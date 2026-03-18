@@ -1,257 +1,117 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4DD2D46B2
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 22:25:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773872725; cv=none; b=Wn1psVS2lPvdgLrVKE+LnBAj8cevj3Omy7dQeboi1ltj0fx3rxHPGcuciD+0dUsOrsKBcnjqAq1sp9tZzgRvXzH0GZ+VMdeR6EtOf2knkYpav0CMk1eNHFoqHhzmFEeZtWNBVqM641j5sxNQruUFxbw0ybR2cvo0AM5NdtdmdD8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773872725; c=relaxed/simple;
-	bh=oFk+VYmdmLDu0EYluMgWHSfFe8uiKJtgcMzl3rUpEzA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nIFEHNU28fXe5tusrN9M0AL4yV8b1zwdJVL4ucBLFLWErOGxfuxNE+y0GZRdqn097FzjLx3F12ewznN3DKmmEtszeihIvcn/2bwYpYGqP0UA+1lhejb9JqNAX+WwulKzzybtajuQ892FCDaMGrzLlOrXBbbmzOQg4xwulHAYIhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=czWb1WOp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yutqpyRo; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E640B184540
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 23:13:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773875609; cv=pass; b=t6EZPZIdmlW+PM1YziBPKY8bdHj61t1SZ71ieRJnEygeb0j7qPSfHkckk8W8IBEvciq77Y6NT/KUw+Q0+qDws+inhGirHxjyoOMpNtytWhT7AZnVaqEPz4SU/inNbhi9IfwH7NGBu6Z4JWRnUzDSmLYxl+LGmmHzEaF+Ppxqcws=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773875609; c=relaxed/simple;
+	bh=GDe/TkXtwIU9XtKMF+Kd4Wkjdvrn+wtn+21OIPe++fY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AFMJhDWyGS8oPzT3/i9js0EsD44jlDT7Eiyfw3qrvOUiN3pE4eiTXydBAEJH9b1tVr1nHqW7us/Z9Tm6dT4CpLm+97OrR72JilHwxJi6cw9ofbpMGRzVbcRu1nRojVPZgf5Wl+nN5v8eu/YaN0fGO7MPinekgsoke9maLG9aePI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IS71t7Ti; arc=pass smtp.client-ip=209.85.217.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="czWb1WOp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yutqpyRo"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 61F141D00127;
-	Wed, 18 Mar 2026 18:25:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 18 Mar 2026 18:25:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773872723; x=1773959123; bh=7agGCfZIRu
-	OTC3CsF2fK/foXwwIEM7FI4RFxGo/C91E=; b=czWb1WOp07ApfYduFoR1Q261Ga
-	5Jnl1ohLcBrD1N5/S4czPfDQnM0ZIizeNza99YwACkNxy7Vb4DghHJ7K7UjE1QvM
-	FElQzuyI+laxgfrPqIcDGSbTjTen9eU/D1zTUYDKi8oHcxf20tnS8W62PCq/1YUu
-	12qCEOPPLVfVws6GrL61G6GXQXg9nCC4t69T5BHiyoz3TNdSv2KhnK8nsT19aqu/
-	ojqMvqxhx5uQ8nRwHIm1p2sWoQqJDf1b5Adl1cUPadQJ2917sd/x9iVeMIao3Cn5
-	4G9FJvZL9CjNqBeFOLu9dACcRrBdMil311ZSoB2/NUFowz74WG1ynu4iM2BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773872723; x=1773959123; bh=7agGCfZIRuOTC3CsF2fK/foXwwIEM7FI4RF
-	xGo/C91E=; b=yutqpyRoGsSWLztxNBFYWYPq7PF+ZDTPpPsoOW970/QomQHzcuw
-	9hMgBht6VcCFgHUv5/e+rGislQbtApSwzWvIchI/WQMyohZgsV4Tt3BbiAcQ1/Hg
-	DUYzco3EJO881tC8PWe1RjXrOqFDgbaK1VMcD3ibENxUD9Y3h5VsimFY57+NZlTT
-	XSDz9s8dHcVvBaQEm4i33/5z1ZzRSy6ocki/nekW6xILA3fW9Lwv6GFuUIJmfZMY
-	BQLO0fZh+rmn4v6DQAP/TzqXoqkV9wt42DNF+N1jzckbtSq1AdclbYWOMD7jMkg4
-	meWV2se6XlYD0WU4Ht1GCNxNVvz1Zi5tFEA==
-X-ME-Sender: <xms:Uia7aTp01gMi7sdkY8q8HZl2UICA81_3Gr9m3YGhJ_XlpZqE93dqRA>
-    <xme:Uia7af6cAb8AtGcX-RZmWmdho6ji7jomDi9o3hbavDyLFMyc9VsS1NAaOc7TbirF8
-    YEfruHgBG_OUOV4GMTo9iVqwyXf44_5mXVPG4TOW0kVDsDEP7uS>
-X-ME-Received: <xmr:Uia7aSfoJ7D69xhjxAcPh0P_2UcpCjDEFurtoOCcgy3VkjmIZimWoFav1X6gdJNAbjhxfDZbL-v_8Ay7MllFHbQhfiNK5WX2Zg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehfeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdr
-    fihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Uia7ac5QNEBF8fRl-zmzBLRqvK6R6KI7xkTSFCwRs09LFuqGhdD7jA>
-    <xmx:Uia7aRtQfMBh3D6M__W7rv9-xRd_ymnOVYlzcGpIqCWCt3aUkMgIhA>
-    <xmx:Uia7aUi9FzpCM7CoCdGx5-XMJs_fWkluA4_-kmQy2XWmZqiyNsqYRw>
-    <xmx:Uia7aUqjZHLNklIz-uoSJzBAsDcqDXLzxecjXQafQrJNVNUWdGWKNQ>
-    <xmx:Uya7aUiDn1R-bP5a73-uSdGyP_LXDDr2JAEOkITPPBpYmBhgPsUc-Wgq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 18:25:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
-  phillip.wood123@gmail.com,  ps@pks.im
-Subject: Re: [RFC PATCH v2 2/2] push: support pushing to a remote group
-In-Reply-To: <20260318204028.1010487-3-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Thu, 19 Mar 2026 02:10:28 +0530")
-References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
-	<20260318204028.1010487-1-usmanakinyemi202@gmail.com>
-	<20260318204028.1010487-3-usmanakinyemi202@gmail.com>
-Date: Wed, 18 Mar 2026 15:25:21 -0700
-Message-ID: <xmqqpl50ojvy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IS71t7Ti"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-5fff52ab292so115608137.1
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 16:13:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773875607; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jpvFIt+y/IJGzINvDYm3QvDJT9ZhVSwc2zNBEVpO9x8YH5RbZjiK9kdR6qC6i40yj7
+         1qiMV8824AFuWdaeF4zHuPP+04J3IRRzxdOUr1HzWGVqdssActbqMKF04b5URVCS0ZZL
+         XTxfRI5xBNF++L+PMArBxjiQwWWWz2TgXftn884hfZ77OvlWag76YoKQNTOE3o9B/+p+
+         Fd5CD7QM2uamGa5XLzWFegdaGgwhE2YGlr9nHwmU+dXoV4IbsSPaLig7W2wEvGr/aA4p
+         tNDN0fkNw4LwrVOwqfqm+V/Jxm1ftTmlBuSrZ1Kq5Ov8OREjqtIPsvpaPtl1XaLwpu8k
+         ij+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=aJzSBJd+qrA2p61iB8TbK6+ASYZD2S8HOdNb2kDvogs=;
+        fh=l9w/CK7gb8pPgxsIND20cpOgEiDBd+vkaJjFjHCeOFg=;
+        b=L10JIddXL1Q0/bK1ESSuQrccreds8RZ17eKb4vavW6Gv4PKoB5NtKsy+z0krEorGFl
+         bobOBL0fckMWIjJrr5Xlxk/jIXbPzlpWuif1BlYcHxIbCIE+RTzetllgC41utH4GHn0o
+         c19wiq13aUZvaRHWsHH0A6BGetw36up9PMDegGelcNO4hhn7QmTfUYX0NywL7hw0iZIO
+         0cFgQkhM+fNl+STS5O1C2XgYLF0zkyA2rkF+B5s+Nj/R+5SxBQ67SwGNnubksjsaJQfP
+         uMSWNe4WhZ1f8AkPVCuC0RcCQaOyvtWzWjREGy8sSEhPBxGbjMOyAUXVTkxM/hScMH9J
+         E2xQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773875607; x=1774480407; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aJzSBJd+qrA2p61iB8TbK6+ASYZD2S8HOdNb2kDvogs=;
+        b=IS71t7TiRdhuSRWISr635USaL+xt0AHkF1gwfkrfqs7HGjXj+uOdoMJWG3YCH1F+xZ
+         UEaOaLTL2DIJI5FvKKlgtTobIBhIUT1MRQN8EenVVHw3Mzgy8LQbcgIvRGkOBH1vxNnO
+         raDcqufb0AJ5HJKcvoPWaRsPSPccD18Z4+JpMHNURjS4xBWBbMfbZ8tphVqdUiTd3m+m
+         reSPfmbHcWHWD/K9ovxSwvB8fG/bfp1NTjkvzBikdxrdmuovuXPvEiPHqJVrCZftc49z
+         MtpfSyVIK5cPuZNPTQhk4kFH4D09LJWBKApVfbT9Ukyjjn8zVS3hp+EFkDRfyNlKWyVO
+         z1BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773875607; x=1774480407;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aJzSBJd+qrA2p61iB8TbK6+ASYZD2S8HOdNb2kDvogs=;
+        b=K8Xaeeb8/vdPE3msDFbI7RDy2P+SonSEzmDKNkzFwwC0qvUYVb10bKx7rAQIq1D9TA
+         s0Y/JzcbpTjOkiFglFFqrPkRicVYmBNIUrLzlUl2xO18RoLAWHgb+z/liIFwWr94+3Qe
+         UUn7V81+td/+D+Tit6bl7gXPA3Oh+xT3593A7DQyXzUVIpcIj7g3Cpj5so7jxGMq47+i
+         wPE6iGlzXqxyXsAXUbuOrVZcFZ3ntL5hPb6XBkyDNmoUXAKvGxbiUnmwSX4OMWeqLx6D
+         f7GwDTlgWrJJ+zIbUHQpkGH3anAXpUOX5+dLZVml8BF7QASJQJwQYCLtUnvRwFmOFJaW
+         87iA==
+X-Gm-Message-State: AOJu0Yy4DOzRgqlYz2sXpOkYdc8E3QZhl5yEwf8FKyW3CC4qVSmQXQ4n
+	h7jacAbbA95mUS+0NgXORsbZgMBrUOBkrUFrjatPdcq4nXqVIhE2WlEwzWKZQ42gVe3LoyLSOQG
+	KiMSwDw56e2zCnC3AR4Fixi8MfBB6orU=
+X-Gm-Gg: ATEYQzyGZM0Ql0UsuNyE55awgAe0nf4JgdtAV1G87TxHKmNkZDPEoY7d3Mil0vEXBva
+	jw8TW+DOdJVt/O87P4ebAXXGLb1lu06nkz/fpiX2dka7u8e/oqkx0cn1pJbML5GSpLhGgGMySNR
+	pkbGMy+4XKdgPh3dZfhzR+B/QS1fq522PXZderAtHZ8lY0/9xCBrG2nOxv5hBx9RPVISJ1ROFV/
+	bEEnF5dONqoF+GkGT4OVS/H4XeicxQZj0+095wFnOxhZzJNmp6hMvHm5kyKhBeM3FIanNgvFhBZ
+	GID0gcA3vtvzUMNH63DA2Mp57LFOiRE3pj3G8w4=
+X-Received: by 2002:a05:6102:84dc:20b0:602:93db:7fa with SMTP id
+ ada2fe7eead31-60293db343amr640621137.33.1773875606909; Wed, 18 Mar 2026
+ 16:13:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+ <20260318204028.1010487-1-usmanakinyemi202@gmail.com> <xmqq7br8pzr2.fsf@gitster.g>
+In-Reply-To: <xmqq7br8pzr2.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Thu, 19 Mar 2026 04:43:15 +0530
+X-Gm-Features: AaiRm50D5oXFme33TM0fQYzUkDdJ7LJxs8KOfSujo6BmxOl9ZtGDv_l9S7v0ZaY
+Message-ID: <CAPSxiM8cFLXNQfVx1V5djHD1MOzAJz83LEWKZJ5znXTO9zfngQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/2] push: add support for pushing to remote groups
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, me@ttaylorr.com, 
+	phillip.wood123@gmail.com, ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+> >   - The current implementation pushes to group members sequentially.
+> >   - push.default = simple interacts poorly with group pushes when the
+> >   - force-with-lease semantics across a group push are currently
+>
+> I am indifferent; comments from others very much welcomed.
+Yeah.
+>
+> >
+> >   - I will also add the tests and documentations in the next iterations
+>
+> Hmm, is this still valid?
+Nope, I already did that, this was from v1.
+>
 
-> diff --git a/t/t5566-push-group.sh b/t/t5566-push-group.sh
-> new file mode 100755
-> index 0000000000..9e0d378f2a
-> --- /dev/null
-> +++ b/t/t5566-push-group.sh
-> @@ -0,0 +1,95 @@
-> +#!/bin/sh
-> +
-> +test_description='push to remote group'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +	for i in 1 2 3
-> +	do
-> +		git init --bare dest-$i.git &&
-> +		git -C dest-$i.git symbolic-ref HEAD refs/heads/not-a-branch ||
-> +		return 1
-> +	done &&
-> +	test_tick &&
-> +	git commit --allow-empty -m "initial" &&
-> +	git config set remote.remote-1.url "file://$(pwd)/dest-1.git" &&
-> +	git config set remote.remote-1.fetch "+refs/heads/*:refs/remotes/remote-1/*" &&
-> +	git config set remote.remote-2.url "file://$(pwd)/dest-2.git" &&
-> +	git config set remote.remote-2.fetch "+refs/heads/*:refs/remotes/remote-2/*" &&
-> +	git config set remote.remote-3.url "file://$(pwd)/dest-3.git" &&
-> +	git config set remote.remote-3.fetch "+refs/heads/*:refs/remotes/remote-3/*" &&
-> +	git config set remotes.all-remotes "remote-1 remote-2 remote-3"
-> +'
-
-So we have three remotes, dest-{1,2,3}.git/ that are all bare, and a
-remote group "all-remotes" that name them.  Is there a reason why
-you want to use an unborn HEAD?
-
-> +test_expect_success 'push to remote group pushes to all members' '
-> +	git push all-remotes HEAD:refs/heads/main &&
-
-Our "push" exits with 0 status.  How would we make sure we pushed
-correctly?
-
-> +	j= &&
-> +	for i in 1 2 3
-> +	do
-> +		git -C dest-$i.git for-each-ref >actual-$i &&
-
-We grab dest-$i's refs to actual-$i
-
-> +		if test -n "$j"
-> +		then
-> +			test_cmp actual-$j actual-$i
-
-and make sure if refs in dest-N differ from dest-(N-1)'s refs.
-
-> +		else
-> +			cat actual-$i
-
-of course, the first one has nothing to compare against, so we get a
-debugging "cat" for it.
-
-> +		fi &&
-> +		j=$i ||
-> +		return 1
-
-But does this loop test what we really want to make sure?  You could
-write your "group push" to push one commit less than what was asked
-to push out to all remotes, and they will match with each other to
-pass the above test, but it would be different from our original.
-
-Don't we know the exact state of refs in these dest-$i.git
-repositories?  If we do, then
-
-    printf "%s commit\trefs/heads/main\n" >expect &&
-    for i in 1 2 3
-    do
-	git -C dest-$i.git for-each-ref >actual &&
-	test_cmp expect actual || return 1
-    done
-
-perhaps?
-
-> +test_expect_success 'push second commit to group updates all members' '
-> +	test_tick &&
-> +	git commit --allow-empty -m "second" &&
-> +	git push all-remotes HEAD:refs/heads/main &&
-> +	for i in 1 2 3
-> +	do
-> +		git -C dest-$i.git rev-parse refs/heads/main >hash-$i ||
-> +		return 1
-> +	done &&
-> +	test_cmp hash-1 hash-2 &&
-> +	test_cmp hash-2 hash-3
-> +'
-
-Again, the primary thing we are interested in is that dest-*.git
-has a copy of what we pushed.  They may be identical to each other
-among themselves but they still could be different from what we
-pushed, and that is something we want to catch, no?
-
-    git rev-parse refs/heads/main >expect &&
-    for i in 1 2 3
-    do
-	git -C dest-$i.git rev-parse refs/heads/main >actual &&
-	test_cmp expect actual || return 1
-    done
-
-> +
-> +test_expect_success 'push to single remote in group does not affect others' '
-> +	test_tick &&
-> +	git commit --allow-empty -m "third" &&
-> +	git push remote-1 HEAD:refs/heads/main &&
-> +	git -C dest-1.git rev-parse refs/heads/main >hash-after-1 &&
-> +	git -C dest-2.git rev-parse refs/heads/main >hash-after-2 &&
-> +	! test_cmp hash-after-1 hash-after-2
-> +'
-
-Obviously correct.
-
-> +test_expect_success 'push to nonexistent group fails with error' '
-> +	test_must_fail git push no-such-group HEAD:refs/heads/main
-> +'
-
-Obviously correct---we probably should already have a test to see
-that a push to nonexistent remote repository fails (missing one you
-cannot even tell if it is a single remote or a group), in which case
-this is not even needed.
-
-> +test_expect_success 'push explicit refspec to group' '
-> +	test_tick &&
-> +	git commit --allow-empty -m "fourth" &&
-> +	git push all-remotes HEAD:refs/heads/other &&
-
-Didn't we do this already?  We did so with 'main' into dest-*.git
-that did not know anything about 'main' (after its HEAD repointed
-to a missing branch).
-
-> +	for i in 1 2 3
-> +	do
-> +		git -C dest-$i.git rev-parse refs/heads/other >other-hash-$i ||
-> +		return 1
-> +	done &&
-> +	test_cmp other-hash-1 other-hash-2 &&
-> +	test_cmp other-hash-2 other-hash-3
-> +'
-> +
-> +test_expect_success 'mirror remote in group with refspec fails' '
-> +	git config set remote.remote-1.mirror true &&
-> +	test_must_fail git push all-remotes HEAD:refs/heads/main 2>err &&
-> +	grep "mirror" err &&
-
-test_grep??
-
-> +	git config unset remote.remote-1.mirror
-> +'
-> +test_expect_success 'push.default=current works with group push' '
-> +	git config set push.default current &&
-> +	test_tick &&
-> +	git commit --allow-empty -m "fifth" &&
-> +	git push all-remotes &&
-> +	git config unset push.default
-> +'
-> +
-> +test_done
+> >     continue to work correctly after the remote resolution
+> >     change.
+> >   - Add a test script t5528-push-group.sh covering the new
+> >     group push behaviour.
+>
+> I think you added 5566 instead of 5528 (the latter of which is
+> already used by another test).
+Mistake.
