@@ -1,146 +1,165 @@
-Received: from nef.ens.fr (nef2.ens.fr [129.199.96.40])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5D02DB781
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=129.199.96.40
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3737336AB50
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773867327; cv=none; b=pnCJudO9mHR7692TUIlIUP2iAUlUD7Zbz2iAXldSOOO72IJXqH37gslj6x8dlrFFofT2+S2VlJ9jfER39v2imQSC9JLiU5GZgHMdagkSEbWgCpH5mtuC9xVF92ZSG5kEQXSfgeG8AU32xOIYHtFg0xWHC08YclM4hsoQFlF332Q=
+	t=1773867473; cv=none; b=WKq573zNRbtEw85LxIvTYNY6JVzp00NYDnNcntXLhGPcpCKrAomp5tEH0NFeLY7tbOSEYL+1rfCSfcoRwk5hX0A6NTdSk9EdwgJDZB2jPqyvS7giGOCyczt5nqh0JZC8sE9k70jtrvIDSr/7btrWe82RmaLAUgrpEk0t07m84J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773867327; c=relaxed/simple;
-	bh=qZNqDng7ZSqLCtxGhsgEh7exYi9uV1mvvKkSIb05MJE=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=t/fB6zoRItyiLNYhXbG2BKfQ7Fl7wrUyyTsqxn2NKnygLNeyR4ClaGPUXg1htf3KvtnhYVb06z+K/o+5gamFs7kBT0gHdcTTtnvAHV7jOwuEb+51BeH+8QAmSIuDGlpjpcrhd5iB9KWRjEELaER2CRtlUuYmXPA6AHjlGuH9vjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nsup.org; spf=pass smtp.mailfrom=phare.normalesup.org; arc=none smtp.client-ip=129.199.96.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nsup.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=phare.normalesup.org
-X-ENS-nef-client:   129.199.129.80 ( name = phare.normalesup.org )
-Received: from phare.normalesup.org (phare.normalesup.org [129.199.129.80])
-          by nef.ens.fr (8.14.4/1.01.28121999) with ESMTP id 62IKMn9f001799
-          for <git@vger.kernel.org>; Wed, 18 Mar 2026 21:22:49 +0100
-Received: by phare.normalesup.org (Postfix, from userid 1001)
-	id 5967F2EFDF; Wed, 18 Mar 2026 21:22:49 +0100 (CET)
-Date: Wed, 18 Mar 2026 21:22:49 +0100
-From: Nicolas George <george@nsup.org>
-To: git@vger.kernel.org
-Subject: gitweb bug report: hash mistaken for an option
-Message-ID: <absJmT_S9gGqbwyT@phare.normalesup.org>
+	s=arc-20240116; t=1773867473; c=relaxed/simple;
+	bh=qEBtfp9wtA9ODJrXjKP1kgPLCst2m0m9EgG8SG0VWto=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ebc4rNdCmmayL0kgrCYyi90CWTG8ivNtOTIOeiVRX+QlcOlmLqPj22aaU1RfsDwLP2SkumKNQM/WK/PrtlCDctaW4TqJ3DuT5Lh3FV9m61Q76M0DDkOdzJ9waP6NRMHkcXYBgIu6akW6Vb7yKIPjI8CdotEZKuGk+lov8eip7E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SS8RceMY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b6YEuI4n; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SS8RceMY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b6YEuI4n"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DACD97A0023;
+	Wed, 18 Mar 2026 16:57:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Wed, 18 Mar 2026 16:57:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773867470;
+	 x=1773953870; bh=RosuH2f/ShLy7WT2EcMoHaS2oVjv5qI5Kj9GKkBcs10=; b=
+	SS8RceMYXto3Wy0c+l6Vi6ujvPTADN4bEFuD8EjR32npNa9lbQ7W3XGs9hSG7hIc
+	fRiSQjL8B/rFv9f5IlD3dI9P4MXqAgDgcYE6T3nhKsM4bOXE3icK5L+/gpaLxgZT
+	164Nsfd3ORBIt/1eMinBt+bvDYzc2i2er3Pc9xxzspgZZnPsiuHvgD9IAts3/JUy
+	+IwSqvM0oitBKFK07Ye9FisF8MSthytSgvgfjpKy6Z4U11N1PR4qZQLw22eL4Q1J
+	jXW86aYb4AiXddh4cRxpVQ5cu5nofIZSyg1r661Lpk7a7UrxZEc+pEFWAmwPW2jk
+	dQ9QEI9qhJrx+r8LyGBgEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773867470; x=
+	1773953870; bh=RosuH2f/ShLy7WT2EcMoHaS2oVjv5qI5Kj9GKkBcs10=; b=b
+	6YEuI4nd0JshPQItqjtMMzds3BFKONrKlrSAvRtZRU3Lhx30CgKhHQaXsIf8ane8
+	Hve90J5K4GJ7ZSilYG1WHbaKmlN386lO6Zist13zvDsL4yBsA0uvqQSOgUUaCMFB
+	saZ2ebmTlOQyJYLzbcPHAgDM9xmX/rmopVV+kjF4Ci/BKfWFpLg2ynlEJTUw2JFU
+	qWPcNeVFH3RixzNNBL8h/Jc7NxwIN5IPXwDvSsw0eKMJZTi0urg99S9vgSsCDf9z
+	5B6Okkr6bdJNwL7UqdKG2R7JQE/wGvFd8aY0XiqW0zNypncA17rmsEzGSYxrmMQO
+	6FJdjcBcOajLZYMtWEZww==
+X-ME-Sender: <xms:zhG7aRDJ_epCS75iig5XO7AI4OFPI_Rn8UuOPC6LbZxgRPlq0FGtPA>
+    <xme:zhG7aRwAQUrYBjzD9Uu5hFG6yvLO9v5XlNRrme6EGk6rdG_pucHaso2fyunLO1voP
+    hS1z9wMpxWSeMGQoLzZZCUKFjSBgzv9PQtXMLjhz90elLgjugTKiA>
+X-ME-Received: <xmr:zhG7ae0P2lDn1Jc69M6sKtGbrNXYnREvxTOlXr4Fnifqnz56Tl1OJkbi3COgm_JvhF09Wg5vqz99LSGv4lV_ixzdi6Xus9W_sQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
+    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zhG7aRwkUxoYX-TYd0_wcvT5q73nKxIcyx7DhVzHzBz7CcyzFKs1YA>
+    <xmx:zhG7aVFcXMGmJF9zqJY8_zLewoXSIM98hp-W9zvC53GZLJIinXCVPw>
+    <xmx:zhG7aUZ0Pfr1FQf5Wk3y7sgBXKL13CCmWHoWuugiCVwgt29rtYDWjw>
+    <xmx:zhG7aXDBAxsw9Gy7kO_XiUuCj0vP-9dy_dhC-UrTXHTiPgSINxIHfg>
+    <xmx:zhG7abPUy2_NF7FfC1E01wqnZjyXzgy4KhDCwGiX9d6o4gjRe6jKNIMH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Mar 2026 16:57:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH v2 2/2] push: support pushing to a remote group
+In-Reply-To: <20260318204028.1010487-3-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Thu, 19 Mar 2026 02:10:28 +0530")
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+	<20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+	<20260318204028.1010487-3-usmanakinyemi202@gmail.com>
+Date: Wed, 18 Mar 2026 13:57:48 -0700
+Message-ID: <xmqqpl50q2ib.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="AAm8trb6/FcXSNYm"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.4.3 (nef.ens.fr [129.199.96.32]); Wed, 18 Mar 2026 21:22:49 +0100 (CET)
-
-
---AAm8trb6/FcXSNYm
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-Hi.
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-We have a web server with gitweb (from Debian), and we observed git error
-messages in apache's error.log. I tracked down the issue to a request that
-had this:
+> A known interaction: push.default = simple will die when the current
+> branch has no upstream configured, because setup_default_push_refspecs()
+> requires an upstream for that mode. Users pushing to a group should set
+> push.default = current or supply explicit refspecs. This is consistent
+> with how fetch handles default refspec resolution per remote.
 
-```
-?p=…/.git;a=tree;hb=-c
-```
+Even if you are not pushing to a group but to a single remote,
+default=simple would die when the current branch has no upstream
+configured, so I do not know what the point of singling
+"default=simple" out is in the above paragraph.  For that matter, is
+"default=current" so special and would it be the only way, other
+than giving an explicit refspec, to make the push succeed?  Wouldn't
+default=matching, for example, work equally well?
 
-I will not bother giving the actual URL since nobody else can check the
-issue in the logs or our server, but the issue can be reproduced on any
-server by replacing the `hb=…` parameter with `hb=-c`.
+> +When a group name is given as the `<repository>` argument, the push is
+> +performed to each member remote in turn.  The defining principle is:
+> +
+> +	git push <options> all-remotes <args>
+> +
+> +is exactly equivalent to:
+> +
+> +	git push <options> r1 <args>
+> +	git push <options> r2 <args>
+> +	...
+> +	git push <options> rN <args>
+> +
+> +where r1, r2, ..., rN are the members of `all-remotes`.  No special
+> +behaviour is added or removed — the group is purely a shorthand for
+> +running the same push command against each member remote individually.
 
-I tracked down the issue further to the `git_tree` function of the CGI
-script:
+One thing this does not make it clear is if we abort upon the first
+failure, or even after some fail we still attempt to push to the
+rest of the remotes in the group.
 
-<https://git.kernel.org/pub/scm/git/git.git/tree/gitweb/gitweb.perl#n7200>
+> +Similarly, if `--force-with-lease` is given without an explicit expected
+> +commit, Git will guess the expected commit for each remote independently
+> +from that remote's own remote-tracking branch, the same way it would if
+> +each push were run separately.
 
-If `$hash_base`, i.e. the `hb` parameter, is set and not `$file_name`, then
-it is passed as is as the last argument of `ls-tree -z`, and since it is not
-a valid hash, it prints an error.
+Understandable (even though it would be obvious from the "exactly
+equivalent to" above).
 
-Since no shell gets invoked and the options of `ls-tree` are very limited, I
-do not think it counts as a security flaw. But it could become one, so
-better fix it.
+> If an explicit commit is given with
+> +`--force-with-lease=<refname>:<expect>`, that same value is forwarded
+> +to every member remote, as if each of
+> +`git push --force-with-lease=<refname>:<expect> r1`,
+> +`git push --force-with-lease=<refname>:<expect> r2`, ...,
+> +`git push --force-with-lease=<refname>:<expect> rN` had been invoked.
 
-I see really two issues:
+Understandable (ditto).
 
-First, that the parameter is interpreted as an option. It could become a
-more severe issue if new options get introduced. And it is very easy to fix:
-add a double dash.
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 5b6cebbb85..33de769a33 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -542,7 +542,6 @@ static int git_push_config(const char *k, const char *v,
+>  
+>  	return git_default_config(k, v, ctx, NULL);
+>  }
+> -
+>  int cmd_push(int argc,
+>  	     const char **argv,
+>  	     const char *prefix,
 
-Second, that the error (be it “unknown switch”, “Not a valid object name” or
-“not a tree object” gets written into the error log: it is an error entirely
-caused by the client that has no repercussion on the server, it should be
-either passed back to the client or ignored. This is more minor but harder
-to fix.
-
-It might also be a good idea to check the rest of the source code for
-similar patterns.
+You didn't want to include this hunk, I presume?
 
 Thanks.
-
-Regards,
-
--- 
-  Nicolas George
-
-[System Info]
-git version:
-git version 2.39.5
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.1.0-44-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.164-1 (2026-03-09) x86_64
-compiler info: gnuc: 12.2
-libc info: glibc: 2.36
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
-
---AAm8trb6/FcXSNYm
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment;
-	filename="0001-gitweb-avoid-hash-being-mistaken-for-an-option.patch"
-
-From a52031aac02bc0704a56d8ca36ba3ee6d25d5b11 Mon Sep 17 00:00:00 2001
-From: Nicolas George <george@nsup.org>
-Date: Wed, 18 Mar 2026 21:11:57 +0100
-Subject: [PATCH] gitweb: avoid hash being mistaken for an option
-
-Fix (partially) weird warning in the error log of the server,
-and potentially more severe issues if new options are added.
-
-Signed-off-by: Nicolas George <george@nsup.org>
----
- gitweb/gitweb.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index fde804593b..2e131bcbe9 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -7217,7 +7217,7 @@ sub git_tree {
- 	{
- 		local $/ = "\0";
- 		open my $fd, "-|", git_cmd(), "ls-tree", '-z',
--			($show_sizes ? '-l' : ()), @extra_options, $hash
-+			($show_sizes ? '-l' : ()), @extra_options, "--", $hash
- 			or die_error(500, "Open git-ls-tree failed");
- 		@entries = map { chomp; $_ } <$fd>;
- 		close $fd
--- 
-2.51.0
-
-
---AAm8trb6/FcXSNYm--
