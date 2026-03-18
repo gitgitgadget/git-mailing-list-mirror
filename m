@@ -1,131 +1,173 @@
-Received: from sonic317-26.consmr.mail.bf2.yahoo.com (sonic317-26.consmr.mail.bf2.yahoo.com [74.6.129.81])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A5332AAD6
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.129.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A1E344DBE
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773866151; cv=none; b=mT+FgheYppvrL8DimLydxK+bP0UtloimctX36+HuId1Q/haZS9rjNnDufAQcpyxqpAa+n10uTCUuToUkJNzmKO8KkI3uYBM7o+gdKnwcQyRN3fbRORZAahbWt/LBhb8o3XIN9e9wGeDdSaIC7HXHLu0xE0ly7vgPSwbdZmRYXoo=
+	t=1773866435; cv=none; b=WYpGi4D1dmqX1/JqVvMKwNPomsHSgjOZSwg/lKERy0h+folwprAcAc5CoA2cXusAfWTzS/FybWarUlqRmm8oaOO7fA0ncxbtCReMfR+RyPhJOg28ViSgwOVAF9lk8hTUV7C4g99naW0rw+ayJfUuGfs4Lo4pSGE2v0cdqVaQTk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773866151; c=relaxed/simple;
-	bh=45ZoMfVU5URCN4DR69mXBLkRvlBeKcHZOBn2UGkCm4w=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:References; b=XahsKZKaIJTFQT3rVovULJ7PeJmWuYbk8d95gA3QGk0z6sCiSuKvgg/G9LARUN1DUk+/ujsbffivUxs8t80OZXlVHCGZZAh/eVtG5fFQlf6L8mdN2BseGCEJCUnLKtiH3KV3EYkgLHd+4HkVJ+0cDynBqmxWNqUcLv4T27Skaig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=r+UixdZY; arc=none smtp.client-ip=74.6.129.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1773866435; c=relaxed/simple;
+	bh=6HVyZHWQKg+DNB3FpS0J/DvRlPx7Sv+DB45j7sdaShc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Pnl4BufDEhy0B/dRGBtXGCO8pLlYNnfnKb0kmnKqGkw71g6tpX0w2GnliH1UimJ8F4kAGaWRjMmDxddL5lK5YuXhiRlc+QkH2hP/fAKeDjoX1ND1j7PmO4TT1XfkIH+UEnMDjVqAo76Ap5VBSPGF//2fuqa0yYM9rdyYcBB0jEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bhsD9viV; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="r+UixdZY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773866149; bh=s/RJzf/GEN1gMThcX3+qKxgAdKPtFHhpXo1BHiLCUPg=; h=From:To:Subject:Date:References:From:Subject:Reply-To; b=r+UixdZYLJCvGvx4nhdJ5O86a+VRDAtpgbEPrtKRauJee1VX5e+J+RoXWdUOCOpbjWQSRTTrHlp8Xw95owTimFWlJq/T4D8yeNcijwvRSF3YFx36qlbsQVKNA2wzjxoJYbyUe10sj2S+NzClfc1D16CR+xtfiakZ9hqOOJPanaziQtcc2GMBLMgKlSbWclqHAD5tHLP9ouzYdSGabAjnIPtRiPWhSf0e0AQUelcx7PwGrmyR1V3l3/h7yrImQ5FD7EJFslD2G4dDgcsEwX7s9OaH62sbYeIPEG0coCBSuK11mZs75N1IREPYVSzMesebizW3uolbgokH/aEE3cEXpQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773866149; bh=oVIKNRC+C0lKTu+jhwS+/6TCY6GTTLL83GKN7BBew70=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=fd2aSJ53oJ1aIj9ycyDwNWAMVONavr2uI8X3/hi2zT6Z1n/iZraodKfLhmX9j1NBJTTzikvwXkmjiGSaXCUTSCH3osdGGkO0PdZMbqZP9ah3m4J3G2a64mZymRjdm6UMfxgoXb3yfI+tJzwdiQUhTbhiAkMzxZLJFoWRtilgCIqFY9QATIfCeUMOS/TwW11xhDLMt2xq2xZOoiXy3ob96tyIUwXfNKM8Utvw8/1tS0sP2Le2/jDgTe+aDW1fjLvhzXtte1GikL6Q6AhOs06+It927D6jLlHwzmQKlbAcdagFENfR6XoZZgRVzYERj/ME0HTmgTHbKOQyqBiA9eno8g==
-X-YMail-OSG: 5b88y7gVM1kSuUEOYfPf68LTYHN9OMsxzHYBWsA7kmS_ktaz8vTaNerzIQHVqLs
- IH6FM_4pn1ia5JDzJww6TzzmMEKltYmeMiFle9y9WqUYmq9OMrA4vGq43P8hKVQbi6YQZFufLRe2
- _Y6WI0FI_UPYA1ovGrHrZK2wnGKW7_FsW1UUrRt4CTvUJj51zykNhrtMwETXVih4X7e9nGQZRovf
- F3z3NKeXaEVncT7s6wz4wlECq52Rlr5fQPqSU2ShB3px6Y9uFa50zoPh7nRZjvXAhXgw0aO9RwZt
- Ruu7MKmaimUZQjcyqqxKoQU3Kwybzhgvixge6vYxHU0vsNKA_d0hae8v2NdqgBIRovLTiNik8CGp
- oynUxkCI.QH1YYavsBQBMB6bYXUvccFFVmY47DhLjk2XKqDCJkcvmhTYXOzOcx4bphs2Gf.WlYRi
- Ld8XJJEpp.MOgtZpg6JzIDktVh507XvH21sum3r7feUP0iO41JxgEB1gOVWV0HkQI3vPk0IPCuSJ
- 54Lh9ciTYgaphgIegsnR7Qq79okv52nztPbgv0sqmHZ9Wbf3yL81LmzZLkS4Q_2sG7d5mdqP6WVs
- SGKBhLjOUqSD_8bvyUmMMlyRYf3vO9Lb.e18h9PWzx5apsHhDtZTZg7KNFocyzVlpxTcSyBNM4eG
- 04Fnxsk.CJBzbdQxjXB1Zt9gRvugibDal71tZMYry75MeL.4dYqK6R30vBgpmsasymcAGGrvdUwK
- r46X6jVPr6Cebox2SAchyIFlD3GJGK4n798REZ6ybgbvoQiytJtqebYrbWyR5v24V35n3rzwVD4k
- yHjsByN3o52VzB.00YX4004H5lTYGpKcPE_fs4lyDWJhEEIW5M5ezNBGfpT_2_kKOhCdZSIUESGd
- J3E1CPEvqY.aMfi5YH7xg7KDyHrek700iOOz2DChEOf06Wm1W1bSFVPP9btFDm2Pemh0hApwwrGl
- 6ZtNUc9w8N2gMfO3flUriaW4blXtFqdBRHfLEVaWhABzkEjv8o1cQG_GO14zXaXI_BFLSR7IQu6c
- cZOO4l25VxiWJmS_VFQBIZoE_h972rtDbulDNdmKxrn4kvIZRwMFGfk87EnBcaWUZAloo8wJwe37
- iDWMrdu.0XhNN42iUvhBlokB6lVHWKh7.te1QJMgmWYsuxxs9rWktIPeWO32SzZwgHx8ut9.ieoI
- .6DYSe3.sCQwvod3Fr4oE1bxPmiMH7vfSFt9_pUS5wMttkca2M6OUD7BfNrNVpvikVkHm0IQg8tQ
- OMTkd_BpNsVE4AARa4qJ.z7LHMUVkhu4cgdyFbOl04wbsJ.Ehg.1aF_fhSzbRjdOX3cr6ULG2Kky
- 8oCCuhPI8mivmg8fyokj22Y925VD8_DEefWYBdS5c9y95_QZt0jb7Q1jnTy2errH2z6_dEKpGk1U
- ebAIWK9QSg1Sfh4OHcnkV2ncISU_mM5cdeXlFiht5szhR8VUHI4Fx8U7npiooD63avHO1evJzeT8
- QVJORcNLbhCnKS.ZvldfOSVUYe7_.PA3skPwHTn2dazZ_NUSpO1KSZPiLf9dVV82.ZxWpTUOHhis
- 0ASs3D6OSNuxCILb02sgEtbSlxtttP8yreVi8f5LKwMN6KPG59tvOIcJO.xH6gdBbUEZXfD2XXM6
- MObGXEgxK9ss24VV1oOdvFJBXmaAJCh5UXyGy2dIE7YcuuBVFWA96IDNCdyfJF.0afHwSQcULm26
- epM7bh71_0XPH6XHbkqsWyuib8XSfKcN7iO22u.VHBekE8Wz18.Lfg8bvGXLxRtNbThOfB_UZvjv
- 6PGoNiRWkmqGWkm2NojZz6yV_o04fqJApubJrOVq.mAekL_wQ3geGDU73OtmSgWm1JMSlv8PdqQz
- Evqeif94dQ3Y6q0CJ6Ft3e7X2J3.YYafSI20KHdy3IfVnfIkF_aiZIuLfFu9DhcnyJjUX3NolxFN
- 60Su5Y9B3LmE2IF.e2u8ocmAEjfvirKdcF8HjmQfNmsn43qz63i8lKHq154XtwwL8F.2VpvADcdJ
- bGrkvDSEpF56rdMduJV6Sy.4xLsd9sTxqLi.pV81BApI2mKwGpqDbptERqoJBJ41pkOusqTusrdq
- ovVudJvvcYigeM8H9NZ.d8B_5rZgYKAwlNxfUhJs3joCU7fq3e57qxVyNpBf2tHYteZ5_jxQWvNR
- EarI5ciuFu9VaR2fvsYHy6PqBu850WxA86tTMtRnTsjGQKv.yC8kEDmH8_6XN9iVgqEHZaIWdXLq
- b.8HoUCHnn0CUJYxyTaXzEdVfaHkbj58wrR80pw7dQz_bQgGtFPukW1vA8E3l8TlhGu5wDbEZLMt
- 7JdOHqCx_S4pEZRWC.KbN
-X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: bd9dc981-b70d-4206-9a9b-c5c7a50d0344
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.bf2.yahoo.com with HTTP; Wed, 18 Mar 2026 20:35:49 +0000
-Received: by hermes--production-bf1-697f88457-2mcdh (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 5087dee980e4177e160d4a83883e199e;
-          Wed, 18 Mar 2026 20:35:48 +0000 (UTC)
-From: Jialong Wang <jerrywang183@yahoo.com>
-To: git@vger.kernel.org
-Subject: [PATCH] t1900: cover linked worktrees and separate git dirs
-Date: Wed, 18 Mar 2026 16:35:47 -0400
-Message-ID: <20260318203547.39972-1-jerrywang183@yahoo.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bhsD9viV"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-829a9d08644so226864b3a.1
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 13:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773866434; x=1774471234; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hCxs5Esb39xyiJmzHIqAjVwgudnwopR30d9NGve/76s=;
+        b=bhsD9viVgfh9zDrgopRZCvyIaggGfURSnVDvvb0B5PLHct8A5wZeutVaPDtwfxo54R
+         hzxtVNHMSPcQRZxlP0yF33E257UVwefWvfMeJsX1VaVbu5jFth4l3kpKYKSx0MuY8ipp
+         vTnF8j4Ql9VCq0y+yE0GBTl1kvHJo2IVXRcTLBOAEdcywIuVzBDGp8qbPBi5pZwi7Hxp
+         puokXCqVOu/fGuV953VQ/avBxNBnvZPAhaCGWjDibktOmnLbJriChUlwEUzUFtNNjZ0N
+         hLNQ18TGdh6PUfeefNWgsaj2iF0uRFoNVs/dFknpofO57QggYEWAsRX2ixkIBMf5o2c8
+         RmBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773866434; x=1774471234;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hCxs5Esb39xyiJmzHIqAjVwgudnwopR30d9NGve/76s=;
+        b=oAkBlSdJvnJ1ZLeloNSKsbDMd4dFxN7kBOGhowxc0n1b9N0mWHe8FMWyjnxUEy4NNW
+         tEmmpdoxGA7ry6M/XaQ8id8WJvszC+V8VTrbLtiqYFZZofI2Pxrs8UObFR+em0btVG7j
+         om0K481akJ/GvHBk8Z2uk3sZ4oqc/Q1iU11K0tdpTOJHUUSOGeDakTcFzHE/K+ZUO7su
+         jdkRx1kNsYo8hKdGsqxFWLWXIWvKvPl30Gun0jeR7SIR5hqTORDAeflAr8vPdUJ9byQ6
+         ZgMQupzOodpXzEUpzyXDIT58/NXhR3P+FeKtoWVETofn85KJ8KAqynTFwZikuZtcdGsw
+         3bLw==
+X-Gm-Message-State: AOJu0Yxod/A89YwcDrBKiesK/9Vkg18QS7JWP4wPcGdgYDHbh+s9hnAc
+	wtDmnnFJyCSSvfHmGXq50P/L5XjvHqRiH49vFqdtIFMRyoLb500r8T59fSzw+UP7
+X-Gm-Gg: ATEYQzw+Omc3pIlVP/bwNvfkhqZ098veHmq6sk0Fl9c34UKtqq9n5v0CTzQ1bTx2hqp
+	CajMFTVgvqAvAak6Y4iwhbedbymjMzG668CYgWcyNvliBiwSZyvbfyvyqc/JhlNb7uCiGE+SRGS
+	8smjLxxVgUqEaXOyvZsRSuY17A4vkntj0AN2Z2Wa12Yo2WRsWy3rGsmCFmWFe8A61zwbnycdx5z
+	5CyGef33Tmb67GZ8HkZGBkYVYpN8cf7o6iuZPEWALKb1TIaAS9GBcPSQT7RTt8cVr2Fprb7ikq/
+	q/msFw4pXPfV4Ny35CD5bxN9wmPI3Nrh9UEj1UFFf2l3JWT6TT3S9YlmP6aQUq0bgttA0FfgtmC
+	7yZzcj5UOjLo9FzHNZUhXrCUqt35pckArbeUwFtDzN5L0RAjuWJ6YzqCmQmGJEs/HS375gU69Qe
+	K9s0iTd3cqqxAQjo04oyoImYhlQiXWCGRBWW6LdnGx1hUYfPBIyABPHoQ5M+Q=
+X-Received: by 2002:a05:6a00:14d3:b0:829:942e:76c3 with SMTP id d2e1a72fcca58-82a6ac83acemr4839304b3a.25.1773866433443;
+        Wed, 18 Mar 2026 13:40:33 -0700 (PDT)
+Received: from archlinux ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6bbb96e4sm4428567b3a.35.2026.03.18.13.40.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2026 13:40:32 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	gitster@pobox.com
+Cc: usmanakinyemi202@gmail.com,
+	christian.couder@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood123@gmail.com,
+	ps@pks.im
+Subject: [RFC PATCH v2 0/2] push: add support for pushing to remote groups
+Date: Thu, 19 Mar 2026 02:10:26 +0530
+Message-ID: <20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-References: <20260318203547.39972-1-jerrywang183.ref@yahoo.com>
 
-Add repo-info coverage for repositories accessed through a linked\nworktree and through a worktree created with --separate-git-dir.\n\nThese layouts are already supported by the current implementation, but\nare not exercised by t1900-repo-info.sh yet. Cover both the lines and\nnul output formats for layout.bare and layout.shallow in these cases.
+This RFC series adds support for `git push` to accept a remote group
+name (as configured via `remotes.<name>` in config) in addition to a
+single remote name, mirroring the behaviour that `git fetch` has
+supported for some time.
 
-Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
----
- t/t1900-repo-info.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+A user with multiple remotes configured as a group can now do:
 
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index a9eb07abe8..f85ed232c2 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -69,6 +69,45 @@ test_repo_info 'object.format = sha1 is retrieved correctly' \
- test_repo_info 'object.format = sha256 is retrieved correctly' \
- 	'git init --object-format=sha256' 'sha256' 'object.format' 'sha256'
- 
-+test_expect_success 'setup linked worktree' '
-+	git init main &&
-+	git -C main worktree add ../linked
-+'
-+
-+test_expect_success 'linked worktree layout values are retrieved correctly in lines format' '
-+	cat >expect <<-\EOF &&
-+	layout.bare=false
-+	layout.shallow=false
-+	EOF
-+	git -C linked repo info layout.bare layout.shallow >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'linked worktree layout values are retrieved correctly in nul format' '
-+	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expect &&
-+	git -C linked repo info --format=nul layout.bare layout.shallow >actual &&
-+	test_cmp_bin expect actual
-+'
-+
-+test_expect_success 'setup repository created with --separate-git-dir' '
-+	git init --separate-git-dir=separate.git separate-worktree
-+'
-+
-+test_expect_success 'separate-git-dir layout values are retrieved correctly in lines format' '
-+	cat >expect <<-\EOF &&
-+	layout.bare=false
-+	layout.shallow=false
-+	EOF
-+	git -C separate-worktree repo info layout.bare layout.shallow >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'separate-git-dir layout values are retrieved correctly in nul format' '
-+	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expect &&
-+	git -C separate-worktree repo info --format=nul layout.bare layout.shallow >actual &&
-+	test_cmp_bin expect actual
-+'
-+
- test_expect_success 'values returned in order requested' '
- 	cat >expect <<-\EOF &&
- 	layout.bare=false
+    git push all-remotes
+
+instead of pushing to each remote individually, in the same way that:
+
+    git fetch all-remotes
+
+already works.
+
+The series is split into two patches:
+
+  - Patch 1 moves `get_remote_group`, `add_remote_or_group`, and the
+    `remote_group_data` struct out of builtin/fetch.c and into
+    remote.c/remote.h, making them part of the public remote API.
+
+  - Patch 2 extends builtin/push.c to use the newly public
+    `add_remote_or_group()` to resolve the repository argument as
+    either a single remote or a group, and pushes to each member of
+    the group in turn.
+
+RFC notes and open questions:
+
+  - The current implementation pushes to group members sequentially.
+    A follow-up could add push.parallel (mirroring fetch.parallel) to
+    allow parallel pushes to group members via run_processes_parallel(),
+    the same mechanism fetch uses. Feedback on whether this is
+    desirable for push is welcome.
+
+  - push.default = simple interacts poorly with group pushes when the
+    current branch has no upstream set, since setup_default_push_refspecs()
+    will die on the first remote that is not the upstream. Users should
+    use push.default = current or explicit refspecs for group pushes.
+    It is worth discussing whether the group push path should automatically
+    imply push.default = current, or whether a clear error message
+    directing the user to configure this would be sufficient.
+
+  - force-with-lease semantics across a group push are currently
+    unmodified — the same CAS constraints are forwarded to every remote
+    in the group. Whether this is the right behaviour or whether
+    per-remote lease tracking is needed is an open question.
+
+  - I will also add the tests and documentations in the next iterations
+
+Changes in v2:
+  - Remove UNUSED from the declaration in remote.h (patch 1).
+  - Drop the persistent `remote` variable from cmd_push entirely
+    (patch 2). Following Junio's suggestion, the default remote
+    case now folds into remote_group so the single-remote and
+    group cases are handled by a single unified loop. There is
+    no longer any structural difference between pushing to one
+    remote and pushing to a group — a singleton is just a group
+    of one.
+  - Move the --mirror+refspec and --all+refspec conflict checks
+    inside the loop so they are evaluated per remote.
+  - Add a URL/path fallback so that direct path arguments like
+      git push /tmp/foo.git
+    continue to work correctly after the remote resolution
+    change.
+  - Add a test script t5528-push-group.sh covering the new
+    group push behaviour.
+  - Update Documentation/git-push.adoc: DESCRIPTION, the
+    <repository> argument description, and a new REMOTE GROUPS
+    section documenting the defining principle that
+      git push <options> all-remotes <args>
+    is exactly equivalent to running git push <options> r$i <args>
+    for each member remote independently.
+
+
+Usman Akinyemi (2):
+  remote: move remote group resolution to remote.c
+  push: support pushing to a remote group
+
+ Documentation/git-push.adoc |  76 +++++++++++++++++++---
+ builtin/fetch.c             |  42 ------------
+ builtin/push.c              | 124 ++++++++++++++++++++++++++----------
+ remote.c                    |  37 +++++++++++
+ remote.h                    |  12 ++++
+ t/meson.build               |   1 +
+ t/t5566-push-group.sh       |  95 +++++++++++++++++++++++++++
+ 7 files changed, 303 insertions(+), 84 deletions(-)
+ create mode 100755 t/t5566-push-group.sh
+
 -- 
-2.51.0
+2.53.0
 
