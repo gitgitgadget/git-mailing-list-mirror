@@ -1,72 +1,71 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D894368277
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 07:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8461D369211
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 07:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773817389; cv=none; b=EsVbG+vstpCHQWCCIAhd2PqaH70lZsf5rSYE995aU0obk4QenMgNH4L5YnMH2eICTfYB6oNTwdidXRjEYi4+Nf8zSsd+Kder/JK2R8icNOEkxgQFwAhA+pdS2pltel6Ol5hnaceJXwMXKRbDEIqWLGOw1RH+O4b+v5dA4Api1F4=
+	t=1773817391; cv=none; b=A99MirV+lX3QvuoiSreS7A4exuIXcW2v+8Vj2u9ximr1yGq2zS5/wATTmWsf38mG7nMuM/CQIzWY2FNeHk4YYRh2S081UUsBzW7jKSqXYCAgzWeIlMvfWEu3yUTPUk/WPHLxvPtscrcLaNbHdFocKsansrAbJSaJCXTfXAdeLfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773817389; c=relaxed/simple;
-	bh=RRXHV1dxpa1nI0XOUnvr5ZWxrKYaC+rSwmuM3HLjeQs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hzkd6V6fczEQ19kNIHf8YcHcFGxpCPTBaIgCC228pMMp0PRRK2A3Ym1vu54bGU6A3eBnjDCK4fCr5mPENm3pvlARGD1o9rzaxwknsQkJR/YQeAHHE7ajpdALPpm3tze/J/PPqhxyZWy6VvMIBo+WccR1UdY7OUrzCltYUY3jqC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FSbtx9oG; arc=none smtp.client-ip=209.85.216.46
+	s=arc-20240116; t=1773817391; c=relaxed/simple;
+	bh=DMh4wd6Pah8R4JP91y7j6GBojCZObyTja8YlTbWDU2w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=I5fSdH7PtdE3zqCjjgnKRKz2+MVPfYPtCUonO40QWg4R3PmfryD4zfxsXkmrRuvvhBY9TCnsAgBD1AFLwYm1c/vtGGZcbefF2DtFoadGySgydtKoY7S8p6fY0pvPMijghq+Ci4IXYKkj9HOUpssuaDQlYVAPHAO+2rizQuVIGDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SIB7FoaM; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FSbtx9oG"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35a034ca40cso541606a91.1
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 00:03:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SIB7FoaM"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82a655cfab5so1062826b3a.1
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 00:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773817387; x=1774422187; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0mCEzs0dvzNjfIq+Zz9pQHeJz4r5Pni1ZHsec6oXZ1Y=;
-        b=FSbtx9oG9d93zKD7YuNgI9UmACKpSKx5Y1WSXcFIIILsGG0KZC7iYQBMbPz75i+F5D
-         aJqM9Njy3wmS7LTvMj+PjcQvrUnk/54lOI+Lzf272nty40GmbCLXGHDZ5CRuhd3FcMU1
-         aHGX/jEoy0UsCji5p0LEB+qLk5zljZiLlSkBu0pYgt5VLbRkyBULxcYYQTFfCHbyeWjX
-         yaHjd5aOxKDn1r2S5ILYhWjyZxbfDphhpKFeK0Iiz9DB6gBy5SQ1tKd1iOx+H8v2q/w1
-         typ7IYcLjyiZca4zJRmT1Srcm4DAu5CarOliiB4HOdXkH6qBSKfVRc/1BBM+7DFoy1rd
-         XeJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773817387; x=1774422187;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773817389; x=1774422189; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0mCEzs0dvzNjfIq+Zz9pQHeJz4r5Pni1ZHsec6oXZ1Y=;
-        b=NirLuK146PhAv7FmnBSHg61MyyKLVfnoMiAdh9BfTFOG7rknWrgzF9rMMUl0U/QcVW
-         0NyR86Ar4lLcpmBC36XJ1N0GVmDHAi6eiiymFLfo03SkMsYRYZjpUjavZBRwjXIIYTq0
-         5m6nlvxg1KJF96G7BihBBonFcjnW+XImjEqybTAwwgWHKK7fOrKR5o0C1DklCTBXAetB
-         rXsVk/+8t0E2meusIK08034vcAaxFsj28Yox2WbKUanWx7FHK8pN+c68f0dGPd/g+au6
-         5YOJ1ALKyPNdld2FCNn6QyvOwbqs87XgpMyah794lDAIsbKj3Ip2+NR/oDtcgxMEtbig
-         LJEw==
-X-Gm-Message-State: AOJu0YzjzKWypNFm5c0/PhlKQCbi8KLsFs2hXwqln+7iq0G/2L6nwvCc
-	hoc5OUk2xJyuAWS1J8cJsB25KNtVRJjUfO1hB8/MeVpweorkeXtgOBByZvSf3Z5A
-X-Gm-Gg: ATEYQzxqVS72FAyQ9tKqjgnONlePoDG1kB+8BYAxWdhITHGSoW6XrKBU+8n+3YtDCl5
-	5Al99oo3tjDB4XDxdIlbl37E8S+6COOCVQbu0US4fXhyZjK+1Ipl6SSlc0g1LTj0zdNoVBm7mXw
-	gk2/OnukFg+ejdPP4EbRuima7nBHdPOFIRc5a26LmapY3+Jf4KlV2sYizP43goNSIjhYeBbE9E2
-	32a/CWrEEBI3U4GE6Jqn/jHmz8z5LqnfJRZhW7mHNWbgEoBso6hXVHMqxTVbxlDqjGlNzoQ3Qr1
-	NWN6DhDgr7WeSa/Qid2FUqZPjpk+cVQkImLhV5JXctFrw4lzDMiOSkjm3msC/gvrccb7HkIPomm
-	q4LKdfcmseUxLKHwj4BrR/3oQWyBhhrXacyHcrpiEdHCoIUMAzbk+VfcH0IzPgB+K3wJByAvWYJ
-	jsrLNGnZH/zq8w4S/Zf7G0p8Mcy2HiSKfaVUgwQJf0e+N5ohrCZtQ0N6OUuNOFlx1jfjPkQGg=
-X-Received: by 2002:a17:90b:5281:b0:35b:a418:6993 with SMTP id 98e67ed59e1d1-35bb9d6be43mr1431480a91.0.1773817386940;
-        Wed, 18 Mar 2026 00:03:06 -0700 (PDT)
-Received: from localhost.localdomain ([14.195.131.227])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bada2bfdbsm5054889a91.3.2026.03.18.00.03.04
+        bh=NNlvRiIB1CFOsMPDGvma1QHkkwu/0oyPEKTZGmwGxK4=;
+        b=SIB7FoaMI9tyOLWkC08sErNdH8oEkcSG6q6DQ3j/10Nh3zwUYW2CUNgWJXVF3EXOTG
+         7g2d4PHbMhcw4Yt/fUuBEoQtospHMLTqRE6XkmoGjWSOsiPIHqa59Q/LEMVwAvbqjnmk
+         CFYvPHL/19N7t2ye7jQZ6ryrCm9ucHvKSl3xb9TZXEhJqbvRit9ExQbvzjxm/WphDFXw
+         4SCZ2LLjwKY/TmmY6y3RpWrwnW41YQnZaufRlRBwmRj0ObTwP2qm8z9osSkP3l7pYEDU
+         Y/YhwRZJkMj6dJGajgRWrWp5lzyNa5q/jK2YHGF3WgRHjuHk2h9bF5WxhUeSU88Mcc36
+         /C+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773817389; x=1774422189;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NNlvRiIB1CFOsMPDGvma1QHkkwu/0oyPEKTZGmwGxK4=;
+        b=YmrC8wV1UBlKl/Gc1f64YegX6TMO2ymif9QSDKXZxZ2NEXVvnClecLpRBlJII1aEQL
+         2tc1ZsSTSZJ0U4MYqPj7cjFdKSszAUjbhv0QMcLsTmAtm/RQD8O8CDZEJuCRq9+k13ck
+         6z9pT8s+hD7pnoK8TJpWvDtcPODeNp0GQIbfgeVi4Dmd/pV1WQ1kkWqa0x4H9ZMCPf7v
+         aucDraJwXoXKiDSHTWL3+4CUYq61E26Rf3Iv/bHsakDDQ2y3nFwYs6322lAvTxgKSDAf
+         jK7hld0mPJDtJ4jSF8aatJuZW10CbC6VQy499KJsNJbk39ZCfjVIo9LOlkc8jr1P38RS
+         39uw==
+X-Gm-Message-State: AOJu0Yyb89yrQNX2KnrNTNFIx49A8M//5WTB+J7ktxaFsJ6F3VYG7qf5
+	O9Npl8gpzDb4d3GhwIzXEGee29OuBpDbm7atJWRzD1tUNCGEtmKKirLRFFbDGA==
+X-Gm-Gg: ATEYQzytodQmcs5jOUVXBOga3L26Bf9/V7uGwmYrVZ8P24Vt9fVPFWm1bsN2iBoDrYE
+	n+Plv3Jjolcv8FiIPeBK/b2QoLjnCY4PK0NoFZZl0lfy5/uPTGjAmbcyiNfVmaAA5IjsToVwqVx
+	N/UibVh6H6uBFG5x2gXwDsYwkXfoLWsIxw3tx2TogWtHnQwgljhmjKnhA3Qxagdt8B+mcQvAubE
+	GehJCH0AAq2SfbeG98xIW9vyZwT/QaFZphH/b9AhglxAibZUBcLHkRmc3kakQLFQIwYTr0wqyEp
+	MSeEqfd19j8r0NfBBr26WSXRFIxyE5zAb8kIrq7jMJRgPzrUULgq8lg538CQID7ddK6Rd/g5PMV
+	E+yitOhChSroxSwwQBntsYlZkj+NZJza5AxybaKr/fWQhmeV6nDdqCbULMj3ADStI/nQuZmM8Qs
+	2Saey+7GkHMq918T42h4j2dIoawbEZ4SAU0P37m8jHPWoxmm9TW5jpAg==
+X-Received: by 2002:a05:6a00:a229:b0:81a:7be3:9e6a with SMTP id d2e1a72fcca58-82a6acafd48mr2218383b3a.7.1773817389377;
+        Wed, 18 Mar 2026 00:03:09 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:8811:4c9f:17e6:42d9:c5c6:178b])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6bbb2802sm1506222b3a.31.2026.03.18.00.03.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2026 00:03:06 -0700 (PDT)
-From: jayesh0104 <jayeshdaga99@gmail.com>
+        Wed, 18 Mar 2026 00:03:09 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
-Cc: Jayesh Daga <jayeshdaga99@gmail.com>,
-	gitster@pobox.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com
-Subject: [RFC] repo: path representation in `git repo info` (absolute vs relative)
-Date: Wed, 18 Mar 2026 06:55:03 +0000
-Message-ID: <20260318065545.10001-3-jayeshdaga99@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: gitster@pobox.com
+Subject: Re: [PATCH] add-patch: use repository instance from add_i_state instead of the_repository
+Date: Wed, 18 Mar 2026 12:31:20 +0530
+Message-ID: <20260318070237.659845-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqqo6kmjj9d.fsf@gitster.g>
+References: <xmqqo6kmjj9d.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,34 +74,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Jayesh Daga <jayeshdaga99@gmail.com>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Having said that, please make sure your patch works well with
+> > patches others are working on.  In this case, s->s.r would no longer
+> > exist after this one:
+> >
+> > commit d51b61f5dab9c8e715fa792f31d572bc96fb5687
+> > Author: Patrick Steinhardt <ps@pks.im>
+> > Date:   Mon Mar 2 13:13:07 2026 +0100
+> >
+> >     add-patch: remove dependency on "add-interactive" subsystem
+> >
+> >     With the preceding commit we have split out interactive configuration
+> >     that is used by both "git add -p" and "git add -i". But we still
+> >     initialize that configuration in the "add -p" subsystem by calling
+> >     `init_add_i_state()`, even though we only do so to initialize the
+> >     interactive configuration as well as a repository pointer.
+> >
+> >     Stop doing so and instead store and initialize the interactive
+> >     configuration in `struct add_p_state` directly.
+> >
+> >     Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> >     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> >
+> > A good way to ensure that you do not send a patch that does not work
+> > well with others is to make a trial merge to 'next' and 'seen' and
+> > ensure that they produce working Git, after making sure your patch
+> > applied directly on top of 'master' works well.
+>
+> The above "good way" is to notice and stop yourself from sending a
+> patch that wants s->s.r to still exist.
+>
+> After that happens, it is tempting to rebuild your change on top of
+> 'next'.  But please do *NOT* do so.
+>
+> Instead, identify such dependencies (i.e. other topics with changes
+> relative to what 'master' has, that break what you developed
+> directly on top of 'master'), and then merge them to 'master'
+> yourself.  And then bulid your topic on top of the merge.  Work hard
+> to limit your dependencies to absolute minimum, as these topics will
+> take your work hostage---until they get merged down to 'master',
+> your topic will not be able to be merged to 'master'.
+>
+> In this case, you'll be likely to do something like
+>
+>     $ git checkout -b sp/add-patch-with-fewer-the-repository origin/master
+>     $ git merge --no-ff origin/ps-history-split
+>     $ edit ... && git add ... && make test
+>     $ git commit -m 'add-patch: use repository instance...'
+>
+> to build your single patch series on top of 'master' taken from my
+> tree, with Patrick's history-split topic merged into it.
+> After the commit is made, send out only your work (i.e., above the
+> merge of Patrick's topic) to the list and you're done.
+>
 
-Hi,
+Thanks a lot for this useful tip.
+Going forward, I will first try to ensure that there are no on-going
+conflicting patches by a trial merge to seen/next branch. Then after
+if there are any I would merge those dependent patches locally on a
+copy of master, thereafter build my changes on that and send them.
 
-While working on extending `git repo info` to include additional
-path-related values (e.g., `paths.common_dir`, `paths.toplevel`,
-and `--git-path` equivalents), I wanted to clarify the expected
-representation of paths before proceeding further.
-
-Currently, commands like `git rev-parse` may return paths relative
-to the current working directory depending on context. In contrast,
-some internal APIs operate on absolute paths.
-
-This raises a design question for `git repo info`:
-
-  Should path-related values be returned as:
-  1. Relative paths (consistent with `rev-parse` behavior and more portable), or
-  2. Absolute paths (more explicit and unambiguous)?
-
-One possible approach is:
-  - Default to relative paths for consistency and portability
-  - Provide an optional flag (e.g., `--absolute`) to return absolute paths
-
-This would allow flexibility while maintaining compatibility with
-existing expectations.
-
-I would appreciate feedback on the preferred approach before
-proceeding with additional path-related keys.
-
-Thanks,
-Jayesh
+Best,
+Shreyansh
