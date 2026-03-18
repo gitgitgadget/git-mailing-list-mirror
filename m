@@ -1,174 +1,114 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic313-13.consmr.mail.bf2.yahoo.com (sonic313-13.consmr.mail.bf2.yahoo.com [74.6.133.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CFA3D6CA1
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 12:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6E57083C
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 12:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.133.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773837927; cv=none; b=lCH6uTNZRPl2FCYd6GGEGnbwqO9cyaproVmnlYpwxC6D2w5noB1QjcFanwjJlS0BTux1UYbTIZXjlylooBHEoIK18jrNemAKkffHMERyEYV1LdfhYkmTCQJ/FI0hVjKFmVHx+3iXOWHbg9bCQP+ew6bzXAQxlYWWj3Dra+OIcFE=
+	t=1773838389; cv=none; b=olZ1mn5UuQ2+gePfWwNRM5d/+vcD02AGSGxZVQiXwggUj4n/n633ncZGG2NNRGX8JGoBUWflNTgZ+Oppf5pRAe1qubiVa47EQ06RXBpB1kxk65aVe0rSltPlEIp2p0CN17d1WV9n4MmfafINNfjI/oj8xi/uVc3fsUsgBBnDSf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773837927; c=relaxed/simple;
-	bh=i+gaFcsolfgNwFB5IzS8ZeREMUkdPWnoIJs/wVb3qeI=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=lh03rzqd/jB3B+5F7T2tooEkfppghQqUeIqE6Rwj6erWUwXbHDjQLz7iqN4Qc+59Uxv+QVZapbv2GU3Po75+zGC9vwGK3XPrnU9vjufgwdZ21GGX5kPDp36vsLKNhhigRHg7dKdjfhrX8bmOIGG+++nsA9XbgBamijhU2t4sJRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=oSQTVxYG; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1773838389; c=relaxed/simple;
+	bh=pzwdmPZ+afy6BygN+4NuXkICDqQrKxibcHHrWQTFCcY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:References; b=JHPFA/98Jws77ethvtOg/2VdItfMSpTNlMRVOELnjp2n/gQslbgbTmt/3DxHgx+yEnHJtQL2IhupS/9H9RnhVrhwYOeh4WHj4f5Hav5eOj2cXCUF5adtRhcLouUvfUL98iy5pV0md30GGciaVu5Hj+HOL93Owy7PjQevVyfrsGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=WJoFNPQ1; arc=none smtp.client-ip=74.6.133.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="oSQTVxYG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1773837915; x=1774442715; i=l.s.r@web.de;
-	bh=tZwqYHmCt1gakhnAS4jBGiUSFeMy9CVhuzvNfUoIn5E=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:From:
-	 Subject:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=oSQTVxYGqHzi+F0m2t3APQ2Vccpzo2+OJa0s3x3lWXJWxsFOQjMpZdtDBn6FuJ5f
-	 WLeaVUOq2CKsFhKMKaaofqlXmkZBRXuYap3MGiVaIiEPjFJBCVBcEeHyOX5t34l/M
-	 nnpjtm5ODGKmhUfUVb0qhUGi2gVS5ofqOBQFRa1jJP4+JjbSRBAn1qRP/9yL1JmlV
-	 WkR5+gq8K4v9PJ7YPcqPu0Kkyjx8ZdjQlW4uPL9+aOcbxoVMii+woqdJEK7m0E1ul
-	 FzK3Qkvdc6xOTYWuxTtMgzxSEXecBSmrB5uccjNfHBoGoBAN7x4C1b1tT3FpcX6CA
-	 uuoILxyWQpoMOq6W8w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MaHWx-1w8hPq2zy9-00SCWc; Wed, 18
- Mar 2026 13:45:15 +0100
-Message-ID: <06000e28-c1b1-472f-bd6b-367b6c8d208d@web.de>
-Date: Wed, 18 Mar 2026 13:45:15 +0100
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="WJoFNPQ1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773838387; bh=fNQ4V51pXD0WBlbYAN8Fyx6EL0C1xgBQIvrFironEoU=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=WJoFNPQ1ipMbhxxYZP41ekq5iVti643kz18Od/CfVxqhcuQWsKJR1wgk0N7SyHI/xqCwPGlt9pXEivwkCTmZIUCPSXJHA/W6rTuLRFzF9QKVRt/OS7Cw1Goj5iHcoAjo5uYtjWAFNfXFG8klD6awUvSV5VM7/e+O+A0QN7VLjKuJbO66OnKzeGCIrJEVw9hzBJq5prxJa0ttRCYhRd0JoiFLz3YrGSuaJ531dQKIhCi9OU5u9Hqj/uLMFh4laHudguoW/LNWHzwEv6s1bG7IbhVdkfn8D/fh2ZQX/U9VfUt1nUVjGR//q3QjODFOulnU/pQFzMk/m0dVvvKMTuG0iw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773838387; bh=vs2V+NQ7Jjs0M1MPRR5bn2bcZsH87V+2MBZnZ9wm514=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=cxp5cjeo/cJ9N56oqz+CSlKLjrRExm6Ha3INJixVG1rHZEeE+g12tNFi7NbBHzN1hECdSu1mvEV1cwbLbfXwWB+XEVgKcKTE9Y6e1+Cm9y/jIxw6xDgEg67QRNMIm1FR+Nv1Sg6BC6J8Sf8hC5hfcJFD6EYZPh7rpI6eBTrnBLSfsksjvRqepoyUobWomTeyFc5M1M5C4FRrA84XkUdHvifGzptPkDJ7YpFlJbr2gGDh0r8P81zNKUgWmlN4j2MphNzMQOcPN0IUdtiKOVkWouGEjWayvL+frp5aG/QPne9xV6B4/9noWnwAieLvppQ0Vrll+TM5yQ5uqr62ERuZmA==
+X-YMail-OSG: K9WCzr8VM1m6tvjM0qq0YlxaGXjEGJnF7DtHvkcabcV2QJHWuByJ2IqDRo5PuLm
+ 1VDUrkIZytc7uPTxEoyrM202qf1yTq0qywmngOP3DQkKSUp7N.ykjYeXpxbEyayPsAwdsOrVKZdR
+ .T6f1ZiXaT1h4NhVERz4GCDmOpJC5ODVw0JDf1aNc.XCANlpnGmPTI19ZOFqejtsnmLGHXov15iu
+ mxLBJNMbqDi0IH0xQ9dRmXwbwSEnY9TqN4nqgyv2o37z62jgM7jDwdD9P25GCC10AhLkkdvEdHbQ
+ ht_U0urqF9XVHYY9wEkVQPiEGejZNxanXwvsBLfWZUhr4ZJcyriTwBywgQ7i1JrRrUJtzDUTM.4R
+ sI5h5Y.b61YV7d3KZ9zMTCr.eLMTgX1O4us0z_uiYBvExJXgV0AP5m47X8wBYr3QMfui873ncoFn
+ mfcZPhykfruW75gnyepGUnglbqnbfcUcbEGxZqaUG5d26vIsPCdKKRN3hJxpL1aEqZCtg1qJl82z
+ fCM9MbBxVzKeEYi3oFgZzPYAaKBKDZ9o9IpCLjxq9HDUlBNhVLM0boSp8J1J4w2AQnrGnLbeOIRr
+ Wl5nYdW9644tM0W3SzH82muPRfda_LEPt3.dG61b9Lln5VNjgip.GbpBvSf_7JyxRl4_OZXnh3Mc
+ fbbB2baUHXQj9N2_DeBK5OzGijzNQJdGKVyynepXlK0R2nlei7.4znzkVbakCP5t73Y75LZrzuHN
+ mc3uqv0F2y_6EQWEYw2Hf2.zmz4NPdKJwkmW9sPLUq3KgZtGwyuOM.zZ8snYZF.jt8cef9m1EWmE
+ GB7jGdPj9vvFqtN4yczwVgMFIv_k_IO6_jVEAdIXqx_wuXqHAad96CNR0vAY94uPaYYZRec._tfT
+ cCmphQEk_PcUvjONq6t3rG5Q8yjfOcKlTXA3YwNlrSTLM9J7LPso0FFPTC9cqckAhu3QCwWoJpew
+ 9TbZvg9l6N0CPdT1VQq6ty_bNKgAwqkrY31EppSp7dv3RWSQ.AW4v_M0dOCnwNz2WtSDdyMb4KmS
+ G_8IDXwRFmI5lyn7kojvmPZW1dWfVIRhYQqYfOeApA4a9uiIzSnagA9uUh3kHPTHuFqKjqKXQniq
+ pObRhowxDBSXAYLchglzZWlf5408Osr.NN_e9cRPPVw6YQOZSNlLS0RtgASg.TQs.hFOBexoeqV6
+ QGpDHzxczGtBmJG10yb.kT7._yuEY5oT9UZIIQdkeoaY_hBPcLRNftmRNWn_lhaDbV3.SLnKLgae
+ och4wEvzReCukd7lwamXT9k.5Ta3xwsYVrX4vzCVNnXiE8AtLQYSFri3pcLLM2JY5UIodEYKnSYj
+ pOVXR5KfSB2uB0V4BWaszLN9AnA_6153xCSa8BiTB5Dq7zxKj1an_dkfwiaObkaXFgH5v2D5OXAL
+ 8Y8VweDOE8eVSeTcDp_nOgAvENf6OrdupSNHxVkP0Wzbt06ksgtjZIMPSfMSmgOuYGSnWA7Z14Ek
+ CQNLl9I.vWGN1kENDXdMYJQTt1GbPLQlTpvY7JCf5Uwn7DGoaBl_kQ592dvFhcLFiewUmixfgaQE
+ iTlgk7V5gISm3hVvfbHT_WuhynpErnwGNgT9W0HVhqbtgjTR1x0I6Q8JUbfuUYR3q6s5k5fyZ5QK
+ 1qSZlaDGk3_hJ8qrK31fFb7y6thlqAK.iRGbGqQKRT0kxzEn_26.x4i7mLW9G.p0nGwBngm64zWN
+ 10P9FH3FdKyUjQjJoEPpcQRwUJYGs1fH0udHN6.cv15OF9O_hriQiCoDMEfaqR9oyiGsPUMcGxRq
+ EmmkZrzQEmjaEzZOdTGEVRBmC7gaZ0qHw9oSzafS_HWRYoBl0XV6fp2pkeZG7XCp1LBpWXr9RwDQ
+ oX3qsgNM2QlKlHwWPM_kkbidgB0wc6JbZS20NFPm5EZtJn8zz5asnaTGiAPVPVmmqKyT0JIRHKbT
+ fEW4VqvOi5Xm__p4OYftrTGFLaw2jsTjnJ1hB6MsW9BaMN2oV2xp4.SDzqQz9OCuDd7jEVTkbEwW
+ oau2GdxAzMeWMapTZZPbq.Ez7Hdb4yYMEq295JKSNDIjfssgBxZAlVCQEfVN7mtgXK8XdQ.kfAFG
+ CASPdKZSn0IppGBIczGBevJlo0n0mV9_7wFdbja8kIvTanbybfk9I8aj8f9l3CVKcl8UU0n0iX5A
+ HbLZ55hkMfN0D26jHnew9rZYh8qMaqkvvex3gyp1oxbtVe0G02D2gZzCs261AkNKF7URritYtFxQ
+ Ts5jFQEl.xqAeC._90uzf017nWOiUnTaiYXCPyEkrQDZT19q4pQNTJLIQsUytTNg818xjdwCPdVZ
+ QjaqcwPIZduB8Sdv7WpnhhLmCTUYX
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: ea61cf02-c8a7-4ea2-a9e8-7cf5b3029f82
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic313.consmr.mail.bf2.yahoo.com with HTTP; Wed, 18 Mar 2026 12:53:07 +0000
+Received: by hermes--production-bf1-697f88457-thlw6 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 14fc1b424a46476ce353da9086e18cc6;
+          Wed, 18 Mar 2026 12:53:04 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: karthik.188@gmail.com
+Cc: Jialong Wang <jerrywang183@yahoo.com>,
+	git@vger.kernel.org
+Subject: Re: [GSoC] Proposal draft: Improve the new git repo command
+Date: Wed, 18 Mar 2026 08:53:03 -0400
+Message-ID: <20260318125303.88730-1-jerrywang183@yahoo.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] commit-reach: simplify cleanup of remaining bitmaps in
- ahead_behind()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ZrRQVisc8bx6VeCJIfplVjhpr9ilJGloJW//flomlznaSnNXg5u
- 8ensHW8L+wjCsZA32CJVY9bHFDnc0GAf0u/F4t3xv6QeOVr3BcB7SCenE9ar3B2ZspsHkQU
- W4tuvLFV+26Dh0kmU4R4BaKlFWzlZQSN+OaCTi/hH8gk+QLTqteSa2kk/ooyFm2q7+JV0Zx
- uuEXvdOZlh3Mc1f5IAMXA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:vgSnrsbP5GI=;y0RcEz0GeuniJ9LRfqaWYYPR7sb
- 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
+Content-Transfer-Encoding: 8bit
+References: <20260318125303.88730-1-jerrywang183.ref@yahoo.com>
 
-Use the deep clear function of the bit_arrays commit slab to free
-bitmaps of commits we didn't traverse.  We don't care about their order
-anymore at this point, so we can bypass the prio_queue and its heap
-rebalancing logic.  Note that bitmap_free() handles NULL pointers, so we
-don't have to check.
+Hi Karthik,
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- commit-reach.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+I wanted to send a brief follow-up on my proposal draft for the
+"Improve the new git repo command" project.
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 9604bbdcce..a4fc41ff40 100644
-=2D-- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -1047,6 +1047,11 @@ static void free_bit_array(struct commit *c)
- 	*bitmap =3D NULL;
- }
-=20
-+static void free_bitmap_pointer(struct bitmap **bitmap)
-+{
-+	bitmap_free(*bitmap);
-+}
-+
- void ahead_behind(struct repository *r,
- 		  struct commit **commits, size_t commits_nr,
- 		  struct ahead_behind_count *counts, size_t counts_nr)
-@@ -1117,11 +1122,7 @@ void ahead_behind(struct repository *r,
-=20
- 	/* STALE is used here, PARENT2 is used by insert_no_dup(). */
- 	repo_clear_commit_marks(r, PARENT2 | STALE);
--	while (prio_queue_peek(&queue)) {
--		struct commit *c =3D prio_queue_get(&queue);
--		free_bit_array(c);
--	}
--	clear_bit_arrays(&bit_arrays);
-+	deep_clear_bit_arrays(&bit_arrays, free_bitmap_pointer);
- 	clear_prio_queue(&queue);
- }
-=20
-=2D-=20
-2.53.0
+Since sending the revised draft, I have continued working on small Git
+patches to get more comfortable with the codebase and with the mailing
+list workflow. In particular, I sent/rerolled:
+
+ - an apply.c series on input-location reporting, starting from
+   "apply: report the location of corrupt patches" and then extending it
+   to header parsing errors and binary/garbage patch errors, which I
+   rerolled as a single v4 0/3 series after review feedback
+ - "t2203: avoid suppressing git status exit code"
+ - "object-name: turn INTERPRET_BRANCH_* constants into enum values"
+
+Working through these patches helped sharpen how I think about the repo
+project's scope.
+
+My current understanding is that the project should probably not try to
+turn "git repo info" into a large catch-all for every possible
+repository path/value right away. Instead, the core scope should be to
+define and land a coherent initial set of path-oriented values that are
+already grounded in existing repository setup / rev-parse style
+plumbing, and to do that as a sequence of small self-contained patches,
+each with its own tests and documentation updates.
+
+For testing, I now expect the main command-level coverage to live in
+t/t1900-repo-info.sh, while reusing patterns from existing rev-parse and
+repository setup tests where the semantics overlap.
+
+This also changed how I think about the timeline: I would prefer to keep
+the initial milestones focused on a small useful subset with a clear
+interface, and only treat broader expansion and cleanups as follow-up
+work once the main direction is in good shape.
+
+If you have time, I would really appreciate any feedback on whether this
+updated framing is closer to the direction you had in mind.
+
+Thanks,
+Jialong
