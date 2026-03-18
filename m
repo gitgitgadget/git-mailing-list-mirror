@@ -1,104 +1,131 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic317-26.consmr.mail.bf2.yahoo.com (sonic317-26.consmr.mail.bf2.yahoo.com [74.6.129.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7D83D6CD8
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:13:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A5332AAD6
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.129.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773864781; cv=none; b=uc7Bvs3QWsO5VcQzFjSVOubneUfMBZwKiy3XnZo+re/wJoFmI/OMRRFkH8g+uj9R/rb7qSoyAN6c8XnsLF/CCXKpF+eXKityx9bPLjW/6FjtyLcQvYu36u/L+9mwmwcN5+qW/sIe3QyL8bmwrrz369O1UOSSZayxFq/ej9KvqOA=
+	t=1773866151; cv=none; b=mT+FgheYppvrL8DimLydxK+bP0UtloimctX36+HuId1Q/haZS9rjNnDufAQcpyxqpAa+n10uTCUuToUkJNzmKO8KkI3uYBM7o+gdKnwcQyRN3fbRORZAahbWt/LBhb8o3XIN9e9wGeDdSaIC7HXHLu0xE0ly7vgPSwbdZmRYXoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773864781; c=relaxed/simple;
-	bh=gMqHVndSrlUIMIbdjekbSLSxK8tR6PONDqs5gsOMM2M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G/luH/ASF2AQanmT6nwR77BXRJmmKOP2kKQbD/CmAVyDe3LDwn3Q4B1OxSKT+CVWVa2AkPit9XJCyNAP9dHrRN4+8HBSpN6CMMW2kq4m1TRYO9qV8FZuWQ70vvPEsz6A3tC/SZ/kC5U17PJFioYP2kS0gsMvzP4Yv5FsbevN6Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BPRLMy8P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sk1f8s9y; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773866151; c=relaxed/simple;
+	bh=45ZoMfVU5URCN4DR69mXBLkRvlBeKcHZOBn2UGkCm4w=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:References; b=XahsKZKaIJTFQT3rVovULJ7PeJmWuYbk8d95gA3QGk0z6sCiSuKvgg/G9LARUN1DUk+/ujsbffivUxs8t80OZXlVHCGZZAh/eVtG5fFQlf6L8mdN2BseGCEJCUnLKtiH3KV3EYkgLHd+4HkVJ+0cDynBqmxWNqUcLv4T27Skaig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=r+UixdZY; arc=none smtp.client-ip=74.6.129.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BPRLMy8P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sk1f8s9y"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4EBBB7A00DC;
-	Wed, 18 Mar 2026 16:12:59 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 18 Mar 2026 16:12:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773864779; x=1773951179; bh=gMqHVndSrl
-	UIMIbdjekbSLSxK8tR6PONDqs5gsOMM2M=; b=BPRLMy8PoH7obqVPuvMZ1IoaiX
-	b1/td8sYxm5cKcoXhGeh2xTE0iIkmQSrZAUqRfltG+bJ97MVLb9ht5thZW7hofJ+
-	Nv5UtoOai8FZyWav2x+OJMcZTl4OQU1xqi1E5m9yYotT1n8A/6xRUFQoAVLJXUnq
-	m35E/GxN57YA2x45GHhvgDJ7PNPUtzoMQ/3FevHZLZbPAuSNLaxMqRrDnFqYx1UH
-	LSBTJhFq303LNq8Te3WNmnbSG1894OcMoG66qIzTdc/1Bhw3kFqRCan163yq5Iq4
-	tfv5a5G/vgEweomwj5PO1dfePgJZbr93gv//YD0spyQWH6xQXw4qDFdXHskw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773864779; x=1773951179; bh=gMqHVndSrlUIMIbdjekbSLSxK8tR6PONDqs
-	5gsOMM2M=; b=Sk1f8s9yHoVRuQ6QBJSfXQ3w9occ+IX7jM6x4ctejlfw60/w+FU
-	f4sZ5vfGdiIsHvkCGlwyawpT8Ve+KvWLVgiARv0EdmOfgIxPL3SVwd8LSdlD9do1
-	cbD+zI6BQF0mwIzjG4o66rAAaxydotOIFih79Wy/ahAvw/Y4sl3EryUT9BwxGRRM
-	hPN+lB+tBsGcBq+Qj/3s8yt3pgdp9TcyvWr1RYCVYx91wXqyDTfXiZRCjp8kg6HO
-	G673/MTZEzWJSY00AVazl0kTnfUzLkkCuhm1Vx2U6W7BBj7phctfoizZIRnGRJ46
-	hUR0Uk+SBEuqUiLW5Zw4lN07ikoJ4dzZ3ZA==
-X-ME-Sender: <xms:Swe7aXCClU2PgPWj7TZGhkCtceCOfHSedFbtkZ7Etd9jMVBZbygSrg>
-    <xme:Swe7aUjqRx4xl8KSZNHIIE668plgHxudzmV3pCNYP84wRsVtUSwQueXcoqTTrh37g
-    aJuPkLw5I1lqKgpjYXDBIb33lMCX05_3LwUtnZjQQIEK9jPS_P6Xw>
-X-ME-Received: <xmr:Swe7aXl-ZVkeUjvB7dTsY2f4HEDA7LQWZic7XBMm2WRg8A_N-JDDaoX1soLZyqlPv_C_4YvHpkUG9JU_ryK7ge8YxwBfGSb5yg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehtdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegrughithihrggsnhiftdejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Swe7aYqdg56nVsU_VPP92R2MLn613zsmnNlwTlu6ChsA4jx28ZNYhA>
-    <xmx:Swe7aYFFDVIIWOGLltjv-iFwF6HFJfVPFPG5y0E2xfmUyAO29yTdpg>
-    <xmx:Swe7aczLmhv0ebyzA4e3koCQ7YXns6-Z7aYAUIYfJMLQZrcdwUCa4w>
-    <xmx:Swe7aVoh_SPgLapbqWyNWPOJqDn593Z2XqUrR_YhD0aEjRE5rX6Qnw>
-    <xmx:Swe7afEVUX7SRYRBxwNqylyLMUBRUjSm1dX6_AkBl7UEcFWc4ffmsoZA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 16:12:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "QUANTUM via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  QUANTUM <adityabnw07@gmail.com>
-Subject: Re: [PATCH v2] t2107: modernize path existence check
-In-Reply-To: <pull.2071.v2.git.1773864455956.gitgitgadget@gmail.com> (QUANTUM
-	via GitGitGadget's message of "Wed, 18 Mar 2026 20:07:35 +0000")
-References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
-	<pull.2071.v2.git.1773864455956.gitgitgadget@gmail.com>
-Date: Wed, 18 Mar 2026 13:12:57 -0700
-Message-ID: <xmqqtsucq4l2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="r+UixdZY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773866149; bh=s/RJzf/GEN1gMThcX3+qKxgAdKPtFHhpXo1BHiLCUPg=; h=From:To:Subject:Date:References:From:Subject:Reply-To; b=r+UixdZYLJCvGvx4nhdJ5O86a+VRDAtpgbEPrtKRauJee1VX5e+J+RoXWdUOCOpbjWQSRTTrHlp8Xw95owTimFWlJq/T4D8yeNcijwvRSF3YFx36qlbsQVKNA2wzjxoJYbyUe10sj2S+NzClfc1D16CR+xtfiakZ9hqOOJPanaziQtcc2GMBLMgKlSbWclqHAD5tHLP9ouzYdSGabAjnIPtRiPWhSf0e0AQUelcx7PwGrmyR1V3l3/h7yrImQ5FD7EJFslD2G4dDgcsEwX7s9OaH62sbYeIPEG0coCBSuK11mZs75N1IREPYVSzMesebizW3uolbgokH/aEE3cEXpQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773866149; bh=oVIKNRC+C0lKTu+jhwS+/6TCY6GTTLL83GKN7BBew70=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=fd2aSJ53oJ1aIj9ycyDwNWAMVONavr2uI8X3/hi2zT6Z1n/iZraodKfLhmX9j1NBJTTzikvwXkmjiGSaXCUTSCH3osdGGkO0PdZMbqZP9ah3m4J3G2a64mZymRjdm6UMfxgoXb3yfI+tJzwdiQUhTbhiAkMzxZLJFoWRtilgCIqFY9QATIfCeUMOS/TwW11xhDLMt2xq2xZOoiXy3ob96tyIUwXfNKM8Utvw8/1tS0sP2Le2/jDgTe+aDW1fjLvhzXtte1GikL6Q6AhOs06+It927D6jLlHwzmQKlbAcdagFENfR6XoZZgRVzYERj/ME0HTmgTHbKOQyqBiA9eno8g==
+X-YMail-OSG: 5b88y7gVM1kSuUEOYfPf68LTYHN9OMsxzHYBWsA7kmS_ktaz8vTaNerzIQHVqLs
+ IH6FM_4pn1ia5JDzJww6TzzmMEKltYmeMiFle9y9WqUYmq9OMrA4vGq43P8hKVQbi6YQZFufLRe2
+ _Y6WI0FI_UPYA1ovGrHrZK2wnGKW7_FsW1UUrRt4CTvUJj51zykNhrtMwETXVih4X7e9nGQZRovf
+ F3z3NKeXaEVncT7s6wz4wlECq52Rlr5fQPqSU2ShB3px6Y9uFa50zoPh7nRZjvXAhXgw0aO9RwZt
+ Ruu7MKmaimUZQjcyqqxKoQU3Kwybzhgvixge6vYxHU0vsNKA_d0hae8v2NdqgBIRovLTiNik8CGp
+ oynUxkCI.QH1YYavsBQBMB6bYXUvccFFVmY47DhLjk2XKqDCJkcvmhTYXOzOcx4bphs2Gf.WlYRi
+ Ld8XJJEpp.MOgtZpg6JzIDktVh507XvH21sum3r7feUP0iO41JxgEB1gOVWV0HkQI3vPk0IPCuSJ
+ 54Lh9ciTYgaphgIegsnR7Qq79okv52nztPbgv0sqmHZ9Wbf3yL81LmzZLkS4Q_2sG7d5mdqP6WVs
+ SGKBhLjOUqSD_8bvyUmMMlyRYf3vO9Lb.e18h9PWzx5apsHhDtZTZg7KNFocyzVlpxTcSyBNM4eG
+ 04Fnxsk.CJBzbdQxjXB1Zt9gRvugibDal71tZMYry75MeL.4dYqK6R30vBgpmsasymcAGGrvdUwK
+ r46X6jVPr6Cebox2SAchyIFlD3GJGK4n798REZ6ybgbvoQiytJtqebYrbWyR5v24V35n3rzwVD4k
+ yHjsByN3o52VzB.00YX4004H5lTYGpKcPE_fs4lyDWJhEEIW5M5ezNBGfpT_2_kKOhCdZSIUESGd
+ J3E1CPEvqY.aMfi5YH7xg7KDyHrek700iOOz2DChEOf06Wm1W1bSFVPP9btFDm2Pemh0hApwwrGl
+ 6ZtNUc9w8N2gMfO3flUriaW4blXtFqdBRHfLEVaWhABzkEjv8o1cQG_GO14zXaXI_BFLSR7IQu6c
+ cZOO4l25VxiWJmS_VFQBIZoE_h972rtDbulDNdmKxrn4kvIZRwMFGfk87EnBcaWUZAloo8wJwe37
+ iDWMrdu.0XhNN42iUvhBlokB6lVHWKh7.te1QJMgmWYsuxxs9rWktIPeWO32SzZwgHx8ut9.ieoI
+ .6DYSe3.sCQwvod3Fr4oE1bxPmiMH7vfSFt9_pUS5wMttkca2M6OUD7BfNrNVpvikVkHm0IQg8tQ
+ OMTkd_BpNsVE4AARa4qJ.z7LHMUVkhu4cgdyFbOl04wbsJ.Ehg.1aF_fhSzbRjdOX3cr6ULG2Kky
+ 8oCCuhPI8mivmg8fyokj22Y925VD8_DEefWYBdS5c9y95_QZt0jb7Q1jnTy2errH2z6_dEKpGk1U
+ ebAIWK9QSg1Sfh4OHcnkV2ncISU_mM5cdeXlFiht5szhR8VUHI4Fx8U7npiooD63avHO1evJzeT8
+ QVJORcNLbhCnKS.ZvldfOSVUYe7_.PA3skPwHTn2dazZ_NUSpO1KSZPiLf9dVV82.ZxWpTUOHhis
+ 0ASs3D6OSNuxCILb02sgEtbSlxtttP8yreVi8f5LKwMN6KPG59tvOIcJO.xH6gdBbUEZXfD2XXM6
+ MObGXEgxK9ss24VV1oOdvFJBXmaAJCh5UXyGy2dIE7YcuuBVFWA96IDNCdyfJF.0afHwSQcULm26
+ epM7bh71_0XPH6XHbkqsWyuib8XSfKcN7iO22u.VHBekE8Wz18.Lfg8bvGXLxRtNbThOfB_UZvjv
+ 6PGoNiRWkmqGWkm2NojZz6yV_o04fqJApubJrOVq.mAekL_wQ3geGDU73OtmSgWm1JMSlv8PdqQz
+ Evqeif94dQ3Y6q0CJ6Ft3e7X2J3.YYafSI20KHdy3IfVnfIkF_aiZIuLfFu9DhcnyJjUX3NolxFN
+ 60Su5Y9B3LmE2IF.e2u8ocmAEjfvirKdcF8HjmQfNmsn43qz63i8lKHq154XtwwL8F.2VpvADcdJ
+ bGrkvDSEpF56rdMduJV6Sy.4xLsd9sTxqLi.pV81BApI2mKwGpqDbptERqoJBJ41pkOusqTusrdq
+ ovVudJvvcYigeM8H9NZ.d8B_5rZgYKAwlNxfUhJs3joCU7fq3e57qxVyNpBf2tHYteZ5_jxQWvNR
+ EarI5ciuFu9VaR2fvsYHy6PqBu850WxA86tTMtRnTsjGQKv.yC8kEDmH8_6XN9iVgqEHZaIWdXLq
+ b.8HoUCHnn0CUJYxyTaXzEdVfaHkbj58wrR80pw7dQz_bQgGtFPukW1vA8E3l8TlhGu5wDbEZLMt
+ 7JdOHqCx_S4pEZRWC.KbN
+X-Sonic-MF: <jerrywang183@yahoo.com>
+X-Sonic-ID: bd9dc981-b70d-4206-9a9b-c5c7a50d0344
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.bf2.yahoo.com with HTTP; Wed, 18 Mar 2026 20:35:49 +0000
+Received: by hermes--production-bf1-697f88457-2mcdh (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 5087dee980e4177e160d4a83883e199e;
+          Wed, 18 Mar 2026 20:35:48 +0000 (UTC)
+From: Jialong Wang <jerrywang183@yahoo.com>
+To: git@vger.kernel.org
+Subject: [PATCH] t1900: cover linked worktrees and separate git dirs
+Date: Wed, 18 Mar 2026 16:35:47 -0400
+Message-ID: <20260318203547.39972-1-jerrywang183@yahoo.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+References: <20260318203547.39972-1-jerrywang183.ref@yahoo.com>
 
-"QUANTUM via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Add repo-info coverage for repositories accessed through a linked\nworktree and through a worktree created with --separate-git-dir.\n\nThese layouts are already supported by the current implementation, but\nare not exercised by t1900-repo-info.sh yet. Cover both the lines and\nnul output formats for layout.bare and layout.shallow in these cases.
 
-> From: Aditya <adityabnw07@gmail.com>
->
-> Replace '! test -f' with 'test_path_is_missing' to get better
-> debugging information by reporting loudly what expectation was
-> not met when the assertion fails.
->
-> Signed-off-by: Aditya <adityabnw07@gmail.com>
-> ---
+Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+---
+ t/t1900-repo-info.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-So we've seen you identify yourself as quantum, aditya, and aditya
-indora; which one do you want to be known as to this community?
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index a9eb07abe8..f85ed232c2 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -69,6 +69,45 @@ test_repo_info 'object.format = sha1 is retrieved correctly' \
+ test_repo_info 'object.format = sha256 is retrieved correctly' \
+ 	'git init --object-format=sha256' 'sha256' 'object.format' 'sha256'
+ 
++test_expect_success 'setup linked worktree' '
++	git init main &&
++	git -C main worktree add ../linked
++'
++
++test_expect_success 'linked worktree layout values are retrieved correctly in lines format' '
++	cat >expect <<-\EOF &&
++	layout.bare=false
++	layout.shallow=false
++	EOF
++	git -C linked repo info layout.bare layout.shallow >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'linked worktree layout values are retrieved correctly in nul format' '
++	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expect &&
++	git -C linked repo info --format=nul layout.bare layout.shallow >actual &&
++	test_cmp_bin expect actual
++'
++
++test_expect_success 'setup repository created with --separate-git-dir' '
++	git init --separate-git-dir=separate.git separate-worktree
++'
++
++test_expect_success 'separate-git-dir layout values are retrieved correctly in lines format' '
++	cat >expect <<-\EOF &&
++	layout.bare=false
++	layout.shallow=false
++	EOF
++	git -C separate-worktree repo info layout.bare layout.shallow >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'separate-git-dir layout values are retrieved correctly in nul format' '
++	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expect &&
++	git -C separate-worktree repo info --format=nul layout.bare layout.shallow >actual &&
++	test_cmp_bin expect actual
++'
++
+ test_expect_success 'values returned in order requested' '
+ 	cat >expect <<-\EOF &&
+ 	layout.bare=false
+-- 
+2.51.0
 
-cf. Documentation/SubmittingPatches:[[dco/real-name]]
