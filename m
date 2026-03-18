@@ -1,135 +1,115 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3417D19C546
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 19:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D6F29ACF6
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773863435; cv=pass; b=Yt5zWnjf8B+soPE1gyE5HWxwywMR0dINEFUL/xqGe/sH/KJZRb/LUfpybGNPUXmSPytSdHlvE10vI5BpMhtfB7B90sGusbXVI4KVVJdnr4fEUiIi/O6Rb7iFT9mvdi8y3dfMAm6ryUqKDCjMcQoFNcIKVhNRK4t8+e14WVvr5QY=
+	t=1773864335; cv=pass; b=m8gL6i0zvsuz8ArybfXKAQwKj3l58p1f3RkeydQ8OtWgBMQvay3jyZh24p8BqtCHnzQGMyn7xTkd+qplaCOKLHD3bGiEMxLe+bTq0fEDHehTeUcR2vEIsCovtIW7NZGQZK0GAwE02wLWeN4244ueCDrNHoFXU3T0alJp399rlBw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773863435; c=relaxed/simple;
-	bh=OMuWnAGIgFuDqAhp7tIJOg/X+lOGcxpWqFiSksWwprw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G2RYQ1Az2kvLGADNjS7pwbM1fFZCaB4tLhCa946iffKLTtQR0GKwbY6IcSob7heaW2IgVYJsl8QnAiBbEVxV4iPUTlINb86xRddPagLm9Z62YXjRJvUaZ7q12oKlvjU5ECaMGynjaAX2R/ai3oH6ypmLIW95lgXnjt7hd11Awo0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=jmpVhPDs; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1773864335; c=relaxed/simple;
+	bh=VyhYoSNrwdANHS7IEuPnSmCHqmQY1Hl/aFqXB+52Z1A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nolMWs5CleMoXCDhvvCOm8jTkOolzjfuv3A/JWvIWQXWS1uDdhphRy5T9lx4r1zNvXxpqgVWmFerdvO0Fevldbsa7GhZF4jkjH/zhLLAecF6cvuNUL7YO6jtCEyM5U/hlxhW/WK7TNzihZTNRAnxP0FBcAvTd6dZ6Fu0kqJspOU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eI6pmexr; arc=pass smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="jmpVhPDs"
-ARC-Seal: i=1; a=rsa-sha256; t=1773863414; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ceRt5dycyU1dWvVubX5/Lt62Ne7DWzGo+UB4YOnqDzaGjBeqaGp3BOBIJS6MBcx4z4XF+L3By0V/kCMI6uEWVvXgypvoXC0Ij8ya+FycMK/VD/RreGA9i01BhVx2F4sIpgmvCxzBf502Em1z7poML2wYeDmJeUWyttgNrnMD+XE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1773863414; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=yV5JFSOqyHcc/9Im6y9MvqizGhhQaGgc/jTwWY5uLSY=; 
-	b=PEa6tyUmVw3tkIf4vXEhBQ1ird1cPZTUBl8txmDvsBxns0EI+nLJEvhhwnCawcOwAzzsCFJxZWC5HPzFj+8uCW0ac/YSBMHUyq+y6kKOIfvmgjCd0ewWLqQanwplAwEItCp4iQ4i/xCtBG4MASHKs6dbz5BCk1BPyTHzG9PrWIw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773863414;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=yV5JFSOqyHcc/9Im6y9MvqizGhhQaGgc/jTwWY5uLSY=;
-	b=jmpVhPDs0wv89Izl9DPZ3snP09o1+hwiM8zHz6jq2JdejgmM7uNCW5fjhcRNXiU8
-	UHeyzLjyNlX84PRxE7es/EIxDKzAgNYiQQ2sMnc9kookeyfA0deWTYDStYA+BrXtcPi
-	/WORLHAWEMTvpQLSXRWUICFq40XbEF55bJQt+7V0=
-Received: by mx.zohomail.com with SMTPS id 17738634128408.939589551827567;
-	Wed, 18 Mar 2026 12:50:12 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
- <steadmon@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, "brian m . carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 8/9] hook: introduce extensions.hookStdoutToStderr
-In-Reply-To: <xmqqy0jrobqn.fsf@gitster.g>
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
- <20260309133739.294555-1-adrian.ratiu@collabora.com>
- <20260309133739.294555-9-adrian.ratiu@collabora.com>
- <xmqqy0jrobqn.fsf@gitster.g>
-Date: Wed, 18 Mar 2026 21:50:08 +0200
-Message-ID: <87pl5029zj.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eI6pmexr"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4852fdb36a8so2542125e9.2
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 13:05:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773864333; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PMOy0kwk174ef78KkCfkPQXW+9XI0TqV0IcdsfRL7j1KC7l/IzJwM+qTHheD5hAVk8
+         AklAiWnixpxZWlH8Z3js4dLK/J96AFrAXkQxX8oKiAHSlOjlxXCFoi8193VjgL3Y1+Nz
+         u+l3vA+N8bXXy/QMT4YR/pwF1M0YKM3FsBzr4CytqClKJMnTTDhABch9Bg9WdicBiVzo
+         kREgiOUaRT9J8tXW9D0JbYCoRtyqS30rlnUmYxy1u7f4PNbTtn4dMJpsBiZDUW0SgO/6
+         rKqulg9iUUO/dRDLHPUXnqFFBWp8OFLCoQqIBv2E4e7ybf0FI3Bni2AmOvRDW5tCvF4D
+         tIHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=VyhYoSNrwdANHS7IEuPnSmCHqmQY1Hl/aFqXB+52Z1A=;
+        fh=Ckcgi/XQvE6gZyhlhU63+krna+9MhVKkPE122X8g5ZU=;
+        b=MZsSyhHJ8t9uPcz7Was8CCg+wA7Z8eYkVMQ6QYen2X+mu7LJQl810Zbrmo5UL8CHZN
+         zSKMg2HXtmJiui5sG3gLtY+PE3/uONFJr49hIoXuiCDtyiXNAwj4o1trMy7GYXSfA+yg
+         B3pX6PGSipVIftl/CzjGGg7DSl6LqyI5IO+e7qTXy7hZOfwSmtIYmyJ8r12d8YNNGXVR
+         VWUUMDLP4mdJT22BeWZpgmVsXiNDANlmiqkrz8OON6E6NaaTx9fGrtHkZ8xSkbZnNimW
+         +0kqtcJZIG4Wkg9CO1BOpLByeTlfJUbWE84llLZCTE8ZogtthA5Td3rkPAZdlp1+wX16
+         W0Yg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773864333; x=1774469133; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VyhYoSNrwdANHS7IEuPnSmCHqmQY1Hl/aFqXB+52Z1A=;
+        b=eI6pmexrMEMUWgRw/swc/k/dV5O/cxmxGWpeAKHNYcBEn2SBGupDX7RbgUtGvdi7BD
+         e9rGaZmQrZ0hmpQ2hbSJC2Xyr6tHVSh+6fTvN+xHTRUWQHHB0cAtkW8j3McKKF01Aume
+         96oKMWGFYkuDRprqpokF42wCFD3ozEniDr36WE2GdluSlJ5Xdv5S2G9y33aNTbFPBEV3
+         zvqiDAnLjTaMiZnUAbc0jab0U/pNliIJErqmXL4Q88AV9Nn+sz+HACtsgH2v5JHsSFse
+         gpAEs+U1twsSYeqNwc4E7P9Adkw680D2vujbd32NlDlot8RR7c+DZ2jDbPNB7bpVtO9h
+         Au0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773864333; x=1774469133;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VyhYoSNrwdANHS7IEuPnSmCHqmQY1Hl/aFqXB+52Z1A=;
+        b=XLqXT3n1bQPdutqE27lsX48Znav/fQ8ElCbPdBnQqj4JAKiP7yX2H6srBFC7Spb1cH
+         SFXXFjMbx1TScTo0yLZFNLmCSXVoT+6A6vlE6y0bolvlA/rNLMelwdATe4uph2yU4DQc
+         ImXNwS0IcrpMktxY/fxRMOTqnCWnM+McrDhrAIW0He8S1cxrdCGBNQZgdGuzi/xls9Ex
+         QRHT43cU65HjuWJDBc+xp5XjUulh10PONjg88ZyuxHnt/EaV3muO+P1iXh43izf6KLWj
+         MtgWhEhh3OWgks41TjxVgHpQkVRLhzoQGbXW0BDHYYOLvOwYUotorjAIE5WKb+/tDWbr
+         r36g==
+X-Forwarded-Encrypted: i=1; AJvYcCVaDmzWOaccHNGFibK81lgZSR7cVU0NbdnKs4f4GDiPVQLqQoGaC2DdK2KNV7sxHexqI0A=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3ypFjfzbYyDRq8r8zYjIiBJ3wU6ZdCCaaMacUI1t8qHQVmbkF
+	2FSsxpKblkaVyndbJW4B3bAPBfEEPp8yU5JObEjLxBO1dagnzGU8VZ0mZYExLc8ZGdCanzA8mfA
+	SX8nGHiKswrxda6wyHWMTlZFnkosgOgM=
+X-Gm-Gg: ATEYQzzoR5HQ/Y3vprcPCZvK5G2hecduqoFhNd2OIwFxWk02O8faygF5njNgML8wb9Z
+	G61fO4UpG0pDSDbtocPJ8nfWzQPUMWzM2/+RPakjaKcI9LxflTrnAkZ9YeILl0wMaZJQNOi1gkb
+	0PDIQixfjwYY53vLyBy421Hftrr1Pl/oaHeN63R4pQ3u3agvjfFRpVhQLTCL6tSby3sp0Spvtnd
+	V8nOAGZ7RXr9HCAaxJwo6M8I7qCmSUdVPltnQYY8X7KdMqUnZSyV8EDzKvFU6NOQpXVobqtTXN1
+	5DmRpg==
+X-Received: by 2002:a05:600c:8b6f:b0:485:6ec7:2df with SMTP id
+ 5b1f17b1804b1-486f4435d46mr73121775e9.8.1773864332521; Wed, 18 Mar 2026
+ 13:05:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
+ <xmqq7br9q8d6.fsf@gitster.g> <CAN5EUNQOrBC9o8go=Vehzyzt4R_1eN2Hn5Q8t+E7am9fRc8_sg@mail.gmail.com>
+In-Reply-To: <CAN5EUNQOrBC9o8go=Vehzyzt4R_1eN2Hn5Q8t+E7am9fRc8_sg@mail.gmail.com>
+From: Aditya Indora <adityabnw07@gmail.com>
+Date: Thu, 19 Mar 2026 01:35:21 +0530
+X-Gm-Features: AaiRm50eg4O5nJ0-6_E0O9zGcFQXh4KDp7gOT2zEPkDaTWV9Jpcsq4MIBaWf_lo
+Message-ID: <CAP6n+1V6b8Kf_jci=ZMX7=HNH85nX+z1FffFzy1hYgaoySPNDg@mail.gmail.com>
+Subject: Re: [PATCH] t2107: modernize path existence check
+To: Pablo <pabloosabaterr@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, QUANTUM via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 16 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> All hooks already redirect stdout to stderr with the exception of
->> pre-push which has a known user who depends on the separate stdout
->> versus stderr outputs (the git-lfs project).
->>
->> The pre-push behavior was a surprise which we found out about after
->> causing a regression for git-lfs. Notably, it might not be the only
->> exception (it's the one we know about). There might be more.
->>
->> This presents a challenge because stdout_to_stderr is required for
->> hook parallelization, so run-command can buffer and de-interleave
->> the hook outputs using ungroup=0, when hook.jobs > 1.
->>
->> Introduce an extension to enforce consistency: all hooks merge stdout
->> into stderr and can be safely parallelized. This provides a clean
->> separation and avoids breaking existing stdout vs stderr behavior.
->>
->> When this extension is disabled, the `hook.jobs` config has no
->> effect for pre-push, to prevent garbled (interleaved) parallel
->> output, so it runs sequentially like before.
->>
->> Alternatives I've considered to this extension include:
->> 1. Allowing pre-push to run in parallel with interleaved output.
->> 2. Always running pre-push sequentially (no parallel jobs for it).
->> 3. Making users (only git-lfs? maybe more?) fix their hooks to read
->>    stderr not stdout.
->>
->> Out of all these alternatives, I think this extension is the most
->> reasonable compromise, to not break existing users, allow pre-push
->> parallel jobs for those who need it (with correct outputs) and also
->> future-proofing in case there are any more exceptions to be added.
->
-> Hmph, I am a bit surprised that this is not hook.<name>.stdoutToStderr
-> controlled per hook process.
+Junio C Hamano <gitster@pobox.com> writes:
 
-You may laugh at me, but making this a per hook process setting (or
-per-event) didn't even occur to me until now. :)
+> People seem to add the above to their test-path helper patches, but
+> unless the coverage of the work is fairly thorough and you want to
+> say "all the similar issues should be found with this command and I
+> addressed all of them", I do not see much point saying how you found
+> one of them and addressed it.
 
-I think we could do this and let the user decide if their hooks are safe
-or not (i.e. do they expect output on stdout?)
+Understood. Will remove in v2.
 
-Or even better:
+Pablo <pabloosabaterr@gmail.com> writes:
 
-Since we now default to jobs == 1, that already keeps backwards
-compatibility  (initially in v1 I turned parallelism on by default,
-using the number of cpus, so this extension was unavoidable).
+> This seems fine but it could add more about why it is better,
+> something like: by reporting loudly what expectation was not met.
 
-Therefore if the user opts-in to parallelism (via config or -jN), we can
-just document that output will go to stderr instead of stdout.
+Good point. Will expand the description in v2.
 
->
-> If we already have consensus that giving output to stdout is a
-> historical wart that we would rather want to fix, then this
-> configuration is probably good enough.  It is certainly a much
-> simpler approach, and there is no need to make finer-grained
-> customization available when nobody wants it ;-).
+> I think it is because of how it is explained on Ideas for
+> microprojects [1].
 
-Agreed. I don't think anybody (including myself) wants this extension
-and if we do what I suggested above, we can drop it and don't even need
-a hook.<name>.stdoutToStderr config.
-
-Will drop this patch and the next one in the re-roll.
-
->
-> We may also want to consider "fixing" it at Git 3.0 boundary, if
-> that is the case, though?  I dunno.  I weren't following the
-> discussion closely enough to tell myself.
-
-There's only 1 known breaking hook, however now I'm convinced we don't
-need to break backwards compatibility with my "even better" approach
-suggested above.
+Yes, that was the reason. Thanks for pointing it out.
