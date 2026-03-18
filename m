@@ -1,109 +1,115 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A60C3ED10A
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 18:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773859882; cv=none; b=cU3YRrLh8X2Q+GnAkwvQK2ail+P+aYFjQ/TRe8bRzpWVcd7GtwAW1gwFs/5iZyVauS4NPdAilcKhoZ8q5eyR+2eswL3KClIII+3fdonbXqYM4KJ5cX9QAhDXpiXeKOlEK0OxA1/byBIOBMUxFKqQm9M+X4N5y2C2duYFVkm1uXU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773859882; c=relaxed/simple;
-	bh=rLhKeF2MzqXTUk5LqcA/RCek40bqxtEMovTEFgLlizk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PiQJmCf/MRJSozYRR3IN3D48f5UAXT/1x186eQrwEgZJD1jKCUJzLbsYtcMuyP31gkQYxd6Otl4xPsMnXrOEnJ2u7MCmMmb4a5LrFrI4xz0X78bjPRaEtb2ghfgOx+5mE0Yms4/3fCYN4NzJNQtfjM2lEef9JNiO/w38Y9SYcWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BhtwJO3B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uWiL3n/N; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341AC30E827
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 18:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773860340; cv=pass; b=Ge9gFVsn2w7kgMzLhxB3WosnyTBNsF9b8PQnGh3VhCtFC5oLHVBZMGIT1YL+3cNBByma5y44Tzed3ecHrFa5HW5hAzY7qUnfdMFFmRLws+k1Faa8SgNdaKZklN/ioE0qapF79lnSTmRUi0x03CZePl3g9C3DH2qSeQMWfdgF6Sg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773860340; c=relaxed/simple;
+	bh=nwm+6+QBIxaA/X1EQIKFb5LacJwYAz2lQeveHIig3uU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DqwOVUUxu6+4r0bv4F0KAFtJxmb7/Uo9GnsBubDthB0iSamf9lz/9255ldH+KwSMyWYq0UxEwCPVzvRMfVXyZXpgPwZY+HevV3Tb46jpUuwHe3ZtBthKBiaXAAAIDU3YINdxknxC74Gwm8rdAHIf/kMWjBrnEbCQYVsV8+kY0BA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e8KHw7SF; arc=pass smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BhtwJO3B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uWiL3n/N"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 732297A011C;
-	Wed, 18 Mar 2026 14:51:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 18 Mar 2026 14:51:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773859879; x=1773946279; bh=6JtweXJbdl
-	mpI4IaLgtkAI24bdSzFmXNHwKLFSO3zJw=; b=BhtwJO3BI7ctQ/i1vjsooPIowx
-	fC2IW9X4tBmR2Ai2DZlArDsmNupujlheHQM5xKb1aKZsp2vgfmGP+DRVBb806wUI
-	N59A/3VfrLtxoc1xC1NGgzGFdRSv13c50jNmUQneUygRyv4csqZspFAef3X4nzw7
-	nv3eRRpzc9Ns1AQvpEtxOUgluPu5ib+NaOukjU7kRlYcnFH9hm450ITDjOSAx5IJ
-	dVaJ8oxvw3RPECQCyqR5JKvuULGUTRiuVSaBnPnGaBHHRyxb0i6fMwrbLrVidpym
-	xmtXSwqKia1jKDybgjbQlYyRwVhDos3X4asYyB8iYtpWovqZU8bFWCrpSbFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773859879; x=1773946279; bh=6JtweXJbdlmpI4IaLgtkAI24bdSzFmXNHwK
-	LFSO3zJw=; b=uWiL3n/Nxz0NqUD0ZmR/RyX4EpdVu7sxIQaI6KRoDsfxyolwONT
-	zmm1iBa7nYDVy3h6jLUKg9uQmcoXTEVgeuxdJXiAtqp7rga6IF9FRGS7H9jGjrFJ
-	eFwmlZZmP6dJU3TirGeTmG9glLy9G/sDO/wRJS9D954oIUdM0MfxZykm+t51iyPT
-	AuQBRLcNtGsnZq7zy7UUViSp2ckDequkGPqcrTYE3/XF/C7II3dTBugtMh0NQO09
-	yeMlaVTLedomkExXKyooOqjOsKaw7cdGUmi9hkp1xKzmoc8+ZWyCG4SVQIFzlzTU
-	RKiAAABq4+y2+II0evNPxfvuVqtIPpUB0rQ==
-X-ME-Sender: <xms:J_S6aSRX4J_pNSlbzKNgO8cKceqE8_IRA-LrxyNMR0WWLDQPe63yow>
-    <xme:J_S6aewyLpFqqf23vMvKgUgxSP4_Nbuft84L0hODbQpifF3ziRlLm4ulF9YWmjgrD
-    eSJWt2_05wxIdOq2WLoBY1BZhxo4dm_wbcVvVki5Yqftz74krz8>
-X-ME-Received: <xmr:J_S6aU3E5VlCOdKkSs5moNL3r5LVGw4FfEuQbSIvZcPhH8Rt2uxMywHpVL5Rpm00WP2iiBtgzNfSiEjj-jCI21uA4vFYTcIb9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprgguihhthigrsghnfidtjeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:J_S6ac7QTUs3FFqAOYVfLL1qohLr9hLcOysLc_8AyaU0Jg3FMxkryw>
-    <xmx:J_S6aXUx5MiqXi9Ln2ibZ-pG38jj7icaVZPfw2BF1ngCmivt1EGXtA>
-    <xmx:J_S6abB6CuqPEr3m9PQuXWF22UbCKO7yTz8Rfdn9BZs9XmGk0_grRw>
-    <xmx:J_S6aW5w21JSP9_mtr4vb28WOKkU050NcKpM420UO1408EfSonY92Q>
-    <xmx:J_S6acVsX_WRkWA883B81663hS92_CrlzIYtL_iTBh9vVKFLxKRu1h0L>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 14:51:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "QUANTUM via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  QUANTUM <adityabnw07@gmail.com>
-Subject: Re: [PATCH] t2107: modernize path existence check
-In-Reply-To: <pull.2071.git.1773857555312.gitgitgadget@gmail.com> (QUANTUM via
-	GitGitGadget's message of "Wed, 18 Mar 2026 18:12:35 +0000")
-References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
-Date: Wed, 18 Mar 2026 11:51:17 -0700
-Message-ID: <xmqq7br9q8d6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e8KHw7SF"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-79a62a2bb8cso2818867b3.3
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 11:58:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773860338; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BdmOrGqvafpj/s5QTq7De/ubyKSR0h2dZu00Zu2Eq6EKFOCFhG9hcHMFxpJWOSWVT7
+         3Rayl+eRckztGw5Z1Ei4z30pTVGhTxsfT2AqCt3Z7vkehqoDRFCRkpVw6VvyEQJUtwI4
+         oMDxYDL3Tr919Y9avWVa6ONIg7yLiwRZPbrVjbJMEYh/miWgSLm7DovlW+QbSERbIDBQ
+         WJFfLZPiYUb2+NnEh0YijfDYdHWt/cUuzg0k38pEx8iY+CCL1sqvwWo0rNf4TEjoP23v
+         M2oXWPcXQhooqhvvfytAlyp4j3lMTjWfqCKW2r5R9rykN6ivAoDcHQs+VQelU4KUejoR
+         xlXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=CKIwg1IT23wgCtt7gbwKuBTMr5iZu0txbbBqNFUOGiw=;
+        fh=FhDaD3HtDHXXFQZv7uo0Kt1Je0PoJl/Q70GifPcXmco=;
+        b=heiZSCnYWpZ7xN+KYoif0WiDeZFWyZC2kXfJ6tqYy0vUS89QKuRdVlficeKLc7guGk
+         B3BRllTgRHmsdZgBJtDKHT8ZhosYNwiGvPLH1OqQpT+VTM9lcecp0tYl3OKcsnEPt6dg
+         RHLtK4VH9oTIF/r4O/v+5gPB4oH39HUSTQHqkaSBC7MASdHbCTrRxJ/PQJqaq/akSd5h
+         eZu49shkiTMSFQl0wWHrfldXlrdHGerW5n2KlITLJycGL5qT/X7nrg4hncdxBPf698Or
+         IFTEuB8Q4w60ySV9qRGJYif1emqweac4qexMGjHxWXQ4c4sPANnqoY+sC6+5MLEG/Uxc
+         G9VA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773860338; x=1774465138; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CKIwg1IT23wgCtt7gbwKuBTMr5iZu0txbbBqNFUOGiw=;
+        b=e8KHw7SFNf6rQp7OOkFMsv6ca6aglETsbTNaPmX+I0uVRgREs/fOoJ7po7IUvhiSqF
+         Ck8WNwRySJPbPXY6PYWKM9rspkG8svirn+JI8b0nBf4L17ct+Jgzok+mov3NmPJCl7vy
+         lO0fPyf369uYFMccRLuajTlsBij7zzKmZbLXaWzJatNNhSE448NtY0E2008DVDaoZGT3
+         3J1MCyv8fdVxaWuQvMq/mwUTRLTBWOmIjRsPPiMxfI6b3JAerZ4ZfoeuNa3iQFrNVJEo
+         0M5CklS7+DhGkvlnEzO8m42+RI7s0zzRgznifqsDMNMEl7nQZcGadagYdQFh95/SGMNl
+         NTCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773860338; x=1774465138;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CKIwg1IT23wgCtt7gbwKuBTMr5iZu0txbbBqNFUOGiw=;
+        b=R7a1bugiq3XYGs9xGZNyljNfkqn36mKB1SVpoD1cePsPuuabWGEDNt8OKcz1Ub6fOu
+         SMX44quKiy4ogQC9Hssm2Cm0EAxlIhnjVWG38z5MrxJS7AeNfQrE9wXwaY9z8eOuQ99Q
+         VCK8FpXykJwg9KgxKm0xqHoUwTkyXPihZc1pRjvYBCRnz30DtkzuhJ8cLG5Q9zfNxqzz
+         RNKjMrkBQaWsNbdzE2vh0u5BYL+70d+3smJlYvUlLwEXpVDlXWj+K+jr1L0/JZ29CXBH
+         H5LY0spXUu06F70EjdPp0Q552mKFsAJHtZ8tI7DMPyxRCPUetL0U60VhLs8Yl/m1lVLx
+         Ahkw==
+X-Gm-Message-State: AOJu0YzlLgjUnO8I/SteaKSPjvih0n0OfXhNifjXh7qn3R4ZnBydDo2L
+	NNBA6BX+mkzA8ExBXI+Y4IItmRuYtoojHzowQH316Ypt7+0Y/+iqs1vRn8JGerKHknav27jpjnq
+	hEmVKg/eTrbX8QBBdeImA8mGQ15MsLWI=
+X-Gm-Gg: ATEYQzyQns9A3RWHM3xTfrQ0y88wCe+KBzvcPWSt5RS+WQI6ldV+4Xd5ySvDdM70sQ6
+	yX6Sh6wDAea10oTIXlSk6IM8c7maWTR4JjGTwzzwuqD1AbeAAfVgbV9t1bFcJZdBPrHkuureKlZ
+	DMU7SNiTBG9cya4g21X8Y7XrOUiys6DlQcRDZFJXQqRMdy0WHFZlrKBXNk2a69T0LkBqwRbaMsI
+	ixTtf2Bvkz5cXsh9HdCpGHo+YjSWnRnWAUBjwBLprNp3pMI8DNAcoJimcOMBbTXITBjFKHt0NQ9
+	N+qz/VY/jWZQd+LBXh/YN7St4nC4AQKkk+TfzIJAKcG4JihKWP2scAy4TwySkAVocfzVEzsOjyP
+	Za6dsGOELpvZaCWKPO8ISS06af5te85965g==
+X-Received: by 2002:a05:690c:d8d:b0:79a:6f11:3ac8 with SMTP id
+ 00721157ae682-79a71acbf46mr47260237b3.29.1773860338252; Wed, 18 Mar 2026
+ 11:58:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Wed, 18 Mar 2026 19:58:41 +0100
+X-Gm-Features: AaiRm518s22I9HhWY1WiaIiQbGj2RQCV5TzEMYfW1vldkPutdlG42IQ64l5OOdk
+Message-ID: <CAN5EUNTNqC6+FPjKafoFfgaEzWdpXEV0QNwumF8CaxBEUOmA6Q@mail.gmail.com>
+Subject: Re: [PATCH] t2107: modernize path existence check
+To: QUANTUM via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, QUANTUM <adityabnw07@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"QUANTUM via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Aditya <adityabnw07@gmail.com> writes:
 
-> From: Aditya <adityabnw07@gmail.com>
->
 > Replace '! test -f' with 'test_path_is_missing' for better
 > debugging information when the assertion fails.
 
-OK.
+This seems fine but it could add more about why it is better,
+something like: by reporting loudly what expectation was not met.
+Also, If this is for GSoC when submitting the patches or anything
+relevant to GSoC contributions add to the prefix with PATCH something
+like: [GSoC PATCH] and CC your possible co-mentors. Read [1].
 
 > Found using: git grep "test -[efd]" t/t????-*.sh
 
-People seem to add the above to their test-path helper patches, but
-unless the coverage of the work is fairly thorough and you want to
-say "all the similar issues should be found with this command and I
-addressed all of them", I do not see much point saying how you found
-one of them and addressed it.
+As Junio said in other microprojects reviews, including the search
+command it's not very useful when you only address one instance.
 
->
+[1]: https://git.github.io/General-Microproject-Information/ "about
+microprojects information"
+
 > Signed-off-by: Aditya <adityabnw07@gmail.com>
 > ---
 >     [GSoC] t2107: modernize path existence check
@@ -120,13 +126,19 @@ one of them and addressed it.
 > --- a/t/t2107-update-index-basic.sh
 > +++ b/t/t2107-update-index-basic.sh
 > @@ -86,7 +86,7 @@ test_expect_success '.lock files cleaned up' '
->  	# the_index.cache_changed is zero, rollback_lock_file fails
->  	git update-index --refresh --verbose >out &&
->  	test_must_be_empty out &&
-> -	! test -f .git/index.lock
-> +	test_path_is_missing .git/index.lock
->  	)
+>         # the_index.cache_changed is zero, rollback_lock_file fails
+>         git update-index --refresh --verbose >out &&
+>         test_must_be_empty out &&
+> -       ! test -f .git/index.lock
+> +       test_path_is_missing .git/index.lock
+>         )
 >  '
->  
+
+Looks fine to me.
+
+>
 >
 > base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
+> --
+> gitgitgadget
+>
