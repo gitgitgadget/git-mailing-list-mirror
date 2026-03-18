@@ -1,63 +1,69 @@
-Received: from outbound.pv.icloud.com (p-west1-cluster6-host1-snip4-10.eps.apple.com [57.103.67.33])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5D4229B18
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.67.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC4A21423C
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773800875; cv=none; b=TL8lJEfcb66uLMA/WrVHRKRuxWxbLf9Z4gmZmuHaai5yAyMvenbUgwy1Z5YZPsVgAjwBJXI5bSPp4vQSJlE0F45IzRsCvFA1MHRcm0nHF64MApZiqa5tQAbXQDXmpBKHvKJnTQ6njDGaWtnLGDsIbDYDHejD0xT464zBDVqww8M=
+	t=1773801480; cv=none; b=e6TvfWM9VB9k6YCYl7m07gHXjnQ+d5k7O7j2JVlz2gz8aUEl3l4bTE0L9vPv2LgErZjjHetv1Rom4JjbQSv8P5zn3eirFy1b8XsqWqV3Sw6w+GwPFvPKDTa2gDRhnd1dSPLJbMrhmTJQrLJY6zDpweuxEuokr4HAwzDlJsdaIxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773800875; c=relaxed/simple;
-	bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=TwwKl889b6QySg7Do7Ge5MWFalw6SXMvmtVYZ+8YZ9KDPqdOxMDEXjjTItHncWSU0vPnsXHZqryKScjbJ6qWMzhgKfafCqjSu29rrS/xtCI6jEsqEzVPVe/+IRKC9byjl2EFjJza1i7wiX1TKZxoCujbIra1MbvFbP0dTNX+q/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=wheJqoP/; arc=none smtp.client-ip=57.103.67.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1773801480; c=relaxed/simple;
+	bh=DL9GrFV6MTAFy/HXwE807zTuypLokfofgBuTX/5RogE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OHzPNN/cWaY84eSxnXfpr/AUBhK33LWAraroE1ViLJeCjBTph/jv6TSuXDfnpeteF9OM7COJaapB4zBOz5vz2cAniWr1GTrnx2itKmcC7AuXUdouH78kJBNuJt/EVjOnb9+gzESnWpydyM9sN66+15VFTwBtI4muAyLR/Tuv39E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GDCbGnDh; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="wheJqoP/"
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-west-1a-10-percent-0 (Postfix) with ESMTPS id A4A1F18016B6
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:27:51 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1773800874; x=1776392874; bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=wheJqoP/H+V/SYusfAC2HwpFC9oIoyq1RQlHJz1FSXQCR/UErjv5JmzTiptidmDukV/g7pJP3+2FFflT9+GZJ35h596AqUx69leJu+0NDJKsyHgiYaknAv20hVDTOvmgpiYsKeLzebTJVrudzsHxnvrRDM5Iuk/5DTjO9EdLHW7yKf2skOXx2R6VyT12MolGgqfGikJOK8R5VWwtd7EZKr/2GVbJYhnl6TMWMwabIMtu0YHQwnehcggJZrKf9UuXOEt/yS8XA00kSls2WSuwaijaGMxdcXH+tq4yuPfI13mUlW0lHImSzp9QP7VMDlin/79YCMLsUtHeU11NG6yzyw==
-mail-alias-created-date: 1710410501088
-Received: from smtpclient.apple (unknown [17.56.9.36])
-	by p00-icloudmta-asmtp-us-west-1a-10-percent-0 (Postfix) with ESMTPSA id E19C81803559
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:27:47 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From: Heather Dell Powell <frosty_islands_0f@icloud.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GDCbGnDh"
+Received: (qmail 36495 invoked by uid 106); 18 Mar 2026 02:37:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=DL9GrFV6MTAFy/HXwE807zTuypLokfofgBuTX/5RogE=; b=GDCbGnDhXiHxohL3r055TlGPWnEUd9LXa2YkNTWMpTOuRYpuO1P/MUx3xFbapA3Rk3qlaTQ4R0JxQts+e9KvM7sqM1gogo6U15d6saNvkf2KCXOsZ24paJPufVXPsO9fW11JyqnPfKHe0MBCiEeWY3dXNRDpkdfoZCIlnocFaDgDf1+QoGbfgI6hAdEyO4Pe0z8DTVhMUAgTImxKHmFGutoYBLjvhakzWRdsCmbn2D9I7VEd4zCBcwt8ZnlNDZqDlVyR5sYk8Y1ibzTfGVNJjHIrAchPaGiLQXQhqvqxmBrNaQnJuc61op93bgA8XuVdMdhYUgFoOFNi7mi+86rsag==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Mar 2026 02:37:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 55263 invoked by uid 111); 18 Mar 2026 02:37:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Mar 2026 22:37:57 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 17 Mar 2026 22:37:57 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>,
+	git@vger.kernel.org, sunshine@sunshineco.com,
+	pushkarkumarsingh1970@gmail.com, christian.couder@gmail.com,
+	karthik.188@gmail.com
+Subject: Re: [PATCH v2] t0410: modernize delete_object helper
+Message-ID: <20260318023757.GA1925517@coredump.intra.peff.net>
+References: <20260312125030.7799-1-r.siddharth.shrimali@gmail.com>
+ <20260313025852.30010-1-r.siddharth.shrimali@gmail.com>
+ <20260313045825.GC3753825@coredump.intra.peff.net>
+ <xmqq3423928q.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Tue, 17 Mar 2026 22:27:33 -0400
-Subject: Write back 
-Message-Id: <95DBACD7-3576-49E1-9881-F4067C0F6A58@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (23E5234a)
-X-Authority-Info-Out: v=2.4 cv=Dfwaa/tW c=1 sm=1 tr=0 ts=69ba0da7
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
- a=x7bEGLp0ZPQA:10 a=Cw5v9ytEUbkA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=YPKi6sGXXs_AdLeIGfsA:9 a=CjuIK1q_8ugA:10 a=EdOd6O7sDzr7AVZUmgC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDAxOSBTYWx0ZWRfX4H2XvXrX/T1X
- 1lu/x8VxSnKSVjm9ArmcJkk1D74qQ4stYr7fN2+fvh9wdR+WYT+FhiDXJhzH+Xj7PMP/shzdvu7
- bDL9FYtIJcgqUZe63VlPuHWgxOYvF11cCf4BZbh7p+x2Vf5xIk0bweEfxrj8wh46D0PSkazzWXc
- p2XIC6GYRsdb5Aj2stCXiw9X0jyziduncPNhkES7vv2Y0lAz33QRss0VRYsuCYfhkpe3RsN2vJc
- yPFfL2xHvGsTRGK0fjgO/5J1FF5gxItt3O0Kyz6+JtmFTyppx3jsI17mK0Jk0frGkFqa1wbA7jB
- uGXMelDqiDApAaDvzWAfNLydLmY/zR1FDKSF7rc6fgdAli7129OAivQ5g+4Yfw=
-X-Proofpoint-GUID: bhtuWLEfwkBMXUnIUocBE3GaG5a5AJvh
-X-Proofpoint-ORIG-GUID: bhtuWLEfwkBMXUnIUocBE3GaG5a5AJvh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-17_05,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0 clxscore=1011 phishscore=0 bulkscore=0 mlxlogscore=576
- spamscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603180019
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq3423928q.fsf@gitster.g>
 
+On Fri, Mar 13, 2026 at 08:29:41AM -0700, Junio C Hamano wrote:
 
-Sent from my iPhone
+> I am tempted to add this to SubmittingPatches::[test]; the first
+> line of the new paragraph appears several lines before the pre-
+> context but without "`make test` from the top-level".
+> [...]
+> +After any code change, make sure that the entire test suite passes,
+> +with `make test` from the top-level.  We say this twice here because
+> +it is important.
+
+Seems reasonable. The other mention of "run the whole suite" is buried
+inside a big paragraph.
+
+I have no idea if people read the document at all, though.  I certainly
+don't, but I am also not a new person trying to join the project. I've
+usually read, if not participated in, most discussions which lead to
+changes in them anyway. ;)
+
+-Peff
