@@ -1,84 +1,88 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6822D73AD
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 21:49:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C9515FA81
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 21:57:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773870577; cv=none; b=YrHZ79oz5S8Ji4Hm5D6joe/JrYgO9IkL7zNSSwj0Ir6QY8GwTJ3MIWkwxOgGmsHh3fCPxQpQeia7wXHBCTRRBo9bWHnKKrZZ+VYDC7ULvYHO4bJzka9FzKK8mFXxQ9bF1aASTCbElttlskvM3uGsr7Z/TfLSG3xz+EhciTNPz8E=
+	t=1773871046; cv=none; b=JGTxzPwPoHPfREXKzHQg4r1u6OpJjmQX1DXcT3DwzYSsFEeD9PnnyWC4wzGemq7/3IzP4+DhDf6gb9YXLcVQU3BJifrWQoaJ6AuXyJFz/NG2rSCm4bVhDfcrZDhBXG8QxCQQx6QeZCoKd1u29siIWnQgtmRzLP9FVbUE9jKCaPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773870577; c=relaxed/simple;
-	bh=5KF7feBgJW4T4vpq4pD2PHkZp2++AKmA6XN8ZYA4o6E=;
+	s=arc-20240116; t=1773871046; c=relaxed/simple;
+	bh=9JofYNVgaEWwo4TQkfErdNYjAiXVg87LNkJ6HGB30dI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OE+1Da3AGfA9DJNpX3aJDnSzYwApT5gCrnDl2mTS381HeBaMV3eyUSO7PSfCrMJM1XiRbtWQZhcZ9QjnidC35wVKPxAjC9nCz+WmIXXdlnsh/828NsxNeNePaTVD7Nt0tVEJD+Ug+8S/k8S8HiEe3YPE/hCBf89ZPm/g+5+kI+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W4WlGaRI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qV+cKpdg; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=f70RqWZDZxh6g+0RQ0cN6pS9d1kQ9gFxXAv+d9ZBCydvf3P2jhL8vMpjnht4XeDXom6uHgEXjAX35wMIkkzik3pnonAAfdEdrXeb4zlJut8BhvH1o10LnaRXioH1Yv6rQzwnYC+UvUqdI9v+kAKHi/GmFIMQPuRF7R2qRgNIrpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RhmKAtbM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=upd2L+bB; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W4WlGaRI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qV+cKpdg"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id AD4501D0013B;
-	Wed, 18 Mar 2026 17:49:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Wed, 18 Mar 2026 17:49:35 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RhmKAtbM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="upd2L+bB"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E41387A0176;
+	Wed, 18 Mar 2026 17:57:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 18 Mar 2026 17:57:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773870575;
-	 x=1773956975; bh=81mMp3wyyC+LG1n5rJEumnbpRMgADhroYa8EpxDJDdA=; b=
-	W4WlGaRIxGlpqPxhTiRcTTi2p4NBW6OX1weB8CXuih4+ljM+QcvD6aPPj81+ctdY
-	Q83BqdWQZJlUS+ZQ2VWhYm4Mk/NCotb3ox3XkOKk3uKKGqsXd+amwfTb/W/iys4u
-	2ih5cM/TBNARjHWM7L5+xanYeDCbLM+qEEKkMvk1erqokXr12/Ij93tkoPNjDL3+
-	KWiChFWMTRkzsg3yXx2OnC/3cM73QNTHL8DxVVhAoNmVx6T1R5ki5Dxdw6+TWM8C
-	HMaszQnyZziScZGvufr+K5VSSJMH1FWst5OTtGQ2blaFtQ66Tg5m9Ph+tqKG82kP
-	Z8fUeORV//lj2thC9+6tEA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773871043;
+	 x=1773957443; bh=Ub+9QbQ6o99X5ehAPGGQlIYbBVb9HxQhy4f9Rt05ChQ=; b=
+	RhmKAtbMzUUT7rzmp/aSR73DbOCw6RIuPHzFanElg62qt32Lg4Q0t8j7VCmAmYPB
+	eHandTObkSliINKdhYPRmGSQcNeC0G3xipy6HBAOIHjjd2EydHzYjuNPMgjHYEqw
+	NWInFuHZbQOglkjiAcId79PnfT+f6GJXhmAEsmrTXNN3/4HHOwM/Z99SRYvvsKbK
+	Y/y6veN/TjwZrUdbC6nIwI0nqmAugfzvAowQX6f7XFuwMmvsHonASY7EHLap/R9T
+	a9mLIDXwWvOf5GQ4KBLi2j9BbiJE7u60y+Ol2tbsHWgh+iPTXaKiR8Xqo9xdwmdf
+	s5O6/G3AefYG1aG0KTRybA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773870575; x=
-	1773956975; bh=81mMp3wyyC+LG1n5rJEumnbpRMgADhroYa8EpxDJDdA=; b=q
-	V+cKpdgVATZIVOqmRRrnxIRvj4+JoN30utasFVjvXr9WFW7q63J61HUnHvWoAVAI
-	7ymXeEFLEaTeFuCscSUQEzfSLt1V4JhvpV/nn62pM4IysRZBhnuU9xno/q0QLU0A
-	f1+2WwaftON30utb/Qb9X8fQSOw9YiW2XZxffloPGuFXTDTCloROvU2njtDkU7aq
-	LVjW9bZG0/LUcXVtaNsezTi/CPIRzEL30lwpjz0S8+4Sjia4YmnO12wgkzbymQvP
-	BeyC+0B00qo4C+VG7cSK6p7oZo6oWhmANYbaQT6Nj7nVu3aF2FPb2PyZXkSdxnty
-	j3P/XGSuL2VK7PGEnBBog==
-X-ME-Sender: <xms:7x27af-RVeR8Vpo_A5bY4IP_JmPSYw476jdrh0AvzqV4jTAIwTVJOA>
-    <xme:7x27aTI7gISda4YqqzvUPjwrmFROb6LTIjc7xzSirW4uY6IGj4rSyOLj_p0877X0N
-    VdzAAZX1f7WewT8SLOKyLMsIFZJE1IUC-fgbNQuxcbNq-Yo9MM-6A>
-X-ME-Received: <xmr:7x27aaYoXsIYExpu7EFD1LN2TjER7spgimp0sfzO4fdjORsqTiAKcIUCWUZQ0Yv1964rDwDh7FtOeVj9gGuYw5tkVqy1dHO9AA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehvdehucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773871043; x=
+	1773957443; bh=Ub+9QbQ6o99X5ehAPGGQlIYbBVb9HxQhy4f9Rt05ChQ=; b=u
+	pd2L+bBwpqzlX7TJyxH9TaWa4CcpOYIuKUUX9FwK9+Adllh/Y3GMKNa5fFUJQVST
+	HdNPBjUwOJqdDwUItiZkCG59c6MKvjOmLqLMkR9dSCkIltV8z0IW89a0JbB14bUS
+	vvwTNuLFNbOh+Gy3XohPs98TJEk2l8PO4sGnrc4c5ZDD9VtMRkCOVasl34Zeol7y
+	Tx1LziFVKyJoYqzdjUsTLhG13JfrvONUuQZvnRbfx2RvF2vweVxfngWrAKSHgy2V
+	jIHfGr6Inf1xBmbkjLv8FxRzWx3HUH2B4/Nfd5/53TfSSJH6X34cdXnXM1A7l165
+	aFGsrO7DevMH2WhD5ZczQ==
+X-ME-Sender: <xms:wx-7aWBA6_a6w1OFRhxMfu-50TkgiDAa67RXynby3x8vSHTfHChC8A>
+    <xme:wx-7aSytThWqLbApqO_OiPX1PseiIocU2PHGq7ZqUjzHlESXGPCY8zZnJR3KD97K1
+    6lLqDxyd3gcmEfKr5gNurDZM8CixKBCFLH2fLB-3TlaEdpBUNAKDfo>
+X-ME-Received: <xmr:wx-7ab0f6XmWXGjk7zBpmqXEzNJxypZupAacSgVXhR7B_QWrYNs5pEWoQd09a8eL6os11m2yIUmBWJSfhFEhEmURbzZ1rAAtDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehvdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
     ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
     htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
     fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgrggslhesghgrsghlrdhinhhkpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7x27aVL2brAtFmLZbElsYc_9ek6zBX6DePGH7JPq6Ik0s5OlygqIiA>
-    <xmx:7x27aYAIhmrEKIuEZroEgVgprlQJ72STw0LcOiSdyxP55-reesXoag>
-    <xmx:7x27aaofRqe9IN9u2L2Xo42T_n0Dqf5O3bQvulN6vuTV_9AqlXX_jA>
-    <xmx:7x27aThB2UPjGj5awpTRdv8ssz8gi5yl93nDxBHe5u9RW5zScn3j2A>
-    <xmx:7x27aUbIhm46Tj7-pdx2s00DS_QRkonhnpTfxBubzTRfxuMEd9wiuBKI>
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
+    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wx-7aay_sRGSpVo4fbu8OiGZl7m0ed1lgj53-srIAtxwIv9-b1yENQ>
+    <xmx:wx-7aaH4J12xY5eDlz0ilVC3L54Z2qaARvDHH7XEb4Cz39KNtyuKkw>
+    <xmx:wx-7aVbiHrhvOPkPdEZy4elL2020N69ZjbSPQ4ye9BpqvDyveuSTWg>
+    <xmx:wx-7aUD-odP-AA3pruMYu7hYeD6RGuz-6x_mWH3HgOYl-FUsDP_Z2A>
+    <xmx:wx-7aZYIoOd1PSRcDJ-4iuAnWFbh_CVv2N9ZAtPSb4RQ1NUxKNmu70ds>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 17:49:34 -0400 (EDT)
+ 18 Mar 2026 17:57:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Gabriel =?utf-8?B?4oCcZ2FibGRvdGlua+KAnQ==?= <gabl@gabl.ink>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: add missing space on git-config page
-In-Reply-To: <20260318210020.759128-1-gabl@gabl.ink> ("Gabriel
-	=?utf-8?Q?=E2=80=9Cgabldotink=E2=80=9D=22's?= message of "Wed, 18 Mar 2026
- 15:00:19 -0600")
-References: <20260318210020.759128-1-gabl@gabl.ink>
-Date: Wed, 18 Mar 2026 14:49:34 -0700
-Message-ID: <xmqqeclgq041.fsf@gitster.g>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH v2 0/2] push: add support for pushing to remote groups
+In-Reply-To: <20260318204028.1010487-1-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Thu, 19 Mar 2026 02:10:26 +0530")
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+	<20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+Date: Wed, 18 Mar 2026 14:57:21 -0700
+Message-ID: <xmqq7br8pzr2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,27 +93,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Gabriel “gabldotink” <gabl@gabl.ink> writes:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Signed-off-by: Gabriel “gabldotink” <gabl@gabl.ink>
-> ---
->  Documentation/git-config.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> This RFC series adds support for `git push` to accept a remote group
+> name (as configured via `remotes.<name>` in config) in addition to a
+> single remote name, mirroring the behaviour that `git fetch` has
+> supported for some time.
 >
-> diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
-> index 5300dd4..00545b2 100644
-> --- a/Documentation/git-config.adoc
-> +++ b/Documentation/git-config.adoc
-> @@ -221,7 +221,7 @@ Use `--no-value` to unset _<pattern>_.
->  +
->  Valid `<type>`'s include:
->  +
-> -- 'bool': canonicalize values `true`, `yes`,`on`, and positive
-> +- 'bool': canonicalize values `true`, `yes`, `on`, and positive
->    numbers as "true", and values `false`, `no`, `off` and `0` as
->    "false".
->  - 'int': canonicalize values as simple decimal numbers. An optional suffix of
+> A user with multiple remotes configured as a group can now do:
+>
+>     git push all-remotes
+>
+> instead of pushing to each remote individually, in the same way that:
+>
+>     git fetch all-remotes
+>
+> already works.
+>
+> The series is split into two patches:
+>
+>   - Patch 1 moves `get_remote_group`, `add_remote_or_group`, and the
+>     `remote_group_data` struct out of builtin/fetch.c and into
+>     remote.c/remote.h, making them part of the public remote API.
+>
+>   - Patch 2 extends builtin/push.c to use the newly public
+>     `add_remote_or_group()` to resolve the repository argument as
+>     either a single remote or a group, and pushes to each member of
+>     the group in turn.
+>
+> RFC notes and open questions:
 
-Ah, thanks for carefully reading.  My bad.
+>   - The current implementation pushes to group members sequentially.
+>   - push.default = simple interacts poorly with group pushes when the
+>   - force-with-lease semantics across a group push are currently
 
-Will apply.  Thanks.
+I am indifferent; comments from others very much welcomed.
+
+>
+>   - I will also add the tests and documentations in the next iterations
+
+Hmm, is this still valid?
+
+> Changes in v2:
+>   - Remove UNUSED from the declaration in remote.h (patch 1).
+>   - Drop the persistent `remote` variable from cmd_push entirely
+>     (patch 2). Following Junio's suggestion, the default remote
+>     case now folds into remote_group so the single-remote and
+>     group cases are handled by a single unified loop. There is
+>     no longer any structural difference between pushing to one
+>     remote and pushing to a group — a singleton is just a group
+>     of one.
+>   - Move the --mirror+refspec and --all+refspec conflict checks
+>     inside the loop so they are evaluated per remote.
+>   - Add a URL/path fallback so that direct path arguments like
+>       git push /tmp/foo.git
+>     continue to work correctly after the remote resolution
+>     change.
+>   - Add a test script t5528-push-group.sh covering the new
+>     group push behaviour.
+
+I think you added 5566 instead of 5528 (the latter of which is
+already used by another test).
+
+>   - Update Documentation/git-push.adoc: DESCRIPTION, the
+>     <repository> argument description, and a new REMOTE GROUPS
+>     section documenting the defining principle that
+>       git push <options> all-remotes <args>
+>     is exactly equivalent to running git push <options> r$i <args>
+>     for each member remote independently.
+>
+>
+> Usman Akinyemi (2):
+>   remote: move remote group resolution to remote.c
+>   push: support pushing to a remote group
+>
+>  Documentation/git-push.adoc |  76 +++++++++++++++++++---
+>  builtin/fetch.c             |  42 ------------
+>  builtin/push.c              | 124 ++++++++++++++++++++++++++----------
+>  remote.c                    |  37 +++++++++++
+>  remote.h                    |  12 ++++
+>  t/meson.build               |   1 +
+>  t/t5566-push-group.sh       |  95 +++++++++++++++++++++++++++
+>  7 files changed, 303 insertions(+), 84 deletions(-)
+>  create mode 100755 t/t5566-push-group.sh
