@@ -1,173 +1,134 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2354F37B406
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 08:27:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773822440; cv=pass; b=EFAuruDyw9G7wG7ST/te5rrZ101+8VPP7rm1QqTUCK+W4r+DIZUh3ZQV5wukWOx6KLHxr7CVwH6w5s6xL7MXAACoCKvXuuGBJwawVrC1xoYH/9wMf1Mo9f8nJrbp3JA2tqgqbNEkHomHHTMcms+RdAuLrGp1jyO/a1Wa7voAAP0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773822440; c=relaxed/simple;
-	bh=fIaCaT5ey9JSilVl3URPCKQyBkyrKowjM5g6MpThqr8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cr3ZTiOE1GVhNpmftrrDSDG7JVyH9XLzmR4jhmgxybQEY3tkdcGW8qvAgRbcbiBK9KpcmW4wI0omzeLrCboNwwvpqoUYKrr4C9dPScPn7wQy2B5R7fmGkHOh8q7tK9CTJ/km9UpgjRdAbgHJTHKO0nt7CPqCOVuRW+BhIUwaJd8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l0ZdE0D7; arc=pass smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5632833DEDD
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 09:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773824768; cv=none; b=tl5xiTerETzHbxgZMMTsCrfoNPNpj/p32Fb9Lp1seM5qsZqUnz7ik4wamzCUo39Z9ZCiphhmsNeT6Jjsxx3/7YdzBKQLPqymBeKqaQjg+HWLxhR+N7kj74vDKlw7jB4peLRHv4bF1hZxPj9BNola96BHkLNWAEGsa9AzjDTsRXw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773824768; c=relaxed/simple;
+	bh=szkwaHBzsWFaMq6d45uQqnvkNySFsVlpnCS8j/eeB0Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=r2NLmPptYn3Fs9kelMgGPRbQ+SUYkWrzlThnxCavktiOeqWu95vqRvdB44GsAclst8AWEztdGwVv2onOdp/H/zMoS3CI/peNcH7dM/0y21LhvN9BVy31CO50Qut44C2ZXSus9bVy0Ympn2pG15NLZrTv0qdpfYzLHYGqPYp22rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P7TjLLpw; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l0ZdE0D7"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-56a9a7e762bso6303771e0c.3
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 01:27:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773822438; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OS5ux3mQc0PeZrSaB4jvbr6Wc2yth6b/XeLHvD5ANKO5nWDBmPzSVDAxUDFb1l8fOJ
-         w67FZWrw+Q20Yl9oXG5hXh4QGg79oK9KPdbGWVn0O9FgK0AmJTcRFEDTv4eGh/n6kz+8
-         WYUEL5je9pOLzbVAHs6/erwAq9k/7GYMoJjvvFxRFXQ60OgffK/uG5IGvDsibdg0G8eI
-         dEXPtvcqjU9g9OFHexLFBFmGOcSJ6uV1ePAkK2rd7GrQlSa2pWBWj+waSEjWWt3oHaY4
-         l7DckcwxNdq7JLJxdAI/mJJiy15taomXQxt9vfj2RLztV38kQRYVjrMo5KRsl0MDArp1
-         93LQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=MXrxh9G8PyZ7va0namTxpEplEGB6Fa1SjFTLnUkLMYw=;
-        fh=ZLbtRHG9wnbVyrKyPiYAE4GtK+1fPdiLi2gTHDJPeZI=;
-        b=hh+GBs/0A/pqp/8qdcintWa/iB4NVzPWvcWQGXvObw1gpJc6ivYNKbjaJDq9oJJjqg
-         dgxp+mNdBNqNgmCMhuPCeGDsHxqfFaP56xXwaLAZTDdBa8hKgZU2UlsOznaXGUsveiFP
-         0zfJY0DEB7mDwizqXJu8HopfUKqXILFLuLB/3O1TFL2JPqTfBDLc1CmLxfSBvHitshoK
-         20S5CU9LchJGH6pGxbHtyGcntRIEu/tt9IIuU1ZnVyOTb2dSGRpR4szFNl+Ui5l9YQvp
-         r/TlKfDm/z0ml60DPu8UQRNMRppYaChAocveJFB2PwojAn5UW2+5Mlss1/7+JJYb/lyE
-         ce9g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7TjLLpw"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c7422399586so142614a12.2
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773822438; x=1774427238; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773824766; x=1774429566; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MXrxh9G8PyZ7va0namTxpEplEGB6Fa1SjFTLnUkLMYw=;
-        b=l0ZdE0D7GQ7BN8Qds7U/F4sryVjGkb78WR8NBnV0OBv4NGpueTv7VpCg1TfRqJsq9R
-         lvaDB5Nyehp/eHu6HsfKfpaMJEKzKrFe5HYBC30PEN3f9FedEgTZowVlTzrf0al97UuM
-         L6JmpX2cj9FDLJ3tc9PhFzpmPns0oqs4VWRRy2NjpyQNkFqs2kn+a5gy/VkJom0+nx/V
-         MT/9Iqx7VwQbP5Ir1lXKTTj2BN45DyuUSlsatKlPkQIY90NB2PwHADJXDErDDp22KTwS
-         G/I5+TKe25Ps1YmHx0/lesX1EiAhFjEas18Hk2KJg/N+VT//G0aIe+Q/5CF2wHCMQzQp
-         5PeQ==
+        bh=aOydFPPIo4A6FoZykjastN7S9753B0+CYIGzSmmPFYM=;
+        b=P7TjLLpwUWYXZnn3UEP7TGvBMRQtz5mYtB21QqQK7GVJ4lxntlEDAqMfXhDFT9I198
+         /1XeU9WNrwAKt9EVpmjysZX5EZvwGZbL9ZCMQMAIlODkMBYkzqSvrGXR2fV1DeBfKqDt
+         eiuBYXkw2YNnwEbp0H6FQVzsN/h5lCyQxv6fieCitymdYzo9IjpLoED756kuk+PJ0QxX
+         ny3p3fQNs0JAJ66Mwj6qn3Q6M4j8pGqDVFz71Yp0bEb+HMN8QAqjQNBvMZXAAkB7c7di
+         HTa+acccAp8rxI4/vnY/jNbNlSfMN4p1RaqYxGxoUwe79rlPfOXCIS4i5QomxNB5ful5
+         3Tng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773822438; x=1774427238;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1773824766; x=1774429566;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=MXrxh9G8PyZ7va0namTxpEplEGB6Fa1SjFTLnUkLMYw=;
-        b=kB/kT/uyPG3+oQ8RXy5/igQryODDOmuQmqheNzMOs1s5BpagyyV72Gx2qItET6hx7F
-         /T0HJlpTF7UO6iCI6eM2mbbP4u9wptlMwSLA9ePfgO1O9hGovXi+05s0gm5uKBds0mmB
-         0rnsZ9GRXZKZKgnsYjdJHVyI3Er8FCYbgL0H3eKGwzJQzumOnDgHGu4WxWcRcPAitpvM
-         8oMWWdJxwerD1VZ6P9dRckIpCmDIilNWBouDuUIgMn7DumOwMo4pfdy7TvazqKkTsc7r
-         BW9VtYFKeGfZxae6zDX7EbdRBNSef1xexIJAEvRqtP8pfVUy29bdD7QM5f1gy68aUyWj
-         21bg==
-X-Gm-Message-State: AOJu0Yy7HnIIFaq2pL996PPLAbY3efCYQ5VwgF7xRvYJIrv8HMDInQyO
-	WM97TJFBESfosLsGUuT2vsh1rOEjibjQuoxhxvgE9xX5UCQ8KlqHyKkIfBvGTS65u2zEsdTUUPh
-	yeevqcA7B9npguUvSz3SQqUqZtVIVeLM=
-X-Gm-Gg: ATEYQzx9QtjDc1VT9BqnTUf8PMtUCdp5uCjAS/BFcey12kq4rurJPGAMDCLC/HRZMTt
-	rMl7W3vIRxyzoLtKQNkGApl9P3exNBSux9H/k9L5esJ+QqruJPQSvEvtOZfdngSRlZVw8bvvda7
-	nUQJQi02HIK1REmPQtME42pzQRRrGNcpuKMq42TtkCPjSVjcB7A9DSXEzRvBtnTi0plVO9Q3/Vj
-	e5ZFmwDsbs/mrR2x67oh2Z+2+0UZEvgT0nbPjlUZy7EVZjWJelGaZYEUrkHtYVJmUSIEQihAQmD
-	U8uI/yNtHVcwrkrLWh3hrzOjhDBQRGYdx8TRN7w=
-X-Received: by 2002:a05:6122:1811:b0:56b:982f:1267 with SMTP id
- 71dfb90a1353d-56ba71b70c2mr1623996e0c.13.1773822437864; Wed, 18 Mar 2026
- 01:27:17 -0700 (PDT)
+        bh=aOydFPPIo4A6FoZykjastN7S9753B0+CYIGzSmmPFYM=;
+        b=OUU0nzP2WJ9+CNUKw6bDBePURdwj/Ct2W7ed9fZ9FDxVYxuF+mBj8QrhYCq4mrZO5k
+         Un5/ire1NFDcxeVXw+l2XNgX0Sf6jKAyX3begP8PUTu5D3ul3uN6s0PWQ+LqxPN4z/j6
+         u314boZZdrnxx2dbNnL1nnmIkdp3yS/YK5618iWJLit+RhtyiR6mpxh8Pq5tKFJfOA+V
+         WCgeD0G6nULSaB+yNPeoQO3iwqJcYt/bUc8mqGVzIeq/nxqm068X/WKARnca1o+kyz87
+         MHgBOeUp1TEntQ4sFT8sW+43Wh3K2bYjqX5DQ0vNbe9bJTOtAFbN4+8sAe39yVcDLZzk
+         i3IQ==
+X-Gm-Message-State: AOJu0Yw7RwZ2ERdSRbN+B2ITc73fp4SCmejh1c+g4ObF8KkCK9yCrSsh
+	Yds+vbeDX/4W40dGHs8X3ustj/wo404UC0lrv02uIeqkyj0ilf3f0k6sBKpyhA==
+X-Gm-Gg: ATEYQzzCNwGN4pBwoG6NrJfss6IoFr+unT8SRyEKxOyUAa8u3pmsHmavVfWK/ZG9g3+
+	cx9WOh1Ts9C7Zrp1TCQJd49nHQoYAKYbbMeYIG+FE+QoZ9VtM7c27ay2qcB2BsGR2b8c8wWzHyC
+	Qx0hkmAt5pqfLlQeAPTyuvfKJJEnV79lanhctZabAEELupKGCwkTDPqlLSRUFJSGwa4fP96VLiS
+	VuvByyBdsUXyAv39KxNJ5/3HIgu/gS5VdxXOzUXxTJK65ZqmJ70o6paEdBSK4vtxYgLWmJ4/K2e
+	1WdAt8I43fDrEp+MJ25GTW1GoXrFREnKp+BHW38qUC17BBJvEw5AIl21dUvG03e9nnJ8np8iqLc
+	B9gCRvGo5fB4v7Xfof7ezCMzP3CrGxM3tJbTKrhJuanb56WYj39Ubu9e7W9ESayLKMXMBSTbCG5
+	5R0QtZdW1vSPFr/EfrjVWOjaTEVewzjCTmmGazNYz4YOo=
+X-Received: by 2002:a05:6300:6705:b0:38d:ec8c:7e55 with SMTP id adf61e73a8af0-39b99f67d91mr2326587637.32.1773824766312;
+        Wed, 18 Mar 2026 02:06:06 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:8811:4c9f:17e6:42d9:c5c6:178b])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c741e568e36sm1947750a12.23.2026.03.18.02.06.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2026 02:06:05 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH v2 ] add-patch: use repository instance from add_p_state instead of the_repository
+Date: Wed, 18 Mar 2026 14:30:03 +0530
+Message-ID: <20260318090546.1213077-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com> <b444fa7af9f39960652209143c9845a47efd58e1.1771187016.git.gitgitgadget@gmail.com>
-In-Reply-To: <b444fa7af9f39960652209143c9845a47efd58e1.1771187016.git.gitgitgadget@gmail.com>
-From: Orgad Shaneh <orgads@gmail.com>
-Date: Wed, 18 Mar 2026 10:27:06 +0200
-X-Gm-Features: AaiRm50MAhQM9sLMG-N4FgGbzom9nKUuVHFSdf3lfAh3hzds1OKXG3cZNJZxNIA
-Message-ID: <CAGHpTB+qbtrBQd23hobQqJjG1+nwkHqBP1fcYjSPvrJhWcD21g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] fetch: clobber existing tags with --prune-tags
-To: Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Orgad Shaneh <orgad.shaneh@audiocodes.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Feb 15, 2026 at 10:23=E2=80=AFPM Orgad Shaneh via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Orgad Shaneh <orgad.shaneh@audiocodes.com>
->
-> This was documented but not implemented.
->
-> In the flag description:
-> prune local tags no longer on remote *and clobber changed tags*
->
-> In the documentation:
-> ... to prune local tags that don't exist on the remote, *and
-> force-update those tags that differ*.
->
-> Signed-off-by: Orgad Shaneh <orgad.shaneh@audiocodes.com>
-> ---
->  builtin/fetch.c       |  2 +-
->  t/t5516-fetch-push.sh | 10 ++++++++--
->  2 files changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index a3bc7e9380..c212f50b86 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -981,7 +981,7 @@ static int update_local_ref(struct ref *ref,
->             starts_with(ref->name, "refs/tags/")) {
->                 struct ref_update_display_info *info;
->
-> -               if (force || ref->force) {
-> +               if (force || ref->force || prune_tags) {
->                         int r;
->
->                         r =3D s_update_ref("updating tag", ref, transacti=
-on, 0);
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 31df7faf56..4d29043baf 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1092,7 +1092,7 @@ test_force_fetch_tag () {
->         tag_type_description=3D$1
->         tag_args=3D$2
->
-> -       test_expect_success "fetch will not clobber an existing $tag_type=
-_description without --force" "
-> +       test_expect_success "fetch will not clobber an existing $tag_type=
-_description without --force or --prune-tags" "
->                 mk_test testrepo heads/main &&
->                 mk_child testrepo child1 &&
->                 mk_child testrepo child2 &&
-> @@ -1108,7 +1108,13 @@ test_force_fetch_tag () {
->                         git -C ../child1 fetch origin '+refs/tags/*:refs/=
-tags/*' &&
->                         git tag $tag_args testTag HEAD^ &&
->                         test_must_fail git -C ../child1 fetch origin tag =
-testTag &&
-> -                       git -C ../child1 fetch --force origin tag testTag
-> +                       git -C ../child1 fetch --force origin tag testTag=
- &&
-> +                       git tag $tag_args testTag HEAD &&
-> +                       test_must_fail git -C ../child1 fetch origin tag =
-testTag &&
-> +                       git -C ../child1 fetch --prune-tags origin tag te=
-stTag &&
-> +                       git tag $tag_args testTag HEAD^ &&
-> +                       test_must_fail git -C ../child1 fetch origin tag =
-testTag &&
-> +                       git -C ../child1 -c fetch.prunetags=3Dtrue fetch =
-origin tag testTag
->                 )
->         "
->  }
-> --
-> gitgitgadget
+Functions parse_diff(), edit_hunk_manually() and patch_update_file() use
+the_repository even though a repository instance is already available via
+struct add_p_state *s.
+Use 's->r' instead of the_repository to avoid relying on global state.
+All callers pass a valid add_p_state and this does not change any behavior.
 
-Gently pinging this thread. I submitted this patch about a month ago
-and would appreciate any feedback once someone finds a moment to
-review it.
+This follows recent refactoring that removed 'add_i_state' and moved
+repository pointer and other add-patch config into struct add_p_state [1].
+This aligns with the ongoing effort to reduce usage of the_repository
+global state.
 
-Thanks!
+[1]- https://lore.kernel.org/git/20260302-pks-history-split-v1-3-444fc987a324@pks.im/
+
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+Changes in v2:
+ - made changes on top of ps/history-split and used s->r instead of s->s.r
+
+ add-patch.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/add-patch.c b/add-patch.c
+index 4e28e5c187..f27edcbe8d 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -558,8 +558,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 		strvec_push(&args,
+ 			    /* could be on an unborn branch */
+ 			    !strcmp("HEAD", s->revision) &&
+-			    repo_get_oid(the_repository, "HEAD", &oid) ?
+-			    empty_tree_oid_hex(the_repository->hash_algo) : s->revision);
++			    repo_get_oid(s->r, "HEAD", &oid) ?
++			    empty_tree_oid_hex(s->r->hash_algo) : s->revision);
+ 	}
+ 	color_arg_index = args.nr;
+ 	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
+@@ -1271,7 +1271,7 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
+ 				"removed, then the edit is\n"
+ 				"aborted and the hunk is left unchanged.\n"));
+
+-	if (strbuf_edit_interactively(the_repository, &s->buf,
++	if (strbuf_edit_interactively(s->r, &s->buf,
+ 				      "addp-hunk-edit.diff", NULL) < 0)
+ 		return -1;
+
+@@ -1679,7 +1679,7 @@ static size_t patch_update_file(struct add_p_state *s,
+ 		if (file_diff->hunk_nr) {
+ 			if (rendered_hunk_index != hunk_index) {
+ 				if (use_pager) {
+-					setup_pager(the_repository);
++					setup_pager(s->r);
+ 					sigchain_push(SIGPIPE, SIG_IGN);
+ 				}
+ 				render_hunk(s, hunk, 0, colored, &s->buf);
+--
+2.53.0
+
