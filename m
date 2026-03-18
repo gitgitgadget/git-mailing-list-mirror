@@ -1,137 +1,114 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from www130.your-server.de (www130.your-server.de [88.198.195.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA733C1B7
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 17:12:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF3D263C8C
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 17:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.198.195.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773853948; cv=none; b=sxU4F8y47BRjwOABbfI+QGzECuwT8dEFJp55ZAhqicS6wBix6zhFbBHvX1Ackx5rQMWuyvzUlmpGXF5DyG2fUP4g75qk9UnqvqnUAVUmvAwN71ubILRauOMs9okRwdvR2vqDRr+Pu/jz3UZUSQGfdwF4890qiw09eXGH73gs04c=
+	t=1773855223; cv=none; b=ILmqTIWmSdRH0TrgqJ2H2j2Nw3Ce7u21nLp42pkkGO7mRyXN/xGz5YuXUJxCqzAgx9xBik12ODPJ5ApZRoTsnO4KFnUgqp4CVBWlDoeZRk6qXyan2L1z8pERc7D6ueekLHgpT+Z0Y/NNNBXnqzdtLxo46Pri1j3Mb6X6mmvEyus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773853948; c=relaxed/simple;
-	bh=ev5y+MfniqVyFC/oKhrtEAnhkG3mMV/QpEa9RBM2sos=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G7P3NSR7mfKaWhWLkGjPpRazxTQzhM+drdL0PGV4B/5sgoM78ZWxb1PsIxUS44wGhikO2OSSF0qUrCoqBSM5wzPhEEneNPfagbsv6GDzDAuqaSxDEA/K1e0N5lv01cUcy+C7o0UqJ5OKurxcP/ds+e2KoX+lzxcP5iQDxe7teog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lf7hxKnW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YvqWwUFk; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773855223; c=relaxed/simple;
+	bh=S5OM+mwq02BSnzN84xwr8WHZK+fNer5UDtgWRBNJjFs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lVXKE5y4LUFsPsDqDSlZdXqUV0PvN3/oVVCDacUXAPl/VzxJ3cYjE2Pn/3YuvOHr2TgPVHkpA1DiUWDxuvyzdu01Xd+uh77JlZCalq/9JSlPWnD+pf0YJefBWHRDeDtz5lAxNZd2WzgCWO2jvBUi4fW3zvbY0Smx1HIYrE2UXOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=virtuell-zuhause.de; spf=pass smtp.mailfrom=virtuell-zuhause.de; dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b=ZBiZcbDa; arc=none smtp.client-ip=88.198.195.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=virtuell-zuhause.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuell-zuhause.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lf7hxKnW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YvqWwUFk"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8F805EC011A;
-	Wed, 18 Mar 2026 13:12:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 18 Mar 2026 13:12:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1773853945;
-	 x=1773940345; bh=+FDJDUbGOBtfb9VDHM1KsO3E9kzezM536pzxSP14e1U=; b=
-	Lf7hxKnW0WNzaJVwV47eMJmGWTtajrdtglfPibWQGc5CH6xVcPKSCb+vRuA4c7sG
-	Qw5KjFx49VssIoYH0uIvKN9f+6ltQR/P92g/etWN30mkhFbZG4sJxY4bzwtxBKu7
-	R6qOFI7+DEQgTOBQ3cyS5upCQGfPb23wcjADnGoT3nZMTUSKFnArDQW8I0iZNFxW
-	5JEJDIVSfrdYXims85w9p6KV3G2QcDAr106ekDPbRJ1/VJNBzebwsWBd11rUgVC4
-	h5+cH0wEP3+Yoyg+kWOUNcgnegBjlAXp9fyESjMUXZgojR1nQ/k36cEQ8BjxveLN
-	1mdit14Rb5Y/sK/8AvP6/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773853945; x=
-	1773940345; bh=+FDJDUbGOBtfb9VDHM1KsO3E9kzezM536pzxSP14e1U=; b=Y
-	vqWwUFkH6LRggZ6bMtw64jPwooy38PV7eKCYg/l+cwZG98f2qsBd8/ANTzBebnn5
-	rzvdtO2sphMSG65SEcy/r2lRAU7cB6C3kQ6eNi7G6RRM20C85H+XJmNUdUjiSIrM
-	q2U6xKuB2QG3F+Gsg+kJSv5Xk6jXBVDGsYpQCtSeHJVbD4DACJ7GP9Fm6p7u44s7
-	tVbR8VAL5qpL/LMT0VV9XUai3QNKK+DnBBbP8pTb92g95MDIgXio6GI/pLh6ltTU
-	T5J5kBigzKaYc8bPMEeqJ4qLBv2BPvUjg6sl92K2VcLtHExeQIGdgdR0kVG/+sy2
-	y0zkplceryvmNV7cQKdvA==
-X-ME-Sender: <xms:-dy6abUgiwjt8UbiYuPJsTS7k2YvCBKjdsv4UTSWRsFOoLNNrb3ydw>
-    <xme:-dy6aalLqiKoq6VYFJgrhN1-t-wi9M5GqK86BAvUUvDvWFzu-eoW0921kB9B_Fe6P
-    dMUYrMi1ikiJXy7dgzDAoXJHeCzv98eO0OWzDzsbLrqkeJFh103Ug>
-X-ME-Received: <xmr:-dy6acYaMn6aS-sr7-pgeENZVus2P4UkJavtEPVFhCso42-kAvFAcjq_fYXrftWPXCFwkyn-O8Qsqkbvc6_jDRLT1EqFpndE3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:-dy6aVNYC_t92BAQayYqjZaNiaA6uvuMpHNEVqtMENhgOScB7DDj-g>
-    <xmx:-dy6aRZj9CiPcxz8wja0mT9l1-YN1tZAYYQqFG1HezI8txdABGIQtQ>
-    <xmx:-dy6aT1C8rtBRdSNpcDUi7NfeynKDXb4fEFpj-v8rCuPowoteKQwQA>
-    <xmx:-dy6aXcV0CufwEnbphAkMy_06tVnPxtgk3gR3zeQz7YP8VlOn1bv1g>
-    <xmx:-dy6aVKsXw1OKxgHZVpQBrkST2jsTIhszbB3tk17651OKje-anmWFH4z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 13:12:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] apply: fix new-style empty context line triggering
- incomplete-line check
-In-Reply-To: <CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
-	(D. Ben Knoble's message of "Wed, 18 Mar 2026 12:36:04 -0400")
-References: <xmqqldfql4hp.fsf@gitster.g>
-	<CAPig+cTTgLVGPG99gsb19BeJVWS=VZCU4F-rjb25yHTAORWwzg@mail.gmail.com>
-	<xmqqcy12l2ft.fsf@gitster.g>
-	<CALnO6CDNwa8Ez4Ug0f8zNyxF1n3C_j8mLRbH7wChVioNoC5QVw@mail.gmail.com>
-Date: Wed, 18 Mar 2026 10:12:23 -0700
-Message-ID: <xmqq341xgiyw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b="ZBiZcbDa"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=virtuell-zuhause.de; s=default2504; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=Gxj2MOjvRvKkQfeBjJE808hNwcjg/yo4zJ4oOiC7d5E=; b=ZBiZcbDauZ1LFhuitWmpN4Y7fI
+	pLmG2GcM19mudTRNcZj1jT+Z4GRJwjRcSAQHqbirx1fAE/n7+sBR+ua5Fg7INVVTpOumaB9LQhlbo
+	ZnCfnhZGDJQJ9HSdGL+htkuJ2u3ZLNM0DIztGfBn7SgHtuiJ7FaHpu3iAi1EaYtD8wFVqNum3krxP
+	qNH3HzDPV8XC60ESN/xAW31BsT19A7w8mtcXGs1le0N+c1tKajLuNRwHHk1DVKny6+xKVlZEgHilL
+	6aMwpDf0rvmo2EiVJP1dd/27WxUIk7yPjO54Km7bg4Fpt72tSPbIRMovQYNzaMOAsFCvrFLGwy6S4
+	Eu865Wiw==;
+Received: from sslproxy05.your-server.de ([78.46.172.2])
+	by www130.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <thomas.braun@virtuell-zuhause.de>)
+	id 1w2ulv-0005Gk-1f;
+	Wed, 18 Mar 2026 18:33:31 +0100
+Received: from localhost ([127.0.0.1])
+	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <thomas.braun@virtuell-zuhause.de>)
+	id 1w2ulv-000Gvd-29;
+	Wed, 18 Mar 2026 18:33:31 +0100
+Message-ID: <9cb575c2-a08a-429d-a7d2-cdceda8389bf@virtuell-zuhause.de>
+Date: Wed, 18 Mar 2026 18:33:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: describe with --git-dir and --dirty outside of the repo always
+ says dirty
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+References: <99f2ba7e-cc5f-4ef5-9b09-85896563346f@virtuell-zuhause.de>
+ <xmqq8qbv4gnq.fsf@gitster.g> <abe9uDp16zOcdzZs@pks.im>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+In-Reply-To: <abe9uDp16zOcdzZs@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/27944/Wed Mar 18 07:24:13 2026)
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Am 16.03.2026 um 09:22 schrieb Patrick Steinhardt:
+> On Fri, Mar 13, 2026 at 01:29:29PM -0700, Junio C Hamano wrote:
+>> Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
+>>
+>>> When I do
+>>>
+>>> git describe --dirty
+>>>
+>>> in clean repo of git.git I get
+>>>
+>>> v2.53.0-522-g67006b9db8
+>>>
+>>> but when I do it from outside of the repo
+>>>
+>>> cd ..
+>>> git --git-dir=git/.git describe --dirty
+>> "--git-dir" tells git "I am at the root of the working tree, but the
+>> git directory that you usually find at ".git" (or a parent directory
+>> of where we are) is not where you expect but somewhere else, so I am
+>> telling you where it is with this argument.
+>>
+>> So if you are not at the root of the working tree for that working
+>> tree, "git --git-dir=git/.git diff" would report that you have a ton
+>> of changes to working tree files, and "describe" would report that
+>> your working tree is dirty.
+>>
+>> In other words, working as intended.
+>>
+>> You can tell where the working tree is (instead of telling the
+>> command that you are at the root of the working tree, when you are
+>> not), with the "--work-tree" option.
+>>
+>> $ git --git-dir=git/.git --work-tree=git describe --dirty
+> You can do that, but what you're probably looking for is `-C`:
+>
+>      $ git -C /path/to/git describe --dirty
+>
+> As Junio pointed out, "--git-dir" has a different effect, and you
+> typically don't have to use it unless you're doing weird stuff.
 
-> I think braces { test_writes lines … && printf … ; } would have
-> sufficed for the second example
+Thanks both Junio and Patrick. The documentation is not lacking and 
+fully explains
+that -C is the way to go. I should have checked first.
 
-Nobody complained about them ever since they were written.  More
-importantly, we have plenty of them that nobody complained and
-bothered to uglify so far [*].
+My lameish excuse for originally using --git-dir is that -C which was 
+added in
+44e1e4d67d (git: run in a directory given with -C option, 2013-09-09) 
+was too
+new back then I added the code originally in 2014.
 
-;-)
+Thomas
 
-$ git grep -e '(.*) >' master -- t/t[0-9]\*.sh | grep -v -e '\$(' -e 'cd ' | wc -l
-60
-$ git grep -e '(.*) >' master -- t/t[0-9]\*.sh | grep -v -e '\$(' -e 'cd ' |
-  head -n 20
-master:t/t3050-subprojects-fetch.sh:	(git rev-parse HEAD && git ls-files -s) >expected &&
-master:t/t3050-subprojects-fetch.sh:		(git rev-parse HEAD && git ls-files -s) >../actual
-master:t/t3050-subprojects-fetch.sh:	(git rev-parse HEAD && git ls-files -s) >expected &&
-master:t/t3050-subprojects-fetch.sh:		(git rev-parse HEAD && git ls-files -s) >../actual
-master:t/t3402-rebase-merge.sh:	(echo "0 $T" && cat original) >renamed &&
-master:t/t3900-i18n-commit.sh:		(sed "1,/^$/d" raw | iconv -f $new -t utf-8) >actual &&
-master:t/t4001-diff-rename.sh:	(cat path1 && echo new) >new-path &&
-master:t/t4015-diff-whitespace.sh:	(echo foo && echo baz | tr -d "\012") >x &&
-master:t/t4015-diff-whitespace.sh:	(echo bar && echo baz | tr -d "\012") >x &&
-master:t/t4019-diff-wserror.sh:if (grep "$blue_grep" <check-grep | grep "$blue_grep") >/dev/null 2>&1
-master:t/t4019-diff-wserror.sh:elif (grep -a "$blue_grep" <check-grep | grep -a "$blue_grep") >/dev/null 2>&1
-master:t/t4024-diff-optimize-common.sh:		( zs $n && echo a ) >file-a$n &&
-master:t/t4024-diff-optimize-common.sh:		( echo b && zs $n && echo ) >file-b$n &&
-master:t/t4024-diff-optimize-common.sh:		( printf c && zs $n ) >file-c$n &&
-master:t/t4024-diff-optimize-common.sh:		( echo d && zs $n ) >file-d$n &&
-master:t/t4024-diff-optimize-common.sh:		( zs $n && echo A ) >file-a$n &&
-master:t/t4024-diff-optimize-common.sh:		( echo B && zs $n && echo ) >file-b$n &&
-master:t/t4024-diff-optimize-common.sh:		( printf C && zs $n ) >file-c$n &&
-master:t/t4024-diff-optimize-common.sh:		( echo D && zs $n ) >file-d$n &&
-master:t/t4101-apply-nonl.sh:(echo a; echo b) >frotz.0
-
-
-
-[Footnote]
-
- * I personally find that we need ';' immediately before '}'
-   intolerably ugly.
