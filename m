@@ -1,134 +1,132 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5632833DEDD
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 09:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773824768; cv=none; b=tl5xiTerETzHbxgZMMTsCrfoNPNpj/p32Fb9Lp1seM5qsZqUnz7ik4wamzCUo39Z9ZCiphhmsNeT6Jjsxx3/7YdzBKQLPqymBeKqaQjg+HWLxhR+N7kj74vDKlw7jB4peLRHv4bF1hZxPj9BNola96BHkLNWAEGsa9AzjDTsRXw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773824768; c=relaxed/simple;
-	bh=szkwaHBzsWFaMq6d45uQqnvkNySFsVlpnCS8j/eeB0Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2NLmPptYn3Fs9kelMgGPRbQ+SUYkWrzlThnxCavktiOeqWu95vqRvdB44GsAclst8AWEztdGwVv2onOdp/H/zMoS3CI/peNcH7dM/0y21LhvN9BVy31CO50Qut44C2ZXSus9bVy0Ympn2pG15NLZrTv0qdpfYzLHYGqPYp22rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P7TjLLpw; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B304A39151E
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 10:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773830730; cv=pass; b=EgGIW8Xk/eDO7MGOGP5pCMWYGQYTFUqJ3Sm6qWjcENLn+15Tia+wrhB2gtSSDuCu/7P3YTLDOjWDTR1iveqjwyRUe9mmk29KeQgUG5snJU1EFAt4cMKHzpO/0O/unMusSbUK//oKfvqsTvRzLgfVxT/CtwtJefnrE77R0fkP9l4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773830730; c=relaxed/simple;
+	bh=+rd8+xQc7I3qffIFkOfCKW8SNwp3HO1y1O+J53ll+M4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kmaUTATU86n6s/ADs+E/vzHb3xwB2ysjXkz3sFLS0SbeauTxG4Gbrxw+kei/k5hbEsy6EjzLlunXPoaXYn7WpocsyHrkc9kHD1aoCR8C4C0Tqc0taFdsunGSoj0bHnFI/qTgoB3VHVr2scJSFqlgfh/sGCFB28sFOs1bNm6Wv14=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=genPYxWy; arc=pass smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7TjLLpw"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c7422399586so142614a12.2
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 02:06:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="genPYxWy"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7991db3dc98so64990207b3.0
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 03:45:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773830728; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JpOQRPv6Y9Brn0yFqnn22FHcudyT5zLuDh5TPVF69j/JT8Cb/1dBcm2MxPBJ8XVMHB
+         y/e6tADNGzNGpZiOe97F+mHM2DbHw5rH+duAgzmu2zDv/nnM6KhS1hmdm+k+/RZ9Qlgx
+         NjSU4/GeV4SWpS+StWDcpEdR+AOtA4F/Sjzy262hpZMLOecrOOChGMVcJEnI22cfjsXA
+         2Ga3Om82avaUBKrhQpqXclL0aWVia8xojaDrIimvzDn15bD3xeuCZX3cnNF6nFTYn+F5
+         p8h41EjXDubSvbS0+50OzoG+N0FlLbpcaspuMQBvyGTqghMRQxg3/hAplsOZHyAppjdP
+         Ehiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=+rd8+xQc7I3qffIFkOfCKW8SNwp3HO1y1O+J53ll+M4=;
+        fh=MTo5IudGTllV7vNSs4W3ihtcUy/MfWXufd7rF2OxLCw=;
+        b=FOcMFvpoXbh8b35Xsux9yKXAQFCi+ctrnKkCHtSsysoRbcE/yVbtgb6uumdMfOdI3p
+         1879bE3OrTgSYJF9FcJFwJWfyYCf6T/dx9scwXol+GTsFruumEeJDjK8x9aEsrxK55fh
+         F/nqTDes6cKtUXHKX5qjQs2WjeVGP8dCUW1YRpZnSMG6b7DzNXpv8rL0s5ChFvnUPkrG
+         9WK7gKBEbBZ19cCW4cWND+H79VSmtj4nni+of0LieJ5AsdoUyr226kO69ORouvkHW/tW
+         YfB62iMOmJlMWsZvIPY5Bg/1Ih+Utx9feTT72N/NwUOdp1Y4LhL9ZrVvA0eWVIq5x5Sm
+         xhAw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773824766; x=1774429566; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aOydFPPIo4A6FoZykjastN7S9753B0+CYIGzSmmPFYM=;
-        b=P7TjLLpwUWYXZnn3UEP7TGvBMRQtz5mYtB21QqQK7GVJ4lxntlEDAqMfXhDFT9I198
-         /1XeU9WNrwAKt9EVpmjysZX5EZvwGZbL9ZCMQMAIlODkMBYkzqSvrGXR2fV1DeBfKqDt
-         eiuBYXkw2YNnwEbp0H6FQVzsN/h5lCyQxv6fieCitymdYzo9IjpLoED756kuk+PJ0QxX
-         ny3p3fQNs0JAJ66Mwj6qn3Q6M4j8pGqDVFz71Yp0bEb+HMN8QAqjQNBvMZXAAkB7c7di
-         HTa+acccAp8rxI4/vnY/jNbNlSfMN4p1RaqYxGxoUwe79rlPfOXCIS4i5QomxNB5ful5
-         3Tng==
+        d=gmail.com; s=20230601; t=1773830728; x=1774435528; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+rd8+xQc7I3qffIFkOfCKW8SNwp3HO1y1O+J53ll+M4=;
+        b=genPYxWyvaAEifGLrEVKP7IJnraWyr6Stqe4wuL7dT1wcC5QPzn57v2BadTFYdI502
+         T8pCv26BESImfRPwlOGy8L8IszphHVquOQa4Glm6Ndl0fPNjDoPh9JnVPYdxVmbVWyFm
+         Wz+AMAHnK+C2oh628wj4/FJDNhRWhf8KxM3M1XKZvUQrO3+1N9OPipK73fVPeWgMybZu
+         Oqei0Izlnqo0ihCY542xEeP3j78y1bADMNRtat0rkvy4jVPol+PGn1AZ8IXWMdBuHYOS
+         9iZFWFauuMGoKSI3BhlfMtbDr0YIcuZv7F23lPkJ9TaFIASUhkEpD0Rvw4jkEgnRlnSF
+         q9qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773824766; x=1774429566;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aOydFPPIo4A6FoZykjastN7S9753B0+CYIGzSmmPFYM=;
-        b=OUU0nzP2WJ9+CNUKw6bDBePURdwj/Ct2W7ed9fZ9FDxVYxuF+mBj8QrhYCq4mrZO5k
-         Un5/ire1NFDcxeVXw+l2XNgX0Sf6jKAyX3begP8PUTu5D3ul3uN6s0PWQ+LqxPN4z/j6
-         u314boZZdrnxx2dbNnL1nnmIkdp3yS/YK5618iWJLit+RhtyiR6mpxh8Pq5tKFJfOA+V
-         WCgeD0G6nULSaB+yNPeoQO3iwqJcYt/bUc8mqGVzIeq/nxqm068X/WKARnca1o+kyz87
-         MHgBOeUp1TEntQ4sFT8sW+43Wh3K2bYjqX5DQ0vNbe9bJTOtAFbN4+8sAe39yVcDLZzk
-         i3IQ==
-X-Gm-Message-State: AOJu0Yw7RwZ2ERdSRbN+B2ITc73fp4SCmejh1c+g4ObF8KkCK9yCrSsh
-	Yds+vbeDX/4W40dGHs8X3ustj/wo404UC0lrv02uIeqkyj0ilf3f0k6sBKpyhA==
-X-Gm-Gg: ATEYQzzCNwGN4pBwoG6NrJfss6IoFr+unT8SRyEKxOyUAa8u3pmsHmavVfWK/ZG9g3+
-	cx9WOh1Ts9C7Zrp1TCQJd49nHQoYAKYbbMeYIG+FE+QoZ9VtM7c27ay2qcB2BsGR2b8c8wWzHyC
-	Qx0hkmAt5pqfLlQeAPTyuvfKJJEnV79lanhctZabAEELupKGCwkTDPqlLSRUFJSGwa4fP96VLiS
-	VuvByyBdsUXyAv39KxNJ5/3HIgu/gS5VdxXOzUXxTJK65ZqmJ70o6paEdBSK4vtxYgLWmJ4/K2e
-	1WdAt8I43fDrEp+MJ25GTW1GoXrFREnKp+BHW38qUC17BBJvEw5AIl21dUvG03e9nnJ8np8iqLc
-	B9gCRvGo5fB4v7Xfof7ezCMzP3CrGxM3tJbTKrhJuanb56WYj39Ubu9e7W9ESayLKMXMBSTbCG5
-	5R0QtZdW1vSPFr/EfrjVWOjaTEVewzjCTmmGazNYz4YOo=
-X-Received: by 2002:a05:6300:6705:b0:38d:ec8c:7e55 with SMTP id adf61e73a8af0-39b99f67d91mr2326587637.32.1773824766312;
-        Wed, 18 Mar 2026 02:06:06 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:8811:4c9f:17e6:42d9:c5c6:178b])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c741e568e36sm1947750a12.23.2026.03.18.02.06.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2026 02:06:05 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH v2 ] add-patch: use repository instance from add_p_state instead of the_repository
-Date: Wed, 18 Mar 2026 14:30:03 +0530
-Message-ID: <20260318090546.1213077-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
+        d=1e100.net; s=20251104; t=1773830728; x=1774435528;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+rd8+xQc7I3qffIFkOfCKW8SNwp3HO1y1O+J53ll+M4=;
+        b=BMxYtLo0Ljn7ohDoSd/aa1H4e7TeoB3cIYwcDGUfKQX5Y8zSW4NmkqDWpg3QdTlyZh
+         ydc6s1B1WriQvlZvU+UX1304y5KRrrgbcM1hRyxpwng61IlNvpqdlMFjjU80Qo3lI+mq
+         Ui7kA2XDYxFlGAdG+X0utOGq+mdaMElB8xyE9OcmhmDLF3WskOWO6e1liAbDA1ouRjqi
+         Nppq0qbh5N85ZBUcvbITa16u1tbbMmR7nkODqA7lIX0vQtTVRlc4WVs0Z1Xo7nD9DnTy
+         GlnLmlaCjgLlspkvxe/KsNjhRcSIR2iIpw841WLfWhMy9zjcWdm7fyDlNj40FgcU4iUV
+         w66Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVdP8i0UEftGk3WWdlUHs4Jb5AKfZRUvevFJeNEupRkG+SeF022S/oUHpYyT8kMhswBHxc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWG77d2ZgXe61ojTH6c7ZVCDutFKIloUBv7+qoOMVdTi/iIuGZ
+	tOpFV4QiS7Jr4tBSY8y1QwSuKwyVXbcmO/aE0V1ZCcS2A/fBxy5/Al2LYOefuxw7Mg8DJMqGPJf
+	FKGxjdeA1iQ9zWaSPs8TOPpF8rocbxeQ=
+X-Gm-Gg: ATEYQzwF+YoPYTkZW/gk1AHrzIo2xDDRNso/rzsVFzL2NbFc2YIyj2xI0L3HcsRJYxc
+	D3PpsS0Okd1XDj0F3dh/BeH+JXJXTguvh4ZH0sdZJFHXMCvs0jBZJQL3sFxHeXdRdaemc6thBLq
+	hPEUdh1owdRn7/pklqHRb8ArwP0eUhP9sYKaadO5rywpa0mR9O3WRKrDdPvhptVq8ca82vXZc8v
+	taQN7i/212k0ZJ0BzVUJa3uqTimnFMxvwVU6hIWpi3P1EG7uw4L2SY8ciaiuQLbXbvR0xGrctw/
+	lm6/VdABbPdzCAqURjGprNdiFHuEq0A8sYVNuntjgRwox/q6ClAjvQD7iVU1I1u9hytp/ezP9UI
+	AgD8LcaevJdbrmUBjSJYHNmX8oytFdVYYkw==
+X-Received: by 2002:a05:690c:6891:b0:79a:56bc:246e with SMTP id
+ 00721157ae682-79a71c2b543mr26508477b3.43.1773830727657; Wed, 18 Mar 2026
+ 03:45:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAN5EUNQKv-LCkbY+5scn6pk6fL8kpmjNR=66rjeY=NqKbqRkhA@mail.gmail.com>
+ <CA+J6zkROsbkr6mWQrEhnswtb4sOh+UMO+bt3P-5XDiAjhtcsMg@mail.gmail.com>
+ <CAN5EUNQdNtPq1mEBUXOjRJ_t2n=cSUS9dz+HUfqbFjrjZVoGLQ@mail.gmail.com> <CAOLa=ZREJsZ_p9Hfi_+XePW8c1n7xd-UjEuMSh=AHrQC8X75Tw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZREJsZ_p9Hfi_+XePW8c1n7xd-UjEuMSh=AHrQC8X75Tw@mail.gmail.com>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Wed, 18 Mar 2026 11:45:12 +0100
+X-Gm-Features: AaiRm52Gbz18duyJOWArzbeBWtcBDEiKlqAFKgb4V2ji00-oVKjnFlNyxLpheTA
+Message-ID: <CAN5EUNQtFY=TpwddqGOSHva7RmunWGLzfHU+4c=OvdqipA1ptA@mail.gmail.com>
+Subject: Re: [GSoC] Proposal: Complete and extend the remote-object-info
+ command for git cat-file
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org, 
+	christian.couder@gmail.com, jltobler@gmail.com, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Functions parse_diff(), edit_hunk_manually() and patch_update_file() use
-the_repository even though a repository instance is already available via
-struct add_p_state *s.
-Use 's->r' instead of the_repository to avoid relying on global state.
-All callers pass a valid add_p_state and this does not change any behavior.
+Karthik Nayak (<karthik.188@gmail.com>) writes:
 
-This follows recent refactoring that removed 'add_i_state' and moved
-repository pointer and other add-patch config into struct add_p_state [1].
-This aligns with the ongoing effort to reduce usage of the_repository
-global state.
+> Perhaps a diff would be a good addition for next time? :)
 
-[1]- https://lore.kernel.org/git/20260302-pks-history-split-v1-3-444fc987a324@pks.im/
+Yes, I'll add a diff from now on.
 
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
-Changes in v2:
- - made changes on top of ps/history-split and used s->r instead of s->s.r
+> It's been a while, so this is expected. I guess the first week[s] would
+> mostly be getting this series up-to date.
 
- add-patch.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Yes, it's mentioned in The Solution section, but I'll make it more clear
+adding it explicitly to the Timeline that it will be the first thing to do.
 
-diff --git a/add-patch.c b/add-patch.c
-index 4e28e5c187..f27edcbe8d 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -558,8 +558,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 		strvec_push(&args,
- 			    /* could be on an unborn branch */
- 			    !strcmp("HEAD", s->revision) &&
--			    repo_get_oid(the_repository, "HEAD", &oid) ?
--			    empty_tree_oid_hex(the_repository->hash_algo) : s->revision);
-+			    repo_get_oid(s->r, "HEAD", &oid) ?
-+			    empty_tree_oid_hex(s->r->hash_algo) : s->revision);
- 	}
- 	color_arg_index = args.nr;
- 	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
-@@ -1271,7 +1271,7 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
- 				"removed, then the edit is\n"
- 				"aborted and the hunk is left unchanged.\n"));
+> You might want to look 'git-backfill(1)', I recall there was some
+> thoughts on extending that command to do something similar. But I don't
+> remember on the top of my head.
 
--	if (strbuf_edit_interactively(the_repository, &s->buf,
-+	if (strbuf_edit_interactively(s->r, &s->buf,
- 				      "addp-hunk-edit.diff", NULL) < 0)
- 		return -1;
+Thanks, I didn't know about that, from what I've found the 'git-backfill'
+extension that Stolee is working on [1], it's similar but (correct me
+if i'm wrong)
+'git-backfill' fetches the branch/path. This idea would only bring the
+metadata asked on a
+format string e.g.:"%(objectname) %(objectsize) %(objecttype)" leveraging
+on what has been done on Goal 1 and Goal 2. I'll add a clarification on the
+proposal about this.
 
-@@ -1679,7 +1679,7 @@ static size_t patch_update_file(struct add_p_state *s,
- 		if (file_diff->hunk_nr) {
- 			if (rendered_hunk_index != hunk_index) {
- 				if (use_pager) {
--					setup_pager(the_repository);
-+					setup_pager(s->r);
- 					sigchain_push(SIGPIPE, SIG_IGN);
- 				}
- 				render_hunk(s, hunk, 0, colored, &s->buf);
---
-2.53.0
+This would get along with 'git-backfill' extension by, querying the metadata
+from a branch first and then fetching it with 'git-backfill'
 
+Thanks for the feedback and compliments,
+Pablo
+
+[1]: https://lore.kernel.org/git/pull.2070.git.1773707361.gitgitgadget@gmail.com/
+"Stolee 'git-backfill' extension"
