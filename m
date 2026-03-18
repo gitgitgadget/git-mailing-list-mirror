@@ -1,114 +1,133 @@
-Received: from sonic313-13.consmr.mail.bf2.yahoo.com (sonic313-13.consmr.mail.bf2.yahoo.com [74.6.133.123])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6E57083C
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 12:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.133.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837913D75C5
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 13:15:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773838389; cv=none; b=olZ1mn5UuQ2+gePfWwNRM5d/+vcD02AGSGxZVQiXwggUj4n/n633ncZGG2NNRGX8JGoBUWflNTgZ+Oppf5pRAe1qubiVa47EQ06RXBpB1kxk65aVe0rSltPlEIp2p0CN17d1WV9n4MmfafINNfjI/oj8xi/uVc3fsUsgBBnDSf8=
+	t=1773839703; cv=none; b=qt+mke61O9DDOr+1cW8TxfmJgNlny3C4arSr/IeQrrZ8Z4WkQ9ruCelyZq7ts8yCB0CI9jrRBNwDOuG/iFZwFoaFGn6J7RQDd1WBMGOCBGdBVd5xZdgAcb817rnNKuJSz4J06jfVkfy7MfKhhjN5O3p2si+vJ+XgkNpnQiSRTOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773838389; c=relaxed/simple;
-	bh=pzwdmPZ+afy6BygN+4NuXkICDqQrKxibcHHrWQTFCcY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:References; b=JHPFA/98Jws77ethvtOg/2VdItfMSpTNlMRVOELnjp2n/gQslbgbTmt/3DxHgx+yEnHJtQL2IhupS/9H9RnhVrhwYOeh4WHj4f5Hav5eOj2cXCUF5adtRhcLouUvfUL98iy5pV0md30GGciaVu5Hj+HOL93Owy7PjQevVyfrsGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=WJoFNPQ1; arc=none smtp.client-ip=74.6.133.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1773839703; c=relaxed/simple;
+	bh=LvuNZgp05etT8MNmu6zmvr/dZ2KIhCojstZhxne2or4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bZCIoYEmW5XI7azBDwVZKQ4LlyuGInkHsOkhXRE+XEYiYbN+zOGz3HtcNfaMOZCGSiVWKAzM0cyEEnQpOeCEOeNgiL3L9e3Ni0aCEZoBvCM5E3VbU05sHqj5Vz+PjQKjkAOIfoffTp4Joh0EQ6P4/LKY7RpvFF9rMDYvPn5pAuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DKD+UGbq; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="WJoFNPQ1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773838387; bh=fNQ4V51pXD0WBlbYAN8Fyx6EL0C1xgBQIvrFironEoU=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=WJoFNPQ1ipMbhxxYZP41ekq5iVti643kz18Od/CfVxqhcuQWsKJR1wgk0N7SyHI/xqCwPGlt9pXEivwkCTmZIUCPSXJHA/W6rTuLRFzF9QKVRt/OS7Cw1Goj5iHcoAjo5uYtjWAFNfXFG8klD6awUvSV5VM7/e+O+A0QN7VLjKuJbO66OnKzeGCIrJEVw9hzBJq5prxJa0ttRCYhRd0JoiFLz3YrGSuaJ531dQKIhCi9OU5u9Hqj/uLMFh4laHudguoW/LNWHzwEv6s1bG7IbhVdkfn8D/fh2ZQX/U9VfUt1nUVjGR//q3QjODFOulnU/pQFzMk/m0dVvvKMTuG0iw==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1773838387; bh=vs2V+NQ7Jjs0M1MPRR5bn2bcZsH87V+2MBZnZ9wm514=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=cxp5cjeo/cJ9N56oqz+CSlKLjrRExm6Ha3INJixVG1rHZEeE+g12tNFi7NbBHzN1hECdSu1mvEV1cwbLbfXwWB+XEVgKcKTE9Y6e1+Cm9y/jIxw6xDgEg67QRNMIm1FR+Nv1Sg6BC6J8Sf8hC5hfcJFD6EYZPh7rpI6eBTrnBLSfsksjvRqepoyUobWomTeyFc5M1M5C4FRrA84XkUdHvifGzptPkDJ7YpFlJbr2gGDh0r8P81zNKUgWmlN4j2MphNzMQOcPN0IUdtiKOVkWouGEjWayvL+frp5aG/QPne9xV6B4/9noWnwAieLvppQ0Vrll+TM5yQ5uqr62ERuZmA==
-X-YMail-OSG: K9WCzr8VM1m6tvjM0qq0YlxaGXjEGJnF7DtHvkcabcV2QJHWuByJ2IqDRo5PuLm
- 1VDUrkIZytc7uPTxEoyrM202qf1yTq0qywmngOP3DQkKSUp7N.ykjYeXpxbEyayPsAwdsOrVKZdR
- .T6f1ZiXaT1h4NhVERz4GCDmOpJC5ODVw0JDf1aNc.XCANlpnGmPTI19ZOFqejtsnmLGHXov15iu
- mxLBJNMbqDi0IH0xQ9dRmXwbwSEnY9TqN4nqgyv2o37z62jgM7jDwdD9P25GCC10AhLkkdvEdHbQ
- ht_U0urqF9XVHYY9wEkVQPiEGejZNxanXwvsBLfWZUhr4ZJcyriTwBywgQ7i1JrRrUJtzDUTM.4R
- sI5h5Y.b61YV7d3KZ9zMTCr.eLMTgX1O4us0z_uiYBvExJXgV0AP5m47X8wBYr3QMfui873ncoFn
- mfcZPhykfruW75gnyepGUnglbqnbfcUcbEGxZqaUG5d26vIsPCdKKRN3hJxpL1aEqZCtg1qJl82z
- fCM9MbBxVzKeEYi3oFgZzPYAaKBKDZ9o9IpCLjxq9HDUlBNhVLM0boSp8J1J4w2AQnrGnLbeOIRr
- Wl5nYdW9644tM0W3SzH82muPRfda_LEPt3.dG61b9Lln5VNjgip.GbpBvSf_7JyxRl4_OZXnh3Mc
- fbbB2baUHXQj9N2_DeBK5OzGijzNQJdGKVyynepXlK0R2nlei7.4znzkVbakCP5t73Y75LZrzuHN
- mc3uqv0F2y_6EQWEYw2Hf2.zmz4NPdKJwkmW9sPLUq3KgZtGwyuOM.zZ8snYZF.jt8cef9m1EWmE
- GB7jGdPj9vvFqtN4yczwVgMFIv_k_IO6_jVEAdIXqx_wuXqHAad96CNR0vAY94uPaYYZRec._tfT
- cCmphQEk_PcUvjONq6t3rG5Q8yjfOcKlTXA3YwNlrSTLM9J7LPso0FFPTC9cqckAhu3QCwWoJpew
- 9TbZvg9l6N0CPdT1VQq6ty_bNKgAwqkrY31EppSp7dv3RWSQ.AW4v_M0dOCnwNz2WtSDdyMb4KmS
- G_8IDXwRFmI5lyn7kojvmPZW1dWfVIRhYQqYfOeApA4a9uiIzSnagA9uUh3kHPTHuFqKjqKXQniq
- pObRhowxDBSXAYLchglzZWlf5408Osr.NN_e9cRPPVw6YQOZSNlLS0RtgASg.TQs.hFOBexoeqV6
- QGpDHzxczGtBmJG10yb.kT7._yuEY5oT9UZIIQdkeoaY_hBPcLRNftmRNWn_lhaDbV3.SLnKLgae
- och4wEvzReCukd7lwamXT9k.5Ta3xwsYVrX4vzCVNnXiE8AtLQYSFri3pcLLM2JY5UIodEYKnSYj
- pOVXR5KfSB2uB0V4BWaszLN9AnA_6153xCSa8BiTB5Dq7zxKj1an_dkfwiaObkaXFgH5v2D5OXAL
- 8Y8VweDOE8eVSeTcDp_nOgAvENf6OrdupSNHxVkP0Wzbt06ksgtjZIMPSfMSmgOuYGSnWA7Z14Ek
- CQNLl9I.vWGN1kENDXdMYJQTt1GbPLQlTpvY7JCf5Uwn7DGoaBl_kQ592dvFhcLFiewUmixfgaQE
- iTlgk7V5gISm3hVvfbHT_WuhynpErnwGNgT9W0HVhqbtgjTR1x0I6Q8JUbfuUYR3q6s5k5fyZ5QK
- 1qSZlaDGk3_hJ8qrK31fFb7y6thlqAK.iRGbGqQKRT0kxzEn_26.x4i7mLW9G.p0nGwBngm64zWN
- 10P9FH3FdKyUjQjJoEPpcQRwUJYGs1fH0udHN6.cv15OF9O_hriQiCoDMEfaqR9oyiGsPUMcGxRq
- EmmkZrzQEmjaEzZOdTGEVRBmC7gaZ0qHw9oSzafS_HWRYoBl0XV6fp2pkeZG7XCp1LBpWXr9RwDQ
- oX3qsgNM2QlKlHwWPM_kkbidgB0wc6JbZS20NFPm5EZtJn8zz5asnaTGiAPVPVmmqKyT0JIRHKbT
- fEW4VqvOi5Xm__p4OYftrTGFLaw2jsTjnJ1hB6MsW9BaMN2oV2xp4.SDzqQz9OCuDd7jEVTkbEwW
- oau2GdxAzMeWMapTZZPbq.Ez7Hdb4yYMEq295JKSNDIjfssgBxZAlVCQEfVN7mtgXK8XdQ.kfAFG
- CASPdKZSn0IppGBIczGBevJlo0n0mV9_7wFdbja8kIvTanbybfk9I8aj8f9l3CVKcl8UU0n0iX5A
- HbLZ55hkMfN0D26jHnew9rZYh8qMaqkvvex3gyp1oxbtVe0G02D2gZzCs261AkNKF7URritYtFxQ
- Ts5jFQEl.xqAeC._90uzf017nWOiUnTaiYXCPyEkrQDZT19q4pQNTJLIQsUytTNg818xjdwCPdVZ
- QjaqcwPIZduB8Sdv7WpnhhLmCTUYX
-X-Sonic-MF: <jerrywang183@yahoo.com>
-X-Sonic-ID: ea61cf02-c8a7-4ea2-a9e8-7cf5b3029f82
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic313.consmr.mail.bf2.yahoo.com with HTTP; Wed, 18 Mar 2026 12:53:07 +0000
-Received: by hermes--production-bf1-697f88457-thlw6 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 14fc1b424a46476ce353da9086e18cc6;
-          Wed, 18 Mar 2026 12:53:04 +0000 (UTC)
-From: Jialong Wang <jerrywang183@yahoo.com>
-To: karthik.188@gmail.com
-Cc: Jialong Wang <jerrywang183@yahoo.com>,
-	git@vger.kernel.org
-Subject: Re: [GSoC] Proposal draft: Improve the new git repo command
-Date: Wed, 18 Mar 2026 08:53:03 -0400
-Message-ID: <20260318125303.88730-1-jerrywang183@yahoo.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DKD+UGbq"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50335b926c2so60787401cf.2
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 06:15:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773839701; x=1774444501; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/jnl/PhPrcGjrd9yEGeKoun+bsft3dplLHwvVVrb3ac=;
+        b=DKD+UGbqpWSJckmJwHZjd5anZZ2SkxGRFh2+WXNZ5nPVjmuJBRa1weyRbhafUlU9xT
+         vA/PpSdUSE8Fi6Tzadbt5EriittcBHotSkmXNPJ1TKk/qUfp3i4YO3knvBXx8m6bBx09
+         UDTlbXmuaSFTPRivIhaLm8LDqmOK7rrO3DiOlESM3e/GYdEgxwg7BvG/tQXmwLRNvSIj
+         ICsDV2x/beK1Oe78lK7FaIBMQFfyVQT9uoH/415uUmGccdof3czuUI7r3SwizhEb7CAI
+         oxHOaE9mqOdy4cyPC0ZjGblfn+6GMUj/RHBi3vUCiOQf1YKYZCqlULJb03LVPggB6j7N
+         yUkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773839701; x=1774444501;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/jnl/PhPrcGjrd9yEGeKoun+bsft3dplLHwvVVrb3ac=;
+        b=HgpTO98j/pVv5qcsFVvU4x9ilQi4Y198xeprUGjD5wKeQKS+rLIgK41sPPmWo/+w5p
+         2y1wryISqP7PVRwGd7iSurXJngCT2i2yGncYh/XDFn5j4DCNa8vQo6DocWiofEuyHkO6
+         +3SYp+iRONf3hW8YTBX1v09fEU0626L1G16syd5rzcNBeT+n7O+5KGAsAIZywVs+tX5p
+         OHCmUc2pvJekim4JL+KvWo0G2iyZIY11FsiUAdDJiVSjvpl0LiPvRfiKJsLHiY8A5yXi
+         laCRm9Egpx9w1JSN/enrgtM34yJpIzCijx71nu8xZ8X3nN4PRVz8cJnW2nGT+vVKCPtT
+         KaHA==
+X-Gm-Message-State: AOJu0YzfggD7g3vJAt28bkLdxJmVIEXW6XtqWSznaVa0uJb+S/sRbwbF
+	fiRsHbu7Aty1upzlvFxWZgUb/Hn3eLsmQGhiLmtAFpdOrmdSs/tppvV4
+X-Gm-Gg: ATEYQzx3NzvJ4BuguNquKugmM2ciADpK3AlbAh/hLNDF2w+xOrzXiqh/UP5ZDfZV2H5
+	a1KKSdv2LIdCy4PqzjlWD59W9YtI4RC3LJBAc/j5eJMeqLck5xvb8o1sFtb74NyQsdPK/tqzhis
+	M4tmlsTtUBB4pzCBm+buwBZ8z0hmpubfRv155aeMc9XQ6lXUJAG30bpy8RtIt8pmf/Kg6ro1pkw
+	3HyuDAp9fedHcvIcwUd4vl3PCnLhfH1xy2gzh9bG56oJAp8c/2MiUCtGNi8soYiQMUkGXSzwFva
+	ql9EIi77EUm5qBCl9xi97p1/3drhV1HZ0FHcVvDOnBeXan9EOC518H7YgqvlHBvP2Lhnx99AhOk
+	6iKNMHhCUXWiRyYDZdfzqOg4T9XfBtO1j87zTR2KoVc8OW7WPpsPPonUyhjEaQWwDGJHnXdMAeI
+	fybTUPtPbBHCyHpKkgeitXr4ha3MY6y1yKYtl0f5vJZEJhKBwX6RRg/SawQe4+gAx5VsSYAQ==
+X-Received: by 2002:a05:622a:58a:b0:509:20de:4adb with SMTP id d75a77b69052e-50b14888802mr39339181cf.58.1773839701409;
+        Wed, 18 Mar 2026 06:15:01 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89c6b9ec0fdsm19563066d6.40.2026.03.18.06.15.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Mar 2026 06:15:00 -0700 (PDT)
+Message-ID: <5122920d-078e-46c6-a494-c6e430df7e3f@gmail.com>
+Date: Wed, 18 Mar 2026 09:15:00 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-References: <20260318125303.88730-1-jerrywang183.ref@yahoo.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] backfill: work with prefix pathspecs
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
+ <977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
+ <xmqqse9yhzu8.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqse9yhzu8.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Karthik,
+On 3/17/2026 6:10 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> The previous change allowed specifying revision arguments over the 'git
+>> backfill' command-line. This created the opportunity for pathspecs that
+>> specify a smaller set of starting commits, but otherwise did not restrict
+>> the blob paths that were downloaded.
+> 
+> "pathspecs that specify a smaller set of starting commits" is
+> puzzling, as starting commits would be coming from the revision
+> arguments.  "opportunity for pathspec to further filter commits
+> to those that touch only the matching paths...", or something?
 
-I wanted to send a brief follow-up on my proposal draft for the
-"Improve the new git repo command" project.
+You're right. I'm using "starting commits" incorrectly. My view was too
+focused on how the path-walk API starts from the commits output by the
+revision walk to get a list of root trees and then walks by path from
+that point.
 
-Since sending the revised draft, I have continued working on small Git
-patches to get more comfortable with the codebase and with the mailing
-list workflow. In particular, I sent/rerolled:
+I'll reword to make this more clear.
 
- - an apply.c series on input-location reporting, starting from
-   "apply: report the location of corrupt patches" and then extending it
-   to header parsing errors and binary/garbage patch errors, which I
-   rerolled as a single v4 0/3 series after review feedback
- - "t2203: avoid suppressing git status exit code"
- - "object-name: turn INTERPRET_BRANCH_* constants into enum values"
+>> Update the path-walk API to accept certain kinds of pathspecs and to
+>> silently ignore anything too complex.
+> 
+> Hmph, "silently ignore", instead of "no, you cannot use that! and
+> die", or at least "sorry, I cannot do that, so the result may not be
+> what you wanted, you've been warned"?
 
-Working through these patches helped sharpen how I think about the repo
-project's scope.
+The behavior when silently ignoring is to over-download. The revision
+walk still filters commits, but the path-walk then walks paths beyond
+that pathspec. This will be fixed in the next commit, so adding an
+error case didn't seem worth it. I'll do a better job foreshadowing.
 
-My current understanding is that the project should probably not try to
-turn "git repo info" into a large catch-all for every possible
-repository path/value right away. Instead, the core scope should be to
-define and land a coherent initial set of path-oriented values that are
-already grounded in existing repository setup / rev-parse style
-plumbing, and to do that as a sequence of small self-contained patches,
-each with its own tests and documentation updates.
+>> The current behavior focuses on
+>> pathspecs that match paths exactly. This includes exact filenames,
+>> including directory names as prefixes. Pathspecs containing wildcards
+>> or magic are cleared so the path walk downloads all blobs, as before.
+> 
+> Ah, "we punt and lift the limitation to grab everything, so at least
+> everything you wanted to have will become available to you, even
+> though we may download more than what you asked"?  OK, users would
+> survive that, and as we improve the pathspec support, the user
+> experience would only improve.  OK.
 
-For testing, I now expect the main command-level coverage to live in
-t/t1900-repo-info.sh, while reusing patterns from existing rev-parse and
-repository setup tests where the semantics overlap.
-
-This also changed how I think about the timeline: I would prefer to keep
-the initial milestones focused on a small useful subset with a clear
-interface, and only treat broader expansion and cleanups as follow-up
-work once the main direction is in good shape.
-
-If you have time, I would really appreciate any feedback on whether this
-updated framing is closer to the direction you had in mind.
+Exactly. I can word things better.
 
 Thanks,
-Jialong
+-Stolee
+
+
