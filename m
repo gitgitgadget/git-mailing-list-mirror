@@ -1,109 +1,188 @@
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEA1360753
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 18:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773857559; cv=none; b=k0dMAeBXosxweO6An1gM2+iI0r5IqgXSzPCnJMDg5L+3b5hz9oUgu27qa6D9hKus5GXFW/wWgzUZkX/Y+Aiw+PNRnTa5az0PDclcsPHx0ke9Mbq9jbHP6g2df5JoposaZBLUPq6NuEtYVrowJ7sm9GC5RJezQiRAktSVXqZ6+uw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773857559; c=relaxed/simple;
-	bh=g5Nhc+3TRjhJ7Vzx3XNnlBp0zx/VfVn7FE3I8gzaR4E=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=dVb9a1LfH4NUBW2iY6e4hUkh1RUmowuMEypGWJlpN+ABX1OfWbNITodK21NqjQQUvnwSppAiPhrfF2g36iaglZJbAyTaeKE4jBY4Vlo48S9vcoF/MHxTm4PsrIbBO5u9rqq18J+pdtn3iGW2v9GQqEqi675Q1hMblI6LzlHNUGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dpt6jcGN; arc=none smtp.client-ip=74.125.82.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443833CE49D
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 18:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773858020; cv=pass; b=KNza8hDRIyDhPeES6dWDIGyv10imaRSS2IG2LS9QbqisEGNszLttVkbabO3xzIIBNe7GNbGLFxRO1Ufe1GEHkFfidqASUBA/Sl3/Y+5SiZwchuyIl1dbTW2tq55Z+lOHluZgdRt6xzsCiR+x3PtRwwf9zl17bQXNvIq7m2ctogw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773858020; c=relaxed/simple;
+	bh=9TzjPvOINW9bzUrgV49jK23yTaX8McVuSEfQdyfXiKM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oIK0pXKjK4FXLFsgohoXesXGpD6hX+Cf0dIFyPERaeJ3v8vHc21N6ku7edliGMWP6nkAjZzyGHXKDkv7p7F1j46TJh63G3J+DgoLZ9E5iSgfqQw/OZ48clmtu3jtvk5DcBGszk+zjNHcxpYXBMGAtP0XUNlYmMpCMpV8CnTOT00=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyb5eWBF; arc=pass smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dpt6jcGN"
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2c0e38f3f60so642839eec.1
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 11:12:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyb5eWBF"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-79a62a2bb8cso2377007b3.3
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 11:20:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773858018; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BCh8vUnhIxb76csgXPHnYbl6jeQyQA+1hDSRJKOMQadU02qB2MoEZkRenM/LGyKPIO
+         rY1/og7hiQTsiAqRRlREuzV7XCWsOvhSVUYrdnoaJpFHGkzFhhnfGGB4HvS/5HSmKkDj
+         mwGQdJit5Irh1PhUjhPzJ6SWY4gmuLJ6cZDA9u/qSWf5/aUj9c1nTLUPdHsKUXTWMinS
+         w9SOS01TI7oiQnWNkc/z99lJz4greVp1kThEfaJmj26OPv0z3Vbgrfzyu2xf6ayzTtqN
+         8vAIZyXSUOPE7Zmtz8p7elu25DynHMN7TcsWa1xOyJymWJjX5lzHu8rZhA+6b/FVfK9/
+         w/pA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=1L5PRL+slo5wpRyYENBxefORqKwIkY+JFXVD1qQ9Rf0=;
+        fh=hdYj/kDeiNxc0CV9ANV1htcOog43EMyhQ9sUUeD7EVE=;
+        b=gFcRGLmg53wDkgGXJlJeJmz+8KUKrshG+OikPyi1T7JXgJx0/CHrPq++4lKsMVSCnH
+         j6g+OyC2UsL+5pduxk3gu8oPz2sL/bKZNOPf+O94H4GStfr5asl9E1hVHe1YmbHwVVGN
+         r0YfloxpydMxmyP8c4a2SST5GpxxqXhLlOhs+xC2Zo9WvyVqcmBFzyclBIGTGJ28bRmU
+         4UWyPIWSo+C6kStxsAEl+Uv3+zNPwz9Vjd21LUSL2hoMDY61cJKYYLtBJTTqxp/5VRUS
+         zUVmZ2iyRS7o04rwK5H5J6zyDfEJdqvp6Nn9ZdKsUfmLX6g++o/mWb1RwVgRUg0m3Cq3
+         IVLA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773857557; x=1774462357; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=B8x+Sg+yRJou65dw/FaWHvXpueaAKvtaPi9YIcRl3qE=;
-        b=Dpt6jcGNLkTZOkxq1L4JqoGTCz9rfxtDtraDefUsVe0VcIcDcRH3n+C65H7FcLXO/0
-         Y/6MKAni9fGlzBhs4tPARoVgluM4tEHT+j11Mti0BAFnJQn40NX6FS4I5gwItUtmmR6F
-         DOZt7KPgkKmLeYSQF+cEStP23yBnuKESKbreaGc8G3z/hRbTzwdDqxAA9rA9piBWyn+1
-         ln35oOU4i9uhesmbyWVaIubBtcRfa0Fd0a7PfSdbt4sk17+OggSeb8z8XR6X9QQtHl2K
-         E1cnTDaFrKZnznVjDw02dJt1DOTLjOCkMCaAJnfnmu5t2KjuqnrKFABKxngP7b6XAzYU
-         Jvnw==
+        d=gmail.com; s=20230601; t=1773858018; x=1774462818; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1L5PRL+slo5wpRyYENBxefORqKwIkY+JFXVD1qQ9Rf0=;
+        b=lyb5eWBFEOZPm2Pe9dSpXOyCNuyduEwBE2Px5aMst3tbJQeIMvLgzcKrzelyg4/NZB
+         8bO0eHLonqT4NtmDwHvinLoWLLBIajUZEnEXyyJuTXSBPxNhF3NWRMr6EME5NthbPWgl
+         C22zVlejxU8RK6HroJE4vCC0SvwlUChSpuV/Fnjb+kMzQ4YL79GglJP5StHCk2mdYl+5
+         SAel39oAdcPuQF7Ozqx7UmeSb8rGHwTZ6WxacdFtXCT1dSUuCmw0sQFDy84jYrDpGSQ3
+         aHceeo58HydkuO+TLzL7Z7MmgOxnAWvvjYvDdKXicgD6sxJHnyyZXBPCgG0QPeHXUxEq
+         tdBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773857557; x=1774462357;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1773858018; x=1774462818;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B8x+Sg+yRJou65dw/FaWHvXpueaAKvtaPi9YIcRl3qE=;
-        b=c41U7nX3D/vHaAp/6CbXqjuJam66IOAEzgeujZx465TibP8GsyrIXJLTXPNccau6XZ
-         0Vczq7rmE68idX2QyJOOU67uw0Bx6V5AnrrA3n4zOkzUdKbg0q2gd9XkP6cY9uOIrI5y
-         lK00B7SyXh7axViJw/RB1xFWaA1/d08Bqi/O1UiwqyuTlaHiHQuBLxvhtjXqCp07soZb
-         dOWBukOlxzh/fAtgQVr3zMrE342BkJos+OeAeg9PfDzEL30jXCWzqALHdeqAhdHfD9b3
-         YIiyKrUsqB/70e1DiDzvyE7GnGKKzFkCRHZ++ZCGPhJdKcVY9IN1eMIccKG+gjYn7bEL
-         lsfw==
-X-Gm-Message-State: AOJu0YweDRfiQPYynaZU/IFJq7cpg/Qh3Es5KtC+KiC6QZ0KocsJQ13C
-	2gIvrlqrezOyAm8hGKX7WLsoK6Dle9el0Bs74AxS8sSk+ciEwVAfizr+T7tKlQ==
-X-Gm-Gg: ATEYQzyQca8kWZvqACgd1rFSmpvmHaKgCynGcu1SuUZsZaojsKesTWhvmWAO6jFzPUr
-	BT8VgGcgkVJcSGhUMrZ6IWOdC82AT6FU1GUxkHMPZ/9hUjug/Y+4Mmv5xzFe0EK7Ax4DBx3RB/Y
-	k/gBuM7L85hhcbQAYvquRj1PowbLuZVl/lrsTvygA3V+07BCWYFGOblbPmrAGLUck1vGa3zUncs
-	MjEBi1mQp2groPlharpQhmRQD8YQs2ndroaPEWs9Th0fdfoJ4ZPHOTGYJYkPieJVq6EAXq81GVV
-	x/d3zipW2vr/obJia2fkaJEsMQ0AYDoL5Vqc/U+ovEF4xQXA5S4AaNxhF/AFGTrw3QeoeSYsJZA
-	YlUBtYKWV3s/fCjuHP472X7EhrkPdNjoqE33fF0nAAX22lolGTfJf5C2wvJ8qE/G30lVGhcTBzj
-	P70l/Xr00NDfP0KyOFqMCsP5nQ
-X-Received: by 2002:a05:7300:3b28:b0:2be:617:1f3b with SMTP id 5a478bee46e88-2c0f3b6bf16mr288710eec.5.1773857556800;
-        Wed, 18 Mar 2026 11:12:36 -0700 (PDT)
-Received: from [127.0.0.1] ([20.168.119.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c0e55ce5ddsm4634245eec.27.2026.03.18.11.12.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2026 11:12:36 -0700 (PDT)
-Message-Id: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
-From: "QUANTUM via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Mar 2026 18:12:35 +0000
-Subject: [PATCH] t2107: modernize path existence check
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=1L5PRL+slo5wpRyYENBxefORqKwIkY+JFXVD1qQ9Rf0=;
+        b=BfMfIqIwSSnRG25A6WGtg3tluhyvzxDCERhQiCItoYW9bVbR1q8eRzWzg02xI7Z8bl
+         9sOXbcFQzpN7ygd5XBmghfA0GCdT8xyCqks3pvaFdAydeOEGk0qV4V+Ll8k5dF+HVpow
+         V/R0fi7gXTfojL78OUSh3aX7Xklk9sVDAyVnBqZ+DobAqxUon6QslU2OZ3hm2Gehme93
+         zPCILSB1Zl0DAzXcgoOhg/wCmy05z0WxvhylzACgkdNVIscCUsdpjTZlx6jR2JxcdlIi
+         iyGpNC6rz0wKnnsS7jPB6r6w0mpxzMa99CSKpNLGZ19wBQVnrEoLUC4iVbRA0j6sAX4B
+         vZqQ==
+X-Gm-Message-State: AOJu0YybMdlxlf/Zljjac2Pz/KVZOEmin5RnGjdyYTajzZVYrijdLbEV
+	P7b0uxGXoaLNhI95Hv94tMltI7VbF+x5upVztlNPiHl0lpHbk6ScF2l9o1BbRmBnPMeqz4PTt6r
+	w3N31LzO++gyYqKRTmWWwL0Eisph/Z9k=
+X-Gm-Gg: ATEYQzxUCklg6hxaQPafE4TrP2/67Q6zwmmLH5ugCgOl7voKKorbNZlGG9dYq+A+Mr0
+	rOgy8xRqCEK+NxApHx1kQZN4f5U/++wdhHXxRfzwJjfh1Ss5zzGDwYhbJvH76tY1zUgP3kyEOBF
+	BvkjNNIYCAyjQSdAIwirPPaJtGm3/ImykpDhcKAbQe8MwVFCLaPG87fGJ8NQRuQ/05faYkUZDlI
+	wEoCWlDzVL2QV9UVtyxjXjj4a09pVgHrobWHARDizMetrIAQS/l4pVhYyYdqgqabx93OInOPRKc
+	k6jM8k1NTr8lfvZKd6rb/E9i9SqQm5lCvx0OrJO5aBN6TNyBsbBxejPrXKGwjNRuevNFa38Q/ID
+	XrYHKLyJKlqqg1aZOB+SpdAk=
+X-Received: by 2002:a05:690c:c4f1:b0:798:caad:ac9e with SMTP id
+ 00721157ae682-79a71cb811bmr43242817b3.61.1773858017984; Wed, 18 Mar 2026
+ 11:20:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: QUANTUM <adityabnw07@gmail.com>,
-    Aditya <adityabnw07@gmail.com>
+References: <20260316133426.117684-1-pabloosabaterr@gmail.com>
+ <20260317220929.120746-1-pabloosabaterr@gmail.com> <xmqqzf45gm2q.fsf@gitster.g>
+In-Reply-To: <xmqqzf45gm2q.fsf@gitster.g>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Wed, 18 Mar 2026 19:20:02 +0100
+X-Gm-Features: AaiRm50vZYq_ZvtUgCz0uGzkyCRlyDZUAohrbzEzS1kp-RLFGbqg68o1tjtkzwA
+Message-ID: <CAN5EUNT7co=ucbBRykXdLJDUdewvoh+cMVbbOOUuRTrv7j2u5A@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH v2] graph: add --max-columns option to limit
+ displayed columns
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com, 
+	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
+	chandrapratap3519@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Aditya <adityabnw07@gmail.com>
+Thanks for the feedback!
 
-Replace '! test -f' with 'test_path_is_missing' for better
-debugging information when the assertion fails.
+Junio C Hamano (<gitster@pobox.com>) writes:
 
-Found using: git grep "test -[efd]" t/t????-*.sh
+> "making it difficult"?
 
-Signed-off-by: Aditya <adityabnw07@gmail.com>
----
-    [GSoC] t2107: modernize path existence check
+I'll correct the typo
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2071%2FQuantumDev-CERN%2Fgsoc-microproject-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2071/QuantumDev-CERN/gsoc-microproject-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2071
+> If this <n> refers to the width of graph part only, the option name
+> should hint that fact somehow.  Perhaps include the word "graph" in
+> it, or something.  As you use the verb "limit" below, perhaps
+> "--limit-graph-columns=<n>"?
 
- t/t2107-update-index-basic.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> I would call this output consuming 5 columns for graph part, not 2.
+> For end users, being able to specify 2, i.e., being able to say "I
+> tolerate wasting display columns to show up to two ancestry lines"
+> (or "two lanes of ancestry information"), is indeed a lot more
+> intuitive than having to say "You are allowed to use up to 5 display
+> columns", so I do not object to an option that takes "2" as its
+> value and produces the above output, but I am not sure if we want to
+> have "columns" in the name of such an option; "--limit-graph-lanes=2"?
 
-diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-index cc72ead79f..3bffe5da8a 100755
---- a/t/t2107-update-index-basic.sh
-+++ b/t/t2107-update-index-basic.sh
-@@ -86,7 +86,7 @@ test_expect_success '.lock files cleaned up' '
- 	# the_index.cache_changed is zero, rollback_lock_file fails
- 	git update-index --refresh --verbose >out &&
- 	test_must_be_empty out &&
--	! test -f .git/index.lock
-+	test_path_is_missing .git/index.lock
- 	)
- '
- 
+Yes, it only affects the graph rendering, I'll change the name to be
+more clear about it is for the graph only and that what is being
+modified are the lanes, "|" + " " not actual single char columns.
+What about --graph-limit-lanes and make it imply --graph as you said
+if it's clear enough?
 
-base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
--- 
-gitgitgadget
+> Isn't "no information is lost" a huge exaggeration?  We are losing
+> the ancestry information by not drawing graph lines, aren't we?
+
+Yeah, I meant that most of the commit information is not lost, only
+where they come from if it's a deeper hidden lane. But what I wanted
+to say is that internally I'm not removing any information about the
+graph and that every commit will show no matter the lane limit.
+
+> IIRC, Gitk also allows you to click the chopped arrow-head to jump
+> to the other end of the omitted ancestry line, which is very useful
+> but is hard to do on a terminal output that is not interactive.
+
+Yes, that's why it's been sooo long without being done prob. But I
+think this approach is still useful, it can be extended later for more
+customization like limiting the lines from the left side or ranges.
+For lane rearrangement I would need to study graph.c more and look
+forward to refactoring a lot in multiple patches.
+
+> If "git log --max-columns=77" ignores the option because "--graph"
+> is not given, it would be confusing to the users.
+
+With the check on 'setup_revision()' users won't be able to
+'max-columns=77' if there's no '--graph'
+
+> This needs a bit more commenting to explain where these magic
+> numbers come from; they are of the same value 2 but have different
+> meanings, right?  Like this (only to illustrate the shape, not
+> suggesting what the contents should read):
+>
+>                 /*
+>                  * Each ancestry "lane" occupies 2 columns, and
+>                  * we leave two columns before drawing the commit
+>                  * title and log message part.
+>                  */
+>                 int max_column_width =
+>                         graph->revs->graph_limit_lanes * 2 + 2;
+
+the magic numbers are because, a lane is two columns '|' + ' ', and
+the +2 comes from the truncation mark '.' + ' ', so for a 3 lanes
+limit, the padding from the graph should be 3 * 2 + 2 = 8. I'll add a
+comment to doc the magic numbers.
+
+> > +
+> > +     if (revs->graph_max_columns > 0 && !revs->graph)
+> > +             die(_("option '%s' requires '%s'"), "--max-columns", "--graph");
+>
+> The naming is so selfish.  Among "git log" options that exists and
+> that will be added in the future, this design decision declares that
+> "--graph" is and will remain to be the only one that may want to
+> specify the maximum number of columns to spend.
+>
+> If the option is named clearly to be related to the "--graph"
+> feature, another way to go is to make it imply "--graph".  If the
+> user says "I want to limit the graph output to consume no more than
+> 10 leftmost columns", it is clear that the user expects the graph to
+> be shown.
+
+I'll make the name clearer about what it does and less selfish. I like
+the idea about --graph-limit-lanes to imply --graph directly and not
+force it to be explicit.
+Making --graph-limit-lanes imply --graph removes the check at revision_setup()
+
+I'll send a v3
