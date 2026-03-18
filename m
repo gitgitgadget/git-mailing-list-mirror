@@ -1,114 +1,178 @@
-Received: from www130.your-server.de (www130.your-server.de [88.198.195.4])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF3D263C8C
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 17:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.198.195.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773855223; cv=none; b=ILmqTIWmSdRH0TrgqJ2H2j2Nw3Ce7u21nLp42pkkGO7mRyXN/xGz5YuXUJxCqzAgx9xBik12ODPJ5ApZRoTsnO4KFnUgqp4CVBWlDoeZRk6qXyan2L1z8pERc7D6ueekLHgpT+Z0Y/NNNBXnqzdtLxo46Pri1j3Mb6X6mmvEyus=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773855223; c=relaxed/simple;
-	bh=S5OM+mwq02BSnzN84xwr8WHZK+fNer5UDtgWRBNJjFs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lVXKE5y4LUFsPsDqDSlZdXqUV0PvN3/oVVCDacUXAPl/VzxJ3cYjE2Pn/3YuvOHr2TgPVHkpA1DiUWDxuvyzdu01Xd+uh77JlZCalq/9JSlPWnD+pf0YJefBWHRDeDtz5lAxNZd2WzgCWO2jvBUi4fW3zvbY0Smx1HIYrE2UXOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=virtuell-zuhause.de; spf=pass smtp.mailfrom=virtuell-zuhause.de; dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b=ZBiZcbDa; arc=none smtp.client-ip=88.198.195.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=virtuell-zuhause.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuell-zuhause.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844903624CF
+	for <git@vger.kernel.org>; Wed, 18 Mar 2026 18:03:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773856981; cv=pass; b=u5REQO1HuDpax4FCtgEw4Weat9wQ0CTGUwdV3fvvYMydVeIIqA77KFzX8ebmRmyJdv8f1I6Uj5VvlKvilTURPvBDvObpq0QSdDBMGPcm3A5NQ6tr8hWBdPfWhqgMq9kMT9zKi9sGc8ujhf9yqRHQuXN40J66JaRCh3C6ucOmekc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773856981; c=relaxed/simple;
+	bh=H3U1YFjcTYWyxBcA+u13F/jb7k4A9VMzQz1Qt6xwK8s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NA6HXPSlNA35yP96EmGUSxp2jXAHbr+m1Bs/9ahVQ+TLTwnyXrJvusrI2hMqDuPtk1Em7KnRgDBNfxtMpMHVtSEfZk+TSNnOCx87o0N33bbX9SlMaiBlzpvOKzEaNARUvQDogjTtnYZLlmxPdJqFDnhhrdYqywFHiQCYUXxQwhw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ir6OUabg; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b="ZBiZcbDa"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=virtuell-zuhause.de; s=default2504; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=Gxj2MOjvRvKkQfeBjJE808hNwcjg/yo4zJ4oOiC7d5E=; b=ZBiZcbDauZ1LFhuitWmpN4Y7fI
-	pLmG2GcM19mudTRNcZj1jT+Z4GRJwjRcSAQHqbirx1fAE/n7+sBR+ua5Fg7INVVTpOumaB9LQhlbo
-	ZnCfnhZGDJQJ9HSdGL+htkuJ2u3ZLNM0DIztGfBn7SgHtuiJ7FaHpu3iAi1EaYtD8wFVqNum3krxP
-	qNH3HzDPV8XC60ESN/xAW31BsT19A7w8mtcXGs1le0N+c1tKajLuNRwHHk1DVKny6+xKVlZEgHilL
-	6aMwpDf0rvmo2EiVJP1dd/27WxUIk7yPjO54Km7bg4Fpt72tSPbIRMovQYNzaMOAsFCvrFLGwy6S4
-	Eu865Wiw==;
-Received: from sslproxy05.your-server.de ([78.46.172.2])
-	by www130.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <thomas.braun@virtuell-zuhause.de>)
-	id 1w2ulv-0005Gk-1f;
-	Wed, 18 Mar 2026 18:33:31 +0100
-Received: from localhost ([127.0.0.1])
-	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <thomas.braun@virtuell-zuhause.de>)
-	id 1w2ulv-000Gvd-29;
-	Wed, 18 Mar 2026 18:33:31 +0100
-Message-ID: <9cb575c2-a08a-429d-a7d2-cdceda8389bf@virtuell-zuhause.de>
-Date: Wed, 18 Mar 2026 18:33:23 +0100
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ir6OUabg"
+ARC-Seal: i=1; a=rsa-sha256; t=1773856953; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hX0MCnnJzCVaZi+Iv2owjLG50yidRgRPBWBtcwShybJsyWiMacE0JTEoWqZE4g53IfUlfPaQ0lPKNTlxBPS0etD8uaPgEi1fR2QjZwWq0H83u1IuIL3vEz6oyo5PUVDjB+Js1LYWnMySb4h/pYedy4C3gRPcnI+zpyrfYZhecP8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1773856953; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=WXdtwTC8O8Od91vtxt3YljYfOXBaPbBGb2PpUy2lheY=; 
+	b=BzO4nLcZDoZWD+b+c7PyXildr08drbpWGa6ejAq/ug+HXksp6XavpX7MQC6sgQCoeAj/R/sMcH6DSwOwQenvFoH/Wc9/6aDw6xKqWSgYZBnTXOg3XgPA55iQw31VDiwE1VIJJPZGXDbe2bbsIWFcroVYArcYq1jlJzZHoAZpdrA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773856953;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=WXdtwTC8O8Od91vtxt3YljYfOXBaPbBGb2PpUy2lheY=;
+	b=ir6OUabgrj14MgfU/Dfv5JrKZNef0oJIxVmYvJtSqfK6W4JgiIBLFJYfQ3pj5pub
+	wGONFhi72x9dN7fvdr2JQdVbr0UIphMT7lXDaNbruCBMZ3+GzemujsoebJF5ahklnm5
+	aYTOYoiK49TwTfGzHoVYgXJP/fOZakrrYZODyXjU=
+Received: by mx.zohomail.com with SMTPS id 1773856949178675.2599645611344;
+	Wed, 18 Mar 2026 11:02:29 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
+ <emilyshaffer@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, "brian m . carlson"
+ <sandals@crustytoothpaste.net>, Emily Shaffer <nasamuffin@google.com>,
+ =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 4/9] hook: allow parallel hook execution
+In-Reply-To: <xmqqjyvcstvi.fsf@gitster.g>
+References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+ <20260309133739.294555-1-adrian.ratiu@collabora.com>
+ <20260309133739.294555-5-adrian.ratiu@collabora.com>
+ <xmqqjyvcstvi.fsf@gitster.g>
+Date: Wed, 18 Mar 2026 20:02:23 +0200
+Message-ID: <871phh2ez4.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: describe with --git-dir and --dirty outside of the repo always
- says dirty
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>
-References: <99f2ba7e-cc5f-4ef5-9b09-85896563346f@virtuell-zuhause.de>
- <xmqq8qbv4gnq.fsf@gitster.g> <abe9uDp16zOcdzZs@pks.im>
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-In-Reply-To: <abe9uDp16zOcdzZs@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/27944/Wed Mar 18 07:24:13 2026)
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-Am 16.03.2026 um 09:22 schrieb Patrick Steinhardt:
-> On Fri, Mar 13, 2026 at 01:29:29PM -0700, Junio C Hamano wrote:
->> Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
->>
->>> When I do
->>>
->>> git describe --dirty
->>>
->>> in clean repo of git.git I get
->>>
->>> v2.53.0-522-g67006b9db8
->>>
->>> but when I do it from outside of the repo
->>>
->>> cd ..
->>> git --git-dir=git/.git describe --dirty
->> "--git-dir" tells git "I am at the root of the working tree, but the
->> git directory that you usually find at ".git" (or a parent directory
->> of where we are) is not where you expect but somewhere else, so I am
->> telling you where it is with this argument.
->>
->> So if you are not at the root of the working tree for that working
->> tree, "git --git-dir=git/.git diff" would report that you have a ton
->> of changes to working tree files, and "describe" would report that
->> your working tree is dirty.
->>
->> In other words, working as intended.
->>
->> You can tell where the working tree is (instead of telling the
->> command that you are at the root of the working tree, when you are
->> not), with the "--work-tree" option.
->>
->> $ git --git-dir=git/.git --work-tree=git describe --dirty
-> You can do that, but what you're probably looking for is `-C`:
+On Sun, 15 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 >
->      $ git -C /path/to/git describe --dirty
+>> +hook.<name>.parallel::
+>> +	Whether the hook `hook.<name>` may run in parallel with other hooks
+>> +	for the same event. Defaults to `false`. Set to `true` only when the
+>> +	hook script is safe to run concurrently with other hooks for the same
+>> +	event. If any hook for an event does not have this set to `true`,
+>> +	all hooks for that event run sequentially regardless of `hook.jobs`.
 >
-> As Junio pointed out, "--git-dir" has a different effect, and you
-> typically don't have to use it unless you're doing weird stuff.
+> This is very conservative and safe default.
+>
+>> @@ -307,6 +316,7 @@ static void build_hook_config_map(struct repository *r,
+>>  			entry->command = command ? xstrdup(command) : NULL;
+>>  			entry->scope = scope;
+>>  			entry->disabled = is_disabled;
+>> +			entry->parallel = (int)(uintptr_t)par;
+>
+> Hmm.  The source "par" is (void *) and the destination .parallel
+> member is a single bit, so would this
+>
+> 			entry->parallel = !!par;
+>
+> be the same?  A cast first to uintptr_t, presumably not to lose
+> bits, and then casting it down to potentially narrower int made me
+> wonder what else is going on here that is tricky.
 
-Thanks both Junio and Patrick. The documentation is not lacking and 
-fully explains
-that -C is the way to go. I should have checked first.
+Yes, I will use the double negation here on the re-roll, it's the same
+and much cleaner (thank you), since it's a simple on/off toggle.
 
-My lameish excuse for originally using --git-dir is that -C which was 
-added in
-44e1e4d67d (git: run in a directory given with -C option, 2013-09-09) 
-was too
-new back then I added the code originally in 2014.
+it'sAs you saw on other series, double negation just doesn't occur to me. :)
 
-Thomas
+>> +/* Determine how many jobs to use for hook execution. */
+>> +static unsigned int get_hook_jobs(struct repository *r,
+>> +				  struct run_hooks_opt *options,
+>> +				  struct string_list *hook_list)
+>> +{
+>> +	unsigned int jobs;
+>> +
+>> +	/*
+>> +	 * Hooks needing separate output streams must run sequentially. Next
+>> +	 * commits will add an extension to allow parallelizing these as well.
+>> +	 */
+>> +	if (!options->stdout_to_stderr)
+>> +		return 1;
+>> +
+>> +	/* An explicit job count (FORCE_SERIAL jobs=1, or -j from CLI). */
+>> +	if (options->jobs)
+>> +		return options->jobs;
+>
+> This could be risky for hooks that claim they do not want to run
+> with others at the same time, but the CLI user ought to know what
+> they are using, so this override is very much appreciated.  After
+> all, the override may be serializing an overly optimisitic set of
+> hooks that want to run in parallel to avoid interaction between
+> them.
 
+Yes, that was my reasoning as well.
+
+I'll expand the comment to explain a bit better why we're doing it.
+
+>> +	/*
+>> +	 * Use hook.jobs from the already-parsed config cache (in-repo), or
+>> +	 * fall back to a direct config lookup (out-of-repo).  Default to 1.
+>> +	 */
+>> +	if (r && r->gitdir && r->hook_config_cache)
+>> +		/* Use the already-parsed cache (in-repo) */
+>> +		jobs = r->hook_config_cache->jobs ? r->hook_config_cache->jobs : 1;
+>> +	else
+>> +		/* No cache present (out-of-repo call), use direct cfg lookup */
+>> +		jobs = repo_config_get_uint(r, "hook.jobs", &jobs) ? 1 : jobs;
+>> +
+>> +	/*
+>> +	 * Cap to serial any configured hook not marked as parallel = true.
+>> +	 * This enforces the parallel = false default, even for "traditional"
+>> +	 * hooks from the hookdir which cannot be marked parallel = true.
+>> +	 */
+>> +	for (size_t i = 0; jobs > 1 && i < hook_list->nr; i++) {
+>> +		struct hook *h = hook_list->items[i].util;
+>> +		if (h->kind == HOOK_CONFIGURED && !h->parallel)
+>> +			jobs = 1;
+>> +	}
+>
+> Losing "jobs > 1 &&" from the termination condition and instead
+> explicitly "break;" out when we demote jobs to 1 would be easier to
+> read, even though it would spend two more lines, i.e.,
+>
+> 	for (size_t i = 0; i < hook_list->nr; i++) {
+>         	struct hook *h = ...;
+> 		if (...) {
+> 			jobs = 1;
+> 			break;
+> 		}
+> 	}
+
+Indeed, that is much easier to read, will do it in the next re-roll,
+thanks again.
+
+I was thiking in pseudo-code something like this when I wrote it:
+
+if (jobs > 1); then
+   for each hook in list do
+       if hook is configured and not parallel then
+          jobs = 1;
+
+Then just integrated the (jobs > 1) condition into the for loop below
+it, the break short-circuit didn't occur to me. :)
+
+>
+>
+> Other than that, very cleanly written.
+
+Many thanks again, this function I think is the "hairiest" part of the
+series, at least it's what gave me the most trouble and also the part
+where I spent most time until I could convince myself it's correct.
