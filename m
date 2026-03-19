@@ -1,89 +1,83 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0238C34B683
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 18:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05591A680A
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 19:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773946691; cv=none; b=JqIPzIy/RRsWXzbGZ/9Deflvt3fcfEPBAz9WNMWBzIOTTbx4ALbkCnK79EP5JVOBdSDx9CyJtf2onnr7kX+J0jVqJv36Z6kbWtfZZvz+B1Rys+bOvbiBPAICsU+hgFVyeG0aJe21O8aN8PPVdgtnYC8kVG3Gbm2sU0Yk1W71l5o=
+	t=1773946877; cv=none; b=Z6XzI5+bPBmq41KaTF+IvnYyKQZs6JPW7zwLy7YZU/kzC6ollur76T35tu0uikS1pYmuYF9f0WEuyLWghhA49/VhTiP01Nuhydh35AMDz5jvJCb9rIFeazUZDCe1TcraPgf2zxHAlnTWmgfsPcm+RN6Obmp4jTGHqFqtj7zcsOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773946691; c=relaxed/simple;
-	bh=BVdeFsW5NYM7+yNj1B6Vu8Vgp+bFVg9DCyi7UbNYiek=;
+	s=arc-20240116; t=1773946877; c=relaxed/simple;
+	bh=IGUJKSDY/ohLR7BUDfBEoV8RrBnlwA9sPMNQ6hmg5ag=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Khqot8LN1um0vJRd255rGNWM9Ur+wCNjKQieQaexBgK7mI9A+8K91kEg2VrkhOfNhK9IuhRYFBlwNuJMsNfc+KwSHSPNRYm6kMpMEYj8wyIturzW09th0itoAKrPd6mZYyeqw+bVIgsb2rjGJaZp6UK1DNHYLGrCSOD4W7W89xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HAu8aort; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vneupdYw; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=g6lBknjRPsbfk4DQs7f9CAUkkapsSxAD4pGN/4aFaBYIeJmy5YXXI4Gn4xCR/jYkKqAgR1OEqLGmeVC0RN0lQVsn2VsvakunQDaOP1bTIvdnCPx2Lnr/wmCiUpo7LDMB0/tHiuytNEGzcQZhvhNtCnUfsow7TJiuPNI5g/qaNtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f5Ovzh7T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=okDIl5LX; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HAu8aort";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vneupdYw"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id EBC8C1D00178;
-	Thu, 19 Mar 2026 14:58:08 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 19 Mar 2026 14:58:09 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f5Ovzh7T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="okDIl5LX"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3747B7A021C;
+	Thu, 19 Mar 2026 15:01:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 19 Mar 2026 15:01:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773946688; x=1774033088; bh=WFEhJesysY
-	awRFZv8Jaw8wIIqbzSejfvt+YZin5MvSY=; b=HAu8aort5krvbj8d5DvhaqJ5Ij
-	RaGtwTxgZekqGXM5vzf+RbV/u8bodqe0OA8Vek5MzZr/xSiSL2jDBdH6tR2QCllW
-	ukvA7i5km+AroTXkq/65pAusZaIwWehWjS41HSIUKsI9U7bSmCFXmOezvdlXYp2k
-	CC4Cb1L+nuhdHeMeDB2NiRSpjhG53C0rlV6/NKJ9QVsM05HIhP6q0cTGNiRaM97/
-	g69dxu0/pboPey5ZrbOZw8XSufrjP4rWKKwjgtBu7o4t12c/WRDooaBFP2q2D6fe
-	8I6PbIlUrlrxgsddwfdnRq8D3p/YiKPvhzLoN+9ZbscUdscVxx+USMFhyIQg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773946874;
+	 x=1774033274; bh=XpQ/3HbxIWUw76uiT56DkXcEh/ixsL2UcvCl/52eeXk=; b=
+	f5Ovzh7TUz4wKaiLsTiIKCvp9QkkeH9Pia28TxLDKaL6fHc9BrGCwc+OZrse5cGe
+	XoRKYlpo1p2zYXO29JpHba5Fa/333hGfU/hfv34RWnM3FkK/EUJS3sP6OEBd5mOQ
+	p/TnlTSHMTRYedtuoe4B6x8JIKkPJUg7/xkbcPep7jonMh09fGzBj7gglmtgyjCP
+	bAcyyvgd/pQQwc1lw4nV2VFwJvC4zzUgg4+Eh7cCtpBwX4V7BNb02Jr0nXPXTsu0
+	fDqakcO9ko28fsgQlfz9RRCHIjc9Ng6SdCiWOoqlpadykN71esxSedbB50ic8OZS
+	vZRl8iIwMulKlPEqDrEWWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773946688; x=1774033088; bh=WFEhJesysYawRFZv8Jaw8wIIqbzSejfvt+Y
-	Zin5MvSY=; b=vneupdYwThX7n2CB0S6TL5bzST3QhikGtrBV5Uu+Wf23Sp0tocZ
-	HvAxBnrPmVoTNCmrxnJtM71w6sS7VyJqmABhKZ4c16WWZGMGSv5fHi3cDffwPX0Q
-	v5xjbakHN3wiNbiT0V5fbYNKLiImpsVhtMW1QwAAy9/YCcTlbE/gJBLrtSu8gEKl
-	mVss6RjwUBMp8kKGWxwaSFFdCS/8Ke+40LL7VS7xIac2i0qxUGCjddJWTxtssiDL
-	Dig8cagil0mi8b5odH7xVWtIdehEjXVd4Zhm33rdISyDiBUKeqIzJszOb62TOFME
-	hFBeBJUj9NPG3pLC8IxIQ8TLg4T7AE8EgSw==
-X-ME-Sender: <xms:QEe8aU3ZK3-0NdraM0TGEFcGJ4KA_XQGBaosKXcwUSsNigh_95U_xQ>
-    <xme:QEe8acBxbzcvw3SM7gNxVyOh3nezurcImGhv7rvhHZFpJJieybX8qQAjauFHh7Fj9
-    csIPq_1rxQCCtrdNPGmNVcgkWdxF2LjpqqSRV6zR5eK_mlJgKqyKw>
-X-ME-Received: <xmr:QEe8aYgMj4zGemy1hyD0V7Ek_Riy6WCGauDsuBCb2PomAYW9awiuu9cwtShT-v8tGo8dNkfbShNnTssoVoH4VU08U36rme5MLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdejjeelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773946874; x=
+	1774033274; bh=XpQ/3HbxIWUw76uiT56DkXcEh/ixsL2UcvCl/52eeXk=; b=o
+	kDIl5LXCHMvoLPyLQKHyxhH3GxO59Y3t2CGMiWUo57Col27I7zpgsMjdPC/NC3h9
+	pajB3/pwjec+9KpVirKZku4OwZUWaH/3MxQ5ulfdqP8ozfGAvWd0Hk24smAizfYY
+	jPII7FmfkhgZRhcyujTf8YoCoP73F7eCaSJx69nJsXsHmpXYxWRp1ZwFcfgv1ivt
+	qbg3EsA30YvfnS5D66McmRBrSG4MgBiO9kK5CjXyIDm3UxL9avdpw9KWphNBRxQZ
+	HlSUgaplUTZSZwjoauxAyfrvHiPQ7b4QfYFxSxXqr5R3Nu5Q1XwV0NHHIXNy6+E6
+	AKAxGz2fSd9N7hdkweHSQ==
+X-ME-Sender: <xms:-ke8af1qlJPVmAbAKtAyRgYhw9VSD0IVgQxBDxMwzyhqhhsP2KMKPA>
+    <xme:-ke8aVjTXufcwx_v4-1onn675z47bOGIPh4eNYQZwgZYqyTVpaVMQ5G8cF5oSfamZ
+    gRIObgTmcj0zpOCsNx6j5rhsp1DRA582l2AHV1GHka4WcwW_MffDw>
+X-ME-Received: <xmr:-ke8adQU3w6LK6PV9Wl3QfQB0bbsyAlTD8FNavlntvNoyou4nhIJV8kZhrFQRf--4djjsypldj0k5e7eUAUryPdA6J8sdWGvwg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdejkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvlhhkhhgr
-    thgrsghisghilhgrlhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrsghlohhoshgrsggrthgvrhhrsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthho
-    pegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiug
-    guhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QEe8aWMUyQPdyuNlUK9zGLb5rFBjEKjWN_X2WbMGxgT38O-P1AE6rw>
-    <xmx:QEe8aQ-e6sr8C4mRnBffvIB_2C3oGhPdTaLRnMeVVgwkkMP1cv8Bkg>
-    <xmx:QEe8afcWfmpN7WnnHML7OL-QbsYdSV47xinU74bB4FnmkH2I4xcWDw>
-    <xmx:QEe8aXyRuTDOe8xHbt3H2-mcqnxA5hmLcZ_OBkRVFn9Nuxy5FlmpRg>
-    <xmx:QEe8aWHXApkJ59i_ukcjhOPCxJaYHEsuo4nKqhjaYzcwvvoQXvOcnPaZ>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdr
+    rhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:-ke8aejZ7LUx2dVbgKndpsnNYXvhGDnV6iBkG54rQ9FGZ13cJLlExw>
+    <xmx:-ke8aV6z4L22D8VOLRfoxxMGzwJqGDVIQcHP4mtEpznSadTuGY7PdA>
+    <xmx:-ke8aTBUDKMvaTTtJd7E7RTJpL8u4KX1JCwM4t8NgGi0aHGFnRPmbw>
+    <xmx:-ke8aUYC9in7akE1WuQyf4AksQwMxqc9Q8PSathjln4Gnp1_xt3k9A>
+    <xmx:-ke8abIlKkJVTj8vH1072cIftj0dcE_xYgZU1Vyp_7ATVpngVX8BOYgO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 14:58:08 -0400 (EDT)
+ 19 Mar 2026 15:01:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Bilal El Khatabi <elkhatabibilal@gmail.com>
-Cc: git@vger.kernel.org,  pabloosabaterr@gmail.com,  karthik.188@gmail.com,
-  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com
-Subject: Re: [GSOC PATCH v2] t5315: use test_path_is_file for loose-object
- check
-In-Reply-To: <20260319180803.164335-1-elkhatabibilal@gmail.com> (Bilal El
-	Khatabi's message of "Thu, 19 Mar 2026 18:06:52 +0000")
-References: <20260319160301.98039-1-elkhatabibilal@gmail.com>
-	<20260319180803.164335-1-elkhatabibilal@gmail.com>
-Date: Thu, 19 Mar 2026 11:58:06 -0700
-Message-ID: <xmqqv7erk5oh.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] split-index: stop using the_repository and the_hash_algo
+In-Reply-To: <944c2331-4dec-4c98-9059-f41dc204ed86@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Thu, 19 Mar 2026 19:48:07 +0100")
+References: <944c2331-4dec-4c98-9059-f41dc204ed86@web.de>
+Date: Thu, 19 Mar 2026 12:01:13 -0700
+Message-ID: <xmqqqzpfk5ja.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,69 +85,68 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Bilal El Khatabi <elkhatabibilal@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> Use test_path_is_file instead of test -f when checking that the
-> loose object was written to the expected path.
+> Reference the hash algorithm of the passed-in index throughout the code.
 >
-> This uses Git's path-checking helper, which provides more specific
-> failure output than a raw test -f check.
-
-These two sentences repeat almost the same thing in different
-phrasing, which starts to become a bit boring.
-
-The gold standard way to write a proposed commit log message for
-this project is to:
-
- - Give an observation on how the current system works in the
-   present tense (so no need to say "Currently X is Y", or
-   "Previously X was Y" to describe the state before your change;
-   just "X is Y" is enough), and discuss what you perceive as a
-   problem in it.
-
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
-
- - Give commands to somebody editing the codebase to "make it so",
-   instead of saying "This commit does X".
-
-in this order.  The above jumps directly to the execution, bypassing
-the observation and solution.  Fully followed, it would become
-something like:
-
-    When a test in t5315 tries to see if a loose object file is
-    created at the expected path in the filesystem, "test -f" is
-    used.  If a developer breaks "git" in such a way that the file
-    is no longer created at this expected place, however, "test -f"
-    will silently fail and exits with non-zero, causing the test
-    fail, but it is not obvious which step in the &&- chained
-    commands failed.
-
-    Use test_path_is_file helper, which loudly reports the failure
-    when the expectation is not met.  When running the test with the
-    "-v" option, i.e., "sh t5315-*.sh -v", the failure would become
-    more prominent, helping the developer.
-
-Will queue.
-
-
-> Signed-off-by: Bilal El Khatabi <elkhatabibilal@gmail.com>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
 > ---
->  t/t5315-pack-objects-compression.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Low-hanging fruit..
+
+Indeed.
+
 >
-> diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
-> index 8bacd96275..d0feab17b4 100755
-> --- a/t/t5315-pack-objects-compression.sh
-> +++ b/t/t5315-pack-objects-compression.sh
-> @@ -10,7 +10,7 @@ test_expect_success setup '
->  	# make sure it resulted in a loose object
->  	ob=$(sed -e "s/\(..\).*/\1/" object-name) &&
->  	ject=$(sed -e "s/..\(.*\)/\1/" object-name) &&
-> -	test -f .git/objects/$ob/$ject
-> +	test_path_is_file .git/objects/$ob/$ject
->  '
+>  split-index.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>
+> diff --git a/split-index.c b/split-index.c
+> index 4c74c4adda..6ba210738c 100644
+> --- a/split-index.c
+> +++ b/split-index.c
+> @@ -1,4 +1,3 @@
+> -#define USE_THE_REPOSITORY_VARIABLE
+>  #define DISABLE_SIGN_COMPARE_WARNINGS
 >  
->  while read expect config
+>  #include "git-compat-util.h"
+> @@ -6,6 +5,7 @@
+>  #include "hash.h"
+>  #include "mem-pool.h"
+>  #include "read-cache-ll.h"
+> +#include "repository.h"
+>  #include "split-index.h"
+>  #include "strbuf.h"
+>  #include "ewah/ewok.h"
+> @@ -25,16 +25,17 @@ struct split_index *init_split_index(struct index_state *istate)
+>  int read_link_extension(struct index_state *istate,
+>  			 const void *data_, unsigned long sz)
+>  {
+> +	const struct git_hash_algo *algo = istate->repo->hash_algo;
+>  	const unsigned char *data = data_;
+>  	struct split_index *si;
+>  	int ret;
+>  
+> -	if (sz < the_hash_algo->rawsz)
+> +	if (sz < algo->rawsz)
+>  		return error("corrupt link extension (too short)");
+>  	si = init_split_index(istate);
+> -	oidread(&si->base_oid, data, the_repository->hash_algo);
+> -	data += the_hash_algo->rawsz;
+> -	sz -= the_hash_algo->rawsz;
+> +	oidread(&si->base_oid, data, algo);
+> +	data += algo->rawsz;
+> +	sz -= algo->rawsz;
+>  	if (!sz)
+>  		return 0;
+>  	si->delete_bitmap = ewah_new();
+> @@ -56,7 +57,7 @@ int write_link_extension(struct strbuf *sb,
+>  			 struct index_state *istate)
+>  {
+>  	struct split_index *si = istate->split_index;
+> -	strbuf_add(sb, si->base_oid.hash, the_hash_algo->rawsz);
+> +	strbuf_add(sb, si->base_oid.hash, istate->repo->hash_algo->rawsz);
+>  	if (!si->delete_bitmap && !si->replace_bitmap)
+>  		return 0;
+>  	ewah_serialize_strbuf(si->delete_bitmap, sb);
