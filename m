@@ -1,128 +1,92 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E8D2F84F
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 07:58:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC753A9D8C
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 08:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773907083; cv=none; b=p7SMNSilUPwVQFaqIgZjWL/ktTUmzPPdQjzzBE9CByQYmGzSrq9lKH9oVkhglFD3bvCXBjvK7wOY9VSzqL22JHZumvIYQZSjA4Zs15ek3k9rbKyy3uudzGC2/xwh0Yl4FLdbLpo8rGq4MZHuuJzJWV8LqmSJQ4xRzhdwDYoYObA=
+	t=1773908724; cv=none; b=ZDxvUPdTzqNoBVImdDnKVxeyJro7FO0cfG7+xQeivSShwfk4axdwwZ0Ri41Wjfc0FErTOx9d+1837T571PyfuvIn22Fn7yxU6FYELNVYCx70KNa4fnmTdq5ENJigAYvVfL2TABcscQkpKj5NIN+w04eZhqqCeMwyKCYfn46xIw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773907083; c=relaxed/simple;
-	bh=QAk/Pzr/jlQHBBzf3c+nNhWALwuizIouXn+0NKY/8Pk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D2lzaLFkmZwW2vojHSayWT3IDF/Fa50+K7AUseUoo6JSxswgeaejjx/Vvo84MhyDIsexPHh/JahMpaI4IJ5+oetqo5Wym1UqZM0ngFgjSQSiZsdW/8GmHpJhLcNABse+vNp9KM2Kc2roY5NjZXmB6HQlx98lQKKUQ808K8mM028=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NpxfI2bx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l2Bd73X8; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773908724; c=relaxed/simple;
+	bh=QHvDZSzisMzDm5sk1eXab1csOsX9AUCYa0yZZC8B8TU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RIybBBZ5TCfWQ+6hWVHD5GDExtVk+zLxboKABBHPMvqYJWmVUHB0yrC1cZAlcnD1HVge+HLHH21+u2dW21Koh/5ungU46XCEm4ge71kWpnhnGy/7qwKiJDilLF2YjEOXpG+E+hrwW3OfWlm1XMv980ePYoABIZAeQug3YOKiyPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/V+56Ls; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NpxfI2bx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l2Bd73X8"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A56781400220;
-	Thu, 19 Mar 2026 03:58:00 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 19 Mar 2026 03:58:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773907080; x=1773993480; bh=wPyNFbMzRQ
-	JME4PNMhDXkVNwrC9c7S3Ce62Uee11Lto=; b=NpxfI2bxKu8ggjktAH2q1UTEY1
-	2TGFZpwRJNF4k6g/8yOqt3U7ddAlQZKRAAS0Ga7XMTFVCt2uyQ12644CYrUM3V1L
-	UdfQ2wuOvs0l0TnQh9b16WNzcBnutPZITBEzta66i+Mmwax8qtplkPCHFqrz/Gvh
-	Lw8/lsfk9IxqPwf6nbFaCet080icsP9gd8TqWlZp/OG2Fu9u3YxTTkwv4zwIOD4C
-	VXLvS6ovoMnfH0ejF+FMeDHye836BupIuk42WufvBT1IfR+wPKrM8iNWe8bGOrjL
-	JDuqgaWUvZEtpU3jZwgkpiypK71GmyhmY4OFe+1KK3Ca1wGKZvNCZoR6NvMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773907080; x=1773993480; bh=wPyNFbMzRQJME4PNMhDXkVNwrC9c7S3Ce62
-	Uee11Lto=; b=l2Bd73X8H4w2pGsVU9eD2Wwc7Kbfb+EAwFghpmqKhL7bJ65FIF1
-	h9S+/QiU/SoTrJYsZG9G2y0quV5uFH3gYKO2wt14wEhFo/7mh8F5bwzS6pr+YBOl
-	IBTl7tk4t3jZHJwYzX7keyzXqkq5PbMZuf6UViqt0lK+fEl/2vvsCe//9rrR6hD3
-	lTYc3NWa7NcJwmijzWMO8p5rQhD0XG6AUJXT9OSYYP02ESzpdD9XcDzM8qNf/qSl
-	1VjcdwLhCqGmRcrpTANmXVf3xApLSAejIa/S7DJfmc1bD3VONiYQ1Z8W8ueWcwzA
-	yKoXesGwwAVaLvlwqwYQKZ2m6IU9e/EXFLA==
-X-ME-Sender: <xms:iKy7aWV-2QG_m61dClAt3Vixup1kdqEKlI9nPUfR6l1YcM9BUIYqvg>
-    <xme:iKy7aYku2ST9l5Co6CFttJ28B2xqUFjep8qhde_OsrepDOuKG8u1DTY9NmNeq6HCq
-    briXI7i064HZ0z8G2wmMoKYbjwqaHnZzhRJkn4NZ5FxlkNy2DJGkA>
-X-ME-Received: <xmr:iKy7aYDc3LgYerlmQVx29azmZW11HGxdiyvsNnjYkqnC4MHTF03nQ2AfGKQ7PKm1MgVDR-Jlo44RNRPU8Jg3EWOfgGc5GmWXSojCxSsl-X_7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeigeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:iKy7aYcr_5F7pkmgK5QMRjVQ5aLxcwT_SBG72LqdZZQ8sHLcUcctRg>
-    <xmx:iKy7aTJQ-4bMiXvFxK6stYCbObrcfnrqU5xrU0TD-X6JkOjR-eZsGQ>
-    <xmx:iKy7abf8vSrsfPdrVka_neZorkRNeOgJ7ySEORzLHLZDfPvHPcAc7w>
-    <xmx:iKy7aa22OWrHgrx1cPDRv2QW5DGK0GmcZYbjxhb2CYk6yIWctYUY9g>
-    <xmx:iKy7aRujTkgHNeL_EjppHXDcjAUFJXIZS6NieI_wn6Om0v32S8BdNFZc>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 03:57:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c93ad547 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Mar 2026 07:57:58 +0000 (UTC)
-Date: Thu, 19 Mar 2026 08:57:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] rerere: update to modern representation of empty strbufs
-Message-ID: <abusg-X1vtd48UpZ@pks.im>
-References: <xmqq341wnvbk.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/V+56Ls"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-38a4234f91dso6713791fa.2
+        for <git@vger.kernel.org>; Thu, 19 Mar 2026 01:25:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773908716; x=1774513516; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QHvDZSzisMzDm5sk1eXab1csOsX9AUCYa0yZZC8B8TU=;
+        b=c/V+56Ls2GWmasjP/Erm7+7bTfqggB2NTPkUOeB7EK0YKNV4/oj9bzAG9Yh5QojM6y
+         MLperprn+ipz59Vr5LuTVuv4E7bggz1hoHphe4YfbQZT++IkAEWm9vHGnYqOrGklhggI
+         /prbLWYaHR9LHD/pmjMyrVY8IhlB4+MuaM52SyUjHQ4EMIO6SbEdR5PCWAYDeGzwQZ9W
+         1vBYBj7FPPp1B488h9nhQT2kSRWvfaknGLm9rycjr+wUCs3O8XqFIwW50YLXoVLnB6Hm
+         XIWAfwXyYxIqxnBEgse1H3QbdGlKECslmTowsxOzeSWGrX4sj1TdsTw9WGq2Bd7lzBKw
+         t2Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773908716; x=1774513516;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QHvDZSzisMzDm5sk1eXab1csOsX9AUCYa0yZZC8B8TU=;
+        b=Z4TleKE+zIZCNtT8479nTrBC8QU+CmPk1lO4vYjCkF0vLK5a4XuhF4QzBJEqpOh7nq
+         4Yzro11iokU2rj7ED1fF0He7AnvVclzmCILFVtvuSXZhBPTHd4u94ozwST+DkR1iP7Ir
+         gl3Tfmp2Zz4J0etJt6lMOaWO07E+n6SOeXCNhEXNN9pXxf80r9DfXBU6iScnyaqBZkUO
+         X8aoJNk9Lqz9BTC48vPBxus0LOjQYHeUs6Iz47yfFsCrQKI8PnLq4tL3oCfJ6KarpD/q
+         weVYzrMOMmYDKLqLFxczmmLLMlzHHy7eQzhs8wWLRbLlaUfeXjFa4RTSBEfdMWAE8BOm
+         jLIQ==
+X-Gm-Message-State: AOJu0Ywa2Gbz0HqN/FP3mGXDhm76E1EC6K60yqL/4t5BkkHPEO/EdX8Z
+	e9rYp9GiqW3E3Un84NoHt7JqtI92Wbp1JUR8mLaJPbvS4ap4rtCrHm+V
+X-Gm-Gg: ATEYQzyGAps/VXNxT+cAssjBWBkhKFv3OcArK+SR1qBVPsV+2jqobrjGyTek9lYzxv5
+	4WQPZqLUP0Rm82eV3TiB/XNVy8tZCG+TtER7Dc6Rc5q+M10bcSVnSuq+mNu0Q7rWHiz2h53+LW/
+	//m+yzQj7xg4UhsBQD+m2qbJpeXXAgMs2acGeStUZb2Ev7inm981IC+LOk+9EnmfwwJiaJRes4Y
+	3+hlK8dA1C05BBfH/EQ1u6hlUPiNeuQeASDb5DjW8svg2u+gbF2cTAfVbINoqfsf0CguZ+FnvJS
+	GrVc0pWzFUbWzvssxXG2iaYkkTalh2bbRucdHOtDKOFMLNDyPvb6xAbVqoLH4gIXbqGRPlMvD/F
+	V6yDQ+vI6qTXBPbKoyzBkl7o7hlx/GPiyLb9Z7125iNTtaopU0NmgZCCfPAPnDwjCeUfAUx9fY3
+	RMELhAdT7V2Tzqh32m5Dwz3Pm57KO51xqvEZbOrevNUlY8ziuNLB50PATbFPEwyYmUVwZUroJss
+	BnQ5LoUCn8JFh6s1ISuWg==
+X-Received: by 2002:a05:6512:64e8:b0:5a1:3b78:17ed with SMTP id 2adb3069b0e04-5a2796d3a29mr1794179e87.40.1773908716224;
+        Thu, 19 Mar 2026 01:25:16 -0700 (PDT)
+Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38bd5488f79sm12080491fa.19.2026.03.19.01.25.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 19 Mar 2026 01:25:15 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: haraldnordgren@gmail.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	gitster@pobox.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Thu, 19 Mar 2026 09:25:14 +0100
+Message-ID: <20260319082514.49717-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260317094716.43654-1-haraldnordgren@gmail.com>
+References: <20260317094716.43654-1-haraldnordgren@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq341wnvbk.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 19, 2026 at 12:15:59AM -0700, Junio C Hamano wrote:
-> Back when b4833a2c (rerere: Fix use of an empty strbuf.buf,
-> 2007-09-26) was written, a freshly initialized empty strbuf
-> had NULL in its .buf member, with .len set to 0.  The code this
-> patch touches in rerere.c was written to _fix_ the original code
-> that assumed that the .buf member is always pointing at a NUL-terminated
-> string, even for an empty string, which did not hold back then.
-> 
-> That changed in b315c5c0 (strbuf change: be sure ->buf is never ever
-> NULL., 2007-09-27), and it has again become safe to assume that .buf
-> is never NULL, and .buf[0] has '\0' for an empty string (i.e., a
-> strbuf with its .len member set to 0).
+Hi Junio and Jeff!
 
-Right. We always require strbufs to be initialized, and that will always
-cause us to set the `.buf` member.
+Did you get a chance to look at the latest changes?
 
-> diff --git a/rerere.c b/rerere.c
-> index 6ec55964e2..0296700f9f 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -403,12 +403,8 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
->  			strbuf_addbuf(out, &two);
->  			rerere_strbuf_putconflict(out, '>', marker_size);
->  			if (ctx) {
-> -				git_hash_update(ctx, one.buf ?
-> -						one.buf : "",
-> -						one.len + 1);
-> -				git_hash_update(ctx, two.buf ?
-> -						two.buf : "",
-> -						two.len + 1);
-> +				git_hash_update(ctx, one.buf, one.len + 1);
-> +				git_hash_update(ctx, two.buf, two.len + 1);
->  			}
+The scope of this grew a lot from my original idea of auto-stashing, so I'm
+not 100% convinced that changing '-m' is necessary here. My fear is to
+break something, especially since 'checkout -m' is a feature I never used
+before touching it here, so I don't have a good sense of how it should
+work.
 
-Yup, this should be indeed equivalent given that we declare the `.buf`
-thing as `char strbuf_slopbuf[1]`. So we'll get a single NUL byte here,
-which is the same as the empty string.
 
-So this looks good to me, thanks!
-
-Patrick
+Harald
