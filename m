@@ -1,104 +1,128 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BB719CC0C
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 07:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E8D2F84F
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 07:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773904789; cv=none; b=e6QTP/RunU/HFFh5e4wgqDh8GhyEpIQYnxRjoFHuvHfbrkcRSikFLKUEUU4vu/nPQeJmSgt7o10+qaPvOqiDjJIRcT1wTblqlqgHcsZGaDJtGmSxFdrrzmLQKHyya0Q5URVNZxo4FUQJOY/d6jtFVlO3KP/5ZFWXE7BtMRvtnJA=
+	t=1773907083; cv=none; b=p7SMNSilUPwVQFaqIgZjWL/ktTUmzPPdQjzzBE9CByQYmGzSrq9lKH9oVkhglFD3bvCXBjvK7wOY9VSzqL22JHZumvIYQZSjA4Zs15ek3k9rbKyy3uudzGC2/xwh0Yl4FLdbLpo8rGq4MZHuuJzJWV8LqmSJQ4xRzhdwDYoYObA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773904789; c=relaxed/simple;
-	bh=c5aeX9ELTiNDyPZtUAdbVnFXWM8mqvo32tfewvI4rhw=;
+	s=arc-20240116; t=1773907083; c=relaxed/simple;
+	bh=QAk/Pzr/jlQHBBzf3c+nNhWALwuizIouXn+0NKY/8Pk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U3F/GHU7i/YBsUBZGQkIquBXyJx+cfmpTKcV+4bfCBPqQO3IBvcevpPY3wAvDPTuRPdtpTdNGuI5IBEMIIIBHgupLe1iPTRyIpXFuS242ghQ4eIrmNxfIbaHB6ZYRh47De5xzUxkfrv2ZnqqlF1vFf22diPwZeXejabxX5TLRmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bl9JWXpX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j98VzvdF; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=D2lzaLFkmZwW2vojHSayWT3IDF/Fa50+K7AUseUoo6JSxswgeaejjx/Vvo84MhyDIsexPHh/JahMpaI4IJ5+oetqo5Wym1UqZM0ngFgjSQSiZsdW/8GmHpJhLcNABse+vNp9KM2Kc2roY5NjZXmB6HQlx98lQKKUQ808K8mM028=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NpxfI2bx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l2Bd73X8; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bl9JWXpX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j98VzvdF"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 61C311400049;
-	Thu, 19 Mar 2026 03:19:47 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 19 Mar 2026 03:19:47 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NpxfI2bx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l2Bd73X8"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A56781400220;
+	Thu, 19 Mar 2026 03:58:00 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Thu, 19 Mar 2026 03:58:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773904787;
-	 x=1773991187; bh=AR6LKWlHrsLhgxLDYpgjol5fx2RfrmPYSwyLv34LtLk=; b=
-	Bl9JWXpXA9UdYS0i4zXQrEoMPkT4x6vCqz/jrxr8hhkneVJJu8fHZbzEJ+woXcAk
-	POUx1loSwIgky8JYrXSzSDLtoJ+NYTi8lVVrsp43+2ZTWDcCR4REm+BFSXMzWHUo
-	7wjQtmrwHE0uq2xKHAGXT/i65PlJcE+XRmQa54Tu7nElaE+c7J1s1za4CsH5/EJU
-	cTwdrnora8QOS8BxcSGtdxVJGSJJahWqlckMEiLYNFxSXkVOhSLl0R1nX9dWhvhD
-	sqQtgjcM/0CxN1PKNkBVAp0zzIytsNEwwL/pYRrTmQyn2sg6EJjJIZYLzzHdml6t
-	/7Lz3FJLwclkkLHviMBuUw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773907080; x=1773993480; bh=wPyNFbMzRQ
+	JME4PNMhDXkVNwrC9c7S3Ce62Uee11Lto=; b=NpxfI2bxKu8ggjktAH2q1UTEY1
+	2TGFZpwRJNF4k6g/8yOqt3U7ddAlQZKRAAS0Ga7XMTFVCt2uyQ12644CYrUM3V1L
+	UdfQ2wuOvs0l0TnQh9b16WNzcBnutPZITBEzta66i+Mmwax8qtplkPCHFqrz/Gvh
+	Lw8/lsfk9IxqPwf6nbFaCet080icsP9gd8TqWlZp/OG2Fu9u3YxTTkwv4zwIOD4C
+	VXLvS6ovoMnfH0ejF+FMeDHye836BupIuk42WufvBT1IfR+wPKrM8iNWe8bGOrjL
+	JDuqgaWUvZEtpU3jZwgkpiypK71GmyhmY4OFe+1KK3Ca1wGKZvNCZoR6NvMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773904787; x=
-	1773991187; bh=AR6LKWlHrsLhgxLDYpgjol5fx2RfrmPYSwyLv34LtLk=; b=j
-	98VzvdFyRqtFcP1UVioufxLkweGGnJE3OakpNo17jGlcX2bEaKDOpMbVZowtTXeQ
-	8qgBnsCaNERYLhP46JuLhg7At4+AiB39iI5EWOf/+45FeI9TUosi4zJxrIRwihuP
-	uhf/mGgw///khWLqOgLl6PUoWuy7XDvWHhmSvE64brXf4mEK8fZpDwoIi6hfZ0VI
-	q1PHS4t837+aDyUapxOsUWVG/+tKk37taKywRO8JQDXhnN7bAuxR2J18vNo111ZX
-	GMan1QT99Z3HJXLAIzvm6JGE1vRCKbyEm7+gLjxJzSU2iTFLr/dg6KgsuBm5lw2l
-	R0MJWZq0vQ3Ex9ZatKdeg==
-X-ME-Sender: <xms:k6O7afUuRCurAdf5kDlzP1ojyQJC0nEtioJusMnDACH6OEQT6D7EdA>
-    <xme:k6O7adm7p0YSLjLpjGjmNEXSX_9ItP0B6cU6Z4S_BxAm9JJqLeMVI2DotlF_KjZSM
-    j5M6arvIFdIx3YCWPsUjxcjH8vD1dS9aJ0TuIXK3M7olP3Wv-0xzg>
-X-ME-Received: <xmr:k6O7aZDnhFYPxoxkm4-1cC_zWKZmAMeKpBGSH5iaWyWvZrN4RQgSnQLsLhbVqxO_POOX93cCyJu1mHKQSjZXUJpNUsV-oEMWKCB88dYvF-fR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773907080; x=1773993480; bh=wPyNFbMzRQJME4PNMhDXkVNwrC9c7S3Ce62
+	Uee11Lto=; b=l2Bd73X8H4w2pGsVU9eD2Wwc7Kbfb+EAwFghpmqKhL7bJ65FIF1
+	h9S+/QiU/SoTrJYsZG9G2y0quV5uFH3gYKO2wt14wEhFo/7mh8F5bwzS6pr+YBOl
+	IBTl7tk4t3jZHJwYzX7keyzXqkq5PbMZuf6UViqt0lK+fEl/2vvsCe//9rrR6hD3
+	lTYc3NWa7NcJwmijzWMO8p5rQhD0XG6AUJXT9OSYYP02ESzpdD9XcDzM8qNf/qSl
+	1VjcdwLhCqGmRcrpTANmXVf3xApLSAejIa/S7DJfmc1bD3VONiYQ1Z8W8ueWcwzA
+	yKoXesGwwAVaLvlwqwYQKZ2m6IU9e/EXFLA==
+X-ME-Sender: <xms:iKy7aWV-2QG_m61dClAt3Vixup1kdqEKlI9nPUfR6l1YcM9BUIYqvg>
+    <xme:iKy7aYku2ST9l5Co6CFttJ28B2xqUFjep8qhde_OsrepDOuKG8u1DTY9NmNeq6HCq
+    briXI7i064HZ0z8G2wmMoKYbjwqaHnZzhRJkn4NZ5FxlkNy2DJGkA>
+X-ME-Received: <xmr:iKy7aYDc3LgYerlmQVx29azmZW11HGxdiyvsNnjYkqnC4MHTF03nQ2AfGKQ7PKm1MgVDR-Jlo44RNRPU8Jg3EWOfgGc5GmWXSojCxSsl-X_7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeigeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:k6O7aVdBPL9t-5SPfTAlPbibE1SjwfSw0_UXWPiBo4BFUvgzQ8zkHA>
-    <xmx:k6O7acJ5Vif1r8EyBye3bEAmI22n3inc4VChvxM-oeTA22cgb7UqCw>
-    <xmx:k6O7aQcPpomF3Y4bBvSr5ewJ7hL4wmUUSgNq6_mWTwtdmyb4JvoMRQ>
-    <xmx:k6O7ab1iPZXe3xowylt9NhUp9eNusTMNplqJpJguu1cv0e9FNXMYfQ>
-    <xmx:k6O7aavbLJJeIHXjyR6WIy0iorZYiJ0fCgLaV0baxvvEXtny7kl6AWoV>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:iKy7aYcr_5F7pkmgK5QMRjVQ5aLxcwT_SBG72LqdZZQ8sHLcUcctRg>
+    <xmx:iKy7aTJQ-4bMiXvFxK6stYCbObrcfnrqU5xrU0TD-X6JkOjR-eZsGQ>
+    <xmx:iKy7abf8vSrsfPdrVka_neZorkRNeOgJ7ySEORzLHLZDfPvHPcAc7w>
+    <xmx:iKy7aa22OWrHgrx1cPDRv2QW5DGK0GmcZYbjxhb2CYk6yIWctYUY9g>
+    <xmx:iKy7aRujTkgHNeL_EjppHXDcjAUFJXIZS6NieI_wn6Om0v32S8BdNFZc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 03:19:46 -0400 (EDT)
+ 19 Mar 2026 03:57:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id af897b5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Mar 2026 07:19:45 +0000 (UTC)
-Date: Thu, 19 Mar 2026 08:19:42 +0100
+	by mail (OpenSMTPD) with ESMTPSA id c93ad547 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Mar 2026 07:57:58 +0000 (UTC)
+Date: Thu, 19 Mar 2026 08:57:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] use commit_stack instead of prio_queue in LIFO mode
-Message-ID: <abujjg-8hwPPlkMU@pks.im>
-References: <05fc946f-6670-46e9-a058-231ee464029d@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] rerere: update to modern representation of empty strbufs
+Message-ID: <abusg-X1vtd48UpZ@pks.im>
+References: <xmqq341wnvbk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <05fc946f-6670-46e9-a058-231ee464029d@web.de>
+In-Reply-To: <xmqq341wnvbk.fsf@gitster.g>
 
-On Tue, Mar 17, 2026 at 10:40:07PM +0100, René Scharfe wrote:
-> A prio_queue with a NULL compare function acts as a stack -- the last
-> element in is the first one out (LIFO).  Use an actual commit_stack
-> instead where possible, as it documents the behavior better, provides
-> type safety and saves some memory because prio_queue stores an
-> additional tie-breaking counter per element.
+On Thu, Mar 19, 2026 at 12:15:59AM -0700, Junio C Hamano wrote:
+> Back when b4833a2c (rerere: Fix use of an empty strbuf.buf,
+> 2007-09-26) was written, a freshly initialized empty strbuf
+> had NULL in its .buf member, with .len set to 0.  The code this
+> patch touches in rerere.c was written to _fix_ the original code
+> that assumed that the .buf member is always pointing at a NUL-terminated
+> string, even for an empty string, which did not hold back then.
+> 
+> That changed in b315c5c0 (strbuf change: be sure ->buf is never ever
+> NULL., 2007-09-27), and it has again become safe to assume that .buf
+> is never NULL, and .buf[0] has '\0' for an empty string (i.e., a
+> strbuf with its .len member set to 0).
 
-Right. I doubt that the memory improvement will really make much of a
-difference, but I agree that using a commit stack makes the intent
-clearer.
+Right. We always require strbufs to be initialized, and that will always
+cause us to set the `.buf` member.
 
-The changes all look as expected to me. Thanks!
+> diff --git a/rerere.c b/rerere.c
+> index 6ec55964e2..0296700f9f 100644
+> --- a/rerere.c
+> +++ b/rerere.c
+> @@ -403,12 +403,8 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
+>  			strbuf_addbuf(out, &two);
+>  			rerere_strbuf_putconflict(out, '>', marker_size);
+>  			if (ctx) {
+> -				git_hash_update(ctx, one.buf ?
+> -						one.buf : "",
+> -						one.len + 1);
+> -				git_hash_update(ctx, two.buf ?
+> -						two.buf : "",
+> -						two.len + 1);
+> +				git_hash_update(ctx, one.buf, one.len + 1);
+> +				git_hash_update(ctx, two.buf, two.len + 1);
+>  			}
+
+Yup, this should be indeed equivalent given that we declare the `.buf`
+thing as `char strbuf_slopbuf[1]`. So we'll get a single NUL byte here,
+which is the same as the empty string.
+
+So this looks good to me, thanks!
 
 Patrick
