@@ -1,104 +1,73 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A7B2DFA5B
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 17:02:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FEA348898;
+	Thu, 19 Mar 2026 17:08:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773939760; cv=none; b=Jzx84cWiSka3VCqrjKnXCtNJg1MODyIV2AALwuzoERGwePLD9SgQxYNnfOLf1e1PSMfyH+tIXFOX14CVWHF1NXIZ2pUXxkeHbTDc2+BtvASd5t3YFEQfJkHGZ2E3k69NSEDdYkHOV0hFnlNWthoHhYZLzsTu9vckeuOOtJxoJS8=
+	t=1773940115; cv=none; b=CXqK7m6CjU5sBD4aKg9lS3xTDR/GWn9IoaCdpE6m4Fyqc2gIWJVAU7R/+0Y/daT2YEO9+s4otk5vZ7xl8dqgNiG8pAYTlpAfj3YheLJaTiYSP8gJjWzTXjs2paMQyxO5kOt+a10Xi4Y9FK72b/C6kvibXK5jxqa6jlKxHm4H9Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773939760; c=relaxed/simple;
-	bh=yMpN71OFIZ7+X9H99KwEAqyNzMmOEJCdSwbNfHWJ4JA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bpk1W3DSXHrdqNkvluVUcxdigKVa8VwFYHDeuHF18Ft1gXfQ5IssajEbDrtcZnZmtMiA5F9MmdH61FTD/Rxw4Io8cqak63oYONkV/0l9MwQL/qvgPSfjP0GZ/cmQ9R0idefhXwmK2I9deParl3RgYt8kVaDKUuqTfOhnzaC/INw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kbJ9l3co; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i25zhjpr; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kbJ9l3co";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i25zhjpr"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CEEA7A0164;
-	Thu, 19 Mar 2026 13:02:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 19 Mar 2026 13:02:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773939758; x=1774026158; bh=0v4oVNUOnq
-	B0sc9/+URzCNhjznyDLS7mLwz8KQv9vAA=; b=kbJ9l3co7FcgEExlA9C2RCfa/N
-	A73R69hf/Y22gvHNQNuvpLBjmiSbYAQCS8zWlfB9m2h0J8bdx7ZIeGcumzXyfBvh
-	AMdWNDD1WbFSiIi4IQYfFAd6WDG8d1+qtRQ0WUZsuvObmOKtmjyX/L4/HMj1YFzi
-	rTT947DdIAhVPejzXc2bxRdQ96bHSbsM5TIA/fuFpS/pqxokrcH7pTlb/uQxWsgX
-	s6oifcKMCBIDlz7K8zSWWQnQZbbZpFRX8jPav4LBciIt7DGLtV/7Y9qXULrALGa9
-	C6iwc+gZCZNPxIjNIudQfSfVE++QvgetclgzLaEHXIsW11v4LMI2tuW6oDWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773939758; x=1774026158; bh=0v4oVNUOnqB0sc9/+URzCNhjznyDLS7mLwz
-	8KQv9vAA=; b=i25zhjprbAvV6N4ZOMwWHc4oXDSMTgohU72dANTRHrKSaB8cuPn
-	pTyERjrHVKVh3DBBzZY1L+9myvliHhCtfNJf9yxg7yowWjC/Pv6V7TEhlMvcNL9o
-	ahvkDY3x7ZcwzB/hLEOO5pcUV/0Z+Z16pnai/SrranSUFjUDhG9UQATmcXqtc0R4
-	hFgHU+Z5JIXTlMZZEWoOz+Lcax0Cs9M0ffJLnrQnbDeliHb8QBmTfHm86C3r0u2x
-	Xe9HW7MnxiFI+Jaoworg2apDibzmDoSO2034U3uvqLJPIeBqVc+llqJGFdycmNiV
-	CKY5XWfGnVaetEH5L3u7Z7kJr3kp6PVh9yA==
-X-ME-Sender: <xms:LSy8aT0MwKxd83uamFF_vYESvS7UiuuGtUJa8_SYcQie_i6fgijH-w>
-    <xme:LSy8aUUIzkVJKkpFHQyF-E2xnxaXwdjMHSQsgev_LTfa02E54bscP6LsbyX1GK8Ux
-    I9Z-rgAT7hDSXmw7DKBUzHVKRVI_P97tsMCAY5Yvf9WsNE4P3bsEw>
-X-ME-Received: <xmr:LSy8aWJfBzVx3jbd_6fUF1YLikEoWeZfRdHBUXFl84wIuXN00jGeqkX_0wQy9zdC2jnsb3UfXWpBfWi6mMvRFHl6_C1C_hfHkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdejheeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdr
-    fihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LSy8ae0W3axsr6H9oUcKZmE40Plw8p2dMl47G2i0LQTxFQPb_6bPhQ>
-    <xmx:LSy8aU6F7Cy2Kjyrj8WDsSAu2CTHoBSP-g2QtZIOXzBPJS6lRL_2Ow>
-    <xmx:LSy8af81rnoFqp9VInSMwzBaNb-_zZi3IwFxYoTqt-_6pVJCkzXuqg>
-    <xmx:LSy8aTVznh2R4nf4maAAumHTdoneYRp9BIMNmXU5L9m5JkBhmczRxQ>
-    <xmx:Liy8aR82ClEidixKa00dZfmI7bfc7sqSebuGBO_KMRU-n3nc7T4nd6mo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 13:02:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
-  phillip.wood123@gmail.com,  ps@pks.im
-Subject: Re: [RFC PATCH v2 2/2] push: support pushing to a remote group
-In-Reply-To: <20260318204028.1010487-3-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Thu, 19 Mar 2026 02:10:28 +0530")
-References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
-	<20260318204028.1010487-1-usmanakinyemi202@gmail.com>
-	<20260318204028.1010487-3-usmanakinyemi202@gmail.com>
-Date: Thu, 19 Mar 2026 10:02:36 -0700
-Message-ID: <xmqqzf43lplf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1773940115; c=relaxed/simple;
+	bh=JgmAb5YIPz+XYk5Nd4PZUAGgJl9Sgl8XtdAyGM2mwjA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=pOgS9Xpbq3IpSLoWOwvK9tsDkkG54lIG2FGWPc1XLU+2hjcT79jH27Iiwft1Brlft+AWehGd3teB2J4YsmnKzLQCxXBuKCxrPsru03VQh2qYuXvotlAeImd20Q5FmkvugpWKCC7UGVvGbBOta7X2xjiHcEQEAsjLTZzGEhTK19k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
+Received: from omf02.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay04.hostedemail.com (Postfix) with ESMTP id 50F021A01ED;
+	Thu, 19 Mar 2026 17:08:33 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf02.hostedemail.com (Postfix) with ESMTPA id 5F0B680011;
+	Thu, 19 Mar 2026 17:08:31 +0000 (UTC)
+Message-ID: <5d28fa8fda122093fcfcf6f948f67184c0c9018e.camel@perches.com>
+Subject: Re: [PATCH 1/1] get_maintainer.pl: add --cc option to produce comma
+ separated list of emails
+From: Joe Perches <joe@perches.com>
+To: jim.cromie@gmail.com
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
+Date: Thu, 19 Mar 2026 10:08:30 -0700
+In-Reply-To: <CAJfuBxxbV1X3X0GdvBEEHB8gS9wQ8hHcKDGC7GrSkOPECgGV3A@mail.gmail.com>
+References: <20260319160633.1149562-1-jim.cromie@gmail.com>
+		 <b69406326eceb27f5973bc0ba55366438845a003.camel@perches.com>
+	 <CAJfuBxxbV1X3X0GdvBEEHB8gS9wQ8hHcKDGC7GrSkOPECgGV3A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Stat-Signature: erg44sbot3byqaidkegpga4i7tm6hbun
+X-Rspamd-Server: rspamout04
+X-Rspamd-Queue-Id: 5F0B680011
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX18c2n22DtN3ZcEiYiAwqLPwlq3pe0PnxoA=
+X-HE-Tag: 1773940111-901988
+X-HE-Meta: U2FsdGVkX18BaN5qRvGDjjJZ8u0MYE9W5lg2takUrGo2xV42m4RgmkXlNpXQaWnjhvbSDv5e5/3/LOBmTn4cs/OGVT5iqQYxpB7casek191A1+99WavGYGBWy1TZfwraJdoZ90yuyqEgsqHvaAeMYa130akoE6AUmjfKdKE8dxOvUNQL6SPzKoiRhcJp1N35lnjkauF5qfcdI/UUjAzGUe1P2hVJnIKRMKlmgEG5ZNvYgYAZRYPzY8KsOECgXRPPUAE4e8Nlo5LjfXrccQHV4Ftkyfh3gAaShoFHFIyc7zyDyo/RkZvCh2oRFVRCixPJlNgkihh+2m3axN+27uc8g5aNdes/ezkJ6yZK8rV/5vN7ecAt3mP8pml2AiHRh6y4GCh0c24Bm2T53UTNReVbVdB7P+qSKUSumhmcIJOtFHhoow/cf1liFAShTiNpELZ6
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+On Thu, 2026-03-19 at 10:56 -0600, jim.cromie@gmail.com wrote:
+> On Thu, Mar 19, 2026 at 10:14=E2=80=AFAM Joe Perches <[joe@perches.com](m=
+ailto:joe@perches.com)> wrote:
+> > On Thu, 2026-03-19 at 10:06 -0600, Jim Cromie wrote:
+> > > This new option works as follows:
+> > >   git send-email --cc=3D$(scripts/get_maintainer.pl -cc 0*.patch) 0*.=
+patch
+> > I think this is not particularly useful.
+> > Just use a script.
 
-> +	for (int i = 0; i < remote_group.nr; i++) {
+[1-3] remedied by script
 
-remote_group.nr is of size_t, so the compiler will complain about
-this comparison that stops a platform natural integer approaching
-the limit from below for type and signedness mismatch, even though
-it would be insane to try defining a remote group whose size would
-not fit platform natural integer.  A workaround is obvious.
+>    4. Configuration Synergy: You can now set sendemail.cc =3D
+> ./scripts/get_maintainer.pl in your .git/config. A shell wrapper can't
+> easily override or
+>       augment the built-in recipient logic as cleanly as this does.
+>=20
+> That last point seems a clear win.
+> Far less maintainer annoyance at not receiving the entire patchset.
 
-    "int i = 0" -> "size_t i = 0"
+That's not my experience.
+
+This _will_ cc disinterested parties when there's a cover letter
+for a large series.
