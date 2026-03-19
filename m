@@ -1,400 +1,106 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16D036404F
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4A53624D7
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773903223; cv=none; b=Can4nURykptTaL+lcNATAk7wtfZQUV2pjIYSXetvG8nM46uIo+OIynCS4hbRanzEsiVGVwfT6LQd1wtvUWSd2KqODuuxP9TxehBBR1GDlZ7Xj0FyRtV0CKrLPaRBuYwf4OPAufDEH0wL5KyNwW9H0RdcCyvbkHYXRzvMhgnnvyk=
+	t=1773903396; cv=none; b=d6oL/9Knu21dDiKyxoJxr6x+oRgc4GFr2pg0+whKa4pIi64mBvqhtlnEN1NLNZaBYFWPkgJmL/8s9LHjP6NGVDIUv2aQCWRt8FpsaAzzfYx6mTV8IXybVfrUaJiKdfoS6PzPIZypMK8tM+kJB7gVaAJFbv1qp3t/2c5rXUv5vOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773903223; c=relaxed/simple;
-	bh=4Ygufyn39HN5jgoHMHb2cMelqZxmEi40eYZPDUwUfPI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L20kifJZbnW7TXIkTJpWeXIxKXt68aHjWzQByuZ8dqfzfwJUvlfwYtttDD7t7ksA76wEac0KiUeI62UrGIb2tklC2Kf83JYbRy6E/lFWZ+8aGMQPC8RDASggwlD2EGs2/NxvygbuHZU9EE+unwX5ykHFz5WNurKVTN7923cVN0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hSDkhFIy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lQKIGN1H; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1773903396; c=relaxed/simple;
+	bh=gGmF1oezma9ojIUFUgTkwhTHvipI0JaCCjtnZAbqhxg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uNho1Ofe+wapAvhpvUJ74Gdc7nLCsmHFb9ZRqcffww1TwmuJ8SGqugQ+2kow36igwt58AZLeofm0QKfQdpMIEh/IS/QWSBVotvRWcgxI4kLhvTozn+tEwd8cZdSTkCNJJsnrbmj98DFlHoP+adrq0iI/tB623M/zNwoG3nfEv0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LXLwM9rz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FcXB0hJP; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hSDkhFIy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lQKIGN1H"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9454E1400221
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LXLwM9rz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FcXB0hJP"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 95909EC0222;
+	Thu, 19 Mar 2026 02:56:34 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Mar 2026 02:53:40 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 19 Mar 2026 02:56:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773903220;
-	 x=1773989620; bh=PXFZHv2xR7RjOruPupYICdeEU1qTlZh5N/ZKCuTOTwY=; b=
-	hSDkhFIyGkDmDY0rMr1RNOfPlhS2IreBejqA12ug+qQ/hWZku8j1RgZLtmRFlMFx
-	Vnu/pQlDBH5wq7UJwtsQjY93oqMDzE1sQ7Ty/CWRaY6ohw6v5CKPTLTIgXyvkFUz
-	rfBCdUIEeSWjgvJs5U67RCMLMTe3Nlskwt3yUs4DOJQRXaKt3ffS231ZmPbq5CfE
-	ltQRzzajBTDfCAGAoDiw8Jw0pamB8vHYDAQmExOUzjz3uyxTYMcdtjK/oVEhvnT1
-	iikYHSKTzo6YwdeTqh4UtIinp/Weo/tLrvb+xa5tcJhh2VC7yGnyXMbT+8pnqfVZ
-	vi8KVr1AbgZ6Ij4krmDSFQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773903394; x=1773989794; bh=rzWqYteOFK
+	lAGf3zkjCqCVE6L+YcTSPkQ+pD91eOg9o=; b=LXLwM9rz3mlzkVYd5br4UZEh/I
+	7VLq4GPmdBDru3MEo15B17xUPGMVd4TzA8/NAa4AHqBYszE5H8qlVBBWbmHWBFc+
+	wa48aRjYKTC5IGy+EGpSZXa51yaU902737l3iBp+OlJ80DhrcPUanpFtUh/1ALaD
+	sS+1iaMiIBWde+vDNC8bDi9FvVXPOm7tkyxxaiAVD+B9W/lCCqaV2szB840Er4HS
+	VXvz8kXTvkK6uD9s4GFLdFVmat5WDbSACaQpOV+WMa4tEZjWrpnzkZifq5S/e/NP
+	53Y+CcGRdiSf/DXGnWiinBMUh6BEOj0qZzepwQgioDKpBck6HYN/UMHw4SPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773903220; x=
-	1773989620; bh=PXFZHv2xR7RjOruPupYICdeEU1qTlZh5N/ZKCuTOTwY=; b=l
-	QKIGN1HJ0tg2xEeNRU/v6RFvrq1ErSyiCjWy1RV6QIueh0kPECcaHQSAM78pCets
-	iWiQ0+loElo3jtnacqD+8/IvymASrr/wlEbZ48p2sVX1oqos9eJmKQnxzVhuvD7D
-	glyx4QEDmr2WuwgFSODiPpj6wnTOtI4RuTNua7Wl4HlPmDQm1KZVw5dQo8Ca9SWg
-	Bk6jng5oUEf5PaIi9rgvuO04XkWqENkhj+ZVsq3loxOZx5LL4DMr5VGM6ouA9cH1
-	ReFox++5qo3AG9TuBHj1c2Ot8I76IB7q0p+QdRyp/5RBOcmYaV+Isp8vpwWNXm2z
-	eJO12vPp8v6XJSvU1b4fg==
-X-ME-Sender: <xms:dJ27aUikGS_r0W3xC4WiPLOgAK8F01K85KIS7PUJNWKrgIw5JHY-Jw>
-    <xme:dJ27aT-3g6A4AxpfyVrS9PrAqS4v8cvnctu22QN1ZtcXfSk4p6TTsc3jMQhF69Q5h
-    bj4TtFcgb3TgJOvDUx2z5xAExesjfELgB2Abyd1-4VAVvS-caJU2g>
-X-ME-Received: <xmr:dJ27aRsL7rqo79PHhuKO3MKvkB5rTNraFBNkizZy1I7_ZCnW3voeitEPp2dBFrfMeN4TTx5jI3QW-zyBQmlKx12CQK4Vnq_AyoT_PEHq8ppI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773903394; x=1773989794; bh=rzWqYteOFKlAGf3zkjCqCVE6L+YcTSPkQ+p
+	D91eOg9o=; b=FcXB0hJPuuRDKkBdpnw+Y71LzUqlMMczy7cezwgxuiZYk71cw6w
+	0L+pV9bmLwU4F1/02EQKH6DqV/7NzvBT07V4DxC8D51FR5+aMiUsetAyjQvH0EgA
+	4KQdZ3pZcMyANLlucA0O29FqhsPtpQCvD0N/ZL8uJudZwkOL9V0V/I+FHCwBLsAY
+	lWPbihGQhMW2gdEqo8UQfCcYXQ9tgHiS4EoFsfnDeqyW3b+tXlGZ6CZnI+CQH7nA
+	KbPkAyPnIzTEKyeNoBhFCNHcuXSARAHss5jpuj7APYCtfYjcDyjsayuM8gDlVxWL
+	ANDbr0iOZjtRmrLgYAqixNwIm/TmeajcZwg==
+X-ME-Sender: <xms:Ip67aTnW6KJXLrDAzw6tUNjAVdVl7aaofL6hL9aA6c_A1mn8vcAMBg>
+    <xme:Ip67ac0LulBFbg9MuUpy9Hwr59anzBz_ltSEyhE-Cne76VS8_VeU4pozJgISDptDW
+    BQuGAskZ4BFwWtTQLejoJDVBwGwi3uftEJ5qhTDxS89VvU6bR__zQ>
+X-ME-Received: <xmr:Ip67aXQqFmHS_RZ2cCYmcEpWy7P-xb494vUjY45q3fhCKTcsvGWFWdqRU1VDFQ58tNv7SWf9d_TugNrFa13fuyzIuaFWrzryjCJC9eYNjx7l>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:dJ27aaZ9roQq2RGzC3UssE1M_hG3Gj0T7BS6Ti_bFiOqs-S0KehZOw>
-    <xmx:dJ27aRqZW62afmgiGOeucMv3dAOgDaFW4B5Sji_xsYFoBT0lHiwT1w>
-    <xmx:dJ27af94MI2xLBMX8oUYkr_kVDFq0yyH6TBrm54r9DyadTjKp0_B9g>
-    <xmx:dJ27aQ-oa2bOVWPEVx3pXpzqQTMm5tkO4P-LXhyt-W6bqss8rP3NaQ>
-    <xmx:dJ27aZiCdZ4lRkaHC0IsYz9AtCrbHa9ekWqUrp0ouFBclgFC7DMv_fBw>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevhfeffedtteeluefgtdeugfdtkeeugfelke
+    dtheegieekudduueevgeehudekffenucffohhmrghinhepghhithhlrggsrdgtohhmnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Ip67aWuUXiNTC0wyHdyDusxxKzOnxuBXzKARxjSwJWonopy25W91_A>
+    <xmx:Ip67aUbRB4-2HEwNFlX3JZuF_BcSsxNsR2E9bqx46dqy1OyhtRGISQ>
+    <xmx:Ip67aTvqeCr_BjW5xqItF37leakO_6ApGqQACBovaO2yDkspkFDWkA>
+    <xmx:Ip67aeFv5atgq_b-AY93PazaLFpYvcAx7UnKiw2xovQjZNlBdYmN7w>
+    <xmx:Ip67ae90Kjvgfa0ozzgynzFuWSLJGvSpIMHCaOTteWFTG00vFwWwUrjR>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:40 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Mar 2026 02:56:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a770bcca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 19 Mar 2026 06:53:39 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 0256f2b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Mar 2026 06:56:32 +0000 (UTC)
+Date: Thu, 19 Mar 2026 07:56:30 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 19 Mar 2026 07:53:12 +0100
-Subject: [PATCH 14/14] odb: introduce generic `odb_find_abbrev_len()`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] commit-graph: fix writing generations with dates
+ exceeding 34 bits
+Message-ID: <abueHjVHCztQtL6b@pks.im>
+References: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
+ <xmqq341ykzyc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260319-b4-pks-odb-source-abbrev-v1-14-5ddebad292b0@pks.im>
-References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
-In-Reply-To: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq341ykzyc.fsf@gitster.g>
 
-Introduce a new generic `odb_find_abbrev_len()` function as well as
-source-specific callback functions. This makes the logic to compute the
-required prefix length to make a given object unique fully pluggable.
+On Tue, Mar 17, 2026 at 12:39:39PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > this fixes a regression recently introduced by myself in 024b4c9697
+> > (commit: make `repo_parse_commit_no_graph()` more robust, 2026-02-16).
+> > The regression was found by GitLab's tests suite, see [1].
+> 
+> Curious.  GitLab's test suite runs pretending that it is way past
+> year 2600 or something?  
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-name.c      | 57 +++---------------------------------------
- odb.c              | 73 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- odb.h              | 16 ++++++++++++
- odb/source-files.c | 25 +++++++++++++++++++
- odb/source.h       | 24 ++++++++++++++++++
- 5 files changed, 142 insertions(+), 53 deletions(-)
+No, but one of the test repositories that we're running tests with [1]
+contains such a commit.
 
-diff --git a/object-name.c b/object-name.c
-index bb2294a193..f6e1f29e1f 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -15,10 +15,9 @@
- #include "refs.h"
- #include "remote.h"
- #include "dir.h"
-+#include "odb.h"
- #include "oid-array.h"
--#include "packfile.h"
- #include "pretty.h"
--#include "object-file.h"
- #include "read-cache-ll.h"
- #include "repo-settings.h"
- #include "repository.h"
-@@ -569,19 +568,6 @@ int repo_for_each_abbrev(struct repository *r, const char *prefix,
- 	return ret;
- }
- 
--/*
-- * Return the slot of the most-significant bit set in "val". There are various
-- * ways to do this quickly with fls() or __builtin_clzl(), but speed is
-- * probably not a big deal here.
-- */
--static unsigned msb(unsigned long val)
--{
--	unsigned r = 0;
--	while (val >>= 1)
--		r++;
--	return r;
--}
--
- void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
- 				   const struct object_id *oid, int abbrev_len)
- {
-@@ -602,49 +588,14 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
- {
- 	const struct git_hash_algo *algo =
- 		oid->algo ? &hash_algos[oid->algo] : r->hash_algo;
--	const unsigned hexsz = algo->hexsz;
- 	unsigned len;
- 
--	if (min_len < 0) {
--		unsigned long count;
--
--		if (odb_count_objects(r->objects, ODB_COUNT_OBJECTS_APPROXIMATE, &count) < 0)
--			count = 0;
--
--		/*
--		 * Add one because the MSB only tells us the highest bit set,
--		 * not including the value of all the _other_ bits (so "15"
--		 * is only one off of 2^4, but the MSB is the 3rd bit.
--		 */
--		len = msb(count) + 1;
--		/*
--		 * We now know we have on the order of 2^len objects, which
--		 * expects a collision at 2^(len/2). But we also care about hex
--		 * chars, not bits, and there are 4 bits per hex. So all
--		 * together we need to divide by 2 and round up.
--		 */
--		len = DIV_ROUND_UP(len, 2);
--		/*
--		 * For very small repos, we stick with our regular fallback.
--		 */
--		if (len < FALLBACK_DEFAULT_ABBREV)
--			len = FALLBACK_DEFAULT_ABBREV;
--	} else {
--		len = min_len;
--	}
-+	if (odb_find_abbrev_len(r->objects, oid, min_len, &len) < 0)
-+		len = algo->hexsz;
- 
- 	oid_to_hex_r(hex, oid);
--	if (len >= hexsz || !len)
--		return hexsz;
--
--	odb_prepare_alternates(r->objects);
--	for (struct odb_source *s = r->objects->sources; s; s = s->next) {
--		struct odb_source_files *files = odb_source_files_downcast(s);
--		packfile_store_find_abbrev_len(files->packed, oid, len, &len);
--		odb_source_loose_find_abbrev_len(s, oid, len, &len);
--	}
--
- 	hex[len] = 0;
-+
- 	return len;
- }
- 
-diff --git a/odb.c b/odb.c
-index 3019957b87..3f94a53df1 100644
---- a/odb.c
-+++ b/odb.c
-@@ -12,6 +12,7 @@
- #include "midx.h"
- #include "object-file-convert.h"
- #include "object-file.h"
-+#include "object-name.h"
- #include "odb.h"
- #include "packfile.h"
- #include "path.h"
-@@ -964,6 +965,78 @@ int odb_count_objects(struct object_database *odb,
- 	return ret;
- }
- 
-+/*
-+ * Return the slot of the most-significant bit set in "val". There are various
-+ * ways to do this quickly with fls() or __builtin_clzl(), but speed is
-+ * probably not a big deal here.
-+ */
-+static unsigned msb(unsigned long val)
-+{
-+	unsigned r = 0;
-+	while (val >>= 1)
-+		r++;
-+	return r;
-+}
-+
-+int odb_find_abbrev_len(struct object_database *odb,
-+			const struct object_id *oid,
-+			int min_length,
-+			unsigned *out)
-+{
-+	const struct git_hash_algo *algo =
-+		oid->algo ? &hash_algos[oid->algo] : odb->repo->hash_algo;
-+	const unsigned hexsz = algo->hexsz;
-+	unsigned len;
-+	int ret;
-+
-+	if (min_length < 0) {
-+		unsigned long count;
-+
-+		if (odb_count_objects(odb, ODB_COUNT_OBJECTS_APPROXIMATE, &count) < 0)
-+			count = 0;
-+
-+		/*
-+		 * Add one because the MSB only tells us the highest bit set,
-+		 * not including the value of all the _other_ bits (so "15"
-+		 * is only one off of 2^4, but the MSB is the 3rd bit.
-+		 */
-+		len = msb(count) + 1;
-+		/*
-+		 * We now know we have on the order of 2^len objects, which
-+		 * expects a collision at 2^(len/2). But we also care about hex
-+		 * chars, not bits, and there are 4 bits per hex. So all
-+		 * together we need to divide by 2 and round up.
-+		 */
-+		len = DIV_ROUND_UP(len, 2);
-+		/*
-+		 * For very small repos, we stick with our regular fallback.
-+		 */
-+		if (len < FALLBACK_DEFAULT_ABBREV)
-+			len = FALLBACK_DEFAULT_ABBREV;
-+	} else {
-+		len = min_length;
-+	}
-+
-+	if (len >= hexsz || !len) {
-+		*out = hexsz;
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	odb_prepare_alternates(odb);
-+	for (struct odb_source *source = odb->sources; source; source = source->next) {
-+		ret = odb_source_find_abbrev_len(source, oid, len, &len);
-+		if (ret)
-+			goto out;
-+	}
-+
-+	ret = 0;
-+	*out = len;
-+
-+out:
-+	return ret;
-+}
-+
- void odb_assert_oid_type(struct object_database *odb,
- 			 const struct object_id *oid, enum object_type expect)
- {
-diff --git a/odb.h b/odb.h
-index e80fd8f7ab..984bafca9d 100644
---- a/odb.h
-+++ b/odb.h
-@@ -545,6 +545,22 @@ int odb_count_objects(struct object_database *odb,
- 		      enum odb_count_objects_flags flags,
- 		      unsigned long *out);
- 
-+/*
-+ * Given an object ID, find the minimum required length required to make the
-+ * object ID unique across the whole object database.
-+ *
-+ * The `min_len` determines the minimum abbreviated length that'll be returned
-+ * by this function. If `min_len < 0`, then the function will set a sensible
-+ * default minimum abbreviation length.
-+ *
-+ * Returns 0 on success, a negative error code otherwise. The computed length
-+ * will be assigned to `*out`.
-+ */
-+int odb_find_abbrev_len(struct object_database *odb,
-+			const struct object_id *oid,
-+			int min_len,
-+			unsigned *out);
-+
- enum {
- 	/*
- 	 * By default, `odb_write_object()` does not actually write anything
-diff --git a/odb/source-files.c b/odb/source-files.c
-index e90bb689bb..76797569de 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -122,6 +122,30 @@ static int odb_source_files_count_objects(struct odb_source *source,
- 	return ret;
- }
- 
-+static int odb_source_files_find_abbrev_len(struct odb_source *source,
-+					    const struct object_id *oid,
-+					    unsigned min_len,
-+					    unsigned *out)
-+{
-+	struct odb_source_files *files = odb_source_files_downcast(source);
-+	unsigned len = min_len;
-+	int ret;
-+
-+	ret = packfile_store_find_abbrev_len(files->packed, oid, len, &len);
-+	if (ret < 0)
-+		goto out;
-+
-+	ret = odb_source_loose_find_abbrev_len(source, oid, len, &len);
-+	if (ret < 0)
-+		goto out;
-+
-+	*out = len;
-+	ret = 0;
-+
-+out:
-+	return ret;
-+}
-+
- static int odb_source_files_freshen_object(struct odb_source *source,
- 					   const struct object_id *oid)
- {
-@@ -250,6 +274,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- 	files->base.read_object_stream = odb_source_files_read_object_stream;
- 	files->base.for_each_object = odb_source_files_for_each_object;
- 	files->base.count_objects = odb_source_files_count_objects;
-+	files->base.find_abbrev_len = odb_source_files_find_abbrev_len;
- 	files->base.freshen_object = odb_source_files_freshen_object;
- 	files->base.write_object = odb_source_files_write_object;
- 	files->base.write_object_stream = odb_source_files_write_object_stream;
-diff --git a/odb/source.h b/odb/source.h
-index ee5d6ed530..a9d7d0b96f 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -157,6 +157,18 @@ struct odb_source {
- 			     enum odb_count_objects_flags flags,
- 			     unsigned long *out);
- 
-+	/*
-+	 * This callback is expected to find the minimum required length to
-+	 * make the given object ID unique.
-+	 *
-+	 * The callback is expected to return a negative error code in case it
-+	 * failed, 0 otherwise.
-+	 */
-+	int (*find_abbrev_len)(struct odb_source *source,
-+			       const struct object_id *oid,
-+			       unsigned min_length,
-+			       unsigned *out);
-+
- 	/*
- 	 * This callback is expected to freshen the given object so that its
- 	 * last access time is set to the current time. This is used to ensure
-@@ -360,6 +372,18 @@ static inline int odb_source_count_objects(struct odb_source *source,
- 	return source->count_objects(source, flags, out);
- }
- 
-+/*
-+ * Determine the minimum required length to make the given object ID unique in
-+ * the given source. Returns 0 on success, a negative error code otherwise.
-+ */
-+static inline int odb_source_find_abbrev_len(struct odb_source *source,
-+					     const struct object_id *oid,
-+					     unsigned min_len,
-+					     unsigned *out)
-+{
-+	return source->find_abbrev_len(source, oid, min_len, out);
-+}
-+
- /*
-  * Freshen an object in the object database by updating its timestamp.
-  * Returns 1 in case the object has been freshened, 0 in case the object does
+Patrick
 
--- 
-2.53.0.1055.ga2ffed1127.dirty
-
+[1]: https://gitlab.com/gitlab-org/gitlab-test
