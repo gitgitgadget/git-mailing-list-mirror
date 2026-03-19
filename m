@@ -1,107 +1,106 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778CD38A715
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 18:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CF42D6401
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 18:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773943690; cv=none; b=P8w78G54ejt/Qwcxd6e8Vsz8FMrQ3sga+O5UL5r5yNbWmK+oqPP0PugJiKJ7CWmFdEAJaWzIvHuWYh05IBO2V408LXsI2HnOTfNzD+M+dVxEChe0kh1G8Bdz9cLtrK0FqCMf7RhIlxWtUm0RkS6elBsUc7zxrbfFfZ70hJ3V4pY=
+	t=1773945314; cv=none; b=Td9mRWRxUoIZxA4oxrHHT+ZnYb04KIuOJRTvf3K9WuE5lxgqc/6MN/5uBVNHIboPAwVGgc7R56dNx0s5VDUvAz0rvmj9rqRN8FILBQ6jgaMrQTZZP8Mm+mNc8XWUtnyFRJ76bJg8CnIwWLQUN8V0B4KRd7fn8KayCkeIperDV9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773943690; c=relaxed/simple;
-	bh=haCwItZ5d9ZGtSTCWjptrqAGOI3IjBQR2oUkqMfKpf0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgqXCRNsCzYvmURGmqDWSgLMBtdgNd6dPl/lr9DBfMd8eAGjsQ8eoBxyfAoKba6lKJy28M1Fqqag/4JDRfpT1gNs6VscpxuKYK08XUSvd1yz4pedPyiLvcNJNhKOVFseQ90q2YstJUSH0C/ZJMqPHWNad34Ksryp1xz+Vy01oBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i+CF1/fu; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773945314; c=relaxed/simple;
+	bh=t4mNDSXmjcTZ5BNq+gq1tEysgzorkS6BRFl7DlSUE4c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aJWbQLH+BAYucRCauGK0IFZWjsrGLjwoiuXeR8VPZJP3SjL0shP8WVm99iMvmMbEZcF1rvful1SqsVgyTxCFtfktzKbyCsGAh3N84E8+4IZGqS+OcGxJkev1sQuc9P0rw/Q39lOFcmr67PuVXNU5GX0f0c9FMp2519rVuz1u6dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ap5mVswd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cw1seoay; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i+CF1/fu"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48557c8ad47so10073255e9.0
-        for <git@vger.kernel.org>; Thu, 19 Mar 2026 11:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773943687; x=1774548487; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pQmMS05GWxRnwbWKCSYD9QbJt8OtrsDg7q1/nO1IOgY=;
-        b=i+CF1/fuiyMZ5QsziaIu7XhGgnGr/XQmhyWs1/YR6S+PTh9rj/QKZ9cjLvezAekvV5
-         +OWOm+7qxlU/xgiipKQK/eMUh8aGzxOJMqX4A0Ay6/Pb+FAwYlM9pGenNVT4gqDSnvsJ
-         bXUAtTzR8ZRDLA3zT8hZf5SNcNWd9P4BcD5iMKMfQZYF9ao30vlCFv/f9oGj/vIH8YgI
-         F2niTj5j4mbKskxefZNPGgT74VnqjWc2nNy9RFqfWhCDZQX1Ki8PpdeABTN1UpsTZv4j
-         yVtQ9JQ8vpaLXCdcXVKvQIRbh6+e4VzD+6btoVlEaPJQfVCM//4NYFN0cdMU5Di48C2S
-         udmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773943687; x=1774548487;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pQmMS05GWxRnwbWKCSYD9QbJt8OtrsDg7q1/nO1IOgY=;
-        b=NURT0X3EDUM59sheAgPvSA1PHJFecimqHrgjvmGVl0eop85zOCdD3pXgs4XxbhncK4
-         IxtLSwBt3c9xf3oXkaSYZwBNykvFdZVLMOluQpjkFAEKIs7F7ryDxdoBAWAJSmU6Gp+G
-         raXpUBd1Uh1fWDIziTOOu4HvpCHPsH5QzZnqQT9M7YmYLZ1RLzk+T0fNpoERDncAd2z2
-         KYld2clcN/mwojYaWI7dKcAA+Jr6H0sDnWwQCv8s5uTjGx4WsMjHRP0XX92ADBv+XNzW
-         ts6W2gbaSOBtupP0RsaPZCNNQjTMxW1mAczfzATE0L+g2bwSv3AL2fKVYX2nfQ2GL6eW
-         SbwQ==
-X-Gm-Message-State: AOJu0Yz/dJ8RSMKk8fiFOCeCBdzxYAuINeiDIqAXzwwO5U5YgOpCvHis
-	NX2tNo/akNgvR3rC4VbG+05rIR/Zpb/PMJwypzmKJn8BgaquYOIwACC0lLrf7DPIF8nLDw==
-X-Gm-Gg: ATEYQzyPvHlqHYFm/wZo8JacpmC4Xkz0fibwhGLJ+hlHIOEsgtu7MslkSbvWGeWVsGs
-	LFUMqF1eoY+QRioAASgs4g+BjgqeKr+v54oRzzWc/pisRfD9vvpTnIe9psYwcTVKTl1MtaWrumK
-	9vE3tmTXQvTmrjU8o0IKrY0dMocN9exYkHPAvOiAON8RslCn75mc9y7DdgbtkNODL1PhNifBTSM
-	Pz8dIM6bMAdBqKc9vS1SaPzD0KHTDUs/Iq9Zybm2DlZUfN8ZF8lrXmhck22FmNgk1jP83DhyS4d
-	p/YUlcF6SNykqfQbpmcJDqF0npZ57wfaRuSY9bG8nrMGOo6oB5o3r7yPiggUL6W0TqoNYRbajye
-	UYZ4fDe+t3CIK2af0xLYNdedooPGnaOGB8+ObiEzlH7MkfFYlKyIJ9o8vH94uN3znA+OFJ9PH67
-	s7OGBruGsJbNOxuMQbuxuP7d6+dsRBYYMqi+QOtiKlyKzUTs2P
-X-Received: by 2002:a05:600c:c167:b0:483:9139:4c1d with SMTP id 5b1f17b1804b1-486fedd4143mr1122835e9.14.1773943687060;
-        Thu, 19 Mar 2026 11:08:07 -0700 (PDT)
-Received: from pluton.example.com ([105.72.248.17])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486fe880c21sm1172165e9.8.2026.03.19.11.08.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 11:08:05 -0700 (PDT)
-From: Bilal El Khatabi <elkhatabibilal@gmail.com>
-To: git@vger.kernel.org
-Cc: pabloosabaterr@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com
-Subject: [GSOC PATCH v2] t5315: use test_path_is_file for loose-object check
-Date: Thu, 19 Mar 2026 18:06:52 +0000
-Message-ID: <20260319180803.164335-1-elkhatabibilal@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260319160301.98039-1-elkhatabibilal@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ap5mVswd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cw1seoay"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2681C7A01C1;
+	Thu, 19 Mar 2026 14:35:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 19 Mar 2026 14:35:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773945312; x=1774031712; bh=bKVLK2pmsi
+	libjilKuKD8d96Zkhly0tX5wgBsW9JpNs=; b=Ap5mVswdIWM9pHMZB8tGbyQLxZ
+	k4NotyFGU76lu0H4pm02uTupesWOJmUDPnQJT4M95AYzg8fWGzjDNUndYTyXxQ9a
+	H/luDWpSsd11mW9m8OU62Uubey73LRrNMXG8byiINPxr5tA0VOuPz4G00T76nC4e
+	Qq7wu1GeiIlPZNElEaaL/66UIxymiRVTGSDqtmw6t9y++FHUkIak3HwbAzJ6H+k8
+	NCZ4sqxrdGlPfs3Z4kaBmmmyUwHo4k/d9vzyRedKZLondBY4Er9s3KtIN+c1bMgQ
+	fLRlQHCD++J4oZUwtVjgsPQE7KmVuS9AGXajxxD66zvPwXB9ZQ8Q3886ZR7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773945312; x=1774031712; bh=bKVLK2pmsilibjilKuKD8d96Zkhly0tX5wg
+	BsW9JpNs=; b=Cw1seoayEcBW1kQpqhU30XozfdGY0QkjGhA0YDmb+kvBuMZ/CMr
+	S4ry2pN996TFLWCnwLOj0w9pYhavEbm9ScW9aqGZs5BUaiweFMRlQWeSKkifxkcg
+	4j2Jlh9I761Guo1FtRWKADxqemnT9hWzgF4Oz93A8mvjT2g/5fezCCCiD+KVf5Tt
+	vO5lvohuhECzJZmbcBxiWvS9cnfJKZDqA38Ks61e6rUo4graSWfgK5hWKlxvYAVV
+	JOcsi65zhvVwBF5xlN5a44N+6NWkwE4YkQuDh6ZVu/TfEjFTyAr12sMqoqGrHZx9
+	qjFh68nWx8f6i00tk7rv06IvEuGNgQwY1nQ==
+X-ME-Sender: <xms:30G8aU6DxEedv-cMSMRo1mP7XVeWJZwqBUrjs_2cVsN1Ykz-XtqVmQ>
+    <xme:30G8ac68ui9azzu6PmbXXERg1Hm1DzwYvF6XxDhbbvwpBbZxUffIjbhHjEUM4nvoQ
+    fIH0FgvIqrN7OY9Y30wYa0t1qafQN-wvBH9SrYLvdUWVP9k4amxX_s>
+X-ME-Received: <xmr:30G8aYeF9Tew3C7UDDRDjfIo1AKxztqG7FZRXKh9ESXKNgmoCo7TUlmu3VtI0uaNMkwK3vvPvbyEPgipdGB7Y2lFEMLe_Gdk3w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdejjeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
+    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
+    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgrsghlohhoshgrsggrthgvrhhrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepvghlkhhhrghtrggsihgsihhlrghlsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:30G8aYAyFW2CTpwIDmvzhDG0LJtB2yL1w0LVv_SDutZtEeHoR5cWfg>
+    <xmx:30G8aT-2prhRTSkp89eFlOU3shoRaFIT5wjn9JckK-uyZ_9McGQQ5w>
+    <xmx:30G8abKAYllAdPoVP0pPJdSdcruWd6e1sk6I2HCReDjngsZaCI2JKw>
+    <xmx:30G8aUjLkxZtSIB4rxu8wXD7VE_uKGO95aLAX8VsqlnirgiaCaG8fw>
+    <xmx:4EG8aX86vWIe6rTYsG5d5dfLcx2t6EV6IBip4fj7uoEjzZHwaoyB4vO3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Mar 2026 14:35:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo <pabloosabaterr@gmail.com>
+Cc: Bilal El Khatabi <elkhatabibilal@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] t5315: use test_path_is_file for loose-object check
+In-Reply-To: <CAN5EUNR2mqpCMG0oPsDnzgZr-2yyL+S0A7p_MM62F7d4MjBuSA@mail.gmail.com>
+	(Pablo's message of "Thu, 19 Mar 2026 17:26:31 +0100")
 References: <20260319160301.98039-1-elkhatabibilal@gmail.com>
+	<CAN5EUNR2mqpCMG0oPsDnzgZr-2yyL+S0A7p_MM62F7d4MjBuSA@mail.gmail.com>
+Date: Thu, 19 Mar 2026 11:35:09 -0700
+Message-ID: <xmqqbjgjllb6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Use test_path_is_file instead of test -f when checking that the
-loose object was written to the expected path.
+Pablo <pabloosabaterr@gmail.com> writes:
 
-This uses Git's path-checking helper, which provides more specific
-failure output than a raw test -f check.
+> Seeing that this is a microproject and the current date, if this is
+> for GSoC, add to the subject GSoC with PATCH "[GSoC PATCH]" for
+> example, and CC your possible co mentors.
 
-Signed-off-by: Bilal El Khatabi <elkhatabibilal@gmail.com>
----
- t/t5315-pack-objects-compression.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for noting these things for new folks.  Another thing to
+encourage is to read and be aware of what other new folks in the
+community has done recently by reading
 
-diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
-index 8bacd96275..d0feab17b4 100755
---- a/t/t5315-pack-objects-compression.sh
-+++ b/t/t5315-pack-objects-compression.sh
-@@ -10,7 +10,7 @@ test_expect_success setup '
- 	# make sure it resulted in a loose object
- 	ob=$(sed -e "s/\(..\).*/\1/" object-name) &&
- 	ject=$(sed -e "s/..\(.*\)/\1/" object-name) &&
--	test -f .git/objects/$ob/$ject
-+	test_path_is_file .git/objects/$ob/$ject
- '
- 
- while read expect config
--- 
-2.53.0
+    https://lore.kernel.org/git/
+
+and at least skim a handful of threads, and a few of them that are
+titled similarly to what they are about to post in detail.
+
+Thanks.
 
