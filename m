@@ -1,171 +1,106 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF243988FD
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 05:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773898429; cv=none; b=Q6mlmgj4L5MOp1iCuAc2kO5C9CS8RXLc3DiMhW5Jv3HtJV9dI0G2uxlD0jU8+bm1OuL64VpoJ4CYK9veDnqEZiAx0GIT5MnJVwUa9SiBD98rhBMW6ulQYezzGf+ra28PA+e93taCPi8XvXMRyKYynCmyMoTAwU7qFArDIsjTEPA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773898429; c=relaxed/simple;
-	bh=FfSuzkjw78d8ea2MPVaI3t/hRBE+U5pP7ilIdUAlUsM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=b3b3vZbH01Tf9c++iUr4/EZitZHOn3JqtpSv2E9vFLCpQTN2A3hsdxVec0vICJXwdYFIslPtQ9MJCHZO9XWs0ObLcTglGA0yLfyFLFSoC+Bgn5sQFFRvjl67IfltP3af+GneaejL1mn3UFAC8GT+bC78ZcYxFMZk2rerbtVpdEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AwJwkzWa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KlKOKubb; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8605E28CF77
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 05:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773898543; cv=pass; b=AdMBfV7PZXeLYbsCP9DSFMUPRPR3g88+fO3lGLbP+zfbSemG0/wnW7FotArlyR12XDZcBMgFtIZe2OxDQPF+zfrdF23NzPtQS9MTo4ZPQnAtzW5xjwALRW1xuQSZvO8g11AWweT7QamgMSjcA+oxJU4SCvrV/jkURY89vOTMwJ0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773898543; c=relaxed/simple;
+	bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RtpffpChop/tW0yD5mPlEONWU0NK0isRtpq1bhKtu6qP+GAplM+qiFKAEppSCxsDtAOQ6e2bEyjR/ISdn7brfmIf5DjaPdK3mckUM2fMAzB0Zq0z3B/bABa4Oj/gw6PN7rTQlpNP7WLlPsJg8VV68nNPQTvq2qQL66aLJpILJCw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AI34fWEC; arc=pass smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AwJwkzWa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KlKOKubb"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id AD1C8EC0219;
-	Thu, 19 Mar 2026 01:33:46 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Thu, 19 Mar 2026 01:33:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773898426;
-	 x=1773984826; bh=bx8PGJ45F8wsNLftFPc5Gw27DFZnvlIfL+kcPF8EH7w=; b=
-	AwJwkzWamxKL0ixuFR9rRodY25yVnZHPEVcKBNYBNbEc7kMXg9DOBjOuUMKqbYPt
-	kjEAUMMmHhbv5v9s17cXui9lnY9nsrJlEQp4a10SGsJzE9MnMaFzOwSYwTZK+RhJ
-	jrqSP0VeoKXOuy7PcKpOosZwxp8be98LvxvaQVaLQAPYCDaFmv7TzmvO5tnUrvub
-	giSmtW7a/Tk70SFrIITwHwPlrftBH+tJ8H+VT9h7LLVyabrtGJxLzwVl2CBQKMzl
-	JeI7EI5C25+2DD58QZuroI6CPHB40eSO4aX1p9F2kPDHiqIh1UFz7TYFcEKGqnoH
-	BhVwdFN9N1Q2oV3YajqxFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773898426; x=
-	1773984826; bh=bx8PGJ45F8wsNLftFPc5Gw27DFZnvlIfL+kcPF8EH7w=; b=K
-	lKOKubb6uMyDcrlQeKgQAb3EnBqiD6Fpo8pzCLxuQpBSIwcqZweWXIXO4McIYlKo
-	S1cmqXN3loX1tjdGp43Obbm3+sEDvFap8WsC9VJz8xXOzik0cyz6XDfQ3Zo14SnT
-	UHx+WYATa7+idUfNTGYWVGDomJ90Ed4dCOG4NAvUv8h8Dcq9jTu91AgbJ4sHPtYl
-	0n6P2U1qRXJc3rMlSQ1VMmxTiHol29ogJcRwzhlciaLfnFLSGmTsLrsEMALtYafT
-	nTJUCrU/ZEW3qQNltk+eh2EUzb+YPONe6PpzAAApN8QTnmTg6qmBip3Zfq5eMa1h
-	b5Vbw8WY3xve9XbS2T/BQ==
-X-ME-Sender: <xms:uoq7afdTTO_ddVTEjL2XQz-WxrduWMIHVztvZtNkTmjB98Y0pN_sPg>
-    <xme:uoq7aWvURJYj88YDehAKhaCaNPNjIMOvBNQzGO40mLGs7hzFzanTPATv6pvZOeDeR
-    Xy1ZaLv9P0tLWKJym_KwIc9uGK7TVOmLvZkvaiQ1YA92yf-hTycpw>
-X-ME-Received: <xmr:uoq7aYlQ4KPI6W26iMP8b1ha_y3-JUrnFCcqjrxmFbctDanRwBFFxHWDa9FqWMoZZrjoX7Q7FPzDGShMZJ9qfraIHg5vKAF4yfZifHPwdOXH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeiudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeejffelleeftedvffegteeglefhteejudeuhffhveeivdfgjedvteelgeelhefgfeen
-    ucffohhmrghinhepghhnuhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehp
-    hhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
-X-ME-Proxy: <xmx:uoq7aQy6JV_R_mjgWKWgjsHUZFw4uw_gcXBl1o-9VCbeQfZrK9UssA>
-    <xmx:uoq7aSNHgKnIphiu-CWyd6NPuh8gXUSbUzgzHzucjV_EB90bGQG9jw>
-    <xmx:uoq7aUr9PFHZIuZ6E3nswOLcqdYHe-6B7sd_MW7Wfea7I5E6aubQGQ>
-    <xmx:uoq7aTGvg1eadAeKhuDsZzRNtCpOlexZRhJrDjCafpnqminOTmM9jw>
-    <xmx:uoq7afBre9hugIYNfMcYS0sXSdgZ4YKwLzrewvvVP995bd8jFBWKN1NT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 01:33:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d5b8971d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Mar 2026 05:33:45 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 19 Mar 2026 06:33:27 +0100
-Subject: [PATCH v3 8/8] meson: precompile "git-compat-util.h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AI34fWEC"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso1812955e9.3
+        for <git@vger.kernel.org>; Wed, 18 Mar 2026 22:35:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773898541; cv=none;
+        d=google.com; s=arc-20240605;
+        b=V9ztsOu279UlJhn9Shh7EPqx7lMulxJCDRpR+VJorVavvUjUfSJtEpx7v69M189C32
+         vDvO/L4nWwmFXM75gyb2jxbBuFBT0a7JhQ7T59Hm7JIfZ4dDMJLHN35I9FANB8CY5ubU
+         emiDmUFAGv2KZ7ceEfPrdkFDTSDr8w8Vott9G9Fsz5UFdI83qEVGERFdKTCmoEFb99mO
+         3Zu6tDaIyJCYCpviOfVisDNRy7rRS2f7UkM5yzXuagjoia1v2raKymqF4Zhfz85DY4h1
+         yxhqP2DZngM3Cb++YCFcXlKqCxH+7rx9qyuAo+wokRH0vmf5zmVpj3n6p3o8ybUQCxGk
+         CLRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
+        fh=q3FwEuqcmu+syEBXkYX01gKL+3nTK1MeVWYK6W4eKi0=;
+        b=KDXjCAZNjXMIx8Au+QNPTupvI9lA2hCv0Zj2gDQEgySUS4y4lSLWr8zuExeeq1t1JX
+         QV9RX65Uwnrw6eOGM0mXjNL89LpzM56e1jFXS6QQk7u4ooE67xZ13lLKXuJNQJLhiEdh
+         7Hn/XzV+Tgi1b6PjmAQmt84gmIljolpAV7oNaI64hU4Xk15CUvVUzvVDERdaDi+0G6Ja
+         ZrpWe0Nf5U0PJCg5mWSsZuw8YmmFdHVixYbceqei4fDJ7U/rkBaPmascUCq2Ff/+80jT
+         bsJkRW0qo50+HMJLO9hsouhoPWVG3V9ZgczulppXiyeSEcZauiWDPP4P0NmPF0bvN2zi
+         8X9g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773898541; x=1774503341; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
+        b=AI34fWECnY2wR4grBaWi998pG3a2lMbauu5jkaR4QMo1mtD1iDyEDROgEBXXaJ87k1
+         KXSuHlVzcV4Z1pzycgm5UQRJDhHGgTjzf4B/ogkoCRnvbGWvjD+01xlY3O68QtmBtBaw
+         TJEw7nXKzXZkL5P6HQ72/OO6fhpdpR3DQvWrAdI94R+qlwABNbyWQ9tfpim4xDD39VDV
+         hHzNnm9xhvIxvNhrahIwh+ivIHRoUclLnvrjj+8G/fc0tVYc0XDhh1KgyOIzrZ8gZ6Jf
+         x9LWufSev77MHCEQjJegihNeZUN2EkoN7TcHWpg+smh5kfUzv8vte+5PKd7ZLlMkxmp7
+         ztMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773898541; x=1774503341;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
+        b=EZQyNLtZuuTyILWUpx2DYlfefQBfmVPOD1r4iWRdw7kO/B9eeXOTC4yfexM/qxV4IZ
+         dfn4kY1DuyKk+YI4jg8s4VqIaPclshSQOh6RSIzLjXg+9OtF2CCn2178DDJJEJxAR09O
+         Pn/sKI1DeuYxXM4D/HS5I3nMoWOV4+mxebhO2lFC3nRREtb3WG5qcfiDN/exLIsp3lK3
+         xFz7RED8N/y9qW0xb80/EStmMJwBnlSlbwEIsV4OYoJSsRdMC1H9wbZVexoP4cjwYKI4
+         QEgV0Z3zEIH/z3/GdPckhig+CPG8oDpCf0iwdhOdnUuFttU4yCGNyFHrRTY1mPGvXH9z
+         Feiw==
+X-Forwarded-Encrypted: i=1; AJvYcCW8zcazvFowMFJnSkxEdmMdcLIYAxRZbMhDO30Jdu7EKmVG+g4zkoGAEnPP1hiCROewMVM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRiFxBFZ9P1+nk/Hrx3ESdbySn3TC8dLZqH677RInfyM7DASq8
+	yxri5kGK8InEPjOjkn9vdHs2uiKSyOQjSRTVhFN9y7ZBa4TBl2x0/nQDU5f+eluJwEN3OIQPtCm
+	tcUSiOTEtdJJtkd05rVwLdBRD1ajwLh8=
+X-Gm-Gg: ATEYQzz15okw7tkdkml6HJY/30gT2/p+En2HrtftTmRUhZqdfsUE1NO7QWyAM4i9nBG
+	zpBTZL53RoNIutvIlCoKTa7+fAO4qVcWDpmm3xsVjNGjJioYwRqJHs/Yxd5m2+AUOmGiUxvtK85
+	87aaRSSAxYWnS01pNmFdcYVJg8YNL+3sah1eH6YVdqBLEU7x/wVhigUYtH/cTl83JeeY34SctAz
+	ZCJiRai/MRyuYAOn2TcCHPNqH28LKmsY8qFGu6IB+402t5oQ5txLM1ty52MWgRQdi3Oqc0IAxkj
+	b/wJvjs1/NBpkEPqBZge/u98q0fCGItH13/iLXx/WAoLtQ4dqw8=
+X-Received: by 2002:a05:600c:a016:b0:485:3fc8:de9c with SMTP id
+ 5b1f17b1804b1-486f4426488mr88620025e9.12.1773898540432; Wed, 18 Mar 2026
+ 22:35:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260319-b4-pks-build-infra-improvements-v3-8-82f5fb3edc3f@pks.im>
-References: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
-In-Reply-To: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
-To: git@vger.kernel.org
-Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Phillip Wood <phillip.wood@dunelm.org.uk>
-X-Mailer: b4 0.14.3
+References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
+ <pull.2071.v2.git.1773864455956.gitgitgadget@gmail.com> <xmqqtsucq4l2.fsf@gitster.g>
+ <CAP6n+1Uj6sd75ENFY8=7NtcOUehTjY86YQV9YOWgdOqfmFHYPw@mail.gmail.com>
+In-Reply-To: <CAP6n+1Uj6sd75ENFY8=7NtcOUehTjY86YQV9YOWgdOqfmFHYPw@mail.gmail.com>
+From: Aditya Indora <adityabnw07@gmail.com>
+Date: Thu, 19 Mar 2026 11:05:29 +0530
+X-Gm-Features: AaiRm53ALgZOYzaMf-ExFh1T7EYO0uTivEv6trU_mbyMAuPUvg9iu6yWCPIhxic
+Message-ID: <CAP6n+1U9UHp8B_DXLJu6d1tsSo1qCuKXdH0tQjXXj9wp01iHtA@mail.gmail.com>
+Subject: Re: [PATCH v2] t2107: modernize path existence check
+To: Junio C Hamano <gitster@pobox.com>
+Cc: QUANTUM via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Every compilation unit in Git is expected to include "git-compat-util.h"
-first, either directly or indirectly via "builtin.h". This header papers
-over differences between platforms so that we can expect the typical
-POSIX functions to exist. Furthermore, it provides functionality that we
-end up using everywhere.
+> On Thu, 19 Mar, 2026, 1:43=E2=80=AFam Junio C Hamano, <gitster@pobox.com>=
+ wrote:
+>>
+>> So we've seen you identify yourself as quantum, aditya, and aditya
+>> indora; which one do you want to be known as to this community?.
 
-This header is thus quite heavy as a consequence. Preprocessing it as a
-standalone unit via `clang -E git-compat-util.h` yields over 23,000
-lines of code overall. Naturally, it takes quite some time to compile
-all of this.
-
-Luckily, this is exactly the kind of use case that precompiled headers
-aim to solve: instead of recompiling it every single time, we compile it
-once and then link the result into the executable. If include guards are
-set up properly it means that the file won't need to be reprocessed.
-
-Set up such a precompiled header for "git-compat-util.h" and wire it up
-via Meson. This causes Meson to implicitly include the precompiled
-header in all compilation units. With GCC and Clang for example this is
-done via the "-include" statement [1].
-
-This leads to a significant speedup when performing full builds:
-
-  Benchmark 1: ninja (rev = HEAD~)
-  Time (mean ± σ):     14.467 s ±  0.126 s    [User: 248.133 s, System: 31.298 s]
-  Range (min … max):   14.195 s … 14.633 s    10 runs
-
-  Benchmark 2: ninja (rev = HEAD)
-    Time (mean ± σ):     10.307 s ±  0.111 s    [User: 173.290 s, System: 23.998 s]
-    Range (min … max):   10.030 s … 10.433 s    10 runs
-
-  Summary
-    ninja (rev = HEAD) ran
-      1.40 ± 0.02 times faster than ninja (rev = HEAD~)
-
-[1]: https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- meson.build         | 2 ++
- tools/precompiled.h | 1 +
- 2 files changed, 3 insertions(+)
-
-diff --git a/meson.build b/meson.build
-index cd00be1c23..2002f4795e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1760,6 +1760,7 @@ libgit = declare_dependency(
-       c_args: libgit_c_args + [
-         '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
-       ],
-+      c_pch: 'tools/precompiled.h',
-       dependencies: libgit_dependencies,
-       include_directories: libgit_include_directories,
-     ),
-@@ -1820,6 +1821,7 @@ test_dependencies = [ ]
- 
- git_builtin = executable('git',
-   sources: builtin_sources + 'git.c',
-+  c_pch: 'tools/precompiled.h',
-   dependencies: [libgit_commonmain],
-   install: true,
-   install_dir: git_exec_path,
-diff --git a/tools/precompiled.h b/tools/precompiled.h
-new file mode 100644
-index 0000000000..b2bec0d2b4
---- /dev/null
-+++ b/tools/precompiled.h
-@@ -0,0 +1 @@
-+#include "git-compat-util.h"
-
--- 
-2.53.0.959.g497ff81fa9.dirty
-
+quantum is just my github username inspired from steins gate anime, my
+first name is aditya and last name is indora , i want to be known as
+aditya to this community .
