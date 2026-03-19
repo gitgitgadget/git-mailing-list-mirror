@@ -1,111 +1,90 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93ABE405AA3
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 22:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2813603F1
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 22:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773959945; cv=none; b=guquhQZxWV48LdIEpGdqymz0tVV/8at6ePahOXmcR9DujyNHgSKcRfLgJZNcvxdHvkfSFd699zR5Yh5UwWYDieuYWF3i474cseT9xHwbQ9jezfrg4PDKjy7TS6ptc8K56ntnvYBUarSuZ5WczOo+bptiglSi+n4oer2OCZfqjjo=
+	t=1773960740; cv=none; b=Ru63itYjKrobB52rLfjhvUgSduOVJrMJf6Vvn3Bf914+lsIhbQzTSVndGuDRHFb+pfuzhDp3zoFmEj2YXCAThJ1NVAod9n6hjFn+HF5WH8uzRzOXbSC4kKhFdhbPe5Rjz3OYujGp1LQCFMxsg7WVEvvN43kxHw2UQ0mzDYbM4KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773959945; c=relaxed/simple;
-	bh=lgexwyKSTJ6yWHnW18/3r3hc4u/h2gw/BPVBnU+l0qk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VHvs8oRu280fBad8L5nHf0T2+qUOJVI5Kv/8yoXZKghyQVBU8+HcfZoZfCAg23FldiZ8lOSHzAneJwowNLE9eDy4hGYAJdgFnqnG+Gd2lgUoZj/HSfHZkzCn3oVfPGF5yJvh3vGsE//2R3ugCb9BkRJlCe8BqhuYgasVoshifng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e35UtkL/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X6wvGPUl; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1773960740; c=relaxed/simple;
+	bh=QB32e0LdK9NMorMHiwSgtukDeaK0qoDN7AWD3AFVmXg=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=U0pBGbiooMtCbCKtausU9j6Ls6SgctyGl2p1XXwkTjYICHuT+l2PNeVsrxC7ta31ERfrATxw6h171MPzMrIzVGfeY3IreyfY2bdno262mBSreBd+l6Eio3Gwuu4TJoNrFqf2OXZ79117/FR3RWlhNPBkNR+3mrmd4WNaXQ6qzlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=pKz4eT9j; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e35UtkL/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X6wvGPUl"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id EA8C51D00177;
-	Thu, 19 Mar 2026 18:39:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 19 Mar 2026 18:39:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1773959943; x=1774046343; bh=Epenbkvr31B2VtaElj9KgI9+RuzvglAt
-	Fm/7PcvX/8g=; b=e35UtkL/HWJZwKebL9B6113ABQka//c1HC6O/MrOO56x78ch
-	/yEjKieqh6dNS7ElVZC9H1jUrEraKF+d+JJ1/ofKWjLZKtt2d7HkqFJNyYDg/y3D
-	fBPuLZs8rQUBPIfqxBytorjZDgLdh2+7JyUizvF2eIoN6wgaL9f8qlcX5isbyFoJ
-	z6wsHTW0J6558rgitpkapxBvz8gpURl1nAdxYIPNiw3KQ2M1z+ZKHyqw7hYhc5Rx
-	5/dEWLAFgLieNgLUAvwvzBhqbGgJj2DtuzUB5kcC/K2cCG9nqLX3wYv2VTsoT5AZ
-	fVEclFNL/k+tTwomUK/Ktjga37t24gDGEp4CBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773959943; x=
-	1774046343; bh=Epenbkvr31B2VtaElj9KgI9+RuzvglAtFm/7PcvX/8g=; b=X
-	6wvGPUl6NvI5xi8toHbUk+rz5aITl/yiBkuDMiqOTga6uoVQ3Grc8Hl61utD3Iwx
-	+yaCH+bquzjVvlVr2rRtcFBdYNfa6RWt0VL/OfvhU2ifqNpRn/SIpq5LNlNsOeXj
-	75srl30uudLR/AKJfQZrI0yt8h0jEb+l+Rt+GXGUbE7UFUNigdA6hd8omIxZ7bsI
-	m0vBLOZcBa1QtKPLGrMIvqRH9IYfJ61MSu6FF9gC7ZE+kYbWYq+TP2/EuVyD3jsB
-	XKMNfIIBxS1Il6nmdYgvK9I33JwbEVhK9zqFb0m+K19qwi6dbelft/l3UwKgCTmT
-	C3kNy1Xhu/eR6xXtFE+iA==
-X-ME-Sender: <xms:B3u8aZGD3XT8KUnp1zda8Wq9ZrCGmHh0dUILyJIKO8TT060_rV-y0w>
-    <xme:B3u8aUXqxKaZN1_kLLFhpRX8Ah0e6fFg5P1B4TPgbppHJsDVTnSN70B0frHbT_Hwh
-    mfMx6JgOr08XFgj8FE9IbeOts-qlSH3CFss4OmBkSDh-eQXpVA>
-X-ME-Received: <xmr:B3u8aYyzNu6jwJt6HQBfI6_QIG8j990WIECrmjylORSliQ_geNZth7DCyC9Ai6D2hVsqJN-0YuHHobWyHFdf1xrSEpm8T-gAHw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdekvdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
-    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:B3u8aaODhKfm41cTJf2sAa6BT_x0dFlhV9TiXpnjvhE4ju9vP69UMQ>
-    <xmx:B3u8aR78uv8cmfZgSeWPOImVDbg1afW5TbEYI8mN_eWEXoAj5kqZdw>
-    <xmx:B3u8aTM4YO7OuQFZj-Mlb4DvZRL_f457eJKHzczvK-WIwg02bGb4Pw>
-    <xmx:B3u8aXlyDtaAghaCfnVqeoz7kP2JP_BFbsMEPwZlGKsnZ60c1WbLqg>
-    <xmx:B3u8aUeueA8w-MLtPGwSuQgNag66aS-OJeqLwDOxWLl2CHHe5ZWBsSBs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 18:39:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] cocci: strbuf.buf is never NULL
-Date: Thu, 19 Mar 2026 15:39:02 -0700
-Message-ID: <xmqq4imbigvt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="pKz4eT9j"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 3MAswBq6S9Rfh3MAtwZSBC; Thu, 19 Mar 2026 22:49:08 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1773960548; bh=1eDUxRRMU5DC4wNrV6VWKjWRlVFbp3YHoxBE9USTt5A=;
+	h=Date:To:Cc:From:Subject;
+	b=pKz4eT9j8aaMrRIL/vXeUTue4rQw/2TMIeI66+TpsmNV3Mv6tPmFODHCeLqIfgq0v
+	 Ri7s83kpLPqYCmapbOsECa3FMoCYStTNve+TNJ7EbGfOG9ueDpPUSItBN7vBCOZnAP
+	 L+8V9Gh459k9QTS+nWPruT4ew4EAPDpId3zbK4LiCrLoLhQNsOkIxbWaCGkhXsarZ6
+	 HgXP3xUQ7Jj6ptb875iFwfBoyXWLaFn32ggACnU7l9kmfidbw2M6iBc6moPkUhhxNl
+	 gO4kOU7nj0m/43D7OdI7nD7FDaLVxskDXRB/C25zEW+a2VrX36gcSE8Z2NXCOtlBpG
+	 +F/EvYX3TRshg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=S5R6w5sP c=1 sm=1 tr=0 ts=69bc7d64
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=2YfQnYkBRGfBZRT2O0wA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <97c623fe-4e03-4fbe-a6af-9c01c101bae4@ramsayjones.plus.com>
+Date: Thu, 19 Mar 2026 22:49:06 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Subject: [PATCH] object-file: fix sparse 'plain integer as NULL
+ pointer' error
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfKbQNZ9SZxaFtdrlnIO8mokwrUd/uIs/17dRJHavalt+MnZqbKSnsw0eBOADsxiu9cbGHRnrNW/NnJ4XfbySsvkXUjxsFLWbnGmCxC+uUgCBFjWpsRLv
+ BlNKh74s4ANSGp+U0hrrqrCMpS0qgALS607bgZ6Y0e1NeS3sUuHP06TG94CZS9aMcTGbFfLSNrnS7LDRqtox8M+ZnxGwh8/lsyc=
 
-We recently noticed one old code from 19 years ago protecting
-against an ancient strbuf convention that the .buf member can be
-NULL for an empty strbuf.  As that is no longer the case in the
-modern codebase, let's catch such a construct.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- * Comes directly on top of my recent rerere.c clean-up patch.
 
- contrib/coccinelle/strbuf.cocci | 7 +++++++
- 1 file changed, 7 insertions(+)
+Hi Patrick,
 
-diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
-index 5f06105df6..13f0ad2679 100644
---- a/contrib/coccinelle/strbuf.cocci
-+++ b/contrib/coccinelle/strbuf.cocci
-@@ -60,3 +60,10 @@ expression E1, E2;
- @@
- - strbuf_addstr(E1, real_path(E2));
- + strbuf_add_real_path(E1, E2);
-+
-+// In modern codebase, .buf member of an empty strbuf is not NULL.
-+@@
-+struct strbuf SB;
-+@@
-+- SB.buf ? SB.buf : ""
-++ SB.buf
+When you next re-roll your 'ps/object-counting' branch, could you please squash this
+into the patch equivalent to the commit 2b24db1110 ("object-file: generalize counting
+objects",2026-03-12) in tonight's 'seen' branch.
+
+Thanks,
+
+ATB,
+Ramsay Jones
+
+
+ object-file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/object-file.c b/object-file.c
+index 35be7e58cb..3708b8f18d 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1941,7 +1941,7 @@ int odb_source_loose_count_objects(struct odb_source *source,
+ 	} else {
+ 		*out = 0;
+ 		ret = odb_source_loose_for_each_object(source, NULL, count_loose_object,
+-						       out, 0);
++						       out, NULL);
+ 	}
+ 
+ out:
 -- 
-2.53.0-816-g44373249a2
-
+2.53.0
