@@ -1,73 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9C12264AB
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 15:53:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B9327EFEE
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 16:03:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773935610; cv=none; b=AMHenLnr1oUGPArk0ztaW8bUjDU9kb7+ceHZMU2cCNzXwR2aa1SOwIZUarmoJtv1Jlh2PcrLEDS2Xh3M7lCDXhWdMiu/JK2RjQ1vu3bw7UzDS8RDBqxxn+OgHVlWBDSvwaBzpBCKTyLJREMVCTXgbLZ6+ofexFzJH+HZ7KT+KLw=
+	t=1773936226; cv=none; b=adl4CuC+v2DO2HgXRfckGYb86bpm+OLTtlETuNWnq5KC4bdHEnKMqTssT43UmQ18GiQ41fMy7wXEVIAienO3H3v+FeOS5f1GGyG1GumnOClw1Q1Sea7yYASJIYeLjQnleAx+CMfYE8M3/xxFRJ/uFJRQjJExUj6j6/ZgqgVXpuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773935610; c=relaxed/simple;
-	bh=2kquumPFZYNQXzhAcICbiwL1cWiABQUFKY+0OxFq3bw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GMTDr6y3f0zWN+r2dblbJYgoeO2FpEXIFRI7FH9sdByEI5Om4ZcqsGDE3P0bnuFNSSlkYr+egFf9XIZhfiTpp1XjAU+zqL5JKx2M6+CI45JCmD9LZdV7B0XFjH1yDGAtlKr6bmHLcwMvR20Wvz2mqjXs5CP0a2CegQW/UpX27h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QPBWiCf/; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773936226; c=relaxed/simple;
+	bh=wDlfjBiD+WLzeCVgR7Kq2XBFkFWVW/uSYkyHTynTa1M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cWVpUs0pbVxfN0isF/TuOP/+AVpnZR2Q0ulZVBVAxYacmW4wUx77Bl7sqT7FFwNd5lPkGug7frjrpPRE8VbdgSJAjiRC3ZYgIGrgFN6tdnIGLSNP3d1DUtHP+ThgkfTny2uK494Bm7/Mqq/sX8Y1Vp4qEv0puYp2c5HGK4ZWvsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VPT5Nfok; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QPBWiCf/"
-Received: (qmail 55958 invoked by uid 106); 19 Mar 2026 15:53:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2kquumPFZYNQXzhAcICbiwL1cWiABQUFKY+0OxFq3bw=; b=QPBWiCf/FT2bPBCcedKKtxf4197uW8V1TtpIfuE0JHJAVeelyai1urZrki16zyKnTA0UltnY+KQD0z6qyDnPDj/1EsJI9LRNxTn7zT9CuskcQGtHPvlwU4vWh1ZXYmi2EIrVNTA/7G6RAuHAqFbSbYYQJlVtPosCgKtVU0vh9Gmz50JTeFZBs0AakUIYbgxhQxuYt2EVGJZkM041lF3N+CT5l5fg8uHBWrPnLA8kiJIP+8r++7r74a3vq5Jptdng060F46BD6Nx16di0ZZtQKgeu6n/kimyN3zMxply1EjgCXjRTZ1KJ8OViSWpm3C4AK+ayYowYLIc0xKyJiCDobA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Mar 2026 15:53:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 84322 invoked by uid 111); 19 Mar 2026 15:53:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Mar 2026 11:53:27 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 19 Mar 2026 11:53:26 -0400
-From: Jeff King <peff@peff.net>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: git@vger.kernel.org
-Subject: Re: git grep failure?
-Message-ID: <20260319155326.GA3611913@coredump.intra.peff.net>
-References: <7bbcda60-dad4-41d4-b994-c19f83f37e2f@infradead.org>
- <20260319003829.GA3530301@coredump.intra.peff.net>
- <2c943182-d5d7-4f72-ab97-8d07bf4ed216@infradead.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VPT5Nfok"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-43b49819938so596765f8f.0
+        for <git@vger.kernel.org>; Thu, 19 Mar 2026 09:03:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773936223; x=1774541023; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F81intB9d0hqyJ0+5nRSDe6zmTFbaBHACejR093+QL8=;
+        b=VPT5NfokrXUgjNC3Ociy0ZJyZIaA6QxIySmINllIoTCt983cHobmTnwH1qUEvq5Qlo
+         cUGYWQKKQ597to9foBJq5Xl3kp87EH44OJ+syvJ3togSHFDVFJ8BHkJX7JAPRXc617qf
+         IsC9S9E1DREK8Q3gE0iIa+enTsBCkPHdJyXFVLbEpRImwKbdQuVuTIywa5A4iDNiGtU+
+         xzwQl3pWXxl8CGpKIjB3skwDFy4m5nVgOy7JAr/7hDS+8zXjHHAnMCkn8i3TObBDTUc0
+         xJRkq+8u9tiq61ZrIkH0AahewDDrwZe97fdAICfk0jU9JcsRSttYLy8F307pVkq7Md39
+         P9AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773936223; x=1774541023;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F81intB9d0hqyJ0+5nRSDe6zmTFbaBHACejR093+QL8=;
+        b=nt2EonmI4gIBM+pRVmSI09QVIQnb3d06e6cIDs6gLv7Ce0TRjMhlZG3ZNVngOh4cE9
+         4C3pQ9WThy7HHNVNiVYRowS+m/yGTcBbPI4nIYwvR3jenaszXFIuBR5i2LD//qq9voFq
+         99Wq5I25MCtubAtLsAE6eF3fvfTwYRg8ibF3BcEoWRrDka407KVyQDViT3TGcnt6tH8u
+         Q57+dG9cKZba8icXXxIHI7harQG5yYdPRMmOZhq3UOMWqv6DI+Cea0j3QL1WH8qgYkBe
+         bOG5oDf7zx/bYjlm9xnaCKRZlOzOmE1seVpDFEb4Gj0YwbBc4qYEDXN1+SD+2oIZ7vo2
+         KSCA==
+X-Gm-Message-State: AOJu0YwcBpag7rL+0YHC+bZPBBlZC/SrudeqvRzkBWJRyxOCECgfBfTA
+	B6mb/mRDSycWKgejr9VlrYRkzQEgvLTEq66/N50lq5BscBdMcNk9gbZALEi+IUJvpN+Zsg==
+X-Gm-Gg: ATEYQzyzgxRmsZGzGF4snw/25l2jRmvi6TRr1UoxL4ZqaGXPn6/G+XUEmp7OT17eTQS
+	FsnCzA4KTpHH8h0RrzJ/qz0GqnPekAOlGVBnCkLLJY//VU5hRFE9/1ljyPjFzFtYePMR4R0yr4q
+	pRRlVCuIzIaMihMTRsDpy0hi2vHrrbulabd9vL9cgx4UatTCeie8Ddg7YSWTCXFhKA2EISMNDIC
+	RFBBhXNFVF8RAhfHTVCI0kIreC0kKhGOals2He4HbZnElOZQpfhGZlGd9DBWOl26l1FS3Yhkflc
+	N1hiJw8+8dNycy5soPb707Tf7l0j4O0fZLNfYWR+QNMflMhfwvq2ExdMKDrYcrhKKFraAgVP52S
+	2v4yf40O+hZ7iiOCGGHqTMIQw9l4CYVGJXcvtbZ1ehAfhoNqTpEEdyTPH2n2I5HCnuF+lQuOZ0w
+	f+7IeGr4B/x0h5TBqiWcKIzoB51/zNXMG67CdRvQ==
+X-Received: by 2002:a05:600c:a312:b0:486:fbf6:abd4 with SMTP id 5b1f17b1804b1-486fbf6af04mr32051605e9.9.1773936222633;
+        Thu, 19 Mar 2026 09:03:42 -0700 (PDT)
+Received: from pluton.example.com ([105.72.248.17])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b518a2cd3sm15107456f8f.32.2026.03.19.09.03.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Mar 2026 09:03:42 -0700 (PDT)
+From: Bilal El Khatabi <elkhatabibilal@gmail.com>
+To: git@vger.kernel.org
+Cc: bilalobe <elkhatabibilal@gmail.com>
+Subject: [PATCH] t5315: use test_path_is_file for loose-object check
+Date: Thu, 19 Mar 2026 16:02:49 +0000
+Message-ID: <20260319160301.98039-1-elkhatabibilal@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2c943182-d5d7-4f72-ab97-8d07bf4ed216@infradead.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 18, 2026 at 09:42:23PM -0700, Randy Dunlap wrote:
+From: bilalobe <elkhatabibilal@gmail.com>
 
-> > I applied the patch and git-grep does produce one line of output (the
-> > instance added by the patch).
-> > 
-> > Two possible differences:
-> > 
-> >   - are you sure the patch application succeeded?
-> 
-> 'git apply filename.patch' succeeded AFAICT. git status shows one
-> untracked file (the one that is added by the patch).
-> Do I need to do 'git commit' also?
+Replace an assertion-style `test -f` check with `test_path_is_file`
+in `t/t5315-pack-objects-compression.sh`.
 
-Ah, I see. I used "git am" to apply the patch, which made a commit using
-the email as the commit message.
+This aligns the test with the path-checking helpers used in Git's test
+suite.
 
-As Junio noted, "git apply" by itself will not mark the file as tracked.
-You would need to "git add" it, at which point git-grep would start
-looking at it (since it only looks at tracked files). And then "git
-commit" if you actually want a commit.
+Found with:
+  git grep "test -[efd]" t/
 
-But at that point, you probably want to be using "git am", unless you
-don't want to use the sender's commit message for some reason. (Though
-even if that is the case, I'd probably use "git am" and then "git commit
---amend" to tweak it).
+Signed-off-by: bilalobe <elkhatabibilal@gmail.com>
+---
+ t/t5315-pack-objects-compression.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
+index 8bacd96275..d0feab17b4 100755
+--- a/t/t5315-pack-objects-compression.sh
++++ b/t/t5315-pack-objects-compression.sh
+@@ -10,7 +10,7 @@ test_expect_success setup '
+ 	# make sure it resulted in a loose object
+ 	ob=$(sed -e "s/\(..\).*/\1/" object-name) &&
+ 	ject=$(sed -e "s/..\(.*\)/\1/" object-name) &&
+-	test -f .git/objects/$ob/$ject
++	test_path_is_file .git/objects/$ob/$ject
+ '
+ 
+ while read expect config
+-- 
+2.53.0
+
