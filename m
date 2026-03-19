@@ -1,175 +1,115 @@
-Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA5812B94
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 11:06:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914E03D4111
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 12:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773918416; cv=none; b=YWXPiGgBGkhHwM5oCvyNQL/gO+KG4HyWKxNreWUdYPszRkwpkuK4SzRVlVmbW/vA/srNmKRLExdcmFs66F3ajr0UbwyPsViQNMPHThNoyF39qFv4/62pCrZ3hmnsG/rw+lskw14riSs5YHh98zonE00n7pyyY4haEKSeQYVZ7P8=
+	t=1773925144; cv=none; b=oxcZtwvN/EJAVPfdxwr8yo1Uqd72SiANfDtCxveKEUrX245yB96LQXtMqFWro8iQICyzp8YE9juCMtfl6UQXKtCtykhTNEeE/YXixJ4gUlqUjseNm9NUkWl9fnzxcE+jLTBo/TUUJmqW3w4BYkUDS1WYZXLnmlV3wwUoqR7GN4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773918416; c=relaxed/simple;
-	bh=uGYVCXjv1CYPOfzXA9aF9gDDWfqUnThKQGmhJ6c2Q/8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VS3mE8CV1H+GaTfAaIkZe2fJuIFHDPSI0Yrkua74SxJlRI+cUG2o2yjbWOifCmat7myq69z+WLRq00DG1LrJM7DvrctOn3zqVQnVp8W7DDc6isMD3xn45Bl9JT3X/7iACM/WXN2MdIAElr6bvEgk/tZxL1cjAnXtTcGk//0tBDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=tlINW0gD; arc=none smtp.client-ip=95.215.58.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1773925144; c=relaxed/simple;
+	bh=9ULd1JeKlfjGSzBcmqc9CriLzXZfV4I3i4hWq1kj0S8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EkVzyidSdH6K2XLyELc1itCgnQsOffTvBpBDPJUaiuvThgOrG3ADougLTCRrxkRhplIlj2wlmvyPFfLaGq4Vcxy1Y2uVsACi0SbnVdpk+CGIUCBOzv90uaYr6TB9Tln/3T4hK0y5YPLEPDB0+2Cd/YGfGcLS+5Vt0QfdzyEc4ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DoBVf5pu; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="tlINW0gD"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1773918410;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=G49OareaYCt2teInA0RE279PjTo0P+3mF7bk1YjPokE=;
-	b=tlINW0gDQ1XXebTXk8GrAnJa2syjbW4Toue7vxgJHRwFRs3wx255Hm+K5wXX/plcGZngAA
-	6b6HL1QHQI4Uqg0BF77ubvkMmrLuj7n2qWKNe/jXGz8MEbfegWG4oSBZtQGo+2nuPdkWo+
-	d7gZLWZ4YGem1vd/VlZ9stEYJOrJdPI=
-From: Toon Claes <toon@iotcl.com>
-To: Jeff King <peff@peff.net>, Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Johannes
- Schindelin <Johannes.Schindelin@gmx.de>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Matthew John Cheetham
- <mjcheetham@outlook.com>, Victoria Dye <vdye@github.com>, Derrick Stolee
- <stolee@gmail.com>, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH] git-compat-util: make git_find_last_dir_sep return a
- const pointer
-In-Reply-To: <20260204053218.GA942606@coredump.intra.peff.net>
-References: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
- <20260203062537.GA286409@coredump.intra.peff.net>
- <87ecn18aip.fsf@gmail.com>
- <20260204053218.GA942606@coredump.intra.peff.net>
-Date: Thu, 19 Mar 2026 12:06:43 +0100
-Message-ID: <87a4w42i4c.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DoBVf5pu"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-5062fc5d86aso4931391cf.1
+        for <git@vger.kernel.org>; Thu, 19 Mar 2026 05:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773925142; x=1774529942; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=miqGi23S3IRdYPITokY6hfOiq6ZCKv2F4WiI3fg7HjM=;
+        b=DoBVf5pubV023hvnuf7ozde8JSdDfqpuEPgDOLi3fx2GC9Ri/yJoqvbANxLGIO4SNZ
+         h1MsAOjFkG0CKH+MCcfcChEtNnWs5KuH4UtrhjNCLmed6xYLILvlp8Mp4IHOOOrjRFuu
+         eiW8mUIqoT9f3Xes6sPA9QCyiZA6huxue/tgj84NBeY1H169NVbbb5Gc0vsfOgcyNoU5
+         0ABRWApG4L8zNDh967OfNAR/24MiOZTopgAYRq6E2Qu/irKMOQYeaSw40s1SGg86zZRm
+         E1plJ2bO1iQDB/W+PwsdpdQ+FfZUXS0ZBzVnCI5auJmgPWLYGuI05shQLK5XWZf26bsN
+         0uUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773925142; x=1774529942;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=miqGi23S3IRdYPITokY6hfOiq6ZCKv2F4WiI3fg7HjM=;
+        b=HqyD/EoaaHAa8m+YI+C0aOjKDQpAGKK92rrImAOX8ku7Lyk46q66E/tjoz+Ma0UAYT
+         ii/WkevV/CeeuONghPYPlPFxz/TzQRyxmF3ldgcUsgKbzKzDaHjXKAFmnIGyRzJNWnO3
+         RFOFOIjiDen3rfe9SHxOUT7G1wVNdSQhMrsZxAnuwuP5dbaNzsUA5hOrmZaVEw+bB2Rx
+         TJTdwa300Un5vd1hkPXfCJydRm1dAG/LclNCjFlIDtVRusszlKZc4hoqcpN2l+IhLIl8
+         4J0QzDnT2lQHuL7Jcywan+FOEWG8ebKUDu+NcP0ZyQwmQPDSgOWYxIkDwWHWNjMtQUSu
+         assw==
+X-Gm-Message-State: AOJu0Yzgr0rVMlazLeSpyqG0h2adQ5YSlpwncYFQ3Yx7+lFalDu7pPSb
+	Tt7ePZ2LrarzY2WMTLVYQV1p+6ukn05cH46lh05ehRDIjuQ3EiTNJoA4ossOfQ==
+X-Gm-Gg: ATEYQzwYSODQneAGFdNrhfwUlcHAVZ1QLd4ma/GEz0YOLng/CZ5aIhsoSBDzK3CNP4V
+	HyAxX16fOvZl2Sjpp096dOmPZcCWjEZ7z2YpKfA3Sup2rTWUSqeYU8Fxiu0ksHJ/bHzIleEGZih
+	YkOcEy0R0S+D4ZJpcS/rCuaUVwVF7wmNkdtuk9TCaltqiSr8TQbZQ+EtwitabmJmFDKM0By/PPS
+	sr4YtRpQyvAmd7uUUe4uVa9KSgx9paMRbaekKpTEdVPfWPgogredZ14il0/xzK8fApdHC/8ECVO
+	IQQ/tr2EUe7jkM2PDA/Fy4ALCSaCSnTxZ2jOExLofdcc1N9EBXxb+JcSvH/QYCjfxaw88D8p1Ky
+	Ecdvm+OyxQKquorDqcw65nF7f+yAPi6u39lNES7UEJxubT2gwlQPsQrMYe8XeqWA3E6dNGmYf7c
+	xTF4+GbscFScQHRGZHCasJSvhki2pY03fuaRewYGs45+LKf+22pzUi3VgJ1Q9ls9ndK+LDug==
+X-Received: by 2002:ac8:570b:0:b0:509:1339:3dbb with SMTP id d75a77b69052e-50b148943b2mr94643581cf.48.1773925142279;
+        Thu, 19 Mar 2026 05:59:02 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b1359871fsm46476961cf.19.2026.03.19.05.59.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Mar 2026 05:59:01 -0700 (PDT)
+Message-ID: <29ec9e5f-ad14-4a87-92f9-a3ffa4077f69@gmail.com>
+Date: Thu, 19 Mar 2026 08:59:01 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] backfill: accept revision arguments
+To: Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
+ <abvH29wYAFzk6V0F@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <abvH29wYAFzk6V0F@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Jeff King <peff@peff.net> writes:
+On 3/19/2026 5:54 AM, Patrick Steinhardt wrote:
+> I think especially blaming is a bit of a sore spot -- downloading blobs
+> one by one simply doesn't cut it there. I wonder whether we can easily
+> use the backfill mechanism to fetch blobs automatically in git-blame(1)
+> so that the user doesn't need to know about git-backfill(1) at all?
 
->> > Looking at strchr()'s declaration in string.h, which is defined like:
->> >
->> >   #  define strchr(S, C)                                          \
->> >     __glibc_const_generic (S, const char *, strchr (S, C))
->> >
->> > I think the answer is probably "yes". But it also doesn't quite solve
->> > our problem. That would give us type-checking of callers of our
->> > function, but we still have to convince the compiler not to complain
->> > about its implementation. For that we'd need to either cast away const
->> > manually, I guess.
->>=20
->> That macro depends on Generic selections from C11 [1]. I wasn't sure if
->> Git would like that, given it is conservative with other C features.
->
-> We definitely can't rely on it everywhere. But if there is a solution
-> that is conditionally compiled, and can kick in only when these extra
-> warnings also kick in, that would be OK. Assuming the result is not too
-> painful to look at, of course.
+I've thought about this a bit, and I'm not sure that we want to run
+'git backfill' directly. Instead, it would be nice if we did a "staged"
+algorithm for 'git blame':
 
-So the Git project would be okay to conditionally compile with Generic
-selections if the compiler supports it? Seems to me this is the easiest
-way forward to silence the errors for users who see these warnings (that
-includes me).
+1. Walk commits according to the pathspec to collect the commits that
+   changed the path.
 
-> Probably the best path forward for most spots is just fixing the code to
-> make it more obvious about its use of const.
+2. Collect the list of blob OIDs that will be needed for computing diffs
+   for the line-tracking algorithm.
 
-Yeah, that's in any case a good idea. I think using Generic selections
-should make it easier to locate those.
+3. In batches, download groups of missing blobs and then process them
+   for line-tracking diffs. (Stop if all lines are blamed; continue to
+   next batch if more lines are needed.)
 
-This is what I've done in an experiment in git-compat-util.h:
+This would be a significant rewrite of the blame algorithm, though. I
+briefly considered this approach about a year ago and decided it would
+be easier to start with 'git backfill' and see whether that satisfies
+most needs.
 
-    #ifndef find_last_dir_sep
-    static inline char *git_find_last_dir_sep_nonconst(char *path)
-    {
-    	return strrchr(path, '/');
-    }
-    static inline const char *git_find_last_dir_sep_const(const char *path)
-    {
-    	return strrchr(path, '/');
-    }
-    #if __STDC_VERSION__ >=3D 201112L || (defined(__GNUC__) && __GNUC__ >=
-=3D 5)
-    #define find_last_dir_sep(path) \
-    	_Generic((path), \
-    		const char *: git_find_last_dir_sep_const((const char *)(path)), \
-    		default:      git_find_last_dir_sep_nonconst((char *)(path)))
-    #else
-    #define find_last_dir_sep(path) git_find_last_dir_sep_nonconst((char *)=
-(path))
-    #endif
-    #endif
+The biggest reason to maybe avoid 'git backfill HEAD -- <path>' before
+_every_ blame operation is that this will add overhead on repeated
+calls that may be obnoxious in its own way. Maybe doing an opt-in
+'git blame --backfill <path>' would make it easier for users to opt-in
+when they want to.
 
-This leads to 28 places where the warning happens:
+Thanks,
+-Stolee
 
-    bloom.c:515:52: warning: initialization discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/config.c:855:22: warning: assignment discards =E2=80=98const=E2=
-=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/receive-pack.c:1045:19: warning: assignment discards =E2=80=98c=
-onst=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/receive-pack.c:1075:27: warning: assignment discards =E2=80=98c=
-onst=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/receive-pack.c:1098:19: warning: assignment discards =E2=80=98c=
-onst=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/rev-parse.c:278:22: warning: assignment discards =E2=80=98const=
-=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/rev-parse.c:339:21: warning: assignment discards =E2=80=98const=
-=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/rev-parse.c:343:28: warning: assignment discards =E2=80=98const=
-=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    builtin/rev-parse.c:347:28: warning: assignment discards =E2=80=98const=
-=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    convert.c:1189:24: warning: assignment discards =E2=80=98const=E2=80=99=
- qualifier from pointer target type [-Wdiscarded-qualifiers]
-    convert.c:1212:32: warning: assignment discards =E2=80=98const=E2=80=99=
- qualifier from pointer target type [-Wdiscarded-qualifiers]
-    convert.c:1223:29: warning: assignment discards =E2=80=98const=E2=80=99=
- qualifier from pointer target type [-Wdiscarded-qualifiers]
-    dir.c:3526:15: warning: assignment discards =E2=80=98const=E2=80=99 qua=
-lifier from pointer target type [-Wdiscarded-qualifiers]
-    http-push.c:1775:44: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    http.c:755:43: warning: initialization discards =E2=80=98const=E2=80=99=
- qualifier from pointer target type [-Wdiscarded-qualifiers]
-    pager.c:121:28: warning: initialization discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    pseudo-merge.c:647:16: warning: return discards =E2=80=98const=E2=80=99=
- qualifier from pointer target type [-Wdiscarded-qualifiers]
-    range-diff.c:109:50: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    refs/files-backend.c:2199:25: warning: assignment discards =E2=80=98con=
-st=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    revision.c:2135:24: warning: initialization discards =E2=80=98const=E2=
-=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    revision.c:2179:14: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    revision.c:2188:14: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    revision.c:2194:14: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    run-command.c:608:32: warning: initialization discards =E2=80=98const=
-=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    send-pack.c:184:19: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    send-pack.c:215:27: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    send-pack.c:240:19: warning: assignment discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-    transport-helper.c:803:19: warning: assignment discards =E2=80=98const=
-=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
-
-I did not look into any of them, but I think you (Collin) have sent out
-patches for various of these? But they _should_ managable to address?
-
---=20
-Cheers,
-Toon
