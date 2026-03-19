@@ -1,55 +1,55 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52173624D7
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9CD3815D1
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:53:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773903190; cv=none; b=Ffzvn8kAna/c2G5FMDoWhnkQIrKn6E/fZbw+UiXDRiUNDevC4Z7BtJAsjVo5wm4citXZPdV9CMpKt6+xFos432DrMD7fWl89fi+QgWmXeIMZC1FNuIPybz5H65+J2YXrp+jMDHFRc7hP4PcNuZ7VyiZKxz9jYN3FxsXoUfqbpL4=
+	t=1773903193; cv=none; b=Z0C300EawmH3iqYl+nP7QzQ7efASKHtOuprC3Bp5wq+5Y7ArZoEyghpH7FvjxWzSQL4Rws7hEdoFBbf6/9Fdb2g4fUf6sbZmDfUlWiu6pGBFwlqS0XZKGskBnuNop+Z1jvswJS/eh1npaPIc8DpLNucHBLnnZtBKWKD8W8QLZJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773903190; c=relaxed/simple;
-	bh=UyWlRvF5gSA3OBwt3Gvt3ltdOfViRoVRA5ApvVm7wd8=;
+	s=arc-20240116; t=1773903193; c=relaxed/simple;
+	bh=DU+FSc98Xy/FhMPrhoSLBr+gP2/FUKhd120YKuebAEg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gti3gMcMnlegrJaYeLeSRFvf9Oy7XicMgafa4ilqOpByeuvYAJn2oDWs+BG/Pg38XTNtQftIeQpRyZ5lS5ATOpWoMch1sUadwvmbHb3bFPXrtako4kipOtSULd4Y1cG9paBJy6vCErjPjz3iJMO65Ref33P0ckHrzXpbMcPwWeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PEGoSedi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hh85Ylre; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=P2yPBtH3hHAhBb0yV+7W+qBWgNOF1I2HrjmtjezNNVKn8Cz+EpyWOA8n1kw9OwQah5OlfTklxcEXLNWQTXpGK7Gni8jcYgT4VIToNwuId/YV6mQDLWwump740k3mGkv7/oaVqNJ9izuIAavuTOumEDC5ev1GEBxj+hfIGrCHoF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LOv15ZXT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rhoNTael; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PEGoSedi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hh85Ylre"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CFAFD1400223
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LOv15ZXT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rhoNTael"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 86812EC0274
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:10 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 19 Mar 2026 02:53:07 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 19 Mar 2026 02:53:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773903187;
-	 x=1773989587; bh=sNbK6Vt7xbmeBEFtIMM0g88zDqR3BPtN5Y011gVpeFs=; b=
-	PEGoSedipl1/wkRtmikxNw6d810h8LJsMUV3adFyXta14tiwO2eYm8fHIc1eDL/f
-	IRjIvueMpzmNj0zWwZtYJYPLFoxuOa/EWVNn7qi4ZKhnZDP5ca0dCvsfxeJ7YWJr
-	jE+605MwMjLuV0YntNms2lqKDUL3ezaQMm4W/I+RAQjQM4CId5yIIZjbUSOQ6a6e
-	VuGQE0vmUkdJ89abRtRFhV6mLnhIq4caBenukGvxfvVSVpfBl/zZLEQC8TXH2k/h
-	xdMsOpswbueN4mksbuitc0JqevJg+NOV9U5DC/uutfiXRpiV4X9vng2YwJz1iUnq
-	ze6Uq//BnfYuDNU2zL0JPA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773903190;
+	 x=1773989590; bh=1m0zRMbFVkNV0RYrSSeySzfz6dedVlz6OqvDS5Fs/tQ=; b=
+	LOv15ZXT4R3AL/4Z1EYL1l9Sjm8LX/M0RRqnBIbsEzK7/x3UOzb159xIeg9XrjWo
+	aFNDFB8/3JHob11L3k1FpM5RYoAK8xh3jG5cJ76VX5TgYF6LW5G/LrF0bwf0JeL/
+	OfBsMCK7VWVeVHx8JWWVfEeFJ808rTsqo7WrA2+5Bw9JSUVM0d//FciZV7qc9SAL
+	4pIOwajV5FS2r0gxWRsJjMIufn0clsUf+7nDQ9HeRZwDuTDuJV3YM9YGxmv6vTYJ
+	u7R6c77ORcQUiPaMpF0yunkUvkk8MlEhSkOlh84rBAkl9VeRYBcdRy59BInVRTEh
+	7TiHexpKdttffHzo0uEbSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773903187; x=
-	1773989587; bh=sNbK6Vt7xbmeBEFtIMM0g88zDqR3BPtN5Y011gVpeFs=; b=H
-	h85YlreTKiFDfKU7bRB08N+hqtISLRvJSREhLhE0t9mWz7ET+80YJBifBcJXAAnn
-	jvUo4F0ayV1aIjeRElhY2Of+KCZdoWPctoEcbD3D75ZWz/VKgHgwVrJaDlM6jizE
-	vylaU4tdKefVK7NjMmy0B3+7FiOk2EDTeJP2c7x3/Q5ijpVf38OaokMwrAmiGlMW
-	Vyvstj57aXwiqhn/lxSs/VoX6w6P51ji7AlWWXkOUfXrnUgwqPo4lLx8QqRGvZga
-	2W4+RW1qQJV9Ow4yp2XP3DTO6YssaVvhFX79MbfHoeFifR97eCmdlnlcpDcU2Zui
-	he3kvET5oU8bJCHq0P85g==
-X-ME-Sender: <xms:U527ac090cNTHWttMVd4TUZPH-FzPdh3-SyYMzBwzQcctVA__MFvag>
-    <xme:U527aeCSOcNGENGdVXMEuu_JoymaXJaYZ2KXqjqQk7_nUzqKLPbcgnnMrzr94pY1x
-    yKNcoIPvDF5SdXFsX_PGJMFpxpTNylaQzakzyoYxgC0RhbiI4mO8A>
-X-ME-Received: <xmr:U527aag0G_yHO77jHiQNKWZXdgir8DsnIeILBZ1vZDRsy0oBhvIx8pC4Zx2kGGaaSMKnOG1sxCAakD5vW16AY-LLvPDz0MY3waQOGSTBnnEO>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773903190; x=
+	1773989590; bh=1m0zRMbFVkNV0RYrSSeySzfz6dedVlz6OqvDS5Fs/tQ=; b=r
+	hoNTaelrMnWZN99wIWaVGa9sEnZVJAtuZUr+i2ncUkw9RBMbzSNAlD8iIBPC9PRs
+	SUp/XJazrn5HA0C9YugXhIjRBjOalLbRP8qzrYyn0x9q16Z3ccug90iuQN47Y6av
+	+ihnAcIhpHAPCWCbT0ol6D46pxoxpSeF/HuXy1JuD6l5RlICee4xrUFwBLq20uNE
+	W33vULP6QLn5foiPjBUu3YgYb/yMOUY6cy5sGuY4/zvQcbZqFJtf+E0XLVid2Jk4
+	eLN3YPQG0A4ZPPFD3vcuGBeMb+0Qg2xC1hShZ4KFjBtx3reWSXPPnDtZWA2cQLgj
+	m5LGSDpm7bIworb+64L3A==
+X-ME-Sender: <xms:Vp27aQlaDZT9KYBGro99g5ZuJxUQRsEVAdldSbgLDgew9aRAA7-8mA>
+    <xme:Vp27aWyAf32vPsFjKeUxwskxlqAgpMbTkVfLpSOk6sme7XyhXSoMticTtRFnGXtDo
+    R9lbeVD6UmPykN0AhQO3KhhQi1YL6MBNSUrCcVKST0MKeWsRZes_A>
+X-ME-Received: <xmr:Vp27aUQhXYTd8HTf6u3EdbCPohrIXZ5jHlb8HzZ0RtucpbzmUQozicenUDn9E8C_bRP-0_epHOXNnDl3MO54nixXNz8uR6i_nGHriNm1fLQq>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,21 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeegucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:U527aa_cOWyy41B3xpPDlZMPNTY0eD1LlAktctwcpfb0rH8kLiGgCA>
-    <xmx:U527ae8lYeW9WOR42i_R3DpvhPqAjux9TWs9yCGU9nQYpe3cV3RzaQ>
-    <xmx:U527abDNcO7ZgPFeUC_3qdDMapUtukeqMn8765Dfyf5d4psadp2w4Q>
-    <xmx:U527aWy9EiyRis2naBrWkGsL6Z3e2oXebgOOqZH2_Dr3dfbtgwdL_g>
-    <xmx:U527aeG1qu-m6tCq8rmp4XPGKm5b87dQ-FcB0rwpEldRdyBKHzgqnB9V>
+X-ME-Proxy: <xmx:Vp27aRvDrxLxhzR_xNhng4B_B5kxQj32QVCaJEwdPlH9LXfscq-SZA>
+    <xmx:Vp27aetJKca1nBUcoqnoY5qCUevWt-rolpr2x6ApAmyQ4u86ya9NRQ>
+    <xmx:Vp27afyHTCgTkb_4Yu9XbAx_7KdnPim-C_N0MXyDqGYdmzz7Adtwow>
+    <xmx:Vp27achXEd68AlcyVAoXymPDDPeiNvA93uXQgo_3XTphy-gCBYUnGg>
+    <xmx:Vp27aU0PVwgHr6LKc-DKcgEVpaMHycge6x_yaXJZcKQsdlnnd8bwsN7m>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:07 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:09 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 17290009 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id fa8fcde1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 19 Mar 2026 06:53:06 +0000 (UTC)
+	Thu, 19 Mar 2026 06:53:08 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 19 Mar 2026 07:52:59 +0100
-Subject: [PATCH 01/14] oidtree: modernize the code a bit
+Date: Thu, 19 Mar 2026 07:53:00 +0100
+Subject: [PATCH 02/14] oidtree: extend iteration to allow for arbitrary
+ return codes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,232 +83,237 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260319-b4-pks-odb-source-abbrev-v1-1-5ddebad292b0@pks.im>
+Message-Id: <20260319-b4-pks-odb-source-abbrev-v1-2-5ddebad292b0@pks.im>
 References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
 In-Reply-To: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-The "oidtree.c" subsystem is rather small and self-contained and tends
-to just work. It thus doesn't typically receive a lot of attention,
-which has as a consequence that it's coding style is somewhat dated
-nowadays.
+The interface `cb_each()` iterates through a crit-bit tree and calls a
+specific callback function for each of the contained items. The callback
+function is expected to return either:
 
-Modernize the style of this subsystem a bit:
+  - `CB_CONTINUE` in case iteration shall continue.
 
-  - Rename the `oidtree_iter()` function to `oidtree_each_cb()`.
+  - `CB_BREAK` to abort iteration.
 
-  - Rename `struct oidtree_iter_data` to `struct oidtree_each_data` to
-    match the renamed callback function type.
+This is needlessly restrictive though, as callers may want to return
+arbitrary values and have them be bubbled up to the `cb_each()` call
+site. In fact, this is a rather common pattern we have: whenever such a
+callback function returns a non-zero error code, we abort iteration and
+bubble up the code as-is.
 
-  - Rename parameters and variables to clarify their intent.
-
-  - Add comments that explain what some of the functions do.
-
-  - Adapt the return value of `oidtree_contains()` to be a boolean.
-
-This prepares for some changes to the subsystem that'll happen in the
-next commit.
+Refactor both the crit-bit tree and oidtree subsystems to behave
+accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- oidtree.c                | 61 ++++++++++++++++++++++++------------------------
- oidtree.h                | 42 +++++++++++++++++++++++++++------
- t/unit-tests/u-oidtree.c | 14 +++++------
- 3 files changed, 73 insertions(+), 44 deletions(-)
+ cbtree.c                 | 21 ++++++++++++---------
+ cbtree.h                 | 11 +++--------
+ object-name.c            |  4 ++--
+ oidtree.c                | 12 ++++++------
+ oidtree.h                | 18 ++++++++++++------
+ t/unit-tests/u-oidtree.c |  4 ++--
+ 6 files changed, 37 insertions(+), 33 deletions(-)
 
-diff --git a/oidtree.c b/oidtree.c
-index 324de94934..a4d10cd429 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -6,14 +6,6 @@
- #include "oidtree.h"
- #include "hash.h"
- 
--struct oidtree_iter_data {
--	oidtree_iter fn;
--	void *arg;
--	size_t *last_nibble_at;
--	uint32_t algo;
--	uint8_t last_byte;
--};
--
- void oidtree_init(struct oidtree *ot)
- {
- 	cb_init(&ot->tree);
-@@ -54,8 +46,7 @@ void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
- 	cb_insert(&ot->tree, on, sizeof(*oid));
+diff --git a/cbtree.c b/cbtree.c
+index cf8cf75b89..4ab794bddc 100644
+--- a/cbtree.c
++++ b/cbtree.c
+@@ -96,26 +96,28 @@ struct cb_node *cb_lookup(struct cb_tree *t, const uint8_t *k, size_t klen)
+ 	return p && !memcmp(p->k, k, klen) ? p : NULL;
  }
  
+-static enum cb_next cb_descend(struct cb_node *p, cb_iter fn, void *arg)
++static int cb_descend(struct cb_node *p, cb_iter fn, void *arg)
+ {
+ 	if (1 & (uintptr_t)p) {
+ 		struct cb_node *q = cb_node_of(p);
+-		enum cb_next n = cb_descend(q->child[0], fn, arg);
 -
--int oidtree_contains(struct oidtree *ot, const struct object_id *oid)
-+bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
- {
- 	struct object_id k;
- 	size_t klen = sizeof(k);
-@@ -69,41 +60,51 @@ int oidtree_contains(struct oidtree *ot, const struct object_id *oid)
- 	klen += BUILD_ASSERT_OR_ZERO(offsetof(struct object_id, hash) <
- 				offsetof(struct object_id, algo));
- 
--	return cb_lookup(&ot->tree, (const uint8_t *)&k, klen) ? 1 : 0;
-+	return !!cb_lookup(&ot->tree, (const uint8_t *)&k, klen);
- }
- 
--static enum cb_next iter(struct cb_node *n, void *arg)
-+struct oidtree_each_data {
-+	oidtree_each_cb cb;
-+	void *cb_data;
-+	size_t *last_nibble_at;
-+	uint32_t algo;
-+	uint8_t last_byte;
-+};
-+
-+static enum cb_next iter(struct cb_node *n, void *cb_data)
- {
--	struct oidtree_iter_data *x = arg;
-+	struct oidtree_each_data *data = cb_data;
- 	struct object_id k;
- 
- 	/* Copy to provide 4-byte alignment needed by struct object_id. */
- 	memcpy(&k, n->k, sizeof(k));
- 
--	if (x->algo != GIT_HASH_UNKNOWN && x->algo != k.algo)
-+	if (data->algo != GIT_HASH_UNKNOWN && data->algo != k.algo)
- 		return CB_CONTINUE;
- 
--	if (x->last_nibble_at) {
--		if ((k.hash[*x->last_nibble_at] ^ x->last_byte) & 0xf0)
-+	if (data->last_nibble_at) {
-+		if ((k.hash[*data->last_nibble_at] ^ data->last_byte) & 0xf0)
- 			return CB_CONTINUE;
+-		return n == CB_BREAK ? n : cb_descend(q->child[1], fn, arg);
++		int ret = cb_descend(q->child[0], fn, arg);
++		if (ret)
++			return ret;
++		return cb_descend(q->child[1], fn, arg);
+ 	} else {
+ 		return fn(p, arg);
  	}
- 
--	return x->fn(&k, x->arg);
-+	return data->cb(&k, data->cb_data);
  }
  
--void oidtree_each(struct oidtree *ot, const struct object_id *oid,
--			size_t oidhexsz, oidtree_iter fn, void *arg)
-+void oidtree_each(struct oidtree *ot, const struct object_id *prefix,
-+		  size_t prefix_hex_len, oidtree_each_cb cb, void *cb_data)
+-void cb_each(struct cb_tree *t, const uint8_t *kpfx, size_t klen,
+-			cb_iter fn, void *arg)
++int cb_each(struct cb_tree *t, const uint8_t *kpfx, size_t klen,
++	    cb_iter fn, void *arg)
  {
--	size_t klen = oidhexsz / 2;
--	struct oidtree_iter_data x = { 0 };
--	assert(oidhexsz <= GIT_MAX_HEXSZ);
--
--	x.fn = fn;
--	x.arg = arg;
--	x.algo = oid->algo;
--	if (oidhexsz & 1) {
--		x.last_byte = oid->hash[klen];
--		x.last_nibble_at = &klen;
-+	struct oidtree_each_data data = {
-+		.cb = cb,
-+		.cb_data = cb_data,
-+		.algo = prefix->algo,
-+	};
-+	size_t klen = prefix_hex_len / 2;
-+	assert(prefix_hex_len <= GIT_MAX_HEXSZ);
-+
-+	if (prefix_hex_len & 1) {
-+		data.last_byte = prefix->hash[klen];
-+		data.last_nibble_at = &klen;
- 	}
--	cb_each(&ot->tree, (const uint8_t *)oid, klen, iter, &x);
-+
-+	cb_each(&ot->tree, prefix->hash, klen, iter, &data);
- }
-diff --git a/oidtree.h b/oidtree.h
-index 77898f510a..0651401017 100644
---- a/oidtree.h
-+++ b/oidtree.h
-@@ -5,18 +5,46 @@
- #include "hash.h"
- #include "mem-pool.h"
+ 	struct cb_node *p = t->root;
+ 	struct cb_node *top = p;
+ 	size_t i = 0;
  
-+/*
-+ * OID trees are an efficient storage for object IDs that use a critbit tree
-+ * internally. Common prefixes are duplicated and object IDs are stored in a
-+ * way that allow easy iteration over the objects in lexicographic order. As a
-+ * consequence, operations that want to enumerate all object IDs that match a
-+ * given prefix can be answered efficiently.
-+ *
-+ * Note that it is not (yet) possible to store data other than the object IDs
-+ * themselves in this tree.
-+ */
- struct oidtree {
- 	struct cb_tree tree;
- 	struct mem_pool mem_pool;
+-	if (!p) return; /* empty tree */
++	if (!p)
++		return 0; /* empty tree */
+ 
+ 	/* Walk tree, maintaining top pointer */
+ 	while (1 & (uintptr_t)p) {
+@@ -130,7 +132,8 @@ void cb_each(struct cb_tree *t, const uint8_t *kpfx, size_t klen,
+ 
+ 	for (i = 0; i < klen; i++) {
+ 		if (p->k[i] != kpfx[i])
+-			return; /* "best" match failed */
++			return 0; /* "best" match failed */
+ 	}
+-	cb_descend(top, fn, arg);
++
++	return cb_descend(top, fn, arg);
+ }
+diff --git a/cbtree.h b/cbtree.h
+index 43193abdda..4f644d6e45 100644
+--- a/cbtree.h
++++ b/cbtree.h
+@@ -30,11 +30,6 @@ struct cb_tree {
+ 	struct cb_node *root;
  };
  
--void oidtree_init(struct oidtree *);
--void oidtree_clear(struct oidtree *);
--void oidtree_insert(struct oidtree *, const struct object_id *);
--int oidtree_contains(struct oidtree *, const struct object_id *);
-+/* Initialize the oidtree so that it is ready for use. */
-+void oidtree_init(struct oidtree *ot);
+-enum cb_next {
+-	CB_CONTINUE = 0,
+-	CB_BREAK = 1
+-};
+-
+ #define CBTREE_INIT { 0 }
  
--typedef enum cb_next (*oidtree_iter)(const struct object_id *, void *data);
--void oidtree_each(struct oidtree *, const struct object_id *,
--			size_t oidhexsz, oidtree_iter, void *data);
+ static inline void cb_init(struct cb_tree *t)
+@@ -46,9 +41,9 @@ static inline void cb_init(struct cb_tree *t)
+ struct cb_node *cb_lookup(struct cb_tree *, const uint8_t *k, size_t klen);
+ struct cb_node *cb_insert(struct cb_tree *, struct cb_node *, size_t klen);
+ 
+-typedef enum cb_next (*cb_iter)(struct cb_node *, void *arg);
++typedef int (*cb_iter)(struct cb_node *, void *arg);
+ 
+-void cb_each(struct cb_tree *, const uint8_t *kpfx, size_t klen,
+-		cb_iter, void *arg);
++int cb_each(struct cb_tree *, const uint8_t *kpfx, size_t klen,
++	    cb_iter, void *arg);
+ 
+ #endif /* CBTREE_H */
+diff --git a/object-name.c b/object-name.c
+index e5adec4c9d..a24a1b48e1 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -103,12 +103,12 @@ static void update_candidates(struct disambiguate_state *ds, const struct object
+ 
+ static int match_hash(unsigned, const unsigned char *, const unsigned char *);
+ 
+-static enum cb_next match_prefix(const struct object_id *oid, void *arg)
++static int match_prefix(const struct object_id *oid, void *arg)
+ {
+ 	struct disambiguate_state *ds = arg;
+ 	/* no need to call match_hash, oidtree_each did prefix match */
+ 	update_candidates(ds, oid);
+-	return ds->ambiguous ? CB_BREAK : CB_CONTINUE;
++	return ds->ambiguous;
+ }
+ 
+ static void find_short_object_filename(struct disambiguate_state *ds)
+diff --git a/oidtree.c b/oidtree.c
+index a4d10cd429..ab9fe7ec7a 100644
+--- a/oidtree.c
++++ b/oidtree.c
+@@ -71,7 +71,7 @@ struct oidtree_each_data {
+ 	uint8_t last_byte;
+ };
+ 
+-static enum cb_next iter(struct cb_node *n, void *cb_data)
++static int iter(struct cb_node *n, void *cb_data)
+ {
+ 	struct oidtree_each_data *data = cb_data;
+ 	struct object_id k;
+@@ -80,18 +80,18 @@ static enum cb_next iter(struct cb_node *n, void *cb_data)
+ 	memcpy(&k, n->k, sizeof(k));
+ 
+ 	if (data->algo != GIT_HASH_UNKNOWN && data->algo != k.algo)
+-		return CB_CONTINUE;
++		return 0;
+ 
+ 	if (data->last_nibble_at) {
+ 		if ((k.hash[*data->last_nibble_at] ^ data->last_byte) & 0xf0)
+-			return CB_CONTINUE;
++			return 0;
+ 	}
+ 
+ 	return data->cb(&k, data->cb_data);
+ }
+ 
+-void oidtree_each(struct oidtree *ot, const struct object_id *prefix,
+-		  size_t prefix_hex_len, oidtree_each_cb cb, void *cb_data)
++int oidtree_each(struct oidtree *ot, const struct object_id *prefix,
++		 size_t prefix_hex_len, oidtree_each_cb cb, void *cb_data)
+ {
+ 	struct oidtree_each_data data = {
+ 		.cb = cb,
+@@ -106,5 +106,5 @@ void oidtree_each(struct oidtree *ot, const struct object_id *prefix,
+ 		data.last_nibble_at = &klen;
+ 	}
+ 
+-	cb_each(&ot->tree, prefix->hash, klen, iter, &data);
++	return cb_each(&ot->tree, prefix->hash, klen, iter, &data);
+ }
+diff --git a/oidtree.h b/oidtree.h
+index 0651401017..2b7bad2e60 100644
+--- a/oidtree.h
++++ b/oidtree.h
+@@ -35,16 +35,22 @@ void oidtree_insert(struct oidtree *ot, const struct object_id *oid);
+ /* Check whether the tree contains the given object ID. */
+ bool oidtree_contains(struct oidtree *ot, const struct object_id *oid);
+ 
+-/* Callback function used for `oidtree_each()`. */
+-typedef enum cb_next (*oidtree_each_cb)(const struct object_id *oid,
+-					void *cb_data);
 +/*
-+ * Release all memory associated with the oidtree and reinitialize it for
-+ * subsequent use.
++ * Callback function used for `oidtree_each()`. Returning a non-zero exit code
++ * will cause iteration to stop. The exit code will be propagated to the caller
++ * of `oidtree_each()`.
 + */
-+void oidtree_clear(struct oidtree *ot);
-+
-+/* Insert the object ID into the tree. */
-+void oidtree_insert(struct oidtree *ot, const struct object_id *oid);
-+
-+/* Check whether the tree contains the given object ID. */
-+bool oidtree_contains(struct oidtree *ot, const struct object_id *oid);
-+
-+/* Callback function used for `oidtree_each()`. */
-+typedef enum cb_next (*oidtree_each_cb)(const struct object_id *oid,
-+					void *cb_data);
-+
-+/*
-+ * Iterate through all object IDs in the tree whose prefix matches the given
-+ * object ID prefix and invoke the callback function on each of them.
-+ */
-+void oidtree_each(struct oidtree *ot,
-+		  const struct object_id *prefix, size_t prefix_hex_len,
-+		  oidtree_each_cb cb, void *cb_data);
++typedef int (*oidtree_each_cb)(const struct object_id *oid,
++			       void *cb_data);
+ 
+ /*
+  * Iterate through all object IDs in the tree whose prefix matches the given
+  * object ID prefix and invoke the callback function on each of them.
++ *
++ * Returns any non-zero exit code from the provided callback function.
+  */
+-void oidtree_each(struct oidtree *ot,
+-		  const struct object_id *prefix, size_t prefix_hex_len,
+-		  oidtree_each_cb cb, void *cb_data);
++int oidtree_each(struct oidtree *ot,
++		 const struct object_id *prefix, size_t prefix_hex_len,
++		 oidtree_each_cb cb, void *cb_data);
  
  #endif /* OIDTREE_H */
 diff --git a/t/unit-tests/u-oidtree.c b/t/unit-tests/u-oidtree.c
-index e6eede2740..def47c6795 100644
+index def47c6795..d4d05c7dc3 100644
 --- a/t/unit-tests/u-oidtree.c
 +++ b/t/unit-tests/u-oidtree.c
-@@ -24,7 +24,7 @@ static int fill_tree_loc(struct oidtree *ot, const char *hexes[], size_t n)
- 	return 0;
+@@ -38,7 +38,7 @@ struct expected_hex_iter {
+ 	const char *query;
+ };
+ 
+-static enum cb_next check_each_cb(const struct object_id *oid, void *data)
++static int check_each_cb(const struct object_id *oid, void *data)
+ {
+ 	struct expected_hex_iter *hex_iter = data;
+ 	struct object_id expected;
+@@ -49,7 +49,7 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
+ 			 &expected);
+ 	cl_assert_equal_s(oid_to_hex(oid), oid_to_hex(&expected));
+ 	hex_iter->i += 1;
+-	return CB_CONTINUE;
++	return 0;
  }
  
--static void check_contains(struct oidtree *ot, const char *hex, int expected)
-+static void check_contains(struct oidtree *ot, const char *hex, bool expected)
- {
- 	struct object_id oid;
- 
-@@ -88,12 +88,12 @@ void test_oidtree__cleanup(void)
- void test_oidtree__contains(void)
- {
- 	FILL_TREE(&ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
--	check_contains(&ot, "44", 0);
--	check_contains(&ot, "441", 0);
--	check_contains(&ot, "440", 0);
--	check_contains(&ot, "444", 1);
--	check_contains(&ot, "4440", 1);
--	check_contains(&ot, "4444", 0);
-+	check_contains(&ot, "44", false);
-+	check_contains(&ot, "441", false);
-+	check_contains(&ot, "440", false);
-+	check_contains(&ot, "444", true);
-+	check_contains(&ot, "4440", true);
-+	check_contains(&ot, "4444", false);
- }
- 
- void test_oidtree__each(void)
+ LAST_ARG_MUST_BE_NULL
 
 -- 
 2.53.0.1055.ga2ffed1127.dirty
