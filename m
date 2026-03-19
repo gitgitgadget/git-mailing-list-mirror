@@ -1,84 +1,82 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C75C1CEADB
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 05:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD70225C6EE
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 05:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773898410; cv=none; b=NAmHZWkTg9livzQmb4wdn5SgPRO2S0VNd2eIq+FDlF7B4guACwmEwNNJE7JKmLX1arnzgRf7JAK8uVcocArDa6rFAYr2I1+ImAS6jKoWZ6i3s3T6V4vjEwc/FGEVxBDF0gV2uXQbb+GOo8Lti7sZwPCxtqtqixerAC8qlFNa1Ls=
+	t=1773898411; cv=none; b=Wz1xA6iyx96UJzHb+NkH/7B6xECj8vGHxu3eXqoQ/z4rArY+0tgqkcKeOdhqNadNuB5xGdQCb24unxpclKObils1HQarzIfsgqSIr8PDil4gvadusN8rWXRyZF6AZDl4BPN11M00Owyd78DBc5IGydivNksorjgtfabe0nDsPn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773898410; c=relaxed/simple;
-	bh=pUoVktBOIqOCIh5GomkaQc+vLjYJMX/ZsuxHMBZN3RE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=OYxVvZmeMLWIr8lEkn97DI0156M9FC3j4Q3nvE1zJEQ0ArvU9xdoyJ/a6ib/fuqXCc6msfkvkrKEI9+z59nyTSQCk9ceDktuH1NDVSVKGkThuKu7ZRhHKoKMkciVLnNVAA2xmK6a9LMRgFIiLGENR+GrM6YwpLHQyIClk3kmyyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nfe8XkA+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5MvfMLke; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1773898411; c=relaxed/simple;
+	bh=8WCwuAkPVP93QN118w/8trJDDjTKnN3AF8bplL20r/0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PgecteaUUgTDvSXu84bGnvSCRpv1/wJmvGZPXZVULsvBv3+t6TMu1ZYP0a0Cg6UEwxAekFXcSTuuM6Wz1ktIwOBMEUAg37RjfDSlO+r5IKAyBkYMyjm2lP59HDajQYS2LWC+Ot9hlF7cjduX9/DBlszAp7adt7Kw5Qe1iPCl8xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VdLiDYlU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3P9ZVV8G; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nfe8XkA+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5MvfMLke"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VdLiDYlU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3P9ZVV8G"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 92A5AEC0210;
-	Thu, 19 Mar 2026 01:33:27 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id D64B5EC0219;
+	Thu, 19 Mar 2026 01:33:28 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 19 Mar 2026 01:33:27 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 19 Mar 2026 01:33:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773898407;
-	 x=1773984807; bh=9wm0s41TAEO+oZY31S/Pcw58yfQBYoVYcgR5aNv8IiI=; b=
-	Nfe8XkA+ybL+DdqrB1j/pB+xa0JQYdDSLQtoF4dYtbRnd04BEGVEAykCTei/BzKW
-	LxEOCECvpXMM9yQUMAF9dgNsFJG3ULUcX6C6LyomX34rF9ysj9eLmtXqkUwj8tTW
-	s9M85JVdVV59j192RBtW1+XX7053k2Fnv0dvg7DSK19VXzVhtckxAsP8tBUEsj2X
-	zbi7MeYyvOrqJI7uRbt6h3GsvjGVWlFJdZfz9U8yVJuKYgFlD/kgtg/Cp2HGcAvT
-	oG3SiOMEWsDHIgNkWIUVBmxDN3xMLTEIwAOZBcwGCHzB1PSX/EcsA1Lu6EIPfumk
-	wy2PSfRAqNLLGNLE34i18w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773898408;
+	 x=1773984808; bh=bI/ubNU8GighF2ALZ+Xij2wBywzz5SdN8vzErp2yx1E=; b=
+	VdLiDYlUVu2uJh97NX/KGqucSZLv2OihhwvpvRI/awAv78wF2qqLsThWwYEGWHHo
+	3LuwncQh0egyFsRpeSMp+MCF1e171vHFjlKSaIbM2i96uWx4v/OdhpSC5yvmLwNM
+	j/ACB1CeJLRCTF9DwDTjxGqP+JQP1glH35v+MgDu8580akl1QI/e3nxCGvzVUTOp
+	3OIzLrexHyaSixN5oWj/jOyR01H171jglNNrrNSuvaqkla/vTTIa+11qno8bMIhT
+	WpXDDxbVxhXGjmWlwrw9ne2rTf6NVH+DyUV0YvO17tFjogL2lnqLxAYuRA8WQBz6
+	c6Jm6sawmpjggkJ5lkawrg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773898407; x=
-	1773984807; bh=9wm0s41TAEO+oZY31S/Pcw58yfQBYoVYcgR5aNv8IiI=; b=5
-	MvfMLkeMf9750qMvlTOI/Alr3vRizDuik8C5hLpGIQPzXX+YwYIG7/VNoYXvSNXD
-	WKcie9uX0HyXy7ZiJmkzGPE7qxXX9jpOiYgwd9gmLoHYYwhteauSuep9+RuR3KvI
-	kU5VVBYyeN8bZTP9cste6mrPgyW6cCgoxe0xh1yu1wRrs5pgqXya5SjimTlaevea
-	1kap/lMAe5g9C22yOgVmsY1nqVZ393z4Jm6gPL8ckTqWt3NTHv3nPtJfUp2t/e+R
-	rj8bYiWKTlfpmY9hbbafmQ56HpXqNqwfEWF804dRxuGTi1y0ZSAJWH3WrriFbvX/
-	iJRuccnRYqy57fHzbbaeg==
-X-ME-Sender: <xms:poq7aVeB0OjYafSv7VAWzfdz-vMblYVPw4ECuppWaIVlfG-XFoUQyA>
-    <xme:poq7aUtm0Kije575BJoEUM5XV4OiAAiD9KoqVrnQJgFXcDRLQ9bwCJMAGSP9Jt8oS
-    Ri_GYNZdFAKiHCI5kma_DomvZhacUlpcNb8ANcQCqpZTmqzRyUNaQ>
-X-ME-Received: <xmr:poq7aems3KibdLcOp9GGBXbStRR4IZX1KeuQJ07mAfRSf1ay9vql2KkQpjAaeMMVbLzKncbb5CraDtb65qsxrDhWIxcTxU-2YlO5u1Ruy9ie>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773898408; x=
+	1773984808; bh=bI/ubNU8GighF2ALZ+Xij2wBywzz5SdN8vzErp2yx1E=; b=3
+	P9ZVV8Gjjv4YpS/vLXTmubh5h/cpfNAXGcbG2P9uJCfBAGDmF16Es5rvcPSSJr5N
+	QJgwE1MTanhVEX9dR49zLol38rex2QrgKrMjhmQDagtFssaFL0feoig44GzdrtZI
+	WXyirOGVI18Xs/86JfMCFW9jknrf0JZUbp+mnnnaVKSHNoQSY9QK0j/g3t20gC8j
+	uv0puBrQRiASDlbYMVq0mrzmucGKhd3LYAqUGCjmwj3HwlnFIMrnZQcc+kh36ijb
+	kz0xkvl/UW+qEh3J83fz3/ddmF7M3+kaOTe8hlFcioUy1qE52UX6yRJzk7EnrWPL
+	IO1p83ZbwfKTqdtk/S0dA==
+X-ME-Sender: <xms:qIq7aaCz9HO-532KFCrxENzDy1kfuE-jBiEXRHvaY468eyVCt05TtQ>
+    <xme:qIq7aWBlsxWks-lK1PXCR4PfLYXBYu80OZms_Q4Z8JjJYL0v5Mrf5tr5egHB31dNq
+    GJPoJALuvuH28CPMBPVfKD7b9a4DtSPrvZPq-BA9jGpU_AvYHWpjg>
+X-ME-Received: <xmr:qIq7adomDFQxEgHuudyqPMZ9YxqagguKR3KUhOgJYE6eH5JxJPtmRLstp_HUvgXh1xf25naoAl_EGVWHF9zYV-HeioWu4EBWkoc2WmZI7_s3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeiudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgeetheejveduleefkeelvdelgeehudetgedtuddvhfekgeevvdekvdettddvuden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhmrghkrdguvghvnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgs
-    pghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
-    lhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:poq7aexOF6Ic_EB5YuQDb1VhWSXv-mfI2XD09R9-OfB5V4Z-tfsPvw>
-    <xmx:poq7aYPqnbQTWJxbFHYdyGnuPOFa8nFQgYGCTRGe7cNWCGEF_Fyeeg>
-    <xmx:poq7aSrNI4rhjJrM416j8d_BYbfRdWB1M-zKq3fIUvT3Oe6_pl2h7A>
-    <xmx:poq7aZFxDdNiGxedqU18whhV1hA0Z-QAmuPCFbEewB-zKQTxHzAmwg>
-    <xmx:p4q7adA-vq9DEk41XKctSdRNI-7zlRPRDKfI7l7jGtLKFcS0AbdvQpzb>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtth
+    hopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomh
+X-ME-Proxy: <xmx:qIq7aYnACJUjdnKyTYBhfr_KCzVKotI3H5wuciyMSd0EXh91zd43PA>
+    <xmx:qIq7aVxYOvTfHe3ibeinHEuPW3fLNsDJa1cMvvGuw54WTVKEOS0gRw>
+    <xmx:qIq7aY-Ie5y6Fo6CBcDGNuCGe1jDmh7-2kHz689HlF2qzOk0QvLf-g>
+    <xmx:qIq7aZL54MuXQhT_NkpK-CBERKqA0EKLz7xpi5qJgLbSUO4LcnbQng>
+    <xmx:qIq7ab38q7skPoWQCxiMhNGKtQ-iLtjA4vfC8VryYl7_pYLx0aW2C96J>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 01:33:25 -0400 (EDT)
+ 19 Mar 2026 01:33:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9efc0d20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Mar 2026 05:33:25 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 22bdda62 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Mar 2026 05:33:27 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 0/8] Some build system improvements
-Date: Thu, 19 Mar 2026 06:33:19 +0100
-Message-Id: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
+Date: Thu, 19 Mar 2026 06:33:20 +0100
+Subject: [PATCH v3 1/8] Introduce new "tools/" directory
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,13 +85,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJ+Ku2kC/4XNTQ6CMBCG4auQrh0zLaUkrryHcQHtIBPlJy02G
- sLdLcQYdyzfyeT5ZhHIMwVxymbhKXLgoU+RHzJh26q/EbBLLRQqgzlqqDWM9wD1kx8OuG98Bdy
- NfojUUT8FsFajVLbIjSaRlNFTw69t4XJN3XKYBv/eBqNcr19b4q4dJSCQLQuHpURnqnN6P3InV
- jiqf8zsYyphulZWWbSoVfHDlmX5AGRGi2YYAQAA
-X-Change-ID: 20260304-b4-pks-build-infra-improvements-cc4012c5364e
-In-Reply-To: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
-References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
+Message-Id: <20260319-b4-pks-build-infra-improvements-v3-1-82f5fb3edc3f@pks.im>
+References: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
+In-Reply-To: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>, 
@@ -101,125 +95,84 @@ Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.14.3
 
-Hi,
+According to its readme, the "contrib/" directory's main intent is to
+collect stuff that is not an official part of Git, either because it is
+too specialized or because it is still considered experimental. The
+reality tells a bit of a different story though: while it _does_ contain
+such things, it also contains other things:
 
-this patch series contains a small set of build system improvements:
+  - Our credential helpers, which are being distributed by many
+    packagers nowadays and which can be considered "stable".
 
-  - The first couple patches introduce a new "tools/" directory that
-    contains items related to our build infrastructure and to our
-    developer tooling. This finally follows up on my promise to do this
-    back when I did the spring clean of "contrib/". [1]
+  - A bunch of tooling that relates to our build and test
+    infrastructure.
 
-  - The last couple patches introduce precompiled headers into Meson for
-    a nice compilation speedup of ~30%. It's 
+Especially the second category is somewhat of a sore spot. You really
+wouldn't expect build-related tooling to be considered an optional part
+of Git. Quite the opposite.
 
-The two topics are not really related with one another other than being
-related to build systems. I decided to throw them in the same patch
-series though so that I can introduce "precompiled.h" in "tools/".
+Create a new top-level "tools/" directory to fix this discrepancy. This
+directory will contain all kind of tools that are related to our build
+infrastructure and that Git developers are likely to use day to day.
 
-Changes in v3:
-  - Improve commit message.
-  - Link to v2: https://lore.kernel.org/r/20260316-b4-pks-build-infra-improvements-v2-0-4b2c2c0c0425@pks.im
+For now, this directory doesn't contain anything yet except for a
+readme and a Meson skeleton. This will change in subsequent commits.
 
-Changes in v2:
-  - Turn array of precompiled headers into a simple string.
-  - Point out in the commit message that the precompiled header is
-    included implicitly.
-  - Link to v1: https://lore.kernel.org/r/20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: https://lore.kernel.org/git/20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im/
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (8):
-      Introduce new "tools/" directory
-      contrib: move "coccinelle/" directory into "tools/"
-      contrib: move "coverage-diff.sh" script into "tools/"
-      contrib: move "update-unicode.sh" script into "tools/"
-      builds: move build scripts into "tools/"
-      git-compat-util.h: move warning infra to prepare for PCHs
-      meson: compile compatibility sources separately
-      meson: precompile "git-compat-util.h"
+ Makefile          | 2 ++
+ meson.build       | 1 +
+ tools/README.md   | 7 +++++++
+ tools/meson.build | 0
+ 4 files changed, 10 insertions(+)
 
- Makefile                                           | 76 ++++++++---------
- ci/run-static-analysis.sh                          |  2 +-
- config.mak.dev                                     |  2 +-
- contrib/buildsystems/CMakeLists.txt                | 18 ++--
- contrib/meson.build                                |  1 -
- contrib/subtree/meson.build                        |  2 +-
- git-compat-util.h                                  |  8 +-
- meson.build                                        | 96 +++++++++++++---------
- tools/README.md                                    |  7 ++
- check-builtins.sh => tools/check-builtins.sh       |  0
- {contrib => tools}/coccinelle/.gitignore           |  0
- {contrib => tools}/coccinelle/README               |  2 +-
- {contrib => tools}/coccinelle/array.cocci          |  0
- {contrib => tools}/coccinelle/commit.cocci         |  0
- .../coccinelle/config_fn_ctx.pending.cocci         |  0
- {contrib => tools}/coccinelle/equals-null.cocci    |  0
- {contrib => tools}/coccinelle/flex_alloc.cocci     |  0
- {contrib => tools}/coccinelle/free.cocci           |  0
- .../coccinelle/git_config_number.cocci             |  0
- {contrib => tools}/coccinelle/hashmap.cocci        |  0
- .../coccinelle/index-compatibility.cocci           |  0
- {contrib => tools}/coccinelle/meson.build          |  0
- {contrib => tools}/coccinelle/object_id.cocci      |  0
- {contrib => tools}/coccinelle/preincr.cocci        |  0
- {contrib => tools}/coccinelle/qsort.cocci          |  0
- {contrib => tools}/coccinelle/refs.cocci           |  0
- {contrib => tools}/coccinelle/spatchcache          |  6 +-
- {contrib => tools}/coccinelle/strbuf.cocci         |  0
- {contrib => tools}/coccinelle/swap.cocci           |  0
- {contrib => tools}/coccinelle/tests/free.c         |  0
- {contrib => tools}/coccinelle/tests/free.res       |  0
- {contrib => tools}/coccinelle/the_repository.cocci |  0
- {contrib => tools}/coccinelle/xcalloc.cocci        |  0
- {contrib => tools}/coccinelle/xopen.cocci          |  0
- .../coccinelle/xstrdup_or_null.cocci               |  0
- {contrib => tools}/coccinelle/xstrncmpz.cocci      |  0
- {contrib => tools}/coverage-diff.sh                |  0
- detect-compiler => tools/detect-compiler           |  0
- generate-cmdlist.sh => tools/generate-cmdlist.sh   |  0
- .../generate-configlist.sh                         |  0
- generate-hooklist.sh => tools/generate-hooklist.sh |  0
- generate-perl.sh => tools/generate-perl.sh         |  0
- generate-python.sh => tools/generate-python.sh     |  0
- generate-script.sh => tools/generate-script.sh     |  0
- tools/meson.build                                  |  1 +
- tools/precompiled.h                                |  1 +
- {contrib => tools}/update-unicode/.gitignore       |  0
- {contrib => tools}/update-unicode/README           |  0
- .../update-unicode/update_unicode.sh               |  0
- 49 files changed, 123 insertions(+), 99 deletions(-)
+diff --git a/Makefile b/Makefile
+index f3264d0a37..c7cedbcd7c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1066,11 +1066,13 @@ SOURCES_CMD = ( \
+ 		'*.sh' \
+ 		':!*[tp][0-9][0-9][0-9][0-9]*' \
+ 		':!contrib' \
++		':!tools' \
+ 		2>/dev/null || \
+ 	$(FIND) . \
+ 		\( -name .git -type d -prune \) \
+ 		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
+ 		-o \( -name contrib -type d -prune \) \
++		-o \( -name tools -type d -prune \) \
+ 		-o \( -name build -type d -prune \) \
+ 		-o \( -name .build -type d -prune \) \
+ 		-o \( -name 'trash*' -type d -prune \) \
+diff --git a/meson.build b/meson.build
+index 4b536e0124..1d66b5181e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2149,6 +2149,7 @@ else
+ endif
+ 
+ subdir('contrib')
++subdir('tools')
+ 
+ # Note that the target is intentionally configured after including the
+ # 'contrib' directory, as some tool there also have their own manpages.
+diff --git a/tools/README.md b/tools/README.md
+new file mode 100644
+index 0000000000..d732997136
+--- /dev/null
++++ b/tools/README.md
+@@ -0,0 +1,7 @@
++Developer Tooling
++-----------------
++
++This directory is expected to contain all sorts of tooling that
++relates to our build infrastructure. This includes scripts and
++inputs required by our build systems, but also scripts that
++developers are expected to run manually.
+diff --git a/tools/meson.build b/tools/meson.build
+new file mode 100644
+index 0000000000..e69de29bb2
 
-Range-diff versus v2:
-
-1:  051b66376f = 1:  bc18fe2f2d Introduce new "tools/" directory
-2:  275a96c805 = 2:  393b42f433 contrib: move "coccinelle/" directory into "tools/"
-3:  afc5a1f8b9 = 3:  00284934e9 contrib: move "coverage-diff.sh" script into "tools/"
-4:  909d996f56 = 4:  9dceec07dd contrib: move "update-unicode.sh" script into "tools/"
-5:  6396ae723e = 5:  af0ce83627 builds: move build scripts into "tools/"
-6:  16b0e9f4fb = 6:  8cb7ea8245 git-compat-util.h: move warning infra to prepare for PCHs
-7:  b4cd150fdf ! 7:  495335a97a meson: compile compatibility sources separately
-    @@ Commit message
-     
-         This is okay for our "normal" library sources and our builtins. But some
-         of our compatibility sources do not include the header on purpose, and
-    -    doing so would cause compileir errors.
-    +    doing so would cause compilation errors.
-     
-         Prepare for this change by splitting out compatibility sources into
-    -    their static library. Like this we can selectively enable precompiled
-    +    their static library. Like this, we can selectively enable precompiled
-         headers for the library sources.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-8:  5899e0318b = 8:  6923592b62 meson: precompile "git-compat-util.h"
-
----
-base-commit: af2c8a61818d773325ef2324dd135786a03ebca0
-change-id: 20260304-b4-pks-build-infra-improvements-cc4012c5364e
+-- 
+2.53.0.959.g497ff81fa9.dirty
 
