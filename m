@@ -1,68 +1,77 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2D62DEA7B
-	for <git@vger.kernel.org>; Wed, 18 Mar 2026 23:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4F01F30A4
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 00:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773876500; cv=none; b=sfE+1BfgbNvlgu+s1f/qCEsF2+0irT4TrlRntt7VObeN4s+Cp8VTg2H2mxpAqabkzuh0iPGXkNASm2QdqocRdc5vW+IBWsU0sUN/1DH3VpKDlda9ElIckQPLsuwNXyyKNhAIn0/8heJUdaEpWw283tPmTFsOtryod9/kyKl3iHo=
+	t=1773880719; cv=none; b=eJgMnxY0BNKuY2ljELK+dsbpmVKQGZZ3qelFnHOeJsrcN9FL/e9Vr8jsoI+HC/KDEXq0UxHLISLFQJTAAdxJEaFOTI7bqo0isIZXzD7dHNPfWvpWNnO5pbgwWHd8eKCmWd/vmHYjSrHu96H5wA0TjRZcXv/CNX//kWiF2+TeZVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773876500; c=relaxed/simple;
-	bh=56aqRN9PBCYnHpkCAOV2fk3kR/u9UjrxqbifXrjOmaQ=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=obBLFKNRbzF1VIPWvsyXU6Xpj7sqUhMqtRCMSMTMQdcFoJmyS/Cj4cojpqs0pcfxaVMclTrdb9/FNPEJwol7UKjtripWipnzCWwEqe6wYh3lWp8EfzwtRm2B7A7W9BzatT52WzVGihbBs0nasFrkOZ6m9lSKe/xGjxcHd+Z/fBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=e3DmxhIT; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1773880719; c=relaxed/simple;
+	bh=id+ma0TYIpKAWo5CKPNeoj33Tb0vqYogZSWLzFMkcBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ju62bbqM2RLr1eG7eXngVCMzUK1rrUKAWaYAEmd0oI2D365Y7Gs8iLa4WABA6SPcH2qvfzrvTH6xVuv9Tojc3YuOqFkE2e4LGR3xpz7qw9X+phSTrrb+uQWJVfHwuCgoIbtJm/yuQSTdOxqXnUvGjJtdEG3T5OB9AJdWyeOo4mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AJSVL3Bt; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="e3DmxhIT"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:Subject:To:From:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=5Kx+5jyABHwCOpuMo6TmZskugRB36z+nGoit2wfR1bQ=; b=e3DmxhITA8ddX67u+eYYv8bpv1
-	2kmm4u/cQhFeFsrtmKQh5N9yfolHGv3kbuGTkNvoACwAlu4r6rl3c50Esff7eDMQxy/sQBLMkSUVb
-	4dUo0B1eQhUQ/NeGHuQwkoyNOygub3gWs7N7v6Z59HMdnV9au3fy+2nBSLybJ6Dhlq7a0SSdgsVcQ
-	M5ZfTogju34Ff/hBLslLYW/CjEcNIW8VVFFA9TV+GFz4bo2eEKugyDet2vxurkL9OieTCk0+Tq+OW
-	TtVpKh1PIQsm9fUsdSisRYrOWyJCqO7L7s/fk6it4h9WFP7JoMADgfFpjNd3vE2jDoNnZbloOPEsM
-	7Gxoj9lA==;
-Received: from [50.53.43.113] (helo=[192.168.254.34])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1w30JF-00000009WBa-48Sv
-	for git@vger.kernel.org;
-	Wed, 18 Mar 2026 23:28:18 +0000
-Message-ID: <7bbcda60-dad4-41d4-b994-c19f83f37e2f@infradead.org>
-Date: Wed, 18 Mar 2026 16:28:17 -0700
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AJSVL3Bt"
+Received: (qmail 48335 invoked by uid 106); 19 Mar 2026 00:38:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=id+ma0TYIpKAWo5CKPNeoj33Tb0vqYogZSWLzFMkcBs=; b=AJSVL3Bt4IxKYL0NpZ1YtHsHGZr6GZP0W0FjXFL9osW/C5LOOgo2iFz+sTHn9A/sR3xomakxFtHRtwnlt673wYSU93eboNvejNT+f2PEypiecCDu36hZxqLpzLs/Ff+uT0oM/WIev5tnxjY7n/T2lEvgjKz3ag+nXBBvmnrGmzUiFC9ktfSKrdTuvSdBInb99QCONy/MuW4zuw/rmbjgIXw1NfappzGQLoa8vexmnQCricKZffJVa4mmJYQfxItrjTfLBM3wd1C2yKAZAy7Ht03sUcMGVModHTll6qd6sL+HXP6GHRhlYMekqAXIaeOKIQT1A6ubiyOi56TNn4GYpQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Mar 2026 00:38:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 71619 invoked by uid 111); 19 Mar 2026 00:38:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Mar 2026 20:38:29 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 18 Mar 2026 20:38:29 -0400
+From: Jeff King <peff@peff.net>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: git@vger.kernel.org
+Subject: Re: git grep failure?
+Message-ID: <20260319003829.GA3530301@coredump.intra.peff.net>
+References: <7bbcda60-dad4-41d4-b994-c19f83f37e2f@infradead.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-To: git@vger.kernel.org
-Subject: git grep failure?
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7bbcda60-dad4-41d4-b994-c19f83f37e2f@infradead.org>
 
-Hi,
+On Wed, Mar 18, 2026 at 04:28:17PM -0700, Randy Dunlap wrote:
 
-If I apply the patch at
-https://lore.kernel.org/linux-doc/c5bb61cf789df1ecb32facc29df9749987c7ddfc.1773346620.git.ljs@kernel.org/
+> If I apply the patch at
+> https://lore.kernel.org/linux-doc/c5bb61cf789df1ecb32facc29df9749987c7ddfc.1773346620.git.ljs@kernel.org/
+> 
+> Subject: [PATCH 02/15] mm: add documentation for the mmap_prepare file operation callback
+> 
+> to the Linux kernel tree (e.g., linux-next-20260316), it applies cleanly.
+> 
+> I noticed a typo in the patch ("struct vma_area_desc" should be
+> "struct vm_area_desc"). When I run
+> $ git grep vma_area_desc
+> the output is empty.
+> 
+> Is this expected? (but not by me :)
 
-Subject: [PATCH 02/15] mm: add documentation for the mmap_prepare file operation callback
+I applied the patch and git-grep does produce one line of output (the
+instance added by the patch).
 
-to the Linux kernel tree (e.g., linux-next-20260316), it applies cleanly.
+Two possible differences:
 
-I noticed a typo in the patch ("struct vma_area_desc" should be
-"struct vm_area_desc"). When I run
-$ git grep vma_area_desc
-the output is empty.
+  - are you sure the patch application succeeded?
 
-Is this expected? (but not by me :)
+  - are you in a different subdirectory? By default git-grep narrows its
+    search to your current working directory and its subdirectories. So
+    if you are in arch/ or something, it would not find the result in
+    Documentation/. You can do:
 
-thanks.
--- 
-~Randy
+      git grep vma_area_desc :/
 
+    to search from the root of the project.
+
+-Peff
