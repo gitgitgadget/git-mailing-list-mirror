@@ -1,54 +1,54 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4882382370
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 09:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA453BE165
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 10:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773914121; cv=none; b=UjW+ymlf0EflN5UaI1gQ5OXoc+WwQXVlt2zCexgN58OuDjOcxl4qxZHx9J6R4a8QNgky31lh9KBBAw0WeHN0eP7Hy9ngpryZ7uGgTVxaYs1dL+5VBxI4nBfzV71Wewdyu8HDFt5mzLALSMhJyGTKNXa7QxOEofL/jolX+Hemfz8=
+	t=1773914764; cv=none; b=YkspXQOFV2vWY217073bcT/nZmv6LK7rhhirNXI8p3jXM6tdpeItj9Ws8mnbv6CXs989H4T2oCd6f5yX51/XeLpNzVKqF49MQk8pYpAqdwIzacrcGUxaJe6ePTE/5Xg+TNrtAXs0Bcos/kkSdgKSjoGHIPrg2s+RXMuCtWf9E5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773914121; c=relaxed/simple;
-	bh=JofXQnz0y6qXyvhYzA2eYso7xzer2OtlzkWZNZkMVXM=;
+	s=arc-20240116; t=1773914764; c=relaxed/simple;
+	bh=pty87DOZARRmivJMSK0gvcu83E8+NBiYPb61ctr6m+I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nu2YuJQNNUmd1pLRo19Z4luwzG/Acy0mboFSbFbhn5UN4nSkcU6+pQTncGNJSdcybHouFbbHqzeXf7se6F7WxF3su05lVfxV/F80nvoapKCp/lgk5drO6I3ZtSdH+xq9JGb3lH0H5QsaExdR8rXOnSd1dlZMJQmiq+BZfqCnMmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mzEDqm8q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WW3J0Sum; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=VC2tjCshmXvv9THqw3/SE6Lj/kUdIXJi7j+QmJzfTGXZEc3TQeubhbEKDsR3uXAnyz1wS22VSRy6mTPT/OnkWf1Ljc/hSX+sPqpPSHKw7hMlEwutjUNYJll8UK1jeSepJA/mkrpqNQ4tZxruijaCwwSFZVk1KPEUMNsE2RFmCI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Rvt+5nOn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YGd+1CQF; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mzEDqm8q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WW3J0Sum"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CA1941400195;
-	Thu, 19 Mar 2026 05:55:16 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Mar 2026 05:55:16 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rvt+5nOn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YGd+1CQF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D154814001F7;
+	Thu, 19 Mar 2026 06:05:59 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 19 Mar 2026 06:05:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773914116; x=1774000516; bh=T75aO01ZNi
-	eU0XRZAis7wWzWOh7wZ4SULGI/yZ5HlXU=; b=mzEDqm8qNyfzj9jKp2XKzF9I3H
-	21RDCLvH+qILCP/PSxrF3kjXIRhPFu70wwjsPjCJa+6egptiUhjrIgOzpGqz49Zx
-	YC0POJatrkYMJElhMGgpjeI/P1HrynVxwIspvCocp5QGX3jeJgZX1UJAEzceGc5B
-	FvlFakROZoaOk6/kxXW7PPKp31e6fteJCaPR9//jguu3aUyLfCIUt/XQBUMh6BRy
-	hDN/OGRlIt/t3f5NrjcvMEL0bPFUgx2HMga2uWBHdJAAcjiEPqAulQM64SrDjpR/
-	vYWGm2+lpwmd6dYB7w0oSaFzoP0AKPYHOFYGYkjtzX2IB6cjWRx5sIyJaBmQ==
+	:subject:to:to; s=fm1; t=1773914759; x=1774001159; bh=BXLDw1MdQJ
+	tL5rNFNYkn6lDZ3VuTFJZSXr6b9ySVVAo=; b=Rvt+5nOn6GHNfnT6zAat6PiFfu
+	UMgR2CIqQFjf0VrrTaKk6R1fGPPwjDp9Wkj6/jYcGYo036ry0oiXFy0akCWCNssl
+	hrENJMU3KI+84ewRLpDJ85Zs3rwQ1YzfPmw4dOChJkuE0UrALw4jk6U8/MPMsYk9
+	YwBIRkUX0p+10yT1qC5BLyznsr4pZ2w4inGG5fdXvFQ3knKFklXu3otI0uIKnV/U
+	19Q2/qzhuTYwsXU+96Ccoa/RSlHIv22eDIZjKLWuJDNf1KHX3NHQ0Wwzh+VRAu1z
+	+imZX7MJpkX5wit5wsBvNPQq+w3nisixYu+q9e6mwo+2BdjMAjO8xZ8Ajupw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773914116; x=1774000516; bh=T75aO01ZNieU0XRZAis7wWzWOh7wZ4SULGI
-	/yZ5HlXU=; b=WW3J0Sumwum38yR/cj+cg7QvujKXOqkxMW7UOUHAdyEc/hq6lDX
-	7J+O4B2P+5YK2HqwfjdaVh8lTxAWvd/HndS04Y6A7TEIipBKz5xMlJEYiAu7HimE
-	GxvA+pbJFe6Kd/wvIZVJXbnzz8J+Zo1m5wyAPim3ObN4fbapuiAXDoPmzGgLOPeI
-	PnH6IhQl/fyKB5/S0mZ0uICxGglvKZei9R478hUpdH/rBnPyN/tlRMSeR+mwTcfz
-	Vd29mT48wmpw/O/MknnHw8gNqgkSDlQDbxLDHQi2tXtA9qB0RQtHeKfRTvaaGIwL
-	miGAQDnehRzf53iqwdVAXAlSuFmrr0ez2zA==
-X-ME-Sender: <xms:BMi7aRFGvSPbbZiC2rkB72c08d95PD4e1rLTt66PNn910YlaMGb4Eg>
-    <xme:BMi7adXbZP2vAdM33Iq9SeCqi93nIgEQjaRp68ROP9D4XxD0KXXoGR5yMg5DERyj5
-    kR50nHxzl2W5F9qm2oE9rkV-7nG4VvhOiGThL3w1YxJlN6AvdrJdg>
-X-ME-Received: <xmr:BMi7aYIFuU2TlpLiOmlWiqFfWMwWOLiBjCo6g5BBbZrNs5m9La-tdzcJqwnIXh7LQOlOJtxtYNMbiI9nHN-be77Rk1rHiBZfGXqAN86OFUNy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeijeduucetufdoteggodetrf
+	1773914759; x=1774001159; bh=BXLDw1MdQJtL5rNFNYkn6lDZ3VuTFJZSXr6
+	b9ySVVAo=; b=YGd+1CQFc23alRiEteltvw72qgDl3+V9wMGZ31Vtvz62ihOPJha
+	SO77hCte868MLs8W6TVltzuDRDx5flx3DIIQ0pP/3QSvt2DAEFaEVjLlCwCE4z7h
+	EBjS8461nv432rhhHKDP46lQbZZJB5UFMQWNiwI2o0dL7eIg24Spxsx47h222cYQ
+	0e4ka5CfpVop53ZxFlaGaS2+5lHwHvtnAl5KvfEJOhQxVapYPCCOa+oqjhTXmB5p
+	Ti0/N45+pfDFPySkOzf4RNCKg1A7uSczuyRD4ridrQd4inv6Rf6tzyP4y4kdtuT/
+	LowIpNMWNDrMOuhctrDDm7Bm5Gj6gz5LfhQ==
+X-ME-Sender: <xms:h8q7aZQFBcS6L9YKQYPMplAm1uZNZ2eo0TR5-CRnuUcc95EzDf8J5Q>
+    <xme:h8q7aZwYxdgzHc9urrU50s9Bv5qmFkxLKwbsN8uOhEWzkiULj-2iIM1tSnuwv38C4
+    DwbbmNWVDhUJQArZXaCpF1W9ZCrPcu1g5cK9tXfWP9aLbM_NdG5>
+X-ME-Received: <xmr:h8q7aT2wwcWlfdZqRQsboVXUQLtZxsqFSgzGFvFpqMShYaZdLHVGiClukYklCf6u9EzYc8Jc-v_Ryw6-3yB5EtaUxEdxcndHnYynluI-Qi_u>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeijedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
@@ -56,29 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeijeduucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsthholhgvvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:BMi7aV8ysvutOr5RcUMlIoUgAS1IfvLLbiO84Wy7_hOr3RhD8gB-cA>
-    <xmx:BMi7aTIC9sJXKpE-KG-NyZHpqSbzI1Y-KR-9A8_fMpdWYug4Vbx6wA>
-    <xmx:BMi7aSkpZrnMBTlk77S_6qKSg1WMW9U60ahFPv2n71jDbMfZTr9Zzw>
-    <xmx:BMi7afNvMcEt-yTXu7FEqhRj4JSzWWu4Xk1ps0TUyKsup4_8AG5qHw>
-    <xmx:BMi7aTpiB20I-xXY04iAtEzfC-8fptXBSbY4wpmIZucNybiXjpVU2rCG>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtoheprghprghtvghrshhonhesphhmrdhmvg
+X-ME-Proxy: <xmx:h8q7af7lKm_FA9CXQVGdNIAZPT6YEhLyCEtrlxLW05Thi9u6WmR5TA>
+    <xmx:h8q7aeVWT9dPHNC9Hl5ZuQnmHYvxmwEgr3yPcugogE54wmPefW0whw>
+    <xmx:h8q7aWALjPToK0eqkuC2IkizOd3VCEuHQz7WUyGs77dzkFmAFW2ZSg>
+    <xmx:h8q7aV4rRDajGYIbGBrlxpH9lEQToHjFLnHM8wx14bXUhPsvPVm4gA>
+    <xmx:h8q7aVBqaZEyfDFDvJ3zek1MlrD6lb7vQ7Mzrrj2mcEZQCP9n25QriBf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 05:55:15 -0400 (EDT)
+ 19 Mar 2026 06:05:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 64096c81 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Mar 2026 09:55:14 +0000 (UTC)
-Date: Thu, 19 Mar 2026 10:55:12 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 60a25ff9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Mar 2026 10:05:57 +0000 (UTC)
+Date: Thu, 19 Mar 2026 11:05:54 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 4/5] backfill: work with prefix pathspecs
-Message-ID: <abvIADZ8kt11t2kP@pks.im>
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
- <977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
+To: Aaron Paterson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Aaron Paterson <apaterson@pm.me>
+Subject: Re: [PATCH 2/2] odb: use odb_source_files_try() in source-chain
+ iterations
+Message-ID: <abvKgsCe1V5g6c0s@pks.im>
+References: <pull.2068.git.1773674983.gitgitgadget@gmail.com>
+ <a8303b1427a41fd4b3ca107eabc49e8ac6d02410.1773674983.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,32 +88,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
+In-Reply-To: <a8303b1427a41fd4b3ca107eabc49e8ac6d02410.1773674983.git.gitgitgadget@gmail.com>
 
-On Tue, Mar 17, 2026 at 12:29:20AM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/path-walk.c b/path-walk.c
-> index 364e4cfa19..e1ad4b0208 100644
-> --- a/path-walk.c
-> +++ b/path-walk.c
-> @@ -481,6 +524,18 @@ int walk_objects_by_path(struct path_walk_info *info)
->  	if (info->tags)
->  		info->revs->tag_objects = 1;
->  
-> +	if (ctx.revs->prune_data.nr) {
-> +		/*
-> +		 * Only exact prefix pathspecs are currently supported.
-> +		 * Clear any wildcard or magic pathspecs to avoid
-> +		 * incorrect prefix matching.
-> +		 */
-> +		struct pathspec *pd = &ctx.revs->prune_data;
-> +
-> +		if (pd->has_wildcard || pd->magic)
-> +			pd->nr = 0;
-> +	}
+On Mon, Mar 16, 2026 at 03:29:43PM +0000, Aaron Paterson via GitGitGadget wrote:
+> From: Aaron Paterson <apaterson@pm.me>
+> 
+> Convert all source-chain iteration sites that access
+> files-specific internals (pack store, loose cache, MIDX) to use
+> odb_source_files_try() instead of odb_source_files_downcast().
 
-Huh, curious. Won't this cause a leak? I guess we should rather use
-`clear_pathspec()` here.
+I have to wonder what the motivation for this is. We don't have any
+other sources (yet), and we're still in the process of bootstrapping
+pluggable object databases. So it's expected that things won't fully
+work yet that we'll die in lots of places if an alternate backend was in
+use.
 
-Also shows that this path is missing test coverage.
+But the solution to this isn't to simply skip non-files backends, but
+rather to adapt those sites so that they are properly abstracted.
+
+> These loops iterate the full source chain, which may include
+> alternates. When a non-files backend is added to the chain (as an
+> alternate or additional source), these sites must skip it rather
+> than abort. The _try() helper returns NULL for non-files sources,
+> and each site checks for NULL before accessing files-specific
+> members.
+
+The big question here is whether skipping is actually the correct thing
+to do, and in most cases I would claim it's probably not.
+
+I'm a bit puzzled.
 
 Patrick
