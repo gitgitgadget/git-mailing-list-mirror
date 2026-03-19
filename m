@@ -1,71 +1,71 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A813B95FA
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 22:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAB83ACA79
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 22:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773959058; cv=none; b=FtDmJBtpLqKukXkS2GbA5orKtVJbwjLNYxoAVPXgApvmvy2kzlxzGw++aoURVpbgf5DWiwZ8kyh/fiS1tgTGm3PASxSauLytxfvZJNz5UBC8tMZJU6va3F2yOuYYXQIXQTFpAXk4xTWn2dwAVXHW3qmzu5Ff5eO1dFCcJbhcCK8=
+	t=1773959060; cv=none; b=iFx6FmkYXtigUJAVikll/7kSaQMvY7hL4te5W2bTFnttsLln5UInCZZo351SnHHWVZRpF9DzN6KdUjPqjs46y21nhVBAdA40LEvhx66sjaWpzshSyqMHsjQfKnz4SgbgKjV4RpX2u0ylrAHkzy8LpfZpul30OHMobNQFsVph+TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773959058; c=relaxed/simple;
-	bh=ZoL0TKgnFvvTvyButtOF1lSoMr0C0KjNJwfQinzf3Jw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Irig6ZVKLzQ0mhBLmKqvra0HEgyo5HwnNYLxBMw3sZt+y+k4hG8OPytyM7M07/MtL7qZyV8MxFM6rkQ5nP6yUQIacWiXCq+WDWsMbTX4TWrLvIsMNCcLeYMb6Vez53N4OvlIu3MCD9GuKlTehmM5MMMNLPQFrMq7ASPB4ZEKO2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=HS4ouQ4G; arc=none smtp.client-ip=74.125.224.51
+	s=arc-20240116; t=1773959060; c=relaxed/simple;
+	bh=ivrXu0qOqqorcpiTVmE9Ltkdz917BDUN+VKfUbQd3K0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PJ1nkF7rlh/XXXu4Ac0Y9eevEP+nhBLtU2B8DAvlHnezmMSipSHyOQjyHZ6AS4mdg+/u0hHMgVoo4eLfTyrMd5J5TowEur0b5+KA2hm8wlvDGjOIAoNc0MWE/Vjrk7sr6xtelhCVlf3uYYU5u70cXCFoJzkL5xlvqr3VLQ2b+es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Ll4tysMX; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="HS4ouQ4G"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-64ad46a44easo1205224d50.0
-        for <git@vger.kernel.org>; Thu, 19 Mar 2026 15:24:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Ll4tysMX"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79860421382so10771367b3.0
+        for <git@vger.kernel.org>; Thu, 19 Mar 2026 15:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1773959054; x=1774563854; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gjo6nMt+pmCJRSOC0abfc0aSDAccTSfactiTKUv6eDQ=;
-        b=HS4ouQ4G4QiWA4MIKPMkSYj9l5us+MIwqx/infYZ3dl5Au1z7asW7rU+Up55MGXQ4b
-         gqna+iWUJyb4H319JdZLQxsqTfC9cVGA1Sqt2pHu9iwocUww7T6ACxisKk410+jFQGBx
-         pnnXsTPgzwyLqQo21nTtIEQe6gljTbsfy8GMKqCWnYQuqClXvyiabuaBAAjOP8VX1RkG
-         DV5anlwW6yNgxAN7UxDBxFQ/z7FE1023p/G2GvnIDhKv5RThbnGlHPT6rcesK201Mmtr
-         ccXDr6GRvV9ZAaH3Pv3zYfQGil/4KnVpO1Yp5rgpc5XtkcuT2Sxzh6i6CjAVYdWgZqgC
-         zzwg==
+        d=ttaylorr.com; s=google; t=1773959057; x=1774563857; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lsFchZqzRmkfWd0CZ35dHnmkBsD5/DfX4k19T+yHAFE=;
+        b=Ll4tysMXiJHcKhmnxdrCEpReZqF3/IwxNX/+7hY9XXARdWfxGQQaky++VOU2MqG3E5
+         2LbOzh2SnGKXN5dwiCsV1NrpnwvL+zjH97sX/ruTfoTrm3n0mG1uy6LeC0OrXnKZGGnC
+         OIs6dnJyCBF+61QmXPuIufp8vD0d3Q15k6/3I0maJCOr1ar7XDl3PRjaI59NXihEYqRr
+         4NB+Xgsq03M2hUEbtfQ28JEPm+JK9e63Op9rjXFskhlvG9WqD8OT+7lGlpL8vGlaruSB
+         RotS7S7KCV1B3cuYWJc9c4UXvuj6CQQ51w0ySkdzz0TTtGYPNnGfI4/HhfMYBFXm2/Vq
+         4vrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773959054; x=1774563854;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Gjo6nMt+pmCJRSOC0abfc0aSDAccTSfactiTKUv6eDQ=;
-        b=g/3LLanWffMC0lQfia/+uP4dFIU23FJMN4kfcHVrhXKxg2m6t50yxp1/MHbRCJG+VP
-         VWoilwvAkUgw7J/0ohZQJurU/Eh1FXSXToWSUTyBADz/eiRGT4YUnQRnq53oNi6IR7Fg
-         teWgqet6LnenFWeGkRKv/j0S1AgerbnSfXae85wlhtwN5/Uw2LTelAsbJzdYG1TTkVat
-         5ED9n5ap9sDaEdrpj+wZeCJX5PgHst9MQ1I+UHKpnQXKapfJ+JGKA/END0BTJmVaERP8
-         NLXqJeUMNMPAJqfNn8ZYbvN0QXVfRMlRd7q23rWbspUs62UBU9We+5wcqXy6grPjtQmF
-         gD6g==
-X-Gm-Message-State: AOJu0Yzyiy0TuEU9uf1UY8sLKdk/74fFqH7FeLDYALQ8w8yEha8iHtv3
-	6ybeQN6372S/V4+yK7QF9JC9w2w56hnEaxXDxTOH/33j1ZtbFXVUwjdYWK7MNffm2B2vMyNFYri
-	JUI3uj/I6kA==
-X-Gm-Gg: ATEYQzxmXi+FTJQE0BNBn5Gssa3VpIHQCmLTMU70nvUPn6pQASgtUnMz3OeOenFHxzu
-	HWbwt3zic30tqfOLP7N47KlviodWQZV92YyCcEukm/XPd7QTV5XH3yBubRBUQmU/5PgOJF2h4CD
-	Axz9Q/ocIYi6CsLcutdMy7hX9ZkIq161hwFSTo62fti+eYcZIjFxVuCwZcoJDZAorz191kDu0/i
-	3VkPNPH6AapyhIM0Ox5B4frtHjuX3WYf0nHvPi7TFVDzpKDy5mNKxkvOPVIio5tcnFbK0AbPVrB
-	Lp9dhQiIrx2Y/1Cia1aPW/UMTTuPJQK4tc9+C8nsK9oX8ixFuEnPPRXk10wOPJScyN5itMCm3LF
-	0xPe4nlkrm9onYngithFy6ixjT8K+P+0Gq5oShYL6yv8FR4W6XP5NGmfKWvCjoDjeq6YQsWvKIU
-	M/8gRrM4WJ1Rdhhxh4Wop5svhM1sUUwZIZJDgBHh+z/j8siqSA7IwVlfl4ECK74B+AuYSGSUl5f
-	w1HEkTrJ/bga2M3Gvz9JT1YDoaaTA==
-X-Received: by 2002:a05:690e:4285:10b0:64c:a09f:12ab with SMTP id 956f58d0204a3-64eaa6e163dmr1061191d50.30.1773959053910;
-        Thu, 19 Mar 2026 15:24:13 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773959057; x=1774563857;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lsFchZqzRmkfWd0CZ35dHnmkBsD5/DfX4k19T+yHAFE=;
+        b=ZdnaOtdzJAIypdaFXFUo23pVEgjPrfRTHNDla5V7XlArVG4dno2CAYH3Zz/OYuf9qc
+         2ELYNihMVDaDt/VK12GZlSBL5wdWhQE1GhDML0KhDOkdn0B9bWkDTjLoXWBTe7oGTOKj
+         kA7donRyigs40DSDssnb7x4nuGlGAq4U713Gyhg/utT5tF5PXYHz2HTmoJ5UKLp8e8Au
+         LO2JOP+jOY7akzhn8b7A7maEdSH8aQamp62+icvfTM/3Y9cTGnV9cbCubX9Liqps10l6
+         q5jUDLk88fiQ98dY4qhCLIBJuC76YllmIoo0Rk/rBFW8SbqtH2J39UspLMRTcRQ62DlL
+         SgtA==
+X-Gm-Message-State: AOJu0YzOR6f5+Xu+a0ZaWJuKgP3vLoZNF9+SAdOGEAVne6gP0jk1Ny1Q
+	Dq7Yy/88kC4RhMIyRaaciAlSealUOB/ANlqrWxYl/GZw9N5rFALLz3LQr2B+fg2Xe4D47y5f+eQ
+	cnluI+6o9Xw==
+X-Gm-Gg: ATEYQzwjF1nvqS3MeVsTe3XDr6+4OTQCdX+dLxm+00foysVTd7VYTuGyZwiiBfXSrPF
+	37TrjRzAQNdc3VJBsNY7ARfRbg1VRCwZX4V/JrFCM0zJngnSGOQO7tMOzRrTFuV1LN1VKE9brLW
+	gHTi4GktJmVF6tNcouRPUncpJk3DhEuys7gYhJH7bZAj6o5bLO7DIZyz/umcQRO521REmxF//mr
+	WcydGsANwbC6HacGMbDx6pqLkw396sCjZuHEvfklUoNieWpSi4Pwg66cxZUBevjqyJIt7hZc8lV
+	GAWmJUQ89R9A+uwR2VoMu60HYyhepCzBwCY9uzLX+sl/k8Tc0l6+2pajYfEXDAtN2O/vUiyw00g
+	H3dwLS4/FAFNFSFJ00pbWPdjaTcON3lCy6Ky3Xfb55GVVqXihjWJKFxCDoEB+GAQU7YDapQ0JJR
+	bklRflE5n+/NvsEpdZhxxyIWeLmwAprlzWU01PFhc8SMvs0/jDbe4VblxMoJTUam0Sk9/gMGeiw
+	M23mJ/OTJV+yxHp1dVaUt5ViUksuw==
+X-Received: by 2002:a05:690c:9204:b0:79a:52d8:fe5a with SMTP id 00721157ae682-79a90beff50mr7042127b3.42.1773959056619;
+        Thu, 19 Mar 2026 15:24:16 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64eabd944ffsm300922d50.9.2026.03.19.15.24.13
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a90554a03sm5176737b3.23.2026.03.19.15.24.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 15:24:13 -0700 (PDT)
-Date: Thu, 19 Mar 2026 18:24:12 -0400
+        Thu, 19 Mar 2026 15:24:16 -0700 (PDT)
+Date: Thu, 19 Mar 2026 18:24:15 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/5] pack-objects: handle excluded-but-open packs via
- `--stdin-packs=follow`
-Message-ID: <cover.1773959041.git.me@ttaylorr.com>
+Subject: [PATCH 1/5] pack-objects: plug leak in `read_stdin_packs()`
+Message-ID: <1dac74f1e4a370097117754a6b1fbb6fa2b382a6.1773959041.git.me@ttaylorr.com>
+References: <cover.1773959041.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,94 +74,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1773959041.git.me@ttaylorr.com>
 
-This series came from an issue I saw in GitHub's infrastructure where a
-particular repository was failing to repack with the following in its
-log output:
+The `read_stdin_packs()` function added originally via 339bce27f4f
+(builtin/pack-objects.c: add '--stdin-packs' option, 2021-02-22)
+declares a `rev_info` struct but neglects to call `release_revisions()`
+on it before returning, creating a leak.
 
-    warning: Failed to write bitmap index. Packfile doesn't have full closure (object XYZ is missing)
+The related change in 97ec43247c0 (pack-objects: declare 'rev_info' for
+'--stdin-packs' earlier, 2025-06-23) carried forward this oversight and
+did not address it.
 
-This was following a geometric repack that generated a MIDX and
-attempted to generate its corresponding MIDX bitmap. Ordinarily, we
-should never expect the above when generating MIDX bitmaps, unless:
+Ensure that we call `release_revisions()` appropriately to prevent a
+leak from this function.
 
- - Object XYZ is indeed missing from the repository (though we should
-   have seen an earlier failure during the MIDX write itself), or
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/pack-objects.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- - Object XYZ is somehow not included in the MIDX, but is reachable from
-   another object which is.
-
-After validating that object XYZ was indeed present at the time the
-repack failed, I tried to figure out why we would ever generate a MIDX
-whose set of objects was not closed under reachability.
-
-The precise details are laid out in the fourth patch, but the gist is
-that:
-
- 1. A pack whose objects are *not* closed under reachability was deemed
-    large enough by the geometric repack machinery so as to not need a
-    repack.
-
- 2. When generating the new pack with the non-closed pack was marked as
-    excluded, some object in an included pack reached an object (XYZ) in
-    an unknown pack whose only reachability path involved walking
-    through the parents of an object in another excluded pack. That
-
- 3. We wrote a MIDX containing the new pack, along with all of the
-    large-enough packs from the previous step
-
- 4. Because XYZ was in an unknown (likely cruft) pack, the resulting
-    MIDX does not contain a copy of object XYZ, but does contain a copy
-    of an object which reaches it, making it impossible to write
-    bitmaps.
-
-This series introduces a special denotation for packs which are excluded
-but not guaranteed to be closed under reachability. By marking a pack as
-excluded via '!' (as opposed to the traditional '^'), we will now pick
-up copies of objects reachable from objects in those pack(s), but
-exclude objects which appear in excluded packs (open or closed).
-
-In practice this means that the resulting pack contains:
-
- 1. All objects in the set difference between the included packs vs. the
-    excluded ones (open or closed).
-
- 2. All objects reachable from at least one object in either an included
-    pack or an excluded-open pack which (a) do not appear in an excluded
-    pack (of either kind), and (b) has a reachability path that does not
-    involve objects in the excluded-closed packs.
-
-The series contains a couple of minor fixups and some refactoring that I
-did along the way to make the substantive changes easier to read. The
-first commit is a cleanup, the second is a refactoring, and the
-remaining patches demonstrate, explain, and fix the bug.
-
-(As a general side-note, I am somewhat unhappy with the growing number
-of ways to mark a pack as "kept", and tried to untangle this by letting
-packs hold an arbitrary bitset of flags that is opaque to the object
-traversal machinery. This ended up being doable but rather complicated,
-so I ended up punting on it for now.)
-
-Thanks in advance for your review!
-
-Taylor Blau (5):
-  pack-objects: plug leak in `read_stdin_packs()`
-  pack-objects: refactor `read_packs_list_from_stdin()` to use `strmap`
-  t7704: demonstrate failure with once-cruft objects above the geometric
-    split
-  pack-objects: support excluded-open packs with --stdin-packs
-  repack: mark non-MIDX packs above the split as excluded-open
-
- Documentation/git-pack-objects.adoc |  25 ++-
- builtin/pack-objects.c              | 234 ++++++++++++++++++++--------
- builtin/repack.c                    |  19 ++-
- packfile.c                          |   3 +-
- packfile.h                          |   2 +
- t/t5331-pack-objects-stdin.sh       | 105 +++++++++++++
- t/t7704-repack-cruft.sh             |  22 +++
- 7 files changed, 332 insertions(+), 78 deletions(-)
-
-
-base-commit: 7ff1e8dc1e1680510c96e69965b3fa81372c5037
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index cd013c0b68a..9a89bc5c4c9 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3968,6 +3968,8 @@ static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpacked)
+ 			     show_object_pack_hint,
+ 			     &mode);
+ 
++	release_revisions(&revs);
++
+ 	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_found",
+ 			   stdin_packs_found_nr);
+ 	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
 -- 
 2.53.0.614.gc4fd52e751a
+
