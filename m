@@ -1,142 +1,175 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6773BE146
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 10:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA5812B94
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 11:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773915336; cv=none; b=APM23VdoNxkl59w6ifeI3rH+yfQviI8EPNxYlwZbWWT6uxF7pA9Oa+dPcni5/BZE0FOURriC1w9yc6ytK0KIU4dZ7Pm4XqOXZISXWnVe1fcK8Gi4pRBw9geLCqyBgzrhlYSFABbmx2Jz8nOKwICrC3f8n9QSyISvqD4i7CNcUrI=
+	t=1773918416; cv=none; b=YWXPiGgBGkhHwM5oCvyNQL/gO+KG4HyWKxNreWUdYPszRkwpkuK4SzRVlVmbW/vA/srNmKRLExdcmFs66F3ajr0UbwyPsViQNMPHThNoyF39qFv4/62pCrZ3hmnsG/rw+lskw14riSs5YHh98zonE00n7pyyY4haEKSeQYVZ7P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773915336; c=relaxed/simple;
-	bh=ALdVFaxfMHXW6Q27AaocyH2iar1jKfFgI11QhFyhx4I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IXvxn7zWjX8N9+IMdAqI6TWeJpWBJkj/6WZ4ndb2+mJBWWjjdfXQEIh8VcnjdDedyC2froXPXF0uorP7ccA3PFF7vGnjaPzDIXXGI38VuJomPej2zg9CQbWlgNURx+a7Ge9HSbOT2QYkFJdxtWiZYG7F5B6WoSzCJXuxI0qxXtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ikgK+DNE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yq14bl2M; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773918416; c=relaxed/simple;
+	bh=uGYVCXjv1CYPOfzXA9aF9gDDWfqUnThKQGmhJ6c2Q/8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VS3mE8CV1H+GaTfAaIkZe2fJuIFHDPSI0Yrkua74SxJlRI+cUG2o2yjbWOifCmat7myq69z+WLRq00DG1LrJM7DvrctOn3zqVQnVp8W7DDc6isMD3xn45Bl9JT3X/7iACM/WXN2MdIAElr6bvEgk/tZxL1cjAnXtTcGk//0tBDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=tlINW0gD; arc=none smtp.client-ip=95.215.58.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ikgK+DNE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yq14bl2M"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43B40EC01E8;
-	Thu, 19 Mar 2026 06:15:33 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 19 Mar 2026 06:15:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773915333; x=1774001733; bh=7/ris6UciJ
-	5cgnjT1stU12peNw2XqfQpnSkLORYsLQ0=; b=ikgK+DNE/QjtKYCJ9qhsrbYnwi
-	+DOiXIZ9ooGywE5E8vJvuKw+R0fZ0iSL9d+2Orhldtn99BCqMEU2nflFPp+pKNtR
-	pV3VHKyACKV2YM6+V2AxoQUbjBQL7BmbZmSMcydnDOd0bJr9V0mfcXQZNLgbsEW3
-	yq5Koh80qvhrVxxsJNlj/pZIKL8fnEtUNIig7uag6vglyYAgyl2rzA2vxXSEsgm9
-	g0SZp1mU22RsdICNvD0LK9C8hPtjRM0pH17HsFK3nsdzq90cAgIPS/5AFVSuGK8F
-	TI4UvQE0gigcl13UF+Ack/x+gS4czTmZzioet9We3fTsyS+fgrNQnX/kH5dQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773915333; x=1774001733; bh=7/ris6UciJ5cgnjT1stU12peNw2XqfQpnSk
-	LORYsLQ0=; b=yq14bl2MsWnh4bnQgK7dfEVsr7o9+SrIf/BTIaU4ID6EXL+I6DN
-	QPQAHiaHE/HtgSyBImAffbM97K1dQUdmJWyX0pbxu2f0edZrRFdajNClJaa91LWr
-	rj7tqasYrR6MEx6G3SvV0sGybnsAD4EVHbjiLEanMm7LDl8BUVwJ0tOKorOEDawf
-	L7/ra1zHFv3rf8i+M6OoB8Ol4EhQZRU9STlXXMeqtesRbD3h8EXUNW2fEI/U/pvn
-	Whh8TZAfr8EN5MVKw5+PWMFD0Mul9NQwOm60godGh5z0luBVwBJdOfy11p5fcLk9
-	XQUPf/bgAxqa2ehd7HaJsdbZMNtoSSCPZCg==
-X-ME-Sender: <xms:xcy7ac0awnyTmrOByYMi6Ko1b4ub1-SITVjDzDpRRxM2mpzX9ZvfKg>
-    <xme:xcy7aeFX5GCE04d2SCaYGfMsgEDbcPYuYgST5vMlJtBuO6hLOAW1yW1MwQmpEKh8g
-    Ar5x589jhM_UXbGU_MAP41pJOLsPr80LzBjsl1AyE3qk3PE4h9V>
-X-ME-Received: <xmr:xcy7aZ6eg_f3oS-BXDjT9WQBYwtgApZqkUHh2GV_PnR5PfRK0cCcFtXhHMr7VjCz8qZhB-4ta0EE5uqMdSK2EFOww9JUhg2DLT6c4Z-8dWjx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeijeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:xcy7aUuLVLoT1h54OGieom4hQXHNP8xNvy8DqDcE-HvbHGIltTnueQ>
-    <xmx:xcy7aa7miWsbO--eZUI9flZwGejwNvAJZmFWAGDX5wuBayqj_dOElQ>
-    <xmx:xcy7afXZ9YkRmsfPLVUMgb-WxhTYVnlbddFanLZ7fYHrbZKPI1slng>
-    <xmx:xcy7ac_-RovcElUPA7_I44iLW9Lf2e8u9z1UyqUcphhPN1jjDdNLWA>
-    <xmx:xcy7aVb2BUJv1lRNn-aLd1nCeZ38pKZim1JyRVP_miBGINtWnr1q0XiX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 06:15:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 34514d8e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Mar 2026 10:15:30 +0000 (UTC)
-Date: Thu, 19 Mar 2026 11:15:28 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 4/5] backfill: work with prefix pathspecs
-Message-ID: <abvMwBr_03_Z0nMX@pks.im>
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
- <977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="tlINW0gD"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1773918410;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=G49OareaYCt2teInA0RE279PjTo0P+3mF7bk1YjPokE=;
+	b=tlINW0gDQ1XXebTXk8GrAnJa2syjbW4Toue7vxgJHRwFRs3wx255Hm+K5wXX/plcGZngAA
+	6b6HL1QHQI4Uqg0BF77ubvkMmrLuj7n2qWKNe/jXGz8MEbfegWG4oSBZtQGo+2nuPdkWo+
+	d7gZLWZ4YGem1vd/VlZ9stEYJOrJdPI=
+From: Toon Claes <toon@iotcl.com>
+To: Jeff King <peff@peff.net>, Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>, Phillip Wood
+ <phillip.wood@dunelm.org.uk>, Matthew John Cheetham
+ <mjcheetham@outlook.com>, Victoria Dye <vdye@github.com>, Derrick Stolee
+ <stolee@gmail.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH] git-compat-util: make git_find_last_dir_sep return a
+ const pointer
+In-Reply-To: <20260204053218.GA942606@coredump.intra.peff.net>
+References: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
+ <20260203062537.GA286409@coredump.intra.peff.net>
+ <87ecn18aip.fsf@gmail.com>
+ <20260204053218.GA942606@coredump.intra.peff.net>
+Date: Thu, 19 Mar 2026 12:06:43 +0100
+Message-ID: <87a4w42i4c.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <977f62faa550ecc4ef7774b4ecf53a9a520fc62a.1773707361.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Mar 17, 2026 at 12:29:20AM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/path-walk.c b/path-walk.c
-> index 364e4cfa19..e1ad4b0208 100644
-> --- a/path-walk.c
-> +++ b/path-walk.c
-> @@ -206,6 +206,49 @@ static int add_tree_entries(struct path_walk_context *ctx,
->  				 match != MATCHED)
->  				continue;
->  		}
-> +		if (ctx->revs->prune_data.nr) {
-> +			struct pathspec *pd = &ctx->revs->prune_data;
-> +			bool found = false;
-> +
-> +			for (int i = 0; i < pd->nr; i++) {
-> +				struct pathspec_item *item = &pd->items[i];
-> +
-> +				/*
-> +				 * Is this path a parent directory of
-> +				 * the pathspec item?
-> +				 */
-> +				if (path.len < (size_t)item->len &&
-> +				    !strncmp(path.buf, item->match, path.len) &&
-> +				    item->match[path.len - 1] == '/') {
-> +					found = true;
-> +					break;
-> +				}
-> +
-> +				/*
-> +				 * Or, is the pathspec an exact match?
-> +				 */
-> +				if (path.len == (size_t)item->len &&
-> +				    !strcmp(path.buf, item->match)) {
-> +					found = true;
-> +					break;
-> +				}
-> +
-> +				/*
-> +				 * Or, is the pathspec a directory prefix
-> +				 * match?
-> +				 */
-> +				if (path.len > (size_t)item->len &&
-> +				    !strncmp(path.buf, item->match, item->len) &&
-> +				    path.buf[item->len] == '/') {
-> +					found = true;
-> +					break;
-> +				}
+Jeff King <peff@peff.net> writes:
 
-Ah, one more thing: we could expose `dir_prefix()` from "path.c" and
-reuse it here.
+>> > Looking at strchr()'s declaration in string.h, which is defined like:
+>> >
+>> >   #  define strchr(S, C)                                          \
+>> >     __glibc_const_generic (S, const char *, strchr (S, C))
+>> >
+>> > I think the answer is probably "yes". But it also doesn't quite solve
+>> > our problem. That would give us type-checking of callers of our
+>> > function, but we still have to convince the compiler not to complain
+>> > about its implementation. For that we'd need to either cast away const
+>> > manually, I guess.
+>>=20
+>> That macro depends on Generic selections from C11 [1]. I wasn't sure if
+>> Git would like that, given it is conservative with other C features.
+>
+> We definitely can't rely on it everywhere. But if there is a solution
+> that is conditionally compiled, and can kick in only when these extra
+> warnings also kick in, that would be OK. Assuming the result is not too
+> painful to look at, of course.
 
-Patrick
+So the Git project would be okay to conditionally compile with Generic
+selections if the compiler supports it? Seems to me this is the easiest
+way forward to silence the errors for users who see these warnings (that
+includes me).
+
+> Probably the best path forward for most spots is just fixing the code to
+> make it more obvious about its use of const.
+
+Yeah, that's in any case a good idea. I think using Generic selections
+should make it easier to locate those.
+
+This is what I've done in an experiment in git-compat-util.h:
+
+    #ifndef find_last_dir_sep
+    static inline char *git_find_last_dir_sep_nonconst(char *path)
+    {
+    	return strrchr(path, '/');
+    }
+    static inline const char *git_find_last_dir_sep_const(const char *path)
+    {
+    	return strrchr(path, '/');
+    }
+    #if __STDC_VERSION__ >=3D 201112L || (defined(__GNUC__) && __GNUC__ >=
+=3D 5)
+    #define find_last_dir_sep(path) \
+    	_Generic((path), \
+    		const char *: git_find_last_dir_sep_const((const char *)(path)), \
+    		default:      git_find_last_dir_sep_nonconst((char *)(path)))
+    #else
+    #define find_last_dir_sep(path) git_find_last_dir_sep_nonconst((char *)=
+(path))
+    #endif
+    #endif
+
+This leads to 28 places where the warning happens:
+
+    bloom.c:515:52: warning: initialization discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/config.c:855:22: warning: assignment discards =E2=80=98const=E2=
+=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/receive-pack.c:1045:19: warning: assignment discards =E2=80=98c=
+onst=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/receive-pack.c:1075:27: warning: assignment discards =E2=80=98c=
+onst=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/receive-pack.c:1098:19: warning: assignment discards =E2=80=98c=
+onst=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/rev-parse.c:278:22: warning: assignment discards =E2=80=98const=
+=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/rev-parse.c:339:21: warning: assignment discards =E2=80=98const=
+=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/rev-parse.c:343:28: warning: assignment discards =E2=80=98const=
+=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    builtin/rev-parse.c:347:28: warning: assignment discards =E2=80=98const=
+=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    convert.c:1189:24: warning: assignment discards =E2=80=98const=E2=80=99=
+ qualifier from pointer target type [-Wdiscarded-qualifiers]
+    convert.c:1212:32: warning: assignment discards =E2=80=98const=E2=80=99=
+ qualifier from pointer target type [-Wdiscarded-qualifiers]
+    convert.c:1223:29: warning: assignment discards =E2=80=98const=E2=80=99=
+ qualifier from pointer target type [-Wdiscarded-qualifiers]
+    dir.c:3526:15: warning: assignment discards =E2=80=98const=E2=80=99 qua=
+lifier from pointer target type [-Wdiscarded-qualifiers]
+    http-push.c:1775:44: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    http.c:755:43: warning: initialization discards =E2=80=98const=E2=80=99=
+ qualifier from pointer target type [-Wdiscarded-qualifiers]
+    pager.c:121:28: warning: initialization discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    pseudo-merge.c:647:16: warning: return discards =E2=80=98const=E2=80=99=
+ qualifier from pointer target type [-Wdiscarded-qualifiers]
+    range-diff.c:109:50: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    refs/files-backend.c:2199:25: warning: assignment discards =E2=80=98con=
+st=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    revision.c:2135:24: warning: initialization discards =E2=80=98const=E2=
+=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    revision.c:2179:14: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    revision.c:2188:14: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    revision.c:2194:14: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    run-command.c:608:32: warning: initialization discards =E2=80=98const=
+=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    send-pack.c:184:19: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    send-pack.c:215:27: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    send-pack.c:240:19: warning: assignment discards =E2=80=98const=E2=80=
+=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+    transport-helper.c:803:19: warning: assignment discards =E2=80=98const=
+=E2=80=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
+
+I did not look into any of them, but I think you (Collin) have sent out
+patches for various of these? But they _should_ managable to address?
+
+--=20
+Cheers,
+Toon
