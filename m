@@ -1,82 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A45B34DB7C
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 16:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A7B2DFA5B
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 17:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773939471; cv=none; b=ZD7hx8+vEvDhlzNZPjLxtBqOuURYpQGo68/SZxyLgCTnMrz+8UvQTnGjF96TocGBAyvhr2dbUnDaNZ7pSjKyDneFWrzRh91XUYlgBbvQLUQ0+jwm572JRCGy0L4CZAWCSXYja2dKuCcy/f3ArPjDgtotJU68l2WFNAitl0lyyVg=
+	t=1773939760; cv=none; b=Jzx84cWiSka3VCqrjKnXCtNJg1MODyIV2AALwuzoERGwePLD9SgQxYNnfOLf1e1PSMfyH+tIXFOX14CVWHF1NXIZ2pUXxkeHbTDc2+BtvASd5t3YFEQfJkHGZ2E3k69NSEDdYkHOV0hFnlNWthoHhYZLzsTu9vckeuOOtJxoJS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773939471; c=relaxed/simple;
-	bh=9AklyW7B9KOK9KO84eJ10gb5YYlAdfGNJsP1/n1DQRo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CxrQB+YJH2Ok4xhLfFUT7CmXYp8BC6lfucqNpjKvjgGTaTVz3/ZjPs0zPZ0jw7wpqXkCNOxMvTMfRLDeBfCAqS/l6sg1BoTiskZq2xNE1zBsXWlNqvlXWTGivd3IaSaYdEZfC2397DN0sm1quRCr/3ARY1ASXR5Ho8WfNhTBcD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WcvOHBrD; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773939760; c=relaxed/simple;
+	bh=yMpN71OFIZ7+X9H99KwEAqyNzMmOEJCdSwbNfHWJ4JA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bpk1W3DSXHrdqNkvluVUcxdigKVa8VwFYHDeuHF18Ft1gXfQ5IssajEbDrtcZnZmtMiA5F9MmdH61FTD/Rxw4Io8cqak63oYONkV/0l9MwQL/qvgPSfjP0GZ/cmQ9R0idefhXwmK2I9deParl3RgYt8kVaDKUuqTfOhnzaC/INw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kbJ9l3co; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i25zhjpr; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WcvOHBrD"
-Received: (qmail 56609 invoked by uid 106); 19 Mar 2026 16:57:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=9AklyW7B9KOK9KO84eJ10gb5YYlAdfGNJsP1/n1DQRo=; b=WcvOHBrDP+i9A/8vVBEC1urBUv9rsHLu+QsoKw0wk+SfsAIwhs0Ne59clJVS+tKd9VR100aqHlKa8K2a+QQa0lZ8rL+Hid3fvaClw7JEoiEbIi1mj69sYehKQT2PIaOT0RD7iAhb/Sk2rODOw5Ppjm83DsReGb7VYhsL5fHUCogZ/4YPelM5fzvXsR5euYfh8I1+YfPWpGft59a31ANmcwW7FNWB3oEy1WXZkiTdqWPyrF+86jYkOsVUHcTl5geQpTNXGY4qja8mmKEPKIDlbHg58iBJJPUuJMxDQ4UpPoLreNZwwpedqZycLtP8j+ZAn2Lce1LKlLDobo2Yy9vjyw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Mar 2026 16:57:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 85057 invoked by uid 111); 19 Mar 2026 16:57:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Mar 2026 12:57:47 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 19 Mar 2026 12:57:47 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] commit-reach: simplify cleanup of remaining bitmaps in
- ahead_behind()
-Message-ID: <20260319165747.GA3615867@coredump.intra.peff.net>
-References: <06000e28-c1b1-472f-bd6b-367b6c8d208d@web.de>
- <c01eb1e3-d839-4cf6-ba47-5a9edd336ae3@web.de>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kbJ9l3co";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i25zhjpr"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CEEA7A0164;
+	Thu, 19 Mar 2026 13:02:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Thu, 19 Mar 2026 13:02:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773939758; x=1774026158; bh=0v4oVNUOnq
+	B0sc9/+URzCNhjznyDLS7mLwz8KQv9vAA=; b=kbJ9l3co7FcgEExlA9C2RCfa/N
+	A73R69hf/Y22gvHNQNuvpLBjmiSbYAQCS8zWlfB9m2h0J8bdx7ZIeGcumzXyfBvh
+	AMdWNDD1WbFSiIi4IQYfFAd6WDG8d1+qtRQ0WUZsuvObmOKtmjyX/L4/HMj1YFzi
+	rTT947DdIAhVPejzXc2bxRdQ96bHSbsM5TIA/fuFpS/pqxokrcH7pTlb/uQxWsgX
+	s6oifcKMCBIDlz7K8zSWWQnQZbbZpFRX8jPav4LBciIt7DGLtV/7Y9qXULrALGa9
+	C6iwc+gZCZNPxIjNIudQfSfVE++QvgetclgzLaEHXIsW11v4LMI2tuW6oDWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773939758; x=1774026158; bh=0v4oVNUOnqB0sc9/+URzCNhjznyDLS7mLwz
+	8KQv9vAA=; b=i25zhjprbAvV6N4ZOMwWHc4oXDSMTgohU72dANTRHrKSaB8cuPn
+	pTyERjrHVKVh3DBBzZY1L+9myvliHhCtfNJf9yxg7yowWjC/Pv6V7TEhlMvcNL9o
+	ahvkDY3x7ZcwzB/hLEOO5pcUV/0Z+Z16pnai/SrranSUFjUDhG9UQATmcXqtc0R4
+	hFgHU+Z5JIXTlMZZEWoOz+Lcax0Cs9M0ffJLnrQnbDeliHb8QBmTfHm86C3r0u2x
+	Xe9HW7MnxiFI+Jaoworg2apDibzmDoSO2034U3uvqLJPIeBqVc+llqJGFdycmNiV
+	CKY5XWfGnVaetEH5L3u7Z7kJr3kp6PVh9yA==
+X-ME-Sender: <xms:LSy8aT0MwKxd83uamFF_vYESvS7UiuuGtUJa8_SYcQie_i6fgijH-w>
+    <xme:LSy8aUUIzkVJKkpFHQyF-E2xnxaXwdjMHSQsgev_LTfa02E54bscP6LsbyX1GK8Ux
+    I9Z-rgAT7hDSXmw7DKBUzHVKRVI_P97tsMCAY5Yvf9WsNE4P3bsEw>
+X-ME-Received: <xmr:LSy8aWJfBzVx3jbd_6fUF1YLikEoWeZfRdHBUXFl84wIuXN00jGeqkX_0wQy9zdC2jnsb3UfXWpBfWi6mMvRFHl6_C1C_hfHkA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdejheeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdr
+    fihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:LSy8ae0W3axsr6H9oUcKZmE40Plw8p2dMl47G2i0LQTxFQPb_6bPhQ>
+    <xmx:LSy8aU6F7Cy2Kjyrj8WDsSAu2CTHoBSP-g2QtZIOXzBPJS6lRL_2Ow>
+    <xmx:LSy8af81rnoFqp9VInSMwzBaNb-_zZi3IwFxYoTqt-_6pVJCkzXuqg>
+    <xmx:LSy8aTVznh2R4nf4maAAumHTdoneYRp9BIMNmXU5L9m5JkBhmczRxQ>
+    <xmx:Liy8aR82ClEidixKa00dZfmI7bfc7sqSebuGBO_KMRU-n3nc7T4nd6mo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Mar 2026 13:02:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH v2 2/2] push: support pushing to a remote group
+In-Reply-To: <20260318204028.1010487-3-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Thu, 19 Mar 2026 02:10:28 +0530")
+References: <20260305223248.170785-1-usmanakinyemi202@gmail.com>
+	<20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+	<20260318204028.1010487-3-usmanakinyemi202@gmail.com>
+Date: Thu, 19 Mar 2026 10:02:36 -0700
+Message-ID: <xmqqzf43lplf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c01eb1e3-d839-4cf6-ba47-5a9edd336ae3@web.de>
+Content-Type: text/plain
 
-On Wed, Mar 18, 2026 at 05:09:37PM +0100, René Scharfe wrote:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> > -	while (prio_queue_peek(&queue)) {
-> > -		struct commit *c = prio_queue_get(&queue);
-> > -		free_bit_array(c);
-> > -	}
-> > -	clear_bit_arrays(&bit_arrays);
-> > +	deep_clear_bit_arrays(&bit_arrays, free_bitmap_pointer);
-> 
-> The prio_queue contains just a few unvisited entries at this point (or
-> perhaps even none), while deep_clear_*() will visit all commits that
-> ever had a bitmap, even if their bitmap pointer is NULL now.
+> +	for (int i = 0; i < remote_group.nr; i++) {
 
-It is potentially even worse than that. A commit-slab must over-allocate
-because it provides a pseudo-array over _all_ commits in the program. So
-if the commit with index 123 gets a bitmap, then we will allocate a
-pointer for the whole chunk, even if 124, 125, etc, never got one.
+remote_group.nr is of size_t, so the compiler will complain about
+this comparison that stops a platform natural integer approaching
+the limit from below for type and signedness mismatch, even though
+it would be insane to try defining a remote group whose size would
+not fit platform natural integer.  A workaround is obvious.
 
-Looking at ahead_behind(), though, I think it's probably pretty dense.
-We'll be creating new commits from parent pointers and then immediately
-queuing them. So the index values we allocate should have high locality.
-
-But it might be something interesting to double-check.
-
-> We could still access them in array order, which must be cheaper:
-> 
-> 	for (size_t i = 0; i < queue.nr; i++)
-> 		free_bit_array(queue.array[i].data);
-> 
-> Performance is the same for my local Git repo clone, though.
-
-Yeah, I agree that is a reasonable simplification.
-
--Peff
+    "int i = 0" -> "size_t i = 0"
