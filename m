@@ -1,116 +1,98 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308A32D97AA
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 03:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7A5318EC4
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 04:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773891414; cv=none; b=WEX3kEv2nJl9Efy4rP/Y34TCasGuaER/JNwytE3JCA0luU7NcDColtSSe+sQP8XGmii6OLTVo+tHlrT+4vaBsdQWC9OLfHtiQhQP+D1BE/rBc6zfaXM6KXCs6K3pktZAOD7wBQcYHikS+rPTzD/qmuN/oyk7nKdMamENIO/jgeQ=
+	t=1773895348; cv=none; b=HIJAQBootewLiP2iSZe/HDLrXV3VFy+oZyCgorL3RtGJ4u1BOvSLFlPVHbxGVRMVMJJaM7D3krN4aJBXZkOo1h07e0P75qrLErvFOVTDHAw4yRBrMLMeFEDzuD4tut8eAZKBvc+t7U6BC9abnkv3Mi3xTB6+TZnqJ3ah0+0TgK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773891414; c=relaxed/simple;
-	bh=++IJ4XRX8SJkPv9gBR2NsLOSSMz8Zjx3E3JSW5M+oCE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBsVVI4Fw6S0kpVu/FtnD43Tal9HsKiKVFtQoUhOCDwyioGV6WFyZL1nN5rw58yHI03ID2jL+rCTFgbvvmA41g3DctEzFIsjM2x/3HEtCjkH34/o90q2j3s9fpqChLROTLWG5ToNV+c16c4KiKmwKZAAueVZR6+YH8SYLV1X47k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHN0TUT0; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773895348; c=relaxed/simple;
+	bh=gAGhoteYdIWhWMEjj0pcNMcsM0uv1uJDagAcqX22X5U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dDRKsYAPGHA15Oth+f3DEu1YcWcUDotxH8MvJ5fileLCDj06WPQEsxr55UFIqIRMRLhiDNen2ErATeq9zgT2iPqV8fIP3xbBjLi/J1UEL5Se+y7yicjbs0+6/gtKx5RamJEO5bNc+8yTu1h62yfo1Af8q22OVMwr0DsPTmt9zC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Q77VnzTo; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHN0TUT0"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82a124f3a5bso136021b3a.0
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 20:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773891412; x=1774496212; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tFg9v14oIvbm81pokf6HZHDkqazL45Ywq7jX2D9k/zI=;
-        b=QHN0TUT0Gm5aa2/vnE2c82OzVMVKdcl/V9zKCm/Yb0gm0Xve82txy/bu6+sX18EJkH
-         l5k7ZXIuRK5gu+34OStvUVVsxoOtsq+tbwm0K/O1kV2kSQsmrS0+EJkaO2LLnsJsQLBT
-         bSCuHeRDRn1r1bQ29ebUaBt4M4BX20jiaMqGNWONRlBGcdEp6ysOCZSxvDfiEg6JDyZu
-         eDshpAqkzc+QA521gjeAWCRUOAyX4HouT+/UOnv8B3kjsHcIqLaoZpxIqalCY1vhTGr3
-         tPuHV0OXOBlXVuBaOA/MHeKtf5S/+xquHwQ9Tiyq2QohgtXqHyUKLDQiuknpJvArHIsP
-         cj+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773891412; x=1774496212;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tFg9v14oIvbm81pokf6HZHDkqazL45Ywq7jX2D9k/zI=;
-        b=U0M1kUW/V/I+C2wW+LaNdlUdvsJUjGodDQVpvJg46cDIh/ClPLm/r6Hzc8nORQG7/4
-         MKjbH36s4lkMwhjXpBJq21oBYK6dYq5XUMbC2ImouDH7i5ma2pX+Oa0Zq4gGFhIY7zBQ
-         e5JkHINn9U/xNOqW+CS8WC0PGJWC+ehpq+Mr25hc+9eY57CwEp+OruftxwYsCwpBm8L7
-         Glu1zAvJoAxwB8oDeOvTpnpmwUUbQDM0TgDtAO/cCpCjwluk1gdDEOcLJps5HgR5j2rt
-         SwMIeDsiXRiHmAULZYuJBpJzgh1Kk6jR+0u0hbPTxTu/cD8Y8MFfHqOQpZxVlTsYt7Jf
-         cwBA==
-X-Gm-Message-State: AOJu0YxZmZ2wKq2snA/QAplYCc+Ee7gAqzpe4AoOfua9FWCpff3T+Gwe
-	FoFp/k5H8nwzh4/jsgt6kM5j9Q3VXIkNAvg3UXgbeuZnOnvkHvewdrHxpJzA4/g8
-X-Gm-Gg: ATEYQzwZjw6JJk+WzJ6epy8fQbCNXzXRYhrL4H8wovicuLsDarZx7XfRU+/YZzNe3+i
-	0wj6q6pqO7wqC92abSsn2ufy94bjkvUjU/TN9HDJuff4c0IXWse/wErR01Sy9k+lMy85cxkcqRF
-	3WuEhxoyVJA6/Gi5hMChgPgagP1uncN7A4CyS7Woy9dvotJD6MrzxvGvicIn+Fu/uVfbOjXCHG1
-	DFv+7kS4aXrYaB6QZwaHuekmya1OL9xjmX1fDiTisjC8n3h5xZezFjaowOFSEsMDQctHRd78fZm
-	kuxaTuoMJW6VleAIHqGtUPlB0LU0FlfCgqXQExz2mmuUDJGsgeIEkXQwrG8wsu1k7spQFE8FXyv
-	xYrKFjDo7qf4ciNetixA99HQ0C3yTj2KOnt1NqQUy0qshBY7++Gg44S2dcHOUdCRHaMA0eqhVLS
-	ibbxi0juwty2sa2U3LHUgao38dIfYjM1fWGeOurLZtcC4BYwE7gr363W/v4/sFygiebQFx/eF6d
-	yr35KEH0J9igNasu1u7leElFH/pPr/j5kC6/PNlH/ML
-X-Received: by 2002:a05:6a00:9099:b0:827:455b:86b1 with SMTP id d2e1a72fcca58-82a6aee1853mr4916580b3a.28.1773891412426;
-        Wed, 18 Mar 2026 20:36:52 -0700 (PDT)
-Received: from jayatheerth ([2409:40f0:1020:5ca3:6737:ef9c:4476:1d9d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6bbb522asm4336780b3a.37.2026.03.18.20.36.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Mar 2026 20:36:52 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: jerrywang183@yahoo.com
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v6 0/6] repo info: add category/path keys and --path-format
-Date: Thu, 19 Mar 2026 09:06:41 +0530
-Message-ID: <20260319033641.38458-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260318204438.40075-1-jerrywang183@yahoo.com>
-References: <20260318204438.40075-1-jerrywang183@yahoo.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Q77VnzTo"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=ns8SlUkRJQfDUHm4KNQZUm2Q7WWUizAusx5ZNqBCkaE=; b=Q77VnzTo7ztY6vNCA5L0UUVG75
+	VedQ0oEIwtdLfWqvhll+vIcsdC4Lrk3FazifprJE4la3sTJ48tTUASFaiXmIsWom9b1IJUbzLrGbR
+	grWP/RAoIsSlIqfrPcOOd8nAB8E2mZyHD1JdEOeZMCteE7+CiWxGvkh4LYYl3MwWI5g+vYTg3svcu
+	PDbCrEMRfgelE4SEx2MZgXlX93MCabPnCQkFuCY8j4vATTUhydYI+XpDPPI5Je6u1x/3kQ6LYMbay
+	fzk4qj01MPApmPZK1tUwmu+G6jW+hlyfNVAmsDaF60dpf62iNd0p9V1brJZMtgzY9ZgrqsJQYGswa
+	AHFlgKYA==;
+Received: from [50.53.43.113] (helo=[192.168.254.34])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1w35DD-00000009uSd-3Cjd;
+	Thu, 19 Mar 2026 04:42:23 +0000
+Message-ID: <2c943182-d5d7-4f72-ab97-8d07bf4ed216@infradead.org>
+Date: Wed, 18 Mar 2026 21:42:23 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: git grep failure?
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+References: <7bbcda60-dad4-41d4-b994-c19f83f37e2f@infradead.org>
+ <20260319003829.GA3530301@coredump.intra.peff.net>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20260319003829.GA3530301@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> While reading the current `git repo info` implementation, I noticed that
-> `layout.bare` is still implemented via `is_bare_repository()` in
-> `builtin/repo.c`.
->
-> At first I thought this might be a small repository-awareness cleanup,
-> since the `repo info` field callbacks already receive a `struct
-> repository *`. But after tracing it further, it seems the current
-> `is_bare_repository()` semantics are not equivalent to simply checking
-> whether `repo_get_work_tree(repo)` is NULL.
 
-Hmph, this was an idea I explored few days ago
-But I do agree the repo->worktree == NULL method has multiple flaws
 
-For example
+On 3/18/26 5:38 PM, Jeff King wrote:
+> On Wed, Mar 18, 2026 at 04:28:17PM -0700, Randy Dunlap wrote:
+> 
+>> If I apply the patch at
+>> https://lore.kernel.org/linux-doc/c5bb61cf789df1ecb32facc29df9749987c7ddfc.1773346620.git.ljs@kernel.org/
+>>
+>> Subject: [PATCH 02/15] mm: add documentation for the mmap_prepare file operation callback
+>>
+>> to the Linux kernel tree (e.g., linux-next-20260316), it applies cleanly.
+>>
+>> I noticed a typo in the patch ("struct vma_area_desc" should be
+>> "struct vm_area_desc"). When I run
+>> $ git grep vma_area_desc
+>> the output is empty.
+>>
+>> Is this expected? (but not by me :)
+> 
+> I applied the patch and git-grep does produce one line of output (the
+> instance added by the patch).
+> 
+> Two possible differences:
+> 
+>   - are you sure the patch application succeeded?
 
-test_expect_success 'layout.bare is false even when run from inside .git' '
-	git init nonbare-dot-git &&
-	echo "layout.bare=false" >expect &&
+'git apply filename.patch' succeeded AFAICT. git status shows one
+untracked file (the one that is added by the patch).
+Do I need to do 'git commit' also?
 
-	git -C nonbare-dot-git/.git repo info layout.bare >actual &&
-	test_cmp expect actual
-'
+>   - are you in a different subdirectory? By default git-grep narrows its
+>     search to your current working directory and its subdirectories. So
+>     if you are in arch/ or something, it would not find the result in
+>     Documentation/. You can do:
+> 
+>       git grep vma_area_desc :/
+> 
+>     to search from the root of the project.
 
-I cooked up a test like this and it failed
-I have since been exploring config.c and parse.c.
-specifically the if repo_config_get_bool()
+I'm running 'git grep' from the top-level directory of the
+kernel source tree.
 
-I think there are few other checks we need to do on top of
-repo->worktree to be completely sure that the given repo is in fact bare.
-Also instead of using repo->worktree I think we can use repo_get_work_tree(repo)
-Why recreate the logic when we have a getter ;)
+thanks.
+-- 
+~Randy
 
-I am convinced that we need a helper
-repo_is_bare is a good name too.
-
-Thanks for exploring this :)
-
-Regards,
-- Jayatheerth
