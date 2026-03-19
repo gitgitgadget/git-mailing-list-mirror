@@ -1,106 +1,173 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8605E28CF77
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 05:35:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773898543; cv=pass; b=AdMBfV7PZXeLYbsCP9DSFMUPRPR3g88+fO3lGLbP+zfbSemG0/wnW7FotArlyR12XDZcBMgFtIZe2OxDQPF+zfrdF23NzPtQS9MTo4ZPQnAtzW5xjwALRW1xuQSZvO8g11AWweT7QamgMSjcA+oxJU4SCvrV/jkURY89vOTMwJ0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773898543; c=relaxed/simple;
-	bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RtpffpChop/tW0yD5mPlEONWU0NK0isRtpq1bhKtu6qP+GAplM+qiFKAEppSCxsDtAOQ6e2bEyjR/ISdn7brfmIf5DjaPdK3mckUM2fMAzB0Zq0z3B/bABa4Oj/gw6PN7rTQlpNP7WLlPsJg8VV68nNPQTvq2qQL66aLJpILJCw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AI34fWEC; arc=pass smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6BC53E0B
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:53:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773903189; cv=none; b=D6BEbjj7dU3h+IAG50BPbPR44+dmlVOSVDp6ON6AIupAIUf3qWVfBxuq8TgtJ3SUq8T8IWwkNfp8W0EDjhlKAoum7NIYGMsP4BT1GGmM9HDauA3ok3FhuGnq5bFdj/NB01+/sOwe18Cpj1vrw4uRI6aI9j2ZbOHqaX++7jp9G4E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773903189; c=relaxed/simple;
+	bh=NFswty3k/7iDT/0p2SvGXH8MgwiyM0gB+9d0tTajyqk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=U9eHSq6LPiHNnACMNuo5mYtkxlRcVK17xDZgIuHop8RW9vvHNUhjN2y39NstScwzxrHXBI73tSm9swTLL+opVU9K2ZE1s2U5A4QOfVPonpBEveS2GXAyWMKnklXSvCR31OZYN4X7Wlp1T5vick/aKR1SQiogpjxe8UJsjkp5LnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NpfvM8O2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oRGGd/jc; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AI34fWEC"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso1812955e9.3
-        for <git@vger.kernel.org>; Wed, 18 Mar 2026 22:35:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773898541; cv=none;
-        d=google.com; s=arc-20240605;
-        b=V9ztsOu279UlJhn9Shh7EPqx7lMulxJCDRpR+VJorVavvUjUfSJtEpx7v69M189C32
-         vDvO/L4nWwmFXM75gyb2jxbBuFBT0a7JhQ7T59Hm7JIfZ4dDMJLHN35I9FANB8CY5ubU
-         emiDmUFAGv2KZ7ceEfPrdkFDTSDr8w8Vott9G9Fsz5UFdI83qEVGERFdKTCmoEFb99mO
-         3Zu6tDaIyJCYCpviOfVisDNRy7rRS2f7UkM5yzXuagjoia1v2raKymqF4Zhfz85DY4h1
-         yxhqP2DZngM3Cb++YCFcXlKqCxH+7rx9qyuAo+wokRH0vmf5zmVpj3n6p3o8ybUQCxGk
-         CLRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
-        fh=q3FwEuqcmu+syEBXkYX01gKL+3nTK1MeVWYK6W4eKi0=;
-        b=KDXjCAZNjXMIx8Au+QNPTupvI9lA2hCv0Zj2gDQEgySUS4y4lSLWr8zuExeeq1t1JX
-         QV9RX65Uwnrw6eOGM0mXjNL89LpzM56e1jFXS6QQk7u4ooE67xZ13lLKXuJNQJLhiEdh
-         7Hn/XzV+Tgi1b6PjmAQmt84gmIljolpAV7oNaI64hU4Xk15CUvVUzvVDERdaDi+0G6Ja
-         ZrpWe0Nf5U0PJCg5mWSsZuw8YmmFdHVixYbceqei4fDJ7U/rkBaPmascUCq2Ff/+80jT
-         bsJkRW0qo50+HMJLO9hsouhoPWVG3V9ZgczulppXiyeSEcZauiWDPP4P0NmPF0bvN2zi
-         8X9g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773898541; x=1774503341; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
-        b=AI34fWECnY2wR4grBaWi998pG3a2lMbauu5jkaR4QMo1mtD1iDyEDROgEBXXaJ87k1
-         KXSuHlVzcV4Z1pzycgm5UQRJDhHGgTjzf4B/ogkoCRnvbGWvjD+01xlY3O68QtmBtBaw
-         TJEw7nXKzXZkL5P6HQ72/OO6fhpdpR3DQvWrAdI94R+qlwABNbyWQ9tfpim4xDD39VDV
-         hHzNnm9xhvIxvNhrahIwh+ivIHRoUclLnvrjj+8G/fc0tVYc0XDhh1KgyOIzrZ8gZ6Jf
-         x9LWufSev77MHCEQjJegihNeZUN2EkoN7TcHWpg+smh5kfUzv8vte+5PKd7ZLlMkxmp7
-         ztMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773898541; x=1774503341;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nyQSaPEVESP3BOHBWemySU+pbZBTbVWv0hJtO+ddLkk=;
-        b=EZQyNLtZuuTyILWUpx2DYlfefQBfmVPOD1r4iWRdw7kO/B9eeXOTC4yfexM/qxV4IZ
-         dfn4kY1DuyKk+YI4jg8s4VqIaPclshSQOh6RSIzLjXg+9OtF2CCn2178DDJJEJxAR09O
-         Pn/sKI1DeuYxXM4D/HS5I3nMoWOV4+mxebhO2lFC3nRREtb3WG5qcfiDN/exLIsp3lK3
-         xFz7RED8N/y9qW0xb80/EStmMJwBnlSlbwEIsV4OYoJSsRdMC1H9wbZVexoP4cjwYKI4
-         QEgV0Z3zEIH/z3/GdPckhig+CPG8oDpCf0iwdhOdnUuFttU4yCGNyFHrRTY1mPGvXH9z
-         Feiw==
-X-Forwarded-Encrypted: i=1; AJvYcCW8zcazvFowMFJnSkxEdmMdcLIYAxRZbMhDO30Jdu7EKmVG+g4zkoGAEnPP1hiCROewMVM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRiFxBFZ9P1+nk/Hrx3ESdbySn3TC8dLZqH677RInfyM7DASq8
-	yxri5kGK8InEPjOjkn9vdHs2uiKSyOQjSRTVhFN9y7ZBa4TBl2x0/nQDU5f+eluJwEN3OIQPtCm
-	tcUSiOTEtdJJtkd05rVwLdBRD1ajwLh8=
-X-Gm-Gg: ATEYQzz15okw7tkdkml6HJY/30gT2/p+En2HrtftTmRUhZqdfsUE1NO7QWyAM4i9nBG
-	zpBTZL53RoNIutvIlCoKTa7+fAO4qVcWDpmm3xsVjNGjJioYwRqJHs/Yxd5m2+AUOmGiUxvtK85
-	87aaRSSAxYWnS01pNmFdcYVJg8YNL+3sah1eH6YVdqBLEU7x/wVhigUYtH/cTl83JeeY34SctAz
-	ZCJiRai/MRyuYAOn2TcCHPNqH28LKmsY8qFGu6IB+402t5oQ5txLM1ty52MWgRQdi3Oqc0IAxkj
-	b/wJvjs1/NBpkEPqBZge/u98q0fCGItH13/iLXx/WAoLtQ4dqw8=
-X-Received: by 2002:a05:600c:a016:b0:485:3fc8:de9c with SMTP id
- 5b1f17b1804b1-486f4426488mr88620025e9.12.1773898540432; Wed, 18 Mar 2026
- 22:35:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NpfvM8O2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oRGGd/jc"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 21D111400220
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:06 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 19 Mar 2026 02:53:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1773903186; x=1773989586; bh=V/HEj01Ob/
+	9diRqnpax/2KM2ZKrEppnCmhi/ZEazyFw=; b=NpfvM8O2InlAx5QFV2pUrt1uzV
+	xamHWgPggC2dyQxtTZ/EgAkbnFdnFuXqGcIEDgJuiGG2k1bp7l0e/SMSa/gXvXoU
+	ZJ6vYWMn4yNdtBh6ZxdIqAF9d1FW1qSMFssC+vBSjLvNxunEYmMwzinSssF2EQNa
+	QqVRygAiPbYvqd+H63olwJuvTb4Rl7J0KQilJugXUaOsHM09lC/jkB1LrTFn/f0y
+	KSbbG2pA4QTdjVwNeIg82+rPbgYo7dFKkF64EK8uTSCI27mpwxGE5hXZE+jSnYjr
+	WvMD7Ktmew4nywjX/Y+yv1sQW/nzCltFFHzyARx+VbYiBe0qAVV+Bwxn+YvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1773903186; x=1773989586; bh=V/HEj01Ob/9diRqnpax/2KM2ZKrE
+	ppnCmhi/ZEazyFw=; b=oRGGd/jcB7kcywmmFhqu2owsPuIaUhawXi7ZncXh5Ueu
+	KA+f8xiEIlMiJB3Me4hrqhOW9Mi0qPw8AU65WF46sgrOdE6N5BMVuYM0yqQNzmkg
+	oD2+Al6FI+8l/qkolDxX8P8N+XSDDIaBS2tYEMrIzda0L5CLtl3+hP5f5o//0ztw
+	pY+oiwZOc+obcuj9hst72PNcoW9WVI8//4FpJMcSerh8wCOuViNqtqQ1Hj88c1ns
+	je8HMEYkx/Z7f5sZDCKOuFuPCBB/SIFqiNLbs7nwPfnQBs/5yovLZnyAhwxFrHqk
+	4JF/FsEs8yXI5NMY4iP6pOnWf0RebV9n+xADMQiQCw==
+X-ME-Sender: <xms:UZ27aRiHM5I7dhjPYuY8LSvK1OIr3E_Si-qAGPKNKEst3-Z6dm5tUQ>
+    <xme:UZ27ac8pEIzAgKIWqzc177ovxr3YJ1zvxUxg19xd4F9brJuGupmbOgQqt24Gz7MGB
+    lvweilzgnq706upKLt_Ihu2703u34L0diPkDCL6hGvo6LMdk3jNog>
+X-ME-Received: <xmr:UZ27aWsyaLEqSbxWMsoKhmGPbzxW2t3CMhaycKgfHqDeicMufrGYb7pqzvVo3MotBLC_GSwLkRg_uXeBmKrBnT1FQJUfI5nUSjr_DAAqW334>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeefkeelvdfggfdufefhhfdugfelhfefleehueeftdekgfffffevtdegudevteeh
+    ieenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
+    ohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:UZ27abYaw9NTqX5UJlu_y9djW3_2uhq_sD2LiSAhXXl2F-6mO_CKaQ>
+    <xmx:UZ27aerY_ogqxtHpPmKY4yR-Hqo-zOHkjEAbErdM743q1UF7_VS23A>
+    <xmx:UZ27aY-Ex_A2wGK6ghQvyVJAZdYFHcA4RG-kdtH9RXV-V0828ieK_w>
+    <xmx:UZ27aV_03godirnWnOEQ8uacCrLMY5zbXMvGOyW8YynxPm4-5Tjb4Q>
+    <xmx:Up27aaiDKwcRRqBVxS6WtQrTzIvm2VF9BrdgQpm9HJ-sWyZ07U5iAJsA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:05 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id daf97c58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 19 Mar 2026 06:53:03 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/14] odb: generic object name handling
+Date: Thu, 19 Mar 2026 07:52:58 +0100
+Message-Id: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2071.git.1773857555312.gitgitgadget@gmail.com>
- <pull.2071.v2.git.1773864455956.gitgitgadget@gmail.com> <xmqqtsucq4l2.fsf@gitster.g>
- <CAP6n+1Uj6sd75ENFY8=7NtcOUehTjY86YQV9YOWgdOqfmFHYPw@mail.gmail.com>
-In-Reply-To: <CAP6n+1Uj6sd75ENFY8=7NtcOUehTjY86YQV9YOWgdOqfmFHYPw@mail.gmail.com>
-From: Aditya Indora <adityabnw07@gmail.com>
-Date: Thu, 19 Mar 2026 11:05:29 +0530
-X-Gm-Features: AaiRm53ALgZOYzaMf-ExFh1T7EYO0uTivEv6trU_mbyMAuPUvg9iu6yWCPIhxic
-Message-ID: <CAP6n+1U9UHp8B_DXLJu6d1tsSo1qCuKXdH0tQjXXj9wp01iHtA@mail.gmail.com>
-Subject: Re: [PATCH v2] t2107: modernize path existence check
-To: Junio C Hamano <gitster@pobox.com>
-Cc: QUANTUM via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEqdu2kC/x3MQQqEMAxA0atI1hNoow7iVWQWTY0aBqw0KELx7
+ lNm+RfvFzDJKgZjUyDLpaZpr+FfDcQt7KugzrWBHL1d61vkDo+vYZoZLZ05CgbmKjEMXew9EXE
+ MUPmRZdH7v54+z/MDD0PVEWoAAAA=
+X-Change-ID: 20260313-b4-pks-odb-source-abbrev-a84c51222bca
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.3
 
-> On Thu, 19 Mar, 2026, 1:43=E2=80=AFam Junio C Hamano, <gitster@pobox.com>=
- wrote:
->>
->> So we've seen you identify yourself as quantum, aditya, and aditya
->> indora; which one do you want to be known as to this community?.
+Hi,
 
-quantum is just my github username inspired from steins gate anime, my
-first name is aditya and last name is indora , i want to be known as
-aditya to this community .
+this patch series refactors handling of object names to become pluggable
+and thus generic. This includes:
+
+  - Disambiguation of object names with a common prefix. This is
+    required to list candidate objects in case the user has passed a
+    non-unique prefix.
+
+  - Abbreviating an object ID to the shortest prefix required while
+    staying unique.
+
+The logic to compute these operations is specific to the backend, but
+not generic. This patch series fixes that by moving the functionality
+into the respective backends.
+
+This patch series may feel somewhat unexiting, but it's not. Especially
+abbreviating object IDs is done in lots of places, so this functionality
+is overall quite critical. So starting with this series, it is now
+possible to do all kinds of local work with an alternative backend:
+git-commit(1), git-log(1), git-rev-parse(1), git-merge(1) and many other
+commands now work as expected. My MongoDB proof of concept [1] only
+requires two commits (the object format extension) on top. And no, I
+don't endorse MongoDB or propose it as a future potential backend. It
+simply had a good C API that was easy to use.
+
+Of course, other functionality, especially everything that involves
+packfiles, doesn't yet work.
+
+This patch series is built on top of ca1db8a0f7 (The 17th batch,
+2026-03-16) with ps/object-counting at 6801ffd37d (odb: introduce
+generic object counting, 2026-03-12) merged into it.
+
+Thanks!
+
+Patrick
+
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/454
+
+---
+Patrick Steinhardt (14):
+      oidtree: modernize the code a bit
+      oidtree: extend iteration to allow for arbitrary return codes
+      odb: introduce `struct odb_for_each_object_options`
+      object-name: move logic to iterate through loose prefixed objects
+      object-name: move logic to iterate through packed prefixed objects
+      object-name: extract function to parse object ID prefixes
+      object-name: backend-generic `repo_collect_ambiguous()`
+      object-name: backend-generic `get_short_oid()`
+      object-name: merge `update_candidates()` and `match_prefix()`
+      object-name: abbreviate loose object names without `disambiguate_state`
+      object-name: simplify computing common prefixes
+      object-name: move logic to compute loose abbreviation length
+      object-file: move logic to compute packed abbreviation length
+      odb: introduce generic `odb_find_abbrev_len()`
+
+ builtin/cat-file.c       |   7 +-
+ builtin/pack-objects.c   |  12 +-
+ cbtree.c                 |  21 ++-
+ cbtree.h                 |  11 +-
+ commit-graph.c           |   5 +-
+ hash.c                   |  18 ++
+ hash.h                   |   3 +
+ object-file.c            |  73 +++++++-
+ object-file.h            |  21 ++-
+ object-name.c            | 437 ++++++++---------------------------------------
+ odb.c                    |  99 ++++++++++-
+ odb.h                    |  39 +++++
+ odb/source-files.c       |  33 +++-
+ odb/source.h             |  30 +++-
+ oidtree.c                |  65 +++----
+ oidtree.h                |  48 +++++-
+ packfile.c               | 297 +++++++++++++++++++++++++++++++-
+ packfile.h               |   7 +-
+ t/unit-tests/u-oidtree.c |  18 +-
+ 19 files changed, 774 insertions(+), 470 deletions(-)
+
+
+---
+base-commit: b052aca69d64d2d8e28e7ce97dcb1beb3d94515a
+change-id: 20260313-b4-pks-odb-source-abbrev-a84c51222bca
+
