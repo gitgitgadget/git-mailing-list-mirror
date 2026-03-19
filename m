@@ -1,79 +1,79 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFD2379960
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF8F38B15C
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 06:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773903197; cv=none; b=q513oc5Z7mD5E0YlU0eU3l1iEJ1Oa2n1OSDvlgGIKDO1TpSiiS7ai6vA/5Sj70HB25yVNO/VSqjK/ldjSVqKQLklOsgE5tpt8C71YQFUYTy5NJdfpmvkQF5w8KYFM8XbvycqBSdEwUeAPqSqTcZNMfSqLWFpXmHdSm5G9NUUNXY=
+	t=1773903200; cv=none; b=Lfc0ErkFAM0PNWGhyraBoNbYRh6NMVBqklxXcj/Gn47P87oSSy5qWQaPNzZHgIo6BaAf7dvrBVRFZWsFrLGyT/gF+4CHwEZvjKRICIUDFcfCeA9bZtRhicfgGzHjCcFUuOM9d3mrfjjlFszcns6OwMXxrE1x2mtnBbRrfxpql0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773903197; c=relaxed/simple;
-	bh=9+F56kvMUii5eq+aFiH463oLakMNyxu3JaOSLIPE+Ww=;
+	s=arc-20240116; t=1773903200; c=relaxed/simple;
+	bh=vsMuQGbv1CHvSgfedoQqMWid2Wxkxv29xDlmxLD3DEA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N8Q4CIIqWFZncYVUQ5wsTwUJel/0YvUat624fnCZgyDX5WYE9jqKbJk6WcE9ca6dlvsD6Os070zWvpWVjTzs/hRJ15Kwx4hfjYL9sv3EhFXvQ/AatqoDncTCedm26+beWK2EZ/2ZLEAuFh+5eetTj8piRNjnXkTVEApG6WjMmc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T/vAamCm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lull1LSR; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=OTc6kKzkmifMkZvi0tcgzFpdS/QIUMmKdh5PoPytVNrijNZEiXSSSrlpry8LTNTQY53GDHGjFy2RXJD3iIoWbyxi+PRUwNiIFPDaliIW0WlX1FttldfGWnHyTdmxoMA2ZuAfz6w5JyUCpVwtDWgvTfMvlXhAzzQi5o7aHLfgGNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WF73gy6f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2pIm2B2P; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T/vAamCm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lull1LSR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WF73gy6f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2pIm2B2P"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2D3D8EC0222
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:15 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id D874DEC026F
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:17 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 19 Mar 2026 02:53:15 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 19 Mar 2026 02:53:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773903195;
-	 x=1773989595; bh=NOq8VgXPoZAIpHx9arw/ru1GY1HKKsiQsMNyltMMTtk=; b=
-	T/vAamCmqqhOfFoXpk+BRfUJz1WnELOijWxDrO6EvJ9g5HpsGG4dgapw5QzK2uD+
-	AAYJx2noctyh6ghGvWSjmYD1OuLMxx0u+1rGzQNCo9cIQSmICI+ALhrYaejQZNuI
-	VBoZmoTWeLvWHaVJOYPFCER/cT7J7QyDkrFkP0D3TfMHkNpUdBWwi13CoengI5qx
-	vn/tCo6fOYOGUZg7HgbZKVVVK42iukdFKnD6IrYqRUOBFykR+YW2mtijLMayMXOg
-	wR1DMRDrPERXG8SKSIxOxKWoAnSbnZ27AHg4PmW5D0wY6ff+3iXTngsNCkkgud0R
-	YX3EXfbRE5yEIAz337ZHPQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773903197;
+	 x=1773989597; bh=HkxMB1qOh26B2J9PNIl2hVIp9sxO1tZNiBXNm2RXnW0=; b=
+	WF73gy6fDUCfpDgCo4Sdoa2GFkrgGP5yPTjjSQN09fXZglpe66Vx26cYMDC11Ttp
+	ru2jL2ijOStRQi5VQ6u/ApBoT5qinUqnT7Pn7Lvwp53hsF1cVbVI3U9bhO+8tf81
+	CJGaJ91sVS1i8IoYqcGBECTn0SC1aQeXEgUZ0B9wlLlefqB0z30b37wcl8BJjg7i
+	QCMb5n5fi2Po0JmX+Lbjz6BiA4L3xSs2/eLuMq8PkaaS85/OZG8aJXeYN/EHblvp
+	q3Cnrg6Ky4doVd6fPMXBYqhdA4Mf+TwnMRoX5S4qkJ//ldzemAnmSUG7g7tXu8WH
+	npABnJtcLgvqu+npGmzsJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773903195; x=
-	1773989595; bh=NOq8VgXPoZAIpHx9arw/ru1GY1HKKsiQsMNyltMMTtk=; b=L
-	ull1LSRJq/AJxe6VcCNQL/q0VXVLoUc9M0q1SQaq91nzgTEB/zsaU1ahMaqQQJP3
-	C/Ps2KhaDFD64tSWPaQ2I4QRVfzbYU+N74UUlJ9wCiWp4yMJo42sXH9cWwR23EJ8
-	Rw/PAtaGMO1fXHy2m8l2FLsEo6KLI2MYi5QOvUBMHyxPLi4JDZ7SVQhaac8SRTTf
-	qntjDUHC0iYcaKA6U+bkTfFUWfso0b6ehHRHEmBCjf7rJpR54pjcG13dFejCNIIh
-	0TjAVnXVb8qZazYbBCW5WujIg86v5lf1tDdCwS3L+fNKzc2+GXRH3HnkJD0vs1gs
-	+5uaQP4ETC/Ty5Bl451zQ==
-X-ME-Sender: <xms:W527aSvHfOnK8hRbZ3_dG3EaiEAT2uHRDxrVzzNCtMr5AEljvW-gKw>
-    <xme:W527aeaDVRHDsjEmHFbj-2Xw_Xip0L4EXdZ5Cy9B892l52NMmeg4iFTVYSsKz1qK_
-    FzcpuL_JmAMBYnOrsTmpmPCMLhCvO8TzucWt2IoIXKpF910VVEE6A>
-X-ME-Received: <xmr:W527aTY4FL76_Fp86Vqhb6-vB8dQRycbdWyBGVz8Y3LQz_kq6mN3yzOtKl8nZwLHaorGQ49DtZ9mZ3OkfaWAWcmAnipuqfvpHDUjxlAjIwns>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773903197; x=
+	1773989597; bh=HkxMB1qOh26B2J9PNIl2hVIp9sxO1tZNiBXNm2RXnW0=; b=2
+	pIm2B2P5HwQzfg1ySZMDvobM3z+nt746lZNiUXARbxq/7fJAUAYDFrunX3Wj02vY
+	cEBnHNqKZQuNdaC3MGroccQqbuJTlvDQETIh2VlQ/AuKqQ3yiQ6nzmV9n5WzK9E3
+	ZYkRgZdSzy+r82gzWkTqL+AZod8Rn4Q01zVil/rPBIC3pZOsy4JNWUPFvemOUNxq
+	vglvaURKiuB7+ToC1+OQtwkdl9TtLtpHDO8vX4LqOf/6lMxAYFUmabQwTrBkPW2n
+	FQudMMo95ylUS47QP+hREgnm/IajrEtYWf95KiFHyzk1rkrQuutJl0cQAmnCMPRr
+	wGMSE1hk9ZO5MYlt0xqIA==
+X-ME-Sender: <xms:XZ27aehupADjoMqet4Gwn5rwByH2Rl4rSnKeC2QQe6E-iKyDCDKmyw>
+    <xme:XZ27aV-9JxaZS6ocxNppJ9kVxSSrUTOCs_ljEZlRGawRJhn0FOAVKs0Vqour9iOdL
+    DS4M9HNjZ-tIcJGElauhQT8ybo_FMZnU6YgmXTGPKEl6cilhoVn2g>
+X-ME-Received: <xmr:XZ27abtmxZTl5qwQ1Hw3uedbA2zbL0mbcZOZaw2_JmFy8B19J2AQPmKQm73f9jR5Isi0Qj7FsAv2vYlL4DUw59ll1zFiVZMqb3DP3EO-URo2>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeifeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
     dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepfeenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:W527aSX0WSe6MVV8HIUATDcYSJJyW89-ohzLueV3wfPbyRwF9j4oIw>
-    <xmx:W527aS0n51sPUzXPiLOBiSnntW1dw_rdcMrn8ygUFQkdXTi2nIYTCA>
-    <xmx:W527aRYJxbN4Lm3b-rEG5SuUIVZYmg2G9jj8QKzPBsAKD5SBEo5AMg>
-    <xmx:W527adqrVRS0RiSmfVmUYSNlhtS0QU7_0mfchAbABoNpQDD5aMkmbg>
-    <xmx:W527adeWd5Te4WnmF14BHK3IXaEiSE-3bMBIf2z7UjL1xPLvS8qgmSBp>
+X-ME-Proxy: <xmx:XZ27acZAMvlWWmIUdfsvP5nbPb-us9RO_fFEMwrt6VHSPEnuZelh5g>
+    <xmx:XZ27abptREykaCDI7nvrcXa0_2n65RE4Yrn5dpn4mSHYRur3b8UQSQ>
+    <xmx:XZ27aR_B2ig55n4BXq-Acj6FrPZnM2n5cbdXzXDFt8IkoIpiL4b2Ow>
+    <xmx:XZ27aa8dOeilwokjML6U_CmjF4Fi2XPl7ULHzJmPUcrwcJwBO0TNXg>
+    <xmx:XZ27abhN8KUaKE4rrHpquBfRCUWhXbIMHaqJR0YiroiFVJsi2zuDasa->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:14 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 19 Mar 2026 02:53:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d016d6c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id db5a030a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 19 Mar 2026 06:53:14 +0000 (UTC)
+	Thu, 19 Mar 2026 06:53:16 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 19 Mar 2026 07:53:02 +0100
-Subject: [PATCH 04/14] object-name: move logic to iterate through loose
+Date: Thu, 19 Mar 2026 07:53:03 +0100
+Subject: [PATCH 05/14] object-name: move logic to iterate through packed
  prefixed objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,171 +83,338 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260319-b4-pks-odb-source-abbrev-v1-4-5ddebad292b0@pks.im>
+Message-Id: <20260319-b4-pks-odb-source-abbrev-v1-5-5ddebad292b0@pks.im>
 References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
 In-Reply-To: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-The logic to iterate through loose objects that have a certain prefix is
-currently hosted in "object-name.c". This logic reaches into specifics
-of the loose object source, so it breaks once a different backend is
-used for the object storage.
-
-Move the logic to iterate through loose objects with a prefix into
-"object-file.c". This is done by extending the for-each-object options
-to support an optional prefix that is then honored by the loose source.
-Naturally, we'll also have this support in the packfile store. This is
-done in the next commit.
-
-Furthermore, there are no users of the loose cache outside of
-"object-file.c" anymore. As such, convert `odb_source_loose_cache()` to
-have file scope.
+Similar to the preceding commit, move the logic to iterate through
+objects that have a given prefix into "packfile.c".
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 29 +++++++++++++++++++++++++++--
- object-file.h |  7 -------
- object-name.c | 10 ++++++----
- odb.h         |  7 +++++++
- 4 files changed, 40 insertions(+), 13 deletions(-)
+ object-name.c |  94 +++----------------------------
+ packfile.c    | 174 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 181 insertions(+), 87 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index ddcc8e81b4..8a9e68a768 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -33,6 +33,9 @@
- /* The maximum size for an object header. */
- #define MAX_HEADER_LEN 32
- 
-+static struct oidtree *odb_source_loose_cache(struct odb_source *source,
-+					      const struct object_id *oid);
-+
- static int get_conv_flags(unsigned flags)
- {
- 	if (flags & INDEX_RENORMALIZE)
-@@ -1845,6 +1848,23 @@ static int for_each_object_wrapper_cb(const struct object_id *oid,
- 	}
- }
- 
-+static int for_each_prefixed_object_wrapper_cb(const struct object_id *oid,
-+					       void *cb_data)
-+{
-+	struct for_each_object_wrapper_data *data = cb_data;
-+	if (data->request) {
-+		struct object_info oi = *data->request;
-+
-+		if (odb_source_loose_read_object_info(data->source,
-+						      oid, &oi, 0) < 0)
-+			return -1;
-+
-+		return data->cb(oid, &oi, data->cb_data);
-+	} else {
-+		return data->cb(oid, NULL, data->cb_data);
-+	}
-+}
-+
- int odb_source_loose_for_each_object(struct odb_source *source,
- 				     const struct object_info *request,
- 				     odb_for_each_object_cb cb,
-@@ -1864,6 +1884,11 @@ int odb_source_loose_for_each_object(struct odb_source *source,
- 	if ((opts->flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY) && !source->local)
- 		return 0;
- 
-+	if (opts->prefix)
-+		return oidtree_each(odb_source_loose_cache(source, opts->prefix),
-+				    opts->prefix, opts->prefix_hex_len,
-+				    for_each_prefixed_object_wrapper_cb, &data);
-+
- 	return for_each_loose_file_in_source(source, for_each_object_wrapper_cb,
- 					     NULL, NULL, &data);
- }
-@@ -1934,8 +1959,8 @@ static int append_loose_object(const struct object_id *oid,
- 	return 0;
- }
- 
--struct oidtree *odb_source_loose_cache(struct odb_source *source,
--				       const struct object_id *oid)
-+static struct oidtree *odb_source_loose_cache(struct odb_source *source,
-+					      const struct object_id *oid)
- {
- 	struct odb_source_files *files = odb_source_files_downcast(source);
- 	int subdir_nr = oid->hash[0];
-diff --git a/object-file.h b/object-file.h
-index 46dfa7b632..f11ad58f6c 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -74,13 +74,6 @@ int odb_source_loose_write_stream(struct odb_source *source,
- 				  struct odb_write_stream *stream, size_t len,
- 				  struct object_id *oid);
- 
--/*
-- * Populate and return the loose object cache array corresponding to the
-- * given object ID.
-- */
--struct oidtree *odb_source_loose_cache(struct odb_source *source,
--				       const struct object_id *oid);
--
- /*
-  * Put in `buf` the name of the file in the local object database that
-  * would be used to store a loose object with the specified oid.
 diff --git a/object-name.c b/object-name.c
-index a24a1b48e1..929a68dbd0 100644
+index 929a68dbd0..ff0de06ff9 100644
 --- a/object-name.c
 +++ b/object-name.c
-@@ -16,7 +16,6 @@
- #include "remote.h"
- #include "dir.h"
- #include "oid-array.h"
--#include "oidtree.h"
- #include "packfile.h"
- #include "pretty.h"
- #include "object-file.h"
-@@ -103,7 +102,7 @@ static void update_candidates(struct disambiguate_state *ds, const struct object
+@@ -100,8 +100,6 @@ static void update_candidates(struct disambiguate_state *ds, const struct object
+ 	/* otherwise, current can be discarded and candidate is still good */
+ }
  
- static int match_hash(unsigned, const unsigned char *, const unsigned char *);
- 
--static int match_prefix(const struct object_id *oid, void *arg)
-+static int match_prefix(const struct object_id *oid, struct object_info *oi UNUSED, void *arg)
+-static int match_hash(unsigned, const unsigned char *, const unsigned char *);
+-
+ static int match_prefix(const struct object_id *oid, struct object_info *oi UNUSED, void *arg)
  {
  	struct disambiguate_state *ds = arg;
- 	/* no need to call match_hash, oidtree_each did prefix match */
-@@ -113,11 +112,14 @@ static int match_prefix(const struct object_id *oid, void *arg)
+@@ -122,103 +120,25 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+ 		odb_source_loose_for_each_object(source, NULL, match_prefix, ds, &opts);
+ }
  
- static void find_short_object_filename(struct disambiguate_state *ds)
+-static int match_hash(unsigned len, const unsigned char *a, const unsigned char *b)
+-{
+-	do {
+-		if (*a != *b)
+-			return 0;
+-		a++;
+-		b++;
+-		len -= 2;
+-	} while (len > 1);
+-	if (len)
+-		if ((*a ^ *b) & 0xf0)
+-			return 0;
+-	return 1;
+-}
+-
+-static void unique_in_midx(struct multi_pack_index *m,
+-			   struct disambiguate_state *ds)
+-{
+-	for (; m; m = m->base_midx) {
+-		uint32_t num, i, first = 0;
+-		const struct object_id *current = NULL;
+-		int len = ds->len > ds->repo->hash_algo->hexsz ?
+-			ds->repo->hash_algo->hexsz : ds->len;
+-
+-		if (!m->num_objects)
+-			continue;
+-
+-		num = m->num_objects + m->num_objects_in_base;
+-
+-		bsearch_one_midx(&ds->bin_pfx, m, &first);
+-
+-		/*
+-		 * At this point, "first" is the location of the lowest
+-		 * object with an object name that could match
+-		 * "bin_pfx".  See if we have 0, 1 or more objects that
+-		 * actually match(es).
+-		 */
+-		for (i = first; i < num && !ds->ambiguous; i++) {
+-			struct object_id oid;
+-			current = nth_midxed_object_oid(&oid, m, i);
+-			if (!match_hash(len, ds->bin_pfx.hash, current->hash))
+-				break;
+-			update_candidates(ds, current);
+-		}
+-	}
+-}
+-
+-static void unique_in_pack(struct packed_git *p,
+-			   struct disambiguate_state *ds)
+-{
+-	uint32_t num, i, first = 0;
+-	int len = ds->len > ds->repo->hash_algo->hexsz ?
+-		ds->repo->hash_algo->hexsz : ds->len;
+-
+-	if (p->multi_pack_index)
+-		return;
+-
+-	if (open_pack_index(p) || !p->num_objects)
+-		return;
+-
+-	num = p->num_objects;
+-	bsearch_pack(&ds->bin_pfx, p, &first);
+-
+-	/*
+-	 * At this point, "first" is the location of the lowest object
+-	 * with an object name that could match "bin_pfx".  See if we have
+-	 * 0, 1 or more objects that actually match(es).
+-	 */
+-	for (i = first; i < num && !ds->ambiguous; i++) {
+-		struct object_id oid;
+-		nth_packed_object_id(&oid, p, i);
+-		if (!match_hash(len, ds->bin_pfx.hash, oid.hash))
+-			break;
+-		update_candidates(ds, &oid);
+-	}
+-}
+-
+ static void find_short_packed_object(struct disambiguate_state *ds)
  {
 +	struct odb_for_each_object_options opts = {
 +		.prefix = &ds->bin_pfx,
 +		.prefix_hex_len = ds->len,
 +	};
  	struct odb_source *source;
+-	struct packed_git *p;
  
- 	for (source = ds->repo->objects->sources; source && !ds->ambiguous; source = source->next)
--		oidtree_each(odb_source_loose_cache(source, &ds->bin_pfx),
--				&ds->bin_pfx, ds->len, match_prefix, ds);
-+		odb_source_loose_for_each_object(source, NULL, match_prefix, ds, &opts);
+ 	/* Skip, unless oids from the storage hash algorithm are wanted */
+ 	if (ds->bin_pfx.algo && (&hash_algos[ds->bin_pfx.algo] != ds->repo->hash_algo))
+ 		return;
+ 
+ 	odb_prepare_alternates(ds->repo->objects);
+-	for (source = ds->repo->objects->sources; source && !ds->ambiguous; source = source->next) {
+-		struct multi_pack_index *m = get_multi_pack_index(source);
+-		if (m)
+-			unique_in_midx(m, ds);
+-	}
++	for (source = ds->repo->objects->sources; source; source = source->next) {
++		struct odb_source_files *files = odb_source_files_downcast(source);
+ 
+-	repo_for_each_pack(ds->repo, p) {
++		packfile_store_for_each_object(files->packed, NULL, match_prefix, ds, &opts);
+ 		if (ds->ambiguous)
+ 			break;
+-		unique_in_pack(p, ds);
+ 	}
  }
  
- static int match_hash(unsigned len, const unsigned char *a, const unsigned char *b)
-diff --git a/odb.h b/odb.h
-index a19a8bb50d..e80fd8f7ab 100644
---- a/odb.h
-+++ b/odb.h
-@@ -488,6 +488,13 @@ typedef int (*odb_for_each_object_cb)(const struct object_id *oid,
- struct odb_for_each_object_options {
- 	/* A bitfield of `odb_for_each_object_flags`. */
- 	enum odb_for_each_object_flags flags;
+diff --git a/packfile.c b/packfile.c
+index a6f3d2035d..2539a371c1 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2371,6 +2371,177 @@ static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
+ 	}
+ }
+ 
++static int match_hash(unsigned len, const unsigned char *a, const unsigned char *b)
++{
++	do {
++		if (*a != *b)
++			return 0;
++		a++;
++		b++;
++		len -= 2;
++	} while (len > 1);
++	if (len)
++		if ((*a ^ *b) & 0xf0)
++			return 0;
++	return 1;
++}
++
++static int for_each_prefixed_object_in_midx(
++	struct packfile_store *store,
++	struct multi_pack_index *m,
++	const struct odb_for_each_object_options *opts,
++	struct packfile_store_for_each_object_wrapper_data *data)
++{
++	int ret;
++
++	for (; m; m = m->base_midx) {
++		uint32_t num, i, first = 0;
++		int len = opts->prefix_hex_len > m->source->odb->repo->hash_algo->hexsz ?
++			m->source->odb->repo->hash_algo->hexsz : opts->prefix_hex_len;
++
++		if (!m->num_objects)
++			continue;
++
++		num = m->num_objects + m->num_objects_in_base;
++
++		bsearch_one_midx(opts->prefix, m, &first);
++
++		/*
++		 * At this point, "first" is the location of the lowest
++		 * object with an object name that could match "opts->prefix".
++		 * See if we have 0, 1 or more objects that actually match(es).
++		 */
++		for (i = first; i < num; i++) {
++			const struct object_id *current = NULL;
++			struct object_id oid;
++
++			current = nth_midxed_object_oid(&oid, m, i);
++
++			if (!match_hash(len, opts->prefix->hash, current->hash))
++				break;
++
++			if (data->request) {
++				struct object_info oi = *data->request;
++
++				ret = packfile_store_read_object_info(store, current,
++								      &oi, 0);
++				if (ret)
++					goto out;
++
++				ret = data->cb(&oid, &oi, data->cb_data);
++				if (ret)
++					goto out;
++			} else {
++				ret = data->cb(&oid, NULL, data->cb_data);
++				if (ret)
++					goto out;
++			}
++		}
++	}
++
++	ret = 0;
++
++out:
++	return ret;
++}
++
++static int for_each_prefixed_object_in_pack(
++	struct packfile_store *store,
++	struct packed_git *p,
++	const struct odb_for_each_object_options *opts,
++	struct packfile_store_for_each_object_wrapper_data *data)
++{
++	uint32_t num, i, first = 0;
++	int len = opts->prefix_hex_len > p->repo->hash_algo->hexsz ?
++		p->repo->hash_algo->hexsz : opts->prefix_hex_len;
++	int ret;
++
++	num = p->num_objects;
++	bsearch_pack(opts->prefix, p, &first);
 +
 +	/*
-+	 * If set, only iterate through objects whose first `prefix_hex_len`
-+	 * hex characters matches the given prefix.
++	 * At this point, "first" is the location of the lowest object
++	 * with an object name that could match "bin_pfx".  See if we have
++	 * 0, 1 or more objects that actually match(es).
 +	 */
-+	const struct object_id *prefix;
-+	size_t prefix_hex_len;
- };
++	for (i = first; i < num; i++) {
++		struct object_id oid;
++
++		nth_packed_object_id(&oid, p, i);
++		if (!match_hash(len, opts->prefix->hash, oid.hash))
++			break;
++
++		if (data->request) {
++			struct object_info oi = *data->request;
++
++			ret = packfile_store_read_object_info(store, &oid, &oi, 0);
++			if (ret)
++				goto out;
++
++			ret = data->cb(&oid, &oi, data->cb_data);
++			if (ret)
++				goto out;
++		} else {
++			ret = data->cb(&oid, NULL, data->cb_data);
++			if (ret)
++				goto out;
++		}
++	}
++
++	ret = 0;
++
++out:
++	return ret;
++}
++
++static int packfile_store_for_each_prefixed_object(
++	struct packfile_store *store,
++	const struct odb_for_each_object_options *opts,
++	struct packfile_store_for_each_object_wrapper_data *data)
++{
++	struct packfile_list_entry *e;
++	struct multi_pack_index *m;
++	bool pack_errors = false;
++	int ret;
++
++	if (opts->flags)
++		BUG("flags unsupported");
++
++	store->skip_mru_updates = true;
++
++	m = get_multi_pack_index(store->source);
++	if (m) {
++		ret = for_each_prefixed_object_in_midx(store, m, opts, data);
++		if (ret)
++			goto out;
++	}
++
++	for (e = packfile_store_get_packs(store); e; e = e->next) {
++		if (e->pack->multi_pack_index)
++			continue;
++
++		if (open_pack_index(e->pack)) {
++			pack_errors = true;
++			continue;
++		}
++
++		if (!e->pack->num_objects)
++			continue;
++
++		ret = for_each_prefixed_object_in_pack(store, e->pack, opts, data);
++		if (ret)
++			goto out;
++	}
++
++	ret = 0;
++
++out:
++	store->skip_mru_updates = false;
++	if (!ret && pack_errors)
++		ret = -1;
++	return ret;
++}
++
+ int packfile_store_for_each_object(struct packfile_store *store,
+ 				   const struct object_info *request,
+ 				   odb_for_each_object_cb cb,
+@@ -2386,6 +2557,9 @@ int packfile_store_for_each_object(struct packfile_store *store,
+ 	struct packfile_list_entry *e;
+ 	int pack_errors = 0, ret;
  
- /*
++	if (opts->prefix)
++		return packfile_store_for_each_prefixed_object(store, opts, &data);
++
+ 	store->skip_mru_updates = true;
+ 
+ 	for (e = packfile_store_get_packs(store); e; e = e->next) {
 
 -- 
 2.53.0.1055.ga2ffed1127.dirty
