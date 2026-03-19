@@ -1,21 +1,21 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2BA40756D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE920407571
 	for <git@vger.kernel.org>; Thu, 19 Mar 2026 22:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773959930; cv=none; b=CCp0CQq0umg7BOWV0pV0y8hEZfVv1FT7IHKDxBRLF62qzC+UYfNLHW4g8lkfG5q7jl9NgQE29/3MLF7dHG74h3CSlnm9fZL/x3Lluq+AL0sSsC3s6NSsGjJQHhw1STJlTzr47B0ZwOBHJiGyGyVk9yS3ZMX3sQ9BQ2qPcCkMteY=
+	t=1773959930; cv=none; b=VB9gYJJKM6UxqG8XLVJGev6sv7n0j7PR5AFs+EqD1MzGJW249MYh8o+dZL7QaXSh6dE8xtz2sZ+hfPlRs2ArpPSoLruqrWj2PxTYp2934pg5H+BcslUwML2HOyFPB0v/jY4YwV1qGHP+6o5MXvVp7mJJgPay2DMoBJOLlaBj5pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773959930; c=relaxed/simple;
-	bh=TmNhCMYwRhbrvn+j6FFmfoiZi9M0z1i3Kq7p2jEDaXw=;
+	bh=Q7kpg9KkftThS4E4NAwTRLENcsJGBvdjfLJDwJNGp9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbWM4q2WbSNY9FoFqqMbrJNAs5DKAnVthnp7F4CVwA/sTiy7HPNNw/l4d4KM2MmNg97r4Ns/UaM+oF9jEewJIYkIFTycUfQMjFQ8ar1tcWKJo03jNdU3OO627RNUvhVAn9mfwESIy/WfHGlUs3STzlHwHkCntqETtuN24euRnrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=g8rxUk/E; arc=none smtp.client-ip=195.231.85.169
+	 MIME-Version; b=N55ZjvnbK/UnRhGIKfkoJHM29IhE2+0d9UKoUSwRBmX0ebGtgFCfNmDPIyDzhMIq4jDANQCHAqWa61mPcqsYNu/cAadGM9kx5pJjitEQhJctglDuZ0CCJjoHNOMHmARcpCdcIZiiUiL1liaV75v3AME3uyy+KyCEyjrqnlYhdg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=CXfIqLFc; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="g8rxUk/E"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="CXfIqLFc"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
 	s=dkim; t=1773959920;
@@ -23,20 +23,20 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=JywgW+Bpg1U98MnA0QdtCAk6qQQ73Jm97agrnPkzDZM=;
-	b=g8rxUk/EQIQWV/5NMeurssMeyS8PBsX1B9p8zVadAwEd7XXoIG+fOtNecsqNoylhUOWJRv
-	1+pMOwUN5QZ78Xtheb0MrawrkNhCkGg+/cPEzmU/YpiSv613q0DwbWSVn17KXWUBQe5KuP
-	MNyEc6MmgJ7aLy+jWpWWAXg0XjP+0L8LqF8b81Y4lDAZUo0aCeEGGqLD1GuIaYo5K/OWzj
-	JXlB6b5VplF8We6dGbX3G3yZr1SUwE/i72qQ9Yg9ll4pdi8OcxMSDUj8+2HBrPSAn0JeTm
-	HHwSGjHQm73k9NgCHC4xp80WwrnUEc4mtKwcbXAyQuwkRN5D51lX7p++H7R2PQ==
+	bh=iAb/ZnWGf7lOx1pudPVgwbPMajjbYCc67Ca/utf61nQ=;
+	b=CXfIqLFcpVjGZBfn7dT6E12djZABgMQB1PjZ6zAMs0IM7KpjTe5I1J1b1HubRBDaC9RYUA
+	JghF9zH3wBgyj3QUXiZ/rycygGxnrt4b+xULMbI3ikl9gmgmOfIXCFmreHFooSrc5od1ON
+	ISg9QF2DXIneO2V9pJyVe8/WPFkK273K2MmMW6z11u9ogkkZfPBJtcVIvOe8mVQYgHJLX8
+	pHg5zABkLYIvdsU0HDWIcbCcE5Ru/kRztN3yatwFJtWFWF+TUB7shEbgZF436B1PqqZv3H
+	GipjPgny6X9JVUoCtepbYXESxAsfBbbP/vQrVTVR7pdzocn9qk6OGgcRDQhP3A==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
 Cc: Mirko Faina <mroik@delayed.space>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v2 5/8] format.commitListFormat: strip meaning from empty
-Date: Thu, 19 Mar 2026 23:38:15 +0100
-Message-ID: <3cb0a0a088f3ca7d4a1d8f97e428cb94b0901968.1773959395.git.mroik@delayed.space>
+Subject: [PATCH v2 6/8] format-patch: wrap generate_commit_list_cover()
+Date: Thu, 19 Mar 2026 23:38:16 +0100
+Message-ID: <3f547451a22e12ed04969fc0ed73dc1b72c15259.1773959395.git.mroik@delayed.space>
 In-Reply-To: <cover.1773959395.git.mroik@delayed.space>
 References: <cover.1773530191.git.mroik@delayed.space> <cover.1773959395.git.mroik@delayed.space>
 Precedence: bulk
@@ -48,63 +48,56 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Bar: -----
 
-The configuration variable format.commitListFormat allows for an empty
-value. This is unusual and can create issues when interacting with this
-configuration variable through the cli interface.
+While most conventions should not allow for the text lines in commit
+messages to get too long, when they do it could make emails harder to
+read.
 
-Strip meaning to format.commitListFormat with an empty value.
+Teach generate_commit_list_cover() to wrap its commit lines if they are
+too long.
 
 Signed-off-by: Mirko Faina <mroik@delayed.space>
 ---
- builtin/log.c           | 11 +----------
- t/t4014-format-patch.sh | 11 -----------
- 2 files changed, 1 insertion(+), 21 deletions(-)
+ builtin/log.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index a7f129d583..47126f9064 100644
+index 47126f9064..d1765ce4ad 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1055,17 +1055,8 @@ static int git_format_config(const char *var, const char *value,
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.commitlistformat")) {
--		struct strbuf tmp = STRBUF_INIT;
--		strbuf_init(&tmp, 0);
--		if (value)
--			strbuf_addstr(&tmp, value);
--		else
--			strbuf_addstr(&tmp, "log:[%(count)/%(total)] %s");
--
- 		FREE_AND_NULL(cfg->fmt_cover_letter_commit_list);
--		git_config_string(&cfg->fmt_cover_letter_commit_list, var, tmp.buf);
--		strbuf_release(&tmp);
--		return 0;
-+		return git_config_string(&cfg->fmt_cover_letter_commit_list, var, value);
- 	}
- 	if (!strcmp(var, "format.outputdirectory")) {
- 		FREE_AND_NULL(cfg->config_output_directory);
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index d2a775f78d..ca37f40a6a 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -451,17 +451,6 @@ test_expect_success 'cover letter config with count and author' '
- 	test_line_count = 2 result
- '
+@@ -40,6 +40,7 @@
+ #include "progress.h"
+ #include "commit-slab.h"
+ #include "advice.h"
++#include "utf8.h"
  
--test_expect_success 'cover letter config commitlistformat set but no format' '
--	test_when_finished "rm -rf patches result" &&
--	test_when_finished "git config unset format.coverletter" &&
--	test_when_finished "git config unset format.commitlistformat" &&
--	git config set format.coverletter true &&
--	printf "\tcommitlistformat" >> .git/config &&
--	git format-patch -o patches HEAD~2 &&
--	grep -E "^[[[:digit:]]+/[[:digit:]]+] .*" patches/0000-cover-letter.patch >result &&
--	test_line_count = 2 result
--'
--
- test_expect_success 'cover letter config commitlistformat set to shortlog' '
- 	test_when_finished "rm -rf patches result" &&
- 	test_when_finished "git config unset format.coverletter" &&
+ #include "commit-reach.h"
+ #include "range-diff.h"
+@@ -1364,6 +1365,7 @@ static void generate_commit_list_cover(FILE *cover_file, const char *format,
+ 				       struct commit **list, int n)
+ {
+ 	struct strbuf commit_line = STRBUF_INIT;
++	struct strbuf wrapped_line = STRBUF_INIT;
+ 	struct pretty_print_context ctx = {0};
+ 	struct rev_info rev = REV_INFO_INIT;
+ 
+@@ -1373,12 +1375,16 @@ static void generate_commit_list_cover(FILE *cover_file, const char *format,
+ 		rev.nr = i;
+ 		repo_format_commit_message(the_repository, list[n - i], format,
+ 				&commit_line, &ctx);
+-		fprintf(cover_file, "%s\n", commit_line.buf);
++		strbuf_add_wrapped_text(&wrapped_line, commit_line.buf, 0, 0,
++					MAIL_DEFAULT_WRAP);
++		fprintf(cover_file, "%s\n", wrapped_line.buf);
+ 		strbuf_reset(&commit_line);
++		strbuf_reset(&wrapped_line);
+ 	}
+ 	fprintf(cover_file, "\n");
+ 
+ 	strbuf_release(&commit_line);
++	strbuf_release(&wrapped_line);
+ }
+ 
+ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
 -- 
 2.53.0.1018.g2bb0e51243
 
