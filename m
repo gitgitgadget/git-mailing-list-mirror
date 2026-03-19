@@ -1,104 +1,119 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B9327EFEE
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 16:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3263806B3
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 16:06:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773936226; cv=none; b=adl4CuC+v2DO2HgXRfckGYb86bpm+OLTtlETuNWnq5KC4bdHEnKMqTssT43UmQ18GiQ41fMy7wXEVIAienO3H3v+FeOS5f1GGyG1GumnOClw1Q1Sea7yYASJIYeLjQnleAx+CMfYE8M3/xxFRJ/uFJRQjJExUj6j6/ZgqgVXpuc=
+	t=1773936371; cv=none; b=UWHrSkK8wPAIhqeQ+aH+d7cB62CiNIBwAinOVhsKRJ47V5XR6yb7NQesXUv49fbT5GlVKMOFd+UF9AkwcN5BejYsKx+EIvNsiCuaXRcsSCZd9JVQuiD9HUeWys2Z+7ie/xGmFNEoCnEySwd88Phf1zCtawHO0t3cgG0/fxCHe4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773936226; c=relaxed/simple;
-	bh=wDlfjBiD+WLzeCVgR7Kq2XBFkFWVW/uSYkyHTynTa1M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cWVpUs0pbVxfN0isF/TuOP/+AVpnZR2Q0ulZVBVAxYacmW4wUx77Bl7sqT7FFwNd5lPkGug7frjrpPRE8VbdgSJAjiRC3ZYgIGrgFN6tdnIGLSNP3d1DUtHP+ThgkfTny2uK494Bm7/Mqq/sX8Y1Vp4qEv0puYp2c5HGK4ZWvsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VPT5Nfok; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773936371; c=relaxed/simple;
+	bh=AOGc681n6XkX8F6p1/Dvcqmb3hkeBoggVi23l21R3ro=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=GQPJJ6SUS/rEr/vUTu2NSNk+0IPM/mhSGkDhTB14gYHItWSuRI0zawtmxFhUQFZ6pIBKL22LrAofnXBXD31OCg7c0G5fh7mYJiYIGQ4o+s5e4e3pHIdtFs4CIcGUj3AVXT83ppddkPYaVDy1i5EFLqeaN/NpwYNrNOY6sbBxIyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DjR8xvlK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kXGzjivB; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VPT5Nfok"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-43b49819938so596765f8f.0
-        for <git@vger.kernel.org>; Thu, 19 Mar 2026 09:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773936223; x=1774541023; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F81intB9d0hqyJ0+5nRSDe6zmTFbaBHACejR093+QL8=;
-        b=VPT5NfokrXUgjNC3Ociy0ZJyZIaA6QxIySmINllIoTCt983cHobmTnwH1qUEvq5Qlo
-         cUGYWQKKQ597to9foBJq5Xl3kp87EH44OJ+syvJ3togSHFDVFJ8BHkJX7JAPRXc617qf
-         IsC9S9E1DREK8Q3gE0iIa+enTsBCkPHdJyXFVLbEpRImwKbdQuVuTIywa5A4iDNiGtU+
-         xzwQl3pWXxl8CGpKIjB3skwDFy4m5nVgOy7JAr/7hDS+8zXjHHAnMCkn8i3TObBDTUc0
-         xJRkq+8u9tiq61ZrIkH0AahewDDrwZe97fdAICfk0jU9JcsRSttYLy8F307pVkq7Md39
-         P9AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773936223; x=1774541023;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F81intB9d0hqyJ0+5nRSDe6zmTFbaBHACejR093+QL8=;
-        b=nt2EonmI4gIBM+pRVmSI09QVIQnb3d06e6cIDs6gLv7Ce0TRjMhlZG3ZNVngOh4cE9
-         4C3pQ9WThy7HHNVNiVYRowS+m/yGTcBbPI4nIYwvR3jenaszXFIuBR5i2LD//qq9voFq
-         99Wq5I25MCtubAtLsAE6eF3fvfTwYRg8ibF3BcEoWRrDka407KVyQDViT3TGcnt6tH8u
-         Q57+dG9cKZba8icXXxIHI7harQG5yYdPRMmOZhq3UOMWqv6DI+Cea0j3QL1WH8qgYkBe
-         bOG5oDf7zx/bYjlm9xnaCKRZlOzOmE1seVpDFEb4Gj0YwbBc4qYEDXN1+SD+2oIZ7vo2
-         KSCA==
-X-Gm-Message-State: AOJu0YwcBpag7rL+0YHC+bZPBBlZC/SrudeqvRzkBWJRyxOCECgfBfTA
-	B6mb/mRDSycWKgejr9VlrYRkzQEgvLTEq66/N50lq5BscBdMcNk9gbZALEi+IUJvpN+Zsg==
-X-Gm-Gg: ATEYQzyzgxRmsZGzGF4snw/25l2jRmvi6TRr1UoxL4ZqaGXPn6/G+XUEmp7OT17eTQS
-	FsnCzA4KTpHH8h0RrzJ/qz0GqnPekAOlGVBnCkLLJY//VU5hRFE9/1ljyPjFzFtYePMR4R0yr4q
-	pRRlVCuIzIaMihMTRsDpy0hi2vHrrbulabd9vL9cgx4UatTCeie8Ddg7YSWTCXFhKA2EISMNDIC
-	RFBBhXNFVF8RAhfHTVCI0kIreC0kKhGOals2He4HbZnElOZQpfhGZlGd9DBWOl26l1FS3Yhkflc
-	N1hiJw8+8dNycy5soPb707Tf7l0j4O0fZLNfYWR+QNMflMhfwvq2ExdMKDrYcrhKKFraAgVP52S
-	2v4yf40O+hZ7iiOCGGHqTMIQw9l4CYVGJXcvtbZ1ehAfhoNqTpEEdyTPH2n2I5HCnuF+lQuOZ0w
-	f+7IeGr4B/x0h5TBqiWcKIzoB51/zNXMG67CdRvQ==
-X-Received: by 2002:a05:600c:a312:b0:486:fbf6:abd4 with SMTP id 5b1f17b1804b1-486fbf6af04mr32051605e9.9.1773936222633;
-        Thu, 19 Mar 2026 09:03:42 -0700 (PDT)
-Received: from pluton.example.com ([105.72.248.17])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b518a2cd3sm15107456f8f.32.2026.03.19.09.03.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 09:03:42 -0700 (PDT)
-From: Bilal El Khatabi <elkhatabibilal@gmail.com>
-To: git@vger.kernel.org
-Cc: bilalobe <elkhatabibilal@gmail.com>
-Subject: [PATCH] t5315: use test_path_is_file for loose-object check
-Date: Thu, 19 Mar 2026 16:02:49 +0000
-Message-ID: <20260319160301.98039-1-elkhatabibilal@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DjR8xvlK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kXGzjivB"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C427914001A7;
+	Thu, 19 Mar 2026 12:06:08 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Thu, 19 Mar 2026 12:06:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773936368;
+	 x=1774022768; bh=AOGc681n6XkX8F6p1/Dvcqmb3hkeBoggVi23l21R3ro=; b=
+	DjR8xvlKBZrK7ePA37KB08vo9ln0CzxA2r9z6XCvFoHZ6IylI7ndOYvoklK/l7bN
+	Ez43KjWACfCNkciIsB5rBD4b7XR24fJR4K1LJmElHIXFdRMG5gvChvVPLL9smVKv
+	OxKskRqRC9a1fON50zPbeEk1xYQWEfxLOVHqqa/20I86cDufUgxLXvDDrS2gt2Kt
+	RygLwVrbems1gJD/3zE8dnktri4HjOKFBVCCWE1amsd77IIHpD77+w6N8VbtkSkw
+	oCSpbKKTRp/Eqn6ZhfqDRPz2ZoXYltTr/IUmT3dCdvgLsnXMCc3pqjscPMRNwx1R
+	f4/mdVYsnpjASL1dZEAEVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773936368; x=
+	1774022768; bh=AOGc681n6XkX8F6p1/Dvcqmb3hkeBoggVi23l21R3ro=; b=k
+	XGzjivBdPEopfbHn2BPFVQAL7WU+lD++b0rFV//sJiUKTyCdDm5yGDwre/UaxDEA
+	ZjbLHbTc/8Ef/PKLXhbz0UKIAc16zVp7i8u85xx+zlgGjHTjiRvhXgKXWwdw2Qem
+	SsRWRcsmhwwqkKTB2zpnAgo9BcIMwISAwsXmBtv0Twbq1sfhVc/d3iAvq1mo3Gjg
+	AGvl/lDMXZNuTwSsAE7WfN6NDRLZo04le5WWTOB9f0gFOY7yKCaugWftxp0ayR6l
+	WZh93pdyN/iexrAlER7XVo9SsIyA474WDBrahYowp0XtWKOubAInuDoF8sjR2aOK
+	bX5widJAic3qFoF7HlWRQ==
+X-ME-Sender: <xms:8B68abB-aNzjPVfK8RLDZ1rJRTWPH3YDp1fzCTzzpbFsnrY2BG7o88s>
+    <xme:8B68acXkHgDgoynAKYEo4SLutGabbPobdC9R-rhbDWbSMD-nImuqr_4nQu3z_CQfi
+    lZ8Wk9Vh2LsP_dRbQkiDuJOYKIPFrGom4b_VjR2ba4rvGHL-FIUC2k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdejgeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehjihhmrdgtrhhomhhivgesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:8B68aYcisb3rg5OLuf8ph-S7W5g6v6beEBD0h3V8hH2qvA9eu7uXmw>
+    <xmx:8B68aR-Br7jyXpzH47_9o9-NR25UvV2SEMCBkf1C1nIM7CjjKmklbQ>
+    <xmx:8B68aclPsaVyFvJ4R9hvw6xXxFcSRonyNw0c21Ft3rBT53jQ9hoHMA>
+    <xmx:8B68ab8PC8BD2dLiYZ9lPZry24Na2V14ImZdIHIep-Jzfec4aIG02A>
+    <xmx:8B68ae6gnms1pInOkF5O_TrfoeOAGUe_xDN1TsPHfl-H35y0C-w6PXxB>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 90B511EA006B; Thu, 19 Mar 2026 12:06:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AFfR1ZykUAFg
+Date: Thu, 19 Mar 2026 17:05:37 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Jim Cromie" <jim.cromie@gmail.com>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <14840d8a-a1cb-4499-ba78-295c778e90d1@app.fastmail.com>
+In-Reply-To: <20260319155148.1145135-1-jim.cromie@gmail.com>
+References: <20260319155148.1145135-1-jim.cromie@gmail.com>
+Subject: Re: [PATCH 1/1] git-send-email.perl: support executable scripts for recipient
+ options
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: bilalobe <elkhatabibilal@gmail.com>
+On Thu, Mar 19, 2026, at 16:51, Jim Cromie wrote:
+> Enhance git-send-email to recognize executable scripts passed to --to,
+> --cc, or --bcc. When a recipient argument is an executable file, run it
+> in a subshell and use its output as the recipient list.
+>
+> This allows users to automate recipient selection using scripts like
+> get_maintainer.pl in the Linux kernel. The script is called with the
+> corresponding flag (--to, --cc, or --bcc) and all remaining command-li=
+ne
+> arguments (typically the patches being sent).
+>
+> Modify execute_cmd() to support multiple arguments safely using
+> quotemeta. Add test cases to verify the new functionality and ensure
+> arguments are correctly passed to the scripts.
+>
+> Co-developed-by: Gemini CLI <gemini-cli@google.com>
 
-Replace an assertion-style `test -f` check with `test_path_is_file`
-in `t/t5315-pack-objects-compression.sh`.
+These are for people who can be emailed.
 
-This aligns the test with the path-checking helpers used in Git's test
-suite.
+But you=E2=80=99ve CCd them as well. Or was that git-send-email(1)=E2=80=
+=99s action?
 
-Found with:
-  git grep "test -[efd]" t/
+> Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+> ---
+>[snip]
 
-Signed-off-by: bilalobe <elkhatabibilal@gmail.com>
----
- t/t5315-pack-objects-compression.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
-index 8bacd96275..d0feab17b4 100755
---- a/t/t5315-pack-objects-compression.sh
-+++ b/t/t5315-pack-objects-compression.sh
-@@ -10,7 +10,7 @@ test_expect_success setup '
- 	# make sure it resulted in a loose object
- 	ob=$(sed -e "s/\(..\).*/\1/" object-name) &&
- 	ject=$(sed -e "s/..\(.*\)/\1/" object-name) &&
--	test -f .git/objects/$ob/$ject
-+	test_path_is_file .git/objects/$ob/$ject
- '
- 
- while read expect config
--- 
-2.53.0
-
+What=E2=80=99s the difference between this and `--cc-cmd` and similar? I
+wouldn=E2=80=99t know, I don=E2=80=99t use these `--*cmd` options.
