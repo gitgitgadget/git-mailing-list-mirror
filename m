@@ -1,71 +1,69 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E1C3E315D
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 15:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1F83C1408
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 15:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773935168; cv=none; b=SjcN26D4j6yi8oprBR1HUWTSByl1dclgkm4m2f/c8tij5PgsH5T6dbYztlJqy4MWWubYYHgQo+80j5fZPhNP4CdTA/nI5ndJOzJpE6i1d4Ockk2LBi0/iUyhKa7iBMcIPrB5vLNtM+yeB7iFW+MM0uoYd3hcFtRd4ZNbshbAun8=
+	t=1773935527; cv=none; b=aWWJCheWefeU9j2zBerFecYuneF3Z3jCfYl9f9uCt7CDOb9i0wGil+6+xigR23zM1nINArAcUHleepk/XKmQXB8z11R93rTBal8UOCZod9COmP0Gq5YON10LIDBlg3QFu+hJ1ti8hSwvcp9wvkRUO4xaRKbdyugiMpN5O/Y0JWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773935168; c=relaxed/simple;
-	bh=Hl717WDqstgWkt8Hwxz4XeBC3N90cC+nUAgHBYv352E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQmYfRkCNRKO5b3GbrnONf/uwQyX9r5brn33dK5rJ2WKoHcqK8TrVDVsVXbzjYAQYGv8yrY0Ed5r6cahon1MrGuDYPLgkom0SEpX67VLyes4iADSnOODeT+mPOcRMfnJSzB4HkoyaIQw+r1wFkJyFyJsAM2CSPp2XCdNZEI1zRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lOxmFT+7; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1773935527; c=relaxed/simple;
+	bh=JRGmOuzWl79ElJ8bn0DWug5tdPDFnjfAEa3NKcyNL3Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e+23TTb0omRoU+DbLOiMDdqrMiSnk20odiCSWCvE7F62WST+pz7a1Pa9Yb0b/1+7subPumkvE5Q9XQzjtg5y3zfUBdoQwHqHAAWTpLOkOoxwogXYR6kFySYA5xUj8EgF4rJvT3qkwKw75Mq23tqK7oZT6cDiJDfr5lF6nPC3jnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JVIu0hUF; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lOxmFT+7"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82a3d3235c9so1030818b3a.2
-        for <git@vger.kernel.org>; Thu, 19 Mar 2026 08:46:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JVIu0hUF"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7d556c1a79eso1132050a34.3
+        for <git@vger.kernel.org>; Thu, 19 Mar 2026 08:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773935167; x=1774539967; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SU8Re5gWirlRVL1rI7nINXQpgZipyYZkNoVLZ9MwOl8=;
-        b=lOxmFT+7aoZW486muQGoSpmkXhjGXxEM72mb0jnkw99cd6yKVLT5YYO/yl/vk0jyZ/
-         ZrHASMH6b1QljuYQuqEM53CDlFu11LXv8EzJwGUzHlm9UwZeAfQbdAKeBIrUnb0PXfhn
-         z0YAe2cZL4+SJjBpn8Gf+/1NKtWMVtinhdu87326Pb2Nfq9OQwKMrvY961s6JRzSmU2P
-         EKolUrM6uTtxQAgtj++7DYgFgdTHk5f+FQqbctJ9sPICXIQ9jz65JupxtvSRqnkT+z4w
-         zpikUyUK+RM8gYaOgImWsxujyCB6yA7UQvyBgqCEWv3CrpNw7NX2Ancaiv7MDuSerSKV
-         VKDw==
+        d=gmail.com; s=20230601; t=1773935525; x=1774540325; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HL4iO08dWs+C8aSZinpn/MoY1WHh3mghfNCjZe9Ue8o=;
+        b=JVIu0hUFOpEG7zd5moAuD05O0rSJg1a+3rT075cq5RP4dykSUvnrqvNQDMTy42yUZv
+         29kqsInuu+cvJH1zuPnxmViRbHCdqQKe+97OgxFtkR3lkBqnQmB8KAI7IrP0bKOUDbbn
+         Vej3PsQ+EMW8e5qavihYONEZKZN7Aa9P+wK/lDPMJcbLLr2iuiyiAxaVoqkd3BcD4PyR
+         Zoa579bSqO4DjjknA3JlauMzzxc48P9HoLxX+ybl7Izf+veYWwUqZyDFoqK9Fj71H+1p
+         1/3Y2bcEpAhUMn623cgKo9TUKINYoyzjdpt0MfxeZ2cZztv0Dqsj1myIp5AkXCqhUEQF
+         WaWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773935167; x=1774539967;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=SU8Re5gWirlRVL1rI7nINXQpgZipyYZkNoVLZ9MwOl8=;
-        b=eblfVG/4Rn/QwzSl10B1Xsny84dCfMCJdFNQzJ0Zyzl0gdBAtnUvtRbgPJiCooAiN1
-         9YKgABTT4ZWIFb/pCnZW2CwyfT5L6uguPn4JLNbh+OBDnJBb/hqmhkHwIr9LeO687z7Q
-         YboHKRkG1VT7SP6zx+QgWMbvHCsaoXd/rKK6ttyGzkJWiZjDXMnmyrKbEckI+fhzMnS0
-         fCFe1w1xGFdSv25Fom6/5TFFAlNGGW4JVrhhUJM/GAEiVD2h9fWL3LlUlMqHP4d2k6S7
-         CDnNZ/GVMlcNOdfNGao06F9vJ+jU459iBHI8UA01gO8RmlYCF9gMtJhJ+8uD3n2sh750
-         9Hog==
-X-Gm-Message-State: AOJu0YxkmtECjK4Lk6XE2y56sBydSgsG2NMuPGJOb5AtDqA3yrvvbLNw
-	bYJZhYp3PrWzcWpkyBg7nXmKM1JDOs4FvjoqHa2z+vCsZykaO+mdav0j8hlUng==
-X-Gm-Gg: ATEYQzzzzyGBZjuQT4cmeNb2iGA4FiK9Uo0YDnfe2Y6n1b539gQRDlYtHaPSJxdQtQ0
-	Vedi23PRdvHrVZq7SxGCd/vu0xMH6zCEpe330JHFXts8tfINYjblNnfahdEU4nOAgDB4Jn3T4Yu
-	monBnajx5LEOmu4RyTJDsFpJsQlPMKZQxbEFaOKaflQRgQ9azYcUU++n8PiPGW80/WIWsMpr/sW
-	Chm7anPl6D2/NajFBjnlt/+NLvSZdEj3BXP6dm3eGU6yjsAqC9UrVO9Nv6jA3dN6UaGuhebwgjO
-	NVMjNAHGNCMWV27WNGr6IK5KS1do6FFH5qTR0mHN+M6v2TmX22a+r80z9BCwovrpEHuDUa9FXqW
-	1FMvR2rdGabetHK7f+AOHuB/GblW4/7XrRDzI/N8GOAoCAgOwHgWyrwawhpxSVyw2HZYeLK5Yc4
-	2YdmDkcMscjzAeuye86f1lbR21Ey6IzQlVk7zFLTfdZeM=
-X-Received: by 2002:a05:6a00:2e24:b0:82a:780f:a181 with SMTP id d2e1a72fcca58-82a780fa99bmr4199396b3a.42.1773935166641;
-        Thu, 19 Mar 2026 08:46:06 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:8811:76df:bb95:3ddc:3aa6:6dd2])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6b5308fcsm7614130b3a.9.2026.03.19.08.46.04
+        d=1e100.net; s=20251104; t=1773935525; x=1774540325;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HL4iO08dWs+C8aSZinpn/MoY1WHh3mghfNCjZe9Ue8o=;
+        b=rvogixWOyLJzT2mRnydbq4s5Lx35zwCNbYpajM2s5WcmBParXw7LigvwQFxCqgru3Q
+         Q8IGld85ym7G5hBo8lJFMrt0fwk7DgOHefZmdSECswrG6D9s8W4W4gmVweNF5k/wIGCH
+         zFMv2XdwQvTEbUpVvUkRec8L/lXci8ZDcZ0j5dE5thQ98AZ+ve9TtMoF6efi3xSdoPkY
+         txYozwA+L5X0w+pVoGq1pPtzdTacvZQly1H3pOh5lXx7jPC0MVSRzWy06ARwDBv3ltg9
+         H3/WC/7ITFQjL9y/jt/DwQRzXbdC/ECt/0j85WwpsIa6S6IZnMYX8bh6LI0Yyo2XYE21
+         8fkg==
+X-Gm-Message-State: AOJu0YzGDx8M/vuVrUefaJenDabtJCEjQqt8sRQ0c+noZdFgCDuTfILD
+	J5i4nGjWObvAhXl8SgMSBUbxouOduEhXbIpDzIwrwjLYlCztO58r7ejJara0yw==
+X-Gm-Gg: ATEYQzyBdEHG8YFepbR1IVc6Sb+NWgFhYxpOJbi1dJ4E6Mpy4D4NBKYuoCCvEpOS4EW
+	Sha7MPAEoK9qyRVkvlS06CXvCYnU0PIQPYd3qToM/jWy5QzE0bE2QLlbfBKy5lpQkIiy0mG/dxz
+	bUB4AeUQeW/HTPg0LIxsPwh6/ZknRUTMadUU5msuERPNQ/l0NXzFe9Hd7cljloF4tVfECD114I8
+	wDP/X9zoQ7SdUXkhFV7uiabEBpYVup0SwuUsehbpw1rWrw8UeLR4qMvrYSNiCqqO+1k9PRPNr43
+	Qf5Q5Plt7ATDd6g4CYlHjVYnyzDf1bZtQgUT/IrBsGYdS7u1jz068XNoyC9p5Y4QGGTFhU1iq96
+	DHIuCABMBN8xupVwwfRnMvLeJbJeYWKPVdidUWFT1EyKPFa/Fo1HXDLulgOKhQoBAkwzI2cFzI3
+	vmSJtdr6akWR0cBqvCNh0yh6PX1Cv+doR3f65Q0UdIqBCgrAxCZTPh1DbOrm4=
+X-Received: by 2002:a05:6830:67d6:b0:7d7:4e62:58d2 with SMTP id 46e09a7af769-7d7ca574097mr4694610a34.7.1773935524649;
+        Thu, 19 Mar 2026 08:52:04 -0700 (PDT)
+Received: from frodo (c-98-38-17-99.hsd1.co.comcast.net. [98.38.17.99])
+        by smtp.googlemail.com with ESMTPSA id 46e09a7af769-7d7c9951092sm4672364a34.1.2026.03.19.08.52.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 08:46:06 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+        Thu, 19 Mar 2026 08:52:04 -0700 (PDT)
+From: Jim Cromie <jim.cromie@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: Re: [RFC] git am: apply patches directly via message id
-Date: Thu, 19 Mar 2026 21:15:24 +0530
-Message-ID: <20260319154554.1328074-1-shreyanshpaliwalcmsmn@gmail.com>
+Cc: gitster@pobox.com,
+	Jim Cromie <jim.cromie@gmail.com>,
+	Gemini CLI <gemini-cli@google.com>
+Subject: [PATCH 1/1] git-send-email.perl: support executable scripts for recipient options
+Date: Thu, 19 Mar 2026 09:51:48 -0600
+Message-ID: <20260319155148.1145135-1-jim.cromie@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqqjyv7n872.fsf@gitster.g>
-References: <xmqqjyv7n872.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,20 +72,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
->
-> >> Sounds a lot like "b4 am -o-" piped to "git am" to me.
-> >
-> > I see. Though I think b4 is an external library, and I am reckoning that
-> > this functionality is used commonly so would it make sense to add this
-> > natively in git am ? or it is fine using b4 for this.
->
-> But lore (and the way it takes the message-ID and returns not just a
-> single message but a mbox with all patches in a complete series) is
-> very specific external dependency.  It does not belong to "git am",
-> whose only purpose is to accept a mailbox with bunch of patches (and
-> we do not care how you downloaded the mailbox) and create commits
-> out of them.  Interacting with lore and downloading patches from it
-> is what "b4" does and it does it well.
+Enhance git-send-email to recognize executable scripts passed to --to,
+--cc, or --bcc. When a recipient argument is an executable file, run it
+in a subshell and use its output as the recipient list.
 
-Hmm. That makes sense. Thanks.
+This allows users to automate recipient selection using scripts like
+get_maintainer.pl in the Linux kernel. The script is called with the
+corresponding flag (--to, --cc, or --bcc) and all remaining command-line
+arguments (typically the patches being sent).
+
+Modify execute_cmd() to support multiple arguments safely using
+quotemeta. Add test cases to verify the new functionality and ensure
+arguments are correctly passed to the scripts.
+
+Co-developed-by: Gemini CLI <gemini-cli@google.com>
+Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+---
+ git-send-email.perl   | 11 +++++++++--
+ t/t9001-send-email.sh | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index bb8ddd1eef..2d54d98304 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -579,8 +579,11 @@ sub config_regexp {
+ 
+ # Munge any "either config or getopt, not both" variables
+ my @initial_to = @getopt_to ? @getopt_to : ($no_to ? () : @config_to);
++@initial_to = map { (-x $_) ? execute_cmd("to-script", $_, "--to", @ARGV) : $_ } @initial_to;
+ my @initial_cc = @getopt_cc ? @getopt_cc : ($no_cc ? () : @config_cc);
++@initial_cc = map { (-x $_) ? execute_cmd("cc-script", $_, "--cc", @ARGV) : $_ } @initial_cc;
+ my @initial_bcc = @getopt_bcc ? @getopt_bcc : ($no_bcc ? () : @config_bcc);
++@initial_bcc = map { (-x $_) ? execute_cmd("bcc-script", $_, "--bcc", @ARGV) : $_ } @initial_bcc;
+ 
+ usage() if $help;
+ my %all_options = (%options, %dump_aliases_options, %identity_options);
+@@ -2222,10 +2225,14 @@ sub initialize_modified_loop_vars {
+ # lines which do not appear at the end of the output are reported as
+ # errors.
+ sub execute_cmd {
+-	my ($prefix, $cmd, $file) = @_;
++	my ($prefix, $cmd, @args) = @_;
+ 	my @lines = ();
+ 	my $seen_blank_line = 0;
+-	open my $fh, "-|", "$cmd \Q$file\E"
++	my $full_cmd = $cmd;
++	for my $arg (@args) {
++		$full_cmd .= " " . quotemeta($arg);
++	}
++	open my $fh, "-|", $full_cmd
+ 		or die sprintf(__("(%s) Could not execute '%s'"), $prefix, $cmd);
+ 	while (my $line = <$fh>) {
+ 		die sprintf(__("(%s) Malformed output from '%s'"), $prefix, $cmd)
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 24f6c76aee..fed75c7669 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2842,4 +2842,46 @@ test_expect_success $PREREQ '--compose handles to headers' '
+ 	test_cmp expect msgtxt2.to
+ '
+ 
++test_expect_success $PREREQ '--cc=$script' '
++	git init repo &&
++	(
++		cd repo &&
++		test_commit commit &&
++		patches=$(git format-patch -1 HEAD) &&
++		write_script cc-script <<-\EOT &&
++		echo "cc-script@example.com"
++		EOT
++		PERL5LIB="$GIT_BUILD_DIR/perl" "$GIT_BUILD_DIR/git-send-email.perl" \
++			--from="Example <from@example.com>" \
++			--to=nobody@example.com \
++			--cc=./cc-script \
++			--smtp-server="$(pwd)/../fake.sendmail" \
++			--confirm=never \
++			--dry-run \
++			$patches >stdout 2>&1 &&
++		grep "^Cc: cc-script@example\.com" stdout
++	)
++'
++
++test_expect_success $PREREQ '--cc=$script with arguments' '
++	git init repo-args &&
++	(
++		cd repo-args &&
++		test_commit commit &&
++		patches=$(git format-patch -1 HEAD) &&
++		write_script cc-script-args <<-\EOT &&
++		echo "script-args-$2@example.com"
++		EOT
++		PERL5LIB="$GIT_BUILD_DIR/perl" "$GIT_BUILD_DIR/git-send-email.perl" \
++			--from="Example <from@example.com>" \
++			--to=nobody@example.com \
++			--cc=./cc-script-args \
++			--smtp-server="$(pwd)/../fake.sendmail" \
++			--confirm=never \
++			--dry-run \
++			$patches >stdout 2>&1 &&
++		grep "^Cc: script-args-0001-commit\.patch@example\.com" stdout
++	)
++'
++
+ test_done
+-- 
+2.53.0
+
