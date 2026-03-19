@@ -1,151 +1,179 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93580347FD7
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 23:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773961907; cv=none; b=TDvjZb30cl3asLIm3XxNtqIht6dUAAm05kuiBudoNoAfYIckJauw39wXp/u8nfmVWm/QHZikKBM6jEtrZLuNrtVi0J+EcZPFAzlI1hPAisKsT7isKzEbtRH2ankAQQtEWWJVCrSdiZBmwv3HiXqpjgbTebXyEa3Ib18vF/Erd+A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773961907; c=relaxed/simple;
-	bh=SlnoCET72/00ofraedh3KjxvoXjDmp6XW5UYwXZnbs4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=eFsQr9+afgenZ2sDpsZXc5xTcIRgsIG0mdmMB9gWSOoxA3T2VRknzqQM5gcqh6g98m12luktRYCYNDqJ7nv+iW0857Utqg2DUqi7BnI2Bn4rq98io+fY6zyReLliDeb5mP7NQ8fj8uM/eRspx0J4lGnnLxT/8iaG6+IzB3mrQwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=goAxW1pH; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA11402456
+	for <git@vger.kernel.org>; Thu, 19 Mar 2026 23:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773963048; cv=pass; b=hFFaELjS7N0ce2QNMNfoy7nzfD1zS6KjIqLAkd5D++pX4vPwNqwC1QedFgYOtjt3LJ06fYV3HZzL5+BVh1n2RKPErxWI8yZFwEGXAM+x6FF1Gas5rUz46ll0pv+2+SQ2fu4SVL3ankUosWaEUYjAyRK1LesHxSxBRASQkiSi6eA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773963048; c=relaxed/simple;
+	bh=YAiPSgwwuyuz7wNizeOPrSRNIVTarz4+AoY6Me3f520=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TRT0jS5rwWvG7/63mOtOiTVpTgXlkfSH74vi64JsNxdeWLaptJZLj5wqmOikswPu0ETC8slC1oql7n4j4phPY5D/v86IwLwMPXsTVuUQXQzzwTvwXTkEnU1L5aB/VAUmtVH8IwlxD7WNZL//IINIEeyz5lPYd/cZ1mRkqFCG/HM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGeY48Td; arc=pass smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="goAxW1pH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1773961903; x=1774566703; i=l.s.r@web.de;
-	bh=O0cLxv+SuHt8MmQ8BRWFXBPiAzKe5i45jYf3pASuUD0=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=goAxW1pHbHN0y1vWAAHQdIM9zdAdGWG5Qks86tyKHxIjMfhiU/ZDLQpH9dHsuFPJ
-	 2IS0kDRRVCbYRN7o4el+imf+qWpw09bT3AkeoPBiImq0ZsLmF+Mv+PIvJx2GON0bk
-	 ASGP5WE40QurZ4ZUgv1G56wL0el1MXawlTyVO/3Des7l9ffjcVE1b8qadgTeeh47X
-	 iqtJbeRq4jUYCoqGB+5R9Ejj21+kF6IWTd8l+I9OtY4WN/+4WCVAOIsG/imCu+odL
-	 975ynro7Pdd/UfKRylxGswPrinFGfqPJkDh76QysWMDBAolo29No6Pjs4YX7EkxYK
-	 iQg99bxJFCXKoVwiIw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M3V28-1w3uUX28nK-004wnG; Fri, 20
- Mar 2026 00:11:43 +0100
-Message-ID: <6cd35848-a234-40dc-bb87-4c2cb7eff52c@web.de>
-Date: Fri, 20 Mar 2026 00:11:43 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGeY48Td"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-43b4915161fso48471f8f.2
+        for <git@vger.kernel.org>; Thu, 19 Mar 2026 16:30:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773963045; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Zo2p0O8LiUGg4d6yrabUNgFEtdtgpTfPgW5Wv3tYwhmDrYJrabbArqW7/JixcHsiKj
+         ZihVJbnMk/bsxhDXSnhLFz5C3NYkdL5Eyi3KvwZkjN05iPwqAJXLDwH2woJ5W8SJ9Gf9
+         FlyPk8IsgKrgGalhELLwEnFlrGd91ABdEiMieHiWyRc8IQpZL0c7p1POaALqDuTk4jWY
+         HVgb4iJTqlwWWNeiW44JQzLTbfWVjjsICoX8F2sua6Rs7DB9FOFsD0QCeJp1KJF3h1Z0
+         K1j/kdR6E8lmEnMBrlS7TzO4Ys4LNeoD8rBR6nN9lYpaVQ6/FPb7std4WG2BnIe/2iED
+         9Qgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=SWFzCkfTFYYO1SJt7AzGCWxrmHm6u08vJnuIsNYebxo=;
+        fh=M0kOffcjipX+oYlHNbmAmNrMnTlNNU773tCHjjFOfAs=;
+        b=gyIHX6+NE66wmrORL6Ag/8bbuBxzAvWkocMhSSjqtbfi0oFbOvR5NVHZir7QxfeK/m
+         Ru1j32G95wm2y/TxC22XL7BBtM/zX8jip5aylntWFJ+c+9H48BS96hRl7XycmwgXby5O
+         jyt1L6MqOnG9JKo/f0SPDJ8Rdu+C9uRwV0D3nW7CqOqOg5XTIqQmctruoPgidThU5W6Q
+         dr+Vrw5fP6FSlQ8o0a0hpT6ALannVpDMTyAHcSgoWoaWq2438+rswxWFtnGQctSJCrt9
+         dzK+uxjnmgbdyX8WjUjMEdzS7WuafyI9Qo2UZJgb7K4T8AxfViYjIaMRyCwnCSDDHb0R
+         1UMw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773963045; x=1774567845; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SWFzCkfTFYYO1SJt7AzGCWxrmHm6u08vJnuIsNYebxo=;
+        b=bGeY48Td6mjnJ3qE04rldlDxM/GqgrishK6FHimfDC8STRCWPmZOL6as33S/OK9sT+
+         T8KJbEWF4k+Xl8k7xyv8Oze5K2YQUpOPr/bPKjRM0Ruj7QfblBGK5IM2OiKZiqaHksj/
+         qmEvvHYCoggFuDh9bh9s61FldpsyfGv03e7o20e51+m+kJdiEnIRwsEAwrAzaDCyrVYp
+         UFcw9j1X1JqJUhgvuHJITnbigrRsPqdO2bwTi1/T7IfgvfD42zcD3gpqzkPEBW/qIm9Z
+         J4aacQKE/kIWP2YTrQXllJwxdweRwPn+dCNlLeG0ABeG9kosCw2ZK5Bh9Vh9SUZ5jHQ/
+         g22A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773963045; x=1774567845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SWFzCkfTFYYO1SJt7AzGCWxrmHm6u08vJnuIsNYebxo=;
+        b=n9CIqoc3myLQFk9w1vAU/xIttQRWYHRT51E31HdjEdKi9RS1uHJnz/GxuXS+Ok6nj8
+         2FMvnR2DoFrpi57a0Y9Q5D7oT6cf+3NvqeJ0UWsm7kEL0uk1GCZ4uxnZ9MV7p7NQOs8t
+         7ZK1zkXv2extblKYCYwuApehDXdnTY2ZGT1MTPD+GDeYBLtTVn61aVhHSWx+Hbj4NF9d
+         KLFThPJs8IuBnMXmv7cqwFjseC2gg9MMjBn8IRSqIh+O1q5g8J7fmq48tVBY87+u+yLD
+         fnSD+UAA45/MnvpT05Lbf8i7zQuNaOZ7CpKhWDYdHt5Fc2dQTNMk6Nm82I/fPZIMFGDW
+         JeVw==
+X-Forwarded-Encrypted: i=1; AJvYcCX30GLwlPtMSsc1cS4Qh1m3XKWmg1pEyBhqWNJA/ubNIov+nwHi2jkzC4Wz8Lqo/lujx98=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6iU5Uf8ze+fBuGWeOYy73sEFUkXsFx547dUZe/k/jtUv6NxKL
+	c2VzAwv9tS9nwytuMLjEXciaL+HdA5Wf4XXyVj4msyEbYarSlRDaB2PGu3qZmPYrD/ykFHaQl15
+	WC542f7SM1wwUd8EM8AQ2aKAHhZ7px0RdMr9a
+X-Gm-Gg: ATEYQzzT/PSzfouAugaBzIZliKX9h2f1Oo6BAskIB5tyFbjpQbj7JTI5GlHrY2+0g4u
+	rMwskuMn0mXKoWbeo/VxuFjjRaleDf0/dmyF4v6mFhJVoEbPun3HiBWIXMXcMYYlUrReKrt8T3p
+	3Xz4J2nuIwrEcKWLfHPS9Lzav8UwXUONu+19QF8Rw0wB5+tJIy0kro3rx5PEHjgQjR2qs3IsJ3b
+	YKeE4CHX0AeKtqbF/CX4LM8v/cXi1Eona9LNgA3L6oYa+hTEOInisKSS7niQyQm2JU+NdA++WVl
+	m5Ftc6g=
+X-Received: by 2002:a05:6000:2484:b0:43b:4396:674c with SMTP id
+ ffacd0b85a97d-43b6427d7a6mr1773688f8f.55.1773963044824; Thu, 19 Mar 2026
+ 16:30:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] regex: not all macOS platforms seem to have REG_ENHANCED
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq8qbnigxp.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq8qbnigxp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+References: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
+ <pull.2120.v2.git.git.1772463265865.gitgitgadget@gmail.com>
+ <xmqqikb08ax3.fsf@gitster.g> <016df393-a36f-4e5e-ab6a-eb661f5c84cc@gmail.com>
+In-Reply-To: <016df393-a36f-4e5e-ab6a-eb661f5c84cc@gmail.com>
+From: Yee Cheng Chin <ychin.git@gmail.com>
+Date: Thu, 19 Mar 2026 16:30:08 -0700
+X-Gm-Features: AaiRm50afVcqImpzPdw-KdCZUntZ1jgFgJ9SVZa6QkcM83D70Q-DL3djpDUSHrc
+Message-ID: <CAHTeOx_edyC_nvXd7cU5o1498K6K9FVky1PG3ArDrWKrZ87pjQ@mail.gmail.com>
+Subject: Re: [PATCH v2] xdiff: re-diff shifted change groups when using
+ histogram algorithm
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Yee Cheng Chin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:drqt+5yxtrzbjQA2TBGLEYL3BnEDOv65pmEbfqqyzYONYKsmsH9
- AHc21C13UVGbJ2ENFGEP+mn0bMclYT6to5KZK6vtwiligZuQdVHqXvr/Ecl6HPgyvNU1xVy
- fi64G9vDfDzLjbyQA+PWcSpf7vXlKLhmf/IFnpG2XOKDqHAd+6tLxqyOmyQjrSTHLFsHSv6
- 2SOKMt90FOWCX4+wiMr1Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:z2vGJLUvZWQ=;TxrX/kpUgxsVlyop2WGyg3mFZXN
- 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
 
-On 3/19/26 11:37 PM, Junio C Hamano wrote:
-> Earlier, 54463d32 (use enhanced basic regular expressions on macOS,
-> 2023-01-08) started to use the REG_ENHANCED option when ERE is not
-> in use on macOS.  The build seems to have started failing on
-> macos-14 CI jobs at GitHub, however, as apparently not all the macOS
-> platforms have this flag defined.
+Great. Sounds good, thanks!
 
-Interesting.  https://en.wikipedia.org/wiki/MacOS_version_history says
-macOS 14 (Sonoma) was released 2023-09-26, i.e. more than eight months
-after the patch.  And the oldest regex(3) man page I could find also
-mentions REG_ENHANCED:
 
-https://man.freebsd.org/cgi/man.cgi?query=3Dregex&apropos=3D0&sektion=3D0&=
-manpath=3DmacOS+10.12.0&format=3Dhtml
-
-Ren=C3=A9
-
+On Fri, Mar 13, 2026 at 3:23=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> On 13/03/2026 07:07, Junio C Hamano wrote:
+> > "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> >> From: Yee Cheng Chin <ychin.git@gmail.com>
+> >>
+> >> After a diff algorithm has been run, the compaction phase
+> >> (xdl_change_compact()) shifts and merges change groups to produce a
+> >> cleaner output. However, this shifting could create a new matched grou=
+p
+> >> where both sides now have matching lines. This results in a
+> >> wrong-looking diff output which contains redundant lines that are the
+> >> same on both files.
+> >>
+> >> Fix this by detecting this situation, and re-diff the texts on each si=
+de
+> >> to find similar lines, using the fall-back Myer's diff. Only do this f=
+or
+> >> histogram diff as it's the only algorithm where this is relevant. Belo=
+w
+> >> contains an example, and more details.
+> >> ...
+> >> This issue is rare in a normal repository. Below is a table of
+> >> repositories (`git log --no-merges -p --histogram -1000`), showing how
+> >> many times a re-diff was done and how many times it resulted in findin=
+g
+> >> matching lines (therefore addressing this issue) with the fix. In
+> >> general it is fewer than 1% of diff's that exhibit this offending
+> >> behavior:
+> >>
+> >> | Repo (1k commits)  | Re-diff | Found matching lines |
+> >> |--------------------|---------|----------------------|
+> >> | llvm-project       |  45     | 11                   |
+> >> | vim                | 110     |  9                   |
+> >> | git                |  18     |  2                   |
+> >> | WebKit             | 168     |  1                   |
+> >> | ripgrep            |  22     |  1                   |
+> >> | cpython            |  32     |  0                   |
+> >> | vscode             |  13     |  0                   |
+> >>
+> >> Signed-off-by: Yee Cheng Chin <ychin.git@gmail.com>
+> >> ---
+> >
+> > Thanks for the updated patch, and sorry for nobody responding to the
+> > patch for over a week.
+>
+> Yes, sorry for the slow response. I agree with Junio that this is
+> explained well and looks good
+>
+> Thanks
+>
+> Phillip
+>
+> > The detailed explanation of the issue and the inclusion of the
+> > repository analysis results are very helpful; they clearly show that
+> > while this is a rare edge case, it significantly improves the
+> > quality of histogram diffs when it does occur.
+> >
+> >   - The removal of go_orig is correct since g and go are kept in sync
+> >     throughout the slide loops.
+> >
+> >   - Clearing the algorithm mask while preserving other flags ensures th=
+at
+> >     user-provided options like --ignore-all-space are correctly applied
+> >     during the re-diff.
+> >
+> >   - While ignore_regex and anchors are not passed to the sub-diff, they
+> >     aren't currently available to xdl_change_compact anyway. Given that
+> >     compaction happens before regex filtering in the main pipeline, thi=
+s
+> >     is OK, I guess.
+> >
+> > Let me mark the topic for 'next'.
+> >
+>
