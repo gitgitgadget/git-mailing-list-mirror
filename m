@@ -1,70 +1,71 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ED91D61B7
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 00:24:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E85239E88
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 00:41:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773966271; cv=none; b=HL6AXw3XpHQ3FMXchGZtAWdEj/y1SA59SuAkP14tkcrSlft8GJ2NckO/wtLEZf7IHs/BmjqH4OXnV8k0AQVfAaEmNs9Eh/NQtKtf+4D4miP5vUYplSDDJRDWRbRjhA1+FZqgvM3oWKwX353dEn3M9oIInjE3BPl6oVaYM/JpnLM=
+	t=1773967307; cv=none; b=KF99rfAYe8wf36eFejugw9M+kGYBDOTk/agzInfyzBl0GzAJg68TlkcAdqUT+Fhz+3esZv3bDOtIFd1HT2h3uiIowvqmUuRIeZsp+KbhpiHPPyW8LAhJ3SihaLWSd1I1UVBbqFrMarq7wxQg+pUDaauaTLSUZB3idmHS+LPr7lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773966271; c=relaxed/simple;
-	bh=8wlG2q4nrN5JI1bHYgty9toyJiDJGIjalweo80ndwfA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H9UXwtO107pYqqxFTXuBV70M6sT65QoAER7GCAC3tQLf1GYvIBknsm5KVEb/Jq9rrkyTtJ0XsT13amfF8/GIMlcJwoLXnsZechC9Uqp9CsJGHSj6pb1VyKt+Dbu6nOBjntWr2hEITRUS34OI2/Q5Z6Zm0juXGWTFa5h11RLVTjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=Ngrj2gLU; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=PZwGXCRW; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1773967307; c=relaxed/simple;
+	bh=nT7yQfPNjHlhefm3IC/Dcro0iX0IEgZ1BvTrTc3Bwx0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=CDTBldDkVzr3RAkE4tNuBDCpEhxp5quDqi8KDDU/wgzb8IOzQHDzcd1aJjjNZ23al9vMGT9+4s9SZ6YgS7md+QWclcNo15pFyyOgUQB1GpOKMWf47bincAp5up49t+s6xCQWGP9ewtLyEfbYcxPiAPBVPx2uKuEsN1eIrVMDi5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IjSEk3QH; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="Ngrj2gLU";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="PZwGXCRW"
-DKIM-Signature: a=rsa-sha256; b=Ngrj2gLUTzr7MfG4l0z2MSWu/z1Ea6bMZXqStalE7bajmgUmPdmZC9SLRokU9WPssswbSd+vDA1BCVT7I/0cEGfr2V4corDvbXcPVOzgv6JerFQjJ+zkLkcWrjFihAUZq7BD2hzLk7J34uAyiU/7pd7OuseiAxY5IlERL8/wfzXkNf+9Fc/IideVZ5KgW0TpiyJ2+A7uZPEtn7PXHlDDq+baQ5GridQP5e3+tGEKiHS7ltvVben60kQLMSJr9l1JTsTmNUyGSVhvfCKQJkK89OnqmN8nv6am6uev2U45a5AW7BtLYG4SqD+7bXVghIxfMRltCj3N2rZokc9tHN5iGg==; s=purelymail3; d=malon.dev; v=1; bh=8wlG2q4nrN5JI1bHYgty9toyJiDJGIjalweo80ndwfA=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=PZwGXCRWy0ebAu/pjn6SuWseejbp2rfxcejCjrWEKkdBR0hhkyWmL+TQSOYaWil3Deqw3Z1V22BGc8Te9drA9qPeL3tUG1GvmlNIVXkBoA5WlBkhUvRRoPJb78zZQspZPkT7DLaJba6naELKHp6hVb/J0ktLeDnJMLSfejCztfsD5MpqBV/h/ArQxjNuKpQR5wLr3TaICtcyTPJ2tbz+aeQOAe+1PDaYp8t2Rp3vMrVEn06ua8ovdiXyEAInZLLjVbPryNIO5FIp6tiQHPXv1Ezipfh39c7M8uxkxizeAaBE5ArSJ2pe/2/AZHg6+vK9dveHN59vdH/tmo/L4LklKQ==; s=purelymail3; d=purelymail.com; v=1; bh=8wlG2q4nrN5JI1bHYgty9toyJiDJGIjalweo80ndwfA=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1913233344;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Fri, 20 Mar 2026 00:24:20 +0000 (UTC)
-Message-ID: <00d622d4-cfb8-41ff-b2df-5fb58a492a75@malon.dev>
-Date: Fri, 20 Mar 2026 08:24:09 +0800
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IjSEk3QH"
+Received: (qmail 62394 invoked by uid 106); 20 Mar 2026 00:41:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=nT7yQfPNjHlhefm3IC/Dcro0iX0IEgZ1BvTrTc3Bwx0=; b=IjSEk3QH4TaeMGK5IkjriPrvy6m/21CRJCmFkJYJSNQ4WVy3aXBBvFwG7mvyy5U/iNU4JldAA5NCPUogQU+tgVKCSgX+NorEb8YlMfc9+ZThDcpgIHEfhj2V1cThKD9hTzDON9NuFIQMNTrcigVodVpsabTA+uw8WF5JQ/NxCwjJXsiWPaQpVD4o07YOhBHiHbwXOEPZ+ZDjObR2zvfe4KXl43m/m7WnX6tiJqk3yi+sPyw+wtT1vFFShsFUo8VTkjS4QnFZGO+4AQvvVxf4IPCpxHAbC6bK5X94ujsIMtDtlJmDy8pl+Ww928zay+pu5RmrEJzzLOhLqrLkasg2xA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Mar 2026 00:41:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 91615 invoked by uid 111); 20 Mar 2026 00:41:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Mar 2026 20:41:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 19 Mar 2026 20:41:38 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Scott Baker <scott@perturb.org>
+Subject: [PATCH 0/8] some diff-highlight tweaks
+Message-ID: <20260320004138.GA3653623@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Question] check_repository_format_gently() is not
- side-effect-free
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git <git@vger.kernel.org>
-References: <c0bb931a-3ee6-416b-8ceb-9fab013a621e@malon.dev>
- <xmqqfr5vlmlu.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqfr5vlmlu.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On 3/20/26 02:07, Junio C Hamano wrote:
-> The verb "check" does not imply side-effect-free.  By checking, each
-> of these functions tries to achieve something, and the way the
-> result of their work is conveyed back to the caller may not
-> necessarily be only by their return values.
-> 
-> The adverb "gently" in this codebase typically means "the variant
-> without gently signals problems by dying.  Instead of dying, return
-> to the caller with error code, so that the caller can decide to
-> die".
+Here are a few small changes to diff-highlight. The main motivation is
+working better with diff-so-fancy, which uses DiffHighlight.pm under the
+hood. But it was a good opportunity to polish up the tests and README,
+and the final patch implements a small optimization I'd been meaning to
+do for a while.
 
-Ah, I see. I guess I took it too literally. Thank you for clarification!
+I based these on the bugfix patch I sent a few days ago in:
 
-Setting the semantics aside, the problem remains: I still think the 
-setup method here isn't quite right. It creates a bottleneck for 
-eventually handling multiple repositories in the same process without 
-data races.
+  https://lore.kernel.org/git/20260317230223.GA716496@coredump.intra.peff.net/
 
-Do you think this is worth a patch?
+They don't _need_ to come after that, but there are otherwise textual
+conflicts as they both add new tests in the same spot.
 
-Thanks,
+  [1/8]: diff-highlight: mention build instructions
+  [2/8]: diff-highlight: drop perl version dependency back to 5.8
+  [3/8]: diff-highlight: check diff-highlight exit status in tests
+  [4/8]: t: add matching negative attributes to test_decode_color
+  [5/8]: diff-highlight: use test_decode_color in tests
+  [6/8]: diff-highlight: test color config
+  [7/8]: diff-highlight: allow module callers to pass in color config
+  [8/8]: diff-highlight: fetch all config with one process
 
-Yuchen
+ contrib/diff-highlight/DiffHighlight.pm       | 57 ++++++++++++----
+ contrib/diff-highlight/README                 | 19 +++++-
+ .../diff-highlight/t/t9400-diff-highlight.sh  | 67 +++++++++++++------
+ t/test-lib-functions.sh                       |  3 +
+ 4 files changed, 111 insertions(+), 35 deletions(-)
+
+-Peff
