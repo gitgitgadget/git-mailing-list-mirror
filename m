@@ -1,124 +1,140 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1297248886
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 06:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4EF8834
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 06:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773986835; cv=none; b=b0NfD/OTi37f05Fs/s9e9CD0Sgy1LF1j7w+3w/5V9mZKrD8Q7ut3MnnCpnmENk4T2hBiqeVdhzpUJn1ZUtAWd4behRT/N+aWFRUfMoSQTZvynuIlxHZkI8yJS7XbkWHPaBHJ9jccqcD2slZ0XlGQuHAvnuSOs1exF8l+IPNaeB8=
+	t=1773987270; cv=none; b=qWBEsepK9CzjULmBZwSOF9AVd3lcEITAQ6D78KPvfdw95USfA59Ro3+Rim9gfAxtRp/ufn/1qACQIxvOf2xwSVU48PQG4IVi9YtfBCESSQ8Vfz2xQbuGQ4hhFBdfug+xgS7WE9BDxllKd4AtLUXrtS1EwvkNGoBu0FFS2XAkQ7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773986835; c=relaxed/simple;
-	bh=9rKwCHWuvWYb5eJ3CPEkJ0AJJKumJW3OOCjqkmU7zQs=;
+	s=arc-20240116; t=1773987270; c=relaxed/simple;
+	bh=xGGPXsgRu8k+1rAalwSeuGfb7juNoXC6DMCVoDoIONs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NQUnje3jZm5IW7TRZ3fiVh2KusO5plv3WgLxxY+gna97CWlAzFo2Aj5VDiEcrt2oU8L7SfeCEh57/eeglJk2FFdgXne7fHUPF6GsMtMIZu0MlnTqDURxMpqsO1TmRFViHoNzyhzwhC2s41Efk63UhlTmn2HYJjsHkcwtz/0X2wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BmgAx1Ic; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=z3Iru3u2; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=lki3Pz/3x827/K8WwVn5XIW1I0nOIh1K2FDvZBXPbngOmsb2m3GLdQIB4x49o/1BjDT4YjwQBsdhnUQnpzkQun1103XeaO6ANEy9/4SykEpnHuSetolx+IOGSY3J1FUzW6Ei94xZf5y6jSLIvM0DiU13IjARN/Zf+NB5lN2PUc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CEKn4tWb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D233Zck9; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BmgAx1Ic";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="z3Iru3u2"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C21E81400248;
-	Fri, 20 Mar 2026 02:07:12 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 20 Mar 2026 02:07:12 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CEKn4tWb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D233Zck9"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 738161400176;
+	Fri, 20 Mar 2026 02:14:28 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Fri, 20 Mar 2026 02:14:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1773986832; x=1774073232; bh=AN5pzhLOWv
-	kViYFIxkvqpoFqyG703VSdComCKo6r85A=; b=BmgAx1IcrXWkRulpanM2z3B2yD
-	8wGqrykIHsSC0OYSatiGrc2BJF09UQRBm/1T3W4XL5BZQj71q8eaxh5+dfgABEoD
-	goZisLqYcnPEVlAHg0BRGaQWHzViORpWJ6mFZ81gzyHKObw/62hzM0VgFKKpJixe
-	UiIZySgD7wla8MV7R1YKe/T/aJJ89eu4pAsrs/GMLBdTt0ob/NdAbolCgY1OyoFP
-	EMK1MqA89KmkgVEarI3mKLQdWo0GfkPl5+2zU18ihHKV2tvrqeSY5XR2OpbS6PYO
-	xI1Jwg9uClsuSUMrQd0t1ceNLGYKv1mIcLKtF1KKqe67KJc3agA2rg8fuIjw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1773987268;
+	 x=1774073668; bh=zZIof15KKVAyHcBW2nbzm3lITKll93lF0m8KhOl1OpY=; b=
+	CEKn4tWbMORpML01S+NIoxFElOWI3+9B22BacKrxnA13IgENJu3vjvMiV5D+74ph
+	clY2PJgjLOHRrapJOk/097r04ZjEZF7WfZccPoUv3+gGvp2lio/U4j3NymvxqcUU
+	ABUKVNGcxKbwJz+5T7XW53Wn3RjHkYTPDq3X1wTVh+GnJ2Uq7J3EJejfIWmspot5
+	QEtWPYSIl+TTigRNHZDa4zJZd4gojJte323gUrLMGpvlpB30joaq6UnZrX/MDgoO
+	ALXFFY6qzsVAkzje5zS7U1D0QA6+4VJpGHK9s1InCD1LrZnGCLlJXMGtNKtY4DL1
+	wJaL6RfnYQT7i+LvQtOMtA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773986832; x=1774073232; bh=AN5pzhLOWvkViYFIxkvqpoFqyG703VSdCom
-	CKo6r85A=; b=z3Iru3u2jvDkIMZUieQR11ppHmQKFsNjeHvVl/vzU2zXKTN6kqu
-	4GRdAL2qrOHBpdLQmrwrYiZXga/Lu37o4BOVEUmDXKNWYuYREbiIv1tCJ+BiZWJK
-	LGxALYdLkg2TwxHeHFgMnfHwlHmLJk7FK7tUMsAqks7nzb11kdvyN815F2sHn9bY
-	7+3GhKzY0mmFRw/VbTs19fKQfOExDL52rXgMwaCqRCQhJClQxU+D3DksZe9ZmYRl
-	k3qm8l0XyDJPpu5wYsqs54/F3gwtXMXdWwlIbpYH4NKGzORJzp+btJGl1DICDzGl
-	znaRLyiyhllyceiNFljkm3BDUnEthwd4tFw==
-X-ME-Sender: <xms:EOS8aVCpd7qL0Gav0Vw-5JFphgetFbUac5yHfXdGNHdfyApRq1m--A>
-    <xme:EOS8aa_uog5xXtb0qCLTARBuCk11DS5ZN6ia7f_dKn9aPb4Vzjt6mM1RYOyexOTYE
-    Z4ODyHDTa6j2oYjrDw728GMaNUxarpa8kcGYWzpB71g5gjZE52liA>
-X-ME-Received: <xmr:EOS8ad_iop0JEdrfTlBMkr2CmsuaxV0zdHnSVb7urQS1-FYLUzYfvFjRkHrIUsl0sr9i2wQEs1Ib4O3Qf-sguYVB_gQXp3QqrdKbahE6Uc2j>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeluddvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773987268; x=
+	1774073668; bh=zZIof15KKVAyHcBW2nbzm3lITKll93lF0m8KhOl1OpY=; b=D
+	233Zck93qnLhZ8WjcqqLqD0JFiQFYXz9cb2n4vCDD40rjA1AzaoxAZV6Yf8Vi0j3
+	Ij7qMzIlZAbbNsuK4XbVBH6ZWIEGXITno/OX/eWFmx+hIkJpfMMbpgi1mFmxuef9
+	WIX/Zrsb/hCYukreTD6HmFlKHMYaS2akcPD1qf0quHT6B7T9GeFTLXJs5Gh58LLl
+	g6Nb3jN/o+wfoj3J7QMFnmulVZeHKO9/DFc1K0Sq931Q2+dEyI5nEqOLYULnXke1
+	zS1hf+CtiAnZTEwZWh2/GWjqiafgPjCWwOnLgXXTG30zcotyLlG/bUhOS8ikL0Hm
+	fc7w4t/1cjiyhh6R/vtNQ==
+X-ME-Sender: <xms:w-W8aQGeskqS-SaRWTy-Ql2Ekd3qsoOPJz2WzonZ_12vyIdaIgz8Og>
+    <xme:w-W8aRGwuLfdgdhm1Zax6Yldc-UgJ7_9QrqsPq_zr_IENWvu0CBdTg9oDpLmL5SpC
+    3UPnaqB6IfBoLVCdDLdnh3WBYVI1gokR3eUL5_b-EcAboLtkEjDrA>
+X-ME-Received: <xmr:w-W8adO4359p240cBQ7RBpX4qzWa5BIUFo4iXCiNWOooqe7AgrL-vgudKwjbGSjnay2BAExj89mZlVdP1G_CQldlFQxI0QYFJQtOf8gX-3t7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeludegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:EOS8aZd2jebENwV2_14r8JhZ8nJN_faSanWcjZNitaE26_XJVM7UjA>
-    <xmx:EOS8aeGjXPI1Yexyl8qce0-lTnk3iOKwtp9OIgmU-PNlvFgO4fedhw>
-    <xmx:EOS8afdtq6jaZQgrkeaL2HTfmkqqdANM4p7uSrTA6EdITzb5BqRlSQ>
-    <xmx:EOS8aQHGUNXEwaQRzRg0ZUqbnmUWp3S5OlHzAROuD9fRbp-g4Pa2Vw>
-    <xmx:EOS8aXKItXkwtU9m8xW65fwxskpTEc2YbUla948N3HMVHUgjGhkMhIbt>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:xOW8aQHFZHnOvSUU15LlucOf8aoRlqlgfVVXA5eRij1BPR8eprSlaw>
+    <xmx:xOW8aUPRpSGpiVxnLWJxTtfTObCRPKZeJHT1L07hLC1sqCL8Ksvi6A>
+    <xmx:xOW8aR8Mj7TUSt7Gzw_wTj67VOX1uQNTjBEFn3l-KS2w8782xzIzfg>
+    <xmx:xOW8aQQRSuISL0HVbHcui7BO3Z0JcZnxWPPEWVOZzetHGXRcHRK4WA>
+    <xmx:xOW8aQXEk9DvTdljIBgqsyG0_7T7As5Au-B6njGwCz0QeBaBaX1lYuva>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Mar 2026 02:07:11 -0400 (EDT)
+ 20 Mar 2026 02:14:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d4c9cc2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Mar 2026 06:07:09 +0000 (UTC)
-Date: Fri, 20 Mar 2026 07:07:07 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 3e44f2c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Mar 2026 06:14:25 +0000 (UTC)
+Date: Fri, 20 Mar 2026 07:14:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Tian Yuchen <cat@malon.dev>
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-Subject: Re: [Question] check_repository_format_gently() is not
- side-effect-free
-Message-ID: <abzkC9uLwZz_nmgv@pks.im>
-References: <c0bb931a-3ee6-416b-8ceb-9fab013a621e@malon.dev>
- <xmqqfr5vlmlu.fsf@gitster.g>
- <00d622d4-cfb8-41ff-b2df-5fb58a492a75@malon.dev>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Subject: [PATCH] object-file: fix sparse 'plain integer as NULL
+ pointer' error
+Message-ID: <abzlv_6qzZcjluic@pks.im>
+References: <97c623fe-4e03-4fbe-a6af-9c01c101bae4@ramsayjones.plus.com>
+ <xmqqqzpfgu5s.fsf@gitster.g>
+ <b2656d8c-7878-489e-a78b-ecb441570bf6@ramsayjones.plus.com>
+ <12187836-0b2d-4e82-ae0c-4da972aee7e7@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <00d622d4-cfb8-41ff-b2df-5fb58a492a75@malon.dev>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <12187836-0b2d-4e82-ae0c-4da972aee7e7@ramsayjones.plus.com>
 
-On Fri, Mar 20, 2026 at 08:24:09AM +0800, Tian Yuchen wrote:
-> On 3/20/26 02:07, Junio C Hamano wrote:
-> > The verb "check" does not imply side-effect-free.  By checking, each
-> > of these functions tries to achieve something, and the way the
-> > result of their work is conveyed back to the caller may not
-> > necessarily be only by their return values.
+On Fri, Mar 20, 2026 at 03:44:08AM +0000, Ramsay Jones wrote:
+> 
+> On 20/03/2026 02:04, Ramsay Jones wrote:
 > > 
-> > The adverb "gently" in this codebase typically means "the variant
-> > without gently signals problems by dying.  Instead of dying, return
-> > to the caller with error code, so that the caller can decide to
-> > die".
+> > On 20/03/2026 1:35 am, Junio C Hamano wrote:
+> > > Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> > > 
+> > > > Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> > > > ---
+> > > > 
+> > > > Hi Patrick,
+> > > > 
+> > > > When you next re-roll your 'ps/object-counting' branch, could you please squash this
+> > > > into the patch equivalent to the commit 2b24db1110 ("object-file: generalize counting
+> > > > objects",2026-03-12) in tonight's 'seen' branch.
+> > > The topic being in 'next' since March 17th, that is a bit awkward to
+> > > arrange.  I can queue the fix on top instead.
+> > Hmm, odd. I didn't do a 'branch --contains', obviously, but this only started tonight
+> > (and I built git yesterday - master, next and seen), so I just assumed ... ;)
+> > 
+> > Sorry about that.
+> > 
 > 
-> Ah, I see. I guess I took it too literally. Thank you for clarification!
+> Heh, I could not sleep, so took another look! :)
 > 
-> Setting the semantics aside, the problem remains: I still think the setup
-> method here isn't quite right. It creates a bottleneck for eventually
-> handling multiple repositories in the same process without data races.
 > 
-> Do you think this is worth a patch?
+> The problem was actually caused by the 'ps/odb-generic-object-name-handling'
+> branch and commit 936c2bfecb ("odb: introduce
+> 
+> `struct odb_for_each_object_options`", 2026-03-19). In particular,  that
+> commit changes the type of the last parameter of the
+> 
+> odb_source_loose_for_each_object() function from 'unsigned' to 'const struct
+> odb_for_each_object_options *', without
+> 
+> changing one call site from '0' to 'NULL'.
+> 
+> 
+> OK, I can go to bed now!
 
-Yes, I think that the whole of "setup.c" is something we will want to
-refactor eventually so that it does not modify global state anymore. So
-it's not only `check_repository_format_gently()`, but also lots of other
-functionality in that file. The motivation is not only being able to set
-up multiple repositories, but also making the code overall easier to
-understand.
-
-That being said, I'll give a small warning that it's probably
-non-trivial to refactor this subystem :)
-
-Thanks!
+Thanks for catching this! Fixed locally now.
 
 Patrick
