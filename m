@@ -1,76 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4926C2F3600
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 05:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6642827CB02
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 06:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773986232; cv=none; b=I+SKFf3BQTfo4xpvUjXgAzCm9K1qK6osVfMdEljge26e7cXC6GV5q+905mZldeXco6in+vupRTMacmqR5LofXyFy66cxsGg1TaXH9LuJW45mwO8nixTHbQ0YanDiggZchMhQiTGwUTXvx7PNNlazHKwCCJ/aXD9cQTjA6olaZpQ=
+	t=1773986760; cv=none; b=slSizxkwJB7yvNSqT26cGfVvJlIY9OlxMUkLORD6ExPR05enuy3NBnaIEB5Y0D6lK92UoXEhkrEC/KAKZWfvH6K83vlrxy9mMf/sfsDGmhC8qe085kLCY+bg5QCD7Yavb4J/Pswha60GTOjuYgmbRSIXRI/TEj2y/VjpXMzk5qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773986232; c=relaxed/simple;
-	bh=lCpHNTxy1iv/rDcTEmdt8VplO/YWkXe5Cg4fkR5c6Z4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b8oLlYddPAFF7evk2uhLeIN4+NS+kOQgJsj2PCOh24Q7T4yFYfWsx8c/Jh2Ff9dNkHXHl64b7dMwRfNN2UGWE/WKskr8t3buKvxfgpyKbVjwl2LiukEjSNGa4obaY9xpS4h2pySlr81c+l0TXjEbhjbPB7gR/mWxEutYn1WdK/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GW2zUnxF; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773986760; c=relaxed/simple;
+	bh=D9odIyeYY39MafBZhsDyRMT2BfVh9cSJe7oV6lzfTJ0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Nws4C3K6HUgm5N2+Di5rET6Glwm+AMe7K7f5nZ3W8T5ejc34SK2W+KUyrld119KUFJIxQY2T5n4051er/YFmxp5FkwdlggePS5boBbCGpMDkh5V48N1SAZ1eQppxgeM1Uak9zdeVvISg8R0mBS77f40h8rKaWrp4LpE44g6W/4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ty6feN+M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XATt4m4P; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GW2zUnxF"
-Received: (qmail 65471 invoked by uid 106); 20 Mar 2026 05:57:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lCpHNTxy1iv/rDcTEmdt8VplO/YWkXe5Cg4fkR5c6Z4=; b=GW2zUnxFaVN0OIyFErUPz4Lx7BrqElpLW4rdKF/94hwgnkW4QM/DbnAHtnXzHKfcY0++4bVIP5CM5x2C3eD335YqHJC+bT2STrakVotfqA4erUKFzkqWLpACegNf14my2TJF8whaSoaacXGWvRDCalVdGI0E5Qko13w0LIWnT8N5pYXE2S0pMdsQS2tzpkKDx/QpXVK2mR67jlYQomlUFx9BOkBIBX4LeKx/VRPH3G5b8wJxGnxCLe8gpl7AurkRtw3PqwOl3iUQIMQOIeS05/Ae83GaHD1bpkgNDRhCcwBrcyLKmxVQzBRIFQ/BaCEVc/CuIQpSxl1qm4GQR/0gIQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Mar 2026 05:57:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 95774 invoked by uid 111); 20 Mar 2026 05:57:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Mar 2026 01:57:09 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Mar 2026 01:57:09 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
-Message-ID: <20260320055709.GA35291@coredump.intra.peff.net>
-References: <xmqq341wnvbk.fsf@gitster.g>
- <xmqqcy0zii0s.fsf@gitster.g>
- <20260319233546.GA3632561@coredump.intra.peff.net>
- <xmqqcy0zgtmu.fsf@gitster.g>
- <20260320041803.GA18125@coredump.intra.peff.net>
- <xmqq341vgilb.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ty6feN+M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XATt4m4P"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 82AEFEC01AD;
+	Fri, 20 Mar 2026 02:05:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 20 Mar 2026 02:05:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1773986758; x=1774073158; bh=W7PCk/qkTT
+	uQF/eW2TJOlvcU5i+ffyrxUIr50LNreFo=; b=Ty6feN+Me9CrycjHgSnS7G2P5m
+	9HaAiPB3MUI5QKmddlCe2gpVetK+4oYo6TRGIZTkrx3AA7+48OBJ87bmjzw6GEeY
+	Vx7Ln28jC0BsqZQiO2lrWtcPNuZwpLg1xqIXOZsB2COrDYqmP/0AMnq1gNXLr+BW
+	l57yVMYR47oK+jQxIsOImPB23KRsatQNOoPgvQ3ECwx0sEs/cFExs3O3mkAt7iOZ
+	b8WkjklXku929cQ6Lm0zGYGCvJkm6iGs1sDhdwhK7sxzEFfI1OQzFxC7d56gN4DU
+	ShdLn2sdwbcfN6zL/fYIKzsdOHJtVDOHP02jAuY/aS38RQowC93rdvEXmcUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773986758; x=1774073158; bh=W7PCk/qkTTuQF/eW2TJOlvcU5i+ffyrxUIr
+	50LNreFo=; b=XATt4m4P9DZHsZmOX5A9Yxas82qw/hzEo+dk+bS4SU7gK8G7NcT
+	JIMVagaSkQYSt8/4J70/IU7hdMdlaOzO9ebSSzt1GSo5Gevt7ruh6oB01ZQkSh8O
+	3QxXFQsC71i3I41AeHpZMjqY7x3P6OeY8yBFE9YX9jAnAkqptVWfgx3w46woTTEd
+	M5PgmuWeOHXIQfInEoqVz/W50hPEldoGa23YGc82QjLbCdtNWJf8HmYX+XV3WuMb
+	xl+/B47JfcGmrEY5P4ZIjZHYKGqbzC6ACuRHcXnOz0D0oUNx3/MEtvq/DSXEfCe4
+	VcAzItd5E/SvMJkn1PE1pxBVyORQ6PguweQ==
+X-ME-Sender: <xms:xuO8aQwf2qoKB_3JxJZRa18KihW4_tKAfy77GI4K2zkt4Vs3WoRq2g>
+    <xme:xuO8aSEO9JYJ9foJQk8XPq0NmA0bTYD-muXOsgkT2n1eLe4piRBmoBbh9qhFoemp0
+    77Dw-5oyZrwqeiT-dZZlWVxXBNkHl6DDMy1STkdpRs_0tFLznxCpg>
+X-ME-Received: <xmr:xuO8aczfSNwylOpTvMoGucih4s9QN_ap_12mUxBsF3AZ7GhTt0DaMrQiWPb10swhn2P1ZxNQglKIxqcnFmzFiRaVt5mZkjrTDw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeluddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
+    hushdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:xuO8abvfvsocNM-qza-_wxyvaynItOKhAMRtT9AfrXoCieETpSdjKA>
+    <xmx:xuO8aR1YlsJTcXMPmdFj7D5cxjEv5Wc4PbumyBv46NZht12rs6Pm7g>
+    <xmx:xuO8ae94FmmbSAOLl9bLj7J1vvrG8pPEiPLWav5CytBZUc19RGs8tA>
+    <xmx:xuO8aaPKnlDPByLoYR6ExKQdi80c-xStm4NFgxHkDdkH4AlGaDVb2Q>
+    <xmx:xuO8aduM7sBoH1Qf0XE50kvd4_Rle0Kci1Pr8iJ6qLDeM-SvAFaXxET4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Mar 2026 02:05:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Subject: [PATCH] object-file: fix sparse 'plain integer as NULL
+ pointer' error
+In-Reply-To: <b2656d8c-7878-489e-a78b-ecb441570bf6@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Fri, 20 Mar 2026 02:04:34 +0000")
+References: <97c623fe-4e03-4fbe-a6af-9c01c101bae4@ramsayjones.plus.com>
+	<xmqqqzpfgu5s.fsf@gitster.g>
+	<b2656d8c-7878-489e-a78b-ecb441570bf6@ramsayjones.plus.com>
+Date: Thu, 19 Mar 2026 23:05:56 -0700
+Message-ID: <xmqqy0jnf323.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq341vgilb.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Mar 19, 2026 at 10:45:04PM -0700, Junio C Hamano wrote:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> I may have phrased the idea very poorly.  In short, the core of the
-> idea is that we do not have to use the original content of the
-> strbuf at all.  I.e., "buf" does not have to be anything related to
-> sb->buf.
+> On 20/03/2026 1:35 am, Junio C Hamano wrote:
+>> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>> 
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>>> ---
+>>>
+>>> Hi Patrick,
+>>>
+>>> When you next re-roll your 'ps/object-counting' branch, could you please squash this
+>>> into the patch equivalent to the commit 2b24db1110 ("object-file: generalize counting
+>>> objects",2026-03-12) in tonight's 'seen' branch.
+>> 
+>> The topic being in 'next' since March 17th, that is a bit awkward to
+>> arrange.  I can queue the fix on top instead.
+>
+> Hmm, odd. I didn't do a 'branch --contains', obviously, but this only started tonight
+> (and I built git yesterday - master, next and seen), so I just assumed ... ;)
+>
+> Sorry about that.
 
-This seems like a non-starter to me, though, as it means getdelim() will
-always allocate a fresh buffer, even though we had a buffer it could
-have used. I.e., here:
+FWIW, my local build & test did not catch this until today, only
+because the version of sparse I was running was a tad old.  After
+updating it today, I started seeing the breakage there.
 
-> +	buf = NULL;
-> +	alloc = 0;
->  	errno = 0;
-> -	r = getdelim(&sb->buf, &sb->alloc, term, fp);
-> +	r = getdelim(&buf, &alloc, term, fp);
-
-we will always get a new allocation. And so looping over
-strbuf_getline() will incur one allocation per call, rather than using
-the same buffer over and over.
-
-I haven't measured to see what the exact cost is, but I know that
-looping over a strbuf (with a reset in the loop, or the implied reset
-from a getline call) is a common optimization trick that does have a
-measurable improvement for some cases.
-
--Peff
