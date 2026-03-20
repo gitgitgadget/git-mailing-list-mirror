@@ -1,40 +1,48 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877DB201004
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 04:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3A19ABD8
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 04:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773980287; cv=none; b=tDuHb5d+WYEh6xygargqFGh3sUgZCukjhYsrmk16Q3Px5NUVlwXLP0TpHtWrkmiLsfAQcbIpvZfNbh13XJnqS7sI8+fmTWgozwj9Bw3P5FK5uKoi/mLyKiVQUDPjBddMiElyW5y2JtWVsMfeQfKAXjeicRLPP/EqyWepkEU+RlM=
+	t=1773981586; cv=none; b=riZuRIxNUBRyNrV98sZMMBqZeItlz9DPav28xHJ+5tv0v96OilxNMQs+fliluIXktDcNqlDL1WioMDrUXpRG7sTIIniwWO/EgGGlkM9HHGzw4estBYkcVPWq+huI5rLJFlkwBK4nnWPWJCJAjNa5gxP9i/kQiwtlcbErPCpE0yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773980287; c=relaxed/simple;
-	bh=pj3TliYrA3s53fUhW+QJeRZt8FEXDeJ49KHxrZdcnFM=;
+	s=arc-20240116; t=1773981586; c=relaxed/simple;
+	bh=X2C6wIV6r9nl78dv6FOxtEeuQ/XgCvsXNYHC0cn28vc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TidabgeDXUVxP+7cUMdaSRAb0+vwvR6U5fqUeUuWZVO+dd2oit3ZVVz3O/wYg3AIyjKoYNWqI2y+kwS6cDlA3xX1wJbQZ0SZs4c/Mm6nQBtNMbRF6Vmky+j7IERSRGXIJAD7YLapEwAKHYaM3XNVGEhdrtKPZsuR7g/D0AMbF4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=S3LtIttr; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qe77nkAXr2piQ7U7i5Q9QMY47WPYBAh9qINV720IWS5jMb0o2sBdpu68SAlryw06cRQgepvXTKwBmizdFHfTOUbAB2cPPLAR7PB6/NrEh8q/Z5FPswE91xH8hkcbb9HzXSS4w7ENN63vdHTa19pddc72D5jzpdjJDLQUwAQzYsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PYQKueqQ; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="S3LtIttr"
-Received: (qmail 64553 invoked by uid 106); 20 Mar 2026 04:18:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pj3TliYrA3s53fUhW+QJeRZt8FEXDeJ49KHxrZdcnFM=; b=S3LtIttrkkAk/K+9V2nwrMb1Sksr4jXA8AMp9GKJswAX0EgtFmIgAo1A9A/eb5R156mH1Rbj/cPv0YhcPTyuAvxL0Nwk8B0hl5KayN0EEiJncz/3STWf9AbrKpY0zCOT6sdEOSm2aQ96OurZvnpOlYJS8GgU/OAX+iifwEvRAfY6/pwn1QM4sfQ2Ur/YBKnCv6UCxEtjOJstlfGywo3OzNlKqtxJqx0GV0qzURU3WMAvi0fvb0F6CvsIruP1xUgtaP5XfHZdGvrPkpnuWkCE32V9dz3tTKdh6cL/YZjTcDND+6hh/vbIEQnp47X7kWBRh7tBfIUpE+Ci81SZg1xGLQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PYQKueqQ"
+Received: (qmail 64753 invoked by uid 106); 20 Mar 2026 04:39:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=X2C6wIV6r9nl78dv6FOxtEeuQ/XgCvsXNYHC0cn28vc=; b=PYQKueqQt1iEiVoQLKHze16XcmY9L4aeJITlkwNAPeZnsqTrn1l9lgd78CXGkoRUGfUiAZesps9ML25GbINaffW68iQDIogpgi6N7veLtZLusHkbr5v3je+zZZUEHH9sL5bdP15c5AkZtffrZTxZ2QB2SGBrlrnAG4RBvpaafvrbmtljH2SJBaUlAD4d1v09aVIo6ykxvCnMydub0Zi926M88RW61usbN7F1K7IePKgbpKjnqz9dTOpIj9P98aMCzIfDjgJG/t6lU1TUmknmZM52OkFmeH+SB8KvHhpod1nQRjlyBuOioOBU+C3Qo5hT5OSJ97W5dGC65pHfrzVPhw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Mar 2026 04:18:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Mar 2026 04:39:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 94310 invoked by uid 111); 20 Mar 2026 04:18:04 -0000
+Received: (qmail 94486 invoked by uid 111); 20 Mar 2026 04:39:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Mar 2026 00:18:04 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Mar 2026 00:39:43 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Mar 2026 00:18:03 -0400
+Date: Fri, 20 Mar 2026 00:39:43 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
-Message-ID: <20260320041803.GA18125@coredump.intra.peff.net>
-References: <xmqq341wnvbk.fsf@gitster.g>
- <xmqqcy0zii0s.fsf@gitster.g>
- <20260319233546.GA3632561@coredump.intra.peff.net>
- <xmqqcy0zgtmu.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Matthew John Cheetham <mjcheetham@outlook.com>,
+	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH] git-compat-util: make git_find_last_dir_sep return a
+ const pointer
+Message-ID: <20260320043943.GB18125@coredump.intra.peff.net>
+References: <e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com>
+ <20260203062537.GA286409@coredump.intra.peff.net>
+ <87ecn18aip.fsf@gmail.com>
+ <20260204053218.GA942606@coredump.intra.peff.net>
+ <87a4w42i4c.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,103 +51,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqcy0zgtmu.fsf@gitster.g>
+In-Reply-To: <87a4w42i4c.fsf@iotcl.com>
 
-On Thu, Mar 19, 2026 at 06:46:33PM -0700, Junio C Hamano wrote:
+On Thu, Mar 19, 2026 at 12:06:43PM +0100, Toon Claes wrote:
 
-> > diff --git a/strbuf.c b/strbuf.c
-> > index 3939863cf3..0333aea261 100644
-> > --- a/strbuf.c
-> > +++ b/strbuf.c
-> > @@ -631,6 +631,8 @@ int strbuf_getcwd(struct strbuf *sb)
-> >  #ifdef HAVE_GETDELIM
-> >  int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
-> >  {
-> > +	char *buf;
-> > +	size_t alloc;
-> >  	ssize_t r;
-> >  
-> >  	if (feof(fp))
-> > @@ -639,12 +641,14 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
-> >  	strbuf_reset(sb);
-> >  
-> >  	/* Translate slopbuf to NULL, as we cannot call realloc on it */
-> > -	if (!sb->alloc)
-> > -		sb->buf = NULL;
-> > +	alloc = sb->alloc;
-> > +	buf = alloc ? sb->buf : NULL;
-> >  	errno = 0;
+> Jeff King <peff@peff.net> writes:
 > 
-> I actually was hoping that all lines in this hunk before this point
-> can be removed, i.e., strbuf_release(sb), buf = NULL, alloc = 0.
-
-I'm not quite sure what you mean. The function right now looks like:
-
-          ssize_t r;
-  
-          if (feof(fp))
-                  return EOF;
-  
-          strbuf_reset(sb);
-  
-          /* Translate slopbuf to NULL, as we cannot call realloc on it */
-          if (!sb->alloc)
-                  sb->buf = NULL;
-          errno = 0;
-
-I think the strbuf_reset() could go away even without any other changes.
-We always adjust sb->len in the end to match what happened with
-getdelim(), so there is no point in doing it up front.
-
-We could strbuf_release() and set buf to NULL, but that would defeat the
-purpose of the function, wouldn't it? We want to reuse sb->buf in each
-call, not allocate it fresh each time. I.e., in a loop like:
-
-  while (strbuf_getline(&sb) != EOF) {
-     ...look at sb.buf...
-  }
-
-we want to use the same buffer over and over.
-
-> > @@ -669,10 +673,13 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
-> >  	 * we can just re-init, but otherwise we should make sure that our
-> >  	 * length is empty, and that the result is NUL-terminated.
-> >  	 */
-> > -	if (!sb->buf)
-> > +	if (!buf)
-> >  		strbuf_init(sb, 0);
-> > -	else
-> > -		strbuf_reset(sb);
-> > +	else {
-> > +		sb->buf = buf;
-> > +		sb->alloc = alloc;
-> > +		strbuf_reset(&sb);
-> > +	}
+> >> > Looking at strchr()'s declaration in string.h, which is defined like:
+> >> >
+> >> >   #  define strchr(S, C)                                          \
+> >> >     __glibc_const_generic (S, const char *, strchr (S, C))
+> >> >
+> >> > I think the answer is probably "yes". But it also doesn't quite solve
+> >> > our problem. That would give us type-checking of callers of our
+> >> > function, but we still have to convince the compiler not to complain
+> >> > about its implementation. For that we'd need to either cast away const
+> >> > manually, I guess.
+> >> 
+> >> That macro depends on Generic selections from C11 [1]. I wasn't sure if
+> >> Git would like that, given it is conservative with other C features.
+> >
+> > We definitely can't rely on it everywhere. But if there is a solution
+> > that is conditionally compiled, and can kick in only when these extra
+> > warnings also kick in, that would be OK. Assuming the result is not too
+> > painful to look at, of course.
 > 
-> I do not get all these conditionals.  This is an EOF code path; we
-> have no data in buf to return.  We resetted the caller's strbuf
-> already.  Can't we return buf (if allocated) to the system and
-> return without doing any further damage to sb at this point?
+> So the Git project would be okay to conditionally compile with Generic
+> selections if the compiler supports it? Seems to me this is the easiest
+> way forward to silence the errors for users who see these warnings (that
+> includes me).
 
-The conditional is trying to keep any allocated buffer returned from
-getdelim() attached to the strbuf. Since this is EOF (or error), I agree
-it would probably be OK to just free it. Even in a loop like the one
-above, the loop will generally end at EOF, and we don't care about
-reusing the buffer further.
+Yes, though I think just turning it into a macro is enough to silence
+this particular case (because macros don't have types, and so the
+compiler sees the original types passed to strchr). And as you noted,
+there are a ton of other cases that have to be looked at individually,
+which I think is the real blocker.
 
-But it's not quite enough to just do:
+> I did not look into any of them, but I think you (Collin) have sent out
+> patches for various of these? But they _should_ managable to address?
 
-  free(buf);
+I have quick-and-dirty fixes for these at:
 
-Because "buf" is a copy of sb->buf, and we handed "buf" off to
-getdelim(), we need to make sure sb->buf is not still pointing there. I
-think it would be enough to do:
+  https://github.com/peff/git jk/hacky-strchr-fixes
 
-  free(buf);
-  strbuf_init(sb, 0);
+I haven't been cleaning them up and sending in patches because I didn't
+want to duplicate work Collin was doing. But Collin, let us know if we
+can contribute. Dealing with the warnings is an occasional hassle during
+other work.
 
-If we did a strbuf_release() at the top of the function then that is not
-a concern (you know that sb->buf is pointing at the slopbuf). But I
-don't think that is a good idea for the reason I gave above.
+If you're using gcc, you can solve it by just adding
+-Wno-discarded-qualifiers to your CFLAGS. But clang doesn't know about
+that warning. Worse, if you sometimes compile with -std=c99 (which is
+necessary to build versions of Git older than e8b3bcf491) then glibc's
+preprocessor conditionals don't kick in correctly and you get:
+
+  ./git-compat-util.h:344:9: warning: returning 'const char *' from a function with result type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+    344 |         return strrchr(path, '/');
+        |                ^~~~~~~~~~~~~~~~~~
+  /usr/include/string.h:296:3: note: expanded from macro 'strrchr'
+    296 |   __glibc_const_generic (S, const char *, strrchr (S, C))
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h:838:3: note: expanded from macro '__glibc_const_generic'
+    838 |   _Generic (0 ? (PTR) : (void *) 1,                     \
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    839 |             const void *: (CTYPE) (CALL),               \
+        |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    840 |             default: CALL)
+        |             ~~~~~~~~~~~~~~
+
+Yuck. That is not even specific to Git, and is hopefully something that
+glibc and clang folks might figure out.
 
 -Peff
