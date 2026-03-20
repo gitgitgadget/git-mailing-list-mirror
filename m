@@ -1,120 +1,147 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737933D34A6
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 17:32:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499792FE58C
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 17:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774027950; cv=none; b=KJvlqaqV+8a2LrZvy+nedhQbbHv+5+xiFgpF/XfYdi5GtTJwOMcoXMC+PpO2AbvXoOnCsJ2L+Zys8q9uo9IscFn2NhqfY8ukoOU/NPwshZYIINT1KwqWc0MMH3hRsVN8Se4E8YJCUyRoThoF8V9KzQXgdtcnpUg//wKfvokcbWU=
+	t=1774028828; cv=none; b=fCFC+guwTkRd0ZdSuYe6K/riVj93MNz3QMFH7BGzz1YXEolkMCWMHBIhHtZfsQ926hkqoAwudq+KOaKwBbewJyXT2oZvCE7G2ZU4nyuIL/Oec9ezuA3bv62oPThJvNEMTXmOI7aMMAg6+wK19W6mFtska6nDIqbNZEohHTrqO6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774027950; c=relaxed/simple;
-	bh=NbLOr9nfoYSkjC0+ik+p5jywNhSEl0KnRC2abLD0yOc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CHeUZwvsXj2flg/Uc4GTBh0jMqVKEtJxc0JrX1/RZR9717g3Cfi/CYC3Ve+51uGQXyqz+Op17IZf8NzPlE6OWGdqGMZH6mopq4yf9s5yySp+8Rqu5bCD921s1TFucIqyo9QmhOgzuoK3z+7JfDWTkP6qQuldWPm/I9Tuhg/qhBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Av7H+jor; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774028828; c=relaxed/simple;
+	bh=n/2biQ4DVAML0bnBOOnoQj06w/WQa6W0sFtnBQc2VIg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PljDET6WLMAB8u6c9ck9LPyVmredWg9H+cJGo29St5bznGCgEWIyCsi+W0ZKzwXfGq5kVH7LiMHQGdiUh7mZ2a8ZCGQrifbJvBLl2sqtVPJ5wDCcMELHa4hpRQg0Nl8AW1cBOWvq4gTfznBYtpneGvGB7o1iezb4bz0kAFPr9j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L1YqwRVa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V7yxO+cy; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Av7H+jor"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2aecf52fa69so2455265ad.0
-        for <git@vger.kernel.org>; Fri, 20 Mar 2026 10:32:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774027949; x=1774632749; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JJ6J+9fFTsx2hzazlgitELTG9cbsRyBAWFgKujYgl+w=;
-        b=Av7H+jorDoewBDu4oQMvdBNFKoweFpkdxGEDOfnSR5mWXHZOyoDVKkGCZMEldj6mdD
-         SoYSZRFhi7aZTQ4HOkHBtO8N1CRrEyYaVDiio2QMAuCMJ3L1wC0a+HM/X/F0gREiVCmE
-         DyKB/sufOMQZfQB+DY8+J53H/ydDi+hdN/cRF1sWpuuQkdHrNOV5rFPRlSCGc19Sobpz
-         XVxEj1jsob6TdbrOj9eNK8gH3VMrd0Hw9HTSHnkC2qwaZUhsp+dvdvQQ46yThQx/3EPx
-         C/4/ooOiyNwta60xR16pFvvsgn+u8AWvuWOcitrIqCI7WlrQppla+dsMaONnp01QEWa8
-         A7aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774027949; x=1774632749;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JJ6J+9fFTsx2hzazlgitELTG9cbsRyBAWFgKujYgl+w=;
-        b=s2+/qPZKfht8LnVUQcNGEYW4vpxvfYjguQarQMrBMaw/oxXNAH/xSWOGAUmsWp8k7u
-         C0+kRlmi80SatYEEHY/RC1WqSbaU2oXYueejmtYR8W1jf0zx42tuR2XOAuuy08Eq6Prc
-         PTjH1067nL43L5SZw6Z56UVYmyzlQy6rvVaj7sviyDV8SKoI+czQDr3qjp/5k41YDWKo
-         kOg/UC08NyITYNSZRCjFzYzRhYGpQMNmmNGOS4b0mKTjKM3yACyMyW7YlFZ7azN4v+vY
-         AwKmVtyrbOWtfFv0aUjXQsZQ51KIt9ciuCIJMTwjR9ZcYVLXPjvGNBe3gv/qDipRvL5c
-         GRxA==
-X-Forwarded-Encrypted: i=1; AJvYcCWEkV1KYNh4etbtz5eR/yUerd4XaiZa2NWftSsNzQqRUnWK8/b0d/1j+domWmlTRiI1JnM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEuLZaY31KDh6rmYomyKO0k3v2SaOo+HAz4DIkiP28rwJUsVPU
-	WPmy9L+aWUHs5gkjIBi6rOdvKaJ2khjSW5Jd9epMFRhLoaQ2z2v43uat
-X-Gm-Gg: ATEYQzwfTA1rD5e60gJHsBQSw0nNhv67Tj9lg81np0AwfpMZ0KRYNCEJ+7ouPs+b/mS
-	tgThZk3Qt6QmVl+x5UW7jUblQWWKofu+ZDcLLRZhsrRVFjnJPSsXKe4A1LbLcnsWCgYMCjrBYF9
-	RZf1UYbx83O6Vwa1xqcbBPyrKRYnEVLgp3Z7WIkbiORsLu+EoWdJZcoZIw5O3OHoxMZRht7HC1y
-	T35ugssQJ+5zpt8X+p4ZI7kJRY7PVM9h8FaY5nERblWXET90EVYFNIRYEi8c8Zwj4H341kqCX4Q
-	WxTyTGoRCzruuqBmRR+BOnslC1pmIztiELHBguCRn1TGyvEQCDbiB25wSxmByvCrCSOPi7l68la
-	BUhx97i7rwwF8JKr837/2zSwOoEUTRwZZCrnb2yYv34w3KRSyBCihtHKEJ7l9HzOcan7s+IPmIs
-	W/V8A99wPyKRVAzggT09LGE3wAEAgpjR2eyfU+/8gFFjdxXDIWYQ6CGxyIdaV3BKIPWBfYAl9hT
-	wgc8sz6MpI=
-X-Received: by 2002:a17:903:22d0:b0:2b0:5075:96fb with SMTP id d9443c01a7336-2b0826b8a74mr22426675ad.2.1774027948696;
-        Fri, 20 Mar 2026 10:32:28 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083655b5dsm37498675ad.52.2026.03.20.10.32.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2026 10:32:28 -0700 (PDT)
-Message-ID: <9d0746d8-2194-4a13-812b-9b46d04c189a@gmail.com>
-Date: Sat, 21 Mar 2026 01:32:25 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L1YqwRVa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V7yxO+cy"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id EEAB21D001C4;
+	Fri, 20 Mar 2026 13:47:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 20 Mar 2026 13:47:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774028824;
+	 x=1774115224; bh=X+ycT20wTFjUL65znpz6D34DMI6ZYuJE8ucL+bJLZOI=; b=
+	L1YqwRVaHMC7WwbuFwOxEAqLBIKI2jstYlyWzHkX1zfFlIlPZ1vmIQN6vnq5ollG
+	mfhnLYcDkDp6fRA6Sqh00+jZ2KHGX1qRmqhWBfhTUcbWYRz6bS69mvmiAqCrGsuX
+	1FnbYj1Y+IFIGWViAGY81LfYM5bZGR0cVvEyqV+l0Ess6I/XazCXUXs+QQYr75DM
+	NgbhNmqNqpt3F7m7Yy4IFDR4+MVKQXLGCnyNoMJ3ODSD/0QxOfDTVKyH0ud38+NE
+	TzIKmOyzTPuXrCjk4daId+U709Mlcm79ormenLo1Dy1wMcLwMwXDvXXrT0MqVOdu
+	1bXcsK86KsCPPlrm4TuDqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774028824; x=
+	1774115224; bh=X+ycT20wTFjUL65znpz6D34DMI6ZYuJE8ucL+bJLZOI=; b=V
+	7yxO+cyjlkf5xV+Yh66KqlpUb+e91ogRIC0mQR70hPxhgWViO4htVApBItZfEV7v
+	L0KjEV1dO1EpY1Iy/opxF3RHm6sp0XlE3DX4Mq0uSd7s0fxI2RHQZvxsbsvnotJi
+	Hrf2KqCXskGHRrvWGPJQzRyGzzaL/h5c+gE9hCspBhcwVkuNwRr6RZtWVwDmLFF0
+	7LtKuFWLL1i2rPq9KagHZFzhPaSL9QmEOsw+OOBH+p9ibVlPRFxPtCAGfC4+mWFf
+	tQWti7D6/mbmRjFLSLsMQeUXCwP+cZe9VPCD7KUtTuiwFUo8XMJE+W36Uvra/SgQ
+	mOP8rWbtE44071el6qVKA==
+X-ME-Sender: <xms:GIi9aeqZXqUue6K8BTN-gTsN9WnDsWjNda7aAXnQ_-YYN_kZpJBGdQ>
+    <xme:GIi9aQUGuS6ffKJPi15W0FPeNFKYBUyKkvpVpn0Jmf46ptgI5lSqndNGEPFY6As45
+    bfCp6-f4R9tKhklatDrV0M9hYJeme4QUcrY1UoDCEMJ6kgpvic>
+X-ME-Received: <xmr:GIi9adBoj0uu_Y9HGfcBLlry4nQBKOBy64eGf2caCv7YZ4GsMZeCaZA6iiBVTe-D-YWcqH75teAJmsoCNLpE9X-MVaXdGII-bQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddtheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhepffethefgieekkeehveegieelie
+    fhgefhudfhtddtveeltdehhfefhfevieeuhfefnecuffhomhgrihhnpehprghthhdqfigr
+    lhhkrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohephihsihhnghhhtghinhesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhish
+    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggv
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GIi9aU3w5-dkYZT3jX5Cox44gpQDyHbMXwzJx3_sdx36IVsZwDeT8g>
+    <xmx:GIi9af1NGNMZW66FBq_TNw8r9Rys0EwBk_rrXSlLtimilZ0cqI6pNA>
+    <xmx:GIi9aZCh1pEa5rOXCIag6j8ul-NIkp3xSEO-m8V1txthp9Za1kQU9Q>
+    <xmx:GIi9ae6gUsx97VckUE3G_EZGOf3wbunmRKUJ0M3tirvrYS7IaZGDOg>
+    <xmx:GIi9aWNw81VMDtuVNRsg8RxV0hQLH17uuzCxoJIgdPMeRUoZwbf75ZDr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Mar 2026 13:47:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <a3205153416@gmail.com>
+Cc: Yuvraj Singh Chauhan <ysinghcin@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com,  stolee@gmail.com
+Subject: Re: [PATCH] path-walk: fix NULL pointer dereference in error message
+In-Reply-To: <9d0746d8-2194-4a13-812b-9b46d04c189a@gmail.com> (Tian Yuchen's
+	message of "Sat, 21 Mar 2026 01:32:25 +0800")
+References: <20260320114556.3151040-1-ysinghcin@gmail.com>
+	<eca1a469-2e15-4466-ae58-978ffc23c177@gmail.com>
+	<9d0746d8-2194-4a13-812b-9b46d04c189a@gmail.com>
+Date: Fri, 20 Mar 2026 10:47:02 -0700
+Message-ID: <xmqqpl4ye6ll.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] path-walk: fix NULL pointer dereference in error message
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-To: Yuvraj Singh Chauhan <ysinghcin@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, stolee@gmail.com
-References: <20260320114556.3151040-1-ysinghcin@gmail.com>
- <eca1a469-2e15-4466-ae58-978ffc23c177@gmail.com>
-In-Reply-To: <eca1a469-2e15-4466-ae58-978ffc23c177@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Although this isn’t covered in this patch, I’d still like to add a few 
-more comments. Please allow me to elaborate a bit further:
+Tian Yuchen <a3205153416@gmail.com> writes:
 
-This is the implementation of object_as_type() in object.c:
+> Then the message 'failed to find object' is misleading when user 
+> encounters the second scenario. Wouldn’t it be confusing if a user saw 
+> this message, checked the object using 'git cat-file -t', and discovered 
+> that the object actually exists?
 
-> void *object_as_type(struct object *obj, enum object_type type, int quiet)
-> {
-> 	if (obj->type == type)
-> 		return obj;
-> 	else if (obj->type == OBJ_NONE) {
-> 		if (type == OBJ_COMMIT)
-> 			init_commit_node((struct commit *) obj);
-> 		else
-> 			obj->type = type;
-> 		return obj;
-> 	}
-> 	else {
-> 		if (!quiet)
-> 			error(_("object %s is a %s, not a %s"),
-> 			      oid_to_hex(&obj->oid),
-> 			      type_name(obj->type), type_name(type));
-> 		return NULL;
-> 	}
-> }
+For that, you'd need to remove the block in question and duplicate
+the message generation, perhaps like so, to allow the message
+properly localized.
 
-There are at least two possible scenarios: the object doesn't exist, or 
-the type doesn't match, right?
+But that is way outside the scope of the patch that was posted,
+which was a surgical fix for a reference to an incorrect pointer, I
+would have to say.
 
-Then the message 'failed to find object' is misleading when user 
-encounters the second scenario. Wouldn’t it be confusing if a user saw 
-this message, checked the object using 'git cat-file -t', and discovered 
-that the object actually exists?
+ path-walk.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Regards,
-
-Yuchen
-
+diff --git c/path-walk.c w/path-walk.c
+index 364e4cfa19..bd2c47079e 100644
+--- c/path-walk.c
++++ w/path-walk.c
+@@ -161,20 +161,20 @@ static int add_tree_entries(struct path_walk_context *ctx,
+ 
+ 		if (type == OBJ_TREE) {
+ 			struct tree *child = lookup_tree(ctx->repo, &entry.oid);
+-			o = child ? &child->object : NULL;
++			if (!child)
++				return error(_("failed to find tree object %s"),
++					     oid_to_hex(&entry.oid));
++			o = &child->object;
+ 		} else if (type == OBJ_BLOB) {
+ 			struct blob *child = lookup_blob(ctx->repo, &entry.oid);
+-			o = child ? &child->object : NULL;
++			if (!child)
++				return error(_("failed to find blob object %s"),
++					     oid_to_hex(&entry.oid));
++			o = &child->object;
+ 		} else {
+ 			BUG("invalid type for tree entry: %d", type);
+ 		}
+ 
+-		if (!o) {
+-			error(_("failed to find object %s"),
+-			      oid_to_hex(&o->oid));
+-			return -1;
+-		}
+-
+ 		/* Skip this object if already seen. */
+ 		if (o->flags & SEEN)
+ 			continue;
 
