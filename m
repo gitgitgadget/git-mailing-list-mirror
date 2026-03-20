@@ -1,98 +1,142 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BF03CEBB2
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 17:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4540E3D3494
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 17:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774026496; cv=none; b=LSn8HKP8phywfLguPTeDoGgUmvTaIzBuan6s9+72G6yyEFD2xUEOZAJrE1z9OTS/zcBP83XUc6HJtIwGv8VB9mKzrlKxCCXBxx68CDPXMIm3fV5njFll05ktjKBvtsWwScFYgSH0n3YT/03gRDagQwE2HwAD3DcKDd1iuy4GyjY=
+	t=1774027125; cv=none; b=nEnCRHjvzCOWT1mP07uV6QJcA3u0Vea2ycrxaFIdrXzAhb33v4eZQsEkeoXCGwYYOslaSyJxhK2+U37FtAPq5pQCxQftAhAFbRtj7kIShMO1czVi/qXUuNsPRDClSi0wdmnrAo0Betci5dez6xjtKFaiOOsVfxOS3URVmlpvXr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774026496; c=relaxed/simple;
-	bh=DvfOGBo9hjGPnQ3mg+JNx/zy61XLWVeY+MFPf0GSWgA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GbeVyH8Zk5Ddmho/BTKCXa0og2Jx9iGCwOxl0fvxTmAqa8/NLRHtzVShrUJrMhQJR5KIhvwaEUS0YhaRMbfZW3iWc4RYEoq6i9pJ1qz0kXIrcUt5aFbTxc4vIKaBHEa3G8uA35OKzYvzcfsKl38XWSTqa9jGx2IWPSeHksoDYSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NUKEy0Sl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5VXWykdj; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774027125; c=relaxed/simple;
+	bh=E04BFAGuTP2ItCLgpEk0jb+b4N1sLG8ZAWFSZ4u9dZE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u5ioyuAfLutiKug+WkpcDSwYMf+3KYmW1t0IxcdPbRBsVm4cf5XnvuP3RMYvRDFzOgPKc9Lvu7MmKM0B2nbsvt2ZgpWIdE67Jq+1BxSCpYJNtzHMgTGpbdKQOh1iuAgYR6shXL5QEeBloiJ/IZtHbvg9858lWNFD4lklMaXtqts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bzitNs3j; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NUKEy0Sl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5VXWykdj"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id BB6171D001C0;
-	Fri, 20 Mar 2026 13:08:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 20 Mar 2026 13:08:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774026494; x=1774112894; bh=U7s5dqSLQG
-	cMi0zuIBkBoq/S+AAEAiqK3fxkKyZuT24=; b=NUKEy0SlncKR+QNPkQIQaBN1Ef
-	2lIBzveU4fH/UXFZow5NQd8+4zgSjbGFlnUD7qZbZ2HZFHBGbXlYLwXk9Bc5kx8A
-	jZDN834QAjA4QF/MBuFM2QPIGAfOA5G2iBPlPjVc27jknYsRkBpHLNJahgq44dTT
-	0FHtS0KZ5Lp28OlCM74WENNlff0V3lmnBN7eJQvsAjEGIveoX9TgxAdQe+LV/47q
-	3G+cD2NVygmQrp0Z3alJcjGpUy9APLEOrcgq4k0aa7Ifk4X2jJXzaKMxudf80iIp
-	gm1eG6FDMaSOnb+Q4AXk4f4BCCigXNSphB4bnMy/RTll0/Im2lcN1kLiFBrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774026494; x=1774112894; bh=U7s5dqSLQGcMi0zuIBkBoq/S+AAEAiqK3fx
-	kKyZuT24=; b=5VXWykdjwDE105ADkolk5nmvdsoJPoR+HIRwugx9s5naNEgKG4W
-	Ct9p0NYHQ6yRfUKbcvEdGRxxiTxtM5EN9xbr7kHTjuNv5eP2ywOAg/7cqiPKyz6k
-	HTtPPhO/rguy5dxsXL2H1Do9eugn80PF1S5T6nsNBJHIBPkNBnMnt5VhBJEVfgW8
-	3nNfaObE2LGqvBk5RQsLQiaHRh4F2q/OIf2/BrOum2dADCZ41I+6252LksXpk7Jc
-	5Lj3Pz4OkXmg7T6Szy4Gd7a/kSUJ6VYOkn7TMXtPEBco8DkwB/FsVy4H8tgYbO+y
-	E3PpyYNzNhz5tiDpmDm0a99fByZwsf4YkgQ==
-X-ME-Sender: <xms:_n69aTOsGJG5UZ9DoesYxlC5CzAFxlo9fxxBURUdLG1l75DeuauFLw>
-    <xme:_n69aRplrOLejzX631vkWT9xgQBJ_HG15bo-Mz3HxDrgL2wJ02EXSej8hpNPBRADs
-    przF6zmYW9gUD0md3_WhQTLxKzq5bAUfsJXMW9tFvGJ8mA9uIhdSg>
-X-ME-Received: <xmr:_n69acHC927BWVz3im75p03vi2ghCsvwcKD5euvT7hJjwFlWvaEpMjdne4eRgjMRJxr6KtHcUIlLOYaHVcBefj9_Pk0eYJZgew>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddtgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohephihsihhnghhhtghinhesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_n69aerBUKQKBWcHRDwwO2a8YiPp0jvK18mV4BdRGQTe3G5LmOZmsg>
-    <xmx:_n69adabyJoXcHMgIduh5bunUJBm9Sro9ewqwMmPwc7wJUtRAEEdgA>
-    <xmx:_n69afW85O9E-kk_4IJ5SVcHVAJKduwafbnT5JEl0mcS0rWa0D2Ujg>
-    <xmx:_n69ae8IDVzlVmlhQU-NK2h3EElqGzvd_QnFsxN-OBMdPEaG6dKAow>
-    <xmx:_n69aXwnZXg5rP2wcyJdxBc76S1zHGzaG7L3ekT4T5bdbXo0DwAphTOe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Mar 2026 13:08:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Yuvraj Singh Chauhan <ysinghcin@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  stolee@gmail.com
-Subject: Re: [PATCH v1] path-walk: fix NULL pointer dereference in error
- message
-In-Reply-To: <CALnO6CDnwYaAPhp67kaYWtV48ULjWAR6ks1khVXmSs1oWUbRDQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Fri, 20 Mar 2026 11:16:48 -0400")
-References: <20260320114823.3151961-1-ysinghcin@gmail.com>
-	<CALnO6CDnwYaAPhp67kaYWtV48ULjWAR6ks1khVXmSs1oWUbRDQ@mail.gmail.com>
-Date: Fri, 20 Mar 2026 10:08:13 -0700
-Message-ID: <xmqqy0jme8ea.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzitNs3j"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ab08e6c553so1995005ad.3
+        for <git@vger.kernel.org>; Fri, 20 Mar 2026 10:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774027121; x=1774631921; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tVf/s+ueDobHMC5Mg9FKz0Pvh9UnvzlCErtoD42tcm8=;
+        b=bzitNs3jI0KAsIFCcEy+7EDvGctaO+E79jlJvxfin3eq/K6yvE6iXoQPSoAAytd+cn
+         RBZQZUodTg92fH4Lp+PK18Qhmo4bfmBKaKMVBg3TaSBURcyMojIhabecd41A+loMrjZ4
+         e50PSJU9W+Jea+9Ye4WSk6/fhauRwljM1Pk8MGObdXLozjXARhqvAlKuy2d0RiqXKP18
+         Gt+Zc1H1ByOnU+VSHFXnQ03urS/2BqY4SdVML8sPPnsLi5PSDozDv+qxcm2c8MKc5Spr
+         5J+yWR0eWdu6GT/5ZEQH/LQOfxaH+MUTdQ/xXB1bZ4f0IPNYsgKPgmQRJjehWskSnB07
+         iawQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774027121; x=1774631921;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tVf/s+ueDobHMC5Mg9FKz0Pvh9UnvzlCErtoD42tcm8=;
+        b=MNUHtYkOMNiSXP6FJfXWNy45/0cV++drFcPqaxJj57uWQLmnGERLeJfBn1Sa/9nH9K
+         LpXBUrsDMpCxZG5sg/WYAmnThBD58n8cRgo0DQyHDLDUJwLDlUbE3LlOobnjIyFnQPtJ
+         B4u6hbNVMuHSBZ9hdFmi7LkhIO0Shx+E1Zuzj0dCSAaLkT9tW/QSNw+7gM+jHG0SGgo6
+         ZjTA0SS1ytDpwvrwvVDr+qvW57qsWum9+uvnEYF31tamlH+vscFhNvAtsIXdN+SsTR9h
+         1y5lyxWBhmLLUpH5kxNxZiGHYdLJlPF13Yw9DfibD1j7HQtoq8EYhfvjdjSG7J0AIuYZ
+         t46Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW5vv+GqMGQJa7DlpX2v4lfJ2Cn2Dmk43E78sQZ9VfMwC+oQxbnLkALTMi4rvAdvtZQJCY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YznT4uUepc641BYbH7YC70EBfx2DwJSgxXa4GQCpGIiEfpDjDUC
+	wB/gmRjDVIOAogvZR1/Y/bbYMy8sIwF8VmB9MAXZtLHC8AYH/7I+/zAc
+X-Gm-Gg: ATEYQzwtQGPrXYYuPIikj9JQAax81nFJ3hfx1LnoTgmfibNsL/u/Ho5lINK+UbTJ7TW
+	PgxoIDMTL6McY5UWOaxrVruwFFBQnl/xGbRWezDaYI6BAdyVKFKQHHLZTJ3IeYa5eibSikG78iE
+	xW8CO7pykR5+wwlGCLG1agFvUu9OocxHu8ebD4NF+6UDDFAVQSdRZUt21FospUpSKGf1+5QVSEY
+	fHDKsnojMrXNCNYo+kZCGaB3U9FziqupDuED9htUBG5FLwcCVZKArgNQHPcGUVJIVu4Gc2Vbvch
+	yKV1kLpmmQfj447FHCTlS3CmMfNGVMo+4H7dMVs5RECbjW7XO2wtSWQOsmojdNjBjQykGyQwKqC
+	cgnBYQtY1SQgFX2DvZpg2Wi8rs8E2ZwToyKFwYj7qpxxLt/AhNbv3MBSIMeRT712GqBVdg88Igd
+	WAkk0RYfaD1aeLgQo+a9ut4rPz4MPpIMEAUbqgekxZlSY829gc1iUqCMb3ut53loZk6gfBkk4S/
+	B/3wr25AKM=
+X-Received: by 2002:a17:903:1a2e:b0:2ae:cacf:fc57 with SMTP id d9443c01a7336-2b08275dae1mr21587465ad.4.1774027121188;
+        Fri, 20 Mar 2026 10:18:41 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516194sm27323155ad.4.2026.03.20.10.18.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Mar 2026 10:18:40 -0700 (PDT)
+Message-ID: <eca1a469-2e15-4466-ae58-978ffc23c177@gmail.com>
+Date: Sat, 21 Mar 2026 01:18:36 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] path-walk: fix NULL pointer dereference in error message
+Content-Language: en-US
+To: Yuvraj Singh Chauhan <ysinghcin@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, stolee@gmail.com
+References: <20260320114556.3151040-1-ysinghcin@gmail.com>
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260320114556.3151040-1-ysinghcin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Hello,
 
-> You mentioned git-backfill with a tree missing from the local odb; do
-> you have a short reproduction script or test-case?
+Thanks for the patch!
 
-Interesting thing to ask.  THe code looks correct, though.
+On 3/20/26 19:45, Yuvraj Singh Chauhan wrote:
+> When lookup_tree() or lookup_blob() cannot find a tree entry's object,
+> 'o' is set to NULL via:
+> 
+>      o = child ? &child->object : NULL;
+> 
+> The subsequent null-check catches this correctly, but then dereferences
+> 'o' to format the error message:
+> 
+>      error(_("failed to find object %s"), oid_to_hex(&o->oid));
+> 
+> This causes a segfault instead of the intended diagnostic output.
+> Fix this by using &entry.oid instead. 'entry' is the struct name_entry
+> populated by tree_entry() on each loop iteration and holds the OID of
+> the failing lookup
+
+Checking for NULL and then dereference the pointer, a segfault is bound 
+to occur. I believe this is indeed a bug.
+
+> ---
+>   path-walk.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/path-walk.c b/path-walk.c
+> index 364e4cfa19..839582380c 100644
+> --- a/path-walk.c
+> +++ b/path-walk.c
+> @@ -171,7 +171,7 @@ static int add_tree_entries(struct path_walk_context *ctx,
+>   
+>   		if (!o) {
+>   			error(_("failed to find object %s"),
+> -			      oid_to_hex(&o->oid));
+> +			      oid_to_hex(&entry.oid));
+>   			return -1;
+>   		}
+>   
+
+The change itself looks good to me.
+
+However, I have a slight concern about the original code implementation:
+
+ >      o = child ? &child->object : NULL;
+
+This means that 'child = NULL' is the expected failure path. But why is 
+'NULL' returned? Does the object truly not exist, or was it simply not 
+parsed? Is 'failed to find object' sufficient to describe the cause of 
+the failure? I think that's debatable. (I’m not 'suggesting' that you 
+make this change; I just hope we can all think about it together ;)
+
+Also, it looks like you forgot to include 'Signed-off-by' line when you 
+committed the changes. When you've gathered enough feedback to commit 
+v2, please remember to include it.
+
+Regards,
+
+Yuchen
+
