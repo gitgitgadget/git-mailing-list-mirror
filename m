@@ -1,97 +1,137 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09590322A2E
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 16:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402532641CA
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 16:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774024271; cv=none; b=bPAuo+vm3/PUutlnzJ5mwHyO7RDMB5yh/QveQO0cbD8QeqKwUhu6KZExfvZY7VP4Cgeh+YKdRkuU7BTvskW6T4MzeSc8I5BrKBTiqdNOrNJor7bulw/8nqSSNK0kz2ypaFfROJfEBskGFRift8Rya5lKiO6GQs+2ddOr05SoWUc=
+	t=1774024409; cv=none; b=tV2q3/b33f6MeDyxcnvSXf1zsB7W8PzXVSu2D34xsQl4xtL17hYDWK4ZGA0jngD4C0Pho/c1ytIlSjvLCVnWP+xv24jUlYxNnppugjvgJ7QYtGl+Z4UpFPzVwM9HHkGG7EvCTNZTjoVf4cDbwTM5wva8/4wV2dhZrOjpxDq4ZWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774024271; c=relaxed/simple;
-	bh=27/3uZUz/b8kJgsjAQo8crfoXRWjWqT75YXmLNkt9dk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Kev+tCrFV37fR+CGNSBxqbnj2xVN8D1vvU/YFAXsMVEkUdJ2xEhvv/NQRDSsH2mgmN3jyIXXLH9WZZ+JLtU7v6sUl7A1vZKCA3yx1shLzxScFDjcSklVYQ6nlEAhhj7D7d+0W+jYqn319IgxLUE2F4LoFDxmdAV3C7qH0nebkvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fZEYTk3Y; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774024409; c=relaxed/simple;
+	bh=Jh1dMXDOUHQfqNHXq7D/WkwjPRCoDzR0i+C5Tn5W3+I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V3AzKRguB0LSQDXGikcRBacaFl8+Ef3z2czsEg/7a2Hze9gR7lL6dwnR1BJU3/FZmCFVxBZFojALyXbWYC51rqUnFJ834rzL259dxM31DMflsEyhSZDFom8Ey/XFWd17hU5rC+8tzYYr1j6QYrejAiD4gJDeGLURl6xUyJ3B5o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q4Q0V8sU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IBTCccJp; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZEYTk3Y"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-506aa68065eso19806221cf.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2026 09:31:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774024269; x=1774629069; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=B4UrtihwmcW9g4lSedw5M+Phxr05jPiCYkAdBNZAJu8=;
-        b=fZEYTk3YGhfmy1nPzC7dL0o2dxkYU4sCYhl7W8DbnHQjI3XQE9cByWUcVMbCP6Q5wt
-         03329AqzNU17yyEhZQWk7UJ0WFMQewG67W0wvldmwCI02nWbQlHdTqaFJ0Q/pJpZmZyz
-         OXuYjpAPWIMSJ+DINL5FLLvIEyRK7xrCz9Tq4tfNaDDjr3xuzmmW6Er4OtQLSy1UFMbR
-         SRzhKSf4rQWKi1uJidFGFSbmkKn88dFoD6ZZKE5p+6PLAuXlKNLtOIyxqgM/9tE6egHw
-         nJN8xucKw3M0mI4IK9olXI4/Rl8dq4f/yc0gQefUKyGU83Fewj5LgUnOQx41v9hMQoQB
-         lwkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774024269; x=1774629069;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B4UrtihwmcW9g4lSedw5M+Phxr05jPiCYkAdBNZAJu8=;
-        b=juwAyCHoJCnM3Xwij+PGXrGIubr0R5dWOOYlQGG/PSw6i/9PcABOrRu8vQBx5Klklz
-         3mfC+KqSmJXlN1FnxNYh/w2E3RomRn2igNZiotdxYzxbGx+R/wlKgiNUkMLOZTP3gBbo
-         RMi4RkKJg2Nx26+YHajs1SxYpmrtyHEe0viga4d12HH2upckTMVCCS1+6JEYJ4kIwpd9
-         Av5QuVSvc9YtLNYMblsPyYGGEv3SsS7G7NEeuRpNqvHzw/At8k/nputtQO4WcmwrYzRV
-         sHWHblpDrTq4Wvqd/Mb8IAE9yJxGAdTtpDJPM7eAdVwFPE/GL7UclKXd7uhBawwQeZs3
-         64Jw==
-X-Forwarded-Encrypted: i=1; AJvYcCWObj+1tUaBx0jtZGCPqPyhi4KhCIZVUYrNFu2G96m3arSn/FM33s00fScc0Ga9bm3HmSc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWbENzDv5WAvcGtet8GYrB4Rqp4qrAObdocupGeMyX7ERC0f7J
-	8nks+dDYTfpdqWotdWmaHLPq0cQYN8Mv/beeRc68oA1m6Wl+7HAVJcKw0LmSzg==
-X-Gm-Gg: ATEYQzz+6noJd+mavSOv2r6dmg2e9W9aEsBclsge7ST/+M6+DFHWWByZMjFu/btBYjo
-	avOKdKGq7x6Rou+sX1uLx5fk9O6eZ42wWv83i14oVhGXr+5nf6TiVkPacD+NJM96Af5HKBZXPAz
-	RMzZYqUXkYQ/RAIB/Gj9wZ01oBlEw/98LhNzMg8HhNmh6xE7PlQwPN1AlZcQGZzdOdJ9X/dByD+
-	p4iBn1AzmlmaR/ZX2uBJ9A/0RdWd6cp/nXvBStV8E8TMyGAyWWEWA2nem3LJk3xyYWq44cvWFTx
-	J9JwIWYcxv8tJge7QwYw6C+RCa9yUUoP3/byTUWw7cTX5js+d6v+X2XKenfu/5xzqlbd5QP9S/Q
-	YgrcG8xJcrvfVsEJ5ebY6xiwCcIuCcYQADpvkBTT8cRz8cJOs6yDXqHTun/pNXMe1IbEMheex/p
-	w5xYMlpdd7IdDOJWJW/elFv+Wb7+vTBvVewMZCYdwXBRXcAfUvlGztz6bKPM76tDDYE0PU23HDi
-	uEvBvvX
-X-Received: by 2002:a05:622a:7b0a:b0:508:faa5:451a with SMTP id d75a77b69052e-50b373a05e8mr42349901cf.13.1774024268743;
-        Fri, 20 Mar 2026 09:31:08 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b36e3d85bsm21143761cf.17.2026.03.20.09.31.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2026 09:31:07 -0700 (PDT)
-Message-ID: <228bfbe3-af2d-49b7-984e-cae7b1b8af28@gmail.com>
-Date: Fri, 20 Mar 2026 12:31:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q4Q0V8sU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IBTCccJp"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 605897A012F;
+	Fri, 20 Mar 2026 12:33:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 20 Mar 2026 12:33:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774024407;
+	 x=1774110807; bh=DYh/bWOLVo18FO28E5CIi4/lKqeF+oyovCUvZlyus8g=; b=
+	Q4Q0V8sUpu+p4qQTOyUzRAODx+GsJkfvikkBfevvFvVixHSCjzlIlndUh4bua+mi
+	cwlcBwnJ79QbzB5I0WiKytuWjKXmisVkRVV6/LUDCp7dE35pREtt7bi9GMKiJQ+K
+	aMxOffWXvhW0mmVMJOt4eVpgQSkpTdRBcVZOmPMw8A40I5ziqfWqLJwSMU6T4mw5
+	s74GusinhXqKJH0e6HZUW24aJEm8tdNklJTr06zXumBppOPQ4gMQYJHkaq4Tpxxn
+	zjipIRdJeqPq3XqF8jacbryQalN37WGdHhhYgEUER7M7TdH7U2Ix0NLVrh99Cads
+	vbL0KbGA9Ruib4jrJcjTMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774024407; x=
+	1774110807; bh=DYh/bWOLVo18FO28E5CIi4/lKqeF+oyovCUvZlyus8g=; b=I
+	BTCccJpVjp5jMZXwKcSXnm2klW1eU4VeEEuxPffEN9AhHBKv9NIZf6usbKJKcOyf
+	/geFXfFkjFRRTnPXU3FtMpGJSRu2VF23RIl7HM4JLsjY0Nu4ZecU7v66OWMvSEQe
+	K/ikWx3OmaSZCOnDLmMoI/hP+zkzKhF81CNnydZYlhNwvClXkJbLa3e5GpE+GJAZ
+	kwdxV8qZgD5Hy62V/jgWKkJo+CaIF368RijSHjlT5SQVXRn6NMLsRyp7mJjKecFD
+	kqfMNdKeBtI6N/8qlGvMfadB9kE0UoWYgQQoQky5Hk6io+yw/aGtbM7bjDn0fU5n
+	ApttyL4j9mD0h12DjYq/w==
+X-ME-Sender: <xms:13a9aQ13_kD9_gmkj0Ti7XwPTWqEiLTCcv9c94M1oxgD06OVvTLdwA>
+    <xme:13a9aSEfebQAELMYYofF6lkoD20ezcVCpxzQf8JPJ1rMRTp5MaIlKUf7gjjwqHpEI
+    8Uc8GpXDyFFSj8uZnvnr0ANvTgJgM7Psbm3SuSl1ppFVoshl-DQ>
+X-ME-Received: <xmr:13a9ad7032dgGjtb1BouU_rRj9mIg85Sx6sKa3mtIimRuF7iNGMI-SmlcOCIUwS1Tk6I9UGdhLNvmIaJuz1NAtGvZXsGyhQcGw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddtgedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedt
+    gfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhope
+    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:13a9aYvEIopzbcPuJ86gV3o0g28r2jAt0KnMHUsWje8nEU8XScJTsQ>
+    <xmx:13a9ae7Gx3SlZOqd6JoO-V6CrYPR2JSKQTvlO_SjYsvh6cJlHpsoDg>
+    <xmx:13a9aTXVx0u2qtk322MILrRgqBa20E3kLXecDbw6S30zKvS449vTAg>
+    <xmx:13a9aQ95atimvvpiRUMBJTBZ8VeXtRcq_15gueJ2bYLHmaI7_NaYRQ>
+    <xmx:13a9aWOQBGRF0yBrBr_r4mrRhbrBKYJZnWD_VyFLLTRE6afecvTAd3hP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Mar 2026 12:33:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
+Subject: Re: [PATCH] regex: not all macOS platforms seem to have REG_ENHANCED
+In-Reply-To: <5b8e24c2-452c-486e-a143-386e06a75e03@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Fri, 20 Mar 2026 12:12:00 +0100")
+References: <xmqq8qbnigxp.fsf@gitster.g>
+	<6636e7d2-7a1d-0108-2e62-af27a3ae3cf3@gmx.de>
+	<77b6ec9f-46a5-1f38-9733-188e20da55ec@gmx.de>
+	<d340af9e-334c-4e81-e58a-fc3dea73ebdd@gmx.de>
+	<5b8e24c2-452c-486e-a143-386e06a75e03@web.de>
+Date: Fri, 20 Mar 2026 09:33:25 -0700
+Message-ID: <xmqqldfmfokq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cocci: strbuf.buf is never NULL
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq4imbigvt.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq4imbigvt.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 3/19/2026 6:39 PM, Junio C Hamano wrote:
-> We recently noticed one old code from 19 years ago protecting
-> against an ancient strbuf convention that the .buf member can be
-> NULL for an empty strbuf.  As that is no longer the case in the
-> modern codebase, let's catch such a construct.
+René Scharfe <l.s.r@web.de> writes:
 
-> +// In modern codebase, .buf member of an empty strbuf is not NULL.
-> +@@
-> +struct strbuf SB;
-> +@@
-> +- SB.buf ? SB.buf : ""
-> ++ SB.buf
+>> The net effect is that `CC=clang` in CI now silently resolves to
+>> Homebrew's LLVM 15.0.7 clang instead of Apple's system clang (Apple
+>> clang 15.0.0, bundled with Xcode 15.4).  The runner image README
+>> confirms this: the reported "Clang/LLVM" version flipped from 15.0.0 to
+>> 15.0.7 between image releases, matching the Homebrew LLVM version
+>> exactly.
+>
+> Good find!
 
-LGTM. I like to see these structural patterns encoded as rules.
+Indeed.  So clang got updated pretty recently (CI runs triggered by
+my pushing out happens at least once a day and yesterday was the
+first time I saw this failure), and that is because Homebrew got
+updated?
 
-Thanks,
--Stolee
+>> Homebrew's LLVM clang uses different include paths from Apple's clang.
+>> In particular, the `regex.h` it sees does not define `REG_ENHANCED`,
+>> which is an Apple-specific extension present in the macOS SDK headers
+>> since at least macOS 10.12.  The Makefile unconditionally sets
+>> `USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS` for all Darwin builds via
+>> `config.mak.uname`, which pulls in `compat/regcomp_enhanced.c`, which
+>> references `REG_ENHANCED`, hence the build failure.
+>
+> I suspect it uses the same regex.h.  The definition of REG_ENHANCED is
+> gated by a __MAC_OS_X_VERSION_MIN_REQUIRED check, though, and that fails
+> because __MAC_OS_X_VERSION_MIN_REQUIRED is defined as
+> __ENVIRONMENT_OS_VERSION_MIN_REQUIRED__ and that one in turn is not
+> defined by the Homebrew version of clang in the runner.
+
+> Or how about using /usr/bin/clang explicitly on macOS instead of any old
+> clang from $PATH?  That would avoid user-visible changes.
+
+If it gives us more stability of CI environment (one fewer thing
+that can suddenly change the toolset), and makes the environment
+closer to a typical end-user set-up (hopefully most of them would
+use what is available in /usr/bin from there, instead of downloading
+newer versions but possibly built with different/castrated set of
+features), that does look like an attractive alternative to me.
+
+
