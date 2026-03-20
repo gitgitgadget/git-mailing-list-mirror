@@ -1,111 +1,120 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CC03D2FFB
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 17:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737933D34A6
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 17:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774027451; cv=none; b=JfKAJIpVZS0WeLFvi5yfZmHk9SoZ1EqVQAt/yQHU++DgVvWfvYLgY7yFJDLyJkrfw+/qfWbkHkvK9K7aJV3/tnsW7rclfEa1E5h9utz4jj+RhAHxb8wG8nD+sfk0Pz/bQyRkxI7D2YIpxnmsVgPQWS7eL3uPAuHZEOBvWHj67G0=
+	t=1774027950; cv=none; b=KJvlqaqV+8a2LrZvy+nedhQbbHv+5+xiFgpF/XfYdi5GtTJwOMcoXMC+PpO2AbvXoOnCsJ2L+Zys8q9uo9IscFn2NhqfY8ukoOU/NPwshZYIINT1KwqWc0MMH3hRsVN8Se4E8YJCUyRoThoF8V9KzQXgdtcnpUg//wKfvokcbWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774027451; c=relaxed/simple;
-	bh=mzLdShdnspxZKSDG653XQtppgwf8RSC3hOtSRTb2iI8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XpfAn22ZhNcYraouWWS48u5W6SY7REfKHUargbtxIGmA7mrHIF6BYrlbweGnPTzfoB1vxuGQwgL8f1Va0uziSjwqMwWndAYGn5wxrI8l0Co1s93S5YJs2Tt/ozyWDP4ICCONGSabL/LpkI5DPlG0DIPllmMNMX67GZXJGnbNxIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C2Sr23W6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ct8/T7q7; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774027950; c=relaxed/simple;
+	bh=NbLOr9nfoYSkjC0+ik+p5jywNhSEl0KnRC2abLD0yOc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CHeUZwvsXj2flg/Uc4GTBh0jMqVKEtJxc0JrX1/RZR9717g3Cfi/CYC3Ve+51uGQXyqz+Op17IZf8NzPlE6OWGdqGMZH6mopq4yf9s5yySp+8Rqu5bCD921s1TFucIqyo9QmhOgzuoK3z+7JfDWTkP6qQuldWPm/I9Tuhg/qhBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Av7H+jor; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C2Sr23W6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ct8/T7q7"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1A9A61D0010B;
-	Fri, 20 Mar 2026 13:24:08 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 20 Mar 2026 13:24:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774027447; x=1774113847; bh=tWfyHiqCCd
-	2bNazTVu+W3z/jMYGQwIpIlPA4RQL4OXM=; b=C2Sr23W6kXe0rzX2DTKNsQy6SE
-	aXW7qoRFHtPP+nsfjfzie9lY/wj+id0AtBmw+3qA/z2qAdc95nAS+rENwT51zXfr
-	HlU0wIJvMxQmKVA4TyyEINtemR0/73djS3QHXvECO68aXdU6UkxhzNjA9ZzBFPzz
-	iiYPjkuT2+1qcfHB1maW8/nPHHqERTIQkkTtVCmlYDyxrEj5fUloRfa+tzFCcfuC
-	RMPBs/cJ9kiFWYgoxttBdFCWRqO4Xynbbqq5bvMPK0q9SQA/TevrvGoILoSdxe8n
-	mMESIPVmW03WMZGtWM7ByizOyYeTwgmh5rY0sErn9gEj9PYZsc4tpzzLpgkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774027447; x=1774113847; bh=tWfyHiqCCd2bNazTVu+W3z/jMYGQwIpIlPA
-	4RQL4OXM=; b=Ct8/T7q7y19YXZn+Vse2ms9sK2ryrQgpZ0EDtdroDwPqIqX92SP
-	DBMERpTa6+9xe4GzmRaBbLcbJ7y8mgoJnfSsAlK48LRw06aqRJ8uxHTbJ0yHStZn
-	7Jmd5gpaTbfUMHRqze6mpEPfqyovf9+ko1pOUqpUU/iaMGPqR+8IlCS6ZT5L/Tgi
-	/jHZaF40BTAkRWo+IFabxs+CaHU5CcDmA39GOvLjh2A5w2dc8HxQ4RK9KicwAvET
-	qLBq6TTRIEkmopwRaolXDqsCpGJEL7wc+2SUB7zhlVBxobBZCEU05BfYff/LALqw
-	oMgt1t5NTESm+XrH2sd5p591CBb47Wj41xQ==
-X-ME-Sender: <xms:t4K9aQGh61g-xGoOTg6Uxnrd_ZtY4wlUuJJLGj6JVmVc2jk58SWwWA>
-    <xme:t4K9ab5Tmgx3wksdanLYXmeRB6eS1PtB_n09oMvU7BRjxuAiwc3_jxNAIMtZDN17Q
-    _3-rUuy79ibZhtqpDXgBxzJDxUvvtCkihBvKHgrxMZoEnUgLLHDWQ>
-X-ME-Received: <xmr:t4K9adwwOIPR1IDQy1reWFUhBuY2CHSI4HQ8liKWOfquP6NE9UoOr8OzrCgN0GTZyWvMo4BVycKtDFjqbBzkkFTUlbJoRGVFjw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddthedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepvghmihhlhihshhgrfh
-    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:t4K9aSMrLzskzKVCTl3ucvC3xP-dfgCRxf3onSc4L8GTlhFbHrEZUQ>
-    <xmx:t4K9abn_mjM_5eF1mTv474nfXLQeF9hxmejegYul5tQh9Bt3bBZfiw>
-    <xmx:t4K9afTN7Hj8AdIQDUSJiVrekPTcFZ1JuOwHHCbU7iJBOWz1YOWCQg>
-    <xmx:t4K9aSXl03s7bxEGLdLIMASvMIy89n39JUo_rplJoU6GppCxbcmULA>
-    <xmx:t4K9aRwMaoJNOHHeHgVau7ebzHJEjX-JKd3EJlHYZrz6zF9yk6r-6V38>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Mar 2026 13:24:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Emily Shaffer
- <emilyshaffer@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
- <steadmon@google.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 0/9] Run hooks in parallel
-In-Reply-To: <20260320135311.331463-1-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Fri, 20 Mar 2026 15:53:02 +0200")
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
-	<20260320135311.331463-1-adrian.ratiu@collabora.com>
-Date: Fri, 20 Mar 2026 10:24:06 -0700
-Message-ID: <xmqqtsuae7nt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Av7H+jor"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2aecf52fa69so2455265ad.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2026 10:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774027949; x=1774632749; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JJ6J+9fFTsx2hzazlgitELTG9cbsRyBAWFgKujYgl+w=;
+        b=Av7H+jorDoewBDu4oQMvdBNFKoweFpkdxGEDOfnSR5mWXHZOyoDVKkGCZMEldj6mdD
+         SoYSZRFhi7aZTQ4HOkHBtO8N1CRrEyYaVDiio2QMAuCMJ3L1wC0a+HM/X/F0gREiVCmE
+         DyKB/sufOMQZfQB+DY8+J53H/ydDi+hdN/cRF1sWpuuQkdHrNOV5rFPRlSCGc19Sobpz
+         XVxEj1jsob6TdbrOj9eNK8gH3VMrd0Hw9HTSHnkC2qwaZUhsp+dvdvQQ46yThQx/3EPx
+         C/4/ooOiyNwta60xR16pFvvsgn+u8AWvuWOcitrIqCI7WlrQppla+dsMaONnp01QEWa8
+         A7aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774027949; x=1774632749;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JJ6J+9fFTsx2hzazlgitELTG9cbsRyBAWFgKujYgl+w=;
+        b=s2+/qPZKfht8LnVUQcNGEYW4vpxvfYjguQarQMrBMaw/oxXNAH/xSWOGAUmsWp8k7u
+         C0+kRlmi80SatYEEHY/RC1WqSbaU2oXYueejmtYR8W1jf0zx42tuR2XOAuuy08Eq6Prc
+         PTjH1067nL43L5SZw6Z56UVYmyzlQy6rvVaj7sviyDV8SKoI+czQDr3qjp/5k41YDWKo
+         kOg/UC08NyITYNSZRCjFzYzRhYGpQMNmmNGOS4b0mKTjKM3yACyMyW7YlFZ7azN4v+vY
+         AwKmVtyrbOWtfFv0aUjXQsZQ51KIt9ciuCIJMTwjR9ZcYVLXPjvGNBe3gv/qDipRvL5c
+         GRxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEkV1KYNh4etbtz5eR/yUerd4XaiZa2NWftSsNzQqRUnWK8/b0d/1j+domWmlTRiI1JnM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEuLZaY31KDh6rmYomyKO0k3v2SaOo+HAz4DIkiP28rwJUsVPU
+	WPmy9L+aWUHs5gkjIBi6rOdvKaJ2khjSW5Jd9epMFRhLoaQ2z2v43uat
+X-Gm-Gg: ATEYQzwfTA1rD5e60gJHsBQSw0nNhv67Tj9lg81np0AwfpMZ0KRYNCEJ+7ouPs+b/mS
+	tgThZk3Qt6QmVl+x5UW7jUblQWWKofu+ZDcLLRZhsrRVFjnJPSsXKe4A1LbLcnsWCgYMCjrBYF9
+	RZf1UYbx83O6Vwa1xqcbBPyrKRYnEVLgp3Z7WIkbiORsLu+EoWdJZcoZIw5O3OHoxMZRht7HC1y
+	T35ugssQJ+5zpt8X+p4ZI7kJRY7PVM9h8FaY5nERblWXET90EVYFNIRYEi8c8Zwj4H341kqCX4Q
+	WxTyTGoRCzruuqBmRR+BOnslC1pmIztiELHBguCRn1TGyvEQCDbiB25wSxmByvCrCSOPi7l68la
+	BUhx97i7rwwF8JKr837/2zSwOoEUTRwZZCrnb2yYv34w3KRSyBCihtHKEJ7l9HzOcan7s+IPmIs
+	W/V8A99wPyKRVAzggT09LGE3wAEAgpjR2eyfU+/8gFFjdxXDIWYQ6CGxyIdaV3BKIPWBfYAl9hT
+	wgc8sz6MpI=
+X-Received: by 2002:a17:903:22d0:b0:2b0:5075:96fb with SMTP id d9443c01a7336-2b0826b8a74mr22426675ad.2.1774027948696;
+        Fri, 20 Mar 2026 10:32:28 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083655b5dsm37498675ad.52.2026.03.20.10.32.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Mar 2026 10:32:28 -0700 (PDT)
+Message-ID: <9d0746d8-2194-4a13-812b-9b46d04c189a@gmail.com>
+Date: Sat, 21 Mar 2026 01:32:25 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] path-walk: fix NULL pointer dereference in error message
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+To: Yuvraj Singh Chauhan <ysinghcin@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, stolee@gmail.com
+References: <20260320114556.3151040-1-ysinghcin@gmail.com>
+ <eca1a469-2e15-4466-ae58-978ffc23c177@gmail.com>
+In-Reply-To: <eca1a469-2e15-4466-ae58-978ffc23c177@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+Although this isn’t covered in this patch, I’d still like to add a few 
+more comments. Please allow me to elaborate a bit further:
 
-> Range-diff v3 -> v4:
->  1:  6686d92867 =  1:  ec274c24e5 repository: fix repo_init() memleak due to missing _clear()
+This is the implementation of object_as_type() in object.c:
 
-This one is not included in the set.  This cover letter identifies
-itself as [0/9], but the range-diff implies it should have 10
-patches.
+> void *object_as_type(struct object *obj, enum object_type type, int quiet)
+> {
+> 	if (obj->type == type)
+> 		return obj;
+> 	else if (obj->type == OBJ_NONE) {
+> 		if (type == OBJ_COMMIT)
+> 			init_commit_node((struct commit *) obj);
+> 		else
+> 			obj->type = type;
+> 		return obj;
+> 	}
+> 	else {
+> 		if (!quiet)
+> 			error(_("object %s is a %s, not a %s"),
+> 			      oid_to_hex(&obj->oid),
+> 			      type_name(obj->type), type_name(type));
+> 		return NULL;
+> 	}
+> }
 
-Curious.
+There are at least two possible scenarios: the object doesn't exist, or 
+the type doesn't match, right?
 
-In the meantime, let me resurrect the corresponding patch from the
-previous, trusting that range-diff deems them identical.
+Then the message 'failed to find object' is misleading when user 
+encounters the second scenario. Wouldn’t it be confusing if a user saw 
+this message, checked the object using 'git cat-file -t', and discovered 
+that the object actually exists?
+
+Regards,
+
+Yuchen
+
 
