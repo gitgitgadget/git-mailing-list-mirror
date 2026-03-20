@@ -1,259 +1,218 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C79F374E67
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 08:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773996921; cv=none; b=JZG+Zrybpyan5BmHuo7jdDQAJfdkBQD5qklCf0IFD+ukwFv/mfDHlMLXfAtrKxBUS29plZx+SqMTMBsFucw+CcTFpu4L2+ucGA+i1Gw1OVE3sN1oBcFBmPTY0mJr+IBG/Eq9H8KozJjIxhg/jSvakhsB5YZ2ahp1vJj4OxXRn9I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773996921; c=relaxed/simple;
-	bh=iW1iRYTola73tyactY4B1S00BD2jdbYh7xIgupLDC0w=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=hZE0mAHQ47zRlK1AdR5/xa/4er2WXwHbMSs632LxNEYGh4qjztYr6eVmNOxnvJ+WJKhhPsTInOejmVvkLjVqVJXIT2LZtvu7tFbjZUsxi9bVn7FP7Rs6pTWAMvHE8wcDEXE9oZ+6h6gML/uO8lpLKhAT+uszf/MLeeV9CH2Xv8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=QLg3MLx8; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD0A328B7D
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 09:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773997306; cv=pass; b=gV4/aJWk3HWruLse63V6OqNg75Aqp3PP67fbEIBmGWubI30kbKJwOglKVjSIntyjM0PI3j+J0hjhUQDNsj5lUopgC0Dop04fYW9DCVxNnkYC6W3qf/lx4WqpS93AWbb4yuqfkwETpc/iC1sKoa7gSWIJ0VAxrfabgoEWHvxufOQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773997306; c=relaxed/simple;
+	bh=DhEi3d9XMT4DFK+w50FswW4XNVVsjgLotnjLcyVcf0A=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=NAhUI4IR3r0DPqXPvEt3GVkQEJlR3hWHuQv0LttMaEigwLMZymvRBmx8gNULUbmVuLyFmMfG7MDNfYGDcnuargFhszutPxoZ3e7Ttj16GPzjT5d6FXdfLOoxHJVHqj89FPES96raQhS4O7GTdTHE1sKve50l5vOSPL5ha4+eJJI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMfIGqcI; arc=pass smtp.client-ip=209.85.217.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="QLg3MLx8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1773996917; x=1774601717;
-	i=johannes.schindelin@gmx.de;
-	bh=IsXPM8A/ZtY+zs5xDBKxtwfJ+ZXVrXU4/YkY2tznonk=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=QLg3MLx82JbcQDfm3X+E9W7Y0eyg5TINt0NUDI2TStVbwqIn5kSNgvv3KdOCL4jo
-	 pJ/bSkQqsrQj0u/9yuIecCYfYN/m2oOb3FgdtlVdzJhhXubFAXeWm2hj/kS3FL4fQ
-	 KpxKc6gqxd/vB7kjOMw5bMBG0dCww719oTJVd6JqVCspSz+NK0E1iZTJmxuN5PLvg
-	 k0o+G+YuFgmH2ORSTG3FQJfJeN6Z7uyrwAtDIac12sjqfKuB7a/ICQZuFEU6nABIo
-	 VkmOhOzUZHRrVscfrCnGgqv8PmAMOmG9LVjg/waA5TYCDrHgpXSNWFcjYY4BfLN0z
-	 Dt7jm+OLbgxPKJIWww==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2E1M-1vaayp1kTu-00ul6I; Fri, 20
- Mar 2026 09:55:17 +0100
-Date: Fri, 20 Mar 2026 09:55:15 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] regex: not all macOS platforms seem to have
- REG_ENHANCED
-In-Reply-To: <77b6ec9f-46a5-1f38-9733-188e20da55ec@gmx.de>
-Message-ID: <d340af9e-334c-4e81-e58a-fc3dea73ebdd@gmx.de>
-References: <xmqq8qbnigxp.fsf@gitster.g> <6636e7d2-7a1d-0108-2e62-af27a3ae3cf3@gmx.de> <77b6ec9f-46a5-1f38-9733-188e20da55ec@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMfIGqcI"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-60294768235so299537137.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2026 02:01:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773997304; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LCeQoltQZ9vcR0Vvu2RfoNuux8F1rvwinOMWiBNOB7y+RbC+FgcVaUvSFgD2l0yGdO
+         MowMPIJEZ4tEpswK8vJ7lL/PnNI8F+Xw1nn0+dB9R23j6qZmF+wtSDVOdDPHa91ZE3vf
+         1w+Dv/RZb34O4X6qrXaOg/qMxEPK1KBstkmymb+CgWO7ml9kSGoeOLZFvsQwlWpzyuid
+         sH09DgcpR39fN5bgjDDnXRiH7y+4lsj20zj+i0O4oXyy1mAjCQzGqarqQ2z6UHlKKc2q
+         qbW9lZI8VZqISKrEmvyd8FyBrG8UT0S45H7z0mJj0BG2zkdWB0d/VP40ErEDVTmaRcN7
+         j6kg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=iN7GUmLbe7V61AT4RAuDgW79RdRXK0+E/XqCaySfEtE=;
+        fh=2C0NXKhR0y9dHbTW4MXxRlcJOAV1HnyXxe0DHq5j0lY=;
+        b=YNnKIlg4Lyi4gBSm3+JLjCc7y2jQhOIZaXC8hsBF9tpuQaKCFOwoupU4f6G6kDxL2d
+         qzhVHKFO3Y5TlKQvWlN7gQdQ0/qRtk/mhvYNenspRvlQwzreaPvhwhDkFnI+dxDQCjfR
+         YpXHxT7/BHBaEdGkgeMqD0NcOSkS5AnCpsHO1wACIgHN3M7kmA8CaLAP0nWDb5sslYuW
+         5bOlYxABr/bwuwviOxz0cmCLaHAFw5aMom6K88YJ4AYEZsNO/VRHORSsTTJYj4U9hRcS
+         +H+mBY5tOXhAxqZtPJ+TKlNl4VpRfV7JulzxjsxB3fABpsJrAQZO50T9CxoHaY/TlMya
+         1nlQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773997304; x=1774602104; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iN7GUmLbe7V61AT4RAuDgW79RdRXK0+E/XqCaySfEtE=;
+        b=dMfIGqcIkuqAW8SGn/cvpyEvpnlUTCOOYi/VXAUUbhFABoiYk7cCzO8of2efZ3LL+0
+         duf6aY07rytB5Z55Q/IX/Ate03KgHF451/p2rRPxecZXUzCptS6Ukc9CwWCxq3ZiTKTV
+         FPGcvIHnGgSydcQK8JjntiIckuoXcDUMTr+VPjK/o3Hl8ERN7cgRJQ/FeVmdrUV4kxF9
+         /oiLzD0QWlV0VI2PL+lPqyLW9ZRRHEJJrPE6xKLeynjq6qOHQHBe3WEEZ2r3Bz3hizif
+         lKNzw3x5uT0mxKknrCVD5X6/4g+tNT3iGG1vRp+p31bmZt+ZbITevFCY15HTv46YAHfw
+         jiSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773997304; x=1774602104;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iN7GUmLbe7V61AT4RAuDgW79RdRXK0+E/XqCaySfEtE=;
+        b=kT7kpyiORymOJe8Hbr3IzT49kB0t3w4ZW8cB6YkHy13FpE502Pf6sGecHEVa1NBBcs
+         xQbB323RopS4mQDtXwlXHatMsamBJ10kXedl4kV8elYz8KDf5pmE2aSrF6Q4+oH0kB55
+         HSG+EowgEl94GTNxSgWaEv6qEkani5o7BTK27vNLoeT5piYilQ6inSdrPFs2r5+Z+nNo
+         Z9fsZ9IMEVbk0vorQbiRgvA+O6XXLmt9FF1qexIiMNWs0K96ltywcZT3slcROFY4INyY
+         JRIsS0/HqBnymaYVErEZMfuzofUU9+yeaZ1X1G4+cgTv24g1NugCZB8+5xenEayjUOFG
+         t5Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCUBqGSCWUCslVeveYx7HxDkKZu1sodczGPNYnIaVNn3pp930qqVyMZHRcI0qgt4NZwVOg0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbR9wPF1tOhb7pDvEx13fnNZe5Yj+Xj5KVsURcGZSVt9AKZMzm
+	gDUrp9eDv1KVfrjRTrwHnhBiCPhyeYryhengYK4QQpU4nwK1m4E6r6NGcrj8ggX1nvXySAGzw4C
+	4WF2DzFetpmGGbTXgo4vAhGGGVhjbrHvxiQ==
+X-Gm-Gg: ATEYQzyoPrdWdlu1/5b3pY81GjvVzM/0djW2q34HJY6U5SkuVYPkiOVQzmYE+APCKRe
+	CXilvfAugw3AyJeFPtLoPPJh2qhK9ZE3F82WzHLkKPSlGhX4gXxQGe2XmCuiGrY463qsaHYakmY
+	kGdaHEzwF7m/HFPWPKos8hEislxxNN44EL8lGqeOwfm4w1fzf3ys0nuaHNgfFQDY1/ggVMjlVL7
+	yJQnZI2BROXBLmMDapCgD1yWgaQoqcYH3ULwOJK7bIRJOr7DZkrMP5d5MjjFbftOd7PulIPc3bn
+	6rXYC4Li
+X-Received: by 2002:a05:6102:508c:b0:602:9b21:eef3 with SMTP id
+ ada2fe7eead31-602aed1bd51mr1262836137.27.1773997303647; Fri, 20 Mar 2026
+ 02:01:43 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 20 Mar 2026 02:01:42 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 20 Mar 2026 02:01:42 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260319-b4-pks-odb-source-abbrev-v1-3-5ddebad292b0@pks.im>
+References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im> <20260319-b4-pks-odb-source-abbrev-v1-3-5ddebad292b0@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:G7bF4MtWYK7brgZ6qn1xCd7HHqkzwzbd4I6PntoMGxdv1WWuKge
- icp0GgriWHdP1DKiXRZ0NAU0X659/2hpegZqT+tokAtPIS3JACS7w7AfomOtcYWV5pOXfNc
- XQmN9vJmMbeDlSNvVBPGcoZH9b7VKzBTaK10DbkzTV7mqWGkvlpXwye3v+HybPcRoFJXPcm
- m9TUUnNER+TrbLmdBU7/Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:dtDO5QoS6ak=;BFiyB2lvqBTPFCgZHNRrr0YSiKo
- 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
- MSOCBB6kcFg
-Content-Transfer-Encoding: quoted-printable
+Date: Fri, 20 Mar 2026 02:01:42 -0700
+X-Gm-Features: AaiRm516bq0V5DjGJUoMvZmwcWvsrEpH0QDWZQS49zjXbKq4g17tDDgrfHxI6-E
+Message-ID: <CAOLa=ZRpCunxE_F1AG-aFqHiyVZ=c+T_wFwpfxC7vFm7dKxqAw@mail.gmail.com>
+Subject: Re: [PATCH 03/14] odb: introduce `struct odb_for_each_object_options`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000001dfc8e064d70ef1e"
 
-Me again, sorry,
+--0000000000001dfc8e064d70ef1e
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 20 Mar 2026, Johannes Schindelin wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, 20 Mar 2026, Johannes Schindelin wrote:
->=20
-> > On Fri, 20 Mar 2026, Junio C Hamano wrote:
-> >=20
-> > > The build seems to have started failing on macos-14 CI jobs at
-> > > GitHub, however, as apparently not all the macOS platforms have this
-> > > flag defined.
->=20
-> [... I need to ...] recommend something like this in the `Darwin` clause
-> in `config.mak.uname`:
->=20
-> -- snipsnap --
-> diff --git a/config.mak.uname b/config.mak.uname
-> index f9ffefa67a4f..572f8967bc36 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -172,6 +172,10 @@ ifeq ($(uname_S),Darwin)
->  		NEEDS_GOOD_LIBICONV =3D UnfortunatelyYes
->          endif
-> =20
-> +	ifeq ($(CC),clang)
-> +		NO_REGEX =3D HomebrewsClangSeemsToBeMissingEnhancedRegexSupportAsOfMa=
-rch2026
-> +	endif
-> +
->  	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
->  	# Unix domain sockets and PThreads.
->          ifndef NO_PTHREADS
+> The `odb_for_each_object()` function only accepts a bitset of flags. In
+> a subsequent commit we'll want to change object iteration to also
+> support iterating over only those objects that have a specific prefix.
+> While we could of course add the prefix to the function signature, or
+> alternative introduce a new function, both of these options don't really
+> seem to be that sensible.
+>
+> Instead, introduce a new `struct odb_for_each_object_options` that can
+> be passed to a new `odb_for_each_object_ext()` function. Splice through
+> the options structure into the respective object database sources.
+>
 
-Turns out that my analysis was not _quite_ complete yet. With Claude Opus'
-assistance, I was able to find the exact turn of events that led to the CI
-failure. Here is my proposal for an alternative to your patch, Junio (the
-https://github.com/git-for-windows/git/actions/runs/23335584918 shows that
-the build completed successfully this time; the tests are still running as
-of time of writing, of course):
+Yeah I like this pattern, really cleans up the arguments sent into a
+function. Making future additions to the struct produce a localized diff
+rather than modifying the function params each time. Nice.
 
-=2D- snipsnap --
-=46rom f65b3b657c36e9132624ea223c90047527edea59 Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Fri, 20 Mar 2026 09:09:10 +0100
-Subject: [PATCH] osx-clang: work around Homebrew's clang lacking REG_ENHAN=
-CED
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/cat-file.c     |  7 +++++--
+>  builtin/pack-objects.c | 12 +++++++-----
+>  commit-graph.c         |  5 ++++-
+>  object-file.c          |  6 +++---
+>  object-file.h          |  2 +-
+>  odb.c                  | 26 +++++++++++++++++++-------
+>  odb.h                  | 16 ++++++++++++++++
+>  odb/source-files.c     |  8 ++++----
+>  odb/source.h           |  6 +++---
+>  packfile.c             | 12 ++++++------
+>  packfile.h             |  2 +-
+>  11 files changed, 69 insertions(+), 33 deletions(-)
+>
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index b6f12f41d6..cd13a3a89f 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -848,6 +848,9 @@ static void batch_each_object(struct batch_options *opt,
+>  		.callback = callback,
+>  		.payload = _payload,
+>  	};
+> +	struct odb_for_each_object_options opts = {
+> +		.flags = flags,
+> +	};
+>  	struct bitmap_index *bitmap = NULL;
+>  	struct odb_source *source;
+>
+> @@ -860,7 +863,7 @@ static void batch_each_object(struct batch_options *opt,
+>  	odb_prepare_alternates(the_repository->objects);
+>  	for (source = the_repository->objects->sources; source; source = source->next) {
+>  		int ret = odb_source_loose_for_each_object(source, NULL, batch_one_object_oi,
+> -							   &payload, flags);
+> +							   &payload, &opts);
+>  		if (ret)
+>  			break;
+>  	}
+> @@ -884,7 +887,7 @@ static void batch_each_object(struct batch_options *opt,
+>  		for (source = the_repository->objects->sources; source; source = source->next) {
+>  			struct odb_source_files *files = odb_source_files_downcast(source);
+>  			int ret = packfile_store_for_each_object(files->packed, &oi,
+> -								 batch_one_object_oi, &payload, flags);
+> +								 batch_one_object_oi, &payload, &opts);
+>  			if (ret)
+>  				break;
+>  		}
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index cd013c0b68..3bb57ff183 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -4344,6 +4344,12 @@ static void add_objects_in_unpacked_packs(void)
+>  {
+>  	struct odb_source *source;
+>  	time_t mtime;
+> +	struct odb_for_each_object_options opts = {
+> +		.flags = ODB_FOR_EACH_OBJECT_PACK_ORDER |
+> +			 ODB_FOR_EACH_OBJECT_LOCAL_ONLY |
+> +			 ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
+> +			 ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS,
+> +	};
+>  	struct object_info oi = {
+>  		.mtimep = &mtime,
+>  	};
+> @@ -4356,11 +4362,7 @@ static void add_objects_in_unpacked_packs(void)
+>  			continue;
+>
+>  		if (packfile_store_for_each_object(files->packed, &oi,
+> -						   add_object_in_unpacked_pack, NULL,
+> -						   ODB_FOR_EACH_OBJECT_PACK_ORDER |
+> -						   ODB_FOR_EACH_OBJECT_LOCAL_ONLY |
+> -						   ODB_FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
+> -						   ODB_FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
+> +						   add_object_in_unpacked_pack, NULL, &opts))
 
-The `osx-clang` and `osx-reftable` CI jobs on macOS started failing
-with:
+Plus this is so much easier to read now.
 
-    compat/regcomp_enhanced.c:7:13: error: use of undeclared identifier
-    'REG_ENHANCED'
+[snip]
 
-The failure coincides with the GitHub Actions `macos-14-arm64` runner
-image being updated from `20260302.0147` to `20260317.0174`.  The key
-change in that image update is the Homebrew version bump from 5.0.15 to
-5.1.0.
+The rest looked good.
 
-Homebrew 5.1.0 introduced automatic linking for versioned keg-only
-formulae when the unversioned sibling is absent (see
-https://github.com/Homebrew/brew/pull/21676, announced at
-https://brew.sh/2026/03/10/homebrew-5.1.0/).  The runner image installs
-`llvm@15` (keg-only) but not unversioned `llvm`.  Under Homebrew 5.0.x
-that formula stayed in its keg and its `clang` binary only lived at
-`$(brew --prefix llvm@15)/bin/clang`.  Under 5.1.0, because unversioned
-`llvm` is absent, `llvm@15` is now auto-linked into
-`/opt/homebrew/bin/`, which sits earlier in PATH than `/usr/bin`.
+--0000000000001dfc8e064d70ef1e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4cedc5b38f1297d2_0.1
 
-The net effect is that `CC=3Dclang` in CI now silently resolves to
-Homebrew's LLVM 15.0.7 clang instead of Apple's system clang (Apple
-clang 15.0.0, bundled with Xcode 15.4).  The runner image README
-confirms this: the reported "Clang/LLVM" version flipped from 15.0.0 to
-15.0.7 between image releases, matching the Homebrew LLVM version
-exactly.
-
-Homebrew's LLVM clang uses different include paths from Apple's clang.
-In particular, the `regex.h` it sees does not define `REG_ENHANCED`,
-which is an Apple-specific extension present in the macOS SDK headers
-since at least macOS 10.12.  The Makefile unconditionally sets
-`USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS` for all Darwin builds via
-`config.mak.uname`, which pulls in `compat/regcomp_enhanced.c`, which
-references `REG_ENHANCED`, hence the build failure.
-
-The `osx-gcc` job (CC=3Dgcc-13) is unaffected because Homebrew GCC is
-configured to use Apple's SDK sysroot, so it still picks up Apple's
-`regex.h` which defines `REG_ENHANCED`.  The `osx-meson` job is
-unaffected because Meson does a compile-time test for `REG_ENHANCED`
-(via `compiler.get_define`) and simply skips the feature when it is
-absent.
-
-Work around this by setting `NO_REGEX` when `CC=3Dclang` on Darwin, which
-makes the build use Git's bundled regex implementation instead of the
-system one.  This sidesteps the missing `REG_ENHANCED` define entirely.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- config.mak.uname | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/config.mak.uname b/config.mak.uname
-index e6efd0f30913..c437accbcc50 100644
-=2D-- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -162,6 +162,17 @@ ifeq ($(uname_S),Darwin)
- 		NEEDS_GOOD_LIBICONV =3D UnfortunatelyYes
-         endif
-=20
-+	# Homebrew's LLVM clang ships a regex.h that lacks REG_ENHANCED,
-+	# which is needed for USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS above.
-+	# Use our bundled regex instead.  This became a practical problem
-+	# when Homebrew 5.1.0 started auto-linking versioned keg-only
-+	# formulae (like llvm@15) into $(HOMEBREW_PREFIX)/bin/, causing
-+	# CC=3Dclang in CI to silently pick up Homebrew's clang instead of
-+	# Apple's /usr/bin/clang.
-+	ifeq ($(CC),clang)
-+		NO_REGEX =3D HomebrewsClangUsesARegexThatLacksREG_ENHANCED
-+	endif
-+
- 	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
- 	# Unix domain sockets and PThreads.
-         ifndef NO_PTHREADS
-=2D-=20
-2.52.0.windows.1.12.g00d4f5e7d9c
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tOURQUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNXZ5Qy85Rk5wZURtYXZUdkg1eEVPY2VJaE54WWx4Swp1akptK3FzQlJ6
+dktKdk9MMDFkVFBQRDVRb1Q1emNGejdZYitiUjN6enhGbHA5QkJ2QmY4L2NxTVRwQ2ErMkJXCnlJ
+bzZEL3crdmtmYncxWGY1UUdRdGw5LzFGNFpBZkxhVHNGbHFNeVo5dGJkRHNXdjExUDlFS3hzYkxm
+ZlhwSGYKZG1CSWx4R0dod0ExVFVmODlvc3Q4TkN0WUphczVPQzVFbzRIQ3NDbjdnRGd1MG1aY1BV
+OUFSenJacG5pSlhRZApGL1FUMHI4V2hiclFPRW45Qy94TWQ4cFc2YnZxWi8wTml1ejVEYmNJL2ZS
+K1YwNSswQkphaUJQckd1OE9wOWQ4CjREclduWWMzQWNzVkhXOEE3T0hxTGp5TTRveVAydmplZXFv
+VVhzeS9VdE9FVHZ0KzJydWszRkNDVVRFVm1wUy8KYVBZc3N6Umg5aWxPblBSc2UrVEZ0dFJMYmhM
+eDlmWmZDK0hrRnJ1OEVrRjI4a1ZMM3JzRlpRTS9MbDB5cmRNTApsUmFydzhuNmJ2L3BnUTc3TzBu
+OWNQc29oVllWN2wxRkEvY3JnL095SllTaWgxNlQ5dXNHOUo5ZkQ3Y25XK2FmCjJqclk5Y0doYlo1
+ckMydEc1UDdJK1lxZWZFckFmUHBQMVlpTmNvdz0KPXZqT3cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001dfc8e064d70ef1e--
