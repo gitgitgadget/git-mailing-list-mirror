@@ -1,105 +1,114 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A86136D4EF
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 16:35:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6503CA4B3
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 16:50:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774024544; cv=none; b=ZiGxWggD41R4Zmv65QGXmqDJh0UZACh1RiHgFQAmETPRMymV/TwqGY+HatTDNL3KXlfmY9faK4Z4M/XJemcg0Bkn97iow5+CWmGtHfC7KzBezRrNb7xDE6jikC5qv8qY/Ti3o36uf/5WYAUBHrJ+s5b5OBNVQX0z0vIRYv+oW3c=
+	t=1774025432; cv=none; b=St2kYuueDdWG2jRKjB8Z344z5iFYE4Re+alwycy4BhE04XH53A7Za72u3ghrAz9G3SjLqA12dK4fZBPxoPYJSsuQAT3GizNShqE3XPlLejagHgqgJ4Oe1wN0XWyM8L4Q/pZkzNAyoFhSz7k/4Hok2efocApINTUV+lAWxLcVDCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774024544; c=relaxed/simple;
-	bh=GCCYTzlDaBbIjpg08KEXszWy+ziptBZq1uE8gSBOiJk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jFhsdlENkogkr0cykrdU47+aKTmU7/odu/qB6ArNPkHSmcqQF54dj7Wr+tyJHNitibL46ECM3RpXl0KzquxpRqwrelKNmrho/NEaqlPaLfPJA2rgvxnM+EXngUCzIzmWzu2836QyBKYLoF7jINUc1DtVPmbtd/jITJUTgsLyYug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ifhGTr09; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774025432; c=relaxed/simple;
+	bh=LeDFEEJSPmHKCNS8sTmeBf4/HUFcX4k7ArzFoCt9EN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SXOg/ETMYUt4ShHQObHrsHmy1vYPQEkb9IyBmVw9s82D8Lw+C2GmTef/DH4BUzyg4VDxmALHUpYBFEtavLLedSxX10TvweKrH6SKNrbmZjdpSzracHFwVDOekcBj2SiipPB8Rqe9KHQBZrbnZl244gtd4F59Do/Ta9kBNfBHedI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ThPev6Ab; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eHZHOCgM; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifhGTr09"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cfbbdbaf3cso208561385a.0
-        for <git@vger.kernel.org>; Fri, 20 Mar 2026 09:35:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774024542; x=1774629342; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dEWirSqLtrCB4d689T/0mdlzRRBhM3gS56xIE0UKz6A=;
-        b=ifhGTr09jcvLXmhj6ldCgPwIhmTMxZRxvVTNyrixaNwHAWokTd8eOGn67GMw+ly/AB
-         9Ay0NqEiuUnZV7qnxEL2Npy7d3klC4BzsYQz5unWsnuo7iuZk6uaHt0Pe2/QPRY7O6E9
-         vM0hQcnsNEJb060islUk2VeQdrhu58xv5GK8BpurMqThPuWqow0GrL1xQTn4utXnn0HQ
-         q9H0Q7eF0jQBSaV09aMFw0m1uxUF4FaGzgsGNDDRY4AK/Enp74Q2a6Hu3HbgLD+TFdQ0
-         rAoqNVY+sy1U9lWhrRz5VRhNEzutz7E2ZtYKg2wHu4X3ek+Q3b4ZMDDz7XPivgR8zZNJ
-         QXcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774024542; x=1774629342;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dEWirSqLtrCB4d689T/0mdlzRRBhM3gS56xIE0UKz6A=;
-        b=VuKWs+kKjl6XauB9BM3B4d9pLu7ZtBys6XkXBTYBG+GJPFe0qBfLvffNeoDkoM4CAU
-         rjkdHqyXOR4axS8dd3aDsi7eoRDsGlY+6tMTHZ9zogsL7wv0j55quRnvamQNwzUiGsQc
-         9k7Ix9259XQpsf9AQW3TsSnknmN7xRoAjnMAa+Kgq7c18ETp1LfpYGDoDZvroLmAUpaA
-         ZgFDlFtn9Sp9SKA9pcPz+vchSgN4ccoqJkMySr9XJZHZ8ec2WRapbSGbVoNfDXNDA7os
-         RhkcXh+aCwde8WArjFyJnTF/pdbFOC/JDUa9I9CWnRUIAA/Amatf5W/SR4FFkdqJn+wp
-         KKDw==
-X-Gm-Message-State: AOJu0Yw4hT8yfm0xfDvvNjkE/vieHd3LyXJ7u7W2Y90TqAL45EwoFCF4
-	PRHgKxDEfQW7ipd2qRYGCUvpNOzZ5C6uJtRotCsgyjRoipa6nlBc4pbIjYV04Q==
-X-Gm-Gg: ATEYQzyr3pldYCTTGLqE/JVM35lff50kr7I7XulzcR2o1WjizT4LcVIobTSiH+AQP5Z
-	fcEDsF7Eu0TAoFaAN1/O64kvsDOka1Rb4gWqR3wJIqjueEmD3/A6WwfRXn2GF+n3+F2A7V95yY9
-	tbcWsDzXJeYCCy4dvGdDE6TEARU4ES7Yc5PlzdnxjzXbeCmMYrlFCK6jA3Vtfu23ku633Yp10XV
-	maX7txWpt7KkFnWLiehggmhSLJP6+L/Fy594sf3ToDNc+ffni/ifSglciMspAlbts7GV2979TKn
-	OT2MOwcu6TCzmqHbF1aA5E3AmgPk8why7sYrcwOhgH0kLcxv2KGCtJl1eaaJDNZ0SrPS5TogAhm
-	Xs7usIWBPadAWMIiTdmBdeb8tUvM5mvQBeGWtDQFBTpCy8vrNjZ7a0IiVfE8TOVSKL9uhuQLJxP
-	jwZCCRDinMHCxPQ5wRZelqfZECmK+dtjACo3ohgpg9YMxipeBKp1zHXhMIC/SPbVnOaCg+mA==
-X-Received: by 2002:a05:620a:318a:b0:8cf:cee2:e405 with SMTP id af79cd13be357-8cfcee2ecf7mr270204685a.24.1774024541828;
-        Fri, 20 Mar 2026 09:35:41 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cfc90e6965sm202081085a.44.2026.03.20.09.35.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2026 09:35:41 -0700 (PDT)
-Message-ID: <ac4df3ef-1704-4a1b-a47c-6fe96ae1c01f@gmail.com>
-Date: Fri, 20 Mar 2026 12:35:40 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ThPev6Ab";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eHZHOCgM"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7C90EEC0194;
+	Fri, 20 Mar 2026 12:50:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 20 Mar 2026 12:50:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774025430; x=1774111830; bh=Zf9qnTg0nV
+	MhhJl2lCmHno5PCPg0tD2n7rCkQwCHMIA=; b=ThPev6AbLRzjjqjz/pDgsA/FTC
+	mG496+X49ouje+HVV/Qy8xfmx4Uh4LWXG9/r9T7dH/+vQSQlbCpSUStkerL412IE
+	I842RWClNDdALNTWydPE3lC67crMJZCbbWmRBdl0OnMTcRdeHtUor9nzB2f8HdIT
+	y1E/gWNJlat5ttX4mV7aP3hpyA4NxTARcFmpfvlqxEEOS8UnmoqO3TGS2ZOPCKmw
+	C7YtjqX/+alZqxePI4GhMnQL+GaOe++zmtzyqwMZkSTbv+phhlHbA6lLh0OgkcNI
+	elBE8She/wF+Thwj24PZm0efH36olhAeM/470D1Cp7lUa05yQpgMnrg+xLDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774025430; x=1774111830; bh=Zf9qnTg0nVMhhJl2lCmHno5PCPg0tD2n7rC
+	kQwCHMIA=; b=eHZHOCgMtCo9tmPb1IqP7Aonj1SWSwTsJ/AvNyjI/vM7DRvjmwa
+	LlWLw0JBvecHUh1pM42i9LZVE+S7/kdaIPKCjQ3D1OQvtJAO2XhCQdkPDVW5Z1hS
+	l4jUMxQTUWuvOcjmGaRVoCqg0tjOYVYLqsYsJez5Y2WztZRhom/WFq1jbr87/qVt
+	wP+kiw6124txiO7S23w4JRQJYGgZpiiLYX+PjbhriRRqstaLzGMRZnsgS6Qj8R7w
+	sUXHeo7zQQNIf+l0q+hh4lAQVj+uYLjRtve0a5nKeMcXut+rYw1dBxNKcviIZOFk
+	PpbqzeHLfe91s/AC8LeH12X5NrYzrtkCkmQ==
+X-ME-Sender: <xms:1nq9aW9huRgKk3TsG3KvLK_8u6A9ViEzyr9kv4NhQupKNWa6vBWKFA>
+    <xme:1nq9adv2-oso4hW0mNKVaqtEYm4-fB_u6Dd-B4Z3N5UPeNk8Zal5CJTLx8bFj4DfT
+    13wAe4w8MgSHXF5_7pjy83EaEvdKS5T11v0MlX0eImUGPDGf8ehUA>
+X-ME-Received: <xmr:1nq9aRDrcf0cWxj52bze6ZunskVguG3nkjG7D2B3xMDl2DCmeVpINYSwU4jh-9JGrP1faNaOCBDn8x9UAtpjqtLZthTXhoQj5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddtgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteehffehffektddufeejtefhteeiudfhgeduveegleehgfeiieeffedugeej
+    ffegnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjoh
+    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdrrhesfigvsgdrug
+    gvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1nq9adWDka4pyV2l--mQCk3430S-waN01i1Nos4ofq8DSHlSvliP_g>
+    <xmx:1nq9aXC1A_ybCFzHttdPhjrVf_YMmoKmxQMd44dfCGE01tUmgnyKHw>
+    <xmx:1nq9aY8ubVRA2AHTDd9Ul9bzMBNVB_HAa_ftP972S_ttQYmxoIKGiQ>
+    <xmx:1nq9aWFgEIAmNFPdWaCineU4HmgrXVwiPOynYycRa5Ovnyxe2usA1g>
+    <xmx:1nq9aUGd4Dwu5u0JBTYEpeUuVuyiTktnjlDjKwHXgC3PWYdTeYOoNaXN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Mar 2026 12:50:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH] regex: not all macOS platforms seem to have REG_ENHANCED
+In-Reply-To: <6636e7d2-7a1d-0108-2e62-af27a3ae3cf3@gmx.de> (Johannes
+	Schindelin's message of "Fri, 20 Mar 2026 08:55:54 +0100 (CET)")
+References: <xmqq8qbnigxp.fsf@gitster.g>
+	<6636e7d2-7a1d-0108-2e62-af27a3ae3cf3@gmx.de>
+Date: Fri, 20 Mar 2026 09:50:28 -0700
+Message-ID: <xmqqcy0yfnsb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] commit-reach: simplify cleanup of remaining bitmaps in
- ahead_behind()
-To: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
- <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
-References: <06000e28-c1b1-472f-bd6b-367b6c8d208d@web.de>
- <21adf042-2bd1-4022-8822-9ed4985122a4@web.de> <xmqqjyv7lnmz.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqjyv7lnmz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 3/19/2026 1:44 PM, Junio C Hamano wrote:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Don't bother extracting the last few remaining prio_queue items in
->> order when we only want to free their associated bitmaps; just iterate
->> over the item array.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Quite obvious and straightforward.  Will queue.  Thanks.
+> While this lets the build pass, it _does_ change behavior. Where
+> previously, EREs were enforced, now BREs are silently enforced.
 
->> -	while (prio_queue_peek(&queue)) {
->> -		struct commit *c = prio_queue_get(&queue);
->> -		free_bit_array(c);
->> -	}
->> +	for (size_t i = 0; i < queue.nr; i++)
->> +		free_bit_array(queue.array[i].data);
+Enhanced is not about ERE/BRE but yes, you're right.  A build that
+does not support REG_ENHANCED (due to the lack of definition in the
+header) would compile but without enhanced features like \b, so the
+"patch" above would not something I want to apply and blamed by
+macOS users for X-<.
 
-I like this cleanup quite a bit, thanks! I appreciate your
-self-review on the performance side, too. Thinking out loud
-like that can help other (e.g. me) avoid similar mistakes in
-the future.
+> So it might be desirable to instead imitate what `meson.build` does,
+> namely define `USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS` on macOS when
+> compiling with `clang`.
+>
+> But that should already be the case:
+> https://gitlab.com/git-scm/git/-/blob/v2.53.0/config.mak.uname#L151
+>
+>> ifeq ($(uname_S),Darwin)
+>> [...]
+>> 	USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS = YesPlease
+>
+> So: hmm.
 
-Thanks,
--Stolee
+Hmm, indeed.
