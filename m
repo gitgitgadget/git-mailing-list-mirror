@@ -1,55 +1,55 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B33C3A8729
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 11:48:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FD93469E6
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 11:48:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774007287; cv=none; b=HLvPOsEDiGmC83rda41EVHanAQiEfneCQfyBDjXrQNLkVVDC1uiTBKNRe9M141HP1PxkD1m/VprEjoT/mVS5P+xMS3TiNIXHed4MeU0X9yIx24Rm62utMGEW3URoOOBmpa6PNUPCcglunwkHAHv2Sgyo+yoNG7w1auybbHzcmA4=
+	t=1774007290; cv=none; b=Nv5mgxlNs52FbuyzKfpwl90OyFbXoBufpDoEyR68g37ewXOSk+gq/YVEUMqnUO8K/Ddf4gT19mYtvkNFUkgyvjiC9TosBfrByEhw6Kw4Le+GGGkyiswfWXEi8NWcrFsTHyn2yddP6/nVlgXEkeVef/aL0emj16l+1SaQIlwTZic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774007287; c=relaxed/simple;
-	bh=oZwf8QccPzGPOQmd+mD9L7s1UpiLCaqsxxDYB1QY09U=;
+	s=arc-20240116; t=1774007290; c=relaxed/simple;
+	bh=ODlMVGo0NUCHTSeBBeH8YDBPARncgnQKQYpI/Nryixs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E2CyCLZ8koOqXtbrdqckb/0C7w0UNDF4yoMsxkn7lDTI7nuSK1OVlz5Vt4Qo+770XYj58o8kr1YJwFsly0kt63VAQlSFGAo+LMDB3ACwxpnGZ5ceqqgvoM3eSL0My4QHQlOrUn/O3vBVqql+ZCluvCAGym0Yd6FelyuQtx82kmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ggpOveXy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yFQAQlYR; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=q4seh8VFf5Xl+7kNZ8SZgWvGepumXkXnlJ8AgPofmBN8p2VqptSVfumxUZzOC5vhl90Dsg/QcXjmEB6Lq+A5UNVdu6Dq/Aw9iYu3FpAvRwxbGjPYuVq8y0nVRz+dBGDGjZq5oNptXTBz8Ekek7H+qKsBQJ+diy85ngrQ1nq1oL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G7nZ/pQ/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=00dt6YDb; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ggpOveXy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yFQAQlYR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G7nZ/pQ/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="00dt6YDb"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E13531400176
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:05 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id A0EB5EC00FF
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:08 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 20 Mar 2026 07:48:05 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 20 Mar 2026 07:48:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774007285;
-	 x=1774093685; bh=sBe2hUHVRhiT/yTKLj3pX7K7Q0DFO/zC1HXGpmvv0N4=; b=
-	ggpOveXyfGBcPIbBjulkYdIqgw+CPkvjOoPlRtLnRFEuEXsVs5lY+564bnl72oJr
-	aA/QjYDEVVAy0clv6z+9UR7rHcG3r+fem2CroCFCtY9NEdDdeZOfchvBfTeaiGH7
-	+FXo6aYTwBkQibbPn6NC1XRQk9beBTYLZMADZDbwe5itXUMDNg73Slw6SRfxxRP2
-	tDmLAw6Zdh4WEtYvWMRvZ0YhKgysUs9jfeCKI23Kf8Ro6e9RCQeE0gqWz1yAjsqT
-	ScpG2uhN8+KisEotqZzuhjLyMy/AOTwbB4JC9xSwjkFQ0Z60xql/BPwT1A4JyxC0
-	XYec+PykEzJ0na3U/wXXPg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1774007288;
+	 x=1774093688; bh=8l7qu6AC97Onj7j9h6yGdCF3XvBKI8ZtJKYZDaMUInc=; b=
+	G7nZ/pQ/9o7gemQNbvwq2BS9JAI5SvLlEMGRAQW9kNnheeB+i/NWEvH1Kn8xmV2K
+	r+tyySk/H4vgItdljgR4XjKfLbRVZsxI3NRP4gkKnc5LSMYFVU8HQtApomucuHFj
+	45ItG0IVUY3STznU42AkPQu25Pzuy9TBAtPz1xUqkbwVG4y78Obiuxq3pvFKQq8v
+	ZaDYSjvUWjV+x8HOvPM/a32/tbrWOA/dyXRwGr5vur3V2RaArjf1UhKu4mlCuJmR
+	qFF0S/EhwPRMCzfkpedgh4Imoks9uee+GdIV3PlsVrBUpAwv84BZoAkCwaFdiYzt
+	FyYSEe5aD6EAIkQU8UaNmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774007285; x=
-	1774093685; bh=sBe2hUHVRhiT/yTKLj3pX7K7Q0DFO/zC1HXGpmvv0N4=; b=y
-	FQAQlYRv0T2nAtwKV+bHtjndD44OrdVSVsAnMUK3NpOGNvAZngNNio6XYYrVSPnj
-	S1y2as0YmrQiJHw9p6X3OhYJj+vi59eY7WZW6nomnkoJxXEDicBtrMeawxcZpMKx
-	xLXJ5YAeO2bgbOh1SMJw+CtbNJxLNsGqQGHkypip3ehfVqU1vlCRGHqiIKmnFjMN
-	v9lw5efSK2GPCWwdmra2msLVdUUQN+DPq1CDlu9ftVXPLCDOQfzgDCuucyD9BL8l
-	mMxHxS6sq7vT89qapXX/l8or1G0E0wwkQvpuysnEyRwv0FJZY0NrFTu6xBQrW8vv
-	mOSpRXESlO/2XShT7aS9A==
-X-ME-Sender: <xms:9TO9aZw8n-em72HX2qmmQIzunXXqyTyAgAqcZirmR5qHUZBYX3hNNw>
-    <xme:9TO9aQMLsX1oyC-19jnzMcRv6gN9_u8c0GX2-JbsGqZlLrIAPz6Kj5ca6-wUd6t2D
-    PdOiX0P_dnx04WrGP_9WNvGjBCRBCtbCYv3k7qt90FwL4nb5GSszw>
-X-ME-Received: <xmr:9TO9aY_NLNEJ9yvuv4bgJequLYvk76ISrcOPVxVkCre6sW-nIIAItXlyN-w7W0wGuJK9hHx6rQCmmfivcEyDxXz96bEBucEhx47GIP_Vtvry>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774007288; x=
+	1774093688; bh=8l7qu6AC97Onj7j9h6yGdCF3XvBKI8ZtJKYZDaMUInc=; b=0
+	0dt6YDb/5CV1pX2L0/2MdgxEGwFY3xDU/leVzsmgl245kE5pqJFcXTn6ZgTuRyFc
+	YuoRluCDboVnEmXz3m8ZCbXcpcHhlwu1hoCNkztsjNozvc7wgafVjkEss/zvgIdc
+	whp6JL3JuxiY03mE8daOiZUbxPqxCdzS0lNBwxpsVF5O7yqMfeaMtWxALskNGPwj
+	YB/GLuEgnExIUiXWvc5+y+TmlGN7cW81+2Q+IwKtjBH7HptxvdwtcI1XfeuBQeDQ
+	A1JxdXyX1ndhPaBznWV2kke/hbDQ6axxryFYHsqUpxFzSj/rzDMc37tNVqXQbEDi
+	JaCMV1vXzmHaL0apM0V8A==
+X-ME-Sender: <xms:-DO9aXi44RH_X5g0EDJDuaWPaDBjI1v20S7_mtWnw4H0pdAYkdeL0w>
+    <xme:-DO9aa9vFy4WJRvpYq0Eft9ASRii3IssR1Gp6vMeJ9ZwyzRDFW3HFOgiVmSnTeDAd
+    rWKA_k6mZc4_yKfCtnHY1VVr8RRLKcnK4XUh_KrCRmq53OQOYEV>
+X-ME-Received: <xmr:-DO9acsyyOGYJXTvcFKzLgknw8-ct--AGaHIFWBqmQrUpnJBNVACUpz8LP5A4eBKRlp5Y0ab-Q-HMYJNYZpkKwAVP5mjK91P_cWkH3YT0IND>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdelkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,22 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdelkedvucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:9TO9aQqBCzt_MC927Co4liGx9Nr_auofPipo65zsOr1_pvj5a_lkkw>
-    <xmx:9TO9aa7iMbyjTavPLpuHby75MDevqpSjK_kM2ihAnL0gsSqnyOwp1A>
-    <xmx:9TO9aQPF-JD4ynL7DJV0tZ6jBXeFbzIjY3pGxn8I1p7EoAan09X0qQ>
-    <xmx:9TO9acOdr4KzNxG-yEihDVsRDAvn9XXgDk6Rq5MEv7XID8zvE1sojw>
-    <xmx:9TO9afwmaq_aDvZLf3T7xUrt_9Xsv6We1TgVHUuXQRDYc4bH1rMRyFZY>
+X-ME-Proxy: <xmx:-DO9aZaDeUXOuzO2UUAlbeVlw4PfnXLOlTjFcSjvQ019PjffE8lNrQ>
+    <xmx:-DO9aUrAYsTkvBBLFNRhtoGKq_vLMtWf3hwTAKgtuga6xALVyUthVQ>
+    <xmx:-DO9aW9IsYhb9LQN4xo3C0mbh38unpmq_rrrMb1LOeeJtKvpNgEjKA>
+    <xmx:-DO9ab-a4pEXI1CXZlU6XITAqonNaiBAJSM80wNiIoBh-WhlfjoYlg>
+    <xmx:-DO9aYjkzdhiUqjqdAtY-czI1m5WPiNaUrHZNSPG0m24YmH35tFuTOR1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:05 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f5418df7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id b572368d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 20 Mar 2026 11:48:05 +0000 (UTC)
+	Fri, 20 Mar 2026 11:48:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Mar 2026 12:47:13 +0100
-Subject: [PATCH 08/14] builtin/fsck: stop using `the_repository` when
- checking refs
+Date: Fri, 20 Mar 2026 12:47:14 +0100
+Subject: [PATCH 09/14] builtin/fsck: stop using `the_repository` when
+ checking reflogs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,67 +83,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260320-b4-pks-fsck-without-the-repository-v1-8-6594f997926b@pks.im>
+Message-Id: <20260320-b4-pks-fsck-without-the-repository-v1-9-6594f997926b@pks.im>
 References: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
 In-Reply-To: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-We implicitly rely on `the_repository` when checking refs. Refactor this
-to instead inject the repository via the callback payload.
+We implicitly rely on `the_repository` when checking reflogs. Refactor
+this to instead inject the repository via the callback payload.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fsck.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ builtin/fsck.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 00476bb921..63cd58e58b 100644
+index 63cd58e58b..ea441b072e 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -573,11 +573,12 @@ static int snapshot_ref(const struct reference *ref, void *cb_data)
+@@ -467,13 +467,14 @@ static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
+ 
+ static int default_refs;
+ 
+-static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
+-	timestamp_t timestamp)
++static void fsck_handle_reflog_oid(struct repository *repo,
++				   const char *refname, struct object_id *oid,
++				   timestamp_t timestamp)
+ {
+ 	struct object *obj;
+ 
+ 	if (!is_null_oid(oid)) {
+-		obj = lookup_object(the_repository, oid);
++		obj = lookup_object(repo, oid);
+ 		if (obj && (obj->flags & HAS_OBJ)) {
+ 			if (timestamp)
+ 				fsck_put_object_name(&fsck_walk_options, oid,
+@@ -481,7 +482,7 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
+ 						     refname, timestamp);
+ 			obj->flags |= USED;
+ 			mark_object_reachable(obj);
+-		} else if (!is_promisor_object(the_repository, oid)) {
++		} else if (!is_promisor_object(repo, oid)) {
+ 			error(_("%s: invalid reflog entry %s"),
+ 			      refname, oid_to_hex(oid));
+ 			errors_found |= ERROR_REACHABLE;
+@@ -493,8 +494,10 @@ static int fsck_handle_reflog_ent(const char *refname,
+ 				  struct object_id *ooid, struct object_id *noid,
+ 				  const char *email UNUSED,
+ 				  timestamp_t timestamp, int tz UNUSED,
+-				  const char *message UNUSED, void *cb_data UNUSED)
++				  const char *message UNUSED, void *cb_data)
+ {
++	struct repository *repo = cb_data;
++
+ 	if (now && timestamp > now)
+ 		return 0;
+ 
+@@ -502,19 +505,20 @@ static int fsck_handle_reflog_ent(const char *refname,
+ 		fprintf_ln(stderr, _("Checking reflog %s->%s"),
+ 			   oid_to_hex(ooid), oid_to_hex(noid));
+ 
+-	fsck_handle_reflog_oid(refname, ooid, 0);
+-	fsck_handle_reflog_oid(refname, noid, timestamp);
++	fsck_handle_reflog_oid(repo, refname, ooid, 0);
++	fsck_handle_reflog_oid(repo, refname, noid, timestamp);
  	return 0;
  }
  
--static int fsck_handle_ref(const struct reference *ref, void *cb_data UNUSED)
-+static int fsck_handle_ref(const struct reference *ref, void *cb_data)
+ static int fsck_handle_reflog(const char *logname, void *cb_data)
  {
-+	struct repository *repo = cb_data;
- 	struct object *obj;
+ 	struct strbuf refname = STRBUF_INIT;
++	struct worktree *wt = cb_data;
  
--	obj = parse_object(the_repository, ref->oid);
-+	obj = parse_object(repo, ref->oid);
- 	obj->flags |= USED;
- 	fsck_put_object_name(&fsck_walk_options,
- 			     ref->oid, "%s", ref->name);
-@@ -664,7 +665,7 @@ static void free_snapshot_refs(struct snapshot *snap)
- 	free(snap->ref);
+-	strbuf_worktree_ref(cb_data, &refname, logname);
+-	refs_for_each_reflog_ent(get_main_ref_store(the_repository),
++	strbuf_worktree_ref(wt, &refname, logname);
++	refs_for_each_reflog_ent(get_main_ref_store(wt->repo),
+ 				 refname.buf, fsck_handle_reflog_ent,
+-				 NULL);
++				 wt->repo);
+ 	strbuf_release(&refname);
+ 	return 0;
  }
- 
--static void process_refs(struct snapshot *snap)
-+static void process_refs(struct repository *repo, struct snapshot *snap)
- {
- 	struct worktree **worktrees, **p;
- 
-@@ -673,7 +674,7 @@ static void process_refs(struct snapshot *snap)
- 			.name = snap->ref[i].refname,
- 			.oid = &snap->ref[i].oid,
- 		};
--		fsck_handle_ref(&ref, NULL);
-+		fsck_handle_ref(&ref, repo);
- 	}
- 
- 	if (include_reflogs) {
-@@ -1092,7 +1093,7 @@ int cmd_fsck(int argc,
- 	}
- 
- 	/* Process the snapshotted refs and the reflogs. */
--	process_refs(&snap);
-+	process_refs(repo, &snap);
- 
- 	/* If not given any explicit objects, process index files too. */
- 	if (!argc)
 
 -- 
 2.53.0.1055.ga2ffed1127.dirty
