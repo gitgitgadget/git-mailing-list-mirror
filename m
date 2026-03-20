@@ -1,139 +1,70 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F6728CF77
-	for <git@vger.kernel.org>; Thu, 19 Mar 2026 23:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ED91D61B7
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 00:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773963350; cv=none; b=DfOskAZzNqViu1kLYwez6vO361bYlkxgF+vs9wEiaMjksNI3N51QVHuvbJ9w+FzmxuxBjjtRvl6BsnzAH7XsVqZUuLIRccmTq2Yqea7NM40tE7nibGE0jYuz2oPOf6IhQEPcJqD7ZS2xE3Ur4G51rngGw/VHKcbPE7LYtAXUSro=
+	t=1773966271; cv=none; b=HL6AXw3XpHQ3FMXchGZtAWdEj/y1SA59SuAkP14tkcrSlft8GJ2NckO/wtLEZf7IHs/BmjqH4OXnV8k0AQVfAaEmNs9Eh/NQtKtf+4D4miP5vUYplSDDJRDWRbRjhA1+FZqgvM3oWKwX353dEn3M9oIInjE3BPl6oVaYM/JpnLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773963350; c=relaxed/simple;
-	bh=a2ciue+OHQ1VMEw/Yi9iG6C20/NyHEb3/U15oHydsGo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dUSzGmg2/DRuIuePfR1yEtC93q0ypMVUWjzZVghLGm6orDVUyaLGTSpgjInwTv+zOkBQJw/re3FlLeYvWDplsY7+2RTuK0KpQ4pCjMSu5x0Kc8UemsO87Esdso6E8Z16wEbQ4oL6O6G3BbsCv+G6WFl41+GulomykQuIFmeBXM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PO4kerm3; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1773966271; c=relaxed/simple;
+	bh=8wlG2q4nrN5JI1bHYgty9toyJiDJGIjalweo80ndwfA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H9UXwtO107pYqqxFTXuBV70M6sT65QoAER7GCAC3tQLf1GYvIBknsm5KVEb/Jq9rrkyTtJ0XsT13amfF8/GIMlcJwoLXnsZechC9Uqp9CsJGHSj6pb1VyKt+Dbu6nOBjntWr2hEITRUS34OI2/Q5Z6Zm0juXGWTFa5h11RLVTjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=Ngrj2gLU; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=PZwGXCRW; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PO4kerm3"
-Received: (qmail 61646 invoked by uid 106); 19 Mar 2026 23:35:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=a2ciue+OHQ1VMEw/Yi9iG6C20/NyHEb3/U15oHydsGo=; b=PO4kerm30SlkMf7k6zR7nyMMBpJZ5WyxIl5tp0hob2dH0HEAf+XUmflIhAWrycUne2ph8g8QAOtdAMb+Z/Iqjaq2yhRpn/DpZAopFZM5xn0Fh7hcFqx/CQ1syH1SOnLdKuDTAvE1rGFPosV0ZTnlE5QfkvVl0/Jqi7qL4wdGUpwsuKHb8H8P6malX1j2Zw+WGlrxTCaiyx9aUO4rKLyr3ozVQw5bwEWraMf5dZOsmOwjrvRXshmklRs8SXio6AFbuM8euP2uHzJhWQWkqf74J1dvrgR/l6q0RO26EKV3LtYENKE835h31FlisP2HihynHfqBl4BacqGRMcMAIbRKjA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Mar 2026 23:35:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 90773 invoked by uid 111); 19 Mar 2026 23:35:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Mar 2026 19:35:46 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 19 Mar 2026 19:35:46 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
-Message-ID: <20260319233546.GA3632561@coredump.intra.peff.net>
-References: <xmqq341wnvbk.fsf@gitster.g>
- <xmqqcy0zii0s.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="Ngrj2gLU";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="PZwGXCRW"
+DKIM-Signature: a=rsa-sha256; b=Ngrj2gLUTzr7MfG4l0z2MSWu/z1Ea6bMZXqStalE7bajmgUmPdmZC9SLRokU9WPssswbSd+vDA1BCVT7I/0cEGfr2V4corDvbXcPVOzgv6JerFQjJ+zkLkcWrjFihAUZq7BD2hzLk7J34uAyiU/7pd7OuseiAxY5IlERL8/wfzXkNf+9Fc/IideVZ5KgW0TpiyJ2+A7uZPEtn7PXHlDDq+baQ5GridQP5e3+tGEKiHS7ltvVben60kQLMSJr9l1JTsTmNUyGSVhvfCKQJkK89OnqmN8nv6am6uev2U45a5AW7BtLYG4SqD+7bXVghIxfMRltCj3N2rZokc9tHN5iGg==; s=purelymail3; d=malon.dev; v=1; bh=8wlG2q4nrN5JI1bHYgty9toyJiDJGIjalweo80ndwfA=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=PZwGXCRWy0ebAu/pjn6SuWseejbp2rfxcejCjrWEKkdBR0hhkyWmL+TQSOYaWil3Deqw3Z1V22BGc8Te9drA9qPeL3tUG1GvmlNIVXkBoA5WlBkhUvRRoPJb78zZQspZPkT7DLaJba6naELKHp6hVb/J0ktLeDnJMLSfejCztfsD5MpqBV/h/ArQxjNuKpQR5wLr3TaICtcyTPJ2tbz+aeQOAe+1PDaYp8t2Rp3vMrVEn06ua8ovdiXyEAInZLLjVbPryNIO5FIp6tiQHPXv1Ezipfh39c7M8uxkxizeAaBE5ArSJ2pe/2/AZHg6+vK9dveHN59vdH/tmo/L4LklKQ==; s=purelymail3; d=purelymail.com; v=1; bh=8wlG2q4nrN5JI1bHYgty9toyJiDJGIjalweo80ndwfA=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1913233344;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 20 Mar 2026 00:24:20 +0000 (UTC)
+Message-ID: <00d622d4-cfb8-41ff-b2df-5fb58a492a75@malon.dev>
+Date: Fri, 20 Mar 2026 08:24:09 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqcy0zii0s.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Question] check_repository_format_gently() is not
+ side-effect-free
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git <git@vger.kernel.org>
+References: <c0bb931a-3ee6-416b-8ceb-9fab013a621e@malon.dev>
+ <xmqqfr5vlmlu.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqfr5vlmlu.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 19, 2026 at 03:14:27PM -0700, Junio C Hamano wrote:
-
-> One is in list-objects-filter-options.c::parse_list_objects_filter()
+On 3/20/26 02:07, Junio C Hamano wrote:
+> The verb "check" does not imply side-effect-free.  By checking, each
+> of these functions tries to achieve something, and the way the
+> result of their work is conveyed back to the caller may not
+> necessarily be only by their return values.
 > 
->         void parse_list_objects_filter(
->                 struct list_objects_filter_options *filter_options,
->                 const char *arg)
->         {
->                 struct strbuf errbuf = STRBUF_INIT;
-> 
->                 if (!filter_options->filter_spec.buf)
->                         BUG("filter_options not properly initialized");
-> 
-> The filter_options variable points at a list_objects_filter_options
-> structure, which has an embedded "struct strbuf".  This BUG() is
-> unnecessary if the structure is properly initialized, either by the
-> LIST_OBJECTS_FILTER_INIT macro or a list_objects_filter_init() call.
-> But it is easy to memset(&lofo, 0, sizeof(lofo)) or zero initialize
-> with "= {0}", so I think it is OK to special case and allow for
-> checking the possibility that .buf might be NULL.
+> The adverb "gently" in this codebase typically means "the variant
+> without gently signals problems by dying.  Instead of dying, return
+> to the caller with error code, so that the caller can decide to
+> die".
 
-Yeah, this is about catching _other_ code which accidentally violates
-the invariant. I don't think there is any choice between special-casing
-it or just removing the BUG() check. It is probably OK to do the latter
-at this point. As part of the transition to LIST_OBJECTS_FILTER_INIT it
-was a bigger risk, but that is less likely now. So I am OK either way.
+Ah, I see. I guess I took it too literally. Thank you for clarification!
 
-> Because strbuf_getwholeline() discards what is originally in sb and
-> replaces it with what getdelim() returns, I have a suspicion that
-> working with bare char * and size_t to interact with getdelim() and
-> then using strbuf_attach() on the success case would be simpler to
-> read and maintain.  Once such a rewrite of this function is done
-> (#leftoverbits), the special case we see in the Coccinelle rule can
-> be lifted.
+Setting the semantics aside, the problem remains: I still think the 
+setup method here isn't quite right. It creates a bottleneck for 
+eventually handling multiple repositories in the same process without 
+data races.
 
-Hmm. I think that is something like this:
+Do you think this is worth a patch?
 
-diff --git a/strbuf.c b/strbuf.c
-index 3939863cf3..0333aea261 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -631,6 +631,8 @@ int strbuf_getcwd(struct strbuf *sb)
- #ifdef HAVE_GETDELIM
- int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
- {
-+	char *buf;
-+	size_t alloc;
- 	ssize_t r;
- 
- 	if (feof(fp))
-@@ -639,12 +641,14 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
- 	strbuf_reset(sb);
- 
- 	/* Translate slopbuf to NULL, as we cannot call realloc on it */
--	if (!sb->alloc)
--		sb->buf = NULL;
-+	alloc = sb->alloc;
-+	buf = alloc ? sb->buf : NULL;
- 	errno = 0;
--	r = getdelim(&sb->buf, &sb->alloc, term, fp);
-+	r = getdelim(&buf, &alloc, term, fp);
- 
- 	if (r > 0) {
-+		sb->buf = buf;
-+		sb->alloc = alloc;
- 		sb->len = r;
- 		return 0;
- 	}
-@@ -669,10 +673,13 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
- 	 * we can just re-init, but otherwise we should make sure that our
- 	 * length is empty, and that the result is NUL-terminated.
- 	 */
--	if (!sb->buf)
-+	if (!buf)
- 		strbuf_init(sb, 0);
--	else
--		strbuf_reset(sb);
-+	else {
-+		sb->buf = buf;
-+		sb->alloc = alloc;
-+		strbuf_reset(&sb);
-+	}
- 	return EOF;
- }
- #else
+Thanks,
 
-So I don't know that it makes anything simpler. We have to copy the
-values back into the strbuf either way, and we still have to handle
-restoring the strbuf invariants. Even the strbuf_init() case is still
-needed, because we don't know whether getdelim() just didn't allocate
-(in which case we could leave the strbuf alone) or if it actually ate
-the allocation we passed in (which was just a copy of sb->buf).
-
--Peff
+Yuchen
