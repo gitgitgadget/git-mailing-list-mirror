@@ -1,83 +1,89 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7F03033D8
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 01:35:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2211431AF14
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 01:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773970520; cv=none; b=ePMhx7RdqPWLN2rBenfDNZTR3MgXc35qqDqHca4/pkjAjo7OP+0MR2pC42X16Rf3/OzCJNj43j7izwkYwLI8ZFnuZpL/WeSNl9EnL3K8qOwM8/qnag3z1Sw91S7M/0QFKqqFYUk8cOgfXSeGcvNkritAudHu6SKL+3XSN/8VLwM=
+	t=1773970569; cv=none; b=HUCOfG/QfKbi8dI7q+K822K6577xDNzlXO0ScTwMTrC9Gr6FCypN/84/k0xQYVVAAWyj6BeZj6EJngAgYXPbvD1+lTJ1MJJp2tKNlILGxlM7M/DkzMcM14AUCe5tYFfwVWs47adbYCCpPMxekO9F1xOPc8uvV12ZbO5QcK1oe5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773970520; c=relaxed/simple;
-	bh=BWZW/ggXFwvBi801VOxc8ukVJmP4QH+QX3VPisOV4/8=;
+	s=arc-20240116; t=1773970569; c=relaxed/simple;
+	bh=8GCGJk2d37SOfI2oNbMRlaBZU5GuVxIoxMjnmV78dq4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DfUrkzgP6MtNym0oHC0qo777evlMEQesxK1tQjjaWJ48HeBtq7XGoSNfGBzLyIJr6xpTE+pBKyHIKSnFE5rntmu2eGdRMDQPyZLlpIHFBSsgpKMDuF2LMMLmhYzhD43lxPsDPER+Gitzb/ljrvRWf3JKDMToy9l9nRZZHEd77A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kOFC0aZR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JwWlBPSy; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=befoEZoJOLW7VYNzMPcBLlstQdU1NBceIEiVKiuB1UeuXTR6j0IEB5GnFB8S8fz43s7o67uWyedP2d6G3+IPyx63eLCEwKiWiMF1SDqQSgCilBNEQVab+CrDOGZnvbzyLQYPDo0T324Y4ayk3cye/hZrMtynq4HOUhQlKibZdug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g31I0fPV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gxD9y4UB; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kOFC0aZR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JwWlBPSy"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1459614001EA;
-	Thu, 19 Mar 2026 21:35:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 19 Mar 2026 21:35:14 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g31I0fPV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gxD9y4UB"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id B5354EC0143;
+	Thu, 19 Mar 2026 21:36:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 19 Mar 2026 21:36:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1773970514; x=1774056914; bh=w8fg32M+A3
-	8SUpvfYNv6/xXJSH7YqT4MK5HQNQr3Y1E=; b=kOFC0aZR+dV2JO2lN0idZ9IG0y
-	jAN09BmBm8KCWBDKslvQcnazEr5q7YJImtOj3m4umZ+Xd6GTdKSX8oNkwjunKx+9
-	jZPqjtpaCbYpTpC1nSqJJWxNExDrv7Kp/7bY28YGDDiBFVjCURdJKPN24aerSt7T
-	Nutk54li1ZTeK5mmC8Y1WPLq63QKodbQDAEZoGsXxEmkRik5eaBhyE70YhCT/Au3
-	qGhmNKJJv9g4jc1scslU6C4k+YHVjfYLeHfdHhanVoNpuVI/lUucXGgMAQ8g1eza
-	nxq5zKpS810jbIFD7D87ReY7lIyMLPmgfT15ZSlGSg7RnH+Yr+DM2oXvLYeQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773970560;
+	 x=1774056960; bh=8GCGJk2d37SOfI2oNbMRlaBZU5GuVxIoxMjnmV78dq4=; b=
+	g31I0fPV1nLAOnKxR13bWmGSAR+5vbDvcFIptfEWepHjrTTq77dwWngshTg6Ayiz
+	2uvUHfb8HKWiPbUUEtjVmBuhJLxjarjxPyy/iif0b25X+kwO6+cv7ODnDmNd19Fe
+	T1xJUVujt3L+kS1cRhlB+0oDNVHJFWm10Is1XXgl7vnGbXKIjR7ELob/Fi+NKw6t
+	82YTesUOKz9dkQhVzuy5XS9QFG7EOgaEJHTUno/ienzhK/HTr/4ibV+qY9nqooba
+	L+xUonM4l5A5qDauc0+Yx3K8aZ8CnVUjS5MHxymGw3Eb7yxcTPXYxWZ1QbR+WbAh
+	VdeGlDVuaRBPZZ9eVFqXRA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1773970514; x=1774056914; bh=w8fg32M+A38SUpvfYNv6/xXJSH7YqT4MK5H
-	QNQr3Y1E=; b=JwWlBPSy+8NgBmUMGViiB9PbREQN6XctqIxdVw74Xv3Np+r7EtI
-	8BOmsmc2mDFTi8tP/3aY5bAURCsKIrzVk5ItqWTdR4sRMhi4WqXhnracQ5q0X+7G
-	PZUuXv3jvyyDXOgTc8EpIoZYa2D//s/HLaVHuLAmHpQJBUjYe6fsCVQVaWBRP6El
-	Mxpct8klv8NIoGZx9oFL/vkg3E+99gj0D1GOGnQ0bxx4yE2ai1dLwr3ogXo/QUxo
-	G5OSxV9Z8wO4zEi5Z8F+LW3hxY8PDPOAhxs785h/XEIY5QuUWpOn5GLQE10UTpEC
-	8xEFzL7pK9zZ8CMwgl6PlEGRabxagbjoWNw==
-X-ME-Sender: <xms:UaS8acATEW3cyfDcSyaaVpcib6HFGIAa4sPf63ajpAbLBV2yst30dQ>
-    <xme:UaS8acX2I1ajviUWyrw2t42ND0OXqJuhFE9EYwo3hipVzRwqC6tQvGEg3MfTrOqUU
-    cMMGMg8cwtP8FDkmRhaM9dNTxFetjm3oEckYJPiyseDll8s5BQ5LA>
-X-ME-Received: <xmr:UaS8aaBF4v3P6CjahXiV8k0yZSoCbqujpRfqI7EfqF5aacIRKDy5Cc1v4rbs-sIr5m4KKF8QrkOq3FgV8DUZ37db77zbYPe3vg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdekheekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773970560; x=
+	1774056960; bh=8GCGJk2d37SOfI2oNbMRlaBZU5GuVxIoxMjnmV78dq4=; b=g
+	xD9y4UBfrm+PSOZIPwpVJMvZNiGr4Jy8NF2Vu0YkIu1MMoEZM50NV2ov78U6PeTb
+	tMTExEKY6rka7LNYXYEYlvUiY/Azf1NMbjHnldKgwgDJZ3tLumtOuF/vpjHIhhH8
+	QyGy6j1WkOjb7vqiv9OsNluns5OjtBpqOsoE/8hqf1f3nrku25fNow7Nu/8KHKV1
+	n1HjJna1HlMomLNObqvrL9ajiPFCTEO9j5Vr+owvEcSBdBaepQjp1hql2yE4oBLQ
+	9c5crXnzvzMXbc+DiaKdIzuafA8iWvj8xN99TiCScO75qLghG7MuaxCgIa/c567O
+	3XSslDa1Ni/+/p2mtHiRQ==
+X-ME-Sender: <xms:gKS8actMufgJFR_K7Cxdf1QVDdQR1DZR92YB4vdFv8jBm3CtXMUXnQ>
+    <xme:gKS8aQX7NFJy63JxnnQpkYwmbaOBXV6DKpLVTUuJOhdLnuHxY2COpqCbjc0vWdAKK
+    x6sjtqT6_LDLwm5LVCsqKGC7K_qXNtX4pjHBTTV59sRE3E9khtysMk>
+X-ME-Received: <xmr:gKS8aQHyw_tU3jgwQYZegIfFXIUR19SHi0xwdPJJdmNz88FSiCdHHNAElGc816vccQPe5fowDIxME9fwS15Rgt06_YaSrED37g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdekheelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
-    hushdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:UaS8af-y-6EyXotU1Bo3GodsTuNf1L00m69Q7g5TArNXmThNZVwJKw>
-    <xmx:UaS8aRFk-8cx-nXX4i8BpNeXkW7Jj6KvbRYJu4eXld-UJbahJZ971Q>
-    <xmx:UaS8adPHyRrGhpSJeZuf2ax0PJavX1NpgGjSRllaELpClA49_KCMFw>
-    <xmx:UaS8abc5CIXSIW7BHRE6tYL4MYQNv6Gu4i6iNZ4AB1zeFvgTZJFqhg>
-    <xmx:UqS8aQ-Oow5_eWSEAj4f82JazIugOieDmnFTZkMv5ONjUa90o9Yp58qL>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomhdprhgtphhtthhopehjihhmrdgtrhhomhhivgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gKS8aa0aaLqeMbgh5jfBD4oBWjrMOsVtYGlMF5xHPFiewTBQSiwAyQ>
+    <xmx:gKS8aaOG3LgUEIyIkXMU7BSS2EOX8ZyTIuLL3hPKTb8GAqBuyTK79g>
+    <xmx:gKS8aR4fHFNd_C6K7ZcknD-6Fk6nOccmdCnj5jNp8ODcdabLGgjoVw>
+    <xmx:gKS8ac17z7AWIBBUkObGv7JlPlLEZT1yDNCHK-KIl2B0aEi_469w-w>
+    <xmx:gKS8adlRFZTfAI9kNV7IeFPpKhhazINz5GW2E-E3THYqVv6KX9niHbQK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Mar 2026 21:35:12 -0400 (EDT)
+ 19 Mar 2026 21:36:00 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Subject: [PATCH] object-file: fix sparse 'plain integer as NULL
- pointer' error
-In-Reply-To: <97c623fe-4e03-4fbe-a6af-9c01c101bae4@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Thu, 19 Mar 2026 22:49:06 +0000")
-References: <97c623fe-4e03-4fbe-a6af-9c01c101bae4@ramsayjones.plus.com>
-Date: Thu, 19 Mar 2026 18:35:11 -0700
-Message-ID: <xmqqqzpfgu5s.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Jim Cromie
+ <jim.cromie@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/1] git-send-email.perl: support executable scripts for
+ recipient options
+In-Reply-To: <CALnO6CAZqAacTPgwTzAyF-ryyQxaWahXmpfCt9R_+vLS0o5uAA@mail.gmail.com>
+	(D. Ben Knoble's message of "Thu, 19 Mar 2026 12:47:58 -0400")
+References: <20260319155148.1145135-1-jim.cromie@gmail.com>
+	<14840d8a-a1cb-4499-ba78-295c778e90d1@app.fastmail.com>
+	<CALnO6CAZqAacTPgwTzAyF-ryyQxaWahXmpfCt9R_+vLS0o5uAA@mail.gmail.com>
+Date: Thu, 19 Mar 2026 18:35:59 -0700
+Message-ID: <xmqqms03gu4g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,42 +91,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
+>> What’s the difference between this and `--cc-cmd` and similar? I
+>> wouldn’t know, I don’t use these `--*cmd` options.
 >
-> Hi Patrick,
+> The only difference I can think of is that we have --cc-cmd, --to-cmd,
+> but not --bcc-cmd.
 >
-> When you next re-roll your 'ps/object-counting' branch, could you please squash this
-> into the patch equivalent to the commit 2b24db1110 ("object-file: generalize counting
-> objects",2026-03-12) in tonight's 'seen' branch.
+> (I use --cc-cmd via config set to git-contacts for git.git so that
+> patches mostly CC the right folks, but I typically have to manually
+> track and add discussion participants, which is a bit of a pain.)
 
-The topic being in 'next' since March 17th, that is a bit awkward to
-arrange.  I can queue the fix on top instead.
-
->
-> Thanks,
->
-> ATB,
-> Ramsay Jones
->
->
->  object-file.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/object-file.c b/object-file.c
-> index 35be7e58cb..3708b8f18d 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1941,7 +1941,7 @@ int odb_source_loose_count_objects(struct odb_source *source,
->  	} else {
->  		*out = 0;
->  		ret = odb_source_loose_for_each_object(source, NULL, count_loose_object,
-> -						       out, 0);
-> +						       out, NULL);
->  	}
->  
->  out:
+If we were inventing git-send-email today without existing users at
+all, we might have appreciated the simplicity of "it is easy to tell
+if the argument to --cc and other options is a name of an executable
+file on disk, so do the obvious thing depending", but this came way
+too late, I would have to say.
