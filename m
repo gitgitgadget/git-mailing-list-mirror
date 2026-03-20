@@ -1,90 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADE440DFC6
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 06:18:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6352DB780
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 06:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773987535; cv=none; b=KoJV/VArKxOJBgnn072MYiZtqO/sv+pRQqr8n9iSrge6K3qYKDbPF640dxjaBpMEfWyQaHQUxtgffRq2LCE5q0UX2wGRa21JHMvWl3g3vaBXQOdyLdnCieH+hf3bzPkZlE/rsrom5tg4I3I8EGPxmWcAkqsyr+8t+J125kJIuM0=
+	t=1773988817; cv=none; b=Nb6BPAqpyV639cXbspi5+7PC0mguFK9WnT638zAfk7upMfXTmj62MG2CWpqVpUmy9OBAtNJl9q8O7Xuw6y6taJqr4Yhlf5O3lcYsm8pBHErjKohFnKdQZHtMRhp62J4jlmaCJFQ/UjS86q7jyhKqLq3vIBTs7Ro4v70+Xyfa/5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773987535; c=relaxed/simple;
-	bh=DhurKSUJ4qLVluKDFxB89P+GW2spKCUzXB+5cxTVyG8=;
+	s=arc-20240116; t=1773988817; c=relaxed/simple;
+	bh=onUVY5ifA03Lqd+ZLEYX6SHS8Wes7leYzZOJOMivg/Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E7iB7mCSwQbcuqo4CnOOAByy/s7IaJgBe4nUvIqtYI+bgSLsa5jTFkyvk2AoOYJmDznPz7KMZ9nnp80DpcPYkhB+dPrG0SCX8TeSuS3hCQI/wWjEYcQA297dEOHSgMHHXrxij8MnbU1XCDeMaPc3Iw30uIReB2GqEVwAr70bPfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aPAHSNmT; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=SYBwjZvrqb+fqjNLDBSL3BsivCg7oK2i8DFV5V9tp1crxrkZEEjD+gRes1Gqg6GYlQd70zUffjOo8tsUZ051/3uKwhVEHANser+4wWktLH12oXl3lb00a4Pps5R+wOrWBwgq/MouqF0Ek32Flsj1q3tHclWFJdoDe0D3FW3VeSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KfcLbdS1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q7LzmgMs; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aPAHSNmT"
-Received: (qmail 65691 invoked by uid 106); 20 Mar 2026 06:18:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=DhurKSUJ4qLVluKDFxB89P+GW2spKCUzXB+5cxTVyG8=; b=aPAHSNmTNJP33W6qh6Ryn6YFNMTH3e5eT+Ewe7/2paXcYKXyk5jGaqS4rNGctmQQGdIDuULIjCC4J6B66kNFoOzId+skhFbSEZTRiOh88albJS7pJDMPF5kyh6jPdgRTuj3kSLG+Tyd61dBP1XT7MgmwnPsHxlwV0JSxGKSq1iUZPxbafbGVLebUKBVzbi0frz8xc7fJq30sgV+UlTW8KVuUkKD75RlzCsP++XZ5x3OKjOjVKgohU4QunPVF7E/hcgxHuZOr9qyzliyCCqdIfGBsXuSbLyDdHy+KPU7I9XTHFH2rCVZOrYiB9MSpUt6Vg2MpOZ2XJHAGTAf8K/REHg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Mar 2026 06:18:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 96039 invoked by uid 111); 20 Mar 2026 06:18:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Mar 2026 02:18:52 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Mar 2026 02:18:52 -0400
-From: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KfcLbdS1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q7LzmgMs"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C1EA6140005E;
+	Fri, 20 Mar 2026 02:40:15 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 20 Mar 2026 02:40:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1773988815; x=1774075215; bh=gAy3CEKNWB
+	+600rbtpHhPiB0vq3vXTVjhB50iqy3dx4=; b=KfcLbdS1xt/Lo1VuS95XJphdpt
+	rsx5e/eNuKoeE/hnYIRcq/286UZR4gYH0oFsdftLOPxxd5FaWLIJRmI9iLVvQxNM
+	cTKXzxWJIXjniaD5PB4SXnOIPLpL6itUm36BpsCe/eueGQfIbgE5+u30h7UGuHDo
+	7wQIEh6xeqhQ4ffN7B1BwMnRjHMLxoF1jonB/1zaMoikthghQNq3oT1mXvncJnPt
+	FteLQv5pY4ypj9hBiCD51xXbdGFLV74MsyY7iMJtAJhLEChw4U1OQ2YfPMQdzUs3
+	RzIjiANd3XX1b8LQB6LlA0VhKHtBcxM8kxKgvCNVyb3XOB4ofCjmiSVKsQLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1773988815; x=1774075215; bh=gAy3CEKNWB+600rbtpHhPiB0vq3vXTVjhB5
+	0iqy3dx4=; b=q7LzmgMs58tmznE5mrt6b3k7rojsSMYHlgt/DlTS7ZGuuf8AhkY
+	zD1OlSLoLwrnU7uW7jpVgcfnah77F/pDcusAtd79OtDMamL0EMzHaeATpzsgkfFe
+	e6jLtHkcUjrXMvSG2V6RdBVMn9VQ4sHYqUVgKl+9uWlvIuaZ0LgxZDNkH3l3TYTq
+	3mDfULqTJEsbI1s2p164nwEpn1XpCmMo8tR5bbc38RV/dTKfV7fmCP2rz1eKWJFN
+	l5L6ttT5qkiMQZxCopEU61E8gJp0HQIq3nOP8jjSkIE3fkSoUgN8QQRCnWAEmRZD
+	f3f5D2lUz1ts4b7R9V1S/yymIDpv4Nkgcug==
+X-ME-Sender: <xms:z-u8afcYVraEbP03YYlQf2JbH4rnQ4GG82ydwOJlkky-OZLvvXlTKQ>
+    <xme:z-u8abMqXgtjTLM96sM45ioOh8MFNiV2oVOuvTWkGNVFRtgTAD7royXMcn0RlkAL5
+    fS1tdqh3ToinamiXMotd_0OnPnKb-CzvYmpEOTGjYjAe-o5fvRZIQ>
+X-ME-Received: <xmr:z-u8aWL2wTwgBGuu8KmdUW44uEOBBlEonmujDLVRhQeQWrvRUH3hFxkOft43jpNJfvqsjLaFFtiJVrwVhrjPzl3HXsGA0TVibvpRkT3D6hv_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeludelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:z-u8acE8JGgr4G3kWGECKCgBJFBbzMVgrKyBTPDDWAMgJDpwUMw4OA>
+    <xmx:z-u8aeTBtS9oE_30pL-L2lMZ1wnWje2MxlRaL0Qnja7Laf05OLIjyA>
+    <xmx:z-u8aYFRXrDXDmDyJLmxGRbhjECivw4bLkslZkAV4aJ_evHFL-Zj9Q>
+    <xmx:z-u8aa9M47FATYAXkjU3910ezaPf16CwQL5qG5XB8H51IxG5kFmiWw>
+    <xmx:z-u8aa3uVUS7Fnknh0qoZnjoV0RyFHYM5qzKyu4LFPPSMLCEpozcaS4w>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Mar 2026 02:40:15 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bf71c991 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Mar 2026 06:40:13 +0000 (UTC)
+Date: Fri, 20 Mar 2026 07:40:10 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
-Message-ID: <20260320061852.GA35538@coredump.intra.peff.net>
-References: <xmqq341wnvbk.fsf@gitster.g>
- <xmqqcy0zii0s.fsf@gitster.g>
- <20260319233546.GA3632561@coredump.intra.peff.net>
- <xmqqcy0zgtmu.fsf@gitster.g>
- <20260320041803.GA18125@coredump.intra.peff.net>
- <xmqq341vgilb.fsf@gitster.g>
- <20260320055709.GA35291@coredump.intra.peff.net>
+Subject: Re: [PATCH 01/14] oidtree: modernize the code a bit
+Message-ID: <abzryk0qjlbvy8OL@pks.im>
+References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
+ <20260319-b4-pks-odb-source-abbrev-v1-1-5ddebad292b0@pks.im>
+ <xmqqeclfn6nn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260320055709.GA35291@coredump.intra.peff.net>
+In-Reply-To: <xmqqeclfn6nn.fsf@gitster.g>
 
-On Fri, Mar 20, 2026 at 01:57:09AM -0400, Jeff King wrote:
+On Thu, Mar 19, 2026 at 09:08:44AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > +void oidtree_each(struct oidtree *ot, const struct object_id *prefix,
+> > +		  size_t prefix_hex_len, oidtree_each_cb cb, void *cb_data)
+> >  {
+> > -	size_t klen = oidhexsz / 2;
+> > -	struct oidtree_iter_data x = { 0 };
+> > -	assert(oidhexsz <= GIT_MAX_HEXSZ);
+> > -
+> > -	x.fn = fn;
+> > -	x.arg = arg;
+> > -	x.algo = oid->algo;
+> > -	if (oidhexsz & 1) {
+> > -		x.last_byte = oid->hash[klen];
+> > -		x.last_nibble_at = &klen;
+> > +	struct oidtree_each_data data = {
+> > +		.cb = cb,
+> > +		.cb_data = cb_data,
+> > +		.algo = prefix->algo,
+> > +	};
+> > +	size_t klen = prefix_hex_len / 2;
+> > +	assert(prefix_hex_len <= GIT_MAX_HEXSZ);
+> 
+> I know the original also used GIT_MAX_HEXSZ to clamp the length for
+> sanity, but because we know what algorithm is in use, I wonder if we
+> want to use the limit more specific to it.
 
-> I haven't measured to see what the exact cost is, but I know that
-> looping over a strbuf (with a reset in the loop, or the implied reset
-> from a getline call) is a common optimization trick that does have a
-> measurable improvement for some cases.
+That assumes that the passed prefix OID actually has an algorithm
+attached to it, and that may not be the case. We could initialize the
+overall oidtree with a hash algorithm in `oidtree_init()`, and if so we
+can then become a bit more thorough with our asserts.
 
-Try something like this:
+But I feel like that would go beyond the smallish cleanups that I'm
+doing in this patch.
 
-  # input file is all objects in linux.git
-  cd linux.git
-  git repack -ad
-  git show-index <.git/objects/pack/pack-*.idx | cut -d' ' -f2 >input
-
-  # now do something that primarily reads a bunch of lines
-  git cat-file --buffer --batch-check='%(objectname)" <input
-
-That's a somewhat silly command, though it does do something useful (it
-checks that each object exists). Here is master ("git.old") versus
-applying your patch ("git.new"):
-
-  Benchmark 1: ./git.old cat-file --buffer --batch-check="%(objectname)" <input
-    Time (mean ± σ):      3.152 s ±  0.057 s    [User: 3.067 s, System: 0.085 s]
-    Range (min … max):    3.048 s …  3.225 s    10 runs
-  
-  Benchmark 2: ./git.new cat-file --buffer --batch-check="%(objectname)" <input
-    Time (mean ± σ):      3.377 s ±  0.065 s    [User: 3.295 s, System: 0.082 s]
-    Range (min … max):    3.279 s …  3.480 s    10 runs
-  
-  Summary
-    ./git.old cat-file --buffer --batch-check="%(objectname)" <input ran
-      1.07 ± 0.03 times faster than ./git.new cat-file --buffer --batch-check="%(objectname)" <input
-
-That's a fairly extreme example, but I think shows that the extra
-allocations do have measurable overhead. If you ask it do more work
-(asking for %(objecttype) or something) the relative change becomes
-smaller, but the absolute slowdown (a few hundred ms) remains.
-
--Peff
+Patrick
