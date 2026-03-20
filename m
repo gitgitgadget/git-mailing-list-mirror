@@ -1,402 +1,211 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FD1359A79
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 07:08:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEBD2E6CB3
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 07:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773990502; cv=none; b=SwPRZG0OFH2AbEbcB7prrN1JQNvlysgSBZ/SmkVW54r3X+sgnjdHU2CJRSoZc77Ut5uN369hmX31FNK022VpQvO2C2NZ5HWVPGT1iRrX56wrQoVCIHtI4hm7l7qcXtAel7n4cCBXYPn2XbZJNRw93eWkY3GVcCCHO+RE+mxkZrQ=
+	t=1773992074; cv=none; b=tzthujmkW6j7bDpjOUwg9T7jj/9sjs5U2wqer/G2Ty+OMzPfzZF0wRDF9UCeEknVujte8OKLde7QUIkMUMFLXYIwVlS1hFnf9GA9oBw+sOAovOzv0Hcd9Js30Yh6t1gZVIV7I+LAd+q19vS1/VjS3v5akqUX64UjOMPRTetoc2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773990502; c=relaxed/simple;
-	bh=4Ygufyn39HN5jgoHMHb2cMelqZxmEi40eYZPDUwUfPI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=khthhyw1TsOJk05skJK3NwL821w+Br+U035GfCyPLItJjhChX3SAXR38kWm5laS+Ja3h4ds71DsZfj9z8/3SoNiJRi18VSTZW8IcVuu2a1T1nK7J+t3JhmxKMA3QkVwoam3HMOZzPlrJYFErLzOE2EjwN3doSlfGK3M10bUwVH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XizD6Tc8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dWhG9zwQ; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1773992074; c=relaxed/simple;
+	bh=c0KZlP2yYCCqRoWdh+reyAAvnC4+7SkYITndpdojjAQ=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=jT4fl4p2kuzVZ8BmaGmqwcwqbaW7m8Lx1hChh/vLFPWzhEG4iGMaVW0Y+/KjWkcGp2UgPorKi4N/ZdFE6mb1NSckA8kByx6ufiHj2l64mS0qk4fOJldC76Z1HhYSVxBNz2snKFfnJG7gL0+8Vf6ujcjIXKZDjqLpmcbxp5y38vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=p35DxA+2; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XizD6Tc8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dWhG9zwQ"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7FBF91400008;
-	Fri, 20 Mar 2026 03:08:20 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Fri, 20 Mar 2026 03:08:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1773990500;
-	 x=1774076900; bh=PXFZHv2xR7RjOruPupYICdeEU1qTlZh5N/ZKCuTOTwY=; b=
-	XizD6Tc8CiHp+WJS5+I+wVXb8kG820q45o9i9jUwFpHDsACCxrdDjxowCHJFp9Ny
-	omxS8SoRwiLIgSmLL8NVLvySHpJ/PHNFB9Gn8kAfMsC356uelyI3WNy2nYC/CNFg
-	4WZgvKi4cvPmwpd6+pM/SZDy+irNpar5z0F/TblqdJXs81IC9ViHMMxUCnQkK7hL
-	e32U3VUfFRUy4+iCWTkJWm+QGmjvZn90aTncSiTcMWXubhOx+2B8+NMUZSjS46jU
-	kHTmNanUhYNR70PEKTHR78+VtJHYNhi/WPzkX7Mnw8Q3TvTQYYp2cQsiU+q2UnRD
-	jEar2rnJA2I42vM7Rhaklw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773990500; x=
-	1774076900; bh=PXFZHv2xR7RjOruPupYICdeEU1qTlZh5N/ZKCuTOTwY=; b=d
-	WhG9zwQ+s4HBS6Vr9U+3Ms/HscVmES0gArnC9RbvnmjnA90kD5Lii2466WG4t5ci
-	bo7Pl+XJhb4NPJ5jTdRvEAK70VO5F5XqFPnU9s5Ecby1hfqOIPmDIgcGDyUzIGPt
-	0Rpw9qlDxjnhrbdJN/N2T5N6GZ/8N6aCIuUefryaB6yeTy63TiI53a9WUMrTOllM
-	LBKZhysc43hUA6HzDHyh/CKs6N1GnpIQtoyfmKaR4s4pSMzQm64juBkyrSnqu31g
-	Bc2nSx0ImdDqE0A3HIDvopYytZPNu3RsVrChD3yTNBdJMPbesXo+GXVqLHwElH3q
-	w7LSLYGG+U1AGhBR9u8kw==
-X-ME-Sender: <xms:ZPK8aYukv3n2JIiPZTxQLeZFVcUFhPUodc6fXi4WzzP6DhUbCtTSGw>
-    <xme:ZPK8ac7oY_D9Kw7XiUwei4L1aCL89I33Jxc8jsUU1JivwBP0PqIGk6aShumW2EKhc
-    zLYrJMDiTOrAx1PKsQc0vjGxbEkP74lFQLfzzorQRfJITK-PdteHg>
-X-ME-Received: <xmr:ZPK8aRI8GZQ_K5vAJbeOZ2_7i7wFPWuSYCGdddJ_IO963kK6ca0L1psKK-IikxSxbYWC9mU1DKGHNXlQsH5weRBiXnkEiAQV8wTw9oeMDM8B>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdelvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
-    ihhlrdgtohhm
-X-ME-Proxy: <xmx:ZPK8aU5DGaAK2JIEp-PjzIbpzQNNuxr3PY2ovpI-HGZ7VA1gN2yPoQ>
-    <xmx:ZPK8acw3g_cC44HNH2Pxk56hERxriQCHAfQTU7ttjPBDBWKyFKZ81w>
-    <xmx:ZPK8aQaLoamUA-H9PklEkHlELLwHVE6MotMFxqoYe7x4k2xsm-Sc_Q>
-    <xmx:ZPK8aWSfCigjBdgdCVA1S2c6ixPrnX_i_l1aK36mINRHYp1WbgCe8w>
-    <xmx:ZPK8aY5gsWklXrCsNoFLLy2PweVzCgk2pS6--1lhitAJy107O1b4-qki>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Mar 2026 03:08:19 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f228f51d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Mar 2026 07:08:18 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Mar 2026 08:07:40 +0100
-Subject: [PATCH v2 14/14] odb: introduce generic `odb_find_abbrev_len()`
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="p35DxA+2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1773992070; x=1774596870;
+	i=johannes.schindelin@gmx.de;
+	bh=SqyR8Tr/rf9X+G5XnLtg4QHU9/kiK+O7za29ccyQT3Y=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=p35DxA+2W/5stnCmdXiyKebemPdX3gxqsVK8vg99Fi9nZDsaHJ4rf5MNBrtsF6K9
+	 hrNEJSpHLImnZrevsaP+AIU8JuINlOhOCwPm/m0YrXDka4SCz2CPoLR2aj8I1zOxz
+	 aY21/n864c/g3B5AAg4n0iHLoQCbilMcJXE2PJLp52SuuKE/z5gm0umTv6vEEI2X2
+	 Q/juno0YI/HlCiLRaAmdOEarRYzHs5eimtc5U7pe/xOPb+UDNXEW/MHrUyTqKe1AC
+	 zDSGasbGKjeMCvB2+t0tWhV677BRYOH81IAyuUxfSsFISFy7YkcmJJpzpruNaNBLH
+	 KZ6J/G0VOv8CK/nnkA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MN5eR-1wKCRf0Pen-00RzEV; Fri, 20
+ Mar 2026 08:34:30 +0100
+Date: Fri, 20 Mar 2026 08:34:27 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH] regex: not all macOS platforms seem to have
+ REG_ENHANCED
+In-Reply-To: <xmqqv7ergud0.fsf@gitster.g>
+Message-ID: <3b0be017-2e6c-d1c8-0ed8-88ec4fa66e38@gmx.de>
+References: <xmqq8qbnigxp.fsf@gitster.g> <6cd35848-a234-40dc-bb87-4c2cb7eff52c@web.de> <xmqqv7ergud0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260320-b4-pks-odb-source-abbrev-v2-14-fe65dcd8c735@pks.im>
-References: <20260320-b4-pks-odb-source-abbrev-v2-0-fe65dcd8c735@pks.im>
-In-Reply-To: <20260320-b4-pks-odb-source-abbrev-v2-0-fe65dcd8c735@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.14.3
+Content-Type: multipart/mixed; boundary="8323328-1689328199-1773992069=:30610"
+X-Provags-ID: V03:K1:k6vZwNTnA7H5Rkp98qNCFCN9hK64d8V2Udy9jzSMt+ydKlfd2c3
+ vNPwHGy/NYrZ6w2bP/hFGopjfDhNSUejCJUU4WnAzhKXGkV9iwuchBaGl1rUKJac6ApuzVW
+ fSOPzng2LkGCYlif398MuO8Vs7yEztmzkBVny9IBUl+HWHcw0zrCgPoeB2hYn0OL6O6XjF+
+ sEa9SSivMKP8P8QwittfA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:oGFpo3g8CIA=;7TvBC2BrUwE2D4v07FiJW5yBS7F
+ HdR/6D06PEilJ92dyWOcZCwM7Mh8CiMjNmy+gMCBiumSzKFn9jM8H3bu1B+HH3YWsalOVRsaH
+ sO4XfdKuL4dfqXjrdmAY4gYWnbZI6OGbbk3+nllpz6KMY+eyI5uyXqNFVu/FTIDahLkRWJyIO
+ flK8xKZ9TEhWRf7lW3xaJ/fz54EACJImBgihLfB0dpgu79ycf/JduIUllHP+qTxDA3O8rK3iV
+ TsF0PvoOjaMHrL9rVh+l4eCUBq6nYXGnp1BHDhtnz/Jc9vcxB3YmpTP4BMxynaRInEc31ipw0
+ 78ZvndqSQ3hKlYoJ9ZOIL+7+3epcRGsygVI8rTId1TXLds1VoNSBCMO6jKYOK0DmI2aFCI4FM
+ B68lW+EizBa8/E1sVjtPXdt+yHPA1Kiq/XvInFbv6D0OP8NpOGfgplUw3C2/7FcC3sgmpWWjo
+ S8Q4PJYaCY8tt+eeCiv0+WSSS3YPbuv9OgWJgeGHeJPvI6B8qSQ8YWzOIOwVGASzDrvrCgcCy
+ ZHQCBV/viPDVZPvUjdSeq7CbQhq4AWNWMFGxEIa90D7qDknPG8c7LWBLbswCMoq8GwmyOtYWs
+ t/q0SRDbBLzMi5jghwYtZsPerTZJfeLtL3oLueCo7SItuu62tt0FVAUvd2+hfKe//I1Z6QifE
+ rLYKtCIVpHkzDnauqLA+YLy5WHfWEW/pXzotUqZYeu/y8zV2Qn1JvB4a1hoY1/ynluFSxPBFh
+ HloCHT4N+az20fKkEy32K00MWBBdGdtsroEnLhgL0n5i+9vQpb4GVkgnJSCut/x54NCKUnK2a
+ 6bTKx082iQ9vv1ZXqSgvml76JsdmQXKjeqjpbHBRhsoUS/jPg88Fs7yfSxqpU+yJCBB1ovRCV
+ PHajtDC0N3Lcr7pDnu2u4Hsz0jtENOcgA9+x3oUv5Gbb0FbWSRPo+mVJ7Hytj8DmyfUrAoiwA
+ QaRUP9Hb3Uu3EJq262hk+ngstOV7BNrG43CCcLmt905k9g+KD3kqD1PNKI49llSlyAC00vAp0
+ GEL/A0KIq4k+U2aRHvCdDQUKzK2VEVcYDoUPXXIH1JJOe4cIcYht1p6g1w6kIyudOZfjDiS8l
+ Pvh6j14EzC1Es7J11Bs06Wyd7T/VHAMFK744bbqoeI01JES1buXdoPyHSzrB4ZkZ25OoxED7j
+ glAEPQST7Q4PU0ZrgSeAEj/mjxkQ89Ml60aOsZ54OqQ5X7oWgCJ7HndES05k4umpjLKBiRueO
+ poz20a6D6wfRBl8LdiZPh2JaJ1r9we/I+C9053z/9xHEH9TpGVMo1GWns2Ah6ooS1+h0AZ8e7
+ SF2G33Y3tTN5mFHG7kYGO2SeZPLy8CbtgtNmyKHoUpJrWWK7dJk7mXuQVL1Ty0czobFiYnx2F
+ N5ey03b9XD32kBoFlDLwzqbvtlvtZfnIORvdqwevwhE7zcOF/Q4WBLbEagUoPY+zeISLZlpzw
+ Gy/SmJ7yq3h4PZeRxvhdVK+sy6Yl/VQr5fH3/cGRXvr77dXr0puFZuv4Hhl3lj3oW4bkYgh0z
+ xE0Yp4O20zGDWL0pkjY9wHREAGIWuqURRowMFaqTrny5b7gVfMFNBDGYEOFpdas0rT7r01bW5
+ Yxtz/Wv/+orVcNBTwUNQzcvV1wqVyynqY1UzZEOH0pSb8l51/M3XShTmI2T1hWkvacErQ0KVc
+ CBUk/DyzDLWwrlbEGTYmKR05nhLBBYO2laOUpRWKbYwWGWuuv6nOH4iKfWfBvbRqaobH9MXtC
+ Qv2lK+pUXUj0HKilrCitlvRRNG5R1S7y1OZc17kUGUKG+xCrdezhWVsvjyZ1zVImKclDnzhOf
+ JS08270N8QKKaYTLWpoR3OnSNRZ8j3qg/7JH2TmOLkRv2uhickMfAvKu4h95InlXnKw0DRq4I
+ JpBkkSvmweqnFdEwlSYgPGjZw8/If8GI8pc9N8mqzYqZ4eawFOgGUWKy6ktY/axJGJqhNhJdO
+ G+RCTTYj5uPxKlnZGWV6DlFu3o4Fxq5KmbazM8eSjGehis9sryMWxEUUzhWPISQn3jaBFL1+L
+ U0KLhqoIRLh9C4jeRzEQDlGB2Qnh8EnIvZiif+0UxF569CQ/wKoJtg8Zl8QXhsvJc8riE/UXH
+ JEr5QmGdyHwz9SmDGtNacJxnykTRRI0Mt03c1q9MqyV6v/0Fzr6qFmSX2KdcezvwP1Z77jhZr
+ etWsCJUPjHPFQ3/pfpDZXm5SVHu04UU30ouMRhJ81XoysxzWsWiDVxqxuN0XCXxQCTaCT58mY
+ vpgnjFQCG2eYYuNKp8jvL8DvExHUShPEASimzN64WX4zIugHmWGwT85jL4xfdkraQptgWOF5S
+ 0f0U+H4J7EkMFwR02x3qUXazNO0FrL3TAyNEadBhg4smdlP0gvfpEaltAon3QP2V2QtzRzigh
+ EFKjLNdaT6qwBZLXzFYMWjLrhkCeSOviwlhmCuWFQlBStaGSasvJV2eTW9wWLYzG61noalUUf
+ CvoKR6j7OcDCONirRjjpA3iDeY9uEJvpWVFnVun/0Gfd52l8pwZ2LQ7hGaRSVszH5ZemE+hxo
+ 4DLbFlvwk7xFn0PT6dUVoCxvHvB88XpSJXBU++0TlaJ92fKp9LNxF8KRQc2tG2PMAHOHH8aTt
+ Rpg2AVGzN//nm9roczKaVIVmUai4yK9eEvPL85A4N5kFt0L1EjyMBBBlI8SRZnc/ocwfcYQFm
+ gP3he5GktoPRXkr5SGjA2vUxwGad5khoRtpsqjMWaAsTKKZSVSVHyjv+f0UFh3k6sVPC+X6O7
+ 0LyAeviDtoRSdFvOuD2A7tFWvHXexW0fjJ1ZDeMcZIEEsk2916czXDWZkqlBS5NO4dmXIWY6C
+ EUbnBxHQsSHPShzVCds+Wf/ubiDgUhLoVlrmIxjqnwYGDl+DM52JAgWPHyH7+uY7TZGhGWvFi
+ NlHrMmzjgQHhTkU2Yxfp4ynlIFQJcs9pMEQLKu/F47JF9MA6DTaOTc3QUfa/B7ajZX9mWYluG
+ 45NDvXBCuxy+GHUj8I2eCZ+VRYGgTPw8wCNEu3CHHUEA9pJZ/Y6FPJyjELlkR8GYhlIgAIY5a
+ 7Bu9rTAYCv9ghSFsn/eWvJ5rwQIjKKoX/JuSQLdS0/oDQeh2kmk4T9yv8vOOuPC21EfQYusYR
+ S2389mJWe2n+d95qSxiVsV7KurUMRE1qEV40zniF+HU0LWNKwDdSuKdfcR4pM+rRJKX8C65l5
+ X6UPe1w/eA4LJuffJsn4Q6MmGprGu51W8hMDs6xwgapnA69Sb5DReP0B4z53EShh6cgTw/xI/
+ /8UhdIRDVVjgxakwX6xZtzc5KyJpz5f+quDhugreqJ00wIJyXx6B6imYdqTL0MRJ8/1CCptbL
+ wtq61L9RQLdxsl19yZKfPgyeX7BNM/aKrHxs38WuixxO0OrErAj3J46p9dAXWY9Zf0WS6wWpD
+ iYS4ZTY1WTzGhQxHageoWplpAxSAMuH+Sc9Fg6hAZ9qQmC19QLpYD8dGHDce+mZW+Mms5zuC7
+ 0JCy4CfG6Szf42xosSoDIDABM9llPSrF5bfW0TZuTUkD02tPSyu93VYYjsd9mQfXrfduTzcJ0
+ 3eryKkc5exFKDd2DQr+RolobTyCZ2RBIuCHEXYMBw2h8oO/tr2XpTLft6Wlq/jTfbVdsfsn3C
+ /lyFquY8SiM0xajKBM91ogmZmVtSXLxusnZbHlXh2SxlfwnOouCbbKvKLjnC3b86vx9y1nA5O
+ tbQWr5EirBUbh+g0puD+MLoV1IZF9k5oSDPhd9mz0nohPLHXtCHgYgGsXS95Xq4Sg5GVGbZZ3
+ c6SrISrXwvlbLnNh+jpbT58EufkGfCFBCwEAKp22p6I6WGz2R5wgyasBR1cu012gpYnBheY0f
+ sMVpEnaLTjFcrXmQIO3k8ZVjQg+gObiwi35WIxSVV4NnuMCHcNOULvNfx0Xut66ZdLTcpd6vg
+ IauivOZDI7qoj6oSG5UfJc8OImy5yvxyBtIhEek1pyHA68lOGdmTOHtZaM48zjrdwB4B4PvH+
+ zH15+ipfReW+crj0Tzhm9Eh4arIbEVBqlALVf+VmsVC2e/r/yo8ZguL5vSGr1sexH1EstiUWY
+ OF5FI4q3qpVUX1p90ItRYIN9f6I9s1AbA7ohAHtU1TsX+ea3jijZS7A97Po7HmyL5C91Ga8/K
+ suGHvvd7GgitN3CFmqKE/qioZI3bEFGt8LC+c/ZdD0UaNsKmbRpG0GnD0aCCCSrxzY0slyqAE
+ kSl7i5/XRQWjwXp9hgUZJk/EyOgMf8RTsCfvuDTQC0Zm2Duane8QR7lXUPTLmtUYaYdlwO0qp
+ Jbimg2A21nTCKQdsDiOTRkbBUMPd2g+KK1iXQrRg2ygVG7x12cnRlDYYUMireVDSBxBGGUII0
+ TvLY4hvM+xwBrx9Vyq4hQ4yZhiD4g8Nw0bQKWQr7gTvaTkyksp6UIimomgUKo66tklkcSyOHh
+ /le4xvtvDD3vbt/sxSdpmpEqCA/xuNnOIWx3Wusq20wKpwndDS7hqBMpTC+E8+lmnJZzmeora
+ KxHM7NF01P/9nopUBGFeNIhJQIh80VfdJki4wvTtlkjhLlpOZxWDqCnqayaZ6BnCx4VUS30XW
+ xTPP2s0a+w6tFgN3Hv6kpNTQwR6TpkuXEugbuTx6VZ60kOLHYf4vavirBQKMxc+g4eGGXEENW
+ 39jFYtKe6Zucz3HoZhxTbzsJED4x1GaPqLGRhq23psTfvZyonYhWugzyLoHbnUf7IAnz8CLbC
+ fqGG0JhA+blJV/6hzTf8MUqLFV2ThB9/ZhnhyDCu+3wru5V4Nmp0n3eHVtGFMsuoTf3s4w0ME
+ Nxq6tv6UzCvlSL8DlKe1ChMiVoZ8tEcUpI0yHi6KdxuUzSyPJp060QU+xGr51IzDTrX++POm8
+ 5gzt6NqtXmrgYws3vEKbn9uqnYCni34YhG///AemMH5rpCWTIa7l23r3Srw9WfLoaOh+7quKq
+ RY8Hchwqn+2QEBsUSPG9ZnVfi6kiIjKnnE2mNc6WLM1T4ui7Apql4aKmU3xI0xZ0p8jWi1E4Q
+ lN2becrSAObiNos6ADQ0Fa3qJkbmIjvAKYUuksjC3uSkOZ71F2LH5Bx4yP2vcbzYm97+t2cMv
+ bifFKM07zk3LXcrgI6Y0GQiLeI+4osu90z08YiJ+WQRPNgDUzaxpUbyd+DN2atTnD0i4S9DmQ
+ NcTDznir3lKGFMVnMZ3dsUYsgzfx6p6eh13F/w0+KMG6CHKihX63cQmar7vYycwPeUUYVHfkP
+ hqV8FMpta1EU4DM78nz5usHchRAX45drCgfpL+WmDJbFrxiIbaby9fzpdSbV89UDh1glCMLKn
+ qDPorSL7/Dgu2k/xkpgMnUnMM1mFlBhlR5ybUiKZEZW3RJYHRFL/WIFJcUHHZq1J0yPVDu0Qt
+ 9d38437cTwBeR3LdZBJgZEoUhma8HqW+pdnUzMFHpq5CpqPC3hq0M7r6jukxFabPupwMqFZqo
+ MC9WNdgo3mztzqpWi1fyX1cQ==
 
-Introduce a new generic `odb_find_abbrev_len()` function as well as
-source-specific callback functions. This makes the logic to compute the
-required prefix length to make a given object unique fully pluggable.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-name.c      | 57 +++---------------------------------------
- odb.c              | 73 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- odb.h              | 16 ++++++++++++
- odb/source-files.c | 25 +++++++++++++++++++
- odb/source.h       | 24 ++++++++++++++++++
- 5 files changed, 142 insertions(+), 53 deletions(-)
+--8323328-1689328199-1773992069=:30610
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/object-name.c b/object-name.c
-index bb2294a193..f6e1f29e1f 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -15,10 +15,9 @@
- #include "refs.h"
- #include "remote.h"
- #include "dir.h"
-+#include "odb.h"
- #include "oid-array.h"
--#include "packfile.h"
- #include "pretty.h"
--#include "object-file.h"
- #include "read-cache-ll.h"
- #include "repo-settings.h"
- #include "repository.h"
-@@ -569,19 +568,6 @@ int repo_for_each_abbrev(struct repository *r, const char *prefix,
- 	return ret;
- }
- 
--/*
-- * Return the slot of the most-significant bit set in "val". There are various
-- * ways to do this quickly with fls() or __builtin_clzl(), but speed is
-- * probably not a big deal here.
-- */
--static unsigned msb(unsigned long val)
--{
--	unsigned r = 0;
--	while (val >>= 1)
--		r++;
--	return r;
--}
--
- void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
- 				   const struct object_id *oid, int abbrev_len)
- {
-@@ -602,49 +588,14 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
- {
- 	const struct git_hash_algo *algo =
- 		oid->algo ? &hash_algos[oid->algo] : r->hash_algo;
--	const unsigned hexsz = algo->hexsz;
- 	unsigned len;
- 
--	if (min_len < 0) {
--		unsigned long count;
--
--		if (odb_count_objects(r->objects, ODB_COUNT_OBJECTS_APPROXIMATE, &count) < 0)
--			count = 0;
--
--		/*
--		 * Add one because the MSB only tells us the highest bit set,
--		 * not including the value of all the _other_ bits (so "15"
--		 * is only one off of 2^4, but the MSB is the 3rd bit.
--		 */
--		len = msb(count) + 1;
--		/*
--		 * We now know we have on the order of 2^len objects, which
--		 * expects a collision at 2^(len/2). But we also care about hex
--		 * chars, not bits, and there are 4 bits per hex. So all
--		 * together we need to divide by 2 and round up.
--		 */
--		len = DIV_ROUND_UP(len, 2);
--		/*
--		 * For very small repos, we stick with our regular fallback.
--		 */
--		if (len < FALLBACK_DEFAULT_ABBREV)
--			len = FALLBACK_DEFAULT_ABBREV;
--	} else {
--		len = min_len;
--	}
-+	if (odb_find_abbrev_len(r->objects, oid, min_len, &len) < 0)
-+		len = algo->hexsz;
- 
- 	oid_to_hex_r(hex, oid);
--	if (len >= hexsz || !len)
--		return hexsz;
--
--	odb_prepare_alternates(r->objects);
--	for (struct odb_source *s = r->objects->sources; s; s = s->next) {
--		struct odb_source_files *files = odb_source_files_downcast(s);
--		packfile_store_find_abbrev_len(files->packed, oid, len, &len);
--		odb_source_loose_find_abbrev_len(s, oid, len, &len);
--	}
--
- 	hex[len] = 0;
-+
- 	return len;
- }
- 
-diff --git a/odb.c b/odb.c
-index 3019957b87..3f94a53df1 100644
---- a/odb.c
-+++ b/odb.c
-@@ -12,6 +12,7 @@
- #include "midx.h"
- #include "object-file-convert.h"
- #include "object-file.h"
-+#include "object-name.h"
- #include "odb.h"
- #include "packfile.h"
- #include "path.h"
-@@ -964,6 +965,78 @@ int odb_count_objects(struct object_database *odb,
- 	return ret;
- }
- 
-+/*
-+ * Return the slot of the most-significant bit set in "val". There are various
-+ * ways to do this quickly with fls() or __builtin_clzl(), but speed is
-+ * probably not a big deal here.
-+ */
-+static unsigned msb(unsigned long val)
-+{
-+	unsigned r = 0;
-+	while (val >>= 1)
-+		r++;
-+	return r;
-+}
-+
-+int odb_find_abbrev_len(struct object_database *odb,
-+			const struct object_id *oid,
-+			int min_length,
-+			unsigned *out)
-+{
-+	const struct git_hash_algo *algo =
-+		oid->algo ? &hash_algos[oid->algo] : odb->repo->hash_algo;
-+	const unsigned hexsz = algo->hexsz;
-+	unsigned len;
-+	int ret;
-+
-+	if (min_length < 0) {
-+		unsigned long count;
-+
-+		if (odb_count_objects(odb, ODB_COUNT_OBJECTS_APPROXIMATE, &count) < 0)
-+			count = 0;
-+
-+		/*
-+		 * Add one because the MSB only tells us the highest bit set,
-+		 * not including the value of all the _other_ bits (so "15"
-+		 * is only one off of 2^4, but the MSB is the 3rd bit.
-+		 */
-+		len = msb(count) + 1;
-+		/*
-+		 * We now know we have on the order of 2^len objects, which
-+		 * expects a collision at 2^(len/2). But we also care about hex
-+		 * chars, not bits, and there are 4 bits per hex. So all
-+		 * together we need to divide by 2 and round up.
-+		 */
-+		len = DIV_ROUND_UP(len, 2);
-+		/*
-+		 * For very small repos, we stick with our regular fallback.
-+		 */
-+		if (len < FALLBACK_DEFAULT_ABBREV)
-+			len = FALLBACK_DEFAULT_ABBREV;
-+	} else {
-+		len = min_length;
-+	}
-+
-+	if (len >= hexsz || !len) {
-+		*out = hexsz;
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	odb_prepare_alternates(odb);
-+	for (struct odb_source *source = odb->sources; source; source = source->next) {
-+		ret = odb_source_find_abbrev_len(source, oid, len, &len);
-+		if (ret)
-+			goto out;
-+	}
-+
-+	ret = 0;
-+	*out = len;
-+
-+out:
-+	return ret;
-+}
-+
- void odb_assert_oid_type(struct object_database *odb,
- 			 const struct object_id *oid, enum object_type expect)
- {
-diff --git a/odb.h b/odb.h
-index e80fd8f7ab..984bafca9d 100644
---- a/odb.h
-+++ b/odb.h
-@@ -545,6 +545,22 @@ int odb_count_objects(struct object_database *odb,
- 		      enum odb_count_objects_flags flags,
- 		      unsigned long *out);
- 
-+/*
-+ * Given an object ID, find the minimum required length required to make the
-+ * object ID unique across the whole object database.
-+ *
-+ * The `min_len` determines the minimum abbreviated length that'll be returned
-+ * by this function. If `min_len < 0`, then the function will set a sensible
-+ * default minimum abbreviation length.
-+ *
-+ * Returns 0 on success, a negative error code otherwise. The computed length
-+ * will be assigned to `*out`.
-+ */
-+int odb_find_abbrev_len(struct object_database *odb,
-+			const struct object_id *oid,
-+			int min_len,
-+			unsigned *out);
-+
- enum {
- 	/*
- 	 * By default, `odb_write_object()` does not actually write anything
-diff --git a/odb/source-files.c b/odb/source-files.c
-index e90bb689bb..76797569de 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -122,6 +122,30 @@ static int odb_source_files_count_objects(struct odb_source *source,
- 	return ret;
- }
- 
-+static int odb_source_files_find_abbrev_len(struct odb_source *source,
-+					    const struct object_id *oid,
-+					    unsigned min_len,
-+					    unsigned *out)
-+{
-+	struct odb_source_files *files = odb_source_files_downcast(source);
-+	unsigned len = min_len;
-+	int ret;
-+
-+	ret = packfile_store_find_abbrev_len(files->packed, oid, len, &len);
-+	if (ret < 0)
-+		goto out;
-+
-+	ret = odb_source_loose_find_abbrev_len(source, oid, len, &len);
-+	if (ret < 0)
-+		goto out;
-+
-+	*out = len;
-+	ret = 0;
-+
-+out:
-+	return ret;
-+}
-+
- static int odb_source_files_freshen_object(struct odb_source *source,
- 					   const struct object_id *oid)
- {
-@@ -250,6 +274,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
- 	files->base.read_object_stream = odb_source_files_read_object_stream;
- 	files->base.for_each_object = odb_source_files_for_each_object;
- 	files->base.count_objects = odb_source_files_count_objects;
-+	files->base.find_abbrev_len = odb_source_files_find_abbrev_len;
- 	files->base.freshen_object = odb_source_files_freshen_object;
- 	files->base.write_object = odb_source_files_write_object;
- 	files->base.write_object_stream = odb_source_files_write_object_stream;
-diff --git a/odb/source.h b/odb/source.h
-index ee5d6ed530..a9d7d0b96f 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -157,6 +157,18 @@ struct odb_source {
- 			     enum odb_count_objects_flags flags,
- 			     unsigned long *out);
- 
-+	/*
-+	 * This callback is expected to find the minimum required length to
-+	 * make the given object ID unique.
-+	 *
-+	 * The callback is expected to return a negative error code in case it
-+	 * failed, 0 otherwise.
-+	 */
-+	int (*find_abbrev_len)(struct odb_source *source,
-+			       const struct object_id *oid,
-+			       unsigned min_length,
-+			       unsigned *out);
-+
- 	/*
- 	 * This callback is expected to freshen the given object so that its
- 	 * last access time is set to the current time. This is used to ensure
-@@ -360,6 +372,18 @@ static inline int odb_source_count_objects(struct odb_source *source,
- 	return source->count_objects(source, flags, out);
- }
- 
-+/*
-+ * Determine the minimum required length to make the given object ID unique in
-+ * the given source. Returns 0 on success, a negative error code otherwise.
-+ */
-+static inline int odb_source_find_abbrev_len(struct odb_source *source,
-+					     const struct object_id *oid,
-+					     unsigned min_len,
-+					     unsigned *out)
-+{
-+	return source->find_abbrev_len(source, oid, min_len, out);
-+}
-+
- /*
-  * Freshen an object in the object database by updating its timestamp.
-  * Returns 1 in case the object has been freshened, 0 in case the object does
+Hi Junio,
 
--- 
-2.53.0.1055.ga2ffed1127.dirty
+On Fri, 20 Mar 2026, Junio C Hamano wrote:
 
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> > On 3/19/26 11:37 PM, Junio C Hamano wrote:
+> >> Earlier, 54463d32 (use enhanced basic regular expressions on macOS,
+> >> 2023-01-08) started to use the REG_ENHANCED option when ERE is not
+> >> in use on macOS.  The build seems to have started failing on
+> >> macos-14 CI jobs at GitHub, however, as apparently not all the macOS
+> >> platforms have this flag defined.
+> >
+> > Interesting.  https://en.wikipedia.org/wiki/MacOS_version_history says
+> > macOS 14 (Sonoma) was released 2023-09-26, i.e. more than eight months
+> > after the patch.  And the oldest regex(3) man page I could find also
+> > mentions REG_ENHANCED:
+> >
+> > https://man.freebsd.org/cgi/man.cgi?query=3Dregex&apropos=3D0&sektion=
+=3D0&manpath=3DmacOS+10.12.0&format=3Dhtml
+>=20
+> Well, I have no idea where this breakage came from; it suddenly
+> started in today's pushout, and I do not think we have made any
+> changes on our end to cause it.
+>=20
+> E.g.,
+> https://github.com/git/git/actions/runs/23315793655/job/67814861386#step=
+:4:301
+>=20
+> In any case, in the same CI run, a few other jobs on osx- that uses
+> the same macos-14 image seem to be passing, so I am reasonably sure
+> that the posted patch is a *bad* idea.  Instead of forcing us to
+> figure out why REG_ENHANCED is missing, it would just hide the
+> problem under the rug, possibly breaking a random regex tests that
+> happen to depend on the "enhanced mode" working. X-<.
+
+I also hit this in Git for Windows' "ever-green" branches:
+https://github.com/git-for-windows/git/actions/runs/23325790048/attempts/1
+
+THe curious thing is that it only hits `osx-clang` and `osx-reftable`, but
+not `osx-gcc` nor `osx-meson`.
+
+The breakage coincides with a runner image version bump: if you expand the
+"Set up job" step, and within that step also expand the "Runner Image"
+group, you will see that the succeeding (older) jobs use 20260302.0147.1,
+the failing (newer) jobs use 20260317.0174.1. The change that strikes me
+as most likely to be the culprit is the Homebrew bump 5.0.15 -> 5.1.0:
+  https://github.com/actions/runner-images/compare/macos-14-arm64/20260302=
+.0147..macos-14-arm64/20260317.0174#diff-5c04a529d3c8adf7a5f23afe544071dad=
+1853e281c9c7b44cd8d626b6c57444dL35-R35
+
+Now, 3 of the 4 `osx-*` jobs use `clang`, only `osx-gcc` uses `gcc`. So my
+money is on a clang update in Homebrew disabling support for
+`REG_ENHANCED`. But why is `osx-meson` not affected, it uses `clang`?
+Well, there's special handling for that in `meson.build`:
+https://gitlab.com/git-scm/git/-/blob/v2.53.0/meson.build#L1347-1350
+
+  if compiler.get_define('REG_ENHANCED', prefix: '#include <regex.h>') !=
+=3D ''
+    libgit_c_args +=3D '-DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS'
+    libgit_sources +=3D 'compat/regcomp_enhanced.c'
+  endif
+
+I'll continue looking along these lines.
+
+Ciao,
+Johannes
+
+--8323328-1689328199-1773992069=:30610--
