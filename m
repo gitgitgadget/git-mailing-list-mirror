@@ -1,514 +1,383 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5753B47E0
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 13:10:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14633AE6F4
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 13:12:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774012241; cv=none; b=n5XX8N03NFGHNDMFw+A5jqjdmW3Q8oxfgRvSIDz12C9mr0SfYW3H/vBuixzLZ9EDnsDBDYCQn2yIw7zZWaRputgPGr2ADtWyZZAhHewrf3ahhifKhqItQub7g7kGWFLynyQasN7MGk5I8QQGvdDVRDxgt+xw0L6IfMfFZwy+vQs=
+	t=1774012350; cv=none; b=hM9SNvyZPQGNJYizw9bDMB3tCUfctWhuH6B4e0sGIFyf+QgFf+XO4rIkjk6nQ5giohLjzN2hz6qgVBLdOdQwwxaAoKG6OAmoXmgugIp8wiIKFPrPnTK0ZaNKNS5Subn479oMLGGwRKQNlEkgOroJoXmcEQRbkiES7DuBPhlo2EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774012241; c=relaxed/simple;
-	bh=Vc3Py/sDDzRx99eXXeC4XKFftNXUw3XCBrWaCj3T/hM=;
+	s=arc-20240116; t=1774012350; c=relaxed/simple;
+	bh=PCpO/BaYYHbt2gWxrs7hbikDU34Cj4Xlw2Jpr+mwjcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IuKjyb/z/7Z4AHyQFg7MDOF8JLLTsWA+42IlGODCVfL7YjCt3R0KpQDowJiuknJjF3qcEMoiCt/BwzJjpceYiKE0tUxQARjkmrVzf0dBuWKmnDwpXkwBKajmNxHq+JITD5Zs9p5TKR85fvREQs2o+g5GgH5VRqfd/tIrjLEQHVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ju7jMicV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=plPn7kn2; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	 MIME-Version; b=aX8ZCelM3ls8L+s//WLUvyH4lG6QP0ZmTmHShU3OMYwMKIj1alBkKSg3bAML4lffDxRzLFbiYlyrSpIRiXCa4eIgATAEcI8otrSwluewtcgSi0MLjw9FqEQYNMvAPA+3ozwDMWO6GRWi9gqhBZCir9VEUdwAuWyZaYsvyx0K/rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YgP+AiqD; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ju7jMicV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="plPn7kn2"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D1E01400204;
-	Fri, 20 Mar 2026 09:10:38 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Mar 2026 09:10:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774012238;
-	 x=1774098638; bh=bDkst2uG/uy4hmhFISullKQ3/NsGVIjjYzeNfql7y1Y=; b=
-	ju7jMicVML61ZP+G1+9vCGqCkE8y2dwavzmpVenDgDtLiEgu/a5mK5ry2E3JG2K7
-	7PY2BLv31pTvBfUhlzrB+trNLZtdTX65nX8aId6QlhkCES4sjdUp5YuPCWEGyO8O
-	Q3Jovfs0TdrFHGDJ7aqKYr937UJ/Ug6nUOAiNsmAx2Ix/Y67WIATeN83FB/vHfPY
-	VXJyzJU3DmvOqI37QePClc2dScueIN3Dij0flHSvLId4YIeNOiQ43KNMoic8SW3S
-	9NDAVU79B68/FgXAl3BY1IBycPqcxh6SHJ1iydV1sStfMridf9o4oAvhtIhL0uK0
-	BsVV+tWduPD0RL6Iu/zHpg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774012238; x=
-	1774098638; bh=bDkst2uG/uy4hmhFISullKQ3/NsGVIjjYzeNfql7y1Y=; b=p
-	lPn7kn2WPAk8TmdE316xPWi8eV1cB30/gpe/NXh4qedCrKXYlGYzz/R0K+96ZjIx
-	WYgrLeWB9/2QcIfGLf80DvlGBV+hdAVaBZC/1J5RrZRCfMUCky73Fu+jlxKfGXXK
-	OAPvpaoMD0PSU5fvHbvT0wNw4a572enPZQkBLpuzMHbTHCIwWxhmJEPLkcqf/uR9
-	oycVCVWfe2I/8pY3jcPhVGLshRVJcb1tuFwB4z0kkZKVhBnequtrBgcyAP+9wnKx
-	3z3wrL85M5uKvyqBlhTvdvF3arDf4uZ+wootTj0gzIylf4TijvlWPeNRDKoCFdn2
-	YDlvzM8a2oL2OEhcA9HvQ==
-X-ME-Sender: <xms:Tke9aYmP2ChtRx-edx123Gk2NbpeBah_mn-UVqJxeABKSAelrPxbdzg>
-    <xme:Tke9ad3SCe7dsL2M2RfkRBd3iE560Tki0j4OjUbceopSNvkc6qMFFQyuG62m6SOTy
-    W8Cngvn51HeTIukRlkYQjOSFrhA162q8NRUeTMJ4_fXFHcajfnIBg>
-X-ME-Received: <xmr:Tke9aURMpmtDR4D6k0c8Rs3X4H93Hve7soNKnbQXP0dJcjCP_WAfpVW43HCctqGM323C8FvUWdmjnK9WTXQ6aApd0PLhfGewKyUOix0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdelleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpefhvfevuf
-    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephfekke
-    euieefffdugeeuleegteejffegvedtlefhudetgeejhfefleekudegudetnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghdptghtgidruggrthgvnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgs
-    rghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:Tke9afvZ3ayrWfArN3QoxX1mIcWdw497ncSXILX0sehg-T7V5D0i5w>
-    <xmx:Tke9aZbPd3MD0dER8ZQlAQwh1bbqqCDASpTMiRXsnWTCle0Qf3faXg>
-    <xmx:Tke9aUsSZN4aig7mk5b2M-cZufvxHgG06CSmZM-YDyOoJO97twUKsA>
-    <xmx:Tke9abHew1s9v7Pi3CzmLJrTrXxjbj3HvAuhZodBgz_GdCWc2rkH5g>
-    <xmx:Tke9aT8WgSJzN3CDzYeN2a3-DK2X7FiYg9TaM5nPm9Pw1Ui0eKp_VBGV>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Mar 2026 09:10:37 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v2 2/2] name-rev: learn --format=<pretty>
-Date: Fri, 20 Mar 2026 14:09:35 +0100
-Message-ID: <V2_name-rev_--format.51d@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
-In-Reply-To: <V2_CV_name-rev_--format.51b@msgid.xyz>
-References: <CV_name-rev_--format.4ad@msgid.xyz> <V2_CV_name-rev_--format.51b@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YgP+AiqD"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-35a211df8e3so1391743a91.2
+        for <git@vger.kernel.org>; Fri, 20 Mar 2026 06:12:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774012348; x=1774617148; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BA/emWIm3CbMl57BThIvkqVT/Hc3rNblclz5PQ7J1xM=;
+        b=YgP+AiqDSr0S/OeZhjxy9mYiO0c8q4dNEDkwShwIdnF66El7HzqTMBIYKYF7fjJUqx
+         2N0AzWFZZAsVQwPCRnO0UESd+HbzAk+I7hVsxYrqVDvD/T02XHhOW4uH3gC92Y0zZpOZ
+         TQ3oaza/77oi9tNu5xCaMx3AH6UbbEyAut832f7FTeArkX9NL4Wo//CLXt8hp7ERANvu
+         45xx5ftJiJwldjmAQwLpeKUC1RhvGCJvtQvQMq+kMNIaiIM3mUawqYaWIJvC0TdGfH+I
+         D8120kuhfLZSSxToCNt3tnbwjw0QYInfKqdkvM0fcLNsqtlReu5OLVZjnmzlQkhrL847
+         SxMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774012348; x=1774617148;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BA/emWIm3CbMl57BThIvkqVT/Hc3rNblclz5PQ7J1xM=;
+        b=meZOfXzWTuhfhVFrmqR/vWz5ByDMmT8kD17tdOuHF0lMVTa+mf45jRjJKAV4URihlr
+         IRstJPOQEo/t5wSCw9oUMlsa5ZU3o8i594albTYenH9EzFFNtkad7urs60aNL6H5XVR3
+         aI6Gic+lGGL7WD56FzWIxJktzdYJ52Y2x5Mm32ZB1rQ4V9OFxO+BiZTIgU51kEqz33dN
+         rp2w/fIIzZ1yIiiQslh/0ivB9s3HrkKq3zK2wSfmNNwjUyGw/1sexxx1tuPVfXpoPO7N
+         +Z22f2gJQTFCtaFrJYjSEOx1Gafo0kChcrXXU5p7o4vmAkQdY7nuQogsLF5T+LuOjkHb
+         M5Jw==
+X-Forwarded-Encrypted: i=1; AJvYcCWVPEaUu3X0MKDqAFSHcldbzjOE25+1qxV7RfjKdOZrX2TWSiCuGH/PTMAAtiw/dYHo0ks=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6v4GVR2VJWGFxhmZtzMwE71286fy95mj7cpTwPIwjDc2HCG7t
+	c4E5a2LCnpfg1D0FBM0A3DywjzVMtONXF6IOpnKa+L5tHkXw2frzpnjS
+X-Gm-Gg: ATEYQzyYf1AvNyqUcpCCLM/GHODqbgFyn7EQ+wuSGhE6TsSGC05aThbfqObPRt3WpO1
+	woT9riVTWz4XymrIrmDjswvC3hlEXU2grdU2AM2yvdKzttBC/tnaAV8c+F0D5BjzYyFHUr6Q9Kq
+	bEi4+2YXs6WazzOzUpeDQ8Xi0RhTAo+n9jGr+of+lB4nsOv+OjTa/6Ln7NzUkauJQt04V6PR549
+	QoUdkzST8u3yyEG5CNj/W61MkQCHNN/MM+Z2dWgDrKxYY3T0NH+vHyz1YmlMkHm8dPPkpZsmzAB
+	7lITD4+28w4AE70aOjOVmZwMXyrZm+FDwasbrVH7/NfolsLB01xeoV+euyqdtrqCrx4GUW5jwZG
+	gOeJQsQrc+jSqTOXXeSbalMnY087UvHpetEi/vTeUxYltBe8OLuhOhfDdzvN8wXaxBFspeIkOTJ
+	nQfqMomFkVlJtnCyZY7YKr/fk2984hE/z86DpVJ86vsroqwhiUyPU+1K6TnulT286el3VLyw5xi
+	ijoWOoPvEP9uUtu9vJ9FDfiriYxfp0gUot4Y0WZEzq/RTA1Pase2R632YkqahccZCNGu6WoL3PE
+	bVs=
+X-Received: by 2002:a17:90b:510a:b0:359:f3b1:6811 with SMTP id 98e67ed59e1d1-35bd2bd5ceamr2423863a91.1.1774012348008;
+        Fri, 20 Mar 2026 06:12:28 -0700 (PDT)
+Received: from localhost.localdomain ([2409:40e2:102b:250:2142:4e75:ddcb:9d3d])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bd3eb46b2sm2197908a91.2.2026.03.20.06.12.15
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 20 Mar 2026 06:12:27 -0700 (PDT)
+From: SoutrikDas <valusoutrik@gmail.com>
+To: valusoutrik@gmail.com
+Cc: ayu.chandekar@gmail.com,
+	chandrapratap3519@gmail.com,
+	christian.couder@gmail.com,
+	git@vger.kernel.org,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	siddharthasthana31@gmail.com
+Subject: [GSoC Proposal v2] Complete and extend the remote-object-info command for git cat-file
+Date: Fri, 20 Mar 2026 18:42:00 +0530
+Message-ID: <20260320131200.3615-1-valusoutrik@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260305204809.54927-1-valusoutrik@gmail.com>
+References: <20260305204809.54927-1-valusoutrik@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Teach git-name-rev(1) to format the given revisions instead of creating
-symbolic names.
+Hi everyone,
+Thank you for the feedback Christian and Karthik.
+I have not made a doc version of this yet. I will link it from v3
 
-Sometimes you want to format commits. Most of the time you’re walking
-the graph, e.g. getting a range of commits like `master..topic`. That’s
-a job for git-log(1).
+I understand that in this proposal I have not explained my own plans that
+thoroughly, I am working on this in v3.
 
-But sometimes you might want to format commits that you encounter
-on demand:
+Changes from v1 : 
+- Correct spelling mistakes
+- Address how much work is remaining after Eric Ju's Patch v11
+- Increase Time in Timeline for Reviews
+- Add a section for rebasing problems
 
-• Full hashes in running text that you might want to pretty-print
-• git-last-modified(1) outputs full hashes that you can do the same with
-• git-cherry(1) has `-v` for commit subject, but maybe you want
-  something else?
-
-But now you can’t use git-log(1), git-show(1), or git-rev-list(1):
-
-• You can’t feed commits piecemeal to these commands, one input for one
-  output; they block until standard in is closed
-• You can’t feed a list of possibly duplicate commits, like the output
-  of git-last-modified(1); they effectively deduplicate the output
-
-Beyond these two points there’s also the input massage problem: you
-cannot feed mixed input (revisions mixed with arbitrary text).
-
-One might hope that git-cat-file(1) can save us. But it doesn’t support
-pretty formats.
-
-But there is one command that already both handles revisions as
-arguments, revisions on standard input, and even revisions mixed
-in with arbitrary text. Namely git-name-rev(1).
-
-Teach it to work in a format mode where the output for each revision is
-the pretty output (implies `--name-only`). This can be used to format
-any revision expression when given as arguments, and all full commit
-hashes in running text on stdin.
-
-Just bring the hashes (to the pipeline). We will pretty print them.
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
-Notes (series):
-    v2:
-    • Propely implement “--format implies --name-only”
-    • Don’t use a needless intermediary struct
-    • Add a new member to `name_rev_usage[]`
-    • FREE_AND_NULL notes string. There is no use-after-free but we have no
-      reason to leave a freed pointer just laying there
-    • Implement `--notes` for `%N` atom use (not just restrict to the default
-      notes ref)
-    • Previous review pointed out `init_revisions()` but this still just uses
-      `REV_INFO_INIT` since it seemed enough. But I have no problem with
-      changing it whatsoever. (This series is still very work-in-progress in
-      any case.)
-    • Tweak test name to mention the specific pretty format (reference); it
-      doesn’t generalize to e.g. `oneline` because you get different output in
-      that case
+This is the second version of my project proposal for GSoC 2026
+
+I am interested in the project idea : "Complete and extend the 
+remote-object-info command for git cat-file"
+
+
+# Complete and extend the remote-object-info command for git cat-file
+
+## Contact
+
+- Name: Soutrik Das
+- E-mail: valusoutrik@gmail.com
+- Github: https://github.com/SoutrikDas
+- LinkedIn: https://www.linkedin.com/in/soutrik-das/
+
+## About Me
+
+My name is Soutrik Das, I am a developer. I did my B.Tech in CS from 
+IIT Dhanbad. Currently I am pursuing a M.Tech degree in AI from IIT 
+Bhubaneswar.
+
+I don't really have much experience in contributing to something as 
+large as git, but I would like to learn as much as possible from this 
+experience. I have experience in C/C++ from my Btech coursework and 
+participating in codeforces contests.
+
+
+## Pre GSoC
+
+I started exploring Git's codebase around February 2026 and sent my first patch
+as a docfix, followed by a microproject of modernizing tests 
+
+- [PATCH] doc: fix repo_config documentation reference [1]
+    status: merged to master 
+    Merge Commit: 94336d77bcbf4360b67a9454d8bf2e84b3d88ae7
+    Merge Date : 13 Feb 2026
+    Description: Replace the path for the repo_config() documentation 
+    from 'Documentation/technical/api-config.h' to 'config.h'.
+
+- [GSoC PATCH] t7003: modernize path existence checks using test helpers [2]
+    status: merged to master 
+    Merge Commit: 11294bb0fa540d214d071b32cf74b1ed37b3bbbd
+    Merge Date : 17 Feb 2026
+    Description: Replace direct uses of 'test -f' and 'test -d' with
+    git's helper functions 'test_path_is_file' ,'test_path_is_missing'
+     and 'test_path_is_dir'
+
+
+## Eric Ju and Calvin Wan's work
+
+In this section I want to talk about the work already done and what 
+feedback the community had on the last sent patch , ie v11 
+
+This is my understanding of the patch series: 
+
+Patch 1/8 : git-compat-util: add strtoul_ul()
+    Helper function addition
+
+Patch 2/8 : cat-file: add declaration of variable i inside for loop
+    Small refactoring
+
+Patch 3/8 : t1006: split test utility functions into new "lib-cat-file.sh"
+    Moving the `echo_without_newline`,`echo_without_newline_nul` and 
+    `strlen` function from `t1006-cat-file.sh` to `lib-cat-file.sh` to
+    reuse them in future. 
+    When I rebased the patch series against a recent master (March 5)
+    795c338de725e13bd361214c6b768019fc45a2c1, there is only one other
+    file ( t1007-hash-object.sh ) that has a duplicate definition. 
+
+Patch 4/8 : fetch-pack: refactor packet writing
+    Generalized write_command_and_capabilities so that it now takes in
+    a command instead of hardcoding "fetch". It was also moved from 
+    `fetch-pack.c` to `connect.c`
+
+Patch 5/8 : fetch-pack: move fetch initialization
+    Before this patch, the state machine of do_fetch_pack_v2() used to
+    assume that starting state is FETCH_CHECK_LOCAL so it would initialize
+    certain variables like `use_sideband=2` inside the FETCH_CHECK_LOCAL
+    case. But now for remote-object-info we do not want to go through
+    the extra steps, we are directly entering the state machine at
+    FETCH_SEND_REQUEST. We don't need to figure out what to fetch,
+    the user/machine is explicitly giving it.
+
+Patch 6/8 : serve: advertise object-info feature
+    Makes the server adertise that it supports the "size" feature of
+    object-info command.
+
+Patch 7/8 : transport: add client support for object-info
+    Adds `fetch_object_info` which checks if protocol is v2 
+    and then sends the object info request. After getting the result
+    its parsing the output. 
+
+    Also sets `state=FFETCH_SEND_REQUEST` when object-info is used.
+
+Not related to above patch , but on the server side this request is
+caught by serve.c and then handled by cap_object_info in protocol-caps.c
+
+Patch 8/8 : cat-file: add remote-object-info to batch-command
+    Adds the subcommands and relevant tests.
+
+To summarize, this patch series has added the subcommand, and all of
+the needed functions to make one object info field work. But a few problems
+were left to be addressed. Once those are addressed, adding new object
+info fields will be much easier. 
+
+## Problems faced during rebasing
+
+I applied the patches onto an old master (2d2a71ce85)  and then rebased
+to a recent master (795c338de7) 
+
+Patch 1/8: Auto / No Merge Conflict
+
+Patch 2/8: Auto / No Merge Conflict
+
+Patch 3/8: add/add conflict
+
+Patch 4/8: Confirming movement of function `write_command_and_capabilities`
+
+Patch 5/8: Auto / No Merge Conflict
+
+Patch 6/8: Auto / No Merge Conflict
+
+Patch 7/8: Makefile merge conflict but when opened in vscode it shows
+0 conflict.
+
+Patch 8/8: add/add conflict for object-store.c and modify/delete 
+conflict for object-store-ll.h
+According to 68cd492a3e 
+
+> object-store: merge "object-store-ll.h" and "object-store.h"
+
+And according to 8f49151763
+
+> object-store: rename files to "odb.{c,h}"
+
+Therefore I have added the function signature that was supposed to go to
+object-store-ll.h to odb.h
+
+
+## Work remaining to get v11 patch accepted
+
+Almost all of it is focused on patch 8 
+
+- Fix multi-line comment formatting - closing */ on own line
+- Add blank lines between macro definitions
+- Split overly-long MAX_REMOTE_OBJ_INFO_LINE definition across lines
+- Change loop variable from size_t i to int i (since argc is int)
+- Rearrange if/else to put smaller body first: if (!gtransport->smart_options)
+    before else
+
+- Fix the logic of maximum line size for the remote-object-info.
+- Adding an allow list of object info fields 
+- Handling what happens if an unsupported object info field is given in
+    format string. 
+    In this case we send the request as if such a object info field is
+    not even there, and when printing the result we simply print an empty
+    string on the client side. No extra payload on the network. 
+ 
+- Add tests.
+- Update Documentation 
     
-    Mostly from: https://lore.kernel.org/git/xmqq8qbvz2dm.fsf@gitster.g/
 
- Documentation/git-name-rev.adoc |  10 +++-
- builtin/name-rev.c              | 100 +++++++++++++++++++++++++++++---
- t/t6120-describe.sh             |  96 ++++++++++++++++++++++++++++++
- 3 files changed, 198 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-name-rev.adoc b/Documentation/git-name-rev.adoc
-index d4f1c4d5945..65348690c8c 100644
---- a/Documentation/git-name-rev.adoc
-+++ b/Documentation/git-name-rev.adoc
-@@ -9,7 +9,7 @@ git-name-rev - Find symbolic names for given revs
- SYNOPSIS
- --------
- [verse]
--'git name-rev' [--tags] [--refs=<pattern>]
-+'git name-rev' [--tags] [--refs=<pattern>] [--format=<pretty>]
- 	       ( --all | --annotate-stdin | <commit-ish>... )
- 
- DESCRIPTION
-@@ -21,6 +21,14 @@ format parsable by 'git rev-parse'.
- OPTIONS
- -------
- 
-+--format=<pretty>::
-+--no-format::
-+	Format revisions instead of outputting symbolic names. The
-+	default is `--no-format`.
-++
-+Implies `--name-only`. The negation `--no-format` implies
-+`--no-name-only` (the default for the command).
-+
- --tags::
- 	Do not use branch names, but only tags to name the commits
- 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 171e7bd0e98..9a008d8b7a8 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -18,6 +18,9 @@
- #include "commit-graph.h"
- #include "wildmatch.h"
- #include "mem-pool.h"
-+#include "pretty.h"
-+#include "revision.h"
-+#include "notes.h"
- 
- /*
-  * One day.  See the 'name a rev shortly after epoch' test in t6120 when
-@@ -33,6 +36,16 @@ struct rev_name {
- 	int from_tag;
- };
- 
-+struct pretty_format {
-+	struct pretty_print_context ctx;
-+	struct userformat_want want;
-+};
-+
-+struct format_cb_data {
-+    const char *format;
-+    int *name_only;
-+};
-+
- define_commit_slab(commit_rev_name, struct rev_name);
- 
- static timestamp_t generation_cutoff = GENERATION_NUMBER_INFINITY;
-@@ -454,7 +467,9 @@ static const char *get_exact_ref_match(const struct object *o)
- }
- 
- /* may return a constant string or use "buf" as scratch space */
--static const char *get_rev_name(const struct object *o, struct strbuf *buf)
-+static const char *get_rev_name(const struct object *o,
-+				struct pretty_format *format_ctx,
-+				struct strbuf *buf)
- {
- 	struct rev_name *n;
- 	const struct commit *c;
-@@ -462,6 +477,25 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
- 	if (o->type != OBJ_COMMIT)
- 		return get_exact_ref_match(o);
- 	c = (const struct commit *) o;
-+
-+	if (format_ctx) {
-+		strbuf_reset(buf);
-+
-+		if (format_ctx->want.notes) {
-+			struct strbuf notebuf = STRBUF_INIT;
-+
-+			format_display_notes(&c->object.oid, &notebuf,
-+					     get_log_output_encoding(),
-+					     format_ctx->ctx.fmt == CMIT_FMT_USERFORMAT);
-+			format_ctx->ctx.notes_message = strbuf_detach(&notebuf, NULL);
-+		}
-+
-+		pretty_print_commit(&format_ctx->ctx, c, buf);
-+		FREE_AND_NULL(format_ctx->ctx.notes_message);
-+
-+		return buf->buf;
-+	}
-+
- 	n = get_commit_rev_name(c);
- 	if (!n)
- 		return NULL;
-@@ -479,6 +513,7 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
- 
- static void show_name(const struct object *obj,
- 		      const char *caller_name,
-+		      struct pretty_format *format_ctx,
- 		      int always, int allow_undefined, int name_only)
- {
- 	const char *name;
-@@ -487,7 +522,7 @@ static void show_name(const struct object *obj,
- 
- 	if (!name_only)
- 		printf("%s ", caller_name ? caller_name : oid_to_hex(oid));
--	name = get_rev_name(obj, &buf);
-+	name = get_rev_name(obj, format_ctx, &buf);
- 	if (name)
- 		printf("%s\n", name);
- 	else if (allow_undefined)
-@@ -507,7 +542,9 @@ static char const * const name_rev_usage[] = {
- 	NULL
- };
- 
--static void name_rev_line(char *p, struct name_ref_data *data)
-+static void name_rev_line(char *p,
-+			  struct name_ref_data *data,
-+			  struct pretty_format *format_ctx)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int counter = 0;
-@@ -532,7 +569,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 				struct object *o =
- 					lookup_object(the_repository, &oid);
- 				if (o)
--					name = get_rev_name(o, &buf);
-+					name = get_rev_name(o, format_ctx, &buf);
- 			}
- 			*(p+1) = c;
- 
-@@ -554,6 +591,16 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 	strbuf_release(&buf);
- }
- 
-+static int format_cb(const struct option *option,
-+		     const char *arg,
-+		     int unset)
-+{
-+	struct format_cb_data *data = option->value;
-+	data->format = arg;
-+	*data->name_only = !unset;
-+	return 0;
-+}
-+
- int cmd_name_rev(int argc,
- 		 const char **argv,
- 		 const char *prefix,
-@@ -567,6 +614,12 @@ int cmd_name_rev(int argc,
- #endif
- 	int all = 0, annotate_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
- 	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
-+	static struct format_cb_data format_cb_data = { 0 };
-+	struct display_notes_opt format_notes_opt;
-+	struct rev_info format_rev = REV_INFO_INIT;
-+	struct pretty_format *format_ctx = NULL;
-+	struct pretty_format format_pp = { 0 };
-+	struct string_list notes = STRING_LIST_INIT_NODUP;
- 	struct option opts[] = {
- 		OPT_BOOL(0, "name-only", &data.name_only, N_("print only ref-based names (no object names)")),
- 		OPT_BOOL(0, "tags", &data.tags_only, N_("only use tags to name the commits")),
-@@ -584,6 +637,10 @@ int cmd_name_rev(int argc,
- 			   PARSE_OPT_HIDDEN),
- #endif /* WITH_BREAKING_CHANGES */
- 		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text from stdin")),
-+		OPT_CALLBACK(0, "format", &format_cb_data, N_("format"),
-+			     N_("pretty-print output instead"), format_cb),
-+		OPT_STRING_LIST(0, "notes", &notes, N_("notes"),
-+				N_("display notes for --format")),
- 		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
- 		OPT_BOOL(0, "always",     &always,
- 			   N_("show abbreviated commit object as fallback")),
-@@ -592,6 +649,8 @@ int cmd_name_rev(int argc,
- 		OPT_END(),
- 	};
- 
-+	init_display_notes(&format_notes_opt);
-+	format_cb_data.name_only = &data.name_only;
- 	mem_pool_init(&string_pool, 0);
- 	init_commit_rev_name(&rev_names);
- 	repo_config(the_repository, git_default_config, NULL);
-@@ -606,6 +665,31 @@ int cmd_name_rev(int argc,
- 	}
- #endif
- 
-+	if (format_cb_data.format) {
-+		get_commit_format(format_cb_data.format, &format_rev);
-+		format_pp.ctx.rev = &format_rev;
-+		format_pp.ctx.fmt = format_rev.commit_format;
-+		format_pp.ctx.abbrev = format_rev.abbrev;
-+		format_pp.ctx.date_mode_explicit = format_rev.date_mode_explicit;
-+		format_pp.ctx.date_mode = format_rev.date_mode;
-+		format_pp.ctx.color = GIT_COLOR_AUTO;
-+
-+		userformat_find_requirements(format_cb_data.format,
-+					     &format_pp.want);
-+		if (format_pp.want.notes) {
-+			int ignore_show_notes = 0;
-+			struct string_list_item *n;
-+
-+			for_each_string_list_item(n, &notes)
-+				enable_ref_display_notes(&format_notes_opt,
-+							 &ignore_show_notes,
-+							 n->string);
-+			load_display_notes(&format_notes_opt);
-+		}
-+
-+		format_ctx = &format_pp;
-+	}
-+
- 	if (all + annotate_stdin + !!argc > 1) {
- 		error("Specify either a list, or --all, not both!");
- 		usage_with_options(name_rev_usage, opts);
-@@ -663,7 +747,7 @@ int cmd_name_rev(int argc,
- 
- 		while (strbuf_getline(&sb, stdin) != EOF) {
- 			strbuf_addch(&sb, '\n');
--			name_rev_line(sb.buf, &data);
-+			name_rev_line(sb.buf, &data, format_ctx);
- 		}
- 		strbuf_release(&sb);
- 	} else if (all) {
-@@ -674,18 +758,20 @@ int cmd_name_rev(int argc,
- 			struct object *obj = get_indexed_object(the_repository, i);
- 			if (!obj || obj->type != OBJ_COMMIT)
- 				continue;
--			show_name(obj, NULL,
-+			show_name(obj, NULL, format_ctx,
- 				  always, allow_undefined, data.name_only);
- 		}
- 	} else {
- 		int i;
- 		for (i = 0; i < revs.nr; i++)
--			show_name(revs.objects[i].item, revs.objects[i].name,
-+			show_name(revs.objects[i].item, revs.objects[i].name, format_ctx,
- 				  always, allow_undefined, data.name_only);
- 	}
- 
- 	string_list_clear(&data.ref_filters, 0);
- 	string_list_clear(&data.exclude_filters, 0);
-+	string_list_clear(&notes, 0);
-+	release_display_notes(&format_notes_opt);
- 	mem_pool_discard(&string_pool, 0);
- 	object_array_clear(&revs);
- 	return 0;
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 2c70cc561ad..0b7e9fe396d 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -658,6 +658,102 @@ test_expect_success 'name-rev --annotate-stdin works with commitGraph' '
- 	)
- '
- 
-+test_expect_success 'name-rev --format setup' '
-+	mkdir repo-format &&
-+	git -C repo-format init &&
-+	test_commit -C repo-format first &&
-+	test_commit -C repo-format second &&
-+	test_commit -C repo-format third &&
-+	test_commit -C repo-format fourth &&
-+	test_commit -C repo-format fifth &&
-+	test_commit -C repo-format sixth &&
-+	test_commit -C repo-format seventh &&
-+	test_commit -C repo-format eighth
-+'
-+
-+test_expect_success 'name-rev --format --no-name-only' '
-+	cat >expect <<-\EOF &&
-+	HEAD~3 [fifth]
-+	HEAD [eighth]
-+	HEAD~5 [third]
-+	EOF
-+	git -C repo-format name-rev --format="[%s]" \
-+		--no-name-only HEAD~3 HEAD HEAD~5 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'name-rev --format --no-format is the same as regular name-rev' '
-+	git -C repo-format name-rev HEAD~2 HEAD~3 >expect &&
-+	test_file_not_empty expect &&
-+	git -C repo-format name-rev --format="huh?" \
-+		--no-format HEAD~2 HEAD~3 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'name-rev --format=%s for argument revs' '
-+	cat >expect <<-\EOF &&
-+	eighth
-+	seventh
-+	fifth
-+	EOF
-+	git -C repo-format name-rev --format=%s \
-+		HEAD HEAD~ HEAD~3 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--name-rev --format=reference --annotate-stdin from rev-list same as log' '
-+	git -C repo-format log --format=reference >expect &&
-+	test_file_not_empty expect &&
-+	git -C repo-format rev-list HEAD >list &&
-+	git -C repo-format name-rev --format=reference \
-+		--annotate-stdin <list >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--name-rev --format=<pretty> --annotate-stdin with running text and tree oid' '
-+	cmit_oid=$(git -C repo-format rev-parse :/fifth) &&
-+	reference=$(git -C repo-format log -n1 --format=reference :/fifth) &&
-+	tree=$(git -C repo-format rev-parse HEAD^{tree}) &&
-+	cat >expect <<-EOF &&
-+	We thought we fixed this in ${reference}.
-+	But look at this tree: ${tree}.
-+	EOF
-+	git -C repo-format name-rev --format=reference --annotate-stdin \
-+		>actual <<-EOF &&
-+	We thought we fixed this in ${cmit_oid}.
-+	But look at this tree: ${tree}.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'name-rev --format=<pretty> with %N (note)' '
-+	test_when_finished "git -C repo-format notes remove" &&
-+	git -C repo-format notes add -m"Make a note" &&
-+	printf "Make a note\n\n\n" >expect &&
-+	git -C repo-format name-rev --format="tformat:%N" \
-+		HEAD HEAD~ >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'name-rev --format=<pretty> --notes<ref>' '
-+	# One custom notes ref
-+	test_when_finished "git -C repo-format notes remove" &&
-+	test_when_finished "git -C repo-format notes --ref=word remove" &&
-+	git -C repo-format notes add -m"default" &&
-+	git -C repo-format notes --ref=word add -m"custom" &&
-+	printf "custom\n\n" >expect &&
-+	git -C repo-format name-rev --format="tformat:%N" \
-+		--notes=word \
-+		HEAD >actual &&
-+	test_cmp expect actual &&
-+	# Glob all
-+	printf "default\ncustom\n\n" >expect &&
-+	git -C repo-format name-rev --format="tformat:%N" \
-+		--notes=* \
-+		HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- #               B
- #               o
- #  H             \
--- 
-2.53.0.32.gf6228eaf9cc
+## Project : Complete and extend the remote-object-info command for git cat-file
 
+Currently in the case of a partial clone, the user cannot retrieve all 
+object data without fetching the object beforehand. To solve this problem
+Calvin Wan and Eric Ju had designed a patch series that can solve that,
+by utilising protocolv2 servers capabilities.
+
+This was done in the form of "remote-object-info".
+
+But only the %(objectsize) was implemented, and that patch was not merged. 
+This project has two goals 
+
+1: To Rebase and finalize Calvin Wan and Eric Ju's Work by addressing
+    the feedback on Eric Ju's Patch v11. Work for this part is discussed
+    above in above section.
+
+2: To discuss with the community and add support for other relevant 
+    object info fields `remote-object-info` like `objecttype`, 
+    `objectsize:disk` and `deltabase`
+
+Project Duration : 13 week approx
+
+## Timeline 
+
+
+### Phase 1 : 
+
+May 1-24 : Community Bonding + Start Design discussions on 
+            Logic of allow list implementation
+            Logic of maximum size of the remote-object-info command
+            Which object info fields should be supported
+
+Week 1 (May 25 - 31) : 
+    Open Patch Series 1 for Eric Jus patch, after 
+    solving all remaining problems. Use the discussed idea/solution from 
+    above. Both client and server side work would be in the same patch 
+    series. This is just rebasing previous work so I have to address 
+    the changes suggested after v11.
+
+Week 2 (June 1 - 7) : Continue discussion, review feedback and refine.
+
+Week 3 (June 8 - 14) : Review feedback and refine
+
+Week 4 (June 15 - 21) : Review feedback and refine + Update Documentation
+    and Tests
+
+Week 5 (June 22 - 28) : By now all tasks regarding Merging Eric Ju's 
+    patch should be finished. But since it may take more time for 
+    reviewing I am adding a buffer weeks.
+
+Week 6 (June 29 - July 5) : Polish everything + Midterm report
+
+Week 7 (July 6 - 12) : Midterm evaluation ( July 7-11)
+
+Week 8 (July 13 - 19) : Start Patch Series 2 for adding other object info
+    fields as per the discussion started in Week 1.
+
+Week 9 (July 20 - 26) : Review feedback and refine.
+
+Week 10 (July 27 - August 2) : Review feedback and refine. 
+
+Week 11 (August 3 - 9) : Finalize all tests and Doc changes.
+
+Week 12 (August 10 - 16) : Prepare Final report.
+
+Week 13 (August 17 - 23) : Final Evaluation ( Aug 18-24 )
+
+
+
+## Availability
+
+My current semester is ending in the first week of May, so I will be
+able to contribute 7-8 hours per day, totalling around 35-40 hrs a week
+on the project.
+
+Total weeks = 13 , total hours = 35*13 = 455
+It leaves with a lot more room to accommodate any unforeseen circumstances
+that may arise during the project.
+
+## RFC 
+
+
+Hi Christian and Karthik !
+
+I still feel like the single object get remote info might be useful
+and I think this might be where I can add this functionality :
+
+When someone does `GIT_NO_LAZY_FETCH=0 git cat-file -s <oid>` 
+And the oid is of a blob that is not on local, then git simply fetches
+the blob and reruns git cat-file -s. 
+
+But if someone does `GIT_NO_LAZY_FETCH=1 git cat-file -s <oid>` 
+And the blob is not on local then it exits with the following error
+
+>	if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0)) {
+>		static int warning_shown;
+>		if (!warning_shown) {
+>			warning_shown = 1;
+>			warning(_("lazy fetching disabled; some objects may not be available"));
+>		}
+>		return -1;
+>	}
+
+Would it be useful behaviour if instead of exiting with an error it sent
+a remote-object-info request for that single file ? 
+
+
+Thank you for your time in reviewing my proposal as well as considering
+my application. I am excited to learn everything I can from git.
+
+
+Thanks and Regards,
+Soutrik
+
+[1] : pull.2187.git.git.1770293021383.gitgitgadget@gmail.com
+[2] : 20260209172445.39536-1-valusoutrik@gmail.com
+[3] : 20260225190306.39358-1-valusoutrik@gmail.com
+[4] : 20240628190503.67389-1-eric.peijian@gmail.com
+[5] : 20220728230210.2952731-1-calvinwan@google.com
