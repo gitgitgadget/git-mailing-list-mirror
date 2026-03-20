@@ -1,54 +1,54 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022062D7DF2
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 23:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22352383C70
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 23:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774048168; cv=none; b=tRxCHkjp/WczThP7sPItHs82KP1TvQXOOjRcqM9aLXI5H6T3WcMdsjl3g3icDbJIUviCfN0gJOy58JXRx5nlvAw/i+ZO+Y4ezN43fJL4OG2Y3d52TbsrTmtcpEbefG06jF6zFmniYZcepOMtj+XEZH0MJ02JpcgzBGcR7fzov9M=
+	t=1774048413; cv=none; b=hilXy68aDukFWdvh5X2HtfNwiBRifNBNhJP+jNbLnYm184LU3xcavV9guzXoE7GD/pD/FO6RDqqBqihKqN1jb2htNmAZCgr+kDcqOXOmZ2V/yDpVGrArqTuAccjR+2I973m3lRritdCecpYqPXgc5XqRKbMoytx2b5Jfh1dDmtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774048168; c=relaxed/simple;
-	bh=Ma0cDz6CLwu+tdLIbvwE3IapTXL0D1BMERFDt540qY0=;
+	s=arc-20240116; t=1774048413; c=relaxed/simple;
+	bh=2wgvfNlGHJf6qdGEI2LaVecm19kiXNALoddZpK+0STQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Hb+ksfnUyRyvScPC2w3TMqsDPMB+ayxkJysNA9lXlun4x7kpw3z1OqAbUUXa48VR6vE4Y/453YmSD1IIrYj5aiRvM0g0JvNlPwgktRRnmO2tiqEkMRxf7KK+T8TTplw0NUTtbB3ltZV+ZFZ2CGFLIrDeDVtieHkcS+wJBZaqwSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QwpgviJq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MrIkD175; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=WpIO+MAXniwJ5VFrjpp0niCOwnXTtcRt+UNsb9pEBYDtiTTBGinFlJ7NmeUjG4EuKNYr0Z6CUDVbkRZ9eIAQjw4oyY3WLlZrDq4eSt0ue+VlHum1hly3jqenEhJuCVfRcsRetAZzwU5vnTREPnqVRWkra4T6G5vUFRe5sce0Nts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jVWjOwl5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gZKs3kcm; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QwpgviJq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MrIkD175"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 276E11400258;
-	Fri, 20 Mar 2026 19:09:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jVWjOwl5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gZKs3kcm"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 49E90140004E;
+	Fri, 20 Mar 2026 19:13:31 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Mar 2026 19:09:26 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 20 Mar 2026 19:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774048166; x=1774134566; bh=e1Wx8quoRj
-	hWsk5eu7lR12axVEr3rGqC6q1csKignCM=; b=QwpgviJqBS6+cUc2CvgUZLGDAI
-	HWdLTtktI8TH4E3d6WcbHbQE61gQYv/5J2d8bEH/ns5X4VpxUyoCTVYCsCDybJ0P
-	4mVV8BnCoGmdJppjvMyDYwTDB7CpDe65iw6cfZRXv0Jv0dh2a+SFLmDcuJB9oAZO
-	l0T+Mu8T+8YO9kp8e01ZlTXFRPjKXTVQtbYiY5498OGAqCaFe4I6PKLzgZif9Y0U
-	0IZGv7rGcQ8QlYuRQ/wQvOSaRFHt3s7AkPZpHQHBxZXX6zp9WqgMyH3AnI8ddCZR
-	bIK1ZY91xFuV4AmI3LuMEwMQ+tiSFQkg5Ale+gf3LUPsYAN8XVzIHVId08tg==
+	:subject:to:to; s=fm3; t=1774048411; x=1774134811; bh=LUVTbwEfe8
+	ceuLn5fwrpY4KEba+VKF/ijIm6ER5woNo=; b=jVWjOwl5D3QPRYjQfc3AaiZw7D
+	zNKwVb91H5ZiKLMKHm0qHjygdlTBD/FPIeX7uUpuiRf/a+1vcnd/DtxIgLLBU1yw
+	P4p2Q63i9Pkxt0z9iGG4z9U2pl4os7m14BJ43CyARYtrF+R91dpnz4eoopuMxbak
+	ePt68XonGHeJ7AAtUuFPu0wSVYmpd2N6Amuof76eEkwwXDbFcjaDOvLvO6nqkC1b
+	wI3e0MM/NGUQZFF3tgziiiYN2ygOxyJEZsVrTRuqNrdIzSQtHjUKtArLqdHPvpE8
+	mmI9XwL8cv6j23UZzrRT3dumtT+yOzIQ5iu/y7RiiMnVSx1zKTE4YovMz93g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774048166; x=1774134566; bh=e1Wx8quoRjhWsk5eu7lR12axVEr3rGqC6q1
-	csKignCM=; b=MrIkD1758u38sR9EhUgbqYynE/88+F00NxMIFG+X5pgMmEUdcIm
-	YKFzBKieWimjKJrqztcbQXispd6owNJB6S8M/KPoKVv2W/ML9cp5QGkuedgUgW3h
-	8acqRrMVt8ei6GfBl416bGFyXxlWS+TD7VDQMBR4hHRSIhWNdYdEnEME/pArS/cT
-	Qg2uHEr4EIzk6XbH2lQUr4hKhMvqkDonP6y84Ao3yo0oi47XrKvMkUjhIqUOnOuy
-	NdzZdWWqvaG59ItDmsVsOakjxTTsvR9PRhIy7FEbRWXZ+LqbvNs8xDUr7jeDFYjj
-	88OUQrOdVDffG0Qbpgfs4cnZq/kkI/GZ74A==
-X-ME-Sender: <xms:pdO9abaprM2kDYl8JTaLI2syvjV8xWLY9irugvzCj57RStlH-UlG8A>
-    <xme:pdO9aR2-l6wQC7O3bIIW95hPRMZiEHF-8o3Ab6W1MZ8ZmPKHyzSLKQ1aMmffkk1Wu
-    SoZBFbeMDZVmtzMHQXjZ18z_VIcDVslAeedK95MJbMNiVZeMvubKaY>
-X-ME-Received: <xmr:pdO9abUIpG46EyygL1I9_OOJQlPU76teLEnwv0J2zje4PtBfz_R300XiKSRZGnqk_IMxN0lf5Xq0iWr9Hs-4Sh_NtPToX8nagw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudduvddtucetufdoteggodetrf
+	1774048411; x=1774134811; bh=LUVTbwEfe8ceuLn5fwrpY4KEba+VKF/ijIm
+	6ER5woNo=; b=gZKs3kcmTAy1kcAPt6Uh17VRy14OdiOrErzOKAWFGZjJkf8ML0a
+	O24nKEoBz2CN87h/tdwgEzohieRAIfKN0zLbQdlYPCMRl21L2NlNJ2DM3WrL3pz+
+	GPAA4INhryAmdSBFrNB+5ILMl6Ta5lu260KGD7wWN80SYpvxiuhZrLTUDJSGyq+u
+	Lu9xTWD5hnyizWPSf34VmNNzIS9RVcy22DqpiRSUr0fhBjzVbZuZmy57zsi+Jb+X
+	o7ZUZUmi+kbLF4GVNi6aDa6u7Fd6KoGmOQvbo9YGzM6khoRACKBXbpEHJS/pqgfs
+	HiMjUvPxBloe7Y+nAh7Y9fKQnfRflSS8djw==
+X-ME-Sender: <xms:m9S9acNgekBzbEXopry0RG7WbY5V4J8JrFS8tQVdVTi8bYXy3tv50g>
+    <xme:m9S9aaZcoGYJ7yx--RBeemcpcCxm4GJwU-ntUp9Q1yoNcjnDgRicJeUhRJOJl3RRf
+    3IKscjX_q4FwPGKtduN1EX9F5hM5Z7F_rUCtI_wXGrnwpZotZ8B4A>
+X-ME-Received: <xmr:m9S9aQqfCle6UyframglZCJNpLlyooffdfsPIHLfBrQIW3pFK-91ZU7dzkFM6wvtAuJvA-F-DEoYxVkqBRqiVibDoRvdRpyOxg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudduvdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -59,24 +59,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudduvddtucetufdote
     mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
     hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
     gidrtghomh
-X-ME-Proxy: <xmx:pdO9abXWUGEfrWLHmliCfthROlkaqTWMjwAQotEc_G34EMPVrvV0Gw>
-    <xmx:pdO9aaeEj1_TZ_sGZ71_4NslewtD1rmjIDwv0ha_Vv_pQ5R3FuOqLw>
-    <xmx:pdO9aUUGz8fSk6FmDbpQHKZTv5l6LgQcer1rhu6x0PPrdfL0-u4RNw>
-    <xmx:pdO9aTezNh6u6oguDh45zxPLxQV-65kdzGqPTGtt85-AxH3zJR0IYA>
-    <xmx:ptO9aZ9-ZVqDMFCfVYkz-q9OpZJ8Rj2yUMSNGpfpWsBsDPq3Jj7RNE-m>
+X-ME-Proxy: <xmx:m9S9aeY2a8xpwvZG6D3X6u6hf8pozaNnXIZta6CEFM4oWr84GnHQEw>
+    <xmx:m9S9aYR_YteMEgmkspLRC_Ove0Hqg8bFcVJTH4y1HakoIQK99MTMjg>
+    <xmx:m9S9aV5kwkMGJg6hiW0Q5JRTn4lhL5hBlLjwDiH-sCHEgv0Oizpbjg>
+    <xmx:m9S9adw5bPiepmwlFaXWSQXqzYOA-zIAEL0tsWX9s7ElOWt1B3pv2g>
+    <xmx:m9S9aagV9aPuwfLdl2mrW3kupoD325cJoV57OWZhuDQQ7PTqhrOXSU8a>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Mar 2026 19:09:25 -0400 (EDT)
+ 20 Mar 2026 19:13:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/14] fsck: drop `the_repository` in `fsck_walk()`
-In-Reply-To: <20260320-b4-pks-fsck-without-the-repository-v1-1-6594f997926b@pks.im>
-	(Patrick Steinhardt's message of "Fri, 20 Mar 2026 12:47:06 +0100")
+Subject: Re: [PATCH 13/14] fsck: provide repository in `struct
+ fsck_report_object`
+In-Reply-To: <20260320-b4-pks-fsck-without-the-repository-v1-13-6594f997926b@pks.im>
+	(Patrick Steinhardt's message of "Fri, 20 Mar 2026 12:47:18 +0100")
 References: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
-	<20260320-b4-pks-fsck-without-the-repository-v1-1-6594f997926b@pks.im>
-Date: Fri, 20 Mar 2026 16:09:24 -0700
-Message-ID: <xmqq341udrob.fsf@gitster.g>
+	<20260320-b4-pks-fsck-without-the-repository-v1-13-6594f997926b@pks.im>
+Date: Fri, 20 Mar 2026 16:13:29 -0700
+Message-ID: <xmqqy0jmccx2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,38 +89,44 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The function `fsck_walk()` and its object type specific functions
-> `fsck_walk_tree()` et al implicitly rely on `the_repository`. Remove
-> this dependency by injecting the repository as a parameter instead.
+> The `report()` function invokes a callback function with a `struct
+> fsck_report_object` for every object that failed at least one of our
+> checks. This report doesn't give the caller enough context though, and
+> thus they have to rely on global state for `the_repository`.
+>
+> Refactor the code and inject the repository into the report.
+>
+> As this requires us to touch up all callsites, rename the `report()`
+> function to `fsck_report_object()` to align it with `fsck_report_ref()`.
+> We have already discussed this rename in the past, but we decided to not
+> do it because it required us to adapt too many callsites.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/fsck.c           |  6 +++---
->  builtin/index-pack.c     |  2 +-
->  builtin/unpack-objects.c |  2 +-
->  fsck.c                   | 40 ++++++++++++++++++++++++++--------------
->  fsck.h                   | 15 ++++++++++++---
->  5 files changed, 43 insertions(+), 22 deletions(-)
+>  fsck.c | 365 ++++++++++++++++++++++++++++++++++++++---------------------------
+>  fsck.h |   1 +
+>  2 files changed, 214 insertions(+), 152 deletions(-)
+>
+> diff --git a/fsck.c b/fsck.c
+> index edf7a0618f..59b9163598 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -258,13 +258,15 @@ static int fsck_vreport(struct fsck_options *options,
+>  	return result;
+>  }
+>  
+> -__attribute__((format (printf, 5, 6)))
+> -static int report(struct fsck_options *options,
+> -		  const struct object_id *oid, enum object_type object_type,
+> -		  enum fsck_msg_id msg_id, const char *fmt, ...)
+> +__attribute__((format (printf, 6, 7)))
+> +static int fsck_report_object(struct repository *repo,
+> +			      struct fsck_options *options,
+> +			      const struct object_id *oid, enum object_type object_type,
+> +			      enum fsck_msg_id msg_id, const char *fmt, ...)
 
-OK.
-
-While the conversion is cleanly done, the resulting code makes me
-wonder if fsck_options struct
-
-        struct fsck_options {
-                fsck_walk_func walk;
-                fsck_error error_func;
-                unsigned strict;
-                unsigned verbose;
-                enum fsck_msg_type *msg_type;
-                struct oidset skip_oids;
-                struct oidset gitmodules_found;
-                struct oidset gitmodules_done;
-                struct oidset gitattributes_found;
-                struct oidset gitattributes_done;
-                kh_oid_map_t *object_names;
-        };
-
-should gain a repository pointer.  After all, these oidset and oidmap
-are about objects in one particular repository.
-
+Earlier I wondered if struct repository *repo should be added to
+fsck_options; I didn't comment on individual patches, but almost all
+patches I saw since that remark made me suspect that fsck_options
+would be a good place to pass repository throughout the callchain
+even more.
