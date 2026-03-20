@@ -1,274 +1,168 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A5B31064E
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 10:01:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3126344030
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 10:04:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774000912; cv=pass; b=CiLxcGrckX50qF5H3dToBjw0og4N21wc8BzFpNoQvdrb+VCpFEwkswk8r3wRLnn0po8KaKu2dDmUXopErv86kfxvYTzYIpYbkjImz0E4N+wUNEMXI1z0O+Bp4Dcc1pCGCGnrftb9wiHCdqCbgLvzsnEqowrWiHvNG2KyxASP4AU=
+	t=1774001046; cv=pass; b=Oq6cd+6Y9V2bmFK5y9a1CRcu0YH0DLyLycsnJ0kuafjszF41b61c8FdJW1NGcVI4WlQPd1wHYTU9ZjNWGNXlS7D6TWqGFqB5bgHOcrLt/DfrZNhckV3yau9J8GLz/ktIP3pRA9cDea0KrfyvAsOdqcFwXJ96IyK/Hi5RXJfJ+eM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774000912; c=relaxed/simple;
-	bh=hHW827xd6LL72xktzB03hy9SXI2L9I5xE5A9vSeMLmU=;
+	s=arc-20240116; t=1774001046; c=relaxed/simple;
+	bh=MsgpUYtMTFZILAktmKEgvg9omU2XCm9NrZHhqNgY7MM=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=PcB3LGD8VO+7HCpC+5rBnJwEmzamdRc80rgYUjGGspFg4tuPMaYOHlBWAOgfo4GqWM2YizTaNsU8kKkUkNQgAvowq+UqlCjK8UMQYIV/IDC2vjRgLD0Z7Iq9HD1w01VXZI7wNwSJTrHQCL22hGGyBxcs5Nm0/AhlNjiNEX+N0Jw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUnQOxZB; arc=pass smtp.client-ip=209.85.222.43
+	 To:Cc:Content-Type; b=hUR5n1ZZ1vp/1dy/TJS+IPux2pL34jx2GsnDtG3sP2YAPjbA/cjBkFVbEMlsQ13yZiVEWbTW+kLuohiO4qI4Ocef6FepyNinzNE4emsHelSUwD0yvHD/+fi9HH25sFV2P94aI8bSgUqq7l/qBXkYn5VqkALPhb/nZ14zHKlxzS8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iOF0pnn8; arc=pass smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUnQOxZB"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-950ca549ff9so1059264241.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2026 03:01:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774000910; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iOF0pnn8"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5ffc6a96602so366236137.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2026 03:04:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774001044; cv=none;
         d=google.com; s=arc-20240605;
-        b=CvgvZHxLT5Be00vN6rHjkjU0pi/et+oiq1M2VIfXMZ13vk2SVA/77hwbv7N1vUPAty
-         cwrGFS1zED4Ems8/Tx/pVWpW2kmK3y9+2nWLcIn7zTueLGQ98YQMuUAwgzU1AiXz8/5K
-         r/cXdMLn52JIfDBY214q3x1DDd/zxTOp2Qo/xupTMEic9FBVCLirQmHD7EJDDTarCsNE
-         vSDMrkmdbHSJmJMNuEWXplR0IIA7vYYJp3KXw+cXCP09KK82idw18Qp0B4TY5D4nU5yc
-         SBbZrYQxW+M6tpOpoGUtd+NK4nQ0brPaN0aTtPT3Uh9kzPAPuw/gPfqRZ7HR+j/Q8/OZ
-         sBgQ==
+        b=M3H5WTsA9DY2cgO7yH/gQo2ykTXvhPVemb2NVcwD/754EbW8ofHKUndcFrWQa5E4o5
+         WgMjUmKIGlcJIJmDzUwM69y+EOJJtq1AMjb8jSABf2XDUZdUUuX0ZJXjdOkZzKvFxH4e
+         xnHg83czym3l/3sFd7jOvYXZ7UPmOWOoWtD8gawRSHfcJH3GS0QwPAw2PnA1+g+cxS0H
+         uHg1GybODteSVaB3ex2BqDhZtBjEHQIWV9VVOGRqmDMmttnSgJ27KuBYhai52SM+aUfc
+         QpP40VbkT+gkHs4RhT1HwbyRZ+LAPaM+8y1mZcWTQtKvHl/zonAOG7tO96vrqobwbbao
+         60+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=SbQ0qzuZv0xmV+834GyUyEpJD/XJjaFtNDaKmjA0LQA=;
-        fh=4prTVcogMgHK0OTgnyiqKe/B5LpbNzVi3P3akdl3WhI=;
-        b=QRw2UuuUP/l4PNuyamMx48EuMHMeZbMnqVLIt0mFk7Exj4Jb+DVLULTGhpqby5PV3n
-         z3MczNnpqYKidQkmCQZQLEa9gP4WusErh5pQEQz7rli+lgXsfV774ZXtWMw2BvrjUjSB
-         dnEDO2lMirwUc7CI03SneXXLLaRQ4gWypXHvd4i6Lm6kqzfr2xPMv+Ft/Qj7w24dAzyw
-         lgnwN5iU3TJ5S4RRLMSuIlJ65bI63TEMR0Dt+LMHU5gLJlGZfGBLtByTVG/Slnr/lZo0
-         grPxtv+4A5gxgDbE9qJk0xSEO3xlA8u8g4jGCvlJQ3J4MbVhwnRnMhu/GKOAS2YGwTqP
-         poNg==;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=LmOwJqEc4j5fedDX+FOWw858q5Kucqx5I4glC5H8ypc=;
+        fh=88UPYidh17ichdsvKFWFekT+/lWWan1nlXG0JDPSDYE=;
+        b=ViYRf90cdgjI8LCjAWLQNaskK8FFlzF2h/7ADjcm5vUOXa4KVAQf3eLrmxmV6eQ4kX
+         Zz6lgSQjJt3CMME4KKXkd0q/d9iJcU7eQU1BWN/AtmuNxqqXnThToEo4xsj09b3PSB+p
+         Pse9ZJ20rOk7Ha8Ulzu1IenSYR4EGpH6FvlrJoQHut4BrHSYr/Q0P/CIGLZb3OMLXNJr
+         D9z9xoMoaR8PWDlPLScZe0jt2uEgpiQObyJF7dqmtGX+7Cor4GfE4LLWzsXZx6+AMCxb
+         duylVscNIRmJ/9bmcLO1I1JQA1qk9CjHrDqq6PYEAiqasHrQ/ssN24m7U40ZBlq5S3yY
+         8G/w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774000910; x=1774605710; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SbQ0qzuZv0xmV+834GyUyEpJD/XJjaFtNDaKmjA0LQA=;
-        b=DUnQOxZBVa60WfmZDfBioPw6N0vZau2Ip7drRaxHMF8yDsMSTXNN5L4yTO1OOB2+Xk
-         VmvxKvFvlWDI/0pGOPuNutr5Pq4Gka/Vgm3yqCcsTgvQUT3MxsqQHm77tqlheHSz52bz
-         EZgiMrcoSXxn7u+HKrBYMf6pIrFjG0ENdg6EqFVR3jFZe/tihh0oKnfT5c+ouOy5A+qr
-         JOdwQ5XjRfqYaKMWX4DKr2Qr3EaqBt+/jurLw0vZDIRgkiupCEAqtZx+OHEgqDRJBL4H
-         g/rGZ+tXr4iW7jVyCra+jm6Nh7DNZoO3Ic27AlV5A84gXRhT8+5a1hpmBf+EkKID3mRM
-         uzSA==
+        d=gmail.com; s=20230601; t=1774001044; x=1774605844; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LmOwJqEc4j5fedDX+FOWw858q5Kucqx5I4glC5H8ypc=;
+        b=iOF0pnn8zmlyNPGCsITfOAEMaUH+nDWecTMSsMKRabr6QZ9IDpS+H19ZoS9QwakNb1
+         Z2pvJZJAOkuf8skun3AejImbBN5kO1sfoptzZ+r2s6Li8xrJSSBmMNoGaO+9me0kGtZx
+         vg2bSy1kWkS/wVcGZrm9gLIM5274aQifl8945QHlMgDeqMfThE4vHCR7C9IVU5BjAPYw
+         p7Y9fe89Jaa32oMpXWk8q1RQmcjzK7daTt8BW1QBrQx1Nw+E2wTAuPOWx3KN855Nuh6N
+         tf70D3zthqZEF8fSy1xuYzrV957rXR6rNsLOHUPDSn6W8ObIqT5WiqVsCMB32nlyhtZF
+         6ggA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774000910; x=1774605710;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20251104; t=1774001044; x=1774605844;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SbQ0qzuZv0xmV+834GyUyEpJD/XJjaFtNDaKmjA0LQA=;
-        b=mB+LCt3Yyjo42a9Zn346F1TM8JPdnCMKAUznm3UKxifz15sJlnmBVfyXnTWhCVl0Kz
-         JBbVbmvhuL5M5+TF6lumqR0HRgNHvhYKNZYl5h0/UXVrm0GDrEx5PIHSAdY2te2ojpjX
-         J6bQW5LEYA2Y40Qoxj7oM291ezWPlT8Ro92V4LT+8iyVnD0q4tZGvjOYw4mJpYuB6ulF
-         3EBtl4ccHgMHzntt0Cb2XXP6GW+Rc9eQ9UqeF/EKNp3tz2oCsRtO8+YrxkvYpnTA5nST
-         8Mn75lF1Wkq0lLHz+7eBb1QT+2Ok/LNC4bKBjrYAqo5ci17Duphk+YbA8M4/Vgg3Kt6a
-         AQhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWwZEPYn5KFB0bOfnWgDgMwlp2R5wHv6adXpCPzCYnnI2MyXgAeKuslB0lXaCjvHyZxAMk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxn/2xP14F4koR2QZzIt7AzwdgCYT+rAPd5hKn7ya3o+KKwpGiX
-	7XhFst3vOkQABhCKSt+G2yLldt3h2dLEHfj4WG7sUwVblMSUn4QZ/zY8mPPOLqjdbkRGBXr0R/V
-	mJry7xpM4k+zqsc76bAzL40Gz5jxKGjA=
-X-Gm-Gg: ATEYQzwq9FCzaVjYrnaDabBMlwLFAOJ4erioyhadTlqO/8H5vx9vbAO8cCRfvwGvlDM
-	0ZJOQr5+COllvi/NoKZfh9QATlym+hntCXwQTrLsBGXzBvs5YFcJd6r4TfZOL0POTE14+zjm82Z
-	TcOx1tOdzWUGomSIzraYuC0xpq8qJRy48fCIxDsy1BdqJ2c5nzUeFtbPKYWbB5B30tfjhNQ7SqG
-	otOo/bAWzkbY2/zj6xWdHThy8zgea046Y/xuTqdKwwLAiNRJldLC/8y/LjU/na1nBKQPqFP5pUO
-	AgmK3Dxk
-X-Received: by 2002:a05:6102:304c:b0:5ff:fbe4:8a8 with SMTP id
- ada2fe7eead31-602aed054camr1258110137.25.1774000909473; Fri, 20 Mar 2026
- 03:01:49 -0700 (PDT)
+        bh=LmOwJqEc4j5fedDX+FOWw858q5Kucqx5I4glC5H8ypc=;
+        b=jBausLD6frkx+JU3c9BdGmtSTWB7yhgyL83Kqyk76/XMM+H2t/AQ6zj2BnDlsExcHq
+         zXuYWHKdW7x17eQs8W+Io3iJuIt1UJHk+2COwIqBjB3s0gGCGHf97hKK27zOYH3MAMp9
+         CHkMBaw0m989KFwyjBDHgCsGpaQDab1x/MUezK36FzAQY20jJn4c6X6DyNz0T1PWBdJP
+         R0Bdd+0mfgHfrQqkhdgkpT1iqH6BsU4lKGVwVxFA04Mawn9Ric0uJlTcF9p1LcE7M4fY
+         nc4K7QktFtlrQGNOsrFp6TS4zNPie1mhKgR4gAORr95mUORwjc6O9BhkVFvzStVitxXB
+         7mIg==
+X-Forwarded-Encrypted: i=1; AJvYcCXfcOgdj/gyKoZQffk8di3JjJTaR4TYa/9SPC7vf+YYkDWRXyHmETMnkYOnfPsYD76EMIw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWORRqK8fdvvf6US48JiFWonL038BllLVeUpya0F6trnlLf1qD
+	NlYUiTYFZK4CEgKI+5gEfjyNusz84iRUjau4DwKPRc5IUYQ+q9vnQwq9/4H0Mvn4UeKw4VXTS1e
+	wnX0OkVsMf/Il7jf3qeVU10+juASbysY=
+X-Gm-Gg: ATEYQzztc2/8ed93igxTa4gf2lFOMKKPj22JGoR+1hOYOzDEJDq+zourtA0gS6QVJ9L
+	oR76ZAjhKFGOt9YsPjjUsg3iBMmkbwPv5fbtZMd+k5IzeN1SyxarBiu2rLj6v4s4fGuaXgFZGGv
+	0UAOI6U5N82Mva7AbfPk0jb8sO1fomikFtXeSLAAOficNQrGEhSML6e+A727INSfLaVYmEiOYPN
+	aD4Nfol2eD0HSvqm5Vnee/XPgwSjiaVBRadq/SqVLgzLMmMBkHupd25F7J36DALaSnYyZf5bFMv
+	AM7mfmm3
+X-Received: by 2002:a05:6102:3f49:b0:5ff:be25:8934 with SMTP id
+ ada2fe7eead31-602aea92a0bmr1018836137.8.1774001043765; Fri, 20 Mar 2026
+ 03:04:03 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Mar 2026 03:01:48 -0700
+ HTTPREST; Fri, 20 Mar 2026 03:04:02 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Mar 2026 03:01:48 -0700
+ HTTPREST; Fri, 20 Mar 2026 03:04:02 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260319-b4-pks-odb-source-abbrev-v1-11-5ddebad292b0@pks.im>
-References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im> <20260319-b4-pks-odb-source-abbrev-v1-11-5ddebad292b0@pks.im>
+In-Reply-To: <20260320-b4-pks-odb-source-abbrev-v2-0-fe65dcd8c735@pks.im>
+References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im> <20260320-b4-pks-odb-source-abbrev-v2-0-fe65dcd8c735@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 20 Mar 2026 03:01:48 -0700
-X-Gm-Features: AaiRm50Mc97JaSWt_oU1Lne0ofGI79dqmMX9qE20KlQwyl9mkO6Oo9LO2-cDQGg
-Message-ID: <CAOLa=ZRU3=FqDo8SiJ=+qTsU79NEfoyAVp1uZYBX57SNPTZomw@mail.gmail.com>
-Subject: Re: [PATCH 11/14] object-name: simplify computing common prefixes
+Date: Fri, 20 Mar 2026 03:04:02 -0700
+X-Gm-Features: AaiRm51DrfZvxbVLcS2oeiO6loyF-Wvs4iIrUsbCM0b2hTSRv_DgSLYH2nWX1Aw
+Message-ID: <CAOLa=ZSeMS2iKzgMUWix_Sx+e24863PsOazRLrqHtS5hYSUk3A@mail.gmail.com>
+Subject: Re: [PATCH v2 00/14] odb: generic object name handling
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000000a83bc064d71c675"
+Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000000b9ca3064d71ce6e"
 
---0000000000000a83bc064d71c675
+--0000000000000b9ca3064d71ce6e
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The function `extend_abbrev_len()` computes the length of common hex
-> characters between two object IDs. This is done by:
+> Hi,
 >
->   - Making the caller provide the `hex` string for the needle object ID.
+> this patch series refactors handling of object names to become pluggable
+> and thus generic. This includes:
 >
->   - Comparing every hex position of the haystack object ID with
->     `get_hex_char_from_oid()`.
+>   - Disambiguation of object names with a common prefix. This is
+>     required to list candidate objects in case the user has passed a
+>     non-unique prefix.
 >
-> Turning the binary representation into hex first is roundabout though:
-> we can simply compare the binary representation and give some special
-> attention to the final nibble.
+>   - Abbreviating an object ID to the shortest prefix required while
+>     staying unique.
 >
-> Introduce a new function `oid_common_prefix_hexlen()` that does exactly
-> this and refactor the code to use the new function. This allows us to
-> drop the `struct min_abbrev_data::hex` field. Furthermore, this function
-> will be used in by some other callsites in subsequent commits.
+> The logic to compute these operations is specific to the backend, but
+> not generic. This patch series fixes that by moving the functionality
+> into the respective backends.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  hash.c        | 18 ++++++++++++++++++
->  hash.h        |  3 +++
->  object-name.c | 23 +++--------------------
->  3 files changed, 24 insertions(+), 20 deletions(-)
+> This patch series may feel somewhat unexiting, but it's not. Especially
+> abbreviating object IDs is done in lots of places, so this functionality
+> is overall quite critical. So starting with this series, it is now
+> possible to do all kinds of local work with an alternative backend:
+> git-commit(1), git-log(1), git-rev-parse(1), git-merge(1) and many other
+> commands now work as expected. My MongoDB proof of concept [1] only
+> requires two commits (the object format extension) on top. And no, I
+> don't endorse MongoDB or propose it as a future potential backend. It
+> simply had a good C API that was easy to use.
 >
-> diff --git a/hash.c b/hash.c
-> index 553f2008ea..e925b9754e 100644
-> --- a/hash.c
-> +++ b/hash.c
-> @@ -317,3 +317,21 @@ const struct git_hash_algo *unsafe_hash_algo(const struct git_hash_algo *algop)
->  	/* Otherwise use the default one. */
->  	return algop;
->  }
-> +
-> +unsigned oid_common_prefix_hexlen(const struct object_id *a,
-> +				  const struct object_id *b)
-> +{
-> +	unsigned rawsz = hash_algos[a->algo].rawsz;
-> +
-> +	for (unsigned i = 0; i < rawsz; i++) {
-> +		if (a->hash[i] == b->hash[i])
-> +			continue;
-> +
-
-Instead of transforming the bytes into 2 hex components we now compare
-the bytes themselves and perhaps then compare parts of it?
-
-> +		if ((a->hash[i] ^ b->hash[i]) & 0xf0)
-
-Okay so if the 4 MSB are the same then we end up here and return i * 2.
-Makes sense.
-
-> +			return i * 2;
-> +		else
-> +			return i * 2 + 1;
-
-If not, its the 4 LSB.
-
-> +	}
-> +
-> +	return rawsz * 2;
-> +}
-> diff --git a/hash.h b/hash.h
-> index d51efce1d3..c082a53c9a 100644
-> --- a/hash.h
-> +++ b/hash.h
-> @@ -396,6 +396,9 @@ static inline int oideq(const struct object_id *oid1, const struct object_id *oi
->  	return !memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
->  }
+> Of course, other functionality, especially everything that involves
+> packfiles, doesn't yet work.
 >
-> +unsigned oid_common_prefix_hexlen(const struct object_id *a,
-> +				  const struct object_id *b);
-> +
->  static inline void oidcpy(struct object_id *dst, const struct object_id *src)
->  {
->  	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
-> diff --git a/object-name.c b/object-name.c
-> index d82fb49f39..32e9c23e40 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -585,32 +585,16 @@ static unsigned msb(unsigned long val)
->  struct min_abbrev_data {
->  	unsigned int init_len;
->  	unsigned int cur_len;
-> -	char *hex;
->  	struct repository *repo;
->  	const struct object_id *oid;
->  };
+> This patch series is built on top of ca1db8a0f7 (The 17th batch,
+> 2026-03-16) with ps/object-counting at 6801ffd37d (odb: introduce
+> generic object counting, 2026-03-12) merged into it.
 >
-> -static inline char get_hex_char_from_oid(const struct object_id *oid,
-> -					 unsigned int pos)
-> -{
-> -	static const char hex[] = "0123456789abcdef";
-> -
-> -	if ((pos & 1) == 0)
+> Changes in v2:
+>   - Document `cb_iter` callback.
+>   - Fix left-over conversion of `odb_source_loose_for_each_object()`.
+>   - commit message typo fixes.
+>   - Link to v1: https://lore.kernel.org/r/20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im
 
-So this basically alternates between odd/even positions.
+I only got around to reviewing v1 now, but the range-diff here looks
+good.
 
-So walking with an example:
+- Karthik
 
-if we have '10101011 11111010 10101010'
-pos 1 should get the hex for '1010'
-pos 2 should get the hex for '1011'
-pos 3 should get the hex for '1111'
-...
+[snip]
 
-> -		return hex[oid->hash[pos >> 1] >> 4];
-
-So for pos 1 '1010', to obtain the byte we first do 'pos >> 1'. Then we
-only care about the 4 MSB so we do `oid->hash[pos >> 1] >> 4`.
-
-Finally we map it to the hex[] char array.
-
-> -	else
-> -		return hex[oid->hash[pos >> 1] & 0xf];
-> -}
-> -
->  static int extend_abbrev_len(const struct object_id *oid,
->  			     struct min_abbrev_data *mad)
->  {
-> -	unsigned int i = mad->init_len;
-> -	while (mad->hex[i] && mad->hex[i] == get_hex_char_from_oid(oid, i))
-> -		i++;
-> -
-
-So earlier, we were iterating through the mad->hex which already had the
-computed hex. So to compare it with oid, we needed to get the hex at
-each position i of the oid.
-
-That's where `get_hex_char_from_oid()` came in place.
-
-> -	if (mad->hex[i] && i >= mad->cur_len)
-> -		mad->cur_len = i + 1;
-> -
-> +	unsigned len = oid_common_prefix_hexlen(oid, mad->oid);
-> +	if (len != hash_algos[oid->algo].hexsz && len >= mad->cur_len)
-> +		mad->cur_len = len + 1;
->  	return 0;
->  }
->
-> @@ -785,7 +769,6 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
->  	mad.repo = r;
->  	mad.init_len = len;
->  	mad.cur_len = len;
-> -	mad.hex = hex;
->  	mad.oid = oid;
->
->  	find_abbrev_len_packed(&mad);
->
-> --
-> 2.53.0.1055.ga2ffed1127.dirty
-
-The patch looks good.
-
---0000000000000a83bc064d71c675
+--0000000000000b9ca3064d71ce6e
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 8b212c724e778bea_0.1
+X-Attachment-Id: 805883b93d5d255e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1tOUd3b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOEpnQy85YjZQVTVVemJjQ24xRDRMUXBTdzd1V25PbApJOFFmT0JtcFVy
-WXlsQ3JDdFJ3SmdTNmZyMzBaemlHV0RmRWhYd0tRZDdya2RYdWJHM3FGbFRpamNSYnhFcE1UCm5T
-c1ZucGVTaVBEMU9uaDFhQmZVVERHbHN6R2l2b05vOHBaVUxtQ3h0ZmpscnZ0STBXMk9pMkNCYTVO
-QXRscGwKT3owNjhKUUh1dExEYzNjeXJMbU00WlZEUzZqeDVqWkRHSVloOWZIQjRvRTdIYytpOWxm
-OXpOTTIxL0h0TkhkdQp3K2kzOVVuaER6K21VeGdjOXp1UWMxT3FkbzRkSGd3bEJHdWRlZ0ZyY2Zx
-Q3czem4xcU1wMFk2UmxRejZ6TlJXClBYaW9aRVN6MXFhanNhWkZnVzBVVzhkU0kxbVpFUGRqNi85
-aFNkT1FTdGNHQm4xK1MrZmx1OGRlMytkNW1oRk0KMFZUNTZqbFVPcGp1OS83TjFkQmx1d0dPUUxo
-OXFwR1RKUDhleXBncVBkNTIyc294c0lzVDc2L3VFMXh3MmZwagpOQVNxeGlybHBOSTFzUXRWbnpy
-QmI4dWsrbSs2dzcwZWFuU2F3dmZGQ05UY2cxbjByNkN4NGp3WDZrZXp3YkdPCmpzNjFwa1BIMGxq
-ZENGV0JnMGg2ODVrOFZ4T0RyUFNjQjZwWG4xbz0KPS85OUgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1tOUc1RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meUUvREFDU0lOdGYzaVhEdkI4eEs5VjhzR3ZBckIrWQpOSVhNVC92bGFs
+bjhaTFk1Z3JSVTlmMGNyVlVQaGUwc2xXT2JTb0NzMCtXRVhudnZTRHhRaVZTa3VXL1hmMjZECko1
+ZVhBbUNta0htTUtqQTZ1NVFjQklNWFEyQzhsMkduamtQa24zaDV0UkFteWpYSjZyTmlSQnpuZlBO
+aWRXU2sKcC82SXBuZS9LU3BibHZUejlpVkVaVDR4OWtaQTNIRTdpWGg4cVN3cFNhL0ZiSVM0L0Jh
+NXZDbUhucGxsSFI0VgphUXZvc1JrQ0RDNzI4andTVFAzMnUvLytGaWFTUEI4QmVOekwwcEJZQnFr
+cmZFa1RUSTlUc2NuQjFmR2crN1kwCnY5bnFxTzZQVHMxczlzalg1UDVqMDA2b09wdEcxTlFhY3Ru
+a2ZqUStLUWlWSmFlMUNuVUsvR0hKUGJxZ3Vld2wKYXNGWEM5UTU5Tk1icEpjWU5XSEg1aE43Ky91
+MXZGMCt3dXRLS3JyRlJuWWZUSkZFMmtZTmxEc3NvVDJobURNUQpPS205cnQ1NTVKREdFYWV5c0xv
+SE9DV2dPaFkzMnk4L2I0WmYxUkYrcGJUOUp0bXVqamFKd3VsdEdvYlloZDNuCm1sMWtDN0FHcjVp
+SUZvZjZIV2kxdlUySXBqYlBGMHdaUy9qSDVjUT0KPW5jOE8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000000a83bc064d71c675--
+--0000000000000b9ca3064d71ce6e--
