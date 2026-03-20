@@ -1,55 +1,55 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEC43AA517
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 11:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838853AA4FD
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 11:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774007297; cv=none; b=tjJckhYS87Ul5PxTCb/h8O8r9FfQEmBNV0waRghJoXDFRBS/PXfu30IbKd18ZDI8ITK17JnjIuB5s1v9fwoS55C351Q48GoAEH1AlSqZ1cdZUf2c8XT++0Kh3Xm2Qx3HBnfIscn5xbljehO96h9dgqjD1V/so/ZMBcoZOX7HSNI=
+	t=1774007299; cv=none; b=OeQ/pHcWqImhqOnXq9OX6KhX4STRaDvy5u/AmkhoOcovjUlqK/qB0x5MSnAVrlD3XXkjmSbtzzruVtJeTLrPPm3maRY1hR7lsqi3r4HU+iDS2S7JBcuASNtmjJanrZVglplmpBMLfiAjDxCtCmN7xvxoOguCwhxBSCiSa8+uLyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774007297; c=relaxed/simple;
-	bh=3jDL7AxDpWb9jzRbvObi9OcQppZ9TkKF6h5FlBG/y4Q=;
+	s=arc-20240116; t=1774007299; c=relaxed/simple;
+	bh=uNzFKL211ZQ81jUtLLcvq2vqbcZmGweTXzkvnre04bM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mpLhQo/h8qTA0G2uBPZlbET4vR44lE0QHIcnj0hGheIq9Fmtnf4znHxxDD6m9Smh4UtjbGUoot+DT8oBjRffsCkkaPs2kPtcghYdq5Ncb4beulRz/WlGTZWBo/zWhUnV6aFYe9kSfz2JNsotnyrBfQ4BQxi6gEi8CwjkDpKecv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JrJR30an; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pvnsNaA8; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=bJ08Uco8d0nWRYvfX/Ed8krmUk9Mlh78V2HFkhvCOyoDSw1t42iwY5w4UosfIrd1n5Q0uYgihZ8VaelpylMO2KicCePqx/pYkcOadW8GgXNPUuhH4k8uNAKvj2V43mASow9PNAfSKl60CYmm9LyR1UiEuZtcReiF88x/NQTDWck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iiTawTwI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q8C81LW0; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JrJR30an";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pvnsNaA8"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1F014140019F
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iiTawTwI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q8C81LW0"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D319A1400182
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:17 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 20 Mar 2026 07:48:15 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 20 Mar 2026 07:48:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774007295;
-	 x=1774093695; bh=vGeHebL+ZMhH+MK6sV3DoMQ8bq7zNOB/0f+jexaSl5w=; b=
-	JrJR30anSwUqSQc8n1H5ioX0/K33lvOgjROBeuRtUgIj2GaFKi/OycbYSeHVeCUf
-	ZW42OLWZ/B/xr5Qgp7llppe4QjVY7dBvc0+ZGfkXcece1KPJektomogVH4mlcsoD
-	Aj6V+g1gtPVX5iRvYsKQ19/7zDVLlHFxxjpjMRRZShjkJYHLN7wEu4xpKozoM5b/
-	tZQMnuHLJjsBEcNEmcA+tSoQ4S0WtHFlZKdIfOXH0VxR7+3YrtmoBRvAKU+NGH5c
-	HnE1JtEhxN0syhGB2BjmCIa1sU+Y2B+Rj41+LJ8qCRrX8ZWXwrk9tJc1b9RdJ0SZ
-	GG5iXTOfKoYRyhOQeWsRLA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1774007297;
+	 x=1774093697; bh=Haoc1WLY2z35zaVjO9L0Ej65rI36Q8KZZrKTvaL4qcU=; b=
+	iiTawTwIRe4I++UBuVOg1DX1jIcETebpJAM2NKRCI+AwE565bSfFJz7o8tkRlq+N
+	88MoUgfgXw6oMEDzLeanUnHGp4WPc0SFljBzVCZPeAkz27WcT6jJnmp3JNEj/lus
+	hRVpPgsFs74HftWi9bGbZgcHeLl2ZKIXcaJZcFswVh46V/Mm1/tk9OLgGm4yzVsf
+	28qkBy/JtjQIOQ1eyf7QDGm7l7VpQVpEU0pkOEiLQjHdusRSGu2t0yqQWDZbn0TB
+	sCWUHkVa5M3qW25fEKG6tz7IfQyHjzEWJ5ZaIZb1E6hPJNpbw/4cXVaoae4H8Blv
+	TxK239//VsUmvKNwAsWyNg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774007295; x=
-	1774093695; bh=vGeHebL+ZMhH+MK6sV3DoMQ8bq7zNOB/0f+jexaSl5w=; b=p
-	vnsNaA8Nwh6iSzvSNKAQPEubXchHaazWEmWM3ZcFUy13y5lowmmKG8taWMU6e5iV
-	8s1E+YfplVPcDQsIVloaaQXkwsWl51YVViPqcwDy/hKt+Ho/QPjVruQC6C4WVB8e
-	olSEnC8LEUcALz6FMIK7l9dD1R52XMIOz4VpN50dkoXpoiNTlEkV2p3LnJ3jPJYK
-	ylkohtZUzwb3dkHM/VHtItmfySrbiTk6l9xGPAZeUxjF8ZTScleMGojkE/WgzeMM
-	tGQtv67prZuMc+Ja5n6xQOAxUXIp6Nh0BNO/VeqT9Mt7E/YcXaedFjYf1C4jSDs1
-	iZtpaKREfKEhWVJLN2CwA==
-X-ME-Sender: <xms:_zO9ab9TIXH7B5PjsLwhK-BO4aWBCWRgMtJtgXSbBGHYTsQKBBw0Og>
-    <xme:_zO9aepWIpkUrx_Zpba3HuvmAJf3RFj12RBWuRJ61bVxrHKToFxwQdyYfq3j0xLhS
-    UzTTR5lZEez8qHtnRR6lo7eGu0dW_u5TMM6bxLFFe1SmUPy83mJog>
-X-ME-Received: <xmr:_zO9aeqoj5XWtaf81G2u0FYorNsWvVoCQEOJGvgzsz5EFLwdwTxR-l0pbeKtMz8o7l1yPQIR_iguoFcmBe61Gof1zQn3gCHCSf2OUsiO2OON>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774007297; x=
+	1774093697; bh=Haoc1WLY2z35zaVjO9L0Ej65rI36Q8KZZrKTvaL4qcU=; b=Q
+	8C81LW0WcZUQUqLpirL6iKOrrz1O8u7QxsWO1DW1shd84q/mWPz0fv6/47M94SFF
+	3Cc4Gi6rbZlIvZ3z42MlLqVz6KL4LCopJZihD0+uHvg1RWqBLZMzqT9FdSJjjlM4
+	Z6THATQwwLXGJbcKKVhvsAGRrqtTgGPBNnXw9MgBU7WSf0Uzn10k6LUP4846NCq8
+	uVIUFDFlLt9d24/S5XfSxepe2Fg8Sf0stTuKYSbS5uLEEQtCU86kzRqZer6lYzjn
+	Uo5vYFXiCEelWMYuutxeK2+Dip67Ktk17+MiQWUIowGeyQ33mr4Bw3i25EZfF4bi
+	hyK9E3y2KK/mmQj5vly7g==
+X-ME-Sender: <xms:ATS9ad0rdwST_P9vUkZIt-CLEpe2WoTZbc-AeIRxCAsheR_CqL-c6A>
+    <xme:ATS9abBPgrT6vC5ZVbm0NHVTwQIEg4hWF94cu55XrEMPx7mbzfwmaoXOr4j7Z1pN_
+    uhZ7ssBzm6R2TR5jlGCZJIEq5G-cgMLE4bx7nTERG3-mfO_cpjKiYk>
+X-ME-Received: <xmr:ATS9aTh5doEHPFYvmqJCchmYUrEwRut2oD9sJ7kxUlZvdkFApJZbrk2L5X0L84ItsC-Q2Duyb7Gzr_VYZ3PWbVtjRE__w_9Jsl0fqo1_BYJi>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdelkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,22 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdelkedvucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:_zO9acmoGsy6f4ClIW-TWbkzvpuEom0Mp0SetNY5nSfl_ZX5WTY1aw>
-    <xmx:_zO9aQFpb2O2ac6CF55eY8pRrzQ1qhq-DwjBJrkVQ7f8mAMIyRwPhg>
-    <xmx:_zO9aVqIXds-UWVwc98ar9alpHRlLA4Q8Mhe9Ei3zNQ9hYKiWk2NAg>
-    <xmx:_zO9ac7zSj0t8nSztXLGDLxSQvncEbOOT51ZQKbasStNclrepTba5Q>
-    <xmx:_zO9aXu8HkVtjilv_fQvybHHXd_sLIwbkdXjngcQZk_7CY4-zgaLSCUh>
+X-ME-Proxy: <xmx:ATS9af9tb0hZp8ueMVmGUJOe8ew7YMaQqXwTv5PJKorvah15sGD7hA>
+    <xmx:ATS9af_kfR6cVGX_YeqrwdTj8bA_8p8KsU9bhS7awFS_RMuGfI4kMw>
+    <xmx:ATS9aYCHFhbBhI0pZTojG8HSXbTE2b8dFV5Rhdz-gCspZ6pJqhHHXg>
+    <xmx:ATS9afy6U576dc-V7NM3PSUa5vV3Q1Z2GiSolKpERHrMbMfyNSGkrg>
+    <xmx:ATS9aTE7pxwLx_-aICbBX8urq7slhQtPNWcSA9S_7F2x3seoE1mM5r31>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:14 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 20 Mar 2026 07:48:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 69ef434e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id f3d93aff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 20 Mar 2026 11:48:13 +0000 (UTC)
+	Fri, 20 Mar 2026 11:48:16 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Mar 2026 12:47:16 +0100
-Subject: [PATCH 11/14] builtin/fsck: stop using `the_repository` when
- checking packed objects
+Date: Fri, 20 Mar 2026 12:47:17 +0100
+Subject: [PATCH 12/14] builtin/fsck: stop using `the_repository` when
+ marking objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,139 +83,195 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260320-b4-pks-fsck-without-the-repository-v1-11-6594f997926b@pks.im>
+Message-Id: <20260320-b4-pks-fsck-without-the-repository-v1-12-6594f997926b@pks.im>
 References: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
 In-Reply-To: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-We implicitly rely on `the_repository` when checking objects part of a
-packfile. These objects are iterated over via `verify_pack()`, which is
-provided by the packfile subsystem, and a callback function is then
-invoked for each of the objects in that specific pack.
-
-Unfortunately, it is not possible to provide a payload to the callback
-function. Refactor `verify_pack()` to accept a payload that is passed
-through to the callback so that we can inject the repository and get rid
-of the use of `the_repository`.
+We implicitly rely on `the_repository` when marking objects for
+connectivity. Refactor this to instead inject the repository via the
+callback payload.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fsck.c | 13 +++++++------
- pack-check.c   |  7 ++++---
- pack.h         |  9 +++++++--
- 3 files changed, 18 insertions(+), 11 deletions(-)
+ builtin/fsck.c | 55 +++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 83299c583e..874af76e05 100644
+index 874af76e05..b15708d155 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -448,15 +448,16 @@ static int fsck_obj(struct repository *repo,
- }
+@@ -123,10 +123,16 @@ static int fsck_objects_error_func(struct fsck_options *o UNUSED,
  
- static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
--			   unsigned long size, void *buffer, int *eaten)
-+			   unsigned long size, void *buffer, int *eaten, void *cb_data)
- {
-+	struct repository *repo = cb_data;
-+	struct object *obj;
+ static struct object_array pending;
+ 
++struct mark_object_data {
++	struct repository *repo;
++	struct object *parent;
++};
 +
+ static int mark_object(struct object *obj, enum object_type type,
+-		       void *data, struct fsck_options *options UNUSED)
++		       void *cb_data, struct fsck_options *options UNUSED)
+ {
+-	struct object *parent = data;
++	struct mark_object_data *data = cb_data;
++	struct object *parent = data->parent;
+ 
  	/*
- 	 * Note, buffer may be NULL if type is OBJ_BLOB. See
- 	 * verify_packfile(), data_valid variable for details.
+ 	 * The only case data is NULL or type is OBJ_ANY is when
+@@ -153,7 +159,7 @@ static int mark_object(struct object *obj, enum object_type type,
+ 		return 0;
+ 	obj->flags |= REACHABLE;
+ 
+-	if (is_promisor_object(the_repository, &obj->oid))
++	if (is_promisor_object(data->repo, &obj->oid))
+ 		/*
+ 		 * Further recursion does not need to be performed on this
+ 		 * object since it is a promisor object (so it does not need to
+@@ -162,7 +168,7 @@ static int mark_object(struct object *obj, enum object_type type,
+ 		return 0;
+ 
+ 	if (!(obj->flags & HAS_OBJ)) {
+-		if (parent && !odb_has_object(the_repository->objects, &obj->oid,
++		if (parent && !odb_has_object(data->repo->objects, &obj->oid,
+ 					      HAS_OBJECT_RECHECK_PACKED)) {
+ 			printf_ln(_("broken link from %7s %s\n"
+ 				    "              to %7s %s"),
+@@ -179,14 +185,21 @@ static int mark_object(struct object *obj, enum object_type type,
+ 	return 0;
+ }
+ 
+-static void mark_object_reachable(struct object *obj)
++static void mark_object_reachable(struct repository *repo, struct object *obj)
+ {
+-	mark_object(obj, OBJ_ANY, NULL, NULL);
++	struct mark_object_data data = {
++		.repo = repo,
++	};
++	mark_object(obj, OBJ_ANY, &data, NULL);
+ }
+ 
+ static int traverse_one_object(struct repository *repo, struct object *obj)
+ {
+-	int result = fsck_walk(repo, obj, obj, &fsck_walk_options);
++	struct mark_object_data data = {
++		.repo = repo,
++		.parent = obj,
++	};
++	int result = fsck_walk(repo, obj, &data, &fsck_walk_options);
+ 
+ 	if (obj->type == OBJ_TREE) {
+ 		struct tree *tree = (struct tree *)obj;
+@@ -222,10 +235,11 @@ static int mark_used(struct object *obj, enum object_type type UNUSED,
+ 
+ static int mark_unreachable_referents(const struct object_id *oid,
+ 				      struct object_info *oi UNUSED,
+-				      void *data UNUSED)
++				      void *data)
+ {
++	struct repository *repo = data;
+ 	struct fsck_options options = FSCK_OPTIONS_DEFAULT;
+-	struct object *obj = lookup_object(the_repository, oid);
++	struct object *obj = lookup_object(repo, oid);
+ 
+ 	if (!obj || !(obj->flags & HAS_OBJ))
+ 		return 0; /* not part of our original set */
+@@ -237,14 +251,14 @@ static int mark_unreachable_referents(const struct object_id *oid,
+ 	 * (and we want to avoid parsing blobs).
  	 */
--	struct object *obj;
--	obj = parse_object_buffer(the_repository, oid, type, size, buffer,
--				  eaten);
-+	obj = parse_object_buffer(repo, oid, type, size, buffer, eaten);
- 	if (!obj) {
- 		errors_found |= ERROR_OBJECT;
- 		return error(_("%s: object corrupt or missing"),
-@@ -464,7 +465,7 @@ static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
+ 	if (obj->type == OBJ_NONE) {
+-		enum object_type type = odb_read_object_info(the_repository->objects,
++		enum object_type type = odb_read_object_info(repo->objects,
+ 							     &obj->oid, NULL);
+ 		if (type > 0)
+ 			object_as_type(obj, type, 0);
  	}
- 	obj->flags &= ~(REACHABLE | SEEN);
- 	obj->flags |= HAS_OBJ;
--	return fsck_obj(the_repository, obj, buffer, size);
-+	return fsck_obj(repo, obj, buffer, size);
+ 
+ 	options.walk = mark_used;
+-	fsck_walk(the_repository, obj, NULL, &options);
++	fsck_walk(repo, obj, NULL, &options);
+ 	if (obj->type == OBJ_TREE)
+ 		free_tree_buffer((struct tree *)obj);
+ 
+@@ -384,7 +398,7 @@ static void check_connectivity(struct repository *repo)
+ 		 * traversal.
+ 		 */
+ 		odb_for_each_object(repo->objects, NULL,
+-				    mark_unreachable_referents, NULL, 0);
++				    mark_unreachable_referents, repo, 0);
+ 	}
+ 
+ 	/* Look up all the requirements, warn about missing objects.. */
+@@ -484,7 +498,7 @@ static void fsck_handle_reflog_oid(struct repository *repo,
+ 						     "%s@{%"PRItime"}",
+ 						     refname, timestamp);
+ 			obj->flags |= USED;
+-			mark_object_reachable(obj);
++			mark_object_reachable(repo, obj);
+ 		} else if (!is_promisor_object(repo, oid)) {
+ 			error(_("%s: invalid reflog entry %s"),
+ 			      refname, oid_to_hex(oid));
+@@ -589,7 +603,7 @@ static int fsck_handle_ref(const struct reference *ref, void *cb_data)
+ 	obj->flags |= USED;
+ 	fsck_put_object_name(&fsck_walk_options,
+ 			     ref->oid, "%s", ref->name);
+-	mark_object_reachable(obj);
++	mark_object_reachable(repo, obj);
+ 
+ 	return 0;
  }
- 
- static int default_refs;
-@@ -1088,7 +1089,7 @@ int cmd_fsck(int argc,
- 			repo_for_each_pack(repo, p) {
- 				/* verify gives error messages itself */
- 				if (verify_pack(repo,
--						p, fsck_obj_buffer,
-+						p, fsck_obj_buffer, repo,
- 						progress, count))
- 					errors_found |= ERROR_PACK;
- 				count += p->num_objects;
-diff --git a/pack-check.c b/pack-check.c
-index 7378c80730..79992bb509 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -53,6 +53,7 @@ static int verify_packfile(struct repository *r,
- 			   struct packed_git *p,
- 			   struct pack_window **w_curs,
- 			   verify_fn fn,
-+			   void *fn_data,
- 			   struct progress *progress, uint32_t base_count)
- 
- {
-@@ -161,7 +162,7 @@ static int verify_packfile(struct repository *r,
- 				    oid_to_hex(&oid), p->pack_name);
- 		else if (fn) {
- 			int eaten = 0;
--			err |= fn(&oid, type, size, data, &eaten);
-+			err |= fn(&oid, type, size, data, &eaten, fn_data);
- 			if (eaten)
- 				data = NULL;
+@@ -829,7 +843,7 @@ static int fsck_cache_tree(struct repository *repo, struct cache_tree *it,
  		}
-@@ -192,7 +193,7 @@ int verify_pack_index(struct packed_git *p)
- 	return err;
- }
+ 		obj->flags |= USED;
+ 		fsck_put_object_name(&fsck_walk_options, &it->oid, ":");
+-		mark_object_reachable(obj);
++		mark_object_reachable(repo, obj);
+ 		if (obj->type != OBJ_TREE)
+ 			err |= objerror(obj, _("non-tree in cache-tree"));
+ 	}
+@@ -871,7 +885,7 @@ static int fsck_resolve_undo(struct index_state *istate,
+ 			obj->flags |= USED;
+ 			fsck_put_object_name(&fsck_walk_options, &ru->oid[i],
+ 					     ":(%d):%s", i, path);
+-			mark_object_reachable(obj);
++			mark_object_reachable(istate->repo, obj);
+ 		}
+ 	}
+ 	return 0;
+@@ -902,7 +916,7 @@ static void fsck_index(struct index_state *istate, const char *index_path,
+ 				     "%s:%s",
+ 				     is_current_worktree ? "" : index_path,
+ 				     istate->cache[i]->name);
+-		mark_object_reachable(obj);
++		mark_object_reachable(istate->repo, obj);
+ 	}
+ 	if (istate->cache_tree)
+ 		fsck_cache_tree(istate->repo, istate->cache_tree, index_path);
+@@ -911,9 +925,10 @@ static void fsck_index(struct index_state *istate, const char *index_path,
  
--int verify_pack(struct repository *r, struct packed_git *p, verify_fn fn,
-+int verify_pack(struct repository *r, struct packed_git *p, verify_fn fn, void *fn_data,
- 		struct progress *progress, uint32_t base_count)
+ static int mark_object_for_connectivity(const struct object_id *oid,
+ 					struct object_info *oi UNUSED,
+-					void *cb_data UNUSED)
++					void *cb_data)
  {
- 	int err = 0;
-@@ -202,7 +203,7 @@ int verify_pack(struct repository *r, struct packed_git *p, verify_fn fn,
- 	if (!p->index_data)
- 		return -1;
+-	struct object *obj = lookup_unknown_object(the_repository, oid);
++	struct repository *repo = cb_data;
++	struct object *obj = lookup_unknown_object(repo, oid);
+ 	obj->flags |= HAS_OBJ;
+ 	return 0;
+ }
+@@ -1064,7 +1079,7 @@ int cmd_fsck(int argc,
  
--	err |= verify_packfile(r, p, &w_curs, fn, progress, base_count);
-+	err |= verify_packfile(r, p, &w_curs, fn, fn_data, progress, base_count);
- 	unuse_pack(&w_curs);
- 
- 	return err;
-diff --git a/pack.h b/pack.h
-index ec76472e49..1cde92082b 100644
---- a/pack.h
-+++ b/pack.h
-@@ -85,7 +85,11 @@ struct pack_idx_entry {
- 
- struct progress;
- /* Note, the data argument could be NULL if object type is blob */
--typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned long, void*, int*);
-+typedef int (*verify_fn)(const struct object_id *oid,
-+			 enum object_type type,
-+			 unsigned long size,
-+			 void *buffer, int *eaten,
-+			 void *fn_data);
- 
- const char *write_idx_file(struct repository *repo,
- 			   const char *index_name,
-@@ -95,7 +99,8 @@ const char *write_idx_file(struct repository *repo,
- 			   const unsigned char *sha1);
- int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
- int verify_pack_index(struct packed_git *);
--int verify_pack(struct repository *, struct packed_git *, verify_fn fn, struct progress *, uint32_t);
-+int verify_pack(struct repository *, struct packed_git *, verify_fn fn, void *fn_data,
-+		struct progress *, uint32_t);
- off_t write_pack_header(struct hashfile *f, uint32_t);
- void fixup_pack_header_footer(const struct git_hash_algo *, int,
- 			      unsigned char *, const char *, uint32_t,
+ 	if (connectivity_only) {
+ 		odb_for_each_object(repo->objects, NULL,
+-				    mark_object_for_connectivity, NULL, 0);
++				    mark_object_for_connectivity, repo, 0);
+ 	} else {
+ 		odb_prepare_alternates(repo->objects);
+ 		for (source = repo->objects->sources; source; source = source->next)
 
 -- 
 2.53.0.1055.ga2ffed1127.dirty
