@@ -1,597 +1,174 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846C439A803
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 18:17:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63A53CEBB9
+	for <git@vger.kernel.org>; Fri, 20 Mar 2026 18:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774030660; cv=none; b=IClXQprx72aA6AnL2fUKO1ufXMM9Ann9JGGha7Wxn2BbEFFXx2YkXSx+HXDbZT7kU60It+ufQalVV6ZdcvHACmk6kUsaiXCeLeanK5nZLMWayiP84WIASqktuzEijqYSJMMxbXbnovTveYJGK6+EeUr+NRD7L7oP3ieYnHF3WlY=
+	t=1774032872; cv=none; b=tCqWNq4BLKppX5v9No3KsRcK382BIgm23zu1q4dWqcUHlaDKxybnQXHW9ahqrjTGKu3EDVdiQapgYJIvhdD2SOAf6cYMaGFq0f1wWItcou/CNxO+s9sIKVXGUkCnVZAm3f6MdQNrzk1rlJP5muVYyWoWULbohCCUjr4t6/JiKe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774030660; c=relaxed/simple;
-	bh=boTrXHwNAM3M20SKoiru22jpGDaU5PPaM/X0rhwUW14=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iQtJ0U+PFw/87xSubH3qegfEJMla9Jq/N5ScJD2pLaxrQ7iyuEaDntppRf3BhTXsT4xxfarhry2GWXs90KzYs0cX74Lw6Drf7o4LUYDPkYb1cohAQqDGIHNFyVxJVgD9RGKERT/Jkyqd3vwM9nSn08JhLLD9PJ+0L7QusNFLKf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IIbnMo1R; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774032872; c=relaxed/simple;
+	bh=jC++PHsefQ/0WVMrWq548X/s3brIvFqbn1DvoLHHNl0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ERDulhCoGkMu9U9POwsBQO3/McsMEIqu82Z/lWvom2/p3mjXdpLl2KVror1pXv6E4W7omLeZF9gNR/A+yUFPowBl4+S84xYaEPwmiEUpYJfQ1WAmrTaRRr1nmGPcS+I0yKpVKBE3197n7CwQckHMJeLKTrhG/RQSGCZg/tVW++U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EndZGwXQ; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IIbnMo1R"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-354a18c48b5so1702829a91.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2026 11:17:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774030658; x=1774635458; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4XCNGOohf9UFoN4luby7XxH/67KLzxMUTHoQ+S3UxSA=;
-        b=IIbnMo1RJb6zDpXY48ufLm9DC8hwte546brjyxuSJY5ASjSa5E6ZhGjxVw1zCBxzgD
-         udVzg1oUhKR+fkTOHq88BZ8wsaW/ylGOL+OJOG8U8bZvhXCEm3/GjYfQKHsNC/27fZhK
-         2j+fpUmTNUsCWcVeCLqYIIXLNURaw/iTUuJg5fmfd7XQbaz3tAnHA9jR0y3KU1bxD3Wt
-         q/wQA//EaGMsga3uLxbR4Z6lE5fAkrhIdcl7tpi68/f2O9naFv9xVNDP94CM6NGWVAWO
-         6nb1nNAWete38+7jHixIxOdowrmbaDKhTRUg+09ThqaGWcKErkWut/6+oOYysqeYBJa1
-         wBjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774030658; x=1774635458;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4XCNGOohf9UFoN4luby7XxH/67KLzxMUTHoQ+S3UxSA=;
-        b=DkUNNqrPrHhFxhF7Grt19WaJ6ZCoaCCsi0bSV6njgnO7PxwAJGEpno81yuM3ueaukp
-         iBt1jr3yU8vY7/iOqmEywuuftNCGpuJwoJvmRXZgCA3KKgCmLQBMk7KDcm8Vso/G4C53
-         8J0I9uPxFVeGhiDysqdWPkoiFdnic64gqbF939s2177BLhvlWBA+tgOXL/xnBkVFbNLu
-         PgdtiuYqbZLPQu9oiJJQKxoLteQyGNvNAnOwXwlLkEaW7YkgEsm6gicY3DBsUVeC7rM2
-         +AWEOL5Mja41QvLU9zeTQoo7AruovFGZWoVGVjqQeclF8hkegV8UCINOOTFQ1kzrr/co
-         gBOw==
-X-Gm-Message-State: AOJu0YxcxwdZeVq0Kls9U4ipZfYI6STyrlXjTNyo6B6957HJhj9NIDhQ
-	SSu4NtfmhVPbvwOOj/7Xa2fV+XaKqbxCxINuvmaiE4DBum82V4UtZa6E88dS6g==
-X-Gm-Gg: ATEYQzz61xB5zCDcea1GAHb3MAEgwxgT7NVvVQ6A4vJYU+4tCwMANXNIfQ2NULSknDS
-	MWsGGVLfOLB2inFxJBRkkuywmY7uAHaQQxDWOreHPCovqs+zEioDBp2HEkSyFRZQKqfo2Tp6fYQ
-	rYO9IVOm5v9g9mvcWVIUphziMpbgTt4EGSkUpSs/uKR1PFec/vZXuP+FDPXPvCbCFv+BNIO0oL/
-	ChgWJwV420au7K9IeP26XjDS5IBj3hDLItVnRKedZrr1F8EWaO1icS3NUC3ZzDQFcWrPzGHdRIG
-	8Na/gGFEnej5oY/O8ioLvSJ6WyDDCHUbr1mzB/D3GGi2QIytCeP6/ahp9ifessvfNxwM7Gc+33o
-	b5slfjUTsky0Kq8PpFus9TqvR60BNRiBpLPjyVIseed7DCV0eeP9+dbZ+MAqxzKCf/0Q6FoWX9c
-	hlsPzQoU4qqSd9j2buYrfjexzTaEeeZ0uqKCc44asIjsjNcq/KR5AUIw==
-X-Received: by 2002:a17:90a:d605:b0:359:406c:49f3 with SMTP id 98e67ed59e1d1-35bd2d1f873mr3095900a91.27.1774030657024;
-        Fri, 20 Mar 2026 11:17:37 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:8811:76df:165f:d0ea:c640:a9f3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bc60174e7sm6142608a91.6.2026.03.20.11.17.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Mar 2026 11:17:36 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com
-Subject: =?UTF-8?q?=5BGSOC=5D=5BPROPOSAL=20v3=5D=3A=20Refactoring=20in=20order=20to=20reduce=20Git=E2=80=99s=20global=20state?=
-Date: Fri, 20 Mar 2026 23:42:42 +0530
-Message-ID: <20260320181655.1395831-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260307200926.149273-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260307200926.149273-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EndZGwXQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1774032861; x=1774637661; i=l.s.r@web.de;
+	bh=x1drrYpuzHUKN8Xf+h7szVnTaKbbVwR/n5L7W8lyqT8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=EndZGwXQKgSV7XHjqTBARsaBiZftMcshTaxXGK9HWEpgcBxaHI8hjM9dSfBjJZpo
+	 9KrSsF9rihyug9fAaF7JVDGccHXnpQj41IVBz/IY/2Gp88NfDEJNckY8omM/pNEjp
+	 SjWZEHgOFO0cHKX05tvUD7CUdLyete0N55ttQkq7pibUyMZz/5VX6r4cIoxHBT+A5
+	 YW2blF9kml8UQ9HY/8zUACj68mviDgZ6RW4JUieCgRoI0Qv8bLSHpqwX2TyIlgVOb
+	 WSqzBQMOw86Ph320f8UIPUtbMZgi+35rjSdTGXtEstl6qqu8hpgY4vML8anoxF8Dr
+	 bFjiZTPnHLNMNEyOng==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MgiXQ-1vMbzd25Eq-00mIx6; Fri, 20
+ Mar 2026 19:54:21 +0100
+Message-ID: <98833ee0-4d63-4d72-9a0c-d668a421ece4@web.de>
+Date: Fri, 20 Mar 2026 19:54:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] path-walk: fix NULL pointer dereference in error
+ message
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, stolee@gmail.com
+References: <20260320114823.3151961-1-ysinghcin@gmail.com>
+ <CALnO6CDnwYaAPhp67kaYWtV48ULjWAR6ks1khVXmSs1oWUbRDQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CALnO6CDnwYaAPhp67kaYWtV48ULjWAR6ks1khVXmSs1oWUbRDQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:PWjeWtSc087hm/YMulPLn6E7ZkSP5ZE4BZ0cS7ndJddajR72pza
+ /TxeHuEtIvWIRGqrF7YaFm13sCXpBAgf+KTy4vq6BoFruS5G8711fRdMDb3QYTBMd89VyHy
+ YLkLhUHW7KUQba+rNM/46Z4oz4QiLNG/79x3i5XHSj84JIFAs1GtvsBe6tfDDe/ObzFCgTf
+ VcPN+qZMAWTszU6Hc51EA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:SmwdLYi35n0=;YgjVqKiFsHbxSEMKs7DW+GAQEeK
+ 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
+
+On 3/20/26 4:16 PM, D. Ben Knoble wrote:
+>=20
+> When we compute "child" in either preceding branch using lookup_tree
+> or lookup_blob, we only return NULL if !quiet in the object_as_type
+> calls (assuming we hit the "else" case there, anyway). But quiet=3D=3D0 =
+in
+> both callers along this path, so !quiet will be truthy and we'll
+> error() out there instead, never returning to add_tree_entries.
+
+error() just prints a message, it doesn't end the program.
+
+> Since I didn't quickly come up with a reproduction, I can't quite
+> prove this, anyway. It's also possible my analysis is based on code
+> that has since changed (I happened to have a537e3e6e9 (Merge branch
+> 'sp/send-email-validate-charset' into next, 2026-03-06) checked out at
+> the moment).
+
+We could build a tree referencing an object using a mismatched
+type to hit that.  It's possible by removing the type check from
+builtin/mktree.c:mktree_line(), then using the resulting twisted tool:
 
-Hello,
+   $ commit=3D$(git rev-parse HEAD)
+   $ tree=3D$(printf "100644 blob $commit\tcommit\n" | git_evil mktree)
 
-This is my third draft of GSoC 2026 proposal for the project
-'Refactoring in order to reduce Git’s global state'.
+> Still, fixing such obviously wrong dereference is good, but I wonder
+> if we should go further?
+>=20
+> You mentioned git-backfill with a tree missing from the local odb; do
+> you have a short reproduction script or test-case?
 
-Doc version can be read at:
-https://docs.google.com/document/d/16MRNUv6dJi6vtNvI5Ro0WmHf20dRRBHjFLpmhAuaUOA/edit?usp=sharing
+I don't know about backfill, but this would work:
 
-I have also uploaded this draft to the GSoC website. Any
-final feedback or suggestions would be greatly appreciated.
+  $ echo $tree | git pack-objects --path-walk --all foo
 
-Thanks for reading.
----
+Ren=C3=A9
 
-Changes in v3:
- - Updated patch list and their statuses.
- - Minor wording and grammar changes.
----
-
-Refactoring in order to reduce Git's global state
-
-Personal Information:
----------------------
-
-Name: Shreyansh Paliwal
-Email: Shreyanshpaliwalcmsmn@gmail.com
-Alternate Email: Shreyansh.01014803123@it.mait.ac.in
-Mobile No.: +91-9335120023
-
-Education: GGSIPU, New Delhi, India
-Year: III / IV
-Degree: Bachelor of Technology in Information Technology
-
-Github: https://github.com/shreyp135
-Time-zone: UTC +5:30 (IST)
-
-About Me:
----------
-
-I am Shreyansh Paliwal, a pre-final year undergraduate student at Guru
-Gobind Singh Indraprastha University, New Delhi, India. I began programming
-in 2018 with Java as my first language and later transitioned to C/C++ in
-2023, and it has been my primary focus since then. I also enjoy exploring
-new technologies and building applications such as [1], which I developed
-using TypeScript, React.js, and AWS. I have also organized multiple
-hackathons and technical fests [2][3] at my college as the SIG-Head of
-IOSD [4], a tech-focused student community.
-
-I started using Git in 2023, which is also when I made my first open-source
-contribution to the Git project. I was also a winner of Augtoberfest 2024
-[5], an open-source competition organized by C4GT India. Over the past
-several months, I have been actively contributing to Git by studying the
-codebase, becoming familiar with the mailing list workflow, and submitting
-multiple patches after incorporating review feedback. I am motivated to
-improve the experience of Git for end users, and this project is an
-excellent opportunity to continue that work.
-
-Overview:
----------
-
-Git relies heavily on global state for managing environment variables and
-configuration data. In particular, many parts of the codebase depend on the
-global struct repository instance, the_repository, which represents the
-currently active repository. Instead of passing a repository instance
-explicitly, several internal functions implicitly rely on this global
-object. Additionally, various configuration derived values and
-environment-related variables such as the_hash_algo, default_abbrev, and
-comment_line_str are stored globally, most of them defined in
-environment.c.
-
-This design assumes that only one repository is active within a process at
-a time. As a result, the repository state becomes shared across the entire
-process, weakening isolation and making behavior implicitly dependent on
-global context. Such global dependencies make the code harder to reason
-about, test, and maintain, and can introduce subtle bugs when operations
-interact with multiple repositories. They also limit long-term goals such
-as safely supporting multiple repositories within a single process and
-continuing Git’s ongoing libification efforts.
-
-To address these issues, global environment and configuration state should
-be refactored into better-scoped contexts. Repository-specific data can be
-moved into struct repository or related structures, while
-subsystem-specific state should be localized appropriately. Passing
-repository instances explicitly through function interfaces will improve
-modularity, reduce hidden dependencies, and make the codebase easier to
-maintain while moving Git closer to supporting multiple repositories safely
-within a single process.
-
-The difficulty of this project is medium, and it is estimated to take 175
-to 350 hours.
-
-Pre-GSOC:
----------
-
-I first explored the Git codebase in December 2023, when I submitted a
-small patch fixing the wording of an error message that I noticed while
-browsing the source code. At that time I had recently started using Git and
-GitHub for version control in my projects, which sparked my curiosity about
-how Git works internally. A few months ago, when I had some free time
-from college, I decided to start contributing to Git more actively. I built
-Git from source, read parts of the documentation, and familiarized myself
-with the mailing list workflow. While going through the documentation, I
-noticed a few inconsistencies in the MyFirstContribution page and submitted
-patches to fix them. I also completed a microproject involving a test
-cleanup, and later worked on adding a warning for a quiet fallback.
-
-During this process, I attempted to remove the usage of the_repository from
-a file. After discussion on the mailing list [23], Phillip directed me
-towards wt-status, which led me to explore parts of the codebase such as
-the wt-status and worktree subsystems. Through this, I learned that such
-refactors are generally more valuable in core library code. Following this
-discussion, I shifted my focus toward understanding the broader global
-state refactoring effort. To better understand the project area, I studied
-previous patches and blog posts by Ayush Chandekar and Olamide Bello,
-followed related discussions on the mailing list, and explored the relevant
-parts of the codebase. This motivated me to work further in this area and
-shaped my interest in this project.
-
-The following is a list of my contributions, ordered from earliest to most
-recent:
-
-Patches for Git:
-----------------
-
-* test-lib-functions.sh: fix test_grep fail message wording
-        Status: Released in v2.43.1
-        Mailing List: https://lore.kernel.org/git/20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: 37e8d795bed7b93d3f12bcdd3fbb86dfe57921e6
-        Log: This was my first patch to Git in 2023. While browsing the
-                 source code and past issues, I noticed that even after
-                 the test_i18ngrep function was deprecated, an error message
-                 referring to test_i18ngrep was left behind. I updated
-                 the wording to correctly reference test_grep.
-
-* doc: MyFirstContribution: fix missing dependencies and clarify build steps
-        Status: Merged into master
-        Mailing List: https://lore.kernel.org/git/20260112195625.391821-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: 81021871eaa8b16a892b9c8791a0c905ab26e342
-        Log: While getting familiar with the codebase, I followed the
-                 MyFirstContribution documentation and encountered a few
-                 issues. Some include headers were missing, the synopsis
-                 format was incorrect, and the explanation for -j$(nproc)
-                 was absent. I submitted fixes to improve the clarity and
-                 correctness of the documentation.
-
-* t5500: simplify test implementation and fix git exit code suppression (Microproject)
-        Status: Merged into master
-        Mailing List: https://lore.kernel.org/git/20260121130012.888299-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: a824421d3644f39bfa8dfc75876db8ed1c7bcdbf
-        Log: This was completed as a microproject for GSoC. Instead of
-                constructing the pack protocol using a complex combination
-                of here-docs and echo commands, the patch captures command
-                outputs beforehand and uses the test-tool pkt-line pack
-                helper to construct the protocol input in a temporary file
-                before feeding it to git upload-pack.
-
-* show-index: add warning and wrap error messages with gettext
-        Status: Merged into master
-        Mailing List: https://lore.kernel.org/git/20260130153603.290196-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: ea39808a22714b8f61b9472de7ef467ced15efea,
-                227e2cc4e1415c4aeadceef527dd33e478ad5ec3
-        Log: While exploring the code, I noticed a TODO comment suggesting
-                automatic hash detection. After discussion on the mailing
-                list, it was concluded that there was no future-proof
-                approach to implement this until a new index file format
-                came into use. Instead, an explicit warning was added rather
-                than silently falling back to SHA-1. Additionally, several
-                error messages were missing gettext wrapping, which was also
-                fixed.
-
-* wt-status: reduce reliance on global state
-        Status: Merged into master
-        Mailing List: https://lore.kernel.org/git/20260218175654.66004-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: a7cd24de0b3b679c16ae3ee8215af06aeea1e6a3,
-                9d0d2ba217f3ceefb0315b556f012edb598b9724,
-                4631e22f925fa2af8d8548af97ee2215be101409
-        Log: This has been the most significant patch series in my journey
-                so far. It began with a suggestion from Phillip to clean up
-                some the_repository usages in wt-status.c. I extended the
-                effort to remove all usages of the_repository and
-                the_hash_algo from the file. During review discussions, it
-                was suggested that some worktree API cleanup should happen
-                first, particularly regarding the representation of worktrees
-                as NULL. Some related changes were later moved to a separate
-                series, after which this refactoring proceeded.
-
-* worktree: change representation and usage of primary worktree
-        Status: Merged into master after being continued by Phillip Wood [6]
-        Mailing List: https://lore.kernel.org/git/20260213120529.15475-1-shreyanshpaliwalcmsmn@gmail.com/
-        Log: This worktree API cleanup series started while I was working
-                on wt-status. The intention was to modify the representation
-                of the current worktree so that struct worktree would not be
-                NULL. During discussion, Phillip clarified that NULL actually
-                represents the current worktree rather than the primary
-                worktree. Since Phillip already had a patch based on the right
-                logic, he continued the series and it was eventually merged
-                into master.
-
-* tree-diff: remove the usage of the_hash_algo global
-        Status: Merged into master
-        Mailing List: https://lore.kernel.org/git/20260220175331.1250726-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: 1e50d839f8592daf364778298a61670c4b998654
-        Log: This was a straightforward patch that removed the remaining
-                usages of the global the_hash_algo in tree-diff.c by using the
-                repository’s local instance instead.
-
-* send-email: UTF-8 encoding in subject line
-        Status: Merged into master
-        Mailing List: https://lore.kernel.org/git/20260228112210.270273-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: c52f085a477c8eece87821c5bbc035e5a900eb12
-        Log: This patch was motivated by an issue I personally encountered
-                while sending a GSoC discussion email [7]. Initially the
-                change only modified the wording of the prompt, but after
-                discussion on the mailing list it was extended to include
-                proper validation to prevent invalid charset encodings from
-                being used in git send-email and to reduce confusion.
-
-* Remove global state from editor.c
-        Status: Awaiting further feedback / not yet picked up
-        Mailing List: https://lore.kernel.org/git/20260310174519.676851-1-shreyanshpaliwalcmsmn@gmail.com/
-        Log: This originated from a question I had about localizing
-                editor_program in editor.c [7]. The patch had some
-                discussion on whether editor_program state should become
-                repository-scoped, since it can also be set via
-                git config --local. Though it was approved by Karthik it
-                has not been picked up by Junio yet and may be awaiting
-                further review.
-
-* add-patch: use repository instance from add_p_state instead of the_repository
-        Status: Needs Review
-        Mailing List: https://lore.kernel.org/git/20260318090546.1213077-1-shreyanshpaliwalcmsmn@gmail.com/
-        Commit: 3cfe355ca74aae5cf90a4eca73a341732b0eb456
-        Log: This was also a straightforward change where the_repository
-        was used instead of local instance of struct repo in add-patch
-        config structs, but it had some changes that overlapped with a
-        recent patch by Patrik. So I got to know the proper method of
-        checking any overlapping changing and how to base your changes
-        on top of them. I have sent the revised version, it needs to be
-        replaced in the seen branch.
-
-Patches for git.github.io:
---------------------------
-
-* SoC-2026-ideas: Remove an extra backtick
-        Status: merged into master
-        PR Link: https://github.com/git/git.github.io/pull/831
-        Merge Commit: c1e4aa87a54430953eaa7355061139fdf1ff6796
-        Log: Minor Typo fix.
-
-* rn-132: fixed 2 typos
-        Status: merged into master
-        PR Link: https://github.com/git/git.github.io/pull/832
-        Merge Commit: 92876114d855d472ce2e0e5337e72a4b97b81681
-        Log: Fixed typos in Git Rev News Edition 132.
-
-* Add Outreachy 2026 participant
-        Status: merged into master
-        PR Link: https://github.com/git/git.github.io/pull/836
-        Merge Commit: 519170970ce7cf29661ee2707aa4e0411cbd2dac
-        Log: Added Bello Caleb Olamide as Outreachy participant.
-
-I have also been involved in additional discussions on the Git mailing
-list [8][9][10][11][26].
-
-History / Background:
---------------------
-
-Efforts to reduce Git’s reliance on global state began as several
-subsystems moved toward libification, enabling Git’s internal functionality
-to be reused as a library. Early examples include the libification of git
-mailinfo [12] and git apply [13], these large patch series exposed the
-limitations of relying on global state and highlighted the need for better
-encapsulation of repository-related data. A key step was the introduction
-of struct repository through refactoring by Stefan Beller [14] and Brandon
-Williams [15], which was motivated to centralize repository-related state
-instead of relying on scattered global variables, improving code clarity
-while laying groundwork for future improvements such as safer
-multithreading and handling submodules in the same process. Later work by
-Patrick further reduced reliance on the global the_repository in the config
-[16] and path [17] subsystems, consolidating several variables into
-environment.c so environment-related state could be managed in one place
-[18]. The macro #define USE_THE_REPOSITORY_VARIABLE was also introduced to
-help transition code away from implicit global repository access [19].
-
-During GSoC 2025, Ayush Chandekar [20] removed additional usages of
-the_repository across the codebase and moved several global configuration
-variables (such as core_preload_index and merge_log_config) into
-repository-scoped structures. More recently, during Outreachy, Olamide
-Bello improved configuration handling by introducing repo_config_values, a
-structure linked to struct repository that stores repository-specific
-configuration values [21][22]. A supporting private structure,
-config_values_private, was added for initialization and internal handling.
-Discussions around this work also highlighted an important design
-constraint: directly moving globals into repository structures or
-introducing lazy loading helpers can cause user experience regressions if
-configuration errors are detected later.
-
-These efforts collectively form the foundation of the ongoing work to
-gradually remove Git’s reliance on global state and move toward a more
-modular, repository-scoped architecture.
-
-Proposed Plan:
--------------
-
-I started exploring the codebase by browsing relevant files and identifying
-global variables by temporarily removing the USE_THE_REPOSITORY_VARIABLE
-macro. My primary focus was on core library files rather than builtin code
-[23]. Through this exploration, I observed that a large number of files still
-depend on the_repository.
-
-To tackle this project systematically, I propose classifying these files into
-two categories:
-
-1. Files using the_repository or the_hash_algo where a repository
-   instance already exists: These files rely on global variables even
-   though a struct repository instance is available somewhere in the
-   call stack. A simple example is my patch in tree-diff.c, where a
-   repository instance was already available through struct diff_options
-   *opt, but the_hash_algo was still used. I replaced it with
-   opt->repo->hash_algo.
-
-   In such cases, the refactor mainly involves passing the repository
-   instance through the function call stack and replacing the global
-   usages. If a repository instance is not directly available in the
-   file, I will trace the callers and propagate it from higher levels in
-   the call hierarchy.
-   Examples of such files include alias.c, archive*.c, walker.c, and
-   xdiff-interface.c. These typically require localized refactoring and
-   are good candidates for incremental patches.
-
-2. Files relying on other global variables defined in environment.c:
-   Some files depend on additional global variables that are parsed and
-   accessed through environment.c. In these cases, there is no existing
-   repository-scoped instance, making the refactor slightly more involved.
-
-   Examples include wt-status.c (default_abbrev, comment_line_str) and
-   apply.c (has_symlink, ignore_case, trust_executable_bit,
-   apply_default_whitespace, apply_default_ignorewhitespace).
-   For such variables, I will evaluate whether they should be moved into
-   repository-scoped structures (e.g., repo_settings or
-   repo_config_values), or instead be localized and passed explicitly
-   where needed. The appropriate approach will depend on how widely the
-   variable is used and whether it logically belongs in a
-   multi-repository standpoint.
-
-I plan to begin with the first category, addressing straightforward
-refactors file by file. In parallel, I will analyze and work on specific
-groups of global variables from the second category, designing
-appropriate repository-scoped replacements while preserving the
-original parsing timing and availability of those variables.
-
-The end goal is to remove reliance on global state and eventually eliminate
-the USE_THE_REPOSITORY_VARIABLE macro from these files.
-
-Project Timeline:
-----------------
-
-* Community Bonding (Until May 24):
-        - Discuss the project direction and design approaches with mentors.
-        - Identify and prioritize two main areas of work:
-                + files that rely on the_repository.
-                + global variables defined in environment.c.
-        - Study the previous patches by Olamide Bello and Ayush Chandekar
-                in depth, and identify any remaining tasks while discussing
-                their approaches and challenges with them.
-        - Interact with all the people involved in this work to better
-                 understand design decisions and potential pitfalls.
-        - Experiment with small RFC patches, if needed to validate approaches.
-
-* Coding period (May 25 - August 16):
-        - Send patches for any remaining cleanup or refactoring related to
-                git_default_config() and repo_config_values [22], as well as
-                the worktree API [24], if any.
-        - Identify straightforward refactors to remove usages of the_repository
-                 in files such as xdiff-interface.c, archive*.c, fsmonitor*.c etc.
-        - Work file by file with the goal of eliminating
-                 #define USE_THE_REPOSITORY_VARIABLE by replacing global usages
-                 with explicit repository instances.
-        - Concurrently maintain at least two parallel patch series:
-                + Small / straightforward refactors and replacements like
-                         the_hash_algo or the_repository.
-                + Larger structural refactors involving globals such as
-                         DEFAULT_ABBREV, comment_line_str etc.
-        - Publish weekly or biweekly blog updates documenting progress and design
-                 decisions.
-
-* Final week (August 17 - August 24):
-        - Address any remaining tasks or pending patches.
-        - Receive final feedback from mentors and reviewers.
-        - Prepare a detailed report summarizing the work completed during the project.
-
-Blogging:
----------
-
-I believe blogging is an important part of any open-source project. It
-helps others understand the ongoing work and also enables the contributor
-to develop a deeper understanding and keep a better track of their own
-progress. I experienced this firsthand, early in my journey I was unsure
-about various aspects, but reading the blogs of Ayush and Olamide Bello
-gave me valuable insight into the contributor perspective and their overall
-work.
-
-With the goal of helping future contributors in a similar way, I plan to
-document my journey and project progress through regular blog posts. I will
-publish updates on a weekly or biweekly basis, depending on the amount of
-meaningful progress made. I have set up my blogging area on Medium, and my
-posts will be available at [25].
-
-
-Availability:
--------------
-
-The main coding period runs from June to August. Most of June and July
-coincide with my summer vacation, which allows me to dedicate significant
-time to the project. My final exams are scheduled for May and will last
-approximately one week, but they will be completed before the coding period
-begins and should not affect my availability.
-
-During June and July, I will be able to dedicate around 40 hours per week to
-the project. In August, when my regular semester resumes, I expect to
-contribute approximately 25–30 hours per week.
-I do not have any other exams, internships, or planned vacations during the
-coding period. Apart from this project, I have no other major commitments
-for the summer.
-
-I will keep the community regularly updated on my progress throughout the
-project. My primary mode of communication will be email, and I will also be
-available for calls or meetings if/when required. My preferred availability
-window is 13:00–19:00 UTC.
-
-Post GSoC:
-----------
-
-Being part of the Git community and contributing to the codebase has been a
-very valuable experience for me. The process of understanding Git’s internals,
-submitting patches, and receiving feedback on the mailing list has helped me
-grow significantly as a developer. The feeling of working on code that is used
-by millions of developers and companies around the world is very rewarding.
-
-I plan to remain involved with the Git community even after GSoC by continuing
-to contribute patches, review code, and participate in discussions to help make
-Git better for end users. The work on refactoring Git’s global state is part of
-a long-term effort, and I would love to continue working on it beyond the GSoC
-timeline.
-
-I would also be happy to mentor, co-mentor, or volunteer in the future to help
-new and upcoming contributors whenever I get the chance. I see GSoC as the
-starting point of a long-term relationship with the Git community.
-
-Closing & Appreciation:
------------------------
-
-I would like to thank the Git community for the excellent documentation and the
-welcoming environment. I am also grateful for the patience and guidance shown
-in the feedback and discussions on the mailing list by Junio, Phillip, Karthik,
-Ben, and others, which have helped me improve my understanding and contributions.
-
-I also read blogs and proposals by Ayush, Lucas, Kousik Sanagavarapu, and Olamide
-Bello, which provided valuable insights and helped shape my approach to contributing.
-
-Thank you for reading my proposal :)
-
-References:
------------
-
-[1]- https://github.com/shreyp135/Alethea
-
-[2]- https://unstop.com/college-fests/impulse-2025-maharaja-agrasen-institute-of-technology-mait-new-delhi-348321
-
-[3]- https://cse.mait.ac.in/index.php/academics/9-computer-center/1249-iosd-mait-impulse-25
-
-[4]- https://iosd-web.vercel.app/
-
-[5]- https://www.linkedin.com/posts/code-for-goodtech_augtoberfest-c4gt2024-activity-7242923677032312834-XMul
-
-[6]- https://lore.kernel.org/git/cover.1771511192.git.phillip.wood@dunelm.org.uk/
-
-[7]- https://lore.kernel.org/git/20260304145823.189440-1-shreyanshpaliwalcmsmn@gmail.com/T/#m65b9b4547036991a7b7f3c861b9663428891f588
-
-[8]- https://lore.kernel.org/git/20260114143238.536312-1-shreyanshpaliwalcmsmn@gmail.com/
-
-[9]- https://lore.kernel.org/git/20260115211609.17420-1-shreyanshpaliwalcmsmn@gmail.com/
-
-[10]- https://lore.kernel.org/git/20260204111343.71975-1-shreyanshpaliwalcmsmn@gmail.com/
-
-[11]- https://lore.kernel.org/git/20260205131132.44282-1-shreyanshpaliwalcmsmn@gmail.com/
-
-[12]- https://lore.kernel.org/git/1444778207-859-1-git-send-email-gitster@pobox.com/
-
-[13]- https://lore.kernel.org/git/20160511131745.2914-1-chriscool@tuxfamily.org/
-
-[14]- https://lore.kernel.org/git/20180205235508.216277-1-sbeller@google.com/
-
-[15]- https://lore.kernel.org/git/20170531214417.38857-1-bmwill@google.com/
-
-[16]- https://lore.kernel.org/git/cover.1715339393.git.ps@pks.im/
-
-[17]- https://lore.kernel.org/git/20250206-b4-pks-path-drop-the-repository-v1-16-4e77f0313206@pks.im/
-
-[18]- https://lore.kernel.org/git/20250717-pks-config-wo-the-repository-v1-20-d888e4a17de1@pks.im/
-
-[19]- https://lore.kernel.org/git/cover.1718347699.git.ps@pks.im/
-
-[20]- https://ayu-ch.github.io/2025/08/29/gsoc-final-report.html
-
-[21]- https://cloobtech.hashnode.dev/week-5-and-6-design-reviews-rfcs-and-refining-the-path-forward
-
-[22]- https://lore.kernel.org/all/cover.1771258573.git.belkid98@gmail.com/
-
-[23]- https://lore.kernel.org/git/7b5dd0c4-0ca0-458e-89db-621a70dac9ae@gmail.com/
-
-[24]- https://lore.kernel.org/git/20260217163909.55094-1-shreyanshpaliwalcmsmn@gmail.com/
-
-[25]- https://medium.com/@shreyanshpaliwal18
-
-[26]- https://lore.kernel.org/git/20260319092441.1283001-1-shreyanshpaliwalcmsmn@gmail.com/
