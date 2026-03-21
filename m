@@ -1,107 +1,111 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB3A40DFC3
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 21:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018D2282F0B
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 21:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774127912; cv=none; b=VK9hnzZvPkKqb7NHI5A6lB/3a45yT3v0+o8Otk+iBOyOslbo6EWvd7CcJKjnHQcOvqCqpnCeSVgqyPkbUrXlXk1hBZ4ueZKexlv+/FGZ9OBR/PDA6AZTDjS6gvWKH7cxfl96OUU7JFEFc/OnCBo8zuoS0M3Ed2hbC8V3ne5cw6M=
+	t=1774128506; cv=none; b=TQQgKRKdqS+Ui2oDVqTwc8fvpJohl1iw0oeyu4AoBpk8B/v/s+k/ZyHjfRRdM0DPcNul2qkzvGtRIqRGDXCmjp4uc2pU1R3MHao2KIApItoiMni9sv/8mBzldtCXzFoLF+iuV7wC2Z/hceahu1GuOytROkwCeZczHlCf0FcmM98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774127912; c=relaxed/simple;
-	bh=9EY31y58ViHg99pqB9rFrzbHs5ytZd63xOEH7UHHRA4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dMpaZLKlyAQhAjreEu6jetsUHJ2/9j9jPvtS+3F9/f9ogEQRKrTHG29kzFsxVKpE74qI1eyqm3EC90dKaSPGuvV1Vqtb6OY8joFg+z5yabzb69r+jegDO3hrG46dIfKAJsHp+we8iyUIEHJsj8ZqofWprXpCQBYJ7IWzjoG10AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NgsaK6JL; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1774128506; c=relaxed/simple;
+	bh=cuEBIzIEMDdWFOhLWVgNmvEk3WL++xYZ/8/Mv+OwDfQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=o352jVcnTXXVFevSdB59LWVl8HWrxblVJM/EMfBlvQ99DueCuXaVBvkdLrOo9aS187rhdNyo/URri41mpxxdNsphltnA8fFTh4reY38YGKeDrBd0nZ+XuPwEQ1Mn5obE9kzQ1+ycxTL8fMIo4AMn6EeI5aeNFRWbJRa+iOjVEdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WjMnUWKQ; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NgsaK6JL"
-Received: (qmail 89137 invoked by uid 106); 21 Mar 2026 21:18:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=9EY31y58ViHg99pqB9rFrzbHs5ytZd63xOEH7UHHRA4=; b=NgsaK6JLpGbm8Zf+ArSV5xSaOgLo+4Ywf09izLfPeJNOuHF23S2ulaSI+T9bTsLfC9xXw7q4gjSAFLfQzwXvzrOWXQUqrA2T4kHbTwtSBvdjhiACgoTSrXbxlUvcPT99iZSPqVzFBEesBN3KJvWgyT6gluJwT7YoP/8bhlHFl21Vq2ZgHGY6oipxEnSzuGm4CgCyNrh8grwx7iTuxh+sf7srjnouP/sxZF1oVrklejzNxrklsIw3c4PdmXQ3StZLDHzPzaPIw8Z4+xdkj+s+yk08T2WQWYTUsObRjGfnZM767tFmySdf6r0EfzkSQeCwnAt+TF/sfvvypvrQ6a9yTA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 21 Mar 2026 21:18:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 123534 invoked by uid 111); 21 Mar 2026 21:18:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 21 Mar 2026 17:18:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 21 Mar 2026 17:18:28 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
-Message-ID: <20260321211828.GB736981@coredump.intra.peff.net>
-References: <xmqq341wnvbk.fsf@gitster.g>
- <xmqqcy0zii0s.fsf@gitster.g>
- <20260319233546.GA3632561@coredump.intra.peff.net>
- <3e387439-c066-4e45-b28b-43f77c8824d6@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjMnUWKQ"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4853e1ce427so16506365e9.3
+        for <git@vger.kernel.org>; Sat, 21 Mar 2026 14:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774128503; x=1774733303; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hVNq/enaZuiNgDcrGhoNqdFWJ419o+cBa2bXKFQlmgU=;
+        b=WjMnUWKQq1vBM05TSBSh1sLj5Jpf2iJ+7FDurTdxMK74u80wDJ5eW1+XRTLR4PgL3d
+         NiLISurEN9h/W4RihsYnRyoR/TwzHSsfxS6yoHtNzldKp9byKnM5HQdHvl3MTzY5JhS2
+         6wZPNeMHJ5Xr7dv4FUPOHCfQgjyzbScNJbiFB/pZ5gh/RTAjC217nlQZEySe211CQP8D
+         mrGWvorPoZNpUblqMyC+RxnoSTu7ke9cimEJzOuRFroHb7NlFnPa+wnB0dMgSxlhg7qX
+         t0pem8UsOgp3nuXdLYhigBSL02NlBYarU0S2GUczstwytq4CrP2V54kjLP1lzdpZyoMr
+         3K3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774128503; x=1774733303;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hVNq/enaZuiNgDcrGhoNqdFWJ419o+cBa2bXKFQlmgU=;
+        b=hUbVpCAAedkqgEcO9sN59GsHNHM5tqXNNziHb77ruqqK6qXN3am4ejDXAZrforPDLv
+         bqcQxFyjtC8ItMeOhByuhubl7iujy3fAxquTsDEjxUvp/hGq1OEU8T5ZYoQMAEF8rr/B
+         GmKfrhrjzUZQYkrX/+KAAUot2PaaQEHU+kMJmk84TIRqSHBeqZ7qVnHg22kunkmtPLR0
+         pwe1yyymWKY5tLLgf6ehcWFMZ3WQvm2u8485jz7FQXL5BL25KR9Jx+7BoF9LkuHzGUhO
+         eUAP0quiI4GusmZJ6HzkIV0/B24NEz9NcBwQpfB8abxbKY9lrmJFnDIHLGsmQ/D3rMYI
+         pd0Q==
+X-Gm-Message-State: AOJu0YyNaNlULH3L5suZ+JnSrnlmQjfAfJ4+5/nBjL+6Pe8qvp0Qeq14
+	IzOxieqpGnZeIfYVs1k/oMgkOzsv8JarepotTR1w9PGZPtGTszLib8KHy4+0W4XLxrI=
+X-Gm-Gg: ATEYQzxne3ee0UYWjK3ckxUY9ctGQOrSinGCAL1fd/dQdM989DFTu2hAAJH66mFMiBi
+	VFJPM8Basv8G+JU8B9eEyWiY6L01vLGUM0c3tzZRQfKmFFF13q/OA1mAl2p7G9o71pmC+kH+ClF
+	sS/mC8/4as4ETD1umi7AofSbuQ4aasfM6GbYRze48EMB1UD9ic47Da5PjQXnLnVPANHcB74dBjL
+	sWGJIMziqT9qPIO5MYyZtnljcVh34My4+xDCw1G5LEvqHbUaOxVEpS+ecD8/B6XNjQtdA4oKhTD
+	+rg4sNiSoO4J2sURkGl0e+tKN6VPJXsEeJ3sRKoW4VkehOO7Dy3/ms/gPPlBWDaPK5rKtv0Y9mD
+	lPHupaPO4UzF0BN1ZZ2BNRjBGhuQMon9F6ygUQ0073DNNCOmw2Mm4CWRoRwvBrm7YQPcorXfgg5
+	XEHAgd0FXFpmAAwA7mZ8yR9mTUf7eR24s0
+X-Received: by 2002:a05:600c:5291:b0:485:34b3:8589 with SMTP id 5b1f17b1804b1-486ff04d42fmr108452785e9.31.1774128503034;
+        Sat, 21 Mar 2026 14:28:23 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.160.4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486fe836784sm144307125e9.13.2026.03.21.14.28.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Mar 2026 14:28:22 -0700 (PDT)
+Date: Sat, 21 Mar 2026 22:28:20 +0100
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC PATCH 0/3] preserve promisor files content after repack
+Message-ID: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3e387439-c066-4e45-b28b-43f77c8824d6@web.de>
 
-On Sat, Mar 21, 2026 at 09:47:18PM +0100, René Scharfe wrote:
+The goal of this patch is to solve the NEEDSWORK comment added by
+5374a290 (fetch-pack: write fetched refs to .promisor, 14/10/2019). This
+is done by adding a helper function that takes the content of all
+.promisor files in the `repository`, and copies it inside the first
+.promisor file created by the repack.
 
-> And yet this function can turn an empty strbuf into an allocated one
-> without rolling it back on error, leaving code similar to this silly
-> example here leaking:
-> 
-> 	int copy_one_line(FILE *in, FILE *out, int term)
-> 	{
-> 		struct strbuf sb = STRBUF_INIT;
-> 		if (strbuf_getwholeline(&sb, in, term))
-> 			return -1;
-> 		fwrite(sb.buf, 1, sb.len, out);
-> 		strbuf_release(&sb);
-> 		return 0;
-> 	}
+Also, I added a comment explaining what is the purpose of the content of
+the .promisor files, since this wasn't explained anywhere (I found
+information regarding this only in the message of the previously cited
+commit).
 
-Yes, I almost pointed that out, but I think it's mostly a non-issue
-in practice because you'd generally call it multiple times (usually in a
-loop, but sometimes just multiple individual calls). And then you have
-to release if any call ever succeeded, which means either doing so after
-the loop ends or in a cleanup block.
+I am not satisfied at all with this patch, and I would love to have some
+feedback for the v2. The issues/questions that I had while writing these
+patches are the following:
+ * Is there a way to not have to check line by line if the content of
+   .promisor files are already inside the destination .promisor file?
+ * Does it make sense to copy everything inside the first .promisor file
+   created by the repack? Is it worth the effort make sure to copy each
+   ref (and associatde hash) inside the .promisor file of the packfile
+   that contains that ref?
 
-Grepping for 'if (strbuf_get.*line', the closest I found was
-get_mail_commit_oid(), which reads a single line. It doesn't have an
-early return, though, since it has to clean up the FILE pointer anyway.
 
-So I dunno. I don't think it's been a problem in practice, but I'm not
-opposed to future-proofing if it's easy to do.
+LorenzoPegorari (3):
+  pack-write: add explanation to promisor file content
+  pack-write: add helper to fill promisor file after repack
+  repack-promisor: preserve content of promisor files after repack
 
-> Some strbuf functions restore the original state in such a case by
-> calling strbuf_release(), strbuf_getwholeline() doesn't.  If we are OK
-> with that then it could be simplified by growing the buffer upfront:
-> 
-> 	int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
-> 	{
-> 		ssize_t r;
-> 
-> 		strbuf_grow(sb, 0);
-> 		errno = 0;
-> 		r = getdelim(&sb->buf, &sb->alloc, term, fp);
+ Documentation/git-repack.adoc |  4 +-
+ pack-write.c                  | 71 +++++++++++++++++++++++++++++++++++
+ pack.h                        |  1 +
+ repack-promisor.c             | 23 ++++++++----
+ 4 files changed, 89 insertions(+), 10 deletions(-)
 
-This causes two allocations, but presumably only the first call of many,
-so not a big deal in practice.
+-- 
+2.43.0
 
-I feel like there's a lot of discussion in this thread but we're not
-achieving anything practical. If we do anything, I think it would be:
-
-  - drop the feof and reset at the top of the function, which are
-    redundant
-
-  - make a noop read on an unallocated strbuf retain the unallocated
-    state (your example above)
-
-Could the function be rewritten differently, or maybe even made a little
-simpler? Perhaps, but who cares? The function has been largely untouched
-for a decade and the behavior is fine. And there are a bunch of pitfalls
-that a rewrite risks falling into.
-
--Peff
