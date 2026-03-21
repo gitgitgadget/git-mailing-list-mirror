@@ -1,117 +1,186 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB30D2FF657
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 13:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774101420; cv=pass; b=gSPZTGCs+XG/udVvtx/FT06Phb4zHAz4eKTSj5pyYU3f5uld6KN+Ch4kLKRhxLTyF1cHKElmZFjIOq2cLQls4pk1SU8jJAmS16OUYSONc1EEjrCH2woISVCd5DDfHApKwi5lVk7NHsOlsw+h/jMoE2pYcsDCmPT32r8ErsdFrt0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774101420; c=relaxed/simple;
-	bh=oYt2cMzCTbohvL5FdnFCpNym2LkxAh4C1JMARfax95w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MqiwwdCmDP8XoSYuDAh8dpDckNJogSYbKLAiI4Tlj8JcKMLn+RCsj0+GH8B4zHb8ZiYU8Vq3LrNCYQQszl/VBNEMPrpfQRqi9OygKFa+U3nmm7jx1MEljecD/MkeoMUdBi8WNsDCNo8X0AY/xZlQX3PthgnxqzOFI7+V7msm84w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pzp8r413; arc=pass smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52D52F9D82
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 16:24:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774110262; cv=none; b=Sqhl7boY6meN6igUjvgkgl3KEpSJS8faBNCbyLivS/6tDa9f7CsJlxm0HoKyDcGO2S5LqxibkC8omGyZfyTi0IXPou5M6N07P0v1lN1AKhRrDRyKhfjK8yE8vz4R3q2Hxwn/M5qNDnXsRosD4lsdtCE2wu4ekyUrkLgdedjMC3Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774110262; c=relaxed/simple;
+	bh=SGV7EqGa1pC4p9JEur3qYPLulHFx/KKBjC/vZoY6tUA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FBbLKAFoZy1zym6ldJfIcUTGdCb7QqA7waC+DmOO6o+ZRjbJB4vMSw2Eb7zhSQ4nSqv7qz87M/2uMKQ7D6xNGi/r8PU3aQnrUBY8rEm8ve85+Cdjba2L7A3w2v5k0C9dZxdVbftK4YwWlu99RwxZVl9mjf1Y8DZ1MHDZHUKCuBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=guPF90fG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ny92GqtF; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pzp8r413"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-89a0ecbc713so32422596d6.1
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 06:56:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774101418; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kfbR5wmnu3LmrZUmhmWkC9ORlq3dqU3jafMYs/ietdYxSbio+ITdkMqQhDiScuuYgj
-         iIbi3RCezNRS35yw3hdXC+MKPWLgfdwSlo6lIX966IhPtyJlH/YKnh0bw0cCqfxOJlL1
-         pi+uiL2gMlA8EdAPfhI3Bpafl778DXPkYrVJQqCudbFPLFSKvuus1sL6PpeAjH82y49J
-         1cLUSL2t5LhmMSuUpBsYqF3byXMUijdB/bNZekOXtpDCXupCfC1Zwn+Dc40R7xVbUKbx
-         3HpqnenxpkFfbozwgkN7arLCeBLt/lVLWYUNVEEcenvo9DbivTfr5V9/bBVJ24x1LX5x
-         WXpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=oYt2cMzCTbohvL5FdnFCpNym2LkxAh4C1JMARfax95w=;
-        fh=qisQi0zCme1vRaxgpOWYmI+FizgBj8QBMRhMtuzhyX8=;
-        b=NQ2fdDGbSUQvnQxgsO+2tcFi8yWPvaOQ+R61ThCBcWcY5Wd7tcwyHmtB+78OA7sq8E
-         stb0jttOVr8qFxK3jPP0CMrT5p8HAVtWNgVrZ/J9TRf5MCNy39hZqkEv3xhfqFuozC+4
-         au/FZNq3Xm0qcUYJYM2vyD3m5McsYOR4997Xtb+WRoyKy2WwM3isHPIdITknzcIv21us
-         fQ+AyezOXycbP1I0iokcMPt9GWr9sl+KV4gHwbYoJU6PV+wqGRWfCFZWttPrviQh3skx
-         8ptF0hry1cY9n5JkimLkngMhg+rpdCx0PIRVcCTmkZ+rYqhXg87StPFeSTZAS6dPe1P7
-         T+cw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774101418; x=1774706218; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYt2cMzCTbohvL5FdnFCpNym2LkxAh4C1JMARfax95w=;
-        b=Pzp8r413ld3banvR/gnFl/faWBHcWhi2FBqOg4xP3b6/Ob0adup7xEs/EGu960gH6W
-         GMQLAs2tcTLOgqbjCFkTeObcu05SeQHaq+LxefnHd+vrKBZTe8CkKz9PtKSRCcVc+wXP
-         3FrqgHUv0T0/vpnTbS2Rj3vJ08Fcj1Lomn6QzMcVb22UJl0QAGMeFIXgN7RLynDHY6HU
-         RJwX+ZebRxYL5ocXCLtS6Z4Sl5blYCLO9FEAQsufRW5tzY/DlNb267xlbNIK3icclZlz
-         EEDYEyJjDp/Eg80Z0nL1hmZUYEC+IFqXZbM1dEzVPeRr8g29JrbdkMSjqT5wdKjM7cS7
-         zucA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774101418; x=1774706218;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oYt2cMzCTbohvL5FdnFCpNym2LkxAh4C1JMARfax95w=;
-        b=UpQ2n3r7oMO6wbBiWqQOQJZZPzR/RXR8+JqHaWH3CKmyksgU9E6u5tz3sFcUdGTN9s
-         uuX6AO6zpQE/XySyCWZ4LDg/atTac2Rm57i+pvqasuKir4HvDoEEdEteKPVXzW3jUlsb
-         yT+wajHeOM8BLzdMIoB6Jaip7uP0rKDV5d9aUw+70ycIFlC5GeLSKB7y8l+qE7Xfn3D4
-         6dY7XOhnzhzc2SyEiFUBGPOJduL8nL1h2fIzDCd27MR1X3GAkMXZr3cuseuR2pNI/dRP
-         I/CDtV4S86YsIRjZjotRa8y6LyukrCYwSQ8A56Lgy0jiCGGPsia06I1Q7PoCRYjNvL2a
-         Y3IA==
-X-Gm-Message-State: AOJu0YzrFw8/ujO464ntV+OkIoCXslZjqVcJwgXlVcwqxGulP+P0uffD
-	8JQ9MYfIaW9TtUpw0sA/x+0dg5Vj7s+c95LYP+I3JzWSHqqnAHH4+KICmS63UXhfPZ9obfhSRSN
-	LC5kiDgHMIo16DG9LyXS4Ipk56+x1qg==
-X-Gm-Gg: ATEYQzxsToS/dcIINPmbceCpxkuYL6StSh1pXp+khc6k1o+KpHbLuWR/lt15sCctxw8
-	YE8WDAVYnv6qJZAqsofbQPwOtPOvdON5b2q0UNmRmSdpVSJAVUt9HNnTq0+eKcVLOETCPkXAvQu
-	qdd0bMR8eZh0yjntUA7I5oIsWaC4XPQ9L8EYni6bnFjTKGHYBYVokrDtsDDytAn3/8TKqjMcmy6
-	nHoflEL2I06Ya+3J/0r2uFvfC7yoAAznNTMGFlqzNF1FuxwJNA094oEDwn7lciWP3IE8Hs/t+AF
-	EM3OEGHfELv2p3dQpaqa6Yoqy5xgiCk6+HY1PQ==
-X-Received: by 2002:a05:6214:3f8f:b0:899:fa7f:7144 with SMTP id
- 6a1803df08f44-89c774750b0mr152862466d6.26.1774101418642; Sat, 21 Mar 2026
- 06:56:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="guPF90fG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ny92GqtF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8F5981D000EA;
+	Sat, 21 Mar 2026 12:24:19 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 21 Mar 2026 12:24:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774110259; x=1774196659; bh=7GA0HYZKjh
+	tjhI9HDxt42t+0xNy5VlDO+CnNT9dTp4A=; b=guPF90fGDFA17IwH+aCxLzgjym
+	23HbduvdeIvl00AvkHEbiFfPCg43yAApbW0xLIy9mr/maLKtROMyWhJY3wZmWzhs
+	II2W3hgLCSmXY7giDB4hLQ9SOdFCLlFrkmQHtorXFtsvAP1sEPmbdi2cUK9im3D3
+	7Q5c2nySx9PZeG/f6lEgKSYS8otPB1QGVuFDbZwZBe1XcWAplmZDpShYpkyCnNjy
+	z9VFPeBsiO+PzAD+UOjq8i7WE+lpSqcdlkZMmPhFxQ2Uoo6Iv9LzansNJ52B2/sW
+	IifaNa4upEsRvFzN2svYtASdUaLMmc0FiY//rf92Qs+DnsJr9l8GpS9bNtuw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774110259; x=1774196659; bh=7GA0HYZKjhtjhI9HDxt42t+0xNy5VlDO+Cn
+	NT9dTp4A=; b=ny92GqtFV+yLoa6/bYUTEYmfDVkoBocRQ+zl+Z1SdHF/8FSG52s
+	1ZliVNGOOJkr9/yQdDRBfvWeVdzMe9qdSz2uGf1ryXpUoSoThbfVwOAFc4Rvujmy
+	vqMEmeAS/xMks4PhgjCBIqlib3tZ0jSXnevzJCnj0w56crl1bwTmpCWBqnAyzf5j
+	/QaNTHjThiVJFDmSQIEM7YvEbv08eWUmNHJIM6Z3QmZJ+EzBuJVIHijlwPtq8Qsx
+	6XDraYc2hdtj/P/sjy030sLB32QvaNmWtswgS2M0sm7n6MowuSQLVDBpY1Hwqti6
+	MGcVuB7rWRgzdSxwR9JI/a3bbeHBCTBzVaA==
+X-ME-Sender: <xms:M8a-aUFJiWd5jKFypWSdO08fkUFCeuXBfrGa8dT1flRyb4A00O7ohA>
+    <xme:M8a-aUVXX7Y66RLgAM9XFIaFMHIRBuS36ZJf1I1ghKbmIPQbOgQBQLpOpBFrT-gwR
+    iarC5jzxR-OzOtce6Cp6kL3mg7O5VmoRkdZ5mXULjcj7yvY0Y75F40>
+X-ME-Received: <xmr:M8a-aTI0hgZ3YxxmJU7lAW1xbXzAB-_lg3tetyWbrPZeBrtJFP9SgNsW2sfKMTSMn7E0ccJD54tEgG1TnWDjE1Pk2lTwQC5pow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeffedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetvdeljedujeetgfefkeeugfdvfe
+    ehiedvvdehhfejtdfgkeejleekhfdtgfegudenucffohhmrghinhepshhtrhgsuhhfrdgt
+    fienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
+    drshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:M8a-aU8zQa2s-ekpZQOR8qEUtlkrT7qkQ8qmiel-SfbGvwgj2AgzoQ>
+    <xmx:M8a-aWII8dS82LSP_ZsUBG7coBRSiN287CzepVMz19sYyCCdYcyHPQ>
+    <xmx:M8a-aZnrFj3tzAWNlPzWlLT8jokEde1qe8Z1MHDTLSBYEBmAhL82Hw>
+    <xmx:M8a-aaPZZAEVuE75AHPblMIapcCcXXqViRQdtM87WCGL7sq4qqpfKQ>
+    <xmx:M8a-aUemZ-hXNCzlBbHjfnKYOlMQ3NJkr3_0f2pz4hjyLlX42CDybKxf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 Mar 2026 12:24:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>,
+    =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
+In-Reply-To: <xmqqcy0zii0s.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	19 Mar 2026 15:14:27 -0700")
+References: <xmqq341wnvbk.fsf@gitster.g> <xmqqcy0zii0s.fsf@gitster.g>
+Date: Sat, 21 Mar 2026 09:24:17 -0700
+Message-ID: <xmqqqzpdb172.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAEaT9_9jAoXkxKn+2+q654aKybC1=bk6p7xiVHmcy+YDDe7GXw@mail.gmail.com>
- <CAP8UFD1H8ZsxfGSnnvX9xkKLSSpDjA3e3KNZ7eHN3ruq-sC7fw@mail.gmail.com>
-In-Reply-To: <CAP8UFD1H8ZsxfGSnnvX9xkKLSSpDjA3e3KNZ7eHN3ruq-sC7fw@mail.gmail.com>
-From: Francesco Paparatto <francescopaparatto@gmail.com>
-Date: Sat, 21 Mar 2026 14:56:46 +0100
-X-Gm-Features: AaiRm52h8QyvypGcQdM-v_PNG6c97plBAxIPtLxZSfETCz-FZkQOIJI-3sFUI7o
-Message-ID: <CAEaT9__zLj+9YQCn-nWqRL6qF=T4rUnY2r6Un=1cjZEFOP8dmw@mail.gmail.com>
-Subject: Re: [GSoC Proposal] Refactoring in order to reduce Git's global state
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>, jltobler@gmail.com, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, karthik nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hi Christian,
-Thanks for the feedback.
+> diff --git c/contrib/coccinelle/strbuf.cocci w/contrib/coccinelle/strbuf.cocci
+> index 5f06105df6..3dc5cd02a3 100644
+> --- c/contrib/coccinelle/strbuf.cocci
+> +++ w/contrib/coccinelle/strbuf.cocci
+> ...
+> +@@
+> +identifier funcname != { strbuf_getwholeline, parse_list_objects_filter };
+> +struct strbuf SB;
+> +@@
+> +  funcname(...) {<...
+> +- !SB.buf
+> ++ 0
+> +  ...>}
 
->
-> For commits which graduated to master, please give the commit ID of
-> either the commits you authored or the merge commit that merged your
-> commit(s) into master.
+Here is my second try.  strbuf_getwholeline() does not have to break
+strbuf invariants even tentatively.  We just grab the guts of sb,
+let getdelim() possibly reallocate, and then return it in the normal
+case.
 
-I will add the commit IDs in v2.
+In the EOF code path, the only special thing we need is when we
+started with slopbuf[] and getdelim() allocated some bytes yet
+returned EOF.  We are expected to free it before returning.
 
->
-> By the way there is also this series from Olamide Bello:
->
-> https://lore.kernel.org/git/cover.1773127785.git.belkid98@gmail.com/
+By the way, the big comment about xrealloc() in the middle, most of
+which is outside the post-context of the first hunk, should be
+updated, as our xrealloc() do not aggressively try to recover these
+days, if I understand correctly.  I left it outside the scope of
+this patch, whose sole focus is to reduce the number of places in
+the codebase that check if sb->buf is NULL.
 
-Thanks for pointing me to Olamide's latest series, I will
-study it and use it to map the remaining repo_config_values
-work directly in the proposal.
 
-Best,
-Francesco
+ strbuf.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
+
+diff --git c/strbuf.c w/strbuf.c
+index 3939863cf3..89933c3814 100644
+--- c/strbuf.c
++++ w/strbuf.c
+@@ -632,24 +632,26 @@ int strbuf_getcwd(struct strbuf *sb)
+ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ {
+ 	ssize_t r;
++	char *buf = sb->buf;
++	size_t alloc = sb->alloc;
+ 
+ 	if (feof(fp))
+ 		return EOF;
+ 
+-	strbuf_reset(sb);
+-
+ 	/* Translate slopbuf to NULL, as we cannot call realloc on it */
+-	if (!sb->alloc)
+-		sb->buf = NULL;
++	if (!alloc)
++		buf = NULL;
+ 	errno = 0;
+-	r = getdelim(&sb->buf, &sb->alloc, term, fp);
++	r = getdelim(&buf, &alloc, term, fp);
+ 
+ 	if (r > 0) {
++		sb->buf = buf;
++		sb->alloc = alloc;
+ 		sb->len = r;
+ 		return 0;
+ 	}
+-	assert(r == -1);
+ 
++	assert(r == -1);
+ 	/*
+ 	 * Normally we would have called xrealloc, which will try to free
+ 	 * memory and recover. But we have no way to tell getdelim() to do so.
+@@ -664,15 +666,16 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ 	if (errno == ENOMEM)
+ 		die("Out of memory, getdelim failed");
+ 
+-	/*
+-	 * Restore strbuf invariants; if getdelim left us with a NULL pointer,
+-	 * we can just re-init, but otherwise we should make sure that our
+-	 * length is empty, and that the result is NUL-terminated.
++	/* 
++	 * If getdelim() allocated when we had no allocation, free it.
++	 */
++	if (!alloc)
++		free(buf);
++
++	/* 
++	 * We haven't touched sb at all; as with the initial "were we
++	 * already at EOF?" case, return EOF without touching sb.
+ 	 */
+-	if (!sb->buf)
+-		strbuf_init(sb, 0);
+-	else
+-		strbuf_reset(sb);
+ 	return EOF;
+ }
+ #else
