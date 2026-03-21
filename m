@@ -1,100 +1,87 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED9A1925BC
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 11:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774092754; cv=pass; b=DKQjiiaD6PZVmrhHkP/yb2ORVp3lVueXyVvz71HLeq+KkoMtjpGdm7TWXfe8ENoF/KVnR6Mnwxyw4FxI9w1vrxL2ksl/S0AzZE+fjbkcdvHZfzWP3C+kTbJsMMGL8p7GA9Yc3ITDE/OidNDEV8V3ODpDaV9RMsSwU6+jbNn9B8M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774092754; c=relaxed/simple;
-	bh=VGgdu01Z/rA1b9pAj50fILIGSgLmCv/fxYRzPKV4fTI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=DKCJOXRQGlRB3bYK7ZXj6PkItg1624t13svl0MqtVz5onNn4XVURVc4s5ubWieYoYXchI2FdIDH2g29SdOfth/CQZ0/xoJpohFKiFVqILsKM+XSjCAyPSYn1KpWy9BP762GF/F30s05iOj7KTnAj3cWxNpTgyXw+58/QzPC609s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QEIPceD4; arc=pass smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QEIPceD4"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43b4d734678so2839542f8f.1
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 04:32:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774092751; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RV25UYcQ2VJ12+hf7Yp1mtJcDJ9VGwLJ0V5dcgWsZq1Z6trBBhAy1SB2SY/vRaEDMb
-         uarYdm7jAixuhZm9YSpp+uOZ1NFKvCftMWFmAAcYdYjhz8CFOj2Hljt52K7hDGrFbF3A
-         53JOQ2yiXkOqlOhblHs1lh4lcmL8CWrH/kBJb5mglAXVPDfndlMT93bYgOz6sybNABZx
-         4hZkWISr8hKJkR5talwcFD0Mrf2K08RjfuKnEUUx81NzehjzwUXa6A+aobpcf/Xi00p9
-         6UCkIVwZ3mITOX2iXTnqv2d/6NPNnfpqdEKQF8TMjWnxe6RKZSro0FLlb1E15aEBMQHO
-         8b2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=VGgdu01Z/rA1b9pAj50fILIGSgLmCv/fxYRzPKV4fTI=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=U21Ezz2Cy2I+fvQEzka6vKPuFsYa+oWfbv0ssjKumuWVRZHgniUVTJHLsSF0wr9pNU
-         mQvQ00cRQGugEet0mk8qHF/rANw1kLX8u0Os0KeXPqyc3bNzY/7oajwUcloEte4b0Gy3
-         gM9D01UUf5Z2FlySefwziQ1iuNUroHwIRyVtiJOSsQG1txPOIJad+WPM7DG+BoEFvha4
-         fs8YjNsSYZBkkhnMMAcorV68S5rs/o6D6LFCWWH52nBVxa7kr4FwOL1osADRq4t9zC8G
-         0v6TOUWm5goIZ/FFyZRawwoCQ8PBibpMPEdZsXKIsXSOgLp3MYibWTdnZP9/yzyng4ZC
-         WdTg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774092751; x=1774697551; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VGgdu01Z/rA1b9pAj50fILIGSgLmCv/fxYRzPKV4fTI=;
-        b=QEIPceD4fkRifNgb3B1HXcJ78+BLXMEkDCPQMOVuiGcl0d5mrO+X9zIjApmDCJ21zT
-         YIUh+O7fdDSg4tKTqA2UQ9xI3p9Jd06gqneE/F3ki+mK30a28aieHdo6C6LVyIgbAv92
-         OhbI26uXPoYZzthvrZQtl3UnQpw8VIveMOiyD8DPvrfd/baSMd6JRdVk9jsc8Eb4c78D
-         x0wa298j5MPnVHgNzyQUE65+ySvOfi/rTo++OcI9s/nOq6x72MLF159+wnVbSNUGtWeI
-         cYVfUX+EblhXQTnh4nZrcf77oidCd+UoIUJKIMjWrRCib94eSryZ/sHTBu8xgYiCLsJb
-         F7lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774092751; x=1774697551;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VGgdu01Z/rA1b9pAj50fILIGSgLmCv/fxYRzPKV4fTI=;
-        b=aLRDGaNo2FTtTCky86A20J9XC2HELC5cReQxaI68/W21pEvPQR3IrScDWFPRG6qg9X
-         yxh+QjLlja9R4edSJEgIKcFBmRt1qmKMXRaHKNl1qKBMFNnpUgbne73kkY9/SjqOmRQ9
-         7Nv7m5Yq0JXYNaMKrffNz/5wOb0nCd5qfPGBaaZ0wGRxGc8klc5vz/TPepWNTDiMxkM+
-         y3Rjq/VNTXZWWmzkZRc1Xk6nULgpfvHEl8TI6cJz19aGliNlqUtgMpHkhb4DcYzx/OGv
-         qnx5dwdc2PGFSRWiA3a4Cu9XXpWCn7i/gfYcoXYTYah0k+LXJud06rnS6RJnuIjv8Olz
-         tw9Q==
-X-Gm-Message-State: AOJu0Yy+ASFsTvzhF3W8u5F4QF7Y2cTz+VSvzMPdfNNsv7H7qTDfzazy
-	9iSbv4+b70ZAqylzblAfgCjpQJAx+Ggg+BrgEYAbG194OGm6wcQK98RYPmOrLUYuuVzbWjm3cBh
-	RvrLzTHuVyzwi+EGY+qdbDtQZ37Y+r0uMXQ==
-X-Gm-Gg: ATEYQzxGLVqJnofEF1i8HDD3k8ZMpglzA/XmVYgZej/Jdo27x+/ikPtPm1WWpKBhxzs
-	59VD9KGqs/gW0NpqT3nT+CH5rLnLeGTBHGZfFFIofv52t2hZprugkIOvnug49SdtgGmRWz8dyDj
-	2wpnKJJ0c1pd5wDxFQGI0RgX5glRgJ3dhCPqt5stLhmPqq9e2S5a/OdReOjA86Jkvrnfap/J/Hd
-	AgL/5fr4qSAypB9Kxo/3Pd/7RycfwTQ+cjRFailT2dnzJEOark4W3zfbR977LWX9wEeL2d7jRBX
-	p6rk6LJYCZOUqvOquen6DiDEYqRWTgjMf7vOlVg1Bn5yKQQdY7zsjpH4Tp8Bd4adLymWpA5mDwm
-	MOtflOhTku/l5+Ahsk/mF8pI9FDs=
-X-Received: by 2002:a05:6000:40ce:b0:439:ac6b:dd64 with SMTP id
- ffacd0b85a97d-43b64271cadmr10159702f8f.45.1774092751094; Sat, 21 Mar 2026
- 04:32:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF128258CCC
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 11:51:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774093878; cv=none; b=noKoa9cxaAUF9fqRUAHVhaEAJ/+SdtTMfwurhzqRMHG1mgGB5bz9spM6fsFj4qPnf5toZ4gFBQw+d4shMUtbz0zfRYs7iLm8JqhdDkYarAYkF4OjK5vyioyMdOpfjzvipr6iJiNwnlxjU82HNNvTDyV8D0VYWykZs93w/glo7XA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774093878; c=relaxed/simple;
+	bh=6Axv9HC6XKDFePC9Iamc1rLLahOZN3XvrU2uPYOFBzo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=igkq8bM034COauwLkeyHJCNC0IcJAW+es+g81UsPPZmS3i25tr/bcFN/dLt/E5tjZojje537kAssfxJX2hZEYvrxcDH+bIP8007tWShwcVsZoiZ0/1+8q3pLkih8THT4gAA2X6b7v/TBiKGgEWOQzD2/54DZ0anvzqlnNeilMaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4fdHnl39WGzRnlK;
+	Sat, 21 Mar 2026 12:51:06 +0100 (CET)
+Message-ID: <5a6b375f-734d-4935-825a-afa41abc3ea0@kdbg.org>
+Date: Sat, 21 Mar 2026 12:51:06 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAHDzFGdAzz1jGVsy+MsP5kso7spFZsNoXDK3UkR_JKGXR-zPwA@mail.gmail.com>
- <CAHDzFGfsrJu+Au+Nm_VrxrhvAQPLzz_ZfChFkpjeWFOV1y2q_g@mail.gmail.com>
-In-Reply-To: <CAHDzFGfsrJu+Au+Nm_VrxrhvAQPLzz_ZfChFkpjeWFOV1y2q_g@mail.gmail.com>
-From: Abhigyan Tiwari <abhigyanph@gmail.com>
-Date: Sat, 21 Mar 2026 17:02:19 +0530
-X-Gm-Features: AaiRm53vjKh6C_QvmTlUfb3phEcZx4SGrlyKVXAxA31WBjfC7w9FBdr0ITcuq8U
-Message-ID: <CAHDzFGeDocjTrWH_cnODQYF-zLoBJU8WJe8J-8qGmrCH5zwXbg@mail.gmail.com>
-Subject: [GSoC 2026] Introduction - Abhigyan Tiwari
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [GIT PULL] gitk: *.po no-location and package name, link and ref
+ colors
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi, My name is Abhigyan Tiwari, a 2nd year B.Tech CSE student from
-Assam, India. I am interested in contributing to Git as part of GSoC
-2026. I have experience with C++ and algorithms, and I am currently
-exploring the Git codebase to find a suitable project to contribute
-to. Could someone point me to the current GSoC 2026 project ideas page
-or any good-first-issue tickets? Thanks,
-Abhigyan
+The following changes since commit ddae547e3775638c238c11f30120f1e7e763fba8:
+
+  Merge branch 'pks-meson-fix-missing-msgfmt' of https://github.com/pks-gitlab/gitk (2026-02-05 13:45:51 +0100)
+
+are available in the Git repository at:
+
+  https://github.com/j6t/gitk.git master
+
+for you to fetch changes up to c8c5df79df34b40119c4bf8e3079520762f258d1:
+
+  Merge branch 'jx/i18n-fix' of github.com:jiangxin/gitk (2026-03-20 09:23:32 +0100)
+
+----------------------------------------------------------------
+Jiang Xin (3):
+      gitk: i18n: use "Gitk" as package name in POT file
+      gitk: ignore generated POT file
+      gitk: l10n: make PO headers identify the Gitk project
+
+Johannes Sixt (4):
+      gitk: commit translation files without file information
+      Merge branch 'sb/heed-ref-decoration-settings'
+      Merge branch 'js/i18n-no-location'
+      Merge branch 'jx/i18n-fix' of github.com:jiangxin/gitk
+
+Shannon Barber (1):
+      gitk: use config settings for head/tag colors
+
+Wang Zichong (1):
+      gitk: support link color in the Preferences dialog
+
+ .gitignore        |   1 +
+ Makefile          |   7 +-
+ gitk              |  21 ++-
+ po/.gitattributes |   1 +
+ po/bg.po          |   2 +-
+ po/ca.po          | 312 +-----------------------------------------
+ po/de.po          | 318 +------------------------------------------
+ po/es.po          | 312 +-----------------------------------------
+ po/fr.po          | 341 +++-------------------------------------------
+ po/hu.po          | 312 +-----------------------------------------
+ po/it.po          | 312 +-----------------------------------------
+ po/ja.po          | 327 ++------------------------------------------
+ po/pt_br.po       | 312 +-----------------------------------------
+ po/pt_pt.po       | 316 +------------------------------------------
+ po/ru.po          | 397 ++++++++----------------------------------------------
+ po/sv.po          | 328 +-------------------------------------------
+ po/ta.po          | 391 ++++-------------------------------------------------
+ po/vi.po          | 312 +-----------------------------------------
+ po/zh_cn.po       | 374 ++++++--------------------------------------------
+ 19 files changed, 187 insertions(+), 4509 deletions(-)
+ create mode 100644 po/.gitattributes
