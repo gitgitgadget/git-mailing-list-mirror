@@ -1,54 +1,54 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0AA2848BA
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 05:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAAC2848BA
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 05:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774069360; cv=none; b=IWgPgl4Jzyde+qoh6usjGpH/EIxyi/0H1VhUBinktSimEdV0+KmqIqp8VpnyN9P/IE/2Wp3EV/7jLloyBU6TEIem5rGLRUmw58jIrdpXgQn4NRKQyfU2XoAOBfAvadhGYDd2fJNjM2qi+Od3f7C2vorie7chMOGVlm4znZgsxsY=
+	t=1774069398; cv=none; b=gv7n6/E1IrHksjnCqUYmAUS9q0ecdFeo629NVioMCBu2OHCJpV1yIbqI+LS8fm2Z0z1mJYgLIIsu/LHdfsIlz+8/qvHzFA6hRAzSb1K3BHbEYn+ZZ5owDUqv353ZXkjy8cr8ivTMXEkRCkNai6ZOTmTk7Yb0YVG1Bqpbdka48zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774069360; c=relaxed/simple;
-	bh=IQUdeasj6at2Gmv2xprQJZDnCFlmNljBwUMDnmunFes=;
+	s=arc-20240116; t=1774069398; c=relaxed/simple;
+	bh=ZnGgyBglofrjP14ript6WYUkeY+t6liD79LPqVnpKd4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MUO/lZHiaWQKQlm6/iRhjaKBPYWky6CBpfZQsC1tRtYAzueW2hB4JkmF7GQYPSPn+NQ8J5z7G6TGI8HO4RXE4k650ubNzDGJxEjGSftRi5n/rQebrEX75dTFc5RYheQcwhztLpOXhkYxFKfyrHHBn1iV62ZS3SifbvRc0zkbuyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lh+AYgYQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k5wYvaDD; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=TJ/YIwLvMUYT74KHEWShxqOk7lEbVDRlS1A7Yhu5zaPrpBX9QD/tifwH0xN6Kl9nkRnPKV89EnDMX7P0AjOKYAtGmGgCn+0QJw+NEnzzU3SIeTDWlTC0hnnqOC8JDkUggYQAkTAi2TvIi0/6ykdXuTzcx3vsWpPTSvY/jn7Bicg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ShzSUZJM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jsBaeek5; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lh+AYgYQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k5wYvaDD"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D454D7A00EA;
-	Sat, 21 Mar 2026 01:02:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 21 Mar 2026 01:02:38 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ShzSUZJM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jsBaeek5"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F1C6C7A00EA;
+	Sat, 21 Mar 2026 01:03:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 21 Mar 2026 01:03:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774069357; x=1774155757; bh=Knby03JROK
-	SZL91Snzjr13d5V1sszZ+Y12GyZC0kicE=; b=Lh+AYgYQfvMQOiX5XCWwI7p7MV
-	4j3B0gd7AeWZiPaoik0N2MXpbmeIKwHFDR1Xx8en2OGfdqEEt018/W2SdX2ncbvJ
-	bkR1o1zjb/baHAjoBQDIn9RxG1NYyOFEV8ELF+BfwRDQ16HcjaGzqjELYdvhPGjq
-	cpzBxYtrH+QfKApfGoj1GZbVIfNESnYlZQufLLvp6xZRIKZ7ObS2mKayyUZpt4Bn
-	z/g5tKM9TpX+IIVUu2D4JewakI3lsdaJtzK54Cdd3fGJzaAoHv+JbFcE1J4rfWph
-	1gpqz+FXAgF+P7fcb67G30a6bp6h1jkctNRGg85JOUweZb1QqlVfAgf93hVQ==
+	:subject:to:to; s=fm3; t=1774069395; x=1774155795; bh=P/cePaRudJ
+	A0CMYaDOXN9HhV2LCdT3e0qBubpBh5lWU=; b=ShzSUZJMIXOz9cOxMbepbTkzp2
+	vvQKKZd/1v94ltW/UfTUJUazNThNvVW/bYcRJkJgrwYY0YzBohavMN2Gj6sBcWLX
+	PtkUBLFHT+6HDV4+5R2OxVxLFspbquHaeIxfQ+nnSMEUk4sDf7xzwj2gbEqdHDes
+	DGf86DNE7mJFgj3Ffib4wV4xdPpw9h9BBQuGzO2AwcegKdn4UWoflewmG4RfTaYy
+	RKHoud7HZR6RLfuXPklkyaB+iM+6/zUBXKXg+1OvoCED206ZFNCvc5DsxqALychW
+	CBQZUOzZ9G4HWKE4grvxua6QQVs7DBjtUxIyMRfm557Tt/T0i8m4/EcRBHoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774069357; x=1774155757; bh=Knby03JROKSZL91Snzjr13d5V1sszZ+Y12G
-	yZC0kicE=; b=k5wYvaDDb1yJuaN4OAhxkoqfbHgByxfC8pkwlye8w/QBiG1Y3UV
-	VrEL9PL1V5+KVo2BZ3vz9kUHBtHzWdudv7IGTs0dkhWHLxY1CyRZ0dvJkchiLJT0
-	OlZvq6W0X5BY4CgqOr7TToGts2boLbsUUKnuuy2U+uHYHgRNqNbpTtxwdcK7CLXl
-	1Ohrnr2xfIwNWh5vyi+S+6aohpVruxzQxmUl3xGV8Q0JMWatwLPUW36DPfGHG1ip
-	g1F1FdmLnTogbFj+LSTU6/dPeJTn4+BrAz8SuRzqQpw1N+N0JKzQohU7cCGpIAvI
-	IIdvka0aPdmvXgdjqw/1LT1Rnsp+DJitJOQ==
-X-ME-Sender: <xms:bSa-aeadpRFuX_lPvkIuyJFsSU1Utouogf9wMSMfusXz9W52hSu3iA>
-    <xme:bSa-aYTFlW7-maUk1pnMty91jdMmIkEC8rFCXDlMouYTXFKNWVJTRtgnLAcURcBgx
-    8FNtuBc8gXSjH1lF8qHuMz7xATzrC_W1MUzckgX6kkARu9FNgFwPG8>
-X-ME-Received: <xmr:bSa-aRRE_NU9Q60iHpemOWUD5RqO0v_hBroUzsLzoEQt6M91nTJD-J-KMV-WcIVmYXbTuEAxgJQy_iwDwT7W6iv95M3NyKaKCA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudduleefucetufdoteggodetrf
+	1774069395; x=1774155795; bh=P/cePaRudJA0CMYaDOXN9HhV2LCdT3e0qBu
+	bpBh5lWU=; b=jsBaeek5lnawR/JQCgEfZhOWLwoJEddjIlJkg+zLBYBSQ+qVpyT
+	f7B1Hm+Nn+8CzhrAyuQ4xSG1spzF54bDWebyvGO8QQYLLQTPxZtpNZgZtC+MzAwK
+	tD5ae7/sGdZDrMU982/KeyoeiJ3J7gXgEQH/rPgzYngYKpauXZiFAHwmmDE5y6GL
+	pXvp5A1gzUIfxa72c2uVpZsgZxLm4qMSTmI6ZnZldGY7p2ITxBn9rj0LoVTdzY+l
+	A/FkPtiC8K0TzuGTOmqZRC3+/Rcu9sTVcAXoQyWfadLXsJU4cuOgGRe4PZQ+FBc3
+	eOAizsOamiO8RDac4hPoidBo29TngHN8bbw==
+X-ME-Sender: <xms:kya-aTLkSBe4BMrozpcWiRrOF9YcNQTEpLyNEfRGe6Cx8jEvkPzT4g>
+    <xme:kya-aeD7Ujyvu-upuE4xpvmGticRPAA96hIk4V06UET-ZftypFC92CxyvplGYQW5w
+    c6sqYQa_3oMFuMoDBAAasE2fXZq6LFO8VR2KT0PILOt8OztuEn60Q>
+X-ME-Received: <xmr:kya-aUARM1MNxbxqbvIgJxj_SJ70YNtcBO9nqOMdklEpzg4CIbunkoyBlESDgU7SnmryvKawAH_Rf5SdBmQJjCIXybBp3rDV6Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudduleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,29 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudduleefucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgvrhhnvghlsehstghhlhgrrhgrfhhfvghnlhgrnh
-    druggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopegthhhrihhssegthhhrihhsughofihnrdhnrghmvgdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bSa-acQepGF7UXmZzVeqm0x1T3jRC3f9FsguVeMSgtZ1eeN8cY40iA>
-    <xmx:bSa-aW7uSpBNnjY9t8fmJydZZeVptpiXoO8jpNXOOzxN31P4CGmC_g>
-    <xmx:bSa-aY2ygvfYX1S8leQcQQS2Mu1tuz8VMj-pb113cCOd7NnpWAuKsQ>
-    <xmx:bSa-aRD8RQVJpCsYBVCwwWC54Id9cgLz43oyobq1IiX52xSTBFeIPA>
-    <xmx:bSa-afvlQrIURecf_uDWZgT7fkANR7zO96bL87UqgQaexTwSMlQiuhsG>
+    mhhtphhouhhtpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhimhgrlhhise
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhlvggvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kya-aYAC3zrIi5NNxRlmKbx_nkbGOPPrVIb64ml2tQYG9tNk3FRT7g>
+    <xmx:kya-aXrNSPDKfUb2hHpcTQdhYXPMfwkr-In7R9NRpS-ydeV9CDUZTg>
+    <xmx:kya-aalyD_SajO0ORecu6oFhzOhEzicx0k6NVIm-f1kXKtKGrFficg>
+    <xmx:kya-afzvnGPM1BYON8RxeQovraTkVC-pvpX_okECXzOsXg74mJQIRQ>
+    <xmx:kya-abSEaQ9cpfEJNrpzwDtxb_rZhlIH4ymAsOgHExpnKffzifz_48eG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Mar 2026 01:02:37 -0400 (EDT)
+ 21 Mar 2026 01:03:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonas Rebmann <kernel@schlaraffenlan.de>
-Cc: git@vger.kernel.org,  Chris Down <chris@chrisdown.name>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH] bisect: use selected alternate terms in status output
-In-Reply-To: <xmqqfr5tdbpc.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	20 Mar 2026 21:54:23 -0700")
-References: <20260320-bisect-terms-v1-1-c30c9540542a@schlaraffenlan.de>
-	<xmqqfr5tdbpc.fsf@gitster.g>
-Date: Fri, 20 Mar 2026 22:02:35 -0700
-Message-ID: <xmqq7br5dbbo.fsf@gitster.g>
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  stolee@gmail.com
+Subject: Re: [PATCH] backfill: handle unexpected arguments
+In-Reply-To: <xmqqtsu9dc9m.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	20 Mar 2026 21:42:13 -0700")
+References: <20260321031643.5185-1-r.siddharth.shrimali@gmail.com>
+	<xmqqtsu9dc9m.fsf@gitster.g>
+Date: Fri, 20 Mar 2026 22:03:14 -0700
+Message-ID: <xmqq341tdbal.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,19 +89,24 @@ Content-Type: text/plain
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Sounds good.
+> I am not sure if this is a good idea.
 >
->> Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
->> ---
->>  builtin/bisect.c | 23 +++++++++++++----------
->>  1 file changed, 13 insertions(+), 10 deletions(-)
+> When parse_options() finds an unrecognised option, you would get
+> usage-with-options help, so without explicitly telling the user
+> "Hey, you have an extra argument that I do not expect at the end of
+> the command line" and giving only the same usage-with-options help,
+> the user would not know why they are seeing the help message, as it
+> is totally unclear what mistake they made in their command line.
 >
-> The changes in the patch look good (but it is hard to tell if this
-> is exhaustive, or there are places where good/bad are still used).
+> "git bugreport" is also a command that does not take any positional
+> arguments on its command line.  Study how it complains about an
+> unwanted argument, and follow its example, perhaps?
 >
 > Thanks.
+>
+>> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+>> ---
+>>  builtin/backfill.c | 3 +++
+>>  1 file changed, 3 insertions(+)
 
-One thing I forgot to mention.  This lacks tests to protect the
-feature against future breakage.
-
-Thanks.
+One thing I forgot.  You may want to add a test for this.
