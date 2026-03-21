@@ -1,69 +1,70 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABBC282F0B
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 21:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EBD31328B
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 21:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774128520; cv=none; b=iSQWCgoSNx46Swtn/GI3ldUGvtBHu3CwiaOLV9NMzdPHEapzAELaDTGB1R5Ijr8AcAAHHK88z6w//38E6P4o6EkR2QGQHrujnTbCWCkgFrP2Npp+StOVZ1pA7xxkYKv9jdXsfAAe5V3u/Mzu1I+yh6hHFJdKWFXkxBCm3fFVpwc=
+	t=1774128536; cv=none; b=ViwcHAoBUeHgk11A2L8CInfobaRVUTLyd2f3VWYmSSarm42rF+YRSRvLze/FCwjAE++4yW743XDwSDAaERTfQJyydGZoPj9hi9i8G6yTvuIMUgHi2CnusqH4QduWolfHfk6iIkBoI/FsT5LUOCX1fH80kNlNU/LccnEmx/XOh3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774128520; c=relaxed/simple;
-	bh=qNqjxbvckYgCJRgOpKsQeusNbhhn+5LMkchyOjiM1Ok=;
+	s=arc-20240116; t=1774128536; c=relaxed/simple;
+	bh=K9dgfX79I0mEW+cClXl6wXJx3ql5MbgPH+lI2jUULzQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o9XkKhJ8ckXAv6Dp6icF7fQyWDomQc9yisL0ID2m6pxbEoxQGMl0dLHRlWvQ6oL5Tyt0qFqIEn9/9heijPWfsqV/6wyFjxMNbkm1O8dsRzHhndd9Se1SpO8H1Qsw3+xrfkIXdqXTcw2FxWwczgrA4TAl1eCWZiGlWCl6WS9P10g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gUCNjwD8; arc=none smtp.client-ip=209.85.221.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=LtVPlD/43eReU8m8QqnZih4vEs1dffbMD7u4eE2DEbxPVOkKXFqMgl4Uhb5gtQ3jm9uJ2gM72eVegZx66hnsUxKuLtMqElDHbcy99OXYR/R3YMbCvWJowMt8G/H7EmhiKOBuQN21zJwn2Xj9l3YyUVfHMFKnSptpUCskiCfaf1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SdJRdfSH; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gUCNjwD8"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43b3f91a7abso1770085f8f.1
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 14:28:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SdJRdfSH"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-439cd6b09f8so2252500f8f.3
+        for <git@vger.kernel.org>; Sat, 21 Mar 2026 14:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774128518; x=1774733318; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774128533; x=1774733333; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7tCj1aRiKhDRlTcNfGJ8t+zL0i4mbS6LeXH0cOqtpGo=;
-        b=gUCNjwD8eafw1RRubVZEP6hbf/U+6KIj/w2ikKqQou3jXjqjwPKox7ZEN98B+aTN+e
-         iEZmZfzYKliv5qOy0Y4oaGXLMxWVYQX4LPaoP31SK+owbSHOaP9/ieSt4X3rQAq4zYHO
-         pXzTcZLyyzU8YoXJCRdqrxrePcxhDgmHO7lsMkDyi+qkxshYfgSii+S0dOoRhvpkaZxY
-         GWvlSQMCVsFhCltV7huDXVGCldZA2hhCUv6J208hNXna2bZXtbCyBuSTKSdBzVkySDOn
-         fsyAeERz5i4ezs/eMLYQw6wvK+JO/FZhcME8YH1TKrSs0lQwfWJdmqzTrSZ1ZjZuh6Rz
-         QQAA==
+        bh=2k34e0IwC1UNHVnOwXp3GyC2MjR6BG11sjNHpn9Z2Go=;
+        b=SdJRdfSHPSjxFUzHxsYJzmsYVbFmGhy4kSbHb5GoIWKBaZfriAO9kRGYCrNjIqezZa
+         hNMWfaVOtWj7JW2IGa0WJpPY11vrc41JF0Q5ZHRvG6nmuKnvrXpwZ+hbppD+1IgZehWs
+         r/xrjXfedOY8SV/rjuS1CsDHGFSTaOud9o63vfpTOkzr3JqCli7WvJXIV/P648fj1KUN
+         tDLP7GiZgJvsLH1tmMgUnALIAAfb+bZPPI6yzefrXL6IbMEZAhk0FY8ikVeXi4gf0+2E
+         wEuoXbLsZ7r30Dc+SGLSs7TKeSpVysiYBZHfRdjtbnKK5JOcRwt9tA6jIbq2ZyvTXhaY
+         c1Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774128518; x=1774733318;
+        d=1e100.net; s=20251104; t=1774128533; x=1774733333;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7tCj1aRiKhDRlTcNfGJ8t+zL0i4mbS6LeXH0cOqtpGo=;
-        b=NsuRbhRw8TJYeEla++aSWh8XFTwa+XUbc9g+cEuuhV0FapeaLdfj+7I2kAHFquOn8O
-         N7ZpP4VsEb4nlISIybcFIzftwWsG27BEVBK7m2mkNvPLtlxxeFa5v/A8xy8eqTPuIel0
-         RHYSrappHHh/5oARky9QwuME17tgYcr8QVNJo0TkA/kmxVSpE9DR/EKbGOkSJBRnjh75
-         LrWBbflpQQE8AylDWqhN9BK52ea3uc8nysb1haKloyJiaSp0K9KndKtaGbAUFnpv50Ec
-         je30+Z7sF+dEccWPvrbA8ANJavKV6lPbmqRGfZJKvruThBd6KMfuJvyta7p1RWYhjlgx
-         v9oA==
-X-Gm-Message-State: AOJu0Ywho8jiQdQlHpT35KIPEjrZTg9VzsRzACKt5WcXk0DSwoNiXQyn
-	uPBnRhSxIhtdn3x2VblqOBlsAGQk6B1/1QFOZthgL12t7OmeKMVMfo5wLA1pXyf/rMQ=
-X-Gm-Gg: ATEYQzzOC99PaXHPK+0Q8XIM9gxlqVKic+egF+QkLdYQRvLE+yXK/h2NF3wt4O8JwgA
-	kQL/zHphaccdr+m9DijRXT0O1K3mqqv0f14EhHIyiMsUIeWqIPZUc38DfzFU8c4IYlIba5BEWQ3
-	WSUjPQ+kyECigjuCXka4uosYF8t7JBccejwcamqOC9hmKCRFDWi4OuO86wOlZ2Q1oBsWnzvNkgg
-	/ap848maSbErFCgRzdFkKhVzdOLdzrm50OnAYnnRHurPPQdUMnRNRZlz7+A8Fwf7ShJnnbUAhAv
-	38NA24L4sA6KuzsQ6/+kEggpVanZs/F3D0vtFfH8sQuSmsLLyD1iZDMHjL6a2707cajlT3Knnd5
-	rCp2dRF2KQKXmf/Z3GrfzpjJVfb8nhAcWYEsdkVEN6rw/Vp9tbPftSJJzMfQfGSYis6G7S/2x8T
-	JWOV95Ta0MTwZMJOD22R+Ij/ABQ+Tc+QS/Ial0E5ePYI4=
-X-Received: by 2002:a05:6000:40cb:b0:43b:4298:3c0b with SMTP id ffacd0b85a97d-43b6427daeemr11073085f8f.30.1774128517652;
-        Sat, 21 Mar 2026 14:28:37 -0700 (PDT)
+        bh=2k34e0IwC1UNHVnOwXp3GyC2MjR6BG11sjNHpn9Z2Go=;
+        b=GlOwt9JS+s6r8relb4HAB0gv2YIOS9aY9B2OZXxvc/9JT3XRE8bNw2yikMCQMddk+I
+         0c0b90Pya1qVaO+5z+H6SZMCy1P3kJMnE6SRJM2QZDAr28JlcMVrBaFQrIk2Z1TS6Mik
+         Q6QnnGSvXVSkJbZe1+EgF7L1HJm8fO4OYIyMHExT16mUOzxJxKaLstzy85As988YFSxu
+         5nso7vgZS7qP9WJIzCMeZnOPUd4Lv2UuRJUZ9qMbgnUEcmbPFjFZ5XKqHwnHT9KgCumU
+         y29P/xuxSfWHgyJrmtkD0dXrriDUsdjL42YgiqFoXFFuOWSu0b91DzZTAuRPW8FCdQ9O
+         SRNw==
+X-Gm-Message-State: AOJu0YwWfkEhcjQl8+X8FfVA50bnAC27H/64urP1SyVWwEnpb1hCU4zW
+	WXmy3bOHO8Orw3UwH/QVxnoKxR3jiqsqwSLXzXpX4gb3h1qSyLsQDmy8aTX80SkalFM=
+X-Gm-Gg: ATEYQzzt4rA7vBs2gHIWLRCwB16aFIlzUoQ+I5zyT2F3ljSuyyp4aAXwex1yv1BT4MC
+	rM9TYsBAQXiHe8dO615l4gpT+9iuaOI6QJuoLyl9LRZMKZRoGI9k7Pqffn+39h3rdyDClV0FV6C
+	gIhTrmRmu3KzvlH/yHVK175g2oEzAE/nouPonEG23xjOPhvTLToE73JB9aVlXjV0fGSHUUwHmUQ
+	2/CydpbUEej7kMDWFwfwgECKpu8EtXHzToFtpPzbGB0rZcKVX7m8/MpFvAfJDFW/9Nh4ODK/uxM
+	f4e+Dn+4i6VgSKoBNxaSOH2Gnmff+bw3XlqbeB1o8WKwECTkZk4yhiGlhjQK0mT5iu7ZYBEDGiG
+	9MnTVEFn0i4tUuLFWwl6RwEjEoVAP0Y+I6Ke3QTYeCkoFop45ljluvncofzj2isjDylzM6NN63I
+	wMy6vgE/Kb1h4WKZjFvkQ9jHpTGtallFX0
+X-Received: by 2002:a05:6000:184d:b0:439:b203:7711 with SMTP id ffacd0b85a97d-43b642405cfmr11964248f8f.3.1774128533266;
+        Sat, 21 Mar 2026 14:28:53 -0700 (PDT)
 Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b644bd38bsm16945667f8f.10.2026.03.21.14.28.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b644bd0dcsm15334856f8f.11.2026.03.21.14.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2026 14:28:37 -0700 (PDT)
-Date: Sat, 21 Mar 2026 22:28:35 +0100
+        Sat, 21 Mar 2026 14:28:52 -0700 (PDT)
+Date: Sat, 21 Mar 2026 22:28:51 +0100
 From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH 1/3] pack-write: add explanation to promisor file content
-Message-ID: <9bba49563e809634e223c3b9d75496cde94707db.1774125871.git.lorenzo.pegorari2002@gmail.com>
+Subject: [GSoC PATCH 2/3] pack-write: add helper to fill promisor file after
+ repack
+Message-ID: <3c0702f81b3e4a57cd38284ab90f8277da3fcd40.1774125871.git.lorenzo.pegorari2002@gmail.com>
 References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,38 +76,108 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
 
-In the entire codebase there is no explanation as to why the ".promisor"
-files may contain the ref names (and their associated hashes) that were
-fetched at the time the corresponding packfile was downloaded.
+Create a `copy_all_promisor_files()` helper function used to copy the
+contents of all ".promisor" files in a `repository` inside another
+".promisor" file.
 
-Add comment explaining that these pieces of information are used only for
-debugging reasons, and how they can be used while debugging.
+This function can be used to preserve the contents of all ".promisor"
+files inside a new ".promisor" file, for example when a repack happens.
+
+This function is written in such a way so that it will read all the
+".promisor" files inside the given `repository` line by line, and copy
+only the lines that are not already present in the destination file. This
+is done to avoid copying the same lines multiple times that may come from
+multiple (redundant) packfiles. A better way to achieve this might be (is
+definitely) possible.
 
 Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
- pack-write.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ pack-write.c | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pack.h       |  1 +
+ 2 files changed, 63 insertions(+)
 
 diff --git a/pack-write.c b/pack-write.c
-index 83eaf88541..6a2023327e 100644
+index 6a2023327e..3620e6bd02 100644
 --- a/pack-write.c
 +++ b/pack-write.c
-@@ -603,6 +603,15 @@ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_
- 	int i, err;
- 	FILE *output = xfopen(promisor_name, "w");
+@@ -621,3 +621,65 @@ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_
+ 	if (err)
+ 		die(_("could not write '%s' promisor file"), promisor_name);
+ }
++
++void copy_all_promisor_files(struct repository *repo, const char *promisor_name)
++{
++	struct strbuf promisor_source_name = STRBUF_INIT;
++	struct strbuf read_source = STRBUF_INIT, read_dest = STRBUF_INIT;
++	struct strbuf write_dest = STRBUF_INIT;
++	int err;
++
++	FILE *dest = xfopen(promisor_name, "r+");
++
++	struct packed_git *p;
++	repo_for_each_pack(repo, p) {
++		if (!p->pack_promisor)
++			continue;
++
++		strbuf_reset(&promisor_source_name);
++		strbuf_addstr(&promisor_source_name, p->pack_name);
++		strbuf_strip_suffix(&promisor_source_name, ".pack");
++		strbuf_addstr(&promisor_source_name, ".promisor");
++		FILE *source = xfopen(promisor_source_name.buf, "r");
++
++		/*
++		 * For each line of the promisor source file, check if it already
++		 * is in the promisor dest file. If not, add it to write_dest, so
++		 * that it will be written in the dest file.
++		 */
++		while (strbuf_getline(&read_source, source) != EOF) {
++			if (fseek(dest, 0L, SEEK_SET))
++				die_errno(_("fseek failed"));
++			int is_source_in_dest = 0;
++			while (strbuf_getline(&read_dest, dest) != EOF) {
++				if (!strbuf_cmp(&read_source, &read_dest)) {
++					is_source_in_dest = 1;
++					break;
++				}
++			}
++			if (!is_source_in_dest) {
++				strbuf_addbuf(&write_dest, &read_source);
++				strbuf_addstr(&write_dest, "\n");
++			}
++		}
++
++		if (write_dest.len) {
++			strbuf_strip_suffix(&write_dest, "\n");
++			if (fseek(dest, 0L, SEEK_END))
++				die_errno(_("fseek failed"));
++			fprintf(dest, "%s\n", write_dest.buf);
++			fflush(dest);
++			strbuf_reset(&write_dest);
++		}
++
++		err = ferror(source);
++		err |= fclose(source);
++		if (err)
++			die(_("could not read '%s' promisor file"), promisor_source_name.buf);
++	}
++
++	err = ferror(dest);
++	err |= fclose(dest);
++	if (err)
++		die(_("could not write '%s' promisor file"), promisor_name);
++}
+diff --git a/pack.h b/pack.h
+index ec76472e49..509e90edba 100644
+--- a/pack.h
++++ b/pack.h
+@@ -105,6 +105,7 @@ char *index_pack_lockfile(struct repository *r, int fd, int *is_well_formed);
+ struct ref;
  
-+	/*
-+	* Write in the .promisor file the ref names and associated hashes,
-+	* obtained by fetch-pack, at the point of generation of the
-+	* corresponding packfile. These pieces of info are only used to make
-+	* it easier to debug issues with partial clones, as we can identify
-+	* what refs (and their associated hashes) were fetched at the time
-+	* the packfile was downloaded, and if necessary, compare those hashes
-+	* against what the promisor remote reports now.
-+	*/
- 	for (i = 0; i < nr_sought; i++)
- 		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
- 			sought[i]->name);
+ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
++void copy_all_promisor_files(struct repository *repo, const char *promisor_name);
+ 
+ char *write_rev_file(struct repository *repo,
+ 		     const char *rev_name,
 -- 
 2.43.0
 
