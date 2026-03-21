@@ -1,143 +1,158 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9050E19C566
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 17:47:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865653C07A
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 18:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774115260; cv=none; b=itqB0GlT/80bwWySScbSb6iEz8klD+fdWKG+7LqDYBT8gnpAnV2UKjXvBgpZi+4MDcPRbDgZdjIAdqH1MCSEX6+KLnJeYFHmxXEh5isQC93bxptM2UvajAL9HdBbgpdcKO1c3F2z22les5vGyIhtQhL9HyANmlHyr/dVEER1teg=
+	t=1774117625; cv=none; b=CuWKKWM5HN12vgpn52IZF/iGMmvguRy+BnQzLjmH6IWWHH18OLHEf3fEK69tdwa6y6oNpY264HnmheKx7x8S8BK0ZS5uL2aiSFeNwq4xPq2XoBhyxkUr7gs+mV1Vr2Ft523qIdjxS0rKjODvU5/1fSdCE4JQylZRbklpTIwZEWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774115260; c=relaxed/simple;
-	bh=LKo3Vv6U+2NEKC37MzbOLHe0HTHQzCqDF1wa5aM8MTo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppA9AIIFqsj6NekGpquCpxk4KTHUL7bg5gLh9++6berrRTtAFosrcSfurfgotCqKcpXCAg5jo+zA5WHGJt810VR7zviJGv8MFNvf65DV64Yax75jfscuqUZhZ+mm5V7qoo9ACBwF4N4JWK8hg7F/WgCdhajTdN8pwLs1gEd6ujQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQWQO2Wx; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774117625; c=relaxed/simple;
+	bh=Zl1pgBaDwQJj3VKDXSV5XtW6hD28gCvLyt7pOvCChM8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VAsCdalRrpdzbjURx5h7kBiCoeVvQeEuEvAofVH1Netg+M+HD91mXgcKvNl7pSkQZPEW3d21AjjaSp9WM5Y6ZtK8voy7kaLmFCIBzz8k7qxeZhBUoqS5YPwnNt5tNDzdKN9H38h4ZBWsRij1FxJSU7TTXv4GYSgYCsE/d3Hd/QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UwDyFB7J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SaNXkfHj; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQWQO2Wx"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-35a09e0dd63so2029644a91.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 10:47:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774115258; x=1774720058; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=13ZFPts41Qqc5sJTN4efZzhoFpSqSngJQQRAWy6pfhY=;
-        b=MQWQO2WxuguXnHQQ9DYfQBzFe8RXnsP5xuuGVccRF+Z1HxOGoFWnUY/KmI0V6inNFE
-         aLFBO2qa09KYK4QwMX0MSt9sODa0rHRwampt5coquXVNhQVYcGzDnHA0hcnjJh5TC5cn
-         Br/EGK976AWsCZCfyzrC9T2salec19naipBQiGK3LsciznfiFDdwIelpBI+jW9hKJdbP
-         cjngmVcAdA6knOswdTmf6ymSr7K7i7tarpoZsm8UKfAmgkhqlZS4rUrPm4ZzSHSay5ss
-         L7l877z+mC3n03Vh5RmfdU7BqApX9MqtZzT/nZNXrdVh4JMVup1Ikd8xxUpfHDYNh2LQ
-         9q2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774115258; x=1774720058;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=13ZFPts41Qqc5sJTN4efZzhoFpSqSngJQQRAWy6pfhY=;
-        b=mR3iJv0gFCXcIeGAFlh8zwJsCtSXzb9GwK76Tph+91pG1HCRQC0oEXnKZIdITQh9pc
-         8Yp31Mh/lDLCEIFufDo0x8QYvlkBnVTHTZSDgMJ1kvcmAnx2KDmLmhAa5s21XNE9Dxga
-         8wMj+T8BUurF4XACql6bNs1C0Tz813SBhNmBKYOE/eIHVOd0lioiO1gZXi1jGbf3K+dd
-         3nbZCV1vaPp2Mm6lhyFEkjhFYwdZquEcf2svxI8XpgDq52EsDZw+SdEkvI3B1O9848jr
-         br/xdAyuB4MG3rVh6tOUgpsEBZaNGKjJHg1TemzsWnL0jcLnmzD3anIAfkjrgr+1B7v0
-         xM+w==
-X-Gm-Message-State: AOJu0YwhFNEjTxRpw1imagp2zjElQaohX557RhN+xqcXWqnrnWFOPK0a
-	j6klt+a0c4zIbRXxxNfWHYp7+ASYqE0YwJYmzuubzHpwDwr0yIwC+xj3fCjtquzyCP8=
-X-Gm-Gg: ATEYQzziJyRiMkxTASAJOftW2yS+YyDtJ/qLvMQWG85l7OkrOCUZ51VRg58Z7h7xwvj
-	jr1I8m6aBB7sgAL4yZWOq1ClF4EtGZzgSxjXqDfYyIwQ+JtxTU8jDZpyPklHBWVfi3mfMpo52CH
-	+/Vd9BslGPCmPppV4582ibpwq8GmikdMizVj2loviKykoIfCZeaW0hHTqJzkwWkAH2xtETwrM15
-	pAqAfweuWFoQHLaYHNRLbrrf85AXh9babro3s/c1bEnd8ggIX7XebR+myRO86WJdQAd5XME0v1V
-	7hXB0ML7PAjmdBU0UMq/5adbCX5GH25joEdlp7aVpekcUJpQhrZheKeoeoh7NTimwHqqVrlNqBk
-	ikItSPd/qyTRuJRGi9srJJtxlRghvC0VAqLpPBtEOFrT8vY7wf6/p+g9Ct8YL6/eonlqjV42ijm
-	6fMOA7q9hZlt1LBGvvBptoapAq1mNLbBMHzkBcMvwYNM48L4Ah9MNPZk02zdQyOaws1AbzqNrIk
-	jTcQXXAHYxV8RTi+X5emwg0pfWvPZS3wYyZ6AdnSWm0K/Oj5MLlyZx71g==
-X-Received: by 2002:a17:902:da8d:b0:2b0:5903:140a with SMTP id d9443c01a7336-2b0826c731amr66877485ad.10.1774115258372;
-        Sat, 21 Mar 2026 10:47:38 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:88fa:aa1e:45:876d:7ee7:e4df])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0836955dbsm77137125ad.72.2026.03.21.10.47.35
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 21 Mar 2026 10:47:37 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	stolee@gmail.com,
-	r.siddharth.shrimali@gmail.com
-Subject: [PATCH v2] backfill: handle unexpected arguments
-Date: Sat, 21 Mar 2026 23:17:30 +0530
-Message-ID: <20260321174730.34762-1-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <xmqq341tdbal.fsf@gitster.g>
-References: <xmqq341tdbal.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UwDyFB7J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SaNXkfHj"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 606291D00035;
+	Sat, 21 Mar 2026 14:27:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sat, 21 Mar 2026 14:27:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774117622;
+	 x=1774204022; bh=j+ibsF7PHfh9i5LG8RboyCDJa4x7cYDfYe7bca4P0Dw=; b=
+	UwDyFB7JxYLOWr9Ag1XMjtQuU4HMTD+jgvvCvsQnqxz/IgUC0zXGGZ6f5EXz8KFk
+	bmxh3r9kHzewPXMmdRRX3bHIJCLYhQzBCynBRkFLgupeQuNl7bNMc0jvuGlw8sVT
+	Rg/8nfzSX1Tmnv5o/cL+MccJtZ6X01PKS662nmEp7ldOKL44qWqrSR6p4EXXGz2k
+	WVdr4fIfmyq6mDfx7CPh34iVSp1aw8ZLLQ8EDtf6F0FhPvAzKVRL5Xq/aDwMyJ5M
+	Bps0qRvAEy65GRAbJq/2yFkGzoZjkCif9dWY32IOxnhpdkMVDbV0P+T7LunbE/5H
+	fiuLdRMoBJJ2aum4lkE2Kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774117622; x=
+	1774204022; bh=j+ibsF7PHfh9i5LG8RboyCDJa4x7cYDfYe7bca4P0Dw=; b=S
+	aNXkfHjp/qGtFYPtGgqm5MJxkRDZxHRvhgqlgYYIE5PjOGGogCFKcE51KESMd2ie
+	10JIc58+wlyHL2CuzeEvucR0JnRmcLzi9RjupvLIDuUN/r9wzizHpBwsQtTaLHCK
+	R7xQbz32pq5H/FtZUcsrpFEVyYCioVyanwvV77vi7ibccmUYc6qf8wjRKXhKOLrX
+	TXJGxH9d0dxc4++GsVPq6SLYLEJa4syuxr/QPKehUBChLz8wV6RmHOHSaoT8yXaD
+	hEBi+Ajg+sulRlYMCP73BReq8iLThiLju2bsw/YNiFFF2NReS0hi+q0JiJsnKhhZ
+	OPQPR1Jp132Dvc1BfAHkg==
+X-ME-Sender: <xms:9eK-aT2SFmx8ZQLU6XS3VCGdRMnsl34CWktwvpPhN7PO4UX-v5I-pA>
+    <xme:9eK-aVxTrPr02TLSbDXmj1Z31gwMr0fgOQ2sOvZ5hhytlN2pq2wy_tWJz7679-ODi
+    12Ev_OT6JwX4xb8fTZmRkS3laOn8fmAKy0WuG4J_4SHJYZ945ZT3A>
+X-ME-Received: <xmr:9eK-aduA13ecnmErLownfx9PMiI8xvBkO-TKqM73KqUaMscHzXsjOeeh_NDwU5lyeDBhAj-jIrlfIhlKE3Wog1Ha3qZOsCU5Mg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudefheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    oheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepohhrghgrughssehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepohhrghgrugdrshhhrghnvghhsegruhguihhotgho
+    uggvshdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:9eK-afwOWDzh-ideBEJv5r2bv9cOaxYiYquWew6b6zVY21d0tkdP2Q>
+    <xmx:9eK-aYCYuo2VrOao4bkPOmpBr2IvEzXkT-NGG2C5lomULTT9zjQfpA>
+    <xmx:9eK-aVcNpiKq9octskdhi4f1Ciy0hI9EdvaTHGtaVx_UU4uJ1Gk7Lg>
+    <xmx:9eK-aalO7LwUSvaKM4yaCknp6uGliBKRc-6U31NHWz3Zj_9lpHy_0Q>
+    <xmx:9uK-aYqqIFSYD_sD9ndSU5kYRIm-kwyZd4S50kne0bLWCwsW8wVSHluB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 Mar 2026 14:27:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+  Orgad Shaneh <orgads@gmail.com>,
+  Orgad Shaneh <orgad.shaneh@audiocodes.com>
+Subject: Re: [PATCH 2/2] fetch: clobber existing tags with --prune-tags
+In-Reply-To: <b444fa7af9f39960652209143c9845a47efd58e1.1771187016.git.gitgitgadget@gmail.com>
+	(Orgad Shaneh via GitGitGadget's message of "Sun, 15 Feb 2026 20:23:36
+	+0000")
+References: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com>
+	<b444fa7af9f39960652209143c9845a47efd58e1.1771187016.git.gitgitgadget@gmail.com>
+Date: Sat, 21 Mar 2026 11:26:59 -0700
+Message-ID: <xmqq1phdavik.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-git backfill takes no non-option arguments. However, if extra
-arguments are passed with git backfill, parse_options() leaves
-them in argc and the command ignores them silently, giving the
-user no indication that something is wrong.
+"Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Add a check after parse_options() to call usage_with_options()
-if any unexpected arguments remain. To ensure the user understands
-why the command failed, print an error message specifying the unknown
-argument before showing the usage string. This is consistent with how
-other Git commands such as git-bugreport handle this situation.
+> From: Orgad Shaneh <orgad.shaneh@audiocodes.com>
+>
+> This was documented but not implemented.
 
-Also, add a test in t5620 to ensure the unexpected arguments are
-rejected with the correct error message.
+And instead what did the command do / how did the command behave?
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
-Changes in v2:
-- Dropped the word "currently" from the commit message as per 
-  Junio's feedback.
-- Added an `error()` call before `usage_with_options()` to state which 
-  argument was unknown, following the pattern in `git bugreport`.
-- Added a test case in `t5620-backfill.sh` to verify the new error output.
+It also is curious when it was "broken".  It could be that it was
+broken from day one when 97716d21 (fetch: add a --prune-tags option
+and fetch.pruneTags config, 2018-02-09) was written, c1a7902f (Merge
+branch 'ab/fetch-prune', 2018-03-06) merged it, and Git 2.17 was
+shipped with it, but knowing Ævar (by the way where is he these
+days???), I somehow doubt it.
 
- builtin/backfill.c  | 5 +++++
- t/t5620-backfill.sh | 5 +++++
- 2 files changed, 10 insertions(+)
+And unless it was broken from day one, we must find out if the
+change in behaviour was deliberate, in which case it would be the
+doucmentation and not the implementation that needs fixing.
 
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index e9a33e81be..5a333afde0 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -135,6 +135,11 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 
- 	argc = parse_options(argc, argv, prefix, options, builtin_backfill_usage,
- 			     0);
-+	
-+	if (argc) {
-+		error(_("unknown argument `%s'"), argv[0]);
-+		usage_with_options(builtin_backfill_usage, options);
-+	}
- 
- 	repo_config(repo, git_default_config, NULL);
- 
-diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index 58c81556e7..d74e1be74b 100755
---- a/t/t5620-backfill.sh
-+++ b/t/t5620-backfill.sh
-@@ -176,6 +176,11 @@ test_expect_success 'backfill --sparse without cone mode (negative)' '
- 	test_line_count = 12 missing
- '
- 
-+test_expect_success 'backfill rejects unexpected arguments' '
-+	test_must_fail git -C backfill1 backfill unexpected-arg 2>err &&
-+	grep "unknown argument .*unexpected-arg" err
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.51.2
+> In the flag description:
+> prune local tags no longer on remote *and clobber changed tags*
+>
+> In the documentation:
+> ... to prune local tags that don't exist on the remote, *and
+> force-update those tags that differ*.
+> ...
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 31df7faf56..4d29043baf 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1092,7 +1092,7 @@ test_force_fetch_tag () {
+>  	tag_type_description=$1
+>  	tag_args=$2
+>  
+> -	test_expect_success "fetch will not clobber an existing $tag_type_description without --force" "
+> +	test_expect_success "fetch will not clobber an existing $tag_type_description without --force or --prune-tags" "
+>  		mk_test testrepo heads/main &&
+>  		mk_child testrepo child1 &&
+>  		mk_child testrepo child2 &&
+> @@ -1108,7 +1108,13 @@ test_force_fetch_tag () {
+>  			git -C ../child1 fetch origin '+refs/tags/*:refs/tags/*' &&
+>  			git tag $tag_args testTag HEAD^ &&
+>  			test_must_fail git -C ../child1 fetch origin tag testTag &&
+> -			git -C ../child1 fetch --force origin tag testTag
+> +			git -C ../child1 fetch --force origin tag testTag &&
+> +			git tag $tag_args testTag HEAD &&
+> +			test_must_fail git -C ../child1 fetch origin tag testTag &&
+> +			git -C ../child1 fetch --prune-tags origin tag testTag &&
+> +			git tag $tag_args testTag HEAD^ &&
+> +			test_must_fail git -C ../child1 fetch origin tag testTag &&
+> +			git -C ../child1 -c fetch.prunetags=true fetch origin tag testTag
+>  		)
+>  	"
+>  }
+
+None of the steps we see in the added test do not seem to check that
+--prune-tags does clobber existing tag that no longer exists on the
+other side.  It only checks the "git fetch" command exits with
+status 0, but does not see if the tag actually went away after the
+operation is done.
 
