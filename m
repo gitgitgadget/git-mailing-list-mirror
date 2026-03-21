@@ -1,158 +1,132 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865653C07A
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 18:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9611925CC74
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 18:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774117625; cv=none; b=CuWKKWM5HN12vgpn52IZF/iGMmvguRy+BnQzLjmH6IWWHH18OLHEf3fEK69tdwa6y6oNpY264HnmheKx7x8S8BK0ZS5uL2aiSFeNwq4xPq2XoBhyxkUr7gs+mV1Vr2Ft523qIdjxS0rKjODvU5/1fSdCE4JQylZRbklpTIwZEWo=
+	t=1774117975; cv=none; b=KWWi4zq8L+eqQ4tpsFN74O4nYncG4+kc2DfVdWYZq2w2wPnOZ/RUDZ+moaSE5yZpqAWpW04fZXNQ75LPAGubHlt7qtR/1kDE76/sZNAP2i5yz142MOyUroJwKYfoF59hVe5eSGzzkMfePgtgNWKFguOSPorlEMmfkYrQRmIikKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774117625; c=relaxed/simple;
-	bh=Zl1pgBaDwQJj3VKDXSV5XtW6hD28gCvLyt7pOvCChM8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VAsCdalRrpdzbjURx5h7kBiCoeVvQeEuEvAofVH1Netg+M+HD91mXgcKvNl7pSkQZPEW3d21AjjaSp9WM5Y6ZtK8voy7kaLmFCIBzz8k7qxeZhBUoqS5YPwnNt5tNDzdKN9H38h4ZBWsRij1FxJSU7TTXv4GYSgYCsE/d3Hd/QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UwDyFB7J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SaNXkfHj; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774117975; c=relaxed/simple;
+	bh=+dY0eVvm/MqkC8pll17i4c/D+i8qKBKe1qOplrvQWOU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ftwKX7ImJzc6oJVOx57j6eYlTuz3uzN5xvaQPzm0CRcyYsW1dB3C0OmUNI/ujk0cEA/gKD5IpiMvDbFfXhXQK6xAfpXIkCI4PDH3FTxgA4CblpYH9uhPTg5s1TJOBrRwTjUbGfXgdxvLeoUB7wfC6mFe4nFTCoCv2T9FJmirkyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=USc6wmeA; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=P/i22b1g; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UwDyFB7J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SaNXkfHj"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 606291D00035;
-	Sat, 21 Mar 2026 14:27:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sat, 21 Mar 2026 14:27:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1774117622;
-	 x=1774204022; bh=j+ibsF7PHfh9i5LG8RboyCDJa4x7cYDfYe7bca4P0Dw=; b=
-	UwDyFB7JxYLOWr9Ag1XMjtQuU4HMTD+jgvvCvsQnqxz/IgUC0zXGGZ6f5EXz8KFk
-	bmxh3r9kHzewPXMmdRRX3bHIJCLYhQzBCynBRkFLgupeQuNl7bNMc0jvuGlw8sVT
-	Rg/8nfzSX1Tmnv5o/cL+MccJtZ6X01PKS662nmEp7ldOKL44qWqrSR6p4EXXGz2k
-	WVdr4fIfmyq6mDfx7CPh34iVSp1aw8ZLLQ8EDtf6F0FhPvAzKVRL5Xq/aDwMyJ5M
-	Bps0qRvAEy65GRAbJq/2yFkGzoZjkCif9dWY32IOxnhpdkMVDbV0P+T7LunbE/5H
-	fiuLdRMoBJJ2aum4lkE2Kw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774117622; x=
-	1774204022; bh=j+ibsF7PHfh9i5LG8RboyCDJa4x7cYDfYe7bca4P0Dw=; b=S
-	aNXkfHjp/qGtFYPtGgqm5MJxkRDZxHRvhgqlgYYIE5PjOGGogCFKcE51KESMd2ie
-	10JIc58+wlyHL2CuzeEvucR0JnRmcLzi9RjupvLIDuUN/r9wzizHpBwsQtTaLHCK
-	R7xQbz32pq5H/FtZUcsrpFEVyYCioVyanwvV77vi7ibccmUYc6qf8wjRKXhKOLrX
-	TXJGxH9d0dxc4++GsVPq6SLYLEJa4syuxr/QPKehUBChLz8wV6RmHOHSaoT8yXaD
-	hEBi+Ajg+sulRlYMCP73BReq8iLThiLju2bsw/YNiFFF2NReS0hi+q0JiJsnKhhZ
-	OPQPR1Jp132Dvc1BfAHkg==
-X-ME-Sender: <xms:9eK-aT2SFmx8ZQLU6XS3VCGdRMnsl34CWktwvpPhN7PO4UX-v5I-pA>
-    <xme:9eK-aVxTrPr02TLSbDXmj1Z31gwMr0fgOQ2sOvZ5hhytlN2pq2wy_tWJz7679-ODi
-    12Ev_OT6JwX4xb8fTZmRkS3laOn8fmAKy0WuG4J_4SHJYZ945ZT3A>
-X-ME-Received: <xmr:9eK-aduA13ecnmErLownfx9PMiI8xvBkO-TKqM73KqUaMscHzXsjOeeh_NDwU5lyeDBhAj-jIrlfIhlKE3Wog1Ha3qZOsCU5Mg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudefheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    oheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepohhrghgrughssehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepohhrghgrugdrshhhrghnvghhsegruhguihhotgho
-    uggvshdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9eK-afwOWDzh-ideBEJv5r2bv9cOaxYiYquWew6b6zVY21d0tkdP2Q>
-    <xmx:9eK-aYCYuo2VrOao4bkPOmpBr2IvEzXkT-NGG2C5lomULTT9zjQfpA>
-    <xmx:9eK-aVcNpiKq9octskdhi4f1Ciy0hI9EdvaTHGtaVx_UU4uJ1Gk7Lg>
-    <xmx:9eK-aalO7LwUSvaKM4yaCknp6uGliBKRc-6U31NHWz3Zj_9lpHy_0Q>
-    <xmx:9uK-aYqqIFSYD_sD9ndSU5kYRIm-kwyZd4S50kne0bLWCwsW8wVSHluB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Mar 2026 14:27:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-  Orgad Shaneh <orgads@gmail.com>,
-  Orgad Shaneh <orgad.shaneh@audiocodes.com>
-Subject: Re: [PATCH 2/2] fetch: clobber existing tags with --prune-tags
-In-Reply-To: <b444fa7af9f39960652209143c9845a47efd58e1.1771187016.git.gitgitgadget@gmail.com>
-	(Orgad Shaneh via GitGitGadget's message of "Sun, 15 Feb 2026 20:23:36
-	+0000")
-References: <pull.2200.git.git.1771187016.gitgitgadget@gmail.com>
-	<b444fa7af9f39960652209143c9845a47efd58e1.1771187016.git.gitgitgadget@gmail.com>
-Date: Sat, 21 Mar 2026 11:26:59 -0700
-Message-ID: <xmqq1phdavik.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="USc6wmeA";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="P/i22b1g"
+DKIM-Signature: a=rsa-sha256; b=USc6wmeAkUhCWELF4/lm89Kvl6Wk99tiYmZ8Um7GXVZ1X2ZnpwmqHy88CmoINd62H21rvzzjyNHvpe9MzPGpOUzrx49lyliqnu2gTB+U6dBA4gYt5lWEGWkz7Wt4duqloU/oPVkTk0pg/HroUjx1Zb7MYOGKVq4Wv216beYFKDZxstE+baKypWfDDU3O02PQIjYlL1S5A1Gso8kyUNOvu2qsq4uxT2BfavaDzAXAJyUx6GvdjaOnH8emTbf0suJmbV+olnLVOx68/KrVROgga4UPAJtFU+xk9y7Ec5imKI9njh1nnUL0B6h7ylaBUgxLNGOe0zNDdVKoosMbrElxRA==; s=purelymail3; d=malon.dev; v=1; bh=+dY0eVvm/MqkC8pll17i4c/D+i8qKBKe1qOplrvQWOU=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=P/i22b1gdRi+vcGAQGqfkDCCtKJuK0AQVrXZk9NuKO31LIBOI/Wiv+seECUeCIiDTswTBavVzNOVLQ7L9PAZplyNtdgMBjzya7l+RYIiTO7BqPc9MKGbh06Y5R2IDAdYtLZP75P4exTfQqZ11315AhauUQvXh0Jg5wOfjAXEPwCxbaFg/A5GXjBZfG9G86nK1n733Am51i/Vkio4z3WOyeCZnkmX8Q4/kpEm19kYOgFbJdhH0mAEgxAbwbiF03qJFeskWg4tX19AXR+4VCkokvDG7fRWudexLuAiLe4xigopNudGyao18fEi6Jz/JMa7FPDYpDVKLJG2sEkQ3qNlbw==; s=purelymail3; d=purelymail.com; v=1; bh=+dY0eVvm/MqkC8pll17i4c/D+i8qKBKe1qOplrvQWOU=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1017693761;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sat, 21 Mar 2026 18:32:50 +0000 (UTC)
+Message-ID: <0b4dee1e-5a85-4863-9538-8c3bbf8e9aef@malon.dev>
+Date: Sun, 22 Mar 2026 02:32:47 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] t1900: cover linked worktrees and separate git dirs
+Content-Language: en-US
+To: Jialong Wang <jerrywang183@yahoo.com>, git@vger.kernel.org
+References: <20260318203547.39972-1-jerrywang183.ref@yahoo.com>
+ <20260318203547.39972-1-jerrywang183@yahoo.com>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <20260318203547.39972-1-jerrywang183@yahoo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Jialong,
 
-> From: Orgad Shaneh <orgad.shaneh@audiocodes.com>
->
-> This was documented but not implemented.
+Thanks for the patch.
 
-And instead what did the command do / how did the command behave?
+On 3/19/26 04:35, Jialong Wang wrote:
+> Add repo-info coverage for repositories accessed through a linked\nworktree and through a worktree created with --separate-git-dir.\n\nThese layouts are already supported by the current implementation, but\nare not exercised by t1900-repo-info.sh yet. Cover both the lines and\nnul output formats for layout.bare and layout.shallow in these cases.
+> 
+> Signed-off-by: Jialong Wang <jerrywang183@yahoo.com>
+> ---
 
-It also is curious when it was "broken".  It could be that it was
-broken from day one when 97716d21 (fetch: add a --prune-tags option
-and fetch.pruneTags config, 2018-02-09) was written, c1a7902f (Merge
-branch 'ab/fetch-prune', 2018-03-06) merged it, and Git 2.17 was
-shipped with it, but knowing Ævar (by the way where is he these
-days???), I somehow doubt it.
+I noticed that line breaks in the submitted data are escaped as \n 
+characters. Even if you send the patch using a different tool, you 
+should still check the mailing list to see how it looks, right? ;)
 
-And unless it was broken from day one, we must find out if the
-change in behaviour was deliberate, in which case it would be the
-doucmentation and not the implementation that needs fixing.
+>   t/t1900-repo-info.sh | 39 +++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 39 insertions(+)
+> 
+> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+> index a9eb07abe8..f85ed232c2 100755
+> --- a/t/t1900-repo-info.sh
+> +++ b/t/t1900-repo-info.sh
+> @@ -69,6 +69,45 @@ test_repo_info 'object.format = sha1 is retrieved correctly' \
+>   test_repo_info 'object.format = sha256 is retrieved correctly' \
+>   	'git init --object-format=sha256' 'sha256' 'object.format' 'sha256'
+>   
+> +test_expect_success 'setup linked worktree' '
+> +	git init main &&
+> +	git -C main worktree add ../linked
+> +'
+> +
+> +test_expect_success 'linked worktree layout values are retrieved correctly in lines format' '
+> +	cat >expect <<-\EOF &&
+> +	layout.bare=false
+> +	layout.shallow=false
+> +	EOF
+> +	git -C linked repo info layout.bare layout.shallow >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'linked worktree layout values are retrieved correctly in nul format' '
+> +	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expect &&
+> +	git -C linked repo info --format=nul layout.bare layout.shallow >actual &&
+> +	test_cmp_bin expect actual
+> +'
+> +
+> +test_expect_success 'setup repository created with --separate-git-dir' '
+> +	git init --separate-git-dir=separate.git separate-worktree
+> +'
+> +
+> +test_expect_success 'separate-git-dir layout values are retrieved correctly in lines format' '
+> +	cat >expect <<-\EOF &&
+> +	layout.bare=false
+> +	layout.shallow=false
+> +	EOF
+> +	git -C separate-worktree repo info layout.bare layout.shallow >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'separate-git-dir layout values are retrieved correctly in nul format' '
+> +	printf "layout.bare\nfalse\0layout.shallow\nfalse\0" >expect &&
+> +	git -C separate-worktree repo info --format=nul layout.bare layout.shallow >actual &&
+> +	test_cmp_bin expect actual
+> +'
+> +
+>   test_expect_success 'values returned in order requested' '
+>   	cat >expect <<-\EOF &&
+>   	layout.bare=false
 
-> In the flag description:
-> prune local tags no longer on remote *and clobber changed tags*
->
-> In the documentation:
-> ... to prune local tags that don't exist on the remote, *and
-> force-update those tags that differ*.
-> ...
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 31df7faf56..4d29043baf 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1092,7 +1092,7 @@ test_force_fetch_tag () {
->  	tag_type_description=$1
->  	tag_args=$2
->  
-> -	test_expect_success "fetch will not clobber an existing $tag_type_description without --force" "
-> +	test_expect_success "fetch will not clobber an existing $tag_type_description without --force or --prune-tags" "
->  		mk_test testrepo heads/main &&
->  		mk_child testrepo child1 &&
->  		mk_child testrepo child2 &&
-> @@ -1108,7 +1108,13 @@ test_force_fetch_tag () {
->  			git -C ../child1 fetch origin '+refs/tags/*:refs/tags/*' &&
->  			git tag $tag_args testTag HEAD^ &&
->  			test_must_fail git -C ../child1 fetch origin tag testTag &&
-> -			git -C ../child1 fetch --force origin tag testTag
-> +			git -C ../child1 fetch --force origin tag testTag &&
-> +			git tag $tag_args testTag HEAD &&
-> +			test_must_fail git -C ../child1 fetch origin tag testTag &&
-> +			git -C ../child1 fetch --prune-tags origin tag testTag &&
-> +			git tag $tag_args testTag HEAD^ &&
-> +			test_must_fail git -C ../child1 fetch origin tag testTag &&
-> +			git -C ../child1 -c fetch.prunetags=true fetch origin tag testTag
->  		)
->  	"
->  }
+The patch itself looks fine. The 'git repo info' command seems to be a 
+relatively new one, so I think adding a test script is necessary...
 
-None of the steps we see in the added test do not seem to check that
---prune-tags does clobber existing tag that no longer exists on the
-other side.  It only checks the "git fetch" command exits with
-status 0, but does not see if the tag actually went away after the
-operation is done.
+...except one thing to mention:
+
+ > +test_expect_success 'setup linked worktree' '
+ > +	git init main &&
+ > +	git -C main worktree add ../linked
+
+Since the main repo here is an empty, can a linked worktree be created? 
+Here, HEAD does not point to a valid object, and there is no commit 
+available checkout. I think it would be better to create a commit using 
+test_commit first.
+
+Regards,
+
+Yuchen
+
 
