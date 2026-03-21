@@ -1,146 +1,108 @@
-Received: from 9.mo581.mail-out.ovh.net (9.mo581.mail-out.ovh.net [46.105.60.248])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911A2225417
-	for <git@vger.kernel.org>; Sat, 21 Mar 2026 01:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.60.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A962701D1
+	for <git@vger.kernel.org>; Sat, 21 Mar 2026 03:16:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774055640; cv=none; b=b/kpAydOV3rOM8XyrBD0zDPlvQ6SwHtWFGNwiUZQw4P6EG+/5/j/xF656uqqN9dfB5bJttdHNjYH0cMb8zD8oK8+nSwcor2Y+3szzqZyYrhkJVukN5tp2PZ71yEU/27hcCaBlwJE3Hj/zdg4wmPDyKfgOzNsWh892gB9XLboTWs=
+	t=1774063012; cv=none; b=qPaHQwkOmD8Qu0H3wLXfUpFr7neQ+Osb3ju1rCk3Fc1ylWu22WSjXqki8E5Y5VE+dtavfrQYmaLXcF7jsSYOy7UrVCaY0MZ73fAjaJzFsGvbGxfRrXqpfCovjlHUB1yixsiNRauIszdZWWZ930G9mv2X+lQOip2TmA9B/kRZADk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774055640; c=relaxed/simple;
-	bh=Ya5l+AWtx3ahMS1CT1ozOXfJ73mpZZXBPS9RVAWNLpE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Nmuwg4Xno7MaZDKJqpFNuUVjUDMz+CpJLsGMlf1TUAzEYGYcplQXOw74hOoE31FqY7DqZNDSqRMHQlKZi4gPv5ocNVCezcMo9k+baOEipDzrK8f+H8ngxCq17tKhs5i/akPSMWIIhfwqhUl2IMHXm/dB7A/HTUal+hNozUzG6wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de; spf=pass smtp.mailfrom=schlaraffenlan.de; arc=none smtp.client-ip=46.105.60.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schlaraffenlan.de
-Received: from director10.ghost.mail-out.ovh.net (unknown [10.110.43.217])
-	by mo581.mail-out.ovh.net (Postfix) with ESMTP id 4fcrC04NxLz5xGg
-	for <git@vger.kernel.org>; Fri, 20 Mar 2026 18:07:56 +0000 (UTC)
-Received: from ghost-submission-7d8d68f679-jwpfw (unknown [10.110.188.54])
-	by director10.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 1B6E5C1017;
-	Fri, 20 Mar 2026 18:07:56 +0000 (UTC)
-Received: from schlaraffenlan.de ([37.59.142.109])
-	by ghost-submission-7d8d68f679-jwpfw with ESMTPSA
-	id A1sXN/uMvWk0LS8A1sYYng
-	(envelope-from <kernel@schlaraffenlan.de>); Fri, 20 Mar 2026 18:07:56 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-109S003046d674b-9f68-4263-aa03-d57d77718664,
-                    578593E53A8C33563E81521E5E811B7E74F4CCB6) smtp.auth=mail@schlaraffenlan.de
-X-OVh-ClientIp:95.90.63.4
-From: Jonas Rebmann <kernel@schlaraffenlan.de>
-Date: Fri, 20 Mar 2026 19:07:52 +0100
-Subject: [PATCH] bisect: use selected alternate terms in status output
+	s=arc-20240116; t=1774063012; c=relaxed/simple;
+	bh=HF7feQB/joHzFWjKE4ZLnjK3SrWNKpw/JepkkiUmsNA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C8FC+takbmWzL/p3mNQ5tgJ3dmZMyxYqCdO2idQdTpeXA3aocy36EhEg5XuZnv9bkj75QyV9cN4SmzUQo4pv+lCswmmLAkqiPZ7x8VJnh/hZ3cCYsxQnlJ4dKgcdO/U87GeMneHLtTuTXYD0aEByJtrLhYt4yYd4AEcKNv72ryc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSAzee3E; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSAzee3E"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-82c20f1e890so700329b3a.3
+        for <git@vger.kernel.org>; Fri, 20 Mar 2026 20:16:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774063010; x=1774667810; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BFHN+V77hf9MR6uIaVsWX754DBg0VU8XCDSEPn6b+d8=;
+        b=VSAzee3E2qIDmm8KDp8zwZu5AgslGONMLZnct4J6VuKICw6RctKBw3i0gd/cOkA1vE
+         5+xuoLjRUuuH+MT8rQtEEHs6ilaAqpy18N5P98khGVLfg6liW0YptsUMaRRybSfpGev7
+         euPMFUzOn0rfAHUN30l75bbGE5eSyTYobsLoA74t2pAxOlJuTnMkhpz+cldos+669fXb
+         MbEFlvcauEdKH5+xckdj9obCKP63Ha+IztK3Zg4xFh4mm5f8b75v1Xvfd9dh+RzlBV4m
+         e/QAE3Bbcd2CrvLYxw+l+XM4vlb7Q0D8IaSPe5/T/YlDhjT1XE9ErcrWttnU30Ml0WtD
+         S6SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774063010; x=1774667810;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BFHN+V77hf9MR6uIaVsWX754DBg0VU8XCDSEPn6b+d8=;
+        b=sij+vpgoS/i/JhJVSTJPRonlh11BQ3rQxrBH3IS1Oyzot3f03kVgkNKEhgWTg7S/Hy
+         g1O8xEFfvo9NXYL/oHjo79fJNORpIYfEu4QEC30LWzZZh4okkop5Cg0e+qw65a8TSuDv
+         zHHZZBgtBKqh/70Q5yAPCQrfQfRI+Thk3gBfqlRWGCJdVTAnadk3DGO7fbKsE60U/Ffm
+         2SIjTLC84s03P1BsNNg6Z8A46F5FKMZ/QHqKpo0YSH5nk+wd7qZCyUpKgt22DpVqE4f/
+         LpzJIg4GDvk/SSNH4JPqMV2XltT+JZ7ltV+I1Io8XKhpe/uGtwOJAPqkGAofIlQLt5jw
+         HjTg==
+X-Gm-Message-State: AOJu0YzxUNmmq760rDDSq9ymud44HtQqH1PEcPJe3A7vsOTxOHadN+48
+	9ylVSV2Uv1nW4y6GCTWGpwLD0xlEs8gIeWntvBCN1gw3vSoUr6cAke5XyqhF0PSiN70=
+X-Gm-Gg: ATEYQzwPN66a/MmPmFtdATiZ8IYUVtTxNy1CcUfLGM7Ko96UsF7vhvoMZSwznTQwijB
+	HGaQ1YFL4jx5ZyGiv8FZDj1O1DlsPBqiIqbg12nhFrErF8A8ucTWbeDzkXi4p5rVpX/j7JDlu72
+	X+IxdoVIJF+aDOA/sDepKthx+pef+7BqCfAIajdyh9t5HC5lawD1Dp0Gz4YjQp7rfm5Iw5sNfBK
+	J0oubHn6y86wnO/558KFuE24MXkAEYt5SmhK6o79BM+z6nq4VTwzzRtBClCDVORkFWxdSqjhh37
+	vrzI4HVF+rMmc1ilH8XU3oo6+PMHgPc77FYgiB0KazEPJ13+metTfPxHk5P2SYEO/zgqNysrrCR
+	ijpkLrJni/sHcqDlKfvowXFB1TFFVCxitg9zNMSqQvP2s1+oaZogXVWLdg3Ut+rd2XZgrSQpCLp
+	mm2UGNVsTHgtjfXlAY6tb3zins4jUXUqM04U0Z4J+/rRscdCyAELKHHrDt66ObEfGVv702Pgeny
+	YnsUPARlqpu9oyLAEeG+wX8ISkCpz2zBLrveObfWUfGhAaEEBksODt3rEpQ
+X-Received: by 2002:a05:6a00:1789:b0:82a:720a:4cde with SMTP id d2e1a72fcca58-82a8c23855bmr4293699b3a.2.1774063010382;
+        Fri, 20 Mar 2026 20:16:50 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:88fa:aa1e:d5f2:b805:6b52:50d3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b041059a5sm4068743b3a.53.2026.03.20.20.16.48
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 20 Mar 2026 20:16:50 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	stolee@gmail.com,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH] backfill: handle unexpected arguments
+Date: Sat, 21 Mar 2026 08:46:43 +0530
+Message-ID: <20260321031643.5185-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260320-bisect-terms-v1-1-c30c9540542a@schlaraffenlan.de>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWM0QpAQBBFf0XzbGutWvEr8sAajLK0g9Tm3w26T
- +fWOREYAyFDlUQIeBLT6gWyNAE3tX5ERb0wGG2szo1WHTG6Xe0YFlaFfNYWstKBKFvAga4vVzc
- /89HNIrwNuO8HsXSN63AAAAA=
-X-Change-ID: 20260320-bisect-terms-76036676769c
-To: git@vger.kernel.org
-Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>, 
- Jonas Rebmann <kernel@schlaraffenlan.de>
-X-Mailer: b4 0.14.3
-x-ovh-tracer-id: 10158994859933074209
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE4w9TsqG1wOqVzCEl4vj40TpiVEaBdpRB6RMF4UdMwkLcVHMM8EJetHMyqCIlYVpBhAiHdzy/uA290AnhTIlQi+ZRYqunbCLSr82tcksW6b05mqCePpEwWsYqlF1Na9uC/shzg4kWS7QPxjaBJ+8qhiUqYGGKobNLov7PP7zyRlPIUysR9LCGu0WNFOFaDfU9/7MqWw7Xa+GI3YW3VMjWUENLpq5qAJDqb+JG0MHGQLQ5bCtbX7QbbozqnDI4LxP127D7g0pZJQcGZkyQNL5+m7CDTmaN6N0P6iwZX4mMk8BlvlYB6xIFo+K2MwVDzNYIVdg1RRi6vq68hHTsuIr1SrQSw4/jXNcmB/qqhCLHxyf3qRi/P2qidu5brMCsXabePUhHxfo8oawqXbxH2KDmTLhSIfxN/s8YDZ9zV0oJQcCw3U0YiwZ88xJ2f2vdlmLwKgUTAmpMsabiNt2VzCXZ51Ccq7kSzAf/oXS+rrbr/7pDGU2M1uPry5hUOeSqf2R2wX38HEA7051opM8xbd9X/POt8BB3DtVYOBrqiDHCOS+jRPSGw4d3d9CwURzuFTa+dIAJDOlZprSBp3lRk6+8/bYB5XH47rfAH0GG/TeriHKq7PP6p3TRHDktSlVjVN0jhQnR98XRZ8hIi5M467gRB0L3wbZeSPiMeoBqiMp6i9g
+Content-Transfer-Encoding: 8bit
 
-Alternate bisect terms are helpful when the terms "good" and "bad" are
-confusing such as when bisecting for the resolution of an issue (the
-first good commit) rather than the introduction of a regression. If
-alternate terms are chosen, the terms "good" and "bad" should not be
-used in git's output to avoid confusion.
+git backfill takes no non-option arguments. However, if extra
+arguments are passed with git backfill, parse_options() leaves
+them in argc and the command currently ignores them silently,
+giving the user no indication that something is wrong.
 
-An old/new bisect should end with
-$ git bisect old
-[sha] is the first new commit
+Add a check after parse_options() to call usage_with_options()
+if any unexpected arguments remain. This prints the correct usage
+and exits with an error, consistent with how other Git commands
+such as git-gc and git-repack handle this situation.
 
-not with
-$ git bisect old
-[sha] is the first bad commit
-
-Using hardcoded good/bad vocabulary can give confusion about what action
-is required:
-
-  status: waiting for bad commit, 1 good commit known
-  $ git bisect bad
-  error: Invalid command: you're currently in a new/old bisect
-  fatal: unknown command: 'bad'
-
-To avoid confusion, use alternate terms consistently across the bisect
-output.
-
-Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 ---
- builtin/bisect.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ builtin/backfill.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 4520e585d0..ee6a2c83b8 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -465,13 +465,16 @@ static void bisect_print_status(const struct bisect_terms *terms)
- 		return;
+diff --git a/builtin/backfill.c b/builtin/backfill.c
+index e9a33e81be..0eb171478a 100644
+--- a/builtin/backfill.c
++++ b/builtin/backfill.c
+@@ -135,6 +135,9 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
  
- 	if (!state.nr_good && !state.nr_bad)
--		bisect_log_printf(_("status: waiting for both good and bad commits\n"));
-+		bisect_log_printf(_("status: waiting for both %s and %s commits\n"),
-+				  terms->term_good, terms->term_bad);
- 	else if (state.nr_good)
--		bisect_log_printf(Q_("status: waiting for bad commit, %d good commit known\n",
--				     "status: waiting for bad commit, %d good commits known\n",
--				     state.nr_good), state.nr_good);
-+		bisect_log_printf(Q_("status: waiting for %s commit, %d %s commit known\n",
-+				     "status: waiting for %s commit, %d %s commits known\n",
-+				     state.nr_good),
-+				  terms->term_bad, state.nr_good, terms->term_good);
- 	else
--		bisect_log_printf(_("status: waiting for good commit(s), bad commit known\n"));
-+		bisect_log_printf(_("status: waiting for %s commit(s), %s commit known\n"),
-+				  terms->term_good, terms->term_bad);
- }
+ 	argc = parse_options(argc, argv, prefix, options, builtin_backfill_usage,
+ 			     0);
++	
++	if (argc)
++		usage_with_options(builtin_backfill_usage, options);
  
- static int bisect_next_check(const struct bisect_terms *terms,
-@@ -1262,14 +1265,14 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- 			int rc = verify_good(terms, command.buf);
- 			is_first_run = 0;
- 			if (rc < 0 || 128 <= rc) {
--				error(_("unable to verify %s on good"
--					" revision"), command.buf);
-+				error(_("unable to verify %s on %s"
-+					" revision"), command.buf, terms->term_good);
- 				res = BISECT_FAILED;
- 				break;
- 			}
- 			if (rc == res) {
--				error(_("bogus exit code %d for good revision"),
--				      rc);
-+				error(_("bogus exit code %d for %s revision"),
-+				      rc, terms->term_good);
- 				res = BISECT_FAILED;
- 				break;
- 			}
-@@ -1314,7 +1317,7 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- 			puts(_("bisect run success"));
- 			res = BISECT_OK;
- 		} else if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
--			puts(_("bisect found first bad commit"));
-+			printf(_("bisect found first %s commit\n"), terms->term_bad);
- 			res = BISECT_OK;
- 		} else if (res) {
- 			error(_("bisect run failed: 'git bisect %s'"
-
----
-base-commit: 1eceb487f285f1efa78465e6208770318f9f4892
-change-id: 20260320-bisect-terms-76036676769c
-
-Best regards,
+ 	repo_config(repo, git_default_config, NULL);
+ 
 -- 
-Jonas Rebmann <kernel@schlaraffenlan.de>
+2.51.2
 
