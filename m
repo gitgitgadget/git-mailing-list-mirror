@@ -1,213 +1,129 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F3C34253B
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 03:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F011DE2B4
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 03:31:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774150058; cv=none; b=fgM04JYKgqBwVvQ7hCrbZlycjMn1EF5/YkC7b3Zx7QPefNnA/wvt0ly2dmTdW+rlVzNyX/kXI0F0XCMrTsHMPijaPpk0LJwvBstxx4PNagIoVsYN4XARj66hWC9or9xNAQmtSj69FL7FEzOvOQKEnPx5ZgyHzPnxuV42RVavSHs=
+	t=1774150275; cv=none; b=mAYd8Wqx30+fYJmDPCA++R4DG/IFQbB121dMDSYM2rXUuXm+ikGUWqJaSwby0sN1B5+ZQNf+iWI3/5ArIwvkoeDHKzDPm4fNC5EOU7lVAoCAjWD+BxnlDPV2rR9Nt9T+RII/PL0mjFqiJkbTxWVtCbkqiAzOwllI/LaYaTX3J5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774150058; c=relaxed/simple;
-	bh=VsoO656RzBzVOuFvlCd1grI16SShp8kZ0ZpOhxSKtwE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s7Ucj7IY+cgy6+K9e5i4WjgbIj3gdXRm1OdAXVm9WcgElwX+MOU1nJhQczBh2L/xLPNEJuf9N8BjudokJErj9I5llV/OEBzgK837vqDPzjnUKX+fP+Z/7QPjLP7q1+nPor3xaW8t4mZlfYpYtn8M6zFSqSmWM1R0b34NxB2NViU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GmjFu33+; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774150275; c=relaxed/simple;
+	bh=VnRe2DuYXqi8MQjTbELe/aMvoct/mI7J0T1z4hu8rI4=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=q7ZFPDzHyjY8XpElmzbyBbcADRqfG96I472adIGisOaOREeKWf3Xh5cbejSdejfvSa3ASkAVJKGum1o9Y6+K21F3031WBcFKp3M/0WBV/40xvEumWo/jJ6Vz9J/CLZ74BvBpKQOGbaDydhDbU/9qppFgWBvIlfbXsjnYjoXBYBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bO4Vmgyf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qlOqtK9R; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GmjFu33+"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ab1c8fdc40so4866205ad.1
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 20:27:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774150057; x=1774754857; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W8jAti1FtMv8jXaNYjG9VqjTW9z24wfKC96n3yEF+h4=;
-        b=GmjFu33+TOWsizz23qun9KyoT/aVWmMCZykCxosjHfxHH9UoQOe1tK6YaXmFj3IXCp
-         u3bKql6MCZnFiLGx/DQyXa92fzcYdtfLkWEv0E/LQb9i3j/ZYHmmWS6WctRZT9RCy4S2
-         P/NkUd3msZURubrOrMi/BVRiNGEO6+RJElHTaKhH6GVSoXO58lml9aFDpT5kI0Lrgjsx
-         qW6ePWGvYzzV1GhLHErLZPJb7rLppK/7HX3xGyTz8sOfsmrRduPGn7nyRkIfrN3jGOBa
-         QEQq7LxiftDLOiSNxPCaMk6IieVX6/tKkuEiShYfvhZf3PhNd5hWByKp1mHeInw7bQwp
-         RRSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774150057; x=1774754857;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W8jAti1FtMv8jXaNYjG9VqjTW9z24wfKC96n3yEF+h4=;
-        b=dWEAcjMgptNv9suI4qRJ5ZR6t7AbYjRXujSFqk293tR87pqzLevuyNK6XrELImK3XH
-         1jlaEL/3VXXYhsnoQ7dMtchHKVWbXotmhfdUnbgAxUyXcg6v6Hx3dAQb9u94inyqAIAh
-         CnEL5CjydIDkPkiT1fl0/RET97rNMfuiI1Sq9cYgk0e3OK0JNrauOULaxu/0DVl1euG+
-         DkDoYGD1sJXPhluftNCLhz80TaLB5YPBdDOxhQu/C/kJ8JJi+q+cTuVN+QFfFSbX1YzK
-         ejBF2XKAdvjuFdo445/m+rSLU5HCP3DWK/3jCNZ8HI5wyF5GaxsiUd2z0tuFarSVDXIP
-         cIMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVWx0DWtidS8hEf2WC/Wa4sPQSES2kZjAne3UsXHII9J/Wmh1MxOuzXJIimbKRqntgTzqg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUDnv/Beopv1O6smx9GOsx9H+2XcBehfDY7ECLWkXMxYuhH+xh
-	FNAcOVjHOctSk4n2H8ha7z6V8wE5qJwhAl1e4yfT8jaDwM396GBftOD1
-X-Gm-Gg: ATEYQzwtn/DsXe9gRsvHii+2wUx/Q1QWtuyjwXCLnPJIwLh5zd6OgEqcAs3NK5WLVZe
-	w/KSmqzlXGNPRuTb8qnb+qcJ3i3NKlBExrrsug2ghpLUfk4ih+lmL8ZxOoNU9/dNtVaun6egMW6
-	v+stPEuDHLrT6yAq5fpD1vyTYlUBSkGTTJsH12DrjtX3QIkSZ0rHkFoRXY2/mP92DeyoxcHIkld
-	kOCA92YiKtIvk7Nb/ycJq1EnY4PZrSWB+RUskCdiRTfxlAX5/954QQrGUbCruYH2LewYY+9Djho
-	MxYuevWiHxWomywgbxYe/FDykRsCeS3NeSz/YereTUqLWsptdIXwRrzb5M/iqGUW1tyu7QypJv+
-	8R+WLpm7YiPrUa+B41YCph9xhE5FZ/rSpfD9RpZ2dBG1QWxPoovtFFgE4gQEWBsZ8GyOJbkI+nJ
-	NTJmm103MSamyrGClHdkR0W3dpbZgLE2gE+6q3LOt8r7NTJRA1MFeFptYQTbBzD9KpVSOs48IS9
-	AZ/+iY/0+0=
-X-Received: by 2002:a17:902:c410:b0:2ae:5d79:a163 with SMTP id d9443c01a7336-2b0827e3cffmr55590635ad.5.1774150056918;
-        Sat, 21 Mar 2026 20:27:36 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0835298acsm68472955ad.22.2026.03.21.20.27.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Mar 2026 20:27:36 -0700 (PDT)
-Message-ID: <90c5b9a9-b77b-43ad-9c04-a0addc058aa8@gmail.com>
-Date: Sun, 22 Mar 2026 11:27:32 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bO4Vmgyf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qlOqtK9R"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 505337A01D2;
+	Sat, 21 Mar 2026 23:31:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sat, 21 Mar 2026 23:31:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774150272; x=1774236672; bh=eJT5+CvYcn
+	eL5KYn0OvS+++n2c/veF7Xf+CTE5VAu/E=; b=bO4VmgyfTe3hP7OrBlLt6J3aPQ
+	lEuKVzPMxelKGDyWXiEFLl2DXO0Zl97Zp+rxJKMzKgNMJtdChSI6+ejqyucmTt7F
+	dAqtQkOB7oUZucpamJlmPYGbJQJM2YE8KGRXfxooPROblNUsWPW5xV7y+k8hgMcL
+	O2vynJm+L+tY9o/JhPH31wISL+vR35WGqgs9xkmbUPUKdq+s4F+xxSMJey2HhoqB
+	9YlPJtdDmYdT8pGOcyB8PYb3SEyGVDLDQMrlpgoRFk5XTgqfpje58BHRqUveFoef
+	Aov+VESsmobstXf1mO0FPFYiEPbVwnYySzezHGt5ET8mcrHu9dcTY/iAFkLg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774150272; x=1774236672; bh=eJT5+CvYcneL5KYn0OvS+++n2c/veF7Xf+C
+	TE5VAu/E=; b=qlOqtK9R2J/+Gf9VE5RBG5nmkVqZU3xtwA44F1BXj7tlZaxFDBr
+	vToAJylw33CACBaCuqNm8nPVAk5ENAXYUTVOdLj6gy2FaVbrfMYHZR78lOAXlvIg
+	y1nMbGgQAzk8JCFT+T1LrvncDKTcMSab526Xqzvqr4SoW0Bf72Jc1J9tU5yqlzwL
+	9+U72uyfq1fwOJDpLTrzXCD97ZVm0W5KqfEAl2B3BZBjo3lwrYrJk36Q3UpKUPVJ
+	l2/1EK14+TIoY2oqMVRlhErb3Mie6o9/O1xzcxKcAlpb2oSyegSdTwmEl/4OGwrE
+	fjJO+s6VpFlglL8p/jmFhRVZylzXvA5eI/w==
+X-ME-Sender: <xms:gGK_aVVzb5V9fzIbk--GpW4rNbQN91XyG4A8AYVVf4P2-ByK7pHC7g>
+    <xme:gGK_aZS638Eqq7yXCo-EOnmQAFJp7-3igX15Yw6MkGxIKHViS0AJDMyTbrEDiFbJq
+    0PQdc-yE1Ph6IV4WPtz7qFlmKWHL8a8DCHAWDBEwydARYyZGE81Fw>
+X-ME-Received: <xmr:gGK_abPDFi8hi0YeXGaiL4nT9FgUYl-7NHijCdOcfFE0q00dwzBaOBy-5Bo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudegjedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffetvdetfeffheevffejueefkedufffffeeltdegieeuffekveeludfgvedt
+    ffdvnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdqshhmrghrthdrshhhnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
+    phhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpd
+    hrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepjhholhhishhsgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhholhhi
+    shhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gGK_afSUdQdIjeExDuJvDCLuQcCd1XZgp_nmYOYfwxbExoeWOiqEtQ>
+    <xmx:gGK_aRhzSSDukc4g0naezK4r0Z5_yy03pT4ZoLtggZAp-B1Aix2YbA>
+    <xmx:gGK_aQ-w_TVeK4S4jCDMkV8IWPtdsUM8x-_xzNt7YrmCZPNBHgf3hA>
+    <xmx:gGK_aQHnDUd1O-GnZ6UATaokjIOB45ecfhmWjUQ2wikfH0d4rJUPKA>
+    <xmx:gGK_aYFgjPml7zMsTeFTWTdyBWoolgD6HNtJzv-XmziKSZyJqT949vMC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 Mar 2026 23:31:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org,  joliss42@gmail.com,  joliss@gmail.com,  peff@peff.net
+Subject: Re: [PATCH v2] refspec: safely parse refspecs outside a repository
+References: <20260321194653.24513-1-jayatheerthkulkarni2005@gmail.com>
+	<20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
+Date: Sat, 21 Mar 2026 20:31:08 -0700
+In-Reply-To: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Sun, 22 Mar 2026 08:05:57 +0530")
+Message-ID: <87qzpck0ar.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] repo: add paths.git_dir repo info key
-Content-Language: en-US
-To: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Justin Tobler
- <jltobler@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>,
- Jayesh Daga <jayeshdaga99@gmail.com>
-References: <pull.2242.git.git.1773766519857.gitgitgadget@gmail.com>
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <pull.2242.git.git.1773766519857.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Jayesh,
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-On 3/18/26 00:55, Jayesh Daga via GitGitGadget wrote:
-> From: jayesh0104 <jayeshdaga99@gmail.com>
-> 
-> Introduce a new repo info key `paths.git_dir` to expose the
-> repository's gitdir path, equivalent to `git rev-parse --git-dir`.
+> Additionally, while looking into the remote-curl execution path,
+> take the opportunity to remove an unused `#include "git-curl-compat.h"`
+> from `remote-curl.c`.
 
-Here you promise in the commit message that paths.git_dir and git 
-rev-parse --git-dir are equivalent...
+I wish you didn't do this in the same patch.  It is completely
+unrelated, isn't it?
 
-> > This improves consistency and allows tools to retrieve the gitdir
-> path without invoking external commands.
-> 
-> The implementation adds support in repo.c and integrates it into
-> the repo info reporting mechanism. Documentation is updated to
-> describe the new key, and tests are added to verify that the value
-> matches the output of `git rev-parse --git-dir`.
-> 
-> Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
-> ---
->      repo: add paths.git_dir to 'git repo info'
->      
->      Teach git repo info a new key, paths.git_dir, which reports the
->      repository’s gitdir path (equivalent to git rev-parse --git-dir).
->      
->      Documentation and tests are included.
->      
->      Tests:
->      
->       * make test T=t1900-repo-info.sh
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2242%2Fjayesh0104%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2242/jayesh0104/master-v1
-> Pull-Request: https://github.com/git/git/pull/2242
-> 
->   Documentation/git-repo.adoc |  5 +++++
->   builtin/repo.c              |  7 +++++++
->   t/t1900-repo-info.sh        | 10 ++++++++++
->   3 files changed, 22 insertions(+)
-> 
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index 42262c1983..d17d911ec6 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -95,6 +95,11 @@ In order to obtain a set of values from `git repo info`, you should provide
->   the keys that identify them. Here's a list of the available keys and the
->   values that they return:
->   
-> +`paths.git_dir`::
-> +	The path to the Git directory for the repository (equivalent to
-> +	`git rev-parse --git-dir`).
-> +
-> +
->   `layout.bare`::
->   	`true` if this is a bare repository, otherwise `false`.
->   
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 55f9b9095c..3067107cad 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -66,11 +66,18 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
->   	return 0;
->   }
->  
+>  refspec.c                   |  4 ++--
+>  remote-curl.c               |  1 -
+>  t/t5551-http-fetch-smart.sh | 15 +++++++++++++++
+>  3 files changed, 17 insertions(+), 3 deletions(-)
 
-...
 
-> +static int get_paths_git_dir(struct repository *repo, struct strbuf *buf)
-> +{
-> +	strbuf_addstr(buf, repo_get_git_dir(repo));
-> +	return 0;
-> +}
-> +
 
-...But your implementation here doesn't quite feel right. Check the 
-git-rev-parse documentation: the output of the --git-dir argument is 
-context-aware and depends on your current directory.
-
-If you are in the root directory of the repository, it gives '.git'; And 
-if you are in some subdirectory of the repository , it gives 
-'/home/user/.../repo-root/.../.git'. I don't think simply calling 
-'repo_get_git_dir(repo)' will achieve this functionality.
-
->   /* repo_info_field keys must be in lexicographical order */
->   static const struct repo_info_field repo_info_field[] = {
->   	{ "layout.bare", get_layout_bare },
->   	{ "layout.shallow", get_layout_shallow },
->   	{ "object.format", get_object_format },
-> +	{ "paths.git_dir", get_paths_git_dir },
->   	{ "references.format", get_references_format },
->   };
->   
-> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-> index a9eb07abe8..63be0849c4 100755
-> --- a/t/t1900-repo-info.sh
-> +++ b/t/t1900-repo-info.sh
-> @@ -149,4 +149,14 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
->   	test_cmp expect actual
->   '
->   
-
-...
-
-> +test_expect_success 'paths.git_dir matches rev-parse --git-dir' '
-> +	git init repo &&
+> +test_expect_success 'ls-remote outside repo does not segfault with fetch refspec' '
+> +	GIT_CEILING_DIRECTORIES=$(pwd) &&
+> +	export GIT_CEILING_DIRECTORIES &&
+> +	mkdir nongit &&
 > +	(
-> +		cd repo &&
-> +		git repo info paths.git_dir >actual &&
-> +		echo "paths.git_dir=$(git rev-parse --git-dir)" >expect &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->   test_done
+> +		cd nongit &&
+> +		env GIT_CONFIG_NOSYSTEM=1 \
+> +			GIT_CONFIG_GLOBAL=/dev/null \
+> +			GIT_CONFIG_COUNT=1 \
+> +			GIT_CONFIG_KEY_0=remote.origin.fetch \
+> +			GIT_CONFIG_VALUE_0="+refs/tags/*:refs/tags/*" \
+> +			git ls-remote "$HTTPD_URL/smart/repo.git"
 
-And you’ve only provided tests for the root directory here, which I 
-don’t think is sufficient. That said, considering that you’ve likely 
-misunderstood how to use the --git-dir parameter, this is understandable.
 
-Next time you create a similar patch, I think you should take a close 
-look at the documentation and source code first, and try using the 
-existing commands a few times on your own to understand how they work, 
-right? ;)
+This complex "env" dance is probably uncalled for.  Wouldn't
+something like
 
-Regards,
+	mkdir nongit &&
+	git -C nongit -c remote.origin.fetch=+refs/*:refs/* \
+		ls-remote "$HTTPD_URL/smart/repo.git"
 
-Yuchen
-
+be sufficient?
