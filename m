@@ -1,144 +1,159 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F058F3033C6
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 16:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6FA1B4156
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 17:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774197605; cv=none; b=fElNX929BCin/Un/qOFi7w+YW6ffezz+6mWOEggsM1hzkCrAClVZiL8Olbe/QXrllrsK5Uxw69OdCV/43z60BoaojWsb5+Z+akYT21sx4j3UZbs2cCAGwl+wq8DPDP7MfFUW3g49COsot6tPoA54MGn0NtEpz7SedrWa/jHBAoU=
+	t=1774199919; cv=none; b=fzgPjZ0PFmrl8DAGhNsSPSK1s9dCKMSOJ+eXrfKkqgEf25UfbdysqzSMBPfV2yuUM29uDW9H3xqmMORghmeu1sSEyimTOWxw8rZTv1GcVOEZkm9V4YBCJjVBriMtWpH4QJyLiJrYU0vqs+GuKRAXbb8DuOwvtvhnpw2Am/fHEY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774197605; c=relaxed/simple;
-	bh=ZP+GdOa4F77wCuRYGBWzK5nCofMlXBiRWpL58jOF0og=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=SRvH6un1gRYa8KHyCi4rhzCm+7ub2ySWawa7LkQ5qxICoaHblJdazUwVJNdZpbcea4kE5FJ2kRxfeQoZiclVrtiZTKR+wk4qjn9sqyUISIL+DjLJ1j+iMMTuPQPjqq/mNFhJjn0c5/V77IKrolm2xyk1eNxSYqRo2ekTVsZO1Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YUCkS+9v; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774199919; c=relaxed/simple;
+	bh=cwGDo5ovVJuUpHyTploEPwjMAf0JaqXkk/YfiuqvrSY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KpSNovotE8f9+Lsn3agaXGzwwDlrTUIHvealFT2Y5Iw/knxxoPOn8lIGRer2dhQvAVq5FF3PaQ2fCKl+EYsajEbvr/abzJOLsaLdcOB8XkHCgdoyRJYw9OK4wSJFNju15zIPRfX1RB4zxD37gRoCZJ4UQhMjB9V0gVj9z+JTX8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=fhlZ0qa3; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=NysrkxWN; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YUCkS+9v"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8cfcb045909so279351085a.0
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 09:40:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774197602; x=1774802402; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fwDESrMy6atrmzP9FHL5TEXg58bhtTWh9n8+BMeO+HM=;
-        b=YUCkS+9vC9yCUcR57AaTh+6YM2a973IEDMWvre4fKV+eB0JJ0gNEJn49FRMTJZLRM6
-         hek5ezCAD28EMO9Q2SwLwIhUWB4FNMcYfMPgf+AsztsIYcBazNXuktWv+5g289r2ecwY
-         YkOsGcwNCg4zYxjxZY587FPlDA9wxruRcKMK0Rjq3PBy56Jx1U+ugiX7nG9CWhPhpBfK
-         kt2AKr5FsqFBwzGbi5zx/t5jNMgC054scAEdvsMzyuIvjhyKhOYbsYG3bHa3IIlwb+9D
-         eGw2UM1yCOO4+Vxj2ZDcPRZOHwJFqrnFJ9fXbGMULCAxEBLppjinx+EgbhiGPtReI4n2
-         +rwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774197602; x=1774802402;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fwDESrMy6atrmzP9FHL5TEXg58bhtTWh9n8+BMeO+HM=;
-        b=oL+SRB1p04XC/Yh4hD6KtTVgEXpss/1pBlENiMEMd12KyBvuaOtuT8hGwVwbtgVqm2
-         eux4yT45uVIj/pNiTzAsVcdFRyRs6PN6r0Xyh3A6zNEOrLmcLS37gMpwuhUr2JtcgIOz
-         LjY1KBlabYNgNcNI/VUaj0s3aAnyOQUoA8R3q4kh+6wYEZCHxkye24dHHlf+a8dRO4OC
-         783GeJUbmg1cqQVUOQcRDxsAHJMEMpTPtyG879UIwRta/6+mlVAoLT+u1/Szidnzf60o
-         YWwW3xXmx6u2xpdmh66J6n1aIxRgAVZdkUTgAa3RbcGTmfrUD76SsxvSDYiZ8+4yeyYF
-         V4NA==
-X-Gm-Message-State: AOJu0YwMmovJqYdUgweRuubE1LZfWWJwmR3VqYwprCnAb9WqxNSbnOrU
-	Y/EH+D+NvA/yCu3nIjKw39xqxJUCjgfuqtaB0TJMAcUJqrCc3q1jB+Atahbt0g==
-X-Gm-Gg: ATEYQzyhyfkrAHkdGvlUsq2ToymxoFrIi0fGEwIMN1hOS6W+/pqZUHOfAdc6sI9m3X5
-	SLSWnsMii8TI/IyB5Ox0pWTqjWUqUsjRAmUA3Qj7/dCsyukedNOTRLBaSXMp44Ujq3VgoKpp2qV
-	sjZ1QJBbhxFmOgC75VKUd1a/qY2N8eAY2NBkHzq8Hxev5BDfeVFOLLMyYH5brgRguD3CE2FVQkq
-	N6WwLW1oGTHEkZ2CeaJVshGHzxrKahmwDMBmu7Gq+QiT4AfugLRsLsRcr518hIEEJFqIj3MSxDu
-	dOc+rZRO6C2BhQxiXN+GBD8au/S2tA8RCgMMw3wXhTPph8bWNrDkK0WmVg+LtWfQiAbsznQQYds
-	/TvRKETvsT5dsJfCi70Tfp4AHibFgkIZUn9V02JzVPEECmDn0xJQXIF2RviFd7EO3SIn9DN9lDS
-	GYq+Nxe05j0qUoZA2SrzTnkVc=
-X-Received: by 2002:a05:620a:aa03:b0:8cf:cf2c:e008 with SMTP id af79cd13be357-8cfcf2ce4dcmr1078184385a.62.1774197602089;
-        Sun, 22 Mar 2026 09:40:02 -0700 (PDT)
-Received: from [127.0.0.1] ([20.81.183.84])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cfd55e79e6sm423725985a.29.2026.03.22.09.40.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 09:40:00 -0700 (PDT)
-Message-Id: <pull.2250.git.git.1774197600379.gitgitgadget@gmail.com>
-From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 22 Mar 2026 16:40:00 +0000
-Subject: [PATCH] t/t2107-update-index-basic: use test_path_is_missing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="fhlZ0qa3";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="NysrkxWN"
+DKIM-Signature: a=rsa-sha256; b=fhlZ0qa3fytH5TUAtzFI4tLWHw/Ud7vUX0xqJyaEQ7IkhFPlkYhaEmqw/PJ9vTWnw8iiu5RGaHybc1pbCe/LHXj/w0Ex+X9Lpe0oQ4CVUkDGDfEjeO5sAZOdNnGRfuGGBTxdmfVS2xmKDMyutUjaewqusuOgG+K/5+i9u+hHAujKtvEl2OYU7ApQnZfipFrzbpkvfMw8zGo2lEg57sO0Wqrqb7vCHyAbOmEEgxhOmJk9gnMteDDYo/4YioyzybLSr/3NqG2pBDq24oJ6b6L3erNUURpBJOXmFOyJvQ6I6JsXHfqA7wjysTex6U6xtErKLSqHYnN8xzlsKP3OytUgzw==; s=purelymail3; d=malon.dev; v=1; bh=cwGDo5ovVJuUpHyTploEPwjMAf0JaqXkk/YfiuqvrSY=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=NysrkxWN/B9L1QWObMC9E4lHpJLI6XnLCXS6gZC883YbqL528PITzYNbuuhXpr+hoarWVCWj5w7JDa/v9rchN0fdxBnHuBKjWWWubPiar9h7P5tf/XY7fr3O85bbwT7PEc9aaZMCaquhD6V95qY///dqdQcr6npqCcARUwk6iNiKu3z9K1hN7TIIOSf/CKbyahJP99djzZvd0X+KKIpKQw7eMEbZ8rAe/ppH9jLi1xrwU8GoeqrgkaRc/81vT75dd3SXaDw6FAHu9s4+mq+EpJECM/2T9E2LPvGu4DcfV62lLfvVE8uRnp8WCCGv4ep9933umVjAaUemQ2NFqmzrig==; s=purelymail3; d=purelymail.com; v=1; bh=cwGDo5ovVJuUpHyTploEPwjMAf0JaqXkk/YfiuqvrSY=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 209374793;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sun, 22 Mar 2026 17:18:33 +0000 (UTC)
+Message-ID: <9d3633e4-6413-4932-a29d-e0347546ede8@malon.dev>
+Date: Mon, 23 Mar 2026 01:18:30 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>,
-    Ayush Chandekar <ayu.chandekar@gmail.com>,
-    Siddharth Asthana <siddharthasthana31@gmail.com>,
-    Jayesh Daga <jayeshdaga99@gmail.com>,
-    jayesh0104 <jayeshdaga99@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 8/8] diff-highlight: fetch all config with one process
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Scott Baker <scott@perturb.org>
+References: <20260320004138.GA3653623@coredump.intra.peff.net>
+ <20260320004856.GH3654226@coredump.intra.peff.net>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <20260320004856.GH3654226@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: jayesh0104 <jayeshdaga99@gmail.com>
+Hi Jeff,
 
-Replace a raw '! test -f' check with test_path_is_missing to
-use the standard test helper and improve consistency with
-other tests.
+On 3/20/26 08:48, Jeff King wrote:
+> When diff-highlight was written, there was no way to fetch multiple
+> config keys _and_ have them interpreted as colors. So we were stuck
+> with either invoking git-config once for each config key, or fetching
+> them all and converting human-readable color names into ANSI codes
+> ourselves.
+> 
+> I chose the former, but it means that diff-highlight kicks off 6
+> git-config processes (even if you haven't configured anything, it has to
+> check each one).
+> 
+> But since Git 2.18.0, we can do:
+> 
+>     git config --type=color --get-regexp=^color\.diff-highlight\.
+> 
+> to get all of them in one shot.
+> 
+> Note that any callers which pass in colors directly to the module via
+> @OLD_HIGHLIGHT and @NEW_HIGHLIGHT (like diff-so-fancy plans to do) are
+> unaffected; those colors suppress any config lookup we'd do ourselves.
+> 
+> You can see the effect like:
+> 
+>    # diff-highlight suppresses git-config's stderr, so dump
+>    # trace through descriptor 3
+>    git show d1f33c753d | GIT_TRACE=3 diff-highlight 3>&2 >/dev/null
+> 
+> which drops from 6 lines down to 1.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   contrib/diff-highlight/DiffHighlight.pm | 26 ++++++++++++++++++-------
+>   1 file changed, 19 insertions(+), 7 deletions(-)
+> 
+> diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
+> index 96369eadf9..a22ba7a851 100644
+> --- a/contrib/diff-highlight/DiffHighlight.pm
+> +++ b/contrib/diff-highlight/DiffHighlight.pm
+> @@ -131,8 +131,20 @@ sub highlight_stdin {
+>   # of it being used in other settings. Let's handle our own
+>   # fallback, which means we will work even if git can't be run.
+>   sub color_config {
+> +	our $cached_config;
+>   	my ($key, $default) = @_;
 
-Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
----
-    [GSoC]: t2107-refs-tests: drop '-f' from test_path_is_missing
-    
-    
-    High-level (Intent & Context)
-    =============================
-    
-    The test script t/pack-refs-tests.sh has two issues that prevent it from
-    running correctly.
-    
-    It uses: ! test -f .git/index.lock
-    
-    This is inconsistent with the Git test framework, where helper functions
-    such as test_path_is_missing should be used instead of raw test checks.
-    
-    
-    Low-level (Implementation & Justification)
-    ==========================================
-    
-    Without sourcing test-lib.sh, the test framework is not initialized,
-    leading to errors such as: test_expect_success: not found
-    
-    Replaced raw file check with the appropriate helper:
-    
-    - ! test -f .git/index.lock
-    + test_path_is_missing .git/index.lock
-    
-    
-    
-    Summary
-    =======
-    
-    Replace test_path_is_missing .git/index.lock
-    
-    cc :Karthik Nayak karthik.188@gmail.com
+$key...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2250%2Fjayesh0104%2Ft2107-missing-helper-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2250/jayesh0104/t2107-missing-helper-v1
-Pull-Request: https://github.com/git/git/pull/2250
+> -	my $s = `git config --get-color $key 2>$NULL`;
+> +
+> +	if (!defined $cached_config) {
+> +		$cached_config = {};
+> +		my $data = `git config --type=color --get-regexp '^color\.diff-highlight\.' 2>$NULL`;
+> +		for my $line (split /\n/, $data) {
+> +			my ($key, $color) = split ' ', $line, 2;
 
- t/t2107-update-index-basic.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+...another $key. I think it would be better to change the name here. 
+What do you think?
 
-diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-index cc72ead79f..3bffe5da8a 100755
---- a/t/t2107-update-index-basic.sh
-+++ b/t/t2107-update-index-basic.sh
-@@ -86,7 +86,7 @@ test_expect_success '.lock files cleaned up' '
- 	# the_index.cache_changed is zero, rollback_lock_file fails
- 	git update-index --refresh --verbose >out &&
- 	test_must_be_empty out &&
--	! test -f .git/index.lock
-+	test_path_is_missing .git/index.lock
- 	)
- '
- 
+> +			$key =~ s/^color\.diff-highlight\.// or next;
+> +			$cached_config->{$key} = $color;
+> +		}
+> +	}
+> +
 
-base-commit: 6e8d538aab8fe4dd07ba9fb87b5c7edcfa5706ad
--- 
-gitgitgadget
+...
+
+> +	my $s = $cached_config->{$key};
+>   	return length($s) ? $s : $default;
+>   }
+>  
+
+Something doesn't feel quite right here.
+
+If the user has not configured color.diff-highlight.*, the expression 
+git config --type=color --get-regexp=^color\.diff-highlight\. will not 
+find a match and should not output anything. In this case, 
+%cached_config->{$key} becomes undef, length() returns 0, and a warning 
+is issued.
+
+But we have "use warnings FATAL => 'all'". This situation will result in 
+a fatal error, which I don't think is what we want.
+
+
+> @@ -172,16 +184,16 @@ sub load_color_config {
+>   	# always be set if you want highlighting to do anything.
+>   	if (!defined $OLD_HIGHLIGHT[1]) {
+>   		@OLD_HIGHLIGHT = (
+> -			color_config('color.diff-highlight.oldnormal'),
+> -			color_config('color.diff-highlight.oldhighlight', "\x1b[7m"),
+> -			color_config('color.diff-highlight.oldreset', "\x1b[27m")
+> +			color_config('oldnormal'),
+> +			color_config('oldhighlight', "\x1b[7m"),
+> +			color_config('oldreset', "\x1b[27m")
+>   		);
+>   	}
+>   	if (!defined $NEW_HIGHLIGHT[1]) {
+>   		@NEW_HIGHLIGHT = (
+> -			color_config('color.diff-highlight.newnormal', $OLD_HIGHLIGHT[0]),
+> -			color_config('color.diff-highlight.newhighlight', $OLD_HIGHLIGHT[1]),
+> -			color_config('color.diff-highlight.newreset', $OLD_HIGHLIGHT[2])
+> +			color_config('newnormal', $OLD_HIGHLIGHT[0]),
+> +			color_config('newhighlight', $OLD_HIGHLIGHT[1]),
+> +			color_config('newreset', $OLD_HIGHLIGHT[2])
+>   		);
+>   	};
+>   }
+
+Regards,
+
+Yuchen
+
