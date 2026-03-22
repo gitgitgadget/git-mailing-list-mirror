@@ -1,63 +1,63 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8C2257827
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 05:37:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DC2317162
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 05:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774157864; cv=none; b=h6/T5aBYiSHVJZXtYfV0KJ6A3mLGZJnf3S/hbTlg71HxTttx36GDi6nVZk9QLS0Up/4H6qGnkhmGe6yXuyoM9JqpkmmR89IuXzfoky2Ea0O3oU4H2YM6F5WWSCFrDy8v0K+0P7PX0K3ab2ZufHH4G4BQ12dL8sVmMK7L6RLfYz8=
+	t=1774157895; cv=none; b=NB//7vgOQE0uQNQVWGy0dZNEuEpm8FRXuvvWM8VZae4JGQUgLHWgJhLrm94d56PlS+ZkoRZ2SJojL+non+mZfwMpoksROIkwAWiGPcfRoJRB2HOp08TAYolZSrZVwrznTlPheLYJIs9+XvHKEaoqlG/2C7mxHnZOLcBsXoHqjT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774157864; c=relaxed/simple;
-	bh=TkEBjSeLmA9D4/jvjZ6fZby109ZQfQnGKggYmyCdpJI=;
+	s=arc-20240116; t=1774157895; c=relaxed/simple;
+	bh=E0FbyiMEJ6SwzOvJw1agmp74zCFZXK1XkCeK7Gvup14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKWBwotnP9tGzeNTsj3uXrrLRATchWtAF70h2KhEKLBOQdhac65nPZbjE5ZWShJlADnRRzjDwTb3yzBAJlsFMRBOLp/s6VvsajvBwB7+jtYNKd1yvzx5Jq8vN5ggGcaOu6f4R1Tk1OCm1Jo9XoiwyUi+PWj168Y3mjhSoFGmUIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BUgDJSWq; arc=none smtp.client-ip=209.85.214.179
+	 MIME-Version; b=Qsh66c74Xn1MYlYKpBfkNCcNiQLeTJCVckO9KJuLm6VHf2WENOk7aT8TLqpe6r0kTVFeHk4nYCLZC0Y6XiHOkSExtb2qvqQxwH+/HF0CZrRw2waxLzkJF8MBDjj2a9nwXiQafPpOrTEnEh4qHN6LEgn6xOQBKq5j5xuon6lA4lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ao+GSP4J; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BUgDJSWq"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2b04d051664so27353995ad.0
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 22:37:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ao+GSP4J"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2b07069e2efso18262055ad.3
+        for <git@vger.kernel.org>; Sat, 21 Mar 2026 22:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774157862; x=1774762662; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774157894; x=1774762694; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5edKGnxBUhSBlPXlz7XFNeXXIB6TlES/8sCJFMMjR68=;
-        b=BUgDJSWqy0JdvjEFi/2XrM0LAx6wesPlkGF7TdrUZQ7VXixbMGq2jJRXG2l0tTaXyM
-         D8ZFZdTryZeJ3T2g3d20K9Fy3GfMfBimVdcnB0Dip8iX6gs4PdAbXSWiy0kZm1WKvdwO
-         r2En3BhCxdH9LMmvmXyk5gt+d7eBp3m9UAvLPgPu7B5gGKEmzmqfFXvREGI4GynUx9+k
-         wNzI3HPfcV9c0dgnZKFO5k0+9Eyw+QASDifvA1uzOovCY0tENt2blG+O9lI+AVRr2XA0
-         g0H/zppiQWGOS18MGow3SxaxlJj7/X2LOFuVAQjbZKkRyT+yLNWUb/Kcbkoh3ehS6k5f
-         +Chw==
+        bh=f7I/c4vf1RAzVY9OV1k2sHS8N/7BE9g8bVundPXpunk=;
+        b=Ao+GSP4JlbnOn/HnujEdjrjqbl+FPwjBslaE1xvswhr7dYLkNQH6bD04VF+8aQWMS+
+         xj50Im7bzzCvOdrP0xmS04WKvEraOdTucoDfEZSc/EQM8gsum9gO+vidSf6hTrM8cfWc
+         MSA+9ed/C34kT9/sgNH5qTkJtsrKQRxjNsK1KBVsrWZiN9jk/nhpPFYEyaSnFLpMNd0v
+         /IFszTMzYyW044k9VXgS3qllxhZqY34HVRn5kzf3XQCDK9V3guUl4T1gf64Of/rMDiDb
+         0G3G8u/DSXmCsUw/obCWuURIJholTigA8haCghFf56mqaQA3esjI71+4h4UcpVtoSQms
+         P5bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774157862; x=1774762662;
+        d=1e100.net; s=20251104; t=1774157894; x=1774762694;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=5edKGnxBUhSBlPXlz7XFNeXXIB6TlES/8sCJFMMjR68=;
-        b=fbmbm+NR7Z+dcuTgSMKVJst5sNiJcpdJUFAZH+ZO2xDQLWSESNHZryqsmRiqYf3avg
-         GsTXQOqTErUOstGszNVCtcYMRH98MhLKIq/+CbD4iG3hbFTsXtTjycxR0QBONszZgJog
-         S4wCjGc2VWil0meLEbQJ1sW/QshvdOoV4PvBfY1weWg6sbRJnAqzt7ytF+mGpf56+e6e
-         +1pcU6YpDMt5jYKUAQzSGyEW3lC9M3d7g/f37dsJtzn8Y5wgvTUeamRCOtj77wDVE6rx
-         0S0TY3TU5Il13ri0OEDbZj0/43V9714F5GD7sRCy9v0fdEBA0uvYlQF6tPdIILd8EU0+
-         E92Q==
-X-Gm-Message-State: AOJu0YytrNXFV6hs2cwvkxPo27yENzhtIG6JRhiR9JqiTEbejaNBtGZE
-	07Epsw/H5U0wpcb6ngcZPXrA2qlbK8aCoJDxpoTyI7P1o3XGwOuUcHvYFK2jMQ==
-X-Gm-Gg: ATEYQzw8rSOzpDVJoTn16i+R1R1pynE0NjdnHryw0ui0mleG2Xa5dNK0DFpEffGq8ru
-	F4PnknfnfujmeTEXI7d2EQCyFubEvsRFe3hmOh/jjo8uphGSqKiLdstG7qUamA1rp4cUW6QPYPh
-	l+l1yJc9pbjEF3wuHZrQzVMiNAZLY9k0Cp0XAuAAO40bvM8mY854ePe+vhuTsI9azT4s8hwD3bk
-	5Ydeo9WB+Hr5z5n0TtF+WVy7kaidslUEK++0rhu2aXZ2GR4t/FUrw0wpAVm1ZDQ+nRM7piWeBGI
-	4aiZPHgUF2lTQ5pHR4mG30jobSadsVrGBkN4KeLuH4GWXsGmaUt9GTQVz6DI2LKN/vKcAAin8Hq
-	JjzJ+O2ZAy+fBt1DZR5bZVscdM4e7eKA37kaDoZWu+RI3CxfF2+R3snB8jPfz1D+9vkRjk+mMNv
-	qwh7Hsf0Czs3rl+qeYx50fE4Iaj009U+VkFRwn/hRkDTIY89w+gRRY2ts9K1eqrxd3MQcR62hBY
-	NuD/v2c6Qo3AOHqj6fTbmsdyg/pUNMKIQ==
-X-Received: by 2002:a17:902:dace:b0:2b0:62dd:3a80 with SMTP id d9443c01a7336-2b08271a32emr81746015ad.17.1774157862258;
-        Sat, 21 Mar 2026 22:37:42 -0700 (PDT)
+        bh=f7I/c4vf1RAzVY9OV1k2sHS8N/7BE9g8bVundPXpunk=;
+        b=cSMCTsYqMwAfRV7LwPU+kdKvj86SgtexHdPho+Sf9M8cn3f2nd0HlaQm6HJ/LI2+N4
+         PxR+otXElJVIjvwQ5w2j16hEPm7pEu/8BJerkb0PRQfzy1GWAnIunkkbBQIjnBCbrvQh
+         ZqXEvtQytdI1oeCqus+SemZAIMBLDKyCO/+SkE4xhg5053IrPzI8X6/xU+r99vc1xeFx
+         OV0cmYPcROtofeF8FgzeSGyrmRECOo1/wC561Ep4K0h3MNyhcC+0qXNr1fAlrmH8ZK6Z
+         Ftib6jvgMuZBhhBuks0+q2e8uamfKmA54G3yYlfrHQU5QdjcuLxhiAokDyNNnmd3zIYK
+         h3Dg==
+X-Gm-Message-State: AOJu0YzWnZGMlysgjGH+yEHwSTrKzXA2C6Fh/OflxMewneuHgFQ8T+6q
+	xBrFSS3lpXXoaYzG0J/ORmNEMQZzgBbh4svuznTvYt3QcDL6j9nrCg1Z
+X-Gm-Gg: ATEYQzyzMs0JjUv7qSFCOMSUYqIxW0QpUNhD46L1yYI8EKWcp8GdZptfUb75gsTCtm/
+	VQIx9hqPVvbquZm3d+8I3ADlMAZ7is1xrgJTwX2byTmrYfe3hxzVvEA5BQNnpd3gY1hey04+Hg8
+	NY8hN2uL5Fhud6odrukjed+af8qWBuxfGNDCPraqM9lP96PhYCr1OEDZ9KX9225YvX6Hs3rEsKL
+	FHj72AvgLvz/8SPHs0o/Z5QuLvO9VpSE5pqNmAxSQ+6kPpfW4NVIlbFSzWCrPtbx61zkWexYV/c
+	OWeIznJFD55HriCktq9BKnSF6Zkf8z42iFDvHtAd0/QU+wBSlaLlVYrXUe6nwxx7a7tvxeYOU59
+	ekkBKjJIsJIUW5dNba5EdB3N999DQ36ptURj+N5MYZptKn/7aPKnoS/U/difcS/lJk/6Ff27RgL
+	GQs0CyOWOjD9vsPKoMssVHFxdEAjXx8zTxh+/qLNwudqvVetb/9tIFtfNbe4RAqdZupo5JMTNz7
+	vxuxE62nYph/dEJSZB3sIk/dVSfUAhJaFe5b2P/Vm/d
+X-Received: by 2002:a17:902:f605:b0:2b0:5084:eb1e with SMTP id d9443c01a7336-2b0827d60d6mr75113155ad.42.1774157893850;
+        Sat, 21 Mar 2026 22:38:13 -0700 (PDT)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516194sm67928745ad.4.2026.03.21.22.37.39
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516194sm67928745ad.4.2026.03.21.22.38.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2026 22:37:41 -0700 (PDT)
+        Sat, 21 Mar 2026 22:38:13 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: jayatheerthkulkarni2005@gmail.com
 Cc: git@vger.kernel.org,
@@ -65,12 +65,13 @@ Cc: git@vger.kernel.org,
 	joliss42@gmail.com,
 	joliss@gmail.com,
 	peff@peff.net
-Subject: [PATCH v3 1/2] refspec: safely parse refspecs outside a repository
-Date: Sun, 22 Mar 2026 11:06:16 +0530
-Message-ID: <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH v3 2/2] refspec: fix typo in comment
+Date: Sun, 22 Mar 2026 11:06:17 +0530
+Message-ID: <20260322053617.38951-2-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
+In-Reply-To: <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
 References: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
+ <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,73 +80,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When git-remote-http is invoked outside of a repository (for example,
-by running `git ls-remote` in a non-git directory with a globally
-configured fetch refspec), `the_hash_algo` is left as NULL by
-setup_git_directory_gently().
+Fix a long-standing typo in a comment: "refpsecs" -> "refspecs".
 
-parse_refspec() checks whether the LHS of a refspec is an exact OID by
-evaluating `llen == the_hash_algo->hexsz`. With `the_hash_algo` being
-NULL, this results in a segmentation fault. The same NULL dereference
-exists in the negative refspec path.
-
-Note that builtin/ls-remote already works around a related issue by
-setting a fallback hash algorithm before calling into the transport
-layer (see 9e89dcb66a). However, since remote-curl runs as a separate
-process, that fix does not help here.
-
-Guard both dereferences with a NULL check on `the_hash_algo`. When
-operating outside a repository, fetching and pushing are impossible
-anyway, so skipping the exact OID check is safe: the exact_sha1 flag
-only influences ref prefixes sent to a remote v2 upload-pack during
-fetch, and we will never reach that point without a local repository.
-
-Reported-by: Jo Liss <joliss@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- refspec.c                   | 4 ++--
- t/t5551-http-fetch-smart.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ refspec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/refspec.c b/refspec.c
-index 0775358d96..a864a0bac2 100644
+index a864a0bac2..a0c9edfbea 100644
 --- a/refspec.c
 +++ b/refspec.c
-@@ -84,7 +84,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 		 */
+@@ -85,7 +85,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
  		if (!*item->src)
  			return 0; /* negative refspecs must not be empty */
--		else if (llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
-+		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
- 			return 0; /* negative refpsecs cannot be exact sha1 */
+ 		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
+-			return 0; /* negative refpsecs cannot be exact sha1 */
++			return 0; /* negative refspecs cannot be exact sha1 */
  		else if (!check_refname_format(item->src, flags))
  			; /* valid looking ref is ok */
-@@ -101,7 +101,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 		/* LHS */
- 		if (!*item->src)
- 			; /* empty is ok; it means "HEAD" */
--		else if (llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
-+		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
- 			item->exact_sha1 = 1; /* ok */
- 		else if (!check_refname_format(item->src, flags))
- 			; /* valid looking ref is ok */
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 73cf531580..a26b6c2844 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -782,4 +782,11 @@ test_expect_success 'tag following always works over v0 http' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ls-remote outside repo does not segfault with fetch refspec' '
-+	nongit git \
-+		-c remote.origin.url="$HTTPD_URL/smart/repo.git" \
-+		-c remote.origin.fetch=anything \
-+		ls-remote origin
-+'
-+
- test_done
+ 		else
 -- 
 2.53.0
 
