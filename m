@@ -1,116 +1,129 @@
-Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD0218FDBE
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 12:46:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774183596; cv=none; b=CfpueOdbOjiafkDxS8/WwnozQEMsvD6B+eXJexCgtLxz98yzAt93RAzlasOlHZgLcb32qhGnJYvfzrprkLqRLPjxMyivYQM4XrDOlr6gJWUX+Ae+VLWExLbFzkiX0EOgcJ+EmEs43WbrsjZxt2VM+kRt9l5EMrdrk28G3edWjpw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774183596; c=relaxed/simple;
-	bh=F6xwBCK9bsSWVFEboSV+jthhWmF1yykc20u0lHoDrzc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Yl89RtNJZCt4NdsOWJqv9GBHf6Y34+WTsvVxi4qNC0w0mYoKFwWO7RpdyZ2nGMUU7XUCoSXkaRl4DSCpRcTx/aI8O9R9oO0B/bOjiaNxkSB6CwWpmuEj4spCN/cDIFXAzVTu8iLpdlOj7IzSlWpGw/rjRtyHs0dSVrRDFMN3Ri4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/rzBlgI; arc=none smtp.client-ip=74.125.82.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6588732F765
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 13:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774186175; cv=pass; b=lpFg5A7IVK/SFoesocnnAC4NDYg/GbyhaTRi4bLu9DasM/Mb95oh/d2RZF4SyhnIrEH47WLENsUsCjTjbTcT3wSiRV35ASV56T+GGnwzJ972aQ/7vehsPZghi680a2yAm/JZl183ORegQy6khGFLTreFFMFjqmshcfJUJyNFS8U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774186175; c=relaxed/simple;
+	bh=DDOo0hOm8qm3k0MatH+7AO1Vz7qKvbuddSG4+qsZwHs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OFsKfcW+IDIvp1QcAoySuVmFJwAV4L09I7jPh09ndJcW5anwviCEPxCOFjxw6f2T5KMUCuzbJQcdM88at+gySBH4mcBXLbVnzX/qX27RPdAZgCiuyaI4Zv9zFX3QqcnfnB72unc8TQdxT2rpFvJRRUzJJC5k2MoKiBAEBTDGY5U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gjS0JWnM; arc=pass smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/rzBlgI"
-Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-1273349c56bso2691285c88.0
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 05:46:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjS0JWnM"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-899a5db525cso29748716d6.3
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 06:29:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774186173; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MTZmka5yhSHjjHX9ZsFUEFz6zjgdXYVwTzV9vKvC+CqkUikBolISKPoZF510s3kuDR
+         xDkrygQ2JiRP5sep/yiwWlPE+lo2g7wZ97pwTdrtT5jJSatGhy1huSbaThTXdlIgLLrK
+         Pr0CJc9h78n7dErNCMqYXcFoKWuh0Wb6CfzZIH6RveuqEsJ5/efvPXDTRAkjUGu33Dvo
+         s3ufAOJ5HyRLW7aEXOjajatNf6Ig4LwBrK+pO3RM/LuezcfTtj8YIip3MpifOzXkVb8e
+         SNqkDO7aq3O1Gf8aP5pbWNmLA55u7TkTQNla/v8Bkx4rX1K/mrzijRkuFdbExl6JsfIy
+         UfFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=CFbMyQgjp6IGcw4vy5h1rjeRYdYyWom3vUYd83bdASQ=;
+        fh=d4YnUlLSzgvfs/h6MExh/rS82xPWo30HnZwuqMIGuVU=;
+        b=hSRtUhavLgIKpwQihvZdOLciGbbcn/VgBc6ZIeHuX5SphhXb4edot/ZCmdoWelqjsD
+         ci9Karsi60dFYrxPJLgF2jOshb3WcH2qm6AE5AMxLldwlvZPcT4tbajCb0YykUTDNOzM
+         0oV8MD+98PrVId2fu8PErUmKXnq40RFUaOCw+Qp6TYx2FjoVq0pXZ59BE+sSlLEEzqfQ
+         s2Bg/FMULLlcdpuPI8+1WczKsAHJYqLwtjn5DheZTPHEFuJPC/kNKjShMQJhQI4eIw0s
+         07FDZLlBsoXsTuPPYrc7/Ve3SIcN4K+hDKkYtwCI2X9B3MJjH09H5Tsie2cIurHi+4Tk
+         TIuw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774183594; x=1774788394; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yOfCSs2ap0hdtXWmX6n520tPjYpHs2ppZ+kBfqoYyTs=;
-        b=C/rzBlgIT8dNfjHRl6LoO/miicgVBQV983sPgOragaM9y3dhpYQl/dp7GjRrB/ak5g
-         QteVXuEbIcil2VFeNa5rKeSctkpPADPVNNoAAGxhlsGJMWDgUJDPBqmrIZcAYNAjLAM0
-         j4bf/NPe4qUZrJcUoDW7cNw7zSoIlAS1bDYOL/3L0sgh5k/4MHXg4+ehRym4KzyFp2jL
-         /vqQ/pXDN0YoYsw5HJ8RNLVCzbnLBirnboY+FMTfTymCcq5TWIOTtzj6ORLLQuVcvp3t
-         8I2tqi5MadN8ZAyvd6GbTa9jBxrL1sINxzj5yDbUJgwAVy+fqMdUMr15PqeQrBIAMnb2
-         66+A==
+        d=gmail.com; s=20230601; t=1774186173; x=1774790973; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CFbMyQgjp6IGcw4vy5h1rjeRYdYyWom3vUYd83bdASQ=;
+        b=gjS0JWnMDkDED/Bk4yGUplVvGa8Bv7ZZbt+nD7zl68BlQAbmAB6tzgh9l/g772kcKc
+         HljqT5kBinrhWS36We+e5jQmBgnsNEq4We4x6ybcM6kQclTWGWtaLZkpSm0/K+QRD7GJ
+         tnsIM4C4ovA5CAbxHOXYkio0ScQmAl9Ao4zNGabPudrq/xAJicWun7oNBTd+639+1cc9
+         NxgmED4+sBOoNn8XcE8cPcWX3aLe2rerPBz2ebwfEf+DxoFtZs4oXnIN1m6JsvBgwDDj
+         fejl8D2SP2jzOivgYAq4GzLOnar2xsM9Xc5gM1SrDDUtAEHqSK4GKZrGKqPk8sYHPzwj
+         vjBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774183594; x=1774788394;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yOfCSs2ap0hdtXWmX6n520tPjYpHs2ppZ+kBfqoYyTs=;
-        b=Agyo3iq8y+L4YnYB4aFETcecQiuwuUSQrqqTuyt/xGwylh9CxO5oPvOplOwUS3D51s
-         /b2I5HkPp12Nj5hsQVOnBGcs/CEd0/KpIn+8x9ZCSUdQK+PwkNZsp3wmXd091Pgl97HP
-         vbhcxaPg2HFfA9hhh1MEjA7/Myu7JKZKkn+2/hxEEf7bgXF9QZbY6E30aamTHXlW11IS
-         llZ00od4SN3rtSKF0+Lh2Pj6RHX+LEeKuVaYw+OgEp0B6dCrIG2CHh7v0gxcuP03IbF5
-         TWM4jaCcraJ26HKLB5Qh4x2ITU+8uKGumwSkqMxTi35H20DEuir6aSbNsfvueKtnoOXw
-         fezQ==
-X-Gm-Message-State: AOJu0Ywh/MMPKfw7s4ckcM9V4uSbj/2yF3Xb485foBpOqlzpvtQWJCt4
-	96NOuiAl+0JNUOypBysjtcHQZvPy24JFzj3HkMVEsWDZZKdYg5NmcjuGqlpHww==
-X-Gm-Gg: ATEYQzwYZFX3kc7AngdXReSoktobOKFU9dcOJ2WuKNYQgrk5/DTHebUXS1YsAuYw8qZ
-	jzMr4c+iErPC5OWVJ35xxA4fhygk5eauia9izYPr99VRlF/fEfwk7vb9XKPA15V0TKE4jZOW0Qf
-	09Q67J2+d4krsutJltEtrJvMSYJ5k8fDL+Xh4dCtAXrJnnTAI1GEpD0IE6o0/YqFgntz5rPJhb2
-	+ZiXrO8m9dbapPYQfPPVF7rwPgk1bWdDQC6JUzIc2vXo9zOZbWwh8Wihaovd7z1U8UeNpX73Qsh
-	iWqfmtpxz2/kxhwt6ItCUJB6GbtBoC7hi/D4Pd5FeLuwiP5Q6ubsHfiKtGEC+FLRMSOLRd/m7Cu
-	KM4zloxXEDZCGY25Zw6XVTvc5TyMLKFCuX1fkdXD2inu+LoUMDZ8iZLIsogJ6DTA6evn1YQuXht
-	0fO/OxxahqHPQHWl0CsxoGc6eOoMw=
-X-Received: by 2002:a05:7022:4582:b0:12a:6c84:6039 with SMTP id a92af1059eb24-12a726dd70amr3688811c88.41.1774183594235;
-        Sun, 22 Mar 2026 05:46:34 -0700 (PDT)
-Received: from [127.0.0.1] ([172.184.209.160])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12a734bbb57sm7289024c88.10.2026.03.22.05.46.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 05:46:32 -0700 (PDT)
-Message-Id: <6f71fb3e9a39d8cec62bbbc83e53543be40feef1.1774183586.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2247.git.git.1774183586.gitgitgadget@gmail.com>
-References: <pull.2247.git.git.1774183586.gitgitgadget@gmail.com>
-From: "jayesh0104 via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 22 Mar 2026 12:46:26 +0000
-Subject: [PATCH 2/2] t/pack-refs-tests: drop '-f' from test_path_is_missing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1774186173; x=1774790973;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CFbMyQgjp6IGcw4vy5h1rjeRYdYyWom3vUYd83bdASQ=;
+        b=RrpYX7dDYkGEHc4BNwQUjJjCBaWU8ZStJelaYJWmtij1G8n8X0QeIBNIUIw7kfBbZJ
+         Vw0rUWOhwGVenGquB9rYCeZKoRYX5wHzFbrguqcS9xE+q8Cb14i2nS8nE73x9YofcMUC
+         9ASgm2x45CzDGJAaS7+V07B0dEybblszJx4Kw1GDKxsjO/J8I5MPX2mV/l+2w97ybZ9t
+         zuPwKquzRXCEVMRBygWf/FxxjrvbMOU7nK1tH6NspCIzktwMJQTTHHtNhm709/utrmkZ
+         fSJCnrw6xsvdVeJj3UHWoREFaD/gAnlnWKl7RrQuDPSV2syGCHamPzZjC1rZVGxf9TrH
+         BlEA==
+X-Gm-Message-State: AOJu0YzhVQ+UaHLzHmgg+Alm/noWle4XnMwsTpu82mDQvNifDjWAw3Hh
+	eN7BQrTWivTwcQ3Dvla9es7MVTrGqS2k50R4GnSAvW3+Ilup0ljTO9j4xM1HBgGdkuxGoHomPfm
+	mDDDiD9Ui5f8UjM7R1x1TdeB/Jf2gNIk=
+X-Gm-Gg: ATEYQzyZcemH/Lpha/U/9359t3065As5RXSkrbUE2rNCFp1Mtm7+9yz0NrR3uZD4+0F
+	BsaxtVAOwmdeC3HUHSfegUJeKjlQri0J6vS079b8bhwvQ7OdeZ+u/PhZpfefpoUcgVQ8lXwJIbo
+	yHHSsYBP4xY2jzh3wjdAO0Rlfb6BEDr0/bF0YP6Bl2BGPjrKK3itQ7WQVIQ9N9zberJ5GSl4ok0
+	YVzZjpkp3V0y/6o36eW+as61cvl0g0YsfKH5hffDSVLxRNDaAHLNd+pbZ8CyoyWaXFSsPpmi06Q
+	3Rfc9SZKweK8Rx7+6QKR2ehcgNYtXz1E+Oh3ILZqKCbo/vXBAAttiIbGPNoIPiSQDv7NbNx99Uu
+	sXXwv4m8CX5xvUBKs/+mBaZrflVf+ZdfomSWI
+X-Received: by 2002:a05:6214:4487:b0:89a:7e03:f914 with SMTP id
+ 6a1803df08f44-89c859fa648mr141848236d6.11.1774186173047; Sun, 22 Mar 2026
+ 06:29:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,
-    Jayesh Daga <jayeshdaga99@gmail.com>,
-    jayesh0104 <jayeshdaga99@gmail.com>
+References: <pull.2247.git.git.1774183586.gitgitgadget@gmail.com> <6f71fb3e9a39d8cec62bbbc83e53543be40feef1.1774183586.git.gitgitgadget@gmail.com>
+In-Reply-To: <6f71fb3e9a39d8cec62bbbc83e53543be40feef1.1774183586.git.gitgitgadget@gmail.com>
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 22 Mar 2026 18:59:22 +0530
+X-Gm-Features: AaiRm53jcXKrZqzKB192rVAGnYbiM4jPQv1UGMj5-ALDdmkOkiZ9CPFhN9pq0_U
+Message-ID: <CA+rGoLd71J31P98_4jC94Zo+oN6qk2ZX65wnOHU=xPwthhWpqQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] t/pack-refs-tests: drop '-f' from test_path_is_missing
+To: jayesh0104 via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jayesh Daga <jayeshdaga99@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: jayesh0104 <jayeshdaga99@gmail.com>
+Hi Jayesh,
+Thanks for the patch
 
-test_path_is_missing expects exactly one argument: the path to
-check for absence. Passing '-f' is incorrect and results in
-"bug in the test script: 1 param" during test execution.
+It is a textbook micro project ;)
+But I could find a few flaws in it.
 
-The '-f' flag appears to have been carried over from the
-equivalent 'test -f' usage, but test_path_is_missing does not
-accept such flags.
 
-Remove the extraneous '-f' to use the helper correctly and
-restore proper test behavior.
+> test_path_is_missing expects exactly one argument: the path to
+> --- a/t/pack-refs-tests.sh
+> +++ b/t/pack-refs-tests.sh
+> @@ -1,9 +1,3 @@
+> -#!/bin/sh
+> -
+> -test_description='test pack-refs'
+> -
+> -. ./test-lib.sh
+> -
+>  pack_refs=${pack_refs:-pack-refs}
+>
+>  test_expect_success 'enable reflogs' '
+> --
+> gitgitgadget
 
-Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
----
- t/pack-refs-tests.sh | 6 ------
- 1 file changed, 6 deletions(-)
- mode change 100755 => 100644 t/pack-refs-tests.sh
 
-diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-old mode 100755
-new mode 100644
-index 8a0c955647..4a85d96c6b
---- a/t/pack-refs-tests.sh
-+++ b/t/pack-refs-tests.sh
-@@ -1,9 +1,3 @@
--#!/bin/sh
--
--test_description='test pack-refs'
--
--. ./test-lib.sh
--
- pack_refs=${pack_refs:-pack-refs}
- 
- test_expect_success 'enable reflogs' '
--- 
-gitgitgadget
+Patch 2 removes exactly what Patch 1 adds.
+You'll have to use rebase -i
+i.e interactive rebase
+and change em.
+
+Here are some docs [1]
+
+Regards,
+- Jayatheerth
+
+
+1 - https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History
