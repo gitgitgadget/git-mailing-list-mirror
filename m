@@ -1,86 +1,82 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2833290CB
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 17:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806881A6815
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 17:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774201812; cv=none; b=l/whSFrZqwfnWGfEOqnAnmtefAxD9J/AlCEIAW5174psDfw9HwK6GI90//U2rQ7YKKCvj2TlhjuoeydSXqM8CDL+m5ajPnclIKqm4bZqH/0hsyUW2R324/XbGucr+OR+/xul+v9yWWbfc4KXtOiZANMmuZNzMlghudYm0ApZUkg=
+	t=1774202015; cv=none; b=blIYghxCPnC7iIubiJkiEZPXtErSnAgnqDOHcRy0SSac7lJFLV3WpeVOQsXWV7YBildb0NLbTYmHCuWhfo479PeU+j+Mjs4JpWPO3srGXnHyFq1ISawyXlYv3WYDHDLeLHFXGZE0WBSDIoi3wi4gksq97Gf41vgK0qIJ2p/+vRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774201812; c=relaxed/simple;
-	bh=ensHUGo98R9eMmlVcZDpoLJqN/bnjLAVTEuoJxhYZrY=;
+	s=arc-20240116; t=1774202015; c=relaxed/simple;
+	bh=hHOh4cP4tx8i8A2dBMHWrCtfLLr5lLt6Rfex1bS1Vuk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UDoyR8gOtIs4WLtHiCS4WS8cVfyvDVRDLZwsefhnS6rZ3TPY/0W+pNDJ/TwqDjfSt7gyXCfnHnf19Ibtnyvm/C6xYpuI8jtmbd8PO5YEeoj1LN52TRFFD8c72iGsgAflw3LRjQ6TDNs1nAQpnj1knRCT2vImDl/kKLKiG5mCvIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gzEUWZYU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5lmUfyDk; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=p1Zl7vR/E+M57X0ed3/wxIK9k4QKC5VvXtJ51dOZ1DdBvQSaW53co7xSBV80bQQ+gMek8R/d3+lpzK5K1nJxkXoSbEjth3qb//EzmEv983JsBBqBKWW6dCCQmRdXXmj9O9RRRhr3uDf2yxaxmDw29Q+PvskejUKE37kkW+Bh+aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WGf/iI7e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tazG1vIm; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gzEUWZYU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5lmUfyDk"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id CADDEEC0118;
-	Sun, 22 Mar 2026 13:50:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WGf/iI7e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tazG1vIm"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B3DAA14001B0;
+	Sun, 22 Mar 2026 13:53:33 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Sun, 22 Mar 2026 13:50:09 -0400
+  by phl-compute-02.internal (MEProxy); Sun, 22 Mar 2026 13:53:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1774201809;
-	 x=1774288209; bh=b8TaJi5iO2x19Ec1QJHLNILzKFU4znd+tPI84sx7rZ8=; b=
-	gzEUWZYUrpajoTn4ja4m05KDgoWv7vNG37wgGXcV2udX9u8d6r84Wpt/06h+bnmH
-	f27SNMhlz2Zi6woRVX3jfT9n8jr6nPTbNZd7Jeds6fM5Qc7A4oI8+S+BTsjShiFg
-	UO+C1R/fNoa+ZIxUO17ECylXvc6meeuEjzFZGGHKedA0RI8ZQVPYRpw7RFBf0hrr
-	0sq/9qcg0C0dpi/Lglof8tinJDQmrW1nK112HiaqB0c+z1ubp81C0Ll92kNWFOVd
-	hiUosOiV9+Jv95ARhLDafPkkc6BZqU8px+GHq1OpxZmTbsq+HiS0L980ChEnL8U0
-	96serLPy2/EI1vLVj7Gk8Q==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774202013; x=1774288413; bh=tNqcdTZRc8
+	EMt7JMh/R7LTrswhrJccBzDYN/pMGwiDk=; b=WGf/iI7eFRkn4kehM9pUakzYFN
+	WUvKAQBZNTsjRPiD2crF33D1XhiG02iiXKF0LiRibCXnldpA+ZavbajZFvBPaRFw
+	3wRDaDlKGiGip7F636vriMAwwb8m2HMj8GWOr1+DZNO8vbsP5N+/5jzPGLoz0O6E
+	Sm30LOMUrQNvIyVSD7GLFCgJNgxBYEXHsC0bUxdTMRlhsS+tsyVqQl8UVooBhHfi
+	9y9gj0VmSmf0lLRD/ZxYs9xoWbE1uIqNJX/7t86FTNsCcjC9i+E8smisrofWngW2
+	UNZcRiYtVOx9B2gfsCzOY7OiW/s0JoufTEUR2AIspHnPn8KEH7GjQqcJfHkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774201809; x=
-	1774288209; bh=b8TaJi5iO2x19Ec1QJHLNILzKFU4znd+tPI84sx7rZ8=; b=5
-	lmUfyDkjrRqQFZj4O9FZrgdQcIdNiMk6q6ZQQHgExuO47t6aZVtjVIs45lxLIgGN
-	NqKSNY+JRWpL6EkZUYMw7BQbRij0+fI4P4X7piHC4OJbB2WdHMo2NsIL/oYV9wuZ
-	m31EMBDxJ530ZuT+Fq/OeMr3368MRK6ANLrK/vCMJvhRu6xUlDUSYl13NgyDn88J
-	IiSVlpcbrhoLciuKyt95h1UNFHjG/IbVdGWckF/+9ZySA9ywQvSPL91zNzE/D0Ah
-	IFGuNRjxfJ/p/ur5u5X2/qNjMKtbJqfZ1+QH8GDNFwguF0r3BPiZj8C6NKFj+yyx
-	CCvcV/fTmrv2AbNpRqkCQ==
-X-ME-Sender: <xms:0SvAafeREo_tk77lqW5Xzh8DQnYmv1DwLO0nendtvHrzFJJ1paoRVw>
-    <xme:0SvAacPQ7r6BKLRsFutw8bE0FyXbWZUvpL9RUU7heLquU6GF4HrEWzuyN0RzWpIav
-    48hYgVuJfVqtzViGUo9PPcHz5145IS-XpUoeLVQ1u0guHCt6PQe>
-X-ME-Received: <xmr:0SvAadgi7NY-ouNj4OfVZXSimPxi7xwI1YKRc6c4MmNkxSD2Rt4OjmqCa_jS27-o3v2WS_5ZYA_Nv6_d8YLcS34geQCQCQM9WQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeigeegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774202013; x=1774288413; bh=tNqcdTZRc8EMt7JMh/R7LTrswhrJccBzDYN
+	/pMGwiDk=; b=tazG1vImVu2+mE+ZCm6At5Gad0MVvvmMEGI8i9rw/BjN521j0+E
+	qr3fYl4ZEXTa/UWJpa3+WBa1dvTp2bv8SRnThaEOstRx0sdGBeasHi4lvK19oM4e
+	q+FA1niDBGxt5VejXgzh2RWBNWBvWfCjdp5eGNwT2XKuLit3KJnSQ8iUaFT/S1MW
+	rSXix7Vv34Zb06yrWIhADMlX3/pz0rRpWogBufOeW0BXBoyMG/EN2QNCK8hPXuWu
+	CP/QUHsMCc4wuhYpdAV2Nt1qoDs4UTlBHD/tVtvLhU8L3Nc0mJY7hInP1A5TuaC6
+	iDrdlxhgshGwj0KJEwUhgrmiVN2eCqlurjg==
+X-ME-Sender: <xms:nSzAaTLR_QNsQu4DTcBXz1gyY0XykBj643UZJy4RTe-Xa4zqUF-G1w>
+    <xme:nSzAaen17qSTaULHJEKDETSXs4xBvkZ4Kcz1ZyikUbgrNcr4JHaaFHm6CjtbY8sQu
+    ieGnB9mKVFnW_hN8NXzn-KAVZoHqyniey8LyF3HNbcGkvlnNJLV>
+X-ME-Received: <xmr:nSzAaZES-N_JCwgIHCJ4xT2ySHAPQ5d2alZm-q0FkABRgoVd1gP01Ri_RpCyaZsQC9no9QvMmTnkuvl-QDq77TyuA-d--8zjyw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeigeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeeggefhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteej
-    ieeuleenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplh
-    drshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrd
-    guvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:0SvAaf3zGPJmBv308CM1mWcrIWNJourUmTkwPmZT5nkQqqjBGhHpZQ>
-    <xmx:0SvAaXhmUoCZx1BQI8kQbPWjSXEDqSW0P7fvZtX_RkaiidKt2-FOLA>
-    <xmx:0SvAafe-W4Dl7NpH44RcTRagjmjy7oQ80gRUuzfU_Oip76mp5fQdOg>
-    <xmx:0SvAaalMQdrr6LswukFZpXNus7fx3Rr_SOk0vcvAzFBrba1yGUCfDw>
-    <xmx:0SvAafRRxIla4Fon-hVeFByoyQ87o98jNgtPr1JkFYA7DM2V-9ZntGXg>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
+    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:nSzAaWGxxAG6RCMAbZWFuWNJBkyyOHF0hZrwqyyhaI1MgxIhTnFbrA>
+    <xmx:nSzAaeMn6oVJkBRdq7LW5a8pjs7i9e1fsIi9L8CODou7oTIYK9Mz5g>
+    <xmx:nSzAadFuXg5zYOqi4QpFkDPUXIzkfO-8iS7k-UeZVH7AwjDcgdFnkA>
+    <xmx:nSzAadP-Q8pOovJXjH7aCCI-0fun06sh3LkacCzuC7MRFg0Fd7izYw>
+    <xmx:nSzAaWm9qoGpat2UgQOlA-wSgkuqXrV4pAJ-9936sUna9ASFj1fJaNC0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Mar 2026 13:50:09 -0400 (EDT)
+ 22 Mar 2026 13:53:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Mar 2026, #08)
-In-Reply-To: <6c108696-2d41-4fa1-9662-fbf6db97f767@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sun, 22 Mar 2026 17:30:44 +0100")
+In-Reply-To: <20260322141517.54890-1-shreyanshpaliwalcmsmn@gmail.com>
+	(Shreyansh Paliwal's message of "Sun, 22 Mar 2026 19:44:38 +0530")
 References: <xmqq1phc9x98.fsf@gitster.g>
-	<6c108696-2d41-4fa1-9662-fbf6db97f767@web.de>
-Date: Sun, 22 Mar 2026 10:50:07 -0700
-Message-ID: <xmqqwlz392k0.fsf@gitster.g>
+	<20260322141517.54890-1-shreyanshpaliwalcmsmn@gmail.com>
+Date: Sun, 22 Mar 2026 10:53:32 -0700
+Message-ID: <xmqqpl4v92eb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,26 +84,17 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
 
-> On 3/22/26 7:46 AM, Junio C Hamano wrote:
->> * js/macos-homebrew-forgets-reg-enhanced (2026-03-20) 1 commit
->>  - osx-clang: work around Homebrew's clang lacking REG_ENHANCED
->> 
->>  The build on macOS with Clang is fixed to work around a Homebrew change
->>  that exposed an issue with missing REG_ENHANCED.
->> 
->>  Will merge to 'next'?
->>  source: <d340af9e-334c-4e81-e58a-fc3dea73ebdd@gmx.de>
-> This seems to no longer be necessary -- the latest workflow run on
-> master succeeded (https://github.com/git/git/actions/runs/23392330338).
+> Though you fixed the conflicts while merging the old version, commit is not
+> yet replaced <20260318090546.1213077-1-shreyanshpaliwalcmsmn@gmail.com>.
 
-Yeah, I saw that too and was wondering if the glitch was reverted or
-something at the platform side.
+The end result would be better with the initial one after all, as it
+could be merged down without somebody else's patch you do not need
+to depend on, so let's keep it as-is.  I'll need to replace the
+status comment, as this has been reviewed and looks good, and it
+also seems nobody complains about what the patch does.
 
-> Did some kind soul fix the runners?
-
-If so, thanks.  It certainly was not me ;-)
+Thanks.
