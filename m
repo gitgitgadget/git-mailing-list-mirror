@@ -1,77 +1,69 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DC2317162
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 05:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D268635A397
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 06:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774157895; cv=none; b=NB//7vgOQE0uQNQVWGy0dZNEuEpm8FRXuvvWM8VZae4JGQUgLHWgJhLrm94d56PlS+ZkoRZ2SJojL+non+mZfwMpoksROIkwAWiGPcfRoJRB2HOp08TAYolZSrZVwrznTlPheLYJIs9+XvHKEaoqlG/2C7mxHnZOLcBsXoHqjT4=
+	t=1774159709; cv=none; b=QbMfNu+dQgccGI2oq5ojoPlM6v6RouRDt6BKKtCumxnECooFN2z3jZ3tTCBEfZaEOHViDGzr60JOYnnf+MwCDv7DHQDGsZUt6Ux5OxqR8YZWwIJNG3shv+IWDGH3aC6qd9BCw9Mx2vj5TrzvJIOKZtMGpN2GnidrXF5LkLA1soU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774157895; c=relaxed/simple;
-	bh=E0FbyiMEJ6SwzOvJw1agmp74zCFZXK1XkCeK7Gvup14=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qsh66c74Xn1MYlYKpBfkNCcNiQLeTJCVckO9KJuLm6VHf2WENOk7aT8TLqpe6r0kTVFeHk4nYCLZC0Y6XiHOkSExtb2qvqQxwH+/HF0CZrRw2waxLzkJF8MBDjj2a9nwXiQafPpOrTEnEh4qHN6LEgn6xOQBKq5j5xuon6lA4lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ao+GSP4J; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1774159709; c=relaxed/simple;
+	bh=oCvjvBCns4p9WsS0MCMsHOZp5HTEKX3+7F+zesvJFOg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KVu/RveAI1LkBNanrABvcpVb6W1mPXTjgkgGAiWw8UdBwDQdSkz6tRpDeOQvz5ebgmvzmxtGsrPpZLeR2nw88Jeyd4AhIjSXYLRo9r4rxXnJGymy4XX5btSDrb3fB4f4aj+BtJvdS/Gk63uY19lN875y1nF/TRzvnXiau8Vkmfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z4DEFFOT; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ao+GSP4J"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2b07069e2efso18262055ad.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 22:38:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z4DEFFOT"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2b0484a6de4so13645785ad.3
+        for <git@vger.kernel.org>; Sat, 21 Mar 2026 23:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774157894; x=1774762694; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f7I/c4vf1RAzVY9OV1k2sHS8N/7BE9g8bVundPXpunk=;
-        b=Ao+GSP4JlbnOn/HnujEdjrjqbl+FPwjBslaE1xvswhr7dYLkNQH6bD04VF+8aQWMS+
-         xj50Im7bzzCvOdrP0xmS04WKvEraOdTucoDfEZSc/EQM8gsum9gO+vidSf6hTrM8cfWc
-         MSA+9ed/C34kT9/sgNH5qTkJtsrKQRxjNsK1KBVsrWZiN9jk/nhpPFYEyaSnFLpMNd0v
-         /IFszTMzYyW044k9VXgS3qllxhZqY34HVRn5kzf3XQCDK9V3guUl4T1gf64Of/rMDiDb
-         0G3G8u/DSXmCsUw/obCWuURIJholTigA8haCghFf56mqaQA3esjI71+4h4UcpVtoSQms
-         P5bA==
+        d=gmail.com; s=20230601; t=1774159707; x=1774764507; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O8bFIKPSZyoCw7ObGIlh0NwMplHjLABgKrUImtNKOs8=;
+        b=Z4DEFFOTPtvME62cOuQ9yJVJ1ZXn1rZmH0yTx4YC0iY5BppiFpWtn29KdLLiRE5yDJ
+         kox4459ycnWmpzMuHBAVKZQ+S6FfOnEMur+O9ZXW/tpCWhPHzcqRuZ8pGlubcmR2Bd2Y
+         tVYX9fVm9z2zbdMPahWOC6n7yJgAIkcWG2N5cxu83pXlmnTLloBsOMRRkyiAdd/fJe6R
+         cLvVrXfBfVOmT28Vw9fYHhoOuUv8K+tOvctJoMnOOF/OCtyH54d8FzhRhJWWhv9ET4T2
+         AaM40mmyVi8mm3sxF+8NiVf5tgAPaa6+m6lqL6+z4tAlvLc+E8g4nm9YghOkkNTLUlkJ
+         ELjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774157894; x=1774762694;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=f7I/c4vf1RAzVY9OV1k2sHS8N/7BE9g8bVundPXpunk=;
-        b=cSMCTsYqMwAfRV7LwPU+kdKvj86SgtexHdPho+Sf9M8cn3f2nd0HlaQm6HJ/LI2+N4
-         PxR+otXElJVIjvwQ5w2j16hEPm7pEu/8BJerkb0PRQfzy1GWAnIunkkbBQIjnBCbrvQh
-         ZqXEvtQytdI1oeCqus+SemZAIMBLDKyCO/+SkE4xhg5053IrPzI8X6/xU+r99vc1xeFx
-         OV0cmYPcROtofeF8FgzeSGyrmRECOo1/wC561Ep4K0h3MNyhcC+0qXNr1fAlrmH8ZK6Z
-         Ftib6jvgMuZBhhBuks0+q2e8uamfKmA54G3yYlfrHQU5QdjcuLxhiAokDyNNnmd3zIYK
-         h3Dg==
-X-Gm-Message-State: AOJu0YzWnZGMlysgjGH+yEHwSTrKzXA2C6Fh/OflxMewneuHgFQ8T+6q
-	xBrFSS3lpXXoaYzG0J/ORmNEMQZzgBbh4svuznTvYt3QcDL6j9nrCg1Z
-X-Gm-Gg: ATEYQzyzMs0JjUv7qSFCOMSUYqIxW0QpUNhD46L1yYI8EKWcp8GdZptfUb75gsTCtm/
-	VQIx9hqPVvbquZm3d+8I3ADlMAZ7is1xrgJTwX2byTmrYfe3hxzVvEA5BQNnpd3gY1hey04+Hg8
-	NY8hN2uL5Fhud6odrukjed+af8qWBuxfGNDCPraqM9lP96PhYCr1OEDZ9KX9225YvX6Hs3rEsKL
-	FHj72AvgLvz/8SPHs0o/Z5QuLvO9VpSE5pqNmAxSQ+6kPpfW4NVIlbFSzWCrPtbx61zkWexYV/c
-	OWeIznJFD55HriCktq9BKnSF6Zkf8z42iFDvHtAd0/QU+wBSlaLlVYrXUe6nwxx7a7tvxeYOU59
-	ekkBKjJIsJIUW5dNba5EdB3N999DQ36ptURj+N5MYZptKn/7aPKnoS/U/difcS/lJk/6Ff27RgL
-	GQs0CyOWOjD9vsPKoMssVHFxdEAjXx8zTxh+/qLNwudqvVetb/9tIFtfNbe4RAqdZupo5JMTNz7
-	vxuxE62nYph/dEJSZB3sIk/dVSfUAhJaFe5b2P/Vm/d
-X-Received: by 2002:a17:902:f605:b0:2b0:5084:eb1e with SMTP id d9443c01a7336-2b0827d60d6mr75113155ad.42.1774157893850;
-        Sat, 21 Mar 2026 22:38:13 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774159707; x=1774764507;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O8bFIKPSZyoCw7ObGIlh0NwMplHjLABgKrUImtNKOs8=;
+        b=GOlw5G+AyFrIVNBoGQNS8BjdOC18QEJ/QCb5QpBfQTTcEk8Gyn+Rh+Pb/6R4nVAL8g
+         7ftgdJFZahDwUmchkXIXnpRTvwKpFuTplXLA5txiLY6Jr5GSxzybuKxtocKkrMWxooGh
+         GCgNcMoZXXHes5hCtzleupMp9A7BUE//r+ltLE9wDXS4Nmw/k+nuI+Zte8sEg5waEcDD
+         fBi0w0j5JvfUS10Ej3i9mcaNlcyXatKRLiiVwQGgfqFWEUVoqu/4vm+tlSrRgmn4j5gl
+         s9T+w93VN4YAq0iHEw8xO64Kd2CV+GWq6CHF4O0XzhWqZsbDVUGSF+OzRO23ClV7Y3SS
+         DExg==
+X-Gm-Message-State: AOJu0YzwjloFeH19ZQLu8ypm9kz1oXQuFLK2qjBZ9r8D253pXNYeSDe+
+	LKm4XhL6fQ/mE18c/DuUHIPnllyT0lvxkT9obZOTBNs6hvrI8fowWSTODlv/IQ==
+X-Gm-Gg: ATEYQzwNS6ILiFVAlTE7KBmqCCQVsK96RIsBlaCgsJw000iNbAzI0+2DHzUpr9WJmCM
+	T18ZMtnXb2BLgTMdpFbmfTojLK2mofvnhzhY+cbGsDk76xwVrqcmyZjsHWtGGhJvWqBnIJwBJbB
+	lepDr0limZSzhIfRiRxiU+uWpGvVEQnrcu9OPskH4nhtrWvjlMhLwQq6QWoGN0Os/AYWB7udWBe
+	rxjVcUTjbjk5B9981zuiXdfMcA2qOjH5cgL6w95LGQtnUJo186VteF5AV/Iqvsan7xXr13tXCzt
+	rZveHtdes6UDVk+7OGBwmwXCQkvv1DB5SIS8ghdqY31LYLUKevQcfpwm2dANrw2tcNnZ8h9CrHy
+	yRuZY7jvXnedhzkK8mXJ63CT6bRzzUJ2giP7KbaggyX0sUah1K0lajAn/1CwbMBOyjg9fEvV0u+
+	SeHOMGP7JtNh6LbzpaTOIHCmyYoEmz6AYZ/v1i8yRnOTyhW0k40YL9a4mmzl9OqIjPPMVgpEP1f
+	Pi4acTSwcyPT7oQ9Gej97DP0AVcq5HjXdHsGSkwtYVX
+X-Received: by 2002:a17:902:e5c9:b0:2ae:3e73:2b43 with SMTP id d9443c01a7336-2b0827868ecmr76930015ad.22.1774159706956;
+        Sat, 21 Mar 2026 23:08:26 -0700 (PDT)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516194sm67928745ad.4.2026.03.21.22.38.10
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b08369e41csm70662135ad.74.2026.03.21.23.08.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2026 22:38:13 -0700 (PDT)
+        Sat, 21 Mar 2026 23:08:26 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: jayatheerthkulkarni2005@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	joliss42@gmail.com,
-	joliss@gmail.com,
-	peff@peff.net
-Subject: [PATCH v3 2/2] refspec: fix typo in comment
-Date: Sun, 22 Mar 2026 11:06:17 +0530
-Message-ID: <20260322053617.38951-2-jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH v2] branch: reject --show-current with -v
+Date: Sun, 22 Mar 2026 11:37:05 +0530
+Message-ID: <20260322060705.53491-1-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
- <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,26 +72,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fix a long-standing typo in a comment: "refpsecs" -> "refspecs".
+The --show-current option doesn't know how to handle verbose
+logic. In such a case, we want the program to die when both flags
+are used together.
 
+Acked-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- refspec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I only changed the title of the commit message.
+The previous one (i.e remove unnecessary verbose flag) sounded
+like we are nuking the whole verbose flag.
 
-diff --git a/refspec.c b/refspec.c
-index a864a0bac2..a0c9edfbea 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -85,7 +85,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 		if (!*item->src)
- 			return 0; /* negative refspecs must not be empty */
- 		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
--			return 0; /* negative refpsecs cannot be exact sha1 */
-+			return 0; /* negative refspecs cannot be exact sha1 */
- 		else if (!check_refname_format(item->src, flags))
- 			; /* valid looking ref is ok */
- 		else
+The acked by tag exists here because this was supposed to be queued,
+I am resending this to remind.
+The originial discussion however is here:
+https://lore.kernel.org/git/20251226032804.596058-1-jayatheerthkulkarni2005@gmail.com/T/#u
+
+ builtin/branch.c  | 2 ++
+ t/t3200-branch.sh | 4 ++++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index a1a43380d0..cab22e1538 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -861,6 +861,8 @@ int cmd_branch(int argc,
+ 		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+ 		goto out;
+ 	} else if (show_current) {
++		if (filter.verbose)
++			die(_("options '%s' and '%s' cannot be used together"), "--show-current", "-v");
+ 		print_current_branch_name();
+ 		ret = 0;
+ 		goto out;
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index c58e505c43..5bb49de9c2 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1716,4 +1716,8 @@ test_expect_success 'errors if given a bad branch name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git branch --show-current rejects -v' '
++	test_must_fail git branch --show-current -v
++'
++
+ test_done
 -- 
 2.53.0
 
