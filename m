@@ -1,64 +1,68 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB6ABA45
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 12:46:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E454BA45
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 12:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774183593; cv=none; b=BAw2+S4SWLA0PboZyY8SbBUHBFerkWxwmVqmOWcrCSNwY+CeyuP2KJo7AnLXUlg2bqCs3m/qJI5BXHlKaFJztEBDcjdXJPV90A4vmeyzzimA12SykOqYLLg1ouNPkJYoIXYrqcBQxF3m83x0tPlOJc2P4B4Y+l89sK3YaPd9el0=
+	t=1774183596; cv=none; b=EsdbQvCdi0xhMM8+rybEvypunv5lJb9KeJz+hhkFhpK8/4LUaJBL0TI/EIDBeJWBpRYkRAfZbqoK8hwo0+/JGTK+Tg2uUh6QUmdBWl2gDgvELlLvKVP/PIU42Kz/Kw6AS2OMkZy0SNDePTgF2QiuCgTJmbT43QRzRCc7sX7djeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774183593; c=relaxed/simple;
-	bh=s1GjPEDDoYnRa6tTB+8zPR6Fn30RP7EM4NCd4BxrIxk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=KbxIBSJcad6i1DM4Y0FtSWaq+fL/e3jxJdhbeo4B4lTY7pAf5S8urlCeUEsY3aIsW3lJGwxQ+uly7HFSaCTAAw6Q9l+Yg2bi3kYtLw1XWj3uzPtCrgxckFcOh4GVL0p6vVE2CYh2p/mVaJtvqsRAwbljhWBmgD28UGC21Zfnkxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+41oL4G; arc=none smtp.client-ip=74.125.82.50
+	s=arc-20240116; t=1774183596; c=relaxed/simple;
+	bh=WJL10xkwQHXRAhfTNTzFd5gHN1WFi0xc17CTl7QqpvQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=WVPI+NQufriLYr6gcgd7eoZ3+6vv/GvPAPDK4qprfhMGdy4YMhky04FLwRzt+KT9mWZ7qLCjmR/htpNtOzZ1rSK0l5CUsTGtpSQVxQDCgQPR9noF5vOtgVMZ+hpTENUOCkMjWtim9ogIjG+GRE6OfiOyxhIIN3htheajScnIQ2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PUM3Dk2k; arc=none smtp.client-ip=74.125.82.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+41oL4G"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1271257ae53so3771262c88.1
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 05:46:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PUM3Dk2k"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2c10a2e2cd1so546531eec.0
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 05:46:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774183590; x=1774788390; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774183593; x=1774788393; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ON2b7VSTQUTgRZQd9oZ3N1gS8m1oTAYfykjKo3Zw6hc=;
-        b=b+41oL4GgKYGJrqAIX3oEUcIWsQqqHGa2RQubBAaqaeCNQEtbOGfByIUwWxss7xmvG
-         qlDTKIx011RxL67zlvHL+5ptM1Cb95XDk4xw+FEfU8U4lBfayFqJOAcHsjcq1QWfVUmf
-         ZUSCnAlqtnTMrzBmYEStzfIkGgnqovFSetiOCgE4KT6N5KT+HslJwhV1e9nznllYHI76
-         On9UpvtBDVyS5+LOspaDqbVaU2WjerHg2sCxW1XbcpLSzRLQiTUvSdcciO4nUurKp5iE
-         ZdmbvYP3aNXwhuoyylcTAvXVHcJnqYADOXtR3fM9Xo1TpIMJemvXiAhxb9oI/L2m2R3H
-         N25w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774183590; x=1774788390;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ON2b7VSTQUTgRZQd9oZ3N1gS8m1oTAYfykjKo3Zw6hc=;
-        b=ImApbOaC93/Qi99tcLIXfc/FziIzGewbX2ILzg3TIR1eFklAJ1xzeHzPo93I8mcdmc
-         1Bfq6/5CUP8xl7FdkgyIDIbAhWybE3dRI9ULPbzwgBOpiUDGMQauNuTJlZaG+LczswnO
-         HSlwJo2Xb1/xIviceDYWd0Me510wzjtWQF71ZNmXWgSiljemc6IwaM3UWf5dkdhDzuPo
-         Bkn0S7W2XElWtDbgIp++2AgWs1wigL6Q9bml5MEhqJ5jC4g5+dcmCbVMmV4TjY/A+Z6j
-         6z7gC6vk7K7aDQ0eeXMW5LqO4f7U82jpm+8gUjWDcqjqiXIy4T51Z7EbnObGhSTol+kQ
-         e/sQ==
-X-Gm-Message-State: AOJu0Yy3AEREJ0BLzNSFvDtVwQzEQcaHj9t3Z18Lv6UsBM+ilg04YJAm
-	KqH2aV89p3op0ztUtrnoCqI++6Ct5MZ6c/FL9bDbCyyfsfdsS8MeMqHvzvJr7g==
-X-Gm-Gg: ATEYQzwOSln/Ij6y/ZdcnJEZUZXuIVEUkS+SHOQUxNwdkNJU7xiBmx4pBw0DhEd68Kh
-	EI8t1GMRpn8rE2fP72a224Dml4vxcOP8WWgoijd6BUZeY0AiTc+23WneHmISqGr32RdQoRb+qys
-	pzfZU1bBzt58I4NEwl8nFAbMp2oZogQgkP+u96d7ue4hTBkzU9l/iVyIWcpqR/B46IK7Wvwkv6g
-	muJRTHjjJ+eOYn4VmecUXGMdkot9ydxoi+5VXHzFQC20DG7LcVacJVVlABXu1Pj066mDkKhW75X
-	ctZrxJX+b/ewXjMGmzxhmcbfcZesga1tAurt8Xk4Q9MpQqLYkr0sPTdva/2UJIQ0/Xl4SWprrW5
-	puqqASrg8x4HU2IDYrd17o9v/QVxJH9OANRoWPA65sixW6sK346KADIQkBWTOm+1ynAdJRTeUJE
-	7h8lXbOwMczwD9avhc363dUg+UxIg=
-X-Received: by 2002:a05:7022:260b:b0:119:e55a:9c03 with SMTP id a92af1059eb24-12a726e81d3mr4042365c88.31.1774183590353;
-        Sun, 22 Mar 2026 05:46:30 -0700 (PDT)
+        bh=wW50A7J1hYoG2SHR9tJGIoDA3JM3yroUmxUdQnw5s0s=;
+        b=PUM3Dk2ke2qLWgG8BGV4GsKt4nwcymtKZdXplIw8Qmy2JpKJgN2DscvKkXjrbrwjU4
+         DLdc/H/DEMSvxwFfFH3d4wEtOWIiOftBp9FdxEb7QLUwMgEaafwqLa1SFlKJjV3VqJII
+         HQyMT5O7rvOMdiIb4etE4keUzIaVrTTjj2z4tsmwAH0rQJ8NGca2GuP8xwymnbkxeELf
+         L49RiCUNg9umaVstcp8c8ZWcNg2pxvwUb+vmKZNZuyzICog5I6X9TS63lFoXnn6PV1Sb
+         yAbDnJDfYBlIbPSh4q3eaxCub6CP2JO0wQYeq1c9fHHIpCq6lgFbnyZzP4GOScWJ/A/K
+         /t2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774183593; x=1774788393;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wW50A7J1hYoG2SHR9tJGIoDA3JM3yroUmxUdQnw5s0s=;
+        b=UD/bFjyeZQxzLwWK5dbFaL5ejDVQSWSvpFECiG002YW+Y0jG8R7QNaOpFHkRocm8dE
+         VPaypaRIZKeC/6Fqn4SXldvl0rBcxKQBL5tH40qCOMEaxl+793nQ1rMKtks1+5kbzwYZ
+         zBJPLpKfHMgVuzb2BxtnaAANw5HTDGCXlzXpwdl3+8N2J1QFvUioipYAW3lxLdKhTdru
+         +Uzi769FfNipS5ZemJBoHIWDSgn2XJNt36NkOlrBy+iuCaW2M1VpJ+m5cEnV06g7Q9Yl
+         54MjhpvL6QqDIAHtHIW+A+LNSot6BUTiy2znvr1k9fHXVYFWIJxSQuwu61mIo58j1+nO
+         5MHQ==
+X-Gm-Message-State: AOJu0Yx/u7uuFYKKON7LWzCZ5lWxYmE2C949+ZuijMSM7D6YcWuoKTA8
+	LeOZ2Hv376pToTefdfSmWa4W9q5uaaGwiM9fXLKR2BJVxPVYJT7IbOgTCrGw0w==
+X-Gm-Gg: ATEYQzwRDXIYlg2MNoJieEEtKd/iAG/Sp1OP2qmvdX2TOaRTJab6M51T73M/3Ocxuxe
+	VDe3MV8UiuDWiq8NhCjRp8PPaJmqk8VnVhRzVohiHWdq/KsMGD7kSOZ0piUp/sxTKITvWDS0Xyh
+	ms9RD6JyACCuJfZZph2s4k98I5Ry2t+WSXXXHd2r5HTRtIZPhMrkCvWwSuqNyak1bA+GLsOLt5c
+	XgNLyn0BY0AoFb8jPnpnVw5zpcHFHKf8KwQgln1FifKR1QuAOkLDXzUBoCuBV+bdnK75OCw6Pgu
+	DvpEqYOkh4RAQh8cnr7R2iaZlGWdv8c431RhuwWSjJoeO+lFNnEjSs5sTtaYyGssjxijdliOSgl
+	NgYbc6cPDDMEL+YXOxEUd52JJK+Xem4xhnoV2n7P0oln4jXoP5u72Jbu79Hf4DKn6SpOZKEqnDQ
+	VjXFUcEfNdnJ1dTGuKW2s7qCnczG8=
+X-Received: by 2002:a05:7301:4198:b0:2b8:26b8:3444 with SMTP id 5a478bee46e88-2c109712d6fmr4200524eec.19.1774183591801;
+        Sun, 22 Mar 2026 05:46:31 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.209.160])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12a733dd8c0sm7293774c88.5.2026.03.22.05.46.27
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c10b2cde3bsm9824662eec.20.2026.03.22.05.46.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 05:46:28 -0700 (PDT)
-Message-Id: <pull.2247.git.git.1774183586.gitgitgadget@gmail.com>
-From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 22 Mar 2026 12:46:24 +0000
-Subject: [PATCH 0/2] t/pack-refs-tests: fix helper usage
+        Sun, 22 Mar 2026 05:46:31 -0700 (PDT)
+Message-Id: <d9fff1ad4effb57fc0c814bee7b33c84ee40f7ca.1774183586.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2247.git.git.1774183586.gitgitgadget@gmail.com>
+References: <pull.2247.git.git.1774183586.gitgitgadget@gmail.com>
+From: "jayesh0104 via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 22 Mar 2026 12:46:25 +0000
+Subject: [PATCH 1/2] t/pack-refs-tests: drop '-f' from test_path_is_missing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,48 +74,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,
-    Jayesh Daga <jayeshdaga99@gmail.com>
+    Jayesh Daga <jayeshdaga99@gmail.com>,
+    jayesh0104 <jayeshdaga99@gmail.com>
 
+From: jayesh0104 <jayeshdaga99@gmail.com>
 
-High-level (Intent & Context)
-=============================
+test_path_is_missing expects exactly one argument: the path to
+check for absence. Passing '-f' is incorrect and results in
+"bug in the test script: 1 param" during test execution.
 
-The test script t/pack-refs-tests.sh has two issues that prevent it from
-running correctly.
+The '-f' flag appears to have been carried over from the
+equivalent 'test -f' usage, but test_path_is_missing does not
+accept such flags.
 
-It uses: ! test -f .git/refs/heads/f
+Remove the extraneous '-f' to use the helper correctly and
+restore proper test behavior.
 
-This is inconsistent with the Git test framework, where helper functions
-such as test_path_is_missing should be used instead of raw test checks.
+Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+---
+ t/pack-refs-tests.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 t/pack-refs-tests.sh
 
-
-Low-level (Implementation & Justification)
-==========================================
-
-Without sourcing test-lib.sh, the test framework is not initialized, leading
-to errors such as: test_expect_success: not found
-
- * Replaced raw file check with the appropriate helper:
-
-- ! test -f .git/refs/heads/f
-+ test_path_is_missing .git/refs/heads/f
-
-
-Summary
-
- * Replace test -f with test_path_is_missing
-
-jayesh0104 (2):
-  t/pack-refs-tests: drop '-f' from test_path_is_missing
-  t/pack-refs-tests: drop '-f' from test_path_is_missing
-
- t/pack-refs-tests.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-
-base-commit: 6e8d538aab8fe4dd07ba9fb87b5c7edcfa5706ad
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2247%2Fjayesh0104%2Ffix-pack-refs-test-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2247/jayesh0104/fix-pack-refs-test-v1
-Pull-Request: https://github.com/git/git/pull/2247
+diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+old mode 100644
+new mode 100755
+index 2fdaccb6c7..8a0c955647
+--- a/t/pack-refs-tests.sh
++++ b/t/pack-refs-tests.sh
+@@ -1,3 +1,9 @@
++#!/bin/sh
++
++test_description='test pack-refs'
++
++. ./test-lib.sh
++
+ pack_refs=${pack_refs:-pack-refs}
+ 
+ test_expect_success 'enable reflogs' '
+@@ -61,7 +67,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+ test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+ 	git branch f &&
+ 	git ${pack_refs} --all --prune &&
+-	! test -f .git/refs/heads/f
++	test_path_is_missing .git/refs/heads/f
+ '
+ 
+ test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
 -- 
 gitgitgadget
+
