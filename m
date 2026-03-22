@@ -1,81 +1,194 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3471F30AD
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 01:44:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774143873; cv=none; b=Cbv8nVZblXI32r5pV+mhOTCKFxAhvKxAaxOqFhTVVyjooqt1MAQvVaF/Bap3p3kma++91ABLGfBtMBl3UM16UCmzUAmzdHOOBmUUixRwLtWmZibSbF65ha43C4Tc9WkQ7lZTI7Tpqx+Csd5qmGEB4RuaTueIizeX0C4qP1/l7x4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774143873; c=relaxed/simple;
-	bh=QP5Oc8Brpbnm8vAIagpXRp9C0Hdht/IqDVcvLSfgYQ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H/UOw6Tyvxq6pkUwqQRWTzBpOkS2T+405gA7L+m4cuyIVXLc/uuduYuqVXjqKOMeJ36f/SgPTGe9MA9nqN0qX9X0QaKJzOevS0N5bzO6kTS7h37P2l5yMuHt/v1iZkjDk7MJBT9dzdaSfF57C1GVd3I3YHZJTexEbG3kX8A0Ncw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MmcjxHeO; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MmcjxHeO"
-Received: (qmail 92158 invoked by uid 106); 22 Mar 2026 01:44:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=QP5Oc8Brpbnm8vAIagpXRp9C0Hdht/IqDVcvLSfgYQ0=; b=MmcjxHeOfWr5GhFnLI2sFuVOOLS9ymMnCqGrrForkrDwQRkSqHM4zBkwYScAoX2dA/GIjvU/aiuFEfoYHqdsy3vlV6wf1itWwHrGwW4qpGFPqA2d1rV3CN5edNJ7XWKhinpYDndLdyw7t/QyH9uOrpcoPju03Zj47ph9NoafxBWPlQ9Z7Ad10rrjkgs6wYaoEoHyDyjj+iSUoHL4lMZvekAmqgkFBfi913unv9yvcuWAl5PtO9tmCF6XLt4EV2ahJRUvhsv0eOlvTXtvDUlA/aEnWL1St8Pq/h7ixsOxIeMz/xKqj+SE1GSYFCFO7+sPKe4HaZNaPz73rZAYZEAqoA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 22 Mar 2026 01:44:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 127001 invoked by uid 111); 22 Mar 2026 01:44:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 21 Mar 2026 21:44:30 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 21 Mar 2026 21:44:30 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC] cocci: .buf in a strbuf object can never be NULL
-Message-ID: <20260322014430.GB816875@coredump.intra.peff.net>
-References: <xmqq341wnvbk.fsf@gitster.g>
- <xmqqcy0zii0s.fsf@gitster.g>
- <20260319233546.GA3632561@coredump.intra.peff.net>
- <3e387439-c066-4e45-b28b-43f77c8824d6@web.de>
- <20260321211828.GB736981@coredump.intra.peff.net>
- <ca9fa6c7-f693-4b85-a17f-8deeb05b45f7@web.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8E940DFBE
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 02:04:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774145060; cv=pass; b=Oqi39Ydqr0I2h+LpM6eWylhIBCqoOoqw/8KYThb7EgLGx78Ug7B/heKNChTlODYMyNNvPZhQXbrWx+KtMCdX8u6dN3BceDC7CQAmcxJUW6GbN4tsEy27DhBWfLD4xH65Ma7bQBSV59BGckjmQGLldC+7zjO6hEAlVwK5jX1t7jw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774145060; c=relaxed/simple;
+	bh=SdSAyqa5VwbuuB4XREL2Jy3KItaCf/SnqEocpuzS+Ic=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=txNw99dbWCJBKWyx1L52OcBuU25dhVKjndh76EQzy+hq9PD061R0i8NmByzufE+BEfpnrBDUbw76Pdwlrxbsispoyd5fFg41+aw58ZTU4xhi6pDKqsoF3mdmb9N4ved2zolCxsKIMtv3RwhvREWulUmVZrnhCAI51h31KQfBcWI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-124713e4244so144781c88.2
+        for <git@vger.kernel.org>; Sat, 21 Mar 2026 19:04:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774145058; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Y3b1BiuF06i2oyi2A0Nwm370Mk4znAS6IKk5X7j88fxC3HiUezAd3ZD/jKas6j2uP9
+         +JdCU+0oCHFcZCnlFt5lgAE63kQYAG9GqZXUObxLOXTWtUtjA8kr7Ab/KrAHc44kZQI/
+         7pAC6uZNBpix+Ql4MzziblRjmuQkNLEQecLCugmMhX3ipvBuABb+6xm2pmlZ6zS/gZM4
+         FGZoidFcrF15fujUyB95lPxehjCWCzpVmuGAowpfqihjhqq6PCpEa3r/LARjvSE7UaL4
+         c+m+DzP/QrGuGweXyX/lgZ03hBDfpejhF1DwQj7+FvJ5sd4qBxkyfBKjv/8gQDtVztDA
+         dvZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=GpH+IayVc7COz3Kq5vspN4DDJQZUnb/VO5FVrLAX9lU=;
+        fh=6vVo/7/laIe1JqA+xNYlvxMrNtmBkIXrc5uXeLhLzrc=;
+        b=gA9OjlHF7UUuhH3SxBoMIi9vHCFiN3tUS6rtFCnwDL5BCUDSsAfghZ7FfpDpCzy9Hb
+         4EjXKCz03heEKQsPaSDDz1SNJmPaCF4EEVgvws90skDtX1Jz00EUpdfnL2h0S+WTaYKd
+         RL7gqwcPDwzzzeAImRVYBh4dLaBknPvz94J+ObjQ+cEvjqHhlZ6r+5uGz7buPPWh1lhS
+         xJ/4CQlrXqGUWsUa10wJCVEEOXyLpwc37Q2eeyRWsH+QpT8cr2umNMrEj5uNY374W2r7
+         5h4hLoYp/87yKa4adAqL81Bqq2s2lrzOmtYqPOqBR2Bde3lG5wzb3ZbGOxnWBnE+s3WH
+         6Cmw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774145058; x=1774749858;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GpH+IayVc7COz3Kq5vspN4DDJQZUnb/VO5FVrLAX9lU=;
+        b=NzXhCqqiRiq4vgQEFcjxZe9kf6gioK9PXqj+SCPXsnkJ+WJw86Qo/n7lobCRQEVrab
+         qvrHPNr46pBtTu80WygG8aGMM7zelye5YTqmX3+iUB5PTXPgiOX9rCYKXknTo5onWklB
+         yNf4/WiwVnY7rrxDc0Hz2YONp3ejwbkAnqBcuUAXRCCpBFLg2Wi/6ZIX8XGn5u7zRo8c
+         VtkCkel/BsyzOtKBSwiuOaa7r7BlrKCT2JLITNqw8/tBBzTBDMHHBAG12C5uZYBB+2tg
+         FXgBtuSkSQBuGPtsbmIKVxur73HJXk9ugaXVvNKuh/Ymubr1ZlilJ7p559eoFnsbRwZR
+         gyxg==
+X-Gm-Message-State: AOJu0Yzw3dYQwYkhOl7z05AtgwrPqGXDw2cBQMkJfJcWDFKj864cP7so
+	hdrIKKm3NoNaqbA2BNTxDmZxsUnpzRcMu6znIoPRuy+mT+cU64U1YclP3Ya/LQrUPttTbbXwtQq
+	fCJYHyDc8PxTMCTGVkM1571v7qsCJlUY=
+X-Gm-Gg: ATEYQzz8yD0qRypvIivQAcQnURCfJVvVaaIdd07NHy+ft+uw+Q8hagzfMX3py6SAERa
+	VyxX6EDXhVVpkkD/LvFncyXJYwEsItjXBhrfd3Wb3Ok/f4HQTi8VymmeRregdtaroxGzRoLWr8f
+	5moeKl6QeLrO1iDFKl5wEyZo2+nVFFrthe1rpCUdnZkiPqmH75dEgGAS6YAZKqfLgVcFMO1q5A+
+	hLSquxO/nuILFBwOebh7iLulPnGoFCbcKxGwa9oNdT5Qi7FYnQc5Vcu1prq9uz9sxgknghcv3Lw
+	LIRHP1U3yeUfbzw2wbcZHuWNQjKod6X+abYvpGXN+w==
+X-Received: by 2002:a05:7022:6723:b0:119:e56b:c3f5 with SMTP id
+ a92af1059eb24-12a726d1d74mr1712256c88.5.1774145057496; Sat, 21 Mar 2026
+ 19:04:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ca9fa6c7-f693-4b85-a17f-8deeb05b45f7@web.de>
+References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com> <3c0702f81b3e4a57cd38284ab90f8277da3fcd40.1774125871.git.lorenzo.pegorari2002@gmail.com>
+In-Reply-To: <3c0702f81b3e4a57cd38284ab90f8277da3fcd40.1774125871.git.lorenzo.pegorari2002@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 21 Mar 2026 22:04:01 -0400
+X-Gm-Features: AaiRm52qhUkTiLJNoode_YNyqBZpB98NHT4g8wJ18ScIPMV_gY0q273MWRgPLcg
+Message-ID: <CAPig+cQSsMfvHJnwuXGQ1Je8ekz=Rqbaibn-3shbya5y-5xTKg@mail.gmail.com>
+Subject: Re: [GSoC PATCH 2/3] pack-write: add helper to fill promisor file
+ after repack
+To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 22, 2026 at 12:41:04AM +0100, René Scharfe wrote:
+On Sat, Mar 21, 2026 at 5:29=E2=80=AFPM LorenzoPegorari
+<lorenzo.pegorari2002@gmail.com> wrote:
+> Create a `copy_all_promisor_files()` helper function used to copy the
+> contents of all ".promisor" files in a `repository` inside another
+> ".promisor" file.
+>
+> This function can be used to preserve the contents of all ".promisor"
+> files inside a new ".promisor" file, for example when a repack happens.
+>
+> This function is written in such a way so that it will read all the
+> ".promisor" files inside the given `repository` line by line, and copy
+> only the lines that are not already present in the destination file. This
+> is done to avoid copying the same lines multiple times that may come from
+> multiple (redundant) packfiles. A better way to achieve this might be (is
+> definitely) possible.
+>
+> Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+> ---
+> diff --git a/pack-write.c b/pack-write.c
+> @@ -621,3 +621,65 @@ void write_promisor_file(const char *promisor_name, =
+struct ref **sought, int nr_
+> +void copy_all_promisor_files(struct repository *repo, const char *promis=
+or_name)
+> +{
+> +       struct strbuf promisor_source_name =3D STRBUF_INIT;
+> +       struct strbuf read_source =3D STRBUF_INIT, read_dest =3D STRBUF_I=
+NIT;
+> +       struct strbuf write_dest =3D STRBUF_INIT;
 
-> >   - make a noop read on an unallocated strbuf retain the unallocated
-> >     state (your example above)
-> 
-> That makes the function conform to the convention of rolling back on
-> error.  This transactional behavior is a bit easier to understand.  The
-> non-getdelim(3) version doesn't do that, though.  It returns whatever
-> it got and leaves error checking and rollback to its callers.
+These strbufs don't seem to be released, thus are leaked.
 
-Yeah, I didn't look at the fallback version. They definitely should
-match if we are going to change the behavior on an unallocated strbuf.
+> +       int err;
+> +
+> +       FILE *dest =3D xfopen(promisor_name, "r+");
+> +
+> +       struct packed_git *p;
 
-> getdelim(3) doesn't allow that -- it has no way to indicate the length
-> of partial reads.  If we are OK with throwing away partial lines then
-> we better do that consistently in both versions?  Sounds a bit messed
-> up to bin perfectly good data just because some other platform has a
-> fancy function that goes quiet when it stumbles.  The alternative of
-> having inconsistent behavior seems worse, though.
+Style nit: Place all the variable declarations together (without blank
+lines), followed by a blank line.
 
-I'd expect a partial read via getdelim() to return the number of bytes
-read, and set an internal flag such that ferror(f) returns true (and
-return -1 next time). But that is based more on wishful thinking than
-looking at the implementation (and the details may even vary between
-implementations).
+> +       repo_for_each_pack(repo, p) {
+> +               if (!p->pack_promisor)
+> +                       continue;
+> +
+> +               strbuf_reset(&promisor_source_name);
+> +               strbuf_addstr(&promisor_source_name, p->pack_name);
+> +               strbuf_strip_suffix(&promisor_source_name, ".pack");
+> +               strbuf_addstr(&promisor_source_name, ".promisor");
+> +               FILE *source =3D xfopen(promisor_source_name.buf, "r");
 
-To some degree, one you see an error on a FILE handle, all bets are off,
-and keeping or throwing away a partial line or not is not really
-important. You can't realistically go back and retry.
+This project still frowns upon variable declaration after code. You
+will want to declare `FILE *source;` at the top of this loop body and
+then assign `source =3D xfopen(...)` here.
 
--Peff
+> +               /*
+> +                * For each line of the promisor source file, check if it=
+ already
+> +                * is in the promisor dest file. If not, add it to write_=
+dest, so
+> +                * that it will be written in the dest file.
+> +                */
+> +               while (strbuf_getline(&read_source, source) !=3D EOF) {
+> +                       if (fseek(dest, 0L, SEEK_SET))
+> +                               die_errno(_("fseek failed"));
+> +                       int is_source_in_dest =3D 0;
+
+Ditto regarding variable declaration following code.
+
+> +                       while (strbuf_getline(&read_dest, dest) !=3D EOF)=
+ {
+> +                               if (!strbuf_cmp(&read_source, &read_dest)=
+) {
+> +                                       is_source_in_dest =3D 1;
+> +                                       break;
+> +                               }
+> +                       }
+> +                       if (!is_source_in_dest) {
+> +                               strbuf_addbuf(&write_dest, &read_source);
+> +                               strbuf_addstr(&write_dest, "\n");
+> +                       }
+
+The commit message talks about this, and it is indeed very ugly that
+this re-reads `dest` from the beginning for *every* `source` line. Is
+there a reason you can't simply read `dest` into a `strset` (see Git's
+`strmap.h`) in its entirety before entering the repo_for_each_pack()
+loop and then merely check the strset for existence using
+strset_add()?
+
+> +               }
+> +
+> +               if (write_dest.len) {
+> +                       strbuf_strip_suffix(&write_dest, "\n");
+> +                       if (fseek(dest, 0L, SEEK_END))
+> +                               die_errno(_("fseek failed"));
+> +                       fprintf(dest, "%s\n", write_dest.buf);
+> +                       fflush(dest);
+> +                       strbuf_reset(&write_dest);
+> +               }
+> +
+> +               err =3D ferror(source);
+> +               err |=3D fclose(source);
+> +               if (err)
+> +                       die(_("could not read '%s' promisor file"), promi=
+sor_source_name.buf);
+> +       }
+> +
+> +       err =3D ferror(dest);
+> +       err |=3D fclose(dest);
+> +       if (err)
+> +               die(_("could not write '%s' promisor file"), promisor_nam=
+e);
+> +}
