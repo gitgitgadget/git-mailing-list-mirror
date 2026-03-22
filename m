@@ -1,175 +1,213 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118DE280CD5
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 02:36:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F3C34253B
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 03:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774146987; cv=none; b=TWkXk59l9FTQ462cTn1Zjvyvn10Rp2Pm0tbPrDOYSA1QNC3WjaxavYs5NpVjd/sSPo07SNHe52ZvSsbQJCWR5Oh/X6jGNgysZ2gq9O6KXHDryhgfBJo59txnqCoz2TXyRMCvSnj6imzNV1qmsDf2b59YScz2oPS0W2PGK/1zHOk=
+	t=1774150058; cv=none; b=fgM04JYKgqBwVvQ7hCrbZlycjMn1EF5/YkC7b3Zx7QPefNnA/wvt0ly2dmTdW+rlVzNyX/kXI0F0XCMrTsHMPijaPpk0LJwvBstxx4PNagIoVsYN4XARj66hWC9or9xNAQmtSj69FL7FEzOvOQKEnPx5ZgyHzPnxuV42RVavSHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774146987; c=relaxed/simple;
-	bh=Cz2m/JfH5tM9USiRz70kCs05ykY0IQDgDNXObU4nfv0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWen+rpCqH5NLGotF2k9H8Azk1C1N5B8MejsARQ/67DG3Bk49y9Jd+ObBdt8Eo/4ieiczhWkowI9SuUPmMuT/x9dpC15BwrEy66sIXDNCos96N+TCplYvbw/tcvsQsrUzSYqMPe3IP8UdoR4QDuwr+je6UpydZTq8rcnYouhEQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5mCALN5; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1774150058; c=relaxed/simple;
+	bh=VsoO656RzBzVOuFvlCd1grI16SShp8kZ0ZpOhxSKtwE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s7Ucj7IY+cgy6+K9e5i4WjgbIj3gdXRm1OdAXVm9WcgElwX+MOU1nJhQczBh2L/xLPNEJuf9N8BjudokJErj9I5llV/OEBzgK837vqDPzjnUKX+fP+Z/7QPjLP7q1+nPor3xaW8t4mZlfYpYtn8M6zFSqSmWM1R0b34NxB2NViU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GmjFu33+; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5mCALN5"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c73ba417c6eso1212044a12.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2026 19:36:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GmjFu33+"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ab1c8fdc40so4866205ad.1
+        for <git@vger.kernel.org>; Sat, 21 Mar 2026 20:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774146985; x=1774751785; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=davMrHZzgr+7vByoE1xsFEIxAGdNdRGuuOhJOmaoSjY=;
-        b=e5mCALN5R0XVWF2OOCY/8clVk4O0sNO5vfRAwYSiv9lvuCWjFRW4d8lpjHXtcchSRi
-         Q/zFORVbcSKa37/D2Ibup8Pdg9eRLjQ/QjdWfrD7j3hsovDNEcB1kVAZVQspKUcQ7IRh
-         N9gRSa8KpVwaztNgnC32ttv4z6hLI37y5ZLuQy40mXDtVQljW4Abgar3u1hLXd9bs24P
-         isN9Z5gzE+rqUPkLcPuOIwJXs5jWRta7WNExfGPUGNZcDRFhj7FjN+zSxAy4v1GgIkHj
-         hAoBdY5ndJmrFWC5hwDSBeePdf9DZ6q25ujRM2LR450dqq0BQDWgR/LUBqdN0hTYTEQE
-         f3wg==
+        d=gmail.com; s=20230601; t=1774150057; x=1774754857; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W8jAti1FtMv8jXaNYjG9VqjTW9z24wfKC96n3yEF+h4=;
+        b=GmjFu33+TOWsizz23qun9KyoT/aVWmMCZykCxosjHfxHH9UoQOe1tK6YaXmFj3IXCp
+         u3bKql6MCZnFiLGx/DQyXa92fzcYdtfLkWEv0E/LQb9i3j/ZYHmmWS6WctRZT9RCy4S2
+         P/NkUd3msZURubrOrMi/BVRiNGEO6+RJElHTaKhH6GVSoXO58lml9aFDpT5kI0Lrgjsx
+         qW6ePWGvYzzV1GhLHErLZPJb7rLppK/7HX3xGyTz8sOfsmrRduPGn7nyRkIfrN3jGOBa
+         QEQq7LxiftDLOiSNxPCaMk6IieVX6/tKkuEiShYfvhZf3PhNd5hWByKp1mHeInw7bQwp
+         RRSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774146985; x=1774751785;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=davMrHZzgr+7vByoE1xsFEIxAGdNdRGuuOhJOmaoSjY=;
-        b=mlOzjhZ1DCHQPJio47CaIO7sAqF/XK5Z4GhFc/iD0tYoqA0YPOq39zKbt5GdHyCrir
-         jgA4jN44JMzu0YDy7z8kcBK3B3LQit/CRms0mNc/Z+FozQ1/BVxUO8Oyzv/LW/+z8dJG
-         /ui3LqqqlTZP24ysyKB0J6LOm8yAtUPCjL2co8onhWwB8sHRYmJorQ1DFjnxUS3FqZes
-         7Al3mEsZ1SeIuuMSzV45TFr84twZ3m8eu1Bzz0UnCBdPbFui9Mwz/zKZAK+z8mxPTMz3
-         T+Fu06DPS58ZIN63vkR9xCHu3oMHug0v1ur7HWK7+7G/K4MxMRR8pwFQKqk2f55mqKxS
-         FQyw==
-X-Gm-Message-State: AOJu0YxoEhrdPv9EZp+nXWXhoWOxMxBbP0/XQFBUUP71qt2Ce/v1jN8s
-	hKYjvcIPTiRPExFgAiVW/9dj4zRgDauuq41eAM9NsZXmgL1TlG6G8CNa
-X-Gm-Gg: ATEYQzxaOQouEcjtjo6DRty/MNl32TgXXqW0IIBAOeXKeVZ2/cDWA1pamP7Vv2+XJ5k
-	BOuvCPkX9gZ+mk5uLlhchnJPBVDSSlcef5zUo/Q7jqYuPB0kK/7yxayrm3piieGvOb/YhTsnwoA
-	6Cn7YJHcxIBaP1Hi7XPzxdEdAHBx16nUoRO4EvAnxQ07qqBjl0LUZmGMY450fJtzkc5gib+qzOL
-	sxHoU8LAwLpxaKOYRYAwgiDnrnZacPwe+DjMFlN7gC4hChgNQ5SNplFP/BqsvLoD4k+rEqe1RPU
-	LuaYoGsz78VjEbT2EEOHg/DO7GWo/3V6Nol0JVneeJBLaAdk1o83mB7YpJm/UlqpChmREKlP3uI
-	R05p50aGTXt4afrffDaYFJf/J25RxHZrv9pbEXrc+oAi2OLj32L+O8XnavBGSFS6BhAMCp+caeh
-	RdH3LOdY2iuBZX+RQH8iU3eWapDSAvwY1hO/FZH9keEXsjyWQVUHGLd5mQhh0evyWDWLQgA2w6a
-	c97TM77BrSYzJjYNTTx1RPyyhBao+pCTQ==
-X-Received: by 2002:a17:903:2284:b0:2ae:a45b:42f7 with SMTP id d9443c01a7336-2b0827a4c3dmr81214255ad.36.1774146985426;
-        Sat, 21 Mar 2026 19:36:25 -0700 (PDT)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b08366b9aesm83351665ad.58.2026.03.21.19.36.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2026 19:36:25 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: jayatheerthkulkarni2005@gmail.com
-Cc: git@vger.kernel.org,
-	joliss42@gmail.com,
-	joliss@gmail.com,
-	gitster@pobox.com,
-	peff@peff.net
-Subject: [PATCH v2] refspec: safely parse refspecs outside a repository
-Date: Sun, 22 Mar 2026 08:05:57 +0530
-Message-ID: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260321194653.24513-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260321194653.24513-1-jayatheerthkulkarni2005@gmail.com>
+        d=1e100.net; s=20251104; t=1774150057; x=1774754857;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W8jAti1FtMv8jXaNYjG9VqjTW9z24wfKC96n3yEF+h4=;
+        b=dWEAcjMgptNv9suI4qRJ5ZR6t7AbYjRXujSFqk293tR87pqzLevuyNK6XrELImK3XH
+         1jlaEL/3VXXYhsnoQ7dMtchHKVWbXotmhfdUnbgAxUyXcg6v6Hx3dAQb9u94inyqAIAh
+         CnEL5CjydIDkPkiT1fl0/RET97rNMfuiI1Sq9cYgk0e3OK0JNrauOULaxu/0DVl1euG+
+         DkDoYGD1sJXPhluftNCLhz80TaLB5YPBdDOxhQu/C/kJ8JJi+q+cTuVN+QFfFSbX1YzK
+         ejBF2XKAdvjuFdo445/m+rSLU5HCP3DWK/3jCNZ8HI5wyF5GaxsiUd2z0tuFarSVDXIP
+         cIMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVWx0DWtidS8hEf2WC/Wa4sPQSES2kZjAne3UsXHII9J/Wmh1MxOuzXJIimbKRqntgTzqg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUDnv/Beopv1O6smx9GOsx9H+2XcBehfDY7ECLWkXMxYuhH+xh
+	FNAcOVjHOctSk4n2H8ha7z6V8wE5qJwhAl1e4yfT8jaDwM396GBftOD1
+X-Gm-Gg: ATEYQzwtn/DsXe9gRsvHii+2wUx/Q1QWtuyjwXCLnPJIwLh5zd6OgEqcAs3NK5WLVZe
+	w/KSmqzlXGNPRuTb8qnb+qcJ3i3NKlBExrrsug2ghpLUfk4ih+lmL8ZxOoNU9/dNtVaun6egMW6
+	v+stPEuDHLrT6yAq5fpD1vyTYlUBSkGTTJsH12DrjtX3QIkSZ0rHkFoRXY2/mP92DeyoxcHIkld
+	kOCA92YiKtIvk7Nb/ycJq1EnY4PZrSWB+RUskCdiRTfxlAX5/954QQrGUbCruYH2LewYY+9Djho
+	MxYuevWiHxWomywgbxYe/FDykRsCeS3NeSz/YereTUqLWsptdIXwRrzb5M/iqGUW1tyu7QypJv+
+	8R+WLpm7YiPrUa+B41YCph9xhE5FZ/rSpfD9RpZ2dBG1QWxPoovtFFgE4gQEWBsZ8GyOJbkI+nJ
+	NTJmm103MSamyrGClHdkR0W3dpbZgLE2gE+6q3LOt8r7NTJRA1MFeFptYQTbBzD9KpVSOs48IS9
+	AZ/+iY/0+0=
+X-Received: by 2002:a17:902:c410:b0:2ae:5d79:a163 with SMTP id d9443c01a7336-2b0827e3cffmr55590635ad.5.1774150056918;
+        Sat, 21 Mar 2026 20:27:36 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0835298acsm68472955ad.22.2026.03.21.20.27.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Mar 2026 20:27:36 -0700 (PDT)
+Message-ID: <90c5b9a9-b77b-43ad-9c04-a0addc058aa8@gmail.com>
+Date: Sun, 22 Mar 2026 11:27:32 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] repo: add paths.git_dir repo info key
+Content-Language: en-US
+To: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Justin Tobler
+ <jltobler@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>,
+ Jayesh Daga <jayeshdaga99@gmail.com>
+References: <pull.2242.git.git.1773766519857.gitgitgadget@gmail.com>
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <pull.2242.git.git.1773766519857.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-When a remote helper like git-remote-http is invoked outside of a
-repository (for example, by running `git ls-remote -h <url>` in a
-non-git directory), `the_hash_algo` is left uninitialized (NULL).
+Hi Jayesh,
 
-If a user has a global fetch refspec configured, `parse_refspec()`
-attempts to check if the LHS of the refspec is an exact OID by
-evaluating `llen == the_hash_algo->hexsz`. Because `the_hash_algo`
-is NULL, this results in a segmentation fault. This crash occurs for
-both standard and negative refspecs.
+On 3/18/26 00:55, Jayesh Daga via GitGitGadget wrote:
+> From: jayesh0104 <jayeshdaga99@gmail.com>
+> 
+> Introduce a new repo info key `paths.git_dir` to expose the
+> repository's gitdir path, equivalent to `git rev-parse --git-dir`.
 
-Fix this by ensuring `the_hash_algo` is non-NULL before checking
-`the_hash_algo->hexsz` for both standard and negative refspecs.
-When operating outside a repository, fetching is impossible,
-so bypassing the exact OID check is the cleanest approach.
+Here you promise in the commit message that paths.git_dir and git 
+rev-parse --git-dir are equivalent...
 
-Additionally, while looking into the remote-curl execution path,
-take the opportunity to remove an unused `#include "git-curl-compat.h"`
-from `remote-curl.c`.
+> > This improves consistency and allows tools to retrieve the gitdir
+> path without invoking external commands.
+> 
+> The implementation adds support in repo.c and integrates it into
+> the repo info reporting mechanism. Documentation is updated to
+> describe the new key, and tests are added to verify that the value
+> matches the output of `git rev-parse --git-dir`.
+> 
+> Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
+> ---
+>      repo: add paths.git_dir to 'git repo info'
+>      
+>      Teach git repo info a new key, paths.git_dir, which reports the
+>      repository’s gitdir path (equivalent to git rev-parse --git-dir).
+>      
+>      Documentation and tests are included.
+>      
+>      Tests:
+>      
+>       * make test T=t1900-repo-info.sh
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2242%2Fjayesh0104%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2242/jayesh0104/master-v1
+> Pull-Request: https://github.com/git/git/pull/2242
+> 
+>   Documentation/git-repo.adoc |  5 +++++
+>   builtin/repo.c              |  7 +++++++
+>   t/t1900-repo-info.sh        | 10 ++++++++++
+>   3 files changed, 22 insertions(+)
+> 
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> index 42262c1983..d17d911ec6 100644
+> --- a/Documentation/git-repo.adoc
+> +++ b/Documentation/git-repo.adoc
+> @@ -95,6 +95,11 @@ In order to obtain a set of values from `git repo info`, you should provide
+>   the keys that identify them. Here's a list of the available keys and the
+>   values that they return:
+>   
+> +`paths.git_dir`::
+> +	The path to the Git directory for the repository (equivalent to
+> +	`git rev-parse --git-dir`).
+> +
+> +
+>   `layout.bare`::
+>   	`true` if this is a bare repository, otherwise `false`.
+>   
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 55f9b9095c..3067107cad 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -66,11 +66,18 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
+>   	return 0;
+>   }
+>  
 
-Reported-by: Jo Liss <joliss@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
-Changes in v2:
-Instead of adding a fix by giving a default hash like we did in cmd_apply()
-I understood that it is impossible to fetch here.
-Therefore I picked up whatever Peff suggested here.
-Since I got no feedback on the test, I am assuming it is correct and leaving as is.
+...
 
- refspec.c                   |  4 ++--
- remote-curl.c               |  1 -
- t/t5551-http-fetch-smart.sh | 15 +++++++++++++++
- 3 files changed, 17 insertions(+), 3 deletions(-)
+> +static int get_paths_git_dir(struct repository *repo, struct strbuf *buf)
+> +{
+> +	strbuf_addstr(buf, repo_get_git_dir(repo));
+> +	return 0;
+> +}
+> +
 
-diff --git a/refspec.c b/refspec.c
-index 0775358d96..a864a0bac2 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -84,7 +84,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 		 */
- 		if (!*item->src)
- 			return 0; /* negative refspecs must not be empty */
--		else if (llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
-+		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
- 			return 0; /* negative refpsecs cannot be exact sha1 */
- 		else if (!check_refname_format(item->src, flags))
- 			; /* valid looking ref is ok */
-@@ -101,7 +101,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 		/* LHS */
- 		if (!*item->src)
- 			; /* empty is ok; it means "HEAD" */
--		else if (llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
-+		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
- 			item->exact_sha1 = 1; /* ok */
- 		else if (!check_refname_format(item->src, flags))
- 			; /* valid looking ref is ok */
-diff --git a/remote-curl.c b/remote-curl.c
-index 92e40bb682..280880e54e 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -2,7 +2,6 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
--#include "git-curl-compat.h"
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 73cf531580..ed81e6b49b 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -782,4 +782,19 @@ test_expect_success 'tag following always works over v0 http' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ls-remote outside repo does not segfault with fetch refspec' '
-+	GIT_CEILING_DIRECTORIES=$(pwd) &&
-+	export GIT_CEILING_DIRECTORIES &&
-+	mkdir nongit &&
-+	(
-+		cd nongit &&
-+		env GIT_CONFIG_NOSYSTEM=1 \
-+			GIT_CONFIG_GLOBAL=/dev/null \
-+			GIT_CONFIG_COUNT=1 \
-+			GIT_CONFIG_KEY_0=remote.origin.fetch \
-+			GIT_CONFIG_VALUE_0="+refs/tags/*:refs/tags/*" \
-+			git ls-remote "$HTTPD_URL/smart/repo.git"
-+	)
-+'
-+
- test_done
--- 
-2.53.0
+...But your implementation here doesn't quite feel right. Check the 
+git-rev-parse documentation: the output of the --git-dir argument is 
+context-aware and depends on your current directory.
+
+If you are in the root directory of the repository, it gives '.git'; And 
+if you are in some subdirectory of the repository , it gives 
+'/home/user/.../repo-root/.../.git'. I don't think simply calling 
+'repo_get_git_dir(repo)' will achieve this functionality.
+
+>   /* repo_info_field keys must be in lexicographical order */
+>   static const struct repo_info_field repo_info_field[] = {
+>   	{ "layout.bare", get_layout_bare },
+>   	{ "layout.shallow", get_layout_shallow },
+>   	{ "object.format", get_object_format },
+> +	{ "paths.git_dir", get_paths_git_dir },
+>   	{ "references.format", get_references_format },
+>   };
+>   
+> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+> index a9eb07abe8..63be0849c4 100755
+> --- a/t/t1900-repo-info.sh
+> +++ b/t/t1900-repo-info.sh
+> @@ -149,4 +149,14 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
+>   	test_cmp expect actual
+>   '
+>   
+
+...
+
+> +test_expect_success 'paths.git_dir matches rev-parse --git-dir' '
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		git repo info paths.git_dir >actual &&
+> +		echo "paths.git_dir=$(git rev-parse --git-dir)" >expect &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>   test_done
+
+And you’ve only provided tests for the root directory here, which I 
+don’t think is sufficient. That said, considering that you’ve likely 
+misunderstood how to use the --git-dir parameter, this is understandable.
+
+Next time you create a similar patch, I think you should take a close 
+look at the documentation and source code first, and try using the 
+existing commands a few times on your own to understand how they work, 
+right? ;)
+
+Regards,
+
+Yuchen
+
