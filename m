@@ -1,69 +1,165 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF2B79CD
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 20:49:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6F537DE83
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 21:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774212573; cv=none; b=qtwrFqL7ve37ZdUYELRaDyg1WuXSvGJDS8rHF4r97ZVhv3TkkdmxqgmQ8K1u4zpl/ppwaSLvsvdgeiF/a9LgoXG2OVy7C92qdzCdnh7B8UTarER0gJNM2vqPX4mABhhZRZzsPNMRZCE7veXPjswmsjpxYd7M9V+Q1mPvAa7yaN0=
+	t=1774215785; cv=none; b=pKErBRILjsVLRWadp2Pbxy3Tyh1ckdv//n68gDQkZIiYE2/Q6FxHgyCuMXwxrEWvQv95AIICG/UzFsVX+dOAyhHUinvfTOm1ge/ZeaKSJ/EhpToTTp2HlaGGTlK3Ag933KIruRh27DTBtQqvgOLAcErbg2PG4BnSeQuHX0dnNyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774212573; c=relaxed/simple;
-	bh=kjWrfl06d75hwZWrjjPxEcTED6+xRJd4KovhEewG4bc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sc5dxVD6myA3hr2A/CGOgQzGsjgcz0Gzsats+cGRScn39Sh0EcCtwnIhu43A7g+ImP+abDIX3q9TNRsHgUQ1e8pTJBvkWLm5IRTXIv0cNGeXsU+Gz1/LBUbBMooLYXeBLz4cSdqo88nuELf/IIgOyIeG8jkH9oIQ4Mw6C/c8kLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GawMATnq; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1774215785; c=relaxed/simple;
+	bh=rvWfDyAT4RfZKav8W8SYFelMnJXABZjeduc+67zh1fM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=C7U75qLm3Z70Ph+5b8EflTm4ovYHiaB0/laM97Tl5BMoL4h+tkvEBXKf4uiiyXwPa7yQ0VqXfNf1jZ4vD3D7mx7CrBp95Ah8oxEZ781cFgwkYc7cAXcPGqhVibQ+vU0O/TfS43YPm4Zdbv1Aj50K0M1JTOOSP4jZYMiiYZIShrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NqqH9JzY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r+U+4HH/; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GawMATnq"
-Received: (qmail 106236 invoked by uid 106); 22 Mar 2026 20:49:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kjWrfl06d75hwZWrjjPxEcTED6+xRJd4KovhEewG4bc=; b=GawMATnqqT+u1luxpOabj3bH4phS4LqDhGwxyNC9uvHgu5VXUj9wqzHqsRddnPQRxaY65HfeyPgArc7ZwSRX1GoESES+mnqS4T16wyzx8199XsjxImWTafC6Cor930gIusEkdL8mINPnxFDU7r/W2zcea0Dp93q8MXKlyZsrEoy7RUb09744bg/Q0xornITHzriaFV7gQevlf2mRboxhJKmrx6gudnl8g3XWYelrPwTU4C/Y5hoWSIFNzgoFhwasaieYWKKodadf25DYQ4kFJylY/x1RV25Li1VAzVQDEwLw+J8rcS3NATCNVm0PkEkvpTGpMQpBR3f7smubaw0v0Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 22 Mar 2026 20:49:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 139831 invoked by uid 111); 22 Mar 2026 20:49:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Mar 2026 16:49:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 22 Mar 2026 16:49:30 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2026, #08)
-Message-ID: <20260322204930.GC2047044@coredump.intra.peff.net>
-References: <xmqq1phc9x98.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NqqH9JzY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r+U+4HH/"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 678A11400112;
+	Sun, 22 Mar 2026 17:43:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Sun, 22 Mar 2026 17:43:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774215782; x=1774302182; bh=pRn+JQ5/6h
+	PKt6HC2RZkup/m6sZaSJMY8BGSWGq5c3o=; b=NqqH9JzYoZoXRy8TjVIsps5tft
+	lcI2Zmy3t+ooJTjzO+enAMiZ/iiy2yuI8wCxmR7wXGOBlE7SPGwGHg+h2O4LL8GF
+	hIs+jKB39qZZvSLHHJzLOBlhq2OkWO+gjOxD50hiBObi/2iDtApFKHWAI3L4R1VE
+	udT7VYiZt2WZTeAItwmRpJbqGRSTXYb7JG7HjZmvsZKoPa8IK8s/OGF8XZO/oySZ
+	rX6CTy/Oj2104AzjC6ffVAjzxTAph8dSD3HJk1sq0MrrFy7Or+bcc03/1kEFthiz
+	v9gUd2ASh2/OP5vH5eJB8LBu6lGiU1dsMRX4nf9w2aBUa3twY7o8idojnH4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774215782; x=1774302182; bh=pRn+JQ5/6hPKt6HC2RZkup/m6sZaSJMY8BG
+	SWGq5c3o=; b=r+U+4HH/kyCSbAwbr4ubC8Ed2HufcgmQZn0ShyOJsfkiWUXfcCy
+	YLlcv6tsEr8dwLTZ2PN5HUQ0k3Tw5DsuaoUkZ1R7c0R80Uhxxs3Q3fk0RbQDNV4i
+	xjh1hbySVGPe7nJe9mSdi1xONNCT7UE7F1G5iYrFEwMNszXtabClxOTo4cDPbez2
+	pthZOoOrkeHhaLedzxnBpe0us0OT9nn62DrhfMKpYnqjIZMkeB0yeyHuKFQMjmni
+	U00oTOW10UnFDUftl2bBq5TsfTo68fFQFzD9ElfnygZsoZwouCG4W2SfWdTnLWaR
+	uniwn8MpGnC8dBVjnv4dhD36OcB9oCMNzeQ==
+X-ME-Sender: <xms:ZmLAacCNDdcP2ii9qjxXeUr1rzrBJZIgW_dlBKbUKKJKX_dDFWqXZQ>
+    <xme:ZmLAaVibTk4t3Ip0zfhvSfF3qs76UIWhYc7-WbAQ5TTVMGoTUBTwuS7rQvKxQzivP
+    1pv_aRUmin2UhDUNEevldOfyT3RizYQeeP6t20_4LAL1dBq7Z2fXg>
+X-ME-Received: <xmr:ZmLAaUlCE-p3mhEPcSZ9Y9BOlyYST7tDIXWExGLZPTzyObROSjnxJpQdB6bU-BuUjqcK4iBlEOpSPBP82Kkei2ezxX-LA_4X0g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeiledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdeh
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ZmLAaRrdLDoXLX29BdrXf1zNQBIOS6yu3_BLOGYmSJBIGFMzNT9bVg>
+    <xmx:ZmLAadG1-CB3HjKfq-N4JumIiuMvCSwBvvrLmn6HFZHXE2xzWGx8lA>
+    <xmx:ZmLAadx9gaYD1zE51Ray-vYK0oabSDqh8qiSrG_FSdBRVA2Kw5FEMw>
+    <xmx:ZmLAaSpS8ZKTOmj6GTNWkZFJZVT6js9e5dXxsZXTi2uozH3mBFIk4g>
+    <xmx:ZmLAacG9m8LQBdsZrgmIXE24CbB_yCf-5T0r6snwVbp7Oihl5Frm9OKM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 22 Mar 2026 17:43:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2] branch: reject --show-current with -v
+In-Reply-To: <bf5b0901-fc44-4fbc-b66d-5eb062ccd324@gmail.com> (Phillip Wood's
+	message of "Sun, 22 Mar 2026 16:34:12 +0000")
+References: <20260322060705.53491-1-jayatheerthkulkarni2005@gmail.com>
+	<bf5b0901-fc44-4fbc-b66d-5eb062ccd324@gmail.com>
+Date: Sun, 22 Mar 2026 14:42:59 -0700
+Message-ID: <xmqqwlz37d7g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1phc9x98.fsf@gitster.g>
+Content-Type: text/plain
 
-On Sat, Mar 21, 2026 at 11:46:59PM -0700, Junio C Hamano wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> * jk/diff-highlight-more (2026-03-19) 9 commits
->  - diff-highlight: fetch all config with one process
->  - diff-highlight: allow module callers to pass in color config
->  - diff-highlight: test color config
->  - diff-highlight: use test_decode_color in tests
->  - t: add matching negative attributes to test_decode_color
->  - diff-highlight: check diff-highlight exit status in tests
->  - diff-highlight: drop perl version dependency back to 5.8
->  - diff-highlight: mention build instructions
->  - Merge branch 'jk/diff-highlight-identical-pairs' into jk/diff-highlight-more
->  (this branch uses jk/diff-highlight-identical-pairs.)
-> 
->  Various updates to contrib/diff-highlight, including documentation
->  updates, test improvements, and color configuration handling.
-> 
->  Will merge to 'next'.
->  source: <20260320004138.GA3653623@coredump.intra.peff.net>
+> On 22/03/2026 06:07, K Jayatheerth wrote:
+>> The --show-current option doesn't know how to handle verbose
+>> logic. In such a case, we want the program to die when both flags
+>> are used together.
+>
+> Is there any reason why --show-current couldn't be made to work with 
+> --verbose instead of dying?
+>
+>> 
+>> Acked-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+>> ---
+>> I only changed the title of the commit message.
+>> The previous one (i.e remove unnecessary verbose flag) sounded
+>> like we are nuking the whole verbose flag.
+>> 
+>> The acked by tag exists here because this was supposed to be queued,
+>
+> That's not what the Acked-by: tag means - you should remove it
 
-Hold off on this one, please. There's a missing &&-connector in the
-test. I'll send out a re-roll, but I'm waiting for a response to the
-reviewer before doing so (to make sure I am not missing anything more).
+I was about to write "Yes, I do not even recall seeing this patch",
+noticed the "v2" label, but couldn't find corresponding v1.  If the
+message had "In-reply-to: <xmqqldiplvyd.fsf@gitster.g>", that would
+not have happened.  FWIW, Sergey, who gave the "why" to start the
+thread, deserves much more credit than I would, I would have to say.
 
--Peff
+I did say "This is certainly an improvement over status quo.", and
+"is good enough for now", so it is not completely unwarranted to
+have my Ack there.  Without any context it is hard to see, though.
+
+I _think_ what happened was later, after that "Ack" was given,
+Sergey brought up a good point, "why not consider what should -v
+mean in the context of --show-current before proceeding", which is
+more or less the same as your point above, so either I did not pick
+up the patch right there (expecting some form of response), or
+picked it up but discarded (after seeing no response came), or
+something like that.
+
+Since there are two people who independently questioned the wisdom
+of erroring out on "-v" before thinking things through to see if we
+can come up with a good behaviour for "--show-current -v", perhaps
+we should do so before proceeding.
+
+So, I am not picking this iteration up, at least not yet.
+
+>> diff --git a/builtin/branch.c b/builtin/branch.c
+>> index a1a43380d0..cab22e1538 100644
+>> --- a/builtin/branch.c
+>> +++ b/builtin/branch.c
+>> @@ -861,6 +861,8 @@ int cmd_branch(int argc,
+>>   		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+>>   		goto out;
+>>   	} else if (show_current) {
+>> +		if (filter.verbose)
+>> +			die(_("options '%s' and '%s' cannot be used together"), "--show-current", "-v");
+>
+> It would be better to use die_for_incompatible_opt2() here so that the 
+> message is consistent with other commands.
+
+Yes.  That would be much better.
+
+>> +test_expect_success 'git branch --show-current rejects -v' '
+>> +	test_must_fail git branch --show-current -v
+>
+> This checks that the command fails but does not check _why_ in failed. 
+> It would be better to redirect stderr to a file and use test_grep to 
+> check the error message matches what we expect as well checking that the 
+> command fails.
+>
+> Thanks
+>
+> Phillip
+
+Good suggestion.
