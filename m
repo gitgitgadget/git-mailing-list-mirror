@@ -1,73 +1,75 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5750536607F
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 18:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DA337BE8F
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 18:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774202986; cv=none; b=CPHz5taeDUJOCwDZySHRlAwmhp0rbt2Lo+H3l8Rw8I/sn94+J6SjDQMG9v2jSEMhLvB8f0cgcvV+0TYCqw5/sj2oCVD/h3iH1K1RvJ+kGuzNq6igv1biYUbKrYY0VstwMB1cpo/FzZBA5PP2DR6QfQcEXdgzIk1225YvCcfQiPk=
+	t=1774205440; cv=none; b=AvIrox/b+URKhD2iURyjNr5sqOu+W7zj32nw8CyY9Fp8GJcMsKtsb8CDgcD2hefq1KsTjbpkAlqhDwKQVqJmOe9CXJElnijZBKQzSyQs2IZTBmChHdBYtuUKrUXls9+Y8WXYgJdaxtEolYDiZlTjhEzl6c/VNcc7n9LAetiXBIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774202986; c=relaxed/simple;
-	bh=n8+gMdyARta3lNKpSEsMUV/C9ezVKXvFHVbWKoSaHtM=;
+	s=arc-20240116; t=1774205440; c=relaxed/simple;
+	bh=WvABEJH6gDG42+57ZJB5HWEzE2bQIsrN34sT6jssnDU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GGSGgWZoLAiHwVyeMhJ2RjllVqmV/fpaihPdg6WkVffbagAX0tyK1lkW7s+DxrQu+jRm5Q4oGhwVT9L1kDMDdN9w7/9fzk17IwTvhJB+teCQJcCcL8wGkxcox2bHauG/tQg64T/+hYVoGx7xzcoKFfe260cDISG2N87Nwu5HKQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gYNBNzsT; arc=none smtp.client-ip=74.125.224.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=j55LrWBkZus2n1gqwJAiBPANOjBXxpMmgz3d0fRDvF56U1tpD8TxrGiUrdOuwiYjjxFeQOz1023rL7h44Gbz8Y1T+60PcNM/nD9xfVw9ZAvMmjr7xQRQa/FCnuZ3U7VqvDUii3HuL3JD9hUNjwwv88qrXxoc8MUHKvC77K6/zqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4/bZyqF; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gYNBNzsT"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-64eaf8aa893so1550274d50.3
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 11:09:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4/bZyqF"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-439d8df7620so2248705f8f.0
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 11:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1774202984; x=1774807784; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Z8k7JAH/XQ838YQWBuRsnr3o0L2fQA9uOMNMaTH4ro=;
-        b=gYNBNzsTCDoXjilWlshJbjdUWRyDYXZP5oiqVmcx2ssV8kwQHzn3npQM5pVfDPPqA8
-         BK1bHDw6Y7tY3YxWZZ16/EKI7MSG4ZrfMFue1ohWbaSR2GWCIPf02FdfSmH7l3tzVbu1
-         u0ZR9BFE7ZR6oYKae7pJug6STyLXtVrx+qqxHkpkE91fuZgd9cz4uCju0GncmNSaBlc0
-         hJfzezzw+pE02FGEGKDU5SmkIpbFuy0sGIgBNnHlx9a0OuJa2ds2l+wqGY4a2KZ4u7M4
-         j8rIEBpiqMYZFy/I01Ed4ng1r4rVteNRkJ+P2xjg7cFoJfxl1fNNt7sYm/hLuYViiSLu
-         YyqA==
+        d=gmail.com; s=20230601; t=1774205437; x=1774810237; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zsiIvebCJj84zaQNpqdmCwXZWx4CF2EdYGFc0drNXAE=;
+        b=L4/bZyqFAo/dUXO6zDTnC0V481hjIufURKREM3BHK0xHhDNrdv1kkp7gLEEEhlDsA9
+         VSexUzz0sUE7MNAvw1LQ+xLWZ7nf5q9nvjfXiSg+kRboBrCVURfrkjOjZWW1cNf0jGyF
+         M1NRBIdm2GlNBDuMtaOxJtJsq/eujFWFrnplkuggWotqRoMkyJleEzjplGjb+0GjLquy
+         KhCI9QMux+xc1647uYVR1dTEfIqbT0I6y1a/Y02ASKYDGw6i2BwRHra5wRZztx7TAg4r
+         z/bLH+tgC9adN8cy38de57oIAB31VjHHFY3dP47HAEVEUXGuf3xCjD82WB7l2myGOMEd
+         azsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774202984; x=1774807784;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/Z8k7JAH/XQ838YQWBuRsnr3o0L2fQA9uOMNMaTH4ro=;
-        b=RJBFwPsNnWVrO0tRCK40WgVUT/vIsezf3Z1WL/CU3ti3fZGvni2FZFueTm5QSY5rMJ
-         fCmo8dNT9dBBoAAzh4zLETDrSGp8MCvC7uMGejkI62w3VjSqKZU2yEJTdUi4+WUAUXkX
-         kE9lPHalt+T+LZpO2tiNgPOH3YRPjAkiTHENPhowBIRhZWs6Q3/kaeQbbh2EDAn8KpHd
-         pCSarYKzmidR+33EwDio0MwCO3dNxAzrANRABFvRWlNbAs2VEeF8kMacRKVcEGooFfzK
-         ba/N/XiV6/A3KuQ3DS6M0BHg2MDSyjljVv916uY4pLPf0aLe3xLLCyMujmZg6fqJ5URl
-         Ziqg==
-X-Gm-Message-State: AOJu0YyL187aTzUavXokyzk0w6gjbkxw8GbPbQRT5gA2bmN+GjIwVdS7
-	JI1/0KxF3Pf93wnSYw+IApzVuFlHm2MtnrmvDPRXBsxgSF7z4Z+aHdZCIr0/Hr0jo+0=
-X-Gm-Gg: ATEYQzxMXre3DtxlXQJQMX8CRlM2aUqI9JWTgrCVLyXXXdyeNssVYJ0k2DVsjXXyPD3
-	5YLPglB4uQFAXpfndLTotTdiOczcyvkhypJ770z2YDUZva+svo+zTa3FIah2gn9Zz+hYo4XPOWD
-	2PMnqxE9sQkerh66pW75BsCPi+4VY8UNgV5pYkHEBGFCSq94kevn1blMUkwlaSQBnWFs37luHXy
-	rQLm6jmk/ie76YjMqtGqU/vaQG8ubqKfRSytEKY3lxUpu7OkPpSX7QjM8zV8ED5+QdiayBa1WL5
-	GvD6h3LKpuoEaRqfPURy48M9VCEe/ORcLoMmXG0qeL15iHZuMJR0ojUXuRRWwBb7p2iKeu4ida2
-	B1/pNuBLk4luOo+SpPVjUA+Op94UE3xw2K4SFIl5KQlTV5vTo7p9o68jfVfMOfN+kNPj4bg2o40
-	KY10K4RvnPtqnzkEzMdo3BU604MSRsxnUqraGlVYuWyYDATXK4KnU1XEbKH/nO4l5CbNLfClrft
-	Rbdo7bqjA/xEZC5RGXRGGzxZcuk7Q==
-X-Received: by 2002:a05:690c:d96:b0:792:7828:b709 with SMTP id 00721157ae682-79a90af0022mr104443737b3.22.1774202984300;
-        Sun, 22 Mar 2026 11:09:44 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a903a294fsm46100957b3.8.2026.03.22.11.09.43
+        d=1e100.net; s=20251104; t=1774205437; x=1774810237;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zsiIvebCJj84zaQNpqdmCwXZWx4CF2EdYGFc0drNXAE=;
+        b=Z9pi+Uor7jCfcXIzpBU1SEc/GT4HhQDEgx6fwX7koP1u6itz8MD2l1h8CVvS2sZI5+
+         FhNCCOsSNvhb43k/6u0wXzqnHGPxVwbnyLp320NzhS9jM+ImGMVH8eg3XZPYJryvU2zg
+         S8BU+s3vW18Gmubb3e3IknDy0erz5ovkJK1PjVBdMGVT6ye0fpEPG+ySd6hyLQNU7Nhn
+         ROx55wBK7VzVi1iJuYmdcIPjS+jmaOeKtl/MrxL4sbhIvbNt/ZD0LAujewpsyJFxhEvG
+         K2/avDxippTRIeQEZi1blP6kYPW6paUZy2S9wLh+fN9yBzc5Ey3H3pc0fQ2zN0Q6IXxB
+         +KaQ==
+X-Gm-Message-State: AOJu0YxfHLFTdnWQlTPXR5kQJMhQPGTy3Xey7ZKj+0aPHNZxB79KqnGU
+	sXSDJnXN48hNVUkUVieC+W/UJy/DYwIvJK0yw2M4BI49I9iqMlB0FQno
+X-Gm-Gg: ATEYQzxy97sNd6E3my+iCfZbQ/PO8nfwfbzblaOwECi1u57y6C+hIzDWUzjFBc89CSv
+	D+V7DFFhyBPw9qKW6FGFiFgqxrGVz/hWlXBP7zJ6D0eXuC4NAmEOnUkwv3zX/R2XYG43/IPnF1e
+	Y2VjZTxhXIZ+SXXEXRJLcNTGjbNnlNJk9tcduogIMehCT0crZVbXjHy745FykRuEFPhVFYe6lQA
+	bNiULip2Bx5qvWT7Kx8uRHSMIld2MxhEY01of1tVM4BTTDX2/dTU1D6zD8zDrElg9SPFEmOX3nl
+	zLfjKJReGC19pNMKcWhGECGJXjoFtW2eSLKOQN9CFN8iXpvqVGk23yiawJjZ5ZHo7lzBZuQmXFG
+	HkILoqOyKIXiKLEU0zQZM+fMfUw7BaKfehGdbunfEMtmgBxqfuU7silHmCQBcUPGvXN95FsUYP8
+	z8sG2p3NGmiUemWfs8U8kgAY9Nx4gelNrX
+X-Received: by 2002:a05:6000:3113:b0:43b:5003:e300 with SMTP id ffacd0b85a97d-43b642814fbmr14645056f8f.43.1774205436773;
+        Sun, 22 Mar 2026 11:50:36 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.160.4])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b6470393fsm24684428f8f.17.2026.03.22.11.50.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 11:09:43 -0700 (PDT)
-Date: Sun, 22 Mar 2026 14:09:43 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 4/5] pack-objects: support excluded-open packs with
- --stdin-packs
-Message-ID: <acAwZ1ARhvsTSpO5@nand.local>
-References: <cover.1773959041.git.me@ttaylorr.com>
- <bd78919e19cfa968556ad4241391120ed56e9dce.1773959041.git.me@ttaylorr.com>
- <20260321165711.GA718452@coredump.intra.peff.net>
+        Sun, 22 Mar 2026 11:50:36 -0700 (PDT)
+Date: Sun, 22 Mar 2026 19:50:34 +0100
+From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Taylor Blau <me@ttaylorr.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC PATCH 2/3] pack-write: add helper to fill promisor file
+ after repack
+Message-ID: <acA5-pIc9zVbqY1e@lorenzo-VM>
+References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
+ <3c0702f81b3e4a57cd38284ab90f8277da3fcd40.1774125871.git.lorenzo.pegorari2002@gmail.com>
+ <CAPig+cQSsMfvHJnwuXGQ1Je8ekz=Rqbaibn-3shbya5y-5xTKg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,115 +78,121 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260321165711.GA718452@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQSsMfvHJnwuXGQ1Je8ekz=Rqbaibn-3shbya5y-5xTKg@mail.gmail.com>
 
-On Sat, Mar 21, 2026 at 12:57:11PM -0400, Jeff King wrote:
-> On Thu, Mar 19, 2026 at 06:24:25PM -0400, Taylor Blau wrote:
->
-> > @@ -3750,8 +3756,6 @@ static int add_object_entry_from_pack(const struct object_id *oid,
-> >  		return 0;
+On Sat, Mar 21, 2026 at 10:04:01PM -0400, Eric Sunshine wrote:
+> On Sat, Mar 21, 2026 at 5:29 PM LorenzoPegorari
+> <lorenzo.pegorari2002@gmail.com> wrote:
+> > Create a `copy_all_promisor_files()` helper function used to copy the
+> > contents of all ".promisor" files in a `repository` inside another
+> > ".promisor" file.
 > >
-> >  	ofs = nth_packed_object_offset(p, pos);
-> > -	if (!want_object_in_pack(oid, 0, &p, &ofs))
-> > -		return 0;
+> > This function can be used to preserve the contents of all ".promisor"
+> > files inside a new ".promisor" file, for example when a repack happens.
 > >
-> >  	if (p) {
-> >  		struct object_info oi = OBJECT_INFO_INIT;
->
-> I haven't read all of the patches carefully yet, but Coverity observed
-> that without this call to want_object_in_pack(), we are left with "p"
-> that came from the caller. If that "p" is ever NULL, then the
-> nth_packed_object_offset() call above will segfault. But if it is not,
-> then the "if (p)" below is pointless.
->
-> AFAICT it will never be NULL, and the conditional is now pointless. But
-> it wasn't before your patch, since want_object_in_pack() may set the
-> found_pack to NULL if the object is not wanted.
+> > This function is written in such a way so that it will read all the
+> > ".promisor" files inside the given `repository` line by line, and copy
+> > only the lines that are not already present in the destination file. This
+> > is done to avoid copying the same lines multiple times that may come from
+> > multiple (redundant) packfiles. A better way to achieve this might be (is
+> > definitely) possible.
+> >
+> > Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+> > ---
+> > diff --git a/pack-write.c b/pack-write.c
+> > @@ -621,3 +621,65 @@ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_
+> > +void copy_all_promisor_files(struct repository *repo, const char *promisor_name)
+> > +{
+> > +       struct strbuf promisor_source_name = STRBUF_INIT;
+> > +       struct strbuf read_source = STRBUF_INIT, read_dest = STRBUF_INIT;
+> > +       struct strbuf write_dest = STRBUF_INIT;
+> 
+> These strbufs don't seem to be released, thus are leaked.
 
-I think that's right. Looking through the code again, the "if (p)"
-conditional is indeed no longer useful, since the sole caller of this
-function (the callback to `for_each_object_in_pack()`) will always pass
-a non-NULL `p` pointer.
+Of course... trivial mistake. Will fix it in v2.
 
-It's tempting to add something like:
+> > +       int err;
+> > +
+> > +       FILE *dest = xfopen(promisor_name, "r+");
+> > +
+> > +       struct packed_git *p;
+> 
+> Style nit: Place all the variable declarations together (without blank
+> lines), followed by a blank line.
 
-    if (!p)
-        BUG("add_object_entry_from_pack: expected non-NULL pack");
+Ack.
 
-But I wonder if we should instead store the result of calling
-`want_object_in_pack()` into a separate variable, only creating an
-object entry if "want == 1". That would have the effect of *not* marking
-objects as traversal tips if want_object_in_pack() makes `p` NULL.
+> > +       repo_for_each_pack(repo, p) {
+> > +               if (!p->pack_promisor)
+> > +                       continue;
+> > +
+> > +               strbuf_reset(&promisor_source_name);
+> > +               strbuf_addstr(&promisor_source_name, p->pack_name);
+> > +               strbuf_strip_suffix(&promisor_source_name, ".pack");
+> > +               strbuf_addstr(&promisor_source_name, ".promisor");
+> > +               FILE *source = xfopen(promisor_source_name.buf, "r");
+> 
+> This project still frowns upon variable declaration after code. You
+> will want to declare `FILE *source;` at the top of this loop body and
+> then assign `source = xfopen(...)` here.
 
-I think that's OK, since what we really care about is having objects in
-both included and excluded-open packs being processed as traversal tips.
-Because we're enumerating only objects that are in included and
-excluded-open packs:
+Ack.
 
- * Objects in excluded-open packs will cause `want_found_object()` to
-   return 0, propagating that through `want_object_in_pack()` without
-   setting "p" to NULL. We'll process these objects as traversal tips,
-   but not create an object entry for them, which is what we want.
+> > +               /*
+> > +                * For each line of the promisor source file, check if it already
+> > +                * is in the promisor dest file. If not, add it to write_dest, so
+> > +                * that it will be written in the dest file.
+> > +                */
+> > +               while (strbuf_getline(&read_source, source) != EOF) {
+> > +                       if (fseek(dest, 0L, SEEK_SET))
+> > +                               die_errno(_("fseek failed"));
+> > +                       int is_source_in_dest = 0;
+> 
+> Ditto regarding variable declaration following code.
 
- * Objects in included packs will return -1 from `want_found_object()`,
-   causing us to NULL out "p" and search through other packs. If we find
-   another pack containing that object, then we'll set "p" to that pack
-   and return 1, otherwise we'll return 0 if no such pack is found.
+Ack.
 
-I think that's the right behavior, so doing something like this instead:
+> > +                       while (strbuf_getline(&read_dest, dest) != EOF) {
+> > +                               if (!strbuf_cmp(&read_source, &read_dest)) {
+> > +                                       is_source_in_dest = 1;
+> > +                                       break;
+> > +                               }
+> > +                       }
+> > +                       if (!is_source_in_dest) {
+> > +                               strbuf_addbuf(&write_dest, &read_source);
+> > +                               strbuf_addstr(&write_dest, "\n");
+> > +                       }
+> 
+> The commit message talks about this, and it is indeed very ugly that
+> this re-reads `dest` from the beginning for *every* `source` line. Is
+> there a reason you can't simply read `dest` into a `strset` (see Git's
+> `strmap.h`) in its entirety before entering the repo_for_each_pack()
+> loop and then merely check the strset for existence using
+> strset_add()?
 
---- 8< ---
-@@ -3742,6 +3749,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
- {
- 	off_t ofs;
- 	enum object_type type = OBJ_NONE;
-+	int want;
+No reason at all, except for me to knowing about `strset`! Thanks for
+suggesting it to me. Will use it in v2.
 
- 	display_progress(progress_state, ++nr_seen);
-
-@@ -3749,8 +3757,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
- 		return 0;
-
- 	ofs = nth_packed_object_offset(p, pos);
--	if (!want_object_in_pack(oid, 0, &p, &ofs))
--		return 0;
-+	want = want_object_in_pack(oid, 0, &p, &ofs);
-
- 	if (p) {
- 		struct object_info oi = OBJECT_INFO_INIT;
-@@ -3762,8 +3769,16 @@ static int add_object_entry_from_pack(const struct object_id *oid,
- 		} else if (type == OBJ_COMMIT) {
- 			struct rev_info *revs = _data;
- 			/*
--			 * commits in included packs are used as starting points for the
--			 * subsequent revision walk
-+			 * commits in included packs are used as starting points
-+			 * for the subsequent revision walk
-+			 *
-+			 * Note that we do want to walk through commits that are
-+			 * present in excluded-open ('!') packs to pick up any
-+			 * objects reachable from them not present in the
-+			 * excluded-closed ('^') packs.
-+			 *
-+			 * However, we'll only add those objects to the packing
-+			 * list after checking `want_object_in_pack()` below.
- 			 */
- 			add_pending_oid(revs, NULL, oid, 0);
- 		}
-@@ -3771,7 +3786,8 @@ static int add_object_entry_from_pack(const struct object_id *oid,
- 		stdin_packs_found_nr++;
- 	}
-
--	create_object_entry(oid, type, 0, 0, 0, p, ofs);
-+	if (want)
-+		create_object_entry(oid, type, 0, 0, 0, p, ofs);
-
- 	return 0;
- }
---- >8 ---
-
-may be more readable. I can't shake the feeling that there is some
-important case that this is missing, though, what do you think?
-
-Thanks,
-Taylor
+> > +               }
+> > +
+> > +               if (write_dest.len) {
+> > +                       strbuf_strip_suffix(&write_dest, "\n");
+> > +                       if (fseek(dest, 0L, SEEK_END))
+> > +                               die_errno(_("fseek failed"));
+> > +                       fprintf(dest, "%s\n", write_dest.buf);
+> > +                       fflush(dest);
+> > +                       strbuf_reset(&write_dest);
+> > +               }
+> > +
+> > +               err = ferror(source);
+> > +               err |= fclose(source);
+> > +               if (err)
+> > +                       die(_("could not read '%s' promisor file"), promisor_source_name.buf);
+> > +       }
+> > +
+> > +       err = ferror(dest);
+> > +       err |= fclose(dest);
+> > +       if (err)
+> > +               die(_("could not write '%s' promisor file"), promisor_name);
+> > +}
