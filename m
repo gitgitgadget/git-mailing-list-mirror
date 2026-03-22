@@ -1,198 +1,123 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DA337BE8F
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 18:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA8A13B7A3
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 19:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774205440; cv=none; b=AvIrox/b+URKhD2iURyjNr5sqOu+W7zj32nw8CyY9Fp8GJcMsKtsb8CDgcD2hefq1KsTjbpkAlqhDwKQVqJmOe9CXJElnijZBKQzSyQs2IZTBmChHdBYtuUKrUXls9+Y8WXYgJdaxtEolYDiZlTjhEzl6c/VNcc7n9LAetiXBIo=
+	t=1774206969; cv=none; b=H5P2V71V2RyQap/aFBhd91CIPK2/4DEgxUJBKUIZBTKJBREcDkfn7GfcImKtYzZi1YMLw/RlAQJJ61xWT0PbrvI+xYMy5qJWAkHN/t7HY5W91DU1156nbz9vOiEKIVOr1BIWF1kh1d7wRiAc/AvUZs2XPmD1B+xAqHc3G6sjLIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774205440; c=relaxed/simple;
-	bh=WvABEJH6gDG42+57ZJB5HWEzE2bQIsrN34sT6jssnDU=;
+	s=arc-20240116; t=1774206969; c=relaxed/simple;
+	bh=wjTnzHhxI8ORTiGBq0w1H0TPVA9Id0sPpyYZlu0gd2A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j55LrWBkZus2n1gqwJAiBPANOjBXxpMmgz3d0fRDvF56U1tpD8TxrGiUrdOuwiYjjxFeQOz1023rL7h44Gbz8Y1T+60PcNM/nD9xfVw9ZAvMmjr7xQRQa/FCnuZ3U7VqvDUii3HuL3JD9hUNjwwv88qrXxoc8MUHKvC77K6/zqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4/bZyqF; arc=none smtp.client-ip=209.85.221.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=JhnMK+b+x4bidcA3KT9ZZMEo3Uu6BgmzOQBw0l6mXfqF6YgIkrxnwWjeaew/Q9oGEYE6CR5rLy70CjQauqhEUyPGTPlREC0MB2sPBtsGcgDSa6EU47uqQ0lOthMmLJBavi9TGxdsQqLMwVoLKI51LqzB0s8s+bWoxkfVxEv3/7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EW1mT4Tq; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4/bZyqF"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-439d8df7620so2248705f8f.0
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 11:50:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EW1mT4Tq"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-486ff3a0fc1so17462725e9.2
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 12:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774205437; x=1774810237; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zsiIvebCJj84zaQNpqdmCwXZWx4CF2EdYGFc0drNXAE=;
-        b=L4/bZyqFAo/dUXO6zDTnC0V481hjIufURKREM3BHK0xHhDNrdv1kkp7gLEEEhlDsA9
-         VSexUzz0sUE7MNAvw1LQ+xLWZ7nf5q9nvjfXiSg+kRboBrCVURfrkjOjZWW1cNf0jGyF
-         M1NRBIdm2GlNBDuMtaOxJtJsq/eujFWFrnplkuggWotqRoMkyJleEzjplGjb+0GjLquy
-         KhCI9QMux+xc1647uYVR1dTEfIqbT0I6y1a/Y02ASKYDGw6i2BwRHra5wRZztx7TAg4r
-         z/bLH+tgC9adN8cy38de57oIAB31VjHHFY3dP47HAEVEUXGuf3xCjD82WB7l2myGOMEd
-         azsA==
+        d=gmail.com; s=20230601; t=1774206966; x=1774811766; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NLZNSzhpvZ8Sty3PZgGyAK7E2oIgq9PkpWVZmENSdUQ=;
+        b=EW1mT4TqAy1Os5juVU0w9zCjVShdfOOvV5rfQsdOfzdcoe9FsNRAA8HOIhBavLHpT5
+         MqGbElcRAVE+N+vvMXa6gKKW/Ndxmz5f3mRwZDWp+Xv3F/M30xEat5u2LMmk/w4N3F+y
+         P93OhVjxQZrHAmHxHx6QcNRzi1Lki+a03DheHbSCwmkD3+c8QAaLQITCqRbCbOY3qQsT
+         1dP6sqrVAuZSzSa5dxy7UsD5whwclPC/sg+5G0fazLCDhvLy270Ltkot3ULSUQ9PtUnb
+         RZmd09q89sSiJiRrb41vn6BzRLgl+OFh1x65m7u0Kl9sMI0pO3i4ZjkebOSoC6nlOuCn
+         I0Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774205437; x=1774810237;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zsiIvebCJj84zaQNpqdmCwXZWx4CF2EdYGFc0drNXAE=;
-        b=Z9pi+Uor7jCfcXIzpBU1SEc/GT4HhQDEgx6fwX7koP1u6itz8MD2l1h8CVvS2sZI5+
-         FhNCCOsSNvhb43k/6u0wXzqnHGPxVwbnyLp320NzhS9jM+ImGMVH8eg3XZPYJryvU2zg
-         S8BU+s3vW18Gmubb3e3IknDy0erz5ovkJK1PjVBdMGVT6ye0fpEPG+ySd6hyLQNU7Nhn
-         ROx55wBK7VzVi1iJuYmdcIPjS+jmaOeKtl/MrxL4sbhIvbNt/ZD0LAujewpsyJFxhEvG
-         K2/avDxippTRIeQEZi1blP6kYPW6paUZy2S9wLh+fN9yBzc5Ey3H3pc0fQ2zN0Q6IXxB
-         +KaQ==
-X-Gm-Message-State: AOJu0YxfHLFTdnWQlTPXR5kQJMhQPGTy3Xey7ZKj+0aPHNZxB79KqnGU
-	sXSDJnXN48hNVUkUVieC+W/UJy/DYwIvJK0yw2M4BI49I9iqMlB0FQno
-X-Gm-Gg: ATEYQzxy97sNd6E3my+iCfZbQ/PO8nfwfbzblaOwECi1u57y6C+hIzDWUzjFBc89CSv
-	D+V7DFFhyBPw9qKW6FGFiFgqxrGVz/hWlXBP7zJ6D0eXuC4NAmEOnUkwv3zX/R2XYG43/IPnF1e
-	Y2VjZTxhXIZ+SXXEXRJLcNTGjbNnlNJk9tcduogIMehCT0crZVbXjHy745FykRuEFPhVFYe6lQA
-	bNiULip2Bx5qvWT7Kx8uRHSMIld2MxhEY01of1tVM4BTTDX2/dTU1D6zD8zDrElg9SPFEmOX3nl
-	zLfjKJReGC19pNMKcWhGECGJXjoFtW2eSLKOQN9CFN8iXpvqVGk23yiawJjZ5ZHo7lzBZuQmXFG
-	HkILoqOyKIXiKLEU0zQZM+fMfUw7BaKfehGdbunfEMtmgBxqfuU7silHmCQBcUPGvXN95FsUYP8
-	z8sG2p3NGmiUemWfs8U8kgAY9Nx4gelNrX
-X-Received: by 2002:a05:6000:3113:b0:43b:5003:e300 with SMTP id ffacd0b85a97d-43b642814fbmr14645056f8f.43.1774205436773;
-        Sun, 22 Mar 2026 11:50:36 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774206966; x=1774811766;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NLZNSzhpvZ8Sty3PZgGyAK7E2oIgq9PkpWVZmENSdUQ=;
+        b=P/PuMfIgNXfI2x2khqQyfTkYspx6u0HGFJ4w/hbZqUBpGp8nQ1fTrUy4dRMtSRv14V
+         EA+fih1J+gM04xtchLgm6oWfCJP18DRpioqY4j+8qUCRKmcexOhf4HoVFOuoMrLB5tDI
+         jcbxA8qmhqwQQDUNn9/jiaoXYbUPTlmgKYwqIUGLRuw2lZXy76YFoIFgSvsABOFTi5QZ
+         HhUWMuJXwiT8XA8awLsRO4R10MINUIcDA7NTrr5LGJhRMBIqQD7smDDwtGxchSPd3432
+         yXA0g96EYxsw9Av46LjswAkBw/L7y/FDhoSiUdtffn3j75m09QZ3k7MIdd52dYee9n09
+         dKkw==
+X-Gm-Message-State: AOJu0Yx0AjIBPswcP8crELe7l8ZIHQkirHuQU3Zl8rSbtWh4ZRphZPYa
+	sw/5xI2/mO4OpZHQJkz0AKVssLgQ1JNFL6mFMXxRtB06N/kP9bqNQosxPWPjxrRNvuQ=
+X-Gm-Gg: ATEYQzx3QwMOEGARwcMN27N/H8Y6G34ejjHH7lzucojLCWXh5dmoV4SF7AwdpyvV55y
+	cGsnivEjJc6iIlPSxaYfs4ChaMEC90i2b7Pu4cz5lvRToYixdka6SnFCCuMVk8yd4c+s7JPqfUy
+	7If+m7beH2B6Q7DDrVKuK9+KieeQnK0i47foodbAvLgdGWETLB285Fq1jXMdN1MRVN0Ziu5Rs/U
+	NxwNscq9F0WjUzZrN+ixagCi+rIYJzE6VWp1y9xtyvK+rUYy7nUGLuYuFcr1Rmr6e9/qF/+fhRB
+	/KzOMU16Km4ovgGkvwbnO2oCSQWJ3T9yeOBTfJ3n4IGsldC974TCZ8/kqMFyqCtSGKmdNIaE64u
+	NXb7mS+uSEvuN83mwB6v/tAucz6OGZWNG1p6f4EQW9ETZv5FeY9ezQDEpmt9PsUOeQC6fcHAa/m
+	63O1rtT611RnBQ47mUlbdNmyCABXXHpLcf
+X-Received: by 2002:a05:600c:a112:b0:485:3ff1:d5c5 with SMTP id 5b1f17b1804b1-486febb5904mr103969715e9.7.1774206966299;
+        Sun, 22 Mar 2026 12:16:06 -0700 (PDT)
 Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b6470393fsm24684428f8f.17.2026.03.22.11.50.35
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486f8b949e1sm492854355e9.9.2026.03.22.12.16.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 11:50:36 -0700 (PDT)
-Date: Sun, 22 Mar 2026 19:50:34 +0100
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC PATCH 2/3] pack-write: add helper to fill promisor file
- after repack
-Message-ID: <acA5-pIc9zVbqY1e@lorenzo-VM>
+        Sun, 22 Mar 2026 12:16:05 -0700 (PDT)
+Date: Sun, 22 Mar 2026 20:16:03 +0100
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [GSoC PATCH v2 0/4] preserve promisor files content after repack
+Message-ID: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
 References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
- <3c0702f81b3e4a57cd38284ab90f8277da3fcd40.1774125871.git.lorenzo.pegorari2002@gmail.com>
- <CAPig+cQSsMfvHJnwuXGQ1Je8ekz=Rqbaibn-3shbya5y-5xTKg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cQSsMfvHJnwuXGQ1Je8ekz=Rqbaibn-3shbya5y-5xTKg@mail.gmail.com>
+In-Reply-To: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
 
-On Sat, Mar 21, 2026 at 10:04:01PM -0400, Eric Sunshine wrote:
-> On Sat, Mar 21, 2026 at 5:29 PM LorenzoPegorari
-> <lorenzo.pegorari2002@gmail.com> wrote:
-> > Create a `copy_all_promisor_files()` helper function used to copy the
-> > contents of all ".promisor" files in a `repository` inside another
-> > ".promisor" file.
-> >
-> > This function can be used to preserve the contents of all ".promisor"
-> > files inside a new ".promisor" file, for example when a repack happens.
-> >
-> > This function is written in such a way so that it will read all the
-> > ".promisor" files inside the given `repository` line by line, and copy
-> > only the lines that are not already present in the destination file. This
-> > is done to avoid copying the same lines multiple times that may come from
-> > multiple (redundant) packfiles. A better way to achieve this might be (is
-> > definitely) possible.
-> >
-> > Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-> > ---
-> > diff --git a/pack-write.c b/pack-write.c
-> > @@ -621,3 +621,65 @@ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_
-> > +void copy_all_promisor_files(struct repository *repo, const char *promisor_name)
-> > +{
-> > +       struct strbuf promisor_source_name = STRBUF_INIT;
-> > +       struct strbuf read_source = STRBUF_INIT, read_dest = STRBUF_INIT;
-> > +       struct strbuf write_dest = STRBUF_INIT;
-> 
-> These strbufs don't seem to be released, thus are leaked.
+The goal of this patch is to solve the NEEDSWORK comment added by
+5374a290 (fetch-pack: write fetched refs to .promisor, 14/10/2019). This
+is done by adding a helper function that takes the content of all
+.promisor files in the `repository`, and copies it inside the first
+.promisor file created by the repack.
 
-Of course... trivial mistake. Will fix it in v2.
+Also, I added a comment explaining what is the purpose of the content of
+the .promisor files, since this wasn't explained anywhere (I found
+information regarding this only in the message of the previously cited
+commit).
 
-> > +       int err;
-> > +
-> > +       FILE *dest = xfopen(promisor_name, "r+");
-> > +
-> > +       struct packed_git *p;
-> 
-> Style nit: Place all the variable declarations together (without blank
-> lines), followed by a blank line.
+Finally, I added a test to "t7700-repack.sh" that checks if the content
+of .promisor files are correctly copied into the first .promisor file
+created by a repack.
 
-Ack.
 
-> > +       repo_for_each_pack(repo, p) {
-> > +               if (!p->pack_promisor)
-> > +                       continue;
-> > +
-> > +               strbuf_reset(&promisor_source_name);
-> > +               strbuf_addstr(&promisor_source_name, p->pack_name);
-> > +               strbuf_strip_suffix(&promisor_source_name, ".pack");
-> > +               strbuf_addstr(&promisor_source_name, ".promisor");
-> > +               FILE *source = xfopen(promisor_source_name.buf, "r");
-> 
-> This project still frowns upon variable declaration after code. You
-> will want to declare `FILE *source;` at the top of this loop body and
-> then assign `source = xfopen(...)` here.
+V2 DIFF:
+ * changed how the `copy_all_promisor_files()` function works, so that it
+   reads `dest` into a `strset` in its entirety before entering the
+   `repo_for_each_pack()` loop, and then checks the `strset` for
+   existence using `strset_add()` (as suggested by Eric Sunshine)
+ * correctly release `strbuf`s
+ * added test
 
-Ack.
 
-> > +               /*
-> > +                * For each line of the promisor source file, check if it already
-> > +                * is in the promisor dest file. If not, add it to write_dest, so
-> > +                * that it will be written in the dest file.
-> > +                */
-> > +               while (strbuf_getline(&read_source, source) != EOF) {
-> > +                       if (fseek(dest, 0L, SEEK_SET))
-> > +                               die_errno(_("fseek failed"));
-> > +                       int is_source_in_dest = 0;
-> 
-> Ditto regarding variable declaration following code.
+LorenzoPegorari (4):
+  pack-write: add explanation to promisor file content
+  pack-write: add helper to fill promisor file after repack
+  repack-promisor: preserve content of promisor files after repack
+  t7700: test for promisor file content after repack
 
-Ack.
+ Documentation/git-repack.adoc |  4 +-
+ pack-write.c                  | 70 +++++++++++++++++++++++++++++++++++
+ pack.h                        |  1 +
+ repack-promisor.c             | 23 ++++++++----
+ t/t7700-repack.sh             | 12 ++++++
+ 5 files changed, 100 insertions(+), 10 deletions(-)
 
-> > +                       while (strbuf_getline(&read_dest, dest) != EOF) {
-> > +                               if (!strbuf_cmp(&read_source, &read_dest)) {
-> > +                                       is_source_in_dest = 1;
-> > +                                       break;
-> > +                               }
-> > +                       }
-> > +                       if (!is_source_in_dest) {
-> > +                               strbuf_addbuf(&write_dest, &read_source);
-> > +                               strbuf_addstr(&write_dest, "\n");
-> > +                       }
-> 
-> The commit message talks about this, and it is indeed very ugly that
-> this re-reads `dest` from the beginning for *every* `source` line. Is
-> there a reason you can't simply read `dest` into a `strset` (see Git's
-> `strmap.h`) in its entirety before entering the repo_for_each_pack()
-> loop and then merely check the strset for existence using
-> strset_add()?
-
-No reason at all, except for me to knowing about `strset`! Thanks for
-suggesting it to me. Will use it in v2.
-
-> > +               }
-> > +
-> > +               if (write_dest.len) {
-> > +                       strbuf_strip_suffix(&write_dest, "\n");
-> > +                       if (fseek(dest, 0L, SEEK_END))
-> > +                               die_errno(_("fseek failed"));
-> > +                       fprintf(dest, "%s\n", write_dest.buf);
-> > +                       fflush(dest);
-> > +                       strbuf_reset(&write_dest);
-> > +               }
-> > +
-> > +               err = ferror(source);
-> > +               err |= fclose(source);
-> > +               if (err)
-> > +                       die(_("could not read '%s' promisor file"), promisor_source_name.buf);
-> > +       }
-> > +
-> > +       err = ferror(dest);
-> > +       err |= fclose(dest);
-> > +       if (err)
-> > +               die(_("could not write '%s' promisor file"), promisor_name);
-> > +}
+Range-diff against v1:
+1:  9bba49563e = 1:  fec0c24897 pack-write: add explanation to promisor file content
+2:  3c0702f81b < -:  ---------- pack-write: add helper to fill promisor file after repack
+-:  ---------- > 2:  0bb031e744 pack-write: add helper to fill promisor file after repack
+3:  6967066fe3 = 3:  3dab969a39 repack-promisor: preserve content of promisor files after repack
+-:  ---------- > 4:  cb642d8225 t7700: test for promisor file content after repack
+-- 
+2.43.0
