@@ -1,185 +1,82 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005D337CD29
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 20:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4A028643A
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 20:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774211897; cv=none; b=fxaho0+55Phd9xVjm6/ZSMFk8GEXH4YcAS5H3uMl6OPNbQMwSw2BSVr22yKKK4iyo/y4s0OAl9Bwv22WYAiq3quQW/55Oj3CNSS19V8mXAs8nNO0Uj8q4xEWV3AiKDZd/BrpypWzCKkgODy9GUcfeoLQEEfTcG3SW/skTWVlOEg=
+	t=1774212319; cv=none; b=bKHomevXSmgO2XDyc9G0LK2qdxnsGZl0t4FTEIRCefIp/7Qj77FiL4LVTcPYWM+SUGDx1UFtXU/cXj2lzmR0DUwxY/815iEn70yvhj7jJ32em5P0D5fhCIrR13OEW5urWZEejwTjzdFx2m3zytVdyM9yT0HoDa3HMyiKQPkfcfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774211897; c=relaxed/simple;
-	bh=/EruzidN746GE6XW0RaRvsHkEvAEq3PnoAPkOF0aR3U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhVMFH2Ngp9pSITLIvH5lQ/N4WbIVSgGvmRFwYodipy4ecGQQXQT+idUP2NY315w9Groqs0sQl9Go1UvJmvNsht9RvhYs13SP6FvpEnRP+5vaPxNhkjshFDGcAV7gG1+t/DKsSXeQamKCp07UwJu2HLYa6czkK/GdggRgnIgQFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPCjaYzY; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774212319; c=relaxed/simple;
+	bh=OQSgH1rAk5fdjVeCHO0ec3akKo2/BrIfQCFYcP7cACA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ecl+t9MDqbCx2EId0KR5qmRK7kOsbGhFRz//rlHbEdudvbt32y7AyL7DcZQBwGLWXSf6eh6sYpv/FVqCek9zPSQVrtZUtB6xR3IQS4hJwcBmXvOk+43IHrtzMfZwwk6xN9cFGJf3dUiiI2hYS2gR/ECVgJzdZL73Km9KJF0ypJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=G1dd2o+A; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPCjaYzY"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43b4121c40aso2516788f8f.0
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 13:38:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774211894; x=1774816694; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lnuXD4RMuo5FNcir4lYYzoZifCWmTZC1ZESbTGGGY40=;
-        b=bPCjaYzYjrMlwb1wmFZH3g7Hb2YgA5PLHHaV4qJfYVBDYHKNcJJbAdqnScAgSvKUXX
-         lKnwCl58+HKeM8fgzBShwHC7C+aNebgDTSB5PFJ0G7PgVqakK+Yv489kK85ykZ+DAMDe
-         qM/91WaLc6qHf7wZQZGmRNjAROdGIkGX7SV7mR+rNABMTUMMi2MOjjJMlcuea45n41wh
-         gMb9xH8v/Fz18S2uS2jf6PZgaHWkqAooveVt2cXbSVa/0i2qdIahRqdEIvd9YWxHfD/Z
-         pzFwByEMFa+9IbeZhFzyaIV2huj5ov8ddgl+eu2QObMv/QhErExqkpUI/RpB6QC97X0A
-         g6DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774211894; x=1774816694;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lnuXD4RMuo5FNcir4lYYzoZifCWmTZC1ZESbTGGGY40=;
-        b=sBSR3SDi4i5f54eEUA9fa22TWHxEZjMo8K1Kk/U37x61VPPBz2hF+OkrxXnRpukIql
-         Wax+U3DLQ3iC6jsC3phOhbTKU0M905gdaE9dOFy7AwO/EcGhFVu4a6NZ6td7RSUx1JyV
-         OFLTvvNasTlqhLuPsihfJK4LxZ9ad0UCs1NwkVrzTDVtwkQtWJ17H/tmLAHWgE5nV0uS
-         krd9nNiMo9dkIZKu7bKZdG+JYvwGWSbugaVSBZaVbaWdivXSPXUPSVKioEkFK40mBwcA
-         EK4Byqm5IfO+w1F2cqwZCuneHgRZ8VutysbI/y2Hs7+YHbX9T4IfJ1nVN6G7sStiJnMp
-         hIqA==
-X-Gm-Message-State: AOJu0Yxh7EgI0VgcL0I1zYx8M45rAY8N+icGweW6aSTE5PgYXZdYbY/R
-	zWxlACk6qC+encwBSf7ZU4/cDRCfb+O3XlyKU5I48FH38Y6Bujx8e/4MjQZImJwex+71pg==
-X-Gm-Gg: ATEYQzy/+rIB6Fh7ZIfJ7ZPXL4rxlRXssPJ1zqJAZEPzGeYY4qgYZl0dg1rzlO5Ouu+
-	eiBcXxZyi6UysNawnprJPMwDq9+CUStdcq5QJmmTpuzv9nLNYisWOMCd3e7fY5Kw8Gig5JIo25I
-	SR9wHT9nkruFvOFA/bRvcubBIsgiHqDP3bM1KIHBlukWZw1RQiJgRLUYbaCD25ydbMqjdVl2pH3
-	g2hlUClOigfH/E9A8HvHeIutj+qaRbLHDxPBOgfWL/3PCH4OYeMwb+enfDOyg4eJCmsqmiqHBYn
-	8TjcsPxQuWeYcYVn49VSysB8ANm7Nb4qgvijPaNViatP6Rs4Iq0jYRM+ZyrKtcngurn7BOPCXu3
-	ga2UZC2dAMs1WvBGsheWPeotao8upzX0c427UBYgYMmwSi0yJ6OusyRsyz8bWAG3yZ268RoA57Z
-	AqSRJdOKSnHmFFI5dndH3jPT2W4kL2qbYx2h265n00x0RFB/jIrbbTXcxrAFhFb+BB1zW1NTQ7d
-	H8c3k+Msi4DhgwJ3rXisykR++JN4Oypb32Q5qj/XOUYQmMD9ncujhLohSc=
-X-Received: by 2002:a05:6000:2203:b0:43b:45a0:9df8 with SMTP id ffacd0b85a97d-43b642781a8mr16242431f8f.35.1774211894072;
-        Sun, 22 Mar 2026 13:38:14 -0700 (PDT)
-Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b64703650sm23569157f8f.20.2026.03.22.13.38.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 13:38:13 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	jltobler@gmail.com,
-	ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com,
-	chandrapratap3519@gmail.com,
-	gitster@pobox.com,
-	j6t@kdbg.org,
-	Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [GSoC PATCH WIP RFC v3 3/3] graph: add documentation and testing about --graph-lane-limit
-Date: Sun, 22 Mar 2026 21:38:01 +0100
-Message-ID: <20260322203801.637769-3-pabloosabaterr@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260322203801.637769-1-pabloosabaterr@gmail.com>
-References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
- <20260322203801.637769-1-pabloosabaterr@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="G1dd2o+A"
+Received: (qmail 106195 invoked by uid 106); 22 Mar 2026 20:45:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OQSgH1rAk5fdjVeCHO0ec3akKo2/BrIfQCFYcP7cACA=; b=G1dd2o+A83RkXO52aHl4LsAO8GiOT2yMYl0OQ53tXkwLxxYTwSsPpevL2czSkt/onApNCHq6LQxH4tIYCfc4ydtID4cXLHxs7lENdzZ8YqdOwcsDkRD8xOV+STHmqKsc7hoCxCCPF+iU2bXXsJlFNo7HHyJSqcLdXTLW8CDyA5ZCRnqzIzyyLCOxPTHGSFLBHnHiczDRGl0eCOVo+xRqEbBzF/Dak5zFl04DE3OVpXvCcu8MpPXwYUH5pOyFxuSluFQtgKW5GCYIaC9RJbDFK5y2aKMs94YbV19BiAy6sAX5OHOTnoohyFCzH4QAa0jdfILp7ekeyFQP2wkVZva5oA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 22 Mar 2026 20:45:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 139796 invoked by uid 111); 22 Mar 2026 20:45:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Mar 2026 16:45:09 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 22 Mar 2026 16:45:09 -0400
+From: Jeff King <peff@peff.net>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, Scott Baker <scott@perturb.org>
+Subject: Re: [PATCH 8/8] diff-highlight: fetch all config with one process
+Message-ID: <20260322204509.GA2047044@coredump.intra.peff.net>
+References: <20260320004138.GA3653623@coredump.intra.peff.net>
+ <20260320004856.GH3654226@coredump.intra.peff.net>
+ <9d3633e4-6413-4932-a29d-e0347546ede8@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9d3633e4-6413-4932-a29d-e0347546ede8@malon.dev>
 
-Document --graph-lane-limit option in rev-list-options.adoc with
---graph option.
+On Mon, Mar 23, 2026 at 01:18:30AM +0800, Tian Yuchen wrote:
 
-Add two tests in t4215 reusing last test graph structure.
+> > -	my $s = `git config --get-color $key 2>$NULL`;
+> > +
+> > +	if (!defined $cached_config) {
+> > +		$cached_config = {};
+> > +		my $data = `git config --type=color --get-regexp '^color\.diff-highlight\.' 2>$NULL`;
+> > +		for my $line (split /\n/, $data) {
+> > +			my ($key, $color) = split ' ', $line, 2;
+> 
+> ...another $key. I think it would be better to change the name here. What do
+> you think?
 
-- --graph-lane-limit=2 on one tip showing only two rendered
-  lanes and the rest replaced with the truncation
-  marker.
+I noticed it, too, but didn't have a better name (in fact they are of
+the same type, just two different contexts). Shadowing seemed less bad
+to me than using a mis-matched name.
 
-- --graph-lane-limit=3 with multiple tips, showing only three
-  rendered lanes.
+> > +	my $s = $cached_config->{$key};
+> >   	return length($s) ? $s : $default;
+> >   }
+> 
+> Something doesn't feel quite right here.
+> 
+> If the user has not configured color.diff-highlight.*, the expression git
+> config --type=color --get-regexp=^color\.diff-highlight\. will not find a
+> match and should not output anything. In this case, %cached_config->{$key}
+> becomes undef, length() returns 0, and a warning is issued.
 
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- Documentation/rev-list-options.adoc |  5 +++
- t/t4215-log-skewed-merges.sh        | 53 +++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+)
+The length() of undef is also undef (and documented in "perldoc -f
+length"). But either way, length($s) will be false, and we will return
+$default, not $s.
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 2d195a1474..1819228b60 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -1259,6 +1259,11 @@ This implies the `--topo-order` option by default, but the
- 	in between them in that case. If _<barrier>_ is specified, it
- 	is the string that will be shown instead of the default one.
- 
-+`graph-lane-limit=<n>`::
-+	When `--graph` is used, limit the number of graph lanes to be shown.
-+	Lanes over the limit are replaced with a truncation mark '.'. By default
-+	there is no limit.
-+
- ifdef::git-rev-list[]
- `--count`::
- 	Print a number stating how many commits would have been
-diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
-index 28d0779a8c..657e3ff2a5 100755
---- a/t/t4215-log-skewed-merges.sh
-+++ b/t/t4215-log-skewed-merges.sh
-@@ -370,4 +370,57 @@ test_expect_success 'log --graph with multiple tips' '
- 	EOF
- '
- 
-+test_expect_success 'log --graph --graph-lane-limit=2 limited to two columns' '
-+	check_graph --graph-lane-limit=2 M_7 <<-\EOF
-+	*-.   7_M4
-+	|\ \
-+	| | * 7_G
-+	| | * 7_F
-+	| * . 7_E
-+	| * . 7_D
-+	* | . 7_C
-+	| |/
-+	|/|
-+	* | 7_B
-+	|/
-+	* 7_A
-+	EOF
-+'
-+
-+test_expect_success 'log --graph --graph-lane-limit=3 limited to three columns' '
-+	check_graph --graph-lane-limit=3 M_1 M_3 M_5 M_7 <<-\EOF
-+	*   7_M1
-+	|\
-+	| | *   7_M2
-+	| | |\
-+	| | | * 7_H
-+	| | | . 7_M3
-+	| | | . 7_J
-+	| | | . 7_I
-+	| | | . 7_M4
-+	| |_|_.
-+	|/| | .
-+	| | |_.
-+	| |/| .
-+	| | | .
-+	| | |/.
-+	| | * . 7_G
-+	| | | .
-+	| | |/.
-+	| | * . 7_F
-+	| * | . 7_E
-+	| | |/.
-+	| |/| .
-+	| * | . 7_D
-+	| | |/
-+	| |/|
-+	* | | 7_C
-+	| |/
-+	|/|
-+	* | 7_B
-+	|/
-+	* 7_A
-+	EOF
-+'
-+
- test_done
--- 
-2.43.0
+I don't get any warning on perl 5.40.1. Are you seeing one on a
+different version?
 
+-Peff
