@@ -1,31 +1,67 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6FA1B4156
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 17:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F54233D4EE
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 17:24:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774199919; cv=none; b=fzgPjZ0PFmrl8DAGhNsSPSK1s9dCKMSOJ+eXrfKkqgEf25UfbdysqzSMBPfV2yuUM29uDW9H3xqmMORghmeu1sSEyimTOWxw8rZTv1GcVOEZkm9V4YBCJjVBriMtWpH4QJyLiJrYU0vqs+GuKRAXbb8DuOwvtvhnpw2Am/fHEY8=
+	t=1774200246; cv=none; b=NQt6PvH7ZgYtSjYbjDrPsfHTWsf07GlJH/2ubeDHn93XiIp85K+GD2joAoEwAkvbnlnkFFGHrNJPdBiO46P86M9UCWUV2JvSHQzhgwOTqotB1RZvTF6XrO5m/YBTI44q/Wqqx24p4xdJn+I4ciLg1LjioD4+i8NCdqHxcixFsds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774199919; c=relaxed/simple;
-	bh=cwGDo5ovVJuUpHyTploEPwjMAf0JaqXkk/YfiuqvrSY=;
+	s=arc-20240116; t=1774200246; c=relaxed/simple;
+	bh=t1h/F8ctLebidtlcbpoRE3V06Gl4kcil885/3PoCj/w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KpSNovotE8f9+Lsn3agaXGzwwDlrTUIHvealFT2Y5Iw/knxxoPOn8lIGRer2dhQvAVq5FF3PaQ2fCKl+EYsajEbvr/abzJOLsaLdcOB8XkHCgdoyRJYw9OK4wSJFNju15zIPRfX1RB4zxD37gRoCZJ4UQhMjB9V0gVj9z+JTX8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=fhlZ0qa3; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=NysrkxWN; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	 In-Reply-To:Content-Type; b=rDWfzAYJW5fCG9rz4PM7Ss7hTle8Yho7DeciL2DeZLtdzCubaigBcP+T6EuLUt+evlxDCXzMhJ2mc95eeqDBsobvWbjGlihn8v1yR0MuwL5F3wqcUM2iRNxF1c+22VjvUvVftWx8CSX0SMuhqqYoRrkdQkqDwR5UqKNxw115tOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTYgmK6H; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="fhlZ0qa3";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="NysrkxWN"
-DKIM-Signature: a=rsa-sha256; b=fhlZ0qa3fytH5TUAtzFI4tLWHw/Ud7vUX0xqJyaEQ7IkhFPlkYhaEmqw/PJ9vTWnw8iiu5RGaHybc1pbCe/LHXj/w0Ex+X9Lpe0oQ4CVUkDGDfEjeO5sAZOdNnGRfuGGBTxdmfVS2xmKDMyutUjaewqusuOgG+K/5+i9u+hHAujKtvEl2OYU7ApQnZfipFrzbpkvfMw8zGo2lEg57sO0Wqrqb7vCHyAbOmEEgxhOmJk9gnMteDDYo/4YioyzybLSr/3NqG2pBDq24oJ6b6L3erNUURpBJOXmFOyJvQ6I6JsXHfqA7wjysTex6U6xtErKLSqHYnN8xzlsKP3OytUgzw==; s=purelymail3; d=malon.dev; v=1; bh=cwGDo5ovVJuUpHyTploEPwjMAf0JaqXkk/YfiuqvrSY=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=NysrkxWN/B9L1QWObMC9E4lHpJLI6XnLCXS6gZC883YbqL528PITzYNbuuhXpr+hoarWVCWj5w7JDa/v9rchN0fdxBnHuBKjWWWubPiar9h7P5tf/XY7fr3O85bbwT7PEc9aaZMCaquhD6V95qY///dqdQcr6npqCcARUwk6iNiKu3z9K1hN7TIIOSf/CKbyahJP99djzZvd0X+KKIpKQw7eMEbZ8rAe/ppH9jLi1xrwU8GoeqrgkaRc/81vT75dd3SXaDw6FAHu9s4+mq+EpJECM/2T9E2LPvGu4DcfV62lLfvVE8uRnp8WCCGv4ep9933umVjAaUemQ2NFqmzrig==; s=purelymail3; d=purelymail.com; v=1; bh=cwGDo5ovVJuUpHyTploEPwjMAf0JaqXkk/YfiuqvrSY=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 209374793;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sun, 22 Mar 2026 17:18:33 +0000 (UTC)
-Message-ID: <9d3633e4-6413-4932-a29d-e0347546ede8@malon.dev>
-Date: Mon, 23 Mar 2026 01:18:30 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTYgmK6H"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2a9633ef0d6so5374605ad.0
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 10:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774200244; x=1774805044; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tLclnF61adL652p5nxOGAYsehf5cvcHDlt4OKWUfoWQ=;
+        b=JTYgmK6HsQqv7Sdf90KX1KVsIY1zMwqfLQS0z76fRVeia2NtDhEkQnjls96IpMQ7fD
+         quWF5iJrVqtTuoPOqkqKbbuLAgyD2DNPlHcRef31HyrnGAMeq4EXTKMIrVz8cMn97VbB
+         onxgNgshMDaqHm8Z+VNHbNBcRrmW4pAHI0PFb1wIKiKxAFjnTCee8aIqS2x5JfToZxLh
+         QTrZIAe9yhwud4nuDPXJXhlFoTEZUG7yAKBtxCPDNo+RmgQt60X+6mBIIIRAA4zwJVWH
+         wKDArRIcgPGQACezMQ0bigeRdgUxzEYRvqqRkrAAUgKIUxWMXixHEuHMUQER8B6jQ2Pc
+         HY1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774200244; x=1774805044;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tLclnF61adL652p5nxOGAYsehf5cvcHDlt4OKWUfoWQ=;
+        b=CJF/2inoDtUnCTgVKWpUTjAG57r/Z3Cw/H8iVRAxaiBlXdF8GRl6rlOwCupLbPtFXH
+         g2cDSG8uy5aQxntzu/asCk0kgYId5NYOKtjxLxTkX5uKRT9fJy9AUzkqSYg+wRXOvwk8
+         cwRiQ3mXLjiX7I6ru8HDZMCXAcfJjVWeO5HQD312GA8z5JUH7DFLoGpaaEQZWE+Bfq65
+         XzPvCqJc1Q+rUsqTTsOEfYW703uHXCF0JMer7rA9nyu1Aoeay/HRpzgsSmZpVkWBxA4I
+         vN+yZxnNub1ppWj5TOuzozG+LBh6Pal8KrkJhbv18De0Ug2HH2ghG7YKMBw8nTH49cBw
+         iC2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXo2V+lA7bOr3lHM7GHG5Su684qzEkIcpgtsa8JclOBv4auRpsoYtbBLS1gR2HERJsdd/Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBbBVT5q4jQ7Bpm9DQ1pHJ/GVbdal8Qvgd2g/oc85lggOZ5B9p
+	85fADuIgjc+rIQy620UKVbovQrgsCZ+zVIHss8CLYiwYob35LQQaCgjDcsob0cH1
+X-Gm-Gg: ATEYQzwRBVaxj2kYDSQt9ThxZRS0x6daZIsYyKzPknQSXPpOgS7B5HZxPF9Xdfp0vOC
+	+F8gVkL0ea3FFYr/ej+k7eI/8jK+4JtpqgVYVgOjH8pPOcwbHH1XoxYRLGgAWpIXaNVCl9osTIj
+	4E6vg8CZxq2krH8N4eZB+U3behH/VdwU/pzmzCoWYsbbduTTSrVqXlAuSMOa+8PxZwBjaXsEPf5
+	d22EtDuA/0FZNgJjH61O106208nGjv8w+2zWEKPf20u9Br6imA5QjSDDhHPMzc8zHIu9nl9553X
+	1XMuzDn11COmymG2hb8+HiOSpiM47+xpPM2x8qVgVlHY93w0Cxaxo0a176SyCwwPWnC/m+I3T2z
+	2evCniycumMlQYEXP4x6FfOrUX0voejWQDfVcx9EZ5V+S0X/1aNjziJsOfCKwPGilllIS54z750
+	Zz5bbZg56i7R3fujSpGTUIA37ebmliwVT7ATee9EGPdBoe061J78l0erRWHDsTcKmyhkA1sugX/
+	B0uu0NqDoo=
+X-Received: by 2002:a05:6a21:1f87:b0:343:c095:c4d6 with SMTP id adf61e73a8af0-39bceb37710mr5697111637.3.1774200244260;
+        Sun, 22 Mar 2026 10:24:04 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b041059a5sm8425446b3a.53.2026.03.22.10.24.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Mar 2026 10:24:03 -0700 (PDT)
+Message-ID: <b992e118-f948-4145-8d77-96f00b497f99@gmail.com>
+Date: Mon, 23 Mar 2026 01:24:00 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -33,127 +69,149 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] diff-highlight: fetch all config with one process
+Subject: Re: [PATCH 5/8] diff-highlight: use test_decode_color in tests
+Content-Language: en-US
 To: Jeff King <peff@peff.net>, git@vger.kernel.org
 Cc: Scott Baker <scott@perturb.org>
 References: <20260320004138.GA3653623@coredump.intra.peff.net>
- <20260320004856.GH3654226@coredump.intra.peff.net>
-Content-Language: en-US
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <20260320004856.GH3654226@coredump.intra.peff.net>
+ <20260320004436.GE3654226@coredump.intra.peff.net>
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260320004436.GE3654226@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Jeff,
-
-On 3/20/26 08:48, Jeff King wrote:
-> When diff-highlight was written, there was no way to fetch multiple
-> config keys _and_ have them interpreted as colors. So we were stuck
-> with either invoking git-config once for each config key, or fetching
-> them all and converting human-readable color names into ANSI codes
-> ourselves.
+On 3/20/26 08:44, Jeff King wrote:
+> The diff-highlight tests use raw color bytes when comparing expected and
+> actual output. Let's use test_decode_color, which is our usual technique
+> in other tests. It makes reading test output diffs a bit easier, since
+> you're not relying on your terminal to interpret the result (or worse,
+> interpreting characters yourself via "cat -A").
 > 
-> I chose the former, but it means that diff-highlight kicks off 6
-> git-config processes (even if you haven't configured anything, it has to
-> check each one).
-> 
-> But since Git 2.18.0, we can do:
-> 
->     git config --type=color --get-regexp=^color\.diff-highlight\.
-> 
-> to get all of them in one shot.
-> 
-> Note that any callers which pass in colors directly to the module via
-> @OLD_HIGHLIGHT and @NEW_HIGHLIGHT (like diff-so-fancy plans to do) are
-> unaffected; those colors suppress any config lookup we'd do ourselves.
-> 
-> You can see the effect like:
-> 
->    # diff-highlight suppresses git-config's stderr, so dump
->    # trace through descriptor 3
->    git show d1f33c753d | GIT_TRACE=3 diff-highlight 3>&2 >/dev/null
-> 
-> which drops from 6 lines down to 1.
+> This will also make it easier to add tests with new colors/attributes,
+> without having to pre-define the byte sequences ourselves.
 > 
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->   contrib/diff-highlight/DiffHighlight.pm | 26 ++++++++++++++++++-------
->   1 file changed, 19 insertions(+), 7 deletions(-)
+>   .../diff-highlight/t/t9400-diff-highlight.sh  | 37 +++++++++----------
+>   1 file changed, 17 insertions(+), 20 deletions(-)
 > 
-> diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-> index 96369eadf9..a22ba7a851 100644
-> --- a/contrib/diff-highlight/DiffHighlight.pm
-> +++ b/contrib/diff-highlight/DiffHighlight.pm
-> @@ -131,8 +131,20 @@ sub highlight_stdin {
->   # of it being used in other settings. Let's handle our own
->   # fallback, which means we will work even if git can't be run.
->   sub color_config {
-> +	our $cached_config;
->   	my ($key, $default) = @_;
+> diff --git a/contrib/diff-highlight/t/t9400-diff-highlight.sh b/contrib/diff-highlight/t/t9400-diff-highlight.sh
+> index 42d331c6cd..ba80cda7c8 100755
+> --- a/contrib/diff-highlight/t/t9400-diff-highlight.sh
+> +++ b/contrib/diff-highlight/t/t9400-diff-highlight.sh
+> @@ -7,9 +7,6 @@ TEST_OUTPUT_DIRECTORY=$(pwd)
+>   TEST_DIRECTORY="$CURR_DIR"/../../../t
+>   DIFF_HIGHLIGHT="$CURR_DIR"/../diff-highlight
+>   
+> -CW="$(printf "\033[7m")"	# white
+> -CR="$(printf "\033[27m")"	# reset
+> -
+>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>   . "$TEST_DIRECTORY"/test-lib.sh
+> @@ -42,9 +39,9 @@ dh_test () {
+>   	} >/dev/null &&
+>   
+>   	"$DIFF_HIGHLIGHT" <diff.raw >diff.hi &&
+> -	test_strip_patch_header <diff.hi >diff.act
+> +	test_strip_patch_header <diff.hi | test_decode_color >diff.act
 
-$key...
+Although this is just simple text filtering and leaving it as is 
+wouldn’t cause any problems IMO, why not go ahead and add the && while 
+you’re at it?
 
-> -	my $s = `git config --get-color $key 2>$NULL`;
-> +
-> +	if (!defined $cached_config) {
-> +		$cached_config = {};
-> +		my $data = `git config --type=color --get-regexp '^color\.diff-highlight\.' 2>$NULL`;
-> +		for my $line (split /\n/, $data) {
-> +			my ($key, $color) = split ' ', $line, 2;
+I've noticed that there are several missing &&.
 
-...another $key. I think it would be better to change the name here. 
-What do you think?
-
-> +			$key =~ s/^color\.diff-highlight\.// or next;
-> +			$cached_config->{$key} = $color;
-> +		}
-> +	}
-> +
-
-...
-
-> +	my $s = $cached_config->{$key};
->   	return length($s) ? $s : $default;
+>   	"$DIFF_HIGHLIGHT" <commit.raw >commit.hi &&
+> -	test_strip_patch_header <commit.hi >commit.act &&
+> +	test_strip_patch_header <commit.hi | test_decode_color >commit.act &&
+>   	test_cmp patch.exp diff.act &&
+>   	test_cmp patch.exp commit.act
 >   }
->  
+> @@ -126,8 +123,8 @@ test_expect_success 'diff-highlight highlights the beginning of a line' '
+>   	dh_test a b <<-EOF
+>   		@@ -1,3 +1,3 @@
+>   		 aaa
+> -		-${CW}b${CR}bb
+> -		+${CW}0${CR}bb
+> +		-<REVERSE>b<NOREVERSE>bb
+> +		+<REVERSE>0<NOREVERSE>bb
+>   		 ccc
+>   	EOF
+>   '
+> @@ -148,8 +145,8 @@ test_expect_success 'diff-highlight highlights the end of a line' '
+>   	dh_test a b <<-EOF
+>   		@@ -1,3 +1,3 @@
+>   		 aaa
+> -		-bb${CW}b${CR}
+> -		+bb${CW}0${CR}
+> +		-bb<REVERSE>b<NOREVERSE>
+> +		+bb<REVERSE>0<NOREVERSE>
+>   		 ccc
+>   	EOF
+>   '
+> @@ -170,8 +167,8 @@ test_expect_success 'diff-highlight highlights the middle of a line' '
+>   	dh_test a b <<-EOF
+>   		@@ -1,3 +1,3 @@
+>   		 aaa
+> -		-b${CW}b${CR}b
+> -		+b${CW}0${CR}b
+> +		-b<REVERSE>b<NOREVERSE>b
+> +		+b<REVERSE>0<NOREVERSE>b
+>   		 ccc
+>   	EOF
+>   '
+> @@ -213,8 +210,8 @@ test_expect_failure 'diff-highlight highlights mismatched hunk size' '
+>   	dh_test a b <<-EOF
+>   		@@ -1,3 +1,3 @@
+>   		 aaa
+> -		-b${CW}b${CR}b
+> -		+b${CW}0${CR}b
+> +		-b<REVERSE>b<NOREVERSE>b
+> +		+b<REVERSE>0<NOREVERSE>b
+>   		+ccc
+>   	EOF
+>   '
+> @@ -232,8 +229,8 @@ test_expect_success 'diff-highlight treats multibyte utf-8 as a unit' '
+>   	echo "unic${o_stroke}de" >b &&
+>   	dh_test a b <<-EOF
+>   		@@ -1 +1 @@
+> -		-unic${CW}${o_accent}${CR}de
+> -		+unic${CW}${o_stroke}${CR}de
+> +		-unic<REVERSE>${o_accent}<NOREVERSE>de
+> +		+unic<REVERSE>${o_stroke}<NOREVERSE>de
+>   	EOF
+>   '
+>   
+> @@ -250,8 +247,8 @@ test_expect_failure 'diff-highlight treats combining code points as a unit' '
+>   	echo "unico${combine_circum}de" >b &&
+>   	dh_test a b <<-EOF
+>   		@@ -1 +1 @@
+> -		-unic${CW}o${combine_accent}${CR}de
+> -		+unic${CW}o${combine_circum}${CR}de
+> +		-unic<REVERSE>o${combine_accent}<NOREVERSE>de
+> +		+unic<REVERSE>o${combine_circum}<NOREVERSE>de
+>   	EOF
+>   '
+>   
+> @@ -333,12 +330,12 @@ test_expect_success 'diff-highlight handles --graph with leading dash' '
+>   	+++ b/file
+>   	@@ -1,3 +1,3 @@
+>   	 before
+> -	-the ${CW}old${CR} line
+> -	+the ${CW}new${CR} line
+> +	-the <REVERSE>old<NOREVERSE> line
+> +	+the <REVERSE>new<NOREVERSE> line
+>   	 -leading dash
+>   	EOF
+>   	git log --graph -p -1 | "$DIFF_HIGHLIGHT" >actual.raw &&
+> -	trim_graph <actual.raw | sed -n "/^---/,\$p" >actual &&
+> +	trim_graph <actual.raw | sed -n "/^---/,\$p" | test_decode_color >actual &&
+>   	test_cmp expect actual
+>   '
+>   
 
-Something doesn't feel quite right here.
-
-If the user has not configured color.diff-highlight.*, the expression 
-git config --type=color --get-regexp=^color\.diff-highlight\. will not 
-find a match and should not output anything. In this case, 
-%cached_config->{$key} becomes undef, length() returns 0, and a warning 
-is issued.
-
-But we have "use warnings FATAL => 'all'". This situation will result in 
-a fatal error, which I don't think is what we want.
-
-
-> @@ -172,16 +184,16 @@ sub load_color_config {
->   	# always be set if you want highlighting to do anything.
->   	if (!defined $OLD_HIGHLIGHT[1]) {
->   		@OLD_HIGHLIGHT = (
-> -			color_config('color.diff-highlight.oldnormal'),
-> -			color_config('color.diff-highlight.oldhighlight', "\x1b[7m"),
-> -			color_config('color.diff-highlight.oldreset', "\x1b[27m")
-> +			color_config('oldnormal'),
-> +			color_config('oldhighlight', "\x1b[7m"),
-> +			color_config('oldreset', "\x1b[27m")
->   		);
->   	}
->   	if (!defined $NEW_HIGHLIGHT[1]) {
->   		@NEW_HIGHLIGHT = (
-> -			color_config('color.diff-highlight.newnormal', $OLD_HIGHLIGHT[0]),
-> -			color_config('color.diff-highlight.newhighlight', $OLD_HIGHLIGHT[1]),
-> -			color_config('color.diff-highlight.newreset', $OLD_HIGHLIGHT[2])
-> +			color_config('newnormal', $OLD_HIGHLIGHT[0]),
-> +			color_config('newhighlight', $OLD_HIGHLIGHT[1]),
-> +			color_config('newreset', $OLD_HIGHLIGHT[2])
->   		);
->   	};
->   }
-
-Regards,
+Thanks,
 
 Yuchen
 
