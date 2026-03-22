@@ -1,109 +1,124 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F011DE2B4
-	for <git@vger.kernel.org>; Sun, 22 Mar 2026 03:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED0354774
+	for <git@vger.kernel.org>; Sun, 22 Mar 2026 03:53:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774150275; cv=none; b=mAYd8Wqx30+fYJmDPCA++R4DG/IFQbB121dMDSYM2rXUuXm+ikGUWqJaSwby0sN1B5+ZQNf+iWI3/5ArIwvkoeDHKzDPm4fNC5EOU7lVAoCAjWD+BxnlDPV2rR9Nt9T+RII/PL0mjFqiJkbTxWVtCbkqiAzOwllI/LaYaTX3J5c=
+	t=1774151622; cv=none; b=teMxIX2EeJtNhT0zGm1MRRtej0z4W4g9StrLsdrwqNB8cFtB8ts/Pcw4k+QR9LMpftD17iq9bVkd8yJLXnAX7+ayGIHTF0F3JkiI6oSf9Kh5jxLxl3v92K5dIxi+TPO8S8r1oasd9ClaJgIVzsR1JCRDZmeLc623abqQ6vIx5iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774150275; c=relaxed/simple;
-	bh=VnRe2DuYXqi8MQjTbELe/aMvoct/mI7J0T1z4hu8rI4=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=q7ZFPDzHyjY8XpElmzbyBbcADRqfG96I472adIGisOaOREeKWf3Xh5cbejSdejfvSa3ASkAVJKGum1o9Y6+K21F3031WBcFKp3M/0WBV/40xvEumWo/jJ6Vz9J/CLZ74BvBpKQOGbaDydhDbU/9qppFgWBvIlfbXsjnYjoXBYBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bO4Vmgyf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qlOqtK9R; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774151622; c=relaxed/simple;
+	bh=MUMnTtk0PxWD2EaaeZiomtJJDEMx0vcQe0miUAvnDOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O8gXM4Su9hhZqTdEkt5pmLxTLJSJtbI3VpCUJP4VOkN+cGDN459RIqLlCR5MLmN26BlhsrosrDfW4pWFomBHRx4JIdPMTvz+LedHopWQ8n/U1ZbJIeVy9Qlc//gxA9ob5HBk4MNHR1lSRHwZerHUoDKGLCsbmKJj0o93JA57Kok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SzprdvFF; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bO4Vmgyf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qlOqtK9R"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 505337A01D2;
-	Sat, 21 Mar 2026 23:31:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 21 Mar 2026 23:31:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774150272; x=1774236672; bh=eJT5+CvYcn
-	eL5KYn0OvS+++n2c/veF7Xf+CTE5VAu/E=; b=bO4VmgyfTe3hP7OrBlLt6J3aPQ
-	lEuKVzPMxelKGDyWXiEFLl2DXO0Zl97Zp+rxJKMzKgNMJtdChSI6+ejqyucmTt7F
-	dAqtQkOB7oUZucpamJlmPYGbJQJM2YE8KGRXfxooPROblNUsWPW5xV7y+k8hgMcL
-	O2vynJm+L+tY9o/JhPH31wISL+vR35WGqgs9xkmbUPUKdq+s4F+xxSMJey2HhoqB
-	9YlPJtdDmYdT8pGOcyB8PYb3SEyGVDLDQMrlpgoRFk5XTgqfpje58BHRqUveFoef
-	Aov+VESsmobstXf1mO0FPFYiEPbVwnYySzezHGt5ET8mcrHu9dcTY/iAFkLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774150272; x=1774236672; bh=eJT5+CvYcneL5KYn0OvS+++n2c/veF7Xf+C
-	TE5VAu/E=; b=qlOqtK9R2J/+Gf9VE5RBG5nmkVqZU3xtwA44F1BXj7tlZaxFDBr
-	vToAJylw33CACBaCuqNm8nPVAk5ENAXYUTVOdLj6gy2FaVbrfMYHZR78lOAXlvIg
-	y1nMbGgQAzk8JCFT+T1LrvncDKTcMSab526Xqzvqr4SoW0Bf72Jc1J9tU5yqlzwL
-	9+U72uyfq1fwOJDpLTrzXCD97ZVm0W5KqfEAl2B3BZBjo3lwrYrJk36Q3UpKUPVJ
-	l2/1EK14+TIoY2oqMVRlhErb3Mie6o9/O1xzcxKcAlpb2oSyegSdTwmEl/4OGwrE
-	fjJO+s6VpFlglL8p/jmFhRVZylzXvA5eI/w==
-X-ME-Sender: <xms:gGK_aVVzb5V9fzIbk--GpW4rNbQN91XyG4A8AYVVf4P2-ByK7pHC7g>
-    <xme:gGK_aZS638Eqq7yXCo-EOnmQAFJp7-3igX15Yw6MkGxIKHViS0AJDMyTbrEDiFbJq
-    0PQdc-yE1Ph6IV4WPtz7qFlmKWHL8a8DCHAWDBEwydARYyZGE81Fw>
-X-ME-Received: <xmr:gGK_abPDFi8hi0YeXGaiL4nT9FgUYl-7NHijCdOcfFE0q00dwzBaOBy-5Bo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudegjedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffetvdetfeffheevffejueefkedufffffeeltdegieeuffekveeludfgvedt
-    ffdvnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdqshhmrghrthdrshhhnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
-    phhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepjhholhhishhsgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhholhhi
-    shhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:gGK_afSUdQdIjeExDuJvDCLuQcCd1XZgp_nmYOYfwxbExoeWOiqEtQ>
-    <xmx:gGK_aRhzSSDukc4g0naezK4r0Z5_yy03pT4ZoLtggZAp-B1Aix2YbA>
-    <xmx:gGK_aQ-w_TVeK4S4jCDMkV8IWPtdsUM8x-_xzNt7YrmCZPNBHgf3hA>
-    <xmx:gGK_aQHnDUd1O-GnZ6UATaokjIOB45ecfhmWjUQ2wikfH0d4rJUPKA>
-    <xmx:gGK_aYFgjPml7zMsTeFTWTdyBWoolgD6HNtJzv-XmziKSZyJqT949vMC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Mar 2026 23:31:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SzprdvFF"
+Received: (qmail 93452 invoked by uid 106); 22 Mar 2026 03:53:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=MUMnTtk0PxWD2EaaeZiomtJJDEMx0vcQe0miUAvnDOI=; b=SzprdvFFJQaFB//VFwWJgvNIRG6Rb3h8UplzZlyJmqeKXvr83jOndn4YOVpwWrt2oh3YldBVA+pjcDo28NYcXTbdjD9zHUU+sNj5Exwn4mSB42oBiqzjCv+iQ00Ja+C7nX2ScpEhVxFHu03OmiDxbBOF5Elx2pri9yFhcahUTKRRcv7Bg9vmKYLc6KGJ83gnQ0pVvG4jJCADrIr+3ZsuWTbLc6EbNYFvuJ229YKkTSfHKNHExznP0kx26aEeD4L8rdZHWMYkDVhpg+FaZUb5KatX/8zIC3RcwTj6Rkp9Q4rIDBoW9+wKtdd+jt07nI9YTRy3a+AtNaQNh2kMm26PMw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 22 Mar 2026 03:53:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 128670 invoked by uid 111); 22 Mar 2026 03:53:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 21 Mar 2026 23:53:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 21 Mar 2026 23:53:38 -0400
+From: Jeff King <peff@peff.net>
 To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  joliss42@gmail.com,  joliss@gmail.com,  peff@peff.net
+Cc: git@vger.kernel.org, joliss42@gmail.com, joliss@gmail.com,
+	gitster@pobox.com
 Subject: Re: [PATCH v2] refspec: safely parse refspecs outside a repository
+Message-ID: <20260322035338.GA819989@coredump.intra.peff.net>
 References: <20260321194653.24513-1-jayatheerthkulkarni2005@gmail.com>
-	<20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
-Date: Sat, 21 Mar 2026 20:31:08 -0700
-In-Reply-To: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sun, 22 Mar 2026 08:05:57 +0530")
-Message-ID: <87qzpck0ar.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+ <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+On Sun, Mar 22, 2026 at 08:05:57AM +0530, K Jayatheerth wrote:
+
+> Fix this by ensuring `the_hash_algo` is non-NULL before checking
+> `the_hash_algo->hexsz` for both standard and negative refspecs.
+> When operating outside a repository, fetching is impossible,
+> so bypassing the exact OID check is the cleanest approach.
+
+This argument is glossing over some details. Trying to break down all of
+the implications, I think we have:
+
+  - Without knowing the hash algo, we cannot reject negative refspecs
+    that look like oids. This is OK in practice for two reasons. One,
+    the only commands which apply refspecs are fetch and push, and they
+    require a repository. And two, while we miss an opportunity to
+    complain about broken config, it is quite unlikely for somebody to
+    have such config (a global-level configured negative refspec that
+    looks like an oid). And they will be told about it when running an
+    actual fetch anyway.
+
+  - Without knowing the hash algo, we cannot mark refspecs with the
+    exact_sha1 flag. Again, we are not actually applying any refspecs
+    unless we have a repo. The exact_sha1 flag is used to influence the
+    set of prefixes we send to a remote v2 upload-pack process, but
+    only for fetch (which requires a repository). For ls-remote, which
+    can run outside a repo, we don't even look at the refspecs.
+
+And so for those reasons it's probably OK to quietly ignore things.
+Still, it rubs me the wrong way a little that we might create a subtle
+bug from some other caller.
+
+If we think we don't care about refspecs, it kind of makes me wonder if
+we ought to be able to tell the remote API that we are interested in
+remotes for their URLs only, and _not_ for their refspecs. But maybe
+that leads to madness, as we end up with half-initialized "struct
+remote"s floating around our process.
+
+
+The other thing I wondered is why we are talking about remote-curl here,
+and not ls-remote. And that's because ls-remote already hacked around
+this!
+
+Check out 9e89dcb66a (builtin/ls-remote: fall back to SHA1 outside of a
+repo, 2024-08-02), which adds this:
+
+          /*
+           * TODO: This is buggy, but required for transport helpers. When a
+           * transport helper advertises a "refspec", then we'd add that to a
+           * list of refspecs via `refspec_append()`, which transitively depends
+           * on `the_hash_algo`. Thus, when the hash algorithm isn't properly set
+           * up, this would lead to a segfault.
+           *
+           * We really should fix this in the transport helper logic such that we
+           * lazily parse refspec capabilities _after_ we have learned about the
+           * remote's object format. Otherwise, we may end up misparsing refspecs
+           * depending on what object hash the remote uses.
+           */
+          if (!the_repository->hash_algo)
+                  repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
+
+Obviously that is kicking the can down the road, but it kind of makes
+sense that we would have the same hack in place for remote-curl (which
+in practice is only going to be called out-of-repo by ls-remote anyway).
+It is only the fact that it happens in a separate process that the
+existing fix from 9e89dcb66a is not helping us.
 
 > Additionally, while looking into the remote-curl execution path,
 > take the opportunity to remove an unused `#include "git-curl-compat.h"`
 > from `remote-curl.c`.
 
-I wish you didn't do this in the same patch.  It is completely
-unrelated, isn't it?
+I doubt this is correct.
 
->  refspec.c                   |  4 ++--
->  remote-curl.c               |  1 -
->  t/t5551-http-fetch-smart.sh | 15 +++++++++++++++
->  3 files changed, 17 insertions(+), 3 deletions(-)
-
-
+remote-curl checks GIT_CURL_NEED_TRANSFER_ENCODING_HEADER, which is
+defined in git-curl-compat.h. It may work fine without that header if
+you have a recent version of curl, but older systems would be subtly
+broken.
 
 > +test_expect_success 'ls-remote outside repo does not segfault with fetch refspec' '
 > +	GIT_CEILING_DIRECTORIES=$(pwd) &&
@@ -117,13 +132,28 @@ unrelated, isn't it?
 > +			GIT_CONFIG_KEY_0=remote.origin.fetch \
 > +			GIT_CONFIG_VALUE_0="+refs/tags/*:refs/tags/*" \
 > +			git ls-remote "$HTTPD_URL/smart/repo.git"
+> +	)
+> +'
 
+Some of this is irrelevant to reproducing the bug (like redirecting
+system and global config). And it is much easier to use "git -c" to set
+temporary config.
 
-This complex "env" dance is probably uncalled for.  Wouldn't
-something like
+We also have a "nongit" helper function already. So I think just:
 
-	mkdir nongit &&
-	git -C nongit -c remote.origin.fetch=+refs/*:refs/* \
-		ls-remote "$HTTPD_URL/smart/repo.git"
+   nongit git \
+          -c remote.origin.fetch=anything \
+          ls-remote "$HTTPD_URL/smart/repo.git"
 
-be sufficient?
+is enough to trigger it. Possibly it is slightly more realistic to
+actually use the remote whose refspecs we are configuring:
+
+  nongit git \
+         -c remote.origin.url="$HTTPD_URL/smart/repo.git" \
+	 -c remote.origin.fetch=anything \
+	 ls-remote origin
+
+but as the bug exists now, either is sufficient to trigger it. You could
+also add a negative refspec if you want to test that half of the change.
+
+-Peff
