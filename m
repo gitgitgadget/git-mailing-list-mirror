@@ -1,70 +1,69 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D2239526D
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 11:40:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715733988EA
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 11:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774266032; cv=none; b=YF/8YGPDmHLkJnWxvymSXQYYG0aZTtHr4psgODBh+MQ6EQlReHl80gWXBh2yWY5EwtDDbGbYZ3387G2nFOB7GIxL/HvfUO6Vdbm3bJbrbx9yc8ezrWIq2bHHmznZnGpwITCAHnAZzN5viKaxpFnkHB8EBqXIQsfqkeR6WgtMmlE=
+	t=1774266033; cv=none; b=puPAaDeMOsfZ0ilA9xCazaqamh07K1/KSPGvS/7FTejistNSinnv9NILZTMtsNxxkzYYweo1WQg0mHTggKCtuXgeXOFeLtM3oWJBxVhgb3q9+udZfKfCjVJ5lxCw4UKn/tQ0rhrl94OGdN7e/UL6xa2FWMvem9dBEysNB+KYj98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774266032; c=relaxed/simple;
-	bh=s25eBXbrsvs9FdyawuF3SgjRFs5BKRFXxSkakzttaZA=;
+	s=arc-20240116; t=1774266033; c=relaxed/simple;
+	bh=37UtG9JMf9Gx7/HkocpumuIGX3BPbuDGt4FUwbsCx0o=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bBssvnTSA3QamWyP2l/uJSSBsZ6yKTUEyRfSo6q2NdtPLfYwwanmY0kuD4ZttIlmZzifuLWiwhaUG6iuOBjR3RHp9vvmxb/B8qPjZPLGs55uypmGnDTGlMjDkFo2nwM9TCPzlbc3XudwcYuIxboyIY9VvO/xwDVoDfS8Yp5ivlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=djJNs0Mn; arc=none smtp.client-ip=74.125.82.54
+	 MIME-Version:To:Cc; b=H4dWgv7lbqahzJ1+mBh2sw0kAh5IiGpI0bV4phpoKMcXA5Iqt0zTcPCS0j4JyqXVwcNadGru9sBD4BbpFG0SZmbuP8ASB1UYUMm8txQvjLYYrTfECqPgP1jgme4w8sFtS4mgFEVt8lOd1O9RHJsfskj/Yn5C3A7Y8WjwYYGR0p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHOKGugc; arc=none smtp.client-ip=74.125.82.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="djJNs0Mn"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12a693cdf29so2975906c88.0
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 04:40:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHOKGugc"
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2ba9c484e5eso2489162eec.1
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 04:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774266030; x=1774870830; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774266031; x=1774870831; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z9b7Nh1yar/C2vzSyBZCLVF79D8rLKMpxrgX0WBHAdI=;
-        b=djJNs0MnQ1DebDiqi1+inHzRyzmNpWBTl1bWBqNTMQvxq1vOEomVeKJTVXsrFqmu0e
-         QIxGx1hIgzfuR3IofTGWtj9I0WoMX/0fmnZimuZVvopQqwPxurDge+Zb8Gkg24qGrdsk
-         x5gJ+FZzwOoVtGiLB95OdTfPRwHz8dd4rZBej6028fvN0JTx9J4Xwt9XTkQ6dB3Kvgn2
-         xHVjnuqXG+s2tQVSf/6ij4yYoJADxY1Y79XoNYfUZ5YgwOHz5GzLzqj6xtpAXjOsVmRU
-         7495/u5b2iarmQaG7QgIyNslGlcKgL0q10ga+E0sXcjd6vT/Ei7+N81yEDvR9OzxZsrs
-         m22Q==
+        bh=/9WQNstima1stoqHeFCDIjLn8tfi5gQxLV2IaIzRF44=;
+        b=jHOKGugcOh+A8MWxgJ9gY+QpQxhCUvw5D7y0Rvy8HGifKp4IyC0Dyd0+IVmV/rrPfP
+         OOiriTbontC3vU/WnTopQ6V8ogNUudAolGYpEeFSPJULnXWjPcTfLKhDYRA7wyd1v297
+         K8jRs2ClMxKj4v1iS24581zL8QXUTg1lrZx7ZMmUnL0CKndyxDs5f8RivPUdcAVz7p3k
+         LoGAQYDlwPF/yxFIXCMPXzBt8B/XMYwvDWtMr34Rw4PfPBlS9RltMGL8TpuxaA+esU8R
+         8FoZ+If97Nxgg8MsTZBRnEiTEMJISvhRmvdU5dq+koSOf73O9UJbyNXHX93qMgryHGMy
+         LP0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774266030; x=1774870830;
+        d=1e100.net; s=20251104; t=1774266031; x=1774870831;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=z9b7Nh1yar/C2vzSyBZCLVF79D8rLKMpxrgX0WBHAdI=;
-        b=Smm4JLf98GvrVeYXbUGw7ofMLTpo3Hmb2LwEKqlOwJfZshmhCmNjDbQYgLMWP3noBc
-         8L6aQOdDkRBaCmpjOUfem1Oj8LqTwaYEY/LZAyoNrl/TUcKLOc1nAa/twSsI6LaWIs8g
-         V6ZO+OlqBeelBClPejMygl9F+IkWNZNmv2yS0rjEoWxLzWmtyZDmJ7kQwexctTwCqtp0
-         AZeZJjGVpPoi0XGBB/yIvonUJHsp+WSAv8IKg0yWsZU1pDWcAWf8d4cmrdOGLF6fiqhn
-         wYXP/n5BvV8cnueSHvRgKlwQnkBfedIxFEL7lwu2Z9QdiWoPJ6pm1Fvb2rKGhZHIcFvq
-         lX6g==
-X-Gm-Message-State: AOJu0YyIj0iMJB9pHx3RmnlfVH57iw2k9eohIRm+yf1gzGx26be8cWIY
-	Aq4CZ+ZcfTscz1LMgcVF4JS+66vzS+OJzT6kGD9sDGMZqO5IEyl8PFF40dnG1Q==
-X-Gm-Gg: ATEYQzwD/pwFvi+9nqXQTCUXntBrZYyduKnB/2iL2hjaXYarhJtgls6b3X5zl3I6oci
-	sTENYR411ijTGn9wOu+XDyY6BXv6gJG9eUlw/bdMeNL4X/eGrX59v3xltk4Gw/olWmRMPk/wkLl
-	3cRlvYLec6DfM8Z707fF5QcWYpqD6SH0kpPnDVxmVgNOpuRSbQRZQ/Ev1boob5I+zfVkdcyhk8h
-	lU58O4Tu4E22Bl5Z+BAFSiAaZGl727j7X50FhE0S6P9S+LrQ7Owa+2PaWniDEMgeYQMGN3yGnHQ
-	Gb8YIJZ4twLCbFFG52ko8lUdjKcHbxVRMN0fN8tVETswEBZxRILWF7bPO0XRlyWKtYXw8H1dpbQ
-	UmwpBprqdpPKPvk34ggDEjdfA8yB8mNZuBK7r+w+NVGT0kDSyFouDu3lXKcDdMhfGsSczBeCps7
-	pvkQaFZIsyd6DkFCrLqp78v1O/whYmFjqW5MGVNA==
-X-Received: by 2002:a05:7022:492:b0:119:e569:f86d with SMTP id a92af1059eb24-12a72326a74mr4516720c88.10.1774266029700;
-        Mon, 23 Mar 2026 04:40:29 -0700 (PDT)
+        bh=/9WQNstima1stoqHeFCDIjLn8tfi5gQxLV2IaIzRF44=;
+        b=F5lE86i0X2AsgnnswEuh9R/wkCq2GA4J2YFxMiASLTGWTmMWtic7mFahdmDmySsILi
+         KxkNESpHcF7NEe7TxFknywuFrnkcNGQ4nCxOKLXWQw4BNX4TYGh5TxfIs1L248jcZDHS
+         xWSB4h4CteWz7ixnSjw85Rlt+IoLhAaWxmhCwZwwT+BKamKy32xvNqB0q0n0dttc0CNn
+         XiubaEjynbWFzgPSNLqGDlcDsQnyIXbxbo/47dJ/ii0d04uPwT9BkvSMhBUauSDY1RdS
+         0pf6MCQ1EoFaCcB5Pb/LS5M66Gis1DpsZsQyUWs6p/e3KSJeIGLm6sQ5C7py+/MAFcCl
+         uWBA==
+X-Gm-Message-State: AOJu0YyC9CBuvkllX4c5/cjJ0UOBFKUB5JT+68hzaekh+j8RmBi1KIHc
+	gYCFXMaOMUKLOePJwMWdDUvheCbsO/UHWqGTzT8Hh7JMWz+btQDulqo5DsGnCQ==
+X-Gm-Gg: ATEYQzy8LjJHFdjhkxBOy1vvO66Dvo43Ayz1WzqcTUhcQWAZOe32gCE4fmxQdKVNxTZ
+	oEu9xkFPuO0tfINV9WPi9Gk0hMwn4Q//YoBVn6s4NU4DV4bhCoX46X4iRxn1oKpHV8ApoCtx0zb
+	f65RuotQTgRccIvBhu+6I8mLKMGs0Aemga7tZ8DOU9jhmDbEEsrdVIk3TMWdjWC0GzVOfpDFp2N
+	DhUrC0SC8G44+E2NrVS0ol3WtHgCbk28fzoR/qLsmL6kYNu43TZO+B1uxMiX8ARBBkB6641MGqL
+	qkoq4vUKruuM42Ji9r4q258b3Ugbh+KK/j5eIlWL5MZpFkA8R21kijS5DtJ4LBQ+Oyk6p5eFn0D
+	ns3LkrRF8+LGB0i/UETslqDvjJabze+KKZyQ/ADOFpw/wmi4NVGITY//SJz1a2PlNzp8eAh0+HN
+	DqAaxDEZS1jzFiMH8UIjQVd6WKsNc=
+X-Received: by 2002:a05:7300:818c:b0:2c1:27c:75d2 with SMTP id 5a478bee46e88-2c109752926mr4614789eec.17.1774266031158;
+        Mon, 23 Mar 2026 04:40:31 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.211.112])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12a733b49afsm9432220c88.2.2026.03.23.04.40.28
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c10b17b90dsm15518131eec.10.2026.03.23.04.40.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 04:40:29 -0700 (PDT)
-Message-Id: <1168edfb96c739581dd510f86bf1dbf5e28603e6.1774266019.git.gitgitgadget@gmail.com>
+        Mon, 23 Mar 2026 04:40:30 -0700 (PDT)
+Message-Id: <9699650aa7dc04cf1cdc26803caa8304b29c1662.1774266019.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
 References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
 	<pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Mar 2026 11:40:18 +0000
-Subject: [PATCH v2 5/6] path-walk: support wildcard pathspecs for blob
- filtering
+Date: Mon, 23 Mar 2026 11:40:19 +0000
+Subject: [PATCH v2 6/6] t5620: test backfill's unknown argument handling
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,104 +83,37 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Previously, walk_objects_by_path() silently ignored pathspecs containing
-wildcards or magic by clearing them. This caused all blobs to be
-downloaded regardless of the given pathspec. Wildcard pathspecs like
-"d/file.*.txt" are useful for narrowing which blobs to process (e.g.,
-during 'git backfill').
+Before the recent changes to parse rev-list arguments inside of 'git
+backfill', the builtin would take arbitrary arguments without complaint (and
+ignore them). This was noticed and a patch was sent [1] which motivates this
+change to encode this behavior in test.
 
-Support wildcard pathspecs by making two changes:
+[1] https://lore.kernel.org/git/20260321031643.5185-1-r.siddharth.shrimali@gmail.com/
 
- 1. Add an 'exact_pathspecs' flag to path_walk_context. When the
-    pathspec has no wildcards or magic, set this flag and use the
-    existing fast-path prefix matching in add_tree_entries(). When
-    wildcards are present, skip that block since prefix matching
-    cannot handle glob patterns.
-
- 2. Add a match_pathspec() check in walk_path() to filter out blobs
-    whose full path does not match the pathspec. This provides the
-    actual blob-level filtering for wildcard pathspecs.
-
+Reported-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- path-walk.c         | 22 +++++++++++++---------
- t/t5620-backfill.sh |  7 +++----
- 2 files changed, 16 insertions(+), 13 deletions(-)
+ t/t5620-backfill.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/path-walk.c b/path-walk.c
-index 0d640e2f24..6b83e0e1d5 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -63,6 +63,8 @@ struct path_walk_context {
- 	 */
- 	struct prio_queue path_stack;
- 	struct strset path_stack_pushed;
-+
-+	unsigned exact_pathspecs:1;
- };
- 
- static int compare_by_type(const void *one, const void *two, void *cb_data)
-@@ -207,7 +209,7 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 				 match != MATCHED)
- 				continue;
- 		}
--		if (ctx->revs->prune_data.nr) {
-+		if (ctx->revs->prune_data.nr && ctx->exact_pathspecs) {
- 			struct pathspec *pd = &ctx->revs->prune_data;
- 			bool found = false;
- 
-@@ -303,6 +305,13 @@ static int walk_path(struct path_walk_context *ctx,
- 			return 0;
- 	}
- 
-+	if (list->type == OBJ_BLOB &&
-+	    ctx->revs->prune_data.nr &&
-+	    !match_pathspec(ctx->repo->index, &ctx->revs->prune_data,
-+			   path, strlen(path), 0,
-+			   NULL, 0))
-+		return 0;
-+
- 	/* Evaluate function pointer on this data, if requested. */
- 	if ((list->type == OBJ_TREE && ctx->info->trees) ||
- 	    (list->type == OBJ_BLOB && ctx->info->blobs) ||
-@@ -511,14 +520,9 @@ int walk_objects_by_path(struct path_walk_info *info)
- 		info->revs->tag_objects = 1;
- 
- 	if (ctx.revs->prune_data.nr) {
--		/*
--		 * Only exact prefix pathspecs are currently supported.
--		 * Clear any wildcard or magic pathspecs to avoid
--		 * incorrect prefix matching.
--		 */
--		if (ctx.revs->prune_data.has_wildcard ||
--		    ctx.revs->prune_data.magic)
--			clear_pathspec(&ctx.revs->prune_data);
-+		if (!ctx.revs->prune_data.has_wildcard &&
-+		    !ctx.revs->prune_data.magic)
-+			ctx.exact_pathspecs = 1;
- 	}
- 
- 	/* Insert a single list for the root tree into the paths. */
 diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index 52f6484ca1..c6f54ee91c 100755
+index c6f54ee91c..85740f1f13 100755
 --- a/t/t5620-backfill.sh
 +++ b/t/t5620-backfill.sh
-@@ -307,12 +307,11 @@ test_expect_success 'backfill with wildcard pathspec' '
- 	git -C backfill-path rev-list --quiet --objects --missing=print HEAD >missing &&
- 	test_line_count = 48 missing &&
+@@ -7,6 +7,14 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
--	# TODO: The wildcard pathspec should limit downloaded blobs,
--	# but currently all blobs are downloaded.
--	git -C backfill-path backfill HEAD -- "d/file.*.txt" &&
-+	git -C backfill-path backfill HEAD -- "d/file.*.txt" 2>err &&
-+	test_must_be_empty err &&
+ . ./test-lib.sh
  
- 	git -C backfill-path rev-list --quiet --objects --missing=print HEAD >missing &&
--	test_line_count = 0 missing
-+	test_line_count = 40 missing
- '
- 
- test_expect_success 'backfill with --all' '
++test_expect_success 'backfill rejects unexpected arguments' '
++	test_must_fail git backfill unexpected-arg 2>err &&
++	test_grep "ambiguous argument .*unexpected-arg" err &&
++
++	test_must_fail git backfill --all --firt-parent unexpected-arg 2>err &&
++	test_grep "ambiguous argument .*unexpected-arg" err
++'
++
+ # We create objects in the 'src' repo.
+ test_expect_success 'setup repo for object creation' '
+ 	echo "{print \$1}" >print_1.awk &&
 -- 
 gitgitgadget
-
