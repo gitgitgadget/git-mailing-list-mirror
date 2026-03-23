@@ -1,21 +1,21 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2D73C13FE
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 16:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFDF3BF678
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 16:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774285080; cv=none; b=Fct+k0mKfgkRAE5ESKBuPkUt2y6gamL+f4yrFFwmYGVLv0IflMww+I0LJte07br2VrXNahXEi8/sUCVbwObbSoc1vnNdUJnvq1Kac/+8cri1tRlE5b4TmXp1qGtAZ31pwDRI0PSh6re6VUJqeOhQRKYIv98nY9+3845d8UDd2T8=
+	t=1774285080; cv=none; b=C8DphmGGCkSbrchBI5GhZdXM0e6lXlLsIa70uoHdpM5ltqKPU9Mv//hInFMwVt2q+Fh3ycYkVLkwTJzj0EhieLPSZb73J8d/+PXaVqkGgOojztmJOImASU3Y3LQjNX9ZkY8vkyqsAj5ViRttKAnGxVfMwSk7SlItQxHuNazO9jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774285080; c=relaxed/simple;
-	bh=iq2rrxG9LhH/mvdsnW8V8PQ2bYlt2Jmlhokp1RQIH3c=;
+	bh=b5jq6gjaqP+hsUIVRoSquUL1WhP8ifByhhXYFpmVBoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4JobhlVIsWV01RuPeT5/klBdEJeAbRn7iLMtphlaDVV1uxw2OsQJSJlVb72hwg4DpvJub1LEfRdsmFwm/ItU3zcQ4r4RPAOFFbN8vuCHcVpV7e4qRtFcwOJRLIiyklw9VsoDw0x8MWYcaQWAvWoyeQoUptUdDzvgTTlLh+CQAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=FZWOIlC/; arc=none smtp.client-ip=195.231.85.169
+	 MIME-Version; b=j1jfAtJPXNRRj1n6V1Loci4dOeU6rESV8cVKnHC+FHd0N7BmowJIUw4r95gpuLM3h4vSNuyOrPs77mONyV7OCt5tjW09t8JLr3QGsFa5/iiERJran2n1TvJ9HTHF9XIazGJTNWfM0dXxnPm92ElnjDT6Mn9sfI8C0/PrIppJFWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=grdjgEZA; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="FZWOIlC/"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="grdjgEZA"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
 	s=dkim; t=1774285077;
@@ -23,20 +23,20 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=75ZykMlGmTlBSX5YaizavngyDVqlHSgYF6PxiTEujFc=;
-	b=FZWOIlC/lNMaWZNsO2OgeTON+eaVpRws1MnuU29ILA5pt5MTU9ujoE3oQkxDCha12nO4NQ
-	ClLo6u7L3XD48zG54liWq6aaSJLde/aIkVbnjGA3LWwfF0MYKHuXzAc55Ejqnat6Qu3HyV
-	Wrsqd/XHdqwB8wbaZ9jybaXPiHrXJF9paq5uaRECHTHDVV2a4RyMP6+VIXe6gfgUOl0T9+
-	I343yttSu5AtLarqMU58nEGasRxHVi3qyXxWCjq9QVUWFbcopfHzW7G+Ekka7awWw78Bpc
-	XtxLaVo61BSrQsdp8P9HdVaB4cSPrx76K8mhhNlLkzE0LDH4/DAmvgKyJlBrYw==
+	bh=QIRVKObaHnvNob74xSseLYYtVr43U9tKQXq9cqTMOlc=;
+	b=grdjgEZA7KjXqUkn4eeUnt5ayiCOsB2U2v/Ue7JtlTdNQ4KRfauROgRlxzEHJuZjDcT0Xi
+	6GmkXU27QRTrVCH+BquR5Yfeg4i6B47LB3OWVeMEqEBmwYMJDsJyBGwZflhqnBvm4x+lRV
+	m7YxqyGSZpFJJRl/7pT0SlFZvHyyUaehoQxCbA9sebyi6sMA/3y0Kh+sVdH+33dmG/VnXW
+	bBuMynHY8M6Kz9Af32n2VS9Fhcc3+m5fCacdQJrSBdCo/ulnC5Adu5u0Q97rZ/1fa1l5VY
+	xv5+rxHwQf9M/PeJ0N5xstxsB2U/gxdlG+Ec55tf6Ffp9uQvYIpAEwouyacKVA==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
 Cc: Mirko Faina <mroik@delayed.space>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v3 4/8] docs/pretty-formats: add %(count) and %(total)
-Date: Mon, 23 Mar 2026 17:57:31 +0100
-Message-ID: <ce7d1bd1fefc63bf625eb88a1b9d73d77af4c4ae.1774284699.git.mroik@delayed.space>
+Subject: [PATCH v3 2/8] format-patch: refactor generate_commit_list_cover
+Date: Mon, 23 Mar 2026 17:57:29 +0100
+Message-ID: <883dd358b6d69ab8430a4fcd95318150a6fca870.1774284699.git.mroik@delayed.space>
 In-Reply-To: <cover.1774284699.git.mroik@delayed.space>
 References: <cover.1773959395.git.mroik@delayed.space> <cover.1774284699.git.mroik@delayed.space>
 Precedence: bulk
@@ -45,36 +45,39 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1153; i=mroik@delayed.space; h=from:subject:message-id; bh=iq2rrxG9LhH/mvdsnW8V8PQ2bYlt2Jmlhokp1RQIH3c=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpwXDze0AnOcw9aDbsV4h5z6kdW5kUhP+tO9kOf hF2VIsF02+JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCacFw8wAKCRBIeX6hnBm+ 0XcJEACQEdm/Pl3zGReC7aQU2p3VeottWbs2uSmPZR6tWtEuloVRDA8chNMwMvW6EpSa05iV3YU MfPM3HmSN0MQmrlr+ntTfNY5EQ3Tu1luAiW8NTZGg7O0ghjM7inZuSk+2+HIHMa0T9Nb0NtpIXv TXVmTD9n3dFVnpCIcpwgakwpO1UWl7HAtJKKD74Lh68vxRA0ZfDHv02B23sNkP1EPFSQJX7Y8G3 /iR7ZfbZLTiLruN/FBSmUsP6JzKgGsW7QyDhoAMWTMec0ac6YYJVfMWYHeJohevU8LDXgmtdoPA S1jf9QcCGsqZs4E6SKnE8cJI8Ng8BR2TO1Mn0n9DdabBYZX/2sguATS2vNFcydBeu/5YzfWVErF wk3MGDYHKNuoTY/Uql3hl3ltktzSraBSQrBJQ2aOdHu88xRisvYzKFSCdtqbLYV/z+eQ6driR5g r+UoakKtP1DawUWfHcd/jS1s4U1wknQaYamaTAcKBiGAnM8jgV/epDxUhl2o5z1oeeQcWlLYizD 93XSHQwBtDKXzIA3JVFdM1q89G2bVyZaxRr4tc2y2GCoZe4RkLkP4iRsAc8hpzNXBqBsuFS53ED JtB5vEu2tyo/02Z6nM0pJxuGTOBSIG/MgpQf7KGLm+moSO4gjDi9bYC0WlOT98sTgkHK4EwcOSD WW+2r2Mjn
- g2438g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=961; i=mroik@delayed.space; h=from:subject:message-id; bh=b5jq6gjaqP+hsUIVRoSquUL1WhP8ifByhhXYFpmVBoI=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpwXDz6z9QGNREu6fvssgEWU0BGlsBUSOlCYNwF plPj5jNR/SJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCacFw8wAKCRBIeX6hnBm+ 0UR6D/47W/oczGINv2pWHCp4amTu0ZsWosSqFa26q3rVXUjFJZrUNBbzndrkWXVj2y2192pQ18E fSCNuwnZeHBTBWDOqtjK+NG9j3TRv65CV6yLSj1wIyGqYB1eIEJlZHOodduhujap4YMitMKKHjx /53Sl4JOwDy58fjaahth66pbEJGfSTKDY/RTasOR5d+QHWZo7Y+Xx8iymVya/vLC8JJRK8jdYQc 5hvEMzMqbV1B0mqzxtv4ovVmYfzRfpRH0O3YUR3DTwxvkZD1w/1oKyL6OQ3jep0dXX1t4fokSvQ sGCKZCbseSp9LTigYKM7CWNYHhGiJdg7jG9oUakDuiE4aIlapTDXY1ojoTrPSnAOl0OpjQbxIHz rKm6i+nsWyiEDfJGmh804JwlOlacQGvNJAPOsDthVpqz2EbjJygULQDYqfiKOBqi6ZH7sHZhF0P GBOluoNZF3yViB2+jXVpo4xhmPWirC1drPke3mvWyZqq0ZFw6QF6EDvn3ZGEGS9/on0G0uvjy43 qN2otOXeO6adclL5hbuaQbeKVXX1vDsKk2sCcjFRc08S1j6OzQ1ZnuNJeHeo80AeOStDMyg0VeS gAkQaK8W5R2awbpdc2neXZXb4aaor8cE6D9VI0FjfOapjy1Ybgnx8txpfFmyU1ZAjqBbr30Xd2r wG50vq0uOw
+ C5A6A==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Content-Transfer-Encoding: 8bit
 X-Spamd-Bar: -----
 
-When --commit-list-format was introduced to format-patch, two new
-placeholders were added to the PRETTY FORMATS code without being
-documented. Do so now.
+Refactor for readability and remove unnecessary initialization.
 
 Signed-off-by: Mirko Faina <mroik@delayed.space>
 ---
- Documentation/pretty-formats.adoc | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/log.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
-index 5405e57a60..2ae0eb11a9 100644
---- a/Documentation/pretty-formats.adoc
-+++ b/Documentation/pretty-formats.adoc
-@@ -253,6 +253,10 @@ The placeholders are:
- 	linkgit:git-rev-list[1])
- +%d+:: ref names, like the --decorate option of linkgit:git-log[1]
- +%D+:: ref names without the " (", ")" wrapping.
-++%(count)+:: the number of a patch within a patch series. Used only in
-+	`--commit-list-format` in `format-patch`
-++%(total)+:: the total number of patches in a patch series. Used only in
-+	`--commit-list-format` in `format-patch`
- ++%(decorate++`[:<option>,...]`++)++::
- ref names with custom decorations. The `decorate` string may be followed by a
- colon and zero or more comma-separated options. Option values may contain
+diff --git a/builtin/log.c b/builtin/log.c
+index 716ebc2701..997bdd608e 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1376,12 +1376,11 @@ static void generate_commit_list_cover(FILE *cover_file, const char *format,
+ 	struct pretty_print_context ctx = {0};
+ 	struct rev_info rev = REV_INFO_INIT;
+ 
+-	strbuf_init(&commit_line, 0);
+ 	rev.total = n;
+ 	ctx.rev = &rev;
+-	for (int i = n - 1; i >= 0; i--) {
+-		rev.nr = n - i;
+-		repo_format_commit_message(the_repository, list[i], format,
++	for (int i = 1; i <= n; i++) {
++		rev.nr = i;
++		repo_format_commit_message(the_repository, list[n - i], format,
+ 				&commit_line, &ctx);
+ 		fprintf(cover_file, "%s\n", commit_line.buf);
+ 		strbuf_reset(&commit_line);
 -- 
 2.53.0.1118.gaef5881109
 
