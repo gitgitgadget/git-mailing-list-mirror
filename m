@@ -1,166 +1,156 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676A52773E4
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 15:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC962773E4
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 15:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279769; cv=none; b=uIaRoQyzTqbNefmidZEP+HQaowA97KsAe1LXbaJIFIHO5a3cxrjeKljC5zwOxerjTpJfaHFQu98omx88zWQzfYA5qpQjhjtAn+2WxgAsx/8W1kS28EBFCLXVOC7bvAi5qInKU/P4eJCmGVQ/BhPkWL1PxGrtFqMN/kBJoDhaQ9o=
+	t=1774279785; cv=none; b=MHyWfRNZkGLWzIDkV65Dd4IlfXkWIuoeiN1HOr/YuYkG0BWBlyYKLd+5oWxOwzyvIBf+9V9T8vXxssJIzTsoqWbNauyZkT1Q7UptxOjVdoWcRXysskpAIOo6aFamToB7GEYGtyBkEBKMLri5EdS0QwjpdzXNbPlICRYjYUPBvaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279769; c=relaxed/simple;
-	bh=GMBsYyaQeNontPW8Ou5Igan/0xjx5+DruSEbjeFpOhc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Y9kLMUExpJUgcn6doUfcpPFQ5cStJZsXEqgmTec43v0NvF+huC+C8Rclwlih/lTXN2wd1r0//uPG9h+I9g8xnJADeTp0q05LUEDe3cXuUyX5FVV898MNKUF6MEq2hg/qnA+mu99yo/yiBD3SMvo5VqEnM0Eovi2uX0Npw6iRRG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sc0Hip96; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bO+y6bJq; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774279785; c=relaxed/simple;
+	bh=/lvMaiDEpoqnhJrfj4ehEgsLskndqeeWENcLu0aHVys=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OpMvjJiKTzbCNd4CWgOZxxMgD3D9SaHvl+9rayVJJRB+duIV9rEnwlT5EUDffPOZib9t0k4csPEZrfN+mcPPp3vRJuInPVsd4xot1WPxbP9aiRbeZSkm0fL5UsUyrT5V/efTJGTFHV65NEutxxKFvak4+ZadvSijbJM2jIorcQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UqUi1iMT; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sc0Hip96";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bO+y6bJq"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id BA1C0EC0198;
-	Mon, 23 Mar 2026 11:29:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 23 Mar 2026 11:29:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774279767; x=1774366167; bh=noPx9/k3Uq
-	ye7rFvwMF2YFtOZHzoxYdFOieBjUMx0Kk=; b=Sc0Hip96BDfeI4JgCkyKoIjBN1
-	NK1vM7qnU/0C2bNiNlEf1yKvRbNlEk0230Icn3DbKBmL28zaSo0r+uPvfi3JbDXd
-	dIX8uVfgl3nqCHDIZhPQIuG98keC1jRhpYpAs6Q5mQuQ3Ge+U1t0FRTVjAG9bxJe
-	IOK1lcw9at0zBfMxpmum8NNN/ce9U1KkRscoD6x49h2KEVEHqpMEEodFIhzxDb+U
-	qV38v5g9CUjASgaorE0xcOigFd28ZuaED01rCeiUR0LWUHDaGhGzMj1hr/C6Wx9Q
-	dUS15dG0HFXaVXW2TU+laV5XRdhCyOXOa/81Cr2eWr4yaUKgybNHGTW8t8+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774279767; x=1774366167; bh=noPx9/k3Uqye7rFvwMF2YFtOZHzoxYdFOie
-	BjUMx0Kk=; b=bO+y6bJq8Mvo7pepY6Ahnnq9pf/VDdNhoyopN5pny95oEoEWp2B
-	K4yS/V0m+sBQ5ocCYTJdPHoNWAoxSI7Zs2ev9GaxjY8XyfR9vtjXjv872v/QwF/g
-	xVEWiYlGLhLC68QSFPJVb5XVhMjlDhtcxOHf+DfY0/ovYgC+TbA7aWRY9W+wDGsz
-	bjGkjEbTuRVhmUqoLiMQDxA6msrln4AHf+HNR1OxQInI1E77cis02OWk6n0+b0Uu
-	7pdZHx1DAigf9HLUTxR9olRv5CvrmGJz0V4ZlSpdZgJ5/sufg2qSi+SzVkJHd2cY
-	JXaB7T4vke1gSp/Gl/h96n5rRQsEyUUXpmw==
-X-ME-Sender: <xms:V1zBafzr8rRYozIIHtJZFq1BUA-Rc91AoArb9pGEoU_SwbhzU1808g>
-    <xme:V1zBaZjmkF6iBngB-GVNQhq1rV6Rcm9sP45dIdkH5Z7A9WcWHz041OxmMYv08m5yq
-    AN6MJzEhB7QwH7Y4jyDCrc0P0QQBXoo7MlivwOkuahckzr8VESo9Q>
-X-ME-Received: <xmr:V1zBabmaQsJjz4ndi52TwHW3aOZiHW2p_AA586p3qXh_KXJ3w94KNM4w93qeNX5U1qvfkDNdT8zjJA-q1bSUP-xt7dtZl_EyKw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeltdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheprhdrshhiugguhhgrrhht
-    hhdrshhhrhhimhgrlhhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:V1zBafiEmSxE8kF9l5J6nGhKjy0BIEeRiWm5NsD-9EQc9iLqpSQ7jA>
-    <xmx:V1zBaf1BKdc56AIC_33MWHqg6CZvlYz-AZIMLdX1zVXJ7yxo6N3G6A>
-    <xmx:V1zBaYLGYzv5zLIUrkUot4jy2AdWnW44nVxlb9sbxYw2Q4gr7FGJeg>
-    <xmx:V1zBafyshh0egLsxBg4noWqv4W2VVSg0p-ejTsmkRfdu6eDZilvLsg>
-    <xmx:V1zBaUXx9HNz_eBIUpoawxM6f6eTalRUfhx-61HwCLzBFe7YSpC0dRHR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Mar 2026 11:29:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  r.siddharth.shrimali@gmail.com,
-  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 6/6] t5620: test backfill's unknown argument handling
-In-Reply-To: <9699650aa7dc04cf1cdc26803caa8304b29c1662.1774266019.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Mon, 23 Mar 2026
-	11:40:19 +0000")
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
-	<pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
-	<9699650aa7dc04cf1cdc26803caa8304b29c1662.1774266019.git.gitgitgadget@gmail.com>
-Date: Mon, 23 Mar 2026 08:29:25 -0700
-Message-ID: <xmqqzf3y5zu2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqUi1iMT"
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-43a03cb1df9so319947f8f.1
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 08:29:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774279782; x=1774884582; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sgdjg5v4KSWcEectdzvM0DWcUBj3v7yWln/tu9KbPPg=;
+        b=UqUi1iMTF0UgK+9CI0LCMUnZJ1+drDY6l3ANG4um/JI735UV6p8b/dyBptxp3YXtj0
+         8H13vmgyRkyI9+5Zl583d3S73f14qo+/EiZ6/Yb+5Uy3PJZKBLQhyypybPNdaS+BJ4MZ
+         ErIj51C4LUYOkjjHX48U3edrYV78m3ta43a7Rafrrwx+BUEs7/zWii2vTYqjDYM92UfT
+         RlY45OEhX+YJt6TMoh8lks918yv9nBz6jYepy1R04Hre3UN9hwH99OxtiQN4113w1TsQ
+         rEBmVy4N1skuMI6hJha2SqbZLm6ZBsgrj2mcEgvm98XAxVClp6W7fSPl1x/RQN5bQgGj
+         iFdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774279782; x=1774884582;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sgdjg5v4KSWcEectdzvM0DWcUBj3v7yWln/tu9KbPPg=;
+        b=EmLSjW/tQQ8MP4Q3qgYwYLGaHyPWhSwTknsUMmEMpilsWvZ6X1uV1ttH0+A5blN+PE
+         uuzi+y/BAs0rOrdYWbFnXvC7gMRVQ8TTCSzHt9gJpvP6nsSrOCnIXSGjXj6d3K3xOhSN
+         L0u8DZ1BOvNM9rLkOk3JkhaCv7MvVoM0M6HJXnXS6VgNk37W/sIyiYMIqr/tdnNwVgY6
+         KDGKSonIczw2EWBducajWZBF3EVNfSuEzPAUR0YVpYrys1DScGahh+P0GZ5gSOz+o9q3
+         mClr9KMa8GDYOtU4wTv5HS6XJ9JzCFknXpYYxBsqUlmM90a4sofjUPFqNr8/N4bSnnic
+         bliA==
+X-Gm-Message-State: AOJu0Yz6D4RpfA4lwXhhOeH0RPGSQrZEGBkM89e49WRAoEmjiH2hg1Od
+	NDx+NojeQOoVs7WGNxJO8uokYbKh+XUxmyvjbg19UdvcmT5269N+fgiQqL+iAh3PzC4=
+X-Gm-Gg: ATEYQzzHYLXgIDJzxBhy04lOx4V+oV56VJkQ8RQ/h3zU1t5cwVclN+uxt5P3qz16Dt8
+	92ZIVYQw9mS0ICs2uX4pshWNSlzKeuQSaeFvGAe7Lg47T0+eUlpduc+48/TpzQmbc9NREHGj+UW
+	+Z8CkLL46mlJNhnXJjQ26NwbyTjjR0+BkjM1gEzK0i2Sq5z5qQyiDvD+YH5+/JD1Adl0tX/+bOG
+	fzddBJ9OX1FzaaWP8nUNOmBgo42D/7JJm/sKVBSGn7VYSlVTJ8uRFYwuTbGJ9L9/nckEv22QLjf
+	npf1OAjDyvdsBeSWdmWSK2Uo6yamlhJt1/+uy6IrA7hsscyiJGNcKTtFAN6vEq0C4KOsQnF/Xls
+	EQJpewFwNTra380cO2BnEEOO6GjUjqP4QpFJg/No0sB1mek7+XiPHmksUUgnpBeBIx3PcYEKyPd
+	nEDV2sNtc5va4qz8hEO25U1N1LTc4L0fS8D6wPHLqAq15p1phpyZW+3/sUuHZqikrQsBjs2KBj+
+	oBCIFB+rcA4dwav
+X-Received: by 2002:a05:600c:8707:b0:487:338:b4df with SMTP id 5b1f17b1804b1-4870338b5d9mr120494765e9.15.1774279782022;
+        Mon, 23 Mar 2026 08:29:42 -0700 (PDT)
+Received: from macbook.. ([88.130.184.197])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486fe032a55sm551802205e9.7.2026.03.23.08.29.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2026 08:29:41 -0700 (PDT)
+From: Mahi Kassa <mahlet.takassa@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	lucasseikioshiro@gmail.com,
+	jltobler@gmail.com
+Subject: [PATCH] repo: show subcommand-specific help text
+Date: Mon, 23 Mar 2026 16:29:37 +0100
+Message-Id: <20260323152937.257406-1-mahlet.takassa@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Use subcommand-specific usage arrays for "git repo info" and "git repo structure" so that each command shows only its own synopsis in help output.
 
-> From: Derrick Stolee <stolee@gmail.com>
->
-> Before the recent changes to parse rev-list arguments inside of 'git
-> backfill', the builtin would take arbitrary arguments without complaint (and
-> ignore them). This was noticed and a patch was sent [1] which motivates this
-> change to encode this behavior in test.
->
-> [1] https://lore.kernel.org/git/20260321031643.5185-1-r.siddharth.shrimali@gmail.com/
->
-> Reported-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  t/t5620-backfill.sh | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-> index c6f54ee91c..85740f1f13 100755
-> --- a/t/t5620-backfill.sh
-> +++ b/t/t5620-backfill.sh
-> @@ -7,6 +7,14 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  . ./test-lib.sh
->  
-> +test_expect_success 'backfill rejects unexpected arguments' '
-> +	test_must_fail git backfill unexpected-arg 2>err &&
-> +	test_grep "ambiguous argument .*unexpected-arg" err &&
-> +
-> +	test_must_fail git backfill --all --firt-parent unexpected-arg 2>err &&
-> +	test_grep "ambiguous argument .*unexpected-arg" err
-> +'
+Keep the top-level "git repo -h" output unchanged, and add tests to cover the subcommand help behavior.
+---
+ builtin/repo.c            | 15 +++++++++++++--
+ t/t1900-repo-info.sh      |  6 +++++-
+ t/t1901-repo-structure.sh |  5 +++++
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
-Hmph, I would have expected that an earlier --firt-parent on the
-command line would trigger "unknown option" instead.
-
-Having said that, if the code lets the setup_revisions() parse the
-command line, the usual "unless disambiguated with a double-dash
-'--', stop at the first non-revision and take everything as paths
-but for safety all of them must refer to an existing path in the
-working tree" behaviour should trigger, and it is not specific to
-"backfill", and may already be tested centrally (if not, I do not
-object to such a new set of tests).
-
-For any cmd that take revisions and pathspec (e.g., log, rev-list,
-grep) these should hold true:
-
-  $ git $cmd [<options>]... Makefile HEAD
-
-    Without disambiguation the command should say "Ah, Makefile
-    is not a revision, so we will see no more revisions, and
-    everything, including the current one we are looking at, must be
-    an existing path on the working tree", and barfs on HEAD that
-    does not exist as a file/directory.
-
-  $ git $cmd [<options>]... Makefile -- HEAD
-
-    With disambiguation, the command should verify everything before
-    the double-dash to be a rev, and barf that Makefile is not a
-    rev.
-
-  $ git $cmd [<options>]... -- Makefile HEAD
-
-    With disambiguation, the command should take everything after
-    the double-dash to be a pathspec element without barfing.  After
-    all, it may be referring to a path that used to exist in some
-    revision the command will look at.
-
-Thanks.
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 55f9b9095c..5ccc5c401a 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -27,6 +27,17 @@ static const char *const repo_usage[] = {
+ 	NULL
+ };
+ 
++static const char *const repo_info_usage[] = {
++	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
++	"git repo info --keys [--format=(lines|nul) | -z]",
++	NULL
++};
++
++static const char *const repo_structure_usage[] = {
++	"git repo structure [--format=(table|lines|nul) | -z]",
++	NULL
++};
++
+ typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+ 
+ enum output_format {
+@@ -214,7 +225,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+ 		OPT_END()
+ 	};
+ 
+-	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
++	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
+ 
+ 	if (show_keys && (all_keys || argc))
+ 		die(_("--keys cannot be used with a <key> or --all"));
+@@ -879,7 +890,7 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
+ 		OPT_END()
+ 	};
+ 
+-	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
++	argc = parse_options(argc, argv, prefix, options, repo_structure_usage, 0);
+ 	if (argc)
+ 		usage(_("too many arguments"));
+ 
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index a9eb07abe8..e0e79ff167 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -148,5 +148,9 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
+ 	git repo info --keys >actual &&
+ 	test_cmp expect actual
+ '
+-
++test_expect_success 'git repo info -h shows only repo info usage' '
++	test_must_fail git repo info -h >actual &&
++	test_grep "git repo info" actual &&
++	test_grep ! "git repo structure" actual
++'
+ test_done
+diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
+index 98921ce1cb..0f7ec4da10 100755
+--- a/t/t1901-repo-structure.sh
++++ b/t/t1901-repo-structure.sh
+@@ -224,4 +224,9 @@ test_expect_success 'progress meter option' '
+ 	)
+ '
+ 
++test_expect_success 'git repo structure -h shows only repo structure usage' '
++	test_must_fail git repo structure -h >actual &&
++	test_grep "git repo structure" actual &&
++	test_grep ! "git repo info" actual
++'
+ test_done
+-- 
+2.34.1
 
