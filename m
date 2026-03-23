@@ -1,157 +1,95 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E795474F
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 02:33:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774233222; cv=pass; b=dQgLlZXsx2BauQe2W2XnmW0b7wd2lAOyPZH15E79IwkNbrN3If7Eqi7Y/2FwfEucULt7rt56Tzf4izRqSi0gZrMBK2dTt1ImA7aqPPMbs1RSwfbyOeBGWMkj2LgKfHcCW7wlSaPccGk+JJU99dJVBYH+Q3WX4EqKlKtMtIRjeZA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774233222; c=relaxed/simple;
-	bh=FXlGgM2FxsyLjTU8K+dbxj5KFvF/js66Zbn6XgyfVD0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MlZhRciIMBevDn22HzzRpSJfH1iXPnCQ5EQxv/QZJ90m5CeTkS5C2Ad7lgpDoYqjUnFU2nY/OcgIy+HeWZz8uwaoWKtMNf5q8V2tgPvyJ6kehVPS/fQYyzUWYZzLKirJqm3N74Ys+6dTG4m64ZPYraR0J/K3XHBa3JFIa7Kn0hU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RV5rLoQp; arc=pass smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39202C3255
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 05:39:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774244397; cv=none; b=Wv41QNojcNknnIPGjnbq0KCFf6GOdJg0GQnm/cXH0NL6lFn9l3DsFKq6eQxdud+mgIOXagu8tn9hMWsjAQi9EIi3ekwPslBCrvOQ1qleNsCYnEPYtWmbXOEZ2vyph49Uma9tTcPrvnTSycyDPY4UeOy5SxqbUQSuwCyKktvKtV4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774244397; c=relaxed/simple;
+	bh=QVc/qu49VZQ3EcrsE20osmvor+PH8vFT67wfZOIJcVo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iHzAygv0Rztx3A2FNTzHkAMduK/GwkYqX5kfutn+IcqC6xSy3bBuFA2/J/gsre94z108zhhcPAhlcEPKe7X1QrYEQdHSAGqqmPwZg6ZA9v3FoI0RGoDAgIHWbk5Flsiu4MCntqDIAENEuSukpCSHYmmwuxq3saoq0Bauhflxbzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=fsgW4Ot8; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=nk1MACoW; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RV5rLoQp"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-64ad79df972so2835279d50.1
-        for <git@vger.kernel.org>; Sun, 22 Mar 2026 19:33:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774233220; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hnXiCe8sc6P7JEWyYK3fsk2fF72mBHUQvbI3ANzw/hjb/6ToIIfI/ZvoNSVqhm8WWP
-         xQ/86jH/M+q+Pa97HoypgSIx1/WP4h2QVQEo6dlo4dQBbqoXwQ3nTYZVV1pn34908HRI
-         UyemPGgaKRCiQQlhzo6cZhnCInAbKaxrpy3/C99agWvFMxiKDU00/jHAaZe+Sl337+S8
-         dpwKlvf8KH7Hz8BRMGNjWiggV7Rrg3S08WYVDtANe+X4CvD0drdKPWPsJXRTbwD7dIlS
-         RYXnCf7vv1oGZ7OY9Qa45wvCZWu7fxt7ZQggDjRp/RxXwKBlhmq6TGZaYlWAcL9BAxxB
-         wxDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=UBw/N4cDhSjx34sQ2ikdEm+KPZwAiysNsHthGMxtr3w=;
-        fh=03HLbGa0e3psWcJheEf5VUIwRHDfcnEAToDnAmqBNcs=;
-        b=BcIlMD5aFB8EqEL0iyCoGt5dBQwNnb7K3IaHkNZj4FxdlhQQ1TmFg/cO9TqJX9y4Ks
-         RJ9pU/eHmlb8Ril/lypuL5rpk27zwjTC2gsCN4K5UE5gvVM4cq3NaVtImIrfEN+RpFCe
-         Mnrq+d7hXnctV8l2fOar/p6oTFhC2Ctyp570d0CP/I+DZxvsCEqi7SkoJwqpBklHADGR
-         fG0UcX+j1K7mTe/iM3OgcmE4fWGA1fBRPs4km/d6DJXmPLTh9+xWAU0bK8clofQrlrcj
-         keAFckahgz0Al3OViDM86/loKv2py9ioa4X+AnKqm8/JigvCBM59K0mg4Ecpz3Z/f+wj
-         WT8Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774233220; x=1774838020; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UBw/N4cDhSjx34sQ2ikdEm+KPZwAiysNsHthGMxtr3w=;
-        b=RV5rLoQpEBrniF1fEMW05YaubKSb5VCtCIztcq7e4GXOyOHj4TLPTl1pevHCX1UcVO
-         X8YQlm/VcVW+FEzkKpNYlGDvlMtSStdH8XUFmkTFp4U5p+FGMmLbcpJxQXQSpHRmIcPT
-         wqvDu/ezgop4ybUGixPDu82nLIVW9s29/iB86x2xogKYtgeyLOdB/MlYYMNxFiMNWBvw
-         y3UoM8VT9Ao4TCQHU/HUgCCXp4gdX2IzH7me2N6OQ0HaVLjjPNcqbrx9rsbrTYjOZuIG
-         uxnUOdkk3ZVTpx91xhX1VHPvc286OPzskzudHRrTLroIpHQy/miZLgRJqEtJrzbepuf1
-         dtbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774233220; x=1774838020;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UBw/N4cDhSjx34sQ2ikdEm+KPZwAiysNsHthGMxtr3w=;
-        b=RU4QfbMARhSJ/V47grwFdsOwsjDX2ObsVaqXpK0OtBk7RsrubgieSoJWgAFemxgd8T
-         czUUQM0W2l4NdLDGNHwdKnXcxQrAECEVLKxBzLWkJjQV1X2KGH4DagyRkSGJWmF+hKn2
-         MYD/1GzYxhh/H1tBMiHE5uYAtIj8eLmJA+SD7/kkP/taQDcp2xrBZLX1yUPxLqe7I7fp
-         Gs8OAWgpZhAp7vSFA7qdecAEo2clE5Z7U8ZRATvGWVjaYJsISsjVKGt/NjHl/Iq0AYtE
-         LxhrwzsuQyVRD8AY/1msmEqYEU40W6qfGvRpj0Y5XVaTn5GsSVQ+jFjjIFazjnV+tPLv
-         6uQA==
-X-Gm-Message-State: AOJu0Yz1yoOaQJ0tpH1PlJbe9sl6HuwlH+41NNUDjx7Ao1mTTuf3EXmS
-	kcKbVVTQXbFXMXrT6qQn8Nv1jNVgKv2CrCPMC+H9eKfbcvoiny1oBUARM/+aleZ3i4n3cJou/Ml
-	UPKrAccnGuDfwiN9GCK/mZey3SyM0QdA=
-X-Gm-Gg: ATEYQzzo+o6gS5eyWInD/kSuIGaj1kpuN7QhKC/19jqxbWS4CBd32vA/ikme+7YQyvw
-	6CX5jArg7C8T0yX8eZkmhh5ZgjXifbN65Gj8/KUPnNNJyJkNnmTTH5dX09UGEpvI1UZS1VxmO7x
-	tAWGAaocQD/gV73H/Km0Lvmtdm1DzkmJHDb/feCb1cvhClCGnuXqQsmBlvysTL4dlEZbw+htYt9
-	puaEdxuRpmZbDXZRGsWpKj+3sEkUiyhntrrUiVk39N75tzBfFwt9eZvzElOCcDcD8SEHMgKgBOc
-	0ifoMRogtGbPQXVkfnPsJP6rWEb3DC+JJvXGDQO8fml8N1Q8xHNPO8rWQ0gCOi8ludl0Vz9RZOS
-	XuM2WXIyAgP6lNHg+O7F/Vwg=
-X-Received: by 2002:a05:690c:3346:b0:798:244:1fa6 with SMTP id
- 00721157ae682-79a90aa328emr117844197b3.4.1774233220034; Sun, 22 Mar 2026
- 19:33:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="fsgW4Ot8";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="nk1MACoW"
+DKIM-Signature: a=rsa-sha256; b=fsgW4Ot8GMi6A1s05nw9g2jX+6+f2RcbXMgdzzeYWsu+iBHaUqbZttxltuOQ+B47rCVlgiOBsHPZ5qXFJx6GlkEYO30f1LPOQuWR1pahn/C6O6I2pXlNjj9QfadJUhKv+QFMFGcdQ385t84ZdqvTnzib2XKMp1/sW/VDlmh+yH0JYjFiI6EWXw6V8jyZmAqmSYZadWEjbAJp+1CAUwryizzkFp+ZeWdSD9RwouTQNBjHGjLjD936PffgzF8ElLAs0WXRIfpHWTFV/61dw4kpXgHbQpwiYZ6+QJbnLuvTUIY0nZI2IGnGHkPV1MZ8yx2/r/Dj4mpGjzbQhCJKC03Xig==; s=purelymail3; d=malon.dev; v=1; bh=QVc/qu49VZQ3EcrsE20osmvor+PH8vFT67wfZOIJcVo=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=nk1MACoWImKryKTLLUP4GKGfmA7+m4/gU13qq96SGduX6jQMhL9GZ4FvCIIoIQo2/23zhwvrCtD6/G04IgLYI+/jvjHDXu66uj1dNImU0GJdNPPb76KQiT04DOJ4VBM2djXAO5khbEapY8b/k9yc1EqhsaMUCWBhUtqj8XPRAWDbx3V1TQNk2Ops9hpueBLNVrb0pucmmcmaIXHKE18nH6N6wcfPTtQACLtZzbXPJUFOdyz7e6hLupDuew/1XMQ6m5yIBWDp3VAPavBQWyA9w2SjUCNU9GBq5PtuI3iVjMW6zKJtFRFv6g7+0T67Wmyak5fkNjUzarbiWFveuaCp2Q==; s=purelymail3; d=purelymail.com; v=1; bh=QVc/qu49VZQ3EcrsE20osmvor+PH8vFT67wfZOIJcVo=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -492045318;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 23 Mar 2026 05:39:48 +0000 (UTC)
+Message-ID: <9818e3ec-838a-4eef-8436-a395f2970d42@malon.dev>
+Date: Mon, 23 Mar 2026 13:39:44 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
- <20260322203801.637769-1-pabloosabaterr@gmail.com> <xmqqeclb7byr.fsf@gitster.g>
-In-Reply-To: <xmqqeclb7byr.fsf@gitster.g>
-From: Pablo <pabloosabaterr@gmail.com>
-Date: Mon, 23 Mar 2026 03:33:25 +0100
-X-Gm-Features: AQROBzBQxKDgIHom3_TXQUxgj1XogP70JZqG8h-_I72bTwkHxieGCQ-_nqLTDJ4
-Message-ID: <CAN5EUNQ8rnBAezRLgATwotnw4EC--EAa3p+52nWb4KCtB7uySQ@mail.gmail.com>
-Subject: Re: [GSoC PATCH WIP RFC v3 1/3] graph: add --graph-lane-limit option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com, 
-	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
-	chandrapratap3519@gmail.com, j6t@kdbg.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 8/8] diff-highlight: fetch all config with one process
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Scott Baker <scott@perturb.org>
+References: <20260320004138.GA3653623@coredump.intra.peff.net>
+ <20260320004856.GH3654226@coredump.intra.peff.net>
+ <9d3633e4-6413-4932-a29d-e0347546ede8@malon.dev>
+ <20260322204509.GA2047044@coredump.intra.peff.net>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <20260322204509.GA2047044@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-Junio C Hamano (<gitster@pobox.com>) writes:
+On 3/23/26 04:45, Jeff King wrote:
 
-> If you have active branches, whether they are merged to some very
-> small number of integration branches or they are left updating
-> without getting merged for a long time, you'd end up getting very
-> wide output from "log --all --graph"?  Or is this a problem only
-> when these active branches are merged and having to show merge
-> commits create the need for wider output?  I cannot quite see which
-> from the above description.
+> I noticed it, too, but didn't have a better name (in fact they are of
+> the same type, just two different contexts). Shadowing seemed less bad
+> to me than using a mis-matched name.=20
 
-The graph gets wide based on the branches active at the same time,
-each one occupies two columns, merges don't create new lanes.
-I'll improve the problem description.
+Fair enough! Let's leave it as it is ;)
 
-> The implementation detail that you happened to choose a C
-> proprocessor macro instead of hardcoded constatnt to write the lower
-> limit is not something readers of the log message needs to know.
-> They can see that in the "log -p" output easily.
->
-> What is more helpful for readers to know is what you mean by
-> "graph-lane", what you are counting, and why you want its lower
-> limit to 1 (instead of 0 or 2).  These reasoning behind the design
-> is much more important to record to help future developers who want
-> to fix bugs in this code or who want to extend the feature this code
-> adds, without violating the underlying assumption and design goals
-> of the original author (i.e., you).
+> The length() of undef is also undef (and documented in "perldoc -f
+> length"). But either way, length($s) will be false, and we will return
+> $default, not $s.
+>=20
+> I don't get any warning on perl 5.40.1. Are you seeing one on a
+> different version?
 
-Ok, I'll focus more on why, rather than how.
-the minimum is set to 1 to have at least 1 visible lane, even though it could
-accept 0 it's the same as not using this option, 0 it's treated as no limit
-and I found it better to not give the users the option to place it
-because no other option
-seems to behave like this, so I thought the best would be to force the
-input to be >= 1 to be valid.
-in v4 I'll make sure that this is clear for others.
+It's mainly because I saw that you changed the required version earlier=EF=
+=BC=9A
 
-> This is "unsigned int"; don't we want the other places (like the
-> on-stack local variable handle_revision_opt() uses to parse the
-> value from the command line) and the parameter used in
-> graph_needs_truncation() helper function all consistently use the
-> same type?
+-require v5.26;
++require v5.008;
 
-I saw that other options like max_count, min/max_parents use int instead
-of unsigned int, so yes the most consistent would be to have it as
-int also, but it would make no sense to have -1 visible lanes. I thought
-it would be a good idea to keep it explicit that it can't be negative.
-this examples, max_count, etc were the closest examples I saw, but
-parse_count does return an int so i can't cast it to unsigned without
-checking if its neg that's why this
+I clearly remember that in older versions of Perl, the length function=20
+behaved differently than it does now.
 
-> int max_lanes = parse_count(optarg);
-> if (max_lanes < MINIMUM_GRAPH_COLUMNS)
->         die(_("minimum lanes is %d, cannot be set to %d"),
->                   MINIMUM_GRAPH_COLUMNS, max_lanes);
-> revs->graph_max_lanes = max_lanes;
+=09use strict;
+=09use warnings FATAL =3D> 'uninitialized';
 
-where it checks if it's < 1, now max_lanes has to be > 1 and it fits in an
-unsigned int. But i do understand to keep the consistency and
-the coding guidelines, i'll make it an int.
+=09my $x;
+=09print "length =3D ", length($x), "\n";
 
-Thanks for the feedback!
+In 5.8.8 the output is:
+
+=09Use of uninitialized value in length at test.pl line 5.
+
+And in 5.38.2 the output is:
+
+=09Use of uninitialized value in print at test.pl line 5. length =3D
+=09
+In the first case, the code will throw an error and exit. Although I=20
+haven't compiled this patch under version 5.8.8 yet, I suspect there=20
+will be issues.
+>=20
+> -Peff
+
+Regards, Yuchen
+
