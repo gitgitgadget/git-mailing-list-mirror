@@ -1,158 +1,109 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3E03BF678
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 16:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842353C2797
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 17:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774285083; cv=none; b=FvNbq9Ve/KK748SXJfN96SeWOskJcVYUfy6f7mMVwSUsjvcJE/mdUGTo8H8eegwbl6XolrXJ1Ec4hyd7MRz1FGA3PRahJ0z1+JbE1yc3bgoRcD4fSp5jR1Cjhowh54lAxH4nvuUnI3KIEv6AOoMbnU5+9J/P6Ovk8XsE/oq+mWc=
+	t=1774285666; cv=none; b=ZTh0/TSRfoMEIu1XF7wC/HKhr8VIg6qOqXynlxp2sZ+tNxsG+M77hhjvkR5iNlBnzJ6s0CZfWGlAWtgTwHlp3D5siIWYdLYCXa+9wVcXLkKHHaTQ5DtkBFVBWQxuxZ9X0Vl4BPeHd+yepTaxPi9Eu8Bmg9W4TLFhFRmrgsH7R4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774285083; c=relaxed/simple;
-	bh=Fnjshu5FfuB2b34uqh6iYzhGBi2aSPdK211ZkWw9uJs=;
+	s=arc-20240116; t=1774285666; c=relaxed/simple;
+	bh=im5uIjZ5LvbDY4lo5WJrKhty4IFbJZVvF6aYIKbqlP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gF9+CcuN5QqxBIAsba18aMtIHSmbOel46LE3/d26csNSfHRjAZSxe5uPhdYAMV9AGb+v2QQzdo41sDqxGwLRWMfQ3AvovFbHKVQl2LMpeaCrEYz8Qewb3JO40rzdgFRo1jSIx1n6Fqy0Nj+30jw02P8wRf0ZoYTTuU/7FP2qHl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=OUhTHes+; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	 MIME-Version:Content-Type; b=AoiVfPtU6dH2WtAU4axcpBijlxRNySvs2Gx3N2W0gk0wHrVngc6HZMHWJATZqqJLWumTyajhaAb6Wsy3KDJXEy79tYfngAlAGs3vBD1iVRx8/WAZrhBtDHtS1uobTo7nbE5zHYtZUCyM6fQLHGhSQfBAv52SWuwqg9BnYJdgK8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N6ZpLbyW; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="OUhTHes+"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1774285078;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RDshCzZvnV/8yD8aYPEDESnv+1SQebKwzIvCBVc9iRY=;
-	b=OUhTHes+H5gaenZ20nbYHpk0f+6e2IlGPFfdhCX4Oe8u9KEyT7zictCzrG7eav8/rJqJ6F
-	gZ8RcHlCcmkRV5CANDqwO1UdoAXJnj/aWMlEvdxcFZnMXct0IjauzET21eLNNNnmiA7npf
-	bwZm2k8uHyU3JHtxr0GOcsQRY63juEBhEtNCVJ/CdwfqrnJ4YjvOW4CskXRgcmUjrkQKxj
-	qWv3C84m1taJdqTo9rcITX5ic4O9k8oAhcxe9luOhncYkS1jU9/VIS9izhjKttc1ZjYRCJ
-	iHsqIijROBK7dr1OyQOY95cE6PVV6iKXyswNyQt7gF01X/AqCNMg4OCduV5iEw==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N6ZpLbyW"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82bae83318bso1533385b3a.2
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 10:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774285665; x=1774890465; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ky1NTye1giroj69HQBmsUjQ6Vj6F+n0dOX0M/rPB0EM=;
+        b=N6ZpLbyWOMoR6uV84XCRCRumqZll9aKMBnm1dvzLGGjQY6G4r7bf62LUHQ6snbtr23
+         BC3Igxi53QMBmVeqQv8NdrrogMRex4o8dnkJRagys7TCW49Phqn09pZwfBdyllTjPNgb
+         iYpmZYKprJAAVSj4v6ngB4uuv7odAVPPIQppSkhpQGYJT2s+SEtCB7s7zuG1Il1fbfeP
+         PmVyiizENbRoqKBq/Oq5NDYilTGgACCAv8bqsFAqRTZZZSUXUSficz9KhMxKN7tyPhtw
+         RQpj94xN0XGHE4I6tcdp+1rh80cTy+Jgn4nbYZCVIMn7LvWhkph6EnTu4xDS5hu//KbQ
+         Wpsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774285665; x=1774890465;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Ky1NTye1giroj69HQBmsUjQ6Vj6F+n0dOX0M/rPB0EM=;
+        b=UCD7t/ho5oClDS3wzzIxu9hTIueMQBMX4cGF56a8XqX01yoOoR+hsXBYvHJHrH89w/
+         yicIMh2Rw3rivivE9vgxJ3+fNCO+oEYDpW6pu7wmZnlS7cLI77y/qKp9Y89YbjpVHJ2x
+         GE4/JGeMWWCIRi/m30CnZKeGIZk1ZvImAQA/6atMLiS4yKIpxVa/RY8H+aXh9Yr0uPwT
+         k6RNKEb7uhw+jCcoGoKBrgesBla2Qy42dELZChJeuyAIzdHqTeoMoUSasoKymSgLgfSx
+         nnnszuDozfKglEgUoEnaVg7/mqczIx5xVCuG/Xc1v/IErjOalI1rAo47aHMbF43friWZ
+         VWlw==
+X-Gm-Message-State: AOJu0YwN++xkJVz4na6ZmKj2ZL0LLsUJw+Wjc9Qbp3fKrJPKSqdm+mNh
+	E7MworLObf7oRNRVlyjVrNLWgr9+Ng4cDS+03XJiIgT0nozhayVbxtU7uzBwjg==
+X-Gm-Gg: ATEYQzzi6LnRHgn2sBPUOORTw7sWyvBprlqU116JMl8t/HJkVnB9bFyTdoEP5Yr+sLc
+	8UI40qTeyF0wQ1nGLJym2Gmmdo9C1Ul8EoM4JfjSHj5mmuVDPd8Gz1gHhqdTVliXMWllJPsITF2
+	OMdTLJoZzzG3YfNj7vg58yBUUUKTS55S9bq8UcZLMZWkoOlx0m/t+qMc4sJ4PyxJBEwAx51Zudi
+	Z4X/1uXpneR8Ky99l0AB03zXkcL3c4R2nnUP4QOgR+t8vuF9p9VDp1F9sbcBO9L1UWU6JHPH4MP
+	ID6Rvke2kXFh4ItPXMXm8Ep4jr2Oyd+eW9NN945kkLzzcQxTAdtv22mc41UBWWMaxUGpQla3q0X
+	Z5c9lADLECQlBGCaXzDm71hNm8Of0f4LBq/sz1WDMfZIm7Nj1uagwMin7IrxDqcxJpJZFwUy+E0
+	9u6VSKZ38cZveA9Ju0pjvRwHyzu6h+SlqQgJfmU7slpQ==
+X-Received: by 2002:a05:6a00:1d0f:b0:828:d9a1:c604 with SMTP id d2e1a72fcca58-82a8c237a8bmr11137192b3a.12.1774285664599;
+        Mon, 23 Mar 2026 10:07:44 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:88eb:4aec:ba2b:bc5:2170:ca7b])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b03bc66b3sm10625817b3a.21.2026.03.23.10.07.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2026 10:07:44 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v3 7/8] format-patch: add preset for --commit-list-format
-Date: Mon, 23 Mar 2026 17:57:34 +0100
-Message-ID: <bdd8f1fb579af60b2c018f463e91c90859bb2daf.1774284699.git.mroik@delayed.space>
-In-Reply-To: <cover.1774284699.git.mroik@delayed.space>
-References: <cover.1773959395.git.mroik@delayed.space> <cover.1774284699.git.mroik@delayed.space>
+Cc: phillip.wood@dunelm.org.uk,
+	ps@pks.im
+Subject: Re: [PATCH v2 1/3] worktree: remove "the_repository" from is_current_worktree()
+Date: Mon, 23 Mar 2026 22:35:32 +0530
+Message-ID: <20260323170650.938396-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <532616a4-d410-4a38-8038-1fd22e39217f@gmail.com>
+References: <532616a4-d410-4a38-8038-1fd22e39217f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4612; i=mroik@delayed.space; h=from:subject:message-id; bh=Fnjshu5FfuB2b34uqh6iYzhGBi2aSPdK211ZkWw9uJs=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpwXD0KpxVAIbY8ZRi6LR3M95/K16092uJ5i1LU y8VTnpiJLiJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCacFw9AAKCRBIeX6hnBm+ 0cj8D/9Gr5iCU1+Mtz4AJa1FtRFovhtJaldN0oWxU5DOTMALJDQ4w54fYCj3/o1uH6OaXBCf8Z/ +JaU6eZthSMsEEO3bUv5PxY04nMkrtuFsygVkmXVIKv37IBJXRVRjXCCBbI4ed6TKgN79SjsxSM UphEwb8tof7xPiyl9D6Vr08mSjZw19T6gI9XzL8udT2ND7GJRdAPWtafPpO28k+8idzKHn9XnQX jQ7icf7wnAqBtt7uy3CqxTntzHR13b8ukOcIszuSEu4yTIxHaRaOeZOuXR0tMmHkQcAoJQN8Edf WUirJWtTXRqrStNzgwyXZyWEFqME+RcsHjDIXUXY1esL4SNgwnaEmIHdbRD3nX+V+9bn/oYyr6F TO71xXVxIA51JN2oze8P/SbuLFew3k1mkrceVHU96OO687JbELng1HykkYBCR5PjksS1ZCGMqXj ULTJLPPDpmPuwabj/zx0kqm+RHzJkdPy9ajLV31sP2WXPKwWmiOFOQ3kixj/CpDHPQdXdeF3a1w Eu+snHW2KJ5U2qTQner5aTZr47wnK4nhPfn1lCPK7k2/quBYEOcPh5yRfv+acxBK6VxmCw0rW5V 2kKjEXhbI/GRb694VZpW917A8aOqPnOwh14KDoxdESiOtOLjdgmKpMYSl+H4wV+wHc5ItVZP5ZU peJv20sWI
- WhZXzQ==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
 
-"git format-patch --commit-list-format" enables the user to make their
-own format for the commit list in the cover letter. It would be nice to
-have a ready to use format to replace shortlog.
+> On 23/03/2026 09:41, Shreyansh Paliwal wrote:
+> >
+> > This may be slightly out of scope for this series. My understanding so far
+> > has been that originally wt == NULL is used to represent the 'current worktree',
+> > which eventually meant following the process-wide state (the_repository).
+> > With the ongoing multi-repository work, the meaning is being changed to be
+> > interpreted as 'the worktree associated with the repository that we are working in'.
+> > However, in path.c there are some callers of repo_git_pathv() passing wt as 'NULL',
+> > I know that there is not involvement of the_repository state but it would be create
+> > less confusion if the semantics of worktrees are same everywhere. So if we replace
+> > those NULL callers with the current worktree and update the checks of (!wt) to
+> > (is_current_worktree(wt)), some tests are failing mostly related to refs of linked
+> > worktrees, and I think the error is originating from this,
+> >
+> >          if (!wt)
+> >                  adjust_git_path(repo, buf, gitdir_len);
+> >
+> > So I am a bit confused to whether wt being NULL here could mean something else
+> > behaviour wise ?
+>
+> That line comes from 543107333b3 (path: worktree_git_path() should not
+> use file relocation, 2017-06-22) which explains why we don't adjust the
+> patch when wt is non-NULL. worktree_git_path() is called from
+> builtin/fsck.c in a loop over all worktrees so changing 'if (!wt)' 'if
+> (!wt->is_current)' will change the behavior for the current worktree.
+> While it might be nice to clean this up in the future, it is an internal
+> helper function so I'm less worried it than if it were a public function.
 
-Teach make_cover_letter() the "modern" format preset.
-This new format is the same as: "log:[%(count)/%(total)] %s".
-
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- Documentation/config/format.adoc    |  2 +-
- Documentation/git-format-patch.adoc |  4 ++--
- builtin/log.c                       |  3 +++
- t/t4014-format-patch.sh             | 20 +++++++++++++++-----
- 4 files changed, 21 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/config/format.adoc b/Documentation/config/format.adoc
-index ea5ec5df7a..ef1ed1d250 100644
---- a/Documentation/config/format.adoc
-+++ b/Documentation/config/format.adoc
-@@ -104,7 +104,7 @@ format.coverLetter::
- format.commitListFormat::
- 	When the `--cover-letter-format` option is not given, `format-patch`
- 	uses the value of this variable to decide how to format the title of
--	each commit. Default to `shortlog`.
-+	each commit. Defaults to `shortlog`.
- 
- format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index 45ca72e670..55cc680685 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -325,8 +325,8 @@ feeding the result to `git send-email`.
- 
- --commit-list-format=<format-spec>::
- 	Specify the format in which to generate the commit list of the patch
--	series. The accepted values for format-spec are "shortlog" or a format
--	string prefixed with `log:`.
-+	series. The accepted values for format-spec are `shortlog`, `modern` or a
-+	format string prefixed with `log:`.
- 	e.g. `log: %s (%an)`
- 	If not given, defaults to the `format.commitListFormat` configuration
- 	variable.
-diff --git a/builtin/log.c b/builtin/log.c
-index d1765ce4ad..c6cf04350a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1445,6 +1445,9 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 		generate_commit_list_cover(rev->diffopt.file, format, list, nr);
- 	else if (!strcmp(format, "shortlog"))
- 		generate_shortlog_cover_letter(&log, rev, list, nr);
-+	else if (!strcmp(format, "modern"))
-+		generate_commit_list_cover(rev->diffopt.file, "[%(count)/%(total)] %s",
-+					   list, nr);
- 	else
- 		die(_("'%s' is not a valid format string"), format);
- 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index ca37f40a6a..7571cc582b 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -392,18 +392,17 @@ test_expect_success 'cover letter with subject, author and count' '
- 	test_grep "^\[1/1\] This is a subject (A U Thor)$" patches/0000-cover-letter.patch
- '
- 
--test_expect_success 'cover letter with author and count' '
-+test_expect_success 'cover letter modern format' '
- 	test_when_finished "git reset --hard HEAD~1" &&
- 	test_when_finished "rm -rf patches test_file" &&
- 	touch test_file &&
- 	git add test_file &&
- 	git commit -m "This is a subject" &&
--	git format-patch --commit-list-format="log:[%(count)/%(total)] %an" \
--	-o patches HEAD~1 &&
--	test_grep "^\[1/1\] A U Thor$" patches/0000-cover-letter.patch
-+	git format-patch --commit-list-format="modern" -o patches HEAD~1 &&
-+	test_grep "^\[1/1\] This is a subject$" patches/0000-cover-letter.patch
- '
- 
--test_expect_success 'cover letter shortlog' '
-+test_expect_success 'cover letter shortlog format' '
- 	test_when_finished "git reset --hard HEAD~1" &&
- 	test_when_finished "rm -rf expect patches result test_file" &&
- 	cat >expect <<-"EOF" &&
-@@ -451,6 +450,17 @@ test_expect_success 'cover letter config with count and author' '
- 	test_line_count = 2 result
- '
- 
-+test_expect_success 'cover letter config commitlistformat set to modern' '
-+	test_when_finished "rm -rf patches result" &&
-+	test_when_finished "git config unset format.coverletter" &&
-+	test_when_finished "git config unset format.commitlistformat" &&
-+	git config set format.coverletter true &&
-+	git config set format.commitlistformat modern &&
-+	git format-patch -o patches HEAD~2 &&
-+	grep -E "^[[[:digit:]]+/[[:digit:]]+] .*$" patches/0000-cover-letter.patch >result &&
-+	test_line_count = 2 result
-+'
-+
- test_expect_success 'cover letter config commitlistformat set to shortlog' '
- 	test_when_finished "rm -rf patches result" &&
- 	test_when_finished "git config unset format.coverletter" &&
--- 
-2.53.0.1118.gaef5881109
-
+Hmm, I see. That would end up calling adjust_git_path() for the current worktree
+in that list of worktrees, which wasn’t happening before, that makes sense.
+Thanks.
