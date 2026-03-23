@@ -1,31 +1,66 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39202C3255
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 05:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2112AD4B
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 05:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774244397; cv=none; b=Wv41QNojcNknnIPGjnbq0KCFf6GOdJg0GQnm/cXH0NL6lFn9l3DsFKq6eQxdud+mgIOXagu8tn9hMWsjAQi9EIi3ekwPslBCrvOQ1qleNsCYnEPYtWmbXOEZ2vyph49Uma9tTcPrvnTSycyDPY4UeOy5SxqbUQSuwCyKktvKtV4=
+	t=1774244936; cv=none; b=h+CTu/bvzbByv71Jd40kcuR3YoKq17rATxD1NoH0cC1jZ3af25DHlzgtF/KYhumxo2CVWgbMKtZbCLJJ3ArrWtJOEGrLwyelhtJ17e+LVKqxevFJ0QUR/LcLsT8H9hsAOePSTa5DPDxRwLpF8gP7OqBLKQ1w7UqqotqH6913ztE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774244397; c=relaxed/simple;
-	bh=QVc/qu49VZQ3EcrsE20osmvor+PH8vFT67wfZOIJcVo=;
+	s=arc-20240116; t=1774244936; c=relaxed/simple;
+	bh=qgFz80LiGfzEH/Bk63Jse/wij71CAL3qSuI1CJJHFHE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iHzAygv0Rztx3A2FNTzHkAMduK/GwkYqX5kfutn+IcqC6xSy3bBuFA2/J/gsre94z108zhhcPAhlcEPKe7X1QrYEQdHSAGqqmPwZg6ZA9v3FoI0RGoDAgIHWbk5Flsiu4MCntqDIAENEuSukpCSHYmmwuxq3saoq0Bauhflxbzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=fsgW4Ot8; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=nk1MACoW; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	 In-Reply-To:Content-Type; b=TEjRGSKqd5AkT269bHUhXdO6u24LjgYKuN5hGIrzdmMzCUhZKDPffHCZm1SvgB8+O+WGs2oUcil82A+i5aIJpYB7ePjhdMo2EgsEBXvXP3+D9j7vXbQhgXTQUnyA5p5xAy3rVmI+Pv8RGBvSbRpH/2Hnj0qEMTBZKITNqmD2u5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lvl9Jc/e; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="fsgW4Ot8";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="nk1MACoW"
-DKIM-Signature: a=rsa-sha256; b=fsgW4Ot8GMi6A1s05nw9g2jX+6+f2RcbXMgdzzeYWsu+iBHaUqbZttxltuOQ+B47rCVlgiOBsHPZ5qXFJx6GlkEYO30f1LPOQuWR1pahn/C6O6I2pXlNjj9QfadJUhKv+QFMFGcdQ385t84ZdqvTnzib2XKMp1/sW/VDlmh+yH0JYjFiI6EWXw6V8jyZmAqmSYZadWEjbAJp+1CAUwryizzkFp+ZeWdSD9RwouTQNBjHGjLjD936PffgzF8ElLAs0WXRIfpHWTFV/61dw4kpXgHbQpwiYZ6+QJbnLuvTUIY0nZI2IGnGHkPV1MZ8yx2/r/Dj4mpGjzbQhCJKC03Xig==; s=purelymail3; d=malon.dev; v=1; bh=QVc/qu49VZQ3EcrsE20osmvor+PH8vFT67wfZOIJcVo=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=nk1MACoWImKryKTLLUP4GKGfmA7+m4/gU13qq96SGduX6jQMhL9GZ4FvCIIoIQo2/23zhwvrCtD6/G04IgLYI+/jvjHDXu66uj1dNImU0GJdNPPb76KQiT04DOJ4VBM2djXAO5khbEapY8b/k9yc1EqhsaMUCWBhUtqj8XPRAWDbx3V1TQNk2Ops9hpueBLNVrb0pucmmcmaIXHKE18nH6N6wcfPTtQACLtZzbXPJUFOdyz7e6hLupDuew/1XMQ6m5yIBWDp3VAPavBQWyA9w2SjUCNU9GBq5PtuI3iVjMW6zKJtFRFv6g7+0T67Wmyak5fkNjUzarbiWFveuaCp2Q==; s=purelymail3; d=purelymail.com; v=1; bh=QVc/qu49VZQ3EcrsE20osmvor+PH8vFT67wfZOIJcVo=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -492045318;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 23 Mar 2026 05:39:48 +0000 (UTC)
-Message-ID: <9818e3ec-838a-4eef-8436-a395f2970d42@malon.dev>
-Date: Mon, 23 Mar 2026 13:39:44 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lvl9Jc/e"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2b05930696cso3276955ad.0
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 22:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774244934; x=1774849734; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nyOY3njC7uZiMbCRkdHukN4YECXHNWPLKNwV2VAMKNI=;
+        b=Lvl9Jc/eq9R7IOkBiW0ETUqZRbhh6nwySib98F+UDT9bcsPqSMYQlmnbugusXiGx7A
+         2Tu32EiD9xqN9kcxWXwRDouI9OzSlCxEzydMX2z/5B4TwVpopakj8dJO0UTIdR60iI3/
+         YS0qhwwHPBIxzTZh73fhUP+/NOvFNN/oe/V/sBS6oLrwbFuuaNfYBpQch5M5tvnv//Fj
+         chp9qFxlKVPGHrHlRhwRNt27BFXVIsED6S1qW9AR5BHDLJKcSi7WzktTs+IRck5hEYbp
+         RFc9kaQdPuB/3ubnzZMQ+l2kW/kA0oYe3YX7tqJ8sfRJhjVliADu1bjysyRGWgNIyUlX
+         WxJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774244934; x=1774849734;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nyOY3njC7uZiMbCRkdHukN4YECXHNWPLKNwV2VAMKNI=;
+        b=b/b9S3viUjDyyP0owooRMZRTe69GAlpJvVxVEFKwVTYZQbwMyBJCNTKTeGOwlZoN+L
+         VgC8NcgP1VDJjY2OS38s7tIo1iW6awsfbXwjiSNNBHvgRqwgYF1bHoSkPF2/tXs7PJvf
+         qoucxOkISegAzHPIx1ri9xWiFJz2V+RrJiXa1tpb/4HoXukNskWgkVYrBVZIT6iqLIBK
+         /CfxDjYjaY/66D8W85tWEWXZPcu9cqgx20c+nvpcoA8j99JiJtkqk4iDWa1k7UanC5bw
+         qmC6uaIHpKMkEq5BaEb/XtFa3xz/r2uAL4IbAIsf0kiX0/nrQnETzW5NtWZrBVIjbxK8
+         2UKA==
+X-Gm-Message-State: AOJu0YzmoITiZDunQ3XkdG/TWYpGu0k8dWDuYaP3HuAoUXfL5pq6sAe4
+	r3C3/Lgt2udlhxRfTsVmyYsh8B5nQGRzYxbgZuylRl1NHKsYtA0vl2pCVuYK5Ew4
+X-Gm-Gg: ATEYQzyrZe49OFwt9Z7pVyGvl552MkFfl8vFaBmlM6P5EqkV8fm2r98wBN1aRsl5pPU
+	WZ2rNsdqZ43pHEbXF5B9tiNiFIl9NfXpT3e9VALTdr47kY7gbUvDVnoI7fGiEph14yY6bJY0VAG
+	iiKPwqKBBzxaOce+6f+N4xwP6aZvCvykYfrAGkMtoVQeByN9Y5xPQVw2gtFgpQBWOkU9bQteMEB
+	Nfs2O1p1jN32ailNwIMN/geFEUKGoYFxE8fS/oeAt71Ym8mzR5ILg+pZyr+BW2qpGA11o2RQwUU
+	hbyREB1i8HUnPRX38qk9bn+cYOrwW8xFTTwSn5A8Yv0ShcPKQ0OfMeP6b5oCxVmDAL6CjKAjh8p
+	AwbLzEqkbh+h+sHo56sowmk3WxN8DkaDQajFr5c4goyz6g4dXf3AbfIRiSnT+rnOnePlLG5HKpL
+	zZi/AqMhCEo2qN4x7DaZM/t6F5N6bPd09K93N9ZSJSlFzdLDks1+RoT/AOXZ1izBpFMuqczSxTK
+	qO85ciXfc2Yb1s1EDF3NA==
+X-Received: by 2002:a17:90b:4c12:b0:35b:e69f:847 with SMTP id 98e67ed59e1d1-35be69f0922mr2876803a91.8.1774244934088;
+        Sun, 22 Mar 2026 22:48:54 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bd364ef9fsm2931014a91.9.2026.03.22.22.48.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Mar 2026 22:48:53 -0700 (PDT)
+Message-ID: <b1064c6b-21df-4ea1-b753-549e0ca1f346@gmail.com>
+Date: Mon, 23 Mar 2026 13:48:49 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -33,63 +68,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] diff-highlight: fetch all config with one process
+Subject: Re: [PATCH 5/8] diff-highlight: use test_decode_color in tests
+Content-Language: en-US
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Scott Baker <scott@perturb.org>
 References: <20260320004138.GA3653623@coredump.intra.peff.net>
- <20260320004856.GH3654226@coredump.intra.peff.net>
- <9d3633e4-6413-4932-a29d-e0347546ede8@malon.dev>
- <20260322204509.GA2047044@coredump.intra.peff.net>
-Content-Language: en-US
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <20260322204509.GA2047044@coredump.intra.peff.net>
+ <20260320004436.GE3654226@coredump.intra.peff.net>
+ <b992e118-f948-4145-8d77-96f00b497f99@gmail.com>
+ <20260322204750.GB2047044@coredump.intra.peff.net>
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260322204750.GB2047044@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Transfer-Encoding: 8bit
 
-On 3/23/26 04:45, Jeff King wrote:
-
-> I noticed it, too, but didn't have a better name (in fact they are of
-> the same type, just two different contexts). Shadowing seemed less bad
-> to me than using a mis-matched name.=20
-
-Fair enough! Let's leave it as it is ;)
-
-> The length() of undef is also undef (and documented in "perldoc -f
-> length"). But either way, length($s) will be false, and we will return
-> $default, not $s.
->=20
-> I don't get any warning on perl 5.40.1. Are you seeing one on a
-> different version?
-
-It's mainly because I saw that you changed the required version earlier=EF=
-=BC=9A
-
--require v5.26;
-+require v5.008;
-
-I clearly remember that in older versions of Perl, the length function=20
-behaved differently than it does now.
-
-=09use strict;
-=09use warnings FATAL =3D> 'uninitialized';
-
-=09my $x;
-=09print "length =3D ", length($x), "\n";
-
-In 5.8.8 the output is:
-
-=09Use of uninitialized value in length at test.pl line 5.
-
-And in 5.38.2 the output is:
-
-=09Use of uninitialized value in print at test.pl line 5. length =3D
-=09
-In the first case, the code will throw an error and exit. Although I=20
-haven't compiled this patch under version 5.8.8 yet, I suspect there=20
-will be issues.
->=20
+On 3/23/26 04:47, Jeff King wrote:
+> On Mon, Mar 23, 2026 at 01:24:00AM +0800, Tian Yuchen wrote:
+> 
+>>> @@ -42,9 +39,9 @@ dh_test () {
+>>>    	} >/dev/null &&
+>>>    	"$DIFF_HIGHLIGHT" <diff.raw >diff.hi &&
+>>> -	test_strip_patch_header <diff.hi >diff.act
+>>> +	test_strip_patch_header <diff.hi | test_decode_color >diff.act
+>>
+>> Although this is just simple text filtering and leaving it as is wouldn’t
+>> cause any problems IMO, why not go ahead and add the && while you’re at it?
+> 
+> The bug is in an earlier commit (patch 3), which breaks apart the pipe
+> but doesn't add the necessary &&. And it's more than just text
+> filtering; it breaks the &&-chain, so we miss the exit code of
+> $DIFF_HIGHLIGHT (which was the whole point of patch 3).
+> 
+> chainlint doesn't find it because we're in a helper function, not
+> directinly in a test snippet.
+> 
+> I'll send a revised series to fix it, but...
+> 
+>> I've noticed that there are several missing &&.
+> 
+> Where else do you see?
+> 
+> Or do you mean that we should not pipe text filtering commands? There
+> I'd disagree. We are not likely to see a failure from 'sed', and if we
+> do, the fact that the output does not match would catch it. And the cost
+> of breaking every command down without pipes means having to manage lots
+> of intermediate files.
+> 
 > -Peff
 
-Regards, Yuchen
+Oh, I see.
 
+To be honest, I didn't think about it in that much detail. I just 
+noticed this tiny issue and wanted to take the opportunity to remind you 
+to check other parts as well. I'm not saying we should remove those pipe 
+commands :P
+
+Thanks for the explanation about chainlint.
+
+Regards, Yuchen
