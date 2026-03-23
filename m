@@ -1,110 +1,170 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7354370D68
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 08:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915213859CE
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 09:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774255748; cv=none; b=occNc8q40FnEDYKlB9lMwB0YDv8G0hQ52XYt3OzZfZVZCxkoeCc1ijoeKAmYbzeMRDE6wtqAmelMODUc9pzbSCSoGMS0VfDjZtchBEHvTIpShLgL9qKglMVjTrO0CjhnxtBHGXa6ES+/oOHy/P/rolbXIkFGejjJZvzOybJt6BE=
+	t=1774259034; cv=none; b=ZygTvhSehodDjNdyHUtGLDTkMz5wZ8hE25ngKIN3K5IrjM/mNnDV4GMO2S+OiYoWjiUbje8dQnXygLtg4kn82ouiUenUkP3JxXFEuov32NOnr6Td/P6jqezgXTx4o8Xjec/OpTJ0Bfa9ROYAuDUfwngbUE/OWevi+jPfohamrSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774255748; c=relaxed/simple;
-	bh=1aXf2wTUKaM2pk7iQgVcHPVtj9FjtkOryw43KtTcog0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4H+GK5ysS7r4qLeHMh5lzhA85joTdU/9yeIilgVViE5ZFnQcgjMro9SGKzCEVdXtbfSfkjD9+fg1hZ0j77nXkeENO7U9eHf4Ak4GMm23dtyY1fVihI3pk4jxWVi0cadjZ8B6PKaFCcQ8BIWgeDdfsJ7/Eh4ZfXMisVcWftPllY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AEDjjbKu; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1774259034; c=relaxed/simple;
+	bh=Gy9Wyg2koqWzLa5078+7n/4i+2Ty8sJQCnlJmWq+r00=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mCqwAX7rlMaC7zw1e7pz9al5sizmSVhnqOWcl8ov/iwGgXyaw4pJqiIAt654MwLGyTDXVbM09WQnfFM1blaU0Jmveg2ERl2gK3GOgdDNWfsYdodgIu67IzGKj1t/g16yBZL8vLanZXXXzlBYUj1r1BRkEQooEpJeZBAOIcwI0kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WWqJJibG; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AEDjjbKu"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2b07069e2efso23611055ad.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 01:49:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WWqJJibG"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so49747715ad.2
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 02:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774255747; x=1774860547; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+KXUSwXQa4MHIWrG+t2yo0nMIg8sHH2pzR0G/HX24Ls=;
-        b=AEDjjbKuqGWH2fWh8mxTxDcrJB9jwW9cN2UHE9K4/h0JCUbqxBJcrYNAv8PUbUkB5O
-         iSq/fCMy7DKTCo/nWnEHVZCYzyBCoHFrSdc5n8lm8qlAxj8IrnB6zGr0hWCTbJfkq9T4
-         /n+Ex1WYlvRhMJR+zN/Utk1LJ1VgeMb8sJNp7eMZPsTrt1D4wURG4Rabdg45OtP1ls+d
-         uN7pztQxE06TzaxG7E/THlAK9/2qNHylzTyi6KXguzkFby5WAIqlD+od/bjkri1hxpsu
-         IWWPzlnHAzsepH7IUW5gV+J984/Kb4I+VviJVlc33seqbK4zQUoEMRW0dQ9GAjKDdq6N
-         OCBA==
+        d=gmail.com; s=20230601; t=1774259033; x=1774863833; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JoIUjm7sqqgmonxKLycLbu5FLx5dNBGXAp8F22p6/yw=;
+        b=WWqJJibGX8PVt4QBq8bRgB92n+6vYBUahCF9+qQ6scOgF8+5dWuvmoT4VjWraYJD1r
+         IW2yMoVVsbQdhFRd6XwxZfh1DpiLANvz3vH/7QFZgkPXlRvNJHcvVCi4EI6UfqSM1del
+         0lQf1BsYR/LJAHOk10fYH7noBrGis2EujaEraREVpdNphk10Q4B9mXgjSf/lVlpGInPF
+         1vvertFRfcqp5vaPVNuu3xqRrZ/sYL7yykaPS4I1SmfoiCOeYL+8q55iIvCS1OP/5E+6
+         xpwnvnThtu3M0bFfhtzJ+UZt14rxkjZifQ5zpeSdNpkEMJ+1iB40pC7j8icouIoxc/4s
+         ng8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774255747; x=1774860547;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+KXUSwXQa4MHIWrG+t2yo0nMIg8sHH2pzR0G/HX24Ls=;
-        b=p4LcgxgsAPg9expAl0oACqngzFqmF9smAZjlGmAQyHD48PBq+XFuX2IFWCyomo2DjO
-         /r0h/EMl20ek9lgir9O1xBw814rmg3536WlW9NqXlcMWFLgC1h1V50j4wsL36vmRd0p7
-         +jcW/sFWR9JJy1/LQj9KIcO0m3jXBbVHbKlzZwbcEpkBMLfGtijVxr8tGzw+RbnAwcek
-         OAnh/UjuNZJ4nZnlWheEBWaHrI4OMCF4NmSaBqWj7r8Akl47NYoS6xINSeKkI1WQV/V2
-         p9HR13h1R/J4Ru4RhO+UL9/eBns5aEoGtY7y9ohM4SEfht96CpzfA5EXtNxxiNN7tqRO
-         8lyQ==
-X-Gm-Message-State: AOJu0YxHU4CoqUzY3eV8jNqSTGQPQgq7PVAV3ekeHkwOYP4Q7AeinWy7
-	xKvLQRSoR408l1e1yea66VOBTQj68IC846/EgzU5oQBdyvaA330N+pldH0fT5eDrE30=
-X-Gm-Gg: ATEYQzxXhaqtaBskw/fnQ6/YuDqfoWlBSsaGAAwRiIA4W0SI1A7dRlxxzi8b0sg4F4m
-	0YdfU4X3wtxSMbIsvpOVioIptVMfyJFGgPfgP3jPyT4aA2++tBueclQNkiyJHZwff8jREA5bdbv
-	1Ddac22eNwyVnXVhhZo2aZe0KTYPxeBs7fZejouY3gyT/B0SvgGAwa6Of7bZLK76JMIBWJZaM2z
-	aV2cHfarbZjNG+yRl0FRMupB/vEtYGBW7OwIb60rWcWddGhPKrY1ZhGYPx0h58aUthjois8nDGl
-	RBm0s0bzD1Zkdx2ZmqODdiyTyIkOHcL/WmiMw27+a1liv1aD8g0FPbswgrMj3/oR73SWuJXraR3
-	69qxHQmpkBOlT1KMhAeBEqt9dwR2o1vq3o4L7Z/u84v6WNCzZjkVzOwRBY+RERPGmmyHIvGcSNY
-	EHyyUApvTDCG5JA3e3O82A9/CH17FjOpPT68Dhn9YDrMA6DJ7hbb2IGxEbLEPCukimqdVVN58Mt
-	fzL73gqTfPqOSvaUeUb/iaAC83+GIohhNq1X8J6eqURrtK496nToIY=
-X-Received: by 2002:a17:903:2f87:b0:2b0:7ca0:3fe4 with SMTP id d9443c01a7336-2b0827dd702mr103808125ad.43.1774255746831;
-        Mon, 23 Mar 2026 01:49:06 -0700 (PDT)
-Received: from ThinkPad-E14-Gen-6 ([220.158.168.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b08368ea1bsm124208605ad.68.2026.03.23.01.49.03
+        d=1e100.net; s=20251104; t=1774259033; x=1774863833;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JoIUjm7sqqgmonxKLycLbu5FLx5dNBGXAp8F22p6/yw=;
+        b=jyMWlM2QNO+NpmSa7xq5ZTPwyuti32JbciZ9Lfj7WRHdLn2jNrFSUGrG66t9cPpg7b
+         uoXXoSXXwPDXoexLEOVtgfDzblIBvAsDDx10CClRsVXNI2UFnKrFw0/KZ+TrF+JXZMkt
+         N2vRMcg0ZAfS2wcA+/eFSbCMzkj8aIAEAI2FNggWhJXkylz4eTYlbdRnUsOcK6VgZ44O
+         oj8epvt17GSvrlsSe/lEP/Hz9HWN0UV5lGQ3S9xm0AzC/iOXyKfHVjpQ8AjOr8uXjIV/
+         X3+euhm7NywpdK4exU2C9K+8PysKYsXvj9oDQfg4eslnEHFivYC9WQVobqetXGSbpB0b
+         BpZA==
+X-Gm-Message-State: AOJu0YzQ+5fNKzDutgrl/4W3LFvyb7Q1ALTqluF/lKkGsmPD1Nf2b0sW
+	1TnWP8TUEtlgtMAkzMThG5lgl698rJDxVdTFSzcGttc4aDcVVtIwyO93cxNbLg==
+X-Gm-Gg: ATEYQzw8IML0tLaF5U9ZiccUPM25AMYmt/MV1Eg8DUOLmpSG7rPJGw5gJMuyMIDp5SD
+	OZKboufz5Jlq3+gR0w/1irsaw8z/MI4HTIAiXDpApfy/kM3y6YN3mLR5D0Qb1TO5obiJiKX4gdU
+	ycnaWM4+W+lWqN6OwjQRNVOd+79mYYZy1XibFyUmLcbVQoZ06L6eiTKcmozUQXEY84iV44gbNw+
+	46x8fkm3JdQDGjcWQLHOJTnrA6JuPqWzE6q2apUK756Rw5slEHJnTuGvEsrkceHHX2x6DfdCdCj
+	H19B7sdGceTlVfOnB9GWW2zPxr0qt0140F72klrEYqCIAEv/ReFO5DDdpNRe1gB1/x46XGjnCYH
+	lUoWecaDv+LRMNLo+2T3cgi0nA/uL/SdwMySfk/JgFhOOLEv/rk5wgVXEspXG/y0dkDzYJojag/
+	XLhKlhmvkL0LDESf1prJd9z53rGpvDybu7FYLgex1DQA==
+X-Received: by 2002:a17:902:d481:b0:2ae:4948:f866 with SMTP id d9443c01a7336-2b08272f608mr116370055ad.22.1774259032603;
+        Mon, 23 Mar 2026 02:43:52 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:88eb:4aec:ba2b:bc5:2170:ca7b])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b08351675esm132140555ad.14.2026.03.23.02.43.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 01:49:06 -0700 (PDT)
-Date: Mon, 23 Mar 2026 14:18:58 +0530
-From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [QUESTION] Improving disk space recovery for partial clones
- (GSoC 2026)
-Message-ID: <acD-esOCTH3PpK9y@ThinkPad-E14-Gen-6>
-References: <aa65h6Z_TrpJbmkj@ThinkPad-E14-Gen-6>
- <CAP8UFD3sicsPd903FU8bsj2B_4Q1DE1xB+--OxryY_jhL=sHdw@mail.gmail.com>
- <aa7XkqhcG6Kb6IhN@ThinkPad-E14-Gen-6>
- <CAP8UFD2iM-z7F_FeDkP5v=1OAJhS2AcFsgPnicvHNFMUcmxbpQ@mail.gmail.com>
- <aa8VWlv7dosrrRwv@ThinkPad-E14-Gen-6>
+        Mon, 23 Mar 2026 02:43:52 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,
+	ps@pks.im
+Subject: Re: [PATCH v2 1/3] worktree: remove "the_repository" from is_current_worktree()
+Date: Mon, 23 Mar 2026 15:11:38 +0530
+Message-ID: <20260323094341.880375-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <9c915043-02da-4823-b4e7-d2a340c0373d@gmail.com>
+References: <9c915043-02da-4823-b4e7-d2a340c0373d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aa8VWlv7dosrrRwv@ThinkPad-E14-Gen-6>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 10, 2026 at 12:15:46AM +0530, Yuvraj Singh Chauhan wrote:
-> I have been studying the different commands and how they work, I will put together
-> my understanding in a pros and cons list for each command and send it asap.
-> 
-> Also the contributor application period starts March 16 and ends on the March 31.
-> Can I complete my proposal for community review in between that period as well? or
-> should I rush to write a draft version before that.
-> 
-> sincerely,
-> Yuvraj
+> On 16/03/2026 16:22, Phillip Wood wrote:
+> >
+> >> I have been staring at this code for longer than I want to admit, and I
+> >> still haven't convinced myself that this is not a change in behaviour.
+> >> I think what I'm wondering about is what `is_current_worktree()` is
+> >> actually intended to do. In other words, what _do_ we consider to be
+> >> "current"?
+> >
+> > There was some discussion about that in [1] where reviewers were
+> > surprised that we needed to call is_current_worktree() here. This change
+> > is consistent with the rest of the patch but you're right that it is a
+> > change in behavior as at the moment the "current" worktree is set by the
+> > worktree that the process was started in. In practice we only ever have
+> > a single struct repository instance per process so there is no practical
+> > change in behavior here. At the moment, if you visit a set of submodules
+> > from the superproject by forking one process per submodule each
+> > submodule worktree is considered "current", but if you visit them by
+> > spinning up some threads in the current process they are not considered
+> > "current". That seems to me to be inconsistent as the process started by
+> > the user is in the superproject in both cases.
+>
+> To add another example get_worktree_ref_store() checks `wt->is_current`
+> to see if it should use the ref store in `wt->repo` or create a new
+> store. That means that if we use `the_repository` to define the current
+> worktree we'll end up opening a copy of the ref store in `wt->repo` when
+> `repo != the_repository` and `wt->path` matches `wt->repo->worktree`
+> when we could be using the ref store that's already open. It is a bit
+> like the bug fixed by 1339cb3c47a (worktree: don't store main worktree
+> twice, 2024-06-06) but for multiple repositories.
+>
+> I'll re-roll with a bit more description in the commit message but I'm
+> going to be off the list for most of the rest of this week so it will
+> probably be next week before I post a new version.
+>
+> Thanks
+>
+> Phillip
+>
+> > The "is_current" field was added in [1] without any discussion in the
+> > commit message. It seems to have been added to stop the same branch
+> > being checked out in multiple worktrees [2].
+> >
+> > Thanks
+> >
+> > Phillip
+> >
+> > [1] 750e8a60d69 (worktree.c: mark current worktree, 2016-04-22)
+> > [2] https://lore.kernel.org/git/
+> > CAJZYdzhG8h3s=Ep1fuGbam1cWhYkv0tW6tQ7pBGGj+fj6=Nrsw@mail.gmail.com/
+> >
+> >
+> >> I would consider the worktree "current" that the Git process
+> >> has been invoked in. So if I pass a repo other than `the_repository`, or
+> >> if I pass a worktree that is not the one that Git has been started in,
+> >> then I would expect the function to return `false`. With that naive
+> >> assumption your change would be breaking the existing logic.
+> >>
+> >> But I have no idea whether my assumption is correct or not, as
+> >> there is not really any documentation of what the function or of the
+> >> `struct worktree::is_current` field. And having a look at a couple of
+> >> callers doesn't really make me all the wiser.
+> >>
+> >> It would be great if you could shine some light on this and then also
+> >> add a bit of documentation to either the function, the field, or both :)
+> >>
+> >> Thanks!
+> >>
+> >> Patrick
+> >>
+> >
 
-After some studying here the four options for placement:
+Hi Phillip,
 
-Option A: git backfill --evict
-Remark: 'backfill' semantically means to fill in what is missing. Adding removal semantics creates confusion. Project idea has also signalled backfill is unlikely to be the right location. The traversal logic for eviction differs enough from backfill's that there wont be a well structured shared code.
+This may be slightly out of scope for this series. My understanding so far
+has been that originally wt == NULL is used to represent the 'current worktree',
+which eventually meant following the process-wide state (the_repository).
+With the ongoing multi-repository work, the meaning is being changed to be
+interpreted as 'the worktree associated with the repository that we are working in'.
+However, in path.c there are some callers of repo_git_pathv() passing wt as 'NULL',
+I know that there is not involvement of the_repository state but it would be create
+less confusion if the semantics of worktrees are same everywhere. So if we replace
+those NULL callers with the current worktree and update the checks of (!wt) to
+(is_current_worktree(wt)), some tests are failing mostly related to refs of linked
+worktrees, and I think the error is originating from this,
 
-Option B: git gc / git repack
-Remark: gc is already complex and runs automatically. Stolee's concern, that background tools like VS Code running git blame will immediately re-download evicted blobs, which argues directly against automatic eviction. A user who runs git gc -a does not expect silent network activity.
+        if (!wt)
+                adjust_git_path(repo, buf, gitdir_len);
 
-Option C: git maintenance task
-Remark: maintenance can be a long-term home for scheduled eviction, but only after the core eviction logic is stable. An idle-detection heuristic (not yet designed) would be needed before automatic eviction is safe.
+So I am a bit confused to whether wt being NULL here could mean something else
+behaviour wise ?
 
-Option D: git evict (standalone command)
-Remark: User-driven invocation is the approach that safely addresses Stolee's re-download concern. When the user explicitly runs git evict, they have context about what they are about to lose. No background tool can trigger git evict accidentally. This placement also avoids semantic confusion and creates a clean audit surface for the community to review.
-
-Please review so that I can create the proposed plan accordingly
-
-sincerely,
-Yuvraj Singh Chauhan
+Best,
+Shreyansh
