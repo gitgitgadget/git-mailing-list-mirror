@@ -1,165 +1,85 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from 17.mo583.mail-out.ovh.net (17.mo583.mail-out.ovh.net [46.105.56.132])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0336B154425
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 22:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0879D372B53
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 23:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.56.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774304853; cv=none; b=o8n6renHgGKgs5YMqvVpnLoGJouYpKBLbmyyXqYajv88ntkjhgYaWQ+3bLs7gfZhNkxVtMSKTu87LKXSYRZLHGw5dTTXhyEK7VMTOS3kLHV3IWGokLlJR5ljsogE2r5kPOjgNFThui1au88VYKJfMAX3CwIyP/DbIGJZtHaqwk8=
+	t=1774307249; cv=none; b=fr0HoptpNmOAJf7BMIQaNufJMz5K30ctMzpMP+7qsiMLUfXGCOkifUWpEN4q9f3mfsi/a5p8uSqqYAre88xnmgpoTNjuex43x6iJTgWDCkFm1ZreYlyVAHZ+jliq3KtUTszFNWlVBBLA9VcLt35CwjYBp9r8XA1DgrXewKV16IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774304853; c=relaxed/simple;
-	bh=fS+F9zkcQnP3naZBJusIlGuHbcpEnGpZyl1Mg9WIrW0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TXwThd3QY9czTqop+Gbi6wmDjhZ9bFIKbajQtWhQ/wGZtL94IRLqb/tu5Jxs6XMJaRJm86uhrE+HpgM2MLVZSsrHLMcM8ELRhPNmETeao4UK0mm7DRycijf3EBxddjFJIU1sRj/oFh7RjidGZT2/3YwP34kXaPsVHM6AqPak0Ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PE8TqYhT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SSAwtgdm; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PE8TqYhT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SSAwtgdm"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4ABEF14001A9;
-	Mon, 23 Mar 2026 18:27:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 23 Mar 2026 18:27:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774304851; x=1774391251; bh=TI8UCmOXDW
-	gFxhwyfgp4i8M6KI4c4cJa/cD9BiKlmXA=; b=PE8TqYhToIhRvOV1f8vRhX24BW
-	YcZ8RNaNIOQEA97/XEUmGhyg9VkH2eNYFTuvMKBL64MtG4MGeYfn9ZG0LHQoFI9v
-	Bbol7VhPWkfM6ANg914nhHVFs3HToovYBvi4AOV5qhC3+ASYGVmtoiCcevg1sQZy
-	46pOj8OZjH6V9MKxvDdNTBLx0C29dge6PEqoO/vlM73CA/VftZLnxonQNaGb2Vuu
-	Gci2VFoxD7vOIOnR748OBNaC/3ATZlveqZod4V/BWKO/r0E3PLyHnR7UOkM5W+qm
-	X2Mvp98/BBcmSh5K9c8V5jwtERTzLIOqYX3buZtY7lqVTHGUN3Gvv9Q27CUw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774304851; x=1774391251; bh=TI8UCmOXDWgFxhwyfgp4i8M6KI4c4cJa/cD
-	9BiKlmXA=; b=SSAwtgdmpVlZJxoocPGuc+rngJG5Us/mz4t1Rn6EtbgfuKwklws
-	fZoE/3PlpHYYfM13fywyFB5+HFSeRTeZlkbFThheXiFqGtMLsrhVIkn25e7d0Vnm
-	LHgL94DL70WJV1fJK9ZVX2dOOSd+pZMc1g3hzDDiOVz3qeD3t3XZh1niPL9gLtT0
-	8aIQUHu9q/umg++TUmLMf16sCUVZUi4a2WdIWKKRYtU6emh2t56kZRtvS7H3fCjR
-	QMY5rQMsoi9RrGTdUqDq2wDEIlZlJ8o6Iv1hbTe2ojapWNj+hVWxEESfgsNZzEx7
-	GJtbtxmFh+F2ibS1ZNB18w6o+67P88oVpnw==
-X-ME-Sender: <xms:U77BadI-nPP0GvBHuASGKK95kWrlae-omQ-dICF4IRlLK4KZguRIZw>
-    <xme:U77Bac2sABcyniO94uKUKvnS2-nxtbRVBrp0h0-0rLquEUtMUP9gI7C4w62doYBzO
-    -51TjwyQuV9fkcqC0xFpPMPjv_G7jPWculTcM1trzhWi3ksfY4xAQ>
-X-ME-Received: <xmr:U77BafgbScI79J3nlun-7LBvKHl5lsP47B59xaHeHmwpykmvEr4KS5S3Z1HKxLz5JqetDNs4sm-oV01qBlCAnhLOPs08XDYKww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudelleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepkeettdduhedthfetudettdffffegffektdeufeehudevledtveekteekuddt
-    tdehnecuffhomhgrihhnpehhthhtphdqfhgvthgthhdqshhmrghrthdrshhhnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
-    phhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepjhholhhishhsgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhholhhi
-    shhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:U77BaVUozyRNft5fh3H2Q0MztErPqv92jKfM45iP-1gD1LG57CkmmQ>
-    <xmx:U77BaWVZQhUXv9d8cnHivjBw_13QUh1bS6lMZGmaMTr9BmRYNa2qmg>
-    <xmx:U77Badjs3DeJTQGKEt6TRtda1JxHNHat-J2XHD7u0cCl0oGt7xF2vg>
-    <xmx:U77BaZZeA_vqvgZ7-FVB75kOB616S5L_1LLUSZQLKeaNsU5GIogiMA>
-    <xmx:U77BaSRxpeNPoYA-7kpsYPgz1ePFbVhqCYqMtWXwz_6KFRZyjxUDcqIS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Mar 2026 18:27:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  joliss42@gmail.com,  joliss@gmail.com,  peff@peff.net
-Subject: Re: [PATCH v3 1/2] refspec: safely parse refspecs outside a repository
-In-Reply-To: <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sun, 22 Mar 2026 11:06:16 +0530")
-References: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
-	<20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 23 Mar 2026 15:27:29 -0700
-Message-ID: <xmqq341q41wu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1774307249; c=relaxed/simple;
+	bh=szSb+jiGXEL3MPO9vHgHC6hTJlMQpL3yDsXCe9oVMDo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ljkfh/zxWoQd4QfrLuOlGbNJIfE+LGTkweyWLBTJx5xS9AFs6w8Dm0OB1Hqr/I5Hu+bbTSadPl/qREzNOkH4zTxbu0OP29bmTSXcVJcq/pYXeVEiRjDOfVfiP046y02su79TWuW7/OSINxhNHdA72UNdFcxS4LziJXBKi5GXTD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de; spf=pass smtp.mailfrom=schlaraffenlan.de; arc=none smtp.client-ip=46.105.56.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schlaraffenlan.de
+Received: from director8.ghost.mail-out.ovh.net (unknown [10.110.37.133])
+	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 4ffpJ346Qlz5wgW
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 22:49:07 +0000 (UTC)
+Received: from ghost-submission-7d8d68f679-77wzd (unknown [10.108.54.44])
+	by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 1FDC3C0134;
+	Mon, 23 Mar 2026 22:49:06 +0000 (UTC)
+Received: from schlaraffenlan.de ([37.59.142.102])
+	by ghost-submission-7d8d68f679-77wzd with ESMTPSA
+	id mhIMMGLDwWl78T0AiVxfvA
+	(envelope-from <kernel@schlaraffenlan.de>); Mon, 23 Mar 2026 22:49:06 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-102R0041cfd1231-27c6-4102-81d9-9bb1e78f158d,
+                    CF5F45155CC526890A7B96C462E82A48810857C8) smtp.auth=mail@schlaraffenlan.de
+X-OVh-ClientIp:95.90.63.4
+From: Jonas Rebmann <kernel@schlaraffenlan.de>
+Subject: [PATCH v2 0/2] Avoid hardcoded "good"/"bad" bisect terms
+Date: Mon, 23 Mar 2026 23:48:58 +0100
+Message-Id: <20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNyw6CMBBFf4XM2ppSXsGV/2FYlDKVMVhIpxIN4
+ d9tcW1mdW7uPbMBoydkuGQbeFyJaXYR1CkDM2p3R0FDZFBS1bJQUvTEaIII6J8smpjVdROvNRA
+ ni0dL70N3637Mr/4RB8mRGiNxmP3n+LfmqfdHveYiF6aQpq1KWZVKX9mMk/baWnSTducBodv3/
+ QvLvsm5wgAAAA==
+X-Change-ID: 20260320-bisect-terms-76036676769c
+To: git@vger.kernel.org
+Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>, 
+ Jonas Rebmann <kernel@schlaraffenlan.de>
+X-Mailer: b4 0.15-dev-bc6c4
+x-ovh-tracer-id: 14079096863422120835
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFcRZ73sADwnUlQ9eaSvXAzTPZVrM6zPUzO6OrEIdx9zX/brm87DI/i4r4P7XhpHRWj9vlDu6ByuW+p165eUis+QkWKB/vgbljFGgP/BXD9re7Zsotq0MyFDpmm1wNbbGAvzUSidVINV9cVNyf/qjHio5if5F49EosSg1O/WNGv7M8RQj9bLG5jciepTfycgeaSVeprb+cS1pFSovcmOG6Srb/nWj7KzMdaRl92Mh15kmDlhhUhsxCsR0gyk+5PF3nqrtUX29LRsaV9r0IzY1fPZD8DEt2IQIpwMx1VlwAIRCadVWNk1tbRhkm3jeokLMUtymHqWTPYwDnGVzykK0I/eR9b+re7vBepG12RL8GMLtmcL9lUgPLXJ33AaxxDX26RMpytu/bo80n8I2n7xNOwQyCsSSFgWBWJp/yAUTuozYDH7ha/9i07aLg0KTqVj/ohFZa2WdBJoTRUAYHtHbnwCMp8+/VMUt40qlgVIxwaKaguRNNIP70f03vp6bk/uJOvR9ZHuTsK5QObZsQMp9m63k8sFcgvAUWFilxw7JFEumY23kT120oaaubIsA/HwGuEYx8lL32jk+YstQaxlgOeBGS2b5EWmnLJByXimzGfJWiBx0Z7zjpBafqbxt2Rw8VhlvF9H8XG9oaAKS0+feQmWLVEkRfn+U+ZxgcH9WZHuw
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+While checking whether all output messages of git bisect where covered
+by [PATCH 1/2] bisect: use selected alternate terms in status output
+I found hardcoded good/bad refs leading to incompatibility of git
+rev-parse --bisect with alternate bisect run terms. This is addressed
+by [PATCH 2/2] rev-parse: use selected alternate terms too look up refs
 
-> When git-remote-http is invoked outside of a repository (for example,
-> by running `git ls-remote` in a non-git directory with a globally
-> configured fetch refspec), `the_hash_algo` is left as NULL by
-> setup_git_directory_gently().
->
-> parse_refspec() checks whether the LHS of a refspec is an exact OID by
-> evaluating `llen == the_hash_algo->hexsz`. With `the_hash_algo` being
-> NULL, this results in a segmentation fault. The same NULL dereference
-> exists in the negative refspec path.
->
-> Note that builtin/ls-remote already works around a related issue by
-> setting a fallback hash algorithm before calling into the transport
-> layer (see 9e89dcb66a). However, since remote-curl runs as a separate
-> process, that fix does not help here.
->
-> Guard both dereferences with a NULL check on `the_hash_algo`. When
-> operating outside a repository, fetching and pushing are impossible
-> anyway, so skipping the exact OID check is safe: the exact_sha1 flag
-> only influences ref prefixes sent to a remote v2 upload-pack during
-> fetch, and we will never reach that point without a local repository.
->
-> Reported-by: Jo Liss <joliss@gmail.com>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-> ---
->  refspec.c                   | 4 ++--
->  t/t5551-http-fetch-smart.sh | 7 +++++++
->  2 files changed, 9 insertions(+), 2 deletions(-)
+Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
+---
+Changes in v2:
+- Improve commit message
+- Add tests
+- Include second patch for hardcoded good/bad in rev-parse
+- Link to v1: https://lore.kernel.org/r/20260320-bisect-terms-v1-1-c30c9540542a@schlaraffenlan.de
 
-Looking good.  Shall we declare victory and mark the topic for
-'next' by now?
+---
+Jonas Rebmann (2):
+      bisect: use selected alternate terms in status output
+      rev-parse: use selected alternate terms too look up refs
 
-Thanks.
+ builtin/bisect.c            | 23 +++++++++++++----------
+ builtin/rev-parse.c         |  8 ++++++--
+ t/t6030-bisect-porcelain.sh | 16 ++++++++++++++--
+ 3 files changed, 33 insertions(+), 14 deletions(-)
+---
+base-commit: 1eceb487f285f1efa78465e6208770318f9f4892
+change-id: 20260320-bisect-terms-76036676769c
 
-> diff --git a/refspec.c b/refspec.c
-> index 0775358d96..a864a0bac2 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -84,7 +84,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
->  		 */
->  		if (!*item->src)
->  			return 0; /* negative refspecs must not be empty */
-> -		else if (llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
-> +		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
->  			return 0; /* negative refpsecs cannot be exact sha1 */
->  		else if (!check_refname_format(item->src, flags))
->  			; /* valid looking ref is ok */
-> @@ -101,7 +101,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
->  		/* LHS */
->  		if (!*item->src)
->  			; /* empty is ok; it means "HEAD" */
-> -		else if (llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
-> +		else if (the_hash_algo && llen == the_hash_algo->hexsz && !get_oid_hex(item->src, &unused))
->  			item->exact_sha1 = 1; /* ok */
->  		else if (!check_refname_format(item->src, flags))
->  			; /* valid looking ref is ok */
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 73cf531580..a26b6c2844 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -782,4 +782,11 @@ test_expect_success 'tag following always works over v0 http' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'ls-remote outside repo does not segfault with fetch refspec' '
-> +	nongit git \
-> +		-c remote.origin.url="$HTTPD_URL/smart/repo.git" \
-> +		-c remote.origin.fetch=anything \
-> +		ls-remote origin
-> +'
-> +
->  test_done
+Best regards,
+--  
+Jonas Rebmann <kernel@schlaraffenlan.de>
+
