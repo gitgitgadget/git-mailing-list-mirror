@@ -1,69 +1,70 @@
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05DC3976B7
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 11:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D2239526D
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 11:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774266031; cv=none; b=p3dmLy6Zqi5LJ+a2FLOyRhuzMqskyerELuCkBi8tDFvhGnv7TnQyb3goCWqprWtBJ7YWnBaOCb5dmtEXG5L1a9ORyvNxP3lI3ckO04ZBX7Qm42Aq5STck6xzNjz0CrDbQJQhsB3XsN+kpY8OaPIXYTpvVIYvDdvXOt1Qkbjy/Og=
+	t=1774266032; cv=none; b=YF/8YGPDmHLkJnWxvymSXQYYG0aZTtHr4psgODBh+MQ6EQlReHl80gWXBh2yWY5EwtDDbGbYZ3387G2nFOB7GIxL/HvfUO6Vdbm3bJbrbx9yc8ezrWIq2bHHmznZnGpwITCAHnAZzN5viKaxpFnkHB8EBqXIQsfqkeR6WgtMmlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774266031; c=relaxed/simple;
-	bh=qS1j7FRgPg1d7/cI5mt9GgcekZxbLLxCxBTPcxqVRno=;
+	s=arc-20240116; t=1774266032; c=relaxed/simple;
+	bh=s25eBXbrsvs9FdyawuF3SgjRFs5BKRFXxSkakzttaZA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=S4gnhcwcYD1nZpufz8gEOjOmj2rlcGILEvD8teTtfTfNvATGbMqIOsuSuqTtM+ruCathl66SvrVPEarbw4+JfrFV5ogcLa0/7KIKe1bedF9rpcSdWAub+LsUDPKdh4WFMusHXKg6Ams0SS2z/LRwaB7fElWhdG0nBuv7kr6kJ90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaY92qJ6; arc=none smtp.client-ip=74.125.82.182
+	 MIME-Version:To:Cc; b=bBssvnTSA3QamWyP2l/uJSSBsZ6yKTUEyRfSo6q2NdtPLfYwwanmY0kuD4ZttIlmZzifuLWiwhaUG6iuOBjR3RHp9vvmxb/B8qPjZPLGs55uypmGnDTGlMjDkFo2nwM9TCPzlbc3XudwcYuIxboyIY9VvO/xwDVoDfS8Yp5ivlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=djJNs0Mn; arc=none smtp.client-ip=74.125.82.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaY92qJ6"
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2c0c955a481so2539613eec.1
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 04:40:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="djJNs0Mn"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12a693cdf29so2975906c88.0
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 04:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774266028; x=1774870828; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774266030; x=1774870830; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BREoAFYlWj7eW5fcf8JSaEKsoKxozlUBYObym3qJ6eM=;
-        b=iaY92qJ6eq6fxfmiMY7iBF9fZ+XkrvRuQSrkW31QSFj/36ZPkNMDzHX2DQ6fQsboi9
-         Mw38SAUpK3CnmAPyUbscxzdnVjlaIuMPyLZ1N3s9Y42q+/Ukz3bU/MoK1hu/tdPm75Cs
-         EBG9rRuXQmlr/7cXjUUWLahxZcw7V0ACmo7iSBrvkk4nlP2/OX1mnigoFwYBJcfakWqx
-         xYztdYMbLXCcxfhN02OUSsSOwkzAwiKexJmA7gcuvDxGa1kC91PvIEICWILnxnnuhXjs
-         62proLRmobAyxvj74LQgK4pqPb3suUtu2+eYGewr9aOqALsxf8mKtCnI0T0WBj/EkksB
-         ggRA==
+        bh=z9b7Nh1yar/C2vzSyBZCLVF79D8rLKMpxrgX0WBHAdI=;
+        b=djJNs0MnQ1DebDiqi1+inHzRyzmNpWBTl1bWBqNTMQvxq1vOEomVeKJTVXsrFqmu0e
+         QIxGx1hIgzfuR3IofTGWtj9I0WoMX/0fmnZimuZVvopQqwPxurDge+Zb8Gkg24qGrdsk
+         x5gJ+FZzwOoVtGiLB95OdTfPRwHz8dd4rZBej6028fvN0JTx9J4Xwt9XTkQ6dB3Kvgn2
+         xHVjnuqXG+s2tQVSf/6ij4yYoJADxY1Y79XoNYfUZ5YgwOHz5GzLzqj6xtpAXjOsVmRU
+         7495/u5b2iarmQaG7QgIyNslGlcKgL0q10ga+E0sXcjd6vT/Ei7+N81yEDvR9OzxZsrs
+         m22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774266028; x=1774870828;
+        d=1e100.net; s=20251104; t=1774266030; x=1774870830;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=BREoAFYlWj7eW5fcf8JSaEKsoKxozlUBYObym3qJ6eM=;
-        b=fV5Tt1cNoKokK+ifX5I2cKwpAceaO4To7m4nUV0BJ7Z9pIXKgi5Kv0od7qztxPn9Tl
-         de3TBnMsp7NND5IB0Vm9xxbdMllsMF/HqQ2YaXLS0wzf6iNSCyZ7EwE7iJDboPZKtaCq
-         4AMXw0vQyI/Y7qT+9/vJfa1Cf4VWfoSyAdrIz7aseZpJXl3S9TAcgo1mvXihop7v7CQA
-         kSZbnvErEaepPD0Xw0r4f/5ayWehyegcBp4NAbpT9jcJMxFdJ8BKmO5x7QcZTrWi0CdK
-         eXeJj+nClF0XZDuNsugMqgTe0aVAjetp2IeUfUEbbI5Os91NvNh0jS52j4eZ1n9jFWeM
-         mYuw==
-X-Gm-Message-State: AOJu0YztsL5+vrtDva1ciKdfzsjOA9dKATd6QFBX8ZDqDw65u+qAZkGH
-	XN9hbRs/v1CMG+SpgDx2Mdjkjq2VQNgbDROQOd3vh1XzyYvde5UqqkDW//GmPw==
-X-Gm-Gg: ATEYQzy99UM91XgjZrjwL3G87UpWa3rb/1PH81FFohT3f+OSZ5NHxWq5WwqWcjpzRSu
-	o3+m/4af5HLmkIimTg3hGwSj1zc3IipO5A0zlSE5sDZNNCTdvmAP3OJ9hC4Gqj2X2TPIoDDpEQU
-	YqIu1MpfovTRZop2zblnQjFZxG0pb/kwieH3LDDMDrUW+89krwQlp/mrjs4FWoIzTNyKA0fQy1N
-	KrbiJIxAaiaWn8U9EznU03QCJmAzsnpGHeOKucBuf3VdOhcObN6w7hlJDXBCikmMAzckwXRDHGR
-	H2sdqaeTUZlKgwquwIHjXggCiLDnBEJBUt5NArA7Ohq3N9dNvz7ApFqjjRs+Wa7cfojBSl5QtVN
-	WbRcjd90yitvTzKJX5DkzG7PArhJ5AZm/JWxbCjncjslvcXsqD+1KmbgNRKs9IHm6VgRXI9ZyKD
-	vN92sXgsWxgSP21bqoYh3X5JjiRAc=
-X-Received: by 2002:a05:693c:2c13:b0:2ba:7875:10c9 with SMTP id 5a478bee46e88-2c109760e2dmr5138457eec.26.1774266028016;
-        Mon, 23 Mar 2026 04:40:28 -0700 (PDT)
+        bh=z9b7Nh1yar/C2vzSyBZCLVF79D8rLKMpxrgX0WBHAdI=;
+        b=Smm4JLf98GvrVeYXbUGw7ofMLTpo3Hmb2LwEKqlOwJfZshmhCmNjDbQYgLMWP3noBc
+         8L6aQOdDkRBaCmpjOUfem1Oj8LqTwaYEY/LZAyoNrl/TUcKLOc1nAa/twSsI6LaWIs8g
+         V6ZO+OlqBeelBClPejMygl9F+IkWNZNmv2yS0rjEoWxLzWmtyZDmJ7kQwexctTwCqtp0
+         AZeZJjGVpPoi0XGBB/yIvonUJHsp+WSAv8IKg0yWsZU1pDWcAWf8d4cmrdOGLF6fiqhn
+         wYXP/n5BvV8cnueSHvRgKlwQnkBfedIxFEL7lwu2Z9QdiWoPJ6pm1Fvb2rKGhZHIcFvq
+         lX6g==
+X-Gm-Message-State: AOJu0YyIj0iMJB9pHx3RmnlfVH57iw2k9eohIRm+yf1gzGx26be8cWIY
+	Aq4CZ+ZcfTscz1LMgcVF4JS+66vzS+OJzT6kGD9sDGMZqO5IEyl8PFF40dnG1Q==
+X-Gm-Gg: ATEYQzwD/pwFvi+9nqXQTCUXntBrZYyduKnB/2iL2hjaXYarhJtgls6b3X5zl3I6oci
+	sTENYR411ijTGn9wOu+XDyY6BXv6gJG9eUlw/bdMeNL4X/eGrX59v3xltk4Gw/olWmRMPk/wkLl
+	3cRlvYLec6DfM8Z707fF5QcWYpqD6SH0kpPnDVxmVgNOpuRSbQRZQ/Ev1boob5I+zfVkdcyhk8h
+	lU58O4Tu4E22Bl5Z+BAFSiAaZGl727j7X50FhE0S6P9S+LrQ7Owa+2PaWniDEMgeYQMGN3yGnHQ
+	Gb8YIJZ4twLCbFFG52ko8lUdjKcHbxVRMN0fN8tVETswEBZxRILWF7bPO0XRlyWKtYXw8H1dpbQ
+	UmwpBprqdpPKPvk34ggDEjdfA8yB8mNZuBK7r+w+NVGT0kDSyFouDu3lXKcDdMhfGsSczBeCps7
+	pvkQaFZIsyd6DkFCrLqp78v1O/whYmFjqW5MGVNA==
+X-Received: by 2002:a05:7022:492:b0:119:e569:f86d with SMTP id a92af1059eb24-12a72326a74mr4516720c88.10.1774266029700;
+        Mon, 23 Mar 2026 04:40:29 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.211.112])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c10b2cf068sm11972459eec.22.2026.03.23.04.40.27
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12a733b49afsm9432220c88.2.2026.03.23.04.40.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 04:40:27 -0700 (PDT)
-Message-Id: <f8f2c613260458e3c86109888ee1c51313095319.1774266019.git.gitgitgadget@gmail.com>
+        Mon, 23 Mar 2026 04:40:29 -0700 (PDT)
+Message-Id: <1168edfb96c739581dd510f86bf1dbf5e28603e6.1774266019.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
 References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
 	<pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Mar 2026 11:40:17 +0000
-Subject: [PATCH v2 4/6] backfill: work with prefix pathspecs
+Date: Mon, 23 Mar 2026 11:40:18 +0000
+Subject: [PATCH v2 5/6] path-walk: support wildcard pathspecs for blob
+ filtering
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,145 +84,96 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The previous change allowed specifying revision arguments over the 'git
-backfill' command-line. This created the opportunity for restricting the
-initial commit set by filtering the revision walk through a pathspec. Other
-than filtering the commit set (and thereby the root trees), this did not
-restrict the path-walk implementation of 'git backfill' and did not restrict
-the blobs that were downloaded to only those matching the pathspec.
+Previously, walk_objects_by_path() silently ignored pathspecs containing
+wildcards or magic by clearing them. This caused all blobs to be
+downloaded regardless of the given pathspec. Wildcard pathspecs like
+"d/file.*.txt" are useful for narrowing which blobs to process (e.g.,
+during 'git backfill').
 
-Update the path-walk API to accept certain kinds of pathspecs and to
-silently ignore anything too complex, for now. We will update this in the
-next change to properly restrict to even complex pathspecs.
+Support wildcard pathspecs by making two changes:
 
-The current behavior focuses on pathspecs that match paths exactly. This
-includes exact filenames, including directory names as prefixes. Pathspecs
-containing wildcards or magic are cleared so the path walk downloads all
-blobs, as before.
+ 1. Add an 'exact_pathspecs' flag to path_walk_context. When the
+    pathspec has no wildcards or magic, set this flag and use the
+    existing fast-path prefix matching in add_tree_entries(). When
+    wildcards are present, skip that block since prefix matching
+    cannot handle glob patterns.
 
-The reason for this restriction is to allow for a faster execution by
-pruning the path walk to only trees that could contribute towards one of
-those paths as a parent directory.
-
-The test directory 'd/f/' (next to 'd/file*.txt') was prepared in a
-previous commit to exercise the subtlety in prefix matching.
+ 2. Add a match_pathspec() check in walk_path() to filter out blobs
+    whose full path does not match the pathspec. This provides the
+    actual blob-level filtering for wildcard pathspecs.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- path-walk.c         | 40 ++++++++++++++++++++++++++++++++++++++++
- path.c              |  2 +-
- path.h              |  6 ++++++
- t/t5620-backfill.sh | 16 ++++++----------
- 4 files changed, 53 insertions(+), 11 deletions(-)
+ path-walk.c         | 22 +++++++++++++---------
+ t/t5620-backfill.sh |  7 +++----
+ 2 files changed, 16 insertions(+), 13 deletions(-)
 
 diff --git a/path-walk.c b/path-walk.c
-index 364e4cfa19..0d640e2f24 100644
+index 0d640e2f24..6b83e0e1d5 100644
 --- a/path-walk.c
 +++ b/path-walk.c
-@@ -11,6 +11,7 @@
- #include "list-objects.h"
- #include "object.h"
- #include "oid-array.h"
-+#include "path.h"
- #include "prio-queue.h"
- #include "repository.h"
- #include "revision.h"
-@@ -206,6 +207,34 @@ static int add_tree_entries(struct path_walk_context *ctx,
+@@ -63,6 +63,8 @@ struct path_walk_context {
+ 	 */
+ 	struct prio_queue path_stack;
+ 	struct strset path_stack_pushed;
++
++	unsigned exact_pathspecs:1;
+ };
+ 
+ static int compare_by_type(const void *one, const void *two, void *cb_data)
+@@ -207,7 +209,7 @@ static int add_tree_entries(struct path_walk_context *ctx,
  				 match != MATCHED)
  				continue;
  		}
-+		if (ctx->revs->prune_data.nr) {
-+			struct pathspec *pd = &ctx->revs->prune_data;
-+			bool found = false;
-+
-+			/* remove '/' for these checks. */
-+			path.buf[path.len - 1] = 0;
-+
-+			for (int i = 0; i < pd->nr; i++) {
-+				struct pathspec_item *item = &pd->items[i];
-+
-+				/*
-+				 * Continue if either is a directory prefix
-+				 * of the other.
-+				 */
-+				if (dir_prefix(path.buf, item->match) ||
-+				    dir_prefix(item->match, path.buf)) {
-+					found = true;
-+					break;
-+				}
-+			}
-+
-+			/* return '/' after these checks. */
-+			path.buf[path.len - 1] = '/';
-+
-+			/* Skip paths that do not match the prefix. */
-+			if (!found)
-+				continue;
-+		}
+-		if (ctx->revs->prune_data.nr) {
++		if (ctx->revs->prune_data.nr && ctx->exact_pathspecs) {
+ 			struct pathspec *pd = &ctx->revs->prune_data;
+ 			bool found = false;
  
- 		add_path_to_list(ctx, path.buf, type, &entry.oid,
- 				 !(o->flags & UNINTERESTING));
-@@ -481,6 +510,17 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	if (info->tags)
+@@ -303,6 +305,13 @@ static int walk_path(struct path_walk_context *ctx,
+ 			return 0;
+ 	}
+ 
++	if (list->type == OBJ_BLOB &&
++	    ctx->revs->prune_data.nr &&
++	    !match_pathspec(ctx->repo->index, &ctx->revs->prune_data,
++			   path, strlen(path), 0,
++			   NULL, 0))
++		return 0;
++
+ 	/* Evaluate function pointer on this data, if requested. */
+ 	if ((list->type == OBJ_TREE && ctx->info->trees) ||
+ 	    (list->type == OBJ_BLOB && ctx->info->blobs) ||
+@@ -511,14 +520,9 @@ int walk_objects_by_path(struct path_walk_info *info)
  		info->revs->tag_objects = 1;
  
-+	if (ctx.revs->prune_data.nr) {
-+		/*
-+		 * Only exact prefix pathspecs are currently supported.
-+		 * Clear any wildcard or magic pathspecs to avoid
-+		 * incorrect prefix matching.
-+		 */
-+		if (ctx.revs->prune_data.has_wildcard ||
-+		    ctx.revs->prune_data.magic)
-+			clear_pathspec(&ctx.revs->prune_data);
-+	}
-+
+ 	if (ctx.revs->prune_data.nr) {
+-		/*
+-		 * Only exact prefix pathspecs are currently supported.
+-		 * Clear any wildcard or magic pathspecs to avoid
+-		 * incorrect prefix matching.
+-		 */
+-		if (ctx.revs->prune_data.has_wildcard ||
+-		    ctx.revs->prune_data.magic)
+-			clear_pathspec(&ctx.revs->prune_data);
++		if (!ctx.revs->prune_data.has_wildcard &&
++		    !ctx.revs->prune_data.magic)
++			ctx.exact_pathspecs = 1;
+ 	}
+ 
  	/* Insert a single list for the root tree into the paths. */
- 	CALLOC_ARRAY(root_tree_list, 1);
- 	root_tree_list->type = OBJ_TREE;
-diff --git a/path.c b/path.c
-index d726537622..aebb10b2e9 100644
---- a/path.c
-+++ b/path.c
-@@ -57,7 +57,7 @@ static void strbuf_cleanup_path(struct strbuf *sb)
- 		strbuf_remove(sb, 0, path - sb->buf);
- }
- 
--static int dir_prefix(const char *buf, const char *dir)
-+int dir_prefix(const char *buf, const char *dir)
- {
- 	int len = strlen(dir);
- 	return !strncmp(buf, dir, len) &&
-diff --git a/path.h b/path.h
-index 0ec95a0b07..829fafd7e9 100644
---- a/path.h
-+++ b/path.h
-@@ -114,6 +114,12 @@ const char *repo_submodule_path_replace(struct repository *repo,
- 					const char *fmt, ...)
- 	__attribute__((format (printf, 4, 5)));
- 
-+/*
-+ * Given a directory name 'dir' (not ending with a trailing '/'),
-+ * determine if 'buf' is equal to 'dir' or has prefix 'dir'+'/'.
-+ */
-+int dir_prefix(const char *buf, const char *dir);
-+
- void report_linked_checkout_garbage(struct repository *r);
- 
- /*
 diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index db66d8b614..52f6484ca1 100755
+index 52f6484ca1..c6f54ee91c 100755
 --- a/t/t5620-backfill.sh
 +++ b/t/t5620-backfill.sh
-@@ -273,13 +273,11 @@ test_expect_success 'backfill with prefix pathspec' '
+@@ -307,12 +307,11 @@ test_expect_success 'backfill with wildcard pathspec' '
  	git -C backfill-path rev-list --quiet --objects --missing=print HEAD >missing &&
  	test_line_count = 48 missing &&
  
--	# TODO: The pathspec should limit the downloaded blobs to
--	# only those matching the prefix "d/f", but currently all
--	# blobs are downloaded.
--	git -C backfill-path backfill HEAD -- d/f &&
-+	git -C backfill-path backfill HEAD -- d/f 2>err &&
+-	# TODO: The wildcard pathspec should limit downloaded blobs,
+-	# but currently all blobs are downloaded.
+-	git -C backfill-path backfill HEAD -- "d/file.*.txt" &&
++	git -C backfill-path backfill HEAD -- "d/file.*.txt" 2>err &&
 +	test_must_be_empty err &&
  
  	git -C backfill-path rev-list --quiet --objects --missing=print HEAD >missing &&
@@ -229,24 +181,7 @@ index db66d8b614..52f6484ca1 100755
 +	test_line_count = 40 missing
  '
  
- test_expect_success 'backfill with multiple pathspecs' '
-@@ -292,13 +290,11 @@ test_expect_success 'backfill with multiple pathspecs' '
- 	git -C backfill-path rev-list --quiet --objects --missing=print HEAD >missing &&
- 	test_line_count = 48 missing &&
- 
--	# TODO: The pathspecs should limit the downloaded blobs to
--	# only those matching "d/f" or "a", but currently all blobs
--	# are downloaded.
--	git -C backfill-path backfill HEAD -- d/f a &&
-+	git -C backfill-path backfill HEAD -- d/f a 2>err &&
-+	test_must_be_empty err &&
- 
- 	git -C backfill-path rev-list --quiet --objects --missing=print HEAD >missing &&
--	test_line_count = 0 missing
-+	test_line_count = 16 missing
- '
- 
- test_expect_success 'backfill with wildcard pathspec' '
+ test_expect_success 'backfill with --all' '
 -- 
 gitgitgadget
 
