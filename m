@@ -1,190 +1,142 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E372D363C65
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 20:27:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774297678; cv=pass; b=HspRTPWqHcCqBjZ/9t9n624mBP+awFgxjuq97RQ/zZ6fQ7KOS7BAhtpDYWg6CsT92mY9UJg6GwQqsHzWpc1UOrO3Bsb2OMj8xQMnprckLaAfBMkhOX3u/SVSpCbvFK390f1Va9Iq5acsFf9fQVM143jlnaWQKNJWK2d58ySun3s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774297678; c=relaxed/simple;
-	bh=pX5uEAU4jPL2UJ71pN+5vfxpHSGkaZ2jKpegdSmp5nc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q2U++ZAfY+pAsmrpWz0D/dGhAnOqW1qSuYQiMB7DlXFraOYhKlLO/Xv9o/9vPmG6U0NEqjumErTqsREUpD4kfr7NLBI8oJpPrrWFbm664NpV0vnJ6udbJoLa/Ccv5djkAy/evqC1IzsOxmLzHz3Xnb+140pKEsSMjVCZVvOAtdM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA0C366548
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 20:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774298359; cv=none; b=BN0rPALSkSgviAHBcIYGl/XIFYnzODSIGY93TCOod1TNi0tQS5FXP6UhTMSrAC0oQetCRnFXZiaYC+I5jxzrUz9YWNvKFmx85yo94iQLApX6f3ZnFVtequLCZ7/GyvzQEATRRWxDFjeQIh92VZwqrhHRPKmMDjhJkZSrHXeDHpM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774298359; c=relaxed/simple;
+	bh=IRMgHMkOVRydTd79IKEfbZXC4u/yLxay+A8L37QDt6k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O187i3egT3v8+9gzYi9+kS5ja0OAM7289PoGTOOD51SBFtKqxleF7zY/kZRHB5QUj8hP3KygXj2zPBfO2ZbpqnwW8lsD09YIyM3jnPUt5Yp10GYjErQDZyh3yWZ3gRv4zFE9/7BMcBjou3aNcClZaS7RWyL2UPymoiGo5N3qdC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AEJn9QQg; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-127148c2112so411644c88.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 13:27:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774297676; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VIAVoHDz+pyOFg76NDWc7agzouRIL3n+4ZNNYRc4q6TP7XXrGYPHSCajrCIDDEm/aC
-         YodMDL3dWmVL9h3sB90/vuQz4Sq3ybbzmTMRX3xOApLY/TbGK5ue81SeSsxOfMpRVjT/
-         QlA/iirXOdjFofGusaYgvd3Y87Ea6Cwv1YSreJcn5Lw3Iv127os72lD9dWXPL/iPCbtn
-         eLic1oSB+AIHlE9ZUt30fHROBgw0eDtPbiLsgsdDG8S/1hh1JI0FquA+BQ/Wh8eeaU0Q
-         tTRC+ecRCJu7JMDu5g8cMDfdp/0JgSIOhsEVHv28BCIA+BQ6sQbey7jQ82+0CVlK/3Fo
-         +P1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=Qfm2JNcBs0bLgYRxhklQYCrFg/U8FzWGu3SsoN+wK1E=;
-        fh=2G/e6Lw/f+E+f8jTR0OeNBw5Z436rjI5/HE2AOyMqWw=;
-        b=XkWUI2t/q5dFoCJ2BSqsX1w/48q3PXJPqjOQmu6Bbo9k456hpijAnCzBC+qZwnLrDZ
-         7lfXku0e9dklLg3/gOYYak1liVyTiTFwLtr6fvC/5SPdrF0buJQAaGgO/QbqLqxfXsk4
-         +Q9LgyR9YjUhT7TP13bsh7o9UsaTsJpLxAu9uQKOPyZvcRBe67hVokypPt/Mof2j/xDE
-         jzxpHrtizdvk/Zp3L61cL5NXH3xLC3SvJyPAqlo2Xo1OugKfJY87LByY6p/yAQaipTWN
-         F7giihyaauZYgMVb8Qb9gYmfqoh4kvYFzv/pYGZWf/fNax7BKWblZmQxP363z7pSZ8kU
-         IoAQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AEJn9QQg"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50b268fba9aso4761611cf.3
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 13:39:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774298357; x=1774903157; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8c1SU55Fb8BKrVUM987kgFBbxdUrktY9UJJME8h03kM=;
+        b=AEJn9QQgUD0PIJxY5cZvZ4jgWSSgKFhqXgiQJNpg0qphih3x52RXSvFLy5UW9Gu+ur
+         T7fccckhrzupf/s+5mi1Pz7WdXcWm72LVqZMU1vaUSSz7+UoaTg2v2LImB/A4jiKhNVG
+         qrhNFKrseWGcAVbfC1YVf/0TXtoTSyRvUeuGpx1I+SaQnj01l3ZyxUanWOd0sC1Dd605
+         CGIWVS4qnhdWTrRdHd/gWPTCOtHT9L0rHSUD/Tp0FhjnM2jO9QNo7mwdk7hc3ndE4pVk
+         w8BQey+bT4irvN3qQzXOBKDar1+ERb1SuobbYzTBEXRJjXhDbHEcWvnR+kuxrzoxMWBh
+         JVFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774297676; x=1774902476;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Qfm2JNcBs0bLgYRxhklQYCrFg/U8FzWGu3SsoN+wK1E=;
-        b=KjD2n5qsdxVdAnKfsfoC5+CoX30xXx5TQc+F/ThrsbIOvUWHx5dAngLwORluOJxCNL
-         BCNAz3blVNrcoh8ZxkEX2pEwK5ooNdxTGr3l1++s1ZX7otqlQD1AM6wH1g2uVdsaefOl
-         PBHSNJSqqK3OYDKqeS/dJdIqnRRz9F8/PuIdTMIrTIkx99AAJrMyHw5MY5j0H4MzXSyb
-         NOmtEV2roYdF+R+WtGR0RMokp+gJvKaX3gO+bverojCxBWrrMbPYxUuYdVBVJju59Alg
-         5jjrROxmfn2dm+h4QHFrue/IRg9RbrWXyWPFfN1mYISZM3pzcgo01ZNAzU2SCBrM+jRE
-         HW1g==
-X-Gm-Message-State: AOJu0YyNp+cpjHTfXodRUWTBOGnJF/PXeR/O5+sPT6JoygOXtaso/jr0
-	lvaUhTOel2/zoFII3FZn+dlC8qAE2DymF+0GBMkThEVLxYvMpxp+eMklZgCnbU6rHycd0fEV81J
-	hipqJIUic+1Ei5nFwRYmLdUrwX5SEKcs=
-X-Gm-Gg: ATEYQzxBsSCn+WpmXC5ls6fft5QF3k/HrIEs6RkySez/9b3alZ0PZjJhIHS5U7NbwIK
-	jyYRhEkgnTMfhf9lzQeWs1UIRw8oWZ/b8QCRTsebE/TQDCQxMsKwM/noU8Y9nay16YPAVPqLNc2
-	yhAMB0FRp54FA1BkL2iYIm4rF80TXQzZ0uGINapyFvCAa8j9joOcI9OPsCevQ3CfpI3CuqR7hy7
-	p5E2LQgFdwCxvrDh50Kp6lPEjWX38Exe00PeGEQ4DhGlnOSrzo0o//oHTPgGjQ87/WFUTRln+pG
-	tzxtPk/e+Mk0v2etaXPTSnFlleOIJlaIiN8aGrU=
-X-Received: by 2002:a05:7022:6883:b0:12a:6d14:df9c with SMTP id
- a92af1059eb24-12a7265122amr3076779c88.1.1774297675973; Mon, 23 Mar 2026
- 13:27:55 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774298357; x=1774903157;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8c1SU55Fb8BKrVUM987kgFBbxdUrktY9UJJME8h03kM=;
+        b=GU5EwB3pe6HSBPzQW5MDwxxz19RnYiiy3NZ2EX6fw4J+UArGMlhBth3cFcEzG+piOg
+         oy1AUeIMXbcrmNVl64dtqYE3geKLDcdFCxPMF6k8v0lYCz5iIbArtDAIfQyfzS6XeLYb
+         bE/qpQ4+cEVYh/mBDi0rz1R/FFgTORYpv1P2tgqRwrkmD6d6EvNLXcGkIj/kr897xi05
+         qvX9/WuS42c9U3HtZCfmO5pdrlpyVeQRBWsBD0FPO9ZQEk4Vu2E77lIy+a4sQldQ8R0X
+         OrzRTQiZADhMnoLM5ZpBhvqqhDpC/jl1nTSVP/l4UGoqVTPHEgJTzpjDdHJ5KmLveeM9
+         DIEQ==
+X-Gm-Message-State: AOJu0Yy3IXZa8BA1Fv/DKhbOiWXXXSorbEctWxKH80OBA6vwUI1uYcLH
+	4nTjNOMcpedpU718ZsaBFTrrTX6gf1xNHRu8IDSiV8SUcqs4TuU09//L
+X-Gm-Gg: ATEYQzwOwlOZTknMS3vVNRgRhs4Ca1qBZZFkln25OL8rirzF1G6YUVkbfWbZuYtouTQ
+	/HHDkaMztlgJCN3WCcCZE0uJGlD9lx/lflozLWQbsjwWahZlXpEU+0WFluHilrZ0i5+2An2yhnD
+	c2fhYxvfYSS1WG4WgUDCoHRpX7yOyIO9VTTXlSFFB8T7zu2tc6bmwx56x9+ypalVqHVmoq8D0lh
+	CZur6gmofltvs0ELCFRFGZMFKhojZDDWioFcudJS6X/gtweVvug45Xso3JlG4AlZwoX4JbbYDQa
+	Ojl8dkrgflC7+6kWynMea9jj9wlBMovuIkRPPpepQti3vf+SMCCKD9KstO41EhlCTJdsCL+8H2t
+	fy6OyShgCpRSWvd51M/p4Q1M2Z+lMKUHmTPt8JyIpoBFC8jpHYJgB5ShaoFzZRWQkjJF2dRxwGT
+	5zs/PnJg26I3mMWJQK8Ucycah8NDA+qucLdgO6eAO1nxH4knqMBYb0X0LOABcatvB1nGsWuw==
+X-Received: by 2002:a05:622a:5c7:b0:50b:34b7:fd62 with SMTP id d75a77b69052e-50b37448bd2mr204207561cf.25.1774298357068;
+        Mon, 23 Mar 2026 13:39:17 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b36cb2c63sm95237541cf.6.2026.03.23.13.39.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Mar 2026 13:39:16 -0700 (PDT)
+Message-ID: <7279f449-7bac-4364-bda0-5115980fa717@gmail.com>
+Date: Mon, 23 Mar 2026 16:39:16 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
- <cover.1774205661.git.lorenzo.pegorari2002@gmail.com> <0bb031e7443bb53abbbb0afaa347285d6d8cf7b8.1774205661.git.lorenzo.pegorari2002@gmail.com>
-In-Reply-To: <0bb031e7443bb53abbbb0afaa347285d6d8cf7b8.1774205661.git.lorenzo.pegorari2002@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Mar 2026 16:27:44 -0400
-X-Gm-Features: AQROBzDKAaKnuHDTSAAzMFoxrYJ6c6U8W0H21rT7i6-ZOwpfJt6W0_sYC0ctylE
-Message-ID: <CAPig+cR7-3rdkHvGbzk8O7P=83pxBTvqXTUgMxYpf+OK9jNCgg@mail.gmail.com>
-Subject: Re: [GSoC PATCH v2 2/4] pack-write: add helper to fill promisor file
- after repack
-To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] t5620: test backfill's unknown argument handling
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ r.siddharth.shrimali@gmail.com, ps@pks.im
+References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
+ <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
+ <9699650aa7dc04cf1cdc26803caa8304b29c1662.1774266019.git.gitgitgadget@gmail.com>
+ <xmqqzf3y5zu2.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqzf3y5zu2.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Mar 22, 2026 at 3:18=E2=80=AFPM LorenzoPegorari
-<lorenzo.pegorari2002@gmail.com> wrote:
-> Create a `copy_all_promisor_files()` helper function used to copy the
-> contents of all ".promisor" files in a `repository` inside another
-> ".promisor" file.
->
-> This function can be used to preserve the contents of all ".promisor"
-> files inside a new ".promisor" file, for example when a repack happens.
->
-> This function is written in such a way so that it will read all the
-> ".promisor" files inside the given `repository` line by line, and copy
-> only the lines that are not already present in the destination file. This
-> is done to avoid copying the same lines multiple times that may come from
-> multiple (redundant) packfiles. There might be another better/cleaner way
-> to achieve this.
->
-> Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-> ---
+On 3/23/2026 11:29 AM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> Before the recent changes to parse rev-list arguments inside of 'git
+>> backfill', the builtin would take arbitrary arguments without complaint (and
+>> ignore them). This was noticed and a patch was sent [1] which motivates this
+>> change to encode this behavior in test.
+>>
+>> [1] https://lore.kernel.org/git/20260321031643.5185-1-r.siddharth.shrimali@gmail.com/
+>>
+>> Reported-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+>> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+>> ---
+>>  t/t5620-backfill.sh | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
+>> index c6f54ee91c..85740f1f13 100755
+>> --- a/t/t5620-backfill.sh
+>> +++ b/t/t5620-backfill.sh
+>> @@ -7,6 +7,14 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>  
+>>  . ./test-lib.sh
+>>  
+>> +test_expect_success 'backfill rejects unexpected arguments' '
+>> +	test_must_fail git backfill unexpected-arg 2>err &&
+>> +	test_grep "ambiguous argument .*unexpected-arg" err &&
+>> +
+>> +	test_must_fail git backfill --all --firt-parent unexpected-arg 2>err &&
+>> +	test_grep "ambiguous argument .*unexpected-arg" err
+>> +'
+> 
+> Hmph, I would have expected that an earlier --firt-parent on the
+> command line would trigger "unknown option" instead.
 
-Thanks, I think this version addresses all my review comments[*] and
-looks much better overall. Use of `strset` makes a big difference over
-the previous attempt. A couple minor comments below...
+Interesting that my mistype has demonstrated an interesting
+behavior here. It turns out that random options starting with
+'--' are accepted here, including --unexpected-arg.
 
-[*]: https://lore.kernel.org/git/CAPig+cQSsMfvHJnwuXGQ1Je8ekz=3DRqbaibn-3sh=
-bya5y-5xTKg@mail.gmail.com/
+This means that we actually have room here for some improvement!
 
-> diff --git a/pack-write.c b/pack-write.c
-> @@ -621,3 +622,63 @@ void write_promisor_file(const char *promisor_name, =
-struct ref **sought, int nr_
-> +void copy_all_promisor_files(struct repository *repo, const char *promis=
-or_name)
-> +{
-> +       struct strset dest_content =3D STRSET_INIT;
-> +       struct strbuf read_line =3D STRBUF_INIT;
-> +       struct strbuf promisor_source_name =3D STRBUF_INIT;
-> +       struct strbuf write_dest =3D STRBUF_INIT;
-> +       FILE *dest, *source;
-> +       struct packed_git *p;
-> +       int err;
+I'll see what can be done to make even these arguments be seen
+as failures.
 
-Nit: I probably would have declared `FILE *dest` within the scope of
-the repo_for_each_pack() loop as suggested in the review, but it's not
-worth a reroll.
+> Having said that, if the code lets the setup_revisions() parse the
+> command line, the usual "unless disambiguated with a double-dash
+> '--', stop at the first non-revision and take everything as paths
+> but for safety all of them must refer to an existing path in the
+> working tree" behaviour should trigger, and it is not specific to
+> "backfill", and may already be tested centrally (if not, I do not
+> object to such a new set of tests).
 
-> +       dest =3D xfopen(promisor_name, "r+");
-> +       while (strbuf_getline(&read_line, dest) !=3D EOF)
-> +               strset_add(&dest_content, read_line.buf);
-> +
-> +       repo_for_each_pack(repo, p) {
-> +               if (!p->pack_promisor)
-> +                       continue;
-> +
-> +               strbuf_reset(&promisor_source_name);
-> +               strbuf_addstr(&promisor_source_name, p->pack_name);
-> +               strbuf_strip_suffix(&promisor_source_name, ".pack");
-> +               strbuf_addstr(&promisor_source_name, ".promisor");
-> +               source =3D xfopen(promisor_source_name.buf, "r");
-> +
-> +               /*
-> +                * For each line of the promisor source file, check if it=
- already
-> +                * is in the promisor dest file. If not, add it to write_=
-dest, so
-> +                * that it will be written in the dest file.
-> +                */
-> +               while (strbuf_getline(&read_line, source) !=3D EOF) {
-> +                       if (strset_add(&dest_content, read_line.buf)) {
-> +                               strbuf_addbuf(&write_dest, &read_line);
-> +                               strbuf_addstr(&write_dest, "\n");
+Thanks,
+-Stolee
 
-Not worth a reroll, but this could also be:
-
-    strbuf_addch(&write_dest, '\n');
-
-> +                       }
-> +               }
-> +
-> +               err =3D ferror(source);
-> +               err |=3D fclose(source);
-> +               if (err)
-> +                       die(_("could not read '%s' promisor file"), promi=
-sor_source_name.buf);
-> +       }
-> +
-> +       if (write_dest.len) {
-> +               strbuf_strip_suffix(&write_dest, "\n");
-> +               if (fseek(dest, 0L, SEEK_END))
-> +                       die_errno(_("fseek failed"));
-> +               fprintf(dest, "%s\n", write_dest.buf);
-> +       }
-
-Can you explain why you strip "\n" and then re-add it via fprintf()?
-The reason is not immediately obvious.
-
-> +       err =3D ferror(dest);
-> +       err |=3D fclose(dest);
-> +       if (err)
-> +               die(_("could not write '%s' promisor file"), promisor_nam=
-e);
-> +
-> +       strbuf_release(&read_line);
-> +       strbuf_release(&promisor_source_name);
-> +       strbuf_release(&write_dest);
-> +       strset_clear(&dest_content);
-> +}
-
-Everything appears to be released. Good.
