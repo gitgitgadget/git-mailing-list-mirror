@@ -1,157 +1,133 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EDA3264F5
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 19:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578CD3DF00E
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 20:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774294368; cv=none; b=UgPqCdxXk3Vkn4NR+VN2gnii4xvs+3IIdqh6Jn1XZTcH8DEwxg1aipo3jzOfn6KTmTtKZF1e527D9zK0VyFD2TCo1snDv9kqtxRAMSM7QY4zu697xrmDdfY7ayNNAPgtlkHWqNNrTJU3uo/SGH/r2C1Db524YDRX2AfSiNb96HA=
+	t=1774296394; cv=none; b=K9PN44/OWZqnx7lgwqitenBO0VNwvSlKXRUGfbCbWISSq6CsBu+xMKFvvODUd58uYJtoiy3bFWUieAc4i4wP12uXqRSvIgJWV/FyoesbZ0FnBGh6meDB7lhJRbHBYSYAg/nboQML0SIlV+yZlRREADzqo5FY+B9mlShLDkp6tPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774294368; c=relaxed/simple;
-	bh=TZPcutmm48HvM/b0Kq3pybmpFxQeLCn7LJXTxKMyHIo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kg816cOPCnKsw7JpQzjeaXq0hDvgVUA2plf6Mg1pD0eBIYR8dmCydb0/8D1U3Mgv6vD9PJKC1AsL0yryr+wi1ys5Og20IG0wSCHgED6wpS30kdkhECtEyhTXwn7sNqNL5wmqxGjj5RGS5Kxy1bEaSlD4Lykf5d2qoeZdsfcNwQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNDkDaz0; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774296394; c=relaxed/simple;
+	bh=oH60xiWekspo1rSgb+2Cfj490lHP3kVg2tw/coM+z2s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d0jFWAbnIiu+H34aCQkC3+RKTFdkcABJTr7Y4+hkh9CwrquUpUNyvxwA8/jbIEETyHU0x1lN+kowICP7WSXOyYYrxvtv/CzVWPW6ac8CaeE0xZ1jzjF5Qr/WYk5jFV+GU0kCjzW+L0HlRzF2iGqFXW5sOTvfyuSI1WU6C6v8YWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lkoR3ouS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VFsL/eYY; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNDkDaz0"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7986fb839f5so45585877b3.0
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 12:32:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774294366; x=1774899166; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=giIAsbuWd2PtDCDiasgFGkEMbxnbogmS2fNwxhYtwAk=;
-        b=HNDkDaz0QQTd7K6HdpZyu0sHcLpveFt6OvD1aE/ZNyVAdKqEe1/0n+/BqlvzQrmaTz
-         vz1zDNlH7+KH/Z6iPOJTjtC0zxd4r7XiaisyUBXcnIvKL+LLSt+/YzKZBUFyA7mwx/0I
-         CAo5czpK6Eqtrgz9pxdieXXc90azSn8OkBjZBTOe+EnFOUiRggpD2Au0E3n4DNjXrGms
-         9M5Qm/M5HmwcCf3guJdIlrIb3Og1ePrwofbSG00OlPJBJo0WWqDAUYPtSY25oFmrDXOo
-         mTxh4U3GUEb3eLI0+tQ/cs/mJiTqttzJKhzqnWh4RQjXG/U4RYn/eFyhyrQNdokW6deA
-         603g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774294366; x=1774899166;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=giIAsbuWd2PtDCDiasgFGkEMbxnbogmS2fNwxhYtwAk=;
-        b=cfshZwI2VychWC+FlttvGCgzO3LfJz18ovi9p+KTBbJt1fnrAbr32VxnIsG7O05GWU
-         3zpk4cVgpDAZdCBUl3OU04vYBEJ1NWtq/OkM09kQHJTgmygrzu93smwSNv6tvT0px+/Q
-         qlqa08X3U9tli9jPaEvalQXYjGD6Fyq5Zpk4N6EcTm6Ublt33osK/BYdtS5fZNjP345v
-         wf4T0/aOurz++7SJYhViIHgGaDu+Hmty/EksWhTUSJ2P5ikFGKz+AcABwT30gBHVrOkJ
-         +ewu86RvnXKm39qcotnfNZCGGzPaolHJi4MK8orV9/8Op6UWQXt+KqIldPcNt7lBqG7g
-         48OA==
-X-Forwarded-Encrypted: i=1; AJvYcCV3gFgNsmaczZpgsTF1eYBcg8eExcns/3gYnUYmOrz5OBW14f3TrqB/HEIY7A5sPaLTKR0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTRFU+odbqj85mhpkBH8lBqtjwADrXFlnrwJMFAZqjjXIzN6Qj
-	5XdXG8eVegNYP/w0vbQCoH5ws6O4COUtN3tTi1ERRp3/ft3pQfB91EMJ7Au1Yw==
-X-Gm-Gg: ATEYQzzGA8xNWsJr9v1u6aNRFRM7FlKhci46cazL9y6ODs1T7XYgdKp99N0FFQreChd
-	IQ/Gy9ORbnAOyo0jZ1qZEdxftBaXcG+9FNpYeWx4QBMeGCUJyukQWijdrv6Sw5jWIYSM/hvcN+V
-	B+PrI63wjch7V2xNzmh7a1JldKoX1TG2zJrd0CUT5IboGRRAOK1vMyn+bE/8AJYYbAhdrEBbqZq
-	1qDcEgcVthYBoSeSTV4/FAO6L7YDM/63b0zECoL5nnPJvUrjHwK8hdj6JIQCKcrIeUsz09ZBLIP
-	m08U/vRegFSufu6oiAmRoy7wxS/x88RkqLvwMbNZX1yytmtehJecFK0WJ1it4tlehjFCSV3yltK
-	PoFn0hV/GBjqdQT7eEAijnZycrQbmXcZFmFiAIGTkWCB8liePlMdSRYSjrdoRWjr2dzXdgKRpV6
-	+V1Tq62Eru+iLfBOESYP3PK67jlICRAeWz3tU2zaWtF5tXeQfPEJHSa1IOClycWV93pb0lSr8+V
-	iV2aYPl
-X-Received: by 2002:a05:690c:dc2:b0:785:cecb:4b19 with SMTP id 00721157ae682-79a90a89acbmr144657137b3.5.1774294366154;
-        Mon, 23 Mar 2026 12:32:46 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a903a33acsm62898547b3.3.2026.03.23.12.32.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2026 12:32:45 -0700 (PDT)
-Message-ID: <ab38c06c-29de-4c41-9aeb-5e465f6af532@gmail.com>
-Date: Mon, 23 Mar 2026 15:32:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lkoR3ouS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VFsL/eYY"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F19914001ED;
+	Mon, 23 Mar 2026 16:06:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 23 Mar 2026 16:06:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774296390;
+	 x=1774382790; bh=fI7sVY66YYcUjsLe9IJvWiGV2NRm8H/ZyF/ZqFEJ6Fc=; b=
+	lkoR3ouSaUTBMp8zjRbPEoPlweb+X6yak3XBI1wKYNpmcWd1rRFtOEGQWfB5UzyI
+	evO5Gilo4ZW0PURSxlBo4uhmgnE0mXbAIO5/+X258XZqwxn/EdEPIcNGzv+J3ORn
+	jSyKz199xRq6SE62YLFNH0XdQmE46lZfN93/lTi/1Hte/Tu+vYbd5uWBYHMhpeIJ
+	OyKcyDkVvFvsNVnqw+cnfKou5BSFx7PkW4YfF0sZZdwk0XkPdrsfGMNasECWPY90
+	Ww5hnR7r+/Y2R3jDOqwtM9CdCfEsQ73m5W+IYaEQoPiFSXDJkyKXN3YMWqs2C/ak
+	pTx4zCkODztC25cRd13Xcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774296390; x=
+	1774382790; bh=fI7sVY66YYcUjsLe9IJvWiGV2NRm8H/ZyF/ZqFEJ6Fc=; b=V
+	FsL/eYYOl+w7i4QbXQyzKI8aCZgqDYcQupUMcg22UbicaA2Fs+md9Qphj4Ipj2xq
+	oqNewl6EBcJzjGpTzZxslLHCaDH1kqQ/uDySrwULqERpSHZVdHxEB2CAkA0ndXc6
+	TGQEvaVXSHFkESyuHD8F2dw07Rn5eD3QSxJC1m84X8xOZi9y3MquYbBnPgV6OrmB
+	q7d0Zksy7Eo08u3eXJGFLbyWK6pPGtlQUkGGxRvIs5/sGmCYUK1mgwy8z7W/Z8Ax
+	FjR4QbjhNWLJ9ZK9qZG5PXFT/zD6qQNmggHd8YoYO9Rd4uIN/f7q9BRdKPTCwvRN
+	r52o+PCW/7N++czLymj6A==
+X-ME-Sender: <xms:RZ3BaZEJ3ZUqXiDxopwM1GqkGYATj9luqgC95VBCe9Kgp5UgnrwydA>
+    <xme:RZ3BaQldL_TmxZO-J9PRGBf21ZOXNbkiqT3YNJHCAkxt018j3llQZDEWEEqzOD45m
+    3YMQwUVf3MhtztD1COQNhx94T9Dk51yJ1xNC5BwmMkJ7ajCWUetQA>
+X-ME-Received: <xmr:RZ3BadaOUANNiVcCSsDZO1hUAsxNlqhwN6yFEpt_mx8-o-DoHQK-yIWr5Do4-G4IVkn8NqFdU8h-_0wcRcEQrSAw8XxbjlVgbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudelieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
+    hlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgr
+    shhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohephigvvggthhgvnhhgrd
+    gthhhinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:RZ3BaVGDmJmg_-s8ns34M3ZJkXNF5Uhp2twBiBBYheKK_mqDcXDqWQ>
+    <xmx:RZ3BaeKDSwCgYYtboOAbnWiLvPwKxUsl8P2oDFAtbSjbvGBuI_XT_g>
+    <xmx:RZ3BaQOTSdtr1xOnAS1DU7o4H7WglToZoPCclFtxP0dXi0tND72A4g>
+    <xmx:RZ3BaemlBg0GlN-XhucGxk0DlQvd1i8vg_Xu28SiKb0P6zjqZjpwOw>
+    <xmx:Rp3BaWNxoZ3iGHyv3_kI9PfFQXrT54RsbNI4Msp-WBSGGOQl4wIZtYN2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Mar 2026 16:06:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Toon Claes" <toon@iotcl.com>,  git@vger.kernel.org,  "Justin Tobler"
+ <jltobler@gmail.com>,  "Siddharth Asthana" <siddharthasthana31@gmail.com>,
+  "Yee Cheng Chin" <yeecheng.chin@gmail.com>
+Subject: Re: [PATCH 1/3] t3650: use option with value consistenly with equal
+ sign
+In-Reply-To: <ccc995f1-4da2-468a-97d6-f20993ca4b4c@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Mon, 23 Mar 2026 20:17:56 +0100")
+References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
+	<20260323-toon-replay-arbitrary-ref-v1-1-5c7172f675ec@iotcl.com>
+	<ccc995f1-4da2-468a-97d6-f20993ca4b4c@app.fastmail.com>
+Date: Mon, 23 Mar 2026 13:06:27 -0700
+Message-ID: <xmqqv7em48fw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] repo: show subcommand-specific help text
-To: Mahi Kassa <mahlet.takassa@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, lucasseikioshiro@gmail.com, jltobler@gmail.com
-References: <20260323152937.257406-1-mahlet.takassa@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260323152937.257406-1-mahlet.takassa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 3/23/2026 11:29 AM, Mahi Kassa wrote:
-> Use subcommand-specific usage arrays for "git repo info" and "git repo structure" so that each command shows only its own synopsis in help output.
-> 
-> Keep the top-level "git repo -h" output unchanged, and add tests to cover the subcommand help behavior.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Please wrap your lines in the commit message.
+> On Mon, Mar 23, 2026, at 17:09, Toon Claes wrote:
+>> The tests in t3650-replay-basics have mixed use of option arguments
+>> with value with and without equal sign. Bring in consistency and use
+>> equal sign for all options that expect a value.
+>
+> If it is about consistency, could you pick one or the other either way
+> or go with whatever happened to be most used right now?
+>
+> Consistency by itself is a weaker argument than arguing that stuck form
+> is better for invoking git(1) commands, which is what gitcli(7) argues.
+>
+> Which is to say: arguing for stuck form in the commit message based on
+> it being better is a stronger argument than wanting consistency. :)
+>
+> Then once one form has been argued for or referenced it follows that you
+> should be consistent and use the best approach throughout.
+>
+>> This makes it easier to distinguish them from positional arguments.
+>
+> Maybe it’s just me, but sticking with the stuck form makes it harder to
+> mess up writing unintended options and positional arguments. Once
+> written it might be slightly more readable, but the main benefit is
+> using a style that makes messing up harder to pull off.
 
-> +static const char *const repo_info_usage[] = {
-> +	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
-> +	"git repo info --keys [--format=(lines|nul) | -z]",
-> +	NULL
-> +};
-> +
-> +static const char *const repo_structure_usage[] = {
-> +	"git repo structure [--format=(table|lines|nul) | -z]",
-> +	NULL
-> +};
-> +
-
-I did a visual comparison to the synopsis in Documentation/git-repo.adoc
-[1] and these look the same. (I suspect that they also exist in the
-repo_usage struct outside of the patch context, so they were easy to
-copy from there.)
-
-[1] https://github.com/git/git/blob/6e8d538aab8fe4dd07ba9fb87b5c7edcfa5706ad/Documentation/git-repo.adoc?plain=1#L10-L13
-
-> -	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-> +	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
-
-> -	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-> +	argc = parse_options(argc, argv, prefix, options, repo_structure_usage, 0);
-
-Nice and easy here.
-
-> --- a/t/t1900-repo-info.sh
-> +++ b/t/t1900-repo-info.sh
-> @@ -148,5 +148,9 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
->  	git repo info --keys >actual &&
->  	test_cmp expect actual
->  '
-> -
-
-Don't erase the whitespace between tests.
-
-> +test_expect_success 'git repo info -h shows only repo info usage' '
-> +	test_must_fail git repo info -h >actual &&
-> +	test_grep "git repo info" actual &&
-> +	test_grep ! "git repo structure" actual
-> +'
->  test_done
-
-and keep whitespace between the end of the test and 'test_done'.
-
-> diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-> index 98921ce1cb..0f7ec4da10 100755
-> --- a/t/t1901-repo-structure.sh
-> +++ b/t/t1901-repo-structure.sh
-> @@ -224,4 +224,9 @@ test_expect_success 'progress meter option' '
->  	)
->  '
->  
-> +test_expect_success 'git repo structure -h shows only repo structure usage' '
-
-You preserved the whitespace above this test. good.
-
-> +	test_must_fail git repo structure -h >actual &&
-> +	test_grep "git repo structure" actual &&
-> +	test_grep ! "git repo info" actual
-> +'
->  test_done
-
-But here we need some before 'test_done'.
-
-Thanks,
--Stolee
+I am not sure if a patch whose purpose is only to make the CLI
+invocation "consistent" is a welcome change, though.  If we support
+two forms, exercising both forms and making sure they mean the same
+thing may even be better, but short of that, a random mixture of
+styles as if end-user human may have picked one form on this day and
+the other form on another day may be better than a complete
+monoculture.
 
