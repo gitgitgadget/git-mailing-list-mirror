@@ -1,82 +1,44 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B7A2C375E
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 12:22:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9D23B47DD
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 14:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774268566; cv=none; b=jqTgRXCRuSdEE5sH9c5tjZMn7dCh4CsumGRzhkxxAk764O4cP+eZGtUGIwQ5srm0wlXCgHCjAqaZN7xui08zgVLsM65utQw8ezFsUjEtSkU93R+Diyf7F78+g3RImVaXSg+S1CJXBgr+uKmRGTtwg3zB7r1ql3GuMs8X+OLBTw4=
+	t=1774274442; cv=none; b=Szri5xrFD8yL2mXs9cNqG7QaaVGsaMU7foU4cTRf11skXSxvZufc9PLpvYarwI7/KLpkAaZkin3RwNWCe/mrDQbrPGRgprM7Mkei8/79XZzKtVGO3sOaTCifDDnYKIKtKIR2mU6oJbThBnlRq8IRhFBz4qGwFcKmKiNrCSvWEqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774268566; c=relaxed/simple;
-	bh=upqCPpw8j4cg2Y+DIQQMjeBn3/7I9/HhXbMXx7xRpQc=;
+	s=arc-20240116; t=1774274442; c=relaxed/simple;
+	bh=9zrx0fQwFCI3WLTgIOtVAuUg0zbPMz2j/2OcDQXRWWo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ilUuxe68xDLZSvBrjdXwSL30BJ62GJEPsTh9M9S/s3GKHyXq2wq/MSYVhdkOMEUyOi5Ikao+sfJ/JK01/1WR0phmDLRE4vFkiUFMSl3pE+qmFZekM4nOMHipEeujRzDCvRT5nKJ3KF1yhy1GUiDY60qbFOXcsU5Bp7LTGLJ/qRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Drymivei; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oYZJS8Gb; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=C5zpVEG/is+5T4T6hf7dyQkjIGP76eyx6lSIcAQzOf71+Riq1eWGV96PrzizdVvj8Ex3PP5y2oa8mTWFjW06gFuK64Y+MBR7TB7dM4kK5cuOFmj6RBQsrKHLlaz2WTjB/tN8kW1aTvh1hf348dGPyGpx/G7imzdKggEFuTFHBY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=A2JoswWy; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Drymivei";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oYZJS8Gb"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A10D27A0053;
-	Mon, 23 Mar 2026 08:22:44 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Mar 2026 08:22:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774268564; x=1774354964; bh=3Tr3JsPHxW
-	8dlpGKJlTH9tXTUmD6UrI8AVTWuwj/dyE=; b=DrymiveiKWzFbpDc11qdWdGptv
-	0mnWBn8tNq62EHRosgRdMBsUiCCJlKFUF+kMSQPvjk6HEVf4wNakkHCv0mpgyC3L
-	tYaLyoEEqiV1Q4Jp87qiWBRTRCdhXeGFl7ROhc18GijY2cRqaraUgXhRiA8BMo+2
-	4e8qF8JBb7ydwFqz5w1ySmjqty2wkOXCB/Hd06sjlexrWur/tpK0oeY7sdNwfFT/
-	j1EtjjHHUG8U/krdeLnB6DYNE1cPb/uQqbeBfDyJMPUuiA3xbS1MG8uoaw9XBbx9
-	m9zAD3zUHs7X4czk/VWhC00maMskGyHoqY+DwK+OcDnL01JhlSPs3R7REY/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774268564; x=1774354964; bh=3Tr3JsPHxW8dlpGKJlTH9tXTUmD6UrI8AVT
-	Wuwj/dyE=; b=oYZJS8GbBfH39nCrDVdgbIf/nYRVHho0S1J+k16t0iZS6SBMJvL
-	rXqPS6XgkGsN2nTusrIOwsqCpntCzuSSG+Z4jbD1ijWpv5wdqFs9/9k8qbXb3/cO
-	MRxLLF2jOz4Q8e++EXxBah0yO3hhH/ovTwCjZ6rFETwxFUBnkRqNBSaqICTOpwD3
-	UQs/TxmSkPH4t8zxMr+RrDA354EdyNpCINbT2YYNI/k5x2zZDeMjpHzwEuSV2wIi
-	+Ln0yHp08NRCs+T8TnYEidJGDd0qefKVoimO/yQrGw9iA2flmHMC5qB3ElbbQsB9
-	tXx41t71sd/rsJ0zcgbxidKLWnS9DRo5tjg==
-X-ME-Sender: <xms:lDDBaZ1ycgdVVKbnWHLmmwVoFLX6MfB8Cvs2aZKmuWGq-343AYGaig>
-    <xme:lDDBaWF6A6Z6V-sKbufX1_-DhyYrBJb_MnJqmd-LAKwiwVZ2zSoUvV5dzIIOKcUFf
-    nL0Pom0kgK-OWrEadYRPyTLC3RCWWb4BWsHDQxQcqplTwKHt1yKAg>
-X-ME-Received: <xmr:lDDBaXg3I_OkumdG4_VZi7H7DvsOD7esP7g5Pt2d4gZ1JRzzMbFP6iFamsylyrR2UDOq7UKgYtKdjw0liklymxz9_LZQGwKVHu6Rl4tJZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudekjedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:lDDBaR-3ToRz2d_qkqBlBqFeiJ3sNMZIjr5xQmKbuYYL4FSDO9c71Q>
-    <xmx:lDDBaepPZKoL1AGnkA6sWzqcsJUF37VEGyRy6MsuPNjWoBO-CzmdFQ>
-    <xmx:lDDBaQ8u0uE62wqu6QVVymNqcylnTVz65DFkeaAF75V91bzS8FPXpw>
-    <xmx:lDDBaSXJR090eQKHeYjB2UilXjs7hPPm_hUN_zGJXyANiYLggsA8LQ>
-    <xmx:lDDBaVMTTlWJc18pRmd8o455yW89MsUXOfcZdri-PPbq_ER-MkaO2eq6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Mar 2026 08:22:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 30dda14e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Mar 2026 12:22:41 +0000 (UTC)
-Date: Mon, 23 Mar 2026 13:22:34 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/14] fsck: drop `the_repository` in `fsck_walk()`
-Message-ID: <acEwis6mGCaY4WtR@pks.im>
-References: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
- <20260320-b4-pks-fsck-without-the-repository-v1-1-6594f997926b@pks.im>
- <xmqq341udrob.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="A2JoswWy"
+Date: Mon, 23 Mar 2026 15:00:30 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1774274431;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DuChWxEEaxgMEUdr09UJeNGdsFhX9DtQ6ufbNaqmKPE=;
+	b=A2JoswWyPK5oi2MeI18It6/ryojcFfvrKCtaQYrkYu4MqKWLJ7OVRMk087gdTlr4MWrJvs
+	Q7xwOn2PkMHayegtrbSPyI5O3TEQ1UB13Pm/Cx8SoXUnFJIkWJHJXq/LCq/MVzzgmO/Kpi
+	v6HnR0IczImTAQb5MTPP6Bmlp7FVjLitrOxz0GErrjwarweo2rRoXSor9s5dtpIsJ1Juu1
+	QIwZIBrQCwoGcFMShhECIpSz7LeGkgkjAknU6r1G5KpW/tNYVbPc0ee2kQF3rxsm6Iu2OF
+	Aj5/KSFfiNCt8VI0GpGrrvRH9Gu0zep4+3EDDFyIbhHops+hX8iJGbXYIqG7xg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v2 4/8] docs/pretty-formats: add %(count) and %(total)
+Message-ID: <acFG_4NbhvvyHbVO@exploit>
+References: <cover.1773530191.git.mroik@delayed.space>
+ <cover.1773959395.git.mroik@delayed.space>
+ <7b1e5cbb243cf3421a4affd77bb45d31f3e7146c.1773959395.git.mroik@delayed.space>
+ <73663cf1-3112-4e8c-a6ab-10a30670d355@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,59 +47,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq341udrob.fsf@gitster.g>
+In-Reply-To: <73663cf1-3112-4e8c-a6ab-10a30670d355@app.fastmail.com>
+X-Spamd-Bar: --
 
-On Fri, Mar 20, 2026 at 04:09:24PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Mar 23, 2026 at 11:29:21AM +0100, Kristoffer Haugsbakk wrote:
+> On Thu, Mar 19, 2026, at 23:38, Mirko Faina wrote:
+> > When --commit-list-format has been introduced to format-patch, two new
 > 
-> > The function `fsck_walk()` and its object type specific functions
-> > `fsck_walk_tree()` et al implicitly rely on `the_repository`. Remove
-> > this dependency by injecting the repository as a parameter instead.
+> The past tense here is wrong.
+> 
+> s/has been/was/
+> 
+> > placeholders have been added to the PRETTY FORMATS code without being
+> 
+> s/have been/were/
+
+Will fix.
+
+> > documented. Do so now.
 > >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > Signed-off-by: Mirko Faina <mroik@delayed.space>
 > > ---
-> >  builtin/fsck.c           |  6 +++---
-> >  builtin/index-pack.c     |  2 +-
-> >  builtin/unpack-objects.c |  2 +-
-> >  fsck.c                   | 40 ++++++++++++++++++++++++++--------------
-> >  fsck.h                   | 15 ++++++++++++---
-> >  5 files changed, 43 insertions(+), 22 deletions(-)
+> >  Documentation/pretty-formats.adoc | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/Documentation/pretty-formats.adoc
+> > b/Documentation/pretty-formats.adoc
+> > index 5405e57a60..67dc0f2a82 100644
+> > --- a/Documentation/pretty-formats.adoc
+> > +++ b/Documentation/pretty-formats.adoc
+> > @@ -253,6 +253,10 @@ The placeholders are:
+> >  	linkgit:git-rev-list[1])
+> >  +%d+:: ref names, like the --decorate option of linkgit:git-log[1]
+> >  +%D+:: ref names without the " (", ")" wrapping.
+> > ++%(count)+:: the number of a patch within a patch series. Used only in
+> > +	`--commit-list-format` in `format-patch`
+> > ++%(total)+:: the number of tatal patches in a patch series. Used only
 > 
-> OK.
-> 
-> While the conversion is cleanly done, the resulting code makes me
-> wonder if fsck_options struct
-> 
->         struct fsck_options {
->                 fsck_walk_func walk;
->                 fsck_error error_func;
->                 unsigned strict;
->                 unsigned verbose;
->                 enum fsck_msg_type *msg_type;
->                 struct oidset skip_oids;
->                 struct oidset gitmodules_found;
->                 struct oidset gitmodules_done;
->                 struct oidset gitattributes_found;
->                 struct oidset gitattributes_done;
->                 kh_oid_map_t *object_names;
->         };
-> 
-> should gain a repository pointer.  After all, these oidset and oidmap
-> are about objects in one particular repository.
+> s/the number of tatal patches/the total number of patches/ ?
 
-That's fair, and indeed this was my first attempt at solving the
-dependency on `the_repository`. The reason why I discarded that approach
-though is the way that we currenlty initialize `struct fsck_options` via
-a set of macros. And as we often do this in file-static scope we don't
-have a repository available there.
+Will fix.
 
-I had a second look at this though and have now introduced a new
-function to initialize the options instead. It's a tiny bit ugly, and
-ideally we'd just not have the options in global scope in the first
-place. But I guess that overall it's okayish.
-
-Will update and send the revised version soonish.
-
-Thanks!
-
-Patrick
+Thank you for the review
