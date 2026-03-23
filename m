@@ -1,142 +1,147 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA0C366548
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 20:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A03378D7F
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 21:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774298359; cv=none; b=BN0rPALSkSgviAHBcIYGl/XIFYnzODSIGY93TCOod1TNi0tQS5FXP6UhTMSrAC0oQetCRnFXZiaYC+I5jxzrUz9YWNvKFmx85yo94iQLApX6f3ZnFVtequLCZ7/GyvzQEATRRWxDFjeQIh92VZwqrhHRPKmMDjhJkZSrHXeDHpM=
+	t=1774300057; cv=none; b=pSPa9znqwGAVs6clog1O8AvSG8LqStU54i+wfgtRFpNkvxxVfyX8K1TlQElFcTUJA0a7qjtZNwNM4v6gyyoppz6hUmL/t1qXj1tqzOy089DZ52UzAVmBIPuQShp2S9I+nrIWMhhtlcBpbCUzKOKUAYJb8C7U72AAArTvnqkyQbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774298359; c=relaxed/simple;
-	bh=IRMgHMkOVRydTd79IKEfbZXC4u/yLxay+A8L37QDt6k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O187i3egT3v8+9gzYi9+kS5ja0OAM7289PoGTOOD51SBFtKqxleF7zY/kZRHB5QUj8hP3KygXj2zPBfO2ZbpqnwW8lsD09YIyM3jnPUt5Yp10GYjErQDZyh3yWZ3gRv4zFE9/7BMcBjou3aNcClZaS7RWyL2UPymoiGo5N3qdC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AEJn9QQg; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774300057; c=relaxed/simple;
+	bh=AqJryPL1Q0EhRXhqwmY67YV/zt5s4Zr/itkrmVk1+Zc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ECjHPwgYJZM7AdT1bmBu5PV2y6ADbtysIsDPc0lbB/R55Zje5Df44HYsXl6JHEhIW2YxjSL+8OtUgXkH3LIdB09ayat451RbzOIqX4yw7VF9dvS/55Q6hrFzw5BdyPHXQL+TuGgTW26UpSOxZnB16cDDshKBbwUC53Qmhrgx8VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VXd0EpEV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+9STGEP; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AEJn9QQg"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50b268fba9aso4761611cf.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 13:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774298357; x=1774903157; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8c1SU55Fb8BKrVUM987kgFBbxdUrktY9UJJME8h03kM=;
-        b=AEJn9QQgUD0PIJxY5cZvZ4jgWSSgKFhqXgiQJNpg0qphih3x52RXSvFLy5UW9Gu+ur
-         T7fccckhrzupf/s+5mi1Pz7WdXcWm72LVqZMU1vaUSSz7+UoaTg2v2LImB/A4jiKhNVG
-         qrhNFKrseWGcAVbfC1YVf/0TXtoTSyRvUeuGpx1I+SaQnj01l3ZyxUanWOd0sC1Dd605
-         CGIWVS4qnhdWTrRdHd/gWPTCOtHT9L0rHSUD/Tp0FhjnM2jO9QNo7mwdk7hc3ndE4pVk
-         w8BQey+bT4irvN3qQzXOBKDar1+ERb1SuobbYzTBEXRJjXhDbHEcWvnR+kuxrzoxMWBh
-         JVFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774298357; x=1774903157;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8c1SU55Fb8BKrVUM987kgFBbxdUrktY9UJJME8h03kM=;
-        b=GU5EwB3pe6HSBPzQW5MDwxxz19RnYiiy3NZ2EX6fw4J+UArGMlhBth3cFcEzG+piOg
-         oy1AUeIMXbcrmNVl64dtqYE3geKLDcdFCxPMF6k8v0lYCz5iIbArtDAIfQyfzS6XeLYb
-         bE/qpQ4+cEVYh/mBDi0rz1R/FFgTORYpv1P2tgqRwrkmD6d6EvNLXcGkIj/kr897xi05
-         qvX9/WuS42c9U3HtZCfmO5pdrlpyVeQRBWsBD0FPO9ZQEk4Vu2E77lIy+a4sQldQ8R0X
-         OrzRTQiZADhMnoLM5ZpBhvqqhDpC/jl1nTSVP/l4UGoqVTPHEgJTzpjDdHJ5KmLveeM9
-         DIEQ==
-X-Gm-Message-State: AOJu0Yy3IXZa8BA1Fv/DKhbOiWXXXSorbEctWxKH80OBA6vwUI1uYcLH
-	4nTjNOMcpedpU718ZsaBFTrrTX6gf1xNHRu8IDSiV8SUcqs4TuU09//L
-X-Gm-Gg: ATEYQzwOwlOZTknMS3vVNRgRhs4Ca1qBZZFkln25OL8rirzF1G6YUVkbfWbZuYtouTQ
-	/HHDkaMztlgJCN3WCcCZE0uJGlD9lx/lflozLWQbsjwWahZlXpEU+0WFluHilrZ0i5+2An2yhnD
-	c2fhYxvfYSS1WG4WgUDCoHRpX7yOyIO9VTTXlSFFB8T7zu2tc6bmwx56x9+ypalVqHVmoq8D0lh
-	CZur6gmofltvs0ELCFRFGZMFKhojZDDWioFcudJS6X/gtweVvug45Xso3JlG4AlZwoX4JbbYDQa
-	Ojl8dkrgflC7+6kWynMea9jj9wlBMovuIkRPPpepQti3vf+SMCCKD9KstO41EhlCTJdsCL+8H2t
-	fy6OyShgCpRSWvd51M/p4Q1M2Z+lMKUHmTPt8JyIpoBFC8jpHYJgB5ShaoFzZRWQkjJF2dRxwGT
-	5zs/PnJg26I3mMWJQK8Ucycah8NDA+qucLdgO6eAO1nxH4knqMBYb0X0LOABcatvB1nGsWuw==
-X-Received: by 2002:a05:622a:5c7:b0:50b:34b7:fd62 with SMTP id d75a77b69052e-50b37448bd2mr204207561cf.25.1774298357068;
-        Mon, 23 Mar 2026 13:39:17 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b36cb2c63sm95237541cf.6.2026.03.23.13.39.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2026 13:39:16 -0700 (PDT)
-Message-ID: <7279f449-7bac-4364-bda0-5115980fa717@gmail.com>
-Date: Mon, 23 Mar 2026 16:39:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VXd0EpEV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+9STGEP"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id A3445EC0224;
+	Mon, 23 Mar 2026 17:07:33 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 23 Mar 2026 17:07:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774300053; x=1774386453; bh=Qs3F5Buwg/
+	y4A4pLQTJmTCyRxDgwZZVDP/27oW+HayE=; b=VXd0EpEVYwbvBhvxf5YVlYpLmF
+	EXRdrC2dBPp+K47pSuJF+v5RsxPFUSe4sIq9hxDTw0aiqlISmkMTazRCJbcphFPb
+	czGkrZyrnsxofiYaEBY8Khfgp7CsoIf60ivPhFzd3F9cqWh3FKIbL4CQJV//0Z42
+	RVg3VvjshXSGlrbxlkko4vkbLuv1R8VAy3rQf2inZ2yGVlsedqks0cKbH/Sy266O
+	Tmx9AGIobJxLiBDIMloxOc1EJ0MF0pof+W2tdGegS6MwdQHmEvh+lkfwBNHl8qC+
+	8SqqBIQ5R/RzMw2yQ6D612LTiquugNd7GKtUz/2nH+SLtaXbgSlPLpTVErkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774300053; x=1774386453; bh=Qs3F5Buwg/y4A4pLQTJmTCyRxDgwZZVDP/2
+	7oW+HayE=; b=W+9STGEPMalYY2FmUqp1u+J60Mz9QonKYUZziJPmM6V3D9j0eAS
+	1PMC0b9+uUm9L3IiSXxdsZ4vvvpZPU0SKFkq2dy9T6XfOo3QnpFuQn+vqEwSftaT
+	xNwzivnZIXnOK2TUwRyVU0pmjKdpQ2ftIeppuOm4lzdx9sphJdDsFb7gK0m1ihhS
+	V23m2KFq9HlrfdjvhxaUw//kPrEmUQ+kBZCizE+RKCeKJ7EX8kyw4DMkNqf6tTkZ
+	NIu8eQVvaYbPUuGWpMaQgcHSJE4P9EDrqyDugiloybByBxV7JJ1ZsdF3Z3JFn2+n
+	m2x0y5bICSKVl3NDpUeEE8Cq/GggyvZyU1A==
+X-ME-Sender: <xms:lavBaSgWbs0BDEx21-1H2RK2cnKcuLjLYXvVSMREXIqOOTwrqTmQ6Q>
+    <xme:lavBaVRjdXu7cvInl0BCWPrvR3jTfhghh0dCokOZdgzn1IssiVqb1v1YM8fppX68e
+    4RrGjjxe3ckEFXw1CtF8hKYeIxup1r3aVxj9HEkkioLDHkxG-f5Dw>
+X-ME-Received: <xmr:lavBacWe7Fx0-70mZE9hOFemq3kCTlZYVSHetqLZ9mKmiINA-YhUl1akwl66r-j1h4eZit0NLtlVNauVXdHk5s3mbWofDny5nw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeljeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhhorhgvnhiiohdrphgvghhorhgrrhhivddttddvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphht
+    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:lavBaRQGsOmOmpWUyXBGX0Ac6Rarmvwjea9CXsHiADG65VVmpc7QXw>
+    <xmx:lavBaelijd9zxO5AuYVRKYnJ29ux0W-oYVQuEfeH1bTIAbdroL5jVQ>
+    <xmx:lavBaf7SKcXJ9O_5_hayiAs-65jsj2_ThkehjorTNO9VGXDt06MgTQ>
+    <xmx:lavBachlYcClFaCRtxHM2mH5mvZkzoUq_myuB2j8gM8IlcBWabK-OA>
+    <xmx:lavBabJvBP5cPqmrnca1ybDK3jrIEfXGrRc6TDh9aZo6VWaFtcH2Eg9L>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Mar 2026 17:07:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [GSoC PATCH v2 1/4] pack-write: add explanation to promisor
+ file content
+In-Reply-To: <fec0c24897092d19a718563ca4ef6e509ab104e6.1774205661.git.lorenzo.pegorari2002@gmail.com>
+	(LorenzoPegorari's message of "Sun, 22 Mar 2026 20:16:23 +0100")
+References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
+	<cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
+	<fec0c24897092d19a718563ca4ef6e509ab104e6.1774205661.git.lorenzo.pegorari2002@gmail.com>
+Date: Mon, 23 Mar 2026 14:07:31 -0700
+Message-ID: <xmqqmrzy45m4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] t5620: test backfill's unknown argument handling
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- r.siddharth.shrimali@gmail.com, ps@pks.im
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
- <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
- <9699650aa7dc04cf1cdc26803caa8304b29c1662.1774266019.git.gitgitgadget@gmail.com>
- <xmqqzf3y5zu2.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqzf3y5zu2.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 3/23/2026 11:29 AM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> Before the recent changes to parse rev-list arguments inside of 'git
->> backfill', the builtin would take arbitrary arguments without complaint (and
->> ignore them). This was noticed and a patch was sent [1] which motivates this
->> change to encode this behavior in test.
->>
->> [1] https://lore.kernel.org/git/20260321031643.5185-1-r.siddharth.shrimali@gmail.com/
->>
->> Reported-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
->> Signed-off-by: Derrick Stolee <stolee@gmail.com>
->> ---
->>  t/t5620-backfill.sh | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
->> index c6f54ee91c..85740f1f13 100755
->> --- a/t/t5620-backfill.sh
->> +++ b/t/t5620-backfill.sh
->> @@ -7,6 +7,14 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->>  
->>  . ./test-lib.sh
->>  
->> +test_expect_success 'backfill rejects unexpected arguments' '
->> +	test_must_fail git backfill unexpected-arg 2>err &&
->> +	test_grep "ambiguous argument .*unexpected-arg" err &&
->> +
->> +	test_must_fail git backfill --all --firt-parent unexpected-arg 2>err &&
->> +	test_grep "ambiguous argument .*unexpected-arg" err
->> +'
-> 
-> Hmph, I would have expected that an earlier --firt-parent on the
-> command line would trigger "unknown option" instead.
+LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
 
-Interesting that my mistype has demonstrated an interesting
-behavior here. It turns out that random options starting with
-'--' are accepted here, including --unexpected-arg.
+> In the entire codebase there is no explanation as to why the ".promisor"
+> files may contain the ref names (and their associated hashes) that were
+> fetched at the time the corresponding packfile was downloaded.
+>
+> Add comment explaining that these pieces of information are used only for
+> debugging reasons, and how they can be used while debugging.
+>
+> Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 
-This means that we actually have room here for some improvement!
+A natural question any reader of the above (and below) would be
+asking is: Who told you that these are only to aid debugging?
 
-I'll see what can be done to make even these arguments be seen
-as failures.
+Please refer to the commit that brought in the reasoning behind the
+comment to make it more convincing.  
 
-> Having said that, if the code lets the setup_revisions() parse the
-> command line, the usual "unless disambiguated with a double-dash
-> '--', stop at the first non-revision and take everything as paths
-> but for safety all of them must refer to an existing path in the
-> working tree" behaviour should trigger, and it is not specific to
-> "backfill", and may already be tested centrally (if not, I do not
-> object to such a new set of tests).
+Something like this replacing the second paragraph,
 
-Thanks,
--Stolee
+    As explained in the log message of the commit 5374a290
+    (fetch-pack: write fetched refs to .promisor, 2019-10-14), where
+    this loop originally came from, these ref values are not
+    actually used for anything in the production, but are solely
+    there to help debugging.  Explain it in a new comment.
 
+perhaps?
+
+> +	/*
+> +	* Write in the .promisor file the ref names and associated hashes,
+> +	* obtained by fetch-pack, at the point of generation of the
+> +	* corresponding packfile. These pieces of info are only used to make
+> +	* it easier to debug issues with partial clones, as we can identify
+> +	* what refs (and their associated hashes) were fetched at the time
+> +	* the packfile was downloaded, and if necessary, compare those hashes
+> +	* against what the promisor remote reports now.
+> +	*/
+
+I do not want to sound too pedantic, but we align '*' asterisks in
+our multi-line comments, assuming tabwidth=8 and monospace:
+
+	/*
+	 * Write in the .promisor ...
+	...
+	 * against what the promisor remote reports now.
+	 */
+
+Your second and subsequent lines lack a single whitespace after the
+leading tab used for indent.
+
+>  	for (i = 0; i < nr_sought; i++)
+>  		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
+>  			sought[i]->name);
