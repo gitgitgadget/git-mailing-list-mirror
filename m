@@ -1,120 +1,109 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C13175A85
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 06:22:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774246974; cv=none; b=XDnQrCUceeH4MXJJT0V98GC2Y6ppCqc13Xy3w6WRsEgCD051Xa55RlSICQ3toHbjHVhGzY248YFIEgtMg/7825hEFM4A8FOnolGNUT5DSJajB7AA+JML36KJ/z2rTbMg3DuXI4ObwDcW53XRmsFFw2cFiyoE52Gcida/GcxXLOs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774246974; c=relaxed/simple;
-	bh=q5wezfZIji+gXoBY7H53f/COwdVYh/zToSmgRiepAvc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dnuw6RAAWq8ul7mrdz55EdIzKPBglamzG8a9xqftxV67IC2B/oZnMI8xNDD/zJ+eMpePSC34oGr1TqmotnJcH25JPAwsGLBsX/vzixQDzC5KMeuT5v7RgnuWrsUXw+8jRw7QcK0n6/T1oQ8iWraq8OVxjpd/1A8mg/mb1x/WiKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HirlboSt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MhEQtLtR; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E36528642B
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 06:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774249122; cv=pass; b=YJTD0JMs3KJl3wwX+zMHK6jky72YsfzIEcqNua7SwRS11+7pYTRl47OxTnbwovCg9HFMQJ4En2dJvu/mtPWhQNdobF/XjMlNyaFHaByW7L0Mj0Dtqgq/NxWaAwsATz0kUKg9uXyGndEFPIIJ9B9P4XPim6W0wXQ5V9Z4jq0MpP8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774249122; c=relaxed/simple;
+	bh=2LlQc2VBZXdCwLUKREeHy45nsX7BdvHTBQ8eZmftyOA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DUcN2HZUFnuyBQ6FjT2inKb9R1R+/m7n2H2FQ4HeJNFnDEITYJMDJ7jyQ5cC2UYq9yymAAnWj+Q175wNSuRtVxfFB0RvzUyiRTuUUK7TbSbn1BiEMjvOn5xSlLm68uQqYl3qqhkbCDDJdmcEXjxzgjwO5zpe3hOZy+JVqxJKHjY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=SI4HumFt; arc=pass smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HirlboSt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MhEQtLtR"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 82DCB1D000B5;
-	Mon, 23 Mar 2026 02:22:51 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 23 Mar 2026 02:22:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774246971; x=1774333371; bh=yDNL54kQ0K
-	GuNSIhp81PmRzd4avc9V6RLoCHOmfQxYE=; b=HirlboStzwoh9tGqALkawGq9o/
-	6FSLgtpQquFPtoBtv5t6BfDX2rM3AQjLIFt5LXWYlhMlJSLukspfmgG/WM/3Zvhf
-	psF8Rq5rpa96QbdBt8iNFMyHJfSC3ccoAWNXXbS2R+18vsoLoAhsLxdDp0UHbwpL
-	waEhdKRr2qwAKT7K8HK03QEmnhfVM09lsZEYsaj6NQpJb30o4rU5OHndWS+rsSCK
-	zj0ZXXJJIoulSce4Rf00bBV61xiBRfUEVC/Jvz8tPr08l15oSf8RD1aYmON3oeh2
-	Zxu/92goWYLJQ2l4mjvJoyKxhtGMvZ6DVutbTvDuXH/Hx9ZBcKZirnU1VG8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774246971; x=1774333371; bh=yDNL54kQ0KGuNSIhp81PmRzd4avc9V6RLoC
-	HOmfQxYE=; b=MhEQtLtRWVSvpbxfBAp7B5SR1bXEetFpLUb3IN5yFFLW5hLpBkS
-	7D6jWYFfoaja8fUDDOQN0pU75ZBD4Brd7K3uIAZTjz0PoAsFusiBXucdcNQW3DhV
-	vWKijzTvsmMvNCkXL8eYSvU7WbxkQCYHFIa0ggAFl6LRFkPy2OGtCsDKhRCSpJYO
-	QfoBSw/v3rHM4vAH+nP+DZlOCkM14By8tHghJA+WNJslAKv/83rHde5JR5AWY9xK
-	jErl1ngNWfwQoEc2BtycK2mt/zRe8BdlFdsTU6UDjuKnq14jcY6fEarAiwGkzjsy
-	EvgbFTA7VSZ49Z7doyqpW0Q1EgtaJLVAJFg==
-X-ME-Sender: <xms:OtzAabSVUCcMZez0_1RyBqaCKj2mdTFE0RCEACTq99RyNgf9QrbFIw>
-    <xme:OtzAaUNtke_1uoFc131BfEEwjCM9uDls21Wlu0ovNs5_DOzuyRLP1MhIG5qs7bds5
-    nW0xX_EVCG1HBshoTjw5EFXAN39-jpYNFCjlY9P6CfLGpHz5GojxA>
-X-ME-Received: <xmr:OtzAaeO_V7ExnmQDRMVsORNWVmqsjyrr_4A0bXM2jtFnqAjX9Ynnw68CFRwwao6HlJcJNElq8W11nLOs_e4JJeH2RrWxMhgkmw_NUoPl6w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudejleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtrodttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepvedugffgtdffleetheevkeevtddtkeetgeeive
-    duhedvuedvueejhfehveejgefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsh
-    grnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:OtzAaUsp0QATvIutM6Wylv_mlIujS-7o0tallAs97_-TsqFQPKO6_w>
-    <xmx:OtzAaYVyrcnuTxIOib7-fBoZKu3AyQsI2JLbVmIZMO72DE_8yLRRkg>
-    <xmx:OtzAacvB6qYd5837g-zDjGKip4c_nJpHB2uhk6rnCt4etUoqYEqF-w>
-    <xmx:OtzAaUXvBxuny95rUbTxVxyGGgLdR4ox4JzDGdbKneEO6UWO5pKGxQ>
-    <xmx:O9zAaWY8dfJPycG8HmjtvPojBNNEmPe88dwcGApJeFQjqbu9zx2Wy6YB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Mar 2026 02:22:50 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7d03fecc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Mar 2026 06:22:49 +0000 (UTC)
-Date: Mon, 23 Mar 2026 07:22:46 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 01/14] oidtree: modernize the code a bit
-Message-ID: <acDcNkIojSNiryFV@pks.im>
-References: <20260319-b4-pks-odb-source-abbrev-v1-0-5ddebad292b0@pks.im>
- <20260319-b4-pks-odb-source-abbrev-v1-1-5ddebad292b0@pks.im>
- <xmqqeclfn6nn.fsf@gitster.g>
- <abzryk0qjlbvy8OL@pks.im>
- <ab3KjF_1WW7hQBaA@fruit.crustytoothpaste.net>
+	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="SI4HumFt"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a13e1cfa45so2750663e87.2
+        for <git@vger.kernel.org>; Sun, 22 Mar 2026 23:58:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774249119; cv=none;
+        d=google.com; s=arc-20240605;
+        b=XsCLOJmxl9xKB+5cXnZXEaRKBKPdI7C1SM+gQXX2onsgtxaTVXybjvtAZvv374ijmN
+         VXGLUtEEcGztdwlnZc4ZGy2tfTOeBir+pvwQmed5E09PVuYyM/BJDU4r+EKh6SJCUbt3
+         1qjZkxcJbR/SQRxAJkXtE7TIyMOPi5mEraBRmWJdJTihgpXjr9FMrRBXg1FYKhhsR85H
+         M/ANUOM1IsiFovZ/e2TNtAF3NpaSDcpEQCZitNn6EAChI2PWYOk+JzhEzmh22eReVkIl
+         4NTDqr9EWK1gna5L0KIx2rbf1NDuzoKZ59m7NKBSyTP1SaS+UjZhk/Y9EYnnsRz2T30W
+         b2+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=2LlQc2VBZXdCwLUKREeHy45nsX7BdvHTBQ8eZmftyOA=;
+        fh=FLmO9WH/nhnHUGkfDhwJGtMtZbaxhWpLsVRueFpTzwo=;
+        b=EQBScmzRCXqURpegbUYMQl704WijbG3lo5VGFc6c6opD3JRwkgSwKc7oIyNy1bze1v
+         7ggRtAixTfoTKb4Vc6YfePMdrTHNv5x1U06xOEryjWAgNm5tyhWkd18I2Q13zf3Rke6I
+         +5ZZ4TL70q3ky0OwDLLL2Eb0sdLZZzBvdmu/vDzsV/S/Egu2H4awMnhkiiG7eEi/FoF1
+         8xSjwv01twgPt1Onm4C+iQQkgKooRGD47Mz51uGGrIYGZcm1wXTskK8jd6x11DprvaK2
+         25r6KHX5zQEDqThMDolasGFdgfkxwmSMv1tGAp0PPzd3bbzVT1gTeozYdquJ18JyXHAJ
+         bnTQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shopify.com; s=google; t=1774249119; x=1774853919; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2LlQc2VBZXdCwLUKREeHy45nsX7BdvHTBQ8eZmftyOA=;
+        b=SI4HumFtg0NiyK3EZuPduBeC75qws8XInBIwCpckSO46hRcLdgqJJ38bqM0BprVEKk
+         b4DzGRWR3i5SaOevqXMCMBJ1l5RkHXyJCLKRvkNcg0WqO55vajfdeehmoILTFZu4V1Ej
+         7PpWHLXoaI6taYGcF4nEA8VOYLp/kouirlBWM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774249119; x=1774853919;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2LlQc2VBZXdCwLUKREeHy45nsX7BdvHTBQ8eZmftyOA=;
+        b=BngM5xqNlS1ULhkhiOrSQlXxDL6S+4Yflo+Q280z19irWowGp7Dehx1tk7Ha01oOhM
+         yIp33eVAK2Vd14sEAC409Fo78gLUbw7ae+/RN1AXoDFn6wBl+4BRnUfJBjEp0Vpz6GZW
+         +LO7gpZ14cA+UmQBK0i1IjeXpW8c8t8Oht0wWVVLMme+o84tF+dZmjFlmSCL4pvIATEA
+         7RAcasRvXhA7MaNUf0P9wXeH1rgOwKyz+7TUSjuRkbwuU4U1J5kDBmfAXgv7BIhJC5pE
+         riTZsBQK63R50JYbvo7dquCXMY7gSTrSFPjIwR/s0itlnd7UDMlUnN6Hs6zDwh6148NT
+         iJ+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXL0IuLLpIvQzDbv4YqMeUt2mRcek9h9/rAYLNCT6/1TB3hWs2fgE6GL2TdnIu6zaU37fc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuBuLpaidj/98oZVblI1YvjlmH6Jwo5g9jJ8vbfBScJuRrxGhx
+	KZIT+z7g/WiU6YQ0YnVjMUCdF3FWMGm3/EEhpaPgenqJ8N3EkEomjU8oBYExfZMdQV36FlQ/r70
+	PO8krFa0FoCPb1DGUOVE3WU+0M4ajbtKEyBFsZlaM+g==
+X-Gm-Gg: ATEYQzyURRMsrkIQTAmipxvOSkx7TyMDXk4PYEAcmKJBjQNYP7NLfjBB60nOKL8gjXf
+	MGU6jjrZPtFn94gPCKQnMxyPERl1BN616lXvaPfHtGjkpXdY8nkiiHzFBt3vsjsUHeVpIHlPho1
+	ZHcuPl1n1MmGrM0dol2ad/JYyCsLZqCWw72cuIXytFBDg0yh7mgiLg4lKP1U41xNoE2+36g47pp
+	tZDIQZXGA0RhSvUFXS132KNLqAsyD8uB0bNi92sOTUxVI0oQ9ixPPvc4p17/LqjojhrkuFRWshM
+	g0Y=
+X-Received: by 2002:a05:6512:6d0:b0:5a2:845f:d41 with SMTP id
+ 2adb3069b0e04-5a285b61730mr4187887e87.23.1774249119033; Sun, 22 Mar 2026
+ 23:58:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ab3KjF_1WW7hQBaA@fruit.crustytoothpaste.net>
+References: <pull.2008.v5.git.1771856405.gitgitgadget@gmail.com>
+ <pull.2008.v6.git.1773752435.gitgitgadget@gmail.com> <ab4RIZr7b49VKjR9@nand.local>
+In-Reply-To: <ab4RIZr7b49VKjR9@nand.local>
+From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
+Date: Mon, 23 Mar 2026 08:58:27 +0200
+X-Gm-Features: AQROBzBC653tE5w2MkEOBLO6EdiFlCrYSk9bZPW_MZ52EC0USdcWvjAbw0RRC9Q
+Message-ID: <CAGjQmDPOo+c=i-oTOzCV=EO+B__3ySR4wd5EYZ1EAdL+jF5rLQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] http: add support for HTTP 429 rate limit retries
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Vaidas Pilkauskas via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 20, 2026 at 10:30:36PM +0000, brian m. carlson wrote:
-> On 2026-03-20 at 06:40:10, Patrick Steinhardt wrote:
-> > On Thu, Mar 19, 2026 at 09:08:44AM -0700, Junio C Hamano wrote:
-> > > I know the original also used GIT_MAX_HEXSZ to clamp the length for
-> > > sanity, but because we know what algorithm is in use, I wonder if we
-> > > want to use the limit more specific to it.
-> > 
-> > That assumes that the passed prefix OID actually has an algorithm
-> > attached to it, and that may not be the case. We could initialize the
-> > overall oidtree with a hash algorithm in `oidtree_init()`, and if so we
-> > can then become a bit more thorough with our asserts.
-> >
-> > But I feel like that would go beyond the smallish cleanups that I'm
-> > doing in this patch.
-> 
-> We should stop assuming that a zero `algo` field in `struct object_id`
-> means `the_hash_algo` because that makes libification hard and our Rust
-> code doesn't support it (because accessing mutable globals without a
-> lock is unsafe)[0].  So in general, I would be fine with forcing callers
-> to set an algorithm per OID, both here and elsewhere in our code.
-> 
-> However, I am also fine with doing that in a different series for the
-> sake of minimalism in this one.  I will probably get to that at some
-> point if nobody else does.
+On Sat, Mar 21, 2026 at 5:31=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> Thanks, this round looks good to me. The main things that I noted from
+> the review on v5 was to drop the old 3/4, and a handful of suggestions
+> on the final patch, all of which look to have been addressed.
+>
+> The first two patches being unchanged, this round looks good to me.
+> Thanks for working on this, Vaidas!
+>
+> Thanks,
+> Taylor
 
-Yeah, I fully agree that we should get rid of this assumption. Thanks!
 
-Patrick
+Taylor, Peff and Junio, thank you very much for reviewing!
