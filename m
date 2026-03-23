@@ -1,115 +1,156 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFF9399004
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 14:37:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26F9275AF5
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 15:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276676; cv=none; b=RruYbAlvLwqwkwWsM3uBtCdZmibyJcyz571uOPrBEkICJJNBAV5hT+Wmj+mNaKBBX4tD1ksytUiAEDVFPGUAhxrC7Z+cL7Xwm79eDyYlVPEVNCla7FX+1AciaJSMv3UCXyF0EptgcX6VQ1WaaKJFTzeJsiGLu5SSRTJlTCzfDOI=
+	t=1774278194; cv=none; b=US9M2n+08vsoSj3C+SVQug7K22OKVwGVlhWAGOnriUOEyik6C/jAGVx7yyoERdMi44oBDLsxqz4ovdH9ZNGegpoHUgwcJb2xth0uual7VUibuedLM9F5OCQz+D1oQpKE0CniLbhrXGXWM0aOMb0NT0M1NtCMSnLbEly5s/ykUco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276676; c=relaxed/simple;
-	bh=WkuOk8WBIJN4XT/neba6pDAIqLITsflDwczQrHgMufs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KEyquE4p4m4J5eTziBuC93wgEWaby2feakJu+Bi8J+24oqt9cisZHt1U92EyTjFwf7gvXNa+I9VFGbLiqpGn4cKP1wwaQPV7M2RQ1u3HJyERzy2hBOLpSYgxdiEBsFJyzDM6JKR/Vg2sZGxdMy6qhz+8nOgieZi9OJg+lY5D0ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EfAmobxI; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774278194; c=relaxed/simple;
+	bh=9bz+9cu7vKAejhn1Mys1cfjKDSNHMjF0SiJMYsufnwI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=KcBuwdOPijnZyWI2SG9M0NpUb3siWEGzM7Egyt/nLFALPkDkAVl3JJHpCCBgIh/BRd3NxB63oKrMLHvZFF8LSVIGTyDK+73OD7WRNrebsflwO9hvcO/48KuSlwdxVNbkjNjMeibzxkMN4HtLlMwlfrZTvR3woGICWsumIwXrQdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BkG1dfLg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sWaIx4rS; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EfAmobxI"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-486ff201041so23281365e9.1
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 07:37:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774276674; x=1774881474; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IsGtyEVEb7/MDjDGH8u6op7js0Kg416E+TJ2HmRhaWk=;
-        b=EfAmobxI417rE1chI3KNsTbkoR8SRiipmS+R/32qSqb/iYMBdMvLv/A6JP2Y608Emz
-         jy3qdOSeTdWeCXa6vLqU0O6MWOePWVHVbHviMNOyArIeGPjmti7WDgYstH+3iE3QAbUl
-         /iSDSXbUgULyn0LJRvCD22UQK+cehwLLH9jzuMcKmu8/0hezY22y0mUPalcFMVX3/1l6
-         XJRH0ArWgXy8SWEmlNPQk+joo9GWN3pkjiteqPbJP7ujcfmVAeKKoRg3A475aapn2l4M
-         s+XJCTnEfaS6FkGpOvFi+A6nh1UTICdV55oQ8WFxmyrRFZFl63vUlJeGENg2/Hnmg3U0
-         AFiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774276674; x=1774881474;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IsGtyEVEb7/MDjDGH8u6op7js0Kg416E+TJ2HmRhaWk=;
-        b=FyHxT8GMsf6ZdoErx8pI6UpzqQK8wJY+BP1l87oogzW0dKdbT4WoYaDrIP7v2k2uY0
-         4xZAZUkvAsOyVHY1Ic46q5AxSL6FVgWM90wbAyK4NwkUshwFvqArJFRGXUawugGw/Kd+
-         2lZWHlkYMJqMc2j2CaqULBcPzQQuSqTWvadsNMLfYNyyYFHZZdbDqGCu19z2NaqsbXaJ
-         xpCY1JxkYVmc93fN1Newu+UjBk8aLBTNnk9zA6Ot+sX7Tst3uW96aph26yT1mM2htCt/
-         ZU9XS8mn8uH8WKoH6eyLWJqHEy21voR2ViyWQiSC9AUVoPK1HYssFyLzocRRrhOWRD27
-         N+3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUFEvYceZt2uqOfHQmRRkYFYzeuKJy1GN5y/LrqxRTHVxKhw5qHPXnZYXYLow/fhjWksjo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwILlZMuZ6ITKA8VIqhER5dnrba8vAMaBJcI6L0ahXp6tnR6moN
-	yGL2YRFrScLwIFgG3Hsg2o2oeYBjUsv/cV/fef/dxFK1GYmX7LO6LAwD
-X-Gm-Gg: ATEYQzzSNfkJe8UqhTxIh8sjOfyIIS44C2sC+NjtN1ym0EQl+6rE0RCh1w2Om+90SnP
-	n1gI2qPCt1MXO1FcCuFvkP7fIHbbRxl5RF5ZFt+/2KtdP3kB7SevbFfrnvXwQ4K0VoXhLv67mKg
-	o6yS0v35BnENWHpf+9WjZQMpC2NeWo6fJ+BU6KgizXn908WgA1v4Uy5hqNDuJpubvqMEfXG42lW
-	rBHHAQI2rXmGsVanvuNj4r1qSqwZtrvKi2hRTtlDBNtJia5i5UAk1Oq4hRBaJk9ktRkLxM7ckfE
-	pPk5sGDY1bdtKJ/An5RUURzyfzouBDL0p3AN+Bf0VHuxwoCS6f6zCfT04OC+bsthWJGWtQiEpMy
-	LU4HIfinBoMpb5JsHip42fGFMzuijfDiIWbHVdU5FFPca4EBI0ukHO/Cg7kTy/H2csAChEaWUfr
-	6yQ1/Hg3k6GEOOpuvdptcrh0rNBb4N7wVAA0h56Or9b9yEzgYKSsq6makIx3bzzHukGNZw4oFZi
-	TcJOw==
-X-Received: by 2002:a05:600c:4705:b0:485:3f17:425 with SMTP id 5b1f17b1804b1-486fee04a53mr170898255e9.21.1774276673557;
-        Mon, 23 Mar 2026 07:37:53 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486fd9845a2sm527743385e9.6.2026.03.23.07.37.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2026 07:37:53 -0700 (PDT)
-Message-ID: <532616a4-d410-4a38-8038-1fd22e39217f@gmail.com>
-Date: Mon, 23 Mar 2026 14:37:51 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BkG1dfLg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sWaIx4rS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6567C7A009F;
+	Mon, 23 Mar 2026 11:03:12 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 23 Mar 2026 11:03:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1774278192;
+	 x=1774364592; bh=5A/dNcRoiE5PEO6/aNE0jZR20DmWUPvj+YoK2LpUUhU=; b=
+	BkG1dfLgAHuyTI6PKycmhaqy2FUy5bYGZMPAQAA8IwSrWsDcsZ9bgyguSQd/cOO8
+	NnX4Me+fJKkkXWi8LhUYHBvR+/DDHAjuZlvzS8LzL3U7BtmuB6RPJ7I7y/fLXGIv
+	4PxKYrsaEayb3Cobe1xn2puuDUjzLmynUKEzzsZ5g/R8YuXapa7UXc3mS8duumIH
+	xdbr2UyvkzZchra6Sk4S6/IOvcgWJC5c06cyEiwZMd6zyYbEpMgIEwlJ8dlmkFF4
+	P/Q19lPpK3qUAn1fmntPYKmHBKpHeowtUh9uQqQBHQTBK7tIaESczESaFnvxMv8R
+	ig85KP4i5nV8879O+6PgiA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774278192; x=
+	1774364592; bh=5A/dNcRoiE5PEO6/aNE0jZR20DmWUPvj+YoK2LpUUhU=; b=s
+	WaIx4rSj8Q+bxgmcqCKwR+6xQXAFs5Ihn9s4vY8Ez+CZBLjB+xNkrU9MlwWShX0P
+	U0EexGZ6llb2OA0BiR+IJMQ3ywltorDWl3ldai1tWi8UxELZ+Qy08Ncw0OtCBEHt
+	J+SHOiqgdhxrbcIyL+a8dGINp0WMC+1uqKYgzlb+12MIz5LpoXRgaGcwb6sf1AOu
+	i9Y/1u5P0w462wpKif/O/kJ+jQ0SoRCb16jLlr3opxv7Ktvy584OzCClPq391/Yl
+	CNJAlZvBVLR+UMhEfqGHXOXScobbURSIipwtzDlqn1N2XO97NQspWTiXMArfrbvr
+	bc9bqLI0u33r+lMShTEbA==
+X-ME-Sender: <xms:MFbBaSvPb5h5fV-2Iemg_jiAGUpfAF4wjP6qDACFb5GvZ6ACRIX1Dg>
+    <xme:MFbBadd283lN578tv-eUwV_wjVJpK0edxmkO0Bxv9o5htDRUDlKs0em7bHMSYCkSG
+    lpI_B3SWtjlfoOcVurZiRYmK4E9Opt76VA7HuSay2-y2cbxAXAlSA>
+X-ME-Received: <xmr:MFbBaba5691uRO0KF4p9LUmZoNl8y8ivIlxPjGyC0Q4BJSon_y-6Z4pr8aXjRrNkauoOFqCTKC4_15hft-zVI4fAB8EX9YqGsaub0ZPeFw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudeltddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
+    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
+    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:MFbBaYXf2XXngQbgQTV4_2XcSXUuWvkTOgcSd9XHaqSA5aOEBeIeeg>
+    <xmx:MFbBaVgn-Drm0jH18rJiE4hu1sHwGzy-l9Wi-8Cx_UkX0tqQiT6ieA>
+    <xmx:MFbBaeW7uUGv6SKb9BMO_LVGg3x7urFI0lYKORz_ZKwMqFkEPncfhw>
+    <xmx:MFbBaUNxlYOTRuIJvDX4Jz_VTRvxYTQVtjkNI_3-S_Tj3cY3WyU7Cw>
+    <xmx:MFbBaeHOqusL1Wxzn6Z43EbuHI78FXmlyC_iEVRqy3bmrXyYBWd5uZqx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Mar 2026 11:03:11 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 856b4b18 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Mar 2026 15:03:11 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Mon, 23 Mar 2026 16:02:52 +0100
+Subject: [PATCH v2 01/12] fetch-pack: move fsck options into function scope
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/3] worktree: remove "the_repository" from
- is_current_worktree()
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, ps@pks.im
-References: <9c915043-02da-4823-b4e7-d2a340c0373d@gmail.com>
- <20260323094341.880375-1-shreyanshpaliwalcmsmn@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260323094341.880375-1-shreyanshpaliwalcmsmn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20260323-b4-pks-fsck-without-the-repository-v2-1-e8dc79bca651@pks.im>
+References: <20260323-b4-pks-fsck-without-the-repository-v2-0-e8dc79bca651@pks.im>
+In-Reply-To: <20260323-b4-pks-fsck-without-the-repository-v2-0-e8dc79bca651@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.3
 
-On 23/03/2026 09:41, Shreyansh Paliwal wrote:
-> 
-> This may be slightly out of scope for this series. My understanding so far
-> has been that originally wt == NULL is used to represent the 'current worktree',
-> which eventually meant following the process-wide state (the_repository).
-> With the ongoing multi-repository work, the meaning is being changed to be
-> interpreted as 'the worktree associated with the repository that we are working in'.
-> However, in path.c there are some callers of repo_git_pathv() passing wt as 'NULL',
-> I know that there is not involvement of the_repository state but it would be create
-> less confusion if the semantics of worktrees are same everywhere. So if we replace
-> those NULL callers with the current worktree and update the checks of (!wt) to
-> (is_current_worktree(wt)), some tests are failing mostly related to refs of linked
-> worktrees, and I think the error is originating from this,
-> 
->          if (!wt)
->                  adjust_git_path(repo, buf, gitdir_len);
-> 
-> So I am a bit confused to whether wt being NULL here could mean something else
-> behaviour wise ?
+When fetching a packfile, we optionally verify received objects via the
+fsck subsystem. The options for those consistency checks are declared in
+global scope without a good reason, and they are never cleaned up. So in
+case the options are reused, they may accumulate more state over time.
 
-That line comes from 543107333b3 (path: worktree_git_path() should not 
-use file relocation, 2017-06-22) which explains why we don't adjust the 
-patch when wt is non-NULL. worktree_git_path() is called from 
-builtin/fsck.c in a loop over all worktrees so changing 'if (!wt)' 'if 
-(!wt->is_current)' will change the behavior for the current worktree. 
-While it might be nice to clean this up in the future, it is an internal 
-helper function so I'm less worried it than if it were a public function.
+Furthermore, in subsequent changes we'll introduce a repository pointer
+into the structure. Obviously though, we don't have a repository
+available at static time, except for `the_repository`, which we don't
+want to use here.
 
-Thanks
+Refactor the code to move the options into the respective functions and
+properly manage their lifecycle.
 
-Phillip
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ fetch-pack.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 6ecd468ef7..ec5abb92b5 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -51,7 +51,6 @@ static int server_supports_filtering;
+ static int advertise_sid;
+ static struct shallow_lock shallow_lock;
+ static const char *alternate_shallow_file;
+-static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ static struct strbuf fsck_msg_types = STRBUF_INIT;
+ static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
+ 
+@@ -1100,6 +1099,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 				 struct shallow_info *si,
+ 				 struct string_list *pack_lockfiles)
+ {
++	struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ 	struct repository *r = the_repository;
+ 	struct ref *ref = copy_ref_list(orig_ref);
+ 	struct object_id oid;
+@@ -1235,6 +1235,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		die("fsck failed");
+ 
+  all_done:
++	fsck_options_clear(&fsck_options);
+ 	if (negotiator)
+ 		negotiator->release(negotiator);
+ 	return ref;
+@@ -1654,6 +1655,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				    struct string_list *pack_lockfiles)
+ {
+ 	struct repository *r = the_repository;
++	struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ 	struct ref *ref = copy_ref_list(orig_ref);
+ 	enum fetch_state state = FETCH_CHECK_LOCAL;
+ 	struct oidset common = OIDSET_INIT;
+@@ -1882,6 +1884,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	if (negotiator)
+ 		negotiator->release(negotiator);
+ 
++	fsck_options_clear(&fsck_options);
+ 	oidset_clear(&common);
+ 	return ref;
+ }
+
+-- 
+2.53.0.1118.gaef5881109.dirty
+
