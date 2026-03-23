@@ -1,37 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3210228690
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 06:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E3B28690
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 06:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774245738; cv=none; b=jYT4Ni5yMw2dQWxDtJIBkvPp7MZb0xS58z/dXG6pdD2/OfMJiExtG6AaXgEfe0Dsxyzl1LsS0BAiPYFglW7Z1FEcXT00S4lZW5xmNseWvw56JiOAmAZLoHk8q6Wr0sYas+p8hVnxtpASYZ6bVEGYU21Vwj/ORJI8PXZBoQAb22o=
+	t=1774245741; cv=none; b=NfIdnErGYtphI46CvOhulw4byD2CWhJ/Em/eygL1n4cJCsG8bQyaIkHqcUEtGOHFzDeO29vJQBtMbQyBKvXuOgrkJ6yZ8w0Acr/OsMmu9YkBzq4q9qWQwO9wnqtrPef31XGE8I40+lNGehaOedOu6sG1gEOhfFqi+DuAuxa/Ius=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774245738; c=relaxed/simple;
-	bh=uLm252pRzmQta2wlMLfjbWxI/wEH8w4CIn0361sWNlU=;
+	s=arc-20240116; t=1774245741; c=relaxed/simple;
+	bh=RGne4TalWf++mJefvFm0TAsH+MbpQNiqUEn8P3iYiG0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XP1GcxvQ0ZS2zZ0x+9uQ6DWgPqrN91UH2PmJG5cRjYbDccxqX6Lpy1Kp6cC0gvY0s/JyXkODk0mWk4N5LM0RuygBua2oV7KvwF9akcwqJ78NT5j0fPmtjsZE+mvuL8sB1qLI7Ghr5h5JienPjNQMROBkOpAG2alqEjLCsUSKN1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=O8Ds6Ed8; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=PP76BPBsvy/6CoJNimF1nYHr/Aytrf2fJywr9UKr/tKhKqOJigrH4Rw5a+MbOm6oVDrbKDLyewWLgO5z0KjbgLjtWrxNLqejJQPD/GFCYgIoCrIVBBChzbMv1cJQZHTMhMhnqebUIVztS/dpqMHCD6DDRoVOOTHCX9c1xSPczZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=S+UmQW39; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="O8Ds6Ed8"
-Received: (qmail 110218 invoked by uid 106); 23 Mar 2026 06:02:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uLm252pRzmQta2wlMLfjbWxI/wEH8w4CIn0361sWNlU=; b=O8Ds6Ed8Gck1ihdpGW8YTBWpiYz5LhoZMtxuw3FpprkRi4EWJ3khS3EBy1e0b0fw2wc+q3DWpkTfFrp72WbbCFnBvo7FGfAWfuPRuprX+SLu8Ep6TzsBBULf9KckYOzwm8JqcGP1WfsrZTgyudu4/h7XsmTM5RY7E9guQiAdAIRNoSSskHO0pBaarZh1yxAzuinRAGGqt+3ZZZGI83r67qP/Xk9YpXKjRnsWKAvbCyF29gttNKByXc1mLulULOT5NnhdOeSQjIYbcaPhB3cJanDxCvrTa/Kefoz7PPr8pN3XkPo1MG2gHCecYU6JQiiROqktRN3hu1ky/x1CaEo1Bg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="S+UmQW39"
+Received: (qmail 110228 invoked by uid 106); 23 Mar 2026 06:02:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=RGne4TalWf++mJefvFm0TAsH+MbpQNiqUEn8P3iYiG0=; b=S+UmQW39P54+nkA5H4yR3Jvsl0jvimMJhSZR76ND/qWrEZr6vpejLf7UCHZ1yUrl3qaF74+kO2U5EIpATpCP4xmof8RSgxtc5BoX65UNITbM2eM2IYyTOtKjMN+lH+IpGyqEUzTdq6ZYyS8n00Us3iZeTloel5x47YGWP27dMi/xuFJunG0PZAZBscRKlBPKOG9ObZFZeOiiskfHtLWDzKyiR6f/o8GjGvlRsL+z2AKEFEBXnixT09s8GNG+PzXd61/kf+wUfZ0FUCzU1Jxc5Hj1yOGwieF8m1lSwsM1/g/HovwCI/61QwPWtK31vtvbbv19O2IelUmn17+mby5Bfg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Mar 2026 06:02:16 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Mar 2026 06:02:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 147010 invoked by uid 111); 23 Mar 2026 06:02:16 -0000
+Received: (qmail 147015 invoked by uid 111); 23 Mar 2026 06:02:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Mar 2026 02:02:16 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Mar 2026 02:02:18 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 23 Mar 2026 02:02:15 -0400
+Date: Mon, 23 Mar 2026 02:02:18 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Tian Yuchen <a3205153416@gmail.com>, Scott Baker <scott@perturb.org>
-Subject: [PATCH v2 7/8] diff-highlight: allow module callers to pass in color
- config
-Message-ID: <20260323060215.GG10482@coredump.intra.peff.net>
+Subject: [PATCH v2 8/8] diff-highlight: fetch all config with one process
+Message-ID: <20260323060218.GH10482@coredump.intra.peff.net>
 References: <20260323060139.GA10215@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,111 +42,89 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260323060139.GA10215@coredump.intra.peff.net>
 
-From: Scott Baker <scott@perturb.org>
+When diff-highlight was written, there was no way to fetch multiple
+config keys _and_ have them interpreted as colors. So we were stuck
+with either invoking git-config once for each config key, or fetching
+them all and converting human-readable color names into ANSI codes
+ourselves.
 
-Users of the module may want to pass in their own color config for a few
-obvious reasons:
+I chose the former, but it means that diff-highlight kicks off 6
+git-config processes (even if you haven't configured anything, it has to
+check each one).
 
-  - they are pulling the config from different variables than
-    diff-highlight itself uses
+But since Git 2.18.0, we can do:
 
-  - they are loading the config in a more efficient way (say, by parsing
-    git-config --list) and don't want to incur the six (!) git-config
-    calls that DiffHighlight.pm runs to check all config
+   git config --type=color --get-regexp=^color\.diff-highlight\.
 
-Let's allow users of the module to pass in the color config, and
-lazy-load it when needed if they haven't.
+to get all of them in one shot.
 
-Signed-off-by: Scott Baker <scott@perturb.org>
+Note that any callers which pass in colors directly to the module via
+@OLD_HIGHLIGHT and @NEW_HIGHLIGHT (like diff-so-fancy plans to do) are
+unaffected; those colors suppress any config lookup we'd do ourselves.
+
+You can see the effect like:
+
+  # diff-highlight suppresses git-config's stderr, so dump
+  # trace through descriptor 3
+  git show d1f33c753d | GIT_TRACE=3 diff-highlight 3>&2 >/dev/null
+
+which drops from 6 lines down to 1.
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- contrib/diff-highlight/DiffHighlight.pm | 41 +++++++++++++++++--------
- contrib/diff-highlight/README           |  6 ++++
- 2 files changed, 35 insertions(+), 12 deletions(-)
+ contrib/diff-highlight/DiffHighlight.pm | 28 ++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-index a5e5de3b18..96369eadf9 100644
+index 96369eadf9..abe457882e 100644
 --- a/contrib/diff-highlight/DiffHighlight.pm
 +++ b/contrib/diff-highlight/DiffHighlight.pm
-@@ -9,18 +9,11 @@ package DiffHighlight;
- 
- my $NULL = File::Spec->devnull();
- 
--# Highlight by reversing foreground and background. You could do
--# other things like bold or underline if you prefer.
--my @OLD_HIGHLIGHT = (
--	color_config('color.diff-highlight.oldnormal'),
--	color_config('color.diff-highlight.oldhighlight', "\x1b[7m"),
--	color_config('color.diff-highlight.oldreset', "\x1b[27m")
--);
--my @NEW_HIGHLIGHT = (
--	color_config('color.diff-highlight.newnormal', $OLD_HIGHLIGHT[0]),
--	color_config('color.diff-highlight.newhighlight', $OLD_HIGHLIGHT[1]),
--	color_config('color.diff-highlight.newreset', $OLD_HIGHLIGHT[2])
--);
-+# The color theme is initially set to nothing here to allow outside callers
-+# to set the colors for their application. If nothing is sent in we use
-+# colors from git config in load_color_config().
-+our @OLD_HIGHLIGHT = ();
-+our @NEW_HIGHLIGHT = ();
- 
- my $RESET = "\x1b[m";
- my $COLOR = qr/\x1b\[[0-9;]*m/;
-@@ -170,6 +163,29 @@ sub show_hunk {
- 	$line_cb->(@queue);
+@@ -131,9 +131,21 @@ sub highlight_stdin {
+ # of it being used in other settings. Let's handle our own
+ # fallback, which means we will work even if git can't be run.
+ sub color_config {
++	our $cached_config;
+ 	my ($key, $default) = @_;
+-	my $s = `git config --get-color $key 2>$NULL`;
+-	return length($s) ? $s : $default;
++
++	if (!defined $cached_config) {
++		$cached_config = {};
++		my $data = `git config --type=color --get-regexp '^color\.diff-highlight\.' 2>$NULL`;
++		for my $line (split /\n/, $data) {
++			my ($key, $color) = split ' ', $line, 2;
++			$key =~ s/^color\.diff-highlight\.// or next;
++			$cached_config->{$key} = $color;
++		}
++	}
++
++	my $s = $cached_config->{$key};
++	return defined($s) ? $s : $default;
  }
  
-+sub load_color_config {
-+	# If the colors were NOT set from outside this module we load them on-demand
-+	# from the git config. Note that only one of elements 0 and 2 in each
-+	# array is used (depending on whether you are doing set/unset on an
-+	# attribute, or specifying normal vs highlighted coloring). So we use
-+	# element 1 as our check for whether colors were passed in; it should
-+	# always be set if you want highlighting to do anything.
-+	if (!defined $OLD_HIGHLIGHT[1]) {
-+		@OLD_HIGHLIGHT = (
-+			color_config('color.diff-highlight.oldnormal'),
-+			color_config('color.diff-highlight.oldhighlight', "\x1b[7m"),
-+			color_config('color.diff-highlight.oldreset', "\x1b[27m")
-+		);
-+	}
-+	if (!defined $NEW_HIGHLIGHT[1]) {
-+		@NEW_HIGHLIGHT = (
-+			color_config('color.diff-highlight.newnormal', $OLD_HIGHLIGHT[0]),
-+			color_config('color.diff-highlight.newhighlight', $OLD_HIGHLIGHT[1]),
-+			color_config('color.diff-highlight.newreset', $OLD_HIGHLIGHT[2])
-+		);
-+	};
-+}
-+
- sub highlight_pair {
- 	my @a = split_line(shift);
- 	my @b = split_line(shift);
-@@ -218,6 +234,7 @@ sub highlight_pair {
+ sub show_hunk {
+@@ -172,16 +184,16 @@ sub load_color_config {
+ 	# always be set if you want highlighting to do anything.
+ 	if (!defined $OLD_HIGHLIGHT[1]) {
+ 		@OLD_HIGHLIGHT = (
+-			color_config('color.diff-highlight.oldnormal'),
+-			color_config('color.diff-highlight.oldhighlight', "\x1b[7m"),
+-			color_config('color.diff-highlight.oldreset', "\x1b[27m")
++			color_config('oldnormal'),
++			color_config('oldhighlight', "\x1b[7m"),
++			color_config('oldreset', "\x1b[27m")
+ 		);
  	}
- 
- 	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
-+		load_color_config();
- 		return highlight_line(\@a, $pa, $sa, \@OLD_HIGHLIGHT),
- 		       highlight_line(\@b, $pb, $sb, \@NEW_HIGHLIGHT);
- 	}
-diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
-index 9c89146fb0..ed8d876a18 100644
---- a/contrib/diff-highlight/README
-+++ b/contrib/diff-highlight/README
-@@ -138,6 +138,12 @@ Your script may set up one or more of the following variables:
-     processing a logical chunk of input). The default function flushes
-     stdout.
- 
-+  - @DiffHighlight::OLD_HIGHLIGHT and @DiffHighlight::NEW_HIGHLIGHT - these
-+    arrays specify the normal, highlighted, and reset colors (in that order)
-+    for old/new lines. If unset, values will be retrieved by calling `git
-+    config` (see "Color Config" above). Note that these should be the literal
-+    color bytes (starting with an ANSI escape code), not color names.
-+
- The script may then feed lines, one at a time, to DiffHighlight::handle_line().
- When lines are done processing, they will be fed to $line_cb. Note that
- DiffHighlight may queue up many input lines (to analyze a whole hunk)
+ 	if (!defined $NEW_HIGHLIGHT[1]) {
+ 		@NEW_HIGHLIGHT = (
+-			color_config('color.diff-highlight.newnormal', $OLD_HIGHLIGHT[0]),
+-			color_config('color.diff-highlight.newhighlight', $OLD_HIGHLIGHT[1]),
+-			color_config('color.diff-highlight.newreset', $OLD_HIGHLIGHT[2])
++			color_config('newnormal', $OLD_HIGHLIGHT[0]),
++			color_config('newhighlight', $OLD_HIGHLIGHT[1]),
++			color_config('newreset', $OLD_HIGHLIGHT[2])
+ 		);
+ 	};
+ }
 -- 
 2.53.0.1051.ga14e96f895
-
