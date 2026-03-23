@@ -1,158 +1,125 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198C931A575
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 18:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2C232C937
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 19:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774292052; cv=none; b=LpIlEf9nIGu7kUpfHFPztWnUT0miHmhvkXXb8/GRQsF9rn75mog7JdaE4cEkk8MVcCNKH3nVU5vHm8EuZRVmrqO0FeO05cXG0I+R3HEfFXQ5r+Sa5ZWaIlituYPGxcBgoa6UFXRIeAGOiY270ccAz5o3c7WEpINJEiLPiNEsgXk=
+	t=1774292861; cv=none; b=Fsz9FlqByvbtrY89YW9IPQmH3l5ITZ5imBXVYHDJw1HKkx9ZwnMcu4cfUeWEVdOTGTnBPnVgb+WIoNwDWubq/5LEQ6lIMv0mI1iDtQjoJHqDYcIYE6VQcPUvho1XiFcvhc4JrcNc+guc5TAk0wRbJ4b5yH7zwfjsgJZhMqnvfAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774292052; c=relaxed/simple;
-	bh=Hn+M3KI0JD+E33CjJKGt08F2I2kofRisTgznyInNyKY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TMw2xbVhJYgtWROONK8JAXfPjDedhQyhMTGMX9In0yjnC7/iD4KoGX7V/FMg5RAlE2Oxwy9RJSSZQ+iEzMngz1pcJF48gmeQaMabUDv/4w29un/06N5qOAj1Bz2VqzSSYR18fK9NyER/kYkPwlmi8MRJVX/4Iq5w93HTWn3utVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IDqmLcBn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YHDHrjtO; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774292861; c=relaxed/simple;
+	bh=5zqpAmhxH25zOz36urX4uShPJtCyqwdl58LgakD8Bbw=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=hG05msyQZzye87z7sfe17JsOH28LY536kw8sf26IwcksNezGI774kCkCWj70Nk7f91d5aVPaOCmw9l+tlOtq7AeJxu23+6cegqhM82xi6Y3hy83D5vqBTZgemp7dS/PFrPO9SVEPw6U+CpcIu6yoPLTQD8pruOkc9tWaT+gxF6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Vp24CQAC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aE9HyTZz; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IDqmLcBn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YHDHrjtO"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 648D3EC01E2;
-	Mon, 23 Mar 2026 14:54:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 23 Mar 2026 14:54:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774292050; x=1774378450; bh=nrr/XTf665
-	W+ohZQBgMo70hHGWngz9V6u1zU0ICQF/k=; b=IDqmLcBngd62phHNVKrQjGi1z9
-	KJ4VKZpFkkuKqazFzRrbWbFmi0RReTHExIiyfZdZH1OXR/xA5iMuOucq2Iv0hU1O
-	g97DBtqFjUOACtdAbpE3LTLMiOR2ZASLtSU7dr3Dg+Lg93u8bkQP3p+W6ZtWlgnD
-	Y20vNllAnLiUgjHniTi8V4vRXGgvni3L/W7O/qxYqJ0mizsGKl16fhRSH+aJspUi
-	4WdGvdUR6IrqafDh+cRxtqOM4cHSWzCxvgT5/tiZUzZpYQE2kZfnmVmF88PTdTli
-	GuwOLBaas8I0yCNGIo7/ojpT2sL6tH5sYJeznFBayZNMjl3lxABBw62Q56fA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Vp24CQAC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aE9HyTZz"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E14737A0202;
+	Mon, 23 Mar 2026 15:07:38 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Mar 2026 15:07:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1774292858;
+	 x=1774379258; bh=cMKBJEoN7+YxH98Z49eqB79Pd22Ouy5TWf2wiqzURDM=; b=
+	Vp24CQACAcT32JuRIdsHaXdMEomOpT7UDr+SSdJBmhw9jUbCsTukGYSDIEnjRlC2
+	PnPg5se4aDiSAGnUjE8wK5R26AlD8/2GfhAADivnawLru6VhnMAp3JIavlHNJFQ6
+	77LdTg1kmyVJ+aM1uBXu/bjyYlezHvcvuyfFDcB5tSkQZ2zI5K2C5qKaebKI5KNz
+	yOX6BcfG7lty/E2qGLeqGmvfZruOpix5/guh582YEwOQSO6Cm6XA5WD//hszzaqG
+	91BJpl5YtVA2V7pKkC/C0HuAXHod5JyWyJ/egYf0j46l1EMWZhca10HbgngZpfXA
+	1trAqd6t16uELdo2BsjzAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774292050; x=1774378450; bh=nrr/XTf665W+ohZQBgMo70hHGWngz9V6u1z
-	U0ICQF/k=; b=YHDHrjtOpenLvMm+jXaAUbs8Zh7VsCmI/ot3ze1mLkCP9wRkyHT
-	9kAnuZcqliorhPmfobnQh3N2CaiWknFoavnixGGkNSvC2JO8SNPEfe9lERkNcSBH
-	7IiB/7V7z9PKKDcFpFOM4SU9+1NnhiNpP47iiCRwXTZ89V05tmd1qk6Dfk6EYni9
-	b/xzRU1ZutcF2er1laZRzlMfVBRUfMbTgAtvOwLI2/F1XXP9u8I/DLNGlXgJEuDy
-	OjY0i426JlLd+36fPcFpXrh2hAKRUYnuR15rskmCaL65STERdmiCREm3Ik6DTlKN
-	ej325QG7JFWI7tslmq5lhEZ1Lc8OmhibaBA==
-X-ME-Sender: <xms:UYzBaU7NouLRRI6ArIPOhcJka4e8zW6FaNSIuoF98ckik7v9k3728A>
-    <xme:UYzBaU95FjqLN7opEozymjET-4XRdft1hzZK5KraiFy_P64KRdclcdBsFRXXwbA9r
-    _QZIjR3DGD4wm9KbY4PywPGPPKzgcIhJ5vXlah4J4-UDKAZDtcX>
-X-ME-Received: <xmr:UYzBaZpe79YhYB9HBkmOU7qEBH7RjnJVY1ovWwbAaOLcklV081MSJR0QsosoQc2qyaLpto8nvVPUr9Ahrob7OND89LJjQvpdJw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudelgeekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774292858; x=
+	1774379258; bh=cMKBJEoN7+YxH98Z49eqB79Pd22Ouy5TWf2wiqzURDM=; b=a
+	E9HyTZzE6hHKmj7yHSZlfOhzidinmBseFVK8WWVhyJNoL6v9IEZ+SUr4ID1Ab4Vc
+	yRLLaxhcRuYaVtq80u5opN3IzOY6HfI6xtgg4Bd9Q3DWShx7xT9LY7aje7AG1rp0
+	xrGPxY6iQBL2tGDqCKrZBpK816DZJ8dIlWTB+QCn+bmFkXC9qerCMp77wwEDd/WV
+	zdsW5wbTsZ6bSwmAqxVuV0iA5MnA5O+PnfuvpuEByUozE5lnQNETuYXDQs6mxibh
+	y6erftWTknLuGSIIlgNRfK8h6nKCSXXbjHYrGn1Z/TksLO6F3jWlhdgKIXs9RUHU
+	Eg420/Y7W3HbQurt2ORJA==
+X-ME-Sender: <xms:eo_BaQnKwS47Y8EG8s28b3gV7wyXMgTY2pNjAOZQ2NBLG63Ts6-pX5E>
+    <xme:eo_Baarv4e1zMo3P8raXzH0hDf4kaN2VJUqUkdy9iAo8vATIhvR4Q0JfEttBkKLGV
+    rTkeW5tXuElb_66Xq7ldyg0R5jDLN6ndgqTQiiLQRQIxrPjvTprRA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudelheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepgfeiledvteekudehtdejteefhedvleduhffgffetuedvkeefvdevtdejffei
-    vefgnecuffhomhgrihhnpehorhhsshhhrdhishdpvgigrghmphhlvgdrtghomhdpvghvih
-    hlqdhhrggtkhgvrhdrnhgvthdphhgrtghkvghrrdhnvghtnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtg
-    homhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    tghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhm
-    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrth
-    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:UYzBaVrBysmjOTVKOiXfG5dxt0DalOzung1Ew2QafrT6naoazkEM1w>
-    <xmx:UYzBac29QYisWPDvT9imSwFb8cP9vl3Y5pArsqtxWgH7FSzkqewAPQ>
-    <xmx:UYzBaTH8N7QVzBiQcfJKAInupZSvahoAJ2ejsJAW13MFKROTXvrFoA>
-    <xmx:UYzBaXG3WYaBWQq9QgztAQEffSJ8JwNfNJwV4MtFR6zKbzw7pHYl-g>
-    <xmx:UozBacKQYuzOEGbceYc3nEUhEZtKP2m5XWvoQlFhHPYwpVXO4BhpfnxX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Mar 2026 14:54:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Elijah Newren
- <newren@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 14/16] promisor-remote: trust known remotes matching
- acceptFromServerUrl
-In-Reply-To: <20260323080520.887550-15-christian.couder@gmail.com> (Christian
-	Couder's message of "Mon, 23 Mar 2026 09:05:17 +0100")
-References: <20260323080520.887550-1-christian.couder@gmail.com>
-	<20260323080520.887550-15-christian.couder@gmail.com>
-Date: Mon, 23 Mar 2026 11:54:07 -0700
-Message-ID: <xmqqzf3y4bsg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtg
+    homhdprhgtphhtthhopeihvggvtghhvghnghdrtghhihhnsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:eo_BaYJgcyKrp8nAfq43sSDp0nGLp_MHOfWp4jOG9Ev5w7JnlLmdUA>
+    <xmx:eo_BaZoNTo1EVLYQoKpu1WAU8xFoo0r96-dhN9OFTyfRpwb8UiXeWw>
+    <xmx:eo_BaYzjgZXgFEHeAyuQBhvxngWittZdasgiiO6AVQGXUskR_A9dew>
+    <xmx:eo_BaVMEyov0KyePqcITdtHo2Z2NQqnUKuXnilSj_mF8HTcNL5qPaA>
+    <xmx:eo_BaYe44F2s5XC7uuTCU6-BN2GN7Wg8fHVqXlq5xCSuBFyFt5wrNPFc>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 50EAE1EA006B; Mon, 23 Mar 2026 15:07:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AHOAF4mS0e8c
+Date: Mon, 23 Mar 2026 20:07:17 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Toon Claes" <toon@iotcl.com>, git@vger.kernel.org
+Cc: "Justin Tobler" <jltobler@gmail.com>,
+ "Siddharth Asthana" <siddharthasthana31@gmail.com>,
+ "Yee Cheng Chin" <yeecheng.chin@gmail.com>
+Message-Id: <63a66d11-d138-4d4e-ab5c-f7669c218293@app.fastmail.com>
+In-Reply-To: <20260323-toon-replay-arbitrary-ref-v1-3-5c7172f675ec@iotcl.com>
+References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
+ <20260323-toon-replay-arbitrary-ref-v1-3-5c7172f675ec@iotcl.com>
+Subject: Re: [PATCH 3/3] replay: allow to specify a ref with option --ref
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Mar 23, 2026, at 17:09, Toon Claes wrote:
+> To enable users to replay commits without having refs in
+> <revision-range> or as the value for --advance and --revert, start
+> accepting option --ref. When the user specifies a --ref, the refs from
+> the other option are ignored, and only the ref is acted on.
 
-> diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-> index b0fa43b839..6f5442cd65 100644
-> --- a/Documentation/config/promisor.adoc
-> +++ b/Documentation/config/promisor.adoc
-> @@ -51,6 +51,52 @@ promisor.acceptFromServer::
->  	to "fetch" and "clone" requests from the client. Name and URL
->  	comparisons are case sensitive. See linkgit:gitprotocol-v2[5].
->  
-> +promisor.acceptFromServerUrl::
-> +	A glob pattern to specify which URLs advertised by a server
-> +	are considered trusted by the client. This option acts as an
-> +	additive security whitelist that works in conjunction with
-> +	`promisor.acceptFromServer`.
+s/option are/options are/
 
-Between the first sentence and the second one, I think there needs
-to be an explanation on what "trusted" means in this context.  Is it
-trusted so that the URL can feed random configuration variable=value
-pairs for the client to blindly apply?  Or is it trusted to do very
-limited things that other remotes can do, and if so what are these
-limited things?  Without knowing that, the end-users cannot assess
-the security implications of setting this option.
+>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>[snip]
+> +To replay onto a specific commit while updating a different reference:
+> +
+> +------------
+> +$ git replay --onto 112233 --ref refs/heads/mybranch aabbcc..ddeeff
+> +------------
 
-I am guessing that the client would behave as if the existing
-promisor.acceptFromServer configuration variable were set to "all"
-when talking with a remote whose URL matches one of the patterns
-listed?
+This example could use the stuck form like in the two previous commits.
 
-By the way, some people may suggest "white" -> "allow".
+    git replay --onto=112233 --ref=refs/heads/mybranch ...
 
-
-> +1. Start with a secure protocol scheme, like `https://` or `ssh://`.
-
-Is there a practical reason why people would want to use schemes
-other than the above two?  This sounds like something a small amount
-of code can easily enforce.
-
-> +2. Only allow domain names or paths where you control and trust _ALL_
-> +   the content.
-
-Obviously.
-
-> +3. Don't use globs (`*`) in the domain name. For example
-> +   `https://cdn.example.com/*` is much safer than
-> +   `https://*.example.com/*`, because the latter matches
-> +   `https://evil-hacker.net/fake.example.com/repo`.
-
-Is there a practical use case where allowing '*' to match anything
-that contains a slash '/' is useful?
-
-> +4. Make sure to have a `/` at the end of the domain name (or the end
-> +   of specific directories). For example `https://cdn.example.com/*`
-> +   is much safer than `https://cdn.example.com*`, because the latter
-> +   matches `https://cdn.example.com.hacker.net/repo`.
-
-Ditto.  The above two points sound like excuses to keep sloppy
-asterisk matching logic.  Yes, retroactively tightening rules always
-have risk to break existing deployments, but if existing code paths
-of urlmatch do not have any good reason to allow '*' to match a
-string that contains a slash '/', perhaps there is no fallout.
-
+> +
+> +This replays the range `aabbcc..ddeeff` onto commit `112233` and updates
+> +`refs/heads/mybranch` to point at the result. This is useful when you want
+> +to use bare commit IDs instead of branch names.
+> +
+>  NOTE: For reverting an entire merge request as a single commit (rather
+> than
+>[snip]
