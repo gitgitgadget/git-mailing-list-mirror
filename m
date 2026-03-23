@@ -1,85 +1,80 @@
-Received: from 17.mo583.mail-out.ovh.net (17.mo583.mail-out.ovh.net [46.105.56.132])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0879D372B53
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 23:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.56.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CB5382385
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 23:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774307249; cv=none; b=fr0HoptpNmOAJf7BMIQaNufJMz5K30ctMzpMP+7qsiMLUfXGCOkifUWpEN4q9f3mfsi/a5p8uSqqYAre88xnmgpoTNjuex43x6iJTgWDCkFm1ZreYlyVAHZ+jliq3KtUTszFNWlVBBLA9VcLt35CwjYBp9r8XA1DgrXewKV16IA=
+	t=1774307459; cv=none; b=I6vA/1l631BP4RqAQymf35SBXcvhCoNxfMexWJmRQnN0J9Bp2ux/0Nunq60nfAY8qwNhXzLSSmVL9Q+T/fp5Ty3DylXcM5MrwP7P07Zi3uc2AfBlNT4O3+i0ySmju4rVSQVNh5YQdmmH8d9QE0/1SVcwpSVcKClgpR7+lx3IxOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774307249; c=relaxed/simple;
-	bh=szSb+jiGXEL3MPO9vHgHC6hTJlMQpL3yDsXCe9oVMDo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ljkfh/zxWoQd4QfrLuOlGbNJIfE+LGTkweyWLBTJx5xS9AFs6w8Dm0OB1Hqr/I5Hu+bbTSadPl/qREzNOkH4zTxbu0OP29bmTSXcVJcq/pYXeVEiRjDOfVfiP046y02su79TWuW7/OSINxhNHdA72UNdFcxS4LziJXBKi5GXTD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de; spf=pass smtp.mailfrom=schlaraffenlan.de; arc=none smtp.client-ip=46.105.56.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schlaraffenlan.de
-Received: from director8.ghost.mail-out.ovh.net (unknown [10.110.37.133])
-	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 4ffpJ346Qlz5wgW
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 22:49:07 +0000 (UTC)
-Received: from ghost-submission-7d8d68f679-77wzd (unknown [10.108.54.44])
-	by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 1FDC3C0134;
-	Mon, 23 Mar 2026 22:49:06 +0000 (UTC)
-Received: from schlaraffenlan.de ([37.59.142.102])
-	by ghost-submission-7d8d68f679-77wzd with ESMTPSA
-	id mhIMMGLDwWl78T0AiVxfvA
-	(envelope-from <kernel@schlaraffenlan.de>); Mon, 23 Mar 2026 22:49:06 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-102R0041cfd1231-27c6-4102-81d9-9bb1e78f158d,
-                    CF5F45155CC526890A7B96C462E82A48810857C8) smtp.auth=mail@schlaraffenlan.de
-X-OVh-ClientIp:95.90.63.4
-From: Jonas Rebmann <kernel@schlaraffenlan.de>
-Subject: [PATCH v2 0/2] Avoid hardcoded "good"/"bad" bisect terms
-Date: Mon, 23 Mar 2026 23:48:58 +0100
-Message-Id: <20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de>
+	s=arc-20240116; t=1774307459; c=relaxed/simple;
+	bh=SlRaXUy9onl91GyFv8xts2yw9eaRZxbKlUUGfhnkpDs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jVry2S+AH+bjrEVPUhsG58BKAV1EnXZ2g6erVTgdALwSFOMwtLmACVE9zQkNdgsugEB6bEmZjhRf2A4Euis1hBweP6LdJoTJGYIv7suvxy9AA64MzQWDSRpAx60lR5v4rqLhyxooBWfUo8xUQ86/ZYnsqHXnaNARPQGH3bQdCOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KLSN19uZ; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KLSN19uZ"
+Received: (qmail 120574 invoked by uid 106); 23 Mar 2026 23:10:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SlRaXUy9onl91GyFv8xts2yw9eaRZxbKlUUGfhnkpDs=; b=KLSN19uZl3P0qcyNmg/wMQJQPDyFJBnCWWRBOKBYZeio0928q0uwMK6kVwYA+3Ko9VINYMBzy0k8UOYKEz8XVYlsLnkELoNWiVfsu1sKhKC7pB7D9xiaS436W5SIS+XysE7cG5ze6zdcOCKRLP74xRQWLlb8eqZ01KBl+NsFmUXR25633JcLpQ/SSthVJTmi0gZEdrugJlibBh37Ud7wykRX72yq5RpfwlfqtjW1T2RRlNhb0a6M4tkOx7M1fZHQP0QUMOdXgaY8GRlLyi7L6ShpuBl1RUr8ihqCph5AcwOSCNFiu8apIIsaNS7MyJNxOTChgZCMuN2meaEVfyXahw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Mar 2026 23:10:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 159635 invoked by uid 111); 23 Mar 2026 23:10:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Mar 2026 19:10:49 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 23 Mar 2026 19:10:49 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, git@vger.kernel.org,
+	joliss42@gmail.com, joliss@gmail.com
+Subject: Re: [PATCH v3 1/2] refspec: safely parse refspecs outside a
+ repository
+Message-ID: <20260323231049.GA23721@coredump.intra.peff.net>
+References: <20260322023557.15907-1-jayatheerthkulkarni2005@gmail.com>
+ <20260322053617.38951-1-jayatheerthkulkarni2005@gmail.com>
+ <xmqq341q41wu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNyw6CMBBFf4XM2ppSXsGV/2FYlDKVMVhIpxIN4
- d9tcW1mdW7uPbMBoydkuGQbeFyJaXYR1CkDM2p3R0FDZFBS1bJQUvTEaIII6J8smpjVdROvNRA
- ni0dL70N3637Mr/4RB8mRGiNxmP3n+LfmqfdHveYiF6aQpq1KWZVKX9mMk/baWnSTducBodv3/
- QvLvsm5wgAAAA==
-X-Change-ID: 20260320-bisect-terms-76036676769c
-To: git@vger.kernel.org
-Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>, 
- Jonas Rebmann <kernel@schlaraffenlan.de>
-X-Mailer: b4 0.15-dev-bc6c4
-x-ovh-tracer-id: 14079096863422120835
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFcRZ73sADwnUlQ9eaSvXAzTPZVrM6zPUzO6OrEIdx9zX/brm87DI/i4r4P7XhpHRWj9vlDu6ByuW+p165eUis+QkWKB/vgbljFGgP/BXD9re7Zsotq0MyFDpmm1wNbbGAvzUSidVINV9cVNyf/qjHio5if5F49EosSg1O/WNGv7M8RQj9bLG5jciepTfycgeaSVeprb+cS1pFSovcmOG6Srb/nWj7KzMdaRl92Mh15kmDlhhUhsxCsR0gyk+5PF3nqrtUX29LRsaV9r0IzY1fPZD8DEt2IQIpwMx1VlwAIRCadVWNk1tbRhkm3jeokLMUtymHqWTPYwDnGVzykK0I/eR9b+re7vBepG12RL8GMLtmcL9lUgPLXJ33AaxxDX26RMpytu/bo80n8I2n7xNOwQyCsSSFgWBWJp/yAUTuozYDH7ha/9i07aLg0KTqVj/ohFZa2WdBJoTRUAYHtHbnwCMp8+/VMUt40qlgVIxwaKaguRNNIP70f03vp6bk/uJOvR9ZHuTsK5QObZsQMp9m63k8sFcgvAUWFilxw7JFEumY23kT120oaaubIsA/HwGuEYx8lL32jk+YstQaxlgOeBGS2b5EWmnLJByXimzGfJWiBx0Z7zjpBafqbxt2Rw8VhlvF9H8XG9oaAKS0+feQmWLVEkRfn+U+ZxgcH9WZHuw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq341q41wu.fsf@gitster.g>
 
-While checking whether all output messages of git bisect where covered
-by [PATCH 1/2] bisect: use selected alternate terms in status output
-I found hardcoded good/bad refs leading to incompatibility of git
-rev-parse --bisect with alternate bisect run terms. This is addressed
-by [PATCH 2/2] rev-parse: use selected alternate terms too look up refs
+On Mon, Mar 23, 2026 at 03:27:29PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
----
-Changes in v2:
-- Improve commit message
-- Add tests
-- Include second patch for hardcoded good/bad in rev-parse
-- Link to v1: https://lore.kernel.org/r/20260320-bisect-terms-v1-1-c30c9540542a@schlaraffenlan.de
+> Looking good.  Shall we declare victory and mark the topic for
+> 'next' by now?
 
----
-Jonas Rebmann (2):
-      bisect: use selected alternate terms in status output
-      rev-parse: use selected alternate terms too look up refs
+I'm not entirely convinced the better solution isn't just:
 
- builtin/bisect.c            | 23 +++++++++++++----------
- builtin/rev-parse.c         |  8 ++++++--
- t/t6030-bisect-porcelain.sh | 16 ++++++++++++++--
- 3 files changed, 33 insertions(+), 14 deletions(-)
----
-base-commit: 1eceb487f285f1efa78465e6208770318f9f4892
-change-id: 20260320-bisect-terms-76036676769c
+diff --git a/remote-curl.c b/remote-curl.c
+index 92e40bb682..60774af929 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1552,6 +1552,11 @@ int cmd_main(int argc, const char **argv)
+ 		goto cleanup;
+ 	}
+ 
++	/* yuck, see 9e89dcb66a (builtin/ls-remote: fall back to SHA1 outside
++	 * of a repo, 2024-08-02) */
++	if (nongit)
++		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
++
+ 	options.verbosity = 1;
+ 	options.progress = !!isatty(2);
+ 	options.thin = 1;
 
-Best regards,
---  
-Jonas Rebmann <kernel@schlaraffenlan.de>
+That would make the http transport consistent with non-http ones (or at
+least any that execute in-process within ls-remote).
 
+Or alternatively, if we think that this use of parse_refspec() is the
+only remaining spot for which ls-remote needs a fallback, then we could
+apply the patch here and then revert 9e89dcb66a.
+
+-Peff
