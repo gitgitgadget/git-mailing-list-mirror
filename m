@@ -1,127 +1,190 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407893382F9
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 20:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774296622; cv=none; b=GddWLo9r9cjPdSoJCdpaOwTBXQljgVjqyOWiEg8e7SW0W/aAJmHywLeq/NtXM5hAHf1U1q1ZWUndgYsDbUJ4fTLsysVttAcN5tHzMe2hgoxkIBdXKeDo9VyV39E/UJP0GSj6+5YtET5Unzp4MRF+ktMXxqzoB8JQPBI0dn+VGXY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774296622; c=relaxed/simple;
-	bh=rEkDIv7GGupAzjbdM0r7Tz3/y1MF0w1LrjQ7tui0+MU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZBxdb5SLw3hUAvoCICf7KsLUvQeIC7F2RdzmBdnFVLC/hmXY7vYnHtg3bfynveOBVrlXfO352JRFUsRMlsN4ze+7dNa3xwQy/nm4btgcpaOb3MrpmJTEMOpmxs5y3yK6vKYBg/zcqyhROuS1xiEeNJaXJTS/RLT0gx7dvjAsllw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TEUki/yq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vUWp0jiU; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TEUki/yq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vUWp0jiU"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6E228140019C;
-	Mon, 23 Mar 2026 16:10:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 23 Mar 2026 16:10:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774296620; x=1774383020; bh=7QjfjQN8Kb
-	NtW2NIXIYbWZqdpnc11y8MsTS6wR4cBHw=; b=TEUki/yq9YIMOFteFfcUL2JeIy
-	3qZXrZSD2ZpMyrSV1+BPwjMYp9TahnK3bbGJ4lc5Mqn7L4w8iE0CEaXYEQA0vABL
-	ypvcu6e6U5c+h+BTlL8NFcR/poVXSkipUuNFReLFNn/+k7MhtHP0jVE93J2JwiKz
-	v74o5VjV9bduTBT5p4WBWfWEkV0hy6i79VNyaPKwbU86JUrg85weWj7crBGC40US
-	MZgmSu/9qRX/azKYEKZXb2LTEGL31m2/zv8ENzI5WwU7UyqRIovTQ48w5dKH3oWu
-	5I/jt6KdXpxHieqooxCbk+wzqgkZXCrYdD13Fk9SyWIprpDNTN3BiEdOAD9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774296620; x=1774383020; bh=7QjfjQN8KbNtW2NIXIYbWZqdpnc11y8MsTS
-	6wR4cBHw=; b=vUWp0jiUq+EPZFWOuSJGqCDgCRYLscejgjYCt7YD/4kaX/J0LLA
-	sfEXbYEzz8AynKNy74ShOqjOmhJfwn30rTiDgEUll7GhV9IayEQnw56UMUy/KHO2
-	fxGD8MU8GJdQ3xp4e70Cjm6GVqTaELCYAB7e0YeXWazcYU45UhcWCtkX0GQgg4Bm
-	OUd19jTps2KIDMoX8+eY1+Lnqxaa0kFb4fgU8Id6LL/hJm6JYKJdgV7/EovDPMVp
-	QXPm9aOkcm39OGb7fdpBMnlaQpQ0h5EoT782gT1j4W77yTcldC0qBx/mrbAdkDWR
-	lTzGY4H5EniXa9A+XuNGXi8Iix9+XcFFR6Q==
-X-ME-Sender: <xms:LJ7BaedddwBrAkxd0zcVQUjxVSvjOHXVaBc2Vy0hekGNxQqsl1F7Bg>
-    <xme:LJ7BafNFU7foe1E5mVeR8TmT8k4vm_kGukofEphxtHaA5bysSg2255b5lGLQKA09V
-    3uHAJsQGTBoTm6JSwiAT8Z4NBLd0fMavT-76CB594r7o7G6HivW5g>
-X-ME-Received: <xmr:LJ7BaUgoO4Pg9iOLSxvz9jJTUa0EpU_OQkBn5v_GLY6K7CzuZjWteY_hhQtbkUEMz_5sw_bOj3wdnaPARcFzW6SGRzAhWUflpA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefudelieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LJ7Baa3k4HE8w1v7oH9LTe717WBYTPt3ta9HFJwj7SYTEPF5I_PSCw>
-    <xmx:LJ7BaWgB8gyjIe4gqUdPrfCS5OJi7hIRsgiFDI6v9GJto_xLunucaA>
-    <xmx:LJ7BaSdXxLo7O2rIph4JpKs23YvXOXM-4aiS5CIKWWSP_p3TbK3G3w>
-    <xmx:LJ7BaRk5xZ00GjaIn7bs_T-WI9OTarISujvVh8uv0NTteX5wt5eVkQ>
-    <xmx:LJ7BaQkUHHZGhEm-Nvu4YOkRD7KubMUKzwS59bADK3a7k6pQ-AMF7nxH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Mar 2026 16:10:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 0/8] improve "git format-patch --commit-list-format"
-In-Reply-To: <cover.1774284699.git.mroik@delayed.space> (Mirko Faina's message
-	of "Mon, 23 Mar 2026 17:57:27 +0100")
-References: <cover.1773959395.git.mroik@delayed.space>
-	<cover.1774284699.git.mroik@delayed.space>
-Date: Mon, 23 Mar 2026 13:10:18 -0700
-Message-ID: <xmqqqzpa489h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E372D363C65
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 20:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774297678; cv=pass; b=HspRTPWqHcCqBjZ/9t9n624mBP+awFgxjuq97RQ/zZ6fQ7KOS7BAhtpDYWg6CsT92mY9UJg6GwQqsHzWpc1UOrO3Bsb2OMj8xQMnprckLaAfBMkhOX3u/SVSpCbvFK390f1Va9Iq5acsFf9fQVM143jlnaWQKNJWK2d58ySun3s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774297678; c=relaxed/simple;
+	bh=pX5uEAU4jPL2UJ71pN+5vfxpHSGkaZ2jKpegdSmp5nc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Q2U++ZAfY+pAsmrpWz0D/dGhAnOqW1qSuYQiMB7DlXFraOYhKlLO/Xv9o/9vPmG6U0NEqjumErTqsREUpD4kfr7NLBI8oJpPrrWFbm664NpV0vnJ6udbJoLa/Ccv5djkAy/evqC1IzsOxmLzHz3Xnb+140pKEsSMjVCZVvOAtdM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-127148c2112so411644c88.3
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 13:27:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774297676; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VIAVoHDz+pyOFg76NDWc7agzouRIL3n+4ZNNYRc4q6TP7XXrGYPHSCajrCIDDEm/aC
+         YodMDL3dWmVL9h3sB90/vuQz4Sq3ybbzmTMRX3xOApLY/TbGK5ue81SeSsxOfMpRVjT/
+         QlA/iirXOdjFofGusaYgvd3Y87Ea6Cwv1YSreJcn5Lw3Iv127os72lD9dWXPL/iPCbtn
+         eLic1oSB+AIHlE9ZUt30fHROBgw0eDtPbiLsgsdDG8S/1hh1JI0FquA+BQ/Wh8eeaU0Q
+         tTRC+ecRCJu7JMDu5g8cMDfdp/0JgSIOhsEVHv28BCIA+BQ6sQbey7jQ82+0CVlK/3Fo
+         +P1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=Qfm2JNcBs0bLgYRxhklQYCrFg/U8FzWGu3SsoN+wK1E=;
+        fh=2G/e6Lw/f+E+f8jTR0OeNBw5Z436rjI5/HE2AOyMqWw=;
+        b=XkWUI2t/q5dFoCJ2BSqsX1w/48q3PXJPqjOQmu6Bbo9k456hpijAnCzBC+qZwnLrDZ
+         7lfXku0e9dklLg3/gOYYak1liVyTiTFwLtr6fvC/5SPdrF0buJQAaGgO/QbqLqxfXsk4
+         +Q9LgyR9YjUhT7TP13bsh7o9UsaTsJpLxAu9uQKOPyZvcRBe67hVokypPt/Mof2j/xDE
+         jzxpHrtizdvk/Zp3L61cL5NXH3xLC3SvJyPAqlo2Xo1OugKfJY87LByY6p/yAQaipTWN
+         F7giihyaauZYgMVb8Qb9gYmfqoh4kvYFzv/pYGZWf/fNax7BKWblZmQxP363z7pSZ8kU
+         IoAQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774297676; x=1774902476;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Qfm2JNcBs0bLgYRxhklQYCrFg/U8FzWGu3SsoN+wK1E=;
+        b=KjD2n5qsdxVdAnKfsfoC5+CoX30xXx5TQc+F/ThrsbIOvUWHx5dAngLwORluOJxCNL
+         BCNAz3blVNrcoh8ZxkEX2pEwK5ooNdxTGr3l1++s1ZX7otqlQD1AM6wH1g2uVdsaefOl
+         PBHSNJSqqK3OYDKqeS/dJdIqnRRz9F8/PuIdTMIrTIkx99AAJrMyHw5MY5j0H4MzXSyb
+         NOmtEV2roYdF+R+WtGR0RMokp+gJvKaX3gO+bverojCxBWrrMbPYxUuYdVBVJju59Alg
+         5jjrROxmfn2dm+h4QHFrue/IRg9RbrWXyWPFfN1mYISZM3pzcgo01ZNAzU2SCBrM+jRE
+         HW1g==
+X-Gm-Message-State: AOJu0YyNp+cpjHTfXodRUWTBOGnJF/PXeR/O5+sPT6JoygOXtaso/jr0
+	lvaUhTOel2/zoFII3FZn+dlC8qAE2DymF+0GBMkThEVLxYvMpxp+eMklZgCnbU6rHycd0fEV81J
+	hipqJIUic+1Ei5nFwRYmLdUrwX5SEKcs=
+X-Gm-Gg: ATEYQzxBsSCn+WpmXC5ls6fft5QF3k/HrIEs6RkySez/9b3alZ0PZjJhIHS5U7NbwIK
+	jyYRhEkgnTMfhf9lzQeWs1UIRw8oWZ/b8QCRTsebE/TQDCQxMsKwM/noU8Y9nay16YPAVPqLNc2
+	yhAMB0FRp54FA1BkL2iYIm4rF80TXQzZ0uGINapyFvCAa8j9joOcI9OPsCevQ3CfpI3CuqR7hy7
+	p5E2LQgFdwCxvrDh50Kp6lPEjWX38Exe00PeGEQ4DhGlnOSrzo0o//oHTPgGjQ87/WFUTRln+pG
+	tzxtPk/e+Mk0v2etaXPTSnFlleOIJlaIiN8aGrU=
+X-Received: by 2002:a05:7022:6883:b0:12a:6d14:df9c with SMTP id
+ a92af1059eb24-12a7265122amr3076779c88.1.1774297675973; Mon, 23 Mar 2026
+ 13:27:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
+ <cover.1774205661.git.lorenzo.pegorari2002@gmail.com> <0bb031e7443bb53abbbb0afaa347285d6d8cf7b8.1774205661.git.lorenzo.pegorari2002@gmail.com>
+In-Reply-To: <0bb031e7443bb53abbbb0afaa347285d6d8cf7b8.1774205661.git.lorenzo.pegorari2002@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 23 Mar 2026 16:27:44 -0400
+X-Gm-Features: AQROBzDKAaKnuHDTSAAzMFoxrYJ6c6U8W0H21rT7i6-ZOwpfJt6W0_sYC0ctylE
+Message-ID: <CAPig+cR7-3rdkHvGbzk8O7P=83pxBTvqXTUgMxYpf+OK9jNCgg@mail.gmail.com>
+Subject: Re: [GSoC PATCH v2 2/4] pack-write: add helper to fill promisor file
+ after repack
+To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Mirko Faina <mroik@delayed.space> writes:
-
-> Not much has changed, just applied the suggestions Kristoffer made.
-> Thank you again for the review
+On Sun, Mar 22, 2026 at 3:18=E2=80=AFPM LorenzoPegorari
+<lorenzo.pegorari2002@gmail.com> wrote:
+> Create a `copy_all_promisor_files()` helper function used to copy the
+> contents of all ".promisor" files in a `repository` inside another
+> ".promisor" file.
 >
-> [1/8] pretty.c: better die message %(count) and %(total) (Mirko Faina)
-> [2/8] format-patch: refactor generate_commit_list_cover (Mirko Faina)
-> [3/8] format-patch: rename --cover-letter-format option (Mirko Faina)
-> [4/8] docs/pretty-formats: add %(count) and %(total) (Mirko Faina)
-> [5/8] format.commitListFormat: strip meaning from empty (Mirko Faina)
-> [6/8] format-patch: wrap generate_commit_list_cover() (Mirko Faina)
-> [7/8] format-patch: add preset for --commit-list-format (Mirko Faina)
-> [8/8] format-patch: --commit-list-format without prefix (Mirko Faina)
+> This function can be used to preserve the contents of all ".promisor"
+> files inside a new ".promisor" file, for example when a repack happens.
 >
->  Documentation/config/format.adoc    |  2 +-
->  Documentation/git-format-patch.adoc | 19 ++++----
->  Documentation/pretty-formats.adoc   |  4 ++
->  builtin/log.c                       | 35 +++++++-------
->  pretty.c                            |  4 +-
->  t/t4014-format-patch.sh             | 72 +++++++++++++++++++----------
->  t/t9902-completion.sh               |  1 -
->  7 files changed, 84 insertions(+), 53 deletions(-)
+> This function is written in such a way so that it will read all the
+> ".promisor" files inside the given `repository` line by line, and copy
+> only the lines that are not already present in the destination file. This
+> is done to avoid copying the same lines multiple times that may come from
+> multiple (redundant) packfiles. There might be another better/cleaner way
+> to achieve this.
+>
+> Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+> ---
 
-All incremental changes look reasonable to me, and it seems we have
-already reached the point of diminishing returns?
+Thanks, I think this version addresses all my review comments[*] and
+looks much better overall. Use of `strset` makes a big difference over
+the previous attempt. A couple minor comments below...
 
-It is possible that people are only commenting on low-hanging
-obvious typoes and mistakes without seeing a bigger picture,
-but I think I've read through an earlier iteration of the series,
-and found it more-or-less solid, and I do not think there was a
-drastic change of course since then, so I am happy to mark the topic
-for 'next' now.
+[*]: https://lore.kernel.org/git/CAPig+cQSsMfvHJnwuXGQ1Je8ekz=3DRqbaibn-3sh=
+bya5y-5xTKg@mail.gmail.com/
 
-Unless other people find bigger issues remaining in the series, that
-is, of course ;-)
+> diff --git a/pack-write.c b/pack-write.c
+> @@ -621,3 +622,63 @@ void write_promisor_file(const char *promisor_name, =
+struct ref **sought, int nr_
+> +void copy_all_promisor_files(struct repository *repo, const char *promis=
+or_name)
+> +{
+> +       struct strset dest_content =3D STRSET_INIT;
+> +       struct strbuf read_line =3D STRBUF_INIT;
+> +       struct strbuf promisor_source_name =3D STRBUF_INIT;
+> +       struct strbuf write_dest =3D STRBUF_INIT;
+> +       FILE *dest, *source;
+> +       struct packed_git *p;
+> +       int err;
 
-Thanks.
+Nit: I probably would have declared `FILE *dest` within the scope of
+the repo_for_each_pack() loop as suggested in the review, but it's not
+worth a reroll.
+
+> +       dest =3D xfopen(promisor_name, "r+");
+> +       while (strbuf_getline(&read_line, dest) !=3D EOF)
+> +               strset_add(&dest_content, read_line.buf);
+> +
+> +       repo_for_each_pack(repo, p) {
+> +               if (!p->pack_promisor)
+> +                       continue;
+> +
+> +               strbuf_reset(&promisor_source_name);
+> +               strbuf_addstr(&promisor_source_name, p->pack_name);
+> +               strbuf_strip_suffix(&promisor_source_name, ".pack");
+> +               strbuf_addstr(&promisor_source_name, ".promisor");
+> +               source =3D xfopen(promisor_source_name.buf, "r");
+> +
+> +               /*
+> +                * For each line of the promisor source file, check if it=
+ already
+> +                * is in the promisor dest file. If not, add it to write_=
+dest, so
+> +                * that it will be written in the dest file.
+> +                */
+> +               while (strbuf_getline(&read_line, source) !=3D EOF) {
+> +                       if (strset_add(&dest_content, read_line.buf)) {
+> +                               strbuf_addbuf(&write_dest, &read_line);
+> +                               strbuf_addstr(&write_dest, "\n");
+
+Not worth a reroll, but this could also be:
+
+    strbuf_addch(&write_dest, '\n');
+
+> +                       }
+> +               }
+> +
+> +               err =3D ferror(source);
+> +               err |=3D fclose(source);
+> +               if (err)
+> +                       die(_("could not read '%s' promisor file"), promi=
+sor_source_name.buf);
+> +       }
+> +
+> +       if (write_dest.len) {
+> +               strbuf_strip_suffix(&write_dest, "\n");
+> +               if (fseek(dest, 0L, SEEK_END))
+> +                       die_errno(_("fseek failed"));
+> +               fprintf(dest, "%s\n", write_dest.buf);
+> +       }
+
+Can you explain why you strip "\n" and then re-add it via fprintf()?
+The reason is not immediately obvious.
+
+> +       err =3D ferror(dest);
+> +       err |=3D fclose(dest);
+> +       if (err)
+> +               die(_("could not write '%s' promisor file"), promisor_nam=
+e);
+> +
+> +       strbuf_release(&read_line);
+> +       strbuf_release(&promisor_source_name);
+> +       strbuf_release(&write_dest);
+> +       strset_clear(&dest_content);
+> +}
+
+Everything appears to be released. Good.
