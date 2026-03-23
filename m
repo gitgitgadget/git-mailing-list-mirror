@@ -1,42 +1,42 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB2227FD5B
-	for <git@vger.kernel.org>; Mon, 23 Mar 2026 16:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2D73C13FE
+	for <git@vger.kernel.org>; Mon, 23 Mar 2026 16:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774285080; cv=none; b=BQzXql45pBprWly1VF8bAXD2C6ZXufArPChFRBp1usPJlz6QPTTHsqzbnqJeam+l7KGW13g45mwoBi1vVRHVU8mY7hdocWHs65UzTq3OuKMSZKuYnfKSSmcy3nx5UXV6fIGGEzR1gw625bF1RxF07Qssy9M9R6dR6lm5fGwMcaI=
+	t=1774285080; cv=none; b=Fct+k0mKfgkRAE5ESKBuPkUt2y6gamL+f4yrFFwmYGVLv0IflMww+I0LJte07br2VrXNahXEi8/sUCVbwObbSoc1vnNdUJnvq1Kac/+8cri1tRlE5b4TmXp1qGtAZ31pwDRI0PSh6re6VUJqeOhQRKYIv98nY9+3845d8UDd2T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774285080; c=relaxed/simple;
-	bh=t6rZ6sCnlhR+CYMTLYBJW5u2Pj4FUaqrNEAM4TUodn0=;
+	bh=iq2rrxG9LhH/mvdsnW8V8PQ2bYlt2Jmlhokp1RQIH3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyemOZGYfcxQ/TXQt571YW8H8gQT32shdHwDVqqv94jF0GCzHZZlIA/9JWGCj+Ecq4MxT4ZyQXeGWur//pEbeWdUZBEPPILTDPZGpptphLJEvTw7o/9fXSTNeao6XN9yMtoLPXhmd6FImcSGsvEQ9SrGr/D6vL/egmF1DJ9bxx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=m0pL6Awo; arc=none smtp.client-ip=195.231.85.169
+	 MIME-Version; b=L4JobhlVIsWV01RuPeT5/klBdEJeAbRn7iLMtphlaDVV1uxw2OsQJSJlVb72hwg4DpvJub1LEfRdsmFwm/ItU3zcQ4r4RPAOFFbN8vuCHcVpV7e4qRtFcwOJRLIiyklw9VsoDw0x8MWYcaQWAvWoyeQoUptUdDzvgTTlLh+CQAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=FZWOIlC/; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="m0pL6Awo"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="FZWOIlC/"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1774285076;
+	s=dkim; t=1774285077;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=RZeZ+ykplqHtDCK+D0wtAUnf8MdrJ+6FGxOjluQqWmw=;
-	b=m0pL6AwovB8t+L/ZjHIHq/zcbb67KjIAIoCuV5xIzLlW1aj+FWEDmJu8to1pdaXPirYZbO
-	VU5ri3tzy3xo8GMozDSvYjvBjOgdryVnKQ5UE57CKQB24jtcW7XD1hGbzRJWGVtp/AD0Yb
-	LcnQ7euz3VfkhcnGSmVzMhB6/efsiRwrz5ORxgEXLS9c8Z9fMi4n8JWqD8SbLtadAhvGyC
-	qoqFIj6P3MJI/gSd2Me469MzRreMUtO8POAkQoql1ikmhXa1YaBUumKX2/5dipRVJlw4rH
-	BITfqkfcy0RhVQH4IQU7jMKh6/gCzCb6SkcGtx2G4t61KX92ZLkeQFuJQXZ/Hg==
+	bh=75ZykMlGmTlBSX5YaizavngyDVqlHSgYF6PxiTEujFc=;
+	b=FZWOIlC/lNMaWZNsO2OgeTON+eaVpRws1MnuU29ILA5pt5MTU9ujoE3oQkxDCha12nO4NQ
+	ClLo6u7L3XD48zG54liWq6aaSJLde/aIkVbnjGA3LWwfF0MYKHuXzAc55Ejqnat6Qu3HyV
+	Wrsqd/XHdqwB8wbaZ9jybaXPiHrXJF9paq5uaRECHTHDVV2a4RyMP6+VIXe6gfgUOl0T9+
+	I343yttSu5AtLarqMU58nEGasRxHVi3qyXxWCjq9QVUWFbcopfHzW7G+Ekka7awWw78Bpc
+	XtxLaVo61BSrQsdp8P9HdVaB4cSPrx76K8mhhNlLkzE0LDH4/DAmvgKyJlBrYw==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
 Cc: Mirko Faina <mroik@delayed.space>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v3 1/8] pretty.c: better die message %(count) and %(total)
-Date: Mon, 23 Mar 2026 17:57:28 +0100
-Message-ID: <a0d26c5999980f87b12022d12031d9f0dabbd864.1774284699.git.mroik@delayed.space>
+Subject: [PATCH v3 4/8] docs/pretty-formats: add %(count) and %(total)
+Date: Mon, 23 Mar 2026 17:57:31 +0100
+Message-ID: <ce7d1bd1fefc63bf625eb88a1b9d73d77af4c4ae.1774284699.git.mroik@delayed.space>
 In-Reply-To: <cover.1774284699.git.mroik@delayed.space>
 References: <cover.1773959395.git.mroik@delayed.space> <cover.1774284699.git.mroik@delayed.space>
 Precedence: bulk
@@ -45,42 +45,36 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1133; i=mroik@delayed.space; h=from:subject:message-id; bh=t6rZ6sCnlhR+CYMTLYBJW5u2Pj4FUaqrNEAM4TUodn0=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpwXDzxoScxlICIx59pKfwcAnzmSMT2txmgZYS+ 58817vp0AKJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCacFw8wAKCRBIeX6hnBm+ 0TnVD/9+tUDB5heANA9FaVuyE8XuSMYfbXFPZOwqU7d3JK9hxMcl3owbuVtswVfHeHpx0mh7Dn0 zK0INYvS3hDxdvftwtUjJIDMuKZeoiJQeqg3xaNeJR90+RkSjvTjpBtQHMlSBg2g3/09j0RiZb6 l3oRioGGkt0KKDS57mQ1snwpyCW2Z+0r0CnYxZpCraUnbgHLugckb4zekCdM0lxN5qKQm+3mPMR NfGuJrCobFM61QqwsL/ystcyAv9/h1pW9FESy0QfW9DUmYTpVFnNsacCpziKpcW3CT+o00NWMVu ma1H3DRAMn7YRVwcCzBO/OtxCejVTF4I4nwzsAyhovkT4S4X6/2GhJL7qAtbrFOisqaJ14R3Ojf L38VnY8DDdGMThGJF+W3kd8cFYUSCSp9cUISmzt8yBP+Y5mA0wq/N6yMhlQm4Sk30cR1bgoaTNH wFYg42wwR5+hbpomkspU5rs1vrnLINoP7WmNG7/Dpgfwao1Ctu6On71buDwSRnyeP1id9UR6DKS w6e2sijPDLyWs6jsu60+uDUZeR5yEQGIv8TYFZLy23sT7LzU7UQ2ZCeTRzsWVWjoCSfsAeeLv+t ersx59MWrSsMxgJuGbEWGBlSAMnUGif4LwQI11WRxJlw9WWWdXsGFR8L9gbnjY8k85L3GPVbtu9 m7aAHrvAN
- T341fw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1153; i=mroik@delayed.space; h=from:subject:message-id; bh=iq2rrxG9LhH/mvdsnW8V8PQ2bYlt2Jmlhokp1RQIH3c=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBpwXDze0AnOcw9aDbsV4h5z6kdW5kUhP+tO9kOf hF2VIsF02+JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCacFw8wAKCRBIeX6hnBm+ 0XcJEACQEdm/Pl3zGReC7aQU2p3VeottWbs2uSmPZR6tWtEuloVRDA8chNMwMvW6EpSa05iV3YU MfPM3HmSN0MQmrlr+ntTfNY5EQ3Tu1luAiW8NTZGg7O0ghjM7inZuSk+2+HIHMa0T9Nb0NtpIXv TXVmTD9n3dFVnpCIcpwgakwpO1UWl7HAtJKKD74Lh68vxRA0ZfDHv02B23sNkP1EPFSQJX7Y8G3 /iR7ZfbZLTiLruN/FBSmUsP6JzKgGsW7QyDhoAMWTMec0ac6YYJVfMWYHeJohevU8LDXgmtdoPA S1jf9QcCGsqZs4E6SKnE8cJI8Ng8BR2TO1Mn0n9DdabBYZX/2sguATS2vNFcydBeu/5YzfWVErF wk3MGDYHKNuoTY/Uql3hl3ltktzSraBSQrBJQ2aOdHu88xRisvYzKFSCdtqbLYV/z+eQ6driR5g r+UoakKtP1DawUWfHcd/jS1s4U1wknQaYamaTAcKBiGAnM8jgV/epDxUhl2o5z1oeeQcWlLYizD 93XSHQwBtDKXzIA3JVFdM1q89G2bVyZaxRr4tc2y2GCoZe4RkLkP4iRsAc8hpzNXBqBsuFS53ED JtB5vEu2tyo/02Z6nM0pJxuGTOBSIG/MgpQf7KGLm+moSO4gjDi9bYC0WlOT98sTgkHK4EwcOSD WW+2r2Mjn
+ g2438g==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Content-Transfer-Encoding: 8bit
 X-Spamd-Bar: -----
 
-Improve die messages for commands that do not support %(count) and
-%(total)
+When --commit-list-format was introduced to format-patch, two new
+placeholders were added to the PRETTY FORMATS code without being
+documented. Do so now.
 
 Signed-off-by: Mirko Faina <mroik@delayed.space>
 ---
- pretty.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/pretty-formats.adoc | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/pretty.c b/pretty.c
-index 74673714c8..814803980b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1551,7 +1551,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 
- 	if (starts_with(placeholder, "(count)")) {
- 		if (!c->pretty_ctx->rev)
--			die(_("this format specifier can't be used with this command"));
-+			die(_("%s is not supported by this command"), "%(count)");
- 		strbuf_addf(sb, "%0*d", decimal_width(c->pretty_ctx->rev->total),
- 			    c->pretty_ctx->rev->nr);
- 		return 7;
-@@ -1559,7 +1559,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 
- 	if (starts_with(placeholder, "(total)")) {
- 		if (!c->pretty_ctx->rev)
--			die(_("this format specifier can't be used with this command"));
-+			die(_("%s is not supported by this command"), "%(total)");
- 		strbuf_addf(sb, "%d", c->pretty_ctx->rev->total);
- 		return 7;
- 	}
+diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
+index 5405e57a60..2ae0eb11a9 100644
+--- a/Documentation/pretty-formats.adoc
++++ b/Documentation/pretty-formats.adoc
+@@ -253,6 +253,10 @@ The placeholders are:
+ 	linkgit:git-rev-list[1])
+ +%d+:: ref names, like the --decorate option of linkgit:git-log[1]
+ +%D+:: ref names without the " (", ")" wrapping.
+++%(count)+:: the number of a patch within a patch series. Used only in
++	`--commit-list-format` in `format-patch`
+++%(total)+:: the total number of patches in a patch series. Used only in
++	`--commit-list-format` in `format-patch`
+ ++%(decorate++`[:<option>,...]`++)++::
+ ref names with custom decorations. The `decorate` string may be followed by a
+ colon and zero or more comma-separated options. Option values may contain
 -- 
 2.53.0.1118.gaef5881109
 
