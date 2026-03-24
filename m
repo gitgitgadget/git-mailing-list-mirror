@@ -1,89 +1,88 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FEA38BF61
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 08:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE4369996
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 08:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774341486; cv=none; b=jzdg3XrLkjC7mnGwByrm5kQjr7QMQd2hNyVWGwBZDANFHUEu7HtAADGtTwbboWSz1uisxAj5IzIYKAcKE9oUzgbdstDOm/jMc6ez5e6XJdFCjr0taJJ0ie2jhsnqjL7e25z/52OEkCtSKGYdXCnyq+m/Tu8391aR+B5l2IfDF24=
+	t=1774341490; cv=none; b=RL7n9iOBRZO6lA2YDp/kGubYb+qv/8stuWfzTP/mqeOiaXzpwiwu047f0KBsWXuLtqghYSqFgnevZTyBUoHCBQ2OvC+f/ap/Wps4NeVojcX3ybpxFy1jZ6xG90uaPPah9NlaCOGWZHmPNVjmn8CXiIc/rx/3jp3EtKsOaEmQ/xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774341486; c=relaxed/simple;
-	bh=5LT4hmuEwMonlucHp29iEu/6zgI8c65nhzhKHK/zlrQ=;
+	s=arc-20240116; t=1774341490; c=relaxed/simple;
+	bh=0q7fsSvhTM+AChKq3DXWvBqFSQguEr+OiFM0Av5TxNk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IigJ4uGtElN0TurobuUlFmIyQ/Dak2qkpWTFKqqa6ksYrNZhnha+LHJfapkgfuxv6VGbKVEMiJhdPLs5LqXgPtuacrJxS50P5mEL8JoOlNd5qrH6rGs6+KtyjDDYd+CahHZoaTJx5svMWnKlY2K3VMypo4zKVZBZ32Eoek/rlhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TbuGyDw6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=daC0PSIY; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=TTQN8j/C38zSyx1crLEWNSiFg3TuXk9MbLGpBLyIEsG9sDnP5aBeSe09ehirCpbY+2kDcbATUqf1xNAgNQoxTp0TF5S7kGTVoJFonUKCh/Fcr84KhMkKuKva/8cT0xRJFkMeDPQBjF32Ktn/VH65NoBhtCOzVG2OZouh4x1O3to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mGMXx4G0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=khmJDujp; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TbuGyDw6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="daC0PSIY"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AE0A51400199;
-	Tue, 24 Mar 2026 04:37:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mGMXx4G0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="khmJDujp"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EA1FE140018E;
+	Tue, 24 Mar 2026 04:38:03 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 24 Mar 2026 04:37:57 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 24 Mar 2026 04:38:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774341477; x=1774427877; bh=0DxNcofaL9
-	uHSiBfDONlKV+D7TclBxmQsWwJjGgHCag=; b=TbuGyDw6P3MpIrJ4/vNWV2E00k
-	7zklPB5dYUbVgXCj4IRfXXSO2j/bT00gff49Uve1668Rf2dWWCgJwK2vIeqLDsXt
-	K5gpyKo72BfXhZ3z/qDg60nj7wDB6AukrSzgAm9JF/ytpg76v0M4TNRNLdMTlBB4
-	+xA2XubYwdZ/gwGwvxP2yFsHdct68HTKxHACdthh+jRIxj+pj7LIuwaAW8u9Q/SN
-	5V7cCxo9n2QYi+VRlKvPg+tXJXbmoAcfS1ejU6bLZrBwIFqoaVJOYctwqnM5am41
-	CMoK2SYvN+03YagRJiy1IDjq1jffuOwkD4I9NJn6Ziv1qWtksl+90IhILhEg==
+	:subject:to:to; s=fm1; t=1774341483; x=1774427883; bh=A1nEvYbh80
+	aq1topOpop18KWcKEhku38oDfPW/EcB30=; b=mGMXx4G01Bl/GFrvmfWh0LFXVi
+	a5IGqtfnK6fZtS2tmaKFbnZ1VxjuEPjxIVXUq5+vWEq16xcws9iidz7esWS13Lwj
+	GsZMhd55/ZqK8oir08+kx8zNGmIeWayyY9KbJVafj3vuKDJmQtwswnVfJhlx5Ehf
+	k8P4Xjf8dBgB7uNg1JLZLQIPLguaXus6811t8PnpBsjnpdn+IKeoz5+7Mdci0giJ
+	tZrAICqX5qBDwFd4Z1pQ9vRNsRHRP7r73CrNfwq+YyRT7vYtRGg2DuRAIdUwSdTg
+	bRaW2DHtWpHna5PgY65CqA3WSfHmev8aT5MIiGnVdAKMI8l8emjugrhDXgCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774341477; x=1774427877; bh=0DxNcofaL9uHSiBfDONlKV+D7TclBxmQsWw
-	JjGgHCag=; b=daC0PSIY5taaBrFO1L0xJle9z9CiYKoK2fP8ME9TkNfithzBcqC
-	0FRte7yal39ZDoahM+spzfeP4O/9Ww/R4iWX8tFuoOuiFBeCK5A/7OLU1z+didJ/
-	ipUFsDKzppKYePFbwF3Zv2dec5AyRE+UICpFOeDDKaQ74Fn/KiWkKoszDSBKtLh3
-	McYpCh6dZ9NtR1RxqPSeMcSeCsBJnGax/+TPJ7c2FIjw+R/l5N0Qm1IdxTic+8RH
-	eLzv9HnOIaGVdTOC4P0g1Dteem5UFpFJ/08zQheUhrbhFJOdCAGXdx+KabZgpUKN
-	qkyjKvD5Pw2E6oZhOK+O6Zoofr5jBhysyqg==
-X-ME-Sender: <xms:ZU3CadJnAnCfsZFxjtJbhO_dtMsrZqHyGsL-6rRCXC3WajDuBZaIaw>
-    <xme:ZU3CaQDHEccJ1Z3X6eFqqlt5syODpPjxjIR0vD5Qvp3lj8lZuRWcvGW_40lbMnd7_
-    SRPSUr19IlfSfg5j2PCQQ9AzC7pGr-BlOoA_rKa8eMKH3BEEs5rBw>
-X-ME-Received: <xmr:ZU3CaeBNbtLxyXpNhmzcLOTeo3O3wOtdP5S_SPkIKdmvAeOFbD2fua0BDglMrq-AOrF6biGdqp5riKeB8jC5zF8nPJQvOUdrPHDbp3CF8iLj3w>
+	1774341483; x=1774427883; bh=A1nEvYbh80aq1topOpop18KWcKEhku38oDf
+	PW/EcB30=; b=khmJDujpB9kZf8vPGq4wKq6LZJ8buQZESHzlvvaVPuNhZ+y7gr4
+	tWagtLQs/8hLAAEEVkOx97PaPi59xM3stX78+jvCfDTRnE1fFYF0h2zcV2MNpsHt
+	a7KNexloFkEr60Rmo09HIDu3RTp/AKKuCLzp+/TZE3EcZU4Y7KQVlAx+ULO3p87N
+	yZYPp/o4zkDv3WJ9kF8QqZL0JiCizc6TS3rftDSY90MGymxWXs9WyyxVgLiLbHJ7
+	SUuG1nR5dTdDFqQ8Idwgh0YQ4seQuFCzqHeJq/iGArkPw7Plmrq4nXgQ1LMs2a9e
+	H2TKfQeI3raU0FueouP5jKJBEd1QYMVILQw==
+X-ME-Sender: <xms:a03CaS_GqBkOdP1qtipi7OkkGs_Rgw6jIboZQnXCBjjDR_Jp4cCmcA>
+    <xme:a03CaZmCax8kVtZd-sQhOGa-5eOFWuBk-IY-llh2Tj7OgwNbrvxZcJdGJ1CRcZmbO
+    bOsHjdZIpE0OH9nak72bzrLgKpIgOLBqg8oFlzwJRvGH2PsU9OTQA>
+X-ME-Received: <xmr:a03CaQWkOq7lhgHQXjoSH4gBD4B01NLkRqh3eTWcI7eq7nDAmx_ByNjS4K9oXxQa4PhNbWcqGfbbW0r4p1qhq6JAeNgxpltuJJ12mJ-QuiOKBg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdduuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggurhhirghnrdhrrg
-    htihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    oheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvmhhilhihshhh
+    rghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruh
+    hsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphho
     sghogidrtghomh
-X-ME-Proxy: <xmx:ZU3CaaCSD0Mb0oVtl2HxvNPfVF_QHmwhojLuuL4eAh8s5Tfz3BOUxA>
-    <xmx:ZU3CaRrr8qvN3jUnws5YcholBflWdNH24UVh3WSNdFgc_Ilah8HsjQ>
-    <xmx:ZU3CacnPm8HoE_mOKXk08FlqRiF_Mizax1CfcLJDutPjD6pd6mSDWw>
-    <xmx:ZU3CaZxWi512SLCwDqtXzVIGeIGKDXUri98VdnmRz3CWL3sZL9XQvw>
-    <xmx:ZU3Cad3ORfSYnlWc2UQqkC2D0S9ZP2R9--OfYLFiC1YiSxVePVgCCtTY>
+X-ME-Proxy: <xmx:a03CaWF-ke5cbUox3F1txlrXYPuAjNYrmWASyUq-Q8FAPs39Jnk3zQ>
+    <xmx:a03CaUey_x8Edr6pD7NDgqZ2cvSaYDdSrCGHSQ3YPlTmbGmxoj88Bw>
+    <xmx:a03CafILe0mkP33RoiOeFvyUtVoJm8bbs3ai7myquBfG3guIfb52Jw>
+    <xmx:a03CaRHKcAuLvAG_BssXfFVGMsQIPDwaUlDkdqzwtnUGfiwHE0mNfQ>
+    <xmx:a03CaXZL3xsgOZaPtAZeM16U_wDviSGX4lsiP-auwG1Q8ZadSD3lyU4N>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 04:37:56 -0400 (EDT)
+ 24 Mar 2026 04:38:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bdf8c9a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Mar 2026 08:37:55 +0000 (UTC)
-Date: Tue, 24 Mar 2026 09:37:52 +0100
+	by mail (OpenSMTPD) with ESMTPSA id fbb7fd0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Mar 2026 08:38:02 +0000 (UTC)
+Date: Tue, 24 Mar 2026 09:37:59 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 05/10] hook: replace hook_list_clear() ->
- string_list_clear_func()
-Message-ID: <acJNYPgOSO86hZYq@pks.im>
+Subject: Re: [PATCH v2 09/10] hook: show config scope in git hook list
+Message-ID: <acJNZ6Tu71YSL57o@pks.im>
 References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
  <20260320115211.177351-1-adrian.ratiu@collabora.com>
- <20260320115211.177351-6-adrian.ratiu@collabora.com>
+ <20260320115211.177351-10-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,30 +91,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260320115211.177351-6-adrian.ratiu@collabora.com>
+In-Reply-To: <20260320115211.177351-10-adrian.ratiu@collabora.com>
 
-On Fri, Mar 20, 2026 at 01:52:06PM +0200, Adrian Ratiu wrote:
-> diff --git a/hook.c b/hook.c
-> index 6dfaa7e9b1..f6bb1999ae 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -52,8 +52,14 @@ const char *find_hook(struct repository *r, const char *name)
->  	return path.buf;
->  }
+On Fri, Mar 20, 2026 at 01:52:10PM +0200, Adrian Ratiu wrote:
+> diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
+> index 966388660a..e7d399ae57 100644
+> --- a/Documentation/git-hook.adoc
+> +++ b/Documentation/git-hook.adoc
+> @@ -9,7 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git hook' run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]
+> -'git hook' list [-z] <hook-name>
+> +'git hook' list [-z] [--show-scope] <hook-name>
 >  
-> -static void hook_clear(struct hook *h, hook_data_free_fn cb_data_free)
-> +/*
-> + * Frees a struct hook stored as the util pointer of a string_list_item.
-> + * Suitable for use as a string_list_clear_func_t callback.
-> + */
+>  DESCRIPTION
+>  -----------
 
-This comment should probably live in the header. I also wonder whether
-this wrapper isn't a bit too specific to freeing hooks with a string
-list. Maybe it would be preferable to expose a "proper" `hook_free()`
-function that only takes a hook, and then provide a small wrapper
-function for freeing in the string list?
+Taking a random patch that relates to the git-hook(1) command. I was
+wondering whether we want to introduce another change here that will
+cause git-hook(1) to bail out when given an unknown hook name.
 
-If so it feels like we're going a bit full circle though. Maybe the
-original code wasn't all that bad in the first place?
+I know that we explicitly want to allow having custom hook events, but I
+would argue that 99% of all invocations will use any of Git's own hook
+events. And given that it's really easy to misspell the "prereceive"
+hook (which really is "pre-receive") I think it would be nice if we told
+the user that it's an unknown hook instead of silently doing nothing.
+
+To cover the original use case we could then add something like
+"--allow-unknown-hook-name" to make the caller explicitly accept non-Git
+hook events.
+
+> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+> index 7eee84fc39..22cca15fda 100755
+> --- a/t/t1800-hook.sh
+> +++ b/t/t1800-hook.sh
+> @@ -408,6 +408,25 @@ test_expect_success 'configured hooks run before hookdir hook' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'git hook list --show-scope shows config scope' '
+> +	test_config_global hook.global-hook.command "echo global" &&
+> +	test_config_global hook.global-hook.event test-hook --add &&
+> +	test_config hook.local-hook.command "echo local" &&
+> +	test_config hook.local-hook.event test-hook --add &&
+> +
+> +	cat >expected <<-\EOF &&
+> +	global	global-hook
+> +	local	local-hook
+> +	EOF
+> +	git hook list --show-scope test-hook >actual &&
+> +	test_cmp expected actual &&
+> +
+> +	# without --show-scope the scope must not appear
+> +	git hook list test-hook >actual &&
+> +	test_grep ! "^global	" actual &&
+> +	test_grep ! "^local	" actual
+> +'
+
+Do we also want to add a hook discovered via ".git/hooks" to show how it
+interacts with the new flag?
 
 Patrick
