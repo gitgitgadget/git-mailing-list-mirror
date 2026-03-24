@@ -1,131 +1,115 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB623D34BE
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 16:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7AD376465
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 16:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774368846; cv=none; b=eJz8deBVo+B062mVxVKbMmwGoSZUnJls1q2KxoO8hv9Cw4aGIFvKIL0HTQtdif5M7qI0rQlN7Y6EZflxho7IZdQb7SSmggo7rnYXwE9ekKJoOqSkUWIm6B7wi+3MFYpEz0PfvAkb4orcc2H9iO3ssv2cuNWU+lH44CYKokThJ1Q=
+	t=1774368880; cv=none; b=fqv3fHtnus31Fdbf4boQOG8Qi+SKjk606WvCDe9W9lOeBp803Snx2wQoiHIs35bGI79CmF5OSBPLjf8cUf+3T5KViGjvbJGvJGXOJtOskY2nQo3aXdrfBeDUEetIcmNlvTchu9TGGoy+iqxlryKa3xnNud40sQu5hUic7mG+XGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774368846; c=relaxed/simple;
-	bh=/oi7/nJDnfOHdZf5Rp2Xer4TQDAspaG1UCnSzCesb1E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Hy2zcnM/bM6gPAvHjMLHt7E/GXrne7sP3jfDMosuxyJ7phhXMZ7u3lOjj98i6wNBej9YjsGQkF7YfzkAxrOwWDzjHF9NtOsMfQ0HrZ2eOJPuWkVErJrlcqU1SEsD7tY8vjAn/xXRGjl1g2gPZafxIeYnHiLnmv9wxHGNsRryAGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d2D7+Hob; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vTx5763J; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774368880; c=relaxed/simple;
+	bh=3oa9y6eGdkhM5KRbxTyu5dWD2YQyJ/uffyBFXic2qfU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bkayHolmG9QPLRkDbzC6GtQxbNaUX7H7lQd7IjOCQdPkLxYIp0ApPbN9dz31qmyJ1fPgLUgKhsmr94rg9iRgmGNecsfLrsi4M7vENnuKNNjRGkG6Q9CLhcagwNtzCmkt8pFpotv8QcEmacM5cPfEA2DrosnoyLqucOI3n2DPN5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b87V+awC; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d2D7+Hob";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vTx5763J"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A2DE7EC0195;
-	Tue, 24 Mar 2026 12:14:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 24 Mar 2026 12:14:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774368844; x=1774455244; bh=85Cb3QJjQ6
-	Uq2eEYctMHojtURzGunC89Kgae7U/+89Q=; b=d2D7+HobY3PvAFWbD3mQANaObm
-	nD0tNS0YG/5+YRzFu+P2uKOMChVAGET9NiGdWyKh7ehsgXufb3R5srE0llSuJjV5
-	5Kn0Idb5vWiypmS5qf5cwcE1IozGDsh+tbeWXDOEH8/p0+SzZCU4tOwKq0uLkbYp
-	IMhNspDQXoP/F1bZpnVcW3AW9SKAFHmJe6f2kL6Gg1951aW5WXEXA2N2BIciWZW2
-	eIyDJQ8reNqJfQZgzJddu8zGNgNVyRu+uea/DwpPNrwtjuOevn0MX4cMW2sIBIjr
-	Jol/9PDv773l9D0Ug3MgSFkOs8As4V2cE9niWr3jFdYA7kCHe4Sh5tLsS9nw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774368844; x=1774455244; bh=85Cb3QJjQ6Uq2eEYctMHojtURzGunC89Kga
-	e7U/+89Q=; b=vTx5763Jude89Eo1NivoTrue3NWbymJDSq2CN6KzGFS1jcnBCp/
-	5Qt7sMN92ghSH9nbCX6yQY3ef9g4J7HMgl4Mkgxw3HVj8dyKJLB6XyQHTw/fGV/G
-	Sssf0R+oF59KZdSPBE2crGQPo7jPPwxYXk69/xLqLZpj/07FoFj+v9Pn5IqAgTGO
-	Wza3ePy1YBmnIKCTL9fFpMx0vS8mBMFEqZgi26UdbVoziPTPMRAlmwFBkEMVT+ax
-	gYD3V9dIuAe7ZeDYrETwT+C7TLpcj1KzcY95u9KOsCI/poY9dQ8hiaQsTMXqPqxm
-	nuAMN9yxoBhTvqksh711mNZgGv6YSHEIFJg==
-X-ME-Sender: <xms:TLjCacfRmVcEQPeG3sSeAOe78Op4fbdW0WLcx7ft1E7aQMVkO5vdOA>
-    <xme:TLjCaR5d3GvHiPnnN8ngEE7xp9djjJZ3K4isWqtIx0RGS3gST6AYzr_Pb9epl_aRU
-    _8IDiFMz8sZ3HNdNHx2_NpEppvEbJPPyrn4Q0Yjdf5TOlD0tQvb>
-X-ME-Received: <xmr:TLjCaXX05wyDpYYl1_rwCr43kWfHZJY2UlvVc1hqC_VpxWN4kXVhm-QMJ4LwnMNZRB9UmEXe1NQ0MmWGrq_0c5RpfyUxUK_0Ag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvtdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegrughrih
-    grnhdrrhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrse
-    hgohhoghhlvgdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
-    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:TLjCaY6jLZqZqh5Q6yvJqjONUV2ppuf_UU2Zz07pOxEtTg74XcgW4A>
-    <xmx:TLjCaaoGvvfLXn-ReJMKrFtbBmUo8SKDl88wX2hrDrLnpVUr_KgdCQ>
-    <xmx:TLjCaTmxzVUKuFlvENcZL6AqeDyotADqMeDh-idubh2Zgks3Il6kPQ>
-    <xmx:TLjCaeMhYjJ9ob0zXxVqsy-uhy9WgFWU9nwr9VrY44vX-JSichEM6A>
-    <xmx:TLjCaZWxjtUnInSLwf_9eFF9L0uLE3voaIu1bh5Kat2E8a6trYH5aWHT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 12:14:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Adrian Ratiu <adrian.ratiu@collabora.com>,  git@vger.kernel.org,  Emily
- Shaffer <emilyshaffer@google.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 10/10] hook: show disabled hooks in "git hook list"
-In-Reply-To: <acJNdKyz-ISsq4fJ@pks.im> (Patrick Steinhardt's message of "Tue,
-	24 Mar 2026 09:38:12 +0100")
-References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
-	<20260320115211.177351-1-adrian.ratiu@collabora.com>
-	<20260320115211.177351-11-adrian.ratiu@collabora.com>
-	<acJNdKyz-ISsq4fJ@pks.im>
-Date: Tue, 24 Mar 2026 09:14:02 -0700
-Message-ID: <xmqqtsu519yt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b87V+awC"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2aea8c13d94so12207135ad.3
+        for <git@vger.kernel.org>; Tue, 24 Mar 2026 09:14:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774368878; x=1774973678; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NDlQJf8TVHnO1XSAHqH+hGgJcMOL6FmeuqQE0Xu2lRo=;
+        b=b87V+awCkpA/gttB1cy0xiL4NhzaBtjDKsjOT2cEvpBWoqOkyjuyMDA+gwP/l++d6a
+         JUoM65y1OSbvvGcGmRnTrp2XjIPELHYkVhur5HGZUvt4GyxPtVhikFL/KPSH5RO45rvq
+         egQGBuj+l/tQKyPaL3roebG7kAY4Hz11bCdy/47af5H61Z0iT1N5W6hRaFvrZqH3XztQ
+         ujr0TFhZxNCYoyqyH2nbCy8r0NlMa1iGH7lb7DodePEt6ApUEB9h1OxQvWIUivqHZd+a
+         IacYZhMUqieOPBoPU2FZncUgJmv1Rz0UEfl3H1zN89yJM/hAgKCEJaEwpAVnsb002i6y
+         nAgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774368878; x=1774973678;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NDlQJf8TVHnO1XSAHqH+hGgJcMOL6FmeuqQE0Xu2lRo=;
+        b=pgK0UJMiQmZnj4p5kh9DXJd84DgILKKfKMJ6koTpKu6RLbEba1kW1WMreE+h9hV+uC
+         f9d3KuMcqj0DdVY0Z2tb0ybQ5XRpAI+ePz+DG7LEE9paWbnGu/KDqYEd3AvZAe5L0mOq
+         QcAXTHzz0GcHmi4M1CcCrKEsrf5ug9Ra+cBD96ynzrf64e9q55eixNI0PYOQ5Z52k74p
+         jChwAWy77eV/9B/0DeHhuLkfyIR6xNUDOHhYNLtT3sqtgieBuMOVWmAXSKRABkE9y0tl
+         oLuh5gnFEAJVk0VLfZOazaMRKTZSbuPxAX1zV0oDF0o0Wm3eXR5ypdxXl9bIFRo2uEhR
+         AO0g==
+X-Forwarded-Encrypted: i=1; AJvYcCXYRATpEiTGj9DOstnOLkJhnM/N1w6d0rS9JAaYiM8Ig8oFYq0ImlMc+QFNMiftYs6erYM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXTx6z+8MXVJ7mF0ThVEzzu/tmV3ZekrUhcpKIvVPaYm3hLHjL
+	q26mtW/Ny7SVCUMa13ujm5AuKdRr04NyssFnJLFIx6hnIueNKgYcW/ra
+X-Gm-Gg: ATEYQzxo8LFpOA2b8ewy78SFGhyZ6/NSXm/ufK5Wvg8j941fE3qEDlz7BVVMoo8bJ0p
+	+3qKePv+QN5xjsOUM8iPY2BPRpRb4HqmAunhKaTNYIJtSrLXJNqHdJ44xWf1//I6VZlZsoRqz6G
+	qavZxVbSIz5bqAj8Vrez+vs6gqhq4lKZm2lJcp/tImDxSXdaXf0xpN8PjzYouLHJcDumzCBcULi
+	H/OOJxq1QZiyrY1D4nJnRXItm6+Tsvg/Ou6e/m7WuqRFvsAjyEkTHJ6sZUuNPQklzs8Q3ro1l3o
+	HEOBXnJHAmt99VCHywGPSYCrKDVG9uC3kz0RDA1RKz4YG1kwQszQ+EHNmmCsuHK1Lf0ywzrAoIv
+	r6IqSF4G8G2wzBZ3QYjt1wQ0fUBUNz2L9Y81KJzgCI4hslSlF6nzKRTXOzeTpi0Ali9v6ZLjBsg
+	q1W8jYNUCaCPhxSM3TsU0u5KYuOqfGFBId8czlO1ENQV5z9Ct/0j0LbvGfK9H8xoheSlCpwbo=
+X-Received: by 2002:a17:902:d506:b0:2b0:59c4:e9d7 with SMTP id d9443c01a7336-2b0b09e6468mr1832985ad.1.1774368877984;
+        Tue, 24 Mar 2026 09:14:37 -0700 (PDT)
+Received: from localhost.localdomain ([14.195.131.227])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083516b96sm191142915ad.7.2026.03.24.09.14.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Mar 2026 09:14:37 -0700 (PDT)
+From: Jayesh Daga <jayeshdaga99@gmail.com>
+To: gitster@pobox.com
+Cc: a3205153416@gmail.com,
+	git@vger.kernel.org,
+	jayeshdaga99@gmail.com
+Subject: [PATCH v4] t/pack-refs-tests: use test_path_is_missing
+Date: Tue, 24 Mar 2026 16:12:44 +0000
+Message-ID: <20260324161329.71047-1-jayeshdaga99@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <87jyv1jqb9.fsf@gitster.g>
+References: <87jyv1jqb9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Replace a raw '! test -f' check with test_path_is_missing
+to use the standard test helper.
 
-> On Fri, Mar 20, 2026 at 01:52:11PM +0200, Adrian Ratiu wrote:
->> diff --git a/hook.c b/hook.c
->> index aa08c38c27..0e09b9a2bb 100644
->> --- a/hook.c
->> +++ b/hook.c
->> @@ -119,6 +119,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
->>  struct hook_config_cache_entry {
->>  	char *command;
->>  	enum config_scope scope;
->> +	unsigned int disabled:1;
->>  };
->>  
->>  /*
->
-> Curious, this is now a single-bit int. I still would have expected a
-> proper bool here :)
->
->> diff --git a/hook.h b/hook.h
->> index 92e9faf9bb..7c8c3d471e 100644
->> --- a/hook.h
->> +++ b/hook.h
->> @@ -31,6 +31,7 @@ struct hook {
->>  			const char *friendly_name;
->>  			const char *command;
->>  			enum config_scope scope;
->> +			unsigned int disabled:1;
->>  		} configured;
->>  	} u;
->
-> Same here, I would expect a proper bool.
->
-> Patrick
+This improves consistency with other tests and provides
+better diagnostics on failure.
 
-I do not know what an improper bool is, though ;-).
+Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+---
+v4:
+- Correct commit message to match actual change
+- Improve rationale (diagnostics, consistency)
+- Move version notes below '---'
+- Fix author name to match sign-off
+
+v3:
+- Fix commit message wording
+---
+ t/pack-refs-tests.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+index 2fdaccb6c7..4a85d96c6b 100644
+--- a/t/pack-refs-tests.sh
++++ b/t/pack-refs-tests.sh
+@@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+ test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+ 	git branch f &&
+ 	git ${pack_refs} --all --prune &&
+-	! test -f .git/refs/heads/f
++	test_path_is_missing .git/refs/heads/f
+ '
+ 
+ test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
+-- 
+2.43.0
+
