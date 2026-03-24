@@ -1,145 +1,156 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8853F35A939
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 10:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774349380; cv=none; b=pIul7Y8FstR9dufvlaOSroKaTaazMyi5xGM6yTcBiF8FF+3Lpeb6p66ZKUErddsZ9tWKug51uW/RfLGvFYEc9SR+9sFXqdyBYRgfc1npWBtMliKiMLIDL7QQsKxtxqvPFa0JYQ54OZ5Mg/El2ehh9A2dF6NxSyt1Pv5sghoxW9c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774349380; c=relaxed/simple;
-	bh=NeyyCk1ZxeCrFdd2+7zHST9Hd/BdYqIkUwpNKyp/2Mo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mNLoQ8AALoyVAYRwlvn1F1xE+tSz/iU7NfMonLCo52lSOgPtETYk8HhPT1O5dJyRRwHDkFYBc8kEczbWEQ6CY70laVuP+06D/nmEWowsVKlkuGKAPch0dsyOKxk1RvWSQd0fLhYFzSij4us8V03+NoA+poBR773FAt5tp6u924s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mUkU2rLF; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189363E92B6
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 11:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774350304; cv=pass; b=Tbt4ezQjY02UUVk6rgTT8Qn5Czct58A0piMxGqvrdRvN2rr9r/QexkyolgjMfP7bGH8jYMRT1Fdvm1FyfDROGKeuiHib4dr3umu49JKw8YbxhxSyYI/53d6snDqqfkmw+5GEQuoAED/TN+g3oMC8F36M7phbPX0eYpBDlAGw2r0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774350304; c=relaxed/simple;
+	bh=YmZrNfLoJhwnUNBFlbOBa93eOQoaq2SDqIqxYzP5a1M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IxmdM0+fIyg8qy85kvw8+2uNp0QDckVxT5bCCo3VBzSjfwcOYzOSI90po9BUh9fFU+FTa0w22bts0KDHjHbl280QjNHQstDRh8RfNP7GmuQDg7XGEhK3jZznUGODjjWe3Es25je11Liphbk0DIRUTkPTPRxxHw91lPxScCOnxXg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oNPCI7FF; arc=pass smtp.client-ip=74.125.82.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mUkU2rLF"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-439b6d9c981so3504696f8f.1
-        for <git@vger.kernel.org>; Tue, 24 Mar 2026 03:49:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oNPCI7FF"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1271257ae53so1215728c88.1
+        for <git@vger.kernel.org>; Tue, 24 Mar 2026 04:05:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774350302; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Q4clL3c2+aegTyg8BlHPFjeCVyotITKIfJ1h0yUeule/+1EqLc57dqagxg8DCO4u65
+         t0ICT+hxKeDUI5LGLYrW9EPPG0TgKBdvUMKRK447xpEPrfkNxb8dwMuwn6P0KF3Y57DL
+         ii59FWOtKMxNhUAn2AO5H/xaaj3a2gZEr4jkfAEyBjjbzMN6OIScFIVRCyA7oY0073UL
+         vAkmAFOJn8h9tKPHzrPvwNN1gVVgEtP+aJyGDaRzd78+riZLJPL7jqhMAdbg8fwbUISP
+         8mwbsk0xuUZtNTB3gZ2p9lZsx3bwkCi6m+YAIlJo35M9tRHe/9RWXu1bkutsABwxc4L2
+         R3MA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YmZrNfLoJhwnUNBFlbOBa93eOQoaq2SDqIqxYzP5a1M=;
+        fh=/plLnf0iYB2jUKmKx5zzdFfzrLcMAzuIidbw4Nsw5bM=;
+        b=DLQjvqlU8BtghSprv9eNZRVIlq2wMTjNC1QDWjmxhta8+8RHQ14YDDBGjWfpJI2U2s
+         0aImyum17EtL6gv5ecvZV3WVijPPIHjYV8L2PPA02RmVn35zGuzpLuerCrrX+tLsSUMg
+         3dATNqLo/nGh2GVsAM10UOe7tGq7KlYUCZ9jDI9uvgfgrHLzJx/BXQqtQyHLM4++0sR3
+         EN6kNhTSXFHHWor+dCHtjSlmZpwTrA0B6qfi/JmNykU8gho63F6EYyDDLrfhwUTEyqqy
+         EVFn4lDCEmU1Pkn5BYuFs5SqoHiGfJTIhgdHRPN8SjQaXlwShgne7kC20yten2dz7O7s
+         cIgA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774349377; x=1774954177; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wtbn9c0pBwCceO+GEQ826wzOyd4/fr6KIB9Sj8HVYxg=;
-        b=mUkU2rLFrS1n6br9a8j7ltDxajiLqyk+FTdl6KpZeGGrIJtDPOKhsHelHjmGSggkM8
-         ZD/BepzpSm7JlZbWJqsW9M/+bbAxhLg0PMn5pDY4C5Hsn9R6bt/gurZBUNK3CXgATAIk
-         63U0rbjP/IlKDzyiROmOw5fJWVB03kgiEOD3Zp3H6Pbl6sBfmj/moSL+nj5EJvpxNg7S
-         YHxF7YcvHk5vmkvjbYGvLIDQuAhpPrbEb26e3BP/HQ921xWgfoCi19QkxbNpntbHCzm/
-         p25LSaKJsYR7/531S2NBqx5DN35mHzrqT3rbbtFpxqBoGIizgBUOU18Nwo0XvquBDZjJ
-         YSVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774349377; x=1774954177;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774350302; x=1774955102; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Wtbn9c0pBwCceO+GEQ826wzOyd4/fr6KIB9Sj8HVYxg=;
-        b=WAEi3WMKJMk0Hy4amLV4msLhhGh0iEdKVHifB8qdRUOusRbygA0ihyefByAc3t6Jhf
-         eaq70HsLS/UmQXNSla3zs4Z92PtdBe0ROafI1bnv80iAe11iVH+kAr+G54Xx+nC01d2Q
-         bE+5eaq9bT58Cv9ylQN2VhAUi6k3WvSRLy7/s6zwiZvKswOBxqgaajzkAX0SEWaB9x3g
-         ujuL703UsYSkqJ04KlZRRfyEeRVl6XCjKAadnFMterycHW/8qCpv9fI2W52jOjd3OlCA
-         RikoN6tycBtjYZY/2/PqFBB4HivWvqWHUIR7vMfJZ4sHOctyiEbHAjl2eyMbsgdpT/pb
-         eURw==
-X-Forwarded-Encrypted: i=1; AJvYcCV3JWE+XhMPIWliwNSUNaIm2lMd+wbnSG/7tY/5ozf0d7OpxkuCR0V5y45hfAOAGdMihjA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGDwFEFTFFOT4aXvQA0JV4v0424h5aokLXzI+gMzr/0pqBty4I
-	DWCv9aZot2TzU7poKSmclITTRj6TuMGLdlkaVX6sQJbtM1Z0LFMHkJVI
-X-Gm-Gg: ATEYQzwcTo3LA4t+zbl9hY9Ee3rPirYFhlK5uz2xFADUtnIWtvvWyovDX0dmOOGpehR
-	40E30r4UwW4NBRLPrNmY5w0lUmTkswp5il918b4mkNQaudnTdGbY+osmdYVfNQSLcpzF7l7Y0FF
-	+FdE90G/j7KblG7cvpcpIwZ++LDXDIzNNj45AivczPpDPrP28cj6zKjy8AFzxPkQUu1U6gQku5e
-	MIyW9GPCKM9l2f9VrTIB9wYYT45aKDTYSXfWDd17hNqEeT4jKGVSiFd4qaaEIlxzF2KF9xnU5im
-	KDRbUTQ8YzLL2wdLAh/Q8xHysMSgqPDuxty464M/pi9JA+23ofv3xGLv3UdhMxUIigr3HqUBqtP
-	n5xB9x3A0lIBklTizlD+QzUoBLt9cqmLAyKLSw5n3dPxea0P3qyOSmdHv6xArcPsftFPfnXePd9
-	cuEN2ddbJfV/sK1IV2KT3cEfm6IPlyZCtcGCpiSRPMupHZbJrNZYJ7G9mDM8pr9Qj4Q6WLq7uN2
-	uV5MA==
-X-Received: by 2002:a05:6000:3102:b0:43b:4909:203c with SMTP id ffacd0b85a97d-43b80577b22mr5251985f8f.21.1774349376511;
-        Tue, 24 Mar 2026 03:49:36 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b644ae16fsm37589265f8f.8.2026.03.24.03.49.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Mar 2026 03:49:36 -0700 (PDT)
-Message-ID: <d366fc82-efcc-46cb-9536-cd38b1fd18d4@gmail.com>
-Date: Tue, 24 Mar 2026 10:49:32 +0000
+        bh=YmZrNfLoJhwnUNBFlbOBa93eOQoaq2SDqIqxYzP5a1M=;
+        b=oNPCI7FFQI8RtGz6crXdI2zbSneQbjgA72b8wFz1tUdIM07vDjSSpk+XXAhqwSKA0N
+         Z6Y1LChgAfg8BpYFVRm13vb18i8Wr1J37GXIvT9ZjfHN081WknZtIijIzQi3M6/6iAO2
+         cOD7/7DATZSkvzdRWWKLi/lK/vKnBx8bpzGPYsaJpJOFKwXqFZj4fz6tolmZjCMugKW9
+         O93uN6RbV6QUCXf1tKDmnzgt6V11ay275iMr4Q3CCowJKhPY7CQD31pn4lTnyYpeAwMH
+         t2tLvKgPgbfhXHls8hX0DTrJkNk/6vKcX+pzFaYW5uDDCsW8zAwdGj3BcugHdD0ZayQR
+         ojwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774350302; x=1774955102;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YmZrNfLoJhwnUNBFlbOBa93eOQoaq2SDqIqxYzP5a1M=;
+        b=Vbos69AMBCiNIF/eFAhNh3ifbG50hVm6K+imN44OmzLYxb7XfeCcF5cptZBiBDZGpj
+         iPsuuOIcbruZbu3MuWtBHyXk9gVAaQZhYLtXpiHI7atXMFSu9ZP8QBWSXe8dI0DMYezV
+         DJO7gACAuzE3AUSZPGLLpBEWNZUQJWQAfVXAP0guRRFnRplC0aFCT5Nl/GF2qPHmO5rU
+         qou2EEdo70B+k59kGqh0uGzATDwXOssSI27gQSus/SC+xLG3bMzD/giXlbbikQQUo06G
+         ld0x4G/XBmOVMR+i0ANHZX8MogmoVWykLZq94chISToklKh7448cU9RnSS4CufJ26mmI
+         DBxQ==
+X-Gm-Message-State: AOJu0Ywpd6X0E+HWwwJm807cX430oQwLBRLm9CXaLkb2JDum3xhziswO
+	VrPfm3p33k/LTF9aHiaiErkQOC1Lfb+k9Bn+Enff3BkVYipaZHcjp/sdUnjyJqDBne/ByRNVzeS
+	SBkFgNrJUlYw2cd2MvN00XsWs8TfKneg=
+X-Gm-Gg: ATEYQzzz6+JAn7LOPhv+GAVa7Mg15cInylhsNChY69rEPmyaOz7Q6hjgGnTm1CPN/4Z
+	6I1z/QE+9XD9+0AqDr3iqrWXw8SBTufLwL3ObLlieSEahCNTwO1nV+klVO5ZvxLzJvtCzc5CVlc
+	/pl2WrsNXmib5KHFGeOsHjLHC1SV3coAUS3dqGR2KPd8zPAjPJvWiL+S6IpgGcPuP5gQ5LH7DLC
+	uzHqHa+A2TDc0fTwziJ4sm6nFOT4V/Qh5vznPRhJ2MXUCF1lKu8m1v3fm9rQD8ZATrWMMs/q4Sv
+	/aC+rzXLC7Po09l1Xk2eO1E7VFVALymekMrh+bnuhJ1WhqspfoTF0YfjXK+kA0tmx3A0
+X-Received: by 2002:a05:701b:2503:b0:12a:7f25:44fd with SMTP id
+ a92af1059eb24-12a7f254723mr2643146c88.41.1774350301628; Tue, 24 Mar 2026
+ 04:05:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] rev-parse: use selected alternate terms too look
- up refs
-To: Jonas Rebmann <kernel@schlaraffenlan.de>, git@vger.kernel.org
-Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>
-References: <20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de>
- <20260323-bisect-terms-v2-2-8d6bdb2c9c7e@schlaraffenlan.de>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260323-bisect-terms-v2-2-8d6bdb2c9c7e@schlaraffenlan.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <aa65h6Z_TrpJbmkj@ThinkPad-E14-Gen-6> <CAP8UFD3sicsPd903FU8bsj2B_4Q1DE1xB+--OxryY_jhL=sHdw@mail.gmail.com>
+ <aa7XkqhcG6Kb6IhN@ThinkPad-E14-Gen-6> <CAP8UFD2iM-z7F_FeDkP5v=1OAJhS2AcFsgPnicvHNFMUcmxbpQ@mail.gmail.com>
+ <aa8VWlv7dosrrRwv@ThinkPad-E14-Gen-6> <acD-esOCTH3PpK9y@ThinkPad-E14-Gen-6>
+In-Reply-To: <acD-esOCTH3PpK9y@ThinkPad-E14-Gen-6>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 24 Mar 2026 12:04:50 +0100
+X-Gm-Features: AaiRm537rR8kDSiQl7kXLk8h77v35jxYJc8TFgdWMpzLd5ebhzqSi79YPlz4CWM
+Message-ID: <CAP8UFD1HsRX3kzs39qa3yfix4ORCR4vzy+ddvU+Gz9OyJ-BsfA@mail.gmail.com>
+Subject: Re: [QUESTION] Improving disk space recovery for partial clones (GSoC 2026)
+To: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jonas
+On Mon, Mar 23, 2026 at 9:49=E2=80=AFAM Yuvraj Singh Chauhan
+<ysinghcin@gmail.com> wrote:
+>
+> On Tue, Mar 10, 2026 at 12:15:46AM +0530, Yuvraj Singh Chauhan wrote:
+> > I have been studying the different commands and how they work, I will p=
+ut together
+> > my understanding in a pros and cons list for each command and send it a=
+sap.
+> >
+> > Also the contributor application period starts March 16 and ends on the=
+ March 31.
+> > Can I complete my proposal for community review in between that period =
+as well? or
+> > should I rush to write a draft version before that.
 
-On 23/03/2026 22:49, Jonas Rebmann wrote:
-> An old/new bisect will name refs "refs/bisect/old" (or new) accordingly
-> so the hardcoded "refs/bisect/bad" (and good) yields no results in a
-> bisect using alternate terms.
-> 
-> Use the current bisect_terms to make rev-parse --bisect work in an
-> alternate term bisect.
+We prefer it when proposals are sent to the mailing list for review
+between one month and one week before the end of the application
+period, so that they are quite up-to-date with recent developments and
+discussions, but we hopefully still have time to review them at least
+once.
 
-It would be clearer if the commit message started by stating the problem 
-that it is solving i.e. "git rev-parse --bisect" does not work if the 
-bisect is using alternate term names.
+So you should send one soon if you haven't already.
 
-> 
-> Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
-> ---
->   builtin/rev-parse.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 01a62800e8..f20f0554ed 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -10,6 +10,7 @@
->   #include "builtin.h"
->   
->   #include "abspath.h"
-> +#include "bisect.h"
->   #include "config.h"
->   #include "commit.h"
->   #include "environment.h"
-> @@ -940,11 +941,14 @@ int cmd_rev_parse(int argc,
->   				continue;
->   			}
->   			if (!strcmp(arg, "--bisect")) {
-> +				char *term_bad = NULL;
-> +				char *term_good = NULL;
->   				struct refs_for_each_ref_options opts = { 0 };
-> -				opts.prefix = "refs/bisect/bad";
-> +				read_bisect_terms(&term_bad, &term_good);
+> After some studying here the four options for placement:
+>
+> Option A: git backfill --evict
+> Remark: 'backfill' semantically means to fill in what is missing. Adding =
+removal semantics creates confusion. Project idea has also signalled backfi=
+ll is unlikely to be the right location. The traversal logic for eviction d=
+iffers enough from backfill's that there wont be a well structured shared c=
+ode.
 
-If we fail to read the terms because there is no bisect in progress then 
-term_bad and term_good will be NULL and so the next line will segfault. 
-We should also free term_bad and term_good once we've finished with them 
-to avoid a memory leak. It would be a good idea to add some tests.
+s/wont/won't/
 
-Thanks
+> Option B: git gc / git repack
+> Remark: gc is already complex and runs automatically. Stolee's concern, t=
+hat background tools like VS Code running git blame will immediately re-dow=
+nload evicted blobs, which argues directly against automatic eviction. A us=
+er who runs git gc -a does not expect silent network activity.
+>
+> Option C: git maintenance task
+> Remark: maintenance can be a long-term home for scheduled eviction, but o=
+nly after the core eviction logic is stable. An idle-detection heuristic (n=
+ot yet designed) would be needed before automatic eviction is safe.
+>
+> Option D: git evict (standalone command)
+> Remark: User-driven invocation is the approach that safely addresses Stol=
+ee's re-download concern. When the user explicitly runs git evict, they hav=
+e context about what they are about to lose. No background tool can trigger=
+ git evict accidentally. This placement also avoids semantic confusion and =
+creates a clean audit surface for the community to review.
+>
+> Please review so that I can create the proposed plan accordingly
 
-Phillip
+We cannot anticipate right now without proper patches with commit
+messages, documentation, tests, etc what the best solution is. So you
+should likely add your analysis of these options to your proposal
+without expecting much from some of us taking a look at them now.
 
-> +				opts.prefix = xstrfmt("refs/bisect/%s", term_bad);
->   				refs_for_each_ref_ext(get_main_ref_store(the_repository),
->   						      show_reference, NULL, &opts);
-> -				opts.prefix = "refs/bisect/good";
-> +				opts.prefix = xstrfmt("refs/bisect/%s", term_good);
->   				refs_for_each_ref_ext(get_main_ref_store(the_repository),
->   						      anti_reference, NULL, &opts);
->   				continue;
-> 
-
+Thanks.
