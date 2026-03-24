@@ -1,110 +1,187 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC5F38C2D0
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 15:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774366954; cv=none; b=BVMMPccw2DdVLPjBg9WmAMg2/N4nZZgLrRzklBfgPBhcvdtrW6KwUaIQKEIxxAG/gy+Lh/dA5dAY6/jfvVz7psTJNiduNpV05vfMf5ChLiGG6MZT+/owrZSWc9bSFSBkqj0Ej1S8CqoSgWm/ZFgjfa6EYeDnEMAZryldsyzxjRA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774366954; c=relaxed/simple;
-	bh=VhOhsZ4DIWRYkeRSGf88D9PQKzJzwbrJpx3y9RBH6JY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pvYBBx5VRPtwg8fLpdQcEE+y2546xDuSwOzCESwwmBbxKXFiyCiTnB8K3/60aRuZXO3tDYoHAsJCS5zJ2auel46Kw3IF4xusj0/rbSGzm+qzj1dPNg1kHcIDb06BLjz/IDFpeIrXniJWRCkjbNgs3bD/XrV8z0Bqy8YRxY5plio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TKG5y7wQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m8TYzzME; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C77A23E320
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 15:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774367169; cv=pass; b=HmRh84XFXfgddFEe7mhyAnR6LfQ31zToq79Gw2mbeXAO091NDSCGV8dK7I8cwjJj8Dd2yJ4pFdo/7uprCefjRLw+fC9/YZCymUZwLcPbHFwJnC0u4k6vlQg4NWXRyUoMgyvDoFYIcSn0hvNbeUDBQQpkb2PQa/xAfqUt/BUFDUQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774367169; c=relaxed/simple;
+	bh=Grn0khOS4JAipLBkfpnFdhHs36AVmqkQCEpswOVTm1Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GKH3+DYwBm/C6eh2l3h+Pvp/4G4PZu2ldYQcBdmcRb9hfrxAo1Lp0m1wjUBfRW/W5C3fQAgd6om64GehP+OhH6pOpUpns4Z2qeAI+5xOtfMbvBiyDy5TTPSAPx3FgqlXSxvazaQPEj5Zr+YCjgAm59efSV01jmJ39dWI3BCHuYY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bv1WC14e; arc=pass smtp.client-ip=74.125.82.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TKG5y7wQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m8TYzzME"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED1091400076;
-	Tue, 24 Mar 2026 11:42:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 24 Mar 2026 11:42:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774366952; x=1774453352; bh=+8Q81cUcGK
-	h/5Xwds5dzAwoXIjM1+npMl2ZM3kJarO4=; b=TKG5y7wQikRfqYNDvJr09/yKQr
-	c9z7se4llSMeZZZYJmoLQTAGWBdEFpsOvOfOkXARpIfuMw9KFVaMBVdrLoZbEMt2
-	pRUfN7gaulj0OOhOq9bnCgqlfeiW/Z1YHFxQnBSmv6Xl/7VWB2Akk0yJjI0pKDAc
-	HESshZVaDRCKuifCmGZGWEH/eAFx3hnj8vnBDXxiCbu7NtuqBhnt4IWo6bq0Uc43
-	U2jB0+TmTOV9pn0m+/8jOLaaEJwHIAQZnj6vbp8Qup9S6QJMM3MD71t018MCNnHk
-	ORjDQFfB2SlDeIEj7/wHvj79bZJNVQclVjo3sthvEnFTjLtqmaj4uVmiBYdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774366952; x=1774453352; bh=+8Q81cUcGKh/5Xwds5dzAwoXIjM1+npMl2Z
-	M3kJarO4=; b=m8TYzzME88r4NHO9w7Q9HCYHyhFOBXaP/RUI6Sor/i66j2F/TqM
-	SuS0TzU6XKB/ZrCEpC7T+szfpt1QMkpQUPQeFyU1/4xe/8dhNWcbZvEWcdaOyIzB
-	ODzErcSmUTgKibetQWV28w9LlZ/34L7nn18JYuSEnE2Ailoe2hjjKG41Sg2aNjxc
-	sKQz0LNXfxPT54YtLYwNqkktSpo13eMkXi6NjEQwsGTCvKDRKVQzRR1Bi+viuqxy
-	gEAN/o3OLidsNFN896nICgX4w6oHMVHCs8N/l59vLjcRJvBJcrdy182/BvU/NF1S
-	ptX39SQvPFp+hR97SWfe7VkOvZDm0lxBBQg==
-X-ME-Sender: <xms:6LDCaXmUW9kf71FaH2BZ3LcPDIxn6kk72NOqakDfIeSoMmtzSQ94Pg>
-    <xme:6LDCaR2uHQSPCHRpyagaw92328rH63xyFF-KYZEd_DFmKH3ajnn37_OfeVu0lTsa8
-    -Zd23qwuPLcwiX8IIFEqtRfmCRqmpFxpVEHD4HUUBYlXzi1gVuxVg>
-X-ME-Received: <xmr:6LDCaSo-t4FyLLoomfkT88kT-YHuq38cB2nHtPPWvqqencjjNRbb080sNOayO3_CGlkXYE335uVqR3mE4FF2x_CIYl-hFgcEPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdduleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:6LDCaedBt3BdlVpOWrqSrnFVMRl7qynBrYe-i992yGh8PSfAy77stA>
-    <xmx:6LDCaRrPcWOrK4-9jn4ow9GtaGU8gcXgl7YAQL_Z7adhIA97_8DODQ>
-    <xmx:6LDCafHXFF6wSMHk2Y3lFCHbqzakwnZHHBy7Lea9yGhYXSGiQWx88A>
-    <xmx:6LDCaRuL-WCCLrQQb_hcX6PNdPns6kTepneaSxHTo2kKJWQXZkrF8g>
-    <xmx:6LDCaeL8G0Z4WEl33cgMrNkquCI-gKNbmjp_oJykQlZBjXnwXcwDcZ26>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 11:42:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] commit-graph: fix writing generations with dates
- exceeding 34 bits
-In-Reply-To: <20260324-pks-commit-graph-overflow-v2-1-843568cf8780@pks.im>
-	(Patrick Steinhardt's message of "Tue, 24 Mar 2026 07:18:26 +0100")
-References: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
-	<20260324-pks-commit-graph-overflow-v2-1-843568cf8780@pks.im>
-Date: Tue, 24 Mar 2026 08:42:31 -0700
-Message-ID: <xmqq1ph92pzs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bv1WC14e"
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2bdd40d3c61so3427805eec.1
+        for <git@vger.kernel.org>; Tue, 24 Mar 2026 08:46:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774367167; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ODQ7oUjgxk5kD+vBY3uBQHdVWgv3QTt5g+fU/XnD7Oicj4IuD8fjzeChxtXRLMVer9
+         5WCB0ITz5go/6LzyGJWWXeF/SR6tqgyhi1v3QFAMQV7kB66h/WU3QAdoDFfuVo5Lv+0L
+         V8kxHOAktnZRL7f/yDOtZiAQu3Gfv+j7T19W6PxPQbi9aCepMcENbiyYyNnicEgG0IDl
+         gv9JuzAarWpnxPoGkwOfpWoKHDJi3iltxVbLDuQiBaPqGFRN/Nmsx/I5xhNKE4l2tcTY
+         rCmA/yXgUZbI2hm1+AxuUIM/Gjpa5ogOwrb3b6U40Od84OWu+nAgI4Yj0M+e0kCEMYKU
+         Q+zQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Grn0khOS4JAipLBkfpnFdhHs36AVmqkQCEpswOVTm1Y=;
+        fh=yEE4jbkyo5i8oazTHT4hCUxT5On7YUISrf6X4i6bnjQ=;
+        b=RF4KMZQgiNGTFAO6K9AmfOiwUCxwK0FFB5GBLRNwrLdk28yx8kGwQqcbIk5nOumvK7
+         LxvsaZk9vgdF/DWugfj3V86uVD+wN4OjHzof+4WgKBHcw/xcgmMmT5z2tB9rV9/FWG3p
+         FvjpRE8yy0kWSuYyKj8j+iG3QhInqKPMCuAcmdxfKM+1hUKkKFxPVY9fr3jqfCd71NWt
+         0DYDBaz4s2sExAm96woBEE5D91IQuodh7If9LUzs8/MITqzWYsER5hB03caI89LiNHwa
+         ugLHVN3rVtaOi4Fk54ydY23XqWDSio5mwNt0WW12FikZocOnICdyf9z7K1AP0NTGakia
+         Xd1w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774367167; x=1774971967; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Grn0khOS4JAipLBkfpnFdhHs36AVmqkQCEpswOVTm1Y=;
+        b=bv1WC14eXEOKB2ffAVu1B5SV0rMxKZy11E9iQ9Cnmz6M/5MuHgMOdzu28UMNfrDBQj
+         Fu/GzpcxpM+anKwkke0gAwC+CqRg7oxuKukFNaZD8Q/Xzpq8pVBhRahduZZNnrgl+T0a
+         cV6E2aF50kXsoG0FuS9AOYNvp7CqUE9LeZv2MRNqXSREIY/Ettu0UUodLdGsMbv8kw22
+         Er40hjGYcmrMJmOUCqM9J5iGoTvtSJFhcF3GyofvTvznrXcEj3+2A9UZqpyqgh5BfPH0
+         AoIlSMiu8Mkf/Qa/sRM/VHpOqbAq+YXEp7cwqpDSDLNwapRwjw2j6lvjCQ4oQwTk4fKG
+         WjAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774367167; x=1774971967;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Grn0khOS4JAipLBkfpnFdhHs36AVmqkQCEpswOVTm1Y=;
+        b=HzjIHGpgHx9xrbX77IO6DCM2/hZdG3hiOj8jOuoV3jRsZJF3yr9OfP0gT1hAxAwgFg
+         t4Pl6ryKNfs4z2m6+ZbjbD65495VK7fpNeNA4N1/rVbl6PGXI67WFZr7pcs1CZ853gYr
+         yDQC+Z7z4M9cbY/0cpO9gMW/C86mt5DipTdZhia6XE1qm3kYXQRUNh3T1cRGIL+Off5X
+         WV4HLGZ2XXSJKc7b6hGGIebFo2Aq0Dz+Vpye5Em0CKHvjLG4jJLaPSE2CPvO8hoH+nFP
+         lhV7KTw6heQ5VnfQA3tRxyPqGvz2EZvyAxn8y4ysnE4Sw0vkOGvTgcQW+dOGv/mEZIRM
+         De6Q==
+X-Gm-Message-State: AOJu0YzXVoLfSM1Wt1D4xENo8MwHMqXDHxiLdRlQOknYJe/Yilx25aPk
+	5xvn4Wztfa6Wu8j6ViRcKp8koY7TD8eN77poyJEkOJx2wZlQnAfk0UhDcljBS2JzERvKohVHgLg
+	0pFR79LazQ9KwP84VKkoSyZJjFDMS9Tc=
+X-Gm-Gg: ATEYQzzHdxhrPSQ5Jrty1f6jRrR7WoHPRH2NnjE6K4cosxM0he9WCM/ecWKyBQ+zSrZ
+	iWxO8tqwUPIwKlXLJ5mrXI307KWpWASuBb+EOX783iXDz7OTc/TaF/DX3R5Kfc4ATf3B5s9KzkK
+	UNKYmUiY9S5ljTZkUZRCOwHRBqTbDd/tdg0oG95cr9UXBQDZIEKQ+njpfASiCrE5XPFI5+hvu4e
+	d8ZzDHQzyM/Vjj19Wwp2zVXg5BBxuM2b6GDaN/6co6ZAaKIIWa+46V042FcP6CPCJfpl4BuGxJ6
+	uOLgoDv4bE/GEGDkDLP7GXThKs8HGYpbCJ2hqA==
+X-Received: by 2002:a05:7300:5b88:b0:2ba:6c66:1f0d with SMTP id
+ 5a478bee46e88-2c1095ae76dmr8854316eec.14.1774367167144; Tue, 24 Mar 2026
+ 08:46:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAG7UgEQTPhxPeEYkm44+BuSj5GG6PWhRrqGT7Vq7zXFPKZqoag@mail.gmail.com>
+ <CAP8UFD1Kirbt-j5h7NB0UcxPjz=Ger7GBK+excY4Z8X+yKtdzw@mail.gmail.com>
+In-Reply-To: <CAP8UFD1Kirbt-j5h7NB0UcxPjz=Ger7GBK+excY4Z8X+yKtdzw@mail.gmail.com>
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Date: Tue, 24 Mar 2026 21:15:52 +0530
+X-Gm-Features: AQROBzC79MaW5QCWm6torwAaGQ5YEc9nfUJPNEzZg-2n2lzsEBOl2d6l-zxLCm0
+Message-ID: <CAG7UgES4Vm9yboUk1nnPKHBdMu17gt-2dh9VmXD_=Lpc3o+3Jw@mail.gmail.com>
+Subject: Re: [GSOC][RFC] Draft Proposal: Complete and extend the
+ remote-object-info command for git cat-file
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, jltobler@gmail.com, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Siddharth Asthana <siddharthasthana31@gmail.com>, 
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+> > - https://github.com/processing/p5.js-web-editor/pull/3492
+> >
+> > - https://github.com/neovim/neovim/pull/33235
+> >
+> > - https://github.com/kube-vip/kube-vip/pull/1087
+> >
+> > - https://github.com/WasmEdge/WasmEdge/pull/3963
+> >
+> > - https://github.com/openfoodfacts/openfoodfacts-server/pull/10037
+> >
+> > - https://github.com/openfoodfacts/openfoodfacts-server/pull/9967
+> >
+> > - https://github.com/processing/p5.js/pull/6761
+> >
+> > - https://github.com/processing/p5.js/pull/6669
+>
+> It could be interesting to introduce these contributions a bit more.
+> Maybe for example add one sentence to introduce your contributions to
+> p5.js and one to introduce your contributions to openfoodfacts-server.
+>
 
-> Changes in v2:
->   - Account for platforms where `timestamp_t` has 32 bit precision. This
->     matches logic in `write_graph_chunk_data()`, where we also depend on
->     the size of the commit timestamps.
+Sure, I will add relevant introductions for these contributions.
 
-> +static timestamp_t compute_generation_offset(struct commit *c)
-> +{
-> +	timestamp_t masked_date;
-> +
-> +	if (sizeof(timestamp_t) > 4)
-> +		masked_date = c->date & (((timestamp_t) 1 << 34) - 1);
-> +	else
-> +		masked_date = c->date;
+> > I was also grateful to be an LFX mentee in Summer 2024 under the Open
+> > Mainframe Project. During the program I worked on building a new
+> > frontend for the Software Discovery Tool and integrating it with the
+> > backend to make the tool easier to use.
+>
+> Do you have a link about this?
+>
 
-It is a bit surprising that on a platform where timestamp_t is only
-32-bit wide, a smart-enough compiler would not find (1<<34) as
-suspicious.  IOW, I would have expected this to be done not with
-runtime switch but with conditional compilation.
+Yes, I will add links to my contributions from the program. Thank you
+for taking the time to review my proposal. I will incorporate the
+suggested changes.
 
+> Thanks for your proposal.
+>
+> Best,
+> Christian.
+
+Thank you very much for your
+
+On Tue, 24 Mar 2026 at 16:12, Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> Hi,
+>
+> On Mon, Mar 16, 2026 at 8:59=E2=80=AFPM Deveshi Dwivedi
+> <deveshigurgaon@gmail.com> wrote:
+> >
+> > Hi! I would be grateful to get feedback on my proposal draft for GSoC
+> > 2026.
+>
+> Sorry for the late feedback, and thanks for your interest in Git and
+> this project.
+>
+> [...]
+>
+> > - https://github.com/processing/p5.js-web-editor/pull/3492
+> >
+> > - https://github.com/neovim/neovim/pull/33235
+> >
+> > - https://github.com/kube-vip/kube-vip/pull/1087
+> >
+> > - https://github.com/WasmEdge/WasmEdge/pull/3963
+> >
+> > - https://github.com/openfoodfacts/openfoodfacts-server/pull/10037
+> >
+> > - https://github.com/openfoodfacts/openfoodfacts-server/pull/9967
+> >
+> > - https://github.com/processing/p5.js/pull/6761
+> >
+> > - https://github.com/processing/p5.js/pull/6669
+>
+> It could be interesting to introduce these contributions a bit more.
+> Maybe for example add one sentence to introduce your contributions to
+> p5.js and one to introduce your contributions to openfoodfacts-server.
+>
+> > I was also grateful to be an LFX mentee in Summer 2024 under the Open
+> > Mainframe Project. During the program I worked on building a new
+> > frontend for the Software Discovery Tool and integrating it with the
+> > backend to make the tool easier to use.
+>
+> Do you have a link about this?
+>
+> Thanks for your proposal.
+>
+> Best,
+> Christian.
