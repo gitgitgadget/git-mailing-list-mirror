@@ -1,84 +1,85 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE892E040D
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 13:43:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1D23D333E
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 13:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774359824; cv=none; b=JUcaqi+dTZ31uL8YEZZrx2ZBuMsZweCjBMpcswWQnhGmFjLH0ni8dLDS62nTDZXw1wZ8CS6SOerL99mXby/e3Z1j6kfMJ8B+csY870CwcKnMaRkn+qrFMPlQMdl5t3RZrwmaL9zbXgNwBPFkABRNlvlZAMIk/mugioHdAbtVdL8=
+	t=1774359954; cv=none; b=jzFNU8lImI+Xjhr0R2af6Ux75yQPjje9sfWfE6qhgIsqNLgx6xC2c8WIBwgkWD4kSFxC0jXb8wKwnNIDFGUQRstKWGrbwXoIvCT/CqhPudcbtWAcOao2T1nzdHhK+8NCuaf3O+c2NQlOqUxIjs5kTa3oYZnY709ZWSEBtR3mCWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774359824; c=relaxed/simple;
-	bh=/ylOcjp04IZwKVHpRUdxg2ozK5RLjZJ+kKvLT4Lq8l4=;
+	s=arc-20240116; t=1774359954; c=relaxed/simple;
+	bh=FWRyuMbotLB/TiuZQdKxnyo/3DOfy/kOmY8ieC4CNuI=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=GnAKXKrCjfBjQkYdoIulq4ENZh/wS0w6AUq1SvQuN6O7t024Rse5nhoc6Hw8SltFE1K9d06oJ8dv5r3+Qf8i0DhJBbTdxCgLCGt7P7aphplaxoPdz49Cf9gi45Ehcj7qWSDD4h6vowj96Ymh7AWjbTOKI4KfY9q1HmlVtvc3T28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtCCR+1G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xjGtjczI; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=ESFa6pAUwWXP2YKVpgHwztwk+wbisXybEtQF2WTsj03gBRR5fQqGXF9gApUJy/1mXtkyIxp7zxN66Fap1LFN2m983hdw0wfRgcJjjWsYn0fRY4JMEam53u6daKTYo4uRf3bHDHXzCHAq/yFx6sQmgzRlLTOStyKtPzWlbt0mJ2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HrPq7tFL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xUa5GxgE; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtCCR+1G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xjGtjczI"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 73173EC01D7;
-	Tue, 24 Mar 2026 09:43:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HrPq7tFL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xUa5GxgE"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 74FD814002D5;
+	Tue, 24 Mar 2026 09:45:52 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 24 Mar 2026 09:43:42 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 24 Mar 2026 09:45:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1774359822;
-	 x=1774446222; bh=fmW8Hve4/FmqsWoGrLR2UhQkBAbvzdSfZVe8TUJV/es=; b=
-	QtCCR+1GO+t6trL+RjgenvntluZIQY+Juku63yp0HkWFr6F9BE0CtXE8T6WH9ydK
-	S/iBYTcW6EakaLF+ObZZ1aQS7xdc4LpDX4trdCeSCZJN+FGzRYg+RM9bT4Aqqu1G
-	YFuqxdxuu67/62cfSBs+I6Le3kukMLm4EkgsUP5YHy8bZI638TN+nfMS0OX7kQWm
-	dLREJVLQ8n43R2d5haAP/q54i0xFVKnPxCBvwJ6kWHgqW0hRSAoaCLKhEXip4lnO
-	dhdkc4kyzL80wRHA2XfpSz1d/XngTkpMNwmwubX+m5jOnmLBsItjrjtyRwPE61j2
-	HDxfiXd1AhoKv8EaZrzOAA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774359952; x=1774446352; bh=Uo+XJs15DB
+	D48whCL+PnVrYWM/ZTqnVzTZgkTUPZjoc=; b=HrPq7tFLu9vDATqVFVXA33DJwn
+	Nr6AsZFXhUv3mepUKzrZNuMTFBclbMXz7MbofHGenAQKw4EX7v3jgahrr23ly4MV
+	zPWYgVMnlIFtGojUY9gD9SXkFeE3tbx/vIy35qn1XOm8onq3diytlXCTBVPXTkiN
+	EWQ4RJ4p5JKkIQAyLjzn0El82CSS0gFOUBbWjBVTWXG/qx9K7N2eju7it7v3v+Tx
+	lScXnw6eSwhbiwlU6/YXw7opwfY4/eDvDZnyddk57ullXLuLgFLpIpETtnSqzX6W
+	iEXRCPIKBM0I0T4Z/NbW6lTpPw6vg6IxIl/D5oE/8FpdYWfgjLNW+NYZoQyQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774359822; x=
-	1774446222; bh=fmW8Hve4/FmqsWoGrLR2UhQkBAbvzdSfZVe8TUJV/es=; b=x
-	jGtjczIEYRlMcPTsT9NrsOVtZ1HzMu/v0OG/vaZ7dhGZMCo+FvA4qn32NuxUsOZS
-	ytvcf96nlg6fUdqTNWQxAkQVPzGpQolOL90ChmSosYm97LP/HoxiqanETty59oUS
-	uBaQNPfVYbHi9RIpd3J4anOln/0HDERUGniQpf3Vs9umfnKYnSlS8uzpgUv+ZgTu
-	64dtQorAKG8pCX5x3TLPjbD2ODJgln9ELaZPZmDffIfwMZ893cEDZoLf4ikVOMWR
-	NXGG/KVo+L2+ELlIKv9VuwOhm+JmpvsfaZ2gMT8mooMrFNeY7UhtfVK9vxYZxpS7
-	AsOoRFdEPQiUmEdg1ylZg==
-X-ME-Sender: <xms:DpXCaQkBYVofZXK2DKqJFbdVAqXSdjkRc9QicZGH9shUh_FQa3DFuQ>
-    <xme:DpXCaW1HtseC82oEM5294aqPSgWqyftL2lYO6byZUHH3p7ILN4thgkeAmJ65bRXoL
-    FUdVPEz0tzfv-Kw3uHP09Nl_HCwy1Hhqh5f3Hq8uqVv-JEQwIrAZg>
-X-ME-Received: <xmr:DpXCaTplLpkEJNameGgNYgGOtnd4XRF2wAG_qoJdasD4LrW3JlfH7sMAvsA>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774359952; x=1774446352; bh=Uo+XJs15DBD48whCL+PnVrYWM/ZTqnVzTZg
+	kTUPZjoc=; b=xUa5GxgErE3RRYNy41kH3tXVU3a5fCMscfeazDS6fp4FjWelN5p
+	uIxoqKZOZbyQnkDD49kFPg8BvVWibabpoZjbxxFkH8mviKauKkPMP4091SRHETnP
+	mBX6zV4HHA7gN6S/kH15OdQjt8KP2f1T0h/BN/ojj0H3muc1nXEsiMkrYj30xJqT
+	9SdmZM/4BUqdj05bXdlQ6CdQb+VkMOCxEBkThHv/zm3PAgI+Pkpqygm9BZtGrcz+
+	m17opuSufjXi+riVI8Uxp22EWOjNeHlYWt0f7atja1QbIrWmluHnsjxX0STv8MBj
+	7VaG8bNI+2ZQwdTCC7QOvWns6ZAb1fgRfDA==
+X-ME-Sender: <xms:kJXCaSY0MjyjDtEnUNSQwQcAWBTc5i8cFPcw-nbbS4v9AMFTexT1_w>
+    <xme:kJXCacQ-b95NpB9vfazsqfZbVJ4_zdC6XcLrmJX6wu5ZGJtnQt7FXI8h2cFacoJhS
+    DY66jjS2u1CZS213TS77CGxa-yDEm35vTNk3J87tW00SXZK_7YS>
+X-ME-Received: <xmr:kJXCaVRkhB_fPXc2CotqSkIXgHqJw8GizZdbiw2UvEBdswS1HWJx98mq-r4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddujeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufhfffgjkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeeikeduudegffeiuddugeefgf
-    eltdejudetveeuuefhiefftdefleegjeefvedunecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigv
-    shhhuggrghgrleelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:DpXCabdDS16nOPZ026pHl_EC3EXA9tot1hZSNswBDz_nrrt3LbSkxg>
-    <xmx:DpXCaap015BEKq853zC6awHTmfwGkrSpsBotHtNM8C0Gju_MCOAuZQ>
-    <xmx:DpXCaUG224X_YwbMR519kGU7-OBxtQMDHwCJDipVR3_LTUKSRcYg9A>
-    <xmx:DpXCaSsTIk5AF4_PqLtLjlqQty6HkMT-Z5KlgY70wmR_isQyB91FkQ>
-    <xmx:DpXCafKXVPom6GuTlKMxxm4oJscZQ8kbHJbra3oPBn7lV3Vbvgqyq0H6>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
+    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgvrhhnvghlsehstghhlhgrrhgrfhhfvghnlhgrnh
+    druggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegthhhrihhssegthhhrihhsughofihnrdhnrghmvgdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kJXCaQRakzjOTJZ6e3SM7PEPiu72uV9N2meSA33OmawRJrsqrWnzHQ>
+    <xmx:kJXCaa6oYiJzOGVc_HzmpUxDEfM3hbqQGPuRd-Z37ryiOrhiZ0vkhQ>
+    <xmx:kJXCac1_8q_nPnpG7k8YbS-jw0pSXnrk3eW6gXjxk287vn5cn6gheg>
+    <xmx:kJXCaVDgR7YRJN5HqJLyn2FPBb52AGDU9BDG1yxlLCe7NfBz9w3Pjw>
+    <xmx:kJXCaTsprgUzyK1mTzdesS-CvsqbHPHMoh3FHuVfgbkicLTOojN9-652>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 09:43:41 -0400 (EDT)
+ 24 Mar 2026 09:45:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: jayesh0104 <jayeshdaga99@gmail.com>
-Cc: git@vger.kernel.org,  a3205153416@gmail.com
-Subject: Re: [PATCH v3] t/pack-refs-tests: use test_path_is_missing
-References: <a26599ba-01b0-4587-ba0c-bd28a822c615@gmail.com>
-	<20260324044619.43944-1-jayeshdaga99@gmail.com>
-Date: Tue, 24 Mar 2026 06:43:38 -0700
-In-Reply-To: <20260324044619.43944-1-jayeshdaga99@gmail.com> (jayesh's message
-	of "Tue, 24 Mar 2026 04:46:19 +0000")
-Message-ID: <87jyv1jqb9.fsf@gitster.g>
+To: Jonas Rebmann <kernel@schlaraffenlan.de>
+Cc: git@vger.kernel.org,  Chris Down <chris@chrisdown.name>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] rev-parse: use selected alternate terms too look
+ up refs
+References: <20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de>
+	<20260323-bisect-terms-v2-2-8d6bdb2c9c7e@schlaraffenlan.de>
+Date: Tue, 24 Mar 2026 06:45:48 -0700
+In-Reply-To: <20260323-bisect-terms-v2-2-8d6bdb2c9c7e@schlaraffenlan.de>
+	(Jonas Rebmann's message of "Mon, 23 Mar 2026 23:49:00 +0100")
+Message-ID: <87fr5pjq7n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,55 +87,32 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-jayesh0104 <jayeshdaga99@gmail.com> writes:
+Jonas Rebmann <kernel@schlaraffenlan.de> writes:
 
-> Replace the raw file existence check:
->
->     ! test -f .git/refs/heads/f
->
-> with the Git test helper:
->
->     test_path_is_missing .git/refs/heads/f
->
-> This aligns the test with Git’s testing conventions and avoids
-> direct use of shell test constructs.
+>  #include "abspath.h"
+> +#include "bisect.h"
+>  #include "config.h"
+>  #include "commit.h"
+>  #include "environment.h"
+> @@ -940,11 +941,14 @@ int cmd_rev_parse(int argc,
+>  				continue;
+>  			}
+>  			if (!strcmp(arg, "--bisect")) {
+> +				char *term_bad = NULL;
+> +				char *term_good = NULL;
+>  				struct refs_for_each_ref_options opts = { 0 };
+> -				opts.prefix = "refs/bisect/bad";
+> +				read_bisect_terms(&term_bad, &term_good);
+> +				opts.prefix = xstrfmt("refs/bisect/%s", term_bad);
+>  				refs_for_each_ref_ext(get_main_ref_store(the_repository),
+>  						      show_reference, NULL, &opts);
+> -				opts.prefix = "refs/bisect/good";
+> +				opts.prefix = xstrfmt("refs/bisect/%s", term_good);
+>  				refs_for_each_ref_ext(get_main_ref_store(the_repository),
+>  						      anti_reference, NULL, &opts);
 
-That makes it sound like "avoiding direct use" is a goal on its own.
-Adhering to the conventions is good, but the ultimate reason is
-something else, isn't it?
+Aren't return values from two xstrfmt() calls leaking in this code?
 
-> v3:
-> - Fix commit message to accurately describe the change
-
-The above two lines plus a blank line should come below the three
-dash line ...
-
-> Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
-> ---
-
-... and placed here.  After getting committed, "git log" readers
-are not interested in learning how many wrong turns you took or what
-mistake you made until you finally got to an acceptable patch.
-
-The name of the game is to pretend as if you were a perfect
-developer ;-).
-
->  t/pack-refs-tests.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-> index 2fdaccb6c7..4a85d96c6b 100644
-> --- a/t/pack-refs-tests.sh
-> +++ b/t/pack-refs-tests.sh
-> @@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
->  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
->  	git branch f &&
->  	git ${pack_refs} --all --prune &&
-> -	! test -f .git/refs/heads/f
-> +	test_path_is_missing .git/refs/heads/f
->  '
->  
->  test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
+>  				continue;
