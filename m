@@ -1,88 +1,93 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DBD38BF61
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 08:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19143DA7DC
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 09:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774341504; cv=none; b=Q/VWT7gH7MTcG+cM+6WltUzPMiy/7E68NLEYKy5gH02FFYjOfq+Rh7IKxkH5wOQZXDadVGdgQpbzFSJe7fKCxerOQrVmY4IkythyMjSr8gcGbRjBztuHP/IqdXX9/p7uf3/r2SL7zeKQRZELRLHpIq0Rpb1+CiA4B6pBUsYrK78=
+	t=1774343269; cv=none; b=PTphDlK1hXYTgwB+uJd4d8ulJbNflkUpV8DK4PZ/w1Px0YxGpd3hGPw4rRp/hf3tNXUwBEw018qobYq4jLyToKDYKfg+8VzyO+dmZMGg8WneMkbT/WeyOrnuh1RLuBNHNy1MPaS2yTTebl2T+VfCR/QS7jDDK63QEKAUNGv2HV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774341504; c=relaxed/simple;
-	bh=jnBODvlat48pD7cmxCJ1Iv+lOVbYgiedQxJX20lRCIY=;
+	s=arc-20240116; t=1774343269; c=relaxed/simple;
+	bh=N+1s6Yd2EUPD4ASBnn91RuBAGAclvxgBWXPOgLFzdwE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o8NHeZ56uYanlp7ezxnWOapJ/ZHh/9KmFZRvO7BoLQdXlW5I1ch7QuEEKCHEioN1YNQPzYjs/e+aPTHgbLifPF4kgF2GATN533gHenOMMWQFYjw4Y/POkneF0l0RIpOPI18ZkPep4yAT0pnlAkRTf90NJibrs3STbRjPKXgYC8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k/thTvRo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XFXZyeWg; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=g2WmzmPdCaYOOgZ/FbFgpyf/csO3C+vSXS5t5gpHqLIjlHuVwOx9G236dEUl3u1n2qVTmJXFnLg2RMZA83c8WdWk2ChrewVJPg20fMVWTZjF5Qz6nbnrexZd5Saa3HfmEQsmpyEqLhWg5xg+py8QkzWuL9xM5fQZwUYuF3hl8eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dosj3sTS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yUCowb/h; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k/thTvRo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XFXZyeWg"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7F69CEC01E1;
-	Tue, 24 Mar 2026 04:38:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dosj3sTS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yUCowb/h"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BC89A1400213;
+	Tue, 24 Mar 2026 05:07:43 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 24 Mar 2026 04:38:17 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 24 Mar 2026 05:07:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774341497; x=1774427897; bh=39tctibbN6
-	uee1bxSUtECzwXym9rXH6Z1F8UMeLhWrk=; b=k/thTvRo/uK3czQy4IS68rNMeF
-	XIFPY345FkyHqYvkDSnLb0NVJUZEjln4yIXRlnVWMYUnKeh5xPZ0mpiB3MJChYd5
-	sDK8uPceYuBrv2brXN6v1FAuIaydBcDI8w0HViCx7OAkm+GeEEALGrkd8kLk6eRe
-	NY5huOviRPrmi9En1xPF7dK1vqcUWo2D2SSPoGGCv6E2vlLyUSD0XwOzhiTk6frM
-	qksAokGDzeGCi9SVaFgoGYat5gKkJPjhPrcjesPXXv9tD+IgyYuE6ADLEr3aKvZa
-	6eP71NZf+X9LUCGcZ5LOqiih/LAGOq3yAgHfiCXQNUqtz5Pd5c0OBQLy5Hrw==
+	:subject:to:to; s=fm1; t=1774343263; x=1774429663; bh=Oqcc+z1qnF
+	K056K7p6/ciRaVx8DIDKaL3nq+lfJYx2o=; b=Dosj3sTSyFngvQzoe0B97QqtEc
+	OASiSGXp6CGAWc7qGnCie0X72rydlwFN4GSGv6Jy2wu1WWcE+/BfYcpS3zvllqky
+	qGnYRlB5x3VH8eGdyZhiZuJvPFPtwDN2CZHUZJ8q/5PQzp+/bPELRoDAuUiiAl08
+	V21tVP6qxxjik6uIVWtL60OGbRHb4cuTAF/f7/1LU6AjxN2vYjhQ4cKpnkMxTzwV
+	IwodnHNftTtcXfhF6nztkl1HGoizQV67Q18EtCV8wmEcL2VAAWlKhyE969La9HOF
+	5VCMHOXlqhTKCKZFLBzPAHtFy1JZDS+3R2YXyQXNMyJyrS47/Sli1IU/ZWFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774341497; x=1774427897; bh=39tctibbN6uee1bxSUtECzwXym9rXH6Z1F8
-	UMeLhWrk=; b=XFXZyeWgWaBsrdeoXjgQZAZeV3Ot4eGM2bjRs9574lQ8w/JeEsz
-	YvO4mRlIUXE6XFhDvsWDMnQRbb7Zb1A3Bdq7FOqa+QfsIWZPdxqziSGifR7d3fyQ
-	PO5qDSXQFYQaT3mrajsP/aK2ILfKnQpnmxyc5KR0+1P6jhgS+0XTmqIhaZB+kCss
-	wuf0zhABeaLQgBuJPCN3lEN0VY+GuH1/dvBveB/Ng+He2gGWHUvFOvW7qdmR1UC9
-	FnzDOdtkbwCo5EtQxJOyl54SSbvKJyT6dAD9xiREaoqxjyK0VaPivGLD9Ecoz5ln
-	52TZudUp29yR6Qsbn6sxEJt8qYm0I3uxsmQ==
-X-ME-Sender: <xms:eU3CadMf4tJ3h9i9C4fMsAZi_csMHwBWASr2kb4R_63Q2KgSIn7j4Q>
-    <xme:eU3CaW0FkF46H2B0yhTAV_UjOwdErZEgsQtn8LUaRDGxtoe2RPf96KcHOH9KWM9a5
-    5zLpCPegny8YeUNolAkGFmW2iQI45gKERjhh2BGaSGOKTCTv5sNfg>
-X-ME-Received: <xmr:eU3CaUnQwNF7hOn3hxu9MeqdyqaZngNoV2rG8eHfKUoe3bxuH6Ne-cOIKpYcjO4D7wl18h-1Zb8BQteCo6op9yvrULfDnHR_TSaPejJwZFm1eg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdduuddvucetufdoteggodetrf
+	1774343263; x=1774429663; bh=Oqcc+z1qnFK056K7p6/ciRaVx8DIDKaL3nq
+	+lfJYx2o=; b=yUCowb/hA8bjYPEKSuEDNY3XI/unyu3fGdAKpWBwlmMvjM0JLLD
+	BWIYSL4anCKVvnWXDQhjdjKX03rJG1RVi6sxftWTt3xGvqT5YsRvRCV50lJZfPSv
+	Jd1UfroWOnf6SxHW3WUQ90bbFDGFX0JTumCWxdkp5tsqwbe5iQSvjPtRszpC059B
+	BKajrCdgwizXUHF6fd3TvS5g4gj0ZEvru8VzNKRUdttIHBV6xNKwmqs2OpLmE6D/
+	vRxYj1o0sskHeMbv7OS1avehE6pj3XZTJDX4wnt0q0EaOgyA7TZkKFCEZa/HdqJt
+	w9SEdEwgi3Nup+XmO/0iLrPluJ5scf9hIuA==
+X-ME-Sender: <xms:X1TCabQ4yOQqCgLjhBtDHGIQUAncGgYfv5GJF370LYmDx9WPgjovNg>
+    <xme:X1TCab3XijiKXTaEeWnngvTObDDSrlH_xM5omKPVbGVik3AtUTqtpC2hIdxVZmCr8
+    2h3B5u-w4VL7ceVz6MqStHaCaatPdV-Bg14r980OyTOIUawZjHT7A>
+X-ME-Received: <xmr:X1TCaXBnuiznDzD1viQ_6NIyXaTUHg5XfIOIFvFRZrvtvqWEdoMKQlBkTDOL0FpMDHLMsZBHmm1_tS0hYtXF9NMQrr92IQCuWjvZ_aGIeIWvwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdduudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvmhhilhihshhhrg
-    hffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
-    grshhtvgdrnhgvthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggs
-    ohhrrgdrtghomh
-X-ME-Proxy: <xmx:eU3CaVVvJ2HsGAl-ho0V7O-GdizmNodirJbUeOHRxRPNe_ctBbv5nQ>
-    <xmx:eU3CaSuCQlm16nirCy8ytjfOO5x8PRSP7cYVytTwzPShXfz4O3yyEw>
-    <xmx:eU3CaQZo5A9D3KsI2FSd_FX-tMV69BBRRpSTsTALlF_QWJB3QIrMcw>
-    <xmx:eU3CaZX2dmmskwrY4BD6ytHBvsSKxyBcNGFyFG9v_-7rorI7fPOJRw>
-    <xmx:eU3CaUrCBKkpYLdP0aEwHLnTLnIkCQkL3PNF6w92qqFtEN7-Cb58waZV>
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthgvrggumh
+    honhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghmih
+    hlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopegrughrihgrnhdr
+    rhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopehkrhhishhtohhffh
+    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsrghn
+    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:X1TCaXjIdXSYcd8RanwkYLqrjztzQkuzgj9hkeCFOuXwHfRDGV9sGw>
+    <xmx:X1TCaZO5IG-Qtpmr6qEoqnuNvN2y3V1A-ci1VBZNRH25evNzdkqZqA>
+    <xmx:X1TCaX8T5SVgP9GGKWYHIjW2tc9_eps55_BVa4y7li5qyTAaB41nEA>
+    <xmx:X1TCaae35I_8nsMZUG4kwSv5BbGcEdqKq_K4xy2N9rVBw5y4q96iFQ>
+    <xmx:X1TCaQnSZmHyvt1ajOZKoYnBt4WNLff_qfl0TPq08P70TT_-IJtpvIeU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 04:38:16 -0400 (EDT)
+ 24 Mar 2026 05:07:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f43d48e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Mar 2026 08:38:15 +0000 (UTC)
-Date: Tue, 24 Mar 2026 09:38:12 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 4f595d18 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Mar 2026 09:07:40 +0000 (UTC)
+Date: Tue, 24 Mar 2026 10:07:37 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 10/10] hook: show disabled hooks in "git hook list"
-Message-ID: <acJNdKyz-ISsq4fJ@pks.im>
-References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
- <20260320115211.177351-1-adrian.ratiu@collabora.com>
- <20260320115211.177351-11-adrian.ratiu@collabora.com>
+Subject: Re: [PATCH v4 0/9] Run hooks in parallel
+Message-ID: <acJUWcNwNOIFDL9B@pks.im>
+References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+ <20260320135311.331463-1-adrian.ratiu@collabora.com>
+ <xmqqtsuae7nt.fsf@gitster.g>
+ <87h5q660un.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,37 +96,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260320115211.177351-11-adrian.ratiu@collabora.com>
+In-Reply-To: <87h5q660un.fsf@gentoo.mail-host-address-is-not-set>
 
-On Fri, Mar 20, 2026 at 01:52:11PM +0200, Adrian Ratiu wrote:
-> diff --git a/hook.c b/hook.c
-> index aa08c38c27..0e09b9a2bb 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -119,6 +119,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
->  struct hook_config_cache_entry {
->  	char *command;
->  	enum config_scope scope;
-> +	unsigned int disabled:1;
->  };
->  
->  /*
+On Mon, Mar 23, 2026 at 05:07:28PM +0200, Adrian Ratiu wrote:
+> On Fri, 20 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> > Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+> >
+> >> Range-diff v3 -> v4:
+> >>  1:  6686d92867 =  1:  ec274c24e5 repository: fix repo_init() memleak due to missing _clear()
+> >
+> > This one is not included in the set.  This cover letter identifies
+> > itself as [0/9], but the range-diff implies it should have 10
+> > patches.
+> >
+> > Curious.
+> >
+> > In the meantime, let me resurrect the corresponding patch from the
+> > previous, trusting that range-diff deems them identical.
+> 
+> Yes, it's identical. Sorry for missing that 1 patch.
+> 
+> I mis-typed git format-patch HEAD~9 instead of HEAD~10. :)
 
-Curious, this is now a single-bit int. I still would have expected a
-proper bool here :)
-
-> diff --git a/hook.h b/hook.h
-> index 92e9faf9bb..7c8c3d471e 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -31,6 +31,7 @@ struct hook {
->  			const char *friendly_name;
->  			const char *command;
->  			enum config_scope scope;
-> +			unsigned int disabled:1;
->  		} configured;
->  	} u;
-
-Same here, I would expect a proper bool.
+I can only recommend the use of b4. It will make your life a ton easier
+with mailing list based workflows as you don't have to manually keep
+track of shenanigans like that.
 
 Patrick
