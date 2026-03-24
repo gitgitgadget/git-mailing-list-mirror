@@ -1,162 +1,115 @@
-Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC6F175A61
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F5C3128A2
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774380958; cv=none; b=YtKE/dzzykdz9mVxiF6nvcZqUg6Xku37n4k686S7juzbAm3qxaj10knaUZ4S0klDx9wjIfBm+20Hgd0fY1w14pNTEgJLaoqN7OS91ZptYoB5fwBvXWCdP1dUEC2M3fPZv2X/a/BMNhFKJgcJSeDZOxv1OwUJBoJgNTMVnIW1Kos=
+	t=1774381708; cv=none; b=SNMpouKZhsJc82DOX+QPPl59YCMuy7ihWLl0hkWYIlX7CKDu9AC+GTnDuCxulxsKiExvcdYbah3P4yDSmwq6V4qOmfMNpE7mp74MG92TV5CU1qL0JwIWu1Z9aUfNbbaCl/gf3IGcPlJ0Xo4ycbJ4vUlmq/Mj63Gu7VSO+0i0aJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774380958; c=relaxed/simple;
-	bh=KvgIHwIx8Y4uIKsWH3ivAkEUknfDr4atbLickTpeJrg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=SKcoaqRwnKLuKBn1/EDFZ+mSvL5i7c5bMWCApnV8exaIxlEhWH4S+rVihmf81VyeetKcgUl3RiGPl4jAf2eMfr/NIlUbT7UnGTjPQELgmMPFU88VsMFa6hwOJjxxRUKgzEeb3SDouIYOiSOYMgMfd1P75rPkOg6uK/QegRrbHdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Yw0/9x/R; arc=none smtp.client-ip=95.215.58.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1774381708; c=relaxed/simple;
+	bh=2P1GYQBcOY+A1VK6L+Rtbu+RJIVtK1bBjagM+2+WDds=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lb474vUpdw6JJsPGtpUFdptydkFFoQSIR2bOTukdYqiXvtqth9FO2OKIGuH1AS6Xq2xWxK/eRIIIXLr5fAxyFEt3a2Fz3MLglqMkxZEVwKPE9If66OQ64dKHNvp3x1bEzO+GlyyLdMWVnVyiVhlQOJ5/u8IaRhvyXrW3g8RvrVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LQjRTvS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3LIqVJRs; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Yw0/9x/R"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1774380952;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ilsntOrKwKwO3IWIhUNXkCbZYmFdp1n8MsLoA/4qNqI=;
-	b=Yw0/9x/R1fFZQ3JKmy73AORUcbe2SjoXIL2a0oTJBwmEycGo8xS+WBWFbsO9h1HehDE0KR
-	Pzjc/s2Fdwo4aOSpoyyhHroQxfEDAeIdy9l/elby9zPgxnjrZVJkLHJkAuDoi+i58DWA9d
-	RnAMcpJRS5zuUKkmxilThnkVVkXHxSE=
-From: Toon Claes <toon@iotcl.com>
-Date: Tue, 24 Mar 2026 20:35:41 +0100
-Subject: [PATCH v2] replay: support replaying down from root commit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LQjRTvS8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3LIqVJRs"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 69EFF1400144;
+	Tue, 24 Mar 2026 15:48:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 24 Mar 2026 15:48:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774381706; x=1774468106; bh=qieVUMR8vO
+	erwNT+8gM41LSRsmuiFgRwKs1063yR52s=; b=LQjRTvS8zJ3bAUxOgxm097itUO
+	/E24ZFbw1rxjCkqXBaSckTKkHnz3w9KBDw+hhBSxx/9yrELq1iFs7pnAEwYND1n7
+	3vpo/BYkvxZnkPJXxzfM4hVhFXFXjldznuFwyByGIwGVG4m1cddmthcH3ZfjCw3w
+	4VHINaacdmy+25X+RSV3jssSHQv+u8i4Y45Nsp6cse0mmQzV4fAs0mzbXhQVI9nT
+	6xzCAZVAvqo3toVyHIb5zWZvSu3FXg8lrK20gw7zef7rXxI8Aa3vDCrMasaSzF2C
+	IVhJg4V6qt4FCcPLouiPg2IKLLIwVAvQIQOFRE7VlwFqfDWunQdYOHBJJsRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774381706; x=1774468106; bh=qieVUMR8vOerwNT+8gM41LSRsmuiFgRwKs1
+	063yR52s=; b=3LIqVJRs53f5YSx+Wi5hJEgiPzxh+f0n2xQRtT+fKqyon/b5tNt
+	TlkQdC2uRegDJ5fmZBIBReAfByAmLiusNb9ZziKkKFCRGqof+zo1TMWjyMhk1LEH
+	kQoqe3zRMNn66cjb5Ap9exBguVv919HXXZwmsPSDsD4X+CSOewW4UIVVUEDDFqDg
+	fzGwva9mwvhIZYNaBPl5sDK+m48ZIcETaW1nHCYVkoe536qtxdZgAkpp8cIqyBV8
+	4sSbQctpWgR5kI+Qw2ooFIBJDwAU3WDZ9c+ewxIO1/it8dpl34wGqbhP08tj9dor
+	87t5BGUufx819P48IJISLE/DjEeyYjfqj/g==
+X-ME-Sender: <xms:iurCach47-P3fTOMUyZucp7OX6cn5OcQqCvH-P3ikr-H0TvgUG8wXA>
+    <xme:iurCaccUrK0lYGxrwOH6dYXcsPTVGWyMFpc3PIBAMyHeEd79H6Mjr05Nw4y-wAhvs
+    BU6F7_l9URVOIcX0XekTFkfh227SWOUZe_FZ_dhNNy1qV_SfG7pXA>
+X-ME-Received: <xmr:iurCaRer4XqfajMeFHTY68dhSnSr0OYeIA2fR9zngyLHujwJBa3WPmPGszZl0_JmF60RfAiiAnwHo_-gz03B2dkC2JsddTfQTg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvgeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:iurCaW8Gy6W9ZTGUN3nw1nKbu3EinTKxoUj4mtpaa70chs1SPH0z8w>
+    <xmx:iurCadny7pkBzvd808H_b7zcXTTjOuRZ3DwTgifiJ928WrDvGZaKXw>
+    <xmx:iurCaY_diVHpM24hS9SVQWo4jXgzBSxd4jJF0Gxj05fD-5OhjPO89g>
+    <xmx:iurCabnZaETCBLCXGRgp7HxvSaysmKBjgGIB_FUD0wjZZu_QeGDJqA>
+    <xmx:iurCaXNmk1JmuMLMKtv-pwdNwgaGYW1uC4ggSkBNwoXlSfBAIRhcBeu9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Mar 2026 15:48:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: catch misspelt 'test_expect_successo'
+In-Reply-To: <20260324193514.GA1870130@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 24 Mar 2026 15:35:14 -0400")
+References: <20260324-b4-pks-t4014-fix-test-execution-v1-1-ac83c1bcc828@pks.im>
+	<acKqvI0EhaORjoD7@exploit> <xmqq5x6l2q5y.fsf@gitster.g>
+	<acKx6yBi-BWUVJcv@exploit> <xmqqo6kd18sr.fsf@gitster.g>
+	<xmqqcy0t178a.fsf_-_@gitster.g> <xmqqmrzxyu2h.fsf_-_@gitster.g>
+	<20260324193514.GA1870130@coredump.intra.peff.net>
+Date: Tue, 24 Mar 2026 12:48:24 -0700
+Message-ID: <xmqqy0jhxb3r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NQQ6CMBBFr0K6dgxTi6gr72FYQDtIDXZIW1FCu
- LsFL+Dy/fz/3ywCeUtBXLJZeBptsOwSyF0mdFe7O4E1iYXM5TE/YAmR2YGnoa8nMPx2KQDPHME
- olLk6tVgqFGk+eGrtZ7u+VT8Or+ZBOq5/a6OzIbKfNveIa+8PzYiAoJtCS3UmLFpztRx1v9f8F
- NWyLF+7hrj40gAAAA==
-X-Change-ID: 20260317-toon-replay-down-to-root-d412048f1741
-In-Reply-To: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
-References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-git-replay(1) doesn't allow replaying commits all the way down to the
-root commit. Fix that.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
-These changes might conflict Siddharth's series[1] to add '--revert' to
-git-replay(1), although resolving that should be trivial.
+> On Tue, Mar 24, 2026 at 11:13:26AM -0700, Junio C Hamano wrote:
+>
+>> In order to catch mistakes like misspelling "test_expect_success",
+>> we would like to eventually be able to run our test suite with the
+>> "-e" option on.
+>
+> Using "-e" makes me very nervous, given all of its quirks. Granted, most
+> of them are related to it _not_ kicking in when you'd want it to, but I
+> worry it will create false positive/negative headaches.
 
-[1]: https://lore.kernel.org/git/20260313054035.26605-1-siddharthasthana31@gmail.com/
----
-Changes in v2:
-- Add NULL pointer check for `commit` in mapped_commit().
-- Change ancestor message to "empty tree" when replaying root commit.
-- Link to v1: https://patch.msgid.link/20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com
----
- replay.c                 | 27 +++++++++++++++++----------
- t/t3650-replay-basics.sh | 10 +++++++---
- 2 files changed, 24 insertions(+), 13 deletions(-)
+After looking at a few scripts, I am not suffering from such
+headaches yet; it does not look too bad.  I'll stop this effort for
+now, but with a handful of patches I already sent, more than 80-90%
+of the entire test scripts that I run are now "set -e" clean, I
+think.  Note that I do not run svn, cvs, or p4 tests ;-)
 
-diff --git a/replay.c b/replay.c
-index a63f6714c4..92f2279156 100644
---- a/replay.c
-+++ b/replay.c
-@@ -209,7 +209,10 @@ static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
- 				    struct commit *commit,
- 				    struct commit *fallback)
- {
--	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
-+	khint_t pos;
-+	if (!commit)
-+		return fallback;
-+	pos = kh_get_oid_map(replayed_commits, commit->object.oid);
- 	if (pos == kh_end(replayed_commits))
- 		return fallback;
- 	return kh_value(replayed_commits, pos);
-@@ -225,16 +228,24 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 	struct commit *base, *replayed_base;
- 	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
- 
--	base = pickme->parents->item;
--	replayed_base = mapped_commit(replayed_commits, base, onto);
-+	if (pickme->parents) {
-+		base = pickme->parents->item;
-+		base_tree = repo_get_commit_tree(repo, base);
-+	} else {
-+		base = NULL;
-+		base_tree = lookup_tree(repo, repo->hash_algo->empty_tree);
-+	}
- 
-+	replayed_base = mapped_commit(replayed_commits, base, onto);
- 	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
- 	pickme_tree = repo_get_commit_tree(repo, pickme);
--	base_tree = repo_get_commit_tree(repo, base);
- 
- 	merge_opt->branch1 = short_commit_name(repo, replayed_base);
- 	merge_opt->branch2 = short_commit_name(repo, pickme);
--	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
-+	if (pickme->parents)
-+		merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
-+	else
-+		merge_opt->ancestor = xstrdup("empty tree");
- 
- 	merge_incore_nonrecursive(merge_opt,
- 				  base_tree,
-@@ -293,8 +304,6 @@ int replay_revisions(struct rev_info *revs,
- 	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
- 			   &detached_head, &advance, &onto, &update_refs);
- 
--	/* FIXME: Should allow replaying commits with the first as a root commit */
--
- 	if (prepare_revision_walk(revs) < 0) {
- 		ret = error(_("error preparing revisions"));
- 		goto out;
-@@ -309,9 +318,7 @@ int replay_revisions(struct rev_info *revs,
- 		khint_t pos;
- 		int hr;
- 
--		if (!commit->parents)
--			die(_("replaying down from root commit is not supported yet!"));
--		if (commit->parents->next)
-+		if (commit->parents && commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
- 
- 		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index a03f8f9293..9c55b62757 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -81,9 +81,13 @@ test_expect_success 'option --onto or --advance is mandatory' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'no base or negative ref gives no-replaying down to root error' '
--	echo "fatal: replaying down from root commit is not supported yet!" >expect &&
--	test_must_fail git replay --onto=topic1 topic2 2>actual &&
-+test_expect_success 'replay down to root onto another branch' '
-+	git replay --ref-action=print --onto main topic2 >result &&
-+
-+	test_line_count = 1 result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-+	test_write_lines E D C M L B A >expect &&
- 	test_cmp expect actual
- '
- 
+> In the past I've caught errors outside of the test snippet by noticing
+> cruft on stderr. This is especially obvious if you use "prove", which
+> captures stdout and gives a nice display (which the extra stderr then
+> makes uglier).
+> I wonder if we could automate / formalize that.
 
----
-base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
-change-id: 20260317-toon-replay-down-to-root-d412048f1741
-
+That's a thought.
