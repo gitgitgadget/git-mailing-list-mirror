@@ -1,84 +1,82 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F5C3128A2
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA05E3093D3
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774381708; cv=none; b=SNMpouKZhsJc82DOX+QPPl59YCMuy7ihWLl0hkWYIlX7CKDu9AC+GTnDuCxulxsKiExvcdYbah3P4yDSmwq6V4qOmfMNpE7mp74MG92TV5CU1qL0JwIWu1Z9aUfNbbaCl/gf3IGcPlJ0Xo4ycbJ4vUlmq/Mj63Gu7VSO+0i0aJI=
+	t=1774381986; cv=none; b=YNVAK7s/hehLzPuHjmVYXkXHWvk86wu8PHdlkTze4d9202D0WQF587GUtBmpe6dUKWQgUDba34WGr8e7FC+ZmMo7v0z6ePsiCNtml9m0nnBdZcIdzFv5jIgsllGckI877w91NuQNpJEnKVjJdLb7w7c5d5VTG7F1tiVrqzU/lgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774381708; c=relaxed/simple;
-	bh=2P1GYQBcOY+A1VK6L+Rtbu+RJIVtK1bBjagM+2+WDds=;
+	s=arc-20240116; t=1774381986; c=relaxed/simple;
+	bh=XJlTbqAfMmdzUpdLm1NNrE5lNvTOxQbbbekRq92ytLE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lb474vUpdw6JJsPGtpUFdptydkFFoQSIR2bOTukdYqiXvtqth9FO2OKIGuH1AS6Xq2xWxK/eRIIIXLr5fAxyFEt3a2Fz3MLglqMkxZEVwKPE9If66OQ64dKHNvp3x1bEzO+GlyyLdMWVnVyiVhlQOJ5/u8IaRhvyXrW3g8RvrVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LQjRTvS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3LIqVJRs; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=PIdhdlhSCe4Exx/YsQc1sIV1L85VZmBT0fe4gNuvq1tB4lKkLvlDoW7Q4l+1xIE1lUsUOvm1ZUP+eFKvSiR1p0w4InN+jHA4h3j6x0vAFgjwwu5THF6IHIQFJbXPKdfQKevUdIwgqjMciRt5qbQKMv+mLEj8ce+NZ73oBcb16Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BlQQSiTb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gb1BJFhE; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LQjRTvS8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3LIqVJRs"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BlQQSiTb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gb1BJFhE"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 69EFF1400144;
-	Tue, 24 Mar 2026 15:48:26 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E798E1400109;
+	Tue, 24 Mar 2026 15:53:04 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 24 Mar 2026 15:48:26 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 24 Mar 2026 15:53:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774381706; x=1774468106; bh=qieVUMR8vO
-	erwNT+8gM41LSRsmuiFgRwKs1063yR52s=; b=LQjRTvS8zJ3bAUxOgxm097itUO
-	/E24ZFbw1rxjCkqXBaSckTKkHnz3w9KBDw+hhBSxx/9yrELq1iFs7pnAEwYND1n7
-	3vpo/BYkvxZnkPJXxzfM4hVhFXFXjldznuFwyByGIwGVG4m1cddmthcH3ZfjCw3w
-	4VHINaacdmy+25X+RSV3jssSHQv+u8i4Y45Nsp6cse0mmQzV4fAs0mzbXhQVI9nT
-	6xzCAZVAvqo3toVyHIb5zWZvSu3FXg8lrK20gw7zef7rXxI8Aa3vDCrMasaSzF2C
-	IVhJg4V6qt4FCcPLouiPg2IKLLIwVAvQIQOFRE7VlwFqfDWunQdYOHBJJsRA==
+	:subject:to:to; s=fm3; t=1774381984; x=1774468384; bh=8Z3gU7Abx9
+	r2UxdUO/lsU61tYkIWMcDVhoxX+6icoW8=; b=BlQQSiTbH43doIacKQL64WEO29
+	sTC6swqXi4fx/ijIdy5fKoh9kqOJif1mWikXRrK7+5rC9Hqd0bnOBtFQMYooQK1D
+	tH3LHUI7o8/0vVIZgmxzeyEgCfnb4oo497eDJO7vdazdPy2CaCbR+UCkA8wIuP20
+	MGBdVJAuKfZ7UBwtoNxAzKw6xManb03fAZ2aJ8GPRVjRgQLli7liReA/3JSKyxXK
+	OC/i6zpL9wL73HTEMXhDZG56h730GkpSB9lUYEn6ObqrTxtlcZUa0z1R2tkuy7Lp
+	InJ7+75a5zXEJYKUTkXT9/0pTAqpadBHP1LePM95eEoepsWAUa7GhvTuydGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774381706; x=1774468106; bh=qieVUMR8vOerwNT+8gM41LSRsmuiFgRwKs1
-	063yR52s=; b=3LIqVJRs53f5YSx+Wi5hJEgiPzxh+f0n2xQRtT+fKqyon/b5tNt
-	TlkQdC2uRegDJ5fmZBIBReAfByAmLiusNb9ZziKkKFCRGqof+zo1TMWjyMhk1LEH
-	kQoqe3zRMNn66cjb5Ap9exBguVv919HXXZwmsPSDsD4X+CSOewW4UIVVUEDDFqDg
-	fzGwva9mwvhIZYNaBPl5sDK+m48ZIcETaW1nHCYVkoe536qtxdZgAkpp8cIqyBV8
-	4sSbQctpWgR5kI+Qw2ooFIBJDwAU3WDZ9c+ewxIO1/it8dpl34wGqbhP08tj9dor
-	87t5BGUufx819P48IJISLE/DjEeyYjfqj/g==
-X-ME-Sender: <xms:iurCach47-P3fTOMUyZucp7OX6cn5OcQqCvH-P3ikr-H0TvgUG8wXA>
-    <xme:iurCaccUrK0lYGxrwOH6dYXcsPTVGWyMFpc3PIBAMyHeEd79H6Mjr05Nw4y-wAhvs
-    BU6F7_l9URVOIcX0XekTFkfh227SWOUZe_FZ_dhNNy1qV_SfG7pXA>
-X-ME-Received: <xmr:iurCaRer4XqfajMeFHTY68dhSnSr0OYeIA2fR9zngyLHujwJBa3WPmPGszZl0_JmF60RfAiiAnwHo_-gz03B2dkC2JsddTfQTg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvgeeiucetufdoteggodetrf
+	1774381984; x=1774468384; bh=8Z3gU7Abx9r2UxdUO/lsU61tYkIWMcDVhox
+	X+6icoW8=; b=gb1BJFhEKj5wBwnJLi+pGSDwBUbBo4aXxUJKgItTZLIxUBkE9NH
+	nmaIyjEsynIx4ENja3PrXJ2S0CedqnJ+9W3HmxScpnMjs7seDRKWrhze7sThEm5k
+	BEut9KQWpFyyqDvDcRGQK3ao0ehMkgZ0tv6oB89fXDzzPdnC17zgjyJu1VwgdpD0
+	svg/UwVjBseHqiEpbfnJnlhGtGP8JHE8duivhVGWqJEC/wWlyXPvoHoGLzpA5ak0
+	1CBI9FcYLozJdiZ7gtnfd2rxRHOQYWuC0uIOOCi7ezzrTGq2EixJ5QAAtZnm3RE8
+	ru5/WrV3OK1iw5rWRX1Gkh2FL4ZaDMJpi+g==
+X-ME-Sender: <xms:oOvCaZQcQO79GSe-7OB2oDup9NJK0Acwf_i2TdMyOGYGoyr79Sgngw>
+    <xme:oOvCaaMaO22cdM7A7VRhshbMt-5_iKr8lTpRcqOAxM1huCsWgF0H6GpiVP2toOyNK
+    SLYDt4kyO_ezBkEp0HL2mGXu6P9ae3KiwwlC9exF7SaG0H3QXZ29A>
+X-ME-Received: <xmr:oOvCacPR2ritNXoUjqBWRR3vJZOC4mnVAQQfqaqHXOFMMyPt5yugCk2DKRDgdnv4wM30UXOMxcERSQ2j_5HSpTPeOlYKTeYkzQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvgeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:iurCaW8Gy6W9ZTGUN3nw1nKbu3EinTKxoUj4mtpaa70chs1SPH0z8w>
-    <xmx:iurCadny7pkBzvd808H_b7zcXTTjOuRZ3DwTgifiJ928WrDvGZaKXw>
-    <xmx:iurCaY_diVHpM24hS9SVQWo4jXgzBSxd4jJF0Gxj05fD-5OhjPO89g>
-    <xmx:iurCabnZaETCBLCXGRgp7HxvSaysmKBjgGIB_FUD0wjZZu_QeGDJqA>
-    <xmx:iurCaXNmk1JmuMLMKtv-pwdNwgaGYW1uC4ggSkBNwoXlSfBAIRhcBeu9>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:oOvCaasFL7Ae1s-rWPUPu9OYIOJhNyS2kPvqwhNWfhHO0zZJjybGlQ>
+    <xmx:oOvCaWWHIjHJZAH0xhgAhGT01a77Jsn9ndabIGAiCYuh3dxj7e8VFA>
+    <xmx:oOvCaSvlBWNq5QeGWUTYyYM9ANkMyJS3r0doxrBbhnt9Mw-u0uRSEg>
+    <xmx:oOvCaSU_3nAaME46RFpbpLCSwTvnFWnzyqkdPbZjVarw5rHBp8g2mw>
+    <xmx:oOvCaY2E3ZHidy9hFGQeFrphcWkvc1G6WcWvJav7TTDAMwl2e8OwKNiS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 15:48:25 -0400 (EDT)
+ 24 Mar 2026 15:53:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] test-lib: catch misspelt 'test_expect_successo'
-In-Reply-To: <20260324193514.GA1870130@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 24 Mar 2026 15:35:14 -0400")
-References: <20260324-b4-pks-t4014-fix-test-execution-v1-1-ac83c1bcc828@pks.im>
-	<acKqvI0EhaORjoD7@exploit> <xmqq5x6l2q5y.fsf@gitster.g>
-	<acKx6yBi-BWUVJcv@exploit> <xmqqo6kd18sr.fsf@gitster.g>
-	<xmqqcy0t178a.fsf_-_@gitster.g> <xmqqmrzxyu2h.fsf_-_@gitster.g>
-	<20260324193514.GA1870130@coredump.intra.peff.net>
-Date: Tue, 24 Mar 2026 12:48:24 -0700
-Message-ID: <xmqqy0jhxb3r.fsf@gitster.g>
+Subject: Re: [PATCH v2] replay: support replaying down from root commit
+In-Reply-To: <20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
+	(Toon Claes's message of "Tue, 24 Mar 2026 20:35:41 +0100")
+References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
+	<20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
+Date: Tue, 24 Mar 2026 12:53:03 -0700
+Message-ID: <xmqqtsu5xaw0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,28 +86,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> On Tue, Mar 24, 2026 at 11:13:26AM -0700, Junio C Hamano wrote:
+> git-replay(1) doesn't allow replaying commits all the way down to the
+> root commit. Fix that.
 >
->> In order to catch mistakes like misspelling "test_expect_success",
->> we would like to eventually be able to run our test suite with the
->> "-e" option on.
->
-> Using "-e" makes me very nervous, given all of its quirks. Granted, most
-> of them are related to it _not_ kicking in when you'd want it to, but I
-> worry it will create false positive/negative headaches.
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+> These changes might conflict Siddharth's series[1] to add '--revert' to
+> git-replay(1), although resolving that should be trivial.
 
-After looking at a few scripts, I am not suffering from such
-headaches yet; it does not look too bad.  I'll stop this effort for
-now, but with a handful of patches I already sent, more than 80-90%
-of the entire test scripts that I run are now "set -e" clean, I
-think.  Note that I do not run svn, cvs, or p4 tests ;-)
+True.  This round looks great to me.  Will queue.
 
-> In the past I've caught errors outside of the test snippet by noticing
-> cruft on stderr. This is especially obvious if you use "prove", which
-> captures stdout and gives a nice display (which the extra stderr then
-> makes uglier).
-> I wonder if we could automate / formalize that.
+Shall we mark the topic for 'next' now?
 
-That's a thought.
+Thanks.
