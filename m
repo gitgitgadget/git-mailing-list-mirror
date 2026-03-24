@@ -1,142 +1,95 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5491B2F0C48
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:03:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C1237CD55
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774379008; cv=none; b=IZSMv0Xm/24PuunagMVYnl81QZz2vj5Qq82RsOdDUOExPd2uJeUKySTssHlM7UBTW1jncYpfcI9kSILqdshjeJ5+89XvqPvNik41XusmaCtostLZHBXvdLAsCExP6pPb+TARJQptd5lJXfRn7YUyjbon9votJL4wfv4YC0kR9Yg=
+	t=1774379247; cv=none; b=UPwJgsa1g117gaZ/QOZX1fi2jRD8IwRPFpZmQXmn1xncjvnspOzSfvb+d8iukS3FzGJ4dKcNgdmL8vxlrISm5XjqWJ5YtNiiGX4yUJZzryvliZZyT/TRpHG272J76arbMm+blmKgawqJv8lb0oL1DS3v4yk9aTyXAnYedIdLvM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774379008; c=relaxed/simple;
-	bh=60PJMgjCvj1RS+9c1kwta2+aeANG4QJ0CxHmPziGGlE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O2jJHwbnWZkFZ9xmkKBzA7fP3dm1KLkP06nh6VEcD8Wbg1+FQUywVztPKCdjdOeLqA4b2oYdQUVftO8UkZgDeY479oxgOEwoXHzA3BEnZ79qhO9cksH4v2Hujm4IrWHmg7uDRRaTVMh+eSKFDI88DJ/wSNgd7gouE7AjVkRUE1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LoP/HmkA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GcEFy8HG; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774379247; c=relaxed/simple;
+	bh=f6zt4siLa7GsmSIXN5Q8U6/1+UKL3U1SmVV4FztjEPA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lWkNiHkqYLvoHIogkUwwA+GNotetk9jcwrSwIuNOmW7TDHi0nzG3XS/mwQOjCeMyyhyDPtUbU1V73Xz2Z+Is48NWCQN9TH2+j6kNFDS1TCz017TQkJw/R2wq3LL4IH8tQyewu69romBBZP3lQeCo8aJWtahxgg+ybLOUaTuD0XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k0ukW7xk; arc=none smtp.client-ip=209.85.128.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LoP/HmkA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GcEFy8HG"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80CAAEC01CA;
-	Tue, 24 Mar 2026 15:03:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 24 Mar 2026 15:03:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1774379006;
-	 x=1774465406; bh=BEG6EtF60463sE+QnuoJZitOPTTvQNh9TTxTN4vu+50=; b=
-	LoP/HmkAgeILT7wMu0xYBz9yGsTrU+7BAVm+8me9UhxMDplfCYRcwup+WBQqS1um
-	ZUh/DMy+hYXNvRMCEgLh3DdpzUdoT1uSl7/osU4GeQ8NOhQEOURp96dn+m+CQyg5
-	Cq5hZmGj+lR3c4Gp/Vhzt76SRLChd71BTE5Q1F/TR39epKscV903InlDqhBZ9Q6D
-	SFiJuV2XXjk2UCwbU9Bg+zCbBdXCbi9MKRG4FRmizez3qn91TomWXmxZCNaxOXuw
-	cQVaQZlHhER3A4SPlcNrBu4z+zusymKwxobgSky1B8YOsCyqIdxzNI6BvIlMQAdb
-	zxOnJQ1OTQyT3liNf7/Ppw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774379006; x=
-	1774465406; bh=BEG6EtF60463sE+QnuoJZitOPTTvQNh9TTxTN4vu+50=; b=G
-	cEFy8HG21uSYQrOLLiwxTL0kxMsGOUuCquE7fot2l2xhQqv5WNb21oCwlSTWPNBh
-	sbyv896ZQn9g9hcVE+tOYSbGkg09NvqWgxFTvtHdCeRk0yijmNbesQP+9RhEoMRl
-	t9Gxb3RD1bW5QQ90hriI8fYZJh4IvQAL4NdBGDjqiJxF8q4qiIpMenQ9UTIvlvry
-	TFJCwEId+8pveUdkZP5eFwi12bxD3Q9djn8BxLX2qCmppObs8HTZFkbzeU+y0oj7
-	q+dMEqP+tPLX681nJJRnWvPUSg3XAqoKpxRH+0KwOVP8v8hsECQWpqQ48azLj4eP
-	JkQE9bh9mo8odjJf58X2A==
-X-ME-Sender: <xms:_t_CaS_uZaAIBpz9gllSu7JF9TN1Ld59cb9RsqjbKdUWRaqcmosDIQ>
-    <xme:_t_CaaKbiuYtC3_cqtrmhVAMOrFGNX8GKg7ADMhm9b7GYr5PMrT2BiwaKTzobyI5y
-    OhpNK95cdLRxzs_Y9uU56lOoLUkWFHHUqX3PLzSBU8r4Dm59K3ubDE>
-X-ME-Received: <xmr:_t_CaVbYrdr7zqKzYGS9dN1bu-ucVANSFsCcEhSZVl64m7QDIVM2oi_8TMIz1FYZB3Lc9ittflTntKgYbOxaJqb4NPlIU1Fhaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_t_CaULkdDhu9qI8ZMIlMUQ0eTFK2dwbHokafDIY3Bcf600YsaYV8w>
-    <xmx:_t_CabD3ESIXpZ80kuhR12Ku9WZ65g8UBazGN71OW1yQe6Mg13N-2g>
-    <xmx:_t_CaRoXAKd5AcEDsAqSsTf5xrYHI5sep0Daq_MJ3AFxysTBhe0PYg>
-    <xmx:_t_Caeg7lnVIpMSamwpYfnz4u_-ay-dtn8LkrXhXTkSAXVYrUM1ClQ>
-    <xmx:_t_CaU0Pk5bHgyyjWChghaL3dSE9b0f4IQdLf0OLQ8BQoz0ngUVFPn8R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 15:03:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t7450: make test "set -e" clean
-In-Reply-To: <CAPig+cQPD3vAxbRAJsqyd5=x2xCkTHj0Z6Gt2t+GiGjXDYei0Q@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 24 Mar 2026 14:38:35 -0400")
-References: <20260324-b4-pks-t4014-fix-test-execution-v1-1-ac83c1bcc828@pks.im>
-	<acKqvI0EhaORjoD7@exploit> <xmqq5x6l2q5y.fsf@gitster.g>
-	<acKx6yBi-BWUVJcv@exploit> <xmqqo6kd18sr.fsf@gitster.g>
-	<xmqqcy0t178a.fsf_-_@gitster.g> <xmqqbjgdyt6l.fsf_-_@gitster.g>
-	<CAPig+cQPD3vAxbRAJsqyd5=x2xCkTHj0Z6Gt2t+GiGjXDYei0Q@mail.gmail.com>
-Date: Tue, 24 Mar 2026 12:03:24 -0700
-Message-ID: <xmqq7br1yrr7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k0ukW7xk"
+Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-48541edecf9so14563805e9.1
+        for <git@vger.kernel.org>; Tue, 24 Mar 2026 12:07:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774379244; x=1774984044; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XtV4eBks6EQjrmnaizPUJw3ZJ37bPVSuSwXpa75maZs=;
+        b=k0ukW7xknF7pWeTnlPXFvO6XdX/8Jv8eT2DqvQty52GLHN6Xrv+UWo8N/eV48Fzla9
+         y8H+wwDqDsHkZFUZjQm7S51+IcU5eA2LAq6AAMj4+XeVG2ZlqPrrCu2+QaEGKDrHYmvn
+         Q29KPgFNZX2n+90HPyiz6VSFkpwBT92zUqoFJLIE9LN5QfAIIP2JzNvUG/AIEnvPdPH/
+         kMBvdw3oeQIoCVWgxxwmviPkKts39kj/FsyG5/+e20izbATKSUvE0ur14GdxbIWN630d
+         CYZz1DWX1R3QuTrXWTYmE5+7pb8pQ6mTMXpSg2/ukjb2sqFqeHUq5OxUhDWrIFdAzK0H
+         Bbiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774379244; x=1774984044;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XtV4eBks6EQjrmnaizPUJw3ZJ37bPVSuSwXpa75maZs=;
+        b=FUHMygIuChSXC1OTRrFrYvcwECH6cFykcOpboDW7hsuU2TgVUQZaDp5ERmvPeqR56V
+         AcvAjwHS88ugWerQoNPLi1iMaxlai8WhUk1pku8Yz9pS6zZxrEESb0+WKK0R2F7HZO6C
+         jzfsyy3YINoE4jpVtzW+N++O41pTHEu37k9hn9SkwC1XEvjh5irfZuCCyUuWO97vPol+
+         pr+doqg0afBnBZFFN6zUB18KuxXsVlHeGofSbQyovf/22mc/aNVyEA06uKyqXtv/Zjbm
+         zTXp5sjZ7oH9g6bBVI4kNXMob4citAGdbSEPl544bFvT88UuagbYAi6gpFWtO5YuVWRh
+         s7GQ==
+X-Gm-Message-State: AOJu0YyOJcTz4sFxGjn3vQ7KXjpAxYFSEcDJ4qC/LRgq1QzMSLAbUghP
+	aXewjR8v3OJvPQHocA0v4Y1vGc9NWLYGfgcGKsVpkBgOvaAWOHJZ7TcOoU15R1LMR3c=
+X-Gm-Gg: ATEYQzwhDIe66oRu4RYLVzRHW1Ts/8VmJ+JEpsRCsUo+J7/v9Qr2f+9hW3De+Zpt/Px
+	wIDs7a9qBezijEL2vXeLeXIjPyqpd5/FXfPVQjCn7Sa397pEfW6tG1QPjOgJ17xl1XltNr9pzvo
+	1Y9gy4yPzMeRINo7UUppS92+sg11Em1vRg4YAiso4/aHqDn9hrryNyGDkQhN6tIZ3xYJG1+pd/L
+	ZiZ2JEMlpKNYbgyhAVdCJMuYUKu3yrQYfoQ+jU7pgHDUs8JIsJRi74znvJ2caQiBqD6pyI+MGW3
+	E2fBQ9sZBC/WsxhOVp/BtpOQrn3ExAYa/9v4qoZ8IUmHkrTHmsdUbdjIfft6wOAzLij15b79amQ
+	OM0h7b7pll2yX2Gos8M5MOvLmf2j+sWZXK86rbScmkmgYbhr+1c+PzU4LTijumPrCQZ2nQIDBwO
+	tmUBkRjxQdweylX5tqEMMSaqE8gMBKD8FzXrQhgwtu+lZx4Zec3WrXm1h79OPHhbGs8rAIAIFan
+	KUZDAOB1lpZkabFBL7eWDqBdQ7I
+X-Received: by 2002:a05:600c:8283:b0:485:3a22:69b9 with SMTP id 5b1f17b1804b1-48716099758mr12945235e9.29.1774379243859;
+        Tue, 24 Mar 2026 12:07:23 -0700 (PDT)
+Received: from macbook.fritz.box ([2001:9e8:16e2:d600:4d27:7cf0:2953:93d0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48711702191sm66497335e9.5.2026.03.24.12.07.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Mar 2026 12:07:23 -0700 (PDT)
+From: Mahi Kassa <mahlet.takassa@gmail.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com,
+	jltobler@gmail.com
+Subject: [GSoC] Proposal direction for improving the new git repo command
+Date: Tue, 24 Mar 2026 20:06:22 +0100
+Message-Id: <20260324190622.309591-1-mahlet.takassa@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hello,
 
-> On Tue, Mar 24, 2026 at 2:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->> In order to catch mistakes like misspelling "test_expect_success",
->> we would like to eventually be able to run our test suite with the
->> "-e" option on.
->>
->> Often we write "A && test_expect_success ..." and want it to mean
->> "If and only if A holds true, this needs to be tested", but under
->> "set -e", this will cause failure when A does not hold true.  We
->> need to write "!A || test_expect_success ..." if we want to run the
->> test conditionally.
->>
->> Or write it properly with if/then/fi, perhaps like:
->>
->>         if ! A
->>         then
->>                 test_expect_success ...
->>         fi
->>
->> Make sure we do not fail unnecessarily under "set -e".
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->> diff --git i/t/t7450-bad-git-dotfiles.sh w/t/t7450-bad-git-dotfiles.sh
->> @@ -220,7 +220,7 @@ check_dotx_symlink () {
->> -       test -n "$refuse_index" &&
->> +       test -z "$refuse_index" ||
->>         test_expect_success "refuse to load symlinked $name into index ($type)" '
->>                 test_must_fail \
->>                         git -C $dir \
->
-> I suppose this is the absolute minimum change to make this work, but
-> typically we would handle this sort of case by defining a PREREQ,
-> wouldn't we? Using a PREREQ would also set a better example for those
-> new to the codebase.
+I am preparing a GSoC 2026 application for Git and would like to ask for feedback on the project direction I am currently exploring.
 
-In some situations, maybe, but I do not think this one is a good fit
-for a prerequisite, whose typical pattern is "let's see what we have
-in the executing platform environment just once, and act accordingly".
+The idea I am focusing on is "Improve the new git repo command". My current plan is to work on incremental improvements to "git repo info" and "git repo structure", with an emphasis on changes that are useful, reviewable and consistent with existing Git command behavior.
 
-This is a "the outside helper function is repeatedly called, and the
-caller may or may not call it with an option, depending on which
-this extra test may or may not make sense to run, so run this one
-conditionally".
+In particular, I am currently considering:
+  - adding useful repository information to "git repo info" that users currently need other commands to look up
+  - improving "git repo structure" with additional or better-organized repository statistics
+  - keeping the work split into small patches, with tests and documentation updates as needed
 
+I have been reading through "builtin/repo.c" and the related tests while working on my microproject, and I recently sent a small patch related to "git repo" help behavior as part of my application preparation.
 
+I would appreciate feedback on whether this seems like a reasonable direction, and especially on:
+  - which "git repo info" improvements would be most valuable
+  - how far "git repo structure" should go before becoming too broad
+  - what scope would be realistic for a GSoC project here
 
+Thanks,
+Mahi Kassa
+mahlet.takassa@gmail.com
