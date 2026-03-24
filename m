@@ -1,110 +1,150 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EE6314B9A
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 16:19:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16463DBD5E
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 16:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774369171; cv=none; b=W87kAC/rX0rfVRMp4+dOhEcbQ7Dzf3FHopeYcfLfsQvnNhbETrfX/ptuLnXZuDxJDKESSeZyKS13YUSopWkeN496jRIUUNAMobZ72Q5iicMvd7W9HX7F8AuAd0kMWE9vx8EBUcdjD+8Brx9NM8NJluLXO8oJKxpr0QZYl4rNA5s=
+	t=1774370360; cv=none; b=bzAXESfvo0aIWrDDgdFuQs32XG9jGeZNVz+BHg6OlSYB0ru1y7K/Ar9NyfR4XSFkZRYIMeTxXhoXXaj0/Sfl/dgGkA5ce6gdpKz7+X27oTfjLdlDTT7I3WNBDk8dqyq4RpGV8b7kXSyHaJppFGh3yUd3slsyWtKMr7hgelnkH1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774369171; c=relaxed/simple;
-	bh=Y7pL2tiBWeQB6fIrrvYNa2t3pg+cF0hjozwlhrwNYy8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=m+YVSd+CERH3/1KTZJ0wOaiI7LmVCfG46yfIiD4AMKolPY/1skZm3cQbSjL+jhfgQqdXSnhGu0auDJhrl6iQNyg95s1PVVWCUhrGIjacMQaihHSoHgQUAKqSqIcmVdMQLGsHm/L+WWu8gXWHj3lP9+VJGrXFVg6mCpxr1k3bFuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=OK1Duds/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eq0pS+mz; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1774370360; c=relaxed/simple;
+	bh=3+f/doCrlEDgeWGXwIsNvNzTWdkVs6dKw6VhUQn19vE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=exa/pEz16aiPT8coms9JwpjBowOtd4Gv4cERzVmhXSjtNXbwqE/OtywZfBC7UROkxmCvNZk0CFkU0QhQRVsa2AeLDWGhpGeuXfFBLdfKmTJAy4JSkLVt6dbzaq4axOVecyj6DrQ7FOiiups4bzbzjhFO5tDo0NQeHb4g77OP1Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F7aIQ+iv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gP0JZkDC; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="OK1Duds/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eq0pS+mz"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 790DE7A017D;
-	Tue, 24 Mar 2026 12:19:28 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Mar 2026 12:19:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774369168;
-	 x=1774455568; bh=ClIisDTN6uzSHXywOdMxlCy7bwXltZ8RkkrseGVBxkg=; b=
-	OK1Duds/YZ5+jfW595zjkrSIIs8Z4F6kSE4xDwYQ+wdl/7ciiGOKwQyutH5OkoJD
-	Y0x/UhEm90dq1OmQQ2b0ZIJqyEIeDpmQyEqpWIAQ9j5Y4kmzOfedjlRPLdbun0iL
-	DZwEIbGD0f+Ri1HsFrxAQ2fW5y3Lzab1KbKFD+VeVUVFzFGkf0GgtoYE6hJI7+Xx
-	aIhDcLExZYDsrPP8hAPV9FaOXWu5E2LggU9af907Zl/evUBAU9Wm5kt+El2eguwn
-	jC1+rBAQCwqeqX7OrP2oDvJYLRXTiFsD9VIdzZu349drlJiclRz8nxc0Zo85mfqX
-	++w0TtpVn4OxSMwV3fCNWA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F7aIQ+iv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gP0JZkDC"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 25F16EC0208;
+	Tue, 24 Mar 2026 12:39:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 24 Mar 2026 12:39:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774370358; x=1774456758; bh=wNGYP9RFD8
+	jICvUQPkIPLNPPInXzIjgaV+N+aMzk3cQ=; b=F7aIQ+ivcGZCM9Nmf9NPivEY0Z
+	wW/izaPj4NPCUGiDeVbNTPLyNg5cJW5a/RXNWGXgZX/td0lPjPW1vHgCWJvqJ1Kx
+	j+KxTf7xYS9J/ILGgFZgiEb8tt7O1nl9RtSo1Zqn+DmtGSIV2OdNZO9LRtEDAHR3
+	S1l1bPvWLSYWsrUwESh/3NJdpW1CEJEH8ev1AZt23TH4MjMLO6bmG3ahT282zUq0
+	k6Ts3OVa0+ZZ/1Uxq0JOYW/W6HS60DmkgB8Q++8Wz7uRFTrg3UUZE2jiXFBiXEWP
+	XYn9ZSB1iawwv2lVfcCUl0oM0cGEH+Ol4/I/zpilerJMH/RJoPCuzgDLFv3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774369168; x=
-	1774455568; bh=ClIisDTN6uzSHXywOdMxlCy7bwXltZ8RkkrseGVBxkg=; b=E
-	q0pS+mzljsdUMyPRAlhP/chKy6CcWsTIxOQysdspBfkoSkUdOlcTeFTW3Bk/ftl+
-	BWGk/4Bt8IXbycFHYoHzCMT2vPInr/tywz7oSfM3qkz4Gn7nBJB046UovOPDIH1y
-	2al05vIVaPYMQ4bRSuoj2OFZoYXEFsmGbXVA0csUT3omKd/aW/EsgVu3JzOVmUsC
-	XZzB3k4eqRDAhFFYSXTXHyb/H98HY3Wahc/y/YaTd+JuMvngIjuJtvUFJkDgEIG5
-	owCsXVYiLt3R1qx24fIqqcuwMZ9UCVCpzLJX8EBblVCixYBaL/fFUUDtrFfE0wty
-	mDRqZc7nKbqRhgEl22TpA==
-X-ME-Sender: <xms:kLnCafhWf14MhdaL96xIHQ2tl-KQjr9tcukxwQge840Kh0ttzStCxao>
-    <xme:kLnCaW2ribxJgsQJ69wpAM-dxmXznYXk47iVAwK1ParRGgCo_9pZGoWw8Syr-MnCg
-    wCmU9wJP_upDHg4kPjAilLgFN1AbJNRV3vA8l-AtQ2C9Lr1ESEv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvtdegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774370358; x=1774456758; bh=wNGYP9RFD8jICvUQPkIPLNPPInXzIjgaV+N
+	+aMzk3cQ=; b=gP0JZkDCCPHxxLeWW505sNCYWE+OMufJMjSPc3WxqmD+7pcQFLK
+	ESW6eIJiXGMSv2wxC611Fu9xwTLoRaO4ysyHSnimBYn8uXVG3s/2wPpsAqbg6+Kt
+	C0pINK70A34dI+zECxJTPameXhTIpvv8Jg7jL1/S3R0IYoDv5TWk/aj8za9Uls4R
+	4HPkiZfIrmmnhLhVEK8Jg7WiZ3hnG3uXluWqfQGfStfLNR2y2Qod6bh62K7CBXp/
+	GYAGcVRNW6EpPotFiOHcun4husLBgaX/rhBAohzzeTfD4FemTZkl10FeUiYF8cAo
+	my+Qz8jLo7y5d841ANxJe+BdspFL2x1u4qg==
+X-ME-Sender: <xms:Nb7CaY2Eb8fr7Pl6a4j6yeCwU0t2sU-4EtA7PPYhm-oC6pELZmbnhA>
+    <xme:Nb7CaaHevPZJc2nlUOcgM87eRDlb6JVe0ctXgBWcTYfISyOY4_75zDhKQTMH7JDdO
+    4OMoRmY_TKLBw7oLabTZw4tVOe5HlYh5K_qOH6iy4t4LgDLx3A5>
+X-ME-Received: <xmr:Nb7CaV5-xQY8FeWOn9NLN9Td6Z7awwoVwbBDPH8O3E-RpPHYnu0OckzAhLoG9aCVDSrQvePyTVGGrUQ_Wyv4b_vHzrzk6sB2zw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvtdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
-    dtredttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpeegtdejieetgefhuedtuedttdeigfdvgeetkedtuedtudfgkeel
-    uefgleetffejffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmh
-    hrohhikhesuggvlhgrhigvugdrshhprggtvgdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:kLnCaY8KqvEK4wgyqV9jym2LTq63N7Q4hb8sns2J3T-qW5Y7Mc6ScA>
-    <xmx:kLnCaYd8gVG4ID_ONNKLWTPdmpiW9GK88cQrvMF8CWM-8ZeeeAuQCw>
-    <xmx:kLnCaRHL2FLSt_rvLB8rKb5DL6r-NpbEJA4OD0LVzpAq2pZ0jszq7w>
-    <xmx:kLnCaWc9_QgcVNYJGxhse-kRfu5oL0YxrJYpH90gnwNfSepcWNSmMg>
-    <xmx:kLnCaWI161a1vcld_ztEeE2LeKq8HbTwVF9-PYP-pqkruLX6RRehv2rF>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 094A51EA006B; Tue, 24 Mar 2026 12:19:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
+    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Nb7CaQtQZy1plxkxQb8Fe1kxwihn8D1f3bF9JZjJXcXLDhy0Exn3mg>
+    <xmx:Nb7CaW4sTCj4_hiPVOi91zwg77pOT4cJ8W2D8kLiXKzCltzbBIZp_w>
+    <xmx:Nb7CabUMWEDgYLUuslCAVljQLXFu97B9wdd4lkKGrerUyqHdzy47kg>
+    <xmx:Nb7CaY8ar7VMKEwAOHrr6vCyA7OV05j5i5S6FKZpn8SJqRPhCO3H8w>
+    <xmx:Nr7CaW_UPOfDlhgkuNNDskLqxJbS3Fk_9zpK0KLpiokN80QEspIXLFvL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Mar 2026 12:39:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH] t4014: fix call to `test_expect_success ()`
+In-Reply-To: <acKx6yBi-BWUVJcv@exploit> (Mirko Faina's message of "Tue, 24 Mar
+	2026 16:48:35 +0100")
+References: <20260324-b4-pks-t4014-fix-test-execution-v1-1-ac83c1bcc828@pks.im>
+	<acKqvI0EhaORjoD7@exploit> <xmqq5x6l2q5y.fsf@gitster.g>
+	<acKx6yBi-BWUVJcv@exploit>
+Date: Tue, 24 Mar 2026 09:39:16 -0700
+Message-ID: <xmqqo6kd18sr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A7JpA1he84vN
-Date: Tue, 24 Mar 2026 17:19:07 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Mirko Faina" <mroik@delayed.space>
-Cc: git@vger.kernel.org
-Message-Id: <95c249dc-6946-425a-bc44-2a943b4bf551@app.fastmail.com>
-In-Reply-To: <xmqqqzpa489h.fsf@gitster.g>
-References: <cover.1773959395.git.mroik@delayed.space>
- <cover.1774284699.git.mroik@delayed.space> <xmqqqzpa489h.fsf@gitster.g>
-Subject: Re: [PATCH v3 0/8] improve "git format-patch --commit-list-format"
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 23, 2026, at 21:10, Junio C Hamano wrote:
->>[snip]
->>  7 files changed, 84 insertions(+), 53 deletions(-)
->
-> All incremental changes look reasonable to me, and it seems we have
-> already reached the point of diminishing returns?
->
-> It is possible that people are only commenting on low-hanging
-> obvious typoes and mistakes without seeing a bigger picture,
+Mirko Faina <mroik@delayed.space> writes:
 
-All my comments here are from spotting things accidentally and are not
-in any way holistic assessments. ;)
-
-> but I think I've read through an earlier iteration of the series,
-> and found it more-or-less solid, and I do not think there was a
-> drastic change of course since then, so I am happy to mark the topic
-> for 'next' now.
+> On Tue, Mar 24, 2026 at 08:38:49AM -0700, Junio C Hamano wrote:
+>> Could either of you remind us why "make test" did not catch this?
 >
-> Unless other people find bigger issues remaining in the series, that
-> is, of course ;-)
+> My bad. At the time when I ran it I simply saw no failing tests and
+> assumed everything worked fine. Next time I'll check that the actual
+> name of the test is present in the output.
+
+No, I wasn't complaining a human tester not running tests.
+
+I was wondering if we can make the test framework better so that a
+misspelt test_expect_success would cause a louder failure than what
+we have now, which is something like:
+
+	...
+        ok 5 - check hash-object
+
+        t0002-gitfile.sh: line 46: test_expect_successo: command not found
+        expecting success of 0002.6 'check update-index':
+                test_path_is_missing "$REAL/index" &&
+                rm -f "$REAL/objects/$(objpath $SHA)" &&
+                git update-index --add bar &&
+                test_path_is_file "$REAL/index" &&
+                test_path_is_file "$REAL/objects/$(objpath $SHA)"
+
+        ok 6 - check update-index
+        ...
+        expecting success of 0002.13 'enter_repo strict mode':
+                head=$(git -C enter_repo rev-parse HEAD) &&
+                ...
+                test_cmp expected actual
+
+        ok 13 - enter_repo strict mode
+
+        # passed all 13 test(s)
+        1..13
+
+when I corrupt the 6th test of a random script.
+
+        diff --git i/t/t0002-gitfile.sh w/t/t0002-gitfile.sh
+        index dfbcdddbcc..d65f664914 100755
+        --- i/t/t0002-gitfile.sh
+        +++ w/t/t0002-gitfile.sh
+        @@ -43,7 +43,7 @@ test_expect_success 'check hash-object' '
+                test_path_is_file "$REAL/objects/$(objpath $SHA)"
+         '
+
+        -test_expect_success 'check cat-file' '
+        +test_expect_successo 'check cat-file' '
+                git cat-file blob $SHA >actual &&
+                test_cmp bar actual
+         '
+
+There is no indication of something bad happened, other than
+"command not found" and 13 tests passed instead of 14 the script
+has, which nobody knows.
+
+So, no, it hardly is your fault.
+
+I wonder if the test framework is safe to run with "set -e".
