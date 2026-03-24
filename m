@@ -1,85 +1,55 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB6C349B15
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 22:22:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774390951; cv=none; b=oQnRA0qIxQ+ottZNMzU46mZlbE/Z4+4mGozJpPkbm8uVJfUBzzjg4j+CNYg87LJPtcE49VnWrMPnCCD89Fe2eViXpMVEmwC4WyhaAea5tcyp6ssOyw3rE1bSKp8J1CrToaGIS2jqJfTKib0C4kU8JoaiAo4mOHKevfHAg3RjnsQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774390951; c=relaxed/simple;
-	bh=skM1aZMe/PRhGcmc8Qg5orGDmpWY0GdeafRkHOG0oLg=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B0E23EAB4
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 22:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774391622; cv=pass; b=Olse0CwENXbBHAyiJIXL0+ftsb2b2c/tfnDK040ebDrrmojU83Iojw/L6yusw5MjUX7QqMlIXzS1Y2bsa8Q3LTKbmRFjChC7cGLQHL3L4w5ihkl3YwZ3NZ0SDOcLyiID7bZcyOd5SzVlZk2vpw+4M0eN9C/vpLoD0QQMERY87YI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774391622; c=relaxed/simple;
+	bh=Oq5tPTD8ywthpcZBy/pf1PAWbyRpyFaMWr7jC3mSyGg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EacddJxEef3tyTL1KkPccV2Ff4KQsohOi9o7cIk9mdJbtioCfwZ30YzDx889IYQpb+is4PR8HfZHUz8xdOLI1qPz3lHIsq9v/qd5VuNbhNQyMuDI3TsARWScwTZgNwb9WOvl0NqrfA1nXr6FFnwsihk2NkSxOe+YZQWvX2rEmlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=joHk3XPR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C0bjPVcs; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=UIDJtk8d0drGILXbUVtOEQL1yai9hvw/TZ1YSsRsAlK2G4q5tyoCEv3YkL+lVlQg0ZC6jZMfilCYuVMq+mqC1hx1iBi/8a8aY3I6PXxWe0nW3dBtMEE/OA/KOKWrwMgx2f8EtrrXPVDIsaNMixjrEonCY3tFooQciqA6n+qi1g4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=BwWlfGJb; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="joHk3XPR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C0bjPVcs"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9F21814000B2;
-	Tue, 24 Mar 2026 18:22:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 24 Mar 2026 18:22:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774390948; x=1774477348; bh=v/Fk2d5g/v
-	PHbAQDa7ILxapt3wEFi9qoMqcl2Opn6Gw=; b=joHk3XPRd3EOP8TSO+xaD7vudp
-	eX2e/1hLwjvoDfNg0KL/WedJThvm7bbIAE5zb4eKPBKNUPEtS4wxXJZOHOLDWkBx
-	PygiT5Xp7Ojl7Tw/Y2XlyxAgax66kf3uQC+FCMRXrb1JZmvQQ/TicFLl0/l9MqY6
-	t2T+I41cXAkUAu1/KXy03BGDzTwiy9vvcrrq1rZNGLN3dpAHyBDjBa2czht56K5H
-	tY1VYnooLLAp1lQdhaaGRHNdIpYoRer/jCfKt9uPR+orf1hT6WALkhPgsZgWJ+83
-	+StZyk2xw7XQV0e8CO7HycrwpQv9z3L8v4C2axI2+33FZv5gjFkD7PIs7jNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774390948; x=1774477348; bh=v/Fk2d5g/vPHbAQDa7ILxapt3wEFi9qoMqc
-	l2Opn6Gw=; b=C0bjPVcswEZPwbsqxaSq++vuzlsiPQe6sbPq9jcquD/TzzS8tRy
-	RcRrIbs/XevqHrYehB3jNjG0VgXZaVRSUhFKyL5zxZbG8WiZJQttTZraMEdgxQz0
-	iaOBi/d/wP7x/LXmCTj5B6P7gud43iZvFeEACxlF4QXPG4k8LOJNtziWM/E2Y+lS
-	MDV+IvwQeot0am6OUqofpk+EHpr5Vrnu5hLm0U5DaCTNgN4n1vI+1WdimSfTvNMm
-	n5apsPjYgdV6IUORkD1FMgy/CGam9bgTcMSjelR9diyrx6RicxuwHd98AzULnl5z
-	Jmr175nEpO9HJe5XSk6KQCNavA6lDRFa9tg==
-X-ME-Sender: <xms:pA7DaaGws6ff1YLhBMLQxK4GKyQB2wQR8RgDAFKAs-CAr6eizjdopA>
-    <xme:pA7DaSWbza18DJ2WIEZHUysOQwsdiwT-jGJga8uyb9UHLSfYP93DETzPttgQInjDi
-    O2_42FCEGeI6oVHjHbAIYphNCFLp9OEUxF3QXfAHtVEtmBLdP3JQA>
-X-ME-Received: <xmr:pA7DaZJa9ENEtnUPsZFElVLEBIxOHsq24rMZsSYqm6zuFLQI867tQy86w1D9Gd6xHUBxI6DCG4tXU64-Z_rLIq8gjLHcRlxWgg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvjeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhr
-    ihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:pA7DaS_KIWx6Baj-XWKTQcric8Wnx53IVMADi78hhjrbSR-oEylOlQ>
-    <xmx:pA7DacKFnji8rA6xFPBLWyY7sytZ6HUOPLHxNSkj7rVuucsFVAahUw>
-    <xmx:pA7DaXmNGWFu_mj0AImAn3qaFUbu8zAlB4Gphff6oBrxBJL-GuGOFw>
-    <xmx:pA7DaQMGcy7e9kDgY3L90y_XhRCoz_oPCkDkUHAuG7os03xz2zOYXA>
-    <xmx:pA7DabnoMon-Lt30vfrPbpoWHQC8jY3t5tK3AFLy3CXbnhwuZMKwmGf1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 18:22:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com
-Subject: Re: [PATCH 1/4] fast-import: add 'abort-if-invalid' mode to
- '--signed-commits=<mode>'
-In-Reply-To: <20260324215513.764739-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 24 Mar 2026 16:55:10 -0500")
-References: <20260324215513.764739-1-jltobler@gmail.com>
-	<20260324215513.764739-2-jltobler@gmail.com>
-Date: Tue, 24 Mar 2026 15:22:26 -0700
-Message-ID: <xmqqpl4syijh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="BwWlfGJb"
+ARC-Seal: i=1; a=rsa-sha256; t=1774391606; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=H0OP/V7BgQW2I1lBJa+sDc7knn7aKIGIhe3CGLMUaWaGB1v6T/gD9nhiY1UzMbObeAg7JMB3Xsl63/mxVohZndyTkGoPGZUFzAeVkIGkowdUmnvtNTjd+KghdZY/gRuHcbLFzQ4ryN492DvCePfLe7hZSK+pwF1ecWtdnhXw+3I=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1774391606; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=NvdPEZ15dK53yiRKnkdm808/RSpI46bL8Wlm29HFcPU=; 
+	b=VSokudAWKAilIK0+FfmcZV2987GJOz4AZ5IDAR4rCxirP3Ek4udK8yJkvsQJVFIxI1HHtZvUvSJKbaN0jSHj8qEfJ7XbaDlLAGBrKfDSgl8JgnDntgMEg26AKjlJQ+Vf2aDR+3iLA9ovz18tCg+dSaPwuF3+yXFTITwIkRhKRAQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774391606;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=NvdPEZ15dK53yiRKnkdm808/RSpI46bL8Wlm29HFcPU=;
+	b=BwWlfGJbbOneqJsqX0E24bTJxnPVl6L0aM6cgxnaGccfAuxUhtsp6adi+WvvqnFJ
+	GmEkI31Fu5BgDH/laHxs7LYssC+oRACQvBN0afuBzYlK5SheIowODmfNIV6y7pHBILl
+	3wtHnV67+OLagIf0Ce/FdqeNO8+Gs/gZwMEGCFLI=
+Received: by mx.zohomail.com with SMTPS id 1774391605394145.9579702728538;
+	Tue, 24 Mar 2026 15:33:25 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Junio C
+ Hamano <gitster@pobox.com>, "brian m . carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 05/10] hook: replace hook_list_clear() ->
+ string_list_clear_func()
+In-Reply-To: <acJNYPgOSO86hZYq@pks.im>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+ <20260320115211.177351-1-adrian.ratiu@collabora.com>
+ <20260320115211.177351-6-adrian.ratiu@collabora.com>
+ <acJNYPgOSO86hZYq@pks.im>
+Date: Wed, 25 Mar 2026 00:33:21 +0200
+Message-ID: <87bjgcdfim.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,55 +57,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-ZohoMailClient: External
 
-Justin Tobler <jltobler@gmail.com> writes:
+On Tue, 24 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> On Fri, Mar 20, 2026 at 01:52:06PM +0200, Adrian Ratiu wrote:
+>> diff --git a/hook.c b/hook.c
+>> index 6dfaa7e9b1..f6bb1999ae 100644
+>> --- a/hook.c
+>> +++ b/hook.c
+>> @@ -52,8 +52,14 @@ const char *find_hook(struct repository *r, const char *name)
+>>  	return path.buf;
+>>  }
+>>  
+>> -static void hook_clear(struct hook *h, hook_data_free_fn cb_data_free)
+>> +/*
+>> + * Frees a struct hook stored as the util pointer of a string_list_item.
+>> + * Suitable for use as a string_list_clear_func_t callback.
+>> + */
+>
+> This comment should probably live in the header. I also wonder whether
+> this wrapper isn't a bit too specific to freeing hooks with a string
+> list. Maybe it would be preferable to expose a "proper" `hook_free()`
+> function that only takes a hook, and then provide a small wrapper
+> function for freeing in the string list?
+>
+> If so it feels like we're going a bit full circle though. Maybe the
+> original code wasn't all that bad in the first place?
 
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 13621b0d6a..dcbc5bc82d 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -822,6 +822,9 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  			die(_("encountered signed commit %s; use "
->  			      "--signed-commits=<mode> to handle it"),
->  			    oid_to_hex(&commit->object.oid));
-> +		case SIGN_ABORT_IF_INVALID:
-> +			die(_("'abort-if-invalid' is not a valid mode for "
-> +			      "git fast-export with --signed-commits=<mode>"));
->  		case SIGN_STRIP_IF_INVALID:
->  			die(_("'strip-if-invalid' is not a valid mode for "
->  			      "git fast-export with --signed-commits=<mode>"));
+I prefer this new design (suggested by you), because:
 
-There are a few similar hunks in this patch to fast-export, but I am
-not sure what is going on here.
+1. We use the generic string_list_clear_func() API.
 
-I may be misreading the code, but this error, and the similar one
-for strip-if-invalid that is already there, trigger if the command
-is given "--signed-commits=abort-if-invalid" on its command line,
-and when we see a signed commit in the range we walk to export the
-commits.  Why shouldn't the user get the error immediately while the
-command is parsing the command line options?  You may be sharing the
-underlying parse_sign_mode() with import side that may support more
-variants, but that is not a good excuse to make these two
+2. Each struct hook owns its data_free callback, which means that callers
+don't need to keep track of internal state (e.g. when to pass NULL to
+skip cleanup).
 
-    git fast-export --signed-commits=abort-if-invalid
-    git fast-export --signed-commits=i-dont-know-what-i-am-doing
+3. The hook API itself is cleaner for hook.[ch] users, because it's
+always string_list_clear_func(head, hook_free); regardless of context.
 
-behave completely differently, no?
+So if it's ok with you, let's use your new design. :)
 
-You can either move these "no, these subset of options are not
-available here" to fast-export.c::parse_opt_sign_mode(), or even
-better yet, teach parse_sign_mode() an option to say "hey, you are
-being called from fast-export, so pretend that you have never heard
-of options that are only available on fast-import" and error out
-right there, can't you?  Or would it be too _early_ to give errors
-to users?
-
-Thanks.
-
-
-
-
-
-
-
-
+I'll move the comment to the header (it's already there, I just forgot
+to remove the duplicated comment in hook.c above the function
+definition).
