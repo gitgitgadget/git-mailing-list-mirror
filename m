@@ -1,113 +1,107 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B352BE043
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774379719; cv=none; b=m8f/F+MIz/Z7AiB+TnXZH8TvZG7kEeweZrELnGIAQ8M6Dea+ScaIUIp2RlLjQmcBcleUk940ze8Q5ShN/fOttgV7rc2RqCAaGC1KkKPRzUEzSuRP2ZNK/WG2rocHeUsxvh0lvxhoUtudpjF9QW42lnv8TWei1fKGi0pxbTsMI3I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774379719; c=relaxed/simple;
-	bh=yWHhqXlhcivGwe0R0jXMujHlbIv1Ld5d84iRADR+zRo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BavmbWiN3cW2P4e8AypfLCcNyesGzc96OF1/72R0sp7+xX0oFz0Ob02uO0c3ZGVf5Nxmm3kSKQP7UyZAoCG2KZz54+K+Z6wDoRyg9RGETN7XLG4sy/TtQmy18UnnDUGtjortVcDNNO34N8jX/4nZwAx1NtkJykOWbXFaHssQRfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eOyqOL5W; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6842E2737E0
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 19:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774379990; cv=pass; b=ZpmcOC205OcUA17T16nyJDqq9a7jCdcw5MKTfv0G29SC+EFG+UdkBRxDqk6UzQYGlEZTmbrBDiFoTRxeb9KpXi3wLG8ERsSDaLjIVbCfEmuAE6pHRIx5P0WKbmPN6+SxRlc82aNvBWp6PX68z2v6/w2GatiJW+AXzXSfGFN0MMw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774379990; c=relaxed/simple;
+	bh=soKCjUaNEqpWidbPlO4U/XOr/RkC7x/fGS+OZelAKmI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GaIdf5Xn17Or4HUnJVQAE8SDqIKAyuXTE5sJRAWQryEHlWAwsFDkQ6bz5g/2ZY34wz3bFEJNdBxPGobjGImGjGyES/VvgmCA9TdY4p1/ZY7JGBIZk2kj7g/PuP10x43h9Tbq6w83aeiZGUBYM81m0hcHtOxtImAQVMqF6i9/tVc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=GoIa7Za3; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eOyqOL5W"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-50917e02472so49593871cf.2
-        for <git@vger.kernel.org>; Tue, 24 Mar 2026 12:15:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774379717; x=1774984517; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kreW0ej6Nv0iZK2rp2LAY3yhXA3B9srnYY6Cnjlnlq8=;
-        b=eOyqOL5WbFKxDRNMC55C9CQ/GmS3QUIteNIUZtQ2ERinKorlpI0UDhcOAPnJOtzTFQ
-         y+cLMflPm7KemWn+bUSBxNJjc8F1gLa9/2uPURqMZ8uR5/Wggt/Xi0XC9QG8rfimW4Um
-         OavpnRNJxulyUyorl4a59ISVvvDYIiBbnsy8XgdTMY4t2cRXCSBl8J17LoSQEmOGqjs/
-         5Fg+lsiInLF9GUf8XLbOCrS4sMMmG+SKXs+8wkNhQL5Uxnl5+mSyKH04oUOAnO7uuce3
-         IC4paLmm+LpfXviOhMWZaek84XzXaF1bx+CTN31/CWAs5teh5hnMeZFtKTyTQjWQvDXq
-         Z/Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774379717; x=1774984517;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kreW0ej6Nv0iZK2rp2LAY3yhXA3B9srnYY6Cnjlnlq8=;
-        b=ffNc9DDjOnhn7imsKwkUNMlmHO8O2Gsx4KtziSzBsNl98mTV5K55qyzSQnB6/cawS6
-         jc0tECUYHctI9JjW8Yz9n4FXpAgYfi6iXd9SmRXXdF5bVtGnrbI+VB9tM31X5zc3b0J9
-         N9YQqglNsaxBedNZjJcgtnyvw+0u7CsSjxuv6I2xZlOPSnM3pd+331hovFGRr6WOFH4Z
-         BM3KBpxBGf1SXfeM2yoUt5u7wiS+bx7437hzyjIW8jjo+PXtuC3w9NHf2AU/j+J90WS9
-         9rQHVa7XFKuf5SBstsz/a3nlNKwREAxZ840HV5e6Ke1CzGOKzSoQAwAk775umQm15HUo
-         BZDg==
-X-Forwarded-Encrypted: i=1; AJvYcCWslsgDy2pdZXVPdPdNcBG1qPq41J6T6qmEbRo2svPb91elYjWa1CNMjd85TnFGdzFh4ls=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxzkZvDqQQr6Aq+fgRBbp8LAv1AEWGo55iu9Zevoynb/1+h6XXe
-	zafF+tpvI7zCsdHKCZn1EAC5+pe4ahwXNOdIweujX5tyq5Cr/uSD6ioH
-X-Gm-Gg: ATEYQzyEjEvna/XZgWaDGTBZltzyc+DpKIdkOOCoGoqFj0bYZbb59+F9E0aPthfrCd+
-	OGXrt9loAB4pryBSuf67XU7BmN4HqkJuzyS63zzre5VimfbAa4GdSzdC+KgfrFtMBUYVGzr5EYU
-	Tk3knhfbP4GAp6IfCqXKsweOZeFg3YuRUNlp0gNGXfyYKJCUoMZP/RXEnR0YCL3q9GIeQoIKCOp
-	snPOdsGLYbIY3oiWymva8zsVEnEkoIadMdIYeIVOo182+puLI59IHpYgmtr1nB+zhQacb1bEdmZ
-	Vci1MnsopOxYy64aF96lUMZ9Z7cqqHefvf6gZziyfomz8G9QkcsaFgS6FDgneU+k09Kpw1gRD0P
-	oHMVDk5Kol8NW3QnkxWUUhIOeR14bqoL67a1focb3dcChRW0lKl/mQ+tC9hV7bwGobZWANzPls+
-	6fFAkUv0vTAA/z0nH5OtzXH1Dxzp0Ro/Wx37m88fW0RubOopc0e9dvFJAwPqwTCM4pJY1HZw==
-X-Received: by 2002:a05:622a:4d4d:b0:509:23c5:328f with SMTP id d75a77b69052e-50b80e66e14mr12892821cf.54.1774379716601;
-        Tue, 24 Mar 2026 12:15:16 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b36b50fa8sm145952521cf.0.2026.03.24.12.15.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Mar 2026 12:15:15 -0700 (PDT)
-Message-ID: <017a4371-3b63-456a-9ca8-e36d6e9dc7d3@gmail.com>
-Date: Tue, 24 Mar 2026 15:15:14 -0400
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="GoIa7Za3"
+ARC-Seal: i=1; a=rsa-sha256; t=1774379972; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Y0JLsgeS0IYsRcOLWCY189E1pOFLDEpKyqPQqTA7srlpEnDC2RCsrQHoE4oF2OXpTgRi6Qk006VBq52Egai9W05tx1+AQzFi1EggEcaL9HV95Mbe+I6CGp4yObzO+Y+NG8pfUuX1JkAXIkFZouVWe6UQaT0jb2RvlRmZukjgGZo=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1774379972; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=aP7vvD7TrpV4ESI9an3LnV3MBmTe+IhuQQPAXpJkpjo=; 
+	b=MFqVMnj9XI9QlsH9eKOwe0t4uqNsedwYr1uRWlqEmK+O3bPWGjZo1/GVuz3Q/avtNvGMFc+XiNtZvVoNjoTi1VfGU4YlK4u6fQdApRL3wg4RFFoAp3BMmPmr1aX2GW9p22a1MVzyUJrzuuy2KvcjHTjGpEuZ53XSLgsC5n8T84k=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774379972;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=aP7vvD7TrpV4ESI9an3LnV3MBmTe+IhuQQPAXpJkpjo=;
+	b=GoIa7Za3bVPadtKHcHnoo6IZFzCZnLGYZVS/yBsx32PEE6cdn6CzrFeSZm/4sJcA
+	YEODR9DBrxaa+2hWrT+zyisTyIlRaqbXViMTw5GNVEyuxX1X28kkmpAfk/vKrIbdxAs
+	VjiIpxbedST8hUX2HS6AfnCP9GLt74DWkqLhISL0=
+Received: by mx.zohomail.com with SMTPS id 1774379970385622.0001661506083;
+	Tue, 24 Mar 2026 12:19:30 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Junio C
+ Hamano <gitster@pobox.com>, "brian m . carlson"
+ <sandals@crustytoothpaste.net>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 02/10] hook: fix minor style issues
+In-Reply-To: <acJNW0m2wHfRStqY@pks.im>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+ <20260320115211.177351-1-adrian.ratiu@collabora.com>
+ <20260320115211.177351-3-adrian.ratiu@collabora.com>
+ <acJNW0m2wHfRStqY@pks.im>
+Date: Tue, 24 Mar 2026 21:19:27 +0200
+Message-ID: <87h5q5c9xc.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] repo: show subcommand-specific help text
-To: Mahi Kassa <mahlet.takassa@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, lucasseikioshiro@gmail.com, jltobler@gmail.com
-References: <20260323152937.257406-1-mahlet.takassa@gmail.com>
- <20260324184843.299223-1-mahlet.takassa@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260324184843.299223-1-mahlet.takassa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-On 3/24/2026 2:48 PM, Mahi Kassa wrote:
-> Use subcommand-specific usage arrays for "git repo info" and
-> "git repo structure" so that each command shows only its own
-> synopsis in help output.
-> 
-> Factor the shared usage strings into macros to avoid
-> duplicating the same synopsis text in multiple arrays.
-> 
-> Add tests to cover the subcommand help behavior.
+On Tue, 24 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
+> On Fri, Mar 20, 2026 at 01:52:03PM +0200, Adrian Ratiu wrote:
+>> diff --git a/builtin/hook.c b/builtin/hook.c
+>> index 83020dfb4f..e641614b84 100644
+>> --- a/builtin/hook.c
+>> +++ b/builtin/hook.c
+>> @@ -5,8 +5,6 @@
+>>  #include "gettext.h"
+>>  #include "hook.h"
+>>  #include "parse-options.h"
+>> -#include "strvec.h"
+>> -#include "abspath.h"
+>pp
+> Another thing we could address while at it is to sort the headers
+> (except "builtin.h" of course). Feel free to ignore though.
+>
 
-You need a sign-off in your commit message.
- 
-> The previous reroll mistakenly omitted the requested code
-> changes; this version includes them.
+I'll fix all the nits you pointed out in v3, no worries. :)
 
-This kind of information needs to be below the --- along with
-your "V3" changes:
- 
-> ---
-> v3:
-> - include the requested code changes that were missing from v2
-> - factor shared usage strings into macros to avoid duplication
-> - restore blank lines between tests and before test_done
+<snip>
 
-(here)
+>> @@ -928,7 +929,11 @@ static int run_receive_hook(struct command *commands,
+>>  {
+>>  	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+>>  	struct command *iter = commands;
+>> -	struct receive_hook_feed_state feed_init_state = { 0 };
+>> +	struct receive_hook_feed_state feed_init_state = {
+>> +		.cmd = commands,
+>> +		.skip_broken = skip_broken,
+>> +		.buf = STRBUF_INIT,
+>> +	};
+>
+> Interesting. The buffer here isn't only a style fix, but an actual bug
+> fix, isn't it?
 
-Outside of these issues with the message, the diff itself
-looks good.
+In theory yes, it's a bug. I'll fix it in a separate commit.
 
-Thanks,
--Stolee
+In practice there is no difference because this is passed to
+receive_hook_feed_state_alloc() which creates "copies" for each hook and
+properly initializes each copy with strbuf_init(&data->buf, 0);
 
+(The differnce is between .buf being NULL vs pointing to a static array
+strbuf_slopbuf with one element containing NULL )
+
+I'll fix it anyway and explain in a separate commit to avoid confusion.
+
+Thanks for spotting this!
