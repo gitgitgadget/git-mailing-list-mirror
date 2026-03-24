@@ -1,40 +1,88 @@
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27414256C70
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 17:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873EB3D5258
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 17:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774373123; cv=none; b=sZ/aAIetHQTq/GB9fZ2mbWQe996wrCLiP8sx1VmsNJynBseWwibeEupBFtgqBg4qw741qoIXsEE3w4Rb87nQ5PnMLSUVaASBcHBJd0Sg3sunEL3RUW5z5hEfUIQmZTckmYkzm2kWWhweF1Hn6GoV4SbCwehzUI9IxjrC2f4/InQ=
+	t=1774373584; cv=none; b=TMYxCQCTkHbCrL8LOZIcIYwWDoA0S2bEDYk8z9FDI24eSjD8cDgGLeHw7FPkuTzLNF0uwa0VpuK0cNycLopcVXWvm/Ql3dt0ldtLTaSeEGgm/SdcbVIFEhj67znDl884C5AWLiZNs9CAF6OvGgyQnBn/PvztAQwH6QmXq1eDgOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774373123; c=relaxed/simple;
-	bh=RqGg8NmqvR8kJw1di7izPjJMgI+DnY3cEb5RLF3dxig=;
+	s=arc-20240116; t=1774373584; c=relaxed/simple;
+	bh=+E/9DSKY/tCm32ZZZbEiY9/SrOW8yac7yR+V7cF+RA8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dknjdglpmgCQIxjsR/zdSu8tKUEpbcCQ6xP/0RMZBqqqTiTUxLcHiKE7TmnWm1na1fB3oxeo/NS6Ug5Htq0762jtq/uDaKf2NZ1Yjuv/x5R5suiTltZ4iKSIPjjhK+jXGtHO8NoL7p3GB4OOVKHu2nA+8pJliTu2rYbyNFdvpOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=ehgM437z; arc=none smtp.client-ip=91.218.175.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=qPixFPBQIk1MxryC18beDA19yXQeKVbDQ+b16LdMi7clZn3sVZGVAWG2SLa2/AmECBXI7cnOyrgSwZnC7u1In11Uihf7E2uoooOsx9RTNYKVRUmZORTEh9uvZZesUj4frA9tyfc/fLKRhVetfs0wEcFTGihOzTIT+Pc39ejrS+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k2gqD6Q2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5Bi0jIY; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="ehgM437z"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1774373118;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=r3bXYD45loOKXx+aG8ZQ9T/jzx1of8agTGIuCuPslrI=;
-	b=ehgM437zHPSqpvLxvLPr2JnAAHzzPFCckoGCRfrkDUqjLAOfOUF6IJhxBhUy3Z124gupO9
-	xrhdy1AOu7Z2A+W/i0F6UYhbqJ7A7nYWM6CXDuP3UFMkbU1fVTVLldOEB4N+OPi2lyw1/g
-	U8y5A5NM+f8rb4WHEnAHbPZHg7WmDZE=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] replay: support replaying down from root commit
-In-Reply-To: <xmqqwlzajkha.fsf@gitster.g>
-References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
- <xmqqwlzajkha.fsf@gitster.g>
-Date: Tue, 24 Mar 2026 18:25:13 +0100
-Message-ID: <87qzp916o6.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k2gqD6Q2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5Bi0jIY"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D2F6E14001FE;
+	Tue, 24 Mar 2026 13:33:02 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 24 Mar 2026 13:33:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774373582; x=1774459982; bh=FVAhhHKICq
+	FZ4Ph9DUYVzuyRkuvuSs5DeKRYZEMt0eY=; b=k2gqD6Q26SPQctA9e3QMWlXPg5
+	+6uLGb+/4/617FWeNXpuKXxSQ2kuA0MLaVExlcTujUC3iPA8ByMawjqQvTqi08xq
+	B6q9L2oNDhk2IyGrQRXgElj2KHItNZ0bMfvBEywIZe/x8SZxhaQ2g3P8cEK1hjX7
+	1mtqwzqqERR+miJp2+d4edveOdi+2ozCGwvFW9Ji1EGEfdVso8l8vrNrHbhKjZaQ
+	jlzur5D78Fi9DfeRizM/HnVk+WxvLRE0P21mKw7LPWFc1mck8T8h0G74eQFNasbx
+	qt9ieJhWgJaTktABnh5SQDOHSGPaIt2gnGMcYSEYgWPkELud3SBjsnTUuF1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774373582; x=1774459982; bh=FVAhhHKICqFZ4Ph9DUYVzuyRkuvuSs5DeKR
+	YZEMt0eY=; b=W5Bi0jIYzxGfy/qKOVS41RKGrRlfpw1aP/lk4uDAA0JRz5Wuj4v
+	/YcIyfaijcsR2YbE6Y/h9nHaxpTMiciI7MXH1B9HLyOxmi9yM1A6vuqXL3fJNccQ
+	aPIWWBWEvMlNyN3/UQJwYaRphbVTtSBk5qxdKX9aZTurjPMuOPQjYu+zvgDH2wOo
+	mpo9BsNyPuzRZCrensW9FG75NU68mUi2mrkr5UXqtld4eqNH7zPKNwYBk6772da2
+	fqMhiOiuWQWKLH0nj4NkGwUtngGdOf7/ULZ+coppog/Wrxvqz/B2yAouV49OkUb7
+	ZA6zew4NwdV3Gp0OiD8Pc3b7wfOO/0btmAQ==
+X-ME-Sender: <xms:zsrCadgarnyO76udzqlsRQh9HfOUlRqG8PvV1ao62f6LL3gGpeo92Q>
+    <xme:zsrCaVu_0IieLRskRjMgxBEkXH24NnB91nVTFiBNcNBRvYGUBB0ef9M6u6TZvqf1o
+    ziMso7pLQq5fFiW6nsrWrBO-3jpB2lqaG9DUtx28xR5mOOm6DKynQ>
+X-ME-Received: <xmr:zsrCaW6WdGeVXP2Otf6zsgYUv4izMuUiKbwQqaJEAB1BLl31jT4Qp0-JEtMisuTbMUeWTADDdFEzvKlbK5pec5g-huVJLu-GpQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddvudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehkvghrnhgvlhesshgthhhlrghrrghffhgvnhhlrghnrdgu
+    vgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    eptghhrhhishestghhrhhishguohifnhdrnhgrmhgvpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zsrCaZNQIMFAb7qwTLFruX48t_MWNykjkMctLbJ2HVuQKaqV8uHwkA>
+    <xmx:zsrCacsvIGtrjQ-r_Zz2-k8ynPSpPH20nLgSjPbsxNmkkVn88Lk3ZA>
+    <xmx:zsrCaUba-C8aMUHEwEEi0NFO664sZo7H2hxqgOG0aY6Rf_6r8nimQw>
+    <xmx:zsrCaWxKoPvx9r6_oMGYSyfHhQgIjbUYs7bl3xiAwXfbnTPvTbLLwQ>
+    <xmx:zsrCae3rF67UTpe1LWGQ6Uatz4Jghkaay77YDaE3vQCQPKvOmYqzFvgz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Mar 2026 13:33:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Jonas Rebmann <kernel@schlaraffenlan.de>,  git@vger.kernel.org,  Chris
+ Down <chris@chrisdown.name>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] bisect: use selected alternate terms in status
+ output
+In-Reply-To: <f8f7a220-c40a-480d-b0d0-abfcf5c83157@gmail.com> (Phillip Wood's
+	message of "Tue, 24 Mar 2026 10:43:06 +0000")
+References: <20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de>
+	<20260323-bisect-terms-v2-1-8d6bdb2c9c7e@schlaraffenlan.de>
+	<f8f7a220-c40a-480d-b0d0-abfcf5c83157@gmail.com>
+Date: Tue, 24 Mar 2026 10:33:00 -0700
+Message-ID: <xmqq7br116b7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,63 +90,52 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Toon Claes <toon@iotcl.com> writes:
+> Hi Jonas
 >
->> git-replay(1) doesn't allow replaying commits all the way down to the
->> root commit. Fix that.
+> On 23/03/2026 22:48, Jonas Rebmann wrote:
+>> 
+>> diff --git a/builtin/bisect.c b/builtin/bisect.c
+>> index 4520e585d0..ee6a2c83b8 100644
+>> --- a/builtin/bisect.c
+>> +++ b/builtin/bisect.c
+>> @@ -465,13 +465,16 @@ static void bisect_print_status(const struct bisect_terms *terms)
+>>   		return;
+>>   
+>>   	if (!state.nr_good && !state.nr_bad)
+>> -		bisect_log_printf(_("status: waiting for both good and bad commits\n"));
+>> +		bisect_log_printf(_("status: waiting for both %s and %s commits\n"),
+>> +				  terms->term_good, terms->term_bad);
 >
-> OK.
+> If we're going to start using alternative terms it might be better to 
+> enclose them in single quotes to make it clearer that we're referencing 
+> the term names. Looking at the test below
 >
->> -	base = pickme->parents->item;
->> -	replayed_base = mapped_commit(replayed_commits, base, onto);
->> +	if (pickme->parents) {
->> +		base = pickme->parents->item;
->> +		replayed_base = mapped_commit(replayed_commits, base, onto);
->> +		base_tree = repo_get_commit_tree(repo, base);
+> 	"status: waiting for both 'term1' and 'term2' commits"
 >
-> So, if we are replaying a commit with parent(s), we do the same as
-> before (base_tree used to be computed a bit later).  But ...
+> is clearer to me than
 >
->> +	} else {
->> +		base = NULL;
->> +		replayed_base = onto;
->> +		base_tree = lookup_tree(repo, repo->hash_algo->empty_tree);
->> +	}
+> 	"status: waiting for both term1 and term2 commits"
+
+Excellent.  I failed to consider this, but your reasoning makes
+perfect sense.  When we were limited to hardcoded good and bad,
+they were clear enough without 'highlighting' with quotes, but that
+is no longer the case.
+
+>>   test_expect_success 'bisect start with one term1 and term2' '
+>>   	git bisect reset &&
+>> -	git bisect start --term-old term2 --term-new term1 &&
+>> -	git bisect term2 $HASH1 &&
+>> +	git bisect start --term-old term2 --term-new term1 >bisect_result &&
+>> +	grep "status: waiting for both term2 and term1 commits" bisect_result &&
 >
-> ... if we are replaying the root commit, there is no base (in
-> contrast to "the first parent of the original commit" used in the
-> other branch of this if-else construct).  We use an empty tree for
-> the base_tree, which is the natural thing to use to replay for a
-> root commit, of course.
+> Using test_grep would make debugging test failures easier as, if it 
+> fails, it prints a helpful diagnostic message.
 >
-> I am not sure why replayed_base is computed differently, though?  Is
-> it because mapped_commit() would not work when base==NULL?
+> Thanks
+>
+> Phillip
 
-That's correct, mapped_commit() dereferences commit->object.oid.
-
-> I have to wonder if the handling of that case should also be
-> encapsulated inside mapped_commit() helper, just like the helper
-> knows to "fallback" when the commit is not yet mapped
-
-I'm fine either way, so I'll do that in v2.
-
-> After all, if we drive that line of thought to the extreme, we would
-> end up making repo_get_commit_tree() to return an empty tree object
-> for base==NULL, too, which may be logical but it is probably too much.
-
-Well, it's a bit annoying `struct commit::parents` is a `struct
-commit_list`, so we have to first check that pointer before we can
-dereference `item`, so that guard do we need anyway. So I agree it's too
-much.
-
-One other thing, in v2 I'm also fixing the merge ancestor label. For
-root commits it will say "empty tree" instead of "parent of <commit>",
-so conflict messages aren't misleading.
-
--- 
-Cheers,
-Toon
+Thanks for helping.
