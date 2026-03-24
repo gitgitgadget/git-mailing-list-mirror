@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEE3386C07
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 07:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AD234D934
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 08:37:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774339175; cv=none; b=YBaUF/q3s1iKuVfPBI5UCNkpJiDJZSpdN984haXnEo+fl2y8q0T1nYPGEphAFmuozlfvBgAi2UeIqCSXNoYa/BJ3HbQwX95W5LO6Bjehl61cSTbgQjydsBFeWZ9GGMSklUJduzoRB30gZca1daoOas85optbvV3m8V1e2AATosE=
+	t=1774341486; cv=none; b=gWntybJ2+eGd03kb+eCxpq/R8N7T9XHvQQSBfMouzJAuncNXoHHeplOtA3s8xzpGognJsZQ9rs/kiIkYUVobubv3Wo8AKCMJeXTH6H2WtyNBGxmdA4yaOurg9FmEHzrxCGb5zRay/1QReW0mKgwWBdFhzaUXYs4rHwfYSmB9ISM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774339175; c=relaxed/simple;
-	bh=g/qp7LtXawI+pzrE2lfS+nrmWVnDS5ISqit/HuK3g08=;
+	s=arc-20240116; t=1774341486; c=relaxed/simple;
+	bh=zzbpqhaU7yPQ+RXdWNzUa//BHqxNaNT05dQSj8FFM5s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f51+Qi5ZtUl0eg/inb25BR9KbkCI4ffTVUVySeBlIWOX8atMkimwP1LpogLX7DWWyRrljxHmRXZf684Eryu6TvWD16y1gXvzQ6C+uQ5+H41CCeR+FtTmqXxBtsfeuvpxOKbjjiCp9z5vGn/gu+Ju80VALYuN9MTVFU+2mP/Rx8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KZ7UKRCZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n50W5rJJ; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=V3iphtaP7l1K/uur4KHLT/P5HJeZSY7hjzjkv/3qr9hTmH1kbRHWOHXrztrRQVUnwTA610O7ALEoAYBE4IhlIQ/laJrvRRU7mkIG8tOX/yWiKRBamxNemnNLxaPpwp/CEFIGqa9lFgTtyiy4ho50GSf/akiUGVD80Wj4SYCIid4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ro5BTO9G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v899oAiO; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KZ7UKRCZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n50W5rJJ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ro5BTO9G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v899oAiO"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B2BC414001D1;
-	Tue, 24 Mar 2026 03:59:23 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 24 Mar 2026 03:59:23 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id 4BF40EC01E1;
+	Tue, 24 Mar 2026 04:37:53 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 24 Mar 2026 04:37:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774339163; x=1774425563; bh=GAE3GLEU2V
-	n4qykngPo8css/RqEk7oYVV+UCba8XTQk=; b=KZ7UKRCZPCpdn5zJNZI1Vgqq6S
-	jJt1th9+JywaTOR0ojZ0QvX42TwmJOlaWNYYB5+fUPd5y3mNXFl/4GSMe9BGfKUN
-	6Ek5FqODVgQIy261jookOaeLFOGpzE1YCZXzXJ0zGlvau17LY8JEAzavXCUh8xGz
-	YKDSp58mIdI/iR7AV6oKCQQH72MePWDE4o+AZjdQlLPat96AShFQYnQrMnn4UxGy
-	5+L0x5GveytSIwXLwAtAqmm2d0r36aSmkRC1Wifdlr77hUnyRR+zwA8ftSyTy7Ix
-	Nx3VzTvrIrTO5g7KEiTxg0++VCnoNBWTw6lmT/Svl0T8dwo7GYKVanHYhhcA==
+	:subject:to:to; s=fm1; t=1774341473; x=1774427873; bh=Naba+PGAaG
+	+tFj+0n4hXLG4oPCgor5AgvwV/Fywavdg=; b=Ro5BTO9G90VfvyG3MRH9KbEHC+
+	jHJAEnGh9qkCAXY1MfZkrr1hBGV3nXcpH0epDnGWIjPnq7udqCwHeIg30KwX1lTt
+	b2mZKSaqeIwLUhsCfnXBVeSmg5+6b0GCRYjVjCe4VcSKVZvSqOw9QV1viiqFRtFn
+	Z/n56ExQRdGR/IwSmOdpy1+P1TuHh9tL/ltvUUyEWO3F+c7wGG6N9rnAHxNJhPGe
+	dFKFk/O6mrzGzM4HZ7U4CJCsouw7dgMfR740IJnuvVWhddPivp+5iUjCKUqnQBB1
+	ytAF6BIiuh9bmRhwozvO5/HauPNB2vTGioR12W2Oi+b1RaeAMt4CkOlH+6Xg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774339163; x=1774425563; bh=GAE3GLEU2Vn4qykngPo8css/RqEk7oYVV+U
-	Cba8XTQk=; b=n50W5rJJfhMbemBRXGrnw41HnKxx5Z0xppvVXz8KlKfrH5f2uqW
-	3Wv4LxNoCwSZU+XzlfmZM4l2MsEMeKbh9ueA5Gxa1xNUzDzi8pQ3vYeApTKAeFgJ
-	ZS4cvFtNMsRNdqLWCkYggYZRVvfRDXXzdI8jUjjYBoJ5g7eq6QkpP8K29GekLVEG
-	NzzL1wiBhg/IbnQ9iptisDpzn/6P8Rdyf7L2u8Gf0GnrM+Y8Nfm7X+igXofMh5Zt
-	biQpEdHeMrOwGjCH+YowyRm7ZBJH9RChEPqT1ko9Z/wNNZ/k2mKMrPDJclyoAf39
-	ctwD9rGFYJtdsy6HybfQ73OZBm1LxJJdSJQ==
-X-ME-Sender: <xms:W0TCafVgCTj0G4jsdOjXMx-i1niA1_caGMZ-D-gQf_IfT7lfYzFsYA>
-    <xme:W0TCabSnZxghBTBF2pMbl1t29LTTsuYUMsjvnra88FZYdUqtXKMZm6xyH-IGvdWBF
-    Y3yns-mAoJ-es4muaMGfyTisx3mv0G0AWw4kVrdm2mgprFAwdLbOuU>
-X-ME-Received: <xmr:W0TCaVN6gX80y2kdPjf9n2Q4wXcxnjK4hAfnANRH7wAumYrRy9XokLcZtfxHzRmGDKHTJ7WP6TZ3tq-HfMHoVR5uQPW7BOPwF_jjSz8dha3utA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddutdegucetufdoteggodetrf
+	1774341473; x=1774427873; bh=Naba+PGAaG+tFj+0n4hXLG4oPCgor5AgvwV
+	/Fywavdg=; b=v899oAiOHRl0JXVs84SUDI/ceQOX5MlV+LI6d2JwZhfUMj2PCRS
+	MgKn/NLp81Z6OLKMp03syDReHyIcyrL/ZYVctiIx/23ZtwDWN3dBCto/gOcvukXB
+	Y94LLscxK4/LqToYTDaztOIQ/Q7qMrXCI6NtWwQchTjnqEP+8c8SnJa4yIC8tCge
+	cojDUg/aLEQQKJEpVWPWrNwKTLQBLlbeyBTm17BXXtnmWNZ6FuY1Cr2hM13aaYEy
+	pinW2btsyiifTiE9Wq24gIxdQSHsS/Mr4Z6cKGbohIGvWOP6u0Ti5Vd8kjf1eSwW
+	IzHvYNeUEwaY57XQsheyy8X9UZdymUVquUg==
+X-ME-Sender: <xms:YE3Cafv2USg6gTkvYY_xIhHl4ivR3o3yYB5QLyvG8LbbIZNK1WzNmw>
+    <xme:YE3CaULsoB9GF4o2sIESiIh4Pv7dtd-Cy9lK-7byO1FcX3z4bjvgpRF2RoyMVsUgH
+    MFfPtmmXmqYi9S0sHPjdwiUbdtHByr4ZQ7iofSxc0Lgi6b5x4OEkQ>
+X-ME-Received: <xmr:YE3Cack-Y11VV-9DiByrmdPWpyCbZNDwM3yCJuBawN6ZBY2Ou-FgsU9ZJKXDpYpQ5wEL_kQgCYV9ZmHyZQA12DFliOCfxkk4jF80Zj6imkKpaA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdduuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
@@ -56,34 +56,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddutdegucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhimhgrlhhisehgmhgrihhlrd
+    ohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopegvmh
+    hilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
+    rdhnvghtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrd
     gtohhm
-X-ME-Proxy: <xmx:W0TCaRQXeUA1IvirfQW0p1fUdd9BuzAHLt963VN7dJ2eQpWq-JtBVg>
-    <xmx:W0TCabiaMEMvwUFBwumB1JkkltEw7dQiy8kmDWviopEbAHSRLh7haw>
-    <xmx:W0TCaS9Pgwdfc_yh-9fCWPFCAv5oasmMEkUBWkNr0ly1hhpgT2wj5A>
-    <xmx:W0TCaaFnafsJClJroFMwXLYq8tIqGxCpbjE5qHWFq6vezBxM3WspPQ>
-    <xmx:W0TCad7UCeM1ibELcCSzPSkmwQ2EqvARSWVuP8FSVod0e9Ts6v2tyBpk>
+X-ME-Proxy: <xmx:YE3CaVLB4wDjQp66-teYfk9PMM2M2hUN4QuVQq0M0o_Fvb3MKecE-w>
+    <xmx:YE3CaR7LtrqhMrmmQsQ1d63rcT_swsq_quhXksO7CdAcUONAVJ_GLQ>
+    <xmx:YE3CaZ2OKY3PChIZZXOQgFSB1c9BriYBh8aGlNvkkfNxwgHXIw0Jdg>
+    <xmx:YE3CaXc9lx3DDpQ8TgtH8T_PJN-LPvHpIpve9bei-3Dvv6ZwINcBkg>
+    <xmx:YU3CaQ4FjF8ALXco109q5-1hZ_svYJYgnHGgXCSmHaPJ-aQuH0Zjyg7T>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 03:59:22 -0400 (EDT)
+ 24 Mar 2026 04:37:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 63f95560 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Mar 2026 07:59:22 +0000 (UTC)
-Date: Tue, 24 Mar 2026 08:59:19 +0100
+	by mail (OpenSMTPD) with ESMTPSA id bd5c0ee3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Mar 2026 08:37:50 +0000 (UTC)
+Date: Tue, 24 Mar 2026 09:37:47 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	r.siddharth.shrimali@gmail.com, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 4/6] backfill: work with prefix pathspecs
-Message-ID: <acJEV18rQAh2i2a4@pks.im>
-References: <pull.2070.git.1773707361.gitgitgadget@gmail.com>
- <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
- <f8f2c613260458e3c86109888ee1c51313095319.1774266019.git.gitgitgadget@gmail.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 02/10] hook: fix minor style issues
+Message-ID: <acJNW0m2wHfRStqY@pks.im>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+ <20260320115211.177351-1-adrian.ratiu@collabora.com>
+ <20260320115211.177351-3-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,36 +93,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f8f2c613260458e3c86109888ee1c51313095319.1774266019.git.gitgitgadget@gmail.com>
+In-Reply-To: <20260320115211.177351-3-adrian.ratiu@collabora.com>
 
-On Mon, Mar 23, 2026 at 11:40:17AM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/path-walk.c b/path-walk.c
-> index 364e4cfa19..0d640e2f24 100644
-> --- a/path-walk.c
-> +++ b/path-walk.c
-> @@ -206,6 +207,34 @@ static int add_tree_entries(struct path_walk_context *ctx,
->  				 match != MATCHED)
->  				continue;
->  		}
-> +		if (ctx->revs->prune_data.nr) {
-> +			struct pathspec *pd = &ctx->revs->prune_data;
-> +			bool found = false;
-> +
-> +			/* remove '/' for these checks. */
-> +			path.buf[path.len - 1] = 0;
+On Fri, Mar 20, 2026 at 01:52:03PM +0200, Adrian Ratiu wrote:
+> Fix some minor style nits pointed by Patrick, Junio and Eric:
 
-Hm. Is this _always_ safe to do? We add the directory separator a few
-lines further up, but only in the case where `type == OBJ_TREE`. So in
-reverse this may mean that there are cases where we don't have a
-trailing '/'.
+Tiny nit, not worth rerolling over: "pointed out by"
 
-Maybe we should instead:
+> diff --git a/builtin/hook.c b/builtin/hook.c
+> index 83020dfb4f..e641614b84 100644
+> --- a/builtin/hook.c
+> +++ b/builtin/hook.c
+> @@ -5,8 +5,6 @@
+>  #include "gettext.h"
+>  #include "hook.h"
+>  #include "parse-options.h"
+> -#include "strvec.h"
+> -#include "abspath.h"
 
-    did_strip_suffix = strbuf_strip_suffix(path, "/");
+Another thing we could address while at it is to sort the headers
+(except "builtin.h" of course). Feel free to ignore though.
 
-    ...
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index e34edff406..991d6ca7d5 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -904,7 +904,8 @@ static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_
+>  static void *receive_hook_feed_state_alloc(void *feed_pipe_ctx)
+>  {
+>  	struct receive_hook_feed_state *init_state = feed_pipe_ctx;
+> -	struct receive_hook_feed_state *data = xcalloc(1, sizeof(*data));
+> +	struct receive_hook_feed_state *data;
+> +	CALLOC_ARRAY(data, 1);
 
-    if (did_strip_suffix)
-        strbuf_addch(path, "/");
+I think it might help the reader to have an empty line between variables
+and logic.
+
+> @@ -928,7 +929,11 @@ static int run_receive_hook(struct command *commands,
+>  {
+>  	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+>  	struct command *iter = commands;
+> -	struct receive_hook_feed_state feed_init_state = { 0 };
+> +	struct receive_hook_feed_state feed_init_state = {
+> +		.cmd = commands,
+> +		.skip_broken = skip_broken,
+> +		.buf = STRBUF_INIT,
+> +	};
+
+Interesting. The buffer here isn't only a style fix, but an actual bug
+fix, isn't it?
+
+> diff --git a/hook.c b/hook.c
+> index 67cc9a66df..349db729f6 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -227,7 +227,8 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
+>  	/* Construct the cache from parsed configs. */
+>  	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
+>  		struct string_list *hook_names = e->value;
+> -		struct string_list *hooks = xcalloc(1, sizeof(*hooks));
+> +		struct string_list *hooks;
+> +		CALLOC_ARRAY(hooks, 1);
+>  
+>  		string_list_init_dup(hooks);
+>  
+
+Same nit here: I'd move the empty line to come before `CALLOC_ARRAY()`.
+
+> @@ -311,7 +312,8 @@ static void list_hooks_add_configured(struct repository *r,
+>  	for (size_t i = 0; configured_hooks && i < configured_hooks->nr; i++) {
+>  		const char *friendly_name = configured_hooks->items[i].string;
+>  		const char *command = configured_hooks->items[i].util;
+> -		struct hook *hook = xcalloc(1, sizeof(struct hook));
+> +		struct hook *hook;
+> +		CALLOC_ARRAY(hook, 1);
+>  
+>  		if (options && options->feed_pipe_cb_data_alloc)
+>  			hook->feed_pipe_cb_data =
+
+And here.
+
+None of my nits are really important, so please feel free to address or
+ignore them as you like.
 
 Patrick
