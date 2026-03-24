@@ -1,109 +1,113 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4362F241695
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 04:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774326491; cv=pass; b=iXyXyktrtz8Tq1fq7/582EXg5rY5NYwap+mCxaXOB8Ijjxt5gO9bbFUs1ATK4z0B9g9b67weO3Vd9gSit1gtnkfM+sJOozfcY32R/Ii2EKpVNnXciGHNUjXN9sDgZG6br7/Oh9Mr5pspE7mpgNGm8Ym4L3M0Sf9V9K7idIU5hjI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774326491; c=relaxed/simple;
-	bh=TL3EBtDh0XSlq5wNL2esBV9q9n7bHK/ux3npemPct94=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rO4INtJyD8SZrUl/plzbJNyf2Gl4q7Pvk+V3VYA/9w3prEiVBSEsKK8MHItdNme9JzVKQwvUoHhiWf36WuKSizv74+Opc4kV7fVMoovk1/CqEfXogE3uVtt7DmuZj++LTjBC/bwYrrcXUy9Kwy5FZgsFy29d4c98L4jQO4T6NWs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD9F8632B
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 04:48:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774327687; cv=none; b=ZEzCR2fs5Pk3ZYHCvUEEA4JRbbXtgUYAtKevZaT7TIPcnfVJmANRmrTqRhP2lL5M3kr/Yx7Zw2y8mD4D4CZZLGT5nveeuIOdBsVfGKIh+1IuwZe1gVlAC/n0ykhqUnwXLKSIbbijjjwpfBvN5mFD6u++JOdBAfYVRbD4suaOnpk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774327687; c=relaxed/simple;
+	bh=O/tTLHXWcxc1FI8hBYYlHAHjrUm4mn4o1s44U0K1cU8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JJq+eeIDgJmeZ3j/fTU/EhKqdQQast7f6zpWGIwJuxkZM45PyNVH2YMreGFKimg22dx2XqktNdslDuJhebMeIP2DdoEQFw/a6CpfM/219YaB7SaOdEV/CsoLtwJCM2g6cGOo1C5l1QbTgstOE0fK5y4Qb5rWEnJnYhMgTqAAJLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oa7sfPD8; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-124a7216c9cso303216c88.0
-        for <git@vger.kernel.org>; Mon, 23 Mar 2026 21:28:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774326489; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GuoN72fe42Ne7p460Blv5RjkommLWmBmkTtICBNd3z38cRTTLyw3PjoqHGlRTgeLmK
-         7XVw95/Vezz1LwE3aqW00wc2+wDcmm4p87PFzHgewD6ZYLI4Oe61NUcOE36xvkhWNyaR
-         YaH2C2LNPdBiNZfVv1ErrWYZ55IwDCDiEI2esW03nhx2+vqqz8wlf4L9/epeA87qhYR+
-         GusP6Qa/vbkdEEA1Us2brlUaozjeOJgfYBODInNWbuN52RKWNo73xujRDqgkH93aaej2
-         yWUXBF7B3NWaYSdefi2l3Wr4OBBukfbCn9gs2Jew3f+GBSTigNUad6UYTEXid1sc42hW
-         rDkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=LSYIXwA/r7Kz9DDct6QAfTqRQJ8ALyjW0x1cgTJQLQ4=;
-        fh=R9x9/2HsTdRKtZSEL4NTQaPda4anL/aroNKhYv+pkRc=;
-        b=j0h87juiNnQZFrZWjEznn+oc0yh8Fg4RKFYcjcCgs5uyMhtkrZToYnmFLZTiqicl6l
-         TizGjy2NMYynNVhimpm6d2eA/pBwtrfu2Cfmk6dCZuMs65boMSnOAFXZkac3l81uMpkb
-         EXDSpgQcC0k0OoUN6dIPac8GXNdyHDHc9ycGFV7bUTOsjv1K6lwp60orj1G6rwMwuXHw
-         7ZynyCPlQMmjy7we8cjWayKC+WYOHjRiozD/K5gTMS/EgEir/Uq+2Q/aQIWDbbABjBF4
-         cRbj6ryIJ0FzChLQFOc/NtPFRZaZ0HJ0WPwrYvV2IoQejkACsPPL6LpD5EX9C3eXcY+v
-         z5yg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oa7sfPD8"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35a034ca40cso502427a91.1
+        for <git@vger.kernel.org>; Mon, 23 Mar 2026 21:48:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774327685; x=1774932485; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mtDGSNLoe9TqJUicW2x+Y4fgaCYYp+MdhFCXfktmLAo=;
+        b=Oa7sfPD8id9qcFW91eqt9BkJh+m+TXoa+dP8co+BsD3BcCM7qsvsTmUjkjkaaI94r6
+         nUvBBLYZIdr1niQAli53BZ1fHIRkzkBEAMfuy5/25DI5B28BbQNdmryGZWcky7d08bZU
+         MnS+M21PM5EsiuVkwcXW/VkjfvwPOMKINWP7zSAzkVN52pTLlCzVyFTriEBC2wsegWzJ
+         qIzyYlDcaaBHrmZflPq0F8x/NcaSm3dpsbZEAHx9Am/iUaoT9Jt55b1PcezCOeWblDlA
+         Tt3BcoqMvISogsyny983M3d0Rxee6OCLndRMMhcLOjFb91nn+dL8tYcPjKE38gWfqjjr
+         o2SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774326489; x=1774931289;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1774327685; x=1774932485;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=LSYIXwA/r7Kz9DDct6QAfTqRQJ8ALyjW0x1cgTJQLQ4=;
-        b=Mm87RtQXLGEETb/Orrhjpjfp8air3qclcpqBXDJGuPZzL/TXiY8BBUjzdvhbpZOExd
-         jUKDQ10rK0Fauvhh+Au0UHy9JBk5OPD6Ijj4mE4do1AFWJ3Ux8vDNzcvTj3OaQieKu2z
-         2UpViWYLxG0MnY0E4yZpwIfmb4OPwJhHS+rtLVLmOvzenZ13oAYmT3ogLfpptEaG3cHX
-         GlaSqzaXimMD+MPIxALRtsl/kneW2CN18IyHg5oRhvMYU+EtXHQdkhDvL/Z721UmeR1g
-         YriJFwfKyQh44PR6wkyQELA6SGQzASbCZNU8SQNCPkoNNn4jjxa6xt40xZcswwYx3CSF
-         d5nQ==
-X-Gm-Message-State: AOJu0YyT6gH4PoSTjFqWoSlP2q7NyeFLTl6NPwWwK96+1SSVkhxe7aF+
-	6kU2aoy0zc1Y6pOBck5XZkZLhqPlDGJnZIVYtYQXkS6AgV5AYq5I7BTsKPIiGmcH/VlWAXzgSv0
-	FMhrzXkPB7P0Ybfu68tHyErGLHXxn13k=
-X-Gm-Gg: ATEYQzwNy71Kw1ClL2XPcjK8Y7KK+46bM6g7my0g7Qo3yFEMXK8d99RVrYMgq7LchK+
-	5FCfaIef5PmpQRQNlNdf0O+A+KS5meVqJN+3CAiWFCIJD7mhDv06zV3jEG8TXM37X6/M+jY7a7D
-	5Z7WLSLVDzfiaZXURk+ZZE7zV12N5LXV2tkgiRH4rpGeRcRHj2Gp3koKxkBa0fxCkvHpZnkjYSE
-	TSooxk57GDrnG30/tqjlRopuM+xs0fiPnO2C9rM3GAXcmGmWIi6aXTrnQzVNauVs7F45FkavGoU
-	SZ22jIYXmK2lrdD8igljOat83wkf1QqADQeUbFQ/ow==
-X-Received: by 2002:a05:7300:aca5:b0:2bd:fe5a:b87b with SMTP id
- 5a478bee46e88-2c1093dbc83mr3281938eec.0.1774326489391; Mon, 23 Mar 2026
- 21:28:09 -0700 (PDT)
+        bh=mtDGSNLoe9TqJUicW2x+Y4fgaCYYp+MdhFCXfktmLAo=;
+        b=nvIlLfdvLmumYDcj45ERUjoENz/kZNucsWBx3FXgqZQgtxV1CAiNQzUp2iWY7pLquB
+         oPZmgxZWicyzww1vD2rqG3OznJwiY3JJCYmudxPR6kIWhLZq/Lsk7r4dL9MQAXFBJbvS
+         mc8sReO1+X5RSMbeispJTe3ASfnLeblcyVVc/kkqc5n/xd2zfPOGCKF5XxkXBzvkBhWB
+         k1ZJaizol/jAhefMox153FPmxjMGQJkxfQjfCOttOAz8ygytCqmbS5CkeVPi3c8AVP8+
+         5k308KxY7Bvnb4Vf25wyuzCBRVWh39VvGwxbesfIpvdVAzBRF9lu/JZixmWTuBMgsz4O
+         VT1A==
+X-Gm-Message-State: AOJu0Yy43q7acR2y8Gmpdod40+FGiUgqrz+cOv28U8NZkNh/aFcLN6px
+	sgblMx02fe2MyYQYULs+H9dPZRuR5/vgTFL5k1SvCNJD4IgFJHaHIhRVwxqZ9Tlx
+X-Gm-Gg: ATEYQzzeMEMpjQPxhN7YjF/WjH7pqoiC+oirm8+/lkgZK8kOrqQHJE1wUgZt6iIzAVm
+	Xu1cLvyDiT8lVPam2sfvmy0UqH1Y7xOsKnPPvj8SLBCJkLnefyB0vQqfnKGabZ3PzdPck3wrm4g
+	LZ7VvWduqEp3kAAC+WeUILMmM9sJQB+XwZnZKlR8ZVCNYoGyvzSNFiJXK9sDlg4tVF/4d65PFf1
+	h3BINd+kA01Arb+twkJlpBqd7Zzgsf/qmXcXTlyc2mJy/m35UPXOpYWdb+R/XD6auQKsTUErK0O
+	79NSRje1dfcIvyucGxYRsBGCobTwr5ngo6qFK+SMDjTyc1dlmWtTwAgO4RmHBknuEbCYTWUpoTL
+	rhoXmn+ab41lZbJ4sdM+1vkn/wiGkiNbec+Nu5o4t+gTP/99Y330rtV/kdIAMieKA5Bmtg2thCj
+	iqEI4BlTxdNhHK3zFz/rxmHI79KgW1eYFxLHEcPCU+9jZV2dfnkJ0a20TItXXKxmsm3i7Fr/0=
+X-Received: by 2002:a17:90a:e7cb:b0:35b:90e7:c450 with SMTP id 98e67ed59e1d1-35bd2b8a355mr8265541a91.1.1774327684876;
+        Mon, 23 Mar 2026 21:48:04 -0700 (PDT)
+Received: from localhost.localdomain ([14.195.131.227])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c031ed064sm774640a91.9.2026.03.23.21.48.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2026 21:48:04 -0700 (PDT)
+From: jayesh0104 <jayeshdaga99@gmail.com>
+To: git@vger.kernel.org
+Cc: a3205153416@gmail.com,
+	jayesh0104 <jayeshdaga99@gmail.com>
+Subject: [PATCH v3] t/pack-refs-tests: use test_path_is_missing
+Date: Tue, 24 Mar 2026 04:46:19 +0000
+Message-ID: <20260324044619.43944-1-jayeshdaga99@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <a26599ba-01b0-4587-ba0c-bd28a822c615@gmail.com>
+References: <a26599ba-01b0-4587-ba0c-bd28a822c615@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <a26599ba-01b0-4587-ba0c-bd28a822c615@gmail.com> <20260324041903.43155-1-jayeshdaga99@gmail.com>
-In-Reply-To: <20260324041903.43155-1-jayeshdaga99@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 24 Mar 2026 00:27:57 -0400
-X-Gm-Features: AQROBzBt4nHgy7_EdO5DbdOjNTjqnrvKj2Wz-64obsMdlzTbggoieoI6jNhFSSY
-Message-ID: <CAPig+cRo6N-idg5ZEzsUyCZUzLoGNV5RR8PUxBb_RghoPXdXNQ@mail.gmail.com>
-Subject: Re: [PATCH v2] t/pack-refs-tests: drop '-f' from test_path_is_missing
-To: jayesh0104 <jayeshdaga99@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, a3205153416@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 24, 2026 at 12:22=E2=80=AFAM jayesh0104 <jayeshdaga99@gmail.com=
-> wrote:
-> test_path_is_missing expects exactly one argument: the path to
-> check for absence. Passing '-f' is incorrect and results in
-> "bug in the test script: 1 param" during test execution.
->
-> The '-f' flag appears to have been carried over from the
-> equivalent 'test -f' usage, but test_path_is_missing does not
-> accept such flags.
->
-> Remove the extraneous '-f' to use the helper correctly and
-> restore proper test behavior.
+Replace the raw file existence check:
 
-This commit message which talks about changing `test_path_is_missing
--f <path>` into `test_path_is_missing <path>`...
+    ! test -f .git/refs/heads/f
 
-> Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
-> ---
-> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-> @@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after=
- git ${pack_refs} --prune
->  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
->         git branch f &&
->         git ${pack_refs} --all --prune &&
-> -       ! test -f .git/refs/heads/f
-> +       test_path_is_missing .git/refs/heads/f
->  '
+with the Git test helper:
 
-...does not reflect the code change at all.
+    test_path_is_missing .git/refs/heads/f
+
+This aligns the test with Git’s testing conventions and avoids
+direct use of shell test constructs.
+
+v3:
+- Fix commit message to accurately describe the change
+
+Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
+---
+ t/pack-refs-tests.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+index 2fdaccb6c7..4a85d96c6b 100644
+--- a/t/pack-refs-tests.sh
++++ b/t/pack-refs-tests.sh
+@@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+ test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+ 	git branch f &&
+ 	git ${pack_refs} --all --prune &&
+-	! test -f .git/refs/heads/f
++	test_path_is_missing .git/refs/heads/f
+ '
+ 
+ test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
+-- 
+2.43.0
+
