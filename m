@@ -1,117 +1,140 @@
-Received: from 2.mo575.mail-out.ovh.net (2.mo575.mail-out.ovh.net [46.105.52.162])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B603D390999
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 13:08:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.52.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE892E040D
+	for <git@vger.kernel.org>; Tue, 24 Mar 2026 13:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774357707; cv=none; b=CVEwvKjp7D22gXLViuEJX288fnG03J1Bq027d711tL1ZwXkjNKhVFUqPn1cnskpvI6A0wVCYwJk1l/UozXi72elJ1qKw8cPY6Lrqge8Y45fiTJQyVruykjbrn94Ogzdyr9aMRueiVXckasVQJ+6ZWugqg7sLPccrN8IY8k0T4gc=
+	t=1774359824; cv=none; b=JUcaqi+dTZ31uL8YEZZrx2ZBuMsZweCjBMpcswWQnhGmFjLH0ni8dLDS62nTDZXw1wZ8CS6SOerL99mXby/e3Z1j6kfMJ8B+csY870CwcKnMaRkn+qrFMPlQMdl5t3RZrwmaL9zbXgNwBPFkABRNlvlZAMIk/mugioHdAbtVdL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774357707; c=relaxed/simple;
-	bh=HLBAwoLYcaVPHAdUxcd227hdSjfT7WOcepQMZxrGNk4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LHZDYviOhdERvzvMmC7odnbkAI6eoLD+aE8Qb6Hvm8vUreN57PGTR+WLRbf2Uaho2rz9oYq3r+L+5PnZsQT+0fnrYPvQTjMs8I4uDX1tZbMBdYv3q4eXNq/wOZFx5q0mQDfMAu0W1ygK5jsj1kmJ440fRRIC13CMbfIVj9tug98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de; spf=pass smtp.mailfrom=schlaraffenlan.de; arc=none smtp.client-ip=46.105.52.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schlaraffenlan.de
-Received: from director10.ghost.mail-out.ovh.net (unknown [10.109.249.109])
-	by mo575.mail-out.ovh.net (Postfix) with ESMTP id 4fg8XH6GXqz5wwx
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 12:30:55 +0000 (UTC)
-Received: from ghost-submission-7d8d68f679-vcd69 (unknown [10.110.178.91])
-	by director10.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 39EB5C1A7B;
-	Tue, 24 Mar 2026 12:30:55 +0000 (UTC)
-Received: from schlaraffenlan.de ([37.59.142.109])
-	by ghost-submission-7d8d68f679-vcd69 with ESMTPSA
-	id hmAFO/6DwmkUAC0ArTSWTA
-	(envelope-from <kernel@schlaraffenlan.de>); Tue, 24 Mar 2026 12:30:55 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-109S003ed53ded7-96ff-45f7-8c67-28a18facea0a,
-                    CD5E8EA95EDA92FEB9CD9D0381FAFF9B3BEAAE73) smtp.auth=mail@schlaraffenlan.de
-X-OVh-ClientIp:95.90.63.4
-Message-ID: <888f8670-856a-4ce7-8177-da78ba4f0c8a@schlaraffenlan.de>
-Date: Tue, 24 Mar 2026 13:30:54 +0100
+	s=arc-20240116; t=1774359824; c=relaxed/simple;
+	bh=/ylOcjp04IZwKVHpRUdxg2ozK5RLjZJ+kKvLT4Lq8l4=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=GnAKXKrCjfBjQkYdoIulq4ENZh/wS0w6AUq1SvQuN6O7t024Rse5nhoc6Hw8SltFE1K9d06oJ8dv5r3+Qf8i0DhJBbTdxCgLCGt7P7aphplaxoPdz49Cf9gi45Ehcj7qWSDD4h6vowj96Ymh7AWjbTOKI4KfY9q1HmlVtvc3T28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtCCR+1G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xjGtjczI; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtCCR+1G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xjGtjczI"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73173EC01D7;
+	Tue, 24 Mar 2026 09:43:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 24 Mar 2026 09:43:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774359822;
+	 x=1774446222; bh=fmW8Hve4/FmqsWoGrLR2UhQkBAbvzdSfZVe8TUJV/es=; b=
+	QtCCR+1GO+t6trL+RjgenvntluZIQY+Juku63yp0HkWFr6F9BE0CtXE8T6WH9ydK
+	S/iBYTcW6EakaLF+ObZZ1aQS7xdc4LpDX4trdCeSCZJN+FGzRYg+RM9bT4Aqqu1G
+	YFuqxdxuu67/62cfSBs+I6Le3kukMLm4EkgsUP5YHy8bZI638TN+nfMS0OX7kQWm
+	dLREJVLQ8n43R2d5haAP/q54i0xFVKnPxCBvwJ6kWHgqW0hRSAoaCLKhEXip4lnO
+	dhdkc4kyzL80wRHA2XfpSz1d/XngTkpMNwmwubX+m5jOnmLBsItjrjtyRwPE61j2
+	HDxfiXd1AhoKv8EaZrzOAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774359822; x=
+	1774446222; bh=fmW8Hve4/FmqsWoGrLR2UhQkBAbvzdSfZVe8TUJV/es=; b=x
+	jGtjczIEYRlMcPTsT9NrsOVtZ1HzMu/v0OG/vaZ7dhGZMCo+FvA4qn32NuxUsOZS
+	ytvcf96nlg6fUdqTNWQxAkQVPzGpQolOL90ChmSosYm97LP/HoxiqanETty59oUS
+	uBaQNPfVYbHi9RIpd3J4anOln/0HDERUGniQpf3Vs9umfnKYnSlS8uzpgUv+ZgTu
+	64dtQorAKG8pCX5x3TLPjbD2ODJgln9ELaZPZmDffIfwMZ893cEDZoLf4ikVOMWR
+	NXGG/KVo+L2+ELlIKv9VuwOhm+JmpvsfaZ2gMT8mooMrFNeY7UhtfVK9vxYZxpS7
+	AsOoRFdEPQiUmEdg1ylZg==
+X-ME-Sender: <xms:DpXCaQkBYVofZXK2DKqJFbdVAqXSdjkRc9QicZGH9shUh_FQa3DFuQ>
+    <xme:DpXCaW1HtseC82oEM5294aqPSgWqyftL2lYO6byZUHH3p7ILN4thgkeAmJ65bRXoL
+    FUdVPEz0tzfv-Kw3uHP09Nl_HCwy1Hhqh5f3Hq8uqVv-JEQwIrAZg>
+X-ME-Received: <xmr:DpXCaTplLpkEJNameGgNYgGOtnd4XRF2wAG_qoJdasD4LrW3JlfH7sMAvsA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvddujeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufhfffgjkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeeikeduudegffeiuddugeefgf
+    eltdejudetveeuuefhiefftdefleegjeefvedunecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigv
+    shhhuggrghgrleelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DpXCabdDS16nOPZ026pHl_EC3EXA9tot1hZSNswBDz_nrrt3LbSkxg>
+    <xmx:DpXCaap015BEKq853zC6awHTmfwGkrSpsBotHtNM8C0Gju_MCOAuZQ>
+    <xmx:DpXCaUG224X_YwbMR519kGU7-OBxtQMDHwCJDipVR3_LTUKSRcYg9A>
+    <xmx:DpXCaSsTIk5AF4_PqLtLjlqQty6HkMT-Z5KlgY70wmR_isQyB91FkQ>
+    <xmx:DpXCafKXVPom6GuTlKMxxm4oJscZQ8kbHJbra3oPBn7lV3Vbvgqyq0H6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Mar 2026 09:43:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: jayesh0104 <jayeshdaga99@gmail.com>
+Cc: git@vger.kernel.org,  a3205153416@gmail.com
+Subject: Re: [PATCH v3] t/pack-refs-tests: use test_path_is_missing
+References: <a26599ba-01b0-4587-ba0c-bd28a822c615@gmail.com>
+	<20260324044619.43944-1-jayeshdaga99@gmail.com>
+Date: Tue, 24 Mar 2026 06:43:38 -0700
+In-Reply-To: <20260324044619.43944-1-jayeshdaga99@gmail.com> (jayesh's message
+	of "Tue, 24 Mar 2026 04:46:19 +0000")
+Message-ID: <87jyv1jqb9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] rev-parse: use selected alternate terms too look
- up refs
-To: phillip.wood@dunelm.org.uk, Jonas Rebmann <kernel@schlaraffenlan.de>,
- git@vger.kernel.org
-Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>
-References: <20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de>
- <20260323-bisect-terms-v2-2-8d6bdb2c9c7e@schlaraffenlan.de>
- <d366fc82-efcc-46cb-9536-cd38b1fd18d4@gmail.com>
-Content-Language: en-US
-From: Jonas Rebmann <kernel@schlaraffenlan.de>
-Autocrypt: addr=mail@schlaraffenlan.de; keydata=
- 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
-In-Reply-To: <d366fc82-efcc-46cb-9536-cd38b1fd18d4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 9511320940039603132
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFgsDU+OLy76f54KrhO2KPSj7isArS1RXD3V2eS58mdDB9B6/IV3Y//CZKBrMFE43xexpeAZdMZ2RaYN1uKwHE/tCavzMjBPHh0JAmAnwPou3v5I2kC8Ubk8wC5pItoGJes6BM/hl5DllHaB53GNawdc1Bz794f4SNEjcM6i8pS6Xp5OYThUYryXtzP2/p54FrGo9CQIhxq4MfPBlKdp5VfySsTS10jnMdRRrzYZL7ot7BiE1GkvOw8sOEUcuS1jpVbajP7zue0hTzPSLXl4YJ7TrpMzYya0ij6MKCqFe0tRc54yaWZlOLxoL5GxzeLvzycj50rK2AP6GyLdzjov+CQiguPuy2F6tO8yY5RNC+agjDHmvdox+XOBTVmPRxLDC3wbMwsYGcE9TPZcmtql+hvwTjYlpQYXZaiWUalKFGMaq7zz5wG4Gxfg/NGBGc6SHxvzfrxgXIAUihRPqHNW262O7T5wImwp53KVRObhrixJ+eiUB+U+lnUCCRSoBC56ymPhc2EqwuHVl8uk6iGOqf+K3jikyLV2i7fz7KkDDn1QK3cd105vS5LlGEL5VBgCJUWtFGmwc5XZVoO4ek03KMDn0KN7jbtlq+j1X/HS/wZ2PIW/NgAbZUEgWvwyGAEVnJkjauxFeErLU2l72DzbwOx2DoFUP1mTrSOT8YuxaiYCQ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi Phillip,
+jayesh0104 <jayeshdaga99@gmail.com> writes:
 
-Thank you for your feedback, it will be addressed in v3.
+> Replace the raw file existence check:
+>
+>     ! test -f .git/refs/heads/f
+>
+> with the Git test helper:
+>
+>     test_path_is_missing .git/refs/heads/f
+>
+> This aligns the test with Git’s testing conventions and avoids
+> direct use of shell test constructs.
 
-On 24/03/2026 11.49, Phillip Wood wrote:
-> If we fail to read the terms because there is no bisect in progress
-> then term_bad and term_good will be NULL and so the next line will
-> segfault.
+That makes it sound like "avoiding direct use" is a goal on its own.
+Adhering to the conventions is good, but the ultimate reason is
+something else, isn't it?
 
-My understanding of read_bisect_terms() was that it never sets the terms
-to NULL, that if no bisect is in progress, .git/BISECT_TERMS does not
-exist, and the terms default to "good"/"bad" here in bisect.c:
+> v3:
+> - Fix commit message to accurately describe the change
 
-	if (errno == ENOENT) {
-		free(*read_bad);
-		*read_bad = xstrdup("bad");
-		free(*read_good);
-		*read_good = xstrdup("good");
-		return;
-	} else {
-		die_errno(_("could not read file '%s'"), filename);
-	}
+The above two lines plus a blank line should come below the three
+dash line ...
 
-So is a NULL-check really needed on caller end?
+> Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
+> ---
 
-Regards,
-Jonas
+... and placed here.  After getting committed, "git log" readers
+are not interested in learning how many wrong turns you took or what
+mistake you made until you finally got to an acceptable patch.
+
+The name of the game is to pretend as if you were a perfect
+developer ;-).
+
+>  t/pack-refs-tests.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+> index 2fdaccb6c7..4a85d96c6b 100644
+> --- a/t/pack-refs-tests.sh
+> +++ b/t/pack-refs-tests.sh
+> @@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+>  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+>  	git branch f &&
+>  	git ${pack_refs} --all --prune &&
+> -	! test -f .git/refs/heads/f
+> +	test_path_is_missing .git/refs/heads/f
+>  '
+>  
+>  test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
