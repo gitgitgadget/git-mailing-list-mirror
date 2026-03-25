@@ -1,129 +1,126 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541FC3D9024
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 15:44:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774453479; cv=pass; b=TL0zlMgLdnrh5mKpt8Dxu5jHA2PMhyQMAAG9NR1fPQXDgBiy/aa+1ufVZ79HWGrF3xpmvOgmFL4sI27rAgmUtd6v/fgbCU+gccTiWra1PfuFEO3ZRre3gMIsvzlyiufebGu8hRlaoD2Ma0EKVEyjfY+9ddOEyLekCp9ulUoRX+M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774453479; c=relaxed/simple;
-	bh=/IgzxZ1PVB9QM7So4rbdcm1vpCQfDrBTrfe/8BpV86o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MmEWBytfosb6rRTxMBsuqQfZBMC7DVDD/2PxgYHaNHM93E0WzncUnMgIfTCt0PtJA6NwAciW9RKYnF1m/Dn+s0d4gRS1Nr1Nob0RBMB6Cz4RUEoX7RyuHY7Nf3WAGDLcM46djYm03LPPdd7gp2IyrXZBtIbbskufAeoQ6o4gNqA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIx1tlHJ; arc=pass smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D67B22D4C3
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 15:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774453559; cv=none; b=nzcIiGCq70o4J7/66RopAdgfM7zR/Og6AdvKxnCTAqZBI3C4FYMRFK5WrG82JRVgw+8z/0IFCyWZmcxcHt2yHdQs2ZJnnA71vjtmU7TfjoCDuX7CjaLA/QHtzfhRBOX5KrBBOFyjByJjDCFURU5rb2eg0R/mOC5X2m3N8gCCFTc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774453559; c=relaxed/simple;
+	bh=54PsCTWw3PHJMAGTb/t6ETCev6a+UmlgcYDyZbAHEsw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IwVjN9R/LFwQ0oc5OjQYlGbbHj4Shu+r9uREEL6Siv+klBSAY/WYxs9R5C//9fXdJrkgoM24vCsl3ZE8lbD/gh/R5n8G0VuUpXwp8zcvdGh+FctA3jDhqp23ju0pquYgbGxl3tPm4R/lU2C8mBrEfXCnJ2L2yxgM8NwEHchB4ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=buOxBv3S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PHx4u9Tw; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIx1tlHJ"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-82a7539851fso8128b3a.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 08:44:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774453478; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lXzP3nfEHVB3ksd8MA4D0JPmZdb/OwiFZ2OxAe6E46Up0H0P6gaVZ5iLstlvplNHVE
-         5JlECHEIoAkrgvvSJbslVPQ9HaMSVuLUkJSV/EvUiNr8XXBmfLXi9d+SRm5PvL6dFzDX
-         GquUQNRNizcOcfuHxMe34ocbLq+w31oxd3iWfUD7AhTuV1j1bc/Sd+HaVjGVxsSrr2XS
-         aR8tF2bdDAcrYJ2HsosnnBy3IfT9srK92n+yhkgyEmBN0UTDWnlKMlktLNXk547yB3WU
-         OY3yexRA7yFbT1//mW7lg6INO/vkjlWPrxpN1USHm8lP3TU1+RCcThErbHVJYA1Qcxd2
-         Jr7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/IgzxZ1PVB9QM7So4rbdcm1vpCQfDrBTrfe/8BpV86o=;
-        fh=bo5yI0LSq1KdRlgM7QvxVoRAuaO1W8lVB+kobQRX1Vk=;
-        b=f4GbQs3iWBkp2y0qOalanhDoka2a8M7MVfNAO22+ccKkQXyHmHwa6kq/FwfZOBO8T4
-         OFROWoB4Xiqx65FZuqgQpCgpKLfOfyeQJrqph50gU04lYjT75EdIUAd8ocvzXPnCUZxC
-         HMiLU/NnP4How1BYrQl8qWBX6xauS2UeSw2u0HgMeVjc+SSk6/7AxtsfY0rwtG9Y/D8u
-         ZFJCVspX4ahxkisKYHYrxDQWxlKKDJHvN29PlmY3JM8MyYV9Xvhl17CweIcuO3DX8UZX
-         pM7pcbp9fwueC73HA+vPfUa7dQMcjyCmydy6WOwJjHpi5ok5iyZtRjCCxOeCr+GIF8ly
-         v4Gg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774453478; x=1775058278; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/IgzxZ1PVB9QM7So4rbdcm1vpCQfDrBTrfe/8BpV86o=;
-        b=fIx1tlHJh4riAvVnahJmV1DOgNnG0MzGVwR2AtadbkbReVpdSz1lPULQot62E8C8cY
-         /WLkotO6WudvI4YNhIld5AiOC0hX1lhiJ7HQKfCOD/S2P/pzeylC/CWAtqqiv6/AAcft
-         9wKUyrruDrZGiDCrF+tMjZVd2rux6bIjnRRwvRRCpgz7eWdmPoj60rH/hmeMmOzTFo4K
-         bkII5jF3jIRC0rXbhwd5eqSfdEtES1HAwRrwXT+cTZIZ6ijUzKunQnQu+kiyrcOx9jOC
-         myg7g3xmFpWgg4ClTgGYY6idWUrwDzeM0eqPTF0FQCXaJgW5/BVRnNM2u4OT5HbXF6X6
-         dt0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774453478; x=1775058278;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/IgzxZ1PVB9QM7So4rbdcm1vpCQfDrBTrfe/8BpV86o=;
-        b=eXAP/EfF0R/tKkK8dWyaAJF3TXHDHFoTFLZLXy2w/6IDW243rpDb/o0HXQXincuqty
-         3zgR2nN5qRR5Uz1U02BPsOy8jzkKwa9P/ujRLrnJ9PQl5dCjlSUNDSVTFRXEoLOn1e1p
-         Kficy0P7aHh/wjY9nJr9mcMWoKRlIyBq5CXmdmSINZUcp9r7aM6BoscuYcwt+h2omP/L
-         EvJDnzyHEsPZmZRsaNKBLwQDQrKBftyA8qBGUiougy0E7lLpin59xURVt3Ojzs2btqBT
-         UrWw3fRj3YiHRpmLPm/ODViOBbNN29I5N2LaXleHmraHEGd+pAE+vJR2Js7EV740a5oi
-         bpcA==
-X-Gm-Message-State: AOJu0Ywih5e3JVVEEctEYecsIVUGuGJnqUfZYiHtETdWP4NaE3/uBaSY
-	w+hLSkrXh8W+4pfrVFopeIFOrfaHBuAvJFpo1YgKEnVZiapcGWVQMauo8iHCUYjVCDXM/9fxddg
-	IJPu4WZyZQpRQEMcFUyKX+LM74N+bzbM=
-X-Gm-Gg: ATEYQzyQa7IN5BDp/5giyjeBiRIncE10Gr+VT9CtDhhYw2kFjc+taXuLevUF248NnSU
-	SBXF04brE8XkBj16R4q3ck4KoVlC3hs9piqK15eUbYJRVofXCaoaWNog3w8l20kHJSwhlgv0Lk0
-	Yhih+zdiZUjqQkgYGSLxcHwvjG0K67uDFXUBfuZ+2qbXwCN5ilcW5OwNfprcCWnqMDmSRsd6E+8
-	TjT3XAypqMyWBXzhK+7jU17yYRyXWCgBRQwB/St6rMD1GJd/+N+sdh4Ln9vSdD2cxPLNAFufPVT
-	zL0VrqnjywigGsbSVlBLgSDJfogWqKgt3XgvaCKvG56kojoFpIJbcD0FNmnUs7nZHUTLDPaBFW8
-	LAgUq
-X-Received: by 2002:a05:6a00:4147:b0:829:8139:d5cc with SMTP id
- d2e1a72fcca58-82c6e120e91mr4186524b3a.62.1774453477579; Wed, 25 Mar 2026
- 08:44:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="buOxBv3S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PHx4u9Tw"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B51B21400167;
+	Wed, 25 Mar 2026 11:45:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 25 Mar 2026 11:45:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774453556; x=1774539956; bh=v5YKsVwmt9
+	Fxy/jimq8nftYpcOoTbUCuiL1H86cHCgI=; b=buOxBv3SXn3h7z2HofDBXdqOla
+	EwCIsA9tHWXKUq7z6vPRM7hv6iIA0pcoArILvTVh4c62q0SSyoyU79yeZEzQR1R0
+	MthBIrmThdgYL343lE8Y/fsKEv79it+fqlihgFGmzOdMC5zCjSabSxb97s37YyvP
+	whQw4quQypOWsfpuX+J5xmwM7i+A+rS8GXt19b2HvfLp24t3GYkD9CVg3Hz0FSlP
+	BQdQCWtnoSDmMVmpYl6Efp7JwAGSTvD8EgTwYWi2auXQ3vo8xyFezg9JEd+hXvbI
+	jesnaqKkZTp7Ovw7oy3/MMQLt2jA7fjG500zjy4FHakjvdJFTTXa/vhYAMxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774453556; x=1774539956; bh=v5YKsVwmt9Fxy/jimq8nftYpcOoTbUCuiL1
+	H86cHCgI=; b=PHx4u9Tw6zq4Ymx6RTh5JtPJ6A8UIMKCss4zxNIxvra4VTJuXTo
+	fDXqNupg/b5/rLY2qu+HXzDCaIu6LmQjwxQF1qOHrqCdGQIrkE5KCKfHaUk/eynM
+	NEiHzuqUzv6WRRnwc9rRuw05zdjDPykh+sV6FPlxTCPGJqXbtlJSykQ50cq/rp37
+	Eig0gp7q0xDDaren9I8xIZzLETNfBbsNAm08Nua83iYNI67tSKYWHkacjdf5orzy
+	iSGOtBHp+V/YSzcLP/R3V5aUuHRZ5F0yVQL+Sno4LMtfUOkz/5eu2cU/1NR1hnv8
+	DuQdfbbHOyLowTORTByeEJgvvImfL75Mzjw==
+X-ME-Sender: <xms:NAPEaZio0nh6ITpaCdTC3NdZCliHXgNWFqpYS443XI-N0dYvTgiBEQ>
+    <xme:NAPEaVdQHKNl-7-iGlz9koA1hP7AuzRGG-_yRlUvrL155-Qy4YbeZKifedqV-aTrL
+    ylLFa5VB2Vm4orMmeMjPm56Tc8xVtWnrXcZX-Bi8lG4rcMTXcNq8g>
+X-ME-Received: <xmr:NAPEaWdn7pkkLZ8MunSCP6WZ434L4zDsRFM9fkHkGKhNKMBFxTCioBIaM0JxLdSF-huQ1jkI0QUWzST4JLIXxCmwIb9SI8xOvA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdegkeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:NAPEaX8UJ0l_FAh-bKkNJ5H4m8UDbNNvaPSkQHxnZ5LXCn_0DnG9Bg>
+    <xmx:NAPEaalPg7PJ85XNAdBVXfSO7FC075rpsQvdeplyDy_gkjjih2qjSg>
+    <xmx:NAPEaR9C2HCmNnGYp6WuUnpu7hJ-v0FBg52YqedlGziJiIq_b7HaEw>
+    <xmx:NAPEaQkL45vQM_L-KVSLcDjiW4wSDCVgJ0sf3ITMOQslXtGvohUdrA>
+    <xmx:NAPEadm1URL_a85OHCjpJbd84ymc5gIDlQZ0lOn-Yku59YfeZoiwzpR8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 11:45:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 03/11] t6002: make test "set -e" clean
+In-Reply-To: <acOLlLzphGMfZeN6@pks.im> (Patrick Steinhardt's message of "Wed,
+	25 Mar 2026 08:15:32 +0100")
+References: <20260325062114.2067946-1-gitster@pobox.com>
+	<20260325062114.2067946-4-gitster@pobox.com> <acOLlLzphGMfZeN6@pks.im>
+Date: Wed, 25 Mar 2026 08:45:54 -0700
+Message-ID: <xmqqcy0rykst.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260325075055.354709-1-luizedc1@gmail.com> <20260325075055.354709-2-luizedc1@gmail.com>
-In-Reply-To: <20260325075055.354709-2-luizedc1@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 25 Mar 2026 11:44:26 -0400
-X-Gm-Features: AaiRm53tii8Na2qJGJJCelXFPUeMnG__aUEP-oVqeUQ_ZxQ82LLOY0VeBFp90Vk
-Message-ID: <CALnO6CD15Tcs+Sr7XDO0eB3KSC7RT2oawTiSpUGdrQkfbPJQtg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] add -p: support discarding hunks with 'x'
-To: Luiz Campos <luizedc1@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net, sagotsky@gmail.com, 
-	Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Mar 25, 2026 at 3:53=E2=80=AFAM Luiz Campos <luizedc1@gmail.com> wr=
-ote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> I've got this alternate fix, which I find a bit cleaner overall. With
+> `$((...))` we don't have to worry about the return value of expr.
 >
-> When using `git add -p`, users can stage or skip hunks,
-> but cannot discard unwanted changes from the working tree.
->
-> Introduce a new 'x' action to discard the current hunk by
-> reverse-applying it.
->
-> This idea was suggested in a previous mailing list discussion:
-> https://lore.kernel.org/git/X%2FiFCo0bXLR%2BLZXs@coredump.intra.peff.net/=
-t/#m0576e6f3c6375e11cc4693b9dca3c1fc57baadd0
->
-> Feedback is very welcome.
->
-> Signed-off-by: Luiz Campos <luizedc1@gmail.com>
+> Patrick
 
-One feature the Fugitive Git client for Vim supports is to discard
-hunks; when it does so, it also prints a message explaining how to
-recover the hunk if you need it.
-
-I think it writes the file as a blob to Git's database before
-restoring from the index.
-
-I'm not suggesting Git copy this necessarily, but we might want to
-consider how to help folks when they lose a hunk they didn't mean to.
-If it's never been in the index, it can be impossible to recover!
-
-PS How different is this from "git restore -p" ?
+Yup.  I agree that arithmetic expansion is much easier to grok.
 
 
---
-D. Ben Knoble
+> diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+> index daa009c9a1..f2de40b5ed 100755
+> --- a/t/t6002-rev-list-bisect.sh
+> +++ b/t/t6002-rev-list-bisect.sh
+> @@ -27,13 +27,16 @@ test_bisection_diff()
+>  	# Test if bisection size is close to half of list size within
+>  	# tolerance.
+>  	#
+> -	_bisect_err=$(expr $_list_size - $_bisection_size \* 2)
+> -	test "$_bisect_err" -lt 0 && _bisect_err=$(expr 0 - $_bisect_err)
+> -	_bisect_err=$(expr $_bisect_err / 2) ; # floor
+> -
+> -	test_expect_success \
+> -	"bisection diff $_bisect_option $_head $* <= $_max_diff" \
+> -	'test $_bisect_err -le $_max_diff'
+> +	_bisect_err=$(($_list_size - $_bisection_size * 2))
+> +	if test "$_bisect_err" -lt 0
+> +	then
+> +		_bisect_err=$((0 - $_bisect_err))
+> +	fi
+> +	_bisect_err=$(($_bisect_err / 2)) ; # floor
+> +
+> +	test_expect_success "bisection diff $_bisect_option $_head $* <= $_max_diff" '
+> +		test $_bisect_err -le $_max_diff
+> +	'
+>  }
+>  
+>  date >path0
