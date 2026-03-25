@@ -1,24 +1,24 @@
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5203A75A8
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2163A759F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774433093; cv=none; b=D6JBQInduGlRo4p2I4wRo8PbMeDRU/jstf3mVsSaopNqri2eaCieAMCKT0DevCcvdxAQxyfMcyXlTQj0vyQXSCjPnC98w4e9m489O8hMwZvPwACCx9i3f7QTDMIAtqRMIe4EzLsgVhY/zK9gXqdhel8LR88Psv54FtFO8mhC5Uw=
+	t=1774433237; cv=none; b=TiINVI9bNoRHfkkmYRhVokjfAV93Qff+8nRtBcs46hlQcyAHEexOa0XXTXMRkA0SLi6hUyRdh4yZe+hbR2+9bWblLWp8raUahv5HoJl6UoVXL9n8sdBUfniitNFjV0hASrJqQ/ywTBfoz8waCyeM3hqO5ClW4Lb4JwJKJAGqcuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774433093; c=relaxed/simple;
-	bh=HDFMXt3Y5zsMaoibK9xdl88skB3NP8T26uSdVikfmMA=;
+	s=arc-20240116; t=1774433237; c=relaxed/simple;
+	bh=T1hJBMCiHTth7M/07niXVabVJ+/AFOMHxSG55mnZ1tw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GDwpMEnJZ1fkgJQTsRksIv96WfN/UP/06l+U26wL87jKRDfCgAGaM1Oz6ueWGmGGGWLRVVTg58P/h8rN6g2mFurFxXwwRmo95sAciCYxvGqF7n4PSpSopoFNVEsLGw+BD4UAjF7qD21hmWWPSVKESZvIfFEL1VBs7rdAyhveYpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+	 In-Reply-To:Content-Type; b=q0aq7CJkcnFRS2IOBtfx1jKIqSq62S+kSGMhhpoFap5QVZDT88z9LpcQGOEyjBhC7fSHA8kNVdFaT65RMOo8WyUHtMT1kjUkw4+hIW8HnGAIseyWRFa4d2K+AukQK+3PY9cn/3v7sOp5rkjVoXAGz1FJvT2//HVpd4eFoiGj+QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
 Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4fgjFD71YFzRpLH;
-	Wed, 25 Mar 2026 11:04:48 +0100 (CET)
-Message-ID: <19cef686-6287-4916-8fec-a9ffe33f7889@kdbg.org>
-Date: Wed, 25 Mar 2026 11:04:48 +0100
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4fgjHt4lGbzRpXD;
+	Wed, 25 Mar 2026 11:07:06 +0100 (CET)
+Message-ID: <6cdcece0-8cc5-4c87-8727-6d3e17424a9e@kdbg.org>
+Date: Wed, 25 Mar 2026 11:07:06 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,122 +26,110 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC PATCH v4 2/3] graph: truncate graph visual output
+Subject: Re: [GSoC PATCH v4 3/3] graph: add documentation and tests about
+ --graph-lane-limit
 Content-Language: en-US
-To: Pablo Sabater <pabloosabaterr@gmail.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org
 Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com,
  ayu.chandekar@gmail.com, siddharthasthana31@gmail.com,
- chandrapratap3519@gmail.com, gitster@pobox.com, git@vger.kernel.org
+ chandrapratap3519@gmail.com, gitster@pobox.com
 References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
  <20260323215935.74486-1-pabloosabaterr@gmail.com>
- <20260323215935.74486-3-pabloosabaterr@gmail.com>
+ <20260323215935.74486-4-pabloosabaterr@gmail.com>
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20260323215935.74486-3-pabloosabaterr@gmail.com>
+In-Reply-To: <20260323215935.74486-4-pabloosabaterr@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 Am 23.03.26 um 22:59 schrieb Pablo Sabater:
-> +	/*
-> +	 * If graph_max_lanes is set, cap the padding from the branches
-> +	 */
-> +	if (graph->revs->graph_max_lanes > 0) {
-> +		/*
-> +		 * Get the maximum width by multiplying the maximum number of
-> +		 * lanes by the size of the lane "| " and adds the truncation
-> +		 * mark ". "
-> +		 */
-> +		int max_columns_width = graph->revs->graph_max_lanes * 2 + 2;
-
-Please be to the point in the code comments. That there is a
-multiplication and an addition, we can see in the code. Perhaps:
-
-		/* width of "| " per lane plus truncation mark ". " */
-
-> +		if (graph->width > max_columns_width)
-> +			graph->width = max_columns_width;
-> +	}
-> +
->  	/*
->  	 * Shrink mapping_size to be the minimum necessary
->  	 */
-
-> @@ -1022,6 +1043,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
->  	 * children that we have already processed.)
->  	 */
->  	seen_this = 0;
-> +
->  	for (i = 0; i <= graph->num_columns; i++) {
->  		struct column *col = &graph->columns[i];
->  		struct commit *col_commit;
-
-Is this empty line really needed?
-
-> +				if (j >= 2)
-> +					truncation_max -= 1;
-
-I think it is more idiomatic way to write this as truncation_max--.
-
-> @@ -1288,12 +1365,20 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
->  	 */
->  	for (i = 0; i < graph->mapping_size; i++) {
->  		int target = graph->mapping[i];
-> -		if (target < 0)
-> -			graph_line_addch(line, ' ');
-> -		else if (target * 2 == i)
-> -			graph_line_write_column(line, &graph->new_columns[target], '|');
-> -		else if (target == horizontal_edge_target &&
-> -			 i != horizontal_edge - 1) {
-> +
-> +		if (!truncated && graph_needs_truncation(graph, i / 2)) {
-> +			graph_line_addstr(line, ". ");
-> +			truncated = 1;
-> +		}
-> +
-> +		if (target < 0) {
-> +			if (!truncated)
-> +				graph_line_addch(line, ' ');
-> +		} else if (target * 2 == i) {
-> +			if (!truncated)
-> +				graph_line_write_column(line, &graph->new_columns[target], '|');
-> +		} else if (target == horizontal_edge_target &&
-> +			   i != horizontal_edge - 1) {
->  				/*
->  				 * Set the mappings for all but the
->  				 * first segment to -1 so that they
-> @@ -1301,13 +1386,14 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
->  				 */
->  				if (i != (target * 2)+3)
->  					graph->mapping[i] = -1;
-> -				used_horizontal = 1;
-> -			graph_line_write_column(line, &graph->new_columns[target], '_');
-> +			used_horizontal = 1;
-> +			if (!truncated)
-> +				graph_line_write_column(line, &graph->new_columns[target], '_');
-
-Huh? The indentation of "used_horizontal..." changed. The reason is that
-this whole if-branch is indented too far by one tab. Perhaps an initial
-clean-up commit that only fixes this indentation?
-
->  		} else {
->  			if (used_horizontal && i < horizontal_edge)
->  				graph->mapping[i] = -1;
-> -			graph_line_write_column(line, &graph->new_columns[target], '/');
-> -
-> +			if (!truncated)
-> +				graph_line_write_column(line, &graph->new_columns[target], '/');
->  		}
->  	}
+> @@ -1259,6 +1259,11 @@ This implies the `--topo-order` option by default, but the
+>  	in between them in that case. If _<barrier>_ is specified, it
+>  	is the string that will be shown instead of the default one.
 >  
-> @@ -1356,7 +1442,6 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb)
->  		graph_output_collapsing_line(graph, &line);
->  		break;
->  	}
-> -
->  	graph_pad_horizontally(graph, &line);
->  	return shown_commit_line;
->  }
+> +`--graph-lane-limit=<n>`::
+> +	When `--graph` is used, limit the number of graph lanes to be shown.
+> +	Lanes over the limit are replaced with a truncation mark '.'. By default
+> +	there is no limit.
 
-This removal of an empty line isn't warranted, I think.
+This should probably mention that 0 means no limit.
+
+> +
+>  ifdef::git-rev-list[]
+>  `--count`::
+>  	Print a number stating how many commits would have been
+> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+> index 28d0779a8c..650701df42 100755
+> --- a/t/t4215-log-skewed-merges.sh
+> +++ b/t/t4215-log-skewed-merges.sh
+> @@ -370,4 +370,57 @@ test_expect_success 'log --graph with multiple tips' '
+>  	EOF
+>  '
+>  
+> +test_expect_success 'log --graph --graph-lane-limit=2 limited to two lanes' '
+> +	check_graph --graph-lane-limit=2 M_7 <<-\EOF
+> +	*-.   7_M4
+> +	|\ \
+> +	| | * 7_G
+> +	| | * 7_F
+> +	| * . 7_E
+> +	| * . 7_D
+> +	* | . 7_C
+> +	| |/
+> +	|/|
+> +	* | 7_B
+> +	|/
+> +	* 7_A
+
+I'm confused. If the lane limit is 2, why do we have actually have 3 lanes?
+
+> +test_expect_success 'log --graph --graph-lane-limit=3 limited to three lanes' '
+> +	check_graph --graph-lane-limit=3 M_1 M_3 M_5 M_7 <<-\EOF
+> +	*   7_M1
+> +	|\
+> +	| | *   7_M2
+> +	| | |\
+> +	| | | * 7_H
+> +	| | | . 7_M3
+> +	| | | . 7_J
+> +	| | | . 7_I
+> +	| | | . 7_M4
+> +	| |_|_.
+> +	|/| | .
+> +	| | |_.
+> +	| |/| .
+> +	| | | .
+> +	| | |/.
+> +	| | * . 7_G
+> +	| | | .
+> +	| | |/.
+> +	| | * . 7_F
+> +	| * | . 7_E
+> +	| | |/.
+> +	| |/| .
+> +	| * | . 7_D
+> +	| | |/
+> +	| |/|
+> +	* | | 7_C
+> +	| |/
+> +	|/|
+> +	* | 7_B
+> +	|/
+> +	* 7_A
+
+Same here. Why is there a fourth lane?
+
+Oh! "Truncation" here does not mean that the vertial lines are cut off
+and are supposed to continue sometime later in the chart. It literally
+means that the *line* is truncated and just some stuff *on that line* is
+omitted.
+
+Ouch! That was not what I was expecting. I thought that truncation means
+that when the eye follows a line vertically, it finds the truncation
+point of the line at some point, and then the continuation of that line
+is again some time later down the chart. The only clue which lanes are
+the same would be the color, which would have to be remedied somehow.
+
+I don't know what to make of it. I have to reconsider.
 
 -- Hannes
 
