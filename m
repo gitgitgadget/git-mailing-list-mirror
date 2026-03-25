@@ -1,139 +1,160 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C8A25A359
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:33:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2D334AB1E
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774474388; cv=none; b=ZCScdyKGN+KQ1yw/FBbR3ZaagFCb19xbdR/o9hCqCLkEyK3noVWEd2QGE676aZcDVSfP9Z7MQGUKK8L+UPZkpb1xXp+G8qus/EoEL462dHW4yrAPJKJjci3YIKIi29lNGQK2yHXbMRP1YrFlA78QmQLnQp0mmxXCw2l/A3LXZgw=
+	t=1774475923; cv=none; b=YloKmlxFF3NOujzl0ANcrEcOIm9mC7D9z+UzFxzxZ36fq8/BEuVA5TeTaxgqi/f5zc2xETSiU3IC9yylWAUfBO3H1u0HSBDmZLObgGJhOmgxOtW2UIDnLEFod+t1MUMhEeAKuakt+5zq8E8rQm6o9FMzOJBRlOlQNwL8t8Ep2es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774474388; c=relaxed/simple;
-	bh=jgEIpgd53rYyRf8RVNJJQTsMw7eWYPS7VAu0ySHfagY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L2BtPNIaeogKIcLtpZMJ6Ei78qhZkIV9FO2bj9fHVh3NbT2bNUGW6ARh4fgVYG973Y439CucL0jLqolr8bGRZx0K8O5TqMmTLiYH4IvEMnZ7u4HAgPWF1ij01qZpGctlBKhVZQPfsW7QQab7pbSd4J15SrCYKJdIyjSjRm+LLic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBiTVceV; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774475923; c=relaxed/simple;
+	bh=3WqJ/I3nmqH8BO5TxBJpp+Nyl1nrIM9ljATyYJZqvOo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iHTO6rxB9KyfeD/B7bxXB58mgLwZpllakfw3deq9djBw11HIo2rxzSElVUXGHxB4OPl+O3jG1hEkEfyZluH9D3uHRJUl80IDMDh4VaLdzZfZa5ahutVKqRmRKoNmHJmFyg3BdgdZfJdPQ7mbcFZmG2LrxWO33l7dB1JChkJpnEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F83vF+GL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v/lR7gh+; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBiTVceV"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48374014a77so3772255e9.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 14:33:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774474385; x=1775079185; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+bvJkZvGb9ueZ9NIVunsHBRGlBQp2sUKltCmGstrBvA=;
-        b=kBiTVceVpIH4YBTLFzzuc542v085jCADFMdU0jbscv7sAxNB1Z2Hx+0IJn/CY9y7+F
-         mNHOqc5MAMhwxKWdE+6Xg5ifIGnXn4Wh66+MWH0BntHOdb494V0+f8paVSzNe387YRpG
-         AB4RXAK2/78Y9ey2yWTGhKhG+GI2dErbhWAbTXJWbQ4ddAxCkvWNU57b8X4IGJK2BICl
-         YhuUKklqCKNt0Yv5VW0k7tD494Jz42vL0KMuuN7kmfQxV2QyzrztzBjYIJzJ8otz0ofu
-         zk9r0KMzIAYrvE6gHObV92bXWMKckEKYW6sbSvqr4oVXU0BWi6UKYbIxbYAzHYiTHSe3
-         iVGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774474385; x=1775079185;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+bvJkZvGb9ueZ9NIVunsHBRGlBQp2sUKltCmGstrBvA=;
-        b=htOGU7FDldwcU+S5ggX9KZmYqO0MypjdZ3gPwWDxOVSJZ552A9nYY9UmwIy6N0pKtr
-         6ftRSAOnvHhpze8dcM3uXgiw7e21640T1XbSjsGEgJR6xwGnoT3/E2YYqH1/3eVPPvsc
-         unfs6uuRCTk1r402u02PR5Av3P/UlTY938x17gXEFhvumxP0uwH7S/2zU7KRmwqzlISo
-         C1SJDA5LzKsA40g9Xl1dGuz1WXAWJmOwvxK+3dfLUfxt+ygfV5OG6s2T5FgqbkmG8gjl
-         Yr3MTDiKUF3pbUiZg1ltUbLxuSvCmfcyKsGpLfH8XLpDKS3y+u6Wye0wzxFW9Crdruj9
-         9AIg==
-X-Gm-Message-State: AOJu0YwraW3aDkQ2icMo+0ctbjWNnaJe/+eigk2LJYXdIHVY55CvCXyP
-	+5TWfyWl7+w/ZRoFsYXK2w+Jwb1rqeHD2Nv4C65xw6K9kp3L+Jc42Sr8
-X-Gm-Gg: ATEYQzxqecGCFT28/o387SabBv1Mq+sAnJO4ih9kYLAMbM/TEovCl8zB04qyqQnKmul
-	NjMoFb6oH00roJv4wDHgRJqGCwrmUF1nZ64JEPV0KPKnn74NWbOZAbYa9l5zteu59bb+XdISo2V
-	4tdfZQWjBRITsNKOMmJHkiVIkQp4cuEFZJcWF8iGGpXMHpszr27MRdfl5hddrgjDT0NTjIk8eQc
-	53Kx+N4fZUcsZl/8+vbSQkR8+GatfBW4Wzat983BubLC73XAuJQrjqACosWW5pMCYw2Pt6DnZ8D
-	bkF9vPlyXv6GSYdcTPh6u5XXeK3/aXfY6Kwsvke+zXF53NPadbUrPs5DmCcya4rh5+UdzM1B1Wt
-	OOd2zTHJbjpKxmfDC73Iai+XliWj9LWzkV+AGCKyq7yOFYTUZ2Dh/JCMguLrf1LCUXlwQsT4iRv
-	ZAu/75Birfg/bMyp56sJMwdliTasPiIwkA
-X-Received: by 2002:a05:600c:8489:b0:485:ae14:8173 with SMTP id 5b1f17b1804b1-48715fc3532mr74557575e9.1.1774474384785;
-        Wed, 25 Mar 2026 14:33:04 -0700 (PDT)
-Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48720926246sm348045e9.26.2026.03.25.14.33.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 14:33:03 -0700 (PDT)
-Date: Wed, 25 Mar 2026 22:33:00 +0100
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v2 1/4] pack-write: add explanation to promisor file
- content
-Message-ID: <acRUjAG7QOD5kVMI@lorenzo-VM>
-References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
- <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <fec0c24897092d19a718563ca4ef6e509ab104e6.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <xmqqmrzy45m4.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F83vF+GL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v/lR7gh+"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A90F14002B7;
+	Wed, 25 Mar 2026 17:58:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 25 Mar 2026 17:58:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774475921; x=1774562321; bh=UcP2JnotSZ
+	k22GulymJ0bb2i+2tD2LDNImAOlxoYDBk=; b=F83vF+GL/rfRzZ/Y+Bb2MHvsNj
+	xSwd7Tgv1W8zllujht+7ClRpyDjRRd2+UChH11ew1qrWWR6ORj/BX4FjQXOEapJq
+	L0SJdWnyX8dremNnyp8qODPfP47747aBm6oGchDUV2HiRmCDJqPWftqtRGmu7zYT
+	sBq/f8V6w24RNmpazJQWYvXkQkYPQ7EqrkAzlFGtKZamdfvSoKJWpTsrQIbAGs8f
+	znbEPIkbfFmUh5TVmL+G+kN/9Hyw8g5wt99EuctQ0OEsMp+vQIRfeF+5pCuoyZzO
+	4vFJ+C2MHPrpyeCrV8ElFFvrn1d6CDuR/b+Nz1bUT0DM6Lyy/D+qbMCF+/4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774475921; x=1774562321; bh=UcP2JnotSZk22GulymJ0bb2i+2tD2LDNImA
+	OlxoYDBk=; b=v/lR7gh+BH4AMWM+sfQ4mFhJ/9fFUy9zOAaNcTX8gWRS6fxfAwa
+	EPuI407kOnGKja5qsupbPAdlgVXJLPouKGT0SrT6wm/8igpvnXZesgfeF1l7wg+F
+	E48DTWoO29Wa16RgYJxp4AesUTgJ+BlG0Ja6aVJc8a2yY6arWNPF6Hynbjxi5K3k
+	lSsKn+x7m9rJrCP6bcHh4+S4aMVH5VMNK+U1nzG1Q4zsVXVkzBRJsWOqtURMlaCw
+	0kbmvCH5crMD0CghM0UhsLxRiEHUpLAXM5qSEgGxxw9jnU4NEJHUZZCorXVesEIw
+	j/tfaq2zoG6WNri8CdRChkd3zvGKjzAOwNg==
+X-ME-Sender: <xms:kFrEaU0GoDDdvPqtXlj4nXSH24jks8ywkaQATGcMOnDm9Iz61nRBZA>
+    <xme:kFrEaRq9e0EnLO3GEUfiHDK8HdAnxeI-NCpHkkN1nA5BRzdOsvbH8BMvIPpTlvr27
+    NL0V-OEhEf7If12vgVwrJYc-F68g3AmTUlUsZtACYpKiDmzCQ>
+X-ME-Received: <xmr:kFrEaQi1qnToOUzc3VSARWkGwaD8q40U76w0dJk7n7L7g0APsk0Wlpl-VT-jPmP1Xq_tFVZ9Dw4UrT5NcN0U29Zi7LduiQNkHw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    peihtghhihhnrdhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
+    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgif
+    rhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:kFrEad_5QOzUI0O4_8rT2zBcuuGVgQrMt5_kMc_1rzOlz9QMStjAng>
+    <xmx:kFrEacXtPDUuxVq8-3cTGzxTTWWcUsvzJg0Ay0z4hJm2XnlZqDJ5aQ>
+    <xmx:kFrEaRDxzYG1TtvzEcpcL1XOKeMZB58CtiyAgqwLtM_yCchWb3oA5g>
+    <xmx:kFrEaREACy-aaHXx7W3bb1tvWGNYZXUgq3QIXqI0dzZIzG_7wOEHxA>
+    <xmx:kVrEaXqGYKzwe56DS6D2tzfZlT8cRtnwLeSrK3klyXVfAvVvQEJaK8WA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 17:58:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
+ <l.s.r@web.de>,  Jeff King
+ <peff@peff.net>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Ezekiel Newren
+ <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 5/5] xdiff/xdl_cleanup_records: use unambiguous types
+In-Reply-To: <a52787f0194bf9f7d1e0abe024c423b8d93754fc.1774473065.git.gitgitgadget@gmail.com>
+	(Ezekiel Newren via GitGitGadget's message of "Wed, 25 Mar 2026
+	21:11:05 +0000")
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+	<pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
+	<a52787f0194bf9f7d1e0abe024c423b8d93754fc.1774473065.git.gitgitgadget@gmail.com>
+Date: Wed, 25 Mar 2026 14:58:39 -0700
+Message-ID: <xmqqldffsh9s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmrzy45m4.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Mar 23, 2026 at 02:07:31PM -0700, Junio C Hamano wrote:
-> LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
-> 
-> > In the entire codebase there is no explanation as to why the ".promisor"
-> > files may contain the ref names (and their associated hashes) that were
-> > fetched at the time the corresponding packfile was downloaded.
-> >
-> > Add comment explaining that these pieces of information are used only for
-> > debugging reasons, and how they can be used while debugging.
-> >
-> > Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-> 
-> A natural question any reader of the above (and below) would be
-> asking is: Who told you that these are only to aid debugging?
-> 
-> Please refer to the commit that brought in the reasoning behind the
-> comment to make it more convincing.  
-> 
-> Something like this replacing the second paragraph,
-> 
->     As explained in the log message of the commit 5374a290
->     (fetch-pack: write fetched refs to .promisor, 2019-10-14), where
->     this loop originally came from, these ref values are not
->     actually used for anything in the production, but are solely
->     there to help debugging.  Explain it in a new comment.
-> 
-> perhaps?
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Makes perfect sense. I should have done this from the start. Thanks for
-pointing that out.
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+>
+> Change the parameters of xdl_clean_mmatch() and the local variables
+> i, nm in xdl_cleanup_records() to use unambiguous types. Best viewed
+> with --color-words.
+>
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>  xdiff/xprepare.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index dd595cf8a1..39e48ad33a 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -197,8 +197,8 @@ void xdl_free_env(xdfenv_t *xe) {
+>  }
+>  
+>  
+> -static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
+> -	long r, rdis0, rpdis0, rdis1, rpdis1;
+> +static bool xdl_clean_mmatch(uint8_t const *action, ptrdiff_t i, ptrdiff_t s, ptrdiff_t e) {
+> +	ptrdiff_t r, rdis0, rpdis0, rdis1, rpdis1;
+>  
+>  	/*
+>  	 * Limits the window that is examined during the similar-lines
+> @@ -268,8 +268,8 @@ static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
+>   * might be potentially discarded if they appear in a run of discardable.
+>   */
+>  static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2) {
+> -	long i, nm;
+> -	size_t mlim1, mlim2;
+> +	ptrdiff_t i;
+> +	size_t nm, mlim1, mlim2;
 
-> > +	/*
-> > +	* Write in the .promisor file the ref names and associated hashes,
-> > +	* obtained by fetch-pack, at the point of generation of the
-> > +	* corresponding packfile. These pieces of info are only used to make
-> > +	* it easier to debug issues with partial clones, as we can identify
-> > +	* what refs (and their associated hashes) were fetched at the time
-> > +	* the packfile was downloaded, and if necessary, compare those hashes
-> > +	* against what the promisor remote reports now.
-> > +	*/
-> 
-> I do not want to sound too pedantic, but we align '*' asterisks in
-> our multi-line comments, assuming tabwidth=8 and monospace:
-> 
-> 	/*
-> 	 * Write in the .promisor ...
-> 	...
-> 	 * against what the promisor remote reports now.
-> 	 */
-> 
-> Your second and subsequent lines lack a single whitespace after the
-> leading tab used for indent.
+Looking good.  Moving away from platform native "long" and to types
+that have more specific meaning makes sense.
 
-You are not too pedantic! Ack.
-
-> >  	for (i = 0; i < nr_sought; i++)
-> >  		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
-> >  			sought[i]->name);
+>  	xdlclass_t *rcrec;
+>  	uint8_t *action1 = NULL, *action2 = NULL;
+>  	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+> @@ -303,7 +303,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>  	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
+>  		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
+>  		rcrec = cf->rcrecs[mph1];
+> -		nm = rcrec ? rcrec->len2 : 0;
+> +		nm = rcrec ? (size_t)rcrec->len2 : 0;
+>  		if (nm == 0)
+>  			action1[i] = DISCARD;
+>  		else if (nm < mlim1)
+> @@ -315,7 +315,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>  	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
+>  		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
+>  		rcrec = cf->rcrecs[mph2];
+> -		nm = rcrec ? rcrec->len1 : 0;
+> +		nm = rcrec ? (size_t)rcrec->len1 : 0;
+>  		if (nm == 0)
+>  			action2[i] = DISCARD;
+>  		else if (nm < mlim2)
