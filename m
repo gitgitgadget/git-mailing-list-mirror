@@ -1,143 +1,177 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9871B3596E3
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774441203; cv=none; b=cAebfBE8Al1UE53HMaIDqguTmE3p/6okU4NM2W0dlQfNnpVmKHVtOg/8r5s6O07ZlI72wd2TNWquUKcIbSX+H2vPtY4HbEqQyEQaGnyYw1v11EsPX4aS91UMQ6Rbat9cxFrCQ9qOR7HP8S/mPUOeQFtl4cEh8caGJP0Q/r1BO+o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774441203; c=relaxed/simple;
-	bh=9awbQyTkAVt8NoGPZrUsPPPNE2eZUa7JnkoE3zvlA+Q=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=NbKPq2lAXlhasLwTbJ7OKW3Uew+IEzB+HaLBnQ4aaF0y9o0qBROx01E4chWUdgWGc/j4ECayzsBGH1RNhRkdJxy/MdQi17m4h8EC5SonbXaWxtPDJ6FulnsH40GgqXv8+hICSXg7jvMdi/2AuP18ktvuV1LV0AQpBsTU5wr7DuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b8VHxT2G; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433F03A2570
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774441734; cv=pass; b=ZEC8P2/irZ3lGQlyO1dR8FY7W+fQvG5mciZ2kv6AG+PR/JAGj39cFbdgk7DBgwUxZ5Gibhec3pYH8nJrFKF0Xl/gGGGBxA2I7TPmcoMdKLqv0lsMHWSt83/13IUhzUTkr0mrfm1TUYPKXPbkqYEX9fXNmW54YeaLidyogTUnpDQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774441734; c=relaxed/simple;
+	bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HjkOHGtnFwgJ1dhCnBVs+k5m8AlNWpQICBkBfutRApPWWcxMijskl85e+xX4mWZf1qI4OcwJdJupCsK8PGEnYOuAWkhwudJFExlWQK5dafIryvLxmgsJ3pDiJprBCaLyDCCUIKr725aoleZwR9y9ibl2d95YRaIQiOKQ8JpQ0jo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IGTEGDaK; arc=pass smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b8VHxT2G"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79495b1aaa7so57397347b3.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:20:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IGTEGDaK"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-79a535e7c00so35820887b3.3
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:28:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774441732; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lHYyB71lKNRcGVmyJyaXkSLylcUfIjkWVVVBJSbhdQNPIK3SG2TxQg3+q+XyTlDCuu
+         Iv8ACF24cSVzmZ4hlUu93zczZ97TgVnRSIJoSau7NH4mD/shXOz4d8rFd7z86j7C/DjK
+         KtfoG2+3mnAizf2HsV5oJjknmCWrfGAm4UEgbASS3QAScmH8fsjmNHVIj7wd6srby4uE
+         DgJxZAaqtuuYndru1y4EyMf9TXxFRxUAbuTkdo8mfvWyKHHAbfZMNuCflcb2XPlPren8
+         au2n03YlMA7w8xmvjgqNhTk16gP9co9+u8hMApo0rHAfJTV6tq5C7HqgMyImp6Szxhl8
+         Jixg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
+        fh=tcHSeyFWSwrY6TQp/SiVMx2my4MAqsWo6eLCYHcaoH4=;
+        b=W3lxW02mPJ5lSnKAnMxKfEJ6Ao/gYDwiXEdAHs5uJD7unYId3Mbp2KWv1v2AuciYah
+         VYFJYjmcJ6x9OMHDUKpGI5NwhpATgl6x3rtXAGEmsbqqb3wFJsCMQV03RYBhdvruURJb
+         +gcBbjJwbbxEB8Pw2vCcDfaX6UGH8Y5LTbRpVrKuSAnRjJ1j/I0QnyN35Ej3rpMA0UaY
+         IKrK3gemnHEvEFHeKterAEUDmYktCaLWFKZttMipG1mFy6lC4vgjXXu0CdougLMSvcym
+         SQdKJchHh2m+sUmzbuBInusxa7uxgJ4YimMRTpOqkfYu8DN5YEqT3hb/WBmBJim66SvR
+         LoKQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774441201; x=1775046001; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qEjLsniM25W1o5h9zHc25KxxNquvYujqC0JbXjIcaH4=;
-        b=b8VHxT2GDkltXxQax5+Rz7GpYEue1LyTRZ6xCA7BaYXrhL0O+8h4EMSXLAXFfk/jyR
-         ODjYsfTNvcER2RvbQxxEEy7cBXhAGoKyh799H7BOjlF8dPZTIqirH5J/rM96tymIpELi
-         ij7vCwQAPA1F+FkFjAnMFxiD1Hl9n8lBpNW0i5Pg3i0QXG3Stm8BZY7s3LjzZ0Ed7NqN
-         Vf++chYZhrrdxae0N0JJBa7+3sw9VgDjj8Jrl9/yaS1M3SMpBKiU1rATCpVU8HP9WtBj
-         mp2OQ15/WrXyMgI1lIG7Vp7tAYgR0DhT1FJOXzhbc6SZMEFBITowskgc7e/WjCtvovyG
-         02Og==
+        d=gmail.com; s=20251104; t=1774441732; x=1775046532; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
+        b=IGTEGDaKTcF4ZpNszs0+yhqltGei9KLBp/4szc+tQJeW97ZUz4lXTPS2wrwnnUmcdT
+         TWdyCvESaqVbdGVsfA0ME1N/566GWV9gIkRCWHTb5uiMzFHMn3DV94S+tfjtfYoKgt0R
+         OAx5NJuFDsf0cEocBtw7pOjnPIhv0hDzF7LvrbzYukUFXiEW8pVz6Ii4QR04hW0+Zyz3
+         sH6NVn7aHk1DHHoVCLzzsBiD2CnCCXGqDW68WNbliep0TmztGg9jHlogNrbMyN0eWbEX
+         /QB/+alGfIwtPVyMwcVUnvl3zkPbTvTFUDpB+CJ/PdGFz7Mo1BldwFgDyBDBJ7xduONu
+         MQ0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774441201; x=1775046001;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=qEjLsniM25W1o5h9zHc25KxxNquvYujqC0JbXjIcaH4=;
-        b=Vl/CbDdAooQLQ3uq1CcR2dr7RgFKXOe2Z/wqKsCtdORmxDMLmcSqprU7aAd+rSC6ZP
-         hekszJGpTN0Z+z+aK6BVI2ydm4Xy4c+CUx0LACqZ3PwkO5tsj3UbpGD3vkZebI2EORZz
-         +1RBgTO9CpkEvhA/Hygvl6wBvzxcCErHcLgT/ifUZ5v/xX5ERsjnPSOaPl2c/3u2W8oY
-         Fo08aj3WmZstWmpZGvtFrtDh9wlRlw+Vq0+IswY6Eqbgvqpe8PyuHVkoVaRdkr4Fmtsu
-         C1QAC6eSg8c/UJMRigmcHhgq88Lx8QwxHQnGJOUo546q/YiNLW+/zh3b63Xp+gf7WVX1
-         LgPw==
-X-Forwarded-Encrypted: i=1; AJvYcCXahjUfRjqHYtmyAwF1+mbjaD97Wfu7XtkZdSyqg1C1GCQb6CrY2IIJFQ7gI/AE2n9E6MQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKhShDx79mxBjRb240RAoi26stfsZKxNLZb5/NjxTufyRgCh3d
-	0HeSykIp6lbJE+V3QtkLfFKI+r6b53zfiUarmH8KAEYrm0824YxYM7vwvQY94cFh
-X-Gm-Gg: ATEYQzztrl1j5WbHFasRRRwrzbiPT+EMjpZwrVcWEsjwzWVvAORFMgCBmKh7BbeYWvU
-	sLLO9IUa0Xi3Phiu1anZKfmHTRtNwrP6bNl9N/Gj+iLlwbBKckoDArqgb27nskrmp4nPOAurpLT
-	uslnLZn2egLPZy4nuQ/VRwcp9nBwUV3qTl0cSxDc5aT2b0FzidCJlnFqA9lyvmowcHxuF+Es4zZ
-	Xb9aSIC/SN1SLXXd4RsAGnL1h7/NTXdI14nVc7tZ9ko4IJjMQ1U2jWyFfZ7pqByF/fwHaCqCCT8
-	AeBFl+vGVcXtQK2z4hQb698qJ/al8nAYWkrXg4yNtbDVsl8kjOeozjKNQr66PDejeaVt9MW4ct6
-	uiWohfVThnUAw4p2ST2OLfEUFH+htxFeffEq7cX+/tKNgZ6SbFOyVVe9olo1/meq2ZdfDqnKgxq
-	xXxcivI0C0Ml+fd0xBP1tRMBs1iDf/p31taYcxtWc2BYaHHRkTBU2lw+jRMTkhlSxrG5iAPn1MM
-	zYrU/+rvxLcsqF8EaGyWAql/Tjw6FqHkOiwZcolKCugfg==
-X-Received: by 2002:a05:690c:f02:b0:79a:6eda:b24b with SMTP id 00721157ae682-79acf64654cmr36496287b3.35.1774441200511;
-        Wed, 25 Mar 2026 05:20:00 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90fb:c300:1401:5c84:8809:a31e])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a90552db6sm87289167b3.27.2026.03.25.05.19.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 05:20:00 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20251104; t=1774441732; x=1775046532;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
+        b=YK1l4ttFp3gGCRtlMQGH6bW7lFqGjxLtH/A7CMIzPe6e/ecDLvHVJcdhJaIgymUe0y
+         2TBBE1E1GERAGhnE0RsHNerGs4xMfFrggBEJtvlW7cwuSDEAdZ0ZxZu4XbVtAjlyimS8
+         JGybrBi86anxpyuhzcyNdzwQ22Lj9PgOo3CRRWpIszlUyZvZU36Sfcj4z/EKVtA2YD6A
+         Qrv2ZgZDx048prmNmQTzpRPG5k/W3RVBdEWQzvxUjTh/DcnhSLjBmJAMjF/9yuyr39H5
+         JJGOyKVnI6PbEAaPhi1/K4quI3ATQvbKkqBiQI5WmCKziWI9OpCPk9j2dR7SLP7pFaMH
+         AJlg==
+X-Forwarded-Encrypted: i=1; AJvYcCUKHcw5RXUcajyE2GiIST+wHCU+zzic5e8jizhvW+IrdVlJqxb5YOeAHbrfh3/UoZ7LA3A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCZeBlq2Y6Fbv1NuzjtRDcoHUJjtNHneSILkGkk6xQuwHz3QcO
+	vhLuPMM5tZkYshrid1kzKB/LFKn7346HSE294JDTq0g/DoS5UGKm891xOoW4kGmBnVdky01PJ6Q
+	ZtTIDdJicYiK6LnrO+ElT9vouT2+RckE=
+X-Gm-Gg: ATEYQzwxU9AHdHC07d18s3/vCj0wSk7Q1SrnaZS9IxdGOqgcw3goBnYT6SEmXO5zLCN
+	unAsDOhIZYwGCb74rf23Ago1A3J3T9TemhBf8txgmIZII+SsImA8t0ZhnGqdHfeXybT17slBcPr
+	cnunx/lqoHTxx6jFamrYAuMlSLpcrhugmL5KTcsxd2YvQWAVYC7QooLziirjWNhDalsMHpCgIeL
+	uGkuUSHflzyQUmmGF09kxwvBxGbnyOpyMDBh0IfpI+WyNSLkKxLCj33/X5aLBqjSzkqXRob4dsc
+	n6cXAJ/IBPyUy6oto9n1r2fwq9Gf+8UwuJxBIe6kPxqp5jWVm2Y5JChUzLOQn+Q3dm+sg9LXMEK
+	j/Zon7OmnO/T3SobrQrS8x0s=
+X-Received: by 2002:a05:690c:102:b0:796:6df5:485a with SMTP id
+ 00721157ae682-79acf67f441mr32975007b3.39.1774441732170; Wed, 25 Mar 2026
+ 05:28:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2] replay: support replaying down from root commit
-Date: Wed, 25 Mar 2026 08:19:49 -0400
-Message-Id: <E0A14573-BBE2-4ADF-989C-E5B2A7E3E166@gmail.com>
-References: <CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-In-Reply-To: <CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
+ <20260323215935.74486-1-pabloosabaterr@gmail.com> <fae2f8e3-029a-43c7-aa6e-45a452026853@kdbg.org>
+In-Reply-To: <fae2f8e3-029a-43c7-aa6e-45a452026853@kdbg.org>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Wed, 25 Mar 2026 13:28:36 +0100
+X-Gm-Features: AQROBzB24IMC68QRR-ldl-hz-fZ8kapUizoHXEQsBSlWxATCQvRntfaur9ivYJE
+Message-ID: <CAN5EUNTXy+cFyHApdrhGKUqrvBGO0bb9X-=MaAWgp4DWOAkA-A@mail.gmail.com>
+Subject: Re: [GSoC PATCH v4 0/3] graph: add --graph-lane-limit option
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com, 
+	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
+	chandrapratap3519@gmail.com, gitster@pobox.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+Johannes Sixt (<j6t@kdbg.org>) writes:
+
+> Generally, I like the goal of this patch series. However, the way in
+> which it is presented and justified can be improved substantially, IMO.
+>
+> It begins with the statement of what this patch series wants to achieve.
+> It is "limit the width of the graph", isn't it? It is not "add
+> --graph-lane-limit"; that is just a tool to achieve the goal.
+>
+> To help reviewers, you should present an example chart in the cover
+> letter that shows the before- and after-state (with and without the user
+> of the new option).
+
+True, I'll do that. Because it seems on your last review that I didn't explain
+myself correctly, the idea was to:
+
+Without --graph-lane-limit:
+
+| | | | | | | * commit message
+| | | | | |/
+
+With --graph-lane-limit=3:
+
+| | | . commit message
+| | | .
+
+It truncates the lanes horizontally at the lane limit, the "." replaces
+everything over the limit (n+1).
+
+> As far as the separation into patches is concerned, I see a few
+> problems. With the current separation is difficult to justify the
+> patches. For example, the first patch adds prerequisites for a later
+> patch, but it is unclear how these are used. The answer to the question
+> "Why do we need this?" is simply "because the next patch uses them", but
+> this is a very weak justification, because the next questions are "how
+> are they used and why didn't you squash this into the next patch?"
+>
+> Let me suggest a different separation.
+
+I'll merge 1st and 2nd patch together into a single one, adding the option
+together with the actual logic that does it. This fixes what SZEDER said about
+the first patch alone breaking the build.
+
+And the documentation + tests on a separate commit.
+
+> 1. The first patch limits the graph width with a hard-coded limit, say
+> 15 lanes. It limits the graph *always*. Choose a limit that is large
+> enough to pass all tests.
+>
+> 2. The next patch adds --graph-lane-limit and its documentation. Let it
+> do its thing. Revert to the default limit value 0, i.e., unlimited.
+>
+> 3. Next, add additional eye-candy. I am alluding to the line that marks
+> where a graph lane was truncated.
+>
+> (4. If more detailed document is warranted, e.g., an example chart, do
+> this as a separate patch that can now show all bells and whistles that
+> the earlier commits have implemented. Whether this makes sense as a
+> separate step, or whether documentation grows with the earlier patches,
+> is a judgement call.)
+>
+> As far as commit messages are concerned, always, always provide an
+> answer to "Why?" for every detail.
+>
+> - Why do we want to limit the graph width?
+> - Why is the hard-coded limit 15? (because it lets tests pass and is
+> still a useful limit; we'll make it dynamic later.)
+> - Why do we always limit the graph width? (Because it makes this patch
+> simpler; we'll fix this later.)
+> - Why does 0 mean unlimited? (Consistency with --max-parents.)
+> - Why is the truncation marked with a fullstop "."? (...)
+
+Ok, I'll make sure to answer clearly all the WHY's on the commits.
 
 
-> Le 25 mars 2026 =C3=A0 06:05, Christian Couder <christian.couder@gmail.com=
-> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Tue, Mar 24, 2026 at 8:56=E2=80=AFPM Junio C Hamano <gitster@p=
-obox.com> wrote:
->>=20
->> Toon Claes <toon@iotcl.com> writes:
->>=20
->>> git-replay(1) doesn't allow replaying commits all the way down to the
->>> root commit. Fix that.
->>>=20
->>> Signed-off-by: Toon Claes <toon@iotcl.com>
->>> ---
->>> These changes might conflict Siddharth's series[1] to add '--revert' to
->>> git-replay(1), although resolving that should be trivial.
->>=20
->> True.  This round looks great to me.  Will queue.
->>=20
->> Shall we mark the topic for 'next' now?
->=20
-> The patch looks good to me, but I wonder if the docs should be updated
-> somehow, especially to try to avoid confusion in case users don't
-> properly specify a range.
->=20
-> For example, before this, `git replay --onto main topic` would fail,
-> but emit "fatal: replaying down from root commit is not supported
-> yet!". This would likely help users understand that they might need to
-> properly specify a range like "main..topic" instead of 'topic".
->=20
-> Now it would likely fail without any error message.
-
-Having used replay in a large monorepo where I juggle many branches (so reba=
-sing another in-flight topic without otherwise interrupting my work is valua=
-ble), I=E2=80=99ve made this mistake a few times. Some way of handling it mo=
-re gracefully would be appreciated: perhaps the root case is rare enough to w=
-arrant an option or confirmation prompt (when attached interactively)?
-
->=20
-> Maybe something like the following could help:
->=20
-> --- a/Documentation/git-replay.adoc
-> +++ b/Documentation/git-replay.adoc
-> @@ -23,6 +23,10 @@ instead get update commands that can be piped to
-> `git update-ref --stdin`
->=20
-> THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
->=20
-> +Note that `git replay --onto main topic` replays the topic branch startin=
-g
-> +from the root commit, not from main. What you might want instead is
-> +`git replay --onto main main..topic`.
-> +
-> OPTIONS
-> -------
->=20
-> ?
->=20
-> And yeah currently `git replay` is a plumbing command that most
-> regular users shouldn't likely use, but I think Elijah's goal was to
-> eventually make it user friendly enough for advanced users with
-> stacked branches.
->=20
+> I'll also look over the patches, but I don't do C code, so I can provide
+> only superficial comments, if any.
+>
+> -- Hannes
+>
