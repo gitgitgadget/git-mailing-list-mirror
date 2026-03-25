@@ -1,470 +1,1070 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B27A2F3C26
-	for <git@vger.kernel.org>; Tue, 24 Mar 2026 22:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A552EB87F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 04:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774392470; cv=none; b=vFEA/JqOYlZIvTqIKNcf8A1Xa7Hn88lJRf610+KnaCmjzkd1O10RyGKlT1VeEDHyEM2NmoZ/KqqfcHK5Jg9JqLbb4CvogBh7EQP6RXPMlSRjSX0XT00kONAr86XTjOSTeC55yyg2QLv+PSGyR0DESLSJTTz27mA7o6WpTIdYc5E=
+	t=1774412447; cv=none; b=sphgTbJ0KzMbvW0afpOMNsx3EFHg72vrQmn/9ENIzvEG5+dwcvuHSXVSRwXZb33bI+TVpRv01KaOGw3UcusaDxNtwR+sAmKz2nSSq05encPBEg4ghqmiHMtrel5ICp8DwbUglVnw+GTzOTea95EvjSg9rXoMlR0pop8Vj1qpq7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774392470; c=relaxed/simple;
-	bh=xqvgYM7HKDQ6qTz8+jjRbp5CuLzaaepTrxzSZs84fEg=;
-	h=From:Date:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=VprqmbeciBXM/05eD8ugtbMFLOhfN4HG4MzbRAcnICi/MFu6l18upDjz3Aw+gro1d9BhmGBb7oQ38JrYqj6DFZWiRdedsKYhrCypTrMt0twsSqeBFyM5kUuOfLxrgungTk4Ky0T8EeC4t3k3uLb2/WUiSNH4KqsXYYHK+GORFNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILUhcHyv; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774412447; c=relaxed/simple;
+	bh=oS+soqWmQ5K9Leq1SGCl1Kp8RxcoDzt1igFZqIm1F8o=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HlG+SRqWfsifkpinkK5Qyhsm81mECaC7EeTI+JlJR+ysyNpKD+eWJkAVeIMrP9fE6A4FMriLX250Y9w00a95uTi3/EWIcjCVDrI/ms4EYbvLW+ctW+DRILURE+ttJruEpEtdJTbigDCjTSKQfpMNQuXS3cxi8Xk7sZDXB6t5kH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZCA5Sb8L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4I9N2urJ; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILUhcHyv"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-439b9b1900bso3065055f8f.1
-        for <git@vger.kernel.org>; Tue, 24 Mar 2026 15:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774392466; x=1774997266; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gZvaaRPCrkeftekWn+tkQ2dR8JGwzTxpiqAhmvWThcs=;
-        b=ILUhcHyvfeq5sURH8imkVDyuafHLI3B9ztjOC5xpmr+sxxMaAvdxL2FpcvWxSB31oi
-         WJXsyVsqWv8OEdWVoy1KzQ0cKwHY0CgUXTc8cemfvD3mUrIVZrxo4mgyVxcmQrfkif7B
-         Nfk/81NUS9u4rC7eYhU44/MtQfv3OBfMVQegInXVXQXBjZpD/OcF5uySWyiJrkNATwRt
-         yqF+BnBMIwRbLqgSkAgQRdeLr9dbb/iSo8WqC3PsjjNnnnBoTiQ+GpSgYyAByJf3kiAV
-         wWjaYWZxAJheq5jy1MdQnDlvRtGthOsD6ZcY/DV1x310f9wdeWzqAzXU9NXzfOdvJU2i
-         +qlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774392466; x=1774997266;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gZvaaRPCrkeftekWn+tkQ2dR8JGwzTxpiqAhmvWThcs=;
-        b=Z280gswA9UDNoPl3kr4JrPtbUXmWj3E9krC3oVxH7LACz+qZ6xiaGiOitKP65PWzpS
-         9XP04f/hfsTFXZpNj9TYBJgp3TRsLDzy3hLu/HJPUaH2L3/Re6OkrkK+VhMv1m42Xmmg
-         /GJwpHnJEep/EB9PqHlocyFk6WdwFn3mT6rFv/bb+MlJPFhQZSHAoF7yWamOopw3v4XR
-         VtZbW0qrrgCUfvLeyEObfwUEHUuFZnc5/ZXoFcNE7ckMyceRWl+gIoUd5NdL1Ejx3PH3
-         kGbuM3kijEatziuwaSnS7hBDs0DTcJ6lbrCXTRFXWe3UXfAtKOTFNgvdsA52hRCT3lAV
-         lmBg==
-X-Gm-Message-State: AOJu0Yzf3Idfj9HMRk4fNpGEWLSwMWLvdmyUsw0BtidEqVvPhnMTc6W2
-	Qpr/jSXz7K1EtyF6sg6WtTs9JeLH8c4B+b4+C0UP2/b+rnpbDB5pH/Dyy3R15Lf9FPM=
-X-Gm-Gg: ATEYQzxm+zRltywnS5RPsEW2jkhSTd6AHnIY853wU3T6ztlk8k9ajgvW+VK7wJgmfSi
-	dtkuNl5mHX2Oh8hlveFvV0qTaJP3441gClG6ycZBaICFlSLenNk0qfaUe/oJJYuCnvc9WvL0wPf
-	WEPN3iwoAzEvWqTkRuOxyLEHQuqF9TWNTwOPepq9/eyBfs00FEJLOie+dUFlpJsOZfWGfX1hqGM
-	bCdF87PHJ1O25VM+mq+Dx44uyX2UR8ayhPcMJRhkeNPKWozW1QtWIOPSxYS8MWCIV46LM/fkLA0
-	bITpcBFQ8z4olLOZyh/ImqE2hpUvle9YKWQbRXBvNtoCT8IaXFDw8E6Uf+s2qIRjGOIZfyB0R9Z
-	xKtnlfVeG73UunX96fJinsX29oDjGt10zd9S4O7pdFGpS69lNnB40Xa1xeH/FRthaiH8R2o4Oic
-	dbgBIM4etVdVyZrLr4/bByhCSaxv6dXGzOzGgUMOLcUAGCjr1b69loHdc=
-X-Received: by 2002:a5d:5f83:0:b0:439:b3a3:7239 with SMTP id ffacd0b85a97d-43b889ac042mr1834605f8f.5.1774392466162;
-        Tue, 24 Mar 2026 15:47:46 -0700 (PDT)
-Received: from localhost ([102.88.77.5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b6470b243sm42479142f8f.26.2026.03.24.15.47.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 15:47:45 -0700 (PDT)
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-X-Google-Original-From: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>
-Date: Tue, 24 Mar 2026 23:47:54 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZCA5Sb8L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4I9N2urJ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5E75BEC01F5;
+	Wed, 25 Mar 2026 00:20:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 25 Mar 2026 00:20:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1774412443; x=1774498843; bh=nyak0I70E9OFra+H/TD+VZQjc2R7YnQo
+	xEhCFfTgRzs=; b=ZCA5Sb8LhoOw0c2K32b8l0NdTrqc2aVa4gtRP4FV4wuX2fpt
+	Ghu2tYZidKAuKY//pAE8zRlSKTB38/+Aik9llwk6bRQ3PKaVIGoanY1omIfWjCET
+	GAAPHQdSfeQTGFlKPtf68maUmOThLUDa3lHFfHYylSx+DMsm4iwHGWycpHtCA3hK
+	R8CEziXRgpVmG6GDll4zl5hwShQqCdGGr/t40xMOEWal5KUogaIstq9IuJIZNwFT
+	xTkR7YchqzxHlTxYoOWQ0wGPrmQCqVfgQQi7oqfgkklaH5QAsUh66Bcv/zMQ1BlS
+	AX3z5AcWt1kLto/Rq5lJhODe24TnpMMlDaJPfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774412443; x=
+	1774498843; bh=nyak0I70E9OFra+H/TD+VZQjc2R7YnQoxEhCFfTgRzs=; b=4
+	I9N2urJhpE6p6saGiuj9EWH/XxJsR13vBLhGq/Qt7jk7LwD6F3qTdtAoPPPprrLo
+	nNXLYfMBDBO3Xm6nYzLl0Ao84tubUObFnNi0prc63tMWn+LyHlQ4BbhUBZLYRWsm
+	yVFbS8brzjEunSy6EoO+QXPiMO3MnvW4JzwvIn+5qmkZb2FIn68+7y/K35Y3UbVy
+	ilV/HlZxaXJrbeWvpMfl9GyPrV0d8faKfl7mMpNVUkNh6yY6T8zX0J9O8K9mhaDf
+	EVKwJ4HMM8MSerCCzD/h+lZYuoDMyGlDo2f6rk6Z2/GWicxMfZFy8y0IFPCHW0OP
+	/bfp+gvkBfQq8S+oYkWBw==
+X-ME-Sender: <xms:m2LDaZUsv49XJeL_8pnsYpx_jC-bDkdrvf1cV5pjUeyt5c5rlLpN1A>
+    <xme:m2LDaRDRofcUwgkXPvnKakrQwNFt-JLD8CMCxeIJODsgtTyNiEohhA9U9oKPHYfRo
+    cM4ZMhFOpGmuaiEvakt6wSkm7QK_MJYLEy_sEJgS8wamUzQwuOc2g>
+X-ME-Received: <xmr:m2LDaSxs-KC17z467gF6RqiqTFev185iGvN3mO0i5Rp28_nWIAwvwyLyJg3p5C8gssrdfLFJqVWWSnmm6Qr_WgEcFogklEDRoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdefgeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedmnecujfgurhephffvufffkf
+    gfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhtdefgfeile
+    duhedtgefgiedtuedukeevkeejtdfgiedthedtvddukeehudfftdenucffohhmrghinhep
+    khgvrhhnvghlrdhorhhgpdhorhdrtgiipdhgohhoghhlvghsohhurhgtvgdrtghomhdpgh
+    hithhhuhgsrdgtohhmpdhgihhtlhgrsgdrtghomhdpfihilhhlmhgvrhhgvghtohhmrghs
+    thgvrhdrtghfnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:m2LDaWAaUIQz6Zqj0ZrqOzum9DlPRdDeeijPanySqbMpQhufuVTEEA>
+    <xmx:m2LDaXb2rkhA2QuS31pAG9y8at3LEbSYIhmuPQ08ytYuDdRbZJIq0g>
+    <xmx:m2LDaWh1RrdrqvBhZIpD2fjd3TbS9Ab7G5afixvB7AQrS4A_ERYoMQ>
+    <xmx:m2LDaR53LjDXmnN5bE1quMa5PSFM-2ltkcEpGmypUF3psdL35bitgg>
+    <xmx:m2LDaUug6aSSgm6ZaafiuFBAHOJfbbEaE8hLIfBFgJhjbmLwahUooZi9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 00:20:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [GSoC] [Proposal v3]: Implement promisor remote fetch ordering
-Message-ID: <acMT0zqd6SiEz5h9@Adekunles-MacBook-Air.local>
+Subject: What's cooking in git.git (Mar 2026, #10)
+X-master-at: ce74208c2fa13943fffa58f168ac27a76d0eb789
+X-next-at: 1066ffbbbe6c1c2269adf9776976e2ba993621db
+Date: Tue, 24 Mar 2026 21:20:41 -0700
+Message-ID: <xmqqldfgy1ye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aafga8AjpxagiEJt@Adekunles-MacBook-Air.local>
+Content-Type: text/plain
 
-Hello,
-This is the third iteration of my proposal for the project
-"Implement promisor remote fetch ordering" for the 2026 GSoC programme.
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and is a candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with a URL
+to a message that raises issues but they are by no means exhaustive.
+A topic without enough support may be discarded after a long period
+of no activity (of course they can be resubmitted when new interests
+arise).
 
-Personal Bio:
-=============
-Full Name:  Abraham Samuel Adekunle
-Email: abrahamadekunle50@gmail.com
-GitHub: https://github.com/devdekunle
-Pronouns: he/him
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-About Me:
-=========
-My name is Abraham Samuel Adekunle. I love to code, read and I am a
-hard worker. In my free time I love to play games and listen to soothing
-music and well, also shift into diffuse thinking to gain a new
-perspective of whatever challenge I am trying to solve.
+With maint, master, next, seen, todo:
 
-I am very curious so I really love to learn as it's a never ending
-journey, and I believe in the power of "yet".
-I can understand anything, it is only a matter of time and effort.
-I love to figure out things and be part of a community
-where we can share experiences and support each other in growth.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-Past Experience with Git:
-=========================
-I first learnt about Git during my ALX Software Engineering days in
-2022, it proved challenging at first understanding what was going on
-and a git merge conflict was always a scary experience.
-Now I feel elated actually contributing to this renowned project.
+With all the integration branches and topics broken out:
 
-Contributions to the Git Community:
-====================================
-My first contribution to the Git community was during the contribution
-phase of the December 2024 Outreachy contribution phase where I first
-learned to send patches and had my first interactions with the Git code
-base. I did not make it through then but it was an opportunity to try
-again.
+	https://github.com/gitster/git/
 
-Contributions to other Communities:
-===================================
-I have contributed very sparingly to the Systemd project and also
-the Linux Kernel.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-Microproject:
-=============
-Link: https://lore.kernel.org/git/aV_IGCld5T_dBxTs@Adekunles-MacBook-Air.local/
-Branch: aa/add-p-previous-decisions
-Status: Merged to master
-Commit ID: 8cafc305e22a59efb92472d4132616e24d3184c6
-Description:  "git add -p" and friends notes what the current status
-               of the hunk being shown is
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-Other Contributions:
-====================
-1.
-Link: https://lore.kernel.org/git/cover.1771066252.git.abrahamadekunle50@gmail.com/
-Branch: aa/add-p-no-auto-advance
-Status: Will merge to master
-Description: "git add -p" learned a new mode that allows the user to
-              revisit a file that was already dealt with
+Release tarballs are available at:
 
-2.
-Link: https://lore.kernel.org/git/aWZkEYHhcIhdAjkh@Adekunles-MacBook-Air.local/
-Status: Stalled
-Description: the patch attempts to remove the use of the_repository
-             global variable in some builtins
-
-3.
-Link: https://lore.kernel.org/git/pull.1817.git.1729296853800.gitgitgadget@gmail.com/
-Branch: sa/notes-edit
-Status: Merged to master
-Description: Teach 'git notes add' and 'git notes append' a new '-e' flag,
-             instructing them to open the note in $GIT_EDITOR before saving.
-
-4.
-Link: https://lore.kernel.org/git/pull.1811.v4.git.1728498122419.gitgitgadget@gmail.com/
-Branch: aa/t7300-modernize
-Status: Merged to master
-Description: use test_path_* helper functions for error logging
-
-Project Overview and Objective:
-===============================
-I have always wondered what happens in the background when I see these
-details on my screen in a "git fetch" process.
-
-        remote: Enumerating objects: 57, done.
-        remote: Counting objects: 100% (57/57), done.
-        remote: Compressing objects: 100% (12/12), done.
-        Receiving objects: 100% (57/57), 48.3 KiB | 512.00 KiB/s, done.
-        Resolving deltas: 100% (21/21), done.
-        remote: Total 57 (delta 21), reused 13 (delta 5), pack-reused 30
-        From https://example.com/me/repo
-        1a2b3c4..5d6e7f8  feature/xyz -> origin/feature/xyz
-
-And when I saw this project from the list of projects listed,
-I was endeared to it as it is an opportunity to work in an area of the
-that Git code base that will satisfy my curiosity while also being
-mentored by very best and most experienced Engineers there is.
-
-When a Git repository is configured with multiple promisor remotes,
-there is currently no other mechanism to specify or optimize the order in
-which these remotes should be queried when fetching missing objects.
-Different remotes may have different performance characteristics, cost, or
-reliability which makes the fetching order an important consideration.
-
-Currently, the promisor remotes are queried in the order in which they
-appear in the local .git/config, one after the other, until all the objects have
-been fetched, with the promisor remote configured with the `extension.partialClone`
-config variable being the last one tried.
-
-The project aims to implement a fetch ordering mechanism for multiple
-promisor remotes that allows a client to be able to specify a fetching order,
-a server to advertise an order to the client to ensure performance
-and cost management, the client to decide to use the server advertised
-order or not, and default to the current order if no order is specified.
-
-
-Review of Previous Work:
-========================
-The project is part of the Large Object Promisor "LOP" effort
-documented in Documentation/technical/large-object-promisors.adoc.
-
-In a bid to better handle large objects, the promisor-remote
-capability was added to the Git protocol v2, as documented in
-the promisor-remote section of Documentation/gitprotocol-v2.adoc.
-
-This enables a protocol negotiation so that the server can advertise
-one or more promisor remotes and the client and server can
-discuss if the client could directly fetch missing objects from the promisor
-remote(s) the server is advertising.
-If an agreement is reached, the client would be able to fetch the missing
-objects directly from the promisor remote without the server acting as
-a relay between the client and the promisor remote.
-
-The ground work for adding this capability to the v2 protocol was
-started by Christian Couder in [1], where if the "promisor.advertise"
-config is set to true, the server can then propagate its promisor remote
-configurations to the client over the v2 protocol during the negotiation
-in the form
-
-        "promisor-remote=name=prom1,url=url_encoded_value1;name=prom2,url=url_encoded_value2"
-
-The client can then choose to accept some promisor remotes the server
-is advertising using the "All", "None", "KnownName" or "KnownUrl"
-configurations as values for the "promisor.acceptfromServer" config option.
-
-In [2], Christian added the option for a server to advertise more
-fields after the "name" and "url", such as "token" and
-"partialCloneFilter" for the client to use this additional information
-in deciding the remotes to use as its promisor remotes by comparing it
-with its local config information.
-
-This was implemented by adding the "promisor.sendFields" and
-"promisor.checkFields" config values to the server and client respectively.
-For example, if "promisor.sendFields" is set to "partialCloneFilter", and the
-server has the remote configured like so:
-[remote "foo"]
-        url = https://pr.test
-        partialCloneFilter = blob:none
-        token = "fake"
-then
-
-        "name=foo,url=https://pr.test,partialCloneFilter=blob:none,token=fake"
-will be advertised by the server to the client which can then decide,
-using the "promisor.checkFields" config option, to check if the passed field
-matches certain conditions before the remote is accepted.
-
-in [3] Christian also implemented the option "promisor.storeFields" which
-allowed the value of the configuration to be saved in the client's
-configuration file for use at a later time.
-
-One fetch order that I will implement is the server recommended fetch order,
-which the server suggests to the client.
-To achieve this, I would take advantage of the ground work done by Christian
-by adding a "priority" field to the promisor-remote capability when the "priority"
-is added to the "promisor.sendFields" server config option. This indicates that the
-server is recommending to the client to use its recommended fetch order.
-
-If the client chooses to use the server recommended fetch order, it can
-add "priority" to the "promisor.storeFields" config option which will store
-this value and query the promisor remotes in the recommended order when fetching
-the missing objects at a later time.
-
-If the client chooses to ignore this recommendation, it can simply choose not to
-store it and instead use its own preferred order by setting the priority for
-some or all the remotes to its preferred value and then query the objects in that order.
-Not using either of these orders will query the promisor remotes in the current
-default order.
-
-High Level Approach to Project Execution:
-=========================================
-
-1. Introduce the `remote.<name>.priority` config option:
-======================================================
-To make the fetch order flexible, the first step will be to introduce the
-`remote.<name>.priority` config option, which will allow the client to set its
-preferred fetch order to each promisor remote configuration, and then make it
-fetch based on this "priority" order.
-
-The value of this option could be a fixed range between 1 - 100 where the smallest
-integer indicates highest priority.
-
-This will allow a promisor remote be configured as follows
-
-        [remote "prom1"]
-                url = https://prom1.com
-                priority = 10
-
-Therefore when the client is configured with more than one promisor remote
-and the prority is set for each promisor remote as follows,
-
-        [remote "prom1"]
-                url = https://prom1.com
-                priority = 20
-        [remote "prom2"]
-                url = https://prom2.com
-                priority = 10,
-
-when fetching for the missing objects, the promisor remote "prom2" will be
-queried first before "prom1".
-
-2. Server Side Advertisement:
------------------------------
-After the `remote.<name>.priority` config option has been implemented and the
-fetch order can be changed, I will then allow the server to advertise its
-recommended fetch order in the promisor-remote capability.
-
-As the server knows about the promisor remotes which hold the
-missing objects, it could recommend the order in which these remotes
-could be queried by the client using a "priority=<value>" field of the
-promisor-remote capability in the Git v2 protocol, where <value> could
-be a fixed range integer between 1 and 100, and the smallest integer indicates
-highest priority.
-
-This will be an optional feature which will be enabled by the server
-if it wants to recommend ordered fetching to the client via
-the "promisor.sendFields=priority" config option.
-
-Hence if the server advertises promisor remotes prom1 and prom2,
-it could be of the form
-
-        "promisor-remote=name=prom1,url=https://prom1.com,priority=10;name=prom2,url=https://prom2.com,priority=20",
-
-if the server is configured as:
-
-[remote "prom1"]
-         url = https://prom1.com
-         priority = 10
-[remote "prom2"]
-        url = https://prom2.com
-        priority = 20
-
-If the "promisor.sendFields" values does not include the "priority"
-field in its comma or space separated options, the field will not be
-advertised in the promisor-remote capability.
-
-3. Client Side Parsing:
------------------------
-After the "priority" field has been advertised in the promisor-remote
-capability, the client can choose to use this server recommended fetch
-order or ignore it completely.
-If the client wants to use the server recommended fetch order later when
-fetching the missing objects from the accepted promisor remotes, the "priority"
-field will be added to the "promisor.storeFields" config
-options so that the passed value can be saved to the client config.
-If the client does not enable this option in the config, the "priority"
-field will not be saved in the local config and the fetching order will
-be client specified order if set or the default local config order if not set.
-
-The three different fetch order are;
-1. the order advertised by the server, where the "priority" field
-   will be added to "promisor.storeFields" and the value will be saved to the
-   local config file for the selected promisor remotes. When fetching the missing
-   objects, this order will be used.
-2. the local "priority" config where the client can set the "priority"
-   field using, priority=<value>, of some or all "remote.<name>" to indicate its preferred
-   fetch order when fetching the missing objects.
-   This order will be used if the "promisor.storeFields" does not include the
-   "priority" field.
-3. the default order, where the field will not be added to the config and hence
-   the current default order will be used.
-
-Proposed Project Execution Timeline:
-====================================
-Estimated Project Size: 350 hours
-
-1. Study code base to understand promisor-remote and fetch mechanism (May 1 - 14, 2026):
-   -------------------------------------------------------------------------------------
-- Study the code base to understand how the client and server
-  communicate using the protocol when client contacts the server.
-- Study how Git currently handles fetching from multiple remotes.
-- Set up blog for posting once in two weeks
-
-2. Community Bonding (May 1 - 14, 2026):
-----------------------------------------
-- Discuss design details with community and mentors
-- Understand safety, security constraints and design considerations
-  when implementing fetch ordering.
-- Read in depth the Documentations for promisor-remote, gitprotocol-v2,
-  and other necessary documentations.
-- Post updates on my blog
-
-3. Review Existing Patches and related code (May 15 - May 25, 2026):
--------------------------------
-- Study code base to understand how a new config option is added.
-- study code that handles the fetching of missing objects after a partial
-  clone/fetch.
-- Study Christian's patches in-depth to understand how a new field is
-  added to the promisor remote of server, what conditions
-  are used to ensure the data is of the right format, correctly passed from
-  server to client, and correctly parsed and stored by client.
-- Study how a client can store the new field it accepts to use from the
-  advertised fields.
-- Understand the tests to see how these new features are tested
-- Post updates on my blog
-
-4. Introduce the `remote.<name>.priority` config option: (May 25 - June 13, 2026):
--------------------------------------------------------
-- Discuss with mentors on the suggested approach
-- Allow the addition of the config option `remote.<name>.priority`
-- Implement fetching based on this option when set by the client
-  and if not set, default to the current order.
-- Write tests to ensure proper implementation of the new config and
-  fetch order
-- Submit patches to mailing list and engage in reviews with Community members
-- Post update on my blog
-
-5. Allow a server to add the "priority" field to the promisor-remote capability (June 14 - June 21, 2026)
--------------------------------------------------------------------------------
-- Discuss with mentors on the suggested approach
-- Allow the server to add the field "priority" to the promisor-remote
-  capability when it is enabled in "promisor.sendFields".
-- Write tests to ensure proper implementation
-- Update documentation in Documenantation/config/promisor.adoc
-- Submit patch to mailing list for discussions and address reviews
-- Post updates on my blog
-
-6. Allow Client to decide to use the field (June 21 - 14, 2026):
------------------------------------------------------------------
-- Discuss strategy with mentors
-- Allow the client to store the "priority" in its .git/config if it
-  accepts the promisor remotes and it is included in "promisor.storeFields"
-- Write unit tests to ensure proper implementations
-- Update documentation in Documentation/config/promisor.adoc
-- Submit patches to mailing list for reviews and address feedbacks
-- Post updates on my blog
-
-7. Implement fetching order based on setting: (July 15 - August 14, 2026):
-------------------------------------------------------------------------
-- Discuss with mentors on the approach and considerations for fetch order
-- Implement fetching based on the client's accepted fetching order
-- Write unittests to test implementation
-- Update documentation in Documenantation/config/promisor.adoc
-- Submit patches for review and address reviews
-- Post updates on my blog
-
-9. Final Report on Project (August 15 - 24, 2026):
+	https://www.kernel.org/pub/software/scm/git/
 
 --------------------------------------------------
-- Document any final report in my blog with details of my experience
-- Finalize any pending tasks
+[Graduated to 'master']
 
-Availability:
-=============
-I will be able to give 30 hours a week to make the project a success
+* dd/cocci-do-not-pass-strbuf-by-value (2026-03-15) 3 commits
+  (merged to 'next' on 2026-03-18 at a2ffed1127)
+ + stash: do not pass strbuf by value
+ + coccinelle: detect struct strbuf passed by value
+ + Merge branch 'dd/list-objects-filter-options-wo-strbuf-split' into dd/cocci-do-not-pass-strbuf-by-value
 
-Post GSoC
-=========
+ Add a coccinelle rule to break the build when "struct strbuf" gets
+ passed by value.
+ source: <20260315094445.19849-1-deveshigurgaon@gmail.com>
 
-Though this is not my first contribution to Git, as I have contributed
-very lightly to the codebase before, I am committed to
-continuously contributing to Git and become a part of the next set
-of contributors to champion the continuous development of Git.
 
-Appreciation
-============
-To Junio C Hamano, Phillip Wood, and everyone who helped with my patches.
-I really appreciate your guidance, patience and direction while
-reviewing and my patches.
+* gj/user-manual-fix-grep-example (2026-03-16) 1 commit
+  (merged to 'next' on 2026-03-17 at dbf9137a9d)
+ + doc: fix git grep args order in Quick Reference
 
-Thanks
+ Fix an example in the user-manual.
+ source: <pull.2069.git.1773670536808.gitgitgadget@gmail.com>
 
-References
-===========
-1. https://lore.kernel.org/git/20250218113204.2847463-1-christian.couder@gmail.com/
-2. https://lore.kernel.org/git/20250908053056.956907-1-christian.couder@gmail.com/
-3. https://lore.kernel.org/git/20260216132317.15894-1-christian.couder@gmail.com/
+
+* jk/transport-color-leakfix (2026-03-14) 1 commit
+  (merged to 'next' on 2026-03-17 at c2d7c74d11)
+ + transport: plug leaks in transport_color_config()
+
+ Leakfix.
+ source: <20260314160814.GA918806@coredump.intra.peff.net>
+
+
+* jt/fast-import-sign-again (2026-03-12) 3 commits
+  (merged to 'next' on 2026-03-17 at e04808d5f2)
+ + fast-import: add mode to sign commits with invalid signatures
+ + gpg-interface: allow sign_buffer() to use default signing key
+ + commit: remove unused forward declaration
+
+ "git fast-import" learned to optionally replace signature on
+ commits whose signatures get invalidated due to replaying by
+ signing afresh.
+ source: <20260313013938.2742124-1-jltobler@gmail.com>
+
+
+* mf/t0008-cleanup (2026-03-15) 1 commit
+  (merged to 'next' on 2026-03-17 at 2bb0e51243)
+ + t0008: improve test cleanup to fix failing test
+
+ Test clean-up.
+ source: <20260316011544.13825-1-mroik@delayed.space>
+
+
+* pb/t4200-test-path-is-helpers (2026-03-16) 1 commit
+  (merged to 'next' on 2026-03-17 at a78771f93e)
+ + t4200: convert test -[df] checks to test_path_* helpers
+
+ Test clean-up.
+ source: <20260316172457.38242-1-prashantjee2025@gmail.com>
+
+
+* ps/clar-wo-path-max (2026-03-16) 1 commit
+  (merged to 'next' on 2026-03-17 at 1d2f28a677)
+ + clar: update to fix compilation on platforms without PATH_MAX
+
+ Clar (unit testing framework) update from the upstream.
+ source: <20260316-b4-pks-clar-without-path-max-v1-1-40b4bc91fdc0@pks.im>
+
+
+* ps/history-split (2026-03-02) 8 commits
+  (merged to 'next' on 2026-03-17 at 456723f018)
+ + builtin/history: implement "split" subcommand
+ + builtin/history: split out extended function to create commits
+ + cache-tree: allow writing in-memory index as tree
+ + add-patch: allow disabling editing of hunks
+ + add-patch: add support for in-memory index patching
+ + add-patch: remove dependency on "add-interactive" subsystem
+ + add-patch: split out `struct interactive_options`
+ + add-patch: split out header from "add-interactive.h"
+
+ "git history" learned the "split" subcommand.
+ source: <20260302-pks-history-split-v1-0-444fc987a324@pks.im>
+
+
+* ps/upload-pack-buffer-more-writes (2026-03-12) 10 commits
+  (merged to 'next' on 2026-03-18 at 138ad42ac5)
+ + builtin/pack-objects: reduce lock contention when writing packfile data
+ + csum-file: drop `hashfd_throughput()`
+ + csum-file: introduce `hashfd_ext()`
+ + sideband: use writev(3p) to send pktlines
+ + wrapper: introduce writev(3p) wrappers
+ + compat/posix: introduce writev(3p) wrapper
+ + upload-pack: reduce lock contention when writing packfile data
+ + upload-pack: prefer flushing data over sending keepalive
+ + upload-pack: adapt keepalives based on buffering
+ + upload-pack: fix debug statement when flushing packfile data
+
+ Reduce system overhead "git upload-pack" spends on relaying "git
+ pack-objects" output to the "git fetch" running on the other end of
+ the connection.
+ source: <20260313-pks-upload-pack-write-contention-v4-0-7a9668061f7f@pks.im>
+
+
+* rj/pack-refs-tests-path-is-helpers (2026-03-15) 1 commit
+  (merged to 'next' on 2026-03-17 at 56374095e3)
+ + t/pack-refs-tests: use test_path_is_missing
+
+ Test updates.
+ source: <20260315081032.497-1-riteshjd75@gmail.com>
+
+
+* ss/t0410-delete-object-cleanup (2026-03-12) 1 commit
+  (merged to 'next' on 2026-03-17 at a8d41f4c1f)
+ + t0410: modernize delete_object helper
+
+ Test clean-up.
+ source: <20260313053159.36492-1-r.siddharth.shrimali@gmail.com>
+
+
+* ty/doc-diff-u-wo-number (2026-03-10) 1 commit
+  (merged to 'next' on 2026-03-18 at 8a410154ff)
+ + diff: document -U without <n> as using default context
+
+ "git diff -U<num>" was too lenient in its command line parsing and
+ took an empty string as a valid <num>.
+ source: <20260310095017.131957-1-cat@malon.dev>
+
+
+* yc/histogram-hunk-shift-fix (2026-03-02) 1 commit
+  (merged to 'next' on 2026-03-18 at 5e49edc821)
+ + xdiff: re-diff shifted change groups when using histogram algorithm
+
+ The final clean-up phase of the diff output could turn the result of
+ histogram diff algorithm suboptimal, which has been corrected.
+ source: <pull.2120.v2.git.git.1772463265865.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* jt/fast-import-signed-modes (2026-03-24) 4 commits
+ - fast-import: add 'abort-if-invalid' mode to '--signed-tags=<mode>'
+ - fast-import: add 'sign-if-invalid' mode to '--signed-tags=<mode>'
+ - fast-import: add 'strip-if-invalid' mode to '--signed-tags=<mode>'
+ - fast-import: add 'abort-if-invalid' mode to '--signed-commits=<mode>'
+
+ Handling of signed commits and tags in fast-import has been made more
+ configurable.
+ source: <20260324215513.764739-1-jltobler@gmail.com>
+
+--------------------------------------------------
+[Cooking]
+
+* ps/graph-lane-limit (2026-03-23) 3 commits
+ - graph: add documentation and tests about --graph-lane-limit
+ - graph: truncate graph visual output
+ - graph: add --graph-lane-limit option
+
+ The graph output from commands like "git log --graph" can now be
+ limited to a specified number of lanes, preventing overly wide output
+ in repositories with many branches.
+
+ Needs review.
+ source: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+
+
+* rs/use-strvec-pushv (2026-03-24) 2 commits
+  (merged to 'next' on 2026-03-24 at 7c6487dcaf)
+ + use strvec_pushv() to add another strvec
+ + Merge branch 'ps/build-tweaks' into rs/use-strvec-pushv
+ (this branch uses ps/build-tweaks.)
+
+ Code paths that loop over another array to push each element into a
+ strvec have been rewritten to use strvec_pushv() instead.
+
+ Will merge to 'master'.
+ source: <084f3b43-91ac-4553-8305-03944e97eaa6@web.de>
+
+
+* cc/promisor-auto-config-url (2026-03-23) 16 commits
+ - doc: promisor: improve acceptFromServer entry
+ - promisor-remote: auto-configure unknown remotes
+ - promisor-remote: trust known remotes matching acceptFromServerUrl
+ - promisor-remote: introduce promisor.acceptFromServerUrl
+ - t5710: use proper file:// URIs for absolute paths
+ - promisor-remote: refactor should_accept_remote() control flow
+ - promisor-remote: pass config entry to all_fields_match() directly
+ - promisor-remote: add 'local_name' to 'struct promisor_info'
+ - promisor-remote: remove the 'accepted' strvec
+ - promisor-remote: keep accepted promisor_info structs alive
+ - promisor-remote: refactor accept_from_server()
+ - promisor-remote: refactor has_control_char()
+ - promisor-remote: clarify that a remote is ignored
+ - urlmatch: add url_is_valid_pattern() helper
+ - urlmatch: change 'allow_globs' arg to bool
+ - promisor-remote: try accepted remotes before others in get_direct()
+
+ Promisor remote handling is enhanced to auto-configure remotes based
+ on a URL whitelist.
+
+ Needs review.
+ source: <20260323080520.887550-1-christian.couder@gmail.com>
+
+
+* kj/refspec-parsing-outside-repository (2026-03-23) 2 commits
+ - refspec: fix typo in comment
+ - remote-curl: fall back to default hash outside repo
+
+ "git ls-remote '+refs/tags/*:refs/tags/*' https://..." run outside a
+ repository would dereference a NULL while trying to see if the given
+ refspec is a single-object refspec, which has been corrected.
+
+ Will merge to 'next'?
+ source: <20260324015734.18470-1-jayatheerthkulkarni2005@gmail.com>
+
+
+* jk/diff-highlight-identical-pairs (2026-03-17) 1 commit
+  (merged to 'next' on 2026-03-20 at a8aa5bd14e)
+ + contrib/diff-highlight: do not highlight identical pairs
+ (this branch is used by jk/diff-highlight-more.)
+
+ The handling of the incomplete lines at the end by "git
+ diff-highlight" has been fixed.
+
+ Will merge to 'master'.
+ source: <20260317230223.GA716496@coredump.intra.peff.net>
+
+
+* jk/diff-highlight-more (2026-03-22) 9 commits
+  (merged to 'next' on 2026-03-24 at e7b555cbc5)
+ + diff-highlight: fetch all config with one process
+ + diff-highlight: allow module callers to pass in color config
+ + diff-highlight: test color config
+ + diff-highlight: use test_decode_color in tests
+ + t: add matching negative attributes to test_decode_color
+ + diff-highlight: check diff-highlight exit status in tests
+ + diff-highlight: drop perl version dependency back to 5.8
+ + diff-highlight: mention build instructions
+ + Merge branch 'jk/diff-highlight-identical-pairs' into jk/diff-highlight-more
+ (this branch uses jk/diff-highlight-identical-pairs.)
+
+ Various updates to contrib/diff-highlight, including documentation
+ updates, test improvements, and color configuration handling.
+
+ Will merge to 'master'.
+ source: <20260323060139.GA10215@coredump.intra.peff.net>
+
+
+* ps/fsck-wo-the-repository (2026-03-23) 12 commits
+ - builtin/fsck: stop using `the_repository` in error reporting
+ - builtin/fsck: stop using `the_repository` when marking objects
+ - builtin/fsck: stop using `the_repository` when checking packed objects
+ - builtin/fsck: stop using `the_repository` with loose objects
+ - builtin/fsck: stop using `the_repository` when checking reflogs
+ - builtin/fsck: stop using `the_repository` when checking refs
+ - builtin/fsck: stop using `the_repository` when snapshotting refs
+ - builtin/fsck: fix trivial dependence on `the_repository`
+ - fsck: drop USE_THE_REPOSITORY
+ - fsck: store repository in fsck options
+ - fsck: initialize fsck options via a function
+ - fetch-pack: move fsck options into function scope
+
+ Internals of "git fsck" have been refactored to not depend on the
+ global `the_repository` variable.
+
+ Needs review.
+ source: <20260323-b4-pks-fsck-without-the-repository-v2-0-e8dc79bca651@pks.im>
+
+
+* tb/stdin-packs-excluded-but-open (2026-03-19) 5 commits
+ - repack: mark non-MIDX packs above the split as excluded-open
+ - pack-objects: support excluded-open packs with --stdin-packs
+ - t7704: demonstrate failure with once-cruft objects above the geometric split
+ - pack-objects: refactor `read_packs_list_from_stdin()` to use `strmap`
+ - pack-objects: plug leak in `read_stdin_packs()`
+
+ pack-objects's --stdin-packs=follow mode learns to handle
+ excluded-but-open packs.
+
+ Comments?
+ source: <cover.1773959041.git.me@ttaylorr.com>
+
+
+* yc/path-walk-fix-error-reporting (2026-03-20) 1 commit
+ - path-walk: fix NULL pointer dereference in error message
+
+ The value of a wrong pointer variable was referenced in an error
+ message that reported that it shouldn't be NULL.
+
+ Reproduction being discussed.
+ cf. <994f92e9-3576-455a-a142-0fefc559131c@gmail.com>
+ source: <20260320114823.3151961-1-ysinghcin@gmail.com>
+
+
+* jr/bisect-custom-terms-in-output (2026-03-20) 1 commit
+ - bisect: use selected alternate terms in status output
+
+ "git bisect" now uses the selected terms (e.g., old/new) more
+ consistently in its output.
+
+ Expecting a reroll?
+ cf. <xmqqfr5tdbpc.fsf@gitster.g>
+ source: <20260320-bisect-terms-v1-1-c30c9540542a@schlaraffenlan.de>
+
+
+* jc/whitespace-incomplete-line (2026-03-17) 1 commit
+ - apply: fix new-style empty context line triggering incomplete-line check
+
+ Fix whitespace correction for new-style empty context lines.
+
+ Needs review.
+ source: <xmqqldfql4hp.fsf@gitster.g>
+
+
+* sp/add-patch-with-fewer-the-repository (2026-03-17) 1 commit
+ - add-patch: use repository instance from add_i_state instead of the_repository
+
+ Reduce dependency on `the_repository` in add-patch.c file.
+
+ Needs review.
+ source: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
+
+
+* ds/backfill-revs (2026-03-23) 6 commits
+ - t5620: test backfill's unknown argument handling
+ - path-walk: support wildcard pathspecs for blob filtering
+ - backfill: work with prefix pathspecs
+ - backfill: accept revision arguments
+ - t5620: prepare branched repo for revision tests
+ - revision: include object-name.h
+
+ `git backfill` learned to accept revision and pathspec arguments.
+
+ Comments?
+ source: <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
+
+
+* jw/t2203-status-pipe-fix (2026-03-16) 1 commit
+  (merged to 'next' on 2026-03-23 at 521c6eb44b)
+ + t2203: avoid suppressing git status exit code
+
+ Test clean-up.
+
+ Will merge to 'master'.
+ source: <20260317011544.65952-1-jerrywang183@yahoo.com>
+
+
+* ps/commit-graph-overflow-fix (2026-03-23) 1 commit
+ - commit-graph: fix writing generations with dates exceeding 34 bits
+
+ Fix a regression in writing the commit-graph where commits with dates
+ exceeding 34 bits (beyond year 2514) could cause an underflow and
+ crash Git during the generation data overflow chunk writing.
+
+ Waiting for review response.
+ cf. <xmqq1ph92pzs.fsf@gitster.g>
+ source: <20260324-pks-commit-graph-overflow-v2-1-843568cf8780@pks.im>
+
+
+* tc/replay-down-to-root (2026-03-24) 1 commit
+ - replay: support replaying down from root commit
+
+ git replay now supports replaying down to the root commit.
+
+ Will merge to 'next'?
+ source: <20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
+
+
+* mr/merge-file-object-id-worktree-fix (2026-03-10) 1 commit
+  (merged to 'next' on 2026-03-20 at 68e1ee2045)
+ + merge-file: fix BUG when --object-id is used in a worktree
+
+ merge-file --object-id used to trigger a BUG when run in a linked
+ worktree, which has been fixed.
+
+ Will merge to 'master'.
+ source: <c076edd0-9057-443b-ba37-33aacde2eede@app.fastmail.com>
+
+
+* rs/prio-queue-to-commit-stack (2026-03-17) 1 commit
+  (merged to 'next' on 2026-03-20 at 265cb7b28c)
+ + use commit_stack instead of prio_queue in LIFO mode
+
+ Uses of prio_queue as a LIFO stack of commits have been written
+ with commit_stack.
+
+ Will merge to 'master'.
+ source: <05fc946f-6670-46e9-a058-231ee464029d@web.de>
+
+
+* jw/object-name-bitset-to-enum (2026-03-18) 1 commit
+  (merged to 'next' on 2026-03-23 at 881af371ef)
+ + object-name: turn INTERPRET_BRANCH_* constants into enum values
+
+ The unsigned integer that is used as an bitset to specify the kind
+ of branches interpret_branch_name() function has been changed to
+ use a dedicated enum type.
+
+ Will merge to 'master'.
+ source: <20260318190942.22595-1-jerrywang183@yahoo.com>
+
+
+* ai/t2107-test-path-is-helpers (2026-03-18) 1 commit
+  (merged to 'next' on 2026-03-23 at 56d10e5f76)
+ + t2107: modernize path existence check
+
+ Test cleanup.
+
+ Will merge to 'master'.
+ source: <pull.2071.v2.git.1773864455956.gitgitgadget@gmail.com>
+
+
+* gi/doc-boolean-config-typofix (2026-03-18) 1 commit
+  (merged to 'next' on 2026-03-20 at 8810624798)
+ + doc: add missing space on git-config page
+
+ Doc typofix.
+
+ Will merge to 'master'.
+ source: <20260318210020.759128-1-gabl@gabl.ink>
+
+
+* ua/push-remote-group (2026-03-18) 2 commits
+ - push: support pushing to a remote group
+ - remote: move remote group resolution to remote.c
+
+ "git push" learned to take a "remote group" name to push to, which
+ causes pushes to multiple places, just like "git fetch" would do.
+
+ Expecting a (hopefully small and final) reroll?
+ cf. <20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+ source: <20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+
+
+* jc/rerere-modern-strbuf-handling (2026-03-19) 2 commits
+  (merged to 'next' on 2026-03-21 at 919b766afc)
+ + cocci: strbuf.buf is never NULL
+ + rerere: update to modern representation of empty strbufs
+
+ Code clean-up overdue by 19 years.
+
+ Will merge to 'master'.
+ source: <xmqq341wnvbk.fsf@gitster.g>
+ source: <xmqq4imbigvt.fsf@gitster.g>
+
+
+* ps/odb-generic-object-name-handling (2026-03-20) 16 commits
+ - odb: introduce generic `odb_find_abbrev_len()`
+ - object-file: move logic to compute packed abbreviation length
+ - object-name: move logic to compute loose abbreviation length
+ - object-name: simplify computing common prefixes
+ - object-name: abbreviate loose object names without `disambiguate_state`
+ - object-name: merge `update_candidates()` and `match_prefix()`
+ - object-name: backend-generic `get_short_oid()`
+ - object-name: backend-generic `repo_collect_ambiguous()`
+ - object-name: extract function to parse object ID prefixes
+ - object-name: move logic to iterate through packed prefixed objects
+ - object-name: move logic to iterate through loose prefixed objects
+ - odb: introduce `struct odb_for_each_object_options`
+ - oidtree: extend iteration to allow for arbitrary return codes
+ - oidtree: modernize the code a bit
+ - Merge branch 'ps/object-counting' into ps/odb-generic-object-name-handling
+ - object-file: fix sparse 'plain integer as NULL pointer' error
+ (this branch uses ps/object-counting.)
+
+ Object name handling (disambiguation and abbreviation) has been
+ refactored to be backend-generic, moving logic into the respective
+ object database backends.
+
+ Comments?
+ source: <20260320-b4-pks-odb-source-abbrev-v2-0-fe65dcd8c735@pks.im>
+
+
+* rs/ahead-behind-cleanup-optimization (2026-03-19) 1 commit
+  (merged to 'next' on 2026-03-21 at 5d8b4fa265)
+ + commit-reach: simplify cleanup of remaining bitmaps in ahead_behind ()
+
+ The cleanup of remaining bitmaps in "ahead_behind()" has been
+ simplified.
+
+ Will merge to 'master'.
+ source: <21adf042-2bd1-4022-8822-9ed4985122a4@web.de>
+
+
+* bk/t5315-test-path-is-helpers (2026-03-19) 1 commit
+  (merged to 'next' on 2026-03-24 at f7374e8e70)
+ + t5315: use test_path_is_file for loose-object check
+
+ Test clean-up.
+
+ Will merge to 'master'.
+ source: <20260319180803.164335-1-elkhatabibilal@gmail.com>
+
+
+* rs/split-index-the-repo-fix (2026-03-19) 1 commit
+  (merged to 'next' on 2026-03-21 at d66850b2ce)
+ + split-index: stop using the_repository and the_hash_algo
+
+ split-index.c has been updated to not use the global the_repository
+ and the_hash_algo variables.
+
+ Will merge to 'master'.
+ source: <944c2331-4dec-4c98-9059-f41dc204ed86@web.de>
+
+
+* aa/reap-transport-child-processes (2026-03-12) 1 commit
+ . transport-helper, connect: use clean_on_exit to reap children on abnormal exit
+
+ A few code paths that spawned child processes for network
+ connection weren't wait(2)ing for their children and letting "init"
+ reap them instead; they have been tightened.
+
+ CI failures on Windows in t0061.24?
+ cf. <20260318040423.GA2858991@coredump.intra.peff.net>
+ source: <20260312214945.4050010-1-cshung@gmail.com>
+
+
+* ej/ref-transaction-hook-preparing (2026-03-16) 1 commit
+  (merged to 'next' on 2026-03-20 at f9b8fbb0dc)
+ + refs: add 'preparing' phase to the reference-transaction hook
+
+ The reference-transaction hook was taught to be triggered before
+ taking locks on references in the "preparing" phase.
+
+ Will merge to 'master'.
+ source: <20260317023624.43070-2-eric.peijian@gmail.com>
+
+
+* hn/git-checkout-m-with-stash (2026-03-17) 4 commits
+ - checkout: -m (--merge) uses autostash when switching branches
+ - sequencer: teach autostash apply to take optional conflict marker labels
+ - sequencer: allow create_autostash to run silently
+ - stash: add --ours-label, --theirs-label, --base-label for apply
+
+ "git checkout -m another-branch" was invented to deal with local
+ changes to paths that are different between the current and the new
+ branch, but it gave only one chance to resolve conflicts.  The command
+ was taught to create a stash to save the local changes.
+
+ Needs review.
+ source: <pull.2234.v6.git.git.1773740139.gitgitgadget@gmail.com>
+
+
+* kh/name-rev-custom-format (2026-03-20) 2 commits
+ - name-rev: learn --format=<pretty>
+ - name-rev: wrap both blocks in braces
+
+ "git name-rev" learned to use custom format instead of the object
+ name in an extended SHA-1 expression form.
+
+ Comments?
+ source: <V2_CV_name-rev_--format.51b@msgid.xyz>
+
+
+* pw/worktree-reduce-the-repository (2026-03-15) 3 commits
+ - worktree: reject NULL worktree in get_worktree_git_dir()
+ - worktree add: stop reading ".git/HEAD"
+ - worktree: remove "the_repository" from is_current_worktree()
+
+ Reduce the reference to the_repository in the worktree subsystem.
+
+ Expecting review responses.
+ cf. <abezeNELL9SU8v82@pks.im>
+ source: <cover.1773591528.git.phillip.wood@dunelm.org.uk>
+
+
+* jw/apply-corrupt-location (2026-03-17) 3 commits
+  (merged to 'next' on 2026-03-23 at 18e9b8f91f)
+ + apply: report input location in binary and garbage patch errors
+ + apply: report input location in header parsing errors
+ + apply: report the location of corrupt patches
+
+ "git apply" now reports the name of the input file along with the
+ line number when it encounters a corrupt patch, and correctly
+ resets the line counter when processing multiple patch files.
+
+ Will merge to 'master'.
+ source: <20260317162321.71812-1-jerrywang183@yahoo.com>
+
+
+* mf/format-patch-commit-list-format (2026-03-23) 9 commits
+  (merged to 'next' on 2026-03-24 at 0f5b6702eb)
+ + format-patch: --commit-list-format without prefix
+ + format-patch: add preset for --commit-list-format
+ + format-patch: wrap generate_commit_list_cover()
+ + format.commitListFormat: strip meaning from empty
+ + docs/pretty-formats: add %(count) and %(total)
+ + format-patch: rename --cover-letter-format option
+ + format-patch: refactor generate_commit_list_cover
+ + pretty.c: better die message %(count) and %(total)
+ + Merge branch 'mf/format-patch-cover-letter-format' into mf/format-patch-commit-list-format
+ (this branch uses mf/format-patch-cover-letter-format.)
+
+ Improve the recently introduced `git format-patch
+ --commit-list-format` (formerly `--cover-letter-format`) option,
+ including a new "modern" preset and better CLI ergonomics.
+
+ Will merge to 'master'.
+ source: <cover.1774284699.git.mroik@delayed.space>
+
+
+* js/parseopt-subcommand-autocorrection (2026-03-16) 10 commits
+ - doc: document autocorrect API
+ - parseopt: add tests for subcommand autocorrection
+ - parseopt: enable subcommand autocorrection for git-remote and git-notes
+ - parseopt: autocorrect mistyped subcommands
+ - autocorrect: provide config resolution API
+ - autocorrect: rename AUTOCORRECT_SHOW to AUTOCORRECT_HINT
+ - autocorrect: use mode and delay instead of magic numbers
+ - help: move tty check for autocorrection to autocorrect.c
+ - help: make autocorrect handling reusable
+ - parseopt: extract subcommand handling from parse_options_step()
+
+ The parse-options library learned to auto-correct misspelled
+ subcommand names.
+
+ Expecting review responses.
+ cf. <xmqqse9zo93p.fsf@gitster.g>
+ source: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+
+
+* mf/apply-p-no-atoi (2026-03-15) 1 commit
+  (merged to 'next' on 2026-03-20 at 70a0a4313b)
+ + apply.c: fix -p argument parsing
+
+ "git apply -p<n>" parses <n> more carefully now.
+
+ Will merge to 'master'.
+ source: <20260316005120.7079-1-mroik@delayed.space>
+
+
+* ps/build-tweaks (2026-03-18) 8 commits
+  (merged to 'next' on 2026-03-20 at fb53cf619a)
+ + meson: precompile "git-compat-util.h"
+ + meson: compile compatibility sources separately
+ + git-compat-util.h: move warning infra to prepare for PCHs
+ + builds: move build scripts into "tools/"
+ + contrib: move "update-unicode.sh" script into "tools/"
+ + contrib: move "coverage-diff.sh" script into "tools/"
+ + contrib: move "coccinelle/" directory into "tools/"
+ + Introduce new "tools/" directory
+ (this branch is used by rs/use-strvec-pushv.)
+
+ Tweak the build infrastructure by moving tools around.
+
+ Will merge to 'master'.
+ source: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
+
+
+* ps/object-counting (2026-03-12) 7 commits
+  (merged to 'next' on 2026-03-17 at 8d3d9a1374)
+ + odb: introduce generic object counting
+ + odb/source: introduce generic object counting
+ + object-file: generalize counting objects
+ + object-file: extract logic to approximate object count
+ + packfile: extract logic to count number of objects
+ + odb: stop including "odb/source.h"
+ + Merge branch 'ps/odb-sources' into ps/object-counting
+ (this branch is used by ps/odb-generic-object-name-handling.)
+
+ The logic to count objects has been cleaned up.
+
+ Will merge to 'master'.
+ source: <20260312-b4-pks-odb-source-count-objects-v2-0-5914f69256bf@pks.im>
+
+
+* kh/doc-interpret-trailers-1 (2026-03-16) 4 commits
+  (merged to 'next' on 2026-03-20 at 6acc8b5a8a)
+ + interpret-trailers: use placeholder instead of *
+ + doc: config: convert trailers section to synopsis style
+ + doc: interpret-trailers: normalize and fill out options
+ + doc: interpret-trailers: convert to synopsis style
+
+ Doc updates.
+
+ Will merge to 'master'.
+ source: <V2_CV_doc_interpret-tr_synopsis.50a@msgid.xyz>
+
+
+* mm/line-log-use-standard-diff-output (2026-03-16) 4 commits
+ - doc: note that -L supports patch formatting and pickaxe options
+ - t4211: add tests for -L with standard diff options
+ - line-log: route -L output through the standard diff pipeline
+ - line-log: fix crash when combined with pickaxe options
+
+ The way the "git log -L<range>:<file>" feature is bolted onto the
+ log/diff machinery is being reworked a bit to make the feature
+ compatible with more diff options, like -S/G.
+
+ Needs review.
+ source: <pull.2065.v2.git.1773714095.gitgitgadget@gmail.com>
+
+
+* ar/config-hook-cleanups (2026-03-20) 11 commits
+ - hook: show disabled hooks in "git hook list"
+ - hook: show config scope in git hook list
+ - hook: introduce hook_config_cache_entry for per-hook data
+ - t1800: add test to verify hook execution ordering
+ - hook: make consistent use of friendly-name in docs
+ - hook: replace hook_list_clear() -> string_list_clear_func()
+ - hook: detect & emit two more bugs
+ - hook: rename cb_data_free/alloc -> hook_data_free/alloc
+ - hook: fix minor style issues
+ - hook: move unsorted_string_list_remove() to string-list.[ch]
+ - Merge branch 'ar/config-hooks' into ar/config-hook-cleanups
+ (this branch is used by ar/parallel-hooks.)
+
+ Code clean-up around the recent "hooks defined in config" topic.
+
+ Expecting a reroll?
+ cf. <acJNblQ8WRGIri0V@pks.im>
+ source: <20260320115211.177351-1-adrian.ratiu@collabora.com>
+
+
+* ab/clone-default-object-filter (2026-03-14) 1 commit
+ - clone: add clone.<url>.defaultObjectFilter config
+
+ "git clone" learns to pay attention to "clone.<url>.defaultObjectFilter"
+ configuration and behave as if the "--filter=<filter-spec>" option
+ was given on the command line.
+
+ Expecting review responses.
+ cf. <abe1l8ONmFIhzaxi@pks.im>
+ source: <pull.2058.v6.git.1773553022381.gitgitgadget@gmail.com>
+
+
+* jc/neuter-sideband-fixup (2026-03-05) 6 commits
+  (merged to 'next' on 2026-03-13 at 5a4098b0cd)
+ + sideband: drop 'default' configuration
+ + sideband: offer to configure sanitizing on a per-URL basis
+ + sideband: add options to allow more control sequences to be passed through
+ + sideband: do allow ANSI color sequences by default
+ + sideband: introduce an "escape hatch" to allow control characters
+ + sideband: mask control characters
+ (this branch is used by jc/neuter-sideband-post-3.0.)
+
+ Try to resurrect and reboot a stalled "avoid sending risky escape
+ sequences taken from sideband to the terminal" topic by Dscho.  The
+ plan is to keep it in 'next' long enough to see if anybody screams
+ with the "everything dropped except for ANSI color escape sequences"
+ default.
+
+ Will keep in 'next' a bit longer than usual.
+ source: <20260305233452.3727126-1-gitster@pobox.com>
+
+
+* jc/neuter-sideband-post-3.0 (2026-03-05) 2 commits
+ - sideband: delay sanitizing by default to Git v3.0
+ - Merge branch 'jc/neuter-sideband-fixup' into jc/neuter-sideband-post-3.0
+ (this branch uses jc/neuter-sideband-fixup.)
+
+ The final step, split from earlier attempt by Dscho, to loosen the
+ sideband restriction for now and tighten later at Git v3.0 boundary.
+
+ On hold, until jc/neuter-sideband-fixup cooks long enough in 'next'.
+ (this branch uses jc/neuter-sideband-fixup.)
+ source: <20260305233452.3727126-8-gitster@pobox.com>
+
+
+* cs/subtree-split-recursion (2026-03-05) 3 commits
+ - contrib/subtree: reduce recursion during split
+ - contrib/subtree: functionalize split traversal
+ - contrib/subtree: reduce function side-effects
+
+ When processing large history graphs on Debian or Ubuntu, "git
+ subtree" can die with a "recursion depth reached" error.
+
+ Comments?
+ source: <20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
+
+
+* pt/promisor-lazy-fetch-no-recurse (2026-03-11) 1 commit
+ - promisor-remote: prevent lazy-fetch recursion in child fetch
+
+ The mechanism to avoid recursive lazy-fetch from promisor remotes
+ was not propagated properly to child "git fetch" processes, which
+ has been corrected.
+
+ Comments?
+ source: <pull.2224.v3.git.git.1773238778894.gitgitgadget@gmail.com>
+
+
+* mf/format-patch-cover-letter-format (2026-03-06) 5 commits
+  (merged to 'next' on 2026-03-09 at e872adca7b)
+ + docs: add usage for the cover-letter fmt feature
+ + format-patch: add commitListFormat config
+ + format-patch: add ability to use alt cover format
+ + format-patch: move cover letter summary generation
+ + pretty.c: add %(count) and %(total) placeholders
+ (this branch is used by mf/format-patch-commit-list-format.)
+
+ "git format-patch --cover-letter" learns to use a simpler format
+ instead of the traditional shortlog format to list its commits with
+ a new --cover-letter-format option and format.commitListFormat
+ configuration variable.
+
+ Waiting for the follow-on topic.
+ source: <cover.1772839973.git.mroik@delayed.space>
+
+
+* pt/fsmonitor-linux (2026-03-04) 12 commits
+ - fsmonitor: convert shown khash to strset in do_handle_client
+ - fsmonitor: add tests for Linux
+ - fsmonitor: add timeout to daemon stop command
+ - fsmonitor: close inherited file descriptors and detach in daemon
+ - run-command: add close_fd_above_stderr option
+ - fsmonitor: implement filesystem change listener for Linux
+ - fsmonitor: rename fsm-settings-darwin.c to fsm-settings-unix.c
+ - fsmonitor: rename fsm-ipc-darwin.c to fsm-ipc-unix.c
+ - fsmonitor: use pthread_cond_timedwait for cookie wait
+ - compat/win32: add pthread_cond_timedwait
+ - fsmonitor: fix hashmap memory leak in fsmonitor_run_daemon
+ - fsmonitor: fix khash memory leak in do_handle_client
+
+ The fsmonitor daemon has been implemented for Linux.
+
+ Waiting for the rerolls to slow down?
+ cf. <aakyzGksiC2fhhiD@pks.im>
+ source: <pull.2147.v8.git.git.1772648125.gitgitgadget@gmail.com>
+
+
+* sa/replay-revert (2026-03-12) 2 commits
+ - replay: add --revert mode to reverse commit changes
+ - sequencer: extract revert message formatting into shared function
+
+ "git replay" (experimental) learns, in addition to "pick" and
+ "replay", a new operating mode "revert".
+
+ Expecting review responses.
+ cf. <87pl53si56.fsf@iotcl.com>
+ source: <20260313054035.26605-1-siddharthasthana31@gmail.com>
+
+
+* vp/http-rate-limit-retries (2026-03-17) 3 commits
+  (merged to 'next' on 2026-03-24 at 9cb4ec5fad)
+ + http: add support for HTTP 429 rate limit retries
+ + strbuf_attach: fix call sites to pass correct alloc
+ + strbuf: pass correct alloc to strbuf_attach() in strbuf_reencode()
+
+ The HTTP transport learned to react to "429 Too Many Requests".
+
+ Will merge to 'master'.
+ cf. <ab4RIZr7b49VKjR9@nand.local>
+ source: <pull.2008.v6.git.1773752435.gitgitgadget@gmail.com>
+
+
+* ar/parallel-hooks (2026-03-20) 11 commits
+ - hook: add hook.<event>.enabled switch
+ - hook: warn when hook.<friendly-name>.jobs is set
+ - hook: add per-event jobs config
+ - hook: add -j/--jobs option to git hook run
+ - hook: mark non-parallelizable hooks
+ - hook: allow pre-push parallel execution
+ - hook: allow parallel hook execution
+ - hook: parse the hook.jobs config
+ - config: add a repo_config_get_uint() helper
+ - repository: fix repo_init() memleak due to missing _clear()
+ - Merge branch 'ar/config-hook-cleanups' into ar/parallel-hooks
+ (this branch uses ar/config-hook-cleanups.)
+
+ Needs review.
+ source: <20260320135311.331463-1-adrian.ratiu@collabora.com>
+
+
+* en/xdiff-cleanup-3 (2026-01-03) 11 commits
+ . SQUASH??? cocci
+ . xdiff: move xdl_cleanup_records() from xprepare.c to xdiffi.c
+ . xdiff: remove dependence on xdlclassifier from xdl_cleanup_records()
+ . xdiff: replace xdfile_t.dend with xdfenv_t.delta_end
+ . xdiff: replace xdfile_t.dstart with xdfenv_t.delta_start
+ . xdiff: cleanup xdl_trim_ends()
+ . xdiff: use xdfenv_t in xdl_trim_ends() and xdl_cleanup_records()
+ . xdiff: let patience and histogram benefit from xdl_trim_ends()
+ . xdiff: don't waste time guessing the number of lines
+ . xdiff: make classic diff explicit by creating xdl_do_classic_diff()
+ . ivec: introduce the C side of ivec
+
+ Preparation of the xdiff/ codebase to work with Rust
+
+ Expecting a reroll.
+ cf. <CAH=ZcbBVSqUG89n65MBpN+HMCmmjzmADGaVnuEJn_cYN0SYknw@mail.gmail.com>
+ source: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+
+
+* tb/incremental-midx-part-3.2 (2026-02-24) 17 commits
+  (merged to 'next' on 2026-03-18 at 7f995e23bb)
+ + midx: enable reachability bitmaps during MIDX compaction
+ + midx: implement MIDX compaction
+ + t/helper/test-read-midx.c: plug memory leak when selecting layer
+ + midx-write.c: factor fanout layering from `compute_sorted_entries()`
+ + midx-write.c: enumerate `pack_int_id` values directly
+ + midx-write.c: extract `fill_pack_from_midx()`
+ + midx-write.c: introduce `midx_pack_perm()` helper
+ + midx: do not require packs to be sorted in lexicographic order
+ + midx-write.c: introduce `struct write_midx_opts`
+ + midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
+ + t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
+ + git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
+ + git-multi-pack-index(1): remove non-existent incompatibility
+ + builtin/multi-pack-index.c: make '--progress' a common option
+ + midx: introduce `midx_get_checksum_hex()`
+ + midx: rename `get_midx_checksum()` to `midx_get_checksum_hash()`
+ + midx: mark `get_midx_checksum()` arguments as const
+
+ Further work on incremental repacking using MIDX/bitmap
+
+ Will merge to 'master'.
+ source: <cover.1771959555.git.me@ttaylorr.com>
+
+
+* js/macos-homebrew-forgets-reg-enhanced (2026-03-20) 1 commit
+ . osx-clang: work around Homebrew's clang lacking REG_ENHANCED
+
+ The build on macOS with Clang is fixed to work around a Homebrew change
+ that exposed an issue with missing REG_ENHANCED.
+
+ No longer needed.
+ cf. <6c108696-2d41-4fa1-9662-fbf6db97f767@web.de>
+ cf. <458ad3c1-96df-4575-ee42-e6eb754f25f6@gmx.de>
+ source: <d340af9e-334c-4e81-e58a-fc3dea73ebdd@gmx.de>
+
+--------------------------------------------------
+[Discarded]
+
+* js/neuter-sideband (2026-02-03) 6 commits
+ . sideband: delay sanitizing by default to Git v3.0
+ . sideband: offer to configure sanitizing on a per-URL basis
+ . sideband: add options to allow more control sequences to be passed through
+ . sideband: do allow ANSI color sequences by default
+ . sideband: introduce an "escape hatch" to allow control characters
+ . sideband: mask control characters
+
+ Invalidate control characters in sideband messages, to avoid
+ terminal state getting messed up.
+
+ Superseded by 'jc/neuter-sideband-fixup', which reuses most of the patches.
+ cf. <xmqqv7gcnwd4.fsf@gitster.g>
+ source: <pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
+
+
+* bc/rev-parse-parseopt-help-exit-code (2026-03-16) 1 commit
+ . rev-parse: have --parseopt callers exit 0 on --help
+
+ `rev-parse --parseopt` now includes "exit 0" in its output when the
+ user asks for help, ensuring that scripts using the recommended `eval`
+ pattern exit successfully.
+
+ Need to step back and rethink how exit code should look like.
+ cf. <20260317150759.GA9975@coredump.intra.peff.net>
+ source: <20260316220742.1286157-1-sandals@crustytoothpaste.net>
