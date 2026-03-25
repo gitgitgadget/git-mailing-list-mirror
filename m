@@ -1,67 +1,71 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58EC2F8BC3
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:48:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CB71A6811
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774457329; cv=none; b=Xu9IK5s5JG5ZjMZsJIrOSEqgBsdiYM7sifs2K3Wclsf0N0pdX8XRidYxkRPaE6M79tS1Usi/TizIzLcQdFSqvGDOE+tnl8GVCUZdxc/0h/gAnr1kL21niCbaWkAAQCtvgI9Z1X0s0OibP1UbqEHTIEKRPJsqCdA4GzkSFWRse9A=
+	t=1774457335; cv=none; b=AnQ1mopjmNWX6nUg2v/ZipYPXsgm39u3Ith47xOnyyqEDWFoMs9nNi7QL+aE4yP0koFpJLYXEg48KWb09iD/XLi+y4HJfAa9wRR93+olb/20nGEj7yEoJ6FeQj/LZ0Oq5yVdr1x6JA6xWNb0+myiqtscCGbj+9h8gtWcdrfdexU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774457329; c=relaxed/simple;
-	bh=LrzSIkDKh4Cp609GynwtCU6yNbrkHsN03UjUbX2CQI8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q7lo3kqmtJI2IJxq0gsutjTtv2fIvdi708+ADck4/MlKSY8v2vbAXakRshM2zHpON35n6queCZH+hZ2A8D0IV0vWqEB5CvyGmrB3VKyh4lMlD5TaEtrUO/iRBT6gzKML+M/V1MAMFB3sU+wQ4DlMcXx77JhxapMoXWp3Zj/A7P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IeN15CxN; arc=none smtp.client-ip=209.85.214.170
+	s=arc-20240116; t=1774457335; c=relaxed/simple;
+	bh=z9XkWrJgJCt6qXJMSYkQq85u1mGWjyaZPwLtowU8dKQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oPqOnK8VLSavbl1ItW8UmvUCoSScUB6GyHranF1mkyINtvEMKro48u2KQ/DRhP0revOCy+ib1ylh7ELRzseIUuETNu9aRKqLokmLZnAdpRMS05sNTNwAStcr7TH+SzuoLTt1OJEZ6I9ZM688oGeJ+Ke5cMYbYc6Fmd4dlb8IEx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OQ0aaa8g; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeN15CxN"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2b0b0064027so176115ad.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 09:48:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQ0aaa8g"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2b07069e2efso103285ad.3
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 09:48:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774457328; x=1775062128; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=URFn/ZxuuRPYH1hqLVi1KgeuMi5tnIVU36pXpuXE8DA=;
-        b=IeN15CxNzqgK33Ubp+kmlRiHf1Hrs3EmqCySaDX9de8Y1WLCGEr97mXHgUpsXisI1M
-         Opw70tXC+cJLxuA4E630tZvSqayOxqtjeC9R/Wt/t4K6j/C8L8H/0CRMBvTq1e4HX8dW
-         gl+9Jr5ExeuHXW3murKwaMfs5QWHUJUtyAPVNVx/N3PjJ0Be6H0nkyhw+MsLkDHhehuh
-         NVuBt0/ZEpJi9r8bgqvml/QNKRvW29Ax+iUCwitbKGF6fNXyZznCK+M1QabfnKcO7XUB
-         zPLA10FBTSxqRMrBhbevByxsoOJsfK/k6PI+GP3kj2Iz+UjlXzJtuhQ4K3e/igLv1/7W
-         XmQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774457328; x=1775062128;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774457332; x=1775062132; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=URFn/ZxuuRPYH1hqLVi1KgeuMi5tnIVU36pXpuXE8DA=;
-        b=jNuLhljdDo3GPqmgIvbD+h3MDj9hEcvX75A2HXYM4UVnUfZDFIqiNf+yXrqz89TeHT
-         2+Osg1Ynhbsw5AhAcCFdnr+XNI57ytkFXKET+KL9EEJVA6DlMOtFAKm8s/4wJYa2z1zs
-         3dKUKOitl9LYo69hXEpFXye+jhslC/q58/dOGz9qD2ryMIEvPOyIhfDLJGLh3lwc8bFt
-         Z7QRUvGIvXf/of23I6jRhaH3EVlqMcO6tWW8zwrlSE2L/xzu1zZsVh82VYmGcQ3Ijc90
-         aC26t6Ekd0C8a1Axcw+qPIyV81xMpf6pX9TPcMvHhaETtYgLVQtKAvEesWomBqkLO3sc
-         y5xQ==
-X-Gm-Message-State: AOJu0YyjYxrk3BEqdLsHQwXErRtEoxgsYiWwKIX7o9OaqegLXAPcRCwC
-	mIibcSGIAgubAM7Go/uYTxN3Y71Tpc44hBznyAXFhl2yoBjUKEhIXBWgxikUTQ==
-X-Gm-Gg: ATEYQzzuenxSUQJqMgoSRrjfn/CH6igvnzbwKvBNm4CZmdUqxldmhDSsfUpD3ZdciNc
-	brVbToWYN/3di5fgBj1/Mel5V3psUyg5XRFMDAJvpiifcGeDe1vT6iAraPy/2EDYD7Rr8tZfnID
-	kO3c0y73h1k3vEz4rqIjHNqDo8qq9LpUDvYsMkl08ZTKVnVik4JDcsHyCmZEsncJetizxALyU4Z
-	67rvaMGHNWgkJGObu6wcSKSmqzDcgYboiYvv7xuzp4/T1qRQUyRDwqtAvp3vVNI9z6iL2RZs2MH
-	rmfHv2daEWzPKsktct/YUGI8uznjoMbFmJlgfOaKq45R9N9Xy6gLTPaFhB7FjzExK2aEgEB6JWf
-	OF/BLFyN7+zHbEK2t93fKjkpsthgY5dBHwGZlTLo4LYUfIWE1FrkAj9W61PjPjBbrdjq9YDK0wL
-	Cmd9Wo4RlkUeMhU+46A2DZcYZU4a4z7zXWXb9Crb9mf9S77lAaBJSvGg==
-X-Received: by 2002:a17:903:2c04:b0:2ae:aa16:acf7 with SMTP id d9443c01a7336-2b0b0ad656fmr47423055ad.40.1774457327714;
-        Wed, 25 Mar 2026 09:48:47 -0700 (PDT)
+        bh=Vtss34o92dvgNZ6V/UMXfQUzRE9oWBgWrq8RogbkwyU=;
+        b=OQ0aaa8gH8y/U18xkVzsrV6Y7GuJ2Iyfcj06yiU9XLL/CIw2TD1rkTmLTYzuJdVes8
+         iFjGM8VEk+jYYkevDh4LYItEkdX3LvdpyLzezxzjqU6hGKNTyVgoNvrwTftbYPYFU+cr
+         lTzc0+jSw2QNpHjk2ROuT6DNL/PSaBuFoj5dlgtYpH/Qg5VESNlYCTwMP1916900TlLi
+         QxvVoUOkLJRPkdSDLqBYeZbw9mN1OtYt6snl//BYLNnBs2g03pj6980Cy1Mmb2dWXc/Q
+         EJwJk9ehCXdBIDf/eiRzuJXsGalPFMdceTfefZ/kHZze3m2DP0XIs/y6etvaXh8hWkaN
+         0mtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774457332; x=1775062132;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Vtss34o92dvgNZ6V/UMXfQUzRE9oWBgWrq8RogbkwyU=;
+        b=R2jkhGWZ0lxBLDdAQtYbObRKFn/1RIA/Kpk9SMZgTBxw14FsMZx/t1qKoRbQo9AMDo
+         pyBdwu70IB+Si0zsRL2PxaCCP4SqrmJbc7SE6AOd8+Oto3h+hW+9vrOdHO+diVgw/OcC
+         gUXWGReuHI3sl+BsPRVX7Bmp4GtIAxYVw4nf3sKfcLb+22JRGKzL4lAzgOLVh3Nas1m1
+         KocgD41bUMsZw3WOLuwXNiJDHULjSUpfnJUhVvlLIkE/GVqf894804C7g4BrzQtaHZp8
+         e3hgleTByAshESKjs+1jQTiXVs/PDp7skma+6Ls9v8yUBIEGoIiqNna1OB63lDedXp9I
+         hWvg==
+X-Gm-Message-State: AOJu0YyfU5tGG/YRhxc2Y0QkcPPiXSWATGgwLNopoW0xqNM1d59GErp2
+	pCIEAD5kNRMOLXNf9N/03HEWzLMcHegx+8lI2xiSKgh8XCTeOqTgduVPM2BAwQ==
+X-Gm-Gg: ATEYQzyfSdAbU04zCIG+8PnynHbomBNeLxMo1TOjO7PLpT21Du6H+AwDYJOnorhWaix
+	t+okL+nn+So6uKneNzmCleFZ7ybnLRNuOKTGhfTD2UjOqK1OW1Y+ZKzIjTRSEl6bNKummVFbAkh
+	35SI+V3FtOGsUL0FCQTdiq/nc7T7LfzXb2yob0CSEkO7qGvZ99WPAZVsUzWmUJYkJr8F+YcocGy
+	7iUS5N+BcAB4CJEt/BVVSKUW+HQfgkSuVSF58Cd3A4HSPdJ9z3cdA0m8Nb4hJ+hBh6LZHrq+82x
+	AUFW6rCkdewD6p1/hjIM9ZuowKj6VDLE7TD3emcLIVDFc9hokoAKYlrTQmFJZC2jicOfvhIEY0/
+	DvTRlye4It3FllSG7DNBc/hxNGr0E3Q1gP+pVfdoMeycq6lc7JDYsx7gVOo9NC6yjl0laS2bK72
+	XsSD9Hz+/YZNkVjyCrAUp5uaHitVUxLaUg//LReCMHo40=
+X-Received: by 2002:a17:902:dac8:b0:2b0:6e12:bb21 with SMTP id d9443c01a7336-2b0b0ad2436mr46018435ad.41.1774457332287;
+        Wed, 25 Mar 2026 09:48:52 -0700 (PDT)
 Received: from Shreyansh-PC ([2401:4900:88eb:4aec:6f26:76cd:bafb:15d6])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc76ba80sm3901275ad.2.2026.03.25.09.48.45
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc76ba80sm3901275ad.2.2026.03.25.09.48.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 09:48:47 -0700 (PDT)
+        Wed, 25 Mar 2026 09:48:51 -0700 (PDT)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH 0/5] refs: reduce reliance on the_repository global state
-Date: Wed, 25 Mar 2026 22:14:17 +0530
-Message-ID: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH 1/5] refs: make branchname helpers repository aware
+Date: Wed, 25 Mar 2026 22:14:18 +0530
+Message-ID: <20260325164833.1216577-2-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,35 +74,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series continues the effort to reduce reliance on the_repository
-global state by making repository context explicit across the refs
-subsystem. The patches focus on passing struct repository through various
-ref helpers and backends, and replacing uses of global state such as
-the_repository and the_hash_algo with the appropriate repository instance.
+copy_branchname() in refs.c relies on the_repository when calling
+repo_interpret_branch_name(), introducing an implicit dependency on global
+state. Add a struct repository parameter and use it instead.
 
-Patch 1/5: Making branch name helper functions (copy_branchname(),
-check_branch_ref(), validate_branchname(), and validate_new_branchname())
-repository-aware. (built on top of jw/object-name-bitset-to-enum)
+Update check_branch_ref() to take a repository parameter as well, since it
+calls copy_branchname(). Propagate this change to higher-level helpers
+validate_branchname() and validate_new_branchname(), which also lack access
+to a repository instance. Most callers of these helpers reside in builtin
+code and already operate on the_repository, so pass it explicitly at those
+call sites (builtin/checkout and builtin/worktree) otherwise pass struct
+repository where available.
 
-Patch 2/5: Updating get_files_ref_lock_timeout_ms() to take a repository
-and propagating it through files-backend, including callback paths.
+This makes branch name handling explicitly repository-aware and aligns with
+ongoing efforts to remove reliance on global state. This change builds on
+top of jw/object-name-bitset-to-enum (2026-03-18), which introduced the
+enum interpret_branch_kind parameter to copy_branchname().
 
-Patch 3/5: Replacing uses of the_hash_algo in refs.c with the hash
-algorithm from the appropriate repository.
-
-Patch 4/5: Removing remaining uses of the_repository in reftable-backend.c
-where a repository instance is already available.
-
-Patch 5/5: Replacing the single instance of the_repository in
-packed-backend.c, thus dropping the USE_THE_REPOSITORY_VARIABLE macro.
-
-Shreyansh Paliwal (5):
-  refs: make branchname helpers repository aware
-  refs: make get_files_ref_lock_timeout_ms() repostory aware
-  refs: remove the_hash_algo global state
-  refs/reftable-backend: drop uses of the_repository
-  refs/packed-backend: use ref_store->repo instead of the_repository
-
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
  branch.c                   | 15 ++++++++-------
  branch.h                   |  5 +++--
  builtin/branch.c           | 14 +++++++-------
@@ -106,14 +100,309 @@ Shreyansh Paliwal (5):
  builtin/checkout.c         |  6 +++---
  builtin/merge.c            |  2 +-
  builtin/worktree.c         | 10 +++++-----
- refs.c                     | 28 +++++++++++++---------------
+ refs.c                     |  9 +++++----
  refs.h                     |  5 +++--
- refs/files-backend.c       | 19 +++++++++++++------
- refs/packed-backend.c      |  3 +--
- refs/refs-internal.h       |  2 +-
- refs/reftable-backend.c    |  6 +++---
- 13 files changed, 63 insertions(+), 55 deletions(-)
+ 9 files changed, 37 insertions(+), 32 deletions(-)
 
---
+diff --git a/branch.c b/branch.c
+index 243db7d0fc..65189823c3 100644
+--- a/branch.c
++++ b/branch.c
+@@ -370,16 +370,16 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+  * Return 1 if the named branch already exists; return 0 otherwise.
+  * Fill ref with the full refname for the branch.
+  */
+-int validate_branchname(const char *name, struct strbuf *ref)
++int validate_branchname(const char *name, struct strbuf *ref, struct repository *repo)
+ {
+-	if (check_branch_ref(ref, name)) {
++	if (check_branch_ref(ref, name, repo)) {
+ 		int code = die_message(_("'%s' is not a valid branch name"), name);
+ 		advise_if_enabled(ADVICE_REF_SYNTAX,
+ 				  _("See 'git help check-ref-format'"));
+ 		exit(code);
+ 	}
+ 
+-	return refs_ref_exists(get_main_ref_store(the_repository), ref->buf);
++	return refs_ref_exists(get_main_ref_store(repo), ref->buf);
+ }
+ 
+ static int initialized_checked_out_branches;
+@@ -468,10 +468,11 @@ const char *branch_checked_out(const char *refname)
+  * Return 1 if the named branch already exists; return 0 otherwise.
+  * Fill ref with the full refname for the branch.
+  */
+-int validate_new_branchname(const char *name, struct strbuf *ref, int force)
++int validate_new_branchname(const char *name, struct strbuf *ref, int force,
++			    struct repository *repo)
+ {
+ 	const char *path;
+-	if (!validate_branchname(name, ref))
++	if (!validate_branchname(name, ref, repo))
+ 		return 0;
+ 
+ 	if (!force)
+@@ -613,8 +614,8 @@ void create_branch(struct repository *r,
+ 		BUG("'clobber_head_ok' can only be used with 'force'");
+ 
+ 	if (clobber_head_ok ?
+-			  validate_branchname(name, &ref) :
+-			  validate_new_branchname(name, &ref, force)) {
++			  validate_branchname(name, &ref, r) :
++			  validate_new_branchname(name, &ref, force, r)) {
+ 		forcing = 1;
+ 	}
+ 
+diff --git a/branch.h b/branch.h
+index 3dc6e2a0ff..3aa53eb243 100644
+--- a/branch.h
++++ b/branch.h
+@@ -111,7 +111,7 @@ const char *branch_checked_out(const char *refname);
+  * Return 1 if the named branch already exists; return 0 otherwise.
+  * Fill ref with the full refname for the branch.
+  */
+-int validate_branchname(const char *name, struct strbuf *ref);
++int validate_branchname(const char *name, struct strbuf *ref, struct repository *repo);
+ 
+ /*
+  * Check if a branch 'name' can be created as a new branch; die otherwise.
+@@ -119,7 +119,8 @@ int validate_branchname(const char *name, struct strbuf *ref);
+  * Return 1 if the named branch already exists; return 0 otherwise.
+  * Fill ref with the full refname for the branch.
+  */
+-int validate_new_branchname(const char *name, struct strbuf *ref, int force);
++int validate_new_branchname(const char *name, struct strbuf *ref, int force,
++			    struct repository *repo);
+ 
+ /*
+  * Remove information about the merge state on the current
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1572a4f9ef..9c86b9f525 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -259,7 +259,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		char *target = NULL;
+ 		int flags = 0;
+ 
+-		copy_branchname(&bname, argv[i], allowed_interpret);
++		copy_branchname(&bname, argv[i], allowed_interpret, the_repository);
+ 		free(name);
+ 		name = mkpathdup(fmt, bname.buf);
+ 
+@@ -581,7 +581,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	int recovery = 0, oldref_usage = 0;
+ 	struct worktree **worktrees = get_worktrees();
+ 
+-	if (check_branch_ref(&oldref, oldname)) {
++	if (check_branch_ref(&oldref, oldname, the_repository)) {
+ 		/*
+ 		 * Bad name --- this could be an attempt to rename a
+ 		 * ref that we used to allow to be created by accident.
+@@ -619,9 +619,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	 * cause the worktree to become inconsistent with HEAD, so allow it.
+ 	 */
+ 	if (!strcmp(oldname, newname))
+-		validate_branchname(newname, &newref);
++		validate_branchname(newname, &newref, the_repository);
+ 	else
+-		validate_new_branchname(newname, &newref, force);
++		validate_new_branchname(newname, &newref, force, the_repository);
+ 
+ 	reject_rebase_or_bisect_branch(worktrees, oldref.buf);
+ 
+@@ -898,7 +898,7 @@ int cmd_branch(int argc,
+ 				die(_("cannot give description to detached HEAD"));
+ 			branch_name = head;
+ 		} else if (argc == 1) {
+-			copy_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL);
++			copy_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL, the_repository);
+ 			branch_name = buf.buf;
+ 		} else {
+ 			die(_("cannot edit description of more than one branch"));
+@@ -941,7 +941,7 @@ int cmd_branch(int argc,
+ 		if (!argc)
+ 			branch = branch_get(NULL);
+ 		else if (argc == 1) {
+-			copy_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL);
++			copy_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL, the_repository);
+ 			branch = branch_get(buf.buf);
+ 		} else
+ 			die(_("too many arguments to set new upstream"));
+@@ -971,7 +971,7 @@ int cmd_branch(int argc,
+ 		if (!argc)
+ 			branch = branch_get(NULL);
+ 		else if (argc == 1) {
+-			copy_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL);
++			copy_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL, the_repository);
+ 			branch = branch_get(buf.buf);
+ 		} else
+ 			die(_("too many arguments to unset upstream"));
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index 5d80afeec0..8222a289c9 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -5,6 +5,7 @@
+ #include "refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
++#include "repository.c"
+ 
+ static const char builtin_check_ref_format_usage[] =
+ "git check-ref-format [--normalize] [<options>] <refname>\n"
+@@ -42,7 +43,7 @@ static int check_ref_format_branch(const char *arg)
+ 	int nongit;
+ 
+ 	setup_git_directory_gently(&nongit);
+-	if (check_branch_ref(&sb, arg) ||
++	if (check_branch_ref(&sb, arg, the_repository) ||
+ 	    !skip_prefix(sb.buf, "refs/heads/", &name))
+ 		die("'%s' is not a valid branch name", arg);
+ 	printf("%s\n", name);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index e031e61886..7570a5664f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -743,7 +743,7 @@ static void setup_branch_path(struct branch_info *branch)
+ 			   &branch->oid, &branch->refname, 0))
+ 		repo_get_oid_committish(the_repository, branch->name, &branch->oid);
+ 
+-	copy_branchname(&buf, branch->name, INTERPRET_BRANCH_LOCAL);
++	copy_branchname(&buf, branch->name, INTERPRET_BRANCH_LOCAL, the_repository);
+ 	if (strcmp(buf.buf, branch->name)) {
+ 		free(branch->name);
+ 		branch->name = xstrdup(buf.buf);
+@@ -2014,10 +2014,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		struct strbuf buf = STRBUF_INIT;
+ 
+ 		if (opts->new_branch_force)
+-			opts->branch_exists = validate_branchname(opts->new_branch, &buf);
++			opts->branch_exists = validate_branchname(opts->new_branch, &buf, the_repository);
+ 		else
+ 			opts->branch_exists =
+-				validate_new_branchname(opts->new_branch, &buf, 0);
++				validate_new_branchname(opts->new_branch, &buf, 0, the_repository);
+ 		strbuf_release(&buf);
+ 	}
+ 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 2cbce56f8d..854490afef 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -552,7 +552,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 	char *found_ref = NULL;
+ 	int len, early;
+ 
+-	copy_branchname(&bname, remote, 0);
++	copy_branchname(&bname, remote, 0, the_repository);
+ 	remote = bname.buf;
+ 
+ 	oidclr(&branch_head, the_repository->hash_algo);
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 4035b1cb06..6ec2f02bf0 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -415,7 +415,7 @@ static int make_worktree_orphan(const char * ref, const struct add_opts *opts,
+ 	struct strbuf symref = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 
+-	validate_new_branchname(ref, &symref, 0);
++	validate_new_branchname(ref, &symref, 0, the_repository);
+ 	strvec_pushl(&cp.args, "symbolic-ref", "HEAD", symref.buf, NULL);
+ 	if (opts->quiet)
+ 		strvec_push(&cp.args, "--quiet");
+@@ -481,7 +481,7 @@ static int add_worktree(const char *path, const char *refname,
+ 	worktrees = NULL;
+ 
+ 	/* is 'refname' a branch or commit? */
+-	if (!opts->detach && !check_branch_ref(&symref, refname) &&
++	if (!opts->detach && !check_branch_ref(&symref, refname, the_repository) &&
+ 	    refs_ref_exists(get_main_ref_store(the_repository), symref.buf)) {
+ 		is_branch = 1;
+ 		if (!opts->force)
+@@ -649,7 +649,7 @@ static void print_preparing_worktree_line(int detach,
+ 		fprintf_ln(stderr, _("Preparing worktree (new branch '%s')"), new_branch);
+ 	} else {
+ 		struct strbuf s = STRBUF_INIT;
+-		if (!detach && !check_branch_ref(&s, branch) &&
++		if (!detach && !check_branch_ref(&s, branch, the_repository) &&
+ 		    refs_ref_exists(get_main_ref_store(the_repository), s.buf))
+ 			fprintf_ln(stderr, _("Preparing worktree (checking out '%s')"),
+ 				  branch);
+@@ -788,7 +788,7 @@ static char *dwim_branch(const char *path, char **new_branch)
+ 	char *branchname = xstrndup(s, n);
+ 	struct strbuf ref = STRBUF_INIT;
+ 
+-	branch_exists = !check_branch_ref(&ref, branchname) &&
++	branch_exists = !check_branch_ref(&ref, branchname, the_repository) &&
+ 			refs_ref_exists(get_main_ref_store(the_repository),
+ 					ref.buf);
+ 	strbuf_release(&ref);
+@@ -885,7 +885,7 @@ static int add(int ac, const char **av, const char *prefix,
+ 		new_branch = new_branch_force;
+ 
+ 		if (!opts.force &&
+-		    !check_branch_ref(&symref, new_branch) &&
++		    !check_branch_ref(&symref, new_branch, the_repository) &&
+ 		    refs_ref_exists(get_main_ref_store(the_repository), symref.buf))
+ 			die_if_checked_out(symref.buf, 0);
+ 		strbuf_release(&symref);
+diff --git a/refs.c b/refs.c
+index 685a0c247b..840965519e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -744,13 +744,14 @@ static char *substitute_branch_name(struct repository *r,
+ }
+ 
+ void copy_branchname(struct strbuf *sb, const char *name,
+-		     enum interpret_branch_kind allowed)
++		     enum interpret_branch_kind allowed,
++		     struct repository *repo)
+ {
+ 	int len = strlen(name);
+ 	struct interpret_branch_name_options options = {
+ 		.allowed = allowed
+ 	};
+-	int used = repo_interpret_branch_name(the_repository, name, len, sb,
++	int used = repo_interpret_branch_name(repo, name, len, sb,
+ 					      &options);
+ 
+ 	if (used < 0)
+@@ -758,10 +759,10 @@ void copy_branchname(struct strbuf *sb, const char *name,
+ 	strbuf_add(sb, name + used, len - used);
+ }
+ 
+-int check_branch_ref(struct strbuf *sb, const char *name)
++int check_branch_ref(struct strbuf *sb, const char *name, struct repository *repo)
+ {
+ 	if (startup_info->have_repository)
+-		copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
++		copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL, repo);
+ 	else
+ 		strbuf_addstr(sb, name);
+ 
+diff --git a/refs.h b/refs.h
+index d65de6ab5f..72b8ea609a 100644
+--- a/refs.h
++++ b/refs.h
+@@ -226,7 +226,8 @@ char *repo_default_branch_name(struct repository *r, int quiet);
+  * repo_interpret_branch_name() for details.
+  */
+ void copy_branchname(struct strbuf *sb, const char *name,
+-		     enum interpret_branch_kind allowed);
++		     enum interpret_branch_kind allowed,
++		     struct repository *repo);
+ 
+ /*
+  * Like copy_branchname() above, but confirm that the result is
+@@ -234,7 +235,7 @@ void copy_branchname(struct strbuf *sb, const char *name,
+  *
+  * The return value is "0" if the result is valid, and "-1" otherwise.
+  */
+-int check_branch_ref(struct strbuf *sb, const char *name);
++int check_branch_ref(struct strbuf *sb, const char *name, struct repository *repo);
+ 
+ /*
+  * Similar for a tag name in refs/tags/.
+-- 
 2.53.0
 
