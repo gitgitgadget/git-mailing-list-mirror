@@ -1,80 +1,80 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433F03A2570
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1253533710F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774441734; cv=pass; b=ZEC8P2/irZ3lGQlyO1dR8FY7W+fQvG5mciZ2kv6AG+PR/JAGj39cFbdgk7DBgwUxZ5Gibhec3pYH8nJrFKF0Xl/gGGGBxA2I7TPmcoMdKLqv0lsMHWSt83/13IUhzUTkr0mrfm1TUYPKXPbkqYEX9fXNmW54YeaLidyogTUnpDQ=
+	t=1774441795; cv=pass; b=MqXCFQo2qn3iVbSnhnY/MG/dbAGNAWwFns/zHnLdTe1AyNls/zepNnhXVe49VhEm3j6au4RfqHlpaj67B69NQODgj2SuHE+IVh4Gn60WxsEL6wUP5nJdn6a2edXCYT8GNqHGsNu46GcpPMpwhl9cOX76FTedWTg8VAyRP5/JP+Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774441734; c=relaxed/simple;
-	bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
+	s=arc-20240116; t=1774441795; c=relaxed/simple;
+	bh=F69AZHCoZ1EhAXqWIEHO0mmxHYjGQu2N6oicc6Hs70A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HjkOHGtnFwgJ1dhCnBVs+k5m8AlNWpQICBkBfutRApPWWcxMijskl85e+xX4mWZf1qI4OcwJdJupCsK8PGEnYOuAWkhwudJFExlWQK5dafIryvLxmgsJ3pDiJprBCaLyDCCUIKr725aoleZwR9y9ibl2d95YRaIQiOKQ8JpQ0jo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IGTEGDaK; arc=pass smtp.client-ip=209.85.128.178
+	 To:Cc:Content-Type; b=iXvZqYd4im55PD5u5lBI7xvhtgjNn4NQ/90kOdCIC1yXxeUazDGCHnfm59SLb8hk9Gz2F+FyTjvjzinTaqx3/wWueEeIVWhzCl1p1+zw3TVBxVZREhNfIT1WF3HNdAtSMlyYju6RmMQcdrXX2QLOu9aal+9yiTrWcRfsKrSou7E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHLN3hlY; arc=pass smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IGTEGDaK"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-79a535e7c00so35820887b3.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:28:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774441732; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHLN3hlY"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7947cf097c1so49479997b3.2
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:29:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774441793; cv=none;
         d=google.com; s=arc-20240605;
-        b=lHYyB71lKNRcGVmyJyaXkSLylcUfIjkWVVVBJSbhdQNPIK3SG2TxQg3+q+XyTlDCuu
-         Iv8ACF24cSVzmZ4hlUu93zczZ97TgVnRSIJoSau7NH4mD/shXOz4d8rFd7z86j7C/DjK
-         KtfoG2+3mnAizf2HsV5oJjknmCWrfGAm4UEgbASS3QAScmH8fsjmNHVIj7wd6srby4uE
-         DgJxZAaqtuuYndru1y4EyMf9TXxFRxUAbuTkdo8mfvWyKHHAbfZMNuCflcb2XPlPren8
-         au2n03YlMA7w8xmvjgqNhTk16gP9co9+u8hMApo0rHAfJTV6tq5C7HqgMyImp6Szxhl8
-         Jixg==
+        b=K7XM+2pA+bhMQkoueFoWfj1Re8NNrADmutdLcx6VhPQT1zU4W0y75zSV6Hr+Z+hVWF
+         r9ZUIS3APqr7YitKoQTpdWWfJ4IocjH79PxZCKdot8jY2K6ae2quqtSRKZ5khkpj39oC
+         u8nf2pPsISYNGl+VhM6zE2EGQewVkRDYl4Hvs6tJ4iDZN1dLTXJwcxNg+4T8GVI0q5Cb
+         87ufhkKHpYfU7I0/ixCiecVDG7fvTs3Rqt4q8OcAgi1feg30lZ2hde5LHJ6WfsndTLa0
+         EkxUjG6olMAWe1vZFy6Tu2xzGTGZJy1PtnvTfrE9YA/sb8WZWy/ifkipZyajIiZ52UMY
+         7ryg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
-        fh=tcHSeyFWSwrY6TQp/SiVMx2my4MAqsWo6eLCYHcaoH4=;
-        b=W3lxW02mPJ5lSnKAnMxKfEJ6Ao/gYDwiXEdAHs5uJD7unYId3Mbp2KWv1v2AuciYah
-         VYFJYjmcJ6x9OMHDUKpGI5NwhpATgl6x3rtXAGEmsbqqb3wFJsCMQV03RYBhdvruURJb
-         +gcBbjJwbbxEB8Pw2vCcDfaX6UGH8Y5LTbRpVrKuSAnRjJ1j/I0QnyN35Ej3rpMA0UaY
-         IKrK3gemnHEvEFHeKterAEUDmYktCaLWFKZttMipG1mFy6lC4vgjXXu0CdougLMSvcym
-         SQdKJchHh2m+sUmzbuBInusxa7uxgJ4YimMRTpOqkfYu8DN5YEqT3hb/WBmBJim66SvR
-         LoKQ==;
+        bh=R6UZphxD71bGIxUWogshiU/bZq1eBJR6kUsJX8CS8wc=;
+        fh=leqxNc3jF/t+mFa40l5qBhn20FaXqhR4DCSsWbMYFEs=;
+        b=ZRPNw51OS3SnIgNeZvS7UX7Xa4tuRxYR5SA+usGk0W5M1Ci7DPePjoeOcaFcbbJ239
+         hVGvhByRwBBJ7qvI/fNCac6oVlI3wbS1mnQC9POR/tngBjJixU/PA2Ak8XTaLNsxFUzS
+         KP7pXKcsJtOAHXKkEeShE4Th9U6iE6Tdz/SzMUjQusy9iaG4OXP94ZTsPIflB5WA0/T2
+         Md11igCH8VYvz57ii1DA9aPKqVMC+yj29Fnjal9drvh1nW9hVYuosD52o2qvLJifGlAY
+         xBPTGKPI0HcFjiahdLkFUOKndPsHCJEW/CEApZfQ0hzcRB9Yi2GzKuhUaQsFOdFTjLP/
+         Bo+g==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774441732; x=1775046532; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774441793; x=1775046593; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
-        b=IGTEGDaKTcF4ZpNszs0+yhqltGei9KLBp/4szc+tQJeW97ZUz4lXTPS2wrwnnUmcdT
-         TWdyCvESaqVbdGVsfA0ME1N/566GWV9gIkRCWHTb5uiMzFHMn3DV94S+tfjtfYoKgt0R
-         OAx5NJuFDsf0cEocBtw7pOjnPIhv0hDzF7LvrbzYukUFXiEW8pVz6Ii4QR04hW0+Zyz3
-         sH6NVn7aHk1DHHoVCLzzsBiD2CnCCXGqDW68WNbliep0TmztGg9jHlogNrbMyN0eWbEX
-         /QB/+alGfIwtPVyMwcVUnvl3zkPbTvTFUDpB+CJ/PdGFz7Mo1BldwFgDyBDBJ7xduONu
-         MQ0w==
+        bh=R6UZphxD71bGIxUWogshiU/bZq1eBJR6kUsJX8CS8wc=;
+        b=hHLN3hlYBVacrrvRUoM6OZi5Pk+EoPw6hft40TRyPIOB0BtUp0hwepM/YdjUiK3gA4
+         UqoJmlsL8Csh/C2vCHY95KYfEtti3Ky6kDfPyi2FL3japXHx6O+VKhS3Du5+y1nm4A4A
+         TQx0neljt11NyLWUaELpVlyZrmHCLa77wJF24NmZos7nOnqIFihbQUFxyury+i42KBuR
+         ouYQjgMiK8E3I4sY4Iod1TQvWx7akdPugE9clSzT3+ApXb+VuU1yR4xhI4c6FztOe6Ij
+         W/IyudeG1K1MXECHwRpYg9jTiO9Hr9n7vUnN2bYGfAvU8fAcvztvoIM78yyUKSiG7F/M
+         jV2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774441732; x=1775046532;
+        d=1e100.net; s=20251104; t=1774441793; x=1775046593;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fuAsw3GV8lYFXg3FF+AuIZ9XOCXQEiyFFkr4OE256IQ=;
-        b=YK1l4ttFp3gGCRtlMQGH6bW7lFqGjxLtH/A7CMIzPe6e/ecDLvHVJcdhJaIgymUe0y
-         2TBBE1E1GERAGhnE0RsHNerGs4xMfFrggBEJtvlW7cwuSDEAdZ0ZxZu4XbVtAjlyimS8
-         JGybrBi86anxpyuhzcyNdzwQ22Lj9PgOo3CRRWpIszlUyZvZU36Sfcj4z/EKVtA2YD6A
-         Qrv2ZgZDx048prmNmQTzpRPG5k/W3RVBdEWQzvxUjTh/DcnhSLjBmJAMjF/9yuyr39H5
-         JJGOyKVnI6PbEAaPhi1/K4quI3ATQvbKkqBiQI5WmCKziWI9OpCPk9j2dR7SLP7pFaMH
-         AJlg==
-X-Forwarded-Encrypted: i=1; AJvYcCUKHcw5RXUcajyE2GiIST+wHCU+zzic5e8jizhvW+IrdVlJqxb5YOeAHbrfh3/UoZ7LA3A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCZeBlq2Y6Fbv1NuzjtRDcoHUJjtNHneSILkGkk6xQuwHz3QcO
-	vhLuPMM5tZkYshrid1kzKB/LFKn7346HSE294JDTq0g/DoS5UGKm891xOoW4kGmBnVdky01PJ6Q
-	ZtTIDdJicYiK6LnrO+ElT9vouT2+RckE=
-X-Gm-Gg: ATEYQzwxU9AHdHC07d18s3/vCj0wSk7Q1SrnaZS9IxdGOqgcw3goBnYT6SEmXO5zLCN
-	unAsDOhIZYwGCb74rf23Ago1A3J3T9TemhBf8txgmIZII+SsImA8t0ZhnGqdHfeXybT17slBcPr
-	cnunx/lqoHTxx6jFamrYAuMlSLpcrhugmL5KTcsxd2YvQWAVYC7QooLziirjWNhDalsMHpCgIeL
-	uGkuUSHflzyQUmmGF09kxwvBxGbnyOpyMDBh0IfpI+WyNSLkKxLCj33/X5aLBqjSzkqXRob4dsc
-	n6cXAJ/IBPyUy6oto9n1r2fwq9Gf+8UwuJxBIe6kPxqp5jWVm2Y5JChUzLOQn+Q3dm+sg9LXMEK
-	j/Zon7OmnO/T3SobrQrS8x0s=
-X-Received: by 2002:a05:690c:102:b0:796:6df5:485a with SMTP id
- 00721157ae682-79acf67f441mr32975007b3.39.1774441732170; Wed, 25 Mar 2026
- 05:28:52 -0700 (PDT)
+        bh=R6UZphxD71bGIxUWogshiU/bZq1eBJR6kUsJX8CS8wc=;
+        b=pO6G4l0SYf4Xv9T+8zZHnxe9Aneo8VSukE0aSjKBKltIBNcY1nXqVnoLB/qcS2sEHC
+         LdnxlWJms+Atlh8uud+t7hFWbAmos7jU7o/UbF51tUhL+Mb2QRmpc9zjxEMfaU2tzD3L
+         lQIY+KEwKTnheobPE9Dxe2+DC1DywjgnzVxKf6h7i8ChBNngXOP9C5YibKnKWvWE3zUo
+         iciVSxN6r3PpUmfZIZlnPtdDGcDIj0qes2Vu6JioeW89ciG+QdlbCNiEWKIDoqZo+Jw8
+         zUKAoDOuDHJAigpacS2X0oQDMmmq9MrE677NVC+x+rDgjOZOsAn8WD/S4LFw0fLFpq+g
+         QWjw==
+X-Forwarded-Encrypted: i=1; AJvYcCXuv7PiRamWEA9m/R1AL+rkgh8tNtodblrfFGVlBUi8CsE2Ls3aj3kee62jlsyaH4dERyI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtIk3AlhqyM+RUv8YLM8FxddWDFUhzCECWb86+M1QepsN3SIUT
+	PoILaK0AG2Ym8W+OL8GXsql5jj5hMYQM67Y7jy0hveDR7kox9CFuEN8LM86xvewr72wRL17+Ykt
+	UbbDnkVKgyVmIju5qKB9TcN8cODdry+U=
+X-Gm-Gg: ATEYQzwul9QUR0rdXUzjhtgOjT60do3ui9101pbBg8EFn59gaz7mrCgYipH1HfwgfcW
+	R7j009nwt92F0HcSxrcNQ4L3qpSYemvOZV10D1Et8TPoOXlTL9M5Zwz3nYmFHYW6gBeiQAG1nzl
+	2g3nIAR9B7/w9fO4BByJmJzBaXrYA8aFVoMr0RBbwE7X/Q7LNTOXMK9JACn477+S1cKcz60FmQ4
+	LX0dUGsG/SkQxsl9a0SdEW/4EGAyjBG/Z4wTiRC0XCGYFMsGN15QSEwY5Ct/FMu8PPMxoeWulCn
+	FZWE7SEEITsbEGbRmgBPmM8yTbsHG/+YcjOG/MTw6CVPdi6nvsSM36HdzQerAl2H0hEQn37JlVj
+	ivSIoqmFPFHQ+8GpZrDGKW+HajVPqpJoGIw==
+X-Received: by 2002:a05:690c:34c9:b0:79a:5fb9:62cc with SMTP id
+ 00721157ae682-79acf2f148bmr33798687b3.13.1774441792954; Wed, 25 Mar 2026
+ 05:29:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,13 +82,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
- <20260323215935.74486-1-pabloosabaterr@gmail.com> <fae2f8e3-029a-43c7-aa6e-45a452026853@kdbg.org>
-In-Reply-To: <fae2f8e3-029a-43c7-aa6e-45a452026853@kdbg.org>
+ <20260323215935.74486-1-pabloosabaterr@gmail.com> <20260323215935.74486-2-pabloosabaterr@gmail.com>
+ <6b299cf5-acfd-4a56-87e7-db26743a3271@kdbg.org>
+In-Reply-To: <6b299cf5-acfd-4a56-87e7-db26743a3271@kdbg.org>
 From: Pablo <pabloosabaterr@gmail.com>
-Date: Wed, 25 Mar 2026 13:28:36 +0100
-X-Gm-Features: AQROBzB24IMC68QRR-ldl-hz-fZ8kapUizoHXEQsBSlWxATCQvRntfaur9ivYJE
-Message-ID: <CAN5EUNTXy+cFyHApdrhGKUqrvBGO0bb9X-=MaAWgp4DWOAkA-A@mail.gmail.com>
-Subject: Re: [GSoC PATCH v4 0/3] graph: add --graph-lane-limit option
+Date: Wed, 25 Mar 2026 13:29:37 +0100
+X-Gm-Features: AQROBzDQu1D-BMQ_P-gCUGOv2n9QncMhxMcMou_80g6uzfdg2kpzu4_Q9vCVinE
+Message-ID: <CAN5EUNQBRp2OQHQ32FFW5vPKUO9jHu5chijA3FTatR7jnyzO1g@mail.gmail.com>
+Subject: Re: [GSoC PATCH v4 1/3] graph: add --graph-lane-limit option
 To: Johannes Sixt <j6t@kdbg.org>
 Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com, 
 	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
@@ -96,82 +97,24 @@ Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com,
 Content-Type: text/plain; charset="UTF-8"
 
 Johannes Sixt (<j6t@kdbg.org>) writes:
-
-> Generally, I like the goal of this patch series. However, the way in
-> which it is presented and justified can be improved substantially, IMO.
 >
-> It begins with the statement of what this patch series wants to achieve.
-> It is "limit the width of the graph", isn't it? It is not "add
-> --graph-lane-limit"; that is just a tool to achieve the goal.
+> Am 23.03.26 um 22:59 schrieb Pablo Sabater:
+> > @@ -3172,6 +3174,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+> >
+> >       if (revs->no_walk && revs->graph)
+> >               die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
+> > +
+> > +     if (revs->graph_max_lanes > 0 && !revs->graph)
+> > +             die(_("option '%s' requires '%s'"), "--graph-lane-limit", "--graph");
+> > +
+> >       if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+> >               die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
 >
-> To help reviewers, you should present an example chart in the cover
-> letter that shows the before- and after-state (with and without the user
-> of the new option).
-
-True, I'll do that. Because it seems on your last review that I didn't explain
-myself correctly, the idea was to:
-
-Without --graph-lane-limit:
-
-| | | | | | | * commit message
-| | | | | |/
-
-With --graph-lane-limit=3:
-
-| | | . commit message
-| | | .
-
-It truncates the lanes horizontally at the lane limit, the "." replaces
-everything over the limit (n+1).
-
-> As far as the separation into patches is concerned, I see a few
-> problems. With the current separation is difficult to justify the
-> patches. For example, the first patch adds prerequisites for a later
-> patch, but it is unclear how these are used. The answer to the question
-> "Why do we need this?" is simply "because the next patch uses them", but
-> this is a very weak justification, because the next questions are "how
-> are they used and why didn't you squash this into the next patch?"
+> You help translators if you make the new error message format string
+> exactly identical to the one that we see in the post-context.
 >
-> Let me suggest a different separation.
 
-I'll merge 1st and 2nd patch together into a single one, adding the option
-together with the actual logic that does it. This fixes what SZEDER said about
-the first patch alone breaking the build.
+True, I'll make the messages the same in v5.
 
-And the documentation + tests on a separate commit.
-
-> 1. The first patch limits the graph width with a hard-coded limit, say
-> 15 lanes. It limits the graph *always*. Choose a limit that is large
-> enough to pass all tests.
->
-> 2. The next patch adds --graph-lane-limit and its documentation. Let it
-> do its thing. Revert to the default limit value 0, i.e., unlimited.
->
-> 3. Next, add additional eye-candy. I am alluding to the line that marks
-> where a graph lane was truncated.
->
-> (4. If more detailed document is warranted, e.g., an example chart, do
-> this as a separate patch that can now show all bells and whistles that
-> the earlier commits have implemented. Whether this makes sense as a
-> separate step, or whether documentation grows with the earlier patches,
-> is a judgement call.)
->
-> As far as commit messages are concerned, always, always provide an
-> answer to "Why?" for every detail.
->
-> - Why do we want to limit the graph width?
-> - Why is the hard-coded limit 15? (because it lets tests pass and is
-> still a useful limit; we'll make it dynamic later.)
-> - Why do we always limit the graph width? (Because it makes this patch
-> simpler; we'll fix this later.)
-> - Why does 0 mean unlimited? (Consistency with --max-parents.)
-> - Why is the truncation marked with a fullstop "."? (...)
-
-Ok, I'll make sure to answer clearly all the WHY's on the commits.
-
-
-> I'll also look over the patches, but I don't do C code, so I can provide
-> only superficial comments, if any.
->
 > -- Hannes
 >
