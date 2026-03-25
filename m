@@ -1,165 +1,103 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72311358389
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:01:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8213A6B8F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774432900; cv=none; b=Mpnu7Z+LVqRetBVuGNuBl8V3xz/Sz7G+jB/uRRBIFXSSRvW7EN7MCDbcxsfiS+PbSld0CSDmMWSq4Rj1KExa4TgKsH0NrJ+v6d4LgsVqp/TAd+BhdUxM7ZiqUvieJLjSgGuCwPJy0NX8fu8FemjXah0vDvdu+WTvLfCly9weADY=
+	t=1774432996; cv=none; b=pexPCm8nx0yAheh5xrsiRnwBPwtP97rm3fdrjX9FWU7+1UkCmKGZvGBkmjDpsNy+a0l+ErHqPC71zVo6rdVRyAgn2MUTflRvgnEhE8wY+OyzKpWRPoLOax7tJ1ameY+tgvvFUmsC+Po/NZ4S8iQncY0vNPIdIwRPL1uaug82Cq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774432900; c=relaxed/simple;
-	bh=CgeaTGHRm1bQuZi2DxYlLjPaFbS2L3KsX24rDP8bDL4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LFGmlh+qB+vCbBi3gUQIxxD+JhCOa03oD20BjXA1EAZB9jODuJuyLEx0lBGy0U3cTUT5+T8gsOExETOtJ5vsoBum0eHDfqAuVeGTXuPkFXMvb1DBHNfEKlKKI1APU9KHnv8RujujGpfjkSK+0zRaYyDnVmZwCEtVbJect4xCW4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T1AKjpHA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aLXyW6LJ; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T1AKjpHA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aLXyW6LJ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A2DE8140002A;
-	Wed, 25 Mar 2026 06:01:37 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 25 Mar 2026 06:01:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774432897; x=1774519297; bh=sEFK/Fsmfh
-	8L8uS2QOl353VwwQjegRNfjnp67DPCPd4=; b=T1AKjpHAtsuhFGfkEF/VC+byBB
-	Li82Q49CRJBdGsdfzcUwRveWYWnuBHj68RlSapXfBZN6oy6V4Kcxu/wit9EvvCs8
-	CdosYUjW/zAIIvL4WG45b4naYmLOmG7M1cNFDDEzSj9fVOMj2c2xtPyhhz8yDnqQ
-	V5RV9E05VELudB/TAdZypU6f40Ki0c/HYW30mw8NQdDRa6NLCd07lJFuZno7aTZA
-	/8fteXS47B1MQUJ1wfs/TKnfigyrIR5gofADzR9EqRV5EP7/STl2qb7K4Bcmztn3
-	snopPGi60s/sGbSM4LRXqbj8m8whL3KxnEAdGuQVB6fXpSI00btKZn/IjH3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774432897; x=1774519297; bh=sEFK/Fsmfh8L8uS2QOl353VwwQjegRNfjnp
-	67DPCPd4=; b=aLXyW6LJ3l56KZthUqcT+mr6WPJr1TGYva3wjscXJUnnsQ7AHdO
-	k7/wMS5NNijrJNeFL+A1+w0XxYQcDRnYUE0JVQ1rkixHT4kSEoVqzsbxYbZxglyQ
-	mwm3/Lrur0PZWpFovRAK698E/TarmmBy/3OZcsV/oWMaMe715EKYL74jwZVJuTqG
-	U75D75zTy9E+KOh6PDFx9VNSvA+vV7tD87RsPbrW6aORcvGAj+aLgo1RZgDJnom9
-	PiS8ljsnQyvwSyALCkV8R17MBl5AZB7VMpMTNt7vXig1VCh/twiqzY/VccCFw9Fy
-	y1A7851RUdLviA2c/y73Po4wx1jMf/yUMLQ==
-X-ME-Sender: <xms:gbLDaVnm5BcDF8pge6Lcyj-66DhO4SS15yAkmzP_7NgKJYH1o2yTVw>
-    <xme:gbLDaXvwonY6Ny13GvXdENX5yInoz6bzc9Xlh7QaJfqGJxstw0Zo-my0H-TXukhuz
-    aucMd9KBRW6wra96Afo9nHtr1mh0Z4BHH29ADiPiAOQr2fI6bxP>
-X-ME-Received: <xmr:gbLDaT955eUX3iuig59vva-aBdirqquBKGhtzCKzx05EDUzTMc98UJPPFxmItLSVaSUBdnmrQT7hnE7EuIU7wUYednNH-4z5O8tIOskI8xk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdegudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehmrghhlhgvthdrthgrkhgrshhsrgesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:gbLDaRNkWPtZ35ZMYo9e10KsjEeZluvaf7a1A6lJoRzeibsvHq-XYg>
-    <xmx:gbLDaRFrJV8I1GjTR29O_jbbQ_LYcuNCAheAtyw2YrPH1p77ex4u5g>
-    <xmx:gbLDafQ1yJac5RPLv-CP_8BaYXJJhwfsgSg8ClQPjg_iqhM6SXPq6A>
-    <xmx:gbLDaet44b6M0n2pBWFXiZC6Yp00FkZLTDK8sSvfdZONwLoqiBSBKQ>
-    <xmx:gbLDaQd8Yv0nz1ZloIPEQTrQpyGhAvGIRMfeq8h3GoYFfr7fCLXNF13M>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 06:01:36 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ca166a81 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 25 Mar 2026 10:01:34 +0000 (UTC)
-Date: Wed, 25 Mar 2026 11:01:31 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Mahi Kassa <mahlet.takassa@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, lucasseikioshiro@gmail.com,
-	jltobler@gmail.com
-Subject: Re: [PATCH v3] repo: show subcommand-specific help text
-Message-ID: <acOye5MbsFVOa1vJ@pks.im>
-References: <20260323152937.257406-1-mahlet.takassa@gmail.com>
- <20260324184843.299223-1-mahlet.takassa@gmail.com>
+	s=arc-20240116; t=1774432996; c=relaxed/simple;
+	bh=CGBO1atrbNWXhIhjeyApXRDN1oXOckicrhqdD/x/HLw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OyHztcBKhoqdaFY5sXbqYjgqcHPO9CcTdrsAbXajIKUor/NDVwRQhjt8H+r3qB1tlVQa5diflZ4rBPn+RF31joikxy0yUxTvCOXRr3rDvo+zOcxknt10U4MTFccn1OI8c093NH08f8hQ5GP2MVvuVEk2mbHhgFtxzHeGeqmvudg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.101])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4fgjCF5K0qz7RN14
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 11:03:05 +0100 (CET)
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4fgjC44JVCzRnlX;
+	Wed, 25 Mar 2026 11:02:56 +0100 (CET)
+Message-ID: <fae2f8e3-029a-43c7-aa6e-45a452026853@kdbg.org>
+Date: Wed, 25 Mar 2026 11:02:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260324184843.299223-1-mahlet.takassa@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH v4 0/3] graph: add --graph-lane-limit option
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com,
+ ayu.chandekar@gmail.com, siddharthasthana31@gmail.com,
+ chandrapratap3519@gmail.com, gitster@pobox.com, git@vger.kernel.org
+References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
+ <20260323215935.74486-1-pabloosabaterr@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 24, 2026 at 07:48:43PM +0100, Mahi Kassa wrote:
-> Use subcommand-specific usage arrays for "git repo info" and
-> "git repo structure" so that each command shows only its own
-> synopsis in help output.
-> 
-> Factor the shared usage strings into macros to avoid
-> duplicating the same synopsis text in multiple arrays.
-> 
-> Add tests to cover the subcommand help behavior.
-> 
-> The previous reroll mistakenly omitted the requested code
-> changes; this version includes them.
-> 
-> ---
-> v3:
-> - include the requested code changes that were missing from v2
-> - factor shared usage strings into macros to avoid duplication
-> - restore blank lines between tests and before test_done
+Am 23.03.26 um 22:59 schrieb Pablo Sabater:
+> Repositories that have many active branches at the same time produce
+> wide graphs. A lane consists of two columns, the edge and the space
+> padding, each branch takes a lane in the graph and there is no way
+> to limit how many can be shown.
 
-By the way, it is highly recommended to respond to some of the review
-mails directly, as it helps to create a dialog between submitter and
-reviewer. Otherwise reviewers may feel as if they are talking to a code
-emitting entity :)
+Generally, I like the goal of this patch series. However, the way in
+which it is presented and justified can be improved substantially, IMO.
 
-It's not necessary to reply to every single mail, but going like "Oops,
-yes, I indeed forgot to add the request code changes. Will fix in the
-next version" can go a long way to make the interaction more social.
+It begins with the statement of what this patch series wants to achieve.
+It is "limit the width of the graph", isn't it? It is not "add
+--graph-lane-limit"; that is just a tool to achieve the goal.
 
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 55f9b9095c..71a5c1c29c 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -20,11 +20,27 @@
->  #include "tree-walk.h"
->  #include "utf8.h"
->  
-> +#define REPO_INFO_USAGE \
-> +	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]", \
-> +	"git repo info --keys [--format=(lines|nul) | -z]"
-> +
-> +#define REPO_STRUCTURE_USAGE \
-> +	"git repo structure [--format=(table|lines|nul) | -z]"
-> +
->  static const char *const repo_usage[] = {
-> -	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
-> -	"git repo info --keys [--format=(lines|nul) | -z]",
-> -	"git repo structure [--format=(table|lines|nul) | -z]",
-> -	NULL
-> +	REPO_INFO_USAGE,
-> +	REPO_STRUCTURE_USAGE,
-> +	NULL,
-> +};
-> +
-> +static const char *const repo_info_usage[] = {
-> +	REPO_INFO_USAGE,
-> +	NULL,
-> +};
-> +
-> +static const char *const repo_structure_usage[] = {
-> +	REPO_STRUCTURE_USAGE,
-> +	NULL,
->  };
->  
->  typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+To help reviewers, you should present an example chart in the cover
+letter that shows the before- and after-state (with and without the user
+of the new option).
 
-I think it would make sense to split this out into two commits: one
-where you introduce the macros as a preparatory refactoring, and then
-the next one where you start to differentiate the different usage
-strings.
+As far as the separation into patches is concerned, I see a few
+problems. With the current separation is difficult to justify the
+patches. For example, the first patch adds prerequisites for a later
+patch, but it is unclear how these are used. The answer to the question
+"Why do we need this?" is simply "because the next patch uses them", but
+this is a very weak justification, because the next questions are "how
+are they used and why didn't you squash this into the next patch?"
 
-Otherwise this looks good to me now, thanks!
+Let me suggest a different separation.
 
-Patrick
+1. The first patch limits the graph width with a hard-coded limit, say
+15 lanes. It limits the graph *always*. Choose a limit that is large
+enough to pass all tests.
+
+2. The next patch adds --graph-lane-limit and its documentation. Let it
+do its thing. Revert to the default limit value 0, i.e., unlimited.
+
+3. Next, add additional eye-candy. I am alluding to the line that marks
+where a graph lane was truncated.
+
+(4. If more detailed document is warranted, e.g., an example chart, do
+this as a separate patch that can now show all bells and whistles that
+the earlier commits have implemented. Whether this makes sense as a
+separate step, or whether documentation grows with the earlier patches,
+is a judgement call.)
+
+As far as commit messages are concerned, always, always provide an
+answer to "Why?" for every detail.
+
+- Why do we want to limit the graph width?
+- Why is the hard-coded limit 15? (because it lets tests pass and is
+still a useful limit; we'll make it dynamic later.)
+- Why do we always limit the graph width? (Because it makes this patch
+simpler; we'll fix this later.)
+- Why does 0 mean unlimited? (Consistency with --max-parents.)
+- Why is the truncation marked with a fullstop "."? (...)
+
+I'll also look over the patches, but I don't do C code, so I can provide
+only superficial comments, if any.
+
+-- Hannes
+
