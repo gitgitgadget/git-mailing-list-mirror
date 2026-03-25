@@ -1,140 +1,94 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D008E279DC2
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96F63112BA
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774417025; cv=none; b=t7xZEHZY7ZpOYcyAoR//hOwP+wo+Lj9X+RdJV56GaJdY/RRiLNmYtOYFzMpyDiZqgBl2OKrR3lubl/IVpCsyv7soAop/i+bh5O4iWkk38b91pFTpw0zIw3G89weHJa9eKL5/ARpzbZ4q++slJ9dcZhWUQpvyG2HYkRgRzvditTY=
+	t=1774417573; cv=none; b=GqWdBNWeXhDOHvk7zqJOqRy/LREaK42icb/VIf/sA0icmVIAGghsmnCOU0tt4NsOp4uRVuEaYmcy7VQOGaHb4o7ZnIO3OModAhW05iIQgqTHniqJVuIQ+FdT5ed0VgFKr3DP6HE22H+5vYuXEnDTbfuEq9kxPb2RVEjvhV70HrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774417025; c=relaxed/simple;
-	bh=jSgvS+8syVtH19s+4RwUstU1dRGRQXrTNxBLPfcQ+g8=;
+	s=arc-20240116; t=1774417573; c=relaxed/simple;
+	bh=v62ydE+DyvNYRr233VDWLWC9iMuoO3eI0riRDiBrjYk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iUA2XxIovzqaueu44vGAMOmziRingBb7/RzQVDFqv0sOEBrkK3X81Riq7yF4bs3UwKlBRJr7I0rVQ657PYs67l5tqlad4UP0HeJLqT0SWjObJo90lVxKyPVLK/L4m6itTs/oFah5kRDZxEon5ZOK+6H9E6UIp2bv/mSWFy8qqBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YZ+1uf3Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=32xxYHxE; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=lcsnK1j4mQjQC8ufPQS3RwO7tUfW0Aqp388k+Z2VbKjGgbUxSHYjcSUmiY74xuKw2ZDpKm9bjAox0v4RGzauFibtnqKNrIfAf8O15BZ+ReuigGR6odhCYY0Xudw1aGsIBl8bpZlZRE6FrEXjThrEjrCULE3byf6s/6x1q9+mpIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JtIwNqQI; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YZ+1uf3Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="32xxYHxE"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id E9769EC01DE;
-	Wed, 25 Mar 2026 01:37:02 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Wed, 25 Mar 2026 01:37:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774417022; x=1774503422; bh=H/5FWdVSjz
-	+FB9yrFGynnrCfnxmJEdl7zQVdtLR52Dc=; b=YZ+1uf3YeA3dqgi+FxHjOlE1yy
-	mVK7blV/bidfsz10QBzAEQ0518pb9VeK6MNS1fG4oVNOTn/O6JShSZgoiva4wf5P
-	+wNu59T28LoCpMRRvHtrslB27dFRTMm67+4UPXqvHNduGjpjand1CIyd9D7DcrKA
-	yWx1fRiqrSeFgeq6n7v9UYMMWTT10H2O91qNIv/GnbdS/NVRAbk2BibWrUSokWZW
-	U7L8GiT7CS3XxHggCUDyvzCfEldKBOvJotlTZ5Dil10qPZdl/4sgd2F1s7ooVDaB
-	Ou/5tajtPYBu3dz5VkzMVAarQ8u8TuYYeXD1Hk5h2bLf2uSJN5vLLTQ9uM3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774417022; x=1774503422; bh=H/5FWdVSjz+FB9yrFGynnrCfnxmJEdl7zQV
-	dtLR52Dc=; b=32xxYHxElppS+ssaONdrbxOtpdz1onzJ/1P7VpQMSsZBOqZ7pTe
-	E69ujdtDA4PHxgBdoa7qchGbpJ00nSyAbsY9rE0FMsunpGfJQGE5hCMeIS/sYn+e
-	1dFp7ClHWMsx1g4aDWcReNgvcRHY7VACPCxqI8fHMNhaUtw3KEioy34HXrU6Z0fC
-	I4vWAxTtjsmCSEe8Md8DfWJXzN6Qy+2dHdEsiSjRgyEykdxtVsROqUMmTjpAaiRa
-	2zSthckqCfcfZXIMenI1AK9MNc/8IYQHhpqHBpbVpIywfwAcEjbuDNSKkRAuC2Ty
-	a9G/2o1SP/jWJOconG3ZG8+5hNCjUSXXxqA==
-X-ME-Sender: <xms:fnTDaQoNxttZSo4oeS9pAQ3OGh1Nwx-Wlq9G6SOiVpl5wZk2g4PQsg>
-    <xme:fnTDaeGAFObF1MmW4PBKFgLX3GDHutOZw4Mk7_rlh2HonhDWRm6sDSDfNPmuj0G6a
-    IIM2dFtIqrcglyK0GOK0h6SM3OE14gBjNEkHJb0XLv5mHuu-FMt_A>
-X-ME-Received: <xmr:fnTDaSkOb4RIU47SMbMt3vK-D4RXoLz_WL9hSW4uvIVh7PQotM5PGMv6TkN5a7EoBSXEQbH5Vy4RWXApn5PFy9dqxguuC250aY4_JqnCv1c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdefieegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    ephfeghfegkeehgfevtdegleevudelheehtdefkeelkefftddvieffgfefueelueegnecu
-    ffhomhgrihhnpehgohgusgholhhtrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:fnTDaRlhmK6tVMc5qeki1iSazsNELVwFFJFC3H5toc62S_rtWZN2Rw>
-    <xmx:fnTDaTtJi9mXY_OufwSIZEEvKx8Cnppa21bwTCzmHCa4b7R9-k5fng>
-    <xmx:fnTDaUmxDnvjibvkpY6zxy63JVcgTJ6G3Ps5SZ_fB-XA17jdbC7V-w>
-    <xmx:fnTDaesbqMP4MmkdOC7_0avw4qTc55fHpysb3jzuagc_uYMg4C0PrQ>
-    <xmx:fnTDaWGuFj-uBws8L3MDLB4j3ByQa5UZ_yD678Zq_v0W__w3jw_gseig>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 01:37:01 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5f00554b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 25 Mar 2026 05:37:00 +0000 (UTC)
-Date: Wed, 25 Mar 2026 06:36:57 +0100
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JtIwNqQI"
+Received: (qmail 135215 invoked by uid 106); 25 Mar 2026 05:46:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=v62ydE+DyvNYRr233VDWLWC9iMuoO3eI0riRDiBrjYk=; b=JtIwNqQIH7k1UK28d8+3Sgg5hM9zQp7u5pcvQuW+MCVV6dGXCWw/Rqa2NE33wqFb5QCEQMoPOrlSDG37b1NggpGVeObZPSiuwZg9jE/tBY75ZFgYsHZWLeHIeT1WhY8Ph8E9cX9CPGfC8teLnepVJwahiQREJW35xHM0AVxxJ5roT/q/06CN0fTCwRiMenwUKVSSDdMRjMar0+VeiGewwJw4eLa3yGqf9OP420pYkC5SkghUPfLhsJQ/BAmlPMaNkVFSJVhvmVyjQaMOcLifCULiGW/ikI/RG2C/p6aiOLu27iq08chkCKmq05z621fVkJ3KpAd0FajDSB+S5h9nGQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 25 Mar 2026 05:46:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 181375 invoked by uid 111); 25 Mar 2026 05:46:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 25 Mar 2026 01:46:02 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 25 Mar 2026 01:46:01 -0400
+From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] commit-graph: fix writing generations with dates
- exceeding 34 bits
-Message-ID: <acN0efJvZ9liex8d@pks.im>
-References: <20260317-pks-commit-graph-overflow-v1-1-e6bee22cd826@pks.im>
- <20260324-pks-commit-graph-overflow-v2-1-843568cf8780@pks.im>
- <xmqq1ph92pzs.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: catch misspelt 'test_expect_successo'
+Message-ID: <20260325054601.GA3701549@coredump.intra.peff.net>
+References: <20260324-b4-pks-t4014-fix-test-execution-v1-1-ac83c1bcc828@pks.im>
+ <acKqvI0EhaORjoD7@exploit>
+ <xmqq5x6l2q5y.fsf@gitster.g>
+ <acKx6yBi-BWUVJcv@exploit>
+ <xmqqo6kd18sr.fsf@gitster.g>
+ <xmqqcy0t178a.fsf_-_@gitster.g>
+ <xmqqmrzxyu2h.fsf_-_@gitster.g>
+ <20260324193514.GA1870130@coredump.intra.peff.net>
+ <xmqqy0jhxb3r.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1ph92pzs.fsf@gitster.g>
+In-Reply-To: <xmqqy0jhxb3r.fsf@gitster.g>
 
-On Tue, Mar 24, 2026 at 08:42:31AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Mar 24, 2026 at 12:48:24PM -0700, Junio C Hamano wrote:
+
+> > Using "-e" makes me very nervous, given all of its quirks. Granted, most
+> > of them are related to it _not_ kicking in when you'd want it to, but I
+> > worry it will create false positive/negative headaches.
 > 
-> > Changes in v2:
-> >   - Account for platforms where `timestamp_t` has 32 bit precision. This
-> >     matches logic in `write_graph_chunk_data()`, where we also depend on
-> >     the size of the commit timestamps.
-> 
-> > +static timestamp_t compute_generation_offset(struct commit *c)
-> > +{
-> > +	timestamp_t masked_date;
-> > +
-> > +	if (sizeof(timestamp_t) > 4)
-> > +		masked_date = c->date & (((timestamp_t) 1 << 34) - 1);
-> > +	else
-> > +		masked_date = c->date;
-> 
-> It is a bit surprising that on a platform where timestamp_t is only
-> 32-bit wide, a smart-enough compiler would not find (1<<34) as
-> suspicious. 
+> After looking at a few scripts, I am not suffering from such
+> headaches yet; it does not look too bad.  I'll stop this effort for
+> now, but with a handful of patches I already sent, more than 80-90%
+> of the entire test scripts that I run are now "set -e" clean, I
+> think.  Note that I do not run svn, cvs, or p4 tests ;-)
 
-It probably would, but we don't test on any system where that's the case
-to the best of my knowledge. `timestamp_t` is defined as `uintmax_t`,
-and that should be 64 bit on almost all platforms. There's going to be
-exceptions though, even though I'm not sure whether such platforms even
-matter to us. But I later realized that we had similar checks elsewhere,
-so I decided to adapt accordingly.
+Clean in the sense that you don't _notice_ any problems. But there may
+be lurking ones. For example, given this:
 
-> IOW, I would have expected this to be done not with runtime switch but
-> with conditional compilation.
+  set -e
+  foo() {
+	false
+	echo foo
+  }
 
-Well, it's written as a runtime switch, but I would expect all compilers
-to essentially turn this into conditional compilation. They should note
-that the condition is always true (or false) on a given platform. And
-checking Godbolt my assumption seems to hold. On x86-64 using GCC [1]:
+what would you expect the output to be for:
 
-    compute_generation_offset(unsigned long, unsigned long):
-            movabs  rax, 17179869183
-            and     rdi, rax
-            mov     rax, rsi
-            sub     rax, rdi
-            ret
+  echo before &&
+  foo &&
+  echo after
 
-Thanks!
+versus:
 
-Patrick
+  echo before &&
+  foo
 
-[1]: https://godbolt.org/z/oa4xPohGb
+Whether that "false" triggers "-e" depends on where in the &&-chain the
+call to the containing function is. So things that are not problems now
+may suddenly become ones when far-away code is changed.
+
+Maybe it's enough that people would notice and debug them when they
+happen (if "set -e" is in test-lib.sh), and they wouldn't come up all
+that much. I dunno. I just have been bitten enough by "-e" quirks that
+I'm wary.
+
+-Peff
