@@ -1,222 +1,189 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385701EE00A
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:23:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774466615; cv=pass; b=Ntk+xKMxWlv0tEd3rIAe+iEs8LzkMwiAhdnt3ZEpqSQ8zsK6wZoaaib6eZHYKuipOmC9cQKRkWn8HLtgI7uvt209TSMOUCX9hGBC3bnD76cmBE9nTD4jKa09LeBswSG/BalhTbvNXm7FwINdlogfZMmMLSYpSNTKh8RGslO792E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774466615; c=relaxed/simple;
-	bh=jsiv7xeAWPGf6mlCMRty2ta4SWcT7+HkoYE4oYJ7kqU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=joBsA+WydJAMZxRy8TIjmz5DdgF+Zv8b+TKH/zh3KS/AtQndEnpkZo+jGw51OqSL+72pBbIXHP+QP8KLjTsCWmhSQ53nUuEMCFQwalmi1Bb0VmHTBHUFqGMLRmNZ93+8YUviO1sgOcMNXht8FOyN/lu42EbF4SJiqciowzfQAjs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5TKPIa2; arc=pass smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB373233ED
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774466845; cv=none; b=WvAbdhNSjcy7onHSfIUDPmk0Ey/mW86ASta7sW3sZguV2U/C6ZCVNSO6KNy1pTmWvtZW4n/2iPBRbIhPG19j2QqLFM7m03Zqn8A3C1KBBGlgWN3HnKjUsh89chsJ3f1O7Yj03FUYtoetTieaBMiA+Gby2ooXBukhCLYdQ7vj3+w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774466845; c=relaxed/simple;
+	bh=3sx634dGJ27SfQBba6PrWq3INLDv3cK83liWuNVYsv4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WAwEx18A6lFC8Db5hmM6HNVhatljUKSblNibrjWrZyh2H2L7bZXwnb2MaqsYj3GS5ZId56w1RwIpEWxbNe8SPPCzdiAmlZyneg+G4wgvwJrIoRZxonG8aGL9xPQXHK3sJl7VnxNNDxSqU9YUGXHVYawY/cwvQFik8mkMRDlLptM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EvdXE0by; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0are6MHU; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5TKPIa2"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-66ad907833dso283299a12.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:23:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774466612; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lF4SwCHAzYxOMhJMuQNJ720+i7a/5z+9CPV53oJxDQLek8w15OLPbDWlN2A8gwgnUy
-         VLt5ndF1B3Et076T8Xg1CvvqgS0NNSJJ9gx1ay/jGM3EpNgO0vWJ1PqK+Qb4keI0x3+v
-         1ZkHSJf1fhA4HL75FkgMNwV1rau0dg4+EzGNMv6ReggSZYRt5CfdiFn6iAS79IIZahTQ
-         vlyFAj1KDvu5vhOi7Xe1QnJDr8KnBJDLQs3/VIit4SpVVLILUN/GLwha6PF5P5emujdM
-         Kpz/UCnv06szC9iC+EsCN6dC7rIbnHQcZadyCSmXK/j80jknu4lgcNk1ofGLsAmhiVvP
-         DZUQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=UAJqyaO0wFozm/3bRq59IG398UxfQUgDSP4xoKWdLjI=;
-        fh=NzcgN3jXytSUsaqO/AXz8UoqXs2kk8M58/YwXy9tVqk=;
-        b=YpMGkKiX7QA8HpxwIcBwweq+NUcVUwPJz/a+0s3wK76CciBsA/PaLgADi+2kgFkJ5A
-         OJ5l1nuTMJq7nUs1AiW9aV38pmkOkToZpJcLig516FOdIxW31fKyMgylh4+gVYhqiKCD
-         YMkRWMZ+Jo7oaMX6NK9tv/70V44Gv4Iy7zSNq1UMKs+zH8FAuiw9b+/4ghSA1ey6sjC+
-         4syHwfsZYcRrZfmuzu6M1E0L3ZGbhGeqDpK5ctFKIlbhhM0YuC7uchhzD3Adm2yfoisg
-         CFyfSAdCl8w4mwbPvG1TDcF6HPUPHKJiOAaUpKDcTOTkN2sAeR2lfRhwib9OQs+kwL9S
-         AX4Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774466612; x=1775071412; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UAJqyaO0wFozm/3bRq59IG398UxfQUgDSP4xoKWdLjI=;
-        b=e5TKPIa2cYkE3R2HZPG923Vg0yrlbp0kUMhx24x5VdIsJVeODxPIzh7csAF7P0jPsy
-         ukRc3vJeLcC9UqFLw+XsOMqkgO5xg41XW1l/ZOUlKGDy8JVf+0csviqjD/dHMF0krPGw
-         KCghbv4pzUMtrUfYVDmNA9ifQscjsg90aoie854f9kLXWytU1ZSB8ev1Pz7b58PO0XVd
-         hAUkdcY1O41LwNckxLBPPdOd8u60PIzcS4E12u9P9i4z+eBDc+ThDgzdia12JM6YbakE
-         EjkYOVWuVpTbTOjyOhZPJYgjpPNnEgbtzQStZOzUTuo3yTx8LTOWl5K5iTHpvLtGkkLx
-         YyJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774466612; x=1775071412;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=UAJqyaO0wFozm/3bRq59IG398UxfQUgDSP4xoKWdLjI=;
-        b=lzv8N3wucUFFLjrBB6wUxrrM3qRJITvflfoSPWfjG5wKRzysgLhHaPwK5emMYKKdML
-         sFq4oJcNsLkMLd0mmEpoMaoQAH3iyQagda9P9pzxyAJFXZq/g0m7ETEPhYmAOwwTZEsM
-         QzyWkL32fdNq18QPLCk9tKxpqUkiNPpl1Xj+OLIiPl3SiG3ahy3P3zistxXbgbx8Zwmz
-         ql3sFvhxdMobu7WYbXt6O3CB0+gloNy3bRDqvR6WLXorA96AZQSaz+nD1kOf+o5Z8FKG
-         UjXyi5yiPDXow0PRq/Uri8I3SE1aM//6aeq+r4xC7wyxaDLR8pGbCdmjfuRNgelZD4+7
-         jcTg==
-X-Gm-Message-State: AOJu0Yw9thIRJwrvr8MyIy05X8g4CcuQxRV1LcVxAnm3qYR8kWBpKkZG
-	ZOBl/45NmPYTgsho9/HSYLKoauPJZN/xX0SH/n+gjFj1wxlqDVX+WA9s0ypYuqn5J2dtuh7pzuP
-	nncnIT/Jva8OKLvQbZbPwMU4BrDOvX14=
-X-Gm-Gg: ATEYQzwBBki0OcbGSQX6bBovkCd5By64a99JtXSl8X5DKATI42FNy/rHSZs1xdlyJKs
-	wwvtaXIDFS2tX284D7057nr5KuckkGBrCn8vG/8UBu53V2zgbKrX+zhrwRmJ5lNpQfv5oJGSx8P
-	BTKFGo6QHYHKd1bNOanDT61MxNkk/QCRTJoM6KSE04+QEEaDdaMRdiHtRXACOG+vBPKdPCjJ7ng
-	c7TvOkLrWvMrQhn31yB6IrpLqn3m2nd9FGPH7eqjt2yGs+SAYIsBJ8LpjFeqGq2s+ocam/McewX
-	00LmIK0cnMNftJ/vm6gIS6NF3vrR3pRw14B8PHtdZxMHhXLh3A1GT5OCWAoiS9iWaoY7lSxVZw=
-	=
-X-Received: by 2002:a05:6402:5389:b0:665:33eb:22f9 with SMTP id
- 4fb4d7f45d1cf-66a82618602mr3344029a12.6.1774466612356; Wed, 25 Mar 2026
- 12:23:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EvdXE0by";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0are6MHU"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DFF2614001A4;
+	Wed, 25 Mar 2026 15:27:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 25 Mar 2026 15:27:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774466842;
+	 x=1774553242; bh=bMiKaQXPQH4Sppc2ZnYOcbyteOTm6Bkl/TUgopOAIWk=; b=
+	EvdXE0byu0alv2uV6M0f8yFSx2DH2NdJNvKBk1tThpVzMPDD+vGTGOQaX8PisIPW
+	3uTCMoFkavrLsTqtph658T6Y/s5L/YUDm0++NhWiQI5A9svIjh1qmEqBxrhP08Y+
+	UmMjDMT1Yt74mohRvBvM/Y1YXIbOVGbkvpgprHlUJCrYNIauzENhcIV0BoACwRj8
+	WdvQyonqKnp3BuQ0FnzTpPIdZond0mH3AqTHiTa0Rj1D7QFXichkr5kEvZXhVTEd
+	XY2MBhZM+PU0JI0/EvqljwoKLBp44z2WG60bN5QKB5clwsMPTPBJg4g1J4g6QM5S
+	V6OEEl+c0apewcjEielS4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774466842; x=
+	1774553242; bh=bMiKaQXPQH4Sppc2ZnYOcbyteOTm6Bkl/TUgopOAIWk=; b=0
+	are6MHUOBw7Ro357bDC4HpoaMuS1gvPjosniyC2EcApjUhf63CyD7JvOb4fuUANt
+	Fv9vaC7J8ar7lzZJS03VB2cJB/9gX/Da5XZplbdNMSgoWOh1Wya+m6SdEc+OWx0l
+	BU1GrZgF656Ua6c/CrqDATjcz+sdMJQEC0GdNEAebEpEmrZ4Rsea29zRzNcDynfa
+	nXajOSlpoqM0mzCvgjGLotHKVj93nuIi8ZoCTovm89AKAsJRGRtGWmEmpinQ9V1x
+	OXOKRQLXucyPZcmvsQ4zDEbmFfKZzxv35Gzg+8QgrzNQ+n0BtZh39mF7Dm59RuLv
+	6ArYnBzpXy4DszAYtuBpw==
+X-ME-Sender: <xms:GjfEaTjivLM9DIcQ8sKV4ON8v_JtsMfssh9eHlZSBVxhatd7dF7ADA>
+    <xme:GjfEaXBiebnwGGBjFx7FdZ-jSbnWNz1EK1pgOcednTe3xI5k_dn_pwWOcNFDNNYiv
+    x0sf_JKtHdVLKTY9dgbkcaqpTXdkcusxZpXkzPAMEAoL_s8Kywu1g>
+X-ME-Received: <xmr:GjfEaYGXSVRn5qKwAe55zzrmBlNE8nVQgv6Oxoblg6HSg-U1aSB7Hc55rfwI7ytNwoobdrvQNvCFUPTLNrpCfHV7yJ2v7SqhwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjrgihvghshhgurghgrgelleesghhmrghilhdrtg
+    homhdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:GjfEafJ1f2MEEXRSpvBfd3N0KJTw03QmGZWxqLvLegCn4-GBHV9IUg>
+    <xmx:GjfEacnZlSXstWfqOoIcdmhQBxujHOZm1pWPSb7tFgdsYraM1Io_cg>
+    <xmx:GjfEaXSeWgQTe-E2b3W56PkGCu64N1NmKvdl4065N7iKb0zt0IbfsQ>
+    <xmx:GjfEaeLCzHdbN4gqPq00V1-XIpR2EDjWJKdKqRP6VA1DUQWqq242Zw>
+    <xmx:GjfEafnI46e5N-jjsRmVFThYGmhIlq5iD9Jm6ZnYSiloXIzgFkfw7qKF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 15:27:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jayesh Daga <jayeshdaga99@gmail.com>
+Cc: a3205153416@gmail.com,  git@vger.kernel.org
+Subject: Re: [PATCH v5] tests: use test_path_is_missing instead of '! test -f'
+In-Reply-To: <20260325174431.73101-4-jayeshdaga99@gmail.com> (Jayesh Daga's
+	message of "Wed, 25 Mar 2026 17:44:33 +0000")
+References: <8dcc9e74-80a9-4963-aa9b-56f28e5edf45@gmail.com>
+	<20260325174431.73101-4-jayeshdaga99@gmail.com>
+Date: Wed, 25 Mar 2026 12:27:21 -0700
+Message-ID: <xmqqecl7u2ue.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260325075055.354709-1-luizedc1@gmail.com> <xmqqcy0rvlao.fsf@gitster.g>
-In-Reply-To: <xmqqcy0rvlao.fsf@gitster.g>
-From: Luiz Eduardo Campos <luizedc1@gmail.com>
-Date: Wed, 25 Mar 2026 16:22:12 -0300
-X-Gm-Features: AQROBzAWCtuHfz0-H6ldlSQsfiAd4-5h52s-dmxqaJZ2SgZVNb2s2ZgKQH0aR44
-Message-ID: <CAN+A6TtsGGQZ+3Q+MSp_kKzxcwMgmCp1bd+tD6y9U2FfPqSLFQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] add -p: support discarding hunks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, peff@peff.net, sagotsky@gmail.com, 
-	Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi Junio,
+Jayesh Daga <jayeshdaga99@gmail.com> writes:
 
-Thanks a lot for the detailed feedback.
+> Replace a raw '! test -f' check with test_path_is_missing.
 
-> "add -p" that touches the working tree feels quite weird.
+Did you already say that on the commit title?
 
-I understand the concern, and I agree that having `git add -p`
-perform destructive changes on the working tree is a significant
-departure from its current mental model.
+> The test_path_is_missing helper integrates with Git’s test
+> framework and produces clearer failure output.
+>
+> In contrast,
+> a plain shell '! test -f' check only reports a generic failure
+> status, which makes it harder to understand whether the file
+> unexpectedly exists or if another issue caused the test to fail.
 
-> people trigger "discard" by mistake ... no way to undo
+"clearer" probably is not clear enough, but don't add more words on
+it.
 
-This is a very good point. I had been thinking of this primarily
-as a convenience for workflows where users repeatedly skip hunks,
-but you are right that making such an operation easy to trigger
-in an interactive session could lead to accidental data loss,
-and that would be problematic.
+The problem with using "test", whether negated or not, is that they
+*silently* succeed or fail.  Take a typical test that does a bunch
+of things like this ...
 
-> What you want is probably a single command ...
+	do something &&
+	do something else &&
+	test -f this_must_be_a_file &&
+	test ! -e this_must_not_exist &&
+	do yet another thing &&
+	! test -d this_should_not_be_a_directory
 
-This is a very interesting direction. My original motivation was
-exactly to avoid having to switch between `git add -p`,
-`git restore -p`, and `git stash -p` when reviewing changes,
-but I had not considered approaching it as a single interface with
-modes over the different views (HEAD, index, worktree) and
-non-destructive flows like stashing.
+... and expects all of them to succeed.  If it fails in one of the
+steps, it is impossible to see from the test output, even when you
+are running with the "-v" option , e.g., "sh t/0601-*.sh -v", where
+in the sequence it failed.  Maybe "do something" and "do something
+else" shows different messages so you can tell these two steps
+succeeded, but did the test fail because this_must_be_a_file did not
+exist, or was it because a filesystem entity this_must_not_exist
+existed?
 
-That does seem like a more coherent model. In the meantime I will
-rely on the workflows you mentioned (`stash -p` or `restore -p`
-followed by `git add -p`) rather than pursuing discard within
-`add -p` alone.
+Our test helpers improve by being loud when the expectation is not
+met.  When "test ! -e this_must_not_exist" is rewritten with
+"test_path_is_missing this_must_not_exist", and when that thing is
+missing from the filesystem, test_path_is_missing will succeed
+silently.  But whe it exists, it loudly reports "We did not want to
+see it, but it exists!", when it fails.
 
-I will step back from the narrow "discard in add -p" RFC while I
-think more about this broader direction. One question I would like
-guidance on is whether something like what you describe would be
-more appropriate as a new top-level command, or as an extension of
-an existing one (and if so, which entry point would be the least
-surprising).
+    Using plain "test" commands in a series of tests concatenated
+    with && makes it hard to tell from the failure output which one
+    of the steps failed, since "test" silently succeeds and fails.
 
-If a unified tool ever includes a destructive "revert hunk in the
-worktree" mode, I agree it would need to be very clearly separated
-and hard to trigger by mistake.
+    In this partciular instance, we expect that ".git/refs/heads/f"
+    should no longer exist in the filesystem.  test_path_is_missing
+    helper function silently succeeds, as does "! test -f", when it
+    finds that the file is not there, but it will loudly report when
+    the file exists, contrary to our expectation, which makes it
+    easier to debug a test failure.
 
-Thanks again for the guidance; it is very helpful.
+or something like that.
 
-Luiz
+> It also avoids relying on negated shell conditions, making the
+> test easier to read and understand.
 
-Em qua., 25 de mar. de 2026 =C3=A0s 15:03, Junio C Hamano
-<gitster@pobox.com> escreveu:
+It is not a single test being "hard to understand".  As a developer,
+you are expected to know what "! test -f .git/refs/heads/f" expects
+(i.e., it does not want to see a file there).
+
+
+> Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+> ---
+> v5:
+> - Clarify rationale for using test helper
+> - Explain diagnostic improvement and negation issues
+> - Address review comments on vague wording
 >
-> Luiz Campos <luizedc1@gmail.com> writes:
+> v4:
+> - Correct commit message to match actual change
+> - Improve rationale (diagnostics, consistency)
+> - Move version notes below '---'
+> - Fix author name to match sign-off
 >
-> > Hi,
-> >
-> > This is an RFC for adding a 'discard hunk' action to `git add -p`.
-> >
-> > Currently, when using `git add -p`, users can stage or skip hunks,
-> > but cannot discard unwanted changes directly from the working tree.
-> > This often leads to repeatedly skipping the same hunks across
-> > multiple passes.
-> >
-> > This patch introduces a new 'x' action to discard the current hunk
-> > by reverse-applying it to the working tree.
-> >
-> > This idea was previously discussed on the mailing list:
-> > https://lore.kernel.org/git/X%2FiFCo0bXLR%2BLZXs@coredump.intra.peff.ne=
-t/t/#m0576e6f3c6375e11cc4693b9dca3c1fc57baadd0
-> >
-> > Open questions:
-> > - Should discard happen immediately or be deferred until patch applicat=
-ion?
-> > - Are there edge cases involving overlapping hunks or edited hunks?
+> v3:
+> - Fix commit message wording
+> ---
+>  t/pack-refs-tests.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> After reading the discussion (by the way, I do not recall seeing it,
-> so thank you very much for having a link to it), I agree with what
-> Peff said back then.  "add -p" that touches the working tree feels
-> quite weird.
->
-> In addition to that, letting it make destructive change makes the
-> idea even less appetizing.  Once you remove the changes introduced
-> by the hunk, it is forever gone.  A "discard" in "add -p" would not
-> solve your problem without adding many unhappy users who lost their
-> work by mistake.  I do not want to see people trigger "discard" by
-> mistake in "add -p" session _and_ find that there is no way to undo
-> that mistaken discard.
->
-> "stash -p" followed by "add -p" is probably the best we can do that
-> is safe.  When the unwanted change is truly unwanted garbage that
-> you would never ever want to see again, "restore -p" followed by
-> "add -p" would be an alternative.
->
-> One reason why they are not satisfying is because during the later
-> "add -p" session, we will notice that some unwanted things we failed
-> to notice and get rid of (either by sending them to stash or restoring
-> it away) are still there, reminding us that we are imperfect human,
-> and at that point, it is not easy to switch back to the "stash -p"
-> or "restore -p" from there.
->
-> What you want is probably a _single_ command that lets you inspect
-> the differences among the HEAD, the index, and the working tree, and
-> allows you to move things hunk-by-hunk in different directions.
->
->  * You can go through the "git diff --cached" (i.e., changes already in
->    the index), and selectively undo/revert the changes to the index,
->    similar to "git reset -p".
->
->  * You can go through the "git diff" (i.e., changes between the
->    index and the working tree), and selectively apply the changes to
->    the index, similar to "git add -p".
->
->  * You can go through the "git diff HEAD" (i.e. changes since your
->    last commit), and selectively send the changes to a stash entry,
->    similar to "git stash -p".  This is not destructive.
->
-> And if the single command lets you switch among working with these
-> modes, you no longer need to worry about forgetting to send
-> some changes to stash to concentrate on working on the rest.
->
-> In addition, optionally you can also have this in the same command:
->
->  * You can go through the "git diff", and selectively revert the
->    changes to the working tree, similar to "git restore -p".
->
-> This additional mode *is* destructive, but if you know from the hunk
-> that you will never need the change in it, it would be a right tool
-> for it.
+> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+> index 2fdaccb6c7..4a85d96c6b 100644
+> --- a/t/pack-refs-tests.sh
+> +++ b/t/pack-refs-tests.sh
+> @@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
+>  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
+>  	git branch f &&
+>  	git ${pack_refs} --all --prune &&
+> -	! test -f .git/refs/heads/f
+> +	test_path_is_missing .git/refs/heads/f
+>  '
+>  
+>  test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
