@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5903334A783
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDDE301472
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774468567; cv=pass; b=JFcNPNrc9L6DO4cCXoSIE5YtQ8PcXJHmXsz287ydRA16Ynol1R6xPwfj4fLcNfh3AORJk5klqyvCw/TJTWU9OJ8MFVWqJ/p1abczXQx/fnFn2X5lzguqH14n99rSgL474FMBNqNeTCNccYyX4d9s2wuIsIAgWboJtOF2ZXebgZQ=
+	t=1774468568; cv=pass; b=Z0syz/Gg1mQUBg0fGNxPMCCVpm+ODKlVIhtG1B984I8qaRs0G0hImeiKyG2OluSjVHKPhUxKgQOoKLUFFap8TUVmahXNkVXuUhh0f50thNzJw01rccSLmJBRmQkqEKRD4mceGycDOS7ERlO/uXlIetwQ4nNnNJbBD7rIMcNDX9g=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774468567; c=relaxed/simple;
-	bh=Uz3lApbDFmE/Xh3qnFXjZtJub7QjRlUf7lq0cmy1SsY=;
+	s=arc-20240116; t=1774468568; c=relaxed/simple;
+	bh=7xfVU0PiLnVZDORQKIzKIHwSgiGVHWDicw3PA9aWQ+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ITLFZIjyqw536DzA1T6N5V/f5pKSOm5PIHMXgFrH7oKD0iMpJ9g/zeCighFjoh9gfZH3jv3MOTGy7izSWM/jzGejFI59XL006rBfUXWswjfdbohqFQQ57EYsOJncFF9XGETQ/jyBm2psZijLhl5vkvbLueGseF2AFWq1mP+rInw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=C+8zaznH; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=C+W61DRTjoIT4lC6feiuS+vDw+/e/LKW4knaDIDXhHGEKf/Dce+tLKL+enACuu8ij5VPnLekAHGoFpyBVw/LBAozmi2KCQkddGyGg0XjVuCpiaQm5JHTpMIMUSw6F220Hof459cZmleta+rY4TBeNwp69xoRyOLmaQ4WaIEvimY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=O5G3qwtQ; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="C+8zaznH"
-ARC-Seal: i=1; a=rsa-sha256; t=1774468554; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="O5G3qwtQ"
+ARC-Seal: i=1; a=rsa-sha256; t=1774468556; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=CfIFLt5hwX7ihOxujvuNynjKI1pKYG15Jrh/4o6GW8QB3g8Y3c2TTp/liTYNYh8kBjgpqLyqCn1yGvdQYk6WO3mqc1Q1HiL2HcGuZHzjTgIplj3c8bgYQAlq23sF79aMEbYDl8AjeH2bZ3XXz4tn6/VYgk1a70rKJfMksP6qgH0=
+	b=doQcJfPOmeBVN+XVSR+LsEP96vO0H+drnHECfH5t4xP2O7gthS74ItiKo+bWqD+NL1cIwlITlj2VXGNT/Aom+1fLF3fUHJt+tnViM9k2+ZQY96GQVKttbo/pcnXCLOOX9FC1P+axvd2wkPE8FE+erYc+XPsCp3niQc4u3RTIrQQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1774468554; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=y4SrmDe1GLJvKUZiUV+Q9KK9sWbMyDPEWkF3EQvg8gs=; 
-	b=RW1wknQcsT9vGWeS31INeITMKGU4SU13PmxJKY7CNQrOzhjrk1QvD0DPFxfe69W36szmhcO0GGjR9yNlgtZB6Y2LObAaGkk72wZ5GmW/DR3fwqSdilVWoMFQ8cot6liku8zwq/oprQXl6ObhyVGkmz013OWbpe2+pHAHs62+2SI=
+	t=1774468556; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=elA5g80Ora1OXwWsgmluw17COHUWBC855ljGhqQTIKA=; 
+	b=gHHmLY8kdbqkk79dBWU2FpqYwcF4WWtljoqSYE2yavDO0JflvkDQHfOiQVPMQraZuv/xwIUobL1a+1O1OivuG2TPcoqcSqgwFrDUYbMwFj+fUX8M0URoOEMpS2205+Z4iO8t1HQ6WkIYnJej+KiGGbDZ0CTBZ0/FKQwWet2sPEI=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774468554;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774468556;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=y4SrmDe1GLJvKUZiUV+Q9KK9sWbMyDPEWkF3EQvg8gs=;
-	b=C+8zaznHamLc+6tnv2x+Upg3M1UzxKFsOGrIHsZ2KMJxY49uEMPNbllhCvxEjxjN
-	5xM4msYF5jyMIrOU4QOA/bX6jkiB9kJZY1etpxFI4Pc7mQAkhDrgpY2Lh2/VI15AQMH
-	9EswMNyEsh+Av9ZEujBktuIK+CDaCZT9lvvoE2Xo=
-Received: by mx.zohomail.com with SMTPS id 1774468552498220.3105865626809;
-	Wed, 25 Mar 2026 12:55:52 -0700 (PDT)
+	bh=elA5g80Ora1OXwWsgmluw17COHUWBC855ljGhqQTIKA=;
+	b=O5G3qwtQ2/ppsExK47hrmEbYh25Htqbp3pgaUrevNTDTEHMwj4uzb9RBdOM42/fS
+	zEWxxSWh5rHZ+Jw/Xjmvsb31UKnhTuDXFaAXOuaSofgBGSVynTSRF5ZaFNaxP8hApWL
+	DbQuhKm/KF2YMtD7NX4Ci65/uN8ieJGiVQXvqxLM=
+Received: by mx.zohomail.com with SMTPS id 1774468554499301.6295528339972;
+	Wed, 25 Mar 2026 12:55:54 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -43,9 +43,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v3 07/12] hook: make consistent use of friendly-name in docs
-Date: Wed, 25 Mar 2026 21:54:58 +0200
-Message-ID: <20260325195503.1139418-8-adrian.ratiu@collabora.com>
+Subject: [PATCH v3 08/12] t1800: add test to verify hook execution ordering
+Date: Wed, 25 Mar 2026 21:54:59 +0200
+Message-ID: <20260325195503.1139418-9-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260325195503.1139418-1-adrian.ratiu@collabora.com>
 References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
@@ -59,114 +59,65 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Both `name` and `friendly-name` is being used. Standardize on
-`friendly-name` for consistency since name is rather generic,
-even when used in the hooks namespace.
+There is a documented expectation that configured hooks are
+run before the hook from the hookdir. Add a test for it.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+While at it, I noticed that `git hook list -h` runs twice
+in the `git hook usage` test, so remove one invocation.
+
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/config/hook.adoc | 30 +++++++++++++++---------------
- Documentation/git-hook.adoc    |  6 +++---
- hook.c                         |  2 +-
- hook.h                         |  2 +-
- 4 files changed, 20 insertions(+), 20 deletions(-)
+ t/t1800-hook.sh | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
-index 64e845a260..9e78f26439 100644
---- a/Documentation/config/hook.adoc
-+++ b/Documentation/config/hook.adoc
-@@ -1,23 +1,23 @@
--hook.<name>.command::
--	The command to execute for `hook.<name>`. `<name>` is a unique
--	"friendly" name that identifies this hook. (The hook events that
--	trigger the command are configured with `hook.<name>.event`.) The
--	value can be an executable path or a shell oneliner. If more than
--	one value is specified for the same `<name>`, only the last value
--	parsed is used. See linkgit:git-hook[1].
-+hook.<friendly-name>.command::
-+	The command to execute for `hook.<friendly-name>`. `<friendly-name>`
-+	is a unique name that identifies this hook. The hook events that
-+	trigger the command are configured with `hook.<friendly-name>.event`.
-+	The value can be an executable path or a shell oneliner. If more than
-+	one value is specified for the same `<friendly-name>`, only the last
-+	value parsed is used. See linkgit:git-hook[1].
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 952bf97b86..7eee84fc39 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -25,7 +25,6 @@ test_expect_success 'git hook usage' '
+ 	test_expect_code 129 git hook &&
+ 	test_expect_code 129 git hook run &&
+ 	test_expect_code 129 git hook run -h &&
+-	test_expect_code 129 git hook list -h &&
+ 	test_expect_code 129 git hook run --unknown 2>err &&
+ 	test_expect_code 129 git hook list &&
+ 	test_expect_code 129 git hook list -h &&
+@@ -381,6 +380,34 @@ test_expect_success 'globally disabled hook can be re-enabled locally' '
+ 	test_cmp expected actual
+ '
  
--hook.<name>.event::
--	The hook events that trigger `hook.<name>`. The value is the name
--	of a hook event, like "pre-commit" or "update". (See
-+hook.<friendly-name>.event::
-+	The hook events that trigger `hook.<friendly-name>`. The value is the
-+	name of a hook event, like "pre-commit" or "update". (See
- 	linkgit:githooks[5] for a complete list of hook events.) On the
--	specified event, the associated `hook.<name>.command` is executed.
--	This is a multi-valued key. To run `hook.<name>` on multiple
-+	specified event, the associated `hook.<friendly-name>.command` is executed.
-+	This is a multi-valued key. To run `hook.<friendly-name>` on multiple
- 	events, specify the key more than once. An empty value resets
- 	the list of events, clearing any previously defined events for
--	`hook.<name>`. See linkgit:git-hook[1].
-+	`hook.<friendly-name>`. See linkgit:git-hook[1].
- 
--hook.<name>.enabled::
--	Whether the hook `hook.<name>` is enabled. Defaults to `true`.
-+hook.<friendly-name>.enabled::
-+	Whether the hook `hook.<friendly-name>` is enabled. Defaults to `true`.
- 	Set to `false` to disable the hook without removing its
- 	configuration. This is particularly useful when a hook is defined
- 	in a system or global config file and needs to be disabled for a
-diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
-index 12d2701b52..966388660a 100644
---- a/Documentation/git-hook.adoc
-+++ b/Documentation/git-hook.adoc
-@@ -44,7 +44,7 @@ event`), and then `~/bin/spellchecker` will have a chance to check your commit
- message (during the `commit-msg` hook event).
- 
- Commands are run in the order Git encounters their associated
--`hook.<name>.event` configs during the configuration parse (see
-+`hook.<friendly-name>.event` configs during the configuration parse (see
- linkgit:git-config[1]). Although multiple `hook.linter.event` configs can be
- added, only one `hook.linter.command` event is valid - Git uses "last-one-wins"
- to determine which command to run.
-@@ -76,10 +76,10 @@ first start `~/bin/linter --cpp20` and second start `~/bin/leak-detector`. It
- would evaluate the output of each when deciding whether to proceed with the
- commit.
- 
--For a full list of hook events which you can set your `hook.<name>.event` to,
-+For a full list of hook events which you can set your `hook.<friendly-name>.event` to,
- and how hooks are invoked during those events, see linkgit:githooks[5].
- 
--Git will ignore any `hook.<name>.event` that specifies an event it doesn't
-+Git will ignore any `hook.<friendly-name>.event` that specifies an event it doesn't
- recognize. This is intended so that tools which wrap Git can use the hook
- infrastructure to run their own hooks; see "WRAPPERS" for more guidance.
- 
-diff --git a/hook.c b/hook.c
-index 021110f216..dc0c3de667 100644
---- a/hook.c
-+++ b/hook.c
-@@ -112,7 +112,7 @@ static void list_hooks_add_default(struct repository *r, const char *hookname,
-  * Callback struct to collect all hook.* keys in a single config pass.
-  * commands: friendly-name to command map.
-  * event_hooks: event-name to list of friendly-names map.
-- * disabled_hooks: set of friendly-names with hook.name.enabled = false.
-+ * disabled_hooks: set of friendly-names with hook.<friendly-name>.enabled = false.
-  */
- struct hook_all_config_cb {
- 	struct strmap commands;
-diff --git a/hook.h b/hook.h
-index a56ac20ccf..d2cf59e649 100644
---- a/hook.h
-+++ b/hook.h
-@@ -14,7 +14,7 @@ typedef void *(*hook_data_alloc_fn)(void *init_ctx);
-  * Represents a hook command to be run.
-  * Hooks can be:
-  * 1. "traditional" (found in the hooks directory)
-- * 2. "configured" (defined in Git's configuration via hook.<name>.event).
-+ * 2. "configured" (defined in Git's configuration via hook.<friendly-name>.event).
-  * The 'kind' field determines which part of the union 'u' is valid.
-  */
- struct hook {
++test_expect_success 'configured hooks run before hookdir hook' '
++	setup_hookdir &&
++	test_config hook.first.event "pre-commit" &&
++	test_config hook.first.command "echo first" &&
++	test_config hook.second.event "pre-commit" &&
++	test_config hook.second.command "echo second" &&
++
++	cat >expected <<-\EOF &&
++	first
++	second
++	hook from hookdir
++	EOF
++
++	git hook list pre-commit >actual &&
++	test_cmp expected actual &&
++
++	# "Legacy Hook" is the output of the hookdir pre-commit script
++	# written by setup_hookdir() above.
++	cat >expected <<-\EOF &&
++	first
++	second
++	"Legacy Hook"
++	EOF
++
++	git hook run pre-commit 2>actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'git hook run a hook with a bad shebang' '
+ 	test_when_finished "rm -rf bad-hooks" &&
+ 	mkdir bad-hooks &&
 -- 
 2.52.0.732.gb351b5166d.dirty
 
