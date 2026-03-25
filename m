@@ -1,106 +1,124 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917C232D452
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:13:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D3C3845B6
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774473193; cv=none; b=bUHCEuM0HdZh8hNVuYM1y9NRpnfkZj54E599qsNzusM4AJTbBEqtFEIYjd/aSuq6MXt8vkpmO0aB3R3ENiN0KmanUjWsV6Ip52OUZVOtfFzoTDzVO+z1YaRdnFWl9waa5En0XOWSre74cLm3eXU6UFAIpoaJc96hmnsyWXH7w+A=
+	t=1774473452; cv=none; b=RbCsXcyO+MJ2+4VUHt7ukt+qaJiQmII1NTbdTyBBir2Tg5DbozWUdUrT/EolbpguNCqakq0FUQPtQ18/tU273ABZAibQMbqrcG8niadBJXPdL3iPLut0ImoopDJQTQHi2bpvnSC/HHHOLO4THpfs0scVfvfXjGgg98DshTzTXdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774473193; c=relaxed/simple;
-	bh=Kj/wmEAPqD9qct9xZzhehSpNucD+kT9Q8G/AuGPnelc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ctqYzY4B0Z6hktEAx1QyB70ITKw4+k28L3VwTtI/i2m9AvIPwncTUZcSH2vLarnLqSK4uTePFU2guHuVZULUFVKr3aGFs5S54Ea5DDG5EeWAsQnmVxTEW2eooyoE3QbAKPl5OO+MKphfX02zNmDgzygbLCmiKlSY23Dd4/Cu38o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qTlmrF0H; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774473452; c=relaxed/simple;
+	bh=03VgbjND21sktXbb1PR67glBvaV1F7/nrcmn32fMKhE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s08UG6PlLZwr9zd4ejgkUjwf08MPEnljJGJEoe9g1V99lp5wi1aD8Zlw1ImFGCecWeGDkHHGZrneE4079XRxhk81UmXZbKYnuzypoEFfPlXgtUbM9lcOTGrzHuYNJt6FZ3QZvpuuLLWwrZYXOWEbIl3sRQ8vGLLnds70MCoa4/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ug9i8yb0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mlVQIVL0; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qTlmrF0H"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-35a094cc3e9so186311a91.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 14:13:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774473192; x=1775077992; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r4jb2W3FxtnhVkeIykNqYXjEwDpma6gJfdZjSlZG4qw=;
-        b=qTlmrF0HBDMJP4tEri8uVkVsOJM6YtFu18+BUkFbnXfvHxCM7wLrzsKnbubH61sxkv
-         SNYpnGLV/DdRvEpkuu3zH6RN+PcYsjesXwk6ijHCNbPazC6iN7OfvicBaGVJcamp2xUQ
-         Sx5GTBtaq8vstCvZq1Ar9vMART7vElTN1tKdfZRlimkdr3Z/LzQlGflhKrJfyVys8Mg4
-         zxxlkK+imVLr32Ze6BE9C2tCAopPNhckfj7jrScdGWf1wHUiSokaN/KuJPfRSEuobJ7w
-         Se1nf/fjMCENki6u4aWj/ww825zkLAdKHBEO+pmEI0hLVQH7hzrqSNiOSd2k+cGhAT44
-         0TFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774473192; x=1775077992;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r4jb2W3FxtnhVkeIykNqYXjEwDpma6gJfdZjSlZG4qw=;
-        b=Wjw04KmXsw7cUegh0HUKLC+BUwo/G0XBE7o2p8kTihpOr7it6I9UfEIFxTKBwwcAWz
-         xiPOkL+2QTGWj+ledmCixG9gcT7dT4+l9yUTsdAn6SVqZh+POEf4EHdSjl4/DF1M3+5J
-         PsVMuBcj0PVa18PNvxkTa/Ytvfaz7cSJYEXDEoUuy/gFDw0+4WAdxUN8GheNl1ybegK/
-         vSTgV76htuqimPGbN/5cEXMIRgYRrk/aCwBRLtxEAe/vbv+pWhjGqe8YgOj4KVjVpm7q
-         6g6/I+39qGQVM8rncvPgw+fbkuDMUricLJrEny5U1jEj59laVnfqECRWaHy1ah2aopDY
-         rJ7A==
-X-Gm-Message-State: AOJu0Yw5mqrrDZca9t3UTaNsPCPIM52hK7ZdYYwQUAs6lyR0n5EjGyiN
-	Vs04MfdCERJUsiOgN462OayHtNOyUF+abqiqOk6qEAdaO2q6oaOEFmoNXJZkcA==
-X-Gm-Gg: ATEYQzwYfGWLM+1mgTQGNBTSsVbTYo3/a/OuUY3C9TKdh3oHDCww97AtEaUF0LH9qN8
-	75/73TaNgpv203d4Ru+ZkGOVNXydrCSGyjJDLJ8VqXvhgnaluKdQtbJvz5RDrGuN5c5nWHaN9z2
-	n8a2iBVrChzXrMxJm5+M41E4vuz8Z1zUvIzoe+yeWHHtbAkk63Ntya3RYCk5c+BGfrABbt6QmCi
-	OjwvOcgFo78EOZQRTn/tcHT3mbzqMI/zfBLUgipdf4Q0UOZxP5ysOA2WsjnaikUmcNnmU1KkZdb
-	bVKmjbomC111lG6p9f1zECSXTT404vZAvVVr8Lr0/W/y4VLUpANlIIjg9aohWwmjp+23BtkrFK3
-	pBa33va3HoQEQ3PydH1ibnob1TiQQVSNGqNXMfxo8MHEpIfc1Qixu3Tj4ut3QuDjhqeYTwprDIP
-	PplwYMqOmuvRYOMKL79jmJXI7cqUTBsuI/b/eFsdEZe5A=
-X-Received: by 2002:a17:90b:4f8c:b0:35b:982a:28c8 with SMTP id 98e67ed59e1d1-35c0dc8f9femr4807808a91.7.1774473191676;
-        Wed, 25 Mar 2026 14:13:11 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:88eb:4aec:6f26:76cd:bafb:15d6])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c1df87c14sm207723a91.13.2026.03.25.14.13.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 14:13:11 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: xmqq1ph7u1sm.fsf@gitster.g
-Subject: Re: What's cooking in git.git (Mar 2026, #10)
-Date: Thu, 26 Mar 2026 02:41:30 +0530
-Message-ID: <20260325211240.1260690-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ug9i8yb0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mlVQIVL0"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6C709EC0279;
+	Wed, 25 Mar 2026 17:17:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 25 Mar 2026 17:17:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774473449; x=1774559849; bh=esapJwgbCW
+	rmerEuHcm71Jbuiun7pHBIvET/rVXzyVQ=; b=Ug9i8yb0TSAwg2HxJLrm+Lyp7x
+	8F4DMnD4ElavKFKwGklLYA9EtPpbk+K8IDVhUAbxiA0zsdbwq3owYMoGvnmiCcXY
+	GGk6qZo7RAr8kOu17PbOIzXjRRkR/CXHXKhtvvbbD2XllkTXPbBqW+70AqpoS6wZ
+	aCQexPRQ/T+IxQWa6mgbcJdYsxa/3+z7kqLvcV1x1mq5u9Xf5h6DbVGEgPKaMOMr
+	j0SfJ8YFhz80D7c6uNMlD6/RGM2tGfcp//DUX9FB4WBQP92r8AHadZon82hR7Y3F
+	jKoASiSmJd7ApqIL3TMCuF6ndGM1vh6Xt8D9GPAGWH+3rQqwfbgQliAdKgDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774473449; x=1774559849; bh=esapJwgbCWrmerEuHcm71Jbuiun7pHBIvET
+	/rVXzyVQ=; b=mlVQIVL0mWnYiDf6KQsqitkgg3BwF2gqykWMZz1HC5Gr27hsrwr
+	rBSIbbm2I/leFZIbDNWM7GCKSh6l8EgfFSuOKXUnTJt7cjFeesy986l/Y9LUYag0
+	pIfaontj2kg9cO1WkEhzqf0UGm90hCQ9R9BXwyItTHMuBxPbizlssWeriw2yKmSx
+	aV9Q1q3+ekdsCFiFfzXci96e9ymi5TK8d8wu7Hg0szXPK0DNxHmwajOtcIR5NMGC
+	quG4KC8/8mNRqVa8FCLUIOC+/QKxrwkR6OLD/HXrmidTcvTGzvHkv2ZMx2UGfDZb
+	fFqpLMk9K7vYiHSYToN3FHhB7Pf5MOq42PA==
+X-ME-Sender: <xms:6VDEadyuAxbXF2qrhMvZIgIsUGeh0YzDD3d0M1bNrHHDe4fj5pci-w>
+    <xme:6VDEaQ9d7KDAxViBVb4G5Z990vGFRrru4oiu3hKq5emupknaLcHWGntoS8m4uSnoZ
+    y0dq9yylyjWMu3ZcNfXe3as-VUsDnkyAbpzm1un8Jdyetfe90RBouA>
+X-ME-Received: <xmr:6VDEaRJ01vRKRXh8lciJQFP65Fpy97Yn0p4u5HqvdESe-8EZekJsgWYScfCkwjcmOlrCpn1BfgueLMO_NjXLOLvyxopmpbep1w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehheduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:6VDEaWcHHWyhbCxpU0g_JMNz99DwpU2uEfkP7LoHs03DGtNZj9cv-g>
+    <xmx:6VDEaQ-AbKiVhONDllVNuKRxEfOpcqhvUCDlwUYO46bPNAT0xHNerQ>
+    <xmx:6VDEaTofRNCaz2ohv-J779Mm0fK4-_7cjrmnpWI1-YSab9qNUvWZSw>
+    <xmx:6VDEaVDejwQAcCLQ8rW7zByGtmZSv4Y1BxViok0IJBh6HFyMP63S0w>
+    <xmx:6VDEaTKWGjsK73yTQa9FbpihbInMBMlMj92Q5sAb8T4Nuq3lcYnWKprO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 17:17:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Patrick
+ Steinhardt <ps@pks.im>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 00/12] config-hook cleanups and three small git-hook
+ features
+In-Reply-To: <20260325195503.1139418-1-adrian.ratiu@collabora.com> (Adrian
+	Ratiu's message of "Wed, 25 Mar 2026 21:54:51 +0200")
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+	<20260325195503.1139418-1-adrian.ratiu@collabora.com>
+Date: Wed, 25 Mar 2026 14:17:27 -0700
+Message-ID: <xmqqse9nsj6g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
->
-> >> * sp/add-patch-with-fewer-the-repository (2026-03-17) 1 commit
-> >>  - add-patch: use repository instance from add_i_state instead of the_repository
-> >>
-> >>  Reduce dependency on `the_repository` in add-patch.c file.
-> >>
-> >>  Needs review.
-> >>  source: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
-> >
-> > I think this was considered ready in the previous 'What's cooking in git.git',
-> > so the status can be changed now.
->
-> This was listed in the new topics section in issue #07 (Mar 19) but
-> I do not recall updating its status in any later issue.  The only
-> change was in issue #08 (Mar 21) in which the topic was moved from
-> new to cooking without changing any status.
->
-> The only comment the patch got was from me about interaction with
-> other topics in flight, and there was no discussion or comments on
-> what the patch wants to do makes sense, or if the way how the patch
-> does so is correct, which should be the real review.
->
-> And I do not consider my single reading alone a sufficient review
-> most of the time.
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-Thanks for clarifying.
-I might have misunderstood your earlier comment [1] as indicating that the
-patch was good to go and had already reviewed.
+> Hello everyone,
+>
+> v3 addresses all the feedback and requests received in v2, many thanks to all
+> who contributed.
+>
+> Let's please stop adding features since this is getting rather big again. :)
+> New features can be added in subsequent patches.
+>
+> This series is mostly for minor cleanups, bug fixes and refactorings + three
+> minor feature additions to git-hook, which resulted from review discussions:
+>
+> 1. The ability to show the config scope (--show-scope).
+> 2. The ability to show which hooks are disabled.
+> 3. The ability reject unknown hook names with "--allow-unknown-hook-name" as
+>    an escape hatch.
+>
+> The series is based on the master branch.
 
-[1]- https://lore.kernel.org/git/xmqqpl4v92eb.fsf@gitster.g/
+Replaced the old one, and then rebuilt ar/parallel-hooks on top.
+Please sanity-check the latter when I later push out the result of
+today's integration.
 
-Best,
-Shreyansh
+One thing I noticed a bit annoying was that we have "event_disabled"
+boolean in "struct hook", plus a string-list of the same name in
+"struct repository", which means "git grep event_disabled" hits
+both.  Perhaps the caching "struct string_list event_disabled" can
+be renamed to reflect what it is a bit better, like "disabled_events"?
+
