@@ -1,166 +1,142 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0FD2BE655
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 06:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0CFDDCD
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 06:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774419240; cv=none; b=ca9/AzLU1hKjvF5D56xJTjcXuHWOtWAE8QlHltwj15OK68jkcuyTE4bWhs2mOHRhSUJ7+lbtuOhM6Ow9Lht0dRGsqTNfJF7gw9GMItjzm9Bp6AC5pSaCzNTfKOO8AvgDZB3Lr6wc4B521IwF3Ggpco/M3vy/tJgqTmwlP1vioPA=
+	t=1774419679; cv=none; b=REJOaIh6NFbTYwgYvZ8SayaANM/lEcg3+/7Sk93Ll3Aji4caX5LuWyqJR0yqd28ywTRyLrCFThfovKMDEkBGxh11iz5ZQXErVbm9mC7IeUg1qWrfSOR4ajekUVl0GKAohym1NqCT8TWpOs9wrlPR4IfY6w1q3fkT3U7nO7ccGoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774419240; c=relaxed/simple;
-	bh=N0ppZMqlOdXCT0y+I9pVUZyvkz8QIzmMg+8Bhj7GC7U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HqUmTZDR1i+Q4NJvnmEf8V0LL8KkZPfSJlKsrCAPT0c6KVL5P9Z+8Y2doC3KlYS0aKsjBopWnreFngFpy7lGHOyTbt6LobBs8q9UaO793l30OZKDhF/PnU71ld8VHy5Fq2R9ySC9VEPcA0AncIZIrJFPTNImNIC3anMSq7fjuCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cILv0f4i; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1774419679; c=relaxed/simple;
+	bh=83wwocd6eQwPcuKUeTTsE2vt7DOxhg5r6+tzLayy3ic=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=deYu+ggsQust+4o6aOhh7dwDBwHAu9+CxmS75wp7p7rIOz9ewL3G56DLzYNb6OBtibS9d4xrEckXPNe+hby4Y6xqBJmFktWteLsjDJt99PL/NSs/VHrrwxRcrkIZ2S4Q7E4JLths1XGQYIMH1SDud6X/19/Sg8joS4eVu+UjNd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DPNcMV5P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qfg6rdoK; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cILv0f4i"
-Received: (qmail 135459 invoked by uid 106); 25 Mar 2026 06:13:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=N0ppZMqlOdXCT0y+I9pVUZyvkz8QIzmMg+8Bhj7GC7U=; b=cILv0f4ioTwShbRvza8wJF6EU9vuVN0hRg9Ho+Z2A0caL77TkOnci3H9QfqeTR+u2JfERhk58ShcyQbnNfxGbrOIfjePRCtqQ1ldLNTOrB8aMDQ0Lba2uyCbURQYc9NemTpxDbaZvjExwj+X6v0L2dc9u9BS61cnU2vONM/ziSj8Qcm4rjooOTIJdvSuu8DZOL2xUG6Yrz+Q5a6c+82efLhy+7qz+A6r3o/R30Jy6vJ5q8qF0rtsX1WyXZ9GAsWvGFV8BTnytvTvvDBmhXxmHDmrxwcUHhnOf4OtAG56/xCy1FAQTTAXzmv8Axh+FmHw/pgpgXhR585MfUeK4D9k5w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 25 Mar 2026 06:13:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 181696 invoked by uid 111); 25 Mar 2026 06:13:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 25 Mar 2026 02:13:57 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 25 Mar 2026 02:13:57 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2026, #10)
-Message-ID: <20260325061357.GA3772970@coredump.intra.peff.net>
-References: <xmqqldfgy1ye.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DPNcMV5P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qfg6rdoK"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8BB681D001BD;
+	Wed, 25 Mar 2026 02:21:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 25 Mar 2026 02:21:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1774419676; x=1774506076; bh=CVs8zfNUEWnzTxzDmku2C
+	BR2ZMAReUhF6C8125B+bBU=; b=DPNcMV5PJuAR4Pikckrw9iCUdZbMqBKX9SZvK
+	Y2BOwdMOP0SaJXA5yWIxqxoGIAgNFGli5Vd5ZmpoNdWqLuI9YQtPOVFrrclq/iHr
+	o6y9vWnOQIm7Pgq7/wRoIKnOUu4d7lB75cieTZCRWXHt54/nVhzWeiRyp3ZGKQ7S
+	8HIX4ytdjaJOM+gYNsf05fe4U+qEA/+Csw0BgdCtg5tRbBMoL7TNgnbcAEwuqM2V
+	1Cdn0CRISqG3/uDcpiH0slLdf8cZmt2bwoOgsO2mpgM1e6cdiLrf562bI2a9yD1v
+	WY2cSDTRfbAgZO0VChPdlxnx53ZfCiNZ/Guuq/7rcFX/avH2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774419676; x=1774506076; bh=CVs8zfNUEWnzTxzDmku2CBR2ZMAReUhF6C8
+	125B+bBU=; b=Qfg6rdoKmCwAlhK77NWpM2eAZpSC7eJpYDE7TgaXIYLoGOmzb2l
+	jhju/Z7cEZBJQMHevfKweV48ueXH0in8OayXpPCgxBIvGcZHssqvPh2rCG4YB9IF
+	p6gfXO/kS46mf3ybMpO6ijP1fYlkf2gOEX1kx/pSdYqZL8zdsQd6JKN12UwOwP+z
+	IooNvg9UgFK77TnIoLSLw5zN0PNuFl8HWEzbckEXT3+3WJ1nM/3mLvRogPKorgz4
+	K07MPegiGGKlR1uY7eMl7tftL5PwaZEib+FT7opdg2XxXd4EE/yxtPtWvo/Kxqf4
+	Ep8W05GQYsPV6Muk1Rbtr91z6WdP95fJ8TQ==
+X-ME-Sender: <xms:3H7DaWcI-LjfnsTSdNRkNIXR5gCHDFuibWbXM11rg1arvE9hcKXxvw>
+    <xme:3H7DaWO9r4ILT8GbJyxfXJkpPyjCTjK_g8_3OqxQmcXu0JdrXPo6WMshOTBG5XUpr
+    ywWjJkEYrzhCXbPkwWFXXYiig9FLc7i6VZypjVFBaiCEUs6oOIkBQ>
+X-ME-Received: <xmr:3H7DaVKLhy5kS6suH2tD3BHDRsBIZw1qizOc_NjVFugezNnmwfEAtHTWHamO_r_e0vEKSWmiBJSWtjiFl7A0O6q6mNXY3fT3DA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdefjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtredttd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepfeelveduffeltdejgfdvueevgefgveelud
+    ehtddujeetgeffieeljeeuieethffhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:3H7DafFGVEo87xYksj6Nb__AiCjnYiWDgnYK5hhWMdsJM7GMJjdk5A>
+    <xmx:3H7DaVQ4kaumFmsvrgXhTa4dwcoYIBLhovPf9F8E7pv4KFB7bUEXgQ>
+    <xmx:3H7DaTFfeOh1H2VKudAjOqQWNVmskyt2dacJua9TXpSp-g8Pwad6xQ>
+    <xmx:3H7DaZ9AhztcVrxtJogIHHSXBIgSobydn_bAIk8kT42XGohzk8Cqaw>
+    <xmx:3H7DaR1WVEm-KnGNjMz9PkBxwZpCLhMRIUK48-NCpTWCuVXojCY2eqbH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 02:21:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 00/11] detect misspelt test_expect_success and friends
+Date: Tue, 24 Mar 2026 23:21:03 -0700
+Message-ID: <20260325062114.2067946-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.53.0-886-g529cbd14ff
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqldfgy1ye.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 24, 2026 at 09:20:41PM -0700, Junio C Hamano wrote:
+Recently we saw an unusual typo in a test that misspelt
+"test_expect_success", but this was not noticed for a while
+primarily because the test script itself did not fail due to this
+typo.  The shell and the test framework did say
 
-> * aa/reap-transport-child-processes (2026-03-12) 1 commit
->  . transport-helper, connect: use clean_on_exit to reap children on abnormal exit
-> 
->  A few code paths that spawned child processes for network
->  connection weren't wait(2)ing for their children and letting "init"
->  reap them instead; they have been tightened.
-> 
->  CI failures on Windows in t0061.24?
->  cf. <20260318040423.GA2858991@coredump.intra.peff.net>
->  source: <20260312214945.4050010-1-cshung@gmail.com>
+    tXXXX-xxx.sh: line 22: test_expect_successo: command not found
 
-After a grueling session with tmate to connect to a GitHub Actions
-Windows runner, I can confirm that the patch below fixes the failure.
+but otherwise kept going.
 
-I had a lingering worry that maybe the test was a canary in the coal
-mine, telling us that other real-world cases may be mad about getting
-kill()ed. But after looking at it, I'm not sure. The fake ssh command is
-_so_ fake here that it produces garbage output immediately and is
-killed before even doing its logging. A real failure would happen
-farther along in the process. And presumably a real ssh client that has
-cleanup to do would catch the signal and do that cleanup.
+One way to help us detect such an error is to run our test under
+"set -e", which will abort execution after any command exits with
+non-zero status.
 
-So...it's probably OK to fix the test and proceed with graduating the
-topic, I think?
+However, there are a handful of places in our existing tests and the
+test framework itself that depends on the current behaviour of
+silently ignoring a failing command.  Here is an attempt to fix them.
 
-Anyway, here's the fix I came up with. But see below the --- line, too.
+The first step turns "set -e" on very early in the test framework,
+and fixes one place in the framework that assumed that a failing
+command is OK.
 
--- >8 --
-Subject: [PATCH] t0061: simplify .bat test
+The remainder of the series fix one test script per one patch, and
+at the end of the series, the whole test suite pass for me, even
+when merged to the tip of 'seen'.
 
-The test added by 71f4960b91 (t0061: fix test for argv[0] with spaces
-(MINGW only), 2019-10-01) checks that we can use a .bat file with spaces
-as GIT_SSH.
+Note that I let cvs, svn, and p4 tests run only up to the point that
+they decide to punt due to lack of external tools and language
+bindings they require, so for those of you who do have the necessary
+bindings, the scripts may still fail due to construct that are not
+"set -e" clean after they call "test_done" for me.
 
-This is a good test in the sense that it's how the original bug was
-detected. And as the commit message there describes, there are some
-elements of the bug that are likely to come up with GIT_SSH and not
-elsewhere: namely that in addition to the .bat file having spaces, we
-must pass an argument with spaces (which happens naturally with ssh,
-since we pass the upload-pack shell command for the other side to run).
+ 01/11: test-lib: catch misspelt 'test_expect_successo'
+ 02/11: t0008: make test "set -e" clean
+ 03/11: t6002: make test "set -e" clean
+ 04/11: t4032: make test "set -e" clean
+ 05/11: t7450: make test "set -e" clean
+ 06/11: tests: make svn test "set -e" clean
+ 07/11: t7508: make test "set -e" clean
+ 08/11: t9200: make test "set -e" clean
+ 09/11: t940?: make test "set -e" clean
+ 10/11: t5570: make test "set -e" clean
+ 11/11: t9902: make test "set -e" clean
 
-But using GIT_SSH does complicate matters:
+ t/lib-git-daemon.sh                | 6 +++---
+ t/lib-git-svn.sh                   | 7 +++----
+ t/t0008-ignores.sh                 | 2 +-
+ t/t4032-diff-inter-hunk-context.sh | 4 ++--
+ t/t6002-rev-list-bisect.sh         | 4 ++--
+ t/t7450-bad-git-dotfiles.sh        | 2 +-
+ t/t7508-status.sh                  | 4 ++--
+ t/t9200-git-cvsexportcommit.sh     | 4 ++--
+ t/t9400-git-cvsserver-server.sh    | 4 ++--
+ t/t9401-git-cvsserver-crlf.sh      | 4 ++--
+ t/t9402-git-cvsserver-refs.sh      | 4 ++--
+ t/t9902-completion.sh              | 2 +-
+ t/test-lib.sh                      | 7 +++++--
+ 13 files changed, 28 insertions(+), 26 deletions(-)
 
-  1. We actually run the ssh command _twice_, once to probe the ssh
-     variant with "-G" in fill_ssh_args(), and then a second time to
-     actually make the connection. So we have to account for that when
-     checking the output.
-
-  2. Our fake ssh .bat file does not actually run ssh. So we expect the
-     command to fail, but not before the .bat file has touched the "out"
-     marker file that tells us it has run.
-
-     This works now, but is fragile. In particular, the .bat file by
-     default will echo commands it runs to stdout. From the perspective
-     of the parent Git process, this is protocol-breaking garbage, and
-     upon seeing it will die().
-
-     That is OK for now because we don't bother to do any cleanup of the
-     child process. But there is a patch under discussion, dd3693eb08
-     (transport-helper, connect: use clean_on_exit to reap children on
-     abnormal exit, 2026-03-12), which causes us to kill() the .bat
-     process. This happens before it actually touches the "out" file,
-     causing the test to fail.
-
-We can simplify this by just using the "test-tool run-command" helper.
-That lets us run whatever command we like with the arguments we want.
-The argument here has a space, which is enough to trigger the original
-bug that 71f4960b91 was testing. I verified that by reverting eb7c786314
-(mingw: support spawning programs containing spaces in their names,
-2019-07-16), the original fix, and confirming that the test fails (but
-succeeds without the revert).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-One thing that puzzled me but that I figured out while writing the
-commit message above is why the .bat file was writing garbage to stdout
-in the first place. But then through the haze of DOS memories, I
-recalled the horror of having to put "@echo off" at the top of every
-batch file.
-
-So probably the smallest fix is to just add that to the start of the
-.bat file, or even just put "@" at the start of the single command in
-the file. That would suppress the extra stdout, and Git would not
-realize the bogus ssh command is failing until it exits without writing
-anything (which is after it has touched the "out" file).
-
-I didn't have the stomach or patience to spin up the tmate environment
-again and test it, though. I do like how much simpler the test gets with
-the t/helper program, but arguably using GIT_SSH is more realistic. I
-dunno.
-
- t/t0061-run-command.sh | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
-
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 2f77fde0d9..60cfe65979 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -287,16 +287,8 @@ test_expect_success MINGW 'can spawn .bat with argv[0] containing spaces' '
- 	rm -f out &&
- 	echo "echo %* >>out" >"$bat" &&
- 
--	# Ask git to invoke .bat; clone will fail due to fake SSH helper
--	test_must_fail env GIT_SSH="$bat" git clone myhost:src ssh-clone &&
--
--	# Spawning .bat can fail if there are two quoted cmd.exe arguments.
--	# .bat itself is first (due to spaces in name), so just one more is
--	# needed to verify. GIT_SSH will invoke .bat multiple times:
--	# 1) -G myhost
--	# 2) myhost "git-upload-pack src"
--	# First invocation will always succeed. Test the second one.
--	grep "git-upload-pack" out
-+	test-tool run-command run-command "$bat" "arg with spaces" &&
-+	test_grep "arg with spaces" out
- '
- 
- test_done
 -- 
-2.53.0.1057.g8b84bc5fb6
+2.53.0-886-g529cbd14ff
 
