@@ -1,84 +1,86 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7B6410D3D
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 18:03:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A498314B8F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 18:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774461812; cv=none; b=W6sSAUZKDEfYN1PxVTfqzVkEheBYdx0wopyKVU79pZEakGoc9gcTQaLBFJtTXqJS6RaxdsJ0xXbiQKltVBt7E1kN82MGXnJmcbzvg6ROE/vaFNk5mIck7EKbVw93Qhw1uerSkpKYC+lfeSSLxofS/d2da4tgsbfz+Lb+pXdUG4M=
+	t=1774463664; cv=none; b=M6HVJDBISwsxHgMAqqXAkUkGxFqLFWoyAdaQ7Dq6CMBdAzbQ4IzwzAcNtw/rrAvBgDzU5o+UD3I6GL3V8ewRLF/Q1QJU3VqOgl9+QVyI2FfYo985gqZgAgDM2AF379KoUC69W2WDv/JK5XhIfGzhp7ewHZtuaJu/tnUb1gQVVzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774461812; c=relaxed/simple;
-	bh=h4oqZ+0KhD5U3PQTq52x8FhB00qM/imD74O+zXuqiV0=;
+	s=arc-20240116; t=1774463664; c=relaxed/simple;
+	bh=k0We7F814zAKWh+5jsTGvDuIzpRxa2s+Tp4w2tOVoTc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EzjjOYdKGOLKggX3IagWWrHCPRg25s7rBuFAhCYv3DPbrT9MsNeRT00NRzb9Ew5U2yoEaZp1U2SAIvIZbEJLsJ0n7KNNH86UV+dDOeixqckR9qMjVmT7Fas5HJ+XEyhRIUAzWvMxR9se/kayWasY8I6LPulcjK+3DMw5ImkKzLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cT3Vs5Wd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D2Brr4j1; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=hWjA1yPuD4XPRnzeUyz3mWJGsmLkbUZDZZFWlOubVykOQbrIzAsRoFoEqOJ5TkiATXjQqaT0wff1FugLBsSY6OWQuXlrCBDBVEmKAScfTAgAojiG05R/R3G/1vTM0ebYlf+LAFrwf427z168t97q4IFA5M/I1Y6RkuykX/rdExE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GycuiqpN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EAt/4I+d; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cT3Vs5Wd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D2Brr4j1"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9299FEC0128;
-	Wed, 25 Mar 2026 14:03:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GycuiqpN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EAt/4I+d"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BC68B14002AB;
+	Wed, 25 Mar 2026 14:34:22 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Wed, 25 Mar 2026 14:03:29 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 25 Mar 2026 14:34:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774461809; x=1774548209; bh=tocbj/DagW
-	u8LB8Gsxc61uglBUKoAZW42bk8biH9pMQ=; b=cT3Vs5Wd3P9iY+rCNXybTvdEun
-	r/OIR7qUmAHNyZH+s2wdiOrhGjy1lNAk6QpWuuOavLXf0uRPEEAsGsPZH4oGmrRT
-	oC3JbK4Z24EivVmaQSCi+auhwirr/Fi8n8cFjaiZ2lS93YHiSSqF0anqpyu0YfKM
-	V6rcBiS1g7DMotJzTl2xKvsAi5Zut3Dpid/NynqxBAOTg68HxPMKRPfA4Be+9ebl
-	H0Ub4oRoAoGh6oGbR6jD2qrqd9+NkyVAFxC2SicIGFO5EyO16hUg91jASPQv2pf6
-	q3sZywihvdoibRN5n55zSLouSgG6CfV4eVWj9iq21FiqURL/CPa8gH8tABzQ==
+	:subject:to:to; s=fm3; t=1774463662; x=1774550062; bh=k0We7F814z
+	AKWh+5jsTGvDuIzpRxa2s+Tp4w2tOVoTc=; b=GycuiqpNRJINW6Q5+Vc/8sLD5E
+	v4IZB7Hlgem1Uh31Q7kZ2Hw+85qt7g6GLDUu6p/7irGlIpi7HJ+KPx0ndXxj0JTZ
+	pGuaDI6qXscaegsUkGMku32+tLKdZR1GmX83P8QCPVGhMogIzD/vM8OuAJR9kmk7
+	BzjDcqSkjf7LvJiNujj9KdGrMmePTiLl12L3tt/9/dIBeFt9bWKN396pX+3Chj88
+	U/74UoyYJ2bV5QlicsgfOMyusS0cQrAjK/sQcc1vYgLH+XuXlxLxndPse1q2kIwr
+	RzS/i3KEg5c6y50zroFvMEQPeWr4eeNlSVAGrYPAKDGYtENYX5MUW64nmhzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774461809; x=1774548209; bh=tocbj/DagWu8LB8Gsxc61uglBUKoAZW42bk
-	8biH9pMQ=; b=D2Brr4j1tpzCqq1ejH1uikr3xiPQcvxJE3rgeLJD0w1oOmadxTc
-	VO/kXO2jBPrn74Y5/LZ/bp846lZjt3RzoyTC8wbPs1/t/hrK0T+sJU9lTwaMapmR
-	UqAamL/HexlilTVHyagMSUt4q9fBz5gIKrDWJ8ev51J9USp1SD+1tFGCWrXGI0R0
-	hmQgix0gzPbFhVAYFZnEuoVckc552Pa6m+WYRN532zhPPHDbWkjfFsm2TBjDYIXF
-	rqYxXcb8FSR1HDdp83pWFVnnd3K9eiMA9KKT3k09iTWk3E+UCfSjVEb0MxSuBJzC
-	eWZKnQZc8aBWWnJBLC3I1j2BHyqk36EA2ZQ==
-X-ME-Sender: <xms:cSPEaZuXKKtBc8FzfNrNc-Opvj02vHXP8YJtPOyM0-lAMz3sz4Z-ZQ>
-    <xme:cSPEaWIQ03yIcylpSoxdra4OC6bw19Sz7Vb4sYxa8ogdCKJehcedMdkFQ4A6JhoDG
-    Q3sZvrjzVN7fOZEU4OSLQtgIhBY3lE7S-o9jYQ8zxjXmIjQaGw_9g>
-X-ME-Received: <xmr:cSPEaWlgsSWeSfym9AUk41UHLusU16ii5GF9pPicsOtlP1zz_Ey4lapo5sqGP98z-NB2enBqNfSrhinKixTJILjNfkZMiq_SiA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehudefucetufdoteggodetrf
+	1774463662; x=1774550062; bh=k0We7F814zAKWh+5jsTGvDuIzpRxa2s+Tp4
+	w2tOVoTc=; b=EAt/4I+dokJh1Wx3Z9nAfoZWMkdCK+Zh7EJU4V0PPlWg8goVCRr
+	ouRL+crctZwHZQOQOvIMBR04M41hXxO/IRPyMr8CTQwzfks/PfbhlrOHVTfY3pOA
+	S1NY7yIHZJ8n4iMNfjvVwVaL+NV++eNZCiyhLb2JBqSqEaeIq4S4UzEAthY5sgTX
+	/TxAtwMX6TT0+srV//msH5D2/XNIOMikAt7OmIobjQMad+F1lUIeTp9CyW4yXlnz
+	Pq9XjFsZxD+famW0IaxlqotHktycKjPvY8lGnanOfQcKu2z6NYO9bMQnig3/TNpQ
+	N8P/rzTloEyU9tXyQ/GGFV+Usn47l2/l7RQ==
+X-ME-Sender: <xms:rirEaerelM-QFbCiICPd5OnC6PpFs3oRlSdkMuAgAYOHpiJNSLyTdg>
+    <xme:rirEaQVn0oW6YfP30haG_zZZwQJ2QwXBkpgHoZPdc8b0t2SWZ0xD2dvUlyTZqbxiW
+    E-Nq8KWMNuiyfuuN8FLOs-opDOh5OkSCh_EJa-4dqWviMNgfq3WuPU>
+X-ME-Received: <xmr:rirEadC1g5rr3jtz2y25cpxGxh0lsZfPHKYDnPazIzWpDTCp9lV-QlxIOnu-QiU2twwhyAKXEffVQhePWP8R4vW-2YXk_aO6bQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehudelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
-    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
-    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhhuihiivggutgdusehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrghhothhskhihsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cSPEaXLS3TuiGo1e0D6HL3PKC-f7dzGzPnZjDl-AddoYgwfF9R0sUA>
-    <xmx:cSPEab7VEgzmLQs1RLkDi_RSpBE6aTa08elE57_a7uh53x4auLwnBA>
-    <xmx:cSPEab3UZW6d6-c_0ypW2GktL3K7BvXF4EV1KVlMytKOhmSMVzoZeQ>
-    <xmx:cSPEaRfZwZCWqwNt21dEWyVyz3-k3ISIE3uPqB-ldMlVzf29IqJBXQ>
-    <xmx:cSPEaa3CGpBmWFSCbTQug_q-m5ahrXzDSwVKDivNrmt8GyvBxPOuB2IQ>
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgv
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrg
+    efudesghhmrghilhdrtghomhdprhgtphhtthhopeihvggvtghhvghnghdrtghhihhnsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:rirEaU25Gv9XmVyiftNCbtId-zxDlC7joqol1iR6df0p6GOTK_DBqg>
+    <xmx:rirEaf3iTaDW0m85cxeAp3t8H9tS4hkCD4Puxmd8JgNOKETJ9dA8pA>
+    <xmx:rirEaZAShXHKUPFxtW3upp--crPFNDYRgdOe2zR4BOG3gJSUnx11LA>
+    <xmx:rirEae69Hu8ZUQGK_2E4ySVYkKvM3EHe3rItKe-SVwuFsvGwx7PndQ>
+    <xmx:rirEaXup9DYiWPzrFBq6p37istJRzfVfd76Uf_X1gGlATOkzckK4qZkH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 14:03:29 -0400 (EDT)
+ 25 Mar 2026 14:34:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Luiz Campos <luizedc1@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  sagotsky@gmail.com,
-  Johannes.Schindelin@gmx.de
-Subject: Re: [RFC PATCH 0/1] add -p: support discarding hunks
-In-Reply-To: <20260325075055.354709-1-luizedc1@gmail.com> (Luiz Campos's
-	message of "Wed, 25 Mar 2026 04:50:54 -0300")
-References: <20260325075055.354709-1-luizedc1@gmail.com>
-Date: Wed, 25 Mar 2026 11:03:27 -0700
-Message-ID: <xmqqcy0rvlao.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Siddharth
+ Asthana <siddharthasthana31@gmail.com>,  Yee Cheng Chin
+ <yeecheng.chin@gmail.com>
+Subject: Re: [PATCH v2 0/3] Add option --ref to git-replay(1)
+In-Reply-To: <20260325-toon-replay-arbitrary-ref-v2-0-553038702c9c@iotcl.com>
+	(Toon Claes's message of "Wed, 25 Mar 2026 16:59:28 +0100")
+References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
+	<20260325-toon-replay-arbitrary-ref-v2-0-553038702c9c@iotcl.com>
+Date: Wed, 25 Mar 2026 11:34:20 -0700
+Message-ID: <xmqq8qbfvjv7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,77 +90,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Luiz Campos <luizedc1@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> Hi,
+> In a previous RFC[1] I suggested to implement subcommands into
+> git-replay(1). While it would be arguable nice to have subcommands for
+> the different modes, because git-replay(1) is a plumbing commands, it's
+> fine to keep a status quo.
 >
-> This is an RFC for adding a 'discard hunk' action to `git add -p`.
+> This series takes one thing for that RFC though: adding option --ref.
+> This new option is useful if you want to have full control over which
+> ref is being updated, and not want to rely on the refs that are using
+> in the <revision-range> or as the value for --advance and --revert.
 >
-> Currently, when using `git add -p`, users can stage or skip hunks,
-> but cannot discard unwanted changes directly from the working tree.
-> This often leads to repeatedly skipping the same hunks across
-> multiple passes.
+> These changes answer the needs expressed in[2].
 >
-> This patch introduces a new 'x' action to discard the current hunk
-> by reverse-applying it to the working tree.
->
-> This idea was previously discussed on the mailing list:
-> https://lore.kernel.org/git/X%2FiFCo0bXLR%2BLZXs@coredump.intra.peff.net/t/#m0576e6f3c6375e11cc4693b9dca3c1fc57baadd0
->
-> Open questions:
-> - Should discard happen immediately or be deferred until patch application?
-> - Are there edge cases involving overlapping hunks or edited hunks?
+> This series is based on Siddharth's series[3] to add '--revert' to
+> git-replay(1) (sa/replay-revert @ ba5c0d03d3).
 
-After reading the discussion (by the way, I do not recall seeing it,
-so thank you very much for having a link to it), I agree with what
-Peff said back then.  "add -p" that touches the working tree feels
-quite weird.
+Which unfortunately got updated just 20 hours ago X-<.
 
-In addition to that, letting it make destructive change makes the
-idea even less appetizing.  Once you remove the changes introduced
-by the hunk, it is forever gone.  A "discard" in "add -p" would not
-solve your problem without adding many unhappy users who lost their
-work by mistake.  I do not want to see people trigger "discard" by
-mistake in "add -p" session _and_ find that there is no way to undo
-that mistaken discard.
+Will try to wriggle it in, but please double check when I push the
+integration result of today.
 
-"stash -p" followed by "add -p" is probably the best we can do that
-is safe.  When the unwanted change is truly unwanted garbage that
-you would never ever want to see again, "restore -p" followed by
-"add -p" would be an alternative.
-
-One reason why they are not satisfying is because during the later
-"add -p" session, we will notice that some unwanted things we failed
-to notice and get rid of (either by sending them to stash or restoring
-it away) are still there, reminding us that we are imperfect human,
-and at that point, it is not easy to switch back to the "stash -p"
-or "restore -p" from there.
-
-What you want is probably a _single_ command that lets you inspect
-the differences among the HEAD, the index, and the working tree, and
-allows you to move things hunk-by-hunk in different directions.
-
- * You can go through the "git diff --cached" (i.e., changes already in
-   the index), and selectively undo/revert the changes to the index,
-   similar to "git reset -p".
-
- * You can go through the "git diff" (i.e., changes between the
-   index and the working tree), and selectively apply the changes to
-   the index, similar to "git add -p".
-
- * You can go through the "git diff HEAD" (i.e. changes since your
-   last commit), and selectively send the changes to a stash entry,
-   similar to "git stash -p".  This is not destructive.
-
-And if the single command lets you switch among working with these
-modes, you no longer need to worry about forgetting to send
-some changes to stash to concentrate on working on the rest.
-
-In addition, optionally you can also have this in the same command:
-
- * You can go through the "git diff", and selectively revert the
-   changes to the working tree, similar to "git restore -p".
-
-This additional mode *is* destructive, but if you know from the hunk
-that you will never need the change in it, it would be a right tool
-for it.
