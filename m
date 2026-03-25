@@ -1,93 +1,91 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2D334AB1E
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C123264DD
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 22:11:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774475923; cv=none; b=YloKmlxFF3NOujzl0ANcrEcOIm9mC7D9z+UzFxzxZ36fq8/BEuVA5TeTaxgqi/f5zc2xETSiU3IC9yylWAUfBO3H1u0HSBDmZLObgGJhOmgxOtW2UIDnLEFod+t1MUMhEeAKuakt+5zq8E8rQm6o9FMzOJBRlOlQNwL8t8Ep2es=
+	t=1774476721; cv=none; b=V76xMXEgc7w3vfxKwSGMPVd6829ulslI2vsg6DONh0Vgw+rWzY/4pNyfHI3gAw02IqeQr0epEE2gha1OswZXSsR+48yZmELtdhweXuk+90GsTet72+OS9y9RY2uDBFiXb2yfV0Da2PGYP9GRzt6NjHKMDlpsMJckybAzbkYAWP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774475923; c=relaxed/simple;
-	bh=3WqJ/I3nmqH8BO5TxBJpp+Nyl1nrIM9ljATyYJZqvOo=;
+	s=arc-20240116; t=1774476721; c=relaxed/simple;
+	bh=1J/MMpoU1P0YE7SQR/Os+wuqIY2VekMy5sHb5hjMZOE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iHTO6rxB9KyfeD/B7bxXB58mgLwZpllakfw3deq9djBw11HIo2rxzSElVUXGHxB4OPl+O3jG1hEkEfyZluH9D3uHRJUl80IDMDh4VaLdzZfZa5ahutVKqRmRKoNmHJmFyg3BdgdZfJdPQ7mbcFZmG2LrxWO33l7dB1JChkJpnEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F83vF+GL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v/lR7gh+; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=j0rSxgq6Ba1HpL1ckugHCLYsl+kU5e7Ksb4X8oBDQRdODe1dIiR4+uzfPODaJN06LeVeC+xntuuprgWNxhedgw4u7oSaE8OwutsBOnTkj1Up7aQN5Nf+hIo8cB+LsJfMM1LNSzLQU8CZiWHHEyL8ayrdLjBjaixOWL3zdpVC4xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MYWPMy/w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aLxKM67A; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F83vF+GL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v/lR7gh+"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A90F14002B7;
-	Wed, 25 Mar 2026 17:58:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MYWPMy/w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aLxKM67A"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 61EC7EC0181;
+	Wed, 25 Mar 2026 18:11:59 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 25 Mar 2026 17:58:41 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 25 Mar 2026 18:11:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774475921; x=1774562321; bh=UcP2JnotSZ
-	k22GulymJ0bb2i+2tD2LDNImAOlxoYDBk=; b=F83vF+GL/rfRzZ/Y+Bb2MHvsNj
-	xSwd7Tgv1W8zllujht+7ClRpyDjRRd2+UChH11ew1qrWWR6ORj/BX4FjQXOEapJq
-	L0SJdWnyX8dremNnyp8qODPfP47747aBm6oGchDUV2HiRmCDJqPWftqtRGmu7zYT
-	sBq/f8V6w24RNmpazJQWYvXkQkYPQ7EqrkAzlFGtKZamdfvSoKJWpTsrQIbAGs8f
-	znbEPIkbfFmUh5TVmL+G+kN/9Hyw8g5wt99EuctQ0OEsMp+vQIRfeF+5pCuoyZzO
-	4vFJ+C2MHPrpyeCrV8ElFFvrn1d6CDuR/b+Nz1bUT0DM6Lyy/D+qbMCF+/4Q==
+	:subject:to:to; s=fm3; t=1774476719; x=1774563119; bh=x7ufXG5Vu1
+	Sw0bD4njQ/GQ4dPmp0I+AvLDMSEq5caDM=; b=MYWPMy/w2kIGUVXLcoec+5A6+c
+	3y8TVqOnZD8D8bsPzU0SIkpn1H8iz0GP2X30EhDP+lRKBnMi1GOZ/UsFUIZb0eaQ
+	k6VerIBHWSnF2PYFSq9QgoFw4yzr49RPsdR6XykDk220fCpaQY38JZ9UiNnnW2Z+
+	eQF12IW5yILqAJEMZnh3W2A5ffV7yLj1xrrFgO+LwfmnszjfwDg5Y1SVgRyjCVtH
+	gkYNG85TaESGBZrR1tsZfSaDJxbw7qrd0ndD9vfMDeXYou5UUeisx4K/2AlZZMVR
+	Ua9jcf3v1gf8BorcMEzukZf1kF238xvdv3NrMqBsrG1jS18OcFutV5Gdas9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774475921; x=1774562321; bh=UcP2JnotSZk22GulymJ0bb2i+2tD2LDNImA
-	OlxoYDBk=; b=v/lR7gh+BH4AMWM+sfQ4mFhJ/9fFUy9zOAaNcTX8gWRS6fxfAwa
-	EPuI407kOnGKja5qsupbPAdlgVXJLPouKGT0SrT6wm/8igpvnXZesgfeF1l7wg+F
-	E48DTWoO29Wa16RgYJxp4AesUTgJ+BlG0Ja6aVJc8a2yY6arWNPF6Hynbjxi5K3k
-	lSsKn+x7m9rJrCP6bcHh4+S4aMVH5VMNK+U1nzG1Q4zsVXVkzBRJsWOqtURMlaCw
-	0kbmvCH5crMD0CghM0UhsLxRiEHUpLAXM5qSEgGxxw9jnU4NEJHUZZCorXVesEIw
-	j/tfaq2zoG6WNri8CdRChkd3zvGKjzAOwNg==
-X-ME-Sender: <xms:kFrEaU0GoDDdvPqtXlj4nXSH24jks8ywkaQATGcMOnDm9Iz61nRBZA>
-    <xme:kFrEaRq9e0EnLO3GEUfiHDK8HdAnxeI-NCpHkkN1nA5BRzdOsvbH8BMvIPpTlvr27
-    NL0V-OEhEf7If12vgVwrJYc-F68g3AmTUlUsZtACYpKiDmzCQ>
-X-ME-Received: <xmr:kFrEaQi1qnToOUzc3VSARWkGwaD8q40U76w0dJk7n7L7g0APsk0Wlpl-VT-jPmP1Xq_tFVZ9Dw4UrT5NcN0U29Zi7LduiQNkHw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehiedtucetufdoteggodetrf
+	1774476719; x=1774563119; bh=x7ufXG5Vu1Sw0bD4njQ/GQ4dPmp0I+AvLDM
+	SEq5caDM=; b=aLxKM67ARvPcVUoFRP7QcuefoUns7vk5ITyn2rswPFe48XIFoZ1
+	lxrvLvGivBIakr3W9QRpqPYCLWWiyfVqwzItvspQija8mQu3FAEAb4gC4pt9WwvA
+	2niuuxFRjw1w8QNOBFT6sIDMNn7WY3VLpmK8gxv7aw1mjhU2GROZxbWwexhtPzoY
+	2UHCsSUzszZOKyGUnKawQi3GWvEzGLSy9XhMEu5dxxbByNWEcx5a5jJweYQjbMvq
+	rnIEznVT1Zv0zlqJou5dFOInKRPgDDfVwPi5SnkQMDdHfnx17gQQlAN3G615ILea
+	s4mP5VDoui1vuWmTs9CEJ8nbRdrOjBl+zlg==
+X-ME-Sender: <xms:r13EaQ1ZVYk8ijZ0ionIjG6gCHeJjluK6BG2-IXQPveXa9QgyHJC4A>
+    <xme:r13EaTSpxke8yVqWZ-S9PkfQHiF3-fA9EhRa8nxeGl5hwCMCYVss8ZRCaA8n2hhIL
+    mePBXFTjvI8Uf42RyjZFofMeoFHXbak2kcpSfq4CkPgLBqc-cggBis>
+X-ME-Received: <xmr:r13EaUeFBalJlLYXqisZsjuzozy6IiqyeN9x5roNj7ledzr3enyNO3VAp8QVmGrr7gvCPss47hA_nNo4Ux1pxrVSnBKoMoegXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehieefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    peihtghhihhnrdhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
-    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnh
-    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgif
-    rhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:kFrEad_5QOzUI0O4_8rT2zBcuuGVgQrMt5_kMc_1rzOlz9QMStjAng>
-    <xmx:kFrEacXtPDUuxVq8-3cTGzxTTWWcUsvzJg0Ay0z4hJm2XnlZqDJ5aQ>
-    <xmx:kFrEaRDxzYG1TtvzEcpcL1XOKeMZB58CtiyAgqwLtM_yCchWb3oA5g>
-    <xmx:kFrEaREACy-aaHXx7W3bb1tvWGNYZXUgq3QIXqI0dzZIzG_7wOEHxA>
-    <xmx:kVrEaXqGYKzwe56DS6D2tzfZlT8cRtnwLeSrK3klyXVfAvVvQEJaK8WA>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghl
+    ohhoshgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggv
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthho
+    pegthhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epjheitheskhgusghgrdhorhhg
+X-ME-Proxy: <xmx:r13EaUcPBL_BrNQr1vR3Lq2x_JQYowAsrgsLiIuAs8R9DszW0UErLg>
+    <xmx:r13Eae2ONplPV8DhFyHYZvWkKyjXV14-4CfLMQEuyb-Rhs6ilWgzRw>
+    <xmx:r13Eac-bBIAbtrL7FwNsRj6BCZHcpjKKKkbggOw-ZXyh2eusyaBgpQ>
+    <xmx:r13EaT5skZqDdcqOCOk97yqqUnKpOM4HbVL7VPKlTScOTVZKBrJ-qQ>
+    <xmx:r13EaSksmLJgNNQxncGe_FH6IDlwKYPbDfcXiFvzrYikZMffwDYEcFkS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 17:58:40 -0400 (EDT)
+ 25 Mar 2026 18:11:58 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  Jeff King
- <peff@peff.net>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 5/5] xdiff/xdl_cleanup_records: use unambiguous types
-In-Reply-To: <a52787f0194bf9f7d1e0abe024c423b8d93754fc.1774473065.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Wed, 25 Mar 2026
-	21:11:05 +0000")
-References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
-	<pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
-	<a52787f0194bf9f7d1e0abe024c423b8d93754fc.1774473065.git.gitgitgadget@gmail.com>
-Date: Wed, 25 Mar 2026 14:58:39 -0700
-Message-ID: <xmqqldffsh9s.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com,
+  j6t@kdbg.org,  szeder.dev@gmail.com
+Subject: Re: [GSoC PATCH v5 1/2] graph: add --graph-lane-limit option
+In-Reply-To: <20260325174401.217577-2-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Wed, 25 Mar 2026 18:44:00 +0100")
+References: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+	<20260325174401.217577-1-pabloosabaterr@gmail.com>
+	<20260325174401.217577-2-pabloosabaterr@gmail.com>
+Date: Wed, 25 Mar 2026 15:11:57 -0700
+Message-ID: <xmqqh5q3sgnm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,64 +95,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
->
-> Change the parameters of xdl_clean_mmatch() and the local variables
-> i, nm in xdl_cleanup_records() to use unambiguous types. Best viewed
-> with --color-words.
->
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->  xdiff/xprepare.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index dd595cf8a1..39e48ad33a 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -197,8 +197,8 @@ void xdl_free_env(xdfenv_t *xe) {
->  }
+> +static int graph_needs_truncation(struct git_graph *graph, int lane)
+> +{
+> +	int max = graph->revs->graph_max_lanes;
+> +	/*
+> +	 * Ignore values <= 0, meaning no limit.
+> +	 */
+> +	return max > 0 && lane >= max;
+> +}
+
+Make a mental note that this helper function works on number of
+lanes, not display columns (which is roughly twice the number of
+lanes).
+
+> @@ -696,6 +705,18 @@ static void graph_update_columns(struct git_graph *graph)
+>  		}
+>  	}
 >  
->  
-> -static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
-> -	long r, rdis0, rpdis0, rdis1, rpdis1;
-> +static bool xdl_clean_mmatch(uint8_t const *action, ptrdiff_t i, ptrdiff_t s, ptrdiff_t e) {
-> +	ptrdiff_t r, rdis0, rpdis0, rdis1, rpdis1;
->  
+> +	/*
+> +	 * If graph_max_lanes is set, cap the padding from the branches
+> +	 */
+> +	if (graph->revs->graph_max_lanes > 0) {
+> +		/*
+> +		 * width of "| " per lanes plus truncation mark "~ ".
+> +		 */
+> +		int max_columns_width = graph->revs->graph_max_lanes * 2 + 2;
+> +		if (graph->width > max_columns_width)
+> +			graph->width = max_columns_width;
+> +	}
+> +
 >  	/*
->  	 * Limits the window that is examined during the similar-lines
-> @@ -268,8 +268,8 @@ static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
->   * might be potentially discarded if they appear in a run of discardable.
->   */
->  static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2) {
-> -	long i, nm;
-> -	size_t mlim1, mlim2;
-> +	ptrdiff_t i;
-> +	size_t nm, mlim1, mlim2;
+>  	 * Shrink mapping_size to be the minimum necessary
+>  	 */
+> @@ -846,6 +867,10 @@ static void graph_output_padding_line(struct git_graph *graph,
+>  	 * Output a padding row, that leaves all branch lines unchanged
+>  	 */
+>  	for (i = 0; i < graph->num_new_columns; i++) {
+> +		if (graph_needs_truncation(graph, i)) {
+> +			graph_line_addstr(line, "~ ");
+> +			break;
+> +		}
 
-Looking good.  Moving away from platform native "long" and to types
-that have more specific meaning makes sense.
+And that mental note helps to convince us this loop makes sense, as
+it increments 'i' one by one ;-)
 
->  	xdlclass_t *rcrec;
->  	uint8_t *action1 = NULL, *action2 = NULL;
->  	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
-> @@ -303,7 +303,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->  	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
->  		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
->  		rcrec = cf->rcrecs[mph1];
-> -		nm = rcrec ? rcrec->len2 : 0;
-> +		nm = rcrec ? (size_t)rcrec->len2 : 0;
->  		if (nm == 0)
->  			action1[i] = DISCARD;
->  		else if (nm < mlim1)
-> @@ -315,7 +315,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->  	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
->  		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
->  		rcrec = cf->rcrecs[mph2];
-> -		nm = rcrec ? rcrec->len1 : 0;
-> +		nm = rcrec ? (size_t)rcrec->len1 : 0;
->  		if (nm == 0)
->  			action2[i] = DISCARD;
->  		else if (nm < mlim2)
+> @@ -903,6 +928,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+>  			seen_this = 1;
+>  			graph_line_write_column(line, col, '|');
+>  			graph_line_addchars(line, ' ', graph->expansion_row);
+> +		} else if (seen_this && graph_needs_truncation(graph, i)) {
+> +			graph_line_addstr(line, "~ ");
+> +			break;
+>  		} else if (seen_this && (graph->expansion_row == 0)) {
+>  			/*
+>  			 * This is the first line of the pre-commit output.
+> @@ -994,6 +1022,12 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
+>  		col = &graph->new_columns[j];
+>  
+>  		graph_line_write_column(line, col, '-');
+
+And here, 'j' comes from graph->mapping[] array.  Does that count in
+display columns or lanes?
+
+> +		if (graph_needs_truncation(graph, j / 2 + i)) {
+
+This makes it look as if 'j' counts in columns and needs to be
+divided by 2 to make it comparable to lanes.
+
+> +			graph_line_addstr(line, "~ ");
+> +			break;
+> +		}
+> +
+>  		graph_line_write_column(line, col, (i == dashed_parents - 1) ? '.' : '-');
+>  	}
+>  
+
+> +	if (graph->num_parents > 1) {
+> +		if (!graph_needs_truncation(graph, graph->commit_index)) {
+> +			graph_update_state(graph, GRAPH_POST_MERGE);
+> +		} else {
+> +			struct commit_list *first_parent = first_interesting_parent(graph);
+> +			int first_parent_col = graph_find_new_column_by_commit(graph, first_parent->item);
+
+Are we sure that first_interesting_parent() will always give us a
+non-NULL pointer?
+
+Can we use a bit shorter identifier names to deal with these overly
+long lines?  The lifetime of these two variables is very short so they
+do not have to be so descriptive.
+
+			struct commit *p = first_interesting_parent(graph)->item;
+			int lane = graph_find_new_column_by_commit(graph, p);
+
+> +			if (!graph_needs_truncation(graph, first_parent_col))
+> +				graph_update_state(graph, GRAPH_POST_MERGE);
+> +			else if (graph_is_mapping_correct(graph))
+> +				graph_update_state(graph, GRAPH_PADDING);
+> +			else
+> +				graph_update_state(graph, GRAPH_COLLAPSING);
+> +		}
+> +	} else if (graph_is_mapping_correct(graph))
+
