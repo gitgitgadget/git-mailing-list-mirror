@@ -1,127 +1,247 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957273E1CE5
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 15:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8983E716C
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774453817; cv=none; b=KH1Lp0nRxG1Y8l0zYNGUddIAvEF7VN82WoNNYuKtZgJYGV8lGoR4iQZw65lQgXR7OiXiIo6XKeC64wcaoWGl+umd/aN5LHM9SofezvBoZYgyE3vpQLnBTCceHYWObCzyUswtJnn5nfgwjWNhkQyK/UlP2Qjey4rShd71iATuup0=
+	t=1774454404; cv=none; b=PPs4ycjNutX+fGSxBiyBimBw6DS+OmZrnHigZ+dqhj+5z9a5kkggJZ6jwa/IxnoMvrK3KhbGDBb9xzVkocYzALGPtTkMLphKvwq08hM8GF2kEfE9lXGklzXTyBQtQfNwGKszOsXN0iECnc7CDbpZ7rcFkcRV+S5pz5ekfkWaWRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774453817; c=relaxed/simple;
-	bh=bd14ekpdL55J526zO2yuWxF2h/iJhgIwLRNwrUxPVkA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pFTK19pSfLzDccpec5DaFmJ30t4gBS1gD01jBWEOMqvQyKzWeboUU6vqeoRk+e2rQff9MUrT/yIV2p9RUUBAUY/ScFuesNYgvjbXmQzeJG1R3oCAM4NQNZq7/d3KtdYt4JfktDmnmQLuFlLpMurhWW953HZz/Q1l+ujBGLAXSMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=arP+Ggrr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p2iD0gGB; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774454404; c=relaxed/simple;
+	bh=4oq0nnzjJcEIqdDHE//F3dDbL//VjMdtcZSX3M8C0LA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=QhilieLTjwZYHeQ6ZjHUqY1Fy24TyH0EC+g4K60qj59oIQV5seXegBkrBubXYA03oj2cFgmnZrW8H6O3j+u4ZcBCfbdtPiB5mYc+73+/Zp6xfgu7LQid8IH8O5HPTCuDKisDC1vcAWtgtIaPaqz2S9lef9A3kMEvNjga2WmI3Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TAPRzrtb; arc=none smtp.client-ip=95.215.58.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="arP+Ggrr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p2iD0gGB"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id CDC73EC00EF;
-	Wed, 25 Mar 2026 11:50:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Mar 2026 11:50:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774453814; x=1774540214; bh=R94CtJYmgw
-	um6IwY2N4lVnWESDr0pmXJhtfFeY/LwZE=; b=arP+GgrrYkoKGgiNUosArg+GIQ
-	PT9gifYVjZx3A5YkOAnhG21pAZR1LIroQ79wchY5rnjsCYIS+AElhsX9OiMktFhJ
-	iLCgJAS+MJUKQcXsFV8kBsHiN5k61YfNBIqwCrMg9wU4kvVAOgbAvIGkZDRIpxq2
-	P3/oS7LlYvrqonCOU4al/7OhJwHnsz7kZKmXYupRLWyh8//Up4vF8OlFuEJ30tMl
-	ykeJvC8ArCu+Ztrsvpmn7jhHQnnHdzM0eNvxz2ZrW+S5AoARiElG4vMga3bxSNZW
-	rKFr6QEsvr684QvMcXtUC1z7jBMV4Ouxi3YTFpKF4EGLqLSeKtCge9QwHZmQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774453814; x=1774540214; bh=R94CtJYmgwum6IwY2N4lVnWESDr0pmXJhtf
-	FeY/LwZE=; b=p2iD0gGBS7KvDoecumzo//CZWu6rkG1ySFRRM5wikqsHPEQpFs8
-	+noYrnpAXksKVvVB1xzIFBU8W0MNZ9cdsJRJZfDk6zWTGtmLQtsst/ixSSs8mERH
-	rG4jQvRj2e4qV/aSb/Dty5qw3A45qmsj76siyWNCY3+LkZtrRsMPGjgtaq5IDEnx
-	8y4Wn4V0U5kcbGwprUUI8o1XUKoEDLRZNLxC6Dia1SNbBJRa+a/wGKND8uRGyBsM
-	Jnyu4RrxdraqQglfFGK2uOSTdOcUQ7q/s4SDBZzBj9VBXXMpiQteM6FHC6AE32aS
-	3Gm/MwQM96vamb5wx6v88PcBOsomx3I065w==
-X-ME-Sender: <xms:NgTEaeiV191q5PzIyAG4zARTn-ZVLxIMz2nY1HpQgLlwcG2D1JLoCQ>
-    <xme:NgTEaWc7KznXaSvOREWV0qBf-tpJ4a-qkTBfAah6AMhW4GV0erhPiruGYmGBvG1FI
-    vHjmTeXN2GSODoJcg_vrDtF_JpVvaM4gVOGdgrk3aXQ8f2mWei4wg>
-X-ME-Received: <xmr:NgTEaTfdOHiqg3ZRw-Aoiz5Ebl_5VVni7z1MGbm7ljGjR5PyADh9_MANXbCuy4Q26kcxafW-nRDjk6FLZHufRGctjtZLbtVe2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdegkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:NgTEaQ8edNAREtn5nRN_0D9YZrQeC0Sjtlk8jHJxu-JV8FOKUuwy9A>
-    <xmx:NgTEafnBpzZPFc1cbF6vyPgzaUVoMvyeL5vlxiPoo1ZT5GnQuHGEZA>
-    <xmx:NgTEaS_O0McS_kn42yvx0qeMCDCEeX1-ZuhVkOxNZRt6yEub75sXeA>
-    <xmx:NgTEadkNTfAFB6VQk3BctRNt3WPclY3ZzENborId8qFrYqPrxuXGLA>
-    <xmx:NgTEaeloAxhDjoyTJqObE2-7xZXme-Ee1z2LplzvbPKSGGsmuAVAARQL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 11:50:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 10/11] t5570: make test "set -e" clean
-In-Reply-To: <acOLt7GuLTpg_QYM@pks.im> (Patrick Steinhardt's message of "Wed,
-	25 Mar 2026 08:16:07 +0100")
-References: <20260325062114.2067946-1-gitster@pobox.com>
-	<20260325062114.2067946-11-gitster@pobox.com>
-	<acOLt7GuLTpg_QYM@pks.im>
-Date: Wed, 25 Mar 2026 08:50:13 -0700
-Message-ID: <xmqq8qbfyklm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TAPRzrtb"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1774454400;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8Vw+gg7faG2PFpNC1CPh6X4+Zqq5Krl+hYZ2PN7SsME=;
+	b=TAPRzrtbZxyAkhLnhn2elsK7EZcrSmZQc3OGCbURo7MlKGREsauyjGR9jf9Fi8P5kzJJt0
+	jpnuUKQftBBz03p49x3ccO1sCHK1EsDDWmiGmM4+vOG+1iJPSIizl11DHr/oAiD0fgSwgt
+	AXLe4lCSpx+h+kQ9ILPsM6itqAyF+6o=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v2 0/3] Add option --ref to git-replay(1)
+Date: Wed, 25 Mar 2026 16:59:28 +0100
+Message-Id: <20260325-toon-replay-arbitrary-ref-v2-0-553038702c9c@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NTQ6CMBBGr0Jm7RhaUqquvIdhUepUxiAlbSUSw
+ t0teAGX7+X7WSBSYIpwKRYINHFkP2SQhwJsZ4YHId8zgyxlXVaywuT9gIHG3sxoQsspmDBn4VC
+ Zk3DKnXVtNeT+mCV/9u1b8+P4bp9k0za4JTqOyYd5P5/ElvvnZxJYorJaaOlqrche2SfbH61/Q
+ bOu6xeyMovt1AAAAA==
+X-Change-ID: 20260323-toon-replay-arbitrary-ref-5a81f5f976c7
+In-Reply-To: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
+References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, 
+ Siddharth Asthana <siddharthasthana31@gmail.com>, 
+ Yee Cheng Chin <yeecheng.chin@gmail.com>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-Patrick Steinhardt <ps@pks.im> writes:
+In a previous RFC[1] I suggested to implement subcommands into
+git-replay(1). While it would be arguable nice to have subcommands for
+the different modes, because git-replay(1) is a plumbing commands, it's
+fine to keep a status quo.
 
-> On Tue, Mar 24, 2026 at 11:21:13PM -0700, Junio C Hamano wrote:
->> diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
->> index e62569222b..6850f08c1d 100644
->> --- a/t/lib-git-daemon.sh
->> +++ b/t/lib-git-daemon.sh
->> @@ -86,13 +86,13 @@ stop_git_daemon() {
->>  	# kill git-daemon child of git
->>  	say >&3 "Stopping git daemon ..."
->>  	kill "$GIT_DAEMON_PID"
->> -	wait "$GIT_DAEMON_PID" >&3 2>&4
->> -	ret=$?
->> +	ret=0
->> +	wait "$GIT_DAEMON_PID" >&3 2>&4 || ret=$?
->>  	if ! test_match_signal 15 $ret
->>  	then
->>  		error "git daemon exited with status: $ret"
->>  	fi
->> -	kill "$(cat "$GIT_DAEMON_PIDFILE")" 2>/dev/null
->> +	kill "$(cat "$GIT_DAEMON_PIDFILE")" 2>/dev/null || :
->>  	GIT_DAEMON_PID=
->>  	rm -f git_daemon_output "$GIT_DAEMON_PIDFILE"
->>  }
->
-> This test actually made me pause a bit. In theory, you can use the
-> function to verify that git-daemon(1) exits successfully because we do
-> bubble up its exit code. So instead of silencing the error code, I
-> simply added `|| :` to all callsites that don't care about it at all.
->
-> But in practice, that turned out to be every callsite, so that exercise
-> may not be worth it.
+This series takes one thing for that RFC though: adding option --ref.
+This new option is useful if you want to have full control over which
+ref is being updated, and not want to rely on the refs that are using
+in the <revision-range> or as the value for --advance and --revert.
 
-Yeah.  Worse, I think this is called even when I suspect that the
-daemon is in the process of exiting (i.e., racy), has already exited
-(i.e., kill and wait will say "huh? what are you talking about"), or
-simply when we do not know what status it is in, so I think it is OK
-to ignore errors from these.
+These changes answer the needs expressed in[2].
+
+This series is based on Siddharth's series[3] to add '--revert' to
+git-replay(1) (sa/replay-revert @ ba5c0d03d3).
+
+[1]: https://lore.kernel.org/git/20260309-toon-replay-subcommands-v1-1-864ec82ef68a@iotcl.com/
+[2]: https://lore.kernel.org/git/CAHTeOx-SMLh_idKhGczPKzZNOKy04uYXmUhL8Z79yRuNpmE4eA@mail.gmail.com/
+[3]: https://lore.kernel.org/git/20260313054035.26605-1-siddharthasthana31@gmail.com/
+
+---
+Changes in v2:
+- Dropped the test-only consistency patch.
+- Separated commit to mark options as not negatable.
+- Modified git-replay(1) docs to everywhere use stuck form.
+- Added code and test ensure the revision range has a single tip when
+  both --onto and --ref are given.
+- Rephrased some comments and docs.
+- Link to v1: https://patch.msgid.link/20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com
+
+---
+Toon Claes (3):
+      builtin/replay: mark options as not negatable
+      replay: use stuck form in documentation and help message
+      replay: allow to specify a ref with option --ref
+
+ Documentation/git-replay.adoc | 42 +++++++++++++++++++--------
+ builtin/replay.c              | 38 ++++++++++++++++---------
+ replay.c                      | 33 +++++++++++++++++-----
+ replay.h                      |  7 +++++
+ t/t3650-replay-basics.sh      | 66 +++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 154 insertions(+), 32 deletions(-)
+
+Range-diff versus v1:
+
+1:  fe4daa4c89 < -:  ---------- t3650: use option with value consistenly with equal sign
+2:  3170bcc916 < -:  ---------- builtin/replay: improve documentation on options
+-:  ---------- > 1:  61ba35cc08 builtin/replay: mark options as not negatable
+-:  ---------- > 2:  19e54b8326 replay: use stuck form in documentation and help message
+3:  bdb166a9ff ! 3:  341b94f937 replay: allow to specify a ref with option --ref
+    @@ Metadata
+      ## Commit message ##
+         replay: allow to specify a ref with option --ref
+     
+    -    To enable users to replay commits without having refs in
+    -    <revision-range> or as the value for --advance and --revert, start
+    -    accepting option --ref. When the user specifies a --ref, the refs from
+    -    the other option are ignored, and only the ref is acted on.
+    +    When option '--onto' is passed to git-replay(1), the command will update
+    +    refs from the <revision-range> passed to the command. When using option
+    +    '--advance' or '--revert', the argument of that option is a ref that
+    +    will be updated.
+    +
+    +    To enable users to specify which ref to update, add option '--ref'. When
+    +    using option '--ref', the refs described above are left untouched and
+    +    instead the argument of this option is updated instead.
+     
+         Signed-off-by: Toon Claes <toon@iotcl.com>
+     
+    @@ Documentation/git-replay.adoc: SYNOPSIS
+      [verse]
+      (EXPERIMENTAL!) 'git replay' ([--contained] --onto=<newbase> | --advance=<branch> | --revert=<branch>)
+     -			     [--ref-action=<mode>] <revision-range>
+    -+			     [--ref=<branch>] [--ref-action=<mode>]
+    -+			     <revision-range>
+    ++			     [--ref=<branch>] [--ref-action=<mode>] <revision-range>
+      
+      DESCRIPTION
+      -----------
+    -@@ Documentation/git-replay.adoc: the current user as the author, matching the behavior of `git revert`.
+    - This option is mutually exclusive with `--onto` and `--advance`. It is also
+    - incompatible with `--contained` (which is a modifier for `--onto` only).
+    - 
+    -+--ref <branch>::
+    -+	Override which reference is updated with the result of the
+    -+	replay. When used with `--onto`, only the specified reference
+    -+	is updated instead of inferring refs from the revision range.
+    -+	When used with `--advance` or `--revert`, the specified
+    -+	reference is updated instead of the branch given to those
+    -+	options. This option is incompatible with `--contained`.
+    -+
+    - --contained::
+    +@@ Documentation/git-replay.adoc: incompatible with `--contained` (which is a modifier for `--onto` only).
+      	Update all branches that point at commits in
+      	<revision-range>. Requires `--onto`.
+    -@@ Documentation/git-replay.adoc: top of `main`, and updates `main` to point at the result. This is useful when
+    - commits from `topic` were previously merged or cherry-picked into `main` and
+    - need to be undone.
+    + 
+    ++--ref=<branch>::
+    ++	Override which reference is updated with the result of the replay.
+    ++	When used with `--onto`, the `<revision-range>` should have a
+    ++	single tip and only the specified reference is updated instead of
+    ++	inferring refs from the revision range.
+    ++	When used with `--advance` or `--revert`, the specified reference is
+    ++	updated instead of the branch given to those options. This option is
+    ++	incompatible with `--contained`.
+    ++
+    + --ref-action[=<mode>]::
+    + 	Control how references are updated. The mode can be:
+    + +
+    +@@ Documentation/git-replay.adoc: NOTE: For reverting an entire merge request as a single commit (rather than
+    + commit-by-commit), consider using `git merge-tree --merge-base $TIP HEAD $BASE`
+    + which can avoid unnecessary merge conflicts.
+      
+     +To replay onto a specific commit while updating a different reference:
+     +
+     +------------
+    -+$ git replay --onto 112233 --ref refs/heads/mybranch aabbcc..ddeeff
+    ++$ git replay --onto=112233 --ref=refs/heads/mybranch aabbcc..ddeeff
+     +------------
+     +
+     +This replays the range `aabbcc..ddeeff` onto commit `112233` and updates
+    -+`refs/heads/mybranch` to point at the result. This is useful when you want
+    ++`refs/heads/mybranch` to point at the result. This can be useful when you want
+     +to use bare commit IDs instead of branch names.
+     +
+    - NOTE: For reverting an entire merge request as a single commit (rather than
+    - commit-by-commit), consider using `git merge-tree --merge-base $TIP HEAD $BASE`
+    - which can avoid unnecessary merge conflicts.
+    + GIT
+    + ---
+    + Part of the linkgit:git[1] suite
+     
+      ## builtin/replay.c ##
+     @@ builtin/replay.c: int cmd_replay(int argc,
+    @@ builtin/replay.c: int cmd_replay(int argc,
+      		N_("(EXPERIMENTAL!) git replay "
+      		   "([--contained] --onto=<newbase> | --advance=<branch> | --revert=<branch>)\n"
+     -		   "[--ref-action=<mode>] <revision-range>"),
+    -+		   "[--ref=<branch>] [--ref-action=<mode>]\n"
+    -+		   "<revision-range>"),
+    ++		   "[--ref=<branch>] [--ref-action=<mode>] <revision-range>"),
+      		NULL
+      	};
+      	struct option replay_options[] = {
+     @@ builtin/replay.c: int cmd_replay(int argc,
+    + 			     N_("branch"),
+    + 			     N_("revert commits onto given branch"),
+      			     PARSE_OPT_NONEG),
+    - 		OPT_BOOL(0, "contained", &opts.contained,
+    - 			 N_("update all branches that point at commits in <revision-range>")),
+     +		OPT_STRING_F(0, "ref", &opts.ref,
+     +			     N_("branch"),
+     +			     N_("reference to update with result"),
+    @@ replay.c: int replay_revisions(struct rev_info *revs,
+     +	if (opts->ref) {
+     +		struct object_id oid;
+     +
+    ++		if (update_refs && strset_get_size(update_refs) > 1) {
+    ++			ret = error(_("'--ref' cannot be used with multiple revision ranges"));
+    ++			goto out;
+    ++		}
+     +		if (check_refname_format(opts->ref, 0) || !starts_with(opts->ref, "refs/")) {
+     +			ret = error(_("'%s' is not a valid refname"), opts->ref);
+     +			goto out;
+    @@ replay.h: struct replay_revisions_options {
+      	const char *onto;
+      
+     +	/*
+    -+	 * Reference to update with the result of the replay. This stops replay
+    -+	 * from taking refs from `onto`, `advance`, and `revert`. Ignores
+    ++	 * Reference to update with the result of the replay. This will not
+    ++	 * update any refs from `onto`, `advance`, or `revert`. Ignores
+     +	 * `contained`.
+     +	 */
+     +	const char *ref;
+    @@ t/t3650-replay-basics.sh: test_expect_success 'git replay --revert incompatible
+     +	test_must_fail git replay --onto=main --ref=main topic1..topic2 2>err &&
+     +	test_grep "is not a valid refname" err
+     +'
+    ++
+    ++test_expect_success '--onto with --ref rejects multiple revision ranges' '
+    ++	test_must_fail git replay --onto=main --ref=refs/heads/topic2 ^topic1 topic2 topic4 2>err &&
+    ++	test_grep "cannot be used with multiple revision ranges" err
+    ++'
+     +
+      test_done
+
+
+---
+base-commit: ba5c0d03d39a8b1798c8f988bdc95f9a08f10fac
+change-id: 20260323-toon-replay-arbitrary-ref-5a81f5f976c7
+
