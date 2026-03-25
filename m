@@ -1,43 +1,42 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9073D6483
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1924B2D94BA
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774442983; cv=none; b=s2P9mdVZJJR6fxh0xk/S7gnRRzvk0vudxVrVbf3UTV59HahxuUXT2Ov/aJm8BNwq2UsqPRty4MPihcNzZJIsQIAmOHn//NLeu9naJtu7W6fe1+4nybM/68n4mgTPSqZR6H+W+m2XJDxyEMOvbJxGJ8EaqQTj/GhlEuAHkRmtnyA=
+	t=1774443014; cv=none; b=ksrrOBYcGHBkHPtMBWBaCkyYhBPWDhAwuYXyoUuMDqeyJ+FNTf+5Ds0qEf6riAVvKVxA96By5aW/wvmLoXykuvkHVCLHcLjiSaUAjKBKbiA/WT3mYkTayo12oCNe7eS1kVLNqSia3lErua1FjVOA3L2tPXdwsmR4ERpI9T+e/Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774442983; c=relaxed/simple;
-	bh=6Z+vSdgIr2m3IkPkLPyCcWeVjHDz0GP2Tb1YsUK6XJI=;
+	s=arc-20240116; t=1774443014; c=relaxed/simple;
+	bh=nVQEIDllBraDOxU3/RNCNtK9nuBrCaJEsUqwZh+ykWY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vl5rD55Rz8KikiC71HYGvaKr9u69tjP9EZaH00knQPSiUkaETY7qnLBpf53N2dP7vgDoMrSrPu9NPVsiHP5CiJS1IYc29zokvEBhe9A883eqSmg3XvH+GcQAUNDTe8kk6vy6XdPzrhRRt0V9eCIPo7nEcgNJqt+gSJ8Uo4GW1RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=BO3D4oad; arc=none smtp.client-ip=95.215.58.174
+	 MIME-Version:Content-Type; b=BMBOYfEUVjho8yFNjJI9p2l2UMr7p4Re6FGGB/Moh7o4Uzs/6DB4/+o3z9jkdZkfsCeQku3bAT/QZIdZc3zDqImMtAxowacTT/fckdwv86wwT+OHQo5SVVnlerTr2auJ5Lugw07wya1TaLH7Lyyw/BI5tkErgr+nFw9d76HigCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=VQya8jsr; arc=none smtp.client-ip=95.215.58.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="BO3D4oad"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="VQya8jsr"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1774442979;
+	t=1774443011;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=hNm+3KJxl8vtfuiINDZN5P5+NpyyXlG8zxfWnb/s2nE=;
-	b=BO3D4oadgZUlvEWSWj+IS/x2NjAzq85gpSo11L78RWD0eu5Ef0CCO/fzTlDuHCuIlehAN/
-	lacZ0jomISYlO2B6zTeW3uSBEtHhcaTfL+8P36px9pYoki3u2rLa3ozJVp/3JACv7+rkN2
-	0r72OhQ9NPiDi1kTIfk5lw/y3Il5Two=
+	bh=cqnZ7I29/ncAoP+RXJTS1IkmTRUnaAuvX6Gy66N+REQ=;
+	b=VQya8jsrTgCeQccIg/aW4H2uj3cchQ7L3Mf5Euax67F/4Ak0Ok7F/jyIUP9cv7LsAUvWWj
+	YPcd2bqc4MAXUuGNYiwJQactmdz8fj8BOZg0tSZ4J8Ixa2CvaVh6FE29Ejz5UNY9AUEYtm
+	MYxT/Rg9AgjgLJ7+n7uq5vwRZRNdejs=
 From: Toon Claes <toon@iotcl.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
+To: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Siddharth Asthana
  <siddharthasthana31@gmail.com>, Yee Cheng Chin <yeecheng.chin@gmail.com>
 Subject: Re: [PATCH 3/3] replay: allow to specify a ref with option --ref
-In-Reply-To: <63a66d11-d138-4d4e-ab5c-f7669c218293@app.fastmail.com>
+In-Reply-To: <b0d49276-a9d3-435d-bb39-8cf7a08fbd11@malon.dev>
 References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
  <20260323-toon-replay-arbitrary-ref-v1-3-5c7172f675ec@iotcl.com>
- <63a66d11-d138-4d4e-ab5c-f7669c218293@app.fastmail.com>
-Date: Wed, 25 Mar 2026 13:49:31 +0100
-Message-ID: <87ikak13c4.fsf@iotcl.com>
+ <b0d49276-a9d3-435d-bb39-8cf7a08fbd11@malon.dev>
+Date: Wed, 25 Mar 2026 13:50:06 +0100
+Message-ID: <87h5q413b5.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,41 +46,82 @@ MIME-Version: 1.0
 Content-Type: text/plain
 X-Migadu-Flow: FLOW_OUT
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> On Mon, Mar 23, 2026, at 17:09, Toon Claes wrote:
->> To enable users to replay commits without having refs in
->> <revision-range> or as the value for --advance and --revert, start
->> accepting option --ref. When the user specifies a --ref, the refs from
->> the other option are ignored, and only the ref is acted on.
+> Hi Toon,
 >
-> s/option are/options are/
-
-Thanks!
-
->> Signed-off-by: Toon Claes <toon@iotcl.com>
->> ---
->>[snip]
->> +To replay onto a specific commit while updating a different reference:
->> +
->> +------------
->> +$ git replay --onto 112233 --ref refs/heads/mybranch aabbcc..ddeeff
->> +------------
+> On 3/24/26 00:09, Toon Claes wrote:
 >
-> This example could use the stuck form like in the two previous commits.
 >
->     git replay --onto=112233 --ref=refs/heads/mybranch ...
-
-Good point.
-
+>> +	die_for_incompatible_opt2(!!opts.ref, "--ref",
+>> +				  !!opts.contained, "--contained");
+>
+>> +	/*
+>> +	 * Reference to update with the result of the replay. This stops replay
+>> +	 * from taking refs from `onto`, `advance`, and `revert`. Ignores
+>> +	 * `contained`.
+>> +	 */
+>> +	const char *ref;
 >> +
->> +This replays the range `aabbcc..ddeeff` onto commit `112233` and updates
->> +`refs/heads/mybranch` to point at the result. This is useful when you want
->> +to use bare commit IDs instead of branch names.
->> +
->>  NOTE: For reverting an entire merge request as a single commit (rather
->> than
->>[snip]
+>
+> Do the comment and the code implementation match up here?
+
+The comment is a bit misleading. A user cannot set the field `contained`
+in the struct when it passed `--ref`. But if a bug is made somewhere,
+but both fields can be set, that's what the comment is saying.
+
+I can add a check to verify in replay.c that not both are set, and
+update the comment they are incompatible?
+
+>> @@ -427,13 +446,9 @@ int replay_revisions(struct rev_info *revs,
+>>  		goto out;
+>>  	}
+>>  
+>> -	/* In --advance or --revert mode, update the target ref */
+>> -	if (advance || revert) {
+>> -		const char *ref = advance ? advance : revert;
+>> -		replay_result_queue_update(out, ref,
+>> -					   &onto->object.oid,
+>> +	if (ref)
+>> +		replay_result_queue_update(out, ref, &old_oid,
+>>  					   &last_commit->object.oid);
+>> -	}
+>>  
+>>  	ret = 0;
+>
+> It doesn't seem like there's anything here to prevent users from 
+> inputting multiple branches? I think this will result in at least one 
+> branch becoming orphaned, without any error being reported.
+>
+> Consider this command:
+>
+> 	git replay --onto main --ref refs/heads/target topic1 topic2
+
+That's interesting, I didn't think of that.
+
+>
+> In replay.c we have:
+>
+>> if (onto_name) {
+>> 		*onto = peel_committish(repo, onto_name, "--onto");
+>> 		if (rinfo.positive_refexprs <
+>> 		    strset_get_size(&rinfo.positive_refs))
+>> 			die(_("all positive revisions given must be references"));
+>> 		*update_refs = xcalloc(1, sizeof(**update_refs));
+>> 		**update_refs = rinfo.positive_refs;
+>> 		memset(&rinfo.positive_refs, 0, sizeof(**update_refs));
+>
+>
+> After topic1 and topic2 are put into update_refs, only one ref 
+> (refs/heads/target) is updated, since what is written in the patch is:
+>
+>  > +	if (ref)
+>  > +		replay_result_queue_update(out, ref, &old_oid,
+>  >  					   &last_commit->object.oid);
+>
+> I believe this is not what we expect :P
+
+Let me look into that how we can deal with that.
 
 -- 
 Cheers,
