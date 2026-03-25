@@ -1,172 +1,143 @@
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E614A3D1CA8
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 11:52:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9871B3596E3
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 12:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774439542; cv=none; b=qP+dSUXN4DEmiBPgajxw9JHsDKsSoAYJ6UlKt4xfEQDbelKI5hNlfbp4xU2PN+3pumrKKPNKbZPKn0GBS/s3QaWIDwxoHHA9ifFdSWAux7TXBRodkubJdnKrM3fuwIy6fulFO/4nYlZhVCn5W1unZ1bY0uXCi4WO6uy5N3HwduM=
+	t=1774441203; cv=none; b=cAebfBE8Al1UE53HMaIDqguTmE3p/6okU4NM2W0dlQfNnpVmKHVtOg/8r5s6O07ZlI72wd2TNWquUKcIbSX+H2vPtY4HbEqQyEQaGnyYw1v11EsPX4aS91UMQ6Rbat9cxFrCQ9qOR7HP8S/mPUOeQFtl4cEh8caGJP0Q/r1BO+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774439542; c=relaxed/simple;
-	bh=uZDawHLm4LtpqE4RJF3uDVypf6k0G8glKQ3a+74HmPE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=RrS2BEhwC8FaBocyvBeFjXksT6cG5F2q7qjD2CxuHkJEGbal0qkgSjH9ACcuRMRaykRtM76x0oa8caN6yk38xJkmUjFsHZ9D524tf+hq7utclhZI2m8ITDUsvy/HTAPOJRhBQgAbvbOfXAzNeCoDLbBWeI7/4s59nk+FBlv5tnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrQ4ErTO; arc=none smtp.client-ip=209.85.128.68
+	s=arc-20240116; t=1774441203; c=relaxed/simple;
+	bh=9awbQyTkAVt8NoGPZrUsPPPNE2eZUa7JnkoE3zvlA+Q=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=NbKPq2lAXlhasLwTbJ7OKW3Uew+IEzB+HaLBnQ4aaF0y9o0qBROx01E4chWUdgWGc/j4ECayzsBGH1RNhRkdJxy/MdQi17m4h8EC5SonbXaWxtPDJ6FulnsH40GgqXv8+hICSXg7jvMdi/2AuP18ktvuV1LV0AQpBsTU5wr7DuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b8VHxT2G; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrQ4ErTO"
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-486fd27754bso19592275e9.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 04:52:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b8VHxT2G"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79495b1aaa7so57397347b3.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 05:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774439538; x=1775044338; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4+7/uMgLktPlCJ4XPhLKuFFts0I2TySpl3FEDqfG4qo=;
-        b=TrQ4ErTOTWvVPD3KsZ+SeL7+JzXsOt9TKIAEz0kJQUPvOmBNxXQh3IbYEE6Bs+xGgE
-         2jE3BQxlGFpwz1SVJJFHmFR6BasIvBAuJtMJBFKc1lCrknbQmd2Ren4N21TfXgkwKtxr
-         TnF5q4Sj3+WeqYaozSRkrI1dCmm3i9FmYn3ouyW9YfdY5vEF9S1NdPZFAI68al7Be6a9
-         RQOzMsO9EBHuk+6OEzQz0XtKLAMoxJUGPp9Dcf+siJVORSHMp6D2laShdCbanFPPRR+n
-         tafQ0n1kp/oIlGC7BudwZqRoa8CpkJu+uiqzpTxg7kOJWsWGvaLjR2WHkbwbWgM6DqYL
-         UU/A==
+        d=gmail.com; s=20251104; t=1774441201; x=1775046001; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qEjLsniM25W1o5h9zHc25KxxNquvYujqC0JbXjIcaH4=;
+        b=b8VHxT2GDkltXxQax5+Rz7GpYEue1LyTRZ6xCA7BaYXrhL0O+8h4EMSXLAXFfk/jyR
+         ODjYsfTNvcER2RvbQxxEEy7cBXhAGoKyh799H7BOjlF8dPZTIqirH5J/rM96tymIpELi
+         ij7vCwQAPA1F+FkFjAnMFxiD1Hl9n8lBpNW0i5Pg3i0QXG3Stm8BZY7s3LjzZ0Ed7NqN
+         Vf++chYZhrrdxae0N0JJBa7+3sw9VgDjj8Jrl9/yaS1M3SMpBKiU1rATCpVU8HP9WtBj
+         mp2OQ15/WrXyMgI1lIG7Vp7tAYgR0DhT1FJOXzhbc6SZMEFBITowskgc7e/WjCtvovyG
+         02Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774439538; x=1775044338;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4+7/uMgLktPlCJ4XPhLKuFFts0I2TySpl3FEDqfG4qo=;
-        b=EP1bHVoZQm9tD/xer2PF/HI2szX8f0tnwIwiHUzWA3o8zvW4jdTRNmOxRybPRZqgbT
-         9NiREDZkRZ4D8ZgMeY1CwLsnoAp5Q9QSMCgZye/fB65rMKI8UCNcfUrinRoECLhTrIi9
-         6th3cyoNyVJ6AdHOkjkFF08iw1+H0eIBJEstlq7Hj+jdcyoXxv7kmQ6+r+2X5mCzceWN
-         uZzRFxfLFqcBXr7/bVR9QtzvG8J7MLySfxU5d6b7JCc9+lISSXW1uzreDT6UUgYPv66H
-         H+RIBo4jLmYYS3Yp48BgdUrbsGMKgXszTPXR3kYRm2jgwMmAj6D/1V93EpjeyEViD9+0
-         ExzA==
-X-Gm-Message-State: AOJu0Yw1sfSOSQg8CfMnyjo7+7g9n614t5ldK37Rke9KkF9f6KJoRhd6
-	y4PuGCTCaQRLMhXwGAJv93yZ1MDoVZJuUBBhMzVBkal8niM/np0rK28kuEnGYlDKheQ=
-X-Gm-Gg: ATEYQzySoM8eqeZTcmSm99eg1y7eCMGETgYJkwCxSTqPeBA0sSTkafkvnbFyrC8ov7z
-	tVPWDeG60c2zHQtzytRmjFG2Rd4U3er+StEeUvc00MFsAYpNgqhjc2z5+Vofwxc8cRHRXqdwBNo
-	STl8ZLqoIQg0f0cn15dA2KRx+mZWPX9pxRlLV8DkaViNEgKGiYPeJPBTzh/leO2KhbHg062x8SX
-	qBL1fuCt1iqmMBtJbJrnhonTuldZ94jHubbJWBgYUSL/6fF4H6gM7yaCJfZpWEj95x01vxjEeDh
-	MIOGGD/yLt3csJDqGY9Pa643DFbo15Hj1J//4scigfOTDc/d/Whbvy73QRf4PEZUCU/uJEnl17Z
-	1QHAxn6SvLtof2jmKeT+4tes4oM/xRdlLJX6KHt4oIrNdKQBTREj1SPlsQDmBe3pSvUf4sQw6K3
-	M50J1KcznGROQ/kI7J2BY67WPBQQgBMs0tYSNXDLEUHqo+yeNRLGemFY3jSPhfO2Lw2W7yDYu+0
-	lILNjpTMuR6foOA
-X-Received: by 2002:a05:600c:3b12:b0:485:3f1c:d887 with SMTP id 5b1f17b1804b1-4871606dc4fmr50346905e9.26.1774439537914;
-        Wed, 25 Mar 2026 04:52:17 -0700 (PDT)
-Received: from macbook.. ([88.130.184.197])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-487116939b8sm192389865e9.3.2026.03.25.04.52.17
+        d=1e100.net; s=20251104; t=1774441201; x=1775046001;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qEjLsniM25W1o5h9zHc25KxxNquvYujqC0JbXjIcaH4=;
+        b=Vl/CbDdAooQLQ3uq1CcR2dr7RgFKXOe2Z/wqKsCtdORmxDMLmcSqprU7aAd+rSC6ZP
+         hekszJGpTN0Z+z+aK6BVI2ydm4Xy4c+CUx0LACqZ3PwkO5tsj3UbpGD3vkZebI2EORZz
+         +1RBgTO9CpkEvhA/Hygvl6wBvzxcCErHcLgT/ifUZ5v/xX5ERsjnPSOaPl2c/3u2W8oY
+         Fo08aj3WmZstWmpZGvtFrtDh9wlRlw+Vq0+IswY6Eqbgvqpe8PyuHVkoVaRdkr4Fmtsu
+         C1QAC6eSg8c/UJMRigmcHhgq88Lx8QwxHQnGJOUo546q/YiNLW+/zh3b63Xp+gf7WVX1
+         LgPw==
+X-Forwarded-Encrypted: i=1; AJvYcCXahjUfRjqHYtmyAwF1+mbjaD97Wfu7XtkZdSyqg1C1GCQb6CrY2IIJFQ7gI/AE2n9E6MQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKhShDx79mxBjRb240RAoi26stfsZKxNLZb5/NjxTufyRgCh3d
+	0HeSykIp6lbJE+V3QtkLfFKI+r6b53zfiUarmH8KAEYrm0824YxYM7vwvQY94cFh
+X-Gm-Gg: ATEYQzztrl1j5WbHFasRRRwrzbiPT+EMjpZwrVcWEsjwzWVvAORFMgCBmKh7BbeYWvU
+	sLLO9IUa0Xi3Phiu1anZKfmHTRtNwrP6bNl9N/Gj+iLlwbBKckoDArqgb27nskrmp4nPOAurpLT
+	uslnLZn2egLPZy4nuQ/VRwcp9nBwUV3qTl0cSxDc5aT2b0FzidCJlnFqA9lyvmowcHxuF+Es4zZ
+	Xb9aSIC/SN1SLXXd4RsAGnL1h7/NTXdI14nVc7tZ9ko4IJjMQ1U2jWyFfZ7pqByF/fwHaCqCCT8
+	AeBFl+vGVcXtQK2z4hQb698qJ/al8nAYWkrXg4yNtbDVsl8kjOeozjKNQr66PDejeaVt9MW4ct6
+	uiWohfVThnUAw4p2ST2OLfEUFH+htxFeffEq7cX+/tKNgZ6SbFOyVVe9olo1/meq2ZdfDqnKgxq
+	xXxcivI0C0Ml+fd0xBP1tRMBs1iDf/p31taYcxtWc2BYaHHRkTBU2lw+jRMTkhlSxrG5iAPn1MM
+	zYrU/+rvxLcsqF8EaGyWAql/Tjw6FqHkOiwZcolKCugfg==
+X-Received: by 2002:a05:690c:f02:b0:79a:6eda:b24b with SMTP id 00721157ae682-79acf64654cmr36496287b3.35.1774441200511;
+        Wed, 25 Mar 2026 05:20:00 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:1401:5c84:8809:a31e])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79a90552db6sm87289167b3.27.2026.03.25.05.19.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 04:52:17 -0700 (PDT)
-From: Mahi Kassa <mahlet.takassa@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	lucasseikioshiro@gmail.com,
-	jltobler@gmail.com,
-	stolee@gmail.com,
-	Mahi Kassa <mahlet.takassa@gmail.com>
-Subject: [PATCH v4 2/2] repo: show subcommand-specific help text
-Date: Wed, 25 Mar 2026 12:51:48 +0100
-Message-Id: <20260325115148.101867-2-mahlet.takassa@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260325115148.101867-1-mahlet.takassa@gmail.com>
-References: <20260323152937.257406-1-
-  mahlet.takassa@gmail.com>
- <20260325115148.101867-1-mahlet.takassa@gmail.com>
+        Wed, 25 Mar 2026 05:20:00 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2] replay: support replaying down from root commit
+Date: Wed, 25 Mar 2026 08:19:49 -0400
+Message-Id: <E0A14573-BBE2-4ADF-989C-E5B2A7E3E166@gmail.com>
+References: <CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+In-Reply-To: <CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Use subcommand-specific usage arrays for "git repo info" and
-"git repo structure" so that each command shows only its own
-synopsis in help output.
 
-Add tests to cover the subcommand help behavior.
+> Le 25 mars 2026 =C3=A0 06:05, Christian Couder <christian.couder@gmail.com=
+> a =C3=A9crit :
+>=20
+> =EF=BB=BFOn Tue, Mar 24, 2026 at 8:56=E2=80=AFPM Junio C Hamano <gitster@p=
+obox.com> wrote:
+>>=20
+>> Toon Claes <toon@iotcl.com> writes:
+>>=20
+>>> git-replay(1) doesn't allow replaying commits all the way down to the
+>>> root commit. Fix that.
+>>>=20
+>>> Signed-off-by: Toon Claes <toon@iotcl.com>
+>>> ---
+>>> These changes might conflict Siddharth's series[1] to add '--revert' to
+>>> git-replay(1), although resolving that should be trivial.
+>>=20
+>> True.  This round looks great to me.  Will queue.
+>>=20
+>> Shall we mark the topic for 'next' now?
+>=20
+> The patch looks good to me, but I wonder if the docs should be updated
+> somehow, especially to try to avoid confusion in case users don't
+> properly specify a range.
+>=20
+> For example, before this, `git replay --onto main topic` would fail,
+> but emit "fatal: replaying down from root commit is not supported
+> yet!". This would likely help users understand that they might need to
+> properly specify a range like "main..topic" instead of 'topic".
+>=20
+> Now it would likely fail without any error message.
 
-Signed-off-by: Mahi Kassa <mahlet.takassa@gmail.com>
+Having used replay in a large monorepo where I juggle many branches (so reba=
+sing another in-flight topic without otherwise interrupting my work is valua=
+ble), I=E2=80=99ve made this mistake a few times. Some way of handling it mo=
+re gracefully would be appreciated: perhaps the root case is rare enough to w=
+arrant an option or confirmation prompt (when attached interactively)?
 
----
-v4:
-- split the subcommand-specific help change into a second patch
-- keep the behavior change and tests together
- builtin/repo.c            | 14 ++++++++++++--
- t/t1900-repo-info.sh      |  6 ++++++
- t/t1901-repo-structure.sh |  6 ++++++
- 3 files changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/repo.c b/builtin/repo.c
-index b5146499d0..71a5c1c29c 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -33,6 +33,16 @@ static const char *const repo_usage[] = {
- 	NULL,
- };
- 
-+static const char *const repo_info_usage[] = {
-+	REPO_INFO_USAGE,
-+	NULL,
-+};
-+
-+static const char *const repo_structure_usage[] = {
-+	REPO_STRUCTURE_USAGE,
-+	NULL,
-+};
-+
- typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
- 
- enum output_format {
-@@ -220,7 +230,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 		OPT_END()
- 	};
- 
--	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
- 
- 	if (show_keys && (all_keys || argc))
- 		die(_("--keys cannot be used with a <key> or --all"));
-@@ -885,7 +895,7 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
- 		OPT_END()
- 	};
- 
--	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, repo_structure_usage, 0);
- 	if (argc)
- 		usage(_("too many arguments"));
- 
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index a9eb07abe8..39bb77dda0 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -149,4 +149,10 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git repo info -h shows only repo info usage' '
-+	test_must_fail git repo info -h >actual &&
-+	test_grep "git repo info" actual &&
-+	test_grep ! "git repo structure" actual
-+'
-+
- test_done
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index 98921ce1cb..10050abd70 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -224,4 +224,10 @@ test_expect_success 'progress meter option' '
- 	)
- '
- 
-+test_expect_success 'git repo structure -h shows only repo structure usage' '
-+	test_must_fail git repo structure -h >actual &&
-+	test_grep "git repo structure" actual &&
-+	test_grep ! "git repo info" actual
-+'
-+
- test_done
--- 
-2.34.1
-
+>=20
+> Maybe something like the following could help:
+>=20
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -23,6 +23,10 @@ instead get update commands that can be piped to
+> `git update-ref --stdin`
+>=20
+> THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+>=20
+> +Note that `git replay --onto main topic` replays the topic branch startin=
+g
+> +from the root commit, not from main. What you might want instead is
+> +`git replay --onto main main..topic`.
+> +
+> OPTIONS
+> -------
+>=20
+> ?
+>=20
+> And yeah currently `git replay` is a plumbing command that most
+> regular users shouldn't likely use, but I think Elijah's goal was to
+> eventually make it user friendly enough for advanced users with
+> stacked branches.
+>=20
