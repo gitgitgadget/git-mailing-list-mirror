@@ -1,81 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D034F29DB9A
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 07:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E699E749C
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 07:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774422959; cv=none; b=b1IG4uNTgGHQHFGaz+zxqKWd2lAPkC0BOXwTfIeqMGs7hJ4FEnpkrUigACGSZlnXPUieWjxT1VKy/PN92R2UKSGpxX4uGuQ6M1yupzUn7ON7O6twstLdTQl4uytSsyNZfjfiLjuP9nNKdJpYc4RdZpmYK2jJQ5JM1LF/nStYPgE=
+	t=1774422967; cv=none; b=uNpW2Yw+uOGP/qqj+d13EA3VvFz8+mfj+9fN/JXDuT4jrUQN0stIq+Th7KFBag5qWknvXMcSEgum0rUTM8EGTrxkJ/f1Ay/zqLYzpVS1/Up9emfw2zRP0pH4LiwOndsGwPJ/2iXwG7I63Qt8OmnITZH1mDoYpMmEEUry4DdOD4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774422959; c=relaxed/simple;
-	bh=pJlvpz0JHKc8Uz1YD0Wh6j7eUyoceu7o8Ipgwa+op2k=;
+	s=arc-20240116; t=1774422967; c=relaxed/simple;
+	bh=riDHZoQ9uWX03WyWOzfODZCIYho7bgfotvFLLcCzim4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fKvp4GOqb6HN6HXLOVZefr7NMgSaGbX7Dq+GdpozC8lExytsrLuIs/K3M5LP++JzChke0uMTrYtyKb/JYsxweSqyo3otP61i81OLJuE7IUflvLkSIhsS+1SkNFKSOHgt0eOAkboOi3h3nK5HPh37WK5itlUwqINqWFvgEUxdNBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NDrLAgmB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1muWyYvY; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=f6KYTv7aPCGjv/6YAlzLhrF+TwsuCgsxpQuGlOUP451abOg7sw/fj79cq21Mcv00p+q2knRWZW7gioZhaOoPQ7SrP3jXCleYQGTNTZHdwAQilPPejZS1ypo1JXrN74IaHv1GFNZJwP81T6X3/5sOJfTR57gbkNkzPjZeFavsi6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j3oum/6C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xSssmVxM; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NDrLAgmB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1muWyYvY"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 37E621400288;
-	Wed, 25 Mar 2026 03:15:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j3oum/6C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xSssmVxM"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 434971400288;
+	Wed, 25 Mar 2026 03:16:05 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Mar 2026 03:15:58 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 25 Mar 2026 03:16:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774422958; x=1774509358; bh=gFK7pQzLu/
-	/AtjRfj/R6QOxMxJeo0BbEPrDEf/iuKLA=; b=NDrLAgmBBncBdDMZ7k07N+RcVd
-	OvLxJcxgjNd6+rY0Y+LqBeIlgCUGieJyiGdqhzY9ZsgMZXwyKoaskwuW5q4obpcA
-	9tpHvmLD1fHOCEeJXs0Fu6+U3KeBJ21XR1TE7OZodFQpjc+135PsQ9TprRFBeKbC
-	O0ycNSDrchpwFbuZf8un6j4Pog0lAsXXfE6rdRXaGG+qjSz9+BdkjMibjBcG43oT
-	Ajpx5eMQ4s09BLL7Qyb4glCUAX1NGeq0Xf5WGH8Malh/iIM2UunoJ44s15PQ4Tva
-	lg+IMqVnadLOVBQf0oJa8U9fafLqzv7ozztNR7zhLAedaURzTTh6719JmlBA==
+	:subject:to:to; s=fm1; t=1774422965; x=1774509365; bh=NBh6xn3LTM
+	Ei2Oz8Pa8b2El+SnPzY5XYVx9GkgpKj9Q=; b=j3oum/6C+jTceyVrqEhWgdBqyd
+	nBwsW7drvwXSGH/KlDsVfpmB630EtklUU5tMlKqRbYa4kaOrVvYBPqv2Nw3IAYLQ
+	OqTSPI3SRk0ZeVUmMWwIG61X8/1gngFJ8E2MNcPo/pwbcNQofFXBh0EtEzqnLjsf
+	DEVtT5mTHfTuNS8K0Be7KloadO3SMp98qEYwDu0c8YR6GWlrF7WSl9i9I6law9Y/
+	QThVE7xaJ9LuuUOsDrXWEIMGtoiFPMVYuY1ckx/XEw/zN0JoOvgXwf61jBMDKlXK
+	hdg0SG826+eq85v9e80L9zNI7z0xpXWcDaNobKbC0os1V5evtDbzVUPam/Pw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774422958; x=1774509358; bh=gFK7pQzLu//AtjRfj/R6QOxMxJeo0BbEPrD
-	Ef/iuKLA=; b=1muWyYvYwsnQ/zncebiWCsGFGDcLTE1/uEYtjwMA+dsGWPag1wc
-	LTLzB8I0Pi0wL/2mDxP5IFSXGArEg8T8gg0UGmvWFJ0CD6+h63Q27bmast1Cqs28
-	nmudbU930QZ1DCahv1431f44WAoeHzQBkYTNWvtMxv8IK/AvS7izb8CQ4+WJeTOc
-	cRJY1FMCC8h6YVAUwiM5NtqHImREIF7//rozr8NPnJyyiVXyzUpl5QgeJ+p4whwn
-	R7KkiLRaE8NClF4btwYcvfBBvc1i1dWOS1CmiKKzsp1yTgrPA2BWVYwlYLcb/L0W
-	LiHyx2fzwVAiwcUw1mTYeOlksPnbgRbggzw==
-X-ME-Sender: <xms:rovDaQ0Iu8-e5YGW3BMywtnhcFEugwBGexejflEsPorkobtC93LSKw>
-    <xme:rovDaRG7bQbmwrv6k-nGsvEHQYMc6bRSF2O6kjbcAKtG3elIMLjmjiwprgdnvtjFp
-    iSvq4UHBIGZUVGj8LnvUL0uSXvX0hhCEpn2Ej5ktmOAK_9H0c4>
-X-ME-Received: <xmr:rovDaWjivrhuZsOc_Gzu_7aNDQ_WI12VRoy6n6-eJ16qXavWlMPyqgyd_77XynYLta_xUq9Yi5j5UjxB3lLTpiasZji6BtIWK6QoAANiaAQ>
+	1774422965; x=1774509365; bh=NBh6xn3LTMEi2Oz8Pa8b2El+SnPzY5XYVx9
+	GkgpKj9Q=; b=xSssmVxMeeL4lvdADRGaiabwMaC74YltXR2NiwrT2tbS6YQIh6i
+	x156gO/NxopbzYzOY38xULwGS4zzw87ByYzKkVP3IZZAGIWOX/CW4IPA6xf4hN1Y
+	zz9zKM1z7aktkxaoVo0RlC2H0Z2JlDsHQC9Cdmbvu9rDvZep6dUzvoZB6mOhPSVN
+	7IwtiBat39fcvyfli8ph8nPfdN+R1rq6/WVJmz+u5LVR5WV4UIzlLiDkHTvbcMib
+	4YEwwfsKSmY6yBR6ALGoeNOMo43Gwm39rOvZA6rhHQjyrl3kQ4uXgbXtHHcVxPXA
+	+r0232QSxEvhY4tIUuIscjq+Q4J89lga4EQ==
+X-ME-Sender: <xms:tYvDad29qURDEmP3nbR4n4zb_d2F2-BKF7WcGzwbY0u4hbZ1gUlCug>
+    <xme:tYvDaaEEKkNQqCIqrVnDfXnrIYtkDrR2av7GqX0OYHq5fZgDtmOon80xeEuiiD80g
+    V3QFSVQn050k4iZI4AvvJ6NTQLE7Ig08OlQ1BskWeO5PIirsFopWQ>
+X-ME-Received: <xmr:tYvDabiUwW-7LL2KAFqiA7NJ_JH6Rfgg75eyTF4BjhCMqwNSBd_npH6bF20wuhiY2KD8otQfq2NCfYRFHA7bOmsNJ5b4aiYarqUWsdgaYUY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdefkeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:rovDaU8fajhgsRqd9IIpQwopOsPBcHNJgjnI81rTwbv6hyyqPpNJpA>
-    <xmx:rovDaVrM6qUpUPtNb__QEmE80FSEJ952JaqNjIUsFJdDKPso-zwWqA>
-    <xmx:rovDab_JIaV6vhhtakU7T70dRyvudfPnSPd6g1FmpPj0Hd56it7lhw>
-    <xmx:rovDaRUzTSTpoyX2ClqJqUhkcjOX7lqtIzMmexsOUUoNETr4Gq96Xg>
-    <xmx:rovDacMgPqZ2KhjlyaBM5B0rTy-XRE8V5zTVecAOWfTAMZBI5QICuDD6>
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:tYvDaV_rg1J1LeDPMiSGINIrNM1tqkpOI8mSXcfJs-aEzc-DL8uqyw>
+    <xmx:tYvDaSoP_e6sTfLRwizIGfBJ3rEiMriHZlG9iMJjP2Ag2XXsqVqZkA>
+    <xmx:tYvDaU8cryFw3x-QVbn6awf4A6B14NRbdWRekLGOokkwgIRwLrqwyw>
+    <xmx:tYvDaWW6ZiGYbFzF89VK8cQAp3UY1ZdZ112soQvKvYph0N0XujWI7Q>
+    <xmx:tYvDaZP-S6p7r4UMp9XYc550zh3LgpB9soGr1ofYt4eydNTXlBMdo3ce>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 03:15:57 -0400 (EDT)
+ 25 Mar 2026 03:16:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8f2b2f94 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 25 Mar 2026 07:15:57 +0000 (UTC)
-Date: Wed, 25 Mar 2026 08:15:54 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 207533f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 25 Mar 2026 07:16:04 +0000 (UTC)
+Date: Wed, 25 Mar 2026 08:16:01 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/11] tests: make svn test "set -e" clean
-Message-ID: <acOLqvP1De5kYjPT@pks.im>
+Subject: Re: [PATCH 08/11] t9200: make test "set -e" clean
+Message-ID: <acOLsfavUHJZA1tW@pks.im>
 References: <20260325062114.2067946-1-gitster@pobox.com>
- <20260325062114.2067946-7-gitster@pobox.com>
+ <20260325062114.2067946-9-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,40 +84,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260325062114.2067946-7-gitster@pobox.com>
+In-Reply-To: <20260325062114.2067946-9-gitster@pobox.com>
 
-On Tue, Mar 24, 2026 at 11:21:09PM -0700, Junio C Hamano wrote:
-> diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-> index 2fde2353fd..a73b997f8f 100644
-> --- a/t/lib-git-svn.sh
-> +++ b/t/lib-git-svn.sh
-> @@ -15,8 +15,8 @@ GIT_SVN_DIR=$GIT_DIR/svn/refs/remotes/git-svn
->  SVN_TREE=$GIT_SVN_DIR/svn-tree
->  test_set_port SVNSERVE_PORT
->  
-> -svn >/dev/null 2>&1
-> -if test $? -ne 1
-> +x=0; svn >/dev/null 2>&1 || x=$?
-> +if test $x -ne 1
->  then
->  	skip_all='skipping git svn tests, svn not found'
+On Tue, Mar 24, 2026 at 11:21:11PM -0700, Junio C Hamano wrote:
+> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+> index 14cbe96527..65ef1d7c82 100755
+> --- a/t/t9200-git-cvsexportcommit.sh
+> +++ b/t/t9200-git-cvsexportcommit.sh
+> @@ -11,8 +11,8 @@ if ! test_have_prereq PERL; then
 >  	test_done
+>  fi
+>  
+> -cvs >/dev/null 2>&1
+> -if test $? -ne 1
+> +status=0; cvs >/dev/null 2>&1 || status=$?
+> +if test $status -ne 1
+>  then
+>      skip_all='skipping git cvsexportcommit tests, cvs not found'
+>      test_done
 
-An alternative:
+Similarly, here I've got:
 
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index 2fde2353fd..07d86ea244 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -15,8 +15,7 @@ GIT_SVN_DIR=$GIT_DIR/svn/refs/remotes/git-svn
- SVN_TREE=$GIT_SVN_DIR/svn-tree
- test_set_port SVNSERVE_PORT
-
--svn >/dev/null 2>&1
--if test $? -ne 1
-+if ! svn help >/dev/null 2>&1
- then
-        skip_all='skipping git svn tests, svn not found'
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index 14cbe96527..581cf3d28f 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -11,8 +11,7 @@ if ! test_have_prereq PERL; then
         test_done
+ fi
+
+-cvs >/dev/null 2>&1
+-if test $? -ne 1
++if ! cvs version >/dev/null 2>&1
+ then
+     skip_all='skipping git cvsexportcommit tests, cvs not found'
+     test_done
 
 Patrick
