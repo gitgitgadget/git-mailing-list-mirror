@@ -1,54 +1,54 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E565840243E
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03423FFAAA
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774460121; cv=none; b=usr1sK7fQZeFA1b2/txSdOaaqRLgiGm2dfYWsV1X1qKH0KDVOqffoeFvQtZu8nH7e4GkUABfnokGhki+T1HEgkknz16uqwvteLWYQsQHccD2RQkefWWgiDGQS5ZXbImYf5nHM1zFOMv5AZpXO6OhbjGazdynXDAFFkx26hOLWaA=
+	t=1774460427; cv=none; b=hDSkTjlJqnHAr1oLFG9QUerrKGyrMCp8Q6ny8IGyL087HdKDpO797DxfLuuYCwN7gx1N3xlHqu5KzYjpOSdsu3Hp8GErI192TnOfMpySWbJ70x/dp2cVamD3WwRf7yiWZPBIXbAvTZh3AbQKun8T5S6ZLIYRkQ21zrZj3yXunME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774460121; c=relaxed/simple;
-	bh=IT+4v/tbCIUvCSH2MjRl2bFb4bDm4zq0uZ8p1WZ50L0=;
+	s=arc-20240116; t=1774460427; c=relaxed/simple;
+	bh=sBrdXWG/AvicX1d9sD9W2mAXNNR0/1bHqELqWw7RxPA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gjDmnXkATcm0FBEoiiSEtdKd5yyOhpr3idSPMbI9QzWXYKft9YY5WCHMLqabaLKv4qZIJAYmGA/3CPCXUEowBRJSqWIpDu0iMV6cbd5K/g8jZ0/qHDJQi1ZuW1+PQIqoYn0GRmKRL5Orb/nwF2abJOKvcdM2/oP0y7wQ5rysIT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AMoz0ok7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3uvmkunw; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=HmcZXgr3L7tCYKPQSwCTAcmDRSrM2nGc6jBcXbY71a+nkvbT/oQfYkoCSUti+Q3ZYGchoHhfJE/DHa81ipkHs5diFrYM3Onb45we7jhb/AQxmVvMscO/KSKjnwLcCXzXW+f05Ax2JsPp+O/F7XDEW4QcvKFG3c7AjunqUUiHZyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Rv2lM5di; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bKtbxkq+; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AMoz0ok7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3uvmkunw"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 309ABEC0189;
-	Wed, 25 Mar 2026 13:35:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rv2lM5di";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bKtbxkq+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 20340EC0189;
+	Wed, 25 Mar 2026 13:40:25 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 25 Mar 2026 13:35:19 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 25 Mar 2026 13:40:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774460119; x=1774546519; bh=Le538OSvlk
-	SPuyjWmtt1l71If6RhmokSqZSez2+vyEo=; b=AMoz0ok7VJmxatrepCtsB1ZpKv
-	grWLjbycqSkvz3J/V1jurr2jQWbnc4LiRlrqYy65Wgtx5+Lq9Ct2FHewbQlnBdhy
-	+S8Zi/nq50ytOhhJi2kyKL6YBCzBTIkcRLy1RzrIKm+GgXNCtgDgNEPeRyqzZUrr
-	7cqUSLn7t7W6pnLygFxeMv5yuXfnB41Ctsq2VHC08uLf9NViCaXK2pCMoejIzqnP
-	T/+DaPsZcZ7Xt+QvMVZiy0gWF36h28rw/qqoecwln1AjZbuUfmtOZjnIoD741C3Y
-	pvdtcUJStQyrvlSU5B/LlJ7f+JTWT3MPvznyGyLZBjxARBPuX3o4ePKY0s1w==
+	:subject:to:to; s=fm3; t=1774460425; x=1774546825; bh=7gW6nM9wSw
+	7tN7vCIwnuxfsWFO3U5m4rYjVtwBRkmM4=; b=Rv2lM5didZUxNU4lMY0lG6j9nv
+	N8NiXihhWk2iw5+NAb6Qu3s5LQTh5BcqpiUfFovFH1NFz8Q3horvK3ffh7hCggmr
+	DiM/R7OPcmhTl1LyTkSr9fZz04SraqTb7T9QHviMLGeHLkBbW/GNouxSoeCJmTF2
+	0VMibt0jdPQsfmsbId7dA8D8vSWlddcsszbE3x8U+yjeeyIGPFQbIVybTsLUrlb0
+	bUCP0BeiXiNx4i2jxr8S4yKY4LkDn5fvOru3wxuc8/wibOvqsoD4VcnxB+a0kjlK
+	MRxTcH7eueon9DrgyCEwteQnJf1RhYFzGFsm+ogLTX/Nko0YOQJgOwgvUOCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774460119; x=1774546519; bh=Le538OSvlkSPuyjWmtt1l71If6RhmokSqZS
-	ez2+vyEo=; b=3uvmkunwGoV0Nr82xf5aJ09hbuffUe6JRHqYJERNTsJCgrnQm7N
-	eyfqMZkhykA/R8/xcwbi54gWWBeIZWLE+gSgpA6Q907F87EiDlkZ2/xeHOGe5T+o
-	XTOfUfSXFgA5ZW43f65n2O1IP5zXID8cl+tgsD2Rc5D7L9Kb9sQUxm5pXv4oBIxq
-	x8CW5zN/J4AUqwewsRBDcwOb7Lr3Aoq3Bt6GAFv7VZdGs1+wAmKhZNQAv3tQPvXf
-	BgBEMGHeXDvSwm289E+iXHMFOhoWT30ok31tmmTEotknVQM+8mns4dW0fuisq6Nz
-	PoWXo3SD+TbKm4Ird9r5fbWOfE7GPKr4acg==
-X-ME-Sender: <xms:1xzEaXQOnKIaVzOp0_juaxXCDd4WzjxLqNiUQbs1d1dzhF6T0eI1MQ>
-    <xme:1xzEacegz1M-UuDfkE4mTo0FgUm69mJA6x0ZjVdGKKTot1S7HzAf-i8pCy-a_Hkr-
-    rNGHtBocvcXz_yEC_SN_PLc4VFjoQBA9vB3P5tCk8G-0E-lV9VTTw>
-X-ME-Received: <xmr:1xzEaWqZEUwRpS3gtAQ0IEb90yJbrc3WLqOITeMuGAqJsgVJlHNcHMBEuDQqtEXT_wfaJdDuKVgxd_GJZUzl2DDnDw96R_1yFg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehtdejucetufdoteggodetrf
+	1774460425; x=1774546825; bh=7gW6nM9wSw7tN7vCIwnuxfsWFO3U5m4rYjV
+	twBRkmM4=; b=bKtbxkq+u48aIfmlJB50KrHrRj/2G/DOeVnQg6p0fE+k78DL8Ru
+	5YIF1QFt4QTXBWkEyyWMN8z1DvRs7xEzNqNd9YVYvyFy7sBD3PruogJv7X9ZKHiP
+	zSQtA81hzyxRiB/JoVNuFChF2EKDebnE6rBUtf9aMLv0CMfhqiqhhH54TuXY5pzK
+	euknEDQxl7PWeydAjv1Ag79Ck4Bd8TS+ZPp30gEk+8Dy+zACfPUyi+YqS/xeLuUF
+	4indWKaNoaX4taUH9BwYdCB3h2KlKi+xtJvQRZJTVGAy0J/CYhLHCKKd1AOaYi+1
+	eY0u6ltgPN+fmD14nwxDJmI6LCztp/ePQHw==
+X-ME-Sender: <xms:CB7EaajEHIheXu2h-csLvyHEwYvT8ZwOCZNbLoTwOo7k_hL4DTvKag>
+    <xme:CB7EaevsP7_TPb6h8J7yekYL6ovhZSlPezx6oiZ3hgUXYC8Df5yrJfOMWYrMY7_UL
+    N_zTjkId9KMJuc8PqcSBwd3Da5OTv3MLnTKHI-YgPpul-b4FmFROw>
+X-ME-Received: <xmr:CB7Eab5celgtwt-SFf6uA-ZO_efQbmwgxGaQzmx8RwEzVD8t4uxSIkgcExA88l1NmltrFVqs_veh5lYayEamlZiaeFyFBHVnmw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehtdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -61,24 +61,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehtdejucetufdote
     thhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtth
     hopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvges
     ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:1xzEad_9-HBUc_WG2qsFjHsaP2PQ1nJS6W4Wc2odJkA9JBE3BONJOQ>
-    <xmx:1xzEaSdBJKASg_Lb-hyF6SDe4FLzcAya-G8E9Rqsz6Poxg3haRLAlQ>
-    <xmx:1xzEaXLmHDPSzYoWzUf9oAwqc5hsvvRj52iGHWtoxvMr6sGc2Lmsfw>
-    <xmx:1xzEaSgBeRV5puZuY04UuYTSLr1lk9btaPafm2-CkaOiSEgI3QPW6g>
-    <xmx:1xzEaQ081WxQKx8SeR3uGInwDqfO-9wHklahkHO268JNx7uFncaC39G3>
+X-ME-Proxy: <xmx:CB7EaaOggcJ4-QRKM3MAoxbX8wSr0hrhYrVKvdQlkVYyHz0faTP00w>
+    <xmx:CB7EaZumPR6fofOF_d9-Or1skOkvaWvtfvskn7s_EWhMM2y9ae9rTg>
+    <xmx:CB7EadZQA9RqyN-HBvUxJs6cSrPIBvE2cRibOYlXPiI_qsXrEkRscQ>
+    <xmx:CB7EabwlWmcT0fVl22dBTaoVvxGCpo9BQl8uiHbUPxqsVJ3LkFM9mQ>
+    <xmx:CR7EaRuSU3FwCr1wAFtURpvH4AWvZHDF0qERrHOtzB7CZeMntkAtD357>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 13:35:18 -0400 (EDT)
+ 25 Mar 2026 13:40:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Mahi Kassa <mahlet.takassa@gmail.com>
 Cc: git@vger.kernel.org,  lucasseikioshiro@gmail.com,  jltobler@gmail.com,
   stolee@gmail.com
-Subject: Re: [PATCH v4 1/2] repo: factor repo usage strings into shared macros
-In-Reply-To: <20260325115148.101867-1-mahlet.takassa@gmail.com> (Mahi Kassa's
-	message of "Wed, 25 Mar 2026 12:51:47 +0100")
+Subject: Re: [PATCH v4 2/2] repo: show subcommand-specific help text
+In-Reply-To: <20260325115148.101867-2-mahlet.takassa@gmail.com> (Mahi Kassa's
+	message of "Wed, 25 Mar 2026 12:51:48 +0100")
 References: <20260325115148.101867-1-mahlet.takassa@gmail.com>
-Date: Wed, 25 Mar 2026 10:35:17 -0700
-Message-ID: <xmqqqzp7vmlm.fsf@gitster.g>
+	<20260325115148.101867-2-mahlet.takassa@gmail.com>
+Date: Wed, 25 Mar 2026 10:40:22 -0700
+Message-ID: <xmqqldffvmd5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,46 +91,108 @@ Content-Type: text/plain
 
 Mahi Kassa <mahlet.takassa@gmail.com> writes:
 
-> Factor the "git repo info" and "git repo structure" usage
-> strings into shared macros so they can be reused in multiple
-> usage arrays.
+> Use subcommand-specific usage arrays for "git repo info" and
+> "git repo structure" so that each command shows only its own
+> synopsis in help output.
 >
-> This is a preparatory refactoring for subsequent changes to
-> subcommand-specific help output.
+> Add tests to cover the subcommand help behavior.
 >
 > Signed-off-by: Mahi Kassa <mahlet.takassa@gmail.com>
 >
 > ---
 > v4:
-> - split the preparatory macro refactoring into its own patch
->  builtin/repo.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-
-Looking good.  The distribution of commas are sensible, too.
-
+> - split the subcommand-specific help change into a second patch
+> - keep the behavior change and tests together
+>  builtin/repo.c            | 14 ++++++++++++--
+>  t/t1900-repo-info.sh      |  6 ++++++
+>  t/t1901-repo-structure.sh |  6 ++++++
+>  3 files changed, 24 insertions(+), 2 deletions(-)
+>
 > diff --git a/builtin/repo.c b/builtin/repo.c
-> index 55f9b9095c..b5146499d0 100644
+> index b5146499d0..71a5c1c29c 100644
 > --- a/builtin/repo.c
 > +++ b/builtin/repo.c
-> @@ -20,11 +20,17 @@
->  #include "tree-walk.h"
->  #include "utf8.h"
->  
-> +#define REPO_INFO_USAGE \
-> +	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]", \
-> +	"git repo info --keys [--format=(lines|nul) | -z]"
-> +
-> +#define REPO_STRUCTURE_USAGE \
-> +	"git repo structure [--format=(table|lines|nul) | -z]"
-> +
->  static const char *const repo_usage[] = {
-> -	"git repo info [--format=(lines|nul) | -z] [--all | <key>...]",
-> -	"git repo info --keys [--format=(lines|nul) | -z]",
-> -	"git repo structure [--format=(table|lines|nul) | -z]",
-> -	NULL
-> +	REPO_INFO_USAGE,
-> +	REPO_STRUCTURE_USAGE,
-> +	NULL,
+> @@ -33,6 +33,16 @@ static const char *const repo_usage[] = {
+>  	NULL,
 >  };
 >  
+> +static const char *const repo_info_usage[] = {
+> +	REPO_INFO_USAGE,
+> +	NULL,
+> +};
+> +
+> +static const char *const repo_structure_usage[] = {
+> +	REPO_STRUCTURE_USAGE,
+> +	NULL,
+> +};
+> +
 >  typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
+>  
+>  enum output_format {
+> @@ -220,7 +230,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+>  		OPT_END()
+>  	};
+>  
+> -	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+> +	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
+>  
+>  	if (show_keys && (all_keys || argc))
+>  		die(_("--keys cannot be used with a <key> or --all"));
+> @@ -885,7 +895,7 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
+>  		OPT_END()
+>  	};
+>  
+> -	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+> +	argc = parse_options(argc, argv, prefix, options, repo_structure_usage, 0);
+>  	if (argc)
+>  		usage(_("too many arguments"));
+
+OK.  It makes sense.  Is repo_usage() still used?
+
+    ... goes and looks ...
+
+Yes, "git repo -h" uses it to tell us that info/structure are the
+available subcommands.
+
+> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+> index a9eb07abe8..39bb77dda0 100755
+> --- a/t/t1900-repo-info.sh
+> +++ b/t/t1900-repo-info.sh
+> @@ -149,4 +149,10 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'git repo info -h shows only repo info usage' '
+> +	test_must_fail git repo info -h >actual &&
+
+There was a topic about the exit code and the output destination of
+"-h", which is the mode of any command that gives exactly what the
+end-user asked, which should go to the standard error, and does so
+successfully, which hints that we may want to exit with 0.  So this
+may later have to change to expect success, but let's leave it as is
+for now.  Existing tests on "-h" will also have to be updatd if/when
+such a change happens.
+
+> +	test_grep "git repo info" actual &&
+> +	test_grep ! "git repo structure" actual
+> +'
+>  test_done
+> diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
+> index 98921ce1cb..10050abd70 100755
+> --- a/t/t1901-repo-structure.sh
+> +++ b/t/t1901-repo-structure.sh
+> @@ -224,4 +224,10 @@ test_expect_success 'progress meter option' '
+>  	)
+>  '
+>  
+> +test_expect_success 'git repo structure -h shows only repo structure usage' '
+> +	test_must_fail git repo structure -h >actual &&
+> +	test_grep "git repo structure" actual &&
+> +	test_grep ! "git repo info" actual
+> +'
+> +
+>  test_done
+
+Looking good.
+
+Will queue.  Thanks.
