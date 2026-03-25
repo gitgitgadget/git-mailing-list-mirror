@@ -1,91 +1,75 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C123264DD
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 22:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A0A32573F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 22:37:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774476721; cv=none; b=V76xMXEgc7w3vfxKwSGMPVd6829ulslI2vsg6DONh0Vgw+rWzY/4pNyfHI3gAw02IqeQr0epEE2gha1OswZXSsR+48yZmELtdhweXuk+90GsTet72+OS9y9RY2uDBFiXb2yfV0Da2PGYP9GRzt6NjHKMDlpsMJckybAzbkYAWP8=
+	t=1774478267; cv=none; b=Brld+uPHYxCSaH+9nw9PKlOMLHeL3W/m2nb/SJvQBlCbYZHNxlbhdN7jwY2O4q0YLem+VzL+MXZepiseniveQOdX4Nryml03JTX3UbMfwL/DSXDKJcQZG682WFACy0kRsJJsugKLEP58J/hyQHh6eJjkoe69t0ob5b+W38VFNK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774476721; c=relaxed/simple;
-	bh=1J/MMpoU1P0YE7SQR/Os+wuqIY2VekMy5sHb5hjMZOE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j0rSxgq6Ba1HpL1ckugHCLYsl+kU5e7Ksb4X8oBDQRdODe1dIiR4+uzfPODaJN06LeVeC+xntuuprgWNxhedgw4u7oSaE8OwutsBOnTkj1Up7aQN5Nf+hIo8cB+LsJfMM1LNSzLQU8CZiWHHEyL8ayrdLjBjaixOWL3zdpVC4xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MYWPMy/w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aLxKM67A; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1774478267; c=relaxed/simple;
+	bh=WRiK74ZD8pQcGet8DGSChz4ji98ASoCXLnZkbdXKEMk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ihn6fbbeFxyimhu+TSUqiPujrIWjBt9ke5LljS1sfJAOe3FPAlNWrRMTKMMAakSLHDFTlWU+iezlzB/mX9ni378oUuNXg4wGefzs46PI1flfT7jAnat1XliTNO+vJHMxo8oVolFtnRDQnlx93NG3o12Jc1RqcnBgv0VSpR8Bmr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M4b9opg6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xHSsSBF/; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MYWPMy/w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aLxKM67A"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61EC7EC0181;
-	Wed, 25 Mar 2026 18:11:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M4b9opg6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xHSsSBF/"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B59171400015;
+	Wed, 25 Mar 2026 18:37:45 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 25 Mar 2026 18:11:59 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 25 Mar 2026 18:37:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774476719; x=1774563119; bh=x7ufXG5Vu1
-	Sw0bD4njQ/GQ4dPmp0I+AvLDMSEq5caDM=; b=MYWPMy/w2kIGUVXLcoec+5A6+c
-	3y8TVqOnZD8D8bsPzU0SIkpn1H8iz0GP2X30EhDP+lRKBnMi1GOZ/UsFUIZb0eaQ
-	k6VerIBHWSnF2PYFSq9QgoFw4yzr49RPsdR6XykDk220fCpaQY38JZ9UiNnnW2Z+
-	eQF12IW5yILqAJEMZnh3W2A5ffV7yLj1xrrFgO+LwfmnszjfwDg5Y1SVgRyjCVtH
-	gkYNG85TaESGBZrR1tsZfSaDJxbw7qrd0ndD9vfMDeXYou5UUeisx4K/2AlZZMVR
-	Ua9jcf3v1gf8BorcMEzukZf1kF238xvdv3NrMqBsrG1jS18OcFutV5Gdas9w==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1774478265; x=1774564665; bh=ldAAsMHlqEB50jh+idF603zxa/xWFjH+
+	XueYvxNoXvo=; b=M4b9opg6Rhh/bkiuEnDWyqiO/l93hR+hiKAoxvmCeEf3UpIY
+	xn0W+Gvh+Kx8+E8cJ+iRMdLLW+sxsqh16CTDya5YTcm2UKUNen97f2OuJ4kdTBy5
+	bP2bIjN6hI5VRRzeirdBgd5hese6GDp2vFqtNb5jGRUuHBIvoILw1V7XB5TRYWeX
+	dzeTWRercL31i+ODHAjPN+U+9i/Wa5alYLr2pWViCw8IG4AzTg4rFv436N0y9kqI
+	5QAv8GydtOBTK97FIowiClp0739kRuxXcWu9yE2eNHpI4zDyMcnjN+ZwwIxKNdDE
+	O0twK0T6o5TSH7/ysEGP1UVNJGyV1VZOHplAAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774476719; x=1774563119; bh=x7ufXG5Vu1Sw0bD4njQ/GQ4dPmp0I+AvLDM
-	SEq5caDM=; b=aLxKM67ARvPcVUoFRP7QcuefoUns7vk5ITyn2rswPFe48XIFoZ1
-	lxrvLvGivBIakr3W9QRpqPYCLWWiyfVqwzItvspQija8mQu3FAEAb4gC4pt9WwvA
-	2niuuxFRjw1w8QNOBFT6sIDMNn7WY3VLpmK8gxv7aw1mjhU2GROZxbWwexhtPzoY
-	2UHCsSUzszZOKyGUnKawQi3GWvEzGLSy9XhMEu5dxxbByNWEcx5a5jJweYQjbMvq
-	rnIEznVT1Zv0zlqJou5dFOInKRPgDDfVwPi5SnkQMDdHfnx17gQQlAN3G615ILea
-	s4mP5VDoui1vuWmTs9CEJ8nbRdrOjBl+zlg==
-X-ME-Sender: <xms:r13EaQ1ZVYk8ijZ0ionIjG6gCHeJjluK6BG2-IXQPveXa9QgyHJC4A>
-    <xme:r13EaTSpxke8yVqWZ-S9PkfQHiF3-fA9EhRa8nxeGl5hwCMCYVss8ZRCaA8n2hhIL
-    mePBXFTjvI8Uf42RyjZFofMeoFHXbak2kcpSfq4CkPgLBqc-cggBis>
-X-ME-Received: <xmr:r13EaUeFBalJlLYXqisZsjuzozy6IiqyeN9x5roNj7ledzr3enyNO3VAp8QVmGrr7gvCPss47hA_nNo4Ux1pxrVSnBKoMoegXw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehieefucetufdoteggodetrf
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774478265; x=
+	1774564665; bh=ldAAsMHlqEB50jh+idF603zxa/xWFjH+XueYvxNoXvo=; b=x
+	HSsSBF/SQVqDfKmk++bi+Q8V/DSIwd6cKA12cJz54YB6v2fdpvKrQGhwQVZrAscC
+	lYwrNnwc+n0SzUVVzLnQY0LzxeKdCXc9dEw0Ut5qXSP+Ige5nFhTrX7h7CTdzUzj
+	okPbjvaaq93KKMeKDanWMDsQyxAaAIY7JJPwsz9D1mYbeI+TMTp6XHpFVYn3kbkc
+	+7rOudulXMW5vHe15iJ6vf8rESb5p+FHlv8VkseuGk+jEK5QefRxumtXQt7mlt5z
+	u/ozQvDKLk/8rMNRx6PngD3RPVl6Lz4ypHcCX3SsbJNht2YBDP1A+blkL+e52nnb
+	sNqjMsE5GDoe23A9Ce6mA==
+X-ME-Sender: <xms:uWPEaQZ6qchpnNuhSafSlHFuhMq2Q2urq2TzTM5fwgBD-14THcAxHQ>
+    <xme:uWPEaRb45T3eEdpLSQC3YYYpB1Rulo0SylP6xrbvNOKFZdwYZil3X8fY5t59Y2Cc_
+    hwR7MIJ5tmNDLAj_XODDchAtqPcjmdMC4YbhRCzAcXblVCD3qZLK04>
+X-ME-Received: <xmr:uWPEaYlbX_QGRwExRnk0SQzoEYTaitFGZqTL2DVgL8lflkY7W1tPHUC02ghZSX3pWoAacq5kBJ5uCeYP9VZcNfE9jSc2LNSFtg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehieelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghl
-    ohhoshgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggv
-    rhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthho
-    pegthhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epjheitheskhgusghgrdhorhhg
-X-ME-Proxy: <xmx:r13EaUcPBL_BrNQr1vR3Lq2x_JQYowAsrgsLiIuAs8R9DszW0UErLg>
-    <xmx:r13Eae2ONplPV8DhFyHYZvWkKyjXV14-4CfLMQEuyb-Rhs6ilWgzRw>
-    <xmx:r13Eac-bBIAbtrL7FwNsRj6BCZHcpjKKKkbggOw-ZXyh2eusyaBgpQ>
-    <xmx:r13EaT5skZqDdcqOCOk97yqqUnKpOM4HbVL7VPKlTScOTVZKBrJ-qQ>
-    <xmx:r13EaSksmLJgNNQxncGe_FH6IDlwKYPbDfcXiFvzrYikZMffwDYEcFkS>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
+    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:uWPEaVxY_RA4YwM3s7QlrcRmi6oSl4WRsOPOsjkEwJOyFlKGUr6-qw>
+    <xmx:uWPEaePE1_-4pAD2B4boknFAA1MBMgrSfKV12qLCw_RbX5ioIdO0Pw>
+    <xmx:uWPEaRSynsLS5McU4PGChVEYainDyZzTRiXc9j8m7Aum38yX0WQcFA>
+    <xmx:uWPEaUZ9lM8yGIlMR5kASlMtg_6yE-HddUd8KNln53AF0Q44fXifIw>
+    <xmx:uWPEaTwD0rQxWQSOqhF1YncWw59tszlfmEPbYkrm5Eve4fhh23tbD3y4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 18:11:58 -0400 (EDT)
+ 25 Mar 2026 18:37:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com,
-  j6t@kdbg.org,  szeder.dev@gmail.com
-Subject: Re: [GSoC PATCH v5 1/2] graph: add --graph-lane-limit option
-In-Reply-To: <20260325174401.217577-2-pabloosabaterr@gmail.com> (Pablo
-	Sabater's message of "Wed, 25 Mar 2026 18:44:00 +0100")
-References: <20260323215935.74486-1-pabloosabaterr@gmail.com>
-	<20260325174401.217577-1-pabloosabaterr@gmail.com>
-	<20260325174401.217577-2-pabloosabaterr@gmail.com>
-Date: Wed, 25 Mar 2026 15:11:57 -0700
-Message-ID: <xmqqh5q3sgnm.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: Tonight's pushout has 'seen' broken with "hook" and "replay"
+Date: Wed, 25 Mar 2026 15:37:43 -0700
+Message-ID: <xmqqcy0rsfgo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,106 +79,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+I didn't have time to figure out which topic is broken, but here is
+the test summary in my local environment of 'seen' I just pushed out.
 
-> +static int graph_needs_truncation(struct git_graph *graph, int lane)
-> +{
-> +	int max = graph->revs->graph_max_lanes;
-> +	/*
-> +	 * Ignore values <= 0, meaning no limit.
-> +	 */
-> +	return max > 0 && lane >= max;
-> +}
+Of course, help is always welcome ;-)
 
-Make a mental note that this helper function works on number of
-lanes, not display columns (which is roughly twice the number of
-lanes).
 
-> @@ -696,6 +705,18 @@ static void graph_update_columns(struct git_graph *graph)
->  		}
->  	}
->  
-> +	/*
-> +	 * If graph_max_lanes is set, cap the padding from the branches
-> +	 */
-> +	if (graph->revs->graph_max_lanes > 0) {
-> +		/*
-> +		 * width of "| " per lanes plus truncation mark "~ ".
-> +		 */
-> +		int max_columns_width = graph->revs->graph_max_lanes * 2 + 2;
-> +		if (graph->width > max_columns_width)
-> +			graph->width = max_columns_width;
-> +	}
-> +
->  	/*
->  	 * Shrink mapping_size to be the minimum necessary
->  	 */
-> @@ -846,6 +867,10 @@ static void graph_output_padding_line(struct git_graph *graph,
->  	 * Output a padding row, that leaves all branch lines unchanged
->  	 */
->  	for (i = 0; i < graph->num_new_columns; i++) {
-> +		if (graph_needs_truncation(graph, i)) {
-> +			graph_line_addstr(line, "~ ");
-> +			break;
-> +		}
-
-And that mental note helps to convince us this loop makes sense, as
-it increments 'i' one by one ;-)
-
-> @@ -903,6 +928,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
->  			seen_this = 1;
->  			graph_line_write_column(line, col, '|');
->  			graph_line_addchars(line, ' ', graph->expansion_row);
-> +		} else if (seen_this && graph_needs_truncation(graph, i)) {
-> +			graph_line_addstr(line, "~ ");
-> +			break;
->  		} else if (seen_this && (graph->expansion_row == 0)) {
->  			/*
->  			 * This is the first line of the pre-commit output.
-> @@ -994,6 +1022,12 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
->  		col = &graph->new_columns[j];
->  
->  		graph_line_write_column(line, col, '-');
-
-And here, 'j' comes from graph->mapping[] array.  Does that count in
-display columns or lanes?
-
-> +		if (graph_needs_truncation(graph, j / 2 + i)) {
-
-This makes it look as if 'j' counts in columns and needs to be
-divided by 2 to make it comparable to lanes.
-
-> +			graph_line_addstr(line, "~ ");
-> +			break;
-> +		}
-> +
->  		graph_line_write_column(line, col, (i == dashed_parents - 1) ? '.' : '-');
->  	}
->  
-
-> +	if (graph->num_parents > 1) {
-> +		if (!graph_needs_truncation(graph, graph->commit_index)) {
-> +			graph_update_state(graph, GRAPH_POST_MERGE);
-> +		} else {
-> +			struct commit_list *first_parent = first_interesting_parent(graph);
-> +			int first_parent_col = graph_find_new_column_by_commit(graph, first_parent->item);
-
-Are we sure that first_interesting_parent() will always give us a
-non-NULL pointer?
-
-Can we use a bit shorter identifier names to deal with these overly
-long lines?  The lifetime of these two variables is very short so they
-do not have to be so descriptive.
-
-			struct commit *p = first_interesting_parent(graph)->item;
-			int lane = graph_find_new_column_by_commit(graph, p);
-
-> +			if (!graph_needs_truncation(graph, first_parent_col))
-> +				graph_update_state(graph, GRAPH_POST_MERGE);
-> +			else if (graph_is_mapping_correct(graph))
-> +				graph_update_state(graph, GRAPH_PADDING);
-> +			else
-> +				graph_update_state(graph, GRAPH_COLLAPSING);
-> +		}
-> +	} else if (graph_is_mapping_correct(graph))
+Test Summary Report
+-------------------
+t1800-hook.sh                                    (Wstat: 256 (exited 1) Tests: 83 Failed: 24)
+  Failed tests:  57-66, 70-83
+  Non-zero exit status: 1
+t3650-replay-basics.sh                           (Wstat: 256 (exited 1) Tests: 48 Failed: 3)
+  Failed tests:  46-48
+  Non-zero exit status: 1
 
