@@ -1,113 +1,433 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F405A2857F6
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774468208; cv=none; b=B2KXaHU+fJ7hAPFo+eLh+0TlLaAgNM+mkakppehME2ANsysc/qxxlAyZAjmM9bCTy1KuOvLYbxNMAtOzA3sUfWWgKUc0qVWl7doDI9GD+hkc1kjm7YhrGkWZB0efWr9NWK0NL2/7IckFh3YKzYyIE2EoFHTIMTg8rqjiPNrKqDk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774468208; c=relaxed/simple;
-	bh=5X/Ff61fPUyQq6jrx0zivmpN78sV37Godu9beW9TnVQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iENImBOLC4eWQhO1uO53U1mRAOzbhQxaGVE5B75k4Byv4Y2vPr1GXx13zfdZnit/hAOTdbqpO+5MuhPq9KVZnrIMSiUjNcHtdy7uiuI+QVcCMxBTDsVP4M8zfUnqXMRIfs2/xpiNlTZOlroEHpf/cpuK8S6mD1zXCgYe00URFQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P5vJ3htb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OuSrHxvR; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A0030F93D
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774468555; cv=pass; b=nhoFDWTaHFCYyw7oKx6EU0h40mot7bGi9q+lJdeQciezYdfm93gs4f+2tczY4RISmy6hjALw7b9cagZP1qkq5oQvkWSaze/Hyn+BTZGcIAFWb5+9ZqajmMn0s7YJ6urDBjoEmbAmpY3sKomQKP9MiM+7rrCOR831bbV6iw72APU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774468555; c=relaxed/simple;
+	bh=AKn3d3FywyI8iDphhfNa0qsFCO86U8jMWIicni17nck=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Vd3mWRlMP+kySkJKl83bxHRzgrI8wXcXoC4XhNb3hAFOimBxF+ZjcttjcurFRjGS6EXOPOzR2D5bU4hKTUVT5ym8Vypyhw/5+24deF/gchxpfYzhttt4+x9vwMU/IY5YEJF545vyP/xw1yPbdFGQTj6yh7sPD14IT/LqFNikIa0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=RfmJlC8S; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P5vJ3htb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OuSrHxvR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 08244EC0257;
-	Wed, 25 Mar 2026 15:50:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 25 Mar 2026 15:50:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774468206; x=1774554606; bh=QyWx3ohPXd
-	X+Zd7FdIbCj6LLYbNu+FzX399PIBCmIK8=; b=P5vJ3htbSNS40KBsZ4thlqQMkv
-	GE6OoN+RhdPZzrlqMh2XwzBNOp6/UqNNadP4BdU9wJVDVFE8SZTcNUGe0LZZPJko
-	4xtJR7ebT4AF5l+sh13gGBdU9nKJ0HJEvBtLortCeB287pg2nleZY9zPkb0scJlP
-	vX1FgrED3HrPkhzJF3KXBNNDQxQ2QolDbwSBKr8n1jBG6KiGuAphXfMkbyZtQs8f
-	TGnyuYJ3nKnSu1xb3XFFSdAz3gKZyjdHEYjcXNc7Y9rtKpCA7mbnvkIabAGikaO1
-	FlqHmvYUfSFHO+wnddll0V3xe75gkrwz3BN9xMCDFZa/YLENSnCx44dwmlvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774468206; x=1774554606; bh=QyWx3ohPXdX+Zd7FdIbCj6LLYbNu+FzX399
-	PIBCmIK8=; b=OuSrHxvRr4eY92AiZzBYz2hZh3ZvsQuUUhz88h/4DqeCMKoFiWx
-	RAYNsVeSC6DpF66YMtMD/4Q7Ux6JwfNmJDMedSo1RuCD0YhZd6aGYaw5xMtIgXMt
-	kxZ+frrh9ixlEHNczKkD+SJCQNjqhc1BPCOhaYR0m7K6DD8Ae/hr3kinUt5iTnK/
-	8I9jjnF0viHukkBPiEs4j9porqlbX4tmngExtGBrx+Y4eF15FAVu6lS9PUpWqgFq
-	gZf3yYJS2KlnKIOwNt8cd7VvbDbTO2gaJhPUuGbEDtDjn1/toluEOc1+dxFq9TS0
-	v60c3LO6HxMA6XJHJOgUf8yXY0Fi9fKFnnw==
-X-ME-Sender: <xms:bTzEabFHHQ-TBgJlSgTYby5MkGczI-eLNwrbdc4yLFPh83QyWYwUgA>
-    <xme:bTzEafyD3gTCkQGt2y79hTYHHuAHRKh6K6UBBBWMtSzTh8AS-N3uAt1C7h5DGQWdU
-    -AKepTKjEx4daHRHVAY7FOIh5hyCyT_bHO_YKtU6vMNBuv00lmvgZo>
-X-ME-Received: <xmr:bTzEaaiiIGaBkrYocxXudLoerdyXkqZJLSTYruMW9YgqKxNIWxRPmkdwQTQf4SYSKmXjK8dyhhfjpki9_jplgz-c1F-JfhDeDg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehfeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgih
-    rghnshhhphgrlhhifigrlhgtmhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bTzEaSy1slk-YzHrZlVGy_P-Dwn4GqrukN3Ku9J1gnRwAGeo2OGQYg>
-    <xmx:bTzEaVInzlaeYnzyngw5sOooso0f1xd3MXqLWS_3mPnoyjLIOlHVkw>
-    <xmx:bTzEaRTrQ5PWgFP6BryVY7BsPwgz81-VYrBLeO9faYFfpGLiVmD3iQ>
-    <xmx:bTzEaVoZYjXpKaRNn9FZfhGRKeQtdlXlxqMtwX6Xb05iOwLSPMkO7Q>
-    <xmx:bjzEaTyBXrN2rSF_9foYFwP5aMubXXFjZhS8gp4VIZGIMBpvzHy0iJvL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 15:50:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2026, #10)
-In-Reply-To: <CAPYXD65-LwXrZSAtGmbj-O4nW7WMcrJ_D8HtNtW5WZY2fLbGqQ@mail.gmail.com>
-	(Shreyansh Paliwal's message of "Wed, 25 Mar 2026 14:03:02 +0530")
-References: <xmqqldfgy1ye.fsf@gitster.g>
-	<CAPYXD65-LwXrZSAtGmbj-O4nW7WMcrJ_D8HtNtW5WZY2fLbGqQ@mail.gmail.com>
-Date: Wed, 25 Mar 2026 12:50:01 -0700
-Message-ID: <xmqq1ph7u1sm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="RfmJlC8S"
+ARC-Seal: i=1; a=rsa-sha256; t=1774468539; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=mRvKg6RMDzMCh+oQ0B2ZZ23RyUlU4+uDrssRSQScCTvKcPLpjw6vMZS0spDdfEKWWRgOYx8NtiZRw5J4FmywdXG3n6oZ1ZsYK5pikf0aS1hFZZV2ODLmYB9aPFDY5i8X+Hn27K9FH0XPIoZ+6dRfYdjhHpxCqUSe874RuL6/T+4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1774468539; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=9t5xrRQGWdyhsrFdAL8DixiIhVkqNcXL06U26ohf4kQ=; 
+	b=LXl7nE2TDCZI5NHtvY2ctTsDFRpvCX0yaDCCWsykowNigzWI87F31WCH3X9daWuOLBvx46fQxGT2OFYsK1PIlbIlLXW1HERnHEZvOZ+e4Lh7xsAsX+8Yn3H6poc2GrQLBCrYTUGFeiUVV8Np24fqUcfBOl2KBVb6Ec8IqrL2Dxg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774468539;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=9t5xrRQGWdyhsrFdAL8DixiIhVkqNcXL06U26ohf4kQ=;
+	b=RfmJlC8S9G3bfpYGgOmF+hJ7BOuiCtF4+sIMbQ0UOqIsu0A5c1ddIL+JgPk47S/E
+	b+UTqOTIfZtiwdCAgnxOOXVrF5Z2Nw2tgaYUookyqsjMS18xsca7p9wzjd/U9pd6mL4
+	4rVGC3zk8Qrs720fYdEEiihUE6+1DhsjJQWeWiXA=
+Received: by mx.zohomail.com with SMTPS id 1774468537491853.6910969972129;
+	Wed, 25 Mar 2026 12:55:37 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v3 00/12] config-hook cleanups and three small git-hook features
+Date: Wed, 25 Mar 2026 21:54:51 +0200
+Message-ID: <20260325195503.1139418-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> writes:
+Hello everyone,
 
->> * sp/add-patch-with-fewer-the-repository (2026-03-17) 1 commit
->>  - add-patch: use repository instance from add_i_state instead of the_repository
->>
->>  Reduce dependency on `the_repository` in add-patch.c file.
->>
->>  Needs review.
->>  source: <20260317155230.619378-1-shreyanshpaliwalcmsmn@gmail.com>
->
-> I think this was considered ready in the previous 'What's cooking in git.git',
-> so the status can be changed now.
+v3 addresses all the feedback and requests received in v2, many thanks to all
+who contributed.
 
-This was listed in the new topics section in issue #07 (Mar 19) but
-I do not recall updating its status in any later issue.  The only
-change was in issue #08 (Mar 21) in which the topic was moved from
-new to cooking without changing any status.
+Let's please stop adding features since this is getting rather big again. :)
+New features can be added in subsequent patches.
 
-The only comment the patch got was from me about interaction with
-other topics in flight, and there was no discussion or comments on
-what the patch wants to do makes sense, or if the way how the patch
-does so is correct, which should be the real review.
+This series is mostly for minor cleanups, bug fixes and refactorings + three
+minor feature additions to git-hook, which resulted from review discussions:
 
-And I do not consider my single reading alone a sufficient review
-most of the time.
+1. The ability to show the config scope (--show-scope).
+2. The ability to show which hooks are disabled.
+3. The ability reject unknown hook names with "--allow-unknown-hook-name" as
+   an escape hatch.
+
+The series is based on the master branch.
+
+Branch pushed GitHub: [1]
+Successful CI run: [2]
+
+Thanks again,
+Adrian
+
+1: https://github.com/10ne1/git/tree/dev/aratiu/config-cleanups-v3
+2: https://github.com/10ne1/git/actions/runs/23540818495
+
+Changes in v3:
+* New commit: properly initialize strbuf in receive-pack.c (Patrick)
+* New commit: add a check which prevents unknown hooks with git-hook(1) (Patrick)
+* Removed duplicated function doc comment between .h and .c files (Patrick)
+* Extended `git hook list` test to also include a hook from the hookdir (Patrick)
+* Converted unsigned int disabled:1 to proper bool (Patrick)
+* Minor commit rewording, header sorting, blank line fixes (Patrick)
+
+Range-diff v2 -> v3:
+ 1:  aeefa72f33 =  1:  db8b7b0552 hook: move unsorted_string_list_remove() to string-list.[ch]
+ -:  ---------- >  2:  02854ecc8b builtin/receive-pack: properly init receive_hook strbuf
+ 2:  90e821bdfa !  3:  14dcedcd9b hook: fix minor style issues
+    @@ Metadata
+      ## Commit message ##
+         hook: fix minor style issues
+     
+    -    Fix some minor style nits pointed by Patrick, Junio and Eric:
+    +    Fix some minor style nits pointed out by Patrick, Junio and Eric:
+           * Use CALLOC_ARRAY instead of xcalloc.
+           * Init struct members during declaration.
+           * Simplify if condition boolean logic.
+    @@ Commit message
+           * Capitalization and full-stop in error/warn messages.
+           * Curly brace on separate line when defining struct.
+           * Comment spelling: free'd -> freed.
+    +      * Sort the included headers.
+    +      * Blank line fixes to improve readability.
+     
+         These contain no logic changes, the code behaves the same as before.
+     
+    @@ builtin/hook.c: static int list(int argc, const char **argv, const char *prefix,
+      	}
+     
+      ## builtin/receive-pack.c ##
+    +@@
+    + 
+    + #include "builtin.h"
+    + #include "abspath.h"
+    +-
+    ++#include "commit.h"
+    ++#include "commit-reach.h"
+    + #include "config.h"
+    ++#include "connect.h"
+    ++#include "connected.h"
+    + #include "environment.h"
+    ++#include "exec-cmd.h"
+    ++#include "fsck.h"
+    + #include "gettext.h"
+    ++#include "gpg-interface.h"
+    + #include "hex.h"
+    +-#include "lockfile.h"
+    +-#include "pack.h"
+    +-#include "refs.h"
+    +-#include "pkt-line.h"
+    +-#include "sideband.h"
+    +-#include "run-command.h"
+    + #include "hook.h"
+    +-#include "exec-cmd.h"
+    +-#include "commit.h"
+    ++#include "lockfile.h"
+    + #include "object.h"
+    +-#include "remote.h"
+    +-#include "connect.h"
+    +-#include "string-list.h"
+    +-#include "oid-array.h"
+    +-#include "connected.h"
+    +-#include "strvec.h"
+    +-#include "version.h"
+    +-#include "gpg-interface.h"
+    +-#include "sigchain.h"
+    +-#include "fsck.h"
+    +-#include "tmp-objdir.h"
+    +-#include "oidset.h"
+    +-#include "packfile.h"
+    + #include "object-file.h"
+    + #include "object-name.h"
+    + #include "odb.h"
+    ++#include "oid-array.h"
+    ++#include "oidset.h"
+    ++#include "pack.h"
+    ++#include "packfile.h"
+    ++#include "parse-options.h"
+    ++#include "pkt-line.h"
+    + #include "protocol.h"
+    +-#include "commit-reach.h"
+    ++#include "refs.h"
+    ++#include "remote.h"
+    ++#include "run-command.h"
+    + #include "server-info.h"
+    ++#include "setup.h"
+    ++#include "shallow.h"
+    ++#include "sideband.h"
+    ++#include "sigchain.h"
+    ++#include "string-list.h"
+    ++#include "strvec.h"
+    ++#include "tmp-objdir.h"
+    + #include "trace.h"
+    + #include "trace2.h"
+    ++#include "version.h"
+    + #include "worktree.h"
+    +-#include "shallow.h"
+    +-#include "setup.h"
+    +-#include "parse-options.h"
+    + 
+    + static const char * const receive_pack_usage[] = {
+    + 	N_("git receive-pack <git-dir>"),
+     @@ builtin/receive-pack.c: static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_
+      static void *receive_hook_feed_state_alloc(void *feed_pipe_ctx)
+      {
+      	struct receive_hook_feed_state *init_state = feed_pipe_ctx;
+     -	struct receive_hook_feed_state *data = xcalloc(1, sizeof(*data));
+     +	struct receive_hook_feed_state *data;
+    ++
+     +	CALLOC_ARRAY(data, 1);
+      	data->report = init_state->report;
+      	data->cmd = init_state->cmd;
+      	data->skip_broken = init_state->skip_broken;
+    + 	strbuf_init(&data->buf, 0);
+    ++
+    + 	return data;
+    + }
+    + 
+     @@ builtin/receive-pack.c: static int run_receive_hook(struct command *commands,
+      {
+      	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+    @@ builtin/receive-pack.c: static int run_receive_hook(struct command *commands,
+      	/* set up stdin callback */
+     -	feed_init_state.cmd = commands;
+     -	feed_init_state.skip_broken = skip_broken;
+    +-	strbuf_init(&feed_init_state.buf, 0);
+      	opt.feed_pipe_ctx = &feed_init_state;
+      	opt.feed_pipe = feed_receive_hook_cb;
+      	opt.feed_pipe_cb_data_alloc = receive_hook_feed_state_alloc;
+     
+      ## hook.c ##
+    +@@
+    + #include "git-compat-util.h"
+    + #include "abspath.h"
+    + #include "advice.h"
+    ++#include "config.h"
+    ++#include "environment.h"
+    + #include "gettext.h"
+    + #include "hook.h"
+    +-#include "path.h"
+    + #include "parse.h"
+    ++#include "path.h"
+    + #include "run-command.h"
+    +-#include "config.h"
+    ++#include "setup.h"
+    + #include "strbuf.h"
+    + #include "strmap.h"
+    +-#include "environment.h"
+    +-#include "setup.h"
+    + 
+    + const char *find_hook(struct repository *r, const char *name)
+    + {
+     @@ hook.c: static void hook_clear(struct hook *h, cb_data_free_fn cb_data_free)
+      	if (!h)
+      		return;
+    @@ hook.c: static void build_hook_config_map(struct repository *r, struct strmap *c
+      		struct string_list *hook_names = e->value;
+     -		struct string_list *hooks = xcalloc(1, sizeof(*hooks));
+     +		struct string_list *hooks;
+    -+		CALLOC_ARRAY(hooks, 1);
+      
+    ++		CALLOC_ARRAY(hooks, 1);
+      		string_list_init_dup(hooks);
+      
+    + 		for (size_t i = 0; i < hook_names->nr; i++) {
+     @@ hook.c: static struct strmap *get_hook_config_cache(struct repository *r)
+      		 * it just once on the first call.
+      		 */
+    @@ hook.c: static void list_hooks_add_configured(struct repository *r,
+      		const char *command = configured_hooks->items[i].util;
+     -		struct hook *hook = xcalloc(1, sizeof(struct hook));
+     +		struct hook *hook;
+    ++
+     +		CALLOC_ARRAY(hook, 1);
+      
+      		if (options && options->feed_pipe_cb_data_alloc)
+    @@ hook.c: int run_hooks_opt(struct repository *r, const char *hook_name,
+      	if (options->invoked_hook)
+     
+      ## hook.h ##
+    +@@
+    + #ifndef HOOK_H
+    + #define HOOK_H
+    +-#include "strvec.h"
+    + #include "run-command.h"
+    + #include "string-list.h"
+    + #include "strmap.h"
+    ++#include "strvec.h"
+    + 
+    + struct repository;
+    + 
+     @@ hook.h: struct hook {
+      typedef void (*cb_data_free_fn)(void *data);
+      typedef void *(*cb_data_alloc_fn)(void *init_ctx);
+ 3:  dee1dd49a4 =  4:  bd49f58486 hook: rename cb_data_free/alloc -> hook_data_free/alloc
+ 4:  86f61204b3 =  5:  9502a98b09 hook: detect & emit two more bugs
+ 5:  30542de351 !  6:  b623e682c7 hook: replace hook_list_clear() -> string_list_clear_func()
+    @@ Commit message
+         API becomes cleaner, e.g. no more calls with NULL function args
+         like hook_list_clear(hooks, NULL).
+     
+    +    In other words, the callers don't need to keep track of hook
+    +    internal state to determine when cleanup is necessary or not
+    +    (pass NULL) because each `struct hook` now owns its data_free
+    +    callback.
+    +
+         Suggested-by: Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+     
+    @@ hook.c: const char *find_hook(struct repository *r, const char *name)
+      }
+      
+     -static void hook_clear(struct hook *h, hook_data_free_fn cb_data_free)
+    -+/*
+    -+ * Frees a struct hook stored as the util pointer of a string_list_item.
+    -+ * Suitable for use as a string_list_clear_func_t callback.
+    -+ */
+     +void hook_free(void *p, const char *str UNUSED)
+      {
+     +	struct hook *h = p;
+    @@ hook.c: static void list_hooks_add_default(struct repository *r, const char *hoo
+      	h->kind = HOOK_TRADITIONAL;
+      	h->u.traditional.path = xstrdup(hook_path);
+     @@ hook.c: static void list_hooks_add_configured(struct repository *r,
+    - 		struct hook *hook;
+    + 
+      		CALLOC_ARRAY(hook, 1);
+      
+     -		if (options && options->feed_pipe_cb_data_alloc)
+ 6:  4e1374b84e =  7:  315b62b24e hook: make consistent use of friendly-name in docs
+ 7:  075f8202aa =  8:  830cea298b t1800: add test to verify hook execution ordering
+ 8:  8f948bbbe7 !  9:  4f4a720cb8 hook: introduce hook_config_cache_entry for per-hook data
+    @@ hook.c: static void list_hooks_add_configured(struct repository *r,
+     -		const char *command = configured_hooks->items[i].util;
+     +		struct hook_config_cache_entry *entry = configured_hooks->items[i].util;
+      		struct hook *hook;
+    - 		CALLOC_ARRAY(hook, 1);
+      
+    + 		CALLOC_ARRAY(hook, 1);
+     @@ hook.c: static void list_hooks_add_configured(struct repository *r,
+      
+      		hook->kind = HOOK_CONFIGURED;
+ 9:  dbf81604ed ! 10:  164e3df981 hook: show config scope in git hook list
+    @@ hook.h
+      #ifndef HOOK_H
+      #define HOOK_H
+     +#include "config.h"
+    - #include "strvec.h"
+      #include "run-command.h"
+      #include "string-list.h"
+    + #include "strmap.h"
+     @@ hook.h: struct hook {
+      		struct {
+      			const char *friendly_name;
+    @@ t/t1800-hook.sh: test_expect_success 'configured hooks run before hookdir hook'
+      '
+      
+     +test_expect_success 'git hook list --show-scope shows config scope' '
+    ++	setup_hookdir &&
+     +	test_config_global hook.global-hook.command "echo global" &&
+    -+	test_config_global hook.global-hook.event test-hook --add &&
+    ++	test_config_global hook.global-hook.event pre-commit --add &&
+     +	test_config hook.local-hook.command "echo local" &&
+    -+	test_config hook.local-hook.event test-hook --add &&
+    ++	test_config hook.local-hook.event pre-commit --add &&
+     +
+     +	cat >expected <<-\EOF &&
+     +	global	global-hook
+     +	local	local-hook
+    ++	hook from hookdir
+     +	EOF
+    -+	git hook list --show-scope test-hook >actual &&
+    ++	git hook list --show-scope pre-commit >actual &&
+     +	test_cmp expected actual &&
+     +
+     +	# without --show-scope the scope must not appear
+    -+	git hook list test-hook >actual &&
+    ++	git hook list pre-commit >actual &&
+     +	test_grep ! "^global	" actual &&
+     +	test_grep ! "^local	" actual
+     +'
+10:  2a67244b20 ! 11:  ab9cd3ec68 hook: show disabled hooks in "git hook list"
+    @@ hook.c: static void list_hooks_add_default(struct repository *r, const char *hoo
+      struct hook_config_cache_entry {
+      	char *command;
+      	enum config_scope scope;
+    -+	unsigned int disabled:1;
+    ++	bool disabled;
+      };
+      
+      /*
+    @@ hook.c: static void build_hook_config_map(struct repository *r, struct strmap *c
+     -			if (unsorted_string_list_lookup(&cb_data.disabled_hooks,
+     -							hname))
+     -				continue;
+    -+			int is_disabled =
+    ++			bool is_disabled =
+     +				!!unsorted_string_list_lookup(
+     +					&cb_data.disabled_hooks, hname);
+      
+    @@ hook.h: struct hook {
+      			const char *friendly_name;
+      			const char *command;
+      			enum config_scope scope;
+    -+			unsigned int disabled:1;
+    ++			bool disabled;
+      		} configured;
+      	} u;
+      
+ -:  ---------- > 12:  dce86488bc hook: reject unknown hook names in git-hook(1)
+
+Adrian Ratiu (12):
+  hook: move unsorted_string_list_remove() to string-list.[ch]
+  builtin/receive-pack: properly init receive_hook strbuf
+  hook: fix minor style issues
+  hook: rename cb_data_free/alloc -> hook_data_free/alloc
+  hook: detect & emit two more bugs
+  hook: replace hook_list_clear() -> string_list_clear_func()
+  hook: make consistent use of friendly-name in docs
+  t1800: add test to verify hook execution ordering
+  hook: introduce hook_config_cache_entry for per-hook data
+  hook: show config scope in git hook list
+  hook: show disabled hooks in "git hook list"
+  hook: reject unknown hook names in git-hook(1)
+
+ Documentation/config/hook.adoc |  30 +++---
+ Documentation/git-hook.adoc    |  27 +++--
+ Makefile                       |   1 +
+ builtin/hook.c                 |  61 +++++++++--
+ builtin/receive-pack.c         |  64 +++++------
+ hook.c                         | 192 +++++++++++++++++++++------------
+ hook.h                         |  34 +++---
+ refs.c                         |   3 +-
+ string-list.c                  |   9 ++
+ string-list.h                  |   8 ++
+ t/t1800-hook.sh                | 167 ++++++++++++++++++++++------
+ transport.c                    |   3 +-
+ 12 files changed, 424 insertions(+), 175 deletions(-)
+
+-- 
+2.52.0.732.gb351b5166d.dirty
+
