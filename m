@@ -1,138 +1,262 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677F9334C28
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 18:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E519034CFDE
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 18:59:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774464263; cv=pass; b=M73SmSfSVNAcxjkKMlByRqKJhu16VaeLSGLbKqZVA1Q2WKBwCeX6FL3zUYpGrtgYai0du7BxInNyeKiVpAojHm7dg4IBRiXhU7+nWi0F04umC1KmLK1dD9fG7/Bwzi7Ro8Zif0tD8VTY8blpmcdfGU+lKbCHHHuQ9H/AZ2Lfvj0=
+	t=1774465177; cv=pass; b=O4RfhIzU7/Mr+d7/CdfEXqO/ZT03NxQwskDH5XhfpElJsCHoh0nhB1AYcDuJd1WC2zDKAEH+K+PpKUPoh7JutcxItyi56pyhppo3rwAhkSIgfSFaT5nZ5dk1R2lCl0nnXP0Xa2CKndFLkjcNXNgUzc9YdSdRjZ6a9FW/V/HbTR0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774464263; c=relaxed/simple;
-	bh=uOmW4OFDIPRT2P0aT/Qdz3qBc+g0ezJ0rh7OiXixjUQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f9gyDLZTQrS4e6WAp+9OAftmUFDvdzR/s/vhibWyrdifwKQvTrUjvu1Ce0+R3SPVrOvMYJ+Ih2oc1t2Idg8rJS4h4q0l1RaUKmQ9LpxgCi22HhjoQeTG6cZ8BwPgIFXa0vTd5WHcevS8xVY8XE6srq/hhASYYzdlHLTsRp8sE8w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Rb3sTfNj; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1774465177; c=relaxed/simple;
+	bh=8pPHBBUqaYVdSs+qnr7vyMd0bzhgZWikvz21tLUatb4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g9VKj1f+64A+C7afozaHBmZ7RXFKyZt0vLEExnzqyMqu4IwYTUrip6LZUB/CIgttQK1sihE1T4UuPcbwzF9cmA9acj/V3PfnJFtYi/RD4HkO//hnPIDjo93Pny3XFztzyLhvosF0mbb6rZ2VxfoMI7qe/M4o5B4CypjXVmVNha4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hWJKfhFp; arc=pass smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Rb3sTfNj"
-ARC-Seal: i=1; a=rsa-sha256; t=1774464244; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=BkKIZF0nUk4jwmCyO9mL1uZ+JO2HQfH38iT7ERRMdHGDojG2+6kPKw0+oUbadyK1C9xcwxr/2HJJ5CSPsgBWTo8aGcDIzd/n8q6ib2OFqSUVZWK72/EIJE5Am0lBHdSnDl66mdq6cJ4dhRfKQFn8rEWjdV5IaY3x13nISLPuuKA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1774464244; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=WIQ4uICnAgYPOg/ByI7Min10Z9DBknZOrRJ1DVYRU1Q=; 
-	b=Lefxn8i3Kx2skAIfR4SnnKMz8GTYOIanqSxl10wg8JVFKqmpIKXRaw41EMNGPXTHJaLQoxKN0iDemSRoH+a/wiLUX0+EGEWoHZqCWE+hW/z4RtmCjHCCE3iNAEGN34+EjR0SedAY2lf2dBt7KWqVjrWgkkX/JpzKWQweIQWCSdU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774464244;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=WIQ4uICnAgYPOg/ByI7Min10Z9DBknZOrRJ1DVYRU1Q=;
-	b=Rb3sTfNj8SnnVqjGdE9izc0Ihan8EXDi/jZzXbVwMTSYvtItlQ/EWFs9eXgm2mdv
-	WVRk+nA75XVarQYEWU/3nTUOq4LjPaocfhTg1E+Fhlz9nDnWd7a+9QUrdTp8YhTocT1
-	5WM4hDaYbZ5zolckH6hRWHN8qG5Gqn5Rq2df6Myg=
-Received: by mx.zohomail.com with SMTPS id 1774464243007252.97616298935577;
-	Wed, 25 Mar 2026 11:44:03 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Junio C Hamano <gitster@pobox.com>, Josh
- Steadmon <steadmon@google.com>, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, "brian m . carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 9/9] hook: add hook.<event>.enabled switch
-In-Reply-To: <acJUfVjby_QyZvj1@pks.im>
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
- <20260320135311.331463-1-adrian.ratiu@collabora.com>
- <20260320135311.331463-10-adrian.ratiu@collabora.com>
- <acJUfVjby_QyZvj1@pks.im>
-Date: Wed, 25 Mar 2026 20:43:58 +0200
-Message-ID: <87mrzvda1d.fsf@gentoo.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hWJKfhFp"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-66a87eb232bso187446a12.2
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 11:59:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774465173; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lfRPjzt4ZOt0Tr0bmG5IpuOUFLg89sqZUu6QzTavIwqsKgyx1JQpm7A0Rk7noNoPKa
+         o3z+SWd3268SyJdDgF/V9jGtB6WHSYJNLjME9O1cnIB8jpJcpcbvFf/fTvZ7Y4f5LRMn
+         MMhUeqwoTRMpk5Qqy1yNi3gmTPLwIkXuIubxkR9tikE1bvoMht2jr8+gY0CI3NTAt5B5
+         5pyYDTaXEeid615MncieRmFM/vffZ/Q5Doniy1VoFQuAV8CYjcvVrym13wdjCPVm/8Uf
+         h2rRELtX26iuk4rCLllTpZBafKL80jT3nu0F7f3/RjPSHRAs3NdKiraogSEp4p4m/DIV
+         NwwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tYSbLsVwQCrezue8YJ9bCgX6xhjQHZyflOsc5X5hlsc=;
+        fh=g/XWdCTF7KcYezcq936vtuk4WrtkI+WeNGpzChYlTOY=;
+        b=aLKNY2E9kAGWwdrwRdRGwE32D2X0SEz0qsX8Q4pskSRBi22qc4F5tV2BxzxPWLIFiJ
+         XezJIbTj6gyRHu0DD7wMva1Yefg1LxuIJfDpulI8Ce33EG3emG4+4MQsZbGmXnXt/luU
+         7Ak27PyQpFnQiJXkdmOizEO7YRKThjcknPZftkLqng4L0tIwgaNxTRPDIaKZwUm7cV0R
+         TsshIoM269JbAnRggiZP0OLqC6geCeSmwexh3VCZgRNQFfWkU0q9G64v8A3jPPBp9TOi
+         TOn8bhfQEJeeAqNjCwYc4+RRBd6WXO6bcld4TJescEvRmJDcQ7e+kO0Ot5/5Qn46jtqk
+         QbLA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774465173; x=1775069973; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tYSbLsVwQCrezue8YJ9bCgX6xhjQHZyflOsc5X5hlsc=;
+        b=hWJKfhFpbhawziu+aL/rsMfwH2dtus1i5dRzpk5nb6xplioJXnwFGIs97E+7p9Htng
+         ilgx72c+/KJ1+atqyXhRcTTepZ3Wh3x8Le9YmPHnWzAifb6ciT98umqQQ+fJNuA6yuVq
+         OogrDOiUB714DfqfuICoMeD6c1z6y4utwluP+UQicT4kxqqg+kypa/OASAPTscl57Wh7
+         3er+EE1pF5xS4M6s4Pm3tp6n8V9ysaaWkhWjIXgqPhcK1Uv6aP7dFUhandD+5aCPKQfA
+         MiYMrEzOsuODFHQGx898nZaNL3B+d43H7YAHdrcfWKQseBGq2ouORCDQ5Cd67j8a+M4d
+         NEGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774465173; x=1775069973;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tYSbLsVwQCrezue8YJ9bCgX6xhjQHZyflOsc5X5hlsc=;
+        b=aVO8qaifMIfjsN8ezeFB2xUhpuaFTN3gtsHRp6VGL2clc9V7sAi8gw5PTjGu9nRvKv
+         SSlCyve2Clo4N4gjEyv/mJYu+CvsKvTydhFO6cZCEBdT7FVdgKoVmskMeOpJ0ixnwTNK
+         69WCTk+LqbwAN06AhCY8+GeIhq/FsjhDtwOK0yQ0byVgWKmg31kR/UQSBvLdja7U54KD
+         l5WjK4kS13y/pn1MO+sGn/PckmzsIeHWBysmiMH21r5JzNIAJ3Hlwwtca0R7GcTtVEPa
+         lmeJPhEBwWh+d56tJITwN1FaB57YBSemCzOgEDByqPBfnRfrQQ2qYXqBSwz3ucdmO6yN
+         SL4A==
+X-Gm-Message-State: AOJu0YyOSaR/jyU4D2mJ35tl86JLGUG08BEz9cfXn1UWxTqZPy7Ps3US
+	tgOFkMe4b0wBpN++Q/SZ0q3erCp4l/54qHTMvxzzgQzkcrCeOcAA+RYPx/amg9x9FAMN+EG2JT9
+	Mq1vFcYZJEow2iJthvlYAgdQEeWTygaU=
+X-Gm-Gg: ATEYQzxHqtL2/C2w2MMTCkdwYfColyboKV9UMGHVGsuvPwlYz8PoW5qDFmeXBslaUJ2
+	erLYcxRsnpRmNvLg0ZMkK0KjTIgdmlx2C9pdnEVROLr7Q5oi+5Dmj9P/SUn5GIaAZQ8gd321zVr
+	l4zG4eohs1qyQFVe8tHSyCTddc7cGwIXz8Z4xS8j4XqmPESD8yEK7nr3ss4LLz6NHeXf1q1l7Oc
+	7bxmarxL4xeaoBZ01fadL8OcaqObRh0vI6zegqu629pbtEbVMzm+rPLqpskM6CW5BoJLYl/GMaI
+	sG8hNJjv2O2sBUb0FC2K7eQjJ0S5supmy8Cv18Gcia2aWIIVh5+IqWsSkzzNrDQcID4KK6QW5Q=
+	=
+X-Received: by 2002:a05:6402:52c7:b0:66a:5c2:51cc with SMTP id
+ 4fb4d7f45d1cf-66a82618054mr3059887a12.4.1774465172938; Wed, 25 Mar 2026
+ 11:59:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+References: <20260325075055.354709-1-luizedc1@gmail.com> <20260325075055.354709-2-luizedc1@gmail.com>
+ <a4305ef7-50ff-4a68-ab42-fe2fa73e8f37@gmx.de>
+In-Reply-To: <a4305ef7-50ff-4a68-ab42-fe2fa73e8f37@gmx.de>
+From: Luiz Eduardo Campos <luizedc1@gmail.com>
+Date: Wed, 25 Mar 2026 15:58:13 -0300
+X-Gm-Features: AQROBzDF1eosJg_pAe9tHBRIiPoDrkZgJh_gf0AdIFsAJAcqsA-lJDGWxjQ7NUQ
+Message-ID: <CAN+A6Tsmc9zo+jYCurEjG+oz+FtNJv1CbVGBrJaRKY27N-=pTA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] add -p: support discarding hunks with 'x'
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, peff@peff.net, sagotsky@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 24 Mar 2026, Patrick Steinhardt <ps@pks.im> wrote:
-> On Fri, Mar 20, 2026 at 03:53:11PM +0200, Adrian Ratiu wrote:
->> Add a hook.<event>.enabled config key that disables all hooks for
->> a given event, when set to false, acting as a high-level switch
->> above the existing per-hook hook.<friendly-name>.enabled.
->> 
->> Event-disabled hooks are shown in "git hook list" with an
->> "event-disabled" tab-separated prefix before the name:
->> 
->> $ git hook list test-hook
->> event-disabled  hook-1
->> event-disabled  hook-2
->> 
->> With --show-scope:
->> 
->> $ git hook list --show-scope test-hook
->> local   event-disabled  hook-1
->> 
->> When a hook is both per-hook disabled and event-disabled, only
->> "event-disabled" is shown: the event-level switch is the more
->> relevant piece of information, and the per-hook "disabled" status
->> will surface once the event is re-enabled.
->> 
->> Reuses is_friendly_name() from the previous commit to distinguish
->> event names from friendly-names when processing .enabled settings.
+Hi Johannes,
+
+Thank you for taking the time to review this!
+
+> This hunk is quite hard to read because of the `if ... else ...` -> `if {
+> ... continue; } ...` change that de-indents a large chunk of code.
+
+You are right. Even though you marked it as "not really actionable",
+I think it is worth fixing: I can keep the original if/else structure
+and just replace the condition with the should_merge_hunk() call.
+That avoids the indentation churn and keeps the diff focused on what
+actually changes.
+
+> If you detect an empty patch here and indicate this via an early return
+> value, then...
+> ... then this loop is no longer necessary.
+
+Good idea. I will have apply_discard_hunks() check whether any hunk
+is marked DISCARD_HUNK before going through the apply machinery, and
+use the return value to distinguish "nothing to do" from "applied" and
+"error". With that in place the pre-scan loop in apply_patch() can be
+dropped, and needs_refresh can just be set based on whether
+apply_discard_hunks() actually applied something.
+
+I will address this in v2; the implementation might still live in add -p,
+or I may fold it into a shared path that fits better (suggestions are
+welcome!)
+
+Thanks,
+Luiz
+
+Em qua., 25 de mar. de 2026 =C3=A0s 13:49, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> escreveu:
 >
-> I think having this makes sense in general. But what about the case
-> where I have configured a hook where the friendly name matches the event
-> name? Is that now forbidden, or would such a hook silently also disable
-> all the other hooks?
-
-In this current patch, if (friendly-name == event-name), then
-hook.*.enabled = false only disables that one hook and there's no way to
-disable the entire event... (see below)
-
->> diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
->> index d4fa29d936..0a9f04b154 100644
->> --- a/Documentation/config/hook.adoc
->> +++ b/Documentation/config/hook.adoc
->> @@ -33,6 +33,18 @@ hook.<friendly-name>.parallel::
->>  	found in the hooks directory do not need to, and run in parallel when
->>  	the effective job count is greater than 1. See linkgit:git-hook[1].
->>  
->> +hook.<event>.enabled::
->> +	Switch to enable or disable all hooks for the `<event>` hook event.
->> +	When set to `false`, no hooks fire for that event, regardless of any
->> +	per-hook `hook.<friendly-name>.enabled` settings. Defaults to `true`.
->> +	See linkgit:git-hook[1].
->> ++
->> +Note on naming: `<event>` must be the event name (e.g. `pre-commit`),
->> +not a hook friendly-name. A name that also carries `.command`, `.event`,
->> +or `.parallel` is treated as a friendly-name and its `.enabled` value
->> +applies only to that individual hook. See `hook.<friendly-name>.enabled`
->> +above.
+> Hi Luiz,
 >
-> Ah, okay, so you've thought about that already. I wonder whether this
-> behaviour is okay in general or whether it is going to be confusing. An
-> alternative would be to disallow configuring hooks where the event name
-> matches the friendly name, which would fix the ambiguity that we now
-> have.
-
-... It is rather confusing, yes.
-
-I think disallowing the collision, as you suggested, is the better
-approach, so I will do this in v5.
-
-I think it can be done at parse time and rather easy to check because
-we have hook.<name>.event = <value>, where name == value results in a
-collision.
-
-Or even simpler: reject if name is in hook_name_list! I already
-implemented this check for the `--allow-unknown-hook-name` arg you
-suggested in the other "cleanup" series.
-
-Many thanks as always, your careful feedback is very valuable,
-Adrian
+> On Wed, 25 Mar 2026, Luiz Campos wrote:
+>
+> > When using `git add -p`, users can stage or skip hunks,
+> > but cannot discard unwanted changes from the working tree.
+> >
+> > Introduce a new 'x' action to discard the current hunk by
+> > reverse-applying it.
+> >
+> > This idea was suggested in a previous mailing list discussion:
+> > https://lore.kernel.org/git/X%2FiFCo0bXLR%2BLZXs@coredump.intra.peff.ne=
+t/t/#m0576e6f3c6375e11cc4693b9dca3c1fc57baadd0
+>
+> Sounds good!
+>
+> Just two minor comments (not really actionable, I think):
+>
+> > @@ -1026,25 +1046,26 @@ static void reassemble_patch(struct add_p_state=
+ *s,
+> >               struct hunk merged =3D { 0 };
+> >
+> >               hunk =3D file_diff->hunk + i;
+> > -             if (!use_all && hunk->use !=3D USE_HUNK)
+> > +             if (!should_merge_hunk(file_diff, i, use_all, merge_for_d=
+iscard)) {
+> >                       delta +=3D hunk->header.old_count
+> >                               - hunk->header.new_count;
+> > -             else {
+> > -                     /* merge overlapping hunks into a temporary hunk =
+*/
+> > -                     if (merge_hunks(s, file_diff, &i, use_all, &merge=
+d))
+> > -                             hunk =3D &merged;
+> > +                     continue;
+> > +             }
+> >
+> > -                     render_hunk(s, hunk, delta, 0, out);
+> > +             if (merge_hunks(s, file_diff, &i, use_all, &merged,
+> > +                             merge_for_discard))
+> > +                     hunk =3D &merged;
+> >
+> > -                     /*
+> > -                      * In case `merge_hunks()` used `plain` as a scra=
+tch
+> > -                      * pad (this happens when an edited hunk had to b=
+e
+> > -                      * coalesced with another hunk).
+> > -                      */
+> > -                     strbuf_setlen(&s->plain, save_len);
+> > +             render_hunk(s, hunk, delta, 0, out);
+> >
+> > -                     delta +=3D hunk->delta;
+> > -             }
+> > +             /*
+> > +              * In case `merge_hunks()` used `plain` as a scratch
+> > +              * pad (this happens when an edited hunk had to be
+> > +              * coalesced with another hunk).
+> > +              */
+> > +             strbuf_setlen(&s->plain, save_len);
+> > +
+> > +             delta +=3D hunk->delta;
+>
+> This hunk is quite hard to read because of the `if ... else ...` -> `if {
+> ... continue; } ...` change that de-indents a large chunk of code.
+>
+> After pouring over the diff for a bit, I was able to convince myself that
+> the diff is correct.
+>
+> > @@ -1547,21 +1570,57 @@ N_("j - go to the next undecided hunk, roll ove=
+r at the bottom\n"
+> >     "? - print help\n"
+> >     "HUNKS SUMMARY - Hunks: %d, USE: %d, SKIP: %d\n");
+> >
+> > +static int apply_discard_hunks(struct add_p_state *s,
+> > +                            struct file_diff *file_diff)
+> > +{
+> > +     struct child_process check_cp =3D CHILD_PROCESS_INIT;
+> > +     struct child_process apply_cp =3D CHILD_PROCESS_INIT;
+> > +
+> > +     strbuf_reset(&s->buf);
+> > +     reassemble_patch(s, file_diff, 0, REASSEMBLE_DISCARD, &s->buf);
+>
+> If you detect an empty patch here and indicate this via an early return
+> value, then...
+>
+> > +
+> > +     discard_index(s->index);
+> > +
+> > +     setup_child_process(s, &check_cp, "apply", "-R", "--check", NULL)=
+;
+> > +     if (pipe_command(&check_cp, s->buf.buf, s->buf.len, NULL, 0, NULL=
+, 0)) {
+> > +             error(_("'git apply -R --check' failed"));
+> > +             return -1;
+> > +     }
+> > +
+> > +     setup_child_process(s, &apply_cp, "apply", "-R", NULL);
+> > +     if (pipe_command(&apply_cp, s->buf.buf, s->buf.len, NULL, 0, NULL=
+, 0)) {
+> > +             error(_("'git apply -R' failed"));
+> > +             return -1;
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> >  static void apply_patch(struct add_p_state *s, struct file_diff *file_=
+diff)
+> >  {
+> >       struct child_process cp =3D CHILD_PROCESS_INIT;
+> >       size_t j;
+> > +     int needs_refresh =3D 0;
+> > +
+> > +     if (s->mode =3D=3D &patch_mode_add) {
+> > +             for (j =3D 0; j < file_diff->hunk_nr; j++) {
+> > +                     if (file_diff->hunk[j].use =3D=3D DISCARD_HUNK)
+> > +                             break;
+> > +             }
+> > +             if (j < file_diff->hunk_nr && apply_discard_hunks(s, file=
+_diff))
+> > +                     return;
+> > +             if (j < file_diff->hunk_nr)
+> > +                     needs_refresh =3D 1;
+> > +     }
+>
+> ... then this loop is no longer necessary.
+>
+> Other than that, looks good to me!
+>
+> Ciao,
+> Johannes
