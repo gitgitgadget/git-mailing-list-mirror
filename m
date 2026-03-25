@@ -1,117 +1,171 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA423DA7F1
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774457716; cv=none; b=A/0aq8+zh+JwN/97s47ZYJtaSjHId9Owf2GXQuJjjijbIMYp9ih2sQIfaQIigOSVvgtqBaF2WRi/yfyVdhMP3rh8YWBUYOxKw52CqQWh2NOzsS0ui+kJ19gdjED4AMkf5iCjuZxaS21p5NNmAcETuj9m9m3044aZpF8dfx6TQF4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774457716; c=relaxed/simple;
-	bh=3oB4411tOwZP+Vz+GM5TB7p+MkAjKZfv6DMrZcT/jB4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SMPsQu8x3OF0/hDGlw0XYp1HTTyq9eTt8fDKl9CLnr7jXIxtXu7yvq1yjoOX9ene8fwGx3BNbhCo76NlifScL/PZk4MTXp8rOGKQqDOVWGs/clBRkHbdobSWeu+7T3ZuxPXSDAOCnsBCjdlmoGXczuifVk6kCorj3Up7AJ0ShvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b3HKCL/w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kczUoPwJ; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF07C26CE32
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774458329; cv=pass; b=qafydP0DGidDLWhda7z41j2IDISJmUVL8esjlchiXiVwyU9lfG9Wiv9fPqWGQ+mqjJix+6eEmiULaZF3W/aajiPGyIpYoEjIL2T8gH50yHW9jtCl10GpagpMkXW5bxzGUHWdslT9sPaS7LEFNH2xjPBVojFZ4g8xUuzLS18Jh98=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774458329; c=relaxed/simple;
+	bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QA1sbnCEdpffQwuTIuGOa31e3OTQbma98Rofw0sa/r050N9oFHnPTVdk74qn/9kyeNdn2EZvVIIy7SI8ge+6vJaZoNFn0EAvVgKjZuonks72wFSaIYCeLf6bzlqI5WNNpbS/mT5/vfNFVyyK1Bs76MZtcPMkO/Du69lO/420Hy4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mIBPn4yE; arc=pass smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b3HKCL/w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kczUoPwJ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CC0571400289;
-	Wed, 25 Mar 2026 12:55:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 25 Mar 2026 12:55:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774457709; x=1774544109; bh=EKKlx8O+FL
-	sKxUXFUpQtIaP/5MMG18QkZ4IocRw6VQw=; b=b3HKCL/wbCLp9xpVtFkVKfGAX0
-	Po3mj6TdtokD7ApDXu34khfSCpUENbZugEsuCGJKPKOeeDi/fSOIXRveLALSmmN5
-	SweBjwhfiiC26axVrd1+k4uV1L4+rGU0A4P1T79vVqLkBdzBMj/J0cNDRrcifMV8
-	m0piZkQwP3rxFxsAOEOAlwJTzUnTaw5D197D91k7FdxYq6xCTM2gzOEZlbPeevjz
-	C+tg5y+Mb9/izxIVtcXnbN9xpOGzTPUERaNZCjGAIuUf14oJulPdySvTEBouahmX
-	s9I2iuAayBmXHz/u6FVPayBVV3uovqmPv8OMnKwScXemH9IwcsoVudZ3l3VQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774457709; x=1774544109; bh=EKKlx8O+FLsKxUXFUpQtIaP/5MMG18QkZ4I
-	ocRw6VQw=; b=kczUoPwJNhAjeEV1jwLvCDrJ6CxdJqhaGLwVdSQBRCjzeg8oc8W
-	m/LoylVvODJ1I1YXe/xORXTrZvuzLctj+fkqcSsQz9GyU24bY/B4Z2JvyrzDRdy3
-	lQ/hE7J6W76EHQebcSwW0DqGg2WGDbD4fX/KmFImgjSsKLgh8U59XOXnGlorxo+D
-	tU4UjqDlhxC86riCjVjWbAb4nmegU//P6EO3RZfkJehH8QFoegbMTKZkfl95HW8e
-	4AnKXY0asJwkLO/jgKUALTyVW1+INzXONpiliCIMuG9oegQWhE7GZ+EDX/QdLYiA
-	p6gyXeeE5DWH37PgkvM3kpT6NtSsOISx+dQ==
-X-ME-Sender: <xms:bRPEaR8jSwNIzX35LGFQRtkvz-7aYoU0Za8ArBBUC2jN0Shb5VUKag>
-    <xme:bRPEaZYPkSJFrpxqvxyVCchNV8mnkQjZIBail5Hg-MrqduvGyfCDqaV3VEyz7uasN
-    b40egFlUqJs1-Siu17MZoYsdO_C-O8uB3yChsJU9ElGE776Zi2NnQ>
-X-ME-Received: <xmr:bRPEaY3Bz8YwMMM61yRizbBAQBNx9Ikx0K02CtAT5iGBKU1MoBwTe-FAXrUwKE6P5bFOl0NfFSIpWDW-wiyFN7LZzUcGmHUUyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdegleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmrghhlh
-    gvthdrthgrkhgrshhsrgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirh
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bRPEacaGQ-b5_yVvNGRy0j7L2u-3hPYAqiGuDPZl_SgJhBtbDL8GZw>
-    <xmx:bRPEaYIV1A72rn6Td0C5c117JvW9SFYuOsVpeJreApRcuEdixLGHpg>
-    <xmx:bRPEaTETqPoyhONa6CHGgXP39BPPZ7sDhEG2zl0BbCTWJI9Y2Pv6pA>
-    <xmx:bRPEaXuoAvg6z9j8BUKrBF5mHm-JIGMuqr5eloYBE8CqN5sC3ENCew>
-    <xmx:bRPEaSjwvMJfl_OClI79aeLMTp_w3jk5EqtwHJrdIjlFlIfs7GQBFxHg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 12:55:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Mahi Kassa <mahlet.takassa@gmail.com>,  git@vger.kernel.org,
-  lucasseikioshiro@gmail.com,  jltobler@gmail.com
-Subject: Re: [PATCH v3] repo: show subcommand-specific help text
-In-Reply-To: <acOye5MbsFVOa1vJ@pks.im> (Patrick Steinhardt's message of "Wed,
-	25 Mar 2026 11:01:31 +0100")
-References: <20260323152937.257406-1-mahlet.takassa@gmail.com>
-	<20260324184843.299223-1-mahlet.takassa@gmail.com>
-	<acOye5MbsFVOa1vJ@pks.im>
-Date: Wed, 25 Mar 2026 09:55:08 -0700
-Message-ID: <xmqq341nx30z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mIBPn4yE"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-66aa2204e9dso1373269a12.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:05:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774458324; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ln+tXulVn/68Xt9nSrz9wC9notIDUmZFdLm7bqRCnD2MIo/8e/4dDgP+8Fh7KYSjn6
+         x405f5vK5LVSz3W78f/k/O4kW9dhZ4jh+Q/8YptKgqm4Ch3mk66JRQ8rf/6jQJMoRkAL
+         NfSed0zCBCeFqielr5sNWAxL8c1WX5TxubbS+n8vbfCStkmUk4///Y58l85bDmOEsq9m
+         0K0tNxc5iIWVDpS4G47FxsYrgBtee9rHSvkm80VA+yJJ2UWhIVYRK3fhDNOKvOWhMX/X
+         rMPOx2sdJBONlreQ1VyGJZe8WFamSkjrUN+90pO4lJc909lwhzHAaL+d5aiImsJw7CAK
+         AswA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
+        fh=92YHPqv+Dgz2hIQYxcqhnikPL8+pZwc7nL3MBjz5fX4=;
+        b=W3Qi/FdHvc+iaWZ0rh+fTen1/KDgQPBBqIppCYEFNKN43dJQb+5MGyzraiIBjq/GI2
+         x8HyrN2rY+EakVC3I8HKEQGiLDxeemsZ1nRR6NVkBXIFdZbuU/DzedttTEcgGtEkYQUQ
+         jacaGgDxGC4zi7VxjKlx/2KdhmZZLi6YVrCKh7Sy9Tx/GNZBGwnNunCP3uYPWzBmAS/X
+         vU1yPZwQwPGlo/9JSP3mh+8Wuo60TwZptDrxtE1MCQD3x6kZcV7w4CpKDyricPeyerao
+         g3vGURjKZyNTR5/3B1gnVK5MJzbj3a7KOwX7st1+VJoN/NFmsu0unPmpTXEcb3wT6g0c
+         eT5A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774458324; x=1775063124; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
+        b=mIBPn4yE9RQeJVJLae5sRPHdlSVJNEqQsbqlP3E5604EStFg5soAm4d1qmARSfPBkF
+         5kFTZeYqBcd44J5l/G8VEkCpf4SoZK4x3zHb6ulDZPlzIzK8i//LywslmA/WwwksMwwD
+         +rtoGgdJQ+HMAZE3NG3lnxMUKdbLo5dPdaV46KaGkGL07TNwra/QAI0Eyf8z+3Ke06K/
+         NQVq5reCHsvUh46rB7O4y4lwqkhRHTzUHQnFD1h6/sFTlUzgraTF2rGxtDARZZaGUoip
+         e1RYzqIZC0rY8nqRQo1aRuFjKCp5EddD2thruRWMmbJ5lQEVmS+uz0wQFZ3i2vW+Bss/
+         HQsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774458324; x=1775063124;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
+        b=SbKy7DJsVVrb64aYhP4LUySry1xyMVr+HoMkH+FiA03vS+RK1/V6/+YnSfZAiHPadr
+         itLSnMbeeopmzCj57tFjohEck9PIVzl78ejNwQh67183qNlWlENr/dPgSFnsRdYaLS05
+         WirFOIMykrbM31znD8TCYpV/w29XzeuOEA71ud5VCSA8+QutbxjY/J/m4Fobsf6Abe4U
+         Y8vaWKEDIDXW5HT5w988AXtJrmbp2NQsbh5MyJyXqrpJtUfMXRwdaI1fwLfCyIKhFOqE
+         F418fJiKQFUJfZrIGARNzMYKILd4SwM1K3YS3FrkYze4F6JJ01GIgfNPDK3fnbbmNYPt
+         VkBQ==
+X-Gm-Message-State: AOJu0Yw0MxJLMfZy3vObCwvVF14/QyDjRsoRiU5ySb5CC5PmtWZpt5Qr
+	b5OjIprQba9xCEVbE1ZKtx1uBc2Wej7Rjtu6P4E3n1uXQi2dHuCcOI2ps3BJSQeK8ihxrLbq0XM
+	Q9dvquSUviL3K8/bh7RLlVOpAI539QAE=
+X-Gm-Gg: ATEYQzyAU0kQ+TavYYwkUDw3SehoZn8oqgNbpBTaZWdkh44yJfhUjTfRw9HaF/gOWLR
+	UyKx24w2VCnkHhYR+CDJkNXRwequKRw2RCacHavdOL3XidA2rC+oAFzFh8MuWSz0F9SpEQAPCEC
+	cEloEZ8I1jujqtGzYIojGsdfOtdhpU+briyMd3G+bnwbjpih2gQwzSj+u3w+34op0Hm2eZIWrri
+	lxjtBCjREZcqrx3a1p6Ou1eGA2/zIosLUz79jxI8cje0a/jbBzhFvd1lbwAss3MGLjpdXAgCkFB
+	hrkSRQ1aJBdjvCcJ8MiADkwtgnag++q8b2QXJwgPPjo9q+cftmlmY/HkNpbLyd7Kh8eysr96kA=
+	=
+X-Received: by 2002:a05:6402:5193:b0:667:90c1:844 with SMTP id
+ 4fb4d7f45d1cf-66a80cf991cmr2688770a12.10.1774458323878; Wed, 25 Mar 2026
+ 10:05:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260325075055.354709-1-luizedc1@gmail.com> <20260325075055.354709-2-luizedc1@gmail.com>
+ <CALnO6CD15Tcs+Sr7XDO0eB3KSC7RT2oawTiSpUGdrQkfbPJQtg@mail.gmail.com>
+In-Reply-To: <CALnO6CD15Tcs+Sr7XDO0eB3KSC7RT2oawTiSpUGdrQkfbPJQtg@mail.gmail.com>
+From: Luiz Eduardo Campos <luizedc1@gmail.com>
+Date: Wed, 25 Mar 2026 14:04:03 -0300
+X-Gm-Features: AQROBzCQNu_P80q__IMN8Hte1bhFIgVh3ntvu4knEA5XD6dz6vEySUqOcLbCkFU
+Message-ID: <CAN+A6TuhiC9U==QvuMXtnTHtwzSMh1fSe12kxqj3iy03jF-Cxg@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] add -p: support discarding hunks with 'x'
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, peff@peff.net, sagotsky@gmail.com, 
+	Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Ben,
 
->> v3:
->> - include the requested code changes that were missing from v2
->> - factor shared usage strings into macros to avoid duplication
->> - restore blank lines between tests and before test_done
+Thanks for the feedback!
+
+(Sending this message again because I had not configured my
+email client to send it plain text, so I apologize if you received
+duplicated content)
+
+> One feature the Fugitive Git client for Vim supports is to discard
+> hunks; when it does so, it also prints a message explaining how to
+> recover the hunk if you need it.
+
+That=E2=80=99s a great point. I hadn=E2=80=99t considered recoverability in=
+ this
+initial version. Storing the discarded hunk as a blob (or otherwise
+making it recoverable) seems like a useful safety measure.
+
+> If it's never been in the index, it can be impossible to recover!
+
+Agreed =E2=80=94 this is probably something that should be addressed before
+considering this feature complete.
+
+> PS How different is this from "git restore -p" ?
+
+My understanding is that `git restore -p` already allows discarding
+changes interactively, but it requires a separate pass. The goal here
+was to allow discarding during `git add -p`, so users can decide what
+to do with each hunk in a single pass.
+
+That said, I=E2=80=99m not yet sure whether integrating this into `add -p` =
+is
+the best approach, or if this should be handled differently.
+
+Thanks again for the insights!
+
+Luiz
+
+
+Em qua., 25 de mar. de 2026 =C3=A0s 12:44, D. Ben Knoble
+<ben.knoble@gmail.com> escreveu:
 >
-> By the way, it is highly recommended to respond to some of the review
-> mails directly, as it helps to create a dialog between submitter and
-> reviewer. Otherwise reviewers may feel as if they are talking to a code
-> emitting entity :)
+> On Wed, Mar 25, 2026 at 3:53=E2=80=AFAM Luiz Campos <luizedc1@gmail.com> =
+wrote:
+> >
+> > When using `git add -p`, users can stage or skip hunks,
+> > but cannot discard unwanted changes from the working tree.
+> >
+> > Introduce a new 'x' action to discard the current hunk by
+> > reverse-applying it.
+> >
+> > This idea was suggested in a previous mailing list discussion:
+> > https://lore.kernel.org/git/X%2FiFCo0bXLR%2BLZXs@coredump.intra.peff.ne=
+t/t/#m0576e6f3c6375e11cc4693b9dca3c1fc57baadd0
+> >
+> > Feedback is very welcome.
+> >
+> > Signed-off-by: Luiz Campos <luizedc1@gmail.com>
 >
-> It's not necessary to reply to every single mail, but going like "Oops,
-> yes, I indeed forgot to add the request code changes. Will fix in the
-> next version" can go a long way to make the interaction more social.
-
-Hear! hear!  A new iteration without any introduction is harder to
-accept without such a pre-warning to suggest what the author thought
-after getting suggestions in earlier reviews.  Did they agree and
-took the suggestion?  Did they disagree but took the suggestion
-anyway, and if so why did they think the suggestion was not such a
-good change?  Did they disagree and did not take the suggestion and
-if so why?  They changed the code but not in the way suggested in
-the review, but why the new way was thought to be better than both
-the original and the reviewer input is unknown?  
+> One feature the Fugitive Git client for Vim supports is to discard
+> hunks; when it does so, it also prints a message explaining how to
+> recover the hunk if you need it.
+>
+> I think it writes the file as a blob to Git's database before
+> restoring from the index.
+>
+> I'm not suggesting Git copy this necessarily, but we might want to
+> consider how to help folks when they lose a hunk they didn't mean to.
+> If it's never been in the index, it can be impossible to recover!
+>
+> PS How different is this from "git restore -p" ?
+>
+>
+> --
+> D. Ben Knoble
