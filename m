@@ -1,77 +1,77 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373973537C2
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 06:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87D9351C0F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 06:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774419685; cv=none; b=KzZLEWHUja339BkpWVF2L5tdnjT2bsdt2d37UAWegeZkKNvbE+E+L8KD1Q7mSsVJKQ1mQYRxJwM1W5r5Ce58ErNaPDf++UhTkuINV2nPKoxYvdX1ZSfHRX+6Xu66/LZAGwHs5sXBWdHcwyuF1kCV63UoQkZ2UUgwj3EE09BHQiw=
+	t=1774419686; cv=none; b=EGlBBT8ALseZA2ap6JyqztVyDgqkvvFrvI2rkZ9VlsU7D2LPppgr0FlD6iKF2zPLFfsCMj8Uya0zR5S4yapFp5XRgoQsvsK1IvoSu3yiGXIJwGldK1zrlI3dAU1RyTpM4a5xQmbaL9+nrQEhBMuSJ4yktXSxwGgQQPI7PvI454k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774419685; c=relaxed/simple;
-	bh=uoTqupK4uSP7KxVKPyR5trWbpAlosBfUXGNxky7vhjE=;
+	s=arc-20240116; t=1774419686; c=relaxed/simple;
+	bh=ZaLYlnziTjXMdqAqSMt3rugapGiaJXPQ4U/reUfjY9o=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8HyKzT+8mCEH62QI9zfwTbl/xFlLqf9eQox4qFAgY1axj87IMSDyYCKeMvKfW+TDUpyGLzybeKU5BaIEtdWbIuALRWy5kM8KX3yoWlIlDK/q55i7ZvitvU4dfL/rfqk5WHeQJXzx/u0HjALruvztTS/SVfgvx53qfage7I15pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hj8Rl3xp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BlTKDypE; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version; b=pMcbfDA7oajC8EbKLW8K4LllLcklA//is4T1RysCXStA/sd+be0xxGdRrcjXuNfDG0NApuvj3vg7W4ewQsgGhSizslAAa1zDQ/iO1FhZ6dZS6I8/Bjj5AqVLpYUpEUkK63aY4UgoUvP+xB0hk76lUxq7BGfjUojHMG2ZRWKHXUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j84ytTnl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FHpimvl1; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hj8Rl3xp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BlTKDypE"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8EED47A0267;
-	Wed, 25 Mar 2026 02:21:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Mar 2026 02:21:23 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j84ytTnl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FHpimvl1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 314391D0017D;
+	Wed, 25 Mar 2026 02:21:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 25 Mar 2026 02:21:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1774419683; x=
-	1774506083; bh=m0FH4acGFb6O9gGhJqwvJ3Q2CCN3xTML3fOCdm3H/n0=; b=H
-	j8Rl3xpGS7MaJtE2FpRfFhM3XY5kZFiu9RVarvvxLvmUkZXLXPJaBq255QTStBkx
-	n7Emx5y25Dr/BCjwFNPifbUxFqaM2R+jecslqU59QtwxeylWIeqKYdcGzBwUUO6j
-	nBBQVizVsOZJVix8iaTmsBuWRbQs8zoPyTl1haXdgK8YtH32QgxqzdUxGs39nJp0
-	lleHZmH9t2lTkViCBFkAVmiyvV5y1KZ+vqHgq2OZKJFD94ZZBoays8kXe4e6d53e
-	fx7f8o2Sw4Kn3NTv35m7h95oH0GEzX+99ZCQrRYUckC9JwvGgwx/CTesCqZkB8fJ
-	06LV6wiUlzEUU2vN7yOAQ==
+	:reply-to:subject:subject:to:to; s=fm3; t=1774419685; x=
+	1774506085; bh=sLmLd+Pgsih3wbnmZ7kS6QxRrbG5dNX6gsxMtCXkJ48=; b=j
+	84ytTnllD403tpp+koFNCKZE2J15Ej32TM1hiDuWCbcAgswjkaAnSF5eBKE5a55l
+	7HSS7sVQ4CfEUPd37iItWaG2PDsnE4V/hsjv6b4IiXt9iYhuMwgiY6EnYK+AJUpk
+	LPy/TRQ1cikXzIaiaG1v3aAZln2JAI208bOY6Af1GVe9dCVS7EYGthEIkYFE2Fg4
+	iI4exnWs/y6RyRk/NQmFrLSTe/8EMkrQOgIMjizGEFWZS8+ACD5bVRMzpUqhQ+tT
+	J80ekZF6EJKxRz2Dk/GWq/GagfuUCJhRDWMf7TBvDFX3r17JeJ43kZM5ls22YxC5
+	WZaPb0JZ6rWBwH1JSBK8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1774419683; x=1774506083; bh=m0FH4acGFb6O9gGhJqwvJ3Q2CCN3
-	xTML3fOCdm3H/n0=; b=BlTKDypE7xdohFYSuS4CMPii+hhyNVGuNP7oIBPANYVD
-	bY8SboKmJkKmFOGDowUJVMx0yBlVXA4Rx5taZCsJZeIFIXciYJgkksVrt8M/NKxG
-	gS2wDAfJrC2w/rJYpaPb76qq3U59q0VjP0RnbBc7UE4LvAP6nhoXFeKJfCOXd6/a
-	uZTJdpHC+bKwJVLuztUjqRF82MeOm2ERZSW5mAahpJsXdXrMG574EPZC47ugBZ8J
-	/bvGGWc5hdUxg1ieUvv6n715/ruT0vNh2jfSqmEZ4RpCnSHJqriU278aRCpBfNnI
-	kdaWn6Y7CNGS1DeAFNltwil3StlTBkq0+5q7R4QEjg==
-X-ME-Sender: <xms:437DaV2-I1ZZzGlAXqVddLgfzwEhnkTCopKOkFNEL47jsBEk82F-pA>
-    <xme:437DaSE7j8YJinfgGcM38ZEtrbYqx-GFcUttk3JTYIVMME2kRvflDb1nrWcDVwvyi
-    bavTzSwPCWOy6p3UffnKhBnOxTQDXTQ9uIreB9tNUslp6wV17nQz6E>
-X-ME-Received: <xmr:437DaTjJ0I5sIvSUKM1pdGQCngSuLo72mCSj8Q8_sii3I5WDZyN1Bkf2ZirbhTB_vnvbk7hRpOlOzIVpWGAgbzZmrPIiHdG9nA>
+	fm1; t=1774419685; x=1774506085; bh=sLmLd+Pgsih3wbnmZ7kS6QxRrbG5
+	dNX6gsxMtCXkJ48=; b=FHpimvl1UG46eLb1EsTuHEmpPbm/CwIS51trlBBQ+ITt
+	pz3ngyQXW3KoCd3ZijiLb4ZCXEE92G6Gqj3Np7/0W4OWFVC5/7bVJI8woWTpDyjz
+	Si1Td6vRBBjBxckDtGeb3CXUq2ZHQN0MiA/PvFRjolsrvWWucJZL5XC+5lUTO2MH
+	THUDU8zej5MnpSMXIPfq/sim8vOKwqa9IEvI41kxS+wbyvoEZ4Wv998252c0lrvV
+	bV/23tJ42GYQSrfDvDsNuG0wNFOF1TeCrG/VpF+K/iec7frCogf92fUdw3/JCLEE
+	4QJmo6BO3fRtNNJAe3Zn1XVKxucc5zlOL1M/05YIIw==
+X-ME-Sender: <xms:5H7DaSrW6xggjWsLdW5ZHIowKw0CGveu7MAUnKt37EvlWcwDhfZFlA>
+    <xme:5H7DaWqLHzKirA5LZJn4rAURF6Njb_i8UDE34B84Yh5Ip5xp6sOfPJgrhvANCVKrX
+    WvGmBE-zZB5WlebfGJIAfgECl9CeH4QKRppcMEKzlfoilf3sducrA>
+X-ME-Received: <xmr:5H7DaU2OsFRIRQ1Yhm80rj7nYbF0yF-0LhABOb5SGch_JDuNBMVs6abB5mOn1vYn9iAzbK62zFLH1Q9zfzKZwsrADt4VCLrS1Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdefjeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepudenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:437Dad9FKJvm2VvjhfXHLi0EFPp8QeuT9XAyJ7dGNeTYWEZP8S7UmQ>
-    <xmx:437DaaqXRvTwEV5v__QVa6VEC4j_nZI4SVLfWApVFPRjQ0naFMMoTw>
-    <xmx:437Dac86oUi9M8bEG53tLH_16PQ8tlMPfhxK1Xz55RxQMAOhB_xlPA>
-    <xmx:437DaeW25FvhO54PV5bI49Gvw-5g8a8jR5AcrwM2KJpjzdcxtHCu5w>
-    <xmx:437DaRM_UHcyg7uxeUSWyxc1L14LBHXyJ-JaBTNK6_Uw3UEgm7MulZUT>
+X-ME-Proxy: <xmx:5H7DadAN3MveUs-cXmU2sy3_vWuHGaEsoIZQ-qY0FZLJNQU9g0AsVQ>
+    <xmx:5X7DaUc_oYZwFo2VXm32GOOaEdGeANIH5DPtM540S2B7rMxj5LJjxA>
+    <xmx:5X7DaaimjbZ2lWSpWp50BhOuC8DadZ0necgK_57VuBCbh5bqEyLLuw>
+    <xmx:5X7DaUqYfyxEfyhcQEcLAq5x95xxwuLV-GdrbF7N6EiFzFCTUXvUXw>
+    <xmx:5X7DaWBByQrcU9WCYvszY9xJnWtErdU4QZ4RWoD5PSlh7CGdV6WVfVxL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 02:21:23 -0400 (EDT)
+ 25 Mar 2026 02:21:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 04/11] t4032: make test "set -e" clean
-Date: Tue, 24 Mar 2026 23:21:07 -0700
-Message-ID: <20260325062114.2067946-5-gitster@pobox.com>
+Subject: [PATCH 05/11] t7450: make test "set -e" clean
+Date: Tue, 24 Mar 2026 23:21:08 -0700
+Message-ID: <20260325062114.2067946-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.53.0-886-g529cbd14ff
 In-Reply-To: <20260325062114.2067946-1-gitster@pobox.com>
 References: <20260325062114.2067946-1-gitster@pobox.com>
@@ -87,43 +87,39 @@ In order to catch mistakes like misspelling "test_expect_success",
 we would like to eventually be able to run our test suite with the
 "-e" option on.
 
-A few shell construct used in this test were not ready.  Make them
-so.
+Often we write "A && test_expect_success ..." and want it to mean
+"If and only if A holds true, this needs to be tested", but under
+"set -e", this will cause failure when A does not hold true.  We
+need to write "!A || test_expect_success ..." if we want to run the
+test conditionally.
 
- * "git config --unset VAR" can fail when VAR is not defined.
+Or write it properly with if/then/fi, perhaps like:
 
- * The author of "test -f X && run test that uses X" written here
-   really wanted to say "if file X is there, then run the test", not
-   "file X must exist and the test using it must succeed".  The
-   proper way to express it is to say "test ! -f X || use X".
+	if ! A
+	then
+		test_expect_success ...
+	fi
+
+Make sure we do not fail unnecessarily under "set -e".
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t4032-diff-inter-hunk-context.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t7450-bad-git-dotfiles.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t4032-diff-inter-hunk-context.sh b/t/t4032-diff-inter-hunk-context.sh
-index bada0cbd32..efcd863126 100755
---- a/t/t4032-diff-inter-hunk-context.sh
-+++ b/t/t4032-diff-inter-hunk-context.sh
-@@ -17,7 +17,7 @@ f() {
+diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+index f512eed278..047e4085d7 100755
+--- a/t/t7450-bad-git-dotfiles.sh
++++ b/t/t7450-bad-git-dotfiles.sh
+@@ -220,7 +220,7 @@ check_dotx_symlink () {
+ 		)
+ 	'
  
- t() {
- 	use_config=
--	git config --unset diff.interHunkContext
-+	git config --unset diff.interHunkContext || :
- 
- 	case $# in
- 	4) hunks=$4; cmd="diff -U$3";;
-@@ -40,7 +40,7 @@ t() {
- 		test $(git $cmd $file | grep '^@@ ' | wc -l) = $hunks
- 	"
- 
--	test -f $expected &&
-+	test ! -f $expected ||
- 	test_expect_success "$label: check output" "
- 		git $cmd $file | grep -v '^index ' >actual &&
- 		test_cmp $expected actual
+-	test -n "$refuse_index" &&
++	test -z "$refuse_index" ||
+ 	test_expect_success "refuse to load symlinked $name into index ($type)" '
+ 		test_must_fail \
+ 			git -C $dir \
 -- 
 2.53.0-886-g529cbd14ff
 
