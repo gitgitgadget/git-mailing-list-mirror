@@ -1,70 +1,70 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635B63382C5
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:11:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886FA33B6C4
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 21:11:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774473074; cv=none; b=gIbeICK6vfGubrMHVwdM6Hm7IajcOigtBeMCdLc/42t5Eb7ktyOsWqTkdDgM0CEmYWqyQelC9IDMcXn9TxIDyhSGxG3z4krAKq0PTNwBvNg9b7SNHNqHUb4DXBE+daA8Ebf5PWqxNyRkwvLsp0n2Ntn2Ay+pGkS6B4l5rgfpKP8=
+	t=1774473075; cv=none; b=ddS+vl8egYu2C3JB087Xu5DV1Ctzyjc8rEGLGMzPTMVQc03+EMDRV0gkLCtSKHLv3w3q4qST/wFNRG8ivUwECQWkQUBLv67AajBwQa5lwRxQJlRh0X1ckXnQUVGCL7wCS1FoqnXRTTjM+1pN3hJulQ4Z4r1VPDf4jx9B7v5OWAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774473074; c=relaxed/simple;
-	bh=DcJLORpE0JympVo+xIkJoGLmruU5U+8myRzjyPCRSL4=;
+	s=arc-20240116; t=1774473075; c=relaxed/simple;
+	bh=Bi/bEFVNKObzrmEHGMNlHMddqVQVqRzW6BbgxUnjDik=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=i0lAEa3tLDC+InC6WrCs+ynk53tUCohoiZT0E5XvieWyNsycFiH1lyZaHnq9st35X/+OvEMxNHqFi6x7XACEpWflqM8Pm9/bSksgY5dtsMr1F5kzKOocLj3yflQaGpPBiVe+C6GZGg47Tt7ytOyBev96uLhkXhRvmTSA2DL1i6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G2GqMi8d; arc=none smtp.client-ip=209.85.167.182
+	 MIME-Version:To:Cc; b=U1k37uyKMCgOy4hvFdBlS0cIkIEVR1CQ5xKErJHwjvpkBr20KlFaZ9nm9gNCDWybr0q4G+x+61yM+zVgNnfoiU82NvaGP+lFA19KUNBIu4/2yIMOBmgv/FWf8d3c7FR0yV6nCJ3FydytX6t2OuOi3tke4Ysj8fpGHtrZdFXoc6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a0XsiYjg; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G2GqMi8d"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-463a0e14abfso158082b6e.2
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 14:11:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a0XsiYjg"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7d7d4ebccf7so217270a34.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 14:11:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774473072; x=1775077872; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774473073; x=1775077873; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QBouSEtOq9DnVWWoshE7EiZgyPT7gQ1ADOLVLwYfzw8=;
-        b=G2GqMi8drnuqGAvQn7iBC372pFc/H1pz1+uYvXBn9H/I9Eg1OrM5fV/vslsOwJX1Hl
-         ynJu4zf3RTvdHfQOYGmlbXlHLikWEg7mORLEs0ZY1+LkE7KzO97YgHyjTvxmMArgGM/W
-         yje0YTQiydWfUxyJmgVMrsViF7s/rmbBXU6pNWdoLf/4ylmfvpgWNrQ4Z1E865ozYQaB
-         THe1cCXKw2h2JuzZGcPW6Fw3hvA8Vo3Ne7lrzASmljbpDuKitqPSd/WYR5W+VewRHcDc
-         T4P4CZn5q/spJ4oQ5lGUaJvm1aj5MaeTWNpTl0HqDdMlR7zfEchlMO0nhXwJtJtGaJi4
-         TD0A==
+        bh=pSeQnxXVfu/bca4r9cvwDCqEMxnZeqy/YYraDvHBaDU=;
+        b=a0XsiYjg73HYSlvE1rqFkhWtN8K9tu2QMOvl60UofLGocNInFJWviklh9THeywg80F
+         GWj2LiNTmsIb4YkDmHXMQUs49cfuRliEPxQl0G60ZS9V3NfvnE/hSHYWoVfGCJ9Zrrcg
+         5C9uPu6KqYwEvZOf878ZapHhbFZRJzNMuZUWcR24IaJyq+fSf2vZ8oW+J11bCNSIGB+9
+         giWMXuEvQgpCyAWBRZ4LhmjK8OPFVJJrhoipZFQoOQAg24JAQv6LZvbvVQwpmmkkCYCD
+         j9S2t5KvYsGvGYJZd6L20IfIq4PXiwt6j0Wd+Tt54vL4jzKepPJBxCCUprDw7zkewGyU
+         uaOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774473072; x=1775077872;
+        d=1e100.net; s=20251104; t=1774473073; x=1775077873;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QBouSEtOq9DnVWWoshE7EiZgyPT7gQ1ADOLVLwYfzw8=;
-        b=WfUWMqeTqeX7bjZ2a0xeFZ65+aX8Q26AYIw/IUD7DGkI7eC3Hy2izo1bKMSp/LsdR5
-         /Kw+a1CnKFu2VLWOKatRshSEWgz+I5AASRSEY/5f0uoEcMWJuHTMFSu+WfdO7nE93qaA
-         tFdZvob0+vUW0QIjP/7n1mUIL8Cj8Apx/+V/8BzQ3Po2TIBjPlSZn6hyU4JB+SkvZOEB
-         n8sY3zX7Zg35PACV/5dECfpoVfXu3rbWPsgPjbHxRD6W7W0ksSqDfvAei3fshuDWMAlc
-         IhDP1G1We/hJ7fpGMat6WEJh2JeakfolZq1vHFHP0B1tCda5Kipp/nfageCjbCW4T+Ly
-         scUg==
-X-Gm-Message-State: AOJu0Yzlpbi6MP+zMX7q82uWeZVspGQ4tTHlWQaB3JXbYB8NvpAh3ZU6
-	FO1WQ1tAJi6b8FEJhtx6H1vo4P8RWu7M6n9Hu8X9AcncDhmy0ViW0uY1UphdyA==
-X-Gm-Gg: ATEYQzzbvXtS7WvlkjhohIsc6HT35w6i9a3t4tTIz8X4+PHNKGJpyR9UOlHiDhZQk+U
-	SPc3wapw+9b6OSxD39CJz1KE0drXIEuCQMzyMeRAdBmGMfoT8YMVEiBqcPx3YzNv8rFqis+yHU8
-	X4KsUQiYaq8jMDEooiOkp5hct/r3oMxo4fOynN72k4+9D28lyQfHc1N44va5EJ4Cw5aRLr0CoSZ
-	FTNdAIqhgh79LIK2/pZkTO73CFCpIgVgdwz4gc1dHqECeE7uokCENb4XH1++1kJZXBeGpd/TUre
-	v8EE2wPezvCv+FtwFJKprhRmb8EV6rmEdHyePXkYNqs7y97wafKQ289z7EVqE2mK3rKOlTSlhTX
-	9P8SSNHXC7qwqFkg4iw4tnIpeaLCOIks2+Pj3AlxbnlDCrBxklZND74ovh1KtHrudbFrmKJawQ1
-	9tTZHOvJdf3TR5ebBJXp2gC3DYhA==
-X-Received: by 2002:a05:6808:d4d:b0:467:237e:ba47 with SMTP id 5614622812f47-46a5c58588fmr2626823b6e.1.1774473071873;
-        Wed, 25 Mar 2026 14:11:11 -0700 (PDT)
+        bh=pSeQnxXVfu/bca4r9cvwDCqEMxnZeqy/YYraDvHBaDU=;
+        b=WEYUceIl0PL0oaqTf2D5mFCHFL8f+R/UPiBWVbQKYltkG4bgaI/jNzZvkOajv5NQxk
+         Dl8gLzQDH0keEVY7kCxKOuACgHqFtv8Deo8UeIcRZg+HcO8VIm7Bs6fzYLOV0jHtj+S4
+         NPs91jboKhWqLQVDT1qT4eMPl8QHWq8Ep/k9qSIGmBHgPdSCnmxM5Ikp/1KQPdtI7hgE
+         Opb06lDFUyH5jpwkEDX4ZOP3U0T+1qSw5Y7e7UjRgaboXjsrT+LWfBDqAxXv/p0f7NiW
+         3dKYa/lvpSuSAIU+mbcJGtWiC6Qz7a/lVX4LSarGSXJ/gn2lIixOZWNEVC5Qm7G2tol8
+         RW9w==
+X-Gm-Message-State: AOJu0Yw3Tgn0cGj8/2+/HqnWxpR77iBMEb7gkdi/4Yj6mkiyXMfV83TL
+	uIbmeFt/9qHMrMNzUuHNc4xqjVwJx2q5ClQ3UCLOnv8xc62+RI3KdK7jSi+2iA==
+X-Gm-Gg: ATEYQzz9qUMMd5j67QqCohnTig8r+uepVNqkjLORHHvFv9detspGj5gxyP+Vk3tc4qZ
+	bobeHKmuF30JpbaZnARiZ79L99lGzz1gyzwtuVH99wbemO6e6Gp4HGUawR37dv9Ygoh+fmAcxPh
+	AGGSf8qr6F/3U9ZWHj4NKyvVn2wSM3O4zGQdUD8QrghvbbxiHPdqrWtasNYN2VdyWJPusufIPnK
+	JCfiSh8ZYIMiHGxDeOmTVGifZavpzg3sXsFS7F/FqYuPilHSUKjRdQ9YCDznHrapjRsbNdT4blc
+	Ef3zFlf9AlMkpEgZoEyw1yU+YxrrHnokpI8AY4tRyOqMOPAAbHRNflH0M7X4iuqU8KHTtFvAQLW
+	qAxbpL6w42x1Z5kUQ9sSnqjX65BA7ZRDLTFbWFaU2h/+TuVvWhrBkcgL8gx0NWbIwNJOZ718LhY
+	G1IdE1mrHCu4N34CEsE2PRdifmwQ==
+X-Received: by 2002:a05:6830:6a89:b0:7d9:4337:2b8e with SMTP id 46e09a7af769-7d9d68af52dmr2713320a34.34.1774473073093;
+        Wed, 25 Mar 2026 14:11:13 -0700 (PDT)
 Received: from [127.0.0.1] ([52.165.213.176])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-46a70634329sm417049b6e.2.2026.03.25.14.11.10
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d9e680456bsm851171a34.0.2026.03.25.14.11.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 14:11:11 -0700 (PDT)
-Message-Id: <8be7e4781a9914e7f051a0fc94cb5bb79e258304.1774473065.git.gitgitgadget@gmail.com>
+        Wed, 25 Mar 2026 14:11:12 -0700 (PDT)
+Message-Id: <6abd052c347025610d26197ba5de8cd11fc1b618.1774473065.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
 References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
 	<pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Mar 2026 21:11:03 +0000
-Subject: [PATCH v2 3/5] xdiff/xdl_cleanup_records: make setting action easier
- to follow
+Date: Wed, 25 Mar 2026 21:11:04 +0000
+Subject: [PATCH v2 4/5] xdiff/xdl_cleanup_records: simplify INVESTIGATE
+ handling for clarity
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,46 +85,68 @@ Cc: Yee Cheng Chin <ychin.git@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Rewrite nested ternaries with a clear if/else ladder for
-action1/action2 to improve readability while preserving
-behavior.
+Make it clear that INVESTIGATE is turned into KEEP or DISCARD based on
+the result of xdl_clean_mmatch() which reduces actionX[i] into a
+boolean value.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xprepare.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ xdiff/xprepare.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 756a5b8dcc..127848b764 100644
+index 127848b764..dd595cf8a1 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -304,14 +304,24 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
- 		rcrec = cf->rcrecs[mph1];
- 		nm = rcrec ? rcrec->len2 : 0;
--		action1[i] = (nm == 0) ? DISCARD: nm >= mlim1 ? INVESTIGATE: KEEP;
-+		if (nm == 0)
-+			action1[i] = DISCARD;
-+		else if (nm < mlim1)
-+			action1[i] = KEEP;
-+		else /* nm >= mlim1 */
-+			action1[i] = INVESTIGATE;
+@@ -330,24 +330,38 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+ 	 */
+ 	xdf1->nreff = 0;
+ 	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
+-		if (action1[i] == KEEP ||
+-		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
++		if (action1[i] == INVESTIGATE) {
++			if (!xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))
++				action1[i] = KEEP;
++			else
++				action1[i] = DISCARD;
++		}
++
++		if (action1[i] == KEEP) {
+ 			xdf1->reference_index[xdf1->nreff++] = i;
+-			/* changed[i] remains false, i.e. keep */
+-		} else
++			/* changed[i] remains false */
++		} else if (action1[i] == DISCARD)
+ 			xdf1->changed[i] = true;
+-			/* i.e. discard */
++		else
++			BUG("Illegal state for action1[i]");
  	}
  
+ 	xdf2->nreff = 0;
  	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
- 		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
- 		rcrec = cf->rcrecs[mph2];
- 		nm = rcrec ? rcrec->len1 : 0;
--		action2[i] = (nm == 0) ? DISCARD: nm >= mlim2 ? INVESTIGATE: KEEP;
-+		if (nm == 0)
-+			action2[i] = DISCARD;
-+		else if (nm < mlim2)
-+			action2[i] = KEEP;
-+		else /* nm >= mlim2 */
-+			action2[i] = INVESTIGATE;
+-		if (action2[i] == KEEP ||
+-		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
++		if (action2[i] == INVESTIGATE) {
++			if (!xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))
++				action2[i] = KEEP;
++			else
++				action2[i] = DISCARD;
++		}
++
++		if (action2[i] == KEEP) {
+ 			xdf2->reference_index[xdf2->nreff++] = i;
+-			/* changed[i] remains false, i.e. keep */
+-		} else
++			/* changed[i] remains false */
++		} else if (action2[i] == DISCARD)
+ 			xdf2->changed[i] = true;
+-			/* i.e. discard */
++		else
++			BUG("Illegal state for action2[i]");
  	}
  
- 	/*
+ cleanup:
 -- 
 gitgitgadget
 
