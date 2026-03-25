@@ -1,63 +1,63 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46313A16B0
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94BB4070F3
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774460658; cv=none; b=eUegrkujaFS/V/JckfLFVBUTMJmIVLfsUhVT6F53Wc2GR6wmcyMvQLxFe+yLNsGpG6mLHB7z8OvrnB9F49r1zHwwY3COWx535stvf1O9M3t+mY/F6unMyYAfkNYQXpVq2pZM60PD0paTJkwWtnDEO9/nJ2vGIZMRF4acbZwBg0U=
+	t=1774460661; cv=none; b=ka87hyYoYStm24XlC1TXmezxnfTITh8vqEWOT8aSWb6k8Q46FwowyJR617EzCpw5XMncBov3nBcl1zMOZNHkfqUpYV6GrUrBRzEWS1LR6ghoQXJI8olzTfy6G3zBedVwJej8tA60+JP6F+tvGGrTKjzNi3+7jDH6Oe4DwR817X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774460658; c=relaxed/simple;
-	bh=Bykxf6i9AwPmr7V3LbO5ylLEOH4Ng8TXvoVxuVfbga8=;
+	s=arc-20240116; t=1774460661; c=relaxed/simple;
+	bh=H3RmfM/3HYN1HUCMdWAgatfgMFue5ty9mnmnhaoOiyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vdh5FMBdo0WDjEodwofXGESykJGNB+Nx2sW85Z9ItDoS7kYhJh0JN9iLPwj+HbrN7sbUtXYT9sE47ZMaZ21/5DMAks/jVbsW1cuWktYr8ea2HJZWxP87AHZsBR14VqVPhOAr3TGkhwaA11HHp2MMXe9ppwoAzc6EClUpi5N+nDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JsVN9xGW; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=OM9faYBufViQLOqtpaoSaroJDRzYetWaYoz4++aR1cILJdPcSo4HhL/T0hey0QP57cJvVLrRKU4CUSvVwLel+rCQ03QUQqsGkvWQy3tyZ6SZCblFrpd51DbZ/tvljLCV30Ec3Vx85rgkU/zbqet/jWnjQJesfsAf7muVYjCVXzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o4EseoU+; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JsVN9xGW"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-48538c5956bso542095e9.0
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:44:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o4EseoU+"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-486fb439299so1546705e9.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774460655; x=1775065455; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774460657; x=1775065457; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LeVCVOSlCLK164b52Kdvw6OYDzwZUWJEvkVpF6kbWes=;
-        b=JsVN9xGWXAnxwDC3Z9KGrsgCyNT7QLbQqViAI7CYZY6Kzx5luh5TlysS/TdmXCvIxn
-         OXDoXtULMSp65VpYKtLOohK+9bIe3UXmk02pwYkQevZTDa4QTIxXHYQKs6Rnf4YgA4QP
-         aEKORlT8TIiIp3O9a2610T0b2x6zcxHDYg2H59mLNDXEe0QcFrhg7PORY2N4fugpiPzz
-         4szDpHMn83vOIPsNvDD4IORaYpgUg5P+U1WsjpXMzpZCtnJu4xDfSspmXzSsDlBwt6GB
-         Yc9d0oy1U1ua8dLbySaWmd+H7D6+r9yU7BRO6SkSPnlmNTRhn1zOW5HTlDYCSbkRSjqt
-         YW6A==
+        bh=otRsexOvBthx0OB202QY13B0kF/RugImOdvr258Qjj4=;
+        b=o4EseoU+KJ+WnAYlV9gTfJFHmi9UtXLuwqVvuPZaCx99H0b5O46lYLD94Q/tMCW7hz
+         8Z4lBBDoRE43fKzf13FAEujBWqyltsPgVgcJoA3E3UUfTnbb1u81BdeBOfRZfmzsjlmO
+         7k1aeLChpgamxJIlUU0nUB+FZAGmPVCzg1oCStbUjpjDhgn/gD1RQc5G7myimxagUFuh
+         d4Z1OvBxENo0r3XCuzPDWbiLX7823OorTSNOs57ReRY5CjO9dQ4tHAd81LnWHH6S9h6l
+         LdoPp2ZesUcsoFBYH2XcCv67jNvdYS0VqdJDo5v9Mxd1F5OP3TULzw0wIaO4f6SLE+3f
+         UVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774460655; x=1775065455;
+        d=1e100.net; s=20251104; t=1774460657; x=1775065457;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=LeVCVOSlCLK164b52Kdvw6OYDzwZUWJEvkVpF6kbWes=;
-        b=VsXihCvrngqH5RKoJBfGz63P0eaqWWwnq5umj8EbPEyM8LBF0RsilAZPnb6GiQ4rdc
-         /mEodIVOtDomS2sh2s5w0b/8yz4fZYn1ROCtOYiCvoZOtFNsWk5NSXSM0vup8D0YDm0d
-         mkWptTnY0o/R+1/E8XuktfzAHWeQThgE15xXtbUKFT49xJnb3aK2Ax7+9dIHOWQUxhll
-         YOapDP+85Emg21xoS5Ce2p/37f6DM3fdy33+zddaEstPphvMYEmvWreLXZSZFQNZ85aM
-         yOPZIkLgjib140Z/xlDnBbtqkY2HKQB29FxJ23JOcg77PC5ksMAPJAXonA2y2CSDXQ2z
-         /4Qw==
-X-Gm-Message-State: AOJu0Yy/DMwU8yK+X/qJofyRCLResSKs8ZV021tOXw3ZRU/32BWV/iC4
-	8pD3MXqRjbVUPsUtv7Aj2sze5GEpnYsaMKo5s3ZbQXfVrYgcQXvPly5pHpQFDOTm0t9Arg==
-X-Gm-Gg: ATEYQzxZzLHuFKfETZhTralUDsuXpHjbAD6Uwml4pxFQCrQImYvxiPYVak+ziIpyE1M
-	9qDwV4G1CaJ83BFcR/rDuJy5/aPKae3u5NwTJjDZIe6a/yznweuC645EKXzL8jGhe4JGvvJFt26
-	N+er/sGmWiyeJK+nowdfOwNymrL4CrJ011EhZP3JLxLnvaUVc8jkRu49K/h5PUW2Ln1Obg7WI6Y
-	AXsKzTfFQF+rpUmrj8zpKX4h0sPBHocf+HscPQN1qtP/FskwRIVNxf+pBSHsJ621594RgHfYRfs
-	VvVn4EtbqXjKYd8kEnZvYXCZp6942Rg0i+J7VSXgF5SlM7VTMJN3ZUN0JQUQt9TiJjcZS+flNhL
-	eXDDIfJUxGindTi2GFf7XyWPMKIrhKo18EjC+aot1gZh/Ta0tLFETpfBatEe61AasXvxSAtVJEk
-	VnUgh5KKvq9+4PV5s2LjFUNc7l8Asx9cwpKOmQYJwtP6i0K+fB4JvlQoqgHf5EjUd1ucTzvESu2
-	B37Sza/bG8os8mPIHduHLzm5CsymrDtKaFYBXF14DshYToFT5MRbAjE5aE=
-X-Received: by 2002:a05:600c:524f:b0:485:fbd2:f72 with SMTP id 5b1f17b1804b1-48715fc76bdmr59436645e9.1.1774460654686;
-        Wed, 25 Mar 2026 10:44:14 -0700 (PDT)
+        bh=otRsexOvBthx0OB202QY13B0kF/RugImOdvr258Qjj4=;
+        b=X798Go4YHLPKA2zkvsYfEe9T3JrmzQtR+N2AqAMJugBFAaBZr/1hJeyENS6WXRfLx4
+         H2knJwu6+JHfE15KHXa8gXyT2RBx2UlOKvWRVtD+LwBB+ej2/HPRHj0I7QlrTI04yPi3
+         GHfJAK2aHUz84d7Napv8x1xIPB5uyHqRRMpVKvcLa5FXmjQxvxXJi7xCO85mXE2hOkpQ
+         EcpER+TcFxbMuivOJhTaAJ7qY9UkJcEsj/Fq6ZpmU5MjEQfsErsB69oLIFwOuCbicFH6
+         sRLI71SHiQ3FOWn69lkE62S8bC+AISQy5I2ALAjTkTzsAg+HKGKF14eIXRrvmOIF3OAJ
+         mhhA==
+X-Gm-Message-State: AOJu0YxcndgjD3B8l33FCYA03IB9vjlUPIsCmpWLgTIwt1CmRcfkTvnt
+	OL799hfR/nR9XKSJnn6azOB7BOXPfVOuW8rAQ+ccIXXdHDblLn7QZbggJh4u0ly0biru5Q==
+X-Gm-Gg: ATEYQzxRxXIVdFXsZO4rv+mwWX4aB1U8Sx/x8WcC16c3emjCurQJX9AItKb1jvDdBxq
+	iVUoH3L4ZpHkfSHFADCwtqkFw3AdC9bDBwGuMVS9cXkW1Bl1XerD29n+k4KMIEuwiAss53WVt0U
+	PZTgsH4mI4JmhBvUg5q+Sa0IJqX6eOOnax5ojiDqLuWW+2M8kLIAKe6RImZAHYgnvBgbsxJrYkB
+	YaYsgUoubWUpj1A0yZljDpW8ZYu8NAGxtDjtGa2rr+OnyebfLGoYMJNYuG61ZTe69SPxp11Ybof
+	5WTxLXpPk0nlWrrbUpG/43aXrDAvwsXJVq6scYO865aOksXpAoz9G7+pNF+w32OA+WCFAc0dcbL
+	dmZlp726Kd0k1cZRtxlF/HXA3uM5CYp1JWj6KA1RdKOSGgGs8Ljirocj2QfiqrCWPpZ/6hJugDP
+	d3g8zoXsT7fJqpKyz1FdJo4aP+bQh9T5PCyk0LCid+7ttNqXMaNiyuQraeATV1HErjguEKrGy75
+	zH8xT1Cm/Z1BI67irRFbwugRRfxVgF2PMlusPyjGEjxvMgxUc98kxoYZV8=
+X-Received: by 2002:a05:600c:a41b:b0:486:fbe1:2499 with SMTP id 5b1f17b1804b1-48716043a6cmr40050785e9.22.1774460656584;
+        Wed, 25 Mar 2026 10:44:16 -0700 (PDT)
 Received: from farblopa.localdomain ([84.126.0.122])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48716547814sm47106145e9.0.2026.03.25.10.44.13
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48716547814sm47106145e9.0.2026.03.25.10.44.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 10:44:14 -0700 (PDT)
+        Wed, 25 Mar 2026 10:44:16 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -70,12 +70,13 @@ Cc: christian.couder@gmail.com,
 	j6t@kdbg.org,
 	szeder.dev@gmail.com,
 	Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [GSoC PATCH v5 0/2] graph: add --graph-lane-limit option
-Date: Wed, 25 Mar 2026 18:43:59 +0100
-Message-ID: <20260325174401.217577-1-pabloosabaterr@gmail.com>
+Subject: [GSoC PATCH v5 1/2] graph: add --graph-lane-limit option
+Date: Wed, 25 Mar 2026 18:44:00 +0100
+Message-ID: <20260325174401.217577-2-pabloosabaterr@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+In-Reply-To: <20260325174401.217577-1-pabloosabaterr@gmail.com>
 References: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+ <20260325174401.217577-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,104 +90,334 @@ wide graphs. A lane consists of two columns, the edge and the space
 padding, each branch takes a lane in the graph and there is no way
 to limit how many can be shown.
 
-The limit is a horizontal truncation, each lane is cut at the lane limit:
+Add '--graph-lane-limit=<n>' revision option that caps the number
+of visible lanes to n. This option requires '--graph', without it
+a limit to the graph has no meaning, in this case error out.
 
-  Without --graph-lane-limit:
+Zero and negative values are valid inputs but silently ignored
+treating them as "no limit", the same as not using the option.
+This follows what '--max-parents' does with negative values.
 
-  *   7_M1
-  |\  
-  | * 7_E
-  * | 7_C
-  | | *   7_M2
-  | | |\  
-  | | | * 7_H
-  | | |/  
-  | |/|   
-  | * | 7_D
-  | | * 7_G
-  | | * 7_F
-  | |/  
-  |/|   
-  * | 7_B
-  |/  
-  * 7_A
+When the limit is set, lanes over the limit are not drawn.
+Teach each graph state to stop rendering at the lane limit
+and print a "~" truncation mark, so users know that
+there are hidden lanes. The "~" was chosen because it was not used
+elsewhere in the graph and it is discrete.
 
-  With --graph-lane-limit=1:
+On the commit line, if the commit lives on a visible lane, show
+the normal commit mark and truncate after it, if the commit lives
+on the first hidden lane show the "*" instead of the truncation mark
+so it is known that this commit sits on the first hidden lane.
+Commits on deeper lanes don't leave a mark.
 
-  *   7_M1
-  |\  
-  | * 7_E
-  * ~ 7_C
-  | ~ 7_M2
-  | ~ 7_H
-  | ~ 
-  | ~ 
-  | * 7_D
-  | ~ 7_G
-  | ~ 7_F
-  | ~ 
-  |/~ 
-  * ~ 7_B
-  |/  
-  * 7_A
+For merges, the post-merge lane is only needed when the commit or
+the first parent lives on a visible lane (to draw the connection
+between them), when both are on hidden lanes, post-merge carries no
+useful information, skip it and go to collapsing or padding state.
 
-The '~' is the truncation mark, not an actual lane. It was chosen because '.' is
-already used in octopus merges and '~' is not used elsewhere in the graph. Yet
-the edges between the last visible lane and the truncation mark are still
-conserved.
+Also fix a pre-existing indentation issue.
 
-The '*' commit mark is visible when it lives on a visible lane or the first
-hidden lane, any deeper lane doesn't show the commit mark but keeps the commit
-message visible. 
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+ graph.c    | 150 +++++++++++++++++++++++++++++++++++++++++++++--------
+ revision.c |   6 +++
+ revision.h |   1 +
+ 3 files changed, 134 insertions(+), 23 deletions(-)
 
-Merges where neither the commit nor its parents live on a visible lane are skipped
-because they don't carry any visible information.
-
-The original idea to limit columns was noted as a TODO in c12172d2ea
-(Add history graph API, 2008-05-04).  This does not implement
-gitk-style column rearrangement, it only truncates the visual output.
-
-Possible future improvements:
-
-- When all branches involved in collapsing or padding are over the limit, the
-  truncated lane doesn't show any information, this lane could be removed to
-  make the graph more compact. Currently these lanes still appear because
-  graph_output_collapsing_line() mixes state handling with rendering, so it can't
-  be skipped but callers always expect a non empty buffer. Fixing it would need
-  to refactor the callers to handle empty buffers instead of expecting them to
-  always have content.
-
-- Collapsing and merges lanes that start on visible lanes but end on hidden ones
-  are kept to maintain the most information possible on the visible lanes, but
-  the information about where they go is lost. They can be kept, removed or think
-  of a way to show that information without showing the lanes.
-
-Changes since v4:
-
-- Merged the option parsing and the truncation logic into a single
-  patch, fixing the DEVELOPER=1 build break when the first patch was alone.
-- Added before/after example to clarify horizontal truncation.
-- Fixed error message to match existing format strings.
-- Shortened code comment.
-- Changed truncation_max -= 1 to truncation_max--.
-- Fixed pre-existing indentation in graph_output_collapsing_line().
-- Fixed unnecessary blank line changes.
-- Added that zero and negative values mean no limit in the docs.
-- Changed truncation mark from '.' to '~' because '.' is already
-  used in octopus merges.
-- Added more tests.
-
-Pablo Sabater (2):
-  graph: add --graph-lane-limit option
-  graph: add documentation and tests about --graph-lane-limit
-
- Documentation/rev-list-options.adoc |   6 ++
- graph.c                             | 149 +++++++++++++++++++++++-----
- revision.c                          |   6 ++
- revision.h                          |   1 +
- t/t4215-log-skewed-merges.sh        | 144 +++++++++++++++++++++++++++
- 5 files changed, 283 insertions(+), 23 deletions(-)
-
+diff --git a/graph.c b/graph.c
+index 26f6fbf000..2218f00c40 100644
+--- a/graph.c
++++ b/graph.c
+@@ -317,6 +317,15 @@ struct git_graph {
+ 	struct strbuf prefix_buf;
+ };
+ 
++static int graph_needs_truncation(struct git_graph *graph, int lane)
++{
++	int max = graph->revs->graph_max_lanes;
++	/*
++	 * Ignore values <= 0, meaning no limit.
++	 */
++	return max > 0 && lane >= max;
++}
++
+ static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
+ {
+ 	struct git_graph *graph = data;
+@@ -696,6 +705,18 @@ static void graph_update_columns(struct git_graph *graph)
+ 		}
+ 	}
+ 
++	/*
++	 * If graph_max_lanes is set, cap the padding from the branches
++	 */
++	if (graph->revs->graph_max_lanes > 0) {
++		/*
++		 * width of "| " per lanes plus truncation mark "~ ".
++		 */
++		int max_columns_width = graph->revs->graph_max_lanes * 2 + 2;
++		if (graph->width > max_columns_width)
++			graph->width = max_columns_width;
++	}
++
+ 	/*
+ 	 * Shrink mapping_size to be the minimum necessary
+ 	 */
+@@ -846,6 +867,10 @@ static void graph_output_padding_line(struct git_graph *graph,
+ 	 * Output a padding row, that leaves all branch lines unchanged
+ 	 */
+ 	for (i = 0; i < graph->num_new_columns; i++) {
++		if (graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, "~ ");
++			break;
++		}
+ 		graph_line_write_column(line, &graph->new_columns[i], '|');
+ 		graph_line_addch(line, ' ');
+ 	}
+@@ -903,6 +928,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 			seen_this = 1;
+ 			graph_line_write_column(line, col, '|');
+ 			graph_line_addchars(line, ' ', graph->expansion_row);
++		} else if (seen_this && graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, "~ ");
++			break;
+ 		} else if (seen_this && (graph->expansion_row == 0)) {
+ 			/*
+ 			 * This is the first line of the pre-commit output.
+@@ -994,6 +1022,12 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
+ 		col = &graph->new_columns[j];
+ 
+ 		graph_line_write_column(line, col, '-');
++
++		if (graph_needs_truncation(graph, j / 2 + i)) {
++			graph_line_addstr(line, "~ ");
++			break;
++		}
++
+ 		graph_line_write_column(line, col, (i == dashed_parents - 1) ? '.' : '-');
+ 	}
+ 
+@@ -1028,8 +1062,17 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 			seen_this = 1;
+ 			graph_output_commit_char(graph, line);
+ 
++			if (graph_needs_truncation(graph, i)) {
++				graph_line_addch(line, ' ');
++				break;
++			}
++
+ 			if (graph->num_parents > 2)
+ 				graph_draw_octopus_merge(graph, line);
++		} else if (graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, "~ ");
++			seen_this = 1;
++			break;
+ 		} else if (seen_this && (graph->edges_added > 1)) {
+ 			graph_line_write_column(line, col, '\\');
+ 		} else if (seen_this && (graph->edges_added == 1)) {
+@@ -1065,10 +1108,32 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line
+ 
+ 	/*
+ 	 * Update graph->state
++	 *
++	 * If the commit is a merge and the first parent is in a visible lane,
++	 * then the GRAPH_POST_MERGE is needed to draw the merge lane.
++	 *
++	 * If the commit is over the truncation limit, but the first parent is on
++	 * a visible lane, then we still need the merge lane but truncated.
++	 *
++	 * If both commit and first parent are over the truncation limit, then
++	 * there's no need to draw the merge lane because it would work as a
++	 * padding lane.
+ 	 */
+-	if (graph->num_parents > 1)
+-		graph_update_state(graph, GRAPH_POST_MERGE);
+-	else if (graph_is_mapping_correct(graph))
++	if (graph->num_parents > 1) {
++		if (!graph_needs_truncation(graph, graph->commit_index)) {
++			graph_update_state(graph, GRAPH_POST_MERGE);
++		} else {
++			struct commit_list *first_parent = first_interesting_parent(graph);
++			int first_parent_col = graph_find_new_column_by_commit(graph, first_parent->item);
++
++			if (!graph_needs_truncation(graph, first_parent_col))
++				graph_update_state(graph, GRAPH_POST_MERGE);
++			else if (graph_is_mapping_correct(graph))
++				graph_update_state(graph, GRAPH_PADDING);
++			else
++				graph_update_state(graph, GRAPH_COLLAPSING);
++		}
++	} else if (graph_is_mapping_correct(graph))
+ 		graph_update_state(graph, GRAPH_PADDING);
+ 	else
+ 		graph_update_state(graph, GRAPH_COLLAPSING);
+@@ -1109,6 +1174,7 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 			int par_column;
+ 			int idx = graph->merge_layout;
+ 			char c;
++			int truncated = 0;
+ 			seen_this = 1;
+ 
+ 			for (j = 0; j < graph->num_parents; j++) {
+@@ -1117,23 +1183,46 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 
+ 				c = merge_chars[idx];
+ 				graph_line_write_column(line, &graph->new_columns[par_column], c);
++				if (graph_needs_truncation(graph, j / 2 + i) &&
++				    j / 2 + i <= graph->num_columns) {
++					if ((j + i * 2) % 2 != 0)
++						graph_line_addch(line, ' ');
++					graph_line_addstr(line, "~ ");
++					truncated = 1;
++					break;
++				}
++
+ 				if (idx == 2) {
+-					if (graph->edges_added > 0 || j < graph->num_parents - 1)
++					if (graph_needs_truncation(graph, (j + 1) / 2 + i) &&
++					    j < graph->num_parents - 1) {
++						graph_line_addstr(line, "~ ");
++						truncated = 1;
++						break;
++					} else if (graph->edges_added > 0 || j < graph->num_parents - 1)
+ 						graph_line_addch(line, ' ');
+ 				} else {
+ 					idx++;
+ 				}
+ 				parents = next_interesting_parent(graph, parents);
+ 			}
++			if (truncated)
++				break;
+ 			if (graph->edges_added == 0)
+ 				graph_line_addch(line, ' ');
+-
++		} else if (graph_needs_truncation(graph, i)) {
++			graph_line_addstr(line, "~ ");
++			break;
+ 		} else if (seen_this) {
+ 			if (graph->edges_added > 0)
+ 				graph_line_write_column(line, col, '\\');
+ 			else
+ 				graph_line_write_column(line, col, '|');
+-			graph_line_addch(line, ' ');
++			/*
++			 * If it's between two lanes and next would be truncated,
++			 * don't add space padding.
++			 */
++			if (!graph_needs_truncation(graph, i + 1))
++				graph_line_addch(line, ' ');
+ 		} else {
+ 			graph_line_write_column(line, col, '|');
+ 			if (graph->merge_layout != 0 || i != graph->commit_index - 1) {
+@@ -1164,6 +1253,7 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+ 	short used_horizontal = 0;
+ 	int horizontal_edge = -1;
+ 	int horizontal_edge_target = -1;
++	int truncated = 0;
+ 
+ 	/*
+ 	 * Swap the mapping and old_mapping arrays
+@@ -1279,26 +1369,35 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+ 	 */
+ 	for (i = 0; i < graph->mapping_size; i++) {
+ 		int target = graph->mapping[i];
+-		if (target < 0)
+-			graph_line_addch(line, ' ');
+-		else if (target * 2 == i)
+-			graph_line_write_column(line, &graph->new_columns[target], '|');
+-		else if (target == horizontal_edge_target &&
+-			 i != horizontal_edge - 1) {
+-				/*
+-				 * Set the mappings for all but the
+-				 * first segment to -1 so that they
+-				 * won't continue into the next line.
+-				 */
+-				if (i != (target * 2)+3)
+-					graph->mapping[i] = -1;
+-				used_horizontal = 1;
+-			graph_line_write_column(line, &graph->new_columns[target], '_');
++
++		if (!truncated && graph_needs_truncation(graph, i / 2)) {
++			graph_line_addstr(line, "~ ");
++			truncated = 1;
++		}
++
++		if (target < 0) {
++			if (!truncated)
++				graph_line_addch(line, ' ');
++		} else if (target * 2 == i) {
++			if (!truncated)
++				graph_line_write_column(line, &graph->new_columns[target], '|');
++		} else if (target == horizontal_edge_target &&
++			   i != horizontal_edge - 1) {
++			/*
++			 * Set the mappings for all but the
++			 * first segment to -1 so that they
++			 * won't continue into the next line.
++			 */
++			if (i != (target * 2)+3)
++				graph->mapping[i] = -1;
++			used_horizontal = 1;
++			if (!truncated)
++				graph_line_write_column(line, &graph->new_columns[target], '_');
+ 		} else {
+ 			if (used_horizontal && i < horizontal_edge)
+ 				graph->mapping[i] = -1;
+-			graph_line_write_column(line, &graph->new_columns[target], '/');
+-
++			if (!truncated)
++				graph_line_write_column(line, &graph->new_columns[target], '/');
+ 		}
+ 	}
+ 
+@@ -1372,6 +1471,11 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+ 	for (i = 0; i < graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 
++		if (graph_needs_truncation(graph, i)) {
++			graph_line_addch(&line, '~');
++			break;
++		}
++
+ 		graph_line_write_column(&line, col, '|');
+ 
+ 		if (col->commit == graph->commit && graph->num_parents > 2) {
+diff --git a/revision.c b/revision.c
+index 31808e3df0..81b67682a8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2605,6 +2605,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--no-graph")) {
+ 		graph_clear(revs->graph);
+ 		revs->graph = NULL;
++	} else if (skip_prefix(arg, "--graph-lane-limit=", &optarg)) {
++		revs->graph_max_lanes = parse_count(optarg);
+ 	} else if (!strcmp(arg, "--encode-email-headers")) {
+ 		revs->encode_email_headers = 1;
+ 	} else if (!strcmp(arg, "--no-encode-email-headers")) {
+@@ -3172,6 +3174,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 
+ 	if (revs->no_walk && revs->graph)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
++
++	if (revs->graph_max_lanes > 0 && !revs->graph)
++		die(_("the option '%s' requires '%s'"), "--graph-lane-limit", "--graph");
++
+ 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+ 		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
+ 
+diff --git a/revision.h b/revision.h
+index 69242ecb18..874ccce625 100644
+--- a/revision.h
++++ b/revision.h
+@@ -304,6 +304,7 @@ struct rev_info {
+ 
+ 	/* Display history graph */
+ 	struct git_graph *graph;
++	int graph_max_lanes;
+ 
+ 	/* special limits */
+ 	int skip_count;
 
 base-commit: ce74208c2fa13943fffa58f168ac27a76d0eb789
 -- 
