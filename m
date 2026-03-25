@@ -1,171 +1,108 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF07C26CE32
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774458329; cv=pass; b=qafydP0DGidDLWhda7z41j2IDISJmUVL8esjlchiXiVwyU9lfG9Wiv9fPqWGQ+mqjJix+6eEmiULaZF3W/aajiPGyIpYoEjIL2T8gH50yHW9jtCl10GpagpMkXW5bxzGUHWdslT9sPaS7LEFNH2xjPBVojFZ4g8xUuzLS18Jh98=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774458329; c=relaxed/simple;
-	bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QA1sbnCEdpffQwuTIuGOa31e3OTQbma98Rofw0sa/r050N9oFHnPTVdk74qn/9kyeNdn2EZvVIIy7SI8ge+6vJaZoNFn0EAvVgKjZuonks72wFSaIYCeLf6bzlqI5WNNpbS/mT5/vfNFVyyK1Bs76MZtcPMkO/Du69lO/420Hy4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mIBPn4yE; arc=pass smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE9E3ED5B0
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:19:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774459178; cv=none; b=mj2l1AAMpKSW7L1WAO+7g+UZgHzSWtUQQzVqAhTvg0Xv8mmFHuKlp6EF/jijrxMw784+GfPnZrnCqtZ+gyVe+JhIo9zQG9UcSDlNER35hcVRo/g1dYZri97M5g8cZEAfTZ41ts6MQZssNc+HgzDdsfFE/oxJUlZUwCeStQpO//8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774459178; c=relaxed/simple;
+	bh=w6YlxKsmcev9QgGhFQwhxqjFYiltmasPABnWTL+6OEU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Tmb5MbebPD5uBJdz3WhExY318LaDtrr3TcSiiw/Oq2FQLOnz5Fq+72gcoeOZV7f7NVunWbmbAJWK3ck1wd6OlAYkGPSljBvZDlw83ebFCOvkwSLu06mlXn8G+yt75AbgoGN7D6P+zk6fo2a37m8ltJn5koI+000sSI9XQDTs07U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rhZS6ZDw; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mIBPn4yE"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-66aa2204e9dso1373269a12.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:05:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774458324; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Ln+tXulVn/68Xt9nSrz9wC9notIDUmZFdLm7bqRCnD2MIo/8e/4dDgP+8Fh7KYSjn6
-         x405f5vK5LVSz3W78f/k/O4kW9dhZ4jh+Q/8YptKgqm4Ch3mk66JRQ8rf/6jQJMoRkAL
-         NfSed0zCBCeFqielr5sNWAxL8c1WX5TxubbS+n8vbfCStkmUk4///Y58l85bDmOEsq9m
-         0K0tNxc5iIWVDpS4G47FxsYrgBtee9rHSvkm80VA+yJJ2UWhIVYRK3fhDNOKvOWhMX/X
-         rMPOx2sdJBONlreQ1VyGJZe8WFamSkjrUN+90pO4lJc909lwhzHAaL+d5aiImsJw7CAK
-         AswA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
-        fh=92YHPqv+Dgz2hIQYxcqhnikPL8+pZwc7nL3MBjz5fX4=;
-        b=W3Qi/FdHvc+iaWZ0rh+fTen1/KDgQPBBqIppCYEFNKN43dJQb+5MGyzraiIBjq/GI2
-         x8HyrN2rY+EakVC3I8HKEQGiLDxeemsZ1nRR6NVkBXIFdZbuU/DzedttTEcgGtEkYQUQ
-         jacaGgDxGC4zi7VxjKlx/2KdhmZZLi6YVrCKh7Sy9Tx/GNZBGwnNunCP3uYPWzBmAS/X
-         vU1yPZwQwPGlo/9JSP3mh+8Wuo60TwZptDrxtE1MCQD3x6kZcV7w4CpKDyricPeyerao
-         g3vGURjKZyNTR5/3B1gnVK5MJzbj3a7KOwX7st1+VJoN/NFmsu0unPmpTXEcb3wT6g0c
-         eT5A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rhZS6ZDw"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-35c116887b9so11079a91.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 10:19:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774458324; x=1775063124; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
-        b=mIBPn4yE9RQeJVJLae5sRPHdlSVJNEqQsbqlP3E5604EStFg5soAm4d1qmARSfPBkF
-         5kFTZeYqBcd44J5l/G8VEkCpf4SoZK4x3zHb6ulDZPlzIzK8i//LywslmA/WwwksMwwD
-         +rtoGgdJQ+HMAZE3NG3lnxMUKdbLo5dPdaV46KaGkGL07TNwra/QAI0Eyf8z+3Ke06K/
-         NQVq5reCHsvUh46rB7O4y4lwqkhRHTzUHQnFD1h6/sFTlUzgraTF2rGxtDARZZaGUoip
-         e1RYzqIZC0rY8nqRQo1aRuFjKCp5EddD2thruRWMmbJ5lQEVmS+uz0wQFZ3i2vW+Bss/
-         HQsQ==
+        d=gmail.com; s=20251104; t=1774459176; x=1775063976; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZLSUsCfwl22sOIIGRBR1FxaI51Hg64mhPL2/NDsJ5V8=;
+        b=rhZS6ZDwS6eUFsuqt/PtiOkhXj5YIYTfDgBLGbQY/c6XDXU7w55OUtf41ze8pmxT9p
+         NAKrNBBdt92GnrhdJRFJIWnTmGlyCObfaj2TE8p0xrPrWnxtW3mpZq1Xqd3EqxdhhnAp
+         FLTK/EcSTFDbbN6SJ388Z6fmKH3DZ/CIzp/XRJTCNjvio+iWAxagaIpe7x6IwkoXTxID
+         xaWazZe8bVmXOp5R1aQGA6BAJ0FILSK6dQ8e1eqTKondXs55qDGJV/g6mRJLnaVd4HAZ
+         uSJWVPoX1dW08MdwiHrLYNGlJiIXH1XZBVijUKCHJaqNMGFIxE0sKXKAf/mKWZmlz4yb
+         oN/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774458324; x=1775063124;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mZNasvR8ha61D9nfehTckxezbdmL0zgu9D8ZAVFRpG4=;
-        b=SbKy7DJsVVrb64aYhP4LUySry1xyMVr+HoMkH+FiA03vS+RK1/V6/+YnSfZAiHPadr
-         itLSnMbeeopmzCj57tFjohEck9PIVzl78ejNwQh67183qNlWlENr/dPgSFnsRdYaLS05
-         WirFOIMykrbM31znD8TCYpV/w29XzeuOEA71ud5VCSA8+QutbxjY/J/m4Fobsf6Abe4U
-         Y8vaWKEDIDXW5HT5w988AXtJrmbp2NQsbh5MyJyXqrpJtUfMXRwdaI1fwLfCyIKhFOqE
-         F418fJiKQFUJfZrIGARNzMYKILd4SwM1K3YS3FrkYze4F6JJ01GIgfNPDK3fnbbmNYPt
-         VkBQ==
-X-Gm-Message-State: AOJu0Yw0MxJLMfZy3vObCwvVF14/QyDjRsoRiU5ySb5CC5PmtWZpt5Qr
-	b5OjIprQba9xCEVbE1ZKtx1uBc2Wej7Rjtu6P4E3n1uXQi2dHuCcOI2ps3BJSQeK8ihxrLbq0XM
-	Q9dvquSUviL3K8/bh7RLlVOpAI539QAE=
-X-Gm-Gg: ATEYQzyAU0kQ+TavYYwkUDw3SehoZn8oqgNbpBTaZWdkh44yJfhUjTfRw9HaF/gOWLR
-	UyKx24w2VCnkHhYR+CDJkNXRwequKRw2RCacHavdOL3XidA2rC+oAFzFh8MuWSz0F9SpEQAPCEC
-	cEloEZ8I1jujqtGzYIojGsdfOtdhpU+briyMd3G+bnwbjpih2gQwzSj+u3w+34op0Hm2eZIWrri
-	lxjtBCjREZcqrx3a1p6Ou1eGA2/zIosLUz79jxI8cje0a/jbBzhFvd1lbwAss3MGLjpdXAgCkFB
-	hrkSRQ1aJBdjvCcJ8MiADkwtgnag++q8b2QXJwgPPjo9q+cftmlmY/HkNpbLyd7Kh8eysr96kA=
-	=
-X-Received: by 2002:a05:6402:5193:b0:667:90c1:844 with SMTP id
- 4fb4d7f45d1cf-66a80cf991cmr2688770a12.10.1774458323878; Wed, 25 Mar 2026
- 10:05:23 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774459176; x=1775063976;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZLSUsCfwl22sOIIGRBR1FxaI51Hg64mhPL2/NDsJ5V8=;
+        b=AvRgE4SXFnGzQija6cGSBJjPnmigQYWrjn7KDJeICZ0PcvkSiPAE3cWxkE3Il46nkx
+         jyDoSv5Xw9SwssBJipyd9OBiX0vrDJ5/UQvZ0/G4OK1EEMxK93XqVaf8kiUKuqrB7AWF
+         lXMcJd6wSuyiDMSVy1u36uBg5wvu8+txzm0NqHWv7oLlKgvO65ljpGzQtBZF+pFTYxln
+         NmszECd2yGuzcwRGwyVWhl5xjQUBkF4N6UY25l3q0FF/+gzkRknlU8qbVM4zzUuAaMNm
+         Un9tbT8ObvV6TSESYA/n9c479oaxNsqS7nn2Fg65oKUfsi+0fgg3HhuPJnVs7GxVbix/
+         UkvA==
+X-Gm-Message-State: AOJu0Yzv/eQ1o7wMWMJwIrrRI57R3k0755LBXWswDrO8LcYsvDTqiPZ1
+	tFGvBPFtpyAYaQZt/4lJ8Qn7vrttu2q8+JNkeyK1eo2L7FFae7ws2N4j
+X-Gm-Gg: ATEYQzwubrPlLgGrX2zQpbQDEJRqOxsGAa1MHcf6xZI2bUckiYqUDwL3IWd5MA0SdFN
+	Yb+NkWGEDcrkwyu56GxtaDjyxjD5ZAXIEcaqnCCMoP9k92Ol/sBOjcnsqfqu6NskSL65AoDYJLE
+	wwQDb2J2K20uQIHpiL4C3QKb+Fbaww46dWzbBP/z8VGddnRsfoJilVotAyBIFftDULA73btGAeC
+	iUnpigeADGHFIlFP7dMRLOOwHpO6nXmmNN5pc18gr5mUuJ0XqOkaRXcJYo7qO58Vjx0+llJ848s
+	9Vm7g5eLtkjmiteW6gv+WWnDNrcMGGs6R6x6HLcrU6BsRcrjGg2QiOfvugpAhll6bLoVHmMBE+y
+	63emS3s+J716pOKrC0H1puMwyk0ojBwwylxmzGmlMiQBRlrVPlQvHajeHfiik2YUPaJG2LKtNEn
+	TAzEcMO5t+o0iodv/e0bq9FUoLTVdKc6M49/ixbU6sbnhdpmbdNrHj//QuprPbsoZF95nygyKu3
+	GwVjfniVc8=
+X-Received: by 2002:a17:90b:2fcc:b0:359:8812:7c00 with SMTP id 98e67ed59e1d1-35c0ddaf02amr2871628a91.7.1774459176145;
+        Wed, 25 Mar 2026 10:19:36 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7673978668sm52754a12.27.2026.03.25.10.19.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Mar 2026 10:19:35 -0700 (PDT)
+Message-ID: <8dcc9e74-80a9-4963-aa9b-56f28e5edf45@gmail.com>
+Date: Thu, 26 Mar 2026 01:19:29 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260325075055.354709-1-luizedc1@gmail.com> <20260325075055.354709-2-luizedc1@gmail.com>
- <CALnO6CD15Tcs+Sr7XDO0eB3KSC7RT2oawTiSpUGdrQkfbPJQtg@mail.gmail.com>
-In-Reply-To: <CALnO6CD15Tcs+Sr7XDO0eB3KSC7RT2oawTiSpUGdrQkfbPJQtg@mail.gmail.com>
-From: Luiz Eduardo Campos <luizedc1@gmail.com>
-Date: Wed, 25 Mar 2026 14:04:03 -0300
-X-Gm-Features: AQROBzCQNu_P80q__IMN8Hte1bhFIgVh3ntvu4knEA5XD6dz6vEySUqOcLbCkFU
-Message-ID: <CAN+A6TuhiC9U==QvuMXtnTHtwzSMh1fSe12kxqj3iy03jF-Cxg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] add -p: support discarding hunks with 'x'
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net, sagotsky@gmail.com, 
-	Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] t/pack-refs-tests: use test_path_is_missing
+To: Jayesh Daga <jayeshdaga99@gmail.com>, gitster@pobox.com
+Cc: git@vger.kernel.org
+References: <87jyv1jqb9.fsf@gitster.g>
+ <20260324161329.71047-1-jayeshdaga99@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260324161329.71047-1-jayeshdaga99@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Ben,
+On 3/25/26 00:12, Jayesh Daga wrote:
+> Replace a raw '! test -f' check with test_path_is_missing
+> to use the standard test helper.
+> 
+> This improves consistency with other tests and provides
+> better diagnostics on failure.
+> 
+> Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
 
-Thanks for the feedback!
+I think what Junio meant is that it would be better if you explain in 
+more detail *why* such change is nice.
 
-(Sending this message again because I had not configured my
-email client to send it plain text, so I apologize if you received
-duplicated content)
+For example, under what specific circumstances might the original 
+approach lead to bugs? How does the new approach address this issue? 
+What exactly do the codes do?
 
-> One feature the Fugitive Git client for Vim supports is to discard
-> hunks; when it does so, it also prints a message explaining how to
-> recover the hunk if you need it.
+To me, phrases like “improving consistency” and “provides better 
+diagnostics” are essentially empty rhetoric unless they are backed up by 
+the specific explanations. Even though this is just a simple one-line 
+change, I think the principle still applies here — if a future developer 
+(let say 50 years from now, human programmers will no longer be writing 
+shell scripts by hand) sees this code, he/she likely won’t be able to 
+quickly understand the intent and purpose of the change just from the 
+commit message, right? :P
 
-That=E2=80=99s a great point. I hadn=E2=80=99t considered recoverability in=
- this
-initial version. Storing the discarded hunk as a blob (or otherwise
-making it recoverable) seems like a useful safety measure.
+Regards, Yuchen
 
-> If it's never been in the index, it can be impossible to recover!
-
-Agreed =E2=80=94 this is probably something that should be addressed before
-considering this feature complete.
-
-> PS How different is this from "git restore -p" ?
-
-My understanding is that `git restore -p` already allows discarding
-changes interactively, but it requires a separate pass. The goal here
-was to allow discarding during `git add -p`, so users can decide what
-to do with each hunk in a single pass.
-
-That said, I=E2=80=99m not yet sure whether integrating this into `add -p` =
-is
-the best approach, or if this should be handled differently.
-
-Thanks again for the insights!
-
-Luiz
-
-
-Em qua., 25 de mar. de 2026 =C3=A0s 12:44, D. Ben Knoble
-<ben.knoble@gmail.com> escreveu:
->
-> On Wed, Mar 25, 2026 at 3:53=E2=80=AFAM Luiz Campos <luizedc1@gmail.com> =
-wrote:
-> >
-> > When using `git add -p`, users can stage or skip hunks,
-> > but cannot discard unwanted changes from the working tree.
-> >
-> > Introduce a new 'x' action to discard the current hunk by
-> > reverse-applying it.
-> >
-> > This idea was suggested in a previous mailing list discussion:
-> > https://lore.kernel.org/git/X%2FiFCo0bXLR%2BLZXs@coredump.intra.peff.ne=
-t/t/#m0576e6f3c6375e11cc4693b9dca3c1fc57baadd0
-> >
-> > Feedback is very welcome.
-> >
-> > Signed-off-by: Luiz Campos <luizedc1@gmail.com>
->
-> One feature the Fugitive Git client for Vim supports is to discard
-> hunks; when it does so, it also prints a message explaining how to
-> recover the hunk if you need it.
->
-> I think it writes the file as a blob to Git's database before
-> restoring from the index.
->
-> I'm not suggesting Git copy this necessarily, but we might want to
-> consider how to help folks when they lose a hunk they didn't mean to.
-> If it's never been in the index, it can be impossible to recover!
->
-> PS How different is this from "git restore -p" ?
->
->
-> --
-> D. Ben Knoble
