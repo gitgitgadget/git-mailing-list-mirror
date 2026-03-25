@@ -1,85 +1,89 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB373233ED
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1244D34EF0A
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774466845; cv=none; b=WvAbdhNSjcy7onHSfIUDPmk0Ey/mW86ASta7sW3sZguV2U/C6ZCVNSO6KNy1pTmWvtZW4n/2iPBRbIhPG19j2QqLFM7m03Zqn8A3C1KBBGlgWN3HnKjUsh89chsJ3f1O7Yj03FUYtoetTieaBMiA+Gby2ooXBukhCLYdQ7vj3+w=
+	t=1774468030; cv=none; b=gw+t4t4R3IZWeA3XlyGaKq3RApORlDwjYy0aVxQu7tSRaIxidLGk0r0baq6tPkIjFoWkt4CkV2XUWq7xU9lYCsNNbF9Aet3dZQaEqIpLEqbonRZotEUoard+NtYSFdlc89rA4quttT3BiV5jUcqawkLToW2de+rSh5mw5cv9PgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774466845; c=relaxed/simple;
-	bh=3sx634dGJ27SfQBba6PrWq3INLDv3cK83liWuNVYsv4=;
+	s=arc-20240116; t=1774468030; c=relaxed/simple;
+	bh=xRyEGN9Q5LOc7HYzYyHrLcY3ut8QqRHGv1D/KMF4lgg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WAwEx18A6lFC8Db5hmM6HNVhatljUKSblNibrjWrZyh2H2L7bZXwnb2MaqsYj3GS5ZId56w1RwIpEWxbNe8SPPCzdiAmlZyneg+G4wgvwJrIoRZxonG8aGL9xPQXHK3sJl7VnxNNDxSqU9YUGXHVYawY/cwvQFik8mkMRDlLptM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EvdXE0by; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0are6MHU; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=MULAeBWwvsB+nNwy7TSwbI8Do1DtUdOclCc0WzDYfpyyOM4O4fjvs64mb97U6cR4pordCeuF7ruQYhRqOYkJ5ZxzjyhoNZOyk3mCK3DB0fwGPmhlwnj2cVEIfk2+kQok9drAZz99BJpgZg17o0u5UshKEhWtsTznT7MS1hQbi7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZZHNQMb2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lzdnmo1T; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EvdXE0by";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0are6MHU"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DFF2614001A4;
-	Wed, 25 Mar 2026 15:27:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZZHNQMb2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lzdnmo1T"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5D9ED14002A6;
+	Wed, 25 Mar 2026 15:47:08 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 25 Mar 2026 15:27:22 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 25 Mar 2026 15:47:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1774466842;
-	 x=1774553242; bh=bMiKaQXPQH4Sppc2ZnYOcbyteOTm6Bkl/TUgopOAIWk=; b=
-	EvdXE0byu0alv2uV6M0f8yFSx2DH2NdJNvKBk1tThpVzMPDD+vGTGOQaX8PisIPW
-	3uTCMoFkavrLsTqtph658T6Y/s5L/YUDm0++NhWiQI5A9svIjh1qmEqBxrhP08Y+
-	UmMjDMT1Yt74mohRvBvM/Y1YXIbOVGbkvpgprHlUJCrYNIauzENhcIV0BoACwRj8
-	WdvQyonqKnp3BuQ0FnzTpPIdZond0mH3AqTHiTa0Rj1D7QFXichkr5kEvZXhVTEd
-	XY2MBhZM+PU0JI0/EvqljwoKLBp44z2WG60bN5QKB5clwsMPTPBJg4g1J4g6QM5S
-	V6OEEl+c0apewcjEielS4w==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774468028;
+	 x=1774554428; bh=tHnpZhGrlt5Pf9Pn+ZhvBp2G26YtdL3Bdrcoox+d4Ak=; b=
+	ZZHNQMb2IbwiJ30Q1knkOWOuMGSaMmGJGer6EEWXihiZszgvZCuW7Jnu9G/Wdsa8
+	pO+2mIWtHrQj48dPSc2Cg5gU7jCVXjot95IBASpQ75b5kvZOEYNEuufiQaFGL/AG
+	W4xcIr01jaSc8ZR10Ya38pg9db8ebYlWndFPGM+AzbVSmH2D+YgRMHt8dwiMbKN7
+	Fi/Vz0XmKdE+LCgI97zcIGaPgH5aA+fIPnJYxGG6mNDTtw10dI3lISuSPnNgw5+b
+	FdjLe31UBBLuOMaR/ExA3bZSDuthCgp15zGu21jDYtsRjI7LrDrRpD1DYuUp2BYy
+	UiZNax9I4VhUPIJyoRqaEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774466842; x=
-	1774553242; bh=bMiKaQXPQH4Sppc2ZnYOcbyteOTm6Bkl/TUgopOAIWk=; b=0
-	are6MHUOBw7Ro357bDC4HpoaMuS1gvPjosniyC2EcApjUhf63CyD7JvOb4fuUANt
-	Fv9vaC7J8ar7lzZJS03VB2cJB/9gX/Da5XZplbdNMSgoWOh1Wya+m6SdEc+OWx0l
-	BU1GrZgF656Ua6c/CrqDATjcz+sdMJQEC0GdNEAebEpEmrZ4Rsea29zRzNcDynfa
-	nXajOSlpoqM0mzCvgjGLotHKVj93nuIi8ZoCTovm89AKAsJRGRtGWmEmpinQ9V1x
-	OXOKRQLXucyPZcmvsQ4zDEbmFfKZzxv35Gzg+8QgrzNQ+n0BtZh39mF7Dm59RuLv
-	6ArYnBzpXy4DszAYtuBpw==
-X-ME-Sender: <xms:GjfEaTjivLM9DIcQ8sKV4ON8v_JtsMfssh9eHlZSBVxhatd7dF7ADA>
-    <xme:GjfEaXBiebnwGGBjFx7FdZ-jSbnWNz1EK1pgOcednTe3xI5k_dn_pwWOcNFDNNYiv
-    x0sf_JKtHdVLKTY9dgbkcaqpTXdkcusxZpXkzPAMEAoL_s8Kywu1g>
-X-ME-Received: <xmr:GjfEaYGXSVRn5qKwAe55zzrmBlNE8nVQgv6Oxoblg6HSg-U1aSB7Hc55rfwI7ytNwoobdrvQNvCFUPTLNrpCfHV7yJ2v7SqhwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehfedtucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774468028; x=
+	1774554428; bh=tHnpZhGrlt5Pf9Pn+ZhvBp2G26YtdL3Bdrcoox+d4Ak=; b=L
+	zdnmo1T8XBzUnLmFBhk9hQU7zfbPSg1rZ/x41t/bh4JX1xCufJOZoLH5Ng4uA3uV
+	bhfNsuSWMZi/QMEP3jeEQ90ZWXlagvVzJ24Szlt8H4ddl6IcS2Tt2sAPjcd/ZaLD
+	3jG+d/gQPtfMG310WP4r2jLZbNAcAUtiJzVixM/vd7lJSvSkrrroPDt+SrV1tKq7
+	UqFNN4ORD70OaTp/ojk/cQ/WtIrtpD0LwSMxGTaj1//Q+4u5bBRj31dJC+7ED9W3
+	f9hrbos/DRbZOwKhDNCBRXFRHmzHfHtajsRg+rzwURsIhPcOq5RlbLwdGnlkrq5b
+	VErqfRP7AZ6k3/mprsy1A==
+X-ME-Sender: <xms:vDvEaeX9pUH9ahIamYRqoMVSYi-B-gQX6URarWbvCdt0SjyVODbodg>
+    <xme:vDvEac3csrnpaCsvGtjcvNCRybsoNPYtUwP7h11IH0QKB49dKZTQdsD4SMS8Tk4sN
+    KC8bYb1lv-poy16D6Tzxt-R30wFSPqRO1cyGRDkB0pWVHPVJpVTRA>
+X-ME-Received: <xmr:vDvEaUoNyAFJsPpgMMWraePF2pdvKD1cLVN868UMPHzBAHTYbC7kpTz0cTBENz-NO8CYSlUwecaAt9EQrPjlTGbWGe6DGyrdhg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdehfeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
     ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
     htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
     fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjrgihvghshhgurghgrgelleesghhmrghilhdrtg
-    homhdprhgtphhtthhopegrfedvtdehudehfeegudeisehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:GjfEafJ1f2MEEXRSpvBfd3N0KJTw03QmGZWxqLvLegCn4-GBHV9IUg>
-    <xmx:GjfEacnZlSXstWfqOoIcdmhQBxujHOZm1pWPSb7tFgdsYraM1Io_cg>
-    <xmx:GjfEaXSeWgQTe-E2b3W56PkGCu64N1NmKvdl4065N7iKb0zt0IbfsQ>
-    <xmx:GjfEaeLCzHdbN4gqPq00V1-XIpR2EDjWJKdKqRP6VA1DUQWqq242Zw>
-    <xmx:GjfEafnI46e5N-jjsRmVFThYGmhIlq5iD9Jm6ZnYSiloXIzgFkfw7qKF>
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhp
+    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:vDvEabWSBXlb5dUY7pdHkkJNg3SsES3M2eyH6wBc2xaiTSIBNqwdFA>
+    <xmx:vDvEaXbpvgXjlYH3jsgS-wXfCrzS63CRBk9E3moeoXbouG0DXjAO4g>
+    <xmx:vDvEaQfLHtefdRHPJOzgHTbprnMqaOxzAHhZOgTLEKNyv_-GCBfKJw>
+    <xmx:vDvEaZ0X0_Jx0aHNFFfDBMYQ5Mebp1_qDRNID0FAfuPAc0DVK0_Ruw>
+    <xmx:vDvEaSfizKIdmgw6o3V45hcMWbXFSTP4i6Th6pzHrTrl01S8A6PLYteP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Mar 2026 15:27:22 -0400 (EDT)
+ 25 Mar 2026 15:47:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jayesh Daga <jayeshdaga99@gmail.com>
-Cc: a3205153416@gmail.com,  git@vger.kernel.org
-Subject: Re: [PATCH v5] tests: use test_path_is_missing instead of '! test -f'
-In-Reply-To: <20260325174431.73101-4-jayeshdaga99@gmail.com> (Jayesh Daga's
-	message of "Wed, 25 Mar 2026 17:44:33 +0000")
-References: <8dcc9e74-80a9-4963-aa9b-56f28e5edf45@gmail.com>
-	<20260325174431.73101-4-jayeshdaga99@gmail.com>
-Date: Wed, 25 Mar 2026 12:27:21 -0700
-Message-ID: <xmqqecl7u2ue.fsf@gitster.g>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH v3 2/2] push: support pushing to a remote group
+In-Reply-To: <20260325190906.1153080-3-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Thu, 26 Mar 2026 00:39:06 +0530")
+References: <20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+	<20260325190906.1153080-1-usmanakinyemi202@gmail.com>
+	<20260325190906.1153080-3-usmanakinyemi202@gmail.com>
+Date: Wed, 25 Mar 2026 12:47:06 -0700
+Message-ID: <xmqq7bqzu1xh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,100 +94,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Jayesh Daga <jayeshdaga99@gmail.com> writes:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Replace a raw '! test -f' check with test_path_is_missing.
-
-Did you already say that on the commit title?
-
-> The test_path_is_missing helper integrates with Git’s test
-> framework and produces clearer failure output.
+> `git fetch` accepts a remote group name (configured via `remotes.<name>`
+> in config) and fetches from each member remote. `git push` has no
+> equivalent — it only accepts a single remote name.
 >
-> In contrast,
-> a plain shell '! test -f' check only reports a generic failure
-> status, which makes it harder to understand whether the file
-> unexpectedly exists or if another issue caused the test to fail.
-
-"clearer" probably is not clear enough, but don't add more words on
-it.
-
-The problem with using "test", whether negated or not, is that they
-*silently* succeed or fail.  Take a typical test that does a bunch
-of things like this ...
-
-	do something &&
-	do something else &&
-	test -f this_must_be_a_file &&
-	test ! -e this_must_not_exist &&
-	do yet another thing &&
-	! test -d this_should_not_be_a_directory
-
-... and expects all of them to succeed.  If it fails in one of the
-steps, it is impossible to see from the test output, even when you
-are running with the "-v" option , e.g., "sh t/0601-*.sh -v", where
-in the sequence it failed.  Maybe "do something" and "do something
-else" shows different messages so you can tell these two steps
-succeeded, but did the test fail because this_must_be_a_file did not
-exist, or was it because a filesystem entity this_must_not_exist
-existed?
-
-Our test helpers improve by being loud when the expectation is not
-met.  When "test ! -e this_must_not_exist" is rewritten with
-"test_path_is_missing this_must_not_exist", and when that thing is
-missing from the filesystem, test_path_is_missing will succeed
-silently.  But whe it exists, it loudly reports "We did not want to
-see it, but it exists!", when it fails.
-
-    Using plain "test" commands in a series of tests concatenated
-    with && makes it hard to tell from the failure output which one
-    of the steps failed, since "test" silently succeeds and fails.
-
-    In this partciular instance, we expect that ".git/refs/heads/f"
-    should no longer exist in the filesystem.  test_path_is_missing
-    helper function silently succeeds, as does "! test -f", when it
-    finds that the file is not there, but it will loudly report when
-    the file exists, contrary to our expectation, which makes it
-    easier to debug a test failure.
-
-or something like that.
-
-> It also avoids relying on negated shell conditions, making the
-> test easier to read and understand.
-
-It is not a single test being "hard to understand".  As a developer,
-you are expected to know what "! test -f .git/refs/heads/f" expects
-(i.e., it does not want to see a file there).
-
-
-> Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+> Teach `git push` to resolve its repository argument through
+> `add_remote_or_group()`, which was made public in the previous patch,
+> so that a user can push to all remotes in a group with:
+>
+>     git push <group>
+>
+> When the argument resolves to a single remote, the behaviour is
+> identical to before. When it resolves to a group, each member remote
+> is pushed in sequence.
+>
+> The group push path rebuilds the refspec list (`rs`) from scratch for
+> each member remote so that per-remote push mappings configured via
+> `remote.<name>.push` are resolved correctly against each specific
+> remote. Without this, refspec entries would accumulate across iterations
+> and each subsequent remote would receive a growing list of duplicated
+> entries.
+>
+> Mirror detection (`remote->mirror`) is also evaluated per remote using
+> a copy of the flags, so that a mirror remote in the group cannot set
+> TRANSPORT_PUSH_FORCE on subsequent non-mirror remotes in the same group.
+>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 > ---
-> v5:
-> - Clarify rationale for using test helper
-> - Explain diagnostic improvement and negation issues
-> - Address review comments on vague wording
->
-> v4:
-> - Correct commit message to match actual change
-> - Improve rationale (diagnostics, consistency)
-> - Move version notes below '---'
-> - Fix author name to match sign-off
->
-> v3:
-> - Fix commit message wording
-> ---
->  t/pack-refs-tests.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-> index 2fdaccb6c7..4a85d96c6b 100644
-> --- a/t/pack-refs-tests.sh
-> +++ b/t/pack-refs-tests.sh
-> @@ -61,7 +61,7 @@ test_expect_success 'see if a branch still exists after git ${pack_refs} --prune
->  test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
->  	git branch f &&
->  	git ${pack_refs} --all --prune &&
-> -	! test -f .git/refs/heads/f
-> +	test_path_is_missing .git/refs/heads/f
->  '
->  
->  test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
+>  Documentation/git-push.adoc |  73 ++++++++++++++++--
+>  builtin/push.c              | 123 +++++++++++++++++++++--------
+>  t/meson.build               |   1 +
+>  t/t5566-push-group.sh       | 150 ++++++++++++++++++++++++++++++++++++
+>  4 files changed, 306 insertions(+), 41 deletions(-)
+>  create mode 100755 t/t5566-push-group.sh
+
+> diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+> index e5ba3a6742..b7f617a290 100644
+> --- a/Documentation/git-push.adoc
+> +++ b/Documentation/git-push.adoc
+> @@ -18,17 +18,28 @@ git push [--all | --branches | --mirror | --tags] [--follow-tags] [--atomic] [-n
+
+All the differences since the previous iteration in the patch to
+this file makes sense to me, except one thing.
+
+> +The behaviour upon failure depends on the kind of error encountered:
+> +
+> +If a member remote rejects the push, for example due to a
+> +non-fast-forward update, force needed but not given, an existing tag,
+> +or a server-side hook refusing a ref, Git reports the error and continues
+> +pushing to the remaining remotes in the group. The overall exit code is
+> +non-zero if any member push fails.
+> +
+> +If a member remote cannot be contacted at all, for example because the
+> +repository does not exist, authentication fails, or the network is
+> +unreachable, the push stops at that point and the remaining remotes
+> +are not attempted.
+
+I am not convinced that having these two "failure modes" is a good
+thing; I am not convinced that a single failure mode is better,
+either, though X-<.
+
+I would personally have designed to mimic exactly like "git push r1;
+git push r2; ..." would do (not concatenated with "&&" but with
+";"), which would mean that there is only one single failure mode
+that would not affect interactions with any other remotes, but I
+have no strong arguments to choose that design, other than that it
+would be easy to explain when we later start supporting pushes to
+multiple remotes in parallel, where a failure to talk to one remote
+cannot easily affect interaction with other remotes without getting
+affected by timing issues.
+
+> +This means the user is responsible for ensuring that the sequence of
+> +individual pushes makes sense. If `git push r1`` would fail for a given
+> +set of options and arguments, then `git push all-remotes` will fail in
+> +the same way when it reaches r1. The group push does not do anything
+> +special to make a failing individual push succeed.
+
+"when it reaches r1" makes it sound as if the group push then stops
+after that failure, but that is not what we just read in the two
+paragraphs about two failure modes.
+
