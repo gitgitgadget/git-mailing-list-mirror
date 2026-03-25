@@ -1,174 +1,189 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63B6256C70
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 07:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC51E218E91
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 07:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774422164; cv=none; b=oRrC5tB5kPzlPYFypHHdRrEpJRKr2B7jIPD2InlpiyWlAkRlrjrvQSUIf1ivpyRNkwiUipv5oHfHcTgF9ffmJrBrursrHD8+wVUG3t6zeCnT8sGEoYv8Pp0gldoZJwyeWDvqUdqiegzQbfOQDVMCZezP/EUgXVicx4FaJzT0Z/Y=
+	t=1774422437; cv=none; b=XCZF0yUYVsFBX1C49yRmwZDayn+6s7oEsG8nQKazuc5S6PcSV7q2DxjFhDmb7X3L0U6aLg7LGoLVzwzX3qSuLBNzFIo8oeV9v0t9zWmLbv1MqbZ7pckgXRcgU88QWLDCSBIHXCYrJ5F3pwKdLK9E9Hpxn3bPrgM0QghkR2zivJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774422164; c=relaxed/simple;
-	bh=TkNUnM2/vlzkswQC7K1mc7s0++5SapHHnOcOc7xL2xk=;
+	s=arc-20240116; t=1774422437; c=relaxed/simple;
+	bh=YgtBmvEfAGEEx03Pd1Hx/1u11jjddTLaf0fAFMDg/nQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sfKQ3M9R4ch9SFsqpoHnmy9Youu26FmKwgF1B0TIIaQ7Ci21ZrCiohZNP5Hay4pInmZRG02/ALDIIzfFvjNik9P1yAj1jY2lu23Bxhwkust00TlSOibXlO9ct+sW+Q4a3SCNq7XCRGy7eeOEQYk17rjQay7huy9tdbN2bPNCHsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WhnXT5Wm; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ByUNpiR5zzT526YcKEVOnYgaQB6EhSdEIy5l/j+43yJ1hySZRK6k9t5Yy7rYLq6JIc/ue0Ecz+7ZKAAE//KZPKaY09bjF3m+gtGcVB8DOZTSDsOkb0ictP49NEVxw1OTU0n+Xbowd6jprMAjvDynjmaCFqypu3Yl9RivuEBfpJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Xt+ugFCI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nIQ7AsT3; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WhnXT5Wm"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-486b9675d36so50709445e9.0
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 00:02:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774422161; x=1775026961; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wPo5xMA2QfrE65XX7ntcQNkzwLvyA7HCqgboMsGdeAE=;
-        b=WhnXT5Wmh0CIsSg+/Q7A1F7rIuNPhh+9/+k6F6ESPiFe83qFN4yCCdtCLaoZQJjiEk
-         LTpI17SUTH1U3Hzq1VDvQJzNwm2YNvVpYKHZd8Bxp4ndD4IKuwu2n1VJ0Yj40LcRCV7U
-         IFpoLKQm9qaOSrnOqwiw/vOaCMucU0KiyXoRt5e/hF649zFdjiCVhMaF7Nrvx+sF9UML
-         5/l1+fjpRR0TmsGvTS0AHbDsSLziKDNgDOoEyJcUziKmlBB/yIa5NzM309hVHpN4z0uD
-         baqI33Awgvgu3KJvopb0Mkf3fPWlhhrW+o2wMSVw5tC/oF/0Zwl9J752ocf9l+5/topZ
-         QEVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774422161; x=1775026961;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wPo5xMA2QfrE65XX7ntcQNkzwLvyA7HCqgboMsGdeAE=;
-        b=bpSgaNQTFs9cGGqQk33K5yh976o5Fi/rcZVeXyP0DeGhGLw47LWD4cfvzq3YDigXH3
-         6K0Qcfqk+6fbxZO+TJAnbwVqUrep5fVwnrzjS9KOTkvzDiQdWut+1a7YYeg6zQr/Qrth
-         CC59qBYfp38tYEPscuRbZgdTKeMGjy+6wK0Tz5vSyv0eJ3xkLKbi6O4CloKSdYIrEVWo
-         7Y1/Tq1Iei3r8zrQflcdCtz9NoVEjkU4IXKXtYrjYh8YU8RK1krRoUGgeKQbcxoTIpLc
-         SZzqAZAhZRX5jun2r9CINUk/vRvhZI6uTSmyhKPhnBKZf/d27PsC9ugjnRzQ1kESZR3b
-         mHmA==
-X-Gm-Message-State: AOJu0YxekkvijDIQMWlX+YeeWF7kwX1nSlzJvuT39wjoH42lkUFb6wnE
-	m/NXopgc79lyoHiqXk4ArOua5K/VMmLkz81/WWubTv+RxB1W4gE5ZKFg
-X-Gm-Gg: ATEYQzxIVa1a+sxrmCePq+FgwVxNJGivLWB/w0ehqhT8JZLrtkbnYMf0Bp0fzX4ZxbH
-	dJAe1ayLERFKYXW4V7rMyz5m4+1qaiI2qoTVyoxHAGdSY0vg6Ha6Yg+x+UUT3pDEm/hQuGg9JOq
-	3I+wr3I3OWlQJLcumpSKCds9FNdUXPbv9HdhlLaW/6qI2cgRMyYZpdMZnXmiRsO4hiBajGE0sUs
-	jrj4oIF9XFM6kA5fzO2DhMVjhETrRVlj9Pc9zsUBtMMTv2O05STYc8hlUu9be2orSolQ3fBmG0O
-	XyQ1gJpb2QkB2kFSAGNlAx2i+3c6oTiYUk9lohnshCMEayENzWlbaFrmp7P1n1GhX5rTaiVeM+g
-	ScGeDIs/uyssO6wnxOwO8BQIHHqtw5NaBxgqoyy4x6j9j9rhPSAHvNnKHpcBgoumhyIYtCpf0AE
-	oDp/Ua+X3WSZhUtEH3rNOTEKGB9Mu7GIorU4QV65egMWrfRxCwIBKL5KBmYKvajP1Xf3zbZKiad
-	5vstLgdiuM=
-X-Received: by 2002:a05:600c:46c8:b0:485:3d3e:167b with SMTP id 5b1f17b1804b1-48715fc33bcmr32632385e9.5.1774422160945;
-        Wed, 25 Mar 2026 00:02:40 -0700 (PDT)
-Received: from localhost (20014C4D24C038005C4BF9510B05A899.dsl.pool.telekom.hu. [2001:4c4d:24c0:3800:5c4b:f951:b05:a899])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-487165feea6sm27447125e9.2.2026.03.25.00.02.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 00:02:40 -0700 (PDT)
-Date: Wed, 25 Mar 2026 08:02:38 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com,
-	jltobler@gmail.com, ayu.chandekar@gmail.com,
-	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com,
-	gitster@pobox.com, j6t@kdbg.org
-Subject: Re: [GSoC PATCH v4 1/3] graph: add --graph-lane-limit option
-Message-ID: <acOIjm2KHXvopSQ/@szeder.dev>
-References: <20260322195406.108280-1-pabloosabaterr@gmail.com>
- <20260323215935.74486-1-pabloosabaterr@gmail.com>
- <20260323215935.74486-2-pabloosabaterr@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xt+ugFCI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nIQ7AsT3"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 150B51400206;
+	Wed, 25 Mar 2026 03:07:15 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 25 Mar 2026 03:07:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1774422435; x=1774508835; bh=vZmbu6XiUD
+	bK4cKKtdxxFBzEL0nmyqi2B/OjD197+0Q=; b=Xt+ugFCIusJqt1/P7ZwLxHe7N8
+	VLOcJV5aGBPhC2BDin7SV8Vb+UdaWg9IWFIC2QmXbfC3TlAby0duLJ2VDlXgHd5F
+	cPUbgS8m0AU/YiTcytvoSjpODTRSiHoXOq24HxKdiF0H7WKt7wNrTkuAcP6ahIoa
+	tIhSP3QnEp6+mFsDlUNrfbxbuoBQGMlHJQVyDqMkxY+modNiWD53CRNYRtCeNsK4
+	NW/gFI996xXiow5gZmkYd1CQW14O9DkR9Pmwph8v8PB9QmYG2gRUxTrZbG3vSMqE
+	RNaI8sOi/tw60fD5RtwaX22JS3fI/1GyIsOzddyWAYp41nvdoArVr9xeUilA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774422435; x=1774508835; bh=vZmbu6XiUDbK4cKKtdxxFBzEL0nmyqi2B/O
+	jD197+0Q=; b=nIQ7AsT3uWm6/bCrr5o7PXZoA7NVcdVNMoo2t3tCl37XhjlJqgL
+	VIVbJywAxHmoRbdKrQ6zdBAZJOcdJ7+czn8wzOQLNh2nBE0SbXH2OQqVaIHpp1qC
+	kbw6sssk3iohlDAS5TOm0jvGki0rqkmcS5DQKrkbX+MJrCencRulKLLANR/F7MF1
+	sVOqE5cWIvIjFQtE5eXvDq73j0mXH/uBBzfBPD38hP2b7hvPEnS9NZZywHvw95gY
+	Pqn+GEBjx8Dfr93TR2sWhw2e3AH+M6XT07xRoGzUJgQtGUUBibGTYpuZM0S9n1Jm
+	ui5mRQcfhg2vrX9hBpCDjRKwIso/XOT63Vw==
+X-ME-Sender: <xms:oonDaaBgkq1ojS68OZkIRoRVoAyexRj3wti7Xso7p_ROHXxlvE58jw>
+    <xme:oonDab_bdO9VaIuHxciwkUlsPt8UxthLRkzvrqy-3CR9dWS7hveBzKo_gwONYF8zm
+    -JbRgu1ZUr8Vyprl96EYGT3tK5K9m3gbjZRyaDF2jfNfU3O3hLBSw>
+X-ME-Received: <xmr:oonDaa8ywVzxdCgSfX8ywGNPjFbbTiDMl8BGwQlHgZfqVQ2ibRSa0xqh6JuuRoIt3LzpETTBQfKh2KKyvVl1kk-FJlyw4LNlPLzv4EyfyXs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdefkedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:oonDaSdS6nX99w2a6cXgycmkuCbiIOo3nAgQ4d7H7Ayy-nk2gVD0AA>
+    <xmx:oonDaTGA6bKHgsvDBYfzqVX4dyu-ZhijX0SygDuIFtE9RjYPwi4Uhg>
+    <xmx:oonDaQccVayNX2xnwSp0dmXJ5ROZ4fYpKUHsCVvMYDkcTOpuJ_PzJw>
+    <xmx:oonDadFCsi1QBZNbZhiIj5A5pMzKd5ZmkOAyPEoFekb9-bjsB6Td0g>
+    <xmx:o4nDaQIVSJE4lvzksfpvJFHLu7mBDUyQho9cvLKU9X9X4po9_sZ5YWXO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Mar 2026 03:07:14 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b8e0a2fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 25 Mar 2026 07:07:12 +0000 (UTC)
+Date: Wed, 25 Mar 2026 08:07:04 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
+Subject: Re: Re* [PATCH] t4014: fix call to `test_expect_success ()`
+Message-ID: <acOJmBluqb5SvjpW@pks.im>
+References: <20260324-b4-pks-t4014-fix-test-execution-v1-1-ac83c1bcc828@pks.im>
+ <acKqvI0EhaORjoD7@exploit>
+ <xmqq5x6l2q5y.fsf@gitster.g>
+ <acKx6yBi-BWUVJcv@exploit>
+ <xmqqo6kd18sr.fsf@gitster.g>
+ <xmqqcy0t178a.fsf_-_@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260323215935.74486-2-pabloosabaterr@gmail.com>
+In-Reply-To: <xmqqcy0t178a.fsf_-_@gitster.g>
 
-On Mon, Mar 23, 2026 at 10:59:33PM +0100, Pablo Sabater wrote:
-> Repositories that have many active branches at the same time produce
-> wide graphs. A lane consists of two columns, the edge and the space
-> padding, each branch takes a lane in the graph and there is no way
-> to limit how many can be shown.
+On Tue, Mar 24, 2026 at 10:13:09AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> Add '--graph-lane-limit=<n>' revision option that caps the number
-> of visible lanes to n. This option requires '--graph', without it
-> a limit to the graph has no meaning, in this case error out.
+> > I was wondering if we can make the test framework better so that a
+> > misspelt test_expect_success would cause a louder failure than what
+> > we have now, which is something like:
+> >
+> > 	...
+> >         ok 5 - check hash-object
+> >
+> >         t0002-gitfile.sh: line 46: test_expect_successo: command not found
+> >         expecting success of 0002.6 'check update-index':
+> >                 test_path_is_missing "$REAL/index" &&
+> >         ...
+> >         ok 13 - enter_repo strict mode
+> >
+> >         # passed all 13 test(s)
+> >         1..13
+> >
+> > when I corrupt the 6th test of a random script.
+> >
+> >         diff --git i/t/t0002-gitfile.sh w/t/t0002-gitfile.sh
+> >         index dfbcdddbcc..d65f664914 100755
+> >         --- i/t/t0002-gitfile.sh
+> >         +++ w/t/t0002-gitfile.sh
+> >         @@ -43,7 +43,7 @@ test_expect_success 'check hash-object' '
+> >                 test_path_is_file "$REAL/objects/$(objpath $SHA)"
+> >          '
+> >
+> >         -test_expect_success 'check cat-file' '
+> >         +test_expect_successo 'check cat-file' '
+> >                 git cat-file blob $SHA >actual &&
+> >                 test_cmp bar actual
+> >          '
+> >
+> > There is no indication of something bad happened, other than
+> > "command not found" and 13 tests passed instead of 14 the script
+> > has, which nobody knows.
+> >
+> > So, no, it hardly is your fault.
+> >
+> > I wonder if the test framework is safe to run with "set -e".
 > 
-> Zero and negative values are valid inputs but silently ignored
-> treating them as "no limit", the same as not using the option.
-> This follows what '--max-parents' does with negative values.
+> It turns out that the test framework itself is not so clean.  If I
+> add "set -e" near the beginning of <t/test-lib.sh>, the first
+> roadblock we hit is this one:
 > 
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  graph.c    | 9 +++++++++
->  revision.c | 6 ++++++
->  revision.h | 1 +
->  3 files changed, 16 insertions(+)
+>         # It appears that people try to run tests without building...
+>         GIT_BINARY="${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X"
+>         "$GIT_BINARY" >/dev/null
+>         if test $? != 1
+>         then
+> 		... complain that you haven't built and ...
+> 		exit 1
+> 	fi
 > 
-> diff --git a/graph.c b/graph.c
-> index 26f6fbf000..e7c1151ac0 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -317,6 +317,15 @@ struct git_graph {
->  	struct strbuf prefix_buf;
->  };
->  
-> +static int graph_needs_truncation(struct git_graph *graph, int lane)
-> +{
-> +	int max = graph->revs->graph_max_lanes;
-> +	/*
-> +	 * Ignore values <= 0, meaning no limit.
-> +	 */
-> +	return max > 0 && lane >= max;
-> +}
+> With "set -e", "$GIT_BINARY" we expect to exit with status 1 (i.e.,
+> "git<RETURN>" that spits out the list of common commands) as a sign
+> that we have an instance of Git that we want to test is not even
+> allowed to do so.  
+> 
+> I did this single liner at the end of <t/test-lib.sh>
+> 
+>          t/test-lib.sh | 2 ++
+>          1 file changed, 2 insertions(+)
+> 
+>         diff --git c/t/test-lib.sh w/t/test-lib.sh
+>         index 70fd3e9baf..4a80933487 100644
+>         --- c/t/test-lib.sh
+>         +++ w/t/test-lib.sh
+>         @@ -1971,3 +1971,5 @@ test_lazy_prereq FSMONITOR_DAEMON '
+>                 git version --build-options >output &&
+>                 grep "feature: fsmonitor--daemon" output
+>          '
+>         +
+>         +set -e
+> 
+> and started running "make test".  I see some failures I haven't yet
+> looked into, but it seems promising.
 
-This patch adds this static function, but it doesn't add any callers.
-This breaks the build with DEVELOPER=1:
+Yeah, I was playing around with the same idea yesterday, but got pulled
+into some meetings and thus couldn't finish that work.
 
-  $ make DEVELOPER=1 graph.o
-      CC graph.o
-  graph.c:320:12: error: ‘graph_needs_truncation’ defined but not used [-Werror=unused-function]
-    320 | static int graph_needs_truncation(struct git_graph *graph, int lane)
-        |            ^~~~~~~~~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
-  make: *** [Makefile:2923: graph.o] Error 1
+> Fixing all may involve finding and fixing little things like the
+> attached patch.  I am not sure if this would be a good microproject
+> canidate for the next year.  There are a handful of them that
+> multiple students can work on independently, but some of them
+> require familiarity with the test framework and shell scripting.
 
->  static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
->  {
->  	struct git_graph *graph = data;
-> diff --git a/revision.c b/revision.c
-> index 31808e3df0..952edb031e 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2605,6 +2605,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  	} else if (!strcmp(arg, "--no-graph")) {
->  		graph_clear(revs->graph);
->  		revs->graph = NULL;
-> +	} else if (skip_prefix(arg, "--graph-lane-limit=", &optarg)) {
-> +		revs->graph_max_lanes = parse_count(optarg);
->  	} else if (!strcmp(arg, "--encode-email-headers")) {
->  		revs->encode_email_headers = 1;
->  	} else if (!strcmp(arg, "--no-encode-email-headers")) {
-> @@ -3172,6 +3174,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
->  
->  	if (revs->no_walk && revs->graph)
->  		die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
-> +
-> +	if (revs->graph_max_lanes > 0 && !revs->graph)
-> +		die(_("option '%s' requires '%s'"), "--graph-lane-limit", "--graph");
-> +
->  	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
->  		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
->  
-> diff --git a/revision.h b/revision.h
-> index 69242ecb18..874ccce625 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -304,6 +304,7 @@ struct rev_info {
->  
->  	/* Display history graph */
->  	struct git_graph *graph;
-> +	int graph_max_lanes;
->  
->  	/* special limits */
->  	int skip_count;
-> -- 
-> 2.43.0
-> 
+I think it's overall not that bad, and I've got something that's almost
+done. It's an easy win for students indeed, but in this case I'd rather
+make our test suite a bit more robust sooner rather than later :)
+
+I'll likely have something later today. Thanks!
+
+Patrick
