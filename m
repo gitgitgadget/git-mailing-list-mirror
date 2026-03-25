@@ -1,73 +1,74 @@
-Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5337396580
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 23:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF16133291F
+	for <git@vger.kernel.org>; Wed, 25 Mar 2026 23:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774480440; cv=none; b=IQ3rPAi+HNulcwDGedsyHKje7mSeN3jvTPNCLnb6z6HwRnSKe/Sfak4NASDAHPY8HNlW8OZcdDOFrW6VxLzjqlLWWQ0DWmYtFPSzbeLisarhPc8pEd8ZQENJTR7Zvx+hMPPNzPAYf2F6Ebn1ywN67B2C9Nc7MYArO4/HiUsEr2w=
+	t=1774480787; cv=none; b=bN9mPid3BPmxX5rQ3yL3F9Gn/Zh306oiIJBo72+BMpb/VMnc+tnzbSrLjjtO7yS0+G3rJFrH2b3U3+Nd8kCPbPmJ2MGKgWLN15tOkJwV4bvFSUSzXE1Ry8aREe74ZH9k24N6G1rQ2xYdJtjKyWW49mOWSRejZ2cwv54v8xDrkBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774480440; c=relaxed/simple;
-	bh=Q3jTCizlfLfhmTNwbE4ex8PT7MGgM/8sZw1oiDNz+pM=;
+	s=arc-20240116; t=1774480787; c=relaxed/simple;
+	bh=wPZaCpOu3/T5GcGEUGsyokKrIhBLKQWRSVKNN2bSLS8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O+hrD5LtaA5Pzfncy65D66fk9RLVBhPS2eWBVT5Qa8UTx/ssf+LmVIMYYrv6YsSW3xRoGMnzWqW2HMSkArx89U8UzragZ8GsCUBlxwrDVMR8gLzy4ngWStl4ixpHXZKVrpydfk0dyfxXM2aBkLmQImTNi6NuHoyFgx9GBUzvhmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=UuxB3cjn; arc=none smtp.client-ip=209.85.128.193
+	 Content-Type:Content-Disposition:In-Reply-To; b=DvfuwXfQLVkjMkaDu7v0NIoRu8Y2VieZdWew2aT79M+RITxC54xyPJ5PCNLOnVkI0hzV4dma0YTkzq17c26AFgbp9T6En7neBCRMe3AE284YYZkaueRLDIVxja31RzOLAusMyjgpbyr2L+CE3w/4v0II7nVinIZuIRujJ8Xvodw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Hx6fwmLK; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="UuxB3cjn"
-Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-79ab3e26cceso3571507b3.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:13:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Hx6fwmLK"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-79ab5fd969aso4617077b3.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1774480438; x=1775085238; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1774480785; x=1775085585; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZxjR+/BhbfFNd5RxP3ANQwFbym1dxpGyxbwmKcx9Rao=;
-        b=UuxB3cjn1W8wtKEdRBXttIaobsSPxdZ+u71FkMYqLiw+pW8dTZKp3TfP9EtSYnHYP4
-         46u8cLADmFRPUuUuI8pfVb37kDWmD30kIatUANV+X92rUGsYMSV+zZmKAfMGtBY44awD
-         MnxH/NK4Sf9B/t8tKeIuuyorbgHu5IxwOnqz/oHBaV3D2ifpybgzfEIfLrZbX11WmFNX
-         pKn2dFBnoPWHnfUReRn8p6SC+AzyszyHrOGIoknpbLuK52tb1SCSDE7OJwvhUqRnmtSv
-         abYv7+2MgvKesOKYNgwOFkHfxrp5G3g30EDYfTtwr3kj+smqPH92UpncJKJRFSPtvnFA
-         +nSQ==
+        bh=QRX/fMoQGvyPAygZvcvaLf3aATVavyYi7axHDsUWIx4=;
+        b=Hx6fwmLKkJ2UsIW+/4YCznj/McTDcB6As5KOCcN1QLqP2n586zqqDNqa36aHFJXd0P
+         zHVJAkX/gPUJbByrhXHIxiDIGbGBgfRc2pmVDDvLEhIcQaa5cZuvjGzLtxyemIxv/JkU
+         JQnHmV1x0c9yWfnAsGR5W1Fwz0b12z1uHsFpVhT50wi5CvrhesFiCbgb2ln5iYC4fvq/
+         Jij47OIkQcBG2hA7KfOpR8oKF2IsKRGly0iaVsXcTkxRetL1IoPKOwXcZKx86naKzoYn
+         Dd5AijY7uZkDvWAY/uqGiLrqKFyeq5t08398mwaUxI83EkAm22f/9HnIs7TGttblDHdL
+         4ydQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774480438; x=1775085238;
+        d=1e100.net; s=20251104; t=1774480785; x=1775085585;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZxjR+/BhbfFNd5RxP3ANQwFbym1dxpGyxbwmKcx9Rao=;
-        b=Cjo2O+kWz3t5kL7sNDVRwBpvJdO02nhyaDCC89K0Kg6J4DPr7ScSgAPTqQb3leA7g5
-         MdHk90Uzsuvp/ebe2ESXh/y/4/z0Ea04rofC6HOu2GqP9DmmGZZrGpN+AUiqlI1wdBxl
-         QEGih037MFlu6/Z7YxDZiYcCN3tPvIPs3m5E9cWBG+qDn318yD94djL+ajLHwrH+BkZO
-         FBitdEISnkCmMvs4Ij4+a+0syivvsYZ0u3U/Oh3Rd7JRv0U8sr6LMTKsNh8nUBtcy092
-         +Q4u6rUGd9zykiqN9LQ0yv34FZg9Uiz000D61S8AX7H7FNMF7WhE24WVj2zK3lchj2vT
-         Uk8Q==
-X-Gm-Message-State: AOJu0Yxc7dwZwrZvZ7I0ie//iSmQ2q7iRpVnRTHZOoxKK7KyAnbPjU5q
-	g9ek895dntlSYrejPDQ7k8BSsiQRan/qxcfLLXn7UZW1ypfu5dOd2Z1AqPK6N//4ifA=
-X-Gm-Gg: ATEYQzzqxSGdML4Hcl+e/d8HyWfNs7aEBosS+Z8r+Mh1objp9M+FhL3qN2R1GX65QlB
-	tFp3U/UGYhTw7ClNdVed4/pt43yE3Raoz1Wjd0kP/m6k1sWD+YonlIPgTo1KZQDq9ZoKpwz9BPE
-	MN+QKXQG9AQsNvxN+/xM5j71BoggvYsbD7INJKSiYHaTkpWzxwCiggrzEfFunNyDBf57SwFN3ET
-	NLYtRExF1qMZwSKiGgVGgZ7fn0V7Nx7bvQqtmIjLikVo6TWY/tcC73r/v1iYsW6vU/lGwibqawK
-	mGKVTKBx9kZPpjJqH3rWMOIf1C3utEP1E1J71jcqd3qVOD8gRO7oxctQls9ahh4Fo0d6BuSOWyZ
-	JOXXsuocsS05IThp8amIugIGMHmdYRJmmsEnZYnHEn9WYscJZ21RbcOpAAKmYGSRZfpUY0t47a9
-	6gWitIHsU5KkuV7K+4JEAphi/utiQF3douTN1yG8QdUp+B3BK9fGQfxI1v/RyORwkcVh655i+Qo
-	GLZOK1d3sgR1qc45+O54sgBiVGWUw==
-X-Received: by 2002:a05:690c:81:b0:79a:8eee:fa3a with SMTP id 00721157ae682-79acf62cca4mr58518647b3.25.1774480437580;
-        Wed, 25 Mar 2026 16:13:57 -0700 (PDT)
+        bh=QRX/fMoQGvyPAygZvcvaLf3aATVavyYi7axHDsUWIx4=;
+        b=TnnOTF5icZ0kDvFEOrtIcQgoWD9jFrtXQtz56CDLYjQnevmK334h99IpNGEKdhe/l7
+         yj4nV7vDzP87UY4/KhYH+g1dJFkQCoCRk3JerXDRUAP9utiiPyTQ6NcX08t/eZGLUOB1
+         nw24SyXUengV9ERjPrXwXznbXo97G2UI1YV3zkM7gZOqztMVO9LMQEw3TnhaxydiRYCH
+         L+1hJYfNaOCSx/PeJaEDT/+mWPDD59QKjEylsFxEIDt/5lJN2lBBYh3LQ2oYsj1W1waD
+         ZFtV6d4IL4MjkOaq/xhpiCgRwlw9ZrvevmKhSEOBh44Zxw8FT+MDz63orf89lNJxLB4q
+         5r8g==
+X-Gm-Message-State: AOJu0YwQ+4Lsqe+TScV+J5/upeSmqsZTj+5o4vc7+Ob+0/UBRVxmWoOr
+	TRmaPdCPHKQRKOiCRy4IQEEqB+9vXx0+D03KRyWfJwKhm2f3W5vUqOR6089sgacUD2w=
+X-Gm-Gg: ATEYQzw+5eqkdP/8pPcWGyLe518u5elYaSXlLB1XoKT+uYJDSKRN4qGFPBO1rbyrKKJ
+	1+LoifySVfvaWd/Q/R/xNXZ9EocqEFmsYG3/SqXknC1YrfImtTbino7wMsokfHyTNj9OYNdpat8
+	Rjom9Le/pSbdOYsqAOjsRQzQQ56NlnfFH2FVXxdOwN/mKsALGwMTeGXti71iilGgrlG/ycu4/xb
+	7lxYYeNfCsb4+S2wuZb78vuqiWTHvH2fkIScSSZZwPfy4APXoOx8CKbt8A0Ahmng0wDqSAmrgmU
+	JLhbXAY5PKTuxaSVXfYe3bnMkogs2AIfmZCVlhtmopkQCSRtjKca8vQrTXc5OQdImd6GAezMz3D
+	H7SgQtPl8WcAPniLPcSleDXDLpRQ0hzC4iKojhzC91san1ZLWYR/PnlJ4RWEevQ7qaxcoiIwYd0
+	BXhXsFqq3GxpciLMlCOHueffDEJAyzatEZJsJpOjpD5VPwJFMyB762Fzpghi6oljp98afAwOQbK
+	WYh7DZZhn0xN+gOHoXu9k+w+KBUzA==
+X-Received: by 2002:a05:690c:3387:b0:796:3e50:77b with SMTP id 00721157ae682-79acf2f1122mr57714367b3.6.1774480784948;
+        Wed, 25 Mar 2026 16:19:44 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79b1e41e735sm4843317b3.45.2026.03.25.16.13.57
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79b1e412da7sm5017077b3.42.2026.03.25.16.19.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 16:13:57 -0700 (PDT)
-Date: Wed, 25 Mar 2026 19:13:56 -0400
+        Wed, 25 Mar 2026 16:19:44 -0700 (PDT)
+Date: Wed, 25 Mar 2026 19:19:43 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/5] pack-objects: refactor
- `read_packs_list_from_stdin()` to use `strmap`
-Message-ID: <acRsNHna6IJHQNZq@nand.local>
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 4/5] pack-objects: support excluded-open packs with
+ --stdin-packs
+Message-ID: <acRtj1ZualwdKwjz@nand.local>
 References: <cover.1773959041.git.me@ttaylorr.com>
- <ea6fdbcc46f608c3fbe65298e9ca91faf43a1b16.1773959041.git.me@ttaylorr.com>
- <acI_sP6ZEdw-xGpR@pks.im>
+ <bd78919e19cfa968556ad4241391120ed56e9dce.1773959041.git.me@ttaylorr.com>
+ <20260321165711.GA718452@coredump.intra.peff.net>
+ <acAwZ1ARhvsTSpO5@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,215 +77,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <acI_sP6ZEdw-xGpR@pks.im>
+In-Reply-To: <acAwZ1ARhvsTSpO5@nand.local>
 
-On Tue, Mar 24, 2026 at 08:39:28AM +0100, Patrick Steinhardt wrote:
-> > Extract the logic for sorting packs by mtime and adding their objects
-> > into a separate `stdin_packs_add_entries()` helper.
+On Sun, Mar 22, 2026 at 02:09:43PM -0400, Taylor Blau wrote:
+> It's tempting to add something like:
 >
-> Right, the ordering was my first question. Interestingly though, that
-> function doesn't seem to be added in this commit... ah, it's called
-> `stdin_packs_add_pack_entries()`.
-
-Ah, good catch. I had originally called it `stdin_packs_add_entries()`
-but renamed it before sending, apparently without adjusting the commit
-message appropriately.
-
-> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > index 9a89bc5c4c9..72c9ddbed6b 100644
-> > --- a/builtin/pack-objects.c
-> > +++ b/builtin/pack-objects.c
-> > @@ -3837,90 +3838,120 @@ static int pack_mtime_cmp(const void *_a, const void *_b)
-> >  		return 0;
-> >  }
-> >
-> > -static void read_packs_list_from_stdin(struct rev_info *revs)
-> > +struct stdin_pack_info {
-> > +	struct packed_git *p;
-> > +	enum {
-> > +		STDIN_PACK_INCLUDE = (1<<0),
-> > +		STDIN_PACK_EXCLUDE_CLOSED = (1<<1),
+>     if (!p)
+>         BUG("add_object_entry_from_pack: expected non-NULL pack");
 >
-> It might make sense to provide a sentence for each of the enums to
-> explain what they do.
+> But I wonder if we should instead store the result of calling
+> `want_object_in_pack()` into a separate variable, only creating an
+> object entry if "want == 1". That would have the effect of *not* marking
+> objects as traversal tips if want_object_in_pack() makes `p` NULL.
 
-I'm not opposed, but I am not sure what information would be helpful to
-add here, since these correspond one-to-one with the three possible
-prefixes for packfile names we receive with --stdin-packs.
+I ended up talking myself out of this.
 
-> > +static void stdin_packs_add_pack_entries(struct strmap *packs,
-> > +					 struct rev_info *revs)
-> > +{
-> > +	struct string_list keys = STRING_LIST_INIT_NODUP;
-> > +	struct string_list_item *item;
-> > +	struct hashmap_iter iter;
-> > +	struct strmap_entry *entry;
-> > +
-> > +	strmap_for_each_entry(packs, &iter, entry) {
-> > +		struct stdin_pack_info *info = entry->value;
-> > +		if (!info->p)
-> > +			die(_("could not find pack '%s'"), entry->key);
-> > +
-> > +		string_list_append(&keys, entry->key)->util = info->p;
-> > +	}
-> > +
-> > +	/*
-> > +	 * Order packs by ascending mtime; use QSORT directly to access the
-> > +	 * string_list_item's ->util pointer, which string_list_sort() does not
-> > +	 * provide.
-> > +	 */
-> > +	QSORT(keys.items, keys.nr, pack_mtime_cmp);
->
-> Okay. I was briefly wondering whether it would make more sense to use
-> `string_list_sort()`, but I guess it doesn't buy us much.
+There's no reason to call want_object_in_pack() early, as it may change
+the very pack pointer we wish to use to determine the object type of the
+given object.
 
-Yeah. This is actually carried forward from the existing implementation,
-and uses the separate QSORT() because `string_list_sort()` doesn't
-provide access to the `util` field of the items, which we need to sort
-by mtime.
-
-> > +	for_each_string_list_item(item, &keys) {
-> > +		struct stdin_pack_info *info = strmap_get(packs, item->string);
->
-> We could avoid this extra lookup if you instead were to store the pack
-> info in the `item->util` field.
-
-Good idea. Funnily enough, we already assign ->util = info->p in the
-loop above, but never use it. Something like this on top should clean
-things up nicely:
-
---- 8< ---
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 72c9ddbed6b..c9b33d1673d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3859,7 +3859,7 @@ static void stdin_packs_add_pack_entries(struct strmap *packs,
- 		if (!info->p)
- 			die(_("could not find pack '%s'"), entry->key);
-
--		string_list_append(&keys, entry->key)->util = info->p;
-+		string_list_append(&keys, entry->key)->util = info;
- 	}
-
- 	/*
-@@ -3870,9 +3870,7 @@ static void stdin_packs_add_pack_entries(struct strmap *packs,
- 	QSORT(keys.items, keys.nr, pack_mtime_cmp);
-
- 	for_each_string_list_item(item, &keys) {
--		struct stdin_pack_info *info = strmap_get(packs, item->string);
--		if (!info->p)
--			die(_("could not find pack '%s'"), item->string);
-+		struct stdin_pack_info *info = item->util;
-
- 		if (info->kind & STDIN_PACK_INCLUDE)
- 			for_each_object_in_pack(info->p,
---- >8 ---
-
-> > +		if (!info->p)
-> > +			die(_("could not find pack '%s'"), item->string);
->
-> This case basically cannot happen as we already `die()` further up,
-> right? Should we rather `BUG()` or drop the check completely?
-
-I think we should drop the check completely here, there's no way that we
-would have a NULL 'info->p' by this point with the check that exists a
-few lines up.
-
-> > +		if (info->kind & STDIN_PACK_INCLUDE)
-> > +			for_each_object_in_pack(info->p,
-> > +						add_object_entry_from_pack,
-> > +						revs,
-> > +						ODB_FOR_EACH_OBJECT_PACK_ORDER);
-> > +	}
-> > +
-> > +	string_list_clear(&keys, 0);
-> > +}
-> > +
-> > +static void stdin_packs_read_input(struct rev_info *revs)
-> >  {
-> >  	struct strbuf buf = STRBUF_INIT;
-> > -	struct string_list include_packs = STRING_LIST_INIT_DUP;
-> > -	struct string_list exclude_packs = STRING_LIST_INIT_DUP;
-> > -	struct string_list_item *item = NULL;
-> > +	struct strmap packs = STRMAP_INIT;
-> >  	struct packed_git *p;
-> >
-> >  	while (strbuf_getline(&buf, stdin) != EOF) {
-> > -		if (!buf.len)
-> > +		struct stdin_pack_info *info;
-> > +		const char *key = buf.buf;
-> > +
-> > +		if (!key || !*key)
->
-> The first case of `!key` cannot ever happen as strbufs always have `buf`
-> set.
-
-You're right, this is just muscle memory, but the left-hand side of the
-condition is unnecessary. I'll remove it.
-
-> >  			continue;
-> >
-> > +		if (*key == '^')
-> > +			key++;
-> > +
-> > +		info = strmap_get(&packs, key);
-> > +		if (!info) {
-> > +			CALLOC_ARRAY(info, 1);
-> > +			strmap_put(&packs, key, info);
-> > +		}
-> > +
-> >  		if (*buf.buf == '^')
-> > -			string_list_append(&exclude_packs, buf.buf + 1);
-> > +			info->kind |= STDIN_PACK_EXCLUDE_CLOSED;
-> >  		else
-> > -			string_list_append(&include_packs, buf.buf);
-> > +			info->kind |= STDIN_PACK_INCLUDE;
->
-> I was briefly wondering whether we need error handling for the case
-> where a pack is marked both as excluded and included. But we didn't have
-> it beforehand, either.
-
-Yeah, I think this is a consequence of 752b465c3c0 (pack-objects: fix
-error when same packfile is included and excluded, 2023-04-14).
-
-> > [snip]
-> > +
-> > +			/*
-> > +			 * Arguments we got on stdin may not even be
-> > +			 * packs. First check that to avoid segfaulting
-> > +			 * later on in e.g.  pack_mtime_cmp(), excluded
-> > +			 * packs are handled below.
-> > +			 */
-> > +			if (!is_pack_valid(p))
-> > +				die(_("packfile %s cannot be accessed"), p->pack_name);
->
-> Hm. Doesn't this change behaviour though? Beforehand, we would have
-> checked the packfile for every included pack. Now we only check the
-> packfile for every included pack that was yielded by
-> `repo_for_each_pack()`. So if an included pack wasn't yielded at all we
-> wouldn't notice that it doesn't exist?
->
-> I guess an easy fix would be to mark every pack that we have processed
-> as seen in the pack info, and then loop over all pack infos a second
-> time to verify that we've seen all that we expected to see.
->
-> Which you in fact already do :) That post-processing happens in
-> `stdin_packs_add_pack_entries()`, where you verify that the `p` pointer
-> is set as expected. And if it's not we die with a message that the pack
-> wasn't found. Good.
-
-Thanks for double checking.
-
-> This was a bit more demanding to review, but I very much like the
-> outcome of this.
-
-Yeah, I really struggled to try and find a productive way to break this
-up into smaller changes. But in the end I couldn't find any good splits
-that I liked, hence the larger-than-usual patch.
-
-Thanks for reviewing it, I think that it makes the rest of the series a
-little more palatable, and the resulting code is easier to reason about
-IMHO.
+Once we have determined the object type, then we are free to call
+want_object_in_pack() to determine if we want to add the object to the
+resulting pack.
 
 Thanks,
 Taylor
