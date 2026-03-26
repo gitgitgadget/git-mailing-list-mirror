@@ -1,36 +1,36 @@
 Received: from mailproxy08.manitu.net (mailproxy08.manitu.net [217.11.48.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9E7405ADA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B9640626E
 	for <git@vger.kernel.org>; Thu, 26 Mar 2026 15:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.11.48.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774538588; cv=none; b=TMFhMwM29/FS/Ezos8EZwJBXAAO7jQtoEPoi5rFk8j1Z48Ki5xq0QjnhNfUbMGoD4OyiNLkhMjB4/8Zq7qCt/KTmkaOPlJvuCc0yXHw1FkSxtQEr0FQ9nFeM1mN6+By/bQBh4cOY1+y5mQJtbkiVWE+6aJK4rEobcYI5ZVku/bc=
+	t=1774538587; cv=none; b=Gxshwjo3YSBERyg9wuWHHJ4iEK4pyVpEoBaZS/GlDqsvv5iP0f4CCGA9I8K1nfMfmcE0q3lmj0pm/bWuqRgIeH3GUnKACUoUHPcp6BoQ08yhaw4wXFdEQiYl4KAOP2iTzsQ60e+vmv8z0tB/Df62LgsPaQsMc1WTJ7diMsiFTlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774538588; c=relaxed/simple;
-	bh=UcNO8nUxMsoiDwEy32ON3ST0ZnDpiXxhBZCTiA9aMIY=;
+	s=arc-20240116; t=1774538587; c=relaxed/simple;
+	bh=17YMchYaH5dP1h0/8dN8Dgp5nfF/lN3Ml7HWsUw1RfM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgPXVL1UBbSTclFG12gjtT60Mmkw1BMmXEGTjp7sedEOgNQtZTJ1dRQ3KJLN/PNvn+vKiXYOyyJxf3g52/AZ2t6YYcLPMRxeW2dUZspQybDPndnhMXwCLDio7QxZU5GK4dYiAEsGn2efrgyEx7itzdV7IFhc0NDZPawW7N29KvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu; spf=pass smtp.mailfrom=grubix.eu; dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b=nx17fQjN; arc=none smtp.client-ip=217.11.48.31
+	 MIME-Version; b=oDrV/S/HQHQ8KkWP00l4YVX+kIVPjy58n+9FELyGvCc+jLILfCaroU22EyaY8kpdRh7wlHlUwsQjL28fkw94uNWuK4dNMr5zcj5zAwJWhswKxfY0hir7Vx+UWPnx1Bq6sVPEzI6Z+cZ4rlU4BTqmn0PZchmGDKr7YQrpM1/dwH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu; spf=pass smtp.mailfrom=grubix.eu; dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b=xxVSfN5S; arc=none smtp.client-ip=217.11.48.31
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grubix.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b="nx17fQjN"
+	dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b="xxVSfN5S"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grubix.eu;
-	s=manitu-webhosting; t=1774538578;
-	bh=+leXXSWB9yvq0W5MUzgVZF6Fcw0VO5X9E6+SAmhPVQ4=;
+	s=manitu-webhosting; t=1774538579;
+	bh=yZe4328eJy50x6LZ9HoqIurURM7R+p7M8+X+GmoBcHQ=;
 	h=From:To:Subject:Date:In-Reply-To:References;
-	b=nx17fQjNztlpiG0ScE4wxl9I0Ee0lB8Wr03ykFIKCgYxor81NQObv7a2n9la7CpRx
-	 Hoh2dlXoMdlrvGETCPDGUcVIfFXuJJDcDctpnQYFF9WZd6EBcj1dduonhi0r0DWxFB
-	 BJPRIC2fNclOtTOUiqIlpTyXC8O6qwBuXJVElnlnzAqIN6BNIIO/zjY2rcF4kU+oVr
-	 YkD2uJJAnUw5i4pHMZOwCrFlJIiBhBBEt1oSOxklB3s9Wn7ax6VHgn9ZXzRhx6WkpQ
-	 6U21ZfF7aLepzH///srxLJRzabZmfmi/8wznDWmwhyCmOJb1XLIYKL5sqAwMDp48qh
-	 VaHcPExe33cUA==
+	b=xxVSfN5S/jKdqcppjdB8JaBkGlBvnt0uejiehm0USnZNzgv9pYagw5vb19OlTs7MK
+	 eTalFSM13K+fD8vh1u+jCJukxAYHTZFeFDVsIgpFXbsRchVhOtiBRv+sH1tGI8iVxp
+	 zuA4hjTgbCiwXXnxbspdcLzAvZT8UAOx4Mvg+fMu+83ksb/W4E+p02JVNB13kM9tQm
+	 E7kYRbRUHnGHw1X6+xAYx3CVbySWig15/BRyGbG1bFccAkQK6inAkn9KOYvGONbFyl
+	 PDbfaviV7tqpZf+2VZGuCYTfgC33UJo3areFprB9BIf4nOm0lltvBLSIDphOW6twC5
+	 OFNpOZllFEb/A==
 From: Michael J Gruber <git@grubix.eu>
 To: git@vger.kernel.org
-Subject: [PATCH 5/6] do not discard const: keep signature
-Date: Thu, 26 Mar 2026 16:22:51 +0100
-Message-ID: <9a90f93111ec54e5eb9675cb84ac1d70ad95e118.1774537954.git.git@grubix.eu>
+Subject: [PATCH 6/6] do not discard const: the ugly truth
+Date: Thu, 26 Mar 2026 16:22:52 +0100
+Message-ID: <fe9c86af4825a81b2618ae8ffc8be12300058af2.1774537954.git.git@grubix.eu>
 In-Reply-To: <cover.1774537954.git.git@grubix.eu>
 References: <cover.1774537954.git.git@grubix.eu>
 Precedence: bulk
@@ -41,25 +41,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Here, while we do not mutate the struct itself, many other signatures
-expect a non-const argument - possibly unnecessarily - so we opt to keep
-the original signature by casting to non-const.
+ISOC23 reveals that we mutate argv strings in place. Confess to this
+with explicit casts.
 ---
- pseudo-merge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/rev-parse.c | 8 ++++----
+ revision.c          | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/pseudo-merge.c b/pseudo-merge.c
-index a2d5bd85f9..ac81792e65 100644
---- a/pseudo-merge.c
-+++ b/pseudo-merge.c
-@@ -644,7 +644,7 @@ static struct pseudo_merge_commit *find_pseudo_merge(const struct pseudo_merge_m
- 	if (!pm->commits_nr)
- 		return NULL;
- 
--	return bsearch(&pos, pm->commits, pm->commits_nr,
-+	return (struct pseudo_merge_commit *) bsearch(&pos, pm->commits, pm->commits_nr,
- 		       PSEUDO_MERGE_COMMIT_RAWSZ, pseudo_merge_commit_cmp);
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 01a62800e8..f429793b6f 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -265,7 +265,7 @@ static int show_file(const char *arg, int output_prefix)
+ 	return 0;
  }
+ 
+-static int try_difference(const char *arg)
++static int try_difference(char *arg)
+ {
+ 	char *dotdot;
+ 	struct object_id start_oid;
+@@ -325,7 +325,7 @@ static int try_difference(const char *arg)
+ 	return 0;
+ }
+ 
+-static int try_parent_shorthands(const char *arg)
++static int try_parent_shorthands(char *arg)
+ {
+ 	char *dotdot;
+ 	struct object_id oid;
+@@ -1145,9 +1145,9 @@ int cmd_rev_parse(int argc,
+ 		}
+ 
+ 		/* Not a flag argument */
+-		if (try_difference(arg))
++		if (try_difference((char *) arg))
+ 			continue;
+-		if (try_parent_shorthands(arg))
++		if (try_parent_shorthands((char *) arg))
+ 			continue;
+ 		name = arg;
+ 		type = NORMAL;
+diff --git a/revision.c b/revision.c
+index 31808e3df0..a28b14a2ea 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2132,7 +2132,7 @@ static int handle_dotdot(const char *arg,
+ 			 int cant_be_filename)
+ {
+ 	struct object_context a_oc = {0}, b_oc = {0};
+-	char *dotdot = strstr(arg, "..");
++	char *dotdot = (char *) strstr(arg, "..");
+ 	int ret;
+ 
+ 	if (!dotdot)
+@@ -2176,7 +2176,7 @@ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int fl
+ 		goto out;
+ 	}
+ 
+-	mark = strstr(arg, "^@");
++	mark = (char *) strstr(arg, "^@");
+ 	if (mark && !mark[2]) {
+ 		*mark = 0;
+ 		if (add_parents_only(revs, arg, flags, 0)) {
+@@ -2185,13 +2185,13 @@ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int fl
+ 		}
+ 		*mark = '^';
+ 	}
+-	mark = strstr(arg, "^!");
++	mark = (char *) strstr(arg, "^!");
+ 	if (mark && !mark[2]) {
+ 		*mark = 0;
+ 		if (!add_parents_only(revs, arg, flags ^ (UNINTERESTING | BOTTOM), 0))
+ 			*mark = '^';
+ 	}
+-	mark = strstr(arg, "^-");
++	mark = (char *) strstr(arg, "^-");
+ 	if (mark) {
+ 		int exclude_parent = 1;
  
 -- 
 2.53.0.1195.g771ffcb452
