@@ -1,118 +1,123 @@
-Received: from mail-244116.protonmail.ch (mail-244116.protonmail.ch [109.224.244.116])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5973FE64A
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 14:21:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BA63FBEC3
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 14:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774534887; cv=none; b=kCvkQrqZYyymQU6Xb+2+k5TaIoK2bA/7lZ1mQXbQw3uqu17bqb0x5w/eVevVqahE0IpZw0M6/N2OwteV7YtRKkfA71sTRhcWX70kZ+kURuG0dtaszUlA28Nxn4gwKwhOFf78VodfYVZ7O9+OTQkzedF8l+6W7RIM332Zn456j1E=
+	t=1774535269; cv=none; b=S8jJ+uEI1jaEKMGrb69i164M5Y3LTFsYdZlQy7DGrWpQp2KVOyqhLvDxvFjsGsEu4Nr+ADXI+oqcLJM1/OSkey4A92lfp71pYE+yJgwvh+47Ip+RktUuV0190PsUpGJIy+9PzezBRNjS96cQGVBAQlOrUhuIGh1/M/MrCvHhkQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774534887; c=relaxed/simple;
-	bh=BI9whyx1P4wEWZe70uU1r445MKZF9RgZYhARIsrOhs0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tz71R7PYFEC7btBvE1pK7n4qBAhVhYk5y4TnQY2y+DB4DeHAfARSgdMDtZvbcI9j8HWRRhuHPKEKrPqUbLd88ux7LlRNd0GqREa7Ht9ImZbqGCZoIMMaav34J95TmcdpN2DL7/1iLjzhgFWNBdIlgns8sdqB2eeejPqkoCesT+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Vdf/1ZeE; arc=none smtp.client-ip=109.224.244.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1774535269; c=relaxed/simple;
+	bh=sbguhnR0oTokO9xgyDVuqRN5YsSkLOyknnwjk5nu2Rc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VX1l/MCNapud3nJ1msh81+H1PsszSSFgc9C5faUcyBAlT+OloCld3cRy/NXHp3ZzRUyPkR6S8O41bdJIYOL3nfHCREsB5LpLIhUKfHmgNhdqfLgATOTfIbWcOpsLer2Ke6HkzKsTRPASCLvk0LhqvNxocJ9C48vnya7n0jlqG5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=irXW3Mv5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MWER/Vi5; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Vdf/1ZeE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1774534871; x=1774794071;
-	bh=1kZ+RJR+WBD3NjvzWbpErAjJNAcHyPHDZSTbjTT1RZw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Vdf/1ZeEFWC6t8NjXDseiiOc35sx1/e443ksGRaVRLK+82xGO1Q1RQ356OdXkAN9X
-	 +CR5JmHpvCLgWIsJCkU35rV0GAIThDu9rHlqS3dB0n+uehPZUU1M1oxqjhrgdtRMeA
-	 hfkX2QI6DtgL3eJ8ecy0XSDB1Y/JF/JrMrs1HoXrzN2Mr8TCqU4qmbZcGAwDZHUfNP
-	 F0tgKEKFzgeAODvsb7FyflkHaHFt+Rio/7EBEef6c3YJzZduDoSIAowlhPFnnJf06x
-	 gQMULhJOOEaaazqeyAU82G4HPR5RhHWEE31qI2SZeEQmLfMd8D5gnc2YSKKuDCm6Ca
-	 mLyWXozhnKiMQ==
-Date: Thu, 26 Mar 2026 14:21:07 +0000
-To: Patrick Steinhardt <ps@pks.im>
-From: apaterson@pm.me
-Cc: Aaron Paterson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] odb: add write_packfile, for_each_unique_abbrev, convert_object_id
-Message-ID: <DpRTZzuEPU7m8kvCckzHYEK380REXLfunHXO4hE3qgAZsKPSNtyqkBT2oRzusMxvIDgLVkt4FOis0HKBTEJPIRQgcbYM6QZdpzN6-Y-F7WE=@pm.me>
-In-Reply-To: <acU7eJ0MpUVhCs6-@pks.im>
-References: <pull.2074.git.1774530437562.gitgitgadget@gmail.com> <pull.2074.v2.git.1774532383055.gitgitgadget@gmail.com> <acU7eJ0MpUVhCs6-@pks.im>
-Feedback-ID: 6356313:user:proton
-X-Pm-Message-ID: 8da39a5715e90d8505cf6d5044d9d10a19ead392
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="irXW3Mv5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MWER/Vi5"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 898567A02A8;
+	Thu, 26 Mar 2026 10:27:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 26 Mar 2026 10:27:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774535266; x=1774621666; bh=avSmG75lJR
+	GSZI5NjY3jRovJv5NzV9zTaTEMcaRNQp0=; b=irXW3Mv55UjkObxI4E5jBqlnjj
+	urH1v6XzrRc3zDwEjTSVd3EeQs1TEbkzgcbArhcR7Wcb5k6UEF4BgbjHzib+M+Av
+	d50PoLgNJUEkbjTu1eA7nRBZk0dyIOY3s3SqGaD/zCnQSWBsm+r6hGgAks/PzTzJ
+	evcLdn+acOeGGtYgpZF51RIwPtpd1VFKkUzyBys9stAnXg4TeK4ab/Uk/yetEAkN
+	YNaoFEN3gdAM7QGgtkZvk0e1FTyOYKj9odLBYen7PAAKqVAU0tHqXJTSZyKeH304
+	HYRZGBsWf8uwYfevoDqCsiD1Gb1Mh1J6z5XK6JSFA/HZeeF1NhblAFDmZO/Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774535266; x=1774621666; bh=avSmG75lJRGSZI5NjY3jRovJv5NzV9zTaTE
+	McaRNQp0=; b=MWER/Vi5d3g4Qb6fECv8T6Eudrq6qL0Y8764DwErQb9u5CuDwH9
+	uUgA0jl6KOrmuxur/PdMuxsK8vk1upHU4el4VyjA5tS2xNMelow10WE2jlrzz4Kc
+	N0YDTnr1MGtjIAmGBkXv3pLKt37Zahj8bcFwtBs/ksK/uYxT0LQh2+dwFRGjcy0w
+	+iHxDfy5066eHcN2Y0ePj+AW60qQ0WkhgJXJ1VF2jTXoJmi1oPi6nBlClvHCwCAV
+	6wbn4k0kq61qhFvRZhVwz6iyp0DwxqXGoVrjPsFQEggq6RvKLM9t9UA3ewRI/ue7
+	//S3bs7PY84NKP0ZNGTuvP/NVeK+CwWghdA==
+X-ME-Sender: <xms:YkLFafaD1zYC8UC4sNbl6iAuzN4wcPmaEIdGXu9yQ7kRLGQFv7qtdg>
+    <xme:YkLFaV0r7KY0i8dE0ctMWalutpL0xp-1Fnrhlf3AUTo6b2yjTnS9bfDzWS4H-SrS9
+    SCMJbu4DklB3H4Wjj8kEBmZ6s7EUkL2EdE4d5XTtU2ppcq69irMtg>
+X-ME-Received: <xmr:YkLFafUMvhVQQ6LvMmdY8Td5_BxglTzE1rgaWgc5vEJxLsj5GelEvGi6tnyKIeAXMB3yHOcGnZMQ-RV7WufyHDWoGJfP5HKeLg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdejiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:YkLFafUlNlK2QL7VA5j_wu65u4WotJz5j56zIxWHupM2kMvdCKsutw>
+    <xmx:YkLFaefCZYW7pswt6Jo0uA9-moXp-3dUO0x5nnkR2KeRpsJoO8TygQ>
+    <xmx:YkLFaYUH9UJucCCIM4c5TSock-Awglrg8xokUM1UuEcIu1kKSo9DKw>
+    <xmx:YkLFaXe7hFnYpKOECwyLo4vlCb3W4yh-JU_F7ZTW5lsQ7K_n_FqxVQ>
+    <xmx:YkLFacnctU-1Fda3aIaO0mQvN_Kqg05BkX-qzdtmx0rRQTzbLGpNfNr4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Mar 2026 10:27:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/11] test-lib: catch misspelt 'test_expect_successo'
+In-Reply-To: <20260326040828.GA686242@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 26 Mar 2026 00:08:28 -0400")
+References: <20260325062114.2067946-1-gitster@pobox.com>
+	<20260325062114.2067946-2-gitster@pobox.com>
+	<20260326040828.GA686242@coredump.intra.peff.net>
+Date: Thu, 26 Mar 2026 07:27:44 -0700
+Message-ID: <xmqq8qbesm1r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Of course, and my apologies, gitgadget is not formatting these messages as =
-clearly as I would like them to be.
+Jeff King <peff@peff.net> writes:
 
-Both this series and the last were adapted from my fork that supports [1] w=
-ith a feature similar to gitremote-helpers. My hope is that the fork can co=
-nverge with master so that sqlite-git can become redistributable. The local=
- backends vtable was already a step in this direction, so the question is i=
-f letting users bring their own local backends, the way they currently can =
-with helpers for remote backends, is in scope for git core.
+> diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+> index afba0fc3fc..0bf1f16750 100755
+> --- a/t/t0005-signals.sh
+> +++ b/t/t0005-signals.sh
+> @@ -42,7 +42,7 @@ test_expect_success 'create blob' '
+>  '
+>  
+>  test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
+> -	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
+> +	OUT=$( ((large_git || echo $? 1>&3) | :) 3>&1 ) &&
+>  	test_match_signal 13 "$OUT"
+>  '
+>  
+>
+> That neglects to echo $? when large_git surprisingly succeeds, but that
+> would mean $OUT is empty, which would cause the test to (correctly)
+> fail. I kind of hate it, though.
 
-Either way, it sounds like series 1 will be covered by upstream, so next I =
-would like to contribute support for git-local-* helpers. This allows users=
- to create .git repositories with storage formats other than packs and buil=
-tin alternatives like reftables, which seems appropriate as direct sqlite s=
-upport would probably be out of scope for core. Local helpers are already i=
-mplemented in [2] but if it makes sense to hold off and rebuild it after e.=
-g. ps/odb-generic-object-name-handling is merged, I am not in such a rush.
+Would
 
-[1] https://github.com/mayCXC/sqlite-git
-[2] https://github.com/gitgitgadget/git/compare/master...MayCXC:git:ps/seri=
-es-2-helpers-v3.patch
+	OUT=$( ((large_git && echo 0 || echo $? 1>&3) | :) 3>&1 )
 
-- Aaron
+do a bit better?
 
-On Thursday, March 26th, 2026 at 7:58 AM, Patrick Steinhardt <ps@pks.im> wr=
-ote:
+We can keep fixing things one by one as we find these little
+glitches and gochas, of it may be a whack-a-mole exercise that
+eventually will turn out to be futile.  I dunno.
 
-> On Thu, Mar 26, 2026 at 01:39:43PM +0000, Aaron Paterson via GitGitGadget=
- wrote:
-> > From: Aaron Paterson <apaterson@pm.me>
-> >
-> > Add three vtable methods to odb_source that were not part of the
-> > recent ps/odb-sources and ps/object-counting series:
-> >
-> >  - write_packfile: ingest a pack from a file descriptor. The files
-> >    backend chooses between index-pack (large packs) and
-> >    unpack-objects (small packs below fetch.unpackLimit). Options
-> >    cover thin-pack fixing, promisor marking, fsck, lockfile
-> >    capture, and shallow file passing.
-> >
-> >  - for_each_unique_abbrev: iterate objects matching a hex prefix
-> >    for disambiguation. Searches loose objects via oidtree, then
-> >    multi-pack indices, then non-MIDX packs.
-> >
-> >  - convert_object_id: translate between hash algorithms using the
-> >    loose object map. Used during SHA-1 to SHA-256 migration.
->=20
-> This will conflict with ps/odb-generic-object-name-handling, which
-> already introduces generic callbacks for `for_each_unique_abbrev()`.
-> There's also ongoing work by Justin to handle writing packfiles via the
-> ODB transaction interface.
->=20
-> > Also add ODB_SOURCE_HELPER to the source type enum, preparing for
-> > the helper backend in the next commit.
->=20
-> Huh.
->=20
-> > The write_packfile vtable method replaces the pattern where callers
-> > spawn index-pack/unpack-objects directly. fast-import already uses
-> > odb_write_packfile() and this allows non-files backends to handle
-> > pack ingestion through their own mechanism.
->=20
-> I'm again a bit puzzled, same as with your previous patch series. It
-> would be nice to collaborate on this topic, but that will require a bit
-> more coordination than just sending in a patch series as things are
-> quite in flux here.
->=20
-> Patrick
-> 
+In any case, the "Add 'set -e' to test-lib.sh to affect everybody"
+step has to come at the very end of the series to keep tests pass at
+each step, I guess.  I wonder how much better Patrick's version
+does...
+
