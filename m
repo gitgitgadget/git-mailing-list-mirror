@@ -1,66 +1,66 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61197322A00
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 20:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF8C355F49
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 20:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774558183; cv=none; b=O1+B8K8NmGizP/s7GHY70rJIpEjdhJ/O3SLGfZ5BnFrID8LXypoYEVkO0uL16OTTzD+14hMiUsFeA4gMxwKbXTC/q7uf7ywNWyF4YtJ9eb8K1lFmZylba5siBNo9luywAcepzzRrDECOcudI5tW//BFD+y25C8eKm76JvWH+yzo=
+	t=1774558273; cv=none; b=mfn/K8aN6AJg3iu+jh2/yY5c+XWqcEjjYcU2SrjD2u9D9UyLMpPNKNbSu6wb1Inh4PA/6PzxVjKNaiAt6OXabOh++3s9jsXupqP6F2LKE52o10XYuQc8hICQ7acnQLqclmU8rFCtH+fhDEP0QhS7BlPO8eI66b6sNupyg6T+g+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774558183; c=relaxed/simple;
-	bh=Rn+sG1tb+L5B+0odHd6zaPsOymGdsw2bLLpf2l0F64k=;
+	s=arc-20240116; t=1774558273; c=relaxed/simple;
+	bh=4jqA1cSCN0rqhsD1QuNn3pYCDoqVIaNQivYPIQjfiPU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kS1de0kZsuzMJ9F+y0lGsSTIy4VvzXQX+8ZnDWroKKJa10SGnALq+GPDq9t5n7J2vo4QJwLv19XW8Zy3hO6vnh08NBwYnK5aFOVdKKTLkxrhbK1Ku08OUFUvzeL21aZxEj6B3P8LrzhQYcFVr/WtFOZLZ34vH+LU8JwtYzsoMwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egg4M6BR; arc=none smtp.client-ip=209.85.222.175
+	 In-Reply-To:Content-Type; b=iDScy9KEtpCsyet1JtRB8jkbZ7qgDi5jP7io5Jf1V6YwvxfQSrnlTeTzGtb5vRBPB02a48b0WMjs3VKPzRgY+R44rIHEYclJVbfUxEDLDVtu52CQyQNhRDYaVXo4nrLMOZo77siaUuBDKDeIcpMSmQRRH9If1vtygPR3bX4iQYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lheQWIil; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egg4M6BR"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8cfc085395fso157711385a.2
-        for <git@vger.kernel.org>; Thu, 26 Mar 2026 13:49:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lheQWIil"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cb38e86cf2so159244385a.1
+        for <git@vger.kernel.org>; Thu, 26 Mar 2026 13:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774558181; x=1775162981; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774558271; x=1775163071; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0ZTmavDFbJGDIjrBbFwXLrLXfGqW8eftNGZPaeZ+Fms=;
-        b=egg4M6BRQLjOCu27qVkOf3vembHafVY5fAPTeMPpmdlPmrmxxnJbA8LFXrBeEDPtNm
-         9ZO7oHSRLz2k6KQGAd1jIF8h6LEeo6DgRIfjxm4xPTRFQ62ADp6eyPfMFb2lVh+FdlBx
-         wIEydTEUc8DHQ70+HeinIO7VBP1zsJtpULNJnRvm4b3UXDfxaIHMIu2UJe96tIybNAUk
-         N1qcSB6kYIoEg0QuBqZ/q7ANJxEI18+u00XfqgRSfnfuzgH0RvUSOUDoHYP8Kr16qOV6
-         tygTL0aS6+z0eQVxbi7WCDcNmJJuge7ysQsrDsqJjt8WmIhtqzqPVFKtRPanzwo6X+Vr
-         NCdA==
+        bh=0DB5Lw/lXFCxFzRbPnzs91X87q+F/C2BkA9BvojBgKw=;
+        b=lheQWIilAu+wqyb2OSiOz2mV8jDNQ5vp9FQrS/XccEkpVFZu/hDrYfx+Fjr6P+UXOA
+         6unYLkJpOpqoPJcIDOdeWo2YubRgIejYrnVwhGgTI13prkEsTobDgn4chlMxqYGGG/T8
+         KK0oUBfe3krViZ1Jqd+ciszFHfNdz+y2YZEhvAQXaq5U2UMqcwPjJvtc//2ZLYiumQcc
+         K2FbiV7XzKsNvrScLtyxEOCs0Kz9R3KWvmUxJmf/nBuRULlNNOroVyLjbfbPWOqZQT1p
+         m4LwhzZqsQsgzaB/Ryl7PpADVWdwKSfMafjZxndg6S8HXV59QU8/xGckfAr1iKXpJUVP
+         ktZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774558181; x=1775162981;
+        d=1e100.net; s=20251104; t=1774558271; x=1775163071;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0ZTmavDFbJGDIjrBbFwXLrLXfGqW8eftNGZPaeZ+Fms=;
-        b=H55TPKYgsRpDrjbGMIA8A3eH09mjfFaJE3TdkA0Sz5fvrfUORs6AgKuzX5mgToYs6M
-         L0Stg/GsW26+yc/hDYl0aYdyjLyzIIawZBTSTSvaeiNlKFJJlwKidf8M+t8xSvq+wiS9
-         oDEHzdgumb9CgIl5PMfgQUVJT909CpkzEJjf6UBtfMXkKoaWj6UHnRt2v3nqkvq+nMoU
-         7Yb/YrXEWBFDdfaBjLiT8s+IaUqSmJIe5aXJ0EcC0Oo2zDFGhRqHIAr/MBVhkb8zcc6L
-         MhcxEWLQ0DQS9GIZhGx+ajce6daoP2W6aOcB7K9j7rAeJvoLFiHiBMCaiWvbPvxsj3vg
-         xmtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXn9zNOI1ayXgslR9wiJJdEc5AFDKiT11rYzwIhYcFlgWoh3c7NpCJJUWND8eh5wPh+PTE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmTaOHmOtHdw8871dc72yfKodIvxHTLwihoBZSomYjR83N0aj7
-	3zx/Oa7j5lILyZqCp6izn6FsYiezW6xuZkANXluu9A6JdoRwMFnwDmob
-X-Gm-Gg: ATEYQzzk7BVSoj+Ec4AWZA9xUEs5uxAg8wXukcmFU/2ThyZqWGEhryt20rizp7giR36
-	rMLWwHib8FssQl87F6c5PQGQHSNjqWx7YcRrKP+zrLrXmnPiydOgbn63UZbzZy8+57WXcioeH7X
-	pa4P6TXMqiL9blr9LtPiKt/BRCo+Ai0njR95wpWKVhlJclUFz3OmAXVtzVDdtbP+nCERqBsdSEM
-	B1GbkKEuIsMLyhz1AR4qHRuNeiR0J1sFctS3mCy0voS6EElFmqhU0dbipW0CVRVCYcQlwx7ywv4
-	9cTf/VXbeZF+6cpIjtK7QyA7TXxhuPaHInyRLjQs4RPqGHHdmYfzvK6k29UK4EDge3TQzSAv7cW
-	diOGJRkRgI7Luql9zy00T3GF5v5bjNwWYX35i/t/gNFIhLOwz/0Vf4aXn7V2gTJ3TmCEib7iBFL
-	Wv1xjTuTepjd6nm+fub66TLDrPoDJZV/KSdeNIrdXpQqUVQBaCKp2KbtsUki7UlIF+zG8phQ==
-X-Received: by 2002:a05:620a:40d0:b0:8cf:c08e:5f43 with SMTP id af79cd13be357-8d00101cbb8mr1282793385a.63.1774558181210;
-        Thu, 26 Mar 2026 13:49:41 -0700 (PDT)
+        bh=0DB5Lw/lXFCxFzRbPnzs91X87q+F/C2BkA9BvojBgKw=;
+        b=MW4N08m18Va+XxTs+P/5lfxocaEHetbn1YyzcGd7Cht02qdRrTZvcWxaE4VoipY16N
+         tiUGGJVmp0zx/HxK7zEaWHrJstEVg9MyqehUY1JAIdvQYQsqZ2peUgtkU0BijolM7PtU
+         W35FKDM4PD3SERxkxXzi46Yo2CzODSxaPW+lex9B6ZW8817yqlr0aBYP/jKJuBx7Wxz9
+         K2VP2t5xYMJ5OHKHIJux+JFPtuzk28T6X6A8UMhnMvF1c4Q82pai/i9fBCVssI5nyQEj
+         rGi7HKdKxdaba4k9vPmzpJ5ehrt78+Gpg7W3U19XKr+AjzAKhfTE/MEZi7uzVQKzXCKP
+         Rw0A==
+X-Forwarded-Encrypted: i=1; AJvYcCUuoxMjtAo/hgpTZhP6wfNEUykSnwYVXVh+G5iZJHhMJlNqhqOnXXD8CC2gTG+uHTM8vnQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkOP63GxV9ttfLxrZWHSAvfu5khILybGpmnMMXMzNm92L87dyD
+	J/Vb0DM4acTp4jOTm7WIdT/BLxGOgLwzB2Ft7X6qpq0lhFv7TnDWfXqH
+X-Gm-Gg: ATEYQzzZHQLKp3SVc+rcp3DlFHDGKrDjmHZKNCIckgqMuKwHfrz7cwTliIj6GIenafz
+	n7XN9ms/5YEZBHZ7TbnwODLqbHO48gAuyYbeKpEWbNMHrIXz6HHACTU3eijNi0FMnDmPamuVOze
+	sBugtxBap+T5addlFuHmFZMBuesE0p8IZnu1/1Ud6wIhORbLLa2S7hnLaDttofv4xuacUinhIDK
+	rn2K2N9UzzJcgLv5BXI3QoZyqy8wXKz21Yg48dCnd9mg2GflJWqVJtWBHFJS8FO/ua/dCOHj9S7
+	JYkUYaEHQUv2q/a4gQfNrmGFKGGnTFy1DGDURYGSplRvoh0zGkfuwVsWPgoOajIKw5SZ9zS0ALd
+	EbXswEvcAeLsQWPaeuZg5wV5Q6mCY6QehII7yfF/k77CRF3HAUot/0dGpSndRbVeQ+CAliDK1t8
+	REDoH7ebTYjT1dsngbWlGOF1W8Ie2SA/hSmDt77L9sUcoMHPzjelt03AD8w7LeJRUOLLzM+g==
+X-Received: by 2002:a05:620a:460a:b0:8cd:c04f:c6a1 with SMTP id af79cd13be357-8d001037fd6mr1277349785a.58.1774558271341;
+        Thu, 26 Mar 2026 13:51:11 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e4cf112sm330580885a.23.2026.03.26.13.49.40
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e4ceb95sm331631285a.26.2026.03.26.13.51.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Mar 2026 13:49:40 -0700 (PDT)
-Message-ID: <2b1a7624-d9cc-48b1-a224-646cafabb359@gmail.com>
-Date: Thu, 26 Mar 2026 16:49:40 -0400
+        Thu, 26 Mar 2026 13:51:10 -0700 (PDT)
+Message-ID: <4511ea3d-35b0-4a62-8dac-250a86c0e0f4@gmail.com>
+Date: Thu, 26 Mar 2026 16:51:09 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,58 +68,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] repack: mark non-MIDX packs above the split as
- excluded-open
+Subject: Re: [PATCH v2 0/5] pack-objects: handle excluded-but-open packs via
+ `--stdin-packs=follow`
 To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
  Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
 References: <cover.1773959041.git.me@ttaylorr.com>
  <cover.1774482700.git.me@ttaylorr.com>
- <23cb9f33dbac735feeb4fa9b5e7676ab871e2c94.1774482701.git.me@ttaylorr.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <23cb9f33dbac735feeb4fa9b5e7676ab871e2c94.1774482701.git.me@ttaylorr.com>
+In-Reply-To: <cover.1774482700.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 3/25/2026 7:51 PM, Taylor Blau wrote:
+> This is a small reroll of my series to fix an issue where MIDX bitmaps
+> fail to generate after a geometric repack in certain scenarios where the
+> set of MIDX'd objects is not closed under reachability.
+> 
+> The main changes since last time are:
+> 
+>  * Clarification in the first patch that the added `release_revisions()`
+>    call prevents a *potential* leak, not an actual one.
+> 
+>  * Cleanup in the second patch (where we convert the --stdin-packs
+>    handling to use a strmap) based on Patrick's review.
+> 
+>  * Dropped an unnecessary "if (p)" conditional in the fourth patch's
+>    `add_object_entry_from_pack()` callback that is unnecessary.
+> 
+> Otherwise, the series is unchanged from the original round. As usual, a
+> range-diff is included below for convenience.
+> 
 
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index f6bb04bef72..4c5a82c2c8d 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -369,8 +369,23 @@ int cmd_repack(int argc,
->  		 */
->  		for (i = 0; i < geometry.split; i++)
->  			fprintf(in, "%s\n", pack_basename(geometry.pack[i]));
-> -		for (i = geometry.split; i < geometry.pack_nr; i++)
-> -			fprintf(in, "^%s\n", pack_basename(geometry.pack[i]));
-> +		for (i = geometry.split; i < geometry.pack_nr; i++) {
-> +			const char *basename = pack_basename(geometry.pack[i]);
-> +			char marker = '^';
-> +
-> +			if (!midx_must_contain_cruft &&
-> +			    !string_list_has_string(&existing.midx_packs,
-> +						    basename)) {
-> +				/*
-> +				 * Assume non-MIDX'd packs are not
-> +				 * necessarily closed under
-> +				 * reachability.
-> +				 */
-> +				marker = '!';
-> +			}
-> +
-> +			fprintf(in, "%c%s\n", marker, basename);
-> +		}
->  		fclose(in);
-
-> -test_expect_failure 'repack rescues once-cruft objects above geometric split' '
-> +test_expect_success 'repack rescues once-cruft objects above geometric split' '
-
-I appreciate the brevity of this behavior change after you
-established the new building blocks that make such a
-concise change possible.
+Sorry I didn't get to v1 in time. This was an interesting series
+and fixes a bug well. My only quibbles are about some minor code
+style things, but I do hope you'll consider them. I struggled to
+read a few things and the changes I recommend seemed to make the
+logic more obvious.
 
 Thanks,
 -Stolee
+
 
