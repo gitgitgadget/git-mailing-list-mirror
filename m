@@ -1,41 +1,41 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F463BF671
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 10:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71144388390
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 10:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774520450; cv=pass; b=MX578nkdBOR0tMrMo5zIIuV4J55MRZZAFJQvEtkUjp0PeXMfHCEKACJd+7X/8OWvDTN0QAjC/JLAWcrtZHhJDcCyr28ir62CFLvaL1u4jbO53rNo6YndrHgJI+KlrU290GoQOoGnFPVtNc/E5Xx/a0BolwqWBFNTh06F3MzMa3g=
+	t=1774520450; cv=pass; b=otCFxKZe5j/O1zLwvuZr8eeJMDxkVhFSHXeB10C6yb0NGHqftEEWUcS411kFbj35G98UxTLog4qJCSLTb1arMO38iA6nnHpkkCR8JprrKXtaNe+CXAVIHw+2jN26JRVyLSktvwDKUQF9R9B0ioIau5Tj741aqZvuNr9ps+pq350=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774520450; c=relaxed/simple;
-	bh=QAuOV2xoIYZFZVw7ffydpmInIYxRNdKBuB9bn95h5D4=;
+	bh=OByR70wa9MSo4TadY7mg/uxx5vv5UQsWxgA187jd4z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mNmaHSw10ffpzQsK7kzjauE2H97vgENnMQRKO/xlH18cM/ffpFd64zzz4Cj3TI1E38YF61bT4wbrgcvBR8FDjaYHhrZnmQgBsDgJ5u8ctTZ/XipY6e5bV6emr8sd+K024zCmeb4O1kTyi5t8UQb6mgGcgv9mz0cyoxedvC3xY58=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=b8hSZ/Mr; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=AMtoE2PcBrQZJAXttJnZNgSLAjqE0+PkcICttBHNhmzM8wTP8C0efwegkYoCFD48XwYgzaFQcrpIrrjQSEdv+W+tMZhK68nNB+zDqqOeuYK+BC0h4VcDloujYIMyyrj9DGtXSZIHfvwzw975JIbQDtuVS/5rerB9yK3Rvi4xH4Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=M66QfuQY; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="b8hSZ/Mr"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="M66QfuQY"
 ARC-Seal: i=1; a=rsa-sha256; t=1774520431; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=BWZCd4fWOq6y+/neDW9//F1W5LCq7aFtJ1aR5RbX9PH3Pzdj9svtruRny0ZsoK4VyzuF7riUT9dUthiu+emV2FZLXZgYqvRWeGYSlU/WCowDsuYwDpeCniEenS8QUKxOhMH19z1cHeLE6V8uYl+PeDYGOC7mDdw2iscbxG7qJZo=
+	b=cs8HS8ZubVtsS3BE2ZEHr/xWVft6n0LDnuR6sJyJjVKND09yj96vhiZ2Njr0pmm+W+RR2SnO5BBEXHEypzTtuClHoSybnWyy69XgnnQhQQ4KaNeenFIvgCLvuRTb5aNryHvCFfS0liFwaKVl2M5Fw2XTPUJ/sglczTp09Qxu+H0=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1774520431; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=VLmt2087uJdGdTdTQh8TbrKiwHSgvWitkEZBS/0eJFY=; 
-	b=JhjCb01jJVFobcTgtd8s+eDLl4d3x85sYzWB5j/usQ+kbQpFMplkuBo+sfppzVLLA0jMp2pqB72Ou/zU6QA6SeIH0T4VgTnb4J1tl11zqX3ikhnh+6qL47LyScYZbq268QZD9sBGaDL7OexL3nKCPkJjD19YQ6HRCO9pvTglVLQ=
+	t=1774520431; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=jRxrqq7qOZSUpdZItLGnImA0IdixZgVT3hBAyNMGr+o=; 
+	b=mDwS0cUZWBRca5xymE9waBllhLDt737lbAtgWHZnDEyKNcLhvLnZWF9gtu0ufEbUBxrYBZwW3TSO3miepFns9f0jd6Ux9X0VoYFptJN8/duYexV+sxIN8/LP0FYQ90iNFoRMvfblF83fUViK89IqvBT41JsMmvVQsmsRJLGOPDI=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774520431;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=VLmt2087uJdGdTdTQh8TbrKiwHSgvWitkEZBS/0eJFY=;
-	b=b8hSZ/MroQZv2ADKwFayZlETrzYK/JhFWTukSFgwmjsvHG8rcElkRgnKASdRVML8
-	pAHrtAiZzomXPszYEpRVDN0CcqceSaDOj7k8XDXHax1Y6AwSw6Geksot9cnJ3YUMeMc
-	L0UYh0VCtDiEaHFGAa8RcfJp+vYtkDgx8sAW2ywQ=
-Received: by mx.zohomail.com with SMTPS id 1774520427785955.1925329428873;
-	Thu, 26 Mar 2026 03:20:27 -0700 (PDT)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=jRxrqq7qOZSUpdZItLGnImA0IdixZgVT3hBAyNMGr+o=;
+	b=M66QfuQYN1nN5qi0o2EqUMDuyNPSTF7hJyz8bV5CZ/QaVbtIuU+tvv/FETQrvXwI
+	OhMdKQqQdbAVhvVmDQArY11+x+TcY+uxdu2hPCVWyhGcDBW3rY9ZVGZFnVBbBPHDY2f
+	vwtlZF1PGbnbUgAOs4r7GisFWMVlGIIWl/B84oPM=
+Received: by mx.zohomail.com with SMTPS id 1774520422119383.9947128535339;
+	Thu, 26 Mar 2026 03:20:22 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -45,11 +45,10 @@ Cc: Jeff King <peff@peff.net>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v5 07/12] hook: add -j/--jobs option to git hook run
-Date: Thu, 26 Mar 2026 12:18:14 +0200
-Message-ID: <20260326101819.1307742-8-adrian.ratiu@collabora.com>
+Subject: [PATCH v5 05/12] hook: allow pre-push parallel execution
+Date: Thu, 26 Mar 2026 12:18:12 +0200
+Message-ID: <20260326101819.1307742-6-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260326101819.1307742-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -60,296 +59,173 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Emily Shaffer <emilyshaffer@google.com>
+pre-push is the only hook that keeps stdout and stderr separate (for
+backwards compatibility with git-lfs and potentially other users). This
+prevents parallelizing it because run-command needs stdout_to_stderr=1
+to buffer and de-interleave parallel outputs.
 
-Expose the parallel job count as a command-line flag so callers can
-request parallelism without relying only on the hook.jobs config.
+Since we now default to jobs=1, backwards compatibility is maintained
+without needing any extension or extra config: when no parallelism is
+requested, pre-push behaves exactly as before.
 
-Add tests covering serial/parallel execution and TTY behaviour under
--j1 vs -jN.
+When the user explicitly opts into parallelism via hook.jobs > 1,
+hook.<event>.jobs > 1, or -jN, they accept the changed output behavior.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Document this and let get_hook_jobs() set stdout_to_stderr=1 automatically
+when jobs > 1, removing the need for any extension infrastructure.
+
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/git-hook.adoc |  23 +++++-
- builtin/hook.c              |   5 +-
- hook.c                      |  17 +++++
- t/t1800-hook.sh             | 135 ++++++++++++++++++++++++++++++++++--
- 4 files changed, 170 insertions(+), 10 deletions(-)
+ Documentation/config/hook.adoc |  4 ++++
+ hook.c                         | 24 ++++++++++++++++--------
+ hook.h                         |  6 ++++--
+ t/t1800-hook.sh                | 32 ++++++++++++++++++++++++++++++++
+ transport.c                    |  6 ++++--
+ 5 files changed, 60 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
-index 318c637bd8..46ea52db55 100644
---- a/Documentation/git-hook.adoc
-+++ b/Documentation/git-hook.adoc
-@@ -8,7 +8,8 @@ git-hook - Run git hooks
- SYNOPSIS
- --------
- [verse]
--'git hook' run [--allow-unknown-hook-name] [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]
-+'git hook' run [--allow-unknown-hook-name] [--ignore-missing] [--to-stdin=<path>] [(-j|--jobs) <n>]
-+	<hook-name> [-- <hook-args>]
- 'git hook' list [--allow-unknown-hook-name] [-z] [--show-scope] <hook-name>
- 
- DESCRIPTION
-@@ -147,6 +148,23 @@ OPTIONS
- 	mirroring the output style of `git config --show-scope`. Traditional
- 	hooks from the hookdir are unaffected.
- 
-+-j::
-+--jobs::
-+	Only valid for `run`.
+diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
+index 21800db648..94c7a9808e 100644
+--- a/Documentation/config/hook.adoc
++++ b/Documentation/config/hook.adoc
+@@ -39,3 +39,7 @@ hook.jobs::
+ +
+ This setting has no effect unless all configured hooks for the event have
+ `hook.<friendly-name>.parallel` set to `true`.
 ++
-+Specify how many hooks to run simultaneously. If this flag is not specified,
-+the value of the `hook.jobs` config is used, see linkgit:git-config[1]. If
-+neither is specified, defaults to 1 (serial execution).
-++
-+When greater than 1, it overrides the per-hook `hook.<friendly-name>.parallel`
-+setting, allowing all hooks for the event to run concurrently, even if they
-+are not individually marked as parallel.
-++
-+Some hooks always run sequentially regardless of this flag or the
-+`hook.jobs` config, because git knows they cannot safely run in parallel:
-+`applypatch-msg`, `pre-commit`, `prepare-commit-msg`, `commit-msg`,
-+`post-commit`, `post-checkout`, and `push-to-checkout`.
-+
- WRAPPERS
- --------
- 
-@@ -169,7 +187,8 @@ running:
- git hook run --allow-unknown-hook-name mywrapper-start-tests \
-   # providing something to stdin
-   --stdin some-tempfile-123 \
--  # execute hooks in serial
-+  # execute multiple hooks in parallel
-+  --jobs 3 \
-   # plus some arguments of your own...
-   -- \
-   --testname bar \
-diff --git a/builtin/hook.c b/builtin/hook.c
-index c0585587e5..bea0668b47 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -8,7 +8,8 @@
- #include "parse-options.h"
- 
- #define BUILTIN_HOOK_RUN_USAGE \
--	N_("git hook run [--allow-unknown-hook-name] [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
-+	N_("git hook run [--allow-unknown-hook-name] [--ignore-missing] [--to-stdin=<path>] [(-j|--jobs) <n>]\n" \
-+	   "<hook-name> [-- <hook-args>]")
- #define BUILTIN_HOOK_LIST_USAGE \
- 	N_("git hook list [--allow-unknown-hook-name] [-z] [--show-scope] <hook-name>")
- 
-@@ -132,6 +133,8 @@ static int run(int argc, const char **argv, const char *prefix,
- 			 N_("silently ignore missing requested <hook-name>")),
- 		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
- 			   N_("file to read into hooks' stdin")),
-+		OPT_UNSIGNED('j', "jobs", &opt.jobs,
-+			    N_("run up to <n> hooks simultaneously")),
- 		OPT_END(),
- 	};
- 	int ret;
++For `pre-push` hooks, which normally keep stdout and stderr separate,
++setting this to a value greater than 1 (or passing `-j`) will merge stdout
++into stderr to allow correct de-interleaving of parallel output.
 diff --git a/hook.c b/hook.c
-index 25762b6c8d..c0b71322cf 100644
+index 85c0de5e47..25762b6c8d 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -568,6 +568,22 @@ static void merge_output_if_parallel(struct run_hooks_opt *options)
- 		options->stdout_to_stderr = 1;
+@@ -555,18 +555,24 @@ static void run_hooks_opt_clear(struct run_hooks_opt *options)
+ 	strvec_clear(&options->args);
  }
  
-+static void warn_non_parallel_hooks_override(unsigned int jobs,
-+					     struct string_list *hook_list)
++/*
++ * When running in parallel, stdout must be merged into stderr so
++ * run-command can buffer and de-interleave outputs correctly. This
++ * applies even to hooks like pre-push that normally keep stdout and
++ * stderr separate: the user has opted into parallelism, so the output
++ * stream behavior changes accordingly.
++ */
++static void merge_output_if_parallel(struct run_hooks_opt *options)
 +{
-+	/* Don't warn for hooks running sequentially. */
-+	if (jobs == 1)
-+		return;
-+
-+	for (size_t i = 0; i < hook_list->nr; i++) {
-+		struct hook *h = hook_list->items[i].util;
-+		if (h->kind == HOOK_CONFIGURED && !h->parallel)
-+			warning(_("hook '%s' is not marked as parallel=true, "
-+				  "running in parallel anyway due to -j%u"),
-+				h->u.configured.friendly_name, jobs);
-+	}
++	if (options->jobs > 1)
++		options->stdout_to_stderr = 1;
 +}
 +
  /* Determine how many jobs to use for hook execution. */
  static unsigned int get_hook_jobs(struct repository *r,
  				  struct run_hooks_opt *options,
-@@ -611,6 +627,7 @@ static unsigned int get_hook_jobs(struct repository *r,
+ 				  struct string_list *hook_list)
+ {
+-	/*
+-	 * Hooks needing separate output streams must run sequentially.
+-	 * Next commit will allow parallelizing these as well.
+-	 */
+-	if (!options->stdout_to_stderr)
+-		return 1;
+-
+ 	/*
+ 	 * An explicit job count overrides everything else: this covers both
+ 	 * FORCE_SERIAL callers (for hooks that must never run in parallel)
+@@ -575,7 +581,7 @@ static unsigned int get_hook_jobs(struct repository *r,
+ 	 * aggressively than the default.
+ 	 */
+ 	if (options->jobs)
+-		return options->jobs;
++		goto cleanup;
  
- cleanup:
- 	merge_output_if_parallel(options);
-+	warn_non_parallel_hooks_override(options->jobs, hook_list);
+ 	/*
+ 	 * Use hook.jobs from the already-parsed config cache (in-repo), or
+@@ -603,6 +609,8 @@ static unsigned int get_hook_jobs(struct repository *r,
+ 		}
+ 	}
+ 
++cleanup:
++	merge_output_if_parallel(options);
  	return options->jobs;
  }
  
+diff --git a/hook.h b/hook.h
+index ba7056f872..01db4226a6 100644
+--- a/hook.h
++++ b/hook.h
+@@ -106,8 +106,10 @@ struct run_hooks_opt {
+ 	 * Send the hook's stdout to stderr.
+ 	 *
+ 	 * This is the default behavior for all hooks except pre-push,
+-	 * which has separate stdout and stderr streams for backwards
+-	 * compatibility reasons.
++	 * which keeps stdout and stderr separate for backwards compatibility.
++	 * When parallel execution is requested (jobs > 1), get_hook_jobs()
++	 * overrides this to 1 for all hooks so run-command can de-interleave
++	 * their outputs correctly.
+ 	 */
+ 	unsigned int stdout_to_stderr:1;
+ 
 diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 6e8b1ad588..a1734fd628 100755
+index 3774a6c2e1..9476a97ca5 100755
 --- a/t/t1800-hook.sh
 +++ b/t/t1800-hook.sh
-@@ -268,10 +268,20 @@ test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
+@@ -800,4 +800,36 @@ test_expect_success 'one non-parallel hook forces the whole event to run seriall
+ 	test_cmp expect hook.order
  '
  
- test_hook_tty () {
--	cat >expect <<-\EOF
--	STDOUT TTY
--	STDERR TTY
--	EOF
-+	expect_tty=$1
-+	shift
-+
-+	if test "$expect_tty" != "no_tty"; then
-+		cat >expect <<-\EOF
-+		STDOUT TTY
-+		STDERR TTY
-+		EOF
-+	else
-+		cat >expect <<-\EOF
-+		STDOUT NO TTY
-+		STDERR NO TTY
-+		EOF
-+	fi
- 
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
-@@ -289,12 +299,21 @@ test_hook_tty () {
- 	test_cmp expect repo/actual
- }
- 
--test_expect_success TTY 'git hook run: stdout and stderr are connected to a TTY' '
--	test_hook_tty hook run pre-commit
-+test_expect_success TTY 'git hook run -j1: stdout and stderr are connected to a TTY' '
-+	# hooks running sequentially (-j1) are always connected to the tty for
-+	# optimum real-time performance.
-+	test_hook_tty tty hook run -j1 pre-commit
-+'
-+
-+test_expect_success TTY 'git hook run -jN: stdout and stderr are not connected to a TTY' '
-+	# Hooks are not connected to the tty when run in parallel, instead they
-+	# output to a pipe through which run-command collects and de-interlaces
-+	# their outputs, which then gets passed either to the tty or a sideband.
-+	test_hook_tty no_tty hook run -j2 pre-commit
- '
- 
- test_expect_success TTY 'git commit: stdout and stderr are connected to a TTY' '
--	test_hook_tty commit -m"B.new"
-+	test_hook_tty tty commit -m"B.new"
- '
- 
- test_expect_success 'git hook list orders by config order' '
-@@ -709,6 +728,108 @@ test_expect_success 'server push-to-checkout hook expects stdout redirected to s
- 	check_stdout_merged_to_stderr push-to-checkout
- '
- 
-+test_expect_success 'parallel hook output is not interleaved' '
-+	test_when_finished "rm -rf .git/hooks" &&
-+
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	echo "Hook 1 Start"
-+	sleep 1
-+	echo "Hook 1 End"
-+	EOF
-+
-+	test_config hook.hook-2.event test-hook &&
-+	test_config hook.hook-2.command \
-+		    "echo \"Hook 2 Start\"; sleep 2; echo \"Hook 2 End\"" &&
-+	test_config hook.hook-2.parallel true &&
-+	test_config hook.hook-3.event test-hook &&
-+	test_config hook.hook-3.command \
-+		    "echo \"Hook 3 Start\"; sleep 3; echo \"Hook 3 End\"" &&
-+	test_config hook.hook-3.parallel true &&
-+
-+	git hook run --allow-unknown-hook-name -j3 test-hook >out 2>err.parallel &&
-+
-+	# Verify Hook 1 output is grouped
-+	sed -n "/Hook 1 Start/,/Hook 1 End/p" err.parallel >hook1_out &&
-+	test_line_count = 2 hook1_out &&
-+
-+	# Verify Hook 2 output is grouped
-+	sed -n "/Hook 2 Start/,/Hook 2 End/p" err.parallel >hook2_out &&
-+	test_line_count = 2 hook2_out &&
-+
-+	# Verify Hook 3 output is grouped
-+	sed -n "/Hook 3 Start/,/Hook 3 End/p" err.parallel >hook3_out &&
-+	test_line_count = 2 hook3_out
-+'
-+
-+test_expect_success 'git hook run -j1 runs hooks in series' '
-+	test_when_finished "rm -rf .git/hooks" &&
-+
-+	test_config hook.series-1.event "test-hook" &&
-+	test_config hook.series-1.command "echo 1" --add &&
-+	test_config hook.series-2.event "test-hook" &&
-+	test_config hook.series-2.command "echo 2" --add &&
-+
++test_expect_success 'client hooks: pre-push parallel execution merges stdout to stderr' '
++	test_when_finished "rm -rf remote-par stdout.actual stderr.actual" &&
++	git init --bare remote-par &&
++	git remote add origin-par remote-par &&
++	test_commit par-commit &&
 +	mkdir -p .git/hooks &&
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	echo 3
-+	EOF
-+
-+	cat >expected <<-\EOF &&
-+	1
-+	2
-+	3
-+	EOF
-+
-+	git hook run --allow-unknown-hook-name -j1 test-hook 2>actual &&
-+	test_cmp expected actual
++	setup_hooks pre-push &&
++	test_config hook.jobs 2 &&
++	git push origin-par HEAD:main >stdout.actual 2>stderr.actual &&
++	check_stdout_merged_to_stderr pre-push
 +'
 +
-+test_expect_success 'git hook run -j2 runs hooks in parallel' '
-+	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
-+	test_when_finished "rm -rf .git/hooks" &&
++test_expect_success 'client hooks: pre-push runs in parallel when hook.jobs > 1' '
++	test_when_finished "rm -rf repo-parallel remote-parallel" &&
++	git init --bare remote-parallel &&
++	git init repo-parallel &&
++	git -C repo-parallel remote add origin ../remote-parallel &&
++	test_commit -C repo-parallel A &&
 +
-+	mkdir -p .git/hooks &&
-+	write_sentinel_hook .git/hooks/test-hook &&
-+
-+	test_config hook.hook-2.event test-hook &&
-+	test_config hook.hook-2.command \
++	write_sentinel_hook repo-parallel/.git/hooks/pre-push &&
++	git -C repo-parallel config hook.hook-2.event pre-push &&
++	git -C repo-parallel config hook.hook-2.command \
 +	    "$(sentinel_detector sentinel hook.order)" &&
-+	test_config hook.hook-2.parallel true &&
++	git -C repo-parallel config hook.hook-2.parallel true &&
 +
-+	git hook run --allow-unknown-hook-name -j2 test-hook >out 2>err &&
++	git -C repo-parallel config hook.jobs 2 &&
++
++	git -C repo-parallel push origin HEAD >out 2>err &&
 +	echo parallel >expect &&
-+	test_cmp expect hook.order
++	test_cmp expect repo-parallel/hook.order
 +'
 +
-+test_expect_success 'git hook run -j2 overrides parallel=false' '
-+	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command \
-+	    "touch sentinel.started; sleep 2; touch sentinel.done" &&
-+	# hook-1 intentionally has no parallel=true
-+	test_config hook.hook-2.event test-hook &&
-+	test_config hook.hook-2.command \
-+	    "$(sentinel_detector sentinel hook.order)" &&
-+	# hook-2 also has no parallel=true
-+
-+	# -j2 overrides parallel=false; hooks run in parallel with a warning.
-+	git hook run --allow-unknown-hook-name -j2 test-hook >out 2>err &&
-+	echo parallel >expect &&
-+	test_cmp expect hook.order
-+'
-+
-+test_expect_success 'git hook run -j2 warns for hooks not marked parallel=true' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "true" &&
-+	test_config hook.hook-2.event test-hook &&
-+	test_config hook.hook-2.command "true" &&
-+	# neither hook has parallel=true
-+
-+	git hook run --allow-unknown-hook-name -j2 test-hook >out 2>err &&
-+	grep "hook .hook-1. is not marked as parallel=true" err &&
-+	grep "hook .hook-2. is not marked as parallel=true" err
-+'
-+
- test_expect_success 'hook.jobs=1 config runs hooks in series' '
- 	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
+ test_done
+diff --git a/transport.c b/transport.c
+index e53936d87b..9406ec4f2d 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1391,8 +1391,10 @@ static int run_pre_push_hook(struct transport *transport,
+ 	opt.feed_pipe_cb_data_free = pre_push_hook_data_free;
+ 
+ 	/*
+-	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
+-	 * them to keep backwards compatibility with existing hooks.
++	 * pre-push hooks keep stdout and stderr separate by default for
++	 * backwards compatibility. When the user opts into parallel execution
++	 * via hook.jobs > 1 or -j, get_hook_jobs() will set stdout_to_stderr=1
++	 * automatically so run-command can de-interleave the outputs.
+ 	 */
+ 	opt.stdout_to_stderr = 0;
  
 -- 
 2.52.0.732.gb351b5166d.dirty
