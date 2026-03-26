@@ -1,157 +1,198 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FDB1DF261
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 00:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774486515; cv=pass; b=j97mCh9M8N3ymgPYkeHycy2kTgoUPUrhma9JiVJFxCy2tSrzkjy7b5GSEHeW38qrMxHo8ZRfTlF1DYYwsDkXrCdzoc8++utqqcysRi+paJf957OHWRp/j06bcJlkhNFLJEs/CvHD/cRqNpUsxYqqfwWJeAJv+dWmDg0TSRlMjfA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774486515; c=relaxed/simple;
-	bh=IC5WyGpdDiV/uowUgRYLJqFpSJ9xSERClBLfwB4NF5w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aWFQz4Mg+o1GLdhz3b9CPsIQhBA0icIkMc7wxsCCMz5iw6e6PAdXdf7OAF/Z6zlzddRVjJsfS6EIYbGnHdRwRnK+SIZ2hppm9CrFOGqdcWnSVhA9GR8S39Zvd3f+zz5KpzJh7PnQn32Gijh1j97hkyVXcBCJbc4iz6LPsH9Rt0c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=acokKv7W; arc=pass smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CF838CFFF
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 02:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774490474; cv=none; b=aNwSOuTRu7ftDr9Dd3c0rvWJ9lgLhZeivg6ePxJzJs6+jQgkY51cZ5yZwBuzKwF3oVz0FOdAw4aZK5JiarMlAK+Qi378Ikj0szdxDrjC1S3Rc7RDz+uTdUWLwq49G7JxtQ+327PWnBZUCPCeBEeCGGOPQPXs3QUpWSzezH/Org4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774490474; c=relaxed/simple;
+	bh=W+K07ohit+w9bDjI78fh5uWF0HAuyGMdqjd7cFxtIZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mgnwa9qQoj3VrFA1hxLHakzWrsCLYY4axy+qjbhasAyQYnlb0bwl4jwBBTObaqEM4nmeIiE72B5gfYn26eIunD8nwb7J0NfnVAdim7gYSU6IhJZQH1xJWwv+/gMte8wijp2WKBWdEnz4ijSPjXjYUUMeLgGtZxDEedj6f7es+pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z5w/PwHA; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="acokKv7W"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-64e8c7f5082so508435d50.0
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:55:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774486513; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QtKxSzztzuue4xP7A9AAi89nDAvLLRbvx2n1kQpb280RITBP5BfQOy0wDkI1jjiDLZ
-         ntwr9uQ9Vwt4u4gCEdQwlYeVW6u8psCKSQ4jSgyd0nrb5OW+Nrs6eWbcYZ1cIqz4ag+p
-         wxaH+zNg258jnznfHBdEDVA/F/NUiF/QZC+3XfURE6YT5gulHv3a1pmNz4M68AABsJHO
-         YlH4SjurMiWkzw/mJFvMeCPAkhUZJIMaAr1xzCANSVQsRbF/cAO+HKH1CoTuMP/ShL3D
-         WmITsJJmodB3FV5Cjb8dkge8HOFkrytVscwlwMh3fxin9WOcM/wUcomWWKLn41QL9REY
-         BO4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BVMqiFl4EF43Sp5qwv5TCSBLQxZb4fBd95wFQJYc1aw=;
-        fh=RtMFSjjeYGrRbJ9Wg8RNbmZc24Qfrd7PQWKjeOJm46M=;
-        b=cyjpXP2M1QvqTdI1zjpXIWtRtJ0OIL1Q9Ht+Pswo0avkfrizRRzL7jzZW3Q5heLkdU
-         8nY6YXtvNHi1TnlSCEaM2Lxux+0+zAgAO7kQJpV9Q6QM/oQypMNEtsF2Oi3AJd0ZIZVn
-         cIil9Zp+FWRpilfFHOOAGwkcJeRy3UINC8z6ToRfE/2VRGIMXFOr6aoFudIOJOtM4WSH
-         uS2Wv19sIvDUP/QbmKvCKdR3Hc56M2TK0Wqyl301S3Y+/fpmGAtcGNMWFl7wEVFi5zld
-         sHd3+40NtAwON9en3dp/brqCUAz0H9nWs7FWhTSlzD0jHlh1ATr5ARkgMgBIEOEsASkP
-         lZ4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z5w/PwHA"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43b7ff8fe92so215385f8f.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774486513; x=1775091313; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BVMqiFl4EF43Sp5qwv5TCSBLQxZb4fBd95wFQJYc1aw=;
-        b=acokKv7W82Y++icAqeGedyN+zCLuNqulaiv2HWM/qchknL4D2pScTLSy3/ZBt0RtDA
-         e+vZKEoeWhZ7FphHoCNQuaNNGTkolTQgvgmxrdKA3C9aZNJSFr4sLc47R2hdWS8A2ZKx
-         /xSjY9pG2Zol+DjOzLIMSy7UtQfAeJKWeDftZQH39JsN843E+9Iwe6eRZyp7E+I+DjZ7
-         0HawpachXvatzxb1qzgk4QhS3h64AfoCWqzNNpVVShxEI5KelDk0Lie2AgttES2FCPMs
-         HibB4YtLr88A91f2S4wzbTJ+8rjHBaVKJnZ7mI76/Z9hD+ZPMUhpfzysaKjxYnPVrVzu
-         LIOw==
+        d=gmail.com; s=20251104; t=1774490470; x=1775095270; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5UFq2yfcTdspcWYFvRzxgrynzgHWXIv06emgPUFOOm8=;
+        b=Z5w/PwHAsKX6NzzcREVflspH+g1TVrXe9i5hEbfIyFTJn9nv331TagSH3Hpi9P05Dk
+         JRe7MwkEkseFTFUno+VJo0ZFL5BuEJTFiyLS3KxOSFBsPJ7xcu61y8/yqT2ALJ6HmlAJ
+         p3S2SSiobjKQk+rwfVMz7b7ti9cNWAN7ZF2wP93BicdWMSAohbYL9txtOGJq9yfVpiFg
+         VXG7ryzOs0oWCExui4gG8E7DS1de/MvIrAjkYn4VOQT7q0KqCKAnHJu3DOx3cqi/jHjY
+         3qeB+B8+KhA9lXx3B2okvfF4Jc99hpydJGDPd1fwqkZ/nOTEm0E0qe3wZLr2dHhAmfQ/
+         jgXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774486513; x=1775091313;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BVMqiFl4EF43Sp5qwv5TCSBLQxZb4fBd95wFQJYc1aw=;
-        b=oDhuFM8x7xNVqDtz9TjqlkX+K+IAlQtkCvALqc56lt7LQvQ8f8cv1vYAq0coTmh8m6
-         zx4NS5q1P/YTgOwRG5mP0j2ioZHyQub0QwtnAEoaxUVfDJVDNrD0HRoBXqf3RwphLV2+
-         ylKbeX2xAJeBvVxvEC1q8pOfEaEGD/xkHLyL4GMKUG2wO5G0Mjv78LeSLhCuQfZWg9sW
-         LwvTy1HzhuCXXLWIgbI2wkIikr+xbWciPkdM8qVj2WSNGgLj0mrl1fImqaTg7gDIHIW0
-         fkB+qdlbHvlO/jPdHgKO101SpN4RsFOA8vkCQmE/WgrhmXsUxZsPXcWICkyfxbyGR1xK
-         mT/g==
-X-Gm-Message-State: AOJu0Yw+0yPYjY4x81fruV5iIk0s1jv7QvAq2LdbvvZlgwzOftdMu8/L
-	XKf8wmT7Yq9EkLIA9jjImwpEDexJj1zCqJzYH8SVQAoVMI04u7oodfdy+vVLcPD8TNizN8VTVQv
-	LY3xUtFAbboPlcbsNVUJ/ajC0bmrBk01IbGzaziQ5Nw==
-X-Gm-Gg: ATEYQzwzOWmLo7wQlh8mvBL3yaLnPE3i0ZBUXWRPohUiB5igCt/Y5G0q14UL6YlokBK
-	3iR8AuLnpEJDbA5xjNEvns9gicrpMaywwqIYbWjOcQ01E2KAbeHNBj9p8++zapsCKZGy/gqn2+e
-	JiYlk5BaMl2IpUvo3lQRjQZbyAZVcu281obKEtt5AzYaxnHXrrklAdmaJLgaanM+hXnbfwdkAp5
-	lfqI37cD7/bqT5H2bMI/V/p9JeS9NKnJEiMrYXDH2lHbEirfh2c/KdmWGcpwnjFiZsda04KOCZG
-	z79tGF4gHwJRK61zZflbCkr9hvMEkvsQ1gNlUzUs+5dXD8Mf0fhXkoMbJKM6i2aGGxSq4UyeVRv
-	KjgH34mqT/1Btor1nwV2TbwEWvcmgVYGwoQ==
-X-Received: by 2002:a05:690e:d4a:b0:64e:a976:dc0f with SMTP id
- 956f58d0204a3-64ee6077c2fmr5060974d50.19.1774486512645; Wed, 25 Mar 2026
- 17:55:12 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774490470; x=1775095270;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5UFq2yfcTdspcWYFvRzxgrynzgHWXIv06emgPUFOOm8=;
+        b=MtOehpy69CSGRUk4+PRK7RTmH7uKdBZpLjEwsT51RSBpSBpTSGXf2LWSdxGgfXN+9j
+         seMWvt89iYhX9kKCKELI6yvDRCvTcqmaNg79SDyyWQkZ/BND4Lj0nVm9+yFhJIJuOG/e
+         V+p0aTAirL9EgjMkjXSEFcsc+cscTqBimknaXl2XFNSaeLw7vglJjo7LJI7trQEDUzEs
+         aw4VFO3/wdBcWEb79lSBvd+2bCJ6ZHbqqt5RKQO+1tBOPCMYeLe4057qhpw684X0c9ab
+         UvloP77EYq+ybHp6rAZpy19o28oGjqGILF8d+A80t7XhXR2vHFBatcGO+beBUzSOwO7Y
+         jyyA==
+X-Gm-Message-State: AOJu0YyWdcPcoU1qKpsA4pM9hbQdtEYKughyui7+iFoVblRhXaHkimnu
+	U5Rnx1PITThUQUAlu4rTm/kbbRwt91fT79rE/1Jp8ZPC81UZ7V88dhv6
+X-Gm-Gg: ATEYQzz85atUuf7xkDs35tVcSbhxO9Ao/PiidExtx6XPM6JoOlysddptVZnaxuMFvka
+	71AmZP2Uwl7vpkVnraqHAYX0+HQlHNjLD1DN9fPjWKGzZFbGkoiWq6c6qgD7g3sJsFZEroBsH7N
+	btJNZuxDgnVSb8b/YQtF+7MQ3NW1tOoYjYTG7+jGvc3NPKnxXYl/Qo3FdQ3PAqMROKSsoXe4/R9
+	oiT4mQM6qGrpusU9e+xtLHxdcRistAigooJ/jFtgtguGMdnwOKNBSVrMyQxJPqKvc6SrqWgbjDT
+	dXV93xtQhgPA8Sek6Yn15TwdMUSBej48usZ9xPFFgqvJJnLYA3zE3Lv60v73OVPS1G+JXzRMDkR
+	oz4D/pkpCSLSKwemXpNVX4WxbA8jpJTZBf9QIDfGmF+hPbMdBEgAwoGVFj67f61atD+xfPFjHib
+	a+6BuXL73qxRaHsaWRREFNrks0oXAeuMDH
+X-Received: by 2002:a5d:634a:0:b0:43b:8ee9:165f with SMTP id ffacd0b85a97d-43b8ee91723mr4390420f8f.53.1774490469414;
+        Wed, 25 Mar 2026 19:01:09 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.160.4])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b919e7372sm5225745f8f.34.2026.03.25.19.01.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 19:01:09 -0700 (PDT)
+Date: Thu, 26 Mar 2026 03:01:07 +0100
+From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [GSoC PATCH v2 2/4] pack-write: add helper to fill promisor file
+ after repack
+Message-ID: <acSTY_i4zAueN9jD@lorenzo-VM>
+References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
+ <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
+ <0bb031e7443bb53abbbb0afaa347285d6d8cf7b8.1774205661.git.lorenzo.pegorari2002@gmail.com>
+ <xmqqfr5q44jx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPAKoce5BeXMPtok+dni+WDTkokCAq0o4uMHGg1KZto9-UniXQ@mail.gmail.com>
-In-Reply-To: <CAPAKoce5BeXMPtok+dni+WDTkokCAq0o4uMHGg1KZto9-UniXQ@mail.gmail.com>
-From: Pablo <pabloosabaterr@gmail.com>
-Date: Thu, 26 Mar 2026 01:54:55 +0100
-X-Gm-Features: AQROBzB0KmYg-4-AAnpkCQyPNtceI9Qyi9YfXcRJrdyeK6AYEub4u_EEEzuiR7Y
-Message-ID: <CAN5EUNR2yh+OhZ-JtW-dcAFQ3k_WXyB3SXUsEb9FLReuRsMLow@mail.gmail.com>
-Subject: Re: Github Patch
-To: Zakariyah Ali <zakariyahali100@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqfr5q44jx.fsf@gitster.g>
 
-Zakariyah Ali (<zakariyahali100@gmail.com>) escribi=C3=B3:
+On Mon, Mar 23, 2026 at 02:30:26PM -0700, Junio C Hamano wrote:
+> LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
+> 
+> > Create a `copy_all_promisor_files()` helper function used to copy the
+> > contents of all ".promisor" files in a `repository` inside another
+> > ".promisor" file.
+> >
+> > This function can be used to preserve the contents of all ".promisor"
+> > files inside a new ".promisor" file, for example when a repack happens.
+> >
+> > This function is written in such a way so that it will read all the
+> > ".promisor" files inside the given `repository` line by line, and copy
+> > only the lines that are not already present in the destination file. This
+> > is done to avoid copying the same lines multiple times that may come from
+> > multiple (redundant) packfiles. There might be another better/cleaner way
+> > to achieve this.
+> 
+> In the previous step, we extablished that these "back then their ref
+> X used to point at object Y" records are there so that we can
+> identify which refs were fetched at the time the packfile was
+> downloaded to help debugging.  When repacking, losing these records
+> certainly would lose information.
+> 
+> But would concatenating all into a single file help preserve the
+> useful information?  Don't we need do better than that?
 
-The mail is empty but for the attached patch.
+Yeah, we absolutely need to! That's why I said that I was not satisfied
+at all with the patch (in cover letter of v1). I really needed some
+feedback, because I knew that I was doing things wrong.
 
-The patch should be sent inline in the email body, not as an attachment.
-Please read Documentation/SubmittingPatches [1] and
-Documentation/MyFirstContribution [2] about how to send patches.
+> A NEEDSWORK comment, as was discussed in another thread or two in
+> the recent past, is not necessarily a well thought out fully
+> finished specification of an additional piece of work.  "We know
+> this has a problem, we may need to do something about it, like
+> concatenating to save the contents, perhaps?  We do not know the
+> answer, and we do not bother thinking it through right at this
+> moment.  It is left to the future developers to figure it out" is
+> what a NEEDSWORK comment is about.
+> 
+> Your first response to such a comment may be "yeah, I agree that it
+> is bad to lose information we added to help debugging", but the
+> second one should be to wonder if the "like concatenating..." is the
+> best approach going forward.
+> 
+> In other words, we should take a NEEDSWORK comment as a mere
+> starting point, and what NEEDS your work begins at thinking what
+> needs to be done about the problem raised there.
 
-Now, about the patch:
+I fully understand this! Honestly, my biggest weakness that I've
+discovered about myself as a dev (through past open-source experience,
+e.g. GSoC'25) is that I get hesitant when I have to work on and submit
+a patch if I don't have a lot of experience with the codebase. This
+happens particularly when I have to take a decision, and not only
+complete a task.
 
-> From: alibaba0010 <zakariyahali100@gmail.com>
-> Signed-off-by: alibaba0010 <zakariyahali100@gmail.com>
+In fact, I decided to work on this specific NEEDSWORK issue to get more
+experience on promisor remotes (the feature that I want to improve in my
+GSoC proposal) before the GSoC coding period... if I get selected, of
+course :-).
 
-Your email says "Zakariyah Ali" but the From and Signed-off-by says
-"alibaba0010. These should be consistent.
-See Documentation/SubmittingPatches [1].
+I will try my best to improve!
 
- "It is common, but not required, to use some form of your real name.
-We realize that some contributors are not comfortable doing so or
-prefer to contribute under a pseudonym or preferred name and we can
-accept your patch either way, as long as the name and email you use
-are distinctive, identifying, and not misleading."
+> By mixing them up all into a single list, you no longer can tell
+> when their ref X was observed to be pointing at object Y anymore.
+> You may have two packs originally, with a record for "ref X pointing
+> at object Y" in each of them, but by deduping them, you lose the
+> information that you cloned at one time, and made an additional
+> fetch on another day, and the fact the ref X was pointing at the
+> same value at both times.  I am not sure if it is a good
+> implementation if the objective of this topic is to preserve
+> information that is useful for debugging.
 
-> Replace old-style path checks using `test -f`, `test -d`,
-> and `test ! -h` with dedicated test helper functions for
-> improved test clarity and consistency.
->
-> This modernization improves test script readability by using
-> Git's dedicated test helpers: > - `test -f` =E2=86=92 `test_path_is_file`
-> - `test -d` =E2=86=92 `test_path_is_dir`
-> - `test ! -h && test -f` =E2=86=92
-> `test_path_is_file_not_symlink`
-> - `test ! -h && test -d` =E2=86=92
-> `test_path_is_dir_not_symlink`
+My reasoning was based on the (wrong) assumption that it was impossible
+for the same record fo "ref X is pointing at object Y" to appear
+multiple times. Obviously then, deduping them is the wrong solution, as
+it will lose some debugging information.
 
-Try explaining why have you done this, why are these helpers better
-than what was before rather than clarity and consistency, what do
-these new helpers do to be considered valuable to refactor it.
+> I wonder if it helps to append to each line the file timestamp of
+> the .promisor file we took the record originally?  For the sake of
+> completeness, we could consider adding the filename as well, but we
+> can quickly dismiss it as not so useful ;-)
 
-> Found instances using: > git grep 'test -[efd]' t/ | grep 'test -[efd].*&=
-&'
+Related to what I said before about getting hesitant... I actually
+thought about (pretty much) exactly this! My original idea was to add
+a timestamp of the current time when the repack happened. I discarded it
+because I didn't want to add any new information (for no particular
+reason tbh) and because I didn't want ".promisor" file content to
+potentially become too long if many repacks happen.
 
-Even though it is mentioned on the microprojects to mention what have
-you used to find the file, because it is only one file, including the
-search command is not very useful. Drop it.
+Your solution is much cleaner compared to what I originally thought of.
 
-Given the date and that this seems a microproject I guess this is for
-GSoC, you should add to the subject [GSoC PATCH] and CC your possible
-co mentors.
+> If repacking already repacked promisor packfile, the records would
+> already contain such a timestamp at the end, so the code to copy
+> existing records must be prepared to see if the records are the
+> <ref, oid> tuple, or <ref, oid, timestamp> tuple, and act
+> accordingly.
 
-I encourage you the same that it's being encourage for newcomers, read:
+Makes perfect sense.
 
-      https://lore.kernel.org/git/
+> I am *not* saying that without such a "preserve timestamp" column in
+> the record, copying existing records to a new .promisor file is
+> useless.  But we do not see any explanation why the author thinks
+> that it is sufficient to copy existing records while silently
+> deduping.  We can implement only one choice backed by series of
+> decisions like "timestamp might help" and "original filenames would
+> probably not help", and the design should describe what was
+> considered and rejected (as opposed to "we didn't think things
+> through---we just did what the original NEEDSWORK comment suggested
+> doing").
 
-There you'll find other microprojects similar to yours where you can learn =
-from.
+I 100% agree.
 
-Code seems OK.
+> Thanks.
 
-[1]: https://github.com/git/git/blob/master/Documentation/SubmittingPatches
-[2]: https://github.com/git/git/blob/master/Documentation/MyFirstContributi=
-on.adoc
+Thank you Junio for your time and feedback,
+
+Lorenzo
