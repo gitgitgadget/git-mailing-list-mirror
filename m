@@ -1,146 +1,94 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0153FADFF
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 17:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3CB41C30C
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 17:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774546156; cv=none; b=mIKtTMKawdAWen+SbGnNStARepZAIdl5NP/3tzaHLCzO6up1oGNE7+k9j13bkYUfpPeevBBusbKnHsfRpXKx2xCbCfSBProuEMSF25ncl9xFRl2Jo4hoIdICt3sMVXVqXQ92YNRfn+S5LxwA5MoanZtNj07W2W4GCRYcPpkrI94=
+	t=1774546171; cv=none; b=a5+6+V16n47sm6HwFn4p9PdB4GeboeZac6Fb+fcpRHYnasU9fI5ElP8aYwncab0r5tlWwkdQPUIIV3EGEWrJLAj7AOi6sGhNncTPB+LJKnTtGqH4G56fV57ejRSGLOb8qpPEKZKdtFHNf2abNa6T0GDz75YqIw7u9ZDw0MLcWnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774546156; c=relaxed/simple;
-	bh=JoHErFQOe+h87HhjsgABdJIMX0wQlUboz94vI5ONx3s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OOBLj2NrRyvTBLWH67N/Wm2sfWTTCyiGmQjQ3ASEInxrFuLo1iFrlUhEZNLrzp3FlsvASNdsUWI0ouZLNVV4XltDEfhZ5hMA7RDF1wG27ym8BKlgDsHCVxRfRW2BOnYKNdUKPboEa8h0+Qe+gbXHwm0IVxf+1xE4woGz1wq9NVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Prd8exuH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IUKg7sn2; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774546171; c=relaxed/simple;
+	bh=n7phfw37jQbZD8v3ZVzZqGcF0ybzHgsBBwhaLq0FN/I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B1RfjL2v5RjmF/xIdJLwHgl0WheIgzqlNwEAZC66eJswDNdUC5gqwb0CNC+ddMGeqaBgBdAP+iGON5rgHLUluKR1VeI9ULziUnZrv58SnTXZcncflSZhsU2VMjQftIwcVit2EmkX47UYgX+vjnfq5Y5K4kBUnVsSTeDwf7mCu0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PET344X+; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Prd8exuH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IUKg7sn2"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id C6ADD1D0027C;
-	Thu, 26 Mar 2026 13:29:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 26 Mar 2026 13:29:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774546153; x=1774632553; bh=L6qm1GEsL+
-	OTvOfXBf/JgmTb6NHbOzqCpNGN/NMTxME=; b=Prd8exuH2RQtdmDxqXMHjzQFdn
-	KuWmOdzrWFVMIFqVU38axUy4PW1sSF+FoFtzg0nFoPQfXoD/euhelKvHAz3euIq0
-	Rw9wlcZXj5O1UJzTFrVuF3BuCSABCgMTYKADSg9bRH7zJ5wllDu+HQF+D/IL7sKx
-	BfmHMxyhp62bRh5FKgnHAL1duj9wuzlWlGjvNFVRSPqHItbYAe3AdDMeVf4fwTKX
-	2owS7eFKJ9CCHaKUsCbdt73yjHVAhfA01D2932/57FqgZxXSTbhzTCLsMq+0PDmq
-	1uaIZG07kIFHfxRv5LVPcpAm30B+RCBgA0ZlWosaaWIIlFD58AlFHbfMBuJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774546153; x=1774632553; bh=L6qm1GEsL+OTvOfXBf/JgmTb6NHbOzqCpNG
-	N/NMTxME=; b=IUKg7sn2N6QcmPf61W8EMSzF/XfrGN+VImg1EFrUpQ4Bez8kZ6V
-	kjnuUkasgxD8qy0N75oGqWMqW2JKzPkVyOoOeUZDGqTdb0zWh5hb2jOpwRAB2HSa
-	n1eru4sU6Ot1YdVM7OVFlcbYkybpa+UJCiDy4eoSCaUeO8dKmJma9DbDoQ9K1ku9
-	sJwgiaCVa/BzHCRraSAe0p/mMusaW+u/poi6X8jHy5Y11Q85fx8bj8VjrKCJ6oDz
-	biXyNeofvHwzFB12O3q3MWF1eWLYB9Zbv6P93AKrOsgb+0Jz3Tpfck/QCrO7VlMN
-	UlaFxR1fKkF+1keNnAEiwcmkyOhqyLwlACw==
-X-ME-Sender: <xms:6WzFaaRRZvRyQcB5KTHQiiSkGJ3HG2avbyCzdxBDRas94_XAa-AsLg>
-    <xme:6WzFaTAjmKz3Q_75Iu5fuMCs2fO6ZuARGnqOwOBAwaxxxOxFw6NHax-3_Z7OPnBoW
-    SM7N5IVZfyjMEiNnZvQxnAtsVzoJc-x6kvjlI0b5KL37d6TBy60qV0>
-X-ME-Received: <xmr:6WzFaRSfbiX_GPdsg29ffJ5HArBZs4CgCKZ_-LTN8vYGn46F_otf5OEX3W7Tq_whP90QJMQ6DKZLCtY4nsOqWVdJP2SV7xXYKA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdejleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhgffffkgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetieejgfeiudehfffhteeggeegtd
-    dvfeeiieduvdduteekteegfeetjeejgffhjeenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehg
-    rhhusghigidrvghupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6WzFaRov17uTBVh6oL3KvaqbmmsFl3vZcrEGfnsZrYIuc680EcIG0w>
-    <xmx:6WzFaTzreVEXm4cPf8K-BQ4DqphSuYKa8OQyvxw4AeOqOBupiYhh-Q>
-    <xmx:6WzFaWIaZIuxkPEjNKDImn2HdCl_z8AzihPsB6AVLdiz59RPI5mDmg>
-    <xmx:6WzFaVII2vo2foE7cqgaWJtIMDCdsEwOWkc-7zbQIV8hEgIFXlfD-Q>
-    <xmx:6WzFaY7mwbZ0pdZmzH3KN8yTfYS7GPrNBKxP4anrGFLP2rejS0EIXIxB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Mar 2026 13:29:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@grubix.eu>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PET344X+"
+Received: (qmail 154756 invoked by uid 106); 26 Mar 2026 17:29:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=n7phfw37jQbZD8v3ZVzZqGcF0ybzHgsBBwhaLq0FN/I=; b=PET344X+iVkulxP9DLm6EktG3wc6XlCXuwgfHuYGn6ctBQoGY52jWui/HYrlnh/8d1FrkDv2CGt1K13ymy883xTccQ2Mbz8ujhUtXrXhqIT9yEy67dvfdOzHWrXssE0XdRsNrsFfxmlLMNeUNZWGI4NRVWboD5dEMx5wsOzBlhWiwhQesqhHTIg8A7LzpMFkKiWRkEjcaeibzyIob/QIdLS90Nl8o0QvwUx43LAAQ2X8ORTGRulafS8gbtIUXI/D4EXF3NkHC1eZ7afb5N4bKvJuL7M0wR5L8YJ629XTqb7OBnSMjsnTazCzmHeLqR5PiR8JGiH2axzT22wmt2yksA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Mar 2026 17:29:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 214585 invoked by uid 111); 26 Mar 2026 17:29:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Mar 2026 13:29:20 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 26 Mar 2026 13:29:20 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/6] do not discard const: adjust to non-const data types
-In-Reply-To: <8a65ada967b6b1308ea4cffca82102d4de8e9dd9.1774537954.git.git@grubix.eu>
-	(Michael J. Gruber's message of "Thu, 26 Mar 2026 16:22:49 +0100")
-References: <cover.1774537954.git.git@grubix.eu>
-	<8a65ada967b6b1308ea4cffca82102d4de8e9dd9.1774537954.git.git@grubix.eu>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Thu, 26 Mar 2026 10:28:54 -0700
-Message-ID: <xmqq5x6iqz3d.fsf@gitster.g>
+Subject: Re: [PATCH 01/11] test-lib: catch misspelt 'test_expect_successo'
+Message-ID: <20260326172920.GA2447148@coredump.intra.peff.net>
+References: <20260325062114.2067946-1-gitster@pobox.com>
+ <20260325062114.2067946-2-gitster@pobox.com>
+ <20260326040828.GA686242@coredump.intra.peff.net>
+ <xmqq8qbesm1r.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8qbesm1r.fsf@gitster.g>
 
-Michael J Gruber <git@grubix.eu> writes:
+On Thu, Mar 26, 2026 at 07:27:44AM -0700, Junio C Hamano wrote:
 
-> We use data types (such as string_list's util member) which are not
-> necessarily "non-const in practice" (such as the list of environment
-> variables in run-command.c) but are not declared "const". Rather than
-> duplicating data types (e.g. with a new constr_string_list), discard the
-> const explicitly for now to quell ISOC23 warnings.
-> ---
->  http-push.c   | 2 +-
->  run-command.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/http-push.c b/http-push.c
-> index 9ae6062198..acc7f1d8fa 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -1772,7 +1772,7 @@ int cmd_main(int argc, const char **argv)
->  			str_end_url_with_slash(arg, &repo->url);
->  			repo->path_len = strlen(repo->url);
->  			if (path) {
-> -				repo->path = strchr(path+2, '/');
-> +				repo->path = (char *) strchr(path+2, '/');
->  				if (repo->path)
->  					repo->path_len = strlen(repo->path);
->  			}
-> diff --git a/run-command.c b/run-command.c
-> index 32c290ee6a..1db02ef030 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -604,7 +604,7 @@ static void trace_add_env(struct strbuf *dst, const char *const *deltaenv)
->  	/* Last one wins, see run-command.c:prep_childenv() for context */
->  	for (e = deltaenv; e && *e; e++) {
->  		struct strbuf key = STRBUF_INIT;
-> -		char *equals = strchr(*e, '=');
-> +		char *equals = (char *) strchr(*e, '=');
->  
->  		if (equals) {
->  			strbuf_add(&key, *e, equals - *e);
+> >  test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
+> > -	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
+> > +	OUT=$( ((large_git || echo $? 1>&3) | :) 3>&1 ) &&
+> >  	test_match_signal 13 "$OUT"
+> >  '
+> >  
+> >
+> > That neglects to echo $? when large_git surprisingly succeeds, but that
+> > would mean $OUT is empty, which would cause the test to (correctly)
+> > fail. I kind of hate it, though.
+> 
+> Would
+> 
+> 	OUT=$( ((large_git && echo 0 || echo $? 1>&3) | :) 3>&1 )
+> 
+> do a bit better?
 
-I didn't look at the other http-push.c one, but this part with a bit
-wider context reads like this:
+Yeah, that is better (though in practice the same for our purposes in
+this particular test).
 
-	for (e = deltaenv; e && *e; e++) {
-		struct strbuf key = STRBUF_INIT;
-		char *equals = strchr(*e, '=');
+> We can keep fixing things one by one as we find these little
+> glitches and gochas, of it may be a whack-a-mole exercise that
+> eventually will turn out to be futile.  I dunno.
 
-		if (equals) {
-			strbuf_add(&key, *e, equals - *e);
-			string_list_insert(&envs, key.buf)->util = equals + 1;
-		} else {
-			string_list_insert(&envs, *e)->util = NULL;
-		}
-		strbuf_release(&key);
-	}
+Yeah, after getting the tests passing locally I pushed to CI and saw a
+ton of failures. I think one is just:
 
-I wonder if the cast to strip away constness wants to go near the
-assignment to ->util.
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index 630a47af21..7f920d7b9e 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -12,7 +12,7 @@ TEST_CREATE_REPO_NO_TEMPLATE=1
+ . ./test-lib.sh
+ 
+ # Remove a default ACL from the test dir if possible.
+-setfacl -k . 2>/dev/null
++setfacl -k . 2>/dev/null || true
+ 
+ # User must have read permissions to the repo -> failure on --shared=0400
+ test_expect_success 'shared = 0400 (faulty permission u-w)' '
 
+and another seems to involve test_done barfing when no tests have been
+run (e.g., if we hit a skip_all case). I didn't investigate further.
 
+-Peff
