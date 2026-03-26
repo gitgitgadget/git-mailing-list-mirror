@@ -1,122 +1,166 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898D71EEA31
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 19:10:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C5332AAA0
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 19:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774552211; cv=none; b=bq8n0h98SgnNwwcHNUi/gzBYlVLRqbW+cYzVrRO66/moo6coKgbrYuCGXHex71FXs0fuHogHyYTrWw75OFO6UEdxFxwdI6SCnu6o1dW3N4K8Eif8VSx8C6K3Vp/1yFyZT7owDtD8hCr+MVmmZJFVVcSta+ESA9fcWpDPK4u9vVQ=
+	t=1774552401; cv=none; b=GL4TtJEKF3yFohoR3JVsSV+t7S7X6k36md7vkEG0U2Rl+bTFzDgfD8NmVOs2bhd3R9mBU66+3D9esHdgnIbCDt/Xx8+urtFDTaihz1PT8JOYOJTsZ+mN1NFQws9+jKVscaGV0q5i25CKtFzFnYHw3bwkTzmCoNtRQgB1EzgXSyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774552211; c=relaxed/simple;
-	bh=7cZEYkkBG2J77C2x7r6QuQW521EPwEGy8iqzVcfPP3E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=moxQjM8ViExOrK0ArY2IbLfAoGb6nTU+ZkgBdeXdBV8aiFT52jyHd4X85mVHGSaNU3OQMBQFbjImnGsEFR86WHJZfxzEUXFsfWR2SMBEXsZ4kdmJrb9sggQDeKgSouuUtgBPxUESY1qDGlFBgq+gZShOpJZ0qjwsSRFrvRMgNfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gwnq8ROL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pTzyj8h3; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774552401; c=relaxed/simple;
+	bh=LwZiWnTjTROlgxIQSE6i+46IScuKQ0dHazlw4SV0UlM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lLz+DsQoI8AENrF/ma0vCjf3/RZSkJhu5lSojB5+jVRVfaKusmF3+Lgir+vuQ58kvX5O8jci6GUl/Ej0KUzAQ0kyorLQLWm6/exB6PULDoXsi+u1g7iVioRGyYydqbhYB3a1RS+aagGP+gXpS2F27SMKcVaKwwIhzIsGGceadF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=StNDVGVK; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gwnq8ROL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pTzyj8h3"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D47C71400173;
-	Thu, 26 Mar 2026 15:10:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 26 Mar 2026 15:10:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774552209; x=1774638609; bh=LlYPKcDSq8
-	Ui7WXMrk0buPOuCpCWTqQ7jxD6Q5PkUVw=; b=Gwnq8ROLjXO2V7/svQlkjs8BIQ
-	4Gs9mrXV0npvbjWJars54IF1nFmhYLPL4YE+5ZcLGNQpcKdAwNdbzHSEbCmWV3R2
-	UncMXI+LxsiVMsXFVJUwllj4dAFxP9ou3bTS7tyjCivRjyONYrDtp4SE7gU9RMFD
-	YXZLChAGPOGut+C3fJTwoF1fJbsPTyt/GNHrpZKJuu8eVeJZEMloVxZH8PgbXGSe
-	Zopgas3U692LxuUwiwd+4WPrGophiFk/jvop3bGB219xhAeHLJEAfy0vUjp0ms6w
-	VF0V3reHEuuHyLsXFrby+hZc15xFjvvGNNKLPK3GIRaH7gz22MuMpupAiNTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774552209; x=1774638609; bh=LlYPKcDSq8Ui7WXMrk0buPOuCpCWTqQ7jxD
-	6Q5PkUVw=; b=pTzyj8h3DRzdBhhJOGtsd+Iiz4BtqC+pUS4LBOAKuQiHoHqT09y
-	b/Hicd0s8KPiLnS1xjxOFcVQgsqqOgugaQ8bkGBObk13Kkfle3s5M6uEB0K5wqDY
-	+UB+FlQBPKWhV+jn3Dnfn7FMQvaJcB4qXaPdWSah0Ww18Eg4kJo9m5cJsEV08nTP
-	srdyo5N24+UUQCpjEIuYv4hDNgA2XGL6YEHsmswROJVr3ext8WPw85i2rl+EcKf6
-	Bc2PL2/R8DcF9V+D5sga8JU6ZSmFhi742aQ+BwOJcAl7SMn9saQPOERCov49JGHs
-	Yi8UU4U/lAo2Cuwsc/246i4Xm9DXML/1STA==
-X-ME-Sender: <xms:kYTFaW5Fk7U1qioRZGLizFL3z6VUmyjHmwYp_Fyut0asw3Er7HxctQ>
-    <xme:kYTFaXVbT7etng2VoVn7dK4CINTJ4T1ydFPp_XLNLi1u2aEuyr3qFG_bofWj5HNsi
-    GifaKXZbnkOqwKgIX1jUq4z0vglyGK_kM61wjEiNQv4HX3MFZriFA>
-X-ME-Received: <xmr:kYTFaS0XT1Nue4sQilWVtAFjfIG5cTvBMp3c2Ydtz9MQzvn3BeZFTFE6DWsWDOFdZdLOXarusIqvkbV5g5Z9ku--tofPxGnztg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdekudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
-    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kYTFac3PxdOmiwIa-VR7Hsysh3ou3ZfjR4AxKu8r-ZP6suW77dVFmg>
-    <xmx:kYTFad8jSaWDsJzDaJ5s5wVupQEPtLFHSbnCioqn3ivhMZj2tsr1JA>
-    <xmx:kYTFaR0hhJSIov6DROKVh-6DzP8JV3eV_r7Q2k0ZvgOAAgfIib13Bg>
-    <xmx:kYTFaS8xkQw26hMFvYPSitmrcm0cR2LiMrOl3_RrPXmMCNv-U-iu0A>
-    <xmx:kYTFaQiCc1tKrAaAo5JOgF0cj58PuFY9W8ezg8QErcZpoX5BCWPZ2jU9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Mar 2026 15:10:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] docs: fix --commit-list-format related entries
-In-Reply-To: <20260326185541.17523-1-mroik@delayed.space> (Mirko Faina's
-	message of "Thu, 26 Mar 2026 19:55:41 +0100")
-References: <20260326185541.17523-1-mroik@delayed.space>
-Date: Thu, 26 Mar 2026 12:10:08 -0700
-Message-ID: <xmqqpl4qpfu7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="StNDVGVK"
+Received: (qmail 155640 invoked by uid 106); 26 Mar 2026 19:13:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LwZiWnTjTROlgxIQSE6i+46IScuKQ0dHazlw4SV0UlM=; b=StNDVGVKQgY4b5dt2HHSrIDyxSgfdQi8leYaoDXqWYQYhK9BfIADvXYqofi5e/LdPOnht25aMU1gopit29jFRjophTRri0h43FClqsgsg4i1jiujUZ2IDHH/ioMgTTM0hrW7tnSKr6/xI40UntX9BkNDIr+yPZWiM8V31s0ea8e1/fzqdY+KNKh+lDZv47gXRw79lHKMWoK2ZG1R+FeeOUXGWoQYzaem/WzR09gMh1isAr4OfOsQuu7WylyKuAxlb2ZOIXEkuiJB9av3urpniTK+tbdQh3LH3u9YRAkRwLBfCrJJlQG5bgnwkeCdQUSDj7YEsthucvqGPWbUqxQNKQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Mar 2026 19:13:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 215885 invoked by uid 111); 26 Mar 2026 19:13:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Mar 2026 15:13:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 26 Mar 2026 15:13:18 -0400
+From: Jeff King <peff@peff.net>
+To: Michael J Gruber <git@grubix.eu>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: [PATCH 3/4] revision: avoid writing to const string for parent marks
+Message-ID: <20260326191318.GC415796@coredump.intra.peff.net>
+References: <20260326190243.GA412983@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260326190243.GA412983@coredump.intra.peff.net>
 
-Mirko Faina <mroik@delayed.space> writes:
+We take in a "const char *", but may write a NUL into it when parsing
+parent marks like "foo^-", since we want to isolate "foo" as a string
+for further parsing. This is usually OK, as our "const" strings are
+often actually argv strings which are technically writeable, but we'd
+segfault with a string literal like:
 
->  	The user is allowed to drop the prefix if the format-string contains a
->  	`%<placeholder>`.
+  handle_revision_arg("HEAD^-", &revs, 0, 0);
 
-As you do not, and we do not want to, parse and validate
-placeholder, it is more honest to phrase this like
+Similar to how we handled dotdot in a previous commit, we can avoid this
+by making a temporary copy of the left-hand side of the string. The cost
+should negligible compared to the rest of the parsing (like actually
+parsing commits to create their parent linked-lists).
 
-	A format-string that contains a `%` letter is treated as a
-	custom format even if it lacks the `log:` prefix.
+There is one slightly tricky thing, though. We parse some of the marks
+progressively, so that if we see "foo^!" for example, we'll strip that
+down to "foo" not just for calling add_parents_only(), but also for the
+rest of the function. That makes sense since we eventually want to pass
+"foo" to get_oid_with_context(). But it also means that we'll keep
+looking for other marks. In particular, "foo^-^!" is valid, though oddly
+"foo^!^-" would ignore the "^-". I'm not sure if this is a weird
+historical artifact of the implementation, or if there are important
+corner cases.
 
-even if we omit saying ", expecting that '%' is part of a %<prefix>",
-or ", similar to how `git log --pretty=<format>` works as if the
-<format> were prefixed with `format:`".
+So I've left the behavior unchanged. Each mark we find allocates a
+string with the mark stripped, which means we could allocate multiple
+times (and carry a free-able pointer for each to the end). But in
+practice we won't, because of the three marks, "^@" jumps immediately to
+the end without further parsing, and "^-^!" is nonsense that nobody
+would pass. So you'd get one allocation in general, and never more than
+two.
 
-> -	If not given, defaults to the `format.commitListFormat` configuration
-> -	variable.
-> -	This option implies the use of `--cover-letter` unless
-> -	`--no-cover-letter` is given.
-> +	If not given, defaults to `shortlog` unless the
-> +	`format.commitListFormat` configuration variable is set. This option
-> +	implies the use of `--cover-letter` unless `--no-cover-letter` is
-> +	given.
+Another obvious option would be to just copy "arg" up front and be OK
+with munging it. But that means we pay the cost even when we find no
+marks. We could make a single copy upon finding a mark and then munge,
+but that adds extra code to each site (checking whether somebody else
+allocated, and if not, adjusting our "mark" pointer to be relative to
+the copied string).
 
-A new reader would wonder if setting the configuration variable
-would count as a trigger to "This option implies", even though we
-only want an explicit command line option to do so.
+I aimed for something that was clear and obvious, if a bit verbose.
 
-Here is myu attempt to rephrase it, but
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Also one other weirdness I noticed while proof-reading: if we
+successfully parse a mark, we never restore the original string! So if
+you call:
 
-    Use of this option from the command line implies `--cover-letter`;
-    an explicit `--no-cover-letter` can defeat it.
+  char buf[] = "foo^!";
+  handle_revision_arg(buf, &revs, 0, 0);
 
-I am not sure how much better it is from the original.
+Then "buf" would have "foo\0!" after it returns. I guess no callers
+care, because they only look at the arg again if there was an error.
+But it incidentally is fixed by this patch.
 
+ revision.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index f61262436f..fda405bf65 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2147,7 +2147,10 @@ static int handle_dotdot(const char *arg,
+ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int flags, unsigned revarg_opt)
+ {
+ 	struct object_context oc = {0};
+-	char *mark;
++	const char *mark;
++	char *arg_minus_at = NULL;
++	char *arg_minus_excl = NULL;
++	char *arg_minus_dash = NULL;
+ 	struct object *object;
+ 	struct object_id oid;
+ 	int local_flags;
+@@ -2174,18 +2177,17 @@ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int fl
+ 
+ 	mark = strstr(arg, "^@");
+ 	if (mark && !mark[2]) {
+-		*mark = 0;
+-		if (add_parents_only(revs, arg, flags, 0)) {
++		arg_minus_at = xmemdupz(arg, mark - arg);
++		if (add_parents_only(revs, arg_minus_at, flags, 0)) {
+ 			ret = 0;
+ 			goto out;
+ 		}
+-		*mark = '^';
+ 	}
+ 	mark = strstr(arg, "^!");
+ 	if (mark && !mark[2]) {
+-		*mark = 0;
+-		if (!add_parents_only(revs, arg, flags ^ (UNINTERESTING | BOTTOM), 0))
+-			*mark = '^';
++		arg_minus_excl = xmemdupz(arg, mark - arg);
++		if (add_parents_only(revs, arg_minus_excl, flags ^ (UNINTERESTING | BOTTOM), 0))
++			arg = arg_minus_excl;
+ 	}
+ 	mark = strstr(arg, "^-");
+ 	if (mark) {
+@@ -2199,9 +2201,9 @@ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int fl
+ 			}
+ 		}
+ 
+-		*mark = 0;
+-		if (!add_parents_only(revs, arg, flags ^ (UNINTERESTING | BOTTOM), exclude_parent))
+-			*mark = '^';
++		arg_minus_dash = xmemdupz(arg, mark - arg);
++		if (add_parents_only(revs, arg_minus_dash, flags ^ (UNINTERESTING | BOTTOM), exclude_parent))
++			arg = arg_minus_dash;
+ 	}
+ 
+ 	local_flags = 0;
+@@ -2236,6 +2238,9 @@ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int fl
+ 
+ out:
+ 	object_context_release(&oc);
++	free(arg_minus_at);
++	free(arg_minus_excl);
++	free(arg_minus_dash);
+ 	return ret;
+ }
+ 
+-- 
+2.53.0.1081.gf77a8b8145
 
