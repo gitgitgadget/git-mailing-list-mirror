@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5093A5456
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 10:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA623A5456
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 10:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774520433; cv=pass; b=LBTio9ePFj22jIb8Pw/xal2bg9opPvcR/89MzSNM1hECwBUt5nTAQdyiZV+iPf2g8OYmPF3ELT3F9Z0FnJ0cXStF7VsdAwWLOxplW78b04KGXokUqcQAeHtyIqSEd7bIw3DUTvln20gzPSe+nU+6k4MvnXBKIH6UPD6w3fWLr4o=
+	t=1774520442; cv=pass; b=T4W3ZXRlMcp2ouuplRjf7BAfQm6tEDTg7zUmON+a/1/au+2tzPW3vBNd3ET/bXY8CVhkRjv1zC4/rv9unLGAAFBgb+xHgjKIwuXKH4Z+BSU/MvCMDqDM0oDPQ4nVqLEiUOhUfYfS4jsiV9cjYFQen3RSLePoYEPnl1GZhWquyEA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774520433; c=relaxed/simple;
-	bh=c0SkI4o7W7G2BLyCprFUQd+fWNx2rhQb6KToBRz7hKE=;
+	s=arc-20240116; t=1774520442; c=relaxed/simple;
+	bh=BKZqMV9oVW6vijgtmuy19R5i6M+ZhdMXzmK1n4idJvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdP1DIGnByI/XreCsdv5BceUkJNn+LW7qYnZ4ZcvaVfuq6vHtbm1xJncS16I0q43jeGZCzU8iHEnTXs4hnZk93wx6VrdgP+3z5i1lB5XjN9XKrtLU97XXnXuBRC9WHeRexS05S1KG6geATuWuULY8c97BgNyRbi6Tfg/j1K8uy8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=dShKLZOt; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=Jd0TLNVyBISrYE55nA0nl8aO6DTqxyeKW+Z2G51egNVkVGL+aES3oOrUAajPyq9jM29NEirv4ZLJ/VFBdIP+B6EG4dvYT3cmPFftYz0nfnyN6o0If+QsQtshYyCbmMcwsJd3wk3dSZSSrNfTz9v9XM8+4Z99o1joqDk5EI2djxA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=D3Cpi7qY; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="dShKLZOt"
-ARC-Seal: i=1; a=rsa-sha256; t=1774520415; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="D3Cpi7qY"
+ARC-Seal: i=1; a=rsa-sha256; t=1774520418; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=N9uKVPwuRajP5WDJT1RTWSJtaZhiQJw1teCayzMtGZR+h8QMUYUecTeqfk4o58mZfoWl/NyKo3KVAScpUYPY1Fa+iY+gaNK4ZJoCQUnmBUDcH1oc6tiqvoFol2S0UDx69xdMtGEdXVrhV773xClPUN9keLf/vOIukQRyP4up1mY=
+	b=nBOLrOOp/5RWWMzfnCaOad6snqKAjr5IQPQ1csDxbdKQpC55r15mjyNzvXS4QA1Xi6O7bfqdgHk3gVSpe2KNECOCes0JiqYb6VTJrkAK2/5MVOWVVPxiNRrB2KM4aGY3271y2qn2jNzArCPVrlXk9NYnTA3mZNN0l92xb7yceQU=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1774520415; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=b5D73cNB3fv5JB/dOhoTUm707VcUqkGJ8774kr+d1L8=; 
-	b=B4FoQfQMWE8T8zC3FiBoy7/USKLZLv3hKsbkZ2Ej830yLSYd0qtgBlp6dUwDb3L09q7RrWx7Z3nzzqu1nBjo+D5/pzLLv38TvLl4NRykTsUXkGdaCoF7KoijJqXUmz8xm2lDbwoBE2Q5pTbqYwU48V3JoMroEWXK8xcrFxOr7aA=
+	t=1774520418; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=hgJfqYbwUqXlm+Co0yrEAEewjsxPDQcbcHLGYB4nTTc=; 
+	b=my7XALjY5D829Qc7pa8wl/+gtP2lP6zy2sgsrS1byb2OBy/Nrk4nH8zSB91MGoK5j+pGXG5Zqbb+b/VSURltX+I7lpTaBtdw4xskydZwwp2zSpWX5Fivd8WN2ImaORL/jqUJG5PJGq0nePcUbuVKxMYT1Kue9Pw1LHVo4ldypxk=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774520415;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774520418;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=b5D73cNB3fv5JB/dOhoTUm707VcUqkGJ8774kr+d1L8=;
-	b=dShKLZOtUxVmahE1CzmzwN5EV6SQYcKwe9BNyu/ttLcmp2SA2Io6prsZk8OiER+y
-	OKvi3nU01K8q+tP5Dj11GBL/6T+PkjmKOkK8/nSQBuzXybrkfdzcC1NzqlpCV5p7jwE
-	HsgHcAfAGozJzVTPGaAkzg4ekhlmf0NBRfEmUU3o=
-Received: by mx.zohomail.com with SMTPS id 1774520413086414.0139789592166;
-	Thu, 26 Mar 2026 03:20:13 -0700 (PDT)
+	bh=hgJfqYbwUqXlm+Co0yrEAEewjsxPDQcbcHLGYB4nTTc=;
+	b=D3Cpi7qYqhce9xoGkwoSxIsMl7Nhe+Abba4Eh4SWWh06NoEodnSexqoFoy05JZrx
+	+1VrbvRe+ZcjZyWtbg6TuZ/wX3fvCvUylceWh6pE+BgFD37+1t5r9kVNeFQ4JEoqjP/
+	XkZAUCzgBYqOz4ExS5vSaZ5VVwPqyl6UsK8GN8tM=
+Received: by mx.zohomail.com with SMTPS id 1774520415767467.82875573525416;
+	Thu, 26 Mar 2026 03:20:15 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -46,9 +46,9 @@ Cc: Jeff King <peff@peff.net>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v5 02/12] config: add a repo_config_get_uint() helper
-Date: Thu, 26 Mar 2026 12:18:09 +0200
-Message-ID: <20260326101819.1307742-3-adrian.ratiu@collabora.com>
+Subject: [PATCH v5 03/12] hook: parse the hook.jobs config
+Date: Thu, 26 Mar 2026 12:18:10 +0200
+Message-ID: <20260326101819.1307742-4-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260326101819.1307742-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -62,145 +62,119 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Next commits add a 'hook.jobs' config option of type 'unsigned int',
-so add a helper to parse it since the API only supports int and ulong.
+The hook.jobs config is a global way to set hook parallelization for
+all hooks, in the sense that it is not per-event nor per-hook.
 
-An alternative is to make 'hook.jobs' an 'int' or parse it as an 'int'
-then cast it to unsigned, however it's better to use proper helpers for
-the type. Using 'ulong' is another option which already has helpers, but
-it's a bit excessive in size for just the jobs number.
+Finer-grained configs will be added in later commits which can override
+it, for e.g. via a per-event type job options. Next commits will also
+add to this item's documentation.
+
+Parse hook.jobs config key in hook_config_lookup_all() and store its
+value in hook_all_config_cb.jobs, then transfer it into r->jobs after
+the config pass completes.
+
+This is mostly plumbing and the cached value is not yet used.
 
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- config.c | 28 ++++++++++++++++++++++++++++
- config.h | 13 +++++++++++++
- parse.c  |  9 +++++++++
- parse.h  |  1 +
- 4 files changed, 51 insertions(+)
+ Documentation/config/hook.adoc |  4 ++++
+ hook.c                         | 23 +++++++++++++++++++++--
+ repository.h                   |  3 +++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/config.c b/config.c
-index 156f2a24fa..a1b92fe083 100644
---- a/config.c
-+++ b/config.c
-@@ -1212,6 +1212,15 @@ int git_config_int(const char *name, const char *value,
- 	return ret;
- }
- 
-+unsigned int git_config_uint(const char *name, const char *value,
-+			     const struct key_value_info *kvi)
-+{
-+	unsigned int ret;
-+	if (!git_parse_uint(value, &ret))
-+		die_bad_number(name, value, kvi);
-+	return ret;
-+}
+diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
+index 9e78f26439..b7847f9338 100644
+--- a/Documentation/config/hook.adoc
++++ b/Documentation/config/hook.adoc
+@@ -22,3 +22,7 @@ hook.<friendly-name>.enabled::
+ 	configuration. This is particularly useful when a hook is defined
+ 	in a system or global config file and needs to be disabled for a
+ 	specific repository. See linkgit:git-hook[1].
 +
- int64_t git_config_int64(const char *name, const char *value,
- 			 const struct key_value_info *kvi)
- {
-@@ -1907,6 +1916,18 @@ int git_configset_get_int(struct config_set *set, const char *key, int *dest)
- 		return 1;
- }
++hook.jobs::
++	Specifies how many hooks can be run simultaneously during parallelized
++	hook execution. If unspecified, defaults to 1 (serial execution).
+diff --git a/hook.c b/hook.c
+index cc23276d27..b8cce00e57 100644
+--- a/hook.c
++++ b/hook.c
+@@ -123,11 +123,13 @@ struct hook_config_cache_entry {
+  * commands: friendly-name to command map.
+  * event_hooks: event-name to list of friendly-names map.
+  * disabled_hooks: set of friendly-names with hook.<friendly-name>.enabled = false.
++ * jobs: value of the global hook.jobs key. Defaults to 0 if unset (stored in r->hook_jobs).
+  */
+ struct hook_all_config_cb {
+ 	struct strmap commands;
+ 	struct strmap event_hooks;
+ 	struct string_list disabled_hooks;
++	unsigned int jobs;
+ };
  
-+int git_configset_get_uint(struct config_set *set, const char *key, unsigned int *dest)
-+{
-+	const char *value;
-+	struct key_value_info kvi;
-+
-+	if (!git_configset_get_value(set, key, &value, &kvi)) {
-+		*dest = git_config_uint(key, value, &kvi);
+ /* repo_config() callback that collects all hook.* configuration in one pass. */
+@@ -143,6 +145,20 @@ static int hook_config_lookup_all(const char *key, const char *value,
+ 	if (parse_config_key(key, "hook", &name, &name_len, &subkey))
+ 		return 0;
+ 
++	/* Handle plain hook.<key> entries that have no hook name component. */
++	if (!name) {
++		if (!strcmp(subkey, "jobs") && value) {
++			unsigned int v;
++			if (!git_parse_uint(value, &v))
++				warning(_("hook.jobs must be a positive integer, ignoring: '%s'"), value);
++			else if (!v)
++				warning(_("hook.jobs must be positive, ignoring: 0"));
++			else
++				data->jobs = v;
++		}
 +		return 0;
-+	} else
-+		return 1;
-+}
++	}
 +
- int git_configset_get_ulong(struct config_set *set, const char *key, unsigned long *dest)
+ 	if (!value)
+ 		return config_error_nonbool(key);
+ 
+@@ -240,7 +256,7 @@ void hook_cache_clear(struct strmap *cache)
+ /* Populate `cache` with the complete hook configuration */
+ static void build_hook_config_map(struct repository *r, struct strmap *cache)
  {
- 	const char *value;
-@@ -2356,6 +2377,13 @@ int repo_config_get_int(struct repository *repo,
- 	return git_configset_get_int(repo->config, key, dest);
- }
+-	struct hook_all_config_cb cb_data;
++	struct hook_all_config_cb cb_data = { 0 };
+ 	struct hashmap_iter iter;
+ 	struct strmap_entry *e;
  
-+int repo_config_get_uint(struct repository *repo,
-+			 const char *key, unsigned int *dest)
-+{
-+	git_config_check_init(repo);
-+	return git_configset_get_uint(repo->config, key, dest);
-+}
+@@ -248,7 +264,7 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
+ 	strmap_init(&cb_data.event_hooks);
+ 	string_list_init_dup(&cb_data.disabled_hooks);
+ 
+-	/* Parse all configs in one run. */
++	/* Parse all configs in one run, capturing hook.* including hook.jobs. */
+ 	repo_config(r, hook_config_lookup_all, &cb_data);
+ 
+ 	/* Construct the cache from parsed configs. */
+@@ -292,6 +308,9 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
+ 		strmap_put(cache, e->key, hooks);
+ 	}
+ 
++	if (r)
++		r->hook_jobs = cb_data.jobs;
 +
- int repo_config_get_ulong(struct repository *repo,
- 			  const char *key, unsigned long *dest)
- {
-diff --git a/config.h b/config.h
-index ba426a960a..bf47fb3afc 100644
---- a/config.h
-+++ b/config.h
-@@ -267,6 +267,12 @@ int git_config_int(const char *, const char *, const struct key_value_info *);
- int64_t git_config_int64(const char *, const char *,
- 			 const struct key_value_info *);
+ 	strmap_clear(&cb_data.commands, 1);
+ 	string_list_clear(&cb_data.disabled_hooks, 0);
+ 	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
+diff --git a/repository.h b/repository.h
+index 078059a6e0..58e46853d0 100644
+--- a/repository.h
++++ b/repository.h
+@@ -172,6 +172,9 @@ struct repository {
+ 	 */
+ 	struct strmap *hook_config_cache;
  
-+/**
-+ * Identical to `git_config_int`, but for unsigned ints.
-+ */
-+unsigned int git_config_uint(const char *, const char *,
-+			     const struct key_value_info *);
++	/* Cached value of hook.jobs config (0 if unset, defaults to serial). */
++	unsigned int hook_jobs;
 +
- /**
-  * Identical to `git_config_int`, but for unsigned longs.
-  */
-@@ -560,6 +566,7 @@ int git_configset_get_value(struct config_set *cs, const char *key,
- 
- int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
- int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
-+int git_configset_get_uint(struct config_set *cs, const char *key, unsigned int *dest);
- int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest);
- int git_configset_get_bool(struct config_set *cs, const char *key, int *dest);
- int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *is_bool, int *dest);
-@@ -650,6 +657,12 @@ int repo_config_get_string_tmp(struct repository *r,
-  */
- int repo_config_get_int(struct repository *r, const char *key, int *dest);
- 
-+/**
-+ * Similar to `repo_config_get_int` but for unsigned ints.
-+ */
-+int repo_config_get_uint(struct repository *r,
-+			 const char *key, unsigned int *dest);
-+
- /**
-  * Similar to `repo_config_get_int` but for unsigned longs.
-  */
-diff --git a/parse.c b/parse.c
-index 48313571aa..d77f28046a 100644
---- a/parse.c
-+++ b/parse.c
-@@ -107,6 +107,15 @@ int git_parse_int64(const char *value, int64_t *ret)
- 	return 1;
- }
- 
-+int git_parse_uint(const char *value, unsigned int *ret)
-+{
-+	uintmax_t tmp;
-+	if (!git_parse_unsigned(value, &tmp, maximum_unsigned_value_of_type(unsigned int)))
-+		return 0;
-+	*ret = tmp;
-+	return 1;
-+}
-+
- int git_parse_ulong(const char *value, unsigned long *ret)
- {
- 	uintmax_t tmp;
-diff --git a/parse.h b/parse.h
-index ea32de9a91..a6dd37c4cb 100644
---- a/parse.h
-+++ b/parse.h
-@@ -5,6 +5,7 @@ int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
- int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
- int git_parse_ssize_t(const char *, ssize_t *);
- int git_parse_ulong(const char *, unsigned long *);
-+int git_parse_uint(const char *value, unsigned int *ret);
- int git_parse_int(const char *value, int *ret);
- int git_parse_int64(const char *value, int64_t *ret);
- int git_parse_double(const char *value, double *ret);
+ 	/* Configurations related to promisor remotes. */
+ 	char *repository_format_partial_clone;
+ 	struct promisor_remote_config *promisor_remote_config;
 -- 
 2.52.0.732.gb351b5166d.dirty
 
