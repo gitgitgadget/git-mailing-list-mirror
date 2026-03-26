@@ -1,103 +1,130 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03A3395276
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 10:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774520510; cv=pass; b=s3cxBJfuaNQduzMgJcgesDeJQ3wlXwL32zIVkW++ZQZnHwRQo7P5lg5nTb4Ve75cauJqthTEaHlG/oTrh7sNcoRU0mGtG2Yi/6sP/cmNBG6oe7YlMhr8SPRmEMfgdlBf93b8m3b8bisagRUd53su9NHnqRwx5NRtT8awPcflSB4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774520510; c=relaxed/simple;
-	bh=UxNT1rQyZzt3i48Tq77KTIClMjYYVECO96CqHf8jvgo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WQzL5Zz10w2O4tV0xWVqSoHmlLILo5oSowJki3yjL5ADCmrdOZ+HK7zYnTHXb/RKfgzoBTs+ce/2Zt9HWMK3QHvvtMBb+j8qbDTzaaLrt32jRxtwsKlHaiv6N4zoj5mUUJPmkqBWH7uIICcgXnU2NVguUBXI1jqbNQXRl7Kf7d4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=XrVu/TxK; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43BD33DED5
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 11:22:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774524151; cv=none; b=oDGY+yRosjOUVYmQttHz0DK2jMNS2n7Rw9mVcohWPITAGFiphEda9M0ADnVN1d3l98Ze0zt85XzNySMlqnWTQzkKp2CEHEVd4FcGnqfc8f5VEe94dkTp8vh42tzFFTDfdkWSvRoijgnyznsVWzkqUzALEnCt6cWG3ORbYTcZymA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774524151; c=relaxed/simple;
+	bh=BQfmcJeySLLG0dIV2D3hle9avr9jzrRNsQfpav1Rpwg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gQ4vfOmDOp3WOPqOAAblZgEpcrRVRIY7uCXaYiza2LfSkA/cu0fGh8+Vnnr4L7+VNho7tkg4YsAmx4bJKrYaR37yXbsxkrsoF1oqkdd+Sz+DPHzH+29A6ojXRlUoRfZMc5NSWIYchlenG4GTir90ww2rhDbuEzv3zraMTbGZI5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fkR60Vxi; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="XrVu/TxK"
-ARC-Seal: i=1; a=rsa-sha256; t=1774520496; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=BlehvcLyMjhnmacfBuKzSiB0nNS4MHu5dTyWNsJMKXvsmN27VLoLOd98Mpt5qX1zh1RVSK+9CgWJpgl6Gf/TLgi1d8bXvDVc0kD9xMtpaJLEFfAEIwgzYIG6TYrWPi7kIzJ1RE9Fua6gr48kC6wBbRwyEY7FowtKfEaqoZMp7zI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1774520496; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=k7kPpaC/rt3LyYzgvNtk+LSO2Joe8jxaAGtQf2Zxy0U=; 
-	b=hE3fkHheHknKXUanTwVjkNwnjS8ljI4lxEGt42TMUkGepz93nEkB7sqYt0kW3D3khkFiX6dmc3bg9Jt37obCqEg+Xy63eGe4FkHFvfp/Zz1OzEnLr5GiKyeIb/vtZ4AOBby6ycdNYfyxWix01seCYI0iokAFWUxodwN666R7gjM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774520496;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=k7kPpaC/rt3LyYzgvNtk+LSO2Joe8jxaAGtQf2Zxy0U=;
-	b=XrVu/TxKu6kC26m2oWL2fV//5K9egBSX/g1E5RDOscZk4Xde6AKL4N++5z1hKRoo
-	/KNxtuWHq/OHD/ga0SKr5uFfnooD6/mG9G2bYo9oK3tBjscztWoDb4DcPde2SviL+2l
-	7vsncAvTPWI7uAL8PZkoxcn5mgzdJD+ATtvHIfjc=
-Received: by mx.zohomail.com with SMTPS id 1774520489081731.8986099559813;
-	Thu, 26 Mar 2026 03:21:29 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Patrick
- Steinhardt <ps@pks.im>, "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 00/12] config-hook cleanups and three small git-hook
- features
-In-Reply-To: <xmqqse9nsj6g.fsf@gitster.g>
-References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
- <20260325195503.1139418-1-adrian.ratiu@collabora.com>
- <xmqqse9nsj6g.fsf@gitster.g>
-Date: Thu, 26 Mar 2026 12:21:25 +0200
-Message-ID: <87fr5mdh7e.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fkR60Vxi"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-439cd6b09f8so520330f8f.3
+        for <git@vger.kernel.org>; Thu, 26 Mar 2026 04:22:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774524148; x=1775128948; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DNa1VQ62zMmVFVBlOhbCxB5pC9Hx0je5pNzJ7Xv1zuw=;
+        b=fkR60Vxiqi4VPxnN6aKU+oAJyJSiGQ0fNuRdFJagYo2nI1fkaX0xxQyqFn7skWA11J
+         UuF2JIesg4NYy4SaZqpe+QfN0yjtQlXJSXIEKuW3OsIV1ucJKyqpj/KZ+qN1wN+ZXp0t
+         UPcmB5UZpE6lldC5OOObf6TiVmUVsEhkgUfxlzNIWkYzy4OxpSSXs7ZTLs02HQ82FkoB
+         mpOQJtH/D2o+cZ2LZv2/Ft+tNGUZg/bjViScoGKNrgwsAP5XHJSxGEDkNVeKw1fcFjfS
+         /CNpwAJNfQMmqnwiDvw1CEgDEP7OM7ZMAHnNGlbNIwX0aZ48WmxNjpChKjiqoQXODntY
+         E9Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774524148; x=1775128948;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DNa1VQ62zMmVFVBlOhbCxB5pC9Hx0je5pNzJ7Xv1zuw=;
+        b=PqEpBuu2ksLmnY255mRzVyfzyjq937NalGNc8bmgj5Yz1SfBpT2La/ZZFxxG/tF9KY
+         zRd6D4aFhKrPcJIoaKZaWmlmew4fhdrbqPTPN9+kLJELP3sBrXZKi8jEXp18Eyx/D8GV
+         nwaaCJZxrnWz5Mryy7nA68MGlIIGIljZyOr1uInOiiDDS8c8PQzCSeppfOVAuZ3GZ8OL
+         QsX2Szs/lcnSsWlP5Bm9DAy+YCuZ4NCvO2cPVvFgoWcpMurkezgZkkxVhjbBxDCQhXAv
+         q4aBDCDQQVQTMOGpvPyQh+GrrZvcWR9qtv1OlyXOkhnL7OldUvvMqOwGzUJ/V/0lq/Tz
+         rlIw==
+X-Gm-Message-State: AOJu0YxybFlQO6fFvONrEGB+U4aL16fXvCrmtQNFSnIsPLB1+9BVSUEP
+	QaoaNqaBG7i3ea3UfRHPITm9CwNW1jLxtR9aeoN5UX8ZpHxtMr7jp0/iEoS+nqstv9k=
+X-Gm-Gg: ATEYQzyvhKrRhMODIZVydbfl/VJaZcrq07dnfVIbyj1mVA/VTeSBP4KHg4tBNNo3s4/
+	USQI0aXJBEb/8eLVC9SSWsnxIDa//95vCzKkWR1ba9AJlOpQlMHTDcd5h2k4Zq5NiuRkOYWQLrz
+	JpePeiaEd05+tTQ8m2YYmhR8FBRODLaafccYsXGJ3L+yO6zoNwJm3eoxp+zDBC55eL0qq3lUvEb
+	86vStHwQEqpIeGP3xqeDWh/dE9v5sIe4sKxrHcmJ2tjtSooQeEuOKqmStniZodmWwQpzhtX5QWd
+	pMlefXil5Y6YehwBiLXpkqPpmV46oaUyMPLizxKQPeOQmJANmhZa3xDsH9405L8RpZO6cCqYFcp
+	oV4pp+din5kxQLnY3FZuGGViZUzKEGxRxxCxch9UiCBqsVFA287IEqjCKmyJHGnARwqxtOsjJIM
+	Pbwcliep2lFMNQjQnbHNgYzAqzLrqE3FlbufuIsPwPGk4hFMafjbCRhqH7P2xAK/d8dThXHj3fs
+	52ZqN7Uu4ibJFKj3hs=
+X-Received: by 2002:a05:6000:2506:b0:43b:45d1:f44f with SMTP id ffacd0b85a97d-43b88a25a2dmr10828586f8f.41.1774524147311;
+        Thu, 26 Mar 2026 04:22:27 -0700 (PDT)
+Received: from alibaba.. ([98.97.79.126])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b919e7372sm8694822f8f.34.2026.03.26.04.22.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2026 04:22:26 -0700 (PDT)
+From: Zakariyah Ali <zakariyahali100@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	siddharthasthana31@gmail.com,
+	ayu.chandekar@gmail.com,
+	Zakariyah Ali <zakariyahali100@gmail.com>
+Subject: [GSoC][PATCH] t2000: modernize path checks to use helper functions
+Date: Thu, 26 Mar 2026 12:21:49 +0100
+Message-ID: <20260326112149.53050-1-zakariyahali100@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-On Wed, 25 Mar 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> Hello everyone,
->>
->> v3 addresses all the feedback and requests received in v2, many thanks to all
->> who contributed.
->>
->> Let's please stop adding features since this is getting rather big again. :)
->> New features can be added in subsequent patches.
->>
->> This series is mostly for minor cleanups, bug fixes and refactorings + three
->> minor feature additions to git-hook, which resulted from review discussions:
->>
->> 1. The ability to show the config scope (--show-scope).
->> 2. The ability to show which hooks are disabled.
->> 3. The ability reject unknown hook names with "--allow-unknown-hook-name" as
->>    an escape hatch.
->>
->> The series is based on the master branch.
->
-> Replaced the old one, and then rebuilt ar/parallel-hooks on top.
-> Please sanity-check the latter when I later push out the result of
-> today's integration.
+Replace bare 'test -f/-d' and 'test ! -h ... && test -f/-d'
+assertions with their dedicated test_path_is_* helpers.
 
-ar/parallel-hooks is expected to break with this v3.
-Sorry I didn't make this clear in the cover letter.
+These helpers are better than the previous 'test' commands
+because they produce clearer diagnostic output on failure.
+For example, instead of a bare exit code, the helper outputs
+'File path0 doesn't exist', which makes test failures
+significantly easier to debug.
 
-What broke it is the new --allow-unknown-hook-name feature and the
-code-review changes (I'd be very surprised if the old ar/parallel-hooks
-applied cleanly on top of this, I fixed quite a few conflicts).
+The replacements are:
+- 'test -f' -> 'test_path_is_file'
+- 'test -d' -> 'test_path_is_dir'
+- 'test ! -h && test -f' -> 'test_path_is_file_not_symlink'
+- 'test ! -h && test -d' -> 'test_path_is_dir_not_symlink'
 
-Please use v5 of ar/parallel-hooks which I just posted and should apply
-cleanly on top of this v3.
+Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
+---
+ t/t2000-conflict-when-checking-files-out.sh | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-> One thing I noticed a bit annoying was that we have "event_disabled"
-> boolean in "struct hook", plus a string-list of the same name in
-> "struct repository", which means "git grep event_disabled" hits
-> both.  Perhaps the caching "struct string_list event_disabled" can
-> be renamed to reflect what it is a bit better, like "disabled_events"?
+diff --git a/t/t2000-conflict-when-checking-files-out.sh b/t/t2000-conflict-when-checking-files-out.sh
+index f18616ad2b..96bae6c53d 100755
+--- a/t/t2000-conflict-when-checking-files-out.sh
++++ b/t/t2000-conflict-when-checking-files-out.sh
+@@ -58,7 +58,9 @@ test_expect_success \
+ 
+ test_expect_success \
+     'git checkout-index conflicting paths.' \
+-    'test -f path0 && test -d path1 && test -f path1/file1'
++    'test_path_is_file path0 &&
++     test_path_is_dir path1 &&
++     test_path_is_file path1/file1'
+ 
+ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
+ 	mkdir -p tar/get &&
+@@ -127,9 +129,9 @@ test_debug 'show_files $tree2'
+ 
+ test_expect_success \
+     'checking out conflicting path with -f' \
+-    'test ! -h path2 && test -d path2 &&
+-     test ! -h path3 && test -d path3 &&
+-     test ! -h path2/file0 && test -f path2/file0 &&
+-     test ! -h path3/file1 && test -f path3/file1'
++    'test_path_is_dir_not_symlink path2 &&
++     test_path_is_dir_not_symlink path3 &&
++     test_path_is_file_not_symlink path2/file0 &&
++     test_path_is_file_not_symlink path3/file1'
+ 
+ test_done
+-- 
+2.43.0
 
-Fixed in parallel-hooks v5.
-
-Thanks!
