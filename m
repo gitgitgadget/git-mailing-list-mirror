@@ -1,178 +1,138 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F2F396B78
-	for <git@vger.kernel.org>; Wed, 25 Mar 2026 23:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774482722; cv=none; b=Yf5CnWU69LF9/B2LflMAaR1WG72ulZnJBuNqHykYXx2j5GwaPrjNAAJO39LBTZwdO2PwKvhJjo8e/Pe26FhocrxXxTRUAANKQtkfaeQqpzzxZAMugny3Vo91Ovaqk3fToV36H11Y9BEKSFqVhu98PefojgKIdSb0a04MiaRoi4A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774482722; c=relaxed/simple;
-	bh=hj9a7tmkGk8uUe7XXQ9zUzveigSYfn+OMUDGTnXqPIA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rr7oqMUYIbQASJydJQHqEeOZjklQYb0Q3tXVDdIP1wuCeTZLYZ73dusXQea1TUZCggxu+jn2eDPtfzVDykecHHY6cfqF0mYox+74TUd+emkd+0vJhmqUqU0tMJ8W0uRYSUzPp7B+FheRduJjQuwNa2cIWV2B5OizasuYTzxbKmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Qs3vzG2n; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE4710F2
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 00:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774483439; cv=pass; b=mwi9B1sOFgyZKpQGx5FwEBGE08bCXSfPJgwvFpoagaAVY4LwjjtdOHJQTDPrhrJSZASdQpelydDSxMlTG5uENm+5GYnfsjoKN2Au2bOhRYA04Aj/v6ocztDqC+4fv8NoV7v9dE1mY7K/GpxbtKGlhcXsFklrRmR5/PDi/eYrjjM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774483439; c=relaxed/simple;
+	bh=BiHxPrAQoZmZV2GxL0oR+IRq2PY0+tYW2Hh0iCHV9lg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gmQbQZPVDAZ1aFIl/GnNJ8FZIRqA7Z3I0FSQ64fybV5Ysy4UxDMSMzKfxKK6Niz0TEqyXEfIgpi+p/a6nRiAKrdkRo4o9YRSv4se/mKahNV1WunKiWFqyodZ0DSQVfkFO/N66hOpWQ5mazHRUC9MIFj7OjKW+OVEHp7tgiOTD48=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POgJV0lH; arc=pass smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Qs3vzG2n"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-64ad79df972so641405d50.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 16:52:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POgJV0lH"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8cfc085395fso52656185a.2
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 17:03:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774483437; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ijLK8aUGKEHefuIGTb4Xe4AWA4pC3KqCzkBo6pbuImFhRWULGhMwXzP1goG35dBXAL
+         Q530swNi+8L4IF656E3hT3D6HqlTnKV1kQTpMJJKcI4aT40LQShlkq4GRio4SF7Cm3sV
+         CsAM42SO8wpO58Uj0MlVkVPgxQ0Vlm7QgdF9smthPcq90fBFGAdvb3Yw8vk1QHbs42WB
+         ZKxJYnGrrsUZGW4uR58bCcVkbX8FkDL76gfAQZsVhzO6r/cm1JmCjyrPzHMqsH8Acg0d
+         NsFiujNmIvqpDMtEnQ9UNDc/BVDG8RJ8Eo873St9QsuZMWSbYZ1cBeBgBgP75UBILgAY
+         EX9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=w8wxRSMqw5aCCZ08sZ1oR8HRy5EKh+von+NZeOuc/TA=;
+        fh=0DBOcLC+jFSg9h4rrMrc2R8mJCQ0T8WRqc1bO8slrvE=;
+        b=dBVP4Aylj+cFfO7sX8q25+jRsM7pGTccAEHbANQz0/pJO4lJYi73dldmfszG8HC/TL
+         EFQIhL9mWd/JzdAPQIkIXxEG9DZiQo0NkoBnoj6sAf91cRibnHMGV4qMPiN9xhfZhKTi
+         4zlmxgVhJN1brWdNPkuzehV+czEZvpfAdWuBHAwCzvz93F2CC+LiiQZnDdw2rISOwTHq
+         0KoEEcGubFVbY2AWv0hyFAcN1PmhGWoGU7gTsXCajnECTSEkGxUhA5TMI56buR2bylfT
+         QdF2LezSC/DJgEKlj+YC0vtnKgeqmtF43zDHV8ot5IsNA7ziXd6l0wxc9mjfYQV71pmb
+         F4Iw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1774482720; x=1775087520; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yCbW4a3AsCsabJOclUYqjtdxK/7FX2b8AzdHsIOlp2k=;
-        b=Qs3vzG2n8ka3GpaEmUp9x8Jd14SdWVksDvajrfR3Yd3ZxPT3HZ1RE8d2H2YscJzVqL
-         lT4v6Wm9eSfcKLvh7jojB1goEBlhs4vfD4+5eph1dct1HKXOEJli0zmb0Jza3TdhUV+h
-         LbziRU0NBnkLoANc55IsWPef7SmVWXuVbGPygRhuo92vIJSj5v6xY48WjHRumzcYfSbJ
-         rXznyAKM6DSK061D6aUEpDvoRxjSKWsaDWr5XJVZZmE93lISBBXzju+csSM5+oL7Kn75
-         KMXi6AF/C1UiWKy4V1IqUYWdnPznqPlRbP3sbomZCgBAzgza0fE+gHlOOF4kT4TpcZlP
-         NRQw==
+        d=gmail.com; s=20251104; t=1774483437; x=1775088237; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=w8wxRSMqw5aCCZ08sZ1oR8HRy5EKh+von+NZeOuc/TA=;
+        b=POgJV0lHKoBn6hLPNxM+1Gb9899CN/417ndt8CvfDWI5llwmfzWaL/Wa8ILq918G+n
+         i+6DhmeQtRdJEi8mekpph6sCHsBkwpoY7P8mWNCvW2UzgRcqXsiRH4jONEE0/T4Fkzuc
+         wG4JNy0eYYpx02GQvBEh6zfeTJWNCv5296PduIl5FyBfQCIXk3FTbqVKponN/L49Ae5d
+         wWLuCYq4POJ6RcGGOUUP4zvPY6MHzg2VgMK+D1xlHoTPYGU5vRMIFPG5I00/XezXy4F1
+         uYKEbBAXxq+shtIrVOf3d9rrWw/yJg3K4OXrBG5t7a2QlqLr7dSaORhTWo2wFUnMeJm2
+         Fihw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774482720; x=1775087520;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yCbW4a3AsCsabJOclUYqjtdxK/7FX2b8AzdHsIOlp2k=;
-        b=Ie4kzhbhLL2LISH/dg9MpvSlBDRAPoihmJgG1b44BhWFTZF2RncHTx3anYUDpl0rzO
-         v/JrPw/Vy5BVjWdBQN7AR6+ZqR2NB4nI9bQzFqEn28zu83LivhO0ufOGL4HM+EoTsgwt
-         dHGmfRar2w9kt0pjhjLGs79pPLvweqwUee+dC4QMqLCNP+HOhW3l+CfCBAC38LXRszpE
-         Muce/++lrjmLZYpFcEZ8CR2ozYUhMWYzAGGDLWgJVmm0AVusem1PHQLc3W/2qTeUfg6Y
-         Cqo9b9j912E4+/TxmBumHpgIEoLRpv25HhMm/JIhCe3Dx5e03sn5H5gIGeJiQYXM8r6x
-         1KOA==
-X-Gm-Message-State: AOJu0YyD8oF28iW0FGm1twz6cRXvOGWt9SGO8IRfabLaVKllRWIWY/2u
-	JyhfH4qp0pZag5cZnTAxLg9NSWK98aE2SlFOEY3iirjVWP9/CEPTyvt4vBq3P/L8vNwigRgm7d1
-	GehxH+aXzAA==
-X-Gm-Gg: ATEYQzwI9L/A0bdPhIjLRWR7iWkDwL2pzjH2BfcrHAX2YZElI4xio20yNohCfhU+ZML
-	OKyFw76RLtlF2FDnpRz3kASWmBWyzwVotmidBFsq+Xd1c5ZvW6zRGfUmKyPZehnTKW/bhmAKywc
-	DMXZ/+vIReh2tbCnQ8L6QxnCd20umxm+H/e13UGRfgWmA1GFy/dGVRYqALkGOijzcM+SeZ/b6PP
-	MJPYyU5d+/lbuDQBp1e9rN3sS778NoOmdjfTocv4kriOS89qDp7DV/WMt18QnK0Jlf/e9NY/oCZ
-	rXmqKPYJgypQLM0dGHbmWF6HkUfAjsv80mZJAffOJb9EAf6xWiC87blF4mI4ceilK+f+W2K5Wbx
-	TIucCHo8GEh6YiJ2aJkRq/oaM1FAme/he6Bc3cqoeNbBJtco8vl2dwjU2si6xvhQuGjBjzY8+rm
-	ZiKeYrBy3nRfkdBfooeQyviuYOlUqn6fOvGxXjP3RGEGxKU5cjIWw9mGXJA6ZO2cHwxuBqvs7gx
-	7q2LiLEFgOoaAAaWth91A9RcnIQsA==
-X-Received: by 2002:a05:690e:4196:b0:64d:6a5a:ac41 with SMTP id 956f58d0204a3-64ee6162bddmr4731138d50.47.1774482719683;
-        Wed, 25 Mar 2026 16:51:59 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-64ef6c32859sm692577d50.20.2026.03.25.16.51.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 16:51:59 -0700 (PDT)
-Date: Wed, 25 Mar 2026 19:51:58 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 5/5] repack: mark non-MIDX packs above the split as
- excluded-open
-Message-ID: <23cb9f33dbac735feeb4fa9b5e7676ab871e2c94.1774482701.git.me@ttaylorr.com>
-References: <cover.1773959041.git.me@ttaylorr.com>
- <cover.1774482700.git.me@ttaylorr.com>
+        d=1e100.net; s=20251104; t=1774483437; x=1775088237;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w8wxRSMqw5aCCZ08sZ1oR8HRy5EKh+von+NZeOuc/TA=;
+        b=ORe+YHTEGtQkWE4utEYTIcA2Olo8i9F2kvidWfMwzLimjiTB43KJgo4VDfH1uwtTnp
+         yrd4MJsTKv+pYH9QRcmDgtBT9X6gG7J+EIlgY4UiR5Wlg48HgunAniOLCrVH3JUrsJIB
+         wvi8U+P5JiGRB8ounHeG393R3WK1Ga87kmyJQfu/aTMUM5KCTZtLgxOQryCBFuA8csTS
+         kflFRE+vXT6HRX/KHuMq7wYlX8hvfFMay0wgaFFQp562UngGaeG1SK7v8S5NgnIVGqM1
+         UXrQqPNN3vX+qRZojPotdKvqy8NxeKE3TQEncb3yPw8E3T4NC6jNbtSnvlJ3YS44AQ+7
+         TvDA==
+X-Gm-Message-State: AOJu0YypShsVunwrLJEj4/o+onBf9ZIyJBnqjBxTNSFMPJ6q/SvOYSeM
+	sNCneE2nqpt6I7sm7Abm1ub0c1yfSQSWz9T9XGwq1dHq+SOHIx0L9/WMkjXHxZivXnJivEe8QrB
+	U9UEeMBSh3iDAiKkw6uXLsocPNT5+/ISVC9L6YiEF1Q==
+X-Gm-Gg: ATEYQzzXrULDGVcFXJSVBe/kajZqtOz4HRs/pdk6EBSfZRxkyxRDY23iho0mWXWPXlp
+	PYSxd1iLEUKSIomPp8JjoQ6f5POUH4bEl151sSX5Gko/fr+iojaPIOBd2C9DC0H8xnqPqmNQtk0
+	9SCk3AD18+RubfU/3YFM1wqf9STvKehb5K2kOTUqBoYIBS0f7yg12bu0Pmpy43G7brkXxAN2oFA
+	yVvXtaw3PZyV40XIITO93ojYMHM2F+rDIw+EViblyKztULSWDcCHOhpG2vbMyIS36cAfNEVVyQY
+	TQDDbgv6N87kmFvgWF9S3t+XvnaML01i6YE169QSYkN/p3TlTHx9dZjmI9rad1i/BqnYaUckxMG
+	aqo64kzvOI+y0/gBYGQMwySY=
+X-Received: by 2002:a05:620a:4591:b0:8ca:2cf9:819d with SMTP id
+ af79cd13be357-8d000f218ddmr833150385a.26.1774483437183; Wed, 25 Mar 2026
+ 17:03:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1774482700.git.me@ttaylorr.com>
+References: <xmqqcy0rsfgo.fsf@gitster.g>
+In-Reply-To: <xmqqcy0rsfgo.fsf@gitster.g>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Thu, 26 Mar 2026 01:03:40 +0100
+X-Gm-Features: AaiRm51dMVlxaqWGIEG3XIaSvpDw4cxo5EeaWbMd2f9HVwtH0pHeiZefm6oE1W8
+Message-ID: <CAN5EUNSM3Hyb-6M_cSis_KhofhgjaEe=kwcXmQ_oSeZ486DbiA@mail.gmail.com>
+Subject: Re: Tonight's pushout has 'seen' broken with "hook" and "replay"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, adrian.ratiu@collabora.com, toon@iotcl.com, 
+	nasamuffin@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-In 5ee86c273bf (repack: exclude cruft pack(s) from the MIDX where
-possible, 2025-06-23), geometric repacking learned to exclude cruft
-packs from the MIDX when 'repack.midxMustContainCruft' is set to
-'false'.
+Junio C Hamano (<gitster@pobox.com>) writes:
+>
+> I didn't have time to figure out which topic is broken, but here is
+> the test summary in my local environment of 'seen' I just pushed out.
+>
+> Of course, help is always welcome ;-)
+>
+>
+> Test Summary Report
+> -------------------
+> t1800-hook.sh                                    (Wstat: 256 (exited 1) Tests: 83 Failed: 24)
+>   Failed tests:  57-66, 70-83
+>   Non-zero exit status: 1
 
-This works because packs generated with '--stdin-packs=follow' rescue
-any once-unreachable objects that later become reachable, making the
-resulting packs closed under reachability without needing the cruft pack
-in the MIDX.
+Bisecting between master and seen
+This one comes from 58f670dc7a (hook: allow parallel hook execution,
+2026-03-20), ar/parallel-hooks.
 
-However, packs above the geometric split that were not part of the
-previous MIDX may not have full object closure.  When such packs are
-marked as excluded-closed ('^'), pack-objects treats them as a
-reachability boundary and does not traverse through them during the
-follow pass, potentially leaving the resulting pack without full
-closure.
+> t3650-replay-basics.sh                           (Wstat: 256 (exited 1) Tests: 48 Failed: 3)
+>   Failed tests:  46-48
+>   Non-zero exit status: 1
 
-Fix this by marking packs above the geometric split that were not in the
-previous MIDX as excluded-open ('!') instead of excluded-closed ('^').
-This causes pack-objects to walk through their commits during the follow
-pass, rescuing any reachable objects not present in the closed-excluded
-packs.
+And this one comes from 76457c38ae (replay: allow to specify a ref
+with option --ref, 2026-03-25), tc/replay-ref
 
-Note that MIDXs which were generated prior to this change and are
-unlucky enough to not be closed under reachability may still exhibit
-this bug, as we treat all MIDX'd packs as closed. That is true in an
-overwhelming number of cases, since in order to have a non-closed MIDX
-you would have to:
+I also saw three more when I ran it:
 
- - Generate a pack via an earlier geometric repack that is not closed
-   under reachability.
+t1301-shared-repo.sh                             (Wstat: 256 (exited
+1) Tests: 0 Failed: 0)
+  Non-zero exit status: 1
+  Parse errors: No plan found in TAP output
+t0005-signals.sh                                 (Wstat: 256 (exited
+1) Tests: 5 Failed: 2)
+  Failed tests:  4-5
+  Non-zero exit status: 1
+t3600-rm.sh                                      (Wstat: 256 (exited
+1) Tests: 82 Failed: 1)
+  Failed test:  36
+  Non-zero exit status: 1
 
- - Store that pack in the MIDX.
-
- - Avoid picking any commits to receive reachability bitmaps which
-   happen to reach objects from which the missing objects are reachable.
-
-In the extremely rare chance that all of the above should happen, an
-all-into-one repack will resolve the issue.
-
-Unfortunately, there is no perfect way to determine whether a MIDX'd
-pack is closed outside of ensuring that there is a '1' bit in at least
-one bitmap for every bit position corresponding to objects in that pack.
-While this is possible to do, this approach would treat MIDX'd packs as
-open in cases where there is at least one object that is not reachable
-from the subset of commits selected for bitmapping.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c        | 19 +++++++++++++++++--
- t/t7704-repack-cruft.sh |  2 +-
- 2 files changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index f6bb04bef72..4c5a82c2c8d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -369,8 +369,23 @@ int cmd_repack(int argc,
- 		 */
- 		for (i = 0; i < geometry.split; i++)
- 			fprintf(in, "%s\n", pack_basename(geometry.pack[i]));
--		for (i = geometry.split; i < geometry.pack_nr; i++)
--			fprintf(in, "^%s\n", pack_basename(geometry.pack[i]));
-+		for (i = geometry.split; i < geometry.pack_nr; i++) {
-+			const char *basename = pack_basename(geometry.pack[i]);
-+			char marker = '^';
-+
-+			if (!midx_must_contain_cruft &&
-+			    !string_list_has_string(&existing.midx_packs,
-+						    basename)) {
-+				/*
-+				 * Assume non-MIDX'd packs are not
-+				 * necessarily closed under
-+				 * reachability.
-+				 */
-+				marker = '!';
-+			}
-+
-+			fprintf(in, "%c%s\n", marker, basename);
-+		}
- 		fclose(in);
- 	}
- 
-diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
-index 77133395b5d..9e03b04315d 100755
---- a/t/t7704-repack-cruft.sh
-+++ b/t/t7704-repack-cruft.sh
-@@ -869,7 +869,7 @@ test_expect_success 'repack --write-midx includes cruft when already geometric'
- 	)
- '
- 
--test_expect_failure 'repack rescues once-cruft objects above geometric split' '
-+test_expect_success 'repack rescues once-cruft objects above geometric split' '
- 	git config repack.midxMustContainCruft false &&
- 
- 	test_commit reachable &&
--- 
-2.53.0.614.g164f3b634ec
+Haven't checked for these ones. Are they already known in your local ?.
+I've CC'd the authors of the two patches above.
+Hope this helps :),
+Pablo
