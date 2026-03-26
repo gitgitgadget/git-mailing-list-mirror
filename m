@@ -1,131 +1,262 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01C13FD152
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 14:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72708401A12
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 15:14:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774535396; cv=none; b=RWNhF3gZF+ivD+7Jw4jnvQ+9zvdkzU0VBcydvGdBbq7HppK+VsRl3D2XW/HCJ06rqX23UbnRBmG8Jsda3vJ4U/9xNYjnzPB9QL8RM8OGElciebSOG2exTfwehF22rwkLqfIoNZkVGuZf+WWORGzTPhudv0cqndz+cVNq4sGBrmY=
+	t=1774538099; cv=none; b=F71KJrRk2KSr5/ifHJB2Bs8I8Ov6kRvM86aN/VIV3ukXTzKbjIMOBsPX/jtlrwxhVw2JW0alh6IdtuiSLB9EvxchpWJuBeMVJPD7+3J+V5tJ0hKq23fwHWC4JTpVPILFxlaqva3Dhss6CboIi0yfvd9i88BDfTlCcFL6Qh9SoYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774535396; c=relaxed/simple;
-	bh=VAHKrctqpOcJgP0ZbvCAnF2bwqVotzfa5UAvdNrf2dY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gtzOHGmNJjex6/IncrnNWbG5mM2BnGl/gvi2sg/eOorJCwL/wJ5x4HG7QFROhblR986tY2wb1AvmKQZCBFtGLF+jNp5pq06JqAU44+fzgpvApJI48OwSKdXDEe8MVU5Pdnskot3QWUqCqEnHkll8BGHUFg7pJg9LpGslgPWyA5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kEiddiTl; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1774538099; c=relaxed/simple;
+	bh=4I/26K96YHq6JuC24wdKxCUFWECblLCAs/4DHC0EmIc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=buBKJTOAXZG+vA3q4889ON4YULce1/cLFQNY0igRkt48FNen4V2c9/YanzxsUQZ0zlLDpw5+kL6X11/S3s9KuCsE4yQ/5GjT5LsZ52s32c7WhzkWN3bAHF0FjKPNO8MV9QD40F8UXAvMnu3B/hCTfiwnm1FdLOefeO2lKiYTUJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a4JQwFjX; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEiddiTl"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-439bc14dcf4so1621289f8f.1
-        for <git@vger.kernel.org>; Thu, 26 Mar 2026 07:29:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a4JQwFjX"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-89cc638496aso10459376d6.0
+        for <git@vger.kernel.org>; Thu, 26 Mar 2026 08:14:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774535392; x=1775140192; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SbcPRe/Zzzasy2w5IkrMNK4zl22HtVrLL6Yh50FuzIw=;
-        b=kEiddiTl9MWhCV26RVBRrBBN9VAycCHy6SIiZcjIGEJnBZSv3cmbytw00fQ0Naqmv2
-         fDtGIQtkMVzdAGAxWsJFgx5mqJjO0U5KSX8auRpqkjDgHeVp/XUymWTY3wS19mU2AI7v
-         daajOn86HuWkV3ZlPbe/6tIc9RjxIvI1FZOj4FCNSROjB/giukTZE4F/eIkr5UkhynUB
-         NQk65ylSDHYP1Dnf4jg1ptsduY3y5n2WWyIufhNwXfcKDhoiJWhE1hq7OgpfdpDm5g23
-         Z4g8M6Dg2i7avtNNYay4Ybp8jhmfFx1bjEuoRQj9kurxA1qXzn1C+BM5pAA8gL01AVu1
-         fGcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774535392; x=1775140192;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774538096; x=1775142896; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SbcPRe/Zzzasy2w5IkrMNK4zl22HtVrLL6Yh50FuzIw=;
-        b=dGr4dUhBZVnT9zfZjL/eJuqHmLQlWzx8rNV1wtGOWFx47pyJ3Llhw68a1g68yJzpH+
-         v9fBMyM6mhDa/O4Wk7yL/syyXHG3v1c5nPr1jswk7+/GjcwUg0S2kyPYROCH6iY0+NEQ
-         hHoBKofKyc1CQVygNIrotJ4iCqEo2mH4HwPJ5uxtAPwXKkxcVY7YFI5+h6dHALXYWJEu
-         fM1QLcrDzLzL1scRvJ96GQVn0pnJ+aCT1WawtE8DwAPEYp+nOtGnKd0e0Nb5XzJp7X8L
-         zzuEcIzhOd6Rnv0yU1S2ZSZikF0OK3udAlwAHLCTuOz/cBxYKWN/Q8eSruyXbhwpoYiY
-         tzpg==
-X-Gm-Message-State: AOJu0YxAXC9FtNw6zWGiKWaSwGurLR36NTLgRqhAEzq8jNfq24oIF8K6
-	/zGFgqL15QW+v3TvRTK5KT/C/GNiWdcjYeK9n99oQCsX8Ru7829lNGIF
-X-Gm-Gg: ATEYQzwnXL6IuazLgvOZiukgjHaI6ifd01bAcFcDiCzCzyb5r1rWIS1dbZJUhdbaEa+
-	qp/SWXBNiUxop4CjwTmGWpCyCu4mWzHSk2wIy0Fw75/t3dEIAHE6uwQeppcQLd1/rTm+zyf/Gti
-	vtk1VNpaxySQ/ur9S/BSZegt23SWxFDPa4gUevhnzjOHOvkQYuYUDiG1D1tKBX56vxKutaNxwzt
-	ba2dPEm6SFaSvKitaepO9ZjwJ6WmDICrJwL6IcfXX7+fOtdBXNiqOt8r4nxPHSk9f80v5UDRJLU
-	v7En+fwYI03TaZeR7jxfcJ7Mumt7mrkda0Du5DeMm2HP2CKwbF96fUJ4fTDUwt/0eurfDOrh+ai
-	Xo0U7laiE2Wqq+9vVxiecHL0lhjIsWPD64vOIUrtI7vU/wcrDFbv8L2UrQPM2V1X4YGoiqDp3HJ
-	XVeLs1kJLrmEZ4Or967OvKO/7g0grqwTc+mf/7ipsi+buTlNiHtF771zRf2yNOU6V8DTvLW1iq8
-	ZIXqQ==
-X-Received: by 2002:a05:600c:3ba1:b0:46e:59bd:f7e2 with SMTP id 5b1f17b1804b1-48722bdfeebmr31554225e9.11.1774535391426;
-        Thu, 26 Mar 2026 07:29:51 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1785:c801:9102:504:16e7:c44e? ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48722d23679sm75818205e9.9.2026.03.26.07.29.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Mar 2026 07:29:50 -0700 (PDT)
-Message-ID: <ad6a32f9-1b48-4bb5-97c5-96d1dfea3074@gmail.com>
-Date: Thu, 26 Mar 2026 14:29:38 +0000
+        bh=hLYX6/bAm3/FzrZu57I1+sWOK1E7barZNFv2ixqjbho=;
+        b=a4JQwFjXRdrlkYX7hMHncsOJ0Mgq0OsllGkU7zhtqSYzQiTvujT/N1L/W/D0pRVNLL
+         9uObeTBjPV1xyop30KEx9q2M0PIRdXqBvp2EjaUHMZKHzZsb230hV9nx+XqO6hW8Qwg0
+         /5RgoaPoB5zWsgwa/Ln55/lIdeU9ZNws5SUsURLOMawxULS1DWzWl8kmMtWe0tH7GPjD
+         0D5qwWQ88umT7F7xWravqYI+71qsuFUqQKFyd/8aJpVMSVPEyP4CNIQxp9xfDI18HAx6
+         WyY2l2AxZ+llOhzTCK5HEPQT69ChUdiXdegpfh+SQNxYKQ8ea+/o9HxNSqflJblXxLc6
+         qJSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774538096; x=1775142896;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hLYX6/bAm3/FzrZu57I1+sWOK1E7barZNFv2ixqjbho=;
+        b=LORkQ09JP+fMMQZbzdzSa3ruCdafrsa/xNkUcGrhxbpSeThrH5WnTi8OCVe+8uAOnb
+         cvl+5jnZx9j9RSCOy49RlZEYVeg2/pr9thDhhNLDF+FpV2fLmnUblmMERWpCO1wyJNH+
+         9pA9xE8cobmRkio4mobvV/OFc7tYKg3iKnHiAiACBbWrDmXRk/CrMj+dV5KaVX98sxOc
+         xZTXFhZeOerPdGjmLGnFE7s8pqLQAiaUp6QaUbtxX3Yvxy2IQ0uG+3ptcL42SeDIFKxQ
+         N9AfoXvDt1b7EVNXgCxl2N/t7IWt1E+wKaADArIfRkXikW8e0uKWsFT26aUUFZY3uQqj
+         DiqA==
+X-Gm-Message-State: AOJu0Yx5VRD6DTvWusTbpFHKXXFYBCAIb4ukbRzNkyk7s+4JtGHjV4DW
+	Z4eQpJfknCgC9pxciY9hucN4ic+COF0CjMVOTvbLBxehcxn9wUOiKmQkcg8TOQ==
+X-Gm-Gg: ATEYQzy4Ip1CWQwuqtzNgcYo40mBmIc367eNMJ89rR5QImvJnWgiaj2IiNHl+SkP76L
+	8zsTPzEE7Iv45q/6DM35gyAQbwFgQ6up6J/IWSOOS1G9pJe/XO1L6joRiwIrGuPP6++0IB9o5dj
+	VTF79Exl+PigL44yU6+4QYIqHoWqhWHolB/U0XAcQkCLDCBAd2NsKoNx188JjLk3pYBl22Ls5RU
+	PYxYZsX9qG6jk+Rb1qd4BGCXiTuV9nS4NcyTZNMqCXA4IzLmMmTcD4jWNf3vEdGONWI/UDnTrGj
+	+rYbOYMnqRGyT+AJXUqJtL6NUCnKtSB25JPe1F2YsbPfXHt2TH2UU/C6LOC7IqfXbMloRUuuQq1
+	7V4BCpy9nwzjHzIvrRNlG/pA/7mD0CHEiwQwHIG2xokm2+6slO8jBNyauuqDAXY5QI9l14vlBta
+	q1CYPcTPlb/5ZvZNEavWrU3h5jKaaOkKkEmpWY
+X-Received: by 2002:a05:6214:ac2:b0:89c:ba96:5fd7 with SMTP id 6a1803df08f44-89cc4b63128mr118305056d6.53.1774538095854;
+        Thu, 26 Mar 2026 08:14:55 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.133.199])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89cd5a6a840sm26334526d6.36.2026.03.26.08.14.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2026 08:14:55 -0700 (PDT)
+Message-Id: <pull.2070.v3.git.1774538094.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
+References: <pull.2070.v2.git.1774266019.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 26 Mar 2026 15:14:48 +0000
+Subject: [PATCH v3 0/6] backfill: accept revision arguments
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/8] improve "git format-patch --commit-list-format"
-To: Junio C Hamano <gitster@pobox.com>, Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <cover.1773959395.git.mroik@delayed.space>
- <cover.1774284699.git.mroik@delayed.space> <xmqqqzpa489h.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqqzpa489h.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    r.siddharth.shrimali@gmail.com,
+    ps@pks.im,
+    Derrick Stolee <stolee@gmail.com>
 
-On 23/03/2026 20:10, Junio C Hamano wrote:
-> Mirko Faina <mroik@delayed.space> writes:
-> 
->> Not much has changed, just applied the suggestions Kristoffer made.
->> Thank you again for the review
->>
->> [1/8] pretty.c: better die message %(count) and %(total) (Mirko Faina)
->> [2/8] format-patch: refactor generate_commit_list_cover (Mirko Faina)
->> [3/8] format-patch: rename --cover-letter-format option (Mirko Faina)
->> [4/8] docs/pretty-formats: add %(count) and %(total) (Mirko Faina)
->> [5/8] format.commitListFormat: strip meaning from empty (Mirko Faina)
->> [6/8] format-patch: wrap generate_commit_list_cover() (Mirko Faina)
->> [7/8] format-patch: add preset for --commit-list-format (Mirko Faina)
->> [8/8] format-patch: --commit-list-format without prefix (Mirko Faina)
->>
->>   Documentation/config/format.adoc    |  2 +-
->>   Documentation/git-format-patch.adoc | 19 ++++----
->>   Documentation/pretty-formats.adoc   |  4 ++
->>   builtin/log.c                       | 35 +++++++-------
->>   pretty.c                            |  4 +-
->>   t/t4014-format-patch.sh             | 72 +++++++++++++++++++----------
->>   t/t9902-completion.sh               |  1 -
->>   7 files changed, 84 insertions(+), 53 deletions(-)
-> 
-> All incremental changes look reasonable to me, and it seems we have
-> already reached the point of diminishing returns?
-> 
-> It is possible that people are only commenting on low-hanging
-> obvious typoes and mistakes without seeing a bigger picture,
-> but I think I've read through an earlier iteration of the series,
-> and found it more-or-less solid, and I do not think there was a
-> drastic change of course since then, so I am happy to mark the topic
-> for 'next' now.
-> 
-> Unless other people find bigger issues remaining in the series, that
-> is, of course ;-)
+The git backfill command assists in downloading missing blobs for blobless
+partial clones. However, its current version lacks some valuable
+functionality. It currently:
 
-I've just had a look at what you merged to next and it looks sound to 
-me. The tweaks to the new feature in this series are very welcome 
-improvements.
+ 1. Only walks commits reachable from HEAD.
+ 2. It walks all reachable commits to the full history.
+ 3. It can focus on the current sparse-checkout definition, but otherwise it
+    doesn't focus on a given pathspec.
 
-Thanks
+All of these are being updated by this patch series, which allows rev-list
+options to impact the path-walk. These include:
 
-Phillip
+ 1. Specifying a given refspec, including --all.
+ 2. Modifying the commit walk, including --first-parent, commit ranges, or
+    recency using --since.
+ 3. Modifying the set of paths to download using pathspecs.
 
-> Thanks.
-> 
+One particularly valuable situation here is that now a user can run git
+backfill -- <path> to download all versions of a specific file or a specific
+directory, accelerating history queries within that path without downloading
+more than necessary. This can accelerate git blame or git log -L for these
+paths, where normally those commands download missing blobs one-by-one
+during its diff algorithms.
 
+This patch series is organized in the following way:
+
+ 1. A missing #include is added to prevent future compilation issues.
+ 2. The test repo in t5620 is expanded to make later tests more interesting.
+ 3. The backfill builtin parses the rev-list arguments. We test the top
+    arguments that work as expected, though the pathspec arguments need
+    extra work.
+ 4. Update the path-walk logic to work efficiently with some pathspecs, such
+    as fixed prefix pathspecs, accelerating the computation.
+ 5. For more complicated pathspecs, do a post-filter in builtin/backfill.c
+    instead of restricting the walk in the path-walk API.
+
+The main goal of this series is to make such customizations possible, and to
+improve performance where common use cases are expected. I'm open to
+feedback as to whether we should consider more detailed performance analysis
+or whether we should wait for how users interact with these new options
+before overoptimizing unlikely use cases.
+
+
+Updates in v2
+=============
+
+ * Hard stops are replaced with a comma (and no punctuation) in the docs.
+ * add_head_to_pending() simplifies some code.
+ * My poor explanation of "starting commits" is updated.
+ * Language around temporary prefix restriction is clarified.
+ * Prefix match logic is simplified with dir_prefix().
+ * Temporary memory leak (introduced in v1's patch 4 and removed in v1's
+   patch 5) is removed in v2's patch 4.
+ * Commit pruning is reenabled in v2's patch 5. There was no need for that
+   with the way the logic works in the patch.
+ * Add a new patch with a test demonstrating the new behavior that was being
+   discussed in [1].
+
+[1]
+https://lore.kernel.org/git/20260321031643.5185-1-r.siddharth.shrimali@gmail.com/
+
+
+Updates in v3
+=============
+
+ * Fixed the argument checks to actually catch unknown arguments, because
+   the revision machinery will skip unknown options starting with --.
+
+Thanks, -Stolee
+
+Derrick Stolee (6):
+  revision: include object-name.h
+  t5620: prepare branched repo for revision tests
+  backfill: accept revision arguments
+  backfill: work with prefix pathspecs
+  path-walk: support wildcard pathspecs for blob filtering
+  t5620: test backfill's unknown argument handling
+
+ Documentation/git-backfill.adoc |   5 +-
+ builtin/backfill.c              |  22 +++-
+ path-walk.c                     |  43 +++++++
+ path.c                          |   2 +-
+ path.h                          |   6 +
+ revision.h                      |   1 +
+ t/t5620-backfill.sh             | 211 +++++++++++++++++++++++++++++++-
+ 7 files changed, 280 insertions(+), 10 deletions(-)
+
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2070%2Fderrickstolee%2Fbackfill-revs-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2070/derrickstolee/backfill-revs-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/2070
+
+Range-diff vs v2:
+
+ 1:  fda0239103 = 1:  fda0239103 revision: include object-name.h
+ 2:  55a45b2fc8 = 2:  55a45b2fc8 t5620: prepare branched repo for revision tests
+ 3:  610a162973 = 3:  610a162973 backfill: accept revision arguments
+ 4:  f8f2c61326 ! 4:  7223124fb3 backfill: work with prefix pathspecs
+     @@ path-walk.c: static int add_tree_entries(struct path_walk_context *ctx,
+      +		if (ctx->revs->prune_data.nr) {
+      +			struct pathspec *pd = &ctx->revs->prune_data;
+      +			bool found = false;
+     ++			int did_strip_suffix = strbuf_strip_suffix(&path, "/");
+      +
+     -+			/* remove '/' for these checks. */
+     -+			path.buf[path.len - 1] = 0;
+      +
+      +			for (int i = 0; i < pd->nr; i++) {
+      +				struct pathspec_item *item = &pd->items[i];
+     @@ path-walk.c: static int add_tree_entries(struct path_walk_context *ctx,
+      +				}
+      +			}
+      +
+     -+			/* return '/' after these checks. */
+     -+			path.buf[path.len - 1] = '/';
+     ++			if (did_strip_suffix)
+     ++				strbuf_addch(&path, '/');
+      +
+      +			/* Skip paths that do not match the prefix. */
+      +			if (!found)
+ 5:  1168edfb96 ! 5:  1ea278bd10 path-walk: support wildcard pathspecs for blob filtering
+     @@ path-walk.c: static int add_tree_entries(struct path_walk_context *ctx,
+      +		if (ctx->revs->prune_data.nr && ctx->exact_pathspecs) {
+       			struct pathspec *pd = &ctx->revs->prune_data;
+       			bool found = false;
+     - 
+     + 			int did_strip_suffix = strbuf_strip_suffix(&path, "/");
+      @@ path-walk.c: static int walk_path(struct path_walk_context *ctx,
+       			return 0;
+       	}
+ 6:  9699650aa7 ! 6:  b6423f9595 t5620: test backfill's unknown argument handling
+     @@ Commit message
+      
+          Before the recent changes to parse rev-list arguments inside of 'git
+          backfill', the builtin would take arbitrary arguments without complaint (and
+     -    ignore them). This was noticed and a patch was sent [1] which motivates this
+     -    change to encode this behavior in test.
+     +    ignore them). This was noticed and a patch was sent [1] which motivates
+     +    this change.
+      
+          [1] https://lore.kernel.org/git/20260321031643.5185-1-r.siddharth.shrimali@gmail.com/
+      
+     +    Note that the revision machinery can output an "ambiguous argument"
+     +    warning if a value not starting with '--' is found and doesn't make
+     +    sense as a reference or a pathspec. For unrecognized arguments starting
+     +    with '--' we need to add logic into builtin/backfill.c to catch leftover
+     +    arguments.
+     +
+          Reported-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+     + ## builtin/backfill.c ##
+     +@@ builtin/backfill.c: int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+     + 	repo_init_revisions(repo, &ctx.revs, prefix);
+     + 	argc = setup_revisions(argc, argv, &ctx.revs, NULL);
+     + 
+     ++	if (argc > 1)
+     ++		die(_("unrecognized argument: %s"), argv[1]);
+     ++
+     + 	repo_config(repo, git_default_config, NULL);
+     + 
+     + 	if (ctx.sparse < 0)
+     +
+       ## t/t5620-backfill.sh ##
+      @@ t/t5620-backfill.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+       
+     @@ t/t5620-backfill.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      +	test_must_fail git backfill unexpected-arg 2>err &&
+      +	test_grep "ambiguous argument .*unexpected-arg" err &&
+      +
+     -+	test_must_fail git backfill --all --firt-parent unexpected-arg 2>err &&
+     -+	test_grep "ambiguous argument .*unexpected-arg" err
+     ++	test_must_fail git backfill --all --unexpected-arg --first-parent 2>err &&
+     ++	test_grep "unrecognized argument: --unexpected-arg" err
+      +'
+      +
+       # We create objects in the 'src' repo.
+
+-- 
+gitgitgadget
