@@ -1,79 +1,79 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA223F7A84
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 12:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731133F7AB2
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 12:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774527679; cv=none; b=QxbBCCb0XpvghZ1ta8g+lY1MLuDnujvOHdjaEF2Tzda/sbp0fLAAhEFy9e8VbaJ1hN/cCM0XaazRv/yO07u5yntEVbjGqIELRvOupArS68/9VfU1hwXWfA4Nrj/gbUYMsK5tMcwVCvNvhV0TO48LgzawIZQwuQ5vGUqvk0IJijw=
+	t=1774527685; cv=none; b=aqcPchXg5xO+F1vJ8pX8XdpbU9UNnBeJzmC3OcW3jVBSonIUkXdFV8RLrRrWvW61NRcC1jvmWBu+sFf/cGkeDvlt4ywAYb0htpa5o63g+e3x5O/BmxILS4iQ2MkrPJALPRmKZUdfy6sMHmb0kSVQTnO1U/dYg9ZmIr6B4BR8JgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774527679; c=relaxed/simple;
-	bh=eUDjzJUMjbpZtZrEjxLxX3p7WmzoO8/2NmiBl3kpS0k=;
+	s=arc-20240116; t=1774527685; c=relaxed/simple;
+	bh=ziAWmqJiMFttG404oNKbLfl4UE3tJ4Pm/7O30ztHx6o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j8NmtPHEa3OpxGWPFRvcvZJyk6QGJomzTa6N7I9zlnFnaMCK/Lhz73wQXS750hL+hNXMk6HP+zu++1U/PrXhyRDYQGXCPI+y0pKg2bdHqyuzeMb/PZKkFDmKJG/eap9xWvtArMK7KMzAK8onR2N3EAfaqFHeDUZd3RE74Sjhhq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JPAM8fR1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJxOhXep; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=TB6qoznmAfjTok7pNHBBEc9+R8nyITgCg/F/lqC7LoSCjiemUnZgMVqqjY7OFNTMmKMsbKf6jU1y1oBYrZUWOXwAt1C5DkSRxBZtrCK7X74oE3NBARwb7SK2McF+xLZAda6UuLrkzVxSzYbFornrcIkHpPW/b1aVvVlfB4HVE70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d4flNpI8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2zutFsDI; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JPAM8fR1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJxOhXep"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id D25B21D001F1;
-	Thu, 26 Mar 2026 08:21:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d4flNpI8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2zutFsDI"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id B80491D00065;
+	Thu, 26 Mar 2026 08:21:23 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 26 Mar 2026 08:21:18 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 26 Mar 2026 08:21:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774527677; x=1774614077; bh=NUAWvkiqBy
-	Cz+n91fMyOMi4Af+FOnEYhNP3srmMLVt4=; b=JPAM8fR1nh218L8Awq9L/DJcPa
-	HuwHXJckZm2lSU4Vf63MGSNb2bNwTuokoTFy8LUz94ng6greO9pPeVhpgYIa1a8m
-	xvoIGj/pv362TNg0oPMwzENgg4yk8SNO8JuPxaD0jLsCe52l8ibaDxSX5BPxAcRJ
-	oN7z65CWS6jjuD6KChoslhrolTQcb0l1RdWQgqYT1nk8PwZiTbYnwXbyyjTPgBh6
-	L2QdogOyX5c0vw4IV39K32sS2UnI76eO4ootMS99qDCykP7xFRLJlbLKxHYvTTNm
-	VimpOm0cV4ihY4s4QNmP05uaZ24sk/Ane5rIiqHK8VVJjCtzUZWaYJSD4nOA==
+	:subject:to:to; s=fm1; t=1774527682; x=1774614082; bh=lUPZtMsBYj
+	3JR1kDQlkMiP9Mo4TfvwMVwdhD2c2Yo5M=; b=d4flNpI8iTcaYySQldr9ltLCxU
+	gjLkzfsQpLuTxCNsWF5L6c6i5YXoc5AW/lyOV4qsXXCv9bKje8CoonOhCtDP/s1n
+	9uXyTiassUcmSWdaI7lV3bs2GU+RGGjvAqvCzoG0/0YB9MJqoVR6F7FG4Aayxbrp
+	42DSe8+0O5XbI4/QI3bV/CuvYOcAzFPXPp3EBdg3Icp/JnCN4QUryf+fRM3qz9q3
+	5NtLF96M3SQ/Auq/tAJCnA9LxNhkgBXqwz1YFgskkI/jBburk3BHcyZW5lJwR7pE
+	m2YXn4Xrt2s6o2Lvts5irP6y+vXRkqylOXikJPlxEeEK/Y+edbSqFKKa3+EQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774527677; x=1774614077; bh=NUAWvkiqByCz+n91fMyOMi4Af+FOnEYhNP3
-	srmMLVt4=; b=MJxOhXepwbTKrvtoQu5BxOuCNJDbPhoqHwWz8mujU4M1vVqcYuj
-	NZmsHtRyQAQdiiGmejFnKRMGO3fLX7HOT5uFX2JlkKzkTTWefcEifZpFhNFU4hsB
-	KBvNvyGUFCGBmFtGoopZeEja5LXnrWFnt6TEesDp3KbU1DB+JSdS8P8Ye8wovdyb
-	gyCMZLaznw1Wq5u5CHnW237HYtQD0gugDUTxf+FGuoC1q/dboGxgZjYYnVWNvEJt
-	5ifAetPw/V/XZCcdR6WeDtFBdj+gnCItkyzgyMNeb2BstNlQJ/2WtGVORgx157G5
-	A9C3TQtTYPFHttlxJ/hja+rMmP9dVKYe9BA==
-X-ME-Sender: <xms:vSTFaRZFUm3L8hGjSvtrI4TxOndZbyvVwmwQ78H19WFif4O6Ycq-cA>
-    <xme:vSTFaaoyLzkc1j58rg1Bl2wHZ6LsM4V4KkjuGJftVC3vLc-UuujVthxW7XgUdA5Nz
-    FPtsuobgdYS9n4m3DMOmI-sXGRIXCE93C0qHUmFuLN9tzWa_Rg8Yds>
-X-ME-Received: <xmr:vSTFaWMqmcxSOPUAmrgC_hlzuNcJXCYRLrcM7QnaNGabFQgqFntc__igw_7QIGMZzF-omW-auKo4UXHK4cDqSDHO-d6TTpu433G_mhpbLFPrFw>
+	1774527682; x=1774614082; bh=lUPZtMsBYj3JR1kDQlkMiP9Mo4TfvwMVwdh
+	D2c2Yo5M=; b=2zutFsDIRKzabOPbzOfFbYtE5y+oi0hBr8nodNb186FcKxRQMPD
+	hyuUPSyEXNZSqvRRhMy0LrR1p86kutqf+2TsZvKpJAHFLFdxk/dPQfNbHYFAqTQY
+	DwvTj9vna7IniEjIvk0Isyy1F+hSxjQubL0LMdsClP8jbxWtSlemRDXEiwxLACwp
+	hv7z68MAOM/yJSHyPwh16gwUm03GnlhlcnW4xIIJTgkoN39JcyfC+VsPp2RCTSrQ
+	nkbaHD86CDfsYgycER1wWKEgD9b61wR97n75Z8490f3LDGOffFQItRFhOhQtlmyb
+	NiVeHkyiMZcyjOTeNFWLyS0yfuzbvK8dvUQ==
+X-ME-Sender: <xms:wiTFaZopfAm1cXW3SWTmNJt3wRjGtXUBTsC6GaZFMjZNPvaQCWB0fA>
+    <xme:wiTFad4WBHxKWr70XyohMCWWQfwuwSk6WSl2Yu42IrNGYOmSzOG8nEQxJACbCAViC
+    b-iTPoqTfaaQzIeMdn6fXIUuS6nGebYPyGaG4oxzZ1Ix3eoKugdIso>
+X-ME-Received: <xmr:wiTFaYcMNf7Y76P4XaenbbmMjmHc-czwlqJsxaZ5Aly357wkQVhHzPSZeK1oxGpklIFSiDJ5T2vqHAxIvA5tVXU-TsNXG1OcUp5qkliD6mHSCg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdejfeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphht
-    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:vSTFaVpsPzVQ5dyXzaRriV69cCeuK26G7ZfdXBgHCp2NmmfAdjLbbA>
-    <xmx:vSTFabfSBt73x0WkUr8sGyZ5qpRNz3GWdvnqOPqvf1zYWc1JWFVZOQ>
-    <xmx:vSTFabSBOe8eP5cFZwaRf9UmodHKMO14NZAZ1Vbb3GOB2RMrqT9JqQ>
-    <xmx:vSTFaUZNzqO9kXu1K9jdtl1Y0s5hK_AKJaQ4ONyoHIic7bqeDQx_rg>
-    <xmx:vSTFafbhC5Hf04agQZde0hrIcK7Qn3ngAWAJAe_33GiyL40bNZV1phfS>
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdho
+    rhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuug
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:wiTFaa4N-xKDYorJbtgyEt8O9KsfvC9xkqGlKk69kAACBLZkrTKL_Q>
+    <xmx:wiTFaXv7S2sLp_PBFERBQoJ1HfwLUOhGwU1YVdDopzBmLB0SfNz3vQ>
+    <xmx:wiTFaSj1-8RZVAq2VA-U-4bDlFejXLHTR6zyPrD0g6qolRWJCPwI7w>
+    <xmx:wiTFaaqtQ2KkU--yGhsvAKSCqxAIRm9yXnORnqZmep1LKQtA7U0GVg>
+    <xmx:wiTFaapAwT7zY1zmaMD12oIDqFInnOBb0N6Y-K-WAgIgYd5ez0_5KxXV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Mar 2026 08:21:16 -0400 (EDT)
+ 26 Mar 2026 08:21:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c6a3943a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Mar 2026 12:21:15 +0000 (UTC)
-Date: Thu, 26 Mar 2026 13:21:12 +0100
+	by mail (OpenSMTPD) with ESMTPSA id af21db7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Mar 2026 12:21:20 +0000 (UTC)
+Date: Thu, 26 Mar 2026 13:21:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -81,11 +81,11 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 09/16] promisor-remote: add 'local_name' to 'struct
- promisor_info'
-Message-ID: <acUkuD6iuq6nTeHn@pks.im>
+Subject: Re: [PATCH 10/16] promisor-remote: pass config entry to
+ all_fields_match() directly
+Message-ID: <acUkvkLYiO0wkCfm@pks.im>
 References: <20260323080520.887550-1-christian.couder@gmail.com>
- <20260323080520.887550-10-christian.couder@gmail.com>
+ <20260323080520.887550-11-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,83 +94,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260323080520.887550-10-christian.couder@gmail.com>
+In-Reply-To: <20260323080520.887550-11-christian.couder@gmail.com>
 
-On Mon, Mar 23, 2026 at 09:05:12AM +0100, Christian Couder wrote:
-> In a following commit, we will store promisor remote information under
-> a remote name different than the one the server advertised.
-> 
-> To prepare for this change, let's add a new 'char* local_name' member
+On Mon, Mar 23, 2026 at 09:05:13AM +0100, Christian Couder wrote:
+> The `in_list == 0` path of all_fields_match() re-looks up the
 
-Micronit: s/char* local_name/char *local_name/
+This reads a bit weird. How about "looks up the remote in config_info by
+advertised->name repeatedly" instead?
 
 > diff --git a/promisor-remote.c b/promisor-remote.c
-> index bdfc5e7608..da347fa2dc 100644
+> index da347fa2dc..8f2c1280c3 100644
 > --- a/promisor-remote.c
 > +++ b/promisor-remote.c
-> @@ -434,15 +434,19 @@ static struct string_list *fields_stored(void)
+> @@ -619,7 +627,11 @@ static int all_fields_match(struct promisor_info *advertised,
+>  		if (!value)
+>  			return 0;
 >  
->  /*
->   * Struct for promisor remotes involved in the "promisor-remote"
-> - * protocol capability.
-> + * protocol capability:
->   *
-> - * Except for "name", each <member> in this struct and its <value>
-> - * should correspond (either on the client side or on the server side)
-> - * to a "remote.<name>.<member>" config variable set to <value> where
-> - * "<name>" is a promisor remote name.
-> + * - "name" is the name the server advertised.
-> + * - "local_name" is the name we use locally (may be auto-generated).
-> + *
-> + * Except for "name" and "local_name", each <member> in this struct
-> + * and its <value> should correspond (either on the client side or on
-> + * the server side) to a "remote.<name>.<member>" config variable set
-> + * to <value> where "<name>" is a promisor remote name.
->   */
->  struct promisor_info {
->  	const char *name;
-> +	const char *local_name;
->  	const char *url;
->  	const char *filter;
->  	const char *token;
+> -		if (in_list) {
+> +		if (config_entry) {
+> +			match = match_field_against_config(field, value,
+> +							   config_entry);
+> +		} else {
+> +			struct string_list_item *item;
+>  			for_each_string_list_item(item, config_info) {
+>  				struct promisor_info *p = item->util;
+>  				if (match_field_against_config(field, value, p)) {
+> @@ -627,12 +639,6 @@ static int all_fields_match(struct promisor_info *advertised,
+>  					break;
+>  				}
+>  			}
+> -		} else {
+> -			item = string_list_lookup(config_info, advertised->name);
+> -			if (item) {
+> -				struct promisor_info *p = item->util;
+> -				match = match_field_against_config(field, value, p);
+> -			}
+>  		}
+>  
+>  		if (!match)
 
-I think it would be easier to follow if the struct-level comment applied
-to the general description of the struct, and individual members would
-then have their own comments describing their intent.
+Okay, the logic is reversed now, which makes sense as we now pass `NULL`
+instead of `1`, and the promisor info instead of `0`.
 
-> @@ -464,6 +469,11 @@ static void promisor_info_list_clear(struct string_list *list)
->  	string_list_clear(list, 0);
->  }
->  
-> +static const char *promisor_info_internal_name(struct promisor_info *p)
-> +{
-> +	return p->local_name ? p->local_name : p->name;
-> +}
-> +
->  static void set_one_field(struct promisor_info *p,
->  			  const char *field, const char *value)
->  {
-> @@ -819,7 +829,7 @@ static bool promisor_store_advertised_fields(struct promisor_info *advertised,
->  {
->  	struct promisor_info *p;
->  	struct string_list_item *item;
-> -	const char *remote_name = advertised->name;
-> +	const char *remote_name = promisor_info_internal_name(advertised);
->  	bool reload_config = false;
->  
->  	if (!(store_info->store_filter || store_info->store_token))
-> @@ -927,7 +937,8 @@ static void filter_promisor_remote(struct repository *repo,
->  	/* Apply accepted remotes to the stable repo state */
->  	for_each_string_list_item(item, accepted_remotes) {
->  		struct promisor_info *info = item->util;
-> -		struct promisor_remote *r = repo_promisor_remote_find(repo, info->name);
-> +		const char *local = promisor_info_internal_name(info);
-> +		struct promisor_remote *r = repo_promisor_remote_find(repo, local);
->  
->  		if (r) {
->  			r->accepted = 1;
-
-Okay. These hunks are essentially a no-op for now given that we don't
-yet store a local name.
+The change itself makes sense, but other than that I have a very hard
+time understanding these two functions. I think they would strongly
+benefit from some comments explaining what's going on, what the input is
+and what we're trying to do. Of course that doesn't have to be part of
+this commit here, but I would appreciate a preparatory commit that helps
+guide the reader a bit.
 
 Patrick
