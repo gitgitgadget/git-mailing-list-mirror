@@ -1,139 +1,118 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-244116.protonmail.ch (mail-244116.protonmail.ch [109.224.244.116])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDFB38BF62
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 14:17:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5973FE64A
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 14:21:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774534659; cv=none; b=j4j8F7HVqeoP1c9wW+zUIgR5eGZRLzoVuJ/2VtM1s69s7RUZRSURPW2lSGMH+/FcGFJaC8WEAMaOpb0iY5XIdv7EndcOINjv443YKoOnb7FttVw64lyY4vUNbHgRs39uZJPyd2XB2KfXVAK2U14HJ4UnxZPQGGPyD8/mTv8Fj1U=
+	t=1774534887; cv=none; b=kCvkQrqZYyymQU6Xb+2+k5TaIoK2bA/7lZ1mQXbQw3uqu17bqb0x5w/eVevVqahE0IpZw0M6/N2OwteV7YtRKkfA71sTRhcWX70kZ+kURuG0dtaszUlA28Nxn4gwKwhOFf78VodfYVZ7O9+OTQkzedF8l+6W7RIM332Zn456j1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774534659; c=relaxed/simple;
-	bh=puhJcY5evlLHpH9kest139q1rEU5mK2aUxmCAVfEi3E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xn8xoDa2DqwqTitjuHhAwoRO8OQ6/28uHldN4TSk84GlWGD8DouhCBfwzD4WnY//16HJK2BNStWc4HDA7n0xqJioFXVJyLdsmL+99ciIWWZITcQfeFBUBs7boYJleEm9UeKo++McQNjZnyakaRcoX7axllcu2TMsiFiqfRturl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gDdpWPCO; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774534887; c=relaxed/simple;
+	bh=BI9whyx1P4wEWZe70uU1r445MKZF9RgZYhARIsrOhs0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Tz71R7PYFEC7btBvE1pK7n4qBAhVhYk5y4TnQY2y+DB4DeHAfARSgdMDtZvbcI9j8HWRRhuHPKEKrPqUbLd88ux7LlRNd0GqREa7Ht9ImZbqGCZoIMMaav34J95TmcdpN2DL7/1iLjzhgFWNBdIlgns8sdqB2eeejPqkoCesT+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Vdf/1ZeE; arc=none smtp.client-ip=109.224.244.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gDdpWPCO"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4852b81c73aso9296755e9.3
-        for <git@vger.kernel.org>; Thu, 26 Mar 2026 07:17:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774534649; x=1775139449; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=251l06KqAygP1T0aJWW4p9RD63Cvty6domWky58h16Y=;
-        b=gDdpWPCOhkFbYhtMTuWwng5RdzudfJPc3q5nt+jOlwT+EQNtBKEwCAH2rDhzMf0OJ8
-         M8VmZbbGV9GK1RuTgHi8t56v8fodZymfxRkJReve96XUIUfsYFVYTJKwl+FhXW/FNkd4
-         uBtr1AHh3ZAx2THbEfbnABVv4ATiwYm+a7SxPTiLRCsboQ86NN8/rPKCc8w4T0MaiNR3
-         YMA653j9qUcbV+8s4XxnKYse0kBWjujuQ38CITtv+i870b1qqjlOqoe2WsVFQoNHLeI1
-         XQVE7+b9/Cc92duVzwOfFFwoVm0s6tPP6hjJ+r7trwjxPHNuDdgW8ipGIHLYPe1OH2Ge
-         vTdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774534649; x=1775139449;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=251l06KqAygP1T0aJWW4p9RD63Cvty6domWky58h16Y=;
-        b=Qm8Fy4KdZRd8FZi68UGA9+fbpHTvSDhaJ93woir9bZc4dBZZ0M/iiL5207888Qrf+t
-         i/CdWg3oI0pPyLJ7oItIDAaJmJGQSwQ9rb5GfzDVHOrWE0qp+nMBetx6h5VnHUI390B5
-         V3srkbFjd/LzeAIfb1XVYbCrnEQWlJuL0OcfJbKSb3U6A9fAdF9RrO1y0grAPQFpgLN0
-         XZYqvxJo4NhMUvHHFIaBtAiYpcVLtns6EUUS3kLqU3ZwHR9zEyNM0s7Ul+LSd3MlxCSf
-         +oJ4+C+mg54z+TVhMJZOJY8/t5/GnNlzhCNugInLKDCiSbb+H4yLzj7mzuEts7wvDMi4
-         nBwg==
-X-Gm-Message-State: AOJu0Ywsf2Na8nhyGX1YzTVRgbkQN8PNJcCeiA4a5OcZlOxBUvRuHd9c
-	xFTqPmbaQz9vv+D1rtrFC6vF7vWUNSTBi3ZmtVjJyyp8ptZ1hBrTVSPKhXnX6Q==
-X-Gm-Gg: ATEYQzxVQbIEyZIcbOy5ijZMlZ7NQC83hf9JsarZk14dNlYCJQ8rTqDoXflIbuqgUKK
-	6RG+2G800DRnCsA6RxIpQ2gLmx9jFjWAgWwvkWoPxWl4/jVzceGiiqrAAbsY7r11yiFEF798V8I
-	91FuqjToOiLelabzGksR3PU4qXcZUlHBIRAfUkqnHjwqKy6EWClx6o0dXTZAo7r4UFZ/Keh/AiR
-	Jlb0XIfg430lYSYo/wScuv2G6kHVevM5clP8xD0pD8OCfbJm8LOZuV60fvI58ayuSutEvoPJ0MB
-	o0mnpA1RVaFKkSe+wf6ZEDfgkgtk+W+twJirY2Bx70wGy33Y7w7RTQ7NvuQdVDSH6DrjmJWd6Rx
-	hVqT4nW8v3i4TSvxD+z5buVxzJlZggJf9mZGnsNxlc71O2fz+f/zphMJ0A3UObd+hZ9ChT8yzov
-	iCHjH+FFBqIhHOJ3HzsFznXhkTTX0=
-X-Received: by 2002:a05:600c:1d15:b0:485:3abe:ab86 with SMTP id 5b1f17b1804b1-48715fc3d1dmr120138385e9.4.1774534649371;
-        Thu, 26 Mar 2026 07:17:29 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:1785:c801:9102:504:16e7:c44e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48720901b90sm15507775e9.17.2026.03.26.07.17.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2026 07:17:28 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 3/3] worktree: reject NULL worktree in get_worktree_git_dir()
-Date: Thu, 26 Mar 2026 14:16:59 +0000
-Message-ID: <c3329028010269995008d92653ba6dc4a5322118.1774534617.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.52.0.362.g884e03848a9.dirty
-In-Reply-To: <cover.1774534617.git.phillip.wood@dunelm.org.uk>
-References: <cover.1773411586.git.phillip.wood@dunelm.org.uk> <cover.1774534617.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Vdf/1ZeE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1774534871; x=1774794071;
+	bh=1kZ+RJR+WBD3NjvzWbpErAjJNAcHyPHDZSTbjTT1RZw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Vdf/1ZeEFWC6t8NjXDseiiOc35sx1/e443ksGRaVRLK+82xGO1Q1RQ356OdXkAN9X
+	 +CR5JmHpvCLgWIsJCkU35rV0GAIThDu9rHlqS3dB0n+uehPZUU1M1oxqjhrgdtRMeA
+	 hfkX2QI6DtgL3eJ8ecy0XSDB1Y/JF/JrMrs1HoXrzN2Mr8TCqU4qmbZcGAwDZHUfNP
+	 F0tgKEKFzgeAODvsb7FyflkHaHFt+Rio/7EBEef6c3YJzZduDoSIAowlhPFnnJf06x
+	 gQMULhJOOEaaazqeyAU82G4HPR5RhHWEE31qI2SZeEQmLfMd8D5gnc2YSKKuDCm6Ca
+	 mLyWXozhnKiMQ==
+Date: Thu, 26 Mar 2026 14:21:07 +0000
+To: Patrick Steinhardt <ps@pks.im>
+From: apaterson@pm.me
+Cc: Aaron Paterson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] odb: add write_packfile, for_each_unique_abbrev, convert_object_id
+Message-ID: <DpRTZzuEPU7m8kvCckzHYEK380REXLfunHXO4hE3qgAZsKPSNtyqkBT2oRzusMxvIDgLVkt4FOis0HKBTEJPIRQgcbYM6QZdpzN6-Y-F7WE=@pm.me>
+In-Reply-To: <acU7eJ0MpUVhCs6-@pks.im>
+References: <pull.2074.git.1774530437562.gitgitgadget@gmail.com> <pull.2074.v2.git.1774532383055.gitgitgadget@gmail.com> <acU7eJ0MpUVhCs6-@pks.im>
+Feedback-ID: 6356313:user:proton
+X-Pm-Message-ID: 8da39a5715e90d8505cf6d5044d9d10a19ead392
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Of course, and my apologies, gitgadget is not formatting these messages as =
+clearly as I would like them to be.
 
-This removes the final dependence on "the_repository" in
-get_worktree_git_dir(). The last commit removed only caller that
-passed a NULL worktree.
+Both this series and the last were adapted from my fork that supports [1] w=
+ith a feature similar to gitremote-helpers. My hope is that the fork can co=
+nverge with master so that sqlite-git can become redistributable. The local=
+ backends vtable was already a step in this direction, so the question is i=
+f letting users bring their own local backends, the way they currently can =
+with helpers for remote backends, is in scope for git core.
 
-get_worktree_git_dir() has the following callers:
+Either way, it sounds like series 1 will be covered by upstream, so next I =
+would like to contribute support for git-local-* helpers. This allows users=
+ to create .git repositories with storage formats other than packs and buil=
+tin alternatives like reftables, which seems appropriate as direct sqlite s=
+upport would probably be out of scope for core. Local helpers are already i=
+mplemented in [2] but if it makes sense to hold off and rebuild it after e.=
+g. ps/odb-generic-object-name-handling is merged, I am not in such a rush.
 
- - branch.c:prepare_checked_out_branches() which loops over all
-   worktrees.
+[1] https://github.com/mayCXC/sqlite-git
+[2] https://github.com/gitgitgadget/git/compare/master...MayCXC:git:ps/seri=
+es-2-helpers-v3.patch
 
- - builtin/fsck.c:cmd_fsck() which loops over all worktrees.
+- Aaron
 
- - builtin/receive-pack.c:update_worktree() which is called from
-   update() only when "worktree" is non-NULL.
+On Thursday, March 26th, 2026 at 7:58 AM, Patrick Steinhardt <ps@pks.im> wr=
+ote:
 
- - builtin/worktree.c:validate_no_submodules() which is called from
-   check_clean_worktree() and move_worktree(), both of which supply
-   a non-NULL worktree.
-
- - reachable.c:add_rebase_files() which loops over all worktrees.
-
- - revision.c:add_index_objects_to_pending() which loops over all
-   worktrees.
-
- - worktree.c:is_current_worktree() which expects a non-NULL worktree.
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- worktree.c | 2 +-
- worktree.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/worktree.c b/worktree.c
-index 344ad0c031b..1ed5e8c3cd2 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -227,7 +227,7 @@ struct worktree **get_worktrees_without_reading_head(void)
- char *get_worktree_git_dir(const struct worktree *wt)
- {
- 	if (!wt)
--		return xstrdup(repo_get_git_dir(the_repository));
-+		BUG("%s() called with NULL worktree", __func__);
- 	else if (!wt->id)
- 		return xstrdup(repo_get_common_dir(wt->repo));
- 	else
-diff --git a/worktree.h b/worktree.h
-index 94ae58db973..400b614f133 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -51,7 +51,6 @@ int submodule_uses_worktrees(const char *path);
- 
- /*
-  * Return git dir of the worktree. Note that the path may be relative.
-- * If wt is NULL, git dir of current worktree is returned.
-  */
- char *get_worktree_git_dir(const struct worktree *wt);
- 
--- 
-2.52.0.362.g884e03848a9.dirty
-
+> On Thu, Mar 26, 2026 at 01:39:43PM +0000, Aaron Paterson via GitGitGadget=
+ wrote:
+> > From: Aaron Paterson <apaterson@pm.me>
+> >
+> > Add three vtable methods to odb_source that were not part of the
+> > recent ps/odb-sources and ps/object-counting series:
+> >
+> >  - write_packfile: ingest a pack from a file descriptor. The files
+> >    backend chooses between index-pack (large packs) and
+> >    unpack-objects (small packs below fetch.unpackLimit). Options
+> >    cover thin-pack fixing, promisor marking, fsck, lockfile
+> >    capture, and shallow file passing.
+> >
+> >  - for_each_unique_abbrev: iterate objects matching a hex prefix
+> >    for disambiguation. Searches loose objects via oidtree, then
+> >    multi-pack indices, then non-MIDX packs.
+> >
+> >  - convert_object_id: translate between hash algorithms using the
+> >    loose object map. Used during SHA-1 to SHA-256 migration.
+>=20
+> This will conflict with ps/odb-generic-object-name-handling, which
+> already introduces generic callbacks for `for_each_unique_abbrev()`.
+> There's also ongoing work by Justin to handle writing packfiles via the
+> ODB transaction interface.
+>=20
+> > Also add ODB_SOURCE_HELPER to the source type enum, preparing for
+> > the helper backend in the next commit.
+>=20
+> Huh.
+>=20
+> > The write_packfile vtable method replaces the pattern where callers
+> > spawn index-pack/unpack-objects directly. fast-import already uses
+> > odb_write_packfile() and this allows non-files backends to handle
+> > pack ingestion through their own mechanism.
+>=20
+> I'm again a bit puzzled, same as with your previous patch series. It
+> would be nice to collaborate on this topic, but that will require a bit
+> more coordination than just sending in a patch series as things are
+> quite in flux here.
+>=20
+> Patrick
+> 
