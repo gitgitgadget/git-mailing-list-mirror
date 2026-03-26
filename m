@@ -1,218 +1,173 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5355937F756
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 20:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4E230B53A
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 20:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774556976; cv=none; b=Eer1jT+JKRE+51f9Nr3BCJiAe+2Ziwmt8FbuAHz1hh8NZEcs27fSXNHdZwFHHpZ5GpobhLw6jQ6+R8Tyee215Ar8MPTiQq9Uxgr0/VYDkt5vnkWvWyaOmE7WI5JRE/wuo6ZT5jCaFhLM6axG9niw9P1AlYH9HDszRzMCKWGkRRY=
+	t=1774557604; cv=none; b=ndZUHcx4ceWIQQEAtEDq57tbJ/nm0AP/9MprJaBanlZqOxxJFPxQcB68PFhXU5DMASkPy4QH5ovCeQHmQvYk5LtjvQS275BPmaNIX3ErfpNcQWH7W+Az+TfRDLbIFrOdrnQnzzwSJkhzNUQEynCcORij0y3i4xfvRfjUYsY1+gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774556976; c=relaxed/simple;
-	bh=oJiLyI/na901+YtZ+uPN51hHYALzPZc7VMZlXPZMZLE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=shmE/awjxe7gffioJQLgej8er/PsG2hufZSnvHtyFV5jxCnr8+SA+TbmjskPxfXuE+nKqcl0aeYpNGES/7jrUQPanVc3iUjZK18x5YdXPXFPo1BSdSQMOPNDNyFDTWLyLI0O3J75JVlHKv/43Xn5hmRz5mb+CLakfuvtkIhb1iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BABNMOSG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GjkaMsTo; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774557604; c=relaxed/simple;
+	bh=XJjohJ+OSPn8PsOdTWVmS0zw6TbV5h3S6Its8dBUyms=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AjXh1Bka7++7Gkw33HNkdP5CFzLTUnwnN8e4qMu8BTOQtuqa0wqddzbPXA+fXZfev9GQ8Lm4ICIEA6qyScapgGeJvJV9FjSfuyLoeAKyKO3Rq7Tm3HcD8ycOHSW+rQEHL0r2+2r0r8oATKIkyPpRQcOupFhVLWvSYNZ+kYiXaKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjXavDtz; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BABNMOSG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GjkaMsTo"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61DF3EC0139;
-	Thu, 26 Mar 2026 16:29:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 26 Mar 2026 16:29:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774556973; x=1774643373; bh=HrZO1gog6M
-	lord1O0xqq1bDBL2Rw4jefmTVBS1K52yg=; b=BABNMOSGRNdOtzskcm8tfTTucw
-	jODxsu0XqlnZAlNBNyRhjvwBaieZSHfiLA4k0Q7Egu1iRRZv17Jgu7gHCZsumarU
-	XEChimeIb6r/RegBY8VIxVFP903yum09nQTqwWxAlqddJ+oUvivqvyqr3FwiHV+m
-	kIhqM46+8j0Vw19T3zHXxECu6QPMJRrtbAU2L0zoTq/Mk/SQ8CvzB2eBPm6TvgKz
-	jTwm1MY4UmHLlxTA78Z6zDogm0zNN5xmf1LCAeRN1hnVSD33f5Wto+JYE67EsnZu
-	mFgtyzgJA0aHi/JU9WOfA8k6LEA1iKQDbUOC6oaDwfmQF6OfbtDkMbRuQrjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774556973; x=1774643373; bh=HrZO1gog6Mlord1O0xqq1bDBL2Rw4jefmTV
-	BS1K52yg=; b=GjkaMsTogmZQEWszJWdrP5OGEZrqpilgMPjsKjKzzSFNzBU5fGB
-	2BhXsT1eWCIg2e1ix8gvePKeAPRBjVbJLYXxS8Av4pcxdBLsnG0vb9WFFsOUDTJ0
-	LlxpiYwvNCCBt87ElqNw0ELMoUy1ST11GQIAV9r5yithRVt1BbJ46/CiQnMPOuIU
-	JIpJZCmwmvi/FFAGeTdfB/lDsGgRimkqfLNnbiXdEseFV1mq1Ql7oFLBDgHFxfjm
-	8t3ujV8usCw9+Iwb2FJPtdsElHx+VhwojWCXD9zqtxeJ5j8aLd+lF7G0NE3tDikC
-	N70fa7xIROyUAxTWUBFzkJZzkDlQ0urafqw==
-X-ME-Sender: <xms:LZfFaQwd77bdYqzx_48diIa7tWxPrU2dGx3O3JMp9BuRlip4dstJNA>
-    <xme:LZfFaTUhYXUwqn-Hvr3UtxiP_Iu-bxxyqljLqPmImsarPBoi60Z3lF-BW8hgDGB-9
-    RGapWK9GeWDHyKaslkaksJ7l1W9LX4DMtoiqd0BBpsUSK4uzJfG2Rc>
-X-ME-Received: <xmr:LZfFaYh_mWTgOofGbIH1zH4wc8sekPFbzJdrLAwTM2STGahR3268hmxhA7e2ItEfw9TmsecdBog5FWH1Omuz6F31jjEM8KouYA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdekfeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepiigrkhgrrhhihigrhhgrlhhiuddttdesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    gthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehj
-    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgr
-    fedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:LZfFabCaOLT5kUY4Nid8s9GmUfxHGVazXBcajXPoPMFNKw0w_I2oEg>
-    <xmx:LZfFaWuLkvlhKpNUZZRmfwI3tDmGKijy2BuemRXrAnNT4khAOI_8iQ>
-    <xmx:LZfFaXd8Ax6NjiI1I-CbajMuZnokVibUV4mp5fVdnBQSSKxGheddug>
-    <xmx:LZfFaT85xluEbfPG3LJ3gb4MSxILvwk0cWIj3PrRx8V4To686JGG6A>
-    <xmx:LZfFaXyEa_vfxlK9mAw1m8EGAxGeAK0o15mV3lZfWNuJEW-UmKwLPBk9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Mar 2026 16:29:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Zakariyah Ali <zakariyahali100@gmail.com>
-Cc: git@vger.kernel.org,  ayu.chandekar@gmail.com,
-  christian.couder@gmail.com,  jltobler@gmail.com,  karthik.188@gmail.com,
-  siddharthasthana31@gmail.com
-Subject: Re: [GSoC PATCH v2] t2000: modernize path checks with
- test_path_is_* helpers
-In-Reply-To: <20260326192603.23961-1-zakariyahali100@gmail.com> (Zakariyah
-	Ali's message of "Thu, 26 Mar 2026 20:26:03 +0100")
-References: <CAPAKoce5BeXMPtok+dni+WDTkokCAq0o4uMHGg1KZto9-UniXQ@mail.gmail.com>
-	<20260326192603.23961-1-zakariyahali100@gmail.com>
-Date: Thu, 26 Mar 2026 13:29:31 -0700
-Message-ID: <xmqqzf3unxlg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjXavDtz"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cfbbdbaf3cso151372985a.0
+        for <git@vger.kernel.org>; Thu, 26 Mar 2026 13:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774557602; x=1775162402; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jcOhsp/avk63DBWYI3EUSowje+yWyfwIvwCW0xEUumU=;
+        b=RjXavDtzfg+PQDJ+VGUyXOkqh5tRiKvGrMp3VJErsuAkZWSTS52NNzX4JU7nRlVCMt
+         SMXbB/PKPXElBQG1h4dPH3t/O/zYsbscWEyPNAXEX6ms+FbW0SRKokOqPn1vbaP/LRf5
+         Y+ULFH1+xChF1QqmmuaMoqtANS4KuwOzDRNZJnmwfO8o3C7aJnwf/WoMisr8UnbOzu1r
+         oEZ8pqXE8jMVNJYSZJOOWl8IrorXsd0+D/X6Un4UNi/J7dC1+sae8sMn6P1De7fa//uH
+         u+oFoouXkFd5sann/qSCT2yLRpjpT0JZwXnkTgP359dIlCUlf7OXEqKYbt2ZYM8TBMFP
+         cDvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774557602; x=1775162402;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jcOhsp/avk63DBWYI3EUSowje+yWyfwIvwCW0xEUumU=;
+        b=D5W5JshN6Ltud3qnyyotz5DJoT00pJX9cHaVIB4uQBd14r/8rw9kYuQQrizI6fgBkk
+         srCQfOF5xukJwegbutcye1E6ASAVWCy1JpYidudnPYsq/WdgbuxDCxibrVmFY6Q9kHfD
+         AFs2jONe0wlZcN7tW2NAvALn4CJpMHu6C72B+ReGTfGMlEbaGadNdnfQwxhnoW1zKeNd
+         0VZ3Fj3x+Ty8huqdQmOfYB2kXg3xlEOxpJXTyxCz6lhFSxXGzTffioq9M86QXJRkiqFR
+         Xt8E7wKz4tuy5lGMUfHWA+Uz4gI43LbY0Y7s/Sui4oB0xu43VVo9DSd1yulJqW244d8s
+         pmFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUSVLeQYem0PI0xUI4MXrEep6AJn7SVaWQ3HLm+Jc0zOjzrtkK/CpXMnQgBKq8EwlSjhRI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5jCB1OBLBoPFi/VxlBuM5y1bqZy/JdhC3qUuWXbBiOwbZKQFn
+	UIAbpZeG4Jf486cl5owSv3fdPFEMxCiy0Ws2ESgX1alaZu7gA8dKcJhP9D1PVA==
+X-Gm-Gg: ATEYQzwJ8dKgrHKOL/3DgXVBZXae2zRs2Tz1Ex8zH7MccsH7iZ2JO2xzJ89frG30Cq5
+	YDWpiX8SdG43BIksoJ6zr72/ucPJ2p58mCHD9vgwiMLwaE+I+FV7meOSf8Beba0LI/KIjfyQwDP
+	WZQKP31LEUdrDwBUiLbzBUJ9QvgdOHGSAjw8iP8m9Shjm3joTAaly+VNDOethE5g7sZoTUVs63g
+	BXhGVbc6lA0W992gRjS1zqyKL2IbRD2Jh3RuKD3eoY9vOBSlJM+/LAvE4d5Y4SoUr2cnB6dF7ah
+	qLXfz5RG8YcWze9382tBrRKvsM7VvMku4AMsjGktYFlK4DjJlntLf2Z8bp1qNQeVpJVTnToG3iK
+	ajqkMlSRffJ48Utc17ijnzREEbe7NRf19RAxgLZL06z+b0Df5dYtFyZiDpPP9meE0a+63f8HFVU
+	etdFxUg4IZfsQPfXzuKJ/eOD2XoHxT53qzs0yV5bS4Ffel3ptOWIi0zI15GdMJzsjQ5T4m1g==
+X-Received: by 2002:a05:620a:1710:b0:8cd:9281:6be9 with SMTP id af79cd13be357-8d0140c9500mr368615885a.31.1774557601563;
+        Thu, 26 Mar 2026 13:40:01 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e502081sm330453285a.36.2026.03.26.13.40.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Mar 2026 13:40:01 -0700 (PDT)
+Message-ID: <9e320604-7367-4f48-a943-f7d22feb2672@gmail.com>
+Date: Thu, 26 Mar 2026 16:40:00 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] pack-objects: refactor
+ `read_packs_list_from_stdin()` to use `strmap`
+To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <cover.1773959041.git.me@ttaylorr.com>
+ <cover.1774482700.git.me@ttaylorr.com>
+ <d5cb793f0eb0028f1f521fec4723ad2b00592638.1774482701.git.me@ttaylorr.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <d5cb793f0eb0028f1f521fec4723ad2b00592638.1774482701.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Zakariyah Ali <zakariyahali100@gmail.com> writes:
+On 3/25/2026 7:51 PM, Taylor Blau wrote:
 
-> Replace bare 'test -f/-d' and 'test ! -h' assertions with dedicated
-> helpers. These helpers report loudly what expectation wasn't met,
-> therefore making debugging easier.
->
-> Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
-> ---
->  t/t2000-conflict-when-checking-files-out.sh | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
+> -static void read_packs_list_from_stdin(struct rev_info *revs)
+> +struct stdin_pack_info {
+> +	struct packed_git *p;
+> +	enum {
+> +		STDIN_PACK_INCLUDE = (1<<0),
+> +		STDIN_PACK_EXCLUDE_CLOSED = (1<<1),
+> +	} kind;
+> +};
 
-There is nothing in the patch text or in the proposed log message
-that is wrong per-se, but looking at the entire test script, it
-needs a major clean-up to match the modern testing standard.
+I kind of wish this enum wasn't anonymous. And it matters later.
+Let's call this 'enum pack_input_kind' for now.
 
-On top of the patch we see here, we may want to do a follow-up patch
-series to clean them.
+> +static void stdin_packs_read_input(struct rev_info *revs)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+> -	struct string_list include_packs = STRING_LIST_INIT_DUP;
+> -	struct string_list exclude_packs = STRING_LIST_INIT_DUP;
+> -	struct string_list_item *item = NULL;
+> +	struct strmap packs = STRMAP_INIT;
+>  	struct packed_git *p;
+>  
+>  	while (strbuf_getline(&buf, stdin) != EOF) {
+> -		if (!buf.len)
+> +		struct stdin_pack_info *info;
+> +		const char *key = buf.buf;
+> +
+> +		if (!*key)
+>  			continue;
+> +		if (*key == '^')
+> +			key++;...
+>  		if (*buf.buf == '^')
+> -			string_list_append(&exclude_packs, buf.buf + 1);
+> +			info->kind |= STDIN_PACK_EXCLUDE_CLOSED;
+>  		else
+> -			string_list_append(&include_packs, buf.buf);
+> +			info->kind |= STDIN_PACK_INCLUDE;
+>  
 
-Here is how such a patch may start out.  I think the remainder of
-the file needs to be cleaned up similarly with about the same amount
-of work.
+It took me a while to figure out what was going on with checking
+*key == '^' and later checking *buf.buf == '^'. We should probably
+combine them to the same condition:
 
----- >8 ----
-Subject: t2000: modernise overall structure
+	const char *key = buf.buf;
+	enum pack_input_kind kind = STDIN_PACK_INCLUDE;
 
-This test script that dates back to 2005 certainly shows its age and
-both its style and the way the tests are laid out do not match the
-modern standard.
+	if (*key == '^') {
+		key++;
+		kind |= STDIN_PACK_EXCLUDE_CLOSED;
+	}
 
- * Executables that prepare the data used to test the command
-   should be inside the test_expect_success block in modern tests.
+	info = strmap_get(&packs, key);
+	if (!info) {
+		CALLOC_ARRAY(info, 1);
+		strmap_put(&packs, key, info);
+		info->kind = kind;
+	}
 
- * In modern tests, running a command that is being tested, making
-   sure it succeeds, and inspecting other side effects that are
-   expected, are all done in a single test_expect_success block.
+	strbuf_reset(&buf);
 
- * A test_expect_success block in modern tests are laid out as
+This feels easier to read, for me.
 
-	test_expect_success 'title of the test' '
-		body of the test &&
-		...
-		body of the test
-	'
+>  		strbuf_reset(&buf);
+>  	}
+>  
+> -	string_list_sort_u(&include_packs, 0);
+> -	string_list_sort_u(&exclude_packs, 0);
+> -
+>  	repo_for_each_pack(the_repository, p) {
+> -		const char *pack_name = pack_basename(p);
+> +		struct stdin_pack_info *info;
+>  
+> -		if ((item = string_list_lookup(&include_packs, pack_name))) {
+> +		info = strmap_get(&packs, pack_basename(p));
+> +		if (!info)
+> +			continue;
+> +
+> +		if (info->kind & STDIN_PACK_INCLUDE) {
+...
+>  		}
 
-   not as
+> +		if (info->kind & STDIN_PACK_EXCLUDE_CLOSED) {
 
-	test_expect_success \
-		'title of the test' \
-                'body of the test &&
-		...
-		body of the test'
+This does help confirm that a pack could be in both categories, so
+using flag bits helps.
 
-   which is in a prehistoric style.
-
- * In modern tests, each &&-chained statement in the body of the
-   test_expect_success block are indented with a horizontal tab,
-   unlike prehistoric style that used 4-space indent.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t2000-conflict-when-checking-files-out.sh | 43 ++++++++++++++---------------
- 1 file changed, 21 insertions(+), 22 deletions(-)
-
-diff --git c/t/t2000-conflict-when-checking-files-out.sh w/t/t2000-conflict-when-checking-files-out.sh
-index 96bae6c53d..39c80e80ea 100755
---- c/t/t2000-conflict-when-checking-files-out.sh
-+++ w/t/t2000-conflict-when-checking-files-out.sh
-@@ -35,32 +35,31 @@ show_files() {
- 	sed -e 's/^\([0-9]*\)	[^ ]*	[0-9a-f]*	/tr: \1 /'
- }
- 
--date >path0
--mkdir path1
--date >path1/file1
-+test_expect_success 'prepare files path0 and path1/file1' '
-+	date >path0 &&
-+	mkdir path1 &&
-+	date >path1/file1 &&
- 
--test_expect_success \
--    'git update-index --add various paths.' \
--    'git update-index --add path0 path1/file1'
--
--rm -fr path0 path1
--mkdir path0
--date >path0/file0
--date >path1
-+	git update-index --add path0 path1/file1
-+'
- 
--test_expect_success \
--    'git checkout-index without -f should fail on conflicting work tree.' \
--    'test_must_fail git checkout-index -a'
-+test_expect_success 'prepare working tree files with D/F conflicts' '
-+	rm -fr path0 path1 &&
-+	mkdir path0 &&
-+	date >path0/file0 &&
-+	date >path1
-+'
- 
--test_expect_success \
--    'git checkout-index with -f should succeed.' \
--    'git checkout-index -f -a'
-+test_expect_success 'git checkout-index without -f should fail on conflicting work tree.' '
-+	test_must_fail git checkout-index -a
-+'
- 
--test_expect_success \
--    'git checkout-index conflicting paths.' \
--    'test_path_is_file path0 &&
--     test_path_is_dir path1 &&
--     test_path_is_file path1/file1'
-+test_expect_success 'git checkout-index with -f should succeed.' '
-+	git checkout-index -f -a &&
-+	test_path_is_file path0 &&
-+	test_path_is_dir path1 &&
-+	test_path_is_file path1/file1
-+'
- 
- test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
- 	mkdir -p tar/get &&
-
+Thanks,
+-Stolee
