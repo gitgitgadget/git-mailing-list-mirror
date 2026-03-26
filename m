@@ -1,38 +1,35 @@
 Received: from mailproxy08.manitu.net (mailproxy08.manitu.net [217.11.48.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C870D3FFAB8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C867A3FFAAD
 	for <git@vger.kernel.org>; Thu, 26 Mar 2026 15:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.11.48.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774538971; cv=none; b=Yfm/+D6YTgr3AOHHsJH6NS2hytonDKZzmtBH7aeNSXTwxQu8RUjmUe5faNPS0JadM91ZTpSDEiQVjdUpU8JRUmqk4mmGiSMHqpFBB5PTpPMUGfgqxaJEMwV1z4DhJgwW0MbA7iBThDjd4zBaC1r1xfPyBGSpj4SkW2Er+ZIu/to=
+	t=1774538972; cv=none; b=kXoJSa7NsBbFtWbuUdmd+MUW+QfQT0GCobUp0mpOu6WZA5U4V+ACr0C+Lt1P9lRRnjSSbQDnoIwvn/8HRU1T+Yq1aUg55SJCeSOI7EbdIgA18LuK462YNb5TutBHJFhoNeDSFgC0ho8Oby/YvyEOht6I6URFhxoqIZLQ8sAhIwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774538971; c=relaxed/simple;
-	bh=+hqAjHn4sQYE8vv3DyBTLoupflxhYpxpmbLe8pF9ts8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4m+V5vP2u2sgyIbY0iw2paUWoxgexEfqjtIMQJTITMenHxWfxvtnDGmK3QOf2dflWSApoPqnH2Q+bSjNVUpreM1M6yPdsHVwpkXNk2ThBtrUf4ZFdkKRUAe29kHS1gYVTQ10Mc5TCC4N//GY+UCKRIMj5Z73xIt0TEQig5jfaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu; spf=pass smtp.mailfrom=grubix.eu; dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b=U1PMBSky; arc=none smtp.client-ip=217.11.48.31
+	s=arc-20240116; t=1774538972; c=relaxed/simple;
+	bh=tB2zjlfCuSl69E2PDY2W1tD3tuRiPrKIPwQ4QEjzjXM=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ABF6CfUNfSk7iKypG/v3ESzE8F+Nq6FhN0OraDaG5Q9HuZZbWLJ3JFQDXhLxBTcGCYdIXycgWxeBw4J3V2V1ScT1hk43Rx8EzId8YTQNWOzCxBIPzF7wIEoKNPbAxdUGY4eJuTML3TaYk7Tjiwhcx5iomJeMQ5COXkeIz5Fosyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu; spf=pass smtp.mailfrom=grubix.eu; dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b=BFq9hage; arc=none smtp.client-ip=217.11.48.31
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=grubix.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grubix.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b="U1PMBSky"
+	dkim=pass (2048-bit key) header.d=grubix.eu header.i=@grubix.eu header.b="BFq9hage"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grubix.eu;
-	s=manitu-webhosting; t=1774538576;
-	bh=CeAZl63add4rytWBwpVpybH9M17Ixr4i52+3kQjRxY8=;
-	h=From:To:Subject:Date:In-Reply-To:References;
-	b=U1PMBSkyuhg4pKxuIGOCK5BbDD/Ay3bnKVXiNLvKykhXC19vMPoDUeZXh0+NGVCEF
-	 utbceuSXa+ZVenLtZKr8Zolnuwpntp1LqkMiGJa0XkMcDjGxkFnC4llMyk3pxf+uDB
-	 jXnJMzRHn6FV5mFvcIXFLbdpidWvdv6SnZy6Nc1seQdcKrdntI5j9tghwC4PSxrSkp
-	 mMZmvrmWDiqDqixjharDPjm8CDnJmoFkcu31VCVUD7/1WYPxCdNaY/JanUhUm/9DPH
-	 JwUX/1jm5L/2e6AP+/GQD+06e/yNDXSLXi9uBAe4DZykC6lzpQWBVzZUOD0iuTX1M4
-	 rWqQLr0pneJZw==
+	s=manitu-webhosting; t=1774538575;
+	bh=Efn+dvBojZuHrY25o7BSBPBm/SP6PoBDRnlLzslA73w=;
+	h=From:To:Subject:Date;
+	b=BFq9hageoNyFmsJeHKVxzmwWXDw0FH0mjGZqwiWHhfTJ5x4wvQCqgoA/q8+xxQwrq
+	 ZOUgjeXXxgf+CY7WnKijpsJ+4jo2m4dMxNZzdyzwjRVnQMTVekqhZ4wFGH4gKKqqt0
+	 B4xd8fh14OM2HSu6zETFYJCBOk9MhA+/ucjgARV7RVGPd2eOU5wiwiKbWviHYseooz
+	 tpux2VqX6cUysOyPcU+L32p9X6SWSJ5pRHKQtB9h1lO12y7H3W4L1we+tvFGRkhRdj
+	 qxRdz0FQCVbMRU5jY+bRBo2Li+XYxpM3N20/88pzqjFGuZqB5ntKd4wETY5Nlocg86
+	 P8jT7GmWBMIQQ==
 From: Michael J Gruber <git@grubix.eu>
 To: git@vger.kernel.org
-Subject: [PATCH 2/6] do not discard const: make git-compat-util ISOC23-like
-Date: Thu, 26 Mar 2026 16:22:48 +0100
-Message-ID: <cfea3c6f006f926319da79bb7d97d57fb3b580e9.1774537954.git.git@grubix.eu>
-In-Reply-To: <cover.1774537954.git.git@grubix.eu>
-References: <cover.1774537954.git.git@grubix.eu>
+Subject: [PATCH 0/6] ISOC23: quell warnings on discarding const
+Date: Thu, 26 Mar 2026 16:22:46 +0100
+Message-ID: <cover.1774537954.git.git@grubix.eu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,54 +38,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-find_last_dir() should and can return a const pointer. This change fixes
-the warnings with ISOC23 for git-compat-util and - via explicit casts -
-makes it clear where we mutate the returned memory.
----
- git-compat-util.h | 2 +-
- scalar.c          | 2 +-
- submodule.c       | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Hi there
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4b4ea2498f..3c3dbe298c 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -335,7 +335,7 @@ static inline int is_path_owned_by_current_uid(const char *path,
- #endif
- 
- #ifndef find_last_dir_sep
--static inline char *git_find_last_dir_sep(const char *path)
-+static inline const char *git_find_last_dir_sep(const char *path)
- {
- 	return strrchr(path, '/');
- }
-diff --git a/scalar.c b/scalar.c
-index 4efb6ac36d..44f432d7f0 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -479,7 +479,7 @@ static int cmd_clone(int argc, const char **argv)
- 		/* Strip suffix `.git`, if any */
- 		strbuf_strip_suffix(&buf, ".git");
- 
--		enlistment = find_last_dir_sep(buf.buf);
-+		enlistment = (char *) find_last_dir_sep(buf.buf);
- 		if (!enlistment) {
- 			die(_("cannot deduce worktree name from '%s'"), url);
- 		}
-diff --git a/submodule.c b/submodule.c
-index b1a0363f9d..57933386bc 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2268,7 +2268,7 @@ static int check_casefolding_conflict(const char *git_dir,
- 	DIR *dir = NULL;
- 	int ret = 0;
- 
--	if ((p = find_last_dir_sep(modules_dir)))
-+	if ((p = (char *) find_last_dir_sep(modules_dir)))
- 		*p = '\0';
- 
- 	/* No conflict is possible if modules_dir doesn't exist (first clone) */
+Fedora 44 beta (gcc-16.0.1, glibc-2.43) brought some fun new warnings
+when building git. In essence, we're not always explicit about
+const-ness or lack thereof of certain pointers. Before, strchr()'s
+signature which turns const arguments into non-const return values
+covered this up. With ISOC23, strchr() and friends return const
+pointers.
+
+This little series takes a middle-ground: no new data types (no new
+const versions of non-const data types) but more explicit casts.
+
+Michael J Gruber (6):
+  do not discard const: the simple cases
+  do not discard const: make git-compat-util ISOC23-like
+  do not discard const: adjust to non-const data types
+  do not discard const: declare const where we stay const
+  do not discard const: keep signature
+  do not discard const: the ugly truth
+
+ builtin/config.c       | 2 +-
+ builtin/receive-pack.c | 6 +++---
+ builtin/rev-parse.c    | 8 ++++----
+ convert.c              | 3 ++-
+ git-compat-util.h      | 2 +-
+ http-push.c            | 2 +-
+ http.c                 | 2 +-
+ pager.c                | 2 +-
+ pseudo-merge.c         | 2 +-
+ range-diff.c           | 2 +-
+ refs/files-backend.c   | 2 +-
+ remote.c               | 2 +-
+ revision.c             | 8 ++++----
+ run-command.c          | 2 +-
+ scalar.c               | 2 +-
+ send-pack.c            | 6 +++---
+ submodule.c            | 2 +-
+ transport-helper.c     | 2 +-
+ 18 files changed, 29 insertions(+), 28 deletions(-)
+
 -- 
 2.53.0.1195.g771ffcb452
 
