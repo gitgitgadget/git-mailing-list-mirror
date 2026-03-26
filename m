@@ -1,137 +1,119 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50368392C50
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 19:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E7A33BBAF
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 19:23:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774552989; cv=none; b=Lfgw6hwJuvJJ5pUEXhocDZ2rEXRXpqEXVdB8IA3tvpkiGQ81EPCkMuoegckTNQjUejBxVdz5CDU6Yhg97Ydy/3jH29u8S+hHWHY/L9WHPr/lLwHHCSrF6pgDOwllTvhGGCYd91TvxoWWintb4lNFAqZHg0WYJH9+hsU5tS8yvEE=
+	t=1774553003; cv=none; b=aBiWlnIldRt8ZVzd410riPKVdnsThVV/VovnaGfsr/a2d3rAPRle0YhZRdhZBakkvnh5ipgh0Kw2VzrYpE5BDh1MWzh22M8lhikqYg90s73fjmGRHMa/eXp/IvYHfbrSoCAhniFh2DHT2WE7i2XV3tx/UIGJ5M841NhKwX3zlxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774552989; c=relaxed/simple;
-	bh=qwS/Ii6u1U4VV0ks6SZr696DQUIb0M7btkwMBQplsHQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=oduYwZy7U54KrUVOe5R6rQ22Bm5g7Xsduk4NSUPd3E6tx0c7IbeU7I7pBxdOCd6mkJYwEk2AamjGClkcGpYnX7Fx3hiv0rD5tapQNSUpGCos2LQi1HEBYegy0jqJQHxN6UZJL/fGOhOJuSSdlb4BqA5OFJmnEcjEA7DBwIj0MKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CqoUKpO+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1nCz2azP; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1774553003; c=relaxed/simple;
+	bh=un7u6PmoIJqu84lUpBsIMDQP0zLMz9jieOPgzKgPvEQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ttQFQHZpOxb4BjTPQLqvqcliDo5N7Z2qmSrbo5NQYsPApZ/u7RkT5sgbNp5Ge3AK2glK38Ae50OMFFpLd9A8CTOc3KaUgtnvZjMz0QHn2tJ1gDI9JH/Q+nDGPLxEIQ1ojTNBacmvFQO+FCXh2wl05IoXTTLnGA09NkhnoaHK/CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JMwKDbjE; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CqoUKpO+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1nCz2azP"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 74DA87A017D;
-	Thu, 26 Mar 2026 15:23:07 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 26 Mar 2026 15:23:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774552987;
-	 x=1774639387; bh=AIbunBb4IyE1yz3pftIcKCza0bmGCfqWXuNZV16Ek/k=; b=
-	CqoUKpO+BXmUwYuHYGTKxSdaNz9bN58hwMbTYvV4uXvXOTe4J7AnXYaJr3qRn6g/
-	QopCu+bWd6bz1BMuYQGxIIusOwiW6SW3XbD9O84ucCRatEs2Hib30hFC/YgE5+34
-	nwXLZeq6NzxDYrLlrTcoyCjqQKQF/hKg8AlCGOqvA7MlmVv7ey8mCTkqABWr0gtf
-	FLkehKBviwaQHGg5HuG6qob78saUITkFpeFPmZQ50W16dbbPytIs4/byBhG+eM5I
-	qyfgo9zV7a25pbdKtsPbYsqIfWy/PJnmHGPEV57yPcj3NRSadNe5U+tI2FYNlRIe
-	8hlJZkAft7/ZIRANf61slg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774552987; x=
-	1774639387; bh=AIbunBb4IyE1yz3pftIcKCza0bmGCfqWXuNZV16Ek/k=; b=1
-	nCz2azPxa/+D9PhAxu9DMZj60QZ7Jywe7vezEWsbtaU18nZVB72Rmno1J4IrphJq
-	xV5OxFvbNqyLJlyhek1hVaSuHk7GVM6Xf8ACfxsnPFbMDybBYH5KKTRfKF5lz3Ep
-	k0Xopm6ONMNsGEaH5vXbfR8S/ieoucdv0SWEJBQEodvt8x3eJnNVM4YX+9SAZpXn
-	3YsGYq8FPGgugqWlD+geOSH7MyY1qPhoPZfIOskeavh4hkeKqMPVu5hO1u3Is9pS
-	kM3g1bk785MLBi+fqtvBpPPILbqnajOqaTMHMRTKTMtdvEAGWyMYP+RpcuqOrMgB
-	EE8oSyeyzGHcdvt+SH+YA==
-X-ME-Sender: <xms:m4fFaYtui556wnKAczdShar90fHsKKSNl6p8ElbNsTLrR0fre-oxhJg>
-    <xme:m4fFaQTHYRSIy95kSWQqKXmDuAvIrLWpKu5kz3HdmsF2gEZ475KYjuP2pEHIwg57J
-    M-7sNjam-5ikwTihupUNeSOBkCegr2XvX7QmqIMQ6Zok29dI8Ogr6A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdekvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefoggffhf
-    fvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
-    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeej
-    keelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:m4fFaXaOioq7nGSkopz7_uO6F486GkII7rf5yhVJB0lI6oJ-4x1kXQ>
-    <xmx:m4fFaUX1nkmCb7lkAvCFThTgVU3LjqgiXVG6cD6qAA5I5rfn_x1zjQ>
-    <xmx:m4fFaRjqbAQfAhT_bpa8DV0CcewLfCLcLRefmVZZ8lOH0bTos-qvkQ>
-    <xmx:m4fFaaUnafjhRtM6RTKmwmar4hrRFfOB0Da-VWAXizE7zuKFtOh8dQ>
-    <xmx:m4fFaSCMRz8_0ZOEBSbRePWtaIiM9awsK8f0qkZX_WRuOF9f-xCUr5lD>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 06ACD1EA006B; Thu, 26 Mar 2026 15:23:07 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JMwKDbjE"
+Received: (qmail 155745 invoked by uid 106); 26 Mar 2026 19:23:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=un7u6PmoIJqu84lUpBsIMDQP0zLMz9jieOPgzKgPvEQ=; b=JMwKDbjEhAmoAKqPSggrvMSxL1WyGQfjgnmm5VFyuTowS300GRm6C3CSr+EweXfGMIw3R3f8leAOdW8p1xFH4jkIeqbNIh3BcjebGQoxb2zKuiFp1O+uHhAKy0vRWwUbsGpC2Bjkjv1RcKhKTPrzU1Pa24dPQ0o+0in6fLMzQgww5zIkBKq8e/6gCEpdUXy2JR+isDwSnRubSBqYZIBfTwk+B/Abayf/7XTCRAhVtDgET4mFMeo6xCRYpZifsQyNT2uciht5/AGWzzn3NQAyftBuvUQ7Nl3rZKJHZi21w+RHuPJhhFcAsAyF3XXxQvApxOCAoE6YE9nGQHeQVKjU1w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Mar 2026 19:23:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 216054 invoked by uid 111); 26 Mar 2026 19:23:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Mar 2026 15:23:20 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 26 Mar 2026 15:23:20 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
+Subject: [PATCH] config: store allocated string in non-const pointer
+Message-ID: <20260326192320.GA418281@coredump.intra.peff.net>
+References: <cover.1774537954.git.git@grubix.eu>
+ <a3a1d2759a0ec5a3ee285689832832e5e3a63768.1774537954.git.git@grubix.eu>
+ <20260326173402.GB2447148@coredump.intra.peff.net>
+ <xmqqy0jepjqy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AdQjVcg-2Zqk
-Date: Thu, 26 Mar 2026 20:22:46 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <8c9dd9f9-4d41-4901-b1fb-080e4e73b40a@app.fastmail.com>
-In-Reply-To: <xmqqtsu2pgu9.fsf@gitster.g>
-References: <xmqqldfgy1ye.fsf@gitster.g>
- <e33142cb-1ec3-468f-8080-ba3bad79ae25@app.fastmail.com>
- <xmqqtsu2pgu9.fsf@gitster.g>
-Subject: Re: kh/name-rev-custom-format
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqy0jepjqy.fsf@gitster.g>
 
-On Thu, Mar 26, 2026, at 19:48, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
->> On Wed, Mar 25, 2026, at 05:20, Junio C Hamano wrote:
->>> * kh/name-rev-custom-format (2026-03-20) 2 commits
->>>  - name-rev: learn --format=3D<pretty>
->>>  - name-rev: wrap both blocks in braces
->>>
->>>  "git name-rev" learned to use custom format instead of the object
->>>  name in an extended SHA-1 expression form.
->>>
->>>  Comments?
->>>  source: <V2_CV_name-rev_--format.51b@msgid.xyz>
->>
->> I=E2=80=99m working on rewriting the functionality in the form of a n=
-ew builtin
->> git-format-rev(1) that lives in `builtin/name-rev.c`.
->
-> By the way, why do we want yet another builtin in the first place?
+On Thu, Mar 26, 2026 at 10:45:41AM -0700, Junio C Hamano wrote:
 
-I didn=E2=80=99t want another builtin. I looked at the options and didn=E2=
-=80=99t find
-anything that fit the described use case.
+> > But we can untangle this for the compiler without having to cast by
+> > using a non-const alias, like:
+> [...]
+> Yeah, this is much clearer.
 
-With git-name-rev(1) it looked like formatting options could crowd up
-the place.
+Here it is as a patch with a commit message. I was eventually planning
+to do a complete series that cleans up all the warnings, and this would
+be part of it. But since other people are starting to work on it, too,
+it may make sense to just send them out as we have them to avoid too
+much duplication.
 
-> Wouldn't this be done as a new option to "git log", for example?
+-- >8 --
+Subject: [PATCH] config: store allocated string in non-const pointer
 
-Okay with me.
+When git-config matches a url, we copy the variable section name and
+store it in the "section" member of a urlmatch_config struct. That
+member is const, since the url-matcher will not touch it (and other
+callers really will have a const string).
 
-git-log(1) blocks until I have closed stdin and effectively dedups
-the output.
+But that means that we have only a const pointer to our allocated
+string. We have to cast away the constness when we free it, and likewise
+when we assign NUL to tie off the "." separating the subsection and key.
+This latter happens implicitly via a strchr() call, but recent versions
+of glibc have added annotations that let the compiler detect that and
+complain.
 
-    git log --oneline  --stdin --no-walk
-    HEAD
-    HEAD
-    HEAD
-    ^D
-    <HEAD is listed one time>
+Let's keep our own "section" pointer for the non-const string, and then
+just point config.section at it. That avoids all of the casting, both
+explicit and implicit.
 
-So if an option could tweak it to instead (1) give one output per line
-(like git-name-rev(1)) and (2) not deduplicate (well, follows from (1))
-then the problem seems solved.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/config.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Thinking out loud here.
+diff --git a/builtin/config.c b/builtin/config.c
+index 7c4857be62..cf4ba0f7cc 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -838,6 +838,7 @@ static int get_urlmatch(const struct config_location_options *opts,
+ 			const char *var, const char *url)
+ {
+ 	int ret;
++	char *section;
+ 	char *section_tail;
+ 	struct config_display_options display_opts = *_display_opts;
+ 	struct string_list_item *item;
+@@ -851,8 +852,8 @@ static int get_urlmatch(const struct config_location_options *opts,
+ 	if (!url_normalize(url, &config.url))
+ 		die("%s", config.url.err);
+ 
+-	config.section = xstrdup_tolower(var);
+-	section_tail = strchr(config.section, '.');
++	config.section = section = xstrdup_tolower(var);
++	section_tail = strchr(section, '.');
+ 	if (section_tail) {
+ 		*section_tail = '\0';
+ 		config.key = section_tail + 1;
+@@ -886,7 +887,7 @@ static int get_urlmatch(const struct config_location_options *opts,
+ 	string_list_clear(&values, 1);
+ 	free(config.url.url);
+ 
+-	free((void *)config.section);
++	free(section);
+ 	return ret;
+ }
+ 
+-- 
+2.53.0.1081.gf77a8b8145
+
