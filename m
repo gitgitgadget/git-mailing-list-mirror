@@ -1,64 +1,68 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEBB260592
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 13:07:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB232DECA1
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 13:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774530443; cv=none; b=CRBwFsqIgPgXcxTdnsgkomSWUxeHYVau81GKmySUKiiTVcEvwCXfPB+rWamNKoTadqQekZU9C1SxaKI2JFDUIU5KtaLQUjhEnDHvx7x3NL2nXaQg+ipfel2ESouBf3EHDndav27tREYqFk4T8j7xr2IMiiyveY5I9EKMKYAh6ic=
+	t=1774532389; cv=none; b=LL0NerOKcVw4geHfjwVxQ5eofAq4JMW+U7mgJDvgO2pHcB86BJjSQ/b7NATDrH8Pa62dVzAqaQuWz545WvXZszzog4sos9iidKqfKAn3KGhvm3SdwT0/+YEnk5Rbu+sgsuHiJMVmUX+KmKllzT2Q/RCmiao9Fc7bchJHkvhV1rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774530443; c=relaxed/simple;
-	bh=YJaL45bHJ8mT+eBdA0Ok+q/8ElRZZvl9kF9SbvsD1gA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Cqp3hWkibM9lMNn915bNF/hKCvhwBH8CVKyCABOuOa8c3INUr+Xe1BI4sAU9S30voXytG9joImwvCBQZOoKqlHNbLk/7ICMz2U5yUcQoh3jfuTf/DOsJvbOwRh8vd6Ng7oCDrz2OB2JBG1EiESU+oyTPSsrY8l1rdXzXnyHgZPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bExfymOU; arc=none smtp.client-ip=209.85.167.174
+	s=arc-20240116; t=1774532389; c=relaxed/simple;
+	bh=QxU8dowQqAAi/K30rDrsqWw2OZHkHcPdsK3RdOwLUsQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XGfqpHyg9xVf5vHAioXvUMpuVfgY1/nS7RuC+v7PmW6MQrpjiYLSLZ+4vAgwsol3XFzRiXr/Rd9JwvF92TsiozjqKkVup/Qvb7URbGwuS0cKR/l5PH4hx66ceDp/G3Eqk40fmgMiN3fnhqBRT3i9tA+FWooncMV1aSJ32zwuCPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YEHnc8Gz; arc=none smtp.client-ip=74.125.82.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bExfymOU"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-46805c4ae5dso359150b6e.1
-        for <git@vger.kernel.org>; Thu, 26 Mar 2026 06:07:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YEHnc8Gz"
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-2c160308a54so2500391eec.0
+        for <git@vger.kernel.org>; Thu, 26 Mar 2026 06:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774530440; x=1775135240; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774532385; x=1775137185; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=AgZ7JJ+VMNgSfD7tjXo/GzsTNB/JTPXdaf4lprNDEU8=;
-        b=bExfymOU1nAz04ODe8tez3O1w5PCH4QGbtW1qyQBnG8K3RrBIxna2FJOCKmhJPl0Qn
-         5gn3Qrnuk8nj50OuhYJrwFy/FYFjr6Lj5DWg1cFauqOaAL1ThrtFoTCyzUXAqqTADNK1
-         guHBYgtlBqFsmV6vN7OH/gHLFtdycliYMZp0HKspJGJVh+5oDOgAyZpQ+e4FapLc2fJ2
-         aBjyj/mRtnL/1KH6mYUTCW3pQ1kGYPA4c9pELiC44CBA1Y+9YmWT3azgsOCe5kzy8NDg
-         NtlXpFJeZZv3Awx1ZqHKfBF/uzI/sAA5Da6H4F3ceuaJzAPJXhQKh7tTKO8JEhob2LvC
-         ImpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774530440; x=1775135240;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AgZ7JJ+VMNgSfD7tjXo/GzsTNB/JTPXdaf4lprNDEU8=;
-        b=AquSSCQr0KUNhMD0Rn+YY7Fcq1QsKq/BgM6sO0d9QLOh7ZuyZUnGEp6dGgtSIjc8t1
-         jw+Yiq2aC35mKU1gc7CNnaQ/Fz+mUA/OixxLiwLcqbEQDdpZZjzia8/si9e9+Pwweaoj
-         K5L9bi61cPhhpY3jMjMhLgmz96rZgfGtjevFaIZOCN/41tDWXgCSpC52RwdmRBoZHw/H
-         R7YRLrUagPI7oO8RU0WsN7QxtKfxqh1r/2zeA0woMy+88JP6rcbqjiD8XJ0iKgGO+GMh
-         wDrXcTFhM74qeIclnEAJyu5OTPTcYXNHf1qMTu24fVaI2n1gRG8wgl516XZ5ehb9pxrL
-         3SDw==
-X-Gm-Message-State: AOJu0Yzgme1QELEJEClr0R4ry0AnkQ1MsDAxIf2iSsEea7B4gOY5oAtk
-	tLIDx3TkP0DmQa8jzqBntMwMhK5BaOmgp3yOpn5OGPOUr2gGqvepr4L5rT4qww==
-X-Gm-Gg: ATEYQzwpqhykcx5ufScrmAxcUC0bYM/NrzLNiAYeh/Q1ylXW8Sgl0AwDHSfkUJzZxiv
-	+GpZwvnmVCRXi6YJ0y1xest/4NR5nLHpzSbc1HOIZuGgKeZkjz3CVVJ03WDAwaXNeLSmIeKCLwZ
-	Z51mYSkCL5G13XXvtTzi0kQ1VJZAKcWZ9TK0z7KKUJJCQVueiCp0KZ35+gX63K5Tt6HO3afutB9
-	rBmnuqlYp6q1K58m1R5vRYsG5/XeMoaTLbZ7VMeF8l+4qiothc7fPGNfTN25luRwPrA/bQk78NL
-	oqLz/behH39GaJEXKNQxIicWCqW9i6iRBqFdOSIERuEPxrQ5tBuYOjLpUptG7AQfo8fKlG6B8xu
-	MoQclZYE/uCDKeiJzsdpR8ADVe3m4edD9e+nh5v8qXS46Pmb233DKp9zA0tbsM1E2B8eWDJFcJg
-	fuRHCymWRxqweYHRR5JHZE2FLo
-X-Received: by 2002:a05:6808:1582:b0:467:14c7:a8ba with SMTP id 5614622812f47-46a5c6e70d1mr3721306b6e.32.1774530439612;
-        Thu, 26 Mar 2026 06:07:19 -0700 (PDT)
-Received: from [127.0.0.1] ([135.119.38.43])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-46a73ae98bbsm1288048b6e.18.2026.03.26.06.07.17
+        bh=3yTIG3BdS8wF5jUZH2vML44sxZbFLgwFF8sgRz3Co3E=;
+        b=YEHnc8GzTKbRl6p07HvbqHw6miPpGTpt96JkphzggmbkZ3uCg8F4I5/+xCCWG+lp6r
+         FMkxS/Igt4dOvsBXOMFK/R9l2LvulMWCrMW9FcMkPf5IDSzBUMg7uNfiShDOkIsckhGX
+         rYRea4xJryxTvVlV6nvkW4gZyAod4e0/cR1hIf6w5yVndimI8MHT5rFdz7wIQUua1c0a
+         e4S0k9/GaDVR+98JVGGZKTRbpr0YHQx3POCLkdR0rx6yIMe4yQ0HAUWfE3jF5+NAO8kC
+         x4+1Z1uUMebyO42ni3r/qN7U7LVGwU1q3u87RTMKfHAvp/vGUCohWKS9Ld2JzqzlExGe
+         p6lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774532385; x=1775137185;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3yTIG3BdS8wF5jUZH2vML44sxZbFLgwFF8sgRz3Co3E=;
+        b=eM5AQPX6i+YsTW1kjjyuYotYBsjL2HFhAijoX3T35MZH4J5EZA/lEVf/TNSIkGfdGz
+         5WDf9mx8p2ALgjLkO3P6t6ySVFFuDCuqsW5ANPYQj5+rjR4f1sbybocTsOCBlNdavqeG
+         oq46dUBoCQD76jLWWOM0TbXxzCysJbZPE3Q0q37F+LmFSfQi0KAzu/7ROapd72WhFy60
+         AqL86lMlH8Sv7Hc6SkMhZJq4NMGLt6J4mhDt7usuzM48BLbM+1tzmweH8KNCcz3nYhFN
+         gxOxVuXq5Y9pQEShCaWQbNw5NlKKDLsiKIcBjOGIF74lSPyJz97Gt2Gd3fHMoIT0mg6H
+         rU3g==
+X-Gm-Message-State: AOJu0YyebaE64uZgk3hV03yPYM1mE33fhWsZs+6kfDZ6Vy690D2V35nL
+	/BCW7hyH5jzKRPzb5lywdiLxfwjJtBg6oq87FEPpPow3kmchEaHlA/1I4C6ZgQ==
+X-Gm-Gg: ATEYQzzcHFOtUu0Kg4aMKdTos4gTa/0sKm+3vRwQhIRn7i5rOXBR/s7ohU6XnJGo8Gu
+	gjZdz/c71U8qghym21CRxP3rs80NA2VOVoN6d1uE3Tt5qptZOQl3Cg47154H9yycuHwHtY7bStH
+	c9vc46d2x0176rMWqXhJQx+Axtlq6JcfCv7+hd+i69w0x1/Q3m4HLBwiS+MTnxv4NG/liOX/8n1
+	rRHBvUj9vcpxmp8Jj2JpHjpZIcBvrTrehKaN5EuJpjqH2AfcToVMN7DDlvOIVZfLDBp98v+M/Uw
+	xPO9BVBBLyHRa6tF1YYrQn538IYAQ8YG0AOsaGpXK1Kopx91PRiPOq4jHnvxhSE35V78nL5xUfw
+	eg8sBXjATZbVoKcTEH1tcA2qyxagijq7n0LjbXY6FwJ8Xc0PCX4gVTvstEzvftR/5DePY1y24d8
+	tDxNEKFVPUW7bMxxGl/F5gmjo6885oN52jVJ0=
+X-Received: by 2002:a05:7022:78e:b0:11b:9b9f:426b with SMTP id a92af1059eb24-12a96ed357fmr3991514c88.20.1774532384919;
+        Thu, 26 Mar 2026 06:39:44 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.45.225])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12aa6513e9bsm4632550c88.0.2026.03.26.06.39.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2026 06:07:18 -0700 (PDT)
-Message-Id: <pull.2074.git.1774530437562.gitgitgadget@gmail.com>
+        Thu, 26 Mar 2026 06:39:44 -0700 (PDT)
+Message-Id: <pull.2074.v2.git.1774532383055.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2074.git.1774530437562.gitgitgadget@gmail.com>
+References: <pull.2074.git.1774530437562.gitgitgadget@gmail.com>
 From: "Aaron Paterson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Mar 2026 13:07:17 +0000
-Subject: [PATCH] odb: add write_packfile, for_each_unique_abbrev,
+Date: Thu, 26 Mar 2026 13:39:43 +0000
+Subject: [PATCH v2] odb: add write_packfile, for_each_unique_abbrev,
  convert_object_id
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -105,7 +109,7 @@ Signed-off-by: Aaron Paterson <apaterson@pm.me>
     
     This adds three ODB source vtable methods that were not part of the
     recent ps/odb-sources and ps/object-counting series, plus caller routing
-    for object-name.c.
+    for object-name.c and fast-import.c.
     
     New vtable methods:
     
@@ -123,15 +127,21 @@ Signed-off-by: Aaron Paterson <apaterson@pm.me>
      * convert_object_id: Translate between hash algorithms using the loose
        object map. Used during SHA-1 to SHA-256 migration.
     
-    Caller routing in object-name.c:
+    Caller routing:
     
-    The abbreviation and disambiguation paths in object-name.c
-    (find_short_object_filename, find_abbrev_len_packed, and
-    find_short_packed_object) directly access files-backend internals (loose
-    cache, pack store, MIDX). These are converted to dispatch through the
-    for_each_unique_abbrev vtable method, so that non-files backends
-    participate in abbreviation and disambiguation through proper
-    abstraction rather than being skipped.
+     * object-name.c: The abbreviation and disambiguation paths
+       (find_short_object_filename, find_abbrev_len_packed, and
+       find_short_packed_object) directly access files-backend internals
+       (loose cache, pack store, MIDX). These are converted to dispatch
+       through the for_each_unique_abbrev vtable method, so that non-files
+       backends participate through proper abstraction rather than being
+       skipped.
+    
+     * fast-import.c: end_packfile() replaced direct pack indexing,
+       registration, and odb_source_files_downcast() with a call to
+       odb_write_packfile(). gfi_unpack_entry() falls back to
+       odb_read_object() when the pack slot is NULL (non-files backends
+       ingest packs without registering them on disk).
     
     This addresses Patrick's feedback on the previous submission [1]: the
     correct fix for downcast sites is proper vtable abstraction, not
@@ -146,10 +156,10 @@ Signed-off-by: Aaron Paterson <apaterson@pm.me>
      * self_contained_out output field on odb_write_packfile_options
     
     Motivation: These methods are needed by the local helper backend series
-    [2], which delegates object and reference storage to external git-local-
-    helper processes. sqlite-git [3] is a working proof of concept that
-    stores objects, refs, and reflogs in a single SQLite database with full
-    worktree support.
+    (Series 2) [2], which delegates object and reference storage to external
+    git-local- helper processes. sqlite-git [3] is a working proof of
+    concept that stores objects, refs, and reflogs in a single SQLite
+    database with full worktree support.
     
     CC: Junio C Hamano gitster@pobox.com, Patrick Steinhardt ps@pks.im
     
@@ -157,17 +167,197 @@ Signed-off-by: Aaron Paterson <apaterson@pm.me>
     https://github.com/gitgitgadget/git/compare/master...MayCXC:git:ps/series-2-helpers-v3.patch
     [3] https://github.com/MayCXC/sqlite-git
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2074%2FMayCXC%2Fps%2Fseries-1-vtable-v3-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2074/MayCXC/ps/series-1-vtable-v3-v1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2074%2FMayCXC%2Fps%2Fseries-1-vtable-v3-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2074/MayCXC/ps/series-1-vtable-v3-v2
 Pull-Request: https://github.com/gitgitgadget/git/pull/2074
 
- object-name.c      |  79 ++++++++++----
- odb.c              |  26 +++++
- odb.h              |  26 +++++
- odb/source-files.c | 259 +++++++++++++++++++++++++++++++++++++++++++++
- odb/source.h       | 108 +++++++++++++++++++
- 5 files changed, 480 insertions(+), 18 deletions(-)
+Range-diff vs v1:
 
+ 1:  146c7ed0b2 ! 1:  5b3e9a8298 odb: add write_packfile, for_each_unique_abbrev, convert_object_id
+     @@ Commit message
+      
+          Signed-off-by: Aaron Paterson <apaterson@pm.me>
+      
+     + ## builtin/fast-import.c ##
+     +@@ builtin/fast-import.c: static void end_packfile(void)
+     + 	running = 1;
+     + 	clear_delta_base_cache();
+     + 	if (object_count) {
+     +-		struct odb_source_files *files = odb_source_files_downcast(pack_data->repo->objects->sources);
+     +-		struct packed_git *new_p;
+     + 		struct object_id cur_pack_oid;
+     +-		char *idx_name;
+     + 		int i;
+     + 		struct branch *b;
+     + 		struct tag *t;
+     +@@ builtin/fast-import.c: static void end_packfile(void)
+     + 					 object_count, cur_pack_oid.hash,
+     + 					 pack_size);
+     + 
+     +-		if (object_count <= unpack_limit) {
+     +-			if (!loosen_small_pack(pack_data)) {
+     +-				invalidate_pack_id(pack_id);
+     +-				goto discard_pack;
+     +-			}
+     +-		}
+     ++		if (lseek(pack_data->pack_fd, 0, SEEK_SET) < 0)
+     ++			die_errno(_("failed seeking to start of '%s'"),
+     ++				  pack_data->pack_name);
+     + 
+     +-		close(pack_data->pack_fd);
+     +-		idx_name = keep_pack(create_index());
+     ++		if (odb_write_packfile(the_repository->objects,
+     ++				       pack_data->pack_fd, NULL))
+     ++			die(_("failed to ingest pack"));
+     + 
+     +-		/* Register the packfile with core git's machinery. */
+     +-		new_p = packfile_store_load_pack(files->packed, idx_name, 1);
+     +-		if (!new_p)
+     +-			die(_("core Git rejected index %s"), idx_name);
+     +-		all_packs[pack_id] = new_p;
+     +-		free(idx_name);
+     ++		/*
+     ++		 * Non-files backends do not register a pack on disk,
+     ++		 * so NULL out the slot to prevent use-after-free in
+     ++		 * gfi_unpack_entry.
+     ++		 */
+     ++		all_packs[pack_id] = NULL;
+     + 
+     + 		/* Print the boundary */
+     + 		if (pack_edges) {
+     +-			fprintf(pack_edges, "%s:", new_p->pack_name);
+     ++			fprintf(pack_edges, "pack-%s:",
+     ++				hash_to_hex(pack_data->hash));
+     + 			for (i = 0; i < branch_table_sz; i++) {
+     + 				for (b = branch_table[i]; b; b = b->table_next_branch) {
+     + 					if (b->pack_id == pack_id)
+     +@@ builtin/fast-import.c: static void *gfi_unpack_entry(
+     + {
+     + 	enum object_type type;
+     + 	struct packed_git *p = all_packs[oe->pack_id];
+     ++	if (!p) {
+     ++		/*
+     ++		 * Pack was ingested by a non-files backend via
+     ++		 * odb_write_packfile() and is no longer on disk.
+     ++		 * Read the object back through the ODB instead.
+     ++		 */
+     ++		enum object_type type;
+     ++		enum object_type odb_type;
+     ++		return odb_read_object(the_repository->objects,
+     ++				       &oe->idx.oid, &odb_type, sizep);
+     ++	}
+     + 	if (p == pack_data && p->pack_size < (pack_size + the_hash_algo->rawsz)) {
+     + 		/* The object is stored in the packfile we are writing to
+     + 		 * and we have modified it since the last time we scanned
+     +
+       ## object-name.c ##
+      @@
+       #include "packfile.h"
+     @@ odb.c: int odb_write_object_stream(struct object_database *odb,
+       				const char *secondary_sources)
+      
+       ## odb.h ##
+     -@@ odb.h: enum object_info_flags {
+     - 	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
+     - 	 */
+     - 	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
+     -+
+     -+	/*
+     -+	 * Only consider objects marked as "kept" (surviving GC). Used by
+     -+	 * helper backends that track kept status per object. Backends that
+     -+	 * do not support kept tracking should return -1 (not found).
+     -+	 */
+     -+	OBJECT_INFO_KEPT_ONLY = (1 << 5),
+     - };
+     - 
+     - /*
+      @@ odb.h: int odb_write_object_stream(struct object_database *odb,
+       			    struct odb_write_stream *stream, size_t len,
+       			    struct object_id *oid);
+
+
+ builtin/fast-import.c |  43 ++++---
+ object-name.c         |  79 ++++++++++---
+ odb.c                 |  26 +++++
+ odb.h                 |  19 ++++
+ odb/source-files.c    | 259 ++++++++++++++++++++++++++++++++++++++++++
+ odb/source.h          | 108 ++++++++++++++++++
+ 6 files changed, 498 insertions(+), 36 deletions(-)
+
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 9fc6c35b74..160495d9b1 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -876,10 +876,7 @@ static void end_packfile(void)
+ 	running = 1;
+ 	clear_delta_base_cache();
+ 	if (object_count) {
+-		struct odb_source_files *files = odb_source_files_downcast(pack_data->repo->objects->sources);
+-		struct packed_git *new_p;
+ 		struct object_id cur_pack_oid;
+-		char *idx_name;
+ 		int i;
+ 		struct branch *b;
+ 		struct tag *t;
+@@ -891,26 +888,25 @@ static void end_packfile(void)
+ 					 object_count, cur_pack_oid.hash,
+ 					 pack_size);
+ 
+-		if (object_count <= unpack_limit) {
+-			if (!loosen_small_pack(pack_data)) {
+-				invalidate_pack_id(pack_id);
+-				goto discard_pack;
+-			}
+-		}
++		if (lseek(pack_data->pack_fd, 0, SEEK_SET) < 0)
++			die_errno(_("failed seeking to start of '%s'"),
++				  pack_data->pack_name);
+ 
+-		close(pack_data->pack_fd);
+-		idx_name = keep_pack(create_index());
++		if (odb_write_packfile(the_repository->objects,
++				       pack_data->pack_fd, NULL))
++			die(_("failed to ingest pack"));
+ 
+-		/* Register the packfile with core git's machinery. */
+-		new_p = packfile_store_load_pack(files->packed, idx_name, 1);
+-		if (!new_p)
+-			die(_("core Git rejected index %s"), idx_name);
+-		all_packs[pack_id] = new_p;
+-		free(idx_name);
++		/*
++		 * Non-files backends do not register a pack on disk,
++		 * so NULL out the slot to prevent use-after-free in
++		 * gfi_unpack_entry.
++		 */
++		all_packs[pack_id] = NULL;
+ 
+ 		/* Print the boundary */
+ 		if (pack_edges) {
+-			fprintf(pack_edges, "%s:", new_p->pack_name);
++			fprintf(pack_edges, "pack-%s:",
++				hash_to_hex(pack_data->hash));
+ 			for (i = 0; i < branch_table_sz; i++) {
+ 				for (b = branch_table[i]; b; b = b->table_next_branch) {
+ 					if (b->pack_id == pack_id)
+@@ -1239,6 +1235,17 @@ static void *gfi_unpack_entry(
+ {
+ 	enum object_type type;
+ 	struct packed_git *p = all_packs[oe->pack_id];
++	if (!p) {
++		/*
++		 * Pack was ingested by a non-files backend via
++		 * odb_write_packfile() and is no longer on disk.
++		 * Read the object back through the ODB instead.
++		 */
++		enum object_type type;
++		enum object_type odb_type;
++		return odb_read_object(the_repository->objects,
++				       &oe->idx.oid, &odb_type, sizep);
++	}
+ 	if (p == pack_data && p->pack_size < (pack_size + the_hash_algo->rawsz)) {
+ 		/* The object is stored in the packfile we are writing to
+ 		 * and we have modified it since the last time we scanned
 diff --git a/object-name.c b/object-name.c
 index e5adec4c9d..8f503b985f 100644
 --- a/object-name.c
@@ -328,24 +518,10 @@ index 350e23f3c0..3032d5492c 100644
  				const char *primary_source,
  				const char *secondary_sources)
 diff --git a/odb.h b/odb.h
-index 9aee260105..99d6674706 100644
+index 9aee260105..b7f1a24006 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -374,6 +374,13 @@ enum object_info_flags {
- 	 * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK.
- 	 */
- 	OBJECT_INFO_FOR_PREFETCH = (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK),
-+
-+	/*
-+	 * Only consider objects marked as "kept" (surviving GC). Used by
-+	 * helper backends that track kept status per object. Backends that
-+	 * do not support kept tracking should return -1 (not found).
-+	 */
-+	OBJECT_INFO_KEPT_ONLY = (1 << 5),
- };
- 
- /*
-@@ -570,6 +577,25 @@ int odb_write_object_stream(struct object_database *odb,
+@@ -570,6 +570,25 @@ int odb_write_object_stream(struct object_database *odb,
  			    struct odb_write_stream *stream, size_t len,
  			    struct object_id *oid);
  
