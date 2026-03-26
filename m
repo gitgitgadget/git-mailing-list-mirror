@@ -1,74 +1,74 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CF838CFFF
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 02:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C83E2C86D
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 02:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774490474; cv=none; b=aNwSOuTRu7ftDr9Dd3c0rvWJ9lgLhZeivg6ePxJzJs6+jQgkY51cZ5yZwBuzKwF3oVz0FOdAw4aZK5JiarMlAK+Qi378Ikj0szdxDrjC1S3Rc7RDz+uTdUWLwq49G7JxtQ+327PWnBZUCPCeBEeCGGOPQPXs3QUpWSzezH/Org4=
+	t=1774491168; cv=none; b=QiRgt2qPNfzToPwzk171Q4L8/ucqKYBoWusjbw7UVdq1NvFzWBk6FapPo/oBtRgAoR7iDiFxEqnt8izkJag0CBjbReP0m3SPMyEuiNvaP6V67o3uBtlpC9lEfIVX6vfpYOmYCXdyQMV9uI/kFFPRvsVUbRz0GKvQ8BL16nEhxOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774490474; c=relaxed/simple;
-	bh=W+K07ohit+w9bDjI78fh5uWF0HAuyGMdqjd7cFxtIZA=;
+	s=arc-20240116; t=1774491168; c=relaxed/simple;
+	bh=Gvj6IohmHYPJcPEmbrgyBhFzXwbJTMUIYmt0/gG6VYI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mgnwa9qQoj3VrFA1hxLHakzWrsCLYY4axy+qjbhasAyQYnlb0bwl4jwBBTObaqEM4nmeIiE72B5gfYn26eIunD8nwb7J0NfnVAdim7gYSU6IhJZQH1xJWwv+/gMte8wijp2WKBWdEnz4ijSPjXjYUUMeLgGtZxDEedj6f7es+pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z5w/PwHA; arc=none smtp.client-ip=209.85.221.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=mdvCn8Afzaah2EBZuh0PIOCe93utbmVaL12Pdse1k7tbjum9nEEsvtpNo2krbgGM6WRN8mIzVqKH24x/I94czAmfWRvBTZbWzwY0TDJPt5bm5IUtercBNOuYXVs1q47vFxGf8cQsBohKQULkYfZqeaSwh11YoiA7uLHu6zWFzhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iOijl9Gy; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z5w/PwHA"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43b7ff8fe92so215385f8f.0
-        for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:01:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iOijl9Gy"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-486507134e4so5689495e9.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 19:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774490470; x=1775095270; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774491165; x=1775095965; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5UFq2yfcTdspcWYFvRzxgrynzgHWXIv06emgPUFOOm8=;
-        b=Z5w/PwHAsKX6NzzcREVflspH+g1TVrXe9i5hEbfIyFTJn9nv331TagSH3Hpi9P05Dk
-         JRe7MwkEkseFTFUno+VJo0ZFL5BuEJTFiyLS3KxOSFBsPJ7xcu61y8/yqT2ALJ6HmlAJ
-         p3S2SSiobjKQk+rwfVMz7b7ti9cNWAN7ZF2wP93BicdWMSAohbYL9txtOGJq9yfVpiFg
-         VXG7ryzOs0oWCExui4gG8E7DS1de/MvIrAjkYn4VOQT7q0KqCKAnHJu3DOx3cqi/jHjY
-         3qeB+B8+KhA9lXx3B2okvfF4Jc99hpydJGDPd1fwqkZ/nOTEm0E0qe3wZLr2dHhAmfQ/
-         jgXA==
+        bh=SgQmctrCuX8l0VjYNglDwrs/oj/Im+0qjXxQ71h1Fh8=;
+        b=iOijl9GyNfjsB5Kaa+6Dr/XG8c9KDma3tv/ahFe0yXBcpIDC5nv2itYEOj5Ak3L8Ww
+         SsmPdfJuSUgdKRJ/ONQv5fyIPXDNLtG9MDT0nDcy20grCkkQHXBB8w7c7FaIYNE0C/lk
+         3iZC9Bc3V6G3zZNQNYHS/HLMNPryGa3oU41I7M/bc9Nk+PxbdqNvbanEI+bt6sJJsRmK
+         yJrNcxbA6/24hkQ9oQ1N17ngDo2w7mxMGTnNnYnHG00cfBDDz7nJLRxQhzxqkaNt7VB5
+         xZx9TKC1ziq8pangh/0D9G6aJhEa+Jhisk2JPfDyjyIB3pIyM9LwkbVgUCynDp4cKD18
+         YHmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774490470; x=1775095270;
+        d=1e100.net; s=20251104; t=1774491165; x=1775095965;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5UFq2yfcTdspcWYFvRzxgrynzgHWXIv06emgPUFOOm8=;
-        b=MtOehpy69CSGRUk4+PRK7RTmH7uKdBZpLjEwsT51RSBpSBpTSGXf2LWSdxGgfXN+9j
-         seMWvt89iYhX9kKCKELI6yvDRCvTcqmaNg79SDyyWQkZ/BND4Lj0nVm9+yFhJIJuOG/e
-         V+p0aTAirL9EgjMkjXSEFcsc+cscTqBimknaXl2XFNSaeLw7vglJjo7LJI7trQEDUzEs
-         aw4VFO3/wdBcWEb79lSBvd+2bCJ6ZHbqqt5RKQO+1tBOPCMYeLe4057qhpw684X0c9ab
-         UvloP77EYq+ybHp6rAZpy19o28oGjqGILF8d+A80t7XhXR2vHFBatcGO+beBUzSOwO7Y
-         jyyA==
-X-Gm-Message-State: AOJu0YyWdcPcoU1qKpsA4pM9hbQdtEYKughyui7+iFoVblRhXaHkimnu
-	U5Rnx1PITThUQUAlu4rTm/kbbRwt91fT79rE/1Jp8ZPC81UZ7V88dhv6
-X-Gm-Gg: ATEYQzz85atUuf7xkDs35tVcSbhxO9Ao/PiidExtx6XPM6JoOlysddptVZnaxuMFvka
-	71AmZP2Uwl7vpkVnraqHAYX0+HQlHNjLD1DN9fPjWKGzZFbGkoiWq6c6qgD7g3sJsFZEroBsH7N
-	btJNZuxDgnVSb8b/YQtF+7MQ3NW1tOoYjYTG7+jGvc3NPKnxXYl/Qo3FdQ3PAqMROKSsoXe4/R9
-	oiT4mQM6qGrpusU9e+xtLHxdcRistAigooJ/jFtgtguGMdnwOKNBSVrMyQxJPqKvc6SrqWgbjDT
-	dXV93xtQhgPA8Sek6Yn15TwdMUSBej48usZ9xPFFgqvJJnLYA3zE3Lv60v73OVPS1G+JXzRMDkR
-	oz4D/pkpCSLSKwemXpNVX4WxbA8jpJTZBf9QIDfGmF+hPbMdBEgAwoGVFj67f61atD+xfPFjHib
-	a+6BuXL73qxRaHsaWRREFNrks0oXAeuMDH
-X-Received: by 2002:a5d:634a:0:b0:43b:8ee9:165f with SMTP id ffacd0b85a97d-43b8ee91723mr4390420f8f.53.1774490469414;
-        Wed, 25 Mar 2026 19:01:09 -0700 (PDT)
+        bh=SgQmctrCuX8l0VjYNglDwrs/oj/Im+0qjXxQ71h1Fh8=;
+        b=jqQy2I5zPqgaspu9Sk1hoca+v504qz1rSSS9HtUvIt4kG6TbX23pVBWwALYPOlMqC8
+         tAiiZPGSN7Sd5fyjIa938Ap23zbWI9bu7a5ylGUoO5mq7KCig86DnPPHYZVz2GCmJQCr
+         OyjNHLktuJfbsuk2ds9w7K/BLbw2XyiGIM6HL9BTqJ+XrOxFxFtN1GIrkozHgw2JaOhV
+         LUsHJR9ssn+DI2AiIVUoKI05C2G61f2D8I9z/BZXphbvfVr4Ldjor1Eg5TcsTdeDc03l
+         wkpT8+AgKNr8aoa2kgLob0p1SHcnA7IVX/3ntUTrCkd1IoFEhRX9BOhyQLeKzMun71+p
+         eEOQ==
+X-Gm-Message-State: AOJu0YzxVSoJAlkSqW7/X0dSPXlUwsdG4KEyM6hrUZeiLJ7bWBizVnC0
+	NhmQQmn2A1mNP8f4ZJh39G1V8EPybu3GWE9i88LiSL7Wz3MmSGh/ksUk
+X-Gm-Gg: ATEYQzztxZ2zBdyzucVI8nspnEW4oDx+CKpUeSDq1z0x2M8ASOpt0b5CtWXC6gb4OFT
+	sO3y3YFiOkUCbIviDQRBbKhGfmvGWcAsXFhOd6MfWlCLSYH7GTMEcetWixFjz2ASikt4bUg9B0L
+	M7AyHhTzxCS8n2u1UTZ3lLHlDnqu2m58Kt4hHmvmYUvObUOeBWKrtoEEoffqJtheXcEFVABxJf8
+	ewLQddSu2tyK5RQjhUVZ3a0KLjPW3b84jVWOF1+MeVdT7rqT8wgNCSXDQkzcHSB8c2aelPsKdhG
+	UbNQcLG42sy/8faTxkeWtWhycJ9VfKH9E+Dn8k7Hc894k3Cou4+jBGQ/BMgU4QBsFi+M32PZ9uF
+	knVeVntEeL6nw9ws0IgR7DxdebpnAdVGuQCHreyPFrrE9t/PoI+/VQUoYetzSC+5JaZKmYBJU1H
+	Kgo9ozPo1H6rAgv+lSTKqq4Dxp3/yqlKMn
+X-Received: by 2002:a05:600c:a15:b0:486:fc46:be9e with SMTP id 5b1f17b1804b1-4871606c911mr95257395e9.24.1774491165341;
+        Wed, 25 Mar 2026 19:12:45 -0700 (PDT)
 Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b919e7372sm5225745f8f.34.2026.03.25.19.01.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4871174f39dsm148093785e9.11.2026.03.25.19.12.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 19:01:09 -0700 (PDT)
-Date: Thu, 26 Mar 2026 03:01:07 +0100
+        Wed, 25 Mar 2026 19:12:44 -0700 (PDT)
+Date: Thu, 26 Mar 2026 03:12:43 +0100
 From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v2 2/4] pack-write: add helper to fill promisor file
- after repack
-Message-ID: <acSTY_i4zAueN9jD@lorenzo-VM>
+Subject: Re: [GSoC PATCH v2 3/4] repack-promisor: preserve content of
+ promisor files after repack
+Message-ID: <acSWG-7Kj67zgzvZ@lorenzo-VM>
 References: <cover.1774125871.git.lorenzo.pegorari2002@gmail.com>
  <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <0bb031e7443bb53abbbb0afaa347285d6d8cf7b8.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <xmqqfr5q44jx.fsf@gitster.g>
+ <3dab969a3942532f49f6f9cdcddb5fb2be11e232.1774205661.git.lorenzo.pegorari2002@gmail.com>
+ <xmqqa4vy43q2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,122 +77,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqfr5q44jx.fsf@gitster.g>
+In-Reply-To: <xmqqa4vy43q2.fsf@gitster.g>
 
-On Mon, Mar 23, 2026 at 02:30:26PM -0700, Junio C Hamano wrote:
+On Mon, Mar 23, 2026 at 02:48:21PM -0700, Junio C Hamano wrote:
 > LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
 > 
-> > Create a `copy_all_promisor_files()` helper function used to copy the
-> > contents of all ".promisor" files in a `repository` inside another
-> > ".promisor" file.
-> >
-> > This function can be used to preserve the contents of all ".promisor"
-> > files inside a new ".promisor" file, for example when a repack happens.
-> >
-> > This function is written in such a way so that it will read all the
-> > ".promisor" files inside the given `repository` line by line, and copy
-> > only the lines that are not already present in the destination file. This
-> > is done to avoid copying the same lines multiple times that may come from
-> > multiple (redundant) packfiles. There might be another better/cleaner way
-> > to achieve this.
+> > @@ -40,6 +40,7 @@ static void finish_repacking_promisor_objects(struct repository *repo,
+> >  					      const char *packtmp)
+> >  {
+> >  	struct strbuf line = STRBUF_INIT;
+> > +	int is_first_promisor = 1;
+> >  	FILE *out;
+> > ... 
+> > +		/*
+> > +		 * Fetch-pack sometimes generates non-empty .promisor files
+> > +		 * containing the ref names and associated hashes at the point of
+> > +		 * generation of the corresponding packfile. These pieces of info
+> > +		 * are only used for debugging reasons. In order to preserve
+> > +		 * these, let's copy the contents of all .promisor files in the
+> > +		 * first promisor file created.
+> > +		 */
+> > +		if (is_first_promisor) {
+> > +			copy_all_promisor_files(repo, promisor_name);
+> > +			is_first_promisor = 0;
+> > +		}
+> > +
 > 
-> In the previous step, we extablished that these "back then their ref
-> X used to point at object Y" records are there so that we can
-> identify which refs were fetched at the time the packfile was
-> downloaded to help debugging.  When repacking, losing these records
-> certainly would lose information.
+> Here the underlying assumption seems to be that whichever one of the
+> two potential callers of this function, repack_promisor_objects()
+> and pack_geometry_repack_promisors(), would handle all the existing
+> packs with corresponding .promisor file so it is safe to coalesce
+> all the debugging comments from all the existing .promisor files
+> into one?
 > 
-> But would concatenating all into a single file help preserve the
-> useful information?  Don't we need do better than that?
-
-Yeah, we absolutely need to! That's why I said that I was not satisfied
-at all with the patch (in cover letter of v1). I really needed some
-feedback, because I knew that I was doing things wrong.
-
-> A NEEDSWORK comment, as was discussed in another thread or two in
-> the recent past, is not necessarily a well thought out fully
-> finished specification of an additional piece of work.  "We know
-> this has a problem, we may need to do something about it, like
-> concatenating to save the contents, perhaps?  We do not know the
-> answer, and we do not bother thinking it through right at this
-> moment.  It is left to the future developers to figure it out" is
-> what a NEEDSWORK comment is about.
+> Is it really true, though?  Especially with geometry repacking
+> enabled, wouldn't a regular repack coalesce only the smallish ones
+> into a single pack while leaving an already largeish ones intact, or
+> something?
 > 
-> Your first response to such a comment may be "yeah, I agree that it
-> is bad to lose information we added to help debugging", but the
-> second one should be to wonder if the "like concatenating..." is the
-> best approach going forward.
-> 
-> In other words, we should take a NEEDSWORK comment as a mere
-> starting point, and what NEEDS your work begins at thinking what
-> needs to be done about the problem raised there.
-
-I fully understand this! Honestly, my biggest weakness that I've
-discovered about myself as a dev (through past open-source experience,
-e.g. GSoC'25) is that I get hesitant when I have to work on and submit
-a patch if I don't have a lot of experience with the codebase. This
-happens particularly when I have to take a decision, and not only
-complete a task.
-
-In fact, I decided to work on this specific NEEDSWORK issue to get more
-experience on promisor remotes (the feature that I want to improve in my
-GSoC proposal) before the GSoC coding period... if I get selected, of
-course :-).
-
-I will try my best to improve!
-
-> By mixing them up all into a single list, you no longer can tell
-> when their ref X was observed to be pointing at object Y anymore.
-> You may have two packs originally, with a record for "ref X pointing
-> at object Y" in each of them, but by deduping them, you lose the
-> information that you cloned at one time, and made an additional
-> fetch on another day, and the fact the ref X was pointing at the
-> same value at both times.  I am not sure if it is a good
-> implementation if the objective of this topic is to preserve
-> information that is useful for debugging.
-
-My reasoning was based on the (wrong) assumption that it was impossible
-for the same record fo "ref X is pointing at object Y" to appear
-multiple times. Obviously then, deduping them is the wrong solution, as
-it will lose some debugging information.
-
-> I wonder if it helps to append to each line the file timestamp of
-> the .promisor file we took the record originally?  For the sake of
-> completeness, we could consider adding the filename as well, but we
-> can quickly dismiss it as not so useful ;-)
-
-Related to what I said before about getting hesitant... I actually
-thought about (pretty much) exactly this! My original idea was to add
-a timestamp of the current time when the repack happened. I discarded it
-because I didn't want to add any new information (for no particular
-reason tbh) and because I didn't want ".promisor" file content to
-potentially become too long if many repacks happen.
-
-Your solution is much cleaner compared to what I originally thought of.
-
-> If repacking already repacked promisor packfile, the records would
-> already contain such a timestamp at the end, so the code to copy
-> existing records must be prepared to see if the records are the
-> <ref, oid> tuple, or <ref, oid, timestamp> tuple, and act
-> accordingly.
-
-Makes perfect sense.
-
-> I am *not* saying that without such a "preserve timestamp" column in
-> the record, copying existing records to a new .promisor file is
-> useless.  But we do not see any explanation why the author thinks
-> that it is sufficient to copy existing records while silently
-> deduping.  We can implement only one choice backed by series of
-> decisions like "timestamp might help" and "original filenames would
-> probably not help", and the design should describe what was
-> considered and rejected (as opposed to "we didn't think things
-> through---we just did what the original NEEDSWORK comment suggested
-> doing").
-
-I 100% agree.
-
 > Thanks.
 
-Thank you Junio for your time and feedback,
+I will look into this. I'm going to drastically rework this patch
+series, so that the next version will be much better and better
+explained.
+
+Thank you so much for the time,
 
 Lorenzo
