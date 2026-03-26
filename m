@@ -1,38 +1,75 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2999939099C
-	for <git@vger.kernel.org>; Thu, 26 Mar 2026 04:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746413AF66B
+	for <git@vger.kernel.org>; Thu, 26 Mar 2026 06:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774498112; cv=none; b=cvvbmU8AVT7ziw/XDNs77JL8CjtXraIcpPmy5L+42aMRKUYjLMd+GvgPdkRxAK/00dSGT00ShDQ9MBtPrkGEKidhSTfxXoXMwYuS5EoyYQJcjHg6OPi67s9RX8Gjn6fo2EzP0Y/va5N8HwbPE1C1UgniZOFUAhjBeOOg88Vc5V8=
+	t=1774506405; cv=none; b=jh9PxHLa2L+oiEgvNKDof6Citf1J2NI1CUA+62efwmxoD8FM0tEttB9cBCauWiHn0kJfD+pm4yeq8cI0S9zeWmmstw0euPwzZdmHSLN43TQAd8+EZBOuH1POPk0M2Urfs5+EDp9jQxqkSPKXDd5WZ4XwJCYbyoM8QZsCmIEkMWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774498112; c=relaxed/simple;
-	bh=GHd6xAQ/BoFnbqns34zQl4CLG3w12B3cAam/sdGE/UE=;
+	s=arc-20240116; t=1774506405; c=relaxed/simple;
+	bh=y2bubOC76GA8Ay0w8mUCubS+U11l2psODkqpxyB56ZE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G+0gv2lHIiEKMF8gIQOAoGvIKYOCHq8rgXz42kSN1opeo8lI6hFEMZTgX2tQgyaHHwQ9fZlSRgMxp3QrcIHUbHbH0WyxoR6rR+EPP7ukCnzg7EuxsMSX3CX2g4ImzHQ0K5KshT7/a4PiBUpdKdd2y//DydBEo4485qI2g9nbSw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dZCmMHJ5; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=YJAxTXDqQ1LzyQ+E1P1Z9mJTB2Y1oG3o3sVLDzQLBkn5EYlVLd3aT25OptzvXy7xIuEO/WURCj+0L2hwCiEWEXnAlMtY1LmHbGqR8kQxSmZU7I/Gdczb2oyxBu27kowKXcCxcekjtjOmG+JIf8dFjMySX945A0oyeukBTttxq4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r3v+4BfX; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dZCmMHJ5"
-Received: (qmail 147180 invoked by uid 106); 26 Mar 2026 04:08:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GHd6xAQ/BoFnbqns34zQl4CLG3w12B3cAam/sdGE/UE=; b=dZCmMHJ5ZIla+tzmcOBcvvWFUE5CE6XDEDQjhEfxbhjMRopYibRsoaqOzlyIexDj5LU+IMDg5DHVebtt1N+qKG6Dg7nbVv4vrJzf6lbLezDPWKZsOkufv0hhI86VALZhVkocfnsH5dFoQFWwHbZd6/Nt9K82rkX5KAND/CQmpXoVASxDMP8DG+x9XE4+StFvYSU+/qwzS1i+mlgECN/bL2+/vjKrO8pptllKmIJqZFlh7d751nQsWOPppf+TlSk0ruSiFnsyJTc1QaY1pnouHny7knX+8/ybW/NyKcoGGRe0FvGTtg7k4P1mha5SEofXr97KINLVa/ao9gCHnlRljQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Mar 2026 04:08:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 199990 invoked by uid 111); 26 Mar 2026 04:08:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Mar 2026 00:08:28 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 26 Mar 2026 00:08:28 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/11] test-lib: catch misspelt 'test_expect_successo'
-Message-ID: <20260326040828.GA686242@coredump.intra.peff.net>
-References: <20260325062114.2067946-1-gitster@pobox.com>
- <20260325062114.2067946-2-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r3v+4BfX"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-486fc4725f0so4747995e9.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2026 23:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774506402; x=1775111202; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=73ceobk00cSKVr2bY5NjvNmYuERMPOZgRTwjTBxc5LQ=;
+        b=r3v+4BfXUat3CUwjRknbYmVK+NYbhUlWYNz1D+uQOufrza+SfU6kLFRRmgbKi0yxYo
+         KOuZtKRKniDhWpdwqmrOZ52seNgrh1ZxefgML5t5vbH2j8c8Qv1804FFgtKL2wJqtZKr
+         d2LGRiXy0Q2blM3mtcTepuaVKcA8f62fUaxq6ZkyZzaZCEutybhgDs8OvSy02OCnMEFH
+         39TCea5xWgiVXWXaWXZhqdO1S/DfEz4wpQygiY07733w8GwabF19RSYe6oOTD/6COtcw
+         lU0K4c0XjNXVOmRB8a+GclgEM9nn5nF5R3/SDWt4dWMYSVuju6bGMbb9UoT1Qvb41WTL
+         Nn9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774506402; x=1775111202;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=73ceobk00cSKVr2bY5NjvNmYuERMPOZgRTwjTBxc5LQ=;
+        b=P1MTyNQekPnWMackN3/SOYM9zwtGNvMAyKntemWNCdStZT2BTLlHU4Ijy60AQEBQ5c
+         nLzEibka39FtZFg78dpkSwAJlkRQrHvLjEICpTwsDmqcyE7ZHr70lwd6IbRr5jxTBOxw
+         +F22KJp/LHqGzvoDqxwT7KwPa2awoirGkIlJOeSUW3ev/2Ic2WXbs9aPefxTBMyqK842
+         ITZZbxSGT8xyqAQGpTa2W3YVRB+h7sAT8JGcF0JYgRlxCcLgdhC02/SbnDXQzgvIcIgj
+         GjGIXG4junBkhL+SVrMvTUxM4vZtTnrTG9dn3yGo4SK8gkNJ8NvYc7kt23jDzYhqD+OV
+         G+fA==
+X-Gm-Message-State: AOJu0YzDuNgDx1SJ/Jqe+4Mx0i56JoThRgITco0FHZ/ASWcD5aUyjScb
+	7CgK4dgFZzIy0R2B+kVuhEP6VCX/6g+2pllyk4uqUlo+TRzZIxoR0U1E
+X-Gm-Gg: ATEYQzw762ea+vDtpBG55YAxdRnEZtGK5PAA0fJ5hcIs2UWwzEL1VRf16i/xjv8GjGO
+	U5gM140YrjpDRDk+m+uCRE/LRS99C7yvFjdVHfvAR4+wNmsSh9fQZcm/tdDSs8/bN9xVgOFzUGv
+	NwopLLlAm7pfaw4N5m5TwnMxvZPhX70JbqzrU+/mXZHKa4MhP4lUoAESxgsdxd0l4oPyhUW7mdp
+	lEuA1V4M5HlpngcONOwDGEbVP0nxWHUzml9QoaqTn0tGvY3JJL0eV1EUXpKViwxA3zW5rYP32Cj
+	zdO0fSFim2VIXq/VLMfIcoxPxYLDDvqTqC7ZlSkjwle7RJrsbvFlWkctvmixeIFZ91jKT2oi9Ua
+	8kNkoYCulbmukVAZRukluzqmHBmhdzQk/SSEhEInIYpiCPbnhftaTremxvKTMy+K4zaLh9X+sf0
+	QhKNKQqUOH154YF79wlGxbRP1n0lfi4/uSVv2z8LfkQYKIDV3IG5jqsor1Y5iVnm/AkFdl0KKh4
+	hnMBa2X42CZ
+X-Received: by 2002:a05:600c:3ba1:b0:46e:59bd:f7e2 with SMTP id 5b1f17b1804b1-48722bdfeebmr5516445e9.11.1774506401554;
+        Wed, 25 Mar 2026 23:26:41 -0700 (PDT)
+Received: from localhost (20014C4D24C038005579661748639A82.dsl.pool.telekom.hu. [2001:4c4d:24c0:3800:5579:6617:4863:9a82])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48722d236a9sm20455905e9.11.2026.03.25.23.26.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 23:26:41 -0700 (PDT)
+Date: Thu, 26 Mar 2026 07:26:11 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Yee Cheng Chin <ychin.git@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Jeff King <peff@peff.net>, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 0/5] Xdiff cleanup part 3
+Message-ID: <acTRg4+8/c/BfE7d@szeder.dev>
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+ <pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,69 +78,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260325062114.2067946-2-gitster@pobox.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
 
-On Tue, Mar 24, 2026 at 11:21:04PM -0700, Junio C Hamano wrote:
+On Wed, Mar 25, 2026 at 09:11:00PM +0000, Ezekiel Newren via GitGitGadget wrote:
+> v2 is a radical departure from v1 Changes in v2:
+> 
+>  * make the flow of xdl_cleanup_records() easier to follow
+> 
+> There is no performance or behavioral change introduced in this patch
+> series.
+> 
+> === original cover letter bellow ===
+> 
+> Patch series summary:
+> 
+>  * patch 1: Introduce the ivec type
+>  * patch 2: Create the function xdl_do_classic_diff()
+>  * patches 3-4: generic cleanup
+>  * patches 5-8: convert from dstart/dend (in xdfile_t) to
+>    delta_start/delta_end (in xdfenv_t)
+>  * patches 9-10: move xdl_cleanup_records(), and related, from xprepare.c to
+>    xdiffi.c
+> 
+> Things that will be addressed in future patch series:
+> 
+>  * Make xdl_cleanup_records() easier to read
+>  * convert recs/nrec into an ivec
+>  * convert changed to an ivec
+>  * remove reference_index/nreff from xdfile_t and turn it into an ivec
+>  * splitting minimal_perfect_hash out as its own ivec
+>  * improve the performance of the classifier and parsing/hashing lines
+> 
+> === before this patch series typedef struct s_xdfile { xrecord_t *recs;
+> size_t nrec; ptrdiff_t dstart, dend; bool *changed; size_t *reference_index;
+> size_t nreff; } xdfile_t;
+> 
+> typedef struct s_xdfenv { xdfile_t xdf1, xdf2; } xdfenv_t;
+> 
+> === after this patch series typedef struct s_xdfile { xrecord_t *recs;
+> size_t nrec; bool *changed; size_t *reference_index; size_t nreff; }
+> xdfile_t;
+> 
+> typedef struct s_xdfenv { xdfile_t xdf1, xdf2; size_t delta_start,
+> delta_end; size_t mph_size; } xdfenv_t;
 
->  # Test the binaries we have just built.  The tests are kept in
->  # t/ subdirectory and are run in 'trash directory' subdirectory.
-> +
-> +set -e
+Please make sure that each commit in this series can be built with
+DEVELOPER=1, which enables a bunch of additional compiler warnings.
+While the last commit can be built with all those warnings, the three
+in the middle fail with sign comparison errors.
 
-This causes failures in t0005 and t3600 with dash, but not bash.
+> Ezekiel Newren (5):
+>   xdiff/xdl_cleanup_records: delete local recs pointer
+>   xdiff/xdl_cleanup_records: make limits more clear
 
-It looks like the suppression of "-e" on the left-hand-side of an && is
-different when there is command substitution in play:
+        CC xdiff/xprepare.o
+    xdiff/xprepare.c: In function ‘xdl_cleanup_records’:
+    xdiff/xprepare.c:307:54: error: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Werror=sign-compare]
+      307 |                 action1[i] = (nm == 0) ? DISCARD: nm >= mlim1 ? INVESTIGATE: KEEP;
+          |                                                      ^~
+    xdiff/xprepare.c:314:54: error: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Werror=sign-compare]
+      314 |                 action2[i] = (nm == 0) ? DISCARD: nm >= mlim2 ? INVESTIGATE: KEEP;
+          |                                                      ^~
+    cc1: all warnings being treated as errors
+    make: *** [Makefile:2923: xdiff/xprepare.o] Error 1
 
-  $ dash -c 'OUT=$( ((yes; echo $? 1>&3) | :) 3>&1) && echo out=$OUT'
-  out=141
+>   xdiff/xdl_cleanup_records: make setting action easier to follow
 
-  $ dash -ec 'OUT=$( ((yes; echo $? 1>&3) | :) 3>&1) && echo out=$OUT'
-  out=
+      CC xdiff/xprepare.o
+  xdiff/xprepare.c: In function ‘xdl_cleanup_records’:
+  xdiff/xprepare.c:309:29: error: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Werror=sign-compare]
+    309 |                 else if (nm < mlim1)
+        |                             ^
+  xdiff/xprepare.c:321:29: error: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Werror=sign-compare]
+    321 |                 else if (nm < mlim2)
+        |                             ^
+  cc1: all warnings being treated as errors
+  make: *** [Makefile:2923: xdiff/xprepare.o] Error 1
 
-whereas with bash, both produce 141.
+>   xdiff/xdl_cleanup_records: simplify INVESTIGATE handling for clarity
 
-The idea is that $OUT becomes the exit status of "yes" here, and we are
-expecting to see SIGPIPE. With "-e" in effect, the failing "yes" will
-terminate before we echo $?.
+Same error as the last one.
 
-To demonstrate the effect as we build it up from smaller pieces:
+>   xdiff/xdl_cleanup_records: use unambiguous types
 
-  # produces 141, SIGPIPE from yes
-  dash -c '((yes; echo $? 1>&3) | :) 3>&1'
+Good.
 
-  # produces nothing, "-e" kills subshell after yes fails
-  dash -ec '((yes; echo $? 1>&3) | :) 3>&1'
-
-  # produces 141 (and "ok"), as the && suppresses -e
-  dash -ec '((yes; echo $? 1>&3) | :) 3>&1 && echo ok'
-
-  # produces "out="; the $() makes us forget that we're on LHS of &&
-  dash -ec 'OUT=$( ((yes; echo $? 1>&3) | :) 3>&1) && echo out=$OUT'
-
-The actual failing code in t0005 is:
-
-  OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
-  test_match_signal 13 "$OUT"
-
-and the one in t3600 is similar. I guess you could do:
-
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index afba0fc3fc..0bf1f16750 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -42,7 +42,7 @@ test_expect_success 'create blob' '
- '
- 
- test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
--	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
-+	OUT=$( ((large_git || echo $? 1>&3) | :) 3>&1 ) &&
- 	test_match_signal 13 "$OUT"
- '
- 
-
-That neglects to echo $? when large_git surprisingly succeeds, but that
-would mean $OUT is empty, which would cause the test to (correctly)
-fail. I kind of hate it, though.
-
--Peff
+> 
+>  xdiff/xprepare.c | 89 ++++++++++++++++++++++++++++++++----------------
+>  1 file changed, 59 insertions(+), 30 deletions(-)
