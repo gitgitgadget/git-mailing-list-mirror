@@ -1,85 +1,88 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA31C3C9EE7
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 07:53:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646F336AB46
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 08:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774598032; cv=none; b=gSjoxYjCzmDfO8fkU0/THYqcoSdoNzbyK3T0k1spNjhfLRU/Hc16PzXGgpy4ycafe2I02dFrCOkq4Nm3ya9VNo5oqA9Ey4qG06UrlQ+8L/3sKqxQF7+M1bx1rJ9vIgJcBCyvn13vuUG4kqLL6Bu1UkPp0xIuwjN9YPvkZ4xrrbQ=
+	t=1774598713; cv=none; b=UIPd1QXOK4B7nmbVR9RkETBv3kzmvBTEUf6loyrqvt0v0iNPmxGP4ipixkR205a406w8Qkzq3mMBkLuu19Ot2+PdqwlUCcUv74IUG9MlrYkSTZn9ecIMUEXPTz7GXHVdqLWBo7O/aJoya/DdIRyzBQaXcNGEziauc9ON0dZLDtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774598032; c=relaxed/simple;
-	bh=X+mOrLY0aw8nsjAgSrmgFw9iFqXsVBmmZ1iS6ak7CvY=;
+	s=arc-20240116; t=1774598713; c=relaxed/simple;
+	bh=UzPLQz66P0gfrl8roA1PVP3jQNpRgWUu9L3Z13Xr6Y4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OpbKYbr89/l7Ar76jk6ESr/skkHnn692EH+/341ZLIL5ToBT3tZKgmoEEoyVWFh4ZQady55+dilGFs99/W+FHbLXDJwqulcS7IVmf6806AD1uDIrZRXNMLapkXK61FxNLGvS/d1CH0dmvU81Oi32lq7AGUKP5+qDkRXU4Smx5UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FSHI/71X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eE+QOy2p; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZoaOBAwkUbNxTZqskS02pEjMIlfqQ8+ppi7qT/Jy8aTAczimGvToky9cXVxrqfvkBWuht5t+kKsGW/WOhhtSffuiryJOrxThk04AtqMwIXvbBRKTvWKjG6x17XeMye3l6iVIPtSl/pKa9XG5Lcj0F2lBO9/vJsHJXdXx/ZJCxE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S8vwWdJ/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vTDlZ1he; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FSHI/71X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eE+QOy2p"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C3EF9140025D;
-	Fri, 27 Mar 2026 03:53:45 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Fri, 27 Mar 2026 03:53:45 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S8vwWdJ/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vTDlZ1he"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9D195EC027D;
+	Fri, 27 Mar 2026 04:05:06 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 27 Mar 2026 04:05:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774598025; x=1774684425; bh=BHA605WJ7X
-	ceVwf5GnuOD8zDiUngn5ul7iLIFO+SUfA=; b=FSHI/71XMz1RJ5sE0/eYHnHgF3
-	EpForcdgftkQ1/M6RobH5guiYub3wERQ+gVBYOm9F/MQ5s01vTwu7Ovqxv4pEm2V
-	ZEQL7Jwc0SMHeBNOxw2IaRL0I6HkLkYET5peCuqXr+DeqUUouakbZhTrPLk1iJCb
-	8RPz486QJidVo5tHl0WjwnpSIavg1MFjV7FolSxtceLkKvpcSmjaGwlzE/lxY1nT
-	gPDQ4NogD2Bw6e/V0+rGHH4EcaaeSre5A/UWSivABHW5cRHF6zGiFg6v5/MPfktl
-	s4NKw1VECcCo1pbhpDgihlyHzS1OzjvWQh77yh4d1vE2BvEhRFMcVUS1McmA==
+	:subject:to:to; s=fm1; t=1774598706; x=1774685106; bh=UzPLQz66P0
+	gfrl8roA1PVP3jQNpRgWUu9L3Z13Xr6Y4=; b=S8vwWdJ/BkWieeOJTCfDcUBe2/
+	aLLQ5n3HfgM+clAK5GJNDwn82KNqj6/XrhM6SrGVPPJCqWPh7QQWQkg60Qre1GgJ
+	LJruwEHadJV9yCscWHk0QHO7yeRHwIsNL58xRtyoaT44tWpjjO3ZSId7k6R0ZxY/
+	30HD0rTbLA5x+Hvm6cPdaY7wd3RoXPmcFXd7Znk+mtZZ8MMV+KXi8sBBpl4W2vzK
+	vbTxzPYIz8Tq4MBgn/qEYM15cKJiiIjjyfwZKt7Jd1qFj/NVYdc+GLi20hzqWkk8
+	d6bZoRpSztGBtGLUPEHjct1syuMq0ykx52/EDsYn1tgAMAQMarkBFtwOXNwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774598025; x=1774684425; bh=BHA605WJ7XceVwf5GnuOD8zDiUngn5ul7iL
-	IFO+SUfA=; b=eE+QOy2pllSn5RObbWlHtsAFtN4udYkUJTkg5iiRCSnO4NYJhRe
-	cBAkBObbajJ74j1lLv3EaJkTzdxrY3QivhViUsNBHJFQ75huAJyEZdpy+V9+LQL6
-	3KD9qxTNe3XoHy5+nUdGH4LUmKPvQesqju4b++lKwkU+uO1DMTdQLkZLVQRRHyZM
-	G8slKMcXP/HZxviYYtF+Q11bpNqmo91KG4UKh9Eny7tcF5SlHwyXGhNtbh8GCBFD
-	kjcT9VREk5Qpgco62gLmpDl4Yhl5oCRU6wx7uExhtiD1s+9SxYaSivbccfKJJz/o
-	ZmLsZvnLMQuOP7LfP52ShRx336ZrEjUZqtQ==
-X-ME-Sender: <xms:iTfGaZdcg_LOO6MR6u6tpS-OyMesvHTdobRjSbkQ0sdhLBtC1vZMfg>
-    <xme:iTfGaeoNJEbr2k200jy78eBQ8Bvz9MRoZei0zB-Xyl5Rh4SOVKhDXHrmwmVIMnA3J
-    xFmeLZdGacMAHzDIFH_ktZvfyIDizAL9qWgDwY5pM2wWgEXsds0_w>
-X-ME-Received: <xmr:iTfGaf4wEDZvXV6KVWcFkZYD-54c93xEfMuEX1TOfgyEXTGej22hLrI2cEpTjEMXQTJWF-X9ug1MivsG7MJiAJoIffy2GhsKCZY5qJ1jLg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeljeefucetufdoteggodetrf
+	1774598706; x=1774685106; bh=UzPLQz66P0gfrl8roA1PVP3jQNpRgWUu9L3
+	Z13Xr6Y4=; b=vTDlZ1he6phzSMJoHvT9r8nnI8ppKYlVG3kp0/PqXuEc1W9JVQL
+	LFaycJlDfuNovwPP5K53YxmPFnr72qc7yfl0DgaDp8wv7K14nvme8yyo8i+HEWx2
+	BbH3yLpzvPfHffTPEi1niKhUeu2w4ro9VOhKoaiKCqBPPqr7h/ZRGbQCzwtj0tLB
+	Oe/31iXUUZLgCxkd7rL+zJwyDS72qigdYKKyQqzQSNJMW9+sAmCQQBUcyU5qOddu
+	C41DzN0WJGvGFd5TwXNHUFzPGnasVNoZ66qaCsU7TeAzr2GKKTDkByrVw3h9B9EM
+	w6fr1IcDUmxKF7ssOpKMe5SAib7fhRnQhBw==
+X-ME-Sender: <xms:MjrGaf6mzKGZJI0VLIjT9RxJQvsV3ZDQX7CG5P7voFmu7zQ0LW3Uow>
+    <xme:MjrGabw0gBOTwDjqJgbvlf_V3i7fIEFhgMQyf_w0s077ozLCHVx_yhWkERycpbchu
+    sH9bw0ICjLM0Ogp-Qz2FDJCsboVBZu6KZiVJBJOZD6EtUWTbuZ3EuM>
+X-ME-Received: <xmr:MjrGaezuWcVwPYkUH_8Y5xwmLAV4mWJZfA0sDzjLdA38VqtV3pKfGypqk8I9W4fYkgUYxHkridWXr_XJg-Xwm7SAP4QXCGgDCu05ERhniw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeljeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:iTfGacqT2-cuCzHggRdUyUIPMIetekhbFmWVYkSxc9C-P9YpWxGoDg>
-    <xmx:iTfGaZjk3tNLkvXPd2X2GTP4M2U48VSOKfNiyzfPtoiP6ZMIKogp9g>
-    <xmx:iTfGaeJl-Q1nDsBIbGeceTEgqiRonL7adVI-amHCqIXqgkFo79O47g>
-    <xmx:iTfGaRB35FoYWXyajrkf7mJhPQbo_kxE2mpZqOzry8m-01VlVE7EZA>
-    <xmx:iTfGaXa-nEBUNC7wxmy8GJkkwYAA5RssMnmXbnmboG-uUWqyFWDDIPtl>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomhdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggs
+    ohhrrgdrtghomh
+X-ME-Proxy: <xmx:MjrGabzsI0Ns5HGaHjf5O_cAXR1_zkn5_LrMEreGSqnd1iZtrmIw6Q>
+    <xmx:MjrGaQZxYlddO61wxsh1Rsp-ddivKfz1vbVWdKp86l6wMpbFaubi5g>
+    <xmx:MjrGaUXd-Q-mhjX3-V9n39pcgJOfjvw8jRV3WdL_xpjNkd3DJRPSnw>
+    <xmx:MjrGaWh8BHJ4CNnFq666Yjk4nics9dfMQktTOtk1QQgjihxto2zVkw>
+    <xmx:MjrGaZlYPl5pPXcRrmHz0d8zOneD90y8Eb46ygNA2MdLdiIXP6IbyrBt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Mar 2026 03:53:44 -0400 (EDT)
+ 27 Mar 2026 04:05:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c6eff644 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Mar 2026 07:53:43 +0000 (UTC)
-Date: Fri, 27 Mar 2026 08:53:41 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 860b4cc3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Mar 2026 08:05:01 +0000 (UTC)
+Date: Fri, 27 Mar 2026 09:04:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 01/11] test-lib: catch misspelt 'test_expect_successo'
-Message-ID: <acY3haGPHPLSfalj@pks.im>
-References: <20260325062114.2067946-1-gitster@pobox.com>
- <20260325062114.2067946-2-gitster@pobox.com>
- <20260326040828.GA686242@coredump.intra.peff.net>
- <xmqq8qbesm1r.fsf@gitster.g>
- <20260326172920.GA2447148@coredump.intra.peff.net>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 00/12] config-hook cleanups and three small git-hook
+ features
+Message-ID: <acY6KtREkGcf6dyp@pks.im>
+References: <20260309005416.2760030-1-adrian.ratiu@collabora.com>
+ <20260325195503.1139418-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,43 +91,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260326172920.GA2447148@coredump.intra.peff.net>
+In-Reply-To: <20260325195503.1139418-1-adrian.ratiu@collabora.com>
 
-On Thu, Mar 26, 2026 at 01:29:20PM -0400, Jeff King wrote:
-> On Thu, Mar 26, 2026 at 07:27:44AM -0700, Junio C Hamano wrote:
-> 
-> > >  test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
-> > > -	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
-> > > +	OUT=$( ((large_git || echo $? 1>&3) | :) 3>&1 ) &&
-> > >  	test_match_signal 13 "$OUT"
-> > >  '
-> > >  
-> > >
-> > > That neglects to echo $? when large_git surprisingly succeeds, but that
-> > > would mean $OUT is empty, which would cause the test to (correctly)
-> > > fail. I kind of hate it, though.
-> > 
-> > Would
-> > 
-> > 	OUT=$( ((large_git && echo 0 || echo $? 1>&3) | :) 3>&1 )
-> > 
-> > do a bit better?
-> 
-> Yeah, that is better (though in practice the same for our purposes in
-> this particular test).
-> 
-> > We can keep fixing things one by one as we find these little
-> > glitches and gochas, of it may be a whack-a-mole exercise that
-> > eventually will turn out to be futile.  I dunno.
-> 
-> Yeah, after getting the tests passing locally I pushed to CI and saw a
-> ton of failures. I think one is just:
+On Wed, Mar 25, 2026 at 09:54:51PM +0200, Adrian Ratiu wrote:
+> Changes in v3:
+> * New commit: properly initialize strbuf in receive-pack.c (Patrick)
+> * New commit: add a check which prevents unknown hooks with git-hook(1) (Patrick)
+> * Removed duplicated function doc comment between .h and .c files (Patrick)
+> * Extended `git hook list` test to also include a hook from the hookdir (Patrick)
+> * Converted unsigned int disabled:1 to proper bool (Patrick)
+> * Minor commit rewording, header sorting, blank line fixes (Patrick)
 
-I think the exercise is still worth it -t most of the changes are
-trivial, and it does help to make our tests a bit more robust.
-
-Let me know in case you get worn out by this though and then I'm happy
-to take over. I like to have a numb task every now and then where I
-don't have to think much, and this here very much is such a task :)
+Thanks, I'm happy with this version!
 
 Patrick
