@@ -1,124 +1,106 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75606342519
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 18:09:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF55349B12
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 18:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774634990; cv=none; b=TcI78fquQN2mNHy+QX9NcitiXcuf3tAn1/RNpgToMI83L/0kj2YhN2Bk1oC1An4G2jEBSjTFVOXFb17jLzIoGt3PRykcHpAAcp7Rz4jmG3HyYhyJnA51ViWzT8NcWTLEFAz1BANLF8rCbqE76vqjI0G1A0wjfBtmzwamvjjzmT4=
+	t=1774635122; cv=none; b=MLYk2L7ZeHx+M3oXZalhgtCn0b/Bt+QKhC/w+P6whL19iXBE2fDdpzSARwAhM89OPkgJkWAjEar78JK/pJC6mqS0NCipM90ysdqMCyQmfL9Fbtys37LMj2LCNgr3vNO2ugKJuTjMv/HbQEcfB/NXVJQWOMeMepVBjdQa3S7Ftok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774634990; c=relaxed/simple;
-	bh=+e4+c4KBDsvwPaHpIDIZWXguXEaSH7JZycUZhWTmULk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LufxR3lUzzNN/73zA6Tva+pMTdTRAnSX4+UIccsu32Bt8fuDK5E5K0nywU6d5pMM/EJY72wdc8TZrAy6Rq6tYUJHWcJo0lKZAbu/VI4V6dkjdfLDg72obDSxbl+U0f4SAekQ3HZDFoXzHpTG4JE/+RjMyJ89pd1UiYBEJvUahF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=GNQHW9+z; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=LMQRLt3O; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1774635122; c=relaxed/simple;
+	bh=blvUupJHBFisBNIYPiQUpgzns/wokucbB1A/teNFuV0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r06TWy2ETojA+uvAEZdZbImVcOF0ZcEMHwNnpsGCMl9dzFEcsA3vOeHUlJ5hWSISvsxa9/N39nsb+9gPNxqDkM46LCC2kYUSO1IVa0pIcOmPYr6eUhtCRZwwF1m3welcOGRojH+FaSIxVE3SjOtm/Ez2ZHxP9v/Pu/8dwXM+IcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wpg6ow39; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lg4YCxr2; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="GNQHW9+z";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="LMQRLt3O"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=GNQHW9+zxZR8pVKE5Fj1hMgHYRQxch3CBOeDI+K4M9kzK6hcqdsLs6VUVctudTdzKj1/LE7mWdZVRfGqCcjX1K3AVMkL30LxiXZPbFtSvFxI46rHH5dix3uzFbImF7BaXQLEPgGkG6hPB4nkisU+2ofJufY6rMPB3cJ9Wa/02IOce7H0Gr3KAUZH06w6IYuuS8oiWIsl3GwWo9dnk77xyAbhuI6FAC/4v/1b6RPm5GSi10kZ7ltr4cAUWzvltuQgi1m2BTAFhvXFH6fBxdi4rdMMsSWNrfBlJaewFJEIKt3B2Eezn01vusbNQ04Wm20qBvfNJk4aBnjiZ1eXct4GMw==; s=purelymail1; d=malon.dev; v=1; bh=+e4+c4KBDsvwPaHpIDIZWXguXEaSH7JZycUZhWTmULk=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=LMQRLt3O2TSxMWgEhG8A+d3+n209EVPRJaj/qWOXwQjBcVLFYmcOSGb6B30gh4R0BKxInSVMjgh3ikfP9eUQA0hD8p7l6a/dQMMqo+TcBq+I49sKLQk92j8mk+jZ93FpUI2z/kMomxvp0U8t3ZfS1EjXM5XPZtml8uZfTOr7K6wCnk/4vEHddAwpZbQ5ZqLPFxztqqGercjZl2at2XJ6fVoZYtiwRqUTMyQWAYiKdlBj8rDKV0m1NfMh3pw3tbuTMAcY7fcY6qegNFeeymjB30jr5jFluW6fLYmsYwvT9PpZiOkxKH/OF8TSsHe1A7s6s7zg2X/6VsQYICnYk3KhTw==; s=purelymail1; d=purelymail.com; v=1; bh=+e4+c4KBDsvwPaHpIDIZWXguXEaSH7JZycUZhWTmULk=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1122676285;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Fri, 27 Mar 2026 18:09:46 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v1] replay.c: support replaying root commits
-Date: Sat, 28 Mar 2026 02:09:30 +0800
-Message-ID: <20260327180930.104563-1-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wpg6ow39";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lg4YCxr2"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 894A91D00124;
+	Fri, 27 Mar 2026 14:12:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 27 Mar 2026 14:12:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774635120; x=1774721520; bh=blvUupJHBF
+	isBNIYPiQUpgzns/wokucbB1A/teNFuV0=; b=Wpg6ow39DDvo/yuYK2zBtwOPHb
+	rTJ3oIIb/Ch+EM7Cbp2rVEA8ST2tqbEdAEeE8TEvKGazVEF2PWyyfgivZObMm0V4
+	EWpRRQGjkKamQehOVdVb8Q9xWsIYaVG1ap3aNtK5ZSto6GloLot4N/+lGfCYpK5O
+	LYGA2+1+oJ23vDAr+6EZoCMG5vj0xGHB84B8f5+IXxOVENqs2unT623yIzd2r6xr
+	E3gSMJ3N17qZ3ej28WWIMmcPohmiDUIyGRODgP8Ft+jcXvL90QoPnPM7dtYI63jg
+	pG+jTIdePARzSDG+rmjTB0cfBt6NKynVUofnQsOBzDq0hoLCv1bxW9u/Mj1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774635120; x=1774721520; bh=blvUupJHBFisBNIYPiQUpgzns/wokucbB1A
+	/teNFuV0=; b=Lg4YCxr2XyJ8SwHeze0M4sgCF+Dzz3emSbCq6O1MgPw+VdxHvU+
+	Yxus5dkAySQdVZi/+Esjym5aj5SqIrvsrCWA6r28JXWpNpZrOrCicfK55eac14qE
+	rT2FqigwwfU6m5UY0obwPkC7qrnqowx5K4FY4iWs+iDkHQmxdEjVh25lNlmFEvXR
+	zbHkW+3I7JBAGdjwbPWuM8/S3MQZnsUUNDvQtzLe3QjlcESRmmsO8XrCemgZQbVS
+	ylPNXHliu6Y7Ftn/BeAZhtAo8DGRpHHfb7PnrxqVDDHEvm7O3Yam+5RMf3jjiSzD
+	Rfq5SLi1sSr2yhbmwMpzHyOLGh2ZLBvb3Ow==
+X-ME-Sender: <xms:b8jGaUyEc0Aq-p1erlroa53zpMP3tXGnmt8nIfmR8RMGRP7cnqbJRQ>
+    <xme:b8jGafRcSnvSBZFprrCgimLZwpOVsr2U2lMo7yIzrm4dG07dv8D4juEMmMc-S0K7R
+    0Ziak5AjRc7A0QuyuYM0Ye96nDT50bzsvbU3Su4SJ2mLx0cR_hL>
+X-ME-Received: <xmr:b8jGabXZBgXv_vezc5oo2gMTSlT1dOBGOkXTB0BBIqKIUKX1yfMjZlwAdpAuerRaPddzfgBVnaOY7ljD2-gAgnZlTFWdQ74xmg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedtleeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:b8jGaRZef80hMUwY0OgEcdD8w5_Kk8AA8VPdiGoEzholAqLXTz_kvw>
+    <xmx:b8jGaR0JTGvsgB6JpCF2chdefAPuT384qLaubkJkB42uXkwB3NlcTA>
+    <xmx:b8jGaTg94tr3YF4dvuUl2nL6H5OWU3ca5WvyZFU15YQAdTZO-uPIVw>
+    <xmx:b8jGaVZ03_wr5f5WtPITfaAguAwoQMpogdC4VhdkUOu07Y7ZIQjsEA>
+    <xmx:cMjGaSSsrgy1_8SVkd_Uur-bx2CJIRYvCzzL1MTNM3l13dxEvx5ViOT5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Mar 2026 14:11:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH 01/11] test-lib: catch misspelt 'test_expect_successo'
+In-Reply-To: <acY3haGPHPLSfalj@pks.im> (Patrick Steinhardt's message of "Fri,
+	27 Mar 2026 08:53:41 +0100")
+References: <20260325062114.2067946-1-gitster@pobox.com>
+	<20260325062114.2067946-2-gitster@pobox.com>
+	<20260326040828.GA686242@coredump.intra.peff.net>
+	<xmqq8qbesm1r.fsf@gitster.g>
+	<20260326172920.GA2447148@coredump.intra.peff.net>
+	<acY3haGPHPLSfalj@pks.im>
+Date: Fri, 27 Mar 2026 11:11:58 -0700
+Message-ID: <xmqqldfdjg5t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 
-'git replay' does not support replaying root commits, as indicated by
-the FIXME comment. If a user attempts to replay a root commit, the 'die()'
-in 'replay_revisions()' will be called.
+Patrick Steinhardt <ps@pks.im> writes:
 
-The reason for this is that the call 'base =3D pickme->parents->item' in
-'pick_regular_commit()' will cause a null pointer dereference error in the
-case of a root commit.
+> Let me know in case you get worn out by this though and then I'm happy
+> to take over. I like to have a numb task every now and then where I
+> don't have to think much, and this here very much is such a task :)
 
-Fix this by adding new conditional statements: the difference between the
-root commit its 'common ancestor' is equivalent to the difference from
-an empty tree object, and it must be placed on the user-specified target
-branch 'onto'. Therefore,  We set 'base' to 'NULL', 'replayed_base' to
-'onto', and use 'lookup_tree()' to instantiate the OID of the empty tree
-in order to pass it to 'base_tree'.
+I've stopped merging mine to 'seen', as I did not mean to carry it
+all the way to the end anyway (I do not have time to wait for the
+tests to the set of tests I run regularly with cvs, svn, and p4
+added), so it's yours if you want it ;-)
 
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
+Thanks.
 
-To be honest, I'm not sure whether setting 'base =3D NULL' is proper or
-not. Feel free to give feedback and suggestions!
-
- replay.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
-
-diff --git a/replay.c b/replay.c
-index a63f6714c4..80497191a8 100644
---- a/replay.c
-+++ b/replay.c
-@@ -225,12 +225,21 @@ static struct commit *pick_regular_commit(struct repo=
-sitory *repo,
- =09struct commit *base, *replayed_base;
- =09struct tree *pickme_tree, *base_tree, *replayed_base_tree;
-=20
--=09base =3D pickme->parents->item;
--=09replayed_base =3D mapped_commit(replayed_commits, base, onto);
--
-+=09if (pickme->parents) {
-+=09=09base =3D pickme->parents->item;
-+=09=09replayed_base =3D mapped_commit(replayed_commits, base, onto);
-+=09=09base_tree =3D repo_get_commit_tree(repo, base);
-+=09} else {
-+=09=09/*=20
-+=09=09 * Root commits have no parents. Their base is the empty tree,
-+=09=09 * and they should be replayed directly onto the target 'onto' commi=
-t.
-+=09=09 */
-+=09=09base =3D NULL;
-+=09=09replayed_base =3D onto;
-+=09=09base_tree =3D lookup_tree(repo, repo->hash_algo->empty_tree);
-+=09}
- =09replayed_base_tree =3D repo_get_commit_tree(repo, replayed_base);
- =09pickme_tree =3D repo_get_commit_tree(repo, pickme);
--=09base_tree =3D repo_get_commit_tree(repo, base);
-=20
- =09merge_opt->branch1 =3D short_commit_name(repo, replayed_base);
- =09merge_opt->branch2 =3D short_commit_name(repo, pickme);
-@@ -293,8 +302,6 @@ int replay_revisions(struct rev_info *revs,
- =09set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
- =09=09=09   &detached_head, &advance, &onto, &update_refs);
-=20
--=09/* FIXME: Should allow replaying commits with the first as a root commi=
-t */
--
- =09if (prepare_revision_walk(revs) < 0) {
- =09=09ret =3D error(_("error preparing revisions"));
- =09=09goto out;
-@@ -309,9 +316,7 @@ int replay_revisions(struct rev_info *revs,
- =09=09khint_t pos;
- =09=09int hr;
-=20
--=09=09if (!commit->parents)
--=09=09=09die(_("replaying down from root commit is not supported yet!"));
--=09=09if (commit->parents->next)
-+=09=09if (commit->parents && commit->parents->next)
- =09=09=09die(_("replaying merge commits is not supported yet!"));
-=20
- =09=09last_commit =3D pick_regular_commit(revs->repo, commit, replayed_com=
-mits,
---=20
-2.43.0
 
