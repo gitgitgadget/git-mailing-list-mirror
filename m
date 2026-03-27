@@ -1,161 +1,121 @@
-Received: from mailout-002.p.bluenet.ch (mailout-002.p.bluenet.ch [138.188.174.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F78186347
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.188.174.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A811474CC
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:34:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774629016; cv=none; b=CWOjUVN4FzVTK2LJPyvWmihbvSoqC7ntdgZlZFm4T2INGaT0+jQX9upmFyTK81SNBQRdSS13wGDchF77pBFmRPQ+a57k14BgYld2pPDyHokSdd4M0lCkkesAUlnGvpkJtmS1X2nSnye3O07ADkcT4pS2LponUyUtbcv7SAdRgso=
+	t=1774629243; cv=none; b=RZlU55Sz/qLc6YmZ0kP9rGcJmwiGpBHIq1NIe46LyTKal0MA7MXQbcYoQLPjsN3zhPvlIKW+Xy/o9S0ggnT1uXGbYHuYnE5ZZ+OHPBxUhCvvJG3g9TPGRkljWh8L1h/Vi6RGl8zoGaG8K8zBItvWia5CzuTlWgk7NEs5Ki7zXFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774629016; c=relaxed/simple;
-	bh=fGfQ4QBKd+N0sW6BqC1RT1f/91p2zVM8763IWL4Pmik=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QSci17DvBSHkF9pkydETGE6nt7tsC4mYEyUFFc9zuDgQkdPGBdoqiCmDhJWLrxZqftpQtJzpSowmtnhGS+NmR16ajdLYl7USI9gQeZeD8NVKezGJcLPvUrHxDQsWT/3ZcyJFVHz/AztMPXLdcXy9Sb7/9yW3sYrCdi2ctRn7iQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch; spf=pass smtp.mailfrom=bluewin.ch; dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b=X+5JWeCA; arc=none smtp.client-ip=138.188.174.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bluewin.ch
+	s=arc-20240116; t=1774629243; c=relaxed/simple;
+	bh=v3HuUoDaz1uYO1J3oCVLohdpFGJgcakJHYwkTe7obhw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gNPXoHSjSInlEsDSI5aiLikCiQR+uu3lpdMTpy7kq7oof3ANiXnxCzgIj8DsqqDja6VzdKGvxBcZ4Lig4r3VMNTY/VYFSzFoJabM2yKPtvZ18PoWWzvtU2kf4v+Gbq1c0cOogy+6OugmOFjTN+RyQaHy0qlYoiuk0oTeYW67eeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S4BIwNGn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Je8gLtfD; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b="X+5JWeCA"
-Received: from [192.168.21.108] ([79.154.91.233])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 256/256 bits)
-	(Client did not present a certificate)
-	by mailout-002.p.bluenet.ch Swisscom AG with ESMTPSA
-	id 6A2XwOkQhXDiX6A2XwB0s0; Fri, 27 Mar 2026 16:28:06 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bluewin.ch;
-	s=fxzs-2048-20230414; t=1774628886;
-	bh=PyUlgyN5xrDfI1HryoJWqtxr6LWXaS1looiO7fMsclk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From;
-	b=X+5JWeCAHboDzCGTrNFrUxlQ0BYeZ6hxoqph+jUeU/SM53IyzXlqwAuAPdPzFjYKN
-	 wCZrzMnYtu8PKI2fE/0AjEuIyMLyPfkcuckdJinzL2Tr2FxsRxZkFFfz2Q5a26pYoq
-	 GFH3rgDbb9/8Dc6zfuS8pl2jTTtOeqjnRKkwr1LPxKO5NPAvR0JvGXtc+2+imWH4yx
-	 WpUyYcKEpc3Zp8f8Cu/1eUhnrqoy8U3OpOX7ZqbkXP1LvhjGM6lIvhPblNtR/Y53O/
-	 BoYI4OYTjLY8r4yrjZXGrPYSB1Zm80AHz0L/9L2T7dHzGGHVw/8mzBbalvrDUwM0OU
-	 Gl1jfI8c8oFUA==
-X-Bluewin-Spam-Analysis: v=2.4 cv=IPIyzAvG c=1 sm=1 tr=0 ts=69c6b016
- a=WY6/0jjk7zsOyTa5/3SlqA==:117 a=WY6/0jjk7zsOyTa5/3SlqA==:17
- a=IkcTkHD0fZMA:10 a=8aoxcsf_4YlTAHqYW78A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Bluewin-Spam-Score: 0.00
-Message-ID: <fbe531eb-b742-4cd1-ab6a-2eaaf8d236c5@bluewin.ch>
-Date: Fri, 27 Mar 2026 17:28:05 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S4BIwNGn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Je8gLtfD"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F1D477A0279;
+	Fri, 27 Mar 2026 12:34:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 27 Mar 2026 12:34:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774629241; x=1774715641; bh=vKGI2dROv0
+	mH5ob4fcO3Dv6zE2BJFlM0q7RM+yuTyw8=; b=S4BIwNGn94V0quYgQ1Cq7Lo5bV
+	Lqi3ZR86TLU9noZkN9sTiaGBUSrAeSfliR+tNJhfx986DetTRqnvSMPwjknC8CDv
+	PKDnuzPdmmzaW16DWNIkZ7LJy3Kf/qFco1NUOTLvkPYORHHZUNK5zQ6nH9HRvs49
+	dDuzlQC3TicNZelBSsdxRK1KC+z93ljdg9QbL/dG7vzQ+tNd9hl8YN6r5OA1FYnD
+	ampxxd9HXrkHy6gFP85YKhK/tE3t1Tza5mjFXFc+AZcLrrj3BDIEoPxo9/rwNcqZ
+	mrhlnGio95lrBdSH+ui8qbY41tp228mk7rOpaXyqv5iYhbb8/V7juwJet/DQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774629241; x=1774715641; bh=vKGI2dROv0mH5ob4fcO3Dv6zE2BJFlM0q7R
+	M+yuTyw8=; b=Je8gLtfDCOYEVjc1PEeI4MjSqf3lY0f2pg/6Qu+Thk3pGwGBr0U
+	QfTdzljrmlTB0rwzhHZgeakGmKC22WL5jf7lw/AgZzHCThm5COQT4bq82zNHA21A
+	D13pbEnOc9ZUNFqs5ni5MWNdszJrJkKX656xv8JjHXnlleqtig96NDyEGLtduQ35
+	N/tO54ZWuZ9QH2MYq/HoFc87YzINBt9fCSqpb3+M0vSBnHI94HT//tGdCeB8uzfq
+	kTNpdzLnshYLuc28YNh69KK51ovCDL2U4RzP0GaYKovBvNvG1rTidLjDjz+b7pkn
+	Ch05VqCpR73iSHxrBB8s7WZh6zAouD/332w==
+X-ME-Sender: <xms:ebHGaazdSvOndaepmYetNrvOJQ649eSxAAhcb2A5eJlVfOh78aEIbA>
+    <xme:ebHGaef6Ch83li0M_nVee-BVdw1z1Kq9h4aGUcBDISDdDh9Mpu3ie39h17NF6f3HI
+    hJXdJ0bBRqQCkG8Umw61O8dB4mJ-orTmbLT9jXYckD89QMEkhKnGdc>
+X-ME-Received: <xmr:ebHGaX4ghz1AuZfstuiJWuk9Kw-oRANBmrLDVKqTnZX710flthgwEzS2lvL_optwpi2UiTsboy9wJYcqylCx7dYwwnAfQjokJA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedtjeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghl
+    ohhoshgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggv
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthho
+    pegthhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epjheitheskhgusghgrdhorhhg
+X-ME-Proxy: <xmx:ebHGabKPWjQOaoGVyH2wtyrvT_Awf-qWMpp3oL0LN9j8c0SjPCZf9A>
+    <xmx:ebHGaXxeD3MhCQsvayQ25fiCW4NYET8Qa3numc86JhIYplZAwsYFog>
+    <xmx:ebHGabJ1o2XmoFexqrwX8mLyjvprqhzYY1nr_Pqv6DLjV8l0xNPeyw>
+    <xmx:ebHGaeUjOs4-XtHQT247NMgTR9h7DXSCEAmKxwuBAvi8REE2ONqX6Q>
+    <xmx:ebHGaWT47h5Dw7oqW2qm7EzL6uGHuw4zb-jGHcSAeIok-yb0pFcVocZ3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Mar 2026 12:34:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com,
+  j6t@kdbg.org,  szeder.dev@gmail.com
+Subject: Re: [GSoC PATCH v5 1/2] graph: add --graph-lane-limit option
+In-Reply-To: <CAN5EUNSyBjpZHHAAd1YGVRjkLwzgGzpafhBJVTTcHJCLKNU2gQ@mail.gmail.com>
+	(Pablo's message of "Fri, 27 Mar 2026 15:22:06 +0100")
+References: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+	<20260325174401.217577-1-pabloosabaterr@gmail.com>
+	<20260325174401.217577-2-pabloosabaterr@gmail.com>
+	<xmqqh5q3sgnm.fsf@gitster.g>
+	<CAN5EUNSyBjpZHHAAd1YGVRjkLwzgGzpafhBJVTTcHJCLKNU2gQ@mail.gmail.com>
+Date: Fri, 27 Mar 2026 09:34:00 -0700
+Message-ID: <xmqqmrztkz9j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: fix git stash grammar
-To: Junio C Hamano <gitster@pobox.com>, Mirko Faina <mroik@delayed.space>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
- Quentin Bernet via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.2255.git.git.1774529148151.gitgitgadget@gmail.com>
- <CALnO6CD-5NBUoooMD+pQAxeyXCjkZ3Za6LJrLrJN57Nrz03xBw@mail.gmail.com>
- <acXIl2cuBv0ifiK6@exploit> <xmqqqzp5mfh5.fsf@gitster.g>
-Content-Language: en-US
-From: Quentin Bernet <quentin.bernet@bluewin.ch>
-In-Reply-To: <xmqqqzp5mfh5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfCgowfq4xuBlzj7Nvkkoq7lt/ofmbjtlvtTkb4XVkADvTGrecnof2H65usxR3xZACoNAlxPR06Cuk+tcefkgo0rpY6s/nExUFs+RA8pb2Abh0tnIh2ws
- qc9He2x71xZnb65+NR1Zc9qgPS3F7Hyvf+dQxYv+wraXjffNlCWIYsze8CN23THlMmDHA2/cQlhbTbClUao+yiSXBsaunbHlV90igbq9af76OLaeVVviGPA4
- I9Favw7kjABZ1WBNGJ7DWh+aDrZ85oB3EdP0TGd/uyqGbAGyB/bOe8W0KLvX0BYhuy5CsrUMAqElimGfD5OfN/SgxY9o3fT4iNibhSPzLf0=
+Content-Type: text/plain
 
-Please keep in mind this is my first contribution to git, and learning 
-the ways things are done here, so things might take more time than usual
+Pablo <pabloosabaterr@gmail.com> writes:
 
-I believe to be fully correct, this should be the grammar:
-(or some other ordering)
-
-
-  [synopsis]
-+git stash [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | 
---quiet]
-+            [-u | --include-untracked] [-a | --all] [(-m | --message) 
-<message>]
-+            [--pathspec-from-file=<file> [--pathspec-file-nul]]
-+            [-- <pathspec>...]
-  git stash list [<log-options>]
-  git stash show [-u | --include-untracked | --only-untracked] 
-[<diff-options>] [<stash>]
-  git stash drop [-q | --quiet] [<stash>]
-  git stash pop [--index] [-q | --quiet] [<stash>]
-  git stash apply [--index] [-q | --quiet] [<stash>]
-  git stash branch <branchname> [<stash>]
--git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] 
-[-q | --quiet]
-+git stash push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] 
-[-q | --quiet]
-              [-u | --include-untracked] [-a | --all] [(-m | --message) 
-<message>]
-              [--pathspec-from-file=<file> [--pathspec-file-nul]]
--            [--] [<pathspec>...]]
-+            [--] [<pathspec>...]
-  git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] 
-[-q | --quiet]
-             [-u | --include-untracked] [-a | --all] [<message>]
-  git stash clear
-
-You'll note the difference between the "stash" and "stash push" options 
-is "[-- <pathspec>...]" vs "[--] [<pathspec>...]", which corresponds to
-
-            For quickly making a snapshot, you can omit "push". In this 
-mode,
-            non-option arguments are not allowed to prevent a misspelled
-            subcommand from making an unwanted stash entry. The two 
-exceptions
-            to this are stash -p which acts as alias for stash push -p and
-            pathspec elements, which are allowed after a double hyphen 
--- for
-            disambiguation.
-
-The wording seems a bit weird, since the only non-option arguments are 
-"<pathspec>...", which it later explains are allowed (but require double 
-hypen)
-
-
-This grammar is better at highlighting `git stash` on its own is valid, 
-but worse at showing that the flags are almost the same
-I don't think we can do better grammar-wise, since "push" is at the very 
-start, and "--" at the end, and grammars don't have memory
-
-My previous, simpler, grammar included "git stash <pathspec>" even 
-though it is not valid.
-Maybe that is an acceptable trade-off for clarity (although I assume not)
-
-On 3/27/26 16:58, Junio C Hamano wrote:
-> Mirko Faina <mroik@delayed.space> writes:
+>> Make a mental note that this helper function works on number of
+>> lanes, not display columns (which is roughly twice the number of
+>> lanes).
+>> ...
+>> And that mental note helps to convince us this loop makes sense, as
+>> it increments 'i' one by one ;-)
 >
->> On Thu, Mar 26, 2026 at 12:17:46PM -0400, D. Ben Knoble wrote:
->>> Now, _is_ the grammar bracketed wrong? "git help stash" says
->>>
->>>             For quickly making a snapshot, you can omit "push". In this mode,
->>>             non-option arguments are not allowed to prevent a misspelled
->>>             subcommand from making an unwanted stash entry. The two exceptions
->>>             to this are stash -p which acts as alias for stash push -p and
->>>             pathspec elements, which are allowed after a double hyphen -- for
->>>             disambiguation.
->>>
->>> So _if_ you want to provide options (other than "-p"), the "push" is
->>> required. I think the existing brackets indicate that.
->> When it says "In this mode, non-option arguments are not allowed"
->> wouldn't -m be allowed as it is an option and not a non-option? In fact
->> if we do try to run "git stash -m something" it does correctly stash
->> while if we do something like "git stash pathspec" it does give back
->> "fatal: subcommand wasn't specified; 'push' can't be assumed due to
->> unexpected token 'pathspec'".
->>
->> If that is the case then there is an issue with the way the usage
->> tooltip shows the optionality of "push".
-> Yup, you're right.  The current SYNOPSIS suggests that you can omit
-> and say "git stash" and it does the "push" thing, but when you want
-> to give any "push" related options, the command name "push" becomes
-> mandatory before them.
->
-> If the log message said something like
->
->      The "[optionality]" bracket is misplaced on the command line for
->      "git stash push" in the synopsis section.  It is not like you
->      can omit "push" only when you do not give any options and
->      arguments.
->
-> we wouldn't be having this long thread, I suspect.
+> Ok, I'll add the note to graph_needs_truncation() and any other places
+> that might need to be more clear about if it handles columns or lanes.
+
+Sorry, I should have taken into account that you are new around
+here.  My "mental note" comment wasn't meant to suggest adding extra
+comments in the code.  Rather, it is "readers would make a mental
+note here after reading this piece of code---and then what they
+later see this other piece of code, what it does is consistent with
+what they remember from the earlier piece code did, which is good"
+(if they are inconsistent, you'd see a similar "make a mental note
+here" followed later by "but this contradicts what we saw
+earlier. what is going on?!?!" instead).
+
