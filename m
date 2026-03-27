@@ -1,124 +1,148 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mailout-001.p.bluenet.ch (mailout-001.p.bluenet.ch [138.188.175.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCFD155C97
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 08:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774598862; cv=pass; b=XPkSAIvNE4eXgCZZErzoX4XqxWxVNt7/SBSm5YL3P4KPAPvTZPgHswkULNEybDXvxnvz9wyAQBpA9jO8iwc9hCVBiNh4rqekD334zN4+MwzmDJboLBEA5oXQ+UmcOl/Sv97nc40EHLZwQy7AGX3S/9W2bpIofGF0Wiy/abfhavY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774598862; c=relaxed/simple;
-	bh=maPKPKyP18ELDxtLGO+/eODRtVw2hjEwHvmOuv2JVg8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e3YTDYxBu/g9H8ZtdsJDEO8dWR9o3hSeg/iZPHRUSWowqhN+RxLF+4zAC5v3JywXmDMuVyC6GuWrj+MbgwnbaK3sEGyIku6SAwzav4mLnUnati25piZLlejZWp1x/i9JeIRJJEweEuE62wqmhUUE27P0z8j7XvawAPcsusR5XjU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IR/iVqb1; arc=pass smtp.client-ip=74.125.82.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC6E36CDEC
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 08:27:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.188.175.9
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774600041; cv=none; b=N0Gu0Q6lsPEK11OL9exfUOc1da4D95DsTZN5WpYfD36WtRylEjOzP7TTUxK3c1GdUbW6HUUnTvmWhJi+JzDZnn8mxMhLe0iPhHGA//277cRZyIfX9v+KK4CL2krPbMfK/enBDNdURxvSlOd9OGcoeqPuJXt4bPEonWJjlAyu39c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774600041; c=relaxed/simple;
+	bh=V8A8M+0HMyCl1soQ7OW28BKDrnXZ1marxuFYf5PRwTI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GDl3UHnGEArRkFPCuZiLWhZRc3k1i27TBUJg7cHwh0C6Iq+VA2OPcBdNzMmRxxRe3pTkStoB4NqXh3cyJoH1O6VBtWsbKwiUfZjouOp3rQR3ugzqj2hven/NiwiijFA+hKjBmeS8PNRT/Wfuo9k36+iyD92lkPf1AiH58RUcO6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch; spf=pass smtp.mailfrom=bluewin.ch; dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b=KKJZSSnY; arc=none smtp.client-ip=138.188.175.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bluewin.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IR/iVqb1"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-126ea4e9694so603871c88.1
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 01:07:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774598858; cv=none;
-        d=google.com; s=arc-20240605;
-        b=DWMKV1SDmrrOVf/gjKzJJkO0261icC2rAp5G2OA5ix4QmfMWvqgIsiLJeTutUcT2NZ
-         yWplELhzz/AldkiTzo7CrpW9/ahk0eZ9+NsALnozu82zWpIYosigrv08cXQV0Hy7cElY
-         le4F39Ce9+u+etIu4VPdn40bDE8P3U/OJkQoDUFwOTsQdPbe1DCJApR3/OVye7jzFGh3
-         3hskwI8NZZfyUe2EmTdIFNJJVcQNvKliJJ0RNXmRBuhyoRxbQ2/rW3jZyoWSkgEGTL5t
-         rSNRSaGFEfgTL9EeWI3Ti4pLCQw6eHBdnCY6QEdcAhgUoOCeEgt4Cr48bKpn4DMzrndK
-         +LEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8PTfWhrAWkKHBFFJYUCPwn1b8Mo6A1LbaMNS6IB0VOI=;
-        fh=enNsqV2a4HGIPorBj7tfu9+cMpFZ3TdhURhIT8PMJm4=;
-        b=A/atmpD07Bg82saqAVPNOQlj1+Cf6crb82PrvhXqS+dy6Y+GjhruHW37MDfdftvZw8
-         n1I2cImNZurLF+5cVtAhbqK+Knc6MqSb5p50s2ySTegqyuMjovXX7/wDweIBkpUIaFXS
-         uuV6GCnXuZincXjBWB3w3Mmcgm9V7C8mJH3EWSqzJR0kouSl0WVf6B6db94x2/7fkzPN
-         0knqkcG8hTmyv48HT2fYngBEW+8+WXV1ezGzkTs/p96JrPGLl2B/CC/8oFUed12aHp4P
-         0GCtlIENqTMi1hMmhndrdm5HX6hEo+dMwBTiRk34p63Pu0cF7g3OrhYevJOMfMpHfwF/
-         WIrA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774598858; x=1775203658; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8PTfWhrAWkKHBFFJYUCPwn1b8Mo6A1LbaMNS6IB0VOI=;
-        b=IR/iVqb1Xyh0FPC2vViQ6FTAAWbL1YVl60qK1sqxZc8tP+IA1a5PiToSYRFOYW8ejb
-         fe1ro4L4L4NwNcKTT9JeNRGGAkmr2rldIalKUq/Lp4d9/VGdhZSXE7UVJCRce0fVOeP0
-         +nVz90SDgafWpttRlWUZY/v5bqMavW8eXb8xK9uDL2fcdaXpupgpGnAuRNofGq6BeqMF
-         cddjBi2yGnVBmWfxisHNBYy/dfA+3x+TOr1NOPPkqSOIzPIagBh5qAfmavuGdbysFuxi
-         omSi09FyvbXVYhBXMZ2cNxcVF7tgp3fOeY4/+che4SKeL5jdApRLJOm+6r93500TxsRa
-         2qkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774598858; x=1775203658;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8PTfWhrAWkKHBFFJYUCPwn1b8Mo6A1LbaMNS6IB0VOI=;
-        b=sZZGlnJU8BKMfVqAqZnFSEvt1aWXiXPAg/9XIbBpkFUI2U9aIVwoNPjZoyk+0uVcV9
-         55KXHFAbZpqh1XT29STTgsXyg8wre54SSNLVdma1F4uGwyzdRgi37agI+/y8621JNuv0
-         +B0Q6sHpl3DGHJLCFnZU2BafC1AF6KuL0aBGlRXsBHOVFS0y1bROWMed2QIXl54mdZ4o
-         8HKtNFjwUfv5rVFU9VGiDO5LFUM2OqPQMTf2GAxbJDlA9Z492b0T87+oaviqcIulphSS
-         /xwM5pM+kyDbZrb70zq2GqYHHNlukbNw9C1Kz421r+TcqijgHgofOijr47OqDa4Kb1vh
-         WBBg==
-X-Gm-Message-State: AOJu0Yw/DEY6jFR8159YZBYKs5SrOyqA0cRPDcSSnBjEljdM0ysyUiYj
-	DQKfCNizNllzfASG+rMfGtDS8TUm/uwnddOmME/8p3Zxl5xplGOYQjNjIplsrxTDitsvXUFd6hj
-	JhXF0rjFjZsGAPNBVkX72w+OIFGCel2Y=
-X-Gm-Gg: ATEYQzwdQTqBnBlAPNJ8FM3xy7gWQOHZB9xcTAMJu9hZMtFnt8sBhRnES+V8Q5eg8uo
-	Hsc0cHW07kmUL86mLFlqs3wY1cd8dKlywgoSL4xtUxew5o54ENMG371HU34VvR/wJNEKMHHJLEA
-	8yJ/L7G+1JQaCdP8gSr9DxrxpbtksZA9ePp1SgKwTVFejwRkfdbNRg2964RTTHpnMXNoGFGZnDR
-	v5tRGWifiKwBJGxUKEFvR4Bb2BrdNOW8fd+bOgfTUSPHp65vvwrnx3nZAa6WyfWiaJBsQTPH5Us
-	wK3j1ncCLVni0lerbfetE/0Fqdd90TJ3P/aXsPmWj4elpZ4R4bHkFfi3IDJiV6ENrpSF
-X-Received: by 2002:a05:7022:2385:b0:11a:61ef:7949 with SMTP id
- a92af1059eb24-12ab2857bd5mr843506c88.9.1774598857939; Fri, 27 Mar 2026
- 01:07:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b="KKJZSSnY"
+Received: from [192.168.21.108] ([79.154.91.233])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 256/256 bits)
+	(Client did not present a certificate)
+	by mailout-001.p.bluenet.ch Swisscom AG with ESMTPSA
+	id 62VBwAAlmDkrf62VBwGHD4; Fri, 27 Mar 2026 08:25:10 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bluewin.ch;
+	s=fxzs-2048-20230414; t=1774599910;
+	bh=iopg345agG5RVpTraFodjEHRXXIcbgn3lepzrrIoEZo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From;
+	b=KKJZSSnY/eF09SSyQbIDiWYnktxHuuCf9ezdSgf8NPID2mDjH394Cx4ec6dxa4s3X
+	 haUf9XK+/PiDn7tZQT9dv0c/TLmW47EMMQj28Gb0vJjsSntLBer84klQ/0o8ZRrvS/
+	 ZU22x+/mOOAiTbmaaiRZ3ZtgGvSJ/KUq+W45oUyLaJAwahdAurMKcklnpWsgmzUSaU
+	 A4dsHrVqk8W17sA3drQiQfMtCtYMshjZeAH7AWWvmUqp09Uh6PZIzxOe7lq9denZAB
+	 1+BdSnO5OflUbapbZNZJlPdHk0W5XvE9tEqdbKbtbzuH9vq07941hH8DyEIYs+XLju
+	 Z1VFy3K3PwUDg==
+X-Bluewin-Spam-Analysis: v=2.4 cv=SMtykuvH c=1 sm=1 tr=0 ts=69c63ee6
+ a=WY6/0jjk7zsOyTa5/3SlqA==:117 a=WY6/0jjk7zsOyTa5/3SlqA==:17
+ a=IkcTkHD0fZMA:10 a=w0RzvLSWAAAA:20 a=NEAV23lmAAAA:8 a=pGLkceISAAAA:8
+ a=GrsELN7seP4a2jTIFLYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Bluewin-Spam-Score: 0.00
+Message-ID: <ce083a4a-321d-4c29-af04-decfab33d237@bluewin.ch>
+Date: Fri, 27 Mar 2026 09:25:09 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq4im2npv2.fsf@gitster.g>
-In-Reply-To: <xmqq4im2npv2.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 27 Mar 2026 09:07:26 +0100
-X-Gm-Features: AQROBzASvTwZOmlF_9vEl_zTG0MqsA-3qphuQBfC3BIru-lMiPjtzRHhYxkGlKw
-Message-ID: <CAP8UFD3kxL5xAcd2OBNmLFMdBaRLgB0WKtvSkuO2m7GP=kZK6Q@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2026, #11)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: fix git stash grammar
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Quentin Bernet via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.2255.git.git.1774529148151.gitgitgadget@gmail.com>
+ <CALnO6CD-5NBUoooMD+pQAxeyXCjkZ3Za6LJrLrJN57Nrz03xBw@mail.gmail.com>
+Content-Language: en-US
+From: Quentin Bernet <quentin.bernet@bluewin.ch>
+In-Reply-To: <CALnO6CD-5NBUoooMD+pQAxeyXCjkZ3Za6LJrLrJN57Nrz03xBw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfMOhu3wV2GML4k+oPE+cBtTKAemfn3ziR0ypGHqpEgilNK3UHyVpHUnNvAIdGUzwIULHS5UubmVJUt94hBo71zB5uxEOh55C5cBlAbNd+1JcVFZlS4EH
+ ++YGWVCFGJ6VZDW2pdgAC4pjhLhpS5ai/dE52LcOyJJLtQncAd4xObPPX76xWBfpeajQuCCL1PFpxmLDTA4o7NjBK/E/0mAOjhAZATmtQ7cqFj1DbivtBDbo
+ R4P7b37ChfUWRtNt+f33KNW/yk6/k2lOcqHQrHf9zPA=
 
-On Fri, Mar 27, 2026 at 12:17=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+This seems to be describing more the content of the patch than the 
+intention behind it, what about:
 
-> * tc/replay-down-to-root (2026-03-24) 1 commit
->  - replay: support replaying down from root commit
+The grammar for "git stash" does not contain valid combinations such as
+"git stash --include-untracked"; fix it
+
+On 3/26/26 17:17, D. Ben Knoble wrote:
+> On Thu, Mar 26, 2026 at 8:46 AM Quentin Bernet via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> From: Quentin Bernet <quentin.bernet@bluewin.ch>
+>>
+>> Grammar incorrectly did not include `git stash -m`
+>> and other valid `git stash push` flags
+> Typically commits for Git describe
+> - the current situation (present tense)
+> - commands to make the code better
 >
->  git replay now supports replaying down to the root commit.
+> In this case, something like
 >
->  Will merge to 'next'?
->  source: <20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
-
-As Toon said that the silent failure in case of "topic" instead of
-"main..topic" will be addressed in a separate series, I am fine with
-merging as is.
-
-> * sa/replay-revert (2026-03-25) 2 commits
->  - replay: add --revert mode to reverse commit changes
->  - sequencer: extract revert message formatting into shared function
->  (this branch is used by tc/replay-ref.)
+>      The grammar for "git stash" is incorrectly bracketed; fix it.
 >
->  "git replay" (experimental) learns, in addition to "pick" and
->  "replay", a new operating mode "revert".
+> ?
 >
->  Will merge to 'next'?
->  source: <20260325202354.10628-1-siddharthasthana31@gmail.com>
-
-It looks good to me, and I think the v6 properly addresses the latest
-few small issues that were found. Previously Phillip also seemed OK
-with merging except for the issues that are now fixed.
+>> Signed-off-by: Quentin Bernet <quentin.bernet@bluewin.ch>
+>> ---
+>>      Fix git stash grammar
+>>
+>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2255%2FSporarum%2Fpatch-1-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2255/Sporarum/patch-1-v1
+>> Pull-Request: https://github.com/git/git/pull/2255
+>>
+>>   Documentation/git-stash.adoc | 4 ++--
+>>   builtin/stash.c              | 4 ++--
+>>   2 files changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+>> index 235d57ddd8..41086c21a4 100644
+>> --- a/Documentation/git-stash.adoc
+>> +++ b/Documentation/git-stash.adoc
+>> @@ -14,10 +14,10 @@ git stash drop [-q | --quiet] [<stash>]
+>>   git stash pop [--index] [-q | --quiet] [<stash>]
+>>   git stash apply [--index] [-q | --quiet] [<stash>]
+>>   git stash branch <branchname> [<stash>]
+>> -git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+>> +git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+>>               [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
+>>               [--pathspec-from-file=<file> [--pathspec-file-nul]]
+>> -            [--] [<pathspec>...]]
+>> +            [--] [<pathspec>...]
+>>   git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+>>              [-u | --include-untracked] [-a | --all] [<message>]
+>>   git stash clear
+>> diff --git a/builtin/stash.c b/builtin/stash.c
+>> index 95c5005b0b..0d27b2fb1f 100644
+>> --- a/builtin/stash.c
+>> +++ b/builtin/stash.c
+>> @@ -50,10 +50,10 @@
+>>   #define BUILTIN_STASH_STORE_USAGE \
+>>          N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>")
+>>   #define BUILTIN_STASH_PUSH_USAGE \
+>> -       N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
+>> +       N_("git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
+>>             "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n" \
+>>             "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n" \
+>> -          "          [--] [<pathspec>...]]")
+>> +          "          [--] [<pathspec>...]")
+>>   #define BUILTIN_STASH_SAVE_USAGE \
+>>          N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
+>>             "          [-u | --include-untracked] [-a | --all] [<message>]")
+>>
+>> base-commit: ce74208c2fa13943fffa58f168ac27a76d0eb789
+>> --
+>> gitgitgadget
+> Now, _is_ the grammar bracketed wrong? "git help stash" says
+>
+>             For quickly making a snapshot, you can omit "push". In this mode,
+>             non-option arguments are not allowed to prevent a misspelled
+>             subcommand from making an unwanted stash entry. The two exceptions
+>             to this are stash -p which acts as alias for stash push -p and
+>             pathspec elements, which are allowed after a double hyphen -- for
+>             disambiguation.
+>
+> So _if_ you want to provide options (other than "-p"), the "push" is
+> required. I think the existing brackets indicate that.
+>
