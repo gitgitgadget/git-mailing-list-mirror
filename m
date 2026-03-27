@@ -1,151 +1,223 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C90395272
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 13:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774619339; cv=none; b=gp7YsbQrK6y7kvI/LV2l27IOuzrdrxxrLzQP635TWgHidvk3ONBcJLuOJ71Wm6C5v9rojaB1Zh7QuAL49snPD9f9ABzuc9eFVjwvgnsPx8xuw5481GrvOXn/9+oNsR6ceENc1EuoOagUpAs4hQiV56BRD3ZorZADSRczJCqQJdg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774619339; c=relaxed/simple;
-	bh=EX0KKho+ad4kJ9H17atVPTbnDl5pC6a3GVHOeumMJdM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p8+FtHTkGqCmMeTKK5QJTmw2D+vGtb7dWcC5gI4ae2FDTzd9c+azMymvxW1wJD7epLP95HkZkvMXuy2X/BfjObmWruM1kFl8Gw0B8VxhBfIejxz44c+7NurQ7YqOn9e6zc9WVBXi9OcBOQS76Sq3GbFf3gyqIXivpy/ZmnwEk7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jm/JCCks; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B625391518
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 14:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774621345; cv=pass; b=U+qdOUqD7rQw4iJ3hgkUt2olS6mFa6XMZDhvNOCBVfjRM67hCOCEa4dmVrKgfAxz43UEGB4EBOZKCBUclcJo6RwcYOzO/ak5Zz7U8mYdJ7Em5teHB1jc52XIQbmpF5B/uRebgd6RhIoXsTlGAbfsTlG5+4ZGGgFzpnehgJ6rccM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774621345; c=relaxed/simple;
+	bh=pSr/900NakBNXZ2Whctaxh5mfP9MQW+RL6OQ3lTFbWM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ueLvQcUJ2YfOpwItQU6VvmHfmmcVmMpVOZ1RNNJi+n2S1xrbGb2tOOeU+92IXC95GmeUg5r7Pqjat89KDfrH57ums4IEXC0DW8i/HEUSadawq1uHEuIrahC9mV9Fntpsr7sj9Qxh8iHZrbiQNfBlXaLk19vUbwLGJLKSbd8CuuU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=crdIf+AT; arc=pass smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jm/JCCks"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8cb3bae8d3eso219763085a.1
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 06:48:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="crdIf+AT"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-79a60975dc5so23881897b3.0
+        for <git@vger.kernel.org>; Fri, 27 Mar 2026 07:22:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774621343; cv=none;
+        d=google.com; s=arc-20240605;
+        b=CyrAiQcsxo1/H2hTSvVWpLrtyBOwaVT8ti7F71Zo8mYsIAXeHowpboeTXNwEzNJqJR
+         UBjh5QjV2sPY/KxxtX+crju9ofT2JIr3WTrE39GM0MUp6GbiTlAUZKWfVJudgTcZEKiZ
+         CS4fSAR+Shk1pwUz0kTalRm0RXaGH01hONFaEz3K3KH5Ce6MAAbhljLmXYaYtGPRLMyU
+         Ffy3zlfCEoaJ1Ke8/vafpiLUbjXK6jl98ykgbo2pBs88scJBOMfEYMpreXsMWXBI09rP
+         wvc6X9L6MSS9RBJIngNSXLp+RvCnZb28odPo+cxrBZmNN2bAnhRW2CiRm665vt/IYTz2
+         aWWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=3MfodvAk8laXwehUA5fEUr1TgIPTX7yAZ2MyFAFnWwU=;
+        fh=EIe78UnJA+VVudPSM3+lTK73m4Wlx/m2JXEaQC4dc1k=;
+        b=MjxtujmA+NcNdBteAecr32mZVV+N/UI/cXDssfC6WuT67istKCKB9UXh83JrMhamL1
+         Av6ql9uqAW/LvOa/gvC944G3ybHKG2voVYdfJ7MQ+AKQF+xJly9vpX+RPg5zVm7J9kDT
+         nZVG3bR3IBJIH11ECXalBdV0f7K5176S9/z121wgBmrNVSH+AXzPtI6uSojug4AFpeIM
+         SMcbv44O2PTaWf5YOcA7hfGO+2jvNPj9Tu1a19vsTYOTj2PSdCHNVgEMqaQhvR9cO86F
+         uJTHXjWJhAIl16ujCA6oGFSQ9OpOx7Q/xqem5ZAJgkN9VwPzUYf4dixSppf7nEljUtZ1
+         CbTQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774619337; x=1775224137; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EoC0niUUh0mxR3abo3X5Q5yMFGWwsAYHcwQW3R6cZBI=;
-        b=Jm/JCCksilTI9IqQ0eU/zufeYPlF34v2cOUIv+tNSHEWt9yIO74JUpnL6JuZgUTDCx
-         oRi2mt26hGlz2vjqpf97yOl5dr1bH5sBrkZXxAhimZVims/16qOpF3RO3KEzhpHk5iZM
-         Ey4TSEhABc2JqNW6+v7YDWiX9CL0IWSzelqSXA2tTzB5wrN61J3t9SneHMMvwBec8BXt
-         BXlgjWhUwlBQBzuhsX+POwu1WyFkui+vd2YJdYZ7KGd4OG7ZkxjRlUD3rWM0UPwgwLOE
-         CbM9t0S2gpreprELzfPq63Xfq4v28pPpm7JoxTjN1j7Tw1zE/TCTKKFoz0u7Ecpe2hdE
-         f20g==
+        d=gmail.com; s=20251104; t=1774621343; x=1775226143; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3MfodvAk8laXwehUA5fEUr1TgIPTX7yAZ2MyFAFnWwU=;
+        b=crdIf+ATfMjJf5CyBP1PgPGtY921Kj+oYAp/j0/TSuMGPCEJeQPhe3Ry8s/akAE+29
+         guVFLCT3cK83UXfsCi+Gos0qrXUwI7k2AfCBUaFOOfTSFsnfmZOIoJMjUbSZIt1X5su6
+         nuaDyF9Km2pZcD65vhiegOOSaMqaaP6m1F2205ieJKaEP61HI2aP55wtnKroqjthwQlP
+         n1rUOGxD1T32ISCNUX8bOw/uqo/HSTRiyTtEW6URnQRlY/aihQgoNC+tsVHeq8ELI6hn
+         KJLyMt5BSOX+T3spVY7TnSZkzgZQ9zt1y4vaov4UFfnNvpeacU6eJAHm4GyYudxVwXBC
+         1GPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774619337; x=1775224137;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EoC0niUUh0mxR3abo3X5Q5yMFGWwsAYHcwQW3R6cZBI=;
-        b=eLwGg9dWrfcPQKajwwXIwY+aHqUpeMSs5W96+rjLjXbEi86J43BGknqYcjUw99QP72
-         Ew17gR/QLHXYSPfEowvUmdvnK+GZSluG2ZhVamUZM0t8dwo6tX/AWLF8l6YgxsS2Iua4
-         t6XRPu0rRq4pxk3qioxQmX1ZhPKp+Ou+n1I6yvCDtmqabLuPGDrDUrXYEIc45Ugh01rF
-         ADgK2Yrto4RJAIDJe75Stjsdf8xPYgloly/se5BwUZ1NeH4L5/sJA8HjYMjZr4VhRLhn
-         LR64dK7Vn/ZEi6jAqAYWFiXFB9aM5l/P8ZXh+pQqWBC935f3x7inX7jL9S8d2noyw5OG
-         aaCg==
-X-Forwarded-Encrypted: i=1; AJvYcCWzgTkro4+UKQ+DVnJdfdi7RRhnhLdHxmd9Wii7gFKeROlY0zatqlGsQ490CFG6tYbDOkI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWeQox8WyUH9rAl8vieNZcJU3btXZ2Diu7cRVJcs7TIMDy4Jvm
-	j9KJ671UpxmtCy9rhq5L4kW7zhXjlxPLcjkkm3FIPn5T/YBqRyRrkviK
-X-Gm-Gg: ATEYQzwGRUwz2bQQNILYvSHLvyaktvM+QiYQ4iHte99wujaENH0CGTvseUviaNNTwNh
-	8bXvAljXZl3yH5SsycX+IcEknZU4cj0KyVHVARbXrB5X+CeVPVn2AAWTXOOfVkBKPcFbxF/kpKt
-	NAU7MTlaGUJk+dlAC/V5YpD299wirGItwprwRpCkOrvUye+wycWVjupCnsBp0r0iHdRsmsyJvVl
-	Ow7HtyA/Uh+Ir5cxQpNDwafiVpI6FANUdZfV8y0VKK1ujAzSzSYr0nYrlrVbYZVxk5tJXn+rwwi
-	oIdrZbzlxiRYsY99XJV3BsQ2owacVFuKgpHLLwjCYbJTU5cp0c4IBdachwxNGNgWsKLxNgugJjf
-	dHC8tISlHt0qT/BmLQjOM9DobtCgTtBz/qpPFA3kwqFh/NKjCCmDJN0GyeCBbXmrhSsCIj979GH
-	t/63zDyQ8dh8q5jWJhyMHZXKMERXP5RpuEEuKGd6wTOxlndTrM1ckdW+bYtKv4uHTfPMbczjoxJ
-	NmFeKkB
-X-Received: by 2002:a05:620a:404b:b0:8cd:8f94:258e with SMTP id af79cd13be357-8d01c7fac01mr313929585a.59.1774619336861;
-        Fri, 27 Mar 2026 06:48:56 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e4fba2fsm507379385a.34.2026.03.27.06.48.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Mar 2026 06:48:56 -0700 (PDT)
-Message-ID: <770465fe-c38f-45a9-b1b0-0ad682a35fab@gmail.com>
-Date: Fri, 27 Mar 2026 09:48:55 -0400
+        d=1e100.net; s=20251104; t=1774621343; x=1775226143;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3MfodvAk8laXwehUA5fEUr1TgIPTX7yAZ2MyFAFnWwU=;
+        b=gfUlEBQII+W+bIywQqDzA/ndUlNwLfl6zUymaJ2LXyzGB5WnRw5yY3oWL42uBx+Y54
+         jtqHJbKCYi+5Ul9oVpYfDgYfMaauHOakXqunWjLgA/7lFFheHbtskBO7lu9O7BOXq/XE
+         of64G5hgndI5oYpD9HbjqzkV73/kfDR53fGTJ+L1XA0D9Tag44Nj2XY34pgRYnrI8E7o
+         x8ynuAfBkjRdOABWiIgYBxJqlzDL/v/qvVhQq4CGvONOJll/hIosijPKX8WlMdxuYL8b
+         JlvYCgf5059pp313XaFDKQBZzg4Y1nhe/YgH+SjacxeCxuPVT5wUXKXdUKURfow9ugFV
+         PxDw==
+X-Gm-Message-State: AOJu0Ywar3U2uJdXbjzrzbsQSd+s8d8pOYygUXj5O9a2q3XJjuzFjdBX
+	KwnyW9VkBjBPig2o8S/Iwf6e6gwItOcLxPLryxWeHpGXAOYhelWoxeyXUvhrJENalwAbekIOZDV
+	RLd+90e33neI+5XaI6L8Zuidezzpy+ts=
+X-Gm-Gg: ATEYQzw/P02raY7dk0LTUjDQp0uzkVxkB6V0HzljA3pD3xwD8s1JQSu3jJPj8yMiu7d
+	d9Myrbi6RymukSop2iS9S6kxpHnRrz34e8Gl0DGNzD3fMVZfycq4tpxjjMzuRtsBHR5LCpSOUsX
+	qgUGSKSxhrR+BwvffwHuWClLQyNbx6lD3ti+OgvcABRh/u0+0FTVm0E/i+NGbaMKnCik6AWdCZO
+	nAEShu7NL6Dbb7HFDJywHjWmzEVKESNPwERZo/cpg0gigumO3hXuQJQE590w1ZZLrPpitaWCTN3
+	XrRJRqlNvL0jYn8gFhULDKeStrgiauyfhTZ/zj/WWM1ol7jw5OpgiHX1eJQbrQQges3MIK3yv/O
+	KgQh60T/464YKEjweOlvtsvk=
+X-Received: by 2002:a05:690c:6b01:b0:79b:cd67:10b9 with SMTP id
+ 00721157ae682-79bdded0d3amr24960627b3.25.1774621342956; Fri, 27 Mar 2026
+ 07:22:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] read-cache: use index state repository for trace2 logging
-To: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>,
- Jayesh Daga <jayeshdaga99@gmail.com>
-References: <pull.2253.git.git.1774606086325.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2253.git.git.1774606086325.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260323215935.74486-1-pabloosabaterr@gmail.com>
+ <20260325174401.217577-1-pabloosabaterr@gmail.com> <20260325174401.217577-2-pabloosabaterr@gmail.com>
+ <xmqqh5q3sgnm.fsf@gitster.g>
+In-Reply-To: <xmqqh5q3sgnm.fsf@gitster.g>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Fri, 27 Mar 2026 15:22:06 +0100
+X-Gm-Features: AQROBzAAaemErkBm5Ut27o2hrUH4HiyQ-50_TKBAc0hLfVx9-xKmsMpgNchHHJA
+Message-ID: <CAN5EUNSyBjpZHHAAd1YGVRjkLwzgGzpafhBJVTTcHJCLKNU2gQ@mail.gmail.com>
+Subject: Re: [GSoC PATCH v5 1/2] graph: add --graph-lane-limit option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com, 
+	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
+	chandrapratap3519@gmail.com, j6t@kdbg.org, szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 3/27/2026 6:08 AM, Jayesh Daga via GitGitGadget wrote:
+Junio C Hamano (<gitster@pobox.com>) writes:
+>
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>
+> > +static int graph_needs_truncation(struct git_graph *graph, int lane)
+> > +{
+> > +     int max = graph->revs->graph_max_lanes;
+> > +     /*
+> > +      * Ignore values <= 0, meaning no limit.
+> > +      */
+> > +     return max > 0 && lane >= max;
+> > +}
+>
+> Make a mental note that this helper function works on number of
+> lanes, not display columns (which is roughly twice the number of
+> lanes).
+>
+> > @@ -696,6 +705,18 @@ static void graph_update_columns(struct git_graph *graph)
+> >               }
+> >       }
+> >
+> > +     /*
+> > +      * If graph_max_lanes is set, cap the padding from the branches
+> > +      */
+> > +     if (graph->revs->graph_max_lanes > 0) {
+> > +             /*
+> > +              * width of "| " per lanes plus truncation mark "~ ".
+> > +              */
+> > +             int max_columns_width = graph->revs->graph_max_lanes * 2 + 2;
+> > +             if (graph->width > max_columns_width)
+> > +                     graph->width = max_columns_width;
+> > +     }
+> > +
+> >       /*
+> >        * Shrink mapping_size to be the minimum necessary
+> >        */
+> > @@ -846,6 +867,10 @@ static void graph_output_padding_line(struct git_graph *graph,
+> >        * Output a padding row, that leaves all branch lines unchanged
+> >        */
+> >       for (i = 0; i < graph->num_new_columns; i++) {
+> > +             if (graph_needs_truncation(graph, i)) {
+> > +                     graph_line_addstr(line, "~ ");
+> > +                     break;
+> > +             }
+>
+> And that mental note helps to convince us this loop makes sense, as
+> it increments 'i' one by one ;-)
 
->     Robustness: The ternary fallback ensures we avoid potential NULL pointer
->     dereferences while maintaining existing logging behavior in edge cases.
+Ok, I'll add the note to graph_needs_truncation() and any other places
+that might need to be more clear about if it handles columns or lanes.
 
-> +	r = istate->repo ? istate->repo : the_repository;
+>
+> > @@ -903,6 +928,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+> >                       seen_this = 1;
+> >                       graph_line_write_column(line, col, '|');
+> >                       graph_line_addchars(line, ' ', graph->expansion_row);
+> > +             } else if (seen_this && graph_needs_truncation(graph, i)) {
+> > +                     graph_line_addstr(line, "~ ");
+> > +                     break;
+> >               } else if (seen_this && (graph->expansion_row == 0)) {
+> >                       /*
+> >                        * This is the first line of the pre-commit output.
+> > @@ -994,6 +1022,12 @@ static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
+> >               col = &graph->new_columns[j];
+> >
+> >               graph_line_write_column(line, col, '-');
+>
+> And here, 'j' comes from graph->mapping[] array.  Does that count in
+> display columns or lanes?
+>
+> > +             if (graph_needs_truncation(graph, j / 2 + i)) {
+>
+> This makes it look as if 'j' counts in columns and needs to be
+> divided by 2 to make it comparable to lanes.
 
-If I understand correctly, it is a bug if istate->repo is NULL.
+Actually, no, because there are other parts like
+graph_output_post_merge_line handling i and j  like that and it is a
+more mechanical thing that logical I didn't double checked it, it
+should be something like commit_index + 1 + i similar to what j is,
+imma check to be sure and add another test for this to be sure because
+current ones pass this and that's why I thought it was ok in the first
+place.
 
-Did you try running the test suite with istate->repo as a replacement for
-the_repository in these tracing calls? Is there a legitimate scenario
-where this would be NULL?
+>
+> > +                     graph_line_addstr(line, "~ ");
+> > +                     break;
+> > +             }
+> > +
+> >               graph_line_write_column(line, col, (i == dashed_parents - 1) ? '.' : '-');
+> >       }
+> >
+>
+> > +     if (graph->num_parents > 1) {
+> > +             if (!graph_needs_truncation(graph, graph->commit_index)) {
+> > +                     graph_update_state(graph, GRAPH_POST_MERGE);
+> > +             } else {
+> > +                     struct commit_list *first_parent = first_interesting_parent(graph);
+> > +                     int first_parent_col = graph_find_new_column_by_commit(graph, first_parent->item);
+>
+> Are we sure that first_interesting_parent() will always give us a
+> non-NULL pointer?
 
-> +	trace2_data_intmax("index", r, "read/version",
->  			   istate->version);
-> -	trace2_data_intmax("index", the_repository, "read/cache_nr",
-> +	trace2_data_intmax("index", r, "read/cache_nr",
->  			   istate->cache_nr);
+my bad, first_interestign_parent() can be a NULL, will add a check for that
 
-Other than that, this is a minor improvement in the right direction. I'd
-rather that it be more complete if you are working in this file.
+>
+> Can we use a bit shorter identifier names to deal with these overly
+> long lines?  The lifetime of these two variables is very short so they
+> do not have to be so descriptive.
+>
+>                         struct commit *p = first_interesting_parent(graph)->item;
+>                         int lane = graph_find_new_column_by_commit(graph, p);
+>
+> > +                     if (!graph_needs_truncation(graph, first_parent_col))
+> > +                             graph_update_state(graph, GRAPH_POST_MERGE);
+> > +                     else if (graph_is_mapping_correct(graph))
+> > +                             graph_update_state(graph, GRAPH_PADDING);
+> > +                     else
+> > +                             graph_update_state(graph, GRAPH_COLLAPSING);
+> > +             }
+> > +     } else if (graph_is_mapping_correct(graph))
+>
 
-There are several places where we use the_repository and there is an
-'istate' right there. If this change works, then why not apply that same
-transformation in the other places?
+sure
 
-There are TODO comments for many of these, including the hunk you are
-editing (be sure to remove these!).
-
-There are other cases that I see in this file:
-
-* refresh_index() uses the_repository for progress.
-
-* tweak_untracked_cache() has a local pointer 'r' that could
-  be set to istate->repo
-
-* tweak_split_index() passes the_repository to
-  repo_config_get_split_index().
-
-* do_read_index() uses the_repository when it could use
-  istate->repo.
-
-* read_index_from() uses the_repository for tracing.
-
-* verify_index_from() uses the_repository->hash_algo but
-  has an istate->repo that could be used.
-
-* do_write_index() has several instances.
-
-(At this point, I stopped taking inventory.)
-
-There are other uses of the_repository that will be harder to remove as
-there isn't a local istate at the time, so those aren't worth combining
-with this kind of effort.
-
-If you are already working in this space, then I recommend figuring out
-how much we can rely on istate->repo and then apply that knowledge to
-these cases as separate commits:
-
-1. Replace the uses in the trace2 calls with istate->repo
-   and delete the TODO comments.
-
-2. Replace the other uses of the_repository when an istate
-   exists already.
-
-Thanks, -Stolee
-
+Thanks for the feedback I'll start with the v6,
+Pablo.
