@@ -1,168 +1,339 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37B63932DA
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 21:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0192729DB88
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 21:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774645792; cv=none; b=tzRvH0Tq0FV0GC1yzlhcbvlBU/NolcBRvUT+sJAEV3NK/+KP02xYXrF0gRetsvSeYM2XvAyHSfCsPAs4+o4gx3PVLmpMn7qFxf3u5oKCMei5n5Btig5C245AKW7In8R0GdA8lbtzMLU1qTdMk9QunOnVKC9LtC3cUARCkp1fqJg=
+	t=1774647198; cv=none; b=eMI6201E2fqZy2ro2vvsCstBzrAc3xnbkUw1HZ96SYas6tQZo/d7sMnZTym9oj6u0MKoPfZWWtI91MwtcAV/CDqXP3YPynglOzA28a/gU8BU4Tfr2GKSz3a24mpNkKbqPQkrM4mZUXXc7+SD8jHZqBCP6lZzFwWmiXkyRl+J4h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774645792; c=relaxed/simple;
-	bh=FBuP9tTTQL4pPEMBk7imcAji8osceoyCiqNfZivODMg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K7F8pRATr9G3Vvk6sq80ngOKpW4DyurFEMMjx+mRuhtOEbXBFF77WkEn66tQ60OyVgZuWF91eVECS50KPbou/6+tmW2MbgpnlOV4pJxngyaoIC94uWclXbq45tZlHH+ROkMf51TI0oOltmpAXbk7YENO2Ae/ogaRX54h8G3FVPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a859UR2L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=saz6sjhw; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774647198; c=relaxed/simple;
+	bh=r+RFG6YJlIXuMmVFZACaEyAfdUhheMJYmQRjPFQDMvQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r/hCXN50Hw54mRJhIdrqJeOmAT3UXc1HUBtXXanG/OhtNG2BiuItRbi4XUyY4eaQsJ6OQ93dBYhXCIVAJAv26cgi28AUQcci3vEIUbJE30Bd02Qx13HskFpFgUHnK8tFZM9bI4yFz+k9DlQ4YI4UaBxSmaSJWM6wi6SFrhTYN20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UhVA7X40; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a859UR2L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="saz6sjhw"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 684B41D001C9;
-	Fri, 27 Mar 2026 17:09:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 27 Mar 2026 17:09:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774645789; x=1774732189; bh=msW8B1u9UA
-	WKM3+APLQ0h/hP9/Y7XELExVRLg3SUKXE=; b=a859UR2Lg/clIgK+CTdRMS2gWG
-	ZA1IbrKQJ237E+CSK/BMDvL8M/JROC/b+Kq9GyGibc4OS+4QP/eSOci0lvMQH1ZY
-	ewAX5c5HnNwRucE+gDicUxRh/PrtDc5N8rAa0SF2p+KWupkn+51snCVTyeQngmKr
-	SJfj2TEmoeN6sRgMNh74mKyx8uRcds6A2cduBHmcgw+ejgxse3obfHSC52VDbV4r
-	57ahuIVnFif5QyZjuBak533xvp9czsHJ2SsJu5jPGcokxemfc7eHqcLZdqBRzSx0
-	dqnfqQPq6qdLTs9eCG2Rw9aFn8s2wLPlEWopXdh9eaDEOkxqOO7aVYRwkmUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774645789; x=1774732189; bh=msW8B1u9UAWKM3+APLQ0h/hP9/Y7XELExVR
-	Lg3SUKXE=; b=saz6sjhwrPIWPPpXcE6Xjc7W//BGa5jeq6dAuvX+x5Oi1AKjz4h
-	oLndyNd7Am4Llvnq4c3BEWA5ZoerLMZpDtamSlAPj3t289E1vwV2r8iDn87iZJ03
-	3BRFp3IIS4KFloLXX7bgI0hWYFS+8Wj6rdGNv9y2C5Rah48zVd7EXkVfxaj8DADj
-	9w8a77f+G6fICb+vwqVL8G21QS6mUoDlPIwY5yd2YR0kIyJxkXMuTiaLpKy2pVif
-	zLCmDZGHP9+cS9Ap/4IMC3+4iKMJY0mZ/K95wxdBdNli2F32IU5BBLbCvj2ffnfu
-	I5FLBkbaQcp8RycRc7TVybkTSicb2GeJklw==
-X-ME-Sender: <xms:HfLGaSZRbGtad1P8kLKD3Ed6LE6N6E7oBUeC4t5mSt84ASRU_zePaw>
-    <xme:HfLGaX-RwgObkrvf8_q8MihUx0XMrFoukSKOVaU-epE9q5QQXydcNBw9wxAxKjQDg
-    Tg3S08VAcqX08TSBZ7f9_dQTyHsfQRmn5lQSQTPHALZHagDvCIv0w>
-X-ME-Received: <xmr:HfLGaQniwTJkvqlOrm-tJ0QZqffmr655_GOwx-IOmlhJsjpoi59CfCg0V275KQoKr6BmjutHVfNeJs-GViGUCy2yYB65qN71YQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedufedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    peihtghhihhnrdhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
-    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnh
-    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgif
-    rhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:HfLGaUwJegmWTDPzP-9l_tXQNpVXicTGPZMeJ0ZsbU8B70gRPBLkJw>
-    <xmx:HfLGaS5t4KhjAgmMhNnCX8aZguOgEbR6igYvwAAjg_rzQ3suuEWrtw>
-    <xmx:HfLGacWGryVeYHEUh8xVGkQfL_mHmXaGQgNyWWz4cmnbEgZihf09Dg>
-    <xmx:HfLGaSJcdJtSp9M_n9qo5Woah6hDZ1ZuCVJTI2AJqI4HyZ79hso66w>
-    <xmx:HfLGaQcWHY-h5ZuLf34-cZcvJYq-NRALB6D6MIW6LsaX7iaz4S9FO1Dx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Mar 2026 17:09:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  Jeff King
- <peff@peff.net>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 4/6] xdiff/xdl_cleanup_records: make limits more clear
-In-Reply-To: <86dd98db9b93651b21adaa41ccd44917910fedcc.1774639433.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Fri, 27 Mar 2026
-	19:23:51 +0000")
-References: <pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
-	<pull.2156.v3.git.git.1774639433.gitgitgadget@gmail.com>
-	<86dd98db9b93651b21adaa41ccd44917910fedcc.1774639433.git.gitgitgadget@gmail.com>
-Date: Fri, 27 Mar 2026 14:09:47 -0700
-Message-ID: <xmqqy0jdhtd0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UhVA7X40"
+Received: (qmail 170977 invoked by uid 106); 27 Mar 2026 21:33:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=r+RFG6YJlIXuMmVFZACaEyAfdUhheMJYmQRjPFQDMvQ=; b=UhVA7X40s9LFj91BJepi9LoUktLIocNMmT0DQJtUa+qGI2u8X2elPyzrxfqN0vXdOH27lATEy2gL6y7hrfjz7Er7N+Lj58EkcJlf9h59OAw8kyyG6+9Rck31wtuiyodkjxX8sDApT3bVbak2erSry1J4ygGU6AfHHFjSlqAr62sPpgkp4HlVogbFG4RjVCFkagmn8x8qG8y9CJPy+r9YpPUA+nRUkWxHP6vO5wqpUrE70cwc/jN4Rj5AEgan70SMFzHqlZM0fOfsWRJMdW+gvZe25FeG0B8AHdVIsQ7DyC5qgaAaGb55AVBU0//XJVwgg8Z/6eiMJVsYrSyzJ5g3sA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Mar 2026 21:33:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 239637 invoked by uid 111); 27 Mar 2026 21:33:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Mar 2026 17:33:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 27 Mar 2026 17:33:08 -0400
+From: Jeff King <peff@peff.net>
+To: Wesley Schwengle <wesleys@opperschaap.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/3] connect: Rename name to command in connect_git()
+Message-ID: <20260327213308.GA598533@coredump.intra.peff.net>
+References: <20260326233739.2911354-1-wesleys@opperschaap.net>
+ <20260326233739.2911354-2-wesleys@opperschaap.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260326233739.2911354-2-wesleys@opperschaap.net>
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Mar 26, 2026 at 07:37:36PM -0400, Wesley Schwengle wrote:
 
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
->
-> Make the handling of per-file limits and the minimal-case clearer.
->   * Use explicit per-file limit variables (mlim1, mlim2) and initialize
->     them.
->   * The additional condition `!need_min` is redudant now, remove it.
-> Best viewed with --color-words.
->
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->  xdiff/xprepare.c | 19 ++++++++++++-------
->  1 file changed, 12 insertions(+), 7 deletions(-)
+> connect_git has `char *name' in its signature and it caught me a little
+> offguard. I initially thought it was the remote name. But when you look
+> closer at the various call sites it is actually a command that is send
+> over the wire, eg . `git-receive-pack'. Change the naming makes it
+> easier to read the code and understand its intention.
 
-t4071 and t8015 do not like this step, even though they are happy
-with 1-3/6 applied.
+I agree that "name" is not all that descriptive, but I think there's a
+hidden gotcha in the explanation above. This string is _not_ the command
+that we send over the wire. That's "prog" in the same function. And the
+reason that "name" exists is that it is a stable name for the operation
+we are performing, like "git-receive-pack", even if configuration or
+command-line parameters (like "--receive-pack=foo") tell us to use a
+different command name.
 
+So probably "op" or "type" is a more accurate description. This
+conceptually ought to be an enum, too, since it is selecting from a
+limited set of operations we know about.
 
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index 386668a92d..2cf1f8d1a8 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -268,7 +268,7 @@ static bool xdl_clean_mmatch(uint8_t const *action, ptrdiff_t i, ptrdiff_t s, pt
->   * might be potentially discarded if they appear in a run of discardable.
->   */
->  static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2) {
-> -	ptrdiff_t i, nm, mlim;
-> +	ptrdiff_t i, nm, mlim1, mlim2;
->  	xdlclass_t *rcrec;
->  	uint8_t *action1 = NULL, *action2 = NULL;
->  	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
-> @@ -287,25 +287,30 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->  		goto cleanup;
->  	}
->  
-> +	if (need_min) {
-> +		/* i.e. infinity */
-> +		mlim1 = SIZE_MAX;
-> +		mlim2 = SIZE_MAX;
-> +	} else {
-> +		mlim1 = XDL_MIN(xdl_bogosqrt(xdf1->nrec), XDL_MAX_EQLIMIT);
-> +		mlim2 = XDL_MIN(xdl_bogosqrt(xdf2->nrec), XDL_MAX_EQLIMIT);
-> +	}
-> +
->  	/*
->  	 * Initialize temporary arrays with DISCARD, KEEP, or INVESTIGATE.
->  	 */
-> -	if ((mlim = (long)xdl_bogosqrt((uint64_t)xdf1->nrec)) > XDL_MAX_EQLIMIT)
-> -		mlim = XDL_MAX_EQLIMIT;
->  	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
->  		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
->  		rcrec = cf->rcrecs[mph1];
->  		nm = rcrec ? rcrec->len2 : 0;
-> -		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
-> +		action1[i] = (nm == 0) ? DISCARD: nm >= mlim1 ? INVESTIGATE: KEEP;
->  	}
->  
-> -	if ((mlim = (long)xdl_bogosqrt((uint64_t)xdf2->nrec)) > XDL_MAX_EQLIMIT)
-> -		mlim = XDL_MAX_EQLIMIT;
->  	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
->  		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
->  		rcrec = cf->rcrecs[mph2];
->  		nm = rcrec ? rcrec->len1 : 0;
-> -		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
-> +		action2[i] = (nm == 0) ? DISCARD: nm >= mlim2 ? INVESTIGATE: KEEP;
->  	}
->  
->  	/*
+I took a quick stab at converting it to an enum (see below) and it's
+mostly an improvement, but:
+
+  1. The ripple effect went much farther than I expected, since the
+     transport code is passing these values, too. If we are going to
+     update one function in the chain, we should probably do all of them
+     (even if it is just a change of the variable name).
+
+  2. We end up having to convert to a string at some points anyway for
+     producing error messages, and for passing across the remote-helper
+     barrier. But I think we are still better off, because it's more
+     clear where we are using the string-ified version and what values
+     it could take.
+
+-Peff
+
+---
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 13ea7308c8..3c1288a123 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -31,7 +31,7 @@ static int run_remote_archiver(int argc, const char **argv,
+ 
+ 	_remote = remote_get(remote);
+ 	transport = transport_get(_remote, _remote->url.v[0]);
+-	transport_connect(transport, "git-upload-archive", exec, fd);
++	transport_connect(transport, GIT_CONNECT_UPLOAD_ARCHIVE, exec, fd);
+ 
+ 	/*
+ 	 * Inject a fake --format field at the beginning of the
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index d9e42bad58..316badd969 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -223,7 +223,7 @@ int cmd_fetch_pack(int argc,
+ 		int flags = args.verbose ? CONNECT_VERBOSE : 0;
+ 		if (args.diag_url)
+ 			flags |= CONNECT_DIAG_URL;
+-		conn = git_connect(fd, dest, "git-upload-pack",
++		conn = git_connect(fd, dest, GIT_CONNECT_UPLOAD_PACK,
+ 				   args.uploadpack, flags);
+ 		if (!conn)
+ 			return args.diag_url ? 0 : 1;
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 8b81c8a848..1412b49bc8 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -273,8 +273,9 @@ int cmd_send_pack(int argc,
+ 		fd[0] = 0;
+ 		fd[1] = 1;
+ 	} else {
+-		conn = git_connect(fd, dest, "git-receive-pack", receivepack,
+-			args.verbose ? CONNECT_VERBOSE : 0);
++		conn = git_connect(fd, dest, GIT_CONNECT_RECEIVE_PACK,
++				   receivepack,
++				   args.verbose ? CONNECT_VERBOSE : 0);
+ 	}
+ 
+ 	packet_reader_init(&reader, fd[0], NULL, 0,
+diff --git a/connect.c b/connect.c
+index a02583a102..dad1cff1a8 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1428,6 +1428,7 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+  */
+ struct child_process *git_connect(int fd[2], const char *url,
+ 				  const char *name,
++				  enum git_connect_type type,
+ 				  const char *prog, int flags)
+ {
+ 	char *hostandport, *path;
+@@ -1441,7 +1442,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 	 * fetch, ls-remote, etc), then fallback to v0 since we don't know how
+ 	 * to do anything else (like push or remote archive) via v2.
+ 	 */
+-	if (version == protocol_v2 && strcmp("git-upload-pack", name))
++	if (version == protocol_v2 && type != GIT_CONNECT_UPLOAD_PACK)
+ 		version = protocol_v0;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+diff --git a/connect.h b/connect.h
+index 1645126c17..641498c759 100644
+--- a/connect.h
++++ b/connect.h
+@@ -7,7 +7,12 @@
+ #define CONNECT_DIAG_URL      (1u << 1)
+ #define CONNECT_IPV4          (1u << 2)
+ #define CONNECT_IPV6          (1u << 3)
+-struct child_process *git_connect(int fd[2], const char *url, const char *name, const char *prog, int flags);
++enum git_connect_type {
++    GIT_CONNECT_UPLOAD_PACK,
++    GIT_CONNECT_RECEIVE_PACK,
++    GIT_CONNECT_UPLOAD_ARCHIVE,
++};
++struct child_process *git_connect(int fd[2], const char *url, enum git_connect_type, const char *prog, int flags);
+ int finish_connect(struct child_process *conn);
+ int git_connection_is_socket(struct child_process *conn);
+ int server_supports(const char *feature);
+diff --git a/transport-helper.c b/transport-helper.c
+index 4d95d84f9e..c7fab6f560 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -620,8 +620,22 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ 	return ret;
+ }
+ 
++static const char *connect_type_to_command(enum git_connect_type type)
++{
++	switch (type) {
++	case GIT_CONNECT_UPLOAD_PACK:
++		return "git-upload-pack";
++	case GIT_CONNECT_RECEIVE_PACK:
++		return "git-receive-pack";
++	case GIT_CONNECT_UPLOAD_ARCHIVE:
++		return "git-upload-archive";
++	}
++	BUG("unknown git_connect_type: %d", type);
++}
++
+ static int process_connect_service(struct transport *transport,
+-				   const char *name, const char *exec)
++				   enum git_connect_type type,
++				   const char *exec)
+ {
+ 	struct helper_data *data = transport->data;
+ 	struct strbuf cmdbuf = STRBUF_INIT;
+@@ -631,7 +645,7 @@ static int process_connect_service(struct transport *transport,
+ 	 * Handle --upload-pack and friends. This is fire and forget...
+ 	 * just warn if it fails.
+ 	 */
+-	if (strcmp(name, exec)) {
++	if (strcmp(connect_type_to_command(type), exec)) {
+ 		int r = set_helper_option(transport, "servpath", exec);
+ 		if (r > 0)
+ 			warning(_("setting remote service path not supported by protocol"));
+@@ -640,13 +654,13 @@ static int process_connect_service(struct transport *transport,
+ 	}
+ 
+ 	if (data->connect) {
+-		strbuf_addf(&cmdbuf, "connect %s\n", name);
++		strbuf_addf(&cmdbuf, "connect %s\n", connect_type_to_command(type));
+ 		ret = run_connect(transport, &cmdbuf);
+ 	} else if (data->stateless_connect &&
+ 		   (get_protocol_version_config() == protocol_v2) &&
+-		   (!strcmp("git-upload-pack", name) ||
+-		    !strcmp("git-upload-archive", name))) {
+-		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
++		   (type == GIT_CONNECT_UPLOAD_PACK ||
++		    type == GIT_CONNECT_UPLOAD_ARCHIVE)) {
++		strbuf_addf(&cmdbuf, "stateless-connect %s\n", connect_type_to_command(type));
+ 		ret = run_connect(transport, &cmdbuf);
+ 		if (ret)
+ 			transport->stateless_rpc = 1;
+@@ -660,32 +674,33 @@ static int process_connect(struct transport *transport,
+ 				     int for_push)
+ {
+ 	struct helper_data *data = transport->data;
+-	const char *name;
++	enum git_connect_type type;
+ 	const char *exec;
+ 	int ret;
+ 
+-	name = for_push ? "git-receive-pack" : "git-upload-pack";
++	type = for_push ? GIT_CONNECT_RECEIVE_PACK : GIT_CONNECT_UPLOAD_PACK;
+ 	if (for_push)
+ 		exec = data->transport_options.receivepack;
+ 	else
+ 		exec = data->transport_options.uploadpack;
+ 
+-	ret = process_connect_service(transport, name, exec);
++	ret = process_connect_service(transport, type, exec);
+ 	if (ret)
+ 		do_take_over(transport);
+ 	return ret;
+ }
+ 
+-static int connect_helper(struct transport *transport, const char *name,
+-		   const char *exec, int fd[2])
++static int connect_helper(struct transport *transport, enum git_connect_type type,
++			  const char *exec, int fd[2])
+ {
+ 	struct helper_data *data = transport->data;
+ 
+ 	/* Get_helper so connect is inited. */
+ 	get_helper(transport);
+ 
+-	if (!process_connect_service(transport, name, exec))
+-		die(_("can't connect to subservice %s"), name);
++	if (!process_connect_service(transport, type, exec))
++		die(_("can't connect to subservice %s"),
++		    connect_type_to_command(type));
+ 
+ 	fd[0] = data->helper->out;
+ 	fd[1] = data->helper->in;
+diff --git a/transport-internal.h b/transport-internal.h
+index 90ea749e5c..1a86c63ce0 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -58,7 +58,7 @@ struct transport_vtable {
+ 	 * process involved generating new commits.
+ 	 **/
+ 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
+-	int (*connect)(struct transport *connection, const char *name,
++	int (*connect)(struct transport *connection, enum git_connect_type type,
+ 		       const char *executable, int fd[2]);
+ 
+ 	/** get_refs_list(), fetch(), and push_refs() can keep
+diff --git a/transport.c b/transport.c
+index cb1befba8c..2fd94d701f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -308,8 +308,8 @@ static int connect_setup(struct transport *transport, int for_push)
+ 
+ 	data->conn = git_connect(data->fd, transport->url,
+ 				 for_push ?
+-					"git-receive-pack" :
+-					"git-upload-pack",
++					GIT_CONNECT_RECEIVE_PACK :
++					GIT_CONNECT_UPLOAD_PACK,
+ 				 for_push ?
+ 					data->options.receivepack :
+ 					data->options.uploadpack,
+@@ -956,12 +956,12 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	return ret;
+ }
+ 
+-static int connect_git(struct transport *transport, const char *name,
++static int connect_git(struct transport *transport, enum git_connect_type type,
+ 		       const char *executable, int fd[2])
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	data->conn = git_connect(data->fd, transport->url,
+-				 name, executable, 0);
++				 type, executable, 0);
+ 	fd[0] = data->fd[0];
+ 	fd[1] = data->fd[1];
+ 	return 0;
+@@ -1650,11 +1650,11 @@ void transport_unlock_pack(struct transport *transport, unsigned int flags)
+ 		string_list_clear(&transport->pack_lockfiles, 0);
+ }
+ 
+-int transport_connect(struct transport *transport, const char *name,
++int transport_connect(struct transport *transport, enum git_connect_type type,
+ 		      const char *exec, int fd[2])
+ {
+ 	if (transport->vtable->connect)
+-		return transport->vtable->connect(transport, name, exec, fd);
++		return transport->vtable->connect(transport, type, exec, fd);
+ 	else
+ 		die(_("operation not supported by protocol"));
+ }
+diff --git a/transport.h b/transport.h
+index 892f19454a..1e6fd263f6 100644
+--- a/transport.h
++++ b/transport.h
+@@ -5,6 +5,7 @@
+ #include "remote.h"
+ #include "list-objects-filter-options.h"
+ #include "string-list.h"
++#include "connect.h"
+ 
+ struct git_transport_options {
+ 	unsigned thin : 1;
+@@ -324,7 +325,7 @@ char *transport_anonymize_url(const char *url);
+ void transport_take_over(struct transport *transport,
+ 			 struct child_process *child);
+ 
+-int transport_connect(struct transport *transport, const char *name,
++int transport_connect(struct transport *transport, enum git_connect_type type,
+ 		      const char *exec, int fd[2]);
+ 
+ /* Transport methods defined outside transport.c */
