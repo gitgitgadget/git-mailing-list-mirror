@@ -1,127 +1,120 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD2240F8C1
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 18:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2DD33509A
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 18:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774636444; cv=none; b=FgC2XMf/rfbHrVXxna1I32xANmBOzIQbPxSs1FFJf/3gviMxHSzSwknFUSTCUVI8kMp4or+eM+/MKeWMuB09hw/sVxkrOALNSFaZudZiDIv1XCZ5n4bUhNOLucL2nI2nQ1olm10xeASP1cGYJBkydhWheBWGsyuMfZ/Ni9VpRUc=
+	t=1774637731; cv=none; b=D0g3KHpVBp3X8IBn/y2OdnIWYEORMLEizkX+S4/aebDaG4lxbRKOcWRwOGN550k4rxoH1SPV0hTPGULxzb5JPar+43L1OJUfsWcF4XgB9ZTYzsjjX3EIHsU3XMibZ4qw2AiJ2WP1+FyE3GYjUtfb7lSPlRoZ8VqCWytQnNhnQHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774636444; c=relaxed/simple;
-	bh=FeeDRPCt8N9TvDrxwNt6N1KPwC7ba1ecwbgBmGLjxB4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AYvW8gYqZjIOfx2Tc7LZpRTcQkY77O1UgofpzPORmC1GlDULCGvXQn0PtnUxIay7t4FfY2A2QZN07Up10ppdDd+/+KQ2vt4/dXaMqeAY+1TxnF/zT8caKu5RsGlw7y7UJbhVSLBrrqOz4qLRDpo54xDR6ygdrllGB+ZNvpTLUhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ox7j7QDB; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774637731; c=relaxed/simple;
+	bh=Z4cCpF3+OBbmx8MTXXcYTYjAQnALe3z/xe5SpAoBZ/k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MBZsf/AiqD2vUmf81A4tZELIvWNBz1Iae1xrkQdznfqsgmom08DSS/TU+Vxk8FYZm84zDeJgfuc7jMFK/GEjcpe0SBJHlF61hxo1ktPA9dwy7V1Q+j+Wj1VCnb6KQxod7BIK3uqqgWZGgZZVb9dAgZINNnIgfshAWP8vAqwz+5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZwfzMgBW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OuAa5/rP; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ox7j7QDB"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8cfc137464dso321854085a.2
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 11:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774636442; x=1775241242; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N9mP7Ileb+ZGNN3rWcQIcXdw3oXYMlD7qpwopALIVp4=;
-        b=Ox7j7QDBUWLF13sA0UUoaFcDSnmKuDVHWYc9+MkKBHbkIv5ZGoFI+FJWMq2ZzCs4It
-         IlFMOyUjyFarkQRqAVRB01Z/HJITwme9jxP5fqmdmmuMTrGBhPzkSVpI5LarxP/aLD4v
-         yEFYkAo//de9PryurcfndId1n6ffZMyrABshPSf7w0+cJ+3f0V68BqQ3vgi9YjC+HwWN
-         dZJom2+ohoJYT1QoXHlpyHkEcD+/KoyRk8n7OulC/atPx5YdBT2+w3EJN2anAsTzjarf
-         Ud78OthU4h2obttWpgNXwgdYZ0X2fdYLD+a+e3DcyCdsT+YFH9X9WRocSDx326T35nGB
-         LuwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774636442; x=1775241242;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N9mP7Ileb+ZGNN3rWcQIcXdw3oXYMlD7qpwopALIVp4=;
-        b=UXl2XPOUY653L8KSIsICXB0CkQCembfMyjVgk5uEIyMbHnDTphyk1CXpSB+GOvX8wb
-         VPsmSNLrROU6MHrtcSTpCZGXQ2BiPfiZOZrUV7YpGcdMV7onhWM5OCbPXp4g+mc2b0Vu
-         Mr/LGyNltlYe6U88dLLG0nvP/veZmcauvwJmhAXORMokNL5MJRNfPG15yMi7ToDb8wRd
-         eLyZd8d44XHG5LJrutEUxb1IqZcZR+fbnqjRiGkP5kl6c5H4X0UGGG8sKoWc91j2WnUm
-         /0W6VdTLR6gbirHIf6lafMS0nErkwe7hpw8IJBPn54zG3FRTuRvky38vmL79EKYwIHtd
-         U+IA==
-X-Forwarded-Encrypted: i=1; AJvYcCWVaL0N8n/590x9e8C413Esg5XKzslKnOUCD24VWlbE420ggrTLgCWZtrVCmRXBIj90L3Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDUZNBAsYgDysVccGMWe3pwGQ5ncJN/X8SAkZb2EaCjfKAnZJG
-	Qa7ZluymyrpOFLu4Bwb0xR/Kk0oxX4A8wMxyx01ELnjWcNgKaYzUxifh
-X-Gm-Gg: ATEYQzyW0IlxX9sRBYSyJB3xT/5WWaQ2ml+hCJP3rQIGyXXSTK/jcV76WXjp59LELCO
-	PRd2yWU3GI6JcGPGTebHjtMdwX1Y00Oy7Yp0s64q3MBV+wfnykM0hAsL1NhfOBmk9GWmQpc4c8t
-	MX6OFYL5AY7HbrAS1OatW2RKKw3AuwVPTXwdLsIeIZsf9VNmqkFsfMjJLNAxoNhB2SsBjnm9fu9
-	2FTesahsMuZlPx77TdQ8tEjZH+n8tua6xkrIdmBbrh5EhnHe9zTKjRuR2OppuqF9gVWuTogFOUp
-	p43tohq4ljofj5pYh2oYzXPtk3SQWB5HHlwXnCPVdpw6F8YMVhGEw7moaJU7I2IILFBKy0eVUL9
-	y4PUDgihOPKRjwLhndbsyH1Rp1CveuTomstD77dgX0vXEXZQb4/XJLdqKRhR21pFmRiIyJWapzR
-	rIBu2gyvkNm5GMfmTjPjEUQ4Blxk3VvZ2SW8E+Lnzb8q5rEhkH+IAf9jr7t9zodPR4voAvMw==
-X-Received: by 2002:a05:620a:28d5:b0:8cf:cf2c:e021 with SMTP id af79cd13be357-8d01c5e4487mr513868685a.7.1774636442423;
-        Fri, 27 Mar 2026 11:34:02 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e39fbb0sm537447185a.8.2026.03.27.11.34.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Mar 2026 11:34:01 -0700 (PDT)
-Message-ID: <21ab7d29-5855-4830-a22d-cadfeb756cb0@gmail.com>
-Date: Fri, 27 Mar 2026 14:34:01 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZwfzMgBW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OuAa5/rP"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 12B571D00247;
+	Fri, 27 Mar 2026 14:55:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 27 Mar 2026 14:55:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774637728; x=1774724128; bh=tRoaj1b6rI
+	qyqTKq+7GVa2r+uUZSWJc83h0zsrGagsc=; b=ZwfzMgBWKE5rnJLl3AMJC2mtzS
+	eyFwnok98H3DlEn2eZz2tJhO9XCG+pYgwtS0lWrfmwMTA/5BvjMBcD2M6lcZhCPs
+	sBZUrePtwroO/IVIwvtSorG4IVl155F3pK7g8KgcZD+r7TPuzDpz89avs0tQwo4f
+	B4kfqsBDxmedXWf6R9axACnilLxDoNu5j3e73hHcgpK1B159dcREa8Rwahgwds3v
+	LqCvFJodyDWh64iWRxpgKblqTkczRCvCt+r1AggOMGu62hw+LRwuqhlRasWapgbD
+	S3M6jLxsigj/jV+ebzkV1Cgou3Y4XCmWkjvvLOOroRVaG1A7Jtm0MqPWMUKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774637728; x=1774724128; bh=tRoaj1b6rIqyqTKq+7GVa2r+uUZSWJc83h0
+	zsrGagsc=; b=OuAa5/rPUZR7dTa+E3lGBZMbxktlmSz/U0Qug1zasyi4Q4jB0PS
+	Zdc1GCJ3AoX6YTqefsYa3F5zu4juFF+w21TULmsVLIW/9jApQv+r1aFEA7UygobI
+	f9tFM+TQrDM9O12odJej4zaGy2wBq90Yu5XejjE4ycSVP99E4zKD2EOZqqENuqeS
+	HPdXHgkkBtZDZV7/SifK+NcgZiT6MMtL757XbI3tlu4qsahV6gLFR/a0m2WN6aBU
+	nmsy3J+AHJA5CJUylGcN8+L+tKE7B0NmCfXJqHWhvLTcxTfeKmkAGX8/LErJIxn2
+	1EJmhRfitkODYjXFtGTvXKTSi5JelI2Lz6Q==
+X-ME-Sender: <xms:oNLGabhPg8OnzjNeibABPBXXps_-z-sBQNgBT0w1kGQsffVyhBOmWQ>
+    <xme:oNLGafc4-veL8BXckvokNazj79e3vfDQHh3aD7o0Yab6_MuIUp1OU4dtIO6B986wI
+    R7YsqCTN0RrdXbWFCAx9V38YL87JMA8rQm5MHZ11yLj50Lf4UcyXQ>
+X-ME-Received: <xmr:oNLGaYcz6k6dhB7LEEwXPJNZD2-WhjZxx2-nl2lKNUNjhxcgAvRsqfRGhiyvKYaZa4_YY5c7avtkjltSnS_Z9Eza2Wt-zwVxDA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedutdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
+    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
+    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:oNLGaR--QX_qo3ncQyd9k6PBaDlaasw_SNwBQp5Nu4QJJVtbdljLCQ>
+    <xmx:oNLGaclIw9Ah0r6djxffZ33nEmI07H1WwWAHyAbjcN_LSoIa1k9ZhQ>
+    <xmx:oNLGab8UaMhIkQ4fUz5E1QoMO99XlfHYBKE9CZkwl7wq38qBe6ADHA>
+    <xmx:oNLGaSl52wbwOvU6oq2n60A4bz59a7TwA7C9HXn-uc7HHb3oo-BYGg>
+    <xmx:oNLGaXpkfv2XQ2FjSjxwUnW02YUvdq5ivDvbBvxAOu2tSczzAdLdnCEJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Mar 2026 14:55:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v1] replay.c: support replaying root commits
+In-Reply-To: <xmqqh5q1jfdg.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	27 Mar 2026 11:28:59 -0700")
+References: <20260327180930.104563-1-cat@malon.dev>
+	<xmqqh5q1jfdg.fsf@gitster.g>
+Date: Fri, 27 Mar 2026 11:55:27 -0700
+Message-ID: <xmqqcy0pje5c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] pack-objects: refactor
- `read_packs_list_from_stdin()` to use `strmap`
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <cover.1773959041.git.me@ttaylorr.com>
- <cover.1774482700.git.me@ttaylorr.com>
- <d5cb793f0eb0028f1f521fec4723ad2b00592638.1774482701.git.me@ttaylorr.com>
- <9e320604-7367-4f48-a943-f7d22feb2672@gmail.com>
- <acWoqXUwVUB2/65T@nand.local> <xmqq8qbensw5.fsf@gitster.g>
- <acWz48NfB+dlbHAz@nand.local>
- <b6e6ea33-76f0-42f8-9546-2e900f239530@gmail.com>
- <acbDkI2vDXYu3mvL@nand.local>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <acbDkI2vDXYu3mvL@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 3/27/2026 1:51 PM, Taylor Blau wrote:
-> On Thu, Mar 26, 2026 at 08:29:57PM -0400, Derrick Stolee wrote:
->> On 3/26/26 6:32 PM, Taylor Blau wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> 
-> fails t5331.8, which verifies that pack-objects correctly handles the
-> same pack being specified as both included and excluded.
-> 
-> But if you do the following on top of the above:
-> 
-> --- 8< ---
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 37c69f307d2..b6e4f950a67 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3946,10 +3946,10 @@ static void stdin_packs_read_input(struct rev_info *revs,
->  		if (!info) {
->  			CALLOC_ARRAY(info, 1);
->  			strmap_put(&packs, key, info);
-> -
-> -			info->kind |= kind;
->  		}
-> 
-> +		info->kind |= kind;
-> +
->  		strbuf_reset(&buf);
->  	}
-> --- >8 ---
-> 
-> Then that works as expected. I agree that the end-result is a little
-> easier to read, so I'll squash this into the subsequent round.
+> Tian Yuchen <cat@malon.dev> writes:
+>
+>> 'git replay' does not support replaying root commits, as indicated by
+>> the FIXME comment. If a user attempts to replay a root commit, the 'die()'
+>> in 'replay_revisions()' will be called.
+>
+> Please be aware of your surroundings.  I think there are multiple
+> topics that work on this file and among them there is a topic to
+> address the same issue, if I am not mistaken.
+>
+> The list archive is your friend, for example, you can try these:
+>
+>     https://lore.kernel.org/git/?q=replay+root
+>     https://lore.kernel.org/git/?q=dfn%3Areplay.c+%22root+commit%22
+>
+> Thanks.
 
-Ah, yes. We should augment the flags even when finding a duplicate.
-That's the fatal flaw. Thanks for working through it and fixing it.
+Oops, sent without completing what I needed to say.
 
--Stolee
+After you find out that other people are working in the vicinity,
+some of them even may be working on the same itch you had, instead
+of silently letting them continue, join the conversation and help
+them polish their work.  You can give reviews, you can supply test
+cases, you can polish their documentation, etc.
 
+Let's make this a team effort, not authors completing against each
+other, or authors working on their own thing without paying any
+attention to what others are doing.
+
+Thanks.
