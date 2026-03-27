@@ -1,81 +1,82 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A741322522
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 07:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97FC2C0F78
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 07:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774596974; cv=none; b=NFQ5x4+mJwepBnXqX2znBMA6KpBpJGlxQKr5Lydyfgdv4QGRAxaSEONPzaXnz7yWhFKnLK/jCFOXDmpNFsO2q5mERFzc0BZkAVTHpXqwaTyOshLrCWDB88dEzYIyx08Gi5btdLGf/bjqTgSufDHiv4v7bLmZGAjvSvg384NbZmU=
+	t=1774597809; cv=none; b=GCjNmqvfdCbbdl3aR2mquCMgPAwtKMCtGKic2WDGi3/Fct6ry4NQMiMoQVpTiUkx7PkmJXKehtizrnkm0SCoxXaaRG4qebv7fCGK60rp2pGUUduOjr8DBnohfJR92nodyobXIeTAEyApe+CU7k/S3bAUrmIhhvOgSpzMWokSezc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774596974; c=relaxed/simple;
-	bh=ppYiznO5F6uBmUBqYh25SvGgTnL9+5Q/wjcdkX5qfLY=;
+	s=arc-20240116; t=1774597809; c=relaxed/simple;
+	bh=0RjvN8gjRkoWIcm0fm7bxkctNkojaZ7chdoTnDNc3do=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mLO0tBH5oKHoSowLGvTAuGhxQXm9UjwkH2FeiRqeYd8XWIaDwi37FPtb5dKOob4AeW1PBSD0FU9gyuO1iytWiZNibpRvmtEI9gPSEHg/VLGq92FovCQKf01V0DaqCh9xsTkth5db1fuf/+r+uLpW/qyLmFdmCa5YH2PtGM0FWLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zo14mbgG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=klEFZ3Rg; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=MKlo1Y/3qg+2SHNzLqlfx721nWmoDrlvumswEJxVkYOS4EEbmdT+bExOZTHBZeLDrHyO7QqAQ5StOFLhmsx/m+XfOYaHUVX3TaLRlas50fHswbt/DcbmBtjXNHqWDBJuAWmorftLK7DTBqsNN49vzLVqomRNOwUTwgXkTvUOH/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P4/8mE4S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y38jW4dY; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zo14mbgG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="klEFZ3Rg"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 88226EC01EC;
-	Fri, 27 Mar 2026 03:36:05 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 27 Mar 2026 03:36:05 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P4/8mE4S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y38jW4dY"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id B45FFEC0266;
+	Fri, 27 Mar 2026 03:50:04 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 27 Mar 2026 03:50:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774596965; x=1774683365; bh=fN3ZVmFmxj
-	Md7lC3Y8TQ47HT25Y9qzA4XNRAuJhP7p4=; b=Zo14mbgGURV4ZCQ1uCIIH0BAGS
-	mSQ9HuQQVLahOAOZvpv3DTObBWNAtsIrTMj07FVZl0BOvAnodo9G77JH7yzshV62
-	x1BuyK1NtSe8sveluSXGlys4o4qh0tAHQow+mV87HmSuiirvYclf82+6H+ecsjsW
-	OO9PfZe+gtv99N8ogR3Pz45gfQbeElt9yZPujryKmWhGLA7unDoJA7O4+7ITQLMZ
-	VL/zNPe4zrTTLAGn/X0Nvsn5BUevNNlL9CJ0oTxdRuwmpDsYTXXKMU4b7FeLQRme
-	7DKkr/9PXrReFpnBhqLcE1JilpJlcSKA1KSyxO68Zy8FbwGzfPmdaXiHilkA==
+	:subject:to:to; s=fm1; t=1774597804; x=1774684204; bh=rnxye3X1dm
+	OIXz76/WXGADJ2WLofZbfp68L1whSEjWc=; b=P4/8mE4SCh4d1IUNrh6VkE/WOS
+	YOFMsDxjQO40l/KgGmmfaknP2J69GzaL7DFgRVLsCPsWzkraMjYa7a2pWIMRgLDv
+	XtvkZhocTksBWkBN9fI1gt9qYh1rP5YSXr7nMAWhpp+PHD2+RUruMQGZWxELvPdc
+	3D6LDn9UCOUGnxZ5Eb7iFnKG2UyssS3RJmNGWwN6eNMFt4LQ5KL2OMYhAEXvi83e
+	sCTxiTt032gIF5J4bvV9FgDbcrW0HJOfs/oMDDC55F7qWNbcTuofO9+Lh3eqwveq
+	QicM3YBl6d3DYUcAZdF9ybiUsMPHgjNxWge2Tb1M0OA4fcc2mR1KNwAh/+bg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774596965; x=1774683365; bh=fN3ZVmFmxjMd7lC3Y8TQ47HT25Y9qzA4XNR
-	AuJhP7p4=; b=klEFZ3RgISf8u/d41F2s2/wGL2GFT7R0a0KkG7dXeEN5XXG2xGi
-	JnSHS2B06N52uMRXgTxkAeYVAVhGt98zwA6BXXZ//ZzP0zOTjRssfxOn3no3vKLX
-	3Psp5715ljdFPNnFLKRK+UoYA4gyvJeLWnA50FLo1KbFHQslPTdvByeueVjUhRFo
-	fHBphzcDva1VaDgnDjN57A3ma0RHdD/d00wvkhRUJsfACsZ2KiqODUyi8wYVusnL
-	s23URinytgDTwfgrWF0gAtoEaScx8nWh86HDPSzR+BIdWxu6/UBfSwUX+xVSP1/4
-	TMzFJxfo2JZ4hCUnPnOAhmmXKxk2Jb0T0Sw==
-X-ME-Sender: <xms:ZTPGaSnywn29Uc6RdPImEjgdd7TEJ6168USAn9bLafRLIRvh7MTw6w>
-    <xme:ZTPGaf2Q8VWegiubeQ3QrQ9jlD8J8mIg3qs09OCc48QAYz1-pLU82mfc4XcDPWPkm
-    Ou8MI7Wha4v684fAZaZRuy5tp_GGxts-6203C_oZT0_BLdv_oSKyw>
-X-ME-Received: <xmr:ZTPGaeT_ouNa_IYEYfMTrLwryuDl5Ft8_ro8ErrgLj3YWnwizgkkg-arKdN6DVxRmQTMWjuAGJ1Ip1iWLV0Izo_JvQNFjBBSaCtXswVACA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeljedtucetufdoteggodetrf
+	1774597804; x=1774684204; bh=rnxye3X1dmOIXz76/WXGADJ2WLofZbfp68L
+	1whSEjWc=; b=y38jW4dYzJ1ku4rRG/z5g9GgOYPexV8ZJMSWA8WSdd7nxwDzG6h
+	2SIRWECTKORIujatJIYBZ6VMeLII2iKTJuhBKoY6xYa6JDQ2iTQDlLlJlfTBLTm2
+	JiJB/J71dbrlt3Yl+h7KLimRVMD96xYCI8TLY9QRngpZnliHzvqq1Mf57EWyMfUZ
+	1YLkHWLN/WaBvqBsdd+4vkhSdjyJaFB2q4hCOKmUFHNTFN7wdii3GibGCmol2S2N
+	D9yrNYL2Xbs9rwCzOmOBIsEaFK1aC1Y/BT2RpoiuHlZ3HM0ugf5xtSL/Ya23KFHm
+	rJQ56jRNYkTJhkFPRR0nzy7tywTsXjwW18Q==
+X-ME-Sender: <xms:rDbGaclIQnD6BRsXoTbr3w8MUCsUp_8jPKxHJobYNAcQKd7Uollw3A>
+    <xme:rDbGaR0zfZmsZ6s97pTPlyhQvf7X2bGz2Cesy3wyxa84Sxxskv_ABct1zroSJscRs
+    3omLhZgG76sri3kO6psaescDPGupfleVYecfZ3hZPLt3zvPx0cljls>
+X-ME-Received: <xmr:rDbGaYTHP0-yuM4PhsQnikQLTkL1i7DM0FKUHol5RaBnls9AKzBT7JoWE-cgKNBe1J2i8-KTfxiq2207rhNqnmcddYRPcAN00Brjjvc0pw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdeljedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdortd
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeelleegudehuedufeetuefgtdefgfffhfdtue
-    eufefggffgffdtfeegudfhffefgfenucffohhmrghinhepughofihnrdhpshdpvgigphgv
-    tghtrghtihhonhhsrdgrrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ZTPGaRsVWCQ57_TJ_hkyd3xpYTZ8m1VgDn_qdBVYExYTWHWY1x0iXw>
-    <xmx:ZTPGaTa8IWXwPy73MYyL9xPg6g125p-UcPEdWXgkOClnoDwhwThVBA>
-    <xmx:ZTPGaWuS1VHYqWJHcCXtVk4fDO-9xdIsvQnQXrpMYXG9rCF2pHxaJw>
-    <xmx:ZTPGaVEstFlnFLfl1zpG_clb9wciy1Pa7TGA19xryirD3NxWXEoQWA>
-    <xmx:ZTPGad9IccozFJ0-AHWgCNjC2GrPsWn6QDjj_dsHtcvtwTTf16Om0-Qr>
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehshhhrvgihrghnshhhphgrlhhifigrlhgt
+    mhhsmhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:rDbGaTvU8pgmCMK1QVX4IF_uhw0ZRbxx-9TLh4xnPGxoymsfMQK_kg>
+    <xmx:rDbGadbcOwQgbDXhZVrfcBZErt3xwP7Us6oRVFqWd2amXbWfOFeHdg>
+    <xmx:rDbGaYs2xVwjXRvSn1m8ymCVKCREM7h2HXBbjFuV1sJ_utvVHaxrzw>
+    <xmx:rDbGafHNsVy39t0bIql0P4jruO7v7epwRCwm2_4aHugYMWNpSlkPag>
+    <xmx:rDbGaVXoSrNnGuLLkq70Z-8Jfz-mNhy4sY13y__ZxDKZo1A45ei2M7xF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Mar 2026 03:36:04 -0400 (EDT)
+ 27 Mar 2026 03:50:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id abfd166d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Mar 2026 07:36:03 +0000 (UTC)
-Date: Fri, 27 Mar 2026 08:35:56 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 9d24f7dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Mar 2026 07:50:00 +0000 (UTC)
+Date: Fri, 27 Mar 2026 08:49:57 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2026, #11)
-Message-ID: <acYzVsWrDxzzQFGy@pks.im>
-References: <xmqq4im2npv2.fsf@gitster.g>
+Subject: Re: [PATCH 1/5] refs: make branchname helpers repository aware
+Message-ID: <acY2pZnCSEf5hcWZ@pks.im>
+References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260325164833.1216577-2-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,85 +85,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq4im2npv2.fsf@gitster.g>
+In-Reply-To: <20260325164833.1216577-2-shreyanshpaliwalcmsmn@gmail.com>
 
-On Thu, Mar 26, 2026 at 04:16:33PM -0700, Junio C Hamano wrote:
-> * ds/backfill-revs (2026-03-26) 6 commits
->  - t5620: test backfill's unknown argument handling
->  - path-walk: support wildcard pathspecs for blob filtering
->  - backfill: work with prefix pathspecs
->  - backfill: accept revision arguments
->  - t5620: prepare branched repo for revision tests
->  - revision: include object-name.h
-> 
->  `git backfill` learned to accept revision and pathspec arguments.
-> 
->  Will merge to 'next'?
->  source: <pull.2070.v3.git.1774538094.gitgitgadget@gmail.com>
+On Wed, Mar 25, 2026 at 10:14:18PM +0530, Shreyansh Paliwal wrote:
+> diff --git a/branch.h b/branch.h
+> index 3dc6e2a0ff..3aa53eb243 100644
+> --- a/branch.h
+> +++ b/branch.h
+> @@ -111,7 +111,7 @@ const char *branch_checked_out(const char *refname);
+>   * Return 1 if the named branch already exists; return 0 otherwise.
+>   * Fill ref with the full refname for the branch.
+>   */
+> -int validate_branchname(const char *name, struct strbuf *ref);
+> +int validate_branchname(const char *name, struct strbuf *ref, struct repository *repo);
+>  
+>  /*
+>   * Check if a branch 'name' can be created as a new branch; die otherwise.
+> @@ -119,7 +119,8 @@ int validate_branchname(const char *name, struct strbuf *ref);
+>   * Return 1 if the named branch already exists; return 0 otherwise.
+>   * Fill ref with the full refname for the branch.
+>   */
+> -int validate_new_branchname(const char *name, struct strbuf *ref, int force);
+> +int validate_new_branchname(const char *name, struct strbuf *ref, int force,
+> +			    struct repository *repo);
+>  
+>  /*
+>   * Remove information about the merge state on the current
 
-I don't have anything else to add to this series, so I'm fine with it
-being merged down.
-
-> * ps/commit-graph-overflow-fix (2026-03-23) 1 commit
->  - commit-graph: fix writing generations with dates exceeding 34 bits
-> 
->  Fix a regression in writing the commit-graph where commits with dates
->  exceeding 34 bits (beyond year 2514) could cause an underflow and
->  crash Git during the generation data overflow chunk writing.
-> 
->  Waiting for review response.
->  cf. <xmqq1ph92pzs.fsf@gitster.g>
->  source: <20260324-pks-commit-graph-overflow-v2-1-843568cf8780@pks.im>
-
-Hm, I think this status is probably stale, as I've sent out that
-response already and don't plan to change anything for now. So from my
-perspective the patch is ready for next, but please let me know in case
-you have different expectations.
-
-> * ar/config-hook-cleanups (2026-03-25) 13 commits
->  - hook: reject unknown hook names in git-hook(1)
->  - hook: show disabled hooks in "git hook list"
->  - hook: show config scope in git hook list
->  - hook: introduce hook_config_cache_entry for per-hook data
->  - t1800: add test to verify hook execution ordering
->  - hook: make consistent use of friendly-name in docs
->  - hook: replace hook_list_clear() -> string_list_clear_func()
->  - hook: detect & emit two more bugs
->  - hook: rename cb_data_free/alloc -> hook_data_free/alloc
->  - hook: fix minor style issues
->  - builtin/receive-pack: properly init receive_hook strbuf
->  - hook: move unsorted_string_list_remove() to string-list.[ch]
->  - Merge branch 'ar/config-hooks' into ar/config-hook-cleanups
->  (this branch is used by ar/parallel-hooks.)
-> 
->  Code clean-up around the recent "hooks defined in config" topic.
-> 
->  Will merge to 'next'?
->  source: <20260325195503.1139418-1-adrian.ratiu@collabora.com>
-
-I'll have a look at v3 of this series series today.
-
-> * ar/parallel-hooks (2026-03-26) 13 commits
->  - hook: allow hook.jobs=-1 to use all available CPU cores
->  - hook: add hook.<event>.enabled switch
->  - hook: move is_known_hook() to hook.c for wider use
->  - hook: warn when hook.<friendly-name>.jobs is set
->  - hook: add per-event jobs config
->  - hook: add -j/--jobs option to git hook run
->  - hook: mark non-parallelizable hooks
->  - hook: allow pre-push parallel execution
->  - hook: allow parallel hook execution
->  - hook: parse the hook.jobs config
->  - config: add a repo_config_get_uint() helper
->  - repository: fix repo_init() memleak due to missing _clear()
->  - Merge branch 'ar/config-hook-cleanups' into ar/parallel-hooks
->  (this branch uses ar/config-hook-cleanups.)
-> 
->  Needs review.
->  source: <20260326101819.1307742-1-adrian.ratiu@collabora.com>
-
-Likewise, will try to find the time to do this today.
-
-Thanks!
+It's more customary in our code base to have the repository be the first
+parameter. Other than that this patch looks good to me.
 
 Patrick
