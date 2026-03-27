@@ -1,134 +1,162 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD79439A7F9
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 22:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0B11AAE28
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 22:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774649165; cv=none; b=kEAw9XzJL3WfM1loHpb7qmh2QbWlwYVDjV+bs9SAWMH0mzJOkeAt7haPITgJMWU62HHxsIk7Rtrs7WJlhYpgDx9u0J3/QtO8lD1HRng6Fznm7ofStroovRoSqCfHUU14C4xcdrFU8cRIVEGgPae/qvVHGRR6ZWDwsG2nS2PTuHw=
+	t=1774649896; cv=none; b=oMMYQlEasHn5fxKUwGY4M5AGPwvVA1Q4EeQVttJma8j3Q3kDn7FdDz2dxGL/Xp8JNHGMh5uOQ45+eGZGgxA2kzqd9lI0/ZBjWaXvRtXkuwNVBmuZ25W2/gJM4ihx2S3LuCK+KgL1LDT1YEXAUxaOsJkRl2MPN6B0USRJBaNAfrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774649165; c=relaxed/simple;
-	bh=7knKvLgd5uKbEYyU8nKkdXDAg94pnTQif99+RUboTvM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cshB9MZlcjhJb7fWCZYqqNjpGHLbwEGdRgqJzrqno72WznE60WVaoX+Y5wsRCvPoNmNNfxb7eyA+OA+aJep33iHnkO3If+9qcyRtkT0k6sbzefRxBMfmFnX1yDQiL/rk+eJP6W5EL0twsMXmlDEpY+Kw1yYYNvcExVv7D9xrMwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=sxxk8IXI; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1774649896; c=relaxed/simple;
+	bh=wJ7DJDpN4OERydasFal5N0IZzxjnoRTfXhpJ/CXn9M8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Qj51QFuKfwMdA+w/LZh97FIdqz78cYHHgOqwsPyCf2yVdmP/2aCDCpSGtcMFl0gKpUrxo0FutkMI8YEXTJy7jqkPqqwnYvcOKS1MpQ4LmLuQuszKm9+XeuIoC4481qs2+gVqy/odLerR/H5DkZi4b1iY6bCpanADCjxhzYZEXyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bkscmrv5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tNwuY3Ku; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sxxk8IXI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1774649162;
-	bh=7knKvLgd5uKbEYyU8nKkdXDAg94pnTQif99+RUboTvM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=sxxk8IXIs+QBpmnitfsnTawA8rejxBPgfZvmSoBWrQxjqXH3iIfuZLxNXmqBPCdbF
-	 Pj1DEM4rP9c/cy2ZLyZyktK5cH7GZLlm6iEjzgMLhICa0ltDd+6NGD+GNrGSiPYXBR
-	 Bzh9beifQomueXavjYzvhotonn9D0Yrr5fW1GFUxST+Kr18Zgmc2w/ndkHLCviJlHK
-	 sNV2LPYD6ILoL1Qe9h9TBL5jpdHioD5pNNpLaOneF/9CWm2xHgoJIkiJpX8/wpQaaB
-	 tJ9LcvcF3U7zcXU9QcGiPwQvDQWvGN82LiKGLYGu2NbhUgMb5T8ym+esUm+OK9OX/F
-	 ZKN8wUmRcqj3TfIjzjomXV/EPZByueZoSXbMQiaTJhKR5xhoCBvSg26EEMwvgMshH5
-	 8hdbqoncRQ9YAQUPUifdZ707QWJy0O30Y3Lx4vg1W6PuEyJHzFqp5tTEt/EXpkNY5a
-	 Y8IuVWmcwkXLTRmc7jiI3n1MCZRQRndkb/C2UDHwzHcWmox5Xq3
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:31c6:2b0b:94a9:e348])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AC7F52011B;
-	Fri, 27 Mar 2026 22:06:02 +0000 (UTC)
-Date: Fri, 27 Mar 2026 22:06:01 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Wesley <wesleys@opperschaap.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 0/3] Add support for per-remote and per-namespace SSH
- options
-Message-ID: <acb_SQ8gdy-fQaFj@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Wesley <wesleys@opperschaap.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-References: <20260326233739.2911354-1-wesleys@opperschaap.net>
- <7d3731c5-d766-47f5-af60-813b379cbeef@kdbg.org>
- <xmqqbjg9mex2.fsf@gitster.g>
- <09c5fe7d-8379-4f68-bf1c-9869e2924cb8@opperschaap.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bkscmrv5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tNwuY3Ku"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1FA491D0000F;
+	Fri, 27 Mar 2026 18:18:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 27 Mar 2026 18:18:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774649892; x=1774736292; bh=I3Vks+2KMj
+	t+Hicu8Z17kOvM1SW3OahXsdantOw26tY=; b=bkscmrv5lWrH6WDJ3EY8Th/W9e
+	EK0LHM2VBuWCKdUWF5bEbtdz0w4bXv6xzJDX2GmaNqvA6Uo1VoJOPqB0eigQTOgx
+	CtIJd7YmW9MM1E/L9CHOLUvjPQjEk8Paij3Yw8ZIl7SD6yUQ8KE0iZQvT5MF6ASP
+	Ou3cx3TKWTAYxy4jTsgv+FjGELQRIsNwNzL6gNCS7/8jP3E8v75cCvu6HPr7HDaf
+	Mx6l/bMxnnbFuf97CoyXKw2U6eajWSbbjM4exu2a1GpU/iEsIoHXanK1df1bmpdS
+	DqjrzOHyJ16kW1/nNK4+8h/Nk4f7JleDFe8XKWzgS6OsM9JzpfiE1uGud1FA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774649892; x=1774736292; bh=I3Vks+2KMjt+Hicu8Z17kOvM1SW3OahXsda
+	ntOw26tY=; b=tNwuY3KuZPOTqUJfynjFAUc9g3S4kl8e+eJJGdvGUd/dIDlxPtV
+	TqnJSnUP/obIq+Hw32gWyFkM9pKmIVuKqtcieYov+m9SC5pIqQOEd0vahgJRplV5
+	Q9z+gWxi6phU6V8y9l+fh9nK8iUYtTQZvf/wFs52j1v50t32DVMwJ0ikSrew4VVI
+	EXmy6VvB0WzkuvJzhOw6GSCAjGHn+yY431AiHPDPyMIRr8LAzqMZQreq4/5g9sQJ
+	B4DhXQP8HVNycAG0aYoVQ4y1uw9QT6FRreeM1B8prLLCyfrkxr04lchMOrEm93Bt
+	z5GcNBFHz+qnhgwkTpA2fHVaP9eyVPFeJ1w==
+X-ME-Sender: <xms:JALHaVZqoiUXfzvNXrrB8GsqBP4gs8pBQgW8x0pbSb8-DCYmHA9grQ>
+    <xme:JALHaeqOxotbOee4oCAh8dBOVIkHcU4RyHz0gGA8C7718KJksPv9mifKVb2AeBKev
+    LHl2FW8M53hpoTcV0yZUfX_7C9T3vTBXNmO0BTMF2ktHyoC6oo7RNI>
+X-ME-Received: <xmr:JALHaaPx7H4rvLEWkNBoOZ86y9y2ccfuNsU5BjLrIv_XVsgLx6Ke65pCnR4XHLoRrO0TUuraDJWa10mfKyqGX3utM1KKqx3Wvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedugeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehush
+    hmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopegthhhr
+    ihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
+    tghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JALHaZrC7pZviGOuwHLXvawhbDohaWbqroeF4XhucURQn6utBqGcJA>
+    <xmx:JALHafcLLADT26-Jf5s7MeZZ3z0iYNegfIPdTKUiKzx5M6CGWPBSUg>
+    <xmx:JALHafRhgjHo1kApv-ikfyXwswyxZfaWNay4HXQHNCF8Df2VQhlydA>
+    <xmx:JALHaYZIT5H0QCD1l8ERiq-q-9zURpJ6dQACfV-U9MrZ9dh7JBEl3Q>
+    <xmx:JALHaXSGpj66yHEcwXH9z0cOI63NNDRe-txU8dtIgfYoN1tVAVBGSZKA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Mar 2026 18:18:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH v3 2/2] push: support pushing to a remote group
+In-Reply-To: <20260325190906.1153080-3-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Thu, 26 Mar 2026 00:39:06 +0530")
+References: <20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+	<20260325190906.1153080-1-usmanakinyemi202@gmail.com>
+	<20260325190906.1153080-3-usmanakinyemi202@gmail.com>
+Date: Fri, 27 Mar 2026 15:18:10 -0700
+Message-ID: <xmqqse9kj4rh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JLcO00C2qnIjd8mZ"
-Content-Disposition: inline
-In-Reply-To: <09c5fe7d-8379-4f68-bf1c-9869e2924cb8@opperschaap.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+
+>  t/meson.build               |   1 +
+>  t/t5566-push-group.sh       | 150 ++++++++++++++++++++++++++++++++++++
+> ...
+> diff --git a/t/t5566-push-group.sh b/t/t5566-push-group.sh
+> new file mode 100755
+> index 0000000000..b9962946c7
+> --- /dev/null
+> +++ b/t/t5566-push-group.sh
+> @@ -0,0 +1,150 @@
+> +#!/bin/sh
+> +
+> +test_description='push to remote group'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	for i in 1 2 3
+> +	do
+> +		git init --bare dest-$i.git &&
+> +		git -C dest-$i.git symbolic-ref HEAD refs/heads/not-a-branch ||
+> +		return 1
+> +	done &&
+> +	test_tick &&
+> +	git commit --allow-empty -m "initial" &&
+> +	git config set remote.remote-1.url "file://$(pwd)/dest-1.git" &&
+> +	git config set remote.remote-1.fetch "+refs/heads/*:refs/remotes/remote-1/*" &&
+> +	git config set remote.remote-2.url "file://$(pwd)/dest-2.git" &&
+> +	git config set remote.remote-2.fetch "+refs/heads/*:refs/remotes/remote-2/*" &&
+> +	git config set remote.remote-3.url "file://$(pwd)/dest-3.git" &&
+> +	git config set remote.remote-3.fetch "+refs/heads/*:refs/remotes/remote-3/*" &&
+> +	git config set remotes.all-remotes "remote-1 remote-2 remote-3"
+> +'
+> +
+> +test_expect_success 'push to remote group updates all members correctly' '
+> +	git push all-remotes HEAD:refs/heads/main &&
+> +	git rev-parse HEAD >expect &&
 
 
---JLcO00C2qnIjd8mZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+These tests will break rather badly at Git 3.0 boundary, because the
+default branch name will be 'main' beyond that point.
 
-On 2026-03-27 at 16:49:35, Wesley wrote:
-> On 3/27/26 12:10, Junio C Hamano wrote:
->=20
-> > I somehow thought that this practice is so widespread that it was
-> > one of the few first things any new people learn to do, but perhaps
-> > we do not have a good documentation coverage?
->=20
-> As said before it is weird thing to configure a global ssh configuration
-> just for git transport. It doesn't make much sense.
->=20
-> The problem with ssh_config usage is that you need to change your ssh
-> config, which is machine global, not just git. And not portable across te=
-ams
-> with configurations committed to git. Myrepos is a good example of this. =
-My
-> former employer had this and I know the Perl metacpan project also uses
-> mysrepos. Changing every URL dynamically in committed configs isn't reall=
-y a
-> nice ask.
+It can be visible in
 
-You can also use the conditional inclusion functionality to rewrite URLs
-for repositories in a certain directory with `url.<URL>.insteadOf`.  Or
-you can use conditional inclusion to use `core.sshCommand` with the `-i`
-option set appropriately.
+    https://github.com/git/git/actions/runs/23667958553/job/68954593675
 
-> The alternative is using core.sshCommand to inject the correct keys, but =
-you
-> must apply logic there when you have multiple accounts or forges. Which is
-> what I initially did with a zsh-scripts.
-> Which is why I ported that logic to git itself, I thought it would be
-> beneficial to have an easy way to maintain sshIdentityFile settings.
->=20
-> In addition, for core.sshCommand to work you must use the full openssh
-> command rather than just adding some options to it. Which is an added
-> benefit of the proposed changes.
+i.e., linux-breaking-changes job.
 
-Right, but the additional burden is typing "ssh -i" for that option.
-That's not very substantial.  And the existing option is much more
-flexible as well, since it allows you to use other options, such as `-o
-ControlMaster`, which is useful when you're using a security key and
-don't want to re-authenticate all the time.  It also allows you to use
-arbitrary shell scripting, too, which means that you can customize
-the configuration depending on what keys are available or what machine
-you're on (or really anything else).
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+I think we can squash in a futureproof fix like this one to the
+patch.
 
---JLcO00C2qnIjd8mZ
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git c/t/t5566-push-group.sh w/t/t5566-push-group.sh
+index b9962946c7..32b8c82cea 100755
+--- c/t/t5566-push-group.sh
++++ w/t/t5566-push-group.sh
+@@ -2,6 +2,9 @@
+ 
+ test_description='push to remote group'
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=default
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
 
------BEGIN PGP SIGNATURE-----
 
-wr0EABYKAG8FgmnG/0gJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZy3mhPBbEJJkSdHHb3u+CUWvxT8VLjwPd6vT+7WrDcyn
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOMrAQDOLYkcXCzZEYspQ1yhskRVxFfm
-HE4qzGuJEyGEfr16HAD/TJcX0WNh6rVUisSS600pAN+8oiJLYfeTa/KsuFYRkwg=
-=0Sqn
------END PGP SIGNATURE-----
-
---JLcO00C2qnIjd8mZ--
