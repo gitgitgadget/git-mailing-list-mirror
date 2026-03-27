@@ -1,87 +1,85 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAC634A79A
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31A5355F58
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:47:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774629939; cv=none; b=Tl+UeaStDGpQTuMU3O+Sz+lXwUdfGSW1gufS2y4BhfwKiIK98bFoyHhv1QcmJtcUDCbSrkClkUlGr7aRXg8Q+CaRz1SfSQ0NtW/Wt3o3Pje4KHxrRxUEaqnd0CvoG6gjl9TtUsbDzWToslUmeL/GzK/iveWxStPvIwFwV9F1grc=
+	t=1774630051; cv=none; b=kC2piu1L1ctJNh5m0k7+Itz/DI/599HAkcTt3rpyxHS08+fk2yVRMFkpnIYZjrA/nIu1fUO/QyrDfNYDjwVA9Lw/mH3mtbQ7uRMRcrgJM8sam8neujA+6Wz36QSSPsjcnEWo/6uFEcku1MWo1GV6R/bSByITonF04Gpz0l9XhA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774629939; c=relaxed/simple;
-	bh=Q8/DvNVQDvIe5QNohcbKCun2cvs8ME+sb1kcini3HeA=;
+	s=arc-20240116; t=1774630051; c=relaxed/simple;
+	bh=FMJJvX66ORrSH/enfzzqeNv8FTojR1hhm/2Vh1i4fdk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XEmyLRSjiTjljtXCtDliGkzzcrfXAINU6vCa3EgA0WECrDEISZ+uqACTBW8TdraqVEy2nwqHRz0ye13x6pjM7lCS3DRl6l5ZkT/DF+UTi2QX+PgV+VyGtfe0GEvzglp3gdpJZ/CIo4jF2zV+bY94KLRr74KRkd3pgHlB7xsuRLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WmhMHsjH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iTm9COYP; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=f4Hx9M8j2vsJYOdPSjQE0drpi6mOfnhzER6KsA6DLpXuHQY7hB0e6WiMWDFpOX70U+1ZfTXWWNqcqWGI13rtsQGVno+bfBv3P7zskRLagSgXTDyTmciEBiHA3YDi15zJYqvMwA9Ptk/+74GvZQkutFNgoX9WcraJ+qKFOLB4cJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IzYQNp23; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=asFJGuG1; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WmhMHsjH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iTm9COYP"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9473D7A01B9;
-	Fri, 27 Mar 2026 12:45:37 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 27 Mar 2026 12:45:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IzYQNp23";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="asFJGuG1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0ECE91400223;
+	Fri, 27 Mar 2026 12:47:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 27 Mar 2026 12:47:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774629937; x=1774716337; bh=g+52aVn/Py
-	o4OF/QJFriipqn38oydBYCkMJ7tlsYxgY=; b=WmhMHsjHPE6q+cD09yKTfCNqbF
-	2RAfv1J7qntuBlfc8uFhDS6Nb/bRUZP8d5SsyU8rX9w1/M1GlxDvQgvgSUxAnaRg
-	oq8MGKxygJ6mGaDtUM6lk+/ciBacwbkz0Tmuty2d5rrntTvE2goFi+e0HuRZSfAC
-	Rth2C4sCLvqncR08w1aQNI4v7SeI0LR55I8mh455MiMDkTo0xFqBMs06AJltHZLP
-	q4YXdjd1fvvEoL9eB09xQWA8zW1a7x3H5hjl0OnkiqeBIBr/eqV51AYTkr4jzhv4
-	lUz0Qr1mbJ/iW50imBkYZ57WF3YI2xEXV3qv3p4E8a4+E/xsgAmIWfKpIadg==
+	:subject:to:to; s=fm3; t=1774630049; x=1774716449; bh=DLa9msu/xc
+	0iSi92V3ZMpFO2fhsPdByHR3VK54q9Ri8=; b=IzYQNp23kxf/BWxMiR5WWaOZiu
+	ro2WmobjC2PhqHqSqLrJX/1tpOBjwYsTho4KL4FfbiArhd17oQYshGkFMeh2vSxu
+	JfGiWGUMrqOL6oIitbI3KO/qV9wLD5Xuy5W4UoFFl1LStZsFIl9x9rX0QV/oCK+B
+	aqpNSChczNQfpYs8efKZvDfCdu7mINIjyPQZa1jxlO2AE3A/Fv1pH3E5eZhsPwWH
+	ttHEx2HstE0SOV2r0JWWOk+IShUBnHDGkgua2qFFBqN5G7p8e+oqI9Y0vclWLZpo
+	188zfilltEhkmPwK5L29ZtTa7Shr3ukrLAGWsfND1mTF+aelMO/YQu1Yco7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774629937; x=1774716337; bh=g+52aVn/Pyo4OF/QJFriipqn38oydBYCkMJ
-	7tlsYxgY=; b=iTm9COYPfUy/6HsBIpf/EkBaY7+UIF9/0jPzXy8qNN2VyU/b+jm
-	16cJmnHRwCe9lveok68qq0zxA7NMKDMc1P5pJyT0KDa2HKuIIrWeyyQLJo5urGPb
-	HMdtSvON604H8aNQiEh7yI3LTQW2+e3FyvF/2c208yj+/Vkka/EnPjuLD+//YcOn
-	Cilh6n2QEExSBQMVSsljKrQCHoRsuaHLauD0wUNe0irBxZNwJ6nh57Q6fQUb6Hc+
-	sOejklfp0qiujFnnj6TE9yLVw0yJa96VLhWHKBpbKMJeJc7j+KVRkuahv1JRBPbw
-	t97TGCgRPQ+8tuI9UTztt+iVo6XNZVZwL9Q==
-X-ME-Sender: <xms:MbTGaV4ymPvy1HobxbuOtFDrEMx2i5JvVbfKFJHoDpPzVZYO1USGQw>
-    <xme:MbTGaZzM4upKcWvRUhAOLQkMqLSKMxPp60vAEMGYS0CSXwirY3a7W2FYoMFUieF2L
-    nQdCYmqQ9DZwZ_o6JC0u5Dbv0isrbfP1CLV8DYZ3mnVauitiiSOsw>
-X-ME-Received: <xmr:MbTGaUzZR1EvjCOiMpR0hWn_CJ0POHkL9EgG9FKRfmpNOUP7ioYvT2E-NU0mstivuIi5O_oR0IVevniJ0srnlPwCHmek-gBUyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedtjeelucetufdoteggodetrf
+	1774630049; x=1774716449; bh=DLa9msu/xc0iSi92V3ZMpFO2fhsPdByHR3V
+	K54q9Ri8=; b=asFJGuG1JqBzBbpKgwlVGbjxXl53VXrcXLLoG+hzSuoHIuOCvxh
+	gmjHUagURU0Dq64Iivmh/i3UFmFFZ6/PhronzbrNG8Uu5M+kqTTN1hHBLd8GDJOB
+	wweR/NChIAUReQB+HjnrZTbvykTv7jmmMX7CLAU5NBb8W2ZBt5nRAPGrqePdXR5d
+	TDqAl2ta8Vycy0uydfbKwB66W2Vhxfu6JOt64Ah5OD02kqmsvxT+LvqY6MewjHB0
+	auKnv2MZonRitIoYyH0zIxCoxFQdsm0VfQB1SwPWrIstt4vKDV/Usowo8eqWLx6Y
+	Wp6ZRpbPKSnaDbLsa/nwucfYY9oFf4iyyfA==
+X-ME-Sender: <xms:n7TGafdZTxaO_u1sRvTF_hJhAXdnDTtT0D-CCPEjQzecrwcK56rANw>
+    <xme:n7TGacovI57qcwa8DJK-FftM5jjbi4xUMBJi8rAHWYPXY8oDWRI1XC01GzRhpkeI5
+    ZdMMDNb4YsKxX3cAK3ViUq3t-CCEs-RHC2bq9tjFrNZZlA3taYrfw>
+X-ME-Received: <xmr:n7TGaV7doGA0RoqsplGeFQLCBK9iBTnK8LNALdOzp5yFhlEySF9pIDKps4OrbR6FY2KUOVZznS1HFuT_Y85pOi7gF579Z9u-vQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedtkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    eptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MbTGaZz3guhsw3_RRytbOmcCq6PlQPRoAICw8pV-8XA8C7_W-FGEfg>
-    <xmx:MbTGaWZSH2sRFIrSUZyA9WvGIP3lw52Z4qPlExBg1GmUCynZLQJWLw>
-    <xmx:MbTGaSUTYi6W9aigWX9KRqfDHND1VK5Z0C_7oXTqG_E3YvEZML5ayQ>
-    <xmx:MbTGacisSu-md_gG-SPrQYPPbVrl4XQtlSmDZv0Cfin388lavaBgmA>
-    <xmx:MbTGadMr9EeaKUq42VnpHO70HlStxGc0-DSWXHoWYjzeGWDEWyaLJ60s>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
+    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:n7TGaao40yplwO5LR8oc5SBYGWDJGq8iTDbCD2DWK4aHiFJPg3jVyw>
+    <xmx:n7TGafhX8RNFBX2e2JMJJ6aag7jinFfO1GDu9EVhfOAAkHJ9AaxjFg>
+    <xmx:n7TGacLF_IU_eKdHdsSL57lQKGiByBEqOHNfIqQVDqfgpXhklL3GeA>
+    <xmx:n7TGaXCJ9x7HHf0AnwhDFJ58JyOE9pZlI1ezr4h3IPyECeeJplgiBg>
+    <xmx:obTGaegYahE3l3JSQ-MB66B1MC_nM2TOCjeQMwLpC7FOWvVg4NmcAnZ3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Mar 2026 12:45:36 -0400 (EDT)
+ 27 Mar 2026 12:47:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2] replay: support replaying down from root commit
-In-Reply-To: <87a4vv2ada.fsf@iotcl.com> (Toon Claes's message of "Wed, 25 Mar
-	2026 16:32:17 +0100")
-References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
-	<20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
-	<xmqqtsu5xaw0.fsf@gitster.g>
-	<CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
-	<87a4vv2ada.fsf@iotcl.com>
-Date: Fri, 27 Mar 2026 09:45:35 -0700
-Message-ID: <xmqqfr5lkyq8.fsf@gitster.g>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 0/8] improve "git format-patch --commit-list-format"
+In-Reply-To: <acaq3Rg63ZjEV8rH@exploit> (Mirko Faina's message of "Fri, 27 Mar
+	2026 17:18:10 +0100")
+References: <cover.1773959395.git.mroik@delayed.space>
+	<cover.1774284699.git.mroik@delayed.space>
+	<xmqqqzpa489h.fsf@gitster.g>
+	<ad6a32f9-1b48-4bb5-97c5-96d1dfea3074@gmail.com>
+	<xmqqpl4qr1he.fsf@gitster.g> <acXYSm1JoX6YRuoL@exploit>
+	<xmqqldfdmf6r.fsf@gitster.g> <acaq3Rg63ZjEV8rH@exploit>
+Date: Fri, 27 Mar 2026 09:47:26 -0700
+Message-ID: <xmqqbjg9kyn5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,41 +89,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Mirko Faina <mroik@delayed.space> writes:
 
->> Maybe something like the following could help:
->>
->> --- a/Documentation/git-replay.adoc
->> +++ b/Documentation/git-replay.adoc
->> @@ -23,6 +23,10 @@ instead get update commands that can be piped to
->> `git update-ref --stdin`
->>
->>  THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
->>
->> +Note that `git replay --onto main topic` replays the topic branch starting
->> +from the root commit, not from main. What you might want instead is
->> +`git replay --onto main main..topic`.
->> +
+> On Fri, Mar 27, 2026 at 09:04:44AM -0700, Junio C Hamano wrote:
+>> When the payload _can_ be specified to wrap (i.e., end-user
+>> configurable output format), the wrapping should not be forced by
+>> the mechanism.  A project that is not ours may want to keep a single
+>> long line for their commit list entries.
+>> 
+>> I do not mind if the default "modern" were defined to include %w()
+>> to force wrapping to those who follow the default, of course.  But
+>> do not unconditionally wrap what the end-user formatted to their
+>> liking.
 >
-> Definitely would help, not sure it needs to be part of this series.
+> I see, since there's not much to edit, I'll send the changes regarding
+> the docs and the wrapping in a single series (I saw that you already
+> made mf/format-patch-commit-list-format-doc but I hope it is not a
+> problem), instead of submitting a new one.
 
-Where else should the patch to add such a note to the documentation
-go, though?  Without this patch, we do not is because the command
-will not take such a command line.  With this patch that adds the
-"now we allow replay to take a single tip commit and replay the
-history leading to the tip all the way down to root" feature, the
-note may become relevant.
-
-So to me, it looks like it is either we will never add such a note
-because it is irrelevant and everybody should know the consequence
-of passing "topic", not "main..topic", or we will have to add such a
-note as part of the series (if the note would help the readers).
-
-Even though I am on the fence about the need for this specific note
-in the documentation, it does not make sense to me to say "this will
-help but we are not doing so here".
-
-My comment on "might" in "What you might" in the thread still
-applies, by the way.
-
-Thanks.
+I do not quite know what you are planning to do with the above four
+lines, but you do not have to answer me here, as we'll know soon
+enough once you post them.  I'll just have to remember *not* to merge
+the new -doc topic to 'next' until that happens ;-).
