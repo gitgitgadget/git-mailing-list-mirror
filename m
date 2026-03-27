@@ -1,105 +1,187 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600A82DECC2
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 09:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970903AA4FC
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 10:08:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774603445; cv=none; b=T0vHK7FKJE1UJnHJBMHxDfY0a+2Ueu7ei6Y+aDF1w1uUSgl5zCnLsQLF1obce809ymQnsclUlqT7U31OZ5k3j/pFAtTEyzYLkFepcMrnyZIganywFQjMqIpKYQvM9+ZDsfNxuZj28/TjBTxXzJ2qOY+rTSXoTQumBWGlQgvVWiI=
+	t=1774606091; cv=none; b=Ge57mggiDu6hCM4ZwXzDEbN1yOIx/Rs0Cv13n5hK1PzUVfEPrpXGp1DxLc4ZP1NFcKnYrSGFzWoayIXdAIBxZtskH+uPFhEABfcziLGDSbFvjM5CTt+fYgJfymeslgTANgxWMO9KSAKxyj89tcd/2x5CcNxRbRIKgtUEGSJz5l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774603445; c=relaxed/simple;
-	bh=5+Z6Ch+e3mDyzHBnJFWv3Hu0gAKUhGrSom1KqMXZmns=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:
-	 References:In-Reply-To; b=Hyp3RX8L52FfWy1KHg13lO7Q+F1k51703X6wcDYz7JiuVK8+l5muxyhMQUCXhtZqsn3KI0cXurdBYCKi5SgOSbO/erao8ZNdan10xJZxpVO5EQDf2902PVK7b9P/CKIojBG1DOq/87hDpSl2UY/mGhMyfLH+lp190h2ngmnPZsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQvJmlz6; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1774606091; c=relaxed/simple;
+	bh=scZdgLzPWz59xTaUWYQpKILuQrI+/qVu+tWhqoK4Nbg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=TSgFlFlo8tqwSuzK92aAorKZWebrwBYm41CUFGLq6knGFzTKyNQprDN7nJnoF4726HKQOS/Bc2InfNELWpDem2n1bqiZymuXvvmjeICOwynkJsZYc73s+sLJzTwnEEMh7acQHalgJ3oR5yYDPzyLl4povtBI2Gbl0kFgH+ukc/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AtNHA8Lr; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQvJmlz6"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48704db565eso26717545e9.1
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 02:24:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AtNHA8Lr"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-506251815a3so16996021cf.0
+        for <git@vger.kernel.org>; Fri, 27 Mar 2026 03:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774603441; x=1775208241; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZyuctO/VyqwZiwRGaCAxS1FX4R47hqYjISWG6IaN0Q8=;
-        b=aQvJmlz6NkfDWgD8GmmKREd3z0cJx84LRhjEOE2pzsiJh8ApBN41/n56K3vKVpHYc6
-         Q0nnTLvehZzRlsJjAaJ4pJHtPfpLp2nFI01VOAVvgdyZrxWzYqKxZL3slXH4w/YHWI9k
-         z6DXKILOjd6Pqi+VEKjBkcWZufgp7P82Z3HP70NsEpfRE5Ae1I67XqI5A3hqnTw0oXJ6
-         TgFv5D22TDHC0WGl4GkDGYhQyEwnqAriSvCyLSpZ6FSJd5X1na0rL/VrqudL68sYTwXZ
-         Ug7OZg3Nrd2DOmG5m2INyLbqM6LcKc0oqff6IRsWLQ5f8sg3hXHhtISMmcV0o/x7l6kV
-         VuMQ==
+        d=gmail.com; s=20251104; t=1774606088; x=1775210888; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pqZLJcH1gVbQrvA/naUtuTcDvqjTRk5i1rzi7CrGBRQ=;
+        b=AtNHA8LrdaQ6zFhunDp8Dn7VUt3KFj1q9gAvjDOX7cKtOTMKxz0HUhB71VOG/hgShP
+         /oXNHPFybRcmO+xnxYYcWrhg4OTnBeOCpGAYhirjK1Lib26sfV/z0EvxJk8uE1wMowGI
+         IZhZjHYVTMUIWbC1wk0LNp3+dm5wBdIWRIPUnzaiY1ryd47NhZti+O2kYe78PhGAX+YU
+         GAmvkDvRNEps8CEiv9mArxQjKdHyDCN04+tfv/QMUaF/WcGZjpzxLbPTY8GkhmvgViSR
+         Zm1n0so95UvxamiFQrI6n78V8qDugbMLtKD8P/zyedY4iYTyf+pEgtNPEhEgMLYB+Jil
+         L0KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774603441; x=1775208241;
-        h=in-reply-to:references:subject:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZyuctO/VyqwZiwRGaCAxS1FX4R47hqYjISWG6IaN0Q8=;
-        b=B2BqQ5Ghh35atm240VmDEFLpDRaVelg0aXKKaqfmT6MSUK8yfYAwMQSIVoFmv/sT4s
-         jJ8qvqn+aVN8lnufpH7gXDqswZfgL8QF4pNpyuq0954fW55SpqGUZAQ8zCbovIcvOziN
-         JwDIWArHJURwGCqBs0uAsh8wyEEEl1+urCpAlCgFQSK6iFtIkj5gEXr54KfxPYykZHLp
-         ESc/TU7uKx+g0lT/em1QsRgbf0wlN2WabfBrwaeYEDl44fY1ce/ylyQamPsLCA4iLd2Y
-         AGkKH9Ql9q7Lk/MN4M0cWUytcbUcdAsBmKNbhmpSR11IfiomERT1a+48W3tEGJS7a3Yf
-         U+1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWWAUZ/fOuqKrsgeD7aQk0K8UJ0oTiYPGoNpmA/YQiE0kJrInrD+l8FOGjjLFpBHpB45/0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/QzegLpAyixh/xzySGMWuFky78hj3i8NXyFJOOSbABJncLBMM
-	INtMUY4ugL0YpBaf9QFQqphmixe9+xRVdLD1JYftd7b2AfnX1urfkp0vyYOx7w==
-X-Gm-Gg: ATEYQzxJcEFoSn2C0tQXFD+zt0gOKAjogZ4IPUUCtnXFlREniehB4g8lEM24AKVxYyA
-	IBzWkcE4B7v8xdhzJWw+WLgPWwpN2PN4nDzWo9AClO1pJJBdq6T62P5sIMloEBdwYg89L2ELqfc
-	haFk/+lY25JWv+CgsLRC22B5gdxpIBsE77vUNIcnIHbad03hvQEVPaVHfW6qLugQe8XGGP4vtAT
-	S/RJBwaEbtTqmVc6MlLLRjrUl2RQ/B4WiHnC5LBYCYA/IIpC2lgsc2W55oHdxnW+yarKgCC4sJs
-	zsPULjNPSXXblUUhxt6Ch7XQWgEmwh2exZkra8DR8izcNjB23j6Jn1qsxWN/wEdmvSXpkCnkQXC
-	5yYy3AwX5BlMy7XtLCNNZGS7Naurxvk3f7nv6cZ9mshuLXffAgqAIFtuVpXC2iPWY9/OYuJACZI
-	uqqkrHfoB46Z0MOBPb/jmd
-X-Received: by 2002:a5d:5f96:0:b0:43b:4faf:a496 with SMTP id ffacd0b85a97d-43b9e9ee4f4mr2539780f8f.31.1774603441129;
-        Fri, 27 Mar 2026 02:24:01 -0700 (PDT)
-Received: from localhost ([193.255.169.14])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b9192e352sm14306284f8f.3.2026.03.27.02.23.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Mar 2026 02:24:00 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774606088; x=1775210888;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pqZLJcH1gVbQrvA/naUtuTcDvqjTRk5i1rzi7CrGBRQ=;
+        b=pb3Fp1CogSQttxjxuSCz6azDyG5fhoRR6DlEmHrzOd0XV8nSNJKXxOntDY+eOA7FEY
+         NpsRYcD4G7mmMWGl6uCvt1G2lt762cno0JQPxwHuYSlerQwUCRhHCM69qgNh2jf7XWJA
+         ENP3FUJcZsgesJWf0xB+/dGTCzW5dlzSYCJQH6/P+JVRw4ossebSGKpp9+0UITYQGZnQ
+         j9v0CX1h43msJmbgM0DIgkiF+Y4jxPXj036qZ+VAVpm+g2J0QJmDNWV7r/bfwBvOmWOf
+         y723TctKfZrFKtSiqsi9LLjVZ2OVSALAR8LD1ZMGAVJ+rIK7iBm70ec8FpIDXIdeNMC8
+         /lNQ==
+X-Gm-Message-State: AOJu0YyyQ0T5Wd7h/v6zASzRHVnFK62Rp9syTyn56lKzvMcjoE7h47Ho
+	QvwpcMi49pcRe66LRBH20d0a9GlsldSPykEjiM7ZJWzE0rbf9X+9xp8IF9RBrRqe
+X-Gm-Gg: ATEYQzwwdNqE7OSeyrLx7PoPf6g92BTsqk/dJnEDcAXNSqYmEu1OY7yXt0cw/V39yER
+	PpyfpmMgzFoT+cktkSPHYVh2RAPfWivfyNs8Rt/FZoYFIOOMcGhGvE2JwWeB+Q2PGxJsod1oDTI
+	tg619Z6K1nsiqzpNpCL4IjPfFgDfG3YnHFezgtgfk0JM0l/Upwg61OqxCQQ1vBb9brLcQReDYym
+	Ts8DAHjX+j1/DoKg4ycp5JhtRQ9ZHa7DI9gw+64H3jkDiOjHlO6fEMexCLF4tlXjoN3AYS0XHcz
+	Zt3zwSg8oW8IXT6hvTmPI7pxvgfaoz8ygf1iCbZhoD8/1fdXSn6d0sv4+3vocwlkp6aLvruDrZW
+	bqSJraEklfZcEQb2Wse5y14hp/YgGUAa/j5RRQjUyemIRokJq8b0HUlPtsRIZ0dd44JeYRmYMQ9
+	OWpkKgOLvaDL06L92j1FSKZLP7GhM=
+X-Received: by 2002:ac8:7f48:0:b0:50b:4537:2e23 with SMTP id d75a77b69052e-50ba39524d0mr23402691cf.48.1774606087628;
+        Fri, 27 Mar 2026 03:08:07 -0700 (PDT)
+Received: from [127.0.0.1] ([172.178.117.214])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89cd5a18c20sm45053106d6.28.2026.03.27.03.08.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Mar 2026 03:08:06 -0700 (PDT)
+Message-Id: <pull.2253.git.git.1774606086325.gitgitgadget@gmail.com>
+From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 27 Mar 2026 10:08:06 +0000
+Subject: [PATCH] read-cache: use index state repository for trace2 logging
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 27 Mar 2026 12:23:59 +0300
-Message-Id: <DHDGF1CL2QHP.101BB8D2101N8@gmail.com>
-From: =?utf-8?q?Burak_Kaan_Kara=C3=A7ay?= <bkkaracay@gmail.com>
-To: "Shreyansh Paliwal" <shreyanshpaliwalcmsmn@gmail.com>,
- <git@vger.kernel.org>
-Subject: Re: [PATCH 2/5] refs: make get_files_ref_lock_timeout_ms()
- repostory aware
-X-Mailer: aerc 0.21.0
-References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260325164833.1216577-3-shreyanshpaliwalcmsmn@gmail.com>
-In-Reply-To: <20260325164833.1216577-3-shreyanshpaliwalcmsmn@gmail.com>
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>,
+    Ayush Chandekar <ayu.chandekar@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Jayesh Daga <jayeshdaga99@gmail.com>,
+    jayesh0104 <jayeshdaga99@gmail.com>
 
-On Wed Mar 25, 2026 at 7:44 PM +03, Shreyansh Paliwal wrote:
-> -long get_files_ref_lock_timeout_ms(void)
-> +long get_files_ref_lock_timeout_ms(struct repository *repo)
->  {
->  	static int configured =3D 0;
-> =20
-> @@ -998,7 +998,7 @@ long get_files_ref_lock_timeout_ms(void)
->  	static int timeout_ms =3D 100;
-> =20
->  	if (!configured) {
-> -		repo_config_get_int(the_repository, "core.filesreflocktimeout", &timeo=
-ut_ms);
-> +		repo_config_get_int(repo, "core.filesreflocktimeout", &timeout_ms);
->  		configured =3D 1;
->  	}
-> =20
+From: jayesh0104 <jayeshdaga99@gmail.com>
 
-Looks like the existing code uses static local variables for
-performance. They can behave unexpectedly in multi-repo cases.
+Replace uses of the_repository in trace2_data_intmax() with
+istate->repo, which represents the repository associated with
+the index state.
 
-I think moving the config into 'repo-settings' should be considered. The
-config is already lazy-parsed, migrating it shouldn't be a problem.
+This avoids relying on global repository state and aligns with
+other parts of the codebase (e.g., sparse-index.c) that pass the
+repository instance explicitly.
 
-Best,
-Burak Kaan Kara=C3=A7ay=20
+No functional change intended.
+
+Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
+---
+    [GSoC] read-cache: use index state repository for trace2 logging
+    
+    
+    HIGH LEVEL
+    ==========
+    
+    The current implementation of trace2_data_intmax() in read-cache.c
+    relies on the global the_repository instance.
+    
+    As part of the ongoing effort to "lib-ify" the Git codebase and reduce
+    dependence on global state, this patch transitions those calls to use
+    the repository instance associated with the index_state.
+    
+    
+    Low-level (Implementation & Justification)
+    ==========================================
+    
+    In read-cache.c, the index_state (istate) typically carries a pointer to
+    its associated repository. However, because istate->repo is not
+    guaranteed to be initialized in all code paths (e.g., certain low-level
+    utility or testing contexts), this patch implements a defensive fallback
+    pattern.
+    
+    Changes:
+    
+    Introduced a local repository pointer r that prefers istate->repo but
+    falls back to the_repository if the former is NULL.
+    
+    Updated trace2_data_intmax() calls to use this context-aware pointer.
+    
+    + struct repository *r = istate->repo ? istate->repo : the_repository;
+    - trace2_data_intmax("index", the_repository, "read/version", istate->version);
+    + trace2_data_intmax("index", r, "read/version", istate->version);
+    
+    
+    Benefits:
+    
+    Thread Safety & Modernization: Aligns with the project's goal of moving
+    away from the_repository.
+    
+    Robustness: The ternary fallback ensures we avoid potential NULL pointer
+    dereferences while maintaining existing logging behavior in edge cases.
+    
+    Consistency: Follows patterns seen in other modernized areas of the
+    codebase.
+    
+    
+    Summary
+    =======
+    
+    Transitioned trace2 logging in read-cache.c from global to local
+    repository context.
+    
+    Implemented a safety fallback to the_repository to handle uninitialized
+    istate->repo pointers.
+    
+    No functional changes to telemetry output are intended.
+    
+    cc :Karthik Nayak karthik.188@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2253%2Fjayesh0104%2Ftrace2-istate-repo-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2253/jayesh0104/trace2-istate-repo-v1
+Pull-Request: https://github.com/git/git/pull/2253
+
+ read-cache.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 5049f9baca..2c5c5165e0 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2206,6 +2206,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	size_t extension_offset = 0;
+ 	int nr_threads, cpus;
+ 	struct index_entry_offset_table *ieot = NULL;
++	struct repository *r;
+ 
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
+@@ -2313,9 +2314,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	 * TODO trace2: replace "the_repository" with the actual repo instance
+ 	 * that is associated with the given "istate".
+ 	 */
+-	trace2_data_intmax("index", the_repository, "read/version",
++	r = istate->repo ? istate->repo : the_repository;
++	trace2_data_intmax("index", r, "read/version",
+ 			   istate->version);
+-	trace2_data_intmax("index", the_repository, "read/cache_nr",
++	trace2_data_intmax("index", r, "read/cache_nr",
+ 			   istate->cache_nr);
+ 
+ 	/*
+
+base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
+-- 
+gitgitgadget
