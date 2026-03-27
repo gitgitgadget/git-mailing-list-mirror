@@ -1,148 +1,105 @@
-Received: from mailout-001.p.bluenet.ch (mailout-001.p.bluenet.ch [138.188.175.9])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC6E36CDEC
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 08:27:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.188.175.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600A82DECC2
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 09:24:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774600041; cv=none; b=N0Gu0Q6lsPEK11OL9exfUOc1da4D95DsTZN5WpYfD36WtRylEjOzP7TTUxK3c1GdUbW6HUUnTvmWhJi+JzDZnn8mxMhLe0iPhHGA//277cRZyIfX9v+KK4CL2krPbMfK/enBDNdURxvSlOd9OGcoeqPuJXt4bPEonWJjlAyu39c=
+	t=1774603445; cv=none; b=T0vHK7FKJE1UJnHJBMHxDfY0a+2Ueu7ei6Y+aDF1w1uUSgl5zCnLsQLF1obce809ymQnsclUlqT7U31OZ5k3j/pFAtTEyzYLkFepcMrnyZIganywFQjMqIpKYQvM9+ZDsfNxuZj28/TjBTxXzJ2qOY+rTSXoTQumBWGlQgvVWiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774600041; c=relaxed/simple;
-	bh=V8A8M+0HMyCl1soQ7OW28BKDrnXZ1marxuFYf5PRwTI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GDl3UHnGEArRkFPCuZiLWhZRc3k1i27TBUJg7cHwh0C6Iq+VA2OPcBdNzMmRxxRe3pTkStoB4NqXh3cyJoH1O6VBtWsbKwiUfZjouOp3rQR3ugzqj2hven/NiwiijFA+hKjBmeS8PNRT/Wfuo9k36+iyD92lkPf1AiH58RUcO6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch; spf=pass smtp.mailfrom=bluewin.ch; dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b=KKJZSSnY; arc=none smtp.client-ip=138.188.175.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bluewin.ch
+	s=arc-20240116; t=1774603445; c=relaxed/simple;
+	bh=5+Z6Ch+e3mDyzHBnJFWv3Hu0gAKUhGrSom1KqMXZmns=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:
+	 References:In-Reply-To; b=Hyp3RX8L52FfWy1KHg13lO7Q+F1k51703X6wcDYz7JiuVK8+l5muxyhMQUCXhtZqsn3KI0cXurdBYCKi5SgOSbO/erao8ZNdan10xJZxpVO5EQDf2902PVK7b9P/CKIojBG1DOq/87hDpSl2UY/mGhMyfLH+lp190h2ngmnPZsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQvJmlz6; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b="KKJZSSnY"
-Received: from [192.168.21.108] ([79.154.91.233])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 256/256 bits)
-	(Client did not present a certificate)
-	by mailout-001.p.bluenet.ch Swisscom AG with ESMTPSA
-	id 62VBwAAlmDkrf62VBwGHD4; Fri, 27 Mar 2026 08:25:10 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bluewin.ch;
-	s=fxzs-2048-20230414; t=1774599910;
-	bh=iopg345agG5RVpTraFodjEHRXXIcbgn3lepzrrIoEZo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From;
-	b=KKJZSSnY/eF09SSyQbIDiWYnktxHuuCf9ezdSgf8NPID2mDjH394Cx4ec6dxa4s3X
-	 haUf9XK+/PiDn7tZQT9dv0c/TLmW47EMMQj28Gb0vJjsSntLBer84klQ/0o8ZRrvS/
-	 ZU22x+/mOOAiTbmaaiRZ3ZtgGvSJ/KUq+W45oUyLaJAwahdAurMKcklnpWsgmzUSaU
-	 A4dsHrVqk8W17sA3drQiQfMtCtYMshjZeAH7AWWvmUqp09Uh6PZIzxOe7lq9denZAB
-	 1+BdSnO5OflUbapbZNZJlPdHk0W5XvE9tEqdbKbtbzuH9vq07941hH8DyEIYs+XLju
-	 Z1VFy3K3PwUDg==
-X-Bluewin-Spam-Analysis: v=2.4 cv=SMtykuvH c=1 sm=1 tr=0 ts=69c63ee6
- a=WY6/0jjk7zsOyTa5/3SlqA==:117 a=WY6/0jjk7zsOyTa5/3SlqA==:17
- a=IkcTkHD0fZMA:10 a=w0RzvLSWAAAA:20 a=NEAV23lmAAAA:8 a=pGLkceISAAAA:8
- a=GrsELN7seP4a2jTIFLYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bA3UWDv6hWIuX7UZL3qL:22
-X-Bluewin-Spam-Score: 0.00
-Message-ID: <ce083a4a-321d-4c29-af04-decfab33d237@bluewin.ch>
-Date: Fri, 27 Mar 2026 09:25:09 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQvJmlz6"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48704db565eso26717545e9.1
+        for <git@vger.kernel.org>; Fri, 27 Mar 2026 02:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774603441; x=1775208241; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZyuctO/VyqwZiwRGaCAxS1FX4R47hqYjISWG6IaN0Q8=;
+        b=aQvJmlz6NkfDWgD8GmmKREd3z0cJx84LRhjEOE2pzsiJh8ApBN41/n56K3vKVpHYc6
+         Q0nnTLvehZzRlsJjAaJ4pJHtPfpLp2nFI01VOAVvgdyZrxWzYqKxZL3slXH4w/YHWI9k
+         z6DXKILOjd6Pqi+VEKjBkcWZufgp7P82Z3HP70NsEpfRE5Ae1I67XqI5A3hqnTw0oXJ6
+         TgFv5D22TDHC0WGl4GkDGYhQyEwnqAriSvCyLSpZ6FSJd5X1na0rL/VrqudL68sYTwXZ
+         Ug7OZg3Nrd2DOmG5m2INyLbqM6LcKc0oqff6IRsWLQ5f8sg3hXHhtISMmcV0o/x7l6kV
+         VuMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774603441; x=1775208241;
+        h=in-reply-to:references:subject:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZyuctO/VyqwZiwRGaCAxS1FX4R47hqYjISWG6IaN0Q8=;
+        b=B2BqQ5Ghh35atm240VmDEFLpDRaVelg0aXKKaqfmT6MSUK8yfYAwMQSIVoFmv/sT4s
+         jJ8qvqn+aVN8lnufpH7gXDqswZfgL8QF4pNpyuq0954fW55SpqGUZAQ8zCbovIcvOziN
+         JwDIWArHJURwGCqBs0uAsh8wyEEEl1+urCpAlCgFQSK6iFtIkj5gEXr54KfxPYykZHLp
+         ESc/TU7uKx+g0lT/em1QsRgbf0wlN2WabfBrwaeYEDl44fY1ce/ylyQamPsLCA4iLd2Y
+         AGkKH9Ql9q7Lk/MN4M0cWUytcbUcdAsBmKNbhmpSR11IfiomERT1a+48W3tEGJS7a3Yf
+         U+1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWWAUZ/fOuqKrsgeD7aQk0K8UJ0oTiYPGoNpmA/YQiE0kJrInrD+l8FOGjjLFpBHpB45/0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/QzegLpAyixh/xzySGMWuFky78hj3i8NXyFJOOSbABJncLBMM
+	INtMUY4ugL0YpBaf9QFQqphmixe9+xRVdLD1JYftd7b2AfnX1urfkp0vyYOx7w==
+X-Gm-Gg: ATEYQzxJcEFoSn2C0tQXFD+zt0gOKAjogZ4IPUUCtnXFlREniehB4g8lEM24AKVxYyA
+	IBzWkcE4B7v8xdhzJWw+WLgPWwpN2PN4nDzWo9AClO1pJJBdq6T62P5sIMloEBdwYg89L2ELqfc
+	haFk/+lY25JWv+CgsLRC22B5gdxpIBsE77vUNIcnIHbad03hvQEVPaVHfW6qLugQe8XGGP4vtAT
+	S/RJBwaEbtTqmVc6MlLLRjrUl2RQ/B4WiHnC5LBYCYA/IIpC2lgsc2W55oHdxnW+yarKgCC4sJs
+	zsPULjNPSXXblUUhxt6Ch7XQWgEmwh2exZkra8DR8izcNjB23j6Jn1qsxWN/wEdmvSXpkCnkQXC
+	5yYy3AwX5BlMy7XtLCNNZGS7Naurxvk3f7nv6cZ9mshuLXffAgqAIFtuVpXC2iPWY9/OYuJACZI
+	uqqkrHfoB46Z0MOBPb/jmd
+X-Received: by 2002:a5d:5f96:0:b0:43b:4faf:a496 with SMTP id ffacd0b85a97d-43b9e9ee4f4mr2539780f8f.31.1774603441129;
+        Fri, 27 Mar 2026 02:24:01 -0700 (PDT)
+Received: from localhost ([193.255.169.14])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b9192e352sm14306284f8f.3.2026.03.27.02.23.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Mar 2026 02:24:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: fix git stash grammar
-To: "D. Ben Knoble" <ben.knoble@gmail.com>,
- Quentin Bernet via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.2255.git.git.1774529148151.gitgitgadget@gmail.com>
- <CALnO6CD-5NBUoooMD+pQAxeyXCjkZ3Za6LJrLrJN57Nrz03xBw@mail.gmail.com>
-Content-Language: en-US
-From: Quentin Bernet <quentin.bernet@bluewin.ch>
-In-Reply-To: <CALnO6CD-5NBUoooMD+pQAxeyXCjkZ3Za6LJrLrJN57Nrz03xBw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfMOhu3wV2GML4k+oPE+cBtTKAemfn3ziR0ypGHqpEgilNK3UHyVpHUnNvAIdGUzwIULHS5UubmVJUt94hBo71zB5uxEOh55C5cBlAbNd+1JcVFZlS4EH
- ++YGWVCFGJ6VZDW2pdgAC4pjhLhpS5ai/dE52LcOyJJLtQncAd4xObPPX76xWBfpeajQuCCL1PFpxmLDTA4o7NjBK/E/0mAOjhAZATmtQ7cqFj1DbivtBDbo
- R4P7b37ChfUWRtNt+f33KNW/yk6/k2lOcqHQrHf9zPA=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 27 Mar 2026 12:23:59 +0300
+Message-Id: <DHDGF1CL2QHP.101BB8D2101N8@gmail.com>
+From: =?utf-8?q?Burak_Kaan_Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: "Shreyansh Paliwal" <shreyanshpaliwalcmsmn@gmail.com>,
+ <git@vger.kernel.org>
+Subject: Re: [PATCH 2/5] refs: make get_files_ref_lock_timeout_ms()
+ repostory aware
+X-Mailer: aerc 0.21.0
+References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260325164833.1216577-3-shreyanshpaliwalcmsmn@gmail.com>
+In-Reply-To: <20260325164833.1216577-3-shreyanshpaliwalcmsmn@gmail.com>
 
-This seems to be describing more the content of the patch than the 
-intention behind it, what about:
+On Wed Mar 25, 2026 at 7:44 PM +03, Shreyansh Paliwal wrote:
+> -long get_files_ref_lock_timeout_ms(void)
+> +long get_files_ref_lock_timeout_ms(struct repository *repo)
+>  {
+>  	static int configured =3D 0;
+> =20
+> @@ -998,7 +998,7 @@ long get_files_ref_lock_timeout_ms(void)
+>  	static int timeout_ms =3D 100;
+> =20
+>  	if (!configured) {
+> -		repo_config_get_int(the_repository, "core.filesreflocktimeout", &timeo=
+ut_ms);
+> +		repo_config_get_int(repo, "core.filesreflocktimeout", &timeout_ms);
+>  		configured =3D 1;
+>  	}
+> =20
 
-The grammar for "git stash" does not contain valid combinations such as
-"git stash --include-untracked"; fix it
+Looks like the existing code uses static local variables for
+performance. They can behave unexpectedly in multi-repo cases.
 
-On 3/26/26 17:17, D. Ben Knoble wrote:
-> On Thu, Mar 26, 2026 at 8:46 AM Quentin Bernet via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> From: Quentin Bernet <quentin.bernet@bluewin.ch>
->>
->> Grammar incorrectly did not include `git stash -m`
->> and other valid `git stash push` flags
-> Typically commits for Git describe
-> - the current situation (present tense)
-> - commands to make the code better
->
-> In this case, something like
->
->      The grammar for "git stash" is incorrectly bracketed; fix it.
->
-> ?
->
->> Signed-off-by: Quentin Bernet <quentin.bernet@bluewin.ch>
->> ---
->>      Fix git stash grammar
->>
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2255%2FSporarum%2Fpatch-1-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2255/Sporarum/patch-1-v1
->> Pull-Request: https://github.com/git/git/pull/2255
->>
->>   Documentation/git-stash.adoc | 4 ++--
->>   builtin/stash.c              | 4 ++--
->>   2 files changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
->> index 235d57ddd8..41086c21a4 100644
->> --- a/Documentation/git-stash.adoc
->> +++ b/Documentation/git-stash.adoc
->> @@ -14,10 +14,10 @@ git stash drop [-q | --quiet] [<stash>]
->>   git stash pop [--index] [-q | --quiet] [<stash>]
->>   git stash apply [--index] [-q | --quiet] [<stash>]
->>   git stash branch <branchname> [<stash>]
->> -git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
->> +git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
->>               [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
->>               [--pathspec-from-file=<file> [--pathspec-file-nul]]
->> -            [--] [<pathspec>...]]
->> +            [--] [<pathspec>...]
->>   git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
->>              [-u | --include-untracked] [-a | --all] [<message>]
->>   git stash clear
->> diff --git a/builtin/stash.c b/builtin/stash.c
->> index 95c5005b0b..0d27b2fb1f 100644
->> --- a/builtin/stash.c
->> +++ b/builtin/stash.c
->> @@ -50,10 +50,10 @@
->>   #define BUILTIN_STASH_STORE_USAGE \
->>          N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>")
->>   #define BUILTIN_STASH_PUSH_USAGE \
->> -       N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
->> +       N_("git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
->>             "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n" \
->>             "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n" \
->> -          "          [--] [<pathspec>...]]")
->> +          "          [--] [<pathspec>...]")
->>   #define BUILTIN_STASH_SAVE_USAGE \
->>          N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
->>             "          [-u | --include-untracked] [-a | --all] [<message>]")
->>
->> base-commit: ce74208c2fa13943fffa58f168ac27a76d0eb789
->> --
->> gitgitgadget
-> Now, _is_ the grammar bracketed wrong? "git help stash" says
->
->             For quickly making a snapshot, you can omit "push". In this mode,
->             non-option arguments are not allowed to prevent a misspelled
->             subcommand from making an unwanted stash entry. The two exceptions
->             to this are stash -p which acts as alias for stash push -p and
->             pathspec elements, which are allowed after a double hyphen -- for
->             disambiguation.
->
-> So _if_ you want to provide options (other than "-p"), the "push" is
-> required. I think the existing brackets indicate that.
->
+I think moving the config into 'repo-settings' should be considered. The
+config is already lazy-parsed, migrating it shouldn't be a problem.
+
+Best,
+Burak Kaan Kara=C3=A7ay=20
