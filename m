@@ -1,81 +1,81 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC18B22301
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 14:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045CF22301
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 14:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774622798; cv=none; b=SdhmBAUP0GQtGJAQ3bCNTta3GARJmIJu51IEXYK64efEDs9a9L1OFfLx31kWKuWkX2ytaLYIBUA8TEvY2Hb3TkWz9HL2S4mTSayOQspOoMBgNpa+mU0pWl9UW1Caxp1XFVHEI8sGvLjCsH6Zpt/ELDiR4fxnEx3qrTzUwa9wPX4=
+	t=1774622802; cv=none; b=b9rOLr6SiMo/l+uGtpVY6bT9sFeGRKkxbv2+SpHZcsC8hQLTzvF+CzRJMZCMpNLMnUKGJc8box6cN0m5zAdIM2j3YHftbcl52QtGMExBRBIQMgJ6K3u44pnGOPYoDT6J9McpGqrgoZVWbYpTCgbgzSxqUYyS5vRbPqE237WkCR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774622798; c=relaxed/simple;
-	bh=UIlxQPTY6yINDkfcW1fClyDfxvZ1IOmg9NUWDZC/AOY=;
+	s=arc-20240116; t=1774622802; c=relaxed/simple;
+	bh=cu4nwcOczIHPvwYcax4JexmVFytSmw9gj+8cfADh758=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ho9RuJW2T7QnrnaIfgKOsItcR3SD8Q0mMTCezrujjIoshsUAPoe/ku+xYEsYDxJiLdraWCwsDgj58jAVIsb9cVEZ8ZvjJfbUftQvR74XUZ997G79CRaNG+wUTa7brBdhG9Bkdc0974BOlIdWq/fcw2Z+M4/BskjX4BS2ohzUK4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AWHFjLrr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cgBN4TCq; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=LzQzJFTSfHFHug0cWYoYOQZyhWsV3p7OL34h4fIMWE55L1QF17hWjoY+2d0lErv98Ese68mvXtfjnTvXe0/4bWVqJ+kSXATwpFsRKI9uSFI1NVj2ox1wueUbuEjYQ4hl2PTO80TvX+AniToOUaJ4AaBZw5/Ya1HMinAZC+cD2DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tlg86EeJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mwdRlu19; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AWHFjLrr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cgBN4TCq"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4A6551D00066;
-	Fri, 27 Mar 2026 10:46:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tlg86EeJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mwdRlu19"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FC127A001F;
+	Fri, 27 Mar 2026 10:46:40 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 27 Mar 2026 10:46:36 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 27 Mar 2026 10:46:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774622795; x=1774709195; bh=TExpS/Ctal
-	X5/3CL6Tb0JN2tDBdvcwCOwVAGS8/FAY8=; b=AWHFjLrrmTdESL9if/WzIS5ntY
-	8Fs6G1CiAZ8AeX+uAOqTOrY0Qg/sj41nfPFmL4YohY73VPEU6KHO8bG2C5yOU3lc
-	ocP+jh/vyJybp1lWbSOfkoALX/YPzUPzx9kH00a8RoE5dSiJVoUUj8Ghz0K2ULy0
-	F+a/e48WHXSyld2TfQAgyahslnDzcVJATc5+L9KNgISDGWmGDBogYz8BqsLcpDXd
-	arVgHuzuLBSd+pantjEo56o2O5gwNktZCr+Gwyp5LkkgY13DGULshl+yUkYfJd1j
-	IMEjI9N0vwjKFQnCp2zL/BdWmd6aqER/HKrcZg4TrrP6G8BFWU/dvfjiggZQ==
+	:subject:to:to; s=fm1; t=1774622799; x=1774709199; bh=uSrXvKnC/x
+	tisJduEaKwm/rRwtXXd+jhzLULhnBbNyY=; b=Tlg86EeJfijuSIsjcljdVi+mIV
+	QM/Qcg/veCIYchAekk6yp82qFC3YhxMaTD/m+Zuxnr/m6Aj+SLNfueLlJ8yMM7YQ
+	GXscIHXICzRsz3F6L3uwJ8VYgqEOKQ0Gngu9sUdtpiQj8bTs7/JUVI+rRZ6iPuN6
+	sqmO3Iw8bd5zxuXOAJupSSOQp7uZ6GXshgqJTRUzgE8FGG0MqCtlihPBYdzV2UF0
+	cs22rgKpRBecZwoOYbrJGduxwxAMlLCpRRGzcVeciaC50ViCFP2z1Qf7vAhlGiGK
+	WKjjliEIJGEVggOwE28Ki398ul57nLGtNoFAicPzwrLR6EUt8+78tD+b7XCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774622795; x=1774709195; bh=TExpS/CtalX5/3CL6Tb0JN2tDBdvcwCOwVA
-	GS8/FAY8=; b=cgBN4TCqXrRUgH6p1HVXO4E3/OJbY+Ur2SMKTTJopPVYZ/DFQgp
-	VxJLrtrIwxT4wTZbYmYE8TBvU+g9itfm/vIsE3fWo62rnf5YIdbcHkaa8Y/hWkvi
-	X5iWvmcWP4ujoDDBS5exK1+tpHQJhRbmVkOP3Tz9W+3yxqj4eQMN5FSbF6VHYJHf
-	G/BBwS/AuQhkEWX9k+d2EHSTgxOAgKo4sH07irUgjoSa6/TdIs1hFysVd/28ychp
-	dhanGhCJwT+fxmx5khwxvJYwVpxYqV+JJCb0TcPQm2JT4qGcOzP+jmLk8xS7XmOa
-	xNfuVAgyFcJhbtBHkSurkEX07JUsnXcSmWA==
-X-ME-Sender: <xms:SpjGaTkp5OY5I0t-TGZWI4lPWNs5CSbGU3LBCwszbgD-hJ2TND0ySQ>
-    <xme:SpjGaZajbu37qmMN4kCz-LcFJe9yZI8lWxi6T9UxEsJrwkTnKNVRZ7o_giw52qWSv
-    cYvJ56Xn-H9eqdNGqbrzUaSvF5OUdDpn1BUqe9UCRjOX-By2-4E_A>
-X-ME-Received: <xmr:SpjGadQ_eugicTYubLSK-smY6cnoXsdPOLuHIeAyGYRpvSuxgNuod93EoW_PFYSZqQCBxg_TAhT0p18NABWaIJSED6mYdu3a_e8MDvAuLw>
+	1774622799; x=1774709199; bh=uSrXvKnC/xtisJduEaKwm/rRwtXXd+jhzLU
+	LhnBbNyY=; b=mwdRlu1945PlzczeDB2CDeQZa54Ee3uGaf9LLD03BDXIrFyq5hm
+	U8QWGCi6NN+1zUsjlVz4KFp3TJXnXiR/Qn1hmWs8lXUvmV3lkQx+M3Gmi0a5PvJ3
+	e7iweRkFprWU7X3wXkxDbRbTiGsZEL9PcyKUl0UuSelQg8CIO/YlpZwjdXmc3krM
+	r9wjInPolcZuw9Qx5l+5RB3wP9xA8jSad9QYaWq7RbD84/H6ljSN+no/lH0V0hYW
+	bVtV0j3xhwtqRhgWail9pbeSCApldZGO2EtwHjjSMSxiI02f/lP7ph9oKR+avBsb
+	tiX8zoLKbrXA1jQPKLcH57E88RhtK3MeAtQ==
+X-ME-Sender: <xms:T5jGaUB8ggPCqcXqGKBohBMzZJrF5FCwb1Pk7FYFZPFjpvUM_0R89Q>
+    <xme:T5jGaVlimVMTjyJwvjxH5EQrP4AtgSnlmvnuNk68epdp7JRERj554iKNDlO3a63q3
+    OgwjYAibYSYorrejPt7zqWZ0rtDZu03DNLMEqsd-ORytkNm8UKPMQ>
+X-ME-Received: <xmr:T5jGadyTQ9LBL4u0P6HH-PAsqNGRYPcUZn1fREIXlr62cGQZL3CHiv6a7h8SFZgkPYfn0XIRJQElAN8NH4npUm9hnDkHGG1vqGL4rbRYxQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedtheeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrughrihgrnh
-    drrhgrthhiuhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopegvmhhilhihshhh
-    rghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegrvhgrrhgrsges
-    ghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:SpjGabtaYo7rYvYOqk7CxlKzjB8j8p3oyCKNwmqhj4_NnciOijzJEg>
-    <xmx:SpjGaXHTSE0cCMoFFdGi7Bib0EqrLqgRqTOy1Hpha5C2W9VoMqGMCw>
-    <xmx:SpjGaUxDx1GJ_AohdD_yHz_aTZeH4qCQ2PcjuMvuwVSh2kUbsGsOYQ>
-    <xmx:SpjGaZ3rZJNJHhpqbrU3Z9hupMaJ41Cq89_dCjZPN8V6XJ8rZoHLpg>
-    <xmx:S5jGae8WBOoJbktcMdBGEEEyotikqLFE5He_oXikh_puvtQJPFtuKjaT>
+    epgfffkeeuteehleekjeelkefhveehkedvgfetieelhfetleduieekgfdtteffudehnecu
+    ffhomhgrihhnpehpohhsthdqrhgvtggvihhvvgdrjhhosghsnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgv
+    rdgtohhmpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrd
+    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrhhi
+    shhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghmihhlhihshh
+    grfhhfvghrsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:T5jGaXS6VsnSyWbguDJ5qWh_3YHdc9d3QI7Yf5Wq9TwhX4lbDe09qg>
+    <xmx:T5jGad8poEgn5BPbS6ZO6mowyo8xrrFCqAQOPfs0vSFztE7ccmRDJg>
+    <xmx:T5jGadsrHK5I6-AMs0QGI8xQ5Yds9y6zxJxkgFrj8-2_36M3HOiD8Q>
+    <xmx:T5jGadO-DEzcd9eSipkY1xQZ7Di_PgslUMiooovxAde6CRrbWFhYNA>
+    <xmx:T5jGadUrQMqLFysmTsxJBANjyimjhmNwTYZcKtJKzurIyAzF6_9qwJRp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Mar 2026 10:46:33 -0400 (EDT)
+ 27 Mar 2026 10:46:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3d62ae6b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Mar 2026 14:46:31 +0000 (UTC)
-Date: Fri, 27 Mar 2026 15:46:24 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 89307a02 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Mar 2026 14:46:37 +0000 (UTC)
+Date: Fri, 27 Mar 2026 15:46:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -83,13 +83,12 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v5 07/12] hook: add -j/--jobs option to git hook run
-Message-ID: <acaYQC8d97p2qzhw@pks.im>
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v5 09/12] hook: warn when hook.<friendly-name>.jobs is set
+Message-ID: <acaYS-p1muabeUqX@pks.im>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
  <20260326101819.1307742-1-adrian.ratiu@collabora.com>
- <20260326101819.1307742-8-adrian.ratiu@collabora.com>
+ <20260326101819.1307742-10-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,39 +97,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260326101819.1307742-8-adrian.ratiu@collabora.com>
+In-Reply-To: <20260326101819.1307742-10-adrian.ratiu@collabora.com>
 
-On Thu, Mar 26, 2026 at 12:18:14PM +0200, Adrian Ratiu wrote:
-> diff --git a/Documentation/git-hook.adoc b/Documentation/git-hook.adoc
-> index 318c637bd8..46ea52db55 100644
-> --- a/Documentation/git-hook.adoc
-> +++ b/Documentation/git-hook.adoc
-> @@ -147,6 +148,23 @@ OPTIONS
->  	mirroring the output style of `git config --show-scope`. Traditional
->  	hooks from the hookdir are unaffected.
+On Thu, Mar 26, 2026 at 12:18:16PM +0200, Adrian Ratiu wrote:
+> diff --git a/hook.c b/hook.c
+> index d98b011563..0493993bbe 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -279,6 +279,44 @@ void hook_cache_clear(struct strmap *cache)
+>  	strmap_clear(cache, 0);
+>  }
 >  
-> +-j::
-> +--jobs::
-> +	Only valid for `run`.
-> ++
-> +Specify how many hooks to run simultaneously. If this flag is not specified,
-> +the value of the `hook.jobs` config is used, see linkgit:git-config[1]. If
-> +neither is specified, defaults to 1 (serial execution).
-> ++
-> +When greater than 1, it overrides the per-hook `hook.<friendly-name>.parallel`
-> +setting, allowing all hooks for the event to run concurrently, even if they
-> +are not individually marked as parallel.
-> ++
-> +Some hooks always run sequentially regardless of this flag or the
-> +`hook.jobs` config, because git knows they cannot safely run in parallel:
-> +`applypatch-msg`, `pre-commit`, `prepare-commit-msg`, `commit-msg`,
-> +`post-commit`, `post-checkout`, and `push-to-checkout`.
+> +/*
+> + * Return true if `name` is a hook friendly-name, i.e. it has at least one of
+> + * .command, .event, or .parallel configured. These are the reliable clues
+> + * that distinguish a friendly-name from an event name. Note: .enabled is
+> + * deliberately excluded because it can appear under both namespaces.
+> + */
+> +static int is_friendly_name(struct hook_all_config_cb *cb, const char *name)
+> +{
+> +	struct hashmap_iter iter;
+> +	struct strmap_entry *e;
 > +
->  WRAPPERS
->  --------
->  
+> +	if (strmap_get(&cb->commands, name) || strmap_get(&cb->parallel_hooks, name))
+> +		return 1;
+> +
+> +	strmap_for_each_entry(&cb->event_hooks, &iter, e) {
+> +		if (unsorted_string_list_lookup(e->value, name))
+> +			return 1;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/* Warn if any name in event_jobs is also a hook friendly-name. */
+> +static void warn_jobs_on_friendly_names(struct hook_all_config_cb *cb_data)
+> +{
+> +	struct hashmap_iter iter;
+> +	struct strmap_entry *e;
+> +
+> +	strmap_for_each_entry(&cb_data->event_jobs, &iter, e) {
+> +		if (is_friendly_name(cb_data, e->key))
+> +			warning(_("hook.%s.jobs is set but '%s' looks like a "
+> +				  "hook friendly-name, not an event name; "
+> +				  "hook.<event>.jobs uses the event name "
+> +				  "(e.g. hook.post-receive.jobs), so this "
+> +				  "setting will be ignored"), e->key, e->key);
+> +	}
+> +}
 
-Great, this is now where we explicitly call out that "-j" overrides the
-configuration.
+Makes sense. The bigger question of course is whether we should properly
+separate those namespaces, so that this confusion cannot even happen in
+the first place. I won't push for such a change though.
 
 Patrick
