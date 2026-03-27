@@ -1,141 +1,161 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mailout-002.p.bluenet.ch (mailout-002.p.bluenet.ch [138.188.174.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40C235DA44
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F78186347
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.188.174.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774628900; cv=none; b=DD55Hzh03TDHvBW70gvjp3jJ2yiATn//i3SRexFgUEQkRKpcxwrdQEWIga6kN+e7Oaar7BA3hYs0k5+CXmc288AbDI5GCRlrRhqktVzrWHnpt3RFQi0PLWAElwtSqJGor/fzA1geCOE2RjKBdeY9N8/BvMaS4CARfw1X5RIpDP0=
+	t=1774629016; cv=none; b=CWOjUVN4FzVTK2LJPyvWmihbvSoqC7ntdgZlZFm4T2INGaT0+jQX9upmFyTK81SNBQRdSS13wGDchF77pBFmRPQ+a57k14BgYld2pPDyHokSdd4M0lCkkesAUlnGvpkJtmS1X2nSnye3O07ADkcT4pS2LponUyUtbcv7SAdRgso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774628900; c=relaxed/simple;
-	bh=Ja16ZnBG2qnUIWnY/vP76jOIwmHcqqUgt2H2Ex0mXao=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W6HtL8JnadQlci5MYec3PyV6xpx1a6doa6V49e8R3GGSwGvMJ2asZB0ZUrypeMRRbAmcV7Kp3S0QPH+EKNs48wl5RxOI+YVlF75Gq7q4tI3ypJmdvy+RhTs1frZG2EPCH7gHO21sdeTDqh/EMcGOJEqtC+8fQDb8gCOllBG44TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lioVGLon; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qg1JIZqe; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774629016; c=relaxed/simple;
+	bh=fGfQ4QBKd+N0sW6BqC1RT1f/91p2zVM8763IWL4Pmik=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QSci17DvBSHkF9pkydETGE6nt7tsC4mYEyUFFc9zuDgQkdPGBdoqiCmDhJWLrxZqftpQtJzpSowmtnhGS+NmR16ajdLYl7USI9gQeZeD8NVKezGJcLPvUrHxDQsWT/3ZcyJFVHz/AztMPXLdcXy9Sb7/9yW3sYrCdi2ctRn7iQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch; spf=pass smtp.mailfrom=bluewin.ch; dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b=X+5JWeCA; arc=none smtp.client-ip=138.188.174.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bluewin.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lioVGLon";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qg1JIZqe"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8F1A37A0231;
-	Fri, 27 Mar 2026 12:28:18 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 27 Mar 2026 12:28:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774628898; x=1774715298; bh=YZ53abfYhW
-	CTPO8cfpLiq3bW9jpLczcjybxzRr5mjRI=; b=lioVGLonTQVk9yCXjixenxUK7M
-	tAtxjR/Hg+I0EhIa0YhUVLzMveIwad/PSicBdkjIh0X0apvdtWyCRY3iBtSl+rCb
-	LtFpII+RVHs1WxKY0ozyUNAo8Ndkw/cisGOpg4rSdu5VP9OW4iWfedbgrO+8fH3x
-	q7B/5r328aCGeLwKsVsI2QqhIAnTILrHKamLSR/e4n/u7UCdn1B47Xeoih0PzE1Q
-	8agcWpVs8V/ins0ybPVMLnOreQUKamtEwsIy5LfOZPSkf1+cw31y/NVka1G8WrOW
-	KcOm6YseNma3rd3eGO2EE19zl6Pv14LBSq10H2AU/FSn+vNvNBu8BcFoQFdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774628898; x=1774715298; bh=YZ53abfYhWCTPO8cfpLiq3bW9jpLczcjybx
-	zRr5mjRI=; b=qg1JIZqel8jRHpuBQciLq6hzSGP4mDm0um7BW60OsTfAyWK07Sa
-	7KXMxTXHd5qGbLTmPit3YR4xkgOIrwN5wA3RnXLlABEopOzySUt5gGRpRPfTTwrh
-	EBgktI+ZGA8IiBW/zErpZdBxR96NYpWtdx92XkfFm+IvJtd8Gr3q+l/BSaR17PRG
-	k5SQGG4rPWMMRtxIFbZIUNEOGoxaTpJ0+yl0V47t47kKMgnn4vrWGicynUlmh5Rm
-	AcFyFOp/RU7TQyVndsPJXvB+SRI2Ephtrf7g+8K/whCKCH2Jv3Ty1NsDy06Ewb2z
-	UG4zUUCDKbrheIz0108g0iOaZZvuXyKjUoQ==
-X-ME-Sender: <xms:IrDGaUUSCf70DJY_ycusg-ImeMw5J5rwyntJXdZk6iaJStT3sMdfSA>
-    <xme:IrDGaXrAS4yshlV2o_8NTtOsFnJCZJjqAV81a1AtK8TqFmUWasnSqeoUayCNh4vjn
-    uv0e1vbCXlR1Qhyxt640pxenQRRLugJnLbs-y5lP3W3kBihpCOs>
-X-ME-Received: <xmr:IrDGaelNM5sLzHaTMZm6nelSld9GIt9YUQMbirkFlhGH89uUL16lOSb3wZLyBAL28DqhwGIPongUA7GOvCSVfYrnOyG8OplSdw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffedtjeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepjhgrhigvshhhuggrghgrleelsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:IrDGaf2fjIK7DJT7mF-VM18nAXNEy7RXIsT5huc3UiRM23-E3fGP0g>
-    <xmx:IrDGaTT7F_lVKoWbEyIpUMa8yLgj_FSLG9zz5G1VD8Aki4FwPiN15g>
-    <xmx:IrDGaQyrjidRXqMLbkGgiDrMOoaU-6GNDKlGQmhe93Ysmi6NcMPvXA>
-    <xmx:IrDGabDsPp9jJj5iBP1da05ZvbjsZ36d8jXZDOp1WIUD8624BouqcQ>
-    <xmx:IrDGaS2Pa-3sOaDLbRAsrvE4qIyHDWg6ykTr9JKlyNgY-4oQA3AriWrF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Mar 2026 12:28:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Ayush
- Chandekar <ayu.chandekar@gmail.com>,  Siddharth Asthana
- <siddharthasthana31@gmail.com>,  Jayesh Daga <jayeshdaga99@gmail.com>
-Subject: Re: [PATCH] read-cache: use index state repository for trace2 logging
-In-Reply-To: <770465fe-c38f-45a9-b1b0-0ad682a35fab@gmail.com> (Derrick
-	Stolee's message of "Fri, 27 Mar 2026 09:48:55 -0400")
-References: <pull.2253.git.git.1774606086325.gitgitgadget@gmail.com>
-	<770465fe-c38f-45a9-b1b0-0ad682a35fab@gmail.com>
-Date: Fri, 27 Mar 2026 09:28:16 -0700
-Message-ID: <xmqqqzp5kzj3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b="X+5JWeCA"
+Received: from [192.168.21.108] ([79.154.91.233])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 256/256 bits)
+	(Client did not present a certificate)
+	by mailout-002.p.bluenet.ch Swisscom AG with ESMTPSA
+	id 6A2XwOkQhXDiX6A2XwB0s0; Fri, 27 Mar 2026 16:28:06 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bluewin.ch;
+	s=fxzs-2048-20230414; t=1774628886;
+	bh=PyUlgyN5xrDfI1HryoJWqtxr6LWXaS1looiO7fMsclk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From;
+	b=X+5JWeCAHboDzCGTrNFrUxlQ0BYeZ6hxoqph+jUeU/SM53IyzXlqwAuAPdPzFjYKN
+	 wCZrzMnYtu8PKI2fE/0AjEuIyMLyPfkcuckdJinzL2Tr2FxsRxZkFFfz2Q5a26pYoq
+	 GFH3rgDbb9/8Dc6zfuS8pl2jTTtOeqjnRKkwr1LPxKO5NPAvR0JvGXtc+2+imWH4yx
+	 WpUyYcKEpc3Zp8f8Cu/1eUhnrqoy8U3OpOX7ZqbkXP1LvhjGM6lIvhPblNtR/Y53O/
+	 BoYI4OYTjLY8r4yrjZXGrPYSB1Zm80AHz0L/9L2T7dHzGGHVw/8mzBbalvrDUwM0OU
+	 Gl1jfI8c8oFUA==
+X-Bluewin-Spam-Analysis: v=2.4 cv=IPIyzAvG c=1 sm=1 tr=0 ts=69c6b016
+ a=WY6/0jjk7zsOyTa5/3SlqA==:117 a=WY6/0jjk7zsOyTa5/3SlqA==:17
+ a=IkcTkHD0fZMA:10 a=8aoxcsf_4YlTAHqYW78A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Bluewin-Spam-Score: 0.00
+Message-ID: <fbe531eb-b742-4cd1-ab6a-2eaaf8d236c5@bluewin.ch>
+Date: Fri, 27 Mar 2026 17:28:05 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: fix git stash grammar
+To: Junio C Hamano <gitster@pobox.com>, Mirko Faina <mroik@delayed.space>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Quentin Bernet via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.2255.git.git.1774529148151.gitgitgadget@gmail.com>
+ <CALnO6CD-5NBUoooMD+pQAxeyXCjkZ3Za6LJrLrJN57Nrz03xBw@mail.gmail.com>
+ <acXIl2cuBv0ifiK6@exploit> <xmqqqzp5mfh5.fsf@gitster.g>
+Content-Language: en-US
+From: Quentin Bernet <quentin.bernet@bluewin.ch>
+In-Reply-To: <xmqqqzp5mfh5.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfCgowfq4xuBlzj7Nvkkoq7lt/ofmbjtlvtTkb4XVkADvTGrecnof2H65usxR3xZACoNAlxPR06Cuk+tcefkgo0rpY6s/nExUFs+RA8pb2Abh0tnIh2ws
+ qc9He2x71xZnb65+NR1Zc9qgPS3F7Hyvf+dQxYv+wraXjffNlCWIYsze8CN23THlMmDHA2/cQlhbTbClUao+yiSXBsaunbHlV90igbq9af76OLaeVVviGPA4
+ I9Favw7kjABZ1WBNGJ7DWh+aDrZ85oB3EdP0TGd/uyqGbAGyB/bOe8W0KLvX0BYhuy5CsrUMAqElimGfD5OfN/SgxY9o3fT4iNibhSPzLf0=
 
-Derrick Stolee <stolee@gmail.com> writes:
+Please keep in mind this is my first contribution to git, and learning 
+the ways things are done here, so things might take more time than usual
 
-> On 3/27/2026 6:08 AM, Jayesh Daga via GitGitGadget wrote:
+I believe to be fully correct, this should be the grammar:
+(or some other ordering)
+
+
+  [synopsis]
++git stash [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | 
+--quiet]
++            [-u | --include-untracked] [-a | --all] [(-m | --message) 
+<message>]
++            [--pathspec-from-file=<file> [--pathspec-file-nul]]
++            [-- <pathspec>...]
+  git stash list [<log-options>]
+  git stash show [-u | --include-untracked | --only-untracked] 
+[<diff-options>] [<stash>]
+  git stash drop [-q | --quiet] [<stash>]
+  git stash pop [--index] [-q | --quiet] [<stash>]
+  git stash apply [--index] [-q | --quiet] [<stash>]
+  git stash branch <branchname> [<stash>]
+-git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] 
+[-q | --quiet]
++git stash push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] 
+[-q | --quiet]
+              [-u | --include-untracked] [-a | --all] [(-m | --message) 
+<message>]
+              [--pathspec-from-file=<file> [--pathspec-file-nul]]
+-            [--] [<pathspec>...]]
++            [--] [<pathspec>...]
+  git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] 
+[-q | --quiet]
+             [-u | --include-untracked] [-a | --all] [<message>]
+  git stash clear
+
+You'll note the difference between the "stash" and "stash push" options 
+is "[-- <pathspec>...]" vs "[--] [<pathspec>...]", which corresponds to
+
+            For quickly making a snapshot, you can omit "push". In this 
+mode,
+            non-option arguments are not allowed to prevent a misspelled
+            subcommand from making an unwanted stash entry. The two 
+exceptions
+            to this are stash -p which acts as alias for stash push -p and
+            pathspec elements, which are allowed after a double hyphen 
+-- for
+            disambiguation.
+
+The wording seems a bit weird, since the only non-option arguments are 
+"<pathspec>...", which it later explains are allowed (but require double 
+hypen)
+
+
+This grammar is better at highlighting `git stash` on its own is valid, 
+but worse at showing that the flags are almost the same
+I don't think we can do better grammar-wise, since "push" is at the very 
+start, and "--" at the end, and grammars don't have memory
+
+My previous, simpler, grammar included "git stash <pathspec>" even 
+though it is not valid.
+Maybe that is an acceptable trade-off for clarity (although I assume not)
+
+On 3/27/26 16:58, Junio C Hamano wrote:
+> Mirko Faina <mroik@delayed.space> writes:
 >
->>     Robustness: The ternary fallback ensures we avoid potential NULL pointer
->>     dereferences while maintaining existing logging behavior in edge cases.
+>> On Thu, Mar 26, 2026 at 12:17:46PM -0400, D. Ben Knoble wrote:
+>>> Now, _is_ the grammar bracketed wrong? "git help stash" says
+>>>
+>>>             For quickly making a snapshot, you can omit "push". In this mode,
+>>>             non-option arguments are not allowed to prevent a misspelled
+>>>             subcommand from making an unwanted stash entry. The two exceptions
+>>>             to this are stash -p which acts as alias for stash push -p and
+>>>             pathspec elements, which are allowed after a double hyphen -- for
+>>>             disambiguation.
+>>>
+>>> So _if_ you want to provide options (other than "-p"), the "push" is
+>>> required. I think the existing brackets indicate that.
+>> When it says "In this mode, non-option arguments are not allowed"
+>> wouldn't -m be allowed as it is an option and not a non-option? In fact
+>> if we do try to run "git stash -m something" it does correctly stash
+>> while if we do something like "git stash pathspec" it does give back
+>> "fatal: subcommand wasn't specified; 'push' can't be assumed due to
+>> unexpected token 'pathspec'".
+>>
+>> If that is the case then there is an issue with the way the usage
+>> tooltip shows the optionality of "push".
+> Yup, you're right.  The current SYNOPSIS suggests that you can omit
+> and say "git stash" and it does the "push" thing, but when you want
+> to give any "push" related options, the command name "push" becomes
+> mandatory before them.
 >
->> +	r = istate->repo ? istate->repo : the_repository;
+> If the log message said something like
 >
-> If I understand correctly, it is a bug if istate->repo is NULL.
-
-Because INDEX_STATE_INIT(r) assigns the repository as the first
-thing, I tend to agree.  A (bare) repository can lack the index
-so repo->index might be NULL, but if you have an istate instance,
-it should always know which repository it came from.
-
->> +	trace2_data_intmax("index", r, "read/version",
->>  			   istate->version);
->> -	trace2_data_intmax("index", the_repository, "read/cache_nr",
->> +	trace2_data_intmax("index", r, "read/cache_nr",
->>  			   istate->cache_nr);
+>      The "[optionality]" bracket is misplaced on the command line for
+>      "git stash push" in the synopsis section.  It is not like you
+>      can omit "push" only when you do not give any options and
+>      arguments.
 >
-> Other than that, this is a minor improvement in the right direction. I'd
-> rather that it be more complete if you are working in this file.
-
-;-)  Long timers always aim higher than posted patches.
-
-> If you are already working in this space, then I recommend figuring out
-> how much we can rely on istate->repo and then apply that knowledge to
-> these cases as separate commits:
->
-> 1. Replace the uses in the trace2 calls with istate->repo
->    and delete the TODO comments.
->
-> 2. Replace the other uses of the_repository when an istate
->    exists already.
-
-Excellent suggestion.
-Thanks.
-
-By the way, Jeyesh, do you really want to be known with a numbered
-"jayesh0104" as your name?  These author identities are cast in
-stone in commit objects and will stay with the project.
-
-Also see Documentation/SubmittingPatches::[dco,real-name].
-
+> we wouldn't be having this long thread, I suspect.
