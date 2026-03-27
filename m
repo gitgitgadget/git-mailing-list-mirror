@@ -1,102 +1,105 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648773932E2
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 20:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6AA37E2EF
+	for <git@vger.kernel.org>; Fri, 27 Mar 2026 20:27:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774642604; cv=none; b=eXhOiRKG63lAzK+VpeZUQ1fzkKEkB0+0X/svvR/iYw1o7X5xBafVD7JrpIM+Tb1pkXMKWKyY718N0Nxz0Zqbyi87H5LDvLxyA5bjWJlo7gFPu4z6cs2gArcPSxJeBA4wx75cXF5sIIZB6BTUv00SrFXIwL9d/CjB1prmtFbQeVY=
+	t=1774643241; cv=none; b=oiWataRedekCcw0XqtHJ1itJ1waDx0+/cbY7OQOLn8NnIZX0K1uvlgOoK73kRVTJ6CKCZr49MWAvhXVPSQ7LhAkcyqdT6zZPeHqP2fszrtQ1qR771yoZEcXC7CurcnjHXAShHEFKJ4WTsDutdx83r864fBaTUkV0pcFdKVff2KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774642604; c=relaxed/simple;
-	bh=pZT4XFtqrItk1icf4b/6RyJOEY7RUWArBhKyqsczg0U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pgrVRQuavpg1M+wH9PBy5bt4SeNdyYBh0zKveqsxstkjxklenkvPQXp4h9LQthUPLGOxTefE/KU/IydSohxRW1R5lkx+H/JZ6wEiUtyiBaRd1x/+Y2JWWTeL2RKTJT3Lh1Zu5j45rZwLdzjrHZ2eaczi+w5ZE1eV61FAkjIhMDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JUOa+Mwv; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774643241; c=relaxed/simple;
+	bh=Q3lUJqkVhmRAVEgFhMT2g7SUuOQFZcUghv41vsOvs6c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=c0K+I8ctiImgvXqO2dP1sZKmxwPmv3oaL/V4+IDAGu+jA0r0qooyNqD/fZWS8QevmsENYec7tpDjZnHEoDWtX51GQcnY3yeiTJInhZYoDpFMNNBSTfz71ajx6ev78JQRC92zXcZasBYoVmga8609JCmZUVS5OaQ5Kn/EiBHu/X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y4pVdGGY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UfXi/AhR; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JUOa+Mwv"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50919fc3a14so25338161cf.2
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 13:16:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774642602; x=1775247402; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5wRJAciSBwcFEoNiyOGf8PNhBiUIPt+IBn6shU/EVCc=;
-        b=JUOa+MwvDiV883HL4JKCmWIWkNm9lIEH20M00QCvzCcLEgM79HGXXwSW9IZnLYNmYV
-         0SVGAwHl0vWJz+RAhvqNF+yksSsepoXjTjSzpYu9k1pg2w0VUOjd28cNYk1cN2L1/SUo
-         0O7MXjZTszOpwUA52aY4uau/9Wf7poF68tG6D7+3Ip+k7jVmHcWCyNwmcLHB9O3N+uuG
-         ElHOEm6A30t78agc3SESWy98CnU8HhjpsrHS4Z86LXyt8q0YdACSrnppRwN9MY/01A3V
-         PTzePPWQ0N5O7+weLtRNUdBkhn7OeyBriNizjJNp9yWhunMgxNmSuA+HIdkF9dBOlVEc
-         T54w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774642602; x=1775247402;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5wRJAciSBwcFEoNiyOGf8PNhBiUIPt+IBn6shU/EVCc=;
-        b=AoZzMG+ys/Sq5Wfqq/Z2DoBjT2qJmtYVMdRL2Y4R61WcBI8E1EpHesFSrQhQ9QBlNA
-         foEJo2Agj157Iw0GgRF+jVcRxtaZXLbekDvNYyjgp6Hk8FIbcNZOr3Qatzec3V+Sp1GJ
-         m09VgfP6JUxXpOw/YhHOS/f+O2ALOsflOg1Lf4j9zrXWX83FXS4U36ETM7r9AVqa63un
-         UyPvYzF2lGzfyttHkkWbSZ4BbJA3u8UVY3Q2cyNqeQB299sXVeNA8mwIIBK1ItKWBDWl
-         QCYyefVUx0mi1xeRjvBfRqxPrA5QTL4a3JffMTBingSEvFiKHMH4qQLVBl+aQsTNQ1mn
-         rEhA==
-X-Forwarded-Encrypted: i=1; AJvYcCWHoVFnMCXYbfCWK9GYFH3cXBVUL+cVltoMhLOvlo2DeoRbhi+9J/j+k+2nZYu7P/SvCM4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxg7E/8asI5YHZC5TMd9daSrIRjB8rf3/FRgv/N5YlAEWjLa0lA
-	8R+3WRq5QaxDwn0l3Cef/dz1uEXgcMmcUSjSsI3O/+GtFyo3hknwdohR0DS8Pw==
-X-Gm-Gg: ATEYQzx8iAfKvE7TFYMlxDFuIU4uVezVK+Lp7JT0QyOispnJDO8ZPm6cjevJzoeaUBK
-	MhOu+wJK85dFmpV2ISNUVZZ580c+EoTzKP7ei8nAm7i1hyiuSWXforLrv8Qj4Fn9PLdw1aKKoPM
-	iDTHxwmw5O29dzBCYE6QcWttycfcU/D3TDJXt8PYhemDazl2vRzgB0FwGz0YclRboMnO52jBxnH
-	59zA9m9s0+mQcEZdUtKpQIh03CahVPqnS4igRNZyQ7qOLOzDFQHp01HBGMJx2ZR255stsEg6VkD
-	uh//UsYvr7MeByFwUv1ORT26bVc6WS3BSURtIg/nUkE2k7m37wS4l4qgvx1WDGbDYExuJyItkMm
-	GOC7hE+xYrIX80+SwjZSGIfIU1uBhKpXBoCf5f5emdt1wUywcjZsdR+RYnx0Hwetr/KpJL2zWsD
-	HM02RqIVwsjZjjkV/8+ud9vjy3zlIi2+0A8W/uM+d1GpBOhqfWCYdGtYG40vkw7wShoZDPrw==
-X-Received: by 2002:ac8:5889:0:b0:50b:2875:fe26 with SMTP id d75a77b69052e-50ba397837fmr55259151cf.60.1774642602199;
-        Fri, 27 Mar 2026 13:16:42 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89ecf865ccesm1024016d6.39.2026.03.27.13.16.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Mar 2026 13:16:41 -0700 (PDT)
-Message-ID: <af5babcd-34ad-4933-a4dc-8c9a9fd59bd2@gmail.com>
-Date: Fri, 27 Mar 2026 16:16:41 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y4pVdGGY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UfXi/AhR"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 233E21D001E2;
+	Fri, 27 Mar 2026 16:27:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 27 Mar 2026 16:27:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774643238; x=1774729638; bh=oexSaasafX
+	3tfB1vsvRW/5XjUVJyqBb96LLlMzcm4eI=; b=Y4pVdGGYVtRunwsvAGpoVxSkLS
+	Wcp/6B8SPyMdEAhte+RJeu3nt9KyY0dZ8KGR2uCcCMifQjn/4IMPM8ubicMc0dZ9
+	1o45f3Ih1gNgSnn/RNDjgq/PEu4vDC3YlAtNYJ5tbnS76uPeyqBKo6NpxVBic9La
+	jo3MoNWqru07484A5JYx+Pxyfo35Kf+zH+N6FgKNflQBKeLVaUQD1cKxxHw+eR6E
+	hV2RlS9WY8Z0zAn4HCRD+vmue08D646ICg5lnsiKEK//8XayuVv+4MKpCDJfY9Do
+	uhz3WYJLcSsfK6s9KNRS6b9wEYhS7s+0Zuo7i+liX2E6VWNYAXk2W8A4/jog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774643238; x=1774729638; bh=oexSaasafX3tfB1vsvRW/5XjUVJyqBb96LL
+	lMzcm4eI=; b=UfXi/AhRhlgTK0CO5fJCa1SvObrIJm9myU3+pztPneA3XMV2pZy
+	N7+cqx5qBGkMEjKavZ73Xee8cs4BaSd5TdhGa2xHbO9dX2v7Rh/9xqhFynqCmv5T
+	GfoQzP7uFFQ6vF83gwIPQjNVHLkC6Cd6dzvbR7ZY0fG3cZ0gPbMJ8Rb30rHEjkd4
+	dEqLBWkP7TBbtqSvirqPC3BL4w2Qchr6jMno3mmNz7iMvS7aAKm5tao7fQ4g3dZh
+	ZvP1N3atAXGmiPpoDssn5Dgqa5s6z1pDRiN4iKf30qapXeTRF129M//XChvCld22
+	CFPL5AosCMDGbi1ZN87llfybVN6EgTgl7oA==
+X-ME-Sender: <xms:JujGaTC5Vma14PX4g2cmmKCH4zQDttXECJtE4ixCcXqnOAYo2YwvRg>
+    <xme:JujGaQ_xX4eM0A2nX9Unc1K-y9PCZLmetEUgSjTJGrPUvEmnK8imPbvGIcMVtSC9X
+    Y0ihTTuJxIXRwDgwO0Ydtf1EZJLaTbWQTH7LQOTr9z0m6mQaHkL-cc>
+X-ME-Received: <xmr:JujGab8lv0aRS_MiK547T_yLCGrAI4SG2k-uNQVDRwHhQ34U0gBv01NxZZMHbEweLQZln5_qxr5GM7SxDyarTjHIEJDtr0Iw7Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeduvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrhhoihhk
+    seguvghlrgihvggurdhsphgrtggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JujGafcvKzJ95a5jmQSsZTCdiUUqoZGZTiy3wgVUhWBJjR_3jzkPUQ>
+    <xmx:JujGacHRkP2K6J4biRbsE6QjS2Ow4l4b_1LHnqkGziphDdsTxwTzEg>
+    <xmx:JujGaVc2mtmOP5bbjT7Q8-IQGcxc6nZiv3vdX0Fd36i9ya9Mmi5XUw>
+    <xmx:JujGaeFWgivR2LZ7ZFcQUaubU4IpAkmsob2YDkdqSzxDqxjvAbj9vQ>
+    <xmx:JujGadKnBBCWwhp-Zbgh2OR4OiHyZovolq05Dw9kTQqUXvUoxjlRxS-o>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Mar 2026 16:27:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] format-patch: removing unconditional wrapping
+In-Reply-To: <204b9320f46529d16d3a4d9a9c4a57253b4db028.1774640789.git.mroik@delayed.space>
+	(Mirko Faina's message of "Fri, 27 Mar 2026 20:48:10 +0100")
+References: <20260326200643.20251-1-mroik@delayed.space>
+	<cover.1774640789.git.mroik@delayed.space>
+	<204b9320f46529d16d3a4d9a9c4a57253b4db028.1774640789.git.mroik@delayed.space>
+Date: Fri, 27 Mar 2026 13:27:17 -0700
+Message-ID: <xmqq7bqxj9wa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] pack-objects: handle excluded-but-open packs via
- `--stdin-packs=follow`
-To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
- Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-References: <cover.1773959041.git.me@ttaylorr.com>
- <cover.1774641999.git.me@ttaylorr.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <cover.1774641999.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 3/27/2026 4:06 PM, Taylor Blau wrote:
-> This is another small reroll of my series to fix an issue where MIDX
-> bitmaps fail to generate after a geometric repack in certain scenarios
-> where the set of MIDX'd objects is not closed under reachability.
-> 
-> The main changes since last time are:
-> 
->  * Named enum stdin_pack_info_kind.
-> 
->  * Refactored how we handle reading incoming packs via stdin.
-> 
->  * Fixed a nasty case where sorting the packs in order of mtime happened
->    to work on some systems, but ASan detected a very legitimate bug.
-> 
-> As usual, a range-diff is included below for convenience.
+Mirko Faina <mroik@delayed.space> writes:
 
-Thanks. This version LGTM.
+> Using format-patch with --commit-list-format different than shortlog,
+> causes the commit entry lines to wrap if they get longer than
+> MAIL_DEFAULT_WRAP (72 characters).
+>
+> While this might be sensible for many when sending changes through
+> email, it forces this decision of wrapping on the user, reducing the
+> control granularity of --commit-list-format.
+>
+> Teach generate_commit_list_cover() to respect commit entry line lengths
+> and place this wrapping rule on the "modern" preset format instead.
 
--Stolee
+Well explained.  I would have personally picked a sligntly different
+default format, but this topic is your itch, so it's OK.
+
+Will queue.  Looks very good.  Thanks.
