@@ -1,78 +1,81 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAAC3A3821
-	for <git@vger.kernel.org>; Fri, 27 Mar 2026 23:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A14A40DFA3
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 00:11:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774654841; cv=none; b=GnJDP6Q3TGL5lC48QCp0JbOXXL3+r2P5P8AjoXVXPYZbCQiQELMgplBR1IeLsDityBW4AH70kiuN3mWofgIlBPwXPBZs0Tnjz5tEWqBsn2mRb5lx0KvTweFbEXQ6amRJzikO7ZtWkS62yE5C4jeZBpUJnUfYoiCHi6NS6zqT1Dw=
+	t=1774656681; cv=none; b=G2/+4kWrgElXqquFhPn/kzMf22/yDQ8/JY0iOC1rdsV9m5O2cRC8s7wppGc2apxOw1CndVNPoKNYFAXU+zUxqzFHm8W663E+TygD2vwy75MfRq/x+PBVuqanCZnw0IK65gr/uUS7XphEeVWGMdaadVh2lA0OA2ZngQxDYe5Q9nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774654841; c=relaxed/simple;
-	bh=cOzg36Y2gKMuJfB3i8q4AGU44YMN13ivsWDd5C7W5dA=;
+	s=arc-20240116; t=1774656681; c=relaxed/simple;
+	bh=qQB1Ze7ds6EIM8spzg+/kwZO+aY1PT80Bncm9g+bGDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3+2/Fxfkbd7j9H1vsJhSkOqKaMO6TWeXaJfZd3vf1VCOvAMo3NBjPfZ6Ki/iSRxab0nLseXHnkhaLroFNk2aDuMfQzeQSBrxV8dUrLSTmmjrYnADb/gh7QITpP+e3xoqHtOsiWLhiba+6IDxe9sOlCwwTZ2ve10D1q70Rs3AbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gq53rmb5; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=g6V2l9CEvRb/jl6GsQkjm6ntUGcltOi57nl2qhVuEhvHEVwcKjBuNdQtq8BmZOqj2TJyLzh3nmPSwmiT2RnMuEO7BZ6DLa2fyhbhJlLTUOw+27YUnQ1J6Mf6MvaTx9wsfsAL4x0BSg0PNMT67tzEUJe0DX4hFVrigJ9ss+F25HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=smFWP8Lb; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gq53rmb5"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso21409115e9.3
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 16:40:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="smFWP8Lb"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-486fda2a389so21247975e9.1
+        for <git@vger.kernel.org>; Fri, 27 Mar 2026 17:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774654837; x=1775259637; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774656678; x=1775261478; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=33fDOQFkGq/FAkWQDYnPdW2Ylt8mbwr0yhyi5VSePsE=;
-        b=gq53rmb5n0zWdVRw4H/TFAmy2f9fTiz/ij/XYOGKVyf9oGHvIpI0wZIgxjh0/P9/+5
-         pO/expzU0YbCxCU56vPvvCqDrzpu91cQhd8k301VHU4i8l32An/YMXzDC6Ri+tg09kPl
-         kqW7LPrGAhJu9M/7Pw47Tf4ppBYcIdBB9EK62aovpWDFtlp0lF55MKmXCaCwAVUTnYK8
-         n03uVkhBXFKFVLVQzzyBj2dhD90X24b63NUC1/a6kAjb9NcrNG/DgzTRZILX5z6mQwqq
-         WOVfbLB6s1bYt94zfjukl4vTggS44pE/AG5hUA7qpxxFGeLEy8AMlvhjO0iXa3B3UJBK
-         5Ekg==
+        bh=ztxGQ7RMdo4TC4Dk+KaE+5mvFfCyM3zZYEDO5sfcZvM=;
+        b=smFWP8LbSfn2Dq5VDE1d2ybj0wAJUp5/O3P8qjwbLsSyllvDxDZGF4MKEBIEzkDxdw
+         +er027YwM4UhE8QJl5WltCmAiz4lAGIldUQ5dIv9+fj1TVVAYm88Lw7ZSDb+rkqEA+7N
+         IAuh2iOR+ghsGwwOfNxzhIN2UZcj0hn0YReroqd/jDH1Lll2UWIGYjozoB8lFK9zIGXT
+         k6feGKrbfV0BU30B+19m/LR1kzvcWlBwkL7sHVPDdIOG3+f+/6WiD4Gj72EApROLlCfJ
+         fHHz1f8y7ZuwR2Rv3cY+Xi6mRSMd8WqarSjgb4VA+5TeYDPKmsATozkFBsOX1P/GsmNy
+         xRVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774654837; x=1775259637;
+        d=1e100.net; s=20251104; t=1774656678; x=1775261478;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=33fDOQFkGq/FAkWQDYnPdW2Ylt8mbwr0yhyi5VSePsE=;
-        b=YfXSpsg9ETjqVuFaV0qycD/g3xlh4fZmTuP+BTCJ0MA5GGF0fobjk6Pl1Aza7RrpOk
-         X1azGdAowgXPp6yX52blPBr1mP4sdYv2yF2QG5PIkZfaPG5rFIQCbDoj6e87VDsrOJeJ
-         XXJ77Hf4YbcosUiWzeTuzGJQ7P16JPN8JmkwH7UkTOUA3G1GFWYRh3ELAYXxWjGJCEsb
-         wrRZ5EimRDvEAVYO9pq5VaJtjaW8W2vEOs6CLb4cL+6DmkvyNysgW9mgaPAwFBZA1Yer
-         uVGaJciU9x2wLAa09Nrera24xS+Hbrk/MsUI/g6Osb1YlJpLT9KLMycr2G39DOVKiiTz
-         KF1Q==
-X-Gm-Message-State: AOJu0YyK9/J2fAuJSQ75FsBQvjuh9VfCrCHJ6C40DbuktFAdOlbH19FF
-	SbKcyDWnUr830LwjFtHrrPSdC3w1O94oIp7OsQdPpuhmHGsHPr/xX00cx662noyy9zE=
-X-Gm-Gg: ATEYQzwynEAgAQSfTh9g4NV+qt+B9X5/mzynwzMxzR2YMrd0TrwxHmm4b8kOygVXWo0
-	VAWQCWYF9idHTEBoW09SJnlDfQDJdJM+FSCLPmc+DB3wr88EzcNdWPMyU9VZ89yTkDHA6nvRoS5
-	KrPo+xTddomgAPVm8grjzd6iASPqj2Tk1fhuT35DevkLsgAy0vJ+dgQEL6mIPRtMahx/+PcBUBS
-	QrNNmVhBDSMf/K4OXZeDpvkpaeJoFEaeFBRiJ+dHpBWgzBV70CyxWgTMnCyRAnlGB941/6Qdzr6
-	g46uVU/cAZEuH4IEVcsVH7kil7vb/8fSRGg7fG99Bavz+uyh/dKHX1QEwZuscG77pXLNMRjewOk
-	g9Etdd2drqFKYQZ0jdwgT+cfPC7vDEoZn3fMrKxv7D5dth0VzCjLShrfKImiTrBkjBFLJigAsh2
-	+h8eBGsynF1EgrFNaBTVMRRzsn0f9HG9ReoQsnarmuMnYLqORsQW88tUFQjH2ocRZk8BWhMtVJK
-	6j9Z6sbIjm3zYVtbF8=
-X-Received: by 2002:a05:600c:6487:b0:485:49c5:8eb7 with SMTP id 5b1f17b1804b1-48727ec7760mr67676555e9.22.1774654837053;
-        Fri, 27 Mar 2026 16:40:37 -0700 (PDT)
-Received: from alibaba.. ([98.97.76.221])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43cf21e265fsm1488281f8f.1.2026.03.27.16.40.33
+        bh=ztxGQ7RMdo4TC4Dk+KaE+5mvFfCyM3zZYEDO5sfcZvM=;
+        b=esaKT7rWl23Y+GTxvrwHtOlC+P4tghzk7SLq95eS3ERs8SWz0yd20Q9bpnU9Ofr8CO
+         Nlv6ni2UW7Qizm/kg0BxeLhhQFF+voOZ7FZYaqS3ruTBKjvtfwjk8X62XAzmyj40qiWR
+         hDtkODgRncjfx8qBEfM52sj0OzotHCYxGVKCgWjel8Uv7Ly4jR4c1v1unwk1IwLbZYcj
+         dSfkjDiVdZ2Mg4AvukCXTaCPFX7s/QJ/KaQyZEGDKEmIl76sm4fZuKrKzgWzXJvUU7KV
+         bPS1ZjGSzat9M9HDNu/Fp8+nWogHPwNel/Un/aX0YKQIuwKKk72CUlrKCEN1na2MpgqO
+         Bkeg==
+X-Gm-Message-State: AOJu0YyRreGcgnnRJxdZ9IWo+CRuBge76ozWaKqYq67OHOudhkKczLuZ
+	Ea0wz8YdUCBzD876XNqt6B5rKAfzGB8pTNUhvSzSX1U7/wuA6qkD75Q0m0u8RqnFuUw=
+X-Gm-Gg: ATEYQzyKGTOkzfJ2LxOujMPqCzZLQ6x6A27V2Wwb0EHfgGghhB61kb9UPYtzA1w/j/H
+	6ru9r832MRd+x9ZKW70dId73/Z+UV/laSFz/QLrNxt9Pb2xz6Azzrod8AyIvEahOKm42FLLEWBw
+	ctBEGd6oEQrGMS0RitvOzmcuxSolZCYqfpXqOQARYWlJB7uYvndGaITnBaTBRkQY/k3mMgxUy+S
+	H/EqmqnGdfWaB5I3ifv7uE822OUlqmSrFRboNCVfD2pnO8nfIdS1f7ntXjMwImNdgwSM/638+Gk
+	zeWN++cpWEPv+KsJuGm3WJ1Dod0IbHCxc8iwYgj9q9dRYim6Xjmp5V9+0i4KQGh9N5HClVMcwPA
+	BFSSqG/7ub5y0RDrx7h7y8lG+M+t63kK94lUXfEqZH26mW80B8OyHXAM/vsQihzr0uoYsDy1Rmv
+	0ZFytjWe+e6lr+XFlf4qVYh08aj294t8c1lD/F8aHGD/X8OwgWIDo7zdPX8EcI5IGODbUZSlXBP
+	5E/h1zkJoMAwQyA0BOZ5IHvdgYR++XEnYu2xYz+4osxa9p3goDB4vxG0f8=
+X-Received: by 2002:a05:600c:a44:b0:485:9a50:3384 with SMTP id 5b1f17b1804b1-48727efcb32mr74510575e9.25.1774656678299;
+        Fri, 27 Mar 2026 17:11:18 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.122])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48722d2366dsm116147635e9.10.2026.03.27.17.11.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2026 16:40:36 -0700 (PDT)
-From: Zakariyah Ali <zakariyahali100@gmail.com>
+        Fri, 27 Mar 2026 17:11:17 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	ayu.chandekar@gmail.com,
-	jltobler@gmail.com,
+Cc: christian.couder@gmail.com,
 	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
 	siddharthasthana31@gmail.com,
-	Zakariyah Ali <zakariyahali100@gmail.com>
-Subject: [GSoC][PATCH v3] t2000: modernise overall structure
-Date: Sat, 28 Mar 2026 00:40:19 +0100
-Message-ID: <20260327234019.95591-1-zakariyahali100@gmail.com>
+	chandrapratap3519@gmail.com,
+	gitster@pobox.com,
+	j6t@kdbg.org,
+	szeder.dev@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC PATCH v6 0/3] graph: add --graph-lane-limit option
+Date: Sat, 28 Mar 2026 01:11:10 +0100
+Message-ID: <20260328001113.1275291-1-pabloosabaterr@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260326192603.23961-1-zakariyahali100@gmail.com>
-References: <20260326192603.23961-1-zakariyahali100@gmail.com>
+In-Reply-To: <20260325174401.217577-1-pabloosabaterr@gmail.com>
+References: <20260325174401.217577-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,199 +84,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This test script that dates back to 2005 certainly shows its age and
-both its style and the way the tests are laid out do not match the
-modern standard.
+Repositories that have many active branches at the same time produce
+wide graphs. A lane consists of two columns, the edge and the space
+padding, each branch takes a lane in the graph and there is no way
+to limit how many can be shown.
 
- * Executables that prepare the data used to test the command should
-   be inside the test_expect_success block in modern tests.
+The limit is a horizontal truncation, each lane is cut at the lane limit:
 
- * In modern tests, running a command that is being tested, making
-   sure it succeeds, and inspecting other side effects that are
-   expected, are all done in a single test_expect_success block.
+  Without --graph-lane-limit:
 
- * A test_expect_success block in modern tests are laid out as
+  *   7_M1
+  |\  
+  | * 7_E
+  * | 7_C
+  | | *   7_M2
+  | | |\  
+  | | | * 7_H
+  | | |/  
+  | |/|   
+  | * | 7_D
+  | | * 7_G
+  | | * 7_F
+  | |/  
+  |/|   
+  * | 7_B
+  |/  
+  * 7_A
 
-        test_expect_success 'title of the test' '
-                body of the test &&
-                ...
-                body of the test
-        '
+  With --graph-lane-limit=1:
 
-   not as
+  *   7_M1
+  |\  
+  | * 7_E
+  * ~ 7_C
+  | ~ 7_M2
+  | ~ 7_H
+  | ~ 
+  | ~ 
+  | * 7_D
+  | ~ 7_G
+  | ~ 7_F
+  | ~ 
+  |/~ 
+  * ~ 7_B
+  |/  
+  * 7_A
 
-        test_expect_success \
-                'title of the test' \
-                'body of the test &&
-                ...
-                body of the test'
+The '~' is the truncation mark, not an actual lane. It was chosen because '.' is
+already used in octopus merges and '~' is not used elsewhere in the graph. Yet
+the edges between the last visible lane and the truncation mark are still
+conserved.
 
-   which is in a prehistoric style.
+The '*' commit mark is visible when it lives on a visible lane or the first
+hidden lane, any deeper lane doesn't show the commit mark but keeps the commit
+message visible. 
 
- * In modern tests, each &&-chained statement in the body of the
-   test_expect_success block are indented with a horizontal tab,
-   unlike prehistoric style that used 4-space indent.
+Merges where neither the commit nor its parents live on a visible lane are skipped
+because they don't carry any visible information.
 
-Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
----
- t/t2000-conflict-when-checking-files-out.sh | 122 +++++++++++---------
- 1 file changed, 66 insertions(+), 56 deletions(-)
+The original idea to limit columns was noted as a TODO in c12172d2ea
+(Add history graph API, 2008-05-04).  This does not implement
+gitk-style column rearrangement, it only truncates the visual output.
 
-diff --git a/t/t2000-conflict-when-checking-files-out.sh b/t/t2000-conflict-when-checking-files-out.sh
-index f18616ad2b..af199d8191 100755
---- a/t/t2000-conflict-when-checking-files-out.sh
-+++ b/t/t2000-conflict-when-checking-files-out.sh
-@@ -35,30 +35,30 @@ show_files() {
- 	sed -e 's/^\([0-9]*\)	[^ ]*	[0-9a-f]*	/tr: \1 /'
- }
- 
--date >path0
--mkdir path1
--date >path1/file1
--
--test_expect_success \
--    'git update-index --add various paths.' \
--    'git update-index --add path0 path1/file1'
--
--rm -fr path0 path1
--mkdir path0
--date >path0/file0
--date >path1
-+test_expect_success 'prepare files path0 and path1/file1' '
-+	date >path0 &&
-+	mkdir path1 &&
-+	date >path1/file1 &&
-+	git update-index --add path0 path1/file1
-+'
- 
--test_expect_success \
--    'git checkout-index without -f should fail on conflicting work tree.' \
--    'test_must_fail git checkout-index -a'
-+test_expect_success 'prepare working tree files with D/F conflicts' '
-+	rm -fr path0 path1 &&
-+	mkdir path0 &&
-+	date >path0/file0 &&
-+	date >path1
-+'
- 
--test_expect_success \
--    'git checkout-index with -f should succeed.' \
--    'git checkout-index -f -a'
-+test_expect_success 'git checkout-index without -f should fail on conflicting work tree.' '
-+	test_must_fail git checkout-index -a
-+'
- 
--test_expect_success \
--    'git checkout-index conflicting paths.' \
--    'test -f path0 && test -d path1 && test -f path1/file1'
-+test_expect_success 'git checkout-index with -f should succeed.' '
-+	git checkout-index -f -a &&
-+	test_path_is_file path0 &&
-+	test_path_is_dir path1 &&
-+	test_path_is_file path1/file1
-+'
- 
- test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
- 	mkdir -p tar/get &&
-@@ -83,53 +83,63 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
- # path path3 is occupied by a non-directory.  With "-f" it should remove
- # the symlink path3 and create directory path3 and file path3/file1.
- 
--mkdir path2
--date >path2/file0
--test_expect_success \
--    'git update-index --add path2/file0' \
--    'git update-index --add path2/file0'
--test_expect_success \
--    'writing tree out with git write-tree' \
--    'tree1=$(git write-tree)'
-+test_expect_success 'prepare path2/file0 and index' '
-+	mkdir path2 &&
-+	date >path2/file0 &&
-+	git update-index --add path2/file0
-+'
-+
-+test_expect_success 'write tree with path2/file0' '
-+	tree1=$(git write-tree)
-+'
-+
- test_debug 'show_files $tree1'
- 
--mkdir path3
--date >path3/file1
--test_expect_success \
--    'git update-index --add path3/file1' \
--    'git update-index --add path3/file1'
--test_expect_success \
--    'writing tree out with git write-tree' \
--    'tree2=$(git write-tree)'
-+test_expect_success 'prepare path3/file1 and index' '
-+	mkdir path3 &&
-+	date >path3/file1 &&
-+	git update-index --add path3/file1
-+'
-+
-+test_expect_success 'write tree with path3/file1' '
-+	tree2=$(git write-tree)
-+'
-+
- test_debug 'show_files $tree2'
- 
--rm -fr path3
--test_expect_success \
--    'read previously written tree and checkout.' \
--    'git read-tree -m $tree1 && git checkout-index -f -a'
-+test_expect_success 'read previously written tree and checkout.' '
-+	rm -fr path3 &&
-+	git read-tree -m $tree1 &&
-+	git checkout-index -f -a
-+'
-+
- test_debug 'show_files $tree1'
- 
--test_expect_success \
--    'add a symlink' \
--    'test_ln_s_add path2 path3'
--test_expect_success \
--    'writing tree out with git write-tree' \
--    'tree3=$(git write-tree)'
-+test_expect_success 'add a symlink' '
-+	test_ln_s_add path2 path3
-+'
-+
-+test_expect_success 'write tree with symlink path3' '
-+	tree3=$(git write-tree)
-+'
-+
- test_debug 'show_files $tree3'
- 
- # Morten says "Got that?" here.
- # Test begins.
- 
--test_expect_success \
--    'read previously written tree and checkout.' \
--    'git read-tree $tree2 && git checkout-index -f -a'
-+test_expect_success 'read previously written tree and checkout.' '
-+	git read-tree $tree2 &&
-+	git checkout-index -f -a
-+'
-+
- test_debug 'show_files $tree2'
- 
--test_expect_success \
--    'checking out conflicting path with -f' \
--    'test ! -h path2 && test -d path2 &&
--     test ! -h path3 && test -d path3 &&
--     test ! -h path2/file0 && test -f path2/file0 &&
--     test ! -h path3/file1 && test -f path3/file1'
-+test_expect_success 'checking out conflicting path with -f' '
-+	test_path_is_dir_not_symlink path2 &&
-+	test_path_is_dir_not_symlink path3 &&
-+	test_path_is_file_not_symlink path2/file0 &&
-+	test_path_is_file_not_symlink path3/file1
-+'
- 
- test_done
+Possible future improvements:
+
+- When all branches involved in collapsing or padding are over the limit, the
+  truncated lane doesn't show any information, this lane could be removed to
+  make the graph more compact. Currently these lanes still appear because
+  graph_output_collapsing_line() mixes state handling with rendering, so it can't
+  be skipped but callers always expect a non empty buffer. Fixing it would need
+  to refactor the callers to handle empty buffers instead of expecting them to
+  always have content.
+
+- Collapsing and merges lanes that start on visible lanes but end on hidden ones
+  are kept to maintain the most information possible on the visible lanes, but
+  the information about where they go or come from is lost. They can be kept,
+  removed or think of a way to show that information without showing the lanes.
+
+Changes since v5:
+
+- Changed patch structure
+- Fixed octopus merge truncation check to commit_index + 1 + i.
+- Added check for first_interesting_parent() NULL check.
+- Shortened variable names.
+- Added clarifications when converting between lanes and columns.
+
+Pablo Sabater (3):
+  graph: limit the graph width to a hard-coded max
+  graph: add --graph-lane-limit option
+  graph: add truncation mark to capped lanes
+
+ Documentation/rev-list-options.adoc |   6 +
+ graph.c                             | 178 ++++++++++++++++++++++++----
+ revision.c                          |   6 +
+ revision.h                          |   1 +
+ t/t4215-log-skewed-merges.sh        | 144 ++++++++++++++++++++++
+ 5 files changed, 311 insertions(+), 24 deletions(-)
+
+
+base-commit: 5361983c075154725be47b65cca9a2421789e410
 -- 
 2.43.0
 
