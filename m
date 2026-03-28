@@ -1,102 +1,99 @@
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA69A481B1
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 02:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA33C2FD
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 02:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774663292; cv=none; b=C8lJrlJre5JaUegT4noUszIetxubCus5ples8PF+r0DkwHgW2RuLgcePKJSzQsFCgSw0EeBWDYQlOcNaI1b35t6IbRnXSRYWixqW30jVn+OiaZw78F7Ih9swLpOwJ9wqt6BW2uUqzDTkgAdZPy/TqzgxvAWAkxxyReRVbon8BcA=
+	t=1774663410; cv=none; b=TiTupp32q8+TcMZv0OEql6R3TZoSXWx401eO53638YJGtLl1d6f30/behV0iZSDIbWrj64N8//52kIQr4uGhfGJZhFAafPApNABWz7X57PSfQeSePx/n1+A3msZpa3vDPhaKitVOHnEB/s5POmFu2FtD7rr8t6XYjgWZP27SAnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774663292; c=relaxed/simple;
-	bh=LY+EF7ez6ghGHq9MMmLEl7TBNMZxo5GgJbCKn5DFXGE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=isxo4Ahv3yIRLX2MIExNpCYu7yk+Un87CslnNw+QXI1cp1z1zOkX4YebgUhP3LGcJ8Aod1cOCNcHKg7C+fLA+3rONkQ+VurguZ/AyD40BZERTag6VbQL/RueyPSFotkbyMvxbOTOL+1Z6qlOfUJZjmwmhyl8+oFkbhB7LNKxqC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opperschaap.net
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4fjLN11fFWz9tX0;
-	Sat, 28 Mar 2026 03:01:21 +0100 (CET)
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of wesleys@opperschaap.net designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=wesleys@opperschaap.net
-Message-ID: <01ca1166-c3ad-48a9-8edf-be82d380e110@opperschaap.net>
-Date: Fri, 27 Mar 2026 22:01:16 -0400
+	s=arc-20240116; t=1774663410; c=relaxed/simple;
+	bh=Y+++3E2oNPThfqQShavTP3fHflnW2AxO8dtEV2b22ps=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dkF25rIJ0CfxOjg4t7szv+5Ka3RluKmq3dTt4TegAgESnAsDWxm2c4Qnl/TUwygFP9UI5e5QThXRZikFl6R+kJJCUUp1v9D59LUq2ufe1vsni3LDxl0ebfqH3wN+sM2M1SbBesvCIm7MdOyuUrMeMx9WyPAhR0+cmjvPliaLiVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=beXIfqOv; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="beXIfqOv"
+Received: (qmail 173600 invoked by uid 106); 28 Mar 2026 02:03:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Y+++3E2oNPThfqQShavTP3fHflnW2AxO8dtEV2b22ps=; b=beXIfqOvIkLWLuD11RtacKpDYkeLj9J5CiDYFkm4PkwRB5e5R7Xg8Ffz1KNNDo0f4AmlwLAd1sgRETuY2OZDEaynUdl32fhgpdIU5fS2W7fW/pfScxRndiwnFOLH50UH/cKTJvVLYx9rgkBEirD3cHsCDXJ2KmaeE1MD88lfnbRN9zT/LGQk3BRoFIVOEFBH9TV3NKWk7IxnkGwFSj3ORfEcy664WWtOeMZ2jorMrWXdFaygPNA6iHgi0OuyGsyDwF7dRfXfpNJzDqhvQp328wlfOSEUu08wcmp4qiHB1aynwUc71aBBtrNFBdT2ZkcxfzEjOmfv87wqH+dSD84i3Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 28 Mar 2026 02:03:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 243892 invoked by uid 111); 28 Mar 2026 02:03:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Mar 2026 22:03:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 27 Mar 2026 22:03:27 -0400
+From: Jeff King <peff@peff.net>
+To: Wesley <wesleys@opperschaap.net>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: Re: [PATCH 3/3] connect: Add support for per-remote and
+ per-namespace SSH options
+Message-ID: <20260328020327.GB621762@coredump.intra.peff.net>
+References: <20260326233739.2911354-1-wesleys@opperschaap.net>
+ <20260326233739.2911354-4-wesleys@opperschaap.net>
+ <20260327214559.GA599365@coredump.intra.peff.net>
+ <a4a03bae-b987-4b21-a7fd-fbdb9d832430@opperschaap.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/3] connect: Rename name to command in connect_git()
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Jiang Xin <zhiyou.jx@alibaba-inc.com>, Derrick Stolee <stolee@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <20260326233739.2911354-1-wesleys@opperschaap.net>
- <20260326233739.2911354-2-wesleys@opperschaap.net>
- <20260327213308.GA598533@coredump.intra.peff.net>
- <3e9d8d71-9595-4151-8133-300b89b3b7f8@opperschaap.net>
- <20260328014426.GA621762@coredump.intra.peff.net>
-Content-Language: en-US
-From: Wesley <wesleys@opperschaap.net>
-In-Reply-To: <20260328014426.GA621762@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 4fjLN11fFWz9tX0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a4a03bae-b987-4b21-a7fd-fbdb9d832430@opperschaap.net>
 
-On 3/27/26 21:44, Jeff King wrote:
-> On Fri, Mar 27, 2026 at 08:58:22PM -0400, Wesley wrote:
+On Fri, Mar 27, 2026 at 08:43:07PM -0400, Wesley wrote:
+
+> > We already have some conditional config mechanisms, and I don't think
+> > it's a good idea to add one that only works for certain keys. If I
+> > understand correctly, this <owner> feature can already be accomplished
+> > with:
+> > 
+> >    [includeIf "hasconfig:remote.*.url:**/owner/**"]
+> >    path = all-your-options-for-that-owner
+> > 
+> > It's a little more verbose (and you have to use a separate file), but it
+> > also allows other conditions, like "gitdir:" for selecting based on how
+> > you lay out your repos locally.
 > 
->>> So probably "op" or "type" is a more accurate description. This
->>> conceptually ought to be an enum, too, since it is selecting from a
->>> limited set of operations we know about.
->>
->> That's a fair take on it, "name" is really a not the best name for this
->> variable. I think "op" covers what you describe here best, it reflects also
->> why I named it command. When you check what is sent via ssh, it looks like
->> the command:
->>
->>     ssh -o SendEnv=GIT_PROTOCOL git@gitlab.com git-upload-pack
->> 'waterkip/git.git'
-> 
-> Right, but it's necessarily what is sent via ssh. E.g.:
-> 
->    $ GIT_TRACE=1 git ls-remote example.com:repo.git
->    [...]
->    trace: start_command: /usr/bin/ssh -o SendEnv=GIT_PROTOCOL example.com 'git-upload-pack '\''repo.git'\'''
-> 
->    $ GIT_TRACE=1 git ls-remote --upload-pack=foobar example.com:repo.git
->    [...]
->    trace: start_command: /usr/bin/ssh -o SendEnv=GIT_PROTOCOL example.com 'foobar '\''repo.git'\'''
-> 
-> That's why I think "command" is actively misleading, because between
-> "prog" and "command" it is not clear which one is going to be sent to
-> the remote.
+> This doesn't work as you would think it does. The includeIf on hasconfig
+> with the remote URL is used if it finds the remote in the config, and not on
+> the actual network action. Thus if you have two remotes with two includeIfs
+> on the remote URL it takes the config of the last defined include. Thus
+> breaks the expectation that it is configured.
 
+Yes, it's going to be per-local-repo. I had assumed you were in a
+situation where you were defining these setups at the global level, and
+each local repo will want to use them or not. I.e., something like this:
 
-Ha! Interesting. I see the confusion :)
-I'm not really sure what to call it.
+  [set up once]
+  $ git config -f ~/.gitconfig-foo core.sshCommand "ssh -i whatever"
+  $ git config --global includeIf.hasconfig:remote.*.url:example.com:foo/**.path .gitconfig-foo
 
-I see the manpage calls it 'exec':
+  [and now we'd use it in this repo]
+  $ git clone example.com:foo/repo.git
 
-   --upload-pack=<exec>
-      Specify the full path of git-upload-pack on the remote host. This
-      allows listing references from repositories accessed via SSH and
-      where the SSH daemon does not use the PATH configured by the user.
+  [but not this one]
+  $ git clone example.com:bar/repo.git
 
-and it's the full path of the git-upload-pack command if the remote 
-doesn't use the PATH. So it is command, just.. I'm not sure what to call 
-it. It executable, binary, program, operation, script. I feel they all 
-cover the same concept. remote-command? It could be any of them iyam.
+If you have remotes for both "foo/repo.git" and "bar/repo.git"
+configured in one local repo, then yes, it will always apply the config.
 
-Cheers,
-Wesley
+If you really want per-connection config, I'm still not quite convinced
+that you aren't better off defining host sections in your ssh config.
+That covers all options that ssh knows about (not just ones we teach Git
+about), and you can still apply it automatically from ~/.gitconfig using
+insteadOf. Something like:
 
--- 
-Wesley
+  git config --global foo.example.com:foo/.insteadOf example.com:foo/
 
-Why not both?
+and then defining a foo.example.com block in your ~/.ssh/config.
+
+-Peff
