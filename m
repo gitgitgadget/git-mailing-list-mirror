@@ -1,116 +1,110 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BC9199949
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 15:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D05B346FA2
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 15:22:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774710016; cv=none; b=CC3fpZxpxZeNraYFRtIetLg3TTTy4HIMdVO390cQqHp8Tb6TxdWe27jqogRAOZ4bGxYyUlhxtNnuKvwob8XYblQZNggeKkp5/hFEOIU0OHZR0wbJ2EM1F+2sjbrxNpDia71hvzcIJVcV3h3hq3SquPzHmOdDftgYG6IZQ7ofACY=
+	t=1774711366; cv=none; b=nSIcOBKjOw7v8bYCW3ajK9lZgxu0wET8HT0AsQp65dnph4EEK/23FCFuaeDhpgKVS/51PwgPD1xKVTX8GZ1X5JfuBcncvEHhP4qxHkEOlVi2hPp4XegyjRcisqcFm71rWuWgz8unCmvTN/u9POrTDrN1mJrFl//IcBIgnBN+3cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774710016; c=relaxed/simple;
-	bh=C7OJ1wfem/kgsCmc2SzijvYyXkeWX8IxvBB6npgkZeI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=obrMfFnzxt9+RAVUYPM1764WW8KiZ1MWFj65BVo00EYWrn8+sV7pLL5U6cUYpu6iUUW5t8QQykR8VmotL7aB3qrNAeEG4JXekjLhve77rePRIBg6K4k0qxKWjUXUMdQoBchBReUH9Zk0Y7CUXGY70IWAuJGDSCUaeM3K2SY2Cmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=opperschaap.net; spf=unknown smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=opperschaap.net
-Authentication-Results: smtp.subspace.kernel.org; spf=tempfail smtp.mailfrom=opperschaap.net
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4fjgfN3c3vz9tMN;
-	Sat, 28 Mar 2026 15:59:56 +0100 (CET)
-Message-ID: <3d8c9b3f-66d0-460d-bd61-a879a6bbfc56@opperschaap.net>
-Date: Sat, 28 Mar 2026 10:59:47 -0400
+	s=arc-20240116; t=1774711366; c=relaxed/simple;
+	bh=Fbm3gdVD7W71XZTHraKRnQYu427yVwxKC3ZULz2IkfI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GWc9W3Yz8VqqISGvF6I6nyaovCxDP/cus5tsQ/nF/E7DuBuZEQLoYmSry+UGhbrVD/JeJ6OlwMvjEtXbYiFQ5YBA8ZQFUXJkruloxooYwYkyMzvk+LJq471oZG10hNFf9xwZSBF829Sjc6FW3jLuPZa82uizn6UA7BKpl9hCe3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyuShfFn; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyuShfFn"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-829a9d08644so1649876b3a.1
+        for <git@vger.kernel.org>; Sat, 28 Mar 2026 08:22:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774711364; x=1775316164; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IgN3tMfLpkY0N9Sy5YUd6Ea1Nlae1KD+Tdy494XZ0R8=;
+        b=NyuShfFntErNOVVGUibk+w887W8jqs9I553ZPzQGCnGBN9awqUTk1sPk/EamYiAKWf
+         mNnN5ks3jZEJT/w3Hg5hlqJxhlM/rr6F7MHUqNNq2OOwpJPyqe3csxIvaTdZpXOJ0CJC
+         0LgMyOnF39kiOr/HOam1RGSYf9GxgdNFOs2V7jrjM2xPJugX+kP0PDY+k8Eb5z92yWDL
+         iNRcwdDcU7jwPInuQVNfPRvXLJofrExFmJL7iaEuKdh6xIBvyISu5yvv53H8qRr5cbnJ
+         IisVGcZfO6uL30QeWCnx/Ivo1my8i6pVVvWHTNC5WdjI2OTA6a1cGiaoQ+Z/0LifShQX
+         kgAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774711364; x=1775316164;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=IgN3tMfLpkY0N9Sy5YUd6Ea1Nlae1KD+Tdy494XZ0R8=;
+        b=UB+iIofEnymSUSZ4ntyLedZ8tqg3qE8SCzF4J4z/nXoQXw4P1FdmXi7QoDWb+29j5S
+         hVE8tKQe5dRpLkf45cFBN9AUQOH/UI0+S1Sby3PSnyQOV7SQ/m9OcXZGIp+RNNLIJMSp
+         VnVJ7WqBPxPyYe/tA2v8mdccy2JG7IstK9L/ewGfX8MsL0fqGhE524Rk5K2pTIfKnYSM
+         G4nmwDrxB2BPdkM1tOb6U9o7xgpdP9HznBQQNz5KRe3YwLsuIpYDPwOx8qVFObN6aToB
+         PwuElXnKP5X0lQR9FzBaunNqlbanJVrMKtPjVar6lC+EJ+pfohGf6RSu+bXXsP27+gEz
+         hfvQ==
+X-Gm-Message-State: AOJu0YzWulj+E/OrNQA9oWociPcWqHb2nwtM0kKMJluoLoKPtmzU6dJV
+	lkkNJDK7jq5cNHazl11VBZb3JN49TC42y5zI/1rId49V/2Hhj2eg8I95/vgmsQ==
+X-Gm-Gg: ATEYQzyVc2bHfHVH7N2CkdyFnpIa3KRnzlnMPnwTJEZ9hjU03lcVk0KoHTa6ywVBNDk
+	17VkeZBUe2fT1to17+X2FM8ojytcbIpH/VyAKKJnPJXBEf+e343XMEP5wv3nXfBRRLsla2lN/QQ
+	h+9qaUk7chdyOOxKK4S/xRuISj2siTcMx0I0LkWGlxUVtjvLs3WJSjLJ8Bzczzag8dz2mTe1HWx
+	JCufkgBfAv9RQQ598QnLDn9wz/iObmn3Vd0TDkEvfEhXMIzl1B1ZZtK07g4l9Ui+oTUhpYzc3RV
+	mdQQaC1uzaOG/jEE6O0GAOhSAWRlMn7Viq2HHiV5l3dO900Gyok4HGpaCEdS26D2fkxwdl+nkwx
+	0l8jALa1eU35Yzl7+QZRJkZK6VKbxiTPBFFd4DO1KL9KX8ysXfi92qKF0hkUto/aTqYybD4dheH
+	YUJVrKnCJsl0hE05zNDz24poxQKV5EMi6dwIDXsa+FFyvCWIyLAcdI
+X-Received: by 2002:a05:6a00:c82:b0:82c:249d:d84f with SMTP id d2e1a72fcca58-82c96031848mr6486932b3a.37.1774711364051;
+        Sat, 28 Mar 2026 08:22:44 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:88eb:4aec:1b3c:5de4:c8b:1b79])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82ca85d3a71sm2707074b3a.30.2026.03.28.08.22.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Mar 2026 08:22:43 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	dan@dandrake.org,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH] doc: gitignore: clarify pattern base for info/exclude and core.excludesFile
+Date: Sat, 28 Mar 2026 20:51:58 +0530
+Message-ID: <20260328152233.1140327-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqqwlyxkzyy.fsf@gitster.g>
+References: <xmqqwlyxkzyy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/3] Add support for per-remote and per-namespace SSH
- options
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <20260326233739.2911354-1-wesleys@opperschaap.net>
- <7d3731c5-d766-47f5-af60-813b379cbeef@kdbg.org> <xmqqbjg9mex2.fsf@gitster.g>
- <09c5fe7d-8379-4f68-bf1c-9869e2924cb8@opperschaap.net>
- <becf040c-b425-4fd1-affa-b6368c812b42@kdbg.org>
-Content-Language: en-US
-From: Wesley <wesleys@opperschaap.net>
-In-Reply-To: <becf040c-b425-4fd1-affa-b6368c812b42@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 3/28/26 03:46, Johannes Sixt wrote:
-> Am 27.03.26 um 17:49 schrieb Wesley:
->> On 3/27/26 12:10, Junio C Hamano wrote:
->>> I somehow thought that this practice is so widespread that it was
->>> one of the few first things any new people learn to do, but perhaps
->>> we do not have a good documentation coverage?
->>
->> As said before it is weird thing to configure a global ssh configuration
->> just for git transport. It doesn't make much sense.
->>
->> The problem with ssh_config usage is that you need to change your ssh
->> config, which is machine global, not just git.
-> 
-> Are thinking about the SSH configuration in /etc/ssh? You do not have to
-> change that. There is also a .ssh/config in the user's home directory.
-> That configuration isn't machine global, it's obviously per user. And
-> the way to make the configuration work only for Git is precisely to use
-> fake host names that are only used in remote URLs of Git repositories.
+The pattern format section describes how patterns are interpreted
+relative to the location of a .gitignore file, but does not mention
+the behavior for exclude sources outside the working tree.
 
-I refered to that as the .ssh/config unit. But /etc/ssh/ssh_config is a 
-more global setting indeed.
+Clarify that patterns from $GIT_DIR/info/exclude and core.excludesFile
+are treated as if they are specified at the root of the working tree,
+so a leading '/' anchors matches at the repository root.
 
->> And not portable across
->> teams with configurations committed to git. Myrepos is a good example of
->> this. My former employer had this and I know the Perl metacpan project
->> also uses mysrepos. Changing every URL dynamically in committed configs
->> isn't really a nice ask.
-> 
-> I cannot comment on this, because I do not know these tools.
-> 
-> There are ways to achieve a considerable amount of customization of SSH
-> connections with existing tools. If you need additional features, you
-> should sell your change with a more specific justification, including
-> examples that show reviewers who do not know the tools you are using
-> what is needed, but missing.
+Reported-by: Dan Drake <dan@dandrake.org>
+Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+---
+ Documentation/gitignore.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-The ways to do it all involve configuring ssh to configure git, instead 
-of configuring git to configure git. The remote is already configured in 
-git, having your sshIndentityFile and possible other options close to 
-that configuration is beneficial to users. The escape-hatch of 
-core.sshCommand doesn't need to be utilized for a simple "Use this 
-indentityFile on this remote".
-
-The only way to configure git without touching ssh is to fiddle with the 
-core.sshCommand, which I did in my own zsh script. This script also 
-utilized the git config, I used my own namespace for this, which in this 
-patch became "core". The whole idea was: git owns git operations, thus 
-the config should live in git.
-
-The need for me arose precisely because upstream encoded git repos on a 
-forge where my personal projects also resided and forced me to create a 
-second account. Having to change ssh config was to me the wrong knob to 
-turn. I fixed it years ago, and while refactoring it I thought the 
-pattern would be helpful for every git user resulting in the above patch.
-
-I think this is helpful for freelancers who have multiple clients and 
-don't feel the need to add a specific host in their .ssh/config for each 
-client. They can includeIf it, setting repos with a particular "owner" 
-to a specific identity file or they can set it on remote level basis if 
-the need is there. That is why the cascading configuration was added.
-
-There is no need to configure both ssh and possible git with rewrite 
-rules with this patch. Which to me is a cleaner solution. One knob in 
-git for git.
-
-Cheers,
-Wesley
-
+diff --git a/Documentation/gitignore.adoc b/Documentation/gitignore.adoc
+index 9fccab4ae8..a3d24e5c34 100644
+--- a/Documentation/gitignore.adoc
++++ b/Documentation/gitignore.adoc
+@@ -96,6 +96,11 @@ PATTERN FORMAT
+    particular `.gitignore` file itself. Otherwise the pattern may also
+    match at any level below the `.gitignore` level.
+ 
++ - Patterns read from exclude sources that are outside the working tree,
++   such as $GIT_DIR/info/exclude and core.excludesFile, are treated as if
++   they are specified at the root of the working tree, i.e. a leading "/"
++   in such patterns anchors the match at the root of the repository.
++
+  - If there is a separator at the end of the pattern then the pattern
+    will only match directories, otherwise the pattern can match both
+    files and directories.
 -- 
-Wesley
-
-Why not both?
+2.53.0
