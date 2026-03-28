@@ -1,81 +1,78 @@
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8295317153
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 01:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E643633F361
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 01:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774659784; cv=none; b=TejPSjT/5MdMwnbSmK9L4zGyLL2K/YEIi45dTBtlr25SGEEFMo5TSdu+rEMcZsWbFVHVBPwCuhMipKBpaKcHESDdatK7Q89pETNYzGq+YKkP7Z39Vkx8/cCej51NWJ5oZFf1lVAGXJp5d6SyvZkR92DXuTC6UKJFjuZJktfogyc=
+	t=1774662269; cv=none; b=WFjDiI8eIg7544cxDDoPgtQhO98NKwMlaZM6Y8oveG9zI8vDXFxgIHGlRqRjGw/zpndpOHXTH+dGjHcgNEMO89rzwYyYnZQj2/5R4FghU/FIddRzbUXdggxvWCvadmlClPyOkbycFCafq1lUgzssT6i7SaHZWFcnBV0xRRphafw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774659784; c=relaxed/simple;
-	bh=r4VASTXUvRbRS9S8oWdvnZ5DbflUooqQSpyS/Zwn1Ro=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=UtU9ij76MxbCm1VkNUAolA2ZLHe1ktnwPtzP8fyC+z8MamPAzMcjyX/DMSXfqHnxZI/53pVry8MOMCLaGuHzcP2qofoYV2tJ/iyH+SV5JxnVtM20Ud4pFh/HkzwUgVTB8v2bRjC+IHCE8Sm455Cfu0Y8tBTbTAL3nOj4XmjKmes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opperschaap.net
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4fjK4c3gDdz9tSN;
-	Sat, 28 Mar 2026 02:02:56 +0100 (CET)
-Message-ID: <8c6cb953-e4b5-40c2-9fc3-734ffee7f313@opperschaap.net>
-Date: Fri, 27 Mar 2026 21:02:53 -0400
+	s=arc-20240116; t=1774662269; c=relaxed/simple;
+	bh=E/tRiDDKhuzIdMYnPgov2xbRWfKhn/7ekKiKcHbX4Aw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u4yn2t0wEmJo6LEZzpwuLS+RQvin2nz0WinPT+ITXmgmiIVGGSy2mWk+1tCykjqRYc5tzXXrB/9/bwTaMxLdf4S/04p84Pj4VboJkRL6GEYNk9gsvB3mlr2BkpVGtIjsus4PeRAtD+p8X8BHAszSQPrmlup7i9KEeTzz9k5tm70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PBURgKd3; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PBURgKd3"
+Received: (qmail 173440 invoked by uid 106); 28 Mar 2026 01:44:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=E/tRiDDKhuzIdMYnPgov2xbRWfKhn/7ekKiKcHbX4Aw=; b=PBURgKd3Ai/SB2r1TDfNoDn5hKa4Nn4GIrGVQzgAVJgX4GN2k2PpedKGsNpebr8j/w7zIsLIYOsSO30Pae61BUwSKmMILpIteMzPhg32EYhSqaoYHbisnwmK6v1I0SUDYJ86g7w/JlNi7B1KjMlYn+qmhGu/tiRjiJChyk0wOSlEy0YlKilNszkmv0kZjdjhZGE1TnUJd52610Cl4L1Ip0AftnkXVIBhZu/VnoGTHIaESMZ8KKGci8jCSuyxMffof3DwT+oX9a/lAZH/+wC+chgeXn2B2w2644Ntr2kS3z48j2jlEezDPUf13UmFup41Cs0Sw5LOO+sEBbXMOvMNUw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 28 Mar 2026 01:44:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 243609 invoked by uid 111); 28 Mar 2026 01:44:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Mar 2026 21:44:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 27 Mar 2026 21:44:26 -0400
+From: Jeff King <peff@peff.net>
+To: Wesley <wesleys@opperschaap.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/3] connect: Rename name to command in connect_git()
+Message-ID: <20260328014426.GA621762@coredump.intra.peff.net>
+References: <20260326233739.2911354-1-wesleys@opperschaap.net>
+ <20260326233739.2911354-2-wesleys@opperschaap.net>
+ <20260327213308.GA598533@coredump.intra.peff.net>
+ <3e9d8d71-9595-4151-8133-300b89b3b7f8@opperschaap.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/3] Add support for per-remote and per-namespace SSH
- options
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- Johannes Sixt <j6t@kdbg.org>
-References: <20260326233739.2911354-1-wesleys@opperschaap.net>
- <7d3731c5-d766-47f5-af60-813b379cbeef@kdbg.org> <xmqqbjg9mex2.fsf@gitster.g>
- <09c5fe7d-8379-4f68-bf1c-9869e2924cb8@opperschaap.net>
- <acb_SQ8gdy-fQaFj@fruit.crustytoothpaste.net>
-Content-Language: en-US
-From: Wesley <wesleys@opperschaap.net>
-In-Reply-To: <acb_SQ8gdy-fQaFj@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3e9d8d71-9595-4151-8133-300b89b3b7f8@opperschaap.net>
 
-On 3/27/26 18:06, brian m. carlson wrote:
-> On 2026-03-27 at 16:49:35, Wesley wrote:
->> On 3/27/26 12:10, Junio C Hamano wrote:
->>
->>> I somehow thought that this practice is so widespread that it was
->>> one of the few first things any new people learn to do, but perhaps
->>> we do not have a good documentation coverage?
->>
->> As said before it is weird thing to configure a global ssh configuration
->> just for git transport. It doesn't make much sense.
->>
->> The problem with ssh_config usage is that you need to change your ssh
->> config, which is machine global, not just git. And not portable across teams
->> with configurations committed to git. Myrepos is a good example of this. My
->> former employer had this and I know the Perl metacpan project also uses
->> mysrepos. Changing every URL dynamically in committed configs isn't really a
->> nice ask.
+On Fri, Mar 27, 2026 at 08:58:22PM -0400, Wesley wrote:
+
+> > So probably "op" or "type" is a more accurate description. This
+> > conceptually ought to be an enum, too, since it is selecting from a
+> > limited set of operations we know about.
 > 
-> You can also use the conditional inclusion functionality to rewrite URLs
-> for repositories in a certain directory with `url.<URL>.insteadOf`.  Or
-> you can use conditional inclusion to use `core.sshCommand` with the `-i`
-> option set appropriately.
+> That's a fair take on it, "name" is really a not the best name for this
+> variable. I think "op" covers what you describe here best, it reflects also
+> why I named it command. When you check what is sent via ssh, it looks like
+> the command:
+> 
+>    ssh -o SendEnv=GIT_PROTOCOL git@gitlab.com git-upload-pack
+> 'waterkip/git.git'
 
-That is what I did and why I thought a simple addition in git would make 
-it declarative in git via its configuration. This would limit the 
-scripting side for just adding "this identityFile should be used in this 
-repo" or "this remote". Including allowing setting sshOpts for specific 
-remotes and/or repos.
+Right, but it's necessarily what is sent via ssh. E.g.:
 
-Cheers,
-Wesley
+  $ GIT_TRACE=1 git ls-remote example.com:repo.git
+  [...]
+  trace: start_command: /usr/bin/ssh -o SendEnv=GIT_PROTOCOL example.com 'git-upload-pack '\''repo.git'\'''
 
--- 
-Wesley
+  $ GIT_TRACE=1 git ls-remote --upload-pack=foobar example.com:repo.git
+  [...]
+  trace: start_command: /usr/bin/ssh -o SendEnv=GIT_PROTOCOL example.com 'foobar '\''repo.git'\'''
 
-Why not both?
+That's why I think "command" is actively misleading, because between
+"prog" and "command" it is not clear which one is going to be sent to
+the remote.
+
+-Peff
