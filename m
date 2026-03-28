@@ -1,122 +1,135 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61419239E80
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 17:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D42776026
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 17:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774717710; cv=none; b=u8bR28cWuVIs0SLBcgJqagfYBV6ErzN8QlfHJ5MnftD3ivwKnOpIWnYBDUOf6rWVbH9rwmKUE4JnMq/ymGPcEjGm4wsUViN66ym9OsOwmMOsYs57l8b2G3+kaM4p0LWRGtjhierdVMq3V+939FpO1hBwUlWaQi9MTrnRGjThJYU=
+	t=1774718986; cv=none; b=QFjsmkuFVpGVgBFGx4vH3pgR48FTmzv5PNZkSTaY5K6OyjbdyaV/zd33BEplQKpoIz90dRAocgMCrkMLc8WsCr4rCDeF6LdmQjUYmtFp7LAHfinrEO5OCo3JciCpBwa3zSHRr50pqUOZ5ciJSeHi5ZMaAFnmKucPgeAwi5iXHUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774717710; c=relaxed/simple;
-	bh=xNsNbR30lwVvnXO5TqR+aXId4C5Zz4Ytq/vp87kw1Po=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kti7CzLTTTfuEgaMbEB4fV5nHuKSyrE71gt6vV8NOAmPSHeS6i1hkGPeXQaWoMN7INeiRN0pYnXPmvKuXYzQTgHVloIv1B9FODGXftjk+GRbFy78bXE/hp9x6gtCMjTJLvgaoR4pNqY+otGAJ1HkmJqXCuMyxABf+W6Y24fZFPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+bzjuUu; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774718986; c=relaxed/simple;
+	bh=NXU0+wGR5pcuwPPlLnNiEvkH70EkzIBY1An5n2OjdiQ=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=N2adMTKKUcb9GNq1I4JGGFznvFhueFMTCFTDAOF4VenhrHod0+NztIONrnS6QypVCIkBGJ6uYdlFZ39RIpwO1kBtlW4NCi0C/GK5lY5Ry/gF/dNUqJlLICETBfk+Ua/sNXoI4+Rf/60WZRfz5hZKmAZwccxkSnFkPkrzF8nw/6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WuZgq8D0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=niYjIPD4; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+bzjuUu"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-358ee55eafcso350932a91.1
-        for <git@vger.kernel.org>; Sat, 28 Mar 2026 10:08:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774717708; x=1775322508; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YqvSBBdwfCvz1oW2cWgdjD2dri136DW8oPr7tuzYiGg=;
-        b=A+bzjuUuU/2csvYAIJVT2H7V44zsM22sYkLYHI3ceAOLXxw77yYopbWy/w9UBDjxww
-         e6G8s7G8oE6Feii8MpQ8VAwXkeCTL1hjIKKO7vv6wXyxlxtFlbgtopfCfZlEhTfbO0W1
-         tLKt88j7G14rEJxl3CHAau8CXu80zyRI3cUD1UZzQ0ZmsnL6N8/OlY7nvGG22aJVx/nj
-         Mx66b7SToUOE3QGb0zEdV6dOJVUUEhiOewfguerSVFqMA41XgAPp4SQYKwfh4FYyZi2m
-         WZ5V4DPkY5lfL/fQaFc8JXaWkl9+01hzBb6Hpy57GFf4IiZmS+tQgM/eUEwAwnr0Ei5T
-         1vOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774717708; x=1775322508;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YqvSBBdwfCvz1oW2cWgdjD2dri136DW8oPr7tuzYiGg=;
-        b=q30LL3J/GVZNt3ykfr0AN+RBzU5PGo4JT7DLu4GYJ2hIa1ZIwTHuWzWTP63hpcK/ti
-         hnR2U9j3Ngd08ptJss/VY2SaASm0BaE1akI60be2aSMxi+Y5sern3wPhfdHw8h95582d
-         jTzD18WbPJ0Oy9TnHLPr2vaTG6CQb+/+82vj8akH8y07e8TO1Tz1vJoD1CNDwpaf3+2J
-         20qh94lNwbKms3nU4idleJU3oWdbIb1HwkC+qJYw646XtfHgiFbz0GqrBCF0F5mXb/+F
-         wGFyGjtASpaPpHFOWCTxm4WiCeuBi9fReXSnny2I1ztT1iRWBYmaj3rQlYbDzOBclQRw
-         anLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUOIOgdcFlDVsXaLr9zrLAi0uvaQfPUpEYz79TVxNpGTRJ5P+lBzEQ3lX82efR3PyaIqgs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7ebWGsm9zaD+VDHo0Nhdqf8b2GeyYB+LFrkkwtNGCo1qn0dJW
-	iRggL3y2BNb1Au0QRU0RtzFMevNQz8MI9UI20XMecpEugXf2FXQtsegl+mFw7qFWx1MzWw==
-X-Gm-Gg: ATEYQzwvb26I2qkIjcpsm8B95dwLQsIfD7C5HJyAHzyy5i9L2VP1USYLxD/mIiCSn3q
-	DI5QN2OR1exUlS44LOwx43CwLy7Vcx+4cp96H/WgTKSGI+9CpwGjHEYmVVtJWy1fpSI0O41yQMs
-	aPJjKd2swOK+6gO60s+FvOr9CPF5Y9gE5rktX8H0XgdA9Zs2tgxhlfSZUW7rL34p0urnJDOP95c
-	i+ooaFqWm3bSMTgHmov9iw5CbvdQ9BXbN8FXw4BazAkiDctCsHQMfNiOeuQ2unLayxjheBSVkCG
-	0kvZ0CfDRhoN2UM4X5eW/mdy3AeOT1U4bDpnGUifevaQf1+MAgr1IBPpbtgRLJ1MfU83f2guhpF
-	5TWsny1nLNmFNG9BgMoLQEsu/F+s2SFRNR7HK1/cQcz5OpC3rv0cBeJxwJcCi2rdM8uYWTnwAv7
-	kcAJB7/Lsny4GsmzlfWLv6orzIXGkIiKVtcmLG7TYjiu/DXRsT2VCRVkOBua+Efd8azaLCQyE9b
-	kGXXR73ntg=
-X-Received: by 2002:a05:6a20:402a:b0:39c:9ef8:8979 with SMTP id adf61e73a8af0-39c9ef894d7mr1554536637.7.1774717708322;
-        Sat, 28 Mar 2026 10:08:28 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c769179e3c3sm2080195a12.19.2026.03.28.10.08.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Mar 2026 10:08:27 -0700 (PDT)
-Message-ID: <b2c143af-22c0-4266-b641-5ccdeb221251@gmail.com>
-Date: Sun, 29 Mar 2026 01:08:24 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WuZgq8D0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="niYjIPD4"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id E87561D0007E;
+	Sat, 28 Mar 2026 13:29:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Sat, 28 Mar 2026 13:29:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774718983; x=1774805383; bh=5q9GiRzE7j
+	bkQCSW0JvOUb60/TvzvadkIdeT0PvMr+A=; b=WuZgq8D00gxXJaV8VL5oGVg2l9
+	WxXb1PeC+lVcqJpLdPeoIyZASMj4IqLQWZ05pv7N/L1+f2qSLa154H0hLNlj+gqi
+	pbDPK42/YORzo5se59CrbmFssdkOQr9lmBHgqgZUO4TxqgV29+8cSM5FQEVuIzE7
+	gTmOyd0X0VtFRoEhR61r1GXyBC4q2Te0rprWdvl6qrAfZAeb3TMQaPkFDLxSE5Mv
+	CIlDoWJnoB416NyyAyzWWBlLA51/Xz6ZTTxyfgLnZ0HnUBcPU43pkl6IU25MRTQ2
+	uZnX73sCCDNBo30F7u6mhHXnejjAJ0SKY8TcZKQpIQYu0NNUhBZDKAnT7onw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774718983; x=1774805383; bh=5q9GiRzE7jbkQCSW0JvOUb60/TvzvadkIde
+	T0PvMr+A=; b=niYjIPD4vS6QyvMaRagw4Aefe5GMK7iHdVJY+1ucK6VsM8RNYXt
+	4ZAnKvsyHwLtcllGPH0Hn85nBFy2p/chiLeNHJfY1Qt/sEKLabg0Yh523iZwAhZH
+	O5NRzKUeV4M2PujswMbCzbSvwMWlg94tfwS37+ihR8smjkJjMG/gPw1oAi4nBi86
+	y6kVEx/h8NYwOAMUiIGbJruILSSyOGvsFCiU8xtpF7a3zm1VX5InrLHKL56LGtpQ
+	YirPylBE/4vaDEJaLfpXJWqzs/XDOIj54KUH6wqxlPHfhsCpdsVlJpWUEitqA5II
+	mhq4sn7IUdp+jcCHuVyoEm4I3GtoKfLG5nA==
+X-ME-Sender: <xms:BxDIaeyiyCyV42eM1YbdpsgsUcnz1E1Zppuf8Eh1Iu8TfDj0gWuRAQ>
+    <xme:BxDIaRJNikgPpzK-wOs1j_SkcbL2M0DbuuTOZpwon8MghOU38rVYWphPHtzRzarD3
+    TWlohASmgL5wFoP38ykc2a4tLqvgbiZOLHYrO-3wJ8rGsqJ6Fitmw>
+X-ME-Received: <xmr:BxDIaYqPy2_uUn0tK7lvvU6jwgdshfC1ip8e-9OPmoetvLHCNuaR5o6unLo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeefjeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
+    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepnhgvtghrohhsphhrvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BxDIaQJEewFMgNKUwMWYHWEHBB9taEcA6HPFgYjOEQVoPWFxqFNatw>
+    <xmx:BxDIadR9gwO3pFnjmJyH9LKpjHvELATuIMADRTfhiuCQfKsm9PgikA>
+    <xmx:BxDIaftkdX3aqTfhIlTwmecGRjHfLiqWdeYABQ-3qwyOkR_WeWo_cg>
+    <xmx:BxDIaebIUvuH4HPA0qjrNKYkFwYHKn1nCFWrL5ZG7DS2d1yferTQug>
+    <xmx:BxDIabb8k6RmU9Rn58rZrO4ZMaK8ixTxMZscO9rQbnObFsCgjLpNBhyj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 28 Mar 2026 13:29:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Noman <necrospre@gmail.com>
+Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>,
+  jltobler@gmail.com
+Subject: Re: [GSoC][PATCH] doc: fix doubled words in gitdiffcore documentation
+References: <CA+TqWtWiYR+aEsQPOsOwOonc2hinjfXW0oy5mLuDOPx4Xu9mwA@mail.gmail.com>
+Date: Sat, 28 Mar 2026 10:29:39 -0700
+In-Reply-To: <CA+TqWtWiYR+aEsQPOsOwOonc2hinjfXW0oy5mLuDOPx4Xu9mwA@mail.gmail.com>
+	(Noman's message of "Sat, 28 Mar 2026 11:11:29 +0530")
+Message-ID: <87bjg7g8vw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] refs/packed-backend: use ref_store->repo instead
- of the_repository
-Content-Language: en-US
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im
-References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260328141146.1095115-6-shreyanshpaliwalcmsmn@gmail.com>
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <20260328141146.1095115-6-shreyanshpaliwalcmsmn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 3/28/26 22:09, Shreyansh Paliwal wrote:
-> In refs/packed-backend.c, repo_config_get_int() is called using the global
-> the_repository, even though a repository instance is available via struct
-> ref_store.
-> 
-> Replace the use of the_repository with ref_store->repo to make the code
-> explicitly repository-aware. With no remaining users of the_repository in
-> this file, drop the USE_THE_REPOSITORY_VARIABLE macro.
-> 
-> Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-> ---
->   refs/packed-backend.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 23ed62984b..ebc10dab4d 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1,4 +1,3 @@
-> -#define USE_THE_REPOSITORY_VARIABLE
->   #define DISABLE_SIGN_COMPARE_WARNINGS
->   
->   #include "../git-compat-util.h"
-> @@ -1223,7 +1222,7 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
->   	static int timeout_value = 1000;
+Noman <necrospre@gmail.com> writes:
 
-Burak already pointed out the issue with the static keyword in patch 3 
-of v1. Notice that it's here as well.
+> diff --git a/Documentation/gitdiffcore.adoc b/Documentation/gitdiffcore.adoc
+> index 642c51227b..2b3fd5a259 100644
+> --- a/Documentation/gitdiffcore.adoc
+> +++ b/Documentation/gitdiffcore.adoc
+> @@ -133,7 +133,7 @@ input contained these filepairs:
+>  :000000 100644 0000000... 0123456... A file0
+>  ------------------------------------------------
+>
+> -and the contents of the deleted file fileX is similar enough to
+> +and the contents of the deleted file X is similar enough to
+>  the contents of the created file file0, then rename detection
+>  merges these filepairs and creates:
 
->   
->   	if (!timeout_configured) {
-> -		repo_config_get_int(the_repository, "core.packedrefstimeout", &timeout_value);
-> +		repo_config_get_int(ref_store->repo, "core.packedrefstimeout", &timeout_value);
->   		timeout_configured = 1;
->   	}
->   
+Please pay attention to the line just before the pre-context of the
+above hunk, which says
 
-Regards, Yuchen
+    :100644 000000 0123456... 0000000... D fileX
+
+and "the deleted file fileX" is a reference to it.
+
+It indeed results in an awkward-sounding sentence, and I agree that
+it would have been better if we used sample filenames that sounded
+distinctly different from "file" 20 years ago when we wrote the
+first edition of this document, but that water under the bridge has
+poured out to the ocean long ago ;-)
+
+In principle, I would not mind an update that consistently moves us
+away from file0, file1, ... to something else both in examples and
+explanations, but the cost of doing such a change and the cost of
+reviewing such a change to make sure no unintended mistakes sneak
+in, feels rather high, relative to the benefit.  So, I dunno.
+
+> @@ -145,7 +145,7 @@ When the "-C" option is used, the original
+> contents of modified files,
+>  and deleted files (and also unmodified files, if the
+>  "--find-copies-harder" option is used) are considered as candidates
+>  of the source files in rename/copy operation.  If the input were like
+> -these filepairs, that talk about a modified file fileY and a newly
+> +these filepairs, that talk about a modified file Y and a newly
+>  created file file0:
+>
+>  ------------------------------------------------
+> --
+> 2.45.1.windows.1
