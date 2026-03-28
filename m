@@ -1,110 +1,126 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D05B346FA2
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 15:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357662F4A18
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 16:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774711366; cv=none; b=nSIcOBKjOw7v8bYCW3ajK9lZgxu0wET8HT0AsQp65dnph4EEK/23FCFuaeDhpgKVS/51PwgPD1xKVTX8GZ1X5JfuBcncvEHhP4qxHkEOlVi2hPp4XegyjRcisqcFm71rWuWgz8unCmvTN/u9POrTDrN1mJrFl//IcBIgnBN+3cQ=
+	t=1774716866; cv=none; b=KjMfE243zoBnt8K0twAluxGvRWDKm62pphXMOR/MZUdN6XFbYjFOyNFLkaf4AS/vBQvgzTLgTrwgkWqqGKIwrMfNX0xeiVUFPAzeHE/VohvoF7joFky+HMwf91hSpDwCH1BT9P6obHX6eooptjIjUGjkQlfmoXG/mYIt6DJImog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774711366; c=relaxed/simple;
-	bh=Fbm3gdVD7W71XZTHraKRnQYu427yVwxKC3ZULz2IkfI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWc9W3Yz8VqqISGvF6I6nyaovCxDP/cus5tsQ/nF/E7DuBuZEQLoYmSry+UGhbrVD/JeJ6OlwMvjEtXbYiFQ5YBA8ZQFUXJkruloxooYwYkyMzvk+LJq471oZG10hNFf9xwZSBF829Sjc6FW3jLuPZa82uizn6UA7BKpl9hCe3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyuShfFn; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1774716866; c=relaxed/simple;
+	bh=QHMfJy11axABHaMuSA78Bh7Gik2joUvevM1UK+K1U+g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GISi2GSHxqfrCptzRtBXO8fJk5iPxS+2QuECUaNIYybemuzsdDlpA6koHgxDHZuP6jOqB7ZsGFL3y84AyCFIb67MZ6T1Uzp9EQtbyY6M4IeLykK57knRPz1LtgvCLT0/X4y9gTO1HcSjgokToXIXTl0vh84HM7YuBjXJNhu62rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fCipHoKG; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyuShfFn"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-829a9d08644so1649876b3a.1
-        for <git@vger.kernel.org>; Sat, 28 Mar 2026 08:22:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fCipHoKG"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-35d99c906d5so83434a91.1
+        for <git@vger.kernel.org>; Sat, 28 Mar 2026 09:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774711364; x=1775316164; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IgN3tMfLpkY0N9Sy5YUd6Ea1Nlae1KD+Tdy494XZ0R8=;
-        b=NyuShfFntErNOVVGUibk+w887W8jqs9I553ZPzQGCnGBN9awqUTk1sPk/EamYiAKWf
-         mNnN5ks3jZEJT/w3Hg5hlqJxhlM/rr6F7MHUqNNq2OOwpJPyqe3csxIvaTdZpXOJ0CJC
-         0LgMyOnF39kiOr/HOam1RGSYf9GxgdNFOs2V7jrjM2xPJugX+kP0PDY+k8Eb5z92yWDL
-         iNRcwdDcU7jwPInuQVNfPRvXLJofrExFmJL7iaEuKdh6xIBvyISu5yvv53H8qRr5cbnJ
-         IisVGcZfO6uL30QeWCnx/Ivo1my8i6pVVvWHTNC5WdjI2OTA6a1cGiaoQ+Z/0LifShQX
-         kgAg==
+        d=gmail.com; s=20251104; t=1774716864; x=1775321664; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Vc6itmwos8PR8cxK6ohTq3P9LEEGNePCMonw3cvrvYo=;
+        b=fCipHoKGR4QUrrPNhEdukQqmJfHLMdfo6+dn8mAQqCFnxy8s7dakLAVDDVE8g5P5sV
+         tZbFTNeNc3YqcBXwNm5XXFZ91KlBslEbOSyNKaMmHN1aAt8DXXHudnbe9vsicTGVkd8S
+         m4IYBZMg7kOPAjVYNdGZWdexE6To/pG11nUNXp3rVGy9I9yLdpjsNa0GejYDNlUK9bhv
+         yrCMhnAxw9Z8Mb9gqiFQBKsMEhfW5Grih/oE7QzW4yg/mnl1UiF7UHn5sbUbw+kuibhk
+         adNxG7QXTirFSSO2PAb9nJEe9HmTGF183JfUjIgZyH13yXvjX/Hj1fmgWNJveiEx19Pl
+         JTHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774711364; x=1775316164;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IgN3tMfLpkY0N9Sy5YUd6Ea1Nlae1KD+Tdy494XZ0R8=;
-        b=UB+iIofEnymSUSZ4ntyLedZ8tqg3qE8SCzF4J4z/nXoQXw4P1FdmXi7QoDWb+29j5S
-         hVE8tKQe5dRpLkf45cFBN9AUQOH/UI0+S1Sby3PSnyQOV7SQ/m9OcXZGIp+RNNLIJMSp
-         VnVJ7WqBPxPyYe/tA2v8mdccy2JG7IstK9L/ewGfX8MsL0fqGhE524Rk5K2pTIfKnYSM
-         G4nmwDrxB2BPdkM1tOb6U9o7xgpdP9HznBQQNz5KRe3YwLsuIpYDPwOx8qVFObN6aToB
-         PwuElXnKP5X0lQR9FzBaunNqlbanJVrMKtPjVar6lC+EJ+pfohGf6RSu+bXXsP27+gEz
-         hfvQ==
-X-Gm-Message-State: AOJu0YzWulj+E/OrNQA9oWociPcWqHb2nwtM0kKMJluoLoKPtmzU6dJV
-	lkkNJDK7jq5cNHazl11VBZb3JN49TC42y5zI/1rId49V/2Hhj2eg8I95/vgmsQ==
-X-Gm-Gg: ATEYQzyVc2bHfHVH7N2CkdyFnpIa3KRnzlnMPnwTJEZ9hjU03lcVk0KoHTa6ywVBNDk
-	17VkeZBUe2fT1to17+X2FM8ojytcbIpH/VyAKKJnPJXBEf+e343XMEP5wv3nXfBRRLsla2lN/QQ
-	h+9qaUk7chdyOOxKK4S/xRuISj2siTcMx0I0LkWGlxUVtjvLs3WJSjLJ8Bzczzag8dz2mTe1HWx
-	JCufkgBfAv9RQQ598QnLDn9wz/iObmn3Vd0TDkEvfEhXMIzl1B1ZZtK07g4l9Ui+oTUhpYzc3RV
-	mdQQaC1uzaOG/jEE6O0GAOhSAWRlMn7Viq2HHiV5l3dO900Gyok4HGpaCEdS26D2fkxwdl+nkwx
-	0l8jALa1eU35Yzl7+QZRJkZK6VKbxiTPBFFd4DO1KL9KX8ysXfi92qKF0hkUto/aTqYybD4dheH
-	YUJVrKnCJsl0hE05zNDz24poxQKV5EMi6dwIDXsa+FFyvCWIyLAcdI
-X-Received: by 2002:a05:6a00:c82:b0:82c:249d:d84f with SMTP id d2e1a72fcca58-82c96031848mr6486932b3a.37.1774711364051;
-        Sat, 28 Mar 2026 08:22:44 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:88eb:4aec:1b3c:5de4:c8b:1b79])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82ca85d3a71sm2707074b3a.30.2026.03.28.08.22.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 08:22:43 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	dan@dandrake.org,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH] doc: gitignore: clarify pattern base for info/exclude and core.excludesFile
-Date: Sat, 28 Mar 2026 20:51:58 +0530
-Message-ID: <20260328152233.1140327-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqqwlyxkzyy.fsf@gitster.g>
-References: <xmqqwlyxkzyy.fsf@gitster.g>
+        d=1e100.net; s=20251104; t=1774716864; x=1775321664;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Vc6itmwos8PR8cxK6ohTq3P9LEEGNePCMonw3cvrvYo=;
+        b=ejmzDLUYfzf6/a1VTpV+MSu4tgwXVqZMi7Bl5hOfOujIqF3Gb9iFHuJxsNmJd7cjH0
+         w706xrsv9B/CmIjks/qrq/7SAR/3Ky1/BHK+JLYb8TxKxX5L5r8Ty3Z8BrQNBqBTe8s7
+         CCH/Pc25CvSmgjsovkDMZWMTbeVQzdMXvxp5Vidc7SYLlhyedAxxnm+bF6fBgnXyZihC
+         2YUBNfwojWp8MiKsTUxzdWyjZkFZ6G6WilCZjrH4k5WTmhXPmaTDNvkSTz8dCkFBIB9g
+         vtbV3cMmQMJ8E1AEdxqruVJWiCRxzi1mdVhMRle8RwokSUX7OB2Ws7VmGUd0AycRtVIu
+         VblQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWLe2d4jjBhUJH2F3f46zYTyQEvX3IAOeMY9wVGteOGA28ZcSxkjhAMpLp4P29MuxV1sRY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyAbpE/zu4WYhlmb/LmZAd3Bl41I74WyU20z2LcQJC48K4lBX9H
+	ajKzKUgmJYvGyNBbaXLFKE5oNZweSo+NbRcR88A969qE/PCHKvCisIVj0ofIYETMnbupYg==
+X-Gm-Gg: ATEYQzyhM7HiWs3D7/ZWWMoHi+qC3btTngBvNxQMtMa5uNuJ7yGVw2M3LCvUg2jdWhe
+	E60exzuQxD/6UY/LguO7R7m+ccFs1ajKtLhP0zo72k2BvX9Wajt49bcRJxInDtgoyEJm7eWVhzB
+	xHCHQPAmJSPk5WvewNfEyP1JDfjhLw0QS+ZjB9XcwIBodXWIUSNbqvHdoB1vs3i/HV/ongcHbHq
+	IWIfmJZztvySgFN+HvLV3n88XYtYMaLchBav0+vpdUKz6vZPNyjUudHMkqBQLe7vnJCVpI+MATr
+	yJnSXFeNXkyx55lDbYrzRul2wzIFPKdaXKxSNqpSeWrhz620vo3jgpqNc2XSELNQnzUM1fs0hun
+	FWbq5yu8bXDterbyL8/VK8U0Z0jXZJmFDdnF7RSFpQEQJTa+Pf81JrtNgjj4qyqTjN/MGYAZXVd
+	nie/LZd4gQfE6JhNz5q+X6g6KACBnhk344ez85/vIb36nFE8VnZsvmPaqrPO8Oo2OSJxC/gbbVf
+	LVoaTKkQPc=
+X-Received: by 2002:a05:6a20:72a2:b0:398:a440:e3a8 with SMTP id adf61e73a8af0-39c871c2b39mr4448591637.0.1774716864208;
+        Sat, 28 Mar 2026 09:54:24 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76916bd67dsm2092444a12.3.2026.03.28.09.54.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Mar 2026 09:54:23 -0700 (PDT)
+Message-ID: <c3f032e4-d50b-4e35-846f-5f5da95f82a6@gmail.com>
+Date: Sun, 29 Mar 2026 00:54:20 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] refs: make branchname helpers repository aware
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im
+References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260328141146.1095115-2-shreyanshpaliwalcmsmn@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260328141146.1095115-2-shreyanshpaliwalcmsmn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The pattern format section describes how patterns are interpreted
-relative to the location of a .gitignore file, but does not mention
-the behavior for exclude sources outside the working tree.
+Hi Shreyansh,
 
-Clarify that patterns from $GIT_DIR/info/exclude and core.excludesFile
-are treated as if they are specified at the root of the working tree,
-so a leading '/' anchors matches at the repository root.
+On 3/28/26 22:09, Shreyansh Paliwal wrote:
 
-Reported-by: Dan Drake <dan@dandrake.org>
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+
+> @@ -5,6 +5,7 @@
+>   #include "refs.h"
+>   #include "setup.h"
+>   #include "strbuf.h"
+> +#include "repository.c"
+
+I'm surprised that it doesn't cause any errors. Or maybe you haven't 
+build it yet?
+
+
 ---
- Documentation/gitignore.adoc | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/gitignore.adoc b/Documentation/gitignore.adoc
-index 9fccab4ae8..a3d24e5c34 100644
---- a/Documentation/gitignore.adoc
-+++ b/Documentation/gitignore.adoc
-@@ -96,6 +96,11 @@ PATTERN FORMAT
-    particular `.gitignore` file itself. Otherwise the pattern may also
-    match at any level below the `.gitignore` level.
- 
-+ - Patterns read from exclude sources that are outside the working tree,
-+   such as $GIT_DIR/info/exclude and core.excludesFile, are treated as if
-+   they are specified at the root of the working tree, i.e. a leading "/"
-+   in such patterns anchors the match at the root of the repository.
-+
-  - If there is a separator at the end of the pattern then the pattern
-    will only match directories, otherwise the pattern can match both
-    files and directories.
--- 
-2.53.0
+
+> -int check_branch_ref(struct strbuf *sb, const char *name)
+> +int check_branch_ref(struct repository *repo, struct strbuf *sb, const char *name)
+>   {
+>   	if (startup_info->have_repository)
+> -		copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
+> +		copy_branchname(repo, sb, name, INTERPRET_BRANCH_LOCAL);
+>   	else
+>   		strbuf_addstr(sb, name);
+>   
+
+startup_info itself is a global variable, isn't it?
+
+I think a more appropriate approach is something like:
+
+	if (repo && repo->gitdir)
+		copy_branchname(repo, sb, name, INTERPRET_BRANCH_LOCAL);
+
+I dunno, just a thought.
+
+
+---
+
+
+Regards, Yuchen
+
