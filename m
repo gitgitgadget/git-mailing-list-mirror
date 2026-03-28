@@ -1,82 +1,76 @@
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DF417D6
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 00:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8295317153
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 01:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774659519; cv=none; b=hvM+Eh++H+1QrsCLvtU6PdifEfcUGB9p26egeUsRVLqvVVS+PGSz111miL9ee6AMHuUFwNqmnCPCkQ8Oxmz6DDVnlY2qB2M31PZYma1ES3MD64cPZHLdau7RWHKT2GGMV0kPYQTX+1VuHV46dmM1gHO2WtpJ1YqydY6hyzkU43A=
+	t=1774659784; cv=none; b=TejPSjT/5MdMwnbSmK9L4zGyLL2K/YEIi45dTBtlr25SGEEFMo5TSdu+rEMcZsWbFVHVBPwCuhMipKBpaKcHESDdatK7Q89pETNYzGq+YKkP7Z39Vkx8/cCej51NWJ5oZFf1lVAGXJp5d6SyvZkR92DXuTC6UKJFjuZJktfogyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774659519; c=relaxed/simple;
-	bh=s1rqdMZTT1y3hgkd6FyQ8XFDErwGRc2TuxpX62p2cIg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JAz6Ahnd8PezPiz3a3GLVBxwgOD14Q1Fw1nIB2m6DdB7OnmVWLSHH9nBo/4waxbCvDj63rrXAcG7uvcacn989ITnMAedtgqe8CJpLnj72MO8Xdq7gYDGUjdWRn2Fuwii+fZ00ud6snDb1bAlgdxv061GEGtIr+9tfTWhXaPN78c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.152
+	s=arc-20240116; t=1774659784; c=relaxed/simple;
+	bh=r4VASTXUvRbRS9S8oWdvnZ5DbflUooqQSpyS/Zwn1Ro=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=UtU9ij76MxbCm1VkNUAolA2ZLHe1ktnwPtzP8fyC+z8MamPAzMcjyX/DMSXfqHnxZI/53pVry8MOMCLaGuHzcP2qofoYV2tJ/iyH+SV5JxnVtM20Ud4pFh/HkzwUgVTB8v2bRjC+IHCE8Sm455Cfu0Y8tBTbTAL3nOj4XmjKmes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opperschaap.net
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4fjJzR5SM7z9vL3;
-	Sat, 28 Mar 2026 01:58:27 +0100 (CET)
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of wesleys@opperschaap.net designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=wesleys@opperschaap.net
-Message-ID: <3e9d8d71-9595-4151-8133-300b89b3b7f8@opperschaap.net>
-Date: Fri, 27 Mar 2026 20:58:22 -0400
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4fjK4c3gDdz9tSN;
+	Sat, 28 Mar 2026 02:02:56 +0100 (CET)
+Message-ID: <8c6cb953-e4b5-40c2-9fc3-734ffee7f313@opperschaap.net>
+Date: Fri, 27 Mar 2026 21:02:53 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/3] connect: Rename name to command in connect_git()
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Jiang Xin <zhiyou.jx@alibaba-inc.com>, Derrick Stolee <stolee@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/3] Add support for per-remote and per-namespace SSH
+ options
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Johannes Sixt <j6t@kdbg.org>
 References: <20260326233739.2911354-1-wesleys@opperschaap.net>
- <20260326233739.2911354-2-wesleys@opperschaap.net>
- <20260327213308.GA598533@coredump.intra.peff.net>
+ <7d3731c5-d766-47f5-af60-813b379cbeef@kdbg.org> <xmqqbjg9mex2.fsf@gitster.g>
+ <09c5fe7d-8379-4f68-bf1c-9869e2924cb8@opperschaap.net>
+ <acb_SQ8gdy-fQaFj@fruit.crustytoothpaste.net>
 Content-Language: en-US
 From: Wesley <wesleys@opperschaap.net>
-In-Reply-To: <20260327213308.GA598533@coredump.intra.peff.net>
+In-Reply-To: <acb_SQ8gdy-fQaFj@fruit.crustytoothpaste.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 4fjJzR5SM7z9vL3
 
-On 3/27/26 17:33, Jeff King wrote:
-> On Thu, Mar 26, 2026 at 07:37:36PM -0400, Wesley Schwengle wrote:
+On 3/27/26 18:06, brian m. carlson wrote:
+> On 2026-03-27 at 16:49:35, Wesley wrote:
+>> On 3/27/26 12:10, Junio C Hamano wrote:
+>>
+>>> I somehow thought that this practice is so widespread that it was
+>>> one of the few first things any new people learn to do, but perhaps
+>>> we do not have a good documentation coverage?
+>>
+>> As said before it is weird thing to configure a global ssh configuration
+>> just for git transport. It doesn't make much sense.
+>>
+>> The problem with ssh_config usage is that you need to change your ssh
+>> config, which is machine global, not just git. And not portable across teams
+>> with configurations committed to git. Myrepos is a good example of this. My
+>> former employer had this and I know the Perl metacpan project also uses
+>> mysrepos. Changing every URL dynamically in committed configs isn't really a
+>> nice ask.
 > 
->> connect_git has `char *name' in its signature and it caught me a little
->> offguard. I initially thought it was the remote name. But when you look
->> closer at the various call sites it is actually a command that is send
->> over the wire, eg . `git-receive-pack'. Change the naming makes it
->> easier to read the code and understand its intention.
-> 
-> I agree that "name" is not all that descriptive, but I think there's a
-> hidden gotcha in the explanation above. This string is _not_ the command
-> that we send over the wire. That's "prog" in the same function. And the
-> reason that "name" exists is that it is a stable name for the operation
-> we are performing, like "git-receive-pack", even if configuration or
-> command-line parameters (like "--receive-pack=foo") tell us to use a
-> different command name.
-> 
-> So probably "op" or "type" is a more accurate description. This
-> conceptually ought to be an enum, too, since it is selecting from a
-> limited set of operations we know about.
+> You can also use the conditional inclusion functionality to rewrite URLs
+> for repositories in a certain directory with `url.<URL>.insteadOf`.  Or
+> you can use conditional inclusion to use `core.sshCommand` with the `-i`
+> option set appropriately.
 
-That's a fair take on it, "name" is really a not the best name for this 
-variable. I think "op" covers what you describe here best, it reflects 
-also why I named it command. When you check what is sent via ssh, it 
-looks like the command:
-
-    ssh -o SendEnv=GIT_PROTOCOL git@gitlab.com git-upload-pack 
-'waterkip/git.git'
-
-That's why in my change it was named command, op, or operation covers it 
-too.
+That is what I did and why I thought a simple addition in git would make 
+it declarative in git via its configuration. This would limit the 
+scripting side for just adding "this identityFile should be used in this 
+repo" or "this remote". Including allowing setting sshOpts for specific 
+remotes and/or repos.
 
 Cheers,
 Wesley
