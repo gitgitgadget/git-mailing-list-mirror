@@ -1,112 +1,116 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03CE2FFDEA
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 14:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BC9199949
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 15:00:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774707163; cv=none; b=kxDDcMbBsc0uk5CL0882YqObZpoO5CL3Tl4aJyK8FYj75t3KfePx3P/fzp5QrwVj/Eg39HkX/xe3YyDEIKH79agWa6woX5XKCBw6X7OAnGOTUfttlR3f1ZHLvd+spCj7kzYAcgU9bDD6zoOTCvgAShdvkKFLW8oQGfODiVpftoU=
+	t=1774710016; cv=none; b=CC3fpZxpxZeNraYFRtIetLg3TTTy4HIMdVO390cQqHp8Tb6TxdWe27jqogRAOZ4bGxYyUlhxtNnuKvwob8XYblQZNggeKkp5/hFEOIU0OHZR0wbJ2EM1F+2sjbrxNpDia71hvzcIJVcV3h3hq3SquPzHmOdDftgYG6IZQ7ofACY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774707163; c=relaxed/simple;
-	bh=oiHn+xh9pIhd2i78ZlGT07EhBnYARhgUcp0FA7EM0uo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKnp4WN9hyV3uSAlFFkuUQTsYhMfVjzh6WHTlMM0M6Ho86123WGVIHn5BXjFrL/icgkmUvoJfwqvUXS5xoOhJVc/Ube+8CrIgOFfxbM+4eDVBGV/8qgqMw/lcCXT/nOs7tLskceesP5laImuYpjpOJl1VXfrvWMB1NAfe0Ic7cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fz+y+//3; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fz+y+//3"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c70ea5e9e9dso1332783a12.1
-        for <git@vger.kernel.org>; Sat, 28 Mar 2026 07:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774707162; x=1775311962; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IMWyzz2p3i469ydikqT1J3g8iglgnOf/wC2IbYVs7ns=;
-        b=Fz+y+//3MRRD/75JWSzHYe7fQ07yX3qMnidSPuNkLYoK9EjEq6nVdt21pa5GtkZHY/
-         jqIY8natjBQ+oJAcfihEVpgHS7jtnKzcvuEox+QEGunOWpzMOUAgvluRj01VSEKgA+JB
-         Es8cxxnsoSX/ms6ISJ8Sz0EjHGJkLjwjz9y+Mvz3Ximvt422LYBzIcKYksZ26YRRAAXY
-         kOGOoh1p30fTCbxfMkmJJTVi33HXb1U77P5Vb+sYF4ZxaJHXutM8isIp8QZ2//I93Try
-         Hjsj3OpH9goIA21/Li6hr1zwop/OKeCoooUpwiZlK8uFjJpZhg152RwDiNJg43pCIeWC
-         q/Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774707162; x=1775311962;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IMWyzz2p3i469ydikqT1J3g8iglgnOf/wC2IbYVs7ns=;
-        b=Qx7nTjjA3E2nXunuB7mieFSMwI1i7Yv2B0eLDFvUV+8KvxJQhmjP3E+/Iu75Czh1L7
-         hoQGxgl9OSMUT7PlQEwkRNIInkCaKJGagbq7DP3ZQ5XkTDkl3Uuy6RNE7R7UtZshmXoi
-         F74wHrG+el5QQs6FnjIUpTtOawxuAtmkFA9xpNLgcrSz251/PQJImOrkwOXZwVsD8okm
-         g7SnHmvVfkB2rNWG7rYzlfBx/Fv3cGPV+kCCQxcQLL/qHbBn84WnN/Oor3RcN45VS5Eq
-         V5TGRAegOnAmvCgfIBHxkFfhWtEw062bqKOkWKUoQIl6CxOAF8NBm5iGpdwVbfOM0smw
-         lhkg==
-X-Gm-Message-State: AOJu0Yz0rU+wE0OUOc0uGEkGYJRVlZQb3aq+bpSAZ5BwzkTyw/udM1II
-	nYa/zSg+p00u3NmjggqPEb9lgYzKCRqSeOZLp2vxKLgCm3HY3eGZGHzybJyz7A==
-X-Gm-Gg: ATEYQzzi4RcCg4wT7zDFTE7fZRs9aM6Hej/tj4yUKDwdEPOL7GF7rEXw+Vr6Iv67wKe
-	1QAtkwKarxUeYdRpeNLPF2JiujqDQSxdMCA9C4Jgg5mnicioUtC6zTjDk5IN6tm8D5rVIG+wh4k
-	XL+llRiu6MADqoUeOcGfap1bytgAlrcC3sBe+l+uVTBtWgH3aN3WpEKRQHA6sQInLntB2wHjR0D
-	eFR0eISIxDQd5//CdNVpgIpj75FncwoDx+zxLJBhXtNKY74URUVd63UJpRQDyTSnstcIIUyzztd
-	A5aXkwou+iL81GR+xQBdUTOGdvA95X5kwU3oIEi/FrEO+8trFtV4rb7liJYJ+OPxyjRkrMhp2zB
-	ekc1UjpjwuSker//IlNkfZiHHzoJgTIcVnjK9l+smdyaUPKjWY/nIVRXeqXoX5SzgohSMeRmXNO
-	WR5IzkCDMvsPVfvaevRTnMsR683pSUs7OAVgoLpJvsXg==
-X-Received: by 2002:a17:902:ce8c:b0:2b0:60b2:4f8 with SMTP id d9443c01a7336-2b0cdc21654mr69498705ad.15.1774707161668;
-        Sat, 28 Mar 2026 07:12:41 -0700 (PDT)
-Received: from Shreyansh-PC ([2401:4900:88eb:4aec:1b3c:5de4:c8b:1b79])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2427a27f2sm33173855ad.67.2026.03.28.07.12.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 07:12:41 -0700 (PDT)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH v2 5/5] refs/packed-backend: use ref_store->repo instead of the_repository
-Date: Sat, 28 Mar 2026 19:39:36 +0530
-Message-ID: <20260328141146.1095115-6-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
+	s=arc-20240116; t=1774710016; c=relaxed/simple;
+	bh=C7OJ1wfem/kgsCmc2SzijvYyXkeWX8IxvBB6npgkZeI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=obrMfFnzxt9+RAVUYPM1764WW8KiZ1MWFj65BVo00EYWrn8+sV7pLL5U6cUYpu6iUUW5t8QQykR8VmotL7aB3qrNAeEG4JXekjLhve77rePRIBg6K4k0qxKWjUXUMdQoBchBReUH9Zk0Y7CUXGY70IWAuJGDSCUaeM3K2SY2Cmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=opperschaap.net; spf=unknown smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=opperschaap.net
+Authentication-Results: smtp.subspace.kernel.org; spf=tempfail smtp.mailfrom=opperschaap.net
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4fjgfN3c3vz9tMN;
+	Sat, 28 Mar 2026 15:59:56 +0100 (CET)
+Message-ID: <3d8c9b3f-66d0-460d-bd61-a879a6bbfc56@opperschaap.net>
+Date: Sat, 28 Mar 2026 10:59:47 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 0/3] Add support for per-remote and per-namespace SSH
+ options
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20260326233739.2911354-1-wesleys@opperschaap.net>
+ <7d3731c5-d766-47f5-af60-813b379cbeef@kdbg.org> <xmqqbjg9mex2.fsf@gitster.g>
+ <09c5fe7d-8379-4f68-bf1c-9869e2924cb8@opperschaap.net>
+ <becf040c-b425-4fd1-affa-b6368c812b42@kdbg.org>
+Content-Language: en-US
+From: Wesley <wesleys@opperschaap.net>
+In-Reply-To: <becf040c-b425-4fd1-affa-b6368c812b42@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-In refs/packed-backend.c, repo_config_get_int() is called using the global
-the_repository, even though a repository instance is available via struct
-ref_store.
+On 3/28/26 03:46, Johannes Sixt wrote:
+> Am 27.03.26 um 17:49 schrieb Wesley:
+>> On 3/27/26 12:10, Junio C Hamano wrote:
+>>> I somehow thought that this practice is so widespread that it was
+>>> one of the few first things any new people learn to do, but perhaps
+>>> we do not have a good documentation coverage?
+>>
+>> As said before it is weird thing to configure a global ssh configuration
+>> just for git transport. It doesn't make much sense.
+>>
+>> The problem with ssh_config usage is that you need to change your ssh
+>> config, which is machine global, not just git.
+> 
+> Are thinking about the SSH configuration in /etc/ssh? You do not have to
+> change that. There is also a .ssh/config in the user's home directory.
+> That configuration isn't machine global, it's obviously per user. And
+> the way to make the configuration work only for Git is precisely to use
+> fake host names that are only used in remote URLs of Git repositories.
 
-Replace the use of the_repository with ref_store->repo to make the code
-explicitly repository-aware. With no remaining users of the_repository in
-this file, drop the USE_THE_REPOSITORY_VARIABLE macro.
+I refered to that as the .ssh/config unit. But /etc/ssh/ssh_config is a 
+more global setting indeed.
 
-Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
----
- refs/packed-backend.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+>> And not portable across
+>> teams with configurations committed to git. Myrepos is a good example of
+>> this. My former employer had this and I know the Perl metacpan project
+>> also uses mysrepos. Changing every URL dynamically in committed configs
+>> isn't really a nice ask.
+> 
+> I cannot comment on this, because I do not know these tools.
+> 
+> There are ways to achieve a considerable amount of customization of SSH
+> connections with existing tools. If you need additional features, you
+> should sell your change with a more specific justification, including
+> examples that show reviewers who do not know the tools you are using
+> what is needed, but missing.
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 23ed62984b..ebc10dab4d 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "../git-compat-util.h"
-@@ -1223,7 +1222,7 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
- 	static int timeout_value = 1000;
- 
- 	if (!timeout_configured) {
--		repo_config_get_int(the_repository, "core.packedrefstimeout", &timeout_value);
-+		repo_config_get_int(ref_store->repo, "core.packedrefstimeout", &timeout_value);
- 		timeout_configured = 1;
- 	}
- 
+The ways to do it all involve configuring ssh to configure git, instead 
+of configuring git to configure git. The remote is already configured in 
+git, having your sshIndentityFile and possible other options close to 
+that configuration is beneficial to users. The escape-hatch of 
+core.sshCommand doesn't need to be utilized for a simple "Use this 
+indentityFile on this remote".
+
+The only way to configure git without touching ssh is to fiddle with the 
+core.sshCommand, which I did in my own zsh script. This script also 
+utilized the git config, I used my own namespace for this, which in this 
+patch became "core". The whole idea was: git owns git operations, thus 
+the config should live in git.
+
+The need for me arose precisely because upstream encoded git repos on a 
+forge where my personal projects also resided and forced me to create a 
+second account. Having to change ssh config was to me the wrong knob to 
+turn. I fixed it years ago, and while refactoring it I thought the 
+pattern would be helpful for every git user resulting in the above patch.
+
+I think this is helpful for freelancers who have multiple clients and 
+don't feel the need to add a specific host in their .ssh/config for each 
+client. They can includeIf it, setting repos with a particular "owner" 
+to a specific identity file or they can set it on remote level basis if 
+the need is there. That is why the cascading configuration was added.
+
+There is no need to configure both ssh and possible git with rewrite 
+rules with this patch. Which to me is a cleaner solution. One knob in 
+git for git.
+
+Cheers,
+Wesley
+
 -- 
-2.53.0
+Wesley
 
+Why not both?
