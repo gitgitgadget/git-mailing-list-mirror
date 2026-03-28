@@ -1,69 +1,69 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF2233A9F3
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 20:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C1732ED29
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 20:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774728192; cv=none; b=rqXKkloGuytZh/MDhp2MKUynvjzS6oxCXf0ulmyTnp4dGEgC7qANHb1GkyL0AytranJfftk5mslEJY4m2l8m0Q5Fyzf/eBomTSEou2z9foXPDTISO53hb1F43pOnoCiRbJWDiKLBcNW66T5xUG8NHRObJ6FABpdQsfk9pHJAnSI=
+	t=1774728193; cv=none; b=g6YCbf9Soprq9GjpVFf+PVzVGGtBX5LYUFQvMQWvHQJ0qKC2Ke38+2Tqkf2inNMI4YRt1Jm6iS1dYdLBXMZqv/n+FqW/hbf7bHHT6Kb+CDHfvdDT0ALMKi4Tw9/Kx2uAcliaWCZuH70/zgotNbf+g5UXJvYqpwG+lLQ9J9sAJJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774728192; c=relaxed/simple;
-	bh=8rMFd/2kjqRuqX+Ju1ng7XXd3SeOLM6Y8QV9JqqlMDE=;
+	s=arc-20240116; t=1774728193; c=relaxed/simple;
+	bh=94cfhfeZIN3avbGG6ElWIin6GlJXNKithmLmUyQ9S6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1I25REFWujj1mO2u/PfeBYyXC9zqtdArL1wk5ZD4kKv3U1zhSaaZ6xKh1fmdHacjIVhBcuI3/07en/7jr6SWIvsFIysaqHHru8SAu70PUMB9sVqO8YRoW+5TgyQ9MDOIehOSFG2MNms81j6hB2A5YuQm7kuAkWczfkFEF5Y0m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=duP7ngJZ; arc=none smtp.client-ip=209.85.215.170
+	 MIME-Version; b=Uv9cdjy42S8HcPDRZvdPiE3DJy7jxu+xMBXBUwL+4Gb10fPGIxM29ATrlBSQTJ8LS65iGauoRbRgJRdMvGvuVNvi8+ImiDPws55Uvqg+l2DhyTuwlV1Qd4c+sMmqtzy0/m8PsjZ8dSmVA1EtJUHyR9Nte7+0eexI/g8b6+KpyAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PDcLd4G1; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="duP7ngJZ"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c74f0c3fc16so1147693a12.2
-        for <git@vger.kernel.org>; Sat, 28 Mar 2026 13:03:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDcLd4G1"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-356337f058aso1835730a91.2
+        for <git@vger.kernel.org>; Sat, 28 Mar 2026 13:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774728190; x=1775332990; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774728192; x=1775332992; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pd8wrd1PCL3Vh7VCavHBFGptsDQ/vRy1jCjsLvtMGwM=;
-        b=duP7ngJZSy13vIoya5hCOTPrzxiddQD2G8OvOq7a1PJUxGOVSouoPbx7z5eFJCbypx
-         Dw0XFwx7KJaUyY4TQTPdqQyUUfZyRC2CW759+guiWu8Uc6rGabseefX6bMV+yH8Dpu3y
-         pmxkgtXAn3WS4EXnsM9mxc4CYIhegQ60Tt3hjuVDV8n7ECEeriqygKn2D9D6DOBCC0qy
-         wjTJQ00iInR5TZt8kM8osLtNZ/CQfhYpTHfIFr3flp+g+toCmbO/efMOz16FolZy9JXj
-         Z5/qRASxvPPttUuR9s2YObNPlm+P3iTjT9cPE9IgYdlxf14BycdL0hpPMgCEYi1O8WrS
-         hXww==
+        bh=RHDX4v2BQl6o2dE+61CtEn5M1ZcmHBvM1PpCvadLpHo=;
+        b=PDcLd4G1IUawwh4ucTy9MlWrnXvBMAhgjLrUC3Vx+Lhwab7K7bQEGoFRXkbv+Yq9Xm
+         2ZxjVe9szoAvQXaYrV17EF53Ar+CFROCkORYLqIfIMdhiMYTemsoPU9sPeXAHbED3Rpt
+         Vb2NP7lmSPeypYEGMQ7JqJ6PZDS7ygAqeocb4f7Pq5yoSAExvj/zaEQUn1UIEE882CXa
+         VV2C/se6eJdy0AHyiVvgZ1t85lkTkAbQwI5945pNXK/Dv4Osi1OvPyuKSdfjAqDCvvjZ
+         w4wNYikxXW14B8L/n3vxjmiU99Rx8FZG9IYTtVklwTpld3vYVKmKbcke1d4T/AnlHNh+
+         27Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774728190; x=1775332990;
+        d=1e100.net; s=20251104; t=1774728192; x=1775332992;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=pd8wrd1PCL3Vh7VCavHBFGptsDQ/vRy1jCjsLvtMGwM=;
-        b=dHKQKhUAgdTWHm2v4nJNiA7Lx/KjZNmWXTSLiVVXvHh1bfdjkppQS42sQ0jGZIYEDc
-         1leWF4xP1LjHhEq44nsyL8SCsSJ5EJEsLPxSS/6xFwJGvkMu7ALdsEe70DFltDNHqg1W
-         7z97OR+3qhLFi9H/nCYyp723KIIgMjn/7c61K8duv7ZEUZg9HgMfU3vS8awugmA1AfbV
-         iJbVjuhuMw3dmkSMr+Sbt2iaIjqCTD/0qlOOsJ4g/GjY1z4enJzD72OP0OyFJRTmQY3p
-         0z1R0p4VI6XiCxN3GCC+Q8yFwiMmg9olIK1V/6cLdvL8S7o50CoAdojfPbEi4fn0A0v4
-         8PCQ==
-X-Gm-Message-State: AOJu0YzMgnJDPSN+l7ijPxUcbGe+sroGAycmPLOpbe5P5Zgfg8owF8iH
-	oXMqXpOKRGEdyZ2XexhxYhl4QHIoW8haXLjVEfpiZyPgBGy/d6R6fR1IIVouwaU7
-X-Gm-Gg: ATEYQzwl6mkhEHoCofQrDg+4Dm46PO6bfEdKEHzqXUwt0H5GiW5qGMBpzjRn2cpnX79
-	CPyptZSo2YZghpEQd2fpAQCrF5CgmevTfjDokKpKAySPxY01UaiIULRTydlmyDlTrG/acwYnrzi
-	6jtC6dAjaaFEPgJ0yNTje/fIIaV1TxdlH63BL8WCZnJTdJlwdXLbr2YJcv+xpMnPvZK0cUwEcDa
-	FOYrHH969xZleleECkX6vo+XXxPt4oeElJUVj6PZeVMo9TR2dROTxkB0XuIG4TxCZfK1GXKLvV+
-	+PVQvkU3AtazPgkTtHmYFDk8d3MbfE6umkcuLHAeDylu2JJiSppPz9ol+zlMZbIpnkrYHJ7Oq22
-	XZapxzrzzRapk69IjROav0nG46B8xoomRaMK2Uo7Bq5gdQCn/33nyF48XVgyQ41WWTExz77YcTD
-	VShgCDHxUfL82WSSj9UxgNfcdwFfBu+FPXv3wDQbpcelg+lcilbPgo5Gf7yrDOYMoNk9ZfhrqyW
-	AtDTNjHFg==
-X-Received: by 2002:a05:6a20:918c:b0:398:7949:6302 with SMTP id adf61e73a8af0-39c8780b4c7mr7567880637.6.1774728189747;
-        Sat, 28 Mar 2026 13:03:09 -0700 (PDT)
+        bh=RHDX4v2BQl6o2dE+61CtEn5M1ZcmHBvM1PpCvadLpHo=;
+        b=V+5TQtchKNHPbRtxNiXiQjHCE+v4ht9dOqxUstDmMJL7PhJvWpySGIeguWM+3tfcZ+
+         n0uE52ppDEmUdDxvZ4s82nB+l12Mc2UBgAA8fxg0UUfjdqC9kB6qgsiVyiuD4pTkHWzb
+         lsh9ZZwemsL2BdgbRD6qdK5TMMMqLdgcFSAg720HwuYzSYhyMJZ8FKKV2NkBU2yjKf5j
+         Kd7Gw7h6ejFa7cyBwfJZuOi3hpKGSB1/+ALxzNszJTbQx2GhOlZ76h8z3Kg0WAFSRtMe
+         /i+rycdXdHktQLjAO3EtOD8d8jpuYzDLinEh4O7p/qUiWXTnrS7APCDZpmPYNHm8WmMz
+         QS8g==
+X-Gm-Message-State: AOJu0YzG/gf/7tQWK21JDaTSfI1bpcWHYMcMiwJ39I7DPRCrDJW28w7Z
+	kNwJ7x5tQdyYvuoSZd4lAV2C/rCOLi4gu4IvKRF7AXTrO8NmIc1Qwd/n0jcoHPbf
+X-Gm-Gg: ATEYQzyJ8FxshA6YMHEdpWTwZUGE3FWi5FC08gI0aLlLJvjFEOGHYuRUy5e2PdsgO88
+	imlcRnPrNlcvTZ9XGKGvFNgKNK8MUSHi0Yg/XMyW+87TlknFBTKbytZHhLT0aEUAL0Mt4c9ZV3X
+	mj9OSjTEAeyL+SwqXgKn40wHnlYqmvgGA2CjzrrhKcMk6YshmXMit/sMUpjE5VkemAb0RkGHxe/
+	8oPZDYQOmkFauR60fzSi2JAe0henSKDU/233g5+uI7eQs+P0vkxxjG6PvihTaRMV7xwM+LmWhlY
+	hTax6lC5+IeMkJ1M4SmpIk/GbVU9YmLpBJu5gWelOz7v2XDd7IbK1ctgXMqubtTXKeVp0wx07Xp
+	HYXrj2PHB2iAwR6xJDebn+2yjOQxVt/DfhAaxSbZ/kE8y4IOpIX9X9gNZ89TPI0eM8iruLGWFXt
+	nBwky2ulKCKS/HvRMIzp4PJMCV6CCjTnzX7Gxqz9cF0EWwuANJMocfSpP2sDzzxLjQrQQrMWxbP
+	z0lVrtLsw==
+X-Received: by 2002:a17:90b:3d4e:b0:359:83d3:27d3 with SMTP id 98e67ed59e1d1-35c2ff4fad4mr6669127a91.2.1774728191750;
+        Sat, 28 Mar 2026 13:03:11 -0700 (PDT)
 Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local ([27.122.242.65])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76917bb31asm2359786a12.23.2026.03.28.13.03.08
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76917bb31asm2359786a12.23.2026.03.28.13.03.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 13:03:09 -0700 (PDT)
+        Sat, 28 Mar 2026 13:03:11 -0700 (PDT)
 From: Trieu Huynh <vikingtc4@gmail.com>
 To: git@vger.kernel.org
 Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [GSoC PATCH 02/16] t6423: avoid suppressing git's exit code
-Date: Sun, 29 Mar 2026 05:02:41 +0900
-Message-ID: <20260328200255.247759-3-vikingtc4@gmail.com>
+Subject: [GSoC PATCH 03/16] t6411: avoid suppressing git's exit code
+Date: Sun, 29 Mar 2026 05:02:42 +0900
+Message-ID: <20260328200255.247759-4-vikingtc4@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260328200255.247759-1-vikingtc4@gmail.com>
 References: <20260328200255.247759-1-vikingtc4@gmail.com>
@@ -75,30 +75,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update t6423-merge-rename-directories.sh to redirect git-cmds
-output to a temporary file instead of piping it directly to
-not hide the exit code of git commands behind pipes, as a crash
-in git might go unnoticed.
+Update t6411-merge-filemode.sh to redirect git-cmds output to
+a temporary file instead of piping it directly to not hide the
+exit code of git commands behind pipes, as a crash in git
+might go unnoticed.
 
 Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 ---
- t/t6423-merge-rename-directories.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t6411-merge-filemode.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 53535a8ebf..52665cedcd 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -2273,7 +2273,8 @@ test_expect_success '8c: modify/delete or rename+modify/delete' '
- 		test_cmp expect actual &&
+diff --git a/t/t6411-merge-filemode.sh b/t/t6411-merge-filemode.sh
+index 6ae2489286..9fe4271555 100755
+--- a/t/t6411-merge-filemode.sh
++++ b/t/t6411-merge-filemode.sh
+@@ -27,7 +27,8 @@ do_one_mode () {
+ 	test_expect_success "resolve single mode change ($strategy, $us)" '
+ 		git checkout -f $us &&
+ 		git merge -s $strategy $them &&
+-		git ls-files -s file1 | grep ^100755
++		git ls-files -s file1 >actual &&
++		test_grep "^100755" actual
+ 	'
  
- 		test_must_fail git rev-parse :2:z/d &&
--		git ls-files -s z/d | grep ^100755 &&
-+		git ls-files -s z/d >actual &&
-+		test_grep "^100755" actual &&
- 		test_path_is_file z/d &&
- 		test_path_is_missing y/d
- 	)
+ 	test_expect_success FILEMODE "verify executable bit on file ($strategy, $us)" '
+@@ -65,7 +66,8 @@ do_both_modes () {
+ 		test_must_fail git merge -s $strategy b2 &&
+ 		git ls-files -u >actual &&
+ 		test_cmp expect actual &&
+-		git ls-files -s file2 | grep ^100755
++		git ls-files -s file2 >actual &&
++		test_grep "^100755" actual
+ 	'
+ 
+ 	test_expect_success FILEMODE "verify executable bit on file ($strategy)" '
 -- 
 2.43.0
 
