@@ -1,169 +1,104 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955C52030A
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 04:33:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECAD2AF1D
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 05:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774672437; cv=none; b=M11wxfLQ9VeSARUuvjt2dqyA2ob/qtBmPihfB206rLHop5FBuxo8PuLIXrTUJQfG1qO8Khy+1jl7y/ngisthZO4mMUAUyZu+IDxB2OQRpqMLsK3lbpNyFNJ3UXXMeCL0/ir9ErfH71kcMYT2fdMWipC+FaalW9kXjxV5iHrTPkU=
+	t=1774675584; cv=none; b=OF+Scn3reA3F5OvizkyITttllXSuf9TZ4fugrkG90klYHaTkp6DZVhmA0E8sl+pXAXKOz5wAQnfP+EGNz9taHlXm4/QTCkixhfbm/I6qUsRno7VQhOSpvuGdUyl6tO1JOerv2m+EV+VCpXffsDRR5oypz/JHyXFuev7vfSNSmsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774672437; c=relaxed/simple;
-	bh=SIWf07IMzL2jZvWsaaHgxunXbX6vZZSvOicUfVALHQE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z8aSlIaV5CmualSnXBFnOLWEh2FYKiJYKHF5xgjUWzCuFuQZVsb8GD/AX8VV/zNT/Mf/bR11MvPctuFokormvB6vZqKc2Su2ZYlKV35nhU7U0r0v4JTMZgaWXQMXOrj9dkgHUOBOLnud1dlyZdxY81NcbNqDgccEDJ2wA9eYglE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SB5Fq6fh; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1774675584; c=relaxed/simple;
+	bh=qJTwN0V8Yo0L7Y6VGkIfJaEztIBi1IntUCsCKDdC1N8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QccsXmfLTzgSgNFym2vRgtr8siCo/dNaiOhNRBgngjnlfCE/jkrtKW5qCsS4KIFgQjwtQq0uNlRSZNm2dtqwA1ZIEApWO0WNPtGmH3FavfUQ9mIm0nel5jgYajgR1E2h0L6MKlOxrzdeOY7U8pyQc9GutNHHoD/ExSGyfBSPP1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QaQz1VZZ; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SB5Fq6fh"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-35c116887b9so447761a91.1
-        for <git@vger.kernel.org>; Fri, 27 Mar 2026 21:33:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QaQz1VZZ"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35d901060f6so95257a91.1
+        for <git@vger.kernel.org>; Fri, 27 Mar 2026 22:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774672436; x=1775277236; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1R4r+6z/IOWikCzyEJOLwHNS1wDB9qsA3COKWViicz4=;
-        b=SB5Fq6fhLUTYERqnI/e4Mr+may41KsC0xh8J7tlnMGCN4MNREs7DQtRfYl49C0QYZM
-         ruO6aD9jHu/RBJab3p1kQr5IQd/euk0dGazSQirmq8Xl3wnjaSgnMrsJ/4ZV5k0Q+7v6
-         IIeBYWwoCwykom2aBLcv1OlZNhioHjLSh3d6dxjLN3cqJ0ERZo86e0BoZ4Rdkns/r/gU
-         IgZzZeXN0p+tdW2ftiIAtryZhYdeCKENtWLJS0eLBWuustO0ap49ZxeTvRKJKiKSdv2X
-         Y9DDxQ6h8etKO/5rV4CK/31qQcbGeBKulYlU/Y/+FN9hZuuv9aI/27s78Od77sUiBfz1
-         relg==
+        d=gmail.com; s=20251104; t=1774675583; x=1775280383; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qJTwN0V8Yo0L7Y6VGkIfJaEztIBi1IntUCsCKDdC1N8=;
+        b=QaQz1VZZbzxwQ1ofgyEgvzVU+DlCtFnudf0pEYLBPqynN3YFrmhy5qjtxZxU/H4X/R
+         OS6vFAFMN4wY8GHE4hMtQeJ2XGheCrUNcFrqM4EOJZBB42FhfJX/+vqVPLtsBvLKl36y
+         pt3pjdmsxN+9wN67h3ALM/58iNuOLaS9D+UueMKrhJwHrJsbGXL4CcjA6wHZRulOkAeW
+         udbfPKYR0AjIlLYsVIbBC494BbwTzdDCTflOE6ees9Uo5JPP04opVBGVEINAZ0JcZFz5
+         2XpSNq8oynQfs9OWQlQVFOpmREUCwvpfcsuT6Wmgn+peuSeHM/kVAw3Ly+okdy5cGsb3
+         y4Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774672436; x=1775277236;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1R4r+6z/IOWikCzyEJOLwHNS1wDB9qsA3COKWViicz4=;
-        b=IJb56LmF0re0nSF0nRKQi3NxDDPnbCOp3LZHKSLJJZun1s+4wE8Ra9ykIS1laVcNeP
-         lQ0C4500oVPGviz5MBHQwvsq9tfT6h5E8XBqEugShQqw+5GtIcaGt+dgxM4tOFuFGMbR
-         GH83qDoA27qAmmNq/Oty01j+Sm1i7lhC6NspsSiFo+D1lQ1EVMQ4Zjx7TdobIwA1oYQ2
-         yBqouy5eEnZ0AOoDggscoQPg2zMmbmZsQP26Hsx8MdGaBigg8JKR6Z1xzP12Lzpt1kCp
-         7jXQxT6r7p95+dP7+GyRpHDS0s6Jx4PzKbMX9wqxovLS0WHPyH0q6BoRMtgf1noeCOBZ
-         8WHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUOPwAQDZ/5jAQrbsA/oj7URVont8ZAh2eVkxEE0DugLprR5/ZxpK90uS8P1UvNsMTOzcY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfPydbjqm8cGZXP47dTVESu/2u2JSq9yo3qclEYye0NL++FLTq
-	UML0CnJLKDde5I+/SwLFcoXfyKw7u/N7E5iXkUP1KqXTn/2Z8F/Bd8kD
-X-Gm-Gg: ATEYQzwvEaN89ic13qV7LOpQAI6gG5KMQMpqBlzW3wlvyQ4uadgPjFJFnRWoZv+EJm6
-	vY4qSGozsnb8W6ekKS2sbhT5+tymhjXpzTqd/Pk45Grs+7gIZn7SUkuLjOW3MyKcQX3G8w8J1XF
-	IR6s7ZnARSF5zJBj5f8SnaBd93bwdFbJeRTFG2JQelHj682s74Y8f6RSBIEkUOWN2QVUCIE5PZM
-	+3LFlrnfINPCprTkx4/AtkIJFFy3XjFwrpSa7kVJQFGTV8Z/gQxSc1mw92x0+xG3+2FoIrI9zg8
-	tMQrFV9+tdAuNP4uvtE68cNzIiEGOl6iNwV+GjcRUv4Wt2aKbULHdk8SewGd3xJx7ZcmWtnfEYB
-	f6mHXY/npcMHc5k/4fX4jNNB67VQ2SqykROoP0HD4pEWYxe+4DCbVyIsn79M6vIlq4/YXkHskAt
-	rTTmVKKDGZPUz8ZNFWb1gy9b7XoV9NvpsaeuIJcwW6ZhHJURfvWxBc5CCcIrpijoEzypfYA+Mzf
-	0QSJR8mHDyFkXobAxdzHA==
-X-Received: by 2002:a17:903:240f:b0:2b0:6f21:8270 with SMTP id d9443c01a7336-2b0cdd36ca7mr34068965ad.5.1774672435766;
-        Fri, 27 Mar 2026 21:33:55 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2427afa57sm10213555ad.71.2026.03.27.21.33.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Mar 2026 21:33:55 -0700 (PDT)
-Message-ID: <05959eb8-4b8a-421e-bf5f-9e6f0b59a313@gmail.com>
-Date: Sat, 28 Mar 2026 12:33:49 +0800
+        d=1e100.net; s=20251104; t=1774675583; x=1775280383;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qJTwN0V8Yo0L7Y6VGkIfJaEztIBi1IntUCsCKDdC1N8=;
+        b=Z1xoToXXLqeP/MLXG2H5tbzRpYh6EOuuFBYJbpnqaH94Dm8OSe1KPi9zTAf85D+sMC
+         pLnvRivnYPxj10nA94pWIXa2x8AYxqR4geXrWHAPJP8UekvSEbjlWdhYX/9O7MHBaD6Q
+         EDKoYDP0duXpyRnC0bn8dRGaJzBvKyedk3VG1Q+rS4uFhGq6lcP4gvfuU3UlrCv9Pj/r
+         S+R0oDWN9Bhv3pTradvlvsW7XqRObJr1qJk2WjTbOH6735gx7YvLANUksXZ8d+2/ekQd
+         j9aZStV+lOr/6hNyMR8St9RtIEQjRCZBqbSqLBkaXWeHmW3ht+sutreeCMv3gL8nzb+Q
+         2q5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCU3m0dL0Mp4lw7gcd+aSkcrnalsQ6QpIV76L9/21ENK75p3UvvW0RKG450JPfa7W0rENyY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWFOIu+cCAyZMTO5LfXdRdheJAWbrdfXTEgzsxo0o9qlPGBhl5
+	8hrFIYFlU0kydejfHDxuf8L2kjffVg64vCQkj+Mczz4n9yXtVpqrWnxk
+X-Gm-Gg: ATEYQzzsTSNr9C/LK5Hkw2KIsNGJZ80mFyoH9HC8glrCRGOQ7YMutRIFFtQOJTJTrEm
+	PSNa9IAq6GMbwdO5fZvx6cKwtuSwksvjpfsC62Tr4DCYoQFHBiVYsVH3mvitJ4w/L2tVzZTs0w0
+	n+RPjTyzs5PCTDdgRjNCyvYutsPialipv/Y0Q5xJu8I3y3aHwofKdqlz8SXUElBWtzoCov08Y/Q
+	OvOaIPQFuJuHw2823f4hLMmoxKHG3MRRJH0ozkZJwnCBd4a4fieYE62Q186zhNmjIhrDlh/UDf4
+	G9CNIouMWLUPpDK9P9ht8NNOQ+NKDq70CT5xduRFdDoLUYGea8sgLQi/3GrcW3tAncsrQHB3DDo
+	MbTgOgIV+oUCI6ueoEFhqV96oXRGZewkR9ZK9ISf68ex5Amk/WLBhvOf0UDA6bj98EcODaDJz69
+	66SL+PXYUBoTfOxjJ4NBPbiIngsgcfoIFHH/z+BvqShm3qjKAv2EkTkxPvZ2rSTnsU6RAtQic=
+X-Received: by 2002:a17:90b:4c0c:b0:359:fe72:3555 with SMTP id 98e67ed59e1d1-35c2ff30582mr3348754a91.2.1774675582529;
+        Fri, 27 Mar 2026 22:26:22 -0700 (PDT)
+Received: from localhost.localdomain ([14.195.131.227])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76917bb31asm757333a12.23.2026.03.27.22.26.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Mar 2026 22:26:22 -0700 (PDT)
+From: jayesh0104 <jayeshdaga99@gmail.com>
+To: gitster@pobox.com
+Cc: ayu.chandekar@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	jayeshdaga99@gmail.com,
+	jltobler@gmail.com,
+	siddharthasthana31@gmail.com,
+	stolee@gmail.com
+Subject: Re: [PATCH] read-cache: use index state repository for trace2 logging
+Date: Sat, 28 Mar 2026 05:25:04 +0000
+Message-ID: <20260328052505.76445-1-jayeshdaga99@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqqzp5kzj3.fsf@gitster.g>
+References: <xmqqqzp5kzj3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] replay: add --revert mode to reverse commit
- changes
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, phillip.wood123@gmail.com, karthik.188@gmail.com,
- johannes.schindelin@gmx.de, toon@iotcl.com
-References: <20260324220401.47040-1-siddharthasthana31@gmail.com>
- <20260325202354.10628-1-siddharthasthana31@gmail.com>
- <20260325202354.10628-3-siddharthasthana31@gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <20260325202354.10628-3-siddharthasthana31@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Siddharth,
+Hi Junio, Derrick,
 
-The patch itself looks pretty good to me, but I have some reservations 
-about its functionality:
+Thanks for the detailed review and suggestions.
 
-On 3/26/26 04:23, Siddharth Asthana wrote:
->   static struct commit *create_commit(struct repository *repo,
->   				    struct tree *tree,
->   				    struct commit *based_on,
-> -				    struct commit *parent)
-> +				    struct commit *parent,
-> +				    enum replay_mode mode)
->   {
+On the fallback to `the_repository`: I agree with your observation that `istate->repo` being NULL would indicate a bug rather than a scenario to defensively handle. My initial intent was to be conservative in case there were edge paths where `istate->repo` might not be initialized, but given that INDEX_STATE_INIT(r) sets this unconditionally, it makes sense to rely on that invariant instead of masking potential issues. I will drop the fallback and use `istate->repo` directly (and verify via the test suite).
 
-...
+Regarding scope, Derrick’s suggestion to split this into separate commits makes sense. I’ll proceed as follows:
 
->   	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
+1. A focused patch that replaces `the_repository` with `istate->repo` in the trace2 calls within this file and removes the associated TODO comments.
 
-...
+2. A follow-up patch that replaces other uses of `the_repository` in places where an `istate` is already available (e.g., `refresh_index()`, `tweak_untracked_cache()`, `do_write_index()`, etc.), keeping changes logically grouped for easier review.
 
+I’ll also run the full test suite after removing the fallback to confirm there are no hidden assumptions.
 
->   	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
->   				 &ret, author, NULL, sign_commit, extra)) {
-> @@ -153,11 +188,35 @@ static void get_ref_information(struct repository *repo,
->   	}
->   }
+Junio, thanks also for pointing out the author identity. I’ll update it to use my real name in the next version.
 
-It seems there isn’t a distinction made here between how 'cherry-pick' 
-and 'revert' handle the `extra` header. But doesn’t the 'revert' 
-operation actually create a *new* commit with the *current time* and 
-*current author*? Is it appropriate to inherit the 'extra' header?
+Thanks again for the guidance.
 
-
-
-
-> +static void set_up_branch_mode(struct repository *repo,
-
-...
-
-> +	*onto = peel_committish(repo, *branch_name, option_name);
-> +	if (rinfo->positive_refexprs > 1)
-> +		die(_("'%s' cannot be used with multiple revision ranges "
-> +		      "because the ordering would be ill-defined"),
-> +		    option_name);
-> +}
-
-This is a fail-safe design intended to prevent users from entering 
-commands like:
-
-	git replay --revert main f1 f2
-
-This operation is indeed undefined which should be intercepted. However, 
-considering:
-	
-	git replay --revert main HEAD~5..HEAD~3 HEAD~1..HEAD
-
-Is this operation also intercepted? I think the reason is that the 
-condition 'rinfo->positive_refexprs > 1' is a bit too simplistic.
-
-
-
-
-> +	if (repo_dwim_ref(repo, *branch_name, strlen(*branch_name),
-> +			  &oid, &fullname, 0) == 1) {
-> +		free(*branch_name);
-> +		*branch_name = fullname;
-> +	} else {
-> +		die(_("argument to %s must be a reference"), option_name);
-> +	}
-
-I think it would be great if a low-level command supported something like:
-
-	git replay --revert new-branch HEAD~3..HEAD
-
-Even if it just saves the step of creating a new branch ;)
-
-
-
-
-These are just my thoughts on the matter. Hope to spark discussion.
-
-Regards, Yuchen
-
+Best,
+Jayesh
