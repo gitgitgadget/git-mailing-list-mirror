@@ -1,79 +1,79 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C5313C8E8
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 12:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAF078F59
+	for <git@vger.kernel.org>; Sat, 28 Mar 2026 12:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774701943; cv=pass; b=MsTxm8za4sMrq1V8lDPastW0RIIOYV1ipxj8swxPMPdNKkW2LZklHMoAQewhX8qC2rFBjYl8jbHac07fNocMi2/6vqVHoeuSF8cz9japLDuMg75WxgqVsqOLPvZ+LZ+0DXvKcHCUGioRa1m3NMN+E+0wzfAKbW25MdR4bB+jGQE=
+	t=1774702332; cv=pass; b=Z53bMex4XcUCVKEijhu3q0iCQpuQ2r4P87EcAhf60tGWkNKadyqs4V8s3HgLJlaHycTudfa1WVbafhmw23Ka5jPRFU/7mNLhiQ7v2r3MnjLx3fkX3K8xJqJecmFi7XZOGMXQxkCxJoyV2boAvay6F667vsVImlzlwlTUbYtaYc0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774701943; c=relaxed/simple;
-	bh=bxM4NVH/gXY60l2N6yI9ntcSW0hpLjaj6ER3NC4LEX8=;
+	s=arc-20240116; t=1774702332; c=relaxed/simple;
+	bh=rT0ZsD/W1XHg3bKCzFv2BhprEDFCETtSAbmq1H5xBDQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=joSYCpq2lXIUz/bdw8sNRj7C5fkKf9o0B+B5z7xo99MXmNRX6jwLgt8kf489HBOoqsrdEYC3Kfnw7JP2Lk4iqK7trcPBt/H3QGX5p7DZmL93yQsebKpYS+F27HD0uHruK56r3+bNo6qbMo2y/DXb1Bi4n87f/GEnAyuVMj17wjw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JG7eiUM6; arc=pass smtp.client-ip=209.85.160.175
+	 To:Cc:Content-Type; b=OBw+a0q5t40ET4YqnbimeZpF7CMSEZHHKlZfy7sxTGlozW5VEFNCG/Kl09WtBuAzoicagixhefUHi0Ed0GhibEeOKl+OYcK61dMeLH5qglpCn1pLqNwjSBZvMX7Z1X7x9htipvFWNA6hHQt8sDoiR2SeKbBXM7U4fdZtnv7Plvw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBIwnP69; arc=pass smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JG7eiUM6"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-50335b926c2so25379561cf.2
-        for <git@vger.kernel.org>; Sat, 28 Mar 2026 05:45:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774701941; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBIwnP69"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-899a9f445cbso35160496d6.0
+        for <git@vger.kernel.org>; Sat, 28 Mar 2026 05:52:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774702330; cv=none;
         d=google.com; s=arc-20240605;
-        b=Ue6D9A8F0wpSaQW+sghpP+1tqu8VT6j9smw/ea+FeLNuRslA4TajlfAeDUMvQPKZll
-         CykkX9eG5i0vGQXC0TlawVNFSQuYZLveM1B4/eLvuOhybBreZii0A+4JUnDEwFApKPBo
-         mq8nvPwAqUXm3StSzNyqGuR7R6oaOrB6rJSVYQgEoNV/Zb7xEGR6aM2ZgiwSrtGb81cS
-         Y2fG54qUppDWIWtnpftGxefCuznvSfMrtOqciyoAC+Qh4SdGK7Au3K0IGwVDr5ksm0LO
-         +Uko88MB1jUASAdGCdGOuY7AoGWf/sR27DTT67Zz+nik1M4JZcItDq8f4ygheFpLRc86
-         Gb7g==
+        b=hwdqEcBSdwh/7zkD5fn+Z+sD1OI7TJDRUCMq+u8ad7xKus8zQcgcewQPbbVuhfEzJI
+         6U/Dxg46sIYTCl7H9jm6Yq4qMksT2XMhJvOkB0j3BdST4eEXnxvWvEkVryDeYKwE8064
+         CIj4/T2zwV3tscDVr32yMzXKXrext4J8hazD1vkoxciX9IP3Xjj837mTdoEw9gd3jrda
+         ns42c/05Miky++ivqzCnDjU2OdBuSW0GhsRBtY7tfPbSyJSWneS5ik/pWJUAeVrnst8O
+         pDXO8uFB+du+0X2YfIYINhPwYUfN6mbkrVE6HHMmUW1wMEoiCkc7tSxYyoHGtaOgd8JK
+         M1AQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=cZ9VzpzInJd+ynLza87OaJni+MlbKHDDMVaab2O8P6w=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=RqnKbUkvv/tgqvX8sUo5u/Q/Df5ITUY12Bg6pgmTX/gdBbO04xmF9HoQO1sSY85B7B
-         kIBe7SiJo+oYs8js6hbVYEgkwmFlc7/dhxP5qs0ONZThvOScGdPTCWH/hEO1if2h9CtX
-         ETz0thavtxoZB747doIyoQsQ4jCTMjQyLrOlHYHk8q+kSItBWAX+2dYuRCzL1+ivHCn9
-         kQQSwRAnSsKQHNk7YfmDBQ4OAYLgm5Cs10Juno7ZGm5FXKUb8+grLLOlbzVn20/pXOxp
-         cjsbLSpVK7Q9U+FrLviSBPNyZW/8PpA9cDr2YL+6sGzMn9ei+GOpJyy0zKOBtjFMFHdF
-         z1Dg==;
+        bh=aK1H3HXbI8d9cKZaDgYNwb25DqMRuMON5/oWFIpyzJ4=;
+        fh=RvJwTIx8ErQQdgi+CMnWTpCZUJB8NJwo6Tu7jmWlYrI=;
+        b=L/ptTGvLOejMG33Jc17rf1/5vJP2m2HaU8g00O+ShulkfiELBTIqKfmsJOFjRT9cve
+         u2tWW8CtILYOJoGJSbpdQUXcrrnJ5CX1GPi/lalzSBF5HFqRSgEL72Av4XYf84i3pX4V
+         1yJHCVHr5NetYgfMRT3I+4Q7X6D1vr9bSisI6yUltFcW9H3eC6p/3TOonI+5Bcd8SWrZ
+         WMhNrtWKSBu0LpfUmZZu05WbjdmZUyFhSfq66zLGyewgef2Kwblgp91YYgPTTV6V7zZL
+         10jfbrO0/s2Erek/zgXv1gkzKys7uvx3FTc8oNEFRDQhizpQ3t9Zr1NujoRrG2VFtytJ
+         JmpA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774701941; x=1775306741; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774702330; x=1775307130; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cZ9VzpzInJd+ynLza87OaJni+MlbKHDDMVaab2O8P6w=;
-        b=JG7eiUM6ylglPZkat1w/xjftGYQBhZ5M5cTDpEQFWRxS93M4gGBA3zumgBekZdH4X4
-         enxigbLgpjXhPpAFWPub0eh6JTFyRVxpFdL2dXU2XHDv9SX7h53qnuJwn1qGkykeVcTa
-         uTXNes8J1tsA2LL2iW//czDUiCJ7Pph7r99cONbG3CudHelmadzUy80PmD8MpdlLvXSH
-         wCTEfckOoHM2L/cooPbDWdy34B+MGLPJzrXrSTRo8i9BAmTuUJ4GFmwmfKEGOeJux5Tl
-         IGMxcfJ9IF/5grSB5Hzgj/5j1Tw3HKjVwOL8rndfGLOmqzDFGp2UPEu+hjeMv+aqhuBg
-         dFYg==
+        bh=aK1H3HXbI8d9cKZaDgYNwb25DqMRuMON5/oWFIpyzJ4=;
+        b=nBIwnP696XWTOxBOvVavwP6fHy6WDyjXs2HVDg6mWPCDhFPCPvroUZqa4zMmQKdGVW
+         ms8j4dqI4yXFdvaJluMxHdfmBu0muabBWBtNX6YF+ruti9Kyw1KSDb1zfs8GZdSqx4La
+         rw2gL0e6fG20Iddb16qe/fWMiOdrRTFu+rvo15l30JYhVMLhAc2sh0ZdvityugT1NugI
+         NjRhHQo/lvbvHQP3dFTne1IQXiocxQ5MILe3r+cO9+QNnnOFaPsT4NaNTadq9T7Ia1lU
+         teW3gfkised0G9t/yPOtXqFgmwdt3pd06paRuHVcjpAaQFmCXNOBGb1w0+K86ItMk1FN
+         F4ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774701941; x=1775306741;
+        d=1e100.net; s=20251104; t=1774702330; x=1775307130;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=cZ9VzpzInJd+ynLza87OaJni+MlbKHDDMVaab2O8P6w=;
-        b=WhZziPCGzkhIiI73W5ZHlEJu/6Pr1cMrzTiYssnGtIALGfMKiJYcMSLiNlmH6f+T3z
-         pfy9nqlw+XLL2iG9b0TCO61xfi+9iM1e5ESyypwi8sJlzro0X6OnvtN68a+ZnL4PQFI4
-         RPV3U4A/xWSK9gPj2MjN1Jw6e7gUpolaIYZouHTTxoLxdcsNxqtYp0DhOiJK61FF5sGY
-         umu2CzcoKdivTwo6mcAC7/f0Adxmumi5CNvJ9cI29jDZtMyGOYi8AQDeWk7c7Q6yYq+0
-         hz8CYJ5EHyYGqQkRs6jrcPjYwKpJiRWmbAIT7cPvy5vd32E/oJRjyTIz1Sfi9nowm+hZ
-         mx8g==
-X-Gm-Message-State: AOJu0YxiJtGlotLGRQAvJuOii+Wts57Be0CGwgDnAxSgb0YsTlB4yICB
-	hIkBza3KnUxWjDXdt4GyWJ4GpRBggTQhee0Kf1wsjpZwelZmHAHqmgesfBtTQoXaKglyruL7Oat
-	Fb6gFk1qIW8kFb9M7wKiJ7kKLnEONRw5xKQ==
-X-Gm-Gg: ATEYQzz2y7z0rBIfFwiHMTbpX/IY6v9rQJ6HIa7Aw2gykmmlj2jP/ld33BpomZmcU5P
-	6hyczdGAqG+TUekfytGTESGlYXmwUpiXyAKM7Yl4ywNcCgNu8NeROj32BLdeS/o3jqyX2Tn5qc1
-	Akh4De9uiTIfe3e8Lvq0Mabf3VM5MfOfgYTcHoYPrubIiaqrDH6rAPP8nIOKVOhXGu5rtzJ9RT6
-	ZYH9nJOmtuZvpX+OKBxgArGIwaOa5NG/xA7BKyh1tApDvZ6HzQHpCUcDIjtJzzm14Etttlu9ujG
-	mnmq782qUshWZL0PwkkDdn+C/925yCiedtyxOiEJ
-X-Received: by 2002:ac8:5f12:0:b0:50b:86f5:8fbc with SMTP id
- d75a77b69052e-50ba3947bdfmr78291841cf.51.1774701941332; Sat, 28 Mar 2026
- 05:45:41 -0700 (PDT)
+        bh=aK1H3HXbI8d9cKZaDgYNwb25DqMRuMON5/oWFIpyzJ4=;
+        b=VSvRIwy9wDVGfgY6QAV82uZX5mm9NPtknJsKe2EgU3Zm7DhMqDhPQCGAJcxfNKMNCi
+         L7zgGEe3KU6IHF+iM8GfyTrEbv0wQ1LryHi0GD97ZdxiS5vESX8NCkgI3YpO2TeIujh+
+         nK7MxnSS0Ol25ZGirSNabcqmFArfeSToN0aevs7iGjLlYVgKz0swtqQPwFQouRRiu27Z
+         h2E27wHyuB8dgRifnnu2f6Zrn1hxNz81cA6dfwcBIDmtQXjTfp2ZRbcrLLbNLiQ4Clki
+         767SfVyqB8ruLexChmBIMSuXmsHv6ZPMjf814dyHSC/y4e0bdFlD2gHOzVYW4hbDFHH4
+         PJDA==
+X-Gm-Message-State: AOJu0Yx5Izto8UXu6WE1MHtRMuUhmUPKdueck2fcIc8JRkM//EmX4tRt
+	06fyM4jqttlYikJ3j+5592pxJKnr94krt4kl3oI3kEUW4we7YgnBmRt20rVM3Q7JNAhWBGrO7Hz
+	o3Mr+gbZYjhYpL3dpyJVSSn28jRmEfDAsHQ==
+X-Gm-Gg: ATEYQzxNr5+iqMKR2z/lQ+YAtihXYmBqbzXuoKeLu9HGebP4yKuYs+jFfifTfNJkpp/
+	DsWieAczAUiSraFEVENAiUnwN2j+ExKgus7N2F5866t4eQYMDEuqeEIOmC6yIaAmwMlvTp6tMWE
+	zAE9EMxsFkT53HBDx1NblLLswkMM9sRjzseu35VQ2YCgqT5lDh2xqePUrMZP4FyNYmrazGaB//l
+	7mEIJf5/BYPIUL8Kg2QWw1keLAnz2U91YI5c23P58kF/vsbuHt6xig9MwNnr2EWKM74Awl8kA6a
+	BK07L2D9sklW0QNTg3c32KAbb/ug7ecMVOf0fRuLBR+p5W/aszw=
+X-Received: by 2002:a05:6214:4292:b0:89e:a170:6b13 with SMTP id
+ 6a1803df08f44-89ea1707210mr45556996d6.20.1774702329844; Sat, 28 Mar 2026
+ 05:52:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,54 +81,44 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260325164833.1216577-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260325164833.1216577-2-shreyanshpaliwalcmsmn@gmail.com> <acY2pZnCSEf5hcWZ@pks.im>
-In-Reply-To: <acY2pZnCSEf5hcWZ@pks.im>
+ <20260325164833.1216577-3-shreyanshpaliwalcmsmn@gmail.com> <DHDGF1CL2QHP.101BB8D2101N8@gmail.com>
+In-Reply-To: <DHDGF1CL2QHP.101BB8D2101N8@gmail.com>
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Date: Sat, 28 Mar 2026 18:15:30 +0530
-X-Gm-Features: AQROBzCPnhnFHuxdPc8pq8LAlAGreRUko9QU-F_SJzROJJcxtc6sPxSsTDxhtgQ
-Message-ID: <CAPYXD65H87wfffuvGWZtnvn19-2kwQFc1bzLHpyw-3X8QC9qvQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] refs: make branchname helpers repository aware
-To: Patrick Steinhardt <ps@pks.im>
+Date: Sat, 28 Mar 2026 18:21:58 +0530
+X-Gm-Features: AQROBzCBGBe6OtU9irIB7sNTbZtvbdLAhGhFGHk3qZO0wVrD5JMBUv3fCp8X99s
+Message-ID: <CAPYXD67BV5-FjvGVv1gcV2Fp8H3d815EZO0PVDWPfq=hJYP=Mg@mail.gmail.com>
+Subject: Re: [PATCH 2/5] refs: make get_files_ref_lock_timeout_ms() repostory aware
+To: =?UTF-8?Q?Burak_Kaan_Kara=C3=A7ay?= <bkkaracay@gmail.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 27, 2026 at 1:20=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Fri, Mar 27, 2026 at 2:54=E2=80=AFPM Burak Kaan Kara=C3=A7ay <bkkaracay@=
+gmail.com> wrote:
 >
-> On Wed, Mar 25, 2026 at 10:14:18PM +0530, Shreyansh Paliwal wrote:
-> > diff --git a/branch.h b/branch.h
-> > index 3dc6e2a0ff..3aa53eb243 100644
-> > --- a/branch.h
-> > +++ b/branch.h
-> > @@ -111,7 +111,7 @@ const char *branch_checked_out(const char *refname)=
-;
-> >   * Return 1 if the named branch already exists; return 0 otherwise.
-> >   * Fill ref with the full refname for the branch.
-> >   */
-> > -int validate_branchname(const char *name, struct strbuf *ref);
-> > +int validate_branchname(const char *name, struct strbuf *ref, struct r=
-epository *repo);
+> On Wed Mar 25, 2026 at 7:44 PM +03, Shreyansh Paliwal wrote:
+> > -long get_files_ref_lock_timeout_ms(void)
+> > +long get_files_ref_lock_timeout_ms(struct repository *repo)
+> >  {
+> >       static int configured =3D 0;
 > >
-> >  /*
-> >   * Check if a branch 'name' can be created as a new branch; die otherw=
-ise.
-> > @@ -119,7 +119,8 @@ int validate_branchname(const char *name, struct st=
-rbuf *ref);
-> >   * Return 1 if the named branch already exists; return 0 otherwise.
-> >   * Fill ref with the full refname for the branch.
-> >   */
-> > -int validate_new_branchname(const char *name, struct strbuf *ref, int =
-force);
-> > +int validate_new_branchname(const char *name, struct strbuf *ref, int =
-force,
-> > +                         struct repository *repo);
+> > @@ -998,7 +998,7 @@ long get_files_ref_lock_timeout_ms(void)
+> >       static int timeout_ms =3D 100;
 > >
-> >  /*
-> >   * Remove information about the merge state on the current
+> >       if (!configured) {
+> > -             repo_config_get_int(the_repository, "core.filesreflocktim=
+eout", &timeout_ms);
+> > +             repo_config_get_int(repo, "core.filesreflocktimeout", &ti=
+meout_ms);
+> >               configured =3D 1;
+> >       }
+> >
 >
-> It's more customary in our code base to have the repository be the first
-> parameter. Other than that this patch looks good to me.
+> Looks like the existing code uses static local variables for
+> performance. They can behave unexpectedly in multi-repo cases.
+>
+> I think moving the config into 'repo-settings' should be considered. The
+> config is already lazy-parsed, migrating it shouldn't be a problem.
 
-Got it. I will send a reroll for that.
-Thanks for reviewing.
+Yup, I agree that would be a logical change.
+We can take that up in a follow-up patch to this. Thanks.
