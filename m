@@ -1,116 +1,261 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f66.google.com (mail-yx1-f66.google.com [74.125.224.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BEC40DFD9
-	for <git@vger.kernel.org>; Sun, 29 Mar 2026 20:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA3A2F12D4
+	for <git@vger.kernel.org>; Sun, 29 Mar 2026 21:40:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774817720; cv=none; b=GUzacFX638aMJKCDsx8fUuc2kAqQ7Wb8UNQfcyR4UiH3n4tTTA1Y3mAbir7pNWXtw6RDnyMHKVFY3iuTFPCjFfcC6NRVcKg5XxmLtcx4vP1PYB0AuK5/GanewLir0Jx9yFkRdlWAy3bC0Hqo6If1bUCBaPksP2DwEGbuxlWkNB0=
+	t=1774820454; cv=none; b=FD3y3dXsEhghV7dIu5WvvIZYD9EE5UP5dRdwcvk3R3ICP9s+iWl7afednbo+9TVBA4cYl960MrXVg2Iy7C2hP0AEtZQDrUzQ3yfrWGm81VAqmvt1ukwO+8V3HNaLsy5Y4bJoOi9Bh+S0Mx8zSRLSU3FclI5NRj2arVmKQGG7leY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774817720; c=relaxed/simple;
-	bh=74M2wlgIEbIPfgvjkdmXENHuOSYQH/LP5mrH38DXvFs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TngBhSFvwcFNf6l2YmWMiL9Swl0dWPncABWkaN1QSOm4A+kHQuXObfyERYiSQk8YMq97HqedphD13diR0pID3mhkUZ6qaX1E2CN4RJroIHtPl/Yfb7C5iahfqZMQ5dsu8A1/ZBcYvknNnEKvBNqD19mkOMhxdMMLGt3bP3m0xkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JmEv+hhj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LlRXJJmg; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774820454; c=relaxed/simple;
+	bh=C6wwIgmOZUovcqK/MxIbpNvLRiyxmx3XqX4ZVJlNA7A=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=DGWBv+rdUSLvL0ORhuk1WRc7qrQ9WxpspeMirAW40QWbwQRKcElPSxy4ZV39qWTRLxVYBURYd9Xbl8D38sNr/n1pa55KMdpkk4LMOEyL2xi3+x97aFB+6LclthTpO/6BggY+A6a/ZCKOwPnfLPjRnBvZcwoHuvvqa12EEyjd7Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LEpTFLRU; arc=none smtp.client-ip=74.125.224.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JmEv+hhj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LlRXJJmg"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id BCD0CEC00AA;
-	Sun, 29 Mar 2026 16:55:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 29 Mar 2026 16:55:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774817717; x=1774904117; bh=T93DF5PZIR
-	I12mcmEmFsl37NPWtVqN5bYFwoVOuvR0E=; b=JmEv+hhjB4Z8wYAiVpJrkGCGZt
-	cG1eIq6lfrlJL8axA6ve3+yt+lVSohx6bxZv56RuMK3KJ9e4X5c37ZwXVTJmuWpI
-	N5bRUjIMysTO9xrQRkoPhwFAj8dOaFEvLi7aNWfznbepDYi5H6ufWYQEkX1rA2AC
-	doGu/8phO6MRasf62x7e0BJNyqLOLrohTynpFbgJgheL0nKrPyNOqB36d3Z51eLJ
-	u0deHKyk8TI7vOS7X2LpSbFX0by/pLT0MWBaRDWfDoS+aY+zgxudDjQLU+NKicY4
-	bZorKq7XjLYl/guPw5GuXMBiHfvcA3t+NKViyolcz79FjeIvKSWqV3S9JX6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774817717; x=1774904117; bh=T93DF5PZIRI12mcmEmFsl37NPWtVqN5bYFw
-	oVOuvR0E=; b=LlRXJJmg3QaIvvwcnJ1FFyR1f7CxEuk3dkvRpAfDYYUBjeE+3Bi
-	0JH7Sd9/Fo6q0D8coyqwdVNMEc1I8dXrnVWoQVnPZ45SKsLuvh9YfmFqNOd7pOoy
-	I4XAhqtm4Zl/fHN0powYrth5kiLEnWds+DMeiJ9SRGpijs7cso6+1m8GnzLUbO29
-	E82AVbjSD//YKq3yEmxPH6LZsTj6cOtH14JwesOhUUdiCPFaugEp/8ArP6QGATvL
-	PhvqOQduLj8be9tEVo/wD8mI4ifUFxfwheWBYNqUrJ4i23vKaDqqAny0Y3+/oBRA
-	05+u/s0KjawUdwbtjzFBoIQDkOo4dK9Uu4g==
-X-ME-Sender: <xms:tZHJaX_0j_bJ5pPbdakV5hcWu_ntIAwGjWs7Wqr8uixNYkbirEieTw>
-    <xme:tZHJaV8419aWWQc23iy8sNZqOhoht8ZYGLf3y1Ir3KxujKEkaco8zTbh8lWG6ZoE8
-    TXqLSLPfcVxMzKcXGWVYgdXOY6Pyt8Llki6eCSyUd72gnBu9B-N8hI>
-X-ME-Received: <xmr:tZHJaXQ2IBu371TXhX0XprKu4sQUyLx_G_E2pWpHMKEwM0A6obPEtJzb5BKR78mI0EunW7qc8vu0tKSIkq3qq59VM-8aAtctmg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeejtdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    eptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tZHJaZfVQtdntWbgwItBDXTtRuFjoY1_AEqYfRwq9zEzBz-0YMX-NQ>
-    <xmx:tZHJabBvQ9SJGduspjbsdhaxBseriehAHX05qQZm4oPobkBy1bX9Tg>
-    <xmx:tZHJabkNnN-Y5fe2mP73OJ46lbA4QcmMliBG1mZgMus3bgh6W32Xaw>
-    <xmx:tZHJaWdpLPKYOlduLm7z9zkcZHnnYEN87l7fIOhSe634QqqErGS_8w>
-    <xmx:tZHJabn13PEd9T0YrfE_197LOqFuwzhAT-x8DZ6B-MwC-3qFKbvV3Jbt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 29 Mar 2026 16:55:16 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,
-  christian.couder@gmail.com,  ps@pks.im,  toon@iotcl.com
-Subject: Re: [PATCH v1 1/1] cat-file: add use-mailmap/no-use-mailmap to
- --batch-command
-In-Reply-To: <a4ec7bfa-f16b-4505-9b37-d3dd137e93cb@gmail.com> (Siddharth
-	Asthana's message of "Sun, 29 Mar 2026 12:55:24 +0530")
-References: <20260328203615.60402-1-siddharthasthana31@gmail.com>
-	<xmqqldfbh32d.fsf@gitster.g>
-	<a4ec7bfa-f16b-4505-9b37-d3dd137e93cb@gmail.com>
-Date: Sun, 29 Mar 2026 13:55:15 -0700
-Message-ID: <xmqqh5pygxu4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LEpTFLRU"
+Received: by mail-yx1-f66.google.com with SMTP id 956f58d0204a3-6501d242e3fso185545d50.0
+        for <git@vger.kernel.org>; Sun, 29 Mar 2026 14:40:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1774820452; x=1775425252; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zZ7YCKb1Snk05THTWTAC9s4MHlhvgSuydROvN+RFJZk=;
+        b=LEpTFLRUSrgk5AJEcqdNp+ou3pgLaL2XF2Zww7HYSxINoUvRJ4khCCdSr1H+QuxgKA
+         i4OgkjfWuOaEeSOlZj0TTCYusR5XHGjPTXiYUcPjGlaXkKDshilFUohgCO1myC6xGYxh
+         fY18fMXhZ4mm4e6UeeJMHC1oqeRnWD0Jjm2oXEvULSapSf/4fNVweOkLGcIpVOie+n67
+         +6jTnCgXTvs985MM8gj54QQQjNHpJDFJESmyG6XgXvJRAOG1joQrYc6YnrSnsp40j6Ep
+         n6S7/25EmvBlhOQ8NwInHOuBJOsRrP3yLg57zBDJBr2qb3QBT0YagaY05hoQg7CtDEkn
+         X74w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774820452; x=1775425252;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zZ7YCKb1Snk05THTWTAC9s4MHlhvgSuydROvN+RFJZk=;
+        b=QkVftMGw9RbwBmpipXI1SE0GdFds2b4CESITPV6E8oto3HkOUs/t0fn3bdcbO6O7wR
+         4CuiSiv24XrglF4JaP/P/jXEScq7WekioXsycFgOuBbXDmZqyN2M474JckLmlqtAJvNc
+         OrpSiCu4hwQ+2f8R3Vy3ZLdQqsbKXZ9dSQ8jsG78UOYtQB8wVS3fEJQfqHIxgl5dK+CA
+         gFRgtM9KDyUJhCLu0XksnuvlagpaooMWPXSj28FyBIr45FvAeKfD+eZFCvTRGWasPMIF
+         P+AP/Lq0soTJlOBdBKSucpo11MnpbtC9N3avb84PySRVBIReZuGw8GPg3OFb1qgGkod0
+         cNIQ==
+X-Gm-Message-State: AOJu0Yx53ll8b78fPL+qhskqjVk+rLdwpxaodKhoapjMwuqR48Sc4xzT
+	MdZvnnbkkoy+IkRUOmpDbSha5crGATQ7togf2G8jXNUYfmjqVpAyUY/8MUfmVIZ6NvsnAEJFE54
+	6yPzAoltFIdEq
+X-Gm-Gg: ATEYQzxUCLVA72SblOqSSSPrmYvj0it3VbGCrKBGMntRlUiaO/AFgXecq0Va+8Z8vH6
+	oV7J97+sjjSA88tbKR/1qVv8Dd9AFKzg4yMhbAaoGB5maDjgI0sldVUT/eoBJqgWv/fO9KZmz0O
+	2qIp8iPd/R7rRpGTSh3Q70LJ2/DX/kNCSoaplA9NWnEBZcAh1mRnKGjwggmTrgTBiJkBmWkpr4r
+	B+6ohMde4C0rUhl5/oBq2gAjSQEKNNWJLdRH2YJQ/CkHtqdZL+x7XdzYnggwAErWEP/QAuOmaqG
+	2ytGSaJtOlh+dj96y84IVzrIR7JbFtbmZ2Qsqu13WS5Nj3c20qWNSoR1dHQO+sPAVrLDNgU8mp9
+	92+WYIqQZhoKSVQDdthX98F00NO226iUvTf+aiaRP06b/ybdZ21oDs0d4UsLC8BVlzupAdah2sa
+	pXx0p91fb+OND/1iXV1HjBZ9g4ykNyudEqrGYOX25qMH3w2pWU9IcBNh9eDnMOs4KyuaFTzOARN
+	/nfjrxMfKMUYrjEPuLg9wglvPpSPw==
+X-Received: by 2002:a05:690c:e:b0:79a:b861:e33f with SMTP id 00721157ae682-79bddd29958mr108879137b3.19.1774820451548;
+        Sun, 29 Mar 2026 14:40:51 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cba76dd1bsm26355487b3.44.2026.03.29.14.40.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Mar 2026 14:40:51 -0700 (PDT)
+Date: Sun, 29 Mar 2026 17:40:50 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/16] repack: incremental MIDX/bitmap-based repacking
+Message-ID: <cover.1774820449.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+Note to the maintainer:
 
->> And the cached information in process, if any, would be flushed?
->
-> No. The mailmap data is kept in memory. Turning it off only disables 
-> application of mailmap; turning it back on reuses already loaded data.
+ * Now that tb/incremental-midx-part-3.2 is merged, this series is
+   rebased on current 'master', which is 5361983c075 (The 22nd batch,
+   2026-03-27) at the time of writing.
 
-I was asking if the rewritten commmit objects were kept around in
-memory and how long; after you show an object once with mapped
-author data, toggled the mailmap use, and then try to show the same
-object again, you would want to avoid reusing the mapped result
-again.
+ * I suggest queueing as 'tb/incremental-midx-part-3.3'.
 
-But it turns out that the command, with or without your patch, reads
-the object data and maps the author/commit in it every time an
-object is requested.  In fact, in a bad case, I think it calls
-replace_idents_using_mailmap() twice, once in batch_object_write()
-only to grab the size of the munged object, then again in
-print_object_or_die() for both contents and the size.
+The below is a nearly identical cover letter to the one I sent for the
+RFC-version[1] of this series. The only changes between the RFC version
+and this one are:
 
-So there is no "tainted data retained across the mode switch"
-problem.
+ * A new commit to correctly handle certain cases when optimizing out
+   MIDX writes.
+
+ * Defined `strvec_init()` as a special case of `strvec_init_alloc()`
+   based on feedback from Junio.
+
+ * Minor ODB source-related fallout as a consequence of rebasing.
+
+ * Add trace2 instrumentation to help follow what repack is doing in
+   response to different packing configurations.
+
+ * Fix various memory leaks.
+
+The original cover letter is below:
+
+------------------------------------------------------------------------
+
+OVERVIEW
+========
+
+This series implements the third and final major component for an
+incremental MIDX/bitmap-based repacking strategy. As a refresher, those
+are:
+
+ 1. Refactoring code out of builtin/repack.c into individual compilation
+    units outside of the builtin directory.
+
+ 2. Implementing MIDX layer compaction, i.e., the ability to combine a
+    contiguous sequence of MIDX layers in an existing chain and replace
+    them with a single layer representing the union of objects/packs
+    among the compacted layers.
+
+ 3. (this series) An incremental repacking strategy that, unlike our
+    current '--geometric' approach, does not rely on periodic
+    all-into-one repacks.
+
+BACKGROUND
+==========
+
+Today, a '--geometric' repack with '--write-midx' rewrites the entire
+MIDX (and, when enabled, its reachability bitmap) on every invocation.
+For most repositories this is acceptable. In large monorepos, these
+costs can add up significantly, especially when those repositories are
+repacked frequently.
+
+The incremental MIDX support introduced in the earlier parts of this
+effort allows us to append new layers to a MIDX chain without rewriting
+anything. Combined with the support for MIDX compaction in 3.2, we now
+have all of the building blocks needed to maintain an incrementally
+growing and shrinking MIDX chain as part of the repack cycle.
+
+STRATEGY
+========
+
+The incremental repacking strategy implemented in this series works
+(roughly) as follows:
+
+ 1. Repack non-MIDX'd packs using an ordinary '--geometric' repack,
+    optionally including packs from the tip MIDX layer if and only if it
+    contains more than 'repack.midxNewLayerThreshold' number of packs.
+
+ 2. Prepare to write a new MIDX layer containing the freshly written
+    pack(s) (and any surviving packs from the tip layer, if it was
+    rewritten).
+
+ 3. Perform a compaction pass over adjacent MIDX layers to restore a
+    geometric progression on object count among layers in the chain
+    (determined by 'repack.midxSplitFactor').
+
+ 4. Write the new MIDX chain, link it into place, and remove redundant
+    layers.
+
+In effect, this approach encourages MIDX chains where:
+
+ * older layers contain fewer, larger packs, and
+
+ * newer layers contain many smaller packs.
+
+As a result of the compaction pass, we prevent the chain itself from
+ever growing too long.
+
+This roughly matches the description of this algorithm I gave at Git
+Merge last year, which is covered on slides 80-131 of this presentation:
+
+    https://ttaylorr.com/presentations/git-merge-2025.pdf
+
+THIS SERIES
+===========
+
+This series is organized roughly as follows:
+
+ * The first three patches perform small-ish quality-of-life refactors
+   within the MIDX machinery.
+
+ * The next two patches introduce `--checksum-only` and `--base`
+   options for `git multi-pack-index write` and `compact`, which are
+   needed by the incremental repacking machinery to assemble MIDX
+   chains without prematurely updating the chain file.
+
+ * The next six patches prepare the repack infrastructure and pack
+   geometry code for the new repacking strategy.
+
+ * The final three patches introduce the new repacking machinery, expose
+   it to users, and then extend it to work with non-geometric repacks in
+   that order. The first two are the substantive patches of this series.
+
+WHERE WE'RE AT
+==============
+
+This series delivers the final substantive component of this overall
+effort to enable the new repacking strategy implemented here. There are
+a couple of (comparatively much smaller) items that will be useful as
+follow-on items, including:
+
+ * "Reachability-infused" geometric repacking to emit small cruft packs
+   to introduce other ways to update the set of cruft objects beyond a
+   whole-repository traversal.
+
+ * Richer bitmap configuration to determine which bitmap(s) to carry
+   forward between adjacent MIDX layers when doing an incremental
+   repack, to prevent an endless accumulation of reachability bitmaps.
+
+Like I mentioned earlier, I think that both of those are significantly
+smaller challenges than this and the previous series.
+
+Thanks in advance for your review!
+
+[1]: https://lore.kernel.org/git/cover.1771978829.git.me@ttaylorr.com/
+
+Taylor Blau (16):
+  midx-write: handle noop writes when converting incremental chains
+  midx: use `string_list` for retained MIDX files
+  strvec: introduce `strvec_init_alloc()`
+  midx: use `strvec` for `keep_hashes`
+  midx: introduce `--checksum-only` for incremental MIDX writes
+  midx: support custom `--base` for incremental MIDX writes
+  repack: track the ODB source via existing_packs
+  midx: expose `midx_layer_contains_pack()`
+  repack-midx: factor out `repack_prepare_midx_command()`
+  repack-midx: extract `repack_fill_midx_stdin_packs()`
+  repack-geometry: prepare for incremental MIDX repacking
+  builtin/repack.c: convert `--write-midx` to an `OPT_CALLBACK`
+  packfile: ensure `close_pack_revindex()` frees in-memory revindex
+  repack: implement incremental MIDX repacking
+  repack: introduce `--write-midx=incremental`
+  repack: allow `--write-midx=incremental` without `--geometric`
+
+ Documentation/config/repack.adoc        |  18 +
+ Documentation/git-multi-pack-index.adoc |  19 +-
+ Documentation/git-repack.adoc           |  44 +-
+ builtin/multi-pack-index.c              |  48 +-
+ builtin/repack.c                        |  90 ++-
+ midx-write.c                            | 137 +++--
+ midx.c                                  | 106 ++--
+ midx.h                                  |  11 +-
+ packfile.c                              |   2 +
+ repack-geometry.c                       |  50 +-
+ repack-midx.c                           | 717 +++++++++++++++++++++++-
+ repack.c                                |  23 +-
+ repack.h                                |  25 +-
+ strvec.c                                |  15 +-
+ strvec.h                                |   5 +
+ t/meson.build                           |   1 +
+ t/t5334-incremental-multi-pack-index.sh |  63 +++
+ t/t5335-compact-multi-pack-index.sh     | 113 ++++
+ t/t7705-repack-incremental-midx.sh      | 461 +++++++++++++++
+ 19 files changed, 1792 insertions(+), 156 deletions(-)
+ create mode 100755 t/t7705-repack-incremental-midx.sh
+
+
+base-commit: 5361983c075154725be47b65cca9a2421789e410
+-- 
+2.53.0.729.g817728289e1.dirty
