@@ -1,69 +1,69 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24730DECE
-	for <git@vger.kernel.org>; Sun, 29 Mar 2026 10:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FD92C3257
+	for <git@vger.kernel.org>; Sun, 29 Mar 2026 10:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774779495; cv=none; b=Ex6pg0DZGrMBJr39IStf66n5m222mvcbqGENpyIBTDYjEUnV2J3neeWrqWvr3THG3m/0OyTFUAZvZWf9TkJKHJpU/JHNaE2v+QfzRb3ZUpv2adP6eI6nKKvMAjkMnqKv0VaMM1lGL2RVnlEHdbrSCwSfK8CY148ZzKRDsmoelhE=
+	t=1774779498; cv=none; b=XBrwoCJYiCyIrFpK8MA7LksJgf9ehgKJ3Ta9QrZ8D8tabX+p+T8KpS2L1KbiyI8ompeqpUlkSJEFIxf1Gbcn9LcOeHaLIric4xpoTkM+XxDSuDy0Pb68x1+323xdbNHE2T4nk9wjRAXvKFDtgmL+g1+0v0KsByUDjaKxtg5iteM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774779495; c=relaxed/simple;
-	bh=lLgTBFemq3TIbhQRZqzDaet1q5JWljRV/EelhXC2kR8=;
+	s=arc-20240116; t=1774779498; c=relaxed/simple;
+	bh=tf3K8SjZAMWi+N0D/gbmRDWOkhrOr0jaLV6i8ot5DTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpMdLo46OGKIibGuN7AFWEyjCJEMlA51tiV0y4vp8d0qcqf4VLRDarZxxQHpUFjvbr10gd8yaozX9qQMt6fE9zHQ/GhCQ6kUN5jhN/rBXZSDal2MIbs3a4Oq71bCgOJXWryckXEeRhET4fW+HeHscohDk7WUhhKvbx+8x9cAu+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XdpoKkgj; arc=none smtp.client-ip=209.85.214.178
+	 MIME-Version; b=ZLpIOkpSq9pHlYG7InOzfsVu4mTEbz3qoROohcQu+EJHdfbX6C5v6z53CeUXJEWZiZTUT/zymhO5Uelc5ska6Kkdh+vuJeIKHWg/Os6NLud3Q1/zlKSBf73CfJrjH/YVTcqILhxM51Y4/ri01GLBg7dUaJoLmUy/fG0G5A1YD0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I1Tkwiy5; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XdpoKkgj"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2b24fcc2b5dso1166785ad.1
-        for <git@vger.kernel.org>; Sun, 29 Mar 2026 03:18:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1Tkwiy5"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c73e9e4cdf7so1483646a12.2
+        for <git@vger.kernel.org>; Sun, 29 Mar 2026 03:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774779493; x=1775384293; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774779496; x=1775384296; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kGCYmIAc6gMdreoaNJWU7+SosDwBgMhVeM3UzllYE2o=;
-        b=XdpoKkgjo7QeuRfNsqxmHjQusFNjQmMWklHlsFk8dck6lhGbCJxmT+v3B4402USye+
-         onLqj+66Fwja+pL5rL2c+SM0SATgLpjqR5tWJTA6WjJgIYqWNoykYPn4WP1C+MjHlQzw
-         aYQvtjP1DqyInszbgdMLuN1OLo9X7+ifE/S6CrYWRjPYqawn8+0fOr7auQo+EAVSpGki
-         8KYQyaVyzC0xn1hMatKwdao2C5JDKz2SuVicLWyqcYaoHMdU4LuqxJeR/XEEME/h/HQk
-         AiPRKGbID6ev6vLShlKLJWrS3qBsTFTHxyIs5f4bWjBhcjXHsYpmkhgGBhPPq60ZWkB1
-         isdA==
+        bh=J+hB7jTEIMTlGhHWPKUzW8bqsVBUSBb2nVxFiwd8UvM=;
+        b=I1Tkwiy5eVnyNxmQrkoMApcFH2AB+Ngno6lxy1foBY0yAfUvgeUSMOu7Wj66PAakDt
+         wIbaeR28GhTinhBdHd3kEuc1Qgmoo40ZF6+jUtPsLMF8Om7oLnuuLESPjacV4hbmPrCj
+         BMEpwdo76n5m0xPwRWZnF/d79di8+L7G8+FIJr2eopd8jX0iz7DwYCnGIk2xSysdQ8+j
+         8G0FAc/XrkaMuflWaryQiiS5aTy7ofWP98qSpLFf3AOG+ccRmVIyy6c3csdJ+DI7laPI
+         NM9H+i6altb5CMYttiTIhhqLW5MzAwZcEQMGmP9ZWXqlkXbX785si3pnFTAz/oeasViG
+         SwOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774779493; x=1775384293;
+        d=1e100.net; s=20251104; t=1774779496; x=1775384296;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kGCYmIAc6gMdreoaNJWU7+SosDwBgMhVeM3UzllYE2o=;
-        b=PDp8i0cN45df/sPJSgQe5mLzxP9+VqnWPN8c/IcYfinr1PX496DKsxdwfQ5QZg+RXW
-         AtcfEovKxu9Hp6Jr51hmBo34SCXMquVke+FXuiYGE/Ki2rcK237ULR1BqU45yivFB46j
-         9phCc1+BOGxJlgKpxmhrteCFjKyA0uDISoDjQOI7t92POud2oyHDQr9E3yrxCeD7A5mA
-         cFLmqwxFASWTXXsh0o1oyNvtPHK3awJTAESMNcA2gIDRgzT/esvFYHoBxDITTChukuWx
-         ipiZ4gaaOwt6+WnMPqiK0nFOXGL8NNW/gJgHpAvDIx5Ni+mqc3VniggM10KjBkjRoyyb
-         xjNw==
-X-Gm-Message-State: AOJu0YywK8e8bS9FHu5WLKE8XSdexheK9IDU0DRP8Nc+PZ8ZZDVhGr3N
-	BNK7tGFzLNO5T8TTTZj8X6MPQrm3MO/AMYQsLmdn9WyFbZzJu7Stg7G3zVddKA==
-X-Gm-Gg: ATEYQzxxJr7DidAyYC+x3ibsS8lxshu/xg1aBL0cTonVtl5jvd5ZmLfK94yZ3b/6LWm
-	PArcwq0ZiO6aFVaQLgsfDRnI9ztqlY8Qt5oSrsl8cj8mzUSU1chHgan+EGwtf4HsRHlwvaqrD12
-	oB4H3ExJmzAq134yN+x4KxEZv6AqYLsVY6kwQLJOxoEdvzToMH7+i/GmpNnFbL2sY04P63W/S5j
-	jahqiulN458x3GT3/ATWDvVHPVR+BgB5st1/48YFcKb9RmKTR/5RzS6DmjOJQa4ZaXj4Kv7h6p5
-	HzGbtNRBHvO3fzux76OMvhUPFjdXPlZSOK53aO3S7VNAF6GDLMvHzNXAEiZiiwnM4/eFWv1MO6L
-	OMom39gm6H0iBgszb/h60bBJr+e94sUkvIV2jgEYA5lqlgwT7Ug6vncfCSohw+yiRET/YOBqKoH
-	lM/FN8MSQGqqkrtHYhMHCugyXsoS07mpNXEAKfmzYNhxk=
-X-Received: by 2002:a17:902:f602:b0:2b2:5099:2f3e with SMTP id d9443c01a7336-2b2509934b0mr6378675ad.4.1774779493378;
-        Sun, 29 Mar 2026 03:18:13 -0700 (PDT)
+        bh=J+hB7jTEIMTlGhHWPKUzW8bqsVBUSBb2nVxFiwd8UvM=;
+        b=ntZQwvXguuaOHwyAwoArwX/ewRxX5NLMVoexB+nscGd8hllaHWWLu2nIhO2XWc5Zh+
+         ldGP+FauJRayrlFk/rm1vc+gTJ8MeK2Ttsg2wo3chyV34iIonWrOPRVPvWxIEgCXWXl9
+         A4A6do3oq1znjH4gHpfGAj9T9vHq7pLNMvsymAiKtVN5Ccd3HMp/zyo9OPJaeM9ih7Zy
+         vbwPa3begKYZOqriTr/UGkTuAwk6ESJbAXYhU8qa+b+fHS1fGnv4VovPCLolfzIINBI0
+         hQ/FM2CgnZCGuSvJe0sjQq/Paf34fmL533SYmgDweOm6qubY3WVaYdn43q+UAdPAl4k3
+         W/5Q==
+X-Gm-Message-State: AOJu0YyHTTpYmWoQCXlsBreFJUl86SN0ItDIrXam6P9egJF8VExJVOrs
+	u2L+FpgijjFM5r1xrBJvLuJeNobjhGz/LNY+ikQ4uoj83mq4XgZ/ZZ0OsY8HcA==
+X-Gm-Gg: ATEYQzy6LHVVZmt3Q2RziMb8MYT5w/4gTIFXcMc778+PnIwlpd1/336vsts+aR0Hsbf
+	8qqCgrBvtx98fLBlgkXryEubNh/ohrVNONmDQSOd/CV1l6BHZp83sYwZ0BE7CsfU4Qb5v9wGpJX
+	8NTjVXF9LjQ0TDiyRPGgh4urtPqfhHEDbNAbzsrNbiFjinDzhL7QPrx0XBQWF68p7UTRFdFvyEa
+	RmAf2nzWuTXUNFvNusVJxpOPzdUWLpE5zRIrMqaBVZKVKeTl+oKOb1jzCs6m30BDr0R1xxw4xLj
+	1FLLIYCzoQvvp4t1gBXd+5lyYJFY1q0OfOMXkBScJwV/3GnJP068FF/ke4A51Dsrk4UdnJtEMwc
+	Xu3MRlKcIPQ7AcaXPSzL04VAlQEXC8FXaT8DU1gf3bpwFKSGLylSCSo4bCHzfBfsQps96UqciVT
+	oRE1kFmTjtfTXPTHNr2wgQRiWcJwwCVveYmiIxZnDOutY=
+X-Received: by 2002:a17:902:d552:b0:2b2:45b7:3078 with SMTP id d9443c01a7336-2b245b73b92mr45344815ad.3.1774779495892;
+        Sun, 29 Mar 2026 03:18:15 -0700 (PDT)
 Received: from Shreyansh-PC ([2401:4900:88eb:4aec:6fcd:e3ea:7ddd:8d9b])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b242679bb3sm46199185ad.30.2026.03.29.03.18.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b242679bb3sm46199185ad.30.2026.03.29.03.18.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2026 03:18:13 -0700 (PDT)
+        Sun, 29 Mar 2026 03:18:15 -0700 (PDT)
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Subject: [PATCH v3 2/5] refs: add struct repository parameter in get_files_ref_lock_timeout_ms()
-Date: Sun, 29 Mar 2026 15:46:40 +0530
-Message-ID: <20260329101725.1092900-3-shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH v3 3/5] refs: remove the_hash_algo global state
+Date: Sun, 29 Mar 2026 15:46:41 +0530
+Message-ID: <20260329101725.1092900-4-shreyanshpaliwalcmsmn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
 References: <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
@@ -76,115 +76,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-get_files_ref_lock_timeout_ms() calls repo_config_get_int() using
-the_repository, as no repository instance is available in its scope. Add a
-struct repository parameter and use it instead of the_repository.
+refs.c uses the_hash_algo in multiple places, relying on global state for
+the object hash algorithm. Replace these uses with the appropriate
+repository-specific hash_algo. In transaction-related functions
+(ref_transaction_create, ref_transaction_delete, migrate_one_ref, and
+transaction_hook_feed_stdin), use transaction->ref_store->repo->hash_algo.
+In other cases, such as repo_get_submodule_ref_store(), use
+repo->hash_algo.
 
-Update all callers accordingly. In files-backend.c, lock_raw_ref() can
-obtain repository instance from the struct ref_transaction via
-transaction->ref_store->repo and pass it down. For create_reflock(), which
-is used as a callback, introduce a small wrapper struct to pass both struct
-lock_file and struct repository through the callback data.
-
-This reduces reliance on the_repository global.
+This removes implicit reliance on global state. With no remaining uses of
+the_repository in this file, drop USE_THE_REPOSITORY_VARIABLE and the
+dependency on environment.h.
 
 Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 ---
- refs.c               |  4 ++--
- refs/files-backend.c | 19 +++++++++++++------
- refs/refs-internal.h |  2 +-
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ refs.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 5cdc8858c5..2f8c8427cd 100644
+index 2f8c8427cd..d3abce0318 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -989,7 +989,7 @@ enum ref_worktree_type parse_worktree_ref(const char *maybe_worktree_ref,
- 	return REF_WORKTREE_SHARED;
- }
- 
--long get_files_ref_lock_timeout_ms(void)
-+long get_files_ref_lock_timeout_ms(struct repository *repo)
- {
- 	static int configured = 0;
- 
-@@ -997,7 +997,7 @@ long get_files_ref_lock_timeout_ms(void)
- 	static int timeout_ms = 100;
- 
- 	if (!configured) {
--		repo_config_get_int(the_repository, "core.filesreflocktimeout", &timeout_ms);
-+		repo_config_get_int(repo, "core.filesreflocktimeout", &timeout_ms);
- 		configured = 1;
- 	}
- 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 7ce0d57478..ee8dd771a4 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -792,7 +792,7 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
- 
- 	if (hold_lock_file_for_update_timeout(
- 			    &lock->lk, ref_file.buf, LOCK_NO_DEREF,
--			    get_files_ref_lock_timeout_ms()) < 0) {
-+			    get_files_ref_lock_timeout_ms(transaction->ref_store->repo)) < 0) {
- 		int myerr = errno;
- 		errno = 0;
- 		if (myerr == ENOENT && --attempts_remaining > 0) {
-@@ -1190,13 +1190,17 @@ static int remove_empty_directories(struct strbuf *path)
- 	return remove_dir_recursively(path, REMOVE_DIR_EMPTY_ONLY);
- }
- 
-+struct create_reflock_cb {
-+    struct lock_file *lk;
-+    struct repository *repo;
-+};
-+
- static int create_reflock(const char *path, void *cb)
- {
--	struct lock_file *lk = cb;
--
-+	struct create_reflock_cb *data = cb;
- 	return hold_lock_file_for_update_timeout(
--			lk, path, LOCK_NO_DEREF,
--			get_files_ref_lock_timeout_ms()) < 0 ? -1 : 0;
-+			data->lk, path, LOCK_NO_DEREF,
-+			get_files_ref_lock_timeout_ms(data->repo)) < 0 ? -1 : 0;
- }
- 
- /*
-@@ -1208,6 +1212,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- {
- 	struct strbuf ref_file = STRBUF_INIT;
- 	struct ref_lock *lock;
-+	struct create_reflock_cb cb_data;
- 
- 	files_assert_main_repository(refs, "lock_ref_oid_basic");
- 	assert(err);
-@@ -1229,8 +1234,10 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 
- 	lock->ref_name = xstrdup(refname);
- 	lock->count = 1;
-+	cb_data.lk   = &lock->lk;
-+	cb_data.repo = refs->base.repo;
- 
--	if (raceproof_create_file(ref_file.buf, create_reflock, &lock->lk)) {
-+	if (raceproof_create_file(ref_file.buf, create_reflock, &cb_data)) {
- 		unable_to_lock_message(ref_file.buf, errno, err);
- 		goto error_return;
- 	}
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d79e35fd26..e4cfd9e19e 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -43,7 +43,7 @@ struct ref_transaction;
-  * Return the length of time to retry acquiring a loose reference lock
-  * before giving up, in milliseconds:
+@@ -2,13 +2,10 @@
+  * The backend-independent part of the reference module.
   */
--long get_files_ref_lock_timeout_ms(void);
-+long get_files_ref_lock_timeout_ms(struct repository *repo);
  
- /*
-  * Return true iff refname is minimally safe. "Safe" here means that
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "abspath.h"
+ #include "advice.h"
+ #include "config.h"
+-#include "environment.h"
+ #include "strmap.h"
+ #include "gettext.h"
+ #include "hex.h"
+@@ -1472,7 +1469,7 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ 		return 1;
+ 	}
+ 	return ref_transaction_update(transaction, refname, new_oid,
+-				      null_oid(the_hash_algo), new_target, NULL, flags,
++				      null_oid(transaction->ref_store->repo->hash_algo), new_target, NULL, flags,
+ 				      msg, err);
+ }
+ 
+@@ -1491,7 +1488,7 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+ 	if (old_target && !(flags & REF_NO_DEREF))
+ 		BUG("delete cannot operate on symrefs with deref mode");
+ 	return ref_transaction_update(transaction, refname,
+-				      null_oid(the_hash_algo), old_oid,
++				      null_oid(transaction->ref_store->repo->hash_algo), old_oid,
+ 				      NULL, old_target, flags,
+ 				      msg, err);
+ }
+@@ -2379,7 +2376,7 @@ struct ref_store *repo_get_submodule_ref_store(struct repository *repo,
+ 	subrepo = xmalloc(sizeof(*subrepo));
+ 
+ 	if (repo_submodule_init(subrepo, repo, submodule,
+-				null_oid(the_hash_algo))) {
++				null_oid(repo->hash_algo))) {
+ 		free(subrepo);
+ 		goto done;
+ 	}
+@@ -2571,14 +2568,14 @@ static int transaction_hook_feed_stdin(int hook_stdin_fd, void *pp_cb, void *pp_
+ 	strbuf_reset(buf);
+ 
+ 	if (!(update->flags & REF_HAVE_OLD))
+-		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
++		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(transaction->ref_store->repo->hash_algo)));
+ 	else if (update->old_target)
+ 		strbuf_addf(buf, "ref:%s ", update->old_target);
+ 	else
+ 		strbuf_addf(buf, "%s ", oid_to_hex(&update->old_oid));
+ 
+ 	if (!(update->flags & REF_HAVE_NEW))
+-		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
++		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(transaction->ref_store->repo->hash_algo)));
+ 	else if (update->new_target)
+ 		strbuf_addf(buf, "ref:%s ", update->new_target);
+ 	else
+@@ -3145,6 +3142,7 @@ struct migration_data {
+ static int migrate_one_ref(const struct reference *ref, void *cb_data)
+ {
+ 	struct migration_data *data = cb_data;
++	const struct git_hash_algo *hash_algo = data->transaction->ref_store->repo->hash_algo;
+ 	struct strbuf symref_target = STRBUF_INIT;
+ 	int ret;
+ 
+@@ -3153,7 +3151,7 @@ static int migrate_one_ref(const struct reference *ref, void *cb_data)
+ 		if (ret < 0)
+ 			goto done;
+ 
+-		ret = ref_transaction_update(data->transaction, ref->name, NULL, null_oid(the_hash_algo),
++		ret = ref_transaction_update(data->transaction, ref->name, NULL, null_oid(hash_algo),
+ 					     symref_target.buf, NULL,
+ 					     REF_SKIP_CREATE_REFLOG | REF_NO_DEREF, NULL, data->errbuf);
+ 		if (ret < 0)
 -- 
 2.53.0
 
