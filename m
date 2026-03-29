@@ -1,70 +1,70 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A368A314B63
-	for <git@vger.kernel.org>; Sun, 29 Mar 2026 21:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E92FF153
+	for <git@vger.kernel.org>; Sun, 29 Mar 2026 21:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774820472; cv=none; b=Q/5AlGQg+xad22mv1k33aue7clc88WXW1DOfGUGJKf6t63pexSojv4cnM2WavMg3P6WnjQXoikD9JDuxNORnRxCH0V3/KCuSzs8Gg88Qhea3IdLSPoaGS8FEcbMHlZRv1wZ+ajBJskI5NrW1AuN8huaOMkcJWa640tIzvy1tzfA=
+	t=1774820474; cv=none; b=USIt0a+Na+t7JTc/qNrYDiIe65RgSLr25hoRtJHqbc3vOByFl3rOUd/rWIP7Pi9LvMiVIuw+uQHBXfO4kaGBgAa/toZ9jcNE/Ks4pBU/tdGNIUwOgL4pJ0eiBWMb2Y6EpjH2ALXtw1tqvHlImFW+r7mwDd7JWauJhutTh1f3Yrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774820472; c=relaxed/simple;
-	bh=XNtHu5FIXnYCDL4sPd+GCih496RtnywHCfsoVBolMwk=;
+	s=arc-20240116; t=1774820474; c=relaxed/simple;
+	bh=olXPEj8RBMy6g61AUe5JDfHG/RNUgusqv4PQcCyKYC0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hToz05qNEmc36xtINRiOyAwuNs0TUcKBt1PBWOvrGC1AUZKhPXOTV2Oc8mgdVqpe3WBg4SoDnA+cE4sgTEjjWAgnMGUrCnppI3ePs+5/U995c9JHLklpK5Xq3sv/xfeKKFuCjnCRox2KbHY1RZakzt8A6lWUfvmWUFVlDqiAqOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LYB9gRcL; arc=none smtp.client-ip=74.125.224.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=LVtBHeUwoIk4qQja68/nC9vysPnkwhsR2AY4da34trsrZVZQVhb3X1RHNoT69qNg9Sy7pEgn8o5gl3knwfoA+IxY8d4l7G6dd0WfMJEuAm/ltywBisZn9Sjky669gL8HZQ6K/+muWXv0FWSepCuxsSQ7RSN5v7vs5Msjqp6vw/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=BuK6JLlE; arc=none smtp.client-ip=74.125.224.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LYB9gRcL"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-64fc6b21789so3229825d50.3
-        for <git@vger.kernel.org>; Sun, 29 Mar 2026 14:41:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="BuK6JLlE"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-6501c4857b2so524184d50.3
+        for <git@vger.kernel.org>; Sun, 29 Mar 2026 14:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1774820469; x=1775425269; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1774820472; x=1775425272; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cKwAVnhf7WiJql7HrpOcMhHEBNwOnVOeWi3hgqn8Gbw=;
-        b=LYB9gRcLgQelAl+3G7focAhCR62mfupWHzMpRGcLKRI5KRt0sX4q+1MMr0oJjbaSES
-         77dGLeHuEtAv48B4DSvCBhDt2/geawHlWsfccQDjt1dA+m2xR6ec5vS30gJZbEfSLUXW
-         FdwoGAh6zanKI7LPal0w5M9r+1ILcbrPU9RFJWZ+jOSODIN/FkB8X7pU2Qumw1zSeBNM
-         cDSm7dSQP4AlkJHgHPlRDTGUQR3u5iLCHLadQLsakmwH9Fz+xlm/B7zKjos8UZ4YZIXD
-         S3f6wRRh0lLVKjAz6rRl83A0lB6L9vYztXnPHvdROIxMfE+RSVGdq2vwX3hJxkhbP4fx
-         bUYA==
+        bh=/DWXJOUVqEKuGBigJTup/Pma71DzlKb0bt4Sj6/35nU=;
+        b=BuK6JLlE/Fuqe8gJRSi3por9oVuNjz/3Zv8shzN+GKNY2Y8XeRAr2EySvumFZ5AmbU
+         HcTbCcJ5fgwSDZ9dpwHHVqz8uUVZoAR0IqkN33UY7zzwkmAdTNzssdaABi7KYx1fqM4r
+         IU4HUQ+/47SqQ2qEWa1F96Qam9ahdFLJsiasGE7sGsR8NEtSyf5ltupDP9c7c4Yq0bL7
+         yOPf5ikGMpMnS3HXblKLrQQrcEXZmmm2bUcglCgbntVOpF6aL0ouxeNKUUYzJFx0QQkm
+         IO4kdLGFy9nAhI11Ovc3L3NtV32Il2JoCBM+RpXMrMI2EHx+tmzNQxq+rudPZINiDPy3
+         1yFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774820469; x=1775425269;
+        d=1e100.net; s=20251104; t=1774820472; x=1775425272;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cKwAVnhf7WiJql7HrpOcMhHEBNwOnVOeWi3hgqn8Gbw=;
-        b=BeM6x9x8rlA2jzftk+XogCmiKf+UHZA1HiQb2z3ui+xGhtB9kqadMHs03luz/R+ii1
-         wQgF8ute16SNqCVg555lQkOcWksjg8et7KNX+YRVmBXvmrc1n7f8gcC7DChFzu5NxIO2
-         QjgsU0eg3Nud3p8SQYi8W4ruS/oYdDg6A/2msMN9gfV+kk9TuK9iXYA1ZCSaTuGTwc3F
-         U1fxu2wCYz0CB7Cd8iv9uih8ZY3y/vpN4Pugo4S44rm0+WK7anyCa7/FscR7LSpDD44f
-         Dxe6ppFFCOgZy8YSNlbBxTVtmVP9Bs/uaMB2oJBZ3npDsKCZRINWqWPTdI37vUSmEOgN
-         QDKw==
-X-Gm-Message-State: AOJu0YyI26cTDfzT60dYMGVSieBTJNlQjQ/FafUqdQw6W1ZJksHwXK9i
-	L7YYx5ghO33uCEE64WWdqZXEo226z1TABtlVwn3R4XwhKToUvNfT1Pf5Vi0QfWtLkD2rOQmoUVh
-	BR4Ch0Fm7bg==
-X-Gm-Gg: ATEYQzxYiZaiVBnrOcnJcteeWHqUBRL4PfgxextF7ElBwysBkTKDogcM6cSGlTVDVb1
-	Yg3aHEddnAUhdX2UteLsijEtuGruFP2d6aTD7c9+uFVpxxxl/QDIGyfgxDQSxKlJXEBEE6u6f4D
-	xoF3Gbe2TvYYtbKvCNPmGMsJVzF4fn9UUIjxSU9D92sQT6BA01dTGxjP0mfoiZ44mwJ6gfbwapo
-	aVcIVa4XRJ5CLZLWGATRV+/Un6fVkWJgIZcmjugLwc7jQQ4LYMJW8N3hkstSrFEBihjVTLKc7TG
-	0j5RRlaXIccsmeOOud0KrgnVf9bzga5XVDywgY/s0ruyP1W6cp8YiTOiyvAf7jLBaScXNzD72wM
-	TpmXkWvIHeJV1QdUFQpedYAyy3w1Um59biT5h8HIXJ7NYZ2ANayI+E4GL1wOlRKVKJFGmMgHDDj
-	hvmW5tvQhpDQTT0K/AF0xJclU708dUKcQF/RR4tlALuAtBAJU1OOXH+zx82eRy+oRuBb71URjkV
-	3Gxmw3uUVaIgWBu1jcvbvafpyRXLQ==
-X-Received: by 2002:a05:690c:c364:b0:79a:8a38:d13b with SMTP id 00721157ae682-79bde029a80mr85405287b3.40.1774820469451;
-        Sun, 29 Mar 2026 14:41:09 -0700 (PDT)
+        bh=/DWXJOUVqEKuGBigJTup/Pma71DzlKb0bt4Sj6/35nU=;
+        b=CPjm972lhlyfhxW3UnrkYrf/H2q1qbobKN+Tm8mDDPlBY+aOhNlFPg9JQqic9iSVQw
+         KhVQBPc6PExXBmhvTIOYDujeCpLpzq2F56X2PFJguIsezl8X7P9Xk+XB6AjTyyJtzO/U
+         NmaCBzWTvzH1bU3Se+pUYF/nOUaPITgTi/11MwIzYT7e/OTOq8BBeaFBbSWEpXe4vATg
+         XmOSSEjdYL4FpNJRpCTw2tbZxW+9G0+JrwAvHVosIB+yoNGClQ3URMDbmL6pfX7AYPDp
+         n9yDIwXIrDtPuvmSWIJ0X0mbdUcVD24KW50KHzhRRkZ8zvIUTP0r6+yjjlJLPDmQ6OlE
+         h+RA==
+X-Gm-Message-State: AOJu0Yx3xzIns9G31DeZK/5jCg4NtJ/OYbOxtEEuNR3teHsnHcmN9ScS
+	n7l1d5LguYaZymvTTiOsXoMV47l1teYgML8YfRuX1QkfGYGXldqFTuCZJoltOtthdVoziHcYQBx
+	x10Ty+dpsIA==
+X-Gm-Gg: ATEYQzwbJQgd+Fiq51ayiVIPTKXw0rc9I5gxLFcMQWrLMr4sDobFfbz84QuPqbLs9jX
+	1X7ZiQqCd40wWt03iJCPCVuD8Gg2df3gXkkJsA6YEH37B9YbHOyDjLW0OTvvl6DNj0orI8kmu6M
+	himixTyAr4a6JGU6KD6fdI6AoqFCVs/VyfF3vd7FnaAUZuJLFB/4/zfQypK51W65/jzqsT4uHxZ
+	MxHVs3xitZmsSRcBPkYl3035o7fLrwW1wduOm/K4evVajIbAhvpOBQ4f2kGmO97aq3FC1hPDCV6
+	GpyNf7CdOz3uxBK4XXzN6hyo8cuJXJXIi7XrfjlIquyP1ZIylG7FWuCJmjOdZq11lO4O0H9xxmx
+	oCqh9I/c7wfQAMdDvHCOlIk177HlDyka93hfeRN9MwYNpuhGv5441lMN7H48V9QhmTnZARSz4vP
+	3oriTVa+pFUUDMZ0e5VqdSVbev16pyrGRyNVhPD/+BKmA7T0xmMc/2D6JEJDMsBLRecLTEC4dFs
+	KjVxM+6pIhygMYoCH94ZOgwwrFEiQCiZeihJMnr
+X-Received: by 2002:a05:690e:14cd:b0:64f:fc0d:6240 with SMTP id 956f58d0204a3-64ffc0d6391mr8972619d50.62.1774820471980;
+        Sun, 29 Mar 2026 14:41:11 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cb9a8daf5sm27041207b3.25.2026.03.29.14.41.09
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65019b581e9sm998787d50.4.2026.03.29.14.41.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2026 14:41:09 -0700 (PDT)
-Date: Sun, 29 Mar 2026 17:41:08 -0400
+        Sun, 29 Mar 2026 14:41:11 -0700 (PDT)
+Date: Sun, 29 Mar 2026 17:41:11 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 07/16] repack: track the ODB source via existing_packs
-Message-ID: <2d377f534071ad9def3fb4860b2581197d02726b.1774820449.git.me@ttaylorr.com>
+Subject: [PATCH 08/16] midx: expose `midx_layer_contains_pack()`
+Message-ID: <6af23849f1d499e7a23d1ef4a70ac3d29748e1ce.1774820449.git.me@ttaylorr.com>
 References: <cover.1774820449.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,76 +76,60 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1774820449.git.me@ttaylorr.com>
 
-Store the ODB source in the `existing_packs` struct and use that in
-place of the raw `repo->objects->sources` access within `cmd_repack()`.
+Rename the function `midx_contains_pack_1()` to instead be called
+`midx_layer_contains_pack()` and make it accessible. Unlike
+`midx_contains_pack()` (which recurses through the entire chain), this
+function checks only a single MIDX layer.
 
-The source used is still assigned from the first source in the list, so
-there are no functional changes in this commit. The changes instead
-serve two purposes (one immediate, one not):
+This will be used by a subsequent commit to determine whether a given
+pack belongs to the tip MIDX layer specifically, rather than to any
+layer in the chain.
 
- - The incremental MIDX-based repacking machinery will need to know what
-   source is being used to read the existing MIDX/chain (should one
-   exist).
-
- - In the future, if "git repack" is taught how to operate on other
-   object sources, this field will serve as the authoritative value for
-   that source.
+No functional changes are present in this commit.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 5 ++---
- repack.c         | 2 ++
- repack.h         | 1 +
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ midx.c | 6 +++---
+ midx.h | 2 ++
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index f6bb04bef72..44a95b56f23 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -402,7 +402,7 @@ int cmd_repack(int argc,
- 		 * midx_has_unknown_packs() will make the decision for
- 		 * us.
- 		 */
--		if (!get_multi_pack_index(repo->objects->sources))
-+		if (!get_multi_pack_index(existing.source))
- 			midx_must_contain_cruft = 1;
- 	}
+diff --git a/midx.c b/midx.c
+index e6b1fbe37d7..7d23338aa3a 100644
+--- a/midx.c
++++ b/midx.c
+@@ -667,8 +667,8 @@ static int midx_pack_names_cmp(const void *a, const void *b, void *m_)
+ 		      m->pack_names[*(const size_t *)b]);
+ }
  
-@@ -549,8 +549,7 @@ int cmd_repack(int argc,
- 		unsigned flags = 0;
- 		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL, 0))
- 			flags |= MIDX_WRITE_INCREMENTAL;
--		write_midx_file(repo->objects->sources,
--				NULL, NULL, flags);
-+		write_midx_file(existing.source, NULL, NULL, flags);
- 	}
+-static int midx_contains_pack_1(struct multi_pack_index *m,
+-				const char *idx_or_pack_name)
++int midx_layer_contains_pack(struct multi_pack_index *m,
++			     const char *idx_or_pack_name)
+ {
+ 	uint32_t first = 0, last = m->num_packs;
  
- cleanup:
-diff --git a/repack.c b/repack.c
-index 596841027af..2ee6b51420a 100644
---- a/repack.c
-+++ b/repack.c
-@@ -154,6 +154,8 @@ void existing_packs_collect(struct existing_packs *existing,
- 			string_list_append(&existing->non_kept_packs, buf.buf);
- 	}
+@@ -709,7 +709,7 @@ static int midx_contains_pack_1(struct multi_pack_index *m,
+ int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
+ {
+ 	for (; m; m = m->base_midx)
+-		if (midx_contains_pack_1(m, idx_or_pack_name))
++		if (midx_layer_contains_pack(m, idx_or_pack_name))
+ 			return 1;
+ 	return 0;
+ }
+diff --git a/midx.h b/midx.h
+index e4a75ff2bef..f211a38b9e7 100644
+--- a/midx.h
++++ b/midx.h
+@@ -119,6 +119,8 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
+ int fill_midx_entry(struct multi_pack_index *m, const struct object_id *oid, struct pack_entry *e);
+ int midx_contains_pack(struct multi_pack_index *m,
+ 		       const char *idx_or_pack_name);
++int midx_layer_contains_pack(struct multi_pack_index *m,
++			     const char *idx_or_pack_name);
+ int midx_preferred_pack(struct multi_pack_index *m, uint32_t *pack_int_id);
+ int prepare_multi_pack_index_one(struct odb_source *source);
  
-+	existing->source = existing->repo->objects->sources;
-+
- 	string_list_sort(&existing->kept_packs);
- 	string_list_sort(&existing->non_kept_packs);
- 	string_list_sort(&existing->cruft_packs);
-diff --git a/repack.h b/repack.h
-index bc9f2e1a5de..c0e9f0ca647 100644
---- a/repack.h
-+++ b/repack.h
-@@ -56,6 +56,7 @@ struct packed_git;
- 
- struct existing_packs {
- 	struct repository *repo;
-+	struct odb_source *source;
- 	struct string_list kept_packs;
- 	struct string_list non_kept_packs;
- 	struct string_list cruft_packs;
 -- 
 2.53.0.729.g817728289e1.dirty
 
