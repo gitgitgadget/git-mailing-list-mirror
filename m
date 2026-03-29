@@ -1,210 +1,136 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9928727281D
-	for <git@vger.kernel.org>; Sat, 28 Mar 2026 21:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774734071; cv=pass; b=aYlc/lHVSs4PeOtOfylxDAk4vq+S773p/fB52AwZ+3uPU3DI0okhYaGTKFQePyrA9jJT3cwvMSPOraS6Vd21H4uAbT4yZfvigKBbOMbDmY4AQ4KZw/kSH9u8EHBKm/cIvYSBSMru1alkD6DUaJ4/102Z+ML6c0ykJfMNKp6ktMM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774734071; c=relaxed/simple;
-	bh=Ya6ZlaxgMEvjpSvyHfGjeCbdjor4gC1Itt9r9RQ5s20=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SveQi7RsSCudj4dE+DrgvKorcC7On5MUEgpNYWL1vskt3iZGiKGI/WVU+H2PKYz44aM6JvwmAHvEPFJDw77JKZPnR2wmr/5a2roCn5vPjObR6YyxVFzQp/eXhAO1cIq+9JlWdnMcve0lnKp1o2WRz6NY6PBihEKUvRMQQ37c4Kw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nTbYL+T8; arc=pass smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B58277CB8
+	for <git@vger.kernel.org>; Sun, 29 Mar 2026 00:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774744951; cv=none; b=L7KRep5pggzC5W7wPYRIciedgwRj0e/lZRNRGX/UYWDRB8CaznEvEe75OB/F0uoyBQaCu42RzLksAfXA5LMs+lbvgIsnXhs4BijIB2hQmux0AoxJA76xge4ds6INkg43gyH1TiIgYmbZSx75DTBNUcr2wFyoKXEd5tcZj0n/obU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774744951; c=relaxed/simple;
+	bh=Bsato+27EydMx6gtTykEoosNj3B8hrm1yTtxYcDVHXc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IYvwYuNSwp9Et4f1xdR/fmlnzPchn5B9Gw9q47qUtjm5pYziQvwYcz6YeIiDC7nUNSm7VC+/jiwxGV0kGhGpqWsltOxOQgm8VhNT0TGW6AD46GVVOXC5jJ4bcgWU33U/nBPeWLK+HTcxW7TKUJdJ1ZqoHnHJcEwh2j6SJywRSow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dy7tA8/o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uEIR3uA0; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nTbYL+T8"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-829a9d08644so1714643b3a.1
-        for <git@vger.kernel.org>; Sat, 28 Mar 2026 14:41:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774734070; cv=none;
-        d=google.com; s=arc-20240605;
-        b=c1G/71fBDIgMaxTRBrgP6Ez8bGTDQdrLAXHadVlp/zYtIIGRD050zxulunkRebKn1L
-         cQ1yXgYPFzoqC21hH5x1ft+NkLu6WIp/lyx8ec7bhnP+rj8y4AEPwp/Z/N0f0DqvuLZz
-         aS6KygnNw+bT0N5TalbEL8nQ/ipj9rFqdARzswpu5AajBus3Xv82hk/14IPSYZQsvUwd
-         ruXiOpa0EYQPUCytGKuWhC+NZ3b8OBR2+86W1pQ6wVhjLre/88VazbEEa/v/XAzQBFK8
-         OxLBYBWG2n9MsNtAL3/S9Xf37jDNIPEibLtIr+mKd0S1ycvtCN2t/qXvDwJw0so63qyV
-         Tmmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=vajLIF9GrRGiFp4nQ1HC/5EShlIwUzGkwPaq+/9lrmM=;
-        fh=Wpv/KwkS9n8VKjvuWfcQBhEh3YhicLpzVjyQnnFoZhU=;
-        b=U0glCxGmmXda7Sx3Gi5WVKm6txUyIzlKxvaFxr1U7lUkTesW5CzZ+5s/TnwLuKBZfC
-         RTRk9ZMYJ45WPFgqkW3+4alDjMuup9yhvNOWRfoRoSM26ILengPBY5BZyxIM90xjmAyv
-         rQzorBwsNGNO0yO/Lhme5drJmA1TjTeYQt1nk4cQ3FX5KkDM7H5CflFgKhtEonBbIk3H
-         nN+hrpj6SmICA96C9Q7Rt7A31HfHBpA+OnbhTcW9yT+wfvAkxKUYlf9cSoMwR6+ZYIUG
-         bO8DSGMzxVYskUIqbadLyJ7UHjdwqx0Tphlz9Y81PUBt0R58zNYJAqtdZWoTdvaOXdp3
-         jLFQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774734070; x=1775338870; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vajLIF9GrRGiFp4nQ1HC/5EShlIwUzGkwPaq+/9lrmM=;
-        b=nTbYL+T8NuLZ27axwkEpsBu9Us5j7vwekGBjKJqM9Qi595uHCSEcqYWjcI3qJdtK8H
-         kajw1m12fmwpLxq1u67/wE8SGFfxUi4SNFCMklf1T8yodOq2eG0geSiNfHS8fJV8tg2b
-         7ssxMvR9Ngu6Vyfkduc0EFbAgFOBslleys3GmDKeQkuCi+/AYYKvJP094Itah5ubqovK
-         GRgUi5sWonNjhoza9XAtMdP92Z+N3fd5EBykThhT3aEiRpb8jB4SPQSPjUAO0q1X/APz
-         cVAbYz579scpowkeHtgYc7MzD2BGuMI4Z1C9cqO77ko0kptCscludmNnA+maSQLTDH7b
-         5ffw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774734070; x=1775338870;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vajLIF9GrRGiFp4nQ1HC/5EShlIwUzGkwPaq+/9lrmM=;
-        b=HHnZdEkkpBo66Ju1qQ5UxmgmttDIQFfx9mLQ1P8Ewz9O+c1KFgjJrs0PwG/aRTvS3h
-         SgYfxq4nwXqMu8Au5j1yu/Fzs0i7PtVzx8jMrzxDfsZn9JTTWR/NLfmSnvghwRzPoI4G
-         M+PXoTIHTMofELuNev8FbQPfo1FGdpYOKAR692tdfV0iC0UoNIae3/Sj8Kzu0eRDOj80
-         EnFN6bOkuAPD3Ft8sFD/LtY/D4BKdBqhAG/fHEx/pGoqk6X6iXJVRnCKmJcj52JBpNt3
-         1WZtPAyYRtkBhO5BKpU+tJVKe0guF39Weu9x1AdL09sn574euk0LSR4hFjZpvsm0OmUc
-         9zUQ==
-X-Gm-Message-State: AOJu0Yx74gWsB7+3Ja0rbPAuYR2FOq/J1fNRqF0S9cm5FaldZ/Zt18Kh
-	gPtSJHEulpMHHNdi9CdYiakEiWysjSdLji3cDuW7sJxnzpQUYfIm/WEaXt6+A6tNYaaBpuIZVlT
-	uaHWGCmOiicvbNHB+Cg4QN0dD+BTmo8uImJeoE4A=
-X-Gm-Gg: ATEYQzwmcGbKmMd6TFN3PtohVFZ8qKNzE8MuEPoefGEypJC+aMBuC+YEhoVsGxS52aT
-	OrQIioVjiFN/nr+94NiA9k/ASvg9Y7/Lue0KnCCoftq7+q+b7fKtd2T1Zhfq43hVhsRLDy8RTTJ
-	W7+aiXAd4ZhlJPaFRGlglV+uAf2+A9yNcyHzye0Bwj5dd/3Xdbj+PV7Jc9tiT9xpzsfwSMLsA+d
-	5QFA+PEDNsqTgurvrPAeKiMLG2GQ6Z4GIsqSiCT/48GayCZ/h7So8K2Fevba1McDSfkm7f37AT3
-	YOCFDX4g
-X-Received: by 2002:a05:6a00:2d1f:b0:829:8cfb:df45 with SMTP id
- d2e1a72fcca58-82c95e4d40bmr6847169b3a.15.1774734069860; Sat, 28 Mar 2026
- 14:41:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dy7tA8/o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uEIR3uA0"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6D368EC00F2;
+	Sat, 28 Mar 2026 20:42:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 28 Mar 2026 20:42:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774744948; x=1774831348; bh=FxnsdYUb/8
+	pQxIsUUdJnB/1iOsgXyz9o3lpkIr2GIlo=; b=dy7tA8/oZMBnYQctY/lq1YXOAR
+	9C1k17/oQE6v3Yx3HUqKeEc5D+QPawnaeHa8g7E2ztxC4kB2kzvDv4Y22Gd36A3i
+	5KSUI7aEgqu1gSCGd24I0ARXa7QIQLpfZBUQaMBmOtHupdJJhG9vgUOiH1KrW/6i
+	ZPSdCGhE6CP081GKE7F8+ZOamGUx9iOa7fE18yV+da7sB2Q7DbprZgKSb/JBTzjd
+	3wyK9OGL7qBf7Bl/avjtxIJYcLFMZdY7j2MA4kT6R/iOxkQPHCNjJ0EtBZAJ1BQb
+	0c0hrIIeAmQBYfmQZ7m4eiVHkm4ywRRryI8Pn8qwLLCslCWfvgWJcqQvOFJA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774744948; x=1774831348; bh=FxnsdYUb/8pQxIsUUdJnB/1iOsgXyz9o3lp
+	kIr2GIlo=; b=uEIR3uA0jMRl2WbsTps7bWNIoH68hObQpzryEY/K9BWb3W8R3Yk
+	oml38b5kNWHQZyMu9pxWf6/TVbLNlWdiv6KbrW7QriQuXcbUwFmAnZm/WrcVwyo6
+	ZrTgmcqLAMuTimZIUdCbSWgobECatXIsGTBs9D0DtDwPICes/6Q6MVgZYQcbrzlL
+	mcwQNtlqCyqHhzcY0ej152srsnKQRtwAVeZW0DwfWOf0yoTPqi2RFtC+Let/zcZM
+	15yLuGt/P1HjV7EyN5nIK+IzwEVAfJ6/JuDiwMnELLkEm1AQLYnZspcjRdP/iE+g
+	b8HCekEK7xgILq4MAXFZK4qgIVisVJOV01Q==
+X-ME-Sender: <xms:dHXIaQWtgchoio3Rq6Dj7ombc-ZNc2mQ6JlBuCEakKXg8gB8nZkK5w>
+    <xme:dHXIabnpcxpJeO28YYeObfDMh-yHA54RoclMhJR08UMrPN8HT0SktTE11kNOhIXd1
+    s45S4QWjOJd78AIr5OR1mxvSKi7hmHNiYH0bWQzvuE4YAnY3ENa>
+X-ME-Received: <xmr:dHXIaZbHzLk5qSQ2jawrWOVgc_BDYhDZfbK8UEwph6mt02BpJmJslg6ShsLlv4fPECKLcjRVbOGZbqhY6nQa1R38buHoVwC3NQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeegieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggpughhrhhuvhesohhuthhlohhokh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dHXIaePM6QLVKW_DDz4qlbTrDeyqZP-6uENQ_GaLHQd7FWjtOqWNHg>
+    <xmx:dHXIaWZkJbRBs3sUxt_MegL-Rs_BSsb0Tv2bDoM-_6giYEB1Qn4OmA>
+    <xmx:dHXIaU2xvZzilC20wmcGdv_oqSkCqDV9xfKIPBDLTVQeu6IerKfLXQ>
+    <xmx:dHXIaUe_9uodZFwLA8rlHsI4V0Lxbrmk8hVmy46ljFz8g0NsHLiElg>
+    <xmx:dHXIaWv3PbxmWGbM8OVS0r7j0FUZDZaXZJXUr6zf2VaTDVYKGC5uSUHJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 28 Mar 2026 20:42:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Dhruv Arora via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Dhruv Arora <a_dhruv@outlook.com>
+Subject: Re: [PATCH 0/2] [GSoC] userdiff: adding typescript pattern
+In-Reply-To: <pull.2251.git.git.1774734004.gitgitgadget@gmail.com> (Dhruv
+	Arora via GitGitGadget's message of "Sat, 28 Mar 2026 21:40:02 +0000")
+References: <pull.2251.git.git.1774734004.gitgitgadget@gmail.com>
+Date: Sat, 28 Mar 2026 17:42:26 -0700
+Message-ID: <xmqqtstzh3f1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260322065509.5384-1-mateopatinodev@gmail.com>
- <CAPig+cRAsEgeT+OgCSpTuY_Q6dMpXrfadrB=ujkAUyF-ocu2-g@mail.gmail.com>
- <CAFRsFoV+k-8GMf=62GJwxP=o0Fy5RRBGW+h4NqOLjFbU6z96tw@mail.gmail.com> <CAPig+cQcLJxxtsH0OeSP2DVUbSg8x95B-7n18fK9BVTJVywEtQ@mail.gmail.com>
-In-Reply-To: <CAPig+cQcLJxxtsH0OeSP2DVUbSg8x95B-7n18fK9BVTJVywEtQ@mail.gmail.com>
-From: Mateo Patino <mateopatinodev@gmail.com>
-Date: Sat, 28 Mar 2026 17:40:59 -0400
-X-Gm-Features: AQROBzCnuaDoYFtemQPpJhRedOs-8jnqLsAGKO4nMvuk35Anl8eXy2IaphIl0t4
-Message-ID: <CAFRsFoWRRnbrJdp_HVuoW-AEMqz_XjoP5yFAFP73VVN9nhdp2w@mail.gmail.com>
-Subject: Re: [RFC] [GSoC]: STRBUF_INIT_CONST: initialize `strbuf` to constant string
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, jltobler@gmail.com, 
-	ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, ps@pks.im, 
-	gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
->
-> But, having reread the threads which your initial email referenced, I
-> think the bigger issue is that we're dealing with an XY Problem[1].
-> The original problem "X" being discussed was how to achieve static
-> initialization of some string variables while still allowing the
-> variables to be later pointed at heap-allocated memory, but at the
-> same time avoiding memory leaks when those reassignments occur. The
-> proposed solution "Y" was to somehow employ `strbuf` to solve X,
-> however, it turns out that `strbuf` is utterly unsuitable for this
-> use-case. Unfortunately, this "Y" proposal was then turned into a
-> GitHub issue[2] which has led to this email thread as well as those
-> aborted and misdirected submissions which you referenced earlier.
+"Dhruv Arora via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I didn't know this concept of an XY problem. It seems very useful to describe
-this kind of mistake in software development. I will keep it in mind from now
-on. Thanks for sharing it!
+> Description
+> ===========
+>
+>  * Add builtin userdiff pattern for TypeScript files. Recognizes function
+>    declarations, class definitions, arrow functions, and method definitions.
+>    
+>    * Handles common modifiers like export, async, static, etc
+>
+>  * Added tests for the typescript pattern in userdiff.
+>
+> Dhruv Arora (2):
+>   userdiff: adding typescript pattern
+>   fix(userdiff): sorted pattern and tests
 
->
-> If we take a step back and focus on the original problem rather than
-> focusing on how to twist strbuf into something it was never meant to
-> be, then a potential solution becomes clearer. Let's restate the
-> original problem:
->
->   static const char *global_var = "thimble";
->
->   void maybe_assign(const char **var, ...) {
->     if (...some_condition...) {
->       /* ??? free((void *)*var) ??? */
->       *var = some_heap_allocated_str;
->     }
->   }
->
->   maybe_assign(&global_var, ...);
->   ...
->   maybe_assign(&global_var, ...);
->
-> When maybe_assign() is called, it doesn't know whether or not the
-> incoming `var` points at a static string literal ("thimble") or at
-> some heap-allocated string, so it doesn't know whether or not to first
-> free() `var` before assigning the new value. To solve this, we need a
-> flag which indicates whether the string stored in the variable needs
-> to be freed before the variable is reassigned. So, this suggests a
-> dedicated, simple structure and a few related functions and a macro or
-> two. For instance, something like this:
->
->   struct str {
->     char *s;
->     int free_me;
->   };
+We frown upon a patch series that makes mistakes in an earlier step,
+only to fix them in a later step.  The "git rebase -i" command helps
+us pretend to be more perfect developers than we actually are,
+whipping your patch series into a shape that builds one small step
+on top of another in a logical succession.  Such a patch series is
+easier to understand than a history that faithfully records all the
+stumbles the developer made until they reached the final solution.
 
-Thanks for explaining the original problem in such detail, I see I really
-hadn't completely understood what the original problem "X" was.
+Just have a single patch that adds the right pattern at the right
+place and add necessary tests.
 
-To clarify, you are imagining this `struct str` more as a "smart pointer"
-than a full string abstraction, correct? I was going to propose including a
-`size_t len` member for this struct, but after some thought, I feel like that
-would somewhat transform `struct str` into a string abstraction, which `strbuf`
-already is. The way you're imagining `struct str` could be used around in the
-Git codebase is as a wrapper whose only purpose is to inform clients of
-a string's ownership, correct?
+When/if your reviewers suggest further changes, the way you should
+work on them is the same.  Pretend as if you discarded everything
+you did, started from scratch, and reached the ideal result without
+making any mistakes or taking any detours along the way.
 
->
->   /* initialize `str` from a literal string (i.e. "foo") */
->   #define STR_INIT(X) { .s = (char *)(X), .free_me = 0 }
->
->   void str_release(str *x) {
->     if (x.free_me)
->       FREE_AND_NULL(x.s);
->     x.free_me = 0;
->   }
->
->   /* take ownership of a heap-allocated string */
->   void str_take(str *x, char * s) {
->     str_release(x);
->     x.s = s;
->     x.free_me = 1;
->   }
->
->   /* assign a string literal (i.e. "foo") */
->   void str_assign(str *x, const char *s) {
->     str_release(x);
->     x.s = (char *)s;
->     x.free_me = 0;
->   }
->
-> That's probably about all you need to solve the stated problem.
-> Given the above, the original problem statement can be "fixed" by taking
-> advantage of the above structure and functions:
->
->   static struct str global_var = STR_INIT("thimble");
->
->   void maybe_assign(str *var, ...) {
->     if (...some_condition...)
->       str_assign(var, some_heap_allocated_str);
->   }
->
->   maybe_assign(&global_var, ...);
->
-> Clients which need the value simply access the `.s` member directly.
-> And there is no need to have any functions to morph the string in any
-> way. If a client needs that functionality, it is easy enough to create
-> and populate a proper `strbuf` from the `.s` member.
+Thanks.
 
-So if we were to make this into a patch, would we implement this as a local
-helper in config.c, where the original problem started? I imagine this small
-ownership interface could likely be used in multiple places around the codebase,
-so my first instinct would be to not restrict it to config.c. Would it be
-too premature to give this `struct str` its own module? If so, then how would an
-idea of this sort be first presented to the community as a patch?
-
-Thanks again for the detailed explanations!
-
-> [1]: https://xyproblem.info/
-> [2]: https://github.com/gitgitgadget/git/issues/398
+>  t/t4018/typescript-class-method         |  7 +++++++
+>  t/t4018/typescript-export-default-class |  7 +++++++
+>  t/t4018/typescript-export-function      |  7 +++++++
+>  userdiff.c                              | 15 +++++++++++++++
+>  4 files changed, 36 insertions(+)
+>  create mode 100644 t/t4018/typescript-class-method
+>  create mode 100644 t/t4018/typescript-export-default-class
+>  create mode 100644 t/t4018/typescript-export-function
+>
+>
+> base-commit: ce74208c2fa13943fffa58f168ac27a76d0eb789
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2251%2FDhruv-0-Arora%2Fuserdiff%2Ftypescript-pattern-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2251/Dhruv-0-Arora/userdiff/typescript-pattern-v1
+> Pull-Request: https://github.com/git/git/pull/2251
