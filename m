@@ -1,70 +1,70 @@
-Received: from mail-yx1-f67.google.com (mail-yx1-f67.google.com [74.125.224.67])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352952F6596
-	for <git@vger.kernel.org>; Sun, 29 Mar 2026 21:41:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C043314D2D
+	for <git@vger.kernel.org>; Sun, 29 Mar 2026 21:41:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774820479; cv=none; b=iBzIY+STm7qbuh12k9a5HTypOtYU/zO1cD6CbVxDIytv6ZadedzwfjykWtk5JyMt8eJjKbWTfKelOXkEi3WfCo67hp0sY4Bcy7sd1V7NxmkWK9icVnN2UTaTME4j7kJNWWSOFcnCR2HF+YM+il6h8E0xDQES4YoU4xSKSKdhCQE=
+	t=1774820482; cv=none; b=ZUSy2m0+7xYhv08UJ9+wOcwagSW1x8tlC9dSHA92CM+Y8K0TX9nO59xChgRUSnJOostkr1/YuvT5RXveyhD2ElreFIFzie8V+SKAZ/lCsaCZwykxiJiELfcPOcA2Qq+Y5EXf3BmWk//IX5gReMfiIhSFcclwOick+X/fFBP6MLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774820479; c=relaxed/simple;
-	bh=whY8EINIDNEdneZvdDT8jRXibDGw+VlVX0f+t5qKEU8=;
+	s=arc-20240116; t=1774820482; c=relaxed/simple;
+	bh=t+2F/dQ4lTRjc7fNgfEYOGNNBRMBMOdfokNlEQoyqPw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C7EiS6eJ4oWvmDQKsan6GS47IqpDrmgO3JPAl+/JxJ4532W+yQPX0mMTXZw0q9L3wihrqhkD6JBEAia/L5C0k10DtVeRNJqnZ4LATDwxBWrdHa9g+/69a89G9nM8JeRUZoWjLrpMyaKayeiJ+AKii9hc8U3GTmhbw0TSfA9T9YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=eNJx0MBx; arc=none smtp.client-ip=74.125.224.67
+	 Content-Type:Content-Disposition:In-Reply-To; b=OPzCtoVu+Qeua7yJCzhEd0xcfAFhdVeBKeCLleZFiv1TW6nmVJwB3/UeVKFh2pG5jYI9Va//NoWAWQvR0K9q9FaGXUuMgq0kdVaXwlSnMgVAwTkEKEkiDxK/euYD4BRcUbIc179l/HoGLh6Bi06tlC2izElUkKvqUmHZFkMCtZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=FRSKekpo; arc=none smtp.client-ip=74.125.224.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="eNJx0MBx"
-Received: by mail-yx1-f67.google.com with SMTP id 956f58d0204a3-64d5a7926cfso4703289d50.2
-        for <git@vger.kernel.org>; Sun, 29 Mar 2026 14:41:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="FRSKekpo"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-64f48a5c3d8so5268897d50.1
+        for <git@vger.kernel.org>; Sun, 29 Mar 2026 14:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1774820477; x=1775425277; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1774820480; x=1775425280; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l5IpTXdeD0sZF30Jys2MWYQngQZ+jkpTWoZPNSjYkwI=;
-        b=eNJx0MBxn6LIlZJN2qVqViZFBCRE1zZQRMbqNHgIsyUEe2ZoA6wjBCsRAkQTqVLP7v
-         riJcEBezXMmA9xrmWf2nKD5svhcrvihFimU2NdW1qN1s2hA4rQkxTxofD94jtu/Jw9rM
-         LuhGc5pmEdziXaWKDAJgmH1kGb5Wk38RFhBgK0eFhjjCXf0NUy9P61TpikyfV9rxnUpp
-         RWGSuge8/4hARY+QJtg8TJmC2Ao2bwhTYiD5iBV0/uz/DGqFqc0Z45/joaneow4u9kLM
-         5AV57WhYtvne7ris/AsK4NqROlMBz2RWG08AxKnXh5wDmEwSHRFwydyVVXvzNbxZtnqR
-         TQBA==
+        bh=+dchLUOtkVaAEtg7GZAIXkkr5oHlDjp6QBVe1KJSLPM=;
+        b=FRSKekpoFxeBdl2iOyl6VKxLYrucXFPTrdKHhzEWaD59xLHLqXnSR1y0Cr11iVRhwi
+         yons3f4itySpnx2Cywf4JimuR+spIIpxx0aCEIF4u25FCBvxGH0KotBECUv49A7S+ucF
+         YIRmyXb2WXeTzFoUwj6CFzAUCxjTL869AWsktGcLYBkcTdnVwwmFQcCEQws8AQyg9rVW
+         QkXk1MhLbCFhJ9f4JCv5u3d8F6F9KCAve41CZvfZaDAeH0djEfOXbTPEytGpXleOKhsi
+         2QwZ+WKnnLltsH33HMGeHt141C6va9Fss5eO5t/W+8KhY+pI3NeAtEe5y9F1iTiKokPK
+         p9UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774820477; x=1775425277;
+        d=1e100.net; s=20251104; t=1774820480; x=1775425280;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=l5IpTXdeD0sZF30Jys2MWYQngQZ+jkpTWoZPNSjYkwI=;
-        b=DXMwezbhQXCX/+WXbzRzJeBv/Ipc97XC6yN8M8tOt6vkv0472ARgFXkvSONbUng5if
-         uALA17XFhMpv02HED54qinPMCjq1ZTBFg3HYYhDrHGHiea0RbYe1cNkFqnSnciGzV8qr
-         ZsGHfLX8/7RcgQcKumBIlHJ5OkJ8Ivkv2jf3dzyUwpEm2EHXCUkdnKkB2Tr50dYTlNZB
-         XJDGgUdNaT3VpOwfYpH/rw5YXt0WFxqvDApzrf6T97q7k+7a1GqR/LyisQIiMBRRndL0
-         muvsa/D2bEMtknA0/FGI1cbN1rhqZlThozkISj2a1Qut0re4vTLH2DKSsUVRuCu061Zi
-         q97A==
-X-Gm-Message-State: AOJu0Yy120z0+O7MgqlKVe8WlNZMYRYNGmXg4/fwq217X76+NKUUBver
-	VHcoFTpiZG29vGZwC/yTGamZLPoXoFXm5rnt5lUpnFbn3sM/ZU9cTZkgCNf1VGGYusLVvpLvEBf
-	/ZHUXXy2XEBdM
-X-Gm-Gg: ATEYQzyXrvE8+pdZgVSJII9PZo9yVHSeP0ISgK49tRVbX6TN4cVcVost755omPw9zGx
-	ignIN43fzeVCIWRDTIlV8Cq9ApnpRmRm9AMh6mTxRzQp9Xlg9eKFhZ7OSoYrWpOx3wp8LUUt/xU
-	my4NkXKy8vVC6vhX15QkgjtAEkTEdxXcigVfQiZIVZHVV7euXEiCipytGQL7hSv222vW0Zhx5dQ
-	B2+NcPv8q2o/YEKw3uvq5RX9+tvjqd2tkECjVIfUH9PEFOEgn5f9nAfR2G5QMor4cHBB+kXNo5K
-	yiaOwEU/DhFrksA900M6y24BYFREZzuDjHI+mSLqFogLOO1+l/eWGj3uki4xrx91Q4oys91mfMG
-	6sJykygpyG1bN6MDNdZlVXdLR71gr3f8rqRk4lj0XjLDguiuUA0GVcFDMY5i+rhrWXDjmjXEETz
-	5ggCdnrpunQdMyrQmzehnFDRtkHxNfeTnzJUpPn2I93ARD4A5e3BwXNzxnDlGLtpHC2RHjN5zu4
-	L2IBKDB+ZLb7NjWXS3221DF7X88EA==
-X-Received: by 2002:a53:ac95:0:b0:650:1a72:99f8 with SMTP id 956f58d0204a3-6501a72b986mr2032853d50.43.1774820477113;
-        Sun, 29 Mar 2026 14:41:17 -0700 (PDT)
+        bh=+dchLUOtkVaAEtg7GZAIXkkr5oHlDjp6QBVe1KJSLPM=;
+        b=lWfyALQMW4GMchQPhotw3E7E1yhl8J55BtM40XDmCMoBzX6enK7OT7x3bb5Imx8uwh
+         b5eK7x9bJNFFc8rXOUvEBG09UZxSfNHnFqslKHNuo+gypDxGh08W0VZtgR/WoVgWAgsX
+         gMbt3DRq8xds6WoBv6Wep8biFLCueBow4lP0dEBrtAJppN0Vl+O2ybvV/vVSufAROxX3
+         ZO/KR7Tnogwf583RC8qnSXXnUOrfuAt4Pl8Yn1zguJsbb9g/yRAYXUElBOrhPWfVoqrO
+         ZqfOAGVSVYeIHT4t85wCjJR8WZGFKc7jZBB/P0JidxK34kc4praHzZXEX4B34/ww223G
+         e5Ew==
+X-Gm-Message-State: AOJu0YxfP65vdpG5jnE37cL9kYBFZbs+gyGWN0hKu+TH4VQ3TSg7NSWA
+	XHkohdCjiweU3B8bhmwyWkXhRlBk55mlcGcpzc76s+8HTRthhojqpXNq9L9t/sshj7dW+7nsajM
+	eCOhs50YbiQ==
+X-Gm-Gg: ATEYQzxXlOT5xolKixxhLiBZMLZWZCgwzrjAnY9kEzzEdRNBLw9Ur4XfZAWVt9aaOvL
+	8mtq0iTF9Z6ACT/2mHk3j3eAf/ab6fmMm01/kw0H0YDOvzS7F/k8ZW7pe2tOAHXoJGwti8NeBtu
+	3GardEjOGtOR9dyzT/K2PdRxINysWFbx1HhtLR+ha3Nhkq4zOvazGNUuhnz46qtY6SarspyyRhp
+	LAKpDqTVUeGsjH2FzcilmHnNt8RDXjP3GSyg0RJpfJ7i8A/qAjZoWNffaSZqOZ/AftBGQxKuwXQ
+	/dz0xvevJSdmaT+ua0aTb/d47L4FRE/orv5ZZlk5WPegX7yKwXm5rE1qj3yFx3voG5hpqJqL8Oh
+	CCdj8x8TomRPkxZ9JBcmdurfKEIlkBvI9QtMuL7rmvVhNYYLAQjY1NqvDp+ngEPX387z4bB909T
+	SdEVpazKX8UThb8Y3wv5C/nxOLvauAIMlgE2mpGECgUITZWZW0Rxp79Zr9xXuBZUqlDeGnQgqUH
+	VEV2YXwJh2OZl3NpKHn+XkS/ZPZ9A==
+X-Received: by 2002:a05:690c:f13:b0:798:1219:c785 with SMTP id 00721157ae682-79bde0ee227mr101605427b3.44.1774820479799;
+        Sun, 29 Mar 2026 14:41:19 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6500936f692sm2967370d50.19.2026.03.29.14.41.16
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cb7c05b88sm26603887b3.20.2026.03.29.14.41.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Mar 2026 14:41:16 -0700 (PDT)
-Date: Sun, 29 Mar 2026 17:41:16 -0400
+        Sun, 29 Mar 2026 14:41:19 -0700 (PDT)
+Date: Sun, 29 Mar 2026 17:41:18 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 10/16] repack-midx: extract `repack_fill_midx_stdin_packs()`
-Message-ID: <cd5eba0f665a4d3a4febc47f1fe5f13200a4f941.1774820449.git.me@ttaylorr.com>
+Subject: [PATCH 11/16] repack-geometry: prepare for incremental MIDX repacking
+Message-ID: <d2c667e841300c3310e3a23493ac27eb2b08992b.1774820449.git.me@ttaylorr.com>
 References: <cover.1774820449.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,95 +76,101 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1774820449.git.me@ttaylorr.com>
 
-The function `write_midx_included_packs()` manages the lifecycle of
-writing packs to stdin when running `git multi-pack-index write` as a
-child process.
+Teach `pack_geometry_init()` to optionally restrict the set of
+repacking candidates to only packs in the tip MIDX layer when a
+`midx_layer_threshold` is configured. If the tip layer has fewer packs
+than the threshold, those packs are excluded entirely; otherwise only
+packs in that layer participate in the geometric repack.
 
-Extract a standalone `repack_fill_midx_stdin_packs()` helper, which
-handles `--stdin-packs` argument setup, starting the command, writing
-pack names to its standard input, and finishing the command.
-
-This simplifies `write_midx_included_packs()` and prepares for a
-subsequent commit where the same helper is called with `cmd->out = -1`
-to capture the MIDX's checksum from the command's standard output,
-which is needed when writing MIDX layers with `--checksum-only`.
-
-No functional changes are included in this patch.
+Also track whether any tip-layer packs were included in the rollup
+(`midx_tip_rewritten`), which a subsequent commit will use to decide
+how to update the MIDX chain after repacking.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- repack-midx.c | 38 ++++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ repack-geometry.c | 37 +++++++++++++++++++++++++++++++++++++
+ repack.h          |  4 ++++
+ 2 files changed, 41 insertions(+)
 
-diff --git a/repack-midx.c b/repack-midx.c
-index 83151d4734a..78f069c2151 100644
---- a/repack-midx.c
-+++ b/repack-midx.c
-@@ -292,23 +292,42 @@ static void repack_prepare_midx_command(struct child_process *cmd,
- 		strvec_push(&cmd->args, "--bitmap");
+diff --git a/repack-geometry.c b/repack-geometry.c
+index 7cebd0cb45f..d2065205f87 100644
+--- a/repack-geometry.c
++++ b/repack-geometry.c
+@@ -4,6 +4,7 @@
+ #include "repack.h"
+ #include "repository.h"
+ #include "hex.h"
++#include "midx.h"
+ #include "packfile.h"
+ 
+ static uint32_t pack_geometry_weight(struct packed_git *p)
+@@ -31,8 +32,30 @@ void pack_geometry_init(struct pack_geometry *geometry,
+ {
+ 	struct packed_git *p;
+ 	struct strbuf buf = STRBUF_INIT;
++	struct multi_pack_index *m = get_multi_pack_index(existing->source);
+ 
+ 	repo_for_each_pack(existing->repo, p) {
++		if (geometry->midx_layer_threshold_set && m &&
++		    p->multi_pack_index) {
++			/*
++			 * When writing MIDX layers incrementally,
++			 * ignore packs unless they are in the most
++			 * recent MIDX layer *and* there are at least
++			 * 'midx_layer_threshold' packs in that layer.
++			 *
++			 * Otherwise 'p' is either in an older layer, or
++			 * the youngest layer does not have enough packs
++			 * to consider its packs as candidates for
++			 * repacking. In either of those cases we want
++			 * to ignore the pack.
++			 */
++			if (m->num_packs > geometry->midx_layer_threshold &&
++			    midx_layer_contains_pack(m, pack_basename(p)))
++				;
++			else
++				continue;
++		}
++
+ 		if (args->local && !p->pack_local)
+ 			/*
+ 			 * When asked to only repack local packfiles we skip
+@@ -173,6 +196,20 @@ void pack_geometry_split(struct pack_geometry *geometry)
+ 	geometry->promisor_split = compute_pack_geometry_split(geometry->promisor_pack,
+ 							       geometry->promisor_pack_nr,
+ 							       geometry->split_factor);
++	for (uint32_t i = 0; i < geometry->split; i++) {
++		struct packed_git *p = geometry->pack[i];
++		/*
++		 * During incremental MIDX/bitmap repacking, any packs
++		 * included in the rollup are either (a) not MIDX'd, or
++		 * (b) contained in the tip layer iff it has more than
++		 * the threshold number of packs.
++		 *
++		 * In the latter case, we can safely conclude that the
++		 * tip of the MIDX chain will be rewritten.
++		 */
++		if (p->multi_pack_index)
++			geometry->midx_tip_rewritten = true;
++	}
  }
  
-+static int repack_fill_midx_stdin_packs(struct child_process *cmd,
-+					struct string_list *include)
-+{
-+	struct string_list_item *item;
-+	FILE *in;
-+	int ret;
-+
-+	cmd->in = -1;
-+
-+	strvec_push(&cmd->args, "--stdin-packs");
-+
-+	ret = start_command(cmd);
-+	if (ret)
-+		return ret;
-+
-+	in = xfdopen(cmd->in, "w");
-+	for_each_string_list_item(item, include)
-+		fprintf(in, "%s\n", item->string);
-+	fclose(in);
-+
-+	return finish_command(cmd);
-+}
-+
- int write_midx_included_packs(struct repack_write_midx_opts *opts)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	struct string_list include = STRING_LIST_INIT_DUP;
- 	struct string_list_item *item;
- 	struct packed_git *preferred = pack_geometry_preferred_pack(opts->geometry);
--	FILE *in;
- 	int ret = 0;
+ struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry)
+diff --git a/repack.h b/repack.h
+index c0e9f0ca647..77d24ee45fb 100644
+--- a/repack.h
++++ b/repack.h
+@@ -108,6 +108,10 @@ struct pack_geometry {
+ 	uint32_t promisor_pack_nr, promisor_pack_alloc;
+ 	uint32_t promisor_split;
  
- 	midx_included_packs(&include, opts);
- 	if (!include.nr)
- 		goto done;
++	uint32_t midx_layer_threshold;
++	bool midx_layer_threshold_set;
++	bool midx_tip_rewritten;
++
+ 	int split_factor;
+ };
  
--	cmd.in = -1;
--
- 	repack_prepare_midx_command(&cmd, opts, "write");
--	strvec_push(&cmd.args, "--stdin-packs");
- 
- 	if (preferred)
- 		strvec_pushf(&cmd.args, "--preferred-pack=%s",
-@@ -350,16 +369,7 @@ int write_midx_included_packs(struct repack_write_midx_opts *opts)
- 		strvec_pushf(&cmd.args, "--refs-snapshot=%s",
- 			     opts->refs_snapshot);
- 
--	ret = start_command(&cmd);
--	if (ret)
--		goto done;
--
--	in = xfdopen(cmd.in, "w");
--	for_each_string_list_item(item, &include)
--		fprintf(in, "%s\n", item->string);
--	fclose(in);
--
--	ret = finish_command(&cmd);
-+	ret = repack_fill_midx_stdin_packs(&cmd, &include);
- done:
- 	if (!ret && opts->write_bitmaps)
- 		remove_redundant_bitmaps(&include, opts->packdir);
 -- 
 2.53.0.729.g817728289e1.dirty
 
