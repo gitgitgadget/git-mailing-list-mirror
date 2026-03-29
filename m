@@ -1,82 +1,82 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B58277CB8
-	for <git@vger.kernel.org>; Sun, 29 Mar 2026 00:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688EA26FA6F
+	for <git@vger.kernel.org>; Sun, 29 Mar 2026 00:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774744951; cv=none; b=L7KRep5pggzC5W7wPYRIciedgwRj0e/lZRNRGX/UYWDRB8CaznEvEe75OB/F0uoyBQaCu42RzLksAfXA5LMs+lbvgIsnXhs4BijIB2hQmux0AoxJA76xge4ds6INkg43gyH1TiIgYmbZSx75DTBNUcr2wFyoKXEd5tcZj0n/obU=
+	t=1774745092; cv=none; b=n/oop8UKlC4GTRtmlsfjn+MsTomRRChMLA1s/Q8UfQUsTmN4PXj67fjHX3yjxUpHTZeG+WDAv0/k1nrBe4MBRxNXSaBrqGr3ychgpBcDHgw3ameT2OfqUNuaAHdVKj3PcQSepOeND1OsIF0+sJ7Hsbxahqg5kw9P2lIhIVvf/D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774744951; c=relaxed/simple;
-	bh=Bsato+27EydMx6gtTykEoosNj3B8hrm1yTtxYcDVHXc=;
+	s=arc-20240116; t=1774745092; c=relaxed/simple;
+	bh=uqQqw/FzAvfWEr3dTDEsizKX4MQDbtbncQ1EG7XVUtY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IYvwYuNSwp9Et4f1xdR/fmlnzPchn5B9Gw9q47qUtjm5pYziQvwYcz6YeIiDC7nUNSm7VC+/jiwxGV0kGhGpqWsltOxOQgm8VhNT0TGW6AD46GVVOXC5jJ4bcgWU33U/nBPeWLK+HTcxW7TKUJdJ1ZqoHnHJcEwh2j6SJywRSow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dy7tA8/o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uEIR3uA0; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=QdGFMQg1I1atbqCMENS4l+q4b6xBtG9g1JX9xCWDAfPPZQ/Ch0X6XDdpNzd/66AtDzzEXJzmusBvEqb2oB0lU7d0T1wgx0wx+p/eED4AkrJSvlH6R5wpGXyInrYXQ8XC74nUTaTGDTIUu8eu3H8fUufyM8g5YbbTyQxd/4csaAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SgObgFjd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KR1X06iN; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dy7tA8/o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uEIR3uA0"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6D368EC00F2;
-	Sat, 28 Mar 2026 20:42:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SgObgFjd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KR1X06iN"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 965F714001B4;
+	Sat, 28 Mar 2026 20:44:50 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 28 Mar 2026 20:42:28 -0400
+  by phl-compute-06.internal (MEProxy); Sat, 28 Mar 2026 20:44:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774744948; x=1774831348; bh=FxnsdYUb/8
-	pQxIsUUdJnB/1iOsgXyz9o3lpkIr2GIlo=; b=dy7tA8/oZMBnYQctY/lq1YXOAR
-	9C1k17/oQE6v3Yx3HUqKeEc5D+QPawnaeHa8g7E2ztxC4kB2kzvDv4Y22Gd36A3i
-	5KSUI7aEgqu1gSCGd24I0ARXa7QIQLpfZBUQaMBmOtHupdJJhG9vgUOiH1KrW/6i
-	ZPSdCGhE6CP081GKE7F8+ZOamGUx9iOa7fE18yV+da7sB2Q7DbprZgKSb/JBTzjd
-	3wyK9OGL7qBf7Bl/avjtxIJYcLFMZdY7j2MA4kT6R/iOxkQPHCNjJ0EtBZAJ1BQb
-	0c0hrIIeAmQBYfmQZ7m4eiVHkm4ywRRryI8Pn8qwLLCslCWfvgWJcqQvOFJA==
+	:subject:to:to; s=fm3; t=1774745090; x=1774831490; bh=S6TsotDPvq
+	x+/YDRRZXMAzzS6mjLJ9wqtxbOg0MX3TY=; b=SgObgFjd7XGbT5uHEZ1tZ8wOQP
+	jYK+yJtGZZmbtX+HJ/UKfJzDJgKhrPLqbBLC7ScyaXfDM0FA6lJq7L17/GauFgiX
+	Ng2/aL7NKBHAAhhGC+zzUBbOuD4vWod65SyvTZHxsEESFsfD09KZKC5B3HhKbyQp
+	xWsmfjjZ8Pucm9PiRnhJmxqjKdZFvV+lLPAUfk1xECgA05Hvj1SxOxieryiVQhnv
+	y4wvJaMJnuxDgnt+jRyxz1K/gTi+4Q82dp6nZ/y/hXkb3AmVrFPJqgvS2+87VNuV
+	+C5u5UiUJdeEuYLB92wNJfbBK6HWP4HC2/9fsLJKxUN5esnURpBx6AusYqGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774744948; x=1774831348; bh=FxnsdYUb/8pQxIsUUdJnB/1iOsgXyz9o3lp
-	kIr2GIlo=; b=uEIR3uA0jMRl2WbsTps7bWNIoH68hObQpzryEY/K9BWb3W8R3Yk
-	oml38b5kNWHQZyMu9pxWf6/TVbLNlWdiv6KbrW7QriQuXcbUwFmAnZm/WrcVwyo6
-	ZrTgmcqLAMuTimZIUdCbSWgobECatXIsGTBs9D0DtDwPICes/6Q6MVgZYQcbrzlL
-	mcwQNtlqCyqHhzcY0ej152srsnKQRtwAVeZW0DwfWOf0yoTPqi2RFtC+Let/zcZM
-	15yLuGt/P1HjV7EyN5nIK+IzwEVAfJ6/JuDiwMnELLkEm1AQLYnZspcjRdP/iE+g
-	b8HCekEK7xgILq4MAXFZK4qgIVisVJOV01Q==
-X-ME-Sender: <xms:dHXIaQWtgchoio3Rq6Dj7ombc-ZNc2mQ6JlBuCEakKXg8gB8nZkK5w>
-    <xme:dHXIabnpcxpJeO28YYeObfDMh-yHA54RoclMhJR08UMrPN8HT0SktTE11kNOhIXd1
-    s45S4QWjOJd78AIr5OR1mxvSKi7hmHNiYH0bWQzvuE4YAnY3ENa>
-X-ME-Received: <xmr:dHXIaZbHzLk5qSQ2jawrWOVgc_BDYhDZfbK8UEwph6mt02BpJmJslg6ShsLlv4fPECKLcjRVbOGZbqhY6nQa1R38buHoVwC3NQ>
+	1774745090; x=1774831490; bh=S6TsotDPvqx+/YDRRZXMAzzS6mjLJ9wqtxb
+	Og0MX3TY=; b=KR1X06iN1mk1vbRGJO4oc34A3ujXIQhxyhE7A/27wBkFMqB/HIg
+	zl/ab7jvGIH37APYAtlKnJDpgP3BQeOwpfOZygM78x2T0eA9/FvnljdhkyLupIiO
+	w7R8Ayswv5dHjeDZjvoLETswCEMTplLh7ncAGQL17w1KdfWYFhhjaVr3fE3KQVaI
+	FgFT+4cHwA46JUWPV5Q27Wu7QDYioIyBt02RFlYfUusLPT1SO+WhlSpKBeL7YYDc
+	bszGNU8XqbNOOw1Ql2MlZ/qmmqosDWdH0DDwl5FK45ivxCDDHxkrDeqbSbHDAWGX
+	OVxkJCmsdE8zRuni6ocUnbiGI1JwjfPYclQ==
+X-ME-Sender: <xms:AnbIac1SUUea8STv6Qxs5ULrQt_owxD-NQ-HHnDHZsSLkD3legwwUQ>
+    <xme:AnbIaehm0jqlE1xI7dOggpaf3AWLfJ77ZgMdHQknw72SFDKpDpqiqW-bmD53gjDIU
+    wJOlNrSqB30_IUgrV4lEoIIz-YRQdaQZvfDQ8Gp5INutHY-qEQ_9qA>
+X-ME-Received: <xmr:AnbIaSRJaFb5fd-hFi1q9lw3Balee6xvaJJt2UEuisSAn6Y-L9KBDxDeCGNzioFSRFuUgWB6PorXVq1UTR9uCbIoHXzGAgKDGQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeegieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    rghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggpughhrhhuvhesohhuthhlohhokh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dHXIaePM6QLVKW_DDz4qlbTrDeyqZP-6uENQ_GaLHQd7FWjtOqWNHg>
-    <xmx:dHXIaWZkJbRBs3sUxt_MegL-Rs_BSsb0Tv2bDoM-_6giYEB1Qn4OmA>
-    <xmx:dHXIaU2xvZzilC20wmcGdv_oqSkCqDV9xfKIPBDLTVQeu6IerKfLXQ>
-    <xmx:dHXIaUe_9uodZFwLA8rlHsI4V0Lxbrmk8hVmy46ljFz8g0NsHLiElg>
-    <xmx:dHXIaWv3PbxmWGbM8OVS0r7j0FUZDZaXZJXUr6zf2VaTDVYKGC5uSUHJ>
+    htvghrnhephedvgfeiuefftdfftefgtdffiefgheffleekhfekieejffeiffdvuefgffek
+    tddvnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpghhithhhuhgsrdhiohenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehvihhkihhnghhttgegsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AnbIafj_FwrgYv-4XTM_sSaIN8Qf7Lin-VHUiKUcp2-xz3PgvZCEIg>
+    <xmx:AnbIaS5IMk9okGAViM1e2BEJUcQy8QgAY5w3hw0JnjI2lahRHY_V_g>
+    <xmx:AnbIacCQO14ndLNFlptWLyAH_8m4dWLumEa_YN1et2N-ds7ligcBmA>
+    <xmx:AnbIaZYrPAKaVnXaN2vorQd6_HCQvSESQP_VRIewhYVGjqCUPHj8XQ>
+    <xmx:AnbIaSjDhl00q4bYrQSow207rZH_CxoCoxgy43ms3_Fbn3SW_jWfJ0aP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 28 Mar 2026 20:42:27 -0400 (EDT)
+ 28 Mar 2026 20:44:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Dhruv Arora via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Dhruv Arora <a_dhruv@outlook.com>
-Subject: Re: [PATCH 0/2] [GSoC] userdiff: adding typescript pattern
-In-Reply-To: <pull.2251.git.git.1774734004.gitgitgadget@gmail.com> (Dhruv
-	Arora via GitGitGadget's message of "Sat, 28 Mar 2026 21:40:02 +0000")
-References: <pull.2251.git.git.1774734004.gitgitgadget@gmail.com>
-Date: Sat, 28 Mar 2026 17:42:26 -0700
-Message-ID: <xmqqtstzh3f1.fsf@gitster.g>
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH 00/16] Microproject: avoid suppressing git's exit code
+In-Reply-To: <20260328200255.247759-1-vikingtc4@gmail.com> (Trieu Huynh's
+	message of "Sun, 29 Mar 2026 05:02:39 +0900")
+References: <20260328200255.247759-1-vikingtc4@gmail.com>
+Date: Sat, 28 Mar 2026 17:44:48 -0700
+Message-ID: <xmqqpl4nh3b3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,51 +86,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Dhruv Arora via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Trieu Huynh <vikingtc4@gmail.com> writes:
 
-> Description
-> ===========
+> Piping git command output directly to subsequent command (eg. grep)
+> hides the exit code of git behind the pipe.  A crash in git would go
+> unnoticed because the shell only sees grep's exit code.
 >
->  * Add builtin userdiff pattern for TypeScript files. Recognizes function
->    declarations, class definitions, arrow functions, and method definitions.
->    
->    * Handles common modifiers like export, async, static, etc
+> This series extends the same fix to 16 more test files, following the
+> approach introduced in t8003 [1] (redirect output to a temporary file,
+> then use test_grep on that file).
 >
->  * Added tests for the typescript pattern in userdiff.
+> Note: t2206 is a special case -- some tests cd into a subdirectory
+> that is itself a git repo and run 'git add .' on the whole working
+> tree.  To prevent the temporary file from being accidentally staged,
+> it is written as '../actual', outside the inner repo.
 >
-> Dhruv Arora (2):
->   userdiff: adding typescript pattern
->   fix(userdiff): sorted pattern and tests
+> Related-to: https://lore.kernel.org/git/20260328132955.172262-1-vikingtc4@gmail.com/T/#t
+> See-also: https://lore.kernel.org/git/xmqq4im2sjnu.fsf@gitster.g/T/#t
 
-We frown upon a patch series that makes mistakes in an earlier step,
-only to fix them in a later step.  The "git rebase -i" command helps
-us pretend to be more perfect developers than we actually are,
-whipping your patch series into a shape that builds one small step
-on top of another in a logical succession.  Such a patch series is
-easier to understand than a history that faithfully records all the
-stumbles the developer made until they reached the final solution.
-
-Just have a single patch that adds the right pattern at the right
-place and add necessary tests.
-
-When/if your reviewers suggest further changes, the way you should
-work on them is the same.  Pretend as if you discarded everything
-you did, started from scratch, and reached the ideal result without
-making any mistakes or taking any detours along the way.
+See also https://git.github.io/General-Microproject-Information/#:~:text=Only%20ONE%20quality%20focused%20microproject%20per%20applicant
 
 Thanks.
-
->  t/t4018/typescript-class-method         |  7 +++++++
->  t/t4018/typescript-export-default-class |  7 +++++++
->  t/t4018/typescript-export-function      |  7 +++++++
->  userdiff.c                              | 15 +++++++++++++++
->  4 files changed, 36 insertions(+)
->  create mode 100644 t/t4018/typescript-class-method
->  create mode 100644 t/t4018/typescript-export-default-class
->  create mode 100644 t/t4018/typescript-export-function
->
->
-> base-commit: ce74208c2fa13943fffa58f168ac27a76d0eb789
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2251%2FDhruv-0-Arora%2Fuserdiff%2Ftypescript-pattern-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2251/Dhruv-0-Arora/userdiff/typescript-pattern-v1
-> Pull-Request: https://github.com/git/git/pull/2251
