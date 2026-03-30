@@ -1,73 +1,129 @@
-Received: from mailout-001.p.bluenet.ch (mailout-001.p.bluenet.ch [138.188.175.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680F4377016
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 17:19:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.188.175.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E26337AA77
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 17:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774891181; cv=none; b=ikmfi2DSS8TImzUarYRq5bSAagXIYJy01VRypDWzRPDv9wJwFjXKjAni8oOgfWD08mAY9oqydnf2fOjZcgZNl2/E4wJXwhx3iyiznz+ezHmPs68HI259AHxL7oAP3q7+LYCEWwB8w42usbRI5hijcwVey6LgmrhJZ6o0HYygypw=
+	t=1774891299; cv=none; b=Xs2fyphvk85XvEW7S7k8NkkAyp8TFJ7DH2IhcClVa8BoAKNV7UFYVwQAch/OzD46UTchBBwDU/j9U2wofMwLUJHB8ERy1Qa/F9eg89fxNLG5m/TTqVCbMLPovk7PW1MucEF/1sCEsoo6sacMSzeqMLHdCoVEKsP8N2buoPdRmdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774891181; c=relaxed/simple;
-	bh=DzuLQSAowmKM+i3UZy0maaIaELTXh78EWJ4BJqx+SsA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aSQb0Pb3lMf+x9i9kfNi10ypjTyoL/BFaKdombjUdrW7GN6bpxjKn4ea4ttwFu1T9AWukQyVpsnEQeR0W/ld+yH0EspJWLUpKvoxvlvgsM6WPi+vCbDAyct5deSZfehR22HSyMLlMIF46a1oa4raltuHv3L7ZCvd9ZNruqF00Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch; spf=pass smtp.mailfrom=bluewin.ch; dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b=I8gmUIv9; arc=none smtp.client-ip=138.188.175.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bluewin.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bluewin.ch
+	s=arc-20240116; t=1774891299; c=relaxed/simple;
+	bh=G5PHvSBDmrRBAfL1Beeo9NKa1inZajrNJRi+AYsJh8g=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=f+VajbeVjqH3awmBIjZhPLiBgmyDpEloDMekHUsrCHYdbfvIRQEdaqCTpIpaLu6vLQHAO0Tulak0YC1ATYmNJgEmCQge/bK260wufwHvTTXmjOvbvydnSS9vd0dDAWhx1Mkt0OFPtUop46mPCSYheeEOGgCkJ5ret8lkPfNATz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WzNwE6Vh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=6AXkbcLP; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bluewin.ch header.i=@bluewin.ch header.b="I8gmUIv9"
-Received: from [192.168.21.108] ([79.154.91.233])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 256/256 bits)
-	(Client did not present a certificate)
-	by mailout-001.p.bluenet.ch Swisscom AG with ESMTPSA
-	id 7GGwwKHolDkrf7GGwwLCBQ; Mon, 30 Mar 2026 17:19:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bluewin.ch;
-	s=fxzs-2048-20230414; t=1774891171;
-	bh=f9gswnZAO4f+2qIn8wnoS86vXWhaWTDNngcBV2EiKcY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From;
-	b=I8gmUIv9eIQ1nQWFSmuUQHEcJEqAy9+6EbIjq4oGpCKIb23HPnC2jNgb+V7CPje+j
-	 ClWrU1oROaeoUNDS9hoBv2I8iFysAaKQ0DyQU6lpPNPIG/KUGl70NM9jc+PzKeSk1v
-	 LpcM4TrBJMirR+RX7AFlm1L2emxiTk8OujnX2BrglBr8tfpsntYfIh0OukJfpObSdr
-	 RnqmJDNtWddoRiwBpImMfMK8PDcO24YCBc8dTbIa8a99MTXMSdFTEoki4HjORd6m+A
-	 ZGWXMLZpmMmVwmLyfcWGJJRRJMInddJ83pN3Ql30NBp9BpJaE1PyWK+zMd507BivrU
-	 WY2D5Vr7SetHA==
-X-Bluewin-Spam-Analysis: v=2.4 cv=SMtykuvH c=1 sm=1 tr=0 ts=69cab0a3
- a=WY6/0jjk7zsOyTa5/3SlqA==:117 a=WY6/0jjk7zsOyTa5/3SlqA==:17
- a=IkcTkHD0fZMA:10 a=wxVyoDmmFkNog-E37iUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Bluewin-Spam-Score: 0.00
-Message-ID: <d99d841f-4284-4734-a34f-4cd1d5c36938@bluewin.ch>
-Date: Mon, 30 Mar 2026 19:19:30 +0200
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WzNwE6Vh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="6AXkbcLP"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7F9A37A01A6;
+	Mon, 30 Mar 2026 13:21:35 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 30 Mar 2026 13:21:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1774891295;
+	 x=1774977695; bh=FUjUHoUPv/XWh2OLmlG22C6jHdbj1zv6TfQ5j1FkzSg=; b=
+	WzNwE6VhxY3aajzzhWgvysMSLS/sDcVyn+AHdcYG6bkTmkfp3ATe5Zbnv0awsndh
+	dlQFUYLr7p7Lx3QL6iCFjelRVL/mh4bzvz/knDhs0+w+83cFBIxFX6f2LjjXu5PW
+	GYMYBUHAawBIcPB/hnobfiMMadSm4A8ook9ZDEdjmy+LAy6YLsstQeyhx4f/f7eV
+	xSNYA3UaVitZ5iJSWooWsy4uy/CR721EF6Ydr4noG571VTodx0O0/Qcm0CXT1YL2
+	RKsf9z3PbjaweV+86LJPpdmUZOPUo6Jzdm5MWRGoSyJ8A/e++2oE1HEvesFew4J0
+	MHtEXFuLQu8lC/VDyOhe5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774891295; x=
+	1774977695; bh=FUjUHoUPv/XWh2OLmlG22C6jHdbj1zv6TfQ5j1FkzSg=; b=6
+	AXkbcLPZK3nM50AlIvticTGAYC9ACT1D0g2GtbqgCzV71iYuoL+qaXHxcwYS1CDt
+	Sa4JSpyq/nkV2/BC183aT3q6bUevEkPglmusA6jHX+SDgiLfP3ietB7PIWKRO6ZF
+	fKkKpq8IRHQopoIgtKM7zXbgpQ/82AU4v/DlefQ+yquUkIqn6GAjvxbp3oM4skhI
+	NV1INs+7LKyPt7iiltH0D2M9tBNo4LlypnYEctRhYhGbq41qXVxPYtC4JE31Q1/j
+	wFRlkVOn5W+PTBIFMlLKEJna5pzUFM/MC7UDJy/eFhlUwI8+9Idbz2qha4+HrnzM
+	r6qmeKe3lZ0pJxEZk7yzg==
+X-ME-Sender: <xms:HbHKaW6WOcWmzFd74jEVADtVqf5H95iRRbtFuI4sZ7YZ-Vofjk2Q9aA>
+    <xme:HbHKaau0oqNHrUib1LwsgWMwefU3XZXgvCbbRTPra0qi_Mexl-kEd6nogQDri1HYu
+    wIawDQMNC9GbEAlvVb21YuwJEVQpQV1TXcimJocZiKpkaQlhbYP1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeelheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedukedpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrthhthhhi
+    rghsrdguvgdprhgtphhtthhopegsvghlkhhiugelkeesghhmrghilhdrtghomhdprhgtph
+    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjnh
+    grrhgvsgesghhmrghilhdrtghomhdprhgtphhtthhopehkrggrrhhtihgtrdhsihhvrghr
+    rggrmhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
+    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtvghpnhgvmhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:HbHKaTFYHCiWhcjickeNV6ooKsfSszniCUi2U6ZReX46ezUAZCuBAg>
+    <xmx:HbHKacRRvp_UcA7u6IGp6kSvUwSxEVkhE7v34Z5HrE-0hPyPn7gqLA>
+    <xmx:HbHKabSEEB25oR9rrXkbQM3R15XiO22abrBk55Ht93Oz2qB0TSMWvA>
+    <xmx:HbHKaXcR2MdCW2E8FUexC4Viu-7qmoZtaezXlNEMN5AQBQiMXqVHfQ>
+    <xmx:H7HKadsa-6A9Ek1n5eWplIXgo7VjZ-r9oUxYi81IutKCvIbxRi9yVO6S>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A8D6F1EA006B; Mon, 30 Mar 2026 13:21:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs: fix "git stash [push]" documentation
-To: Junio C Hamano <gitster@pobox.com>,
- Quentin Bernet via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.2255.git.git.1774529148151.gitgitgadget@gmail.com>
- <pull.2255.v2.git.git.1774877075694.gitgitgadget@gmail.com>
- <xmqq341hfiql.fsf@gitster.g>
-Content-Language: en-US
-From: Quentin Bernet <quentin.bernet@bluewin.ch>
-In-Reply-To: <xmqq341hfiql.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfL7DG+a/NP6y05WARDd/rwmzLSfwptBYP7eOJ9ml1z/yUWcYN6Bssy4mxJN8TEgB5tBOEbI/kGT7qvMScYTsqYU8UKRRIaFiUxrztPS7rsPDSGv+spMv
- c8LTMauQnx0C3+GaxxNIAW5ZLvS1fxhpvOg1z8OYtWVtvsJHzl129yNFoIN3qqA9wcOeDnZpOxxUu21MJE1qqSL05bYFaGe/89EYJYKQEI9bvlY1BvCS7qkE
- Pg3W2S/ZGCdm7QVzWWzGNRlFbHtgTSD/GH7UTNpnIrY=
+X-ThreadId: AIF3iC1xX5tJ
+Date: Mon, 30 Mar 2026 19:20:57 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Christian Couder" <christian.couder@gmail.com>, git <git@vger.kernel.org>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jakub Narebski" <jnareb@gmail.com>,
+ "Markus Jansen" <mja@jansen-preisler.de>,
+ "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>,
+ =?UTF-8?Q?=C5=A0t=C4=9Bp=C3=A1n_N=C4=9Bmec?= <stepnem@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Jeff King" <peff@peff.net>, "Olamide Caleb Bello" <belkid98@gmail.com>,
+ "Matthias Beyer" <mail@beyermatthias.de>,
+ "Jacob Keller" <jacob.keller@gmail.com>,
+ "Florian Weimer" <fweimer@redhat.com>, "Jakob Haufe" <sur5r@sur5r.net>,
+ "Christoph Anton Mitterer" <calestyo@scientia.org>,
+ "Phillip Wood" <phillip.wood123@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <b5c66f24-7bfd-464c-afb3-745bf3f49381@app.fastmail.com>
+In-Reply-To: 
+ <CAP8UFD2HhBq3MPD30jb0XJw0hciTyB=BNjcH9s9hjBoocFqQjg@mail.gmail.com>
+References: 
+ <CAP8UFD2HhBq3MPD30jb0XJw0hciTyB=BNjcH9s9hjBoocFqQjg@mail.gmail.com>
+Subject: Re: Draft of Git Rev News edition 133
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
- > Looking ver good.  Does this excatly match what we have in the
- > documentation?  I think we have a test for it, but I do not offhand
- > recall it covers "git stash".
+Git Rev News Draft wrote:
 
-There is a test for it, at least on the github repo (I wouldn't have 
-known to change the c file otherwise)
+> On February 6, 2026, Matthias Beyer forwarded to the Git mailing list a
+> surprising warning that had just circulated on Mastodon:
+>
+> [...]
+>
+> The thread also served as a useful reminder that this problem is not
+> limited to email workflows: any project that generates patches from
+> Git commits using `git-format-patch` and applies them with `patch(1)`
+> or `git-am` is exposed to it. The practical advice for authors is
+> simple: if you include diffs in commit messages for illustrative
+> purposes, make sure to indent them consistently, and be aware that
+> even that does not protect you from `patch(1)`.
 
- > Thanks.  Will queue.
+Very nice treatment of this topic.
 
-Nice perfect !
+This is useful since there were so many subthreads.
 
+-- 
+Kristoffer Haugsbakk
