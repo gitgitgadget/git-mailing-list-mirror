@@ -1,141 +1,112 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5034F39EF24
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 21:12:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774905153; cv=none; b=ZSnm8QJ8n8VSvM/IP5jGpnqbTRd3XIaVEiF8FKujk0d2NIxBJV04+FwevPsi25JoARqCwBvrjVjJkgWBefkd5CyAbgBgPVI9XMHJVlq5rra2Yh4bC6zBtYarpKBvX0kestLQTmEfsz1qQhvp64UPtyEN1N0xTKyhBVRmwt/tXeE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774905153; c=relaxed/simple;
-	bh=4EdmaIOsTxR+GoDuG20oTfz/06HAqM7hZlBocRflmaE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XA134ivhnELRu+PSMQYZUR0O++Bhcu/YODYzwVR2EbPi9SfePIWJfmkAeTAEt4saTgJLRJ1cwOnYBk6tDyc0PdXfO1G7V9tmvo9LQ6T61jopmGnmBvgvMIpC9am8e4IDvHBoocSfNDKA5Xei29/5KG/Oqh33WahE4vAioLC533I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=PaYSirUw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I8iJxoIR; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6F7382291
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 21:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774907412; cv=pass; b=D0AYuX0L9gh3h8OuDTURpbAOysX1ayD9dL11OekgHQLfb4870fyJN3kU3FnuWhzNbA9HCr2cu+Ehj9jeiHfMfSXl0KMtOZSMfVasV3sSS0d1GZ1P/QHiDsh8uQexvW6xtmwnSNMwkPwTBqay519L9KQorxbby0M8R50QAedZTIM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774907412; c=relaxed/simple;
+	bh=SoWN9cC+F0kPCHMqx+J1r+axISwVemowbkgXkEKg0VI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BrBuaWBLJfrLBVKslu0y931Ra6wl1vbXp8IE2KKeYObB+LaHAgLWA5MJdkIVbx9hpXB9TWuVFPUiEJ7fN7I3RM++4pdqT5YnbRC8zh+PfFsskWf3WtXCntPuHG6GoMnq8ufdiMCY6LcuzIWIJ4qh/ja3EfgBl4rSI1ZnPkjBiE8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sTFWY7KZ; arc=pass smtp.client-ip=209.85.221.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="PaYSirUw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I8iJxoIR"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8EE107A003E;
-	Mon, 30 Mar 2026 17:12:31 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Mon, 30 Mar 2026 17:12:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774905151;
-	 x=1774991551; bh=UMoLejiW6rAqT7w58dAu3rQBtScmTb+OXR7b0BMF/N4=; b=
-	PaYSirUwy+3glxHnXWqrlCX0iPxqe0IQmOZjZSpzr4cN0vCNw4ni/FraE0ue/CsD
-	DQyz/+qn/eSTAyId+0Racgs/NWEn8kBauQ0p16KY3Pko+asvYBA8DAr0V9WJZp98
-	QZtYGEQKmIRtMJcNaUS3FbmG5qY1SXACZlh47ZN78RW7pUxl9mlGiJ67EE09xEEd
-	AFwwk3RStJpLn1v+TRl9ODgTuiFfkZ+XNf1LsrmYjYmI0qcal35hTv+vB3Ue0L3h
-	04n3RPq+2lIBuM0XY90Gn7CqEAqhCod36T7qce+9OSfYweoLd+mp7FcmpM0WStgz
-	roJ5NALww7du81I+La/C1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774905151; x=
-	1774991551; bh=UMoLejiW6rAqT7w58dAu3rQBtScmTb+OXR7b0BMF/N4=; b=I
-	8iJxoIR34h4X4Yb+vc64jQKi127Gc9EiSAngPLKbChSC/rg2J7pEVp8d95pEMyep
-	0O4xEiEFIrc+y+9m4ZAvUhDm8ep1hwn78EOWD6mP73hWmgBHDwFExZsTwLHCMe/B
-	kQzUTDdc6Z5gWH4c8B6i2ua8nQ63D29FStbusSPYwTCShxlSle2kcZ57Q5BNGMpH
-	oNqsgObBhl1YtGDK5eog+7mwOLORGmRiLLiqABHGE3FqcsXHRSS8jYjDD31iDIZG
-	4AjuRIoS66XZVk5d/C/RiXxjhm+1pmJ5gS25n5lQvmSgKYnGAnMg0QGjkdSIVuZ9
-	JF0Ke8pvNju6VOJ9CphAg==
-X-ME-Sender: <xms:P-fKadsiwpwEQa6aSiLEc3D5DA_WgEqiB6kn_AYtHzgWWKOuQfTJ3nU>
-    <xme:P-fKadV_ClG1JaTqoLB2l-aiDWF9xpZXUsbJNtKiqU1GCxcRsr0yq7N4mmBXn3mNf
-    EhBaposYQYviSdcqH-3yDY7TipyO9voCw_FrTT267ucr7rly1a9tw>
-X-ME-Received: <xmr:P-fKaZFewCHS3E4CB0nyZeNEOOHjyYrjWemXprHSiiXH5fimYvJ7Obnck75Xr3wx03OJIVbhVR-Qs1t0YRLhmbEvxbWVzexYmAwFmGX4URmwoHT0q8DGqQb7Ng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedttdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
-    jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
-    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgepudenucfrrghrrg
-    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgrtghkmhgrnhgssehg
-    ohhoghhlvgdrtghomhdprhgtphhtthhopehlihhnuhhssehutghlrgdrvgguuh
-X-ME-Proxy: <xmx:P-fKaf2zK6Ugic7_VqOFZZs7K1J7dMRM5SErIbU07ZfodsptWV52bg>
-    <xmx:P-fKabOtoh-4dzVbSkNz8e_u1B7sAqjHLOVRpkIT_bqvLSuek7PSaA>
-    <xmx:P-fKae4gU_8OmnoC2DcHspM1U7uQeaPpJabNin3fml_gNS4JQQ5m7A>
-    <xmx:P-fKaV0hnHs62DaKIFYc9eLSZM9q6cBdWkdHh7kCQNiOI_iDZmDzXA>
-    <xmx:P-fKaenPPiC3bL-C5r-1cR3m3eatl1yrXgVtcFzC_RoPr3HpfCe3SegC>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Mar 2026 17:12:29 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	christian.couder@gmail.com,
-	jackmanb@google.com,
-	Linus Arver <linus@ucla.edu>
-Subject: [PATCH 2/2] doc: interpret-trailers: explain key format
-Date: Mon, 30 Mar 2026 23:11:33 +0200
-Message-ID: <doc_int-tr_not_rfc.535@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
-In-Reply-To: <CV_doc_int-tr_key_format.533@msgid.xyz>
-References: <CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com> <CV_doc_int-tr_key_format.533@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sTFWY7KZ"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-56ce07a54e8so3678512e0c.2
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 14:50:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774907410; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VnJpcvz10zTEopFLzDZJwTy7Vi8nIdPFIWL8+011+2+XxXyN7gRKEzKmy958lFn9wa
+         /Rg1TUB6rAsF90qYmK33Q3KMUKc4NGsdmA3hm9Pr7gRnW6y9xYHcMR9xUPSpqS8gXniv
+         qS70EVUkcuaZy3tscCR1Ke5gigLEsR1RrPNJFfkVLQtJkxcgw5SizNtYFRO9dThRhYpr
+         nwGasG8eNrR+osP2wPJFRGr6jt/qUKtx0CDx3RStIrGg+H86RmCN+ALoU+9ms1/MDeKK
+         jBtAUJALQwApn0l17pmWLYziUE47s5mz/24zWGD38IHXXG6KtmWnwwP2qd93ABoJj7Ky
+         odRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=SoWN9cC+F0kPCHMqx+J1r+axISwVemowbkgXkEKg0VI=;
+        fh=d3G+r6gZxawRF62r8cGBQgJa3cP3CQYGHyQc1AgFRyI=;
+        b=cVVh8PPnAoJedaD2stN9F97BwcTEpOkl4aEm3d6c2eQDa1ZAKwCd7nz0+nlkOUsfoO
+         AOc9q+qro9u9hDFilUZ4uYKdqRDvFIgv8cIcCbuUAf6VKLMWISJHpAOw8Z4Tj4XJ7jmX
+         gvAm+H/I6oeANhrlXwmotSjy41eC/S3K0el0fo/f+SNSMh6XYdPCXDl6BRD4x+WMOt0s
+         n3hFqfsk6ASdaD8etl8GdKqEsA7KelGbHrNquqf2Hl1hWvSePh8CXSYoD6uStfcouOh4
+         aPaw6LByCNBdvoW3TGuRBIBkA3k27VkKr/g2VKsKrVKTXR/E8+mmrnoaHEEnNkXm31PY
+         Koyg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774907410; x=1775512210; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SoWN9cC+F0kPCHMqx+J1r+axISwVemowbkgXkEKg0VI=;
+        b=sTFWY7KZ7rl+nuDJRAnYt5ov6Dxg3BopqoYqtP77FeKq7yAv77tPqsuQhrQzeqwBe8
+         PZm0bxDvpKx2f4dnh+pqr5+pgh/eWltXwgyMsCAE4fyZlgtKKJeCaQvMo1ADEgd//fG7
+         t/VbSZ7Ap1bXpNt1EAASHawuuEfmUgg90AgZ8mGZQFxjdWJMfHj3zDQwc4pnjrTHM9BT
+         uti/3GzUXittd5iA7qptSLkfRSb52dVK+X85foIKHDJTxWDAMLLkHVHDHjhwfcNFFb8Y
+         PqD5HVhItS8Um2RBCrwJe9YGu1rXdkXNmqmxJlCEl+gabcWsWDuT5u3P9oUBZeEo95VL
+         QZwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774907410; x=1775512210;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SoWN9cC+F0kPCHMqx+J1r+axISwVemowbkgXkEKg0VI=;
+        b=n9Wv9StzvMZwNpEZSDPZUCfZIN5bD+kwpm0qdzEPWvkc+NIA0H/VsO1w9jSlkipXUA
+         jKRpiKrdmzXXb/Y6UTSgKNgpBAmWAxEiU7R/QGrKA+m+c2TOxOP154ZICWwRjuWKLWwe
+         0vIqpRpuXIZf21cLvPLx3ULjbZW537u3st5jDoV44F9wAjoD/mhUFA0qn7M14Xp0ovdn
+         aVH1UUIvF7GTkscuth9fqTGnG6VlP9EYXwtPyTOC0BEK+cqr90lqA+moUj0oYXpNWVVT
+         chd7GdvNEW8o6qSQrp0kGxc9WkyYasNKn7q/9XTVVavBWp/GqNEdESTWUL9W1che24Nj
+         G1NQ==
+X-Gm-Message-State: AOJu0YwBmkfKLHFPUi+ugkMn8J57/fASNWKuKpii1Em7bx2S4gqF81xe
+	eyd3LRJW81K5j3FR7hu80cHeNryFPgPxTt4iCpgXKk3TuTOM74IabyDOhF/LrdAHlFDPe5dIpt5
+	Lpofybw1fe//V+d9fRB45WCFRao7p1YU=
+X-Gm-Gg: ATEYQzzs5o/9rjd1/S+0HSrc56oj+MQ6n0C+gHOinlzBeZwzgytlmzMJNjR3btskZCx
+	9i89aWE0pU5bwBEebIHtpsKW7QZ4E37UtERNu3kyu0iE38Ofj4EWdQ/JlKjLrZqcKM4A/b8dKm+
+	3d4SkzQBrkF1ahjEUyFUkywoLmbk2JIKF6cuznx+06Vd9026+YWT2lGe2035gYeazjUVK4YtCR1
+	IVSywojJTwmaRe3tHcLwJCetKusgIgrSpTcDPX/Bo8m6BGhc4IQCRyq7SKmNFRJgjWsP6gx1TPZ
+	PzgRtRQ=
+X-Received: by 2002:a05:6122:3a0b:b0:56b:579c:82e with SMTP id
+ 71dfb90a1353d-56d4a50bf8bmr6213755e0c.5.1774907410228; Mon, 30 Mar 2026
+ 14:50:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <aafga8AjpxagiEJt@Adekunles-MacBook-Air.local> <acMT0zqd6SiEz5h9@Adekunles-MacBook-Air.local>
+In-Reply-To: <acMT0zqd6SiEz5h9@Adekunles-MacBook-Air.local>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Mon, 30 Mar 2026 22:50:10 +0100
+X-Gm-Features: AQROBzDfFEjC3ORd21vgnh17FUR-7omJ8ndz36XK5USLMIJiWMZEsPqihWYSzNc
+Message-ID: <CADYq+fbsXVtYZcq2wB2FoyUzDdzZKJYEN2EZk1uOvdihMyJzVA@mail.gmail.com>
+Subject: Re: [GSoC] [Proposal v3]: Implement promisor remote fetch ordering
+To: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Tue, Mar 24, 2026 at 11:47=E2=80=AFPM Abraham Samuel Adekunle
+<AbrahamSamuelAdekunle@adekunles-macbook-air.local> wrote:
+>
+> Hello,
+> This is the third iteration of my proposal for the project
+> "Implement promisor remote fetch ordering" for the 2026 GSoC programme.
+>
+Hello.
 
-A trailer key must consist of ASCII alphanumeric characters and
-hyphens *only*. Let’s document it explicitly instead of relying on
-readers being conservative and painting their trailers by numbers
-(by the documentation examples).
+Just bumping this up to know if this version is okay for submission to
+the GSoC site.
+Thanks
 
-The previous commit for “key–value pairs” allows us to segue right into
-describing these lines as consisting of a key and a value, which is our
-opening to describing the key format.
-
-Just like *trailer* we emphasize these two first standalone word
-mentions. They are then mostly used in placeholders throughout the rest
-of the document (<key> and <value>).
-
-Reported-by: Brendan Jackman <jackmanb@google.com>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    `trailer.c` uses `isalnum()`. That short research together with a little
-    testing left me with this conclusion. (The C unit tests for trailers and
-    t7513-interpret-trailers.sh seem to just use lines with spaces and no
-    separators for non-trailer lines.)
-
- Documentation/git-interpret-trailers.adoc | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index e7c1f821619..92d9c95f9d2 100644
---- a/Documentation/git-interpret-trailers.adoc
-+++ b/Documentation/git-interpret-trailers.adoc
-@@ -27,7 +27,10 @@ Signed-off-by: Alice <alice@example.com>
- Signed-off-by: Bob <bob@example.com>
- ------------------------------------------------
- 
--the last two lines starting with `Signed-off-by` are trailers.
-+the last two lines starting with `Signed-off-by` are trailers. These two
-+trailers have the _key_ `Signed-off-by` and a _value_ (Alice and Bob).
-+The key must consist of only ASCII alphanumeric characters and hyphens
-+(`-`). The hyphens serve as interword separators.
- 
- This command reads commit messages from either the
- _<file>_ arguments or the standard input if no _<file>_ is specified.
--- 
-2.53.0.32.gf6228eaf9cc
-
+Abraham.
