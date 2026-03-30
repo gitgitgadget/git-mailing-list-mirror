@@ -1,68 +1,69 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE42374E43
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 17:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0103DD517
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 17:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774891672; cv=none; b=Q2dD85ksO6vlaDaJ9r4+gRnIhIb1rrGiikKY5zHXEyRE7VGyCPaa5Wpg2u0dnPwIEY1uIQp67BNV4ZwOuszuBcqIeK0idTiE5/hTbW43gnSb7eoXw9itywwmnncUOgrm2O71mjSbpE5XByy4tXrWuuUNQWjQbXpv6DWGBoZajxc=
+	t=1774891673; cv=none; b=DznWtEw3KvIqNzVJD+Q33TECFgp2HHR/bIuSQ9GDHKVq9a3z5ELfZeAdSneisPBE68/9O65pQogDb2bog9ljzRltFVJVvl+IBcO70ZMgT72UCb5YUxkC2AlU7uHe8oZTxHuW0Mt6aHPtkmIWAlwMz1qtc/rArpQOU4V6x2F3IXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774891672; c=relaxed/simple;
-	bh=BCFv5ZXEJ6JCgeyzoAJZsjGUPyFyhJYbpJUIChEEfcU=;
+	s=arc-20240116; t=1774891673; c=relaxed/simple;
+	bh=wawFqB7G0Ar9g7OBPG1atT2FN69lVZxRmeAuhmuw/8Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Yt/UMpfhFd/YBq2UTKmR5BnbOysShv6hPQ0IkETGe+HcZm3cSXjQWzuC7UwqrG9XJLU3qUx4roYz0NbPWfF5JGGjSCxSgQ8n4gIYsaJUYVdQqgK0uDrS6Jt95eRmkxlNfP+Q0qcRF4bMxlOiYkxHhV8ltc4HlwT+EEEsAYDRA+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UlL5/a8g; arc=none smtp.client-ip=74.125.82.43
+	 MIME-Version:To:Cc; b=sn2mm8t9jZOfbHUlJ4ECVrtZP4vtxZTyLACdpGOLzgR0GQg0gXKFpTaGeBifi8axh7wPaKzQP/d1Jq6UrjrUetszKD/VJ1F3R+xLtk45bX3e1Yza6sBCg4bcRGIcs7c9apdGlxOHSSObPdqQRTVASn3rrs0JP9s5GfLV2McFZ+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RupjvHxd; arc=none smtp.client-ip=74.125.82.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UlL5/a8g"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-126ea4e9694so445048c88.1
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 10:27:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RupjvHxd"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2c66eafc1easo1925322eec.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 10:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774891669; x=1775496469; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774891671; x=1775496471; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aphQfZ5EJdkrYx5CWc7xI5rK552v5kAXtYWDcBrSdLs=;
-        b=UlL5/a8g/B4lkPTrdKprKTeEezGlXOxHIttAaDJ8BDNFa3P8b1hdih8D+phuyHEbYN
-         FtAUy96gEZEPZkKh7u/FDrWt3sUs76OVktKv1NcpOzg3YVYIFZJvDRvOQWK4dTpa3xrT
-         tY6cVDR1RqzBwuF75ImPfN8QGyVPx1MuhsRJM1tGHFBM0k0uvHjMM0XC0xjTzCo9rsZI
-         h0/VVRBV8uMdzDITcPgwRo2sftLWdSdFp+/czyVnhuqcLpgfE7gwO7W+MaVGv+fW8RWo
-         6wwiveyvdLg9PqTJ0mtGDP+5KfwaxucPM5GkoFleFNYj+PvMgMYva6AKKPv1GIh0qKaf
-         vwLQ==
+        bh=WUE9y+t+YlUZRNErlcV0R22MPdxA+qmQwV2DvypWci0=;
+        b=RupjvHxd03Bjg6Lpmp5NWW4Ya/WmliVNKPobPpd5+aNtIAB9vM0SB+V7prb+KWSvNG
+         2oeieOKNM5ATQ8l+7OeSr/ndD6pFOs/dMhOONme2loMFRztMeAzlL8aJdbyBcWVxIAn5
+         9U8DOr7n2tKo7EBj2HSRVJi/PjDHIwdnU5lwRKS6ucxCty6jy6n49HFg1o2qV0YLegHV
+         NSAUlHnh3iUjo1x6gcrlJeVcco44flV8y49h2aIEXZ4hAaRTY3FbRJr2zDy6iXIk20NL
+         XVCgHcMB0M6yPzN+Zk4PLr1L7+oXCIEw5A2WB8MUjzP291sW9L0dM2Swe+K7lrlk720Y
+         x+Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774891669; x=1775496469;
+        d=1e100.net; s=20251104; t=1774891671; x=1775496471;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=aphQfZ5EJdkrYx5CWc7xI5rK552v5kAXtYWDcBrSdLs=;
-        b=J/g8b4XvOIs1sFEgf9zRCFYkSVW72/P0TqifWB/0Mn80KNAx1e5X787YkLFnyo5mO/
-         Ol6BF7XFUz6pwhtvmm9ViazXIoNh1MSZCYcuPOexpc5Yg5U5KCjPsBCwij2jXN0MNMfr
-         mDcn8ocaT8Y/SpXzTbSSmFS6rq+ZViUAQ9o4H6DAchn4hc/kEl3/zPA+TIL+oapUvJTH
-         jqxe9KLU854Uaw3rfFI4LdmVha23PtbWCnIQxGeH9U6bhpEDKKMps8HMxTjsoQQE3Uhe
-         0aJKjycNCTARVulbLBtoo79Wlkv4SY6MYZwc2ECeeJoYI4cubvaLTdCuCiAmm55tNm5c
-         iVeQ==
-X-Gm-Message-State: AOJu0YxkMHZg1yQNcRZEnm/CQLNh1v8ml7oX1f7VZ+j4FIVimFTlIVBk
-	4u3LFSO3UkO2XcnVRMjzIJL9spcFenGIbfFwLkUtFGNX4SL0SLlTiihLo68rLQ==
-X-Gm-Gg: ATEYQzxLi4+C+/wRiMhdKurDG73O2uhoE0w8cjdkwJOBV6julivyLWHmyGVscd2F738
-	U8S6Bi4b/o04Q428zgiAw3UzsDsb77HdvBMae0Gpv56nE4AKJM7xcmKLJV1P7vQpBQEbCHxuRKY
-	bauLqGuZY+ZUb5STzABQ71Cu14MVsXaLOvUO7k2eM8XUT6o28ZYb318hyR1SqN8PIkw3IYuH5p+
-	2b1eSKX39lmMq4TPLLNksUoPGx0DaM+OS+qpGroIJmov4UST5bKVAQvuukTS/nFyUTx8hrp0HtH
-	jaiucJEvbLXSeOze3L+tpch4vxFnLRKu+b08zpiUSjLLYbvo7XKvQ15R+2+F0D7j9+FaQSIT/Gp
-	loCbX0JwtzI5VyRC33H1swDrNI2LgW030gOpIh+hy6E11+Ipag+KEYv5oaFsk5TO6vP4qbzHsfi
-	UarckAxWfHGkAl/VhPusX5Klu7jw==
-X-Received: by 2002:a05:7022:f8a:b0:119:e56b:957b with SMTP id a92af1059eb24-12ab276d87fmr8151382c88.0.1774891669206;
-        Mon, 30 Mar 2026 10:27:49 -0700 (PDT)
+        bh=WUE9y+t+YlUZRNErlcV0R22MPdxA+qmQwV2DvypWci0=;
+        b=aO4RMFKzlFWRcXR+DTMTjnkmBQ+aYufVzIQkcqRPj0sgWaxHq8s7vmoQDJIvcP3uKc
+         BE4mDC2+8eyAKA//gSCAXRTYj7e0OrtyMVv3fwSubKXPdixJ5tgx0ypr0HvrC9qSDg0m
+         fWvaBEH8ZpTOdFpjjKHcDSPlp8GAWBnyu+tosoztNBhwCCejYQBTIZw+r9hGXAlo1Di3
+         lqpAHwtXMDoI5XJTffBN5XvVNejuS+KU7XGBDKd53grYZyYTFpMsNZvNaLg3MIWolaIJ
+         D23QoylfUWaUVLz1AS0UnXqXB4HrhHR8wEdfe1sBOIgdC70h+lriMnX9umz1ZOrjIoz4
+         nBRQ==
+X-Gm-Message-State: AOJu0YyKxGs40+zj/NaxlMlLqqGUWGRoKLqJaWrtWHeHyeUxp0lVxkm4
+	i3IqO1PqnW7pyJyXggGzEpfHyD5OIJ26rhXEPVtQ2HQ+f8ZqXIy8piZuBW9GQA==
+X-Gm-Gg: ATEYQzzXoF900dToTJGS6/JxfhS7+KSOjyxJTLLGSWaZnZB1Xix0PNpHEKknu7Yoo0y
+	yDKTOznsmDfFjpCB89LDkb6cU+93tTlnLpcyb9nlHM8roy1K5hSZ1+fghwhg0rSJxFfBUot6nO0
+	oLcPhzq800QhCyZb2xBukpWukc8YiQCp9xSFBG6wdBS42bnVqsy6IzVXUBZH3cZZsczLCFvSt8l
+	tUL4/ytn1YZFV7TZGySCjMHzo9Ue0mgLN51ficzLBrbmpDg00LcJqpkRIdaHsWCFqsfb30g2iuj
+	emwaUOPUp4xYUigDQFlQWcPuy8SjxGc7zXeo3/dfD8nFwfdNZR0XLlhq3DysC8usct0p8465+s7
+	qLZ0uNBiGCeYy05WCdmPxf5ciwNLb4o0FW40skm3wGCjZgGSBpq9ceJA7m1uuBhm6JB6T12mT8N
+	KBumCFB7inXf0FT6ASQ4OFUiZiRg==
+X-Received: by 2002:a05:7300:a485:b0:2c1:7afc:df00 with SMTP id 5a478bee46e88-2c185e69320mr6972819eec.30.1774891670815;
+        Mon, 30 Mar 2026 10:27:50 -0700 (PDT)
 Received: from [127.0.0.1] ([52.225.73.164])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12ab97cb08csm12125988c88.3.2026.03.30.10.27.48
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c3c68b272esm7376309eec.15.2026.03.30.10.27.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 10:27:48 -0700 (PDT)
-Message-Id: <pull.2253.v3.git.git.1774891667.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2253.v2.git.git.1774682046750.gitgitgadget@gmail.com>
+        Mon, 30 Mar 2026 10:27:50 -0700 (PDT)
+Message-Id: <5a8165b05dad6143c910105be832bdc6ea5bf598.1774891667.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2253.v3.git.git.1774891667.gitgitgadget@gmail.com>
 References: <pull.2253.v2.git.git.1774682046750.gitgitgadget@gmail.com>
-From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 30 Mar 2026 17:27:45 +0000
-Subject: [PATCH v3 0/2] [GSoC] read-cache: use index state repository for trace2 logging
+	<pull.2253.v3.git.git.1774891667.gitgitgadget@gmail.com>
+From: "jayesh0104 via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 30 Mar 2026 17:27:46 +0000
+Subject: [PATCH v3 1/2] repo: add paths.git_dir repo info key
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,165 +74,87 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Jayesh Daga <jayeshdaga99@gmail.com>
+Cc: Jayesh Daga <jayeshdaga99@gmail.com>,
+    jayesh0104 <jayeshdaga99@gmail.com>
 
-trace2 calls in read-cache.c use the global 'the_repository', even though
-the relevant index_state provides an explicit repository pointer via
-'istate->repo'.
+From: jayesh0104 <jayeshdaga99@gmail.com>
 
-Using the global repository can result in incorrect trace2 output when
-multiple repository instances are in use, as events may be attributed to the
-wrong repository.
+Introduce a new repo info key `paths.git_dir` to expose the
+repository's gitdir path, equivalent to `git rev-parse --git-dir`.
 
-Use 'istate->repo' instead in these call sites to ensure correct repository
-attribution.
+This improves consistency and allows tools to retrieve the gitdir
+path without invoking external commands.
 
-Changes since v2:
+The implementation adds support in repo.c and integrates it into
+the repo info reporting mechanism. Documentation is updated to
+describe the new key, and tests are added to verify that the value
+matches the output of `git rev-parse --git-dir`.
 
- * Apply the change consistently across read-cache.c
- * Drop unnecessary intermediate variable
- * Remove obsolete TODO comments
- * Update commit message
-
-Jayesh Daga (1):
-  read-cache: use istate->repo for trace2 logging
-
-jayesh0104 (1):
-  repo: add paths.git_dir repo info key
-
+Signed-off-by: jayesh0104 <jayeshdaga99@gmail.com>
+---
  Documentation/git-repo.adoc |  5 +++++
  builtin/repo.c              |  7 +++++++
- read-cache.c                | 32 ++++++++------------------------
  t/t1900-repo-info.sh        | 10 ++++++++++
- 4 files changed, 30 insertions(+), 24 deletions(-)
+ 3 files changed, 22 insertions(+)
 
-
-base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2253%2Fjayesh0104%2Ftrace2-istate-repo-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2253/jayesh0104/trace2-istate-repo-v3
-Pull-Request: https://github.com/git/git/pull/2253
-
-Range-diff vs v2:
-
- -:  ---------- > 1:  5a8165b05d repo: add paths.git_dir repo info key
- 1:  7fdfaaef9b ! 2:  9bb6d0fa01 read-cache: use istate->repo for trace2 logging
-     @@ Metadata
-       ## Commit message ##
-          read-cache: use istate->repo for trace2 logging
-      
-     -    trace2_data_intmax() calls in do_read_index() currently use the
-     -    global 'the_repository' instance, even though the index_state
-     -    already carries an explicit repository pointer (istate->repo).
-     +    trace2 calls in read-cache.c use the global 'the_repository',
-     +    even though the relevant index_state provides an explicit
-     +    repository pointer via 'istate->repo'.
-      
-     -    index_state instances are initialized via INDEX_STATE_INIT(r),
-     -    which sets istate->repo. Using the_repository here is therefore
-     -    redundant and obscures the actual repository context associated
-     -    with the index being read.
-     +    Using the global repository can result in incorrect trace2
-     +    output when multiple repository instances are in use, as
-     +    events may be attributed to the wrong repository.
-      
-     -    In particular, using the global repository can lead to misleading
-     -    trace2 output in scenarios where multiple repository instances are
-     -    in use (such as tests or future refactoring toward better library
-     -    boundaries), as events may be attributed to the wrong repository.
-     -
-     -    Switch these calls to use istate->repo directly, making the
-     -    association between the index and its repository explicit.
-     -
-     -    Since istate->repo is expected to be non-NULL, enforce this
-     -    assumption with a BUG() check so that any violation of this
-     -    invariant is caught early.
-     -
-     -    Also remove the now-obsolete TODO comment.
-     +    Use 'istate->repo' instead to ensure correct repository
-     +    attribution.
-      
-          Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
-      
-       ## read-cache.c ##
-     -@@ read-cache.c: int do_read_index(struct index_state *istate, const char *path, int must_exist)
-     - 	size_t extension_offset = 0;
-     - 	int nr_threads, cpus;
-     - 	struct index_entry_offset_table *ieot = NULL;
-     -+	struct repository *r;
-     - 
-     - 	if (istate->initialized)
-     - 		return istate->cache_nr;
-      @@ read-cache.c: int do_read_index(struct index_state *istate, const char *path, int must_exist)
-       	}
-       	munmap((void *)mmap, mmap_size);
-     @@ read-cache.c: int do_read_index(struct index_state *istate, const char *path, in
-      -	 * that is associated with the given "istate".
-      -	 */
-      -	trace2_data_intmax("index", the_repository, "read/version",
-     -+	r=istate->repo;
-     -+	if (!r)
-     -+	    BUG("istate->repo is NULL in do_read_index");
-     -+	trace2_data_intmax("index", r, "read/version",
-     ++	trace2_data_intmax("index", istate->repo, "read/version",
-       			   istate->version);
-      -	trace2_data_intmax("index", the_repository, "read/cache_nr",
-     -+	trace2_data_intmax("index", r, "read/cache_nr",
-     ++	trace2_data_intmax("index", istate->repo, "read/cache_nr",
-       			   istate->cache_nr);
-       
-       	/*
-     +@@ read-cache.c: int read_index_from(struct index_state *istate, const char *path,
-     + 	if (istate->initialized)
-     + 		return istate->cache_nr;
-     + 
-     +-	/*
-     +-	 * TODO trace2: replace "the_repository" with the actual repo instance
-     +-	 * that is associated with the given "istate".
-     +-	 */
-     +-	trace2_region_enter_printf("index", "do_read_index", the_repository,
-     ++	trace2_region_enter_printf("index", "do_read_index", istate->repo,
-     + 				   "%s", path);
-     + 	trace_performance_enter();
-     + 	ret = do_read_index(istate, path, 0);
-     + 	trace_performance_leave("read cache %s", path);
-     +-	trace2_region_leave_printf("index", "do_read_index", the_repository,
-     ++	trace2_region_leave_printf("index", "do_read_index", istate->repo,
-     + 				   "%s", path);
-     + 
-     + 	split_index = istate->split_index;
-     +@@ read-cache.c: static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
-     + 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
-     + 	trace_performance_since(start, "write index, changed mask = %x", istate->cache_changed);
-     + 
-     +-	/*
-     +-	 * TODO trace2: replace "the_repository" with the actual repo instance
-     +-	 * that is associated with the given "istate".
-     +-	 */
-     +-	trace2_data_intmax("index", the_repository, "write/version",
-     ++	trace2_data_intmax("index", istate->repo, "write/version",
-     + 			   istate->version);
-     +-	trace2_data_intmax("index", the_repository, "write/cache_nr",
-     ++	trace2_data_intmax("index", istate->repo, "write/cache_nr",
-     + 			   istate->cache_nr);
-     + 
-     + 	ret = 0;
-     +@@ read-cache.c: static int do_write_locked_index(struct index_state *istate,
-     + 		return ret;
-     + 	}
-     + 
-     +-	/*
-     +-	 * TODO trace2: replace "the_repository" with the actual repo instance
-     +-	 * that is associated with the given "istate".
-     +-	 */
-     +-	trace2_region_enter_printf("index", "do_write_index", the_repository,
-     ++	trace2_region_enter_printf("index", "do_write_index", istate->repo,
-     + 				   "%s", get_lock_file_path(lock));
-     + 	ret = do_write_index(istate, lock->tempfile, write_extensions, flags);
-     +-	trace2_region_leave_printf("index", "do_write_index", the_repository,
-     ++	trace2_region_leave_printf("index", "do_write_index", istate->repo,
-     + 				   "%s", get_lock_file_path(lock));
-     + 
-     + 	if (was_full)
-
+diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+index 42262c1983..d17d911ec6 100644
+--- a/Documentation/git-repo.adoc
++++ b/Documentation/git-repo.adoc
+@@ -95,6 +95,11 @@ In order to obtain a set of values from `git repo info`, you should provide
+ the keys that identify them. Here's a list of the available keys and the
+ values that they return:
+ 
++`paths.git_dir`::
++	The path to the Git directory for the repository (equivalent to
++	`git rev-parse --git-dir`).
++
++
+ `layout.bare`::
+ 	`true` if this is a bare repository, otherwise `false`.
+ 
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 55f9b9095c..3067107cad 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -66,11 +66,18 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
+ 	return 0;
+ }
+ 
++static int get_paths_git_dir(struct repository *repo, struct strbuf *buf)
++{
++	strbuf_addstr(buf, repo_get_git_dir(repo));
++	return 0;
++}
++
+ /* repo_info_field keys must be in lexicographical order */
+ static const struct repo_info_field repo_info_field[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
+ 	{ "object.format", get_object_format },
++	{ "paths.git_dir", get_paths_git_dir },
+ 	{ "references.format", get_references_format },
+ };
+ 
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index a9eb07abe8..63be0849c4 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -149,4 +149,14 @@ test_expect_success 'git repo info --keys uses lines as its default output forma
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'paths.git_dir matches rev-parse --git-dir' '
++	git init repo &&
++	(
++		cd repo &&
++		git repo info paths.git_dir >actual &&
++		echo "paths.git_dir=$(git rev-parse --git-dir)" >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
+
