@@ -1,40 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DBB37E310
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F9623958D
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774912552; cv=none; b=fcpAEDzRZdpjVE4L8Hm7EXm+6ysvc1QSAWbDRIhMSa8vxfo+X8VDaguZbzIj6Huad0btyxjkxXJk23WzNH0nsjniVI5wZHctVlLrxe02lRPajPog5s2no0Q6IVMrbV+SiKqbyaESWMM1ze9IGzHKzduDRW86PG6tXgokWDtdPiA=
+	t=1774913072; cv=none; b=iodXhWjoJqcuZk3ZrnQfEkLVnXdIR+PHOCtS0AtCTPCL9zCgGtJ4EcEN+ggTzBDKxGRd+d/+HFz2VbCzFUJoCe1pm/A6TIz/XhZ+POuflMJTem4NUhgO94fgmIGnnSRjiiJisUhKwzSXCBEkEHfh5Pstn/HC1hMHqpyiutLR4K0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774912552; c=relaxed/simple;
-	bh=Xwrp6DW+27yBAY0WMSSe9CUS2hYQwMlrGzkmwS0M2J0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IX6LrK9qaiL+dAzZttqi0Pg+zXaEbT4FboL9S0qvIFnZrZh6jokTY2wivtutStB2LOKPJrvGBP8SimESdT5Po2SItU/ew//MGS4HCRHiye22kMhoYFrtnqk3+WFbFnkHMrdqfUFXbwDVmEHFsuz3v0ZyU08R1Za0vV+9jBUb/Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ExMDQQCT; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1774913072; c=relaxed/simple;
+	bh=QVbv+opbdu5/c4s5dj/uoI2Q7qF5r1mdiuFUft7LVaI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tk1R1QLVqYWB0KqYRKwOQMWVDM73uYL7E5QpklE2gLGXNVhmQ0szxwaoyrmx6zhHkzLMOkSltQhht5UJTQbNTSAnC34JR7RY/4euThLlF+OhE9+jJKIlnAklyRHeXu8cHk8Rzl315ms+ehCI1JDfljU5xcpZ8KHevuPZylkb8Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UAVliOeA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4Yr+8V1R; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ExMDQQCT"
-Received: (qmail 199445 invoked by uid 106); 30 Mar 2026 23:15:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Xwrp6DW+27yBAY0WMSSe9CUS2hYQwMlrGzkmwS0M2J0=; b=ExMDQQCTRc+MnR19aEzU1uFX8KHbqNkrd3Iq2hgKSWhHDFiSawXoetwiBnERG9CjsMT6ZH4AdSuKInAQKAACsDwSfgzVo2xgagKJ5eKjPecks7b26ea4AOfoC3pE1CNmeW17xFfiLASBlD3cOfBD+mOHtKfwxFax3xywSCdUv0OjbK5Hk/8Np9jkVTv70zbByq4EQz060zl4EZtrdS+KSlNSvZpycf5fhJuKCTUxHJrDjda2+DMYdyNo5bRu2rwUjAMdF4Vjk/JO/AfQx0ECr7LeiZPbsrPzZz0rcO9+ybvxSluVc8g2LcmMZqEJT+ijLIpOuFoh64ELPDDm4AWtpg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Mar 2026 23:15:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 306714 invoked by uid 111); 30 Mar 2026 23:15:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2026 19:15:47 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 30 Mar 2026 19:15:47 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 05/16] midx: introduce `--checksum-only` for incremental
- MIDX writes
-Message-ID: <20260330231547.GE41843@coredump.intra.peff.net>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <41cb5471bb96d38a1b9ae75d022e2c5356318939.1774820449.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UAVliOeA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4Yr+8V1R"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 83AD614002E8;
+	Mon, 30 Mar 2026 19:24:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 30 Mar 2026 19:24:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1774913070;
+	 x=1774999470; bh=gYHwsWK1oZgl86vYiZdaWI4uZ+PJ0iyBIuT9S415H0o=; b=
+	UAVliOeAn6ExUn6WMbGNkBWe1SxAVBwESHpzifVURKgtwEh4wpRaWZ1+huH2bRX/
+	QkLnZ7xyww40kvalsDgWA+2SMPz2clVn6F4geyt0fGlFl+nR0qfnZCj3URTLMJJ5
+	R5SxfCF4RJxWvd4oy8hGVNg05j4hC+5w22Jhm1WOZRw6XnScseS9OEUsVICYFVQ6
+	NcUpaJo2VqeqWB7x4Y9fSDKs1M+B9dqhCbwFc5kX0FEkk4hIJelvFDbQYtVnHUIr
+	BGkSjgBYr+NDTA21ZqxBQqWEQJqAxjCnkuxYMz2UbsZZvvRXEbmzJ+UBLCOePaAp
+	m3/icF96Wl4U4P3upyhvHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774913070; x=
+	1774999470; bh=gYHwsWK1oZgl86vYiZdaWI4uZ+PJ0iyBIuT9S415H0o=; b=4
+	Yr+8V1RVK0BoajbygaW0HeigLJJ3HSxvdy/88nr00pbtnDF8XWHSP2XLeFmec17b
+	uG2tOvFwbtyctswe7ZYFOOjvEfLokaDqqysIU4g0FBdB5nm8xMKYbxsglauQOOw0
+	GPXEhDG0EgDVdrjtYn00PEvCAPl/eHLzgrFsMnzE2QdZ0n/DojUsy6G2fEEjflgo
+	VQqcfpEtIVak0prn74HzkSU/hASqHiXgxA59Ka1V8QoeKOn9qs+TPbIp0/SUi4VA
+	BOX33zl5CtNPsJHMdmc5CK2woRPHgHI58H6CiemjnQqvOjMc9PqhvPFJGMzim8Jl
+	Zsoum+K5cEBi5638n8Nrg==
+X-ME-Sender: <xms:LgbLaUXCKaNR9bTuNvIbIMhjHsf2Ok_fRBITrNhND-JqaZfPPoefGw>
+    <xme:LgbLacT2XuIx7np43TE66OSpD5fsJhNpl-tF1vMHpHnSt_D5KB-1pLWgxZE5SGuCO
+    -G_LX6Ap2Y_rJ_jE1cRr4KDOJYyfZBiiYc0_GGE7xL9m05XEFjtOQ>
+X-ME-Received: <xmr:LgbLaSOElnEZyWLZwUHxmnEDgFA9tGLi88Ceh9SDcXw11xJO8-qZNpKVy2_lfmMwx66vLKD1goozH54QNeLBhlJC161o2DUQJA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedtvdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepjhgrtghkmhgrnhgssehgohhoghhlvgdrtghomhdprhgtphht
+    thhopehlihhnuhhssehutghlrgdrvgguuhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:LgbLaaQk_6WHtAvCGHN8C8kpAItpSHOQWbcSwVCO2XE4L3gqmPEGkQ>
+    <xmx:LgbLaQjBM06HIJsqqbhsRsqj9ha1oeka-GRZyKtKlrhD1Cn7JEJb8Q>
+    <xmx:LgbLaT9_Bj7LCfG3YZlcTgRFBAtXYEuyQ7JP0RNZezPh0kV_QTeZ9g>
+    <xmx:LgbLaXE-Mz3_y7IOBbBmyPruFMr47Sdls3G7sl8gVqfa_qfPjngkzg>
+    <xmx:LgbLaYDJkMhOpvleYCSJfIFmzfo0kl6CYOOkUSrelbit6k785VxcGFJ->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Mar 2026 19:24:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org,  "Christian Couder" <christian.couder@gmail.com>,
+  jackmanb@google.com,  "Linus Arver" <linus@ucla.edu>
+Subject: Re: [PATCH 1/2] doc: interpret-trailers: stop fixating on RFC 822
+In-Reply-To: <2ed992d8-7314-423d-828a-5801f4de2471@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 31 Mar 2026 00:56:44 +0200")
+References: <CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com>
+	<CV_doc_int-tr_key_format.533@msgid.xyz>
+	<doc_int-tr_key_format.534@msgid.xyz> <xmqqbjg56jhb.fsf@gitster.g>
+	<2ed992d8-7314-423d-828a-5801f4de2471@app.fastmail.com>
+Date: Mon, 30 Mar 2026 16:24:28 -0700
+Message-ID: <xmqqmrzo6gur.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,164 +93,15 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <41cb5471bb96d38a1b9ae75d022e2c5356318939.1774820449.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Mar 29, 2026 at 05:41:03PM -0400, Taylor Blau wrote:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> When writing an incremental MIDX layer, the MIDX machinery writes the
-> new layer into the multi-pack-index.d directory and then updates the
-> multi-pack-index-chain file to include the freshly written layer.
-> 
-> Future callers however may not wish to immediately update the MIDX chain
-> itself, preferring instead to write out new layer(s) themselves before
-> atomically updating the chain. Concretely, the new incremental
-> MIDX-based repacking strategy will want to do exactly this (that is,
-> assemble the new MIDX chain itself before writing a new chain file and
-> atomically linking it into place).
-> 
-> Introduce a `--checksum-only` flag that:
-> 
->  * writes the new MIDX layer into the multi-pack-index.d directory
-> 
->  * prints its checksum
-> 
->  * does not update the multi-pack-index-chain file.
+> IMO it’s best to stick to the normalized `:`SP when writing as well,
 
-Your goal makes sense, but that is not at all what I would have expected
-a "--checksum-only" option to do. From the name I expected it to just
-compute or verify checksums and not write anything to disk. I dunno.
-Maybe it should be "--no-write-chain-file" or something?
+Absolutely.  That is why I suggested to mention colon somewhere when
+we talk about key and value.  Your 2/2 with minor fixes you alluded
+to in your review response made the worry I raised for 1/2 go away.
 
-This is perhaps on the border of bike-shedding, and maybe the fact that
-it is an option of "multi-pack-index write" would be enough to clarify.
+Thanks.
 
-> @@ -221,6 +233,9 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
->  			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
->  		OPT_BIT(0, "incremental", &opts.flags,
->  			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
-> +		OPT_BIT(0, "checksum-only", &opts.flags,
-> +			N_("write a MIDX layer without updating the MIDX chain"),
-> +			MIDX_WRITE_CHECKSUM_ONLY),
->  		OPT_END(),
->  	};
->  
-> @@ -239,6 +254,15 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
->  	if (argc != 2)
->  		usage_with_options(builtin_multi_pack_index_compact_usage,
->  				   options);
-> +
-> +	if (opts.flags & MIDX_WRITE_CHECKSUM_ONLY &&
-> +	    !(opts.flags & MIDX_WRITE_INCREMENTAL)) {
-> +		error(_("cannot use %s without %s"),
-> +		      "--checksum-only", "--incremental");
-> +		usage_with_options(builtin_multi_pack_index_compact_usage,
-> +				   options);
-> +	}
-> +
-
-OK. It's sad that we have to duplicate these bits between the write and
-compact operations, but I'm not sure how much sense it would make to
-factor out common options (both how much work it is, and how much
-duplication we could actually drop in practice).
-
->  	source = handle_object_dir_option(the_repository);
->  
->  	FREE_AND_NULL(options);
-> diff --git a/midx-write.c b/midx-write.c
-> index 9f7d2bbf4cb..2c6905173ba 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -1600,11 +1600,14 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	}
->  
->  	if (ctx.incremental) {
-> -		struct strbuf lock_name = STRBUF_INIT;
-> +		if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY)) {
-> +			struct strbuf lock_name = STRBUF_INIT;
->  
-> -		get_midx_chain_filename(opts->source, &lock_name);
-> -		hold_lock_file_for_update(&lk, lock_name.buf, LOCK_DIE_ON_ERROR);
-> -		strbuf_release(&lock_name);
-> +			get_midx_chain_filename(opts->source, &lock_name);
-> +			hold_lock_file_for_update(&lk, lock_name.buf,
-> +						  LOCK_DIE_ON_ERROR);
-> +			strbuf_release(&lock_name);
-> +		}
-
-OK, we skip the chain-file write here (or least the start of it).
-
-> @@ -1725,14 +1728,19 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	}
->  	strvec_init_alloc(&keep_hashes, keep_hashes_nr);
->  
-> +	if (opts->flags & MIDX_WRITE_CHECKSUM_ONLY)
-> +		printf("%s\n", hash_to_hex_algop(midx_hash, r->hash_algo));
-
-And then output the hash here instead.
-
-Just thinking on the name I suggested, it implies the action from the
-first hunk above, but not this one (whereas your name sort of does the
-opposite). I don't think there is any reason to have _two_ options,
-since you'd always want to do them together (or not at all). I still
-like my suggestion better. ;)
-
-
->  	if (ctx.incremental) {
-> -		FILE *chainf = fdopen_lock_file(&lk, "w");
->  		struct strbuf final_midx_name = STRBUF_INIT;
->  		struct multi_pack_index *m = ctx.base_midx;
->  
-> -		if (!chainf) {
-> -			error_errno(_("unable to open multi-pack-index chain file"));
-> -			goto cleanup;
-> +		if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY)) {
-> +			FILE *chainf = fdopen_lock_file(&lk, "w");
-> +			if (!chainf) {
-> +				error_errno(_("unable to open multi-pack-index chain file"));
-> +				goto cleanup;
-> +			}
->  		}
-
-OK, and this is the actual write which is skipped. I guess this could
-also be conditional on is_lock_file_locked(&lk), assuming we initialize
-it with LOCK_INIT. In some ways that seems easier to analyze to me,
-since you don't have to realize that "lk" is only active when
-CHECKSUM_ONLY is not set. But I don't think there's another reason we'd
-choose not to take a lock file, so I think it may be six of one and half
-a dozen of the other.
-
-> @@ -1793,8 +1801,10 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  			}
->  		}
->  
-> -		for (uint32_t i = 0; i < keep_hashes_nr; i++)
-> -			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes.v[i]);
-> +		if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY))
-> +			for (uint32_t i = 0; i < keep_hashes_nr; i++)
-> +				fprintf(get_lock_file_fp(&lk), "%s\n",
-> +					keep_hashes.v[i]);
->  	} else {
->  		keep_hashes.v[ctx.num_multi_pack_indexes_before] =
->  			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
-> @@ -1804,10 +1814,12 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	if (ctx.m || ctx.base_midx)
->  		odb_close(ctx.repo->objects);
->  
-> -	if (commit_lock_file(&lk) < 0)
-> -		die_errno(_("could not write multi-pack-index"));
-> +	if (!(opts->flags & MIDX_WRITE_CHECKSUM_ONLY)) {
-> +		if (commit_lock_file(&lk) < 0)
-> +			die_errno(_("could not write multi-pack-index"));
->  
-> -	clear_midx_files(opts->source, &keep_hashes, ctx.incremental);
-> +		clear_midx_files(opts->source, &keep_hashes, ctx.incremental);
-> +	}
->  	result = 0;
-
-Ditto on these conditionals.
-
-I'm out of time to keep reviewing, so I'll stop here for now. I'll try
-to continue with the rest late tonight or tomorrow.
-
--Peff
