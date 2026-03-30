@@ -1,94 +1,172 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E403E959D
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 22:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13F137F736
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 22:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774910795; cv=none; b=RpOqzXe30+Z5Yq35zd2wRC3XlNLKo1Db6zgRfEyBxJjd7QA3yjxFoQDZlel/fVMKp3x1SasWJnz+CZUr1sDFiC5jgd67ylI0QJT8lH+rwmXCwiZcjq+Q3zfB7baAjax6EkX6zIcpsgz8YJgmrtRx3v/pV8azYnLVpZDsch9CymI=
+	t=1774911236; cv=none; b=vGnm894N6pzNH68QZL4LMXa5wK4K58z2PQflMO3yYKLiKAJZy5uM+3O/jPzDzAF3a33A3E39ndOJkhk11zWgmiZiPmzMS2uFiPr3aghshwJzsMoA2bzmOd1QjyKFTJAsET1bv4tZxw/+ABlzF5Xo6vEvTt1KTJqWAyKag7u6SdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774910795; c=relaxed/simple;
-	bh=rnV/Xeal/VXNWR5OzjLMrZ5ISbKlugs/qv0b9eBtUb0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lh3/E5EN+8k2Hql3+GTB/dvsw6pPhuYwgorndCByPpFV95iyJWIm9+UEfrM4/IfZ8bKe5XajEo3CNawwfMSmXc9qxJ8KrFDUrQFxlZ5rzZF525riD19AVvBhikKur4rGtvZraVIN0b8RmYiqhR6AXinRYVu1R/XrAvICL6F9ytI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=empMldNM; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1774911236; c=relaxed/simple;
+	bh=3rLDiEvUtfcZPzes8X99XZBS42xU6iDrDmKdspRmb2E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tVhAI2xetnPt/m9v+s0UGkjT/p2V7OECDA1P06qnBLuLlkvNh72TNSuMfWXcu+Z7/zEKpDMPXTHF3ZKpJls1SEAnDRs5BPE9JBGby1o8HnYVK1ZBxcCB4qYS5l2zyOaGE9Cp7CXKZ81GQ0rBPIGBldLhkUy8t2vDRk+MYwHMNPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YoGGD8D+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xMz0f5Rp; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="empMldNM"
-Received: (qmail 199250 invoked by uid 106); 30 Mar 2026 22:46:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rnV/Xeal/VXNWR5OzjLMrZ5ISbKlugs/qv0b9eBtUb0=; b=empMldNMIu8GqVB6+KA+8A8tlxIWx2HTVmolKmSBnPv3f01zSYau6sDnjoWFU8UJf6hUrn2GVI1CIXPxQh55BStAMsf/t/mLRXcUTfEQsxX4Tj4HzIExKYfat2Hn1K/PfW3uQIc0KffYU+i3/+Ab0UbllS9dZ4UPph3dUJrPHCyZ9X6FjlPnMLR3iHy9o7BzZo1WeVFMcbBDuE5L9yF51flBY/BXpWBzmB0hfZTujRTKJ4TCSJI2nLtNz2WylGI8oXfuUEDaw9coRyUA/5uAy1r/DxBMJKL9WeZUEhOTUDvmQoiBwoaPEDFLnSPIMPWR2vl2SYgqzPSUWzwHYEutCg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Mar 2026 22:46:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 306082 invoked by uid 111); 30 Mar 2026 22:46:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2026 18:46:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 30 Mar 2026 18:46:31 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 03/16] strvec: introduce `strvec_init_alloc()`
-Message-ID: <20260330224631.GC41843@coredump.intra.peff.net>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <aea6aad695336a974df9c90ce7bd02ddcc33582f.1774820449.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YoGGD8D+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xMz0f5Rp"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5A90BEC026C;
+	Mon, 30 Mar 2026 18:53:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 30 Mar 2026 18:53:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1774911227; x=1774997627; bh=orEtD2SUmV
+	V8IjArWwFfKXuOPwLiG/h1GIKatega1Oc=; b=YoGGD8D+ApCVs5AhQ2w3nBuHS9
+	kNUmXgmRXDNgfmBfgmnnuDG7A60LAuenMjUgUO6IOFamS35loASvxTN/u7CF0xBc
+	Ir7Mm8gwcor9NKdxmYx9B3+XRMSWirQawjj/PLMiubi1xMtu8dXXTB6otDqs//ra
+	TySWZXI7yzg6rNEn3z1kSuN8echTaOyKui6tq+HfNmqKB2pCHmEi0MViEfj0bxH9
+	gVIXAwZhnsyv1E1R2y7BKFBoONv/7LwMR7A10ci7TOTeDsF58si6jLm4myqxmZZ9
+	SX50MR4IqsfewhcwB3BmxC6ofeiJrb8OyQZLIkSLrO7cYpqs3sRXHhY762aw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1774911227; x=1774997627; bh=orEtD2SUmVV8IjArWwFfKXuOPwLiG/h1GIK
+	atega1Oc=; b=xMz0f5RpqmcnYdqLczbgK4a/FjbPkyHxf7PKi54scEKAP/Tjnhq
+	QBIttCsdgfJRl/aLF9nzeffmhRwOxKtU2kqZLkccWsiVYY/0O21CqhkECxIbz4/u
+	45e5AhC5fGJy556k6SGxrTDjzfkSS9P0zHUn+wnyOBjxkxKU2qZMvgz2bg1IruET
+	7MDD7AyDCgB2N+RW2haggg9YU/bWe7N89t8dHiqMwFPYe9bX6aX39gFMC4smAs65
+	DHLNB5nLehGLWBRFXOlt3WzT/wc/hLibHtwy8zWRdDpAHiFDI1jyVaJ+xTgm+FGM
+	JyJnIy9JwDnNyFyTRgWwZBQXZToPa6uFfBQ==
+X-ME-Sender: <xms:-_7KabW-SA9Z3qfo7GIIrXsABXmDH01ebPLnFI7c84R2qqM1dqPxbw>
+    <xme:-_7KaWKx39Q7m5ZvhQG3vEaG9gF3xoD_rmHeXq__5WcabZfJYYC7aHx0MdeKvQfjN
+    e8v18L6vaUA8O3USklhInimWAHDmLsp9TNPlEoSpSsmEWIE0Sj1TQ>
+X-ME-Received: <xmr:-_7KabBnEqb8Xqt8wke7njHdNJ502gC_nvG62-VfANf9gMw4lHD9ZQDt6nD020fAg2_7I8fkP8leB06XNwP_1T9LGXRPI-aOQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedtvdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    peihtghhihhnrdhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
+    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgif
+    rhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:-_7KaWf7yoIwz2e5GOODwC1iLHWI1eZF3l2C58SOqmJsFkmpZUe8dQ>
+    <xmx:-_7Kaa3Ev6QquGVS8cfFjTtdUaIcmLdKyS6itASITvIqoDv33Z8dPw>
+    <xmx:-_7Kadjhd9eVk-BLzC1KO4RDNGvJl9Eck5urc71JFv0yWvEJiS55kg>
+    <xmx:-_7KaTk1Gr9iuhuWu5Z9VQMu8EdgslphTYXZA3Egkjn37gSRItpdDA>
+    <xmx:-_7KaQLdOw77R7WQHBISbzxMJysQqb_LnEFwrRQCrGsyAYYeNNJUgxUj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Mar 2026 18:53:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
+ <l.s.r@web.de>,  Jeff King
+ <peff@peff.net>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Ezekiel Newren
+ <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v4 1/6] xdiff/xdl_cleanup_records: delete local recs
+ pointer
+In-Reply-To: <da32a9747c7bde88b4fe33e43ae48c7092d57d9d.1774890003.git.gitgitgadget@gmail.com>
+	(Ezekiel Newren via GitGitGadget's message of "Mon, 30 Mar 2026
+	16:59:58 +0000")
+References: <pull.2156.v3.git.git.1774639433.gitgitgadget@gmail.com>
+	<pull.2156.v4.git.git.1774890003.gitgitgadget@gmail.com>
+	<da32a9747c7bde88b4fe33e43ae48c7092d57d9d.1774890003.git.gitgitgadget@gmail.com>
+Date: Mon, 30 Mar 2026 15:53:45 -0700
+Message-ID: <xmqq7bqt6i9y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aea6aad695336a974df9c90ce7bd02ddcc33582f.1774820449.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-On Sun, Mar 29, 2026 at 05:40:58PM -0400, Taylor Blau wrote:
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> When the caller knows upfront how many elements will be pushed onto a
-> `strvec`, it is useful to pre-allocate enough space in the array to fit
-> that many elements (and one additional slot to store NULL, indicating
-> the end of the list.)
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+>
+> Simplify the first 2 for loops by directly indexing the xdfile.recs.
+> recs is unused in the last 2 for loops, remove it. Best viewed with
+> --color-words.
+>
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>  xdiff/xprepare.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
 
-The main reason I didn't add an "alloc" parameter to the initializer
-originally is that if you know how many elements you are going to push,
-you probably don't need a strvec in the first place (you can just make
-an array). But let's wait and see how it gets used in a future patch.
+Interesting that the latter loops did not even have to have the
+extra pointer variable.  Nice clean-up.
 
-> +void strvec_init_alloc(struct strvec *array, size_t alloc)
-> +{
-> +	if (!alloc) {
-> +		struct strvec blank = STRVEC_INIT;
-> +		memcpy(array, &blank, sizeof(*array));
-> +	} else {
-> +		CALLOC_ARRAY(array->v, st_add(alloc, 1));
-> +		array->nr = 0;
-> +		array->alloc = alloc + 1;
-> +	}
->  }
-
-We use the blank+memcpy approach so that we don't duplicate knowledge of
-which elements are in the struct (and which might need to be
-initialized). But now there's an implicit zero-ing happening when alloc
-is non-zero. Can we write this as:
-
-  struct strvec blank = STRVEC_INIT;
-  memcpy(array, &blank, sizeof(*array));
-  if (alloc) {
-	CALLOC_ARRAY(array->v, st_add(alloc, 1));
-	array->alloc = alloc + 1;
-  }
-
-The worst case is a useless write of a few struct elements, but I
-suspect that an optimizing compiler can even get rid of those.
-
-I doubt we are going to add new elements to a strvec, so this is
-arguably just pedantry. It just feels like it's easy enough to do now
-while we're thinking about it.
-
-  As an aside, it is sad that we have to CALLOC() ourselves here, as
-  there is no reusable "grow" operation. Probably not worth refactoring
-  it out, though, though.
-
--Peff
+>
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index cd4fc405eb..d6e1901d2d 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -269,7 +269,6 @@ static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
+>   */
+>  static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2) {
+>  	long i, nm, mlim;
+> -	xrecord_t *recs;
+>  	xdlclass_t *rcrec;
+>  	uint8_t *action1 = NULL, *action2 = NULL;
+>  	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+> @@ -293,16 +292,18 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>  	 */
+>  	if ((mlim = xdl_bogosqrt((long)xdf1->nrec)) > XDL_MAX_EQLIMIT)
+>  		mlim = XDL_MAX_EQLIMIT;
+> -	for (i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart]; i <= xdf1->dend; i++, recs++) {
+> -		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
+> +	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
+> +		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
+> +		rcrec = cf->rcrecs[mph1];
+>  		nm = rcrec ? rcrec->len2 : 0;
+>  		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+>  	}
+>  
+>  	if ((mlim = xdl_bogosqrt((long)xdf2->nrec)) > XDL_MAX_EQLIMIT)
+>  		mlim = XDL_MAX_EQLIMIT;
+> -	for (i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart]; i <= xdf2->dend; i++, recs++) {
+> -		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
+> +	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
+> +		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
+> +		rcrec = cf->rcrecs[mph2];
+>  		nm = rcrec ? rcrec->len1 : 0;
+>  		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+>  	}
+> @@ -312,8 +313,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>  	 * false, or become true.
+>  	 */
+>  	xdf1->nreff = 0;
+> -	for (i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
+> -	     i <= xdf1->dend; i++, recs++) {
+> +	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
+>  		if (action1[i] == KEEP ||
+>  		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
+>  			xdf1->reference_index[xdf1->nreff++] = i;
+> @@ -324,8 +324,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>  	}
+>  
+>  	xdf2->nreff = 0;
+> -	for (i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart];
+> -	     i <= xdf2->dend; i++, recs++) {
+> +	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
+>  		if (action2[i] == KEEP ||
+>  		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
+>  			xdf2->reference_index[xdf2->nreff++] = i;
