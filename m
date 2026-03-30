@@ -1,133 +1,115 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FFA332901
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 15:26:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774884406; cv=none; b=BHZo7MHbQQRIP62jZmQAY7ugiY84pg9aTkyP34GxRdgUtBueJnb7Q147e55ncWSGmpXDggR4dCaATGF24CqfOrPBODZD1pdPgvUizYbwFXbsrYQICKF1fvaPtzf0KU81JdrSfXLOmjWrZyUclNjfDg+gc5riDmZ04a0Fh9BPcRA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774884406; c=relaxed/simple;
-	bh=KT/M3VVyNJa2MfIDvAtuViZmgjwLtyIeZ8kodhvGF3g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jTsQNLspV/EQMGAiGQtLByBRo290RYsN8CSNvMt+XEyaxc92xynDj6wDOuDPK5rNZYetBHa+pey2hSPf6vQhCA2apNOyI07KL01KE/8w6SokoM3qY92xEbUEFsa+qstglO3o9CZW1Iy7T1c2SI//pOJR5yh5ypBeMmAZKaF5odA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CKSJwzpY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5YpZZBqL; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5E5376466
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 16:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774886432; cv=pass; b=jumWkptoRaTvuYxyOYA3wxFKKRrb+KvwGNO64QiqVfcW4g9TDcU9A91R1Z9xbCxsTs3ELh7NLBDDY+8tXNJNUdxEqqOJKBrmOUNBFj/1KTybjI9yAb62IqyZ/yn2Kzrz6Ct4FPA4AQXb/6Oqz8X+fWOhiBiyO52Rk1P8+1KTrK4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774886432; c=relaxed/simple;
+	bh=7SdSkBkBYw0q9Y6Y9ZiQsc7jOavotoNu1/cE7LoPPKM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=D5RwBACgbsugf92wdcFLApjQOgFaZAs+Jt1p3okyEE8+Nmrmvjuvs3P2NNBpZpmCvs0vWxWzZrWA1J83BYPJH5SCID9oaoQhFEpQca6xJADQKCheesskuAiL3vRm0qOgVMqgfl3Akl6whsG2WDMOxO2qE+I3b/My+f5iNcf9BcA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lr5gH/HU; arc=pass smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CKSJwzpY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5YpZZBqL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B1EB07A01D6;
-	Mon, 30 Mar 2026 11:26:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 30 Mar 2026 11:26:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774884404; x=1774970804; bh=jWFQXoUXpF
-	QQ3iOfkWKOe0are1oYfMbWsGUchiAJ06Y=; b=CKSJwzpYwpQdUNE3gy4O00nkjy
-	r0dK1mLxSGUrMuu8Gf53Mmn3Zr3gNEbRYWpnaeAPOkOsxxhzXscUHSCAR8zZ4kFP
-	0A/lC7JhQburM5MHCDzRlZiA+vB6yt3se0Y6aIw+cWFj9pu0IiPwc9rAMuITSlA1
-	5gueQ9b4slo/koysbFOknR+22vbdYMOiiwXuXRX3hqmHhAX1SdJl4x62UX+OslTH
-	GoSV2rzA8fxqupQ8Hqknp79otWeche9wB9aDuAChUo36jZPcXgsvxAXSltimh2RZ
-	5Kvgs+XispY53UgCFEEl6R61cEGYb4qiLB3VkiyOmgIdK7sy8ujcrsiwjmiw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774884404; x=1774970804; bh=jWFQXoUXpFQQ3iOfkWKOe0are1oYfMbWsGU
-	chiAJ06Y=; b=5YpZZBqLlRABnofZqAIPU2SFTiuraqiqO/n8qb+tQ5U/Sb01X2I
-	XafVPkhN+D/4auhXrZCTwFd14v8av86ryrjpd1iQBdiWzVmCpBROqlEvCI8NEN10
-	18a/HIsbrxPqdzABZ/xMekL5/L8xX8l696hiLJ98QrKKt6+vAgq4iqcx8peI79ri
-	kia14LLbA+pKFFyYTcJ3D5xHdlaCLj7+yFVotNYVsfy8br7QFWwBwvVB3WMIKOfK
-	8zXAS1joqHP+1fal7AF4jKIBYeLBy2Dw26NX3EFR2j5kjd5xUAaw5VM8KJSZ67gE
-	oQpUpOm6pgN85/BzYOxr63uRogIW7mrz2cg==
-X-ME-Sender: <xms:NJbKaTTFe3vbQY8oMRXD_LVEHC0NJWypfEAVzmeLrPh6DLogYQsQxg>
-    <xme:NJbKaRWWmyLZoEEwDuZYpgIssjd7NT--Ov-hfqWDDaUvGjbpOXgl13WyWf6Kgb3Hs
-    9zuZASwwGqIs2Hto8_ovN7zeOJs0lwlOItiUTB4agjof7uGgKKhyQ>
-X-ME-Received: <xmr:NJbKadT9F4o2lliVdiY0gaEuXXnEzh4iwdSK0vz6m8CuaGvAqz2BD-OtJWoA1HJWhVBDTKTJub4gxLqZeGTr9PlraJXmqfY0ag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeelfeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
-    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
-    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehprggslhhoohhsrggsrghtvghrrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepmhgvsehruhhngihihihurdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
-    keesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpd
-    hrtghpthhtoheptghhrghnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:NJbKaZ2MKGKLmtxK5MCSRSSw05TP2Ou6eld4Agr5Uy2-NI3Ljfm9EA>
-    <xmx:NJbKadfEclzvlmx9KWZnD2GF2iIXvHwpNQ5JKzkOf7uj7FYWcPrGwQ>
-    <xmx:NJbKaRNx7TqDlM3TBs73BakILjw4PeofykwrNPDnuaTg_kxiUlNhVg>
-    <xmx:NJbKaRWg9LXk0AM3rOkqpnVpKveRdQGdpQNtohYHx3igyJ_obr0B5g>
-    <xmx:NJbKaa4WoRnEWbNSj8wodzK7A4iQyv0HJNssQfCsZg58PxbzC5AksmI6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Mar 2026 11:26:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  me@runxiyu.org,  christian.couder@gmail.com,
-  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
-Subject: Re: [GSoC PATCH 0/3] receive-pack: fix HEAD check for updateInstead
-In-Reply-To: <20260330111822.165188-1-pabloosabaterr@gmail.com> (Pablo
-	Sabater's message of "Mon, 30 Mar 2026 13:18:19 +0200")
-References: <20260223141236.22476-1-me@runxiyu.org>
-	<20260330111822.165188-1-pabloosabaterr@gmail.com>
-Date: Mon, 30 Mar 2026 08:26:42 -0700
-Message-ID: <xmqqy0j9e3t9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lr5gH/HU"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d556c1a79eso4777346a34.3
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 09:00:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774886429; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dlsh/4svSdvdjWyS9NJ3guq29q3n95YMkA6Ej0oTPgLcAQ+LYdE8fFF/HIkdVcEWp1
+         trxa2zEvjgF+fANR0HchFkxDc/UuyKu5l+imPxbkwisZMOHJQWb18zf0UKtExEJ9pxnA
+         5ILHiMOJFVDVx8jAlE2FCL7KwSHcYInYZ39CtGTZ8mMRtV8NqmIYVmv0D4M1NzkcEEjt
+         YaBzn36lk9RllDdwm/pDN3h1wNyr14IsybitYK/hz2UmpKqWvX1GI1rp5LOIHumoT1T1
+         /aKn0wBB3eSb8WwO4+tsGDQ1MKfmGr5txAlaSRZKXlRbdKFZ3grXhtRL3VqYC/7tqOTv
+         HLJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=lGEFDwbGPDZY2pDwHgZf+HnA1jfxQO6IBNiXZ5I4afY=;
+        fh=F0F5gU4Z/4p17fM2qLSNnsWrEUMuzFi01YUWEN7CQEc=;
+        b=LbsLPs/GeECgsNI2UyXbp7Lf1xAC4rBpyJhNR2N6Mu1quNsyd+E0ZlLI5jChPFc/yt
+         2H/z688llTm/VjcHTWQMKxasB3USB8qAymiVFxxNTkfjDW18CcsC9MIs0XuRcjQcRNH8
+         fgX/xKIZA3qFyJuppnM0tyOvaHhNPyqpnGmzyHu9UTqzY/a7X5zIudJjbr6wum4aoFVs
+         lTZ26hjjemf+2maPCC6cCzkYO2dinKYTzpCrTtDqF/9e1f+vS+mYloG9wXnV1auVsebk
+         utOCf9uUZ8Se0J72Afh+rZJKhDj1yMawI7hQoMhxRsGZgNEnFN0w1QKSVvsfPNN9Z3Jr
+         pOWQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774886429; x=1775491229; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lGEFDwbGPDZY2pDwHgZf+HnA1jfxQO6IBNiXZ5I4afY=;
+        b=Lr5gH/HUCHYwuwu3Wcf6r55ruoMvJDoYgamv9yoZm8ijgtEoBW1e2dQ8Kv9lA5QB4g
+         nwQ+iBjHB6w3pb+siVoKBSUfcoOyG4y5IguNIBhuqwRVrepmsLk92GwU7snfJyYAe1ta
+         QnXrXxqIpgkjQ4dd3f8c494Qs8VrGpHKSwG5Z/tVHDibIwumfk0GDuCUqlJEpO9ZWLBI
+         lKwEDayUvl0ClklhfTJ1ncVGxbKhhtyqgpAo2f4Jgt+Sc9K6HDfmuBzTNWPfBCATtkRx
+         9zC/eR0B40TPd99xOComrXl5YlFaGYqcVO3dlw3e+0vYVd7AFyFIUWPj2jGIhvUMEV5Q
+         m/Dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774886429; x=1775491229;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lGEFDwbGPDZY2pDwHgZf+HnA1jfxQO6IBNiXZ5I4afY=;
+        b=ORg0rf9g4bkzv6226kvpyWGisgqX+4I6Toi2y09ggGlpoKuR530jSD2MeaGVvFQwXh
+         UvJA5JGhQn03DP6OyFp5NCyn6Ak8FVtmwY6SXM/S9+wmTY+tO6/v6LeW1Yib+zDDHujx
+         Xay6O0cV47iNIOrVWkDQ7zhRyaSa5TFzNj3fmPKotcJ8FA8gMu/xQQZ6R06fghCgYvwv
+         t8ZhuOskiXM/YmJLNK+7wpBl8X7kThanSsHOAzWXZBxa0TIJggQx1qiN8WYDl+b8PgK1
+         XAVjFrS4fPzUdTWTwMxg9d0vqDiOj2x6LOAZHK2DjntniqsaFhOPhPSlebN4rGzkO7Hz
+         B6dw==
+X-Forwarded-Encrypted: i=1; AJvYcCW8kwGKgBSTNXydBjN4cg3ONaHe+qeffuKCKvXAg4ykoZvgyo/Dz/yxjaVLgL9RUHDLuGc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTV8xDAzjgYKMrc6EClR/pEaH/kXIM/zAf/HV1x27zbPihi7kG
+	MN0sDg47Htmb7O3fAU1cRt+EzNzUeIHtTGr4f+8cnmPJZY3XYSXHuF+zClZnL0QDTpwSaSCNGOC
+	EOaR9PwpFrk+if7n6Ith6zUeSYiGia0G9OQ==
+X-Gm-Gg: ATEYQzxZNTfMx2u7fm1cS7fu7bJx9SbHGK7E/hIqANfPFqadO1QZoraTdF5xxRomOBv
+	Qgf06kUSo5zhXIhdSw5KQJOcW0BsEfSjaymTjnW+EFv0ZREO09gPBQQ64dWyfA4bODMAOGJr9V7
+	bWmpuPDBkI1jsATOh+mJ0FPYB/iV/0sdrLlCHa8y3/w9IvYqedQTHTmtKz11kJSdKRy27cdRgGK
+	jCKZ0gVU//9Adc+rP7OOokeBRYgA7yzN7u8r1FBtrI5x4vVWY3Q/+Zx4/kIsJoI4p4F2g4ZLG0g
+	jpm/
+X-Received: by 2002:a05:6820:210a:b0:67e:3960:4730 with SMTP id
+ 006d021491bc7-67e39605af4mr1004028eaf.13.1774886429429; Mon, 30 Mar 2026
+ 09:00:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
+ <pull.2156.v3.git.git.1774639433.gitgitgadget@gmail.com> <86dd98db9b93651b21adaa41ccd44917910fedcc.1774639433.git.gitgitgadget@gmail.com>
+ <xmqqy0jdhtd0.fsf@gitster.g> <xmqqcy0oj2s1.fsf@gitster.g>
+In-Reply-To: <xmqqcy0oj2s1.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 30 Mar 2026 10:00:18 -0600
+X-Gm-Features: AQROBzDJTsVUwGq1u0EfkF9Ld5BrosaMHBVuXgthMHI0pSYRSRhynhdKDaMHxJk
+Message-ID: <CAH=ZcbAKwtq9jiv=XWi_P0ZD1hz7XEpEtMPONB9n=_EcOPPSRg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] xdiff/xdl_cleanup_records: make limits more clear
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Yee Cheng Chin <ychin.git@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Jeff King <peff@peff.net>, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+On Fri, Mar 27, 2026 at 5:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Updated code, when nm is not zero, does something different.  if
+> need_min is true, mlim1 is set to -1 and presumably nm is a count or
+> length that is bounded on its lower end with 0, so it is larger than
+> mlim1 (=3D=3D -1), and we always take INVESTIGATE and never KEEP.
+>
+> So the rewritten code is broken when need_min is true?
+>
+> I suspect the remainder of the patch is broken exactly the same way,
+> so the remedy would be similar?
 
-> When a bare repo has linked worktrees, and its HEAD points to an unborn branch,
-> pushing to a wt branch with updateInstead fails and rejects the push, even if
-> the wt is clean.
->
-> This happens because HEAD is checked only for the bare repo context, instead
-> of the wt.
->
-> This series includes Runxi's test, a cleanup of a test that messes with Runxi's
-> test and the fix for the issue.
-
-It would have made a perfect cover letter if you said in a very
-early paragraph what Runxi is and how it related to this issue.  I
-am guessing (from the fact that the same word appears in the patch
-list below with family name) that is a name of a person who first
-reported the issue?  If so, the missing sentence would have said
-something like "At https/lore.kernel.org/git/$MessageId, Runxi Yu
-reported ...".
-
-I have to leave the keyboard now, so will take a look at the patches
-later today.  Thanks.
-
-
-> Pablo Sabater (2):
->   t5516: clean up cloned and new-wt in denyCurrentBranch and worktrees
->     test
->   receive-pack: use worktree HEAD for updateInstead
->
-> Runxi Yu (1):
->   t5516: test updateInstead with worktree and unborn bare HEAD
->
->  builtin/receive-pack.c | 39 +++++++++++++++------------------------
->  t/t5516-fetch-push.sh  | 15 +++++++++++++++
->  2 files changed, 30 insertions(+), 24 deletions(-)
->
->
-> base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
+Your assessment is correct, PTRDIFF_MAX should be used instead of
+SIZE_MAX. I realized my mistake a few hours after I pushed. This will
+be fixed in the next version.
