@@ -1,109 +1,156 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0A33E51C0
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 22:59:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C1B405F7
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774911593; cv=none; b=qId01axhvVkfaEkfb9wQJTIfbw5EilnGhaeg6A5IiX9r6deOMHFL1gsuhGfyU9cTtU1w3qFMXRtdOm4h1QYL6kq88Xq/g5fEx3GuiOYfRdR5ZwLHtVuKhcFqzCSQCDY6ykFd3diFNmO4JH+u+ikQtByKrTgf5larjfXfrweZLSw=
+	t=1774911693; cv=none; b=CjmPipt+3O1ijrieAggm/0STLvFHPWJY+kfsfKP7g/7h7QiCVD+08qhUIT8oIAsNQ2RG6tybna1yc/wLOCo6N45h4aaNKh7DWnJNuOJsNpvW2QXIiqmBgHdTQFn59lqGqsIaQoc3B366zoNu6AzAvA1tbfj/sq3RZfK2ILCCgZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774911593; c=relaxed/simple;
-	bh=SMKIsctKpgmoIyI2luLdiozxC8rFChcm/b7dbB7N5w0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YB0+TJwxmE+jinF2ROKqJR3v4e8KEXHW8bLgeCWhlA2CGUXwlH8LbVTMhAfpTKV2U6aRb6STVS2LiJQFJNvKCkbEq8SK7YdkzJfpyMQE2Vgv49TikyDj3lYXkLvdvQ7Ml3+Hps8DdQlMeqS4p7QEQQt+QO+x6FEv28h8otKm6y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XcqypmT8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n794k/dH; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774911693; c=relaxed/simple;
+	bh=BsoBUWQV8GW0LSoqnhjpGozMeyM/vd6xs0t/NY3lC3Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fw6Ich9T+LlimqmiNWFY4b7mF86IdG6aEMtIuztEtb5MUxWgAUPjY1GHyOHTpXnX7PSoS6vba0sLm//tbr23zxQt4uoEdaIPBmUzzzrM9M9hZ6yQkc9m53DzQmxk56pGBElpu+s/aW0pM39MYR1gJzuCBsSc3WmkzVlcsz8ISdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FW8cli/9; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XcqypmT8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n794k/dH"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id D0203EC027B;
-	Mon, 30 Mar 2026 18:59:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 30 Mar 2026 18:59:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774911590; x=1774997990; bh=nnw4Tgw8Ii
-	2WYy6Y0C6wXVJYhq7hH9BGp8/M9G0o8Y0=; b=XcqypmT8XKTbm4QXQeGCIHlR0W
-	6gHFaaTlVpm4YwltzsASCQqK7cjZSulhqRbpZjfbrUKi6Q4n6eaoAxzRnB8XufiE
-	kNsP/QQtUhuD6XNFWuHd8Zj8jCZX3vaSTNXfPbJPCU7TM6R+iZE9RaDI0/BaoOpn
-	i05svXpAKqgWgvB6jeHKCW1nEl1IIH+BqmFIbEITLPYZvrAy2bXhBeOhUpTuXMpU
-	5cHBexG0e1TDY84nhfAEJJ5rlx6SMkVd7yzWGsyIt47P5wf7LqourCCy8b2vIgbG
-	KBpgd3pGmI+WUb/rFmLLptSdY12h2wItLaPQQROpxnBNnhfqMdNCfwALX5jQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774911590; x=1774997990; bh=nnw4Tgw8Ii2WYy6Y0C6wXVJYhq7hH9BGp8/
-	M9G0o8Y0=; b=n794k/dHmxFq/QWHIj0jqzZUg79C1umFeINgMiXQXZ60YzHdPyP
-	B8yX7B3XQlt35PqHeIe7ZrxyM3DHHpZq7surSldB7CbFvsrqSR42tcisMkPxeO81
-	aV191NNMWLMoXc4mHepSQtzHmKqL/Ib9tO1/CArhmdj7pevZMqG/Zz4NN9rbMrly
-	DMd2eCEGAoeubF8FhnRyYbpXLSke800SJa1kt0tmqO3Qar7q1YA2Xd8NMrFucM4K
-	s8mdD/gaI9K5vFpwVOHeC/W2JaD1F5slwL4lwRdsI5Hjix6J92pd1XiFdf17EX46
-	Vu6I+hUHSS2JtilQCWTq3b+NQuWm67Hrjnw==
-X-ME-Sender: <xms:ZgDLacNbU-EM3OH4RcwPqgaNQducrZ0W6GEp4xkl6dHybMvlg7XuYQ>
-    <xme:ZgDLaVgkZ7nvFFxPT-X_GacHYmLE8Ph2sofb5WT5fdDQXuaRfDuoZXr7hUtTXOMp_
-    0IcWy0xLcRsRPmEP6sw_Ju0wlswfc8pe2fX3lxBot2dn9R87IIApZA>
-X-ME-Received: <xmr:ZgDLaW5ez_OHl4_YrMK4WeBbkRs8EtyviLhX3JbBdbaxgKBvd61_JSauY1_lQOdd-Pdj6rEPiD4HilqGa-vROrWj0QITUwZGkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedtvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    peihtghhihhnrdhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
-    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnh
-    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgif
-    rhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:ZgDLaU2-Fp1hNDrclsIYxYyUi3OY0Z6m1R9ajbKcdW6-G7beDpJQiw>
-    <xmx:ZgDLaZtkJAhWe0xYBBycndUd5XUGF0tl4AhA8RcgmIDNbXaFm341jw>
-    <xmx:ZgDLaS7OZ2RjRHzbVsq19LBYEg6vLMrR4sQ3lbmC5bAw4JEk1KU5Sg>
-    <xmx:ZgDLadcZ38JRvSh5CW0X-5eeji45GzBXxfX6Mreng0AB32HnMEmDNQ>
-    <xmx:ZgDLaY1_hYoC9nzTg3LoF4GCj9J95_rz23V88trBS8k3TWe2a8xcCazC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Mar 2026 18:59:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  Jeff King
- <peff@peff.net>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v4 2/6] xdiff: use unambiguous types in xdl_bogo_sqrt()
-In-Reply-To: <86b0ad100ccbcd1812b24eabd0abe1987592daa0.1774890003.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Mon, 30 Mar 2026
-	16:59:59 +0000")
-References: <pull.2156.v3.git.git.1774639433.gitgitgadget@gmail.com>
-	<pull.2156.v4.git.git.1774890003.gitgitgadget@gmail.com>
-	<86b0ad100ccbcd1812b24eabd0abe1987592daa0.1774890003.git.gitgitgadget@gmail.com>
-Date: Mon, 30 Mar 2026 15:59:49 -0700
-Message-ID: <xmqq341g7wka.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FW8cli/9"
+Received: (qmail 199347 invoked by uid 106); 30 Mar 2026 23:01:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=BsoBUWQV8GW0LSoqnhjpGozMeyM/vd6xs0t/NY3lC3Q=; b=FW8cli/9owhK8xxhfxqjeIYz6WKZLdOmzFrfxMTLb/enmJAM0WYNgts/OccGQMynDAxaBpTb8VMzwVkCvVgLXpA5DTglX6LOLD1THq+1KsR7E8AfH20UdhQFFBJH0IQ1F9YgYRYxRqTVSsThNx3ZCX7m5BaWZtwJB9b92Rv45b84nDB3qwhyDDmqD1YwJndf4YJMv4fmOOsL1SS7FmKcNuhcKzbteQ3nGB+hjfSpObPnnA0Wi7XywEBXNDsTYFUmUmUxpHT91yK/heic8NEyw8Dl7Q/uB/mGkzxGsPt4ZNDBAwHAVYYwNIvLV8VgHu2sdTxJRKPt5loHoRlL1WHCbQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Mar 2026 23:01:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 306346 invoked by uid 111); 30 Mar 2026 23:01:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2026 19:01:31 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 30 Mar 2026 19:01:30 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 04/16] midx: use `strvec` for `keep_hashes`
+Message-ID: <20260330230130.GD41843@coredump.intra.peff.net>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <5fc72d5049a602ae5ede6bb243f44546f02d995d.1774820449.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5fc72d5049a602ae5ede6bb243f44546f02d995d.1774820449.git.me@ttaylorr.com>
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sun, Mar 29, 2026 at 05:41:00PM -0400, Taylor Blau wrote:
 
-> -	xenv.mxcost = xdl_bogosqrt(ndiags);
-> +	xenv.mxcost = (long)xdl_bogosqrt((uint64_t)ndiags);
+> -	CALLOC_ARRAY(keep_hashes, keep_hashes_nr);
+> +	strvec_init_alloc(&keep_hashes, keep_hashes_nr);
+>  
+>  	if (ctx.incremental) {
+>  		FILE *chainf = fdopen_lock_file(&lk, "w");
+> @@ -1760,39 +1760,45 @@ static int write_midx_internal(struct write_midx_opts *opts)
+>  			for (i = 0; i < num_layers_before_from; i++) {
+>  				uint32_t j = num_layers_before_from - i - 1;
+>  
+> -				keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
+> +				keep_hashes.v[j] = xstrdup(midx_get_checksum_hex(m));
+> +				keep_hashes.nr++;
 
-There is nothing actionable, but this makes me wonder if we want to
-update the type of .mxcost member (which seems to never go negative)
-somehow.  I also wonder if uint32_t should be sufficiently wide for
-xdl_bogosqrt() that takes uint64_t.
+Gross, we are just manipulating the innards of the strvec ourselves?
 
+Is it really worth doing this (and adding init_alloc()) versus just:
+
+  strvec_init(&keep_hashes);
+  for (...)
+	strvec_push(midx_get_checksum_hex(m));
+
+? That's amortized linear-time, and it's not like the number of midx
+layers is going to be large anyway.
+
+>  				m = m->base_midx;
+>  			}
+>  
+> -			keep_hashes[i] = xstrdup(hash_to_hex_algop(midx_hash,
+> +			keep_hashes.v[i] = xstrdup(hash_to_hex_algop(midx_hash,
+>  								   r->hash_algo));
+> +			keep_hashes.nr++;
+
+OK, this could be a push, too.
+
+>  
+>  			i = 0;
+>  			for (m = ctx.m;
+>  			     m && midx_hashcmp(m, ctx.compact_to, r->hash_algo);
+>  			     m = m->base_midx) {
+> -				keep_hashes[keep_hashes_nr - i - 1] =
+> +				keep_hashes.v[keep_hashes_nr - i - 1] =
+>  					xstrdup(midx_get_checksum_hex(m));
+> +				keep_hashes.nr++;
+
+But what is this? We're filling in from the back side of the array? I
+mean...yeah, that's something that strvec_push() can't do. But I can't
+help but feel like it might be simpler and more obvious to adjust the
+iteration to build the array in order.
+
+I dunno. Maybe that is hard to do. But if so, I question whether moving
+to a strvec is worth it here, since we are not treating it as an opaque
+type anymore. And it is not buying us much to use it (we get to pass one
+parameter versus two, though that is easily solved with a struct, and we
+get to use _clear() instead of our own free loop).
+
+>  void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext,
+> -				      char **keep_hashes,
+> -				      uint32_t hashes_nr)
+> +				      const struct strvec *keep_hashes)
+>  {
+>  	struct clear_midx_data data = {
+> -		.keep = STRING_LIST_INIT_NODUP,
+> +		.keep = STRING_LIST_INIT_DUP,
+>  		.ext = ext,
+>  	};
+> -	uint32_t i;
+>  
+> -	for (i = 0; i < hashes_nr; i++)
+> -		string_list_append(&data.keep,
+> -				   xstrfmt("multi-pack-index-%s.%s",
+> -					   keep_hashes[i], ext));
+> -	string_list_sort(&data.keep);
+> +	if (keep_hashes) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +		for (size_t i = 0; i < keep_hashes->nr; i++) {
+> +			strbuf_reset(&buf);
+> +
+> +			strbuf_addf(&buf, "multi-pack-index-%s.%s",
+> +				    keep_hashes->v[i], ext);
+> +			string_list_append(&data.keep, buf.buf);
+> +		}
+> +
+> +		string_list_sort(&data.keep);
+> +		strbuf_release(&buf);
+> +	}
+
+This hunk was unexpected. We move from xstrfmt() to a strbuf, but does
+that have anything to do with the rest of the patch?
+
+Also, I don't think using a strbuf really buys us anything. We are
+reusing the strbuf for each format operation, but then we copy into the
+string list anyway. So there is one allocation per loop iteration either
+way.
+
+Also also, the original was leaking the strings, right? The string_list
+was initialized as NODUP, but we assigned allocate xstrfmt() results to
+it. But because of the nodup, string_list_clear() won't free them.
+It should have been:
+
+  .keep = STRING_LIST_INIT_DUP,
+  [...]
+  string_list_append_nodup(&data.keep, xstfmrt(...));
+  [...]
+  string_list_clear(&data.keep);
+
+in patch 2.
+
+-Peff
