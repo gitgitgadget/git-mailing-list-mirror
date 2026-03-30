@@ -1,65 +1,65 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3963BB48
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 18:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A654E363C77
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 18:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774894059; cv=none; b=galHfCsSlT0TKypR+gUYvkE8i4iMXJobeqW61D3su76KTFhM4aaEuZbbbhwKhC+TEz11636QN6SlRCA9CtwLQ41/sByMGKB/mL26dQd+UM+uIYIMP5qQDsEQtJXGFtqbNpRNjEytuxKZTQ/MUoll3F7lDDlCNZCJhLOUFcx7m7o=
+	t=1774894120; cv=none; b=Qh9rzEIC33DzBvevWRLVOFRHccocRRKfPrBt6KCFydqo+18+uQ7XZjnkoBfoHtuLxg20tMtuxA9b5KYTRdWOK5PjfXbKIYzhaz5Ljt3Hif5Kq22590tkcDY8JJYHhZFU0SttjlTW3yqTO8qW2YrTqBz1kmGg0g0g6A+cwWrw6AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774894059; c=relaxed/simple;
-	bh=iEB+88CgrsfPZZ0zFjf+x77nsrVRtgVwmMu3qlfGmHw=;
+	s=arc-20240116; t=1774894120; c=relaxed/simple;
+	bh=iq4gSBtTmneljIp4TvgxttsXXWdtE4YSwzI4fQepbtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t9jg+YsvBYuvv1gauzYf+8viYm5+Z+nksbGIt4h/OYBDpsCu3WyZVtfgHw6YLcf4838m02JwHNQGgZC2MTI5I9qZxzDsz81K1MvTDKcoDRqXht5ARmCUzADVFEqj3Fw+4NzTzAg4Wb8Ux85ReMWR8S5INgxo0SS2FONUXjcIASs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sithyd.siu.edu.in; spf=pass smtp.mailfrom=sithyd.siu.edu.in; dkim=pass (1024-bit key) header.d=sithyd.siu.edu.in header.i=@sithyd.siu.edu.in header.b=KQQtoM9m; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version:Content-Type; b=rKAa8DdzGAa7b3qtyYhXDQo3XZN2zChHWkg1VQQOs+kF/BU0gfoLml1tpJcL6DtBrRoKGe8UTQqkNoJM34vRfeug2/8KDZiQbOU36O46jI5Udbk8aZKhISbZkZPNsdGRqwB6SxM/7p9c/LTepSp3spm3ULs1UZkTEMJchH8y3U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sithyd.siu.edu.in; spf=pass smtp.mailfrom=sithyd.siu.edu.in; dkim=pass (1024-bit key) header.d=sithyd.siu.edu.in header.i=@sithyd.siu.edu.in header.b=humjeC+O; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sithyd.siu.edu.in
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sithyd.siu.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sithyd.siu.edu.in header.i=@sithyd.siu.edu.in header.b="KQQtoM9m"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ad9f316d68so21289745ad.2
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 11:07:37 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=sithyd.siu.edu.in header.i=@sithyd.siu.edu.in header.b="humjeC+O"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35c1d101355so2020627a91.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 11:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sithyd.siu.edu.in; s=google; t=1774894057; x=1775498857; darn=vger.kernel.org;
+        d=sithyd.siu.edu.in; s=google; t=1774894119; x=1775498919; darn=vger.kernel.org;
         h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XCcbIWFUnOOTL2Lbw7WePYEzqGXCNLLJfzPznIazkUo=;
-        b=KQQtoM9mPdBJhjhhCcJsHVWtC1Rk3KCLULrBH0zXJVaKh025F93emODr9undF2RyG8
-         04P+KpjFTT1xEcrHAtLRCw9djrIqKrRDwj2nRp4HwCdM53QGRFxccfDcuDEsMNFiUji+
-         0XrAqThIYzKxXQOz/bdMkQCpnlLAHPVOC1Jxs=
+        bh=/HQ37PHB5TcOljMyf1ngBNNNTogjtaUQOB36I8Cog5M=;
+        b=humjeC+OOAITVQ+h45IgqWNyI4BEbybK/y7fCzsPvDFKqPnI8jnzwzyFjmv4PEFTgx
+         TF2aMIsENMKppyRWCrKlvjbyseyolbUxWdWE0/bnXa2inR1VQKabyzjUoHA1hHefIlot
+         QeD/79T4iKfLIOZwCSeOEmoGfpoP4dtglV1Go=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774894057; x=1775498857;
+        d=1e100.net; s=20251104; t=1774894119; x=1775498919;
         h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XCcbIWFUnOOTL2Lbw7WePYEzqGXCNLLJfzPznIazkUo=;
-        b=YyXZzqPcnKoWlvu8fC/viGl49rRl5YY6cLQtP7NeamPaWGnsvX72y4VTCrG7QjeVZ7
-         auAP/5vLKFk7TS7NXszO/g7EMNQ6lhfo5K4wtskVr6kMsr0IVa75ha2yAoKsBfUCS+p9
-         jgnnCCse7rEKE1nzGkzhzjxdtpwJwyEKR6r30WgftH02Op1LRB+xTJ10nF89r9Tz2f9V
-         dWTC9JZA2jjhlBLLOUUGbCV+9BlyPsyRJ0j2Rm0eht/exOKj4a0VK7tmjbLLNgO93jN0
-         V2HpCC5BPvg2CpfPWMOKPgebabXEZa4/rBtg9jZkNH8NN44xwOLyvmGZvr/SiRFxLzN8
-         aHQQ==
-X-Gm-Message-State: AOJu0Yxc6FZbpFExRs6N3nn6y9ot0U4kRZeZLrkxclL7PnJPiu3XzSmK
-	t8f5aBORgPLTMeTZbMsTSOEUGSTZ2mx5Hb2PmsdgoTsvlCf10WSiLt+4r1pPwONwZuz9cX6YkoI
-	64NNZVIBxl07YqT3khUEypBMzpwUiQ6Y3s2UrkmTkkk6L9GOZlSvdnSTnM3A=
-X-Gm-Gg: ATEYQzztlAvdXAYY3MkmB4snKAibVRZsKwA5rJ9vDs6S07zDUCwitZRpOhJsXMkiIhe
-	Y3kYHENwwCS/dbtDqRqidx+Nrh++UaS24KTpToF6XYCc5Zxqaq6frrbzPNn8xOr6rBW2C8izTbA
-	oP6iQhBl2CMGmSNc8ZoESu2Y4PkKr5UOHTAuZAzpP4QJ6YwRmcuhiVCUKrYesnJGFbFJKLEoIa6
-	QBMqPUcwdrck7RiK/KcBaAACTF2dV34C81J6pj0VcD7ECUfFgv0jQlcU1n/fTenFFNMQWHxzuL9
-	fOzxpGlNk0EETsXyZ0uC9brgXn/gJuebaPcd+8fD3hAKGfKAJBqZGBq35Yo1yfUlhitZOWTFO3G
-	azB0QypXSg9Fgnd68UJUA1R0O6zQxnQ3GYZw78nc38BNGepXK6B0M8hjQh+5iph6Co+hEi9do+b
-	GPR3kfci11aiBK8wK5UjQzRAIEK+MTXk5EAd9IgHNQL+EO+JfXdWHh6Qg=
-X-Received: by 2002:a17:902:ce12:b0:2b0:60db:7927 with SMTP id d9443c01a7336-2b0cdcdbb73mr153551885ad.28.1774894057098;
-        Mon, 30 Mar 2026 11:07:37 -0700 (PDT)
+        bh=/HQ37PHB5TcOljMyf1ngBNNNTogjtaUQOB36I8Cog5M=;
+        b=hiUA7aDdvF7dwWw5zC2lUuluq2XdCyPMlKcl6B2fyVSHS0yCy6OXs1ZL2sQwobuxwE
+         4q5LqxZmhfEcc6M688k3W9abTTGETDlXmXJ2m1QlnFW89X70aVsyeQV25VWBBZJaT2bF
+         NbT/cHxqm4XrPx/oXSdqiEcuaGnCyUlxcTLch7BJzrqyZlGOJN3hre1gMmeiQU6cAhA5
+         jHtkUNiSpheommsKTU2Gfjxa3FwFjw4Z1EHL9KTdR5UIP8hjQ0p/J8TozXNkqrQIDQvJ
+         Uf9czJE3xs5szyuF6wz/orlL+fzW7LT40Gm/kTG+lJIjIpbdieRkyDm5wnNhwUju2qjL
+         FgWA==
+X-Gm-Message-State: AOJu0YzNVu5EkfpVcrcqJgrznchIaQKDFQsosCt01a1TeCuBYteT/hdR
+	/bMYurxj03ywAgXXZUA6k+vPg2UkOEv5REfIs2thMkbWj2dSE/APzsIfSqclNV9yPsIMgZRHOB8
+	gBMBbVNleIjGX5WMOceCMwyBXe7C2nSRmkEGfXiZVk/vVYT8+2QpJgVmZyCY=
+X-Gm-Gg: ATEYQzyFyuFdxxJ2kIJdKCHaYxec7JWhFZlvA1415zXlwwFTPKuuwBbVeeyTEW15OkJ
+	uvQc8H0/4FhXJVXgxypVz47hyeNB3jTxSmi5MJdp+MK192d2wWA/NPyhjA7kDPLUumGdNun8Iqs
+	1toCe/cLDXzzHuoIs0771hCKVW3m3lAWijiSUknqkI/L5ZmVXVWGd8EjAFawKJNGd6Aa/UA98sm
+	AJYnSB/AShoB7LqO5jq/K2XgARH0GXctaThI4QntzuebfPGO4tW5LqsG05cT7C9bK6ZcVCU+ddh
+	UPxUHaltlayczJAFB2tJw5VAdZkCa2Ah2SicERgPlEyS29o1CT9oyzKo2fRz9kQxiu7SSWc7EW/
+	ZvmN8yJlB1nFb6nepRbryZscuWhPN0tQcDwqwKoCuR5wkbegAIzP2/TJTSjPszZNyC8ymn/DAsG
+	1fGPutKtWXFGf6xRgcNMfkwUf3rXU7OILt1SsJollJy+n3/+zlTBxC+mE=
+X-Received: by 2002:a17:902:da83:b0:2b0:bed1:46db with SMTP id d9443c01a7336-2b0cdd97682mr142473545ad.45.1774894118844;
+        Mon, 30 Mar 2026 11:08:38 -0700 (PDT)
 Received: from LAPTOP-A2K1CSVQ.localdomain ([103.157.13.18])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b24277e8d3sm85979815ad.55.2026.03.30.11.07.35
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b24277e8d3sm85979815ad.55.2026.03.30.11.08.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 11:07:36 -0700 (PDT)
+        Mon, 30 Mar 2026 11:08:38 -0700 (PDT)
 From: Smaran Jaianand <24070721037@sithyd.siu.edu.in>
 To: git@vger.kernel.org
-Cc: smaran-jaianand <24070721037@sithyd.siu.edu.in>
+Cc: Smaran Jaianand <24070721037@sithyd.siu.edu.in>
 Subject: [GSoC PATCH v3] bugreport: revert incorrect usage message change
-Date: Mon, 30 Mar 2026 17:41:08 +0000
-Message-ID: <20260330174131.456-3-24070721037@sithyd.siu.edu.in>
+Date: Mon, 30 Mar 2026 17:41:10 +0000
+Message-ID: <20260330174131.456-5-24070721037@sithyd.siu.edu.in>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260330064454.76833-1-24070721037@sithyd.siu.edu.in>
 References: <20260330064454.76833-1-24070721037@sithyd.siu.edu.in>
@@ -71,30 +71,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
 
-From: smaran-jaianand <24070721037@sithyd.siu.edu.in>
-
-The usage string is intended to reflect command syntax rather than
-describe functionality. Revert the previous change to keep it consistent
-with documentation.
+Revert the previous change to keep it consistent with documentation.
+Based on the feedback, the usage string is intended to represent command syntax rather than provide a description.
 
 Signed-off-by: Smaran Jaianand <24070721037@sithyd.siu.edu.in>
 ---
-v3: Revert previous change after feedback that usage strings should reflect command syntax rather than description.
-
- builtin/bugreport.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ builtin/bugreport.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index f78c3f2aed..6b1d1accb1 100644
+index 6b1d1accb1..c42b61cc8f 100644
 --- a/builtin/bugreport.c
 +++ b/builtin/bugreport.c
-@@ -56,7 +56,8 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+@@ -56,8 +56,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
  }
  
  static const char * const bugreport_usage[] = {
--	N_("git bugreport [(-o | --output-directory) <path>]\n"
-+	N_("git bugreport - create a bug report with diagnostic information\n"
-+           "              [(-o | --output-directory) <path>]\n"
+-	N_("git bugreport - create a bug report with diagnostic information\n"
+-           "              [(-o | --output-directory) <path>]\n"
++	N_("              [(-o | --output-directory) <path>]\n"
  	   "              [(-s | --suffix) <format> | --no-suffix]\n"
  	   "              [--diagnose[=<mode>]]"),
  	NULL
