@@ -1,84 +1,89 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80B6191F98
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 15:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FFA332901
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 15:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774883942; cv=none; b=f08GBZSgKmnLHd8CMI34Kiz1ZU8AmqyyiRZjqJ9plLntf9ha2kibqfMgcrwIdGsQ0npzmfQA8fS+0iOVVdjWgiMbJM75yBzcFFO7lJqaNCCrmrLM1FW/CStdob9du40OeHp3YMMwrdB1ID7RuUYWTNg9HygyfU6Iw2YhWIEz+rI=
+	t=1774884406; cv=none; b=BHZo7MHbQQRIP62jZmQAY7ugiY84pg9aTkyP34GxRdgUtBueJnb7Q147e55ncWSGmpXDggR4dCaATGF24CqfOrPBODZD1pdPgvUizYbwFXbsrYQICKF1fvaPtzf0KU81JdrSfXLOmjWrZyUclNjfDg+gc5riDmZ04a0Fh9BPcRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774883942; c=relaxed/simple;
-	bh=ltSFQRJIhrjtCS/G9zOlo4P5EKUyjp8UEwC98cOPX4k=;
+	s=arc-20240116; t=1774884406; c=relaxed/simple;
+	bh=KT/M3VVyNJa2MfIDvAtuViZmgjwLtyIeZ8kodhvGF3g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j9OHm4Uls0Vpy6xgkut/cdFJ7x6NS3KgtN0XWdL7VpqI8oLxhozWfHF4Ux4Ml7FkXCVYRfB9DzI/icdPJujzjI9iugw4iKQWHq9/hGmJ35/E2AFJJSU6fb+NLmlxZa8NSuWcDkpYoKEC0k+8/oyzrRFKcVMNU4xgpdAU2kTNoEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K25DDD/T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZ8ZnYnC; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=jTsQNLspV/EQMGAiGQtLByBRo290RYsN8CSNvMt+XEyaxc92xynDj6wDOuDPK5rNZYetBHa+pey2hSPf6vQhCA2apNOyI07KL01KE/8w6SokoM3qY92xEbUEFsa+qstglO3o9CZW1Iy7T1c2SI//pOJR5yh5ypBeMmAZKaF5odA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CKSJwzpY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5YpZZBqL; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K25DDD/T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZ8ZnYnC"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CKSJwzpY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5YpZZBqL"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 07C1C7A01F0;
-	Mon, 30 Mar 2026 11:19:00 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B1EB07A01D6;
+	Mon, 30 Mar 2026 11:26:44 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 30 Mar 2026 11:19:00 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 30 Mar 2026 11:26:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1774883939; x=1774970339; bh=J6QWpx4M3N
-	a63l0msNbNv8s7+L1lVHji+T2TZHEIeM8=; b=K25DDD/TFoD45c0HsgeOwOYLiz
-	dyEUSjJl9GVejCJF6q7ugcskre9nZ7x5w+gnDcUkJGXCr7FswWecY06Yu+XwYtI0
-	EVB3rZ5vjfHwAK3brhE4DFufLMphx12pesgl5R0z8hHy5Jz3QYfGjw/vB9ASL6e4
-	WzuqqtIXT7Bc5Rk3rN2SUNK+q7Clq+yLse5O2Stchedjkdgx76W8AzK+l3HTzVAW
-	3DO6Qdk/yrAtjyI9t0QkuWTUiFNeBAdOAwO2YJSEf7xYR1ocrhmHvdB7VlioKA9F
-	GypI0nTZrTxnS9YsePrOnFnxZd9yjmAILPVfL5DJT+cc8yUqVS2nbwshtCGg==
+	:subject:to:to; s=fm3; t=1774884404; x=1774970804; bh=jWFQXoUXpF
+	QQ3iOfkWKOe0are1oYfMbWsGUchiAJ06Y=; b=CKSJwzpYwpQdUNE3gy4O00nkjy
+	r0dK1mLxSGUrMuu8Gf53Mmn3Zr3gNEbRYWpnaeAPOkOsxxhzXscUHSCAR8zZ4kFP
+	0A/lC7JhQburM5MHCDzRlZiA+vB6yt3se0Y6aIw+cWFj9pu0IiPwc9rAMuITSlA1
+	5gueQ9b4slo/koysbFOknR+22vbdYMOiiwXuXRX3hqmHhAX1SdJl4x62UX+OslTH
+	GoSV2rzA8fxqupQ8Hqknp79otWeche9wB9aDuAChUo36jZPcXgsvxAXSltimh2RZ
+	5Kvgs+XispY53UgCFEEl6R61cEGYb4qiLB3VkiyOmgIdK7sy8ujcrsiwjmiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774883939; x=1774970339; bh=J6QWpx4M3Na63l0msNbNv8s7+L1lVHji+T2
-	TZHEIeM8=; b=hZ8ZnYnC7JJjoG2tQ/fwQuWNP64fAcVGlQXFpdPAkaSZSX0kxs7
-	I4rm1VgJtOblo2hm30FwO6IjGB/Y02PIUCFpmaeVChicOM6lT3N8qfvYST6JseOp
-	DcI0Ed3yNPXGlaKo2YQlkM6D6rWY0uGKkTjlyC65NVoVlrP0BP/HRbV4arOLtHp0
-	s3F2plZUw3T/yivWu+Iw7OSsQdej/IMCvyyWgsQf7fpVlWJ9rLqh6EEkLl78137R
-	f7RvdcjDYWPT40E9B22o4bc/ylnaeUUEBVrGtn0WKsDCwWChCJ7VOL6Swm7LMyBm
-	BcJHlJlXLByM+apTtyfcxiR1bsTpbtKVtdw==
-X-ME-Sender: <xms:Y5TKacoF8srQiic4plNXW_v1ScQV7Nk7WS1WIgklZT1C01w86mLThQ>
-    <xme:Y5TKaZqzpr9op3Ju1cssF_Kes4IBWMnF0DMg12hmtWwrbJTmj7-IWjwHaiwpBvUil
-    9EJ3s-TMf6RbZstkyJpMLifpMmCHhv4fegr4sgdMYorcjQn9Z9XVzo>
-X-ME-Received: <xmr:Y5TKaWPiOOumrn0Qls-K5QXt36ccWyRjj3no1HgzLgpQ1mBXYvoAFJoDc0PCFFtfTPzqQrlr43rIqi_G7Grr5G-eiafxBO5WFg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeelfedvucetufdoteggodetrf
+	1774884404; x=1774970804; bh=jWFQXoUXpFQQ3iOfkWKOe0are1oYfMbWsGU
+	chiAJ06Y=; b=5YpZZBqLlRABnofZqAIPU2SFTiuraqiqO/n8qb+tQ5U/Sb01X2I
+	XafVPkhN+D/4auhXrZCTwFd14v8av86ryrjpd1iQBdiWzVmCpBROqlEvCI8NEN10
+	18a/HIsbrxPqdzABZ/xMekL5/L8xX8l696hiLJ98QrKKt6+vAgq4iqcx8peI79ri
+	kia14LLbA+pKFFyYTcJ3D5xHdlaCLj7+yFVotNYVsfy8br7QFWwBwvVB3WMIKOfK
+	8zXAS1joqHP+1fal7AF4jKIBYeLBy2Dw26NX3EFR2j5kjd5xUAaw5VM8KJSZ67gE
+	oQpUpOm6pgN85/BzYOxr63uRogIW7mrz2cg==
+X-ME-Sender: <xms:NJbKaTTFe3vbQY8oMRXD_LVEHC0NJWypfEAVzmeLrPh6DLogYQsQxg>
+    <xme:NJbKaRWWmyLZoEEwDuZYpgIssjd7NT--Ov-hfqWDDaUvGjbpOXgl13WyWf6Kgb3Hs
+    9zuZASwwGqIs2Hto8_ovN7zeOJs0lwlOItiUTB4agjof7uGgKKhyQ>
+X-ME-Received: <xmr:NJbKadT9F4o2lliVdiY0gaEuXXnEzh4iwdSK0vz6m8CuaGvAqz2BD-OtJWoA1HJWhVBDTKTJub4gxLqZeGTr9PlraJXmqfY0ag>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeelfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehquhgvnhhtihhnrdgsvghrnhgvthessghluhgvfihinhdrtghhpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Y5TKaSxkAakjhO2uDi8PbjVngvjK3d9GlmYcb3ZntgCjt2r7Rc4g4Q>
-    <xmx:Y5TKaXtkaGPm5uvfIdRPXnGg_7ccgEfHK25I1oYr4TnSfwDeZXrE-w>
-    <xmx:Y5TKaT6Ys7dJcesFbdrAn9xRznZp7xw4stDw_JhvqgwmXkEpdgjaWQ>
-    <xmx:Y5TKaeSZUjfWMQXW4iZZwdV09-APJLnGathI1oyKFQN4sru1nuRYug>
-    <xmx:Y5TKabmp4B4i7PDXeHw2Xsw26v5JTvYBL7YfYXos1XTGjs3yqGC4g3-r>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
+    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
+    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehprggslhhoohhsrggsrghtvghrrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepmhgvsehruhhngihihihurdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnh
+    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
+    keesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtg
+    homhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpd
+    hrtghpthhtoheptghhrghnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:NJbKaZ2MKGKLmtxK5MCSRSSw05TP2Ou6eld4Agr5Uy2-NI3Ljfm9EA>
+    <xmx:NJbKadfEclzvlmx9KWZnD2GF2iIXvHwpNQ5JKzkOf7uj7FYWcPrGwQ>
+    <xmx:NJbKaRNx7TqDlM3TBs73BakILjw4PeofykwrNPDnuaTg_kxiUlNhVg>
+    <xmx:NJbKaRWg9LXk0AM3rOkqpnVpKveRdQGdpQNtohYHx3igyJ_obr0B5g>
+    <xmx:NJbKaa4WoRnEWbNSj8wodzK7A4iQyv0HJNssQfCsZg58PxbzC5AksmI6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Mar 2026 11:18:59 -0400 (EDT)
+ 30 Mar 2026 11:26:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Quentin Bernet via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Quentin Bernet <quentin.bernet@bluewin.ch>
-Subject: Re: [PATCH v2] docs: fix "git stash [push]" documentation
-In-Reply-To: <pull.2255.v2.git.git.1774877075694.gitgitgadget@gmail.com>
-	(Quentin Bernet via GitGitGadget's message of "Mon, 30 Mar 2026
-	13:24:35 +0000")
-References: <pull.2255.git.git.1774529148151.gitgitgadget@gmail.com>
-	<pull.2255.v2.git.git.1774877075694.gitgitgadget@gmail.com>
-Date: Mon, 30 Mar 2026 08:18:58 -0700
-Message-ID: <xmqq341hfiql.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  me@runxiyu.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
+Subject: Re: [GSoC PATCH 0/3] receive-pack: fix HEAD check for updateInstead
+In-Reply-To: <20260330111822.165188-1-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Mon, 30 Mar 2026 13:18:19 +0200")
+References: <20260223141236.22476-1-me@runxiyu.org>
+	<20260330111822.165188-1-pabloosabaterr@gmail.com>
+Date: Mon, 30 Mar 2026 08:26:42 -0700
+Message-ID: <xmqqy0j9e3t9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,58 +93,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Quentin Bernet via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> But it also adds "-p" to the list of exceptions, even though it is an
-> option argument.
-
-This point I did not notice before, and you are right.  We already
-said that we reject non-option arguments, and "-p" is by no means
-special among other options.  Good spotting.
-
+> When a bare repo has linked worktrees, and its HEAD points to an unborn branch,
+> pushing to a wt branch with updateInstead fails and rejects the push, even if
+> the wt is clean.
 >
-> -git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
-> +git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
->  	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
->  	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
-> -	     [--] [<pathspec>...]]
-> +	     [--] [<pathspec>...]
-
-OK.  So the first '[' was closed after the entire thing, but now it
-closes after [push], making it clear that the command word can be
-omitted without affecting the remainder.
-
-> @@ -60,10 +60,8 @@ COMMANDS
->  	the description along with the stashed state.
->  +
->  For quickly making a snapshot, you can omit "push".  In this mode,
-> -non-option arguments are not allowed to prevent a misspelled
-> -subcommand from making an unwanted stash entry.  The two exceptions to this
-> -are `stash -p` which acts as alias for `stash push -p` and pathspec elements,
-> -which are allowed after a double hyphen `--` for disambiguation.
-> +pathspec elements are only allowed after a double hyphen `--`
-> +to prevent a misspelled subcommand from making an unwanted stash entry.
-
-OK.  I personally think "for disambiguation" in the original is
-clear enough, but the rephrased version is not excessively verbose,
-so let's take it.
-
-> -	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
-> +	N_("git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
->  	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n" \
->  	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n" \
-> -	   "          [--] [<pathspec>...]]")
-> +	   "          [--] [<pathspec>...]")
-
-OK.  Looking ver good.  Does this excatly match what we have in the
-documentation?  I think we have a test for it, but I do not offhand
-recall it covers "git stash".
-
-Thanks.  Will queue.
-
-
->  #define BUILTIN_STASH_SAVE_USAGE \
->  	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
->  	   "          [-u | --include-untracked] [-a | --all] [<message>]")
+> This happens because HEAD is checked only for the bare repo context, instead
+> of the wt.
 >
-> base-commit: ce74208c2fa13943fffa58f168ac27a76d0eb789
+> This series includes Runxi's test, a cleanup of a test that messes with Runxi's
+> test and the fix for the issue.
+
+It would have made a perfect cover letter if you said in a very
+early paragraph what Runxi is and how it related to this issue.  I
+am guessing (from the fact that the same word appears in the patch
+list below with family name) that is a name of a person who first
+reported the issue?  If so, the missing sentence would have said
+something like "At https/lore.kernel.org/git/$MessageId, Runxi Yu
+reported ...".
+
+I have to leave the keyboard now, so will take a look at the patches
+later today.  Thanks.
+
+
+> Pablo Sabater (2):
+>   t5516: clean up cloned and new-wt in denyCurrentBranch and worktrees
+>     test
+>   receive-pack: use worktree HEAD for updateInstead
+>
+> Runxi Yu (1):
+>   t5516: test updateInstead with worktree and unborn bare HEAD
+>
+>  builtin/receive-pack.c | 39 +++++++++++++++------------------------
+>  t/t5516-fetch-push.sh  | 15 +++++++++++++++
+>  2 files changed, 30 insertions(+), 24 deletions(-)
+>
+>
+> base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
