@@ -1,114 +1,147 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A654E363C77
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 18:08:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACFB2FD7D3
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 18:36:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774894120; cv=none; b=Qh9rzEIC33DzBvevWRLVOFRHccocRRKfPrBt6KCFydqo+18+uQ7XZjnkoBfoHtuLxg20tMtuxA9b5KYTRdWOK5PjfXbKIYzhaz5Ljt3Hif5Kq22590tkcDY8JJYHhZFU0SttjlTW3yqTO8qW2YrTqBz1kmGg0g0g6A+cwWrw6AI=
+	t=1774895806; cv=none; b=VExFEfwamcwe+PqgfYOEX8SZNeTECBXgBFrLWrKMw21vL+YULNG+M7X7JNBbqCVlhjE3zhentoa/QXVXiCGNBJYK+lO/SwJDh2U4kdxhLpMZWDaNyGOKcVur8azuJqUArxrlcNkw71eDFFCdlBw3DodUObdvsOf5d4N3RQ3IXHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774894120; c=relaxed/simple;
-	bh=iq4gSBtTmneljIp4TvgxttsXXWdtE4YSwzI4fQepbtM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rKAa8DdzGAa7b3qtyYhXDQo3XZN2zChHWkg1VQQOs+kF/BU0gfoLml1tpJcL6DtBrRoKGe8UTQqkNoJM34vRfeug2/8KDZiQbOU36O46jI5Udbk8aZKhISbZkZPNsdGRqwB6SxM/7p9c/LTepSp3spm3ULs1UZkTEMJchH8y3U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sithyd.siu.edu.in; spf=pass smtp.mailfrom=sithyd.siu.edu.in; dkim=pass (1024-bit key) header.d=sithyd.siu.edu.in header.i=@sithyd.siu.edu.in header.b=humjeC+O; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sithyd.siu.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sithyd.siu.edu.in
+	s=arc-20240116; t=1774895806; c=relaxed/simple;
+	bh=S1Fc+WAN1CfOt+3P6wlujbpqMavNkSHnn1wkxG8yf+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DtDKQTRqS9+xZKgC/GnTc1GLC87xVfHPlbnwy6yAteJRqNH3mlAWV4uTw0vdUgqJiVP2wcGBlB/DDO9i7O3KDPJ0pyuMBrjN7nnBFJVtfuKdx0ShHq9SkzB9ZLO2N4r/pV1LmWlcHcKBaQot6pnF+erxgsTUn7po3iWwc/YB6e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3IX7deq; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sithyd.siu.edu.in header.i=@sithyd.siu.edu.in header.b="humjeC+O"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35c1d101355so2020627a91.1
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 11:08:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3IX7deq"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-35dac556bb2so742113a91.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 11:36:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sithyd.siu.edu.in; s=google; t=1774894119; x=1775498919; darn=vger.kernel.org;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/HQ37PHB5TcOljMyf1ngBNNNTogjtaUQOB36I8Cog5M=;
-        b=humjeC+OOAITVQ+h45IgqWNyI4BEbybK/y7fCzsPvDFKqPnI8jnzwzyFjmv4PEFTgx
-         TF2aMIsENMKppyRWCrKlvjbyseyolbUxWdWE0/bnXa2inR1VQKabyzjUoHA1hHefIlot
-         QeD/79T4iKfLIOZwCSeOEmoGfpoP4dtglV1Go=
+        d=gmail.com; s=20251104; t=1774895804; x=1775500604; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=e1M2ZSwZKnoK2WtgxMKs52Dupo+adwDO46VeW3fToBQ=;
+        b=J3IX7deqE9AC3oBDZc6PkFvqeJQK9x3BllBnc+NcgpVpgJ0gDCuTWEXOF0bChY4jkz
+         wThrKsj2ywum+f3bdBznw1K2x1/mcX9wzeAOYy7rL6ae310czo1Hxnfq1eJv3sp/Afav
+         A/B54vjSPEquOMLWudR5jup3NiwKbbNTrzV/Xp+oywV2A8JCSOGEypyk1xLz9vRCEnOK
+         NiPAwE6ux9dn6OsGaGB/nZXq/B768cQaHIHd3WaUFlzpBRoKYpTpfIAjqzJqNpp2zChS
+         sqA1w4/RMH9JKA5cXAdsS9sjBP/Vv9AGivbu2B7rKPMDbnYoG9Yu5VGpO+0fwzV2QScS
+         V/bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774894119; x=1775498919;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/HQ37PHB5TcOljMyf1ngBNNNTogjtaUQOB36I8Cog5M=;
-        b=hiUA7aDdvF7dwWw5zC2lUuluq2XdCyPMlKcl6B2fyVSHS0yCy6OXs1ZL2sQwobuxwE
-         4q5LqxZmhfEcc6M688k3W9abTTGETDlXmXJ2m1QlnFW89X70aVsyeQV25VWBBZJaT2bF
-         NbT/cHxqm4XrPx/oXSdqiEcuaGnCyUlxcTLch7BJzrqyZlGOJN3hre1gMmeiQU6cAhA5
-         jHtkUNiSpheommsKTU2Gfjxa3FwFjw4Z1EHL9KTdR5UIP8hjQ0p/J8TozXNkqrQIDQvJ
-         Uf9czJE3xs5szyuF6wz/orlL+fzW7LT40Gm/kTG+lJIjIpbdieRkyDm5wnNhwUju2qjL
-         FgWA==
-X-Gm-Message-State: AOJu0YzNVu5EkfpVcrcqJgrznchIaQKDFQsosCt01a1TeCuBYteT/hdR
-	/bMYurxj03ywAgXXZUA6k+vPg2UkOEv5REfIs2thMkbWj2dSE/APzsIfSqclNV9yPsIMgZRHOB8
-	gBMBbVNleIjGX5WMOceCMwyBXe7C2nSRmkEGfXiZVk/vVYT8+2QpJgVmZyCY=
-X-Gm-Gg: ATEYQzyFyuFdxxJ2kIJdKCHaYxec7JWhFZlvA1415zXlwwFTPKuuwBbVeeyTEW15OkJ
-	uvQc8H0/4FhXJVXgxypVz47hyeNB3jTxSmi5MJdp+MK192d2wWA/NPyhjA7kDPLUumGdNun8Iqs
-	1toCe/cLDXzzHuoIs0771hCKVW3m3lAWijiSUknqkI/L5ZmVXVWGd8EjAFawKJNGd6Aa/UA98sm
-	AJYnSB/AShoB7LqO5jq/K2XgARH0GXctaThI4QntzuebfPGO4tW5LqsG05cT7C9bK6ZcVCU+ddh
-	UPxUHaltlayczJAFB2tJw5VAdZkCa2Ah2SicERgPlEyS29o1CT9oyzKo2fRz9kQxiu7SSWc7EW/
-	ZvmN8yJlB1nFb6nepRbryZscuWhPN0tQcDwqwKoCuR5wkbegAIzP2/TJTSjPszZNyC8ymn/DAsG
-	1fGPutKtWXFGf6xRgcNMfkwUf3rXU7OILt1SsJollJy+n3/+zlTBxC+mE=
-X-Received: by 2002:a17:902:da83:b0:2b0:bed1:46db with SMTP id d9443c01a7336-2b0cdd97682mr142473545ad.45.1774894118844;
-        Mon, 30 Mar 2026 11:08:38 -0700 (PDT)
-Received: from LAPTOP-A2K1CSVQ.localdomain ([103.157.13.18])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b24277e8d3sm85979815ad.55.2026.03.30.11.08.37
+        d=1e100.net; s=20251104; t=1774895804; x=1775500604;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e1M2ZSwZKnoK2WtgxMKs52Dupo+adwDO46VeW3fToBQ=;
+        b=bVTcVgiDIXDTco8z4EJR8ZPH1AhJxrK4oo3nTEA+nBxC5Fp4gewBGdd4x+dCAm6o8K
+         n82uWgDvxZ7x6Qjwmd4U8AWUDRKacOgjLirV9quMvLmiv31SYAQ6rcmDfhJMst+Ts2Uu
+         guSBMq88qS11c46+QGAMSQ1nKJkSFVJdT3bVx5h7kAQhk5qduj/D+TCCRSkUTtCi+s4q
+         NtM4fm2awIx5C9IrTr9bnq7qlTOpNFU8wBc7AT0HvK07PVObEKSW8Yklyz0bYDs3Cd4h
+         4CuEu1CGSLlRH8dJfIjzZb6B/juHlgq/L9+7UOl82x+91YPrMSIoQLPyIBfpRG/7y6+v
+         cVxw==
+X-Gm-Message-State: AOJu0YxiJ48e/RWVr15MIqYTrP8jcy7K4ZGDsGPpC/teHHNaK/pnWYH8
+	WtTWlFCxlxJRMd0BTDgeAd8osd6BMLAVb3FDQRP2h4Sxlo26rwKBC8fqmUP1FmH/HtA=
+X-Gm-Gg: ATEYQzx8/hmBcgB7Y7dC47j1iXhaiWAmg1ZhSXki2XC6BHPKeYjr4aHKCp+XJNL+HBg
+	5nOxuZqdlIpwboMIuo0X93o5kB1pgSAT0lq++tQxnjXU7/bb3rjRo7a70GnDYwoSABxzmjoDFhg
+	38myBLtQ+u/NjCH35zHZqk3AJ7996/R3s7eGx5gxeZ8YVJb8xps5ZPIUMUBQigfepCRQIFRxyvd
+	DEnXvbivBhUV8kY4E0SJADjGCTSEJ4Q5+Bl+oi4xe7FQjEbCHu8PD1vyJcCUwDkcyAQlRNHEfWx
+	vJHESk+tqewk6HkzYO5ISEwbmr05VZrAfaUi/RxJKiVumF7HkhJub3HAxOHD8uFWOWjUu36pjV0
+	+RAZL/68jfE35FhRDF24hTJ+lec2vVebp/TIePuxNft+oPSe3onZVzs6rNwx+WtbCB4bvshS70U
+	c+8BxPBAOAT5jw5B0vzxl9Lu+x057HELg=
+X-Received: by 2002:a17:90a:f94e:b0:32e:3829:a71c with SMTP id 98e67ed59e1d1-35c30052dffmr12893529a91.16.1774895804421;
+        Mon, 30 Mar 2026 11:36:44 -0700 (PDT)
+Received: from localhost ([42.114.23.29])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c22ba5700sm13635451a91.8.2026.03.30.11.36.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 11:08:38 -0700 (PDT)
-From: Smaran Jaianand <24070721037@sithyd.siu.edu.in>
-To: git@vger.kernel.org
-Cc: Smaran Jaianand <24070721037@sithyd.siu.edu.in>
-Subject: [GSoC PATCH v3] bugreport: revert incorrect usage message change
-Date: Mon, 30 Mar 2026 17:41:10 +0000
-Message-ID: <20260330174131.456-5-24070721037@sithyd.siu.edu.in>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260330064454.76833-1-24070721037@sithyd.siu.edu.in>
-References: <20260330064454.76833-1-24070721037@sithyd.siu.edu.in>
+        Mon, 30 Mar 2026 11:36:44 -0700 (PDT)
+Date: Tue, 31 Mar 2026 01:36:39 +0700
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH] backfill: error out when HEAD cannot be parsed
+Message-ID: <idaildqkkf26ks6hlibt5e7rhdlbytra3x3o7ovd543mnsthtm@h3um5miwhc4l>
+References: <20260329183603.538241-1-vikingtc4@gmail.com>
+ <0af26f29-5643-4ff2-b659-ae0fa234161a@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0af26f29-5643-4ff2-b659-ae0fa234161a@malon.dev>
 
-Revert the previous change to keep it consistent with documentation.
-Based on the feedback, the usage string is intended to represent command syntax rather than provide a description.
-
-Signed-off-by: Smaran Jaianand <24070721037@sithyd.siu.edu.in>
----
- builtin/bugreport.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 6b1d1accb1..c42b61cc8f 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -56,8 +56,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- }
- 
- static const char * const bugreport_usage[] = {
--	N_("git bugreport - create a bug report with diagnostic information\n"
--           "              [(-o | --output-directory) <path>]\n"
-+	N_("              [(-o | --output-directory) <path>]\n"
- 	   "              [(-s | --suffix) <format> | --no-suffix]\n"
- 	   "              [--diagnose[=<mode>]]"),
- 	NULL
--- 
-2.43.0
-
-
--- 
-* <https://www.facebook.com/symbiosis.official/>*  
-<https://www.instagram.com/symbiosis.official/>  
-<https://www.linkedin.com/school/symbiosis-international-university/>  
-<https://x.com/symbiosistweets> 
- 
-
-
-
-
-**Disclaimer:* This email is 
-governed by the Disclaimer Terms of SIU, which may be viewed at 
-http://siu.edu.in/disclaimer.php <http://siu.edu.in/disclaimer.php>*
-
-
+On Tue, Mar 31, 2026 at 01:41:56AM +0800, Tian Yuchen wrote:
+> On 3/30/26 02:36, Trieu Huynh wrote:
+> > handle_revision_arg() returns non-zero on failure, but do_backfill()
+> > ignored the return value. On an empty repo with no commits, HEAD is
+> > unborn and handle_revision_arg() fails, but backfill silently
+> > continues with an empty revision walk and exits zero, looks like
+> > success but did nothing.
+> > 
+> > Check the return value and propagate the error, consistent with
+> > how builtin/pack-objects.c handles handle_revision_arg() failures.
+> > 
+> > Add a test to verify that backfill on an empty repository fails
+> > with a clear error message.
+> > 
+> 
+> Aside from the minor flaws Karthik mentioned, I think this commit message is
+> spot on.
+> 
+> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> > ---
+> >   builtin/backfill.c  | 3 ++-
+> >   t/t5620-backfill.sh | 6 ++++++
+> >   2 files changed, 8 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/builtin/backfill.c b/builtin/backfill.c
+> > index 27a301f9b2..4b2db94173 100644
+> > --- a/builtin/backfill.c
+> > +++ b/builtin/backfill.c
+> > @@ -96,7 +96,8 @@ static int do_backfill(struct backfill_context *ctx)
+> >   	}
+> >   	repo_init_revisions(ctx->repo, &revs, "");
+> > -	handle_revision_arg("HEAD", &revs, 0, 0);
+> > +	if (handle_revision_arg("HEAD", &revs, 0, 0))
+> > +		return error(_("unable to parse HEAD revision"));
+> 
+> Looks good to me.
+> 
+> >   	info.blobs = 1;
+> >   	info.tags = info.commits = info.trees = 0;
+> > diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
+> > index ff67e8ecea..91b5115732 100755
+> > --- a/t/t5620-backfill.sh
+> > +++ b/t/t5620-backfill.sh
+> > @@ -101,6 +101,12 @@ test_expect_success 'backfill no flag on non-TTY is silent' '
+> >   	test_grep ! "Downloading batches" err
+> >   '
+> > +test_expect_success 'backfill on empty repo fails gracefully' '
+> > +	git init empty-repo &&
+> > +	test_must_fail git -C empty-repo backfill 2>err &&
+> > +	grep "unable to parse HEAD" err
+> 
+> Remember your last patch? Wouldn't it be better to use 'test_grep' here?
+> It's easy to see that the original code uses 'test_grep' (a few lines
+> above):
+> 
+> 	>   	test_grep ! "Downloading batches" err
+> 
+> Wouldn't it be better to maintain consistency? ;)
+thanks for the spot.
+> 
+> > +'
+> > +
+> >   test_expect_success 'backfill --sparse without sparse-checkout fails' '
+> >   	git init not-sparse &&
+> >   	test_must_fail git -C not-sparse backfill --sparse 2>err &&
+> 
+> Regards,
+> 
+> Yuchen
+> 
+acked, will submit v2, shortly.
