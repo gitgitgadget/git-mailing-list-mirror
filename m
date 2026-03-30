@@ -1,40 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133613E6395
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 22:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7AD3EBF1F
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 22:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774910042; cv=none; b=RiS7qZ6SMgjIdEzmT1XnBecWbV5wtZ2WapV8c5K1uZjdLBmofy8P/pNLDMb1lO4w7m49ajsrNgEs1NEp1pG00Lly//oPkzkJjtcfDtGlocpPG1/nEGNls5OukEIHtFiQs2ejRQDPDo29/b0PJ2x5WoACfr+zI14DyeB+DPSO1CI=
+	t=1774910343; cv=none; b=h+Mk7bqazkdRvc+0ymtSEUO+q6+pWYk2QCukedGNnnb5dNhp7w8s8ZlerHtXyN+OGFby54fAMwynoBYBShZV9B3zhWjfhSX8b88nqkyPHI/RojnUVDisGzLvbhHJZI2fYx48BGw1V/XbaoH6YCot3HH73vTjT4LLX9VibrJeIHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774910042; c=relaxed/simple;
-	bh=pnfVn54+0mvaOjbNHQynZGIKuQyMLZmrZCnPgVdXPHk=;
+	s=arc-20240116; t=1774910343; c=relaxed/simple;
+	bh=ir3KA6Zuq8Z3pqcdgECkSrr7she4ny4TPrOQvrSovtk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a7OZSz3oAAKdxhdZUO4OtMyGUwzniPJG5z6owoLLE3vz86cl2BvxWqIvvAlorKOPS0vI7gbm7jFuillJRcI0t+4AW/Y9Gxo564onJus4l7F8YxzaFzfKUd4Qa0aM3X8xrj78fCyLQdLmlqbD+uC1XLEXv5xQ9BA7kdy1+BP7MYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PO2XTzOT; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=aWCVsVjtDrL01dUtyx+qZbgtg74g6tzKZwVsmN93CZF1Vd9/+iIhsvYeKp4A+DfCdtwTqk4YiFHG4KgMw/mqI2CQBhlaSGYeBUBkqJYBS8wwtK/8jXx7S3reLJ5ouTV5a3UbNB13o9/Kwsn5DW8v5FvEEmb+DwLY4IiSpNq3qn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=K8xH8AiI; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PO2XTzOT"
-Received: (qmail 199106 invoked by uid 106); 30 Mar 2026 22:33:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pnfVn54+0mvaOjbNHQynZGIKuQyMLZmrZCnPgVdXPHk=; b=PO2XTzOTx+WF5cFOmCBHQ5CLGhn3dD6L6Ve7Cy7Qa2EKuaNLyuwjbBd7XH41sBmNwkDcwjPSSG6/t3IlwC5qsW1UuW5OuQgADdS9tZanwdYGN1SSHlYtbIJn7AL5puoSIn21cxWxGOEHptmeGWvns7s6eZa1b4CDxt734qql+KO04PA7PSpknNGqun1MzVfFz+5Jqv4gnuglI23uAnNfp7TvSNzV0bLWdGQ1VKUQypPagnmWE7x6VwPWOt0XG4UL4x1Re/PHWSGG+vtxJQl6qt1yu5zITRyQSIcE2Aij/V2NjNcMRy+o7js7oYSiyCYQ7VA0yra5Q5jlnJt1WldFgg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="K8xH8AiI"
+Received: (qmail 199149 invoked by uid 106); 30 Mar 2026 22:38:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ir3KA6Zuq8Z3pqcdgECkSrr7she4ny4TPrOQvrSovtk=; b=K8xH8AiIPYHAeyNvepev/pXAJyZp9UgRfmi4LiQiv8xU+H6HD6UB4m8q4fjBWrXhNM7AJowXE/tlG3GE16Ec3ik7rMjEOTW6I+wD6pzsFVedWb1kt7m33xP04v1Kc5xak5Xp9i25RDTPzuRcHEu8TFb+HZEB/xTiDLS2BLALxmoDMWCO5qZ1tvT8TgAQOEqPFOY+06TK/OrecG5nDBkUbvdRV8MY5PsvlbzfIwlvT3gMA25Wnqyf+0NtikWDUs7/C+KWEt1oDAAfSY1Gj10Iz3fFh3nBGfI/Vlavg+sHUilgqI4r5VHBR03uTUDQEW0fJ1xw2YvZb0XEQh3c5KeXIA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Mar 2026 22:33:47 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Mar 2026 22:38:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 305915 invoked by uid 111); 30 Mar 2026 22:33:47 -0000
+Received: (qmail 305958 invoked by uid 111); 30 Mar 2026 22:38:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2026 18:33:47 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Mar 2026 18:38:50 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 30 Mar 2026 18:33:46 -0400
+Date: Mon, 30 Mar 2026 18:38:49 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 01/16] midx-write: handle noop writes when converting
- incremental chains
-Message-ID: <20260330223346.GA41843@coredump.intra.peff.net>
+Subject: Re: [PATCH 02/16] midx: use `string_list` for retained MIDX files
+Message-ID: <20260330223849.GB41843@coredump.intra.peff.net>
 References: <cover.1774820449.git.me@ttaylorr.com>
- <0c7a68ca5a777cce9c0c951643ea2220b1b56a8c.1774820449.git.me@ttaylorr.com>
+ <1391552dfc6624374bed89b25d1892d9b9d080f9.1774820449.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,64 +42,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0c7a68ca5a777cce9c0c951643ea2220b1b56a8c.1774820449.git.me@ttaylorr.com>
+In-Reply-To: <1391552dfc6624374bed89b25d1892d9b9d080f9.1774820449.git.me@ttaylorr.com>
 
-On Sun, Mar 29, 2026 at 05:40:53PM -0400, Taylor Blau wrote:
+On Sun, Mar 29, 2026 at 05:40:55PM -0400, Taylor Blau wrote:
 
-> This comparison fails when we have an incremental MIDX chain with
-> at least two layers, since we do not recursively peel through earlier
-> layers, instead treating the `->pack_names` array of the tip MIDX layer
-> as containing all `m->num_packs + m->num_packs_in_base` packs.
-> 
-> Adjust this to instead look through the MIDX layers one by one when
-> comparing pack names. While we're at it, fix a typo above in the same
-> function.
-
-Makes sense.
-
-> @@ -1208,14 +1208,16 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
->  			BUG("same pack added twice?");
->  	}
+> @@ -767,15 +766,12 @@ static void clear_midx_file_ext(const char *full_path, size_t full_path_len UNUS
+>  				const char *file_name, void *_data)
+>  {
+>  	struct clear_midx_data *data = _data;
+> -	uint32_t i;
 >  
-> -	for (uint32_t i = 0; i < ctx->nr; i++) {
-> -		strbuf_reset(&buf);
-> -		strbuf_addstr(&buf, midx->pack_names[i]);
-> -		strbuf_strip_suffix(&buf, ".idx");
-> +	for (struct multi_pack_index *m = midx; m; m = m->base_midx) {
-> +		for (uint32_t i = 0; i < m->num_packs; i++) {
-> +			strbuf_reset(&buf);
-> +			strbuf_addstr(&buf, m->pack_names[i]);
-> +			strbuf_strip_suffix(&buf, ".idx");
+>  	if (!(starts_with(file_name, "multi-pack-index-") &&
+>  	      ends_with(file_name, data->ext)))
+>  		return;
+> -	for (i = 0; i < data->keep_nr; i++) {
+> -		if (!strcmp(data->keep[i], file_name))
+> -			return;
+> -	}
+> +	if (string_list_has_string(&data->keep, file_name))
+> +		return;
+
+We are using has_string() here, so &data->keep will need to be sorted
+(just keeping it in mind as we read further).
+
+>  	if (keep_hash) {
+> -		ALLOC_ARRAY(data.keep, 1);
+> +		struct strbuf buf = STRBUF_INIT;
+> +		strbuf_addf(&buf, "multi-pack-index-%s.%s", keep_hash, ext);
 >  
-> -		if (!strset_contains(&packs, buf.buf))
-> -			goto out;
-> -		strset_remove(&packs, buf.buf);
-> +			if (!strset_contains(&packs, buf.buf))
-> +				goto out;
-> +			strset_remove(&packs, buf.buf);
-> +		}
+> -		data.keep[0] = xstrfmt("multi-pack-index-%s.%s", keep_hash, ext);
+> -		data.keep_nr = 1;
+> +		string_list_insert(&data.keep, buf.buf);
 
-I wondered here if we would also need to adjust the check of the count,
-but it is already OK. Just above the context is:
+OK, we use insert() here. But there is no difference between insert and
+append, since the list only has one element. It is sorted either way. ;)
 
-          if (ctx->nr != midx->num_packs + midx->num_packs_in_base)
-                  goto out;
+And we do not have to worry about being accidentally-quadratic because
+there is no loop.
 
-which handles the layered midx. Since we were counting up to ctx->nr
-before, which includes packs in base midx layers, I guess these old
-lines:
+> -	ALLOC_ARRAY(data.keep, hashes_nr);
+>  	for (i = 0; i < hashes_nr; i++)
+> -		data.keep[i] = xstrfmt("multi-pack-index-%s.%s", keep_hashes[i],
+> -				       ext);
+> -	data.keep_nr = hashes_nr;
+> -	data.ext = ext;
+> +		string_list_append(&data.keep,
+> +				   xstrfmt("multi-pack-index-%s.%s",
+> +					   keep_hashes[i], ext));
+> +	string_list_sort(&data.keep);
 
-> -	for (uint32_t i = 0; i < ctx->nr; i++) {
-> [...]
-> -		strbuf_addstr(&buf, midx->pack_names[i]);
+OK, and here we really do have a list, but we do append+sort to avoid
+being quadratic. Good.
 
-was probably reading garbage off the end of the array.
+Since AFAICT we only care about set inclusion, I probably would have
+used a strset instead, but for the numbers we are talking about it is
+unlikely to matter much either way.
 
-Now we iterate through each layer individually. We assume that the total
-count matches ctx->nr, otherwise the midx struct is totally corrupt. We
-could count them and double-check, I guess, but I don't think there's
-much point (it would be a BUG() if they were mismatched).
-
-So looks good to me.
+So looking good.
 
 -Peff
