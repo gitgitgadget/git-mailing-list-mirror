@@ -1,140 +1,83 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBF03C6616
-	for <git@vger.kernel.org>; Mon, 30 Mar 2026 11:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9041D2FE566
+	for <git@vger.kernel.org>; Mon, 30 Mar 2026 12:31:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774870818; cv=none; b=cQqA+vMRF2QoMoFifv4cL0MoeUcFwP+zM3sM5XpIyat5n2e4dx0GJRTEN2ZNlxViZtCEEdeaBGwYE+vZ1ufUbDJR0rPpOO7IjOs4WcfmsH26b9Y5LDl8/PmLC8I+Vj5fbXYet4eEK5X7EpXijYmtVoSf7F539JL7GYRpUq233CQ=
+	t=1774873916; cv=none; b=LBzZL/BNVsTQvvBKrHheUQ6TNiPS6F4xCC6LKlG4WsWsHyTHK2l1sZjwI3GXOhvhvqsrBjb2LkcEg8aPn0OHEbRyoLqwWxg40RtROHobb0zzW8/Kgf5eYrg2BQ3ePQ+G9Vft9w6BdIE9K6XSfJ5JwL/zTOIw+LSMJ+iThv+1dWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774870818; c=relaxed/simple;
-	bh=I5/UD2zJ42PA0mbDjvqUONwj6zn2WrLIX/5HPe8pPA4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PDytK7ThU3jb2SEEQ/5uyYYCoY95VB5RbZ8FFU1gahX4nlnpOtTKeDeB3mwi+Ra6lHe3969Glb7Tl+FmLQ2ltCbPyc9JPreIB+O0A+qRVFfRRVMuwUcab8AikVSJYbdnvIzkLw6VHk8zM6nwkasQCpsc5v0Nxz8zzH9fkUOOw00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YCKqWzZc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1QbzvUXZ; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1774873916; c=relaxed/simple;
+	bh=/8eTcoocGO+C8USiiqOk3/n/gipk8ycZRk4RoikX+FE=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pHLpzlMV386WmZ8TR1rAVlVSZxZ0yAPlQ8V4jFyJuIb1WC52Y+xNv6lKDqklsi6rFv32/zeZNyu5nZjxeEhv/hHKjVAG222X/TYr6ZS2QfS0BukimBE9DVAEWKAN9XV+WowadOzeg69IdcEcdMAdKXf/hL5K7O9+SxpLk/3Vo2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iI6vGgw6; arc=none smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YCKqWzZc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1QbzvUXZ"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 673487A02CD;
-	Mon, 30 Mar 2026 07:40:16 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 30 Mar 2026 07:40:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774870816; x=1774957216; bh=IKzqU5xyCp
-	mc+KBAPMPpdV/6QGlEloPOCnGtCCootZ4=; b=YCKqWzZcdjJxIVY0E5DKqdojVx
-	DWC59G7NYEQaviaKXzDFoVNKiPPQ7AIWy7QuMXEb6Xwwz1XywI9/bc/spJ2za+VQ
-	UHEBqoTr0KcUBfiTzXYDtPNO/4LrtElejfrzovRvxk0Wtj7ZxhmhSBHlvyc83RBW
-	bxL/oQzprLMTwykEoJLEm+Tz+DcaXFVviZmVo0yQuwstkZZPWjOVDlOjpwZXg40j
-	G0ooWbyM7pb/iYAMQJRnLyIxSCmVkmtkZJhOdelmnAC1K+EPshVBTo33MX82vUKL
-	ltzMh1QoXBtIs6i/Wwu69TxaK/s/RYgx6rvR4bBbBPxhBJNnsCOof5k+Gk2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1774870816; x=1774957216; bh=IKzqU5xyCpmc+KBAPMPpdV/6QGlEloPOCnG
-	tCCootZ4=; b=1QbzvUXZsJzARCOP19GwlV7oDK/3F9zpAXVBJYE52iAjtxl/wWy
-	kdAzPs56LidA58juPfr3RzjWCn3JPlPSjf2KgLwR4dkkKnK3gshL+RK5ngRIG57Q
-	/s9ZaWuHjxfzORh0C/ErWWyHY4wboXAMo2Bho+1cZecxuEqnUmsz34DBYZRK1Xze
-	lO9hWljCLR7fEc7JvyelMd/69FdijJ3wZ8t3qF+7z4Q8FP1KoRyfkPOnplAwAp4m
-	NpNUkWOgWGQp9J2ThCqUAjJNfQOHcWH3lCDuvIliOZGHNZhaGtqFCVmZ5A2bZQB6
-	xGmcgAUD1068hr5THzaV3stvRSQ/irLG9NQ==
-X-ME-Sender: <xms:H2HKaUiT0XwDUzUnI2J2s-7CQb8tc1ZadZVdJ4PNa2ty7zb46LkpsQ>
-    <xme:H2HKaT5MG8G2x2SBLJ97C92gONOwLeqXFO9S_axkR9pbS6Jsr54JqJsKJmAmdCHJv
-    Vikz_1rvviD6Zch3XEavqvGDN41z_o69Yxb_AlkZ3YmpeYpwF67>
-X-ME-Received: <xmr:H2HKaUa9WW8fA-lqfFyn0guDgmpzGQtXrMB_c2v10GmUFPykyquTzwcx6z7A8V9IwBBwTx0fbXPBSdU6oQfW369-k5HczEIlnD2rZBD_U-VCjw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeffeekkeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepphgruhhlsehprghulhhtrghrjhgrnhdrtghomhdprh
-    gtphhtthhopehgihhthhhusgesphgruhhlihhsrghgvggvkhdrtghomh
-X-ME-Proxy: <xmx:H2HKaQ6la78IKV3DVxgiAuYulGBD18w3LxpFXfIjS1qhXuXflKp2IQ>
-    <xmx:IGHKafCXHblRqx7y8l66i-RhTVVkFKJqJJslP0lyz9TzLb6TD1l_Qw>
-    <xmx:IGHKaeeqV50irRdNEFs7irdlecsCoI50QGZjvEMwKRBMvFdHsZqt7w>
-    <xmx:IGHKaWKWDPdkMx6VKpuBpsGZAs2Rl7DgLxe3xvUK0rz5Cbe2vrscZg>
-    <xmx:IGHKaYVSr0pz0EK6o1GS-53O2e-NG-bdrNTFh5sgFujQY1jP7OfX5KJV>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Mar 2026 07:40:14 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 121b53f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 30 Mar 2026 11:40:12 +0000 (UTC)
-Date: Mon, 30 Mar 2026 13:40:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Paul Tarjan <paul@paultarjan.com>,
-	Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v11 00/12] fsmonitor: implement filesystem change
- listener for Linux
-Message-ID: <acphGnG9uX9C6dvx@pks.im>
-References: <pull.2147.v10.git.git.1772673378.gitgitgadget@gmail.com>
- <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
- <aakyzGksiC2fhhiD@pks.im>
- <xmqqwlyzsmq7.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iI6vGgw6"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-650158138d9so1959536d50.3
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 05:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774873914; x=1775478714; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/8eTcoocGO+C8USiiqOk3/n/gipk8ycZRk4RoikX+FE=;
+        b=iI6vGgw6fuW7PM2gOp8Bxz8WYurNKpb8Fuj4j/thi7FotIgeDrwXSXeGm1SV+z3mCh
+         4F3pVJnMJlI3t6fCI0Rv0reWkmo2p3RrOIqIF9aKRwG42MdYBw3VeLNOvh/3k8ZByogE
+         4Ln/5eYYb5wm13xB8qvHXsxAsUdgq/dyplZ+mTBaurYo0Vy6aIWqtlIk8nLe5JkyYQ5k
+         YLrz0DoOV7iB+KyGBNQOLrwQY/ES0uahqKd4NtWzWyWkx8BXi9SMC4r6obNIELvi9I/N
+         k4A4xSgjCIBi7aT/Rjkisef99vnQWR/DnMPj034l2vWbIszxTX4e+RqmKgUC2CN5EDNH
+         SSXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774873914; x=1775478714;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/8eTcoocGO+C8USiiqOk3/n/gipk8ycZRk4RoikX+FE=;
+        b=af6zUZrJV8kJ9ZqS1sWNsj49993j+2lSFaEoPsHT5kQlyqSbIeaJMtVENSvevxM8nu
+         ra7RKtGT6SB8LDmEKX0RO6fPvPTrySVvfQ078g+Kn2sVtUlcBFa/WGWciR5Obsa2yYuy
+         zOzs9DJaXyhBmAWbPlqtWj3MLDJTsDTPFuh/hQ1prxBC1w8EZznUh0EMRuJFn10KOdNz
+         K9qt0qrG+tc2grGFtl7a5K6VTLDqePwdF6Oo5I99hjxiXhiOTOT9SX+huV44Wnz15ESe
+         Tl3hXCxKYfP6toNy/SxnC8qT9LX72KfQCoqspjixnUsMngAMy40eb0LuNJi8wSi2so6e
+         Uo8A==
+X-Gm-Message-State: AOJu0YyLRzoYxFHeCuN+M/tLwJrlii1aYIeDM9Q1Y4cnl99T6QDQnkxx
+	/Sd3dtBnm4z96dqcvTTouPS5OBHxIdzT/3an3biDUbSSKY2XZ0O4s8AdDoShPh2IehOuUA==
+X-Gm-Gg: ATEYQzxsK2AdgVJy72bfXZDVfx8rWvCuU8mL+RYdPIzOUtQDHIixGwsnUF6JloKHwm4
+	jMWcadR5F8ira2fbJPc9er2tUhgSKx6hk0/e+ip98Pv86Yn+IQS6cOlN8aJ8Zm/ed7mdszs+LY6
+	EqbLZkTDVPMo6KEIyZAI+yjoMz7Eq1SVDKqDfooRMA+8XGjpAXzgGS3x0m+vprwSEeV2PG2bXiU
+	Dv0crVmmCbCdX4FP7o+Rcec4Pp4256KSdOQhGGRPSoqT2Vf/w9rT5qrl9moc1NvBTMoAxwF5fUj
+	3tUTAp5nil+Yzh8bawnS5pQ+Avaegujpg6z90fNOvpfHxxCPpYScsP1IaNcwdW2kytXtyvt3Umb
+	j42+85nerYqjek5RGQPJCBU7us4/1xEGiKoqlQNs2+Sc0VuOPvJyXisGj/N+KDFd9lzyC0e26Ai
+	56Rl4tOsxnx2BfYzx0mDoR1NonqFm2c4Zv4hQEA6Kuf/69os7EOzAk2Ji47X50jRfSRzHL2IPlV
+	tT+csFYjtmHiJEUD9G6lsrw/9FPQQ==
+X-Received: by 2002:a05:690c:84:b0:79a:b824:ccb0 with SMTP id 00721157ae682-79bde0f57e3mr110255377b3.46.1774873910205;
+        Mon, 30 Mar 2026 05:31:50 -0700 (PDT)
+Received: from alibaba.. ([98.97.79.160])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cb7135bd2sm34198867b3.2.2026.03.30.05.31.48
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2026 05:31:49 -0700 (PDT)
+From: Zakariyah Ali <zakariyahali100@gmail.com>
+To: git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v3] t2000: modernise overall structure
+Date: Mon, 30 Mar 2026 13:31:29 +0100
+Message-ID: <20260330123130.40959-1-zakariyahali100@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260327234019.95591-1-zakariyahali100@gmail.com>
+References: <20260327234019.95591-1-zakariyahali100@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwlyzsmq7.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 25, 2026 at 01:00:48PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Thu, Mar 05, 2026 at 06:55:00AM +0000, Paul Tarjan via GitGitGadget wrote:
-> >> Changes since v10:
-> >> 
-> >>  * Reverted pre_exec_cb callback back to simple close_fd_above_stderr flag
-> >>    per Junio's clarification (same as v8)
-> >
-> > One ask from my side: I would welcome it if you slowed down a bit with
-> > sending out new versions. Sending three different versions within a
-> > couple hours without any reviews in between makes me pause, as I have no
-> > idea whether the current version is good to be reviewed or whether I
-> > should expect another 5 rerolls.
-> >
-> > So please take a bit more time to work feedback into your patch series
-> > before sending out the next version. It's totally fine to wait a couple
-> > days between iterations.
-> >
-> > Also, could you please clarify whether the patch series has been written
-> > by AI and if so, which parts of it are?
-> >
-> > Thanks!
-> >
-> > Patrick
-> 
-> The topic went totally silent after this message; is this topic
-> still viable?
+Hi everyone,
 
-I didn't have the capacity recently to focus on this patch series.
+Just a gentle reminder on this v3 patch. I would be looking forward for your review.
 
-Also, I think we need to be extra careful with merging this patch series
-as it's written mostly by AI as far as I understood. So I don't quite
-feel comfortable to ACK this series by myself, as I'm not sure to what
-degree the code is understood and reasoned about by anyone.
-
-I'm not against merging it in general, but if we want to merge it I
-would like to have at least one more thorough review by somebody who
-understands this area before I feel comfortable committing to it and
-maintaining the code going forward.
-
-Thanks!
-
-Patrick
+Thanks,
+Zakariyah
