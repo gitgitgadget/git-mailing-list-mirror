@@ -1,107 +1,148 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D823321AA
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6FE3321AA
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774997445; cv=none; b=uNUg6T8GjpVy5oKPiDFiGCn6YmccF7PN+rsV+T7oATQggS0xAL145TbMWOPFBcqb5Y/JYmriMTLxsklzHMnbdNuCsJt4yuMWfe4vmX7EO8FQl6MjrVwBKYKtlDacqEouPSQXTt+fTQVIpWBW1s7gMaOcfn5jWa8VflRFKXG4Azs=
+	t=1774997452; cv=none; b=s29KzLx4dtCW9TwcNsWAgVkej3TyAc49Jgvrn6OPFY1145GvuWQk7jKyAHx1djFFPRcUc7JbAfczapxKTdiaWwXHbq78V7harQlfk0rihUsbYoncVcXO1KWXG17KqLQiIySpJ/xh1ZpFnZjNBPoUNcZNxEPjVx5iImKNcWxM834=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774997445; c=relaxed/simple;
-	bh=94HoNPKp2YZW1BW1axnVz2h6ErEblTZ089g7OyM9M3Q=;
+	s=arc-20240116; t=1774997452; c=relaxed/simple;
+	bh=yKtEMCwkElnrYOUQ4qzVf6w4z+11WcTn3d+FDA+dnsA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qh5cLCBYpeKAUWMBeLPudLF4d7lSqbG312392iS0b47A0DnT+I91Fb+29nwdg8N5zOHNvELoqmLQ790QcrNZKKyO+cAP06vz8A+tfXWFN/7+x1+dNamg69iIl0ZilQ0kFTJymaD1G5QfZNGNqSpdw5+2JTxIYhD/KHg0Sy1r0ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zU511OEA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mXQbYcZz; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=G2+BuW4rrk6iIfPEGOFysDa9mkDO32DdbBpq8Th9kFLioFuBbCqfS56/kBoiD1QDgfaTMfsgyqH074ZhNixKf7aaCE5FFZ9D4GMbrhximzN8HQMlcO0zAEOF2pdjdtEFHg3G4hZlbb8VbDt3OSVSIsEUViGnIzG1UkqkndZnZAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=SdbMp3LU; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zU511OEA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mXQbYcZz"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 10EF2EC021A;
-	Tue, 31 Mar 2026 18:50:43 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 31 Mar 2026 18:50:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1774997443; x=1775083843; bh=xx8SwDf6Hh
-	TJ7gvApFluaj65ZeDfB316OAn+IKDQvzU=; b=zU511OEA8VLj1dVjHc6YHKvs79
-	+UYTpl1L5maCzkrX/4E/AdDE7IfbitWKYCdmyDPO//eYwk5qkTwHKS3PjNBMgxtQ
-	F1bU7w1dq6CQQoVorJmk60Gi5Vc7mK0/GGT8dgP+SktI685nhTHVt9SmmAgxdxFk
-	Dy2WAjloCiZ3o+jfbtnIKYPxIn8m8HOhjGXaHwds7Trr9fkSfQlndyUXtrqzrmE3
-	Uxy34jnNwD82F/HlpIX9csivJhjDwMXaWbq//mjamG3AOhNeFYbkezZHw7tYYozY
-	rN6hgbEFzVsrjTcURQWyun54SsPLXnq2TYmrhhZDj2IfZQpdp4gM+/pFuJIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774997443; x=1775083843; bh=xx8SwDf6HhTJ7gvApFluaj65ZeDfB316OAn
-	+IKDQvzU=; b=mXQbYcZzM4Sb2PLqZVicj9w6geyEIWHOx0yXe53sjuc0BSsxN8+
-	Vncci1YGczNfNCkfvw2FyQkPneJOFZwDpyDU3iGvMlMw79rIvg6VQhxtgk0Y5h7/
-	Mzq8seRC6W/BCqSoX0UZ5Pq4ZY+ZAmD4F5dVivbawjHcAn5IceWlUVeiCpgyPuwX
-	ieLBXdxso7VQXFHIm1p5cOtC08+W7aiMDz/7IxpqRvEzSUfkYLunKeWTteR+bhsV
-	BoH1d+GWLykjchFUSX0pKxHK+hB1zbCAZjr/UYiEkbiE9EZEIw5o17cc+v7apa9e
-	qrKrN0vvAce7wfATio1PXffTDbNRavCPrMg==
-X-ME-Sender: <xms:wk_MabSK0z5LcCH8QFeXlhuBWOYkQGD7lLWXuD-dp6nWIR6gI2ySCw>
-    <xme:wk_MaSxmM503b_WI5diaZU-WgTS_n_lldE9Dg2Qb2cbHisaKlARqFlovT0OdEwEeH
-    FOC1mb0IRcueZUK1BWMobStroWLhOxO_ULFwDcKv_USQyu8O0plKw>
-X-ME-Received: <xmr:wk_Maef-hqm4VjaEP59yDBTF5f6hgPSEnkoLiIH0KDjexnL5oA3fjbntGP0zTPjlZbAQ-8kE9L6BdTVKzbV9JByoaAuTQCHfYOppoGo4k0k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttd
-    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
-    ihhmqeenucggtffrrghtthgvrhhnpeejvedugefgffffieegtefhgfeikeevfeefheevvd
-    egieetgeeujeeliefhiedtueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:wk_MaWJbTO4O-QggZnR6l6jKbqqc8wOlnmafXToUquGEDuVMgu4Kew>
-    <xmx:wk_MaXFyuzQI-sP32B5MM8EojF-vu97lONrwmnZxRhGnqexpurBCtw>
-    <xmx:wk_MaYorZfigWa91rqgtC-XI8ybGBST6Yyl1DWZbs6CHpoLJiiu09A>
-    <xmx:wk_MaYQ4_lIcUvgt97xAxlWCEIJdrSLVfzEw3ErC5JHpmjRmOzrRWg>
-    <xmx:w0_MaeoCaEZa8zfu2WOhv3wL16urWSBuzJ37jjX-KT-S7sUGV1Zwwb1r>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 18:50:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9f2e9337 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Mar 2026 22:50:40 +0000 (UTC)
-Date: Wed, 1 Apr 2026 00:50:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] fsck: drop use of `the_repository`
-Message-ID: <acxPvS984rAPJxdl@pks.im>
-References: <20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im>
- <20260323-b4-pks-fsck-without-the-repository-v2-0-e8dc79bca651@pks.im>
- <xmqqy0j7wt7z.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="SdbMp3LU"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-794719afcd4so31506537b3.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 15:50:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1774997450; x=1775602250; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=f+JYupsio+mMrlj98/MYIcuJ+TpkzVESuwLJGaGTykQ=;
+        b=SdbMp3LUxbmoTLzmFeREwJpJq0+Vwwo6VltsjqgHX3SEQwoerYbGz56XatpJIGmz0c
+         /dAaVbrTmEz+z+LkyvE5HoFOEuTpIyvIcme9HSj0t06WohdWIQ1WWJq7FmPoNwPOy0a4
+         g6v08iaQtPOgDJyvIxciSXRAPpwAQiMthV1KZbcuS5ADGR1VS+CgdFS8zG3uBThp7Dfr
+         U+uqjSOtRCxKczSlAd0/xaptEbz8F2PT47QJcPtwgAs3eFE6HirXvwlX72iwzEvBOw6e
+         pX608aYR2fgWwtzSYSRLxAlVFzeM6Bhn4/oIWFs7pOFPpen6qKGx9AUbfG8FiJVsnYAQ
+         U9BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774997450; x=1775602250;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f+JYupsio+mMrlj98/MYIcuJ+TpkzVESuwLJGaGTykQ=;
+        b=LzrSUx8HAVeloMfo98ricCZ2Ao5rJofSbPHZDPhmPQZ0Ow6iV3HdgqrOvLwa2svnnE
+         Kp3w0uxScixW26cbFuX3lCrX7t8eaoIJVzk2iIHlhXQ5wEmOQiIHaRyKWblmSkFqGjD/
+         uWxi6k3qaZ1IFsZf8nch9e9QkCYfberBK1UCEtdokC3Qi0dSf+v9SHb5U+uQwH2DAxkZ
+         ffuw15frwtklyx2fCVPum09JHfN40SCi3P2qHoOrZH1sKA6ripc4FiHNbtnuZ6lqH7aK
+         Hez/Ub/nJzeuakq3dtPmFTZUL5wDz+y2dKNniflYJTMufNKX/mohXKlMPERwZIbWrFy4
+         edOA==
+X-Gm-Message-State: AOJu0YzBs4OgQ9hN8R9KVx/s+Cc79Y0zC5akQngMLT1Ao6SQ7pPX8zyO
+	UcDHkU4ACadQMeC7nn7rpMiJf92cx+RPZarm/Q228AvTzK95F4zIvRmP7KUH5RSDvv8=
+X-Gm-Gg: ATEYQzz0OnK0gX2FX2pSbPIQZvjyMmNXE1xRbIz6V37yNjDZ78nySQLIqpCLKfmikLv
+	SWiTZLPJZAiyAwHX7BCieQW7VsVCm7CK0yf2nlq8F6k9Q/NVPY7kXRiBzY0Z944px2ChJW/KGJM
+	duGhcNE8XfM4knZfN9LdPhNXqf4qvhx/NNkAbuQ7PkUsSuX/d2QlD5xYP9KmOM+kO7RND/syoUq
+	k/6VNMs8lwsX8xGPhlO+n9NjicYwJIDKBoIqs7UMEbSh2Q3364Z4xXHHFXyQBmbQq4Gp5NNm8tc
+	rRJgKb8/JxjLKyuR1msXm5K49e7VCvgZOoVZrSVp4nPD+z3bWqlsEjhyim9LtlGaeTecnVhJZEJ
+	XTZRFklMrjyLjgEOfKBd6BvktnDsnEArUAiwy2KDHQVpidb6B6SjQYVu80AfJmV8WkBJUcD5VqP
+	AT/XdYWK9Vgqr1TJZWOtPUfkiJc6RyL3hyEMmT8vbquQndtIQKakaP5Gcz7EfEca8SrXYLOYGQ+
+	sMfSKf6m5GkdC4PPP6RbhmRmpnbjQ==
+X-Received: by 2002:a05:690c:c0c4:b0:79a:d43a:1177 with SMTP id 00721157ae682-7a2102b84edmr13872797b3.17.1774997450166;
+        Tue, 31 Mar 2026 15:50:50 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cbaa605fasm55428627b3.47.2026.03.31.15.50.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 15:50:49 -0700 (PDT)
+Date: Tue, 31 Mar 2026 18:50:49 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 04/16] midx: use `strvec` for `keep_hashes`
+Message-ID: <acxPyXnV8HtxtEHl@nand.local>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <5fc72d5049a602ae5ede6bb243f44546f02d995d.1774820449.git.me@ttaylorr.com>
+ <20260330230130.GD41843@coredump.intra.peff.net>
+ <acxJ/NfLNloCv3o+@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy0j7wt7z.fsf@gitster.g>
+In-Reply-To: <acxJ/NfLNloCv3o+@nand.local>
 
-On Tue, Mar 31, 2026 at 03:05:04PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > this patch series refactors "{builtin/,}fsck.c" to not depend on
-> > `the_repository` anymore. These refactorings are mostly done to prepare
-> > for upcoming changes where we'll make backend-specific fsck checks
-> > pluggable.
+On Tue, Mar 31, 2026 at 06:26:04PM -0400, Taylor Blau wrote:
+> > Also also, the original was leaking the strings, right? The string_list
+> > was initialized as NODUP, but we assigned allocate xstrfmt() results to
+> > it. But because of the nodup, string_list_clear() won't free them.
+> > It should have been:
 > >
-> > Changes in v2:
-> >   - Propagate the repository via `struct fsck_options`.
-> >   - Link to v1: https://lore.kernel.org/r/20260320-b4-pks-fsck-without-the-repository-v1-0-6594f997926b@pks.im
-> 
-> Looking good.  Shall we mark the topic for 'next' now?
+> >   .keep = STRING_LIST_INIT_DUP,
+> >   [...]
+> >   string_list_append_nodup(&data.keep, xstfmrt(...));
+> >   [...]
+> >   string_list_clear(&data.keep);
+> >
+> > in patch 2.
+>
+> Good catch, that's right, but partially obviated by the fact that we're moving to
+> strset here.
 
-No more changes are planned on my side, so I'm fine with that. Thanks!
+...actually, I think this is a little more subtle than I was hoping for.
 
-Patrick
+If we move to strset, we obviously still need to ensure that
+constructing .keep doesn't leak strings. The strset API has a
+strdup_strings option (via the strmap underneath), but does not
+explicitly free keys on clear.
+
+As far as I can tell, the strset API is not designed to take ownership
+of the strings themselves, so to avoid leaks we would have to do
+something like:
+
+--- 8< ---
+diff --git a/midx.c b/midx.c
+index 4976ed4fac3..1c17a8657ff 100644
+--- a/midx.c
++++ b/midx.c
+@@ -802,12 +802,14 @@ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext
+ 				      char **keep_hashes,
+ 				      uint32_t hashes_nr)
+ {
+-	struct clear_midx_data data = {
+-		.keep = STRSET_INIT,
+-		.ext = ext,
+-	};
++	struct clear_midx_data data = { .ext = ext };
++	struct hashmap_iter iter;
++	struct strmap_entry *e;
++
+ 	uint32_t i;
+
++	strset_init_with_options(&data.keep, NULL, 0);
++
+ 	for (i = 0; i < hashes_nr; i++)
+ 		strset_add(&data.keep, xstrfmt("multi-pack-index-%s.%s",
+ 					       keep_hashes[i], ext));
+@@ -815,6 +817,9 @@ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext
+ 	for_each_file_in_pack_subdir(source->path, "multi-pack-index.d",
+ 				     clear_midx_file_ext, &data);
+
++	hashmap_for_each_entry((struct hashmap*)&data.keep.map, &iter, e, ent) {
++		free((void *)e->key);
++	}
+ 	strset_clear(&data.keep);
+ }
+--- >8 ---
+
+which is... pretty gross. I think we may be better off sticking with a
+string_list for 'keep' here internally.
+
+Thanks,
+Taylor
