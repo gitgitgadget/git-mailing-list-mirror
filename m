@@ -1,86 +1,88 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F8443C071
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 21:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB7C371D09
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 21:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774992238; cv=none; b=RAuLnp2lF7NNZNdD3afB/s1M/EvkOzZ1g1u5tampX1U14/X6ptB9CC9csIO2HcrOCqxTANi5xGbPqhSYjHDrwZcv40d1Nf0DViNUx9moDhh9lHnrjvm1XACkXgfmya0Jee0T9Zoc+Jsp1178f3ypmS471dKhkaHp9rTsMLs//xE=
+	t=1774992950; cv=none; b=uu9Tt9j/Gw+g9OMQCiuqcfgkGDjHmqBCpr6xgmmegkv2xYNBcGNcb3UJY+zWSxnyjfUNUkRAD6RTpAAihpxMvXsYU+TROC4+X64W3ooc5fYQrBN+aTCOcyWLXc3Kw+3PjAdoEACEPQrh+yW04aP/nlE6G2df/6dUoMCL6E1BOm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774992238; c=relaxed/simple;
-	bh=sVB5VxfiMaTB/MRHW3DHgxVsio6UdoHHG1uIFrvPU+k=;
+	s=arc-20240116; t=1774992950; c=relaxed/simple;
+	bh=VzADNIit0WLEtJ8URDg4VPTgxRQOBFhD6DWgvL6ykoE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zs79YQxn7Kt4IyblSh2sP5ucf8JQDcJTKbyeAsVC3S9l7JlgucHKoh53Qd8KKdlpojrGhQoVo+ClTaslta6ljIHpcChg9kqLS69ZNkfmeCYNEP6rjZGcH++2ZFZuo0hTWfc0lNR2jOI9PuCf0Mtr3J8D1uHyWvsuu1GCbQapWXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L+r36hNn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pz7mEfx8; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=VVpiIFM/rmjjF96emxiUq9NOOuDym7EPBevIEt5ZSV0XV2XghP98fqvxxTh4KBtmLs+E8W5UdFfHQzg7GfEauzBcUxrmJXfhKwMN6zfN5qUfHU9OdTpRoN0YS7Hbr4zOh3H6J7NMbUUrsP+aTwIka6DSQaCfcEpm9Vz2bXcQOzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xHUfanIu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IM8UGP0U; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+r36hNn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pz7mEfx8"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0F6771D0004B;
-	Tue, 31 Mar 2026 17:23:57 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 31 Mar 2026 17:23:57 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xHUfanIu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IM8UGP0U"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id CB51E1D001BD;
+	Tue, 31 Mar 2026 17:35:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 31 Mar 2026 17:35:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1774992236;
-	 x=1775078636; bh=4cb/62+Kotiv6OeqJOtxK+tuoCEtPRROAH8uHz/o2SQ=; b=
-	L+r36hNnMswoGVPKvb2ylHXL5aGUVrJwyVDVmXBSyQQ3jbML1aP8TpR22z0Kug/f
-	1zhWOc7N8nkRwvRRUQxU0kH57IqVbijQAc4atF9DtMw533GtWjGMzbKqeFUX4Jkd
-	QoeVr+3qNMOuR2QHOuV4IiWRDc2CE+LIExFZdWtG+peyBEzVyZukglknTM8lOXS9
-	3+WiykcNs1VDP9uMVI4d94P3InaOTHOgwRe0RCw9Jxo6owN+vAzC5Fet83RaMGoa
-	67HPQPh59dBGp/PgJtkUVGjsnV58Ehda+qmUwR9dqhD0R4IJYWS0s/afGuG7pAso
-	L6WIt5gZO3e9rIwEEmYxBw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1774992947; x=1775079347; bh=kO+Qa5edLt
+	X3mS9r4R0K01kujnTQfle4AphME1s9Jmc=; b=xHUfanIuMH7+98Y7Y2SuxjCiSW
+	h5JE46hn1LC/d6okGKU5czIC8n/W4dCa5ejAIXW4N4DKUqa6xUk0EqkyXhWrkSz6
+	clbP40JCHhXSvzqfZOvc9NZYXpQFidZyfPbkooS1IPF3nS3zI9XWQ+R68yyTvskl
+	nV1AI3ZgFyqFlsUuT+ahB1nN1x4pL4wpB30iao5HXWZ9tIdc0Fs2AZlJPE/vAN78
+	2n0UczLC6yfXEgK/JKlTN09BP9wMZi/Vfzech96FGtu8nhGmuEnNmI/ZBVSXzWrD
+	IU7vRK8IY4hhd8OIiKPWWm7ycHHXMgPboZMNNbTA6uXlPwawgB5S01SRlh5A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1774992236; x=
-	1775078636; bh=4cb/62+Kotiv6OeqJOtxK+tuoCEtPRROAH8uHz/o2SQ=; b=P
-	z7mEfx8qC8deCcV8QX9EeL1f4bPx35sBjN+hZJ4Fa9ffpz5T5y3PQZujzg108AxM
-	R7wLhxgXkoYnO08e0vVczZpv4WERUOXCb/mLF7vsJeEhSJcTGV+kTUoL3KXoJywg
-	0Q4E5Mjpcacm2i/1p1n8VjjlMhzJTkZTvjP51bHh4bsQwl0f3XWbZHXQf/N6Bvvf
-	bITbcRsTFJ9tROoivGaPaGW6P/0STTyoYe/HTs1r1ubCHqqlf0KU1PvPsihS8A3t
-	9rSdli+EF5OifMjJjHk5jAI6kgYEsBXXg+rkwDvh3fmjv4cRqQxkrOU5pC6TkzV0
-	doTZ+O2O7QQu1IwJp7HGw==
-X-ME-Sender: <xms:bDvMaTKh0aK9PmHO3UNpcYk8pS2KBU4vNSWmneCXLczzghj1EM4pRg>
-    <xme:bDvMaeJOWwNYanW_lvzTCFqFkHWD7qHJqTRA-hy_rH5we6sFU0BO9jEAMHLD33QDb
-    WImxrVtiWFw8P4CL2W-2pgiK89uGeL67OjjVf1rcUxCk7MaEf-xDg>
-X-ME-Received: <xmr:bDvMaQuwAZnpdjZPUp7I4wVvkF_a9BDizdDDzMCEDbrMOrrruDHiSurL5ynVQ6d_TIPslLaiBVLW6PNPISVB8qZ5Il_bg6QtQA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdejucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1774992947; x=1775079347; bh=kO+Qa5edLtX3mS9r4R0K01kujnTQfle4Aph
+	ME1s9Jmc=; b=IM8UGP0U7to6g8kMJ0v5TlgkwZNSOmlWSkcNdPofTf6M/dI5UNJ
+	unc485RL2HVhY+xaI3p6GoEnRRA59lISk0V42DCaz18TbXI9rOQytf42xkmeDWde
+	4do7tSOLqzL/4evw3LgpbcERMzDBabhaSSr5m5hZdLg1oFME3EaRO4mJ/F3k/B5D
+	GRU9lOmcaIGeyyWyrKVMhI3nKvPf2pFLy3zmcSeWgNfsiDer0aZxDBUksiKDHzUc
+	4iftf/xyGi7UUBhk7JiBZ/XhDzsGhVtoYHBYo+1eJvIdl3OetmMwBzRsrsW7VBk2
+	k/beovJasHIr36xortu/Qj31NS2MiQA7/MQ==
+X-ME-Sender: <xms:Mz7MafZTaeUkiX1gpVZyqvH_7yvvLnVK1bdCr6NUUTaFXfpt3_bWpA>
+    <xme:Mz7MaQrI3QiCLidAe-lFtnJ0s5_yv3D180MDSAWkqXJv4dEB5QZhes7LSPuhPSQFF
+    LpT-TSuHh-mx18GsvI6xPcJyba3PN2A9MfUwv-2QcCc6oUzwotNU6E>
+X-ME-Received: <xmr:Mz7MaUMEowh8p4GmEOj_3n-zuzl7ze7_lydLY0kZaD5GrUb-iMd4I5t0tc6QuQD9XHbyqVY-x7Oc8pnbtkjuBee_zY5eQgcphQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedt
-    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bDvMabTkJVeoKHD8T9A4HSUjhBiP5DvJeKZ6oL1rWq81Cf5XMIts2Q>
-    <xmx:bDvMaWNOzcFnrtj7tDn2O0jMFbSDdGSC1f6r5LPzwDT_ftbfYGsfmg>
-    <xmx:bDvMaQagsWQVkXMbdPQ1xxIHkaqE4PwfXoGslexXPtDDG5CQOy8ghQ>
-    <xmx:bDvMaQya2baEHvm3axRrva3XI6R_xxKBp06liGXtZVZ67zKxfayb7Q>
-    <xmx:bDvMaer1mSoSKYxG-9z9GZqfEAzG7NrCWTGmDKm79I6vnQW8QAqhuh6g>
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehj
+    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrhihurdgthhgrnhguvg
+    hkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgr
+    nhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgrhigvshhhuggrghgrleelse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Mz7MabpwsLmfjxKgTzdXxyJ5xp3depDegKiLKdUThysrT2Z5REGl-w>
+    <xmx:Mz7MaZfvkxS_V0dYUCetTy1Mo_I-bXDTce7bpHo1oLG8uDZ4CvBHZQ>
+    <xmx:Mz7MaRQNwM9M95lu2HIzKm5GJy8hBlArQqK_cMK6PXc1FxGNg24-OQ>
+    <xmx:Mz7MaSblz9qffrBnkd-QjCVWjOWFW88X7orpXvFP2q1XGonwmvgrfg>
+    <xmx:Mz7MaVdiIjbVXZ3FkuL_j4C0JZan-D20V7CWrIGnAbXflW_lgx0u8wKe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 17:23:56 -0400 (EDT)
+ 31 Mar 2026 17:35:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/6] reftable/system: provide `REFTABLE_INLINE()` macro
-In-Reply-To: <054e69e8-3dab-4321-b68c-a48d43dc052f@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 31 Mar 2026 23:12:51 +0200")
-References: <20260331-pks-reftable-portability-fixes-v1-0-46bfae55c68c@pks.im>
-	<20260331-pks-reftable-portability-fixes-v1-1-46bfae55c68c@pks.im>
-	<054e69e8-3dab-4321-b68c-a48d43dc052f@web.de>
-Date: Tue, 31 Mar 2026 14:23:55 -0700
-Message-ID: <xmqqpl4jy9p0.fsf@gitster.g>
+To: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Ayush
+ Chandekar <ayu.chandekar@gmail.com>,  Siddharth Asthana
+ <siddharthasthana31@gmail.com>,  Jayesh Daga <jayeshdaga99@gmail.com>
+Subject: Re: [PATCH v2 0/2] unpack-trees: use explicit repository in trace2
+ calls
+In-Reply-To: <pull.2258.v2.git.git.1774971267.gitgitgadget@gmail.com> (Jayesh
+	Daga via GitGitGadget's message of "Tue, 31 Mar 2026 15:34:25 +0000")
+References: <pull.2258.git.git.1774901607564.gitgitgadget@gmail.com>
+	<pull.2258.v2.git.git.1774971267.gitgitgadget@gmail.com>
+Date: Tue, 31 Mar 2026 14:35:45 -0700
+Message-ID: <xmqqldf7y95a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,29 +90,15 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+"Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 3/31/26 1:26 PM, Patrick Steinhardt wrote:
->> Not every compiler knows about the `inline` annotation for functions.
->> Consequently, Git knows to define `inline` as an empty macro in case
->> it's not available.
->
-> Does it?  Only in compat/regex/regex_internal.h, which does not leak
-> to other code, no?
+> Jayesh Daga (2):
+>   unpack-trees: use repository from index instead of global
+>   unpack-trees: use repository from index instead of global
 
-As we also do 
+That is unusual to have two commits with identical title and
+identical proposed log messages yet with different patch text.
 
-ifneq (,$(INLINE))
-        BASIC_CFLAGS += -Dinline=$(INLINE)
-endif
-
-in the Makefile so we cannot tell what people do with their
-config.mak ;-).
-
-And obviously other projects do not share our Makefile, so it is not
-too much of stretch to say Git "knows to define", even though it may
-be more precise to say "knows to let users redefine", perhaps?
-
+Do you perhaps want to squash them into a single commit?
