@@ -1,66 +1,67 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5821EEA54
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 09:44:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6BC284690
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 09:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774950250; cv=none; b=WH4WmGPdaHNO8HrOhIwGmhxdUIWQnIuXQE5SXI+mlqh7Ml/V9JEMDrVF79GTWTgu84wca7q8ldj2/TGbUyzDZJ1hFhoaxo5qJ1Aj+kamcVE1BlUuYaIZxghlpe7/2uaZWYol8D4CVRwONwl/Bd3SrqR/U6ybIySzpnq7G9rbGXo=
+	t=1774950259; cv=none; b=smnTDddP55uTiXN4EKu3ihCMO/fYIusbIoOHR3SwaG0pS+bFMql6NESynle1kE6ynQvc4Q/iw7n3u5hSw5A4MrW+78yQZl0XeK3CKIExXLxkYgqKXmvNJ4WMR41mbKir6sVun6N/u4CVi0xMbX0lu4RQHJO6UxoD9hgRsOhQ5Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774950250; c=relaxed/simple;
-	bh=WHAs+Y83/Xmni4oeLLEqE7B+FCgeVyq3fOmWatYPPak=;
+	s=arc-20240116; t=1774950259; c=relaxed/simple;
+	bh=nwfCqr4Z1W9DJ713pdkfvL83VxVChy/CjN1x2XeGFYs=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aD7A/fbeNH1W0LVpwUY6VKoey7m9B7j5/GAgSsD0DZpWsKG3gJsDAgUoCzOI9eFEmFL6MeFC2DbFL7JxLMdyd043rcAmBTU6WxCUlOplmqf8ZtS/eIfYWQl8bZxNTFZPZG3yB0HnO/VKS+BPAAvlR9elo9wO1Rhxh53xHkDOBXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rPtCWIr1; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:Content-Type; b=PfiLSFaeYdftUDsVs7sGbnFuWMt28q/sDSIcNk9ODr8MptykgthzRX8uhII07TRcXMqr7A1pwxfeN2SmyvUzoitrTjHNCjXKX39fm5ifzX4b2cRRwgx66wwQmh7rWZ1H4OEdEPQM19p5QcQyTlgeiI3T0FcW9ytImXzIW/PbZCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiKWYNUu; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rPtCWIr1"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-486fb439299so51006845e9.0
-        for <git@vger.kernel.org>; Tue, 31 Mar 2026 02:44:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiKWYNUu"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-43b95e5b3afso3166468f8f.3
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 02:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774950247; x=1775555047; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774950257; x=1775555057; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6aZF066zPI6htjUFYljnjBoxH/YiU3jLG9BMS9jztAQ=;
-        b=rPtCWIr1U9daV/npFnb8iZ97GpjoIRxhN4u9b8ckkUbJJWfRxlEDn6V6vIemJpT9YM
-         Y/1n5n7pm3V7ln+WFJhL8MjdErbqOd20+pkAsnOAg78LGMGp4SmoEeQH2gXjUFetCCEH
-         qCKajVR0U1J3vejvf9o7ZqY2POH6iqZ15yu7P7JcAvyZm2pv4prrf72rpVTyP6+Xqa3U
-         oZMeBkrl1ay6lo+4kAsG41BjbXHRERla+ebTfeg/TULrhynfZB8jtuSdASg3vcsEXM/L
-         GZCjKzUMkNin+9Xp/ZxlNSCyix0CV1drij2Nsk3XVf4XZQEl8e2ofg9uK18rYGrfkcFe
-         tAKA==
+        bh=kz7snUpdJTbWrV3J6Sw4RAP3EZ6SRo3Vvw4SISqLLdA=;
+        b=SiKWYNUu/BoMgcQ4cyiwmx5fFduVCWMLF/nd2xpM9yYtWps6lFEK0UB8ryXprpQzn4
+         rJERiLxRkVbiAm8EjkTuZXifv5f4zMRpEvG1S02I3BJyYXM5/F1/UchOdfl4O6r3SEwY
+         Q3e1XrVMENrc9T4ykC3Y5SYzdN/KBDrj5A3Hw/4iWJhVuRI8cGlgNXWpYoF63f9bJ0BR
+         k/F9dSMRXz2E8N3RCc+3Zs3JaqpiROR2gQ/xMmZ1QdxvCCwDTXC7qHG7WbtWg5nQoDEN
+         j1Y8X79rI/ObRiF5V/MilsgIMZ6AH3XYpc7tFouny7PnAaGAWkQwjl75iZHAFAZ/KaLn
+         nD1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774950247; x=1775555047;
+        d=1e100.net; s=20251104; t=1774950257; x=1775555057;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6aZF066zPI6htjUFYljnjBoxH/YiU3jLG9BMS9jztAQ=;
-        b=Chai86wS4SS+Ko5vuMTjG/wtZidyThyvuSJTIqtcRL4Zl+6JAd86zjxwB9CpLojkEz
-         uStyg/wG4TfEo78fuRDJ61y2/MqsSOWupgH6uKP27FnkzWypEkeZ1FVRbl3+Cj60MCjv
-         CRD42uXENFr8P9CH7RxNyRusOghmyxXaCX0HrEEn5Ii4Vm4XvlRxJd3qn9unS7/SXULh
-         uIgekG8MxIomx8qDgRkWWGcJfs2QUge3eyV9D6Gw4XML2WFj58mnTLCXLBO3BbiYA5Hb
-         naxeT+qvoLCAJkPp/4i4NWmihobx0yUEIksaoQkDDCqknQNpO/GEEcTAcltnRdYeuyMg
-         DQhA==
-X-Gm-Message-State: AOJu0YylAia+UiWSp4LpivqvXj1iWZxrWuVY/8YpCdZn7kaQ7YFaESly
-	epePyz/O7ZrQxeodRf53oUbHdoc8FoO+zBUtAf0aDU2JyTjKL7wchY1A
-X-Gm-Gg: ATEYQzxRfDZlzhx0ziDqYTq0QixM6Yv4ci5k9fuX5cFh67QiNVo0UOWObGvzXZIQJLk
-	2qXq3Fl9S5MLVhiDSCLrVJi0fCZ8nRkobDqanQ8KGLS/xcAVtqtmbRsoHG6ijn26Sqgk9bkoJ+O
-	P8UlJRFRwODWO9xKrs9aAiMzzV1HRQ5J0ig1+2mXPArKhW4NSF/A5iLLM3cz8ctge/mWiX4awY5
-	xqNIHJra4BMGjA6Ubq79WwkIIHf2Gpxw6WMQVKf6nthG+Kj15HOU3CZgMuRB2VUzfXWcoTlsnsT
-	JSyOqlvfzW/CrgXNNdddXO83ExThAUlfBSXdN7TSyjzs4mbKTqiiW5RDbCunxfo7BdwMWmOV143
-	IhqnBVFZnZZLpYfRfyF150tlRlNt86yl1hMbOcEEN6CWtJDRA9tI+n+sPO98JvkaNJOxoUUlOtu
-	VV/p4ze/pbYy72p2ISo09jxN09z1a7QG544uFVwS6n07ZG427qgzwFoo+U5nSiP1n+M1Kh1tUwo
-	Hg=
-X-Received: by 2002:a05:600c:6814:b0:486:f8d6:5dea with SMTP id 5b1f17b1804b1-48727f7bd78mr271929515e9.19.1774950246839;
-        Tue, 31 Mar 2026 02:44:06 -0700 (PDT)
+        bh=kz7snUpdJTbWrV3J6Sw4RAP3EZ6SRo3Vvw4SISqLLdA=;
+        b=WyZKR6hPwUNQ8DzhG69z0/nXPCUz7Z6GOhh/KscW8tcgvRQxx6YJ4Q9TAOc4SX9nhy
+         8NGcgtUvKcVw5jG3ug+9Nz12vHLSlmFmjc1pH4YyNjQsu7TachrvvN5zAxpcWlqhHX+H
+         4dA9nZzx/PzwtfPcp6NeaEVz90vF3+r1R1E8k6ixt8sD7kBDUOj1UdYdnvB7PGeJrq3p
+         j+1IsS3QFAw6TW60WzbDWYhOykkNIj94pLDDLgLaleiTsEKP2gVeKpRf3dHOWbDaSgKr
+         JgzROHEQgGVMZnIVav2gaBTZSOCrhT+iHchzVBuZ+/r3h1EyaVaUbxDy20+fMwSwYyQI
+         kubQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWZJYv1ApWt1kLAn+8rLRFH1MVIuOmQQA8ZJ04Cv5aT1Aa3R2It6pF7UmDWBVvfzi4pOlc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwtpoqFrArXx3oflaZpYkGgoMlBCA16H9GfNNHhZ6b2WAGstjg
+	UICFiZcrau5jIYTnFEEBkrFxvyAR6ONt2H1HOHcZGUXMf8y+ZS6S0/u+
+X-Gm-Gg: ATEYQzxM+9ORT/njw8t21zhq8xqM2qxaDMfjcIcEH3/2gjKfLT+Prxi1c+QcsjT1BMV
+	mDL6nwWzFgeeoPE5khrPDyTrhvkXV/zQiOh+Debi4v5QC4cf4nrGhsQMMq1cdDGUUP72DiebMaO
+	hqkhpPkfb34VivjhruQ191iYkJEONJp/D2n/OiF9PqqHRGmIs8XJi5tqQ2cI95/Rn8PZrE0Xuvd
+	JhHOSQAaRyy+xUU9aOxIKCChaIotwCyPhDDnbIDBDNgzBNNXoyhD2nTH/NDd9M33YLoMxfaDkvv
+	czk2qWPknY6+teXnW06mVcfnS4I8LRqe9sKYFSkRq8Av+mb43AqEusclW+69rEIV0ZuxyKRAshe
+	jkJ4YXdnfRtvdUvvQYxTE31u6jYkGpbGd5EkmuWujQ+ubKkdonP2uHpxsw8Lh3VBasFm9TC38vS
+	rWTAUwk8qpJwV8NM0fMPPJpEu4JekFo1EibPEWb+q5g411C92hh2HkYHDRxjNSy8T5Tr0RCY7vR
+	Zc=
+X-Received: by 2002:a05:6000:1ac8:b0:43a:c70:6f0d with SMTP id ffacd0b85a97d-43b9e99039fmr30089383f8f.20.1774950256964;
+        Tue, 31 Mar 2026 02:44:16 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887e80a6ebsm28640905e9.6.2026.03.31.02.44.05
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43cf21f173dsm29501341f8f.15.2026.03.31.02.44.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Mar 2026 02:44:06 -0700 (PDT)
-Message-ID: <6d099729-d28c-4c1b-b61b-26aaa6b48ec8@gmail.com>
-Date: Tue, 31 Mar 2026 10:44:05 +0100
+        Tue, 31 Mar 2026 02:44:16 -0700 (PDT)
+Message-ID: <32c34d0d-9358-43e3-9d58-5999b3ffd6c2@gmail.com>
+Date: Tue, 31 Mar 2026 10:44:15 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,76 +71,99 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 5/6] xdiff/xdl_cleanup_records: make setting action
- easier to follow
-To: Junio C Hamano <gitster@pobox.com>,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Yee Cheng Chin <ychin.git@gmail.com>,
- =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Jeff King <peff@peff.net>,
+Subject: Re: [PATCH v4 4/6] xdiff/xdl_cleanup_records: make limits more clear
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Yee Cheng Chin <ychin.git@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
+ <l.s.r@web.de>, Jeff King <peff@peff.net>,
  "D. Ben Knoble" <ben.knoble@gmail.com>,
  Ezekiel Newren <ezekielnewren@gmail.com>
 References: <pull.2156.v3.git.git.1774639433.gitgitgadget@gmail.com>
  <pull.2156.v4.git.git.1774890003.gitgitgadget@gmail.com>
- <0cf1412d01cc4895aa945b6f3ead3b2d79716523.1774890003.git.gitgitgadget@gmail.com>
- <xmqqy0j86hva.fsf@gitster.g>
+ <75fe3ea1250ab7dfa4e029f49f2ad353185afded.1774890003.git.gitgitgadget@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqy0j86hva.fsf@gitster.g>
+In-Reply-To: <75fe3ea1250ab7dfa4e029f49f2ad353185afded.1774890003.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 31/03/2026 00:02, Junio C Hamano wrote:
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Ezekiel Newren <ezekielnewren@gmail.com>
->>
->> Rewrite nested ternaries with a clear if/else ladder for
->> action1/action2 to improve readability while preserving
->> behavior.
->>
->> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
->> ---
->>   xdiff/xprepare.c | 14 ++++++++++++--
->>   1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> Oh, I love this kind of rewrite that makes it more trivial to follwo
-> what the code is doing.  Looking good.
+Hi Ezekiel
 
-Yes, this is a nice improvement in readability
+On 30/03/2026 18:00, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+> 
+> Make the handling of per-file limits and the minimal-case clearer.
+>    * Use explicit per-file limit variables (mlim1, mlim2) and initialize
+>      them.
+>    * The additional condition `!need_min` is redudant now, remove it.
+> Best viewed with --color-words.
+> 
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>   xdiff/xprepare.c | 19 ++++++++++++-------
+>   1 file changed, 12 insertions(+), 7 deletions(-)
+> 
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index 386668a92d..bd8baf214d 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -268,7 +268,7 @@ static bool xdl_clean_mmatch(uint8_t const *action, ptrdiff_t i, ptrdiff_t s, pt
+>    * might be potentially discarded if they appear in a run of discardable.
+>    */
+>   static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2) {
+> -	ptrdiff_t i, nm, mlim;
+> +	ptrdiff_t i, nm, mlim1, mlim2;
+>   	xdlclass_t *rcrec;
+>   	uint8_t *action1 = NULL, *action2 = NULL;
+>   	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+> @@ -287,25 +287,30 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   		goto cleanup;
+>   	}
+>   
+> +	if (need_min) {
+> +		/* i.e. infinity */
+> +		mlim1 = PTRDIFF_MAX;
+> +		mlim2 = PTRDIFF_MAX;
+
+This is a nice improvement as it simplifies the checks below
+
+> +	} else {
+> +		mlim1 = XDL_MIN(xdl_bogosqrt(xdf1->nrec), XDL_MAX_EQLIMIT);
+> +		mlim2 = XDL_MIN(xdl_bogosqrt(xdf2->nrec), XDL_MAX_EQLIMIT);
+
+As Junio has pointed out we now evaluate xdl_bogosqrt() twice which is 
+unfortunate. It would have been nice to mention that in the commit 
+message and explain why it does not matter. Personally I find the old 
+code that set the limit just before each loop quite readable, the new 
+version sets mlim2 a long way before it is used.
 
 Thanks
 
 Phillip
 
-> 
->> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
->> index bd8baf214d..471d9567c9 100644
->> --- a/xdiff/xprepare.c
->> +++ b/xdiff/xprepare.c
->> @@ -303,14 +303,24 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->>   		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
->>   		rcrec = cf->rcrecs[mph1];
->>   		nm = rcrec ? rcrec->len2 : 0;
->> -		action1[i] = (nm == 0) ? DISCARD: nm >= mlim1 ? INVESTIGATE: KEEP;
->> +		if (nm == 0)
->> +			action1[i] = DISCARD;
->> +		else if (nm < mlim1)
->> +			action1[i] = KEEP;
->> +		else /* nm >= mlim1 */
->> +			action1[i] = INVESTIGATE;
->>   	}
->>   
->>   	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
->>   		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
->>   		rcrec = cf->rcrecs[mph2];
->>   		nm = rcrec ? rcrec->len1 : 0;
->> -		action2[i] = (nm == 0) ? DISCARD: nm >= mlim2 ? INVESTIGATE: KEEP;
->> +		if (nm == 0)
->> +			action2[i] = DISCARD;
->> +		else if (nm < mlim2)
->> +			action2[i] = KEEP;
->> +		else /* nm >= mlim2 */
->> +			action2[i] = INVESTIGATE;
->>   	}
->>   
->>   	/*
+> +	}
+> +
+>   	/*
+>   	 * Initialize temporary arrays with DISCARD, KEEP, or INVESTIGATE.
+>   	 */
+> -	if ((mlim = (long)xdl_bogosqrt((uint64_t)xdf1->nrec)) > XDL_MAX_EQLIMIT)
+> -		mlim = XDL_MAX_EQLIMIT;
+>   	for (i = xdf1->dstart; i <= xdf1->dend; i++) {
+>   		size_t mph1 = xdf1->recs[i].minimal_perfect_hash;
+>   		rcrec = cf->rcrecs[mph1];
+>   		nm = rcrec ? rcrec->len2 : 0;
+> -		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+> +		action1[i] = (nm == 0) ? DISCARD: nm >= mlim1 ? INVESTIGATE: KEEP;
+>   	}
+>   
+> -	if ((mlim = (long)xdl_bogosqrt((uint64_t)xdf2->nrec)) > XDL_MAX_EQLIMIT)
+> -		mlim = XDL_MAX_EQLIMIT;
+>   	for (i = xdf2->dstart; i <= xdf2->dend; i++) {
+>   		size_t mph2 = xdf2->recs[i].minimal_perfect_hash;
+>   		rcrec = cf->rcrecs[mph2];
+>   		nm = rcrec ? rcrec->len1 : 0;
+> -		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+> +		action2[i] = (nm == 0) ? DISCARD: nm >= mlim2 ? INVESTIGATE: KEEP;
+>   	}
+>   
+>   	/*
 
