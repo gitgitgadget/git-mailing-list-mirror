@@ -1,83 +1,83 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1653D4120
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8208F38238B
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774943329; cv=none; b=tdk0Lcnr+8tLz+T8i0xe1rcNtxDH7Hbtj5CRSiwmPhtztniGDpqXioz98Jm8GcIIJkeOQqTHIHIph16wEpNU7bCG/twdfoiDBs1LmEYwdaSUXOXqFRdjcxpRchTcpEjwYUFhhaR0TSRwCOe1INBg3GbZSlVP5ivxs7eGcCEbrt8=
+	t=1774943334; cv=none; b=sgGgG2CLMtOunDa3xQv32sSHtzNHwlcGXRuA1iMOPpLwzkEDJEDvTn8cJamGj/nbTNUye4yeMytYAScde/QiWWPjEKbjrjODIg/yq6v7/l1sV8YieD4WtLaYCTdctEe7X4tCe7zTpxdo5RQquozvPPwUzCQr841neYhvow20Vno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774943329; c=relaxed/simple;
-	bh=lkRkDpe1wzQ8ocJa/r49SVV380W5iRn1vEpKuV7HhY0=;
+	s=arc-20240116; t=1774943334; c=relaxed/simple;
+	bh=zd0VXA5Tw7WvdCXRqY8/QcijAU8Qpbs8gOVJc8XuvI8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mE6Tz3IdYeY8Ve7gAc6jc/z/+tYozd882zjI6fdwjNbNyGrxGcblVTcp6h10d8kglp7bJxlX+2oD2rKxTYJm7/Yd+zXfaRJeRkOsCKlLSktIRN0Zz6ScbBVTtF4ESxD/qYBWX3FI+ZsR5BsgI/Qa4oSXUXg5CeVTAK6lu0Z12uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L/w5fWAz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cN9NeOxj; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=WSVbh/uztH8RV3rQ6FoQkGSm3E9wkb2gMDaLb7AMQm+w3kdhJoPSPxpwzvHuHrbh8pFaHUTllGQi4XN/u671ndXLRJ4OmI7hF8wWtSNQOF0kqUL95zF06wkLaUFgSWCm9f7+uPhvge8Lw+Hn1rccmWnT8HfMqbJhhXT+Y0bkMF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aibSpkJo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kOHFs5if; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L/w5fWAz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cN9NeOxj"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EC33A1400259;
-	Tue, 31 Mar 2026 03:48:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aibSpkJo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kOHFs5if"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id BA787EC01E2;
+	Tue, 31 Mar 2026 03:48:52 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 31 Mar 2026 03:48:46 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 31 Mar 2026 03:48:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1774943326; x=1775029726; bh=4cX4wOt/tU
-	nkuZhyZrU7OWA+NHFM3tuhzyo+CspRbPE=; b=L/w5fWAzQDqduytziMF7Ffhri4
-	BUbkUGFWXON2OY00B37S9bh3Z+BkbyfETH3WH0sQISC/86XObYJBmmAs3U7AoPTs
-	hlk+qIwreXVuGFVoy96p6/CZoU2fzOCvjdp9NEtUyFgT4SJJIPq/EhXu7OOulYs+
-	lv4yH22T+xKPL6S0LH+9L5ziYhoSC+dgH35OL5s8TytG6cSLKWDiFvFwicoRR3Pz
-	vtE4kaN2vGrFdPUJteF48mN3/MLKDDrNIjgd1jAjdLcVoCzqCOjtrHY2pB9qmk0F
-	mxs1DiybRcBHQ+e6jRckP5gfMY6NaeSrhjg15g6TB6sOaUbsHPiVFb5fHzVQ==
+	:subject:to:to; s=fm2; t=1774943332; x=1775029732; bh=IWviIrCtOf
+	LQ8q5fav13yg6bEMuqI4m5/RyeM6WX91Y=; b=aibSpkJop+e5MmC4jzO3pJCgmL
+	+gTwxd+bpdOe6aKvVmtCEX+8kvxAhnkiL/ig1PleK+dsWYQlwGv9WuyZYHLZZUz7
+	+dCm740GIwkRGCbHgbT+JE14TeI+lTrJua1bJfDiruBERNVU5MvaAQIf+U7YXxUd
+	PilpBoPDs24FbxzJT7EHAs01pu84ihP1VqmrArX5VbQk6DDbu4CrdHmghRCgF2Wq
+	/Nna7Ba6sYaClL97gUTz7nP2Yx0i1RPfRxUOThzZF8HYXSgNB6VGX1bMITlwvD89
+	ArEEwBPCiBVwBtT8QZaEcsbQdWL6fujip1hlHw+Ag6Kl3Tade6s0fB50G5TQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774943326; x=1775029726; bh=4cX4wOt/tUnkuZhyZrU7OWA+NHFM3tuhzyo
-	+CspRbPE=; b=cN9NeOxjCSAmcHydJZGkSKo5FcXkbGjw/aDuqmXd8Rs/WafPJW0
-	OG02dGkwdAdG0zz7OJCftCcgzKJzeAovpHhS9KqEB83C49T9I/cCVjtlJWxgVDVI
-	85VgfxDAahQOK5Z2M8ej9pquFXU/Uw3K8YS80BwKEKIEpiBBYQ2AdT8sVGQ2LWpI
-	0apYo+1b36cJmhihZ5FsICU7bptPqxyJatTOuBsfEEjRlN92zWScriLVw2G26hSs
-	53unuVNJpJq7/wBPjwnrE/TySYk+3BJC97eCXgb2iG95k/UVUb3bmyhVNDJDAuXn
-	o7uDN0GY3b1TN6BZBB8Lwxy3O3DMH4BXGYw==
-X-ME-Sender: <xms:XnzLaeRw7TRHU3xQgQQdKwihkGEBX68tU9Xm_LrPPiC4OnUfsPrryw>
-    <xme:XnzLaZyISX_LAjBrAj9CS-sq9N_dA5A6yTi0GlxMYXrENsQ8uCN46G70QevU3ZR8F
-    vf7wNVagC1paKrEuEAeBBKirAe9KU_Dkf-UxKeqdeEKaH-mI9UODA>
-X-ME-Received: <xmr:XnzLaZdIJK_7ZH0OI6sencEqlelZStcvpobm9_CNtsgNpuaF81JjxRW7DFhXflI6HnQAKLl2zgfuuIm8FtJfyFVKHjx8m5C0g6O6Wwtr5wE>
+	1774943332; x=1775029732; bh=IWviIrCtOfLQ8q5fav13yg6bEMuqI4m5/Ry
+	eM6WX91Y=; b=kOHFs5ifJlldfQ0pNpMmDRfhOsbwilIctS/oJcnKIr0sgRJkovt
+	Wv0+HDGZvkuh/mDq7bkmxZNOgykzM7qdkrh6UtEnfX67PBhj+tigv3cuQiVIoTUv
+	CWj38NbIVz1dxj9cE8xtc2U4Vv2E61JnokoH+ejxmhFQaIU+/N4zoCncxA6La/qK
+	qVfktRjPrREXod9ZU7AuMmMEzpfxxZm/N2ERGdOXdilWHN9O3nD1yCvVHfkc/Fjx
+	VA0E1QhdkeY7TGZ3rmG1G/uTDnNTVUi+SOuBg/5uv2F0QeWnIIzZP/MBiTyxT/tW
+	Gi/yyD1AfqBv58JzgKAJY+F719X59wnv/MA==
+X-ME-Sender: <xms:ZHzLaYjCwRtaJ8CmyoNgsqtsTI6xblu5lQKTdLYs5aditiP-yi3GsQ>
+    <xme:ZHzLaXCjOQSU6BHwvrzbLnAfG6C_itG6dxcUMO_I_H26zwvCeTjuSAJKXjoowLqDd
+    6UPcWJxi9S7XQNXbDZqYDB0DRloF6eAbSGlwK-T_3VjNekQ8aF7lZw>
+X-ME-Received: <xmr:ZHzLadss6pQOWczwOH_sY6RwqQwyEmRao_79Kp71uxL5Q5Fz9dSL4wDETOoD5X4I3ZIFJd2JLiMXjau9dLDBaw2ai895oZOvyxvhi4WrO-I>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedufedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:XnzLaVLbuDCJHcXLa9S3IfWqGod8k_jUHzi4IkQhSyR_0BxxeNmH8Q>
-    <xmx:XnzLaaGLHwnWoyfRXUsgv5UK0lPbQTO6zDKrYuHR9sNNSoMFOyX_kQ>
-    <xmx:XnzLafoE5S2U9oxfY46DD4jHXwtjQG7ilXw4F0YLMhNzfiYEwKeg0w>
-    <xmx:XnzLaTRtCIt7f9rBH9N17QOEP5EbRatz3rsZFYi60iOj_S5RzJHRRg>
-    <xmx:XnzLaSDaySY1imo6f0lCk5by_ojlzZk3k5IxMTEtmz0ZcAG6BR42lA-4>
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ZHzLaUYkwDcflHeEZdmM9wOomJfrMBDK7WFYddS8QkOpOC24dzM72A>
+    <xmx:ZHzLaYXTtGuQBYIL0yS_9icdMHDN0FuJ_Th76j90C8mAPmTUYv8-jw>
+    <xmx:ZHzLaQ55O0QJdtiaw1udGnY6LsOMCFV-hjL8pV4vEP6eeETyj2srlg>
+    <xmx:ZHzLabjRkRQ8c3Z9EtvBTjdfvJKQMPFwhup1YbNoITWzODKLBK623A>
+    <xmx:ZHzLaQSmE9bChnPZc3dS2AmfS-TKW9K2AT6cUl_pOm_neEUH4MuBUvHj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 03:48:46 -0400 (EDT)
+ 31 Mar 2026 03:48:52 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cf1cb1bc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Mar 2026 07:48:45 +0000 (UTC)
-Date: Tue, 31 Mar 2026 09:48:43 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ce81132b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Mar 2026 07:48:51 +0000 (UTC)
+Date: Tue, 31 Mar 2026 09:48:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/6] object-file: avoid fd seekback by checking object
- size upfront
-Message-ID: <act8W1BEg6iyUpHB@pks.im>
+Subject: Re: [PATCH 5/6] object-file: generalize packfile writes to use
+ odb_write_stream
+Message-ID: <act8YM8tMeUr3cJe@pks.im>
 References: <20260331033835.2863514-1-jltobler@gmail.com>
- <20260331033835.2863514-5-jltobler@gmail.com>
+ <20260331033835.2863514-6-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,163 +86,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260331033835.2863514-5-jltobler@gmail.com>
+In-Reply-To: <20260331033835.2863514-6-jltobler@gmail.com>
 
-On Mon, Mar 30, 2026 at 10:38:33PM -0500, Justin Tobler wrote:
-> In certain scenarios, Git handles writing blobs that exceed
-> "core.bigFilesThreshold" differently by streaming the object directly
-> into a packfile. When there is an active ODB transaction, these blobs
-> are streamed to the same packfile instead of using a separate packfile
-> for each. If "pack.packSizeLimit" is configured and streaming another
-> object causes the packfile to exceed the configured limit, the packfile
-> is truncated back to the previous object and the object write is
-> restarted in a new packfile.
-> 
-> This works fine, but requires the fd being read from to save a
-> checkpoint so it becomes possible to rewind the input source via seeking
-> back to a known offset at the beginning. In a subsequent commit, blob
-> streaming is converted to use `struct odb_write_stream` as a more
-> generic input source instead of an fd which doesn't provide a mechanism
-> for rewinding.
-> 
-> For this use case though, rewinding the fd is not strictly necessary
-> because the inflated size of the object is known and can be used to
-> approximate whether writing the object would cause the packfile to
-> exceed the configured limit prior to writing anything. These blobs
-> written to the packfile are never deltafied thus the size difference
-
-s/deltafied/deltified/
-
-> between what is written versus the inflated size is due to zlib
-> compression. While this does prevent packfiles from being filled to the
-> potential maximum is some cases, it should be good enough and still
-> prevents the packfile from exceeding any configured limit.
-> 
-> Use the inflated blob size to determine whether writing an object to a
-> packfile will exceed the configured "pack.packSizeLimit".
-
-I agree that this is a reasonable tradeoff:
-
-  - For small objects it's probably not going to make a huge difference,
-    as we'd at most waste a couple kilobytes.
-
-  - For large objects we can expect that we wouldn't use deltification
-    anyway due to "core.bigFileThreshold".
-
-  - We can expect that in many cases large files will be not compress
-    well, either, as it's more likely than not that a file >512MB (our
-    default limit for "core.bigFileThreshold") is going to be a binary
-    file.
-
-We also nicely document "pack.packSizeLimit" as "rarely useful, and may
-result in a larger total on-disk size" in git-config(1), so I think it's
-fair to not bend ourselves over backwards just to make a rarely-useful
-feature work exactly the same.
-
+On Mon, Mar 30, 2026 at 10:38:34PM -0500, Justin Tobler wrote:
 > diff --git a/object-file.c b/object-file.c
-> index 493173eaf4..1de2244ac5 100644
+> index 1de2244ac5..4c797d6498 100644
 > --- a/object-file.c
 > +++ b/object-file.c
-> @@ -1473,15 +1461,10 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
->  			if ((size_t)read_result != rsize)
->  				die("failed to read %u bytes from '%s'",
->  				    (unsigned)rsize, path);
-> -			offset += rsize;
-> -			if (*already_hashed_to < offset) {
-> -				size_t hsize = offset - *already_hashed_to;
-> -				if (rsize < hsize)
-> -					hsize = rsize;
-> -				if (hsize)
-> -					git_hash_update(ctx, ibuf, hsize);
-> -				*already_hashed_to = offset;
-> -			}
+> @@ -1453,24 +1453,19 @@ static void stream_blob_to_pack(struct transaction_packfile *state,
+>  	s.avail_out = sizeof(obuf) - hdrlen;
+>  
+>  	while (status != Z_STREAM_END) {
+> -		if (size && !s.avail_in) {
+> -			size_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+> -			ssize_t read_result = read_in_full(fd, ibuf, rsize);
+> -			if (read_result < 0)
+> -				die_errno("failed to read from '%s'", path);
+> -			if ((size_t)read_result != rsize)
+> -				die("failed to read %u bytes from '%s'",
+> -				    (unsigned)rsize, path);
+> +		if (!stream->is_finished && !s.avail_in) {
+> +			unsigned long rsize;
+> +			unsigned const char *buf = stream->read(stream, &rsize);
+>  
+>  			if (rsize)
+> -				git_hash_update(ctx, ibuf, rsize);
+> +				git_hash_update(ctx, buf, rsize);
+>  
+> -			s.next_in = ibuf;
+> +			s.next_in = (unsigned char *)buf;
+
+A bit ugly that we have to cast away the constness, but oh, well.
+
+> @@ -1490,6 +1485,10 @@ static void stream_blob_to_pack(struct transaction_packfile *state,
+>  			die("unexpected deflate failure: %d", status);
+>  		}
+>  	}
 > +
-> +			if (rsize)
-> +				git_hash_update(ctx, ibuf, rsize);
+> +	if (total != size)
+> +		die("unexpected number of bytes read");
 
-Is this guard really needed? I wouldn't expect that we ever try to read
-zero bytes into `ibuf`, and we bail in case we didn't receive the
-expected number of bytes.
+Do we want to mention the expected and actual number of bytes?
 
-And even if we did, `git_hash_update()` works just fine with no data.
-
-> @@ -1592,48 +1566,34 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
->  					   size_t size, const char *path)
->  {
->  	struct transaction_packfile *state = &transaction->packfile;
-> -	off_t seekback, already_hashed_to;
->  	struct git_hash_ctx ctx;
->  	unsigned char obuf[16384];
->  	unsigned header_len;
->  	struct hashfile_checkpoint checkpoint;
->  	struct pack_idx_entry *idx;
+> @@ -1543,6 +1542,40 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
+>  	odb_reprepare(repo->objects);
+>  }
 >  
-> -	seekback = lseek(fd, 0, SEEK_CUR);
-> -	if (seekback == (off_t)-1)
-> -		return error("cannot find the current offset");
+> +struct read_object_fd_data {
+> +	int fd;
+> +	size_t size;
+> +	unsigned char buf[16384];
+> +};
 
-Okay, no seeking necessary because we don't restart the write anymore.
+This interface feels generally useful to me, not just in this subsystem
+here. Would it make sense to instead expose it in "odb/transaction.h"
+as a new `odb_write_stream_from_fd()` function? No need to expose the
+structure itself, I guess.
 
->  	header_len = format_object_header((char *)obuf, sizeof(obuf),
->  					  OBJ_BLOB, size);
->  	transaction->base.source->odb->repo->hash_algo->init_fn(&ctx);
->  	git_hash_update(&ctx, obuf, header_len);
->  
-> +	/*
-> +	 * If writing another object to the packfile could result in it
-> +	 * exceeding the configured size limit, flush the current packfile
-> +	 * transaction.
-> +	 */
+> +static const void *read_object_fd(struct odb_write_stream *stream,
+> +				  unsigned long *len)
+> +{
+> +	struct read_object_fd_data *data = stream->data;
+> +	ssize_t read_result;
+> +	size_t rsize;
+> +
+> +	if (stream->is_finished) {
+> +		*len = 0;
+> +		return NULL;
+> +	}
+> +
+> +	rsize = data->size < sizeof(data->buf) ? data->size : sizeof(data->buf);
+> +	read_result = read_in_full(data->fd, data->buf, rsize);
+> +	if (read_result < 0)
+> +		die_errno("failed to read blob data");
 
-Do we want to document that this intentionally works on the inflated
-size, not the deflated one, with the arguments mentioned in the commit
-message?
+It's a bit unfortunate that we die here, but we don't have an easy way
+to return errors. I wonder whether we should refactor the interface a
+bit to maybe take a pointer to a buffer as well as the buffer's length
+and then return an `ssize_t`.
 
-> +	if (state->nr_written && pack_size_limit_cfg &&
-> +	    pack_size_limit_cfg < state->offset + size)
-> +		flush_packfile_transaction(transaction);
+    static ssize_t *read_object_fd(struct odb_write_stream *stream,
+                                   unsigned char *buf,
+                                   size_t buf_len);
 
-And we now flush the packfile before writing any object that may cause
-us to bust the size limit. Makes sense.
+That'd also avoid having to cast away the const-ness, and it allows the
+caller to control how many bytes they want to read at once.
 
->  	CALLOC_ARRAY(idx, 1);
->  	prepare_packfile_transaction(transaction);
->  	hashfile_checkpoint_init(state->f, &checkpoint);
->  
-> -	already_hashed_to = 0;
-> -
-> -	while (1) {
-> -		prepare_packfile_transaction(transaction);
-> -		hashfile_checkpoint(state->f, &checkpoint);
-> -		idx->offset = state->offset;
-> -		crc32_begin(state->f);
-> -
-> -		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
-> -					 fd, size, path))
-> -			break;
-> -		/*
-> -		 * Writing this object to the current pack will make
-> -		 * it too big; we need to truncate it, start a new
-> -		 * pack, and write into it.
-> -		 */
-> -		hashfile_truncate(state->f, &checkpoint);
-> -		state->offset = checkpoint.offset;
-> -		flush_packfile_transaction(transaction);
-> -		if (lseek(fd, seekback, SEEK_SET) == (off_t)-1)
-> -			return error("cannot seek back");
-> -	}
+> +	if ((size_t)read_result != rsize)
+> +		die("failed to read %u bytes of blob data", (unsigned)rsize);
+> +
+> +	data->size -= rsize;
 
-Hm. I was briefly wondering whether we'd loop indefinitely in case the
-object alone is bigger than the packsize. But we have an escape hatch in
-`stream_blob_to_pack()` that special-cases when we haven't written any
-data yet, so the answer is "no".
-
-> +	hashfile_checkpoint(state->f, &checkpoint);
-> +	idx->offset = state->offset;
-> +	crc32_begin(state->f);
-> +	stream_blob_to_pack(state, &ctx, fd, size, path);
->  	git_hash_final_oid(result_oid, &ctx);
-
-Thanks!
+I feel like `data->size` is misleadingly named now, as it doesn't
+reflect the overall size but rather the number of remaining bytes that
+we expect.
 
 Patrick
