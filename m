@@ -1,82 +1,90 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995023BE155
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8588A3C872F
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774995088; cv=none; b=edfOubBvOLxmqqHDD34NDlZu+nl9CSBVZImGrO5RuXAghV6GCevz/vpRvr20ho6f4U1bSPkR4jAcxUtrQXE1OCWjJ3GWgyqckK8aY5bvyMpaGF31dG13wtFXaHKT/1w9tWkGf9boSNM6CZmhw54bpXsnMns4o+daqASnpXxk8MI=
+	t=1774995278; cv=none; b=iBtECNpwQ9kph8iWMvSOk77kjkp1ZbhvOx8vLpELu/FI+w2HhRTsnGMm6E/PRfqeiqNqHP47xsm/ylnAYY8RCbnNR567X4mtlXuOGHs3GuV8sxo8b5jsu4FFtBb8RH3lG9VjrjYth+U52+3jEWflYWZ29sUNiRTRF0RadE7HNl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774995088; c=relaxed/simple;
-	bh=ynpzxLT7i7iWe2Py50pTDpW9FTFQJxnb6fD+ywDkYuo=;
+	s=arc-20240116; t=1774995278; c=relaxed/simple;
+	bh=e231eCP7+gOvnwEG6KjPMWizwPStCEfDJ9erfZ8dHcQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bB3K/UOazVkViME9uWPtC+Ofcw/wIul3CLHE15Bd/NtwDAiIgZyMKKb1nk1zu5ZkbD+5kloV+6YtEVJ/CMKQlz82vsSRDYYy1bNxMCiQEa+zMjHposPDfmBNEL5hhD/CwMeJLk0vi4uTrOgaY5mNmSh2aSwLL2G5CP7hCeNIoM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aejdY7LT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fU8nO11g; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=eXZlTBc765vpWssZhrGTjNU6Hbofj9dr59G7ghZ9flFeyx/lGA2T1Dg8IS5l5Xd1XkSf6WycBJ1OALaZc4DTBGkPmcCWI/Q6Ds4ffXp/z7uVkBkeKPRjyV+f4CY9i+FEuAkGax8fLpJEFb9va92OMt4+vnoddsmJcAqTV0cYXG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y58PQk0S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jRnK7dd+; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aejdY7LT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fU8nO11g"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C6AC37A00E7;
-	Tue, 31 Mar 2026 18:11:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 31 Mar 2026 18:11:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y58PQk0S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jRnK7dd+"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9C6107A00BC;
+	Tue, 31 Mar 2026 18:14:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 31 Mar 2026 18:14:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774995086; x=1775081486; bh=r/OMFpZMwY
-	kmS97X4x/v3ueS2r2Y7I+n5wHV2Hx0+eA=; b=aejdY7LTQHK8m0QEnM3Cb48OtB
-	0LydtVgikUWsxuFg3DpSiJukBOU5z/IQxUBrYeUeeSa2ui1iw+mvvZITT8mO2pwB
-	8PjF++UWs3LkoTA0kuVX4MZiLXwS054RvAJJt1SGIqJw2s0Giwna7LErx+/HYez+
-	xskN7AJbFqvwJQyavEJ0m8HT1MdpuJAuqVmI0m3mEtnSTnFu961QsTUkPMpybxjI
-	ccY4Vdb/MYP7dAqBDOzBJvP9ASOVhpHbKjOlXDTG4AD518RSNBjMPuTps/IFvw9l
-	rFpcuRycOofxAU3kJMSruhExTqmNmcJeIiG1rV6iHblSx/K6UEnvBhZfM3Eg==
+	:subject:to:to; s=fm1; t=1774995276; x=1775081676; bh=LFVmPixgNa
+	CtQnIL2hejmrY1Vv6x2JJfdJnDJzgzDRY=; b=Y58PQk0SdM2OVUrJQoI9tQJkjO
+	C77j36j7mbpwHUEGOiK+3Oer4UQ5zq434Cq42CuktD+bNmVUvrvJIa25QbM+DUQJ
+	1pf6XeTXvGzZ/dUKi2xMlk8siiZyyS7LBD+8dI1ZWg13OBojxPq+aShVkJhl854c
+	WpGAIvuotYAU2BH/7UvE7W273zNth4Vh4kgWYFRtfqCzzNiRIiKe6b46X0o6Lxeg
+	C2LSjpI8TU49wly5jU68av6MgKLNTEpkoNQz5bI5XargE1MWi5l8cbnugkr+H+qh
+	Rf7xYXgHC5tj0qKcqm4d6I1t2hZ76JnzJokZA2ZwJOg+6LXiYtx+EyiALnCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774995086; x=1775081486; bh=r/OMFpZMwYkmS97X4x/v3ueS2r2Y7I+n5wH
-	V2Hx0+eA=; b=fU8nO11gPS9veu5Os9Xb/vQ2P3qgWzoz0F6rk2MEzo8RI+9VpQq
-	iNsQrWI4i/GMY7dy++OM3GAQpGSkoTYLP9RaS07gBjPnfleMADgE7dgQEEL/e6bL
-	TQaQl0TIyNVTEs12P+jHmWDmhx/0JWzB3xELCVr8Iv90jM5CXvm6vfWBvpGuMzIE
-	71Q9641BjQcsKAawFET3T39WmbJxuCVMyTdAIdAme7/m/SBZgs4FMd/Km/qcxVVm
-	00IfmBjQ+u+IvisEH0CeShlIspUChJrH41IALAklfNx8DthGGqFahBH6PsckUKbr
-	yH9tB5174WmreOXGdcHjJ9EJhkAP+zttpdw==
-X-ME-Sender: <xms:jkbMaQJy991tMm6Fx9zSJCLnX8F1p3ZroHERTzsVirG3i7WNqimBxQ>
-    <xme:jkbMaXIX0As9smF9myAjriQk9xcHGLme_c8-lL7HBM_kOickC94B8l1ztuPyk7g74
-    wyldczkunxB7gEVOK7D8nZA36Z-VbwnU7zSRj28dW7hu2mef5xRRw>
-X-ME-Received: <xmr:jkbMaVt1rOPA5AkYe15jum_KtSixqUfUr8dNwxUi7oO3FNnPIDPZJvJV_H_gMhXB0JvEiHP9dRZZuoQD8SrKlGxAcUHCtm1GBQ>
+	1774995276; x=1775081676; bh=LFVmPixgNaCtQnIL2hejmrY1Vv6x2JJfdJn
+	DJzgzDRY=; b=jRnK7dd+mcVXLbxwBEExZuivUMU0H030E5ApDfHBqtq+2zfwH8S
+	qgDdM+v3oIqef7qMyUPvKSVADT7TEIH2H4nx1ULHbxPfTukJjlCcKpd9HP5kzItB
+	yJFqmg8qUGu9v7OGkYZpaXCI6Ui+WqHWwczq7a8NeJKRA6pNT32OY57ZmDAdhbGW
+	Lv89v0/O7qNQJQMFvrhpqPt46HAsI7yn8SyMfwlEV9fyyFa9SFqdbCVP1pKbozbf
+	8qaonTMsuJqoRMuLDQEbE0QcDe6ihj5yzqtZQDxP2/28lj5mn1zjFhj+qXXK2BhW
+	KOBgM7JY0NrLgKhaNIEbrFeRq9wMgSEZjKw==
+X-ME-Sender: <xms:TEfMaQUyEnM920VD8K9S7t4DAM-76FjuSatusUpriHYgv1XYkFhxpA>
+    <xme:TEfMaczavYyxbX6CkX0Xizf9JZFT2M95ZEGaufd5kw-74vCUJ77nLvvpwFA0uBpN0
+    Wuw48Sm8pkUJgLyeK3nqbFJiY-m8K0MzHqI2s7I3PDs9hbs7cvClg>
+X-ME-Received: <xmr:TEfMaf8y9KTPsa9icEWZBmQJr-W4etlpLyRU1mf-ihuk2KbNXgkvu305vnpoL8xSVJFLy2Bs3IlJbx3hv-UH_t0WhQkwrO-Bxg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepgfetjeegudevueetieduhffhgedutdejhfejvdffleetlefhtdevjeeuheduffeu
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jkbMacTH4dQli0tIvQEB6E2uD551BqicD397Vlwgia5rLSJxNKkoqw>
-    <xmx:jkbMaTNcjUuF0LdF-Edl6OAuMPfwLHad6Pk8Yq9OKIJPmidKlp25gQ>
-    <xmx:jkbMaZZhoLNATWt175H7KPwVBMBPbOhbkjkDrN1lVKxF8Lu4K1xelw>
-    <xmx:jkbMaVxkKSVS6Q_QsVbbntIiyIUpEWB3W1k7HZ1pwzGqxAX_2Lz7Zg>
-    <xmx:jkbMaVO7OkL5NXXzB5jCImLVqKYE69VaXmhMC3bzfRnzWMUSoLxst4h7>
+    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffue
+    efjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghlohho
+    shgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
+    oheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopehsih
+    guughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthhopegt
+    hhgrnhgurhgrphhrrghtrghpfeehudelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjh
+    eitheskhgusghgrdhorhhg
+X-ME-Proxy: <xmx:TEfMaZ9WVymMZBxvY86vBkiUXoN8pTyYLrjvkcmQ8099KXeau-UoMw>
+    <xmx:TEfMaWX_5MU0l2Nb8buyD6GNRTY7bgFKle3ibBAPs06ou1cR2bIk3w>
+    <xmx:TEfMaedO9v2p_S223xWOswXhF1UiMKvkV2m5DsYqtwIJYUMvodSmyg>
+    <xmx:TEfMaXY9gks1aE2C3EvIQ1UOBSRdaD97jsyruYIcQlFQi_Xr8qSvMQ>
+    <xmx:TEfMaQGSt0cbvqVFZ8X0zboNwqaFtaVoUNs-FQpS-ijfntIWGE62pJsU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 18:11:26 -0400 (EDT)
+ 31 Mar 2026 18:14:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com
-Subject: Re: [PATCH v2 0/5] fast-import: extend signed object handling modes
-In-Reply-To: <20260326191414.3783974-1-jltobler@gmail.com> (Justin Tobler's
-	message of "Thu, 26 Mar 2026 14:14:09 -0500")
-References: <20260326191414.3783974-1-jltobler@gmail.com>
-Date: Tue, 31 Mar 2026 15:11:25 -0700
-Message-ID: <xmqqtstvwsxe.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com,
+  j6t@kdbg.org,  szeder.dev@gmail.com
+Subject: Re: [GSoC PATCH v6 0/3] graph: add --graph-lane-limit option
+In-Reply-To: <20260328001113.1275291-1-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Sat, 28 Mar 2026 01:11:10 +0100")
+References: <20260325174401.217577-1-pabloosabaterr@gmail.com>
+	<20260328001113.1275291-1-pabloosabaterr@gmail.com>
+Date: Tue, 31 Mar 2026 15:14:34 -0700
+Message-ID: <xmqqpl4jwss5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,34 +94,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Justin Tobler <jltobler@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> Changes since V1:
-> - Added a prepatory patch which unifies how unsupported signing modes
->   are handled for git-fast-export(1). Now they are treated like any
->   other unknown signing mode. Unsupported signing modes for
->   '--signed-tags' in git-fast-import(1) are left alone because this
->   series progressively adds support for all these currently unsupported
->   modes.
+> Changes since v5:
+>
+> - Changed patch structure
+> - Fixed octopus merge truncation check to commit_index + 1 + i.
+> - Added check for first_interesting_parent() NULL check.
+> - Shortened variable names.
+> - Added clarifications when converting between lanes and columns.
 
-Even though you have this inter-iteration change log (which is very
-good), as the cover letter is not sent as a reply to the cover
-letter of the previous iteration, the mailing list archive
+The updated series structure is quite unique.  While it is a bit
+counter-intuitive to first hardcode the limit and then start lifting
+it, it does make the presentation really easy to understand.
 
-  https://lore.kernel.org/git/20260326191414.3783974-1-jltobler@gmail.com/
-
-does not help us navigate to the previous iteration
-
-  https://lore.kernel.org/git/20260324215513.764739-1-jltobler@gmail.com/
-
-very easily (I found the above URL by cheating---I looked at notes/amlog
-for a commit from previous iteration jt/fast-import-signed-modes@{1}---but
-that is not for everybody).
-
-Looks like I was the only one who was interested enough to comment
-on the patches over these two iterations, which is a bit sad, but I
-think the patches are fairly cleanly done and are ready for 'next'.
-
-Let me mark the topic as such in the "What's cooking" report.
+Anybody spotted problems in the series?  I couldn't find any but I
+admit I did not look very hard.
 
 Thanks.
