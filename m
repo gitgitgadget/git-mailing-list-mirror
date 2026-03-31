@@ -1,141 +1,126 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC0736AB6B
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 06:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774937994; cv=none; b=SGTvhtpSHj+VmD8CBr4ypWR0LoIw5s/8aBOrV9Lk87wVVxqU5ihDQ731RxNaLMe8X5pL9Ikicofeb6hxylhEcNK1hyfaaYQSpnXb6t/UOu+53QFWIygCts3KxyYin0dEtrPGc5flCZOKxvMUdiT6ZN29Q7ZkW7WD6Ay/K2TlPxg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774937994; c=relaxed/simple;
-	bh=qqZvl9p05kIVO6nE6mWZf3e8pZn4kf5apGdqTe5NHfM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=AEG39hPoqsDze9UaGemCUUrh0S44tZoYaUKIrjWQ0WCBSUybGcfYRhGQBtEPpRwkEg3WaG6SOanOQnM48rFyHnU9Z8RKBFqyeufxLly/nMZo25PxZjq974BZ4Zr51GufWfVPOXQq3qvEkGqHGUNtH9VHTz1fh1MGrtI9iUx6mAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qwnTxhdl; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AAF3CE4B4
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774941968; cv=pass; b=Gkmf0tHVSvK1PeX8bpSN2sZe9/giJ1PRvRAcpQELG+xrPittmXiQyZryAxroQ7Z6YMn8xmS9NfQH0YDRxDThG/5mWHgyKejcb6gKiLOfJJwCAgnUuciGxZrri1wyB7O/1+O1sNRD2t89apgBt0MTa0ZXoIseIIGXhbXteeuDPCo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774941968; c=relaxed/simple;
+	bh=bslw7QYb7tNfa+yk2EJn7n/ueMoeDNz1E7HMD4QJWLs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rqmTvnBeEDk6eJGCOYIoFqYv90Wnd/dpuKmaX8bGCyh4ne2/W4SobLvTgB/L2D/OzfMt9bGWpj5R3Gz//fUuOptiL1BuySVKBQdBHBI4wfSjifqInKvuEOERV249mz8Vnsa3AgoNumDCoATqsYjOZzy4QGV6XtPayoGJ7brEyKg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U1ercfnZ; arc=pass smtp.client-ip=209.85.160.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qwnTxhdl"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7d75371d873so5112955a34.3
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:19:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U1ercfnZ"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-41c4d660b19so1661786fac.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 00:26:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774941965; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WXh18QkZCLbOIlrIPmv7VjzbMdI/BJPBC8lIrIUtJQRQ40CyiJmkmisCDWSldx30mF
+         5qEzumQU8k7xMMF1Sud0//dC0iUBAJkSwbPkJhvdxmUG0mEmfwHEEBUDSt2EWIsUIpNK
+         hw8d3JX/p1R6KRnVDJESmyNMzwbPCEBL0l3OtpZn2l7Ff6f1S9f6Q1psXOeTPYAy5X1L
+         SR90r0rHuf5yCsI22LnLekBhl+bWEeloVqKYnQN1K2OchEi8tXq+9pEK4fy9hlbut8PK
+         x1lDFCSjC6q0N9CfVqXuKnpTThe8AJrbteQxl8zAUml7BrBoJfM3X1Gczx4PR5ICjJeH
+         RlPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=bslw7QYb7tNfa+yk2EJn7n/ueMoeDNz1E7HMD4QJWLs=;
+        fh=7LqtyqQ6wrY6Db0YlukneDt8m/L4mg8KO66ooiYm+34=;
+        b=eq5YaPTx58XSBSuoA/ehuWd6+nrhWWvA6sGhs5OnFl07T1+luMWAhByG+a5wRAsUrJ
+         9M0MXeRpoZeDk2+PXgPnoPSceDcgOw/JRMTJCkowMtp2Yrh4+XF6LOPEqYX0HInjI/uq
+         6j7rxP9mY3AmHZ6Ki1xuIwn2cGM/D6+baHAo2Lz+WXLgQxC6iJLJnJgBsoRkp4XZnINS
+         oQGDmd8sPSyjwi1u9z3qxvKkKyGvFarQ+7N8znaO3JREqCCvoRR/GvQaD5KRT/K/zXD2
+         cCto9JFWObhL/zCuEZhhYBGW9IeFUqeJHf48FclHaWbqoo60M7a2qy3PqWP3GALIyl7h
+         2/kw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774937991; x=1775542791; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774941965; x=1775546765; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2FDpa3SNk1bz7Uuj9GtWYNOnTgYj/q/xxHy178htTps=;
-        b=qwnTxhdlRRA/v0jO9DhmEyOtJJwwpBJnFG0qob/g2mFAn4vR03RzY3vnTtXPG4d2Xv
-         Ix0CnwAtjZCO+Zf9vo/mW3NzVIAwgN+YxHs2PHh0eNB3Bl1CH8gXLmeRtzxIkkJXTKRZ
-         KYYa+ASHeaSuWfPq6Uh8BpD4Uwy8iZSSM9AqT4OdFc7kXYHsc0c8zMM/9mHVOtnITM8G
-         +G1//58hv1E0tT+ozSROdw8sBUjXhv3p9Zn14+DKFB9QT0iR4ccbSxVxwjTa/wt0tekX
-         ENjHnaNs4fs9mi7RXwaoXnZexE+JVBpqD7+z6UtNiuCZh447Il19NxaniMKPl+ec8wVH
-         2ePA==
+        bh=bslw7QYb7tNfa+yk2EJn7n/ueMoeDNz1E7HMD4QJWLs=;
+        b=U1ercfnZ2/+IIKktPoZwr+Ngj18/60n0utwKJ9nilt4sqYzJp12x1BMCbtxHpctRs3
+         xnTl+3PXNZOkb9mHN46OVPkBbbqMZH02Wovl6stCWeotz3+HsTt3ctF5uBpwDy4eK0PJ
+         PEqQiJAMhMH6flL1zX+KAgRCvlylhSjY3QkKM40QzsYJddhGI1ZHPNVsp1SaOE58dCSF
+         hlIAg+quu7uNQzj26AHdyNMmLkLbqcppT4TrDZ6L+gMTUPxRbogk5AmAZBjKaLkWj+8N
+         9rFG2yylviA01F0kacvOw1PHjzrGdp4m1bZizy5une8kOJ95gptyOkJxKSVXp5WuF8ju
+         3Eqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774937991; x=1775542791;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1774941965; x=1775546765;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2FDpa3SNk1bz7Uuj9GtWYNOnTgYj/q/xxHy178htTps=;
-        b=sPN2Neyc74xqg2l1GwTp3q83peMQhNM2BhlsGNZfvXtOGWSlxSLmLU8BklKNujsLzA
-         iFXCL/Ffu+3VeOjqBM7tOIFN7jMW3c8B7UkOQp37r/fBJr+naXIifHl5cv+lpnGzfNxK
-         3k0G3nUm4EgBGBY8WG04OuyC+JPrhxuz2+NaOTbEWJhIYlL7TXTnIQOuB+Qm8eX2aMtl
-         HkUho7/flNoo5NTzfbVGNAWt0EnPbJBrw3iB6hpJ1PF171DhpcrmXCS7nBMPi70hRD8d
-         3W5VlNvEewblUpXOloQiJK90qqFWGkXrur9PTszx8HGI+Odrxp+CFNuLgn8OMmL3jQwT
-         MX/w==
-X-Gm-Message-State: AOJu0YxcVb5dIv/bgXdMKGF0Jyaq0DNhzgDYADC5TuPPCU0KVjaKFeox
-	pKAjhpvRMaQrHM3QmLvlTKxL4x++YpMBwbPO5uT7SPiFOe3ZOn6zGj2NOU3Jv3OX
-X-Gm-Gg: ATEYQzy3zNkoMKToF/Jmsk8RibE4kJ9qeXHKp7+dAVtcgyuZbzj2/PEYQogVQrna6pW
-	ORMMRmyKPF70ii/BoZuEZISGjY8H6p2IFYmlDAqIBu7rESU8vxlFmlFF9jctMsuIBby8bDQp+hU
-	2SLMd+a3QB3tpINP4s0EaJwsnOn0kjev/dwK9xhoFvsPdw96GmDNfWKnhTDKeZsPcfUlm1a/MQH
-	ns7G+zTvFR+11sRu2jBdvRyTEwDtaut7oZYKJZj5bBuK946MMWkC7G5wsWuoiccvB5vEmo5i+9S
-	bnKHwb+GA9oXC1NbQolslp7uUDhOm3FhHzq3z5KtFDiackVp0/94GEQw2VEdUSw8myVe2zsWexO
-	RfTkZeRCSeKHeShskybeLGgZHmGWFtEPqdnjzOtuXK6XmZcf3vazfpMKl78JFcG7Mwhl3D4ZHhY
-	Zj9Oqc7yIEWWS1jwwXBoOMVzL7VAA=
-X-Received: by 2002:a05:6830:82f9:b0:7d7:da43:387 with SMTP id 46e09a7af769-7d9faead555mr9986417a34.16.1774937991274;
-        Mon, 30 Mar 2026 23:19:51 -0700 (PDT)
-Received: from [127.0.0.1] ([52.165.251.162])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da0a335414sm7329732a34.6.2026.03.30.23.19.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 23:19:50 -0700 (PDT)
-Message-Id: <84ddbb30bb3862d4230ba1775d4c061832f2623f.1774937958.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
-References: <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
-	<pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
-From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 31 Mar 2026 06:19:18 +0000
-Subject: [PATCH v12 13/13] fsmonitor: fix split-index bitmap bounds in
- tweak_fsmonitor()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=bslw7QYb7tNfa+yk2EJn7n/ueMoeDNz1E7HMD4QJWLs=;
+        b=lg7hFLv8Fi2cmZSqRprI1tt715KekrYalT7CbgVYuVWVZU/R9P/tBIVdlJjbrO3HTG
+         7FqkGEioIxJCk769TA3YRyV/OKjkxvAxVDymv5Y7ytelf+vcDeX30IVyjsLWWaEL8GP8
+         MEBZRUsi/Y89s39HtDjwSZ4VOmN/FC+sWzl5G0BHiZ8zzHDKt6xFrIQU0G+o6ca4Hbgs
+         CX7eX3hNSU6454nTKo/Lt/CLFtkDvr1QvrTyTZGFUIyEbxN3vlc5aImoBEE4VvCfNCGm
+         K79hTXq6Oq1dE2OYKTBAgzjLtqRV7O8vbZDVHmfudcKqaN/G4M4+Ik8T2YqPtbVyKio4
+         pU/w==
+X-Forwarded-Encrypted: i=1; AJvYcCWEz63sRXLy0sXDVNUk4IWIDkdes9PyFEJhhedgYa4/fyFQSeOPfn+MeHO3PH80toezTfk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7wdh2qcetCumhnL33MtSfE98IDqQ6iLhFF/oLOpygJyhVFlB8
+	Sv24RfOdEh+/b+vlX2xc9ATn7YhFizuxFSYviEcTX/59HnpTQb4GTYujAbKu9PZvYAzHgkDWQ88
+	MNeckLbbLqHk0J+00kaaBcrLgK5xjknM=
+X-Gm-Gg: ATEYQzyDfTUFmyyzjmR3I7xU/xQEGUcx43G1hLndZzu86vsYVLYcBnCwFNVmu72ddDP
+	mDDd8Y/11osk4Vd9jKu7vt6L2//SP2G7rmie7E+NxI3g7OAaCVb6rR7Gq2eW5tD96LsY738E7ul
+	HSlbPBMAQphNdNAlUY8c1f5fUTK9DbXJitq7triYaff0K137SOveNHt+kj78srdJuxceblPK5bG
+	za3JRfgXowPm6AnNAi60kbXBdFcple4WPLoTujVUfBFviKXq0Qs0EyKwU+6spiARSkPhGi3e3Bq
+	iH6XLw1ttleMQYCXNM0T58t8Pr31n/qhGpS3NofRpPGpzEK2QbWmCxGXcGSLYO1MVJdB
+X-Received: by 2002:a05:6871:7517:b0:417:2d6d:b7ad with SMTP id
+ 586e51a60fabf-41cec1579bdmr8124064fac.21.1774941965108; Tue, 31 Mar 2026
+ 00:26:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Paul Tarjan <paul@paultarjan.com>,
-    Paul Tarjan <github@paulisageek.com>,
-    Paul Tarjan <github@paulisageek.com>
+References: <aafga8AjpxagiEJt@Adekunles-MacBook-Air.local> <acMT0zqd6SiEz5h9@Adekunles-MacBook-Air.local>
+ <CADYq+fbsXVtYZcq2wB2FoyUzDdzZKJYEN2EZk1uOvdihMyJzVA@mail.gmail.com>
+In-Reply-To: <CADYq+fbsXVtYZcq2wB2FoyUzDdzZKJYEN2EZk1uOvdihMyJzVA@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 31 Mar 2026 09:25:52 +0200
+X-Gm-Features: AQROBzAQb0pWRs6dO1Uo52IADQSMwZv5CTWHsfW_lNGrz5sqy7Kt3aFa4hKu9Qg
+Message-ID: <CAP8UFD3xsMc+irB0Aiit3rMqHeSqodeKpSRRvjOKFGF-vvmx-Q@mail.gmail.com>
+Subject: Re: [GSoC] [Proposal v3]: Implement promisor remote fetch ordering
+To: Samuel Abraham <abrahamadekunle50@gmail.com>
+Cc: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>, git@vger.kernel.org, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Paul Tarjan <github@paulisageek.com>
+Hi,
 
-When GIT_TEST_SPLIT_INDEX=yes is set and the fsmonitor daemon is
-active, tweak_fsmonitor() can hit a BUG() assertion:
+On Mon, Mar 30, 2026 at 11:50=E2=80=AFPM Samuel Abraham
+<abrahamadekunle50@gmail.com> wrote:
+>
+> On Tue, Mar 24, 2026 at 11:47=E2=80=AFPM Abraham Samuel Adekunle
+> <AbrahamSamuelAdekunle@adekunles-macbook-air.local> wrote:
+> >
+> > Hello,
+> > This is the third iteration of my proposal for the project
+> > "Implement promisor remote fetch ordering" for the 2026 GSoC programme.
+> >
+> Hello.
+>
+> Just bumping this up to know if this version is okay for submission to
+> the GSoC site.
+> Thanks
 
-  BUG: fsmonitor.c:27: fsmonitor_dirty has more entries than the index (2 > 0)
+Sorry but we won't likely have time to review your proposal and other
+proposals before the end of the application period today at 18:00 UTC.
 
-The fsmonitor_dirty EWAH bitmap may reference positions from a
-previous index state.  With split-index, cache_nr can be smaller
-than the bitmap expects because entries have not been merged yet.
+So everyone should submit their proposal on the GSoC site as-is now if
+they haven't already done so.
 
-This is related to the issue that 05f28e4b3c (scalar: use
-index.skipHash=true for performance, 2025-06-04) worked around by
-disabling GIT_TEST_SPLIT_INDEX in t9210, noting "the issue should
-be resolved in a series focused on the split index."  This fixes
-the fsmonitor bitmap side; the index.skipHash interaction remains.
-
-Two places hit this:
-
-  - tweak_fsmonitor() calls assert_index_minimum() without the
-    !istate->split_index guard that the read path (line 98) and
-    write path (line 128) already have.  Add the same guard.
-
-  - fsmonitor_ewah_callback() unconditionally asserts and then
-    accesses istate->cache[pos], which is out of bounds with
-    split-index.  Replace the assertion with a bounds check that
-    silently skips positions beyond cache_nr.
-
-Signed-off-by: Paul Tarjan <github@paulisageek.com>
----
- fsmonitor.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/fsmonitor.c b/fsmonitor.c
-index d07dc18967..5e5a4fadea 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -33,7 +33,8 @@ static void fsmonitor_ewah_callback(size_t pos, void *is)
- 	struct index_state *istate = (struct index_state *)is;
- 	struct cache_entry *ce;
- 
--	assert_index_minimum(istate, pos + 1);
-+	if (pos >= istate->cache_nr)
-+		return;
- 
- 	ce = istate->cache[pos];
- 	ce->ce_flags &= ~CE_FSMONITOR_VALID;
-@@ -805,7 +806,8 @@ void tweak_fsmonitor(struct index_state *istate)
- 			}
- 
- 			/* Mark all previously saved entries as dirty */
--			assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
-+			if (!istate->split_index)
-+				assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
- 			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
- 
- 			refresh_fsmonitor(istate);
--- 
-gitgitgadget
+Best,
+Christian.
