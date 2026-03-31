@@ -1,87 +1,95 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9530236D517
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 05:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47AD274FE9
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 06:02:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774935076; cv=none; b=ihXaqDkaRvT3dASsG9Jv5bJm1QRmDLt0Ofpjl2DR4MoeV+Y/j6ORfRGpyTDJbB+tKKBQmp5mJoXXNcPBwFe2O7hbjXw2JWaBZgE1WvxAAadqf4ZWRGCHVI9YHBlb/k4I69nUuVLSNRViNunSf66hcddogdqp/1jEN/RsNP9E4co=
+	t=1774936954; cv=none; b=qYHZsdNLeQI9tsYaID4pwuXJXgz0DAwMciaDhExF3KEXrNpUwXZJwxGP95Htdb8+rGH6mpPv5q3/je1IhT1+xWHxOrtgW/7kF2gZR9dAUEFBn/O9k9cMhar6GITBh+HvdRdkBN/wb/3McqWZP/cdLoWTLmNLl99Tt1h3mkgU8fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774935076; c=relaxed/simple;
-	bh=dG02wodvckat22CMwc0q5XgqghueReUBjo2Q2FoGwHI=;
+	s=arc-20240116; t=1774936954; c=relaxed/simple;
+	bh=UoP4c0yBiGJLTQye8Aj8kRo6XDw3jpdgdR37ObSBD1M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e5A+bkuhahKQCaN1CZlmVX7qy/Z1icYgK9Ma0myQEaa/fwilGQjRP889jLC3fARU7SmLeF3Bj7WSd6pxrNUwzGTj+IOAVa9UGtEmuREZLCxHjIvcyX1iXZSRnKO/EOd/GcVYNZC/CG+rQQM/beRphLd6KsKxLwanJkuINIZpa0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ovOAYU3Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZJdVRCLT; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=JLhLqrtM5kE3T5HHVEtyJf6O+QudzP0/xLB66FapaVxczwajZMZRpMrrN30imzuAuFsyPrkLZKHQfaECk5ZDTxJkTX2syeRsycIsVigoQwjgvAvFO2kbOqJPsvxI3qhl7L2qe2iUt4ixbqPXJfmlMi9zQ4VgWdg4DTH1LKKYlgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kQOp0pge; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZJlR1dt6; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ovOAYU3Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZJdVRCLT"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB0781400255;
-	Tue, 31 Mar 2026 01:31:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kQOp0pge";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZJlR1dt6"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2A13714001EA;
+	Tue, 31 Mar 2026 02:02:32 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 31 Mar 2026 01:31:14 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 31 Mar 2026 02:02:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774935074; x=1775021474; bh=bDVNmWuEGN
-	Jmm2c+RAxlF1E64quR+S6ugtn0sdmYnIE=; b=ovOAYU3QZ487UT35qTD90UWwT6
-	5JmXmiwfKf1xrwcl8W6gAPXcQ9mX6vjGsYljJ91s7+el4Uv22eVF2gdf1bE25bIC
-	3yT/p49nxVoiCIjz1Z3W95uohUuvEkwPduZSgeSfDOXGNlSoYX7SejOd6toCggEu
-	f+rno4DIa3o7eGbA1sww1JFhRzcNYZrVv+YrOKHEI+ZaC/ey7F3jY1uDsGVURWpP
-	S7Gjaw6HMDdDhKmgCcK4CHNG83BmgweGz0cR6J41bxpcfUy5c0moK15POdcg5G0+
-	t5TyYzJJUaxuaMgRnXrD8Yi6x051p0y3HlhV4O5wQWkYkm5ebw4cjdJV7e0w==
+	:subject:to:to; s=fm1; t=1774936952; x=1775023352; bh=MEOUYFJFb5
+	Eu6CETWAxi41F2KY2flN/DuqTu++wt5jw=; b=kQOp0pgeacPW4XnAtNp5BAKnYN
+	YtbIbVZV2+aY7QMaowujAOcq6ltcRP+iRAX7xLKldLVaOLhIAEOTNjFUdckBFPwC
+	5uIOd+RsXGipfY7jHgH7O0Ud8xmyy+2TI/eL13TGGx0OwIgxraG0iRIpT5LJiLwc
+	Z77DxByoskiBUTp9lUKmO54XqB608/lJZwJDGyxjahq03MJCZBVvETimzva3YbGO
+	5+byW5fYYbBOJGLEF+jWCl9uKfPk36RZxF7xTyPxM2/2Q/WjFuy/iLqj3zB287qK
+	fUdzrWvTs6lMapfFn6+P91VfIhydwTFmqhUpw9o0czf9AHF5jcXXD51TGTJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774935074; x=1775021474; bh=bDVNmWuEGNJmm2c+RAxlF1E64quR+S6ugtn
-	0sdmYnIE=; b=ZJdVRCLTIiOx8rsUvpsEz8qSczmMaG9Q9YiByib5SGoG/5FYydN
-	laCNE0KdLVs3G0Hq4yxrAuIdscjm8WKt34/2ntu17qvwzUcZMyD4q8r8oZ0B4Ex3
-	tOXB2INHHj6FcNwBb0O32vlL+hfRm9JdgMqHV8Yz+b1/r0iS2eSzY+g9yPJmQDNc
-	dMp5LwdsVAVlInMIGTJDsMLjGCjgalHYxwg59Gu9/ABdFnyGsU5T+bG7CfCr/MLg
-	Q182eLm/IiFdoWsn2a2sjNtW9Mkzu2zXwVCFhkucN5W2BfpI6sLCduWtijiW8NiO
-	ewCDjYZ6t+TUAxb2W3JnohLbVbWeowZhS9Q==
-X-ME-Sender: <xms:IlzLabPDi1zO4zBPA4ON40ZJb2GpxjygiZ571PFP510F0s6BgP1pUQ>
-    <xme:IlzLaZpmypPaz7Xhk29uXPAWmi6XScYsPKmbdlL_3Mkcf6rCeuDo_PvVHDGKPX6RA
-    A1BPiIIkFBFD4if8BnIXFkxlpK8m76OGa9TWeA0-upjwshpaeZjbQ>
-X-ME-Received: <xmr:IlzLaUFmFzC2Zqvdd9swSEH639tqtgoPTEF-e8CgM2iZ2qCr_aKeYKGFxSHYaH3vr5-txf2RtQbqwjcbiu6e7BP7cvtYYO_qwX7OUP7mJc4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedutdegucetufdoteggodetrf
+	1774936952; x=1775023352; bh=MEOUYFJFb5Eu6CETWAxi41F2KY2flN/DuqT
+	u++wt5jw=; b=ZJlR1dt6iUDbQmW5wahQlnZQGaBQU1XIndVZQUuXQttxL3mYb/d
+	yxriXjLM/d8Ne200/CZFZekgnFCdS0AwnGBDXMHTZB6ebNki6Q4himu5CaEvOTlu
+	S2Zf8MlDTYObCBov/9M4XH1b6IG/FrE6bPcm3m/kB6tyj9LfDCI9Q1qDI/GwJ+vD
+	iwEdkyxOH9gbZ/f8/peNuYhjpLTeXHuG4guXyAanXc65YGB2sxB24eL4JZBSMNG3
+	ft+805PPu+Tl+WCn7YKUuLD72Y9lTwy7ddzB9uN/Jwm11abF7jLgRlXCPf/xItFM
+	3c2/zqZ3XmDvNtQMD+6X1mOClYGV2mD8Law==
+X-ME-Sender: <xms:d2PLaXMJEV-79udVNAt9AjWZ-UGjeKFoXx5w-VBmELVs2b0_m1cpdg>
+    <xme:d2PLaeg-jrBj0_VCM1ASPS8Zi9SG5vefWY2ih3OuSXQCl24qcb_EYrBRSmDglbHsw
+    TRhCzzhqlg5nVWGdFGF9muyalkP44eZOTJbH4yBYlesLoFNTL3cdQ>
+X-ME-Received: <xmr:d2PLaatxm5rrta0PJvRVw_uN0Fdi3Zz4tRtyzjol99YpWo-kj_lwHfZoEUq_GmhIeITskPm2pVvCM_-cJBZFOO60z1g062MNMYk_Xq50HLA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgeduuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgv
-    rhesghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrg
-    efudesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepjhgrhigvshhhuggrghgrleelsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:IlzLaWpfrgUfPd1YVMEqumQRmpIaa-J_01GOeTykirNB1z0X01diQA>
-    <xmx:IlzLaVarJV1bbeh_Tg0jG6JddSmzAIwchHnRcO_f4tR0fUvdx4-1vQ>
-    <xmx:IlzLaXVWcZew-6seJyY-LEy8jwdgIAp9RK2suJIZMQffr4ZVpX_QCw>
-    <xmx:IlzLaW9k04a448hZFz5jyCNzPbyfrr5wnJDgAWHr1eB8UkeD0QmptA>
-    <xmx:IlzLacYovGMcBF3t8psDsiBt5mHZ9dIyOiPzjD1Of80C4dxR6T5uTubV>
+    hsrdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheprggsrhgr
+    hhgrmhgruggvkhhunhhlvgehtdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:d2PLaSgJaMBgHjcRxgbQN4A4-xqnsvrWyWB7m7lVYlGHgMCaqJrjFg>
+    <xmx:eGPLaQaug-Hkrda4gEeFV1S9RaA0igSyWmz8CRl_OvQOUlu_uIWCjg>
+    <xmx:eGPLaRb09M2QZxve1qwcatp8NcZLcIbOk95jhzoLfKnsvN8MDQNZvA>
+    <xmx:eGPLaVwaoHAqYs3SppayIjmEjpAZmVzXOEmMUvHC5z1n3hZTGbXYZg>
+    <xmx:eGPLaQ3Zx7vYSjccwOFFepspxYfjCMBmGtrRZykHUUbVy0YpvlwYP4TG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 01:31:13 -0400 (EDT)
+ 31 Mar 2026 02:02:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 57487e25 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Mar 2026 05:31:12 +0000 (UTC)
-Date: Tue, 31 Mar 2026 07:31:09 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ac055476 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Mar 2026 06:02:28 +0000 (UTC)
+Date: Tue, 31 Mar 2026 08:02:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
+To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
 	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Jayesh Daga <jayeshdaga99@gmail.com>
-Subject: Re: [PATCH] unpack-trees: use explicit repository in trace2 calls
-Message-ID: <actcHT_ZHkb58ndi@pks.im>
-References: <pull.2258.git.git.1774901607564.gitgitgadget@gmail.com>
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] repack-promisor: add fake paths to oids when repacking
+ promisor objects
+Message-ID: <actjaxIkDEXHJbyi@pks.im>
+References: <acasFS_UXC8NybtE@Adekunles-MacBook-Air.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,39 +98,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2258.git.git.1774901607564.gitgitgadget@gmail.com>
+In-Reply-To: <acasFS_UXC8NybtE@Adekunles-MacBook-Air.local>
 
-On Mon, Mar 30, 2026 at 08:13:27PM +0000, Jayesh Daga via GitGitGadget wrote:
-> From: Jayesh Daga <jayeshdaga99@gmail.com>
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 998a1e6dc7..191b9d4769 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1903,7 +1903,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->  		BUG("o->df_conflict_entry is an output only field");
+On Fri, Mar 27, 2026 at 05:12:43PM +0100, Abraham Samuel Adekunle wrote:
+> This change addresses the NEEDSWORK comment added by commit
+> 5d19e81 (repack: repack promisor objects if -a or -A is set).
+> 
+> When 'git-repack' repacks promisor objects, only the raw oids
+> are sent to 'git-pack-objects'.
+> This gives 'git-pack-objects' no information about the original
+> pack order of those objects in the packfile so it must
+> rely on its default strategy of sorting the objects by type and
+> then by size over again. This can produce suboptimal packfiles
+> because the objects that were previously stored in the same
+> packfile can become separated.
+> 
+> Provide a hint to 'git-pack-objects' when sorting, by using the
+> packfile basename, and the offset of the object in the existing
+> packfile as fake paths when writing the oids to 'git-pack-objects'.
+> 
+> This will ensure they can be grouped by the type and existing pack
+> order which will make them end up close together in the sort, improving
+> delta compression.
+
+I think the general idea may be sound, but ideally we would have some
+benchmarks that demonstrate it actually is. Like, can you come up with
+scenarios where it will indeed improve the packfile size and show the
+advantage of this change? Are there scenarios that are likely to have a
+disadvantage because of this new ordering? Which of these scenarios do
+we expect to be more likely?
+
+Before answering these questions we basically just claim it's going to
+be an improvement without actually verifying.
+
+> diff --git a/repack-promisor.c b/repack-promisor.c
+> index 90318ce150..3f3034fb79 100644
+> --- a/repack-promisor.c
+> +++ b/repack-promisor.c
+> @@ -12,25 +12,51 @@ struct write_oid_context {
+>  	const struct git_hash_algo *algop;
+>  };
 >  
->  	trace_performance_enter();
-> -	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
-> +	trace2_region_enter("unpack_trees", "unpack_trees", repo);
+> +/**
+> + * Build fake path for the objects to give pack-objects
+> + * an ordering hint.
+> + * For the packed objects: pack-basename/offset-padded
+> + */
+> +
+
+Nit: this empty line can be removed.
+
+> +static void build_ordering_hint(struct object_info *oi, struct strbuf *hint)
+> +{
+> +	struct packed_git *pack;
+> +	unsigned long offset;
+> +
+> +	if (oi->whence == OI_PACKED) {
+> +		pack = oi->u.packed.pack;
+> +		offset = oi->u.packed.offset;
+> +		strbuf_addf(hint, "%s/%05lu", pack_basename(pack), (unsigned long)offset);
+> +	} else
+> +		strbuf_addstr(hint, "loose");
+
+Nit: our coding guidelines say that once an if statement requires curly
+braces in one branch, all branches should have them.
+
+I also have to wonder whether it's going to be a benefit to also specify
+a hint for loose objects, or whether we should rather not write any hint
+at all for them.
+
+> +}
+> +
+>  /*
+>   * Write oid to the given struct child_process's stdin, starting it first if
+>   * necessary.
+>   */
+>  static int write_oid(const struct object_id *oid,
+> -		     struct object_info *oi UNUSED,
+> +		     struct object_info *oi,
+>  		     void *data)
+>  {
+>  	struct write_oid_context *ctx = data;
+>  	struct child_process *cmd = ctx->cmd;
+> +	struct strbuf hint = STRBUF_INIT;
 >  
->  	prepare_repo_settings(repo);
->  	if (repo->settings.command_requires_full_index) {
+>  	if (cmd->in == -1) {
+>  		if (start_command(cmd))
+>  			die(_("could not start pack-objects to repack promisor objects"));
+>  	}
+>  
+> +	build_ordering_hint(oi, &hint);
+> +
+>  	if (write_in_full(cmd->in, oid_to_hex(oid), ctx->algop->hexsz) < 0 ||
+> +	    write_in_full(cmd->in, " ", 1) < 0 ||
+> +	    write_in_full(cmd->in, hint.buf, hint.len) < 0 ||
+>  	    write_in_full(cmd->in, "\n", 1) < 0)
+>  		die(_("failed to feed promisor objects to pack-objects"));
 
-The changes in `unpack_trees()` are a bit misleading -- while it reads
-as if we don't use `the_repository` anymore, we still do because the
-function starts with:
-
-  int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
-  {
-  	struct repository *repo = the_repository;
-
-So would it make sense to maybe have a separate patch where we inject a
-repository as a parameter to `unpack_trees()`?
-
-Once that's done we only have a handful of other places, and in all but
-two cases we have a repository available via the index. Do we maybe want
-to go all the way so that we can drop `USE_THE_REPOSITORY_VARIABLE` at
-the end of this series?
+This now translate into at least four write(3p) syscalls per object. Can
+we maybe reuse a buffer so that we can reduce the number of syscalls?
 
 Thanks!
 
