@@ -1,68 +1,75 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0462B3A8734
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 12:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE50E2BE642
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 12:16:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774959132; cv=none; b=DvRUx5gvNePruMYC1WWGyz7KSwDkK4IUfK7TKqyC/rUmRNbdCyvI4pXkjoovwpsnERnWzgBnmUsqm08TSFKV2cIM2RK/8kIgzp3td3d44Ym79eLGJIzXvlfS+upMoFd2chnIBO0ayPHHN879uIyLHtkHPJqgl49IL54ROsngsOs=
+	t=1774959398; cv=none; b=g6pB21PCOQVTxd6jiSeevkUgLYkG91zFlNn/+/MmotA+oPQoGG8VoYGpFM4EgVcSl1ZQmkoRKJ65Imf56rwXeaeQqy2jessl1OiJ3mQy+C01f5G2tHAFsY+Xae9yZt06RNHAdD8+vK/FK93y1y5Cb3DNUMVoklmW63o/nwTH6yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774959132; c=relaxed/simple;
-	bh=TNkbmT/LmeF/95EVk18AjXOIk4EPu0c7HNkOuYXeky0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FeCPciAMO3SV8z1yI7CqlQyVqNUdXG2OBjLsCMbjN739D8+yHWUfJajQK5CuZKkOLWWg2g8PL1kBnINIDG9B/vIHcfEh4YdPHJBGHGe1MpVdJ92ODffhVelXxy1YZi9miDUswS0rUCM7Q0igGMCNmR8F5FhCMhhcrjip2jD3MMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qQ+SMgvy; arc=none smtp.client-ip=209.85.216.46
+	s=arc-20240116; t=1774959398; c=relaxed/simple;
+	bh=9TTpX6FlELqde4l9wZlAdwhK95RLpUkbTBkmVWuNSa0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HatcgBhKWAKKixTwNA7SQVzZciRboJnySnBQor9PI48fmJKW3KXxBKUfAzIgtiNhKNIzkhOFflhPRcyrUys3sbfNHRLjQItnIG8zFSAf9OVC6rX0kdFcIQ+VzgiZNmsem/vKk5/qjC/FwUo+Gsjy4CXsZCo+YFRhvSop/gK+0VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pnItc8Kt; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qQ+SMgvy"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3590042fa8eso3707633a91.1
-        for <git@vger.kernel.org>; Tue, 31 Mar 2026 05:12:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pnItc8Kt"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-38c68e6b62cso39587071fa.0
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 05:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774959130; x=1775563930; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=v+WurA/cp4n+yc5B0fxP5EY3N7LF7lEyvfcDpzQNS/Q=;
-        b=qQ+SMgvyY3kaPR04lbWZa69VIlOT1+jXLWeNGUH9+rmdms5ljZgELXbL9UTuhbA8n3
-         xclwbvEEs0JuUchowFZc0E0Z4q0qnVx423MjndeaqexgetRmLfl42f0+QhWo0FVEbIYL
-         1Yycmdx1QLcLcvUbE2vvy2dyWBvvFH0wViynypuoE6JRW28ai6FpotrJaZOTv5cs4jRj
-         4z6N/1YvEm605xlzmwPR3A6vF/y6JB0U8WHt/txzEtKIApLfoQrGQ0tR6hGXehf7kMq1
-         IZBJJQJcUWaRyAQa8wvJ4vg1K4rC1nqhVZYZMNJ9jz+frXMqmUKaUxeKytAfJYyrQ/OY
-         X3oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774959130; x=1775563930;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774959395; x=1775564195; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v+WurA/cp4n+yc5B0fxP5EY3N7LF7lEyvfcDpzQNS/Q=;
-        b=dJfmNsFn033afLKk3DLtgNHRMZnq2QPNt9jLBPvFeMMAKue2xgZvsXhAYAfbrddUvN
-         3z5HOO7p3qo4VtoMUFmQfapw+UcodtJuEFR+xk2uMT0s+bZCKSJTfG03XUYwGJY5HNyJ
-         J4iAemljyT4G4S1Aj4NcX62a24JFf1zgBmWH09uh664YDCoPCnKreO9YJrOsPuQl2Ngb
-         TTbI1OAt+YVziFgTwzXTkMheh6sZ9yK78ln0aemsDX/dZISnx7mPjt3t+5HGknkCnFet
-         8FjIVe89D/OpOyhdtpp+/wMC3cVso9kb5f44ulIfohcgCb2rWgIGtzN8ZKAmR6KNz3O4
-         GMWQ==
-X-Gm-Message-State: AOJu0YyU2htQ0hejXEmYImJnSIZ4gw/YyZL00bdmhCf/OYB1i0oTHTwr
-	6g6lWgWgs2X0VtlukWey+Rsjv9gIOAHWIcJTySliqLd5iT5+dNYHkKJc8ScfIAVA
-X-Gm-Gg: ATEYQzzFqL95/CYv+jnKLdtJf9zz98Ylmwk/QQSMs+bx6+CDWnW+NDiivtTxjD98otm
-	EkLrfKd2Nmoe+DvJv0itGbBLQ3fjCcTiUXfY6u5Zu1DGzTr78jrHKv/wV0qmmThfUGS9X/Kds00
-	hLUaQcohxYnXg7VWUFOdGZMXedz3UuIPAKE5/lPu0s4zisHMY2aMkWiW6Dflxzl162expemxZcI
-	Mm0zPO4d/pATkBDmKf3fTZM7Olu3l+v8TUlF5LXj8qECtYxmxFWTFnNFMzGE7GTMj84vly8ivqA
-	tCvjnP04jrVNdbMHr5xbDBWUWzdB4vRXnPQUyfr44thKylZ9u6aMB1XosOgpn/QAvjNxv2a5i2H
-	k2OZOP0HWuOyQI6KVL1fDNbQvgPOGlUbV05O1DQSqkS4/ykFCPv3ofSDm4C+VovdKMYFC+DXTEt
-	mEs9P+YATsk64fcBNGoZnn3PY5rz6PlbGToW+RKLmeKDC1UW0PEb6fZXl+CJDPjEM5rHWUzTYJ1
-	UP2oTUVZg==
-X-Received: by 2002:a17:90b:4c8d:b0:359:855f:ff96 with SMTP id 98e67ed59e1d1-35c300b29b3mr15342776a91.17.1774959129933;
-        Tue, 31 Mar 2026 05:12:09 -0700 (PDT)
-Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local ([27.122.242.65])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dbe6953a8sm1608558a91.12.2026.03.31.05.12.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 05:12:09 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: git@vger.kernel.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [RFC GSoC PATCH] backfill: skip downloading for empty batches
-Date: Tue, 31 Mar 2026 21:12:04 +0900
-Message-ID: <20260331121204.787826-1-vikingtc4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        bh=Tf8RbkOd6sKCLzclWLL+4rGRJHts4Yg4q9UBiRhs6e0=;
+        b=pnItc8KtBdsgYhMTF9aDZ2scBKwiY5hlE7+V5nvPSSQwucdp2CXwsetIERpMgkenjD
+         CtDeh33pdLevkr4Fu/URhN7vW7il1I8VIAbSsX/lXuWx1dvDkx2ARYD615mLtCq3sIcp
+         paRF15EoghFjnr86uUP7TmR3nUPD3I+gwFe3UmSCkRHSXJ0URSvlepT+rID65D229vwo
+         B3vtpD5n7TLBYGtODMZnMIR29r6mpox0YKXLlqJO7+ZlpJLkBK/+HUl4QvqEYi3wNKfM
+         kg/CX+qnKcbKXTvdZ0jl4Y9DoxAOrHzojmHwUoatvrHPQcpsim9oX6sqR2iHWuuEmwy7
+         Nwfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774959395; x=1775564195;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Tf8RbkOd6sKCLzclWLL+4rGRJHts4Yg4q9UBiRhs6e0=;
+        b=KiNBzHUCEhwC5TywgPmr97n9FYSbpXYsoNFpezSqmRuA1ANIVhama+YPuEKvXj9KEQ
+         9eRu06pEhSvZL4pJRy12GisMB/A9kufTU2TyXnBx7gc95Ri7QPxXZ56CLWSHsykNA54D
+         vHgcW9rHWxhYiXhveAS3Wzv7dt8uObuy8y/2DKS43Dp0j3w8po33FAen2AokdCxUC+Jk
+         cHtWfufC39ugk5K4zvImFkdY+BpHLiOi4yXXhhRwTjAU6vEMIF3etWVsVJ9BrZv2jnUW
+         dy8gvwWzHn3Yd5kZaIsld1wm+zItN5bzFulNF1F25oQVtrapn3TTS8Lw+YNa4MeBhSNy
+         p+Hw==
+X-Gm-Message-State: AOJu0YxtlrSeWVLEL0Wb1/CQOQTzSw8vzNw69m7h5G/8T/a/mRW91dJk
+	dviRoxooI9TH16PULpZqnQWzH9jjGH6a1t1ajaBKCz9NBIuX+NlXdjzE
+X-Gm-Gg: ATEYQzzqscoLjX/9Kmp70fyEE1XQsQy3fFWbQBaOEHifLLWPuAhFTcpC7gbvYQgLzEW
+	W1hGksUkDwO36DwFRuUR6N+RqIOxUjWj/kBK4dVtwUhOMxdM+hEHAsSOysPkj8TVGkNCXvuP71W
+	UMERw0xv1L/VEZ1hhSyAR1+uTSH6NoW7Duw5kDC29iJQpUjpVp5HWX0MEf9KqNPr83XVwQqDTdQ
+	3/g/5n7eBa0033uXO+3Vkw3jao4nNE27eWmmJ3RWOjNJOi83EBSILTej7NYrDhxAVM92rVcstsT
+	U2OZMIEXYKYtAAuqdhAea5CaaWtikKrsQ/+symJoYmMD9Z+bF07KR1bqYEqt72MT+GOdodevuzq
+	xg9JiX5hwA57SvMy3O7W/6DSduKi8gNFDfYkdn7Y1GFxCRRtucIsEl7/aBCrxWFUrpog22PKRUL
+	xQircjxrfnYMXQnSPN82pPw0wrlbnjjlNhcDlUxlB31mjy1kIOeIHTzfiSIe40L6UbufC/aFWEo
+	l91PQOw12D+yr7EPQfT8w==
+X-Received: by 2002:a05:651c:324a:b0:387:d29:fd4f with SMTP id 38308e7fff4ca-38c73065e4fmr50052931fa.1.1774959394681;
+        Tue, 31 Mar 2026 05:16:34 -0700 (PDT)
+Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38c838daa4bsm23419011fa.32.2026.03.31.05.16.33
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 31 Mar 2026 05:16:33 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Tue, 31 Mar 2026 14:16:33 +0200
+Message-ID: <20260331121633.14907-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq4imbn4sw.fsf@gitster.g>
+References: <xmqq4imbn4sw.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,81 +78,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When git backfill finishes its object walk, it unconditionally calls
-download_batch to process any remaining objects. If the repository
-is already up-to-date (no missing objects found), this call still
-performs an unnecessary directory scan via odb_reprepare.
+> FWIW, I very much like what I see in 
+> 
+>    $ git checkout hn/git-checkout-m-with-stash && git diff @{1}
+> 
+> output.  It is great that we do not have to do any dry-run, because
+> the "real" run safely aborts, we can do the "stash && merge && unstash"
+> dance as a fallback instead.  All the credit goes to Phillip and you
+> for the idea and the execution of this.
+> 
+> I do use "checkout -m" a few times a week, but I do not do anything
+> complex with submodules or run the command with unrelated local
+> modifications, so there may be changes in behaviour I haven't seen
+> in corner cases that I do not exercise.
 
-Fix it by adding a check in do_backfill to ensure download_batch is only
-called if the current batch actually contains objects (nr > 0).
+I wonder if my implementation is not really up to par. I have ran into a
+few "conflicts", were 'git stash pop' simply worked afterwards.
 
-To facilitate testing and provide better telemetry, add a trace2 data
-event for batches_requested. This allows us to verify that no batches
-are processed when the command is run on an up-to-date repository.
+So not quite production ready.
 
-Add a test case in t5620-backfill.sh to ensure silence and efficiency
-when no objects are missing.
 
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
----
-Need discussion:
-1. Is adding trace2_data_intmax() the preferred way to verify this 
-   behavior in our test suite, or should we rely on redirection of 
-   stderr to check for progress messages when the progress option
-   is supported?
-
- builtin/backfill.c  |  3 ++-
- t/t5620-backfill.sh | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 0f31844ce7..67f9f28daf 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -58,6 +58,7 @@ static void download_batch(struct backfill_context *ctx)
- 	 */
- 	odb_reprepare(ctx->repo->objects);
- 	display_progress(ctx->progress, ++ctx->batches_requested);
-+	trace2_data_intmax("backfill", ctx->repo, "batches_requested", ctx->batches_requested);
- }
- 
- static int fill_missing_blobs(const char *path UNUSED,
-@@ -109,7 +110,7 @@ static int do_backfill(struct backfill_context *ctx)
- 	ret = walk_objects_by_path(&info);
- 
- 	/* Download the objects that did not fill a batch. */
--	if (!ret)
-+	if ( (!ret) && (ctx->current_batch.nr > 0) )
- 		download_batch(ctx);
- 
- 	path_walk_info_clear(&info);
-diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index a1a8d736db..d3cc4022bf 100755
---- a/t/t5620-backfill.sh
-+++ b/t/t5620-backfill.sh
-@@ -221,6 +221,22 @@ test_expect_success 'backfill --sparse without cone mode (negative)' '
- 	test_line_count = 12 missing
- '
- 
-+test_expect_success 'backfill does not request batches when up-to-date' '
-+	git clone --no-checkout --filter=blob:none \
-+		--single-branch --branch=main \
-+		"file://$(pwd)/srv.bare" backfill-up-to-date &&
-+
-+	# First trigger to have a full download
-+	git -C backfill-up-to-date backfill &&
-+
-+	# Second trigger to verify when already have a full download previously
-+	GIT_TRACE2_EVENT="$(pwd)/up-to-date-trace" git \
-+		-C backfill-up-to-date backfill &&
-+
-+	# Verify no  batches_request occurr
-+	test_grep ! "batches_requested" up-to-date-trace
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.43.0
-
+Harald
