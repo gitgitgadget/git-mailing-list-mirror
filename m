@@ -1,117 +1,123 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAA7199D8
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 23:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA20438F92F
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 23:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774999275; cv=none; b=Dt8GtcyLIW653Jrp7+qG3/cdegd5lUBzbcnywXVIDtlsRSiOXDzX5f4dEEV1mjODQ3IkvZCq5TwYKxUQ31G248BVrLxWdZ7CsfvJ3TzDgFU+Hpu4ZaH6i59hZ3TNQg+m6UShpHUxBp7znI5V4RIcCMotCzwACZxJ1ZbePPM/otU=
+	t=1775000340; cv=none; b=jSFLnjsAwfpmluEXlA1yFB+xWFd27GUXP63/+1mXTEq+ZG4UNnEHEqcGGWPIDA257HlHcEomNl3fPyFEHyqX14SAtwkZZU22SSkAzQQQqjYDgeV4azHjR2oWQTI7mH6lL29HtQW6jkU4v9MD+lQXd/pQ+geBDz5W+V/oxxG/B9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774999275; c=relaxed/simple;
-	bh=glGNl5w3zC//vs8OQyWjOsDHa18i0WlI9wJf6OULFOk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F0Y7OvJqoEyC8X3CehWqufFRlYTB6LGFvE+1MtCsBTsxfHC0M4rZqzb+Sm+KoyB1Wn8F7rkB3U5DJ398LCYJhxuGKIT8Q/evK6OrEMYv95KnSTOAeAjLLQyYGfqRAmUNlIwNjDpmDTNo+XLRAVZGN9Td/cIJEN0x5pr/dKxf8+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VKdZ7QoR; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775000340; c=relaxed/simple;
+	bh=eUEWxIYrwhl4WM9kl5oCT+hSZhpfS6GYWnPA5et36A0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=DEFWRFnEvn3hvKIx4EXAHNQgRZYtFimLAhU7HiI3gMUoBWAuXlT/81dxY5BPKF9p6Ms7xyQkETzRAs4IeqJcw1rsbo24r2sT1uf2rxkhu9jpJeNxADEmvkSS82kXTl0E1JApDRELq7Mi0qWPPbsjUuoczvGUdPaQ1YwJvxGUOe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=X7iKBOYZ; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VKdZ7QoR"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7d7653db148so3396596a34.2
-        for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:21:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774999273; x=1775604073; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kEMCUp/mvVvETgMrhV2kO6rJSQ8RDAVTK0UQdPdiKyE=;
-        b=VKdZ7QoRzPsmISee/z5cXr3Xn/qFs/bOhY3Iz4hOm8so94yC/c5sun+PiWZ0nfZc/3
-         n5GjjRFzBjgLaxfBhZcBfSn1gTBw7VWS8VZbUlhJCSwE5NDFIbJV+wogIAgIO/yaAxIp
-         iT1q5shu9iVI7bF0WlmJtdFGtYBxCQ98qo3v2uHl2+5prQSEiKyAqnloNQQNq9zkGcQw
-         8SGGbj1sJsjOCXyxQDRQ3DlXELndX74WUT8ABnhhTXSlgPb+p58zyzrNUOq7BAHxIN2r
-         x/lNYV2xwnQQttCTV4GWw27lOm8eu6IRsAIRaTuXNPNkoJAymWZVXaGcr+Pa+zGzE3oc
-         POow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774999273; x=1775604073;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kEMCUp/mvVvETgMrhV2kO6rJSQ8RDAVTK0UQdPdiKyE=;
-        b=lv5H2VfS3rKxr3+ipAjzz/NOiqbJQ/k+t3s6BxPFOTF1WSaxf4UK0Kn5RHluUQXISl
-         P4R71zo8m4kRecnxAP4KBaAKgHvRwUXZc7bfayCpP3C6vI00INhtLHL1F34Syxt6oOlt
-         bOSRfhddPBN7VsvE0QIGJW96kxIBtSFtWbCoaULXOU1jR6IVElKWpxDkRJUBPv2nAqgM
-         WgKkbtAXWzrrI9yPPdbINsIPleTIFrS1wUc62bOKUdkkMTAWWf+Z66ZjBqzkEKOPSOaM
-         dNk5xUJkNwKZTD4AoPHM2Co1eyKq68roHofU4PumDXTwqWlNS2y/xY1y/wDJLQZVDe1r
-         JVYg==
-X-Gm-Message-State: AOJu0Yzuz6E4KSEn/gqCMxDBA20d7BtVmc/cmdJpbEDpCJt8nh47wCaQ
-	airynl26RLXp+9mKrVUUAj5vMtXf8qW2qEW2jAzUldjR9oH/cJEsgtEMA/TWHQ==
-X-Gm-Gg: ATEYQzyzzKlpeFBfNiaRCBJf8waXzE1kjd0rZMFbFODyxQmd7cCAdOjiJEZ29ZFJtTz
-	WVq6vnonMXbP37MfUTfli6rBPeH4gxQWiUYtmWioW1IzQb6rIBH7h9QGGfIuRP3oybD4XsfU3H7
-	r9qlUT+Sgj3R22wwrxuzMEyC0TDEBgMe89Yg/D6BU5oIoMWYvdDR4ksw11wFm5yw1U2fGCyfGyW
-	jxzvHTA19V640oZMAis0ipfwLUzLU/rKd3726gwKHzNzv13UCUE9HvHi56d3tNHqL6qAFRdHjom
-	tHyFs5brO/wwOidrHFIYQo0IuiCDoGNqMWHOWTVYxYtYsrbbaMv9K8aD/vq+TC/DLIv0cGFhbxd
-	pKAWJSRZ76UhLqOwLZ/7XcBb3rByIoYvSEUNY2VAJgsn1tZo1GhoPn7kvKr0NskXbrvqSDSBKFj
-	fJuG/aSmexDCRDLaZpxKh+HhpIgeg=
-X-Received: by 2002:a05:6830:67cc:b0:7d7:d1e1:69b8 with SMTP id 46e09a7af769-7db99354c9fmr1079185a34.16.1774999272649;
-        Tue, 31 Mar 2026 16:21:12 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da0a87de2esm9008863a34.27.2026.03.31.16.21.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 16:21:12 -0700 (PDT)
-Date: Tue, 31 Mar 2026 18:21:11 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] object-file: generalize packfile writes to use
- odb_write_stream
-Message-ID: <acxWV5U-yb2F_0lG@denethor>
-References: <20260331033835.2863514-1-jltobler@gmail.com>
- <20260331033835.2863514-6-jltobler@gmail.com>
- <act8YM8tMeUr3cJe@pks.im>
- <acvX8wdg39xTy-Am@denethor>
- <acxRwaUk4XNJiDx9@pks.im>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="X7iKBOYZ"
+Received: (qmail 206567 invoked by uid 106); 31 Mar 2026 23:38:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=eUEWxIYrwhl4WM9kl5oCT+hSZhpfS6GYWnPA5et36A0=; b=X7iKBOYZQoIPeNoZvGvbmfzbWV0o7bqQ+nWJMlQGxsjr20vi0QuvF9+xfObTHB0L76G1L7sQUxdG+FWCjp0PWpOmVX1nIy1SBXObh0vkl/jacmw9pnxbuNSPUSn+VFK3JqHC56odHhvsUv9I8LQUu0RLt/JKHpojoWcLtCjQItk2rp2OE+Uwq/ImllZ7ZG31+dGVXrQFqYZswCdkEiitKyBj7ZINKQqNHJAVH1FpiJ2a6oOC/vgopp21JqnJ9mF0JuKQCkcXU523YSmUgtHL6SyBAXe+5cCepvNYUdeuKFTH4cJrnuFy4bGWP6wjj3kYDmu/3DyKO0NveKRuWwMM/Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Mar 2026 23:38:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 326352 invoked by uid 111); 31 Mar 2026 23:38:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Mar 2026 19:38:57 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 31 Mar 2026 19:38:56 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Collin Funk <collin.funk1@gmail.com>, Michael J Gruber <git@grubix.eu>
+Subject: [PATCH 0/12] fixing the remainder of the C23 strchr warnings
+Message-ID: <20260331233856.GA2327197@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <acxRwaUk4XNJiDx9@pks.im>
 
-On 26/04/01 12:59AM, Patrick Steinhardt wrote:
-> On Tue, Mar 31, 2026 at 09:31:25AM -0500, Justin Tobler wrote:
-> > On 26/03/31 09:48AM, Patrick Steinhardt wrote:
-> > > On Mon, Mar 30, 2026 at 10:38:34PM -0500, Justin Tobler wrote:
-> > > > @@ -1543,6 +1542,40 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
-> > > >  	odb_reprepare(repo->objects);
-> > > >  }
-> > > >  
-> > > > +struct read_object_fd_data {
-> > > > +	int fd;
-> > > > +	size_t size;
-> > > > +	unsigned char buf[16384];
-> > > > +};
-> > > 
-> > > This interface feels generally useful to me, not just in this subsystem
-> > > here. Would it make sense to instead expose it in "odb/transaction.h"
-> > > as a new `odb_write_stream_from_fd()` function? No need to expose the
-> > > structure itself, I guess.
-> > 
-> > Hmmm, exposing an `odb_write_stream_from_fd()` function could probably
-> > be useful. Would it be better for it to be put in "odb/streaming.h"
-> > though? Maybe the its use case would always be related to transactions?
-> 
-> For now it's certainly always related to writing objects, but you're
-> right in that it is not necessarily related to a transaction. After all,
-> we also have `odb_write_object_stream()`.
-> 
-> Putting it into "odb.h" would feel off I think, so maybe
-> "odb/streaming.h" is a good alternative.
+This series fixes the rest of the warnings you might see on recent glibc
+or other C23 libc where:
 
-Ok, I'll put it in "odb/streaming.h" for now. Out of curiousity, is
-there any reason `struct odb_write_stream` isn't currently in
-"odb/streaming.h" already? I was thinking it may make sense to move that
-interface over as well.
+  const char *in = ...;
+  char *out = strchr(in, ...);
 
-Thanks,
--Justin
+now complains instead of quietly assigning the const pointer to a
+non-const one. It's all textually independent of the other fixes, but
+if you want a clean build you'll need the others. I think Collin's fixes
+have hit master already, but my jk/c23-const-preserving-fixes are still
+slated for 'next'.
+
+Some of my fixes are similar to what Michael posted in:
+
+  https://lore.kernel.org/git/cover.1774537954.git.git@grubix.eu/
+
+but for most of them I took a somewhat different approach. So this would
+be applied instead of those patches.
+
+The patches are:
+
+  [01/12]: convert: add const to fix strchr() warnings
+  [02/12]: http: add const to fix strchr() warnings
+  [03/12]: transport-helper: drop const to fix strchr() warnings
+
+    These ones are obvious fixes that just match the type declarations
+    to their uses.
+
+  [04/12]: pager: explicitly cast away strchr() constness
+  [05/12]: run-command: explicitly cast away constness when assigning to void
+
+    These are ones where I think an explicit cast is the least-bad
+    option.
+
+  [06/12]: find_last_dir_sep(): convert inline function to macro
+
+    This is the one that gets repeated a zillion times when you build
+    because it's in a header file. ;) It takes a slightly different
+    approach than Collin's in:
+
+      https://lore.kernel.org/git/e6f7e2eddbc9aef1c21f661420a4b8cb9cd8e2c1.1770095829.git.collin.funk1@gmail.com/
+
+    which I think reduces the fallout through the rest of the codebase.
+
+  [07/12]: pseudo-merge: fix disk reads from find_pseudo_merge()
+
+    This one is...spicy. I think there are probably actual bugs here,
+    but my hope is that this takes us in the right direction (and shuts
+    up the warning).
+
+  [08/12]: skip_prefix(): check const match between in and out params
+
+    And here is where we might get controversial. It introduces some
+    macro hackery that makes it safe and easy to use skip_prefix() with
+    const or non-const strings. I _think_ it should just work
+    everywhere, but I won't be surprised if some compiler somewhere
+    complains about the construct. Coverity does, but it is so full of
+    false positives that adding more is not a big deal.
+
+  [09/12]: pkt-line: make packet_reader.line non-const
+  [10/12]: range-diff: drop const to fix strstr() warnings
+  [11/12]: http: drop const to fix strstr() warning
+  [12/12]: refs/files-backend: drop const to fix strchr() warning
+
+     And then these are all obvious fixes that are only made possible by
+     the skip_prefix() magic above. Well, possible without extra ugly
+     casts everywhere.
+
+ builtin/config.c    |  7 ++++---
+ builtin/rev-parse.c | 40 ++++++++++++++++++++--------------------
+ convert.c           |  3 ++-
+ git-compat-util.h   | 23 ++++++++++++++++++-----
+ http-push.c         |  2 +-
+ pager.c             |  3 ++-
+ pseudo-merge.c      | 32 +++++++++++++++++++-------------
+ revision.c          | 25 +++++++++++++++----------
+ run-command.c       |  4 ++--
+ transport-helper.c  |  3 ++-
+ 10 files changed, 85 insertions(+), 57 deletions(-)
+
+-Peff
