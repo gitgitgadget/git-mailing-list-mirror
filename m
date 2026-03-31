@@ -1,133 +1,105 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3243A3DDDD0
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 21:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC19451071
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 21:43:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774993338; cv=none; b=nS3Ezinj0m+nWwUj8rntknTwv2v26WvbUHQMbuzK7h7hbVKYeyACKVoMJflq6tAGzRH8AZOvBMsZ/hcUQd65EwrZYCqhSZ2Aa/e+gpyq8EsZUpFNwVRRzgym+0HWuKcD30OXASLwo6YizZHzwloId3cSm4DJeORX2rknmZyCBoY=
+	t=1774993395; cv=none; b=aCsjZ9IPJhRzfXSbqU5U4lhAk1coY2NHYxSxezSVwEqsOJnxRgWM7DqVyvow7VXFmornubv1GI+m02kEQAnzHaRJQWm8gLT9Lk/fPaVMLCUURUlwiRp+LKxe/ch+fKxOLU6Ye3NQdNiWtz38fF3UTZ3t/DPM7Eua3EiKyQbS9NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774993338; c=relaxed/simple;
-	bh=dSSLLOPtwVSH8YaJuaQyq18Sz6/iuvyeqXII0z7jh1E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rZJiAm2GSEekRRZwm7rQ4YtxbSJDPlhI0rNXuxZjdPKx9XwgNI8WNTZEekcY5xENIH/wktxhkH6QcxKRmD+AehcLAUJAV6t7YBtGTkLqeY9lBIVt5f8eNoxxE08MkijKtcgVu7moX5KMNh01vdvSpJVib/nS6+e/lVLUDXMggJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hN215v1L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NRNloKmW; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774993395; c=relaxed/simple;
+	bh=gW5t0HUG+cbHh4eEDncJS0cwQ9niP7jgpdvNzGyn3p4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QHoK+GfTZ7FyTsQhV1OHnnYiLGVxvQEa9tGKf3XZQG+39Semp3ZPWnpKBDxOM6mo14eslfnmP0gfVpfakXdpqif8A0nsLlx5wQrtiL8noCPrEK2Sxw6NWmlF7+b5vMQADT0NJXeOARPjS6IQep53+grJhzUurjBUwPWJOmJb2/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=qGDphgFj; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hN215v1L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NRNloKmW"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8355E7A00F1;
-	Tue, 31 Mar 2026 17:42:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 31 Mar 2026 17:42:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774993336; x=1775079736; bh=89FlzQ7dgb
-	7ult7LXUeuE3E6h+avbfvpeSsmx4jl82c=; b=hN215v1LBCOKAyfXSSHkioe0eK
-	3xhWUnrRo8+kOhqxJHCSdW2fjWzD2rXny1NeBAQd1PeBNNqVTAZe0U8GuQoIWk+0
-	m7IlgqpM8y6RVLvBfAs+y+h7ppMgV7PpuntcvjblJ+eZhBHQRC8xirkgXDSBnCPE
-	8HEMaqXWLtjMMEvZg72tVKPWGwHdAnJYWPeLSOyT88eGscSutOXUEDSumUHt70B4
-	ALAJcpGpvo7WN4bjJpXeZT/VJWRwlwlH/sPFN5bybR4+0nqNekfe8hwrnxmKu/e5
-	VTzNVS9R1TcX0TmsJdHLe14Kkseu6W+0Y1hoqceSfZkdTxIK4HmOZgFY6iCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774993336; x=1775079736; bh=89FlzQ7dgb7ult7LXUeuE3E6h+avbfvpeSs
-	mx4jl82c=; b=NRNloKmWb/7gHO2eO1LuGZn1C7SiYiLavUkslSh6xKCVi5dIShO
-	LM6JQ/+63zVZ/FtLRtHPKuf91jSzD3u2x2Uccck2tl7lALU4nylA1b2nDTrWJvhk
-	wWKsOGo2E2B+tkesdkz17WXx2BnsMtZe2j1At5s74b/rHsuCo6ZrNL84/DHgbP4T
-	wTy4M9y5uPtyHqsw+6JIajkaas8jGi9li/6lvDZRUtD3cqkM0yw9lFvzwNyBUFZ7
-	lmKQFWX9fkC5gI0DiP6N4NvjzJMTFPiQQIJjTrym8JUJWU9AVhW9p5kF6tUAiIRQ
-	ypTXGXPVrqmrNaG8/E1FFN10snyKqXVSY4g==
-X-ME-Sender: <xms:tz_Mad7MsOQPzRpu4spEyOa1IpePAQk8R2pxUlCKNfiNunYJiSrSwQ>
-    <xme:tz_Maenvb49uJvTEZ_5sUiaQOuiwCB23dynCqIGBiQgQGQIBo6j7vito0ngv8Np57
-    G5iG3WXcjEUCyIaBiXSeFFX25rbtNYGPuayWor9REGSMgLTU-FgCBo>
-X-ME-Received: <xmr:tz_MaeTWwyXp9sEOW2H_jFWU0YaOXv6BlbyHVDTFn_mv0XHD5M_24wJs-EvFAK2JjYFD4pJPfNYIJhFxBSHlXkREzhXeFT1DPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefud
-    esghhmrghilhdrtghomhdprhgtphhtthhopeihvggvtghhvghnghdrtghhihhnsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:tz_MadHGkL2qnDyUUeo736Q8ZD4ApmKMCH2wdbrr4V4TGQSXawcvPQ>
-    <xmx:tz_MaTE8ZracB0fuQory6pA7Gs1RHX6pHZEZzyQeuAEGf0rQIiikUg>
-    <xmx:tz_MabTF9w0sk8AFMFIijR-xU8k0cPdGROTHP5NwCCR6hQ-HoP5n3w>
-    <xmx:tz_MaUJcF_bmB2CIObgr3B92yHuEiuQf-PqYlXXjSDORksTip20m-g>
-    <xmx:uD_MaXGuepD73OSW0zqPvSSII2mYs_2QHAyP0S-E3szu0_vRmMr-L3zf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 17:42:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Siddharth
- Asthana <siddharthasthana31@gmail.com>,  Yee Cheng Chin
- <yeecheng.chin@gmail.com>
-Subject: Re: [PATCH v2 0/3] Add option --ref to git-replay(1)
-In-Reply-To: <87tstwl9g7.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
-	(Toon Claes's message of "Tue, 31 Mar 2026 09:55:20 +0200")
-References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
-	<20260325-toon-replay-arbitrary-ref-v2-0-553038702c9c@iotcl.com>
-	<xmqqjyuynv99.fsf@gitster.g>
-	<87tstwl9g7.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
-Date: Tue, 31 Mar 2026 14:42:13 -0700
-Message-ID: <xmqqfr5fy8ui.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="qGDphgFj"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-79f8d6bc4e1so2086877b3.2
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 14:43:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1774993393; x=1775598193; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xy5UpqsXYPPj44vaaagm9nVSMkH9q9J2QBijIJSlo0w=;
+        b=qGDphgFjZkCfeT4ikMHiKW/CG9omuKN0wAD2qqUi7eFJMGC+FQAVi7BmL78iOxYNsM
+         /9ZtzRRQPEHRawa+GhfyjxQGqI7ucLmbx26PiKMn6iWDTWSJUEn0cMnZ4umaJRuFgLRf
+         DaYMGeBcnNObORKJ+DbmQ+3kRXGL7Mam3EDPjodubhaM8tFZy4TgN8KfUKIWy4RyiXL1
+         umlLmqCINf45Hs/nCe+lNAryt/q54EAEqAGMiNdqcRoE+8nReZm9KF65p2cy1dEucy5X
+         +u/Vm+43wlNp8brJRQlAjXrkeuFSykXDP9th9Nrtl5SP4xxCuZiCuI7oiXFyGaCGiD0D
+         ebEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774993393; x=1775598193;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xy5UpqsXYPPj44vaaagm9nVSMkH9q9J2QBijIJSlo0w=;
+        b=mOsbUyojnm8oI/9Hkfh00/0EgrKpqQuSlCbN+GNvDeJVQmSBrlij3MrBsIxeLfXBmD
+         I093oSPCqOwogLB80IOs25FP7gCrKlivzE9+NhOnxD3yDJUX/4KDrg1MfkRBrxjOnrBB
+         IV3gmJeT/de1H3YvIrCb/+kiwa6mmMc3eUADKKjLoYKoDpvnon1TdlziImx1umrTqa7R
+         2PXq+PbqlFREWdXaHPkyoeyjrHMUccftE7yuNMEG1kJ+aKBvGz6nj4ktQYD3yVp2VrRG
+         ri4ixQPpXzglro3rFT7mrSnBJOJ1//JykSrwq7JP9XA1DzfpJxqVYv5nxTJAondyENQs
+         Kf3Q==
+X-Gm-Message-State: AOJu0YyyB6Pa+k4NgPFOzgo8jOvuFeLypsMS7szfz2k2uEamevHpvoH7
+	6VfQoo9OnKMAxbRDyOJ6aR+9VxXxzcKhINLTyDQdl58DPiGIPXKrhWnFk+Bv4USXh18=
+X-Gm-Gg: ATEYQzxx8dziRLXkOiivtcOdIR+r0akygMIrlh3XqfxlowdkCGmSNXMZn68dxbjO5C6
+	CilbrTYoi7qUnPEmSIOf3zmDGwWGIQ8Z5SukrZemk1nl9B5elxoWXBY/P+/jGwQXi/rbFB92r9Y
+	8o9jN8tppqIf2QIkgPGbJIe9f3oju2I8WW063uVFK+0c7PWcxLvPE4iI75yTEMQeLaCudfjbJ5+
+	22Ts40y428Iid+Mvgo/BcgWjTovQe9prsmBLvUOKmGEHVAp8w07gklRGtiDTA8RuMvcTVU6AYRf
+	lqw2kAOco78asafsDJu/v0LRC26yx8Cekh4IQyTTo9etxZ8pQ0egKrQT3HrdZIS6POfNUHBQuwx
+	yWYD+DaSYvYBauMLzP087pcqEVR+rs2VD1CgvIGZPnb9Rh0DPc0fEthBA0cS3Yiatwd/D3AZyCO
+	I4ndYr/Spp5B1ws5mbZromxxo7jN7dDz6XzNd1KZpc8qmaOtnTt4j38IO6EUac7a173EQNb2K/Q
+	MjVaOBZ0ATDcmXfgVcvG9qsGwn9iA==
+X-Received: by 2002:a05:690c:c226:b0:798:dbaa:d989 with SMTP id 00721157ae682-7a211e4eabemr13672507b3.36.1774993392758;
+        Tue, 31 Mar 2026 14:43:12 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cb7721566sm54836987b3.12.2026.03.31.14.43.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 14:43:12 -0700 (PDT)
+Date: Tue, 31 Mar 2026 17:43:11 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 01/16] midx-write: handle noop writes when converting
+ incremental chains
+Message-ID: <acw/79TEXFs2cZyJ@nand.local>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <0c7a68ca5a777cce9c0c951643ea2220b1b56a8c.1774820449.git.me@ttaylorr.com>
+ <20260330223346.GA41843@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260330223346.GA41843@coredump.intra.peff.net>
 
-Toon Claes <toon@iotcl.com> writes:
+On Mon, Mar 30, 2026 at 06:33:46PM -0400, Jeff King wrote:
+> Now we iterate through each layer individually. We assume that the total
+> count matches ctx->nr, otherwise the midx struct is totally corrupt. We
+> could count them and double-check, I guess, but I don't think there's
+> much point (it would be a BUG() if they were mismatched).
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> As sa/replay-revert has been updated, I rebased these three patches
->> on top of the updated version of that other topic and merged it to
->> 'seen', which broke CI with t3650.
->>
->> I naturally suspected that I made some stupid mistakes while
->> rebasing, so I applied these three patches directly on top of that
->> old sa/replay-revert.  Unfortunately, the same test t3650 fails
->> exactly the same way with merge-ort aborting.
->>
->> The failing test run fails like so:
->>
->> ok 45 - --ref with nonexistent fully-qualified ref
->>
->> expecting success of 3650.46 '--ref must be a valid refname':
->>         test_must_fail git replay --onto=main --ref="refs/heads/bad..ref" topic1..topic2 2>err &&
->>         test_grep "is not a valid refname" err
->>
->> /home/gitster/w/git.git/t/test-lib-functions.sh: line 1180: 2840466 Aborted                    (core dumped) "$@" 2>&7
->> test_must_fail: died by signal 6: git replay --onto=main --ref=refs/heads/bad..ref topic1..topic2
->> not ok 46 - --ref must be a valid refname
->> #
->> #               test_must_fail git replay --onto=main --ref="refs/heads/bad..ref" topic1..topic2 2>err &&
->> #               test_grep "is not a valid refname" err
->> #
->
-> No need for you to worry about those conflicts. I'm happy to do the
-> rebase myself.
+Yeah, I agree. The omitted context:
 
-Will wait for updates.  Thanks.
+        if (ctx->nr != midx->num_packs + midx->num_packs_in_base)
+                goto out;
 
-I said I suspected that my rebasing introduced a bug, but what I was
-reporting in the message you are responding to is that the patches
-without my rebases are breaking tests.  So perhaps you do not have
-to rebase and there won't be any problematic conflicts, but the
-patches do need to be updated to address the test failure.
+tells us that if we get to this spot, we expect our 'ctx->nr' to be equal
+to 'midx->num_packs + midx->num_packs_in_base'.
+
+As soon as we find a non-already-MIDX'd pack, we 'goto out', so I don't
+think it makes much sense to build up a count and check it at the end
+even after we know we can't optimize out the write.
+
+We could check that the ->num_packs of each of the tip's base MIDXs
+match ->num_packs_in_base, but the MIDX internals handle that for us by
+how we construct that field, since num_packs_in_base is *not* read from
+the on-disk MIDX.
+
+Thanks,
+Taylor
