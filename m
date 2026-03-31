@@ -1,83 +1,83 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C0370D4F
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1653D4120
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774943324; cv=none; b=uw9oEyMppkzAhNrn425dnqgh8Y+xYAxI0qk5aMvWSltLbo5DVZb4RKK0Uax8g0lRUlp6E/5HxlTv8N2Ioxa7URdaVZ2TSH0bl0BH0uLL/6ly21fO0OjdT7e9RY1ORF3qmhe85ssRgjF5kEH7ww0GJ4ekCaGEdKqLr/bimgRelos=
+	t=1774943329; cv=none; b=tdk0Lcnr+8tLz+T8i0xe1rcNtxDH7Hbtj5CRSiwmPhtztniGDpqXioz98Jm8GcIIJkeOQqTHIHIph16wEpNU7bCG/twdfoiDBs1LmEYwdaSUXOXqFRdjcxpRchTcpEjwYUFhhaR0TSRwCOe1INBg3GbZSlVP5ivxs7eGcCEbrt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774943324; c=relaxed/simple;
-	bh=oqgC6c/8HO4ScJfYsjMh41R9qwRdnifQcSzTlPvQPao=;
+	s=arc-20240116; t=1774943329; c=relaxed/simple;
+	bh=lkRkDpe1wzQ8ocJa/r49SVV380W5iRn1vEpKuV7HhY0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mbDyBPyI+l0Bvmyzv3AqHPmyQL6xbNTalGqECIGFJQhZAe0qKPZnBAbGuRuXSw9rDKW8oP4tG5iAtZeKv5RmgrZgSosHXj5pGfPA1UBb7R1qRZwV3xyEjb5ag77+3Y5e2JmfUqoIk6RibL3JR9b7FuqBrQ5M97br5gr8oICAw/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PNowq9r/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nswVk2ou; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=mE6Tz3IdYeY8Ve7gAc6jc/z/+tYozd882zjI6fdwjNbNyGrxGcblVTcp6h10d8kglp7bJxlX+2oD2rKxTYJm7/Yd+zXfaRJeRkOsCKlLSktIRN0Zz6ScbBVTtF4ESxD/qYBWX3FI+ZsR5BsgI/Qa4oSXUXg5CeVTAK6lu0Z12uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L/w5fWAz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cN9NeOxj; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PNowq9r/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nswVk2ou"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1E3131400259;
-	Tue, 31 Mar 2026 03:48:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L/w5fWAz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cN9NeOxj"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EC33A1400259;
+	Tue, 31 Mar 2026 03:48:46 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 31 Mar 2026 03:48:42 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 31 Mar 2026 03:48:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1774943322; x=1775029722; bh=thkNANhxtt
-	2CyFUMCKmJ7ttvzvqX9Dy7fcmZxuM9DcQ=; b=PNowq9r/L11LimMX1Y4ODCjpRq
-	twZJ6KMsbkgtFmfMZhWHfOMT4TCN9bric96mBMFw53GlpcuJPetPCNsUeQu7CcWt
-	Elj1JMH38ZV+gDyEHZ6jIb/exuOnZY/9dREHsU3L87aaYr0Zw9yjQWU/uYr92GiD
-	MipiQ9Aq8BaCVhl0qX6NPj/95BJaRKZkP6fJGpEeQsw/huh7ASnTKwhpSUm6WPPR
-	6/ZpJWL+uxsHj8VSsRNDlrmUS+JikOttX2gJ4e2Q15RlzE/Om5guHuTox3i+npdL
-	jSsSy3nlZBJGnWw7UoG/lOVIoL3W3J8ihS2gGDAJwz7a7Y4k1roMFdJrJAeQ==
+	:subject:to:to; s=fm2; t=1774943326; x=1775029726; bh=4cX4wOt/tU
+	nkuZhyZrU7OWA+NHFM3tuhzyo+CspRbPE=; b=L/w5fWAzQDqduytziMF7Ffhri4
+	BUbkUGFWXON2OY00B37S9bh3Z+BkbyfETH3WH0sQISC/86XObYJBmmAs3U7AoPTs
+	hlk+qIwreXVuGFVoy96p6/CZoU2fzOCvjdp9NEtUyFgT4SJJIPq/EhXu7OOulYs+
+	lv4yH22T+xKPL6S0LH+9L5ziYhoSC+dgH35OL5s8TytG6cSLKWDiFvFwicoRR3Pz
+	vtE4kaN2vGrFdPUJteF48mN3/MLKDDrNIjgd1jAjdLcVoCzqCOjtrHY2pB9qmk0F
+	mxs1DiybRcBHQ+e6jRckP5gfMY6NaeSrhjg15g6TB6sOaUbsHPiVFb5fHzVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774943322; x=1775029722; bh=thkNANhxtt2CyFUMCKmJ7ttvzvqX9Dy7fcm
-	ZxuM9DcQ=; b=nswVk2ouRofG1SkpiTAIcDdoRuZRjKH2sUVnMVU6HkLvIEl8HJk
-	IdTAu1rdP+96G7har+3aM3TUXMHZfwrHnWyY8XEKYlA0DzUNCgyUTHBgNKi2dj5v
-	De8Uyhr7NzagZl/peosrAH4Rz4qsBrw35qUqDsgms3Rd0bJiRISYK4ofdcZ8XqvN
-	928EtN2u625MbhCgqsDsJhEnwsdAMjnZlNE6lUJL/knTPZYJerh4/idSRJue3J7h
-	y6VaiHJNdfLaGLpPg1BLw4lBYqa6Ejnf5GLnaocipQo2/eo6GpMRkOSvJTMqcKII
-	rn8luBhVP5NmA/fd5wwrwQ1VZuTzRt68J/w==
-X-ME-Sender: <xms:WnzLaZUUPrFYn2taiqA09bm5PLS0jaiXK8kkfM9cVUclxRisJK4wNA>
-    <xme:WnzLaflA3EXTdoMC7BD515Ff7iEauY5sangT_1-quWXfBOO1MYvqK-SSQqKvhxhqR
-    b0PelQGY7ybyiN8yDzpXSb_Pvbkv0hwzR1Jih3_uTB0ch8qcCk6cg>
-X-ME-Received: <xmr:WnzLaTBW_KjkrafjA-ZVh7n8qlGLSK2cL1fO6cMRlCyFRrVQsnPJWrBSVV0_G1qT02Gdk7XWg4Ndn8qzwwXDwq8zM4aPRJ7IG9rw3Eg8Vlg>
+	1774943326; x=1775029726; bh=4cX4wOt/tUnkuZhyZrU7OWA+NHFM3tuhzyo
+	+CspRbPE=; b=cN9NeOxjCSAmcHydJZGkSKo5FcXkbGjw/aDuqmXd8Rs/WafPJW0
+	OG02dGkwdAdG0zz7OJCftCcgzKJzeAovpHhS9KqEB83C49T9I/cCVjtlJWxgVDVI
+	85VgfxDAahQOK5Z2M8ej9pquFXU/Uw3K8YS80BwKEKIEpiBBYQ2AdT8sVGQ2LWpI
+	0apYo+1b36cJmhihZ5FsICU7bptPqxyJatTOuBsfEEjRlN92zWScriLVw2G26hSs
+	53unuVNJpJq7/wBPjwnrE/TySYk+3BJC97eCXgb2iG95k/UVUb3bmyhVNDJDAuXn
+	o7uDN0GY3b1TN6BZBB8Lwxy3O3DMH4BXGYw==
+X-ME-Sender: <xms:XnzLaeRw7TRHU3xQgQQdKwihkGEBX68tU9Xm_LrPPiC4OnUfsPrryw>
+    <xme:XnzLaZyISX_LAjBrAj9CS-sq9N_dA5A6yTi0GlxMYXrENsQ8uCN46G70QevU3ZR8F
+    vf7wNVagC1paKrEuEAeBBKirAe9KU_Dkf-UxKeqdeEKaH-mI9UODA>
+X-ME-Received: <xmr:XnzLaZdIJK_7ZH0OI6sencEqlelZStcvpobm9_CNtsgNpuaF81JjxRW7DFhXflI6HnQAKLl2zgfuuIm8FtJfyFVKHjx8m5C0g6O6Wwtr5wE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedufedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:WnzLaXcb-uQ84E-eAXXItcP_t1Cdih5Vq-tX_08ZQVweSG-ii8hMTg>
-    <xmx:WnzLaWIZpaBjvt1rOcdvHRL2-VtB1F1UYI0kMsb9BQG0J7Gw8bwzGg>
-    <xmx:WnzLaSfGCbv2k9Dx9Z5l3j_nwyYEJSvtbMJnG4S6FOIEhnZsfncX8Q>
-    <xmx:WnzLaV0bucSuQ5nImbon-_wEJDd4pSQ9JKirkf_tZci7QelVxJC-1Q>
-    <xmx:WnzLaeGQcdYhSBWDkIsL74JwhnPlDoulkQje8D9KytnC7BHJl7Q2kJGz>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:XnzLaVLbuDCJHcXLa9S3IfWqGod8k_jUHzi4IkQhSyR_0BxxeNmH8Q>
+    <xmx:XnzLaaGLHwnWoyfRXUsgv5UK0lPbQTO6zDKrYuHR9sNNSoMFOyX_kQ>
+    <xmx:XnzLafoE5S2U9oxfY46DD4jHXwtjQG7ilXw4F0YLMhNzfiYEwKeg0w>
+    <xmx:XnzLaTRtCIt7f9rBH9N17QOEP5EbRatz3rsZFYi60iOj_S5RzJHRRg>
+    <xmx:XnzLaSDaySY1imo6f0lCk5by_ojlzZk3k5IxMTEtmz0ZcAG6BR42lA-4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 03:48:41 -0400 (EDT)
+ 31 Mar 2026 03:48:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 342f6b09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Mar 2026 07:48:41 +0000 (UTC)
-Date: Tue, 31 Mar 2026 09:48:38 +0200
+	by mail (OpenSMTPD) with ESMTPSA id cf1cb1bc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Mar 2026 07:48:45 +0000 (UTC)
+Date: Tue, 31 Mar 2026 09:48:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/6] object-file: remove flags from transaction packfile
- writes
-Message-ID: <act8VlnYzyTGOY7Y@pks.im>
+Subject: Re: [PATCH 4/6] object-file: avoid fd seekback by checking object
+ size upfront
+Message-ID: <act8W1BEg6iyUpHB@pks.im>
 References: <20260331033835.2863514-1-jltobler@gmail.com>
- <20260331033835.2863514-4-jltobler@gmail.com>
+ <20260331033835.2863514-5-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,130 +86,163 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260331033835.2863514-4-jltobler@gmail.com>
+In-Reply-To: <20260331033835.2863514-5-jltobler@gmail.com>
 
-On Mon, Mar 30, 2026 at 10:38:32PM -0500, Justin Tobler wrote:
-> The `index_blob_packfile_transaction()` function handles streaming a
-> blob from an fd to compute its object ID and conditionally writes the
-> object directly to a packfile if the INDEX_WRITE_OBJECT flag is set. A
-> subsequent commit will make these packfile object writes part of the
-> transaction interface. Consequently, having the object write be
-> conditional on this flag is a bit awkward.
+On Mon, Mar 30, 2026 at 10:38:33PM -0500, Justin Tobler wrote:
+> In certain scenarios, Git handles writing blobs that exceed
+> "core.bigFilesThreshold" differently by streaming the object directly
+> into a packfile. When there is an active ODB transaction, these blobs
+> are streamed to the same packfile instead of using a separate packfile
+> for each. If "pack.packSizeLimit" is configured and streaming another
+> object causes the packfile to exceed the configured limit, the packfile
+> is truncated back to the previous object and the object write is
+> restarted in a new packfile.
+> 
+> This works fine, but requires the fd being read from to save a
+> checkpoint so it becomes possible to rewind the input source via seeking
+> back to a known offset at the beginning. In a subsequent commit, blob
+> streaming is converted to use `struct odb_write_stream` as a more
+> generic input source instead of an fd which doesn't provide a mechanism
+> for rewinding.
+> 
+> For this use case though, rewinding the fd is not strictly necessary
+> because the inflated size of the object is known and can be used to
+> approximate whether writing the object would cause the packfile to
+> exceed the configured limit prior to writing anything. These blobs
+> written to the packfile are never deltafied thus the size difference
 
-One could argue that we can uplift the object into the transaction
-interface. But I have to overall agree that this would be rather awkward
-as we're now starting to mix concerns that really shouldn't be mixed.
-Most importantly, it would be weird to have a transaction where you can
-write some objects, but not all of them via such a flag.
+s/deltafied/deltified/
 
-> In preparation for this change, introduce a dedicated
-> `hash_blob_stream()` helper that only computes the OID from the fd. This
-> is invoked by `index_fd()` instead when the INDEX_WRITE_OBJECT is not
-> set. The object write performed via `index_blob_packfile_transaction()`
-> is made unconditional accordingly.
+> between what is written versus the inflated size is due to zlib
+> compression. While this does prevent packfiles from being filled to the
+> potential maximum is some cases, it should be good enough and still
+> prevents the packfile from exceeding any configured limit.
+> 
+> Use the inflated blob size to determine whether writing an object to a
+> packfile will exceed the configured "pack.packSizeLimit".
 
-Makes sense.
+I agree that this is a reasonable tradeoff:
+
+  - For small objects it's probably not going to make a huge difference,
+    as we'd at most waste a couple kilobytes.
+
+  - For large objects we can expect that we wouldn't use deltification
+    anyway due to "core.bigFileThreshold".
+
+  - We can expect that in many cases large files will be not compress
+    well, either, as it's more likely than not that a file >512MB (our
+    default limit for "core.bigFileThreshold") is going to be a binary
+    file.
+
+We also nicely document "pack.packSizeLimit" as "rarely useful, and may
+result in a larger total on-disk size" in git-config(1), so I think it's
+fair to not bend ourselves over backwards just to make a rarely-useful
+feature work exactly the same.
 
 > diff --git a/object-file.c b/object-file.c
-> index bfbb632cf8..493173eaf4 100644
+> index 493173eaf4..1de2244ac5 100644
 > --- a/object-file.c
 > +++ b/object-file.c
-> @@ -1405,6 +1404,34 @@ static void prepare_packfile_transaction(struct odb_transaction_files *transacti
->  		die_errno("unable to write pack header");
->  }
->  
-> +static int hash_blob_stream(const struct git_hash_algo *hash_algo,
-> +			    struct object_id *result_oid, int fd, size_t size)
-
-We could of course change the interface while at it to also receive the
-object type. I'll leave it to you though whether you want to go there,
-we don't have any use case for it right now anyway.
-
-> +{
-> +	unsigned char buf[16384];
-> +	struct git_hash_ctx ctx;
-> +	unsigned header_len;
+> @@ -1473,15 +1461,10 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
+>  			if ((size_t)read_result != rsize)
+>  				die("failed to read %u bytes from '%s'",
+>  				    (unsigned)rsize, path);
+> -			offset += rsize;
+> -			if (*already_hashed_to < offset) {
+> -				size_t hsize = offset - *already_hashed_to;
+> -				if (rsize < hsize)
+> -					hsize = rsize;
+> -				if (hsize)
+> -					git_hash_update(ctx, ibuf, hsize);
+> -				*already_hashed_to = offset;
+> -			}
 > +
-> +	header_len = format_object_header((char *)buf, sizeof(buf),
-> +					  OBJ_BLOB, size);
-> +	hash_algo->init_fn(&ctx);
-> +	git_hash_update(&ctx, buf, header_len);
-> +
-> +	while (size) {
-> +		size_t rsize = size < sizeof(buf) ? size : sizeof(buf);
-> +		ssize_t read_result = read_in_full(fd, buf, rsize);
-> +
-> +		if ((size_t)read_result != rsize)
-> +			return -1;
+> +			if (rsize)
+> +				git_hash_update(ctx, ibuf, rsize);
 
-It would be a bit cleaner to first check whether `read_result < 0`
-before casting.
+Is this guard really needed? I wouldn't expect that we ever try to read
+zero bytes into `ibuf`, and we bail in case we didn't receive the
+expected number of bytes.
 
-    if (read_result < 0 || (size_t) read_result != rsize)
-        return -1;
+And even if we did, `git_hash_update()` works just fine with no data.
 
-Doesn't make a difference in practice though.
-
-> +		git_hash_update(&ctx, buf, rsize);
-> +		size -= read_result;
-> +	}
-> +
-> +	git_hash_final_oid(result_oid, &ctx);
-> +
-> +	return 0;
-> +}
-
-Overall, this function really is simple enough to pull out, even if it
-duplicates a tiny amount of logic. Also, it has the benefit that we can
-easily skip deflating the data, which we used to do even if we didn't
-ultimately write the data to disk, so it was just pointless busywork.
-
-> @@ -1642,7 +1655,7 @@ int index_fd(struct index_state *istate, struct object_id *oid,
->  	     int fd, struct stat *st,
->  	     enum object_type type, const char *path, unsigned flags)
+> @@ -1592,48 +1566,34 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
+>  					   size_t size, const char *path)
 >  {
-> -	int ret;
-> +	int ret = 0;
+>  	struct transaction_packfile *state = &transaction->packfile;
+> -	off_t seekback, already_hashed_to;
+>  	struct git_hash_ctx ctx;
+>  	unsigned char obuf[16384];
+>  	unsigned header_len;
+>  	struct hashfile_checkpoint checkpoint;
+>  	struct pack_idx_entry *idx;
 >  
->  	/*
->  	 * Call xsize_t() only when needed to avoid potentially unnecessary
+> -	seekback = lseek(fd, 0, SEEK_CUR);
+> -	if (seekback == (off_t)-1)
+> -		return error("cannot find the current offset");
 
-In practice this doesn't have to be zero-initialized
+Okay, no seeking necessary because we don't restart the write anymore.
 
-> @@ -1659,18 +1672,23 @@ int index_fd(struct index_state *istate, struct object_id *oid,
->  		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
->  				 type, path, flags);
->  	} else {
-> -		struct object_database *odb = the_repository->objects;
-> -		struct odb_transaction_files *files_transaction;
-> -		struct odb_transaction *transaction;
+>  	header_len = format_object_header((char *)obuf, sizeof(obuf),
+>  					  OBJ_BLOB, size);
+>  	transaction->base.source->odb->repo->hash_algo->init_fn(&ctx);
+>  	git_hash_update(&ctx, obuf, header_len);
+>  
+> +	/*
+> +	 * If writing another object to the packfile could result in it
+> +	 * exceeding the configured size limit, flush the current packfile
+> +	 * transaction.
+> +	 */
+
+Do we want to document that this intentionally works on the inflated
+size, not the deflated one, with the arguments mentioned in the commit
+message?
+
+> +	if (state->nr_written && pack_size_limit_cfg &&
+> +	    pack_size_limit_cfg < state->offset + size)
+> +		flush_packfile_transaction(transaction);
+
+And we now flush the packfile before writing any object that may cause
+us to bust the size limit. Makes sense.
+
+>  	CALLOC_ARRAY(idx, 1);
+>  	prepare_packfile_transaction(transaction);
+>  	hashfile_checkpoint_init(state->f, &checkpoint);
+>  
+> -	already_hashed_to = 0;
 > -
-> -		transaction = odb_transaction_begin(odb);
-> -		files_transaction = container_of(odb->transaction,
-> -						 struct odb_transaction_files,
-> -						 base);
-> -		ret = index_blob_packfile_transaction(files_transaction, oid, fd,
-> -						      xsize_t(st->st_size),
-> -						      path, flags);
-> -		odb_transaction_commit(transaction);
-> +		if (flags & INDEX_WRITE_OBJECT) {
-> +			struct object_database *odb = the_repository->objects;
-> +			struct odb_transaction_files *files_transaction;
-> +			struct odb_transaction *transaction;
-> +
-> +			transaction = odb_transaction_begin(odb);
-> +			files_transaction = container_of(odb->transaction,
-> +							 struct odb_transaction_files,
-> +							 base);
-> +			ret = index_blob_packfile_transaction(files_transaction, oid, fd,
-> +						      xsize_t(st->st_size), path);
-> +			odb_transaction_commit(transaction);
+> -	while (1) {
+> -		prepare_packfile_transaction(transaction);
+> -		hashfile_checkpoint(state->f, &checkpoint);
+> -		idx->offset = state->offset;
+> -		crc32_begin(state->f);
+> -
+> -		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+> -					 fd, size, path))
+> -			break;
+> -		/*
+> -		 * Writing this object to the current pack will make
+> -		 * it too big; we need to truncate it, start a new
+> -		 * pack, and write into it.
+> -		 */
+> -		hashfile_truncate(state->f, &checkpoint);
+> -		state->offset = checkpoint.offset;
+> -		flush_packfile_transaction(transaction);
+> -		if (lseek(fd, seekback, SEEK_SET) == (off_t)-1)
+> -			return error("cannot seek back");
+> -	}
 
-Okay. It's a bit sad that we have to reach into the files backend here,
-but we already did beforehand, and maybe a subsequent commit will fix
-this? Reading on.
+Hm. I was briefly wondering whether we'd loop indefinitely in case the
+object alone is bigger than the packsize. But we have an escape hatch in
+`stream_blob_to_pack()` that special-cases when we haven't written any
+data yet, so the answer is "no".
 
-On another note, it's somewhat curious that the commit doesn't return an
-error code. Probably something we should fix eventually.
+> +	hashfile_checkpoint(state->f, &checkpoint);
+> +	idx->offset = state->offset;
+> +	crc32_begin(state->f);
+> +	stream_blob_to_pack(state, &ctx, fd, size, path);
+>  	git_hash_final_oid(result_oid, &ctx);
+
+Thanks!
 
 Patrick
