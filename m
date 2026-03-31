@@ -1,168 +1,127 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557A93FA5D9
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87620421F1F
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975046; cv=none; b=TYvKoSypkDtwKtFiG9Gc04V8UWaUooBvfYhLzdnT1V0lcscmF/yfjZOidj9OeiCzx/avujyyIxPpf9XMquP80DUfkgl8fl3LERV1rLxX1EHIV++zBV8fOQYkYtjloBKQQATO/7tEmoKKA31AuD8T1ApSwNsdu1fGcFyt9vNLU8w=
+	t=1774975405; cv=none; b=VbGM/5gJ9KKAQ7c70r5lUzw3E5qtpOhy5FP5owIZS/SSZywCQBCMwiHq3MkH6p90jhjxIjdQ5AwjayFuyeWAqoowcAr1jF4E+WcNn0QyZJWQBzmV1qBhXLVJu8OFo0MKIOUu57QAMj0GPeeoiFxT/eg7kaE7g8smkCsXmnEKDWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975046; c=relaxed/simple;
-	bh=YACnDrXXV7iQnN0eujgXKp/3BNQx+8tw1igvNReQNsA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jy4Nv2a8e5d0KFvClZvirlkL/YcAuu37tsl/YMoxk74zaGzK7ec3d6BUI/GVtPVMTgwvUVel34CsHaiyUte1yFxavlPgGuiHJJZrRRJtiejwbnFht/rbE+t/gUppFDJJ8TrugQp/UNPL6mVI5nuiAOQbuzTbDVRjY9kMdCBln3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bThahNN9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cXgdVE71; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774975405; c=relaxed/simple;
+	bh=n9pTwEDa/NMPSjVCBpyaYMYaauGGINK5PoCH3dURndM=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ir23pxJlioEl4h283EJ9P3HQkEo+i0IWx3aPr4iDk6ls4QNzxDzpxqpGExRKM/DTNqhXXVtY0i8DYvJwahhWWuzCMK5q1uL4IpWOxsm73npGVtEmLGBLdwwKBeRe3poW8keq+r8XpsUe9xSkElskrOyb/hURywxCNxWaD12RA4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QxQiFsgq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jAwxt6v3; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bThahNN9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cXgdVE71"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6E3ED140020B;
-	Tue, 31 Mar 2026 12:37:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 31 Mar 2026 12:37:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774975044; x=1775061444; bh=ez7A+wm52t
-	/RSuzlZuZAT1Wg3Nyrb783BX7cd7s3pso=; b=bThahNN9DaBcV5Z1VkwP05vFyI
-	8jtydmYYW1CB7qILOBY/M2O4AiiV0y4axzS0h+9HzaSLUDYaIR9xC4rR5wnSDChS
-	HPpMTVma8MjB1CoaQf1FytKY2GYxMk2O9INeXBfYc8Ge/+xq98u0RsbQ6wGIsxeD
-	cF5DhONGKvcgpw5OPNSBgBl6rTlt/MXH+W6shu1b/5KtFaqTTT2Ww3tPVATrKuV1
-	lvIFG7TnMLMHk/e1SP1ppyTh91gERAiDdVzeVigmfeWH6Nr7FY1M5aS8DLOYSoTh
-	JQmsEaKSspSlQQ8Fz45EEWz+jKgYu3A9P4kF/UrEPVmeR4H4T9u1OHEu5GOg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QxQiFsgq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jAwxt6v3"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 84403140013E;
+	Tue, 31 Mar 2026 12:43:23 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 31 Mar 2026 12:43:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1774975403;
+	 x=1775061803; bh=zdCmyPI6PlP5Gn+EgrKVP3PhSkjpwTHEEKG5OyYXXvI=; b=
+	QxQiFsgqYLMleDFToM7dYA1+l59plyOfJI/XKE+a/Ho0peWuGX0xLT3/E6wS0a0O
+	zyyouLSCo8lnTUuaHqij2GH0WQVpuqJfEG8kYRzZeOm+uPXjTlcl5XqjcoU/SYdl
+	8sgP60AYHSgiXfaLGEg60KXt6ujY9xisXOw+w6KAh5tmO8g4ON86kLGaf72TBvK5
+	s9WyCuJ7npnpHUASj93PwL1nb3OgGVfoucUXts2gqSg0iMPos1HuAbvTPR02iBAC
+	KalGA1U1eHCx0OvNc7NxTVpvwkb4h2c1tJejVbFpPJcc7hWHZVjz1S3eS3jsQQ9I
+	4Vjq2T8ivE06lqOQ6zH9xQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774975044; x=1775061444; bh=ez7A+wm52t/RSuzlZuZAT1Wg3Nyrb783BX7
-	cd7s3pso=; b=cXgdVE71FuUHmpl8wXloMkCAcvRlDYX/3TvCySGfOQCwbTHhBAm
-	Ab4kSUJZveHnSjGiWJpHF5cWQQH2g9xtl0yAHFk+qaWfanRTsjqsjkHKNjLiJupP
-	pZ0QdfbW1Vboe+GiKVR4yrJdbQeRtBZkuw9/NMLlPV2VlUdLxIiHPg6SArSXwh8G
-	VLec6BPUhdIbcUTu9Ggw8AVRIYTWjCk8WI7+4X5bEhp5mr35yz3Nyb1ItAY48rll
-	6FNur3Mus4zwXq4eRhbtc/mOVMfydixkIVzDTQgcAkOt63QlCGSWYiIdxEbW3yoR
-	yjhW6Y7vSRjXd05Bps6lh/x2KsnDtnCwFuw==
-X-ME-Sender: <xms:RPjLaYRdV5nw93IqTgz7fMCZ85tc66o0WsulzD9De_tcCjN1fnYhfw>
-    <xme:RPjLaYBttXT6ZcR_6JBla6zzttbnxUSmMu3rxmtbIp56aAC-e0K0KYmFQric4xiTt
-    74NoLAufW7Vp0Zzq9sByyq3Si79ipLEz0qFGRV8-Q6TvYm1C_zQiw>
-X-ME-Received: <xmr:RPjLaYF75I5_cglykIh-v67LFpHLUBy5tU-PlqLNthf8w951Tm5t4uizVEZFqQJORoLaA0GfRfwCsu5iyVO0t8oTNTQKTM_TSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejtdcutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1774975403; x=1775061803; bh=z
+	dCmyPI6PlP5Gn+EgrKVP3PhSkjpwTHEEKG5OyYXXvI=; b=jAwxt6v3rIU89FmKV
+	QeryQlcEGYNikgrWsxMD8HOQK/spR48om5B51vtL7ukU3udT7wtcCDVBfOBQ/6YI
+	yiEsPYyEaXG7+IvEuKm1S/QWOT/5Hc7ax5a2f3vTX2NSdVg/E+ltPQMkOo5WdnR2
+	G4h1Rexv5rUMy8AhMOaFMmcIDNn5SBxPpBvApc0IXt5NEZ9fYi2tVGtXLrXsGaE+
+	Bwo3yIRd1hZ5fgY2+GpYMRboiqJ2TxRJSfIm+43C//8RWQU3ILCmzbKRX4Q5/noV
+	Ou8C39qYnULS50OfECdIKvF/kIMyso9/ozzUhp3mfH+QP0k6gtMR4QKZLiWVK1/+
+	oVDHQ==
+X-ME-Sender: <xms:q_nLaR7ZviVi6RiJh6Rt2NPGFqLqs3EQV1UXWcP0NOZbxeQzPyXG3H4>
+    <xme:q_nLaZs5ipDH9bgxsY4cJOkTaIGBay8UsRrEN2Dt3F7O-XtftcXqPvYrHZwIE6ZhM
+    _UHVJghPwWTL530d8uZisqy3B8oftUh1OB7r2JdTgc0lY3YomJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
-    fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
-    rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshht
-    ohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopehprghulhesphgruhhlthgrrhhjrghnrdgtohhmpdhrtghpthhtohepghhithhh
-    uhgssehprghulhhishgrghgvvghkrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:RPjLaSDq2WUYdttb_ReQ-EfDk2MoLMxBHW-3Q_Co1_E5yC5e1h2vVA>
-    <xmx:RPjLaQVEVgOYdSItzNFTNsiJ939tVXNex4wvnk_x4DacZCkpzAsq6w>
-    <xmx:RPjLaerTwEm2gEyUfqWLJzScMyirvwFKp7MqlMbi5czl87dDhRQGPA>
-    <xmx:RPjLaUTSEGGsHDUic1eqSDNEBVCfEVkhDwA2mGoGlynoTZaMBRxGKA>
-    <xmx:RPjLacTgCrZNY1LAIxDszaxFV8Y08xUvsCahxEbunw6tJsvPqoWJ1fXO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 12:37:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-    Derrick Stolee <stolee@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Paul Tarjan <paul@paultarjan.com>,
-    Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v12 13/13] fsmonitor: fix split-index bitmap bounds in
- tweak_fsmonitor()
-In-Reply-To: <84ddbb30bb3862d4230ba1775d4c061832f2623f.1774937958.git.gitgitgadget@gmail.com>
-	(Paul Tarjan via GitGitGadget's message of "Tue, 31 Mar 2026 06:19:18
-	+0000")
-References: <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
-	<pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
-	<84ddbb30bb3862d4230ba1775d4c061832f2623f.1774937958.git.gitgitgadget@gmail.com>
-Date: Tue, 31 Mar 2026 09:37:22 -0700
-Message-ID: <xmqqse9g0xbx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    foggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhf
+    vghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefhfeek
+    heetgfegfeejveeikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgs
+    rghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopehgrghsphdrghhiohhrghhoshesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:q_nLacnDCbBZRJYqM8vOSn91RJCyr4cySbx5RTmqIUqSk9WkP1u-PQ>
+    <xmx:q_nLaZw7Na1YxspO5bkxzyO4_bZsZlcfIkh_60qDDVa8HUi83QCGPQ>
+    <xmx:q_nLaSMHz7jxXMCQSxDQgwVnQgwITfG7ePsLe2sHsgfcCUmP9OAdXA>
+    <xmx:q_nLaVRnazzWZ7xIHmpwe9aGp-j1TVS8EpEAnryA4QqMufeE4hzwRw>
+    <xmx:q_nLaafpUkxmEO_VBh-NTRx8LM9NOdNUg9qTeUh880F3zDhkfm4Jib2g>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5E30B1EA006B; Tue, 31 Mar 2026 12:43:23 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AHgF0jPpqFYo
+Date: Tue, 31 Mar 2026 18:43:02 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Giorgos Gasparis" <gasp.giorgos@gmail.com>, git@vger.kernel.org
+Message-Id: <fab20df3-248b-4590-9b3e-e7601404df55@app.fastmail.com>
+In-Reply-To: 
+ <CALCP2CjymE-i9TsKB8TmW_0M=ZDbtLPzZFpx4-ba01164b1MOA@mail.gmail.com>
+References: 
+ <CALCP2CjymE-i9TsKB8TmW_0M=ZDbtLPzZFpx4-ba01164b1MOA@mail.gmail.com>
+Subject: Re: [Feature Proposal] Add a built-in 'git whoami' command
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Mar 31, 2026, at 16:57, Giorgos Gasparis wrote:
+> I would like to propose adding a native git whoami command to Git to
+> easily check the currently active identity.
+>
+> Currently, users have to run two separate commands (git config
+> user.name and git config user.email) to check this. This is a frequent
+> friction point for developers balancing work and personal repositories
+> who want to double-check their active profile before committing.
+>
+> To solve this locally, I currently use the following alias in my .gitc=
+onfig:
+>
+> [alias] whoami =3D !echo "=F0=9F=91=A4 $(git config user.name) | =F0=9F=
+=93=A7 $(git config
+> user.email)"
 
-> From: Paul Tarjan <github@paulisageek.com>
->
-> When GIT_TEST_SPLIT_INDEX=yes is set and the fsmonitor daemon is
-> active, tweak_fsmonitor() can hit a BUG() assertion:
->
->   BUG: fsmonitor.c:27: fsmonitor_dirty has more entries than the index (2 > 0)
->
-> The fsmonitor_dirty EWAH bitmap may reference positions from a
-> previous index state.  With split-index, cache_nr can be smaller
-> than the bitmap expects because entries have not been merged yet.
->
-> This is related to the issue that 05f28e4b3c (scalar: use
-> index.skipHash=true for performance, 2025-06-04) worked around by
-> disabling GIT_TEST_SPLIT_INDEX in t9210, noting "the issue should
-> be resolved in a series focused on the split index."  This fixes
-> the fsmonitor bitmap side; the index.skipHash interaction remains.
+Strange. I was looking at an example from git-interpret-trailers(1) toda=
+y.
 
-Let's ask for input from the author of that scalar commit 05f28e4b3c,
-which hints that the fix should come with the focus on split-index.
+    $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git =
+config user.email)>"'
 
-I also have to wonder if we should bury the issue like this patch
-does, which is not limited to the split case (i.e., the assert
-should trigger if the requirement is not met while split-index is
-not active, but the patch castrates it), instead of mimicking what
-Derrick did to work it around on the test side, leaving the
-production code still broken, which will give us better feel on the
-urgency of the split-index case in the real world.  I dunno.
+And =E2=80=9Cgit-whoami(1)?=E2=80=9D jumped in to my mind.
 
-> Two places hit this:
->
->   - tweak_fsmonitor() calls assert_index_minimum() without the
->     !istate->split_index guard that the read path (line 98) and
->     write path (line 128) already have.  Add the same guard.
->
->   - fsmonitor_ewah_callback() unconditionally asserts and then
->     accesses istate->cache[pos], which is out of bounds with
->     split-index.  Replace the assertion with a bounds check that
->     silently skips positions beyond cache_nr.
->
-> Signed-off-by: Paul Tarjan <github@paulisageek.com>
-> ---
->  fsmonitor.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index d07dc18967..5e5a4fadea 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -33,7 +33,8 @@ static void fsmonitor_ewah_callback(size_t pos, void *is)
->  	struct index_state *istate = (struct index_state *)is;
->  	struct cache_entry *ce;
->  
-> -	assert_index_minimum(istate, pos + 1);
-> +	if (pos >= istate->cache_nr)
-> +		return;
->  
->  	ce = istate->cache[pos];
->  	ce->ce_flags &= ~CE_FSMONITOR_VALID;
-> @@ -805,7 +806,8 @@ void tweak_fsmonitor(struct index_state *istate)
->  			}
->  
->  			/* Mark all previously saved entries as dirty */
-> -			assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
-> +			if (!istate->split_index)
-> +				assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
->  			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
->  
->  			refresh_fsmonitor(istate);
+You can kind of get that with [which Junio mentioned after I wrote this =
+draft]
+
+    git var GIT_AUTHOR_IDENT | sed -e 's/> .*/>/'
+
+Too bad with the postprocessing needed for the timestamp.
+
+> Having a built-in command that provides this kind of unified,
+> single-line output natively (even as standard plain text without
+> emojis) would be a great quality-of-life improvement for the wider
+> community so they don't have to build custom aliases.
+
+A problem (subjectively) is that there are already 147 git(1) commands.
