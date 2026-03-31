@@ -1,80 +1,91 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0306B2D3EC1
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 21:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FBB3321AA
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774994063; cv=none; b=QrpW2CcyVmBYKCA2kXvQDsXxRC8oy31XhyjQnmO1VGt2PfxfYHcpQUcAywoHoLXWA/mYnfcjlV8m69yUdpgMBC+3+lLxAQrCP6yZZRy04Un+uaaoYXFqmq3tUmCLFJosKy2mZty8tUbB0dKyWIhy5k3RBfrEqwbf6GSdpkiGaqc=
+	t=1774994612; cv=none; b=ECwF47h63NWaI/Eq7IRkkrSOzWnMB3c2BVZZHVqiIxu19JA4iKQsRIU/biyrwiyLlHXPEQfEnsc4vLDyVljWWF3eTEs2SWGqm6gLUoLcLXdkVGh2n9yDMbTPCHGMFwVXlApC3mXdDgaUYIlsCuXNuEugtv0YNApgab7DCpbqCzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774994063; c=relaxed/simple;
-	bh=G4CeES3FO4RPpBEFfHcQUAwgUKGR2vggCGxtOuIURjw=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qGKm3fvhCckkl6niqaYH2fNZpYsnFoNFHNLIH6oXT9Lwlx/2iy8+IVuIVTHtuLWqzECKSuIvBVu1M6K9C+we7hl5qsAUo7NEhHMTib2QRE+0VfoTmU6OrTdAD0LTzkGkdvd7CtzoX85g6lZeahDK+O5cde4VmP+A6N7kdJC8jSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YHnIArhv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lnqags61; arc=none smtp.client-ip=202.12.124.144
+	s=arc-20240116; t=1774994612; c=relaxed/simple;
+	bh=JARR47yssmgkROmhZOBILLupyI1ihY6pHIVeiqi0/hE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LPWsrwPj0CPRX5pBFuxAuqK4Zqpl8HvJmC+R4YKpeZc+W1YH3nRZ8JTtXrP4D5vyx73CWZvERJfekMzfHnmGcT86VT2lT0FWOa9+nbeBnQ29d8Y5NNqMLSwBNFi76OURKhGlYStnysakgBa54/f8DgbyEeqU0uIIILx0ylsL8bA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LX1iHa26; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qQKaLc0G; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YHnIArhv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lnqags61"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4781B1D00077;
-	Tue, 31 Mar 2026 17:54:21 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 31 Mar 2026 17:54:21 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LX1iHa26";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qQKaLc0G"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0F7901D00124;
+	Tue, 31 Mar 2026 18:03:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 31 Mar 2026 18:03:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774994061; x=1775080461; bh=pkQRAaeEpl
-	P0pcx8tm9DF79wED5PnEh8MNpgQYlCNBU=; b=YHnIArhv77zWZNr/AelPgiSNMM
-	sZAgDcm+JSkz9PnHTyNPsad7kX3xiJDh5pEw/GtF+6xPJp3gqi/AfQTXvzPC74nQ
-	zaZ9NPK/nosVtvWtL8NDbsZT8O9qrJQyzyuZ5zKvPXi6TmJ1RGdYTqx1MmfAkIE8
-	q6OkxCwFew1jZCzucoW/k243kWgNKyx2/oztIzKoFr77WEERanovW48WAttI7auP
-	Tl5wXeoF/lACK/76fiLfEnOqMCpvHPIqzBkgfajRjM00lT2ySFsL7MFqKFiaGQsW
-	9sfn2LBNfh3gYfeRzEW5SvWAjuWYU+Bi1NYCUeO++Anv79JrO1+hcbcHkUDw==
+	:subject:to:to; s=fm1; t=1774994609; x=1775081009; bh=Jkqlncp6eM
+	4Txjh3qef6olXor+CXpT43OGa3HqatdvU=; b=LX1iHa267DKP+kbMpR5zhSlfX7
+	WCMMBDHxI4EUymGHJLtAUi0B2sbiJGNXTgR/YQOp76PxM0kM4b9Ray3yQtPqyX8B
+	q/OohKa/ZVVN9r17YT3ktou44M/zphqmog9gRDMzz3UB5ZaEfMU4KSPAt8RetSc6
+	vQwt6vpc0CNi2bisa71kFtZydAG7ejOGqD3+EuvsHz7lHUC/HQzLOFHg3JcBP/Or
+	GBDuBgaCTJS34GbgyQuIiEQGkOStggFcM1MoPOTICf62LegwP+UuI2PIVIm3ISNL
+	usvgZAPUX0b0RfkZLFkrDW9WP+rsxkA8uSH84qLHapCpLriCsAyjNzjNtqPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774994061; x=1775080461; bh=pkQRAaeEplP0pcx8tm9DF79wED5PnEh8MNp
-	gQYlCNBU=; b=Lnqags61WdN5TmlNai4DJeKJ9Ms1Aq7hAXj8xFi0khd0fDza/0A
-	m92uvgHbka2okBkXKacE7yNjVIkU6TkUXJQK/arBFqeKnBRVUf4a8TRFeABkQsh/
-	fynwRWt7/PkjcClGS3DH8slh7ePj1FwwHccrVmvsE/WGc8BY+MRDJt2/Q69ZJGnn
-	loYMplK/E9/MMzqafqngfMxgckol2GQCTgLyY8keV4fLGY1BvY3hdBKXaDmJktsS
-	EWr7eYjzNDx51S9bwN2kGe5Iqv3uhFQTthCIIjMMr8Uvvzj5I66CogvWP0fAYXwK
-	CYt2NnxABUgquTUmn6EsBIBtDnW6Ch5rL1w==
-X-ME-Sender: <xms:jULMae1dQ7pu7y8l8LyH_2-lYNhPrrO-k1-hFpzaNLa-zPu7h0f-FA>
-    <xme:jULMaXGLIcpmigqBMEXLBT4NF-7-kXwgUVpHOzw5IlQFXFjS5rTzhu0ZiZE7jD5JA
-    YNdYxlJBZySmfpXwlsFybo0qSu-VTJVpLH1YOMlIK6JKb9JWTiC>
-X-ME-Received: <xmr:jULMaUjbBPIacsdwOQg6bIjNTC6jCQSTSA89ZQ0ackHiaOS2xRffw79TPTRs7doV9kL85m-vJJfsvnuVy_wuVyk5wSDlBH2aaA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeefucetufdoteggodetrfdotf
+	1774994609; x=1775081009; bh=Jkqlncp6eM4Txjh3qef6olXor+CXpT43OGa
+	3HqatdvU=; b=qQKaLc0G10dIZ/D7WkH62jShvQuiK8Nw+gKl9X++8aVwpWvebjB
+	QzxvdYyoYdml3lC6BVZXSTP6wFar2Bubdu4JjN6sss+Y1rptFNMHzTpQNb8aplHr
+	SA/73ut4ROQf3tPRtoRGcEK5rij/Mt2w+/rQcJxV/f+M+0h33hsm8ZnyyVBLHOTH
+	AdDbo3r6SekbNQ470uH9XrmiJguUh9HnwUb4gAIn3VXftIMNia5tEsiCefWLzwtv
+	QHmzz6r9OoW2XDEmcOcbRAF6MNnBrZz3oOLP1ed96prMxK91EsjrklveUYMWwd7d
+	MomLatTAnkC6ob87XeMG1TE0PX2PDTE+Kgw==
+X-ME-Sender: <xms:sUTMaW0zFPPF94fdvJy8UU3iKlEaYrbQ0PlvgAohE3N79hVaS35SiA>
+    <xme:sUTMaYLOsiI-M89UwZ_57EHIZIoFbPfarseoMK3m_qlxnjraZiPQA0pi5JcFq3xUJ
+    lsNUoZi6kCoymBuW_vtkf_Rd8eseBer49_WP3pNHXVi7EZEKpeIhA>
+X-ME-Received: <xmr:sUTMaVF3DxtRU3z4FUMlt6VavUHAFf2aTbTM7ztQaGO8CCqgn1F3JZiVo4PgHk8oqK2kvVDhiA8KBwR9E_PZ7AJD6vAanWZGuQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefhvffujghffffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepkefhueduteekgfdtueegvdfgueeiuedvle
-    fggfefkedvffduvddvkeeuhfeifeejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:jULMaa9WTifPizyCaGeWun4CVmkx_rNN4u7Ifi8nA6RTpk6FVq6f4g>
-    <xmx:jULMaTqgVrO1faI21eXgK7z2rxYv4l831n_PfjqaHGDHFPMRvCINLA>
-    <xmx:jULMaR9A5s78mU9X_71tlcmxfAYua8SKsHBHmefhwVYX2DS4QFiKbA>
-    <xmx:jULMafXZzc9P-1uTWy6eFDmwgJscTQ2SfU8f5f5CJ_zi1Oy3jCJdrQ>
-    <xmx:jULMaaPmBrzaEdDy84Txdo0TVqQ2ULCPSD_5NrrMBDTbGCgSdSAQ2npQ>
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholh
+    esthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:sUTMaUWxXRwHP-I19nI_aa3Pco8q8hb3DS1goMJxCBdaaik4Xu4iDg>
+    <xmx:sUTMadwGA6ucQt7zLfXGz4GC0ySx2X7v6bPzVuKdJhmt03K7GG0wdg>
+    <xmx:sUTMaZSR-4NT0jUGVSdchhZ13NjGxGJjc8Wy61tIuJX5t9U0vDfvOQ>
+    <xmx:sUTMaZhEG0a19cDynhntySh9lee6-1FP5v2ldboHkn0lB5yVw6a67w>
+    <xmx:sUTMaW3tw7X6y91vTfT24iwP2S7_jl85VKEGasMIg3goge4feR_ALgjc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 17:54:20 -0400 (EDT)
+ 31 Mar 2026 18:03:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: [PATCH] apply: fix new-style empty context line triggering
- incomplete-line check
-In-Reply-To: <xmqqldfql4hp.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	17 Mar 2026 11:01:38 -0700")
-References: <xmqqldfql4hp.fsf@gitster.g>
-Date: Tue, 31 Mar 2026 14:54:19 -0700
-Message-ID: <xmqq7bqry8ac.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 14/16] promisor-remote: trust known remotes matching
+ acceptFromServerUrl
+In-Reply-To: <CAP8UFD2vAK_khTkJMP4QBfhYA5iYVW5sfB3i-vnzhf71BvwQ=w@mail.gmail.com>
+	(Christian Couder's message of "Fri, 27 Mar 2026 13:17:59 +0100")
+References: <20260323080520.887550-1-christian.couder@gmail.com>
+	<20260323080520.887550-15-christian.couder@gmail.com>
+	<xmqqzf3y4bsg.fsf@gitster.g>
+	<CAP8UFD2vAK_khTkJMP4QBfhYA5iYVW5sfB3i-vnzhf71BvwQ=w@mail.gmail.com>
+Date: Tue, 31 Mar 2026 15:03:27 -0700
+Message-ID: <xmqq341fy7v4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,84 +95,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> A new-style unified context diff represents an empty context line
-> with an empty line (instead of a line with a single SP on it).  The
-> code to check whitespace errors in an incoming patch is designed to
-> omit the first byte of a line (typically SP, "-", or "+") and pass the
-> remainder of the line to the whitespace checker.
+>> Between the first sentence and the second one, I think there needs
+>> to be an explanation on what "trusted" means in this context.  Is it
+>> trusted so that the URL can feed random configuration variable=value
+>> pairs for the client to blindly apply?  Or is it trusted to do very
+>> limited things that other remotes can do, and if so what are these
+>> limited things?  Without knowing that, the end-users cannot assess
+>> the security implications of setting this option.
 >
-> Usually we do not pass a context line to the whitespace error checker,
-> but when we are correcting errors, we do.  This "remove the first
-> byte and send the remainder" strategy of checking a line ended up
-> sending a zero-length string to the whitespace checker when seeing a
-> new-style empty context line, which caused the whitespace checker to
-> say "ah, you do not even have a newline at the end!", leading to an
-> "incomplete line" in the middle of the patch!
->
-> Fix this by pretending that we got a traditional empty context line
-> when we drive the whitespace checker.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  apply.c                  | 12 ++++++++++--
->  t/t4124-apply-ws-rule.sh | 16 ++++++++++++++++
->  2 files changed, 26 insertions(+), 2 deletions(-)
+> Yeah, in the current version, the following is used, which is more explicit:
+> ...
 
-There were only comments on the unnecessary uses of subshell in
-test, which were fixed since then, and I've been using them in
-production without problems, so let me mark this for 'next' now.
+Do you mean by "the current version", the one you are preparing as
+an updated iteration?
 
-Objections and better yet polishing on top are of course welcome.
+If so, let me mark the topic to be expecting a reroll.  From the
+reviews by Patrick, I am not sure if I should also add the usual
+"(hopefully small and final)" in this case, not just yet, though.
 
-> diff --git a/apply.c b/apply.c
-> index f01204d15b..e88e5c77e3 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -1796,8 +1796,16 @@ static int parse_fragment(struct apply_state *state,
->  			trailing++;
->  			check_old_for_crlf(patch, line, len);
->  			if (!state->apply_in_reverse &&
-> -			    state->ws_error_action == correct_ws_error)
-> -				check_whitespace(state, line, len, patch->ws_rule);
-> +			    state->ws_error_action == correct_ws_error) {
-> +				const char *test_line = line;
-> +				int test_len = len;
-> +				if (*line == '\n') {
-> +					test_line = " \n";
-> +					test_len = 2;
-> +				}
-> +				check_whitespace(state, test_line, test_len,
-> +						 patch->ws_rule);
-> +			}
->  			break;
->  		case '-':
->  			if (!state->apply_in_reverse)
-> diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-> index 29ea7d4268..8573e12f46 100755
-> --- a/t/t4124-apply-ws-rule.sh
-> +++ b/t/t4124-apply-ws-rule.sh
-> @@ -561,6 +561,22 @@ test_expect_success 'check incomplete lines (setup)' '
->  	git config core.whitespace incomplete-line
->  '
->  
-> +test_expect_success 'no incomplete context line (not an error)' '
-> +	test_when_finished "rm -f sample*-i patch patch-new target" &&
-> +	(test_write_lines 1 2 3 "" 4 5 ) >sample-i &&
-> +	(test_write_lines 1 2 3 "" 0 5 ) >sample2-i &&
-> +	cat sample-i >target &&
-> +	git add target &&
-> +	cat sample2-i >target &&
-> +	git diff-files -p target >patch &&
-> +	sed -e "s/^ $//" <patch >patch-new &&
-> +
-> +	cat sample-i >target &&
-> +	git apply --whitespace=fix <patch-new 2>error &&
-> +	test_cmp sample2-i target &&
-> +	test_must_be_empty error
-> +'
-> +
->  test_expect_success 'incomplete context line (not an error)' '
->  	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
->  	(test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
+Thanks.
