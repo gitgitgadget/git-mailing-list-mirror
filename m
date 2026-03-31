@@ -1,127 +1,104 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87620421F1F
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCA51C861A
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:44:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774975405; cv=none; b=VbGM/5gJ9KKAQ7c70r5lUzw3E5qtpOhy5FP5owIZS/SSZywCQBCMwiHq3MkH6p90jhjxIjdQ5AwjayFuyeWAqoowcAr1jF4E+WcNn0QyZJWQBzmV1qBhXLVJu8OFo0MKIOUu57QAMj0GPeeoiFxT/eg7kaE7g8smkCsXmnEKDWI=
+	t=1774975445; cv=none; b=sjDKqQ4Iz7MNdAu75edhHtHh+1oIrJB39LBq0SP0WsiQlSYH3aepU1DPdd29WkNMSVlB+X82kOJYh/qzdyySXiktDq3OoPyYWC0po8u39EoxSklaWm4t7TrEJ7GR+iqUS/ihzNHfRtaTubzC/rkSZZuD20lU+OnGZl+UViM1IJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774975405; c=relaxed/simple;
-	bh=n9pTwEDa/NMPSjVCBpyaYMYaauGGINK5PoCH3dURndM=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ir23pxJlioEl4h283EJ9P3HQkEo+i0IWx3aPr4iDk6ls4QNzxDzpxqpGExRKM/DTNqhXXVtY0i8DYvJwahhWWuzCMK5q1uL4IpWOxsm73npGVtEmLGBLdwwKBeRe3poW8keq+r8XpsUe9xSkElskrOyb/hURywxCNxWaD12RA4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QxQiFsgq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jAwxt6v3; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1774975445; c=relaxed/simple;
+	bh=1pg46XxcX5LXjCq5egwWVMYg3OJxntR5/m9hAuE8k9I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oGKjg6ZKC4xI32fgW1cej800aqyVRvbk8DCoSDhwyc68wMoTOtY3+15BaDugVXUeQW4TWOHXgXqhatugFNswxh/3btf1RY8FEx6QRP1dLeQln4vlp2Hh6M1q2i/l1N5g6hW1rEZyEGbiZ4rHBNW7qIZGTgaYstXl2WuHaouNDJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kiMKpEaT; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QxQiFsgq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jAwxt6v3"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 84403140013E;
-	Tue, 31 Mar 2026 12:43:23 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 31 Mar 2026 12:43:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1774975403;
-	 x=1775061803; bh=zdCmyPI6PlP5Gn+EgrKVP3PhSkjpwTHEEKG5OyYXXvI=; b=
-	QxQiFsgqYLMleDFToM7dYA1+l59plyOfJI/XKE+a/Ho0peWuGX0xLT3/E6wS0a0O
-	zyyouLSCo8lnTUuaHqij2GH0WQVpuqJfEG8kYRzZeOm+uPXjTlcl5XqjcoU/SYdl
-	8sgP60AYHSgiXfaLGEg60KXt6ujY9xisXOw+w6KAh5tmO8g4ON86kLGaf72TBvK5
-	s9WyCuJ7npnpHUASj93PwL1nb3OgGVfoucUXts2gqSg0iMPos1HuAbvTPR02iBAC
-	KalGA1U1eHCx0OvNc7NxTVpvwkb4h2c1tJejVbFpPJcc7hWHZVjz1S3eS3jsQQ9I
-	4Vjq2T8ivE06lqOQ6zH9xQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1774975403; x=1775061803; bh=z
-	dCmyPI6PlP5Gn+EgrKVP3PhSkjpwTHEEKG5OyYXXvI=; b=jAwxt6v3rIU89FmKV
-	QeryQlcEGYNikgrWsxMD8HOQK/spR48om5B51vtL7ukU3udT7wtcCDVBfOBQ/6YI
-	yiEsPYyEaXG7+IvEuKm1S/QWOT/5Hc7ax5a2f3vTX2NSdVg/E+ltPQMkOo5WdnR2
-	G4h1Rexv5rUMy8AhMOaFMmcIDNn5SBxPpBvApc0IXt5NEZ9fYi2tVGtXLrXsGaE+
-	Bwo3yIRd1hZ5fgY2+GpYMRboiqJ2TxRJSfIm+43C//8RWQU3ILCmzbKRX4Q5/noV
-	Ou8C39qYnULS50OfECdIKvF/kIMyso9/ozzUhp3mfH+QP0k6gtMR4QKZLiWVK1/+
-	oVDHQ==
-X-ME-Sender: <xms:q_nLaR7ZviVi6RiJh6Rt2NPGFqLqs3EQV1UXWcP0NOZbxeQzPyXG3H4>
-    <xme:q_nLaZs5ipDH9bgxsY4cJOkTaIGBay8UsRrEN2Dt3F7O-XtftcXqPvYrHZwIE6ZhM
-    _UHVJghPwWTL530d8uZisqy3B8oftUh1OB7r2JdTgc0lY3YomJQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
-    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
-    foggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhf
-    vghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefhfeek
-    heetgfegfeejveeikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgs
-    rghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehgrghsphdrghhiohhrghhoshesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:q_nLacnDCbBZRJYqM8vOSn91RJCyr4cySbx5RTmqIUqSk9WkP1u-PQ>
-    <xmx:q_nLaZw7Na1YxspO5bkxzyO4_bZsZlcfIkh_60qDDVa8HUi83QCGPQ>
-    <xmx:q_nLaSMHz7jxXMCQSxDQgwVnQgwITfG7ePsLe2sHsgfcCUmP9OAdXA>
-    <xmx:q_nLaVRnazzWZ7xIHmpwe9aGp-j1TVS8EpEAnryA4QqMufeE4hzwRw>
-    <xmx:q_nLaafpUkxmEO_VBh-NTRx8LM9NOdNUg9qTeUh880F3zDhkfm4Jib2g>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5E30B1EA006B; Tue, 31 Mar 2026 12:43:23 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kiMKpEaT"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7d751ef36ccso3217271a34.0
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 09:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774975443; x=1775580243; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mDERe+XPXB/Qd0LQea+JaqIkVI4+aZdvHwXIpjrXHKE=;
+        b=kiMKpEaTbHEtGtksF7VLDl41kPg1jlA1q7lQJ6PhSzbN6BaxtebXgcjin+tfk65aST
+         kyn08gLqEeVgLNiHGhEHu3g/miNjPda2O9eE1zLLw+BTXP6GcQAAyKJPaUIhC/hDHdCU
+         MuF+Fm8QsTZNzhBHm8xxvSCUY+to8ZdeZPvTQkn8ziMqOdsstfUQhmlsf/GOYo0lDrjI
+         t7yiTXVL8xisEz9Nd9dbLMVpSDNzFCu+KGPdxPPjiRkfSU1ocjBhtGsVrfG2gcYWjS2V
+         rdb3Ho24zwkFByP74zDXGL8wnR75qlcNBsfIjZv9i9ZWkQZXQR1nVQtTBoqpybKk6gRU
+         Bqig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774975443; x=1775580243;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mDERe+XPXB/Qd0LQea+JaqIkVI4+aZdvHwXIpjrXHKE=;
+        b=kBluqzh8zJKof6aVOsUwih18E6/ANsOrZWB1zAx9unSGsmtqvUuSGx1xOhPhy7yNQ5
+         0uM6sV557Zx83GiSxzHzTVSRFlkdpeUhpSHaf0DsMa6JCKwZeA+KFxAP8aCY/dqyhIef
+         8TVL9kB/tgX+Jx0NoKqJ4cyr9m+/JgM6A0Obt8+egPHtVZXd6JJc0fboTKzyv6K1AMpj
+         5YEkndFph+Po9CPLoj21gQTi7b0Ka6EjvaPziJHL7oedzjeIFYlDz5EjWjXqK+1svbxO
+         7eq3Ek/G8PCSpCEZ6b339JGCfgPqO9JxmaJx73pJEOIXrL8mG+J2S7k2K3TIjkYY2JFL
+         PWzA==
+X-Forwarded-Encrypted: i=1; AJvYcCWdRpXJNW1yQSYK3lnKtDaIt4SdWoTFFdtu+Q44GXiBR4MicHop51qRI6mjQfudrIBcZPk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQG2ObAelkQSS11zSvgR/7TxXEvsnfq/Zw1SJMtle02peTOaGp
+	eaxx5pY8hze3kmgmorapr/EVeLAJhLyoy9Z6cdpopf+QiMW3n4BH3j2Z
+X-Gm-Gg: ATEYQzwkisb1OVt5qdq3Chyw5tSjfxj0efCejBvBM0VSL7Bg8xyR3YW5qkrk2rdIpnW
+	IACaD2r8O99GUZy5oqEAmYl95omnUILkFmHN2K0FY6YanbokECS8iygMQXCbSAQ4Mf9Xehs3aTI
+	5lvNl2H9MCL9ppeYO9QPTDwECaUBzLitkET/ruQnvUCvXIHOWVrqX+gOTpKsMFBu3jVLdiKE/Bp
+	GtxSkm5HnrJdNRDMSaOMEMiHvmZMOjs2onN2HAfkZ7Z5cdvRpc5xmiqxvliI8NVMyd22pc4rMHC
+	8GKcsIug+40tvSmrI5CdSlvVe+DO6tJ3erICeTmvZ8TGyQhAlLLS1DjsI+m+oeTus7Ie4Y6gzSw
+	JWWtduTIqm4vQIVEOph81Fbg4K3a/mvT1Cq4pXI3f/fuwDkY4IBR4jifmFZvHUZ4PBgoSzWZk5Q
+	O6Kr3G+h3X+UQfUBnz
+X-Received: by 2002:a05:6830:6d48:b0:7d7:fd7d:b035 with SMTP id 46e09a7af769-7db9946f8b8mr202934a34.32.1774975442746;
+        Tue, 31 Mar 2026 09:44:02 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da0a335421sm8369400a34.3.2026.03.31.09.44.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 09:44:02 -0700 (PDT)
+Date: Tue, 31 Mar 2026 11:44:01 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 1/6] odb: split `struct odb_transaction` into separate
+ header
+Message-ID: <acv5lsgfw2eKDCkO@denethor>
+References: <20260331033835.2863514-1-jltobler@gmail.com>
+ <20260331033835.2863514-2-jltobler@gmail.com>
+ <act8SB3hqHvleT_Z@pks.im>
+ <acvSQ_qeA79LV-8y@denethor>
+ <xmqqmrzo2dpk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AHgF0jPpqFYo
-Date: Tue, 31 Mar 2026 18:43:02 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Giorgos Gasparis" <gasp.giorgos@gmail.com>, git@vger.kernel.org
-Message-Id: <fab20df3-248b-4590-9b3e-e7601404df55@app.fastmail.com>
-In-Reply-To: 
- <CALCP2CjymE-i9TsKB8TmW_0M=ZDbtLPzZFpx4-ba01164b1MOA@mail.gmail.com>
-References: 
- <CALCP2CjymE-i9TsKB8TmW_0M=ZDbtLPzZFpx4-ba01164b1MOA@mail.gmail.com>
-Subject: Re: [Feature Proposal] Add a built-in 'git whoami' command
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmrzo2dpk.fsf@gitster.g>
 
-On Tue, Mar 31, 2026, at 16:57, Giorgos Gasparis wrote:
-> I would like to propose adding a native git whoami command to Git to
-> easily check the currently active identity.
->
-> Currently, users have to run two separate commands (git config
-> user.name and git config user.email) to check this. This is a frequent
-> friction point for developers balancing work and personal repositories
-> who want to double-check their active profile before committing.
->
-> To solve this locally, I currently use the following alias in my .gitc=
-onfig:
->
-> [alias] whoami =3D !echo "=F0=9F=91=A4 $(git config user.name) | =F0=9F=
-=93=A7 $(git config
-> user.email)"
+On 26/03/31 08:58AM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > On 26/03/31 09:48AM, Patrick Steinhardt wrote:
+> >> On Mon, Mar 30, 2026 at 10:38:30PM -0500, Justin Tobler wrote:
+> >> > The current ODB transaction interface is collocated with other ODB
+> >> 
+> >> s/collocated/colocated/
+> >
+> > I wonder if this a regional spelling difference. My spell check doesn't
+> > seem to like this variant.
+> 
+> Collocate is a verb that is defined as words or items being set side
+> by side. This word has been around since the early 1500s.  Colocate
+> is a verb that means to place two or more items closely together,
+> sometimes in order to use a shared resource.
+> 
+> https://grammarist.com/spelling/collocate-vs-colocate/
 
-Strange. I was looking at an example from git-interpret-trailers(1) toda=
-y.
+Ahh, good to know. Will fix this in my next version. :)
 
-    $ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git =
-config user.email)>"'
-
-And =E2=80=9Cgit-whoami(1)?=E2=80=9D jumped in to my mind.
-
-You can kind of get that with [which Junio mentioned after I wrote this =
-draft]
-
-    git var GIT_AUTHOR_IDENT | sed -e 's/> .*/>/'
-
-Too bad with the postprocessing needed for the timestamp.
-
-> Having a built-in command that provides this kind of unified,
-> single-line output natively (even as standard plain text without
-> emojis) would be a great quality-of-life improvement for the wider
-> community so they don't have to build custom aliases.
-
-A problem (subjectively) is that there are already 147 git(1) commands.
+Thanks,
+-Justin
