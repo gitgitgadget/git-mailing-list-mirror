@@ -1,126 +1,181 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f194.google.com (mail-yw1-f194.google.com [209.85.128.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE838F23D
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C781538F23D
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 22:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774995678; cv=none; b=AKeRw4deSAqjRWzCMgKEy3aaL68TrXhr/VBsnAy88X9/BUN5E1LKxUriSS67piztoie89S0ta5xFqNmhn3FkgX0mNbHabrwVlGpUTt9QBUZKHc84FMQ3WYXG7mMsQEHoxpq2JZFdrTv4AAFKFS7NRZf0EbnD5MiLpxrIP3iDmC0=
+	t=1774995968; cv=none; b=Z/YjLYpsxpDqe/q4Q412bJ7GS5pGh/AmGd/dvjGNjNyu/l9DEuCezB1mHoH1poYu6f8xCTEX4CCzr+p8M6+ObExJHl+bz7/W9wY/O/Rpb+iJLUMD4fT0dVtQ7UqMUfLM0HZLBoZHJu3w/7XARJss87aVVUXincjCnCqag3Z4pyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774995678; c=relaxed/simple;
-	bh=aHzK9/7TVlafhWYEcjg3G4GiBGNsA99a6WIWF+eOTbI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DVnjo5Bm3tinx/uHL4tlA4nqfqZ6Ynq51KIinljtlo5K+sc29K2I1EM+i4SqN/LpOuXNPtNR7WOUh885lr6Wab9EzfgLd5gwcrex+eXmzoMjYMXFuqi+XgG3mc9yD00BtQXvQCCiZZOEiKKk1zycKYn5eNi7C8AG2GgHUXZmK98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ppMiqXFv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v5agNzMm; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774995968; c=relaxed/simple;
+	bh=Xx60UJy13/vjVCbR1vQHFem2QPmW8krf5n8Q2CdPTUY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NeqD/JFhX1WkS32VU5UumAcdFviUOtAx2PNOzsP3Qs+SwZI7ZMKzp3tNRXGN3AMEZLWvaZGhbP3xNpO0ZIsA7HUcZXES5p7RNBN2+q/Ie1XtlC+Gjaf+HANQUV0PfWpAW4Sl+lB+CQJyk6OcxbGwT3ldAssiR1QqQ/Avu2hbMow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Y+WMDltq; arc=none smtp.client-ip=209.85.128.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ppMiqXFv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v5agNzMm"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3E8A17A019F;
-	Tue, 31 Mar 2026 18:21:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 31 Mar 2026 18:21:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774995676; x=1775082076; bh=bOWQxBe4rS
-	Mxuscu/mGcted1JYYhqsa2qWkGmvp+9TM=; b=ppMiqXFvGmEhFsKZZ3OuClMvDf
-	tF7UOzCOSlqQZLV+xLUEIiqdPuJimjemKDDIozJHGJSmKsyypnISbwPge/tkyVfE
-	zZr/qGV5LCuZpFCzDLIIR50Fbp9bsQT4eATpVEVQy0DJ6oUDwlNX96W/sj6Z45JC
-	UZP3zfm8CnQxhubjCJFB7cbym2QPsxSJsjIjYkhoyXlzd+ykd+I3ysrnwCUDJj+O
-	yC/3S+1fkCc4NhSxGwFToq5wnAy6r55gaRNbycX9F4NG4w98n156j14cOCWQGYLs
-	YdQ89Ub+UwtD+kY2BdXCmp8BEDfjjDjaA18fXt83KeVWLqSSOMLagZQOhAMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774995676; x=1775082076; bh=bOWQxBe4rSMxuscu/mGcted1JYYhqsa2qWk
-	Gmvp+9TM=; b=v5agNzMm5c9XAbv/ExYB4vBniEs/oQdeIRaAxAP2KvRS/xuwggi
-	2KQfaAY2T76eATpNLJXGzEZ0aKxkcY5hVlJZGKmVOhbdnwEBXg1nxE5bFhRA7qKh
-	zQFnK7dJUkmp6qIWDUm6rMhVfYHyvRWlhtOFTlkGCpZTzXQAwxwdeukclQVeCkzI
-	X7blVLHPRbwtBz5elQZs2fHVm2xbZ2YGvOKqyqj2bsjg4HkrOg941zE62/2vaex/
-	QngchNTigIU62SwDmVxCd+BEyBU309E9vnfT3w6zhdyNOPHYfuzAUdwlkrAU13Ck
-	l5ZgWpARyC+qiWleX3S8aQmtvX6lI1A6SGA==
-X-ME-Sender: <xms:20jMaf0T9g1_DegFoMsWSPnTbr2DsKOPKuCTocvu3Kkvb-KxJMkbMw>
-    <xme:20jMaaq3w1KsbrdMEzm7SMP6KBmntpuwGaRcOADdPf_HpFBC6ki3w9XaFu7yp-RYg
-    NokCtrxV2b-kBCLDRQ_kN-Y2MApB9MxRgF63wdPJR33ICZd7fn1rA>
-X-ME-Received: <xmr:20jMaUUotkRfmOKB_CMVu5praTKZaYT4kXXmJBbTzydaOJ8favn16oADvL_p8LQrlpTopTpTAZEni8KgGi_wkFxLXIhuVNT69A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtre
-    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffue
-    efjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghlohho
-    shgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesrhhunhigihihuhdrohhrghdprhgt
-    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhl
-    thhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkh
-    grrhesghhmrghilhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghn
-    rgefudesghhmrghilhdrtghomhdprhgtphhtthhopegthhgrnhgurhgrphhrrghtrghpfe
-    ehudelsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:20jMabokzg9La1kotsbin5SjKmgd9ov8u_C4SUhRFCXVj8OTDV2FEQ>
-    <xmx:20jMaTCXWnOVlhO0eOMQkLq80pBjIjfAGXoGEKXESIKncz3IISKi9w>
-    <xmx:20jMafj2qVoH2Dr48pWbgVwuemrbWPmXwaVV_5ifv_vfn1gatpriHg>
-    <xmx:20jMaZZgoZ4Bg7t0_0IJLaiewGIDDOW7g-BYYfrGl3lg8o9kPIYBnQ>
-    <xmx:3EjMacuNDg3lqaErXalW3-qAQ6fKk3DI_pTE7E1V7cqoYM_y-23uS6gt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 18:21:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  me@runxiyu.org,  christian.couder@gmail.com,
-  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
-Subject: Re: [GSoC PATCH 0/3] receive-pack: fix HEAD check for updateInstead
-In-Reply-To: <20260330111822.165188-1-pabloosabaterr@gmail.com> (Pablo
-	Sabater's message of "Mon, 30 Mar 2026 13:18:19 +0200")
-References: <20260223141236.22476-1-me@runxiyu.org>
-	<20260330111822.165188-1-pabloosabaterr@gmail.com>
-Date: Tue, 31 Mar 2026 15:21:14 -0700
-Message-ID: <xmqqldf7wsh1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Y+WMDltq"
+Received: by mail-yw1-f194.google.com with SMTP id 00721157ae682-7927261a3acso27704007b3.0
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 15:26:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1774995966; x=1775600766; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=T4XsiQeh1NgTeAEhmYogIpf5iL+JR+MMZgKU1Diq18M=;
+        b=Y+WMDltqAvIcjiQVjo9zcp9Na2lmNyuOmgs5QL4Msk93EZ6VkufQUY8WXhiWMCNEW8
+         L7Sr4j1ol/unfEwpcszOMYFchXTiXtIxeDBv+d17ZibVdFw+oOOVosLfAeyt0QN3iMAZ
+         CNxh3OL62l3RjEbhlqZ1Z1kEXsIUkrODZ3iaQq6hdLelLfY/EepSa/PLVfV+jZ7HuBH3
+         8nlgvTcGbbWgX3LqftUl6fg93FG+ulgbFYK1cqKs/cIMAw5mkaXW8FiZbw+5/pEwyyZX
+         qykm4uaIcLQgSYltZIbOkVTpqiS0zqNFC0/kKoW82aXnn1HpA2OHvPwMC4Qn8K4xDmTu
+         x+Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774995966; x=1775600766;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T4XsiQeh1NgTeAEhmYogIpf5iL+JR+MMZgKU1Diq18M=;
+        b=a2ixsNBER7pHma7JeTbMthBA73sclbTUeZ34PjRE926qpCWw/+52U7nkHniEKJIBCR
+         z+a3dIsWogWEYEECm15v3WUOBaUHf2bwxbvzIMLzpz2uZiFfgGfGa1k6iFbR/0/Q9GRv
+         /MINqSGMEsfMsVnkGDgXYrLyrpO61OKFYFdl1Gow6JY4iMXHeoMlN5t/3GMX+gcDg5r0
+         20evsC6acy7byX6eLn5/40edseT+MJzWVxwvbGsVxBgSCyhpBwDVHGxmRDUxP8gcE8g/
+         ni5Vt4gDcHq0HrvLhUE4P9UuOvrBaTBPLARzhsAqY4E0rd+THsHAwDJ9qpB2YcIQAvmL
+         /5tQ==
+X-Gm-Message-State: AOJu0YyIXn7kKrh3IsemCV+xhP5X11QZAepi3MuBqnmYhAUKzrR6si75
+	XH4CvAKe5o7CCZyKG8BP1aKyhkDEsgLKI/iFZKT9LbGiNmC2RrCCYWQLLAGMTqs/WrY=
+X-Gm-Gg: ATEYQzxiCS+fw1yitsNTkNqYcmwRjJZIM9C3nG5SNvQiK/VE0nFAE0QwksrmXKQJB3I
+	FEMrdS9MBAdj/QpEu/WHR3ob3rJkMh7wsN8z9D54HETJicW4BNjrHGuLgznk6ahT/RuQJqT17HT
+	wfjeJ3P4CksFO3jM221o/EvObf9c2PeZEBEuqQwoILnb4AJCajJIOzm5CnEfw2VGdNOvGbLYpjF
+	SI7kpchys+4h7pK0mOcFy6hKFx+EJsfarbNIa1QH2hGdYT91fpt9reyEkrqQcp61nYwD7pqJgSo
+	fS4bGkreGUA/h7ges1k7j7gRUOpfQ8jLwMfpC3PtOE8ayhocRuhq6S7fWyVyLzKAPZ1Y0B4WOqq
+	gFtFW0H2jZyqXdE0vstasgfpWUmsRfqWo9WMGPuWe0SHsyY/f0081HBxHwrX6AJNbjNDzRO0CjH
+	s3CiK/rQRdazVjAWpP/EilMgqRXxdW+OdhpgEEI9+NHAMJ22AzJ3ZGN2yhrMKP01+HLQ3wEImUC
+	xPtYORDmauIhBN9aNlTcuihQeeA7xJdyJ7W6/ln
+X-Received: by 2002:a05:690c:c4e5:b0:79a:7cf4:1a47 with SMTP id 00721157ae682-7a212832ccbmr14155067b3.42.1774995965825;
+        Tue, 31 Mar 2026 15:26:05 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-79cb9a8f19fsm54543357b3.23.2026.03.31.15.26.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 15:26:05 -0700 (PDT)
+Date: Tue, 31 Mar 2026 18:26:04 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 04/16] midx: use `strvec` for `keep_hashes`
+Message-ID: <acxJ/NfLNloCv3o+@nand.local>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <5fc72d5049a602ae5ede6bb243f44546f02d995d.1774820449.git.me@ttaylorr.com>
+ <20260330230130.GD41843@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260330230130.GD41843@coredump.intra.peff.net>
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
-
-> This series includes Runxi's test, a cleanup of a test that messes with Runxi's
-> test and the fix for the issue.
+On Mon, Mar 30, 2026 at 07:01:30PM -0400, Jeff King wrote:
+> On Sun, Mar 29, 2026 at 05:41:00PM -0400, Taylor Blau wrote:
 >
-> Pablo Sabater (2):
->   t5516: clean up cloned and new-wt in denyCurrentBranch and worktrees
->     test
->   receive-pack: use worktree HEAD for updateInstead
-
-I re-read the main patch [3/3]; we used to check "HEAD" in
-the_repository but now we pass the worktree object (not just its
-"path" member) down the callchain, and that allows us to check if
-the worktree's HEAD is unborn.  Which makes sense and is a
-surprisingly small fix.
-
-Let me mark the topic for 'next'.  Thanks.
-
-
-
-
+> > -	CALLOC_ARRAY(keep_hashes, keep_hashes_nr);
+> > +	strvec_init_alloc(&keep_hashes, keep_hashes_nr);
+> >
+> >  	if (ctx.incremental) {
+> >  		FILE *chainf = fdopen_lock_file(&lk, "w");
+> > @@ -1760,39 +1760,45 @@ static int write_midx_internal(struct write_midx_opts *opts)
+> >  			for (i = 0; i < num_layers_before_from; i++) {
+> >  				uint32_t j = num_layers_before_from - i - 1;
+> >
+> > -				keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
+> > +				keep_hashes.v[j] = xstrdup(midx_get_checksum_hex(m));
+> > +				keep_hashes.nr++;
 >
-> Runxi Yu (1):
->   t5516: test updateInstead with worktree and unborn bare HEAD
+> Gross, we are just manipulating the innards of the strvec ourselves?
 >
->  builtin/receive-pack.c | 39 +++++++++++++++------------------------
->  t/t5516-fetch-push.sh  | 15 +++++++++++++++
->  2 files changed, 30 insertions(+), 24 deletions(-)
+> Is it really worth doing this (and adding init_alloc()) versus just:
 >
+>   strvec_init(&keep_hashes);
+>   for (...)
+> 	strvec_push(midx_get_checksum_hex(m));
 >
-> base-commit: ca1db8a0f7dc0dbea892e99f5b37c5fe5861be71
+> ? That's amortized linear-time, and it's not like the number of midx
+> layers is going to be large anyway.
+
+Yeah, this is all pretty disgusting. It's in service of what you noted
+below where we need to fill in the array out-of-order, but that's really
+bending strvec around MIDX-specific awkwardness, which I dislike.
+
+> I dunno. Maybe that is hard to do. But if so, I question whether moving
+> to a strvec is worth it here, since we are not treating it as an opaque
+> type anymore. And it is not buying us much to use it (we get to pass one
+> parameter versus two, though that is easily solved with a struct, and we
+> get to use _clear() instead of our own free loop).
+
+I think it is worth it to move to a strvec here to avoid having to
+manage our own memory and pass the length around separately, but I
+dislike the way that I did it in this patch.
+
+I tried adjusting this patch to juggle the MIDX layers in a way that
+would allow us to just push to the strvec. It ended up being less
+awkward/difficult than I thought, so I think we should go with that and
+drop the previous patch.
+
+> >  void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext,
+> > -				      char **keep_hashes,
+> > -				      uint32_t hashes_nr)
+> > +				      const struct strvec *keep_hashes)
+> >  {
+> >  	struct clear_midx_data data = {
+> > -		.keep = STRING_LIST_INIT_NODUP,
+> > +		.keep = STRING_LIST_INIT_DUP,
+> >  		.ext = ext,
+> >  	};
+> > -	uint32_t i;
+> >
+> > -	for (i = 0; i < hashes_nr; i++)
+> > -		string_list_append(&data.keep,
+> > -				   xstrfmt("multi-pack-index-%s.%s",
+> > -					   keep_hashes[i], ext));
+> > -	string_list_sort(&data.keep);
+> > +	if (keep_hashes) {
+> > +		struct strbuf buf = STRBUF_INIT;
+> > +		for (size_t i = 0; i < keep_hashes->nr; i++) {
+> > +			strbuf_reset(&buf);
+> > +
+> > +			strbuf_addf(&buf, "multi-pack-index-%s.%s",
+> > +				    keep_hashes->v[i], ext);
+> > +			string_list_append(&data.keep, buf.buf);
+> > +		}
+> > +
+> > +		string_list_sort(&data.keep);
+> > +		strbuf_release(&buf);
+> > +	}
+>
+> This hunk was unexpected. We move from xstrfmt() to a strbuf, but does
+> that have anything to do with the rest of the patch?
+
+Yeah, this looks like it was left over from when I was writing this
+patch and trying out different approaches, and I didn't notice that I
+left it in when sending this patch out.
+
+> Also also, the original was leaking the strings, right? The string_list
+> was initialized as NODUP, but we assigned allocate xstrfmt() results to
+> it. But because of the nodup, string_list_clear() won't free them.
+> It should have been:
+>
+>   .keep = STRING_LIST_INIT_DUP,
+>   [...]
+>   string_list_append_nodup(&data.keep, xstfmrt(...));
+>   [...]
+>   string_list_clear(&data.keep);
+>
+> in patch 2.
+
+Good catch, that's right, but partially obviated by the fact that we're moving to
+strset here.
+
+Thanks,
+Taylor
