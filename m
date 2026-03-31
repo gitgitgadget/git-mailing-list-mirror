@@ -1,90 +1,82 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283E64418DA
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 17:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A7B33B6E3
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 18:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774979752; cv=none; b=dN3SigFXfMOqbl3Bp4QsxBdHJr6PIJbS9t4HTsbQuWUo64VLY9e4QFMyhQEHzhYXs4tNZOVdDwQqr/hc9SWx0uW3HP5Fd8xYLMxaWfWdRNH3p72qOJEL+YbK3jpteYZrF3T6aDCfp55KhHpOZ+3/FCQW7rRNqlhPtVh4wyXqaH4=
+	t=1774980199; cv=none; b=KGvLJlam/b0PONg8xnyuV6aZM/0AQ50IUcfS+vrql7q53HjX6JvNbQGMKTYSYyYD9+qkDYAJw9Rr8mjl00oqGIBUbp9/yyJxmdNTx3YlYF7ZmiS5T7c2ctdl/umniprG5G9oSqlSOXc8R8mRBVc7RF8Hpa+AHRZf//i5LHuYU9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774979752; c=relaxed/simple;
-	bh=oCrJQoSIhWDlXiIGP2v0cR4m5z8YPAAKi5F96//GW2A=;
+	s=arc-20240116; t=1774980199; c=relaxed/simple;
+	bh=8PzEu0W0iYR1e5vskILnSf0TD0TU/9fqaFcKm3ygErc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SlqcadghzzOIB1istl98x6aEu+8lLnlVLn+o3o3FNo3B/y7rD38vLn+Mq0NM1n5tE5/nIQSuBYYh+rlRge92to3JRXbhhgljdQeKvDMhoqOuOx3GLyNtPjOgylxKt0NvZRuJ1KKc2ce4QvhyXWFfsxF/LHyDFakGpzyyP8Two6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YlthrfC7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YNbtH/pX; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=QDQ8OkZUyQO1yqblaDj+/5qi+Fm9xtUWNNyKZfIdx4yrZKY9V29L9KTVaD6Xiy32FYYjWxPb7M+cR1bTsGrxlxOg/qRx+Q0OdaqOyKcGIquDyYWFLL+YSDJ45notEVu26j1Nj1D1Gj0ftJqVXrpO4KpvO1y2Z2HcW+L4eo/ffJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bU55LJfj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ims4Ug4l; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YlthrfC7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YNbtH/pX"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6FAE0EC00C8;
-	Tue, 31 Mar 2026 13:55:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 31 Mar 2026 13:55:43 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bU55LJfj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ims4Ug4l"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 61C7C1D00179;
+	Tue, 31 Mar 2026 14:03:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Tue, 31 Mar 2026 14:03:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774979743; x=1775066143; bh=ZcE+rVVvy1
-	84TgWsXhnAgo1VOQTD4zQ1wGFEa1uu7iM=; b=YlthrfC7PCu7dYSno5h8AXcv3H
-	8Rp8Ny8s/UTHBj7QPA/71IaUKamx81vB8tz/4G0MPK0ngjox4PX1WsUpSWpBhsAz
-	2+4IStIl7u9q0BbZuF6F9nexlzHcpk9Y+x1CHw8u3D69Kn5/z0ERzDKQmIvHUx3O
-	jTwvGeApSSYXmIKslm88k4mYm0gqTZXgzX2J37kxTnuqmS/U0c2+lu+E6h9zKq7K
-	+PFgPGk4+gonZlp7NNkklbPf/yjloBnwsOtZxSQ9J0InJk4v39RpHy2AOuRyGsZU
-	l1ziSr1KrmdY0ecvnQPGWpYs7M6FIgqy4BByoZdCAsGEvUckim9pqVDaAUxQ==
+	:subject:to:to; s=fm1; t=1774980196; x=1775066596; bh=iprkBc09D0
+	o6onqZWM2BqaOlajKhRPrVy6xjudbX8GU=; b=bU55LJfjul7VeNT0JaEQCbYqFl
+	FiYFwfHLSbJZtg00SE3uoGhCy+Zc5RyvR0Dsms5asPdTMoJ5J30raYg2mNaChE2h
+	DpKkOl9FwtwNHz2GDgucablbyJMdBiO5RkTuwqbWRGfG4Fjfwc2kqSabt32juZj9
+	2FYq4NS8ck9A2CffhI5MW//5WcpIO25dLLsK3YW72Jv9hqmJkiEo7HgcSlzqh5mJ
+	bX3nZeCa1v+lfIxkT1+/QcQKAMn2G59oU1BVX8erU9pmLVqalh8h/wlyPAcCItg1
+	VIY164yCJY/OKAnP/rQvu7p4Vx8jnpU5ALTpjId3dgZL79dNWb1FoZp/INOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774979743; x=1775066143; bh=ZcE+rVVvy184TgWsXhnAgo1VOQTD4zQ1wGF
-	Ea1uu7iM=; b=YNbtH/pX95AsyZd6mQQ3J5YOiB9naIVHCB1Ytw7HgHF4NIHJdwZ
-	tIELIMuKPYwY1BbpOgj2+rtpc7yYFvSgPb+uiZHW3WBgDh8coC4JE3jvcS2U5WAU
-	+WY3GqooV/BrgRem3CgSYXaWdN831DKNX2XpjloO+ZVTDj2gD6gGGkGsCvUAPnwk
-	5W+8cw2z5hXpw7Jw8Sz5+AMJFs9EwH40r/eVwCTPlUO1qjEks3tXANcCrJwtUQUP
-	4enMELbK0EB7VfHgjLoj5lH6XfL2bmF8y7fqMy1VcBApcWQxhLUDCPKASaFpXYk6
-	le1y39MEtcwdCMbDS6IdZESYsoXes8xtxrQ==
-X-ME-Sender: <xms:nwrMaWi0dL9LMzmHCBQ4ebQ3NRRGqdzhaROuRiWxXhE4g0MS5UQO-Q>
-    <xme:nwrMaZREdN2orJnDf7VOQYx700dduQCNQYF48U7y53q58niTr43tPFFsy3Q7CAfS6
-    nw39jB4Cw0H43lWs4vC_OYLyC-fJvFo23qJwsyHitVxtnro7Teh>
-X-ME-Received: <xmr:nwrMaQUH0jsAPl19kp0XrsiufEvkTZ2mEtZ_z3Da6ueDD7YQtTy8gxs9sOrs797Hfgb5rpY0TvOr2RLL0-o9V3Eh4LJSC0Un6A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekhecutefuodetggdotefrodftvf
+	1774980196; x=1775066596; bh=iprkBc09D0o6onqZWM2BqaOlajKhRPrVy6x
+	judbX8GU=; b=Ims4Ug4lFHD1xZy1vPOB6tT07C5Pbyagjf+zJadb1tusj+lyWU2
+	2JuhPNfQ/ZwM9SdQV4enR0xlhlOQCHbovXxJ2VrDd36+Kgeg+yjjxBMleNDMQwLe
+	fWVgXj7LUPzCWGRKTx3DapKBonqClziLUmiaANNxR8VZQCNVHK/e9uG4e5TyhBgn
+	kSczrPB8qJW79waxHiznP4mpUv08HAsjtIoGUTyhoXZGoWsX52oOxmJHcAbM0PHC
+	m5u5boaMVSKzm9QlDsehjx7W3Qdxbm/gX1NHSlEd0hA4n0Kcnf56JcNBjGIEeizP
+	HaRAOVmcBtFGTwBq5c0fmxR+NysfOrKtQ3Q==
+X-ME-Sender: <xms:ZAzMaYac-G93I9HlP2oe0gDAMnYsLT6J7nxd3IedzV3f7N6YPX4OQw>
+    <xme:ZAzMaa0A1TomL9hQtfI0U-CvB3JJLe1uCKuH-B0-6J47bJ6HwNKO87gtcqCtUUeTI
+    ogdLKFGQVCsb8d2xYJGhWJBoj4XP-ksIxZmIa95GlUf05A-HVQgig>
+X-ME-Received: <xmr:ZAzMaQXARkWU6_qN82LfmKmzYyn6T8NbfNIbS2B3F-yOiGwpgMLv8XHooLFvuxyc7ARtCDGGsaatiE4MNIuuUu97YFmD_JjFzQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
     fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
     rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
     hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshht
-    ohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopehprghulhesphgruhhlthgrrhhjrghnrdgtohhmpdhrtghpthhtohepghhithhh
-    uhgssehprghulhhishgrghgvvghkrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:nwrMaVTpBohx79qeV0YP1Nf-MMVV1avHF7mwER7spArvRKDu_7dLig>
-    <xmx:nwrMaSmlt1m8WBSLK8nzr8tYc5WMoKr2Wn4UscwDh4IvmP5fc1eJlw>
-    <xmx:nwrMaT6IrVM0L88MhF3VFpicy0rV3xTV41atSYoATkyqSihhxMZhmQ>
-    <xmx:nwrMaQgSTVooFDmsgVOYGYEKuhc6u-a6IDs0qu5kRZeeEGRoUa3bog>
-    <xmx:nwrMaZg5ty7zpprLydbPHWORlplWv7qyud7TadhdzciYQQJqNnEcN6xD>
+    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:ZAzMacXDClN27nHcH6ezgR2cF_glR9uXu9FHpulhvGEqDYQ-UeVHfQ>
+    <xmx:ZAzMaXfUdcFFKQx3macmuEj-erwMvA4wP0-7B599jddojCot47B85A>
+    <xmx:ZAzMadXhU1Zz5SfA6V-zptyS-jQ5HYGgeghHJP12_14ZLWbb4L3Sdw>
+    <xmx:ZAzMaYePy3Jf-EMlGMWJ7xWsH4r_5NL0-UIcWS1HrXW7OFs3KwD41A>
+    <xmx:ZAzMaS9Jxw9kVjaCB4fSol0Xu2ZGQtW2o5dHRmyv3F0DtU3vQ_sjm-hV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 13:55:42 -0400 (EDT)
+ 31 Mar 2026 14:03:16 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Paul Tarjan <paul@paultarjan.com>,  Paul Tarjan
- <github@paulisageek.com>
-Subject: Re: [PATCH v12 13/13] fsmonitor: fix split-index bitmap bounds in
- tweak_fsmonitor()
-In-Reply-To: <xmqqse9g0xbx.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	31 Mar 2026 09:37:22 -0700")
-References: <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
-	<pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
-	<84ddbb30bb3862d4230ba1775d4c061832f2623f.1774937958.git.gitgitgadget@gmail.com>
-	<xmqqse9g0xbx.fsf@gitster.g>
-Date: Tue, 31 Mar 2026 10:55:41 -0700
-Message-ID: <xmqqfr5f289u.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/6] reftable/system: provide `REFTABLE_INLINE()` macro
+In-Reply-To: <20260331-pks-reftable-portability-fixes-v1-1-46bfae55c68c@pks.im>
+	(Patrick Steinhardt's message of "Tue, 31 Mar 2026 13:26:47 +0200")
+References: <20260331-pks-reftable-portability-fixes-v1-0-46bfae55c68c@pks.im>
+	<20260331-pks-reftable-portability-fixes-v1-1-46bfae55c68c@pks.im>
+Date: Tue, 31 Mar 2026 11:03:14 -0700
+Message-ID: <xmqqbjg327x9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,70 +86,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I also have to wonder if we should bury the issue like this patch
-> does, which is not limited to the split case (i.e., the assert
-> should trigger if the requirement is not met while split-index is
-> not active, but the patch castrates it), instead of mimicking what
-> Derrick did to work it around on the test side, leaving the
-> production code still broken, which will give us better feel on the
-> urgency of the split-index case in the real world.  I dunno.
+> Not every compiler knows about the `inline` annotation for functions.
+> Consequently, Git knows to define `inline` as an empty macro in case
+> it's not available.
 >
->> Two places hit this:
->>
->>   - tweak_fsmonitor() calls assert_index_minimum() without the
->>     !istate->split_index guard that the read path (line 98) and
->>     write path (line 128) already have.  Add the same guard.
->>
->>   - fsmonitor_ewah_callback() unconditionally asserts and then
->>     accesses istate->cache[pos], which is out of bounds with
->>     split-index.  Replace the assertion with a bounds check that
->>     silently skips positions beyond cache_nr.
->>
->> Signed-off-by: Paul Tarjan <github@paulisageek.com>
->> ---
->>  fsmonitor.c | 6 ++++--
->>  1 file changed, 4 insertions(+), 2 deletions(-)
+> In the reftable library though we cannot assume the macro to be
+> available as it is usable as a standalone library. Fix this by
+> introducing a `REFTABLE_INLINE()` macro via "reftable/system.h" that
+> allows the project to use their own definition.
 
-Let me ask the question differently.
+And our `inline` would be used to define REFTABLE_INLINE() in the
+context of this project?  Makes sense to me.
 
->> diff --git a/fsmonitor.c b/fsmonitor.c
->> index d07dc18967..5e5a4fadea 100644
->> --- a/fsmonitor.c
->> +++ b/fsmonitor.c
->> @@ -33,7 +33,8 @@ static void fsmonitor_ewah_callback(size_t pos, void *is)
->>  	struct index_state *istate = (struct index_state *)is;
->>  	struct cache_entry *ce;
->>  
->> -	assert_index_minimum(istate, pos + 1);
->> +	if (pos >= istate->cache_nr)
->> +		return;
-
-While this may avoid this "assert" stopping the process, what is the
-implication of returning from here?  Who are the callers, what did
-the callers want us to do to the cache entry at the "pos", and what
-happens to their expectations if we simply returned to them without
-doing anything they asked us to do?
-
->> @@ -805,7 +806,8 @@ void tweak_fsmonitor(struct index_state *istate)
->>  			}
->>  
->>  			/* Mark all previously saved entries as dirty */
->> -			assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
->> +			if (!istate->split_index)
->> +				assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
-
-This part does make sense; the minimum may be relevant only when
-split-index is in effect, so we limit the check to non split case.
-
-I do have to wonder if there are some invariants we can/want to
-enforce here in the split case, but I do not mind punting it to a
-fix that is more focused on the split-index theme, as Derrick hinted
-in the earlier commit you found.
-
->>  			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
->>  
->>  			refresh_fsmonitor(istate);
-
-Thanks.
+> diff --git a/reftable/system.h b/reftable/system.h
+> index c54ed4cad6..b15768dbdb 100644
+> --- a/reftable/system.h
+> +++ b/reftable/system.h
+> @@ -15,6 +15,8 @@
+>  #include "compat/posix.h"
+>  #include "compat/zlib-compat.h"
+>  
+> +#define REFTABLE_INLINE(type) static inline type
+> +
+>  /*
+>   * Return a random 32 bit integer. This function is expected to return
+>   * pre-seeded data.
