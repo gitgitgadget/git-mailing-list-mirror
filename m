@@ -1,116 +1,150 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569C3411618
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 15:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB03413254
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 15:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774971136; cv=none; b=Tc7A/XhCdZ9cjP89bBrx3Gr7OAQWOMqXHu/1ugURvpOelPmn9orVrNSn/kLrDkq1cceIbj9ulhj7YjmJ1R6SszHWm1sDmAGfIGA/MbNo5BvWhDcp2Hl1exxnhF6BCSFAWq+9NPLM+9Hpmq67v+LnV27fYqMpn2DtKXTevDO37Rk=
+	t=1774971275; cv=none; b=DqFvOaBb71hIHwEoxqfy30xGxoK3abaP01iEau2aAJ4oW0N8xyj2rbsgP05fACEcFdv+Vrvg1P6wNgz3uRMrLcjWG3z1TCVWJaN52flD/JVyKPhTlSjy+1KeIcFK++gIquTQ8yNHPH5QsYOrP5Wf6BIyz7zyVtT8QIefWRWOIG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774971136; c=relaxed/simple;
-	bh=fXKcKwg8vaoiJOyZP38cNXd56+BAF0/MRndB2UGzxN0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JsQHfDX/+y51qvyobG2hi6w4cwgZVxhrMvzGKiQOJAVAr2sycLN3+TKFqLiDcCl4y42NI/mwLLXEDBp6mpGxz/TsGzYMHhYmHXAKj7XMCrflY7ABPhzQdCr/b6FXyOBsEe7NclUzw+Y4/cSFIsTe365kjzA1Rvi4TFpuZSsDK3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=biFpYpTI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NHStO/DI; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774971275; c=relaxed/simple;
+	bh=bzrRKEu2cCaOI7HmpwPqoIFxGFnw2Jtyc+ZvYKSNOAQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=syMQnc17NjKoEJQfqdwPs760AxBguOvFyjKNV/ps4VumdFGQOE1ugQc/HvOIMiorHwrsC0bQ7gIifivydHRGBSQJBT2rTHsMvxdMou94TwnHv5kJFgX2FsnlPbYOXmPSg4mlmBqGMP93bt49pF4NRZImLs22HGur9yQmUP/E8bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6U+Iv2V; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="biFpYpTI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NHStO/DI"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6E41614000A4;
-	Tue, 31 Mar 2026 11:32:05 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 31 Mar 2026 11:32:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774971125; x=1775057525; bh=EBjWc/rAym
-	HxId7j1GT76gflKxcOH5JecidGlEDtWQ4=; b=biFpYpTIaoZJs6+uHP4++lZYGZ
-	FDIuylpS4LjR6cu0O5yDMsJHQtJNOj3Hw6AdJofxW5eJUDvb+H1tbUv9wkNOk9Qf
-	FWZfqDPRNQJm84TTjWtHwFOkjjASOKnCp2MXkm9nahjVl78s6wIQ55jCjTGmg312
-	A38J9KmBjNge6qw8M0oCXuFdFgShOB0mM3sdElm5aD+YGlB6bMjk+TR8lXwVr6gF
-	E+AXVMz6P9Mrx14PtYu7f9Kr7AefQDvQtbLw9nIVzYmQcJn8ZHEX6GqgFhbMk2H+
-	80Cxp7IyqXx2HpY+zefLS+GSoGB5buSe+EqEbdwdsU5CaWNO5xAp1eed/1Hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774971125; x=1775057525; bh=EBjWc/rAymHxId7j1GT76gflKxcOH5Jecid
-	GlEDtWQ4=; b=NHStO/DIgx0Crm9EDH4xnKARlAVvTmAP4QIwvWciXrZOWIW/mCK
-	2T9Tfmcu2poOAi7o7QwPXIvQqMtyqjWdc4JC37segIHZzUgPL+A3GYJrPIdJ6384
-	XYOvsaWQ/Y+w5Brf+TmJfHFDE0eWyr2Cuss+lGtkEjfEtFeuvQuNPuqai26Oo4vD
-	wbsN+g6BoIzdWGSyhA1mNrtnu01RPRqmnrsC6BiH+izJJ37DQ9yJZB5iSqo6ghKG
-	yKoc7iPUexU6SYoJjnXKGs407NH5TMVeks2UnHarnlNOYMDZaoJ5KEU7MtJPZgWx
-	S/bCFcRdV02TvDTgKqWcwWlduQJL0COddGQ==
-X-ME-Sender: <xms:9ejLaaJcKZBw6gKroGCQgiuD9wfIApzJRfplaYmJHNeTC9YX1HUxog>
-    <xme:9ejLaRP4lvpnGQrbTkF90k8oCL31npxHjKnRrYKey-93kuuS0hXztwq8sH1A0YBe6
-    18fymJ8wiDhW3r0hOA6hbA0NAjaFMGkj4T1zrakMOpuI9Ebo3iv6g>
-X-ME-Received: <xmr:9ejLaQ5wORQsiBgOvCEBSZPcJArS_e3HVXiCfSntThUUn5_7ykjU68y9E7WblS2Ff1zwm66KlyfcQINHl0IR-Wvgx2sV4nRJUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
-    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
-    fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
-    rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepjhgrhigvshhhuggrghgrleelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9ejLab5n8hyJjT7Rtdad51-kcshgnDoyxF1r7kjnZGo7CZ08kv_5pg>
-    <xmx:9ejLaWFu0atC4Vn0tL2mgyEhSq03GK4D4IOJrf6e-Rfj7Okp43-dQw>
-    <xmx:9ejLaTUjexE2-tvWrG3Bm8jB_Bx-LmXdUjTu4vuxS1DlsLadFdRwZQ>
-    <xmx:9ejLaSXsrgAp-oEvpzJXDkQSm3wbjdICy8v5lUWGFK66a14i2aqYnw>
-    <xmx:9ejLaeKSdAj0kPEDUJyGn5rhcD3OtR0dLcnQG4sPBXASb-ZGM9sgISdd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 11:32:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Ayush
- Chandekar <ayu.chandekar@gmail.com>,  Siddharth Asthana
- <siddharthasthana31@gmail.com>,  Jayesh Daga <jayeshdaga99@gmail.com>
-Subject: Re: [PATCH] unpack-trees: use explicit repository in trace2 calls
-In-Reply-To: <actcHT_ZHkb58ndi@pks.im> (Patrick Steinhardt's message of "Tue,
-	31 Mar 2026 07:31:09 +0200")
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6U+Iv2V"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8d006a80ccbso734983685a.2
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 08:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774971269; x=1775576069; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=56ZS7uOx+IJTsgPF4PAvS3OlsK/gzx/X9JVZMswBdME=;
+        b=m6U+Iv2VVEJCsPogjxH1KZo9Bn9P/sHjV+gbOthsMMANJj6XONvSV2LYB7K7OHfwJ0
+         2//rMxYP1/KA0B5Fs0HlTLUFcPR2gpXPaLi+TkLQVI5gz6rA/imCm2okBtoHTrcKGWTy
+         K+3GtJyAPjUZNsqEZLOe+v5I072VNXS7/B7l9u4VM6gQosA1L/Il8Q+fbi9wmJel4Dkc
+         n091DJqwYXZIhCa04Viz6MAWh9X/zbKTomMN6IaUNfPJMCNaEfM3oun2lbX2qbCyMyOf
+         oHBzJzX0Z8cd+E6nIQcTqbDfaXTt1D/F2yOYoD1evynoMhaetN0rIK1m79PsYOTzEEfA
+         HD9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774971269; x=1775576069;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=56ZS7uOx+IJTsgPF4PAvS3OlsK/gzx/X9JVZMswBdME=;
+        b=HI4+ivckoXEPgtv95X86LCUfRY0uYjAwnPLvDSmyHR43uSpValTUQRTRZ+wGD+snxs
+         4H3Bo4IZ00KRoN53eJL5vdzL9WOZG9cIgzbJl7GqjJZeL/N5kNHHFeXZorsYG1s2OTqO
+         PN8GpfAlxgjnoBHdXWtGpM9p+ABjW6y51iMfq4+5+sTrvWXgOt2Ch+ELM1jhkWNFGinY
+         QD+F4YnREG+/T5H4HrNPDBfMvnB0WNej0SEdix3qGpZKhMIQvZbyJ5UUe6T+D9RsIgtM
+         jVI7iBWe2aydzbzSC7Jmj114kXhhNGNq6QX2dILhM9WLYggYA2GZf5HvW+K01Me+93C1
+         2e2A==
+X-Gm-Message-State: AOJu0Yy16Omz0FtBnB/kSNcOJ9rM/xnfh1NpvYHnbTUc/JJySgdjuq18
+	u8FeXI/m1kOkPgu4bf3AVnSUVvikgA+FIto6jdBOINA2+/rmmi0NGjQs08ZZHA==
+X-Gm-Gg: ATEYQzwgrQbU2a8vmqSufex3tt7KjhL3ZfsgLKncS5Ms6lyOh3uNgFQ4NCRsgQGTJnO
+	Fo1HYv4v+hrAV0YDe/obJ9T2dXRWG3z6IqLTs0qye8V26TcNy6Fx4Zrh2t48cpwZ8yC+hvwmGVe
+	Kk1mWrJBzoMRDPYA5IViMWyl4OUhxiJraVcta82H/hlJC1PX3vLnTl4IW3qqT498gQtZ5fqBouC
+	uUW8/8X+QZOFu8nxLcsVsQahrbGXJEOdkFw9lJMBMUO8+gz1hRv3+yGwG6N5QjoGf4A0H7QvaqD
+	jaQz+Rszq+AOnHxU67Il68zXl+ZRtpwUhbBPIrywO4366EEesa+2jGKxs+YjyjCbXuWhvFg9nlE
+	OFlmbS+kVd97aO/axIjxBNQY6sDHreq8DT2pX9SUDh4Ok1jFXQW+U33gPhlnOrT6j1K3n6SxSHR
+	wvSwXUEpmjMyet60yZpMwY7WpbSEI=
+X-Received: by 2002:a05:620a:1981:b0:8cf:ff82:6dc3 with SMTP id af79cd13be357-8d1b5c190efmr7643585a.51.1774971268516;
+        Tue, 31 Mar 2026 08:34:28 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.224.83])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d027edc550sm999985085a.5.2026.03.31.08.34.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 08:34:27 -0700 (PDT)
+Message-Id: <pull.2258.v2.git.git.1774971267.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2258.git.git.1774901607564.gitgitgadget@gmail.com>
 References: <pull.2258.git.git.1774901607564.gitgitgadget@gmail.com>
-	<actcHT_ZHkb58ndi@pks.im>
-Date: Tue, 31 Mar 2026 08:32:03 -0700
-Message-ID: <xmqqy0j82ex8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 31 Mar 2026 15:34:25 +0000
+Subject: [PATCH v2 0/2] unpack-trees: use explicit repository in trace2 calls
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>,
+    Ayush Chandekar <ayu.chandekar@gmail.com>,
+    Siddharth Asthana <siddharthasthana31@gmail.com>,
+    Jayesh Daga <jayeshdaga99@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+trace2 calls in unpack-trees.c use the global 'the_repository', even though
+the relevant context provides an explicit repository pointer via
+'istate->repo' or the local 'repo' variable.
 
-> The changes in `unpack_trees()` are a bit misleading -- while it reads
-> as if we don't use `the_repository` anymore, we still do because the
-> function starts with:
->
->   int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
->   {
->   	struct repository *repo = the_repository;
->
-> So would it make sense to maybe have a separate patch where we inject a
-> repository as a parameter to `unpack_trees()`?
+Using the global repository can result in incorrect trace2 output when
+multiple repository instances are in use, as events may be attributed to the
+wrong repository.
 
-We can see that "struct unpack_trees_options" is rich enough in the
-merge context that it would be a natural place to have it unless it
-is already tehre.
+Use explicit repository pointers instead in these call sites to ensure
+correct repository attribution.
 
-In fact, o->dst_index->repo should probably be what you want, and
-because it would be insane to start from an index in a repo and
-store the resulting updated index in another repo, there probably
-needs an assert(o->dst_index->repo == o->src_index->repo) somewhere.
+Signed-off-by: Jayesh Daga jayeshdaga99@gmail.com
+
+v2:
+
+ * Use repository from src_index instead of the_repository
+ * Address review feedback from Patrick Steinhardt
+ * Avoid introducing new API or struct fields
+
+cc :Karthik Nayak karthik.188@gmail.com
+
+Jayesh Daga (2):
+  unpack-trees: use repository from index instead of global
+  unpack-trees: use repository from index instead of global
+
+ unpack-trees.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+
+base-commit: 5361983c075154725be47b65cca9a2421789e410
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2258%2Fjayesh0104%2Funpack-trees-trace2-repo-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2258/jayesh0104/unpack-trees-trace2-repo-v2
+Pull-Request: https://github.com/git/git/pull/2258
+
+Range-diff vs v1:
+
+ 1:  717da16044 ! 1:  f03ea194e3 unpack-trees: use explicit repository in trace2 calls
+     @@ Metadata
+      Author: Jayesh Daga <jayeshdaga99@gmail.com>
+      
+       ## Commit message ##
+     -    unpack-trees: use explicit repository in trace2 calls
+     +    unpack-trees: use repository from index instead of global
+      
+     -    trace2 calls in unpack-trees.c use the global 'the_repository',
+     -    even though the relevant context provides an explicit repository
+     -    pointer via 'istate->repo' or the local 'repo' variable.
+     +    unpack_trees() currently initializes its repository from the
+     +    global 'the_repository', even though a repository instance is
+     +    already available via the source index.
+      
+     -    Using the global repository can result in incorrect trace2 output
+     -    when multiple repository instances are in use, as events may be
+     -    attributed to the wrong repository.
+     +    Use 'o->src_index->repo' instead of the global variable,
+     +    reducing reliance on global repository state.
+      
+     -    Use explicit repository pointers instead to ensure correct
+     -    repository attribution.
+     +    This is a step towards eliminating global repository usage in
+     +    unpack_trees().
+      
+     +    Suggested-by: Patrick Steinhardt <ps@pks.im>
+          Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+      
+       ## unpack-trees.c ##
+ -:  ---------- > 2:  fbdf3271b7 unpack-trees: use repository from index instead of global
+
+-- 
+gitgitgadget
