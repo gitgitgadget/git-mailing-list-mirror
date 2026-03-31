@@ -1,68 +1,72 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6186823507B
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 03:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA5D28641E
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 03:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774928341; cv=none; b=UEV6MIaWRnc6GIWuXyNJtm4QDzmRAZTceFUBHjpgtrPUQeGzxHfmdbAvvEl4KZ2Hhoy4zMdvzWzWSQRcIQVNimaGyb1U3EZKGAM/cGxrBrnLOn431MfkTjjabllc2pSb1i+Q20XMX5aRNJ3vV0z89LeMSl8R3YTTRDZDahfuSiU=
+	t=1774928343; cv=none; b=ipT83MHcP8AQSFE/HC/vmhEYF5KnC9FuC/n30WUXCTSRBcYuf2JzfgV5zD1eTQPgL7dhhXZZwNnGudmwFEuNS2PKy2XCDkChhvZOd5SRZUO1Y3GjJsG6Af7K0QurNVmfBgxpxtRu/spXOWyAAZDqV688zvt/n2QjQCnPkkhh1/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774928341; c=relaxed/simple;
-	bh=w57RVmJ5oX7PCvjD45A5/hOZdJAvjVbXCkBm4Fy71xA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mYq4nR6obdLTJIpc0PUlh6i9dStv9tjsDSJCltEBlfcWoUycHUvNfJStnnw0r+jW+rG0pWAd1HWGbvkYyAWNSAMbKgZWHuu9/1Giv/14rU/i2X6hceq2qJQRG1vP1sTVX8ZFba+zfN1hW7313V9EC55klKsvJS5jKGCgG/TOqsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TY/aldFY; arc=none smtp.client-ip=209.85.210.49
+	s=arc-20240116; t=1774928343; c=relaxed/simple;
+	bh=qK56F7b5/0AUTGNFN3HUlM/Y07IQis+ih1LK94xtvEY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=g5UTJk0R+jPWT3mbJ8EhPopwEBwWB0opK6tVO3dtJZEgEvtqIhbbzYT+VrvjVRMw/HQnmiOrem5w6lBKGvAlRoJqomCrxmpMVzN3SCe3c7JR3sBEhgDDuyyyreGIP1G4XC7Igyz+VgZhz7xCtHUap8WbGVKAcuRT4Ty7MaAaROI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEKw/qnD; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TY/aldFY"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7d7e565c877so2580967a34.3
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 20:39:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEKw/qnD"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7d7c77fd31cso4838789a34.3
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 20:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774928339; x=1775533139; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=B7MrtCJUbYLbIrPvXE7XA7kdDahr+DhjcmhjinLwL7Q=;
-        b=TY/aldFY3fjEEpY1WXIB9gEG3oC4srm5BjCCUAsV/PDiPu38OvBuSVvHB/Y/YJJujO
-         fJbts+Id9sL60jtzzUhA8GtUS2t16hu0Tlo83sB3SmYcnHJI2m8ya+EnxrinkMrNd76D
-         P3hm+LpE/rDBoWHr+xPrxYd06TX9dxDNW3F6s0sTL9dujFuwk0Y2BN66fBnY8KeLAnmR
-         O/sNBg7YijsoCzzits7jTTAjjH8zPeQ+lKf9xHlhkkd+DQMLXCyRgUyV+QeCXVCiojgB
-         Gw04b/miROBF8zcaCw75Wjx5hOG32pgwLMJI4B6bRSGRiGBZXnPWdN7r4uYaP1iXBeXf
-         6fKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774928339; x=1775533139;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774928340; x=1775533140; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B7MrtCJUbYLbIrPvXE7XA7kdDahr+DhjcmhjinLwL7Q=;
-        b=Y1ioXFxW42z3BR817nBo+FWABG8d2bC3px6++tvGLBSL9cI5zmWrYXJA0SZ9fed731
-         rAQhGgwGBZj0Rv0viMZ4eghPTErn+ImpaCP2eOUB0EnNhr+5oJtc419DsP2R44zgrRJV
-         q6/IXom2Gno8KHITbMXmP/hBv5BES+9ntFfEFQogVig6UX/TPZ91xYcCAcP/q0+n0VWq
-         1ctoWZ/oaSFf/ZWajdXFhqPZrrTY5GG3tTplyxYe3LZwRsqAqYH4bBS/suNjMX51mDCh
-         a6dJQcd1kzMT+qAmMZIfRnsEbHzuaLtAcGNvMk5ERiuHr7NgE2uG8I/Cc8WZyB6wTxn9
-         V1GA==
-X-Gm-Message-State: AOJu0YwzZVNTUSSPR1/zwLZNEa3JQeXfxrKGMw2PzlB4omyBvt63B4ZV
-	jdTanYCxHXi649VSYAxrwVPTSuyoFGTSPoUvhuI2CUFvW9k0WDWNqOeKYzO0Xw==
-X-Gm-Gg: ATEYQzxakTPsV7G2pIPF012ijUjqz/uIbYX1mdZdZFjzyZUERi8vL7VfvxGtN+M752X
-	txYKvuDcPSnIhzH9c1H1mqCZ7pMN39atEAQ7DVy2wkjcvrHZmjTdxS+S70oR6NjwzDGbc5OcQJc
-	TnZakUS4oUNxpFsLdTOlxJUKz9GP9IUanL3dvfI+DJJrqarCIbecMLjIqQQp5kjjgZLGspP8sGE
-	cIZLES049IKbTaSp5wooTTc8zpcNgHTqroLisHF8EJ31GDuLlhWm6kEDN6/cUTFiFY8wOQ8DjXr
-	LC5ehHcifg5gQb9m9ENocxuABiQ+m6PBkFjMWvSVUGcz5idfXmbnLIWI0A0/02nmCN+R1gw/B3G
-	0PjlMaOezl1zBxGAxHVgPQ8w4nfPR8QMGnJUJwzGAewYCnWKV0gUcjL3Rt8cRKmTJIpuxgNdpB+
-	N5MRIGhomlUp+US/1c+FyAopMHufVslkM=
-X-Received: by 2002:a05:6830:4ac9:b0:7d9:b4dd:c34a with SMTP id 46e09a7af769-7d9fad7013amr9455177a34.7.1774928338940;
-        Mon, 30 Mar 2026 20:38:58 -0700 (PDT)
+        bh=+5p58eJgs8j99EcGEQLEjrngANZWzF5+rQTLAElqmh8=;
+        b=BEKw/qnDLOC/t/PtqMz2G9k0D25Ae1gjTfTlVYIxRGiHZFjqubyIjyxXatsZlgiPe+
+         klqJLpnY+inst4YGr376W94GgceTbMkxrZ6OEN7TnvdMyT/cXckazWdyKRpafg1H76sW
+         2Dlq75Lm4olTqt8CH/zCc47weeHaIRNdvkicdEettDBzu71e8FAEdWixuL/ovMHMmmYJ
+         w1ffV9yYlzGJwFhvZuqd20EEgbJelU54RRIDhbXDwrBwRdJBR8BQvtGj4G1hZuc+6+Q0
+         7x6Q3Uu2ljwlIk7U3Lf35fDqMzeJnuudK/FfbzzTpcKSaJA9PN6R5lDUUsauvKFT/PFg
+         OL9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774928340; x=1775533140;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+5p58eJgs8j99EcGEQLEjrngANZWzF5+rQTLAElqmh8=;
+        b=CKurYp4/MtrK+A0F8NmwviBVC/4wgiKi+fGjrlFPI4rwMGBR0lvYEa2ijhltlmNG0a
+         /NUCrSB7LiiB3ACIpULmTbldTgOsjzB7H7TP+vYPYux9RlKOonR3c/pJR4w7xmkEfnha
+         CHsNcSRyesP9Y+lp4QIhIy59h+dLWUmS/mXJt8oo1Ebi47G1n3LLbUS87UeYgT5CO9tc
+         x/MvT2MIprnkoTKIVWjl0yzJxEODQLpyEw38qvgpqmjHWrNGqhs69LJEMDg5AjO2gsme
+         WRpPGxRxefrPp9Ojbs/UPw/91La5cRpZHtzehCPeAG1o8D8ZrKVS3/U6wFSvX77ELndW
+         w8xg==
+X-Gm-Message-State: AOJu0YySCcGRXvU8NOGFwEYNWk03JKb76ho/FluUNdncUOla6Th8FjSo
+	vLFRGOKs0R2bb9Sw+DfX3Kz+T06dWs5Oe/UIhAln/hAzAizPSVv0ApA+EXalRw==
+X-Gm-Gg: ATEYQzxvjPRvLGzTHVHjqGwL07RQgJZyaY8z1c9dJsPOICTR8Hr9KOgO4qq6gJMCgek
+	QOmdvjOYLNK5HG5/TcoaMNUZw5281o34XY6pM8KUs3sT7q9Mmjeq2gTq4KqL/EX7QvwOCUUlTxN
+	Ze3Ke/jrfxB78hoDlnYQvTKXGs9sHCGcRiXkbSxapGVBUZ4wYGkd8D8lV5HHPkyjBuYhL4+fQLS
+	soc//K77RVBLgiY/riCUG+8MlurtZJRLjkHIyK8rphhf8GqtzwvdHTEDD1hpP8xI9knMCzmVkNt
+	EA5xPkOJGDZf0Ko0Z1m5CoWBn2FTX3sxXGjCOrDY4IhF9ywoC/8P77DLZ1z9f9n9tcOeF2AITEc
+	IYeRbuIKENxBwkdHXFxj0RtBXPTRK2NVIlR1GyfG19fGT6fG2o7lz/MwnkNTYX06LdqMLvxhgpt
+	pRLP/DaRJZcwGLGUxB9Fybs/5H7bs1QrM=
+X-Received: by 2002:a05:6830:6f8d:b0:7d7:cc76:ff56 with SMTP id 46e09a7af769-7d9fad17da2mr10885135a34.5.1774928340204;
+        Mon, 30 Mar 2026 20:39:00 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da0a3b2e37sm7494665a34.10.2026.03.30.20.38.57
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da0a3b2e37sm7494665a34.10.2026.03.30.20.38.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 20:38:58 -0700 (PDT)
+        Mon, 30 Mar 2026 20:38:59 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 0/6] odb: add write operation to ODB transaction interface
-Date: Mon, 30 Mar 2026 22:38:29 -0500
-Message-ID: <20260331033835.2863514-1-jltobler@gmail.com>
+Subject: [PATCH 1/6] odb: split `struct odb_transaction` into separate header
+Date: Mon, 30 Mar 2026 22:38:30 -0500
+Message-ID: <20260331033835.2863514-2-jltobler@gmail.com>
 X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
+In-Reply-To: <20260331033835.2863514-1-jltobler@gmail.com>
+References: <20260331033835.2863514-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,51 +75,287 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Greetings,
+The current ODB transaction interface is collocated with other ODB
+interfaces in "odb.{c,h}". Subsequent commits will expand `struct
+odb_transaction` to support write operations on the transaction
+directly. To keep things organized and prevent "odb.{c,h}" from becoming
+more unwieldy, split out `struct odb_transaction` into a separate
+header.
 
-This series lays the groundwork for introducing write operations to the
-ODB transaction interface. The eventual goal is for all object writes
-performed within a transaction to go through this interface explicitly,
-rather than implicitly relying on the transaction to reconfigure ODB
-sources so that writes are redirected to a temporary location.
-
-For now, only `odb_transaction_write_object_stream()` is implemented and
-wires up the existing logic for streaming "large" blobs directly into a
-packfile as part of the transaction.
-
-Most of the patches are structural refactorings to enable this, but
-patch 4 introduces a behavioral change in how packfiles that would
-exceed "pack.packSizeLimit" are handled.
-
-Thanks,
--Justin
-
-Justin Tobler (6):
-  odb: split `struct odb_transaction` into separate header
-  odb/transaction: use pluggable `begin_transaction()`
-  object-file: remove flags from transaction packfile writes
-  object-file: avoid fd seekback by checking object size upfront
-  object-file: generalize packfile writes to use odb_write_stream
-  odb/transaction: make `write_object_stream()` pluggable
-
- Makefile                 |   1 +
- builtin/add.c            |   1 +
- builtin/unpack-objects.c |   1 +
- builtin/update-index.c   |   1 +
- cache-tree.c             |   1 +
- meson.build              |   1 +
- object-file.c            | 249 +++++++++++++++++++++------------------
- odb.c                    |  25 ----
- odb.h                    |  31 -----
- odb/transaction.c        |  35 ++++++
- odb/transaction.h        |  57 +++++++++
- read-cache.c             |   1 +
- 12 files changed, 234 insertions(+), 170 deletions(-)
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ Makefile                 |  1 +
+ builtin/add.c            |  1 +
+ builtin/unpack-objects.c |  1 +
+ builtin/update-index.c   |  1 +
+ cache-tree.c             |  1 +
+ meson.build              |  1 +
+ object-file.c            |  1 +
+ odb.c                    | 25 -------------------------
+ odb.h                    | 31 -------------------------------
+ odb/transaction.c        | 28 ++++++++++++++++++++++++++++
+ odb/transaction.h        | 38 ++++++++++++++++++++++++++++++++++++++
+ read-cache.c             |  1 +
+ 12 files changed, 74 insertions(+), 56 deletions(-)
  create mode 100644 odb/transaction.c
  create mode 100644 odb/transaction.h
 
-
-base-commit: 5361983c075154725be47b65cca9a2421789e410
+diff --git a/Makefile b/Makefile
+index dbf0022054..6342db13e5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1219,6 +1219,7 @@ LIB_OBJS += odb.o
+ LIB_OBJS += odb/source.o
+ LIB_OBJS += odb/source-files.o
+ LIB_OBJS += odb/streaming.o
++LIB_OBJS += odb/transaction.o
+ LIB_OBJS += oid-array.o
+ LIB_OBJS += oidmap.o
+ LIB_OBJS += oidset.o
+diff --git a/builtin/add.c b/builtin/add.c
+index 7737ab878b..c859f66519 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -16,6 +16,7 @@
+ #include "run-command.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/transaction.h"
+ #include "parse-options.h"
+ #include "path.h"
+ #include "preload-index.h"
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 6fc64e9e4b..bc9b1e047e 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -9,6 +9,7 @@
+ #include "hex.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/transaction.h"
+ #include "object.h"
+ #include "delta.h"
+ #include "pack.h"
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 8a5907767b..bcc43852ef 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -19,6 +19,7 @@
+ #include "tree-walk.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/transaction.h"
+ #include "refs.h"
+ #include "resolve-undo.h"
+ #include "parse-options.h"
+diff --git a/cache-tree.c b/cache-tree.c
+index 60bcc07c3b..f056869cfd 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -10,6 +10,7 @@
+ #include "cache-tree.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/transaction.h"
+ #include "read-cache-ll.h"
+ #include "replace-object.h"
+ #include "repository.h"
+diff --git a/meson.build b/meson.build
+index 8309942d18..6dc23b3af2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -405,6 +405,7 @@ libgit_sources = [
+   'odb/source.c',
+   'odb/source-files.c',
+   'odb/streaming.c',
++  'odb/transaction.c',
+   'oid-array.c',
+   'oidmap.c',
+   'oidset.c',
+diff --git a/object-file.c b/object-file.c
+index f0b029ff0b..bfbb632cf8 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -21,6 +21,7 @@
+ #include "object-file.h"
+ #include "odb.h"
+ #include "odb/streaming.h"
++#include "odb/transaction.h"
+ #include "oidtree.h"
+ #include "pack.h"
+ #include "packfile.h"
+diff --git a/odb.c b/odb.c
+index 350e23f3c0..8c3cbc1b53 100644
+--- a/odb.c
++++ b/odb.c
+@@ -1069,28 +1069,3 @@ void odb_reprepare(struct object_database *o)
+ 
+ 	obj_read_unlock();
+ }
+-
+-struct odb_transaction *odb_transaction_begin(struct object_database *odb)
+-{
+-	if (odb->transaction)
+-		return NULL;
+-
+-	odb->transaction = odb_transaction_files_begin(odb->sources);
+-
+-	return odb->transaction;
+-}
+-
+-void odb_transaction_commit(struct odb_transaction *transaction)
+-{
+-	if (!transaction)
+-		return;
+-
+-	/*
+-	 * Ensure the transaction ending matches the pending transaction.
+-	 */
+-	ASSERT(transaction == transaction->source->odb->transaction);
+-
+-	transaction->commit(transaction);
+-	transaction->source->odb->transaction = NULL;
+-	free(transaction);
+-}
+diff --git a/odb.h b/odb.h
+index 9aee260105..ec5367b13e 100644
+--- a/odb.h
++++ b/odb.h
+@@ -35,24 +35,6 @@ struct packed_git;
+ struct packfile_store;
+ struct cached_object_entry;
+ 
+-/*
+- * A transaction may be started for an object database prior to writing new
+- * objects via odb_transaction_begin(). These objects are not committed until
+- * odb_transaction_commit() is invoked. Only a single transaction may be pending
+- * at a time.
+- *
+- * Each ODB source is expected to implement its own transaction handling.
+- */
+-struct odb_transaction;
+-typedef void (*odb_transaction_commit_fn)(struct odb_transaction *transaction);
+-struct odb_transaction {
+-	/* The ODB source the transaction is opened against. */
+-	struct odb_source *source;
+-
+-	/* The ODB source specific callback invoked to commit a transaction. */
+-	odb_transaction_commit_fn commit;
+-};
+-
+ /*
+  * The object database encapsulates access to objects in a repository. It
+  * manages one or more sources that store the actual objects which are
+@@ -154,19 +136,6 @@ void odb_close(struct object_database *o);
+  */
+ void odb_reprepare(struct object_database *o);
+ 
+-/*
+- * Starts an ODB transaction. Subsequent objects are written to the transaction
+- * and not committed until odb_transaction_commit() is invoked on the
+- * transaction. If the ODB already has a pending transaction, NULL is returned.
+- */
+-struct odb_transaction *odb_transaction_begin(struct object_database *odb);
+-
+-/*
+- * Commits an ODB transaction making the written objects visible. If the
+- * specified transaction is NULL, the function is a no-op.
+- */
+-void odb_transaction_commit(struct odb_transaction *transaction);
+-
+ /*
+  * Find source by its object directory path. Returns a `NULL` pointer in case
+  * the source could not be found.
+diff --git a/odb/transaction.c b/odb/transaction.c
+new file mode 100644
+index 0000000000..9bf3f347dc
+--- /dev/null
++++ b/odb/transaction.c
+@@ -0,0 +1,28 @@
++#include "git-compat-util.h"
++#include "object-file.h"
++#include "odb/transaction.h"
++
++struct odb_transaction *odb_transaction_begin(struct object_database *odb)
++{
++	if (odb->transaction)
++		return NULL;
++
++	odb->transaction = odb_transaction_files_begin(odb->sources);
++
++	return odb->transaction;
++}
++
++void odb_transaction_commit(struct odb_transaction *transaction)
++{
++	if (!transaction)
++		return;
++
++	/*
++	 * Ensure the transaction ending matches the pending transaction.
++	 */
++	ASSERT(transaction == transaction->source->odb->transaction);
++
++	transaction->commit(transaction);
++	transaction->source->odb->transaction = NULL;
++	free(transaction);
++}
+diff --git a/odb/transaction.h b/odb/transaction.h
+new file mode 100644
+index 0000000000..a56e392f21
+--- /dev/null
++++ b/odb/transaction.h
+@@ -0,0 +1,38 @@
++#ifndef ODB_TRANSACTION_H
++#define ODB_TRANSACTION_H
++
++#include "odb.h"
++#include "odb/source.h"
++
++/*
++ * A transaction may be started for an object database prior to writing new
++ * objects via odb_transaction_begin(). These objects are not committed until
++ * odb_transaction_commit() is invoked. Only a single transaction may be pending
++ * at a time.
++ *
++ * Each ODB source is expected to implement its own transaction handling.
++ */
++struct odb_transaction;
++typedef void (*odb_transaction_commit_fn)(struct odb_transaction *transaction);
++struct odb_transaction {
++	/* The ODB source the transaction is opened against. */
++	struct odb_source *source;
++
++	/* The ODB source specific callback invoked to commit a transaction. */
++	odb_transaction_commit_fn commit;
++};
++
++/*
++ * Starts an ODB transaction. Subsequent objects are written to the transaction
++ * and not committed until odb_transaction_commit() is invoked on the
++ * transaction. If the ODB already has a pending transaction, NULL is returned.
++ */
++struct odb_transaction *odb_transaction_begin(struct object_database *odb);
++
++/*
++ * Commits an ODB transaction making the written objects visible. If the
++ * specified transaction is NULL, the function is a no-op.
++ */
++void odb_transaction_commit(struct odb_transaction *transaction);
++
++#endif
+diff --git a/read-cache.c b/read-cache.c
+index 5049f9baca..8147c7e94a 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -20,6 +20,7 @@
+ #include "dir.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/transaction.h"
+ #include "oid-array.h"
+ #include "tree.h"
+ #include "commit.h"
 -- 
 2.53.0.381.g628a66ccf6
 
