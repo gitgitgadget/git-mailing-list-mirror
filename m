@@ -1,71 +1,71 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFA83F7875
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 14:14:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3BA2EC553
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 14:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774966446; cv=none; b=I3OpPmlaXJ7W9yK8FCB5fzHZVvdms3UkMPTWFPFMIfnihlkZ4g4H5LuT9qAFxf6V/frTHpvx8mTec8vyvx/q/We3vY31v7pmHI1ZHoJ0qPQrQpV+qIi4CUoOSe+A6yqnNTlXcayC9pn7fFnymZl0EaB1Qutl7Dgn6/8sp7NMTNc=
+	t=1774967490; cv=none; b=vC1+Wxg+DD0D6RYtF9HcDac+m0VqsGt1jP0iM0U8eZ/OliI3RBTFiInjXr6P0GSG69zuSISt7+lA6dRqi2f5V6vKrPo/5L6mJ1EV4eqHORz41bYoJk5g28evPfmiE5GbwSXCgT4wFIbC84XmX0uux3GcCMQc7zK7zITBYCT7Dpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774966446; c=relaxed/simple;
-	bh=C0dRDu7B07XkoXQ0yc9wBT5a6FO+Sn9wY5QzUb4YRsg=;
+	s=arc-20240116; t=1774967490; c=relaxed/simple;
+	bh=lAHLQJ8Vbmgpho2ySOgsubN+ZcLJX5dN4Bzese5aUCM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q+fAbgyPtelpKQZMbv+QaOpu9GlXdAanjDhviAI1U5XvBYffxAVaCPY/W8ISUEqdDx7R4gBNLDViesPJrO5r7RBOwGa5BjW2L87x3ZPFDnQmstDTIRRs5vLLH9m77/CqXMYHMJ9KdOp0aayJJMOEY3cz5YdbriiTGjlh0Ht8NLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HDGPh/rD; arc=none smtp.client-ip=209.85.167.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=ch5Mgjw6tEmX+DfdBaFT6gQr6uD/6JrT6yNlfL5OVqriHUztBF18r0UbUgw/SuESb+hm5EGBcWdcqJrK2wNa8v1YLu6fjG6x6o8pIU11sUFMCnUEF6nqLFSxPHhzlv34mjxFRJcICpxw58eZp2dVFIXCy2JmhU34p1YkpsQMVuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kg7stQ+O; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HDGPh/rD"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-4648447e29bso1859631b6e.0
-        for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:14:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kg7stQ+O"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-40f0e14b9f9so3867868fac.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774966444; x=1775571244; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774967488; x=1775572288; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=U3F0PBG7mTgaaEJ5dSSMfhgZrZ0ZFLAGQD52DKZNNHA=;
-        b=HDGPh/rDBNuO7Co9ezFpNykDT84KdTvWN5m76vgMEG0HyOvLxTLbModB3NiJjkoZQv
-         UHWlxIE6sKZAB4i0h/0P80j+Xc21ohi1shpmnEG+hRZxSlxnZuHnCz3a/V97xaXOb6x6
-         ke3f1oyW7hyBQCPF0x45p7sWvkLiCxKkw/Gs4XTEwVs31WVLZlpdPGpOcMT0Zn78huSH
-         SD2l22a0b6vHKNAMZAf4/Kv1+Kt8pu9nwWy9t4oMWMRMvJhUV+O2N1E+pFyMGfMJJP3X
-         TtVouVHnrVRXUr88eeA7+HtUCn3IEqP+OlEX9YyeFxDSXNLDOXZaTgM7SsvRJLxZF2kE
-         2DBA==
+        bh=RBBWbx707ZEhoOVf9Muo1mHgqudcIBPXW54ajYoGtcM=;
+        b=kg7stQ+OP9Op80zGWRUn9cVQP8B10lPdayz5Cz5ynrBd4w6iqzVkU6szwFJzs7Sm+R
+         /DdTYv/D8qIa7jSIWjCV+wo0oGpS+S1oSFxO2Ukx9Qx1xGMaed/oo2Qe2ItvSTCsZAs7
+         4KWezy/ftFvYBtD8ZlN7TMSykeBF5Np8+Xk61+zLx89k+60Oa7ZoU2ZHaQE1DyAiWf5e
+         +Fsqcl3Vb0/UJIUXDGHQYX1JeDPbxOYiSGdgu9gWzX1YRE3lxs/3mvJxZZJyzLDPR50P
+         M2vdNmtiQk1mLhtZZbFG992LFBoguMVSEreZ6jv8D/3Lf+2pG9a1JWgkeoMg2K7y5pjv
+         VvEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774966444; x=1775571244;
+        d=1e100.net; s=20251104; t=1774967488; x=1775572288;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U3F0PBG7mTgaaEJ5dSSMfhgZrZ0ZFLAGQD52DKZNNHA=;
-        b=b7InL8PzareWomdEh9pQ4kV/eFSqi9OzodEXEwXZlLdigi7x2T7z2GosjQTC//TojR
-         VyGe8reZcSKq37Ry5n94cRlWFYDINHseMeIo9HYtTtJKtSBp6vYB8fNmWeVIqxO3L8n6
-         ITc2NCHql0QH12EbMpSRgb47K/nx3fv64fWjZ/mONP5WnSedEJeoBOLYyefg5p03Yr2q
-         srXr6y0OzyMJ595bUciacg1qMk3XuPtKfkkNBgzfIC1zRqLy+4uWm+u01EBwx38Zkm3I
-         I/98mqS1AqtQtxi7TSUMM3rIhc8kc09aJspvmr7VGvQVRJtojfVbxM1OWN/dF7kPL/K0
-         ggiQ==
-X-Gm-Message-State: AOJu0YzJUOXkJYBve/tHsJkQ/ykTsvgVaadz8QBxFS6faPjO1u8ej+LV
-	h3h3R8IE7wTvMRy/8Qw1MWHWO3PUSjidURH+m9r0Iu0oqkkOtSs5ixEdS7XT+w==
-X-Gm-Gg: ATEYQzx0Hpg04OI/LI/gKGSeTH1PK60HnQbAs85nEYnEzxwmQEXWXP5PvRyZw+n5oLd
-	f8Zz88VBKDv+crPYY60hTQB80pd8ssL44IySgWIP4dQ70HWmWrgCoIkowmAJuwLLX487CucBu4E
-	3QXE1t7pkBuFftevtHwEePmY1Mms43QG4b1EXssCYoLJsjqdaYFBWTR1c5+UwflTH1HIIiy+/F5
-	ps5LDffSd7+szAmGST2V95h5GHZ/u1wmv7csD+L1O/TSToMO0EgjcneazTlzfWTsfAsUNgANs/I
-	5lYyZUsit/RViZwjUXcV+00qupnVDsNLQdNzYp6ui4JkHWiTcb56mq4+MsLrhuFfyhIh7GS3FGI
-	ULN8SYZvV8nqScSyshdEULiPR0iY/6j/BjDKbFaDfHdykw1coqzJbhc/Hd83Gb4zYmcM+3ahEY7
-	nykt7Tddp1C2yRF67N
-X-Received: by 2002:a05:6808:4704:b0:450:bb4e:8395 with SMTP id 5614622812f47-46a8a5e0413mr7383219b6e.53.1774966443597;
-        Tue, 31 Mar 2026 07:14:03 -0700 (PDT)
+        bh=RBBWbx707ZEhoOVf9Muo1mHgqudcIBPXW54ajYoGtcM=;
+        b=C/MspJpQaD5Or28eiCYYSefEkO4bPVzcgOaC0rwsuO+zG7Aqf2vTxNNUbkN7e/TXCh
+         jG/qAYB+tjIWhABb2xsH75PRsqepMvHvNSE9ksl+pat+fG3mya3Q+BTL6f0XTkMPUy/f
+         7LvzUIGxssm2BiO1RfG1B5Q2JxB+D37Vu+yX1fGRRdEk5Wl+AXM25clwyrqtnuOLF3GM
+         u3Q8qBSoflscWyw3fbtgQeD8OjTmtm3ej3syKB5rA5VME3aV1i9QffnPQeutfufwTbQB
+         Jaf1O6EcT8E8LVbmNjX4nh76HCAS3cxap9MGlXrZSEQDMmETTqcB/gq1T1vvN6MT7amJ
+         XEng==
+X-Gm-Message-State: AOJu0YyHuPZXYq0/mlv/cSbKLyBjAW5/XMZOFjkctIYmy57T1bBM/p9l
+	Sd7s+Ez8SfxC/Dhzzu/tIqAqFx40MPxJ60QrRK1+hQm0vCEy3QfuXLP8
+X-Gm-Gg: ATEYQzwPtGj2/YWt/gXfDcZIOizLQm/Xj8co6rjs7OmcjFMkwkjsiiLB0muvJHGjx1V
+	VJX4Szhsf0zPbpQxWz9yD8KKYXggPpMhDuongRcM+EAARSBZqq6q+gp15idE1mlPY0cNj0jIje3
+	ltwXHv1ibXAuHpI0z8CTw2iL4uIU2DzRoj4w7e7MtS5ylVlFfjGxugzx9oxW8ZR4SxWSmyDo4tA
+	grPHmcvngZbqzAqyaLULNxqdM8v0K7DRuOzvQXdmYxxh8ij7o8CjlrdmBgDfgRWBSjrj2LULHF4
+	SQIa5nN1iJMaesqZc5MQ8SznQLiQ7SWbaAoSQxIbOwCIn/7Cx80uQ38irXPeh0GpCAZzCDApNbs
+	NfjyRj1IMFk8HcDS6xq57kHnf1zLno5Mj0q1d35buPHWx+371ZRBvw6CrU4E6oMZqnIS7t8FNsQ
+	W3iaabpbxzIyCJZSpt
+X-Received: by 2002:a05:687c:409e:b0:409:9a0b:b733 with SMTP id 586e51a60fabf-41cec167efemr8823791fac.10.1774967488171;
+        Tue, 31 Mar 2026 07:31:28 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-41d048e1961sm7772428fac.2.2026.03.31.07.14.03
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-41d048e1984sm7387465fac.4.2026.03.31.07.31.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 07:14:03 -0700 (PDT)
-Date: Tue, 31 Mar 2026 09:14:02 -0500
+        Tue, 31 Mar 2026 07:31:27 -0700 (PDT)
+Date: Tue, 31 Mar 2026 09:31:25 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/6] object-file: avoid fd seekback by checking object
- size upfront
-Message-ID: <acvV0_7DqGy_q9GY@denethor>
+Subject: Re: [PATCH 5/6] object-file: generalize packfile writes to use
+ odb_write_stream
+Message-ID: <acvX8wdg39xTy-Am@denethor>
 References: <20260331033835.2863514-1-jltobler@gmail.com>
- <20260331033835.2863514-5-jltobler@gmail.com>
- <act8W1BEg6iyUpHB@pks.im>
+ <20260331033835.2863514-6-jltobler@gmail.com>
+ <act8YM8tMeUr3cJe@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,84 +74,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <act8W1BEg6iyUpHB@pks.im>
+In-Reply-To: <act8YM8tMeUr3cJe@pks.im>
 
 On 26/03/31 09:48AM, Patrick Steinhardt wrote:
-> On Mon, Mar 30, 2026 at 10:38:33PM -0500, Justin Tobler wrote:
-> > In certain scenarios, Git handles writing blobs that exceed
-> > "core.bigFilesThreshold" differently by streaming the object directly
-> > into a packfile. When there is an active ODB transaction, these blobs
-> > are streamed to the same packfile instead of using a separate packfile
-> > for each. If "pack.packSizeLimit" is configured and streaming another
-> > object causes the packfile to exceed the configured limit, the packfile
-> > is truncated back to the previous object and the object write is
-> > restarted in a new packfile.
-> > 
-> > This works fine, but requires the fd being read from to save a
-> > checkpoint so it becomes possible to rewind the input source via seeking
-> > back to a known offset at the beginning. In a subsequent commit, blob
-> > streaming is converted to use `struct odb_write_stream` as a more
-> > generic input source instead of an fd which doesn't provide a mechanism
-> > for rewinding.
-> > 
-> > For this use case though, rewinding the fd is not strictly necessary
-> > because the inflated size of the object is known and can be used to
-> > approximate whether writing the object would cause the packfile to
-> > exceed the configured limit prior to writing anything. These blobs
-> > written to the packfile are never deltafied thus the size difference
-> 
-> s/deltafied/deltified/
-
-Will fix.
-
-
-> > diff --git a/object-file.c b/object-file.c
-> > index 493173eaf4..1de2244ac5 100644
-> > --- a/object-file.c
-> > +++ b/object-file.c
-> > @@ -1473,15 +1461,10 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
-> >  			if ((size_t)read_result != rsize)
-> >  				die("failed to read %u bytes from '%s'",
-> >  				    (unsigned)rsize, path);
-> > -			offset += rsize;
-> > -			if (*already_hashed_to < offset) {
-> > -				size_t hsize = offset - *already_hashed_to;
-> > -				if (rsize < hsize)
-> > -					hsize = rsize;
-> > -				if (hsize)
-> > -					git_hash_update(ctx, ibuf, hsize);
-> > -				*already_hashed_to = offset;
-> > -			}
+> On Mon, Mar 30, 2026 at 10:38:34PM -0500, Justin Tobler wrote:
 > > +
-> > +			if (rsize)
-> > +				git_hash_update(ctx, ibuf, rsize);
+> > +	if (total != size)
+> > +		die("unexpected number of bytes read");
 > 
-> Is this guard really needed? I wouldn't expect that we ever try to read
-> zero bytes into `ibuf`, and we bail in case we didn't receive the
-> expected number of bytes.
-> 
-> And even if we did, `git_hash_update()` works just fine with no data.
+> Do we want to mention the expected and actual number of bytes?
 
-Ya you are right, this guard is not needed. Will remove in the next
-version.
+Ya, that sounds reasonable. Will update.
 
-
-> >  	header_len = format_object_header((char *)obuf, sizeof(obuf),
-> >  					  OBJ_BLOB, size);
-> >  	transaction->base.source->odb->repo->hash_algo->init_fn(&ctx);
-> >  	git_hash_update(&ctx, obuf, header_len);
+> > @@ -1543,6 +1542,40 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
+> >  	odb_reprepare(repo->objects);
+> >  }
 > >  
-> > +	/*
-> > +	 * If writing another object to the packfile could result in it
-> > +	 * exceeding the configured size limit, flush the current packfile
-> > +	 * transaction.
-> > +	 */
+> > +struct read_object_fd_data {
+> > +	int fd;
+> > +	size_t size;
+> > +	unsigned char buf[16384];
+> > +};
 > 
-> Do we want to document that this intentionally works on the inflated
-> size, not the deflated one, with the arguments mentioned in the commit
-> message?
+> This interface feels generally useful to me, not just in this subsystem
+> here. Would it make sense to instead expose it in "odb/transaction.h"
+> as a new `odb_write_stream_from_fd()` function? No need to expose the
+> structure itself, I guess.
 
-Good suggestion. Will update.
+Hmmm, exposing an `odb_write_stream_from_fd()` function could probably
+be useful. Would it be better for it to be put in "odb/streaming.h"
+though? Maybe the its use case would always be related to transactions?
+
+> > +static const void *read_object_fd(struct odb_write_stream *stream,
+> > +				  unsigned long *len)
+> > +{
+> > +	struct read_object_fd_data *data = stream->data;
+> > +	ssize_t read_result;
+> > +	size_t rsize;
+> > +
+> > +	if (stream->is_finished) {
+> > +		*len = 0;
+> > +		return NULL;
+> > +	}
+> > +
+> > +	rsize = data->size < sizeof(data->buf) ? data->size : sizeof(data->buf);
+> > +	read_result = read_in_full(data->fd, data->buf, rsize);
+> > +	if (read_result < 0)
+> > +		die_errno("failed to read blob data");
+> 
+> It's a bit unfortunate that we die here, but we don't have an easy way
+> to return errors. I wonder whether we should refactor the interface a
+> bit to maybe take a pointer to a buffer as well as the buffer's length
+> and then return an `ssize_t`.
+> 
+>     static ssize_t *read_object_fd(struct odb_write_stream *stream,
+>                                    unsigned char *buf,
+>                                    size_t buf_len);
+> 
+> That'd also avoid having to cast away the const-ness, and it allows the
+> caller to control how many bytes they want to read at once.
+
+I think the above suggestion would work. I believe there is only a
+single other usage of `struct odb_write_stream` so updating shouldn't be
+much churn.
+
+> > +	if ((size_t)read_result != rsize)
+> > +		die("failed to read %u bytes of blob data", (unsigned)rsize);
+> > +
+> > +	data->size -= rsize;
+> 
+> I feel like `data->size` is misleadingly named now, as it doesn't
+> reflect the overall size but rather the number of remaining bytes that
+> we expect.
+
+That's fair. The variable starts off as the initial size of the object
+being read, but really is just the number of unread bytes. Will update.
 
 Thanks,
 -Justin
