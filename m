@@ -1,37 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BCE38F92F
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 23:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23B53B3C0B
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 23:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775000574; cv=none; b=PyxgsfwT3Nl3R1BSKoPlzKkz485KrXytvEZAqB8h5tAiD9pifJ3I1iGy1itPjksOv+89W0IcQg1xntF4eaJnLBqmZAjJ1pgSHVOhXTgGRF7/5mHm1RyOXvVEQd3qbSUW0dt+IVU28b5UuVqdpHN6jqJ5sTKlanbGeD7XDjHrxhg=
+	t=1775000658; cv=none; b=hdvZ41LsWve4YXcO+3lGx6WW2YDvJLwsUfKIYq7xOjspxA3NfRiZS87h3JoaWl+sGIb55zu/7NwIwtqPT6U4i4yOvnmQyhQ1irkJZIRD7ZWHC/8dxxq9QpSoCuUEn27YnwwqTV9ZCmb8IEATao6Xzz1mXZNLxBngrh/8p98zl4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775000574; c=relaxed/simple;
-	bh=eRDRVol1U0a2ydYytJ0jGKJZJdMGe2D4BfUGMgKUv8o=;
+	s=arc-20240116; t=1775000658; c=relaxed/simple;
+	bh=AW8Rl4fZOfFKJK8kOuYJ6dLAoXZMD9aX1CJ6qiycaf0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LhdKRXUocxK4rgqbXbt4zGowzEBzkN8mOHKlIf1k6ThpMm9WC5k4fhmXLb2+n15rRW+mRlycnXdcMYm/PYzmE6F9pHB51OiPdyUN/IKUagFGr8fTeD6q+GFPiQe9q6dCLbrpledbicQ0Sp5qyg/r1C1dSCd92koIrDxCcfASOX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U5c4bVHA; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7Wlzyw9/y5O28O5HfzTjkgPQX6T6ojpYcNeCImYF96sjhIZJqO96w9ATfI7NmgbCYKHN3+si/IAyMpNXL6J9KiL6tGYHPar504UOZOaG9kpGLXCrOcN55kmQjoJeAWy6Cypvy8QK0UeVgoZW3VxEf5o+I8thSK3bulUeArQEDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=apJQ+XVP; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U5c4bVHA"
-Received: (qmail 206629 invoked by uid 106); 31 Mar 2026 23:42:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=eRDRVol1U0a2ydYytJ0jGKJZJdMGe2D4BfUGMgKUv8o=; b=U5c4bVHAyRio5LlNT5QKFAw8JTLtCPklA1zNFK4RVbHoyiZ/eXcV8kOjOHq4peNfZ1mPv50YQgh7IZllKKbjbnf2vntXwwYtsIPO3q+qIgxpiQuIo9RPeFy9ilnsvI4aaZj0RAhQLDF14gtFEUpcfZBKg6eMxxhGNGjKpoEQt4xdAWSjrnW3KWDDwFEQb8rANAvVZOuaehN/XBg1BVOb8ylF8QfemUY+dlzWAitXzisyKsmX3mHUFmYOzT3u3Iy197OTF3BVT4QJ/gMJ0LOnLrT2gXJYQmxPqGiLx5aSoHDb6raLMGj4NeQat0+YWpJwO6jd85TxNLkDUMLOj9v4ZQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="apJQ+XVP"
+Received: (qmail 206639 invoked by uid 106); 31 Mar 2026 23:44:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AW8Rl4fZOfFKJK8kOuYJ6dLAoXZMD9aX1CJ6qiycaf0=; b=apJQ+XVPVqM6EAYvAJmfSmWt3hNO9Q4CYXAUkXRq3dlSndLV8aXYM1Iybrrjq2/LWtfpgE5y6eSBZKDKB6Bb3cLh/CRHGUcWnHAAT/FK8LrpO703gP8uNUZBvJeBscZrq9gG1sxcR5xJGCkfMvMDz3uB4YGEifyCp2RX9kRq8u1BzTIhbngNq2634h0mocVo3MfnunIPnPC/0+F3tUPs/D0Jlb5yIWW9/zne6vQq33ODPB0Fy6SLKzWAHc9JFIw8f1tzWS3q+LZYhqZuoJVkeFsop2baMRj5S1sZ18pztdvhbvInKJX+gm86EPxCWD7Ir9clvrIk3w/QNA1ApQiLDQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Mar 2026 23:42:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Mar 2026 23:44:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 326439 invoked by uid 111); 31 Mar 2026 23:42:52 -0000
+Received: (qmail 326445 invoked by uid 111); 31 Mar 2026 23:44:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Mar 2026 19:42:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Mar 2026 19:44:15 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 31 Mar 2026 19:42:51 -0400
+Date: Tue, 31 Mar 2026 19:44:15 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Collin Funk <collin.funk1@gmail.com>, Michael J Gruber <git@grubix.eu>
-Subject: [PATCH 05/12] run-command: explicitly cast away constness when
- assigning to void
-Message-ID: <20260331234251.GE2328529@coredump.intra.peff.net>
+Subject: [PATCH 06/12] find_last_dir_sep(): convert inline function to macro
+Message-ID: <20260331234415.GF2328529@coredump.intra.peff.net>
 References: <20260331233856.GA2327197@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,43 +42,60 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260331233856.GA2327197@coredump.intra.peff.net>
 
-We do this:
+The find_last_dir_sep() function is implemented as an inline function
+which takes in a "const char *" and returns a "char *" via strrchr().
+That means that just like strrchr(), it quietly removes the const from
+our pointer, which could lead to accidentally writing to the resulting
+string.
 
-  char *equals = strchr(*e, '=');
+But C23 versions of libc (including recent glibc) annotate strrchr()
+such that the compiler can detect when const is implicitly lost, and it
+now complains about the call in this inline function.
 
-which implicitly removes the constness from "*e" and cause the compiler
-to complain. We never write to "equals", but later assign it to a
-string_list util field, which is defined as non-const "void *".
+We can't just switch the return type of the function to "const char *",
+though. Some callers really do want a non-const string to be returned
+(and are OK because they are feeding a non-const string into the
+function).
 
-We have to cast somewhere, but doing so at the assignment to util is the
-least-bad place, since that is the source of the confusion. Sadly we are
-still open to accidentally writing to the string via the util pointer,
-but that is the cost of using void pointers, which lose all type
-information.
+The most general solution is for us to annotate find_last_dir_sep() in
+the same way that is done for strrchr(). But doing so relies on using
+C23 generics, which we do not otherwise require.
+
+Since this inline function is wrapping a single call to strrchr(), we
+can take a shortcut. If we implement it as a macro, then the original
+type information is still available to strrchr(), and it does the check
+for us.
+
+Note that this is just one implementation of find_last_dir_sep(). There
+is an alternate implementation in compat/win32/path-utils.h. It doesn't
+suffer from the same warning, as it does not use strrchr() and just
+casts away const explicitly. That's not ideal, and eventually we may
+want to conditionally teach it the same C23 generic trick that strrchr()
+uses.  But it has been that way forever, and our goal here is just
+quieting new warnings, not improving const-checking.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- run-command.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-compat-util.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 32c290ee6a..d6980c79b3 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -604,11 +604,11 @@ static void trace_add_env(struct strbuf *dst, const char *const *deltaenv)
- 	/* Last one wins, see run-command.c:prep_childenv() for context */
- 	for (e = deltaenv; e && *e; e++) {
- 		struct strbuf key = STRBUF_INIT;
--		char *equals = strchr(*e, '=');
-+		const char *equals = strchr(*e, '=');
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4b4ea2498f..4bb59b3101 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -335,11 +335,7 @@ static inline int is_path_owned_by_current_uid(const char *path,
+ #endif
  
- 		if (equals) {
- 			strbuf_add(&key, *e, equals - *e);
--			string_list_insert(&envs, key.buf)->util = equals + 1;
-+			string_list_insert(&envs, key.buf)->util = (void *)(equals + 1);
- 		} else {
- 			string_list_insert(&envs, *e)->util = NULL;
- 		}
+ #ifndef find_last_dir_sep
+-static inline char *git_find_last_dir_sep(const char *path)
+-{
+-	return strrchr(path, '/');
+-}
+-#define find_last_dir_sep git_find_last_dir_sep
++#define find_last_dir_sep(path) strrchr((path), '/')
+ #endif
+ 
+ #ifndef has_dir_sep
 -- 
 2.53.0.1136.gd760fbd4a0
 
