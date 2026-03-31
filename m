@@ -1,88 +1,81 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F663E316C
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DBE3EF0A2
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 16:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974055; cv=none; b=uoPlDSJu3N8M2LsN757Onvt90XW1MKWF+L4zuera4OeZO4mesFem/XZTUhtYnjRrtujg73qqZR1Yv5IUqqgOfS3arfW+KqK7ngQTDRNmlNTTsWHD0qzD8QNSlDTPO3h4fo7Z2hrshs+Y1sIkPF/zG+bzRN3Oi0K08/9PV4eFH5U=
+	t=1774974376; cv=none; b=kuipybgeSMH5HawmduolXggSgzTPS2ZlN0rkK1UO5r3+YVmGD5flHlLXEWLQxI5OF5ShXu3TeTofcLQTQkJL4wtqkLR1yMqLzS1gmlg6LN2Pz5OCRVYPICvgAab6knnJafqHRoopqfiafrHRTqR4SKzUXLK+/PGzlwEJoAlxTCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974055; c=relaxed/simple;
-	bh=Yq8daiNWbMMsZxVrTLF9W/55EAdHBHHG46YEMLjGy0A=;
+	s=arc-20240116; t=1774974376; c=relaxed/simple;
+	bh=a/0WohmNRQ4ie5BAkY8bahGww/HskHC0QUTsrmAHQ8Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bcZfWjMiXAipNfNQSbUH3fpfsOts0lJsGCSyYvW1l27M7l33UHtdF4yUFfauevzw3+av/DVl0prgTNHqCWrjP0y+RGy9G1zqXtXTNugzWMtq+04tiZwED96WQOtQ8CvaxPdPj9a96lCW1FIoY6K4DCHXD6ljwt16WI81Wn+pgo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p90+u1SE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=APbZs1XC; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=QPRYtcdZOoX/m7xkkF8pvCxoZSbzHFOI3RhrZmydMC92wxNsAEnyYY/iu7PATsMdO8/WYL9tqZfDwJj+YFTrr6cERl3obg++wbHpp7wycO9ra33DQh23jNvnMlrVGm/OiElD61aFTq0lWhy+vtstqHe64oC3gwbABSSNiNe+cQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CJEMVnu7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zdg7t3wz; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p90+u1SE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="APbZs1XC"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 76F2E140011C;
-	Tue, 31 Mar 2026 12:20:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 31 Mar 2026 12:20:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CJEMVnu7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zdg7t3wz"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EB3E91400012;
+	Tue, 31 Mar 2026 12:26:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 31 Mar 2026 12:26:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1774974053; x=1775060453; bh=mvklWAf4I3
-	x1Cqu+9oX8ptGWeb12t2uB6qCV1dr6Dp4=; b=p90+u1SEsKYAZ9c6SLjUuPqqBD
-	jbp6xGXAiZkcfz4WxDwjrRb5T3VVse91b7GdO01hifgN5TqQdV2Nbb0Q9BtoVKvu
-	OyebSuHbwKUKGlbFldwpim1nvYXz9ey/W96w5DcKs2jNRYoeauSVp0Y2srpps+IJ
-	JpmyHURfMLNkqcg785CaJ3ef4IldJJcDhtGeIL5HLap3jGJ4Zky+V11nMCLbBEjl
-	KNXaDS6teFwePWiM/MBeaMKW76E+I6d2TwT1r4CKdScSY15yzXKeCu7eQOwSWu8B
-	EpWxYdsPNrGntyICcB0/Xt2Tw2k4aI7MEtcfH+noLKlG2g2A9OOTcZqsikCA==
+	:subject:to:to; s=fm1; t=1774974373; x=1775060773; bh=a/0WohmNRQ
+	4ie5BAkY8bahGww/HskHC0QUTsrmAHQ8Y=; b=CJEMVnu7wSkTbt7TSBJnqPpmTm
+	JdTDWVUJuf5QZ5fYmADP12HW18zTn6oFNOCNYXbC/FjFfdWiByb8RaurxmECU5uk
+	Te8sR/8OKyn18RXdNhgo7sGee+2RlpXb7gww0CeO+TWU36+K6BtOfRiaqXDq8ddQ
+	unYNfbt9X8WdccRz/ux0rzWpm43OG9u25cXYsyYQw2JZwkcYG5nejvyEx7+g0y3f
+	Y2/URHL1ypj6w5T3FXTwjd0dt5uQWnUrHnStmRDQqCp+tZhPHCMhxvK5KfhGl8Zt
+	9PJMIcba5hQXZGMZ6ADUu5sRG487/MiIwtEs1KcU9sOwwJJPqKEIIOZc8y9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774974053; x=1775060453; bh=mvklWAf4I3x1Cqu+9oX8ptGWeb12t2uB6qC
-	V1dr6Dp4=; b=APbZs1XCn5L78nwkNAg99BBapXs+4fSagOrcjccl8rEvflgf6fh
-	qtvOADmlcNQlxf48rUnMYbW4DtLH8OrHL9t2gC6Q+M8L0l5+sf76Egl5ZAl67Le9
-	qJeq/eBlIcRfwWotfxjuxSE6MExKAnyuEMZThCg2YqP5/Z5YMQyY3ns2/2mcAdWF
-	Re95Y0yRlv2nf4HjKvLAlZgWPQk4UEpqihKlTc+G3CKK9r3FY9JFEGqzR7KZlv+J
-	EOLRtRoPtiFLBJAgUakadF/leqZ7ojArAh5MZYlcGnsIqcIRUkXfvHmWx/5xa8iY
-	CL9QkWLmuuaO5dLA5U99jhyOMhGmDc+gfRg==
-X-ME-Sender: <xms:ZfTLab0_yRHfsqCMeCGhnl8RCtbk2LqV2ycD--BzGEnywGHJ2rftVQ>
-    <xme:ZfTLaQ_YXCVVD1p-MnV28FnJVNiruQiY_tvZJg4L7J758t7zZWd3m-VQ8F0Lsjf9B
-    relga4F8GgHkimrgyIZRDUHpgj9Aou5J_pVWpGJBZGaK1y38EaPMA>
-X-ME-Received: <xmr:ZfTLaUMLjCVvZzzAWUG3bF6Ojfcdw5qDfoF6KVKhaBTMOMnQ0zOTgqNzF_IZz2BHJnE997FN40-E6n9avPSwX5l7eUKWwkJEIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeiiecutefuodetggdotefrodftvf
+	1774974373; x=1775060773; bh=a/0WohmNRQ4ie5BAkY8bahGww/HskHC0QUT
+	srmAHQ8Y=; b=Zdg7t3wzHKgQsMptN6bmXE6OOGU0NMZYpz2nSXtg/D1aoAcG4kf
+	Pzsh/J2gThsWwOW8b1k26a9kO8k6RGnCcNaSx6E1vFBXABjBx/vytJVi9op29cLB
+	UjpSrU3AK/RCyGlPJ+xlrkMDNK3DpK6tVxyrsfrEalbmCdKnK8yOehPfw9DkdIfa
+	x1Iq0FE0VEmSMBOK2Tg9dxQbe0/qiBf/u3Kpa81ERrP5Khm+hp/5aHE3EHVNOBc+
+	ZAbf4Z9FBMCnzenAKiH01OiRmbnJCViFff1Fi5MakAWE3rwVW5VPgMmlNlNaQ1CD
+	r5pnUCzkJFGPFHBs3sVSot25I85pXeY5SCg==
+X-ME-Sender: <xms:pfXLac4Zmhwu5Ux18W7gvJlxFOyG4d3pbgBkwIDj0Qhz_Qk6yRr09Q>
+    <xme:pfXLaVUIhsDtjcYShboAd_PKcbfMqwo2h9ZNgD6qmp_uf60j2r7lIR5IsS3xOhZBc
+    1n6F0zsnEjgpXDd0P9NE2UBUWjwtd70V18JCsahY0mqTi9D9cHZ>
+X-ME-Received: <xmr:pfXLaY3yZ_1MWSFnOh6w3oiHhj7mVs7nb6VlETPSLdOAZ18Hadwtp1VTPjfNVspEHHLz_8MoLyw_ekfbtCcntdOLdtQGN8bX6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeikecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
     fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
     rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
     hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ZfTLaccnJNBtoOYu0XQhHuobMmKRL2itHL0etW5B9Hh1y_xdo_zU9g>
-    <xmx:ZfTLabV2q42wdvogkR9H4ZydJ06rrQG9yhtwjqT2Q9weBRLRtnZCgw>
-    <xmx:ZfTLaciCgMcMa6j-KHmU7caEDdg6FFzdHswZjctTIYsMb_6bM8Tsuw>
-    <xmx:ZfTLaS-n0L2zzNtdHA0ssvnMZ74SLmc6k-FAw-yPM5dayxzi9DCXJQ>
-    <xmx:ZfTLac7LLKb4wpjy2rzLMFN2zqVEnIHz-dK-tczVqJB7hkslrw2wOPYm>
+    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehgrghsphdrghhiohhrghhoshesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:pfXLaa138xHHrXqPeCYLr9GEO_0i6bvLtiD3o4ZTG56sr2seJCx2lg>
+    <xmx:pfXLaT_eDCb5R-GZ0koGW-pTX9AFx6UMcg_USudttgkSAEir8gzGNQ>
+    <xmx:pfXLaf27zFHslcwBYdOXQgVC7o-LrwanQcy6ddxDPtBgKH7M5wNXpA>
+    <xmx:pfXLaY9iIOahE-0Sq9kktYhdqLbF1934XZzIvsmgdsqNe9BdWmY51g>
+    <xmx:pfXLadWO_GsIJQkoZiQU3zNy7DCl6k2LOYmFmkWovJlxv6gp_OyUUtP2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 12:20:52 -0400 (EDT)
+ 31 Mar 2026 12:26:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v2] replay: support replaying down from root commit
-In-Reply-To: <CAP8UFD3P2Gs0J1FNyKW2URwSEW4ZaTrVO7cM1V8sG+zzXctbhg@mail.gmail.com>
-	(Christian Couder's message of "Tue, 31 Mar 2026 12:34:19 +0200")
-References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
-	<20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
-	<xmqqtsu5xaw0.fsf@gitster.g>
-	<CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
-	<87a4vv2ada.fsf@iotcl.com> <xmqqfr5lkyq8.fsf@gitster.g>
-	<CAP8UFD3P2Gs0J1FNyKW2URwSEW4ZaTrVO7cM1V8sG+zzXctbhg@mail.gmail.com>
-Date: Tue, 31 Mar 2026 09:20:51 -0700
-Message-ID: <xmqq4ilw2cnw.fsf@gitster.g>
+To: Giorgos Gasparis <gasp.giorgos@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [Feature Proposal] Add a built-in 'git whoami' command
+In-Reply-To: <CALCP2CjymE-i9TsKB8TmW_0M=ZDbtLPzZFpx4-ba01164b1MOA@mail.gmail.com>
+	(Giorgos Gasparis's message of "Tue, 31 Mar 2026 17:57:55 +0300")
+References: <CALCP2CjymE-i9TsKB8TmW_0M=ZDbtLPzZFpx4-ba01164b1MOA@mail.gmail.com>
+Date: Tue, 31 Mar 2026 09:26:12 -0700
+Message-ID: <xmqqzf3o0xuj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,26 +85,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Giorgos Gasparis <gasp.giorgos@gmail.com> writes:
 
-> So if we are about to fix that main issue in a separate patch or
-> series, and if we plan to emit something like the following in the
-> regular case:
+> Hello Git team,
 >
-> "fatal: replaying failed due to conflict"
+> I would like to propose adding a native git whoami command to Git to
+> easily check the currently active identity.
 >
-> and something like the following when replaying from a root commit:
->
-> "fatal: replaying from root commit XXX failed due to conflict"
->
-> then I think it would alleviate the need for a doc update.
+> Currently, users have to run two separate commands (git config
+> user.name and git config user.email) to check this.
 
-Hmph, what would you do to the other side (i.e., replay from some
-specified boundary) of the message?  When the version of "git
-replay" command a user who sees for the first time comes with the
-ability to replay from a root on day one, "from root commit" is not
-so special from "from these boundary commits", so I am not sure if
-it makes sense to have such a message that treats the down-to-root
-case any specially.
-
+"git var GIT_AUTHOR_IDENT"?
 
