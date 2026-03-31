@@ -1,133 +1,137 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23C4181334
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 00:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8623363C60
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 01:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774918379; cv=pass; b=IP/Sl0J13wMG1XFW3ZggOa4v+VQn/6JR7RpiGP1V0XmtaVpFxiGzjAKFXWIMoNLZQCgQNW9NXZ6uYIPxHV9UlmoYnzQh0XZsq7XAb9PFs6ERq4DG0l5Z9Yz9iweLUlgmP0EA640sTPQ+TOUh0Q2z2f1VNdjm9s5uout4180o58k=
+	t=1774920613; cv=pass; b=nXago1DyApPE9b3mV6sLiz+okuK1gc++2qKloQ4uuA0Gym1advqRpS4tAHacNekhFdAXmB4hR6oSeyWqK0iYGMMuNTtT9RaTKolZLaTEpJ+YwQaqDlmSDJD5aMP36T3C9BA1eO422eRqYh4Qjdwa8G1K/cQNH13S4gVod5DoS9E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774918379; c=relaxed/simple;
-	bh=SR2wCqsTg7w6WRCm4SrKX4dB+iN43mn4qDt4verGFdE=;
+	s=arc-20240116; t=1774920613; c=relaxed/simple;
+	bh=KRVFbq4O5oA4mujoDrYRSaO26sttwjEcIxYnUXZU360=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WKZOVLBge+Jc3ZAC0FYQMNC/4l+0YllplTCeSl40a5WTdqABSWnaK5kYAkAq3ikzKJYK+TOlATtb7WdgiIskM9uFkH1CeREqQyM+tW/HjaEeNoh0aL1+ZheqeY1dtOogmAseYQDWwjUtlo6Y3+E/B5F+jRwWvtSwkMUhS751LIk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FQnTbD5C; arc=pass smtp.client-ip=74.125.82.50
+	 To:Cc:Content-Type; b=U50dB7e50a3Lxh9Vh6eEC4LSr95cMgek99wBdpacWK+E42QzaJseFWD3l1RmOc5tZugveoIj0Jg7w5vhTna5ADbuPTQkv+ZagkpHEyg/MaAwd7iG3LVmUS73R6eD+/HfxPN4my0slQ1sDpB4sOqUasgtD4klQqphZXzFlY2YPEc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lWUngrZe; arc=pass smtp.client-ip=209.85.161.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FQnTbD5C"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-12732165d1eso7061524c88.1
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 17:52:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774918378; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lWUngrZe"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-67e00a230adso3217639eaf.3
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 18:30:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774920610; cv=none;
         d=google.com; s=arc-20240605;
-        b=bJaV4ILKMXCHDl4e8JM8H/+vnkc7cBd+UbF1iAeYXDxskx/nanV7ZWSP1ZjEe8u5ua
-         kMwTNIvo/sDF9u9L/tvJHhcIIRjip56nC7K+jBYqAUQl7piH9h9ygrtJT+vrkSYkSnf1
-         wlG2cNtT7h0QDl5jAouETgIIbMqWFWdPpfWf7M/DM+qgZx65wljhcyXEK/5QUrMFDUt+
-         Fmn0tQe8/yN2xNFY5IlsxqpTobuwyraXhQ7lcYynDYlOkUpYAMNjnWr3f+OofqcfwoiZ
-         J8wbJHuFQ8NtuLNWFNkw+vgNsxOM6hmELOtSLUZHdO+prHsfKEe29BM4nJTRRsQ1yUco
-         +nlQ==
+        b=BhFH8kIZMEqDRMXFHLoWMNNbsWPdVFnXqky3DbAT5lo2LmepVplsc54Z09Z11n8eZc
+         dom1IbGJ1WHjrL8rgdI6hSuUmBD8/yynGsOkd7wLJpbFhZjJYza/xjGrsii0xWtlWSdW
+         mfOqupY8etEpr8c44AFU0Ef66BlXJeL6T2Gz/eT2Tf/6upgv7KTymE9SZM8awtJll5pf
+         3g417Jj83eBccjUPoCLesZPWMIs3Mk43/Gn6v1bw+iWxNDpiFFr2VmUTZS+NDTBkdoLX
+         Mb3dHUKItLhEzRaZcLk+MBgPQXQCBNo26uIPmZ3DBGsJMhmb74A3SGpTu42S2TpliZVG
+         6A6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Cbt+FXrbuZ+LlYtrwTAsWrQXROXHVmY57eDe5m7W0xs=;
-        fh=IOYtyoWt77kTC++1Qc2uVIXZtRVT7H26+YEmKwQoAcI=;
-        b=lOMhsex1kHOOgvGKhYB07a2YuqLKXY3f+LatYBgMDb01JfPbrsr8kjQsOZ/UU/S8Sj
-         YPRLy2KYyVG7Nrz64OzwiAFSH0KvT41t7gXhUaIzbc69zapWM1hQFTPBP3FF1fSQCSBR
-         vUOUbWWQnysQ0EMucQzHhiXoVQLcflrGGO6AIIXDQXaNDyV8KVqSz7RvzzswySPyo2Qx
-         0HWFgqYzdBHw96kFY1CPUxxnG/wMJXPxyLxQhwqrvytpA+PnKcxUpf3gx0rcRTAxeTVu
-         Nd4dG0AGesjOk7mIrUZqiXj0XMhahuP/+PVQXWk9N/zSkpKLtOYqPJCMy/2IRn2T9FzL
-         5pug==;
+        bh=/Fh4mQaWvWCT2VyGI41pV/qQ2nCcMHEPc4CEm5NM56s=;
+        fh=7m/N7ORBm2uFVg7HhGFKK5cKqq5L33hKXdSvGb86aXk=;
+        b=SAkJtZ2p2U57boovFJXyB2vE+19ECm4BeJ0YFexodjMSIsJERxBBriJlHWoJXjDFTT
+         4NhmfkoZsC4p2wSju7+SQaC7szIi+lxeTJK+5VPXCAAK5KGXOovUBgimiYsOn2EjAjQA
+         uyYNxscYw7rL1g5MT9YOz1Sdvlf3uRMh8RI5VhNhxqxKCsGF6z5J3zIcS8/rl0pHwvmJ
+         BVnzCd/KvCxGC6IfXdQ5LOK1gwNCXtwGB9Jv+dDu0ITQysb6EsvtXJOMiVikXipavfIb
+         8GjGL4oZQdrHue2ffaSdvhN/ApN2y0pprdNFauR+uvgcJv8L23bQPGfJ80lC2fd29TUa
+         yfTw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774918378; x=1775523178; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774920610; x=1775525410; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Cbt+FXrbuZ+LlYtrwTAsWrQXROXHVmY57eDe5m7W0xs=;
-        b=FQnTbD5CKpSdzfzhIKDwsDGORKDe7YRxshAQC3HdYdCvDKQiYpA5lqsD69dOYRrdJC
-         sZdFU0jmo8sgDa59TjXCEpLhGyFj56WUp6WKynccjOqwAEZU1zzchKdcodRXJ8J0NSHe
-         1p297q/FQMecnP6ADQUkjdzUZ01Ia+imlZLzIecKjplFlsg+0+SkzBPTK9nZPMwFLLvs
-         yZ6xkBmo/BX/ID9YP8hyNVitVmUaa1j7OOvTnsD5fAoCpwh8he7bLmjaPVibYmqEHvv3
-         4LPoxTmjHmfWYvQzETUiVqYJSIwMpnFfXlkQPID2oHz9NXNr7YiFnoXkEa+UKGncoJib
-         L/vg==
+        bh=/Fh4mQaWvWCT2VyGI41pV/qQ2nCcMHEPc4CEm5NM56s=;
+        b=lWUngrZe2pjKkzQFuU631d6TsclpTwx8kvzQFYUOUj6YgjutXx2W2Ksd7NMG8OKiCE
+         tbEYhXrsXrNQDJzvTqwpWoqIM4i/piGNuu8KztK4wY9xjeEIdiKmh4fofess1Hp05JDl
+         /k4mt7ZhUwbQidfDBY+6XH2CwGPqyjpm5xDfWQL/2VU76VzXSAC2wZYAx3h0JSNaCzcA
+         S41Dkvh+paYcFjTETQCfjoKEiHCvlWqg1i0p5Gq2BRHEB3+Obst+lLeJuyMAIBgFk5Dn
+         wuhi5tqng6jY9r8DnlmhJ1tVEfxGaMkvuBK6wDXPipn0kBWu4pwnyMksSEmFXfufUVyu
+         osTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774918378; x=1775523178;
+        d=1e100.net; s=20251104; t=1774920610; x=1775525410;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Cbt+FXrbuZ+LlYtrwTAsWrQXROXHVmY57eDe5m7W0xs=;
-        b=BgVf8sDQQ7ONrDn0VbNK98dmyvSRCT6mbAqgxnOo9hm64IupQoPRU/WxHpb799HhcI
-         1aGHBuM4aTTUjIMUYtTlzarW3di+J3tRXKOHRxc51sT6ermx0k9vkYC4yfliZDZCkZNl
-         7OhY8N+ESWDV3sOeHGdg1FM7PIf90wVLO3zbSB0WUp8ft34fVV7FkRMrU55nn8t0IkDu
-         g3DBPLoDWrKBe9b088cN5osKeaCPyrPNJ8Bxkrv4WR0b0x1RmmGR1DbdqrGVB0Qilhmh
-         1+ZlqptQPFENB/byIKI7UANKV8rznxe31foNxOkNwIaJ3PDr0ISXLmxyIYY5ncB6PORz
-         JrdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXb+ERvHOOH9MK8R2cJrcsSHlfCgp8ruTPPgnpfkpWDVWq0lcLXc7Y3rX8/dRCxzsweAKI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxB2NBuCPaGt00p9W9DFsUprXozfc/KtedAw1/yGUUTrgSIphHg
-	yx7SCb1DzPhqeoQ4K4bTwt30sxa0pOfy9ku92XUZwfBag1QgtxN17igihvplh3xbhT/AeclsmYg
-	A+eHI0FkfcxZRxt2atr273Hp0DTKiqkg=
-X-Gm-Gg: ATEYQzwhEh9GQMnIbzsPN0HerNnLo5tHiemvwi2q2Lc+nMvsIV3KJxk1oXoIXea3V9e
-	6SGXK7TWhm6FDjuUs6VIOUihL4AW3x/TCdyqqW87JM7H6fMV1LjXip/dBP/g+0q9ws5ChLtLdVo
-	4PLZDNXxt2wm2QrHz5UbT5WFcYKKKnTKED8LS4RJb+IbGZltNAyrihm0ioWtebcEdywpCXa3ZNC
-	ePRPY5AcSF66BSJYw+Bh3Fog7iAt4OSB/1q9Y7AlC081hmo90rkJkj0Tix+Nve8u9wd/B2psjph
-	dL2YBDQOsBTPRs+qFVnEj4baLNhPuVdH86hiP2Ir1CQ0hKVxiTxnRRbHS9zh394f6RqdG51c5NE
-	aBnuOof6/f0JXGzDeEg==
-X-Received: by 2002:a05:7022:f8b:b0:122:3a5:fc42 with SMTP id
- a92af1059eb24-12ab28d07ccmr7388475c88.20.1774918377750; Mon, 30 Mar 2026
- 17:52:57 -0700 (PDT)
+        bh=/Fh4mQaWvWCT2VyGI41pV/qQ2nCcMHEPc4CEm5NM56s=;
+        b=kU2IGOZZYz5Ofjjvo1SIpdYIZ6wm83TpGZktAaAxK+UowaMD0C3c4Acyzpk0WTqGpI
+         z8YmZnrXmaLBxjRLSI5Z7X2y03Z7Bog88MKAgeFJzm6lCO9xNAQ3NVwmyPwuKNjmPQAA
+         NPgEE093hJraevSD2j0fi1eby+qYyFx42qlODVgY02vRNYP2lK18rShdDN0Jy6PjPbRa
+         CjBFNmgRPlkVsqQV+lKGvm2LF7UiDsVyRt6P4AHDCMifKOlVj/8oC/n3lDFninMsIshF
+         wDsuY/gIox7YWGCZrHNjm37+J9iW28yIkR4n1a/UIelXjuSO2W4DTyEnXuglCJpn6vfY
+         hTJA==
+X-Forwarded-Encrypted: i=1; AJvYcCU1uM4SnXUmNBEytomlRE5LNOjzPcnL422M7UYFqO5f9Qm4j38UZUY2N2/mltNQ6rDzw+g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHSX9IyknFU8Mli2Ufhz2Rk4+X5UsVljpBkPhM4aSAmLpxOAaj
+	1k9twp2pvsiBKqFPEDRZb8AA42EZuK89WiTIAd3+vGrwiHOONaKqgjXcqw4PTW2vHuf7oKkTB5M
+	aqmARBuQir66vYY7FqqiKGLLhFIVqP1M=
+X-Gm-Gg: ATEYQzyvylmMTvgjw9f9NA/uoNpltyFOGCFSn3mZjfpt1OFAV4u4+ZsAdPLLySKGnI6
+	x5Dfj+LUHcQgYHg1dUmJFJ6cpaMTz7orXpcBqgZeAQaOfbEuLpsJ87w+41vFR7k//CEHDRZcqBa
+	yc+y1EqxKdHCEKFpMACh7o7kyNyWer77OmIXVwBHUvkNZlgffA5h5i+u+dYHZRbmTVf8hk/Noxt
+	8TIaxdNuTyDuf+pgcrGU9KLAHYdxYvy3Y1NJmNvtRuWo6yRVHzqnTNHoiqS9WR6eJh9FSbZyJO8
+	f6Qm
+X-Received: by 2002:a05:6820:228e:b0:67e:2960:ee2f with SMTP id
+ 006d021491bc7-67e2960f1b1mr5040856eaf.22.1774920610338; Mon, 30 Mar 2026
+ 18:30:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANYiYbFM9+4xGmeBRNCC6VyW9EzjEFxEWHDNnOVhJNM73Ga_FA@mail.gmail.com>
- <cover.1773704908.git.worldhello.net@gmail.com>
-In-Reply-To: <cover.1773704908.git.worldhello.net@gmail.com>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Tue, 31 Mar 2026 08:52:46 +0800
-X-Gm-Features: AQROBzCFDKdSqhXJzjNml0TDGPc5NE-ayOIr65Bi32rYRzfIXVNOieV0_tCEwD4
-Message-ID: <CANYiYbFpexxr8hihAQA_v6Gr+mvxS=1GKToDVf-O2B9XXwEWaA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] docs(l10n): AI agent instructions and workflow improvements
-To: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
-Cc: Alexander Shopov <ash@kambanaria.org>, Mikel Forcada <mikel.forcada@gmail.com>, 
-	Ralf Thielow <ralf.thielow@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
-	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
-	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
-	=?UTF-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, 
-	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>
+References: <pull.2156.v2.git.git.1774473065.gitgitgadget@gmail.com>
+ <pull.2156.v3.git.git.1774639433.gitgitgadget@gmail.com> <86dd98db9b93651b21adaa41ccd44917910fedcc.1774639433.git.gitgitgadget@gmail.com>
+ <xmqqy0jdhtd0.fsf@gitster.g> <xmqqcy0oj2s1.fsf@gitster.g> <CAH=ZcbAKwtq9jiv=XWi_P0ZD1hz7XEpEtMPONB9n=_EcOPPSRg@mail.gmail.com>
+ <xmqqtstxdr6v.fsf@gitster.g>
+In-Reply-To: <xmqqtstxdr6v.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 30 Mar 2026 19:29:57 -0600
+X-Gm-Features: AQROBzCz7wKC579JQD359WgeapBsMBZcP1ccgwRP-MhN5RhiouC0KXT_PGi7h7Y
+Message-ID: <CAH=ZcbA_1pZYDjg0Q7bEB11vY8-T76o-r-v9g--NUSwbfZigsQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] xdiff/xdl_cleanup_records: make limits more clear
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Yee Cheng Chin <ychin.git@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Jeff King <peff@peff.net>, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 17, 2026 at 7:55=E2=80=AFAM Jiang Xin <worldhello.net@gmail.com=
-> wrote:
-> ## Introduction
+On Mon, Mar 30, 2026 at 1:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> This series introduces AI agent instructions for Git localization (l10n)
-> workflows to help localization contributors quickly complete drafts and
-> use AI to check translation quality. The changes focus on:
+> Ezekiel Newren <ezekielnewren@gmail.com> writes:
 >
-> 1. Separating agent-specific documentation into po/AGENTS.md for
->    targeted optimization of AI-assisted workflows
-> 2. Providing step-by-step instructions for update-pot, update-po,
->    translation, and review tasks
-> 3. Simplifying location filtering for PO file commits via .gitattributes
+> > On Fri, Mar 27, 2026 at 5:01=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+> >> Updated code, when nm is not zero, does something different.  if
+> >> need_min is true, mlim1 is set to -1 and presumably nm is a count or
+> >> length that is bounded on its lower end with 0, so it is larger than
+> >> mlim1 (=3D=3D -1), and we always take INVESTIGATE and never KEEP.
+> >>
+> >> So the rewritten code is broken when need_min is true?
+> >>
+> >> I suspect the remainder of the patch is broken exactly the same way,
+> >> so the remedy would be similar?
+> >
+> > Your assessment is correct, PTRDIFF_MAX should be used instead of
+> > SIZE_MAX. I realized my mistake a few hours after I pushed. This will
+> > be fixed in the next version.
 >
-> AI-assisted translation is optional; many successful l10n teams work
-> well without it. When used, AI output serves as reference only=E2=80=94hu=
-man
-> contributors must review and approve before submission.
+> Yeah, using PTRDIFF_MAX is fine.  When I reported the breakage I was
+> hinting that everything may want to become unsigned, but since the
+> original does use signed quantities and variables, it is far safer
+> to stick to signed arithmetic---until a full audit says it is safe
+> to switch to size_t of course.
 
-Hi Junio,
+I would prefer to make everything size_t, but dend can be negative if
+the number of lines in a file is 0 and that breaks the current code if
+unsigned is forced. I can cleanup the code to use unsigned, but I
+didn't want to distract from the readability, of this patch series, of
+xdl_cleanup_records() with other refactorings.
 
-The l10n window for Git 2.54 will open soon. I will merge at least
-patch 1/5 ("l10n: add .gitattributes to simplify location filtering")
-into my tree. The new GitHub Actions workflow already supports checks
-based on the filter attribute.
-
-As for patches 2/5 through 5/5, would they also be appropriate to
-merge during this l10n window?
-
---
-Jiang Xin
+In fact dstart is never negative, but I thought that it would be more
+confusing to change dstart to unsigned and keep dend signed and
+explain why there is a discrepancy in types between the 2.
