@@ -1,142 +1,132 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B4539BFF0
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 10:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774951379; cv=none; b=uec6EvMS6T7+4I3BvAAF2XYG4X8oazsAS0Gi+8sUP5eUWt9ulEmxPcGPW4N6hK7J1gI8HBXepsn/tBVb8wj91LoRml4HTjjn+GO+2qd/Qs6nYV3cSJWoMkTGHY+xNxVXzddwEYbOPzB0V4ghCWGbAmNbtTK62Lyk8fMzaweFjug=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774951379; c=relaxed/simple;
-	bh=1lLOdan5NhkHI36Hrp/dl1DyoopbdMY27nMxN6GFhrY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=atvALZjbMX2ZBHQAMhfTzLS6A00JzoJWGJLBV9nY3Y85AOqpP3u1j9P6kgRetqGowQbDnMnBSkaIl8WbW0Qdj4moBiVUZoZbDo6Xtio+mh+99XrlJGRz6nEcWMRWSKQvQqR/mBt/weeopSazaHcXOtBp868UOLyNOY432IWfHGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nq69RlPl; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE7D374E7F
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 10:10:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774951854; cv=pass; b=nrGbEH0csTUk8RjoxLv1H8ncauSLmr1kII2phFQQTGSZH1OSOdFMMb/9ZAptIlxRCVltt6UjJhYvgHz7rApfCeCKciUmJjNcOnuvPKXJaQkyPKOeSN9pQhIZcMKJuOYAlqpmNi+x4f69kj1iI061gitpOxgXsYOiShvkTFTg0EQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774951854; c=relaxed/simple;
+	bh=pDuumcCPBinmrV4qDdcej9noyTCijGcw6pL87ffRnWU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Nvgen3ohC/73BUg5J5pFGYac1G9zbCwoLLSEnQoz2di4CBY0733Jt1/FwoRHoPutYBnOjNgGrXZk170Z6nnUxt7t9T7LuE45HPXonXq4GnzTDtT8F2mu1FRg+WFN21IuI8P1nOIWwqpUo+2bjYd/t6wp3VkG5PMlFqzDsVxjxZ8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qPcytAFY; arc=pass smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nq69RlPl"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7d9c98e437cso4605768a34.0
-        for <git@vger.kernel.org>; Tue, 31 Mar 2026 03:02:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qPcytAFY"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-56a9c5cb48bso2116205e0c.0
+        for <git@vger.kernel.org>; Tue, 31 Mar 2026 03:10:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774951852; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Xyr+nQcQk3Z8Og+np4fjdq1zXDSrb4RGh4n25zpn2lw9JACWWJ73rFkKo3lQJp+63r
+         /lhmYFSl5MXkLQgJBzucZbtcFx6Y/9mOs/xA08x70GOYvfR8nACJZjX1ISazj7Qa/FKd
+         QfsJfuh8+fdyJiMOeFKCKIvJJt/kbd7N/07eSErFvAkxBEJMYKrbJWeat3G9/mnCigny
+         hZJdENnQElx58tLcBtH0eHiGcUe4qbB0re2IVjYK70lHTDZ0gmUCYgMegxGEGDmnuvm6
+         tl3PuEn976XI4AcpWU9Yo+SkM4oZ3/FFxIuGTgPXc5zXaXezkg8G8a3KgLnPg/3FVkPI
+         K0OQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=pDuumcCPBinmrV4qDdcej9noyTCijGcw6pL87ffRnWU=;
+        fh=m2oaRB3T1+1JqKWYoAJfgD54oHaF3IPNat9UweSvYgs=;
+        b=dXcRoJuF8R6zNZYunMvbTq0VGWRbQsMWPGR5dja2/zzEYOjtUzc7+zDSC1v7IRAXZK
+         dSX7VPIdx+DHQyu56+hazZPcYCkBX0V8/V+/gGd3eKbAHzopIYkcWxPuugYZICDBV7wB
+         c5gpug8g+WWU9eyWuohSQlNsNf7gDLiKqt1XWxxjkX0IgNIxJrgGpQwZe4lCgbuXf1Ii
+         iFkAl3AQBftjtlgQ0Ach1oQZqyuMIlmeYA39nsLN8LheY2QxmeMdxQaSptdfgDtKi7dk
+         ooGHJTyGN0Fsl1/Hx98hw9A7vX4BKNn9H+FPzEcV0XZaD1l5ECSLHfT5UqntPWmYvGed
+         /ELw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774951376; x=1775556176; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=RjV8xaCNYDZn6QBT29OpZPybn0t37EtzScgVaz6MN0k=;
-        b=nq69RlPlYnlBCYS5kWoPHC4USbkzGf4zLdYz4tbakWThmBH8YMju0c7sXA2cKB5ZjN
-         V5koZ+STd9U4iuFrViD7h1yKObL2x7Gs1Ll0TT+j1YRJjBeERJKTCmsfrrQ7dr3tRguD
-         /jk4U1tWCMFessHMma7QlIActyeF7bSkoXVGG8Qu7SIApNg5eZW92/VSj7w/oHxXd69z
-         BPehECR0B1SCxwfV1iIjmwJKm2XO/I6bzmjwNgp40CHp0NcYdXEY19AsdRbtB1bHqevM
-         bVzRPuEBIqMMyXkIfUQQuUWi1vMhOE3mL4nnDuvfQaOc10oj3VYaNDICXqi4/4gxRFow
-         2fbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774951376; x=1775556176;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1774951852; x=1775556652; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RjV8xaCNYDZn6QBT29OpZPybn0t37EtzScgVaz6MN0k=;
-        b=p/7ufd0aF9P+6qMuaa+iQd/WJQw/EHHHNFq0QX9YzYgBz/OiWjHT4GxZtR7gTGbuIR
-         dIraW9+fnHFJv8EH9d7XFN18YxxphvnmV+YqBuLXnzi0BzMImpREFMgET+hkEosW0S8i
-         baTar1rgVQEt2FtVk3kYKtRgm4jPlQzUNRHkFkVg+2A4A5GS4XwOUfeW8nLVkJ+QziAs
-         Wk7Ndsp3hqvWveKgnvps9an8TGZz90X6PGZg8w/4ynOWtDX6cRvbsgjGuKvHX7ndbZuJ
-         fcReBLe5Ub0N5iP4Mznb/vbWeo2yt/Sh0i5GSzQ8zOsvshRLCv+M0tWI0PJZaz5PrzR0
-         ugAw==
-X-Gm-Message-State: AOJu0YxbAyRfQFT2emeYYwUAhdZuwsZ+knqknjzvrPUFGSgErkId4mJK
-	RCYnw+wA85C5lSanm+lJZQSCpEAEBlSiGGAW+q0uY3nWZIbBSxcG33jr0EkLmA==
-X-Gm-Gg: ATEYQzwocGuhTA92WxrNyH0JeiRznHxtC7/yj8Uv1NkYlvnzkCRjbHmgp1k74XC/MHQ
-	iQRMicvQ1/qAhvBdGdWfPv78NwodzxFueL6MgK1sE1Kec+6yjoVqbXW5+eSNEWIPUockqPKyAhA
-	j/km8q7Sn0laNokFGfzOqAVlOX/UKGAJ9UOVTmVB0UOUT1O1GrQ91ecP1U5QNDW092yV5OwYQbT
-	s7m1q79njVvw/HNOJZKHwhYS7pTUPcxbApnPBDavM3U0OrC4NdgwTz5TcCyOHsP1KiGjnPBLDdh
-	H8VxFxKgiwPdc4xrRZMo/eypPsK1klgyApqaLHvlxYiqij33Kq3K5edd//Ao1iGs0Vd1jbFN68G
-	q1FwhAh33Ckbe0bVFX19L6BJd/jF0ih6wvUu+28RnZYpQh07h+hBC0RNFTbhryjz7ckDEWAV1LJ
-	/13fC2qAqUZD8sWx9ic02s/3MKxpg=
-X-Received: by 2002:a05:6820:1903:b0:67d:e90f:99d1 with SMTP id 006d021491bc7-67e18764916mr8368942eaf.66.1774951376395;
-        Tue, 31 Mar 2026 03:02:56 -0700 (PDT)
-Received: from [127.0.0.1] ([52.242.243.103])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-67e2d510bd0sm4795320eaf.8.2026.03.31.03.02.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 03:02:55 -0700 (PDT)
-Message-Id: <pull.2259.git.git.1774951373588.gitgitgadget@gmail.com>
-From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 31 Mar 2026 10:02:53 +0000
-Subject: [PATCH] cache-tree: use index state repository in trace2 calls
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=pDuumcCPBinmrV4qDdcej9noyTCijGcw6pL87ffRnWU=;
+        b=qPcytAFYf1Bo92LQ6neHJ4NUOn0CuBFdIgwQQrP1MXPDhw5HbnaEW9NhzmPsR0c4Fg
+         lnd7+mprazCTxFYqwyt2U5NzU9JjQDCxnDHLCmlwaV5kISYKIyTy2MrrSj1qfhr4p3zH
+         am+3YTUUciAEi6fARZTAFdC62eQc5t6oUKUSi/Y78FVeRv2006yLi3uHbgJ9nn6eyeX/
+         XCXSwp8MtPmb5R93GySgsl7qyfOOz1R4ZabKXbHhRYRABUbWG4XSDks7e29d2QjmOjvi
+         HYL3/Quui4xvMxk74+RaxQhmChjULrOhIpYi1ZX6YYcoaBQeTkoiOl2gG1A7AYoBB2eY
+         Zzzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774951852; x=1775556652;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pDuumcCPBinmrV4qDdcej9noyTCijGcw6pL87ffRnWU=;
+        b=FqW5z5A5KPuA5mWPhq7nqBODMiIx/vaGB+W8aJrBwjdN6FIM3c62b90ro9c1R7xPXn
+         PBu6Je/S8gOuyyVJ5goad36qIdzXBDAOnsBNDv0DS7ZUtDKqehhsWornlC+W12SsYQ6O
+         wGKdTOmPOAIqPEY9//F2UD4Ppw42v1r1hdfnahrgXbQKdLk6biEUy97WBUo5NPYDKJuu
+         g0AZyMsC/LPkSMQ0hGEYXaURfa6iRP4WNT/zeOvSFgsquZdkq1aqo5oEXplWknYNfzCf
+         4K/eBBha3+1oJ5q0D4HIuZwGlnV3MNzSwGHzFxkCklycdi4Gl2T+F6D8SqqDiZJNO7nR
+         b5gg==
+X-Forwarded-Encrypted: i=1; AJvYcCW/3DQESdEPSmINS1YoyWn1VcKaH9c2lyX19hhPzt3T+Nu9iBrJxzkyLtyk7sC24oYmkP8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywepi0DpOAzU2vxvrg204NyaWwe/t5II56PFdfT6ue50pPw5qCU
+	nE41izb83qKlYILwM7386dPnq+y+F8mcNjQAjv6MQ/588hoJh65J7UN+klX+dY0X/aPoXs8nMkp
+	pvvBOwusBsNfH6Xc2s9KI+sYRKOKUJZIv2YY0mO0=
+X-Gm-Gg: ATEYQzyoWGrmp6Fc/sNQuoqcm9cNA5rHtqBma3coNfZ3q2NMoTERyNtzwxmQEXJakPU
+	WetMBKbkrdoTAej7Kyk3R9MBAjyU6FEGSouzNFioLQB3P05v/Dm43nNCWGIlROuwAZjMnqIRsfj
+	Qx4+/gP6tzs1F7qh5D+qLtPHt9myufrEdr5olMFt7yMM0qwrnpaYELhtweW9tvHSJ+6yfbHeahb
+	aWB+pN0PZNPR69zw9Zw1zNQaXTKlg2j8sUV+DPZ33KwNNjpn0cFbm29mtx63IQhHoG1uKpE7ytW
+	n+Zmu4/h
+X-Received: by 2002:a05:6122:1824:b0:56b:95a5:da18 with SMTP id
+ 71dfb90a1353d-56d4a5f8b95mr5433328e0c.10.1774951851697; Tue, 31 Mar 2026
+ 03:10:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>,
-    Ayush Chandekar <ayu.chandekar@gmail.com>,
-    Siddharth Asthana <siddharthasthana31@gmail.com>,
-    Jayesh Daga <jayeshdaga99@gmail.com>,
-    Jayesh Daga <jayeshdaga99@gmail.com>
+References: <aafga8AjpxagiEJt@Adekunles-MacBook-Air.local> <acMT0zqd6SiEz5h9@Adekunles-MacBook-Air.local>
+ <CADYq+fbsXVtYZcq2wB2FoyUzDdzZKJYEN2EZk1uOvdihMyJzVA@mail.gmail.com> <CAP8UFD3xsMc+irB0Aiit3rMqHeSqodeKpSRRvjOKFGF-vvmx-Q@mail.gmail.com>
+In-Reply-To: <CAP8UFD3xsMc+irB0Aiit3rMqHeSqodeKpSRRvjOKFGF-vvmx-Q@mail.gmail.com>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Tue, 31 Mar 2026 11:10:51 +0100
+X-Gm-Features: AQROBzBmY-ApTOjpBi04ir7zrvfvRctm4XpWoRoZ8qgcmuG5ikwUbPU0UOgjLi0
+Message-ID: <CADYq+fZGtWz62U-ur50_Ee+KvA0BPvXPPQ1dNwsx0+qxPdydHA@mail.gmail.com>
+Subject: Re: [GSoC] [Proposal v3]: Implement promisor remote fetch ordering
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>, git@vger.kernel.org, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Ayush Chandekar <ayu.chandekar@gmail.com>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Jayesh Daga <jayeshdaga99@gmail.com>
+On Tue, Mar 31, 2026 at 8:26=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> Hi,
+>
+> On Mon, Mar 30, 2026 at 11:50=E2=80=AFPM Samuel Abraham
+> <abrahamadekunle50@gmail.com> wrote:
+> >
+> > On Tue, Mar 24, 2026 at 11:47=E2=80=AFPM Abraham Samuel Adekunle
+> > <AbrahamSamuelAdekunle@adekunles-macbook-air.local> wrote:
+> > >
+> > > Hello,
+> > > This is the third iteration of my proposal for the project
+> > > "Implement promisor remote fetch ordering" for the 2026 GSoC programm=
+e.
+> > >
+> > Hello.
+> >
+> > Just bumping this up to know if this version is okay for submission to
+> > the GSoC site.
+> > Thanks
+>
+> Sorry but we won't likely have time to review your proposal and other
+> proposals before the end of the application period today at 18:00 UTC.
+>
+> So everyone should submit their proposal on the GSoC site as-is now if
+> they haven't already done so.
+>
+Thank you Christian
+I will do that
 
-trace2 calls in cache-tree.c use the global 'the_repository',
-even though cache_tree_update() has access to an explicit
-repository pointer via 'istate->repo'.
-
-Using the global repository can result in incorrect trace2
-output when multiple repository instances are in use, as
-events may be attributed to the wrong repository.
-
-Use 'istate->repo' in cache_tree_update() to ensure correct
-repository attribution.
-
-Other call sites are left unchanged as they do not have
-access to a repository instance.
-
-Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
----
-    cache-tree: use index state repository in trace2 calls
-    
-    trace2 calls in cache-tree.c use the global 'the_repository', even
-    though cache_tree_update() has access to an explicit repository pointer
-    via 'istate->repo'.
-    
-    Using the global repository can result in incorrect trace2 output when
-    multiple repository instances are in use, as events may be attributed to
-    the wrong repository.
-    
-    Use 'istate->repo' instead in these call sites to ensure correct
-    repository attribution.
-    
-    Signed-off-by: Jayesh Daga jayeshdaga99@gmail.com
-    
-    cc :Karthik Nayak karthik.188@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2259%2Fjayesh0104%2Fcache-tree-trace2-repo-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2259/jayesh0104/cache-tree-trace2-repo-v1
-Pull-Request: https://github.com/git/git/pull/2259
-
- cache-tree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 60bcc07c3b..e4f9174c4a 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -488,12 +488,12 @@ int cache_tree_update(struct index_state *istate, int flags)
- 		prefetch_cache_entries(istate, must_check_existence);
- 
- 	trace_performance_enter();
--	trace2_region_enter("cache_tree", "update", the_repository);
-+	trace2_region_enter("cache_tree", "update", istate->repo);
- 	transaction = odb_transaction_begin(the_repository->objects);
- 	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
- 		       "", 0, &skip, flags);
- 	odb_transaction_commit(transaction);
--	trace2_region_leave("cache_tree", "update", the_repository);
-+	trace2_region_leave("cache_tree", "update", istate->repo);
- 	trace_performance_leave("cache_tree_update");
- 	if (i < 0)
- 		return i;
-
-base-commit: 5361983c075154725be47b65cca9a2421789e410
--- 
-gitgitgadget
+Abraham
