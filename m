@@ -1,140 +1,147 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254163C2E
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 11:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC033C2E
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 11:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774956324; cv=none; b=b4Nr/rlp9ngWQrbGSANiZ3VUe6vIekC984dv/9iAlYGa6gmNNhXhuWZMz+EsLP/64w+uH9TmPLeviEBk5E3mhq5tNC9zqQhSn2bS+ToC4UMv0tNRsEOM8ld6v3tscFNFr/WGhryEUQSbbvYxO8jdPUqNWcw06gk6yuoLszQ5B2o=
+	t=1774956417; cv=none; b=WKf1+/AX4gHGpbJRn1+iZvKmNV1FuxHMlgzk90wk/YEkdDC2GCIxMKug9MUGzmQNuGtxfgbPDvmzhRFRgpPttIbQkseyRiETU2hHgykj5MSGVzd2p4ctIyxT9fN8gcQCLcCXSkgj3SdZF38W62C9OxuCYYWlDW73WgNvkdlo9HE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774956324; c=relaxed/simple;
-	bh=CPhkvmuJc6n0E8BZbL/Yff+LDPqLbCkL20V5g2NKhv0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z66qtXrUY/vd9tByVc8ONvDU5YAEe9zapEn6Kwko5XiWjlKD++xRVIbjO/UZfABU3ItG4dXlPzaZ9SLllmS0V6CB8/zfK5A4NCl5JCEBvy3EAeEe0jABFr4w4wYg6A8IbnGho+XUHrsmBUjsRaEwki0yrq7dwGJ2DFGCGMD761o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b05+/D4t; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774956417; c=relaxed/simple;
+	bh=vwRzzdbdtVcynWkZv90/RXInmkQOo/jP6+v8dMrebxM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CWgYP1v7H/nAYZc2dy0NkBVBjefVIRCTiKUdvYrtMkGvGtjlqWFVYmLLJqGCgwau5SEBW5pF3nKgCNNdWhfIR/dZ7EEmBBvUfwdMGIDaH8vNvLv4ypsc2/QYCfCr/HtXL2ab8dAVxJIjc9fsn983bVTrEISkkuV+gjqi/P2Hy3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ALyOGHNF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uKGlONhx; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b05+/D4t"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2ad21f437eeso36888075ad.0
-        for <git@vger.kernel.org>; Tue, 31 Mar 2026 04:25:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774956322; x=1775561122; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RyntLLKE/eoHReZEL0wPzPEYZTVvBROGjxSxiwipfyQ=;
-        b=b05+/D4tfoTF05ppJB0ZRYVdBlsnqvr4Nz/vzF77ELWZqW9q6IS92k4waqtINdl2mM
-         MSl3LwnbRm0lZdoQeynpSILCQKHkvdS7qp/w1l4I26UAOG3OsHl25FwvxRFd973PeLZ+
-         14a651mYVZrTn17k3+1QgfCqlmOin92x9egjD0tlRKg2yN4F07E/EpLoZ/bBOMYh9A4e
-         v2FihrPVRTWnJgID1WvjLDlx8IdroexUQO48CXYUjwggPEOIpbXFeZQUUme7bIPkP/Jz
-         XKSyLI2QqPkQabQGo8m3jMWdpyfippHKXAF9A+cNt73yz9ad5OLQmAYNje2U+eiMhHzW
-         4t4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774956322; x=1775561122;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RyntLLKE/eoHReZEL0wPzPEYZTVvBROGjxSxiwipfyQ=;
-        b=VD1iv1XVM4heycXcocae+dNuBmZRlR29cIJUTCQXRGY0YjXUDshRUH/OivEo+q99NW
-         4H49flBFIOYMdMkDXnHyRUqPGIxX9qQFv/6a8ky91AGAWGqHdAByaXeDqApGJpTDH1Dt
-         dfNqn0p6jGqJHmMbOp1pFdzjBSt+xeNrd/t2vox68pyzfb28THVRNaqp84ghDAe7TJ0r
-         7MkEavhDmuT27ifQE8PzpFjOKULojNJtv/FcjxtcU0hrQhhZPiUQhTslYdmNyJVmeSMN
-         L/Jbu24sFFlWknqXDISoHUJPBVvurAEf/RpfEh4yTzSn31xepauokYnaMateaViYSdDj
-         I0wQ==
-X-Gm-Message-State: AOJu0YwUKI6cdHMvp67tePWHoybRVtDPpFPS5rCccYQt37JQb9jrXR/h
-	PHKystKHQW2h/Ljrak6vinarVx8edggEg653q00qpmAWNXglHyz03amLiAWJHKhD
-X-Gm-Gg: ATEYQzz9kG9YLK9sRvU/tctF3Gi/bIdrMyTsPKVl9NDUrUqbqOz2xyO+wmv913Yf9HZ
-	EFc9yUWLQQL+XyuFQibWE9cuYIl8LNu71yBihbDflAkYFrSDAkM0uiV4cl5iIIU3JlyXabNrziL
-	hiGOFpUdLTqtg4mvMCe959oiFJdigSv8UDG5tFEEWmXGF2+xXBIhoOde4/s/KKrZeNt2/LkoIJK
-	2KQcdfLqvOrHgmEnd9RArWe4fc8FrPvy7e3tivH8SvTGEu4EdUjW3cxltLCV4/l6BhR01Ye4M/8
-	sXlUVIXSuCLYzdAB3kHVORabfAqGhSwHK0jncqCgWkS7J/pJbo8wEMLG4MyybSeJ5vEb2NuYP9/
-	VyW5SWVpgLjHGY/uy5RipQTziQ4haGQDHVjCyRaqM+VcVlSeHsZ1oHdlYaEAmTGTLICxX4Iq7vC
-	KJnevV4YKFRLSVtVFuonHfJyO0rpuIxNCi/y9yYz/+yRjf3zKg9zeucod5dUlbbv4NvYgrZ0UKc
-	4236cG7oQ==
-X-Received: by 2002:a17:902:ef0c:b0:2b0:b557:6fe5 with SMTP id d9443c01a7336-2b25efaca1emr30007175ad.30.1774956322198;
-        Tue, 31 Mar 2026 04:25:22 -0700 (PDT)
-Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local ([27.122.242.65])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b24264224esm112055975ad.15.2026.03.31.04.25.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 04:25:21 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: git@vger.kernel.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [GSoC PATCH] backfill: auto-detect sparse-checkout from config
-Date: Tue, 31 Mar 2026 20:25:16 +0900
-Message-ID: <20260331112516.772635-1-vikingtc4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ALyOGHNF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uKGlONhx"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id CBA5CEC008B
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:26:54 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 31 Mar 2026 07:26:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1774956414; x=1775042814; bh=eXVuwrzVaD
+	mpYIIe9Ksx3skcd3gp6C5pggr3BK+243E=; b=ALyOGHNFbRA/1Amgi6ZC2DRy4W
+	Mz1lyJCvSvoxKLHmvctygsMoYw6Li9GVODrKICPqe1yE0XECYXVmTALfUDUHYgzi
+	cUnPMbLcoXmfgp1x1C1k7iiNxKcmWEteeuc7+o/bjIVKnA1vLel5ez/3INOgfn0O
+	c/oMTaT0U80hQOZ1blTW63GWvFe0wRV7Fyq5QsZb8fqr+1tE1pQ+G8rip8CtTb46
+	ZEXQLaR5jyHxUgMKIGFYtbGOSSSmjcewffwgBf7oepju+LRGyH9IUYVzYxT9dPfC
+	8VcQ5Y4eDcU5BpUL58N7w/ZSZqQd74GiKweOp2PknHY5jR2YzFdcifyrWGAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1774956414; x=1775042814; bh=eXVuwrzVaDmpYIIe9Ksx3skcd3gp
+	6C5pggr3BK+243E=; b=uKGlONhxvbqr8nvELhggnbwRDMLO+JWBEd6raBSLSeOy
+	K+C+Xh8PfH0p3bW6lSyCucvOpwC9bWu5InUQW5V86RbHpuTdl/viG2js8RQGntCw
+	HM69YiLR12gmTQdFCT8r0HTMbqcHVKzu9i/bJdCDP9nRNqdJV0y6eTZrPnhGxRg6
+	B9ulwNGuLxa6y5i2JuO0iaMmVM/h9enkSeQRPLrMMXyIKCfKu6YZBdWYhi6OlYB5
+	XGcV+4wFD2tMEIw8vrp8NViHZs419PPd6hjh7cT1OseyOwjCR+yUAyaRVsfLYIHL
+	TXtdyy68KoO6YZzI6o7VAJ3O7OmrL03BWFVZkPPKNw==
+X-ME-Sender: <xms:fq_LabPqwUmT-_MAYn4gf3EFCg55Fug2gLpfcORfEcM5aEQC8SJ6FQ>
+    <xme:fq_Lac7UEd7CIAGqgcX4sOT2y_IXHNArn0JNRDCwmmicKW1m0SEs57tl9gkP3MbT1
+    SGCnhfxWHuB9FwPKx0ZndesisS2PswMOapj5Cc22BV_BdemA4dB>
+X-ME-Received: <xmr:fq_Laf4a0-D_wn5hc7WrKXhwDyTSwDPbeSui6SPhI74gSeQ8Mjh4TacF7JpB5Pa6FAT5Rsm52osONluHkyM_pYG_cMS-xzNEmbpoH9Tc7Vg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddtjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
+    ohhuthemuceftddtnecuogfvvgigthfqnhhlhidqqdetfeejfedqtdegucdlhedtmdenuc
+    fjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epffekfedvgfevfeeikeekgffgvdffkedvudevudefvdfhteehtdefkeeivddviedunecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:fq_LaU0zwPISVbkWduyHur29ntZxU72Jh6ldGehLJgsKmethjrMjyQ>
+    <xmx:fq_LaTX7Dbw67wJLdldc0UZL9FtDDqdTm_9PAPZCHy1qljHKIulssg>
+    <xmx:fq_LaX6ALO57Ix02inziqMtBxtYGD_0mWgaopA_pn_K_WvFjkOOuxQ>
+    <xmx:fq_LaSLziiuZ4pM6euoqvQTzwx0rqfq5cNOXYkApDUsfgXChx-lSCw>
+    <xmx:fq_Laf_vC6QVowLFPw-BjtZZMCuKEA_6M-WtZ0sNYrdr2USheJucN2He>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 31 Mar 2026 07:26:54 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b0c21250 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 31 Mar 2026 11:26:52 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/6] reftable: some more portability improvements
+Date: Tue, 31 Mar 2026 13:26:46 +0200
+Message-Id: <20260331-pks-reftable-portability-fixes-v1-0-46bfae55c68c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHevy2kC/yWM0QrCMAxFf2Xk2UBNYWP+iviw1nSLjq00VZSxf
+ zfDt3u4h7OBchFWuDQbFH6LyroYnE8NxGlYRka5GwM5ap33DvNTsXCqQ5gZ81psyCz1i0k+rOh
+ bDqlPRF0ksEg29ziscb39WV/hwbEeVdj3Hxvgi1yCAAAA
+X-Change-ID: 20260330-pks-reftable-portability-fixes-36ebf9f227c2
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.0
 
-git backfill currently initializes the `sparse` field in
-backfill_context to 0. This causes the command to always perform a
-full backfill by default, even when the repository has sparse-checkout
-enabled in its configuration (core.sparseCheckout).
+Hi,
 
-Because 'sparse' is explicitly set to 0 at initialization, any later
-logic intended to auto-detect the setting from the repository
-configuration becomes dead code, as it only triggers if the value
-is negative (sentinel).
+this patch series contains the last set of portability improvements
+that currently sits in the reftable implementation of libgit2. With
+these patches merged lbigit2 is able to fully reuse the reftable library
+while only having to provide its own system headers.
 
-Change the initial value of .sparse to -1. This allows the command
-to correctly fallback to the repository's sparse-checkout settings
-when the '--sparse' or '--no-sparse' options are not provided on the
-command line.
+I've got a test run with libgit2 at [1], the code in Git is tested at
+[2]. Overall we're quite close -- the pull requests to implement the
+repository extension and to adjust handling of pseudo-refs have been
+merged. Still missing is a couple of test fixes, but once those are
+merged the reftable backend itself will be in review.
 
-Add a test case in t5620-backfill.sh to verify that 'git backfill'
-automatically respects the sparse-checkout configuration without
-explicit flags.
+Thanks!
 
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+Patrick
+
+[1]: https://github.com/libgit2/libgit2/pull/7117
+[2]: https://gitlab.com/gitlab-org/git/-/merge_requests/535
+
 ---
- builtin/backfill.c  |  2 +-
- t/t5620-backfill.sh | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+Patrick Steinhardt (6):
+      reftable/system: provide `REFTABLE_INLINE()` macro
+      reftable/stack: don't call fsync(3p) unless provided
+      reftable/fsck: use REFTABLE_UNUSED instead of UNUSED
+      reftable/system: add abstraction to retrieve time in milliseconds
+      reftable/system: add abstraction to mmap files
+      reftable: introduce "reftable-system.h" header
 
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 4b2db94173..0f31844ce7 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -124,7 +124,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 		.repo = repo,
- 		.current_batch = OID_ARRAY_INIT,
- 		.min_batch_size = 50000,
--		.sparse = 0,
-+		.sparse = -1,
- 		.show_progress = -1,
- 	};
- 	struct option options[] = {
-diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index 91b5115732..a1a8d736db 100755
---- a/t/t5620-backfill.sh
-+++ b/t/t5620-backfill.sh
-@@ -149,6 +149,21 @@ test_expect_success 'backfill --sparse' '
- 	test_line_count = 0 missing
- '
- 
-+test_expect_success 'backfill auto-detects sparse-checkout from config' '
-+	git clone --sparse --filter=blob:none \
-+		--single-branch --branch=main \
-+		"file://$(pwd)/srv.bare" backfill-auto-sparse &&
-+
-+	git -C backfill-auto-sparse rev-list --quiet --objects --missing=print HEAD >missing &&
-+	test_line_count = 44 missing &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/auto-sparse-trace" git \
-+		-C backfill-auto-sparse backfill &&
-+
-+	test_trace2_data promisor fetch_count 4 <auto-sparse-trace &&
-+	test_trace2_data path-walk paths 5 <auto-sparse-trace
-+'
-+
- test_expect_success 'backfill --sparse without cone mode (positive)' '
- 	git clone --no-checkout --filter=blob:none		\
- 		--single-branch --branch=main 		\
--- 
-2.43.0
+ reftable/basics.h               | 20 ++++++++++----------
+ reftable/blocksource.c          | 19 +++++++------------
+ reftable/fsck.c                 |  2 +-
+ reftable/pq.h                   |  4 ++--
+ reftable/record.h               |  4 ++--
+ reftable/reftable-basics.h      |  2 +-
+ reftable/reftable-block.h       |  3 +--
+ reftable/reftable-blocksource.h |  2 +-
+ reftable/reftable-error.h       |  2 ++
+ reftable/reftable-fsck.h        |  1 +
+ reftable/reftable-iterator.h    |  1 +
+ reftable/reftable-merged.h      |  1 +
+ reftable/reftable-record.h      |  2 +-
+ reftable/reftable-stack.h       |  1 +
+ reftable/reftable-system.h      |  7 +++++++
+ reftable/reftable-table.h       |  1 +
+ reftable/reftable-writer.h      |  4 +---
+ reftable/stack.c                | 29 +++++------------------------
+ reftable/system.c               | 26 ++++++++++++++++++++++++++
+ reftable/system.h               | 26 ++++++++++++++++++++++++--
+ 20 files changed, 96 insertions(+), 61 deletions(-)
+
+
+---
+base-commit: 270e10ad6dda3379ea0da7efd11e4fbf2cd7a325
+change-id: 20260330-pks-reftable-portability-fixes-36ebf9f227c2
 
