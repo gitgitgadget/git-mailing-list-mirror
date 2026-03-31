@@ -1,70 +1,69 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC9A27FD49
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 06:19:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9A838737F
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 06:19:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774937969; cv=none; b=qlr0hejT3ltDQpJwrhb6YLCMJ/y2Amd1liIYVGoDOgLP2WXBS/n9sEkZLeJK/AE3eqGhkSvcd4FwYv0+XE8JRn4LFlYSyEVQKFP4/blbarcjABTNsotyHq+50xyb/CPJFNyJol9gV2JDxlONtI14ElJoTBnGGTzdSAMBfUPWZpU=
+	t=1774937971; cv=none; b=aZfS2aRFgVkb7G9VVBWUrnWot1QBxSAWZ74QKKn4npGHMWjQjf1iUdptDGujxkr/vnwYKy2DEXz2JWBvXjYBVD03LFI0CSsOf6AlbWi02DltByizLnbGT4IwsOSp8L1JAiKeG9WGfK6a7EvBUzSpOSHyfEIkdBsKQ9Fx0eePHuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774937969; c=relaxed/simple;
-	bh=dgzktmB3UZefBssaL2ZSgY5M3yNRYA/erR3TfVJjNYM=;
+	s=arc-20240116; t=1774937971; c=relaxed/simple;
+	bh=JQJPUnNlc88YOZjc+woeZHt0OERzy3a3Bt1KoYQ4zbU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=EZiibVdGMtwXcPVqlAvL9G6QFsDkwnxHqopQtUstZ3gNS4UXJ53ZeGxGGU4Wh/Ae1sP7MoohtJMRp1wmu/wTH0K4Hc2qgbb7vamdkh/SuwwVMZuppty2Fj3oCQivH8DBirInt9OMKaymlIQRooQL+khXZSUS11p1H41h7J0gGL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a0NQKntT; arc=none smtp.client-ip=209.85.161.48
+	 MIME-Version:To:Cc; b=IEhmw1vjCons/mTvRCNnBU1/J5DK54MQB4ShbaHK3LrVLpSsAcP2uI/rVhSZ8TSyasX6zV8cg7vCE2hDY1pOJK3WfnZoqqyn4i1kbBM0P6jspchVb9kDKtH7Zf1UE7QW2XmVddkVSTskw+GQswoek7jev1PrIIow53/eib2a4Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpE0q6+h; arc=none smtp.client-ip=209.85.210.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a0NQKntT"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-67baf20e8c2so2257414eaf.3
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:19:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpE0q6+h"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7d91f82d819so5266248a34.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774937967; x=1775542767; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774937968; x=1775542768; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8yRyfUm958Q8U3QnlqMYhczOEnpYrJIU0IcFDG9fhFE=;
-        b=a0NQKntTCYNSdV9V7JHDCp+PEQWMTZ146WmjEvHJqAomC2p5znN/DdUF/wQK523Flv
-         fGK48eqfDaF/NTEQahWjW9zabFRYeaDLZ3/PRHnNkpf2tpFfwsVfF9QNM3eHkr9XA5qh
-         gbxLG2a/ROrpdblGHtfWHYKwqWo6BbAR4RwTnCtX82Ca1pcKGyhUl+vgBl/0xc+kXKqJ
-         bID4NCBR7JFpyfmofagrk/tMtXrTqgM18CvO/hPdvbM68HL2BuRoDBUQ8IZDOH3YNlp4
-         tp1vHGMHe+zej5MtCQ0x0jecITjjagQw4OHHiIawr1d1+6BPiKgTsUpB/Hrb1laFamiA
-         DUeQ==
+        bh=utSML8XDRWikFjEf8OTnGhOa1Cm1oF1YFZw6B0GetW0=;
+        b=RpE0q6+h7u39vrqa1p+ZEXFpfy2ckPwN5pZtwHNYH2NdWebBOUjruEIS4D0Sj1oesC
+         vTO2UfUheJ30B8rp4rKyFnCXJbQWqB4kAgcbL4G1jUJ7XI+uoPiGFo4qyOgNlsDHPbLo
+         w98dJStKwg/P1NEZ8o4JKB5Dzn3TlloGbl/e81FBmWYO2PjeHA2AHrwn/oNVQAPcfVqp
+         2QhMwfZ8nvGOSFu8RaQtBR3obXCX4CTcrlsEKaBknqsKS6E76SIH9gKa2o1VOj247xQF
+         OqnV1NMozZUAk/n6qnKt9XNIJ5XwHd840XBZ3QtUhsg1WSfevjs5UTiZqRJC7ZfOc5W+
+         30gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774937967; x=1775542767;
+        d=1e100.net; s=20251104; t=1774937968; x=1775542768;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=8yRyfUm958Q8U3QnlqMYhczOEnpYrJIU0IcFDG9fhFE=;
-        b=d7NeuU5IAn7TQHecMmX/MaNpJp4bmHIsLYX23cLQ+xlJH6j3QwMG95v12CfoaUu1yz
-         Ejwsh2q5d8jxGGFeNGDYf7Ff0OhkUOSIzyfezZaqEISFyvMt2edA4j1CeAsb7MunCGnc
-         C9dzLME76pK1R/PlMprehBmwRomJxUpfkYsXQ9NqNjVhjaScRKQ887hMEirJzh7mGNAc
-         F+Ff+IXxTJXNaWItYlOB9ZYbnips9SDcNT1Kazvy4xkdeeJZrxhxZp7smCdKzXd3o4rw
-         sFvm2+ZFGQ0Vy6fqTMKWTJAmvw0RVhMLMIogIkV2Bm7Hz93mNLuT5UsnDikGvcZKFUq2
-         u3/w==
-X-Gm-Message-State: AOJu0Yy1bDp4v/6wkbtoqioKqLtyw95WXVf9qYB7RoyqKWSPZt+aodGc
-	j2hh9DAy4U8e78AENkaBPD/bttM0jYrlPsbaHrbmvCMXjg+yJIs8c80H9xVJD+xF
-X-Gm-Gg: ATEYQzx9zRPWiYqgPui/z++kzLDvqMF1a0O6MzO6CfIrVURz9Itxng1qVPvEiUzLj1G
-	l5gLvjDmGFTzrkHrZFoY+j6VQqQC2kzTPQCH7OJ+6jMjz8HhW8ZZut+297+M/nWhIJETQzgWaKI
-	Y1cU7Le/ulMxpt+IouGeyD8mxodwNfYoZrwoQnUvcRwhhp5sXIho2R7dJpEdn4vJYaK6qq87m1h
-	laVzWuLhIk2mU5h3yh40fqqXCqomJv+r98t0+GBs4lCftfCO89bbQrKHWFW8st/9TYl8WBLPOvN
-	5DQRoMXgoQ68Hg4kcDbnS8YHC9B2L3fCFEq6ZI+Fpag5bFZMFqoNd0YCdhBkGlldWe/5gzLRV6W
-	O5CBACslKJ5Od22V5qhbzlQvGMh5Dr2NjklRliww1NRlkZzdZvakoYezA1x4UaoM2Xr7ZiWeHrA
-	C2C6zoDnymtVvfDQoTsU5dY5Cutt1o61gF7r/QIQ==
-X-Received: by 2002:a05:6820:16a2:b0:67b:b847:f0fa with SMTP id 006d021491bc7-67e18639953mr8658131eaf.17.1774937966672;
-        Mon, 30 Mar 2026 23:19:26 -0700 (PDT)
+        bh=utSML8XDRWikFjEf8OTnGhOa1Cm1oF1YFZw6B0GetW0=;
+        b=ISn+6fEb5ZWsSFXGDjnK+Sp5dtfPiQV2tuRU8Aq4419HMRhFczScdJHQHURHh38lo+
+         +Ung87UkIlEJ0d9x5+gpVX9+7A8n5mbChP0sIgfUk7qWg26p+DElahUYp/JFJdBvVJLh
+         VA4D7PM3V2ZkzrXKJ54kbkcNw3lZq4XJL0Xr9nyUsjEpV+USQSmgyjPC7oHDGtshKLTX
+         UW/3jjsB28BAvhJyV6cYUSprSRhM9qcWFKr98n3Ufs2ylLE8fPgWd+OwtPlIRyvIbTar
+         una9muRxgr8rLClDGKPMy1n+4x89xIT0VUKIIIJdaNRFYOQ3RFMOKg6AooF4fM7ZZYmk
+         tRSQ==
+X-Gm-Message-State: AOJu0YynZZnznZVenUcLfDfm/MuUkLB7byQEa9VlzWfghLPUeWoAtbbO
+	Zr/EHBE6DuATNTVR4SCk1tSDD7zOILhx2/IRI4TE+u3bngxcc//q5rLMgqElIVOY
+X-Gm-Gg: ATEYQzy4apEHx17iguSYDZJ9QlrZgsO4EPP9MPeEeQTGRs3IZY8AuzHNEIPDVHecFxg
+	F/MJhGH1p8sJT2rOY0iGpfCt1LLEE4/R2bu6Dc34e2ydvNuMuBzNaRlqYBakRCYvU95C78OGOxh
+	BfthLadx8mlNKrIMfcQKORGBIuYHMkHUZXNkpwoPcESz7boYtZ0MOJv4rjy2B8IwYyKH6GfazW1
+	XPOyj6RS9qsP1v6xkCePrfRvgGxQVZEg0ZWIpByiCWWezjLOK5RI3NHMMlgRB4SQQvOkr4kryiz
+	VbzLVhfGUg1gr9nQFemUBFkpNjg2NwwkfcNt+i71M0Bp0UMnKoXMl6LZXlyNN7VMcul1g8Zf/WG
+	kULOUp6+EyBheCw94j9mTIaYDgQecGlYQhweNwPTmOC5BTwHlL0phIQdED4+RRa5k8XXaf7Op6N
+	2Y72BO7mUaGu9j72UH6MlytuszL5U=
+X-Received: by 2002:a05:6830:4492:b0:7d7:f031:37bf with SMTP id 46e09a7af769-7d9faed1c08mr9429355a34.19.1774937968615;
+        Mon, 30 Mar 2026 23:19:28 -0700 (PDT)
 Received: from [127.0.0.1] ([52.165.251.162])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-67e231ad680sm6075740eaf.10.2026.03.30.23.19.24
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da3356d8c5sm1956878a34.14.2026.03.30.23.19.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 23:19:25 -0700 (PDT)
-Message-Id: <cb270120f0e27a34a58c856b7c80e78e2301c989.1774937958.git.gitgitgadget@gmail.com>
+        Mon, 30 Mar 2026 23:19:28 -0700 (PDT)
+Message-Id: <44a063074dadc27110e2dd3481756c8c324ed956.1774937958.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
 References: <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
 	<pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 31 Mar 2026 06:19:07 +0000
-Subject: [PATCH v12 02/13] fsmonitor: fix hashmap memory leak in
- fsmonitor_run_daemon
+Date: Tue, 31 Mar 2026 06:19:08 +0000
+Subject: [PATCH v12 03/13] compat/win32: add pthread_cond_timedwait
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,39 +81,63 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-The `state.cookies` hashmap is initialized during daemon startup but
-never freed during cleanup in the `done:` label of
-fsmonitor_run_daemon().  The cookie entries also have names allocated
-via strbuf_detach() that must be freed individually.
-
-Iterate the hashmap to free each cookie name, then call
-hashmap_clear_and_free() to release the entries and table.
+Add a pthread_cond_timedwait() implementation to the Windows pthread
+compatibility layer using SleepConditionVariableCS() with a millisecond
+timeout computed from the absolute deadline.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- builtin/fsmonitor--daemon.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ compat/win32/pthread.c | 26 ++++++++++++++++++++++++++
+ compat/win32/pthread.h |  2 ++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index bc4571938c..d8d32b01ef 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1404,6 +1404,15 @@ static int fsmonitor_run_daemon(void)
- done:
- 	pthread_cond_destroy(&state.cookies_cond);
- 	pthread_mutex_destroy(&state.main_lock);
-+	{
-+		struct hashmap_iter iter;
-+		struct fsmonitor_cookie_item *cookie;
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index 7e93146963..398caa9602 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -66,3 +66,29 @@ int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
+ 		return err_win_to_posix(GetLastError());
+ 	return 0;
+ }
 +
-+		hashmap_for_each_entry(&state.cookies, &iter, cookie, entry)
-+			free(cookie->name);
-+		hashmap_clear_and_free(&state.cookies,
-+				       struct fsmonitor_cookie_item, entry);
++int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
++			   const struct timespec *abstime)
++{
++	struct timeval now;
++	long long now_ms, deadline_ms;
++	DWORD timeout_ms;
++
++	gettimeofday(&now, NULL);
++	now_ms = (long long)now.tv_sec * 1000 + now.tv_usec / 1000;
++	deadline_ms = (long long)abstime->tv_sec * 1000 +
++		      abstime->tv_nsec / 1000000;
++
++	if (deadline_ms <= now_ms)
++		return ETIMEDOUT;
++	else
++		timeout_ms = (DWORD)(deadline_ms - now_ms);
++
++	if (SleepConditionVariableCS(cond, mutex, timeout_ms) == 0) {
++		DWORD err = GetLastError();
++		if (err == ERROR_TIMEOUT)
++			return ETIMEDOUT;
++		return err_win_to_posix(err);
 +	}
- 	fsm_listen__dtor(&state);
- 	fsm_health__dtor(&state);
++	return 0;
++}
+diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+index ccacc5a53b..d80df8d12a 100644
+--- a/compat/win32/pthread.h
++++ b/compat/win32/pthread.h
+@@ -64,6 +64,8 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr);
+ pthread_t pthread_self(void);
  
+ int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
++int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
++			   const struct timespec *abstime);
+ 
+ static inline void NORETURN pthread_exit(void *ret)
+ {
 -- 
 gitgitgadget
 
