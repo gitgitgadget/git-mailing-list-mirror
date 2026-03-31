@@ -1,164 +1,82 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FF23C1408
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE0A3D75D9
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774943339; cv=none; b=tConALpqKCKNBMf7wwnXWv3zWOgr317vT5UKO8WkEmltOPJII3+/bEkTo1cFSQfkXs9Me7Vq7GCG1l72ym8O2RWQwfa1S9LMpGW3qR78igxEdsSPyv2C4i3e8BdRYG4zAmCfOHIC7SZoDe1mGpQnNYH/4cmgLEv/SA0Hj2pFyMc=
+	t=1774943731; cv=none; b=rgkYd1mtV3KHpSpDvybQZZKHfbg8IV39pc7t7uuwCZfMr/s4wy21hY5ELzt8dC1UgdspqN8KsK4U1davKalgZDymF6yqJYccboze1vhqGPyDV0lPHBENx/cHMpDEU0T/zbx0SXhdlsjq23hKMkZjW9qSMu3e3MCZcn1QB5cYqjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774943339; c=relaxed/simple;
-	bh=1RN9niom0DxlLn6PiUt7bs9ONWModigCMP0fccX+eLs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ovnEFzvstFh240U0gwi05LxRJXzBuSdE/pj65cFk8Hmiq8wre053iWIOqjsA4npPVwHWeYWgQnUw0h2ce46AWZ5afuXKMRfcC81XACIJldI1fuQ71qyH6GKRxz1uC/eRDeOO3U+iOpuVhSYUH9omnJmEb4cSoYBp7a9q2h5Kcxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=prWuaNJY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CdhTkkw/; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1774943731; c=relaxed/simple;
+	bh=DBazdVTPowd/DGBuosxb3zse30EsnN3S4JCPbibxZr0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nHorz24cAhPb3YiLm3jLCjLaS+ht8nhHr+zyT/08CFnONS/Z5ejZO7Y4EICssecN5bs2fs5bF+DwgrrRS0qsS1lTf7uMbq12ccSXKaUvDdZed383sgEQB/iEk96w8J3uwUgtqkzzPJmuN1ynzFEHKAA4BOEPuiP46YJgC80j0u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=mRZD5lH7; arc=none smtp.client-ip=95.215.58.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="prWuaNJY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CdhTkkw/"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9901B1400259;
-	Tue, 31 Mar 2026 03:48:57 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 31 Mar 2026 03:48:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1774943337; x=1775029737; bh=ryKccWbEsg
-	uV7Mu072y3zCam+FMdkSngwP+SZyALBgM=; b=prWuaNJYXlx01/6O9mqyJiA4QJ
-	y9PIi7SMP6mZFczfNfQ4GxkMNGMFgMEJXPQr3jQkpHet/cohqzU4uXS8bOSbL8Bb
-	sny6hn1cQTR24wFZzYqt8ARMKYhg+f6jXII2IQvY0PLHLhx0I9ZFbCc17aKZabp7
-	6KIAMBw1y6wPbyb59h36HKQ1nYaMDT7Nid74ALl28MKZvD1iITckE5hrkgJSMZqf
-	7ye0d/VVNo4cflU82UESpjbuQZ6cvcp16bfWRwm0rXbAUQJ8k8YOXbxnBpWx3Gou
-	1VkLnhZgOHSLXYBJW8RztHyFydWbR/8QOEjGGyy2ngjgSlbvs7g2ASesHdfg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1774943337; x=1775029737; bh=ryKccWbEsguV7Mu072y3zCam+FMdkSngwP+
-	SZyALBgM=; b=CdhTkkw/+Az1OTYva+bw+Z3M3h2a7oGEG0mcfy4RVaw1IDXI2LK
-	AOrvMryLENY0YR1QBV7NR2g3g2A9l9NzKKj1qoERSW+rvlc3C8RT2dsR0T8bJ8s1
-	2mSXHLc/BLkSfjjq2+upfQFfeiXRSsato2vPJMVNf3ihGSjaz0B4EmztcHgBTBI+
-	74HwYjsweSJklAUO51XBqxVXrnhbM3P6fw+zPYACqw+2ij3XiBdLSsEBw3dXsxhv
-	ZqkmBwu4wip0ujgsRZdd6V45zzJJVQnr0836G84zthK0Ok4KZ8E4XlrIro+ub6xn
-	C60J1AxiKltwvZQhZFoRYXptd+3Pv+L/arA==
-X-ME-Sender: <xms:aXzLaeMFZPVSa2hTttSFw5ClPsGr78gLeQe8zuvNx22Vsxd7fJwcbQ>
-    <xme:aXzLaS8TuHj8lO_Jt9Feii4ZoDVBQ89Iez3T5M6WM8_pGuSJEjVCTvmXja9imC-9Y
-    zMh_VpCtSf-Ta9KJV6yMWgi256VTTRSs2MDFo8eoyofX817Z-exIQ>
-X-ME-Received: <xmr:aXzLaS5bOW1BmtfUpPIcYhFBAuwbvjDtnTOOh5EvwGF2JGavieaGJPR5rtj9sllLYvzbD-vUNDZsg09pz4SFaq4KGVocriMVLE62vQDKGaA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefgedufedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:aXzLaZ1vmSN4ct9A9RAfhxWpybfdefW79fvaFFCPbbTIfXaNeKt3bg>
-    <xmx:aXzLaZARHveBc9-czY-3uvocJJJbv_jg3E4fBMFdc24alDnyp5U7BA>
-    <xmx:aXzLab3F7OnZ0_nvVFV2uuUenPHxghJtFzBYusCfh6wOGcEr-oRcvw>
-    <xmx:aXzLaTuySF9IZdO8wqWHX7-1BcH68vw4Ncw1TKoTktMeSnq3g0pW9Q>
-    <xmx:aXzLaQ9nWRkWfzx9NxzQ46cQfuQ2qVf8a_NcBBE6DRHfpl7tbtY4CBP3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Mar 2026 03:48:56 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 07da1a2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Mar 2026 07:48:56 +0000 (UTC)
-Date: Tue, 31 Mar 2026 09:48:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] odb/transaction: make `write_object_stream()`
- pluggable
-Message-ID: <act8ZWi5On9uQptf@pks.im>
-References: <20260331033835.2863514-1-jltobler@gmail.com>
- <20260331033835.2863514-7-jltobler@gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="mRZD5lH7"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1774943725;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j8Q7IcZFmX/UnUokMFKMhWlSJjSYqPpIxMsgkpdsU1E=;
+	b=mRZD5lH7oj3/2Xhp+awqm87BNjTglJheOEOIiwIkWYD2EcbqWG18G4QwiRob70BWw6JzhX
+	6eI915liaa12Km2pfPKPQxDPFjD3dD2pi2TMeQnP0lp6USJ5fPZd5CJrUh9JlEWozwFQps
+	46d4QQmN9XoLHXCkjyj3P4BsOb1SG1M=
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>, Siddharth
+ Asthana <siddharthasthana31@gmail.com>, Yee Cheng Chin
+ <yeecheng.chin@gmail.com>
+Subject: Re: [PATCH v2 0/3] Add option --ref to git-replay(1)
+In-Reply-To: <xmqqjyuynv99.fsf@gitster.g>
+References: <20260323-toon-replay-arbitrary-ref-v1-0-5c7172f675ec@iotcl.com>
+ <20260325-toon-replay-arbitrary-ref-v2-0-553038702c9c@iotcl.com>
+ <xmqqjyuynv99.fsf@gitster.g>
+Date: Tue, 31 Mar 2026 09:55:20 +0200
+Message-ID: <87tstwl9g7.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260331033835.2863514-7-jltobler@gmail.com>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Mar 30, 2026 at 10:38:35PM -0500, Justin Tobler wrote:
-> How an ODB transaction handles writing objects is expected to vary
-> between implementations. Introduce a new `write_object_stream()`
-> callback in `struct odb_transaction` to make this function pluggable.
-> Wire up `index_blob_packfile_transaction()` for use with `struct
-> odb_transaction_files` accordingly.
-> 
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  object-file.c     |  9 +++++----
->  odb/transaction.c |  7 +++++++
->  odb/transaction.h | 25 ++++++++++++++++++++++---
->  3 files changed, 34 insertions(+), 7 deletions(-)
-> 
-> diff --git a/object-file.c b/object-file.c
-> index 4c797d6498..b1c97faef3 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1680,10 +1680,10 @@ int index_fd(struct index_state *istate, struct object_id *oid,
->  				.data = &data,
->  			};
->  
-> -			ret = index_blob_packfile_transaction(odb->transaction,
-> -							      &in_stream,
-> -							      xsize_t(st->st_size),
-> -							      oid);
-> +			ret = odb_transaction_write_object_stream(odb->transaction,
-> +								  &in_stream,
-> +								  xsize_t(st->st_size),
-> +								  oid);
->  			odb_transaction_commit(transaction);
->  		} else {
->  			if (hash_blob_stream(the_repository->hash_algo, oid, fd,
-> @@ -2146,6 +2146,7 @@ struct odb_transaction *odb_transaction_files_begin(struct odb_source *source)
->  	transaction = xcalloc(1, sizeof(*transaction));
->  	transaction->base.source = source;
->  	transaction->base.commit = odb_transaction_files_commit;
-> +	transaction->base.write_object_stream = index_blob_packfile_transaction;
->  
->  	return &transaction->base;
->  }
+Junio C Hamano <gitster@pobox.com> writes:
 
-I was originally expecting the upcast to `odb_transaction_files` in
-`index_blob_packfile_transaction()` to go away in this last step, but
-that of course doesn't make much sense as it now _becomes_ the
-implementation of `write_object_stream()`.
+> As sa/replay-revert has been updated, I rebased these three patches
+> on top of the updated version of that other topic and merged it to
+> 'seen', which broke CI with t3650.
+>
+> I naturally suspected that I made some stupid mistakes while
+> rebasing, so I applied these three patches directly on top of that
+> old sa/replay-revert.  Unfortunately, the same test t3650 fails
+> exactly the same way with merge-ort aborting.
+>
+> The failing test run fails like so:
+>
+> ok 45 - --ref with nonexistent fully-qualified ref
+>
+> expecting success of 3650.46 '--ref must be a valid refname':
+>         test_must_fail git replay --onto=main --ref="refs/heads/bad..ref" topic1..topic2 2>err &&
+>         test_grep "is not a valid refname" err
+>
+> /home/gitster/w/git.git/t/test-lib-functions.sh: line 1180: 2840466 Aborted                    (core dumped) "$@" 2>&7
+> test_must_fail: died by signal 6: git replay --onto=main --ref=refs/heads/bad..ref topic1..topic2
+> not ok 46 - --ref must be a valid refname
+> #
+> #               test_must_fail git replay --onto=main --ref="refs/heads/bad..ref" topic1..topic2 2>err &&
+> #               test_grep "is not a valid refname" err
+> #
 
-But should we rename to `odb_transaction_files_write_object_stream()`?
+No need for you to worry about those conflicts. I'm happy to do the
+rebase myself.
 
-> diff --git a/odb/transaction.h b/odb/transaction.h
-> index a56e392f21..584e8de36e 100644
-> --- a/odb/transaction.h
-> +++ b/odb/transaction.h
-> @@ -12,14 +12,24 @@
->   *
->   * Each ODB source is expected to implement its own transaction handling.
->   */
-> -struct odb_transaction;
-> -typedef void (*odb_transaction_commit_fn)(struct odb_transaction *transaction);
->  struct odb_transaction {
->  	/* The ODB source the transaction is opened against. */
->  	struct odb_source *source;
->  
->  	/* The ODB source specific callback invoked to commit a transaction. */
-> -	odb_transaction_commit_fn commit;
-> +	void (*commit)(struct odb_transaction *transaction);
-> +
-> +	/*
-> +	 * This callback is expected to write the given object stream into
-> +	 * the ODB transaction.
-
-Should we note that for now, the expectation is to always write a blob?
-
-Patrick
+-- 
+Cheers,
+Toon
