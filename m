@@ -1,70 +1,69 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A3827FD49
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 06:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939BB386551
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 06:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774937987; cv=none; b=jv1p3MLNNckH6EJoBUCb06oqmzyV6v/FnofrbgngjU9JgVsDjRUfmvhgDWiQ45jCd6hVCbAoixvnp/KBuArzi+ZSle0wZkoC+XnkOLsCMS+LZDTwcVf5mweQYP+3WA6QSQSEF+Un+SP9dgdUegizMXqpGnRq0pZtjngoHVYZKgM=
+	t=1774937988; cv=none; b=S+22Mrn4SlkqHnOinWuHJ26bZq7ZHXgkJbX3RPIF6VJJyfcCYuB5NAEAoXrmsw1tvN7nMnph01Vmpx2dHdEnBN/clG13GizgizHXnZLliFqG4jvzbggm0YDlQYwtkIRQLTSBilZ7naQz8WiUMs+wCI3EhxQaDTiCnqeC4/i11h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774937987; c=relaxed/simple;
-	bh=iWHi/Iy6Jg9VFB2Ce9XDASiFMpsfM1rNBVIoij/oyeI=;
+	s=arc-20240116; t=1774937988; c=relaxed/simple;
+	bh=wW4L5f2UPz5JB2XuHq37kfldUvOK8IUq2BxlaQwTYkw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aH/6GkAGwFTwfkDZVskowhw+QNDma4VjjBfF9/0n+P0pI/hv28VqKMqfQeo5N64E4Ut8sGcFu8VewQ+sG9pBUXicbKX7kVyhd2Pr3FqguZ2iP/R8gg2yVIuY8qkhKGdnyzsVk1lMvzNzrwKhwFMwwCKEKUwjeS7s7EGm5Rnx0PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FBOha1bT; arc=none smtp.client-ip=209.85.160.47
+	 MIME-Version:To:Cc; b=U5mavisOBDQD9rLPK6j0RyfEHLdh1Kcgr5Sqzjt+dZmVSIc6GNxC7DysDu0ltm+cAuxRb0c1s4xCvPUZSkvR3TidV7mQggs9w5oX0dLgkvstwmpgp36aJu66xaYztg2sgcHcb8XShA2ZYkLeJk7VuhEd9Bfgad1dhHUL3KWH2as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=alYsASFW; arc=none smtp.client-ip=209.85.167.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FBOha1bT"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-41c420d1460so2103721fac.3
-        for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:19:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="alYsASFW"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-4645dde00a7so4617384b6e.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2026 23:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774937984; x=1775542784; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774937986; x=1775542786; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S+XccA/xUBXw7BUScvs447In5YHY/qkuIiroMUtuxbE=;
-        b=FBOha1bTwJoiekB6osFIPukaN7ssaUx90YA+gS4UlHHySRsm7a7WAImj4iu7Jq7Y2v
-         smY/ctXad8jcmeKfCNNJMMqQbdsuVBJhq1PM91Vc8t55Qtn4SdWr/3qcz25fo54vB5Ui
-         /3FqyneITZRnW58zUlk/Ww9ldq4CdxDc//QFhKDejj/lvlkDKXSZzcRL+g4idhP7WX1T
-         QCVzKDtJHdpllMR7pbvGHXLwg0bV6DwFC7c5gOmpErIluECJu9m7jPLc+tVjpsmkciGY
-         Qviwgcf6ebZYoDHlpnq57g+ITlfktMYZtIFcTiVh70P5ggtT4gvarzCtSxXktvfJREiP
-         isEA==
+        bh=C83czoS95l3vv2klvVyic5XtiDMyrhb+y+/EC4Hbov4=;
+        b=alYsASFWDfuHegH89tdVpMEiOB6ZaO7NuRyPYoMou4iXvUlQTtLQ42k72CK9Z2zwYG
+         VsLKjtgmzHE60ip23TvV4f2gJNSdBLYpDuzy0zrc7ImBKbhbWKBoJGu/ZShwfTRtNbZv
+         gHmsqBggAdf/w4nkd/GDW6TV175Z2pCA1r2hgQNryHzbKI8wAB7RDb1TfS9MLe7JVRBo
+         V9116eHhUfqUf63wGMVnqG8DIJnesT0skBYWa9UWhOq6GkBDtEj1gllZmuOuaODyxqoT
+         GK4OD5L6FnjogJBkt3eG2EkuEYqHEN25x6aTO0DUneD331/kg9NICPMsZAclk62gC7vd
+         WSYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774937984; x=1775542784;
+        d=1e100.net; s=20251104; t=1774937986; x=1775542786;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=S+XccA/xUBXw7BUScvs447In5YHY/qkuIiroMUtuxbE=;
-        b=WXxyxqz9HMwie770gYd4AGqpTTwY3fYBmeQA/zhIo+pMjDTerkyryThUyOPZYwRU7I
-         HSQiXZJqj+UHkAPXWYBS2w/p5ZVO3Nyqvqqwtze2nrcqzrZaskcqgGTrvPKiuuWfjyuY
-         aLJl3YyG4Jd6PJ4d2OnpmYfsq+nDYwG8vAZKf0k+DuI5fSO6Zrrxfb9dnzDatbYlIa4O
-         88CZ+7Vvf7rOKE8ZQkax9YXQxAT8urJHVLKZoXF0QBafK9/OVesWF8cOIt3fle1BBbqB
-         YdB4r4EgyPF8ym/mIFTJdCgEyNVZ9UuvHVKre23WtRfD+9hDM8Y6utPLwUA2Mt1cd6rF
-         JQcA==
-X-Gm-Message-State: AOJu0Yw1Sb0apke34buOXx7MP0UwO+/z8QNF8Zk8AFjt9U1GmP/6IEQ8
-	l8S29Zw/mVMwXmTxSgyPXhZuFuxx+LhSbWfzTb2GvyW5cB3FxIq/w9Jh1HcUpQ==
-X-Gm-Gg: ATEYQzzpdjw5m2TLCXYcCGBQI3hlZFyZDpps9etwQNGWQCwLTJw8QzQDsFmzMH3UYt0
-	bV6/bw8Nu5Lj8UMIr1U0tA73C8JI5fOBY3ZNU0s2PdT5YPn9dzmSoJWUQVGW7DTdkeQCeKctgf3
-	WdUbEjTdpq6cAajzeiva4rpx2XMccxLuZUU10DJKc1iaXwJVGQaxenwd5tY54TZtaMuaO8ZznsX
-	NrY9tymJCFHAiBl5xo4qbapXiOWdlGWnB7+IOFerT9D9BTeFRrLZ7JyiAwd7Rfc4n3CSd/oZtDy
-	/gTEdEKo/vSPzfDvRZBfJoErbHXWGTK0xihhO0sf5KmlJ3MbbpA3F/NuamNVLfnfyroCHiqNnRn
-	NsySpXZM0SKoX3fh48pbPt4mc2mcH31YE/UcsSsrmRdm7CQqvfM+1zdBpj3hy/DN3q3oixRWMrF
-	wjKcuG0o9PGkIXUEas1BIpEIbiwtejTRMLtjtYrg==
-X-Received: by 2002:a05:6870:d208:b0:404:4166:ff59 with SMTP id 586e51a60fabf-41cec35e015mr7900270fac.43.1774937984156;
-        Mon, 30 Mar 2026 23:19:44 -0700 (PDT)
+        bh=C83czoS95l3vv2klvVyic5XtiDMyrhb+y+/EC4Hbov4=;
+        b=P5ek0EeFN/9V5c46SXUWuE63d0P6yACFK+Fd/xT9+Fz76hgCt5SBJ9MVtq6EaD6Pxr
+         MzZKb3eYcS9X86ZUXEBZNe/+5rVbCEhl0O3WCG+hcGIf3ly0Vi9U0Lcne4Jj3Gya+CSm
+         c/S0Qer+zRrK1I8Q3Rfw7UpEyg3ajrHVc3D9qGWVa7mav34V7XDPGr3mm3FSHeVSzVjj
+         bIj26vMrztM+uC6pf05UGGGTYnwBkl7qVQT4fRibnVxG2IrC5qGqLL1ao8/u1GmsE191
+         4+Kf+lFsnNyWLv97GcaYAIcOzu5HSonFFBS9higRVR1qBlA+XwWi4WiIKNUt/OR5RxkK
+         SSrA==
+X-Gm-Message-State: AOJu0YzxMYvxJ5dwceKTzgMGk9MogGEZiGcn+5OXrxKbu/kUD16367Jw
+	7V9gIdoBXodLKiioUPDXV0SxXUa1ofCDPm3HUcDj7+ZanS/UJhCZcYT5HRkLyXRM
+X-Gm-Gg: ATEYQzx68haF5VAHspZaOLjTWpgFp5OFdnQacTmTzdMhHc9TSpnmzyz0HJ/ebAXA0cQ
+	FLRoFEC12nRi7hVuJTdPAHtQKR03hsIybol65m7UqEPx2DZ7fxo1Kq6futDtyBNzvQf4oUjUaTr
+	e8Ic31IY0LNJ0Il4kbQvrGUjcQ0/Ng86kEwbXH7h3UU20I8j3clMV8wM0SwD5uEKKsaodkXXQJX
+	Iwx89SoM7IbI/cxv7RrJsIzDcyXk/9uzcY9Bx7JRYAxPKj2g4ZJFNld+Mn2zjFq2hPnSd2ixeJ4
+	w86a/wyxvxqkB4Q8b9wbccK+vm6v77jPc0h7F7IhRcrtG9ReG5G27QzAJ6uSfL9xqwMBatEDrp4
+	mex0O9w1liknVR+NwHvFdpaz6ip2pgnidZi10NDu+WNM1ty3V6mk7FUmETZegCOdvLS+2/d+KZX
+	mzJPVQIKp66SH9d35LC6YZNsaDePM=
+X-Received: by 2002:a05:6808:1506:b0:44f:f025:303e with SMTP id 5614622812f47-46acdb2be89mr1330177b6e.6.1774937986235;
+        Mon, 30 Mar 2026 23:19:46 -0700 (PDT)
 Received: from [127.0.0.1] ([52.165.251.162])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-41d04c889fesm6104788fac.9.2026.03.30.23.19.41
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7da0a38a746sm8146712a34.8.2026.03.30.23.19.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 23:19:42 -0700 (PDT)
-Message-Id: <057b3098bcbea0302877bab0abbb9f9a21194f40.1774937958.git.gitgitgadget@gmail.com>
+        Mon, 30 Mar 2026 23:19:45 -0700 (PDT)
+Message-Id: <e6bc3bfcb285b48bff804460943aef17f0e00b6d.1774937958.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
 References: <pull.2147.v11.git.git.1772693712.gitgitgadget@gmail.com>
 	<pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 31 Mar 2026 06:19:14 +0000
-Subject: [PATCH v12 09/13] fsmonitor: close inherited file descriptors and
- detach in daemon
+Date: Tue, 31 Mar 2026 06:19:15 +0000
+Subject: [PATCH v12 10/13] fsmonitor: add timeout to daemon stop command
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,88 +81,50 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-When the fsmonitor daemon is spawned as a background process, it may
-inherit file descriptors from its parent that it does not need.  In
-particular, when the test harness or a CI system captures output through
-pipes, the daemon can inherit duplicated pipe endpoints.  If the daemon
-holds these open, the parent process never sees EOF and may appear to
-hang.
+The "fsmonitor--daemon stop" command polls in a loop waiting for the
+daemon to exit after sending a "quit" command over IPC.  If the daemon
+fails to shut down (e.g. it is stuck or wedged), this loop spins
+forever.
 
-Set close_fd_above_stderr on the child process at both daemon startup
-paths: the explicit "fsmonitor--daemon start" command and the implicit
-spawn triggered by fsmonitor-ipc when a client finds no running daemon.
-Also suppress stdout and stderr on the implicit spawn path to prevent
-the background daemon from writing to the client's terminal.
-
-Additionally, call setsid() when the daemon starts with --detach to
-create a new session and process group.  This prevents the daemon
-from being part of the spawning shell's process group, which could
-cause the shell's "wait" to block until the daemon exits.
+Add a 30-second timeout so the stop command returns an error instead
+of blocking indefinitely.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- builtin/fsmonitor--daemon.c | 16 ++++++++++++++--
- fsmonitor-ipc.c             |  3 +++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ builtin/fsmonitor--daemon.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index c8ec7b722e..b2a816dc3f 100644
+index b2a816dc3f..53d8ad1f0d 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -1439,7 +1439,7 @@ done:
- 	return err;
- }
- 
--static int try_to_run_foreground_daemon(int detach_console MAYBE_UNUSED)
-+static int try_to_run_foreground_daemon(int detach_console)
+@@ -86,6 +86,8 @@ static int do_as_client__send_stop(void)
  {
- 	/*
- 	 * Technically, we don't need to probe for an existing daemon
-@@ -1459,10 +1459,21 @@ static int try_to_run_foreground_daemon(int detach_console MAYBE_UNUSED)
- 		fflush(stderr);
- 	}
+ 	struct strbuf answer = STRBUF_INIT;
+ 	int ret;
++	int max_wait_ms = 30000;
++	int elapsed_ms = 0;
  
-+	if (detach_console) {
- #ifdef GIT_WINDOWS_NATIVE
--	if (detach_console)
- 		FreeConsole();
-+#else
-+		/*
-+		 * Create a new session so that the daemon is detached
-+		 * from the parent's process group.  This prevents
-+		 * shells with job control (e.g. bash with "set -m")
-+		 * from waiting on the daemon when they wait for a
-+		 * foreground command that implicitly spawned it.
-+		 */
-+		if (setsid() == -1)
-+			warning_errno(_("setsid failed"));
- #endif
+ 	ret = fsmonitor_ipc__send_command("quit", &answer);
+ 
+@@ -96,8 +98,16 @@ static int do_as_client__send_stop(void)
+ 		return ret;
+ 
+ 	trace2_region_enter("fsm_client", "polling-for-daemon-exit", NULL);
+-	while (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
++	while (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING) {
++		if (elapsed_ms >= max_wait_ms) {
++			trace2_region_leave("fsm_client",
++					    "polling-for-daemon-exit", NULL);
++			return error(_("daemon did not stop within %d seconds"),
++				     max_wait_ms / 1000);
++		}
+ 		sleep_millisec(50);
++		elapsed_ms += 50;
 +	}
+ 	trace2_region_leave("fsm_client", "polling-for-daemon-exit", NULL);
  
- 	return !!fsmonitor_run_daemon();
- }
-@@ -1525,6 +1536,7 @@ static int try_to_start_background_daemon(void)
- 	cp.no_stdin = 1;
- 	cp.no_stdout = 1;
- 	cp.no_stderr = 1;
-+	cp.close_fd_above_stderr = 1;
- 
- 	sbgr = start_bg_command(&cp, bg_wait_cb, NULL,
- 				fsmonitor__start_timeout_sec);
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-index f1b1631111..6112d13064 100644
---- a/fsmonitor-ipc.c
-+++ b/fsmonitor-ipc.c
-@@ -61,6 +61,9 @@ static int spawn_daemon(void)
- 
- 	cmd.git_cmd = 1;
- 	cmd.no_stdin = 1;
-+	cmd.no_stdout = 1;
-+	cmd.no_stderr = 1;
-+	cmd.close_fd_above_stderr = 1;
- 	cmd.trace2_child_class = "fsmonitor";
- 	strvec_pushl(&cmd.args, "fsmonitor--daemon", "start", NULL);
- 
+ 	return 0;
 -- 
 gitgitgadget
 
