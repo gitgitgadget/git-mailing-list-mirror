@@ -1,55 +1,55 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B9D3D811D
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 11:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21BA3DB624
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 11:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774956421; cv=none; b=WHMhW/XQhmqFZmHIu78FkO+1nPkIRaJQw1K3xV+eXS5ATSG0Uazxw+PTu4YxvrfwWst1C7iYtRVYasRugG0Ujrpkz3+wi8K8YSPAt3sodsRSBErUynqLVuOQDboo8EB8BpdrslTzy0jVKLPyA2FWA8ru7mQzbuiwF2+WnGiiifg=
+	t=1774956423; cv=none; b=YJ0nocXubXWQnvBjkPXeT0Unw2E32gmXfGn+Sz/Y4/ovJW6qC+/97Cif0CXgifoPMwWEqkLdKmqd8CrgTUNIebcnOvOSSIlGn4x1+RrZs5/IiM2TphzpD27CNIOTUcqaXXnChBqNCnX3KjnHsKpyKoCI5QLaeSTKmyv/yGKXhsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774956421; c=relaxed/simple;
-	bh=EvuvtOBqFqUsMFCq3fsrfLRYi5AWDRe5gGAnOBWB6aY=;
+	s=arc-20240116; t=1774956423; c=relaxed/simple;
+	bh=3ScUvSnRPkT50Rs+UkfkVqLiLLGoLnEoCFSwR2b6WCc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=anzKME+ixsuFWsBgoMkQooB2eLI9g9tEYuEXKaaUmkrY656RdI0yibIIaudZ4oqKv44CMnIJ1bhh6Ts+xfDq7nHByzt52pQ3z4hfxdusFEYtaHTGaGR5vC/Vrp/MstKeCgzs8nW+Ur9n4A1HIbqe6rAkDQ9nakbip7UKTo9dy98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ol20s81h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gdli2TAw; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=pNpJt4XbnEmu+Go98aVMFD15NLWA44JMbD43YYEEF3jrakp8j04mlcixdci39nYzv8JAubJB2JhJ/Rj5oNiss2EYO97QBAhEef1by1bVg+9Im6Dj6VP0W5b4q2jR1DYNkdwuyAw1BTKt2vvui296q2IozTAnNUH1Y/VtDaWWXY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bv8J1E+f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lyA2hXZ8; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ol20s81h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gdli2TAw"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 291DEEC00C5
-	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:26:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bv8J1E+f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lyA2hXZ8"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id EF894EC008B
+	for <git@vger.kernel.org>; Tue, 31 Mar 2026 07:27:01 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 31 Mar 2026 07:26:59 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 31 Mar 2026 07:27:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1774956419;
-	 x=1775042819; bh=Sr7r0+KeTqYA0KelR4SkagPB9zLJXfKxC/Tcho+bLq8=; b=
-	ol20s81hi86l9Pa6rDfUKe60ZCaTyBwfCtqED6wBTJQGPT8ZiJ840GEIINkFfL/S
-	kkrawAGkvYfgjH6/Pw5cbcBRE+3RecnUcojPgUm9YxOhOfETJaoruDQFCTzun5J/
-	eyG1hjTgdbZdmBKb3RBrviUG09P+LKRcYc61G9PI1axIw7UC3eHJSZEQF9Gb7W5+
-	risyI2fYwpUNGx3U5a5H5RKcrz0vqCPgJCWft+609KDkf56S7zpMtM5YsSg775al
-	3vIKVxqwLrBeVYYQ5W9Ika59O4fBIezwp5DaL7vgJg54DVIX8XghZ+TIOZBPE9se
-	T84om0+GZwBBewq1b3jyAw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1774956421;
+	 x=1775042821; bh=oGrmjHcVDkRAZv67RV0DcPGUyUZZT7Grjbk0OkN5Q68=; b=
+	Bv8J1E+f2WZmep2xiQ6D7AK5D8THkuheXp5i6RndRA+WJwXk4MKlbatARpCMS1tm
+	k9cOSEypAj21ky1ixu4yl2s5eiVjsxL0VdJ4znNTi40aN7NisJGYJOq6Zafe+r4h
+	Fs0QJiAxsVANSVM8yb5WfufLfgCDT9b5uscrjMEuSmRXLbLV70JM49CTZ7TvRXZ0
+	JTAJDl5ubHxQJQxW9TSxWZKNVRGHThyUXXJxAULHb5vgqhyQ4Gb/z31F4XjmaMmx
+	abybR6BPWtW2xuhFIcJOuZOkf5Hw7xA+urYFsFUdJtqivu3AclD++D8aAOICVJr9
+	goccfJ3OKD9mMISiV7aDkA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1774956419; x=
-	1775042819; bh=Sr7r0+KeTqYA0KelR4SkagPB9zLJXfKxC/Tcho+bLq8=; b=g
-	dli2TAwb8MNlvpUJmHsmN75fChGRcftED8xqVhXigAfilE/RCFacF7d/XfkrlFXY
-	ZQhcTCQVM44hIB2euK7NmLIkuqw9YUb45jG+TFHFNteY3HVy0JvQT3lNR3N8u7HN
-	IxEsiIYskpXHcru9X9yIAR5IAQVr67kASM07H1m3pWeS+15fiK9W4sDALeX31+Jh
-	M+04R7o3BDgH/hBhNe9O8Lvv2FLiozptz9oehcNhzfoOZrB3ct+U76bwx0PMLHWm
-	4T8Ec6gLvObpMzzzxXJ8gZ3sSOVfl5hIBL04YVtk1MGTJ5neG031qFl6Zn6guwTx
-	1afqSeuDvgeSfC/xZ801A==
-X-ME-Sender: <xms:g6_LaT3SC_CovavlETfpKr8gP5RFy9cUJKVKPIV20ZSboBNhcXTPFQ>
-    <xme:g6_LaZBmxzC1HE26dY9kAtmVWX3JPSAqWIQUCyvgOnQm5SuOuKvk3INTP1NffWi1q
-    ZiteTC2en-2X_w-NZxoXTujp-dAlOe97X3JTMHauJwZyoabbkHg9iw>
-X-ME-Received: <xmr:g6_LaZh27tNHLWBUWzhG3gLFapQu_sHxYRuPsHMWpyu6on8FikJCktPDAqE9QYOnSXf9wHBRql0smOLIK7_ukKSwl4sEyJVdE05RjgVvUJ8>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1774956421; x=
+	1775042821; bh=oGrmjHcVDkRAZv67RV0DcPGUyUZZT7Grjbk0OkN5Q68=; b=l
+	yA2hXZ8nj8BB8jMhkacHL0W7KhJR9ysB63+qc/H6r+rXE38WKtHpyafG+jesDpF9
+	P5oG8cf9U1qm21Qm4CYbcalLyimHn0kyMPUT1uBBR4HPsCdv7LCphUloTYYJcV4h
+	qm9s1KHAvdGJpeeMEEDdVBQColDUwLIjGD3iAZIV+Tu3uiTGShr3zMHhiNcekUpE
+	/dMhiqOSjEMrIoFz/f/xzhYFPQOg1fqtxMD9olRZ7xF11QsYSsxR/5VnSydsrQL+
+	VteWIVKgIU/DIIEGcd2k8FZkSKhpr4pPvhO+rXdcMGC08IXjXkgGp1i157Yf+bfq
+	CsvStGVwfvTT7oKcGOUKA==
+X-ME-Sender: <xms:ha_LabgOmY6G53VoGky_9iKtjkIFh_yGd5nZkVmd3UhUtr0wPyXOYA>
+    <xme:ha_Lae-opAIsQ_X9CEMWWuYH1ftfNdeKYLPeqrc0fXkYOh2oCjTfcbed00-2nbk3T
+    nrYwORIjP-vtEFyBUeOR1etauggfv01dsA3YUxpfBl_Zr-Sn3z7>
+X-ME-Received: <xmr:ha_LaQsTWYrqDPdXDa2fyO8VdFDSfrKurGFCiksSPsefC93UX5kgd0LAN-J3x4jF-aw9-MKtinW05MQehMvk95XwLfxQ7V4DsBm7WItMTCc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertd
@@ -58,21 +58,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddtkecutefuodetggdote
     ehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
     mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmohguvg
     epshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:g6_Lad-Pqgd4V4fo5dK0FATR5qc28jX981R0vq79gLDJEs0XHQ9juw>
-    <xmx:g6_LaV-RmiV8h88jejW6ZrMOGm0KvNQOp7oVx6LcqK3nzSL8CBbO-Q>
-    <xmx:g6_LaWAsqggfGXkb-VxSetq8H3YYaLDHWwUew2khMCEZONZsLEfV_w>
-    <xmx:g6_LaVwu0stviLBB_1E2gRU24zLlbP51zOHshZ29QNd72f1KnL3HIw>
-    <xmx:g6_LaRGVbnp-Wxu1j5-4IKZAXe3Pnnip7zStxym5Gs3x0VJsbKXav_i->
+X-ME-Proxy: <xmx:ha_LadZ-om_3GHw95mswo46GKQa7ALHB5FFvbfYEOsWVESmp-5wWWA>
+    <xmx:ha_LaYo6kah9rg4C2DQnNjJE6vjicRXYkN-CmdbkC-aud0Ko4k7UMg>
+    <xmx:ha_Laa_VUKWJnPzqmOI3HOea9ALdwEYZphfkyxavbFByZ17lRuUBxw>
+    <xmx:ha_Laf8-udEXESwLmKNvCOn8A56lykR09ONU3SKlPdv4StDg9REuIw>
+    <xmx:ha_LacgvLLir8Y-vfT40AQ0EZOpXHMJ7QabbW1CB2Sd9-TpND12_hDxV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 31 Mar 2026 07:26:58 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 31 Mar 2026 07:27:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 09a5bf58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 8a1a6025 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 31 Mar 2026 11:26:57 +0000 (UTC)
+	Tue, 31 Mar 2026 11:27:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 31 Mar 2026 13:26:48 +0200
-Subject: [PATCH 2/6] reftable/stack: don't call fsync(3p) unless provided
+Date: Tue, 31 Mar 2026 13:26:49 +0200
+Subject: [PATCH 3/6] reftable/fsck: use REFTABLE_UNUSED instead of UNUSED
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,39 +81,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260331-pks-reftable-portability-fixes-v1-2-46bfae55c68c@pks.im>
+Message-Id: <20260331-pks-reftable-portability-fixes-v1-3-46bfae55c68c@pks.im>
 References: <20260331-pks-reftable-portability-fixes-v1-0-46bfae55c68c@pks.im>
 In-Reply-To: <20260331-pks-reftable-portability-fixes-v1-0-46bfae55c68c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.0
 
-Users of the reftable library are expected to provide their own function
-callback in cases they want to sync(3p) data to disk via the reftable
-write options. But if no such function was provided we end up calling
-fsync(3p) directly, which may not even be available on some systems.
+While we have the reftable-specific `REFTABLE_UNUSED` header, we
+accidentally introduced a new usage of the Git-specific `UNUSED` header
+into the reftable library in 9051638519 (reftable: add code to
+facilitate consistency checks, 2025-10-07).
 
-Drop the call to fsync(3p) and rely on the callback function
-exclusively.
+Convert the site to use `REFTABLE_UNUSED`.
+
+Ideally, we'd move the definition of `UNUSED` into "git-compat-util.h"
+so that it becomes in accessible to the reftable library. But this is
+unfortunately not easily possible as "compat/mingw-posix.h" requires
+this macro, and this header is included by "compat/posix.h".
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 2 +-
+ reftable/fsck.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 1c9f21dfe1..f9ae832e3a 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -33,7 +33,7 @@ static int stack_fsync(const struct reftable_write_options *opts, int fd)
- {
- 	if (opts->fsync)
- 		return opts->fsync(fd);
--	return fsync(fd);
-+	return 0;
- }
+diff --git a/reftable/fsck.c b/reftable/fsck.c
+index 26b9115b14..8e73fc83f2 100644
+--- a/reftable/fsck.c
++++ b/reftable/fsck.c
+@@ -63,7 +63,7 @@ static int table_check_name(struct reftable_table *table,
  
- static ssize_t reftable_write_data(int fd, const void *data, size_t size)
+ static int table_checks(struct reftable_table *table,
+ 			reftable_fsck_report_fn report_fn,
+-			reftable_fsck_verbose_fn verbose_fn UNUSED,
++			reftable_fsck_verbose_fn verbose_fn REFTABLE_UNUSED,
+ 			void *cb_data)
+ {
+ 	table_check_fn table_check_fns[] = {
 
 -- 
 2.53.0.1185.g05d4b7b318.dirty
