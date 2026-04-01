@@ -1,84 +1,87 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ACE2F5337
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 22:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2E9371CFB
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 22:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775081919; cv=none; b=gwjpW9R2nLJsqbPsvOxJ63bXlbP9AsVVI0eMOvn/yIR9g/lrssBHsmegDazYeMoyWgCGJYStJcmNhX1IRaoSdAq2IFbs9+qFZjebn49YYNtT88WIwg+KPCGtm5s7lWUdGlhuMCw/hOMWAZSzRuTAB93m4Mso/sAo4tkHHF9K3qA=
+	t=1775082172; cv=none; b=UO/Hayl4m34CaP5zccJmQZ386NXzhBLoEXEHzfeV2AMOVRb7OoGNy2S6BXQUGAy2QD/tsIyYigt/Z2w0APwHxXTXMKl+RC+ELQKkehNGqcnBIFiqdPYvNTF1tiZddZfVwuIoGTPMCE09IPuMd8AAwiCtxs/7ckQq6FlMzUmp2+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775081919; c=relaxed/simple;
-	bh=o0quo9/wShw3IaTcGqIKIFg0It/VRZHZzdvJA+FKypI=;
+	s=arc-20240116; t=1775082172; c=relaxed/simple;
+	bh=Zd8QA03KdwbHq7eYIXlimsoJVSRaMx8Ng/6LrSLdeuY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KsxiLzkWZbMaC7S3JDJPDLX4U1Hcg+Q9yIHLQxahuKeGw/o8QL4u187//F+gcsi1aRK+P2pZ0vMSoSU18FBMaDVyZEnN+wxl1kKWMJKn+aHVnPMcYz8LjA8KhPOemxIwMAKfjguFYDuA7rZtZjj6X7Y+FWWseaSoNDV+Wn3zv+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QE3cKIlh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NQn66FtR; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=LRdhEsg3HxRJSFWOGE+ivDU9ONBPkR/eAoVg5dkIsyGM0ywBSGCMJ+wCq0bkLrVH0bIQPwD0rvtwG4Xlg36TVkBONNmn8L+TbeoSACxyigQXn26WTxfTf0PahqUzq3/f2WslrrZqgF2Ga/FoVx4HoP2+CHG7q8N0p9i19FQL6Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lD7emk3Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LeyNWNq8; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QE3cKIlh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NQn66FtR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 896A17A016D;
-	Wed,  1 Apr 2026 18:18:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 01 Apr 2026 18:18:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lD7emk3Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LeyNWNq8"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CF1E7A0220;
+	Wed,  1 Apr 2026 18:22:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 01 Apr 2026 18:22:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775081917; x=1775168317; bh=kb35TsApnq
-	bBBMIqWp5qFU2gzK/rIZCeOZd2U91RAJM=; b=QE3cKIlhEqCQhTDOerDOk+CjSW
-	9wk3+uWp8ABkUD2p+6koDtHpNJpR1ibBr1Ov9oJlCmoQiTXA8udpCKNxj7FWpYzH
-	U6B5nOzBxpt/dzz+z189raIYetRlGDk+mBKmy+OsuaJAKyn5MXSX98yH+wYc7kjg
-	tq9kxUovU0azhfPVNHmOvGp4MZQVuohrCLKnCEr4xdH45fvW7WtPjzNDRVvq8UuK
-	RAnOxExChjiKDP3dyOuZphG/LAVX6a6jY3nk3bXEpGjqCqnUscWanwvHzX62G1J3
-	nJgx9XmKKyLdAPsS+QxMr8r1qkS04cdGDj2wBIO1pl6MV54hDkduetudnNtg==
+	:subject:to:to; s=fm1; t=1775082169; x=1775168569; bh=s6dST3104V
+	mWg1Z/p4gC5npb26fZ69LdHs6oQ3kiEiI=; b=lD7emk3Q5X9KQv3Ya8YTHhcuxk
+	AGfU4r0LsUmehShHJzrAh7ofLcDAV0DKRV5stpxaZWP7FloHHa6Z182wj4e++x6m
+	b85k5GjnuBuLxKuqcBgKLn4cmhyXEQtT+clayAM10x6uSxJYycWzCTUKN7G+ZVKn
+	nDlUi7rkSKPF87NbOoz/kdkGOWFE0SEDbqd78DP9UvEw/bBQECqQSuaOz2Jz42Ui
+	mD6AiNfVpQaW54GpxRa/geJYeZ3AYEXCznXTKa9O+KfJKLel7ZA0CU4H/w6MZM4I
+	e/1xatvEi1W9wuu+zyfV7RxeVrFgfclw/2oDoZNzx+RHtkWb3TczyOpCbwBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775081917; x=1775168317; bh=kb35TsApnqbBBMIqWp5qFU2gzK/rIZCeOZd
-	2U91RAJM=; b=NQn66FtRr2Kesm9DdD5mrFy1eMJEHPD2OxlJCj5jQ3hoBZ6lQvK
-	i13XqTWteYrpaTfaxiJyPYsiME/sJ95ZVT+BefhQNHGgN1c7gP/VhfQf2ZQroELo
-	5Ts7LY/mbMBMsx+AdtJOiVd9l16hPbE7DzWKeCXOG/BqbqIuyfNA+idYmH5ds/PJ
-	2zgth+xH27TMntjMIiBc+O/SyZVIIvC6iOrTYGD2GvyvQXLtgCWBMBdWeolotAHq
-	/9/79oZAjLC8iJFnMVAKXsSXhTtgR0At6cyyztdiw/AKSAdTPTFSt1iAAbTrhIyb
-	Eh3C839aLuXzYPSj8I39SWbYHJO3Z2bzeEg==
-X-ME-Sender: <xms:vZnNabXDY5xs9lwsti9xNoV_dK72mUYM4Mkb917Y5GnR67SnCFsxMg>
-    <xme:vZnNaafYV7Sv6lHozrNIRTDKQDVv_v5oMbKfD3RzSy9M8zqNbnSmuMILxEZnu1t12
-    sCXwCx9N80HkLyzUmxBzesTkzuhl5ErJJFsCxFYbsCM--jPm7_e>
-X-ME-Received: <xmr:vZnNafvbE-X8giDmILS0910uzU3rnFjqzoApHNR3bTMmMvhZRy5xFZnyp0V7ThYmauIK7b1Os0Ig2S_XKIZqq5hPXRqFnJ-9Zg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegfeduucetufdoteggodetrfdotf
+	1775082169; x=1775168569; bh=s6dST3104VmWg1Z/p4gC5npb26fZ69LdHs6
+	oQ3kiEiI=; b=LeyNWNq8G7yn0TNjJ/ukMh+Zx6ir1HLOK6NBbVF/aA+tZ3Qajs3
+	vFKosND05Ge23l1/W5tyEPjq34hraVxccy3vclZnkVxRlsMsaKgAyx1U3SY9HTs1
+	++/Nk1WC+cD+JpdY32PuTJxDdF0gqboSzmVJ6olwYHn/TjawN9veC6LExWp4VNjY
+	gEVWSD7T3DkS4wgynhBxvVE8LJYoZaJKPE/LNFN9LABPh/aqNDl8fX5pMsqCAW8a
+	zDbPCwA2K4I5R+KrJhYP38qFOqPefRwMd3XfsEllYhK9pliCPsDhibe0LgKZP/K4
+	a8WybLgv4LscGiEL/E6D5cbqgkhkz5timOg==
+X-ME-Sender: <xms:uZrNaTLNcs3bTsycYex3X-1rV_BVbRfXXj8xjorDDcogl3Z7DXPIJg>
+    <xme:uZrNaa2LxRsDFa9YIVWwB5fLz8CJ8_Mi6uI_Xr_yWPNFtLFgsoSY2_e5efuIeID9i
+    nQqvOBPUxXfRbhvb9LOvOlpQ6rVbIpH1u3i6TVeZwT9U9TGAu0NKA>
+X-ME-Received: <xmr:uZrNaVhB2WA7YPEqWJy2mfeWkSyxyNEHzHQt8WCeMM-Q2ZDZeqIU8ZC54B57KEkdGIHraw2A5RO_67ist8ptzu6TJwFK397OeA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegfedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
     jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
     hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhn
-    khdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesghhruhgsihigrdgvuhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:vZnNaR9WHVwRFhHKKnPyP3vH5JpgfR3Rdxke2rsZNeg0LNmbyhZBGA>
-    <xmx:vZnNaS1Chw-WYkkTFCgL4xsL-yKIbb4doUKy1UoA4_yogOMVgg0AJg>
-    <xmx:vZnNaeD0gy0wsI4UNLLzjO5IIY060c1MuFsKYdRpNgSzhllfDnYzIg>
-    <xmx:vZnNaWfL6UNorQyER48MlAcYa-x0CJgzhHuZAI3KBlbsWpUy_qjOBQ>
-    <xmx:vZnNaQXzcX0mm0KkKtbtzHorG-dfskkiDQf1n1kfmV1HLV_X_MIaFMT9>
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffhesph
+    gvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehgrhhusghigidrvghupdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:uZrNaTVSQ97ZVhW34aWVr0Fs347vuspcBpQ8T4YAVhAUNd4yf7-7ww>
+    <xmx:uZrNacVt10M1Y-cDqoBdCR9oWICZEyDqrGXTc_EBeyMgddpOVftOtg>
+    <xmx:uZrNabjZJAb6W0DIkcpASX2AsIOw56SyMPMd5lZqljMGWAtvfdkHeg>
+    <xmx:uZrNafZ59Aw1qFlIH8f2ri3A8xhD-gL4-fT1-LMxUfW3elNMwIWD4Q>
+    <xmx:uZrNaTkUZFKmJluTY3aeNPdkF-MMZYuv2aszy3ohfbKN-E6l7H6JO-Zw>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Apr 2026 18:18:36 -0400 (EDT)
+ 1 Apr 2026 18:22:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Collin Funk <collin.funk1@gmail.com>,  Michael J
- Gruber <git@grubix.eu>
-Subject: Re: [PATCH 09/12] pkt-line: make packet_reader.line non-const
-In-Reply-To: <20260331235136.GI2328529@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 31 Mar 2026 19:51:36 -0400")
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Collin Funk
+ <collin.funk1@gmail.com>,  Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH 12/12] refs/files-backend: drop const to fix strchr()
+ warning
+In-Reply-To: <ac0h0xwqLdX5u51v@pks.im> (Patrick Steinhardt's message of "Wed,
+	1 Apr 2026 15:46:59 +0200")
 References: <20260331233856.GA2327197@coredump.intra.peff.net>
-	<20260331235136.GI2328529@coredump.intra.peff.net>
-Date: Wed, 01 Apr 2026 15:18:35 -0700
-Message-ID: <xmqq4iluuxxg.fsf@gitster.g>
+	<20260331235341.GL2328529@coredump.intra.peff.net>
+	<ac0h0xwqLdX5u51v@pks.im>
+Date: Wed, 01 Apr 2026 15:22:48 -0700
+Message-ID: <xmqqzf3mtj5z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,25 +91,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> The "line" member of a packet_reader struct is marked as const. This
-> kind of makes sense, because it's not its own allocated buffer that
-> should be freed, and we often use const to indicate that.
-
-This is interesting.  Once we go down this path, will we rethink the
-use of "const" as "not ours" hint (which I always found confusing)?
-
-> We can fix it by marking "line" as non-const, as well as a few
-> intermediate variables (like "head" in the above example). Note that by
-> itself, switching to a non-const variable would cause problems with this
-> line in send-pack.c:
+> On Tue, Mar 31, 2026 at 07:53:41PM -0400, Jeff King wrote:
+>> In show_one_reflog_ent(), we're fed a writable strbuf buffer, which we
+>> parse into the various reflog components. We write a NUL over email_end
+>> to tie off one of the fields, and thus email_end must be non-const.
+>> 
+>> But with a C23 implementation of libc, strchr() will now complain when
+>> assigning the result to a non-const pointer from a const one. So we can
+>> fix this by making the source pointer non-const.
+>> 
+>> But there's a catch. We derive that source pointer by parsing the line
+>> with parse_oid_hex_algop(), which requires a const pointer for its
+>> out-parameter. We can work around that by teaching it to use our
+>> CONST_OUTPARAM() trick, just like skip_prefix(). Note that unlike
+>> skip_prefix(), the function is not inline, so we can't just wrap it
+>> using the same name (otherwise the actual definition would expand the
+>> macro, which breaks compilation). So we rename the actual function with
+>> an "_impl" suffix, and callers will all use the macro.
 >
->   if (!skip_prefix(reader->line, "unpack ", &reader->line))
->
-> But due to our skip_prefix() magic introduced in the previous commit,
-> this compiles fine (both the in and out-parameters are non-const, so we
-> know it is safe).
+> Fair. In fact, I was a bit torn with the other commits whether it's nice
+> to reuse the same name. I guess what it buys us is that you cannot
+> accidentally call the wrong function without the guardrails. Even though
+> that's quite unlikely with the `_impl` suffix.
 
-OK.
+I share the sentiment.  If I were deciding the design, I'd even go
+forcing the _impl suffix to everything, including the inline ones,
+as I found the earlier "strip_prefix()" example already confusing.
+
 
