@@ -1,92 +1,89 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3274418CB
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 16:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA1D47D921
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775062190; cv=none; b=U8J1ecddvynGOS0T2mQGE0G4I2V4es79eObzHgqWNTvihN0SypdTRwINUKTqjduwETKiLBwZEsHEHxVeJRQy1Vkt0oyGjNSag2ugxuaFOChDSun1gAabXxQ8awNHbovlAwfIQmJTDs3kedkLJuBPjbD5uGIqgmA3Ro7O71MI6C8=
+	t=1775062609; cv=none; b=dTbIMQAiZsaDYsX3CkyF3sxBa9zEpplJwJp+LveIHfNC0YTt5Mz9QIKSTSmMHZ39qPMhGIVPQ0AKfTRazrhi72OTxP/AEJqZOXlQ4mg2Shl2Pnfj4vi8m0MXq87dsX8YBK7zyzfhvMuANR1AEj8aBIXYGsnA8kiatTRJ7hZHQyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775062190; c=relaxed/simple;
-	bh=Yhi6rsj9iauguVsyqxMwRTHQMk5etvMY/7g/ErVI5T8=;
+	s=arc-20240116; t=1775062609; c=relaxed/simple;
+	bh=YU5CTEk868wKlxMKn4bFrl6k/BzrJYxpWVVujmKFUKQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dOoXjYpbQD8a/ACM7wmtKrkcrwHZTVRNdon1/i44Q5jgVI6ALGTtbTn0IkjWr+zSE/8o5X7tVeVfmnkQzYezKcObHF4OPRal4KdO7XO5wtBGTtysETlvRJC185eNov99CP2RdIIXMfg6bHwk//jg2ccroL0ltvFpXIip36K7jKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vsirMHgD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GlSShxL0; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=SbxpmT+ZRodnL1uo7tXRUfuqtVwb/1anv9HMumq2KsDrl4S3oDqvYt4WOcsLFkVvRjk9F6/672uJXlXhdyjVqeTPstIaYbdl/MFpwlQ7uBY9qiXBpuy9Q7D7eANWTVlrA24L/8PjjvQDolZAqDcJd7h7BDuVW2oQk7L97TMYwhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mJdJiAia; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dwb8pJG4; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vsirMHgD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GlSShxL0"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 35C0B1D001B7;
-	Wed,  1 Apr 2026 12:49:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 01 Apr 2026 12:49:48 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mJdJiAia";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dwb8pJG4"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id F12981D00225;
+	Wed,  1 Apr 2026 12:56:45 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 01 Apr 2026 12:56:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775062188; x=1775148588; bh=MMCJmyszWK
-	7N6j9vRVtazVT0a120YZn7YqTatYR9C2A=; b=vsirMHgDB62MkGwifzC9qaJSMq
-	e8KmL/SVCntxtR1JLwlBslXcnMEHDu6R0XHicVAtZm2QUA3bCkp6ufHddYodh9+z
-	4MGatzlN0Ckli5hqAkBFYKsKP+EKoi9+6fUXnKlg6IquHAgKw0RO7m/eae6OpHWE
-	auQbT06xaAtWK/iLB4PRg25F1GjPShFRr7dPfWcPzGmeM0w/EmQ5RzIx9rq2Pvwb
-	1MDujTO/aNUz3naAoodPuFsN5yCpAh51gs6GF1VvUYd2HxxAma5IEc0H3l3xYdno
-	xPMGbbARBOOGbgkUBO9QVV3PYmHogcjGBbTIZhgefboUP2qUzNPEn55RuhVQ==
+	:subject:to:to; s=fm1; t=1775062605; x=1775149005; bh=CL2xP/j+3t
+	rSLhgzemb+i5ppZ1vWtMuhfozKjYpG/gw=; b=mJdJiAiaFEd9m8YHRYkkG+K5n6
+	tNdIW/SIbMPAheVRVALDCIgoySLCWv0lv4uF0F4at/Cne0FjT1YHMTwLt0m+Z136
+	GFLc9VSjLZjVIDgvJpLMINdHim4aoXcG21sqFF1f0/BzN/UBp+z30D94N81KA36s
+	Zyq0SUYFPOWC4TxQEjgf9rY0I5f178FdcexIkDXbN04stfdHBSZHOfP0qQsgW6Dh
+	AJbnX1nTyxCs+XgZu1XgQmZxP6pKyt06WaFVSyiZPr+eAADFqRYFTFMryyEHnKmR
+	dTea7b7gWqoTd+maQt58Kx+UAX01+WcGtRFthvMm8Myjq7CdNC/Ws68GiMgQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775062188; x=1775148588; bh=MMCJmyszWK7N6j9vRVtazVT0a120YZn7YqT
-	atYR9C2A=; b=GlSShxL0tJHzlzNeL1Yim5mSOiSbISUi4wWz+806R8iIiZxkGZB
-	cM+TlyFrZiGwb7zGDgY9NK9Ydn7ozV+RNpTfGxiCOUAraBQ0T0kfUbe0k1evpF+H
-	RkWAOa4saD5PxHGA/DmIk+3AhWcDFgPLBwATPiXsGw9V5g7iLSiCaFjzLYY2npHC
-	Uwc9lhCPBStESyuZcUxRXY7eN2J073+Xa5c0QWYk0AOy3YYpp0aaba0EBRtf/0se
-	CkQOhty+5gudh2z2P2fSOJHn0jn8LZm9gInmNsB5W8FAmPyU4TYsLZ4KB86zXBGV
-	0PfJIB2DFRYpaBAqsZNdFxdn76H7/y8LRRQ==
-X-ME-Sender: <xms:q0zNaeaRILydYTT0qHUbVqzAyGV8sxa6JBL74ShdkFmPu8kDKrpAzw>
-    <xme:q0zNaZnTbBONilzDhr7AqFgYGVBIBceIkPGOJRThjKXP2DXTWyV7whW3c84Tz7aa6
-    RTBXzKzNRUCzC9GCIeCRgXj-DRc05Q12qGlUGwBN2IatMwiIikL4w>
-X-ME-Received: <xmr:q0zNaUhQ-FPevQLaMD-B_3jLHGZWlEn0bFUTzDsmgw33358OC963t4aJtm0K0Njw-UlpY9ES2QMYwlDSOxVCXq_VzlNTNB-NSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefieegucetufdoteggodetrfdotf
+	1775062605; x=1775149005; bh=CL2xP/j+3trSLhgzemb+i5ppZ1vWtMuhfoz
+	KjYpG/gw=; b=Dwb8pJG4EWEnStEtnwRtHsyohH7jEW++CKLFMBH/TwyFPnnywS/
+	BhyI5UFwcaMB03eGdpg6LKLUwD64gCM6g6J1oP+Mv7fmetovYMdqI/0S3iXGadyb
+	lfqUe6Qf6SxDtg4EhU42Y26ATgr/4AcsGBcL0aLCbPzyFg8DvMhC4WZ2ZLSjDwm8
+	aU9r5tw7itHBl/o2Yp0e1aP5THrVvwbhGGQM7p3vf2mVUD3neP48WcDiUZ/jDmYt
+	bQtnZiLu9E4djElUJtEsWXu+Psyo0GTna0IN3BpW50Zw0UhrVD3Qwzz1TgevaDIl
+	3CuqaT95kol4+X8FjWEeavThEeDcZ0m6BPQ==
+X-ME-Sender: <xms:TU7NaQqVWqkuM_XgOI1mrokxnxQWS0wMvGLoBbWI4Jiu_OS2KV4c2Q>
+    <xme:TU7NaY51fo1xScZb9k99Ma9bpZYb7IA3ugU9Wl1wCYFN-XUFu1I2prgsqdACfyGpA
+    gSCdfWwcqDubXrp9Jzp0ys0nqRrj4hdaeo00udb1hj91_M88xSvsg>
+X-ME-Received: <xmr:TU7NaXd9oUpXtDvcEwHfypzfS2CI0q7CckyOr3Sr77t2kDuhBleEbOg_f6mx-PNIUcGY4oLLd82aWUwZhMWnQ_cDJeAv_D7wrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefieeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtre
-    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggf
-    efiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghlohho
-    shgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrd
-    horhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
-    htthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrhihurdgt
-    hhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthh
-    grshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrghnughrrghp
-    rhgrthgrphefheduleesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdrug
-    gvvhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:q0zNabRks60NTHQ4I9ZJZ8SD6RaOht_3xgdJK6qodhVxa0hVTr0Fxg>
-    <xmx:q0zNaVbcGQeYRbGTL4GGhAMBOZXih5slSUKPS3Yv8ejo7AFO7LmS9Q>
-    <xmx:q0zNaYTnJOy0WJd6FTHUzrMQ_GPNBmxLQqcInoHCd8XgJ_V4a-zHYQ>
-    <xmx:q0zNaU9GMmnfT2lx8QZljVj_5e6QVF8Cty3MQc2bONRDAT4CVHzZzQ>
-    <xmx:rEzNaUYsv9x6Kmq4P6fSygkp01p-sm1ogBs0lsc80fc1OUERwdI5vpek>
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TU7Nad7D3kfWOYbsD8TNz21KRNuXaDiKcgEQRo24wfjvMwIm7psiTA>
+    <xmx:TU7NaeutLxrUtVpngowh1X4WHE5Qq2anP5zSstNTj-nAz4juN4_lqg>
+    <xmx:TU7NadiOf20Zo-uefszypDvWfNkikMh-9HLEIjAS5-hyN-q6JCiEqw>
+    <xmx:TU7NaZo9oKw9Gft-mNuodbNqLK_aGubWzPU1h9wAKkn6eKVPpu36Xg>
+    <xmx:TU7NadgS03mdYgPvkhbXn6t7Kvn-XfFTfJi_gN925s2E0tXbiIEz54XZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Apr 2026 12:49:47 -0400 (EDT)
+ 1 Apr 2026 12:56:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo <pabloosabaterr@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>,  christian.couder@gmail.com,
-  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com,
-  szeder.dev@gmail.com,  git@vger.kernel.org
-Subject: Re: [GSoC PATCH v6 0/3] graph: add --graph-lane-limit option
-In-Reply-To: <CAN5EUNR_yfkv_hC4wg-nHNg=3FnkYdvFm6FcOUNG2A=MdGs7ZQ@mail.gmail.com>
-	(Pablo's message of "Wed, 1 Apr 2026 16:42:26 +0200")
-References: <20260325174401.217577-1-pabloosabaterr@gmail.com>
-	<20260328001113.1275291-1-pabloosabaterr@gmail.com>
-	<bdff0a5d-b738-4053-9b72-08eba88156de@kdbg.org>
-	<CAN5EUNR_yfkv_hC4wg-nHNg=3FnkYdvFm6FcOUNG2A=MdGs7ZQ@mail.gmail.com>
-Date: Wed, 01 Apr 2026 09:49:46 -0700
-Message-ID: <xmqqikaawrpx.fsf@gitster.g>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,  me@ttaylorr.com,
+  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [RFC PATCH v3 2/2] push: support pushing to a remote group
+In-Reply-To: <CAPSxiM8Nks16nJCB9N8_bi-ZmQFF71UQEzACrF+pFXKXNuVdKQ@mail.gmail.com>
+	(Usman Akinyemi's message of "Wed, 1 Apr 2026 05:15:12 +0530")
+References: <20260318204028.1010487-1-usmanakinyemi202@gmail.com>
+	<20260325190906.1153080-1-usmanakinyemi202@gmail.com>
+	<20260325190906.1153080-3-usmanakinyemi202@gmail.com>
+	<xmqq7bqzu1xh.fsf@gitster.g>
+	<CAPSxiM8Nks16nJCB9N8_bi-ZmQFF71UQEzACrF+pFXKXNuVdKQ@mail.gmail.com>
+Date: Wed, 01 Apr 2026 09:56:43 -0700
+Message-ID: <xmqqcy0iwrec.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,57 +93,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo <pabloosabaterr@gmail.com> writes:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> While working on this I spent most of the time with graph.c and
-> I got to understand well how the rendering engine works. I think
-> I have an idea about how to tackle the column rearrangement
-> like gitk, which I believe is what you thought it was about at the
-> start (and the
-> TODO that's been on graph.c for 16 years c12172d2ea).
->
-> FWIW, I'd like to send an RFC about the column rearrangement
-> because it would be better overall, no information is lost, you can
-> still limit the number of visible columns which would replace this
-> in most cases (only scenario I can think of where you still
-> want to keep the truncation would be if you want to keep the
-> branches going straight vertically).
->
-> I'd like to hold this series and send the RFC with the idea for the
-> rearrangement. If it ends up not being viable I would come back
-> here and add a 4th patch to remove the extra padding lines
-> (merge and collapsing lines truncated) to make it more useful
-> making the graph more compact vertically as well.
+>>
+>> I would personally have designed to mimic exactly like "git push r1;
+>> git push r2; ..." would do (not concatenated with "&&" but with
+>> ";"), which would mean that there is only one single failure mode
+>> that would not affect interactions with any other remotes, but I
+>> have no strong arguments to choose that design, other than that it
+>> would be easy to explain when we later start supporting pushes to
+>> multiple remotes in parallel, where a failure to talk to one remote
+>> cannot easily affect interaction with other remotes without getting
+>> affected by timing issues.
+> If we want to have one failure mode i.e continue pushing when there is
+> a failure,
+> then, we have to use `run_command` to spawn a child process for each
+> of the push.
 
-Oh, I may have found a volunteer to fix one of my pet peeves ;-)
+Because you would want to avoid hitting a "die()" while pushing to
+the (N-1)th remote, before you push to the Nth remote?
 
-Imagine a history with multiple root commits and you are drawing the
-history near one of the roots.  Immediately fater pacing that root
-commit, the graphing engine seems to say "ah, the next display row
-immediately below this commit '*' is vacant because it does not have
-any parent.  We can draw a commit right there" and draws a commit
-that is unrelated to that root commit it just has drawn.
+If there is a "now we have attempted to push to all N remotes, and
+know the outcome from these N attempts, summarize them and present
+the result" phase in the program, then you'd need to spawn sub push
+for N times and then the primary process needs to do the summarizing.
 
-Which of course makes it impossible to tell that the commit on the
-earlier row is a root, if we draw a commit immediately below it.
-We'd want to leave that column/lane open for at least one row.
+If there isn't any such "post push clean-up" phase, we need N-1 sub
+pushes and the last one can be done in the primary process.  If that
+is possible, that would be ideal, because it makes N==1 case the same
+as the traditional "push to a single remote" case.
 
-Instead of 
-
-    * a child of the root commit below
-    * one of the root commits
-    * an unrelated commit X
-    * the parent of X
-    * the other root commit that is a grandparent of X
-
-we could probably draw
-
-    * a child of the root commit below
-    * one of the root commits
-      * an unrelated commit X
-     /
-    * the parent of X
-    * the other root commit that is a grandparent of X
-
-or you or somebody who stared at the graph engine much longer than I
-have may have even better ideas to draw such a history.
