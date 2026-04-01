@@ -1,87 +1,80 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2E9371CFB
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 22:22:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF493CF666
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 22:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775082172; cv=none; b=UO/Hayl4m34CaP5zccJmQZ386NXzhBLoEXEHzfeV2AMOVRb7OoGNy2S6BXQUGAy2QD/tsIyYigt/Z2w0APwHxXTXMKl+RC+ELQKkehNGqcnBIFiqdPYvNTF1tiZddZfVwuIoGTPMCE09IPuMd8AAwiCtxs/7ckQq6FlMzUmp2+8=
+	t=1775082804; cv=none; b=WCtDwrjNybNXAMavhIv8GlpVnixgIl+xe8yry6U8T36+VTBA6YmSizhBAp7ucZqGRa3AfgTWdWOF+e2ulXwR/GK17yf4f03DuOcsVagySWtEOcdVvktl+4upeezqQOfgnqbJhk9nUXhxDjEGa0bHSiwSaJ2794/ICZ5f+3/luVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775082172; c=relaxed/simple;
-	bh=Zd8QA03KdwbHq7eYIXlimsoJVSRaMx8Ng/6LrSLdeuY=;
+	s=arc-20240116; t=1775082804; c=relaxed/simple;
+	bh=pKxKNfoL9u098jHXGbo5EJPU/MI70OMXBPBcxxRcLpE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LRdhEsg3HxRJSFWOGE+ivDU9ONBPkR/eAoVg5dkIsyGM0ywBSGCMJ+wCq0bkLrVH0bIQPwD0rvtwG4Xlg36TVkBONNmn8L+TbeoSACxyigQXn26WTxfTf0PahqUzq3/f2WslrrZqgF2Ga/FoVx4HoP2+CHG7q8N0p9i19FQL6Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lD7emk3Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LeyNWNq8; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=WZx0dDVX1MAVgC5chzZbn8xOfvwINnQS8DZ0nb0fZ4Ad4uwpg9iROKZqMO4O+tsYDCzmognRppcKMwoxbwfXlS8t5+vY6+7pfc/80EI9VWou6kIh5TKz0U8bjTQzR5qwqfGomn/XxPN863QB4KqyV/E1AdKuofO/1OVuBJXX1Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=x7DltkN0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A4IPVW7V; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lD7emk3Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LeyNWNq8"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CF1E7A0220;
-	Wed,  1 Apr 2026 18:22:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 01 Apr 2026 18:22:50 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="x7DltkN0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A4IPVW7V"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id C80071D000F5;
+	Wed,  1 Apr 2026 18:33:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 01 Apr 2026 18:33:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775082169; x=1775168569; bh=s6dST3104V
-	mWg1Z/p4gC5npb26fZ69LdHs6oQ3kiEiI=; b=lD7emk3Q5X9KQv3Ya8YTHhcuxk
-	AGfU4r0LsUmehShHJzrAh7ofLcDAV0DKRV5stpxaZWP7FloHHa6Z182wj4e++x6m
-	b85k5GjnuBuLxKuqcBgKLn4cmhyXEQtT+clayAM10x6uSxJYycWzCTUKN7G+ZVKn
-	nDlUi7rkSKPF87NbOoz/kdkGOWFE0SEDbqd78DP9UvEw/bBQECqQSuaOz2Jz42Ui
-	mD6AiNfVpQaW54GpxRa/geJYeZ3AYEXCznXTKa9O+KfJKLel7ZA0CU4H/w6MZM4I
-	e/1xatvEi1W9wuu+zyfV7RxeVrFgfclw/2oDoZNzx+RHtkWb3TczyOpCbwBg==
+	:subject:to:to; s=fm1; t=1775082788; x=1775169188; bh=umaLfLUZnX
+	PhLk1aGoWN7ECHBp49sKM2dy/3ae9pplc=; b=x7DltkN0tSpjquMSUQC/MdDxR2
+	veM+uZK/+dq+lkkhcg36/W6Q1JgP30pFkJFfk3YcLXG8hGMarDUGYOL0XhlmAOGS
+	AJ2VmUcJA9qjMSBwdG35WbJ1epjJ3uYer0MIn7mQQklOCzfWLUZ4vz24TzH7kMVs
+	NezJO78Q11qwj4GRv/Uq2pvHja8dTVv/SzshQjnVO/Y415zb+wBQfU8kMI/OpxU1
+	YQkjQHPNzJioi6AN5uEsn0Q/QNV+L0WS1WqVYb0TE4eZJPldClij540PnnZty1ij
+	Yq4AJ0kVBr9TuRb/ikAtvuBQ4tjDFvrEc7+5HOEedAVqSkWuDIKc6Wewa+wQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775082169; x=1775168569; bh=s6dST3104VmWg1Z/p4gC5npb26fZ69LdHs6
-	oQ3kiEiI=; b=LeyNWNq8G7yn0TNjJ/ukMh+Zx6ir1HLOK6NBbVF/aA+tZ3Qajs3
-	vFKosND05Ge23l1/W5tyEPjq34hraVxccy3vclZnkVxRlsMsaKgAyx1U3SY9HTs1
-	++/Nk1WC+cD+JpdY32PuTJxDdF0gqboSzmVJ6olwYHn/TjawN9veC6LExWp4VNjY
-	gEVWSD7T3DkS4wgynhBxvVE8LJYoZaJKPE/LNFN9LABPh/aqNDl8fX5pMsqCAW8a
-	zDbPCwA2K4I5R+KrJhYP38qFOqPefRwMd3XfsEllYhK9pliCPsDhibe0LgKZP/K4
-	a8WybLgv4LscGiEL/E6D5cbqgkhkz5timOg==
-X-ME-Sender: <xms:uZrNaTLNcs3bTsycYex3X-1rV_BVbRfXXj8xjorDDcogl3Z7DXPIJg>
-    <xme:uZrNaa2LxRsDFa9YIVWwB5fLz8CJ8_Mi6uI_Xr_yWPNFtLFgsoSY2_e5efuIeID9i
-    nQqvOBPUxXfRbhvb9LOvOlpQ6rVbIpH1u3i6TVeZwT9U9TGAu0NKA>
-X-ME-Received: <xmr:uZrNaVhB2WA7YPEqWJy2mfeWkSyxyNEHzHQt8WCeMM-Q2ZDZeqIU8ZC54B57KEkdGIHraw2A5RO_67ist8ptzu6TJwFK397OeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegfedvucetufdoteggodetrfdotf
+	1775082788; x=1775169188; bh=umaLfLUZnXPhLk1aGoWN7ECHBp49sKM2dy/
+	3ae9pplc=; b=A4IPVW7VTVKaTVcb9Z2VE+UyornOEaKfpIsWZzTJ0ekPRQf3X3b
+	nChmNyLRAvW/ozyrCjvqn8hyVc5Dx4e6yOkCxc1yURVARaitKnsxYPhhCKnPf0BT
+	NO3ZKX9M3HcQyogWCiG+0hYcbJ/ZULEpxdLNy1yZquPQNJGXiXlIrW1Bb1AjNBni
+	NiSr3Z3Grb6qsWQrgUCGiJCa/TXCZLpqpsJFB3rrm7GRRWHOT8BsGS2MszE2ZPPx
+	yvb4asMFW2BnvKuKa9dr430vjDImWs0/WBpE6EodYioQth/ddesjem4fyIDg9Vb6
+	M0GmGtBNkHgo2NR1mE+rhemWLzWbushNX5Q==
+X-ME-Sender: <xms:JJ3NaeoFHbIHypZtQXUbfoqnGrtC6gqsGuOmXdpbJBuE5BcoEbbW8A>
+    <xme:JJ3NaUG4NfsYuY3wZ1bGaTJINsE46IqZ9OUUrx_0aWCJfUNvZpIcDNS4_hekgUuWq
+    JK_WrO2Qv4fW6_FZ2J_PSX8nHqQk8NvdVKaKQ6BSwAXMWxl-qeCRA>
+X-ME-Received: <xmr:JJ3NaQni06flurY82DCdfTbOwv7K-CrAaP4M5dQz-vZx2CZEdRRzkKJ48u_b1uR60aG3LZ_LfOqK9akW7zYvcHtPOjZmsmcqqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegfeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehgrhhusghigidrvghupdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:uZrNaTVSQ97ZVhW34aWVr0Fs347vuspcBpQ8T4YAVhAUNd4yf7-7ww>
-    <xmx:uZrNacVt10M1Y-cDqoBdCR9oWICZEyDqrGXTc_EBeyMgddpOVftOtg>
-    <xmx:uZrNabjZJAb6W0DIkcpASX2AsIOw56SyMPMd5lZqljMGWAtvfdkHeg>
-    <xmx:uZrNafZ59Aw1qFlIH8f2ri3A8xhD-gL4-fT1-LMxUfW3elNMwIWD4Q>
-    <xmx:uZrNaTkUZFKmJluTY3aeNPdkF-MMZYuv2aszy3ohfbKN-E6l7H6JO-Zw>
+    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggf
+    efiedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehpohgs
+    ohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JJ3NaXnXYem36SWcoviVpCH3dpQizUKQYHsHsNC1cZ_UlMdt_tfWaw>
+    <xmx:JJ3NaRvwLELB-IJHjFOqSkNzEquLi_BNmY26igGRxtqUVQlEELC2AA>
+    <xmx:JJ3Naan-T1raeGoKmf2KgXULbEnJDHs2unxh0FPWA-iWJvPMgeEWbQ>
+    <xmx:JJ3NactNehJyMq8x34ukFbRwWWs_lG0ur53tiymOID_EEoRRTQbAqQ>
+    <xmx:JJ3NacNa30oM5_5JUBUJbe-fS-pFImJv4BQHTpHiU6raP_IO5W31pFVh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Apr 2026 18:22:49 -0400 (EDT)
+ 1 Apr 2026 18:33:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Collin Funk
- <collin.funk1@gmail.com>,  Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH 12/12] refs/files-backend: drop const to fix strchr()
- warning
-In-Reply-To: <ac0h0xwqLdX5u51v@pks.im> (Patrick Steinhardt's message of "Wed,
-	1 Apr 2026 15:46:59 +0200")
-References: <20260331233856.GA2327197@coredump.intra.peff.net>
-	<20260331235341.GL2328529@coredump.intra.peff.net>
-	<ac0h0xwqLdX5u51v@pks.im>
-Date: Wed, 01 Apr 2026 15:22:48 -0700
-Message-ID: <xmqqzf3mtj5z.fsf@gitster.g>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] RelNotes: minor typo fixes in 2.54.0 draft
+In-Reply-To: <20260401211436.489478-1-tmz@pobox.com> (Todd Zullinger's message
+	of "Wed, 1 Apr 2026 17:14:36 -0400")
+References: <20260401211436.489478-1-tmz@pobox.com>
+Date: Wed, 01 Apr 2026 15:33:07 -0700
+Message-ID: <xmqqmrzmtios.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,33 +84,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> On Tue, Mar 31, 2026 at 07:53:41PM -0400, Jeff King wrote:
->> In show_one_reflog_ent(), we're fed a writable strbuf buffer, which we
->> parse into the various reflog components. We write a NUL over email_end
->> to tie off one of the fields, and thus email_end must be non-const.
->> 
->> But with a C23 implementation of libc, strchr() will now complain when
->> assigning the result to a non-const pointer from a const one. So we can
->> fix this by making the source pointer non-const.
->> 
->> But there's a catch. We derive that source pointer by parsing the line
->> with parse_oid_hex_algop(), which requires a const pointer for its
->> out-parameter. We can work around that by teaching it to use our
->> CONST_OUTPARAM() trick, just like skip_prefix(). Note that unlike
->> skip_prefix(), the function is not inline, so we can't just wrap it
->> using the same name (otherwise the actual definition would expand the
->> macro, which breaks compilation). So we rename the actual function with
->> an "_impl" suffix, and callers will all use the macro.
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+> ---
+>  Documentation/RelNotes/2.54.0.adoc | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+Thanks.
+
 >
-> Fair. In fact, I was a bit torn with the other commits whether it's nice
-> to reuse the same name. I guess what it buys us is that you cannot
-> accidentally call the wrong function without the guardrails. Even though
-> that's quite unlikely with the `_impl` suffix.
-
-I share the sentiment.  If I were deciding the design, I'd even go
-forcing the _impl suffix to everything, including the inline ones,
-as I found the earlier "strip_prefix()" example already confusing.
-
-
+> diff --git a/Documentation/RelNotes/2.54.0.adoc b/Documentation/RelNotes/2.54.0.adoc
+> index 85b15284f3..4ce30d9d5b 100644
+> --- a/Documentation/RelNotes/2.54.0.adoc
+> +++ b/Documentation/RelNotes/2.54.0.adoc
+> @@ -122,7 +122,7 @@ Performance, Internal Implementation, Development Support etc.
+>  
+>   * Improve set-up time of a perf test.
+>  
+> - * ISO C23 redefines strchr and friends that tradiotionally took
+> + * ISO C23 redefines strchr and friends that traditionally took
+>     a const pointer and returned a non-const pointer derived from it to
+>     preserve constness (i.e., if you ask for a substring in a const
+>     string, you get a const pointer to the substring).  Update code
+> @@ -221,7 +221,7 @@ Performance, Internal Implementation, Development Support etc.
+>     many source files inside subdirectories unaffected, which has been
+>     corrected.
+>  
+> - * The run_command() API lost its implicit dependencyon the singleton
+> + * The run_command() API lost its implicit dependency on the singleton
+>     `the_repository` instance.
+>  
+>   * The unit test helper function was taught to use backslash +
