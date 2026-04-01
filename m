@@ -1,157 +1,574 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11023121.outbound.protection.outlook.com [40.107.159.121])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919CA36F439
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 10:51:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.121
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775040717; cv=fail; b=le0iTSAQ97kfA4mEJDQgJ1BlwnsGZHTevIhy6iN0u7jyb3gmhBPorhFjq6QyIK/8WjN+s6dh5xqG1TaclTWtH+9t0LbZqemd8n9KpRXKwsCMDMmmsIfmZLCmFjJ0E3+nHXDZXNOyQyaYR7aJmlerlYDo3fJI5AWRJB/zUVapmU0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775040717; c=relaxed/simple;
-	bh=9gekH1WUS+Dez3UnjnSr1NqBU7YGqWjqbnl43Zag9QE=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Vy6Y/MqY+B85lbChrKm7kN4s9Y8FUcFyW0LdZ4Lm+TTIxNN9E26iRhLg8bq3PcDR4iYsCoddFAp23YjlMQ+oByBW4YVLmfFeTlc8MwaVwehyLbJvcRq5o2hldO65T5r15waaVWl3dF39cSaWC+ymQC7WGtNFVS0NuwgR9nh1rEU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bentco.biz; spf=pass smtp.mailfrom=bentco.biz; dkim=pass (1024-bit key) header.d=bentco.onmicrosoft.com header.i=@bentco.onmicrosoft.com header.b=kOzTomRf; arc=fail smtp.client-ip=40.107.159.121
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bentco.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bentco.biz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3F73D7D95
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 10:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775040967; cv=none; b=So6qsiYaRrc1ukPkG4ol0YLYAPk45TvIVPznxXPItmgyjs0d6CgmrrEoQrxw0Zp0EktLLE5dzmmYqUQbv8Qxu5DnZSaroUb/k7vjyOcSVxRZ4P25j4hZGy36d0pIF8UYwqA5DB92hSdHHPHv3lAJoDIapvQHbZaai2drnIh+axg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775040967; c=relaxed/simple;
+	bh=9NywGN9XfZf0tUDoAexVI4Ei06A8iQhIeNANZbcL3QY=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=s3KUTm5M6lZ3hIihNovSKE3//wBO+2ldD2528GACDBLC+VNRMXcGADqQ6FUDV5r5obk3+RuALJMQ+lkOIxiN5ocMhWyfgyCheZVIMzD/8mEz+bV8MrYMufD6YoEw6qljrh9NZnzQJGp+a570F9IrpL/OzycdKU6AaPdaYbOgPzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cjyanuVM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mXYlFuNm; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bentco.onmicrosoft.com header.i=@bentco.onmicrosoft.com header.b="kOzTomRf"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cuccyEs2No7huMK9NEkinzWWBG2C8e7E/7prN5o9Yiobz8Snfp8xz/lZf3bdyrGRN83Smx34teyfAqkMJPQ8M06lenmLeRLbK2+4HMdoLQnvEe9FXHINyy7Va12K4Vi+CJL7IR7B7qMCo5q0YefEgUiZ2+w4uCTRpj45h0ZK5cbLI6DvunZHInbi6Bh2JI9C6Y8ePG+teSTzDUP4AHCbKNgiRXXmN+/hlTY09LhJjdG8CbPtRy9ccvF/YSwT/kJgZRSrrHg11yqa+7xBJJyMYoCv9r9WuZ6m+A9ZH18PQ94R+8AOmk6nKjTL4BIoLMIacAh7B+Yfy38bELVniR5smA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9gekH1WUS+Dez3UnjnSr1NqBU7YGqWjqbnl43Zag9QE=;
- b=AiOwAnvecBi0zAYqNJCbZ/As+1ykDOvv25sDLF+xddRBFBx1ea3bF1BY7v1Kgjt6cDJnKlv1Xnq1SrcA6tACPOQ+YYc9pGu+bJTjSbmr7f5/pBjMU738kjOqAmFhkWmVidOkkqaVCUwTTMGn6NylICshymn5qhWm5Brfie793Tsu9siXC0Vd/yhXICroT24i7CUuWqq5OCy5qgZ2mqyRpWDHBoPL0O9wb68LKyTYIo4cbEOS4PcQcUBX5bfUK+DMl0LfTTyQMz05R0HogBv5dBt+1lw7FOFyLG/PTSBslmDHY/Z+D2He6Jn+mRbSxSO9FWYS3ms/JQ2UbzbcmV3FDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bentco.biz; dmarc=pass action=none header.from=bentco.biz;
- dkim=pass header.d=bentco.biz; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bentco.onmicrosoft.com; s=selector2-bentco-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9gekH1WUS+Dez3UnjnSr1NqBU7YGqWjqbnl43Zag9QE=;
- b=kOzTomRfRBsQsXw9z5pWr/X18iDI0yEnBanoO8B21DxT3KWnGVXPTz1sEbq8azRO1NwZIDVeDfqzw0hatalfZVvZ3f693CbyfTdhSHzTJ+2ot6u/v5IJUAHwqOM0NU71fRzJhRKJVCnhjOhOD/mK52whiA4bSvS0+MkAaUYz7aM=
-Received: from DB4PR03MB10106.eurprd03.prod.outlook.com (2603:10a6:10:3fe::10)
- by AM9PR03MB7836.eurprd03.prod.outlook.com (2603:10a6:20b:41c::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.31; Wed, 1 Apr
- 2026 10:51:50 +0000
-Received: from DB4PR03MB10106.eurprd03.prod.outlook.com
- ([fe80::2f17:89b0:cc2a:6c9d]) by DB4PR03MB10106.eurprd03.prod.outlook.com
- ([fe80::2f17:89b0:cc2a:6c9d%4]) with mapi id 15.20.9769.016; Wed, 1 Apr 2026
- 10:51:49 +0000
-From: Miljan Mitrovic <mmitrovic@bentco.biz>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Cloning an empty SHA256 remote creates a local SHA1 repo
-Thread-Topic: Cloning an empty SHA256 remote creates a local SHA1 repo
-Thread-Index: AdzBxYyt/MZwr5NiRMKl5YunO17DDA==
-Date: Wed, 1 Apr 2026 10:51:49 +0000
-Message-ID:
- <DB4PR03MB101069CF70418ABE11AAC1CF3C850A@DB4PR03MB10106.eurprd03.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bentco.biz;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB4PR03MB10106:EE_|AM9PR03MB7836:EE_
-x-ms-office365-filtering-correlation-id: 09fd65c7-838e-4315-c7b5-08de8fdcad70
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|1800799024|366016|38070700021|56012099003|18002099003|7055299006;
-x-microsoft-antispam-message-info:
- JAJYaQHLxzTFUoBROQ3hTteNJDMBdJR22U602xPyC/B/xptxSjn0ccTUEOuBnhdGGFNM9KcPjs8IFY+jrJ3P+NqZ0HAjdko/Uy0I57ezJ1G9lwaMmPw9KTxdvnm2Q5usFLLkrJuKAFwfDS7KSh45JUqS22Jsf5CalW9Sd8eGRqqOVLMGqrYNaGUyFPNnxqQlCqFIPiTc28wxBZZ5M8NJpnHd4ITjWb2tMURTJ/IT/xf3I3ytQmkjx8OW2yEJg11la8af7WMV9NVdksT1P1DB+sA9ohBkkfN4ns/ycIie8B5TDBtlfDcZxf8Hx8o7xfEAf0U4bU7JYLwP/h5LzVIeCclg1ZtcYG8rF80oO9l4Olt/F8Wtj1Bd45NIc0I/78HGVSDkDHqvxDtiuls+oGtYwget+acogS2iaw/CHjUD35Jhfc3O8/sTgukuPLilBU9qz6pAYyOXMlcfoF04VzP9QCkJh6EF1vtf/esjxvlnG9AARd3TlFkb8dCFYz4c9tfFCw0ClT3xoAu14icOT7H/AFX7ZeiXebxUy8QD0Ofw7Ui10gdTNoYgIcsh/wKzxAImD/tEGlRJeDMrdv1hQ2g5lDFcL6p87FCU3yagPHn66pyshG0vDzaOhHIa8RVHuU2jEiLwrcbIqO6LD4VWZlMCcawzh44kncywS6/5eEGq2omTCzj9FDVcn25Y1kZRnGRGieOy1kK4cfwSHItxY9Q5lbBsaxh1Tdf2V3NBDZbbQFXrZMOnpBBXrh/XGERJDNK5+3bdwSMVi5pHYjYXF055/9O8PJcVMmxKuhz03P0dxsoSE+gFxFZLOYKTUJ6+k4Zx
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB4PR03MB10106.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(56012099003)(18002099003)(7055299006);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ynYufEfrQHCulWbYQNsHKrd8uzGUxURTRf5av3QpynScsW2I5P1Iav5kkebH?=
- =?us-ascii?Q?CPi687euBWl/+8kyz6df/ATksfODjZ6esmI+nttFHHRDt0ewVHxE0CX59BrH?=
- =?us-ascii?Q?bwccbGekg0xvOM+Sp3jz0TNnmU9vEDc4v3NOExGBzYf2p5fwf9xZDhqPKBYr?=
- =?us-ascii?Q?KCn6N3hM6ciq924VO+PQQTXnlVimSMmk+xd4Y1OHts0jFgLH/ZXswrbfO6dl?=
- =?us-ascii?Q?CUZX4yPonNG3HHZIKfR+oawaEjOXtPOhozDExTkXtfWS7ORXtGkc3+DVzb+N?=
- =?us-ascii?Q?w07Aag+cEWM5iFf66ARwr7KtWzusyIpJUBRM4Z6Vga/O5zWlYuvsoGoY1Hn4?=
- =?us-ascii?Q?PyhC+M3Bge2zXFkqz3P/hMmj+JWucPj33o5nUOYJzRnB6IxCl5fJXg26CrGN?=
- =?us-ascii?Q?sW+v+jJ2hPIknzvoopJMwAfre61opnUOfj2o1RGCQHTql+xo6giTU1bc8C07?=
- =?us-ascii?Q?8x2IGvwEPrAyDFNMWC9Utb9Rz6r1vWkjTdUkF3r9qLxbk4+7GRtXRsjCrCyR?=
- =?us-ascii?Q?bFSjuaVxGLAcatOZb2GCwPD9h9oPA74mstvJsft2iMdHaynO9IUs2tB2Cw+w?=
- =?us-ascii?Q?t+cVwoYuoUiK+rVSh2oFjlaUOajt4JCcpFJrhvd1IV4T+e8+zH8/ElF5LdJP?=
- =?us-ascii?Q?mmhBoXVub2iCMddyGHeCtVadCyCQgmAVa9BIH/EbzlXi0Slg/kWzjVZAVFny?=
- =?us-ascii?Q?6lDzVyknKiZlzHKdX5VemINBTAB7JYeGW3Tz//i6fgj2+SX9eryglKaQjO/x?=
- =?us-ascii?Q?domMCXTZ0ZqPHcpMP21AIQgKrC+GukXf5vuYDMMvePRBHIs76AGVBkOj+68c?=
- =?us-ascii?Q?F+p5GDMmP+HMYdb9XBb74DTrU+s2XEsg7LpwPua/tPVjyy6BdVY+rTNg7Wui?=
- =?us-ascii?Q?IK9UaJp05n7xeXgPjluqwcLf09Cw2OQDAjHB1qIvDOhG32Gj8EsD294vvQLP?=
- =?us-ascii?Q?360k8fIBDDFeEs3gFjYbf1GdS67VQkYChNerw53gCFZTso3jX/woSXbWqc3U?=
- =?us-ascii?Q?+6BqJcJ0e9MRccCtDF+HJINmuUucfXCxgDlZ60OSWfzCFs6k1fWYDgOyHu4W?=
- =?us-ascii?Q?he8POqVzXkruZFgL+jOt/F8UhkImnYsl6BDi/T8sPuFtTsi+R280tgscwo0L?=
- =?us-ascii?Q?4iMU8kS5BjN/ln/U5oyusoQhkJszFHgxoc4C6/wIW6K0F4KCdfNhHWX6t2wt?=
- =?us-ascii?Q?T+ZnpM2bkx/LNq7i4P3C87LY+t8+xAaIAqA2nml+PjIqkZ2BXaU/rgznsNDM?=
- =?us-ascii?Q?FVjMFr+hutVmlZkl0I84rphsJAilgDQyYYpYRdqGII6QQyZzkBBwnCPDd+c8?=
- =?us-ascii?Q?I537JSS4ngDR0P63Gclan9QLdEuCX8JtywNVpQjtxdNmyhIF05FsF+tuAemt?=
- =?us-ascii?Q?AGz/nL1Nhg9dRwNJFZS1gnxQp5rpS1/edtbqDs4uhxbGoba/iToz2lldRqHi?=
- =?us-ascii?Q?RDTSEKwRlqMloIteXPen3jGQn3nN0qYrZ2OCzBBTtpo40Rs2IhCqzXq9QpXZ?=
- =?us-ascii?Q?OWa6mRt+ov2ATzaM9Dlyy5B83E+FnqDUmR8ZktFUnBYMrOp++gOllbvamIJg?=
- =?us-ascii?Q?5kQN6TZ4Mka1sCYyNCiftcl5r1p0OKqzV1j/o23AZes5GypJtX65Tbo55u9y?=
- =?us-ascii?Q?PXk33WIVyBCL5Q5MmLSBPCDt6Po1/kYpoQ6RrmKa72ce4wg18iTa0pPKw6Cc?=
- =?us-ascii?Q?6Cr9nGTs67seXoEutwekgLR6OswEFiLt5WDYIkzbVvzVD2zx?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cjyanuVM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mXYlFuNm"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C77947A02F1;
+	Wed,  1 Apr 2026 06:55:56 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Wed, 01 Apr 2026 06:55:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775040956;
+	 x=1775127356; bh=wHDl3Vf1oDR+HKEaHB1nD5cy2xiZhXg83MpHDACutU4=; b=
+	cjyanuVMejgxOif5Qx1UYbsRWek2LgUFvkRvHlQEvDI5n2/H9CD//ozxdkTxqXLV
+	qTCN5awtn3Mo6QmAhz2uXHukXx4fxqDLtLQMTkNh+MX+o9xuLCCEgoe0YeUJS9tX
+	R3/WHnKRSYqivgSx+bW4hZtTMppFm5ZXX4szrOLqGcvGMBqYzw2qCP+dM+W2XY4r
+	viGGfFyYpxH8oneHNAvWawg2ienJK7DWPgvqfQOzybofF2twNW6+ubWQa2BsKle+
+	/Q0CSaNw2xbvSvqEqCWhv2Bgka7uGF2nzA4a2X81KXv83IKMezkyhO4OU+yficfn
+	m4kOUBl6OKdQzKYK/kOADQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1775040956; x=1775127356; bh=w
+	HDl3Vf1oDR+HKEaHB1nD5cy2xiZhXg83MpHDACutU4=; b=mXYlFuNmc4HCQUyMv
+	tHu7tcpW2bUAM3NBDnd/zloIBmkWI+sU2lV6jahVsHEPhz57qncS7U5HhnZe/Eua
+	Y/zYFt/HrTmPMbv6nsCCwUlNPrpxfa2L+kF/y/reUuHsB2BtP3zFj081wjE0Tog0
+	n689TWh/RRuRihqF8aFehkyH8R3+amtz873fIrAlMgZiBcLY2/IJhbchFWW5kA6k
+	5pJfFqmpD46G5MQ+OE8umjcp+uhWWWF8aZAWJjGlN0g0I+1h85r5dhopvx/8c8uG
+	sgWB6Th/JHxtHJVVn/uQxlGNrbMz30ar2HSs/GYJAb5dnMD+nURLZkUpFad56kqV
+	V7aBw==
+X-ME-Sender: <xms:vPnMafy-x_WHg9WrcsEZX4FunPe7H9cRYIAai-sevbs8YsESbeY4ouI>
+    <xme:vPnMaSGNgY8OOILlYdmGfrhDT-YQZXvIwCFaqZ7zieEuMcNu8_F_4inA54b9ou6gU
+    gtWxIpW0UregqANdN8o6lBmKmefOiJ4sjyv6fpZIBYLj183qaCgRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvledvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhf
+    fhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeffieeftefgheekgeei
+    tedujefgveehvdevieelfeeiiedttedtgfduhfejiefggfenucffohhmrghinhepkhgvrh
+    hnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
+    hmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:vPnMaSfdr_xcZHNTRTWao8AZKkEpeL_7mxmkYc8g56S6KKbXeEjhGQ>
+    <xmx:vPnMaaJ8YHHrQ_GRxbXRFvyN2ojk8GQBE9FWDOzhHSukSWlsQPItPQ>
+    <xmx:vPnMabEaLUEB1XmNu4ROqNPRNXAT2u_rHxWt1_d3NynGUTR-pmDSVw>
+    <xmx:vPnMacpO8_z8LpTPOkAY66VL26fXSlFTla5JmhfTiKjQBxJo4y5MTg>
+    <xmx:vPnMaS3SGf-p_ZTuYWhLcvRt30gQJM-P2MGbFz01YS3ktbQrruZguD9r>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 4E3581EA006B; Wed,  1 Apr 2026 06:55:56 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: bentco.biz
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB4PR03MB10106.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 09fd65c7-838e-4315-c7b5-08de8fdcad70
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2026 10:51:49.8139
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 74d7b2bd-6b03-42f3-b139-4dfb5adfdbd8
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kgq5KVQnHB+hHAtnzEqZBqZYk36/o4J9poLtAu9XOTtdHG2Gjiwb+b64Ucdjh+M7qFBhJqTIt2YLvFeA7+qz8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR03MB7836
+X-ThreadId: A5Q0mbbeukxo
+Date: Wed, 01 Apr 2026 12:54:05 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
+Message-Id: <67f10f21-121b-426d-abee-32d034f84fe7@app.fastmail.com>
+In-Reply-To: <20260401-pks-object-format-md5-v1-1-1b8f0be23713@pks.im>
+References: <20260401-pks-object-format-md5-v1-1-1b8f0be23713@pks.im>
+Subject: Re: [PATCH] hash: introduce support for the MD5 hash algorithm
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Wed, Apr 1, 2026, at 12:42, Patrick Steinhardt wrote:
+> We are currently in the process of migrating to SHA256 as the
+> alternative to SHA1. But we believe that proposal is misguided.
+>
+> When Linus first announced Git in April 2005, he was explicit about the
+> role of SHA1 in the design: the hash is used for content integrity, not
+> for cryptographic security [1]. Given this foundational principle, the
+> collision resistance of the underlying hash algorithm is essentially
+> irrelevant. What matters is that identical content always produces the
+> same name, and that any corruption of stored data is detectable.
+>
+> While SHA256 technically provides stronger collision resistance than
+> SHA1, it does so at the cost of 64-byte object names instead of 40, a
+> 60% increase in verbosity for no practical benefit.
+>
+> As an alternative, MD5 satisfies the requirements of collision
+> resistance and deterministic checksums perfectly well. At a length of =
+32
+> hex characters they are shorter than SHA1, roll off the tongue more
+> easily, and have been a beloved companion to the software engineer for
+> decades. Furthermore, it remains in active use throughout the ecosyste=
+m,
+> in checksums on download pages, filesystem integrity tools, and
+> countless systems out there, which overall proves the point that they
+> aren't inherently broken.
+>
+> Quoting Linus in [1]:
+>
+>   In other words, I think we could have used md5's as the hash, if we
+>   just make sure we have good practices. And it wouldn't have been
+>   "insecure".
+>
+> Let's do so and wire up MD5 as a new alternatitve hash algorithm next =
+to
+> SHA1 and SHA256. Repositories can easily be initialized with MD5 by
+> saying `git init --object-format=3Dmd5`, and tests can be executed with
+> the new hash by setting the `GIT_TEST_DEFAULT_HASH_ALGO=3Dmd5` environ=
+ment
+> variable.
+>
+> [1]:
+> https://lore.kernel.org/git/Pine.LNX.4.58.0504160913180.7211@ppc970.os=
+dl.org/
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi,
+>
+> I guess the title says it all. Let's correct course!
+>
+> Patrick
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Created a blank remote SHA256 git repository, cloned that repository locall=
-y using git clone
+I=E2=80=99ve been waiting years for this! Thank you so much!!!
 
-What did you expect to happen? (Expected behavior)
-I expected a warning I am cloning an empty repo but get a blank local SHA25=
-6 repository with remote set up.
+When will this be packaged on CD-ROM?
 
-What happened instead? (Actual behavior)
-Warning was there but the created local repo is SHA1. Commits then made to =
-it are rejected by remote. And there is no method to convert a repo from SH=
-A1 to SHA256, even when its blank.
+> ---
+>  chunk-format.c             |  2 ++
+>  hash.c                     | 69 +++++++++++++++++++++++++++++++++++++=
+++++++++-
+>  hash.h                     | 34 +++++++++++++++++++----
+>  md5/openssl.h              | 49 ++++++++++++++++++++++++++++++++
+>  pack-mtimes.c              | 12 +++++++-
+>  pkt-line.c                 |  2 +-
+>  refs/reftable-backend.c    |  9 ++++++
+>  reftable/basics.c          |  2 ++
+>  reftable/basics.h          |  1 +
+>  reftable/reftable-basics.h |  2 ++
+>  reftable/table.c           |  3 ++
+>  reftable/writer.c          |  3 ++
+>  12 files changed, 180 insertions(+), 8 deletions(-)
+>
+> diff --git a/chunk-format.c b/chunk-format.c
+> index 51b5a2c959..28aa0ae945 100644
+> --- a/chunk-format.c
+> +++ b/chunk-format.c
+> @@ -209,6 +209,8 @@ uint8_t oid_version(const struct git_hash_algo *al=
+gop)
+>  		return 1;
+>  	case GIT_HASH_SHA256:
+>  		return 2;
+> +	case GIT_HASH_MD5:
+> +		return 3;
+>  	default:
+>  		die(_("invalid hash version"));
+>  	}
+> diff --git a/hash.c b/hash.c
+> index 553f2008ea..adfae35b7c 100644
+> --- a/hash.c
+> +++ b/hash.c
+> @@ -43,6 +43,25 @@ static const struct object_id null_oid_sha256 =3D {
+>  	.algo =3D GIT_HASH_SHA256,
+>  };
+>
+> +static const struct object_id empty_tree_oid_md5 =3D {
+> +	.hash =3D {
+> +		0xfe, 0x20, 0x56, 0x59, 0xa1, 0x2b, 0x97, 0x65, 0x5d, 0x0a,
+> +		0x89, 0x87, 0x50, 0xce, 0xaf, 0x96
+> +	},
+> +	.algo =3D GIT_HASH_MD5,
+> +};
+> +static const struct object_id empty_blob_oid_md5 =3D {
+> +	.hash =3D {
+> +		0x80, 0xff, 0xc6, 0xeb, 0x72, 0x86, 0xb1, 0x5a, 0xfc, 0x63,
+> +		0xf9, 0xb8, 0x61, 0x79, 0xcc, 0xb1
+> +	},
+> +	.algo =3D GIT_HASH_MD5,
+> +};
+> +static const struct object_id null_oid_md5 =3D {
+> +	.hash =3D {0},
+> +	.algo =3D GIT_HASH_MD5,
+> +};
+> +
+>  static void git_hash_sha1_init(struct git_hash_ctx *ctx)
+>  {
+>  	ctx->algop =3D &hash_algos[GIT_HASH_SHA1];
+> @@ -135,6 +154,39 @@ static void git_hash_sha256_final_oid(struct
+> object_id *oid, struct git_hash_ctx
+>  	oid->algo =3D GIT_HASH_SHA256;
+>  }
+>
+> +static void git_hash_md5_init(struct git_hash_ctx *ctx)
+> +{
+> +	ctx->algop =3D unsafe_hash_algo(&hash_algos[GIT_HASH_MD5]);
+> +	git_MD5_Init(&ctx->state.md5);
+> +}
+> +
+> +static void git_hash_md5_clone(struct git_hash_ctx *dst, const struct
+> git_hash_ctx *src)
+> +{
+> +	dst->algop =3D src->algop;
+> +	git_MD5_Clone(&dst->state.md5, &src->state.md5);
+> +}
+> +
+> +static void git_hash_md5_update(struct git_hash_ctx *ctx, const void
+> *data, size_t len)
+> +{
+> +	git_MD5_Update(&ctx->state.md5, data, len);
+> +}
+> +
+> +static void git_hash_md5_final(unsigned char *hash, struct
+> git_hash_ctx *ctx)
+> +{
+> +	git_MD5_Final(hash, &ctx->state.md5);
+> +}
+> +
+> +static void git_hash_md5_final_oid(struct object_id *oid, struct
+> git_hash_ctx *ctx)
+> +{
+> +	git_MD5_Final(oid->hash, &ctx->state.md5);
+> +	/*
+> +	 * This currently does nothing, so the compiler should optimize it
+> out,
+> +	 * but keep it in case we extend the hash size again.
+> +	 */
+> +	memset(oid->hash + GIT_MD5_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_MD5_RAWSZ);
+> +	oid->algo =3D GIT_HASH_MD5;
+> +}
+> +
+>  static void git_hash_unknown_init(struct git_hash_ctx *ctx UNUSED)
+>  {
+>  	BUG("trying to init unknown hash");
+> @@ -227,7 +279,22 @@ const struct git_hash_algo
+> hash_algos[GIT_HASH_NALGOS] =3D {
+>  		.empty_tree =3D &empty_tree_oid_sha256,
+>  		.empty_blob =3D &empty_blob_oid_sha256,
+>  		.null_oid =3D &null_oid_sha256,
+> -	}
+> +	},
+> +	{
+> +		.name =3D "md5",
+> +		.format_id =3D GIT_MD5_FORMAT_ID,
+> +		.rawsz =3D GIT_MD5_RAWSZ,
+> +		.hexsz =3D GIT_MD5_HEXSZ,
+> +		.blksz =3D GIT_MD5_BLKSZ,
+> +		.init_fn =3D git_hash_md5_init,
+> +		.clone_fn =3D git_hash_md5_clone,
+> +		.update_fn =3D git_hash_md5_update,
+> +		.final_fn =3D git_hash_md5_final,
+> +		.final_oid_fn =3D git_hash_md5_final_oid,
+> +		.empty_tree =3D &empty_tree_oid_md5,
+> +		.empty_blob =3D &empty_blob_oid_md5,
+> +		.null_oid =3D &null_oid_md5,
+> +	},
+>  };
+>
+>  const struct object_id *null_oid(const struct git_hash_algo *algop)
+> diff --git a/hash.h b/hash.h
+> index d51efce1d3..18f97eb1a9 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -131,6 +131,14 @@
+>  #define git_SHA256_Clone	platform_SHA256_Clone
+>  #endif
+>
+> +#include "md5/openssl.h"
+> +
+> +#define git_MD5_CTX	platform_MD5_CTX
+> +#define git_MD5_Init	platform_MD5_Init
+> +#define git_MD5_Update	platform_MD5_Update
+> +#define git_MD5_Final	platform_MD5_Final
+> +#define git_MD5_Clone	platform_MD5_Clone
+> +
+>  #ifdef SHA1_MAX_BLOCK_SIZE
+>  #include "compat/sha1-chunked.h"
+>  #undef git_SHA1_Update
+> @@ -172,8 +180,10 @@ static inline void git_SHA256_Clone(git_SHA256_CTX
+> *dst, const git_SHA256_CTX *s
+>  #define GIT_HASH_SHA1 1
+>  /* SHA-256  */
+>  #define GIT_HASH_SHA256 2
+> +/* MD5 */
+> +#define GIT_HASH_MD5 3
+>  /* Number of algorithms supported (including unknown). */
+> -#define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
+> +#define GIT_HASH_NALGOS (GIT_HASH_MD5 + 1)
+>
+>  /* Default hash algorithm if unspecified. */
+>  #ifdef WITH_BREAKING_CHANGES
+> @@ -203,6 +213,15 @@ static inline void git_SHA256_Clone(git_SHA256_CTX
+> *dst, const git_SHA256_CTX *s
+>  /* The block size of SHA-256. */
+>  #define GIT_SHA256_BLKSZ 64
+>
+> +/* "md5s", big-endian */
+> +#define GIT_MD5_FORMAT_ID 0x6d643573
+> +
+> +/* The length in bytes and in hex digits of an object name (MD5 value=
+). */
+> +#define GIT_MD5_RAWSZ 16
+> +#define GIT_MD5_HEXSZ (2 * GIT_MD5_RAWSZ)
+> +/* The block size of MD5. */
+> +#define GIT_MD5_BLKSZ 64
+> +
+>  /* The length in byte and in hex digits of the largest possible hash =
+value. */
+>  #define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
+>  #define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
+> @@ -263,6 +282,7 @@ struct git_hash_ctx {
+>  		git_SHA_CTX sha1;
+>  		git_SHA_CTX_unsafe sha1_unsafe;
+>  		git_SHA256_CTX sha256;
+> +		git_MD5_CTX md5;
+>  	} state;
+>  };
+>
+> @@ -359,8 +379,10 @@ static inline int hashcmp(const unsigned char
+> *sha1, const unsigned char *sha2,
+>  	 * Teach the compiler that there are only two possibilities of hash
+> size
+>  	 * here, so that it can optimize for this case as much as possible.
+>  	 */
+> -	if (algop->rawsz =3D=3D GIT_MAX_RAWSZ)
+> -		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
+> +	if (algop->rawsz =3D=3D GIT_SHA256_RAWSZ)
+> +		return memcmp(sha1, sha2, GIT_SHA256_RAWSZ);
+> +	if (algop->rawsz =3D=3D GIT_MD5_RAWSZ)
+> +		return memcmp(sha1, sha2, GIT_MD5_RAWSZ);
+>  	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
+>  }
+>
+> @@ -370,8 +392,10 @@ static inline int hasheq(const unsigned char
+> *sha1, const unsigned char *sha2, c
+>  	 * We write this here instead of deferring to hashcmp so that the
+>  	 * compiler can properly inline it and avoid calling memcmp.
+>  	 */
+> -	if (algop->rawsz =3D=3D GIT_MAX_RAWSZ)
+> -		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
+> +	if (algop->rawsz =3D=3D GIT_SHA256_RAWSZ)
+> +		return !memcmp(sha1, sha2, GIT_SHA256_RAWSZ);
+> +	if (algop->rawsz =3D=3D GIT_MD5_RAWSZ)
+> +		return !memcmp(sha1, sha2, GIT_MD5_RAWSZ);
+>  	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
+>  }
+>
+> diff --git a/md5/openssl.h b/md5/openssl.h
+> new file mode 100644
+> index 0000000000..4e5a041734
+> --- /dev/null
+> +++ b/md5/openssl.h
+> @@ -0,0 +1,49 @@
+> +/* wrappers for the EVP API of OpenSSL 3+ */
+> +#ifndef MD5_OPENSSL_H
+> +#define MD5_OPENSSL_H
+> +#include <openssl/evp.h>
+> +
+> +struct openssl_MD5_CTX {
+> +	EVP_MD_CTX *ectx;
+> +};
+> +
+> +typedef struct openssl_MD5_CTX openssl_MD5_CTX;
+> +
+> +static inline void openssl_MD5_Init(struct openssl_MD5_CTX *ctx)
+> +{
+> +	const EVP_MD *type =3D EVP_md5();
+> +
+> +	ctx->ectx =3D EVP_MD_CTX_new();
+> +	if (!ctx->ectx)
+> +		die("EVP_MD_CTX_new: out of memory");
+> +
+> +	EVP_DigestInit_ex(ctx->ectx, type, NULL);
+> +}
+> +
+> +static inline void openssl_MD5_Update(struct openssl_MD5_CTX *ctx,
+> +				      const void *data,
+> +				      size_t len)
+> +{
+> +	EVP_DigestUpdate(ctx->ectx, data, len);
+> +}
+> +
+> +static inline void openssl_MD5_Final(unsigned char *digest,
+> +				     struct openssl_MD5_CTX *ctx)
+> +{
+> +	EVP_DigestFinal_ex(ctx->ectx, digest, NULL);
+> +	EVP_MD_CTX_free(ctx->ectx);
+> +}
+> +
+> +static inline void openssl_MD5_Clone(struct openssl_MD5_CTX *dst,
+> +				     const struct openssl_MD5_CTX *src)
+> +{
+> +	EVP_MD_CTX_copy_ex(dst->ectx, src->ectx);
+> +}
+> +
+> +#define platform_MD5_CTX openssl_MD5_CTX
+> +#define platform_MD5_Init openssl_MD5_Init
+> +#define platform_MD5_Clone openssl_MD5_Clone
+> +#define platform_MD5_Update openssl_MD5_Update
+> +#define platform_MD5_Final openssl_MD5_Final
+> +
+> +#endif /* MD5_OPENSSL_H */
+> diff --git a/pack-mtimes.c b/pack-mtimes.c
+> index 8e1f2dec0e..ee54aa3dd4 100644
+> --- a/pack-mtimes.c
+> +++ b/pack-mtimes.c
+> @@ -75,7 +75,17 @@ static int load_pack_mtimes_file(char *mtimes_file,
+>
+>  	expected_size =3D MTIMES_HEADER_SIZE;
+>  	expected_size =3D st_add(expected_size, st_mult(sizeof(uint32_t),
+> num_objects));
+> -	expected_size =3D st_add(expected_size, 2 * (header.hash_id =3D=3D 1=
+ ?
+> GIT_SHA1_RAWSZ : GIT_SHA256_RAWSZ));
+> +	switch (header.hash_id) {
+> +		case 1:
+> +			expected_size =3D st_add(expected_size, 2 * GIT_SHA1_RAWSZ);
+> +			break;
+> +		case 2:
+> +			expected_size =3D st_add(expected_size, 2 * GIT_SHA256_RAWSZ);
+> +			break;
+> +		case 3:
+> +			expected_size =3D st_add(expected_size, 2 * GIT_MD5_RAWSZ);
+> +			break;
+> +	}
+>
+>  	if (mtimes_size !=3D expected_size) {
+>  		ret =3D error(_("mtimes file %s is corrupt"), mtimes_file);
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 3fc3e9ea70..4bc917c8d3 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -395,7 +395,7 @@ static const char *find_packfile_uri_path(const
+> char *buffer)
+>
+>  	len =3D strspn(buffer, "0123456789abcdefABCDEF");
+>  	/* size of SHA1 and SHA256 hash */
+> -	if (!(len =3D=3D 40 || len =3D=3D 64) || buffer[len] !=3D ' ')
+> +	if (!(len =3D=3D 40 || len =3D=3D 64 || len =3D=3D 32) || buffer[len=
+] !=3D ' ')
+>  		return NULL; /* required "<hash>SP" not seen */
+>
+>  	path =3D strstr(buffer + len + 1, URI_MARK);
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index b124404663..7bb0a60f15 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -106,6 +106,9 @@ static int reftable_backend_read_ref(struct
+> reftable_backend *be,
+>  		case REFTABLE_HASH_SHA256:
+>  			hash_id =3D GIT_HASH_SHA256;
+>  			break;
+> +		case REFTABLE_HASH_MD5:
+> +			hash_id =3D GIT_HASH_MD5;
+> +			break;
+>  		default:
+>  			BUG("unhandled hash ID %d", reftable_stack_hash_id(be->stack));
+>  		}
+> @@ -401,6 +404,9 @@ static struct ref_store *reftable_be_init(struct
+> repository *repo,
+>  	case GIT_SHA256_FORMAT_ID:
+>  		refs->write_options.hash_id =3D REFTABLE_HASH_SHA256;
+>  		break;
+> +	case GIT_MD5_FORMAT_ID:
+> +		refs->write_options.hash_id =3D REFTABLE_HASH_MD5;
+> +		break;
+>  	default:
+>  		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
+>  	}
+> @@ -2788,6 +2794,9 @@ static int reftable_be_fsck(struct ref_store
+> *ref_store, struct fsck_options *o,
+>  			case REFTABLE_HASH_SHA256:
+>  				hash_id =3D GIT_HASH_SHA256;
+>  				break;
+> +			case REFTABLE_HASH_MD5:
+> +				hash_id =3D GIT_HASH_MD5;
+> +				break;
+>  			default:
+>  				BUG("unhandled hash ID %d",
+>  				    reftable_stack_hash_id(backend->stack));
+> diff --git a/reftable/basics.c b/reftable/basics.c
+> index e969927b61..3b62c562cf 100644
+> --- a/reftable/basics.c
+> +++ b/reftable/basics.c
+> @@ -273,6 +273,8 @@ uint32_t hash_size(enum reftable_hash id)
+>  		return REFTABLE_HASH_SIZE_SHA1;
+>  	case REFTABLE_HASH_SHA256:
+>  		return REFTABLE_HASH_SIZE_SHA256;
+> +	case REFTABLE_HASH_MD5:
+> +		return REFTABLE_HASH_SIZE_MD5;
+>  	}
+>  	abort();
+>  }
+> diff --git a/reftable/basics.h b/reftable/basics.h
+> index e4b83b2b03..9f0e0b3fa5 100644
+> --- a/reftable/basics.h
+> +++ b/reftable/basics.h
+> @@ -287,5 +287,6 @@ uint32_t hash_size(enum reftable_hash id);
+>   */
+>  #define REFTABLE_FORMAT_ID_SHA1   ((uint32_t) 0x73686131)
+>  #define REFTABLE_FORMAT_ID_SHA256 ((uint32_t) 0x73323536)
+> +#define REFTABLE_FORMAT_ID_MD5    ((uint32_t) 0x6d643573)
+>
+>  #endif
+> diff --git a/reftable/reftable-basics.h b/reftable/reftable-basics.h
+> index 6d73f19c85..8cc196f91e 100644
+> --- a/reftable/reftable-basics.h
+> +++ b/reftable/reftable-basics.h
+> @@ -27,9 +27,11 @@ struct reftable_buf {
+>  enum reftable_hash {
+>  	REFTABLE_HASH_SHA1   =3D 89,
+>  	REFTABLE_HASH_SHA256 =3D 247,
+> +	REFTABLE_HASH_MD5    =3D 104,
+>  };
+>  #define REFTABLE_HASH_SIZE_SHA1   20
+>  #define REFTABLE_HASH_SIZE_SHA256 32
+> +#define REFTABLE_HASH_SIZE_MD5    16
+>  #define REFTABLE_HASH_SIZE_MAX    REFTABLE_HASH_SIZE_SHA256
+>
+>  /* Overrides the functions to use for memory management. */
+> diff --git a/reftable/table.c b/reftable/table.c
+> index 56362df0ed..5c463ade73 100644
+> --- a/reftable/table.c
+> +++ b/reftable/table.c
+> @@ -79,6 +79,9 @@ static int parse_footer(struct reftable_table *t,
+> uint8_t *footer,
+>  		case REFTABLE_FORMAT_ID_SHA256:
+>  			t->hash_id =3D REFTABLE_HASH_SHA256;
+>  			break;
+> +		case REFTABLE_FORMAT_ID_MD5:
+> +			t->hash_id =3D REFTABLE_HASH_MD5;
+> +			break;
+>  		default:
+>  			err =3D REFTABLE_FORMAT_ERROR;
+>  			goto done;
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index 0133b64975..9499fd9a73 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -114,6 +114,9 @@ static int writer_write_header(struct
+> reftable_writer *w, uint8_t *dest)
+>  		case REFTABLE_HASH_SHA256:
+>  			hash_id =3D REFTABLE_FORMAT_ID_SHA256;
+>  			break;
+> +		case REFTABLE_HASH_MD5:
+> +			hash_id =3D REFTABLE_FORMAT_ID_MD5;
+> +			break;
+>  		default:
+>  			return -1;
+>  		}
+>
+> ---
+> base-commit: 270e10ad6dda3379ea0da7efd11e4fbf2cd7a325
+> change-id: 20260401-pks-object-format-md5-5e34f91d5b06
 
-What's different between what you expected and what actually happened?
-I expected git clone to create the repo using the same hashing algorithm
+--=20
 
-Anything else you want to add: I know this is a fringe scenario, but it sho=
-uld work as expected. Now that repo's have roadblocking init settings, the =
-important ones should be passed on to clone.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.39.1.windows.1
-cpu: x86_64
-built from commit: b03dafd9c26b06c92d509a07ab01b01e6d0d85ee
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 26200
-compiler info: gnuc: 12.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
+sent from my SamSun g
