@@ -1,293 +1,155 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8713D4418D7
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 17:10:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4D238A73A
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 17:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775063403; cv=none; b=qT7x0eoBbvj8ls/cgAFgwb525tDyWHXPEg5+diqHkkt6zsyrf3grpme6N0I6Jr7LHXzaD7N659xua9W+Fku71AwycqFDnMK17rNsadp8j7uM7cFU7zigfPB/pXlGGpHac8mm+gwy3VUvH9yNzDM3r25eydL0bG8Wy3fk2ltHGEw=
+	t=1775063569; cv=none; b=G6lfLHRKgYUkTBnYKRtZbMk41DbvzXD57aSERs/BdEbqExaWi7MamGy1GxDG3IZ8JeOqi0v/FSZ80vvMHqEdc4EWPHsxwDRzL7ia820nWKZH/IqEx+4/HDOky5tXJql/elq3IZEDGpqsAkXh9WTgJNQ0y8claoHwSG1Ucrt6lPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775063403; c=relaxed/simple;
-	bh=GOy8c4a+Cn5pN+YJMvP5k0go9Uk4FJL5TvDuQSymHwY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rWl9UzETMauBKMkPyMI5n8G6QNcLKT8QDtZ6fTskqBPUi/N4TMF3GvX+zS3EGAwFy8q0g+m0A1onPHCltpUPnesBZh0wZTmfsNlkQn5CCzOqvxE58+/p/Tdq9JUPQC373JcDHGGvy26pI3/gaVK2Hstrm9zljugGElvWvf/hbhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VTPNPJBk; arc=none smtp.client-ip=209.85.215.171
+	s=arc-20240116; t=1775063569; c=relaxed/simple;
+	bh=bSmBNy8k8zVLK5pfwt3QJ3G/Fv86OM/FkZsOv5Qv/FQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mWgRoYYCjsIUm8F87P6QcDPBBkDJdd5IwFTnfKypgeC9FQrz1AiuC/T+fvC0e139I78upEO6ovuP5dLqzfrE31oKvsKIYFNR3D4Ijzhx8+P3cO6qkC5qim+zWBuTX0ztGYyT6IYJNuKWvZ6traj/1kj8qcKOYn+TWIbggjD8Wjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HK1VN6AP; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VTPNPJBk"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c76afacbb0bso162461a12.2
-        for <git@vger.kernel.org>; Wed, 01 Apr 2026 10:10:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HK1VN6AP"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-40438e0cba6so4499301fac.1
+        for <git@vger.kernel.org>; Wed, 01 Apr 2026 10:12:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775063402; x=1775668202; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JVjuHpbBp4/go9wIYUJ5A4GOq38uvYt3fcF+zD8I2bY=;
-        b=VTPNPJBkz/nCfWAi5MM89Tgh+kBAGxpC9+cfbkBiil4vaE9XZ4vOAqqynT6h1lGeXq
-         4M8KI/l8dVjC8asF9iMUyNHgNm5yyxdESeuYaYQqmy++hsZ5Fsfy6yoZJQV+IrqfKVDb
-         JDKBQqPQshYJn2Zgun7H3ZWrZAfEXmvQISmWm/obUOSnJS6Ym3GFfn70vn4dHpwu53pu
-         Wa/bivxfBktilcDaOcVQfmCF8EL9ti3Fsv5E3U5kR5JzxLKgmLdPHMYtmxpJkjMoHUEs
-         dAMzKyAETT3w5gimPv6APS4H7XPYqkatIO+fkVzkb10QIsWPRmInPsAOw5K40OW9hL5t
-         V33g==
+        d=gmail.com; s=20251104; t=1775063566; x=1775668366; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KMSsme7IY6vT4HlvsfRM4eERQk7wvlp5eIvDhL6cqs4=;
+        b=HK1VN6APxesibXNcib4Mu4UAD84CkMjEYYSGUGO7nEekzfanWgmeqe5R2lgSmp8nxD
+         uk5obbWCgjUe4DT92hZ213xfjvXOqAVF7FynPPvZP8SDNW9WEOv1G5Z8f7Tvk0zTSDcK
+         XwMvTUF3aMojZ5ExI6ZbHiIGSgudjlwftxxaMSQdB3F9h764gDvf6WrAWw3RoeVP5ods
+         XbsiPyLAiyk7UbBDeYiRM9VLU8rp3dlg4Zdd9Kl/WqiJKP6vpxU1Wh4CwW+SvAKH3DqX
+         mJhUOpcLp76wPhZWxAGhC5o3YQscBf951t3EjdQUsfXJJIDKYNh+fbI7A5ZmkgPThejb
+         0rpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775063402; x=1775668202;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JVjuHpbBp4/go9wIYUJ5A4GOq38uvYt3fcF+zD8I2bY=;
-        b=tMmP/bGzg9MwjaXEFceTuuR+ak/05+zh3rMObPvku5vCbGTu+W/obQFCsDg7VadvIm
-         3pZN4CCyhMEEUyxM8cFGHaAYMZUILBiUBAwiqyx8fu33VgxQv3lRjv7XJMVphwpkdgNT
-         kuyiKXXbFftQGjp+3cJPZmBouq+FZisKqj/NFqO0h/sRXkxCIBLIpPT/fwGj+5tOd3m/
-         r8xGtd6crrnlKP843rbY1Uj6eQiK+6bCyPyIlkaLmrw3MPMZj/4fQdXRS8e0ycYdaPYL
-         7Txm/Zs3C1UoGlPQqB3034GEp2Ig5kWoZO6DqYmih69BEsq2QVszONWI2ef0lxbeEt+X
-         QMCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnrdsugIZ2qVKKPdSi3RbumV6jnXR0/jjf/Un4MLb5ytsaFPYmclZqanwRwL4dhprDELc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyphmr/LxA/z4ICO/AyXcNAljfs4b4C0I1bzCKkMbbjhQSAoH1i
-	iKNcrruZovuUCDdDTKhs8bprSKaMBFxAL416T8fgwekQOU5XMQvdlna0
-X-Gm-Gg: ATEYQzxpqGp0Mc7KzPc3NC5wu/e1BNSQcq7GgKEoyH4XqMJnuh2t4DkrHzw8rUivFhe
-	pLWXSMUJiSEAt92p4k4WIupWWpdeKZ1yBwoydNJdOUH584y2p3Vmt7EXUgH/FPOzcc1PF5UfXcl
-	hk5OB93lnOuDj6sOsroKgyFRhfWeK9PvX8jvfR1MnonQfe1AfrZsgVfWzkinjx4VegoNJQvDfcA
-	3oK0mtrxHxAKOtxTEoK2DbBJjJZcJgdDd5pTKGH6IxQVZ5tyzIjVAGni/l5QvKe20zS8PTej872
-	Hyrx2b5j5ElJCkQlEojZdwl4eU74VG6FjdkUujJTs5P1Iau7CHyzFKkEzQvALfl+2QjCi8vzEkq
-	t1OFiG6E44FHXRP2rPHanZVwBr+61z4DCnOwtYWuSHBXdNT+gtx1LowEcdeSRw8jnxJnr7gQq0y
-	MneV7Vbmqd7HoHSl/74mSAQhYHQb26n0pp0RVHcs65+1QcEEOMglf8eFNyozipaPQ8HSRM4ZqRa
-	NFlGqkn2lU=
-X-Received: by 2002:a17:90b:224e:b0:35c:30a8:31a with SMTP id 98e67ed59e1d1-35dc6d6c077mr2741792a91.0.1775063401656;
-        Wed, 01 Apr 2026 10:10:01 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dba590d49sm2701927a91.2.2026.04.01.10.09.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Apr 2026 10:10:01 -0700 (PDT)
-Message-ID: <0c2ee025-3fe3-4f8f-b8ea-62d2f101c15d@gmail.com>
-Date: Thu, 2 Apr 2026 01:09:56 +0800
+        d=1e100.net; s=20251104; t=1775063566; x=1775668366;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KMSsme7IY6vT4HlvsfRM4eERQk7wvlp5eIvDhL6cqs4=;
+        b=sGe9EyhFUnhQz0/W4/xBs6T3TlbcB32CVQXp3paC5bTXVktB2bNEWTbj4ioPvy3BtK
+         xOMxwbrRRKSZ957nIBOb3LUT1+D9wAsgQkoJgTmgnH2tlVzRgc/a7N27PVG38N/2px80
+         W6mFDtG7CgOD1iPPeVYcLT65UUs4rEMyMTrnxIzlqLSjt0Cj1inxKS4/sjH+wfIWmjO9
+         aZ57i2XKzfj7QGTuzbzJQGgvNT6HPII7d9mF5cOE7dBxjJQVBwXxpYBZLqYZ8vZS/F4v
+         oRdWk9Gw0LtnzJ2xz1JItI3nqXin76Xn5p1rRET1NtkZ49pwLOsdvx6dX/t8NCzoTrbg
+         +h0w==
+X-Gm-Message-State: AOJu0Yzwd49UL/397MHTVb57FSNYtT7oR3gPdkAUXJCQLbNnoC5VTTv3
+	oD6cN1mht5r6RG/Vtl5prk3dIzC0sNYG35IaDo3i5D16OROyJhPXJIkDXfaulA==
+X-Gm-Gg: ATEYQzxYzYKovVxsTVedt27MQ3ruXoy43bxf5rzYcYmgFXrsLEWRaPZiiW2MF1M2T3m
+	jXPrlfPkN//p6fkim/YiVqA7pHhZpbBWc9N4p1wbRctMBiMEf5j3Va5fD0PnmnPDBO4B+7sWC+C
+	/0O8ODfq46hasggXl/H21DzB6ZAQNGRTPYexL+YR20RwVuKcE3s3eDvDMx0d6gAQay1+JLExINZ
+	wZj9Zu+7gmh9nsZO1B9QyqzIt/SOLTIrnrcVA4ZOE/fyW8R55VJoXBzU3QZYkVzE3OzNOtZGxo1
+	Em0FTryywbXvlVmmGmablkZyIezBvPYE2+JrO6BlOWdssuZ3U6QU/6As3h6+/bbG9okpETxqd9h
+	hsevpVgHbnfboVWFzbTdsUH0RiwNX5FVFT2iIiNLDbk/EI4QUCokruP1c+5Ge/lwlNQYbIU6dtc
+	0+auFT1klgqqQm1Fqh4joJCaoQDi5aA+YvtPpZ7dWuYL2s8kSL2UnMs5XKatM=
+X-Received: by 2002:a05:6871:8314:b0:409:8473:d76 with SMTP id 586e51a60fabf-422cfca6e82mr2614034fac.18.1775063566265;
+        Wed, 01 Apr 2026 10:12:46 -0700 (PDT)
+Received: from Mac.attlocal.net.net ([2600:1702:74a1:4770:a4f1:5ce8:780f:fe5c])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-422eaf94eccsm256464fac.8.2026.04.01.10.12.45
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 01 Apr 2026 10:12:45 -0700 (PDT)
+From: blindmansion <blindmansion@gmail.com>
+To: git@vger.kernel.org
+Cc: blindmansion <blindmansion@gmail.com>
+Subject: [PATCH] read-cache: disable renames in add_files_to_cache
+Date: Wed,  1 Apr 2026 13:05:02 -0400
+Message-ID: <20260401170502.35877-1-blindmansion@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
+References: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC][PATCH v3] t2000: modernise overall structure
-To: Zakariyah Ali <zakariyahali100@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, christian.couder@gmail.com, ayu.chandekar@gmail.com,
- jltobler@gmail.com, karthik.188@gmail.com, siddharthasthana31@gmail.com
-References: <20260326192603.23961-1-zakariyahali100@gmail.com>
- <20260327234019.95591-1-zakariyahali100@gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <20260327234019.95591-1-zakariyahali100@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 3/28/26 07:40, Zakariyah Ali wrote:
-> This test script that dates back to 2005 certainly shows its age and
-> both its style and the way the tests are laid out do not match the
-> modern standard.
-> 
->   * Executables that prepare the data used to test the command should
->     be inside the test_expect_success block in modern tests.
-> 
->   * In modern tests, running a command that is being tested, making
->     sure it succeeds, and inspecting other side effects that are
->     expected, are all done in a single test_expect_success block.
-> 
->   * A test_expect_success block in modern tests are laid out as
-> 
->          test_expect_success 'title of the test' '
->                  body of the test &&
->                  ...
->                  body of the test
->          '
-> 
->     not as
-> 
->          test_expect_success \
->                  'title of the test' \
->                  'body of the test &&
->                  ...
->                  body of the test'
-> 
->     which is in a prehistoric style.
-> 
->   * In modern tests, each &&-chained statement in the body of the
->     test_expect_success block are indented with a horizontal tab,
->     unlike prehistoric style that used 4-space indent.
+add_files_to_cache() refreshes the index from worktree changes and does
+not need rename detection. When unmerged entries and a deleted stage-0
+path are present together, rename detection can pair them and rewrite an
+unmerged diff pair to point at the deleted path.
 
-I like this commit message. Nice.
+That later makes "git commit -a" and "git add -u" try to stat the
+deleted path and die with "unable to stat". Disable rename detection in
+this callback-driven staging path and add a regression test covering the
+crash.
+---
+ read-cache.c          |  1 +
+ t/t2200-add-update.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
-Would it be better to add a 'Helped-by'?
+diff --git a/read-cache.c b/read-cache.c
+index 5049f9b..d938abc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -4049,6 +4049,7 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 	rev.diffopt.format_callback = update_callback;
+ 	rev.diffopt.format_callback_data = &data;
+ 	rev.diffopt.flags.override_submodule_config = 1;
++	rev.diffopt.detect_rename = 0; /* staging worktree changes does not need renames */
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 
+ 	/*
+diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+index 06e83d3..56c7e55 100755
+--- a/t/t2200-add-update.sh
++++ b/t/t2200-add-update.sh
+@@ -200,6 +200,45 @@ test_expect_success 'add -u resolves unmerged paths' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'add -u avoids rename pairing on unmerged paths' '
++	test_create_repo rename-crash &&
++	(
++		cd rename-crash &&
++		test_seq 1 100 |
++		sed "s/.*/line &: shared content that is identical across both files/" >conflict.txt &&
++		cp conflict.txt bystander.txt &&
++		git add conflict.txt bystander.txt &&
++		git commit -m "initial: two files with identical content" &&
++		main_branch=$(git symbolic-ref --short HEAD) &&
++		git checkout -b feature &&
++		perl -pe '\''s/^line 50:.*/line 50: FEATURE BRANCH CHANGE/'\'' \
++			conflict.txt >conflict.txt.tmp &&
++		mv conflict.txt.tmp conflict.txt &&
++		git add conflict.txt &&
++		git commit -m "feature: modify line 50" &&
++		git checkout "$main_branch" &&
++		perl -pe '\''s/^line 50:.*/line 50: MAIN BRANCH CHANGE/'\'' \
++			conflict.txt >conflict.txt.tmp &&
++		mv conflict.txt.tmp conflict.txt &&
++		git add conflict.txt &&
++		git commit -m "main: modify line 50 differently" &&
++		test_must_fail git merge feature &&
++		rm bystander.txt &&
++		git add -u >out 2>err &&
++		test_must_be_empty out &&
++		test_must_be_empty err &&
++		git ls-files -u >actual &&
++		test_must_be_empty actual &&
++		git ls-files bystander.txt >actual &&
++		test_must_be_empty actual &&
++		echo conflict.txt >expect &&
++		git ls-files conflict.txt >actual &&
++		test_cmp expect actual &&
++		git diff-files --name-only >actual &&
++		test_must_be_empty actual
++	)
++'
++
+ test_expect_success '"add -u non-existent" should fail' '
+ 	test_must_fail git add -u non-existent &&
+ 	git ls-files >actual &&
+-- 
+2.53.0
 
-> Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
-> ---
->   t/t2000-conflict-when-checking-files-out.sh | 122 +++++++++++---------
->   1 file changed, 66 insertions(+), 56 deletions(-)
-> 
-> diff --git a/t/t2000-conflict-when-checking-files-out.sh b/t/t2000-conflict-when-checking-files-out.sh
-> index f18616ad2b..af199d8191 100755
-> --- a/t/t2000-conflict-when-checking-files-out.sh
-> +++ b/t/t2000-conflict-when-checking-files-out.sh
-> @@ -35,30 +35,30 @@ show_files() {
->   	sed -e 's/^\([0-9]*\)	[^ ]*	[0-9a-f]*	/tr: \1 /'
->   }
->   
-> -date >path0
-> -mkdir path1
-> -date >path1/file1
-> -
-> -test_expect_success \
-> -    'git update-index --add various paths.' \
-> -    'git update-index --add path0 path1/file1'
-> -
-> -rm -fr path0 path1
-> -mkdir path0
-> -date >path0/file0
-> -date >path1
-> +test_expect_success 'prepare files path0 and path1/file1' '
-> +	date >path0 &&
-> +	mkdir path1 &&
-> +	date >path1/file1 &&
-> +	git update-index --add path0 path1/file1
-> +'
->   
-> -test_expect_success \
-> -    'git checkout-index without -f should fail on conflicting work tree.' \
-> -    'test_must_fail git checkout-index -a'
-> +test_expect_success 'prepare working tree files with D/F conflicts' '
-> +	rm -fr path0 path1 &&
-> +	mkdir path0 &&
-> +	date >path0/file0 &&
-> +	date >path1
-> +'
->   
-> -test_expect_success \
-> -    'git checkout-index with -f should succeed.' \
-> -    'git checkout-index -f -a'
-> +test_expect_success 'git checkout-index without -f should fail on conflicting work tree.' '
-> +	test_must_fail git checkout-index -a
-> +'
->   
-> -test_expect_success \
-> -    'git checkout-index conflicting paths.' \
-> -    'test -f path0 && test -d path1 && test -f path1/file1'
-> +test_expect_success 'git checkout-index with -f should succeed.' '
-> +	git checkout-index -f -a &&
-> +	test_path_is_file path0 &&
-> +	test_path_is_dir path1 &&
-> +	test_path_is_file path1/file1
-> +'
->   
->   test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
->   	mkdir -p tar/get &&
-> @@ -83,53 +83,63 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
->   # path path3 is occupied by a non-directory.  With "-f" it should remove
->   # the symlink path3 and create directory path3 and file path3/file1.
->   
-> -mkdir path2
-> -date >path2/file0
-> -test_expect_success \
-> -    'git update-index --add path2/file0' \
-> -    'git update-index --add path2/file0'
-> -test_expect_success \
-> -    'writing tree out with git write-tree' \
-> -    'tree1=$(git write-tree)'
-> +test_expect_success 'prepare path2/file0 and index' '
-> +	mkdir path2 &&
-> +	date >path2/file0 &&
-> +	git update-index --add path2/file0
-> +'
-> +
-> +test_expect_success 'write tree with path2/file0' '
-> +	tree1=$(git write-tree)
-> +'
-> +
->   test_debug 'show_files $tree1'
->   
-> -mkdir path3
-> -date >path3/file1
-> -test_expect_success \
-> -    'git update-index --add path3/file1' \
-> -    'git update-index --add path3/file1'
-> -test_expect_success \
-> -    'writing tree out with git write-tree' \
-> -    'tree2=$(git write-tree)'
-> +test_expect_success 'prepare path3/file1 and index' '
-> +	mkdir path3 &&
-> +	date >path3/file1 &&
-> +	git update-index --add path3/file1
-> +'
-> +
-> +test_expect_success 'write tree with path3/file1' '
-> +	tree2=$(git write-tree)
-> +'
-> +
->   test_debug 'show_files $tree2'
->   
-> -rm -fr path3
-> -test_expect_success \
-> -    'read previously written tree and checkout.' \
-> -    'git read-tree -m $tree1 && git checkout-index -f -a'
-> +test_expect_success 'read previously written tree and checkout.' '
-> +	rm -fr path3 &&
-> +	git read-tree -m $tree1 &&
-> +	git checkout-index -f -a
-> +'
-> +
->   test_debug 'show_files $tree1'
->   
-> -test_expect_success \
-> -    'add a symlink' \
-> -    'test_ln_s_add path2 path3'
-> -test_expect_success \
-> -    'writing tree out with git write-tree' \
-> -    'tree3=$(git write-tree)'
-> +test_expect_success 'add a symlink' '
-> +	test_ln_s_add path2 path3
-> +'
-> +
-> +test_expect_success 'write tree with symlink path3' '
-> +	tree3=$(git write-tree)
-> +'
-> +
->   test_debug 'show_files $tree3'
->   
->   # Morten says "Got that?" here.
->   # Test begins.
->   
-> -test_expect_success \
-> -    'read previously written tree and checkout.' \
-> -    'git read-tree $tree2 && git checkout-index -f -a'
-> +test_expect_success 'read previously written tree and checkout.' '
-> +	git read-tree $tree2 &&
-> +	git checkout-index -f -a
-> +'
-> +
->   test_debug 'show_files $tree2'
->   
-> -test_expect_success \
-> -    'checking out conflicting path with -f' \
-> -    'test ! -h path2 && test -d path2 &&
-> -     test ! -h path3 && test -d path3 &&
-> -     test ! -h path2/file0 && test -f path2/file0 &&
-> -     test ! -h path3/file1 && test -f path3/file1'
-> +test_expect_success 'checking out conflicting path with -f' '
-> +	test_path_is_dir_not_symlink path2 &&
-> +	test_path_is_dir_not_symlink path3 &&
-> +	test_path_is_file_not_symlink path2/file0 &&
-> +	test_path_is_file_not_symlink path3/file1
-> +'
-
-test_path_is_file_not_symlink and test_path_is_dir_not_symlink look 
-rather unfamiliar, and sure enough, only four test scripts in the Git 
-test suite make use of them.
-
-These two functions were implemented four years ago; the commit hash is 
-456296b5d1f05ca16949e7d37ae87f5750118564. Although the names of these 
-two functions are particularly simple and straightforward, I’m not sure 
-if it would be better to mention them in the commit message.
-
->   
->   test_done
-
-Thanks, Yuchen
