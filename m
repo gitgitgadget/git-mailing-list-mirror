@@ -1,69 +1,69 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6421D33F383
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 19:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D11311969
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 19:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775071901; cv=none; b=TOFund3brugtJpmeHHXIyoV5cPvRcz2ngIVUXcyAqy8HUkhYk7kWxFOVTyOPs86HeDACT9oAmN1PIBMCBlES4IY3Kz5ITTT8ZmwLZbS/I4nPyE+egTb6pV7Gr5GG5xu1bGLxB6Nv1ld+SaXYwPodEXF7MRLhp9TPbuhJUlIV5rc=
+	t=1775072704; cv=none; b=YrJS0DaNjNF8XPND54IjPghqknKGSfpgdsdH4QkMzEd0vcJIjCftyDlfhzHBP48YF35ROSvOd1cKjZ8mkuHANPKzxJlblKXXNFFhd2k3SeP5ySpRJxyjb+xd8ivqX8agkO/l1pYxE+h9dNuNW5bhWWxlHbfFiX7oVEDYM9wiUec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775071901; c=relaxed/simple;
-	bh=Q9bMuBWJJSfa69JOOHCBXEn4FzFTrSc4nBBoJSpaYoY=;
+	s=arc-20240116; t=1775072704; c=relaxed/simple;
+	bh=Tti+wrjDpP2g4Bz0AEW6Cf9QaBDHiL4j4ZVPmX4t1do=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BWom8LT82Rk40BDA8k86ImkglcIBKpA3HwUtgXCq660CTYr/VJhE66cBYR95FVStv6CMN4LIncjSORLbBR5H1aCf2d26/Yy4EDL9YsJI06qRFp8JvYYShYqPhkzvOVTr+KEKq6fyjTgFygIREG3Uw0GdqMJlmt5a7gfWifZdKPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hgxczxDL; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=JduY0DyB+/WerSSrRHrk9ka9WLjPtCDkz/UM5FmTbWkYA2fwe7pqYsDiHEmopAD/fSow6yagG7aPEQJWlXee0WCrrd7BgnNMH+oWaBsYLLU30vqA1yynOzOJSHGtazjY8kPmJF/00e3GXZwMJ27BGXixYiGhJttVBC6qedVh1po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7AcODry; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hgxczxDL"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2a871daa98fso537175ad.1
-        for <git@vger.kernel.org>; Wed, 01 Apr 2026 12:31:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7AcODry"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c76b9efc299so35931a12.0
+        for <git@vger.kernel.org>; Wed, 01 Apr 2026 12:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775071900; x=1775676700; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775072703; x=1775677503; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RkisWHyEJXUGMP/hygMss73nte1CkgqjnrBccB7SiVE=;
-        b=hgxczxDL8iDs4uk91BmJex/INvoOucFWTi4nTl/EJ9RCqPEkR6NC/0FWOB6DB5Jh6N
-         aKMU5nrLzyVWAzTYbRL1YqRkD+J5rTM5e0cxXEe97kvq0fR0EIclDLYQGzcAGEeW2DXN
-         /30MAlU5Q2SznNxBq2wGp2rK5nF5fzzv6t8bY6rrBWbZERr5hGk+gthtsHofIKXCTzUe
-         K/PNIaNKEvhgmIo3BiB4XR4Yya/tSdofjuF2L/4WJ+5FS0Ib0riCOvWFcLEzKN+H7fux
-         aM1QSbiDaRHSGxg0qJrzOMhReZtrd83altRk7deAchRctuolDbI/5P/iJ70AGcPFdzTL
-         cqEA==
+        bh=FZg0uuJvU6DXW/MbkZDnSTTTgaB4HYaIOHDR/cL2GYQ=;
+        b=T7AcODryIfIvc+DllSH/MBmCvXu0Tmqmmx4HkhbH4UdTE4ceJXX5+rTPj/+z3zbTdn
+         wJshC1d66NLR1WpsheBJJ4r6b7N6qEEA1QV7OXBN9xY2b0tUGIruymo6qEiJ93Ylzgp7
+         yfVumxv51oQiApJT0zGpNTI3JE6ZX+HOqBDvEOEt84KekAq0RmNo6Yw1luqcFJloUane
+         rw7FR/uM6FaXB0QaAb+sYN2SCwM+ZOguDTVf6oM2W9650pLcOH5kdj3WNykaL50EwsxR
+         apkJxauPRiZnZiHWnMPMHGzynUMBhpc6XVeaS7KHu60bvDV/t5lNIhzBf8lOWkxqujbE
+         eqRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775071900; x=1775676700;
+        d=1e100.net; s=20251104; t=1775072703; x=1775677503;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RkisWHyEJXUGMP/hygMss73nte1CkgqjnrBccB7SiVE=;
-        b=AllcF29wBzJvNefxlHEIh/8rL/I1BWqV4NOOwg2jv8v+bGnEokI0xIpz/PfdWcWI+i
-         GpAlFxrrkaaJyIuUp+xmEYDDiJEmFZzsHMhOskdbInCj6HnwRbCfmciBmcfqvwBaYMdn
-         X8zZuaSp2BmF034Feo5F3KpoypIThA8hjJhfVV3GUb4FW5ytPKW10xdhNG27bRZ9rNig
-         5CbyqSNLKOrhKBsncDyyGeIFUOx4qu8kIk0amcpmQG3PIk+y6u7Z0FexojRWgOn5QOPl
-         ZsNsqR2/R9Jmd6TgFatRm/uyXZ/6UdbZpL66omLJgqsWurfJLf2k7BBnPP9+DPa2mMBE
-         68dA==
-X-Gm-Message-State: AOJu0YwBIUdRtqSPUTDUyg6h0AXoRSMJE0Fpr5VPRG+Gi4OgG1Y1//0c
-	YtIrlilE0A+/zz+PA5NI5I6ra4Xg4nkmsnrF7IuPw8WVl+XsSe+iXujE
-X-Gm-Gg: ATEYQzzwBJZUh2sYutjETFXUD+tXgrKPINmqEZ+RYHJtlUB8F/7tWuwMyyHv5m0ew37
-	/R5xirAIZ8kKf7mvXu7SvJPeTP/aEB5PO3EwVmKBP5CGiLbBOdeSk3g+nlzMNP21l4wzxTQZdgV
-	9IuMe25C+HPmlMFZDcKOHbNy8TK3je+q3QXypnHd2uzabnQ1g6LEOCjeoKI9i1XkjmFbXOwsqqc
-	/piHvuEPFf+z5Yk0URVJEBefhouvWOG7fWlEeLChQbr73TaYLQKFpZrcku1xSYiPIqoIpdt9I5o
-	3DAuA/UIc8TyFDsUowduQEfz4kSxo0AA8wUw2wDlluei/fy11IUFT0GasHFblqr9eMRilsbOxUB
-	b3Lkf1aQqrVmYh/VENR1PrQ4mkwxDlRI+bLrKuNbk3FykcctUgnbL1T7nKsSccdHmQ7UmEs05AT
-	7er6E91/za8UmlLUxw6r9op6RMST3y1QY=
-X-Received: by 2002:a17:902:bd46:b0:2b0:67a7:5c4b with SMTP id d9443c01a7336-2b269c44989mr34637535ad.28.1775071899582;
-        Wed, 01 Apr 2026 12:31:39 -0700 (PDT)
+        bh=FZg0uuJvU6DXW/MbkZDnSTTTgaB4HYaIOHDR/cL2GYQ=;
+        b=HvToTeL8KYVb2jvIW8e5cdeCL+RlQYu3tKd/ZcDH1n+nRly7ZlNgHnodouClW4hGOv
+         0zNpEUnLy5xMh6NR5LK8qGXcQ5/uoZdSf4MepCToKrbD/N4KTFkMOY3lZX9uXTtPXTal
+         1n8tlJdqMe2zuXguZ8ADtnxcXykMWxj+WfHh5HKpEf248xQKiUfAhDcI3XXXGjHTwlqa
+         x+IY62/l7plfbmrcuisf1jFVU9vNNhykSOse3/TOY+LVB8BduOWpt4GeTfjUFwGjuQ15
+         73AiXYysQZPNg9SbjBGBEC4qKqSgVlFuuFpQVna/tfohurNfA2rj+BMaim6iafx1oE8F
+         0TgA==
+X-Gm-Message-State: AOJu0YypNnkAQiF75dIhR3R+8mmxxfy1mzW5JM9MQzaThO6PAvP8GcuA
+	O2xlcHamBQPYXkZ7u7kqP6fRr/6Q+hjr92KmqPcUS30lYkGgZOOx1pQ/b4EbDnNQnzc=
+X-Gm-Gg: ATEYQzzWaoPaZEUqMpI2I3KSQfbUJ9vW7vT7yTyeEEo3KGaMPMaxHW0CWS9I83ET5Pf
+	pTqsZFVpTyUwiCd+yhkH/kpQascRbaU6F0jx4caHZ694mNqb1Lp0ZDVG35EGQQKBfIDOSKYK3rF
+	VpyazX4cpBQfPevL4pwZEKPHOvmx/ONIc7clErTiEXZLZqRMuQnKmg9DTQvr7Y7uHu+DzdGxerP
+	5QupXAVMtoqyZVmNlefU/Ovya1ulB01xuTDF3OtUsk2+s4p4XeWZaMaDNgBYcihALmqd1gETw8Q
+	MB7sCNIl6pbqDWKuT6HZQggfWxNAr8MBBzBigtEylBUcTAHHO48hkXKjGe4VeUKgRf6JGnivlut
+	VmS58xc4uz9GJRMwbTRntWtIxeLru/pWsYv/f/5Api/o0+84TsEJKLxikHIMTW+inmzLZgaZqeq
+	/NBUPA6uEnpyKRuDRH/tgzFgReiv8BsLQ=
+X-Received: by 2002:a05:6a20:394f:b0:39b:ce4a:f397 with SMTP id adf61e73a8af0-39ef73957d3mr5381753637.18.1775072702701;
+        Wed, 01 Apr 2026 12:45:02 -0700 (PDT)
 Received: from localhost ([42.118.191.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2749cbc58sm5096005ad.78.2026.04.01.12.31.38
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76c6563aacsm635052a12.19.2026.04.01.12.45.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2026 12:31:38 -0700 (PDT)
-Date: Thu, 2 Apr 2026 02:31:34 +0700
+        Wed, 01 Apr 2026 12:45:02 -0700 (PDT)
+Date: Thu, 2 Apr 2026 02:44:57 +0700
 From: Trieu Huynh <vikingtc4@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [GSoC PATCH] backfill: auto-detect sparse-checkout from config
-Message-ID: <buisigjsw3zrcy6bqaic2zefypq37kimju32eufquppsvkgkvx@cqd3cwj6an6t>
-References: <20260331112516.772635-1-vikingtc4@gmail.com>
- <xmqqo6k40wbl.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC GSoC PATCH] backfill: skip downloading for empty batches
+Message-ID: <lwsskrhd2prb577xrpcse3f7oureuztmp4kyegn4gziu63zvcj@h4pqpympiava>
+References: <20260331121204.787826-1-vikingtc4@gmail.com>
+ <ac0GnzQgZMfu8aGL@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,122 +72,116 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqo6k40wbl.fsf@gitster.g>
+In-Reply-To: <ac0GnzQgZMfu8aGL@pks.im>
 
-On Tue, Mar 31, 2026 at 09:59:10AM -0700, Junio C Hamano wrote:
-> Trieu Huynh <vikingtc4@gmail.com> writes:
-> 
-> > git backfill currently initializes the `sparse` field in
-> > backfill_context to 0. This causes the command to always perform a
-> > full backfill by default, even when the repository has sparse-checkout
-> > enabled in its configuration (core.sparseCheckout).
-> >
-> > Because 'sparse' is explicitly set to 0 at initialization, any later
-> > logic intended to auto-detect the setting from the repository
-> > configuration becomes dead code, as it only triggers if the value
-> > is negative (sentinel).
-> >
-> > Change the initial value of .sparse to -1. This allows the command
-> > to correctly fallback to the repository's sparse-checkout settings
-> > when the '--sparse' or '--no-sparse' options are not provided on the
-> > command line.
-> 
-> The author of bff45557 (backfill: add --sparse option, 2025-02-03),
-> where this .sparse member originates, CC'ed for more intelligent
-> input than my review can offer ;-)
-> 
-> 
-> > Add a test case in t5620-backfill.sh to verify that 'git backfill'
-> > automatically respects the sparse-checkout configuration without
-> > explicit flags.
-> >
+On Wed, Apr 01, 2026 at 01:50:55PM +0200, Patrick Steinhardt wrote:
+> On Tue, Mar 31, 2026 at 09:12:04PM +0900, Trieu Huynh wrote:
+> > When git backfill finishes its object walk, it unconditionally calls
+> > download_batch to process any remaining objects. If the repository
+> > is already up-to-date (no missing objects found), this call still
+> > performs an unnecessary directory scan via odb_reprepare.
+> > 
+> > Fix it by adding a check in do_backfill to ensure download_batch is only
+> > called if the current batch actually contains objects (nr > 0).
+> > 
+> > To facilitate testing and provide better telemetry, add a trace2 data
+> > event for batches_requested. This allows us to verify that no batches
+> > are processed when the command is run on an up-to-date repository.
+> > 
+> > Add a test case in t5620-backfill.sh to ensure silence and efficiency
+> > when no objects are missing.
+> > 
 > > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 > > ---
-> >  builtin/backfill.c  |  2 +-
-> >  t/t5620-backfill.sh | 15 +++++++++++++++
-> >  2 files changed, 16 insertions(+), 1 deletion(-)
-> >
+> > Need discussion:
+> > 1. Is adding trace2_data_intmax() the preferred way to verify this 
+> >    behavior in our test suite, or should we rely on redirection of 
+> >    stderr to check for progress messages when the progress option
+> >    is supported?
+> 
+> I think adding a call to trace2 only for the test itself doesn't make a
+> lot of sense if we already have another way to verify. But would we
+> actually see any progress messages? `promisor_remote_get_direct()` knows
+> to bail out early in case there is nothing to be downloaded, so the only
+> difference really is the call to `odb_reprepare()`.
+> 
+> Or is it? This part here...
+> 
+currently, I have no idea to verify the change, so I'm adding a trace2 here.
 > > diff --git a/builtin/backfill.c b/builtin/backfill.c
-> > index 4b2db94173..0f31844ce7 100644
+> > index 0f31844ce7..67f9f28daf 100644
 > > --- a/builtin/backfill.c
 > > +++ b/builtin/backfill.c
-> > @@ -124,7 +124,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
-> >  		.repo = repo,
-> >  		.current_batch = OID_ARRAY_INIT,
-> >  		.min_batch_size = 50000,
-> > -		.sparse = 0,
-> > +		.sparse = -1,
-> >  		.show_progress = -1,
-> >  	};
-> >  	struct option options[] = {
+> > @@ -58,6 +58,7 @@ static void download_batch(struct backfill_context *ctx)
+> >  	 */
+> >  	odb_reprepare(ctx->repo->objects);
+> >  	display_progress(ctx->progress, ++ctx->batches_requested);
+> > +	trace2_data_intmax("backfill", ctx->repo, "batches_requested", ctx->batches_requested);
+> >  }
+> >  
+> >  static int fill_missing_blobs(const char *path UNUSED,
 > 
-> I am a bit confused by this change.  What's the difference between
-> using -1 (which you picked) and 1 as the initial value for this
-> member?  From the proposed log message, I would have expected a new
-> code that says "ah, we notice, from this member being -1, that the
-> user did not specify --no-sparse or --sparse, so let's figure out if
-> our working tree is sparsely checked out ourselves and set it either
-> to 0 or to 1", but there is nothing like that in the code.  It seems
-> that the updated code relies on the fact that this part of
-> do_backfill() only cares if .sparse is zero or not, and ...
+> ... looks different. What commit is this patch based on? There is no
+> call to `display_progress()` on "master", and you didn't mention any
+> other dependency in your cover letter. Please note such dependencies
+> when you post a patch that has any requirements.
 > 
-> 	if (ctx->sparse) {
-> 		CALLOC_ARRAY(info.pl, 1);
-> 		if (get_sparse_checkout_patterns(info.pl)) {
-> 			path_walk_info_clear(&info);
-> 			return error(_("problem loading sparse-checkout"));
-> 		}
-> 	}
+I was submit another patch to support --[no-]progress option.
+https://lore.kernel.org/git/20260329152443.525493-1-vikingtc4@gmail.com/
+it should be based on master's latest rather than this change, sorry for
+the confusion, will rebase on v2.
+> But in any case, this here would cause us to print "batches_requested"
+> events repeatedly, which doesn't make a lot of sense.
 > 
-> ... relies on get_sparse_checkout_patterns() not to do any harm when
-> the working tree is not sparsely checked out.
+ack, but I wonder if it should be defined method to verify if it can skip
+when no objects are missing or not here.
+> > @@ -109,7 +110,7 @@ static int do_backfill(struct backfill_context *ctx)
+> >  	ret = walk_objects_by_path(&info);
+> >  
+> >  	/* Download the objects that did not fill a batch. */
+> > -	if (!ret)
+> > +	if ( (!ret) && (ctx->current_batch.nr > 0) )
+> >  		download_batch(ctx);
+> >  
+> >  	path_walk_info_clear(&info);
 > 
-> I am not sure if we want to call it "auto-detction".  It looks more
-> like "default to --sparse, relying that --sparse is a no-op in a
-> non-sparse working tree" at least to me.  Not that it is necessarily
-> wrong, and when people do "backfill" knowing that the working tree
-> is sparse, I am sympathetic if they prefer to keep the sparseness,
-> so such a change of default may be beneficial.
+> Please pay attention to our coding guidlines, see
+> "Documentation/CodingGuidelines".
 > 
-actually, the logic IIUC here is:
-- first, ctx.sprase originally is set to 0.
-- then, it check user's options. Assume, there is no option passed,
-still 0.
-- then, it check repo's config (core.sparseCheckout (default to 0 in
-enviroment.c) but it doesn't since the guard:
-	if (ctx.sparse < 0)
-		ctx.sparse = cfg->apply_sparse_checkout;
-- evenly. ctx.sparse still 0 eventhough in case the
-core.sparseCheckout = 1 (git config core.sparseCheckout true)
-
-IMHO, this change set the default value to -1, then it can fallback to
-repo's config value if user has no-op passing (default to 0 (full
-backfill if user doesnt intent to config previously either).
-> Derrick, what do you think?
+ack, I got it.
+> I guess a more robust fix would add the check in `download_batch()`
+> itself, but I guess both alternatives work. But overall, it's sensible
+> to avoid repreparing the ODB in case we know nothing has changed.
 > 
+ack, waiting for other reviews.
 > > diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-> > index 91b5115732..a1a8d736db 100755
+> > index a1a8d736db..d3cc4022bf 100755
 > > --- a/t/t5620-backfill.sh
 > > +++ b/t/t5620-backfill.sh
-> > @@ -149,6 +149,21 @@ test_expect_success 'backfill --sparse' '
-> >  	test_line_count = 0 missing
+> > @@ -221,6 +221,22 @@ test_expect_success 'backfill --sparse without cone mode (negative)' '
+> >  	test_line_count = 12 missing
 > >  '
 > >  
-> > +test_expect_success 'backfill auto-detects sparse-checkout from config' '
-> > +	git clone --sparse --filter=blob:none \
+> > +test_expect_success 'backfill does not request batches when up-to-date' '
+> > +	git clone --no-checkout --filter=blob:none \
 > > +		--single-branch --branch=main \
-> > +		"file://$(pwd)/srv.bare" backfill-auto-sparse &&
+> > +		"file://$(pwd)/srv.bare" backfill-up-to-date &&
 > > +
-> > +	git -C backfill-auto-sparse rev-list --quiet --objects --missing=print HEAD >missing &&
-> > +	test_line_count = 44 missing &&
+> > +	# First trigger to have a full download
+> > +	git -C backfill-up-to-date backfill &&
 > > +
-> > +	GIT_TRACE2_EVENT="$(pwd)/auto-sparse-trace" git \
-> > +		-C backfill-auto-sparse backfill &&
+> > +	# Second trigger to verify when already have a full download previously
+> > +	GIT_TRACE2_EVENT="$(pwd)/up-to-date-trace" git \
+> > +		-C backfill-up-to-date backfill &&
 > > +
-> > +	test_trace2_data promisor fetch_count 4 <auto-sparse-trace &&
-> > +	test_trace2_data path-walk paths 5 <auto-sparse-trace
+> > +	# Verify no  batches_request occurr
+> > +	test_grep ! "batches_requested" up-to-date-trace
 > > +'
-> > +
-> >  test_expect_success 'backfill --sparse without cone mode (positive)' '
-> >  	git clone --no-checkout --filter=blob:none		\
-> >  		--single-branch --branch=main 		\
+> 
+> I'm ultimately not sure whether this change even needs a test. We're not
+> changing any user-visible behaviour, we're simply skipping some
+> pointless busywork that doesn't do much, but that shouldn't really hurt
+> much, either.
+> 
+ack, can provide steps to verify in commit msg instead of adding a test.
+> Patrick
