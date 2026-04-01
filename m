@@ -1,187 +1,136 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D11311969
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 19:45:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA608258CCC
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 20:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775072704; cv=none; b=YrJS0DaNjNF8XPND54IjPghqknKGSfpgdsdH4QkMzEd0vcJIjCftyDlfhzHBP48YF35ROSvOd1cKjZ8mkuHANPKzxJlblKXXNFFhd2k3SeP5ySpRJxyjb+xd8ivqX8agkO/l1pYxE+h9dNuNW5bhWWxlHbfFiX7oVEDYM9wiUec=
+	t=1775076632; cv=none; b=tI+IqOunGXwXZnnYEg9P+QoR8IBtSt1Pf0Eezv2CT18Ih5R6lIskA+/HS04ECcnoD5u9wSiqhhTkdiU6RURvd4O01TQXhr4Z5IEZliCOWpIcv6/+O6C68aUQqRi8zhfdyN+QAKVg4ZbzHSJO9IEpUlSdSBp521K6qeOAY0BoQK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775072704; c=relaxed/simple;
-	bh=Tti+wrjDpP2g4Bz0AEW6Cf9QaBDHiL4j4ZVPmX4t1do=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JduY0DyB+/WerSSrRHrk9ka9WLjPtCDkz/UM5FmTbWkYA2fwe7pqYsDiHEmopAD/fSow6yagG7aPEQJWlXee0WCrrd7BgnNMH+oWaBsYLLU30vqA1yynOzOJSHGtazjY8kPmJF/00e3GXZwMJ27BGXixYiGhJttVBC6qedVh1po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7AcODry; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775076632; c=relaxed/simple;
+	bh=bwhyai+zyj4mTrxEuBDgkWZzrujJhM75UOiJi1u08EU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sMqh/odOKE9qbKlv5AYt9CQeS42rvKjl9xIZH7hEK6LGg9InfkGhnRZXOlIN0ojg+9UYvlQpOiA8JBQ79BtHSCj21ln9/L+nqG1ku0BJskr97P0uF7X0YzBlZ5czBxOhn9LXCJqZ4jbTOrPZUm4pRSloQpQdbK3pv3/YU/ZnQQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ERbtjLHn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vGjrywAD; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7AcODry"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c76b9efc299so35931a12.0
-        for <git@vger.kernel.org>; Wed, 01 Apr 2026 12:45:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775072703; x=1775677503; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FZg0uuJvU6DXW/MbkZDnSTTTgaB4HYaIOHDR/cL2GYQ=;
-        b=T7AcODryIfIvc+DllSH/MBmCvXu0Tmqmmx4HkhbH4UdTE4ceJXX5+rTPj/+z3zbTdn
-         wJshC1d66NLR1WpsheBJJ4r6b7N6qEEA1QV7OXBN9xY2b0tUGIruymo6qEiJ93Ylzgp7
-         yfVumxv51oQiApJT0zGpNTI3JE6ZX+HOqBDvEOEt84KekAq0RmNo6Yw1luqcFJloUane
-         rw7FR/uM6FaXB0QaAb+sYN2SCwM+ZOguDTVf6oM2W9650pLcOH5kdj3WNykaL50EwsxR
-         apkJxauPRiZnZiHWnMPMHGzynUMBhpc6XVeaS7KHu60bvDV/t5lNIhzBf8lOWkxqujbE
-         eqRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775072703; x=1775677503;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FZg0uuJvU6DXW/MbkZDnSTTTgaB4HYaIOHDR/cL2GYQ=;
-        b=HvToTeL8KYVb2jvIW8e5cdeCL+RlQYu3tKd/ZcDH1n+nRly7ZlNgHnodouClW4hGOv
-         0zNpEUnLy5xMh6NR5LK8qGXcQ5/uoZdSf4MepCToKrbD/N4KTFkMOY3lZX9uXTtPXTal
-         1n8tlJdqMe2zuXguZ8ADtnxcXykMWxj+WfHh5HKpEf248xQKiUfAhDcI3XXXGjHTwlqa
-         x+IY62/l7plfbmrcuisf1jFVU9vNNhykSOse3/TOY+LVB8BduOWpt4GeTfjUFwGjuQ15
-         73AiXYysQZPNg9SbjBGBEC4qKqSgVlFuuFpQVna/tfohurNfA2rj+BMaim6iafx1oE8F
-         0TgA==
-X-Gm-Message-State: AOJu0YypNnkAQiF75dIhR3R+8mmxxfy1mzW5JM9MQzaThO6PAvP8GcuA
-	O2xlcHamBQPYXkZ7u7kqP6fRr/6Q+hjr92KmqPcUS30lYkGgZOOx1pQ/b4EbDnNQnzc=
-X-Gm-Gg: ATEYQzzWaoPaZEUqMpI2I3KSQfbUJ9vW7vT7yTyeEEo3KGaMPMaxHW0CWS9I83ET5Pf
-	pTqsZFVpTyUwiCd+yhkH/kpQascRbaU6F0jx4caHZ694mNqb1Lp0ZDVG35EGQQKBfIDOSKYK3rF
-	VpyazX4cpBQfPevL4pwZEKPHOvmx/ONIc7clErTiEXZLZqRMuQnKmg9DTQvr7Y7uHu+DzdGxerP
-	5QupXAVMtoqyZVmNlefU/Ovya1ulB01xuTDF3OtUsk2+s4p4XeWZaMaDNgBYcihALmqd1gETw8Q
-	MB7sCNIl6pbqDWKuT6HZQggfWxNAr8MBBzBigtEylBUcTAHHO48hkXKjGe4VeUKgRf6JGnivlut
-	VmS58xc4uz9GJRMwbTRntWtIxeLru/pWsYv/f/5Api/o0+84TsEJKLxikHIMTW+inmzLZgaZqeq
-	/NBUPA6uEnpyKRuDRH/tgzFgReiv8BsLQ=
-X-Received: by 2002:a05:6a20:394f:b0:39b:ce4a:f397 with SMTP id adf61e73a8af0-39ef73957d3mr5381753637.18.1775072702701;
-        Wed, 01 Apr 2026 12:45:02 -0700 (PDT)
-Received: from localhost ([42.118.191.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76c6563aacsm635052a12.19.2026.04.01.12.45.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2026 12:45:02 -0700 (PDT)
-Date: Thu, 2 Apr 2026 02:44:57 +0700
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC GSoC PATCH] backfill: skip downloading for empty batches
-Message-ID: <lwsskrhd2prb577xrpcse3f7oureuztmp4kyegn4gziu63zvcj@h4pqpympiava>
-References: <20260331121204.787826-1-vikingtc4@gmail.com>
- <ac0GnzQgZMfu8aGL@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ERbtjLHn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vGjrywAD"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F2CBB7A0289;
+	Wed,  1 Apr 2026 16:50:29 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 01 Apr 2026 16:50:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775076629; x=1775163029; bh=yNmWlfAdUb
+	0+JRVzjQa/vibv77Mlx7KxF9nbKw1YzTs=; b=ERbtjLHnQnxmvFZEQFPgLYjDIP
+	vmpx3fANzdwenHmcCwyiKBsVRx43dhGk3zowQ4h3tRy6qX4/zGlD9jMQMef7xowP
+	yhF0ENi8tQ2tHa/0YFI3cXdG4/vrDRRHLEyP2+lHW0YAr1ZAwXUkswRCO3Kw2zqA
+	V9D42d837rdyPZbOpqyDFVL6LcvppRN+AghyEDGhU7uGZdzPpK3ENlkgj5MWKwzj
+	n50byqLFSXrorTk1Mrr0hKutlVyYnZqgiOaoFl3XKUX3PbSyynlZZg7dvfKMNHNl
+	KHDj8hSWAT7Dmj75AIL3GyUoE/+VLcEzJFSJQXVMW4oBzcJzkn6AsPPmZ2JQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775076629; x=1775163029; bh=yNmWlfAdUb0+JRVzjQa/vibv77Mlx7KxF9n
+	bKw1YzTs=; b=vGjrywADlNFiCETbIeaRu2HQWOk8bKcG4lBb+EvKPfoQUDl7mGi
+	V4I/zUDgmf3q6qRKEwzeOaVxGC0ZNS44d3zj8pfuTWAa01V8KLbNoqIRpL0yPsPV
+	V4STQvliBH+qgu3LTxm59bKUFFGdiW2SWtm8Qf+5fq42Y/k1AJmgvoLNpkePAVht
+	ZN/JJEdn7vzhCOiFIH3s9JZ3SFU6uzXoKET0GkUhoJeSm7dnurv4ihlSZV0bD0IR
+	AAAWFWmfXhOb+Qh+V8zBhVRunhPAASXSblYtpDKG6frCY9RTT9zO263ewJ8C3qng
+	YUpANmahYMCiw3zzJIw6aBHWyULmQXWk1rw==
+X-ME-Sender: <xms:FYXNaWDBM28d6eAvH4-SBdXh9EDB-RE0jgX4v2_GAf4Snx45HaT2sQ>
+    <xme:FYXNaXZ8cnhT2MAVcoh5MznUZx-PZQED6bmkTriZd9IMPAz2sZjBLWmXgrTproroH
+    86ceP8Wd6ThnCZeZeRe6KN7YK9Jy9u-dhNOlgR6wcRZNVw_FGWZww>
+X-ME-Received: <xmr:FYXNaR6Va9hIVcW66vZbP2m4qCunDBK_3YRyT6WhcvPud8olhYDH6Cw2vsWlG1rBKRksnhifr32dG7JNjmag7he8uajavsxrig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeguddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhn
+    khdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesghhruhgsihigrdgvuhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:FYXNaQacEM8IZeH1o71FLm6yTXX9eFM2QTvj2T1K7FY9G77DMnPMfg>
+    <xmx:FYXNaYiP3VTDai6EFvBQJUJFU8hqe5IGBKQsaE7JynHHeDKN3lpi0A>
+    <xmx:FYXNaZ-mpnYdy-lfRGMxoSBBRDVGuErjpSg2rN0HU-gS2Tb8IPFdlA>
+    <xmx:FYXNaboTdREn7zPnRvj_THLv2qd5zgPhEIGZ7cispIHM17x3J1sAXQ>
+    <xmx:FYXNaWx3gsC0f6JB3AKEIJXpt-kzbI1REmiXa2BbPIRWogH0_Pp1RdmW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Apr 2026 16:50:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Collin Funk <collin.funk1@gmail.com>,  Michael J
+ Gruber <git@grubix.eu>
+Subject: Re: [PATCH 04/12] pager: explicitly cast away strchr() constness
+In-Reply-To: <20260331234220.GD2328529@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 31 Mar 2026 19:42:20 -0400")
+References: <20260331233856.GA2327197@coredump.intra.peff.net>
+	<20260331234220.GD2328529@coredump.intra.peff.net>
+Date: Wed, 01 Apr 2026 13:50:27 -0700
+Message-ID: <xmqqh5puv20c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac0GnzQgZMfu8aGL@pks.im>
+Content-Type: text/plain
 
-On Wed, Apr 01, 2026 at 01:50:55PM +0200, Patrick Steinhardt wrote:
-> On Tue, Mar 31, 2026 at 09:12:04PM +0900, Trieu Huynh wrote:
-> > When git backfill finishes its object walk, it unconditionally calls
-> > download_batch to process any remaining objects. If the repository
-> > is already up-to-date (no missing objects found), this call still
-> > performs an unnecessary directory scan via odb_reprepare.
-> > 
-> > Fix it by adding a check in do_backfill to ensure download_batch is only
-> > called if the current batch actually contains objects (nr > 0).
-> > 
-> > To facilitate testing and provide better telemetry, add a trace2 data
-> > event for batches_requested. This allows us to verify that no batches
-> > are processed when the command is run on an up-to-date repository.
-> > 
-> > Add a test case in t5620-backfill.sh to ensure silence and efficiency
-> > when no objects are missing.
-> > 
-> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> > ---
-> > Need discussion:
-> > 1. Is adding trace2_data_intmax() the preferred way to verify this 
-> >    behavior in our test suite, or should we rely on redirection of 
-> >    stderr to check for progress messages when the progress option
-> >    is supported?
-> 
-> I think adding a call to trace2 only for the test itself doesn't make a
-> lot of sense if we already have another way to verify. But would we
-> actually see any progress messages? `promisor_remote_get_direct()` knows
-> to bail out early in case there is nothing to be downloaded, so the only
-> difference really is the call to `odb_reprepare()`.
-> 
-> Or is it? This part here...
-> 
-currently, I have no idea to verify the change, so I'm adding a trace2 here.
-> > diff --git a/builtin/backfill.c b/builtin/backfill.c
-> > index 0f31844ce7..67f9f28daf 100644
-> > --- a/builtin/backfill.c
-> > +++ b/builtin/backfill.c
-> > @@ -58,6 +58,7 @@ static void download_batch(struct backfill_context *ctx)
-> >  	 */
-> >  	odb_reprepare(ctx->repo->objects);
-> >  	display_progress(ctx->progress, ++ctx->batches_requested);
-> > +	trace2_data_intmax("backfill", ctx->repo, "batches_requested", ctx->batches_requested);
-> >  }
-> >  
-> >  static int fill_missing_blobs(const char *path UNUSED,
-> 
-> ... looks different. What commit is this patch based on? There is no
-> call to `display_progress()` on "master", and you didn't mention any
-> other dependency in your cover letter. Please note such dependencies
-> when you post a patch that has any requirements.
-> 
-I was submit another patch to support --[no-]progress option.
-https://lore.kernel.org/git/20260329152443.525493-1-vikingtc4@gmail.com/
-it should be based on master's latest rather than this change, sorry for
-the confusion, will rebase on v2.
-> But in any case, this here would cause us to print "batches_requested"
-> events repeatedly, which doesn't make a lot of sense.
-> 
-ack, but I wonder if it should be defined method to verify if it can skip
-when no objects are missing or not here.
-> > @@ -109,7 +110,7 @@ static int do_backfill(struct backfill_context *ctx)
-> >  	ret = walk_objects_by_path(&info);
-> >  
-> >  	/* Download the objects that did not fill a batch. */
-> > -	if (!ret)
-> > +	if ( (!ret) && (ctx->current_batch.nr > 0) )
-> >  		download_batch(ctx);
-> >  
-> >  	path_walk_info_clear(&info);
-> 
-> Please pay attention to our coding guidlines, see
-> "Documentation/CodingGuidelines".
-> 
-ack, I got it.
-> I guess a more robust fix would add the check in `download_batch()`
-> itself, but I guess both alternatives work. But overall, it's sensible
-> to avoid repreparing the ODB in case we know nothing has changed.
-> 
-ack, waiting for other reviews.
-> > diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-> > index a1a8d736db..d3cc4022bf 100755
-> > --- a/t/t5620-backfill.sh
-> > +++ b/t/t5620-backfill.sh
-> > @@ -221,6 +221,22 @@ test_expect_success 'backfill --sparse without cone mode (negative)' '
-> >  	test_line_count = 12 missing
-> >  '
-> >  
-> > +test_expect_success 'backfill does not request batches when up-to-date' '
-> > +	git clone --no-checkout --filter=blob:none \
-> > +		--single-branch --branch=main \
-> > +		"file://$(pwd)/srv.bare" backfill-up-to-date &&
-> > +
-> > +	# First trigger to have a full download
-> > +	git -C backfill-up-to-date backfill &&
-> > +
-> > +	# Second trigger to verify when already have a full download previously
-> > +	GIT_TRACE2_EVENT="$(pwd)/up-to-date-trace" git \
-> > +		-C backfill-up-to-date backfill &&
-> > +
-> > +	# Verify no  batches_request occurr
-> > +	test_grep ! "batches_requested" up-to-date-trace
-> > +'
-> 
-> I'm ultimately not sure whether this change even needs a test. We're not
-> changing any user-visible behaviour, we're simply skipping some
-> pointless busywork that doesn't do much, but that shouldn't really hurt
-> much, either.
-> 
-ack, can provide steps to verify in commit msg instead of adding a test.
-> Patrick
+Jeff King <peff@peff.net> writes:
+
+> When we do:
+>
+>   char *cp = strchr(argv[i], '=');
+>
+> it implicitly removes the constness from argv[i]. We need "cp" to remain
+> writable (since we overwrite it with a NUL). In theory we should be able
+> to drop the const from argv[i], because it is a sub-pointer into our
+> duplicated pager_env variable.
+>
+> But we get it from split_cmdline(), which uses the traditional "const
+> char **" type for argv. This is overly limiting, but changing it would
+> be awkward for all the other callers of split_cmdline().
+
+Yeah, it was the first thing that came to my mind that const char
+**argv is the source of the problem.  We could cast the pointer we
+give to split_cmdline() and drop const from argv[] instead, which
+may make the in-code comment unnecessary but the patch we see here
+is good enough.
+
+
+
+>
+> Let's do an explicit cast with a note about why it is OK. This is enough
+> to silence compiler warnings about the implicit const problems.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  pager.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/pager.c b/pager.c
+> index 5531fff50e..801ba392f2 100644
+> --- a/pager.c
+> +++ b/pager.c
+> @@ -118,7 +118,8 @@ static void setup_pager_env(struct strvec *env)
+>  			split_cmdline_strerror(n));
+>  
+>  	for (i = 0; i < n; i++) {
+> -		char *cp = strchr(argv[i], '=');
+> +		/* we know this is writable because it was split from pager_env */
+> +		char *cp = strchr((char *)argv[i], '=');
+>  
+>  		if (!cp)
+>  			die("malformed build-time PAGER_ENV");
