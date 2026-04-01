@@ -1,136 +1,118 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7314383C74
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 12:44:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C640199FAB
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 13:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775047483; cv=none; b=Bde0yU+VpMQabGd7dU6GzPxH/nwiYRMv+VoOr7T2Ek/WgC3jbvSpTNXd7RDGGVqhOdUAGMn/7yWgo0Hjh3u52chooNaoK3Bc5OQEffdhFeToBqxgcUTjUF9KTY6rVdfajRcbJkM23IYoF80wJcROTC0XwvrJWK3+GJAf0We8Hqc=
+	t=1775049444; cv=none; b=I58N24ulIuiaAEKnfY1D+b2gzEFIWcG/78ZOOEknC9H1yIkUMtZAliEWrMONZt/eyB7dgr1YLF8/vY9XnJRT0oR4rzNXOf2HCjN8WIzz26CwU1SWnEXi9saQYBY/8UvLetZOAE6wVJ3RvMnNiEqPcT0QGt+1bcMVhTzP4g6C7ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775047483; c=relaxed/simple;
-	bh=518jIDFWA3WCq9Xbdz65DYC7HPA1M18BMYw7lAoADTM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pN/IEizBFWrB/rgKkz+xdeTsTWIecxUkPPgirOPTxziVttvJBEi7LpziDheYxJz60rymeY8bAiAF79G+1z1Slp1spL5RRqpkaFAkXPfy0+R3oSFqhOYqA7K2q5wyGPs8QDYD0SABZjA1qKa57gr8mNJ9ZiS4Yw7eOeno6VguJrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KI71eNEs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tsf5PEId; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1775049444; c=relaxed/simple;
+	bh=B2ZNi1fAmt5UDyUGGbHZcsfTWG/WRLFrPP85ePotv7c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O953GSkaqLrLAloxs8TAECwS7DOeMhohz3Vmyf8tPBbhAhTNDK1kd/kKKjiA0Fzig4ojgAPrWQedf4gIPNblwrMl5xWrpkXvcU3ZMdNbXGAnTx4h1QV3qKj9SdB67lhz1+PoUtx4pukje3vrpJM8vhaP33Qbmtd/c3mC5MujUOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nFrdjhYu; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KI71eNEs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tsf5PEId"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E4CB414001B3;
-	Wed,  1 Apr 2026 08:44:41 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 01 Apr 2026 08:44:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775047481; x=1775133881; bh=d6b0Svv3dn
-	XocP1ZtC2RxDvUsxgyUW8o4MO8lwxlB6M=; b=KI71eNEs5MPqLE4HgkiHYYbI4b
-	uyyuOlt70c1PBgQ0r5l+93gxdUDH479zg8MSEOqGku3DVaoSGFI1IhnGnnqXuDDX
-	dJ5CM9hj+jw4/PzT1w7SlmodKBgCDTRgF7kyHy/2ZfPJtz4crqyTsIV0Kbxs/Hyy
-	MvAJLBcXBeeaLVRdCgkVykiT4CBLaO/Zf4TwjL8U1vFibLaDf0H6x2xW1lGE9voV
-	1/3lrQBHLCIW+OrD4cTNZSnL+dpVGlVflfRv0Bf5Y2QX2DQ6snvFkZZwKBTJ5AiZ
-	jP3bZPuiS3yzDmkDdS2eZ2cpFHDgzhPwaeDNgCEVf1w4w406SjmwVvOvNVWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775047481; x=1775133881; bh=d6b0Svv3dnXocP1ZtC2RxDvUsxgyUW8o4MO
-	8lwxlB6M=; b=Tsf5PEIdtKxlM9WUgcW8i8sQc7hNgm4l8ioBkoqYptZsjusrcKK
-	oHbPz2vqcnNJlfC+bYRCh5XuHnviMpuf57eqrW+Y8q8cwCyUZ0mBt/4HzeuA7goF
-	QciKDhTXTD5w/VFzh2hnWJ0PmtvR2Xc3BYGyxHqREfY9sz93GPr9uMqFHqKlPY1v
-	ynn8KqkCH9e00zaeMdE57ymxLiKn6Wj5TDrreV5sQsyV0u3VDOTRTJvQ7Zm2+SoX
-	NEoy8kVDdqyPUz/Y6scJn5p860uaSyTv0dWN0mGNYuzlh7W6wc3K5Df25TqRvy3F
-	OSXjVR4uTjk/ufGlruWIU0dfN2jF2C/zKfQ==
-X-ME-Sender: <xms:ORPNaZNZil3tsdyniBXODuefE-OLdGXBwN3ausxeKvc7HFjxGbAQpg>
-    <xme:ORPNaR_VeQbfYAeJR_08g_u5dWF1JN1BFP4YWrzrl6LWBpgpl2G6WiQNaXeTa_QJz
-    aSDVE_NHSKFNVfK7neyRKSAoEvQGWBTdtizUhAiIaJmZtP7DIfm>
-X-ME-Received: <xmr:ORPNaV6ONsarGqVew6jlnlp7bnK6LkMJjX1ltq75xMK877_ok8jqjj8p_IUUOrFQ_Sp0MPy7ziQyk2qbATmUK8_K0XVhxd2cLMR5juSabEg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhephf
-    etueeukefhueehffffgeeitdfhleeuleekheevleelvedvvedtkeelveffgfeinecuffho
-    mhgrihhnpeeguddrshhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehmmhhithhrohhvihgtsegsvghnthgtohdrsghiii
-X-ME-Proxy: <xmx:ORPNaQ1bpVMJOrdWRdahzdUshJEyILDgacNoFTliMCTvQ3keHVT5CA>
-    <xmx:ORPNaUDw90zpzImd01n-AibtKCspBWBXrDLOvVxtz1f_KUSSyMRuJg>
-    <xmx:ORPNaa22AiDBem5trZ-_kEmV4u296HrBr4FFhJZUHrgGwNrpGEXk5g>
-    <xmx:ORPNaWvoV1o_HMl7l9yX3vbAWZorHrAUzHnxXbK0FNf27CvABQQoYw>
-    <xmx:ORPNaQx48S5JRtlifeEKZgLEIQU-LUkYWN0wmdCoiPfv_upMj_woCVSx>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Apr 2026 08:44:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ae895020 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Apr 2026 12:44:39 +0000 (UTC)
-Date: Wed, 1 Apr 2026 14:44:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Miljan Mitrovic <mmitrovic@bentco.biz>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Cloning an empty SHA256 remote creates a local SHA1 repo
-Message-ID: <ac0TNM2l1r_cgwYj@pks.im>
-References: <DB4PR03MB101069CF70418ABE11AAC1CF3C850A@DB4PR03MB10106.eurprd03.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nFrdjhYu"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4852c9b4158so56454355e9.0
+        for <git@vger.kernel.org>; Wed, 01 Apr 2026 06:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775049442; x=1775654242; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cw/gXvU+RVMF6do4f+oxAKdsAo36CfYLWA65bmhEbPI=;
+        b=nFrdjhYuQnkoVumaBsNe8tQKRacyGxkGz5ESTSNn1jczKdXdsR5x/XPAzbQV7IRwa/
+         ooTgnGIQSCU9L+HQT+x9bAJibdlNHxGbc3o2lIWq7z6BzxnC0k5x/opNixMYttLifMQ/
+         LZGtssMRVQS+XAv95wm9FxE+DU7EIlYH4scPN2+6SmSMCaDb4T2xrjtHmLez5/Anfjb1
+         etEuv2dGII1u/2A82PSUzk12aU14Sx8AjDhsI3Ic5YtmgeeeJXKRtwB22Z5NwBaNUNqw
+         fXOM2qJ/Erjb+/ruyoFwexGOVJoB/eNGlUgy/i6nKotHJ3JqOPXX/RRZE4uhoC3uYbjN
+         CKBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775049442; x=1775654242;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cw/gXvU+RVMF6do4f+oxAKdsAo36CfYLWA65bmhEbPI=;
+        b=el1RcClcPx5wPY7w9tUJIyHbvR0j4740wkaVPQxT969uvEEPmK7L+BxF9X0U8jW6sM
+         NlX682dWV28RHEa7zSEIbp8toxaojTzipFeNRA5GvrkEJKPL73qf0JtHkUi5Nl3TAOn7
+         oVCqAzeLAD1LMaq7Lp87YHxK1/v+V0L35r96o3/dSqk+X79EzN44b9T8f0WcL2EB9pGx
+         dOlJrUpZQEFqefSiVEeQ64CykwH/77GSVeyS3onQHS0cHJhQ94NoG+erDHNdokxNJIWH
+         EHeVxy8HuXiI9WyBxNx3eE5GmmHm3ZwuNS3AP6MeSKccfKBe9uD5GLV3iK9v2JmN+mOa
+         fr8w==
+X-Forwarded-Encrypted: i=1; AJvYcCWQog0yNv1He76THA6v/UtIAAhlvgrhKpbirIpwQCnWSchPXns7xZ6Qotg5tYi09ELRZMQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynuFqGiTnSmXqUmJmfaagQQJPf4RleQN6TOae+6mcWy6TQ91av
+	S2U17Nj5ZKVBPACJHlVbR3BXpRi//zBl6mcx7E8wRnpIh2OnUH0CtRwFpBXdOA==
+X-Gm-Gg: ATEYQzy7NAljnJSoarlDSYDGNzf0mtT9F19t0OOgu21xKazmmOO/FZYbCK+Kg39tOjQ
+	jEMJo/lmJQolP76duyVN/8kjo2AUVKv/fsJw7GKhnlxpfCD8Mb5umBvr5bHOi8niG4OU84PfeIk
+	OxonG+LEoX7mBXv9VZZOkoiFUPLxHQVvXoysmht0ljLNO6QkE/0wD8Cj4CywxkFu+N+mPcdS6St
+	Xt12rDPCQal96GPI4EsWs/pBqvT1mvzcNc8MqmGrnYe8E95vnT6PGS5NaCRlNkfnmaoRUgLH9Sp
+	6aqkwfPePJCElHdYbozzyRSwRXmOfCJPpWHOI8MnmycG6hPiCffspM+Wiw7DYkUWmoLmoLfCoPw
+	jWA5BGZSKNyUBpgUkgysVPUDoD+b4M/Z12w9flxaazpJUOuZ7AXBBMbfTUNSy09gL8O1r6gJZH5
+	HHnhSg8Asdllzwe5p/BIxeQb8fZ4TKfEbp/jfHT5z34X52ZkRL3AT5AtMJw5PEUNDWsKAZOr5Lk
+	q1erWxfx1c=
+X-Received: by 2002:a05:600c:354e:b0:485:531d:28b9 with SMTP id 5b1f17b1804b1-4888358b4d0mr55815775e9.14.1775049441361;
+        Wed, 01 Apr 2026 06:17:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:392a:d0de:96a3:bdc9? ([2a0a:ef40:7d8:fa01:392a:d0de:96a3:bdc9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c769841sm57096795e9.7.2026.04.01.06.17.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Apr 2026 06:17:20 -0700 (PDT)
+Message-ID: <14a417c6-fc80-4a7e-993d-57fff10896f8@gmail.com>
+Date: Wed, 1 Apr 2026 14:17:20 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DB4PR03MB101069CF70418ABE11AAC1CF3C850A@DB4PR03MB10106.eurprd03.prod.outlook.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/12] skip_prefix(): check const match between in and out
+ params
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Collin Funk <collin.funk1@gmail.com>, Michael J Gruber <git@grubix.eu>
+References: <20260331233856.GA2327197@coredump.intra.peff.net>
+ <20260331235017.GH2328529@coredump.intra.peff.net>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260331235017.GH2328529@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+Hi peff
 
-On Wed, Apr 01, 2026 at 10:51:49AM +0000, Miljan Mitrovic wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
+On 01/04/2026 00:50, Jeff King wrote:
 > 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Created a blank remote SHA256 git repository, cloned that repository locally using git clone
-> 
-> What did you expect to happen? (Expected behavior)
-> I expected a warning I am cloning an empty repo but get a blank local SHA256 repository with remote set up.
-> 
-> What happened instead? (Actual behavior)
-> Warning was there but the created local repo is SHA1. Commits then made to it are rejected by remote. And there is no method to convert a repo from SHA1 to SHA256, even when its blank.
-> 
-> What's different between what you expected and what actually happened?
-> I expected git clone to create the repo using the same hashing algorithm
-> 
-> Anything else you want to add: I know this is a fringe scenario, but it should work as expected. Now that repo's have roadblocking init settings, the important ones should be passed on to clone.
-> 
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
+> +/*
+> + * Check that an out-parameter that is "at least as const as" a matching
+> + * in-parameter. For example, skip_prefix() will return "out" that is a subset
+> + * of "str". So:
+> + *
+> + *  const str, const out: ok
+> + *  non-const str, const out: ok
+> + *  non-const str, non-const out: ok
+> + *  const str, non-const out: compile error
+> + *
+> + *  See the skip_prefix macro below for an example of use.
+> + */
+> +#define CONST_OUTPARAM(in, out) \
+> +    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
+> +#define skip_prefix(str, prefix, out) \
+> +	skip_prefix((str), (prefix), CONST_OUTPARAM((str), (out)))
 
-This was a known bug indeed, but we eventually fixed this by announcing
-an "object-format" capability that tells the client about the
-repository's object format, even if it's empty.
+This is clever but it changes the behavior of skip_prefix() which is 
+documented as not touching out if it returns false. That may not matter 
+in practice but there are nearly 600 callers so auditing them all would 
+be quite an undertaking. Elsewhere there was some discussion about using 
+type generic macros to fix the warnings. That would be more complex as 
+we need to check if they were supported by the compiler but it would 
+avoid changing the behavior.
 
-> [System Info]
-> git version:
-> git version 2.39.1.windows.1
-> cpu: x86_64
-> built from commit: b03dafd9c26b06c92d509a07ab01b01e6d0d85ee
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Windows 10.0 26200
-> compiler info: gnuc: 12.2
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): <unset>
+Thanks for working on fixing these warnings, your approach of trying to 
+fix the underlying problem rather than casting away the warning is very 
+welcome.
 
-The fixes required for this have been released as part of Git v2.41. So
-once you and your server run at least that version it should work as
-expected.
+Phillip
 
-Thanks!
-
-Patrick
