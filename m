@@ -1,155 +1,155 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4D238A73A
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 17:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF94B47DD76
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 17:41:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775063569; cv=none; b=G6lfLHRKgYUkTBnYKRtZbMk41DbvzXD57aSERs/BdEbqExaWi7MamGy1GxDG3IZ8JeOqi0v/FSZ80vvMHqEdc4EWPHsxwDRzL7ia820nWKZH/IqEx+4/HDOky5tXJql/elq3IZEDGpqsAkXh9WTgJNQ0y8claoHwSG1Ucrt6lPs=
+	t=1775065272; cv=none; b=Bbl1CSyYtXwDWu4qwcIGL6Cl8PM50QgvwF8gmNSbqJ+PUIyrLhwel3NoFUmZIwe33aPM7Hlvi2Fdig5Ch0iA+Nipcr3J0Jf5bLZr1kG3f0zwMPms6jXv6GxCBmelTqU7uD5OdlncBKt3h5Z5WyHE5Wwldm4g1lgaQkhvB5f/5Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775063569; c=relaxed/simple;
-	bh=bSmBNy8k8zVLK5pfwt3QJ3G/Fv86OM/FkZsOv5Qv/FQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWgRoYYCjsIUm8F87P6QcDPBBkDJdd5IwFTnfKypgeC9FQrz1AiuC/T+fvC0e139I78upEO6ovuP5dLqzfrE31oKvsKIYFNR3D4Ijzhx8+P3cO6qkC5qim+zWBuTX0ztGYyT6IYJNuKWvZ6traj/1kj8qcKOYn+TWIbggjD8Wjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HK1VN6AP; arc=none smtp.client-ip=209.85.160.54
+	s=arc-20240116; t=1775065272; c=relaxed/simple;
+	bh=Ibd3rBK7Ieh2qhTJ5fyRNoJuhojYqiW1YZPuPKO4DAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=bZXV2vtpTbEhf1D7qgmyYtmScJf8laVSPJJLPLU4Lm7F3jDL1gy4Q0pPiIH/MOa0ZCcRitwX2nz4GoNJ5g+Gj+kpAlYcrwxuS4QoLbLsP+veiKIpxOFClzBIxxjx/zbbnIMWVJTzxRCrwwGpXurHi/Uxcy32pwTkM6TBgqLNXTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OdpNyaLA; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HK1VN6AP"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-40438e0cba6so4499301fac.1
-        for <git@vger.kernel.org>; Wed, 01 Apr 2026 10:12:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OdpNyaLA"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2b249d6ba0bso2171385ad.2
+        for <git@vger.kernel.org>; Wed, 01 Apr 2026 10:41:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775063566; x=1775668366; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KMSsme7IY6vT4HlvsfRM4eERQk7wvlp5eIvDhL6cqs4=;
-        b=HK1VN6APxesibXNcib4Mu4UAD84CkMjEYYSGUGO7nEekzfanWgmeqe5R2lgSmp8nxD
-         uk5obbWCgjUe4DT92hZ213xfjvXOqAVF7FynPPvZP8SDNW9WEOv1G5Z8f7Tvk0zTSDcK
-         XwMvTUF3aMojZ5ExI6ZbHiIGSgudjlwftxxaMSQdB3F9h764gDvf6WrAWw3RoeVP5ods
-         XbsiPyLAiyk7UbBDeYiRM9VLU8rp3dlg4Zdd9Kl/WqiJKP6vpxU1Wh4CwW+SvAKH3DqX
-         mJhUOpcLp76wPhZWxAGhC5o3YQscBf951t3EjdQUsfXJJIDKYNh+fbI7A5ZmkgPThejb
-         0rpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775063566; x=1775668366;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=gmail.com; s=20251104; t=1775065269; x=1775670069; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=KMSsme7IY6vT4HlvsfRM4eERQk7wvlp5eIvDhL6cqs4=;
-        b=sGe9EyhFUnhQz0/W4/xBs6T3TlbcB32CVQXp3paC5bTXVktB2bNEWTbj4ioPvy3BtK
-         xOMxwbrRRKSZ957nIBOb3LUT1+D9wAsgQkoJgTmgnH2tlVzRgc/a7N27PVG38N/2px80
-         W6mFDtG7CgOD1iPPeVYcLT65UUs4rEMyMTrnxIzlqLSjt0Cj1inxKS4/sjH+wfIWmjO9
-         aZ57i2XKzfj7QGTuzbzJQGgvNT6HPII7d9mF5cOE7dBxjJQVBwXxpYBZLqYZ8vZS/F4v
-         oRdWk9Gw0LtnzJ2xz1JItI3nqXin76Xn5p1rRET1NtkZ49pwLOsdvx6dX/t8NCzoTrbg
-         +h0w==
-X-Gm-Message-State: AOJu0Yzwd49UL/397MHTVb57FSNYtT7oR3gPdkAUXJCQLbNnoC5VTTv3
-	oD6cN1mht5r6RG/Vtl5prk3dIzC0sNYG35IaDo3i5D16OROyJhPXJIkDXfaulA==
-X-Gm-Gg: ATEYQzxYzYKovVxsTVedt27MQ3ruXoy43bxf5rzYcYmgFXrsLEWRaPZiiW2MF1M2T3m
-	jXPrlfPkN//p6fkim/YiVqA7pHhZpbBWc9N4p1wbRctMBiMEf5j3Va5fD0PnmnPDBO4B+7sWC+C
-	/0O8ODfq46hasggXl/H21DzB6ZAQNGRTPYexL+YR20RwVuKcE3s3eDvDMx0d6gAQay1+JLExINZ
-	wZj9Zu+7gmh9nsZO1B9QyqzIt/SOLTIrnrcVA4ZOE/fyW8R55VJoXBzU3QZYkVzE3OzNOtZGxo1
-	Em0FTryywbXvlVmmGmablkZyIezBvPYE2+JrO6BlOWdssuZ3U6QU/6As3h6+/bbG9okpETxqd9h
-	hsevpVgHbnfboVWFzbTdsUH0RiwNX5FVFT2iIiNLDbk/EI4QUCokruP1c+5Ge/lwlNQYbIU6dtc
-	0+auFT1klgqqQm1Fqh4joJCaoQDi5aA+YvtPpZ7dWuYL2s8kSL2UnMs5XKatM=
-X-Received: by 2002:a05:6871:8314:b0:409:8473:d76 with SMTP id 586e51a60fabf-422cfca6e82mr2614034fac.18.1775063566265;
-        Wed, 01 Apr 2026 10:12:46 -0700 (PDT)
-Received: from Mac.attlocal.net.net ([2600:1702:74a1:4770:a4f1:5ce8:780f:fe5c])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-422eaf94eccsm256464fac.8.2026.04.01.10.12.45
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 01 Apr 2026 10:12:45 -0700 (PDT)
-From: blindmansion <blindmansion@gmail.com>
-To: git@vger.kernel.org
-Cc: blindmansion <blindmansion@gmail.com>
-Subject: [PATCH] read-cache: disable renames in add_files_to_cache
-Date: Wed,  1 Apr 2026 13:05:02 -0400
-Message-ID: <20260401170502.35877-1-blindmansion@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
-References: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
+        bh=NgL3YKUk3B+rTb2ZOFDVY5YnsLYi7JvZKFAZ5dyzYag=;
+        b=OdpNyaLAoW6jUI+ZXmgjNe4KznKIOhv1aremUmXL9ExroMrc/neA5KRxt97915ZJKA
+         uemaudQuESRlRrHZpS/xd07B58+vC5X+y4HiL3ujpmI9SF54Ua58n8wziAVZ1uj0RE0n
+         CY0IP1jqdZZ64r9KKOPQqByCmd8SwmCSp4DZFnWlIDWJeWciJPY3ihrsKZ6zaH2b2bLQ
+         QnO3ICCPffmQFe9dXvThT3r5BgdQJBzs6RUU91OldnGIQH39pSm6UmYjvLEKXIvWE4Xw
+         zL2ZgbIBP7eJHUXlu+NlqSnYFvPtYg0CD7rCzzJzgvtAlSwt1jMhnsKv/AHxlMQ3FaQY
+         +LVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775065269; x=1775670069;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NgL3YKUk3B+rTb2ZOFDVY5YnsLYi7JvZKFAZ5dyzYag=;
+        b=MvVcCftttfoDzr+OaAUiw4LomZaKgRsPP+QhWe/CtI3djOZzC+rkn2cZlhgEBKvXG9
+         fl/yDoe5+4nxMGKFi752FepIvde3NeVAmjKs8aJn118Dw1vVlVSkJGuFHKnOgu6yyxsF
+         3wVXlmKzO4jwul6wD8WJlUogf0iM04ORbda/NDxKMAnr9IjcNT7mrtHC41Wd+le2GPau
+         HbQX8H/1jKDWBAeM52HqGFKMbtyZn/T2nBuxCp/IWlr8p/Omo6swdaLGIgG4wcgKKRA1
+         IU2+qVnbNQfktMYPUxYFLHVGDHpCEgEF5CtM0o+wXwT9XJLtiktY2PmMCMRHndhRwunq
+         sRXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVEB1PYvM5vsswMWf6fPNmV6SO47OgU5/EcYsJIUG4DF2brImLq0pvYt9Mx4rQa3sarmrc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjL+8F5X1bsKs5frTzZ8y18+xvQ+fJqWHqcJo7MxeSfIga3III
+	dVS3LgxmfNe0NLFN8u5e2kzcHS/Bddj8iGjxhQE3TMNeP/ocEDB/IrPHnYrLehFX
+X-Gm-Gg: ATEYQzxk+hUZNOxHOngUoUYHwBCCtu5W1Rcld91rrFE+W/8dEqE2rFUwa3xYhPrFVdY
+	KQAnN8Nro4QCN18tnkFy3esRG0D6CmERbQAoP4Rg6QqGHrRskx8760XxIC1EFDCdi6qCK4+nnIb
+	wEpK1NlIREa7xB01Zs/m4AbN5ehGOfXRK3HdyahY0nEsHwEHEeGhwwBYHB5Nj2pECACFMfW1Yj1
+	VEeLHiiTJXlYv2lROqg4QRxIO2zBB96StODxw/9vnCdSbO3XhvqeAAGKwC99MiY+xzcLFQDoM0/
+	XNOwl+4dsFY9FclZ2dfNAGK5YNBnXh7+1R1fOs6hie5iDAWk35XaHfJidDNFzd0tmUt5sIo9G1L
+	iI3q0i2LJN7XzYx83WFWyca7K9sZ7wYw3hmLKERWMXzcwI5vrF3v5UoSOGS5S2VxZluF942J3i0
+	eXVmbkuC+bsGsitaXXZEwn9hSjuiQCcp9YS+NCi3i/AKNTpdH4LUliPRiQeI7xnOuAeRET/359Z
+	EAMjUsy6Ho=
+X-Received: by 2002:a17:902:fc85:b0:2b2:61c7:165b with SMTP id d9443c01a7336-2b269d14994mr25034785ad.7.1775065268680;
+        Wed, 01 Apr 2026 10:41:08 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b274757fa7sm3710635ad.21.2026.04.01.10.41.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Apr 2026 10:41:07 -0700 (PDT)
+Message-ID: <12070180-b0a1-4dcd-b333-3c42505aeecb@gmail.com>
+Date: Thu, 2 Apr 2026 01:41:03 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hash: introduce support for the MD5 hash algorithm
+To: Toon Claes <toon@iotcl.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20260401-pks-object-format-md5-v1-1-1b8f0be23713@pks.im>
+ <67f10f21-121b-426d-abee-32d034f84fe7@app.fastmail.com>
+ <875x6aeqsa.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <875x6aeqsa.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-add_files_to_cache() refreshes the index from worktree changes and does
-not need rename detection. When unmerged entries and a deleted stage-0
-path are present together, rename detection can pair them and rewrite an
-unmerged diff pair to point at the deleted path.
+On 4/1/26 21:47, Toon Claes wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+> 
+>> On Wed, Apr 1, 2026, at 12:42, Patrick Steinhardt wrote:
+>>> We are currently in the process of migrating to SHA256 as the
+>>> alternative to SHA1. But we believe that proposal is misguided.
+>>>
+>>> When Linus first announced Git in April 2005, he was explicit about the
+>>> role of SHA1 in the design: the hash is used for content integrity, not
+>>> for cryptographic security [1]. Given this foundational principle, the
+>>> collision resistance of the underlying hash algorithm is essentially
+>>> irrelevant. What matters is that identical content always produces the
+>>> same name, and that any corruption of stored data is detectable.
+>>>
+>>> While SHA256 technically provides stronger collision resistance than
+>>> SHA1, it does so at the cost of 64-byte object names instead of 40, a
+>>> 60% increase in verbosity for no practical benefit.
+>>>
+>>> As an alternative, MD5 satisfies the requirements of collision
+>>> resistance and deterministic checksums perfectly well. At a length of 32
+>>> hex characters they are shorter than SHA1, roll off the tongue more
+>>> easily, and have been a beloved companion to the software engineer for
+>>> decades. Furthermore, it remains in active use throughout the ecosystem,
+>>> in checksums on download pages, filesystem integrity tools, and
+>>> countless systems out there, which overall proves the point that they
+>>> aren't inherently broken.
+>>>
+>>> Quoting Linus in [1]:
+>>>
+>>>    In other words, I think we could have used md5's as the hash, if we
+>>>    just make sure we have good practices. And it wouldn't have been
+>>>    "insecure".
+>>>
+>>> Let's do so and wire up MD5 as a new alternatitve hash algorithm next to
+>>> SHA1 and SHA256. Repositories can easily be initialized with MD5 by
+>>> saying `git init --object-format=md5`, and tests can be executed with
+>>> the new hash by setting the `GIT_TEST_DEFAULT_HASH_ALGO=md5` environment
+>>> variable.
+>>>
+>>> [1]:
+>>> https://lore.kernel.org/git/Pine.LNX.4.58.0504160913180.7211@ppc970.osdl.org/
+>>>
+>>> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>>> ---
+>>> Hi,
+>>>
+>>> I guess the title says it all. Let's correct course!
+>>>
+>>> Patrick
+>>
+>> I’ve been waiting years for this! Thank you so much!!!
 
-That later makes "git commit -a" and "git add -u" try to stat the
-deleted path and die with "unable to stat". Disable rename detection in
-this callback-driven staging path and add a regression test covering the
-crash.
----
- read-cache.c          |  1 +
- t/t2200-add-update.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+MD5 sounds good... but Caesar cipher is clearly much better. This 
+approach offers O(N) performance, zero memory overhead, and — most 
+importantly — I want to be able to remember the key by heart.
 
-diff --git a/read-cache.c b/read-cache.c
-index 5049f9b..d938abc 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -4049,6 +4049,7 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
- 	rev.diffopt.format_callback = update_callback;
- 	rev.diffopt.format_callback_data = &data;
- 	rev.diffopt.flags.override_submodule_config = 1;
-+	rev.diffopt.detect_rename = 0; /* staging worktree changes does not need renames */
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
- 
- 	/*
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 06e83d3..56c7e55 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -200,6 +200,45 @@ test_expect_success 'add -u resolves unmerged paths' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'add -u avoids rename pairing on unmerged paths' '
-+	test_create_repo rename-crash &&
-+	(
-+		cd rename-crash &&
-+		test_seq 1 100 |
-+		sed "s/.*/line &: shared content that is identical across both files/" >conflict.txt &&
-+		cp conflict.txt bystander.txt &&
-+		git add conflict.txt bystander.txt &&
-+		git commit -m "initial: two files with identical content" &&
-+		main_branch=$(git symbolic-ref --short HEAD) &&
-+		git checkout -b feature &&
-+		perl -pe '\''s/^line 50:.*/line 50: FEATURE BRANCH CHANGE/'\'' \
-+			conflict.txt >conflict.txt.tmp &&
-+		mv conflict.txt.tmp conflict.txt &&
-+		git add conflict.txt &&
-+		git commit -m "feature: modify line 50" &&
-+		git checkout "$main_branch" &&
-+		perl -pe '\''s/^line 50:.*/line 50: MAIN BRANCH CHANGE/'\'' \
-+			conflict.txt >conflict.txt.tmp &&
-+		mv conflict.txt.tmp conflict.txt &&
-+		git add conflict.txt &&
-+		git commit -m "main: modify line 50 differently" &&
-+		test_must_fail git merge feature &&
-+		rm bystander.txt &&
-+		git add -u >out 2>err &&
-+		test_must_be_empty out &&
-+		test_must_be_empty err &&
-+		git ls-files -u >actual &&
-+		test_must_be_empty actual &&
-+		git ls-files bystander.txt >actual &&
-+		test_must_be_empty actual &&
-+		echo conflict.txt >expect &&
-+		git ls-files conflict.txt >actual &&
-+		test_cmp expect actual &&
-+		git diff-files --name-only >actual &&
-+		test_must_be_empty actual
-+	)
-+'
-+
- test_expect_success '"add -u non-existent" should fail' '
- 	test_must_fail git add -u non-existent &&
- 	git ls-files >actual &&
--- 
-2.53.0
+To prevent unscrupulous individuals from directly deciphering the text 
+by aligning the letter 'e', I strongly recommend replacing all natural 
+language in the files and code with Japanese or Classical Chinese that 
+does not use particles.
 
+By the way, it’d be better to switch the transport protocol to carrier 
+pigeons. Don't any of yall keep pigeons these days??
+
+ >
+ > I can't believe we'd have MD5 before GTA6.
+ >
+
+Half-Life 3.
+
+Regards, Yuchen
