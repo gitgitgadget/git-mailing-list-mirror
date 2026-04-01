@@ -1,118 +1,106 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E2D3F8DE5
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 13:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F453F8DE5
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 13:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775051226; cv=none; b=AFHV4PAwdZxjLE3RmmqrKd4xUKcPn4Nu22k1+ulpk7xWZnNmVNDoSpQSqBirYN1YJYLgSJMw+VrPQR/dAmk+0i07KwwKVHKsBv91nPZc0Qz9weD74Dl2Y0JAPNcrBVfa4fQqR4ksm98Crpn9C7GBYiGU/Ldp4o9I4OcmNMNJbQQ=
+	t=1775051252; cv=none; b=tzoD8pql+ki//OPPdwkPEcYa4e8ft/3J0mHXOBFBdq03clDBrDzwqiMag1k2YuF8wplmscMiIw//nty37xd9kB2EJoEhV8dtfQWSRJyuw8MS2WRzjXLd5snb1lxVBSxRY75oeMv5h2U+lhRnhVvPEywpxiPBnDzbKeg/SVkJtRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775051226; c=relaxed/simple;
-	bh=A8ahYoMlz85aLrEzB5+edeXKPWAOmHt+F5I4MJ07JMg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N3MC6qISIj25797JtsuRC7sGyYj3CzVToey/YmEYZnGYWR7j13elypvH1Kss600PtEc9hAbrCpJVCetOQjMeBggKC4FSyhgOUq0maQv6vOl4sr/88e6rFa+S1ectwXuC5iVnODMAJYN1otZlMAifCBuqu8mMnvVYUYEW4i5I2ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sBJ5aOB5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tt8LW9j/; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1775051252; c=relaxed/simple;
+	bh=Iqc4tnwLiYDSEm5A4Fv6N03C3LT/f+lH2B+f8QzDG4I=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VRjPQJDo3eoSpc/mG7elKs26nJMW/3ewWDTMtbIZLTXAmGE6qKKOZmeYem34muqNqH6xETPsZCGJh2vZZevc2tpuHsaojilKdCnKthvMPveGeLZB/9czZF0+an5oCLTENX7plm1NCzajNzZCeUl3behcTyD2Rv5+2u6EJBboUwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=I7ab683m; arc=none smtp.client-ip=95.215.58.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sBJ5aOB5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tt8LW9j/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 66509140033E;
-	Wed,  1 Apr 2026 09:47:04 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 01 Apr 2026 09:47:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775051224; x=1775137624; bh=Ds7A9c78wa
-	Pi3pyF6hgjm4C7czX2MFPaO5JSQGOwy04=; b=sBJ5aOB5J1fr6plhSGQr5zrgp1
-	fEt3CmDB0JhTxcs9VVHboiVcDKPpruDG5Axgj6+1DIwZ+5KDM4J34S3kJ39l21D+
-	v3Y1CjLaYcaZFE8ZCwwuf/LXAMlgdONwZJ9fEAj+ClxHWGFPeuwRWTDTJh2U06IQ
-	eEzwL540wMVftIncLvBtMvqfV634qVACdBa2FWK4oDbCEgWd63pwP6jL67gIp7hF
-	OvaLukiUVT719y7ZswRkJy5TqytXHcH38tVE79sD2RnE/JvnJbBIpHBbO15+4EUk
-	ejEHoDpRrp/q2IABJQk+lvdW8IlhXHjK8hOBRPCOWmnuiXu7TF3zwZ2KY4Zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775051224; x=1775137624; bh=Ds7A9c78waPi3pyF6hgjm4C7czX2MFPaO5J
-	SQGOwy04=; b=tt8LW9j/2JbuhouKjxVmUr8WrFbojqEXW0ycG52zGXKiZyuK+lk
-	A/7Ni64iXjknMc2uAmgSU7xgAGi8oEK+lq0iscC0S8hmolQJDL5RzIzDitjaTvcY
-	CVaIpL+EFYTlisDoi1RwJ30CBwBLK95DCovKNGuNoCYE8X28KiY7teq1XiXljsR5
-	Iv3oK38H4lUwpSOLjP/X4X0GrTstxDDiEId3sbQ1YLN6bGkwrmvUb4EAZ38Y4LBd
-	urGHe3nw4XVmcaftzGSlftQakOF0FhuJBI24Tf+nYNG98OY8ZtiOvlBnNcycu6US
-	EDEmoq5d1CfZlX3EuJHOHBFI438pzwwF0Tw==
-X-ME-Sender: <xms:2CHNacJg1yQOPSePBoQvdtUmcHasCqF-i-y98G2i_gjWGm6rMITNvw>
-    <xme:2CHNaWuMZA3QlqypC1rDJGEZD4XmTjAulMoyDEL8qrya-xWyK9p02u4clvjNWvupx
-    0qdGq_FAmVOuFnYn89Qo3jmxCIVXchnxac2MeqE9wxpiQeiY-ne_g>
-X-ME-Received: <xmr:2CHNaZT5ux99foH2oVjeTADwCsrBdNBwZzO1Bh02lkFojRmRSVHUgljSRoyE5cmfrFxxP4I45Q91moJs4pqV6WPXQ-CGtFOTp202RE7lE7k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefvdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
-    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
-    uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    tgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-    pdhrtghpthhtohepghhithesghhruhgsihigrdgvuh
-X-ME-Proxy: <xmx:2CHNacNx9X7x3dHxYp_-foTIzLRHp-QbVD5ZfpEhTOR7JgaCezmszw>
-    <xmx:2CHNaebvENtNtTog6K_LIF8WCa7pTMLvNsv5za0byHDcgmklpiQRUQ>
-    <xmx:2CHNaWzcsaEs2Mw1P_KSQd_8qYYSGowYPC7elkPAfwdrBBXpJHactg>
-    <xmx:2CHNaZLIgJtgWD1h4hphbsWPW1XMc9LiNej7l4M6cwQKIaivKZlgNQ>
-    <xmx:2CHNaauw9qt8B_rQh4m5YoPIGR7OltyANvSltPux3xNkho8dYqZwRpkh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Apr 2026 09:47:03 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 06d55237 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Apr 2026 13:47:02 +0000 (UTC)
-Date: Wed, 1 Apr 2026 15:46:59 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>,
-	Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH 12/12] refs/files-backend: drop const to fix strchr()
- warning
-Message-ID: <ac0h0xwqLdX5u51v@pks.im>
-References: <20260331233856.GA2327197@coredump.intra.peff.net>
- <20260331235341.GL2328529@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="I7ab683m"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1775051245;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=U5hESXEpghGlRYTgQvBhdPh3EbixP6XgRmsKYkFJDwM=;
+	b=I7ab683mDXfOvoHGoqJNhZIAcF9asRBlORwFTombv4DLJaTmDHqaqb1HZ4RpyWXIU5JqUD
+	1hxW+sCskEUD8GzsAaWJciUrtTNm4UQwwUn8hKgSBb48qBxxjJ8czKBakUYo0/IE5WdCh/
+	ZLsPwyhtbE6YFeqV47mzc9S/KPP0ZhM=
+From: Toon Claes <toon@iotcl.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick
+ Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH] hash: introduce support for the MD5 hash algorithm
+In-Reply-To: <67f10f21-121b-426d-abee-32d034f84fe7@app.fastmail.com>
+References: <20260401-pks-object-format-md5-v1-1-1b8f0be23713@pks.im>
+ <67f10f21-121b-426d-abee-32d034f84fe7@app.fastmail.com>
+Date: Wed, 01 Apr 2026 15:47:17 +0200
+Message-ID: <875x6aeqsa.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260331235341.GL2328529@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Mar 31, 2026 at 07:53:41PM -0400, Jeff King wrote:
-> In show_one_reflog_ent(), we're fed a writable strbuf buffer, which we
-> parse into the various reflog components. We write a NUL over email_end
-> to tie off one of the fields, and thus email_end must be non-const.
-> 
-> But with a C23 implementation of libc, strchr() will now complain when
-> assigning the result to a non-const pointer from a const one. So we can
-> fix this by making the source pointer non-const.
-> 
-> But there's a catch. We derive that source pointer by parsing the line
-> with parse_oid_hex_algop(), which requires a const pointer for its
-> out-parameter. We can work around that by teaching it to use our
-> CONST_OUTPARAM() trick, just like skip_prefix(). Note that unlike
-> skip_prefix(), the function is not inline, so we can't just wrap it
-> using the same name (otherwise the actual definition would expand the
-> macro, which breaks compilation). So we rename the actual function with
-> an "_impl" suffix, and callers will all use the macro.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Fair. In fact, I was a bit torn with the other commits whether it's nice
-to reuse the same name. I guess what it buys us is that you cannot
-accidentally call the wrong function without the guardrails. Even though
-that's quite unlikely with the `_impl` suffix.
+> On Wed, Apr 1, 2026, at 12:42, Patrick Steinhardt wrote:
+>> We are currently in the process of migrating to SHA256 as the
+>> alternative to SHA1. But we believe that proposal is misguided.
+>>
+>> When Linus first announced Git in April 2005, he was explicit about the
+>> role of SHA1 in the design: the hash is used for content integrity, not
+>> for cryptographic security [1]. Given this foundational principle, the
+>> collision resistance of the underlying hash algorithm is essentially
+>> irrelevant. What matters is that identical content always produces the
+>> same name, and that any corruption of stored data is detectable.
+>>
+>> While SHA256 technically provides stronger collision resistance than
+>> SHA1, it does so at the cost of 64-byte object names instead of 40, a
+>> 60% increase in verbosity for no practical benefit.
+>>
+>> As an alternative, MD5 satisfies the requirements of collision
+>> resistance and deterministic checksums perfectly well. At a length of 32
+>> hex characters they are shorter than SHA1, roll off the tongue more
+>> easily, and have been a beloved companion to the software engineer for
+>> decades. Furthermore, it remains in active use throughout the ecosystem,
+>> in checksums on download pages, filesystem integrity tools, and
+>> countless systems out there, which overall proves the point that they
+>> aren't inherently broken.
+>>
+>> Quoting Linus in [1]:
+>>
+>>   In other words, I think we could have used md5's as the hash, if we
+>>   just make sure we have good practices. And it wouldn't have been
+>>   "insecure".
+>>
+>> Let's do so and wire up MD5 as a new alternatitve hash algorithm next to
+>> SHA1 and SHA256. Repositories can easily be initialized with MD5 by
+>> saying `git init --object-format=3Dmd5`, and tests can be executed with
+>> the new hash by setting the `GIT_TEST_DEFAULT_HASH_ALGO=3Dmd5` environme=
+nt
+>> variable.
+>>
+>> [1]:
+>> https://lore.kernel.org/git/Pine.LNX.4.58.0504160913180.7211@ppc970.osdl=
+.org/
+>>
+>> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>> ---
+>> Hi,
+>>
+>> I guess the title says it all. Let's correct course!
+>>
+>> Patrick
+>
+> I=E2=80=99ve been waiting years for this! Thank you so much!!!
 
-Thanks!
+I can't believe we'd have MD5 before GTA6.
 
-Patrick
+--=20
+Cheers,
+Toon
