@@ -1,24 +1,38 @@
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89CB3B4E83
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 08:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08813BC69B
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 10:11:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775032590; cv=none; b=P6ru76rWx7e/7ETZeg83Zuq3QD9Bdk2OE5I6aNyO7Y8LJRkBaivPFBFBYwtoEIEnaKIjulnh1N41Z3Aufv02VHuWyd9ZK0JvO/DtJEbhadsByrtqt+FE9Bt6BQccavF6E7IC3TuUKenRfRARdR9ldL4u2dDaVmWc0kzL/UuJQBE=
+	t=1775038302; cv=none; b=ZwGLL5IvFFZb0UYK9ur7WDEYYUqlMe5KiYvo9MirUVo0vLn+kxFcrBC3haHIZ9x9tSA+cY1vVPiQAvDfvPy44ymO20dakj9aEYmHqmSG+Ga3FHhoPKrZ79+TbGHVCJq5yvGtuthiVMQ/Yj5nxCC8dzLpLX23CcsWbADsfNaXvqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775032590; c=relaxed/simple;
-	bh=9T66KtpwUSSGUDZK9tEzB21GEpBFYodS5ZXp3JPDq18=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Snddtnu6kQ3n4l1Xztnv6nCXCU7k6AuenEzas9JzAMOYxaCJE6qG9l8UdijQDkvizta2s/Uki2fgYmxM5CohzrtuH77qp9OZbH4Vcf2VwVFfUix2uXSsvkaaYUBzRlMrzSciwp0eLe/2GhRpgY9xk26BKIZUmZzgxeagonVAmXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4flyxv1x49zRq2F;
-	Wed,  1 Apr 2026 10:36:19 +0200 (CEST)
-Message-ID: <bdff0a5d-b738-4053-9b72-08eba88156de@kdbg.org>
-Date: Wed, 1 Apr 2026 10:36:18 +0200
+	s=arc-20240116; t=1775038302; c=relaxed/simple;
+	bh=PKwvF8ZnJBJjIZVfHOMstpcauuSo+BmfehlQWEpAM8E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cvAq2TM4laaCWk16Tp4PB4QGs5sp3CXYlzcys/tLLpY/6K73JKdfHA7ZGu13TmY+Ok1+7UQQfHWDnNPpa+FRIJDidxDR7BqO8EdChfuMWkk2+dN1YSBayoOe3EjiKWUqpqnFwtZ2fqkwBAhuzSBuPNIHT0obzjwFspNrCuckkiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Yjvx9Wbf; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Yjvx9Wbf"
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 23A1A42997D
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 12:11:35 +0200 (CEST)
+Received: from [192.168.3.191] (unknown [92.173.128.58])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id C5F7F780368;
+	Wed,  1 Apr 2026 12:11:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1775038287;
+	bh=PKwvF8ZnJBJjIZVfHOMstpcauuSo+BmfehlQWEpAM8E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Yjvx9WbfthQoxXk9eFAOM0nk/lwCvO+2nT5vBQo3JufVHGQZVxb9MhGoCaW73eAOa
+	 +X0/x7fdBu1IY+l7kO4E4n4guo1aLfQEP5KRi2L9RJ75j0WJ84onJuZIu6BB1y/7aE
+	 Iw5t70AKQfaELlo+7wjdh5965Wv9fbONGrz7g4UsXLzz0y28bAJpSlJjRuft/ocMwb
+	 v9Gag9oXe+e7L3UAQGUsFd6eA5aKKc3gFg1yNGBPeWsstWMKuQeXofRy4lHL9RoXda
+	 43fuHGhYlUhlHXtcm0G0tM3xwy6/eJDssniripA6hMHft5IeoZluH+KNxXLGEHE9MH
+	 ITWvLdtu+WFaw==
+Message-ID: <025bbab6-0731-4df7-bc1f-a4969cb5ae13@free.fr>
+Date: Wed, 1 Apr 2026 12:11:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,102 +40,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [GSoC PATCH v6 0/3] graph: add --graph-lane-limit option
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: christian.couder@gmail.com, karthik.188@gmail.com, jltobler@gmail.com,
- ayu.chandekar@gmail.com, siddharthasthana31@gmail.com,
- chandrapratap3519@gmail.com, gitster@pobox.com, szeder.dev@gmail.com,
- git@vger.kernel.org
-References: <20260325174401.217577-1-pabloosabaterr@gmail.com>
- <20260328001113.1275291-1-pabloosabaterr@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260328001113.1275291-1-pabloosabaterr@gmail.com>
+Subject: Re: [PATCH v2 1/1] cat-file: add mailmap subcommand to
+ --batch-command
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Siddharth Asthana <siddharthasthana31@gmail.com>,
+ karthik.188@gmail.com, christian.couder@gmail.com, ps@pks.im, toon@iotcl.com
+References: <20260328203615.60402-1-siddharthasthana31@gmail.com>
+ <20260329082808.12609-1-siddharthasthana31@gmail.com>
+ <20260329082808.12609-2-siddharthasthana31@gmail.com>
+ <2060629.PYKUYFuaPT@piment-oiseau> <xmqqjyur28kn.fsf@gitster.g>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: es-ES
+In-Reply-To: <xmqqjyur28kn.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Am 28.03.26 um 01:11 schrieb Pablo Sabater:
-> Repositories that have many active branches at the same time produce
-> wide graphs. A lane consists of two columns, the edge and the space
-> padding, each branch takes a lane in the graph and there is no way
-> to limit how many can be shown.
+On 3/31/26 19:49, Junio C Hamano wrote:
+> Jean-Noël AVILA <jn.avila@free.fr> writes:
 > 
-> The limit is a horizontal truncation, each lane is cut at the lane limit:
+>> On Sunday, 29 March 2026 10:28:08 CEST Siddharth Asthana wrote:
+>>> git-cat-file(1)'s --batch-command works with the --use-mailmap option,
+>>> but this option needs to be set when the process is created. This means
+>>> we cannot change this option mid-operation.
+>>>
+>>> At GitLab, Gitaly caches git-cat-file processes and it would be useful
+>>> if --batch-command supported toggling mailmap dynamically with existing
+>>> processes.
+>>>
+>>> Add a `mailmap` subcommand to --batch-command that takes a single
+>>> argument: `yes` to enable mailmap and `no` to disable it. When enabled,
+>>> mailmap data is loaded from disk on first use and kept in memory so that
+>>> toggling back on does not require reloading.
+>>>
+>>> Suggested-by: Junio C Hamano <gitster@pobox.com>
+>>> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+>>> ---
+>>> CI: https://gitlab.com/gitlab-org/git/-/pipelines/2416081861
+>>>
+>>>  Documentation/git-cat-file.adoc |  7 +++++
+>>>  builtin/cat-file.c              | 30 ++++++++++++++++++---
+>>>  t/t4203-mailmap.sh              | 48 +++++++++++++++++++++++++++++++++
+>>>  3 files changed, 81 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-
+>> file.adoc
+>>> index c139f55a16..af32e929a8 100644
+>>> --- a/Documentation/git-cat-file.adoc
+>>> +++ b/Documentation/git-cat-file.adoc
+>>> @@ -174,6 +174,13 @@ flush::
+>>>  	since the beginning or since the last flush was issued. When `--
+>> buffer`
+>>>  	is used, no output will come until a `flush` is issued. When `--
+>> buffer`
+>>>  	is not used, commands are flushed each time without issuing `flush`.
+>>> +
+>>> +mailmap <yes|no>::
+>>
+>> `yes` and `no` are keywords, and you want to express an alternative, do it 
+>> like this: `mailmap (yes|no)::`.
 > 
->   Without --graph-lane-limit:
+> Not 
 > 
->   *   7_M1
->   |\  
->   | * 7_E
->   * | 7_C
->   | | *   7_M2
->   | | |\  
->   | | | * 7_H
->   | | |/  
->   | |/|   
->   | * | 7_D
->   | | * 7_G
->   | | * 7_F
->   | |/  
->   |/|   
->   * | 7_B
->   |/  
->   * 7_A
+>     `mailmap (yes|no)`::
 > 
->   With --graph-lane-limit=1:
-> 
->   *   7_M1
->   |\  
->   | * 7_E
->   * ~ 7_C
->   | ~ 7_M2
->   | ~ 7_H
->   | ~ 
->   | ~ 
->   | * 7_D
->   | ~ 7_G
->   | ~ 7_F
->   | ~ 
->   |/~ 
->   * ~ 7_B
->   |/  
->   * 7_A
+> IOW, shouldn't the closing quote come before the double-colon?
 
-After seeing this example, my first reaction was that this
---graph-lane-limit option would not be useful for me. The relationship
-among the commits is apparently obfuscated to such a degree that the
-graph is not a lot better than a plain listing without --graph.
+Oops, you're completely right!
 
-But then I tried on a few real-world examples, and the result turned out
-to be a lot better. The commits (asterisks) typically occur in the
-left-most lanes, and the lanes to the right are usually just connections
-without commits. This makes it more practical to just truncate the graph
-part, i.e., hide the connecting lanes.
-
-In conclusion, I regard the way the option works as useful, even though
-it is not the way of truncation I had envisioned originally.
-
-I discovered a small glitch, though. If you download today's gitk
-repository https://github.com/j6t/gitk.git, run
-
-  git log --graph --oneline --decorate --boundary \
-     --graph-lane-limit=4 465f03869ae11acd0..origin/j6t-testing
-
-(j6t-testing is a volatile branch and is 86848fe40b60ae58f today).
-Scroll down to line 166 and you see the '~' at the wrong place:
-
-| | * | ~ 9f0d1c2 gitk: sanitize 'exec' arguments: simple cases
-| | * | ~ 6eb797f gitk: have callers of diffcmd supply pipe symbol...
-| | * | ~ b966b73 gitk: treat file names beginning with "|" as...
-* | | | ~ 0c8be6f Merge branch 'ah/fix-open-with-stdin'
-|\| | |~           <-- this is line 166
-| * | | ~ 8e3070a (...) gitk: encode arguments correctly with "open"
-* | | | ~ bfb0fa7 Merge branch 'top-panel-search-highlight' of ...
-|\ \ \ \~
-| * | | ~ 9cad4a9 gitk: do not hard-code color of search results...
-
-I haven't tried to find out what is going wrong here or to simplify the
-reproducer.
-
--- Hannes
 
