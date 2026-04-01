@@ -1,164 +1,200 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33776299923
-	for <git@vger.kernel.org>; Wed,  1 Apr 2026 19:00:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775070041; cv=none; b=Ddwf56Hafn56tO1eG+yOia5bSRSfxplZE8IOtdl2ERlHl24rGp4wK3GKQbgEdmy5v1eorWw7RT90GKTHxATXoOx+WnV4v0KPZr0kBVLgFtTy7XJk1tcAaEOUc9T4Heak3PanvTY5OfT+CQX0rBdiR7p1HlanSoiDPh3BI2BmNOI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775070041; c=relaxed/simple;
-	bh=fAqaxBks7ukLtFnG84kNNRvAS6ua6/KvR8apCcbcZO4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7v2bwyve04AYljDgZus/8QlACIzwNvTHJlJ52+N0obsykaKYLwRPAH/+Fw52nduX3rHZSLtzlQj7fdbbku3//T62ZU0I/MvbQgNV5KoKzWB5+vuTzf4Oxsbo7wpPw88tDrrdS+E8OWjDbHIO1IWplKz6Xzorlub/D/LHzq6g5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=clbGup5I; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B345333F8C3
+	for <git@vger.kernel.org>; Wed,  1 Apr 2026 19:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775070536; cv=pass; b=PPKOzd2DW2h6dRlA0eUIbJ+/p1aGD8wjVhjsDVtZ9E68E4MZkfHgcg5bW6bFxPQljsWTaB2TpakQsLtjLf2d+Y69MPxEMqGdz20noD6u8Tjy7ga7Shj08ZVixLB2cb6ybYe+6XYkY/cJ9QiWlLtnBGCT6Fk2DUJ47NAHC7VoYkk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775070536; c=relaxed/simple;
+	bh=ykzQuYrIMTOvMD1+gzyl/X6KEiMdMhyiBZJ3TU411Wo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rHnhLC9KMMwEbyMFpNXKUzy9cg0udwqMRyVJFGuPiVuAlCDiKcQ7IaYCAIJCm0tEjVKacyoP3D4xOQ+09l3KvBeeurW+Jboxjzzdq9ccKJk8SOQoKhL+nFGQ5TS64IbrCisVQtLRtpssZhMzvGAFT9ozrQI1pd/coK930J0MLnM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEj5EO71; arc=pass smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clbGup5I"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-46704fbf62dso51002b6e.1
-        for <git@vger.kernel.org>; Wed, 01 Apr 2026 12:00:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEj5EO71"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a2a8abac7dso127562e87.3
+        for <git@vger.kernel.org>; Wed, 01 Apr 2026 12:08:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775070531; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WastrYILZc53u1/r4SivXWxUev2DxMjvDX0j9fOCC59+zS5yQymKisyNL2ntYuzYYs
+         Jn8Uo7SGg4p26lVW6D0SS/HewdJnpQG80iDV6nkkA/kxdNWdokp/P1wpOR3yyh0hV44H
+         Byl9tk9MJGOlaRJ+v41IYm6JkxxrUAO94ZHJumwof2HNg2UchBml/BepbJvH1/yUXK6o
+         poEPAkxj58nd3EkURaTW/FxkmTkNYAVTFkjfUyx15mGX6q7Q/t7dmeeBtnJq1Jl2YLB8
+         cczhu2J3wkotBS7gHKNNsgwOBOggTbQxSEMQ8bX6yJfzGesGuDthEygeYnRNVL8ekWUs
+         vikw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Qwvtm0D3EjGvL+XPxmiGRH4rV/H1GZbCSXtJbmk+nA4=;
+        fh=mKKDE1BltftIrVGBfZkLs5NTy7eSiPHLeuQL/NjyPzM=;
+        b=HKeCcvbXHffWwDYQ6TAjYysrFgvRu8NZFfPEyM/EP2SaR2FVbVx+RNnNyAYEhsXOBe
+         3Ah2JfVkwu6FPTl2j/iFM3GNy/dtqDoRiV4063PegARqbqhigZvDwsBjJddLK0ae+r7+
+         iOEc6YWNoTJ4e+2G0mCCXcJIDKxer5FRQ1LVWxIYCIqzjnhYSIBy0oK6nrI7ivcN7eNK
+         b9qFKoiHPvoselbTudR9NpTdZ97IZSs38o5rRibr5LT5AG3el/lXFvnoH1kt/Y7ZK82l
+         olMJ/Z5LYRX55Ex4j0AxNQGxeSjPiWsPe4nia5zfzvU6lTCzlFIc4ZYD7eB9EiHsTILH
+         UmMg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775070038; x=1775674838; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1775070531; x=1775675331; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ap4J4QJOTClpRGQYFQqhAQDLKBqJORZISrOm49L/ooA=;
-        b=clbGup5IXCzH1b1rvy4uYTanvFPaOUd0jGbYsawXr0f7b1tiVtykyEC8MJ949dXBYU
-         UiorLoLnFz4XwlH5uhOAsQMN4GrONeMUMCj7IEsfxDy991uJOZw9Us7hfvdXmZW+i5EN
-         9lK5A+HJingo8o4oiFjY/JAsyo1WdxobCICTm3UapFZNFPLMuoUK6pn7xyziyNRTxSMj
-         b1SM3w2GEhHYuf7T5ZmXgXsLZH+ABkHzjPbBdyyPalkjApnn1N4LGnaUpy89u97Ti/j9
-         LWIVWCfNCoHumR/Qt4JxUOGajVJXoIQdhsr3Iw6Su1i16uL+DFnjvWW+BXbPGqL1j3eG
-         wrbg==
+        bh=Qwvtm0D3EjGvL+XPxmiGRH4rV/H1GZbCSXtJbmk+nA4=;
+        b=cEj5EO71N11XjKFhSPlE19RrE59X/ih6M9qzg8zyYDKLR2FsmHv4GLoM0PRXjj4TyO
+         DhH8k3vYR3LKkWzoy6zs4VkBbfA3/bOQehO+PtLSGPewOdlFGqK7bYeA9bqpz/P+LqNw
+         you08fVwsbBccez1/FX75sKk7LviBLgjg4HkQYc28ULYPP4wJdz+Kw/moSNykOC3Ec/x
+         rpR3F+HcW8VEw68ufHRDZKMCzIO3T+dpkfH6Tn9KRt15vZiOR46XGWLdkgO1Ac9WdzhZ
+         0V4O+33NTVkoGFzHGyjyrq0LCJRsq0clJ7WkMcLUrDGVi/TbPolbEFpmDo7khcxuOjrw
+         Z/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775070038; x=1775674838;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1775070531; x=1775675331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ap4J4QJOTClpRGQYFQqhAQDLKBqJORZISrOm49L/ooA=;
-        b=Oz9EUroP2GywTpefF0MqK5bVtMcp/G2t7Ny5hnx9CHwR/TYaNIra2F3g5EV0RuSczY
-         Q0CSl58jOtlD7EyleqE5F7t8zQBDsGPpIrXiqglHHfUm2I6vgGtkUXFxtK7WVTGfL4oh
-         MdX5l2Mu5t8mbmjwJqmLQEnip4lIvxDD/gQnc7mVutBfzLT3qlCmCivsd/WM7SE+hx2p
-         kgIQnd5GG+xLrZ0s20wFxFVZS2C8MCkYdiYPB9J2XnaHZibpzlbLmVwzKV8zUkoX7oia
-         Qzu3YnSxHB99/rrRH+2LeeW3u4Awcw7zWxIPb5q2YVKKOMJcTzgtSwTxXiTJUb2mIqXM
-         oPMg==
-X-Gm-Message-State: AOJu0YyRZAyqhBLFfbUJMh1rnYFLcRP0D2dCcq9OTMbf8VvD+PQrT30+
-	/J1IMqYWtLAx1RnBfB3rTJ6vcNyCP2VChQl6VtQoWSroHd24juqNn4MdXQXzlm+Q
-X-Gm-Gg: ATEYQzwoouUvgN16CI5YVXY1Wfp952DZ6oKV2qXdrE9ZGU/P+KLb0RIRGd9k58xXQIW
-	BF/Vd8u7/LXGcOu8ffuLDxTVPMeNHPqtCzogc0JxSuAZ4W+f3/WTVrGfQMh9cKf8afWoYm3wA4a
-	w3vdSDDdV3m07LgGJpw994AJLu2tnwPxxvbgnDLcaFvCBBY+TB6M61RUyVqg2/pc5L6hvPEnEhP
-	FCmjTCLJEb9MXfEgAKG0iTVPAgzOujnx0RdWKI8tuODL/YllM+AwOPeJz1iES6dXqm8Fl8HJTok
-	Zz5sblEtjDURqfdphl6dgZBqlMIZZ62i91/itMZST2zJ3+dnEChgGpgpv1R7OQca69qcZ3Quh0W
-	/TrBIe/zVyS3fiRdV3V9oK++7MADBotD/r1t94pVauTKy1aJHCfiHVmm7Md3dFZ29YH8m+bqbYO
-	Z0A9uDgCHjvakiZZQDpNXO3mQv/b+7h3DpCDcxHzviGCCBRxJV5DQYXllPEAI=
-X-Received: by 2002:a05:6808:14d3:b0:467:26e4:728e with SMTP id 5614622812f47-46ae01f57bdmr2780447b6e.49.1775070038471;
-        Wed, 01 Apr 2026 12:00:38 -0700 (PDT)
-Received: from Mac.attlocal.net.net ([2600:1702:74a1:4770:a4f1:5ce8:780f:fe5c])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-46d8d109b69sm263217b6e.0.2026.04.01.12.00.36
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 01 Apr 2026 12:00:37 -0700 (PDT)
-From: Nick Golden <blindmansion@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Nick Golden <blindmansion@gmail.com>
-Subject: [PATCH v2] read-cache: disable renames in add_files_to_cache
-Date: Wed,  1 Apr 2026 15:00:33 -0400
-Message-ID: <20260401190033.11325-1-blindmansion@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
-References: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
+        bh=Qwvtm0D3EjGvL+XPxmiGRH4rV/H1GZbCSXtJbmk+nA4=;
+        b=anADdZHhE9URnjJlsW9iB1mLOEQ2ZYRIWc1x3plofK8tsXxoItqZVojrR8LXJY+74g
+         d0pERx7NBd08hXnaD2CBji8Xln1+uZhfWa/BhWNrahoGCplvvhh1SnitUG1/Y1QgcGqR
+         T1RN+uKixqvX9stSliJauM/STniFffGjnIsu+HfzCENEcySIG2+B3M0P6zVIvwKdynWT
+         OAWfUhyy9TDV6EaPe6w4Iu3D40pbZIgq4anFeGS8Cahj6tV+7SIif8EDHlqi0QWXS/S9
+         KR1eo8lET4phpIRN6nYMq+CLBc3G6nrHmsn8HWEQk9L58gYHdET7wcZtFlIQGAR8XcJn
+         V9aw==
+X-Gm-Message-State: AOJu0Yx/UzEbRqoeIJDK+x/khX3RgTjx2QCIgOiMUhYT+LSqLmgPJ06j
+	9XvYA9V/EaDdSrlPDm6DUoQsa4xD4+nzvXEb+T4IQlrCkwh/C6QqwYHKzo+GIgzO1Lx0M84yTDi
+	sDgo1KdN2mgS/htqsXo0SZYsjEaQOLp7xcqXrl2o=
+X-Gm-Gg: ATEYQzwDHInptAWid4efqxFg+3Acu8tXRLH7kIEEd5K0oO6roMOt3g7xHwQ9zWzIVNd
+	1f7QXh8Igvsvpziu9p4V0DogwhKxPNYTUJmHGWaqkmLLEmRXomFhIIs4O4MkSe2WDahFCZIXEoK
+	ZdkZUFXDr8HefNEAIhP5cnlyx/owRYoLJBl5lEq4h9hKqx5ztD7whscKypbVMZrwsC2s/HD07fN
+	5GCAOciEkkLQibKiZcmwWHr8ZWPbPHWQUCoUjpqUtvAn4e3OlYQxKrBmDzzCI0hIPJ7yKxwil3w
+	BYb6vOmrbaUgLBZpZ5GQyVDQOMSiJcC1r7aX0OFaXA==
+X-Received: by 2002:a05:6512:2352:b0:5a2:5b88:a8a3 with SMTP id
+ 2adb3069b0e04-5a2c767ac34mr123750e87.31.1775070530913; Wed, 01 Apr 2026
+ 12:08:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAF6hZH5TyFBm5H_fcVyaf1aw-mPsVbAmNvkUGCMoQYYCX1+HRQ@mail.gmail.com>
+ <20260401190033.11325-1-blindmansion@gmail.com>
+In-Reply-To: <20260401190033.11325-1-blindmansion@gmail.com>
+From: Blind Mansion <blindmansion@gmail.com>
+Date: Wed, 1 Apr 2026 15:08:38 -0400
+X-Gm-Features: AQROBzA9CetscuOAXOSnHHSLgSfx6yNP32MjqTS9sDzgLuKO4wbSZMU794e-L6g
+Message-ID: <CAEu6FALj=789M=gASYpWT9CGC4_802-X=9sGoF=YndFRCgcb1w@mail.gmail.com>
+Subject: Re: [PATCH v2] read-cache: disable renames in add_files_to_cache
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-add_files_to_cache() refreshes the index from worktree changes and does
-not need rename detection. When unmerged entries and a deleted stage-0
-path are present together, rename detection can pair them and rewrite an
-unmerged diff pair to point at the deleted path.
+Thanks for the review. I encountered this bug while doing differential
+testing against another implementation, and enjoyed learning more about
+this process. I have sent v2 with the metadata fix and test
+cleanups you noted.
 
-That later makes "git commit -a" and "git add -u" try to stat the
-deleted path and die with "unable to stat". Disable rename detection in
-this callback-driven staging path and add a regression test covering the
-crash.
+I also audited nearby callback-driven index refresh/staging paths and did
+not find another obvious instance of this specific pattern outside
+add_files_to_cache().
 
-Signed-off-by: Nick Golden <blindmansion@gmail.com>
----
-Changes since v1:
-- use sed instead of perl in the regression test
-- shorten the sample line content
-- stop asserting that stderr is empty
-- simplify the final ls-files check
-- use real name and add Signed-off-by
 
- read-cache.c          |  1 +
- t/t2200-add-update.sh | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
-
-diff --git a/read-cache.c b/read-cache.c
-index 5049f9b..d938abc 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -4049,6 +4049,7 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
- 	rev.diffopt.format_callback = update_callback;
- 	rev.diffopt.format_callback_data = &data;
- 	rev.diffopt.flags.override_submodule_config = 1;
-+	rev.diffopt.detect_rename = 0; /* staging worktree changes does not need renames */
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
- 
- 	/*
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 06e83d3..0a96655 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -200,6 +200,44 @@ test_expect_success 'add -u resolves unmerged paths' '
- 	test_cmp expect actual
+On Wed, Apr 1, 2026 at 3:00=E2=80=AFPM Nick Golden <blindmansion@gmail.com>=
+ wrote:
+>
+> add_files_to_cache() refreshes the index from worktree changes and does
+> not need rename detection. When unmerged entries and a deleted stage-0
+> path are present together, rename detection can pair them and rewrite an
+> unmerged diff pair to point at the deleted path.
+>
+> That later makes "git commit -a" and "git add -u" try to stat the
+> deleted path and die with "unable to stat". Disable rename detection in
+> this callback-driven staging path and add a regression test covering the
+> crash.
+>
+> Signed-off-by: Nick Golden <blindmansion@gmail.com>
+> ---
+> Changes since v1:
+> - use sed instead of perl in the regression test
+> - shorten the sample line content
+> - stop asserting that stderr is empty
+> - simplify the final ls-files check
+> - use real name and add Signed-off-by
+>
+>  read-cache.c          |  1 +
+>  t/t2200-add-update.sh | 38 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 39 insertions(+)
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index 5049f9b..d938abc 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -4049,6 +4049,7 @@ int add_files_to_cache(struct repository *repo, con=
+st char *prefix,
+>         rev.diffopt.format_callback =3D update_callback;
+>         rev.diffopt.format_callback_data =3D &data;
+>         rev.diffopt.flags.override_submodule_config =3D 1;
+> +       rev.diffopt.detect_rename =3D 0; /* staging worktree changes does=
+ not need renames */
+>         rev.max_count =3D 0; /* do not compare unmerged paths with stage =
+#2 */
+>
+>         /*
+> diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+> index 06e83d3..0a96655 100755
+> --- a/t/t2200-add-update.sh
+> +++ b/t/t2200-add-update.sh
+> @@ -200,6 +200,44 @@ test_expect_success 'add -u resolves unmerged paths'=
  '
- 
-+test_expect_success 'add -u avoids rename pairing on unmerged paths' '
-+	test_create_repo rename-crash &&
-+	(
-+		cd rename-crash &&
-+		test_seq 1 100 |
-+		sed "s/.*/line &: same text/" >conflict.txt &&
-+		cp conflict.txt bystander.txt &&
-+		git add conflict.txt bystander.txt &&
-+		git commit -m "initial: two files with identical content" &&
-+		main_branch=$(git symbolic-ref --short HEAD) &&
-+		git checkout -b feature &&
-+		sed "s/^line 50:.*/line 50: FEATURE/" \
-+			conflict.txt >conflict.txt.tmp &&
-+		mv conflict.txt.tmp conflict.txt &&
-+		git add conflict.txt &&
-+		git commit -m "feature: modify line 50" &&
-+		git checkout "$main_branch" &&
-+		sed "s/^line 50:.*/line 50: MAIN/" \
-+			conflict.txt >conflict.txt.tmp &&
-+		mv conflict.txt.tmp conflict.txt &&
-+		git add conflict.txt &&
-+		git commit -m "main: modify line 50 differently" &&
-+		test_must_fail git merge feature &&
-+		rm bystander.txt &&
-+		git add -u >out &&
-+		test_must_be_empty out &&
-+		git ls-files -u >actual &&
-+		test_must_be_empty actual &&
-+		git ls-files bystander.txt conflict.txt >actual &&
-+		cat >expect <<-\EOF &&
-+		conflict.txt
-+		EOF
-+		test_cmp expect actual &&
-+		git diff-files --name-only >actual &&
-+		test_must_be_empty actual
-+	)
-+'
-+
- test_expect_success '"add -u non-existent" should fail' '
- 	test_must_fail git add -u non-existent &&
- 	git ls-files >actual &&
--- 
-2.53.0
-
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success 'add -u avoids rename pairing on unmerged paths' '
+> +       test_create_repo rename-crash &&
+> +       (
+> +               cd rename-crash &&
+> +               test_seq 1 100 |
+> +               sed "s/.*/line &: same text/" >conflict.txt &&
+> +               cp conflict.txt bystander.txt &&
+> +               git add conflict.txt bystander.txt &&
+> +               git commit -m "initial: two files with identical content"=
+ &&
+> +               main_branch=3D$(git symbolic-ref --short HEAD) &&
+> +               git checkout -b feature &&
+> +               sed "s/^line 50:.*/line 50: FEATURE/" \
+> +                       conflict.txt >conflict.txt.tmp &&
+> +               mv conflict.txt.tmp conflict.txt &&
+> +               git add conflict.txt &&
+> +               git commit -m "feature: modify line 50" &&
+> +               git checkout "$main_branch" &&
+> +               sed "s/^line 50:.*/line 50: MAIN/" \
+> +                       conflict.txt >conflict.txt.tmp &&
+> +               mv conflict.txt.tmp conflict.txt &&
+> +               git add conflict.txt &&
+> +               git commit -m "main: modify line 50 differently" &&
+> +               test_must_fail git merge feature &&
+> +               rm bystander.txt &&
+> +               git add -u >out &&
+> +               test_must_be_empty out &&
+> +               git ls-files -u >actual &&
+> +               test_must_be_empty actual &&
+> +               git ls-files bystander.txt conflict.txt >actual &&
+> +               cat >expect <<-\EOF &&
+> +               conflict.txt
+> +               EOF
+> +               test_cmp expect actual &&
+> +               git diff-files --name-only >actual &&
+> +               test_must_be_empty actual
+> +       )
+> +'
+> +
+>  test_expect_success '"add -u non-existent" should fail' '
+>         test_must_fail git add -u non-existent &&
+>         git ls-files >actual &&
+> --
+> 2.53.0
+>
