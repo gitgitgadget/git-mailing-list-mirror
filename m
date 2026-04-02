@@ -1,126 +1,180 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F193EF0B8
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38E13EFD13
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 15:05:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775141886; cv=none; b=pIl7msmsf2UGtDAepmbEdoVWwRqD3Ko1fCuR2PpqVuiPeDir3KJLJsILnLw8tnlATpOa4Z6noM4Zkr3qR3pYZSdYIO9MyV/T5cQ6kkDyaLN+Qz89P+qmeJBCdtnvV/BFbL+pZT+zwGIdAg7JDNb66kg+VlMY4PdtKVZgQbQgnT0=
+	t=1775142354; cv=none; b=GtMLwjUJHx5fj8bfsPF4w/ntIJ60xdJ0hE9OIRLL78WfLUTBhfa8GcQF0NCBOtoY8SC8S+HQZ+M+AFC3M9skdgR0Z0wAACGSitowuT6eLiq//mKoPf9G0SfUumvp0z0QQSO5S8APPPL8kwgDhK5WPSaBfg8sdiogtNuTygr2XZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775141886; c=relaxed/simple;
-	bh=1kPrG3mgMAYnlQGLzVDLHeGBh8gGQXRL/qzYyglFo+o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4x6H9eekUrJxWA0VcZ3MC9vmE5R7fP5qDyPQVNm8yNEKvTMsbH4LSeNC6pr4NE+OTvtKCGU5GCclPgARSB/gDmQKWD9RtZxDYaL/Bq+f1k+KjrNarl7ITxeSIfNgaAzakEGYi15RmEsnrbxMsX/iynbJ2Og1eAxIFkF1VpjL4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QJB2MeJd; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1775142354; c=relaxed/simple;
+	bh=NsxgfpzQ2dSL9ESc+UXXA71mMwKjkuhlvidoov1vjsE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=XrrgMIAlq5sMiuMqmsAZq6axEGLIEiIbjku+6FXkRJZChHZntdB1hnGrcVf/P6WaU+IAYFQn9KMtlxh5c5dXoiUybfCFfnkbdTVpnyXrbFSfiy/uqmti14amWQhiImTB14hWAuBW78eLg+gIa0f1YQD39J/LDTF1eNl3Rd32R1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fn+NwBpY; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJB2MeJd"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4887eca00c4so6542775e9.2
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:58:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fn+NwBpY"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43b95e5b3afso621711f8f.3
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 08:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775141883; x=1775746683; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xBcsLdFa28wbXtwBBha9uSh2s9ms7XmD5KGQ+3Gjcic=;
-        b=QJB2MeJd42T5VUZ0TMB1zjjZHEJgM2kfMIseVjxMlMHvF6crORiTPJW2joJoeEXs2K
-         hWgUCGLdh27eilL5Pqxd26IANpcYAbUxRoha/Pf0BL35/heXr9DMrDBuZ4d+bmBNwoG+
-         qDki7lfKmFhN5WL/f/qp+T3skMYsKUQouZJWbNoYo47b/sXhrMxjOFNOr02MwZcCcRSP
-         TmmA1gDakEphya8W5ooWWW3YFle03aHEU5tjQJFYzp6dUZZ2vP8mKD9hfcBRwYi9xPvV
-         rbCEMVM7nK1nx792mgf8Xrcw+cY7g0tNBqv0WN1nLTLQpQP6hsX22/YsQHaaEkqM+eg0
-         FBxg==
+        d=gmail.com; s=20251104; t=1775142351; x=1775747151; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CwsbhQ3zhaYm5gu8ywEulUc/ivyCq+sG47cjvdKvvr0=;
+        b=Fn+NwBpY26wxeW66DRFSpcmVmPmpoUQo77+ngv+FCFWhRcCLEHF1NwnT6xn5W5Yz1u
+         i7TKSStBEg26U1v1JEnkfNFW4ur502t0cw1S/b8PgwQsSxKSuGE8zHShq9aSGDTTIgZ2
+         gxyEneUzKKnj3+FVcN+6Mfs/Ik5b75HaAFZlovXG7Ah11dihsPznrOxb2KjTyeVYpZzK
+         Ju+hDJCsWQ9uD/wUX5QwrzmfM7JHYfjuSOd/wQ9aYAfHcGrIhGqpaOIRSLzsdr+i38k1
+         IfuOZOESJR4uRcspbMmgG3cBUIIbq29hoMrUprLlveMx9oNsv6MwLHOkZeyMyfynhbTf
+         rXng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775141883; x=1775746683;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xBcsLdFa28wbXtwBBha9uSh2s9ms7XmD5KGQ+3Gjcic=;
-        b=BcbCykya52+59Fimqc5UV+SC2wbkhyTSENFKA3QPUnss1pezc/MpTzMkSqA+Kiz6GQ
-         NVSMM+qjIftVPG9wS8OiNoXF5ySulRYFP6cFbK+E03EuyhJh3FmT5xHB4vSu+P2SCQsN
-         CTz+Su3lMAI8LNLsyhXSJCOxv++RMQzFSbyoc0HCSW7a8mgavreDHXvKLQRFl6wwdyFA
-         SreTXIfGn11kSjfly/6tXjlZNI8wJ1en5HUIL/cl+6E9FjPjvg5AKIAgtnh5ep61kRnC
-         JOjV7L7ufQUiIs3I4C4nf1dmlmUhZ4qUXUt0cFsXfSjZl5aVMj7zgISxMGmJJvU4IrKw
-         Qd4Q==
-X-Gm-Message-State: AOJu0YzgqAkO7Pw6pdacw4tYkG0ceTw8F9vFEUC8ZeVLwPD365ALqS/5
-	EbP8ryriFP/kNek4Uo8XUeq+7CBLBWPIr9Uj4ibreEYsjR/JDeHHHfuhjI/qCg==
-X-Gm-Gg: ATEYQzw8GNNt44XaQsrVA1XIkwfm0hb8Kq4L+5JYZuSdoKVkkSrWDmVHpd07REcKK8Q
-	+Ah/M8c+yQoAF366eY7aJNB85x8bZlzhcTaNmfoBv61HA/6HH7HHkP3mOU2m38nVYmbgNQECutH
-	3pxvbdBQgLKSdtsTMBVF/cq+703AfBtol+lqNtXRoHWycMMbqkL8J091B70ZI74aoXyPDiPVFkO
-	Na/ZzAGJqMKsAesp1kOCmsTuizlX2ACd9sA/FbCRrc4QkYoyNAWRjBPbOMP15CfcIjRQ8UXZGlM
-	NCE5LKgL730NIYdpPVu5A+4MyGyeh9NSj6i1DK6ambqEr4z4hhKOHQiog5IaPzGH4D1FKFgEn1d
-	mc9eRvSG3S53PeDMFkgX15+VhRNGROvlYyfQhIjTEN9qRQ7tzVBNzxgd7jFbCjHt0lwnI8/PxbM
-	fDNv2ngj7TTYVBi7H79K7cYB+X2g==
-X-Received: by 2002:a05:600c:a406:b0:485:40fd:8390 with SMTP id 5b1f17b1804b1-488835ccc61mr110859545e9.26.1775141883063;
-        Thu, 02 Apr 2026 07:58:03 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c8b6230sm70913705e9.24.2026.04.02.07.58.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 07:58:02 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 4/4] xdiff: reduce the size of array
-Date: Thu,  2 Apr 2026 15:57:44 +0100
-Message-ID: <a3438dc09335ce46c0141c80d18d71cefcb96a4f.1775141855.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.52.0.362.g884e03848a9.dirty
-In-Reply-To: <cover.1775141855.git.phillip.wood@dunelm.org.uk>
-References: <cover.1775141855.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20251104; t=1775142351; x=1775747151;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CwsbhQ3zhaYm5gu8ywEulUc/ivyCq+sG47cjvdKvvr0=;
+        b=S2KI0wyUxA1ucHAhIcmTUR5NDsdpt/EVzwIGhg+5cwstJThXsvSgqbu320FBB20p20
+         mopjfIO3ZsAEy5eB2I1Z/WmTwTZvzJXywm4HheLqvtWz/BzvQEILuFtWESzJIv1tv5c8
+         EtiBQ1hmLpHYq541+ezBpnmuNpByT7hwN1dzl9dTQ00bVWAQLKT57h6zT9wEwZWlLTjx
+         8Q4w2bqEUGPjK3TbVhJsnbKi4Nd9wPWLvCdO3E/DQJK/lDQiDAgHs4HENpWdjOiRDj9k
+         f9X3HRmfgGFsGbOdQydGlkw6T9YSaz4E4yAs8VFUaU2yftDC7GFj/uH1On9aISVFqRHh
+         7zdQ==
+X-Gm-Message-State: AOJu0Yx1RPAMSNfpDW7eOCRtlJgod9CiCAB1XliNtdEaxeVnbrcgvK+C
+	l0Bf1vM2ZWjijpUh11hB5oun62+S83AJX+tUyPk1gWfH7lKXhVyhahxk
+X-Gm-Gg: AeBDiesMQvxSJzGDyK6Mm6uG/fWKrBrqOFG8hQvWa4W5NnDKVoOSW/BPzPD7HRCNb3u
+	3UvEzBetY63ltRfgKAsVCfZSHIdhljlectZs3ECEsjTkXB9kBPftz0B8v38b+2PFeDrUNhKpdj6
+	VClg2gV+Dw7+gIsWcFVZv3v61CZFu9ONw9qAouYkdaXSoCtmDn92DvR50ctJEAd75Dm4TgiwzAK
+	0S9NKsUlo7KL2WDAiF++FV+KriFA5GNlrQ6CyMii5AqcWq/id4wIQ1nk7CRtNhj1NTAzHwi0UMj
+	Sezy0jCOaxX/XNVoJhuql2Vv2Oz9mHO18B6ArJ+WHH3kodxtSYWY+MOvd3Ma0u2P2x+hKiGtlEZ
+	Gyc7kwSxTjG8NgkmTIKCSET4LGQmV0XEYEgOAMmfuqtoxV3f16BzYnFXfPsAVOn+AiW7BDb5L5z
+	DifIOSUsNL7i3J1/RrJefET8RPYrlRVb7lsALurie+nWoUGpiAmy3WsvK3HoDzLS+lBlgaujAyL
+	NE=
+X-Received: by 2002:a05:6000:18a8:b0:43c:f583:126a with SMTP id ffacd0b85a97d-43d15062d30mr15614518f8f.14.1775142350811;
+        Thu, 02 Apr 2026 08:05:50 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4d29bbsm8753341f8f.21.2026.04.02.08.05.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Apr 2026 08:05:50 -0700 (PDT)
+Message-ID: <49834347-8049-4a79-8bdd-4da1ec1ebac0@gmail.com>
+Date: Thu, 2 Apr 2026 16:05:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 08/12] skip_prefix(): check const match between in and out
+ params
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>,
+ Michael J Gruber <git@grubix.eu>
+References: <20260331233856.GA2327197@coredump.intra.peff.net>
+ <20260331235017.GH2328529@coredump.intra.peff.net>
+ <14a417c6-fc80-4a7e-993d-57fff10896f8@gmail.com>
+ <b77be594-83b4-4d9b-9f89-569f1f335d61@gmail.com>
+ <20260401192423.GA2905896@coredump.intra.peff.net>
+Content-Language: en-US
+In-Reply-To: <20260401192423.GA2905896@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 01/04/2026 20:24, Jeff King wrote:
+> On Wed, Apr 01, 2026 at 03:04:10PM +0100, Phillip Wood wrote:
+> 
+>> On 01/04/2026 14:17, Phillip Wood wrote:
+>>> On 01/04/2026 00:50, Jeff King wrote:
+>>>>
+>>>> +/*
+>>>> + * Check that an out-parameter that is "at least as const as" a matching
+>>>> + * in-parameter. For example, skip_prefix() will return "out" that
+>>>> is a subset
+>>>> + * of "str". So:
+>>>> + *
+>>>> + *  const str, const out: ok
+>>>> + *  non-const str, const out: ok
+>>>> + *  non-const str, non-const out: ok
+>>>> + *  const str, non-const out: compile error
+>>>> + *
+>>>> + *  See the skip_prefix macro below for an example of use.
+>>>> + */
+>>>> +#define CONST_OUTPARAM(in, out) \
+>>>> +    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
+>>>> +#define skip_prefix(str, prefix, out) \
+>>>> +    skip_prefix((str), (prefix), CONST_OUTPARAM((str), (out)))
+>>>
+>>> This is clever but it changes the behavior of skip_prefix() which is
+>>> documented as not touching out if it returns false.
+>>
+>> Sorry, I've just realized we always take the other branch so this does not
+>> change the behavior and is in fact a nice solution to the problem.
+> 
+> Yeah, exactly. I was curious if the dead branch would be left in place,
+> but gcc seems to prune it even at -O0.
+> 
+> I also pondered whether:
+> 
+>    (*out = in,out)
+> 
+> might be a problem, but I think it is OK. The "," is a sequence point,
+> so it is well defined (of course we would never run this code anyway,
+> but if we have undefined behavior in the code at all, it may cause
+> confusing effects).
 
-When the myers algorithm is selected the input files are pre-processed
-to remove any common prefix and suffix and any lines that appear
-in only one file. This requires a map to be created between the
-lines that are processed by the myers algorithm and the lines in
-the original file. That map does not include the common lines at the
-beginning and end of the files but the array is allocated to be the
-size of the whole file. Move the allocation into xdl_cleanup_records()
-where the map is populated and we know how big it needs to be.
+I agree it's well defined and because this code is never executed we 
+don't need to worry about evaluating "out" multiple times. While the 
+message from using _Static_assert below is nicer I think having this 
+which is simple and works with all compilers is a better trade off.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- xdiff/xprepare.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+Thanks
 
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index cf4ac34f047..c5a3c9cde76 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -171,12 +171,6 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 	if (!XDL_CALLOC_ARRAY(xdf->changed, xdf->nrec + 2))
- 		goto abort;
- 
--	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
--	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
--		if (!XDL_ALLOC_ARRAY(xdf->reference_index, xdf->nrec + 1))
--			goto abort;
--	}
--
- 	xdf->changed += 1;
- 	xdf->nreff = 0;
- 	xdf->dstart = 0;
-@@ -283,7 +277,10 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 	 * changed[i] should remain false, or become true.
- 	 */
- 	if (!XDL_CALLOC_ARRAY(action1, len1) ||
--	    !XDL_CALLOC_ARRAY(action2, len2)) {
-+	    !XDL_CALLOC_ARRAY(action2, len2) ||
-+	    !XDL_ALLOC_ARRAY(xdf1->reference_index, len1) ||
-+	    !XDL_ALLOC_ARRAY(xdf2->reference_index, len2))
-+	{
- 		ret = -1;
- 		goto cleanup;
- 	}
--- 
-2.52.0.362.g884e03848a9.dirty
+Phillip
+
+> For reference, this is the more complicated one I came up with:
+> 
+>    /*
+>     * Note that builtin_types_compatible_p() counts "char" and "const
+>     * char" as the same type. So we deref and construct our own pointer
+>     * with const to find out it "x" is const, and then either compare
+>     * x and y exactly (if it is const, they must both be) or dereferenced
+>     * (which lets y be either const or not).
+>     */
+>    #define CONST_COMPATIBLE(x, y) \
+>            (__builtin_types_compatible_p(typeof(x), const typeof(*(x)) *) ? \
+>             __builtin_types_compatible_p(typeof(x), typeof(y)) : \
+>             __builtin_types_compatible_p(typeof(*(x)), typeof(*(y))))
+> 
+> I also tried using a gcc statement-expression and _Static_assert to get
+> a nicer message, like this:
+> 
+>    #define CONST_OUTPARAM(in, out, in_name, out_name) ({ \
+>            _Static_assert(CONST_COMPATIBLE((in),*(out)), \
+>                           in_name " is not const-compatible with " out_name); \
+>            (const typeof(*(in)) **)(out); \
+>    })
+>    #define skip_prefix(str, prefix, out) \
+>            skip_prefix(str, prefix, CONST_OUTPARAM((str), (out), #str, #out))
+> 
+> It does produce slightly nicer output:
+> 
+>    foo.c: In function ‘bad’:
+>    foo.c:8:9: error: static assertion failed: "my_in_var is not const-compatible with my_out_var"
+>        8 |         _Static_assert(CONST_COMPATIBLE((in),*(out)), \
+>          |         ^~~~~~~~~~~~~~
+>    foo.c:13:34: note: in expansion of macro ‘CONST_OUTPARAM’
+>       13 |         skip_prefix(str, prefix, CONST_OUTPARAM((str), (out), #str, #out))
+>          |                                  ^~~~~~~~~~~~~~
+>    foo.c:16:9: note: in expansion of macro ‘skip_prefix’
+>       16 |         skip_prefix(my_in_var, "foo", my_out_var);
+> 
+> but I don't think the extra complexity and portability headache is worth
+> it.
+> 
+> -Peff
 
