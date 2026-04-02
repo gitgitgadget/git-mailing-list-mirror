@@ -1,68 +1,69 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2550E3E1205
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CC03C9ECE
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775140431; cv=none; b=hy+OYGtdSU3O1uMBTt6BqjdbvCtAZyOLQwzSOV0gV0SJrZ0LeTDRC4B17T6XeYMkczrj6uLPTFHOlvmlMIZLh4FzVCF9ouV04cNk3JAy/aowxQy232kit7nIYysrFucqU9hGNnzFKLB6cxacptnwrQ8T9r554TvJ1JEZs2kSASg=
+	t=1775140432; cv=none; b=EcTsDm1cwimsO04bKBcfw25RkD2MfXOCZXBSKkwt+aRd7E+/D8lUs39maIvJVQg37KvD7gdq1geZPoJv69gp7bOJqiJMqtlFsfzN1VIw4BUuOIPVDLRPoCSTFk1olgs4lTWs1p47pcCcDUmzdoE5qbGo+4otilZsUT8SqcZQrvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775140431; c=relaxed/simple;
-	bh=+63aRGSBqz6HSHQnvcWjwwdpN4bQol9v+qtK6YXJxOQ=;
+	s=arc-20240116; t=1775140432; c=relaxed/simple;
+	bh=dtncqUT7zDp/SpAEOWhVR9ivNLDtj9HO9Yn/da0pYmc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=a8OY8vMiTULfJYoNlkEiyvrm9tEAT4v5BV17tRc/QkxKJjoDtc3RvHSAPRfrDVtFrCZYMZfEnDaTdLf0hBOTXfxP3mAtLlzRnzg86H9hMvmPQGxriGnCCe9Ie2lc9l4MVA6hyUyHxN+YwrvZKffVt82+qt+BavHv5Kd4hJnWR24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JpAm61AG; arc=none smtp.client-ip=209.85.160.179
+	 MIME-Version:To:Cc; b=boqGCUu38tTG5gD5zKiPHzEmsrJ49AjFWQiq5moC4vZiErojkbESi9bh6CH1/bQy4ri6Q5ETmwJAdGjPWOcGHUhrYANcHZa2iwBl5D8JSjMC7Ca40cV+9XJQpBQYOcSfG8Fu40rblIWjwoN1Avde9WpJH4cJNKhEiCzJ/1sCnSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZL3ZFisK; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JpAm61AG"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-50b2b289925so8012721cf.2
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZL3ZFisK"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-899d6b7b073so12270466d6.2
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775140429; x=1775745229; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775140430; x=1775745230; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o17+zJH8tRbAy3ykVGAlCqOKUyYVdHJLKN4nvYlOTAc=;
-        b=JpAm61AGcEzcAzjafzodtZs/sqkcFE8nKfT3rNrkZx8l6ahimSkOsbqWJ5HJxWuJj0
-         1UoVCCwro71ld3imWM6LhDEfo+wCkNdDQmLRV/JA41uyQKL5F83sDUg8Flv55WEUkekS
-         5tgvuNx3004uRY1kWbPC+Ir5qFNapV3n7THkX+1boDhxCictHlzzxN5IcdZDPaxicJ6s
-         PiFvBlzZTM1RYA0fSNDZF1KAdGLAcx6vXo/jLytabc502Ohqwi+wuEL2sV9cbwTD93qc
-         7Y63LFoi8H0SHjQYd+xHziELtcP2DX5WTToqENtXCL5K9zI0dlSBCLPf5VH6k3ezSnin
-         cIYQ==
+        bh=aB/n1bjwPf5DzQNdvwgWmbQWriYNdfNABq5Yc7hCd4A=;
+        b=ZL3ZFisK21YLEobj8CeuL99VAASpMhhOvSYEB/IItetoYFRc37ODAu3KmEAcmkObT2
+         I7tibo40MT/a67Hg6b6oSAlT+f8k5AwvHxNAE5o008knB4JLtV32D+JKcBQbqcRikQN8
+         KTtIVHQuK2e7R13UcQTcGJfejD79GcYprOP6HVphPsrkbqdNJKfkvKocNsEVfoY0sQ6W
+         B0BvmNLHnlDF/ooxjZ+21+GG0IBZraLPYo7HoOYjgvPY7qqwx864Z7hJFg28doQC0HHA
+         PycwIIKGsuzO3OH4IG9R7MuHX/9XA7HnJsLwUW4rqCjir4oJvy2BVntjmU6iswZUBEVh
+         DvVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775140429; x=1775745229;
+        d=1e100.net; s=20251104; t=1775140430; x=1775745230;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=o17+zJH8tRbAy3ykVGAlCqOKUyYVdHJLKN4nvYlOTAc=;
-        b=Ky1/n4Xdmomx0F/DkYnXYbKGbrbNr3E0Q89ojH0+A+CI/Ax67nL1y4iP2f5ZHdzTDu
-         Gf1vkt8vh6WdDzhxPrWQlU8BVK+a64k06VfhliDNklcdlczRx3R+IO63lX+WE0yCcUt3
-         /NUB48pnhmRTjaHMUHPQkmCUqeXkiDXYrsygZrVRPQnrLsQkzB1WxRjCVj/jB0Vr19XI
-         c5grLd9Ts99wZd/EwK9w/eE3YOlO8t4/kD+d7tryPaALiUr8C42qTnpNX87fZ2eU11eV
-         pSkeCj1gMtcOaZzsmZKUaCLD9uUcYqpPzr6VP6Q6wgabL2mgzdEo8PO3N2H9nfBQr4hx
-         SnQg==
-X-Gm-Message-State: AOJu0Yyh1o4VEL2uHeYe/Mru5VXIYy40oRkOqSlZdBKa+JuMNnA2USXN
-	kBIUC98nMeMU+2oxAMfheCLOG3nyM5rU0bJiN8c+fq/Zan95Lsfr6euYqgaOhA==
-X-Gm-Gg: ATEYQzxr/SYnXSxupS2tFJF0ks2NkGUjLcgOJKZ5jq6QavbZDG99rpRQKs4CDLybpmX
-	vM40aDzXgeOD19U1XG3+FcDpkvzWEzgBTIXRQeYF4gt1wlHNrJan2g6OP7tef9lOLpVrBCs8qvO
-	F++q9gyxafG4X9gBWs5DjbofNgor+RPBOVPmSCySRQ+GenWax82bAxwyTeFHL5Xr6S+nG0XdkEf
-	zQw9z13rTbOnFiJx9Fu1d1NauFne0RuBYmnpJuiJiH8dYsw8QX0Yz1WNUzMLOB+FEsF48miR8Zh
-	pW6uB3O60YaDJO8ozLsvUqxtLUP+Cqf3LDlJPiX48nGYuQD3W5Q4e2+/5DVQTyqzDvQyZl9PXKi
-	Qg2tiQnjfOqLK5mV5BdIlQLTEKYXM5qmDjoO3y5UfVmKcOAkjOW87TvmHV83I3lDFuzdiEJgik+
-	Rkp7eXaIs5ylKasn/zOfkTq0mBx0c=
-X-Received: by 2002:a05:622a:4acc:b0:50b:3fbe:a0de with SMTP id d75a77b69052e-50d4c023574mr57627891cf.32.1775140428564;
-        Thu, 02 Apr 2026 07:33:48 -0700 (PDT)
+        bh=aB/n1bjwPf5DzQNdvwgWmbQWriYNdfNABq5Yc7hCd4A=;
+        b=SYMlU+CjbbeOmpQonHcaTtuHDn9CEYCMW0KRZfhQhl/ZSMLw3b6wk1rj3Ag7PKce89
+         oZCERJoTb5hb4vV9INiKfRLk0EYfTKk+xlphOOD9oE/ZE8OO0FW8TstGRQxrviy+c2j9
+         0FQHRI7nHj7qn1Wf3ZJIyziB30+Rz3srokZb5ZvgvDcFeFym36TxMersqYE5a6+qhxRZ
+         qrzKrJtA0CPj+DHByXLmowdd/75zggnMDDXcvNRHHm/scJnCVppUNe+9AsJbqExN6VeD
+         499h+1bXlUVXkkcJJmRO+G2Nb1bMqAoeqTWf6qjib3/B7SLqc2GknZ7bs5vPmSbkR22d
+         MEeg==
+X-Gm-Message-State: AOJu0YwxF8TvfsLVwfhHhnJC8w1uXVIV/E7NUPprha+mio3r18PkhO9G
+	p9SGuR59329foa9DDEhQSzZCbCByOOKt0qvoCHtYSgNslDcjGmWux4v5qjYTRQ==
+X-Gm-Gg: AeBDiessw+05CavZsG4zsvwKCxsTiRmG1uaRKAm4cvZ5MwvX8RpDWmhs+L93I7rOj+3
+	u7ROXbTeMfBH2j2Ug6ijrt/RjdNRm+eg5hzryKb3Ch/6Htp+RwK7pwrAvrk4tn7Bqs8DiS/m2BC
+	KGyyckskHPyxR07QnzIY9uSVoiy+oAKAFVhI98KEU276DPVwtNvnZ/9pM+8bApYs+dn2KXSGrVN
+	6MayXbs8evcZCBLzYaTaBuPYYRyJnnksE4xJhT/ykrpiT+s8RQeP/huTj82a5tpSW+ULw3nZtt/
+	xMIGQ4t2n6pbBDXaczcmq6o6nHQrFtteAXDQZzLPXJgeHnzkUexCiZbCv2qRoonqvMmJ8Uit73I
+	FGzLX4jSx350Pp2rDC08YXkGfbxftS12thsfdgyQQEltJuWxbKfRVB/iORRNeqOLlk0zZ+nKyFj
+	C1fNWVYvKdb7pGMo2sfBK4wVZvXLY=
+X-Received: by 2002:a05:6214:3d08:b0:89a:622e:d32c with SMTP id 6a1803df08f44-8a4391c09a1mr115628006d6.36.1775140429661;
+        Thu, 02 Apr 2026 07:33:49 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.114])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a593bf51b6sm30059726d6.17.2026.04.02.07.33.47
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a593ded920sm24377486d6.21.2026.04.02.07.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 07:33:48 -0700 (PDT)
-Message-Id: <1f1668a6f4ded1647242d652929abe91a4877816.1775140403.git.gitgitgadget@gmail.com>
+        Thu, 02 Apr 2026 07:33:49 -0700 (PDT)
+Message-Id: <c8e5bef27b4635774eb88f29c98e35e2c613d5a8.1775140403.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 Apr 2026 14:33:22 +0000
-Subject: [PATCH 16/17] t9700: stop relying on implicit bare repo discovery
+Date: Thu, 02 Apr 2026 14:33:23 +0000
+Subject: [PATCH 17/17] git p4 clone --bare: need to be explicit about the
+ gitdir
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,43 +79,27 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Currently, the "alternate bare repo" test case relies on Git
-discovering non-bare and bare repositories alike. However, the automatic
-discovery of bare repository represents a weakness that leaves Git
-users vulnerable. To that end, the `safe.bareRepository` config was
-introduced, but out of backwards-compatibility concerns, the default is
-not yet secure.
-
-To prepare for that default to switch to the secure one, where bare
-repositories are never discovered automatically but instead must be
-specified explicitly, let's do exactly that in this test case: specify
-it explicitly, via setting the environment variable `GIT_DIR`.
+When `safe.bareRepository` will change to be safe by default, bare
+repositories won't be discovered by default anymore. To prepare for
+this, `git p4` must be explicit about the gitdir when cloning into a
+bare repository, and no longer rely on that implicit discovery.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9700/test.pl | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ git-p4.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t9700/test.pl b/t/t9700/test.pl
-index f83e6169e2..99b712b626 100755
---- a/t/t9700/test.pl
-+++ b/t/t9700/test.pl
-@@ -153,9 +153,12 @@ unlink $tmpfile3;
- chdir($abs_repo_dir);
- 
- # open alternate bare repo
--my $r4 = Git->repository(Directory => "$abs_repo_dir/bare.git");
--is($r4->command_oneline(qw(log --format=%s)), "bare commit",
--	"log of bare repo works");
-+{
-+	local $ENV{GIT_DIR} = "$abs_repo_dir/bare.git";
-+	my $r4 = Git->repository(Directory => "$abs_repo_dir/bare.git");
-+	is($r4->command_oneline(qw(log --format=%s)), "bare commit",
-+		"log of bare repo works");
-+}
- 
- # unquoting paths
- is(Git::unquote_path('abc'), 'abc', 'unquote unquoted path');
+diff --git a/git-p4.py b/git-p4.py
+index c0ca7becaf..dd38dbca22 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -4360,6 +4360,7 @@ class P4Clone(P4Sync):
+         init_cmd = ["git", "init"]
+         if self.cloneBare:
+             init_cmd.append("--bare")
++            os.environ["GIT_DIR"] = os.getcwd()
+         retcode = subprocess.call(init_cmd)
+         if retcode:
+             raise subprocess.CalledProcessError(retcode, init_cmd)
 -- 
 gitgitgadget
-
