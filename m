@@ -1,130 +1,182 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6379B3D5643
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 09:58:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5DF3E8C42
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775123932; cv=none; b=TGJkgHax8i7jXAYozXFxXULZb/Opjvk4b2NPUE7eL5RHxDz7WF0YubcmtL0F3bKNGhQvMm44rUPYKgIHj3NQioinxwTEfe3fE9B/l/SjV7mb+Z7+LMS/ENHL8RrlTnBHL6eajbZK/nWyWCrG0AOMRLjtYQJrWbC8GRHOYqyf9yw=
+	t=1775139889; cv=none; b=F4bg5pN2Q5i/3L7lXh/9I+WTQfR3feFqkhwK4mqtX8RnstUU2+tXoUIbWU27CI4Ta/NOYAbrg9HQmf6AFeOsDX5yBMlp+oV+YpaQbi9oYXIARwjw2YBbvmC2uqbxLCMps9n49eMMhpXYWL0fUPT2WpT9KQAVMauEOpu+YJ1wb+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775123932; c=relaxed/simple;
-	bh=nGIHMl8odZO+GPlB67X0Ysv8KE9n8uKcLqx2qLVJ/jU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NsdIsE9I4qxcfjAoL3GPwAWiEeyfKf26p6Mrp7YWttzlAoEUwRs6mYg4iq/upp6+PV3Jlbo9Gz867PCs3z9Dyc0tfm6MX3MMd7weVe5B9QESTHpcxAu6KQ3fRCmqKuGOtcwLLYkr8g0rhrcngGCP/F6+yLggECvRVWysKnH7A5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F19YyoQo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BB7tB769; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775139889; c=relaxed/simple;
+	bh=z1E1G8rRpkuDySMTPcJEO3HusUAdaptMi6fuROvDeBo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mRal4EZDg+6CEsKSJ8PvqOvjJKJ13Ql70V4bvx2seHtwDbexasDi7OMlWAChJAaWK4tywzjVYA7I7wR6ytKx4koEnAFafCieYdzyCVsyZ+HmqxmnIezvs1axdmgGU7RGANlQHVsTNcWITGOh8lgdGssXr1zByJOQzP0JnqdDokU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FfFRD9KX; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F19YyoQo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BB7tB769"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 742187A02FE;
-	Thu,  2 Apr 2026 05:58:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Apr 2026 05:58:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775123926; x=1775210326; bh=vwI81Zx7Pu
-	gxyJhjzg6GgQovxWyiJIsMK78hy9ZE/dU=; b=F19YyoQoRO8DQ7ZQVTm9Oh2jUw
-	muUGSf1wTc1XmDcwX1GHkmNv2z1JzJwF9gsuBOhxcKmM3QctbA2hPZCAEHV+W4Dx
-	26poyzcb2FTRh0Jeqj+exKLHXDlDc2zK32nBFri5NzXjKlc9INoYWj2cVA2Nqjql
-	ngFEwBJd40D5PvV1EY0ToB1JRgUyemTgJBZIudvILs+Q4s/RIPgekiQrVA5CW3Yj
-	NrupccFfdYWWnfScOEhwsoVsnnIGVy7NjveB3rEGftQaILQseLO1QXTM6T10RFRq
-	vUdfcXJ6RG2bSDq2G5SO/bJ7OWbSNdbWWf+jiGElE/f5cic7nldpM0Widtjw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775123926; x=1775210326; bh=vwI81Zx7PugxyJhjzg6GgQovxWyiJIsMK78
-	hy9ZE/dU=; b=BB7tB769fDedxZ7dfpUoq9bEf/qcjD7ngg+TZsw6LAWxtM/r/nI
-	fFMOz/gjR/ayj0tkrwl1ignG34zzhKom8OsM0fd1ZA9W7yboKQQQ3K5Fc12ywGHH
-	MTZgsxyW1spT3coKpmqX7GzP+dVvuApfV0YJEeeW7oWdP3LsjSEYU5coqJT+ZZNm
-	v6fN0ZnWDT2JK4nRRB7fTDQbPwD9WDFghsjnSdtcCda/kSW5fwUfUjN61ZH1Z7ao
-	MnPxph4ipcpikxPzmqGuajoJ3y4wp25QsSiw6sD+vICNr9buNOfWb6fgl8xD6ci/
-	Qeww1N5JKaz53OH9VvYNVuuG33MRNKkum0Q==
-X-ME-Sender: <xms:1T3OadVJbV4jVOGqaFi_HqKLFNfX27R_4cGvtG0TZ8G684not6zNHw>
-    <xme:1T3OacrIorlDfmDv0IZcPIXO1Y3rO1eNk5ErcWeDniy6i9yBZBeq8Nml5PixWIsGQ
-    YB2Pb2_aCzNVbRWAcDWy9H5e24Z9wNKMJ9A-bd-h_P7i4VQI289>
-X-ME-Received: <xmr:1T3Oafm3eSRHs7XyYw-znWwOF53f21yVCo90HeGUlzE8EejKybnfX5h0DQgI3H-tWH0bV6FVTJNswxUts6-cmnDozgZFHqqAZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehjedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholh
-    esthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:1T3Oac0okt_GaKn8VyjohhXRLNmoWVkCH6XVHxjGSpgEfeSEY5Wrvw>
-    <xmx:1T3OacQbHg0vmCVl_RRBVgOSDQUpPZxLOVRq1ud2vSqJNeG4FBo80A>
-    <xmx:1T3OaVzoKxTo3i2--3YhbUnFGMy-MZQxGaz5JDTYHYU_z7PorW2Kmw>
-    <xmx:1T3OacDnB4lfay7dBPJOkaE8QrpRmTjfzvE6sJkZqvaqzDS8Dcbgbw>
-    <xmx:1j3OaRVr4t6orMKy5KTG2pSmYx0icKAovKc42vS_-fNbczVy5hVUYeo_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Apr 2026 05:58:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Elijah Newren
- <newren@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 10/10] t5710: use proper file:// URIs for absolute paths
-In-Reply-To: <20260402070613.85934-11-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 2 Apr 2026 09:06:13 +0200")
-References: <20260402070613.85934-1-christian.couder@gmail.com>
-	<20260402070613.85934-11-christian.couder@gmail.com>
-Date: Thu, 02 Apr 2026 02:58:44 -0700
-Message-ID: <xmqqa4vlu1ij.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FfFRD9KX"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-89e8e352dc1so5810406d6.1
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:24:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775139886; x=1775744686; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KUQ8oGDCPD3PkURNS3yw7GFAo1v4DtQapPqwStD+qQA=;
+        b=FfFRD9KXN3q2iic1RC55ExwMzgwInABQPyeWqHT3VK+xUjzWTAlVDKVgwiFd6qvFLG
+         Lu7S7NWqKXvN3QXr+pyAR1ZLFLXGB187OUJWfsSw42mjnaU9UVxTu0Fr7tkKR+/tKJee
+         rfsMAmez+uqFKCF9SuXmMSlfzL/J/bd5vYufw3Biwe+PSwiQJ9Nf+Q9nhJ/fKrnCWYVH
+         U+o30+p0O7ovnBqoZCMcudweIvNaRVyxRDGXtUXkT6tUay3iImneIfKlLGDwLLjCeEwE
+         GmVchS5SNkUaVoN7187lPH9OTPdYM8EjU79qh2FTrbGsAGVkVtIbKsvS0kQ8WnV8GjNH
+         Fdcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775139886; x=1775744686;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KUQ8oGDCPD3PkURNS3yw7GFAo1v4DtQapPqwStD+qQA=;
+        b=pOb8JdxLInyP9vnpBmK+tFLXszxfdji1k/+7w/MRggP4N++nENFSOyo05nyV6IWt/M
+         3xhsjqZlBxLROADyYA74NhAgkMdLyLTBA8XoAkPKzObRvgGUf+tuVfNqCCWrKGxGICgq
+         VPgkkAiHwNUGOwIYUIqL0AFf6FaEviOW5f2IL3A9KFPHKqWaVWDFSGXovTVxN9Ju0+WP
+         mWl62xpFwybxGVNq/cKmkCkJ0wT4MRKZk5KouKk1BjctwusJ7e3qlIPerPqzP4OMROfn
+         eUAzbpTmU5c/loS2ol/xOJd3fMdxJk85j1Hj0Pj7eC4U8hz6exsF/OOYpRTZTiJhP0Cj
+         wIzw==
+X-Gm-Message-State: AOJu0Yz4HS794IC/moo1wtAR8SwBRXWdQBa20DOCb+EyZZaGRwk5lQ0v
+	3UtKzof23KunY2563wjx+DR1ilvRb4MHberC6GDGTLJ+K5f1xXZyZDhA
+X-Gm-Gg: AeBDies5u8h54hvsPf+cK1YY/LTrHfRJ3yaX9n6t3M9DPNlV2s7y8TO1nImHYIGZSKg
+	0xReiWqvS8+zHzCAnXuIxdNPVnljlxD6fnEPuR5IeRo5M62TriYVyhJaSZj8Sgmr+1GV+bfVIje
+	taYcmPUVGoXpIGHgE1OjPFeVg4XzHqzyxraw9Ea+oiOfliBTWVFsHBeA25GecSwPnKoXPQzJE2q
+	/yccSzAIyISuxD15cwD/ZwcD/GqFZ9c0nH5uohjuWLiQ9TZj+vE7bcWONOf0WKxwSPC0cNGfXtk
+	l8ldHXlRFiVUPrLXTdUwXnpmzbarP4uucOP0sVhA/4V0kZfURmr3aBBY+qs/yLODSpEd5q5+qe8
+	jBzH7OBL5thEezfpYN2UaEjmxW2uy57SpcpcSsTkITup3OA1TZP+G0Ss4874cUsrWrcM1sR9iB/
+	N/gxOi9rJOc4gFGtfGp68+/gchQ0u7atpRK+kFPWU4KhJHFPz6QPisqaG//3yfKBzD9+SCeaxtQ
+	yCEQUESllYk98GHxepYrJ5GBGoVFBFiKLwhf6L/R/50arf8
+X-Received: by 2002:a05:6214:8088:b0:8a4:8b2c:428e with SMTP id 6a1803df08f44-8a48b3bad5amr87396466d6.6.1775139886160;
+        Thu, 02 Apr 2026 07:24:46 -0700 (PDT)
+Received: from ?IPV6:2605:a601:a6b4:9c00:4872:ad35:e6d:aa17? ([2605:a601:a6b4:9c00:4872:ad35:e6d:aa17])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a5977e00b4sm23788046d6.47.2026.04.02.07.24.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Apr 2026 07:24:45 -0700 (PDT)
+Message-ID: <b7164e46-0521-4c0c-984e-35fc1891e4bd@gmail.com>
+Date: Thu, 2 Apr 2026 10:24:45 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH] backfill: auto-detect sparse-checkout from config
+To: Trieu Huynh <vikingtc4@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <20260331112516.772635-1-vikingtc4@gmail.com>
+ <xmqqo6k40wbl.fsf@gitster.g>
+ <buisigjsw3zrcy6bqaic2zefypq37kimju32eufquppsvkgkvx@cqd3cwj6an6t>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <buisigjsw3zrcy6bqaic2zefypq37kimju32eufquppsvkgkvx@cqd3cwj6an6t>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 4/1/26 3:31 PM, Trieu Huynh wrote:
+> On Tue, Mar 31, 2026 at 09:59:10AM -0700, Junio C Hamano wrote:
 
-> +# On Windows, 'pwd' returns a path like 'D:/foo/bar'. Prepend '/' to turn
-> +# it into '/D:/foo/bar', which is what git expects in file:// URLs on Windows.
-> +# On Unix, the path already starts with '/', so this is a no-op.
-> +pwd_path=$(pwd)
-> +case "$pwd_path" in
-> +[a-zA-Z]:*) pwd_path="/$pwd_path" ;;
-> +esac
-> +PWD_URL="file://$pwd_path"
-> +# Same as PWD_URL but with spaces percent-encoded, for use in URL patterns.
-> +ENCODED_PWD_URL="file://$(echo "$pwd_path" | sed "s/ /%20/g")"
+>>> diff --git a/builtin/backfill.c b/builtin/backfill.c
+>>> index 4b2db94173..0f31844ce7 100644
+>>> --- a/builtin/backfill.c
+>>> +++ b/builtin/backfill.c
+>>> @@ -124,7 +124,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+>>>   		.repo = repo,
+>>>   		.current_batch = OID_ARRAY_INIT,
+>>>   		.min_batch_size = 50000,
+>>> -		.sparse = 0,
+>>> +		.sparse = -1,
+>>>   		.show_progress = -1,
+>>>   	};
+>>>   	struct option options[] = {
+>>
+>> I am a bit confused by this change.  What's the difference between
+>> using -1 (which you picked) and 1 as the initial value for this
+>> member?  From the proposed log message, I would have expected a new
+>> code that says "ah, we notice, from this member being -1, that the
+>> user did not specify --no-sparse or --sparse, so let's figure out if
+>> our working tree is sparsely checked out ourselves and set it either
+>> to 0 or to 1", but there is nothing like that in the code.  It seems
+>> that the updated code relies on the fact that this part of
+>> do_backfill() only cares if .sparse is zero or not, and ...
+>>
+>> 	if (ctx->sparse) {
+>> 		CALLOC_ARRAY(info.pl, 1);
+>> 		if (get_sparse_checkout_patterns(info.pl)) {
+>> 			path_walk_info_clear(&info);
+>> 			return error(_("problem loading sparse-checkout"));
+>> 		}
+>> 	}
+>>
+>> ... relies on get_sparse_checkout_patterns() not to do any harm when
+>> the working tree is not sparsely checked out.
+>>
+>> I am not sure if we want to call it "auto-detction".  It looks more
+>> like "default to --sparse, relying that --sparse is a no-op in a
+>> non-sparse working tree" at least to me.  Not that it is necessarily
+>> wrong, and when people do "backfill" knowing that the working tree
+>> is sparse, I am sympathetic if they prefer to keep the sparseness,
+>> so such a change of default may be beneficial.
+>>
+> actually, the logic IIUC here is:
+> - first, ctx.sprase originally is set to 0.
+> - then, it check user's options. Assume, there is no option passed,
+> still 0.
+> - then, it check repo's config (core.sparseCheckout (default to 0 in
+> enviroment.c) but it doesn't since the guard:
+> 	if (ctx.sparse < 0)
+> 		ctx.sparse = cfg->apply_sparse_checkout;
+> - evenly. ctx.sparse still 0 eventhough in case the
+> core.sparseCheckout = 1 (git config core.sparseCheckout true)
+> 
+> IMHO, this change set the default value to -1, then it can fallback to
+> repo's config value if user has no-op passing (default to 0 (full
+> backfill if user doesnt intent to config previously either).
+>> Derrick, what do you think?
 
-Two comments.
+Indeed, I thought this was how it already worked, as 85127bcdea
+(backfill: assume --sparse when sparse-checkout is enabled,
+2025-02-03) (introduced in [1]) should have covered.
 
- - I was a bit surprised that these are not given as functions but
-   as variables, as a caller that chdirs around in the trash
-   directory would want a URL that points at its current working
-   directory (the expectation is from "pwd" in the name PWD_URL).
-   But a variable based interface "Here is the URL that corresponds
-   to the trash directory" is OK and probably easier to use than
-   "give me the URL corresponding to my current working directory",
-   simply because it allows a caller to append some string to it to
-   come up with a URL for any subdirectory on its own without
-   actually going there.  But in that case, the name PWD_URL would
-   become misleading, as it is PWD as of the moment the variable
-   gets defined, and the true meaning of the variable is not "URL
-   for the current directory", but "URL for the trash directory" is
-   more usable definition.
+[1] 
+https://lore.kernel.org/git/f22cf8b34851a3ba4cd6ab1d31f0835579143c40.1738602667.git.gitgitgadget@gmail.com/
 
- - Is it sufficient to only special case SP?  My repository may be
-   $HOME/w/git.git, for example, and the trash repository may be
-   "$HOME/w/git.git/t/trash directory.t5710/", so you need to cope
-   with SP between "trash" and "directory" the test framework adds
-   (to force you to be careful), but the test framework does not
-   control what can be in the leading $HOME part.
+However, that change did not include this test:
+
+>>> +test_expect_success 'backfill auto-detects sparse-checkout from config' '
+>>> +	git clone --sparse --filter=blob:none \
+>>> +		--single-branch --branch=main \
+>>> +		"file://$(pwd)/srv.bare" backfill-auto-sparse &&
+>>> +
+>>> +	git -C backfill-auto-sparse rev-list --quiet --objects --missing=print HEAD >missing &&
+>>> +	test_line_count = 44 missing &&
+>>> +
+>>> +	GIT_TRACE2_EVENT="$(pwd)/auto-sparse-trace" git \
+>>> +		-C backfill-auto-sparse backfill &&
+>>> +
+>>> +	test_trace2_data promisor fetch_count 4 <auto-sparse-trace &&
+>>> +	test_trace2_data path-walk paths 5 <auto-sparse-trace
+>>> +'
+
+This actually demonstrates the behavior that I was intending
+to introduce in that change, but made an error in (1) not testing
+it like I thought I had, and (2) not doing exactly what this change
+does by having the .sparse option initialized as -1 (unset).
+
+The code and commit message do a good job of identifying this bug
+and difference in behavior. The only suggestion I have is to update
+the commit message to point to my original commit that failed to
+implement this behavior in the expected way.
+
+Thanks,
+-Stolee
+
+
+
