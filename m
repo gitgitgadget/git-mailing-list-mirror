@@ -1,115 +1,136 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28417346AC4
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 17:02:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301FE388E69
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 17:03:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775149339; cv=none; b=ovQdXOzwRmUQgWvJZxKf2hKpg+mEUGaVwRUU1OuPHFMfKBuf32lWbdoL3zqbZksWXVfyAKcUbwJFSl8tGENU/nubOCDSL6hQ0zWhNh0PDaoDLK43z/+HEFx9JNywu9JhOpcoNA4vPVHUp+z1zLaUoyGm+XyZxP0ZiTfzm/Omv2Q=
+	t=1775149445; cv=none; b=V7FRFQKSnW43xhD7ttAQG0x3SprvRPZw2tjwPURLoNq+wgiMz9Lbrh2zRospWE7ekhudU6M8PwVy93OdQsud7N/z38rjxbDUkGnRrsSu2cJ/FDFxkIMRgNp5fPWO0XEL2wlNd7u7FHeAYGFlx32p8nOx4kyNrR9O1p7JrQSxerA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775149339; c=relaxed/simple;
-	bh=Y1/cnnsrk2fcJRHHyeqknBK+olProgl0Cn8ja5dN1H4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BQ3YUIFUVNHwpTVxJiJ/44SQ26WG2NQHmKGmgNN7V2iaqfsbGMf80lLcbVpW09A7Z47owpXVTT0s10Wq2QXJ5USdQaaAk3u6mhfgD2vip/yiw1p/Z/Yk/MUvrIw+RMx1qbwsKjSjCDafFq8WOnks6Zx9/tvEchBt9VHzNxygymc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bn3jeFNE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KBRJ78dY; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775149445; c=relaxed/simple;
+	bh=5YN5kCioQB3YStj5+5K06n+jfhN9s+N7BQr0EamkJN4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VQgqz2ZfukU6j88Nhz/h5pEHFAiPOzWc6KP/PIfFYG183bIHhhDMb7HBA2gbk1DCEdvZbHVMQBQ3Z8623VXNIC+HGcg9zrTo1KTJ0Mc12QAuzVhHD52SuUYM/HrOgpBNT3Kb0BY7R06MIE4H8V58X3Sw1AGFdaIsimmZ/VRqxX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I1LtLA/I; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bn3jeFNE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KBRJ78dY"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 695341D0005E;
-	Thu,  2 Apr 2026 13:02:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 02 Apr 2026 13:02:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775149332; x=1775235732; bh=Y1/cnnsrk2
-	fcJRHHyeqknBK+olProgl0Cn8ja5dN1H4=; b=bn3jeFNEdGmeXhJ748Qyup6XsX
-	Grex3gfVTuWGAX9LBPmnU8sldubvg7ccak5hKM2JSK5kFlLAJZ99BkEkIRPlUlhG
-	c94Erifa/ZPt4Kw31A4BDgYde4XvOhm3agEjaSj9HLZodR8CPOpKgrQvDz8DU5AA
-	WGEzq3Nva9J8uRsPgz4036xxWzqqLw4/oTObUA7TPuSEriGVYPRrT7sLwhovozfZ
-	8QIZJkp6mvOGxx6EP4pfJOZ5uQNFAv9S9Xj1CwtV7VQ+mz0VvSybUddrkj8MlEQV
-	eOm4fqw0sMWIMWWXzbLeJ5vwTlFAovZYmlhfOFgSMc6tIe4F0ULfUEJPHE2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775149332; x=1775235732; bh=Y1/cnnsrk2fcJRHHyeqknBK+olProgl0Cn8
-	ja5dN1H4=; b=KBRJ78dYGmxA/6jXsHh+XTUv11O6ONwXvONKLDKS02do/q7T1ae
-	WUcfsyQKZPkZJy5DTBnbKbWrEsRPFyl5hgbTK5bmBjtVihcuBsGwEJBNAYD9bmOO
-	Wl4JPDdSAzgsY1sMu069GI1hX2kc2UlcT46J3mg9UYk5DTVRwvFz3j+Ox/xRlOJU
-	p5MsWXl/xlYBCrJPlAPsDk4X7y+3KcqR86CciImKz91T4rGnuUr2Eop4ciVtlF7M
-	cilHyImgRMDOsmh7DhYNVaRoX5gbe1z2thXRwhFbwOtaflJqrOihUj1jR6o/WSxW
-	xNhPDVe4RckkWu3B4tgvluZkrUjeNglmfVA==
-X-ME-Sender: <xms:E6HOaWNVYnqfad2gHL6Kmv5qTTVJijibi3pVVbZzAWUQ3Q1EiO9WVg>
-    <xme:E6HOaYqOSv05PUy_JmaB8W79n0-dRV2NNKBkH_aNSzC67asZf1z_5cLdbk4sqNXa3
-    jbNAXyIoFm4AV3o3zC_uI9yWro3vJ5Liy-6gNtm8FZnjTgUsswY9Q>
-X-ME-Received: <xmr:E6HOaXEHyjD3SQL8URTuLJKcE0pqydfwRbLpd2sMzTiGV6NoF41B4HI6cHYPwkZHvvNTh0mH0AqWofPeei7IiWrjk_NxSEDm6Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeiheekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoheptg
-    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:E6HOadogzgasNZjsdmPiS37GFE-2Iui-0AZwzpBI8YSOsJoW7UjOBw>
-    <xmx:E6HOaQaotdIV2ZRFsnFYM1Vb2vfYSgqjV0V0T42MMnYKReFT4mQY4w>
-    <xmx:E6HOaWUNBpVnMs76KvP70qv9-33K7Rjsd-X6Dx4NzNKxBFDzFXbGxQ>
-    <xmx:E6HOaZ_owOBrZ_pRimUtpRcE3z9_vj3-9v7gzHRKkyqKt7KdVJ-edw>
-    <xmx:FKHOaXTxTc9R6vGU2cGrV70wdq0Y9crVS0VJ0fFUKH2D3NgfWFOaWac5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Apr 2026 13:02:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Elijah Newren <newren@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2] replay: support replaying down from root commit
-In-Reply-To: <87zf3ld90k.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
-	(Toon Claes's message of "Thu, 02 Apr 2026 11:08:43 +0200")
-References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
-	<20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
-	<xmqqtsu5xaw0.fsf@gitster.g>
-	<CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
-	<87a4vv2ada.fsf@iotcl.com> <xmqqfr5lkyq8.fsf@gitster.g>
-	<CAP8UFD3P2Gs0J1FNyKW2URwSEW4ZaTrVO7cM1V8sG+zzXctbhg@mail.gmail.com>
-	<xmqq4ilw2cnw.fsf@gitster.g>
-	<87zf3ld90k.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
-Date: Thu, 02 Apr 2026 10:02:10 -0700
-Message-ID: <xmqqv7e9qorx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1LtLA/I"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48541edecf9so13256935e9.1
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 10:03:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775149434; x=1775754234; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mcTohUwmbdzsrhVdQurvQmbwv7NozqBzMR/QuKSL42Y=;
+        b=I1LtLA/IB6ozzrh5fR+RmZSLdjKnpWkiO0PqNunrNwJSqQmSY6OtRdHyiAGWWQ8f1R
+         2WuJz7mvSW4NimfKtd75E6sUSLZEW/SNvOPNVjIheZZo9mmA0EXWPzBIuBi9/+3uTxXi
+         pty+M0E09Fy2RXG/qlwf8DF8PCcc3ILEqeMHj+9u9O7SS4tH3yiSttfMYxCMIR5ge2sE
+         mMONyo3JQqJfgFHB0dJfer/7A4qUHku5LnZdZ4yz9fL7FQWcXk042A8EgllC4U+IosSY
+         yqBIbQNJrESObYBn0RudoKDTAPn+Ny6abZJxMLfVljP1MnPBwt8OvNiveGE5bo0o4k7r
+         Jz7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775149434; x=1775754234;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mcTohUwmbdzsrhVdQurvQmbwv7NozqBzMR/QuKSL42Y=;
+        b=KtnH4Z7ZHDbUPEEnVd63Y+8/BPWpoF5Smry5E2lCbBtHHHnGZ60pl3vlvLlNtCmzC9
+         o92bFbL3vMFLVXHI4eqmKmj8Mlll6VixiqP0VbSYPKR0TCd6dlL+cO/Fet/iFxlkoxyX
+         PLikU55nP/FDGQw9VDbNkzTMXcEg3AWghBLvIiWcJnqwlbK/1rNj+fbhzuwxaZt0Sh8x
+         txq9y+mOHvHQXNQRH2f41Wf1z3j7QwDEVZOWJrxJgkuvjkufsY/zvgnF95SY6kX3KA8f
+         YuIMatmvwPhem1S9KS6T91VEVvGdrjJMvsiIh8ua3Lihgx2M4PIw5fzGob4lbA3qiUSV
+         cJqw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3fMrc7023IzgZPgkjqceDbmAE1cMwQwPPWbB2G19yiN7MRtshRBdcNImUPFMOTGsK7UU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywmx3N8fQpiv0IKMz1e1LjMIvgj1yHN9KIrF+1nF7GhMolH02yO
+	EIU4hkBn6EslDBJO6AraBtH0i3nlZDsri7HMf3r9B2YUdRJt9/9Vf4rl
+X-Gm-Gg: ATEYQzy7Yw7UIh24yKG1KqWDAtaRhOcoiKvSOnkvFl6lMJ9IMAB1TRYFmQ0OL7nhlB/
+	pJ2e7+3B2IvlzFMPbuja7TcB1AoE0MVrq7quxOSbOk7peIVOztpMNGHZmsOjIxpurNAgovVMz5b
+	pHR8J1Mwv+nRkscYkWzmY4rWH+mIeNOgyj04y3hmKuMrjU0jclBXLb/lZ+3H8ajoLwWzgySiCMk
+	apeLx7un8Cwxys8nQ6mx6k43hPdcKnClL2r0k2lcEncIMsKjaMXX5XDNw0rHwJuACiuohQ57mq9
+	MXW7oodU/g6D/oo0g/MoX/x8VXD4+LMAZn2amHoT52/EYSa+aMZduRfncY4c5AGRPnb6z2CYgfb
+	ezqGf4yxc+mAcprWhP1EvIu0QmiNR2pO3QE+zFYjW5wOR1IGpZro0GpIuYB4aUwtrG/Or7mGvkj
+	MQozGSnworcp33nL+4Wuus
+X-Received: by 2002:a05:600c:1f11:b0:485:304a:58cd with SMTP id 5b1f17b1804b1-48883569e20mr142217565e9.4.1775149434063;
+        Thu, 02 Apr 2026 10:03:54 -0700 (PDT)
+Received: from gmail.com ([159.146.41.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4888a63c9b1sm77404025e9.5.2026.04.02.10.03.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Apr 2026 10:03:53 -0700 (PDT)
+Date: Thu, 2 Apr 2026 20:03:45 +0300
+From: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, 
+	git@vger.kernel.org, Jeff King <peff@peff.net>, Tian Yuchen <a3205153416@gmail.com>
+Subject: Re: [PATCH v3 1/5] refs: add struct repository parameter to
+ branchname helpers
+Message-ID: <ac6K5UnVdw67Rfpy@gmail.com>
+References: <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260329101725.1092900-2-shreyanshpaliwalcmsmn@gmail.com>
+ <ac4aZRveWXjOtxgB@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ac4aZRveWXjOtxgB@pks.im>
 
-Toon Claes <toon@iotcl.com> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
->> Even though I am on the fence about the need for this specific note
->> in the documentation, ...
-> ...
-> But to summarize: I'm not sure a documentation change is needed, but if
-> you insist, I'm attaching a fixup patch (it's based on
-> sa/replay-revert). I'm leaving it to Christian an Junio to decide
-> whether it should be included. I'm happy to take it to a separate series
-> if you consider that a better idea.
+On Thu, Apr 02, 2026 at 09:27:33AM +0200, Patrick Steinhardt wrote:
+>On Sun, Mar 29, 2026 at 03:46:39PM +0530, Shreyansh Paliwal wrote:
+>> diff --git a/refs.c b/refs.c
+>> index 685a0c247b..5cdc8858c5 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -758,10 +758,10 @@ void copy_branchname(struct strbuf *sb, const char *name,
+>>  	strbuf_add(sb, name + used, len - used);
+>>  }
+>>
+>> -int check_branch_ref(struct strbuf *sb, const char *name)
+>> +int check_branch_ref(struct repository *repo, struct strbuf *sb, const char *name)
+>>  {
+>>  	if (startup_info->have_repository)
+>> -		copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
+>> +		copy_branchname(repo, sb, name, INTERPRET_BRANCH_LOCAL);
+>>  	else
+>>  		strbuf_addstr(sb, name);
+>>
+>
+>I have to agree with Tian's comment on v2, this part here looks wrong. I
+>don't think we should depend on `startup_info` here, but we should
+>exclusively rely on whether or not the caller has passed in a
+>repository. And that will likely require a bit more scrutiny to figure
+>out whether there are any callers that shouldn't pass in a repository
+>because it's not initialized.
+>
+>Alternatively, we could go with Tian's suggestion of checking for `repo
+>&& repo->gitdir`.
+>
+>Patrick
 
-As I already said, I am not enthusiastic about the "how about adding
-something like this" Christian gave us and I think we can do without
-it, so I'll leave it up to Christian ;-)
+This approach actually leads to a bug and segfault in a specific edge
+case when running 'git check-ref-format'. The current tests don't cover
+this scenario, but they can be extended to catch it.
 
-Thanks, all.
+If GIT_DIR is set to a non-existent path,
+'startup_info->have_repository' becomes '0' but 'repo->gitdir' still
+holds the invalid path. As a result, the code enters the first condition
+and crashes. The case can be tested with this command:
+
+$ git --git-dir='non-existing' check-ref-format --branch @{-1}
+
+Modifying the behavior of 'repo->gitdir' might solve the issue, but I
+belive that falls outside the scope of this patch. After a quick search,
+I found a prophecy from Peff about the 'startup_info->have_repository':
+
+[1] https://lore.kernel.org/git/20190806124954.GA13649@sigill.intra.peff.net/
+
+Thanks,
+Burak Kaan Karaçay
