@@ -1,64 +1,69 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4622FAC14
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DDC3B774F
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775140407; cv=none; b=lt8GiLZuL3vNgvPUs49z5eTAJ8tba2YJkdvP2lrYKauwl+qk6a0hPcSYZYQB1CWqNb5t7hV4cnBA0eS3/g1SmX2LvKwWkCWqu9Z8NZ7FObr3ZQfA6oAoIZPk5Ss5nQKuz3cSFQBSSdZsX7uiaCiA3Mn/fxdZ1exYEIZXSllTPxY=
+	t=1775140408; cv=none; b=qo/sJiD5i30GtWr/2S2v99lRDkaupTUMeFpKArSEk1t0iUw+RmJ1huo3aCJXUTo0RdQXRwQUdkheqx0ug60Oa7/AvXqQa+Yd9SnsGOcB8bwTBQ7VlN1AEWwLSHF5GLTL7+yN7dzZSFqlzc+yM2XOH98usTEFLqZ3WmyhzWxgbak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775140407; c=relaxed/simple;
-	bh=p2GVdyJ4z1G13wGB3W1/eLKHEBVQhMNABgC0Zqi/yHE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=bNbyA35lf1Wa90g5nmAKthpvRx9Ypz4atocpSuG7jBcuRpeRsI2S18XmM37McBepOi0mTYqwS5EylRFC9kD7d3H/EmhKpN1yf+K8XoliD/wyykZ9XknvDetvz1PExaHtxtYaoz4q5dGpI25eW1dyzZRDQnkisqv3M8y6pbTT7O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fgcxtMUX; arc=none smtp.client-ip=209.85.222.179
+	s=arc-20240116; t=1775140408; c=relaxed/simple;
+	bh=XG5Z8BKHOb1AuADzfLEaXraUEzPLeg9mKDLElANYm/w=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=mUijHJVbCdFNSJFzYIOLGP+RN8n2si08lKrRdTshG6g+hr5Wy0YUjkIdLsWdQ81vVkb0talzoRBDsD+gIkr+vLkJBfvMJLPZUXzJpuikDJit4rHbNjesowqNHcy9oqdlsObtewPl01n8YupkEFBKoG6V/YicNRcxyRy2XyrzB8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qF5y2uWu; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fgcxtMUX"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cfc085395fso87890985a.2
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qF5y2uWu"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-899a5db525cso7784976d6.3
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775140404; x=1775745204; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775140406; x=1775745206; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qQHDTY4OILi3gEQAIsmfqxvqCqNyYcNyqqKfjqRcG8Q=;
-        b=fgcxtMUXwRr07dVfOZgaLCGSnznvMLjrZLoZG6buoRIayp/LNpwuZuhtG/+rnvph0f
-         5I3ESYRk5KfY4ygoFP4ICuAG+G7opsIgh4+L34CBroUScG7kbqnRA6G9e8qoJ07k+EF2
-         oWIDaH1MgQAn49iweJ+kq4Og2XrytBq2oI0rXtH1tcM5FEG6zl1oys/p3O5v/hvMWA77
-         5w6BYiCEOya5zvUduop1edQr1JluH6o9DogewrdqWRQK10ouUPqGRpdn2Q06eDD+W3bK
-         ciiI1wMF+2/K2n0G/th+zP1+J3ZbDVVq/cueU/bta6Zfa9oWhw0b1eUNEsGbBLbcy5Pm
-         aZkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775140404; x=1775745204;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qQHDTY4OILi3gEQAIsmfqxvqCqNyYcNyqqKfjqRcG8Q=;
-        b=oBHQoa72JVAIQ2J9ofcQCdGOVn4JKhdP3UvsgP+TOHxtC6GaU6KCcd6sNdKYLxgFAS
-         TDOUzdUonTwEPCZGzLk8R8WcxRvR0eKyoh8X5NC73pCeKh3cXOSP2SVLeEMHDp+8a1HG
-         Hlv7zx/gVfmK5w7guk3WmI8WHbK8VdsQAyy81yJ4dvz2yPz56aJF0+CnAfEMKM38Lt5D
-         edr2fUujznreORSFpLf4nhB3l5pqhGEDZ8IE7hlY1Ki/ytx+ELTPNjYiSCcxE+zKCcTw
-         bKIY9XkSHTB1uUrrsOFg3dKXmQjzCfPQzxPlA3nYsM9JookKFvSrybTDqCejtHnreQC+
-         MliA==
-X-Gm-Message-State: AOJu0YyXlNwLF50ZoftzwV473apSL8DFGzSVhXLQjSOGEivMpf0vzA40
-	l/cHAxKVwWgq5wbEuqbT8ayNkGHsYkAZ7cgr8W1OT0IA81gYviYs9ufmBPFXQw==
-X-Gm-Gg: ATEYQzxYeajv+0Cvhlb2WycdU+R15NGQSgyQauaD1q3ka4jiP20g4YTqbH0ZveYIqF0
-	w1VUmjIQcd1nAqeBEZ1LaOTSpoG9DyNn8YFGNTV61XNruCPfSXcSlixmfk8VOlR9dqkZuwDfqzU
-	PoO6n3wRfsvcjhTesiQtbL1pPkFhxgQCqVfZReuk/Neie9YLg72kBl6SSEUNRoy6S4ZPEBFgQ3A
-	HaVp6bLb0eHF8puvhG08Cs0I6SqZeVfmRsORe5KtAbWeOnhVYWswwI5MRpNy12JoZh2zf2R8QV0
-	0RyuNpokD58BY9nwMqE2QxwOOF00Kf76luK+jPrSh6UyLLvNSmaCkvrD/KfpccYNAc9pVRPccqW
-	eWrQGmJy9gCELz+AmRjEz+lk5zP5EQ0/QghYjrArP384nWUwWo72LOGUxTrDhJTF3Ml8e0bMLfC
-	+p3bsi1Yp0E2iVqo0J7mBxVfNWvzqEctE380jLNw==
-X-Received: by 2002:a05:620a:298e:b0:8cd:9060:522f with SMTP id af79cd13be357-8d1b5bce9a2mr1159637985a.56.1775140404408;
-        Thu, 02 Apr 2026 07:33:24 -0700 (PDT)
+        bh=Zsay0vdYZ078i+Fl2k2574Y2xiOimamD5CyBm2fi7+Y=;
+        b=qF5y2uWur26dTH1AOAdKxSekggzbaafXD7Glv3+vSBPWG51XuZFrDXXz0Cc9miwr3D
+         Ui9SAy4+Rdf1uoklUuiSi/ykZV/7cyuiKQtoYqiJKRUJGEJ5r4WDzdl5MxBQlAwkXPTd
+         peL60FdlF5qYxsPGxZGN/AH59BvzJ9q6aOKSa497ADfp+9CMxL3z+2tPPNs4p2dsQyIm
+         aa8nluX/BBU4u4EEbe7zsrZg+a6ae7FF6aB5UGq5V9vdudPbb5F9joVMRfGnbkTjuVuV
+         VJh5oBkfqt3l7sn5kpd+KMAOEqMh8KEd01eWcU1C0+bvo4GCnQaLncCXGP2RbMdXK4OT
+         yZNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775140406; x=1775745206;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Zsay0vdYZ078i+Fl2k2574Y2xiOimamD5CyBm2fi7+Y=;
+        b=IB/MiKYvnNuSxdzOhxMSlyVYtHMNyfbW2pmCo4Y0WtEDxjkpaxwsWnzdVdqDd6FffE
+         ChJ4v7whd9eCQh/s83cx26DjmXoWRuMTAF0s/NQa8VrTgUK//IA1l/rgFyRBGXNfzL5g
+         J3LBgvlNt+NTbgDPTViPc79WQzs5/eeDcmOFP7F/BjXmYQjpPlwo3R3fc0wZtJYGVNTi
+         xvf/90Jq1zt09mtKDShraoLKTMRrzgbSAnYbHVy5FBsUMs/IslvR53WkOlQqvI+iJRkr
+         MhennsDOQT4ePyhsKxGIeF32yOj4MS+kZgBrLFj/csBNTZzqwRe1g8nRdFZ2iYW4FcOg
+         zUOA==
+X-Gm-Message-State: AOJu0Yx/aR6G+C0KT1+VppufU1jqP/+oD1N6s3TkYsfaztIn8jsGNm1M
+	bMyHuiNRgkAOwDFhmyE9ld0xxFza/3xBB5i88GUjFPniRn/R3hLWJVjpV1+47Q==
+X-Gm-Gg: AeBDieuQAgXWQZKXZ4xQ/QoFkrEUDAFvhRM3KY1I6ELW0NR4wxcD5EdArD39baaQCKU
+	ll6OCCqs3fpdEjmtqmbCCbOn+a4qNf1uj5JGi2CQrRiULpCzgV6FxzFl+1Rm6X56sADoPqPwWRO
+	DnivGo9bRmUSlIkReQxAGe/v0WzVPrX678sYr/s34MmzLBx2oL4fDFNlBSZkTggCRGn8kA3GOU8
+	LMK+8VhuFGp8bFQd4kVUS+SjBLBA7Ve2aYqd18XWC+JBB5eO9FRKBBfXO70w9XiPwKYP50WbYww
+	vkqgWo+IWalJ99SD9Ltajm8MBpXOevgn3rBAdPFYE59ecbFWzA/L6TI7SfeWRr6eUosJyEpZHvT
+	Zs/tsVV+spTgUsvmCyFzR6e50zcwhycJXpgMP9yqna0bvmhvt+H8Hsy1rVLzTA+MJLqW+OjhpqS
+	Q5VrQKQl/rWy+5G/S92xCNvVOKujg=
+X-Received: by 2002:ad4:574f:0:b0:89f:2fa:a9b6 with SMTP id 6a1803df08f44-8a4392c1c5fmr122453796d6.37.1775140406137;
+        Thu, 02 Apr 2026 07:33:26 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.114])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a5393a07sm228222085a.4.2026.04.02.07.33.23
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a596915986sm26687016d6.24.2026.04.02.07.33.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 07:33:23 -0700 (PDT)
-Message-Id: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
+        Thu, 02 Apr 2026 07:33:25 -0700 (PDT)
+Message-Id: <a1cdbd58f0af27be689230b7d8009d93bc34abca.1775140403.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
+References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 Apr 2026 14:33:06 +0000
-Subject: [PATCH 00/17] tests: access bare repositories explicitly
+Date: Thu, 02 Apr 2026 14:33:07 +0000
+Subject: [PATCH 01/17] t0001: allow implicit bare repo discovery for
+ aliased-command test
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,69 +74,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The safe.bareRepository configuration variable (introduced in 8d1a7448206e)
-allows restricting implicit bare repository discovery. Its default may well
-change to "explicit" in Git v3.0, at which point any test that relies on
-implicit discovery of a bare repository would break, even if the test
-subject has nothing to do with bare repositories.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This series adjusts 16 test scripts and git-p4 so that they access bare
-repositories explicitly. The techniques used are:
+8d1a7448206e (setup.c: create `safe.bareRepository`, 2022-07-14)
+introduced a setting to restrict implicit bare repository discovery,
+mitigating a social-engineering attack where an embedded bare repo's
+hooks get executed unknowingly. To allow for that default to change at
+some stage in the future, the tests need to be prepared.
 
- * Replace git -C <bare-repo> ... with git --git-dir=<bare-repo> ...
- * Export GIT_DIR=. after cd-ing into a bare repository
- * Wrap commands in (GIT_DIR=<path> && export GIT_DIR && ...)
- * Add test_config_global safe.bareRepository all in the few tests where
-   implicit discovery is genuinely part of what is being tested
+This commit adjusts a test accordingly that runs `git aliasedinit`
+from inside a bare repo to verify that aliased commands work there.
+The test is about alias resolution, not bare repo discovery, so add
+`test_config_global safe.bareRepository all` to opt in explicitly.
 
-Each commit is a self-contained fix to one test file (or a small related
-group).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t0001-init.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-This patch series is part of https://github.com/gitgitgadget/git/pull/2072.
-
-Johannes Schindelin (17):
-  t0001: allow implicit bare repo discovery for aliased-command test
-  t0001: replace `cd`+`git` with `git --git-dir` in `check_config`
-  t0003: use `--git-dir` for bare repo attribute tests
-  t0056: allow implicit bare repo discovery for `-C` work-tree tests
-  t1020: use `--git-dir` instead of subshell for bare repo
-  t1900: avoid using `-C <dir>` for a bare repository
-  t2400: explicitly specify bare repo for `git worktree add`
-  t2406: use `--git-dir=.` for bare repository worktree repair
-  t5503: avoid discovering a bare repository
-  t5505: export `GIT_DIR` after `git init --bare`
-  t5509: specify bare repository path explicitly
-  t5540/t5541: avoid accessing a bare repository via `-C <dir>`
-  t5619: wrap `test_commit_bulk` in `GIT_DIR` subshell for bare repo
-  t6020: use `-C` for worktree, `--git-dir` for bare repository
-  t9210: pass `safe.bareRepository=all` to `scalar register`
-  t9700: stop relying on implicit bare repo discovery
-  git p4 clone --bare: need to be explicit about the gitdir
-
- git-p4.py                                  |  1 +
- t/lib-httpd.sh                             | 12 ++--
- t/t0001-init.sh                            |  5 +-
- t/t0003-attributes.sh                      | 66 +++++++++-------------
- t/t0056-git-C.sh                           |  2 +
- t/t1020-subdirectory.sh                    |  5 +-
- t/t1900-repo-info.sh                       |  7 ++-
- t/t2400-worktree-add.sh                    | 21 +++----
- t/t2406-worktree-repair.sh                 |  2 +-
- t/t5503-tagfollow.sh                       | 13 ++---
- t/t5505-remote.sh                          |  4 +-
- t/t5509-fetch-push-namespaces.sh           | 12 ++--
- t/t5619-clone-local-ambiguous-transport.sh |  2 +-
- t/t6020-bundle-misc.sh                     |  4 +-
- t/t9210-scalar.sh                          |  2 +-
- t/t9700/test.pl                            |  9 ++-
- 16 files changed, 74 insertions(+), 93 deletions(-)
-
-
-base-commit: cf2139f8e1680b076e115bc0b349e369b4b0ecc4
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2076%2Fdscho%2Ftests-explicit-bare-repo-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2076/dscho/tests-explicit-bare-repo-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2076
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index e4d32bb4d2..6bd0a15dac 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -77,6 +77,7 @@ test_expect_success 'plain nested through aliased command' '
+ '
+ 
+ test_expect_success 'plain nested in bare through aliased command' '
++	test_config_global safe.bareRepository all &&
+ 	(
+ 		git init --bare bare-ancestor-aliased.git &&
+ 		cd bare-ancestor-aliased.git &&
 -- 
 gitgitgadget
+
