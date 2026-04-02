@@ -1,47 +1,89 @@
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B725D372B28
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 09:08:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6379B3D5643
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 09:58:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775120939; cv=none; b=bMYxP/jQmqY/ultjiRnGG87yCdQdAfCLV+tXCVgU3K2yVLv3ryvH6AczGFQ9tG6viUy91o1kjeOtwmY9VIHKPREibAJf5VqmzZ4dV/eERuidCqllNwfNe4P20KsIW3MwJLH0TnRwqbRVT/NOBfb4dPbB+9U4dZhxMCnmEPS/Pk8=
+	t=1775123932; cv=none; b=TGJkgHax8i7jXAYozXFxXULZb/Opjvk4b2NPUE7eL5RHxDz7WF0YubcmtL0F3bKNGhQvMm44rUPYKgIHj3NQioinxwTEfe3fE9B/l/SjV7mb+Z7+LMS/ENHL8RrlTnBHL6eajbZK/nWyWCrG0AOMRLjtYQJrWbC8GRHOYqyf9yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775120939; c=relaxed/simple;
-	bh=pfyNX7dojSGRPBU4GwMwyU9sh8rdj8WE790tla7q0CI=;
+	s=arc-20240116; t=1775123932; c=relaxed/simple;
+	bh=nGIHMl8odZO+GPlB67X0Ysv8KE9n8uKcLqx2qLVJ/jU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gZvukL7Ie6A/bRw0D4zS1lszsAQUiAxeTo00PgRyCURpV9jkF6H5UJCT+6b3iTZSl6UqYRNm/bZ2pqpNI5sfUddlVLkbuvXcjdtkqekoAfNh6nl44fTu31dV/hGuOiwnF52NbNIL/vfZHUikM9KVfMq4dU+jbNEkXGA3DI01LgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=vnrRQ/oB; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=NsdIsE9I4qxcfjAoL3GPwAWiEeyfKf26p6Mrp7YWttzlAoEUwRs6mYg4iq/upp6+PV3Jlbo9Gz867PCs3z9Dyc0tfm6MX3MMd7weVe5B9QESTHpcxAu6KQ3fRCmqKuGOtcwLLYkr8g0rhrcngGCP/F6+yLggECvRVWysKnH7A5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F19YyoQo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BB7tB769; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="vnrRQ/oB"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1775120933;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1Y23adB0hVqA8IXqPEm7J/omjiu3FtU8mPnF6ICphNg=;
-	b=vnrRQ/oBjQDuIyeDnu0uBeuJF8Df370RrRi4g2qyioc/iOyXjtvfVneynL9TPqbFM1Crl/
-	/Ro13OnyNNFQE/4pb1v2FBaZXxtk5b70CbUNc0WQiiD8nJvJxPWNxdqvywcQfUkYc4ldly
-	T7Eynr8+1iOSsxcKS5ugxeBxIG0+SkA=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>, Christian Couder
- <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Ben Knoble
- <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2] replay: support replaying down from root commit
-In-Reply-To: <xmqq4ilw2cnw.fsf@gitster.g>
-References: <20260317-toon-replay-down-to-root-v1-1-cb5c249e15fd@iotcl.com>
- <20260324-toon-replay-down-to-root-v2-1-34e723489f6e@iotcl.com>
- <xmqqtsu5xaw0.fsf@gitster.g>
- <CAP8UFD1zJXnsm7POK32GqEu4xSC+VO5mfzUpM-jn+Nr1qvzEFQ@mail.gmail.com>
- <87a4vv2ada.fsf@iotcl.com> <xmqqfr5lkyq8.fsf@gitster.g>
- <CAP8UFD3P2Gs0J1FNyKW2URwSEW4ZaTrVO7cM1V8sG+zzXctbhg@mail.gmail.com>
- <xmqq4ilw2cnw.fsf@gitster.g>
-Date: Thu, 02 Apr 2026 11:08:43 +0200
-Message-ID: <87zf3ld90k.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F19YyoQo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BB7tB769"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 742187A02FE;
+	Thu,  2 Apr 2026 05:58:46 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 02 Apr 2026 05:58:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775123926; x=1775210326; bh=vwI81Zx7Pu
+	gxyJhjzg6GgQovxWyiJIsMK78hy9ZE/dU=; b=F19YyoQoRO8DQ7ZQVTm9Oh2jUw
+	muUGSf1wTc1XmDcwX1GHkmNv2z1JzJwF9gsuBOhxcKmM3QctbA2hPZCAEHV+W4Dx
+	26poyzcb2FTRh0Jeqj+exKLHXDlDc2zK32nBFri5NzXjKlc9INoYWj2cVA2Nqjql
+	ngFEwBJd40D5PvV1EY0ToB1JRgUyemTgJBZIudvILs+Q4s/RIPgekiQrVA5CW3Yj
+	NrupccFfdYWWnfScOEhwsoVsnnIGVy7NjveB3rEGftQaILQseLO1QXTM6T10RFRq
+	vUdfcXJ6RG2bSDq2G5SO/bJ7OWbSNdbWWf+jiGElE/f5cic7nldpM0Widtjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775123926; x=1775210326; bh=vwI81Zx7PugxyJhjzg6GgQovxWyiJIsMK78
+	hy9ZE/dU=; b=BB7tB769fDedxZ7dfpUoq9bEf/qcjD7ngg+TZsw6LAWxtM/r/nI
+	fFMOz/gjR/ayj0tkrwl1ignG34zzhKom8OsM0fd1ZA9W7yboKQQQ3K5Fc12ywGHH
+	MTZgsxyW1spT3coKpmqX7GzP+dVvuApfV0YJEeeW7oWdP3LsjSEYU5coqJT+ZZNm
+	v6fN0ZnWDT2JK4nRRB7fTDQbPwD9WDFghsjnSdtcCda/kSW5fwUfUjN61ZH1Z7ao
+	MnPxph4ipcpikxPzmqGuajoJ3y4wp25QsSiw6sD+vICNr9buNOfWb6fgl8xD6ci/
+	Qeww1N5JKaz53OH9VvYNVuuG33MRNKkum0Q==
+X-ME-Sender: <xms:1T3OadVJbV4jVOGqaFi_HqKLFNfX27R_4cGvtG0TZ8G684not6zNHw>
+    <xme:1T3OacrIorlDfmDv0IZcPIXO1Y3rO1eNk5ErcWeDniy6i9yBZBeq8Nml5PixWIsGQ
+    YB2Pb2_aCzNVbRWAcDWy9H5e24Z9wNKMJ9A-bd-h_P7i4VQI289>
+X-ME-Received: <xmr:1T3Oafm3eSRHs7XyYw-znWwOF53f21yVCo90HeGUlzE8EejKybnfX5h0DQgI3H-tWH0bV6FVTJNswxUts6-cmnDozgZFHqqAZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehjedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholh
+    esthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:1T3Oac0okt_GaKn8VyjohhXRLNmoWVkCH6XVHxjGSpgEfeSEY5Wrvw>
+    <xmx:1T3OacQbHg0vmCVl_RRBVgOSDQUpPZxLOVRq1ud2vSqJNeG4FBo80A>
+    <xmx:1T3OaVzoKxTo3i2--3YhbUnFGMy-MZQxGaz5JDTYHYU_z7PorW2Kmw>
+    <xmx:1T3OacDnB4lfay7dBPJOkaE8QrpRmTjfzvE6sJkZqvaqzDS8Dcbgbw>
+    <xmx:1j3OaRVr4t6orMKy5KTG2pSmYx0icKAovKc42vS_-fNbczVy5hVUYeo_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Apr 2026 05:58:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 10/10] t5710: use proper file:// URIs for absolute paths
+In-Reply-To: <20260402070613.85934-11-christian.couder@gmail.com> (Christian
+	Couder's message of "Thu, 2 Apr 2026 09:06:13 +0200")
+References: <20260402070613.85934-1-christian.couder@gmail.com>
+	<20260402070613.85934-11-christian.couder@gmail.com>
+Date: Thu, 02 Apr 2026 02:58:44 -0700
+Message-ID: <xmqqa4vlu1ij.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,159 +91,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
+Christian Couder <christian.couder@gmail.com> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
+> +# On Windows, 'pwd' returns a path like 'D:/foo/bar'. Prepend '/' to turn
+> +# it into '/D:/foo/bar', which is what git expects in file:// URLs on Windows.
+> +# On Unix, the path already starts with '/', so this is a no-op.
+> +pwd_path=$(pwd)
+> +case "$pwd_path" in
+> +[a-zA-Z]:*) pwd_path="/$pwd_path" ;;
+> +esac
+> +PWD_URL="file://$pwd_path"
+> +# Same as PWD_URL but with spaces percent-encoded, for use in URL patterns.
+> +ENCODED_PWD_URL="file://$(echo "$pwd_path" | sed "s/ /%20/g")"
 
-> Toon Claes <toon@iotcl.com> writes:
->
->>> Maybe something like the following could help:
->>>
->>> --- a/Documentation/git-replay.adoc
->>> +++ b/Documentation/git-replay.adoc
->>> @@ -23,6 +23,10 @@ instead get update commands that can be piped to
->>> `git update-ref --stdin`
->>>
->>>  THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
->>>
->>> +Note that `git replay --onto main topic` replays the topic branch starting
->>> +from the root commit, not from main. What you might want instead is
->>> +`git replay --onto main main..topic`.
->>> +
->>
->> Definitely would help, not sure it needs to be part of this series.
->
-> Where else should the patch to add such a note to the documentation
-> go, though?
+Two comments.
 
-First let me clarify, I'm sorry but I posted that message because I was
-messing up two of my patch series. Yes, that change (if made) should
-belong to this series.
+ - I was a bit surprised that these are not given as functions but
+   as variables, as a caller that chdirs around in the trash
+   directory would want a URL that points at its current working
+   directory (the expectation is from "pwd" in the name PWD_URL).
+   But a variable based interface "Here is the URL that corresponds
+   to the trash directory" is OK and probably easier to use than
+   "give me the URL corresponding to my current working directory",
+   simply because it allows a caller to append some string to it to
+   come up with a URL for any subdirectory on its own without
+   actually going there.  But in that case, the name PWD_URL would
+   become misleading, as it is PWD as of the moment the variable
+   gets defined, and the true meaning of the variable is not "URL
+   for the current directory", but "URL for the trash directory" is
+   more usable definition.
 
-> Where else should the patch to add such a note to the documentation
-> go, though?  Without this patch, we do not is because the command
-> will not take such a command line.  With this patch that adds the
-> "now we allow replay to take a single tip commit and replay the
-> history leading to the tip all the way down to root" feature, the
-> note may become relevant.
->
-> So to me, it looks like it is either we will never add such a note
-> because it is irrelevant and everybody should know the consequence
-> of passing "topic", not "main..topic", or we will have to add such a
-> note as part of the series (if the note would help the readers).
->
-> Even though I am on the fence about the need for this specific note
-> in the documentation, it does not make sense to me to say "this will
-> help but we are not doing so here".
-
-The git-replay(1) docs refer to "Specifying Ranges" in
-git-rev-parse(1). The section itself is included from
-Documentation/revisions.adoc. If I look at "Revision Range Summary":
-
-    Revision Range Summary
-    ----------------------
-    '<rev>'::
-    	Include commits that are reachable from <rev> (i.e. <rev> and
-    	its ancestors).
-
-Personally I would say that's clear enough, and it feels a redundant to
-repeat ourselves in the git-replay(1) docs. It's basically the same as
-for every other command (git-log(1) for example).
-
-Now I can understand it can be confusing when you compare this to how
-git-rebase(1) works. But if you ask me, using git-rebase(1) with
-'--onto' is a bit awkward anyway.
-
-Nevertheless, looking at what the git-replay(1) docs now say about the
-'<revision-range>':
-
-    <revision-range>::
-    	Range of commits to replay; see "Specifying Ranges" in
-    	linkgit:git-rev-parse[1]. In `--advance <branch>` mode, the
-    	range should have a single tip, so that it's clear to which tip the
-    	advanced <branch> should point. Any commits in the range whose
-    	changes are already present in the branch the commits are being
-    	replayed onto will be dropped.
-
-The phrasing around dropping commits can cause confusion. We should say
-instead empty commits are dropped.
-
-One other thing to note though, in my other patch series I'm changing
-the docs to use stuck form. I think that also helps to clarify the
-argument to '--onto' isn't part of the revision range.
-
-But to summarize: I'm not sure a documentation change is needed, but if
-you insist, I'm attaching a fixup patch (it's based on
-sa/replay-revert). I'm leaving it to Christian an Junio to decide
-whether it should be included. I'm happy to take it to a separate series
-if you consider that a better idea.
-
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> So if we are about to fix that main issue in a separate patch or
->> series, and if we plan to emit something like the following in the
->> regular case:
->>
->> "fatal: replaying failed due to conflict"
->>
->> and something like the following when replaying from a root commit:
->>
->> "fatal: replaying from root commit XXX failed due to conflict"
->>
->> then I think it would alleviate the need for a doc update.
->
-> Hmph, what would you do to the other side (i.e., replay from some
-> specified boundary) of the message?  When the version of "git
-> replay" command a user who sees for the first time comes with the
-> ability to replay from a root on day one, "from root commit" is not
-> so special from "from these boundary commits", so I am not sure if
-> it makes sense to have such a message that treats the down-to-root
-> case any specially.
-
-I agree, making a separate error message for when replaying down to root
-seems a bit of an overkill.
-
-
-Cheers, Toon
-
----
-
-From: Toon Claes <toon@iotcl.com>
-Date: Thu, 2 Apr 2026 10:52:59 +0200
-Subject: [PATCH] fixup! Add support to git-replay down from root commit
-
----
- Documentation/git-replay.adoc | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-index 997097e420..fb73a57444 100644
---- a/Documentation/git-replay.adoc
-+++ b/Documentation/git-replay.adoc
-@@ -78,13 +78,15 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
- The default mode can be configured via the `replay.refAction` configuration variable.
- 
- <revision-range>::
--	Range of commits to replay; see "Specifying Ranges" in
--	linkgit:git-rev-parse[1]. In `--advance <branch>` or
--	`--revert <branch>` mode, the range should have a single tip,
--	so that it's clear to which tip the advanced or reverted
--	<branch> should point. Any commits in the range whose changes
--	are already present in the branch the commits are being
--	replayed onto will be dropped.
-+	Each ref specified in the `<revision-range>` is replayed and updated
-+	separately. All commits reachable from those refs are replayed and thus
-+	if no dotted range notation is used or excluded revision is given, each
-+	ref is replayed down to root.
-+	Commits that end up being empty are dropped.
-+	Only one positive ref is allowed when using `--advance <branch>` or
-+	`--revert <branch>`.
-+	Consult "Specifying Ranges" in linkgit:git-rev-parse[1] for more
-+	information.
- 
- :git-replay: 1
- include::rev-list-options.adoc[]
--- 
-2.53.0.310.g728cabbaf7
-
+ - Is it sufficient to only special case SP?  My repository may be
+   $HOME/w/git.git, for example, and the trash repository may be
+   "$HOME/w/git.git/t/trash directory.t5710/", so you need to cope
+   with SP between "trash" and "directory" the test framework adds
+   (to force you to be careful), but the test framework does not
+   control what can be in the leading $HOME part.
