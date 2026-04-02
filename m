@@ -1,63 +1,63 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEA53019D6
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 07:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3FF37F74A
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 07:06:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775113600; cv=none; b=UV5j4oIR5UrFK+cRbRJtM8wRt68Aue7arVPta45Qc1WGkezEOt81p+f7bLK2DLLP5XBs+9Q/ReK8lv9O0wDVfQM9ih6eh/3xZYkzE36o1KmXcLunU1Xnu/cDiB1iQ9RCyMFmYpGBjzxgQsT4rIWoXDoUgX8VRuAzhj/T83cUDCk=
+	t=1775113601; cv=none; b=Iqr/BYqaEdSElrrzJKyssyAD3pYi02Fybq7wOFvmi6GJgJp0qQ9XpcgK4ZnGbOxVi4rnITL5XGH0Xu3xJLNlsViZM1HKF1WzHvDTQFgZjZBbONdp4qYD8laDcCBxt7+6cA7UZQOoid2VMD3YoGFoh6c5SCV6OeI5I/US7BgYOF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775113600; c=relaxed/simple;
-	bh=rJW50BMI6191pFjj/W5kz+Ds2ySpqIXy7UYT7lJSSMs=;
+	s=arc-20240116; t=1775113601; c=relaxed/simple;
+	bh=rk0/BEXlLPTBDczw8eroXiLEJDD6nQolEu5cYsh0wJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhLB0mo/DNFFjbT/OhAt0sMJVJhuBvTMCYnbTJ7IOMWqJFAzQpBgEm+xswTp+pa8mfTRAEs+ei0hxdtDkno0xHKFVwcZYrTc6wwx6orhn8TUjmpa8Otkp+qYSL81hNHWS/PmWOJsyG3VOeugju4oiHE5q0jwK9c2IKBWgTZJXeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jOtsfFrY; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=NbY1w7MCSAhAmuXHCJTxOyiHBm+VlWiPHHcc1HJApfNrQuIMFxi2cyEE0VloWmMpzGwMTGPFDKHNPorvEc0QlJuEYnBQTwn7noh6OjDaVGPtX82WnZ7FdExImBADA4tfoA2gSEN0VcNyDQX+HFwmuPtJMVziL19J/Ldid8zQLew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nk6v6VTX; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jOtsfFrY"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-486b9675d36so3957545e9.0
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 00:06:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nk6v6VTX"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4887ca8e529so3467455e9.0
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 00:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775113596; x=1775718396; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775113598; x=1775718398; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3Jws4GJkw1/nu8arm+dAEBWCkxWnogL4oVLkMCUjWFY=;
-        b=jOtsfFrYeho0TZFyTmzjItgoTeh+tmaXUNgvDoCu3IW78Okq+mnsOZ2VTVSjQZ4JrF
-         LC4sWjpcfQPem7xXmh8jP7Ai9+A7GW5vrV7fD/CuUoci1SnVDeTna+TaAeoFhHmkez6+
-         6Ila8koHyzXaBTTJ/0iSNa8PqD6wLhUfKNLF7RJonR4bzsMyEwTuMj1FYl2N6PkZF0SH
-         ndSoQUCxLGG62C9BO6kBGxCu5/M9CzqKUC/2Nomc9eUcv/6VqoeO68EAcdKqodSZ54g4
-         E2jStvup3sylka2/nPYJNrCJ+sNxXKY1bjcAs2XfWbySx0FXJjfC5qfjYN/mG1KLapnz
-         +oLw==
+        bh=hzzTgdS5xkJyyjz/oeG5O7a/F10WgijVSo8BwjTxCcw=;
+        b=Nk6v6VTXNcNmjhZ3uI+Za1VtcT1sMyyV/lmD2pwxLOERaUQmWEQKKBOxTJLTnG1g8D
+         rAXpuGJHIueY+yMlVW1Z5T0MWYjcIZTa/e+bPdIquFLzRGSSmOwLvAfDK9JK9G9Hj3Lu
+         rH4Sd4P0YnTKySHr65H6fs4TYYKIAdfviEmQUQT6itNF2wd9dvHzZGWiTCNvZ4ySwFF/
+         K63XOyixv8Jcd2DSoHVn8T3i9eXmm9+6z5G7xmXysGqHOEILi6X5A+9mnXzbg5Catbuu
+         Yv+vw5JdTyFnL0VFIS29XVxqplDeXCutByUpvSxkGkZm+4GXCxp9XBZe+bKxE0QdTkOk
+         K14Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775113596; x=1775718396;
+        d=1e100.net; s=20251104; t=1775113598; x=1775718398;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=3Jws4GJkw1/nu8arm+dAEBWCkxWnogL4oVLkMCUjWFY=;
-        b=beSVUwOSOViVKthvqRPz5zS3WaexrPD0EgaAP4haXJm96WC1NjnY2Xrje6yLYfy0yu
-         l3XLACdjj1JBvFfYk8yRWoq9Co3S1HxkSkqHysNZuOUi+MsDjlI9qBjLQpPy+UYkMglV
-         uyusSylpjLNIj+F+9uAp//Er8xVdYEhfCmedR4fYjPMJp1WKHU0IcAXlBv1+faHSN4l6
-         tkznTJZNU0JNGjFSamdm6PkJz9sv439WEh6KttGJ8QO2bnnH/zMago/LHxyLpYQD3Mn8
-         CgHgnwyZQRSSaeh5x5lpL3Y1hCmBCl7rZ2DGPrSfU3fHtxdGSCcXAZttaOhL8mv3NNBO
-         aHnA==
-X-Gm-Message-State: AOJu0YxXKvb3hYPKN8fe70l49CKAbtWm/UGEj58B393UhejtaU+yW4Wc
-	bPDCxq7w3szBR2TXQj0dX3Gf5qdOrBPLbUFXocHMsU5oyA3nW/JpF236DqaxsA==
-X-Gm-Gg: ATEYQzwmidRFBIdMHkxQqfuHJ/jqFwVshYgYqGlvkb8TCnxL5JcCkNfwW87rufAXsl5
-	2H0LWoNLiXUj6g6KtPbzvpib97vj7+kppSWdqyYgtCFvWKrGqOIaRs8fFrlcPbSHX2LqllqKgRR
-	HlCQq13Bj+peYHX/9OTj9XB5E0us8ZEElGSaQKAiyHnXB6HSSOyztdSiYJQ1xRYUSsy2FQU/sSh
-	9Dnsq+5QUJB24lH3CMyjJvSCIUleuBhycjQypc6710z1BM+NjKJ43sGLhPN1CKA0ZOJgRwmVrvy
-	tP/V6ZY+OaKxHDZVT3Mfe0r9EgGpzrgXwN3MArZdA7TVxov3r1c6QyREDRNQ9zykWkeLazRk7v9
-	mBoqphAuOQZ1zt2IPJsy253cwlgAl29xlxAzxAlU8aCJb8ZG7K7emu85zlzZ1O2EV7F+d0D3+w2
-	38ktCWUPqYvxzDdI2WkvDyfkTtxGu4/BtI998muF+x77HIMWssySYF5x315cYeHuNRtR3Ssmqqm
-	icjHhIXe9N0BUsqtoEO7jnMzOCKZutcPtX0zq4=
-X-Received: by 2002:a05:600c:310a:b0:485:3d3e:167b with SMTP id 5b1f17b1804b1-4888b6d4a4fmr35583965e9.5.1775113596085;
-        Thu, 02 Apr 2026 00:06:36 -0700 (PDT)
+        bh=hzzTgdS5xkJyyjz/oeG5O7a/F10WgijVSo8BwjTxCcw=;
+        b=J7cBy+QChbv3MfwJ1ScEVvNkfzsB1nGnL2GM9g9rzCDDNnrseuu8WvpvkPohDyNRUJ
+         Am3iGA+ZKlRg6eIxbAAQ8NhToInBLUQV4IjvmZOi9xScwwiG8p+u6nakWETHNzh8+qvn
+         WOP8zXYbidIaQXDg2wbNgoBSgCghrc+NtLL/JHKwYfaLXOFNvNxth9J4nnQ+C1UR81OS
+         aNVtsIlhihC0pwWsHBe0uGtIpCFzFAtyJTpf9kr5wEq+CBC4fMIeI0KBZCpGItRHwUbo
+         B67G7E/+hguYlff4t4RvL1T0U5swMP1BCm4zk9s6IPEMBIp4Itz2fig1y7vxQXhDYf5w
+         A27g==
+X-Gm-Message-State: AOJu0YwHXIA28wCIrFa/urA6OupflYFKhwIyS+bNh9M/PTrt6AZumnyA
+	KmJvKN8nH7rI5eENZsHVHm7YiX9jfnHK17JJk1rd7l5JMCyApgIcDpc6nfKjdQ==
+X-Gm-Gg: ATEYQzxQWWmnoDnMQCfzGPHzHeXF2G/u3LBtUwrxmyMCF/AmVXgdb1fBL6ZCO2Iu2KU
+	DcVrchY3ywGeNQIKZq8Qo+hudmCMKCKVCpP1lNe+4irbVGsyXel7LMFhSCYz64jUkL5H33SO4Cj
+	dy1fhkvEQdA4B4UWo97GpHDKwPvfNXS1CpuSmnrwxfDqqx0i3gaTcgDheP64oxk11/04ctopv3s
+	AB6+qgJbkDabMyyXucxRRwwlgVkmgJaSbgyvIsVHi6DpTDE451HmlHwgT6+L0YIxrygEZzTyvql
+	RB7w3Nq6JNcf0xWDkzSTmCoG6Y675RHH3kHMcrlOgHB/YwJf3McPYT0EdB7gHn7Vl82D8jtD09e
+	6C7yitfXq9dCSBHu0MctHc5vmycRLGxizpVBZ3Vj6LhbDyGdtSuZZoYqPmlL6oaoOn+kwGco6Xm
+	aol71MzRNYiZI3EWgM87FIZrC3uuTJBzSK/3Ki+h5UYL7XNAVseBudWsGqjlAvEFViJIT7eQxST
+	IQMG7UVeEi4UJzE8YKLhvwbYahuY732jAmsOtI=
+X-Received: by 2002:a05:600c:8483:b0:487:22ad:403e with SMTP id 5b1f17b1804b1-4888e0cf3a0mr18945905e9.14.1775113597413;
+        Thu, 02 Apr 2026 00:06:37 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c8bc9dcsm101916335e9.6.2026.04.02.00.06.35
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c8bc9dcsm101916335e9.6.2026.04.02.00.06.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 00:06:35 -0700 (PDT)
+        Thu, 02 Apr 2026 00:06:36 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 01/10] promisor-remote: try accepted remotes before others in get_direct()
-Date: Thu,  2 Apr 2026 09:06:04 +0200
-Message-ID: <20260402070613.85934-2-christian.couder@gmail.com>
+Subject: [PATCH 02/10] promisor-remote: pass config entry to all_fields_match() directly
+Date: Thu,  2 Apr 2026 09:06:05 +0200
+Message-ID: <20260402070613.85934-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.53.0.765.g57b94de1f0.dirty
 In-Reply-To: <20260402070613.85934-1-christian.couder@gmail.com>
 References: <20260402070613.85934-1-christian.couder@gmail.com>
@@ -81,212 +81,132 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When a server advertises promisor remotes and the client accepts some
-of them, those remotes carry the server's intent: 'fetch missing
-objects preferably from here', and the client agrees with that for the
-remotes it accepts.
+The `in_list == 0` path of all_fields_match() looks up the remote in
+`config_info` by `advertised->name` repeatedly, even though every
+caller in should_accept_remote() has already performed this
+lookup and holds the result in `p`.
 
-However promisor_remote_get_direct() actually iterates over all
-promisor remotes in list order, which is the order they appear in the
-config files (except perhaps for the one appearing in the
-`extensions.partialClone` config variable which is tried last).
+To avoid this useless work, let's replace the `int in_list`
+parameter with a `struct promisor_info *config_entry` pointer:
 
-This means an existing, but not accepted, promisor remote, could be
-tried before the accepted ones, which does not reflect the intent of
-the agreement between client and server.
+ - When NULL (ACCEPT_ALL mode): scan the whole `config_info` list, as
+   the old `in_list == 1` path did.
 
-If the client doesn't care about what the server suggests, it should
-accept nothing and rely on its remotes as they are already configured.
+ - When non-NULL: match against that single config entry directly,
+   avoiding the redundant string_list_lookup() call.
 
-To better reflect the agreement between client and server, let's make
-promisor_remote_get_direct() try the accepted promisor remotes before
-the non-accepted ones.
+This removes the hidden dependency on `advertised->name` inside
+all_fields_match(), which would be wrong if in the future
+auto-configured remotes are implemented, as the local config name may
+differ from the server's advertised name.
 
-Concretely, let's extract a try_promisor_remotes() helper and call it
-twice from promisor_remote_get_direct():
-
-- first with an `accepted_only=true` argument to try only the accepted
-  remotes,
-- then with `accepted_only=false` to fall back to any remaining remote.
-
-Ensuring that accepted remotes are preferred will be even more
-important if in the future a mechanism is developed to allow the
-client to auto-configure remotes that the server advertises. This will
-in particular avoid fetching from the server (which is already
-configured as a promisor remote) before trying the auto-configured
-remotes, as these new remotes would likely appear at the end of the
-config file, and as the server might not appear in the
-`extensions.partialClone` config variable.
+While at it, let's also add a comment before all_fields_match() and
+match_field_against_config() to help understand how things work and
+help avoid similar issues.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/gitprotocol-v2.adoc     |  4 ++
- promisor-remote.c                     | 44 ++++++++++++-----
- t/t5710-promisor-remote-capability.sh | 69 +++++++++++++++++++++++++++
- 3 files changed, 104 insertions(+), 13 deletions(-)
+ promisor-remote.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-index f985cb4c47..4fcb1a7bda 100644
---- a/Documentation/gitprotocol-v2.adoc
-+++ b/Documentation/gitprotocol-v2.adoc
-@@ -848,6 +848,10 @@ advertised, it can reply with "promisor-remote=<pr-names>" where
- where `pr-name` is the urlencoded name of a promisor remote the server
- advertised and the client accepts.
- 
-+The promisor remotes that the client accepted will be tried before the
-+other configured promisor remotes when the client attempts to fetch
-+missing objects.
-+
- Note that, everywhere in this document, the ';' and ',' characters
- MUST be encoded if they appear in `pr-name` or `field-value`.
- 
 diff --git a/promisor-remote.c b/promisor-remote.c
-index 96fa215b06..7ce7d22f95 100644
+index 7ce7d22f95..6c935f855a 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -268,11 +268,35 @@ static int remove_fetched_oids(struct repository *repo,
- 	return remaining_nr;
+@@ -575,6 +575,12 @@ enum accept_promisor {
+ 	ACCEPT_ALL
+ };
+ 
++/*
++ * Check if a specific field and its advertised value match the local
++ * configuration of a given promisor remote.
++ *
++ * Returns 1 if they match, 0 otherwise.
++ */
+ static int match_field_against_config(const char *field, const char *value,
+ 				      struct promisor_info *config_info)
+ {
+@@ -586,9 +592,18 @@ static int match_field_against_config(const char *field, const char *value,
+ 	return 0;
  }
  
-+static int try_promisor_remotes(struct repository *repo,
-+				struct object_id **remaining_oids,
-+				int *remaining_nr, int *to_free,
-+				bool accepted_only)
-+{
-+	struct promisor_remote *r = repo->promisor_remote_config->promisors;
-+
-+	for (; r; r = r->next) {
-+		if (accepted_only != r->accepted)
-+			continue;
-+		if (fetch_objects(repo, r->name, *remaining_oids, *remaining_nr) < 0) {
-+			if (*remaining_nr == 1)
-+				continue;
-+			*remaining_nr = remove_fetched_oids(repo, remaining_oids,
-+							    *remaining_nr, *to_free);
-+			if (*remaining_nr) {
-+				*to_free = 1;
-+				continue;
-+			}
-+		}
-+		return 1; /* all fetched */
-+	}
-+	return 0;
-+}
-+
- void promisor_remote_get_direct(struct repository *repo,
- 				const struct object_id *oids,
- 				int oid_nr)
++/*
++ * Check that the advertised fields match the local configuration.
++ *
++ * When 'config_entry' is NULL (ACCEPT_ALL mode), every checked field
++ * must match at least one remote in 'config_info'.
++ *
++ * When 'config_entry' points to a specific remote's config, the
++ * checked fields are compared against that single remote only.
++ */
+ static int all_fields_match(struct promisor_info *advertised,
+ 			    struct string_list *config_info,
+-			    int in_list)
++			    struct promisor_info *config_entry)
  {
--	struct promisor_remote *r;
- 	struct object_id *remaining_oids = (struct object_id *)oids;
- 	int remaining_nr = oid_nr;
- 	int to_free = 0;
-@@ -283,19 +307,13 @@ void promisor_remote_get_direct(struct repository *repo,
+ 	struct string_list *fields = fields_checked();
+ 	struct string_list_item *item_checked;
+@@ -597,7 +612,6 @@ static int all_fields_match(struct promisor_info *advertised,
+ 		int match = 0;
+ 		const char *field = item_checked->string;
+ 		const char *value = NULL;
+-		struct string_list_item *item;
  
- 	promisor_remote_init(repo);
+ 		if (!strcasecmp(field, promisor_field_filter))
+ 			value = advertised->filter;
+@@ -607,7 +621,11 @@ static int all_fields_match(struct promisor_info *advertised,
+ 		if (!value)
+ 			return 0;
  
--	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
--		if (fetch_objects(repo, r->name, remaining_oids, remaining_nr) < 0) {
--			if (remaining_nr == 1)
--				continue;
--			remaining_nr = remove_fetched_oids(repo, &remaining_oids,
--							 remaining_nr, to_free);
--			if (remaining_nr) {
--				to_free = 1;
--				continue;
+-		if (in_list) {
++		if (config_entry) {
++			match = match_field_against_config(field, value,
++							   config_entry);
++		} else {
++			struct string_list_item *item;
+ 			for_each_string_list_item(item, config_info) {
+ 				struct promisor_info *p = item->util;
+ 				if (match_field_against_config(field, value, p)) {
+@@ -615,12 +633,6 @@ static int all_fields_match(struct promisor_info *advertised,
+ 					break;
+ 				}
+ 			}
+-		} else {
+-			item = string_list_lookup(config_info, advertised->name);
+-			if (item) {
+-				struct promisor_info *p = item->util;
+-				match = match_field_against_config(field, value, p);
 -			}
--		}
-+	/* Try accepted remotes first (those the server told us to use) */
-+	if (try_promisor_remotes(repo, &remaining_oids, &remaining_nr,
-+				 &to_free, true))
-+		goto all_fetched;
-+	if (try_promisor_remotes(repo, &remaining_oids, &remaining_nr,
-+				 &to_free, false))
- 		goto all_fetched;
--	}
+ 		}
  
- 	for (i = 0; i < remaining_nr; i++) {
- 		if (is_promisor_object(repo, &remaining_oids[i]))
-diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-index 357822c01a..bf0eed9f10 100755
---- a/t/t5710-promisor-remote-capability.sh
-+++ b/t/t5710-promisor-remote-capability.sh
-@@ -166,6 +166,75 @@ test_expect_success "init + fetch with promisor.advertise set to 'true'" '
- 	check_missing_objects server 1 "$oid"
- '
+ 		if (!match)
+@@ -640,7 +652,7 @@ static int should_accept_remote(enum accept_promisor accept,
+ 	const char *remote_url = advertised->url;
  
-+test_expect_success "clone with two promisors but only one advertised" '
-+	git -C server config promisor.advertise true &&
-+	test_when_finished "rm -rf client unused_lop" &&
-+
-+	# Create a promisor that will be configured but not be used
-+	git init --bare unused_lop &&
-+
-+	# Clone from server to create a client
-+	GIT_TRACE="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
-+		-c remote.unused_lop.promisor=true \
-+		-c remote.unused_lop.fetch="+refs/heads/*:refs/remotes/unused_lop/*" \
-+		-c remote.unused_lop.url="file://$(pwd)/unused_lop" \
-+		-c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c promisor.acceptfromserver=All \
-+		--no-local --filter="blob:limit=5k" server client &&
-+
-+	# Check that "unused_lop" appears before "lop" in the config
-+	printf "remote.%s.promisor true\n" "unused_lop" "lop" "origin" >expect &&
-+	git -C client config get --all --show-names --regexp "^remote\..*\.promisor$" >actual &&
-+	test_cmp expect actual &&
-+
-+	# Check that "lop" was tried
-+	test_grep " fetch lop " trace &&
-+	# Check that "unused_lop" was not contacted
-+	# This means "lop", the accepted promisor, was tried first
-+	test_grep ! " fetch unused_lop " trace &&
-+
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
-+
-+test_expect_success "init + fetch two promisors but only one advertised" '
-+	git -C server config promisor.advertise true &&
-+	test_when_finished "rm -rf client unused_lop" &&
-+
-+	# Create a promisor that will be configured but not be used
-+	git init --bare unused_lop &&
-+
-+	mkdir client &&
-+	git -C client init &&
-+	git -C client config remote.unused_lop.promisor true &&
-+	git -C client config remote.unused_lop.fetch "+refs/heads/*:refs/remotes/unused_lop/*" &&
-+	git -C client config remote.unused_lop.url "file://$(pwd)/unused_lop" &&
-+	git -C client config remote.lop.promisor true &&
-+	git -C client config remote.lop.fetch "+refs/heads/*:refs/remotes/lop/*" &&
-+	git -C client config remote.lop.url "file://$(pwd)/lop" &&
-+	git -C client config remote.server.url "file://$(pwd)/server" &&
-+	git -C client config remote.server.fetch "+refs/heads/*:refs/remotes/server/*" &&
-+	git -C client config promisor.acceptfromserver All &&
-+
-+	# Check that "unused_lop" appears before "lop" in the config
-+	printf "remote.%s.promisor true\n" "unused_lop" "lop" >expect &&
-+	git -C client config get --all --show-names --regexp "^remote\..*\.promisor$" >actual &&
-+	test_cmp expect actual &&
-+
-+	GIT_TRACE="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git -C client fetch --filter="blob:limit=5k" server &&
-+
-+	# Check that "lop" was tried
-+	test_grep " fetch lop " trace &&
-+	# Check that "unused_lop" was not contacted
-+	# This means "lop", the accepted promisor, was tried first
-+	test_grep ! " fetch unused_lop " trace &&
-+
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
-+
- test_expect_success "clone with promisor.acceptfromserver set to 'KnownName'" '
- 	git -C server config promisor.advertise true &&
- 	test_when_finished "rm -rf client" &&
+ 	if (accept == ACCEPT_ALL)
+-		return all_fields_match(advertised, config_info, 1);
++		return all_fields_match(advertised, config_info, NULL);
+ 
+ 	/* Get config info for that promisor remote */
+ 	item = string_list_lookup(config_info, remote_name);
+@@ -652,7 +664,7 @@ static int should_accept_remote(enum accept_promisor accept,
+ 	p = item->util;
+ 
+ 	if (accept == ACCEPT_KNOWN_NAME)
+-		return all_fields_match(advertised, config_info, 0);
++		return all_fields_match(advertised, config_info, p);
+ 
+ 	if (accept != ACCEPT_KNOWN_URL)
+ 		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
+@@ -663,7 +675,7 @@ static int should_accept_remote(enum accept_promisor accept,
+ 	}
+ 
+ 	if (!strcmp(p->url, remote_url))
+-		return all_fields_match(advertised, config_info, 0);
++		return all_fields_match(advertised, config_info, p);
+ 
+ 	warning(_("known remote named '%s' but with URL '%s' instead of '%s'"),
+ 		remote_name, p->url, remote_url);
 -- 
 2.53.0.765.g57b94de1f0.dirty
 
