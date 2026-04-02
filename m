@@ -1,116 +1,133 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3D82C0F8C
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 04:15:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC6F36B061
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 05:11:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775103320; cv=none; b=JQ5GHWtZ+HRIv2BqP5zTDSyfRLgSygSFhjA2G3OmFBQ3og62XEEiPJuAuBZzdHUn+GYACdT77m6/FMfOSBsx+9cTCc2iun96YZGPB8deD8n5feh6u+bBOE8pwzV9tSNTCXi5M3t8Rh9l+3PmO+u9WJxpyRFEBf3eco9VWTBfVbU=
+	t=1775106711; cv=none; b=JG0kGnQAzCBzndOxpMT3ttQfSEXDDjhiHS+ZU4UZLukuMXojOiaKh0gPuhiNN4ss5TkyGPWdnxge0ud2UnYbHf+JQg/0UWLwkCDgwWYZHXyZKTwSvV9L45DSooNMyn1znI7zOyVowdMyJkQmd8owNrRpD55IrGJ0pzc3BhGUnGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775103320; c=relaxed/simple;
-	bh=lWhYJTTg2zfBCEJRGk8l1w+l3Gi0kKeRglOmurh1rTY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ASksnZ521HMsTMSacla5BTZo+3AwXc9xbfi1X6KRpwBYHwUW4GN9PuVB2VvOJB07l1KK5JVD/W1hYgQSE5h6s4Ch8xFilPeLQfJ44G+2jedRcFew8gvMOPsoXJp5rb9OYuMOCZUmJY6Gx3y7OxlVPE/azlnkfx9yh+S7ucuYekI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EaqYqBbI; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1775106711; c=relaxed/simple;
+	bh=3knY8tZMccQuU2n77vIcdew4oJfIZejd7raU0R1qYZY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=No6O0bEPBRgHZtJnsVQ60M5cI1EmUtV+EP/VbL80nZzXiS0uR74dnbG4dBitBBG7tDkmgBhwcniZh97YTBRUFKIVJydddI6T6WVcZXEGliYeORFb7A2H4aUXOcJ+EnKt24CS+3JRlJhJVxKxnJYGRTrjXAEmq3wQ8JdjjVepg/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dq5U/+Mv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vsh7Rit9; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EaqYqBbI"
-Received: (qmail 218943 invoked by uid 106); 2 Apr 2026 04:15:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lWhYJTTg2zfBCEJRGk8l1w+l3Gi0kKeRglOmurh1rTY=; b=EaqYqBbIvCFhS9mnsUAL69QsaCV/LGzs83pyN5OnXVWw/x0CeNyEuzUIXHnLfuo1PtPjNoShD7H5JS8tIn6qGkP298BVwAyYxW4podRvnrkw+sx02CyGpFahl0dGJO1VhQkjzn9SNxomJYzzk2m0SRCG+ZZtHzPRiJBHHAIyovAonG/SBDfZtw+aPJSjlWAiSF8UKm77+CR2pZNS3ZFPQWEwei+yv9V0gtNIgcSp0Q0V3HCwJtSlYQmDfLUNPDAKrD7zrDtvwFIHVuRCjWS9iZpf1n/xTM68bTLhhZhCIPC5YKIfTwnUeKGmcSwpVPqXqDDZ8cV0Y2CFsVHYCVtooQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Apr 2026 04:15:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 349795 invoked by uid 111); 2 Apr 2026 04:15:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Apr 2026 00:15:17 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 2 Apr 2026 00:15:16 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Michael J Gruber <git@grubix.eu>
-Subject: [PATCH v2 12/12] refs/files-backend: drop const to fix strchr()
- warning
-Message-ID: <20260402041516.GL3501239@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dq5U/+Mv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vsh7Rit9"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 446B7EC01A2;
+	Thu,  2 Apr 2026 01:11:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Thu, 02 Apr 2026 01:11:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775106708; x=1775193108; bh=0NvbC9TeMb
+	FDKOgUwn3SzTJVF6MhClKMIL8lmUa7woI=; b=dq5U/+Mv9RQxfEbvWMMwI8v+Ex
+	GwzuCXIavzJL0TzOBfLkYG1oZ005K2gGXvY62CquDMkLKcLbtRGKdTA/YerGZ2w3
+	pLRWz6nJo9f3czOfQ48yk8DBbywY+Lac8R4QUEfBEPMe1feY2rWpqngGKPjW1iWL
+	AJrrWjkKsiIkOO0edcAcaezwVPztw1c8Q+nYch13VGyc6F0Xxa7VKX+QRZ+mWLVF
+	/pox4LU1Agt7bUkVifTYZ2BX11Y2hoTFgYnne+ObTESOjnA1e7zASrCnN7As0QzX
+	2EaylJ6NqgdFLH0aqm65zY+N4F1FH37piUpMQ5F4XML0l7IsKd1BezOsf5mw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775106708; x=1775193108; bh=0NvbC9TeMbFDKOgUwn3SzTJVF6MhClKMIL8
+	lmUa7woI=; b=Vsh7Rit9mAqReLLRvjVN0VtopUvTzXlywnUww9qVH/MZ+M8lCSU
+	yyK2qeLW+3f5QfHQCifnVPZPt4EyWCDJjs5pWu9gQM2Lu1GmV3MGmFLTsC13bGoG
+	aR6rOslrnAOXrEnWoNCqTkHQEVza2xg5MR7AZAulEie8QgvU6lTzK2l+dCrLZWio
+	xlgqoTsnTw5Z80VKZVmlzg4Rkho6fO039NWnPtSh14wqkTnkeLTUKPUuee7vttyA
+	wB3K2nhQRXs9WXoHEN32ZaZ2lKfiqb2ObUx35/vJmxn2sHWs0ZR1oAwBlZnwcnM9
+	GOuQdSjUFfD/XJxNENwJDd+6nrFEWBWsong==
+X-ME-Sender: <xms:k_rNae-paJ7XlgGYntal7to8EK0sySXTGYX61RG9Ag1qRv5Rrm-S-w>
+    <xme:k_rNaSZWAl07XNUE1TqERN7LIaVzDfck0KOu6bK_Sn8BqO5wetAn447FHZ8EoDke2
+    fdQcoRtvpJmZbDumywBR1eAWr0OC-dVDK_SXGqiX9YrfdgI73Z90g>
+X-ME-Received: <xmr:k_rNad0sMFv-HMuf4l4yAyjgFLWXTK-xNaiF5295AzgNFuL-PiqkqrsgqUAvayRLcdebjlN4BeWr_hUttwT_DGrEyqJLAsIXiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehgrhhusghigidrvghupdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:k_rNadYXewEhFctlwGHI8FrWzW_cyrijoz1R0JgGhqyxY_0DTtU3nw>
+    <xmx:k_rNaVI5kSwg_cKAFyRiQ3GLYYU-iRvTXny6OLQ2juM8iakFngrxwQ>
+    <xmx:k_rNacEyHfalzPWt9TGKpuP5h-ZLMlcKuW1OcygW_7JPdNBMPTbbZA>
+    <xmx:k_rNact4_DsU8QBOEgY_lXKcS_OYa-5iQRJEW4s27xWFkMwp3ATfLw>
+    <xmx:lPrNaUb_ZCqZbrBLKcwpJizvgnovx3JBJ81j6FLaHvjkKIqnufpUN7eJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Apr 2026 01:11:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Collin Funk
+ <collin.funk1@gmail.com>,  Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH v2 08/12] skip_prefix(): check const match between in
+ and out params
+In-Reply-To: <20260402041507.GH3501239@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 2 Apr 2026 00:15:07 -0400")
 References: <20260402041433.GA3501120@coredump.intra.peff.net>
+	<20260402041507.GH3501239@coredump.intra.peff.net>
+Date: Wed, 01 Apr 2026 22:11:45 -0700
+Message-ID: <xmqqeckyt08e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260402041433.GA3501120@coredump.intra.peff.net>
+Content-Type: text/plain
 
-In show_one_reflog_ent(), we're fed a writable strbuf buffer, which we
-parse into the various reflog components. We write a NUL over email_end
-to tie off one of the fields, and thus email_end must be non-const.
+Jeff King <peff@peff.net> writes:
 
-But with a C23 implementation of libc, strchr() will now complain when
-assigning the result to a non-const pointer from a const one. So we can
-fix this by making the source pointer non-const.
+> +/*
+> + * Check that an out-parameter that is "at least as const as" a matching
+> + * in-parameter. For example, skip_prefix() will return "out" that is a subset
+> + * of "str". So:
 
-But there's a catch. We derive that source pointer by parsing the line
-with parse_oid_hex_algop(), which requires a const pointer for its
-out-parameter. We can work around that by teaching it to use our
-CONST_OUTPARAM() trick, just like skip_prefix().
+Sorry for not mentioning earlier, but I couldn't quite parse the
+above with "that" immediately after "out-parameter".  I am guessing
+that you wanted to say an equivalent of
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- hex.c                | 6 +++---
- hex.h                | 6 ++++--
- refs/files-backend.c | 2 +-
- 3 files changed, 8 insertions(+), 6 deletions(-)
+    Check that an out-parameter "out" is at least as const as a
+    matching in-parameter "in".
 
-diff --git a/hex.c b/hex.c
-index 865a232167..bc756722ca 100644
---- a/hex.c
-+++ b/hex.c
-@@ -54,9 +54,9 @@ int get_oid_hex(const char *hex, struct object_id *oid)
- 	return get_oid_hex_algop(hex, oid, the_hash_algo);
- }
- 
--int parse_oid_hex_algop(const char *hex, struct object_id *oid,
--			const char **end,
--			const struct git_hash_algo *algop)
-+int parse_oid_hex_algop_impl(const char *hex, struct object_id *oid,
-+			     const char **end,
-+			     const struct git_hash_algo *algop)
- {
- 	int ret = get_oid_hex_algop(hex, oid, algop);
- 	if (!ret)
-diff --git a/hex.h b/hex.h
-index e9ccb54065..1e9a65d83a 100644
---- a/hex.h
-+++ b/hex.h
-@@ -40,8 +40,10 @@ char *oid_to_hex(const struct object_id *oid);						/* same static buffer */
-  * other invalid character.  end is only updated on success; otherwise, it is
-  * unmodified.
-  */
--int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char **end,
--			const struct git_hash_algo *algo);
-+#define parse_oid_hex_algop(hex, oid, end, algo) \
-+	parse_oid_hex_algop_impl((hex), (oid), CONST_OUTPARAM((hex), (end)), (algo))
-+int parse_oid_hex_algop_impl(const char *hex, struct object_id *oid, const char **end,
-+			     const struct git_hash_algo *algo);
- 
- /*
-  * These functions work like get_oid_hex and parse_oid_hex, but they will parse
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0537a72b2a..b3b0c25f84 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2190,7 +2190,7 @@ static int show_one_reflog_ent(struct files_ref_store *refs,
- 	char *email_end, *message;
- 	timestamp_t timestamp;
- 	int tz;
--	const char *p = sb->buf;
-+	char *p = sb->buf;
- 
- 	/* old SP new SP name <email> SP time TAB msg LF */
- 	if (!sb->len || sb->buf[sb->len - 1] != '\n' ||
--- 
-2.53.0.1172.ge9e20b5838
+> + *
+> + *  const str, const out: ok
+> + *  non-const str, const out: ok
+> + *  non-const str, non-const out: ok
+> + *  const str, non-const out: compile error
+> + *
+> + *  See the skip_prefix macro below for an example of use.
+> + */
+> +#define CONST_OUTPARAM(in, out) \
+> +    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
+> +
+>  /*
+>   * If the string "str" begins with the string found in "prefix", return true.
+>   * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
+> @@ -479,8 +494,10 @@ void set_die_is_recursing_routine(int (*routine)(void));
+>   *   [skip prefix if present, otherwise use whole string]
+>   *   skip_prefix(name, "refs/heads/", &name);
+>   */
+> -static inline bool skip_prefix(const char *str, const char *prefix,
+> -			       const char **out)
+> +#define skip_prefix(str, prefix, out) \
+> +	skip_prefix_impl((str), (prefix), CONST_OUTPARAM((str), (out)))
+> +static inline bool skip_prefix_impl(const char *str, const char *prefix,
+> +				    const char **out)
+>  {
+>  	do {
+>  		if (!*prefix) {
