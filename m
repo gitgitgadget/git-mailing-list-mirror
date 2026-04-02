@@ -1,105 +1,102 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CC03C9ECE
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EEC2FE591
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:58:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775140432; cv=none; b=EcTsDm1cwimsO04bKBcfw25RkD2MfXOCZXBSKkwt+aRd7E+/D8lUs39maIvJVQg37KvD7gdq1geZPoJv69gp7bOJqiJMqtlFsfzN1VIw4BUuOIPVDLRPoCSTFk1olgs4lTWs1p47pcCcDUmzdoE5qbGo+4otilZsUT8SqcZQrvM=
+	t=1775141883; cv=none; b=kGOrR/XWFwYYp40xU1jKJNQwj+ojHJF351OP27O2w2c3lkoDphRtCKoTQbrS3pE3k6GKQrJZ7u6cyNUzITnaCONeOsx15QkmTyAPSYSVVX0rX5CyW8Pa7rO+SRYIK30ILNqMlNSmDEJ/mdHZQjMkP8Rh2MrGuhDTKAErEhzF5Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775140432; c=relaxed/simple;
-	bh=dtncqUT7zDp/SpAEOWhVR9ivNLDtj9HO9Yn/da0pYmc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=boqGCUu38tTG5gD5zKiPHzEmsrJ49AjFWQiq5moC4vZiErojkbESi9bh6CH1/bQy4ri6Q5ETmwJAdGjPWOcGHUhrYANcHZa2iwBl5D8JSjMC7Ca40cV+9XJQpBQYOcSfG8Fu40rblIWjwoN1Avde9WpJH4cJNKhEiCzJ/1sCnSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZL3ZFisK; arc=none smtp.client-ip=209.85.219.46
+	s=arc-20240116; t=1775141883; c=relaxed/simple;
+	bh=yH5pSPSLSd/tXsE08xm00Po2cbVjGytpg5l0f9ebNsQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uxRO8ojccvqks/cXnPT+R+eW3SIQKtCV8JGlAORgNzhMNCTvseTfuzHT1Ro38y/fM9HzApmYh/Iqkxxm477aWNUgIVQyq5lGH+PMezku/+DYRpSHgH6n7BR77TeEDRwBmO++nmROGg7zNxwU7VnnyWyPfpG+7SVRZQcydFM3Ebc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HTiIOY9j; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZL3ZFisK"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-899d6b7b073so12270466d6.2
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HTiIOY9j"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4888244e9f9so8956755e9.0
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775140430; x=1775745230; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aB/n1bjwPf5DzQNdvwgWmbQWriYNdfNABq5Yc7hCd4A=;
-        b=ZL3ZFisK21YLEobj8CeuL99VAASpMhhOvSYEB/IItetoYFRc37ODAu3KmEAcmkObT2
-         I7tibo40MT/a67Hg6b6oSAlT+f8k5AwvHxNAE5o008knB4JLtV32D+JKcBQbqcRikQN8
-         KTtIVHQuK2e7R13UcQTcGJfejD79GcYprOP6HVphPsrkbqdNJKfkvKocNsEVfoY0sQ6W
-         B0BvmNLHnlDF/ooxjZ+21+GG0IBZraLPYo7HoOYjgvPY7qqwx864Z7hJFg28doQC0HHA
-         PycwIIKGsuzO3OH4IG9R7MuHX/9XA7HnJsLwUW4rqCjir4oJvy2BVntjmU6iswZUBEVh
-         DvVQ==
+        d=gmail.com; s=20251104; t=1775141880; x=1775746680; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SX5R9I70ANt0T5SNHk2H9F8Huc0rBsHFiUOXgCMnsYs=;
+        b=HTiIOY9jf+3+l8iVFbryUHfMotUmXu6+a50ZRHgl8UuuQ4NmpN0Ab4Zrg92F4YF/ey
+         Lww9zJ5KIbBBBqxebbtFkJn4DHsF4i7Rk8K5qjTrcnrEgSYif+LNhsGvZYddHHExYavf
+         D+UvJM8F6H8WJaxBA/wNuanTO+itD5u3GnWU991N3al5dGHeIk/gAZtbrQeRn4Irkwvs
+         wsA0Uz8ci8WKNju6jZfivi3njbLP4OYRhRYHEKqowvc6XBg6iNcobM8WX0tfJch4DpF8
+         KOIEh6l5d22EGH8hNNxlBQEIhhkK2fwJ9IWj9NXUCe7AEiVOzIZCiu0P1HF99GWNakoA
+         e94w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775140430; x=1775745230;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aB/n1bjwPf5DzQNdvwgWmbQWriYNdfNABq5Yc7hCd4A=;
-        b=SYMlU+CjbbeOmpQonHcaTtuHDn9CEYCMW0KRZfhQhl/ZSMLw3b6wk1rj3Ag7PKce89
-         oZCERJoTb5hb4vV9INiKfRLk0EYfTKk+xlphOOD9oE/ZE8OO0FW8TstGRQxrviy+c2j9
-         0FQHRI7nHj7qn1Wf3ZJIyziB30+Rz3srokZb5ZvgvDcFeFym36TxMersqYE5a6+qhxRZ
-         qrzKrJtA0CPj+DHByXLmowdd/75zggnMDDXcvNRHHm/scJnCVppUNe+9AsJbqExN6VeD
-         499h+1bXlUVXkkcJJmRO+G2Nb1bMqAoeqTWf6qjib3/B7SLqc2GknZ7bs5vPmSbkR22d
-         MEeg==
-X-Gm-Message-State: AOJu0YwxF8TvfsLVwfhHhnJC8w1uXVIV/E7NUPprha+mio3r18PkhO9G
-	p9SGuR59329foa9DDEhQSzZCbCByOOKt0qvoCHtYSgNslDcjGmWux4v5qjYTRQ==
-X-Gm-Gg: AeBDiessw+05CavZsG4zsvwKCxsTiRmG1uaRKAm4cvZ5MwvX8RpDWmhs+L93I7rOj+3
-	u7ROXbTeMfBH2j2Ug6ijrt/RjdNRm+eg5hzryKb3Ch/6Htp+RwK7pwrAvrk4tn7Bqs8DiS/m2BC
-	KGyyckskHPyxR07QnzIY9uSVoiy+oAKAFVhI98KEU276DPVwtNvnZ/9pM+8bApYs+dn2KXSGrVN
-	6MayXbs8evcZCBLzYaTaBuPYYRyJnnksE4xJhT/ykrpiT+s8RQeP/huTj82a5tpSW+ULw3nZtt/
-	xMIGQ4t2n6pbBDXaczcmq6o6nHQrFtteAXDQZzLPXJgeHnzkUexCiZbCv2qRoonqvMmJ8Uit73I
-	FGzLX4jSx350Pp2rDC08YXkGfbxftS12thsfdgyQQEltJuWxbKfRVB/iORRNeqOLlk0zZ+nKyFj
-	C1fNWVYvKdb7pGMo2sfBK4wVZvXLY=
-X-Received: by 2002:a05:6214:3d08:b0:89a:622e:d32c with SMTP id 6a1803df08f44-8a4391c09a1mr115628006d6.36.1775140429661;
-        Thu, 02 Apr 2026 07:33:49 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.177.114])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a593ded920sm24377486d6.21.2026.04.02.07.33.49
+        d=1e100.net; s=20251104; t=1775141880; x=1775746680;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SX5R9I70ANt0T5SNHk2H9F8Huc0rBsHFiUOXgCMnsYs=;
+        b=E9/w2WJQLsSsO1L55X5Vvg6MnXUz3KIRZGUU8w032ZRJE2hn9j/WhbZvUauO9nl4oI
+         uF9RNJcTc5K6eRXyBra7+5QxDTWkmK1Afpl7Gh10kvCz3lGqe2WX1kTdj9IquswVraIh
+         LKEc/2qfJOusMGe7qG0AJfbESRGuBYWXEaPxwzD6e5wxLEzpUZwEx0leS7yZoAhd4SDC
+         Dvoyfn8cHYi3GXmGfjckB9f+/+O3E4kyRK1YMzXaEpZ7YkQWh3Sj/kGPKThVrsKD1KsI
+         D2hbQErs15PCprw4vTF+zbhPoEb4EmQPHW8KdyT9V7Uw/s9hQDTpqzEB78f0Ca4U9zn0
+         8pVQ==
+X-Gm-Message-State: AOJu0Yzcmrg+D551pU1Zvw0QBUqrmBrWWernfZfHuqye6T3Q15diVngC
+	z93UVB3buxDaj8PYU2HSL/NP8nimTKzi9fh1ebTuKus/3QT1Jdx/RlSqvjGP+Q==
+X-Gm-Gg: ATEYQzze1e49HGa5gYhf/jFla+7xgtHJPTkBkPy5t4TISfFyeYOhAjBrCH3eqnQ+ckJ
+	8zDHWhDrF45HP36JihgD4zxCi7+zGThsjeMtQHj90jZSEXsOEUKbCKEebCCNUzytK5tNv4kXG2H
+	C1o/SuqcIpMvDD47LBudJxexFfQx3a5e/Aby2mMe1S50QzdZ35f0OT/BF4SDdenhm4ytvFmEn32
+	0PnPBBJdYw1LOXWDJyBjw3VUFhFzmnaO0lL3zFaXZDBTGah5mfxk7eCVDR7FeCuotXrNejjaJGy
+	U1a0ac1LooxRvjmMKZZc3XLdg+8RVqFEitZKiKuikFTm7X+1Mvb07xgNJQfBXF9CM5O8bSDtvgK
+	0TJiFXiNczXX8wSkfRYQL4SMiMK979q2UANR87Pdv8nmVI9ov9hFB86pPWUE4FC2SMM31J+1ynB
+	jFshTMmvWnyySJ5gIyC1VsLWZ45iotnHPk1oHi
+X-Received: by 2002:a05:600c:46ce:b0:488:92a3:dd4d with SMTP id 5b1f17b1804b1-48892a3ddfcmr32507115e9.29.1775141879746;
+        Thu, 02 Apr 2026 07:57:59 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c8b6230sm70913705e9.24.2026.04.02.07.57.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 07:33:49 -0700 (PDT)
-Message-Id: <c8e5bef27b4635774eb88f29c98e35e2c613d5a8.1775140403.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
-References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 Apr 2026 14:33:23 +0000
-Subject: [PATCH 17/17] git p4 clone --bare: need to be explicit about the
- gitdir
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 02 Apr 2026 07:57:59 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: [PATCH 0/4] xdiff: reduce the size of a couple of arrays
+Date: Thu,  2 Apr 2026 15:57:40 +0100
+Message-ID: <cover.1775141855.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9.dirty
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Transfer-Encoding: 8bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When `safe.bareRepository` will change to be safe by default, bare
-repositories won't be discovered by default anymore. To prepare for
-this, `git p4` must be explicit about the gitdir when cloning into a
-bare repository, and no longer rely on that implicit discovery.
+When the myers algorithm is selected the input files are pre-processed
+to remove any common prefix and suffix. There are a couple of places
+where we allocate arrays large enough to hold the whole file when
+they only need to be big enough to hold the remaining lines after the
+common prefix and suffix have been removed. This series adjusts those
+allocations to avoid allocating space for the common lines.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-p4.py | 1 +
- 1 file changed, 1 insertion(+)
+These patches are based on 'en/xdiff-cleanup-3'
 
-diff --git a/git-p4.py b/git-p4.py
-index c0ca7becaf..dd38dbca22 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -4360,6 +4360,7 @@ class P4Clone(P4Sync):
-         init_cmd = ["git", "init"]
-         if self.cloneBare:
-             init_cmd.append("--bare")
-+            os.environ["GIT_DIR"] = os.getcwd()
-         retcode = subprocess.call(init_cmd)
-         if retcode:
-             raise subprocess.CalledProcessError(retcode, init_cmd)
+Base-Commit: 7ff1460b62ffc8f18a5478be5aba9d4599afb635
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fxdiff-reduce-array-sizes%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/7ff1460b6...a3438dc09
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/xdiff-reduce-array-sizes/v1
+
+
+Phillip Wood (4):
+  xdiff: reduce size of action arrays
+  xdiff: cleanup xdl_clean_mmatch()
+  xprepare: simplify error handling
+  xdiff: reduce the size of array
+
+ xdiff/xprepare.c | 46 ++++++++++++++++++++++------------------------
+ 1 file changed, 22 insertions(+), 24 deletions(-)
+
 -- 
-gitgitgadget
+2.52.0.362.g884e03848a9.dirty
+
