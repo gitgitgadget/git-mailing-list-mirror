@@ -1,325 +1,143 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93093630A8
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 07:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AF7365A1B
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 07:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775113615; cv=none; b=XWI6mnGen19w7OY5bOyD2tQo3kvgoUNSk0OPoqmV96/xitentuT7evwpG8ow5UywFNxehs+pU1FgBxVMe0nHYQygP1aYfg9OdVf9Sj1bPIdfJzGNP1ReHyMgW4ZJZmFuoGp5c/B6WtnuCYsEC/Rj0SdnqRELRHirEYOodnmbI1E=
+	t=1775113708; cv=none; b=H+XW1zM3y7Iyi60oxbZ5jY3iuZhResfS37lSCxkEXITJZsQZV1Md9AcBTWn9Jw9WFXL4VYf42oe1077xJj7Q3NTSx3ndIR8kkgwnhhrmlWRe7Tbzz8o/QC35VgvZRTLk5IkTVHfCIhWrdgIwl71MHPMjFQqjXqGqiNAwLftK4lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775113615; c=relaxed/simple;
-	bh=J/FF/O9zzSGSBopAJN1xJbirmLVrQ/qe8aH/qgMcq9o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKZJ4gtzijm8ovMfqL2fI/ZjK7WD8TqDPkpBMetFK2Epak758KrkgkBslxrDlJsWwRzHda5v9Cyiglud2HZP2/PGYIEhd/1ru2arIKvUDtbLCp20Ez5R7UqNhBrPiCwHUiJ2VdthkatxYogmjii2FOQfTe0sIVLb5hin6CwySpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nGL8EGZw; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775113708; c=relaxed/simple;
+	bh=V2aBFYKYWFaiX+t81RtJlJID0AkTPrTU44B9odY/P5o=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mhboeTUBP4+o2Imiw5RX+enHQbHQ1JC86HN4pv2DBQzO6udhzbqMVh3W5OeSZOsPT/URfCSQCMI5zgmFrL/KqQWW0qEsXRNsbY30rEsC3fToA1u6oJpIZdpRCdYteHQ9JjeOzwQh2Fk+xK3LnPvbxlJAOPncf+aRbOpXlqC7dX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h9a/AhOT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rfv0KKgj; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGL8EGZw"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-486b96760easo5484935e9.2
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 00:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775113609; x=1775718409; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CHqpOpNyZBW9bO6t3jyi5HmmShSlj1tJdCFE3PfLQLY=;
-        b=nGL8EGZwTpSpoRb2zSX6B5BfR8fagdO34zUmeFWP2AHVprEoC9+DAudP7BmfSgIcON
-         W5mNWCPf1XGKEwJVN0Q2EaFhzEIle6QhnL3aN19iTtXXznWD0R6mEkogawC7Sg8gjg7l
-         5cpNTLWziyQfmA8KRMshJB0VocBvEUASirs9JUVMBMCI8zAIiHa6FWfCyMFVPZqcRmza
-         19n5p4c2ms0OVzjYbnQnrEbB0gjojUul/24SjLZLUQCfK3QYkJzkCDB8aFuVAjv5RPGQ
-         29gHqnNBF0KChnYQRPWIIuuB4/5AiM6XU5dzCgwl19U7W0Dz5aizNqaHhlNbLT/yRdwZ
-         lGRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775113609; x=1775718409;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CHqpOpNyZBW9bO6t3jyi5HmmShSlj1tJdCFE3PfLQLY=;
-        b=dkD9eh+i0mhj7616AXMVOTwweTLJBFf8dja0pdultgJ0i1OYmqvSANIngim71eapRM
-         EHYozaT2kEJ9YnUUfTJ7Lt5CEv56HNFfMGmGwfehtS7cT4+vhwMy2Zw9JZ/AQFekDh9O
-         3xZecaud87U9S9bkPdOuHrjZrmKYY6CIbdMKkSqY2Z0B1HfotYEIVZAfwICsaRJuceaj
-         vCHxcTuNfUliGCmHb8I0pRUdLsgCHhxDbzNjKfVqg3aXyd7zU/lPjSy9ZwUgQ5x3BieM
-         KyyQWbScmjf38TdiSt4mLn69bwT/y4euPIl1TJiIU0mUSegWJ75dLqeQHg2S7kVVH5uk
-         tJag==
-X-Gm-Message-State: AOJu0YxFymv+4+rZ459yplQqf+v3/bJgJtp3tCoJ26/WwEzoePFGKY5V
-	hiDCexhbcv3t/6bjRDTk+JwukCSZXCNQvJI/5eYkuu0h+fA4Gl3ZoA+3fMRdzw==
-X-Gm-Gg: ATEYQzz4hHet0m9owCJWHdYGqoIeAZ7YnUnqZ1mjwLFzJJSR9IPgVM9UpIHv+DPKzhX
-	9sKU+9V3MnklGAz9IuJuvIT4ra12JfiJsi4AnLASnzREbcSolV/0oCjDq3i/PIyKnj6CpcYn5l1
-	Dtb2anEjYQ+g6qdmYpEcDMvAamZcJOvT1L+qk3bE/aYvNhF9GrRnqY6rMBa254VdS7jbEccX05h
-	Cn/AyixEUDb7ZQwAEYF60SL4KfwLGfoCJ90mJ9HisByz7qa3POhugrp0OJ5qqwN5x1GzGRFPgus
-	Gz2qSvD/WZZsQ3IsYVGiwViIpQgfQra7dslsTwmri8wOlFHuDrLPSmJiM6x/VFXnvFZhvgEzcW6
-	LmmPotfF99ZIVHkR2WUOY01Pefg9BUbanGRQEMbtzPPtxSqdf03JiadNvadDgpTdPBQJScXE7HJ
-	oLwE+goC7qxD7HLSi6GEiGUvpGXKeP22t6MYP1R85+IKcOvAXKgC8zvzHCOsr5YjgrFzocJuEdb
-	QTv9TjEY7EBa4JDU3LAGir1Yik0jTxMcYEa6aY=
-X-Received: by 2002:a05:600c:45d2:b0:487:169:9f64 with SMTP id 5b1f17b1804b1-48883563408mr107125315e9.12.1775113609121;
-        Thu, 02 Apr 2026 00:06:49 -0700 (PDT)
-Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887c8bc9dcsm101916335e9.6.2026.04.02.00.06.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 00:06:47 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h9a/AhOT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rfv0KKgj"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D7EB57A0351
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 03:08:26 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 02 Apr 2026 03:08:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1775113706; x=1775200106; bh=7LyaDEun/q
+	jMtDklsog49zSn7VS2tWJiLH5fdERkkDQ=; b=h9a/AhOT9dENx9UlQS2HlYO3M/
+	pIznUDAWLEuF9D32PM3sIiWKZXoDTcI9X+4p7BpKj9QsjIgaju3eWTML+gH5cXUg
+	xHgdLjcc24QRiyaXv07bJNJbUlzuJWHquV9Wi5Sd7QYukTgUScRS5Le4C0i+UFgv
+	t11Lu1FPxgmEAfhOlVJAjcCDmWew9jmoySoeM7UjvEz+udnpWp7fKdxcy0/VX9vS
+	Mf4236h9rZxdAFisd651PGiIDm/a6ED6C6yp6uCKT1I17bSjVz7wTpX6P50lDRFt
+	XpdD5xiNimaK8zmqg5kA82fGPvA5JphTqPwVxV0FO6//jbJTq1arr38PdLGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775113706; x=1775200106; bh=7LyaDEun/qjMtDklsog49zSn7VS2tWJiLH5
+	fdERkkDQ=; b=rfv0KKgj1gPnt5ZzVj1zW0URF6TqPNxuHmf6Km1JJYJD6gWQbIR
+	dHbBRuUXfcX/fkvgwQZFsjI0D7Peux8lB1wW3/LhRKj+ECwx7hyUfM/pJBLfbh0/
+	AAe1iQBkX7eAOuY2cc6NyyRxiUdG+NPkUn0jfnTCcSLRedG+ZB3q9eRxkHkzMzBC
+	89/9U7Lmh8Q3fAoJ+tPwc1R6tcZ4KJs6Mc0gE9UdHaoRUoMmCidj9YSEQ5ovTjdE
+	ULtoedpxi1dJjJIN08H0lhEgzeLZVkW+ZPUXa8Oq8Y26W2j8i1pzTf34ENJSzPuk
+	QV/AMQ6IhpaltnOd4bPvoevYPHLD4kgQ5bA==
+X-ME-Sender: <xms:6hXOaZ6Nde7vCJnJkQV8DG_yRmWsTCDHBQA-3hPm7zqXx8Kny4eblA>
+    <xme:6hXOad1UkV0EeStyucLIDgNRt1HqShZd_sptkHiSV1Epq53RaX-bQS-qncCsGbJHV
+    c8pGu8iZfB-syw_Fhzs4NZbVhDknrHs3pVseaWk8mXRavDgerf8yQ>
+X-ME-Received: <xmr:6hXOaWEb_sbRGhjIMz3tpzNZUD03xR2smucZw2wuhepkqGdQ0DqHf6gYTLBlbRky34GJ8GczNY0Q778SIgWsh2yftZ_BQjMBc0Oxl8euYQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehfeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtredttddtvd
+    enucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhi
+    mheqnecuggftrfgrthhtvghrnhepvdekueeiiefhleevfeevvedvhfffveegjedvtdeuge
+    eiteefhefglefhkeduhfeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:6hXOaXRPrMrmEs2m7DGQTQeg4xRdi9xnwxUPJ60odNLcxB_8EkqHpQ>
+    <xmx:6hXOadAB1ZJ5MbYLoeZZ64dDTktr-rjbqblWsqLFqL88t_-QqKKwGA>
+    <xmx:6hXOaX2SvbFp3xkwr4zwC1W_1OYKEavh-0KcCJArKxHyvswfDZf5Rg>
+    <xmx:6hXOabW2jn_wNQhRyJ2_VFqM36NwAhAWUgNCVvY1hLFwkWcKbh6w6w>
+    <xmx:6hXOaeZj47D_UgT_NpD69xilNKNez_QABHFsOPQLKrmbgzq7WYWq_Lta>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 2 Apr 2026 03:08:26 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 7a2e67f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 2 Apr 2026 07:08:24 +0000 (UTC)
+Date: Thu, 2 Apr 2026 09:08:21 +0200
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 10/10] t5710: use proper file:// URIs for absolute paths
-Date: Thu,  2 Apr 2026 09:06:13 +0200
-Message-ID: <20260402070613.85934-11-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.53.0.765.g57b94de1f0.dirty
-In-Reply-To: <20260402070613.85934-1-christian.couder@gmail.com>
-References: <20260402070613.85934-1-christian.couder@gmail.com>
+Subject: Re: [PATCH] hash: introduce support for the MD5 hash algorithm
+Message-ID: <ac4V5UaLs9hJemxt@pks.im>
+References: <20260401-pks-object-format-md5-v1-1-1b8f0be23713@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260401-pks-object-format-md5-v1-1-1b8f0be23713@pks.im>
 
-In t5710, we frequently construct local file URIs using `file://$(pwd)`.
-On Unix-like systems, $(pwd) returns an absolute path starting with a
-slash (e.g., `/tmp/repo`), resulting in a valid 3-slash URI with an
-empty host (`file:///tmp/repo`).
+On Wed, Apr 01, 2026 at 12:42:28PM +0200, Patrick Steinhardt wrote:
+> We are currently in the process of migrating to SHA256 as the
+> alternative to SHA1. But we believe that proposal is misguided.
+> 
+> When Linus first announced Git in April 2005, he was explicit about the
+> role of SHA1 in the design: the hash is used for content integrity, not
+> for cryptographic security [1]. Given this foundational principle, the
+> collision resistance of the underlying hash algorithm is essentially
+> irrelevant. What matters is that identical content always produces the
+> same name, and that any corruption of stored data is detectable.
+> 
+> While SHA256 technically provides stronger collision resistance than
+> SHA1, it does so at the cost of 64-byte object names instead of 40, a
+> 60% increase in verbosity for no practical benefit.
+> 
+> As an alternative, MD5 satisfies the requirements of collision
+> resistance and deterministic checksums perfectly well. At a length of 32
+> hex characters they are shorter than SHA1, roll off the tongue more
+> easily, and have been a beloved companion to the software engineer for
+> decades. Furthermore, it remains in active use throughout the ecosystem,
+> in checksums on download pages, filesystem integrity tools, and
+> countless systems out there, which overall proves the point that they
+> aren't inherently broken.
+> 
+> Quoting Linus in [1]:
+> 
+>   In other words, I think we could have used md5's as the hash, if we
+>   just make sure we have good practices. And it wouldn't have been
+>   "insecure".
+> 
+> Let's do so and wire up MD5 as a new alternatitve hash algorithm next to
+> SHA1 and SHA256. Repositories can easily be initialized with MD5 by
+> saying `git init --object-format=md5`, and tests can be executed with
+> the new hash by setting the `GIT_TEST_DEFAULT_HASH_ALGO=md5` environment
+> variable.
+> 
+> [1]: https://lore.kernel.org/git/Pine.LNX.4.58.0504160913180.7211@ppc970.osdl.org/
 
-However, on Windows, $(pwd) returns a path starting with a drive
-letter (e.g., `D:/a/repo`). This results in a 2-slash URI
-(`file://D:/a/repo`). Standard URI parsers misinterpret this format,
-treating `D:` as the host rather than part of the absolute path.
+This was obviously a joke, but one thing I would like to point out is
+that this patch actually works. There's 15 test suites that are failing,
+but everything else passes. Which is quite amazing, and it shows that we
+have come a long way with making our code base more agile when it comes
+to the hash function. I guess a lot of the praise goes to brian here.
 
-This is to be expected because RFC 8089 says that the `//` prefix with
-an empty local host must be followed by an absolute path starting with
-a slash.
+So while this here was a joke, it was also me experimenting with how
+hard it is to actually add another hash function. We've discussed in the
+past whether it might make sense to have a third hash that is focussed
+on speed. Of course, it would still require collision resistance, but it
+might actually be in the picture to compromise on the cryptographic
+nature for internal projects.
 
-While this hasn't broken the existing tests (because the old
-`promisor.acceptFromServer` logic relies entirely on strict `strcmp()`
-without normalizing the URLs), it will break future commits that pass
-these URLs through `url_normalize()` or similar functions.
+Anyway, that's a bigger discussion to be had at a future point in time.
 
-To future-proof the tests and ensure cross-platform URI compliance,
-let's introduce a $PWD_URL helper that explicitly guarantees a leading
-slash for the path component, ensuring valid 3-slash `file:///` URIs on
-all operating systems.
+Thanks!
 
-While at it, let's also introduce $ENCODED_PWD_URL to handle spaces in
-directory paths (which is needed for URL glob pattern matching).
-
-Then let's replace all instances of `file://$(pwd)` with $PWD_URL across
-the test script, and let's simplify the `ENCODED_URL` constructions in
-the `sendFields` and `checkFields` tests to use $ENCODED_PWD_URL
-directly.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t5710-promisor-remote-capability.sh | 55 ++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 23 deletions(-)
-
-diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-index bf0eed9f10..3eca6601ca 100755
---- a/t/t5710-promisor-remote-capability.sh
-+++ b/t/t5710-promisor-remote-capability.sh
-@@ -76,6 +76,17 @@ copy_to_lop () {
- 	cp "$path" "$path2"
- }
- 
-+# On Windows, 'pwd' returns a path like 'D:/foo/bar'. Prepend '/' to turn
-+# it into '/D:/foo/bar', which is what git expects in file:// URLs on Windows.
-+# On Unix, the path already starts with '/', so this is a no-op.
-+pwd_path=$(pwd)
-+case "$pwd_path" in
-+[a-zA-Z]:*) pwd_path="/$pwd_path" ;;
-+esac
-+PWD_URL="file://$pwd_path"
-+# Same as PWD_URL but with spaces percent-encoded, for use in URL patterns.
-+ENCODED_PWD_URL="file://$(echo "$pwd_path" | sed "s/ /%20/g")"
-+
- test_expect_success "setup for testing promisor remote advertisement" '
- 	# Create another bare repo called "lop" (for Large Object Promisor)
- 	git init --bare lop &&
-@@ -88,7 +99,7 @@ test_expect_success "setup for testing promisor remote advertisement" '
- 	initialize_server 1 "$oid" &&
- 
- 	# Configure lop as promisor remote for server
--	git -C server remote add lop "file://$(pwd)/lop" &&
-+	git -C server remote add lop "$PWD_URL/lop" &&
- 	git -C server config remote.lop.promisor true &&
- 
- 	git -C lop config uploadpack.allowFilter true &&
-@@ -104,7 +115,7 @@ test_expect_success "clone with promisor.advertise set to 'true'" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=All \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -119,7 +130,7 @@ test_expect_success "clone with promisor.advertise set to 'false'" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=All \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -137,7 +148,7 @@ test_expect_success "clone with promisor.acceptfromserver set to 'None'" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=None \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -156,8 +167,8 @@ test_expect_success "init + fetch with promisor.advertise set to 'true'" '
- 	git -C client init &&
- 	git -C client config remote.lop.promisor true &&
- 	git -C client config remote.lop.fetch "+refs/heads/*:refs/remotes/lop/*" &&
--	git -C client config remote.lop.url "file://$(pwd)/lop" &&
--	git -C client config remote.server.url "file://$(pwd)/server" &&
-+	git -C client config remote.lop.url "$PWD_URL/lop" &&
-+	git -C client config remote.server.url "$PWD_URL/server" &&
- 	git -C client config remote.server.fetch "+refs/heads/*:refs/remotes/server/*" &&
- 	git -C client config promisor.acceptfromserver All &&
- 	GIT_NO_LAZY_FETCH=0 git -C client fetch --filter="blob:limit=5k" server &&
-@@ -242,7 +253,7 @@ test_expect_success "clone with promisor.acceptfromserver set to 'KnownName'" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=KnownName \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -257,7 +268,7 @@ test_expect_success "clone with 'KnownName' and different remote names" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.serverTwo.promisor=true \
- 		-c remote.serverTwo.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.serverTwo.url="file://$(pwd)/lop" \
-+		-c remote.serverTwo.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=KnownName \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -294,7 +305,7 @@ test_expect_success "clone with promisor.acceptfromserver set to 'KnownUrl'" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=KnownUrl \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -311,7 +322,7 @@ test_expect_success "clone with 'KnownUrl' and different remote urls" '
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/serverTwo" \
-+		-c remote.lop.url="$PWD_URL/serverTwo" \
- 		-c promisor.acceptfromserver=KnownUrl \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -326,7 +337,7 @@ test_expect_success "clone with 'KnownUrl' and url not configured on the server"
- 	git -C server config promisor.advertise true &&
- 	test_when_finished "rm -rf client" &&
- 
--	test_when_finished "git -C server config set remote.lop.url \"file://$(pwd)/lop\"" &&
-+	test_when_finished "git -C server config set remote.lop.url \"$PWD_URL/lop\"" &&
- 	git -C server config unset remote.lop.url &&
- 
- 	# Clone from server to create a client
-@@ -335,7 +346,7 @@ test_expect_success "clone with 'KnownUrl' and url not configured on the server"
- 	# missing, so the remote name will be used instead which will fail.
- 	test_must_fail env GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=KnownUrl \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -347,7 +358,7 @@ test_expect_success "clone with 'KnownUrl' and empty url, so not advertised" '
- 	git -C server config promisor.advertise true &&
- 	test_when_finished "rm -rf client" &&
- 
--	test_when_finished "git -C server config set remote.lop.url \"file://$(pwd)/lop\"" &&
-+	test_when_finished "git -C server config set remote.lop.url \"$PWD_URL/lop\"" &&
- 	git -C server config set remote.lop.url "" &&
- 
- 	# Clone from server to create a client
-@@ -356,7 +367,7 @@ test_expect_success "clone with 'KnownUrl' and empty url, so not advertised" '
- 	# so the remote name will be used instead which will fail.
- 	test_must_fail env GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=KnownUrl \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
-@@ -380,13 +391,12 @@ test_expect_success "clone with promisor.sendFields" '
- 	GIT_TRACE_PACKET="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
- 		-c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=All \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
- 	# Check that fields are properly transmitted
--	ENCODED_URL=$(echo "file://$(pwd)/lop" | sed -e "s/ /%20/g") &&
--	PR1="name=lop,url=$ENCODED_URL,partialCloneFilter=blob:none" &&
-+	PR1="name=lop,url=$ENCODED_PWD_URL/lop,partialCloneFilter=blob:none" &&
- 	PR2="name=otherLop,url=https://invalid.invalid,partialCloneFilter=blob:limit=10k,token=fooBar" &&
- 	test_grep "clone< promisor-remote=$PR1;$PR2" trace &&
- 	test_grep "clone> promisor-remote=lop;otherLop" trace &&
-@@ -411,15 +421,14 @@ test_expect_success "clone with promisor.checkFields" '
- 	GIT_TRACE_PACKET="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
- 		-c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c remote.lop.partialCloneFilter="blob:none" \
- 		-c promisor.acceptfromserver=All \
- 		-c promisor.checkFields=partialcloneFilter \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
- 	# Check that fields are properly transmitted
--	ENCODED_URL=$(echo "file://$(pwd)/lop" | sed -e "s/ /%20/g") &&
--	PR1="name=lop,url=$ENCODED_URL,partialCloneFilter=blob:none" &&
-+	PR1="name=lop,url=$ENCODED_PWD_URL/lop,partialCloneFilter=blob:none" &&
- 	PR2="name=otherLop,url=https://invalid.invalid,partialCloneFilter=blob:limit=10k,token=fooBar" &&
- 	test_grep "clone< promisor-remote=$PR1;$PR2" trace &&
- 	test_grep "clone> promisor-remote=lop" trace &&
-@@ -449,7 +458,7 @@ test_expect_success "clone with promisor.storeFields=partialCloneFilter" '
- 	GIT_TRACE_PACKET="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
- 		-c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c remote.lop.token="fooYYY" \
- 		-c remote.lop.partialCloneFilter="blob:none" \
- 		-c promisor.acceptfromserver=All \
-@@ -501,7 +510,7 @@ test_expect_success "clone and fetch with --filter=auto" '
- 
- 	GIT_TRACE_PACKET="$(pwd)/trace" GIT_NO_LAZY_FETCH=0 git clone \
- 		-c remote.lop.promisor=true \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=All \
- 		--no-local --filter=auto server client 2>err &&
- 
-@@ -558,7 +567,7 @@ test_expect_success "clone with promisor.advertise set to 'true' but don't delet
- 	# Clone from server to create a client
- 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
- 		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
--		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c remote.lop.url="$PWD_URL/lop" \
- 		-c promisor.acceptfromserver=All \
- 		--no-local --filter="blob:limit=5k" server client &&
- 
--- 
-2.53.0.765.g57b94de1f0.dirty
-
+Patrick
