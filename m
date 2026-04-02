@@ -1,53 +1,53 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BD83164AA
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 19:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8EA3B2AA
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 19:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775159751; cv=none; b=Qc0vgG4CPw+7FE9bKrxqL3Ot+IpQ7oQovlYsRHZjiM2iyqvWkYquTR5EFVxFgt9Ry/ahwpA03rltiMrJWcIlJbyOeGUg6DdnHWIYsBJ1iC1OFbO2ZdeGqndXezKTyl5TmQjTVhywoxsxV66TUwo9U6nY+QCA8qWuDzFWIUs2+sg=
+	t=1775159771; cv=none; b=tLSpyMJlYqd8mECMdeJ0NidWVE25Nrcoxc+LYJ3hp5HHhj7oiRJbW26ODb81UoVNgMMM+NRZd/OuHkcKkIw6odozLdAzNpP4qN3nqfi4izm5QQNSG+OAZ+G2H3Rn8Kg/pJdV5H3eS6X1678Og92qWihOJ7LdulcTBBGtLypnXX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775159751; c=relaxed/simple;
-	bh=eshgbvTR6uZKMaygF0RLBM0vSjvx7EPXySOPNcu2BEM=;
+	s=arc-20240116; t=1775159771; c=relaxed/simple;
+	bh=EXu32YO+1uDsIhyZng/Awr9iS5nwqi7gv9cXdIyT724=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KpaGtsXBBt7S7LcKJTKg2i57RXvG7y7D/psXJ2lU3/gdIxEqymFtFis0DxEmFx3M+ywC7Y6aOp03XVe+YVmN5u1M/GG7Pyu1ubv4vgWTgjF6EGJhxXgZQK9LxAIW0Xx6PvGCWTEJAN7i0xogpm4FjLiYvsL8awhIs8yCGk90D/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wUEvX6cx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vL3TqRGF; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=PAHDK6lBoX1VI6N/5ok1ipeZwYAb/MGPEbr+TdWAtPSks3Zh8jyYRz/UDaRMlD1KlyteNDcGHASQqlufdcKi2tBviVuKrN0ItHIfAdZEgBdlNsr/lAxhwJBDhz0Imy8HOsD0GzEGq8Rig2ioST8HLp7cYtnHEJsD3u7nstKOTmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gS4ObUYw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E0U5/8mW; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wUEvX6cx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vL3TqRGF"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0160CEC0269;
-	Thu,  2 Apr 2026 15:55:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gS4ObUYw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E0U5/8mW"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id BDFBBEC0141;
+	Thu,  2 Apr 2026 15:56:09 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Apr 2026 15:55:49 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 02 Apr 2026 15:56:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775159748; x=1775246148; bh=Oqrwwd/rp6
-	1OKDjRPd2GwYf2eF1jJyhtRTedq0wNElc=; b=wUEvX6cxh6B5hX6tvfDvHJEFev
-	sjdevgnfpuMCCqiXUL2mTHgZWfkAumBWAtIn3pi+EdPnOStNHvosFsUIF8vrRVI3
-	O0a0iBnXB6497+y7PGu0Pd5qWfHYMNANZQ5ymj4ul85ZQdLwaRTmZU3GQbkQQjH/
-	boRTmbajghSr3MbGFcN0+BJixMAKxF7EyHFkRrEEHXOyPf4pb0xtsWVHW+pFPkq5
-	5mZNJy97U53B6PIL6/zwrVKMsWi2JcupY67J7IqRLOGTPl977w20AfnmZ5NpW6YA
-	Y+yM7WM95W5GNGxKFb4ZOlOWcw5VOSRAzZN7gDMKMsIZhYcGsc6ynlLmCDCg==
+	:subject:to:to; s=fm1; t=1775159769; x=1775246169; bh=KZzTnNQPGZ
+	SLQ7QQmqTL/2isso8508vxBykBAiWuTNQ=; b=gS4ObUYwjsKe2FILd0A9/yBtIO
+	2gK1kOQ1Xqijiufx0JFzcV8+n4xnZ0uuvSgvcTZteIxP60tqC6ahkVKY3Pcnl5Od
+	zTt5BLN7+ZkkjTVWE9kYtnIj9zQJGLovEzts3dK6ka0LeG0VlgVVi5hjmEB6tGar
+	81mViN/+ZA27LwXP8faDIMT5GnMhSOg1DvFCCES69t7CWQCEYZBqWjWwf7bqp9D/
+	mSSosk64/0le5OqHsowTh/EDwIB0/CRgGooSRsj0H446KfLeptlLEPh7cC9KGnQ8
+	ETiN51wvcG3QyqZFETrQM40xR61JoEylJB0GuFR5j5yqVOsMUxMjFVQLd23w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775159748; x=1775246148; bh=Oqrwwd/rp61OKDjRPd2GwYf2eF1jJyhtRTe
-	dq0wNElc=; b=vL3TqRGFdMRbYdwFswygdTG9zFsexoNvS4QRkqIQD45rfd3qvcM
-	mznF0pc44X3xQh9HjFthV3kjRHyrPXe03HwloqNZQZvLo0cGRJo6ct+IDR1cI2vz
-	2tOL0sLKBO/mC2to4iPLGGIRpdAlviPiU4XTapMPdwaLX/L/H8y42+V05Dcra2tc
-	NU10rCR/kCiTG11MeMluKLDP5+3+FQ31yS+n9b5mv7EuegX0H9Fc/FjMLy0SzzjR
-	KwN60QDgBEuYPnmurKyjlNKfkx38I4NLzfwFWQAQxto0Y8pBVzgVfa7cHb43tFDa
-	ERhmonoMj8Fr+hx3kyRNR5O4/zzhUMSbqnA==
-X-ME-Sender: <xms:xMnOaYgCnX-8wET7eEBeJZitqTjmuGFnlW7eO7mpN2bdE_JHqa65Gw>
-    <xme:xMnOaZNU8m1p4EtAhDFddu5JBGDmFwRX0HV51Yus1ru2DIn0miSaYULG5NSWZ6rIe
-    vF1TvX4U12RdRZu8m31XwMmFuyuAqG0FM8vOZzD6mD2AyQvYjonSfU>
-X-ME-Received: <xmr:xMnOabrWKIPkDxmdZzdDvK95Y_Xbtj1N5MuoPPRaZGWCQw40rIXRRvOpqKD2RePs4pUYB_AoCmqkCNu0LhX_5XfXKw9zQRbt9g>
+	1775159769; x=1775246169; bh=KZzTnNQPGZSLQ7QQmqTL/2isso8508vxByk
+	BAiWuTNQ=; b=E0U5/8mWMrTvMp4s2iWTTd03VppRiQUpTkHzM7oBBblnWQEq3ky
+	ixIx4jRAwAhTEFWcm/cal+WfEZKV2LpEOYUaSKGQOhZcR9kpZQ6n6ogL5vg2VG71
+	vMxyzmvirDOD1Wy4WgD4UK5dBTRO+NBlKpRvazznffWkz9ZdKAR19m6nPIYJ7z6Y
+	RNmXpu0HKxg3z1Ya2Hj8iyFVOfRhqT/c+yqM1ecLH2oAV2uW93OHAXNPpmXo98d3
+	Lj3muoecVwR00ljmGIbTaRCtiCdpRnBs7D5sO7sHKSvKMwJocxseUZmcDv+e96KR
+	YLgionRppw6Cv34rzIOepWflIUCCW1JVLSg==
+X-ME-Sender: <xms:2cnOaUn-ZLc3ePRrxyjN3OGW6v92ENhIVDA87NBudxPRqEjMFjXuyw>
+    <xme:2cnOabTSkz1fodE0JYODTfhPznJNLnwjCymXf8e4lm_gCBWSvFmXULnau85Vo3Gyo
+    cfmzFjlDfhVfD6kl4XM4bnFYazkndxjNExxvqIzOT6HRYznX4PzfUw>
+X-ME-Received: <xmr:2cnOaQB3rJGZpKDWMLrNrowtgr6xH5U-px-DRAdikFnL7B-QTuQi6xSaFcjyjhyOz07tjj-dbzmsJeJX_dO2-6u2VcTQUAqr-Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeileefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtre
@@ -55,40 +55,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeileefucetufdoteggod
     ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffue
     efjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrsghlohho
-    shgrsggrthgvrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrd
-    horhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
-    htthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrhihurdgt
-    hhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthh
-    grshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrghnughrrghp
-    rhgrthgrphefheduleesghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdrug
-    gvvhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:xMnOaT4PPysN2OvOQh64rR2y7HUsW9-aBoWLLWl8A82QZzJCMmPhMg>
-    <xmx:xMnOaRh1AdpcOfQyemoa8lfTzBkK8tlHZYCGjiOMlOVdVe3ZbBQ1Lw>
-    <xmx:xMnOaR4-19oSuBAVhutlOLxZh88xMmiJdMm5lY3JuADQ8WWaZcK6vg>
-    <xmx:xMnOaeGB56bILL3NykQqbTqtGHAkbp9VQY-MulB6GuR-abj20Wl-Hg>
-    <xmx:xMnOaTDZSskEMUSZkW0_jnjb_YtuZwzVrmWxLSBzHoRMVsA63Mv_Ckox>
+    gtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehvihhkihhnghht
+    tgegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2cnOaaQuI5YzTTGLR6GPLNvz5GuDHwgbnB8hnl0z7BbiqmOL24BwJg>
+    <xmx:2cnOaWqvcyoG52U8K5c2sxiayA84jg5iCoSeMP5wfy_UcXhWKB8D0Q>
+    <xmx:2cnOaUxtJK_rMJ2bSd_gwUETZbqSzKqqnVgwQ_P5DjoljiTGqJ_f2Q>
+    <xmx:2cnOaTLbl2QwB181mMn9x1AFpQLqW6WnzKH33XAwlGMIwX8HiUipyQ>
+    <xmx:2cnOafRljPR0_pXf8m-0b0bB-SQ90MQCHayS8zcAORg2W4G0D26au2wO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Apr 2026 15:55:48 -0400 (EDT)
+ 2 Apr 2026 15:56:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo <pabloosabaterr@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>,  christian.couder@gmail.com,
-  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
-  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com,
-  szeder.dev@gmail.com,  git@vger.kernel.org
-Subject: Re: [GSoC PATCH v6 0/3] graph: add --graph-lane-limit option
-In-Reply-To: <CAN5EUNRvsUgZPQhk4vj-QY8k+iCkTHQsgO8RJj1gNkYBDChsZg@mail.gmail.com>
-	(Pablo's message of "Thu, 2 Apr 2026 07:53:32 +0200")
-References: <20260325174401.217577-1-pabloosabaterr@gmail.com>
-	<20260328001113.1275291-1-pabloosabaterr@gmail.com>
-	<bdff0a5d-b738-4053-9b72-08eba88156de@kdbg.org>
-	<CAN5EUNR_yfkv_hC4wg-nHNg=3FnkYdvFm6FcOUNG2A=MdGs7ZQ@mail.gmail.com>
-	<xmqqikaawrpx.fsf@gitster.g>
-	<CAN5EUNRvsUgZPQhk4vj-QY8k+iCkTHQsgO8RJj1gNkYBDChsZg@mail.gmail.com>
-Date: Thu, 02 Apr 2026 12:55:47 -0700
-Message-ID: <xmqqeckxp264.fsf@gitster.g>
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC PATCH v2] backfill: error out when HEAD cannot be parsed
+In-Reply-To: <20260402191359.11304-1-viking4@gmail.com> (Trieu Huynh's message
+	of "Fri, 3 Apr 2026 02:13:58 +0700")
+References: <20260402191359.11304-1-viking4@gmail.com>
+Date: Thu, 02 Apr 2026 12:56:08 -0700
+Message-ID: <xmqqcy0hp25j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,28 +84,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Pablo <pabloosabaterr@gmail.com> writes:
+Trieu Huynh <vikingtc4@gmail.com> writes:
 
-> About other ways to draw it, I actually like yours, other way I can
-> think of is to make a hard separation row something like
+> From: Trieu Huynh <vikingtc4@gmail.com>
 >
->>     * a child of the root commit below
->>     * one of the root commits
->        ---
->>     * an unrelated commit X
->>     * the parent of X
->>     * the other root commit that is a grandparent of X
+> handle_revision_arg() returns non-zero on failure, but do_backfill()
+> ignores the return value. On an empty repo with no commits, HEAD is
+> unborn and handle_revision_arg() fails, but backfill silently
+> continues with an empty revision walk and exists with a zero return
+> code.
 
-Yes, this is rather an easy way out and its variants have been
-attempted over the years for a few times, I think.  Marking a root
-commit differently from others, like the hard break line immediately
-below it, drawing it with something other than '*', or painting '*'
-in red---any of these approaches will let you tell that the commit
-does not have a parent-child relationship with the commit that
-appears on the next line.
+"exists" -> "exits", I think.
 
-But the reason why the user asks for "--graph" is because they want
-to see the parent-child relashionships in the graph layout itself by
-laying commits out on the 2-D plane, and drawing the root so
-differently from others is failing that task.
+But more importantly (with Devil's advocate hat on), what's the
+downside of the current behaviour?
 
+You tell the command to backfill, the machinery does not find
+anything necessary to fetch to backfill, and successfully, quickly,
+and quietly exits.  That sounds like a graceful exit to me.
+
+Is there anything wrong with that?
+
+> +test_expect_success 'backfill on empty repo fails gracefully' '
+> +	git init empty-repo &&
+> +	test_must_fail git -C empty-repo backfill 2>err &&
+> +	test_grep "unable to parse HEAD" err
+> +'
