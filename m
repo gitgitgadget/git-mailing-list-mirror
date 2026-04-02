@@ -1,66 +1,66 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38E13EFD13
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 15:05:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8093D3C65E8
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 15:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775142354; cv=none; b=GtMLwjUJHx5fj8bfsPF4w/ntIJ60xdJ0hE9OIRLL78WfLUTBhfa8GcQF0NCBOtoY8SC8S+HQZ+M+AFC3M9skdgR0Z0wAACGSitowuT6eLiq//mKoPf9G0SfUumvp0z0QQSO5S8APPPL8kwgDhK5WPSaBfg8sdiogtNuTygr2XZ0=
+	t=1775142628; cv=none; b=kTqumpATO+VoyCZLg8q4A1q4lNwpubAFAn518613fY1CCqA+EKF0uLbqP8lB7yCruSw5Psf5X4TqJ9NE99Cou40OYJjGkVz3bAxTZSSWl/d0tf8XT23LrqiwDxi4ydIc57TXu+Xu8x04W7d96+284QRLcFcTKDQlFQrPKR7lX1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775142354; c=relaxed/simple;
-	bh=NsxgfpzQ2dSL9ESc+UXXA71mMwKjkuhlvidoov1vjsE=;
+	s=arc-20240116; t=1775142628; c=relaxed/simple;
+	bh=uTQ+50Mho+O4LCdaC49jw/R75klkC0B0tnjjIZoeQP8=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=XrrgMIAlq5sMiuMqmsAZq6axEGLIEiIbjku+6FXkRJZChHZntdB1hnGrcVf/P6WaU+IAYFQn9KMtlxh5c5dXoiUybfCFfnkbdTVpnyXrbFSfiy/uqmti14amWQhiImTB14hWAuBW78eLg+gIa0f1YQD39J/LDTF1eNl3Rd32R1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fn+NwBpY; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:Content-Type; b=mzLlASjnmXk2TLoNWQwBq/rqu5OIcS+tv+b+AUglLWGCIEJwhVN9+VaDMIV5RxzXnlv+lcAVJKomv9pV+ExXdTzJBEJm9YOMQCJ/M1euVxMVIw/RJr4ANujOdGY6bIst/pfHCdnvxuF16VzlXuUKJNFBd3adSj16LiA+NFQS9D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eUX3BFIZ; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fn+NwBpY"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43b95e5b3afso621711f8f.3
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 08:05:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUX3BFIZ"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-43cfd832155so583758f8f.1
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 08:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775142351; x=1775747151; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775142626; x=1775747426; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CwsbhQ3zhaYm5gu8ywEulUc/ivyCq+sG47cjvdKvvr0=;
-        b=Fn+NwBpY26wxeW66DRFSpcmVmPmpoUQo77+ngv+FCFWhRcCLEHF1NwnT6xn5W5Yz1u
-         i7TKSStBEg26U1v1JEnkfNFW4ur502t0cw1S/b8PgwQsSxKSuGE8zHShq9aSGDTTIgZ2
-         gxyEneUzKKnj3+FVcN+6Mfs/Ik5b75HaAFZlovXG7Ah11dihsPznrOxb2KjTyeVYpZzK
-         Ju+hDJCsWQ9uD/wUX5QwrzmfM7JHYfjuSOd/wQ9aYAfHcGrIhGqpaOIRSLzsdr+i38k1
-         IfuOZOESJR4uRcspbMmgG3cBUIIbq29hoMrUprLlveMx9oNsv6MwLHOkZeyMyfynhbTf
-         rXng==
+        bh=ljxCktEK8JSUo9v15t42aHoixrMUURy2APZoZMsySt0=;
+        b=eUX3BFIZ+xbZZdpDP5vpVuwlGudKhEmWOkJDvsKOFwdzXYue/eh1zLuwyg1cUUi2El
+         QO//oWYkgn5t2I4OVjY6xfSuT7+1bR7FBEjhawV2Y3Bct6uqddAdWVESVxfM+VPNnNtm
+         P21xQ8ezRsdOWBKvGogJbaPrILnCaGn4+pJHp3PE5CYRKRQQI/i/oEgCExspPXJEn4Wr
+         7EqaB4CEbbVJ/CsWFsl9bekhZVzBky53FkZ3exqihQph3Y+9GyA7bJGhEod7fHcS1QnE
+         cB2Bo4C/wpGKmCINd1O/pnU3FKLynDnpfHxNlhJCYOGYZyHz0yL6K6kw5LYldK9q2oZZ
+         YKdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775142351; x=1775747151;
+        d=1e100.net; s=20251104; t=1775142626; x=1775747426;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CwsbhQ3zhaYm5gu8ywEulUc/ivyCq+sG47cjvdKvvr0=;
-        b=S2KI0wyUxA1ucHAhIcmTUR5NDsdpt/EVzwIGhg+5cwstJThXsvSgqbu320FBB20p20
-         mopjfIO3ZsAEy5eB2I1Z/WmTwTZvzJXywm4HheLqvtWz/BzvQEILuFtWESzJIv1tv5c8
-         EtiBQ1hmLpHYq541+ezBpnmuNpByT7hwN1dzl9dTQ00bVWAQLKT57h6zT9wEwZWlLTjx
-         8Q4w2bqEUGPjK3TbVhJsnbKi4Nd9wPWLvCdO3E/DQJK/lDQiDAgHs4HENpWdjOiRDj9k
-         f9X3HRmfgGFsGbOdQydGlkw6T9YSaz4E4yAs8VFUaU2yftDC7GFj/uH1On9aISVFqRHh
-         7zdQ==
-X-Gm-Message-State: AOJu0Yx1RPAMSNfpDW7eOCRtlJgod9CiCAB1XliNtdEaxeVnbrcgvK+C
-	l0Bf1vM2ZWjijpUh11hB5oun62+S83AJX+tUyPk1gWfH7lKXhVyhahxk
-X-Gm-Gg: AeBDiesMQvxSJzGDyK6Mm6uG/fWKrBrqOFG8hQvWa4W5NnDKVoOSW/BPzPD7HRCNb3u
-	3UvEzBetY63ltRfgKAsVCfZSHIdhljlectZs3ECEsjTkXB9kBPftz0B8v38b+2PFeDrUNhKpdj6
-	VClg2gV+Dw7+gIsWcFVZv3v61CZFu9ONw9qAouYkdaXSoCtmDn92DvR50ctJEAd75Dm4TgiwzAK
-	0S9NKsUlo7KL2WDAiF++FV+KriFA5GNlrQ6CyMii5AqcWq/id4wIQ1nk7CRtNhj1NTAzHwi0UMj
-	Sezy0jCOaxX/XNVoJhuql2Vv2Oz9mHO18B6ArJ+WHH3kodxtSYWY+MOvd3Ma0u2P2x+hKiGtlEZ
-	Gyc7kwSxTjG8NgkmTIKCSET4LGQmV0XEYEgOAMmfuqtoxV3f16BzYnFXfPsAVOn+AiW7BDb5L5z
-	DifIOSUsNL7i3J1/RrJefET8RPYrlRVb7lsALurie+nWoUGpiAmy3WsvK3HoDzLS+lBlgaujAyL
-	NE=
-X-Received: by 2002:a05:6000:18a8:b0:43c:f583:126a with SMTP id ffacd0b85a97d-43d15062d30mr15614518f8f.14.1775142350811;
-        Thu, 02 Apr 2026 08:05:50 -0700 (PDT)
+        bh=ljxCktEK8JSUo9v15t42aHoixrMUURy2APZoZMsySt0=;
+        b=jN+ihN2B0lUFi9Fe7jvx70q6LAZJc92L19mnv9D8989ZUhTS8de9+p7J9044wD5Al4
+         gHX6X0BqenB/cCxi78V6JX0icKB1bgZSQAo3I9U5sN09T18qYYh3GXzHmTwaW1EtfUNo
+         cbTVxuwnSeZX7sBRto6TbNF2CNAmxqB4fxXeJxjsTZCc3L1qDo9l6lx+f7isr5sJ146U
+         8mASTl/wxgRWfthkosnGU8XnfmS8CPZGP6F1B6KgHMNVNloPlk5oylDI6vW6Fs6y/21R
+         NTQRYs+AhA75t/s5oUVTzDPXMgjerMHMHfP0NOcbIcQZAuD6awX1KWFgDizccqiUzw1+
+         +vtQ==
+X-Gm-Message-State: AOJu0YzRKfQ++XXe/W8sK3XnmtXoEUHAwprZeXoXqgwC6KUFnbq2IVhI
+	FBonVH3R93cyiXdTzzl2OGwGZ7/TkTsxn3t8JLPAbAtYQNAHfGqPuVII
+X-Gm-Gg: AeBDiesSHN+ieFzZuGNJDhQv4eUY6L1OEly+lK/pNIH6ezJqodkqAws9aVl+DApicJn
+	AXsXYQCnl9se2VzTtL25KBYucP0xrApnF67zz9FQ3BXXXM/YcGNVUOleQlhsEOrMzAvgeSyAJrp
+	msBnUuBVagdHaQ384yudGDthf+MnD+7TeqynGtZXGx+Hk0cxw07dLkKZvxwkqAmRI2xrbq/KM0T
+	87MF14/KABWevMMUhkMLuGPwSjbcd0ph4HA27G4pH3wassyrqqdKEG5VReCILGp0g/2Uf2Lnmov
+	4zK7zuAq7out9v7AcnSKwsB8kW0FF352Ke/TmjuZR3NB6zSNoGMzJhgIXQ9poqBIIvE+O6F9BFq
+	sd5byb9GH4KQlqO0WQ+0kOICm9Qw1qqimrT1JE5S4OLjTtYhdQRbs7ARFQvE8mo7O5R/5uqY0KD
+	h5fSB3R+cxskK8/SwTOerd+yrURvxzzE1dg5YiLMXfymLezRDrjRoPSpx4sPd06LdAONmEHCUey
+	1o=
+X-Received: by 2002:a05:6000:2010:b0:439:bdba:56be with SMTP id ffacd0b85a97d-43d150429bcmr14909535f8f.10.1775142625741;
+        Thu, 02 Apr 2026 08:10:25 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4d29bbsm8753341f8f.21.2026.04.02.08.05.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4e221bsm8179254f8f.29.2026.04.02.08.10.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Apr 2026 08:05:50 -0700 (PDT)
-Message-ID: <49834347-8049-4a79-8bdd-4da1ec1ebac0@gmail.com>
-Date: Thu, 2 Apr 2026 16:05:49 +0100
+        Thu, 02 Apr 2026 08:10:25 -0700 (PDT)
+Message-ID: <eadbe64e-b43f-42a8-852d-1e0824f5a9be@gmail.com>
+Date: Thu, 2 Apr 2026 16:10:24 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,111 +70,74 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 08/12] skip_prefix(): check const match between in and out
- params
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>,
- Michael J Gruber <git@grubix.eu>
-References: <20260331233856.GA2327197@coredump.intra.peff.net>
- <20260331235017.GH2328529@coredump.intra.peff.net>
- <14a417c6-fc80-4a7e-993d-57fff10896f8@gmail.com>
- <b77be594-83b4-4d9b-9f89-569f1f335d61@gmail.com>
- <20260401192423.GA2905896@coredump.intra.peff.net>
+Subject: Re: [PATCH v3 1/3] worktree: remove "the_repository" from
+ is_current_worktree()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1773411586.git.phillip.wood@dunelm.org.uk>
+ <cover.1774534617.git.phillip.wood@dunelm.org.uk>
+ <5357c0dd53ee123a4ea064412c83983b0be5e400.1774534617.git.phillip.wood@dunelm.org.uk>
+ <xmqqy0jer3qu.fsf@gitster.g> <317ed4f7-f88d-4415-bd25-b62b4a076728@gmail.com>
+ <xmqq1ph5kxpx.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <20260401192423.GA2905896@coredump.intra.peff.net>
+In-Reply-To: <xmqq1ph5kxpx.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 01/04/2026 20:24, Jeff King wrote:
-> On Wed, Apr 01, 2026 at 03:04:10PM +0100, Phillip Wood wrote:
+On 27/03/2026 17:07, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes> 
+>> On 26/03/2026 15:48, Junio C Hamano wrote:
 > 
->> On 01/04/2026 14:17, Phillip Wood wrote:
->>> On 01/04/2026 00:50, Jeff King wrote:
->>>>
->>>> +/*
->>>> + * Check that an out-parameter that is "at least as const as" a matching
->>>> + * in-parameter. For example, skip_prefix() will return "out" that
->>>> is a subset
->>>> + * of "str". So:
->>>> + *
->>>> + *  const str, const out: ok
->>>> + *  non-const str, const out: ok
->>>> + *  non-const str, non-const out: ok
->>>> + *  const str, non-const out: compile error
->>>> + *
->>>> + *  See the skip_prefix macro below for an example of use.
->>>> + */
->>>> +#define CONST_OUTPARAM(in, out) \
->>>> +    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
->>>> +#define skip_prefix(str, prefix, out) \
->>>> +    skip_prefix((str), (prefix), CONST_OUTPARAM((str), (out)))
->>>
->>> This is clever but it changes the behavior of skip_prefix() which is
->>> documented as not touching out if it returns false.
+> I _think_ what I am frustrated about is the lack of description on
+> "what it means to be the worktree among many that is pointed by via
+> the .worktree member in the repository struct".  Does it correspond to
+> the worktree being "the current worktree the codepath is working on?"
+
+Yes
+
+>>> The function's comment in <worktree.h> talks only at the
+>>> implementation level "construct a worktree struct from repo->gitdir
+>>> and repo->worktree" as if it is so obvious what the resulting
+>>> worktree struct means at a higher layer's point of view, which does
+>>> not help, either.
 >>
->> Sorry, I've just realized we always take the other branch so this does not
->> change the behavior and is in fact a nice solution to the problem.
+>> That comes from me thinking of a struct repository as referring to a
+>> specific worktree - would calling it
+>> "get_worktree_from_repository_instance" be clearer?
 > 
-> Yeah, exactly. I was curious if the dead branch would be left in place,
-> but gcc seems to prune it even at -O0.
-> 
-> I also pondered whether:
-> 
->    (*out = in,out)
-> 
-> might be a problem, but I think it is OK. The "," is a sequence point,
-> so it is well defined (of course we would never run this code anyway,
-> but if we have undefined behavior in the code at all, it may cause
-> confusing effects).
+> It does not change the descriptive value of the name in any
+> meaningful way, so let's not do that.  If the answer to my "what
+> frustrates me" comment above is "yeah, we are getting the current
+> worktree", then renaming the function to include "current" in its
+> name would add descriptive value vastly, though.
 
-I agree it's well defined and because this code is never executed we 
-don't need to worry about evaluating "out" multiple times. While the 
-message from using _Static_assert below is nicer I think having this 
-which is simple and works with all compilers is a better trade off.
+That's a good idea, I'll send a patch to rename 
+get_worktree_from_repository() to get_current_worktree()
+
+>> I feel I'm struggling to explain this clearly - I find this whole
+>> discussion gets confusing because we have "struct worktree" and also a
+>> "worktree" member of "struct repository" which means a "struct
+>> repository" instance is tied to a specific worktree within the
+>> repository. If "struct repository" only had a "commondir" member and no
+>> "gitdir" or "worktree" members and we instead used "sturct worktree" to
+>> refer to a specific worktree within a repository with functions like
+>>
+>> 	worktree_get_oid(wt, "HEAD", &oid);
+>>
+>> instead of
+>>
+>> 	repo_get_oid(repo, "HEAD", &oid);
+>>
+>> it might be clearer but that would be a very big change.
+> 
+> In short, am I hearing the worktree subsystem is not conceptually
+> clean and it would be a huge undertaking to clean it up?
+
+Yes, we mostly use "struct repository" to operate on the current 
+worktree but sometimes we need a "struct worktree" instead.
 
 Thanks
 
 Phillip
-
-> For reference, this is the more complicated one I came up with:
-> 
->    /*
->     * Note that builtin_types_compatible_p() counts "char" and "const
->     * char" as the same type. So we deref and construct our own pointer
->     * with const to find out it "x" is const, and then either compare
->     * x and y exactly (if it is const, they must both be) or dereferenced
->     * (which lets y be either const or not).
->     */
->    #define CONST_COMPATIBLE(x, y) \
->            (__builtin_types_compatible_p(typeof(x), const typeof(*(x)) *) ? \
->             __builtin_types_compatible_p(typeof(x), typeof(y)) : \
->             __builtin_types_compatible_p(typeof(*(x)), typeof(*(y))))
-> 
-> I also tried using a gcc statement-expression and _Static_assert to get
-> a nicer message, like this:
-> 
->    #define CONST_OUTPARAM(in, out, in_name, out_name) ({ \
->            _Static_assert(CONST_COMPATIBLE((in),*(out)), \
->                           in_name " is not const-compatible with " out_name); \
->            (const typeof(*(in)) **)(out); \
->    })
->    #define skip_prefix(str, prefix, out) \
->            skip_prefix(str, prefix, CONST_OUTPARAM((str), (out), #str, #out))
-> 
-> It does produce slightly nicer output:
-> 
->    foo.c: In function ‘bad’:
->    foo.c:8:9: error: static assertion failed: "my_in_var is not const-compatible with my_out_var"
->        8 |         _Static_assert(CONST_COMPATIBLE((in),*(out)), \
->          |         ^~~~~~~~~~~~~~
->    foo.c:13:34: note: in expansion of macro ‘CONST_OUTPARAM’
->       13 |         skip_prefix(str, prefix, CONST_OUTPARAM((str), (out), #str, #out))
->          |                                  ^~~~~~~~~~~~~~
->    foo.c:16:9: note: in expansion of macro ‘skip_prefix’
->       16 |         skip_prefix(my_in_var, "foo", my_out_var);
-> 
-> but I don't think the extra complexity and portability headache is worth
-> it.
-> 
-> -Peff
 
