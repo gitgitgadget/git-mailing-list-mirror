@@ -1,69 +1,68 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE073E5593
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65483E2746
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775140410; cv=none; b=XMYz2WJEq+4QM2oqSUvIaqTlqA/M6Tv4rzDdwtSRIb5Xjnx81X6l5F07XRBkB7+tvKRQ30/2aEx4Z5BxbZN9eb7xOw9Ki7pkGzCslCRGLyZF/G4H+GU3QXFyHqBMOIKb+JD0GxGJtHZiX+l4jKkyG34Q5eVmTOQJQn3wqBWK7D4=
+	t=1775140411; cv=none; b=UnHesWrWbLQk9AaA5XD8MFEZA4gt8tLLP51BGxandDNNHx0JOMiiLw3lGEo07S63ReCV+Qz53RaW84IJPxp0VcKD0AqX6eu1NoiQNdvOTT0iwu+C+5cWeSUoymBHVX9HvZGWRBGMAlxBvsIA3yRf8Yqmu5vr9aWrp4TeNt+ZeAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775140410; c=relaxed/simple;
-	bh=N1BeQESXVc823dj66xtUEgDBbdoAuDBtL2UwjFZSrLk=;
+	s=arc-20240116; t=1775140411; c=relaxed/simple;
+	bh=d1HpGepY7OTo4GSnHn/90JC1pUegYXD1q1N7NE52a8I=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=AJpi7rVHTZVzC0HJzXVRyL6D1bK2egbFqn2OscwWKR29/Pe1+OOI6HV4t55/Zsbv2G8HezRSuZ5jwUak040Sn2CqTd+IoKDH0L7OZ56XyRDaQn9T1QhL/KW0fS9WOQkEt5VCXCoobDGtUQjWEQIeKaON/dGO7wvvOnPfh4WZVr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=snz8eTjG; arc=none smtp.client-ip=209.85.222.171
+	 MIME-Version:To:Cc; b=hmgU9ac7kXrnM18c4GwnASutQwPu2ZjjifMACtlkgTIklgTTTJ+ok0Qd5UlqjPVr9D+OktDh1c/55QYG7h6R1/0vLIHztHJicbWeZZPAbmDlS1KRJRByrG9mCOf84SGzf2E0LccF9euow1Q/xBUOZaSLbF6dLN8UXK+cLCl/5V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hdxicbt/; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="snz8eTjG"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8cfbfdabf3fso104879085a.3
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hdxicbt/"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cd7ecedf2cso103657685a.3
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775140407; x=1775745207; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775140408; x=1775745208; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eDCvNhsw8FfrYHO3qOBtcamTF8GOzlMOJSASJ9HGgkw=;
-        b=snz8eTjGfRm5fwDG75/7TaGJXlaKp2OUrZ21RlyABZx1wNHxzp9R3HS9SaIHxCstTa
-         +cEr1B3hBJ3v6Ry8d4TxfRho4Bt2VuaePTNkCyllYAnJCVP/6zH9BoeIVQniphMeYpRg
-         YeWSNn0noRRhFhA/aTcG6gvuJoCCxJMApLtqe3mNhpIJtLjgABOxGW9fBHmdSQIrMfed
-         duGvB80WXDhGVZ7yC/uJwM/231kde3cz2kDOsSbBBG2hTe7enQUU2bXf7uTXGuJIP9X+
-         67W15411SrXFmYsZWNz1kFuQlUMuyo1dcHIbsc0Cnlpod/AFpgsNRfrJrT/t7KZaI0Ho
-         JUAg==
+        bh=R2pMOkJGbquIsOyduzjPo7YoobacrNK2/UDFyZNLKrg=;
+        b=Hdxicbt/prk/jwclBMP3HI7zZBNwLOWGeRxS3/zzbzw8wumVGNHY3b0qlX0/KnzqXA
+         saJrPDAqqmhKcvyizv9FDGuMFxTwH59HzsFnyR9zpoupFRKGPRo7qsZA8ytLlbyAUfyQ
+         u51cyD3MDXJtlw0jNsMe/hFUaDAdNuAVtLk+qVuCg4F9uh5aXbtjUcIto7F2+AQUc2/G
+         +4GIsVHuaqWQVKnuPNeqDtu0IPTrR1Uxs3A22o4FkluOQC3lV9JN48BlnqOmtUFXyYbr
+         l7DmfaR2bAYWO2Rn/y9ecasEk8EDqukH4c7+BGRAyOyhpRe43p3gi325ydjGELn+tA30
+         Ny4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775140407; x=1775745207;
+        d=1e100.net; s=20251104; t=1775140408; x=1775745208;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=eDCvNhsw8FfrYHO3qOBtcamTF8GOzlMOJSASJ9HGgkw=;
-        b=Dp33IwGrhG/jva7UWGvqbl0XTdkOexMOX5InSDPeQ6Yl1BaypApFyD5hJTyrg/abQs
-         Fb9fYP9BXl0uilFn008xSOJxe654CrEoCEKTny9A9T2ioPxfUCXkiqCj8fAQZf2JXMS6
-         CIqFbqTutSFOkG0QRdLBN++FcIeR2m+kL4J9DlmThcW9RvIgrXlGKFSqHP/0iwPCl6DW
-         piMfFA9A7kISMziHP/4ykrdgWWRdPXTN0xU0r+gsyux1dzlyKUAoGia/zA8QpetoO6TE
-         CaO8YiWKN4LC1cfu1D/l2OVGeRezlkBMqJWEZaqkGKZzUMoPU5aV6HhDQwQBvvRVslj6
-         gEEA==
-X-Gm-Message-State: AOJu0YzEqFKeKXh6SCo5Hm267BcKzcwYm/i+TE4xX/1s1G0fPNbC9qFE
-	45/voQH0spMnMEZ0k/u0I/i1s5XCnLA9wQui0sVPfQexRHSmgI2DC/JQieFVZw==
-X-Gm-Gg: ATEYQzye5fzcA0hoppALhjMmzcQ8AHkx2p1nrSM60ogJbkLNRiSGyk5lMgr2GXBV7GA
-	pgG58GvnJxukHpWhfc73pbgs6Hc4zGCI74v8M0pOLuumiKkbQP5jSqvX4Ld82QNjEjPVw8IYacA
-	bsDMzzLbfO+0HyhjSuwNHsQitGj7wE2cPJ4K3IVMi61cpwaZ5/pwXH6nvqsFH/4DNHBG/gedBVg
-	/UfMESqtjDxOBYETdi88uxLCay4QWj9oP05m/3r0hK+uAF1mEE44VE1o+MxCkKeuxm6ds75xOXw
-	7OhixT1JCAxTW05Yb2bc/GBuPbR0R0QPNfVodvMuiSVnWPM3hJtmPc00hAhqhxGxkfaw7EafPo0
-	1Wj/K0mI+b5VYy+2O/lDYYKCDpu1bG16CPdCjgoRauqn7cqrIG195PFTLO94MVl3mmvA5e/2P4O
-	Qqz2Yn0Uvzhp1gFGPMvnQKzDAbJRM=
-X-Received: by 2002:a05:620a:4589:b0:8c7:f61:fd7b with SMTP id af79cd13be357-8d1b5c38d01mr1081268285a.57.1775140407252;
-        Thu, 02 Apr 2026 07:33:27 -0700 (PDT)
+        bh=R2pMOkJGbquIsOyduzjPo7YoobacrNK2/UDFyZNLKrg=;
+        b=pHP8C12/10+KTf1yKdg50ltRx1dYoVa0YOAD4aF8smbc3AiXv5LTYqAhuHxMXGp9Ud
+         1PopqqB81ipDCe3tG9dSrGuoBu9gGt1miMUptRuaNaBqTJ/OaZWhkhpaGI3Zo7kHBcY7
+         XALPNWnH9/XrEufzTwrtODTZwfs/yXG+5/wyfZYcAUhJZpyogFkqVGgwZlx0mdjlJgJM
+         lcfb7Y8LQOw3XVg06EU2ufZzDs/mjxcDcblMnzreJGvfFDzRpFT9csM3VyyyTQjbaSE7
+         RocxZBNotE9Q712ZjysKLCVadd7/+5yrRyTFRZjZD0ffse3EKYMAbuo4kW5k8PEqyNc3
+         WPsQ==
+X-Gm-Message-State: AOJu0YzDz2w6NgrvobspJ5TjIVTjLjrACkxBIzTo66B8NsW9XA80au42
+	IWHOvsM2GFOUhRP/u11XKB+QUQOh1vfOYPV/6YAIbpwzGo60isXaPoZrU7vQIQ==
+X-Gm-Gg: AeBDievmgO8SgdZiSgQcntVvcsVDUaYxqP0SsVBW1zVF/8eOVDhst3Zs/O+srT0Lolv
+	guO4k4CS95tX/dGit2dYz5zow4fXNbi1T5/49q66hyDwe10wNATD/uB+7c8lwrZCOYYetCnMx4u
+	1yMy9EX+jDRIieFAAg3e8hr6XLidEJwEAE5gm7m7Ifpj6a6C5KS+gT0w/o5p2YrKnWzqUe/vzEm
+	Zpo8WI5rrjCopw9fYnaebUz3PLV1QPc5En1E1y2pSV5lM54t+3xSZqMd+kdMDA2a/RjRaBEfk3Y
+	PJNtVC0vW/NB3mK1SR3LHhtd25VYpxnl34sxz53hpKZSckCBMBiK1VSVw7tfpZIqSxyeMSM/7im
+	Us+HlowBASbTeulonH331YPkAta8qt03VtaaeLkRZgs4lTRgy+wKIoCg/n2ewsFNQRB8HuB96d9
+	tOgg8dCq4YxkV4rLUo/kRon2Q6qXk=
+X-Received: by 2002:a05:6214:2468:b0:89c:4d0f:d7d1 with SMTP id 6a1803df08f44-8a4394b16eamr124535056d6.33.1775140408483;
+        Thu, 02 Apr 2026 07:33:28 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.114])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a548a2f6sm217143585a.6.2026.04.02.07.33.26
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a5933333d0sm27623036d6.1.2026.04.02.07.33.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 07:33:26 -0700 (PDT)
-Message-Id: <78744602fb33978a9f674f5f9860c58e7734d2e8.1775140403.git.gitgitgadget@gmail.com>
+        Thu, 02 Apr 2026 07:33:27 -0700 (PDT)
+Message-Id: <a4f7a6df516c848936e6952dac8ca02ccb0ac643.1775140403.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 Apr 2026 14:33:08 +0000
-Subject: [PATCH 02/17] t0001: replace `cd`+`git` with `git --git-dir` in
- `check_config`
+Date: Thu, 02 Apr 2026 14:33:09 +0000
+Subject: [PATCH 03/17] t0003: use `--git-dir` for bare repo attribute tests
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,31 +78,109 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-To prepare for `safe.bareRepository` defaulting to `explicit`
-(see 8d1a7448206e), replace `cd <dir> && git config` with `git
---git-dir=<dir> config` so the helper does not rely on implicit bare
-repository discovery.
+The bare repo tests in t0003-attributes.sh currently `cd` into the bare
+repository inside subshells, relying on implicit discovery. Restructure
+these tests to pass `--git-dir=bare.git` to the `attr_check` and
+`attr_check_source` helpers instead. This makes the code much easier to
+read, and also makes bare repo access explicit, i.e. compatible with an
+eventual `safe.bareRepository=explicit` default.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t0001-init.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t0003-attributes.sh | 66 ++++++++++++++++++-------------------------
+ 1 file changed, 27 insertions(+), 39 deletions(-)
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 6bd0a15dac..db2bf1001f 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -20,8 +20,8 @@ check_config () {
- 		return 1
- 	fi
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 582e207aa1..3a34f5dbc2 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -346,17 +346,14 @@ test_expect_success 'setup bare' '
  
--	bare=$(cd "$1" && git config --bool core.bare)
--	worktree=$(cd "$1" && git config core.worktree) ||
-+	bare=$(git --git-dir="$1" config --bool core.bare)
-+	worktree=$(git --git-dir="$1" config core.worktree) ||
- 	worktree=unset
+ test_expect_success 'bare repository: check that .gitattribute is ignored' '
+ 	(
+-		cd bare.git &&
+-		(
+-			echo "f	test=f" &&
+-			echo "a/i test=a/i"
+-		) >.gitattributes &&
+-		attr_check f unspecified &&
+-		attr_check a/f unspecified &&
+-		attr_check a/c/f unspecified &&
+-		attr_check a/i unspecified &&
+-		attr_check subdir/a/i unspecified
+-	)
++		echo "f	test=f" &&
++		echo "a/i test=a/i"
++	) >bare.git/.gitattributes &&
++	attr_check f unspecified --git-dir=bare.git &&
++	attr_check a/f unspecified --git-dir=bare.git &&
++	attr_check a/c/f unspecified --git-dir=bare.git &&
++	attr_check a/i unspecified --git-dir=bare.git &&
++	attr_check subdir/a/i unspecified --git-dir=bare.git
+ '
  
- 	test "$bare" = "$2" && test "$worktree" = "$3" || {
+ bad_attr_source_err="fatal: bad --attr-source or GIT_ATTR_SOURCE"
+@@ -449,41 +446,32 @@ test_expect_success 'diff without repository with attr source' '
+ '
+ 
+ test_expect_success 'bare repository: with --source' '
+-	(
+-		cd bare.git &&
+-		attr_check_source foo/bar/f f tag-1 &&
+-		attr_check_source foo/bar/a/i n tag-1 &&
+-		attr_check_source foo/bar/f unspecified tag-2 &&
+-		attr_check_source foo/bar/a/i m tag-2 &&
+-		attr_check_source foo/bar/g g tag-2 &&
+-		attr_check_source foo/bar/g unspecified tag-1
+-	)
++	attr_check_source foo/bar/f f tag-1 --git-dir=bare.git &&
++	attr_check_source foo/bar/a/i n tag-1 --git-dir=bare.git &&
++	attr_check_source foo/bar/f unspecified tag-2 --git-dir=bare.git &&
++	attr_check_source foo/bar/a/i m tag-2 --git-dir=bare.git &&
++	attr_check_source foo/bar/g g tag-2 --git-dir=bare.git &&
++	attr_check_source foo/bar/g unspecified tag-1 --git-dir=bare.git
+ '
+ 
+ test_expect_success 'bare repository: check that --cached honors index' '
+-	(
+-		cd bare.git &&
+-		GIT_INDEX_FILE=../.git/index \
+-		git check-attr --cached --stdin --all <../stdin-all |
+-		sort >actual &&
+-		test_cmp ../specified-all actual
+-	)
++	GIT_INDEX_FILE=.git/index \
++	git --git-dir=bare.git check-attr --cached --stdin --all <stdin-all |
++	sort >actual &&
++	test_cmp specified-all actual
+ '
+ 
+ test_expect_success 'bare repository: test info/attributes' '
++	mkdir -p bare.git/info &&
+ 	(
+-		cd bare.git &&
+-		mkdir info &&
+-		(
+-			echo "f	test=f" &&
+-			echo "a/i test=a/i"
+-		) >info/attributes &&
+-		attr_check f f &&
+-		attr_check a/f f &&
+-		attr_check a/c/f f &&
+-		attr_check a/i a/i &&
+-		attr_check subdir/a/i unspecified
+-	)
++		echo "f	test=f" &&
++		echo "a/i test=a/i"
++	) >bare.git/info/attributes &&
++	attr_check f f --git-dir=bare.git &&
++	attr_check a/f f --git-dir=bare.git &&
++	attr_check a/c/f f --git-dir=bare.git &&
++	attr_check a/i a/i --git-dir=bare.git &&
++	attr_check subdir/a/i unspecified --git-dir=bare.git
+ '
+ 
+ test_expect_success 'binary macro expanded by -a' '
 -- 
 gitgitgadget
 
