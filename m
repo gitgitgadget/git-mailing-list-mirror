@@ -1,68 +1,69 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9567F375F99
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C1F3CD8D3
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 14:33:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775140423; cv=none; b=ALhbZ3Ydhi9e6FfJeoh+4SJfEK7RmH7rdVG9pbspfVNPK0IIxu5zyswSFAUVONiES3JdykUQU22ACFMCUjPW7ZMPl0TN3oEHal8YkRiqdsMDva4xaCI0H0JqRbt1Nd1LpZ2/LL/2jkze1tMVaOYx97Vtv+K8RuCJ3u9PDWpfurU=
+	t=1775140424; cv=none; b=AQ6MObLK3VBwknAS+dHk4QFHNQ5GOaO1rb35LBQTq2Ej30ydYHY5j+hg3Ns6w9Ujqxpx66IH1YPQLx1oUJY8lHLzmlVWS1spg9T43AgHDWIBLB642F0M83FmTG7zOxxnN4wxZeg5Jvg/B3hhvE7lbJuLIM4uJetlh+daWNRpsbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775140423; c=relaxed/simple;
-	bh=0PbczuOe8YaRO619AtUgucO8TUR8vH7rOrU1qsl7DkQ=;
+	s=arc-20240116; t=1775140424; c=relaxed/simple;
+	bh=9rTKenrLdvqMEF8PyehPuyoUNV4PUzaUef1YOGKLrHI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WjJdg2E4Fs6itUC/FYtnaYSs52P+2JsPFyUuSCJ6bBlq9sZ3DFkzdduoRHV4m0D7RjwkLWZTXP+4aQ+H0YnxaeyyYn5xUAdkEFEoR1FsSje8FNuQTi5FOLLwwve9kPsCVqXzmlpZH+hOIyV8R+cg9VEKjUHxy6j+UIS5Z5GTESg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HsmmVM2x; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=rWqxj5LaudWvgi+o0n68Y6U2dEt/phZ0uaEO6a93mnHvCEkEQOE5Kuo8nA9Jo2rDTw/rra8CDgBeu2e9Do2e0Ngp6Iv+uaJRwFzA3SarclBFu+vKOTyw6ncEt2NyVdpkcTJbxEwej6GEYCu8NXEAf0SEkSA2tQt9wXno17Kac7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a0Axj9ZS; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HsmmVM2x"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cfcb045909so115594185a.0
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a0Axj9ZS"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-89cc71f4311so11952246d6.3
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 07:33:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775140421; x=1775745221; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775140422; x=1775745222; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rtBElVDU149smXMsfotRGsCD8+fn2Iigwugv5wO5zgw=;
-        b=HsmmVM2xmPaAorwOzIHJZgM4Sr3xar6f3PdaGaZncqKFV2gA6xQQyK5Bw0gTELCade
-         6xvnqQn3Ok2RQ37F1ur89nHAnQ61m2CfdbGvY3LSBKAaaitwyYWGxkPpSbbDt2NLgsfq
-         5ZSt6tHeouB/ogJGHp4eEaXRIwqIkqE1Es6VGogArTvwHM8Vr03s2AYvvujacoKbHIKE
-         lmBrih2yUadUkzwvkGXHuZtT+XUXyez9c+uZ5kyMu7Cw8EMgwmm+YwK5yZR8hNKQDEZL
-         0jmCRuNPsbMMLTY7y9u1XfuOVTOj5dBi1Zorw2ToiObCQ2lOPFJfkdsN2Fnmxpp4CNv8
-         Hjug==
+        bh=3dawH4QE158lj4sRDGtHrx0oqYiK6oDsVS2ww0T9lIw=;
+        b=a0Axj9ZSRVLuQHNDNceud3DnykGDpnzNOkuRVT3vTGl9Sw+M8ksP9HXB9FOoa8Hf4m
+         Jl5kRMkSsWTa2YdmM/WTYa7FudqvzudF8uTJDkzTRrFaU41wl6xFBcb1TtJksgIf2WRg
+         c6wZ9PUzSh6qfmZlZV8u7kIT++QMk9yb8yku2weB7ksVJOXv2EJtzW+y9b/g1dDOwFCS
+         If7IgxEG3u9Nor37/ZL9RpZXDAb+oriqOWuAJK3WbN3RxBWBvUYMLvL0kK2NycQA5C8/
+         xA1aUxzXt617O8DuXY5k8ua2zEMEb+IyFmdAl7JQQRrIjMbZeA0txT8E7V4GxOm6F2xY
+         Eh/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775140421; x=1775745221;
+        d=1e100.net; s=20251104; t=1775140422; x=1775745222;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=rtBElVDU149smXMsfotRGsCD8+fn2Iigwugv5wO5zgw=;
-        b=e3YaR9dFpYQVQ5Hv3DfM/bT3avOKLXtxY35HWbzsSmJl+A4UpC15TXJfDMHviFPmes
-         rr5b55YgAVTiGpb3lJhEhldbTo4lypb2BLZgv3DZdfRBliANwZTBJx8FMnG24ZF3kjVr
-         e4dY6ReIXMMxR/+Qmt5BWRLarjuNEtpfVHblejmv0CrGdZrL+AJPHDwxZRrNA5JqDPRf
-         08vtGJ4OzTk6RfkVw0VOF4VjfyzG8kAIPo7RUWZB5d446iFo5h3kXXwTZlMq26xLuxoI
-         K085eQJ40mlk2B+xq/QasoiweeH6Ui5e09/CEZ7xw6y513U2plyT4/GVlk/vVgFak/xe
-         QeeA==
-X-Gm-Message-State: AOJu0YzARXcWOUK7ESd2jk9jo1zYctb9mrM0Yt3ePlw3bgd987/D9Ww/
-	dB5BL1SzK7QizSgtNjfxDYATTc11RGyC2FMda4mvQNuL+w0GCaHHEsjjnnNGyg==
-X-Gm-Gg: ATEYQzwhz7dIuhPR2IPCRgzqDuAA/FwRrCOvywzd7dBvD+2ZlDKv5m5Nf6fPOnFODSe
-	1Bdi714R+tAkwjbzYfb81abvhXi1dqbnNdtfg047Kj3skRXPxgJnlKsJeaxv8CW2gegY9Xrk+Ll
-	2SZ6umd41loLXgVnzgyLU59YETsrJo/jK5h3HOnbSdWrhbvz/h6UI59q1gqkz0EXpRiCpUkWyuu
-	Coj47hs1k0fkmbZnMU0hVgN9C9M2mQtt6yCbO06UphTI3tRyKDxXDt9VlgydQxsXMVpiz1NMTqf
-	XTMt1ellBLTTaPHj/8DQbtM4YGOrIO4ExAgJXjUrWQ4yj1Nk/gTSYUsRYCWL2y9yaKWikWB1p2A
-	7zXitQQvGfM797DQ1P82Ihz4jXdLNBEbmBk4oJLs9TWKQXC2Yip50rqCSShkFnuooTGzYuoAqMW
-	mjg1KJGe5k0cbqNppUj4BNe1GT0k8=
-X-Received: by 2002:a05:620a:19a3:b0:8cd:b60f:9ef6 with SMTP id af79cd13be357-8d2a9fcb603mr542253585a.16.1775140421152;
-        Thu, 02 Apr 2026 07:33:41 -0700 (PDT)
+        bh=3dawH4QE158lj4sRDGtHrx0oqYiK6oDsVS2ww0T9lIw=;
+        b=QoRYOrW1rnHXzxK3TxVmFoFXHuiXlAGYc8xbJpb6R/AcjgVcN9Zud38o2BWjFbS3oF
+         i0DvI1olbN+ButjHAoSQFUA64K0/gfQFT08snz5+rKrt7YsWtEyRAl+iBND0BjkJ5JNP
+         yXWe8T9T9kPGnpWlZMMpvF5ejQcXiezRVi+i2rnzCCA3/qTadbeJGeHr/HUO5dx9zU5U
+         vC9mXPyl+lEO3ev7o4CycMP/FjkoOc5qMsXRccSji+ggkrHt1E40a3njYB5Br6RfyZJr
+         I4muOI14yk4HDiQwDqt9PzHnDHf9h+9BqkdOSr9R78ttnGltzc6J2+QfdQwxWuGAyCdw
+         nOrg==
+X-Gm-Message-State: AOJu0YxRTMvyiC05k8hiFrRAfPVRBFYeJUrenFAUhLPM3e/QIyArOBst
+	0Gs/5If5W+wCL2wH3QSo+lZ9I23Oe7PIZrKOW+4Plizpz1KYO9yspP6+TBt+cw==
+X-Gm-Gg: AeBDietrZhYSaeLMxKbJj30t4ZA+L+cO4XdoiAqVj9uZVVOOsvR+4SDba4B+ts9s9vI
+	HSKQwRZFpJyQy/FcN9z/wTc0p5kjxFYFyZz3qum8nqL2GF9gV5qX3CVUS7H2qRSMpXPBG8+0Q8J
+	LDLFt5qv/J5gjUuSiN+SE5zHh/QvI7kZbE+fJdOZLNgoYAqPiSzGfRldEYhXS8Pjy5Y4/qscpgu
+	tEQDh842t/DYnGzlaT3I8xnhtlhzn5Yoi0qWRsezdkWkUUd3YxfLEQ9SUIBKixjkUiNu5wknkM4
+	IMjGzUIIPnRz3X0kGN0FNiDCUkJQ2OXTeCA1CSe2SojN8Zip9MawKh5VR4lJD0nnxBTHuSTj0hB
+	Ahh7vw/3j/8mPfQqlpjDAHF5C+3DaPoZjN2wODr7xqQhwy+6RfQLir+oHwQfIQz0mbNck1wxQNd
+	L2RkL4hJ6StHJlrddW+C0evzCFAeo=
+X-Received: by 2002:a0c:f10e:0:b0:8a1:e3f8:b214 with SMTP id 6a1803df08f44-8a43999b3ccmr101102016d6.33.1775140422241;
+        Thu, 02 Apr 2026 07:33:42 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.114])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a864b516sm239147785a.37.2026.04.02.07.33.39
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a593cf0691sm23965716d6.20.2026.04.02.07.33.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 07:33:40 -0700 (PDT)
-Message-Id: <f6fc807af627701bf7f9ea413c7714e9bc01aea4.1775140403.git.gitgitgadget@gmail.com>
+        Thu, 02 Apr 2026 07:33:41 -0700 (PDT)
+Message-Id: <5aa3f2a225b9b22a026e0994f2eef583da9d26db.1775140403.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 Apr 2026 14:33:17 +0000
-Subject: [PATCH 11/17] t5509: specify bare repository path explicitly
+Date: Thu, 02 Apr 2026 14:33:18 +0000
+Subject: [PATCH 12/17] t5540/t5541: avoid accessing a bare repository via `-C
+ <dir>`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,53 +79,64 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-After switching from `-C pushee` to `--git-dir=pushee` as part of
-the `safe.bareRepository` preparation, `ext::` URLs that used `.`
-(resolved relative to the `-C` target) must spell out the directory
-name explicitly.
+In the `test_http_push_nonff` function both of these test scripts
+call, there were two Git invocations that assume that bare repositories
+will always be discovered when the current working directory is inside
+one. This is unlikely to be true forever because at some stage, the
+`safe.bareRepository` config is prone to be modified to be safe by
+default.
+
+So let's be safe and specify the bare repository explicitly.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5509-fetch-push-namespaces.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/lib-httpd.sh | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index 095df1a753..7771a3b34a 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -88,8 +88,8 @@ test_expect_success 'mirroring a repository using a ref namespace' '
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 4c76e813e3..f15158b2c5 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -259,7 +259,7 @@ test_http_push_nonff () {
  
- test_expect_success 'hide namespaced refs with transfer.hideRefs' '
- 	GIT_NAMESPACE=namespace \
--		git -C pushee -c transfer.hideRefs=refs/tags \
--		ls-remote "ext::git %s ." >actual &&
-+		git --git-dir=pushee -c transfer.hideRefs=refs/tags \
-+		ls-remote "ext::git %s pushee" >actual &&
- 	printf "$commit1\trefs/heads/main\n" >expected &&
- 	test_cmp expected actual
- '
-@@ -97,8 +97,8 @@ test_expect_success 'hide namespaced refs with transfer.hideRefs' '
- test_expect_success 'check that transfer.hideRefs does not match unstripped refs' '
- 	git -C pushee pack-refs --all &&
- 	GIT_NAMESPACE=namespace \
--		git -C pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
--		ls-remote "ext::git %s ." >actual &&
-+		git --git-dir=pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
-+		ls-remote "ext::git %s pushee" >actual &&
- 	printf "$commit1\trefs/heads/main\n" >expected &&
- 	printf "$commit0\trefs/tags/0\n" >>expected &&
- 	printf "$commit1\trefs/tags/1\n" >>expected &&
-@@ -107,8 +107,8 @@ test_expect_success 'check that transfer.hideRefs does not match unstripped refs
+ 	test_expect_success 'non-fast-forward push fails' '
+ 		cd "$REMOTE_REPO" &&
+-		HEAD=$(git rev-parse --verify HEAD) &&
++		HEAD=$(git --git-dir=. rev-parse --verify HEAD) &&
  
- test_expect_success 'hide full refs with transfer.hideRefs' '
- 	GIT_NAMESPACE=namespace \
--		git -C pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
--		ls-remote "ext::git %s ." >actual &&
-+		git --git-dir=pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
-+		ls-remote "ext::git %s pushee" >actual &&
- 	printf "$commit1\trefs/heads/main\n" >expected &&
- 	test_cmp expected actual
- '
+ 		cd "$LOCAL_REPO" &&
+ 		git checkout $BRANCH &&
+@@ -270,7 +270,7 @@ test_http_push_nonff () {
+ 		(
+ 			cd "$REMOTE_REPO" &&
+ 			echo "$HEAD" >expect &&
+-			git rev-parse --verify HEAD >actual &&
++			git --git-dir=. rev-parse --verify HEAD >actual &&
+ 			test_cmp expect actual
+ 		)
+ 	'
+@@ -284,18 +284,16 @@ test_http_push_nonff () {
+ 	'
+ 
+ 	test_expect_${EXPECT_CAS_RESULT} 'force with lease aka cas' '
+-		HEAD=$(	cd "$REMOTE_REPO" && git rev-parse --verify HEAD ) &&
++		HEAD=$(git --git-dir="$REMOTE_REPO" rev-parse --verify HEAD) &&
+ 		test_when_finished '\''
+-			(cd "$REMOTE_REPO" && git update-ref HEAD "$HEAD")
++			git --git-dir="$REMOTE_REPO" update-ref HEAD "$HEAD"
+ 		'\'' &&
+ 		(
+ 			cd "$LOCAL_REPO" &&
+ 			git push -v --force-with-lease=$BRANCH:$HEAD origin
+ 		) &&
+ 		git rev-parse --verify "$BRANCH" >expect &&
+-		(
+-			cd "$REMOTE_REPO" && git rev-parse --verify HEAD
+-		) >actual &&
++		git --git-dir="$REMOTE_REPO" rev-parse --verify HEAD >actual &&
+ 		test_cmp expect actual
+ 	'
+ }
 -- 
 gitgitgadget
 
