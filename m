@@ -1,70 +1,70 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463D93B9D9E
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 21:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C05E3BD258
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 21:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775165577; cv=none; b=ElCau/IsV2ZOitAQIpuI4oGugHBJp0EFivP11vDCYKaILPzzLagiyErFPW6mDYcjbfh3zxpkEp0aCxeDAMXux2YnhpmDXH2iNKhpkixnHIe6SojNELEWSNwIatb9Nwk7w5LNsbb1//pryeGYE9FvgyWV/xfU9JnID49qXJEUjX0=
+	t=1775165577; cv=none; b=IXcoye4XkSwQR8YtJIFYrtxoRRYLaoOtEN1HJ09lans3N2KcZXDd6rYCGnQCWhOJlfzz/bSdBtB8P9dowQTh7Vhh4NAJ3YA/On2hQl9Xy/5hA370qm2dJ3hJJcRBByjpwEaF0HyXeRfXwgK8Yh7SitJCdmE76SfdwKB1Oh0HoXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775165577; c=relaxed/simple;
-	bh=IuBKN19ktEebHXlNctPAOJod0NRphZ5x7HODlTV+x8U=;
+	bh=oP/bnYa+SmGlve8ZOILkWgvZOKNcvjWxOsopHz2Zj7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSBIpE8dKo1Fql5s++TANNu2MHSe6CWMcIRHq4MrUboiS8DHkcZHonXWfERIVSliRXobzTp59u7M7xNos7hge+QyiKL3ayHUCl8ROtHi/CDTVLDBmwoVHlchLupG29g+2TXcFLD2VH4Tj4EHbDwGwfv+GIp+1NjSsaxj0PLWMjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jJMtUiZh; arc=none smtp.client-ip=209.85.160.48
+	 MIME-Version; b=kVjehp74hCUV5Du762XUlfcPlxzbD31ICSZc63Km2cdTDdxKh480SSXLnWsrWpiJ1MnCOvbVdjyjoPRT17Q9MdVskR4XR5kxq06UDcdcvIx+mnnsWcPOKJNLgHZDLKVzlZv/YDJwbw3ixz0xbMaweyeqwOEhY8KhwfGXd17gaQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fQrsjCdz; arc=none smtp.client-ip=209.85.161.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jJMtUiZh"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-4094b31a037so957187fac.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fQrsjCdz"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-679f6ee3fb0so532592eaf.2
         for <git@vger.kernel.org>; Thu, 02 Apr 2026 14:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1775165573; x=1775770373; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/jSFKV0votA6yQ6cwazIV4AJ0RDTqh6R/ldoj1v6/sw=;
-        b=jJMtUiZhfJh4nrMhRB0LWQAnEk8eofqYsqUmghq5gMXHacndjLZjthmUuASNiAymuD
-         TuUqOcaj1WzmpBfYZN/kLBMWS6aMTO0SyfcCb6gNUaSv7Ol5I8ATlHHO4n48Lvy85aOz
-         fxVdcbG1f1UjKguEw/eEFxNFYgeUrc7EdonYFHD3Ay5AFhQ5JxByjxP3ARxD5MnjP8aF
-         SnGLzvjgJLAw6qIguj49jkDImZ/sEzQy4WrRqdK8LhRAzrU+cBoENZ8Vqp/BHrpFJNAv
-         dFAL48ys5t0E4x0jy8pm2rpPh+BzjjZNOWZ/diNud7u/6pLGeIrS1MegYB1J4qn4QHZ8
-         UqjQ==
+        bh=X5qwyTphKEH37JiNuf3K3jMV3Ds5ZlRSTrMqj0lnXIg=;
+        b=fQrsjCdzDVVM2spoVXgMIJy1ifb9AuXpwu5YJD98kJNuh1SuFd/8e48I6Pz3E+TnG0
+         BtcmF4jcrUrF651lpC3pnq7oaOKeZ14zdDemKRsLKkbFM5Bjtz8beRzQn7qLDhZbqSY/
+         N9M7YZwldqljORIEmh2xP47FLvxl5owZlTUiI5EOAGYkCuZx+AYrSY0XR7WYrEWJLrXX
+         3LTWfYKMdDg/PdVcv9j78k1LhzbgGRz2FY9euqicFjyDC3nEOE+AiSPQRp9dsjkkWnNb
+         T7k33H+eCD4A5svmtZENnzIOErzl8h2ETD8FD7+E2F+V87vqf+ve63GpgKiwYfYTT3qM
+         qhfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1775165573; x=1775770373;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/jSFKV0votA6yQ6cwazIV4AJ0RDTqh6R/ldoj1v6/sw=;
-        b=pO/bTDLwBje/G1vpECJ6ouFYdAJOkLjy73YA67OI6fKBVEjKy+yGZOVKk/cZSXOljK
-         kGZvdNbP5TS7V1bWcULoj8X/1dv3X3AHI8lJLbk0FacW1FUAQivG9uD/lpwlao9vUgZJ
-         gKE7TXnPH0WU8+rIBl6vtdKv1lEmB9rrZf1dfiWA8AL9oFjI6zIuTTi7XD5fViH6ABKP
-         qubj9Pa2aGRP/Fp59sbJrsNzXavDccSYUvK2wVXD885Wzh38PsCpLSXSlgstEDHfkCZ4
-         dWKC0NWUuvluKHGYUTXH1w9ogLzxqcp466/EY5tLWfUcJJPzve6xChlVG7SnUi9TDcxF
-         jYtQ==
-X-Gm-Message-State: AOJu0YyKkDPZxIO4LeBzRHWVr42yctf2TsXmY6Xy7QNY6MhBSDuKzndz
-	owpDgVGmupUEvam0DNysATH8X/2TNsWXssNpD4ljsovCRg99GokifPikZiCRAw==
-X-Gm-Gg: ATEYQzwiLY5Ke3gTQn9LaMjZqrtjgT4DtAntk1vmpfgrrAc+OMDHNjZH7HNOgU/NgCc
-	XPIJuEm1x0C+PraKFGbiqcMMM+CJDzII6KIOWA+dQU+te3Jk/xL/hhtAxrgzbCBNZ2GOjo3c/RN
-	wQct+w3yUXT5zWfqjNUrBoRyiLc0QeGxt4XAm+CFqsRYqZUbj70Hq+Db3A6FuJLPm2hdy5yyhUb
-	aTv607nTvz3J0rFFlN20mtX34iWmiLwYfBtf144BSTqwN7T9cEP2JZeogPehKK7Nl3AxPIMyoGH
-	e/Nfu4zaCUnLzc+wsoITRm+RUVth6ajSu0hMQWWC6U71xuyyqimGdaTpK1ajJvWGKsch60gGJ4Y
-	Po2X9vKdA7QXD1SzR/Lpo8jNbIJqVcUmrgFB5BOdJ8yiQ1PePh9bkYtcw0qYk1q3s0uNWL7rIpG
-	mdw/fWLTqr4RFOI2vRNt7okavOdMLkp7E=
-X-Received: by 2002:a05:6870:c189:b0:404:2e20:818b with SMTP id 586e51a60fabf-4230ffb87dbmr325419fac.23.1775165572771;
-        Thu, 02 Apr 2026 14:32:52 -0700 (PDT)
+        bh=X5qwyTphKEH37JiNuf3K3jMV3Ds5ZlRSTrMqj0lnXIg=;
+        b=UlI75WzHAuhQx9sQ3ZXBOLqeKXx3q5r2OnUZTfXFtjxOkqcJuRzPHwlP9/+gZTx7yC
+         2iFirN6q+lYlEJ0nIbYvxSxkWwRE3A4c6Ihwd7NsCGoC1rZMk6XzA5p4giRYB4Jak+4J
+         nIS/d2w6cwuXqCKk+P9Ys3lP112ZuXOjh8SXfQcm3haLj14nTQZu48JYFO4H5MjRIG8r
+         FRmeDyL7DqrxXBFS8+N3KBJ0Iv2PrLn85GXd4NuVPRQPWPApb2ZglxeB06gkUh2nfnEt
+         m/aYFUn213TgtXUEduaAmfmxsyv459bQ9WJwzdrDia2iVFG43JfzjD3OXPOzzKU59SPa
+         OZbg==
+X-Gm-Message-State: AOJu0YzuF9LXufkNqDo3I8LTpbeyM2OcgI96WWWLLn8YtqYwzq+l0c4O
+	CVNByW6/14vw4Rot3oJIkYP969JNWqrjQlX0OWae2+7S4h5IyEjGQeSef3JGqA==
+X-Gm-Gg: ATEYQzzNrLuaKGCKevCpGSWxwz+dV3qp1Ay/+vUDW5/izW5EzO+1xzKVgCfOciv6quO
+	2wyWdvuQHcNE8PyxtGxDwzB6/V82EKgXn8oc6nyR5SeXcW5AReUk+GlufvJ9AZs50+r2CKELEN5
+	Npf/yS9o1bbLOYn03Kj1cv3oe3cO6EeIGjNwjvef3uJf7VxwVPb+5Du3S2f8xmUVYWBiQEtZ63m
+	/b3nOJweFSOYjXtWwGP2KdyDLDjg1WO9ehLZM3hysu1xQpI3R7i6RJE/a8e9pLUejwdDxBp9Tos
+	IbdsqwpROztxk2YDUdpSqdzdESaaeMzgRUKL6vNwzVK4ZK/+0cwFuwGru61/3847HCcsYVmnbeu
+	afb/dWQ0oMSJSarBSHAVI5sRv6IRr99HTx7HzJl2kHhFgo+X+WECVNMI5qmZbk2XfrzVFZHapOg
+	Kli817Wh1eUZ0G0C0EkIYAcHfPaNTlwDg=
+X-Received: by 2002:a05:6820:3087:b0:67e:21c9:ab55 with SMTP id 006d021491bc7-6821e8699famr424964eaf.3.1775165573457;
+        Thu, 02 Apr 2026 14:32:53 -0700 (PDT)
 Received: from denethor.localdomain ([136.51.44.64])
         by smtp.gmail.com with ESMTPSA id 586e51a60fabf-422eaf2c780sm3325030fac.6.2026.04.02.14.32.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 14:32:52 -0700 (PDT)
+        Thu, 02 Apr 2026 14:32:53 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 4/7] object-file: remove flags from transaction packfile writes
-Date: Thu,  2 Apr 2026 16:32:17 -0500
-Message-ID: <20260402213220.2651523-5-jltobler@gmail.com>
+Subject: [PATCH v3 5/7] object-file: avoid fd seekback by checking object size upfront
+Date: Thu,  2 Apr 2026 16:32:18 -0500
+Message-ID: <20260402213220.2651523-6-jltobler@gmail.com>
 X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
 In-Reply-To: <20260402213220.2651523-1-jltobler@gmail.com>
 References: <20260401030316.1847362-1-jltobler@gmail.com>
@@ -77,341 +77,187 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `index_blob_packfile_transaction()` function handles streaming a
-blob from an fd to compute its object ID and conditionally writes the
-object directly to a packfile if the INDEX_WRITE_OBJECT flag is set. A
-subsequent commit will make these packfile object writes part of the
-transaction interface. Consequently, having the object write be
-conditional on this flag is a bit awkward.
+In certain scenarios, Git handles writing blobs that exceed
+"core.bigFileThreshold" differently by streaming the object directly
+into a packfile. When there is an active ODB transaction, these blobs
+are streamed to the same packfile instead of using a separate packfile
+for each. If "pack.packSizeLimit" is configured and streaming another
+object causes the packfile to exceed the configured limit, the packfile
+is truncated back to the previous object and the object write is
+restarted in a new packfile.
 
-In preparation for this change, introduce a dedicated
-`hash_blob_stream()` helper that only computes the OID from a `struct
-odb_write_stream`. This is invoked by `index_fd()` instead when the
-INDEX_WRITE_OBJECT is not set. The object write performed via
-`index_blob_packfile_transaction()` is made unconditional accordingly.
+This works fine, but requires the fd being read from to save a
+checkpoint so it becomes possible to rewind the input source via seeking
+back to a known offset at the beginning. In a subsequent commit, blob
+streaming is converted to use `struct odb_write_stream` as a more
+generic input source instead of an fd which doesn't provide a mechanism
+for rewinding.
+
+For this use case though, rewinding the fd is not strictly necessary
+because the inflated size of the object is known and can be used to
+approximate whether writing the object would cause the packfile to
+exceed the configured limit prior to writing anything. These blobs
+written to the packfile are never deltified thus the size difference
+between what is written versus the inflated size is due to zlib
+compression. While this does prevent packfiles from being filled to the
+potential maximum is some cases, it should be good enough and still
+prevents the packfile from exceeding any configured limit.
+
+Use the inflated blob size to determine whether writing an object to a
+packfile will exceed the configured "pack.packSizeLimit".
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c   | 132 +++++++++++++++++++++++++++++-------------------
- odb/streaming.c |  46 +++++++++++++++++
- odb/streaming.h |  12 +++++
- 3 files changed, 138 insertions(+), 52 deletions(-)
+ object-file.c | 86 +++++++++++++++------------------------------------
+ 1 file changed, 25 insertions(+), 61 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 0ae36314aa..382d14c8c0 100644
+index 382d14c8c0..0284d5434b 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1396,11 +1396,10 @@ static int already_written(struct odb_transaction_files *transaction,
- }
+@@ -1447,29 +1447,17 @@ static int hash_blob_stream(struct odb_write_stream *stream,
  
- /* Lazily create backing packfile for the state */
--static void prepare_packfile_transaction(struct odb_transaction_files *transaction,
--					 unsigned flags)
-+static void prepare_packfile_transaction(struct odb_transaction_files *transaction)
- {
- 	struct transaction_packfile *state = &transaction->packfile;
--	if (!(flags & INDEX_WRITE_OBJECT) || state->f)
-+	if (state->f)
- 		return;
- 
- 	state->f = create_tmp_packfile(transaction->base.source->odb->repo,
-@@ -1413,6 +1412,39 @@ static void prepare_packfile_transaction(struct odb_transaction_files *transacti
- 		die_errno("unable to write pack header");
- }
- 
-+static int hash_blob_stream(struct odb_write_stream *stream,
-+			    const struct git_hash_algo *hash_algo,
-+			    struct object_id *result_oid, size_t size)
-+{
-+	unsigned char buf[16384];
-+	struct git_hash_ctx ctx;
-+	unsigned header_len;
-+	size_t bytes_hashed = 0;
-+
-+	header_len = format_object_header((char *)buf, sizeof(buf),
-+					  OBJ_BLOB, size);
-+	hash_algo->init_fn(&ctx);
-+	git_hash_update(&ctx, buf, header_len);
-+
-+	while (!stream->is_finished) {
-+		ssize_t read_result = odb_write_stream_read(stream, buf,
-+							    sizeof(buf));
-+
-+		if (read_result < 0)
-+			return -1;
-+
-+		git_hash_update(&ctx, buf, read_result);
-+		bytes_hashed += read_result;
-+	}
-+
-+	if (bytes_hashed != size)
-+		return -1;
-+
-+	git_hash_final_oid(result_oid, &ctx);
-+
-+	return 0;
-+}
-+
  /*
   * Read the contents from fd for size bytes, streaming it to the
-  * packfile in state while updating the hash in ctx. Signal a failure
-@@ -1430,15 +1462,13 @@ static void prepare_packfile_transaction(struct odb_transaction_files *transacti
+- * packfile in state while updating the hash in ctx. Signal a failure
+- * by returning a negative value when the resulting pack would exceed
+- * the pack size limit and this is not the first object in the pack,
+- * so that the caller can discard what we wrote from the current pack
+- * by truncating it and opening a new one. The caller will then call
+- * us again after rewinding the input fd.
+- *
+- * The already_hashed_to pointer is kept untouched by the caller to
+- * make sure we do not hash the same byte when we are called
+- * again. This way, the caller does not have to checkpoint its hash
+- * status before calling us just in case we ask it to call us again
+- * with a new pack.
++ * packfile in state while updating the hash in ctx.
   */
- static int stream_blob_to_pack(struct transaction_packfile *state,
- 			       struct git_hash_ctx *ctx, off_t *already_hashed_to,
--			       int fd, size_t size, const char *path,
--			       unsigned flags)
-+			       int fd, size_t size, const char *path)
+-static int stream_blob_to_pack(struct transaction_packfile *state,
+-			       struct git_hash_ctx *ctx, off_t *already_hashed_to,
+-			       int fd, size_t size, const char *path)
++static void stream_blob_to_pack(struct transaction_packfile *state,
++				struct git_hash_ctx *ctx, int fd, size_t size,
++				const char *path)
  {
  	git_zstream s;
  	unsigned char ibuf[16384];
  	unsigned char obuf[16384];
  	unsigned hdrlen;
  	int status = Z_OK;
--	int write_object = (flags & INDEX_WRITE_OBJECT);
- 	off_t offset = 0;
+-	off_t offset = 0;
  
  	git_deflate_init(&s, pack_compression_level);
-@@ -1473,20 +1503,18 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
- 		status = git_deflate(&s, size ? 0 : Z_FINISH);
  
+@@ -1486,15 +1474,9 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
+ 			if ((size_t)read_result != rsize)
+ 				die("failed to read %u bytes from '%s'",
+ 				    (unsigned)rsize, path);
+-			offset += rsize;
+-			if (*already_hashed_to < offset) {
+-				size_t hsize = offset - *already_hashed_to;
+-				if (rsize < hsize)
+-					hsize = rsize;
+-				if (hsize)
+-					git_hash_update(ctx, ibuf, hsize);
+-				*already_hashed_to = offset;
+-			}
++
++			git_hash_update(ctx, ibuf, rsize);
++
+ 			s.next_in = ibuf;
+ 			s.avail_in = rsize;
+ 			size -= rsize;
+@@ -1505,14 +1487,6 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
  		if (!s.avail_out || status == Z_STREAM_END) {
--			if (write_object) {
--				size_t written = s.next_out - obuf;
+ 			size_t written = s.next_out - obuf;
+ 
+-			/* would we bust the size limit? */
+-			if (state->nr_written &&
+-			    pack_size_limit_cfg &&
+-			    pack_size_limit_cfg < state->offset + written) {
+-				git_deflate_abort(&s);
+-				return -1;
+-			}
 -
--				/* would we bust the size limit? */
--				if (state->nr_written &&
--				    pack_size_limit_cfg &&
--				    pack_size_limit_cfg < state->offset + written) {
--					git_deflate_abort(&s);
--					return -1;
--				}
--
--				hashwrite(state->f, obuf, written);
--				state->offset += written;
-+			size_t written = s.next_out - obuf;
-+
-+			/* would we bust the size limit? */
-+			if (state->nr_written &&
-+			    pack_size_limit_cfg &&
-+			    pack_size_limit_cfg < state->offset + written) {
-+				git_deflate_abort(&s);
-+				return -1;
- 			}
-+
-+			hashwrite(state->f, obuf, written);
-+			state->offset += written;
+ 			hashwrite(state->f, obuf, written);
+ 			state->offset += written;
  			s.next_out = obuf;
- 			s.avail_out = sizeof(obuf);
+@@ -1529,7 +1503,6 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
  		}
-@@ -1574,8 +1602,7 @@ static void flush_packfile_transaction(struct odb_transaction_files *transaction
-  */
- static int index_blob_packfile_transaction(struct odb_transaction_files *transaction,
- 					   struct object_id *result_oid, int fd,
--					   size_t size, const char *path,
--					   unsigned flags)
-+					   size_t size, const char *path)
+ 	}
+ 	git_deflate_end(&s);
+-	return 0;
+ }
+ 
+ static void flush_packfile_transaction(struct odb_transaction_files *transaction)
+@@ -1605,48 +1578,39 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
+ 					   size_t size, const char *path)
  {
  	struct transaction_packfile *state = &transaction->packfile;
- 	off_t seekback, already_hashed_to;
-@@ -1583,7 +1610,7 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
+-	off_t seekback, already_hashed_to;
+ 	struct git_hash_ctx ctx;
  	unsigned char obuf[16384];
  	unsigned header_len;
  	struct hashfile_checkpoint checkpoint;
--	struct pack_idx_entry *idx = NULL;
-+	struct pack_idx_entry *idx;
+ 	struct pack_idx_entry *idx;
  
- 	seekback = lseek(fd, 0, SEEK_CUR);
- 	if (seekback == (off_t)-1)
-@@ -1594,33 +1621,26 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
+-	seekback = lseek(fd, 0, SEEK_CUR);
+-	if (seekback == (off_t)-1)
+-		return error("cannot find the current offset");
+-
+ 	header_len = format_object_header((char *)obuf, sizeof(obuf),
+ 					  OBJ_BLOB, size);
  	transaction->base.source->odb->repo->hash_algo->init_fn(&ctx);
  	git_hash_update(&ctx, obuf, header_len);
  
--	/* Note: idx is non-NULL when we are writing */
--	if ((flags & INDEX_WRITE_OBJECT) != 0) {
--		CALLOC_ARRAY(idx, 1);
--
--		prepare_packfile_transaction(transaction, flags);
--		hashfile_checkpoint_init(state->f, &checkpoint);
--	}
-+	CALLOC_ARRAY(idx, 1);
-+	prepare_packfile_transaction(transaction);
-+	hashfile_checkpoint_init(state->f, &checkpoint);
- 
- 	already_hashed_to = 0;
- 
- 	while (1) {
--		prepare_packfile_transaction(transaction, flags);
--		if (idx) {
--			hashfile_checkpoint(state->f, &checkpoint);
--			idx->offset = state->offset;
--			crc32_begin(state->f);
--		}
-+		prepare_packfile_transaction(transaction);
-+		hashfile_checkpoint(state->f, &checkpoint);
-+		idx->offset = state->offset;
-+		crc32_begin(state->f);
++	/*
++	 * If writing another object to the packfile could result in it
++	 * exceeding the configured size limit, flush the current packfile
++	 * transaction.
++	 *
++	 * Note that this uses the inflated object size as an approximation.
++	 * Blob objects written in this manner are not delta-compressed, so
++	 * the difference between the inflated and on-disk size is limited
++	 * to zlib compression and is sufficient for this check.
++	 */
++	if (state->nr_written && pack_size_limit_cfg &&
++	    pack_size_limit_cfg < state->offset + size)
++		flush_packfile_transaction(transaction);
 +
- 		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
--					 fd, size, path, flags))
-+					 fd, size, path))
- 			break;
- 		/*
- 		 * Writing this object to the current pack will make
- 		 * it too big; we need to truncate it, start a new
- 		 * pack, and write into it.
- 		 */
--		if (!idx)
--			BUG("should not happen");
- 		hashfile_truncate(state->f, &checkpoint);
- 		state->offset = checkpoint.offset;
- 		flush_packfile_transaction(transaction);
-@@ -1628,8 +1648,6 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
- 			return error("cannot seek back");
- 	}
+ 	CALLOC_ARRAY(idx, 1);
+ 	prepare_packfile_transaction(transaction);
+ 	hashfile_checkpoint_init(state->f, &checkpoint);
+ 
+-	already_hashed_to = 0;
+-
+-	while (1) {
+-		prepare_packfile_transaction(transaction);
+-		hashfile_checkpoint(state->f, &checkpoint);
+-		idx->offset = state->offset;
+-		crc32_begin(state->f);
+-
+-		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+-					 fd, size, path))
+-			break;
+-		/*
+-		 * Writing this object to the current pack will make
+-		 * it too big; we need to truncate it, start a new
+-		 * pack, and write into it.
+-		 */
+-		hashfile_truncate(state->f, &checkpoint);
+-		state->offset = checkpoint.offset;
+-		flush_packfile_transaction(transaction);
+-		if (lseek(fd, seekback, SEEK_SET) == (off_t)-1)
+-			return error("cannot seek back");
+-	}
++	hashfile_checkpoint(state->f, &checkpoint);
++	idx->offset = state->offset;
++	crc32_begin(state->f);
++	stream_blob_to_pack(state, &ctx, fd, size, path);
  	git_hash_final_oid(result_oid, &ctx);
--	if (!idx)
--		return 0;
  
  	idx->crc32 = crc32_end(state->f);
- 	if (already_written(transaction, result_oid)) {
-@@ -1667,18 +1685,28 @@ int index_fd(struct index_state *istate, struct object_id *oid,
- 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
- 				 type, path, flags);
- 	} else {
--		struct object_database *odb = the_repository->objects;
--		struct odb_transaction_files *files_transaction;
--		struct odb_transaction *transaction;
--
--		transaction = odb_transaction_begin(odb);
--		files_transaction = container_of(odb->transaction,
--						 struct odb_transaction_files,
--						 base);
--		ret = index_blob_packfile_transaction(files_transaction, oid, fd,
--						      xsize_t(st->st_size),
--						      path, flags);
--		odb_transaction_commit(transaction);
-+		struct odb_write_stream stream;
-+		odb_write_stream_from_fd(&stream, fd, xsize_t(st->st_size));
-+
-+		if (flags & INDEX_WRITE_OBJECT) {
-+			struct object_database *odb = the_repository->objects;
-+			struct odb_transaction_files *files_transaction;
-+			struct odb_transaction *transaction;
-+
-+			transaction = odb_transaction_begin(odb);
-+			files_transaction = container_of(odb->transaction,
-+							 struct odb_transaction_files,
-+							 base);
-+			ret = index_blob_packfile_transaction(files_transaction, oid, fd,
-+						      xsize_t(st->st_size), path);
-+			odb_transaction_commit(transaction);
-+		} else {
-+			ret = hash_blob_stream(&stream,
-+					       the_repository->hash_algo, oid,
-+					       xsize_t(st->st_size));
-+		}
-+
-+		odb_write_stream_release(&stream);
- 	}
- 
- 	close(fd);
-diff --git a/odb/streaming.c b/odb/streaming.c
-index a68dd2cbe3..20531e864c 100644
---- a/odb/streaming.c
-+++ b/odb/streaming.c
-@@ -237,6 +237,11 @@ ssize_t odb_write_stream_read(struct odb_write_stream *st, void *buf, size_t sz)
- 	return st->read(st, buf, sz);
- }
- 
-+void odb_write_stream_release(struct odb_write_stream *st)
-+{
-+	free(st->data);
-+}
-+
- int odb_stream_blob_to_fd(struct object_database *odb,
- 			  int fd,
- 			  const struct object_id *oid,
-@@ -292,3 +297,44 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	odb_read_stream_close(st);
- 	return result;
- }
-+
-+struct read_object_fd_data {
-+	int fd;
-+	size_t remaining;
-+};
-+
-+static ssize_t read_object_fd(struct odb_write_stream *stream,
-+			      unsigned char *buf, size_t len)
-+{
-+	struct read_object_fd_data *data = stream->data;
-+	ssize_t read_result;
-+	size_t count;
-+
-+	if (stream->is_finished)
-+		return 0;
-+
-+	count = data->remaining < len ? data->remaining : len;
-+	read_result = read_in_full(data->fd, buf, count);
-+	if (read_result < 0 || (size_t)read_result != count)
-+		return -1;
-+
-+	data->remaining -= count;
-+	if (!data->remaining)
-+		stream->is_finished = 1;
-+
-+	return read_result;
-+}
-+
-+void odb_write_stream_from_fd(struct odb_write_stream *stream, int fd,
-+			      size_t size)
-+{
-+	struct read_object_fd_data *data;
-+
-+	CALLOC_ARRAY(data, 1);
-+	data->fd = fd;
-+	data->remaining = size;
-+
-+	stream->data = data;
-+	stream->read = read_object_fd;
-+	stream->is_finished = 0;
-+}
-diff --git a/odb/streaming.h b/odb/streaming.h
-index 65ced911fe..2a8cac19a4 100644
---- a/odb/streaming.h
-+++ b/odb/streaming.h
-@@ -5,6 +5,7 @@
- #define STREAMING_H 1
- 
- #include "object.h"
-+#include "odb.h"
- 
- struct object_database;
- struct odb_read_stream;
-@@ -65,6 +66,11 @@ struct odb_write_stream {
- ssize_t odb_write_stream_read(struct odb_write_stream *stream, void *buf,
- 			      size_t len);
- 
-+/*
-+ * Releases memory allocated for underlying stream data.
-+ */
-+void odb_write_stream_release(struct odb_write_stream *stream);
-+
- /*
-  * Look up the object by its ID and write the full contents to the file
-  * descriptor. The object must be a blob, or the function will fail. When
-@@ -82,4 +88,10 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 			  struct stream_filter *filter,
- 			  int can_seek);
- 
-+/*
-+ * Sets up an ODB write stream that reads from an fd.
-+ */
-+void odb_write_stream_from_fd(struct odb_write_stream *stream, int fd,
-+			      size_t size);
-+
- #endif /* STREAMING_H */
 -- 
 2.53.0.381.g628a66ccf6
 
