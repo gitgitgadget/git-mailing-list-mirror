@@ -1,136 +1,175 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301FE388E69
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 17:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C17304BDC
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 17:14:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775149445; cv=none; b=V7FRFQKSnW43xhD7ttAQG0x3SprvRPZw2tjwPURLoNq+wgiMz9Lbrh2zRospWE7ekhudU6M8PwVy93OdQsud7N/z38rjxbDUkGnRrsSu2cJ/FDFxkIMRgNp5fPWO0XEL2wlNd7u7FHeAYGFlx32p8nOx4kyNrR9O1p7JrQSxerA=
+	t=1775150070; cv=none; b=HxooKnw6hEOFTLslo4Z5zv/toS065mLpNtdNyy+ggjUKmP1y0JOaBRDuswUAEsnd7l6Fye9AGTVHcBMNuxYzAtzfRPURWKJ2QhISxDVAby+LZVmCsWRKy0Trenro6k+tgCbiZ2hajRi2/VNlwdXZbl13u7lQDbYpBy8VjnZYBvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775149445; c=relaxed/simple;
-	bh=5YN5kCioQB3YStj5+5K06n+jfhN9s+N7BQr0EamkJN4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VQgqz2ZfukU6j88Nhz/h5pEHFAiPOzWc6KP/PIfFYG183bIHhhDMb7HBA2gbk1DCEdvZbHVMQBQ3Z8623VXNIC+HGcg9zrTo1KTJ0Mc12QAuzVhHD52SuUYM/HrOgpBNT3Kb0BY7R06MIE4H8V58X3Sw1AGFdaIsimmZ/VRqxX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I1LtLA/I; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1775150070; c=relaxed/simple;
+	bh=jNf8Qssge6XhbrGZcSmCQk9VtNKJndDer5lXqE9Pvgs=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HqziB/C8RgCGYxPxKhspXSd2zh1PE6IzIUyN4VzIr9+iPNOBFrVg1tlw0EaO1eKEnnUDkNqxGOpaLJWFLrLRSLRQ29RfTihus3JxUKyioDymH84GLhSMIqu4g+OptKhMtHw5DZ1rBarlJBBAYmK1EMeX8evJgRLRqvQaAL2V9O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n+wvJCHf; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1LtLA/I"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48541edecf9so13256935e9.1
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 10:03:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n+wvJCHf"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-509061dab77so9705191cf.2
+        for <git@vger.kernel.org>; Thu, 02 Apr 2026 10:14:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775149434; x=1775754234; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mcTohUwmbdzsrhVdQurvQmbwv7NozqBzMR/QuKSL42Y=;
-        b=I1LtLA/IB6ozzrh5fR+RmZSLdjKnpWkiO0PqNunrNwJSqQmSY6OtRdHyiAGWWQ8f1R
-         2WuJz7mvSW4NimfKtd75E6sUSLZEW/SNvOPNVjIheZZo9mmA0EXWPzBIuBi9/+3uTxXi
-         pty+M0E09Fy2RXG/qlwf8DF8PCcc3ILEqeMHj+9u9O7SS4tH3yiSttfMYxCMIR5ge2sE
-         mMONyo3JQqJfgFHB0dJfer/7A4qUHku5LnZdZ4yz9fL7FQWcXk042A8EgllC4U+IosSY
-         yqBIbQNJrESObYBn0RudoKDTAPn+Ny6abZJxMLfVljP1MnPBwt8OvNiveGE5bo0o4k7r
-         Jz7g==
+        d=gmail.com; s=20251104; t=1775150063; x=1775754863; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=S/AJnLbBrEGGeZ1lbfPCS9Qbq4bjVS9X+Jn+zJlt8gU=;
+        b=n+wvJCHfDwDGRcpgGIlJgiakAu9/v5cWrBL7X1pNUrT3YaRLwJVf2wt8ujnpl2Rw0T
+         4T6PzXowKUgnw/S+joGI4JTM6otDVSokwAvqhfoB6FXlfm4FiaxjDjuHUFvmVMsvfPoo
+         3YiZcK/pg3hLH8tSrRRo7if8Ew0Gz5y2+qqlBw0YFuDMDdm41qJtnKWU4hlLua57h+/o
+         tVlclZ89u8ZqMAK06syztyGj+p6XhW9HrQxhZexFuxZH3gLdsoXJ0NUI25xoAiuaPyuo
+         cS8Lx8YbhSgqO0CwKQ80wiS6W8Jfxhr0HvjpVmATpq16TNS8JuYmX47jmBMkPNkpQ3Nz
+         R0MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775149434; x=1775754234;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mcTohUwmbdzsrhVdQurvQmbwv7NozqBzMR/QuKSL42Y=;
-        b=KtnH4Z7ZHDbUPEEnVd63Y+8/BPWpoF5Smry5E2lCbBtHHHnGZ60pl3vlvLlNtCmzC9
-         o92bFbL3vMFLVXHI4eqmKmj8Mlll6VixiqP0VbSYPKR0TCd6dlL+cO/Fet/iFxlkoxyX
-         PLikU55nP/FDGQw9VDbNkzTMXcEg3AWghBLvIiWcJnqwlbK/1rNj+fbhzuwxaZt0Sh8x
-         txq9y+mOHvHQXNQRH2f41Wf1z3j7QwDEVZOWJrxJgkuvjkufsY/zvgnF95SY6kX3KA8f
-         YuIMatmvwPhem1S9KS6T91VEVvGdrjJMvsiIh8ua3Lihgx2M4PIw5fzGob4lbA3qiUSV
-         cJqw==
-X-Forwarded-Encrypted: i=1; AJvYcCV3fMrc7023IzgZPgkjqceDbmAE1cMwQwPPWbB2G19yiN7MRtshRBdcNImUPFMOTGsK7UU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywmx3N8fQpiv0IKMz1e1LjMIvgj1yHN9KIrF+1nF7GhMolH02yO
-	EIU4hkBn6EslDBJO6AraBtH0i3nlZDsri7HMf3r9B2YUdRJt9/9Vf4rl
-X-Gm-Gg: ATEYQzy7Yw7UIh24yKG1KqWDAtaRhOcoiKvSOnkvFl6lMJ9IMAB1TRYFmQ0OL7nhlB/
-	pJ2e7+3B2IvlzFMPbuja7TcB1AoE0MVrq7quxOSbOk7peIVOztpMNGHZmsOjIxpurNAgovVMz5b
-	pHR8J1Mwv+nRkscYkWzmY4rWH+mIeNOgyj04y3hmKuMrjU0jclBXLb/lZ+3H8ajoLwWzgySiCMk
-	apeLx7un8Cwxys8nQ6mx6k43hPdcKnClL2r0k2lcEncIMsKjaMXX5XDNw0rHwJuACiuohQ57mq9
-	MXW7oodU/g6D/oo0g/MoX/x8VXD4+LMAZn2amHoT52/EYSa+aMZduRfncY4c5AGRPnb6z2CYgfb
-	ezqGf4yxc+mAcprWhP1EvIu0QmiNR2pO3QE+zFYjW5wOR1IGpZro0GpIuYB4aUwtrG/Or7mGvkj
-	MQozGSnworcp33nL+4Wuus
-X-Received: by 2002:a05:600c:1f11:b0:485:304a:58cd with SMTP id 5b1f17b1804b1-48883569e20mr142217565e9.4.1775149434063;
-        Thu, 02 Apr 2026 10:03:54 -0700 (PDT)
-Received: from gmail.com ([159.146.41.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4888a63c9b1sm77404025e9.5.2026.04.02.10.03.51
+        d=1e100.net; s=20251104; t=1775150063; x=1775754863;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S/AJnLbBrEGGeZ1lbfPCS9Qbq4bjVS9X+Jn+zJlt8gU=;
+        b=qvDmMzzbuNRUNGKcICi05C3bXJs6CYxAYjw8DMMpDpgL3H+QymKkkja0OQsvYyeIhF
+         aJri4duItbCNJ9IYk8BrqwthkfG06EFUx4nbGr2O3BAqOXxohqvd5P0EEpMC4njG137l
+         KPLp5fwKcDWK33VeZTF4pHtmtJis3yTzZk7nW6cmy39tQeOViDIS22MT1V3fZymR3Hl/
+         CXA3vtcPsLx6aRlivBAPSj+7jnFKRCrK2wxSgUS0hRoK2phQLVW3Xlv95rGvD5tL/8oC
+         sHuSxNKVOOGRjCxQLHvb82lLSm/vd6Wa1W3jHzSJMQWOkt20hjm1jZeZQYD3SoMKDerj
+         LOhQ==
+X-Gm-Message-State: AOJu0YxtvlvVARD+cBFtuv1hxgEZhcJZCJjtMNea/tTE4k0eNPvH0G0I
+	sHGaF0wSbPEBMFv8RpK9vJ4K/7+xzQ3ABpT+v+4D3c7tOJzfUn41vaz+2DMZXQ==
+X-Gm-Gg: ATEYQzyYWaZ+aGHDMpwQDQt4ctiubtd/aGxeIPXIy6cBLDUdlf3JSulTGYyTDG/lvNU
+	xdbPPJRcWdeC8tPoWU+Iflsi8J5xJ+J1heGcOzd1syTH4o5NGjO9P0KxjD0smHc7A8+N43GKAvD
+	PIHeb1lFN1KViDgdPcWIawxnzUY+/54uC1SAlpU/yg7Ui2QUia53FqbSu7LEAwMOZ1L6nOg3hll
+	kUWCoPSEPlJ1PAj5yLafobcpW+LgGzBUsIu7OO9lJiOYGT9nGHb4uOy/ICCZm0WcAFE+cfG/nd5
+	c3tJJVFqve7zcpN4BAGvG3j/xT3Nfb28loanOLFufJos04dDRIsp9PlGkSYV4TdVVA8vFvdTHJq
+	bRfWh09X1NQSp9XHNg7XqEUku+SstuixNW++nr13BCx8yGBWPPSFf2/HjMXDJRcYrSIdmCaAShj
+	Clk8CmneqdvnHHbo6eLWTwe/he
+X-Received: by 2002:a05:622a:4819:b0:509:3141:312c with SMTP id d75a77b69052e-50d62cc15efmr1044501cf.40.1775150063307;
+        Thu, 02 Apr 2026 10:14:23 -0700 (PDT)
+Received: from [127.0.0.1] ([4.246.135.65])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50d53c00654sm14774401cf.18.2026.04.02.10.14.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 10:03:53 -0700 (PDT)
-Date: Thu, 2 Apr 2026 20:03:45 +0300
-From: Burak Kaan =?utf-8?Q?Kara=C3=A7ay?= <bkkaracay@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, 
-	git@vger.kernel.org, Jeff King <peff@peff.net>, Tian Yuchen <a3205153416@gmail.com>
-Subject: Re: [PATCH v3 1/5] refs: add struct repository parameter to
- branchname helpers
-Message-ID: <ac6K5UnVdw67Rfpy@gmail.com>
-References: <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260329101725.1092900-2-shreyanshpaliwalcmsmn@gmail.com>
- <ac4aZRveWXjOtxgB@pks.im>
+        Thu, 02 Apr 2026 10:14:22 -0700 (PDT)
+Message-Id: <pull.2264.git.git.1775150062407.gitgitgadget@gmail.com>
+From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 02 Apr 2026 17:14:22 +0000
+Subject: [PATCH] repo: add paths.toplevel to repo info
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ac4aZRveWXjOtxgB@pks.im>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+    Jayesh Daga <jayeshdaga99@gmail.com>,
+    Jayesh Daga <jayeshdaga99@gmail.com>
 
-Hi,
+From: Jayesh Daga <jayeshdaga99@gmail.com>
 
-On Thu, Apr 02, 2026 at 09:27:33AM +0200, Patrick Steinhardt wrote:
->On Sun, Mar 29, 2026 at 03:46:39PM +0530, Shreyansh Paliwal wrote:
->> diff --git a/refs.c b/refs.c
->> index 685a0c247b..5cdc8858c5 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -758,10 +758,10 @@ void copy_branchname(struct strbuf *sb, const char *name,
->>  	strbuf_add(sb, name + used, len - used);
->>  }
->>
->> -int check_branch_ref(struct strbuf *sb, const char *name)
->> +int check_branch_ref(struct repository *repo, struct strbuf *sb, const char *name)
->>  {
->>  	if (startup_info->have_repository)
->> -		copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
->> +		copy_branchname(repo, sb, name, INTERPRET_BRANCH_LOCAL);
->>  	else
->>  		strbuf_addstr(sb, name);
->>
->
->I have to agree with Tian's comment on v2, this part here looks wrong. I
->don't think we should depend on `startup_info` here, but we should
->exclusively rely on whether or not the caller has passed in a
->repository. And that will likely require a bit more scrutiny to figure
->out whether there are any callers that shouldn't pass in a repository
->because it's not initialized.
->
->Alternatively, we could go with Tian's suggestion of checking for `repo
->&& repo->gitdir`.
->
->Patrick
+Expose the working tree root via `git repo info` as
+paths.toplevel, matching the semantics of
+`git rev-parse --show-toplevel`.
 
-This approach actually leads to a bug and segfault in a specific edge
-case when running 'git check-ref-format'. The current tests don't cover
-this scenario, but they can be extended to catch it.
+For bare repositories, this value is empty, consistent
+with other non-applicable fields.
 
-If GIT_DIR is set to a non-existent path,
-'startup_info->have_repository' becomes '0' but 'repo->gitdir' still
-holds the invalid path. As a result, the code enters the first condition
-and crashes. The case can be tested with this command:
+This allows scripts to retrieve the repository root
+through a structured interface without invoking
+rev-parse.
 
-$ git --git-dir='non-existing' check-ref-format --branch @{-1}
+Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+---
+    repo: add paths.toplevel to repo info
+    
+    repo info currently does not expose the repository's working tree root,
+    even though this information is available via repo_get_work_tree().
+    
+    This makes it harder for scripts to retrieve the repository root through
+    a structured interface, often requiring the use of git rev-parse
+    --show-toplevel.
+    
+    Add a new field paths.toplevel to git repo info that returns the working
+    tree root. For bare repositories, this value is empty, consistent with
+    other non-applicable fields.
+    
+    This provides a consistent and script-friendly way to query repository
+    paths without invoking additional commands.
+    
+    Signed-off-by: Jayesh Daga jayeshdaga99@gmail.com
 
-Modifying the behavior of 'repo->gitdir' might solve the issue, but I
-belive that falls outside the scope of this patch. After a quick search,
-I found a prophecy from Peff about the 'startup_info->have_repository':
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2264%2Fjayesh0104%2Frepo-toplevel-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2264/jayesh0104/repo-toplevel-v1
+Pull-Request: https://github.com/git/git/pull/2264
 
-[1] https://lore.kernel.org/git/20190806124954.GA13649@sigill.intra.peff.net/
+ builtin/repo.c       | 12 ++++++++++++
+ t/t1900-repo-info.sh | 16 ++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-Thanks,
-Burak Kaan Karaçay
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 71a5c1c29c..d0491f6c66 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -62,6 +62,17 @@ static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+ 	return 0;
+ }
+ 
++static int get_paths_toplevel(struct repository *repo, struct strbuf *buf)
++{
++    const char *wt = repo_get_work_tree(repo);
++
++    if (!wt)
++	return -1; /* match existing error style */
++
++    strbuf_addstr(buf, wt);
++    return 0;
++}
++
+ static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
+ {
+ 	strbuf_addstr(buf,
+@@ -87,6 +98,7 @@ static const struct repo_info_field repo_info_field[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
+ 	{ "object.format", get_object_format },
++	{ "paths.toplevel", get_paths_toplevel },
+ 	{ "references.format", get_references_format },
+ };
+ 
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index 39bb77dda0..470e06e8c2 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -155,4 +155,20 @@ test_expect_success 'git repo info -h shows only repo info usage' '
+ 	test_grep ! "git repo structure" actual
+ '
+ 
++test_expect_success 'repo info paths.toplevel' '
++    git repo info paths.toplevel >actual &&
++    echo "paths.toplevel=$(git rev-parse --show-toplevel)" >expected &&
++    test_cmp expected actual
++'
++
++test_expect_success 'repo info paths.toplevel (bare repo)' '
++    git init --bare bare.git &&
++    (
++	cd bare.git &&
++	git repo info paths.toplevel >actual &&
++	echo "paths.toplevel=" >expected &&
++	test_cmp expected actual
++    )
++'
++
+ test_done
+
+base-commit: 256554692df0685b45e60778b08802b720880c50
+-- 
+gitgitgadget
