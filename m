@@ -1,173 +1,151 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D1A2DCC04
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 17:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471B03594A
+	for <git@vger.kernel.org>; Thu,  2 Apr 2026 18:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775152142; cv=none; b=J6YXOo/anuhpE9TVKtCOxDj2fW1BKcYBaVe5BXr+fomsJshsE1Kwdw1fz/MrVnCEKempI84zFLoqAQdJObZNhBDVUgXpkJKYyeg3akyhyq8f9AGfT8WyBcWI2j5d3tqgWV7NRXaiPHK/yb0PhOWUDIGVn1wTYSXlk8CUY005IKA=
+	t=1775152989; cv=none; b=tBeRDbbWQAkI0Uenhp3sX/3MkV3IIq6lwx/gkKUjV2LwO2lN5qCXOPF3mjkhKesYtlXUnp7YD5DJCatYJRMeS8uRHblHiKxE4srxJu+r0s2b6MZhxA6Z5O8pruNA74thluEhYu73jUJG5IMvwTjSxDNYXOGhjB/UvyrvunxFGuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775152142; c=relaxed/simple;
-	bh=jfjMH2AF/6B2VaTMkgTRUQyuzjozos7prDLKkAhPwnk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hARUbOP2wvpu6viWZzB739PVgGpUvQZM1yrDi2LTb+lYvybQut9OQMbjKcCYEuzPFSgoG3lrWKBls2AfL57IBBIm7LVGe3OYz/WRjoY6NPOQ+miI5sw4ZtA611gXAd65Mr5ib2VMIiUo/r8n9cHyXztgnAmEA0k+Xg4WYrdCeVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dbb2DSV8; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775152989; c=relaxed/simple;
+	bh=h4170F2dfrGLI5O7kRpXaBbsw0RAR+ixis2NLXAmrX4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qKgCQUtNexaLFlFAK6XNjsxEfwKEDa3yIHLL5CI0QwRHbMWB7tnU/cmtKCdV9cLKm6kTel/EWATNwumT1pAAJOkpSlNCj1aR9SUXDPtoyAXfZG9Fy61uZz9kdFVwS/9ZFXasDBBQ0yWt75poePQnw1VshswwP7yaBerxrtUvyMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vw6I2yn8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YpE1obXt; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dbb2DSV8"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3597822d6d8so95329a91.3
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 10:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775152141; x=1775756941; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sSZI+o63dKJnq8abP3sRq5W4C3Vp+7LdzoZK2ve9kQE=;
-        b=Dbb2DSV8mm8Fy6Tv09EhPm/WDZeXIrDKSjnHTEnZFeReIdUeKaSopzTq8ctDMEhslH
-         W90JQvknAgVqaCpPM9FlO18eI6Os+gwrN85qj9efvUsL1NYiz6QaR8qEdLZ5Wim0u9cO
-         5cYvQjDPnsxQxGuRN8/x3A0h1E+KvnCGzu8LjPQLX/9EyqX1I4zk5QCqEzlU/OzdtM2w
-         o5rbAV69J5dpN/a3ItsT97gNHWtSO8H+t8eWXQI+ExnPAcfR9OutHIfaZp35rd0lM/OB
-         x73ihvNZE+cdBbasFGUf0d1ofcLs/fXgstMp0IKIbmPn1orUUKBAWaVB4Dc/QxYGxJJU
-         HKFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775152141; x=1775756941;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sSZI+o63dKJnq8abP3sRq5W4C3Vp+7LdzoZK2ve9kQE=;
-        b=TP9S3Mt5w2ikA1TMNM0cHwVo/AKC3IWcEBIguXNeCjzDFUbJmDAZp8HQ6NtITpbJL5
-         IkjWBJJqRoNi/OpyGz0B6VFyjpyRSYZEO9gSUuoHBExCHrlwLv4q/oSpy17KH6fCsVTA
-         rjPkTeBIl8FnsJXsz9rC2vcumZ1QvvODAn4YkTwXt/LxB/6zt3LhsojB2ZReL+psP4SQ
-         IHfJ+6jxlpJMmMkG31fX7GIjuqdkLr63DoDNX6tSgY+d1osC6yR+iZeY7z20yJMtVe5D
-         2R9CTDjT5IkCJOBdUzIf+9MmrM6lSt6/28/qqN91RCqeSXDe3+cUVfFTY3bRBOx1cfjf
-         pncA==
-X-Forwarded-Encrypted: i=1; AJvYcCXOMDof6ubKmKg997yw5g9rAuXcwWKfhvuvc/1xiEG1cXYCBcWycPPegwl14tJGqrqUHZY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxC7jdmixbFpA8rxwHtcpmANyilnRwFda/Fj/+ecIGm5WRJjKGI
-	tjxzpO28lm20JvXeIH+GGy0lm/MkPz+d/cv8QZrHi6dfl7c5CzXuHfM4
-X-Gm-Gg: AeBDievI3LgeJ0CkWq1laj+Sc3773StN0NN1pz4cQAmChbniIIh6PhEe74WgiVIhtNh
-	NTKiajtlbkWeLtQskrR4zIQ5BIwC1B00OyjsnnHo8WImTndgibmzHjK412WlQU6lfcYoaqRZ/JM
-	hZF1Fwz5sd5FLRGHnPhhlruSoMkpGPmnF0FFt7iOIqh1ohKIbT/kZOOZp7j/x8B/Vv3M8z16RYe
-	FoIpj/W9VJZ935fLphdPVAKPjqB49UvJcckNi7urx7nrBV4s0U7Ey69LoszQcGcPjtg83rsl85w
-	pysvSRNyeIBRBIMX6mHoi7p3LvmGH1F0+fg7Lw1RoqNkJtCm9fsQy6xmRwl7P6lh1f+rcxSPxzZ
-	jNuEN9ejvBE3sdbHzJP7FHALIMKoXcRtEtCMNfn3SsZz2PBmKdArnwsEHEaWhtNF2AJZQGXVuGO
-	9lsExUBPATOKVDVhiH58zzSSFdPjDbsjqOYnjamuDasReEWtdOEHlqLrTuFsPd4HBGf46I0GFK6
-	01ptDs0WMU=
-X-Received: by 2002:a17:90b:2247:b0:35b:ed51:afac with SMTP id 98e67ed59e1d1-35dc6fd4056mr5272602a91.6.1775152140821;
-        Thu, 02 Apr 2026 10:49:00 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dbe977031sm8604268a91.17.2026.04.02.10.48.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Apr 2026 10:49:00 -0700 (PDT)
-Message-ID: <7d8ec377-0555-48d8-b016-6794329932a1@gmail.com>
-Date: Fri, 3 Apr 2026 01:48:56 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vw6I2yn8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YpE1obXt"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6AADEEC00A2;
+	Thu,  2 Apr 2026 14:03:07 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 02 Apr 2026 14:03:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775152987; x=1775239387; bh=ZssWZfPFa8
+	vrbDo7MQ7HHyDrILbUxIZKJXHymAuJiI8=; b=vw6I2yn8cevjFMkgSRFnOA9tr/
+	hOhCDguDRNxfRrA/Y62Wq74Fyd7Rf+/tlgdVLahggQyh8Be1l+Z3XTISqNPhmr31
+	AgUXmKKKdqLrRjkvDEyEUH+YMaKp4jPIZ47WPWGm+8ZLDNduVt6Vy3utOvJMvMSA
+	HQeI2lgU4L/CzvKXVw5todb2qvqATlENNXWzXbbhYStaG9kwSWbXu9wwtHS/9cFz
+	Is04OdoUUg9Ofw9it0sbTHGNFdvXILoapLHoOQM/JoSlV7OFuDXKGdmxA4uxzN/p
+	En4XpK4GzYxCYpJYsed+1vjqnkLD0hRV3J12avMbyzMLxag8b8yivJ9L8T8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775152987; x=1775239387; bh=ZssWZfPFa8vrbDo7MQ7HHyDrILbUxIZKJXH
+	ymAuJiI8=; b=YpE1obXttEwhQ7OHGNBlW1aBtw/5U88Xm4uuaH5MUrdrnfexgVL
+	NeVJUsNrKudxzikD4SdpPB2KvFEk1vDgtIJXBxpXHI3JWHFIijCDgOmMgquRYt2N
+	sHMJZvh3HQOdobhGlB9DVDaq78f46e0H0lyTo5OGkKGCJCTuhWyeh6h7tqxCPFIY
+	0EDIzZ3IO8f2eAA0SOYSXWkd6Jw+x8WtjMX13IteoXW4cFcEzLWzkr0GKEzIjmSY
+	SA+6eM6fXgJdkouVrwg1lY5up4a+VV5AZYIyQ2B3M1bboMQg8MRNmNrM2baFklTs
+	+pHZddT4fbwL4mPatMBe/XEUH5iqzIfZyUA==
+X-ME-Sender: <xms:W6_OaRGnu0O9cKHB7wDa69g89ojnHPpM2VyXyJJRwwWLF_iR2a-FsA>
+    <xme:W6_OadNO2EvnmanyUl7QceMQX41n82OdmuQUlu9afkf_PE1WO8CkA1qVRjhACpctI
+    YL8UlUs9yIGSnu1GrHPSh7v-R3NwiRy6wYZHySr3706f957NJp5ERc>
+X-ME-Received: <xmr:W6_Oabe0genn3Jeg1RtU_fYmWoS74-iYkqjGQziyy25tal1Zvp0mH9WQ4FYfy-rtPVzLUCcV7Esfbsnc4voBZddFRdgh21BYhQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeijedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhr
+    tghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:W6_OaSuG68TArTL9LqKIhQobz-2i8HDEITFBrpMepRWM3FZy7XWbsA>
+    <xmx:W6_OaUl_jKFXUXgYrIcEh_pYzYRQaOS0fJXOG9XZggKzM_GRFswUJA>
+    <xmx:W6_Oacwhdqx4YeCf4pwdVJqLEq8x7LjydJwXoT8WJlVQfgl4TJ9K8w>
+    <xmx:W6_OaePz8vbHODQvhkuvCcv5PwgtWPRPdW7SiUydiF4qzLDhGZCnYw>
+    <xmx:W6_OaRKOOJ24hGkr3yxPS0uyHrhiZ10qLtwaC89nc0rDUjf7wusiIwJ1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Apr 2026 14:03:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+  "brian m. carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 2/5] reftable/stack: provide fsync(3p) via system header
+In-Reply-To: <20260402-pks-reftable-portability-fixes-v2-2-bc110cee0ae0@pks.im>
+	(Patrick Steinhardt's message of "Thu, 02 Apr 2026 09:31:15 +0200")
+References: <20260402-pks-reftable-portability-fixes-v2-0-bc110cee0ae0@pks.im>
+	<20260402-pks-reftable-portability-fixes-v2-2-bc110cee0ae0@pks.im>
+Date: Thu, 02 Apr 2026 11:03:05 -0700
+Message-ID: <xmqqika9qlye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] refs: add struct repository parameter to
- branchname helpers
-Content-Language: en-US
-To: =?UTF-8?Q?Burak_Kaan_Kara=C3=A7ay?= <bkkaracay@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org,
- Jeff King <peff@peff.net>
-References: <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260329101725.1092900-2-shreyanshpaliwalcmsmn@gmail.com>
- <ac4aZRveWXjOtxgB@pks.im> <ac6K5UnVdw67Rfpy@gmail.com>
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <ac6K5UnVdw67Rfpy@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 4/3/26 01:03, Burak Kaan Karaçay wrote:
-> Hi,
-> 
-> On Thu, Apr 02, 2026 at 09:27:33AM +0200, Patrick Steinhardt wrote:
->> On Sun, Mar 29, 2026 at 03:46:39PM +0530, Shreyansh Paliwal wrote:
->>> diff --git a/refs.c b/refs.c
->>> index 685a0c247b..5cdc8858c5 100644
->>> --- a/refs.c
->>> +++ b/refs.c
->>> @@ -758,10 +758,10 @@ void copy_branchname(struct strbuf *sb, const 
->>> char *name,
->>>      strbuf_add(sb, name + used, len - used);
->>>  }
->>>
->>> -int check_branch_ref(struct strbuf *sb, const char *name)
->>> +int check_branch_ref(struct repository *repo, struct strbuf *sb, 
->>> const char *name)
->>>  {
->>>      if (startup_info->have_repository)
->>> -        copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
->>> +        copy_branchname(repo, sb, name, INTERPRET_BRANCH_LOCAL);
->>>      else
->>>          strbuf_addstr(sb, name);
->>>
->>
->> I have to agree with Tian's comment on v2, this part here looks wrong. I
->> don't think we should depend on `startup_info` here, but we should
->> exclusively rely on whether or not the caller has passed in a
->> repository. And that will likely require a bit more scrutiny to figure
->> out whether there are any callers that shouldn't pass in a repository
->> because it's not initialized.
->>
->> Alternatively, we could go with Tian's suggestion of checking for `repo
->> && repo->gitdir`.
->>
->> Patrick
-> 
-> This approach actually leads to a bug and segfault in a specific edge
-> case when running 'git check-ref-format'. The current tests don't cover
-> this scenario, but they can be extended to catch it.
-> 
-> If GIT_DIR is set to a non-existent path,
-> 'startup_info->have_repository' becomes '0' but 'repo->gitdir' still
-> holds the invalid path. As a result, the code enters the first condition
-> and crashes. The case can be tested with this command:
-> 
-> $ git --git-dir='non-existing' check-ref-format --branch @{-1}
-> 
-> Modifying the behavior of 'repo->gitdir' might solve the issue, but I
-> belive that falls outside the scope of this patch. After a quick search,
-> I found a prophecy from Peff about the 'startup_info->have_repository':
-> 
-> [1] https://lore.kernel.org/ 
-> git/20190806124954.GA13649@sigill.intra.peff.net/
-> 
-> Thanks,
-> Burak Kaan Karaçay
+Patrick Steinhardt <ps@pks.im> writes:
 
-You’re absolutely right.
+> Users of the reftable library are expected to provide their own function
+> callback in cases they want to sync(3p) data to disk via the reftable
+> write options. But if no such function was provided we end up calling
+> fsync(3p) directly, which may not even be available on some systems.
+>
+> While dropping the explicit call to fsync(3p) would work, it would lead
+> to an unsafe default behaviour where a project may have forgotten to set
+> up the callback function, and that could lead to potential data loss. So
+> this is not a great solution.
+>
+> Instead, drop the callback function and make it mandatory for the
+> project to define fsync(3p). In the case of Git, we can then easily
+> inject our custom implementation via the "reftable-system.h" header so
+> that we continue to use `fsync_component()`.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs/reftable-backend.c    |  6 ------
+>  reftable/reftable-system.h |  3 +++
+>  reftable/reftable-writer.h |  6 ------
+>  reftable/stack.c           | 13 +++----------
+>  reftable/system.c          |  6 ++++++
+>  5 files changed, 12 insertions(+), 22 deletions(-)
+>
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index b124404663..daea30a5b4 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -366,11 +366,6 @@ static int reftable_be_config(const char *var, const char *value,
+>  	return 0;
+>  }
+>  
+> -static int reftable_be_fsync(int fd)
+> -{
+> -	return fsync_component(FSYNC_COMPONENT_REFERENCE, fd);
+> -}
+> -
+>  static struct ref_store *reftable_be_init(struct repository *repo,
+>  					  const char *payload,
+>  					  const char *gitdir,
+> @@ -408,7 +403,6 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+>  	refs->write_options.disable_auto_compact =
+>  		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
+>  	refs->write_options.lock_timeout_ms = 100;
+> -	refs->write_options.fsync = reftable_be_fsync;
 
-Actually, I’d already spotted the error when I wrote that bit of code, 
-which is why I said 'I dunno' - simply to give an idea of what I was 
-trying to achieve. It looks like we’ll have to go with a much uglier 
-solution. ;)
 
-One possible approach (albeit temporary and useless) is to wrap the code 
-in a macro or an inline function (in repository.h, I guess?):
+It used to be that by swapping the write_options settings the
+project can choose to perform its fsync in different ways depending
+on what they are writing, but now we have a chance to specify a
+single fsync() in <reftable/system.c>?  
 
-> static inline int repo_has_repository(struct repository *repo)
-> {
-> 	/*  
- >	* NEEDSWORK...
->	*/> 	if (repo == the_repository)
-> 		return startup_info->have_repository;
-> 
-> 	return repo && repo->gitdir;
-> }
+The project code does not set up write_options and the project code
+has no say in the choice of the kind of fsync used for different
+data files the reftable library uses, so it is not a problem.
 
-This will remove a large amount of startup_info->have_repository...But 
-that doesn’t solve anything, just as stuffing rubbish into a bin doesn’t 
-change the fact that it’s rubbish. The 'startup_info->have_repository' 
-still requires a significant amount of effort to refactor.
+OK.
 
-So still, I dunno.
-
-Regards, Yuchen
