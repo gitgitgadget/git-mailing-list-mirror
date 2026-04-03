@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7E323D7FB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1CD309DB5
 	for <git@vger.kernel.org>; Fri,  3 Apr 2026 07:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775199779; cv=none; b=j505y8xp9ubjAcKULkub/OITMeoGcLIYUZFSVEuSGPhqfqhns3CcEF75m6CBUL22EarSoIID+fA+SzIj3XdDtTUi0asXSp7I76My5ZrO+pn7w8rcdDEks/DusHjvm2O6jSWL6sbYJtsb/jLN7OtcqNm2bzvpe+kyf+OxjQ4V94Y=
+	t=1775199779; cv=none; b=mFUTYRHk2OAswdwOxo31eoRNhQYHOWO7a+dECGWZxqdRx0R9Pm3ae2Br3cbxjR+gHs4I/bl2rmjZShkOKPI+5YEIsZcizUo3y2MEDqbeMmrFfbcLIVlIu7zV/6TPDqK1NAHhy0nMCigtLdE+spdEXDghuC2FLh+Zo814p3RhGl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775199779; c=relaxed/simple;
-	bh=jC+xSAS5CvD3lougcHXkk40e+L26l7MIsnv/2txLAGM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dJjxrj+fqxjnItuKzUOHOctGh5LGXANFqmsclVnCa38y3v3duL+Iz4oyrmZ+0i5fS3LW4zseAeawseWim9fhfKSfSQWQmAXCPiLDL5aZnNSgp+yxsEUi2asYHn35X6OcFK1NFMm7RUApv0tYqZ1C9CY6dJ/p43leytV0gI1mUso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lro3chw2; arc=none smtp.client-ip=10.30.226.201
+	bh=DwuWlMFbXxtvcS8zVCluFfVC0Tr1mn0qvPjokUo9tWM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JBXll9nDljFgZHG7tiqFM1wmG5mX8YGAH/x1i4eynAVK46hpdDWEMhUhRVaSSxVviZ6vij3kj995jb9l9/1o+9w/lE97OWNod5y73X/C8gvrvmQtYtTdnGPbIEVKrmI+c6iCzwoa3ht5NLa3KY/grbjxVZ5W31kBrKtVzka+uow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AWIdB1fY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lro3chw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4EFF1C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AWIdB1fY"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3CF5CC4CEF7;
 	Fri,  3 Apr 2026 07:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775199779;
-	bh=jC+xSAS5CvD3lougcHXkk40e+L26l7MIsnv/2txLAGM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Lro3chw2zQKjOl1cb46zojesNhgw/oiUbVcX26/jsD3YZyzlITSRW1CcKGNYoAevD
-	 BWNsPq+lj4ENPf4gD5I62Jt/PzrUDk+HumZTjv+riJsqE435n5syzCJhT1qb+jGK9m
-	 IxNRzfGRIcwwH+pe5llfiHPwzqT+BqHMuzvNoUFgd0BlUDuTt9PswOI1KQ/fKRMK0T
-	 srg5che9edimGbFBISfA9kSHDQYm59l1pjzLDy6pW0jsveWWNp7fDFluSBkffzxudl
-	 3T58YJQcq/vmsIxVV+2FlhOJGYd1qY/qwH0rfcXpRSRfeFJwgrAjpJU345XddAy3xk
-	 ZnuO0CV7/Jikw==
+	bh=DwuWlMFbXxtvcS8zVCluFfVC0Tr1mn0qvPjokUo9tWM=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=AWIdB1fYx6dk5RJRBICzQZlbdZzZYyReOsw+ReCtfAnzNwQCzKzjKe3yqERsIBUG7
+	 8T9s0gYgziy7Qbi7kMZdsFDkYy2pRUvYUdeYrHb0uWtdos4f4cBo4x8JgR0g+cqdK4
+	 FebPSw5zqiJE1maGCrMh6ZP9Jp44MD00omOYF4KJkJBssmdUymWlNHx6pkeQ9uGf8Y
+	 Hza5JNmOdzcakkmjjy6XuT2iROjjHNABieUmQIfnBUihhmnvae9KrPZIQ9ORWDBF9z
+	 7OC09Yz3qsT2iqdJw7jVdWltvg2zURe0OCyw/gffevRJXk6X9P3yBPFfLsnc8xGSBv
+	 1mt4Ia5XVHKhw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E140D730AC;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CFB4D730AF;
 	Fri,  3 Apr 2026 07:02:59 +0000 (UTC)
 From: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-Date: Fri, 03 Apr 2026 15:02:28 +0800
-Subject: [PATCH v3 1/2] config: refactor include_by_gitdir() into
- include_by_path()
+Subject: [PATCH v3 0/2] includeIf: add "worktree" condition for matching
+ working tree path
+Date: Fri, 03 Apr 2026 15:02:27 +0800
+Message-Id: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,28 +41,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260403-includeif-worktree-v3-1-109ce5782b03@black-desk.cn>
-References: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
-In-Reply-To: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
+X-B4-Tracking: v=1; b=H4sIAANmz2kC/33NQQ7CIBCF4as0rMVQqLS48h7GRYHBTtpQAxU1T
+ e8u7coY4/J/yXwzkwgBIZJjMZMACSOOPofYFcR0rb8CRZubcMYlq1hJ0ZvhbgEdfYyhnwIAdUb
+ LSh2Ydbol+fAWwOFzQ8+X3B3GaQyv7Ucq1/Uvl0rKqGLSaqkcN7U66aE1PbUQ+73xZCUT/2T4T
+ 4ZnRkgQQulGNbb+ZpZleQMUHPLu/wAAAA==
+X-Change-ID: 20260401-includeif-worktree-fcb64950dfba
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
  Junio C Hamano <gitster@pobox.com>, Chen Linxuan <me@black-desk.cn>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2786; i=me@black-desk.cn;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1759; i=me@black-desk.cn;
  h=from:subject:message-id;
- bh=yvkS6GGoBsk+BJdWDXSoiHZd4Dvb067JLuW86tJ84MQ=;
- b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBpz2YgmLK2XJDMD5MTvQzr/oXFGybt6xOnaUOKd
- R3jabpUd8qJAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCac9mIAAKCRB2HuYUOZmu
- i8MREAC1nFwnlVype3a9DVNVfmkYLn5DB7AIxN6zy6N2tE2+QdgCp2DUc+EXvgEhZgI/ck8c7wJ
- HOn7R3LuYsdy1S7sbARXkaiLxEoJfFrwpbk1dCLdOUUsyCAn4nh1As1SUdO9IE/L3cLlsi4zKlh
- /t9AY1y+MIn77cVvp13AqYRSubI0w8RovRL+ZFEL7oVAh/q4QshyDAu2Nxh/e6fkUvYRX1ddPXt
- WO5VNZdd7DTPdzIutVgQaS7W/2CnTSGkkip/0blFwtxmNRqCQdDVuPJVODTvHJKFeM/nqEHPJng
- 7gf1+Fqi8RUBXhHZ5Y+4rfyE9cWo9DT91Fs6b0w5CNQYbJ7zI10B4iqK/+cG79J/2EGM+fhDmoA
- jClTEJO/eGDDdbbDGZM5YIUtuqYT0/zaJxAtocbXNshya+W0P/xic4N4bmh/mQ+Ba8RdXreDiH9
- 2/g9bafLxHVSVTzzJobWP5TJBOX+oos13A/zbwsZs6QGgeARMlSG3Au1Oa4etCSB5MtoQF2tQ8I
- DDV7PRpAxvhfmEIeIR/1Yf8dkc1a/RXSAklHpqDGiqe+pG6LlH4V6LjulAsIlVNXHU/GFRuj491
- BbaP+yQe+9FYqG32zuCyCL66gapems59r6x2pwHIaPEXgUVgqCG0fj5wquaxlBHJv7SxOLgGxuv
- wlLBSq1/Kczw0eg==
+ bh=DwuWlMFbXxtvcS8zVCluFfVC0Tr1mn0qvPjokUo9tWM=;
+ b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBpz2YJPPZ4A3xF8wmZB0AhVUv2D2hLbFhIl/u9c
+ zwOJwVKOXeJAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCac9mCQAKCRB2HuYUOZmu
+ i/yzEACi1xs2EkXHith7arXWLLea04+1eHyTgUwYJPj1hKcYnhf83QNNPe/uK7Qts1/nsaQSgiI
+ Q61FYxt++T2e4YZrcGCRJvjzWQjSWV1cTL7GbtAnOHeRSc7VfR8NoFcEmsJzv9zAf/0IDhaZZ2M
+ OUC3PoluuaAg17WbDQLv4RN/4kvFKTGSvKv1oLFSfOee+Y8ciIlp746p/Oka1tjv+wEWAK5A2u8
+ DtsjfgK9mNPjselTpdqZ01V5CBkzH9ISAkB5duZhTeRxa0H7cVKl8eIHQM4NjVI0njo22aw1Sq6
+ nD5UKrCMOSq9r3QSCb6NPFi0GFbsbMMcukvvSlrOFJYiy6K11kWkcuFTCGqxIhXLP9scacx5XnL
+ T4180azjwfloPB9JSVogc5BtyexzEwHISNWWVyHuePQMans0jpC6WA6a+Ic7Odpm0eOA4CWNKA9
+ t4V8De8liUGjE0cvAS9h0fy4MsscVhHJoXjb0GeIJLJfz9e6x2w/EBis+lTeFbyVuamev72DM9E
+ Z3gztGCXwC86qIv5iKEqCWo6RS54AHBLj79Zm7L8J395e4uKKnmviPhMREJQxT+WtkLPaqWHySd
+ dZqAoljiPMySg9iebeOBg6H81ucJ/oIuZ1jIytO1szpiMS+ngMEH1AkMOsgPsuURJxkMXSyI9kb
+ aJc/oIZfKAtzw/g==
 X-Developer-Key: i=me@black-desk.cn; a=openpgp;
  fpr=D818ACDD385CAE92D4BAC01A6269794D24791D21
 X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
@@ -70,80 +72,49 @@ X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
 X-Original-From: Chen Linxuan <me@black-desk.cn>
 Reply-To: me@black-desk.cn
 
-From: Chen Linxuan <me@black-desk.cn>
+The `includeIf` mechanism already supports matching on the `.git`
+directory path (`gitdir`) and the currently checked out branch
+(`onbranch`).  But in multi-worktree setups the `.git` directory of a
+linked worktree points into the main repository's `.git/worktrees/`
+area, which makes `gitdir` patterns cumbersome when one wants to
+include config based on the working tree's checkout path instead.
 
-The include_by_gitdir() function matches the realpath of a given
-path against a glob pattern, but its interface is tightly coupled to
-the gitdir condition: it takes a struct config_options *opts and
-extracts opts->git_dir internally.
+Introduce two new condition keywords:
 
-Refactor it into a more generic include_by_path() helper that takes
-a const char *path parameter directly, and update the gitdir and
-gitdir/i callers to pass opts->git_dir explicitly.  No behavior
-change, just preparing for the addition of a new worktree condition
-that will reuse the same path-matching logic with a different path.
+  - `worktree:<pattern>` matches the realpath of the current worktree's
+    working directory against a glob pattern.
+  - `worktree/i:<pattern>` is the case-insensitive variant.
+
+Supported pattern features: glob wildcards, `**/` and `/**`, `~`
+expansion, `./` relative paths, and trailing-`/` prefix matching.
+The condition never matches in a bare repository.
 
 Signed-off-by: Chen Linxuan <me@black-desk.cn>
 ---
- config.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+Changes in v3:
+- Apply Junio's suggestion.
+- Link to v2: https://lore.kernel.org/r/20260402-includeif-worktree-v2-0-36e339b898d7@black-desk.cn
 
-diff --git a/config.c b/config.c
-index 156f2a24fa00..7d5dae0e8450 100644
---- a/config.c
-+++ b/config.c
-@@ -235,23 +235,20 @@ static int prepare_include_condition_pattern(const struct key_value_info *kvi,
- 	return 0;
- }
- 
--static int include_by_gitdir(const struct key_value_info *kvi,
--			     const struct config_options *opts,
--			     const char *cond, size_t cond_len, int icase)
-+static int include_by_path(const struct key_value_info *kvi,
-+			   const char *path,
-+			   const char *cond, size_t cond_len, int icase)
- {
- 	struct strbuf text = STRBUF_INIT;
- 	struct strbuf pattern = STRBUF_INIT;
- 	size_t prefix;
- 	int ret = 0;
--	const char *git_dir;
- 	int already_tried_absolute = 0;
- 
--	if (opts->git_dir)
--		git_dir = opts->git_dir;
--	else
-+	if (!path)
- 		goto done;
- 
--	strbuf_realpath(&text, git_dir, 1);
-+	strbuf_realpath(&text, path, 1);
- 	strbuf_add(&pattern, cond, cond_len);
- 	ret = prepare_include_condition_pattern(kvi, &pattern, &prefix);
- 	if (ret < 0)
-@@ -284,7 +281,7 @@ static int include_by_gitdir(const struct key_value_info *kvi,
- 		 * which'll do the right thing
- 		 */
- 		strbuf_reset(&text);
--		strbuf_add_absolute_path(&text, git_dir);
-+		strbuf_add_absolute_path(&text, path);
- 		already_tried_absolute = 1;
- 		goto again;
- 	}
-@@ -400,9 +397,9 @@ static int include_condition_is_true(const struct key_value_info *kvi,
- 	const struct config_options *opts = inc->opts;
- 
- 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
--		return include_by_gitdir(kvi, opts, cond, cond_len, 0);
-+		return include_by_path(kvi, opts->git_dir, cond, cond_len, 0);
- 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
--		return include_by_gitdir(kvi, opts, cond, cond_len, 1);
-+		return include_by_path(kvi, opts->git_dir, cond, cond_len, 1);
- 	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
- 		return include_by_branch(inc, cond, cond_len);
- 	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
+Changes in v2:
 
+- Add missing signed-off-by lines.
+- Link to v1: https://lore.kernel.org/r/20260401-includeif-worktree-v1-0-906db69f2c79@black-desk.cn
+
+---
+Chen Linxuan (2):
+      config: refactor include_by_gitdir() into include_by_path()
+      config: add "worktree" and "worktree/i" includeIf conditions
+
+ Documentation/config.adoc | 50 +++++++++++++++++++++++++++++++++++
+ config.c                  | 25 ++++++++++--------
+ t/t1305-config-include.sh | 66 +++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 130 insertions(+), 11 deletions(-)
+---
+base-commit: 270e10ad6dda3379ea0da7efd11e4fbf2cd7a325
+change-id: 20260401-includeif-worktree-fcb64950dfba
+
+Best regards,
 -- 
-2.53.0
+Chen Linxuan <me@black-desk.cn>
 
 
