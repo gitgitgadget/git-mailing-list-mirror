@@ -1,83 +1,90 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6937D394787
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 17:53:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BE13D5663
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 17:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775238794; cv=none; b=coS0N4jhmmo0sQEY+Iq1KGATEVgjr7KkFPSZhgJEkz3p5n6hZWewcvcEdZ6guD4EhlAJDU8pg/s4LS/eIox0SelaxyHxZCULZfInQjzOLBlAxCU4NVTZ7IbmlKTElWVJvgqzl92zaQvhglXZCqYJxhRxblOvkOl3d9js6/qeLrQ=
+	t=1775238960; cv=none; b=XYFCva/EsYit21A6IjWjFOmXBJ1L4hgEN2S1hIhVyeoKVm5lDUixntq3OEmT+Sx8BPHDOyM8ZA68l9lCYr9Ry3rUwgtT3JWu9w1vLQKumN1O0wgtoFqklwb17CGWIuU3KM0qDZindg2bRbTQwln52HB0wVID27UUtiHWslFoGbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775238794; c=relaxed/simple;
-	bh=F87gvseUFgK5Sw2HoPq/dByhetNJ6KQ2SP1hcShXWLM=;
+	s=arc-20240116; t=1775238960; c=relaxed/simple;
+	bh=kaKtEBNQnyZC19F5UUlkeWPhh8E5D2JaHd/Wz8DXbfE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n67chOso7RMSdwtO0XBrqUwm3KktMZaSiyan4ibtUtoJOXd0pUnlea3/lDde35tbsVVeUrqVop3Kpwxp/Sq0sidsyRyQg3YuQCMJGOyarxa6E5jEg29uLBlbG6vyaFAADpFrX7gg5lSUMYtUtimMip0r0C/c5Q5Ee9a+DGjZJdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LQXgtgwA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sbD8zqYQ; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=AlytMocd1oo+vcomGU2oRSR8wyu2nfn9K6LV8Du0lFegsPrFZKdv5ljOGiagqHu8fTR+EBNV5Celbm2RmRTEO02kIAiCsr9faAxLJW5N8F0AoFrYpT3OuRp3U7+VcHrzSoKUCFZcBIcXVLGGQAUEN5sD0RM6uQPHwU+5de82n78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OgPCTZEi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A5QB0dl2; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LQXgtgwA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sbD8zqYQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2F5AD1D00038;
-	Fri,  3 Apr 2026 13:53:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OgPCTZEi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A5QB0dl2"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E90D37A01B2;
+	Fri,  3 Apr 2026 13:55:57 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 03 Apr 2026 13:53:12 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 03 Apr 2026 13:55:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1775238792;
-	 x=1775325192; bh=fFmw+0V3aP64pgGsaP/SlbWamZsphQvjhnhAaMFe3DQ=; b=
-	LQXgtgwAVRnYJRNrwR+LmOVpS2cjL6VLNbgSmja3EMTKkuKODFE+9kralHY0/bmZ
-	dryQv2Di8Z1Pr3A5O2EY3gtluU9BkPpkxmAV5nmc43srm++HLDoSAhZ4rkp0Zr4t
-	bSKU4sxQUmOrUxreq4CTx/pANy1dWmn1HTbjEQDPHxRKw5ixKxOdNlqrZ7g9IMsU
-	rZlJPCslTQBamlHDz4vE0iYkSODeKB3EaiMgbQpJgS4ornPS4rr0fv2S9LIhWjM1
-	XDhLpDPOUCvJl2YG6pCAwsZuO9je1Nq+3BGEXVD9iRnpUevP3xefSHvgJdKUdMIU
-	ltAgBLT9Fs9qQqdAgeGKWg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775238957; x=1775325357; bh=4NwmZfm9jv
+	XCVjnlnbeI+1TnOQzTrCP50wDQSxv+9Dw=; b=OgPCTZEipJ041x+haSOS9XptbQ
+	cY5VHnWN2lu2CY61Z5SQzJLAHua+CeXo6LJkCCJOagj0dtY3tLo97x/eXQltc9Eu
+	MykvCrV6dCkwNetOpg1Ngz+SpHRamcPl02VeUT1mnSKYx6rmHCDicrcQDNrTS3Fu
+	CPawt/ZCx7iWJtNF186uIoAVg/6lUxx4U57udXRxgc+PfYLYTuTEF7lr6+tiNg1f
+	7nE6eib9F5Yq294+zRrTYpKUfBeTWOc5uAO7M9IlIoe07PN68+JenBfIdnYW/4KE
+	35DjSgpRbV6UQDkYfXc2n8iXOEB3PpTQ3c0CTNcI6PM+sCDhlpHvC+bLAwEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775238792; x=
-	1775325192; bh=fFmw+0V3aP64pgGsaP/SlbWamZsphQvjhnhAaMFe3DQ=; b=s
-	bD8zqYQwPMsig5HDaHcxCR66gHsjFkt7iWQGE4oaXkpQfyTRkcxXZTdDdiqamfjw
-	yTlYl2VH1Wqn/ROyQrScva4LMtw7Hgm+sXSTHyEdJhH2dbRC3OeACdOFZWuucxhT
-	Yrqgm2qp1gXWBCZMzUM77A9G3AP5xrChNZi/2Zv5Cg1pnS3ZJcmlmiyNtUm75RXm
-	fR7yejSyFh+3M7aTo27n7ISoOk2gRpaTCzcSy3+4bYR2btvpUMlMKdtWMw+FWY5/
-	NnkwdlZGQZzBb1T/p1lLSd/9dB0UBZecwvxAN+OHGFxQn7fuJqPeBH0dief2lVEt
-	dOsS9yDfZ0lNuyS4yiTPg==
-X-ME-Sender: <xms:h_7PaU9j2V1hYGNR-7R_qYGbK-7lhMcwQjPfpFmwFsayg_lZF27Q6Q>
-    <xme:h_7PaTsDy7ZZgBykdoorxEtDwuHR6khpDjqlWKuafFT8Rlx6bZnD-Gey61RfEGS4-
-    CZHH6v4b8KorlBdaS4BdM_kCHWhIe4_s7bwwpOMqkTrGxEjDx6c>
-X-ME-Received: <xmr:h_7PafBvpctJiIfcA5LKIJOscT3go5V0maLI10XiaWvxFL17R-RocHhLcb4aymsAUD38mKFXVV-XNGNxcfjSuqSzybKne_Zv1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelheelucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775238957; x=1775325357; bh=4NwmZfm9jvXCVjnlnbeI+1TnOQzTrCP50wD
+	QSxv+9Dw=; b=A5QB0dl2ong38pFWTIN02AO6AX3L1xarTy1nFTlEPTBy4yXRyoc
+	dLPB32FftrYGslX7aitlkfrWu4uUwT4u/B6eX752YXx8TptfJhIb9HRNZ2hVyR9b
+	rFW9tnb+TVyJk1GAWgngVyYQTfwnK5mlSp6Kk4OdWiNLBptBEXhCXkf4xf21v6TR
+	vBfIyec/OJeKh7Ojur7d7pl7ugumpKfND/LCzIv5e4Yh8D6X/emDKwsg1lby8S9M
+	P+ija+Hw9frlhM707tJN/+rwuT0So9yrQD7cTiXgtrQHEOZA4CDbzWtd7JwAKUcq
+	Ge84p+JW4FfaJlt6OwwGPWuBiOjebdFg6hg==
+X-ME-Sender: <xms:Lf_PaTxtGT91F5TK8LHKwirhOZI2AB-hs2Wb2rWRnVTy06uT1KV_CQ>
+    <xme:Lf_Pad1K-6Np9Fa8wK95bb3l8ek6HvfdOXwJueRIKLPU6aNHQEiTXkuBCEA1NKalr
+    O5KINCYYm2DiK0STSZjdrA0ypobC81M2_2qkBMA04p_8r5Ni4CW>
+X-ME-Received: <xmr:Lf_PaQ9DG8jy58cwcghP9_3t5Qc_PbivQS-zoZBL4lCbGbxTDa8bod7W1KExKtILLCaWpt6CdGX20LUNT8I1Gk58-HflCgOKzw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeliedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedt
-    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjohgvrhhgsehthhgrlhhhvghimhdrihhopdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhk
-    shdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:h_7PaTVXYoIhfJz2p9NxLjpq8lTUQSjZ2LhkWuEzpkOYwnk3cJqmcQ>
-    <xmx:h_7PaVD1VeYQ-2sAzPYAm0jwHoWNg2VjgYaLboY5lAQs5tPpac596A>
-    <xmx:h_7Pae-gVSGiwc38_oo240NosEQAE9ROXtzETojRcLIFQ72_N32s8A>
-    <xmx:h_7PaUFTS0b171fZK_I4vsjTroitfqeiiHibbDE1kzxu6IAL3Yi_lA>
-    <xmx:h_7PaXGyX7SfDfPKYourD-AbYNh3tmPqZCJd9LDEJt-u2D3UDgSWhJcC>
+    lhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffue
+    efjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprggslhhoohhs
+    rggsrghtvghrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthho
+    pegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiug
+    guhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghh
+    rghnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Lf_Padq8O5NAED8g1Utv0lazR8hxXU39_46_ruREXcQQ0B8HxP9lfQ>
+    <xmx:Lf_PaaR0kwJX4R_RPYOWeO-oSGbJT3cNS828YvPZyLsiNFRK3Zr1QA>
+    <xmx:Lf_PaQO4ZWSlFuRcVmjd8BKOJU3x-fgCJDX8d_HcNh9AD2Z3cDNIAQ>
+    <xmx:Lf_PaYgHbSh4vJSlEvha6jm2Qf_L-kxWBBYMQ7g01YEZePgbQbWc-w>
+    <xmx:Lf_PacfTySMPBYx75XEBYfDtREeS7Oz5kRUgP6yCNluc5krQThSsJiN8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Apr 2026 13:53:11 -0400 (EDT)
+ 3 Apr 2026 13:55:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Joerg Thalheim <joerg@thalheim.io>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] config: retry acquiring config.lock for 100ms
-In-Reply-To: <20260403100135.3901610-1-joerg@thalheim.io> (Joerg Thalheim's
-	message of "Fri, 3 Apr 2026 12:01:35 +0200")
-References: <20260403100135.3901610-1-joerg@thalheim.io>
-Date: Fri, 03 Apr 2026 10:53:10 -0700
-Message-ID: <xmqqzf3klym1.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  karthik.188@gmail.com,  jltobler@gmail.com,  ayu.chandekar@gmail.com,
+  siddharthasthana31@gmail.com,  chandrapratap3519@gmail.com
+Subject: Re: [GSoC RFC PATCH 1/1] graph: add indentation for commits
+ preceded by a root
+In-Reply-To: <20260402211717.3604688-2-pabloosabaterr@gmail.com> (Pablo
+	Sabater's message of "Thu, 2 Apr 2026 23:17:17 +0200")
+References: <20260402211717.3604688-1-pabloosabaterr@gmail.com>
+	<20260402211717.3604688-2-pabloosabaterr@gmail.com>
+Date: Fri, 03 Apr 2026 10:55:56 -0700
+Message-ID: <xmqqv7e8lyhf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,86 +92,28 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Joerg Thalheim <joerg@thalheim.io> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> From: Jörg Thalheim <joerg@thalheim.io>
->
-> When multiple processes write to a config file concurrently, they
-> contend on its ".lock" file, which is acquired via open(O_EXCL) with
-> no retry. The losers fail immediately with "could not lock config
-> file". Two processes writing unrelated keys (say, "branch.a.remote"
-> and "branch.b.remote") have no semantic conflict, yet one of them
-> fails for a purely mechanical reason.
->
-> This bites in practice when running `git worktree add -b` concurrently
-> against the same repository. Each invocation makes several writes to
-> ".git/config" to set up branch tracking, and tooling that creates
-> worktrees in parallel sees intermittent failures. Worse, `git worktree
-> add` does not propagate the failed config write to its exit code: the
-> worktree is created and the command exits 0, but tracking
-> configuration is silently dropped.
->
-> The lock is held only for the duration of rewriting a small file, so
-> retrying for 100 ms papers over any realistic contention while still
-> failing fast if a stale lock has been left behind by a crashed
-> process. This mirrors what we already do for individual reference
-> locks (4ff0f01cb7 (refs: retry acquiring reference locks for 100ms,
-> 2017-08-21)).
->
-> Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
-> ---
->  config.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
-
-OK.  This is consistent with the default used for a ref update with
-files backend.  Various subsystems use their own value randomly
-chosen out of thin air, it seems.  credential-store uses 1000ms, gc
-uses 150ms to interact with launchctl, refs have their own per
-backend, etc.
-
-> diff --git a/config.c b/config.c
-> index 156f2a24fa..f7aff8725d 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -2903,6 +2903,14 @@ char *git_config_prepare_comment_string(const char *comment)
->  	return prepared;
->  }
+> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+> index 28d0779a8c..0333fea95a 100755
+> --- a/t/t4215-log-skewed-merges.sh
+> +++ b/t/t4215-log-skewed-merges.sh
+> @@ -370,4 +370,140 @@ test_expect_success 'log --graph with multiple tips' '
+>  	EOF
+>  '
 >  
-> +/*
-> + * How long to retry acquiring config.lock when another process holds it.
-> + * The lock is held only for the duration of rewriting a small file, so
-> + * 100 ms covers any realistic contention while still failing fast if
-> + * a stale lock has been left behind by a crashed process.
-> + */
-> +#define CONFIG_LOCK_TIMEOUT_MS 100
-> +
+> +test_expect_success 'log --graph with root commit' '
+> +	git checkout --orphan 8_a &&
+> +	test_commit 8_A &&
+> +	test_commit 8_A1 &&
+> +	git checkout --orphan 8_b &&
+> +	test_commit 8_B &&
 
-Making this configurable would make a cute chicken-and-egg problem?
+On case challenged filesystems, you cannot have a commit "8_a" and
+"8_A" without being ambiguous.  The CI failures from last night are
+all from Windows and macOS X.
 
-;-)  No, no need for that---just kidding.
 
-Will queue.  Thanks.
 
-> @@ -2986,7 +2994,8 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
->  	 * The lock serves a purpose in addition to locking: the new
->  	 * contents of .git/config will be written into it.
->  	 */
-> -	fd = hold_lock_file_for_update(&lock, config_filename, 0);
-> +	fd = hold_lock_file_for_update_timeout(&lock, config_filename, 0,
-> +					       CONFIG_LOCK_TIMEOUT_MS);
->  	if (fd < 0) {
->  		error_errno(_("could not lock config file %s"), config_filename);
->  		ret = CONFIG_NO_LOCK;
-> @@ -3331,7 +3340,8 @@ static int repo_config_copy_or_rename_section_in_file(
->  	if (!config_filename)
->  		config_filename = filename_buf = repo_git_path(r, "config");
->  
-> -	out_fd = hold_lock_file_for_update(&lock, config_filename, 0);
-> +	out_fd = hold_lock_file_for_update_timeout(&lock, config_filename, 0,
-> +						   CONFIG_LOCK_TIMEOUT_MS);
->  	if (out_fd < 0) {
->  		ret = error(_("could not lock config file %s"), config_filename);
->  		goto out;
