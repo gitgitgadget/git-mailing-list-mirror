@@ -1,146 +1,130 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A691D28F50F
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 17:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72FD35F603
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 17:41:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775237730; cv=none; b=Nd/qQq/XEs8XniVaZH4IkUgNx3EgX8UYiYrvBUiwLvHPdGZfwnDvdQmnj5pVcSpnyzM+Pfftxsjnt6h0R5lW6cbXqJDuvT14sw4O8WLt7zk6adMTZrnvWtpx9VpUZdruzHRZ/3o4ya7E1CHuvrvcKP5svAbQVpsn84gwVb+sfaQ=
+	t=1775238061; cv=none; b=Byf13xX8BmbSVNqVMjzDw7nH6t5C0cRT1VS39w+7oKOa7kANFnfF+L1JPghxHBEHC1cWULQgQl1/5/H/3meOCh8Pe4zFZh2dDuwVyuMBBhrVW0VjeJ8wXYaf74L7PwnMhRw5sO9a5L7/wH2vZOXg5whcHGOjLYYzxe9FyWSMp2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775237730; c=relaxed/simple;
-	bh=/gYu1y0Runsnmmj9lyrij/bbX7p6E6gD+uv7FwS1pBA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=POwhTG15+n7y7hHo4mDVj5vjlIAP6i+1hsX8S/mejEnsMVaHM0Ih2DuP3aT06t8aNkCr8fvt34NHWLDSYMGB/DE9874K5HrXQNIKfQ0Qfa6bMzqgO2/WnFOhaMsmIaggAO55qKGRioh4fErQ8b7uIZ9xHInEVliTN3uUlbWl7rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=np8VDuK9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FDujzPmJ; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775238061; c=relaxed/simple;
+	bh=Z5CPITwQix6w8e5c+33S1Ujm50vjQWIsLYApqZiMT4Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G1xFeF/TXQWGbn1M5TIKwZyvZCjMUZUMUcO/WfOKxYgipDcMPMTDtU8lylpwSbRFjSJczq1EE7grYsOpcBarSBN7IOjFJmrI1VfrbCUrjFdCf+qef9GAFrJb4S0zP1tqHgRYp6AlqZ+S4msXlp8O/paRnCyVZqd5GZufdqHpuBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qmVjm82N; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="np8VDuK9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FDujzPmJ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id CF11B1D00071;
-	Fri,  3 Apr 2026 13:35:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 03 Apr 2026 13:35:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775237726; x=1775324126; bh=KBLGj7iwGm
-	H09keArAZJyY0UjTREwbGoVTY+pw4QQcc=; b=np8VDuK9cEnZ2/sySm6XK4hrmB
-	NSlf5yWZccvh6ZsGjBwa5dJAtcT5UE/YgAsKw3OBeC8CiBNxq5SCfezW1xpQfQYS
-	wvx24ZD1MtY8XpS6yXXmdaoSc4B//tzES2oc1nZXarpso7jbUs+ZU76MumLNqBVU
-	6UGGkPPjpxquZko7ws1urC+4P4i+TS49DEKCRB3HfuN4YKnnkwQkE/cLDb2uNqBy
-	kqnp2f1raya5ye8XNVUIN1qotq5HVEotHcUPLvo+5rOEpBdv8udBV54Xwql7Y0rK
-	5vw0qhoFg1kMPnX+aKq+CYLTzQL3BQtHHYV227gSFyldooHZimzQBRkSDaxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775237726; x=1775324126; bh=KBLGj7iwGmH09keArAZJyY0UjTREwbGoVTY
-	+pw4QQcc=; b=FDujzPmJZjOiiwCbSoE9OhxqPn65jc6BstMJuP0BiZjy7PNou2h
-	aegQe3+kWo3M0qGpkR+vlIMkUUDrmP1LVu8jLLWKHs/OGKRh1g3QH26KqZaKyyen
-	so3U1cG3ZC6siEzV9LlKV4IQDUwC/6TaW0C54AtU2vBE2nMNETSs7cFYCeFilqhf
-	4tVe2wV7AXWo++6GH32Jw4FsaqciMEUGQ1ENbTFfBEVfBGVT4DKMfMbSmKZtPDKb
-	dw6huxV3CrywGZkNLTgqa1ZqQGD5W5pw7x/RvX4XLqXaG+ZswXpTRDjXnmljppxT
-	USD3SRmu22fMvf0+ynhZO/Zief6LhKy3Ccw==
-X-ME-Sender: <xms:XvrPaWCnJPbQLFqhj-Csm20zbj76dCx_odSJuErJzgdCXXX3317-WA>
-    <xme:XvrPaXZqqGNVnCsZm_FoLbQY9EHq1lTUoSUeJN4iu1_keSVlBa6Eq6FWyE_ldptlH
-    8YfntQG7TZ7LLrNMeUQ0_bB4AOzvBOMfcdNSxQHCclF_13wP116>
-X-ME-Received: <xmr:XvrPaR7rNdphB7kDcold7MAEQ3IuoUNqfnstDE5NctiRTjzn7yMC2ZdU7Wiy0eM5tBWywiyjjNCBvtkok7inGelqU4hb6MAy7Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelheehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfeijedt
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
-    hinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XvrPaQY6e6MKWNzLsL2ODPyhqhbrVjVSSWdHHidAMlUnSvY9DMV2YQ>
-    <xmx:XvrPaYjVNjjdCsQZjGoW_UTOoYD76WA5ide5n7E5ukt3iT63tjL9Mw>
-    <xmx:XvrPaZ90jQCqFxYWu-jbv2R0PwvVHaT5p1cBRJrhopgN2323o2l3KA>
-    <xmx:XvrPabrJzg1LfVBnQ8DdhstxM4M30r0HMIAW3nirQ0U5umpWbHMF1w>
-    <xmx:XvrPaWwVYmKN5z-KEthMXFx7wlVmwn79RfJ0rbHbVGivGtsKNSx79rAp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Apr 2026 13:35:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] cmake: use writev(3p) wrapper as needed
-In-Reply-To: <pull.2078.git.1775206502134.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Fri, 03 Apr 2026 08:55:02
-	+0000")
-References: <pull.2078.git.1775206502134.gitgitgadget@gmail.com>
-Date: Fri, 03 Apr 2026 10:35:24 -0700
-Message-ID: <xmqq5x68ne03.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qmVjm82N"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2b0baebcb55so5914445ad.0
+        for <git@vger.kernel.org>; Fri, 03 Apr 2026 10:41:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775238060; x=1775842860; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fqadWfVP/3LGoZVV+xACZrJXu8+PqmVj816dB4SEv1w=;
+        b=qmVjm82NvY2Pl9djdXNXGIEf8HMg7RgZtpJe7Mpr176scRuABGS97sF19C6V2jecqs
+         Yu07qCqMkS0GCAnce8Y+OgekfxN/1oN6cH/cjQFwHmDHxZK5mDm3Xy99HcRwmNokSa9Y
+         IMvWykHwoIOW9JhbEzJfS1RzGmY5/Qtlu8k3YQU6KqQG9oIU/c+k5/vZJYmlQdhuJ7Ab
+         X5NRchmLW0bnofVfYKqqZVNkDvE9EJvURkV6BzZB5N3v8qFHs/mhmsU5NhayED3M8N4S
+         Gs8D7Z+K+qxcWmaCrTzF4Ka0DgtsKS7uRpTOaJ+RkIkN8UM8WiiUOWOm7ZCPVPX4dVIG
+         TPuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775238060; x=1775842860;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fqadWfVP/3LGoZVV+xACZrJXu8+PqmVj816dB4SEv1w=;
+        b=Nk2xdBnKjuYg/rZXQO2sphkiKWS+VBT+mE/xcZVYen3zKXg94IM6NwPOSiBSJQfdug
+         mICZTHUr+1/qcl7ywCLUxzrzvPT9XG9hzrSOmDibStShsyeUvuvjce2Ohr7tmHKdaDMi
+         aONjALMT/rVEMlsBOlnXvWr2nKodMcg/6Mv6aYWRYlo7LIeALcXLQ3MsbsUc7MOpHNwP
+         JcQ1F23Riov9iaQojBqRpEO1Kr9I/o9/6p781XnmvYGYUTQJKcs6H359LEAVm82sW4Ml
+         +5BZDYaMf5GYuHqUZrWbMNRoxTva6jyyDYr5svLHA6xvE93xUvVuxjD4FrJXcKB+DgKu
+         uqUw==
+X-Forwarded-Encrypted: i=1; AJvYcCXn14kbm8GaGvNfayYOZwt9d5Q4we8PUxEPszZDX+XozG5D37EtMu3AB4zZ3fFgbMzfMGs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwilCav5xuGN+TkscrZJ/ovZEqP7YHJmTGObTsV1Hsl3YOZSKo3
+	NzHy+pgwLa12CCV1AjR5Z4r3RrB4nh7+RyQa3epR7xI9RLsCA5cCpzxC
+X-Gm-Gg: AeBDies0df1dy3QCY2EmxUeGDJjrIj1ocmydlXMdpErKGf1nmRGYfHSqYOmkmdGLzK8
+	WTeYPOwMxzgjTyIcl9Ld9Gu7kMNZxe0qKnIz9YZGFZbMOKg49nxRb/motAhatlsY9QdzaT4S29O
+	OznvpjpI2uIzfQXM8FsoLjagbuJ9+ZmDuT06kxJjuke8tbERBm1n7drT9GkLvReD0GlWwlWSaBi
+	bTnyeb7pMCYpRxoQrY33SW7yNp3FFlG0rXnWDxVRETxJzr9UCu/9fhfyfHmId9vgWR4kZ1wmoD3
+	LGKT4LrIFjaKRz82szRTEA0MK6rR97D4aNr+5k7QzZXx+ZN1ZF2wgeX6NTBgWcS+PIuEfGmtTjo
+	2HA5ZX9wrXrJeKjR3A/gu0X2ZxUyUYQBaFuv15bFxYhm+ADdc10LcWRHq7LlzYHd1wPO40XxM7G
+	JzHEwvvxFtuNWo9a3PzgB9nnBl6qV5Y8cASNUgdBi/pjcDCohMG7k+bGqtT/HyUyEC/c+iG0Qje
+	6NcouQGlFo=
+X-Received: by 2002:a17:902:f54a:b0:2b0:ac1e:972e with SMTP id d9443c01a7336-2b2819577b1mr24111275ad.8.1775238059849;
+        Fri, 03 Apr 2026 10:40:59 -0700 (PDT)
+Received: from [192.168.0.109] ([155.69.180.3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2747af6e7sm64447995ad.37.2026.04.03.10.40.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Apr 2026 10:40:59 -0700 (PDT)
+Message-ID: <5017740b-4437-4e55-b019-244b33eed05a@gmail.com>
+Date: Sat, 4 Apr 2026 01:40:55 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/3] refs: add struct repository parameter in
+ get_files_ref_lock_timeout_ms()
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, gitster@pobox.com, bkkaracay@gmail.com
+References: <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260403120938.1142533-1-shreyanshpaliwalcmsmn@gmail.com>
+ <20260403120938.1142533-2-shreyanshpaliwalcmsmn@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <a3205153416@gmail.com>
+In-Reply-To: <20260403120938.1142533-2-shreyanshpaliwalcmsmn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 4/3/26 20:08, Shreyansh Paliwal wrote:
+> -long get_files_ref_lock_timeout_ms(void)
+> +long get_files_ref_lock_timeout_ms(struct repository *repo)
+>   {
+>   	static int configured = 0;
+>   
+> @@ -997,7 +997,7 @@ long get_files_ref_lock_timeout_ms(void)
+>   	static int timeout_ms = 100;
+> 
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> This is a companion patch of 3b9b2c2a29a (compat/posix: introduce
-> writev(3p) wrapper, 2026-03-13) where support for using the `writev()`
-> wrapper was introduced in the `Makefile` and the Meson-based build, but
-> the CMake build still needs that treatment, too.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     cmake: use writev(3p) wrapper as needed
->     
->     This was necessary to get Git for Windows v2.54.0-rc0's CI builds to
->     pass successfully.
+A very minor and trivial question: the 'static' keyword is still present 
+here. This is entirely understandable, given that you mentioned earlier 
+that...
 
-Thanks.
+> Hi Yuchen,
+> 
+> I have acknowledged this in a previous reply to Burak. As stated there,
+> this is a valid issue and would require moving the config into
+> repo-settings struct.
+> In this patch, I focused on removing the dependency on
+> 'the_repository' while preserving existing behavior. Global state
+> removal and multi-repo correctness is an incremental process,
+> so I would prefer to handle this in a follow-up change.
+> I'll also update the patch title in the next version to better reflect
+> the scope of the change.
 
-I should have been paying a bit more attention when I saw a patch
-that touches meson.build files, I think.  Sorry about the slippage.
+But if that is the case, the accuracy of this line in the commit message:
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2078%2Fdscho%2Fwritev-vs-cmake-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2078/dscho/writev-vs-cmake-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2078
->
->  contrib/buildsystems/CMakeLists.txt | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-> index c6cfb874ef..dce9c84d0b 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -376,7 +376,7 @@ endif()
->  #function checks
->  set(function_checks
->  	strcasestr memmem strlcpy strtoimax strtoumax strtoull
-> -	setenv mkdtemp poll pread memmem)
-> +	setenv mkdtemp poll pread memmem writev)
->  
->  #unsetenv,hstrerror are incompatible with windows build
->  if(NOT WIN32)
-> @@ -421,6 +421,10 @@ if(NOT HAVE_MEMMEM)
->  	list(APPEND compat_SOURCES compat/memmem.c)
->  endif()
->  
-> +if(NOT HAVE_WRITEV)
-> +	list(APPEND compat_SOURCES compat/writev.c)
-> +endif()
-> +
->  if(NOT WIN32)
->  	if(NOT HAVE_UNSETENV)
->  		list(APPEND compat_SOURCES compat/unsetenv.c)
->
-> base-commit: 6e8d538aab8fe4dd07ba9fb87b5c7edcfa5706ad
+> This reduces reliance on the_repository global.
+
+..is open to question. Or perhaps it would be worth mentioning:
+
+"Note: This function still uses static variables, which means it does 
+not fully support in-process multi-repo usage yet. This will be 
+addressed in a follow-up by moving the configuration to the 
+'repo-settings' struct, but changing the signature is a necessary first 
+step..."
+
+or something (shorter)?
+
+To reiterate, I think this is a minor issue, so it would be better if 
+you decide for yourself. Other parts look good to me. ;)
+
+Regards, Yuchen
+
+
