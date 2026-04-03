@@ -1,55 +1,55 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C3B374E55
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 06:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761C735E952
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 06:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775196172; cv=none; b=LGo14cwNKldgzcsqgTiM4c5MdiQks9RYD2FO5p+l0k3apqYBxlVcezvJvfuHm8ivjdbcWMeLLiw9sQPY4yY9Lf19ALXA6vonR5Vbay02+fuJvSkZkm9j+BmspT5iRwmRMKrrh+7PC/boSZPs96MbU9s7QPLI/EWjFDWrXj82hJ8=
+	t=1775196175; cv=none; b=r7a1kkShi2Hf6WdNqL/LY+TQ1OQfsQVdI9VdwGPoExsQdUJGE/0p3ay/X0Qd29ZrhERULVgAER5BPF4OBa8qTjqmTKeuBaPq3VjQ4eZ8bdLHJEG97VW6XOutq15adJlDdvousxLC6IPBNU4cCm952GM40dcNCIv8wQl9exfPvOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775196172; c=relaxed/simple;
-	bh=qmLdHj4jnIYQ/dr7QanPVJz6hCpfOmQJjnPME2hpD2I=;
+	s=arc-20240116; t=1775196175; c=relaxed/simple;
+	bh=QkA8p1SidygftaQ827xqJHaXTNp4CzJDzcsouftvMtc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XIqgjmG6PrNhoAqLu9PKVS84EeWq0UwqoXDD36Ib3BC8wBhrTa9oWFK0DwWu0dNNQdQ6PkpFIOvM52QWIxj7P6z7JpkpsrZAsQFIZ39xrFdcu1dsrGZ2fJLa+urn75j8KP9wUWgh7liAdMZnuxMoyI5Fsklk8XLctn3qSWzUxRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qJ/mmxET; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PoLFAGL8; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=DX03ii9b2tv/kIVg4jD2PrindO5r8TKT34lZ69k7pJLtHh4gKPByI2gkFbW1TAMksVvAmvujYnYBAPRzCDsX4WRvnnwbipDpX9yJxz/Fgxt3PtV/JbN6fmarB4aFWVQN+O6MHFG9IaG8rJkqgGjnCZ4LiIzr7yBj1iEJwlS+bW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ICe984Cr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wli4QQ+g; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qJ/mmxET";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PoLFAGL8"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 756BA1D000F9
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 02:02:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ICe984Cr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wli4QQ+g"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F65D7A0105
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 02:02:46 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Fri, 03 Apr 2026 02:02:43 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 03 Apr 2026 02:02:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775196163;
-	 x=1775282563; bh=+mujMXqaSYYOyQGbfMSvbGGn21TFvWxfHnz3bo0KQUc=; b=
-	qJ/mmxETfCP9Um6lMXV6vixtJ0iF8orUbppu7wf72JVXLOwQyF9IRWGuUztfck8K
-	7ylTFMbgKjSBIEai66t96OrIb0ajaojkY6Xlg4px/9zw757Kkl2afjeWM2xj0RIq
-	RwkoTK2V7KCiE6YaTcfgMJEHLYRI24qZD3hbwgGDSWa9PMY/0aSM/uquYd4vsbnb
-	JRqftcmi3aZe9DWHeQnx37OW5PiwAi0IadVowk1h8zyX8Ob5eWZtIib+RRDY5Pa8
-	7EuRJBTlK0M52hXe76Z+vCMx/WkvKimenQyStlVCrTFxZGaXP++xO0VcnPEVRhr2
-	+xlW1Cx8YW4VzIrv2jKdFw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775196166;
+	 x=1775282566; bh=nB8d0jYwSYIJdbtHpvsPBjnDrcbM009niIzG27rijNk=; b=
+	ICe984Cr49KMVKT+T5irfTmjvKZrCMWCNtqsSPf1eEnp+jG6A+wUoGO9qlNth4kx
+	gLhNwRGzdjhcKypJmUGcCB5LOydwOFdo63oG9aExV31Nf0gGX8D7FijQHoYIQBTe
+	z0LuG7MuzI5Os0W8ciPdLHgRAoa/u16bQwkli4vNrZixGMKyzoa8C6pG2cCPhYEP
+	wYLPNDguEAaHn+wt1Vv+ZAQS4yRBhjJpEf7Rwer0tI9sIbRm5XhM3gVTYvLAfu7z
+	uRJfleE0tcOSPktMpqKUTC6i7esW42+GvIpNmAc9ILiDb+zfqVctB68cCA8wInzk
+	P0ySXRBIOHI+r6UktSsqpA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775196163; x=
-	1775282563; bh=+mujMXqaSYYOyQGbfMSvbGGn21TFvWxfHnz3bo0KQUc=; b=P
-	oLFAGL8TXKnk9zPWHQZKTOqokxIxpHsranXwoYaoWiW91zXg+le6lPfGv2GJQd4c
-	4DwOWc+J/f8CARTKBcW3MLHhlCyNOBj+mAxMtsBHUC62QryB5BL3lgLosdnCoXS/
-	XyQWhwqCeGbIOfYrE+19dKC+kV1Mm8u/jFhPBrEvbZuNnWs2KSqDBUfx26Ge3n4z
-	v5rMmbw1UEKhtj2gSmvjolezzC4iNioODzxKlLTk1/hTlR5+TcvTQsm4HARRogWH
-	ZO+RtdtCQ8s8an5hmeDi9l/83Ster8qMFdAZJkjvQz8whKue4ZZNMNCfcqdCVeYq
-	y/Q3HK78nTuYQ+6ZOrz8w==
-X-ME-Sender: <xms:A1jPaQJikfMmTFSmFO8UKGHrClMoM7lfPDwTBUtNO3SHoTnD4O8hrw>
-    <xme:A1jPaXGbbA-6CRvGSZyQUDSYhADE1ujZNEfQyZzqpf7neIuRKAQvC5g0bDOwAO589
-    vu2fWL5REtbqteR2V70gl1AIcwfS_7-ZUpc5UFAqj4gn7cqHKAdnA>
-X-ME-Received: <xmr:A1jPaWUgNOs_3TunU-NPFc5GSkd0SMWfCwtk1zUHpJrb6r1vxQo6SJZhggb3VAFAWmLRx1Q8rFT5X5Jy3Omwa6G1QhXkvclc-gZmPIISRxo>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775196166; x=
+	1775282566; bh=nB8d0jYwSYIJdbtHpvsPBjnDrcbM009niIzG27rijNk=; b=W
+	li4QQ+gvT1t7xeSOopd05RZVfVt9UVoLgcXHdBBnNCNhlpDl42qCNsQo4k0q+c3M
+	+nQuaJbnswY16aaE5iGOz8r6F2keAIRCOGMZSLnAxhPFwoKhrmKeQHdzuXu794mY
+	Y6T2FuqnjZWC6UCRLl/J00RiM1bRjVinvpes1wQW5S8n5PtFA2II5kT7eW/fbXvX
+	+nQ2+5vMtCsDeC2jlI6XNe9Rs7q24+7r5eaj1WKv/IqCQL8fM11F5ii1wfwi5zQ2
+	RsoKbwgLQ97ED+lJ+hUeAjjUJzKZcyHvYWAnpXIekcfJEzY+vhJUeR4xM0Nnhgh1
+	E2MhOv2PiiHy3udGVGV9Q==
+X-ME-Sender: <xms:BljPac3H0faZJNYSWYPFBJmdBOnVnlvjHwMP8trHwvjJqLM2LPJxsw>
+    <xme:BljPaeBUcC6Xpm61ZW-JaZgadORoqgfsZRujQZ7c_uBGNtj97nOve7eXlWWYRHLV7
+    eHuUaX-hZgqP60qvHRL3tWjU2som5f-bgkh3lRTLt1KjFAncPWxkQ>
+X-ME-Received: <xmr:BljPaajOt6x9DFdPMVri_b2cfQrYHRQokn-lxmAO6nudJvhB4PXf1Aq1c9kLhJpDljRL-UgbFbVv6V4Px9YFi0qxFEHeWMKIUINiQ1-_fSc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtre
@@ -59,21 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekudeiucetufdoteggod
     pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
     gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
     gh
-X-ME-Proxy: <xmx:A1jPaSgK3tVYPKPMiJixMkX0Z7fDSYuX4s05VD2VmZXCo6JrABhiMA>
-    <xmx:A1jPaXQ4rzo6EU4B76iofrpn0KwhEzUiH9AcdbKB387Y70uwjxF4Hg>
-    <xmx:A1jPaVEu7s3DN1RjNWdori-ptrt06UYYfbLMJ7fuhaZZ9xMXfnwMxg>
-    <xmx:A1jPafmHsau9zpB6Y4Y0w8SMnMioHZScoKPerWrCfAg2gGx4rcN8qw>
-    <xmx:A1jPaZoziQW7HM8WuUi5Jlf19l6EEgtoVN1Cfyx8-UHkAny5cxOWnxby>
+X-ME-Proxy: <xmx:BljPaa9uQ0k3Dj5f1k9AMU1llDg0HZ-nvspYoxYr6e2zkyxnIMbseg>
+    <xmx:BljPae9PoDNNfGLgnI7t3l8Q9yH_kmBmLIfCmoepHbRVmmcDXNv0kQ>
+    <xmx:BljPabCvEbf2YfKoCK5HKXit2gaoTYQYp0aprgig9JZuUMk7keeVXQ>
+    <xmx:BljPaWz3nnv2CNNG-n0CLYKJSIbm8Ar_C_H4yHkPWSGW-whiciyvww>
+    <xmx:BljPaeHHPErl9klHwIwlJulS6aCm4Ig-nJBIvqoPQngYhPlyCM38s6pF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 3 Apr 2026 02:02:42 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 3 Apr 2026 02:02:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6eb7f33b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 6292de2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 3 Apr 2026 06:02:42 +0000 (UTC)
+	Fri, 3 Apr 2026 06:02:45 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 03 Apr 2026 08:01:57 +0200
-Subject: [PATCH 10/16] odb/source-inmemory: convert to use oidtree
+Date: Fri, 03 Apr 2026 08:01:58 +0200
+Subject: [PATCH 11/16] odb/source-inmemory: implement `for_each_object()`
+ callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,187 +83,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260403-b4-pks-odb-source-inmemory-v1-10-8b8d1abaa25e@pks.im>
+Message-Id: <20260403-b4-pks-odb-source-inmemory-v1-11-8b8d1abaa25e@pks.im>
 References: <20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im>
 In-Reply-To: <20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.1
 
-The inmemory source stores its objects in a simple array that we grow as
-needed. This has a couple of downsides:
-
-  - The object lookup is O(n). This doesn't matter in practice because
-    we only store a small number of objects.
-
-  - We don't have an easy way to iterate over all objects in
-    lexicographic order.
-
-  - We don't have an easy way to compute unique object ID prefixes.
-
-Refactor the code to use an oidtree instead. This is the same data
-structure used by our loose object source, and thus it means we get a
-bunch of functionality for free.
+Implement the `for_each_object()` callback function for the inmemory
+source.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-inmemory.c | 72 +++++++++++++++++++++++++++++++++++++--------------
- odb/source-inmemory.h | 13 ++--------
- 2 files changed, 54 insertions(+), 31 deletions(-)
+ odb/source-inmemory.c | 86 +++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 70 insertions(+), 16 deletions(-)
 
 diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index 890e2a8c7c..22bae6927e 100644
+index 22bae6927e..0ac20df323 100644
 --- a/odb/source-inmemory.c
 +++ b/odb/source-inmemory.c
-@@ -2,20 +2,29 @@
- #include "odb.h"
- #include "odb/source-inmemory.h"
- #include "odb/streaming.h"
-+#include "oidtree.h"
- #include "repository.h"
- 
--static const struct cached_object *find_cached_object(struct odb_source_inmemory *source,
--						      const struct object_id *oid)
-+struct inmemory_object {
-+	enum object_type type;
-+	const void *buf;
-+	unsigned long size;
-+};
-+
-+static const struct inmemory_object *find_cached_object(struct odb_source_inmemory *source,
-+							const struct object_id *oid)
- {
--	static const struct cached_object empty_tree = {
-+	static const struct inmemory_object empty_tree = {
- 		.type = OBJ_TREE,
- 		.buf = "",
- 	};
--	const struct cached_object_entry *co = source->objects;
-+	const struct inmemory_object *object;
- 
--	for (size_t i = 0; i < source->objects_nr; i++, co++)
--		if (oideq(&co->oid, oid))
--			return &co->value;
-+	if (source->objects) {
-+		object = oidtree_get(source->objects, oid);
-+		if (object)
-+			return object;
-+	}
- 
- 	if (oid->algo && oideq(oid, hash_algos[oid->algo].empty_tree))
- 		return &empty_tree;
-@@ -29,7 +38,7 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
- 						enum object_info_flags flags UNUSED)
- {
- 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
--	const struct cached_object *object;
-+	const struct inmemory_object *object;
- 
- 	object = find_cached_object(inmemory, oid);
- 	if (!object)
-@@ -85,7 +94,7 @@ static int odb_source_inmemory_read_object_stream(struct odb_read_stream **out,
- {
- 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
- 	struct odb_read_stream_inmemory *stream;
--	const struct cached_object *object;
-+	const struct inmemory_object *object;
- 
- 	object = find_cached_object(inmemory, oid);
- 	if (!object)
-@@ -110,15 +119,21 @@ static int odb_source_inmemory_write_object(struct odb_source *source,
- 					    enum odb_write_object_flags flags UNUSED)
- {
- 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
--	struct cached_object_entry *object;
-+	struct inmemory_object *object;
- 
--	ALLOC_GROW(inmemory->objects, inmemory->objects_nr + 1,
--		   inmemory->objects_alloc);
--	object = &inmemory->objects[inmemory->objects_nr++];
--	object->value.size = len;
--	object->value.type = type;
--	object->value.buf = xmemdupz(buf, len);
--	oidcpy(&object->oid, oid);
-+	if (!inmemory->objects) {
-+		CALLOC_ARRAY(inmemory->objects, 1);
-+		oidtree_init(inmemory->objects);
-+	} else if (oidtree_contains(inmemory->objects, oid)) {
-+		return 0;
-+	}
-+
-+	CALLOC_ARRAY(object, 1);
-+	object->size = len;
-+	object->type = type;
-+	object->buf = xmemdupz(buf, len);
-+
-+	oidtree_insert(inmemory->objects, oid, object);
- 
- 	return 0;
- }
-@@ -162,12 +177,29 @@ static int odb_source_inmemory_write_object_stream(struct odb_source *source,
- 	return ret;
+@@ -32,6 +32,28 @@ static const struct inmemory_object *find_cached_object(struct odb_source_inmemo
+ 	return NULL;
  }
  
-+static int inmemory_object_free(const struct object_id *oid UNUSED,
-+				void *node_data,
-+				void *cb_data UNUSED)
++static void populate_object_info(struct odb_source_inmemory *source,
++				 struct object_info *oi,
++				 const struct inmemory_object *object)
 +{
-+	struct inmemory_object *object = node_data;
-+	free((void *) object->buf);
-+	free(object);
-+	return 0;
++	if (!oi)
++		return;
++
++	if (oi->typep)
++		*(oi->typep) = object->type;
++	if (oi->sizep)
++		*(oi->sizep) = object->size;
++	if (oi->disk_sizep)
++		*(oi->disk_sizep) = 0;
++	if (oi->delta_base_oid)
++		oidclr(oi->delta_base_oid, source->base.odb->repo->hash_algo);
++	if (oi->contentp)
++		*oi->contentp = xmemdupz(object->buf, object->size);
++	if (oi->mtimep)
++		*oi->mtimep = 0;
++	oi->whence = OI_CACHED;
 +}
 +
- static void odb_source_inmemory_free(struct odb_source *source)
- {
- 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
--	for (size_t i = 0; i < inmemory->objects_nr; i++)
--		free((char *) inmemory->objects[i].value.buf);
--	free(inmemory->objects);
-+
-+	if (inmemory->objects) {
-+		struct object_id null_oid = { 0 };
-+
-+		oidtree_each(inmemory->objects, &null_oid, 0,
-+			     inmemory_object_free, NULL);
-+		oidtree_clear(inmemory->objects);
-+		free(inmemory->objects);
-+	}
-+
- 	free(inmemory->base.path);
- 	free(inmemory);
- }
-diff --git a/odb/source-inmemory.h b/odb/source-inmemory.h
-index 14dc06f7c3..02cf586b63 100644
---- a/odb/source-inmemory.h
-+++ b/odb/source-inmemory.h
-@@ -3,14 +3,7 @@
+ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+ 						const struct object_id *oid,
+ 						struct object_info *oi,
+@@ -44,22 +66,7 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+ 	if (!object)
+ 		return -1;
  
- #include "odb/source.h"
- 
--struct cached_object_entry {
--	struct object_id oid;
--	struct cached_object {
--		enum object_type type;
--		const void *buf;
--		unsigned long size;
--	} value;
--};
-+struct oidtree;
- 
- /*
-  * An inmemory source that you can write objects to that shall be made
-@@ -20,9 +13,7 @@ struct cached_object_entry {
-  */
- struct odb_source_inmemory {
- 	struct odb_source base;
+-	if (oi) {
+-		if (oi->typep)
+-			*(oi->typep) = object->type;
+-		if (oi->sizep)
+-			*(oi->sizep) = object->size;
+-		if (oi->disk_sizep)
+-			*(oi->disk_sizep) = 0;
+-		if (oi->delta_base_oid)
+-			oidclr(oi->delta_base_oid, source->odb->repo->hash_algo);
+-		if (oi->contentp)
+-			*oi->contentp = xmemdupz(object->buf, object->size);
+-		if (oi->mtimep)
+-			*oi->mtimep = 0;
+-		oi->whence = OI_CACHED;
+-	}
 -
--	struct cached_object_entry *objects;
--	size_t objects_nr, objects_alloc;
-+	struct oidtree *objects;
- };
++	populate_object_info(inmemory, oi, object);
+ 	return 0;
+ }
  
- /* Create a new in-memory object database source. */
+@@ -111,6 +118,52 @@ static int odb_source_inmemory_read_object_stream(struct odb_read_stream **out,
+ 	return 0;
+ }
+ 
++struct odb_source_inmemory_for_each_object_data {
++	struct odb_source_inmemory *inmemory;
++	const struct object_info *request;
++	odb_for_each_object_cb cb;
++	void *cb_data;
++};
++
++static int odb_source_inmemory_for_each_object_cb(const struct object_id *oid,
++						  void *node_data, void *cb_data)
++{
++	struct odb_source_inmemory_for_each_object_data *data = cb_data;
++	struct inmemory_object *object = node_data;
++
++	if (data->request) {
++		struct object_info oi = *data->request;
++		populate_object_info(data->inmemory, &oi, object);
++		return data->cb(oid, &oi, data->cb_data);
++	} else {
++		return data->cb(oid, NULL, data->cb_data);
++	}
++}
++
++static int odb_source_inmemory_for_each_object(struct odb_source *source,
++					       const struct object_info *request,
++					       odb_for_each_object_cb cb,
++					       void *cb_data,
++					       const struct odb_for_each_object_options *opts)
++{
++	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
++	struct odb_source_inmemory_for_each_object_data payload = {
++		.inmemory = inmemory,
++		.request = request,
++		.cb = cb,
++		.cb_data = cb_data,
++	};
++	struct object_id null_oid = { 0 };
++
++	if ((opts->flags & ODB_FOR_EACH_OBJECT_PROMISOR_ONLY) ||
++	    (opts->flags & ODB_FOR_EACH_OBJECT_LOCAL_ONLY && !source->local))
++		return 0;
++
++	return oidtree_each(inmemory->objects,
++			    opts->prefix ? opts->prefix : &null_oid, opts->prefix_hex_len,
++			    odb_source_inmemory_for_each_object_cb, &payload);
++}
++
+ static int odb_source_inmemory_write_object(struct odb_source *source,
+ 					    const void *buf, unsigned long len,
+ 					    enum object_type type,
+@@ -214,6 +267,7 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
+ 	source->base.free = odb_source_inmemory_free;
+ 	source->base.read_object_info = odb_source_inmemory_read_object_info;
+ 	source->base.read_object_stream = odb_source_inmemory_read_object_stream;
++	source->base.for_each_object = odb_source_inmemory_for_each_object;
+ 	source->base.write_object = odb_source_inmemory_write_object;
+ 	source->base.write_object_stream = odb_source_inmemory_write_object_stream;
+ 
 
 -- 
 2.53.0.1323.g189a785ab5.dirty
