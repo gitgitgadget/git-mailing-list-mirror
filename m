@@ -1,107 +1,173 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641F32E8B98
-	for <git@vger.kernel.org>; Thu,  2 Apr 2026 23:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A811F3D56
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 01:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775173911; cv=none; b=c56eK4oEzb2e+VloZn5s1zjcCdnwV9rx81LnSw1IOrkU9ecb6QJPEr5bDZy6rkLQ0lEVcW3PocLuCtKeKN5TEQ4vNL/B3U5ONOnsZTeDO1/BAL+d1PQ/VdfEsvxPzT7l28kR1a2fGcdLa5jYlrym5JxJGWs7xlPixNkqqSMpmvA=
+	t=1775179045; cv=none; b=AnXXq30cYm8cvzLPCBd31vN0kGoZt9z9SZzQi8KCgOTYWcMDImvwvYIGFP8NLcOFJdhom6OqUVIatUXcHEIMHcnRuXinhQ0oau4i5lqKJcCzhmCxZ2Tq0frkj+QbMRFk1q/nUu3xh/bsMo3mnvZy4TEkQSDwuZe9dRUrltDvNrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775173911; c=relaxed/simple;
-	bh=2C6fwB1NvU7beF8NJOIou4Wgoz0YyefDlhvB4g2advI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PMQMJoYsa/i2/huXq4s3Erq8/IY4s7p8zGoJ9dYlhkvGcB5lxMjm/UuQxG//B62V6ujUB7PmthAqHUJssVXB6MHXsFKr+HsuiXjvpXy2t9xZDsRpdkdPrfUL9P70N7c6SMKlarpyM1O2nvjYEKufMnbLOePz1ijMPAkSA1BIGTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WTDwMCBY; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1775179045; c=relaxed/simple;
+	bh=zfPsK1QrwCPo4POVcUbBoCgf4hF2lwV/nvN4KegotWY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EdvCq58FA7e2Xz4QW9iS/UASzPl/xnW3XSQKudzbnCMdPCtt+nUIbPdBSI0cojOA9sDWLOPkTu64TSSghvWfZ+wPhVOetBCQMi/ZzJzhIGeK4Td+mS9k7G8/ZMqRmal2CS3nFPLSelIrK4tuBHHZd8lDVo6iqp6xxBDIzEQeerI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=RxxQbqfX; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WTDwMCBY"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8a154cc6a48so18698196d6.0
-        for <git@vger.kernel.org>; Thu, 02 Apr 2026 16:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1775173909; x=1775778709; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2C6fwB1NvU7beF8NJOIou4Wgoz0YyefDlhvB4g2advI=;
-        b=WTDwMCBYPUR49U2Tv2FzFL2qJlIL9kXJBk9rNB+Yal0aFexOF8u8t0RzeS+WNjwEoe
-         7AzMH8NxXfY3YQZn5k5cy0cnFZSPAwHSy+PvokppqHrQqceAa44eVCU4UFPTAHHi+lcz
-         utO3EbttqiIQ942X6Hs/4X+A3Be+DU3Py8trl7NDS6eB8yDcunP8WsAWatxQcDNSedWY
-         nKf1giDOBpUJ//+cE4MMI3qU4ZpdpstfLfu2GF3nS8lcXExrwOK1BRPUkmVmcbxgcKCG
-         F5t9AzFqWeCUBFZSRzzwepGP/xKV/I0pNncJU3gC27qztyrWcn+p1TDfNujNgc0F3ZPE
-         YzDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775173909; x=1775778709;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2C6fwB1NvU7beF8NJOIou4Wgoz0YyefDlhvB4g2advI=;
-        b=gqwRcrFtybWX0gvGv5vTO2jc4YHE7Ew4U2w1TRcev1tSrvPXq+kJoo3XDbhhgh6G2a
-         bFJYzXnaUwWmaZNE7iWYl+seBBE/vz4qz+6jMFsPqrv10NWK3DxKlVjzOUe4bp2lUJ8e
-         1YUQUtqZp03+92HfIWb+19mqSCUn/BNtEhLRn9omubkprMQZOmdpje+mJ+RMLpz5tXOB
-         fZ3QPWxr+e6fZua8e31ohgYOkZiZJweMUlHmj9rwk8ZggHvej9EYG7Du/zl9kQbPDzoy
-         mmWlouYxEOLca3SqwBGtPGXhsh87xEnSQxHHv6I06Ri/S8RadCWY0xKn4rass1Ki3bXR
-         00OQ==
-X-Gm-Message-State: AOJu0YyVKAG7NUz7OyCoOWiR/yxQSK0hSOIcVnyJ79hNuUnkJvL3maHR
-	TVAgpQSogj2sf+9gD43Z5U3JQvgnkGzg2vxnS7mMU0FAolpOnYJ8F2sbgfIJQLgzw2w=
-X-Gm-Gg: AeBDiev8bFl14L3G29AI/kLdH/iWW4NY6RGiTtbbcnWJFkAd1xhvEw2I06SqlKbmdjq
-	3yjNEVgpUFS02+cFI/EiF5MNtvhB6KeRal/iftHVAWaGp0c126F9QFSmpr5vN3uQEmZ6Wp+CvZv
-	sx3RhjsqjwNUJ4jGML4Ga7aia7oB5DE8Z19m+GHljsrvQTTPZABrFsJnNA5xsqQpP7KOUMCq0nb
-	LVF433ClRja40+iWIbxaEggu4KdXDKUP3ezr38+8nsrQugAHIdPEb87Tl/fRKlM9iqL3mg2sGHW
-	dxxkh5IgbPnODnDBKTpqFuXpAcGT8KghKLlJdBH7lXghYJjx1Xj+BazNjJHry2LYa+btq+R9xEc
-	YgX6ckZfjJW8f01bA7L1yk+1JQsBhuy3nPa1xOtrgbfWQ2LyCYDdosJu2E+M8rm67WPoqYD9HvS
-	dVOqplkwWQV8blEYyvlyX7xtN+VsZZr2TtDdDWwBSFKApuZvsbz0g0QVF8wBKbPudmyWJvAfQUU
-	66+whnX6E8RpCM3inop+ggHz5FD2g==
-X-Received: by 2002:a05:6214:3bc5:b0:89c:e5f0:8f23 with SMTP id 6a1803df08f44-8a701ecf235mr19470546d6.8.1775173909314;
-        Thu, 02 Apr 2026 16:51:49 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a593bf2769sm35465596d6.14.2026.04.02.16.51.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 16:51:48 -0700 (PDT)
-Date: Thu, 2 Apr 2026 19:51:47 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>,
-	Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH 07/12] pseudo-merge: fix disk reads from
- find_pseudo_merge()
-Message-ID: <ac8BE4StG2bJbFFc@nand.local>
-References: <20260331233856.GA2327197@coredump.intra.peff.net>
- <20260331234622.GG2328529@coredump.intra.peff.net>
- <20260331235637.GA2328851@coredump.intra.peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="RxxQbqfX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1775179042;
+	bh=zfPsK1QrwCPo4POVcUbBoCgf4hF2lwV/nvN4KegotWY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=RxxQbqfXlj1LnkUWwsy2MwPtZFvwEMOG2q3sNSNET0imwSDSAZpL9p1MR5Mm1ChJZ
+	 7RVSGkBZTuFV0KD8ya+Wj6GgJgHckeSTcuobyTa0LL1BY0NGcN7EbgJz+IWMP2Qt2U
+	 1NycYMr6TkmACsqXoLmbAZrhelKsiIhrXObr+wrN4gbXX7o2OT7bjYOcJdDIjbxv21
+	 i1ciwolxhTwyGRaK1aDqbqURK49EcUe4NVBy0Zal8s2Kr5G/sU3ajrYfIqQdesDhaS
+	 VFRbc6OELuEBEaael2lLk7FgavaJo+wYfYL//mWJoTsdnL5/TDnyLEjHOy/0U0ArMK
+	 mDVFabRMQ4fHBINeOA9zPYhM45f1q2VfG/h5AMNTsDdrNFkTPCyJ0VyztZyKWBpl+t
+	 WqblhVKy+b3KUsoM3DgscGho3LhCFataQXVTpxsSiboM5O5x0hMWBfOxSeWA3uSRab
+	 NIQgJ3Bhjq1dwrtVHP+TU1+ocRb0peZwhFdrKZY9RIOW+L6ow22
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:4fc4:8150:dc47:49e7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DD7F2243C8;
+	Fri,  3 Apr 2026 01:17:22 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: [PATCH 4/4] Enable Rust by default
+Date: Fri,  3 Apr 2026 01:12:49 +0000
+Message-ID: <20260403011249.4133372-5-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
+In-Reply-To: <20260403011249.4133372-1-sandals@crustytoothpaste.net>
+References: <20260403011249.4133372-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260331235637.GA2328851@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 31, 2026 at 07:56:37PM -0400, Jeff King wrote:
-> On Tue, Mar 31, 2026 at 07:46:23PM -0400, Jeff King wrote:
->
-> > So I think there is something wrong or missing from the test setup, and
-> > this bears further investigation. Sadly the answer to the second part
-> > ("does it work now") is still "no idea". I _think_ this takes us in a
-> > positive direction, but my goal here is mainly to quiet the compiler
-> > warning. Further bug-hunting on this experimental feature can be done
-> > separately.
->
-> If this is the wrong direction or if we just want to keep things minimal
-> in this patch series, the absolute smallest fix is probably to cast away
-> the constness explicitly in find_pseudo_merge(), along with a comment
-> that the fix is almost certainly wrong. ;)
+Our breaking changes document says that we'll enable Rust by default in
+Git 2.54.  Adjust the Makefile to switch the option from WITH_RUST to
+NO_RUST to enable it by default and update the help text accordingly.
+Similarly, for Meson, enable the option by default and do not
+automatically disable it if Cargo is missing, since the goal is to help
+users find where they are likely to have problems in the future.
 
-This approach makes the most sense to me as a band-aid fix to squelch
-the Coverity warnings.
+Update our CI tests to swap out the single Linux job with Rust to a
+single job without.  Similarly, update the Windows Makefile job to not
+use Rust, while the Meson job (which does not build with ci/lib.sh) will
+default to having it enabled.
 
-I pulled on this thread a little bit over the past couple of evenings
-and found a fair number of pseudo-merge related bugs / oddities that I'd
-like to fix more comprehensively.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Makefile                  | 10 +++++-----
+ ci/lib.sh                 |  3 +++
+ ci/run-build-and-tests.sh |  2 +-
+ meson.build               |  2 +-
+ meson_options.txt         |  2 +-
+ 5 files changed, 11 insertions(+), 8 deletions(-)
 
-But this is makes sense as a first step to quiet the noise from Coverity
-without rushing the other fixes.
-
-Thanks,
-Taylor
+diff --git a/Makefile b/Makefile
+index dbf0022054..84b59959de 100644
+--- a/Makefile
++++ b/Makefile
+@@ -498,9 +498,9 @@ include shared.mak
+ #
+ # == Optional Rust support ==
+ #
+-# Define WITH_RUST if you want to include features and subsystems written in
+-# Rust into Git. For now, Rust is still an optional feature of the build
+-# process. With Git 3.0 though, Rust will always be enabled.
++# Define NO_RUST if you want to disable features and subsystems written in Rust
++# from being compiled into Git. For now, Rust is still an optional feature of
++# the build process. With Git 3.0 though, Rust will always be enabled.
+ #
+ # Building Rust code requires Cargo.
+ #
+@@ -1351,7 +1351,7 @@ LIB_OBJS += urlmatch.o
+ LIB_OBJS += usage.o
+ LIB_OBJS += userdiff.o
+ LIB_OBJS += utf8.o
+-ifndef WITH_RUST
++ifdef NO_RUST
+ LIB_OBJS += varint.o
+ endif
+ LIB_OBJS += version.o
+@@ -1590,7 +1590,7 @@ endif
+ ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_APPEND)
+ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
+ 
+-ifdef WITH_RUST
++ifndef NO_RUST
+ BASIC_CFLAGS += -DWITH_RUST
+ GITLIBS += $(RUST_LIB)
+ ifeq ($(uname_S),Windows)
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 42a2b6a318..1cfc8c6efc 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -372,6 +372,9 @@ linux-asan-ubsan)
+ osx-meson)
+ 	MESONFLAGS="$MESONFLAGS -Dcredential_helpers=osxkeychain"
+ 	;;
++windows-*)
++	export NO_RUST=UnfortunatelyYes
++	;;
+ esac
+ 
+ MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 28cfe730ee..bf1fdbe968 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -10,7 +10,6 @@ export TEST_CONTRIB_TOO=yes
+ case "$jobname" in
+ fedora-breaking-changes-musl|linux-breaking-changes)
+ 	export WITH_BREAKING_CHANGES=YesPlease
+-	export WITH_RUST=YesPlease
+ 	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
+ 	MESONFLAGS="$MESONFLAGS -Drust=enabled"
+ 	;;
+@@ -30,6 +29,7 @@ linux-TEST-vars)
+ 	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
+ 	;;
+ linux-clang)
++	export NO_RUST=UnfortunatelyYes
+ 	export GIT_TEST_DEFAULT_HASH=sha1
+ 	;;
+ linux-sha256)
+diff --git a/meson.build b/meson.build
+index 8309942d18..4e1a58ee01 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1746,7 +1746,7 @@ version_def_h = custom_target(
+ libgit_sources += version_def_h
+ 
+ cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
+-rust_option = get_option('rust').disable_auto_if(not cargo.found())
++rust_option = get_option('rust')
+ if rust_option.allowed()
+   subdir('src')
+   libgit_c_args += '-DWITH_RUST'
+diff --git a/meson_options.txt b/meson_options.txt
+index 659cbb218f..80a8025f20 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -77,7 +77,7 @@ option('zlib_backend', type: 'combo', choices: ['auto', 'zlib', 'zlib-ng'], valu
+ # Build tweaks.
+ option('breaking_changes', type: 'boolean', value: false,
+   description: 'Enable upcoming breaking changes.')
+-option('rust', type: 'feature', value: 'auto',
++option('rust', type: 'feature', value: 'enabled',
+   description: 'Enable building with Rust.')
+ option('macos_use_homebrew_gettext', type: 'boolean', value: true,
+   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
