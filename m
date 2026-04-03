@@ -1,80 +1,79 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59603310651
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 10:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1A63537E6
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 10:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.175
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775212757; cv=pass; b=bjgnC/oMIw+0BwPCB4lB55ZUE85PUcGUfMDURAPzttbwSIj6CYJv5FV+SSKZiz9DadHTq3JsL0wpcfqWZ5BvJCm/SUNUPC7huhgTWfE0qTuxbL8lPZfPOjyLMPnu9NDGwx+5ebnlh8WgT3my1KLaApKLrfF1jQf1WKqaUWa9bWA=
+	t=1775213014; cv=pass; b=Cl1I51RyK3C3nD4REkoZl3/fjEblqTt5DzHU7W0zbR8GRtigBnVep8qCBNxUeJovmXq55At7bnzF2p7F5Qg/vbhz4DZr+3OZgM4daFNFahM1eRnXTBw5nWU2qE850eA8I76I/SzLB7CVgCPyV97kM/6dAyZcyU87m8CrKARGuBE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775212757; c=relaxed/simple;
-	bh=0Nqp1kGpDcHPliGT++8H1I4anAXHT+iYDZV9Fg8xckY=;
+	s=arc-20240116; t=1775213014; c=relaxed/simple;
+	bh=CMGepadcvNaBbLNko0NmfQkvQjDkEemzQaaLqlnfiA4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hr+IQjB3z+DOgDZJTuqM6c3/2FsyU3+4Zcxij5aEDsENvP14CqEyIGDmw+Czmos3CdRBZ1X6s2rKpyI7nmuurk3A5t8EYqhmkTy8427LcUhLM+i75VWtGqcgSysXBTdiCG9KLwbr6DmpzMxXp16diMSUye4TbiW9oG7LtLUN05s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fwekg4wt; arc=pass smtp.client-ip=209.85.160.171
+	 To:Cc:Content-Type; b=oZpKFoFN6ZuLCwp7gyqI7t96djppqCkowiOYx4PNyGSKA2x4FjLCqxKl8uErYKa+IV8JCMCmqdFvSw/+f80Ot6JobfzArRH5ZAUkRV6ePZuYG9fbT85VkenJNokX9XTQxxKBkhUgwHVVsZx3yZBe+FJqMjhqA8LdO5QfLYDUZuA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DdgZ2+YR; arc=pass smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fwekg4wt"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-50335b926c2so15020341cf.2
-        for <git@vger.kernel.org>; Fri, 03 Apr 2026 03:39:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775212755; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdgZ2+YR"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-50b2ebca625so17063231cf.0
+        for <git@vger.kernel.org>; Fri, 03 Apr 2026 03:43:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775213012; cv=none;
         d=google.com; s=arc-20240605;
-        b=S+ZnPy6HoOB1UAzFS7tKee/XRL55ZvjVdkZsT3eJhHQN9qP6kykcOF1n7auEkFxqo2
-         C9klazcAWaesKw5Lqj+PAY11LoM5gBnm+mEcuFxIpZPFB3caZjGEZqQ22nFAs7+2W3vx
-         KT8+QZdEQC15hII+hpCIISQYUOAie04gpibjynaqbMPXlbs6Z6yUlL3UgNKGa9+qfyHY
-         hyPcHvKRRT2MRSxdIy8B+QE6yQMdmOZ+Z9KcKLArMdczpu74H62WaTN6lrYxbwswv6rI
-         WgRtH9eCYsXbTLk2zixjyqOJCIOoCl6aSHHisczeEIbP6J7DAwwy3PQWGb67vNh/oUuY
-         jMyw==
+        b=WHjIWhn0uLOTOB6TFu2QIsU4fRe4Gtnam3bYaTLnR/6TE0V5AxJEFetrvGXcK2O6+x
+         AyFT/tzFkjSc5D2XY6m65ZMibToGt6ccZwHXxpyqhpisVy3d15wWoc5Sph0YB/9aL7CI
+         h6I57CmoQjHCPcqCtQVSmehQWHwfapLEYMvmFr8NVc33OBtX61btEOyk74jnMn54a6co
+         vSZFkYWPwQlGmaqSK4/vskc96BdbrufvKDiImFvnarJQ7mNzboPFlsxVk9u38otpf4Mj
+         CCvp2pmwF//OPypgJrcbVFjnGfw0sAS3oPOIV9U1u0fIt5WKELx1ms4m8Z9ayC/RX3Oj
+         bjuQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=0ph6hvBydX6q7VVyhG4/3xQHKXPQrilQEGJsJPH97Ns=;
-        fh=cH0ddPfyM2iA0RtCDtDYDi/pZLxP1ojFPrUDEjSgDio=;
-        b=E/xUvNn8sgW0rWnHfA7qcG+XaNnTdA6xg+WZPvkAg6QEJ05vvl2Pky63XFKI6wP+1y
-         V5SM7w6XmLziP2fVGMr0ZrsXxVm++tQVqntgAbsBMl9ABFgIL6YUV+vgkzFAA7muB/cm
-         JtbFd8hTQ018fh0jd0dffApbQY8wAiIzmUR17ZpodhJ/Qkrtu0SpoMcpAvi5uPoGSbZQ
-         kfeQ7dC1TmewqpaGMC/D9zBSd4Cvxqh9Ie6h9W7c5pviiajN/891mDmh4VrZHCpnqv45
-         f5KeLma3Dl0SqG6pA+iUgFiV/yTPEIp51T5sm5kes4e6BuBWjCTbaeOG9NM3bcRo+SpC
-         +D7g==;
+        bh=CMGepadcvNaBbLNko0NmfQkvQjDkEemzQaaLqlnfiA4=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=EDYt+eMioxRXPFfzjBMuhnDago+h1a1+jvFM0Hxg7iyYwi48uibofe2pNvHT6KBlhj
+         V+0MQLEoI2XrGFh0WHzU+vqL5cHT0dT67XroDox5MMYGslggR2ghCqlQjK7WeRm7myh/
+         YxDXjb6bRVjL0RCUR8CE/OSJlCRnmKuSxb+yLZoIvwP29ukhZhigHMbywgOPSg2u8hw/
+         D6XDs2DHx6zxhf2TkKVIc2CDjVazHkVgw648qzD7E3e4YPP+AWe1CwtNRHJe4EQRq2KV
+         OFr0tIZPptJarYVsdbdU+hNiOJ0Y6iw8qHHcxAqsShXVoyRKn3XfGh/96nhQac/DwYM7
+         gjSw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775212755; x=1775817555; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775213012; x=1775817812; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0ph6hvBydX6q7VVyhG4/3xQHKXPQrilQEGJsJPH97Ns=;
-        b=fwekg4wtPlzVVo5KLII+QP+VZ7Cb+OGqjnPYCb1xgMA4Up41/gAQ8CTMg9mIbnNnWP
-         JHy35D7Q1X+wYXi+1yfVaSA/gFxFfFLIAdYkPtEgO2913OVh1Kbe3WShTYTPi8JcY9n+
-         dkE9IsJs/VoUoMUFplLbZVcFSvOwY6YF+aIYlsm4gk+EZp20RtlYazgf3rPzGI8IPXCV
-         GnNh29ClJs1B+Q5Ul1jyLQdCz7Gx+A1ajWGwMMgL9nwY7V5Vea+e65RTd/tXNk2arQ0D
-         EJg8E4KMqYI5DpO0UNBmRWYcfmGQjyqPn/5UjJnGhPCD5wF+td4yDsqHbgqNtpbYQrAX
-         RG1g==
+        bh=CMGepadcvNaBbLNko0NmfQkvQjDkEemzQaaLqlnfiA4=;
+        b=DdgZ2+YRTt5ZkdVQxLgDxmJisAlrtKSg1eAStRkLy5zmBFswDcpNvhd9pDk4aAo9LN
+         bPf8N1OYUfCWQJ5lkQJQQSaf4Vk5DHLCoNXWAnzR24aX8eaKF1UHnL+uojl9D3AcYpfV
+         N9NYWWSsi5zElE7hYxwXH8nqHgUsZ2cfMDhvgN4KtLmqt8w9e+LdYBHOui5bVTvGP1OZ
+         sGQ3mYB8AJrlahU8G5fg8T1fus1eZBcRPl30fUgjaP4mi/Q52HBS8PJcBWSUtaHQcdkP
+         +csA9Npkq2lEd+mwWivTHi3DZ5c9pGk5mo+gCKqGebu00Sz/SG7D1zUa7FqIawN9+Pxj
+         iy+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775212755; x=1775817555;
+        d=1e100.net; s=20251104; t=1775213012; x=1775817812;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=0ph6hvBydX6q7VVyhG4/3xQHKXPQrilQEGJsJPH97Ns=;
-        b=MIMxNIKwrVdQgIttrmSYqRKCs09mmARosqLOz7gsKdAxYNQoWPmDvYG6X+rycOwIEd
-         4+VHnuKNGGu2Ha5oeHJ4JvSdSEzjB7dnUREoAd12vQd9m9YG/5LQpvxtQXMChBGvpqQ+
-         CdouNwUupvF9i3MZ+yRTYzc68cd961T4VwVfHIzK2eHHkzrTHZ9pJOQ+8GENSdiRygr4
-         Tga91bDjvUbIFo0aPSRWt2QSpxZtWenXhQwU6XeHxdFccHci/W2pO1hFneTnn9gQDl/r
-         P9cOYef+O/cD4YMQt0TkZq9YrIRH1GO3gjxSf9hcuaBeC2X3VNgW04KF5ulSTNEFdPFv
-         XsWg==
-X-Forwarded-Encrypted: i=1; AJvYcCXkpKdhfeMAZyu0LrTfZ8HauN3+hVQJ00KtHuzqMgvCU4bnhqFtm5uyNqBL7ULrDTPm0M0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLqApaK4bX5iv7idq1i88+9mPHAUrgXyneMEoMrXqNGsv/7OT9
-	bAmgHzGXRy9g+N6eu0UI8kcW0IaD1LD+yEHkQ7X0Xt8W5/5R+553YIr+n1+u0tjvpNc9SO/+fUU
-	NZViZhKjgrIe4ipKq02i0R3GgkFCciKY=
-X-Gm-Gg: ATEYQzzISm1Tn2cjLf9HOITCicVd5ccWh6AxI9TdTFdA4MEJXy79FLStNHMkqKG8cm1
-	FG1yeDNNK0sfGt2PAKwUXA28VzsFdXQUNdl//dfemuFYKEli+dTvGu2GmCJuzD6rLSnTD9UJ60A
-	5Yhb3lr6cNyQqrFItkjaa6JajhWw9Ilzfyfd8VbHvmekoEsie1GN1n63ZFzMeLLVcrAD/YspJB1
-	XxVxldPAIZUl2x9hP+pCOsl1szpLNWkr5lVsPXZ6U41qkMnQfm3x6TXbUuWNMks1O/Va+EWvcXF
-	qStvkLFFLXqRE0C0Wnvj9smuo3dV+BkPpPuFtTkIWA==
-X-Received: by 2002:ac8:578c:0:b0:50d:6ab3:1acb with SMTP id
- d75a77b69052e-50d6ab31ba5mr11404011cf.41.1775212755202; Fri, 03 Apr 2026
- 03:39:15 -0700 (PDT)
+        bh=CMGepadcvNaBbLNko0NmfQkvQjDkEemzQaaLqlnfiA4=;
+        b=jS6t4HhVGvj+VpLV3MUCxUS4mObyVdtReBu4M9S8GEf9KLDF8ARDaZf2DDqns3zJt6
+         VDBO9waOuKYm1SytU+DesX5j/XnMA93Ac7Z4eCGLoVeGBBqvLv6UrqLqqQABjq1mtAIb
+         kvApVY1+R7YueVo1ZWyJdfPIf3MApJRAKQads1fYmDangwUnrm71+nXSOkBVEA0gM6Xm
+         mDUP5nTitl+zH3Sg3N/NfkjQ9VuB9u2bk55ZCPDcC9XfKKjOeZe9G+xTh7Lw3Q9+UvLY
+         pCNQYZqhZbYhkaOY9opjyloHDjiMNM126gxZzPi0TWmtItfOi84z6NTDZL2faYsRm7ft
+         G6lQ==
+X-Gm-Message-State: AOJu0Yx/CdXnYmn2npo+0JZZO4NdlRWyHjbtfzJFvNARuydsza7S6/bQ
+	ZuGHzsAk390jWOL3nHTdWOFvME2H62o1TQp6bHbB9W14e3ecqyYMV4RGaQyVu/GTOLk+BXuiNVJ
+	UeCqFmUSiMr0xn9+3UvF/TdZ8DGv1XneLEzUt
+X-Gm-Gg: ATEYQzzMm2GHbz6sbfXbeUPxjXBBwI7JeTdoKNxTZW8LVhMN/MON3vRXFPihksj7fii
+	C+A+8yfNa4ofdObFB5+OhrYDlEsNsIuBmnyAWTGbE1t77bytRA8Nf47xGH0ywokD/abuDbBTZEe
+	oxMRuGUdUytFGUhWQB1aOeZfh5AW9qQGVaNko5MAAPBOOP/qhCwA8YfDgRxWXiQAj2OU0fFNkIH
+	pjUPnrlGLjQgSwKMf6484qFzdafA5zV0OtSNg+2dWhV59jNaS1p99bXmikzvGcyQEUIJI2B+wq3
+	PGj+N7aukwg/DZeg5/MA2pevG/la0/cIu8nBw9BQ0Q0/s8AQAz9T
+X-Received: by 2002:ac8:7fca:0:b0:4ee:1dd0:5a50 with SMTP id
+ d75a77b69052e-50d6325138bmr28206041cf.17.1775213012027; Fri, 03 Apr 2026
+ 03:43:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,96 +82,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260328141146.1095115-1-shreyanshpaliwalcmsmn@gmail.com>
  <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260329101725.1092900-2-shreyanshpaliwalcmsmn@gmail.com>
- <ac4aZRveWXjOtxgB@pks.im> <ac6K5UnVdw67Rfpy@gmail.com> <ac68ME2j5CXzVgxF@pks.im>
-In-Reply-To: <ac68ME2j5CXzVgxF@pks.im>
+ <20260329101725.1092900-5-shreyanshpaliwalcmsmn@gmail.com> <ac4aa-qLWwoZ9uPZ@pks.im>
+In-Reply-To: <ac4aa-qLWwoZ9uPZ@pks.im>
 From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Date: Fri, 3 Apr 2026 16:09:02 +0530
-X-Gm-Features: AQROBzCSNKPX50YP5fTpC342KCAKOuhqPDPmB9i5-vRVg26s27uFBMjhRxQDQ_c
-Message-ID: <CAPYXD646gcj-fmy0fqZUrKsSt1=+ZW4iRsVuJoLf0yUyUddigQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] refs: add struct repository parameter to
- branchname helpers
+Date: Fri, 3 Apr 2026 16:13:21 +0530
+X-Gm-Features: AQROBzCVgy4WvtuNF2Wndp8sxDyyUdKCtY6roGpCrH5fW32NpBJsTs1UOc4RxlM
+Message-ID: <CAPYXD64sR3D9Qhdf4a2O91ENwFO+dLirWRrneG0+ykoUexEGzQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] refs/reftable-backend: drop uses of the_repository
 To: Patrick Steinhardt <ps@pks.im>
-Cc: =?UTF-8?Q?Burak_Kaan_Kara=C3=A7ay?= <bkkaracay@gmail.com>, 
-	git@vger.kernel.org, Jeff King <peff@peff.net>, Tian Yuchen <a3205153416@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 3, 2026 at 12:28=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+On Thu, Apr 2, 2026 at 12:57=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
 e:
 >
-> On Thu, Apr 02, 2026 at 08:03:45PM +0300, Burak Kaan Kara=C3=A7ay wrote:
-> > Hi,
+> On Sun, Mar 29, 2026 at 03:46:42PM +0530, Shreyansh Paliwal wrote:
+> > reftable_be_init() and reftable_be_create_on_disk() use the_repository =
+even
+> > though a repository instance is already available, either directly or v=
+ia
+> > struct ref_store.
 > >
-> > On Thu, Apr 02, 2026 at 09:27:33AM +0200, Patrick Steinhardt wrote:
-> > > On Sun, Mar 29, 2026 at 03:46:39PM +0530, Shreyansh Paliwal wrote:
-> > > > diff --git a/refs.c b/refs.c
-> > > > index 685a0c247b..5cdc8858c5 100644
-> > > > --- a/refs.c
-> > > > +++ b/refs.c
-> > > > @@ -758,10 +758,10 @@ void copy_branchname(struct strbuf *sb, const=
- char *name,
-> > > >   strbuf_add(sb, name + used, len - used);
-> > > >  }
-> > > >
-> > > > -int check_branch_ref(struct strbuf *sb, const char *name)
-> > > > +int check_branch_ref(struct repository *repo, struct strbuf *sb, c=
-onst char *name)
-> > > >  {
-> > > >   if (startup_info->have_repository)
-> > > > -         copy_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
-> > > > +         copy_branchname(repo, sb, name, INTERPRET_BRANCH_LOCAL);
-> > > >   else
-> > > >           strbuf_addstr(sb, name);
-> > > >
-> > >
-> > > I have to agree with Tian's comment on v2, this part here looks wrong=
-. I
-> > > don't think we should depend on `startup_info` here, but we should
-> > > exclusively rely on whether or not the caller has passed in a
-> > > repository. And that will likely require a bit more scrutiny to figur=
-e
-> > > out whether there are any callers that shouldn't pass in a repository
-> > > because it's not initialized.
-> > >
-> > > Alternatively, we could go with Tian's suggestion of checking for `re=
-po
-> > > && repo->gitdir`.
-> > >
-> > > Patrick
+> > Replace these uses with the appropriate local repository instance (repo=
+ or
+> > ref_store->repo) to avoid relying on global state.
 > >
-> > This approach actually leads to a bug and segfault in a specific edge
-> > case when running 'git check-ref-format'. The current tests don't cover
-> > this scenario, but they can be extended to catch it.
+> > Note that USE_THE_REPOSITORY_VARIABLE cannot be removed yet, as
+> > is_bare_repository() is still there in the file.
 >
-> > If GIT_DIR is set to a non-existent path,
-> > 'startup_info->have_repository' becomes '0' but 'repo->gitdir' still
-> > holds the invalid path. As a result, the code enters the first conditio=
-n
-> > and crashes. The case can be tested with this command:
-> >
-> > $ git --git-dir=3D'non-existing' check-ref-format --branch @{-1}
-> >
-> > Modifying the behavior of 'repo->gitdir' might solve the issue, but I
-> > belive that falls outside the scope of this patch. After a quick search=
-,
-> > I found a prophecy from Peff about the 'startup_info->have_repository':
-> >
-> > [1] https://lore.kernel.org/git/20190806124954.GA13649@sigill.intra.pef=
-f.net/
->
-> If we cannot make it work in this patch series, the next question is
-> whether we actually want to give the false sense of `check_branch_ref()`
-> being independent of global state, or whether we want to leave it as-is
-> for now and then do a follow-up patch series where we fix the issue and
-> adapt the interface.
+> I've got a patch series cooking now that'll eventually de-globalize
+> `is_bare_repository()`. So there's light at the end of the tunnel here :)
 
-I think it makes sense to drop patch 1/5 from this series for now, which
-introduces changes to the branch name helper functions.
-It would be much better to address this separately after replacing
-startup_info->have_repository.
-For now, I'll reroll the series with the remaining patches and send this
-part later as an rfc.
-
-Thanks everyone,
-Shreyansh
+That's great to hear, thanks for the heads-up :)
