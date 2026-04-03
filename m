@@ -1,200 +1,123 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CC42ECEB9
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 08:26:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775204770; cv=pass; b=TANvcPZ+bHrewLRhiI9tskSC53LmMT76weSgrSA8/q8WKHlOhuqLPjPjuFNrmpNu+TtqmaTIC4C+aZT/8a3I8fUkVCxTvdmHNHuKX3TFi3sfkHjkkSsaqKTpWv3os++KDkkw/1kWzve/+CrW4dKDteMLZuzsReLmY1dUBOXGfHA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775204770; c=relaxed/simple;
-	bh=t7eCLU90+wGSZQ7oaRVkQx7s1yBN82ditfQuyO87tGk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W+MLtD2WoQ/CcuReAmtotoKa7Uk3jsmPK2N7kBTl9MbSbfbtd5Q6+4glIKXs5q43xg0RkcAuPj0q5gQajL9Xb8G0y4EfP8gaL56WZ+o/O/rAkBpOlFdb772tQtiVE/QrF3m6D8eWfSgErqPLmdGjxip/MyzbWznON/AjVfxzgZw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gA4V60tQ; arc=pass smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3461F92E
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 08:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775206509; cv=none; b=lHyJA94sXkML9Be7fWIpTvN1PZmoi9Vt24ITakEV1v1BAH/9rQYY2en0RTMJdDlG8wXDoTimuVDVEJGFcShVkVLTsXCAdQwnL5ktodjQL+TCWET0WeMxu0hQD/aUUjy/54+WKZhGcJizABWrUtNw6eDjfPOApB5DsomUibAGing=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775206509; c=relaxed/simple;
+	bh=VPY5f/mlDUFuCVw70ED3RUAN23zXONSeg3IZtLjWO/A=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Pd0WGZSqlx35VIxf+1BoAIFRGXAW+X7Xf/WC2J3t/lgHtF8hr/pejh1Co2zs8zzglpgdns1fSic9LDvdZY/3SU+n5sxte6iyHboyZd7p39JAFmDrMNxew6TsVZmqsI/wEYB+02R2aTSA4lKCTvWPf5DnnBTy8RgcsxQOE9MeL1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nt57s89s; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gA4V60tQ"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-79ab5fd969aso17948407b3.0
-        for <git@vger.kernel.org>; Fri, 03 Apr 2026 01:26:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775204769; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OrqdFa3TM5gnf1SnIxixqekdbHt4ONSTtO2Sr9wSoI8sL0+NyvQVHvshploVgZrbLJ
-         XI9TlyGKoDTdoNtit0GtgIAUDToa1kIYc3DR2eu1imfiksD9SSpNwyxQxn/9Dr0GbgHC
-         bky5GydDzIZcYweDuXEncQdNW84flTwEOgF3Rte4FcrnJX0txuMxy/mLULbCJfZTsu5B
-         3AJpQ+LXxHsBxCK9FHajYCQGd/tSfiN3BH9POXlV0V8fzuxY9AiheZ9nJnlQOXzbIGv7
-         yyCiJRdajzcPyK1PuQmVZeADfPln3FkB17ghZC8lfq5+YsEJ3k/xZNezRZGk5jpr9qEj
-         z3lA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qhVJOM+cN9/VoRg8T9suoYYdUPZ2IW71DlZJdRiCKk4=;
-        fh=hdYj/kDeiNxc0CV9ANV1htcOog43EMyhQ9sUUeD7EVE=;
-        b=JsamAjtwJ4pLiVlKcLDrRXYtpeK4r+vlHc1aFzYVCLKtAtHEd98s+98O3h2ZXJ3MQr
-         PcoO7OtlIniw+mf8AFp1rxr8f/GPqjRcUITlJBm1rjA5QxJ/iyMNIBA3foMbwh9uGPpD
-         4vzlhv3A4yrMgwlHohmE1CZsVmqdzd8YV/1ydM4ET04ND/edrWN46aDZuHVV8o+zvrO/
-         EgL7QSZU2PZUqxmZiE6Raze43sQzyciR/UJeSlgCNuBF7fjSHvZbg46dTO9YKiqFdPIA
-         j+Ipw75OAAXkiD8xGKBL3Yb8GEF7j2vxuJHhrRL71Oz2A0w7oW7JZSV34XJv+fDZoGfy
-         HSMA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nt57s89s"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-40946982a78so630479fac.2
+        for <git@vger.kernel.org>; Fri, 03 Apr 2026 01:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775204769; x=1775809569; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qhVJOM+cN9/VoRg8T9suoYYdUPZ2IW71DlZJdRiCKk4=;
-        b=gA4V60tQWd6U8uOrDVipgrZIV3hTGEE4tKQzhrS43qYxhN6n7b9hb21G2d0fBHslXw
-         MDFUu9Jt1vTzKS2Oaz4V2nZ0fbYeKGfEroR7uUBlX3x0eZBjmPcsTqnaDQMulc4dwlr1
-         wFrikXpa/mkmCY22TAXG0cC3OhEgRgdmwCj3NXXA1z+43fyr2KoVUEEp70pJmc63wCW/
-         oD0I9nQu2F9yl2zWE4/oLO6X2YcfyHz6vn7wTZ3SmUMauOkuyDp6CL0nWJyGZxKr0gSK
-         ZhO7wnrQuTewVMVAAkCB4RndXAhd57v3sy7JMQzTJYW57+MVJZjcEHkTTY7JdF3nv88i
-         TAKg==
+        d=gmail.com; s=20251104; t=1775206505; x=1775811305; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=505oDZhSRB7DA546ZMZTN3L+RGle/p74ZxbeO6+p2uI=;
+        b=Nt57s89sCy0s0aw0hERtZ+c84mH3ZMmve3q+oSK18FaM/F5vJZ9hT5E0OH2tEofu43
+         tRapsSl0vNlqVNRoDuarNFBeJs9dVVZDPb6IuGRFrRMsP2ALwQ6YTmgQexmt3Ldgz2tK
+         nbC9mIgBAPwl1KrLA9/RUq518mYcq9JU86lVeRKCLM3WyMfDnSXik/kGezuT5VKXNIM8
+         TnVFRv6fSLSO9T2Kp1ehibcbR/Qrn5B5BNTnvNGlFFF9SVrI1dmgAgdtTpQs4bqscdnC
+         mFRUTX7J5HpJgsVFUjRr82rWDCn7H7BXkNGjBgi4NtorGgNNQ0av3+PqLjVviMDqgXIg
+         DSsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775204769; x=1775809569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qhVJOM+cN9/VoRg8T9suoYYdUPZ2IW71DlZJdRiCKk4=;
-        b=FLYPI1gwfOSuTVob9JBmvTGVakorp64QuRHPrjCsVbE5WZBF0hKPaA7now1hPqpFkV
-         sxER1+fBEp1QcrIygqQ3JCFEoAQNonPV5D6a/KyuZHRtdMrcmG5wNdcHlKJ34LwjgSko
-         Dwk1lCWxedjgmSMFN1U6hyD97ywqvMUZDNXGi2ff3800PnV+xdYK6dPCWvoAbd5154qB
-         BrZpK/JKQUms43fuNtBXkWoaFBFfwDa+Bm8hkA3lDm9bGW0UEmuUWZ6CKozmg2UdGHnI
-         DSa6VBcQDRmv31pjbJPeGnpoCG0EWDJ6sg4TcBJvA5pLquUNEYa12uJuhX0Mxdvsi8Ji
-         iG8w==
-X-Gm-Message-State: AOJu0YwodzeZEUWqd7l3U7hlJs7F1jMIBLwJuGptebpN7nlrYa9JvajT
-	j+0q76hPHwV0Nz7mEr+FmD31RwBT85148jJb2wGvA2I8ZQowIH2q9C8mERPI9nv6zagPnFPGYt5
-	onbBihOPXtW9N/WY/nrwlMca0RHMq8hQ=
-X-Gm-Gg: AeBDieu4/XvT7iic3gQvxkDiOgFo5+XtcPx/PZuk9ETvssS1ZAW7wwsd0jxCeXktwB8
-	Ra+Oc8kFaXPG79VbYQHbSdRSSknIrSHhuIR0HY/KpWmcpFGkIgNjrNHfsbzeeMB8NS+qCEQ6llf
-	UfdJunCn23Q3wh3CJ9h5rw8pEMsUYAKDZmWSkvne7VzlnM/MqFunXBbKLzIbvojU2m5i2fpEiUA
-	nteFIs2dANVu4bW8xMAOzbiKqLSzLXSj7e16p81sqTBRm0fftk9ztnADy9M+UGkHzyx+rNG63lr
-	OE+qTIb9v8KRLvlBlz8eMUZI3ENsxKdmqKcsjG/WjOjwv8c5/NxTpfIEWhXe+xwR6VE4XSoZM/+
-	jazX73aUvurX6eZhHXPOifg==
-X-Received: by 2002:a05:690c:6e85:b0:7a2:f14d:5a1 with SMTP id
- 00721157ae682-7a4d5f563d7mr22698547b3.49.1775204768509; Fri, 03 Apr 2026
- 01:26:08 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775206505; x=1775811305;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=505oDZhSRB7DA546ZMZTN3L+RGle/p74ZxbeO6+p2uI=;
+        b=q957rTZdA1JwGv9UyaJk7KMyKVAnVl+o0V8lobualVhvNYqyzVvovToldesCGFO5C6
+         TcjoUjcrzRZs3nV4AIUUXqXP2oWsqASMg4UrCtvtRu3iQgEXwOmKOx+Th01biLR8h65B
+         TlxN6tJ3dybi1lY1qvK4BDOwAc3Iskm/rgf2gRWMya69+T+lvFQKJLHvbFp3/S+17TLk
+         tfEVGufysXvFIQ1YyL4J5USDmasqUbI5OqavDNIyTlxRVMjQt36ssMcmON5dOEBrEFjV
+         c6IXOM5UKH+hX1dSzdAieeJJa64rg3Y1Tv/v+Cvx+bjfdVEbuxqkqBxqyK/UGxOpr87E
+         nTMg==
+X-Gm-Message-State: AOJu0YxIF9d+1bmOg6qs4g7TrGy1ThmEKYrwzfE3FPkXfhUHb9e3pmnP
+	FeU+SSWbDi2zxEwA4B3Nccu16kfHLUftMwuMl7f0ejxL3ECIUS6umNI2Izp06fYz
+X-Gm-Gg: AeBDiesegHVL0SFGzzR7puoeFPRivnaCEaL/J9vQ4anxiZ2gLvaX5v/t7llM6M7wEm+
+	PT7bE5snSamJtdCFDqnEumi70xRxAL4Q6C8FucRjrSyj+pJjGXiiGem4ZMFc4FUO3TQ97es3162
+	Wyopn0huKJMwmmnNAgNEEVmnR7MWwfmBOHN/Y1KHy1wzdm86s+7N1c/OFIMY71j55ZchR/hsHOB
+	Q7OtAfKqJU2xtmWlRDf2AM0ojSL10ylvpn9xKj7IyzpBRfi0visAZRSSQylLOnUrzLpfxmzLux/
+	O/jEr+V2IoC2i9s97tktoYDV/RfMfX1SqnSo03fwj7u3YLnDCN3zQLe2OOXljhF1SmjbnTDxx3l
+	CmleR0lQ3v9XyG+k7yyN21cj23qXVGpOCMV5TSVKnyVtevPTCqi02+8msKVpsE48wmTdcKWLGug
+	9/xu188VAebTcTCkB0uGJnix1g
+X-Received: by 2002:a05:6870:670d:b0:408:9c83:5b1a with SMTP id 586e51a60fabf-4230fcb1c75mr1097519fac.4.1775206505025;
+        Fri, 03 Apr 2026 01:55:05 -0700 (PDT)
+Received: from [127.0.0.1] ([52.154.21.49])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-422eb3c8282sm4331301fac.13.2026.04.03.01.55.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Apr 2026 01:55:03 -0700 (PDT)
+Message-Id: <pull.2078.git.1775206502134.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 03 Apr 2026 08:55:02 +0000
+Subject: [PATCH] cmake: use writev(3p) wrapper as needed
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260402211717.3604688-1-pabloosabaterr@gmail.com> <xmqqpl4gocrj.fsf@gitster.g>
-In-Reply-To: <xmqqpl4gocrj.fsf@gitster.g>
-From: Pablo <pabloosabaterr@gmail.com>
-Date: Fri, 3 Apr 2026 10:25:57 +0200
-X-Gm-Features: AQROBzCLtMtc__nujbnxDfmTL5HgWCxzdVh_ip0-QqrY4Y9vsvTfYqxoZIfVryg
-Message-ID: <CAN5EUNQZLHDSyLB=Z6RarfD1re3d=+tsUHCrL6QrjjU7eObRSQ@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH 0/1] graph: add indentation for commits preceded
- by a root
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com, 
-	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
-	chandrapratap3519@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-El vie, 3 abr 2026 a las 7:04, Junio C Hamano (<gitster@pobox.com>) escribi=
-=C3=B3:
->
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
-> > This issue was reported by Junio at:
-> >   https://lore.kernel.org/git/xmqqikaawrpx.fsf@gitster.g/
->
-> You are giving me too much credit.  I just knew about previous
-> attempts and the gotchas.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Should I mention that thread instead ?
+This is a companion patch of 3b9b2c2a29a (compat/posix: introduce
+writev(3p) wrapper, 2026-03-13) where support for using the `writev()`
+wrapper was introduced in the `Makefile` and the Meson-based build, but
+the CMake build still needs that treatment, too.
 
->
-> One thing that we may want to make sure your solution gets right is
-> the issue depicated in two graphs in the footnote of this message:
->
->   https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
->
->     Stepping back a bit, I think concentrating too much on "is it
->     root?" is a wrong way to think about the problem.  Suppose you
->     have two histories, e.g. (time flows from left to right; A and X
->     are roots)
->
->             A---B
->                  \
->           X---Y---Z
->
->     and doing "git log --graph --oneline Z" would show A, B, X, Y
->     and Z.
->
->     But in a slightly modified graph:
->
->           C
->          /
->         O---A---B
->                  \
->           X---Y---Z
->
->     if you do "git log --graph --oneline C..Z", you should see the
->     same commits listed as above (A, B, X, Y and Z), and most likely
->     in the same order.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    cmake: use writev(3p) wrapper as needed
+    
+    This was necessary to get Git for Windows v2.54.0-rc0's CI builds to
+    pass successfully.
 
-I can't find the issue with the graph above, it would be shown:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2078%2Fdscho%2Fwritev-vs-cmake-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2078/dscho/writev-vs-cmake-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2078
 
-            A---B
-                 \
-          X---Y---Z
+ contrib/buildsystems/CMakeLists.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-but we shouldn't want indentation here tho
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index c6cfb874ef..dce9c84d0b 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -376,7 +376,7 @@ endif()
+ #function checks
+ set(function_checks
+ 	strcasestr memmem strlcpy strtoimax strtoumax strtoull
+-	setenv mkdtemp poll pread memmem)
++	setenv mkdtemp poll pread memmem writev)
+ 
+ #unsetenv,hstrerror are incompatible with windows build
+ if(NOT WIN32)
+@@ -421,6 +421,10 @@ if(NOT HAVE_MEMMEM)
+ 	list(APPEND compat_SOURCES compat/memmem.c)
+ endif()
+ 
++if(NOT HAVE_WRITEV)
++	list(APPEND compat_SOURCES compat/writev.c)
++endif()
++
+ if(NOT WIN32)
+ 	if(NOT HAVE_UNSETENV)
+ 		list(APPEND compat_SOURCES compat/unsetenv.c)
 
-  *   Z
-  |\
-  | * B
-  | * A
-  * Y
-  * X
-
-B is the parent of A and there is no commit on a third branch that
-could try to get below A.
-
-But I do find the issue with focusing on: is a root ? for example with
-this graph:
-
-  O---A
-
-  X---Y
-
-If we O..A Y, it shows A, Y, X but because I only look for roots it
-ends up looking like:
-
-  * A <- not a root but O is excluded
-  * Y <- no indentation
-  * X
-
-Then it's more something like 'seems_root' rather than 'is_root', and
-it should look like
-
-  * A
-    * Y
-   /
-  * X
-
-This would make on your last graph to have indentation at the right of
-Y, below A, even if not needed, it would protect A's spot the row
-below, which I think is desirable and what you meant with the
-examples.
-
->
-> The way we draw A and make sure one raw below A in the same lane is
-> vacant (to avoid something that is not an ancestor of A steals that
-> spot) is applicable to both graphs.  The reason why we try to keep
-> one row below A vacant is not because it is a root, but because in
-> the graph being drawn, none of A's parent will appear.  Obviously if
-> A is root, none of A's parent will appear in the graph, but in the
-> latter topology where we are drawing C..Z, none of A's parent will
-> appear not because A is root, but because all the parents of A is
-> excluded.
->
-
-Thanks for the feedback
-Pablo
+base-commit: 6e8d538aab8fe4dd07ba9fb87b5c7edcfa5706ad
+-- 
+gitgitgadget
