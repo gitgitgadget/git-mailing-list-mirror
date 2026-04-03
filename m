@@ -1,130 +1,170 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72FD35F603
-	for <git@vger.kernel.org>; Fri,  3 Apr 2026 17:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6937D394787
+	for <git@vger.kernel.org>; Fri,  3 Apr 2026 17:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775238061; cv=none; b=Byf13xX8BmbSVNqVMjzDw7nH6t5C0cRT1VS39w+7oKOa7kANFnfF+L1JPghxHBEHC1cWULQgQl1/5/H/3meOCh8Pe4zFZh2dDuwVyuMBBhrVW0VjeJ8wXYaf74L7PwnMhRw5sO9a5L7/wH2vZOXg5whcHGOjLYYzxe9FyWSMp2I=
+	t=1775238794; cv=none; b=coS0N4jhmmo0sQEY+Iq1KGATEVgjr7KkFPSZhgJEkz3p5n6hZWewcvcEdZ6guD4EhlAJDU8pg/s4LS/eIox0SelaxyHxZCULZfInQjzOLBlAxCU4NVTZ7IbmlKTElWVJvgqzl92zaQvhglXZCqYJxhRxblOvkOl3d9js6/qeLrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775238061; c=relaxed/simple;
-	bh=Z5CPITwQix6w8e5c+33S1Ujm50vjQWIsLYApqZiMT4Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G1xFeF/TXQWGbn1M5TIKwZyvZCjMUZUMUcO/WfOKxYgipDcMPMTDtU8lylpwSbRFjSJczq1EE7grYsOpcBarSBN7IOjFJmrI1VfrbCUrjFdCf+qef9GAFrJb4S0zP1tqHgRYp6AlqZ+S4msXlp8O/paRnCyVZqd5GZufdqHpuBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qmVjm82N; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775238794; c=relaxed/simple;
+	bh=F87gvseUFgK5Sw2HoPq/dByhetNJ6KQ2SP1hcShXWLM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n67chOso7RMSdwtO0XBrqUwm3KktMZaSiyan4ibtUtoJOXd0pUnlea3/lDde35tbsVVeUrqVop3Kpwxp/Sq0sidsyRyQg3YuQCMJGOyarxa6E5jEg29uLBlbG6vyaFAADpFrX7gg5lSUMYtUtimMip0r0C/c5Q5Ee9a+DGjZJdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LQXgtgwA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sbD8zqYQ; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qmVjm82N"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2b0baebcb55so5914445ad.0
-        for <git@vger.kernel.org>; Fri, 03 Apr 2026 10:41:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775238060; x=1775842860; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fqadWfVP/3LGoZVV+xACZrJXu8+PqmVj816dB4SEv1w=;
-        b=qmVjm82NvY2Pl9djdXNXGIEf8HMg7RgZtpJe7Mpr176scRuABGS97sF19C6V2jecqs
-         Yu07qCqMkS0GCAnce8Y+OgekfxN/1oN6cH/cjQFwHmDHxZK5mDm3Xy99HcRwmNokSa9Y
-         IMvWykHwoIOW9JhbEzJfS1RzGmY5/Qtlu8k3YQU6KqQG9oIU/c+k5/vZJYmlQdhuJ7Ab
-         X5NRchmLW0bnofVfYKqqZVNkDvE9EJvURkV6BzZB5N3v8qFHs/mhmsU5NhayED3M8N4S
-         Gs8D7Z+K+qxcWmaCrTzF4Ka0DgtsKS7uRpTOaJ+RkIkN8UM8WiiUOWOm7ZCPVPX4dVIG
-         TPuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775238060; x=1775842860;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fqadWfVP/3LGoZVV+xACZrJXu8+PqmVj816dB4SEv1w=;
-        b=Nk2xdBnKjuYg/rZXQO2sphkiKWS+VBT+mE/xcZVYen3zKXg94IM6NwPOSiBSJQfdug
-         mICZTHUr+1/qcl7ywCLUxzrzvPT9XG9hzrSOmDibStShsyeUvuvjce2Ohr7tmHKdaDMi
-         aONjALMT/rVEMlsBOlnXvWr2nKodMcg/6Mv6aYWRYlo7LIeALcXLQ3MsbsUc7MOpHNwP
-         JcQ1F23Riov9iaQojBqRpEO1Kr9I/o9/6p781XnmvYGYUTQJKcs6H359LEAVm82sW4Ml
-         +5BZDYaMf5GYuHqUZrWbMNRoxTva6jyyDYr5svLHA6xvE93xUvVuxjD4FrJXcKB+DgKu
-         uqUw==
-X-Forwarded-Encrypted: i=1; AJvYcCXn14kbm8GaGvNfayYOZwt9d5Q4we8PUxEPszZDX+XozG5D37EtMu3AB4zZ3fFgbMzfMGs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwilCav5xuGN+TkscrZJ/ovZEqP7YHJmTGObTsV1Hsl3YOZSKo3
-	NzHy+pgwLa12CCV1AjR5Z4r3RrB4nh7+RyQa3epR7xI9RLsCA5cCpzxC
-X-Gm-Gg: AeBDies0df1dy3QCY2EmxUeGDJjrIj1ocmydlXMdpErKGf1nmRGYfHSqYOmkmdGLzK8
-	WTeYPOwMxzgjTyIcl9Ld9Gu7kMNZxe0qKnIz9YZGFZbMOKg49nxRb/motAhatlsY9QdzaT4S29O
-	OznvpjpI2uIzfQXM8FsoLjagbuJ9+ZmDuT06kxJjuke8tbERBm1n7drT9GkLvReD0GlWwlWSaBi
-	bTnyeb7pMCYpRxoQrY33SW7yNp3FFlG0rXnWDxVRETxJzr9UCu/9fhfyfHmId9vgWR4kZ1wmoD3
-	LGKT4LrIFjaKRz82szRTEA0MK6rR97D4aNr+5k7QzZXx+ZN1ZF2wgeX6NTBgWcS+PIuEfGmtTjo
-	2HA5ZX9wrXrJeKjR3A/gu0X2ZxUyUYQBaFuv15bFxYhm+ADdc10LcWRHq7LlzYHd1wPO40XxM7G
-	JzHEwvvxFtuNWo9a3PzgB9nnBl6qV5Y8cASNUgdBi/pjcDCohMG7k+bGqtT/HyUyEC/c+iG0Qje
-	6NcouQGlFo=
-X-Received: by 2002:a17:902:f54a:b0:2b0:ac1e:972e with SMTP id d9443c01a7336-2b2819577b1mr24111275ad.8.1775238059849;
-        Fri, 03 Apr 2026 10:40:59 -0700 (PDT)
-Received: from [192.168.0.109] ([155.69.180.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2747af6e7sm64447995ad.37.2026.04.03.10.40.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Apr 2026 10:40:59 -0700 (PDT)
-Message-ID: <5017740b-4437-4e55-b019-244b33eed05a@gmail.com>
-Date: Sat, 4 Apr 2026 01:40:55 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LQXgtgwA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sbD8zqYQ"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2F5AD1D00038;
+	Fri,  3 Apr 2026 13:53:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 03 Apr 2026 13:53:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1775238792;
+	 x=1775325192; bh=fFmw+0V3aP64pgGsaP/SlbWamZsphQvjhnhAaMFe3DQ=; b=
+	LQXgtgwAVRnYJRNrwR+LmOVpS2cjL6VLNbgSmja3EMTKkuKODFE+9kralHY0/bmZ
+	dryQv2Di8Z1Pr3A5O2EY3gtluU9BkPpkxmAV5nmc43srm++HLDoSAhZ4rkp0Zr4t
+	bSKU4sxQUmOrUxreq4CTx/pANy1dWmn1HTbjEQDPHxRKw5ixKxOdNlqrZ7g9IMsU
+	rZlJPCslTQBamlHDz4vE0iYkSODeKB3EaiMgbQpJgS4ornPS4rr0fv2S9LIhWjM1
+	XDhLpDPOUCvJl2YG6pCAwsZuO9je1Nq+3BGEXVD9iRnpUevP3xefSHvgJdKUdMIU
+	ltAgBLT9Fs9qQqdAgeGKWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775238792; x=
+	1775325192; bh=fFmw+0V3aP64pgGsaP/SlbWamZsphQvjhnhAaMFe3DQ=; b=s
+	bD8zqYQwPMsig5HDaHcxCR66gHsjFkt7iWQGE4oaXkpQfyTRkcxXZTdDdiqamfjw
+	yTlYl2VH1Wqn/ROyQrScva4LMtw7Hgm+sXSTHyEdJhH2dbRC3OeACdOFZWuucxhT
+	Yrqgm2qp1gXWBCZMzUM77A9G3AP5xrChNZi/2Zv5Cg1pnS3ZJcmlmiyNtUm75RXm
+	fR7yejSyFh+3M7aTo27n7ISoOk2gRpaTCzcSy3+4bYR2btvpUMlMKdtWMw+FWY5/
+	NnkwdlZGQZzBb1T/p1lLSd/9dB0UBZecwvxAN+OHGFxQn7fuJqPeBH0dief2lVEt
+	dOsS9yDfZ0lNuyS4yiTPg==
+X-ME-Sender: <xms:h_7PaU9j2V1hYGNR-7R_qYGbK-7lhMcwQjPfpFmwFsayg_lZF27Q6Q>
+    <xme:h_7PaTsDy7ZZgBykdoorxEtDwuHR6khpDjqlWKuafFT8Rlx6bZnD-Gey61RfEGS4-
+    CZHH6v4b8KorlBdaS4BdM_kCHWhIe4_s7bwwpOMqkTrGxEjDx6c>
+X-ME-Received: <xmr:h_7PafBvpctJiIfcA5LKIJOscT3go5V0maLI10XiaWvxFL17R-RocHhLcb4aymsAUD38mKFXVV-XNGNxcfjSuqSzybKne_Zv1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelheelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedt
+    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohgvrhhgsehthhgrlhhhvghimhdrihhopdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:h_7PaTVXYoIhfJz2p9NxLjpq8lTUQSjZ2LhkWuEzpkOYwnk3cJqmcQ>
+    <xmx:h_7PaVD1VeYQ-2sAzPYAm0jwHoWNg2VjgYaLboY5lAQs5tPpac596A>
+    <xmx:h_7Pae-gVSGiwc38_oo240NosEQAE9ROXtzETojRcLIFQ72_N32s8A>
+    <xmx:h_7PaUFTS0b171fZK_I4vsjTroitfqeiiHibbDE1kzxu6IAL3Yi_lA>
+    <xmx:h_7PaXGyX7SfDfPKYourD-AbYNh3tmPqZCJd9LDEJt-u2D3UDgSWhJcC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 Apr 2026 13:53:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Joerg Thalheim <joerg@thalheim.io>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] config: retry acquiring config.lock for 100ms
+In-Reply-To: <20260403100135.3901610-1-joerg@thalheim.io> (Joerg Thalheim's
+	message of "Fri, 3 Apr 2026 12:01:35 +0200")
+References: <20260403100135.3901610-1-joerg@thalheim.io>
+Date: Fri, 03 Apr 2026 10:53:10 -0700
+Message-ID: <xmqqzf3klym1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] refs: add struct repository parameter in
- get_files_ref_lock_timeout_ms()
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, gitster@pobox.com, bkkaracay@gmail.com
-References: <20260329101725.1092900-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260403120938.1142533-1-shreyanshpaliwalcmsmn@gmail.com>
- <20260403120938.1142533-2-shreyanshpaliwalcmsmn@gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <a3205153416@gmail.com>
-In-Reply-To: <20260403120938.1142533-2-shreyanshpaliwalcmsmn@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 4/3/26 20:08, Shreyansh Paliwal wrote:
-> -long get_files_ref_lock_timeout_ms(void)
-> +long get_files_ref_lock_timeout_ms(struct repository *repo)
->   {
->   	static int configured = 0;
->   
-> @@ -997,7 +997,7 @@ long get_files_ref_lock_timeout_ms(void)
->   	static int timeout_ms = 100;
-> 
+Joerg Thalheim <joerg@thalheim.io> writes:
 
-A very minor and trivial question: the 'static' keyword is still present 
-here. This is entirely understandable, given that you mentioned earlier 
-that...
+> From: Jörg Thalheim <joerg@thalheim.io>
+>
+> When multiple processes write to a config file concurrently, they
+> contend on its ".lock" file, which is acquired via open(O_EXCL) with
+> no retry. The losers fail immediately with "could not lock config
+> file". Two processes writing unrelated keys (say, "branch.a.remote"
+> and "branch.b.remote") have no semantic conflict, yet one of them
+> fails for a purely mechanical reason.
+>
+> This bites in practice when running `git worktree add -b` concurrently
+> against the same repository. Each invocation makes several writes to
+> ".git/config" to set up branch tracking, and tooling that creates
+> worktrees in parallel sees intermittent failures. Worse, `git worktree
+> add` does not propagate the failed config write to its exit code: the
+> worktree is created and the command exits 0, but tracking
+> configuration is silently dropped.
+>
+> The lock is held only for the duration of rewriting a small file, so
+> retrying for 100 ms papers over any realistic contention while still
+> failing fast if a stale lock has been left behind by a crashed
+> process. This mirrors what we already do for individual reference
+> locks (4ff0f01cb7 (refs: retry acquiring reference locks for 100ms,
+> 2017-08-21)).
+>
+> Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
+> ---
+>  config.c | 14 ++++++++++++--
+>  1 file changed, 12 insertions(+), 2 deletions(-)
 
-> Hi Yuchen,
-> 
-> I have acknowledged this in a previous reply to Burak. As stated there,
-> this is a valid issue and would require moving the config into
-> repo-settings struct.
-> In this patch, I focused on removing the dependency on
-> 'the_repository' while preserving existing behavior. Global state
-> removal and multi-repo correctness is an incremental process,
-> so I would prefer to handle this in a follow-up change.
-> I'll also update the patch title in the next version to better reflect
-> the scope of the change.
+OK.  This is consistent with the default used for a ref update with
+files backend.  Various subsystems use their own value randomly
+chosen out of thin air, it seems.  credential-store uses 1000ms, gc
+uses 150ms to interact with launchctl, refs have their own per
+backend, etc.
 
-But if that is the case, the accuracy of this line in the commit message:
+> diff --git a/config.c b/config.c
+> index 156f2a24fa..f7aff8725d 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2903,6 +2903,14 @@ char *git_config_prepare_comment_string(const char *comment)
+>  	return prepared;
+>  }
+>  
+> +/*
+> + * How long to retry acquiring config.lock when another process holds it.
+> + * The lock is held only for the duration of rewriting a small file, so
+> + * 100 ms covers any realistic contention while still failing fast if
+> + * a stale lock has been left behind by a crashed process.
+> + */
+> +#define CONFIG_LOCK_TIMEOUT_MS 100
+> +
 
-> This reduces reliance on the_repository global.
+Making this configurable would make a cute chicken-and-egg problem?
 
-..is open to question. Or perhaps it would be worth mentioning:
+;-)  No, no need for that---just kidding.
 
-"Note: This function still uses static variables, which means it does 
-not fully support in-process multi-repo usage yet. This will be 
-addressed in a follow-up by moving the configuration to the 
-'repo-settings' struct, but changing the signature is a necessary first 
-step..."
+Will queue.  Thanks.
 
-or something (shorter)?
-
-To reiterate, I think this is a minor issue, so it would be better if 
-you decide for yourself. Other parts look good to me. ;)
-
-Regards, Yuchen
-
-
+> @@ -2986,7 +2994,8 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
+>  	 * The lock serves a purpose in addition to locking: the new
+>  	 * contents of .git/config will be written into it.
+>  	 */
+> -	fd = hold_lock_file_for_update(&lock, config_filename, 0);
+> +	fd = hold_lock_file_for_update_timeout(&lock, config_filename, 0,
+> +					       CONFIG_LOCK_TIMEOUT_MS);
+>  	if (fd < 0) {
+>  		error_errno(_("could not lock config file %s"), config_filename);
+>  		ret = CONFIG_NO_LOCK;
+> @@ -3331,7 +3340,8 @@ static int repo_config_copy_or_rename_section_in_file(
+>  	if (!config_filename)
+>  		config_filename = filename_buf = repo_git_path(r, "config");
+>  
+> -	out_fd = hold_lock_file_for_update(&lock, config_filename, 0);
+> +	out_fd = hold_lock_file_for_update_timeout(&lock, config_filename, 0,
+> +						   CONFIG_LOCK_TIMEOUT_MS);
+>  	if (out_fd < 0) {
+>  		ret = error(_("could not lock config file %s"), config_filename);
+>  		goto out;
