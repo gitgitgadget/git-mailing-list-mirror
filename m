@@ -1,110 +1,206 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF5B2BE630
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 05:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775281341; cv=none; b=I87YCpcGBqoDleFtLu/RWA3E/ZzzTRZSFpfst233j6QCyJb45oBlCZYH4KJjev11vUownQNR8GvS5mR1BzCyPESJbJi8KndwYhpuptQMolhBK6vzQUyaxQ1XNOH1co1OvDI1g0pgqlE3pxpgUyJUrEy/KsghjUdWFerjlX3phWA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775281341; c=relaxed/simple;
-	bh=pHgAljtJmXGpFkquyInihenv/Nh6XPh9a4JwjdBERvY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ei7/G9O6LVDLwaJ/awA7RUdLdaanpmsyH+xIq/vTm86EylnWZ9j/g/bDJh+Nmfu1HjTwn022zGDqHEdYZ2fOSmKK5IwT2O2F2dnl0xTL4b7MplKqPLekoFURciqag7y2sN/fmuwQSUO3ufDstggiJPKAi4VeTzW457axOSVOMbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZOMVag1J; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1462C21E8
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 08:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775291423; cv=pass; b=L6ZBHpfMIKtgD0QLD53YZWrLK0fqWhkP0huxLoqlGOfbLvdsCB3qcRX+Yfp+/RXnpCiSEUOjscoVzBowP7yjNUXI/NcYtK+yTpH5/S7h8KKU9l/NyiW9KIdX+RhnmX4NF72fY3XjIzPGBL5Y3Nrt45MTQaaa/LjXHUbSQRb4S/I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775291423; c=relaxed/simple;
+	bh=c0SkI4o7W7G2BLyCprFUQd+fWNx2rhQb6KToBRz7hKE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OpL4OpMyb3Kqiveul6biRKUg7Kf42LFT8t1EZwAVngETfmYhNVhqwiHlG4ZXKWWx+dMB3IGZFZcQ2WcAsnPAP6SqsnVVgu3TXDdIK/uPKu5xLBLZfruVzFMHQsggmJN45gAlfAcQs7+mTvRCtparxMX2W+Qo+qTFk9AWQkSlPqU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=GfB4Ehzd; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZOMVag1J"
-Received: (qmail 239653 invoked by uid 106); 4 Apr 2026 05:42:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pHgAljtJmXGpFkquyInihenv/Nh6XPh9a4JwjdBERvY=; b=ZOMVag1JATiB5KNS8zx12vvBW0IgXEachxHlM8cGU3jjadR/ozpnO+X8cvdXBe75Y7WEToXBJ3cFfFyut/90N2VCLS9ybcGmO/0/v5GLcD1OFCJa37CI2XJUxESTgiyBhE+ndmRgihv0PbvoSq8GKpsQxsb0IVLoRVjCV9O5rlQyjPvw6nDwnBwJAM0uUwToyFFiVa7p0KDFTAsqBE/wasQ2JpgVldGZPrkpYGkNzc454yYzEp82dCyFd2QN83xLrVJLOSaLveL8VVBhZ1l3k7jw9aFHCi35EmxyEHcteVLFXJRQD8Mzrah8dL2d+9Ls1qXgbFeo2Z8u4sEVqgm3fg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Apr 2026 05:42:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 386243 invoked by uid 111); 4 Apr 2026 05:42:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Apr 2026 01:42:12 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 4 Apr 2026 01:42:11 -0400
-From: Jeff King <peff@peff.net>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="GfB4Ehzd"
+ARC-Seal: i=1; a=rsa-sha256; t=1775291402; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=AQxNCwykbt/B2/JSfEBErPqwkRyLA7ZX1P4uFMsNWqX0wXvAoRDmefTtjGhlzM6O3IYz5Si1Owr9nYF/9ZOvhv3SEsZS1D7nUWVPH7hbXA9KW3csdCgyIeCcn4eegaTJhQ2KRe18pX7L4n50fNjcmxdz4OcdLrDzEebHbmCGKLI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1775291402; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=b5D73cNB3fv5JB/dOhoTUm707VcUqkGJ8774kr+d1L8=; 
+	b=g6pxhaZ1fh2MK9r+vWuvMbaP3gbPMfDxJYdVEfIo1cRz9F0FsnDZ4LfaJq+d4zrP5KDmR7OBhsRssYuUnYdL1s0SwVp4jIyEuHwJ1sJbM5x18+4GX+nXkISNX1cBGFWxXzJC+AKKLk5l8aPMrBm6j3Ah8em69D+K5mj6ymbpBp4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775291402;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=b5D73cNB3fv5JB/dOhoTUm707VcUqkGJ8774kr+d1L8=;
+	b=GfB4Ehzd8xA3fwU4vDvY5+FZoTRJlABcF/AN+T+9xvke2vbfDbJXFmG0dO7Zjmg4
+	oCd7vbbkWxB+EGodnmZpT/9Mb8ocXjUnV6V6P5mMybaBbZ9IRv0RUWqVB3/3k3k+nTS
+	/umhv3Q1us5naqTJsEGTfvMoPdAoIVBR5V9Q8b/0=
+Received: by mx.zohomail.com with SMTPS id 1775291399270755.2646665451489;
+	Sat, 4 Apr 2026 01:29:59 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Michael J Gruber <git@grubix.eu>
-Subject: [PATCH v2 13/12] git-compat-util: fix CONST_OUTPARAM typo and
- indentation
-Message-ID: <20260404054211.GA1346444@coredump.intra.peff.net>
-References: <20260402041433.GA3501120@coredump.intra.peff.net>
- <20260402041507.GH3501239@coredump.intra.peff.net>
- <87h5ps5mbc.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v6 02/12] config: add a repo_config_get_uint() helper
+Date: Sat,  4 Apr 2026 11:29:24 +0300
+Message-ID: <20260404082934.173788-3-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
+In-Reply-To: <20260404082934.173788-1-adrian.ratiu@collabora.com>
+References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
+ <20260404082934.173788-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87h5ps5mbc.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Fri, Apr 03, 2026 at 01:13:11PM +0200, Toon Claes wrote:
+Next commits add a 'hook.jobs' config option of type 'unsigned int',
+so add a helper to parse it since the API only supports int and ulong.
 
-> > +/*
-> > + * Check that an out-parameter that is "at least as const as" a matching
-> > + * in-parameter. For example, skip_prefix() will return "out" that is a subset
-> > + * of "str". So:
-> > + *
-> > + *  const str, const out: ok
-> > + *  non-const str, const out: ok
-> > + *  non-const str, non-const out: ok
-> > + *  const str, non-const out: compile error
-> > + *
-> > + *  See the skip_prefix macro below for an example of use.
-> > + */
-> > +#define CONST_OUTPARAM(in, out) \
-> > +    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
-> 
-> I'm not sure it matters, but this is indented with spaces
+An alternative is to make 'hook.jobs' an 'int' or parse it as an 'int'
+then cast it to unsigned, however it's better to use proper helpers for
+the type. Using 'ulong' is another option which already has helpers, but
+it's a bit excessive in size for just the jobs number.
 
-This is in 'next', so we'd need a patch on top. Maybe not worth it on
-its own, but we also missed the typo-fix that Junio pointed out earlier.
-
-So maybe this on top:
-
--- >8 --
-Subject: [PATCH] git-compat-util: fix CONST_OUTPARAM typo and indentation
-
-There's a typo in the comment, making it hard to understand. And the
-macro itself is indented with spaces rather than tab.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- git-compat-util.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ config.c | 28 ++++++++++++++++++++++++++++
+ config.h | 13 +++++++++++++
+ parse.c  |  9 +++++++++
+ parse.h  |  1 +
+ 4 files changed, 51 insertions(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 4ddac61992..ae1bdc90a4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -464,7 +464,7 @@ report_fn get_warn_routine(void);
- void set_die_is_recursing_routine(int (*routine)(void));
+diff --git a/config.c b/config.c
+index 156f2a24fa..a1b92fe083 100644
+--- a/config.c
++++ b/config.c
+@@ -1212,6 +1212,15 @@ int git_config_int(const char *name, const char *value,
+ 	return ret;
+ }
  
- /*
-- * Check that an out-parameter that is "at least as const as" a matching
-+ * Check that an out-parameter is "at least as const as" a matching
-  * in-parameter. For example, skip_prefix() will return "out" that is a subset
-  * of "str". So:
-  *
-@@ -476,7 +476,7 @@ void set_die_is_recursing_routine(int (*routine)(void));
-  *  See the skip_prefix macro below for an example of use.
++unsigned int git_config_uint(const char *name, const char *value,
++			     const struct key_value_info *kvi)
++{
++	unsigned int ret;
++	if (!git_parse_uint(value, &ret))
++		die_bad_number(name, value, kvi);
++	return ret;
++}
++
+ int64_t git_config_int64(const char *name, const char *value,
+ 			 const struct key_value_info *kvi)
+ {
+@@ -1907,6 +1916,18 @@ int git_configset_get_int(struct config_set *set, const char *key, int *dest)
+ 		return 1;
+ }
+ 
++int git_configset_get_uint(struct config_set *set, const char *key, unsigned int *dest)
++{
++	const char *value;
++	struct key_value_info kvi;
++
++	if (!git_configset_get_value(set, key, &value, &kvi)) {
++		*dest = git_config_uint(key, value, &kvi);
++		return 0;
++	} else
++		return 1;
++}
++
+ int git_configset_get_ulong(struct config_set *set, const char *key, unsigned long *dest)
+ {
+ 	const char *value;
+@@ -2356,6 +2377,13 @@ int repo_config_get_int(struct repository *repo,
+ 	return git_configset_get_int(repo->config, key, dest);
+ }
+ 
++int repo_config_get_uint(struct repository *repo,
++			 const char *key, unsigned int *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_uint(repo->config, key, dest);
++}
++
+ int repo_config_get_ulong(struct repository *repo,
+ 			  const char *key, unsigned long *dest)
+ {
+diff --git a/config.h b/config.h
+index ba426a960a..bf47fb3afc 100644
+--- a/config.h
++++ b/config.h
+@@ -267,6 +267,12 @@ int git_config_int(const char *, const char *, const struct key_value_info *);
+ int64_t git_config_int64(const char *, const char *,
+ 			 const struct key_value_info *);
+ 
++/**
++ * Identical to `git_config_int`, but for unsigned ints.
++ */
++unsigned int git_config_uint(const char *, const char *,
++			     const struct key_value_info *);
++
+ /**
+  * Identical to `git_config_int`, but for unsigned longs.
   */
- #define CONST_OUTPARAM(in, out) \
--    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
-+	((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
+@@ -560,6 +566,7 @@ int git_configset_get_value(struct config_set *cs, const char *key,
  
- /*
-  * If the string "str" begins with the string found in "prefix", return true.
+ int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
+ int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
++int git_configset_get_uint(struct config_set *cs, const char *key, unsigned int *dest);
+ int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest);
+ int git_configset_get_bool(struct config_set *cs, const char *key, int *dest);
+ int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *is_bool, int *dest);
+@@ -650,6 +657,12 @@ int repo_config_get_string_tmp(struct repository *r,
+  */
+ int repo_config_get_int(struct repository *r, const char *key, int *dest);
+ 
++/**
++ * Similar to `repo_config_get_int` but for unsigned ints.
++ */
++int repo_config_get_uint(struct repository *r,
++			 const char *key, unsigned int *dest);
++
+ /**
+  * Similar to `repo_config_get_int` but for unsigned longs.
+  */
+diff --git a/parse.c b/parse.c
+index 48313571aa..d77f28046a 100644
+--- a/parse.c
++++ b/parse.c
+@@ -107,6 +107,15 @@ int git_parse_int64(const char *value, int64_t *ret)
+ 	return 1;
+ }
+ 
++int git_parse_uint(const char *value, unsigned int *ret)
++{
++	uintmax_t tmp;
++	if (!git_parse_unsigned(value, &tmp, maximum_unsigned_value_of_type(unsigned int)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
+ int git_parse_ulong(const char *value, unsigned long *ret)
+ {
+ 	uintmax_t tmp;
+diff --git a/parse.h b/parse.h
+index ea32de9a91..a6dd37c4cb 100644
+--- a/parse.h
++++ b/parse.h
+@@ -5,6 +5,7 @@ int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
+ int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
+ int git_parse_ssize_t(const char *, ssize_t *);
+ int git_parse_ulong(const char *, unsigned long *);
++int git_parse_uint(const char *value, unsigned int *ret);
+ int git_parse_int(const char *value, int *ret);
+ int git_parse_int64(const char *value, int64_t *ret);
+ int git_parse_double(const char *value, double *ret);
 -- 
-2.54.0.rc0.409.g4c76eb20e4
+2.52.0.732.gb351b5166d.dirty
 
