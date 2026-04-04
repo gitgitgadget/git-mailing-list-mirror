@@ -1,58 +1,79 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E572C21E8
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 08:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775291441; cv=pass; b=ahnV1/Uzi8a767SWaQFlhZ++zz6GpAQqb48sGDpm93febq36GNl8sgKdJPtvGgLM4P8YD/eeSDxrXWpzPiEMCsrInJEpFuWW+wWLOwyWGfTriZJutoLnoG93fzj6J3S0z4hogARdUP+IETyJof8Y34DECrj/EJYzjBPFUE+bOTs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775291441; c=relaxed/simple;
-	bh=5mlKM8wlSyLHBm5DzhvHHQTY7kjIHEmXwshhO10QuXg=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368C4371D1D
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 09:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775294673; cv=none; b=cE7QPel6sBAzrfUptDq+X2lUI2E4jcgwcaaY2Izm+cb3tbcYI8jCP7SZrUowKwA4TzocXcHd9XyLrJQZcUJD0TzyYqyPy0bIvOpXfUz3L/LlxffSWjA3o9MbZO2/lYnQsDZukBBt14MN0ayAvvWo/Fz7MBW55jbJtilWJ0Zr/qc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775294673; c=relaxed/simple;
+	bh=46Ck20jV/IYXyGZ1mEb3TofGWhTbrtB9/rRMlv8wk4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+jadf/hK/HdGmHxiXPJQClYBg4LYHMYYHECzROgLmunyHs7f0KYb3Sm5tIUSfbXmx71bI06ZTb3tiRc1QKnILyk8tcOLfYr6Z1AjUG7pe1iVjTYJtVNo2fo0qm4dx9K2rrLsuYOCe0sauZZTsQiAAiJ8Cc0NqXkD+uGZcp4DaU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=XYXK1FUZ; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version; b=jTZKRbveybL41drqzF+B6gbXT6H6bYjSCA1ujgzmcy0Q3VIWIc1ekEfmDWFBglRclhbdi1WAnEsV1kpb8GyhiWZm1DSa49BK/mCu7TaE1/1asicARaKouEGyuJ5frHl2WIFvihKRGmciLeAA9w1pfg4uc3Yo1TQ2+EL2bSLi+Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Du/pGk6M; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="XYXK1FUZ"
-ARC-Seal: i=1; a=rsa-sha256; t=1775291422; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=JenZmHeogNw0Cx6W3KdT2Jvkw3eESqMAj40Vl+3XV4FruCvc9hFupjchSatGszORNyKhnhA8rbH8k3BkpAJpSuycGMBWIZ9iQdyx9BcwcDkiPI9YGq4SvdptD76waUWR58aVSstepvfEH/MZJXil4d3mXPsNKRmK2FxNgiNbJZo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775291422; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=j17x8KwYVOQOShZ29Yjs9lOQo/R3KXvHPVdq2Vrfc7k=; 
-	b=J12kom3T44EXigaMTzZ+5wxfI0+z2jbyliYT16g/U0Ql2Wep4NsxgE95V/qLNhy5iKz4iRb0zv8CdaJvIxK6jx+XkXG6yUX97fBNvOJYmO5iTgRX3iVKJUIIWXtVLQgdnG7XnjyJRoBWuTP+WZbSaDl/qHQHqzFk9ttBk63HTyA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775291422;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=j17x8KwYVOQOShZ29Yjs9lOQo/R3KXvHPVdq2Vrfc7k=;
-	b=XYXK1FUZflegAygKFtHAeVnNjGwicwJS1m+i95syC1C9520fc+dLDVST9acalv1a
-	avLNK4Rebd8jwJZBdAqeubcDVIFw1BJ9jiWmRHIT5OukLMbO1cQ8GaLjJ8cJ3fX2ZV0
-	e4k7e/QXMlcbtEG6iGVVFlzLnhwhFYKyLVtTPSwo=
-Received: by mx.zohomail.com with SMTPS id 1775291420834725.0310077823007;
-	Sat, 4 Apr 2026 01:30:20 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Du/pGk6M"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-43cfa33a983so1570762f8f.1
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 02:24:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775294669; x=1775899469; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xnhvIWwKONaiOZjB2t3ue4VHUinkxLQJADcrd1bg3n8=;
+        b=Du/pGk6MwMDLFYGWfyhI1STgG1hxb7V2KsPGUoZe2dqStyOc4BoKFM8B2WM++iwBiE
+         Cp+edT9Mg+nzB5ZPA3zjLPkWDuH9MI+A3Fwmggh3Dl3/mfXbBuovAj1hTcFvf5yoUuIH
+         rAMgPs06T1Uuw+TQg3lf6BY2mxXKpq6Hv3vDk30X9cn8pKGAhReQXJivaG9D5irXyNPi
+         XYvQwxGBC9XBJxkzRHRiMwlgMJOkbORX3+mDfJJdIqDsr9TbUUELpG8g2fSrX3//6JtQ
+         3msNkmjr1mVs5K2Ul1qjqdTn4VN0ZpSQI+FVmWcSvUTdL2phHU+MJdc5DZVORBquQN8l
+         JOhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775294669; x=1775899469;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xnhvIWwKONaiOZjB2t3ue4VHUinkxLQJADcrd1bg3n8=;
+        b=EEjvmTd+17OWpgEpoREEcCluhgKzzirHPOIzcJjm/rueEsHmJVWMFkWWcsjYmDw1IZ
+         oY3TQRrYkR7lhZ8402O5A002BRYeUGYfG+zOhBTpPYamCcpc0w3eOWZ0ViBISSz67ctj
+         2Pfg+8cSbB59KBS1IUBkBQoZEYtw1VzvAPEn8V3Xziiy7cnpNbe0mTkBt8PL/uKeou/I
+         +wr+rPpu4/h3KqawOYITXFzJZq5Kg9zQF4jROmhReyfMWHMpk1IgiM9Lqott6lX8kzNY
+         04Npw02rhtrNBncGRA/jXYGPhh4eBzpGf5oqPiFuIVHXlG9w0WvGCDFruT40W85lcFvq
+         +hqQ==
+X-Gm-Message-State: AOJu0Yy//vPMDa2yVerP4pDgTbj+q6A6dKjWwe/bZGbV8+q7CU/CLk57
+	MKIeQl12wO+YjtR5ZTdEy+KVYPWxekIJDwS9J9YlKSVVDRtb3ajZV5CaiwIGEd36AHM=
+X-Gm-Gg: AeBDiesAVaLKVf0TOSVqkn+taB/8Zb4qyGf7Ff20fJkPYKc3Bjsa8ZpFR4kUX69h24o
+	QHctVgNw6bzyjqAn0eaL7VGa4g5x2whL+4ZTnuye+t1wgIOwZMGm0lHwW0YyFOCaFCPUHfQPVk9
+	jIBXR3/dWHJr7JE0IBwFs4F6V2XL7TSF+zCKHz9tBeMOY4Kvd82AfJUxJkEo2MX8WKRwH+5GNef
+	xWKxxc2LewP8xlrvgdo2uBuJx53ReRkMUkwR+5Sc4nIp/d3cYkoDPMYSbIYz0YTNbZ+nZGNHdP6
+	G8CTy75JPrrGNYinYIYuGr4wmI+p+5sCZrCoLdZ05xMIQpFNGjsGDG0RJEelGyXfQQqNu9JdBwA
+	ChQT3vGefILEXrUilTBurslvjunf2kGTKEsykqI3yKj+1Hg0Qa9gVxFxhuVpXZ78Yd8ynoBkL5S
+	wRIW8wIQFr5WyONJpUeDhp9XjwQmsDbd1pvyETXpbsP3/0z7Vi54W7I/hpf9T/NvmR938MAfpKQ
+	aevqqWdIohth1RSmhbLWE7ynTU/FXsDxf4J1JGXxx4pgzBSZLhr198htg==
+X-Received: by 2002:a05:6000:4023:b0:439:c661:3245 with SMTP id ffacd0b85a97d-43d292f12a8mr8795136f8f.34.1775294668922;
+        Sat, 04 Apr 2026 02:24:28 -0700 (PDT)
+Received: from farblopa.localdomain ([84.126.0.39])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4f1a99sm25488813f8f.32.2026.04.04.02.24.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Apr 2026 02:24:28 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Josh Steadmon <steadmon@google.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v6 12/12] hook: allow hook.jobs=-1 to use all available CPU cores
-Date: Sat,  4 Apr 2026 11:29:34 +0300
-Message-ID: <20260404082934.173788-13-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
-In-Reply-To: <20260404082934.173788-1-adrian.ratiu@collabora.com>
-References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
- <20260404082934.173788-1-adrian.ratiu@collabora.com>
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com,
+	chandrapratap3519@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [GSoC RFC PATCH v2 0/1] graph: add indentation for commits preceded by a parentless commit
+Date: Sat,  4 Apr 2026 11:24:24 +0200
+Message-ID: <20260404092425.550346-1-pabloosabaterr@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260402211717.3604688-1-pabloosabaterr@gmail.com>
+References: <20260402211717.3604688-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,264 +81,111 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
 
-Allow -1 as a value for hook.jobs, hook.<event>.jobs, and the -j
-CLI flag to mean "use as many jobs as there are CPU cores", matching
-the convention used by fetch.parallel and other Git subsystems.
+When having a history with multiple root commits or commits
+that act like roots (they have excluded parents), let's call
+them parentless, and drawing the history near them, the
+graphing engine renders the commits one below the other, seeming
+that they are related.
 
-The value is resolved to online_cpus() at parse time so the rest
-of the code always works with a positive resolved count.
+e.g.:
 
-Other non-positive values (0, -2, etc) are rejected with a warning
-(config) or die (CLI).
+  * parentless-B
+  * child-A2
+  * child-A1
+  * parentless-A
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- Documentation/config/hook.adoc |  4 ++-
- builtin/hook.c                 | 15 +++++++--
- hook.c                         | 60 ++++++++++++++++++++++++----------
- t/t1800-hook.sh                | 49 +++++++++++++++++++++++++++
- 4 files changed, 108 insertions(+), 20 deletions(-)
+This issue has been attempted multiple times:
+  https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
 
-diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
-index e0db3afa19..a9dc0063c1 100644
---- a/Documentation/config/hook.adoc
-+++ b/Documentation/config/hook.adoc
-@@ -58,7 +58,8 @@ hook.<event>.jobs::
- 	hook event (e.g. `hook.post-receive.jobs = 4`). Overrides `hook.jobs`
- 	for this specific event. The same parallelism restrictions apply: this
- 	setting has no effect unless all configured hooks for the event have
--	`hook.<friendly-name>.parallel` set to `true`. Must be a positive int,
-+	`hook.<friendly-name>.parallel` set to `true`. Set to `-1` to use the
-+	number of available CPU cores. Must be a positive integer or `-1`;
- 	zero is rejected with a warning. See linkgit:git-hook[1].
- +
- Note on naming: although this key resembles `hook.<friendly-name>.*`
-@@ -74,6 +75,7 @@ valid event name when setting `hook.<event>.jobs`.
- hook.jobs::
- 	Specifies how many hooks can be run simultaneously during parallelized
- 	hook execution. If unspecified, defaults to 1 (serial execution).
-+	Set to `-1` to use the number of available CPU cores.
- 	Can be overridden on a per-event basis with `hook.<event>.jobs`.
- 	Some hooks always run sequentially regardless of this setting because
- 	they operate on shared data and cannot safely be parallelized:
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 8e47e22e2a..cceeb3586e 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -5,6 +5,7 @@
- #include "gettext.h"
- #include "hook.h"
- #include "parse-options.h"
-+#include "thread-utils.h"
- 
- #define BUILTIN_HOOK_RUN_USAGE \
- 	N_("git hook run [--allow-unknown-hook-name] [--ignore-missing] [--to-stdin=<path>] [(-j|--jobs) <n>]\n" \
-@@ -123,6 +124,7 @@ static int run(int argc, const char **argv, const char *prefix,
- 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
- 	int ignore_missing = 0;
- 	int allow_unknown = 0;
-+	int jobs = 0;
- 	const char *hook_name;
- 	struct option run_options[] = {
- 		OPT_BOOL(0, "allow-unknown-hook-name", &allow_unknown,
-@@ -131,8 +133,8 @@ static int run(int argc, const char **argv, const char *prefix,
- 			 N_("silently ignore missing requested <hook-name>")),
- 		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
- 			   N_("file to read into hooks' stdin")),
--		OPT_UNSIGNED('j', "jobs", &opt.jobs,
--			    N_("run up to <n> hooks simultaneously")),
-+		OPT_INTEGER('j', "jobs", &jobs,
-+			    N_("run up to <n> hooks simultaneously (-1 for CPU count)")),
- 		OPT_END(),
- 	};
- 	int ret;
-@@ -141,6 +143,15 @@ static int run(int argc, const char **argv, const char *prefix,
- 			     builtin_hook_run_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
-+	if (jobs == -1)
-+		opt.jobs = online_cpus();
-+	else if (jobs < 0)
-+		die(_("invalid value for -j: %d"
-+		     " (use -1 for CPU count or a"
-+		     " positive integer)"), jobs);
-+	else
-+		opt.jobs = jobs;
-+
- 	if (!argc)
- 		goto usage;
- 
-diff --git a/hook.c b/hook.c
-index bc990d4ed4..d10eef4763 100644
---- a/hook.c
-+++ b/hook.c
-@@ -12,6 +12,7 @@
- #include "setup.h"
- #include "strbuf.h"
- #include "strmap.h"
-+#include "thread-utils.h"
- 
- bool is_known_hook(const char *name)
- {
-@@ -165,13 +166,17 @@ static int hook_config_lookup_all(const char *key, const char *value,
- 	/* Handle plain hook.<key> entries that have no hook name component. */
- 	if (!name) {
- 		if (!strcmp(subkey, "jobs") && value) {
--			unsigned int v;
--			if (!git_parse_uint(value, &v))
--				warning(_("hook.jobs must be a positive integer, ignoring: '%s'"), value);
--			else if (!v)
--				warning(_("hook.jobs must be positive, ignoring: 0"));
--			else
-+			int v;
-+			if (!git_parse_int(value, &v))
-+				warning(_("hook.jobs must be an integer, ignoring: '%s'"), value);
-+			else if (v == -1)
-+				data->jobs = online_cpus();
-+			else if (v > 0)
- 				data->jobs = v;
-+			else
-+				warning(_("hook.jobs must be a positive integer"
-+					  " or -1, ignoring: '%s'"),
-+					value);
- 		}
- 		return 0;
- 	}
-@@ -259,17 +264,21 @@ static int hook_config_lookup_all(const char *key, const char *value,
- 				  " ignoring: '%s'"),
- 				hook_name, value);
- 	} else if (!strcmp(subkey, "jobs")) {
--		unsigned int v;
--		if (!git_parse_uint(value, &v))
--			warning(_("hook.%s.jobs must be a positive integer,"
-+		int v;
-+		if (!git_parse_int(value, &v))
-+			warning(_("hook.%s.jobs must be an integer,"
- 				  " ignoring: '%s'"),
- 				hook_name, value);
--		else if (!v)
--			warning(_("hook.%s.jobs must be positive,"
--				  " ignoring: 0"), hook_name);
--		else
-+		else if (v == -1)
-+			strmap_put(&data->event_jobs, hook_name,
-+				   (void *)(uintptr_t)online_cpus());
-+		else if (v > 0)
- 			strmap_put(&data->event_jobs, hook_name,
- 				   (void *)(uintptr_t)v);
-+		else
-+			warning(_("hook.%s.jobs must be a positive"
-+				  " integer or -1, ignoring: '%s'"),
-+				hook_name, value);
- 	}
- 
- 	free(hook_name);
-@@ -688,6 +697,25 @@ static void warn_non_parallel_hooks_override(unsigned int jobs,
- 	}
- }
- 
-+/* Resolve a hook.jobs config key, handling -1 as online_cpus(). */
-+static void resolve_hook_config_jobs(struct repository *r,
-+				     const char *key,
-+				     unsigned int *jobs)
-+{
-+	int v;
-+
-+	if (repo_config_get_int(r, key, &v))
-+		return;
-+
-+	if (v == -1)
-+		*jobs = online_cpus();
-+	else if (v > 0)
-+		*jobs = v;
-+	else
-+		warning(_("%s must be a positive integer or -1,"
-+			  " ignoring: %d"), key, v);
-+}
-+
- /* Determine how many jobs to use for hook execution. */
- static unsigned int get_hook_jobs(struct repository *r,
- 				  struct run_hooks_opt *options,
-@@ -721,14 +749,12 @@ static unsigned int get_hook_jobs(struct repository *r,
- 			if (event_jobs)
- 				options->jobs = (unsigned int)(uintptr_t)event_jobs;
- 		} else {
--			unsigned int event_jobs;
- 			char *key;
- 
--			repo_config_get_uint(r, "hook.jobs", &options->jobs);
-+			resolve_hook_config_jobs(r, "hook.jobs", &options->jobs);
- 
- 			key = xstrfmt("hook.%s.jobs", hook_name);
--			if (!repo_config_get_uint(r, key, &event_jobs) && event_jobs)
--				options->jobs = event_jobs;
-+			resolve_hook_config_jobs(r, key, &options->jobs);
- 			free(key);
- 		}
- 	}
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 273588e4d4..dbd5299d92 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -1058,6 +1058,55 @@ test_expect_success 'hook.<event>.jobs does not warn for a real event name' '
- 	test_grep ! "friendly-name" err
- '
- 
-+test_expect_success 'hook.jobs=-1 resolves to online_cpus()' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "true" &&
-+	test_config hook.hook-1.parallel true &&
-+
-+	test_config hook.jobs -1 &&
-+
-+	cpus=$(test-tool online-cpus) &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	grep "\"region_enter\".*\"hook\".*\"test-hook\".*\"max:$cpus\"" trace.txt
-+'
-+
-+test_expect_success 'hook.<event>.jobs=-1 resolves to online_cpus()' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "true" &&
-+	test_config hook.hook-1.parallel true &&
-+
-+	test_config hook.test-hook.jobs -1 &&
-+
-+	cpus=$(test-tool online-cpus) &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	grep "\"region_enter\".*\"hook\".*\"test-hook\".*\"max:$cpus\"" trace.txt
-+'
-+
-+test_expect_success 'git hook run -j-1 resolves to online_cpus()' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "true" &&
-+	test_config hook.hook-1.parallel true &&
-+
-+	cpus=$(test-tool online-cpus) &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git hook run --allow-unknown-hook-name -j-1 test-hook >out 2>err &&
-+	grep "\"region_enter\".*\"hook\".*\"test-hook\".*\"max:$cpus\"" trace.txt
-+'
-+
-+test_expect_success 'hook.jobs rejects values less than -1' '
-+	test_config hook.jobs -2 &&
-+	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
-+	test_grep "hook.jobs must be a positive integer or -1" err
-+'
-+
-+test_expect_success 'hook.<event>.jobs rejects values less than -1' '
-+	test_config hook.test-hook.jobs -5 &&
-+	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
-+	test_grep "hook.test-hook.jobs must be a positive integer or -1" err
-+'
-+
- test_expect_success 'hook.<event>.enabled=false skips all hooks for event' '
- 	test_config hook.hook-1.event test-hook &&
- 	test_config hook.hook-1.command "echo ran" &&
+This happens because the engine prints left to right from the first free
+column and these parentless commits for the next row, their column
+becomes empty and the engine fills that gap with the next commit (child-A2)
+seeming that parentless-B and child-A2 are related when they are not.
+
+The actual implementation is very minimal.
+This patch makes the parentless commits to be kept alive at least one more row to avoid
+that, indenting the next commit to the next column and then clean the mapping
+letting the indented commit to naturally collapse to the column where the
+parentless commit was.
+
+e.g.:
+
+  * parentless-B
+    * child-A2
+   /
+  * child-A1
+  * parentless-A
+
+This is done by adding a is_placeholder flag to the columns, the parentless
+commit is actually there but marked as a placeholder
+
+e.g.:
+
+   * parentless-B
+  (B) * child-A2
+    /
+   * child-A1
+   * parentless-A
+
+(B) would be parentless-B column with the placeholder flag active.
+
+By teaching the rendering function to print a padding ' ' when meeting a
+placeholder column hides them, printing the second example.
+
+There could also be the case where there are multiple parentless commits
+
+without the patch:
+
+  * A parentless
+  * B parentless
+  * C parentless
+  * D1 child
+  * D parentless
+
+with the patch, the indentation cascades:
+
+  * A parentless
+    * B parentless
+      * C parentless
+        * D1 child
+     _ /
+    /
+   /
+  * D parentless
+
+the _ / might look weird but that's how the collapsing rendering does it
+for big gaps, this case being from the 4th column to the 0th column.
+
+Another patch could change the collapsing rendering for placeholders?
+I haven't done it to keep it minimal, but a follow up could make it
+to be straight '/'. This would make it bigger but easier for the eye to follow.
+IMO is not worth it, but opinions are welcome.
+
+The patch also adds tests for different cases like a parentless commit
+preceding multiple parents merges and the examples above.
+
+There could be some edge cases still so any testing is very welcome.
+
+PSA: the tests are on t4215-log-skewed-merges.sh, which is not very related,
+     but other graph related tests have +140 tests, and this one has less than
+     20 and some of them are also not very related and differ in style.
+     A cleanup patch before this renaming the file and style of the tests is fine?
+
+Changes from v1:
+
+- Changed to parentless commits instead of root commits to make it more generic
+- Fixed the branch names to pass CI and fixed tests style.
+
+Pablo Sabater (1):
+  graph: add indentation for commits preceded by a parentless commit
+
+ graph.c                      |  70 ++++++++++++++++++--
+ t/t4215-log-skewed-merges.sh | 124 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 188 insertions(+), 6 deletions(-)
+
+
+base-commit: 8de2f1b07a8053d7f1aad70dc1131d6afcf5a28a
 -- 
-2.52.0.732.gb351b5166d.dirty
+2.43.0
 
