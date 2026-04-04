@@ -1,70 +1,75 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589AA14884C
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 11:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACEE264617
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 13:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775301366; cv=none; b=hHyQbrEA1KzviBJqkDfZeiBUsRr6zwxyHAK52ZXnyBzigkJAEmo+IQZDbV7Cs6bRD+Y4zYftVvO/6a0yfVhlLqVOzWWVCmgexPD7AInloqkJWeRF1M7x7LW5gjss5TlE8JsJ57BcpGMBWNSlypJWWD5+213nv01b8HMrqZCE8FI=
+	t=1775311191; cv=none; b=OUmc+Z7E23wu2VgI2iySypxVs1U/fgVOsEQD9Jp/S44X1Yr5F/uWvpnmTfdZU1ZdMZ7N9VmsoUUo1ijCEmvgwAVFIATcpMQc7Gr/LLxJNjttvZcxJ4nTaiA8uW7572du1F8ApTBn07mYQhInDt6TAWhEadDg31KxVaMLrt6KEi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775301366; c=relaxed/simple;
-	bh=p8mutkVe9gvSw+uTYUvv7PKPpaUDzB8DHsa8XNYxr7s=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eHu/pz/EGYSHkWEoXOpkJzZwErBWxxb/ALFmrvEr0OaE9/IHugfjs5dCqCzEEfLxuPQWlXNMMpJ/zxxELf4TQL/VwjmRlNbzZgbZZN0+NGnvDSj4Q+h1wR6/DoP5ZPg+kUkNV7jz01uzTkq3KbmSSbSBI8ocqfhKgIU8k2C2o4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kn7xsqeR; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1775311191; c=relaxed/simple;
+	bh=sUPAF4YUdz20HzGRgqTpVfNNnWXPpEsGF0rnOjOa7qY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=q6JsQpc375dhV2HS01UeoxZoI96ALOJ69/j5GVdp4NmkRIITzZ3VEczCOwS9YqTpYraJzmk1TA0XQKFkbOo3Ew/dMUVLj7rVoqef0r1YisuOgkQou2q/rLyMcF6/f/CqyQt+FQTg3nyBWzXmcWXHkf8LuDlTNNYVVAf1fNAgr68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m8QLOTsV; arc=none smtp.client-ip=209.85.216.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kn7xsqeR"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-82ce0a9b41aso958640b3a.0
-        for <git@vger.kernel.org>; Sat, 04 Apr 2026 04:16:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8QLOTsV"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-35d99bae2ebso2374491a91.3
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 06:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775301364; x=1775906164; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sQAqjZLeIqpxtg0F8wLP6SB+OtXBLgXS5LvDtp/kCGk=;
-        b=kn7xsqeR4ejVq2ziL7nspCuB2GGtphV+JUr1EOQX4qAbpNE4hgZ6zEZYSQm4Blbrwh
-         2k5i2j3b0wGLsF7W78UnN1ZrPs+jPcm5vl+pg7KLRH9Gkw8G/KNdmWN1Qa3dxaUGH/6H
-         Pvaooc+WvZCAFME1v+0D/UfbAk3CQsTtpCLxbmE0+CimXq1QQbPt76JvEtF38RMrK+Pw
-         yBUuOTwbZc3SVRt7zahe32nkzQKoVuQ/fKRNqlXrowrd7HjpItijdZAfrwiJvskzy/Rq
-         zufafwu81RhXeBGbjv0ygoUMFCyx9It30ZBSaghBSQSBByBWwNA0fw3vOZbSiLA0rq9F
-         y01g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775301364; x=1775906164;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1775311190; x=1775915990; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sQAqjZLeIqpxtg0F8wLP6SB+OtXBLgXS5LvDtp/kCGk=;
-        b=hK++fa77aJ/iTrGM/0rftlPg4qOVZQMF7JlLdKcwCKmUkVYjX4uppkQ3jDZRmcEXlk
-         b/FynaqsEGHuPhS+A46Jm5zxJiUXCif8j8m4oqVIzU3Sp38TGZlOHbqqQRQB7zwsN/hk
-         2105Fs3ta3b+At5Ii6O0G+Ol7aBqPI08vGWJqEBp4BvJp+PPGKPAJCE+hBkHJ2/7VI45
-         o88ua+Dade9Y0Uic73DYlk5af4ndLIMCXVnxwlSuHly12ZkEcZVBtzZzwQ/zhfCoe+2y
-         60wOqGJSvshqloA+ktNplw7Z01peSXqrU5oiXgHe2Ke3lEH+NiueTH6M44d/b/XRD8cW
-         MlYw==
-X-Gm-Message-State: AOJu0YyyinaP/kiOtTSnfXdU/6zzU/GkKEvDOFeNZj3Wk8KRg+TZ4Xe8
-	Khvwd/mfz3fRttQPXbWPToxgDYRufrlhfWYwy4Ruq0uNpReS8qWbe8HUYfEiPjgr9MY=
-X-Gm-Gg: AeBDietkrVirQ900EwdHy8yd0KjJvQjBCrStPMwjOq0OcP26j1t06p4kGqhk1YIOIWw
-	52h977c1qogPfXKPw1RDpo64+Ju29utZ7VH+BaA+P6/nNM+vB+6BEVK/JE0MxGkMVXBRVSwJAsO
-	zu/zKM2kk4cr4qOs2T1NFkUXP9Z+/7QEUhZlNQi/ttca1k2i4TIx7ihwsyxVmV4l7cqwiy90ZhU
-	4cI8sj9k1oaKNL7a5DB/4jNSvvPSVWyjIznREJLeD0mKu7P9AfdWYN+6TXkGsvFGIkgJtFqdxYo
-	sfxWwbCAIrNGW3ueL/3rBtg5eehqIG1r0y7oldYYNnjK6CQlyppx0wXdFFZR8zWUA5b7wIPUm4N
-	NpIYX6XkmIU0GWq/Jv21JYxBfTcRg/f2OKoNCXtiYPekeS8mYRIVpzcKu4kCBwzOAWfpFZXc54I
-	JlO3IELKhFBkqcWqLziwzqIaUH0v797r+uDcWNaXHYPng6/84=
-X-Received: by 2002:a05:6a00:3e15:b0:81d:dd3a:b8f5 with SMTP id d2e1a72fcca58-82d0db9ca66mr6275084b3a.38.1775301364428;
-        Sat, 04 Apr 2026 04:16:04 -0700 (PDT)
-Received: from localhost.localdomain ([123.19.199.205])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9ca4efesm8807497b3a.61.2026.04.04.04.16.01
+        bh=Ut2zalUO6Kdno+MwARwx6JEXNUonZuuxQTcj7/jOAvw=;
+        b=m8QLOTsV/fPO7Z+7AWO+dLbAh9MJo2iK42D++2ZMe92fgfedD89efAFsvsYcRalpKl
+         2DHQYJw7pVMffZxEM5ZugO4WNsNdUczkJTp1h30G1uzM86cgMRZHJ9eQ0r7FZRH6yYDZ
+         IQWObAfDD76gNKDP1V5A14DTtYAlWK1H6wi2VoUR/I8e6sGOY+4EVdk/Hy4RMEMGIIBC
+         cdVfvws9co4wnNdQQclSuM8S5Z9vdyHUVnNvqCcNJurO5rQ2SD/kMHi58VdHwwllgQ/k
+         PJsxu8OqGd/95jA6W5CPGrdQvpaRi9JKHQEccdckIxo6VqE10SIMIuikhqSijoZSZCW8
+         12Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775311190; x=1775915990;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Ut2zalUO6Kdno+MwARwx6JEXNUonZuuxQTcj7/jOAvw=;
+        b=AcscEBML4DRE0g+rkVEkWMQo6lVpTP4RfN4bH6PcMcufyys0/URU6hKwbkSCHoyWs6
+         Fo3ePEwSNg08WbgdEriqNz1XCCr86Fq2cpX05c4Qt0BE38Hffo+dMkNs/yw3I+5UIZej
+         eSAAIFZ4oMQOjV2nNlAL4DGeBPDI0TObJz65XtuyeSFz6BW4osZrSMNFU2CvUhUlR6aW
+         /4O3RIxdFOu818+fXE7Ylo2rUIMos/SV+bGOnj+l9cBgNblFo5zomLxLIvTEzBVd3YBk
+         iu4To65gIwo0J2M8WsY6+lkaZm2LIkulUHC7IgjAehauuqNJx9DHCTCGaXVBtzRsU4F/
+         dGlg==
+X-Gm-Message-State: AOJu0YxN3Kvy08cLjJhlMXXZkvSSnu4EuXYv55b9HjvriXwIb+CdQ41G
+	VTM/YGyGpXQu7NfgK8/EeNYpdcqSBVryBF2aQnCwIR+dsvMV/vhWf2WPICUQJg==
+X-Gm-Gg: AeBDieviezTu6cpId8/KzWSajrH49YcZCSPigJx6p/e8N87tih84DQ50QF4NpjWOUwL
+	iNpSm4XW3fj+35iLivxpxv6UPidBORdSjOPNc9FolP+m/gfwCm+VvGgP05NNmFx/oZXyqgwxQRB
+	z6/dZT/Cjqs3ZPWjG5P4f80mP4XYZBGqF3silXDqh+eOBWpr+UEZIrdfwiFZN+EcBjwNEP26Kjm
+	cxUuKc4xlN+cuI9f709bICvCHciInHHhNZ8/so5ANE2mPYTni3XsJeZBdsCIVupdoLLyWhsVkb8
+	pQidImqo6J10yiwTz2AmGQA/Ty3CETsE5/gCIwbJ6C6/DIZgDH6wd+2I8wNz9lJLzuaq/QD56bO
+	wGJGj0C6Ts76IOaCn0V0Gd5oAzhtFWIPxpqT4epnJuO0XMHgM9mgEfSNfUFT6EZg9n5TdNRS/ET
+	ZuDLATOkY1pZ5OFpEhrBaN5aCJA0HtL5jEZ4GhmnjWmA8=
+X-Received: by 2002:a17:90b:3bd0:b0:35d:8fd8:d893 with SMTP id 98e67ed59e1d1-35de67eb212mr6325862a91.7.1775311189852;
+        Sat, 04 Apr 2026 06:59:49 -0700 (PDT)
+Received: from Shreyansh-PC ([2401:4900:8811:aff7:7421:f350:c0a6:bb03])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76c6491fe0sm7071805a12.11.2026.04.04.06.59.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2026 04:16:03 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
+        Sat, 04 Apr 2026 06:59:49 -0700 (PDT)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	stolee@gmail.com,
-	Trieu Huynh <vikingtc4@gmail.com>
-Subject: [GSoC PATCH v2] backfill: auto-detect sparse-checkout from config
-Date: Sat,  4 Apr 2026 18:15:57 +0700
-Message-ID: <20260404111557.17220-1-viking4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	a3205153416@gmail.com,
+	bkkaracay@gmail.com,
+	Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Subject: [PATCH v5 0/3] refs: reduce reliance on global state
+Date: Sat,  4 Apr 2026 19:28:37 +0530
+Message-ID: <20260404135914.61195-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260403120938.1142533-1-shreyanshpaliwalcmsmn@gmail.com>
+References: <20260403120938.1142533-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,77 +78,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Trieu Huynh <vikingtc4@gmail.com>
+This series continues the effort to reduce reliance on the_repository
+global state by making repository context explicit across the refs
+subsystem. The patches focus on passing struct repository through various
+ref helpers and backends, and replacing uses of global state such as
+the_repository and the_hash_algo with the appropriate repository instance.
 
-Commit 85127bcdea ("backfill: assume --sparse when sparse-checkout is
-enabled") intended for 'git backfill' to consult the repository
-configuration when the user does not pass '--sparse' or
-'--no-sparse' on the command line. It added the sentinel check:
+Patch 1/3: Updating get_files_ref_lock_timeout_ms() to take a repository
+and propagating it through files-backend, including callback paths.
 
-    if (ctx->sparse < 0)
-        ctx->sparse = cfg->apply_sparse_checkout;
+Patch 2/3:Replacing uses of the_hash_algo in refs.c with the hash
+algorithm from the appropriate repository.
 
-However, the ctx->sparse field is initialized to 0 instead of -1,
-so this guard never triggers. Consequently, the repository config
-(core.sparseCheckout) is never checked, and the command always
-performs a full backfill even when sparse-checkout is enabled.
+Patch 3/3:Removing remaining uses of the_repository in reftable-backend.c
+where a repository instance is already available.
 
-Fix this by initializing ctx->sparse to -1, ensuring the existing
-fallback logic correctly reads the repository configuration when
-no explicit flags are provided.
+Shreyansh Paliwal (3):
+  refs: add struct repository parameter in
+    get_files_ref_lock_timeout_ms()
+  refs: remove the_hash_algo global state
+  refs/reftable-backend: drop uses of the_repository
 
-Add a test to verify that 'git backfill' automatically respects
-sparse-checkout settings when no flags are passed.
+ refs.c                  | 17 +++++++++--------
+ refs/files-backend.c    | 19 +++++++++++++------
+ refs/refs-internal.h    |  2 +-
+ refs/reftable-backend.c |  6 +++---
+ 4 files changed, 26 insertions(+), 18 deletions(-)
 
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 ---
-v2:
-  - Update commit message to explicitly point to addressing 85127bcdea.
-  - The code change itself is unchanged.
+Changes in v5:
+ - made the commit message of patch 1/3 more explicit.
 
- builtin/backfill.c  |  2 +-
- t/t5620-backfill.sh | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+Changes in v4:
+ - Dropped patches 1/5 and 5/5, as they require further refactoring and
+   discussion. I will send them separately as a follow-up.
 
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index e80fc1b694..54acdfe290 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -120,7 +120,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 		.repo = repo,
- 		.current_batch = OID_ARRAY_INIT,
- 		.min_batch_size = 50000,
--		.sparse = 0,
-+		.sparse = -1,
- 	};
- 	struct option options[] = {
- 		OPT_UNSIGNED(0, "min-batch-size", &ctx.min_batch_size,
-diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index 58c81556e7..bed4987124 100755
---- a/t/t5620-backfill.sh
-+++ b/t/t5620-backfill.sh
-@@ -119,6 +119,21 @@ test_expect_success 'backfill --sparse' '
- 	test_line_count = 0 missing
- '
- 
-+test_expect_success 'backfill auto-detects sparse-checkout from config' '
-+	git clone --sparse --filter=blob:none \
-+		--single-branch --branch=main \
-+		"file://$(pwd)/srv.bare" backfill-auto-sparse &&
-+
-+	git -C backfill-auto-sparse rev-list --quiet --objects --missing=print HEAD >missing &&
-+	test_line_count = 44 missing &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/auto-sparse-trace" git \
-+		-C backfill-auto-sparse backfill &&
-+
-+	test_trace2_data promisor fetch_count 4 <auto-sparse-trace &&
-+	test_trace2_data path-walk paths 5 <auto-sparse-trace
-+'
-+
- test_expect_success 'backfill --sparse without cone mode (positive)' '
- 	git clone --no-checkout --filter=blob:none		\
- 		--single-branch --branch=main 		\
--- 
-2.43.0
+Changes in v3:
+ - Fixed an import
+ - better readability in patch 3/5
+
+Changes in v2:
+ - Made struct repository the first argument in function parameters.
+
+Range-diff against v4:
+1:  11c134b3f5 ! 1:  59c4662031 refs: add struct repository parameter in get_files_ref_lock_timeout_ms()
+    @@ Commit message
+         is used as a callback, introduce a small wrapper struct to pass both struct
+         lock_file and struct repository through the callback data.
+
+    -    This reduces reliance on the_repository global.
+    +    This reduces reliance on the_repository global, though the function
+    +    still uses static variables and is not yet fully repository-scoped.
+    +    This can be addressed in a follow-up change.
+
+         Signed-off-by: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+
+2:  d144e879ad = 2:  9dd20df759 refs: remove the_hash_algo global state
+3:  76c14eb320 = 3:  04c88f7ed4 refs/reftable-backend: drop uses of the_repository
+--
+2.53.0
 
