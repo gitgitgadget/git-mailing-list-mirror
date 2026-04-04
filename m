@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C2F3B2BA
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 08:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E219356A38
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 08:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775291427; cv=pass; b=ZDJUsWxXuMo20z8ulpOYiDRAS+ovhokQvZp4hIlBOb/Nb4IoUDxXE6M63AT51HIr9ZkvsKiRbkec54JizoBe31Yp/iAGYiMt8tyKowmvrakotDsdkkSazDoeX84vQb4Am97D01zkAv0Ys6KOinu8SjhxsTcMNHqh8MvRa3ndh9w=
+	t=1775291428; cv=pass; b=o1aYQ2hcXPicBbLAwD+Amhk0LDEedjcb9HChKWsXswKgCdZBCjhKMAlCmKFumGimY23IdoFh1SRKGz4UOsovsprLyuhcPW3ICRerEvHxdcLNbZTRtsfhK6UTcH1j2WhbYL0MUaczrPJ80FCALB582zFgKse1Dgul5yDTLHmayJY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775291427; c=relaxed/simple;
-	bh=OByR70wa9MSo4TadY7mg/uxx5vv5UQsWxgA187jd4z8=;
+	s=arc-20240116; t=1775291428; c=relaxed/simple;
+	bh=w+edxPnv7P0T5PIJLK1YRdRPY36K/BjqlVpn5yIbxZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BapEN+yxivz5LlXgEaHT5qUhTUqE8+hDTcBwFp/M/89e2S7ImTixx5WGgTrDBpF3i8Opqxs5AEmDrsMfEuMf5cQo6iX2UKXKjNuGHacElg0KCH30IusYeFchSmiZOMgKuDEMxpEaxRHslyj16/fOHJqoWiadDKzhaCQ+P8MPfgE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=DY4P4Upi; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=lhF0uEMxmCckzdLNL62G2pnSDSQLXZMy5HNPg8yAGWBHOovD40BOD/KdS0GJgCSH+M7w5gKKlPWpL3gKyt5jOUncnyN9DWc/dYDRHX/WU8X6zjyYvYmHUkYgSTt/VH7xZ7iKGmQu1TeUZqkvbc1BnCGs9xtsf6xGL4sJVh1LPjQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=lJLXhIk7; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="DY4P4Upi"
-ARC-Seal: i=1; a=rsa-sha256; t=1775291408; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="lJLXhIk7"
+ARC-Seal: i=1; a=rsa-sha256; t=1775291410; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=gihHycM189C6TmNeHCrE+i0VehAl8StuhXOkyzcTgYEN4tYHYYwJCC/kY6BIkak5Qx4CMDe94keyaZsWXHBnEeEtPSru/G2oGfX+MzFjEbxealoI0wCx/y/wCfd04OlsqK58hqt4eIllhPUy1Pw4LuW1yEAy8vLESH6bSsbB6c0=
+	b=Dj8GQQm0QuzV6WLOmiH8kLlN6ZBtcElhYYwXfoUfBHQCRCM2niVW30NVFC3FOAD5rmUqw0zGH/HjutYTcndtVNlVTVfJBy69ROWYF2WwGEat7JJcFUr5aBA1EAoLOruLFe5MpUlezmXM3JbErJQis1v7unk/CjaEUy4/7AEGoxA=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775291408; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=jRxrqq7qOZSUpdZItLGnImA0IdixZgVT3hBAyNMGr+o=; 
-	b=lKctQ1AHFSo9hrW2MPCx7sLNfdFQ1fKgn+bgDTMHGbxjVoO3YTUAKptYLYcw7kmtOb/9KJ+582dTTWU+hwJr36gnxP3ZPnaX8EorGoMubBcuVFWgGI2zFqbjeBZq4GyhfpCQRhgVnSF3pqkTJfiMRTR2kuDVUIpZ4qJjb5jvTao=
+	t=1775291410; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=+5HAwH7YdHE3SmUz0dVy21ESuYDzBNPyISnCn3j4cJQ=; 
+	b=FMChRggAUuoqFrpvyuo2SBsHklrTr3Bml4DsxxqleDPsspNVT38lS8+nWfjtJWnzDGuMDFrztGT9fDQGKAe6s/vgSaZGKGWn/sZstD/a44haVCD0oGu95iWDW+8Mt1a+syhdSujH28QIfON+pJFMSZxEha+AbOcyXpd4onM3lDw=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775291408;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775291410;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=jRxrqq7qOZSUpdZItLGnImA0IdixZgVT3hBAyNMGr+o=;
-	b=DY4P4Upizan3ldV4/p5uGLETYSsXySRFeFR+2jlfUC+/r7kWMV4FyWZKuZMLlDnX
-	PVVep7Hy9Qm96exkEGh2UdGvgLuO7e/qgmFSjhytSD8ZE/1JLo37wrwIwjcQDT9ryLP
-	pVlwzTy7GzvSD+tz/XaiFRle7RauyFeeikF4Vy18=
-Received: by mx.zohomail.com with SMTPS id 1775291406269511.60840722564103;
-	Sat, 4 Apr 2026 01:30:06 -0700 (PDT)
+	bh=+5HAwH7YdHE3SmUz0dVy21ESuYDzBNPyISnCn3j4cJQ=;
+	b=lJLXhIk7cuDeO3cUYFIHhdEgRquFBTGytRUQyiW8jotc67AnPnNCjSJHMY+kmwIz
+	pEixYXQtnUR3WX4YDAe/jydSbDYFa3sLyUlwEhdevqDYQoFSLFCfF/65XjpxG/aEWfm
+	0Gv0VhkVzJAsTuAp6ayx3SCUWReneiTX4p8opKlo=
+Received: by mx.zohomail.com with SMTPS id 1775291408312577.9107100019523;
+	Sat, 4 Apr 2026 01:30:08 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -46,9 +46,9 @@ Cc: Jeff King <peff@peff.net>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v6 05/12] hook: allow pre-push parallel execution
-Date: Sat,  4 Apr 2026 11:29:27 +0300
-Message-ID: <20260404082934.173788-6-adrian.ratiu@collabora.com>
+Subject: [PATCH v6 06/12] hook: mark non-parallelizable hooks
+Date: Sat,  4 Apr 2026 11:29:28 +0300
+Message-ID: <20260404082934.173788-7-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260404082934.173788-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -62,171 +62,200 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-pre-push is the only hook that keeps stdout and stderr separate (for
-backwards compatibility with git-lfs and potentially other users). This
-prevents parallelizing it because run-command needs stdout_to_stderr=1
-to buffer and de-interleave parallel outputs.
+From: Emily Shaffer <emilyshaffer@google.com>
 
-Since we now default to jobs=1, backwards compatibility is maintained
-without needing any extension or extra config: when no parallelism is
-requested, pre-push behaves exactly as before.
+Several hooks are known to be inherently non-parallelizable, so initialize
+them with RUN_HOOKS_OPT_INIT_FORCE_SERIAL. This pins jobs=1 and overrides
+any hook.jobs or runtime -j flags.
 
-When the user explicitly opts into parallelism via hook.jobs > 1,
-hook.<event>.jobs > 1, or -jN, they accept the changed output behavior.
+These hooks are:
+applypatch-msg, pre-commit, prepare-commit-msg, commit-msg, post-commit,
+post-checkout, and push-to-checkout.
 
-Document this and let get_hook_jobs() set stdout_to_stderr=1 automatically
-when jobs > 1, removing the need for any extension infrastructure.
-
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/config/hook.adoc |  4 ++++
- hook.c                         | 24 ++++++++++++++++--------
- hook.h                         |  6 ++++--
- t/t1800-hook.sh                | 32 ++++++++++++++++++++++++++++++++
- transport.c                    |  6 ++++--
- 5 files changed, 60 insertions(+), 12 deletions(-)
+ Documentation/config/hook.adoc | 14 ++++++++++++++
+ builtin/am.c                   |  8 +++++---
+ builtin/checkout.c             | 19 +++++++++++++------
+ builtin/clone.c                |  6 ++++--
+ builtin/receive-pack.c         |  3 ++-
+ builtin/worktree.c             |  2 +-
+ commit.c                       |  2 +-
+ t/t1800-hook.sh                | 16 ++++++++++++++++
+ 8 files changed, 56 insertions(+), 14 deletions(-)
 
 diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
-index 21800db648..94c7a9808e 100644
+index 94c7a9808e..6f60775c28 100644
 --- a/Documentation/config/hook.adoc
 +++ b/Documentation/config/hook.adoc
-@@ -39,3 +39,7 @@ hook.jobs::
+@@ -36,6 +36,20 @@ hook.<friendly-name>.parallel::
+ hook.jobs::
+ 	Specifies how many hooks can be run simultaneously during parallelized
+ 	hook execution. If unspecified, defaults to 1 (serial execution).
++	Some hooks always run sequentially regardless of this setting because
++	they operate on shared data and cannot safely be parallelized:
+++
++--
++`applypatch-msg`;;
++`prepare-commit-msg`;;
++`commit-msg`;;
++	Receive a commit message file and may rewrite it in place.
++`pre-commit`;;
++`post-checkout`;;
++`push-to-checkout`;;
++`post-commit`;;
++	Access the working tree, index, or repository state.
++--
  +
  This setting has no effect unless all configured hooks for the event have
  `hook.<friendly-name>.parallel` set to `true`.
-++
-+For `pre-push` hooks, which normally keep stdout and stderr separate,
-+setting this to a value greater than 1 (or passing `-j`) will merge stdout
-+into stderr to allow correct de-interleaving of parallel output.
-diff --git a/hook.c b/hook.c
-index 85c0de5e47..25762b6c8d 100644
---- a/hook.c
-+++ b/hook.c
-@@ -555,18 +555,24 @@ static void run_hooks_opt_clear(struct run_hooks_opt *options)
- 	strvec_clear(&options->args);
- }
+diff --git a/builtin/am.c b/builtin/am.c
+index fe6e087eee..e9623b8307 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -490,9 +490,11 @@ static int run_applypatch_msg_hook(struct am_state *state)
  
-+/*
-+ * When running in parallel, stdout must be merged into stderr so
-+ * run-command can buffer and de-interleave outputs correctly. This
-+ * applies even to hooks like pre-push that normally keep stdout and
-+ * stderr separate: the user has opted into parallelism, so the output
-+ * stream behavior changes accordingly.
-+ */
-+static void merge_output_if_parallel(struct run_hooks_opt *options)
-+{
-+	if (options->jobs > 1)
-+		options->stdout_to_stderr = 1;
-+}
-+
- /* Determine how many jobs to use for hook execution. */
- static unsigned int get_hook_jobs(struct repository *r,
- 				  struct run_hooks_opt *options,
- 				  struct string_list *hook_list)
+ 	assert(state->msg);
+ 
+-	if (!state->no_verify)
+-		ret = run_hooks_l(the_repository, "applypatch-msg",
+-				  am_path(state, "final-commit"), NULL);
++	if (!state->no_verify) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
++		strvec_push(&opt.args, am_path(state, "final-commit"));
++		ret = run_hooks_opt(the_repository, "applypatch-msg", &opt);
++	}
+ 
+ 	if (!ret) {
+ 		FREE_AND_NULL(state->msg);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index e031e61886..ac0186a33e 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -31,6 +31,7 @@
+ #include "resolve-undo.h"
+ #include "revision.h"
+ #include "setup.h"
++#include "strvec.h"
+ #include "submodule.h"
+ #include "symlinks.h"
+ #include "trace2.h"
+@@ -123,13 +124,19 @@ static void branch_info_release(struct branch_info *info)
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
  {
--	/*
--	 * Hooks needing separate output streams must run sequentially.
--	 * Next commit will allow parallelizing these as well.
--	 */
--	if (!options->stdout_to_stderr)
--		return 1;
--
- 	/*
- 	 * An explicit job count overrides everything else: this covers both
- 	 * FORCE_SERIAL callers (for hooks that must never run in parallel)
-@@ -575,7 +581,7 @@ static unsigned int get_hook_jobs(struct repository *r,
- 	 * aggressively than the default.
- 	 */
- 	if (options->jobs)
--		return options->jobs;
-+		goto cleanup;
+-	return run_hooks_l(the_repository, "post-checkout",
+-			   oid_to_hex(old_commit ? &old_commit->object.oid : null_oid(the_hash_algo)),
+-			   oid_to_hex(new_commit ? &new_commit->object.oid : null_oid(the_hash_algo)),
+-			   changed ? "1" : "0", NULL);
+-	/* "new_commit" can be NULL when checking out from the index before
+-	   a commit exists. */
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
  
- 	/*
- 	 * Use hook.jobs from the already-parsed config cache (in-repo), or
-@@ -603,6 +609,8 @@ static unsigned int get_hook_jobs(struct repository *r,
- 		}
- 	}
- 
-+cleanup:
-+	merge_output_if_parallel(options);
- 	return options->jobs;
++	/*
++	 * "new_commit" can be NULL when checking out from the index before
++	 * a commit exists.
++	 */
++	strvec_pushl(&opt.args,
++		     oid_to_hex(old_commit ? &old_commit->object.oid : null_oid(the_hash_algo)),
++		     oid_to_hex(new_commit ? &new_commit->object.oid : null_oid(the_hash_algo)),
++		     changed ? "1" : "0",
++		     NULL);
++
++	return run_hooks_opt(the_repository, "post-checkout", &opt);
  }
  
-diff --git a/hook.h b/hook.h
-index ba7056f872..01db4226a6 100644
---- a/hook.h
-+++ b/hook.h
-@@ -106,8 +106,10 @@ struct run_hooks_opt {
- 	 * Send the hook's stdout to stderr.
- 	 *
- 	 * This is the default behavior for all hooks except pre-push,
--	 * which has separate stdout and stderr streams for backwards
--	 * compatibility reasons.
-+	 * which keeps stdout and stderr separate for backwards compatibility.
-+	 * When parallel execution is requested (jobs > 1), get_hook_jobs()
-+	 * overrides this to 1 for all hooks so run-command can de-interleave
-+	 * their outputs correctly.
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index fba3c9c508..d23b0cafcf 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -647,6 +647,7 @@ static int checkout(int submodule_progress,
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
+ 
+ 	if (option_no_checkout)
+ 		return 0;
+@@ -697,8 +698,9 @@ static int checkout(int submodule_progress,
+ 	if (write_locked_index(the_repository->index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	err |= run_hooks_l(the_repository, "post-checkout", oid_to_hex(null_oid(the_hash_algo)),
+-			   oid_to_hex(&oid), "1", NULL);
++	strvec_pushl(&hook_opt.args, oid_to_hex(null_oid(the_hash_algo)),
++		     oid_to_hex(&oid), "1", NULL);
++	err |= run_hooks_opt(the_repository, "post-checkout", &hook_opt);
+ 
+ 	if (!err && (option_recurse_submodules.nr > 0)) {
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index cb3656a034..1d9eb2e1a6 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1464,7 +1464,8 @@ static const char *push_to_checkout(unsigned char *hash,
+ 				    struct strvec *env,
+ 				    const char *work_tree)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
++
+ 	opt.invoked_hook = invoked_hook;
+ 
+ 	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 4fd6f7575f..d21c43fde3 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -609,7 +609,7 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
  	 */
- 	unsigned int stdout_to_stderr:1;
+ 	if (!ret && opts->checkout && !opts->orphan) {
+-		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
+ 
+ 		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
+ 		strvec_pushl(&opt.args,
+diff --git a/commit.c b/commit.c
+index 80d8d07875..4385ae4329 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1970,7 +1970,7 @@ size_t ignored_log_message_bytes(const char *buf, size_t len)
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    int *invoked_hook, const char *name, ...)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_FORCE_SERIAL;
+ 	va_list args;
+ 	const char *arg;
  
 diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 3774a6c2e1..9476a97ca5 100755
+index 9476a97ca5..6e8b1ad588 100755
 --- a/t/t1800-hook.sh
 +++ b/t/t1800-hook.sh
-@@ -800,4 +800,36 @@ test_expect_success 'one non-parallel hook forces the whole event to run seriall
- 	test_cmp expect hook.order
+@@ -832,4 +832,20 @@ test_expect_success 'client hooks: pre-push runs in parallel when hook.jobs > 1'
+ 	test_cmp expect repo-parallel/hook.order
  '
  
-+test_expect_success 'client hooks: pre-push parallel execution merges stdout to stderr' '
-+	test_when_finished "rm -rf remote-par stdout.actual stderr.actual" &&
-+	git init --bare remote-par &&
-+	git remote add origin-par remote-par &&
-+	test_commit par-commit &&
-+	mkdir -p .git/hooks &&
-+	setup_hooks pre-push &&
-+	test_config hook.jobs 2 &&
-+	git push origin-par HEAD:main >stdout.actual 2>stderr.actual &&
-+	check_stdout_merged_to_stderr pre-push
-+'
-+
-+test_expect_success 'client hooks: pre-push runs in parallel when hook.jobs > 1' '
-+	test_when_finished "rm -rf repo-parallel remote-parallel" &&
-+	git init --bare remote-parallel &&
-+	git init repo-parallel &&
-+	git -C repo-parallel remote add origin ../remote-parallel &&
-+	test_commit -C repo-parallel A &&
-+
-+	write_sentinel_hook repo-parallel/.git/hooks/pre-push &&
-+	git -C repo-parallel config hook.hook-2.event pre-push &&
-+	git -C repo-parallel config hook.hook-2.command \
++test_expect_success 'hook.jobs=2 is ignored for force-serial hooks (pre-commit)' '
++	test_when_finished "rm -f sentinel.started sentinel.done hook.order" &&
++	test_config hook.hook-1.event pre-commit &&
++	test_config hook.hook-1.command \
++	    "touch sentinel.started; sleep 2; touch sentinel.done" &&
++	test_config hook.hook-1.parallel true &&
++	test_config hook.hook-2.event pre-commit &&
++	test_config hook.hook-2.command \
 +	    "$(sentinel_detector sentinel hook.order)" &&
-+	git -C repo-parallel config hook.hook-2.parallel true &&
-+
-+	git -C repo-parallel config hook.jobs 2 &&
-+
-+	git -C repo-parallel push origin HEAD >out 2>err &&
-+	echo parallel >expect &&
-+	test_cmp expect repo-parallel/hook.order
++	test_config hook.hook-2.parallel true &&
++	test_config hook.jobs 2 &&
++	git commit --allow-empty -m "test: verify force-serial on pre-commit" &&
++	echo serial >expect &&
++	test_cmp expect hook.order
 +'
 +
  test_done
-diff --git a/transport.c b/transport.c
-index e53936d87b..9406ec4f2d 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1391,8 +1391,10 @@ static int run_pre_push_hook(struct transport *transport,
- 	opt.feed_pipe_cb_data_free = pre_push_hook_data_free;
- 
- 	/*
--	 * pre-push hooks expect stdout & stderr to be separate, so don't merge
--	 * them to keep backwards compatibility with existing hooks.
-+	 * pre-push hooks keep stdout and stderr separate by default for
-+	 * backwards compatibility. When the user opts into parallel execution
-+	 * via hook.jobs > 1 or -j, get_hook_jobs() will set stdout_to_stderr=1
-+	 * automatically so run-command can de-interleave the outputs.
- 	 */
- 	opt.stdout_to_stderr = 0;
- 
 -- 
 2.52.0.732.gb351b5166d.dirty
 
