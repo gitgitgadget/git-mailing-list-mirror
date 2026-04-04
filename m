@@ -1,375 +1,213 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC26372EC5
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 16:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775318919; cv=pass; b=L/nZH6cFjy+umDnbLYvQZhwRIO81zG64rEKYiv3c8uslSYV8sCw18H+4hZEqFJzmAcMMxQQpCyiRc57noV+sHAUlk8IxFrCl+6+YMLbVXRPdqJMhO56Vd72bJe3uJmCHtGzjzAsXXtGVnnOxCBwTrUwuRf/Bp9jXsZhHC637QKI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775318919; c=relaxed/simple;
-	bh=KsDXWeWBgS+43FQ6/oITPjnje8D9FMv/hv+mSa5bHgs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HOpKiQAVIbLY8HCFxLlzyIPFrzopskh1LxLT4Zb5gyUgBEpVuWixJKG6eShXeWqxszILR9TKVWYxQ2va4p7r3eedUx85/B8FiJBt8aJR+2dCHsIP1WFo4SV+Cxh8KoxoyqRcDrNxZ7dZ4ZgW4SSCwssa0gjqI2X4v7yG5bw+Ut4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RiVS3AcS; arc=pass smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB2923645D
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 16:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775321113; cv=none; b=pL19ppJ06lnHrF6sBbjDD5RQxMCEjQX2zro9Z5a0PefwQWuEcxcHyL9OBiiD5D8xbwBWcVZojKYCNIE/GRFi+7h7gMH1adBqpo/EbQoZQ2pnpb+mriPKBhxX0yZ4IqWoIBzY4wvjkMtl43qPFXG/OlBMYZIDk/+Z6pdrzk94UX4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775321113; c=relaxed/simple;
+	bh=06YInPmLcJbbME/VzHbAG3f5TZdqMsiZ28zsxkJ0PQ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ERxa9tpc5CIFNhl4gj8YtNOH3fRyeYhYboejT6jLRCQGVDpj0KIeEZ6XuMB9Yip75O7TIgrwySHGQ7P0DQ1pNyK2aIRSgFuUFjJ8Msy9nrPCaCS46S2NjQGJWwM2lxdPs04nR4+IFqHB0g9hsSdrzsnP5nhcPhybEFiEdgX4qL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=OJjCPUca; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=azX+RKrb; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RiVS3AcS"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79ee5037d44so35999817b3.0
-        for <git@vger.kernel.org>; Sat, 04 Apr 2026 09:08:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775318917; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bRnWN1p4Pdif8IDqsrvn/ycw91cQ6n5GdhPAaB153hjAS9oG7z3x0axHVsRpALi6GT
-         tMM5CZNL2YbBQoGRgMGaxrACgRrEVBx6rMXlDsLXeGDu/asOnaiCe908f6o7RnokGJzQ
-         4h3X+7fvPuWeci3w4gsCIFgjSvKlScJ47El6ewJQ8DK2Ln9uKUvEdqAzIIfs9M1878Mm
-         WB6yGCMKbE8I2u6VA1ZcOIML6Z4zRx57eORpKgKwo0Y3Nod0gFLoMWFyu1Da7AXOS/mQ
-         L11StRc8e2Ljeu4Eean9we/ybB8hZ4R4WP5u87jyM15qRZmERWxj+foMqZlOTsKMsO9i
-         ZP4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=f5SvHHIQ8Ailf8lJjQuDJ61+ZIDufGbjcK/Bd51nUdc=;
-        fh=UHNRS8Vb6y6646peOuqpS2HLp2NdD/g21LPA1XnA4o0=;
-        b=B6G304vRv+QVbT1IFC7rr0DM6OhZpERp1oFKxzS+lghxFvF/1azZC3JKjHoIHIBrO9
-         6+YtbZINQxh07xYpW7ZJQxbzXj5EHOY7aKDRtYyidIYwVIFtw26ZTNIWqRO8G3sNiofl
-         FVurJcbL1FurL6pegFg65Dygi4/Eu/lPC0XYaskoK7XfcjE1IWCWDWPLZUe2ZJEPUUpy
-         YZLyBQ4xo8emya+FQ730ij2dbzsaVMZEsGfLv0wWmmyaLqKC7IRe3Rz08etmwjxnut6p
-         +4sn+EmlsaTTaYomuhIVgApi0QzSs9bAKzDAK0kJHO6vb25h79OkRg0IM4AxZrx/14BN
-         WCww==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775318917; x=1775923717; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f5SvHHIQ8Ailf8lJjQuDJ61+ZIDufGbjcK/Bd51nUdc=;
-        b=RiVS3AcSYAa0Agu4RM6MxK50Y/peH1TMpvCzek4506641Dn4/VVXsComoWImC3TwUW
-         cT2/YUXWHG28x8EV4fk94uLVmTMhl1pbgdv2tGMAhyBzLQ4pqED5MTB8luap6F4HgW/z
-         T3Vw+ShrAEmBbE7sLA7irx0x65IBYoiqUQuGWbptu5RrMQ0nuhOY1N+dpSoYkyKx37+Y
-         rbOQQURcrSf5f0I2WyBCSYstIhQxGnqPJwNpFEqAJcSaLSBL1npDvFJTX7dpfENmgQO6
-         lDw42xSGxiO+6+4xrLNkcdlMj59lgAJwgCpSMQX42IMjX77X9+ZM3WbXpEy2pPf6nhnz
-         GaJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775318917; x=1775923717;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=f5SvHHIQ8Ailf8lJjQuDJ61+ZIDufGbjcK/Bd51nUdc=;
-        b=g8yu4zK/87jeri93faxG0ypHgY0vbqjTBYibq/EHzQvCa3arTpC8xUFqdQrHjMAHam
-         o8JiDdi+F92oeaH0bloCrtH5QoVgQEl+HH7EPQWngNw5ucErM4yyS05LRRT1UwU9qqsM
-         AEfX1d5GU4vQ3TmxWqG+Fw168kp1ubfttnGGdPwnqhLW/NYAMaZEV+EiDoNtCVA4f2TK
-         jD1akKx1m27szE+pSnN8Ad7YylBbnHHmLez42/W+v9EP6tehufowrT2AL6szZBVwYltY
-         RKqIHLcHEJTTM7Dm2weCKMUClTKUux9ZD3ET+dKvaubZNIIUqg7W9F3zGCLStfSf1jeJ
-         tqrQ==
-X-Gm-Message-State: AOJu0YzU1HE7dsZMyC0EDLgJiD+BIFHWYb34chOQVKdjNv8RDWR7FrhF
-	JyuzRC3AnGwQdt8bZUPl+wk9WwnUVPWFz+HGkhPx+hFivkHBJx7ZeYs3h/rELZNg09X6mrUKQiF
-	6iLU5OQfHuWFTcX715II+Yx1h6vsZFvY=
-X-Gm-Gg: AeBDiesGom6X62MEWF7+J5QWvZSVlFiwDdO/c7XOBtgGQyI28ZnBu7/RGt5cLPJFWQk
-	fa9XVb/cJWrYQAlp5yygOEk0BetKEfFGXkCht2Ht7sWYCSB4t/U/Y7AVDzbWgTfTaU3DlMqQa3w
-	5ZE12JWFeF19CKuRh5k8IGV8Dyi3ynz/Hdn+vEbZwqrgBEmf6j9ebi7AhQWLyxIScI5n/1iNvk1
-	WOdwdltRb8xnEP0yPTEAoOtDAzH/Hog9/Ed0QZymhKpMg49i5wTJWvB5GPm7EbhkYKJozsGj1+O
-	gJ30Mua+QXIApdWQGdelIJPjuWrhcoYl6RxdSA+egvGc8XJ84vyqvB10QENXmJtGGhTbJAZ5wK8
-	QjTyA752kJKdXNQn+ZP9G5w==
-X-Received: by 2002:a05:690c:7203:b0:79c:a09a:e580 with SMTP id
- 00721157ae682-7a3bc20875fmr81106737b3.9.1775318917167; Sat, 04 Apr 2026
- 09:08:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="OJjCPUca";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="azX+RKrb"
+DKIM-Signature: a=rsa-sha256; b=OJjCPUcaOakM97MIyc8zquNzbO59xo+XQMonlRtNafhbAXVrStnh+wk3WHu5PjFkvV26FToouZKqT6Tr3I8EhvpPV3BhKV2VPAnExUOhatiNmyIgE7x44At248AltyiZtvcLnRmU/PfI4QQAF6PwcAqMggQuWujqPsvS3SUziKIZAfro8tVdBOtfg13QXCRfHyUNAyXIV1RyuIjqIjGrvJZVVHbclvYsIjnuIDnn7G9jSRuUMcdeSXX0na6jankIcKSLeEA38yvHOEJCbcG24chduOe8XtTcU6Jrpgk77ho6B6gJNbp462hk66TEBFmbePVRvqMw2snHGerTAKlRvw==; s=purelymail2; d=malon.dev; v=1; bh=06YInPmLcJbbME/VzHbAG3f5TZdqMsiZ28zsxkJ0PQ0=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=azX+RKrb1B9s1yOj6ZTuIrJ194JrGXCFzQWb65p8L972O8wskGMN5bTTa9VFn8zV3O5O6NNxALzWfi9ncET8skbrZzK0Dg6oiwvtFG40NVB7K9XtWpp4XUmDjC1mLcjPnzlXt9w6bD6akMNHfr9qMYew7s+0kiuXJReSGFRt+euY2fdeoypgk9vfLC0qSj1LegJdFybMk5x+GwfW44/lxmfuwSX+j1xKc3PNKlhgIXg3lBlwUgk2cPtLY8KvHJKzd7kWf7bDY1iehiMXJtvSkHHjyFAcDVubtRCj9BIcnsLNnywRuSRuQmsMWzkbJlWbMqprEf8HZmmr691m4PI1pw==; s=purelymail2; d=purelymail.com; v=1; bh=06YInPmLcJbbME/VzHbAG3f5TZdqMsiZ28zsxkJ0PQ0=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 748357501;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sat, 04 Apr 2026 16:45:03 +0000 (UTC)
+Message-ID: <d6c63949-1998-4cde-8cb0-902fd7db988c@malon.dev>
+Date: Sun, 5 Apr 2026 00:45:00 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <adErl-EdiaXopVx-@x395.localdomain>
-In-Reply-To: <adErl-EdiaXopVx-@x395.localdomain>
-From: Pablo <pabloosabaterr@gmail.com>
-Date: Sat, 4 Apr 2026 18:08:25 +0200
-X-Gm-Features: AQROBzBVZYDQR66KyHuprZjxcFPaiFJa6MFJ86XMOIwca8iWmbXXrMDtlLYRCb4
-Message-ID: <CAN5EUNTUDT7FMNYTOnTA_GJJXa2eZZL=RhJHfA6PfJvFSSHL-g@mail.gmail.com>
-Subject: Re: [RFC] Show empty root commits when using --simplify-by-decoration
-To: Fernando Ramos <greenfoo@u92.eu>
-Cc: git@vger.kernel.org, me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [BUG] git diff --no-index segfaults on large files (NULL object
+ database)
+To: Luca Stefani <luca.stefani.ge1@gmail.com>, git@vger.kernel.org
+References: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-El s=C3=A1b, 4 abr 2026 a las 17:18, Fernando Ramos (<greenfoo@u92.eu>) esc=
-ribi=C3=B3:
+On 4/4/26 18:39, Luca Stefani wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+> 
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> `git diff --color -- file1 file2` SIGSEGV in case file1 and file2
+> are "big enough", that is when the file size is bigger than
+> repo_settings_get_big_file_threshold()
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> Not a crash, it to say "binary files are different"
+> 
+> What happened instead? (Actual behavior)
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> index_fd (istate=istate@entry=0x5555559ccb40,
+> oid=oid@entry=0x5555559d3c80, fd=4, st=st@entry=0x7fffffffc5c0,
+> type=type@entry=OBJ_BLOB, path=path@entry=0x5555559d3ce0
+> "4/root_part", flags=0) at /usr/src/debug/git/git/object-file.c:1634
+> 1634                    transaction =
+> odb_transaction_begin(the_repository->objects);
+> (gdb) bt
+> #0  index_fd (istate=istate@entry=0x5555559ccb40,
+> oid=oid@entry=0x5555559d3c80, fd=4, st=st@entry=0x7fffffffc5c0,
+> type=type@entry=OBJ_BLOB, path=path@entry=0x5555559d3ce0
+> "4/root_part", flags=0)
+>     at /usr/src/debug/git/git/object-file.c:1634
+> #1  0x000055555579ab75 in index_path (istate=0x5555559ccb40,
+> oid=0x5555559d3c80, path=0x5555559d3ce0 "4/root_part",
+> st=0x7fffffffc5c0, flags=0) at
+> /usr/src/debug/git/git/object-file.c:1658
+> #2  0x0000555555720f83 in diff_fill_oid_info (one=0x5555559d3c80,
+> istate=0x5555559ccb40) at /usr/src/debug/git/git/diff.c:4690
+> #3  diff_fill_oid_info (one=one@entry=0x5555559d3c80,
+> istate=0x5555559ccb40) at /usr/src/debug/git/git/diff.c:4679
+> #4  0x0000555555724aba in run_diff (p=0x5555559ce900,
+> o=0x7fffffffd188) at /usr/src/debug/git/git/diff.c:4738
+> #5  diff_flush_patch (p=0x5555559ce900, o=0x7fffffffd188) at
+> /usr/src/debug/git/git/diff.c:6247
+> #6  0x0000555555729850 in diff_flush_patch_all_file_pairs
+> (o=0x7fffffffd188) at /usr/src/debug/git/git/diff.c:6802
+> #7  diff_flush (options=<optimized out>) at /usr/src/debug/git/git/diff.c:6942
+> #8  0x00005555555b0d34 in diff_no_index (revs=0x7fffffffcbd0,
+> algop=0x55555598dbd0 <hash_algos+112>, implicit_no_index=<optimized
+> out>, argc=2, argv=0x5555559ce2a0) at
+> /usr/src/debug/git/git/diff-no-index.c:427
+> #9  cmd_diff (argc=<optimized out>, argv=0x5555559ce2a0,
+> prefix=<optimized out>, repo=<optimized out>) at builtin/diff.c:516
+> #10 0x000055555555fe05 in run_builtin (p=0x555555994ec8
+> <commands.lto_priv+840>, argc=<optimized out>, argv=<optimized out>,
+> repo=0x5555559a3c00 <the_repo.lto_priv>) at
+> /usr/src/debug/git/git/git.c:506
+> #11 handle_builtin (args=args@entry=0x7fffffffd980) at
+> /usr/src/debug/git/git/git.c:779
+> #12 0x00005555555612cc in run_argv (args=0x7fffffffd980) at
+> /usr/src/debug/git/git/git.c:862
+> #13 cmd_main (argc=<optimized out>, argv=<optimized out>) at
+> /usr/src/debug/git/git/git.c:984
+> #14 0x000055555555d794 in main (argc=6, argv=0x7fffffffdc58) at
+> /usr/src/debug/git/git/common-main.c:9
+> (gdb) p the_repository->objects
+> $1 = (struct object_database *) 0x0
+> (gdb) p istate->repo->objects
+> $2 = (struct object_database *) 0x0
+> (gdb) p istate->repo
+> $3 = (struct repository *) 0x5555559a3c00 <the_repo.lto_priv>
+> (gdb) p the_repository
+> $4 = (struct repository *) 0x5555559a3c00 <the_repo.lto_priv>
+> 
+> The same issue happens in master, the same path is taken and when we
+> finally get into
+> `odb_transaction_begin` where odb is NULL, and reading ->transaction
+> causes the illegal
+> segment access once again.
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x00005555557c6283 in odb_transaction_begin (odb=0x0) at odb.c:1075
+> 1075            if (odb->transaction)
+> (gdb) bt
+> #0  0x00005555557c6283 in odb_transaction_begin (odb=0x0) at odb.c:1075
+> #1  0x00005555557b94f9 in index_fd (istate=0x555555a88b60,
+> oid=0x555555a8fcb0, fd=4, st=0x7fffffffc730, type=OBJ_BLOB,
+> path=0x555555a8fd10 "4/root_part", flags=0) at object-file.c:1665
+> #2  0x00005555557b9651 in index_path (istate=0x555555a88b60,
+> oid=0x555555a8fcb0, path=0x555555a8fd10 "4/root_part",
+> st=0x7fffffffc730, flags=0) at object-file.c:1691
+> #3  0x0000555555730937 in diff_fill_oid_info (one=0x555555a8fcb0,
+> istate=0x555555a88b60) at diff.c:4699
+> #4  0x0000555555730b81 in run_diff (p=0x555555a8a9a0,
+> o=0x7fffffffd1a8) at diff.c:4747
+> #5  0x00005555557361d5 in diff_flush_patch (p=0x555555a8a9a0,
+> o=0x7fffffffd1a8) at diff.c:6258
+> #6  0x0000555555737cae in diff_flush_patch_all_file_pairs
+> (o=0x7fffffffd1a8) at diff.c:6813
+> #7  0x00005555557382b2 in diff_flush (options=0x7fffffffd1a8) at diff.c:6953
+> #8  0x00005555557228cc in diff_no_index (revs=0x7fffffffcbf0,
+> algop=0x555555a49b50 <hash_algos+112>, implicit_no_index=1, argc=2,
+> argv=0x555555a8a2f0) at diff-no-index.c:427
+> #9  0x00005555555c04b1 in cmd_diff (argc=5, argv=0x555555a8a2f0,
+> prefix=0x0, repo=0x0) at builtin/diff.c:516
+> #10 0x0000555555574f47 in run_builtin (p=0x555555a4aaa8
+> <commands+840>, argc=5, argv=0x555555a8a2f0, repo=0x555555a7e620
+> <the_repo>) at git.c:506
+> #11 0x000055555557544e in handle_builtin (args=0x7fffffffdab0) at git.c:780
+> #12 0x0000555555575778 in run_argv (args=0x7fffffffdab0) at git.c:863
+> #13 0x0000555555575c0f in cmd_main (argc=5, argv=0x7fffffffdc50) at git.c:984
+> #14 0x00005555556a7414 in main (argc=6, argv=0x7fffffffdc48) at common-main.c:9
 
-Hi Fernando,
-I think I can bring some clarity to your second issue.
+The problem is most likely to occur in object-file.c:
 
->
-> Regarding "--simplify-by-decoration", I found a somewhat unexpected behav=
-ior.
->
-> Let's say we have a repository with two branches ("master" and "branch") =
-and
-> this history structure:
->
->          a * <master>       b * <branch>
->            |                  |
->          2 *------------------'
->            |
->          1 *
->            |
->     start  *
->
-> If I now run this...
->
->     $ git log --graph --all --oneline --simplify-by-decoration
->
-> ...I get this (which is expected and ok):
->
->     * 0f3892d (branch) b
->     | * 0c37d8c (master) a
->     |/
->     * d783631 Start
->
-> HOWEVER, if the root commit ("start") is an empty commit, then the same c=
-ommand
-> will print this instead:
->
->     * 7abc10a (branch) b
->     * 14d51e1 (master) a
->
-> ...which is confusing for two reasons:
->
-> 1. The graph is not showing a common origin.
-> 2. Because "root" commits use an "*", it looks like "a" is the parent of =
-"b",
->    when the reality is that the graph is showing two independen origins.
->
-> Issue (1) seems to be caused by the fact that empty root commits are mark=
-ed as
-> TREESAME and thus discarded when showing the graph.  This can be fixed wi=
-th
-> patch #1 at the end of this email.  Note, however, that this patch partia=
-lly
-> breaks what Taylor did on 1343c893138 (I say "partially" because it only =
-happens
-> when using "--simplify-by-decoration").  I have CC'ed Taylor in case he h=
-as any
-> comments about it.
->
-> Issue (2) can be "fixed" by using a diferent character (for example "I") =
-for
-> root commits (ie. those without parents), which can be done with patch #2=
- at the
-> end of this email.
+...
+int index_fd(struct index_state *istate, struct object_id *oid,
+	     int fd, struct stat *st,
+	     enum object_type type, const char *path, unsigned flags)
+{
+	int ret;
 
-This has actually been discussed before and it was ruled out some years ago=
-.
-  https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+	/*
+	 * Call xsize_t() only when needed to avoid potentially unnecessary
+	 * die() for large files.
+	 */
+	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(istate, 
+path)) {
+		ret = index_stream_convert_blob(istate, oid, fd, path, flags);
+	} else if (!S_ISREG(st->st_mode)) {
+		ret = index_pipe(istate, oid, fd, type, path, flags);
+	} else if ((st->st_size >= 0 &&
+		    (size_t)st->st_size <= 
+repo_settings_get_big_file_threshold(istate->repo)) ||
+		   type != OBJ_BLOB ||
+		   (path && would_convert_to_git(istate, path))) {
+		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
+				 type, path, flags);
+	} else {
+		struct object_database *odb = the_repository->objects;
+		struct odb_transaction_files *files_transaction;
+		struct odb_transaction *transaction;
 
-You would need more symbols for different roots, --boundary, --left-right a=
-nd
-what if a commit that is not a root has its parents excluded, would you
-change the symbol even tho it is not a root?
+		transaction = odb_transaction_begin(odb);
+		files_transaction = container_of(odb->transaction,
+						 struct odb_transaction_files,
+						 base);
+		ret = index_blob_packfile_transaction(files_transaction, oid, fd,
+						      xsize_t(st->st_size),
+						      path, flags);
+		odb_transaction_commit(transaction);
+	}
 
-You might find interesting a patch I'm working on that tackles that
-confusing look when two "parentless" commits are stacked.
-  https://lore.kernel.org/git/20260404092425.550346-1-pabloosabaterr@gmail.=
-com/
+	close(fd);
+	return ret;
+}
+...
 
-This answer from junio might be helpful as well:
-  https://lore.kernel.org/git/xmqqbjfzn6ku.fsf@gitster.g/
+Note that in 'if (type == OBJ_BLOB && st->st_size > big_file_threshold)' 
+block, there is no check to see if 'the_repository->objects' is NULL. It 
+assumes that an object database is available, which is not true in 
+no-repository scenarios.
 
->
-> With those two patches applied, this is what the output looks like in bot=
-h cases
-> (with the root commit being empty or not):
->
->     * 7abc10a (branch) b
->     | * 14d51e1 (master) a
->     |/
->     I c0db521 Start
->
-> Let me know what you think and whether you want me to send a proper patch=
- that
-> includes (1) or (2) or (1)+(2).
->
-> Thanks!
->
-> PS: Path #3 at the end of this emails includes a dummy script to quickly
-> recreate the two scenarios described above.
->
->
->
-> -------------------------------------------------------------------------=
--------
-> Patch #1
-> -------------------------------------------------------------------------=
--------
->
-> diff --git a/revision.c b/revision.c
-> index c9b8bfd09f..0e7bf2ed3c 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -978,15 +978,17 @@ static void try_to_simplify_commit(struct rev_info =
-*revs, struct commit *commit)
->                 return;
->
->         if (!commit->parents) {
-> -               /*
-> -                * Pretend as if we are comparing ourselves to the
-> -                * (non-existent) first parent of this commit object. Eve=
-n
-> -                * though no such parent exists, its changed-path Bloom f=
-ilter
-> -                * (if one exists) is relative to the empty tree, using B=
-loom
-> -                * filters is allowed here.
-> -                */
-> -               if (rev_same_tree_as_empty(revs, commit, 0))
-> -                       commit->object.flags |=3D TREESAME;
-> +               if (!revs->simplify_by_decoration) {
-> +                       /*
-> +                        * Pretend as if we are comparing ourselves to th=
-e
-> +                        * (non-existent) first parent of this commit obj=
-ect. Even
-> +                        * though no such parent exists, its changed-path=
- Bloom filter
-> +                        * (if one exists) is relative to the empty tree,=
- using Bloom
-> +                        * filters is allowed here.
-> +                        */
-> +                       if (rev_same_tree_as_empty(revs, commit, 0))
-> +                               commit->object.flags |=3D TREESAME;
-> +               }
->                 return;
->         }
->
->
-> -------------------------------------------------------------------------=
--------
-> Patch #2
-> -------------------------------------------------------------------------=
--------
->
-> diff --git a/revision.c b/revision.c
-> index 31808e3df0..c9b8bfd09f 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -4565,7 +4565,7 @@ const char *get_revision_mark(const struct rev_info=
- *revs, const struct commit *
->                 else
->                         return ">";
->         } else if (revs->graph)
-> -               return "*";
-> +               return commit->parents ? "*" : "I";
+One possible solution would be as follows: only when 'flags & 
+HASH_WRITE_OBJECT' (or something like that) is true does this indicate 
+that the file needs to be written in; if it is false only the hash value 
+is required and the file should not be written in.
 
-This only focuses on real roots, what about commits with excluded parents.
-for example:
+Will send a patch to fix it, soon.
 
-    O---A
-
-    X---Y
-
-    If you'd run 'git log --graph O..A Y', it shows A, Y, X but
-because it only look for roots it
-    ends up looking like:
-
-      * A <- not a root but O is excluded so it seems like one
-      * Y
-      I X
-
-This would make A and Y look related, also the "I" makes it very
-confusing because
-the vertical edges are very similar "|".
-
-
->         else if (revs->cherry_mark)
->                 return "+";
->         return "";
->
->
-> -------------------------------------------------------------------------=
--------
-> Patch #3
-> -------------------------------------------------------------------------=
--------
->
-> diff --git a/build_example.sh b/build_example.sh
-> new file mode 100755
-> index 0000000000..60f63c5344
-> --- /dev/null
-> +++ b/build_example.sh
-> @@ -0,0 +1,61 @@
-> +#!/bin/bash
-> +
-> +########################################################################=
-########
-> +# Example #1
-> +########################################################################=
-########
-> +#
-> +# This will create this a repo with this history structure:
-> +#
-> +#       a * (master)       b * (branch)
-> +#         |                  |
-> +#       2 * -----------------'
-> +#         |
-> +#       1 *
-> +#         |
-> +#   start *
-> +
-> +rm -rf EXAMPLE1 || true; mkdir -p EXAMPLE1; cd EXAMPLE1
-> +
-> +touch start.txt; git init; git add start.txt; git commit -m 'Start'
-> +touch 1.txt; git add 1.txt; git commit -m '1'
-> +touch 2.txt; git add 2.txt; git commit -m '2'
-> +touch a.txt; git add a.txt; git commit -m 'a'
-> +git checkout -b branch HEAD^
-> +touch b.txt; git add b.txt; git commit -m 'b'
-> +
-> +git log --graph --all --oneline --simplify-by-decoration
-> +# The previous command will print this, which is what we expected:
-> +#
-> +#   * 0f3892d (HEAD -> branch) b
-> +#   | * 0c37d8c (master) a
-> +#   |/
-> +#   * d783631 Start
-> +
-> +cd ..
-> +
-> +
-> +
-> +########################################################################=
-########
-> +# Example #2
-> +########################################################################=
-########
-> +#
-> +# This will create this a repo with the same structure as before, but th=
-is time
-> +# the root commit ("start") is an empty one.
-> +
-> +rm -rf EXAMPLE2 || true; mkdir -p EXAMPLE2; cd EXAMPLE2
-> +
-> +git init; git commit --allow-empty -m 'Start'
-> +touch 1.txt; git add 1.txt; git commit -m '1'
-> +touch 2.txt; git add 2.txt; git commit -m '2'
-> +touch a.txt; git add a.txt; git commit -m 'a'
-> +git checkout -b branch HEAD^
-> +touch b.txt; git add b.txt; git commit -m 'b'
-> +
-> +git log --graph --all --oneline --simplify-by-decoration
-> +# The previous command will print this, which is unexpected:
-> +#
-> +#   * 7abc10a (HEAD -> branch) b
-> +#   * 14d51e1 (master) a
-> +
-> +cd ..
-> +
->
->
-
-One more thing, even if it's an RFC it would be much easier for reviewers i=
-f the
-patches were sent as git format-patch (one each email) with a cover letter,
-discussing your RFC, so anyone can use git am and b4 to apply the patches.
-
-Hope this helps,
-Pablo
+Thanks, Yuchen
