@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A98F33065C
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 08:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E572C21E8
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 08:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775291438; cv=pass; b=WKA9iFVGBaVHGisjzphceenhSU/HQ+/V4x6ER8lTEo3U/fr50xwRTIo1My/w+sOWkSGauHV3p+2bIpEZkr5Y2vkMbF0oTC/j4ccb3uMgtYhNq8Pw7I4YCdf70FdvYoeR+mK1mO5gyDu2JulNdRYibIU71d13fuw0oLzzn3GUawU=
+	t=1775291441; cv=pass; b=ahnV1/Uzi8a767SWaQFlhZ++zz6GpAQqb48sGDpm93febq36GNl8sgKdJPtvGgLM4P8YD/eeSDxrXWpzPiEMCsrInJEpFuWW+wWLOwyWGfTriZJutoLnoG93fzj6J3S0z4hogARdUP+IETyJof8Y34DECrj/EJYzjBPFUE+bOTs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775291438; c=relaxed/simple;
-	bh=FN6jf4AQ8QcsJScIfCGRUNSGSrhgU04Vv5U82Si/iHQ=;
+	s=arc-20240116; t=1775291441; c=relaxed/simple;
+	bh=5mlKM8wlSyLHBm5DzhvHHQTY7kjIHEmXwshhO10QuXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIQ4LbXMemjNEOvsQ7J2wJuA1e36RVJjW2ic+n6zyzsMxf2ODeBGJWvZ4+3+JzNH9TmsSNFDvhAmyAQwVHFfm/LiqpiuB6RURhP/jP5fG1ZAWgkZ55mB3hUYjEb7FO2bz41zL5dE/o24OT+AprHfRxvTGlHg9Z0dSM8qxXMKKF4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=U9UCy8OX; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=L+jadf/hK/HdGmHxiXPJQClYBg4LYHMYYHECzROgLmunyHs7f0KYb3Sm5tIUSfbXmx71bI06ZTb3tiRc1QKnILyk8tcOLfYr6Z1AjUG7pe1iVjTYJtVNo2fo0qm4dx9K2rrLsuYOCe0sauZZTsQiAAiJ8Cc0NqXkD+uGZcp4DaU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=XYXK1FUZ; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="U9UCy8OX"
-ARC-Seal: i=1; a=rsa-sha256; t=1775291420; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="XYXK1FUZ"
+ARC-Seal: i=1; a=rsa-sha256; t=1775291422; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=VME5ZyCnv6UHZgQhVKzAUzL4anH/FX/LdpyDnm/npzngsbLp2+MdpB19vHx6flEZ6d+Bo6Kobqkln3dtOI5Dm1uHh5GFr5HL2MTsFjZmoj/WggAX1ob14yoyVQidw3SMucAWBvQG3s+UjDdW2GaQhTdWjE1sRgkYpfwPLofc2Qw=
+	b=JenZmHeogNw0Cx6W3KdT2Jvkw3eESqMAj40Vl+3XV4FruCvc9hFupjchSatGszORNyKhnhA8rbH8k3BkpAJpSuycGMBWIZ9iQdyx9BcwcDkiPI9YGq4SvdptD76waUWR58aVSstepvfEH/MZJXil4d3mXPsNKRmK2FxNgiNbJZo=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775291420; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=uWRDtJqcRjv/6tKjJHvdns5dVU5mZDfO6KDSqXWN04s=; 
-	b=e5qtheiLrb20p2lJ+o4+4Yi6MBpYGBzX1TWk5QlXpOJb7umm1w/b+E8Meh8qzfy1+FY1gjVAGoiXy81Wk6HwC+sXp2AW3BZEkfiugXTHxD71a8ezqDiUCSe0XEvl0cYE5DTjrF4qJ/Fc9UMebHxXvvtWh3TVH6LA2V0uZgaSlUY=
+	t=1775291422; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=j17x8KwYVOQOShZ29Yjs9lOQo/R3KXvHPVdq2Vrfc7k=; 
+	b=J12kom3T44EXigaMTzZ+5wxfI0+z2jbyliYT16g/U0Ql2Wep4NsxgE95V/qLNhy5iKz4iRb0zv8CdaJvIxK6jx+XkXG6yUX97fBNvOJYmO5iTgRX3iVKJUIIWXtVLQgdnG7XnjyJRoBWuTP+WZbSaDl/qHQHqzFk9ttBk63HTyA=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775291420;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775291422;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=uWRDtJqcRjv/6tKjJHvdns5dVU5mZDfO6KDSqXWN04s=;
-	b=U9UCy8OXayotQWN+4W4RyRZhWu53bT4Iek96a/xZ7sXYR9SXHzadF6L0k1c6w2QR
-	reoq5DFH0auHUG5idZGd7LOs1Oevj36HDUYDe//wqbQws6ie+qgG91tdpqcFmR7/q2Y
-	JlMZ/hA6E50FHYS6pQCkQGF5JGb/LlmOExdq97XQ=
-Received: by mx.zohomail.com with SMTPS id 177529141873140.48587813080678;
-	Sat, 4 Apr 2026 01:30:18 -0700 (PDT)
+	bh=j17x8KwYVOQOShZ29Yjs9lOQo/R3KXvHPVdq2Vrfc7k=;
+	b=XYXK1FUZflegAygKFtHAeVnNjGwicwJS1m+i95syC1C9520fc+dLDVST9acalv1a
+	avLNK4Rebd8jwJZBdAqeubcDVIFw1BJ9jiWmRHIT5OukLMbO1cQ8GaLjJ8cJ3fX2ZV0
+	e4k7e/QXMlcbtEG6iGVVFlzLnhwhFYKyLVtTPSwo=
+Received: by mx.zohomail.com with SMTPS id 1775291420834725.0310077823007;
+	Sat, 4 Apr 2026 01:30:20 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -46,9 +46,9 @@ Cc: Jeff King <peff@peff.net>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v6 11/12] hook: add hook.<event>.enabled switch
-Date: Sat,  4 Apr 2026 11:29:33 +0300
-Message-ID: <20260404082934.173788-12-adrian.ratiu@collabora.com>
+Subject: [PATCH v6 12/12] hook: allow hook.jobs=-1 to use all available CPU cores
+Date: Sat,  4 Apr 2026 11:29:34 +0300
+Message-ID: <20260404082934.173788-13-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0.732.gb351b5166d.dirty
 In-Reply-To: <20260404082934.173788-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -62,361 +62,262 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Add a hook.<event>.enabled config key that disables all hooks for
-a given event, when set to false, acting as a high-level switch
-above the existing per-hook hook.<friendly-name>.enabled.
+Allow -1 as a value for hook.jobs, hook.<event>.jobs, and the -j
+CLI flag to mean "use as many jobs as there are CPU cores", matching
+the convention used by fetch.parallel and other Git subsystems.
 
-Event-disabled hooks are shown in "git hook list" with an
-"event-disabled" tab-separated prefix before the name:
+The value is resolved to online_cpus() at parse time so the rest
+of the code always works with a positive resolved count.
 
-$ git hook list test-hook
-event-disabled  hook-1
-event-disabled  hook-2
-
-With --show-scope:
-
-$ git hook list --show-scope test-hook
-local   event-disabled  hook-1
-
-When a hook is both per-hook disabled and event-disabled, only
-"event-disabled" is shown: the event-level switch is the more
-relevant piece of information, and the per-hook "disabled" status
-will surface once the event is re-enabled.
-
-Using an event name as a friendly-name (e.g. hook.<event>.enabled)
-can cause ambiguity, so a fatal error is issued when using a known
-event name and a warning is issued for unknown event name, since
-a collision cannot be detected with certainty for unknown events.
+Other non-positive values (0, -2, etc) are rejected with a warning
+(config) or die (CLI).
 
 Suggested-by: Patrick Steinhardt <ps@pks.im>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/config/hook.adoc | 20 ++++++++
- builtin/hook.c                 | 20 +++++---
- hook.c                         | 47 +++++++++++++++++--
- hook.h                         |  1 +
- repository.c                   |  1 +
- repository.h                   |  4 ++
- t/t1800-hook.sh                | 83 ++++++++++++++++++++++++++++++++++
- 7 files changed, 165 insertions(+), 11 deletions(-)
+ Documentation/config/hook.adoc |  4 ++-
+ builtin/hook.c                 | 15 +++++++--
+ hook.c                         | 60 ++++++++++++++++++++++++----------
+ t/t1800-hook.sh                | 49 +++++++++++++++++++++++++++
+ 4 files changed, 108 insertions(+), 20 deletions(-)
 
 diff --git a/Documentation/config/hook.adoc b/Documentation/config/hook.adoc
-index d4fa29d936..e0db3afa19 100644
+index e0db3afa19..a9dc0063c1 100644
 --- a/Documentation/config/hook.adoc
 +++ b/Documentation/config/hook.adoc
-@@ -15,6 +15,12 @@ hook.<friendly-name>.event::
- 	events, specify the key more than once. An empty value resets
- 	the list of events, clearing any previously defined events for
- 	`hook.<friendly-name>`. See linkgit:git-hook[1].
-++
-+The `<friendly-name>` must not be the same as a known hook event name
-+(e.g. do not use `hook.pre-commit.event`). Using a known event name as
-+a friendly-name is a fatal error because it creates an ambiguity with
-+`hook.<event>.enabled` and `hook.<event>.jobs`. For unknown event names,
-+a warning is issued when `<friendly-name>` matches the event value.
- 
- hook.<friendly-name>.enabled::
- 	Whether the hook `hook.<friendly-name>` is enabled. Defaults to `true`.
-@@ -33,6 +39,20 @@ hook.<friendly-name>.parallel::
- 	found in the hooks directory do not need to, and run in parallel when
- 	the effective job count is greater than 1. See linkgit:git-hook[1].
- 
-+hook.<event>.enabled::
-+	Switch to enable or disable all hooks for the `<event>` hook event.
-+	When set to `false`, no hooks fire for that event, regardless of any
-+	per-hook `hook.<friendly-name>.enabled` settings. Defaults to `true`.
-+	See linkgit:git-hook[1].
-++
-+Note on naming: `<event>` must be the event name (e.g. `pre-commit`),
-+not a hook friendly-name. Since using a known event name as a
-+friendly-name is disallowed (see `hook.<friendly-name>.event` above),
-+there is no ambiguity between event-level and per-hook `.enabled`
-+settings for known events. For unknown events, if a friendly-name
-+matches the event name despite the warning, `.enabled` is treated
-+as per-hook only.
-+
- hook.<event>.jobs::
- 	Specifies how many hooks can be run simultaneously for the `<event>`
+@@ -58,7 +58,8 @@ hook.<event>.jobs::
  	hook event (e.g. `hook.post-receive.jobs = 4`). Overrides `hook.jobs`
+ 	for this specific event. The same parallelism restrictions apply: this
+ 	setting has no effect unless all configured hooks for the event have
+-	`hook.<friendly-name>.parallel` set to `true`. Must be a positive int,
++	`hook.<friendly-name>.parallel` set to `true`. Set to `-1` to use the
++	number of available CPU cores. Must be a positive integer or `-1`;
+ 	zero is rejected with a warning. See linkgit:git-hook[1].
+ +
+ Note on naming: although this key resembles `hook.<friendly-name>.*`
+@@ -74,6 +75,7 @@ valid event name when setting `hook.<event>.jobs`.
+ hook.jobs::
+ 	Specifies how many hooks can be run simultaneously during parallelized
+ 	hook execution. If unspecified, defaults to 1 (serial execution).
++	Set to `-1` to use the number of available CPU cores.
+ 	Can be overridden on a per-event basis with `hook.<event>.jobs`.
+ 	Some hooks always run sequentially regardless of this setting because
+ 	they operate on shared data and cannot safely be parallelized:
 diff --git a/builtin/hook.c b/builtin/hook.c
-index 1839412dca..8e47e22e2a 100644
+index 8e47e22e2a..cceeb3586e 100644
 --- a/builtin/hook.c
 +++ b/builtin/hook.c
-@@ -87,14 +87,22 @@ static int list(int argc, const char **argv, const char *prefix,
- 			const char *name = h->u.configured.friendly_name;
- 			const char *scope = show_scope ?
- 				config_scope_name(h->u.configured.scope) : NULL;
-+			/*
-+			 * Show the most relevant disable reason. Event-level
-+			 * takes precedence: if the whole event is off, that
-+			 * is what the user needs to know. The per-hook
-+			 * "disabled" surfaces once the event is re-enabled.
-+			 */
-+			const char *disability =
-+				h->u.configured.event_disabled ? "event-disabled\t" :
-+				h->u.configured.disabled       ? "disabled\t"       :
-+								 "";
- 			if (scope)
--				printf("%s\t%s%s%c", scope,
--				       h->u.configured.disabled ? "disabled\t" : "",
--				       name, line_terminator);
-+				printf("%s\t%s%s%c", scope, disability, name,
-+				       line_terminator);
- 			else
--				printf("%s%s%c",
--				       h->u.configured.disabled ? "disabled\t" : "",
--				       name, line_terminator);
-+				printf("%s%s%c", disability, name,
-+				       line_terminator);
- 			break;
- 		}
- 		default:
+@@ -5,6 +5,7 @@
+ #include "gettext.h"
+ #include "hook.h"
+ #include "parse-options.h"
++#include "thread-utils.h"
+ 
+ #define BUILTIN_HOOK_RUN_USAGE \
+ 	N_("git hook run [--allow-unknown-hook-name] [--ignore-missing] [--to-stdin=<path>] [(-j|--jobs) <n>]\n" \
+@@ -123,6 +124,7 @@ static int run(int argc, const char **argv, const char *prefix,
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	int ignore_missing = 0;
+ 	int allow_unknown = 0;
++	int jobs = 0;
+ 	const char *hook_name;
+ 	struct option run_options[] = {
+ 		OPT_BOOL(0, "allow-unknown-hook-name", &allow_unknown,
+@@ -131,8 +133,8 @@ static int run(int argc, const char **argv, const char *prefix,
+ 			 N_("silently ignore missing requested <hook-name>")),
+ 		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
+ 			   N_("file to read into hooks' stdin")),
+-		OPT_UNSIGNED('j', "jobs", &opt.jobs,
+-			    N_("run up to <n> hooks simultaneously")),
++		OPT_INTEGER('j', "jobs", &jobs,
++			    N_("run up to <n> hooks simultaneously (-1 for CPU count)")),
+ 		OPT_END(),
+ 	};
+ 	int ret;
+@@ -141,6 +143,15 @@ static int run(int argc, const char **argv, const char *prefix,
+ 			     builtin_hook_run_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+ 
++	if (jobs == -1)
++		opt.jobs = online_cpus();
++	else if (jobs < 0)
++		die(_("invalid value for -j: %d"
++		     " (use -1 for CPU count or a"
++		     " positive integer)"), jobs);
++	else
++		opt.jobs = jobs;
++
+ 	if (!argc)
+ 		goto usage;
+ 
 diff --git a/hook.c b/hook.c
-index 19076f8f2b..bc990d4ed4 100644
+index bc990d4ed4..d10eef4763 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -133,7 +133,9 @@ struct hook_config_cache_entry {
-  * Callback struct to collect all hook.* keys in a single config pass.
-  * commands: friendly-name to command map.
-  * event_hooks: event-name to list of friendly-names map.
-- * disabled_hooks: set of friendly-names with hook.<friendly-name>.enabled = false.
-+ * disabled_hooks: set of all names with hook.<name>.enabled = false; after
-+ *                 parsing, names that are not friendly-names become event-level
-+ *                 disables stored in r->disabled_events. This collects all.
-  * parallel_hooks: friendly-name to parallel flag.
-  * event_jobs: event-name to per-event jobs count (stored as uintptr_t, NULL == unset).
-  * jobs: value of the global hook.jobs key. Defaults to 0 if unset (stored in r->hook_jobs).
-@@ -189,8 +191,21 @@ static int hook_config_lookup_all(const char *key, const char *value,
- 			strmap_for_each_entry(&data->event_hooks, &iter, e)
- 				unsorted_string_list_remove(e->value, hook_name, 0);
- 		} else {
--			struct string_list *hooks =
--				strmap_get(&data->event_hooks, value);
-+			struct string_list *hooks;
-+
-+			if (is_known_hook(hook_name))
-+				die(_("hook friendly-name '%s' collides with "
-+				      "a known event name; please choose a "
-+				      "different friendly-name"),
-+				    hook_name);
-+
-+			if (!strcmp(hook_name, value))
-+				warning(_("hook friendly-name '%s' is the "
-+					  "same as its event; this may cause "
-+					  "ambiguity with hook.%s.enabled"),
-+					hook_name, hook_name);
-+
-+			hooks = strmap_get(&data->event_hooks, value);
+@@ -12,6 +12,7 @@
+ #include "setup.h"
+ #include "strbuf.h"
+ #include "strmap.h"
++#include "thread-utils.h"
  
- 			if (!hooks) {
- 				CALLOC_ARRAY(hooks, 1);
-@@ -345,6 +360,22 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
- 
- 	warn_jobs_on_friendly_names(&cb_data);
- 
-+	/*
-+	 * Populate disabled_events: names in disabled_hooks that are not
-+	 * friendly-names are event-level switches (hook.<event>.enabled = false).
-+	 * Names that are friendly-names are already handled per-hook via the
-+	 * hook_config_cache_entry.disabled flag below.
-+	 */
-+	if (r) {
-+		string_list_clear(&r->disabled_events, 0);
-+		string_list_init_dup(&r->disabled_events);
-+		for (size_t i = 0; i < cb_data.disabled_hooks.nr; i++) {
-+			const char *n = cb_data.disabled_hooks.items[i].string;
-+			if (!is_friendly_name(&cb_data, n))
-+				string_list_append(&r->disabled_events, n);
-+		}
-+	}
-+
- 	/* Construct the cache from parsed configs. */
- 	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
- 		struct string_list *hook_names = e->value;
-@@ -446,6 +477,8 @@ static void list_hooks_add_configured(struct repository *r,
+ bool is_known_hook(const char *name)
  {
- 	struct strmap *cache = get_hook_config_cache(r);
- 	struct string_list *configured_hooks = strmap_get(cache, hookname);
-+	bool event_is_disabled = r ? !!unsorted_string_list_lookup(&r->disabled_events,
-+								   hookname) : 0;
+@@ -165,13 +166,17 @@ static int hook_config_lookup_all(const char *key, const char *value,
+ 	/* Handle plain hook.<key> entries that have no hook name component. */
+ 	if (!name) {
+ 		if (!strcmp(subkey, "jobs") && value) {
+-			unsigned int v;
+-			if (!git_parse_uint(value, &v))
+-				warning(_("hook.jobs must be a positive integer, ignoring: '%s'"), value);
+-			else if (!v)
+-				warning(_("hook.jobs must be positive, ignoring: 0"));
+-			else
++			int v;
++			if (!git_parse_int(value, &v))
++				warning(_("hook.jobs must be an integer, ignoring: '%s'"), value);
++			else if (v == -1)
++				data->jobs = online_cpus();
++			else if (v > 0)
+ 				data->jobs = v;
++			else
++				warning(_("hook.jobs must be a positive integer"
++					  " or -1, ignoring: '%s'"),
++					value);
+ 		}
+ 		return 0;
+ 	}
+@@ -259,17 +264,21 @@ static int hook_config_lookup_all(const char *key, const char *value,
+ 				  " ignoring: '%s'"),
+ 				hook_name, value);
+ 	} else if (!strcmp(subkey, "jobs")) {
+-		unsigned int v;
+-		if (!git_parse_uint(value, &v))
+-			warning(_("hook.%s.jobs must be a positive integer,"
++		int v;
++		if (!git_parse_int(value, &v))
++			warning(_("hook.%s.jobs must be an integer,"
+ 				  " ignoring: '%s'"),
+ 				hook_name, value);
+-		else if (!v)
+-			warning(_("hook.%s.jobs must be positive,"
+-				  " ignoring: 0"), hook_name);
+-		else
++		else if (v == -1)
++			strmap_put(&data->event_jobs, hook_name,
++				   (void *)(uintptr_t)online_cpus());
++		else if (v > 0)
+ 			strmap_put(&data->event_jobs, hook_name,
+ 				   (void *)(uintptr_t)v);
++		else
++			warning(_("hook.%s.jobs must be a positive"
++				  " integer or -1, ignoring: '%s'"),
++				hook_name, value);
+ 	}
  
- 	/* Iterate through configured hooks and initialize internal states */
- 	for (size_t i = 0; configured_hooks && i < configured_hooks->nr; i++) {
-@@ -472,6 +505,7 @@ static void list_hooks_add_configured(struct repository *r,
- 			entry->command ? xstrdup(entry->command) : NULL;
- 		hook->u.configured.scope = entry->scope;
- 		hook->u.configured.disabled = entry->disabled;
-+		hook->u.configured.event_disabled = event_is_disabled;
- 		hook->parallel = entry->parallel;
- 
- 		string_list_append(list, friendly_name)->util = hook;
-@@ -484,6 +518,8 @@ static void list_hooks_add_configured(struct repository *r,
- 	if (!r || !r->gitdir) {
- 		hook_cache_clear(cache);
- 		free(cache);
-+		if (r)
-+			string_list_clear(&r->disabled_events, 0);
+ 	free(hook_name);
+@@ -688,6 +697,25 @@ static void warn_non_parallel_hooks_override(unsigned int jobs,
  	}
  }
  
-@@ -515,7 +551,7 @@ int hook_exists(struct repository *r, const char *name)
- 	for (size_t i = 0; i < hooks->nr; i++) {
- 		struct hook *h = hooks->items[i].util;
- 		if (h->kind == HOOK_TRADITIONAL ||
--		    !h->u.configured.disabled) {
-+		    (!h->u.configured.disabled && !h->u.configured.event_disabled)) {
- 			exists = 1;
- 			break;
- 		}
-@@ -538,7 +574,8 @@ static int pick_next_hook(struct child_process *cp,
- 		if (hook_cb->hook_to_run_index >= hook_list->nr)
- 			return 0;
- 		h = hook_list->items[hook_cb->hook_to_run_index++].util;
--	} while (h->kind == HOOK_CONFIGURED && h->u.configured.disabled);
-+	} while (h->kind == HOOK_CONFIGURED &&
-+		 (h->u.configured.disabled || h->u.configured.event_disabled));
- 
- 	cp->no_stdin = 1;
- 	strvec_pushv(&cp->env, hook_cb->options->env.v);
-diff --git a/hook.h b/hook.h
-index 5a93f56618..b4372b636f 100644
---- a/hook.h
-+++ b/hook.h
-@@ -32,6 +32,7 @@ struct hook {
- 			const char *command;
- 			enum config_scope scope;
- 			bool disabled;
-+			bool event_disabled;
- 		} configured;
- 	} u;
- 
-diff --git a/repository.c b/repository.c
-index 4030db4460..db57b8308b 100644
---- a/repository.c
-+++ b/repository.c
-@@ -427,6 +427,7 @@ void repo_clear(struct repository *repo)
- 		FREE_AND_NULL(repo->hook_config_cache);
- 	}
- 	strmap_clear(&repo->event_jobs, 0); /* values are uintptr_t, not heap ptrs */
-+	string_list_clear(&repo->disabled_events, 0);
- 
- 	if (repo->promisor_remote_config) {
- 		promisor_remote_clear(repo->promisor_remote_config);
-diff --git a/repository.h b/repository.h
-index 6b67ec02e2..4969d8b8eb 100644
---- a/repository.h
-+++ b/repository.h
-@@ -2,6 +2,7 @@
- #define REPOSITORY_H
- 
- #include "strmap.h"
-+#include "string-list.h"
- #include "repo-settings.h"
- #include "environment.h"
- 
-@@ -178,6 +179,9 @@ struct repository {
- 	/* Cached map of event-name -> jobs count (as uintptr_t) from hook.<event>.jobs. */
- 	struct strmap event_jobs;
- 
-+	/* Cached list of event names with hook.<event>.enabled = false. */
-+	struct string_list disabled_events;
++/* Resolve a hook.jobs config key, handling -1 as online_cpus(). */
++static void resolve_hook_config_jobs(struct repository *r,
++				     const char *key,
++				     unsigned int *jobs)
++{
++	int v;
 +
- 	/* Configurations related to promisor remotes. */
- 	char *repository_format_partial_clone;
- 	struct promisor_remote_config *promisor_remote_config;
++	if (repo_config_get_int(r, key, &v))
++		return;
++
++	if (v == -1)
++		*jobs = online_cpus();
++	else if (v > 0)
++		*jobs = v;
++	else
++		warning(_("%s must be a positive integer or -1,"
++			  " ignoring: %d"), key, v);
++}
++
+ /* Determine how many jobs to use for hook execution. */
+ static unsigned int get_hook_jobs(struct repository *r,
+ 				  struct run_hooks_opt *options,
+@@ -721,14 +749,12 @@ static unsigned int get_hook_jobs(struct repository *r,
+ 			if (event_jobs)
+ 				options->jobs = (unsigned int)(uintptr_t)event_jobs;
+ 		} else {
+-			unsigned int event_jobs;
+ 			char *key;
+ 
+-			repo_config_get_uint(r, "hook.jobs", &options->jobs);
++			resolve_hook_config_jobs(r, "hook.jobs", &options->jobs);
+ 
+ 			key = xstrfmt("hook.%s.jobs", hook_name);
+-			if (!repo_config_get_uint(r, key, &event_jobs) && event_jobs)
+-				options->jobs = event_jobs;
++			resolve_hook_config_jobs(r, key, &options->jobs);
+ 			free(key);
+ 		}
+ 	}
 diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 85b055a897..273588e4d4 100755
+index 273588e4d4..dbd5299d92 100755
 --- a/t/t1800-hook.sh
 +++ b/t/t1800-hook.sh
-@@ -1058,4 +1058,87 @@ test_expect_success 'hook.<event>.jobs does not warn for a real event name' '
+@@ -1058,6 +1058,55 @@ test_expect_success 'hook.<event>.jobs does not warn for a real event name' '
  	test_grep ! "friendly-name" err
  '
  
-+test_expect_success 'hook.<event>.enabled=false skips all hooks for event' '
++test_expect_success 'hook.jobs=-1 resolves to online_cpus()' '
 +	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo ran" &&
-+	test_config hook.test-hook.enabled false &&
-+	git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	test_must_be_empty out
++	test_config hook.hook-1.command "true" &&
++	test_config hook.hook-1.parallel true &&
++
++	test_config hook.jobs -1 &&
++
++	cpus=$(test-tool online-cpus) &&
++	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++		git hook run --allow-unknown-hook-name test-hook >out 2>err &&
++	grep "\"region_enter\".*\"hook\".*\"test-hook\".*\"max:$cpus\"" trace.txt
 +'
 +
-+test_expect_success 'hook.<event>.enabled=true does not suppress hooks' '
++test_expect_success 'hook.<event>.jobs=-1 resolves to online_cpus()' '
 +	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo ran" &&
-+	test_config hook.test-hook.enabled true &&
-+	git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	test_grep "ran" err
++	test_config hook.hook-1.command "true" &&
++	test_config hook.hook-1.parallel true &&
++
++	test_config hook.test-hook.jobs -1 &&
++
++	cpus=$(test-tool online-cpus) &&
++	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++		git hook run --allow-unknown-hook-name test-hook >out 2>err &&
++	grep "\"region_enter\".*\"hook\".*\"test-hook\".*\"max:$cpus\"" trace.txt
 +'
 +
-+test_expect_success 'hook.<event>.enabled=false does not affect other events' '
++test_expect_success 'git hook run -j-1 resolves to online_cpus()' '
 +	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo ran" &&
-+	test_config hook.other-event.enabled false &&
-+	git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	test_grep "ran" err
++	test_config hook.hook-1.command "true" &&
++	test_config hook.hook-1.parallel true &&
++
++	cpus=$(test-tool online-cpus) &&
++	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++		git hook run --allow-unknown-hook-name -j-1 test-hook >out 2>err &&
++	grep "\"region_enter\".*\"hook\".*\"test-hook\".*\"max:$cpus\"" trace.txt
 +'
 +
-+test_expect_success 'hook.<friendly-name>.enabled=false still disables that hook' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo hook-1" &&
-+	test_config hook.hook-2.event test-hook &&
-+	test_config hook.hook-2.command "echo hook-2" &&
-+	test_config hook.hook-1.enabled false &&
-+	git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	test_grep ! "hook-1" err &&
-+	test_grep "hook-2" err
++test_expect_success 'hook.jobs rejects values less than -1' '
++	test_config hook.jobs -2 &&
++	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
++	test_grep "hook.jobs must be a positive integer or -1" err
 +'
 +
-+test_expect_success 'git hook list shows event-disabled hooks as event-disabled' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo ran" &&
-+	test_config hook.hook-2.event test-hook &&
-+	test_config hook.hook-2.command "echo ran" &&
-+	test_config hook.test-hook.enabled false &&
-+	git hook list --allow-unknown-hook-name test-hook >actual &&
-+	test_grep "^event-disabled	hook-1$" actual &&
-+	test_grep "^event-disabled	hook-2$" actual
++test_expect_success 'hook.<event>.jobs rejects values less than -1' '
++	test_config hook.test-hook.jobs -5 &&
++	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
++	test_grep "hook.test-hook.jobs must be a positive integer or -1" err
 +'
 +
-+test_expect_success 'git hook list shows scope with event-disabled' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo ran" &&
-+	test_config hook.test-hook.enabled false &&
-+	git hook list --allow-unknown-hook-name --show-scope test-hook >actual &&
-+	test_grep "^local	event-disabled	hook-1$" actual
-+'
-+
-+test_expect_success 'git hook list still shows hooks when event is disabled' '
-+	test_config hook.hook-1.event test-hook &&
-+	test_config hook.hook-1.command "echo ran" &&
-+	test_config hook.test-hook.enabled false &&
-+	git hook list --allow-unknown-hook-name test-hook >actual &&
-+	test_grep "event-disabled" actual
-+'
-+
-+test_expect_success 'friendly-name matching known event name is rejected' '
-+	test_config hook.pre-commit.event pre-commit &&
-+	test_config hook.pre-commit.command "echo oops" &&
-+	test_must_fail git hook run pre-commit 2>err &&
-+	test_grep "collides with a known event name" err
-+'
-+
-+test_expect_success 'friendly-name matching known event name is rejected even for different event' '
-+	test_config hook.pre-commit.event post-commit &&
-+	test_config hook.pre-commit.command "echo oops" &&
-+	test_must_fail git hook run post-commit 2>err &&
-+	test_grep "collides with a known event name" err
-+'
-+
-+test_expect_success 'friendly-name matching unknown event warns' '
-+	test_config hook.test-hook.event test-hook &&
-+	test_config hook.test-hook.command "echo ran" &&
-+	git hook run --allow-unknown-hook-name test-hook >out 2>err &&
-+	test_grep "same as its event" err
-+'
-+
- test_done
+ test_expect_success 'hook.<event>.enabled=false skips all hooks for event' '
+ 	test_config hook.hook-1.event test-hook &&
+ 	test_config hook.hook-1.command "echo ran" &&
 -- 
 2.52.0.732.gb351b5166d.dirty
 
