@@ -1,116 +1,110 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB4514EC73
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 04:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775278681; cv=pass; b=SDptkM1EDjZQ/rRCOck5qZng8R4RDPd/8B4ATwHNBCJQX9nZTeCegs/nX3QnXqvY5JTJEZVNhVIsgXBcw8orDoTy8LF4Zi/gQp+UEd/E6dI4ReNXE/lBy3VMqQwXMcY95e0CYLu2PFefcLc3+YxDCq5nW2F0rZ3T6HKq9a2iEMQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775278681; c=relaxed/simple;
-	bh=9akY5qB5dwD2grCijIIn2kwo0E7Ewuo+0uCXSYGrOv4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=LJYSa9eCohw61QvEfmRWYWlctuYKdcF78zkm5Z0MWdePDO517gIBmmUq0AQZzHQkaV8enYwEzO/Ipa7HihE/pIF88EFpvDCq8MOpXHmDG8wYXAAONoOLnFw/WgotemLVNNDsd5wh7vREOhLvQ9evCB8/TsvAlguwLHQzl4J9WeQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GEx+YqAN; arc=pass smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF5B2BE630
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 05:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775281341; cv=none; b=I87YCpcGBqoDleFtLu/RWA3E/ZzzTRZSFpfst233j6QCyJb45oBlCZYH4KJjev11vUownQNR8GvS5mR1BzCyPESJbJi8KndwYhpuptQMolhBK6vzQUyaxQ1XNOH1co1OvDI1g0pgqlE3pxpgUyJUrEy/KsghjUdWFerjlX3phWA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775281341; c=relaxed/simple;
+	bh=pHgAljtJmXGpFkquyInihenv/Nh6XPh9a4JwjdBERvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ei7/G9O6LVDLwaJ/awA7RUdLdaanpmsyH+xIq/vTm86EylnWZ9j/g/bDJh+Nmfu1HjTwn022zGDqHEdYZ2fOSmKK5IwT2O2F2dnl0xTL4b7MplKqPLekoFURciqag7y2sN/fmuwQSUO3ufDstggiJPKAi4VeTzW457axOSVOMbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZOMVag1J; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GEx+YqAN"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-6058ac0ebceso1586023137.2
-        for <git@vger.kernel.org>; Fri, 03 Apr 2026 21:58:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775278679; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Q6sv4dfZjHUe+Mj/fLr/WyuUKJ/7H4WjYZ5Qn9AuHxiiQbeYdJ/L3rgRGl856SFctK
-         PYN4vyVyL867t9YhjkzyT9F4+a/6HprSyEwM17toI3Xpk0G6mwa+TnnHrCDhoNmIw37h
-         zrPrNNESA7xvC9Z6FdQXQ3kFMuy5Ph1cf9aojoLQYK90dbrvGEu1UfqPBapfwnJlYRrA
-         8M94GLFJQfjsbahyLu1fsZLivastEaVg5h9Z3/QodTMLPGwDdzUDoTOwCU1Hf0PxHo5F
-         g9BJ8HRL4w5VTRzDjTCwsfsk9A461+vPmWYlDWMzTdYlLMorO4X4KQIwG+9C2VChPf9p
-         EnxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=9akY5qB5dwD2grCijIIn2kwo0E7Ewuo+0uCXSYGrOv4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=Y1Bjd7/KmBQ4o+0fkoDQEkzDRylvBW/+HH9tN/SB4pTMZNpinVrFJXy+gObnyJYrC0
-         T0rvM+0bfLbf16OPH1IQRfpvEfhygr7XtJDygpK3cpaEvf4Uc2nCXrSQueCCsOcXHTBm
-         +5ig1FAKUquHjmJopN5fmVu/zAUcuBwVCS+h2fRpmC2A6SEuHCcE3V1VKq6hB4b1nhB6
-         gzLozV70vYamQ0sspVntQModbmGnF2jPtgVswJKIB/yC5xrGs+BFTrWv9J0o03san1o1
-         p9nyVqDCU7eR6Dk5dqCTI5my8piGSADbZWU1gIFjis+CzeA5HffMg6uQ1j5/JRetX1v+
-         NUcA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775278679; x=1775883479; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9akY5qB5dwD2grCijIIn2kwo0E7Ewuo+0uCXSYGrOv4=;
-        b=GEx+YqANO5m3vdWimBKeByq0dDHvqF5UST0RGSGM28mgFNauLRRHmNUBog6kdh1L15
-         74gDNiKjlwYzNkEATIK/FF82powyW74j+fBRg5zq/nOuJ82l7jY/dY5crLpsKsiJs52R
-         DRkwBQqtqfpI5JnaI6EgQfxNSIve+9Tkoob6mWOH6agPnXGxok4pZfbX/+qY4WP8E07H
-         Oo+Wq4RLMSESRysOlmd/sIXKfE5uAJwWPdbzmm1hR2+T3l1jXlVwGwZ6hFlcMzqs0Jlj
-         5iRHCJoRLfZvAHiP+OhpCbgMmVz6qLojI9sQ2WMIBoauFOzcWI94Bk3/EgolfGg11TZo
-         9XfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775278679; x=1775883479;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9akY5qB5dwD2grCijIIn2kwo0E7Ewuo+0uCXSYGrOv4=;
-        b=Dw9QJ2/4RtzCrvyirdayJ0YTuRWyR5Tq0UxKV6G7Kborf5FJ8BpE89aJ39ISjU3X8h
-         QfXcs1rUQ/Tot3ki1lSJNc9ClN/oH0EipnaSQyuYh0O2aq9J1u0NlMMJV9uaUBPYUs2x
-         MHONx12VrQau1Z0rDdTg2kwubaEboY/RPhzslwWDQHhVmpWVG+s7gk9MC9lUplRf6sJ+
-         jJQW4xyOAQZO0mNeI0akYX1WFS+dDNJ0BbiEnbkZB08Ng7694NH8fatCVdFfMVInvQ0U
-         H7YgfaVOqBK7lih7gxVjrxIo+gAdIEuk+9cJuNKcj5AaKKoTFWDUYaHmQ8a9LBv6vhem
-         4nsg==
-X-Gm-Message-State: AOJu0YwKTvcnIiaUwJjoGAdji1SY13jXIHqtjaU9956KzHQLMBB9ChXS
-	cpIjV7uCIsiC/r9M8C8mFlfFVOoqbrgVFhSLVLoiQgo0mwrNZw6Dl8NpVm6FQ7VfNsTQSWaYLoS
-	JoJwgiOGI46ZAnjuYGAhCNKO9Uk9Ht+k5uYyimbA=
-X-Gm-Gg: AeBDieumsPHTiC40lFkunoSGFWbD33dALFTZWEjVl7fRH/u2pgCUFJdCPMjGDUXLxk0
-	ZGw4RB90xkZUKyHBFuiYAxWmbw3zoryhyF40qiq71RYHqj05NTKSFgD8pWe87AbiEC+0y/3EETn
-	lpOxXVCq4/v9+HyWSsopyAs0XdVxasWu4GJxzokYIc/tA/lmjQLtsOcZFBUI17z5asec0PGv8r0
-	2AAImPLK31F7lhaeP4WZEFWRb7Sq5VrIzJZLYYrGZWvHl7ZSNQh1j6Le4EmJIB7rJIss+Qss0o4
-	/WH6RczkZjPuG1mUcwx8H69AY5Ib7DZvIpIBnk2F8MbvOJSddtp5is0nfhJ7fV0HzNcveVIFqt1
-	aujuPq6/OAkPzluVe4Y6H3kwWJKhB1Hq02zELgxHFpb4g4ivwWpudn+nZHp4T7BRtAC+dhnZHaD
-	hZpLUG
-X-Received: by 2002:a05:6102:4494:b0:5ff:fbe4:8ac with SMTP id
- ada2fe7eead31-605a50085a1mr1928940137.21.1775278678927; Fri, 03 Apr 2026
- 21:57:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZOMVag1J"
+Received: (qmail 239653 invoked by uid 106); 4 Apr 2026 05:42:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pHgAljtJmXGpFkquyInihenv/Nh6XPh9a4JwjdBERvY=; b=ZOMVag1JATiB5KNS8zx12vvBW0IgXEachxHlM8cGU3jjadR/ozpnO+X8cvdXBe75Y7WEToXBJ3cFfFyut/90N2VCLS9ybcGmO/0/v5GLcD1OFCJa37CI2XJUxESTgiyBhE+ndmRgihv0PbvoSq8GKpsQxsb0IVLoRVjCV9O5rlQyjPvw6nDwnBwJAM0uUwToyFFiVa7p0KDFTAsqBE/wasQ2JpgVldGZPrkpYGkNzc454yYzEp82dCyFd2QN83xLrVJLOSaLveL8VVBhZ1l3k7jw9aFHCi35EmxyEHcteVLFXJRQD8Mzrah8dL2d+9Ls1qXgbFeo2Z8u4sEVqgm3fg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Apr 2026 05:42:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 386243 invoked by uid 111); 4 Apr 2026 05:42:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Apr 2026 01:42:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 4 Apr 2026 01:42:11 -0400
+From: Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Michael J Gruber <git@grubix.eu>
+Subject: [PATCH v2 13/12] git-compat-util: fix CONST_OUTPARAM typo and
+ indentation
+Message-ID: <20260404054211.GA1346444@coredump.intra.peff.net>
+References: <20260402041433.GA3501120@coredump.intra.peff.net>
+ <20260402041507.GH3501239@coredump.intra.peff.net>
+ <87h5ps5mbc.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Arsh Srivastava <arshsrivastava00@gmail.com>
-Date: Sat, 4 Apr 2026 10:27:48 +0530
-X-Gm-Features: AQROBzAPbIPMuacCkXX4e2IH_65zzr9aFy7yY2lfPaAg0Po2rEvaJchwOzo_UTA
-Message-ID: <CAOAgETPYmCr=1UudOZdphjShp-kFabyVJo4sxUkXiqSBNoT5gA@mail.gmail.com>
-Subject: [Proposal][GSOC] extending git repo info with additional path metadata
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87h5ps5mbc.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
 
-Hi,
+On Fri, Apr 03, 2026 at 01:13:11PM +0200, Toon Claes wrote:
 
-This is a follow up mail to proposal for [GSOC] "git repo info", it
-seems that it doesn=E2=80=99t expose some of the path-related information t=
-hat
-users often end up needing, like the Git directory, working tree root,
-or object directory.
+> > +/*
+> > + * Check that an out-parameter that is "at least as const as" a matching
+> > + * in-parameter. For example, skip_prefix() will return "out" that is a subset
+> > + * of "str". So:
+> > + *
+> > + *  const str, const out: ok
+> > + *  non-const str, const out: ok
+> > + *  non-const str, non-const out: ok
+> > + *  const str, non-const out: compile error
+> > + *
+> > + *  See the skip_prefix macro below for an example of use.
+> > + */
+> > +#define CONST_OUTPARAM(in, out) \
+> > +    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
+> 
+> I'm not sure it matters, but this is indented with spaces
 
-In practice, users still rely on "git rev-parse" for these, which
-feels a bit inconsistent given that repo info already provides a
-structured way to query repository metadata.
+This is in 'next', so we'd need a patch on top. Maybe not worth it on
+its own, but we also missed the typo-fix that Junio pointed out earlier.
 
-After looking at "repo.c", it appears that the existing field-based
-setup could be extended fairly easily to include these without
-changing the overall design. The idea would be to add a few
-path-related fields using the same getter pattern that=E2=80=99s already
-there.
+So maybe this on top:
 
-Before going further with this, it would be helpful to understand
-whether this direction fits within the intended scope of "git repo
-info", or if there are reasons this kind of information is
-intentionally not exposed through it.
+-- >8 --
+Subject: [PATCH] git-compat-util: fix CONST_OUTPARAM typo and indentation
 
-Thanks,
-Arsh Srivastava
+There's a typo in the comment, making it hard to understand. And the
+macro itself is indented with spaces rather than tab.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git-compat-util.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4ddac61992..ae1bdc90a4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -464,7 +464,7 @@ report_fn get_warn_routine(void);
+ void set_die_is_recursing_routine(int (*routine)(void));
+ 
+ /*
+- * Check that an out-parameter that is "at least as const as" a matching
++ * Check that an out-parameter is "at least as const as" a matching
+  * in-parameter. For example, skip_prefix() will return "out" that is a subset
+  * of "str". So:
+  *
+@@ -476,7 +476,7 @@ void set_die_is_recursing_routine(int (*routine)(void));
+  *  See the skip_prefix macro below for an example of use.
+  */
+ #define CONST_OUTPARAM(in, out) \
+-    ((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
++	((const char **)(0 ? ((*(out) = (in)),(out)) : (out)))
+ 
+ /*
+  * If the string "str" begins with the string found in "prefix", return true.
+-- 
+2.54.0.rc0.409.g4c76eb20e4
+
