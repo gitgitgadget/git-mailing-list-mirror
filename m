@@ -1,190 +1,221 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABEB314B9D
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 19:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96062D73B8
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 19:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775331937; cv=none; b=uu6/eiMFUdtW0qQrfiKfk7j0WI3N6RZSQT6YJYhCVXr7axBeMithsMo9carU9888yDaJH+i1ip1E5M38+uziMLYuoMdJjvC/tQGjYjW7DcaK60RxSLoauRT+zfBb+6QvKhbVqGWUaQW7nULI6KBAbDyObOBWO8hXYUqc8gKY1Pg=
+	t=1775332201; cv=none; b=BH2ZXlOOqVM9Pa/4idO0uOvG7OwSQWmrgWVlJin0BbBVXf955ZbNUh9gxAEEA1d1E2uFJH/EpnVmusFWTxWGp73uOvHj0lyDaMjmLsWrMfiTfpPsVN0r2+U857Z0zx6QnZp53ZIZ69wZdE356Bbe5s6cjKMtFoxuZ6PIi4okfTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775331937; c=relaxed/simple;
-	bh=zjKwmGPADaYc8Sp4UXmpN1qBttTRm3tIaEZ1vqhIhaE=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=geyaqDS5igyeROUDt64Kwg4d8XN94MgBlZR8WQVXyUEK1bzOhgQsdrpOjnESQZzUYfGAmDO/8SxZPcf7hiizU/em5HAYZeOLZBo4II/U5P0cBTXUba7dBFIz6vshZdq9Sv9ny8Zq70iXAu7/PCEaLog+Y3SSAVnY2y6nNjjaqiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=MfW8glGX; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1775332201; c=relaxed/simple;
+	bh=MkEhnty9KyVknF+ACIpBelFMOjcbyyqaX4N4UK4JhZM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fPco+jrd9r+q5GQNEnSMqR735seQ/d5D7RjJsmCQqghctWXKoBG8gadK9zAVM1JonmJbqgWyCbmLsfSRenZ/8RPQL9Fm6ssSYqyNBHtG0B6Q336JpIr1l6UDFfmlvCo+x4EnmRx//qkrBNTaBVtZR8V5BBOUPjKbm0ctsG2gi10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XsOwMfRJ; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="MfW8glGX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1775331933; x=1775936733;
-	i=johannes.schindelin@gmx.de;
-	bh=zjKwmGPADaYc8Sp4UXmpN1qBttTRm3tIaEZ1vqhIhaE=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=MfW8glGXiBfotN6oqnRgKmqa9okLtt+ehcaeQo86zn5g0V2UqPvkpxUhAkwK119D
-	 21/FPzQLYeHw1TJ9/qGU3bKDejvNrBhfquaaPIm7NEYSsAz6OvXYdMDTNK2KkJHch
-	 mlSyiezGteyFuKShPbOQD3ILvRy5W/DmEaPoYiOPNl+KtC+cdxES/DFJ3AUcnePQK
-	 wEGIhEB5yET/JLIk3Bysa4W4jQ81I19co7yAbVx6TTS2OxgcPcwsgDYLAIgKRT8oX
-	 yWvy9FIh4ee86KgFb0AabaMlT2w2Acaym7ULxkgzvo0vS7YYRQ0Tb+t4zbUTjy7yd
-	 J0jkT3r+10vcXoZcmw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8hV5-1w4SEO1Z2H-007akb; Sat, 04
- Apr 2026 21:45:33 +0200
-Date: Sat, 4 Apr 2026 21:45:31 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH 00/17] tests: access bare repositories explicitly
-In-Reply-To: <xmqqeckxqld8.fsf@gitster.g>
-Message-ID: <dcb8c6f1-1410-9f04-c389-6f69ac4fe842@gmx.de>
-References: <pull.2076.git.1775140403.gitgitgadget@gmail.com> <xmqqeckxqld8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XsOwMfRJ"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-899a9f445cbso37586846d6.0
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 12:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775332198; x=1775936998; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xi47qzOC8uzg6u8aJsk1WFn9cjb83LIoA/NOqlPX58g=;
+        b=XsOwMfRJ0VHCssAUBy5aS8ecUm8nX6usYSl9guzQO6N+LD+EOAnMdmL06x9qAWBrl6
+         pIX6nNPAMZloqD98sOiNs/CSTEQ6hhey7gHldYwFM3kx+4qz+2jWG5xKSA/apG4QFA40
+         i3AcfZ7HvDMoyZwUm19aEHlYqk6kOKeVmBjkatX5fYmG2HsXkWIE0eIDM5LM7UkOpw0t
+         P1lrAbk3lgA3YvM2xU6Od2DaxkQbNB/6ALEFVQAXShXcPFEzvWZ8MdohpYplccmGh1uk
+         F4DCZ0xuV0XLFpzV8RGZXFUqNmXOsqpIuXT/ifs0Nsw0rOzcdA2XMwSdMuNLs8i4n9B4
+         RrsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775332198; x=1775936998;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xi47qzOC8uzg6u8aJsk1WFn9cjb83LIoA/NOqlPX58g=;
+        b=bempbU6UHAlMWoZbCz8bSajhDvJpIsuodyq5v0AXmVPVnOuZMlkoEj0xTEkxCx+P2Q
+         /dHqO4TmMNrIyyYwt+un+omfqkGNNECshpbptzxI5idlFZewt7DNYsIJ92weSjdY77Lr
+         cESB2+CAQeqUwSvTp/hP1/J1KpNIZC0EX/QcvFyssYocpp5numssLD/SJ7C6iy9wREtH
+         GmTffI1NuXMQG0xaqLaQqrH6NEyg0SY5ghMKwzd7XNvimBV8nrjqM5/vX2E4nf4oVoHV
+         /MYP7mF2RNqg7aIOGk0sFGZSv0BFQtrLzn6fulXh7Aoy7Tn1gwkZNWl1M1cAzeYwHS+5
+         0+wg==
+X-Gm-Message-State: AOJu0Yx3UcGRAFlnqvU+iLUH/0OJLLXH6XyiOlexhWoJXsaQgguUX4rs
+	h2rVOCxre1ybdADI3mQuis41eWhb3E3r+zjnXFbnt6k2KRh6F2CeOhnommopBQ==
+X-Gm-Gg: AeBDieu0pqSumkVYigqS7TeqGKj0ZVIwRAZA46CmBAWDV87ezi0Q2SKr7Gjejrs2HBc
+	YJPxIXK5bAm+EIf/uw1BOdC0oKSsVEfh+hhYxXDtM3Fnnu1f0GT+LNQ157Ya+QDZ8kWMDvddxm1
+	BVAU2IBlrofFgmI5XmEeYSC/4+TKaFowTK45vWAANNs18pg46jX+vQC4ENun4hl/kztLJlOUo1S
+	R6fEffk+/wRg16m8MCR5i/kyK4z7rHj+g6IJrzclzWNW1SJFkkzoOIcOzGkZpiZ7qFgNbNKpvpl
+	OG2IElarlPiVH8NmfxZo9iLS1SLL2HD77BzoJzHOlIV18CK3qZf6+DH++hfx2JKl/f9+9d/ih3p
+	VyiMir0C/yAL6j2iGerfMImmvqyIwTh5YE0TnPeVvbr2Ip2UxP3Vvx0em+0gNtBICuas8pUVuvN
+	bVzCKklMt1RCznrdSrQqnNdRuJymI=
+X-Received: by 2002:a05:6214:5d8e:b0:8a4:71fa:1f4a with SMTP id 6a1803df08f44-8a6ff3b4e2bmr136438236d6.0.1775332198121;
+        Sat, 04 Apr 2026 12:49:58 -0700 (PDT)
+Received: from [127.0.0.1] ([57.151.121.197])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a59323a0dasm80578406d6.4.2026.04.04.12.49.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Apr 2026 12:49:57 -0700 (PDT)
+Message-Id: <pull.2076.v2.git.1775332197.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
+References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 04 Apr 2026 19:49:40 +0000
+Subject: [PATCH v2 00/17] tests: access bare repositories explicitly
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:us20gdhS6q1aH7uQl3okfdd0/ihQSgLUvKpGYQu5xFwSaaSBozS
- Okb0l/AAsNtaKlJKa3voWVg/atfrlSNIYeN9/QYwJA6umKXVHMHRCoyI3GvSiza69jAkkDO
- uDr0yV8h/HMG+dXkSzovm1ai5tCx7JK0lYhAEj/JACrpYz3v5jN/dJPp5q/QhgIB5wfK8Fy
- ptTxFgUXJeOPHxcI+2kOQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:pzd8HsaUxys=;XglSv5U5pc8iWcmKLN/eTCKZslF
- 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
- chQo8xk7S9L
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Hi Junio,
+The safe.bareRepository configuration variable (introduced in 8d1a7448206e)
+allows restricting implicit bare repository discovery. Its default may well
+change to "explicit" in Git v3.0, at which point any test that relies on
+implicit discovery of a bare repository would break, even if the test
+subject has nothing to do with bare repositories.
 
-On Thu, 2 Apr 2026, Junio C Hamano wrote:
+This series adjusts 16 test scripts and git-p4 so that they access bare
+repositories explicitly. The techniques used are:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->=20
-> > The safe.bareRepository configuration variable (introduced in
-> > 8d1a7448206e) allows restricting implicit bare repository discovery.
-> > Its default may well change to "explicit" in Git v3.0, at which point
-> > any test that relies on implicit discovery of a bare repository would
-> > break, even if the test subject has nothing to do with bare
-> > repositories.
->=20
-> I do not recall such a change for safe.bareRepository discussed in
-> the recent past, and I do not have a strong opinion yet because of
-> that, but if no such change to require "explicit" comes, we would be
-> losing test coverage with these patches, because these rewrite the
-> ones that rely on a working code in implicit cases?
+ * Replace git -C <bare-repo> ... with git --git-dir=<bare-repo> ...
+ * Export GIT_DIR=. after cd-ing into a bare repository
+ * Wrap commands in (GIT_DIR=<path> && export GIT_DIR && ...)
+ * Add test_config_global safe.bareRepository all in the few tests where
+   implicit discovery is genuinely part of what is being tested
 
-Note that the commit message says "may well" not "will". Precisely because
-such a discussion has not been had in the recent past.
+Each commit is a self-contained fix to one test file (or a small related
+group).
 
-But yes, that discussion has not happened, and I was quite surprised about
-that when I recently looked (I prepared some of my code for such a change,
-assuming that Git 3.0 as a natural inflection point would be the time for
-8d1a7448206e's long journey to come to a conclusion).
+This patch series is part of https://github.com/gitgitgadget/git/pull/2072.
 
-> Shoudln't there be a patch [01/18] before everything else that
-> updates Documentation/BreakingChanges.adoc to propose the default
-> change?
+Changes since v1:
 
-Well, yes and no. There should be an update to BreakingChanges to propose
-that default change, but obviously it should not only be a documentation
-change: It should also adjust `Documentation/config/safe.adoc` to mention
-the intended change of behavior, and it should introduce
-`WITH_BREAKING_HANGES`-specific conditional code in `setup.c`.
+ * Dramatically simplified the patch "t5509: specify bare repository path
+   explicitly"
 
-And, crucially, it should pass the test suite under WITH_BREAKING_CHANGES.
+Johannes Schindelin (17):
+  t0001: allow implicit bare repo discovery for aliased-command test
+  t0001: replace `cd`+`git` with `git --git-dir` in `check_config`
+  t0003: use `--git-dir` for bare repo attribute tests
+  t0056: allow implicit bare repo discovery for `-C` work-tree tests
+  t1020: use `--git-dir` instead of subshell for bare repo
+  t1900: avoid using `-C <dir>` for a bare repository
+  t2400: explicitly specify bare repo for `git worktree add`
+  t2406: use `--git-dir=.` for bare repository worktree repair
+  t5503: avoid discovering a bare repository
+  t5505: export `GIT_DIR` after `git init --bare`
+  t5509: specify bare repository path explicitly
+  t5540/t5541: avoid accessing a bare repository via `-C <dir>`
+  t5619: wrap `test_commit_bulk` in `GIT_DIR` subshell for bare repo
+  t6020: use `-C` for worktree, `--git-dir` for bare repository
+  t9210: pass `safe.bareRepository=all` to `scalar register`
+  t9700: stop relying on implicit bare repo discovery
+  git p4 clone --bare: need to be explicit about the gitdir
 
-To do that, a lot more needs to happen than just the 17 patches in this
-here patch series. Most of the additional changes are quite mechanical,
-and can be validated relatively easily despite their sheer number. And
-only at the very end of those changes can that `safe.bareRepository`
-change even be proposed. The eventual patch that does what you ask (but
-not as 1/18, for the reasons I outlined above), and more, is:
-https://github.com/gitgitgadget/git/pull/2072/changes/435e3505e7997a25f457=
-77a6ba436899a793c59c
+ git-p4.py                                  |  1 +
+ t/lib-httpd.sh                             | 12 ++--
+ t/t0001-init.sh                            |  5 +-
+ t/t0003-attributes.sh                      | 66 +++++++++-------------
+ t/t0056-git-C.sh                           |  2 +
+ t/t1020-subdirectory.sh                    |  5 +-
+ t/t1900-repo-info.sh                       |  7 ++-
+ t/t2400-worktree-add.sh                    | 21 +++----
+ t/t2406-worktree-repair.sh                 |  2 +-
+ t/t5503-tagfollow.sh                       | 13 ++---
+ t/t5505-remote.sh                          |  4 +-
+ t/t5509-fetch-push-namespaces.sh           |  6 +-
+ t/t5619-clone-local-ambiguous-transport.sh |  2 +-
+ t/t6020-bundle-misc.sh                     |  4 +-
+ t/t9210-scalar.sh                          |  2 +-
+ t/t9700/test.pl                            |  9 ++-
+ 16 files changed, 71 insertions(+), 90 deletions(-)
 
-I plan on proposing that patch in due time, to start the discussion
-whether or not it is a good idea to change the default of
-`safe.bareRepository` in Git 3.0.
 
-Ciao,
-Johannes
+base-commit: cf2139f8e1680b076e115bc0b349e369b4b0ecc4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2076%2Fdscho%2Ftests-explicit-bare-repo-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2076/dscho/tests-explicit-bare-repo-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2076
+
+Range-diff vs v1:
+
+  1:  a1cdbd58f0 =  1:  a1cdbd58f0 t0001: allow implicit bare repo discovery for aliased-command test
+  2:  78744602fb =  2:  78744602fb t0001: replace `cd`+`git` with `git --git-dir` in `check_config`
+  3:  a4f7a6df51 =  3:  a4f7a6df51 t0003: use `--git-dir` for bare repo attribute tests
+  4:  5b6bb18632 =  4:  5b6bb18632 t0056: allow implicit bare repo discovery for `-C` work-tree tests
+  5:  c38f0a68f1 =  5:  c38f0a68f1 t1020: use `--git-dir` instead of subshell for bare repo
+  6:  a084c39273 =  6:  a084c39273 t1900: avoid using `-C <dir>` for a bare repository
+  7:  6a7730cf57 =  7:  6a7730cf57 t2400: explicitly specify bare repo for `git worktree add`
+  8:  2905e000c5 =  8:  2905e000c5 t2406: use `--git-dir=.` for bare repository worktree repair
+  9:  9001883e15 =  9:  9001883e15 t5503: avoid discovering a bare repository
+ 10:  6932658411 = 10:  6932658411 t5505: export `GIT_DIR` after `git init --bare`
+ 11:  f6fc807af6 ! 11:  2f1e745b55 t5509: specify bare repository path explicitly
+     @@ Metadata
+       ## Commit message ##
+          t5509: specify bare repository path explicitly
+      
+     -    After switching from `-C pushee` to `--git-dir=pushee` as part of
+     -    the `safe.bareRepository` preparation, `ext::` URLs that used `.`
+     -    (resolved relative to the `-C` target) must spell out the directory
+     -    name explicitly.
+     +    When `ls-remote` is told to switch the current working directory to the
+     +    bare repository `pushee` via `-C pushee`, as part of the
+     +    `safe.bareRepository` preparation let's append `--git-dir=.` to spell
+     +    out that this is a bare repository that does not need to be discovered
+     +    implictly.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     @@ t/t5509-fetch-push-namespaces.sh: test_expect_success 'mirroring a repository us
+       test_expect_success 'hide namespaced refs with transfer.hideRefs' '
+       	GIT_NAMESPACE=namespace \
+      -		git -C pushee -c transfer.hideRefs=refs/tags \
+     --		ls-remote "ext::git %s ." >actual &&
+     -+		git --git-dir=pushee -c transfer.hideRefs=refs/tags \
+     -+		ls-remote "ext::git %s pushee" >actual &&
+     ++		git -C pushee --git-dir=. -c transfer.hideRefs=refs/tags \
+     + 		ls-remote "ext::git %s ." >actual &&
+       	printf "$commit1\trefs/heads/main\n" >expected &&
+       	test_cmp expected actual
+     - '
+      @@ t/t5509-fetch-push-namespaces.sh: test_expect_success 'hide namespaced refs with transfer.hideRefs' '
+       test_expect_success 'check that transfer.hideRefs does not match unstripped refs' '
+       	git -C pushee pack-refs --all &&
+       	GIT_NAMESPACE=namespace \
+      -		git -C pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
+     --		ls-remote "ext::git %s ." >actual &&
+     -+		git --git-dir=pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
+     -+		ls-remote "ext::git %s pushee" >actual &&
+     ++		git -C pushee --git-dir=. -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
+     + 		ls-remote "ext::git %s ." >actual &&
+       	printf "$commit1\trefs/heads/main\n" >expected &&
+       	printf "$commit0\trefs/tags/0\n" >>expected &&
+     - 	printf "$commit1\trefs/tags/1\n" >>expected &&
+      @@ t/t5509-fetch-push-namespaces.sh: test_expect_success 'check that transfer.hideRefs does not match unstripped refs
+       
+       test_expect_success 'hide full refs with transfer.hideRefs' '
+       	GIT_NAMESPACE=namespace \
+      -		git -C pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
+     --		ls-remote "ext::git %s ." >actual &&
+     -+		git --git-dir=pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
+     -+		ls-remote "ext::git %s pushee" >actual &&
+     ++		git -C pushee --git-dir=. -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
+     + 		ls-remote "ext::git %s ." >actual &&
+       	printf "$commit1\trefs/heads/main\n" >expected &&
+       	test_cmp expected actual
+     - '
+ 12:  5aa3f2a225 = 12:  c8789bd542 t5540/t5541: avoid accessing a bare repository via `-C <dir>`
+ 13:  97f22f9e87 = 13:  f09a96e55d t5619: wrap `test_commit_bulk` in `GIT_DIR` subshell for bare repo
+ 14:  1ae4caf155 = 14:  01ec77c908 t6020: use `-C` for worktree, `--git-dir` for bare repository
+ 15:  861a8e0940 = 15:  00eaefbf62 t9210: pass `safe.bareRepository=all` to `scalar register`
+ 16:  1f1668a6f4 = 16:  890dfd024d t9700: stop relying on implicit bare repo discovery
+ 17:  c8e5bef27b = 17:  139b9da946 git p4 clone --bare: need to be explicit about the gitdir
+
+-- 
+gitgitgadget
