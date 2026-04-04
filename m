@@ -1,221 +1,154 @@
-Received: from cyborg.thican.net (cyborg.thican.net [94.23.45.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF8222538F
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 14:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.23.45.103
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4299D1BD9C9
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 14:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775313387; cv=none; b=FHHQzP2wYHGTT72xwlNgnOG101YdVXzAULWOHk+LwIqOzmXHB13AxQLM0/4K62RakxpbpGb27bRnCRnSrnb/xOrhZ5SO6XUaeVyLOdN43T+Q1kf9r2RsMTv36eBO/trt4WmDUULufLSASbGb/rNFA5WFF/PP1UNQjFlPay1FImU=
+	t=1775313412; cv=none; b=Wf4XkO4nTi5NEddwu+8LdScltwgHrwWQaB0ntw1cu8Vr10PfjXspZ3iFpBb4q5pWdovaLDyAnjDlUreY28g2uTLN21xEShFVrH21MChwbNMC4sW/Q3Uaaw2K+WUy0J3qiIqmqStfJwOZwXTFJBkOPPu0d+JAqgWGJDlYmqWN3gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775313387; c=relaxed/simple;
-	bh=IQ0ZebvQOj8s0htrJDRslfcRngyzyFM0W1HAi3Bpxq0=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ogs0aEQUlEVbOiCqf0Q4WiZIUjtWFa8S8jNqbvZ3Gr2Eic86jBr8iJ1NWAxUUzhs74/RhNluKHt/55OIJesv8f4i7yiLOG3+s1ardNO+4OBoAlu1zLLDD2HkNT/mgKq42apJIWf1pxhISbtAs2qzyxd7GhWYa7+hyDxsWGeWehs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thican.net; spf=pass smtp.mailfrom=thican.net; dkim=pass (2048-bit key) header.d=thican.net header.i=@thican.net header.b=hKfF7C1y; arc=none smtp.client-ip=94.23.45.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=thican.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thican.net
+	s=arc-20240116; t=1775313412; c=relaxed/simple;
+	bh=l+Yn6sc9Aw4eLAYOJq7oQ+OOUAziEuRW6tAngRugm58=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kfsgblr/UNPqAx/O4AkAMRojasnEVs7uNOOeAg4p3hsRLt0msbTH4F4oZZ3uvc1dt4/Bh3p4Gn1oMbwwCQ/CzTgdIwjyrzfNL5tgGR7//fzLtECWp8IDLZV1EYQ+S25HSE7reUDEH2YathlOZEfeVjvQBhTEV2bv3G4XK9s2Z0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JoKMOt3B; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thican.net header.i=@thican.net header.b="hKfF7C1y"
-Received: by cyborg.thican.net (Postfix, from userid 1000)
-	id B6763818076; Sat, 04 Apr 2026 16:28:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thican.net; s=cyborg;
-	t=1775312937; bh=IQ0ZebvQOj8s0htrJDRslfcRngyzyFM0W1HAi3Bpxq0=;
-	h=Date:From:To:Subject;
-	b=hKfF7C1yxYQf4taGCyCO6d7far5CnnK4a/G5KRKeknHu8TR0i2N8eJ9G359qVW6dW
-	 2wTQ17sblNU/mQKlBK0yniBKxXCD2FwFmyOrY3VKxrCf8S6qu6xkmCn1hL8uoNw/Lt
-	 qo828eTE36Huesiura/MadId2ojRVI17O+bVkDlwRTq4IHQ4KaFqW8NwXiLZyyJ4uq
-	 IuwQQAmgrMFaZmP+tiYjVyBmBSxwndhLtwLR1Sal50FKdDuGxxXv7dR3cv9S6ZpFDo
-	 vds8tR4jyEXq/Esf9tKA2MSpys2gm6q8qIhnAMZ04S4xHkdZJIVDCDMw17v6ShdD8s
-	 WjKDo8YYooFYw==
-Date: Sat, 4 Apr 2026 16:28:57 +0200
-From: Thibaud CANALE <thican@thican.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JoKMOt3B"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70c112cb61so1546728a12.0
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 07:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775313410; x=1775918210; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NfMrgdiqroI7cnneFzpOvGijNTSTfX02lnuh/g3QiDk=;
+        b=JoKMOt3BiSsKPVbsft620eqDbVOsDLfLMdhHvseXytTD+VUoQbP9ePePxL4p7JSqDI
+         zZ1El4lvUQ1uBhuMHeCEFxwzQLkf5EwWEt2dgflPf0BNgUKa/legM270vBvasfZICPvC
+         FevjX+jXqJviWk8pooeOeXynFuhuwJQtmDt+8zXFBJ8lEr7JGwMnvNZoasaAB82AZiPf
+         j4oE+o5g8NzV20ibidAz9/WIXLm6FatAx6jn5/hqHWrvHM5w3eWggj4v7+AXFoSUBB/M
+         3W8Vec5Vl4K8bm8qmxurjmDG+eokjVkHT3JvTB6LhaDtiCXxuys6IzJMfPpqnV5yOb4e
+         5pMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775313410; x=1775918210;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NfMrgdiqroI7cnneFzpOvGijNTSTfX02lnuh/g3QiDk=;
+        b=GR8gHyTclouaip+9aqmdhdfV2EeP3OMzrmnIXh866Wx0Wd6YjXH8dgQDzL082X6jex
+         yPosEGwipYf3AjjKYZCJbZQpGo/Axwrfk0odFEmlvbZPaXHhi9R+WLFzyKOQgG/hMaH2
+         FkHx3dt1+D/me68WQ/fOQPLJNX4msYkzreMnVJPzkDeSoPxKk81QJLXMT942avmonFPC
+         ScKVmcdbi9i/fe9H6SyR3Tws2SA4CfMsy5k0JS/GYbNBipghSwojLmCmj8IQTWtbCIlO
+         Cruri2FPJyBJcpg8d16BI8Kd+ivjTljUgln8NrEQK3jhGapymxW4VtQHlVYHkjmy2l3Y
+         75Iw==
+X-Gm-Message-State: AOJu0YwLy69dmW8Z5ylWYDIq+fiT7oxICBUkj8hK+LzinG7RfjghRwsr
+	ahSaUOLth6TmX0gOcuaiMyrxsY5pXuwqJWLIKAZLVycNWY5zRijLdlCw+Wkr9A==
+X-Gm-Gg: AeBDiesmkJKoq1kIi6kA2cza2Rf6t/VCofyL7DC1CHdi27XbFoZ1kZOEFEJ6DnwqoXj
+	CnB+hepGN6hODwtEgYOG8fwL4xL50Ta7hybCkPZCiIxI90KdrIOGc/iDc/Nz8ZLYW0DCcXVSsVQ
+	a7zSb47Eondys0Y1DOVUE/VEqDxuL3ou5EofV6wBY4HrihILCFO312Otak5HwXoe9ZoBjp5BZPi
+	oL+nuiH/ZLvyEHI+JX6kAy/CVPAiY1MfQwz3n/WK4stB5FCCwyvroEr5gih71DE+viodZX3+IRM
+	jGNluaFlCo38d9vArrxojLzvslRjUIWs/vhGtgg6OkvMrg4+D8YctBx0e1Pw4KTeB7qBowoOkux
+	XSeoN9GYkp8NBO0+mMaBn8xPi7djcT1T12sHMK8mS2SHdIEXvz41izj/ID+eSHql8Zy47osX6Db
+	rMDz/4M8MTc6YBnEdAcOftAlmvW8du0zoBvNOzOQHBaYVa
+X-Received: by 2002:a05:6a20:6a24:b0:39c:a78e:dba9 with SMTP id adf61e73a8af0-39f2f0b2d10mr6726242637.40.1775313409828;
+        Sat, 04 Apr 2026 07:36:49 -0700 (PDT)
+Received: from d ([106.202.55.5])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76c657dfb7sm7620422a12.24.2026.04.04.07.36.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Apr 2026 07:36:49 -0700 (PDT)
+From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 To: git@vger.kernel.org
-Subject: [RFC PATCH] switch: provide configurable detach
-Message-ID: <njuf62lav6akkmdyqutwk7pim5yutw5cuicjidwpe5eh6qnkqr@4ir6q4uhhvht>
+Cc: ben.knoble@gmail.com,
+	mroik@delayed.space,
+	quentin.bernet@bluewin.ch,
+	gitster@pobox.com,
+	Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Subject: [PATCH] stash: infer "push" when push-specific options are given
+Date: Sat,  4 Apr 2026 14:36:40 +0000
+Message-ID: <20260404143640.6679-1-deveshigurgaon@gmail.com>
+X-Mailer: git-send-email 2.52.0.230.gd8af7cadaa
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="rzokuhjjf7jwezna"
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
+When "git stash" is run without the "push" subcommand, the command
+tries to assume "push" but rejects any non-option arguments (i.e.,
+pathspecs without "--") to avoid treating a misspelled subcommand
+name as a pathspec.  The only exception is "-p", which sets
+force_assume and allows pathspecs to follow.
 
---rzokuhjjf7jwezna
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: [RFC PATCH] switch: provide configurable detach
-MIME-Version: 1.0
+This means "git stash -m foo file" is rejected even though "-m" is
+unambiguously a "push" option, and the user's intent is clear.  The
+same applies to other push-specific options like "--staged",
+"--keep-index", "--include-untracked", and "--pathspec-from-file".
 
-Its purpose is to provide for git-switch(1) same detach behavior on
-commit it than git-checkout(1) through configuration option
-`checkout.switchDetach`.
+Expand the set of options that force the "push" assumption to
+include all push-specific options, so that pathspec arguments are
+accepted without requiring "--" or the explicit "push" subcommand
+when the command line already contains a push-only option.
 
-Signed-off-by: Thibaud CANALE <thican@thican.net>
+This was marked as #leftoverbits in [1].
+
+[1] https://lore.kernel.org/git/xmqqtsu1jipp.fsf@gitster.g/
+
+Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
 ---
- Documentation/config/checkout.adoc |  4 ++++
- builtin/checkout.c                 | 18 +++++++++++++++---
- t/t2060-switch.sh                  | 27 +++++++++++++++++++++++++++
- 3 files changed, 46 insertions(+), 3 deletions(-)
+ builtin/stash.c  |  4 +++-
+ t/t3903-stash.sh | 21 +++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config/checkout.adoc b/Documentation/config/chec=
-kout.adoc
-index e35d2129..3a6c1049 100644
---- a/Documentation/config/checkout.adoc
-+++ b/Documentation/config/checkout.adoc
-@@ -22,6 +22,10 @@ commands or functionality in the future.
- 	option in `git checkout` and `git switch`. See
- 	linkgit:git-switch[1] and linkgit:git-checkout[1].
-=20
-+`checkout.switchDetach`::
-+	Provides for linkgit:git-switch[1] the same detach behavior on commit id
-+	than linkgit:git-checkout[1] without the explicit --detach option.
-+
- `checkout.workers`::
- 	The number of parallel workers to use when updating the working tree.
- 	The default is one, i.e. sequential execution. If set to a value less
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e031e618..1da1062e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -53,6 +53,7 @@ struct checkout_opts {
- 	int force;
- 	int force_detach;
- 	int implicit_detach;
-+	int switch_detach;  // For checkout.switchDetach configuration
- 	int writeout_stage;
- 	int overwrite_ignore;
- 	int ignore_skipworktree;
-@@ -1005,7 +1006,10 @@ static void update_refs_for_switch(const struct chec=
-kout_opts *opts,
- 	else
- 		strbuf_insertstr(&msg, 0, reflog_msg);
-=20
--	if (!strcmp(new_branch_info->name, "HEAD") && !new_branch_info->path && !=
-opts->force_detach) {
-+	if (!strcmp(new_branch_info->name, "HEAD") &&
-+	    !new_branch_info->path &&
-+	    !opts->force_detach &&
-+	    !opts->switch_detach) {
- 		/* Nothing to do. */
- 	} else if (opts->force_detach || !new_branch_info->path) {	/* No longer o=
-n any branch. */
- 		refs_update_ref(get_main_ref_store(the_repository), msg.buf,
-@@ -1014,7 +1018,9 @@ static void update_refs_for_switch(const struct check=
-out_opts *opts,
- 				REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old_branch_info->path &&
--			    advice_enabled(ADVICE_DETACHED_HEAD) && !opts->force_detach)
-+			    advice_enabled(ADVICE_DETACHED_HEAD) &&
-+			    !opts->force_detach &&
-+			    !opts->switch_detach)
- 				detach_advice(new_branch_info->name);
- 			describe_detached_head(_("HEAD is now at"), new_branch_info->commit);
- 		}
-@@ -1541,8 +1547,11 @@ static void die_expecting_a_branch(const struct bran=
-ch_info *branch_info)
- 		 */
- 		code =3D die_message(_("a branch is expected, got '%s'"), branch_info->n=
-ame);
-=20
--	if (advice_enabled(ADVICE_SUGGEST_DETACHING_HEAD))
-+	if (advice_enabled(ADVICE_SUGGEST_DETACHING_HEAD)) {
- 		advise(_("If you want to detach HEAD at the commit, try again with the -=
--detach option."));
-+		advise(_("Also you can detach by default by setting the config variable "
-+		         "checkout.switchDetach to true."));
-+	}
-=20
- 	exit(code);
- }
-@@ -1660,6 +1669,7 @@ static int checkout_branch(struct checkout_opts *opts,
-=20
- 	if (!opts->implicit_detach &&
- 	    !opts->force_detach &&
-+	    !opts->switch_detach &&
- 	    !opts->new_branch &&
- 	    !opts->new_branch_force &&
- 	    new_branch_info->name &&
-@@ -2119,6 +2129,8 @@ int cmd_switch(int argc,
- 	options =3D add_common_options(&opts, options);
- 	options =3D add_common_switch_branch_options(&opts, options);
-=20
-+	repo_config_get_bool(the_repository, "checkout.switchDetach", &opts.switc=
-h_detach);
-+
- 	cb_option =3D 'c';
-=20
- 	return checkout_main(argc, argv, prefix, &opts, options,
-diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-index c91c4db9..3435ae98 100755
---- a/t/t2060-switch.sh
-+++ b/t/t2060-switch.sh
-@@ -177,4 +177,31 @@ test_expect_success 'switch back when temporarily deta=
-ched and checked out elsew
- 	git -C wt2 switch --ignore-other-worktrees shared
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 95c5005b0b..197814241c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1877,7 +1877,9 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		argc = parse_options(argc, argv, prefix, options,
+ 				     push_assumed ? git_stash_usage :
+ 				     git_stash_push_usage, flags);
+-		force_assume |= patch_mode;
++		force_assume |= patch_mode || stash_msg ||
++			keep_index != -1 || only_staged ||
++			include_untracked || pathspec_from_file;
+ 	}
+ 
+ 	if (argc) {
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 70879941c2..9812b64989 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -414,6 +414,27 @@ test_expect_success 'dont assume push with non-option args' '
+ 	test_grep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
  '
-=20
-+test_expect_success 'switch with configured detach behavior from configura=
-tion ' '
-+	test_when_finished "
-+		test_config checkout.switchDetach false;
-+		git switch main
-+	" &&
-+	test_config checkout.switchDetach true &&
-+	git switch main &&
-+	git symbolic-ref HEAD &&
-+	git switch main~ &&
-+	test_must_fail git symbolic-ref HEAD &&
-+	git switch - &&
-+	git symbolic-ref HEAD &&
-+	git switch - &&
-+	test_must_fail git symbolic-ref HEAD
+ 
++test_expect_success 'assume push when options imply push' '
++	git reset --hard &&
++	echo changed >file &&
++	git add file &&
++	git stash -m "implied push" file &&
++	git stash pop &&
++
++	git add file &&
++	git stash --staged file &&
++	git stash pop &&
++
++	git add file &&
++	git stash --keep-index file &&
++	git stash pop &&
++
++	echo untracked >untracked-file &&
++	git stash --include-untracked untracked-file &&
++	test_path_is_missing untracked-file &&
++	git stash pop
 +'
 +
-+test_expect_success 'switch without configured detach behavior from config=
-uration ' '
-+	test_when_finished "
-+		test_config checkout.switchDetach false;
-+		git switch main
-+	" &&
-+	test_config checkout.switchDetach false &&
-+	git switch main &&
-+	git symbolic-ref HEAD &&
-+	test_must_fail git switch main~
-+'
-+
- test_done
+ test_expect_success 'stash --invalid-option' '
+ 	echo bar5 >file &&
+ 	echo bar6 >file2 &&
 
 base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
---=20
-Thibaud CANALE
-thican [at] thican [dot] net
-https://thican.net/
-GPG: rsa4096 2013-10-14 485EF628CB85CDD4CB7CFF0D52F5127650733A18
+-- 
+2.52.0.230.gd8af7cadaa
 
---rzokuhjjf7jwezna
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEESF72KMuFzdTLfP8NUvUSdlBzOhgFAmnRICUbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTEsMiwyAAoJEFL1EnZQczoY5MEQAIB/Yt3eRsSiQPamDlG2
-uJkGNiNcV2IJXowTmFXw/Bg509TeqPtJQ7IerJLzwjob97cFtkDy3xlINN6ZY37D
-OB4c37miFEHCb5gWSmKPFMvkcn3esHuMx/xsF+GUOXYTnAMbwMMwjY/Lg6UXnYHC
-D5sz3mmqx5m0v5EmrMBjKr9GuoGsVlYDPUCpCzlbWVblHE6l/DRnz3S9/FQlbtZj
-1nJhSC7kpr4N3kckW1RwfPuslgBZvv7GngnMJGwRZVrJqCrfyAll/JoXXY4Yqb1F
-vImMHSctWKC+f3JlqxTOZlGmpPyQQkdOCcp4sOwqV7VRf3ghhDxGK2f6UhapgTAQ
-tqcIwKDaUoQdQKOrNclF8flo5Klykc79aYRD7yN1brrMuAcD4n9w5RgySBWtr4hi
-PWubjA5acpJ2D808E2RXI1WOFPgcEUUi6PxCwnJvvdwYGGNLic2QE4qSPk352uHT
-wT5GJC0VPbwoH9QUE1DABkMglFcpnDXHQh0L8MplRuIDnygq+6pK37dsmTzDc7iz
-t7J7iaOmZ3vHJFIqGX630oKwhD1ywHzmbcJ8EW4MyefFhfIWmD+OQf/O0fqYe4nh
-Le5o5cgCxqPIIjCDzOMQsRY1Rf/4YQK3vtIuF1/7V5h63WwbhqU0mi121xpZjA6X
-VonOgDWzPbfUFa13q19/Pr/c
-=YBoR
------END PGP SIGNATURE-----
-
---rzokuhjjf7jwezna--
