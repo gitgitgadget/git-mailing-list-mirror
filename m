@@ -1,70 +1,70 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6D9346E71
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 19:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFA534753A
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 19:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775332217; cv=none; b=qm7bZBTvo5T7jYtOCfLMScn1iNfAYkBe3PYD2nc1N7UvLOTpe+QKGgZK6QLj76+JbdkJNaJbNl5TfB6cdnO4cZgTGY7lwTV4EBNKVrSusZFT2rvTorrNCvcfUPfuSpY0nSu7UHAPj+PmlqteGAkqX+13zY1vNlXhiYDEzaexM/Y=
+	t=1775332218; cv=none; b=ZFvYN/Mfiquyok1hQEnJcScQSSERothOSnti8EnJjakaAPM6LXcCTBq/39kqFN26eNU/RDHKrB3g4Nps4DT9t7+3PlYK8TFWcQ/ZG6WSBudqLWlo5u4fslC/ospS84fYLsR85aD4UJc6jX00oyb/PQ3ZGEuhEELhDdwj1e5UQUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775332217; c=relaxed/simple;
-	bh=qcnyIHU7P1yEe/l74/uSE8tKgb+YfzU6iGAgFVl168c=;
+	s=arc-20240116; t=1775332218; c=relaxed/simple;
+	bh=Ov8jqpAj6L0FeDurzPMMs2WrWSiOqjVjQmcWcJCEkFs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UJICQ08dQ5lU1wZgP9+16SBheG9WE8qomu+50dWsJNwGG6W7IbaUEy7pegqmr/CrHf62t7uw3FI9pS4zG1X/pYz22mVBBoovluI++v/+xzsrzZ0iw3/iDPaHp9jYBmyb/ceHzKWUuq3W3cRFUUiXh3INVRGGh7+w6iWtM/kqKWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFkfnFOI; arc=none smtp.client-ip=209.85.222.172
+	 MIME-Version:To:Cc; b=cHSYK4Ngtyj8hcIUOTth2A6Niu6nRrloJ7BmOiSqQh4pDOeMCFt0utd6xJwpHMzvn0RyKxfpYumbxl9x8xKrv1ByeaxGacJ6L+RBFtCXH83fTPMnwmQcJHyXva9wiTAejAbsZhOQCeNGEItnzPW8Ugxo+Rvcl2F4NNSpyC3T9dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pEqBrb0d; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFkfnFOI"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8cfc5941028so500174285a.1
-        for <git@vger.kernel.org>; Sat, 04 Apr 2026 12:50:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pEqBrb0d"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8cfc085395fso255520985a.2
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 12:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775332214; x=1775937014; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775332215; x=1775937015; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UoUOOPcjUlOza1IAtYajWPS969AxmLafRaDyxBj/6Qo=;
-        b=eFkfnFOIhEAJuGWwHscAZpIEhGW9U6pGinhtxOMTMeCUQanNnjVRWH9UA9CN6irtxf
-         drIYjdCtFkfJ1KHpHaTiY73rrb+X9iHuLoELgEbnlNheavXBImr4xzFKTBYKkjT9hy0S
-         06azbt0cPFC1+5N3ADfFq8IX333+bzCZtfIBbZIBhPGBMZ0/wLYzt300M0D68hbUk17z
-         3z9rpFbhc7Spju/WlScGUjuhYbWDPx4UfC6AqVVxU3MhrdjEaL64fmeZXVFIoZgTfZ8k
-         dB/JRYuuSFo61hJwzO/eM132xCSKWadcxZcx1JKT9VWxERcHW1furXFObtTzCAqCAEdp
-         mWtQ==
+        bh=vbndA/jWMkmYldpu8iy64Xea81ACg5kjKEO7Cm3yLqM=;
+        b=pEqBrb0dDCX0pWhqr0FX/9Rnc/CbCZPc/uzkJTef9YXBwRHmTUcq/jaITUDD5uATL7
+         RIqG8rZGgxn73PagFEOBkLZDyNvdWiCX6WgXXj/QxoRHkkscY19GP0lXN2Oz1sn9u3yL
+         08jrjJ99FyLEFkPbi529u8g2JeIygKlg4tWGG9Kuo0+yVoKXAP/MYGfPHss2f2MYJZmh
+         0EY0sm1IdJiMD89hLxnDnE48w1MLlK3F32sF0d5zDEru31dMH0nKsge4vl0zoRG/xoaw
+         tNuQMmz4bfevJizX/y79aFQTapur/7GJuEzrH0tB+uJxwd4/NlbENnX7nBSyzSmNHoVd
+         yn1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775332214; x=1775937014;
+        d=1e100.net; s=20251104; t=1775332215; x=1775937015;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=UoUOOPcjUlOza1IAtYajWPS969AxmLafRaDyxBj/6Qo=;
-        b=FeMAp2doI3wD4NEisud/W3WxvufAwt6FP7CnY3+QHIkTVXYv1960IdGfmQQL3MWZRu
-         M6/lsAnfOwPNWulVMO4ADT0dgsA+TPJsAlrkVKJ5H4BsV1qRoKrtMJiX1HS4sNQTHFna
-         ZonF79spnDGuvpuc/cesDO0kcqoJAuGru94tmojuE0d5sEbPde7b85GDnd1n27IvbVvR
-         ozvtDdoJLEHwGxal9aOFX2zh99mlPDhdq5ZLIbmiRr1PejQHKd6zkBJOGBVqO21TE+HF
-         5/hS8BCURbMwnPMl8+ugIRw0yXj+co5Nid37AuTz0jgv3qh0T8un70sE3bfL/tfCP/3j
-         h08Q==
-X-Gm-Message-State: AOJu0YwT+TnhRHySFLU2uCB9TymzNiiEY7Al1jLHbwAp3KIYnMiGb8zQ
-	38HV6A+L7jETphdu8dQw36reNbEEyU5Nu+sEzvhFv0KlbByHs0BzMdYZOz5UXURF
-X-Gm-Gg: AeBDiesXxPJKnGJdn7YxVL+XRXDQxWCM4G/Ub8ZSvM9OUyxactCz1Wpq/3OJwHqUaX5
-	9Z7uil9JlR8w5RsQxg901Xot9EQ1c62GKDiSPo0UKKgPnmZRlD9PPziENDW83O7bAm6viu0Q/gq
-	hYpzm6on0Ra6RB3Jy/YJtronbAvpTZnxT3+3l448KCtzEJ78C9wzV8BDSs0sy5NTMTFvNvRH2IM
-	xLs6ahP4RZc5DIyew6qzhufk0As7OUeefyvLExj7W3hYw3HxxGFjmwB3oLxddCOgAA+V/MzsAhT
-	PgDYjbxTCOP88jOgq6ZFubTzdgO1uFVlRDLh2TNFMPywRKvvjh0YfRLU2Jr0KssziGPaGjJGAZp
-	gCubuxxlPOTUCaDvx9fUpCjyaGFx3Dkbvag/F+s/5QzJQEFJJXKRLkdL30osZNhvbxMgypp79O2
-	NETWQtpGUtbN1qb0zubFDxAky3q24=
-X-Received: by 2002:a05:620a:6ccc:b0:8cf:de1c:edec with SMTP id af79cd13be357-8d41c1c1352mr1110601385a.66.1775332213924;
-        Sat, 04 Apr 2026 12:50:13 -0700 (PDT)
+        bh=vbndA/jWMkmYldpu8iy64Xea81ACg5kjKEO7Cm3yLqM=;
+        b=Z1WPgmWEXv7bnvxY51LonWsQYt1O6gaZafKJQjl8cd7Q0LjKxL8+TftVdYNZx+nqzZ
+         +ouyDkeQkvZ2/9i3dQxuFYxZBb4X3XNYhwBvIhLM633b2r1SlAqNj1LDQaWlYnUkInCS
+         +KipsyviR3gbWYi7i7RAv2g3K2Vf+Z0w3sDIHD5QTjOHAMZAjfvizlx3ogy5Zpjk7sTG
+         lqUIEqL2YaCa+OvNTqkeLi/N+dr5NqAcS3b6vC4mtK3uF6Fr9BD4MbYuDue23q6FA4+S
+         nAtZQRMZzd19qnVS5zPhNCPIF6jiIsPtj+n82Kz5AedaMfeX3/o/qnEtzT2PDKRNP0Zq
+         9CPg==
+X-Gm-Message-State: AOJu0YwGVhA2Lf9Kmf/UX5ufhR/8dKb9U+JdNGqHaETggL5Y0xX7PCZJ
+	1hHbIVBvfOGw1d6fURC5csbsFqdJbs9CINC+ulwxs2ODac9/JqO4eDrIgJPCbtoC
+X-Gm-Gg: AeBDieuOB9srwRcd7blP0u7JZ/qDW+4Im12SiWZEiQS/wbdETnM1zw1ZszZss44L7eh
+	O9/8tCiICn1mSs57lhciLGHM0t9hA22I4Uq48vDyT8oEyEFYwIbmD0wGDKyJENSn2rxlneRH2s8
+	4+G/mM7V97T6owzLScXL7gWqffZDeQhdep6mPIavYbYydPBdpJOpkaw0I0ID7h7hD4zL2Gu2Rls
+	4W05vU6Bxk8RtoYmlaEKgqJFBH+YGPW0okzN0F/LhUkNh7+NqvPsEEqWihllXSa8iQXBXlkdxKw
+	NqBemhdm2kMK7p7mx8Liia80y/cWimOXnY2m4ryYez9Qf03WkkydBs8q2LvOborxTtNP6nmMhxd
+	awQNsVSLnyA58p1mARKgEua8Qu1ILcnp1QUXOSokMqu59lRMFO5sDlFJ8r9MsFOguMkZf70alKB
+	C8QYL0hh/lhtykgc17VaNxshX22QagD6uHPT05Hg==
+X-Received: by 2002:a05:620a:c53:b0:8cf:e993:83a4 with SMTP id af79cd13be357-8d41b5d66aamr1068807585a.47.1775332215262;
+        Sat, 04 Apr 2026 12:50:15 -0700 (PDT)
 Received: from [127.0.0.1] ([57.151.121.197])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a5d5a096sm715717685a.19.2026.04.04.12.50.13
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a5392d35sm692809985a.10.2026.04.04.12.50.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2026 12:50:13 -0700 (PDT)
-Message-Id: <f09a96e55ddcc95229efe37d2ec495ee40b4110e.1775332197.git.gitgitgadget@gmail.com>
+        Sat, 04 Apr 2026 12:50:14 -0700 (PDT)
+Message-Id: <01ec77c9080dab28afd3f013397abcf498db8798.1775332197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2076.v2.git.1775332197.gitgitgadget@gmail.com>
 References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
 	<pull.2076.v2.git.1775332197.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 04 Apr 2026 19:49:53 +0000
-Subject: [PATCH v2 13/17] t5619: wrap `test_commit_bulk` in `GIT_DIR` subshell
- for bare repo
+Date: Sat, 04 Apr 2026 19:49:54 +0000
+Subject: [PATCH v2 14/17] t6020: use `-C` for worktree, `--git-dir` for bare
+ repository
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,29 +80,33 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-To prepare for `safe.bareRepository` defaulting to `explicit` (see
-8d1a7448206e), wrap the `test_commit_bulk` call in `(GIT_DIR="$REPO" &&
-export GIT_DIR && test_commit_bulk ...)` because `test_commit_bulk -C`
-relies on implicit discovery which would fail once the default changes.
+To prepare for `safe.bareRepository` defaulting to `explicit`
+(see 8d1a7448206e), adjust a loop that iterated over both a
+bare (`cloned`) and a non-bare (`unbundled`) repository using
+the same `-C` flag: the bare repo needs `--git-dir` to avoid
+implicit discovery, while the non-bare one keeps `-C`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5619-clone-local-ambiguous-transport.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6020-bundle-misc.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5619-clone-local-ambiguous-transport.sh b/t/t5619-clone-local-ambiguous-transport.sh
-index cce62bf78d..3e9aac9015 100755
---- a/t/t5619-clone-local-ambiguous-transport.sh
-+++ b/t/t5619-clone-local-ambiguous-transport.sh
-@@ -21,7 +21,7 @@ test_expect_success 'setup' '
- 	echo "secret" >sensitive/secret &&
- 
- 	git init --bare "$REPO" &&
--	test_commit_bulk -C "$REPO" --ref=main 1 &&
-+	(GIT_DIR="$REPO" && export GIT_DIR && test_commit_bulk --ref=main 1) &&
- 
- 	git -C "$REPO" update-ref HEAD main &&
- 	git -C "$REPO" update-server-info &&
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 500c81b8a1..82df105b47 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -594,9 +594,9 @@ do
+ 		reflist=$(git for-each-ref --format="%(objectname)") &&
+ 		git rev-list --objects --filter=$filter --missing=allow-any \
+ 			$reflist >expect &&
+-		for repo in cloned unbundled
++		for opt in "--git-dir cloned" "-C unbundled"
+ 		do
+-			git -C $repo rev-list --objects --missing=allow-any \
++			git $opt rev-list --objects --missing=allow-any \
+ 				$reflist >actual &&
+ 			test_cmp expect actual || return 1
+ 		done
 -- 
 gitgitgadget
 
