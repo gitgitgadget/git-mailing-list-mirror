@@ -1,83 +1,99 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F57D86341
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 17:07:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8206086341
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 17:12:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775322455; cv=none; b=F3wxaQzKbPG3NM0auIdRxBVIomvhCoOIDUU/8hUpjleQie+N7MyjMCaEqa91ZEZJxJob1x14vFaQN0zehF5GJV7FvVqHYeVehJae++kGB7FVO/LOAzXg6p9Gvh1Gf9iQP0FpAbnWPOdq9FSkSvcOc+Vi79PjcbGn/SQULQRkEg8=
+	t=1775322771; cv=none; b=EkFIs4bLXVSFRbqxzwilMLiWiNuEpRFJkS/VrmSe9MKqaNz3tX4dlQS96p1fql4JzhNr0FDvch6sW8ijPjfM7eW/DXnDH//BMlWq4boruPM52/z4tu4Ht+XhjWFqHhuztkx18RpXdYea3MMoDskGGBva9uXsuDAiJml7P8j2sAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775322455; c=relaxed/simple;
-	bh=c4txrloRZItvKJGVmrmxoLVcWrCGiu2Lvopy94DJyzA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aqUGVyos5WPsJrIEip2CAzayPvd5E2Tcq41AU+Xk5Z7DwLiDvr4hKqFzZ2z39rX3Zb5okIcYwZJcvKUECIqpwOJhRfrHTvUkEUU6Rt8afH7PLEWHLybBlRH9RcypuSAuvXbytLVq0jMdfxALtK/HFEWBi/8H5wVpaEspEeNuQ7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=aWAhFn0v; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=lctOGADM; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1775322771; c=relaxed/simple;
+	bh=r3CWP2pcp7metnPQgyv5hY62WxwzDwZvW7TfBjxfdHM=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=Asx56MrPsM/FkJjdjiUdHhsxNj4OvQ89DxFAxy7wTb0wNh/z8Z6fBte6oWKYcvGNgQlWxu6NR4pOjRUv2uLaqrlr/NDLKFzFaoM+IbZmiLQGz5GokvHpqtK1RTqiHIM1YL9qFhW41l4YEWibF0piiuwFbdTpwg/0JKbD1Na/xz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I4OtjotM; arc=none smtp.client-ip=74.125.82.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="aWAhFn0v";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="lctOGADM"
-DKIM-Signature: a=rsa-sha256; b=aWAhFn0voHXHeoN5mU9fnjpIl6JiAuaH4u1J41ycHJLD7id9a0Eddn0G7r8mBt9LUxjHRJYyLnCUB+5dIvP+jIjy/AXHVW1xeXiiWWHjgqU6rDcnhViquP7OeLAN9Q/i9BRIJWACAzEDoni6fjNgKtSuX+lpnv7Lit2q5p1lHziavtk7QzqN9uMPs89BVw6AXFihT7Q/Ms2DjUNYKe+8trNKBB3coxFA8n+ELozrHaED65xFXy+q+yRljbbNVivEwE7M7FTOwBdrZz4vH+3S1MWXwjC2CLPFFDXXmCW1XizVT2roTAwOcJkVS1HlKYM0k7XgeoHIv0oycT2lZ2c18g==; s=purelymail2; d=malon.dev; v=1; bh=c4txrloRZItvKJGVmrmxoLVcWrCGiu2Lvopy94DJyzA=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=lctOGADMeg8DdZ4uT8ldHuB/ZoEMntT08+HMvfSTvkC9fLplN+kmbJLFC2AAYY15VARoBzdGUJxyROgyPaR6Z5a4OlsWBsWITcbH7Jb7BxK7cAnVp5JwScwN3XFXQHMTsfnYlRKS+0T58v18va/Poo946a5eWCya9d9otKs7GNa1Vc/9TIdk3Bli/UZQTqada6ipgUSUKlNqG4GG3nVLvutUxO/E8MBp3R+5hx9FPbw6PCIg8v0dzP7P/P+dJAYgFEI7dsMzgz+PoX2pXg9cm7NbJUjvWeN/uwCBUDe1goROj/k3oqDjNdLKqyGgMAebd4hZp55XmD730EseKavSmg==; s=purelymail2; d=purelymail.com; v=1; bh=c4txrloRZItvKJGVmrmxoLVcWrCGiu2Lvopy94DJyzA=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1561183331;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 04 Apr 2026 17:07:31 +0000 (UTC)
-Message-ID: <4be492cf-347b-4fa5-9bdd-83e7ea8abd92@malon.dev>
-Date: Sun, 5 Apr 2026 01:07:27 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I4OtjotM"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2ba895adfeaso3006052eec.0
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 10:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775322769; x=1775927569; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rX6kog0WiND1vKJItBPvNGZ0DQ567Jj/zem1pITjXM=;
+        b=I4OtjotM/BYxc2Il6U5JVHpTI+9FdnyCcCuECbFYwZhZmvfh0GLGB18Bqzn3Xr+xwD
+         fsfRlR3caiYBKzQXLVbR+kNmdzhsKiOETBr9cza0BrR9ZL9vDtEDlxajYdVar7pnfxvD
+         t2peoxjaUTYyDmNH/Qm4WlNefsOVp2nrKXhi5PQUJjDvptKMmKTz6TwPl4WZEuj/DQOU
+         ilRMJI1+xw/8Y5cfaLXqYnsA36pWvzh8q8HrCDPBkgflSChpNK5xqGsOE/2U0xFa4wQq
+         BEGbw5LPf0rIg7yEUlltCjr4PNcpSioxiOHwCysEvuqwtZEGpNlkgufdc3IHMnVecb81
+         mIfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775322769; x=1775927569;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3rX6kog0WiND1vKJItBPvNGZ0DQ567Jj/zem1pITjXM=;
+        b=UGmbND1ZAEiJJSi6mI4D3wwJqRz/Krz8mhacXozCTxPfXZBbCpr0y18IzWIVSd2bmg
+         uGGheFp/ypPK6uevWJhJbmcqlW+xnhpVenOQEhuf1+ch6jo3A18peMb5OYSj1CgfoZgJ
+         6r3fuR1oFTsaT57Ks0KpDxFMeIHt9ZeoR96YcZRiP0Ju8weKieFCeqW/Klzex+g4QUJM
+         AwBN8/im3BYvMSy0gDdzLMjX/L1ZySFLZpAwHVqCi3O2v3xqTDG38ALCZ7+17RRkH5XC
+         Cx5rGu2CGvXVctbhY4XwYQ+SfRpyTvs+/3IAt3qwPyKpmhyTrUJpRbsvzHmqV7f8FF8W
+         G/Sw==
+X-Gm-Message-State: AOJu0YyEM9A1SavsZk3qrD8BVWKG7sp9hZMmD/PtjxvnzaH7mTFHFVLZ
+	57P486PGsF6pPIiUXq70NGvYiXJRcCquLSTkHO63ALH8XCMPzR/KkMvzvzAjgQ==
+X-Gm-Gg: AeBDievwaBHglcmba5UaOyg5tk7zEnuRycgtWsUXpoCr9qC3sVuxPFq5kcMWVJC019B
+	x+2EZh5eK96U66cnS4v19vUu1d+w65zqvmD5VwMlG4lh76GQ/rPU3DU6Cfqr5yEACCE5cJv6WYQ
+	QVT6pt+OJtnefssRME42oBz+gOVFYJARi+T6s0Vkp5sLboG1aV6YztEPRvXu+uSd3AZGViGtHmb
+	9W+VI4VnwyrvGas2aZ75rtnWMpxcn5OPzOUBb/7Bvddsb6BkMiuzeopXZp2SVqnJBecrl0i/wGi
+	9XilbFpl1UeSVGkCOB5UvSsBLNa4zJ7NfUhdy2f6jzyYnu0T+qqIf51aPjN/3Fium9AGUcHOrgX
+	MOM1XlYii+4EYusOVbHHnhVew/Ok8lgBixOjBaI+FRa1eImIgFlWYKjNndhOoTQcKByOnvdpQmM
+	jL8Uppj3HMK8fQNljMLXjqNckYIA==
+X-Received: by 2002:a05:7300:cd8a:b0:2c7:2c0b:f334 with SMTP id 5a478bee46e88-2cbfb4a6039mr3485619eec.18.1775322769093;
+        Sat, 04 Apr 2026 10:12:49 -0700 (PDT)
+Received: from [127.0.0.1] ([20.168.111.64])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ca78df3b84sm7931384eec.5.2026.04.04.10.12.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Apr 2026 10:12:48 -0700 (PDT)
+Message-Id: <pull.2077.git.1775322767.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 04 Apr 2026 17:12:43 +0000
+Subject: [PATCH 0/4] Doc difftool
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] git diff --no-index segfaults on large files (NULL object
- database)
-Content-Language: en-US
-To: Luca Stefani <luca.stefani.ge1@gmail.com>
-Cc: git@vger.kernel.org
-References: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
- <d6c63949-1998-4cde-8cb0-902fd7db988c@malon.dev>
- <CAO0HQ0VEJsG6MYrp_bSTuU09PDsypGPrM0XazvM8er0kB32Gqg@mail.gmail.com>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <CAO0HQ0VEJsG6MYrp_bSTuU09PDsypGPrM0XazvM8er0kB32Gqg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-On 4/5/26 00:53, Luca Stefani wrote:
-> Thanks for looking into it.
-> Locally, I simply check against null storage and it works just fine,
-> flags is always 0 in my experiments so a check against
-> INDEX_WRITE_OBJECT also worked.
->=20
-> diff --git a/object-file.c b/object-file.c
-> index f0b029ff0b..68303aa99c 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1654,7 +1654,8 @@ int index_fd(struct index_state *istate, struct
-> object_id *oid,
->    } else if ((st->st_size >=3D 0 &&
->        (size_t)st->st_size <=3D
-> repo_settings_get_big_file_threshold(istate->repo)) ||
->       type !=3D OBJ_BLOB ||
-> -    (path && would_convert_to_git(istate, path))) {
-> +    (path && would_convert_to_git(istate, path)) ||
-> +    !(flags & INDEX_WRITE_OBJECT)) {
->    ret =3D index_core(istate, oid, fd, xsize_t(st->st_size),
->    type, path, flags);
->    } else {
->=20
-> Luca.
+This is another set of changes to convert the manual pages to synopsis
+style.
 
-That looks good, almost exactly what I was about to send. I was=20
-mistaken=E2=80=94 there isn=E2=80=99t a hash_write_object flag after all ;-=
-)
+Nothing noteworthy to add, pretty straight-forward.
 
-It looks like this is your first time posting on the Git mailing list.=20
-Would you consider contributing this (as a patch)?
+Jean-Noël Avila (4):
+  doc: convert git-difftool manual page to synopsis style
+  doc: convert git-range-diff manual page to synopsis style
+  doc: convert git-shortlog manual page to synopsis style
+  doc: convert git-describe manual page to synopsis style
 
-Thanks! Yuchen
+ Documentation/config/difftool.adoc  | 24 ++++----
+ Documentation/config/mergetool.adoc |  8 +--
+ Documentation/git-describe.adoc     | 96 ++++++++++++++---------------
+ Documentation/git-difftool.adoc     | 80 ++++++++++++------------
+ Documentation/git-range-diff.adoc   | 50 +++++++--------
+ Documentation/git-shortlog.adoc     | 60 +++++++++---------
+ 6 files changed, 159 insertions(+), 159 deletions(-)
 
+
+base-commit: 270e10ad6dda3379ea0da7efd11e4fbf2cd7a325
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2077%2Fjnavila%2Fdoc_difftool-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2077/jnavila/doc_difftool-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2077
+-- 
+gitgitgadget
