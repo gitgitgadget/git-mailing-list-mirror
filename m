@@ -1,68 +1,68 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D293081D7
-	for <git@vger.kernel.org>; Sat,  4 Apr 2026 17:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C0C332EDE
+	for <git@vger.kernel.org>; Sat,  4 Apr 2026 17:12:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775322773; cv=none; b=kMc6Qzudjba+cS/HtMpR5OnZ7bK8WqBPZrhJGn9PDJ/nTA7E3L3AbXgqfzpHQd88TbeeNbdtQHPdooRQxLGOjTjRNoRJ7mPrvrlRfrfIVNHzVgJt7+Z5rXU3d2d+EzaeYKIcUrya3PQKN0WY2ZiqHnV+yP+oAmGYeTDwA6su2LQ=
+	t=1775322774; cv=none; b=I5z4NTWNzsj6sv4E1KCLWFsrssgR/C+p+std+LdNE/G5UMdI5sheYPzAOi11rEJbcjC0/fnNwTAUyAJUVx4dYn4kFnYTbj7FN3uphCxxoTY9wBNhz7xe9MSFV7SQ4nArH4RrhnnZ7df2w9sLnxwx+KnF01c0/2rNea82NTbv2DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775322773; c=relaxed/simple;
-	bh=/6R2opT7DfLBTSAzw8tqYDRICumkqZAOK/RR7b4CaQ0=;
+	s=arc-20240116; t=1775322774; c=relaxed/simple;
+	bh=EL94E//iI3nqB4zzwdsi8oFJpyhyBUBYmzwIKY/InBI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=HlWcEc/5xyoqUDlkTpFgembuqLe/7n+SRoby4zPyluFDX5ua+AZ5bPa84alMTOeHHWZyNFORjV3IhtBzG4SxFVJVwkl3bYov9eaBQgwXPw0ucTc0oe61YdjfBpzGaCAiiHvHHC9EQFvGUG/ZHUIizSOFGMueTlo6W22GTRcDE7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B50U1luo; arc=none smtp.client-ip=74.125.82.50
+	 Content-Type:To:Cc; b=tNvQ3c0dpzFusZDKUM55b7hpEC7HuJEREc0pDZ8LkoR7uM/jYd2jWtBOZbyh9Ox0FqN4owQWAtr8wLyF2DK3zOuja7a+W9DSKHk4hc2ZY3tvlKEZgpHc5QKPyv/s7V0DkXoYZpYcXIrzWbFRDjWQZ5aupXZ42tqjsMg3fOl5NSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qc7dR9fH; arc=none smtp.client-ip=74.125.82.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B50U1luo"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1273349c56bso3407446c88.0
-        for <git@vger.kernel.org>; Sat, 04 Apr 2026 10:12:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qc7dR9fH"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2ce22328930so419209eec.0
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 10:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775322770; x=1775927570; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775322772; x=1775927572; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=h1nToj/eEzPaaVrth1AeCO/+sH4d7TFKglYKNdo1bmo=;
-        b=B50U1luoBgfUbQvtViu0XfsnzDQwtPKslMNc+uD2QkKGN1itN6oE/KHEc71ox19T78
-         TYaMS3PQpSJ3bdXslMYfJT8Jh7SX+6biFjBtsjwQJaJyLUIByQp+Nj3laxAmUCmPdUJX
-         u5q5TbzmqoQpkKEAwtx2pm1WeF3rJ6VeGsFad6xeqetcvtb7zqwfAnDGMWKBX4Do0Cwm
-         DcmTcueQFZpGh/vQr8UVS1hooBR+CLMcTundH8Qc5cmiYLqO6ab6+B0YWUGflwpPux1s
-         k/yQ5oJJInzl44MWF45aSptF/wfCQZ7Z+ryqr4GddP9JsQRSz7s8MlXc9R2MadkHNJs3
-         Un6g==
+        bh=RAz78+Qzyufjc/IUe0Xw3fqHvutTAv3L1o5GtEyhL44=;
+        b=qc7dR9fHM03i+5MzBuKmoldjmy9yBDmPa+9LCj5462iQKc4rX/BXyW1zgR/aZIaA6Q
+         Eejz4yIjGA6M4uL9eE3gCyPiIEmas2i3ubOj56D6wqbIFc2xK68/Nmwibh8VEGKMvxGH
+         fhv9WasRUWuM2t9cIurvcIK6NllUHb7tiu5KOORU+5D05GLEQD8J2aRQUdsVww+D907p
+         Rmp/+hIBZwCwt/iTZbbhsKdv9Z8RXRM/sZcHSfaWCOsSKB4bpbETGtMdrhnKjaEr+8/m
+         UrsY1zJnmS2OXaZ0pxm3hSWsNTYjWVY//31qnDwnXUC2lWY1iMdaJP7cqSFyTWg2Ym1q
+         xmhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775322770; x=1775927570;
+        d=1e100.net; s=20251104; t=1775322772; x=1775927572;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=h1nToj/eEzPaaVrth1AeCO/+sH4d7TFKglYKNdo1bmo=;
-        b=JUn1Sp2yISW+ybK3Q/VxhCeIFoNWFu5mbKkz7T3I2jJ1XVSSNhXDo3WsXQGbNVmeCD
-         85Xm36W4MUDdghNwzaatdV/tQF2AolObDqDRvaU9HBJVQ/59094SlqAUyxCJszJsoVhm
-         uVMtV9BbSUUuEh9cE57XW37EJA/RiFBnhu7W4f1eF0PttqW0SCTQ4Pve8bwp0W03uw1F
-         Zo5xJF3EGxHYGBd36GVthxCJgHzdZERZsgbzeD+rVlIYq6u541f/IiuC0D5yczqk69MK
-         GyYWBNW7RP078ERPhugZ7bLQsBIcp+44U8lux1A30eFRLUHm3BVGmvSZDtk+KFNrNFlY
-         ovQA==
-X-Gm-Message-State: AOJu0YyecdRpVV28m1pvzUYLMTQme1jrwLkRTHtd11f4Dnueo3JfI6k0
-	EVnfS89rwTq8grDjKgMtX7ipIZHvS6gzQhyLO5SOO1fnFj/O0TC2wUyEe8svOg==
-X-Gm-Gg: AeBDieu6T2KIfeY0eY+NNyovkTmb9N3c4YvCBFXOJi4WqQHKW/A0KQrK5JzhoTJ4PMo
-	/WMoRpMBySbUWfIWsVh0TSCPqCAximje6aDo/CJZwNp/TZdH1Mqn4U2nYRIAZ+nxHlFUj9iWSe/
-	ODJiL3fkE6rmWu3ENSYI82djYZH/wBMYmjbEQ2Ckgjb4yPAIzzgjNUF/4jbnOQD/QcIaRWO6NBd
-	nkQZNRXBNuM9J3godRTV8Fd9N4KjT8kA3e/LE3QNg1beX9Es4RCJL7QOvY3k2ah/ed0s96uGVh4
-	L5pUr8GoIPOivW/WqJUyoEk1oLhQ+Hgl2bp+AcaZ5GhkcW76dsemm7lshnbcSHD01dmjVsnEiLR
-	SlI3AzI+jB84S7kQhivqvkhcDxU3clgWEFBid1cQ4G0EJjjzWPWIZ0R2LZsorg2BANOAAN6yc/E
-	Lg97hRMDGrpGBQiNhbPAZMiwLNxQ==
-X-Received: by 2002:a05:7022:f319:b0:12c:8b9:7200 with SMTP id a92af1059eb24-12c08b9733cmr83430c88.17.1775322770369;
-        Sat, 04 Apr 2026 10:12:50 -0700 (PDT)
+        bh=RAz78+Qzyufjc/IUe0Xw3fqHvutTAv3L1o5GtEyhL44=;
+        b=sKFHQssUa9RLdK9fA0I3jG1yvHRR1HAkeTmkWi0N7uIHscaWY9B4+EZ1hLVCDvW552
+         EjTPidMwu/v5IRYMuQOXpvQeNJBSsPQwYqkPKCNjLxhOrYh3YNEOiuDq+War/m42MqDP
+         +pZN7UVKLhgBjAo2TDN+F/ItfJHh8WmPq4GSr9NH304/5MgQXqO7LnSRZSxVRvmRkpM3
+         sFQJabUWFB421FrmUCh/y5gvWm53Z3aMWPV8Uu/pnF0u6x7XQ9JoHVk0V+XNtMAg251n
+         bXAuOgfemg6vjp9sLDqOo+2BTVtLgoQpDttVTjeU7RncOKX8CGPrCzfM7z1FJcTEzzbc
+         X+0g==
+X-Gm-Message-State: AOJu0YwUa7jRxiWtmDn0yYopTCMzntXnMqf9GAu/kGoYXRxeDU15Wk+w
+	ryD5x4b1vdeildUwG8nDe1zVTsVZxcvfJeDzYjhLeUxaTE7J7sjlbm4GLTpdPg==
+X-Gm-Gg: AeBDiesf6k8bJWIdq3eYZB3Plx9V3zsn4sITQczkjmycSa/9kMfRFKMba8itobj6Bx6
+	4ADBpp9ChIurJIp3M20vjx5I2AOZObjjOX5bPKEhMhSxX+TynwqiTklMCTnpTumJqh2lvEAkBnj
+	RFEX23XrbCMk5LeuO9JgtJdkyoGWRj/E0XtVDjOwvK9X5UnVS1Dl7AV1ABfpcdFoJSgqTZNx9Fq
+	CNilqMAM3tXRYQF0doDrfmkucz4jtKQEd7V5WASp9i3AvohBWdv7sY6vbOalZqWa/yc2Aj0JD7t
+	e12un8AaLZsZ69EXKVliai7Ws+RgI9QIaqFJNpr+uh7g7+tZ22LjCS//pfDb9Y11OjizIghNZ3p
+	77MZf65UWoByo9V4e0A0NZ2SWeIjoDp6HnWKodxvEvuflZvc/3z2QCv3sObFSA9srHz1MB4fMqI
+	E8kdUHyfsO4ZbSeHfaO7Xa1SXZ0g==
+X-Received: by 2002:a05:7300:80d6:b0:2c6:7f49:a876 with SMTP id 5a478bee46e88-2cbfc85e1d5mr3870423eec.31.1775322771712;
+        Sat, 04 Apr 2026 10:12:51 -0700 (PDT)
 Received: from [127.0.0.1] ([20.168.111.64])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12bedd70f18sm7224300c88.6.2026.04.04.10.12.49
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2cb92ea0ef1sm6185629eec.21.2026.04.04.10.12.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2026 10:12:49 -0700 (PDT)
-Message-Id: <f9d931db328024fa7a437fd80580dce6cea673d8.1775322767.git.gitgitgadget@gmail.com>
+        Sat, 04 Apr 2026 10:12:51 -0700 (PDT)
+Message-Id: <4e14058f96e7ab49741fd77a5549b8730d046e1e.1775322767.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2077.git.1775322767.gitgitgadget@gmail.com>
 References: <pull.2077.git.1775322767.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 04 Apr 2026 17:12:44 +0000
-Subject: [PATCH 1/4] doc: convert git-difftool manual page to synopsis style
+Date: Sat, 04 Apr 2026 17:12:45 +0000
+Subject: [PATCH 2/4] doc: convert git-range-diff manual page to synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,260 +78,149 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-     * convert commands to synopsis style
+     * convert commands and options to synopsis style
      * use _<placeholder>_ for arguments
-     * fix conditional text to sentence limits
+     * small style fixes
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/config/difftool.adoc  | 24 ++++-----
- Documentation/config/mergetool.adoc |  8 +--
- Documentation/git-difftool.adoc     | 80 ++++++++++++++---------------
- 3 files changed, 56 insertions(+), 56 deletions(-)
+ Documentation/git-range-diff.adoc | 50 +++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/Documentation/config/difftool.adoc b/Documentation/config/difftool.adoc
-index 4f7d40ce24..1b8d483813 100644
---- a/Documentation/config/difftool.adoc
-+++ b/Documentation/config/difftool.adoc
-@@ -1,43 +1,43 @@
--diff.tool::
-+`diff.tool`::
- 	Controls which diff tool is used by linkgit:git-difftool[1].
- 	This variable overrides the value configured in `merge.tool`.
- 	The list below shows the valid built-in values.
- 	Any other value is treated as a custom diff tool and requires
--	that a corresponding difftool.<tool>.cmd variable is defined.
-+	that a corresponding `difftool.<tool>.cmd` variable is defined.
- 
--diff.guitool::
-+`diff.guitool`::
- 	Controls which diff tool is used by linkgit:git-difftool[1] when
--	the -g/--gui flag is specified. This variable overrides the value
-+	the `-g`/`--gui` flag is specified. This variable overrides the value
- 	configured in `merge.guitool`. The list below shows the valid
- 	built-in values. Any other value is treated as a custom diff tool
--	and requires that a corresponding difftool.<guitool>.cmd variable
-+	and requires that a corresponding `difftool.<guitool>.cmd` variable
- 	is defined.
- 
- include::{build_dir}/mergetools-diff.adoc[]
- 
--difftool.<tool>.cmd::
-+`difftool.<tool>.cmd`::
- 	Specify the command to invoke the specified diff tool.
- 	The specified command is evaluated in shell with the following
--	variables available:  'LOCAL' is set to the name of the temporary
--	file containing the contents of the diff pre-image and 'REMOTE'
-+	variables available: `LOCAL` is set to the name of the temporary
-+	file containing the contents of the diff pre-image and `REMOTE`
- 	is set to the name of the temporary file containing the contents
- 	of the diff post-image.
- +
- See the `--tool=<tool>` option in linkgit:git-difftool[1] for more details.
- 
--difftool.<tool>.path::
-+`difftool.<tool>.path`::
- 	Override the path for the given tool.  This is useful in case
- 	your tool is not in the PATH.
- 
--difftool.trustExitCode::
-+`difftool.trustExitCode`::
- 	Exit difftool if the invoked diff tool returns a non-zero exit status.
- +
- See the `--trust-exit-code` option in linkgit:git-difftool[1] for more details.
- 
--difftool.prompt::
-+`difftool.prompt`::
- 	Prompt before each invocation of the diff tool.
- 
--difftool.guiDefault::
-+`difftool.guiDefault`::
- 	Set `true` to use the `diff.guitool` by default (equivalent to specifying
- 	the `--gui` argument), or `auto` to select `diff.guitool` or `diff.tool`
- 	depending on the presence of a `DISPLAY` environment variable value. The
-diff --git a/Documentation/config/mergetool.adoc b/Documentation/config/mergetool.adoc
-index 7064f5a462..7afdcad92b 100644
---- a/Documentation/config/mergetool.adoc
-+++ b/Documentation/config/mergetool.adoc
-@@ -52,13 +52,13 @@
- 	if `merge.tool` is configured as _<variant>_), Git will consult
- 	`mergetool.<variant>.layout` to determine the tool's layout. If the
- 	variant-specific configuration is not available, `vimdiff` ' s is used as
--	fallback.  If that too is not available, a default layout with 4 windows
--	will be used.  To configure the layout, see the 'BACKEND SPECIFIC HINTS'
-+	fallback. If that too is not available, a default layout with 4 windows
-+	will be used.
- ifdef::git-mergetool[]
--	section.
-+To configure the layout, see the 'BACKEND SPECIFIC HINTS' section.
- endif::[]
- ifndef::git-mergetool[]
--	section in linkgit:git-mergetool[1].
-+To configure the layout, see the 'BACKEND SPECIFIC HINTS' section in linkgit:git-mergetool[1].
- endif::[]
- 
- `mergetool.hideResolved`::
-diff --git a/Documentation/git-difftool.adoc b/Documentation/git-difftool.adoc
-index 064bc68347..dd7cacf95e 100644
---- a/Documentation/git-difftool.adoc
-+++ b/Documentation/git-difftool.adoc
-@@ -7,64 +7,64 @@ git-difftool - Show changes using common diff tools
+diff --git a/Documentation/git-range-diff.adoc b/Documentation/git-range-diff.adoc
+index b5e85d37f1..8805570845 100644
+--- a/Documentation/git-range-diff.adoc
++++ b/Documentation/git-range-diff.adoc
+@@ -7,8 +7,8 @@ git-range-diff - Compare two commit ranges (e.g. two versions of a branch)
  
  SYNOPSIS
  --------
 -[verse]
--'git difftool' [<options>] [<commit> [<commit>]] [--] [<path>...]
+-'git range-diff' [--color=[<when>]] [--no-color] [<diff-options>]
 +[synopsis]
-+git difftool [<options>] [<commit> [<commit>]] [--] [<path>...]
++git range-diff [--color=[<when>]] [--no-color] [<diff-options>]
+ 	[--no-dual-color] [--creation-factor=<factor>]
+ 	[--left-only | --right-only] [--diff-merges=<format>]
+ 	[--remerge-diff]
+@@ -21,14 +21,14 @@ DESCRIPTION
+ This command shows the differences between two versions of a patch
+ series, or more generally, two commit ranges (ignoring merge commits).
  
- DESCRIPTION
- -----------
--'git difftool' is a Git command that allows you to compare and edit files
--between revisions using common diff tools.  'git difftool' is a frontend
--to 'git diff' and accepts the same options and arguments. See
-+`git difftool` is a Git command that allows you to compare and edit files
-+between revisions using common diff tools. `git difftool` is a frontend
-+to `git diff` and accepts the same options and arguments. See
- linkgit:git-diff[1].
+-In the presence of `<path>` arguments, these commit ranges are limited
++In the presence of _<path>_ arguments, these commit ranges are limited
+ accordingly.
+ 
+ To that end, it first finds pairs of commits from both commit ranges
+ that correspond with each other. Two commits are said to correspond when
+ the diff between their patches (i.e. the author information, the commit
+ message and the commit diff) is reasonably small compared to the
+-patches' size. See ``Algorithm`` below for details.
++patches' size. See 'Algorithm' below for details.
+ 
+ Finally, the list of matching commits is shown in the order of the
+ second commit range, with unmatched commits being inserted just after
+@@ -37,7 +37,7 @@ all of their ancestors have been shown.
+ There are three ways to specify the commit ranges:
+ 
+ - `<range1> <range2>`: Either commit range can be of the form
+-  `<base>..<rev>`, `<rev>^!` or `<rev>^-<n>`. See `SPECIFYING RANGES`
++  `<base>..<rev>`, `<rev>^!` or `<rev>^-<n>`. See 'SPECIFYING RANGES'
+   in linkgit:gitrevisions[7] for more details.
+ 
+ - `<rev1>...<rev2>`. This is equivalent to
+@@ -48,7 +48,7 @@ There are three ways to specify the commit ranges:
  
  OPTIONS
  -------
---d::
----dir-diff::
-+`-d`::
-+`--dir-diff`::
- 	Copy the modified files to a temporary location and perform
- 	a directory diff on them. This mode never prompts before
- 	launching the diff tool.
- 
---y::
----no-prompt::
-+`-y`::
-+`--no-prompt`::
- 	Do not prompt before launching a diff tool.
- 
----prompt::
-+`--prompt`::
- 	Prompt before each invocation of the diff tool.
- 	This is the default behaviour; the option is provided to
- 	override any configuration settings.
- 
----rotate-to=<file>::
--	Start showing the diff for the given path,
-+`--rotate-to=<file>`::
-+	Start showing the diff for _<file>_,
- 	the paths before it will move to the end and output.
- 
----skip-to=<file>::
--	Start showing the diff for the given path, skipping all
-+`--skip-to=<file>`::
-+	Start showing the diff for _<file>_, skipping all
- 	the paths before it.
- 
---t <tool>::
----tool=<tool>::
--	Use the diff tool specified by <tool>.  Valid values include
-+`-t <tool>`::
-+`--tool=<tool>`::
-+	Use the diff tool specified by _<tool>_. Valid values include
- 	emerge, kompare, meld, and vimdiff. Run `git difftool --tool-help`
--	for the list of valid <tool> settings.
-+	for the list of valid _<tool>_ settings.
+---no-dual-color::
++`--no-dual-color`::
+ 	When the commit diffs differ, `git range-diff` recreates the
+ 	original diffs' coloring, and adds outer -/+ diff markers with
+ 	the *background* being red/green to make it easier to see e.g.
+@@ -56,33 +56,33 @@ OPTIONS
  +
--If a diff tool is not specified, 'git difftool'
-+If a diff tool is not specified, `git difftool`
- will use the configuration variable `diff.tool`.  If the
--configuration variable `diff.tool` is not set, 'git difftool'
-+configuration variable `diff.tool` is not set, `git difftool`
- will pick a suitable default.
+ Additionally, the commit diff lines that are only present in the first commit
+ range are shown "dimmed" (this can be overridden using the `color.diff.<slot>`
+-config setting where `<slot>` is one of `contextDimmed`, `oldDimmed` and
++config setting where _<slot>_ is one of `contextDimmed`, `oldDimmed` and
+ `newDimmed`), and the commit diff lines that are only present in the second
+ commit range are shown in bold (which can be overridden using the config
+-settings `color.diff.<slot>` with `<slot>` being one of `contextBold`,
++settings `color.diff.<slot>` with _<slot>_ being one of `contextBold`,
+ `oldBold` or `newBold`).
  +
- You can explicitly provide a full path to the tool by setting the
- configuration variable `difftool.<tool>.path`. For example, you
- can configure the absolute path to kdiff3 by setting
--`difftool.kdiff3.path`. Otherwise, 'git difftool' assumes the
-+`difftool.kdiff3.path`. Otherwise, `git difftool` assumes the
- tool is available in PATH.
- +
- Instead of running one of the known diff tools,
--'git difftool' can be customized to run an alternative program
-+`git difftool` can be customized to run an alternative program
- by specifying the command line to invoke in a configuration
- variable `difftool.<tool>.cmd`.
- +
--When 'git difftool' is invoked with this tool (either through the
-+When `git difftool` is invoked with this tool (either through the
- `-t` or `--tool` option or the `diff.tool` configuration variable)
- the configured command line will be invoked with the following
- variables available: `$LOCAL` is set to the name of the temporary
-@@ -74,30 +74,30 @@ of the diff post-image.  `$MERGED` is the name of the file which is
- being compared. `$BASE` is provided for compatibility
- with custom merge tool commands and has the same value as `$MERGED`.
+ This is known to `range-diff` as "dual coloring". Use `--no-dual-color`
+ to revert to color all lines according to the outer diff markers
+ (and completely ignore the inner diff when it comes to color).
  
----tool-help::
-+`--tool-help`::
- 	Print a list of diff tools that may be used with `--tool`.
+---creation-factor=<percent>::
+-	Set the creation/deletion cost fudge factor to `<percent>`.
++`--creation-factor=<percent>`::
++	Set the creation/deletion cost fudge factor to _<percent>_.
+ 	Defaults to 60. Try a larger value if `git range-diff` erroneously
+ 	considers a large change a total rewrite (deletion of one commit
+ 	and addition of another), and a smaller one in the reverse case.
+-	See the ``Algorithm`` section below for an explanation of why this is
++	See the 'Algorithm' section below for an explanation of why this is
+ 	needed.
  
----symlinks::
----no-symlinks::
--	'git difftool''s default behavior is to create symlinks to the
-+`--symlinks`::
-+`--no-symlinks`::
-+	`git difftool`'s default behavior is to create symlinks to the
- 	working tree when run in `--dir-diff` mode and the right-hand
- 	side of the comparison yields the same content as the file in
- 	the working tree.
- +
--Specifying `--no-symlinks` instructs 'git difftool' to create copies
-+Specifying `--no-symlinks` instructs `git difftool` to create copies
- instead.  `--no-symlinks` is the default on Windows.
+---left-only::
++`--left-only`::
+ 	Suppress commits that are missing from the first specified range
+-	(or the "left range" when using the `<rev1>...<rev2>` format).
++	(or the "left range" when using the `<rev1>...<rev2>` form).
  
---x <command>::
----extcmd=<command>::
-+`-x <command>`::
-+`--extcmd=<command>`::
- 	Specify a custom command for viewing diffs.
--	'git-difftool' ignores the configured defaults and runs
-+	`git-difftool` ignores the configured defaults and runs
- 	`<command> $LOCAL $REMOTE` when this option is specified.
- 	Additionally, `$BASE` is set in the environment.
+---right-only::
++`--right-only`::
+ 	Suppress commits that are missing from the second specified range
+-	(or the "right range" when using the `<rev1>...<rev2>` format).
++	(or the "right range" when using the `<rev1>...<rev2>` form).
  
---g::
----gui::
----no-gui::
--	When 'git-difftool' is invoked with the `-g` or `--gui` option
-+`-g`::
-+`--gui`::
-+`--no-gui`::
-+	When `git-difftool` is invoked with the `-g` or `--gui` option
- 	the default diff tool will be read from the configured
- 	`diff.guitool` variable instead of `diff.tool`. This may be
- 	selected automatically using the configuration variable
-@@ -106,20 +106,20 @@ instead.  `--no-symlinks` is the default on Windows.
- 	fallback in the order of `merge.guitool`, `diff.tool`,
- 	`merge.tool` until a tool is found.
+---diff-merges=<format>::
++`--diff-merges=<format>`::
+ 	Instead of ignoring merge commits, generate diffs for them using the
+ 	corresponding `--diff-merges=<format>` option of linkgit:git-log[1],
+ 	and include them in the comparison.
+@@ -93,30 +93,30 @@ have produced. In other words, if a merge commit is the result of a
+ non-conflicting `git merge`, the `remerge` mode will represent it with an empty
+ diff.
  
----trust-exit-code::
----no-trust-exit-code::
-+`--trust-exit-code`::
-+`--no-trust-exit-code`::
- 	Errors reported by the diff tool are ignored by default.
--	Use `--trust-exit-code` to make 'git-difftool' exit when an
-+	Use `--trust-exit-code` to make `git-difftool` exit when an
- 	invoked diff tool returns a non-zero exit code.
- +
--'git-difftool' will forward the exit code of the invoked tool when
-+`git-difftool` will forward the exit code of the invoked tool when
- `--trust-exit-code` is used.
+---remerge-diff::
++`--remerge-diff`::
+ 	Convenience option, equivalent to `--diff-merges=remerge`.
  
- See linkgit:git-diff[1] for the full list of supported options.
+---notes[=<ref>]::
+---no-notes::
++`--notes[=<ref>]`::
++`--no-notes`::
+ 	This flag is passed to the `git log` program
+ 	(see linkgit:git-log[1]) that generates the patches.
  
- CONFIGURATION
- -------------
--'git difftool' falls back to 'git mergetool' config variables when the
-+`git difftool` falls back to `git mergetool` config variables when the
- difftool equivalents have not been defined.
+-<range1> <range2>::
++`<range1> <range2>`::
+ 	Compare the commits specified by the two ranges, where
+-	`<range1>` is considered an older version of `<range2>`.
++	_<range1>_ is considered an older version of _<range2>_.
  
- include::includes/cmd-config-section-rest.adoc[]
+-<rev1>...<rev2>::
++`<rev1>...<rev2>`::
+ 	Equivalent to passing `<rev2>..<rev1>` and `<rev1>..<rev2>`.
+ 
+-<base> <rev1> <rev2>::
++`<base> <rev1> <rev2>`::
+ 	Equivalent to passing `<base>..<rev1>` and `<base>..<rev2>`.
+-	Note that `<base>` does not need to be the exact branch point
++	Note that _<base>_ does not need to be the exact branch point
+ 	of the branches. Example: after rebasing a branch `my-topic`,
+ 	`git range-diff my-topic@{u} my-topic@{1} my-topic` would
+ 	show the differences introduced by the rebase.
+ 
+ `git range-diff` also accepts the regular diff options (see
+-linkgit:git-diff[1]), most notably the `--color=[<when>]` and
++linkgit:git-diff[1]), most notably the `--color[=<when>]` and
+ `--no-color` options. These options are used when generating the "diff
+ between patches", i.e. to compare the author, commit message and diff of
+ corresponding old/new commits. There is currently no means to tweak most of the
 -- 
 gitgitgadget
 
