@@ -1,44 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0256635B14B
-	for <git@vger.kernel.org>; Sun,  5 Apr 2026 06:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D64199FAB
+	for <git@vger.kernel.org>; Sun,  5 Apr 2026 06:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775369680; cv=none; b=hHUppKSA4WPs9oZ5FTm5rh9mIldltNMUiX6gKlmQTdAlPtg77dP3jb/tjxHzF/H9QB18xbOxk84a2B3VD3fmZwqXvttIkGDnHXMMZ4eAAM10KJC8qkbkAPK4Mg1jLIo/V8oVGGdNlFmE76e+5zCVNbstjq/wXt9hgj24yEZyuDI=
+	t=1775371615; cv=none; b=m+lOhA2kvpKMSLnqasbhlP0cCIvLWargzl7fY2uN/berzJA5FCOzUebehEiJDuWT8kW6eEWazA2t+Kb+4JRlS754vUBK8hPQlmyMGzNCFxswUqVyi08E220ToNVCEMFmijcI9xN65whbsv7OUnwrHDp+Z7jXzI7WjWKWn0tc+LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775369680; c=relaxed/simple;
-	bh=rIFwYJoRYg8yhLx5MPwyGi+hjvPoiI31cexAiJQbF7o=;
+	s=arc-20240116; t=1775371615; c=relaxed/simple;
+	bh=r1ZtfHjHGVH3+gm6860ukDqVf8VFFfwutcOVkAh4LrU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rJk2tVoFVsevLUwrHsMFLUrlU2rGjLcXAcRQjsDakJ/sP7kkIAKhWHesQIc90W0yRlASSrnvnjGWMs77SeE+mqeWsxn2zHdF73tQwufF27r/s2wGD+RRQz5KCUA3569FQaPNfxoqw+hWKHyrCZ8Gbhxb0H2j//j0HBqV8xoREGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Hjsoegp4; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=ApbDGxZ8zxx22TeFmeBDibq3oNfdaEYa/UJqIHxr55QixTpAtmo7AbNNRQY10ntvw9Msr7rblQGGMtRN2POwc4bdWXiJdGAIWuOiK22ZBpJCv5iWLSOwukutVhs6nvXtU9o8yIlbljasFDUWhiebo/JtG2sqK3SsEYSebPA8OTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NbQQgvoG; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Hjsoegp4"
-Received: (qmail 249972 invoked by uid 106); 5 Apr 2026 06:14:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=rIFwYJoRYg8yhLx5MPwyGi+hjvPoiI31cexAiJQbF7o=; b=Hjsoegp4wriZdaSceE7bKTWGyOoOeKdHutqPXejAe2pHZH2M8BI5Y34d69IqngJ9UzsWFEwLhazf2yN8I8+U23NJsrwwBPKkbC3te1r7AVl620hwfHhhfDncn0hcFOaxzc/LIiHAF2tjiFahiqZH0XH03N+qij57e0ZsH3DRTwfzkMHyLvNtFO6kCjXD+Q4NEKh1Olb83w1DbYKQWPOM6uQLdo+dukRUDd2vq0Qnzrr+f7VQZuwp1/GnZWrJaNVIHGrZSw2RrBKnRJ/S4J3LvG1EYqixFAhvPgJqnbdGiDG2H6Am6ziTW20bbkevxJAee+B1Ac9UZXbhATpf6Yjr+w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NbQQgvoG"
+Received: (qmail 251037 invoked by uid 106); 5 Apr 2026 06:46:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=r1ZtfHjHGVH3+gm6860ukDqVf8VFFfwutcOVkAh4LrU=; b=NbQQgvoGKVrcputfvg/hCJktbuuo6j4jxG3PvV89B2wUXjIffS8cWotuNGAOMCvnD2PJBInFwOH3wPQNBGmxYwCG0r7pOgPtpWQt619I5G1EbsqutmYP8c8aSpPHeN4gB/7hRAJ2p+9HBwpVLvmU2uxWgkvPs38DjVTuLzyGMwZf4C6qeTElThMdn0sl+peQS+6cLqeg/L2rMb9c1Zgnq9uyNyNc9/8KlN79UEai5AT339QYu344+/0SSfOJFyvu6Hsr8M80D2ZWmNqJnA4uuiU1rTJIB3GN3Fw8bRW6v4Q2F53bCCW2c716DWH9HlKGvYFxLh+2NC+mbdV8nJz6Uw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 05 Apr 2026 06:14:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 05 Apr 2026 06:46:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 402768 invoked by uid 111); 5 Apr 2026 06:14:30 -0000
+Received: (qmail 403136 invoked by uid 111); 5 Apr 2026 06:46:52 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 05 Apr 2026 02:14:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 05 Apr 2026 02:46:52 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 5 Apr 2026 02:14:30 -0400
+Date: Sun, 5 Apr 2026 02:46:51 -0400
 From: Jeff King <peff@peff.net>
-To: Tian Yuchen <cat@malon.dev>
-Cc: Justin Tobler <jltobler@gmail.com>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>, git@vger.kernel.org
-Subject: Re: [BUG] git diff --no-index segfaults on large files (NULL object
- database)
-Message-ID: <20260405061430.GA1451922@coredump.intra.peff.net>
-References: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
- <d6c63949-1998-4cde-8cb0-902fd7db988c@malon.dev>
- <CAO0HQ0VEJsG6MYrp_bSTuU09PDsypGPrM0XazvM8er0kB32Gqg@mail.gmail.com>
- <4be492cf-347b-4fa5-9bdd-83e7ea8abd92@malon.dev>
- <20260404230939.GA1360412@coredump.intra.peff.net>
- <7841c013-1f6e-49e3-9f47-f25044764a11@malon.dev>
+To: Luca Stefani <luca.stefani.ge1@gmail.com>
+Cc: git@vger.kernel.org, cat@malon.dev
+Subject: Re: [PATCH] object-file: don't use object database without a
+ repository
+Message-ID: <20260405064651.GA1452907@coredump.intra.peff.net>
+References: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,73 +41,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7841c013-1f6e-49e3-9f47-f25044764a11@malon.dev>
+In-Reply-To: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
 
-On Sun, Apr 05, 2026 at 10:48:16AM +0800, Tian Yuchen wrote:
+On Sat, Apr 04, 2026 at 07:28:17PM +0200, Luca Stefani wrote:
 
-> > Immediately after that commit, the switch from taking an odb to a source
-> > is not helpful, though I think eventually it is used to set
-> > transaction->base.source. But should the whole thing check for a NULL
-> > source and return early? Or otherwise establish some kind of noop
-> > transaction?
-> > 
+> When running `git diff -- $file1 $file2' on large enough files,
+> index_fd() attempts to use 'the_repository->objects', assuming it
+> is initialized, but that's not the case for non-repository usecases.
 > 
-> In a nutshell, are you suggesting that odb_transaction_begin() should return
-> silently when source is NULL?
+> When git diff is invoked without a backing repository,
+> INDEX_WRITE_OBJECT is never set in flags, meaning only the hash is
+> needed and nothing should be written to the object store.
 > 
-> I understand and agree with your intention, but in practical terms, if the
-> odb has not been initialised correctly, data will be lost silently here and
-> the caller will not receive an error message. I’m concerned that doing this
-> might lead to more bugs in certain situations
+> Enforce the use of index_core() in this case.
 
-The source of data loss is not the transaction begin/end, though, but
-the actual write operation inside it. If I do this:
+I don't think we want to use index_core() for a large file, though. A
+test like this:
 
-  t = odb_transaction_begin(the_repository->objects);
-  if (startup_info->have_repository)
-	odb_write_object(the_repository->objects, ...);
-  odb_transaction_commit(t);
-
-should it be an error? We chose not to write because we knew we did not
-have an odb, so there is no data to be lost. Starting or ending a
-transaction without an odb _is_ a noop, because there is nothing that
-can or will be written. It is asking to write that is the error.
-
-In the example above you could obviously push the transaction begin/end
-into the conditional. But that's harder when the "if" part is happening
-inside a helper function, which is exactly what's going on in index_fd()
-here. It passes the flags (which would omit INDEX_WRITE_OBJECT) down to
-index_blob_packfile_transaction(), which then goes through all its
-regular motions without touching the odb.
-
-This used to work because begin_odb_transaction() did quietly return
-NULL, and index_fd() did not have to care about the flag at all.
-
-> Would it make more sense to treat this as a bug instead, e.g. by
-> triggering a BUG() when source is NULL?
-
-I don't think so, if the point is to be kind to callers. We should still
-BUG() on an actual write when there is no odb or repo, of course.
+diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+index 15076dfe0d..7ef5604430 100755
+--- a/t/t4053-diff-no-index.sh
++++ b/t/t4053-diff-no-index.sh
+@@ -413,4 +413,10 @@ test_expect_success 'diff --no-index with pathspec glob and exclude' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'diff --no-index on a huge file' '
++	dd if=/dev/zero bs=1M count=4000 >big.file &&
++	echo whatever >small.file &&
++	test_expect_code 1 git diff --no-index big.file small.file
++'
++
+ test_done
 
 
-I looked over the other callers of odb_transaction_begin() and I think
-this is probably the only affected caller. But I don't think it's purely
-academic. If you teach index_fd() to use index_core() when the
-INDEX_WRITE_OBJECT is not set (as proposed earlier in this thread), I
-think you'll fall afoul of the comment at the top of the function:
+will now fail on a 32-bit system, because we try to mmap the whole file,
+which will fail.  We really do want to follow the streaming code path
+(which knows to respect the lack of a WRITE_OBJECT flag and works
+without an odb in that case).
 
-          /*
-           * Call xsize_t() only when needed to avoid potentially unnecessary
-           * die() for large files.
-           */
-
-E.g., on a 32-bit system we'd die() on a 4GB file now (because we can't
-fit its size in a size_t anymore), and probably even smaller (because
-we'd try to mmap() it and there wouldn't be a large enough contiguous
-chunk of the address space).
-
-So we really do want to follow the streaming path, even if we're not
-writing out the object.
+It's kind of an expensive test, though, so we probably don't want to
+actually include it in the test suite.
 
 -Peff
+
+PS I'd expect a 4GB+ file to work, too, but it looks like the diff code
+   barfs when trying to stuff the file into a diff_filespec. A simpler
+   example is:
+
+     dd if=/dev/zero bs=1G count=5 >big.file
+     git hash-object big.file
+
+   but that dies, too! It looks like the streaming helper uses a size_t
+   to take the size, which is wrong. It really should be an off_t. So I
+   dunno, maybe nobody cares about ever working with 4GB files on 32-bit
+   systems these days. It still feels like we should avoid a large mmap,
+   though.
