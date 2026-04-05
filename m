@@ -1,95 +1,145 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B1126CE2C
-	for <git@vger.kernel.org>; Sun,  5 Apr 2026 02:48:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635D3346FAB
+	for <git@vger.kernel.org>; Sun,  5 Apr 2026 05:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775357306; cv=none; b=uc6KdV0N4mU6aXxjq2Hdx+RkzqZpH2Q4oi5cJ7SSr2X0afVhXx9/s4BqDLAgPMQJyregtrlaLlSl53YX5BeE2emFdeoO1riUIAd0n8/EpHbQwBJ3O5h+2Ulp1wKslvMEdUBe8pNW5+Np7SmTsCVMXf8dZW5waxifnNqdf5xxhEw=
+	t=1775366132; cv=none; b=q9PBF1+oLjS0B+5VQaTck7eAdJyYqzOreUlIDLnmO/gfDRLW8j2eUV2NVoz+VGae86RhYpuSaFCTSnlwYcyrqcDB6z0aL1tamnnGvTs6Yj8YP+iqqIJxE4zP/LkpfEBzFLxBd9QuAmIUapCvGHTIiE1Uy37bdJ6v6Q9ZfYh0h78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775357306; c=relaxed/simple;
-	bh=2Qyv784fdLp1xu0aXiB0yplxS4kIkGqNbkOTODs0Q+E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QC1jjDsdfbOacrZeYsY9Pbh5qWrf3Q3dJPIgQrV3J1SYvOhTksbSAkdfWy5cHReLwp/vb3XPM06XnF4+3KKu3To2A+ewGYP7H4Smh/i1Jm6GjB98im3gouBxifmCBNjuO0E6EuJPq+5hKUI+BgYhyEeJXd0ws+NCr9Yq4l6/64s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=YnVeZjCN; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=QUC5n2/t; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1775366132; c=relaxed/simple;
+	bh=KmW/aLF1KoqsWig0PlZRDyU4+aZc7/cg2nLnlQMoi4A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IHpTgiadYMYsNYm4Fy5JeFpiLb9b2/b46Yto4P3xVJf64vVwu7yYCyUNbqrU4tjqzMUWHcTq1OYP6OOcWAMZkwneU/Y5KbMEQlkm8/GJYTXyhowlZIFcvmRtMZpY5EatFXHi3vwXVQCBQOWQZu3w73dXCx6GZ4ZgtePD+BgXN7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oM8EMAHV; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="YnVeZjCN";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="QUC5n2/t"
-DKIM-Signature: a=rsa-sha256; b=YnVeZjCNCv+RP5xeVaEDbSCUgS3EgJCcEZpKDXJCm4W+UnYkQN+J4frKBh7uvOVT2J470CTQ8kCIvcH6IE3bZYpSpRU83UqMUyVB2x+fd0quJAqlhEdfSTCYO67TVEAntOUcwxkUOrL8jXvDY8fiddmTmzv4kLwyhLDa0qJML+pyS5zXWTUxrzxIqdw2wU9Ecxh9x+NnghQP6ter4n2SHsR3PeqHAvvWKAafZYnAUhBts/Fwc+JeUL3VUSFUmiPbLCPfpw6QKsCr4tWufUmmRakURWr0obQ1QnN9yHzc2mXegTjE+jswLvDhVFstEBBHpjtJva7evSaxYZAp8mRSRA==; s=purelymail2; d=malon.dev; v=1; bh=2Qyv784fdLp1xu0aXiB0yplxS4kIkGqNbkOTODs0Q+E=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=QUC5n2/tf8LXqUgJDHtiC3ub7p98/Jsp5S1lISSWtOfe+IP1j71FXAX/7LSpMTu9ABSZar1mMwDf1bWwIGTlVynG35N96B9cHhrUabVmwMoApd9LPsGS9PJfiIgYf2w3cQnfTB3xR7Mw9EcSKv3Wv6KYde6HGIyIZhtgnv+W83yIul4FAzKzN3E8nJdIRkKnmOOMMH1KKPihGHuKFZJp4yRWWU+Y4guBshfZxBUBCwTNdihPERfpVNouUeDEBUikVFCEFBtGaEMNUnRiFzcin9dl2BzEsViDFsg6ll/CTsNuKomUlH8Ck7bv+Lk4gNdahU3UA5YLw31Sv/oa6A9pqg==; s=purelymail2; d=purelymail.com; v=1; bh=2Qyv784fdLp1xu0aXiB0yplxS4kIkGqNbkOTODs0Q+E=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -2105106148;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sun, 05 Apr 2026 02:48:19 +0000 (UTC)
-Message-ID: <7841c013-1f6e-49e3-9f47-f25044764a11@malon.dev>
-Date: Sun, 5 Apr 2026 10:48:16 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oM8EMAHV"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c76cce85bd9so967259a12.1
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 22:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775366130; x=1775970930; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w6Mwn/8b+XaByMyUjJbpUw7u5VwLg163fvghI5Atm6A=;
+        b=oM8EMAHVkEAS1lOdXpmNV4uBBAKKp8a/3rvIzQPMrM1uz/sfhiVFPbhdElOr/8j291
+         Kk3ajit+yml6YSnHuJ+XD5K862ritazLan3vSp9ZQ8zsVkfa8SnIOY6IztfLtUQ418c4
+         j5//gfTO3f54yloJCzkP1AsY23HBZTkrJwr7ExWKWocl0B/6jm1TCm4j0qYXseG5KHSR
+         NfBNDQIJDtD5AjknCWfaL55mlALPR37y1RL71ZWXCZGns60QtP4k8wjiHaZCoMrG20w3
+         hNa/GMTrDb9+nxmQHLRO2L4Wz04SgV9bxcN/IMSu6mo3HDchOiODEYgcOj5Wz/jgD57k
+         WzwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775366130; x=1775970930;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w6Mwn/8b+XaByMyUjJbpUw7u5VwLg163fvghI5Atm6A=;
+        b=YWznKMt4vyub38iFTfybOQg9MiiL9h/3dBE8BUIXB3qsv4oACA42EQc+DRJm4/3bUl
+         98snuHnUCbt4xDTBwjD+GDOobGGpKdgYp+fGj8r5PIljf6NJXTJ2+KA9wSnFJZwLPl3M
+         mJIfFVC2YnJO7VLc5WzibHgRCnYfy+6Fge8G5TnoBCaDd7NG/eCZBCKuBYxItbsijkp3
+         ZLnQCw5WkLCzKXghgY84o71e9YG0iHMkp0MXNJBX51ts3fSAk2CsoVlarJwhsAderDTE
+         q6xZd7vf2AbygczDSpjnUZFIyBrdWA46Nh8rqWaJwC1sfwMtuuSc59aycfxfh4VXk437
+         WtwQ==
+X-Gm-Message-State: AOJu0YxA0rLLvoGmfSkaQe3nXeT1iNIWmTuvFYanrcK4oslJ+FlV2FDH
+	ltvGLbm2N8M70NmnBEyb8xMLYc11wASKPMIAFwRt6rC5o0goQJB7Y5C6O+TRPjBk
+X-Gm-Gg: AeBDiesMkrMNDOuUlQJ7ElQVwayqTjfHluZgOmOpQL1hIvKILkmBmIYgWGaynYA3dYf
+	W6hKueDj2eJ2WFina3ItOkmwwpMCRP1EzL0wYhmeoXaLj0BbOZKy3vdIiq0KnexjPkAvAtVKqNc
+	vH+1XTTB8vlxaySCX710BGJKbtfOMEynSXaw0XY6L99p5b0t7XVzvXg5RL/4u3cOnFkehi9kQv2
+	BlXWjoB3pHbps4h9K8f4NlP9o5WXMoyIw+Y6uoK1vE2FpiqhL0NW2YQHVEichpRHQzmUNwTbToe
+	6NXWZaNNmA4Z+sm8N0q/QBs7tyXaDgq5j11wpiqxTKkhBoXbLJ/1TCXs6LTccSUIH+Xad4t31lR
+	MCc7K+73iCm2b31AfphgCg7h3TUIZ4RUuwy9QFLtEnvvXB/gKJLLfGR5C3NjLgu4RMXuaJnYpNd
+	52LPz0yQ5PVeZK1Cg2i9NBmBjuqMuETE2yqcmNWbIDRnZxfdVkiFe1jO+Zi49DjoIF1xHPxUA23
+	DF4q0cEKw==
+X-Received: by 2002:a05:6a00:301f:b0:82c:9fe1:aa4e with SMTP id d2e1a72fcca58-82d0da8f68amr8521152b3a.21.1775366130235;
+        Sat, 04 Apr 2026 22:15:30 -0700 (PDT)
+Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9b261b6sm12151602b3a.3.2026.04.04.22.15.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Apr 2026 22:15:29 -0700 (PDT)
+Sender: Paul Tarjan <ptarjan@gmail.com>
+From: Paul Tarjan <paul@paultarjan.com>
+X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
+To: git@vger.kernel.org
+Cc: Johannes.Schindelin@gmx.de,
+	gitster@pobox.com,
+	ps@pks.im,
+	stolee@gmail.com,
+	gitgitgadget@gmail.com
+Subject: Re: [PATCH v12 13/13] fsmonitor: fix split-index bitmap bounds in tweak_fsmonitor()
+Date: Sat,  4 Apr 2026 23:15:28 -0600
+Message-ID: <20260405051528.74435-1-github@paulisageek.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <b96ed977-525e-c3fc-a626-db1a4b3da376@gmx.de>
+References: <b96ed977-525e-c3fc-a626-db1a4b3da376@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] git diff --no-index segfaults on large files (NULL object
- database)
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: Justin Tobler <jltobler@gmail.com>,
- Luca Stefani <luca.stefani.ge1@gmail.com>, git@vger.kernel.org
-References: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
- <d6c63949-1998-4cde-8cb0-902fd7db988c@malon.dev>
- <CAO0HQ0VEJsG6MYrp_bSTuU09PDsypGPrM0XazvM8er0kB32Gqg@mail.gmail.com>
- <4be492cf-347b-4fa5-9bdd-83e7ea8abd92@malon.dev>
- <20260404230939.GA1360412@coredump.intra.peff.net>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <20260404230939.GA1360412@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Transfer-Encoding: 8bit
 
-On 4/5/26 07:09, Jeff King wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Alternatively, should the odb transaction system be more forgiving here,
-> and act as a noop when there is no odb?
->=20
-> Bisecting the segfault yields ce1661f9da (odb: add transaction
-> interface, 2025-09-16). Before then, we passed around the
-> object_database itself, saw that its transaction field was NULL, and
-> returned immediately. After that commit, we pass the object_databse to
-> odb_transaction_begin(), which narrows it to odb->sources (which is
-> NULL) while passing to object_file_transaction_begin(). And then that
-> function looks at source->odb to go back to the object_database! But
-> the source being NULL, it segfaults.
->=20
-> Immediately after that commit, the switch from taking an odb to a source
-> is not helpful, though I think eventually it is used to set
-> transaction->base.source. But should the whole thing check for a NULL
-> source and return early? Or otherwise establish some kind of noop
-> transaction?
->=20
+> So the actual bug fix would be to ensure that `write_shared_index()`
+> produces a hash even if `index.skipHash=true`, because that hash is
+> needed to identify the shared index.
 
-In a nutshell, are you suggesting that odb_transaction_begin() should=20
-return silently when source is NULL?
+You're right, and I verified this. I reverted my fsmonitor.c patch
+from seen, applied the fix below in write_shared_index(), and ran
+t9210 with GIT_TEST_SPLIT_INDEX=yes on Fedora:
 
-I understand and agree with your intention, but in practical terms, if=20
-the odb has not been initialised correctly, data will be lost silently=20
-here and the caller will not receive an error message. I=E2=80=99m concerne=
-d=20
-that doing this might lead to more bugs in certain situations
+  Without either fix:     not ok 12, not ok 13 (BUG assertion)
+  With only skipHash fix: passed all 22 test(s)
 
-Would it make more sense to treat this as a bug instead, e.g. by
-triggering a BUG() when source is NULL?
+The fsmonitor.c patch is not needed. I'll drop it from the next
+version of the series.
 
-> I haven't thought about the implications (nor even really looked at odb
-> transaction code before). But doing it that way would fix not only this
-> bug, but also other potential bugs throughout the code base when callers
-> start a noop transaction.
->=20
-> +cc Justin (author of ce1661f9da) for any thoughts.
->=20
-> -Peff
+Happy to submit this as a separate patch or include it in my
+series if that's helpful. Or if someone is already working on the
+skipHash + split-index interaction, I'll stay out of the way.
 
-Thanks! Yuchen
+--- >8 ---
+
+diff --git a/read-cache.c b/read-cache.c
+--- a/read-cache.c
++++ b/read-cache.c
+@@ write_shared_index
+ 	move_cache_to_base_index(istate);
+ 	convert_to_sparse(istate, 0);
+
+-	trace2_region_enter_printf("index", "shared/do_write_index",
+-				   the_repository, "%s", get_tempfile_path(*temp));
+-	ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags);
+-	trace2_region_leave_printf("index", "shared/do_write_index",
+-				   the_repository, "%s", get_tempfile_path(*temp));
++	/*
++	 * The shared index is identified by the hash of its contents
++	 * (sharedindex.<oid>).  If index.skipHash is set, do_write_index()
++	 * would produce an all-zero hash and the shared index would not
++	 * be found on re-read (is_null_oid() check in read_index_from()).
++	 * Temporarily force hashing for the shared index write.
++	 */
++	{
++		struct repository *r = the_repository;
++		int save_skip_hash;
++
++		prepare_repo_settings(r);
++		save_skip_hash = r->settings.index_skip_hash;
++		r->settings.index_skip_hash = 0;
++
++		trace2_region_enter_printf("index", "shared/do_write_index",
++					   the_repository, "%s", get_tempfile_path(*temp));
++		ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags);
++		trace2_region_leave_printf("index", "shared/do_write_index",
++					   the_repository, "%s", get_tempfile_path(*temp));
++
++		r->settings.index_skip_hash = save_skip_hash;
++	}
+
+ 	if (was_full)
+ 		ensure_full_index(istate);
+
+Paul
