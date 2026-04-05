@@ -1,82 +1,64 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC7C72627
-	for <git@vger.kernel.org>; Sun,  5 Apr 2026 10:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203911607A4
+	for <git@vger.kernel.org>; Sun,  5 Apr 2026 10:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775385213; cv=none; b=IS6HQK82ZX794uTzF8bOlKBU2/bwwqGvlmb9Jec1FP7ICA5ggVo+foBVMoAlmSNQq/27dPo/5t5l9WUtnZpy8RkByEQujwu2qH2sItpofvXIN584XotAhn8emevRyzlIqMWgYdmi7RpcYQ9w76kQjfQIun9UDYNsN8Kj4Jd1/nA=
+	t=1775386456; cv=none; b=PCXvO0p6lFlkzj/RletGN5HM7GBk9VTcdo3cs/1xu+Q54Wr4TDY2krnNISeuQ6yn4hZiNWErops9aBdRucDvrsCxLJ+iyeCa2yk4beUui/3X8+y9BJ1MzP0/MHPcy/ZqnBO2y+9vcYrmLmLIxshbadGYLlffK2KK7lhu3sVob4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775385213; c=relaxed/simple;
-	bh=L+7qsqdzzOu2izAK340WtE5HSznrFPv/Jr7TA95FKqw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d3pLrtQ73damh31l+2kuS0Z1sg5aj7oGOnluJP+azpBbrnzSNyvCKiBPE/Uq8ygVx/bUGodx0Iy2s5OzYtgk/Fjf8Ek6jg5ciyi046JTC5HHkLR8fYRfYyJHxY4FmliLR7w9cVEdf/96iTFpUaZaNcU60WbYk9EDQIkalpTeNJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=eaE8OhjK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d5rsMGoL; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1775386456; c=relaxed/simple;
+	bh=Uxxk2O1gEq6twAtGpVxpSrKebgc47NMp0RjpjjM+0SQ=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=MG7ajpCBhybU/ROuwag6faW8RYpRBs/x4kLbc/AVlqGTe6BHAc1LqFweLx0b25MThrY/lxhsDZ/pDTMyvTaDt4Xa1aRdlnsuDeCEw8uQl/eIUilgZrbvOUL7oEZcxoV4oZHB8uVTgjYYgihv0qcmA6WKr3cIhAyW7a6kvw0QGn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gh1AGkUR; arc=none smtp.client-ip=74.125.82.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="eaE8OhjK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d5rsMGoL"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E327D1400109;
-	Sun,  5 Apr 2026 06:33:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Sun, 05 Apr 2026 06:33:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775385210;
-	 x=1775471610; bh=r6mjpVcMz1Z9vgcNRw4qANQ1huJRorRHvFSMlgJmhk8=; b=
-	eaE8OhjK8YElqiTXhTh6u0TsFf7CgNsdBtD/lh1W91Z7roYSFYz3XD8fXrr7s0K9
-	VYL4dXEZAFwWuvUCo0+SFNB6BGyEOv4wYorJYSmb+oiaa1VO7pF3spYWUqcJ73O8
-	ILED58Qeu2IdF734INsthOz1KnYtyoLScEQpb01UeaRRluljzxs2xsdcnca9/2D6
-	v1dhDk6g0572bn2C61EbMdkJAG+QQzuUZPOzBa1JwzAWGKx8HZJWxHn+O1WzfwOg
-	knNybUap5LptrYMve9BqoiFSH4pNij7m13OKTm9rpKQdZvQkaawIrjp7cWqOKxlh
-	xQsKaleri9QlHtAfNzP3QQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775385210; x=
-	1775471610; bh=r6mjpVcMz1Z9vgcNRw4qANQ1huJRorRHvFSMlgJmhk8=; b=d
-	5rsMGoLnQVkiKLN23l1q1iXUt9/XsIoncbUYu/cZh8VsioOwSvIKcbgh77p4v9Ml
-	ObBQSyQ/MNJ7hI/mKFIxXu9cdpdTX3idC0gSptCXIreLB48KZaJjS1/YWXl5r1ed
-	wOhE+QbUFmhaUirLn4VxJeIOW2SKhZ8e90NVbnl8NZT4IRJ1Ti2FBQqjzY/bAWPa
-	2J8Cy5cdKLV5QHr+X4WS3BhyST4iSgmz2QOH9BMS3XQvg4oPpYxc4zLN/7zQVDiu
-	3/byTH87LxuNXo43WBWZPpjF/FORqja+/1FVqZVWCzq5HQWLMIVU+5Ad82YMdAKO
-	KuZH8WasP54bqzx806Iaw==
-X-ME-Sender: <xms:ejrSaTN7lartRL3m_WqQ1QeiukcZ9gSZoED4jtTzAd-g8vuac1BfyOY>
-    <xme:ejrSaT_m7JNHMrp4p00SYlAulCn5z1P8m1ETWoOudlPSc7bED10hyV1r_368_I_FQ
-    vIoJYn2R7CuQHlgFWj4CR4XhtG_YVQHW97Du3N_E8QsjxJ4ykNv4g>
-X-ME-Received: <xmr:ejrSaf6YF-tJ0FGWNxlfoa8-S_x0pF3mSqm4LOzTmxLfq8UzK3TTPUcArbUMGdYq_HzuWRh1voHmlNMHpFauAViKxdNrulnhDNr87r-f4o9TQ05NJdKZvqk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhephffvvefuff
-    fkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhgfegle
-    fhjeekgfetleetjefhteeiheegfedtudduffegjefhkeetudeggffhkeenucevlhhushht
-    vghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrh
-    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:ejrSaS2hgsICjM-6dGFsDTH0iPF_WrEerUz9AVk-x61pNiipCk36HA>
-    <xmx:ejrSaeCLr7PH8alrYAk5VzMuKck1J5h9ekTtTnNN2vKFRgAB8e99Dg>
-    <xmx:ejrSac25gQkgbpYMttXfUunO8GrshiiD_WG6oPaDUvDc3t9CtxX3fg>
-    <xmx:ejrSaQv9uoP2MZsSRnSb1Z9DRAu3_K0LS7yDlQCyVpcejbOxdh2aRA>
-    <xmx:ejrSaekef5UiVsrw-WTat8kilJQPXVO5p9oNkengD717I0MR16BOtzO->
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 5 Apr 2026 06:33:29 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v2 2/2] =?UTF-8?q?doc:=20gitcvs-migration:=20rephrase=20?= =?UTF-8?q?=E2=80=9Cman=20page=E2=80=9D?=
-Date: Sun,  5 Apr 2026 12:32:00 +0200
-Message-ID: <V2_gitcvs_doc_link.56b@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
-In-Reply-To: <V2_CV_doc_deprecation_config_--list.569@msgid.xyz>
-References: <CV_doc_deprecation_config_--list.54a@msgid.xyz> <V2_CV_doc_deprecation_config_--list.569@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gh1AGkUR"
+Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-12713e56abdso1005930c88.1
+        for <git@vger.kernel.org>; Sun, 05 Apr 2026 03:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775386452; x=1775991252; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6LhtyNoGFDI0Hv53V7EvTcyN9Sdy9ilBS++A/M9VQNA=;
+        b=Gh1AGkURLcljyflCtQO6hmX04RKBTDUqKzYrHSYbL3wDzu38br2EiFPA48jkeUGY/c
+         S12h4t71lo8VFKORS074S3kwCeqKERRWOxb6+FJEbU2mplmJn5Z1pwMzbPkLm+xuFg/h
+         6cJXwVnLzS8mduyboDzj2zG52TfQoTIkRdQlpr/v6nx1hH37fFafmDE5IK72Ik87snX+
+         0ri6YSsGyClMycXT4XzZV4Y0zOzM+/WP3eLUJBHoyXLzS52LHcQ533y4J+RQYlJyJbbB
+         Sb6g8t9hAgVb8wJLgOfpddSUfrKxmUo+aATIpjgLxqbci2P8JtWstgSp+mdashMBud/T
+         iIcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775386452; x=1775991252;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6LhtyNoGFDI0Hv53V7EvTcyN9Sdy9ilBS++A/M9VQNA=;
+        b=j7ia7RxgQR/z/zR3EhQAxcx8Nrng2/UYuiLEpzcEUMzOZpjQqUzGSd1cghSo09KH/x
+         0y/Xfy5ZCBceK3RUdm1CfUamNdaw9LXWZCfmQ0iXxCwxoTHb7PWcIjsRoZ0dcnbc1gI8
+         QonNSMLibZYyZKKYp1NGahVXDd3115jWxCgPhBPfaBMpk/sHNhFGXIAViE7qOgQugQb+
+         /a+azpNE7IQL+PaG+4y2pgQSb7x2oYOoWADmTKfs697wVAg5PZKb3nrIuf/omxYHrDy/
+         IlZfhDishHN1YogbhF8cQs4bMXoLlaG7qFwVfTdnBB556gWc/uyZPuI/IM6g504Crd0+
+         cIrA==
+X-Gm-Message-State: AOJu0YxsIsuOoly9PcS4NJcVtBMWYsSCju4AykiAMG8Mnb5u6pJP4EcL
+	G5PG0YzZHRdXigO+7gbG3gOjFV8clATJWabZlxrDJypoflntD/FnXh6ydEXEww==
+X-Gm-Gg: AeBDiesKN/HQDejo6iTCBLzR0SoQ40pCZ36UYuJOmWsFvonr/LqIjc8kRLwPqys9f6Z
+	+64B23NmQsxZk73bjXCmi3Fl+jUH/SWLrBPs4xgOqbqt2MkzfWcV8B2j1wm9cw0OX8PiYq5VReg
+	XQLlFyN6yVKXlUGYdrtSOAUujPFJwAcCFz3JOZNaUsNJlJkl8AJp78WdZphyBSIpgixwSpYFgq6
+	MpfvBes3btQHtsAJhOLFFGlH35f6lfAGGdJq169HHSpye+weGApQbP3cVqXZJ3S3zcCBAQvffIy
+	pjCXur0jAKAHM5rxuFHiKjOx00/oBSemlbCQogZR1Jm0cKII2H6pvw+0Iy6jlY9Q/hwtk68U5DC
+	2ZVNtPsJFB/03V+pIuvuDjsZVt7ELWWpEp64fI/Pq9uyHkNYPUfgCj7p+vMwMdciOGVTVdhMg7R
+	DEj/iOfQuG/OOYQYI5r/Cjbw01og==
+X-Received: by 2002:a05:7022:220b:b0:11e:3e9:3e92 with SMTP id a92af1059eb24-12bf08ba9f5mr4720014c88.23.1775386452506;
+        Sun, 05 Apr 2026 03:54:12 -0700 (PDT)
+Received: from [127.0.0.1] ([68.220.58.145])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12bedd4e4e3sm8305870c88.1.2026.04.05.03.54.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Apr 2026 03:54:10 -0700 (PDT)
+Message-Id: <pull.2081.git.1775386448854.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 05 Apr 2026 10:54:08 +0000
+Subject: [PATCH] unify and bump _WIN32_WINNT definition to Windows 8.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,54 +67,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-Let’s change the phrasing around the `linkgit` while we’re visiting this
-file (see previous commit[1]).
+Git for Windows doesn't support anything prior to Windows 8.1 since 2.47.0
+and Git followed along with commits like ce6ccba (mingw: drop Windows
+7-specific work-around, 2025-08-04).
 
-We use the section syntax to refer to man pages, so writing “man page”
-next to it is a bit redundant. We can be more concise and just lean on
-the preposition “in”.
+There is no need to pretend to the compiler that we still support Windows
+Vista, just to lock us out of easy access to newer APIs. There is also no
+need to have conflicting and unused definitions claiming we support some
+versions of Windows XP or even Windows NT 4.0.
 
-And in order to avoid this double “git”:
+Bump all definitions of _WIN32_WINNT to a realistic value of Windows 8.1.
+This will also simplify code for a followup commit that will improve cpu
+core detection on multi-socket systems.
 
-    see `git config list` in git-config(1) ...
-
-We can rephrase to the subcommand, which is a typical pattern (config or
-option followed by “in git-command(1)”).
-
-† 1: Which also discusses why we do not change a similar phrasing
-     in gittutorial(7)
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Signed-off-by: Matthias Aßhauer <mha1993@live.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
+    unify and bump _WIN32_WINNT definition to Windows 8.1
+    
+    A clean-up while preparing for v2.54.0.
 
-Notes (series):
-    v2:
-    • Just the “man page” change, which now comes after the --list/-l change
-    • Restructure commit message paragraph so that it leads with “section
-      syntax” and has a simpler structure.
-    • Footnote to remind what was discussed on the previous commit
-    v1: (combined --list/-l change and “man page” change)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2081%2Fdscho%2Fdrop-windows-vista-support-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2081/dscho/drop-windows-vista-support-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2081
 
- Documentation/gitcvs-migration.adoc | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ compat/mingw.c              | 2 +-
+ compat/nedmalloc/malloc.c.h | 2 +-
+ compat/poll/poll.c          | 4 ++--
+ compat/posix.h              | 2 +-
+ compat/win32/flush.c        | 2 ++
+ 5 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/gitcvs-migration.adoc b/Documentation/gitcvs-migration.adoc
-index 2883834b714..905d08cd5f9 100644
---- a/Documentation/gitcvs-migration.adoc
-+++ b/Documentation/gitcvs-migration.adoc
-@@ -49,8 +49,7 @@ them first before running git pull.
- ================================
- The 'pull' command knows where to get updates from because of certain
- configuration variables that were set by the first 'git clone'
--command; see `git config list` and the linkgit:git-config[1] man
--page for details.
-+command; see the subcommand `list` in linkgit:git-config[1] for details.
- ================================
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 338ec3535e..2023c16db6 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2464,7 +2464,7 @@ repeat:
+ 	if (supports_file_rename_info_ex) {
+ 		/*
+ 		 * Our minimum required Windows version is still set to Windows
+-		 * Vista. We thus have to declare required infrastructure for
++		 * 8.1. We thus have to declare required infrastructure for
+ 		 * FileRenameInfoEx ourselves until we bump _WIN32_WINNT to
+ 		 * 0x0A00. Furthermore, we have to handle cases where the
+ 		 * FileRenameInfoEx call isn't supported yet.
+diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
+index 814845d4b3..e0c567586c 100644
+--- a/compat/nedmalloc/malloc.c.h
++++ b/compat/nedmalloc/malloc.c.h
+@@ -500,7 +500,7 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
+ #ifdef WIN32
+ #define WIN32_LEAN_AND_MEAN
+ #ifndef _WIN32_WINNT
+-#define _WIN32_WINNT 0x403
++#define _WIN32_WINNT 0x603
+ #endif
+ #include <windows.h>
+ #define HAVE_MMAP 1
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index a2becd16cd..ea362b4a8e 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -20,7 +20,7 @@
  
- You can update the shared repository with your changes by first committing
--- 
-2.53.0.32.gf6228eaf9cc
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+-/* To bump the minimum Windows version to Windows Vista */
++/* To bump the minimum Windows version to Windows 8.1 */
+ #include "git-compat-util.h"
+ 
+ /* Tell gcc not to warn about the (nfd < 0) tests, below.  */
+@@ -41,7 +41,7 @@
+ #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+ # define WIN32_NATIVE
+ # if defined (_MSC_VER) && !defined(_WIN32_WINNT)
+-#  define _WIN32_WINNT 0x0502
++#  define _WIN32_WINNT 0x0603
+ # endif
+ # include <winsock2.h>
+ # include <windows.h>
+diff --git a/compat/posix.h b/compat/posix.h
+index 3c611d2736..94699a03fa 100644
+--- a/compat/posix.h
++++ b/compat/posix.h
+@@ -76,7 +76,7 @@
+ 
+ #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
+ # if !defined(_WIN32_WINNT)
+-#  define _WIN32_WINNT 0x0600
++#  define _WIN32_WINNT 0x0603
+ # endif
+ #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
+ #include <winsock2.h>
+diff --git a/compat/win32/flush.c b/compat/win32/flush.c
+index 291f90ea94..7244ff69ac 100644
+--- a/compat/win32/flush.c
++++ b/compat/win32/flush.c
+@@ -6,7 +6,9 @@ int win32_fsync_no_flush(int fd)
+ {
+        IO_STATUS_BLOCK io_status;
+ 
++#ifndef FLUSH_FLAGS_FILE_DATA_ONLY
+ #define FLUSH_FLAGS_FILE_DATA_ONLY 1
++#endif
+ 
+        DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NTAPI, NtFlushBuffersFileEx,
+ 			 HANDLE FileHandle, ULONG Flags, PVOID Parameters, ULONG ParameterSize,
 
+base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
+-- 
+gitgitgadget
