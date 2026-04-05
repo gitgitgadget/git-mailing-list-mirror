@@ -1,145 +1,120 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635D3346FAB
-	for <git@vger.kernel.org>; Sun,  5 Apr 2026 05:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775366132; cv=none; b=q9PBF1+oLjS0B+5VQaTck7eAdJyYqzOreUlIDLnmO/gfDRLW8j2eUV2NVoz+VGae86RhYpuSaFCTSnlwYcyrqcDB6z0aL1tamnnGvTs6Yj8YP+iqqIJxE4zP/LkpfEBzFLxBd9QuAmIUapCvGHTIiE1Uy37bdJ6v6Q9ZfYh0h78=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775366132; c=relaxed/simple;
-	bh=KmW/aLF1KoqsWig0PlZRDyU4+aZc7/cg2nLnlQMoi4A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHpTgiadYMYsNYm4Fy5JeFpiLb9b2/b46Yto4P3xVJf64vVwu7yYCyUNbqrU4tjqzMUWHcTq1OYP6OOcWAMZkwneU/Y5KbMEQlkm8/GJYTXyhowlZIFcvmRtMZpY5EatFXHi3vwXVQCBQOWQZu3w73dXCx6GZ4ZgtePD+BgXN7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oM8EMAHV; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807C41DF748
+	for <git@vger.kernel.org>; Sun,  5 Apr 2026 06:03:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775369000; cv=pass; b=gwDQHnKxkwdRiknyXzlywtr/1wkRuScP5urW9VtWKwalnsUZMndsCA5INnugaI9sX+RJK43x8duku5yURvORCvVS2yCqk2HjJcqhdIrrVifcTOYbuWKnRdkj0eW1f1US3Zeeh5+JsAhyLVJIXa42X3HSedYDNcny/yZ/ZMBmPJU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775369000; c=relaxed/simple;
+	bh=FGzMlwITHyT99H97wA1MXYjt15Z6gwCOAUr1SC4wQn4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gn8Rw7t5euJG5Hyu0VltDfAtxZUDOHRtNjSNMG+8bcl1q79fMcixDT46CN+3LhynY5fyy7KepqLQIl8wLCmKeLMoy8pgJHnYgsYDrrkb5N+p7i3bvZ3INN06uxCSHXZg0DmS2WtO1gcN1hxnbpCp6xsKz4+aApjf/AxZQERjbAI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZPIEXa/+; arc=pass smtp.client-ip=74.125.224.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oM8EMAHV"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c76cce85bd9so967259a12.1
-        for <git@vger.kernel.org>; Sat, 04 Apr 2026 22:15:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZPIEXa/+"
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-6500040f128so2568342d50.0
+        for <git@vger.kernel.org>; Sat, 04 Apr 2026 23:03:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775368998; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UHYWb747fTxLLa7E2mi0bF8hIoWYd9Lobeel0VMcJk9deFZSpeMOX1B7I4T/tKjkpa
+         nJDHm0WJn0tZ+uQkKp76+qEbQ5tUK8EtOkiFi+XEwatuEqP8jtKhSk0m/a/UdEYjkdji
+         jYJv7jcNimorE9V0nMUcIAaaykxJvaFl/hacMBQyA9Fx+ByXZPh8iLy9sYH13WTzRCeo
+         CxfIjqlXIu6m1YpWTG+SvL4zSW4f+pvxOhxmxSlAOJZVEzh8MyMCdUwdcTpcKkz0BkAV
+         UZbA/z1J1HzhinL04f9PMq1sQtEO6ZkA2zCNXp2+8hcAH3m0iSyDeCZxfvNnvCM/1eO9
+         erPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Gn0yU38BLSflpAYtmHJZ4C/xCYZYI199vxINIe4WfLU=;
+        fh=jEIUGGHHBCpTn8yS4umoLODuHn1NLPyyjDxjS6hHEAA=;
+        b=OpGk2NQCi+BLYSRu2wVoIYbuo3/LEnc/xmRXqLSZsU73gO6QpdDYROF32BBM7c13yd
+         2kDj7Qu20F50Fs0YLi5qC4GqQ0ZQCr14qk3ttIVPI09xmpIHL2aAXcV1IFLZPEIJJQVA
+         QrbOqwsK9NMSrTGru1wGhNdE7cvTJ6bFsAUvM02GysbOau3vEJTShBuXCFRqaFkD7wKC
+         Zx+Fzup7Mk46+2cEreTurE1tJadHacPg47bUo0yrzJHMNEbr+v5OrTWxgG0otfQMk5LF
+         AhOhn+1cvdQgxO4SUVJk4vNjOATTogyA20uODLQ/QmtqcCaXqinaRzeLjeFzw9nDGxko
+         /5/A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775366130; x=1775970930; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w6Mwn/8b+XaByMyUjJbpUw7u5VwLg163fvghI5Atm6A=;
-        b=oM8EMAHVkEAS1lOdXpmNV4uBBAKKp8a/3rvIzQPMrM1uz/sfhiVFPbhdElOr/8j291
-         Kk3ajit+yml6YSnHuJ+XD5K862ritazLan3vSp9ZQ8zsVkfa8SnIOY6IztfLtUQ418c4
-         j5//gfTO3f54yloJCzkP1AsY23HBZTkrJwr7ExWKWocl0B/6jm1TCm4j0qYXseG5KHSR
-         NfBNDQIJDtD5AjknCWfaL55mlALPR37y1RL71ZWXCZGns60QtP4k8wjiHaZCoMrG20w3
-         hNa/GMTrDb9+nxmQHLRO2L4Wz04SgV9bxcN/IMSu6mo3HDchOiODEYgcOj5Wz/jgD57k
-         WzwA==
+        d=gmail.com; s=20251104; t=1775368998; x=1775973798; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gn0yU38BLSflpAYtmHJZ4C/xCYZYI199vxINIe4WfLU=;
+        b=ZPIEXa/+NGxFijzpdqWCBQry3Y0WbNskdqRoviTzr5PsX9/nR7L4/8KOIUIIsqPYRG
+         Pwd3Et8BJSPNG3FrNsCWq4yc/KtR+4a3CKwmiP3DU6FO17AMj/6v9pU4e1cP1IF6iDx6
+         uSEg9J9gjLdCdixc32p+/2N3ZzOpdCy8mLQQt51Xhfx2KB8VRk5Y0pN4/VwsOUza06EN
+         S0hUnwqHzt0kyi3EOfExrdPO7bUIDQQJoQd1qs3adrm6qXjVD+ldrV2Pa88X7SeiU9gr
+         C+2s8F77vd/iRSjgwpc+IIDGwNr+vNWdnmYtBU+OLH9YQYND1RT9qIjNCmvnmG57LWMQ
+         fCBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775366130; x=1775970930;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w6Mwn/8b+XaByMyUjJbpUw7u5VwLg163fvghI5Atm6A=;
-        b=YWznKMt4vyub38iFTfybOQg9MiiL9h/3dBE8BUIXB3qsv4oACA42EQc+DRJm4/3bUl
-         98snuHnUCbt4xDTBwjD+GDOobGGpKdgYp+fGj8r5PIljf6NJXTJ2+KA9wSnFJZwLPl3M
-         mJIfFVC2YnJO7VLc5WzibHgRCnYfy+6Fge8G5TnoBCaDd7NG/eCZBCKuBYxItbsijkp3
-         ZLnQCw5WkLCzKXghgY84o71e9YG0iHMkp0MXNJBX51ts3fSAk2CsoVlarJwhsAderDTE
-         q6xZd7vf2AbygczDSpjnUZFIyBrdWA46Nh8rqWaJwC1sfwMtuuSc59aycfxfh4VXk437
-         WtwQ==
-X-Gm-Message-State: AOJu0YxA0rLLvoGmfSkaQe3nXeT1iNIWmTuvFYanrcK4oslJ+FlV2FDH
-	ltvGLbm2N8M70NmnBEyb8xMLYc11wASKPMIAFwRt6rC5o0goQJB7Y5C6O+TRPjBk
-X-Gm-Gg: AeBDiesMkrMNDOuUlQJ7ElQVwayqTjfHluZgOmOpQL1hIvKILkmBmIYgWGaynYA3dYf
-	W6hKueDj2eJ2WFina3ItOkmwwpMCRP1EzL0wYhmeoXaLj0BbOZKy3vdIiq0KnexjPkAvAtVKqNc
-	vH+1XTTB8vlxaySCX710BGJKbtfOMEynSXaw0XY6L99p5b0t7XVzvXg5RL/4u3cOnFkehi9kQv2
-	BlXWjoB3pHbps4h9K8f4NlP9o5WXMoyIw+Y6uoK1vE2FpiqhL0NW2YQHVEichpRHQzmUNwTbToe
-	6NXWZaNNmA4Z+sm8N0q/QBs7tyXaDgq5j11wpiqxTKkhBoXbLJ/1TCXs6LTccSUIH+Xad4t31lR
-	MCc7K+73iCm2b31AfphgCg7h3TUIZ4RUuwy9QFLtEnvvXB/gKJLLfGR5C3NjLgu4RMXuaJnYpNd
-	52LPz0yQ5PVeZK1Cg2i9NBmBjuqMuETE2yqcmNWbIDRnZxfdVkiFe1jO+Zi49DjoIF1xHPxUA23
-	DF4q0cEKw==
-X-Received: by 2002:a05:6a00:301f:b0:82c:9fe1:aa4e with SMTP id d2e1a72fcca58-82d0da8f68amr8521152b3a.21.1775366130235;
-        Sat, 04 Apr 2026 22:15:30 -0700 (PDT)
-Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9b261b6sm12151602b3a.3.2026.04.04.22.15.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Apr 2026 22:15:29 -0700 (PDT)
-Sender: Paul Tarjan <ptarjan@gmail.com>
-From: Paul Tarjan <paul@paultarjan.com>
-X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
-To: git@vger.kernel.org
-Cc: Johannes.Schindelin@gmx.de,
-	gitster@pobox.com,
-	ps@pks.im,
-	stolee@gmail.com,
-	gitgitgadget@gmail.com
-Subject: Re: [PATCH v12 13/13] fsmonitor: fix split-index bitmap bounds in tweak_fsmonitor()
-Date: Sat,  4 Apr 2026 23:15:28 -0600
-Message-ID: <20260405051528.74435-1-github@paulisageek.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <b96ed977-525e-c3fc-a626-db1a4b3da376@gmx.de>
-References: <b96ed977-525e-c3fc-a626-db1a4b3da376@gmx.de>
+        d=1e100.net; s=20251104; t=1775368998; x=1775973798;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gn0yU38BLSflpAYtmHJZ4C/xCYZYI199vxINIe4WfLU=;
+        b=hZeCHeFjGLvcRDjzMZB/Ui7sRoza8UGfF5vabh0e5cy21dAzWaZM9Tuq1TPj6L749J
+         4GVdltWoCH5wduYYUhs2tV+w1tHF+oz9y8cspV+T2jbFpcxmhkLIvGApa4ds/p5tFFZV
+         JLp6iMXYoqIabyXwVnc3YHQTUZRVq174mIoN0+X+2hAKSVEiV8HA5P625YHyIl9tUksW
+         YGXECVnUamKzE25B5Gc8POBxtnBqhUU8UBU8e7kWQgQnh8zKM525bg9hqkvP0QlB5LL6
+         dHRkZ1jklwgimWR6SEk3pG2IX8KuXiRmw++TFRdg5QWrO3/vRWjkfnwqQpXfOBQ4RPB3
+         Ut6w==
+X-Gm-Message-State: AOJu0YxAUXar5cMuWM8OQNR2B/0aPVmh3NN9OncX8bk1VjAiWEZAbhrb
+	sG4xtGuL6RabPQEtxaxFl+Cl6M+xeqcNLfXuX/j7ittybCe8of9gSapPrrdr33KwkmYLBMRENnd
+	+ZgkZk5BkZhRHr9C/ZVo5wGQfYSWj8iQ439/9
+X-Gm-Gg: AeBDiesEg4g5Wh3ttcwjRYM/TknVI4JMRZDHuDi9bEzjl92Mdz97PRt8kOx5/DtRYYk
+	vYfdG4UcQO7+buf93Y9U6iXWwC0YP0vSN+mj6hZhETxHCOgPvGmA+G2XdlwdFFtO85SKpNoMTQT
+	fn94qKT+KuK2oPOVkjI296Vt/QJ7NmwOJAtPfvjmt3iO/byZKbUobyV0642UuIoGZMvT3eIRvkg
+	7UOzLJU/KSZYXIrM7q7MTt+oisgXN+VdqE4PGmkadVo+yuC1KO5+Fi+1CXePDJy5QTIyN7q9/Rm
+	Lpyi
+X-Received: by 2002:a05:690c:6d81:b0:7a6:1a8d:3046 with SMTP id
+ 00721157ae682-7a61a8d315fmr54145827b3.54.1775368998555; Sat, 04 Apr 2026
+ 23:03:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
+In-Reply-To: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Sun, 5 Apr 2026 11:33:07 +0530
+X-Gm-Features: AQROBzBLTdMEo7aRh6Mt_n4nxNPfiryOyr8SXLqZgQXWLq_EwfqvuvqblpUsRRg
+Message-ID: <CALE2CrSP0poB2u=SuWuhXNt-FLgqOTV0rmZoWYX8p6OOzpodOw@mail.gmail.com>
+Subject: Re: [PATCH] object-file: don't use object database without a repository
+To: Luca Stefani <luca.stefani.ge1@gmail.com>
+Cc: git@vger.kernel.org, cat@malon.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Luca,
 
-> So the actual bug fix would be to ensure that `write_shared_index()`
-> produces a hash even if `index.skipHash=true`, because that hash is
-> needed to identify the shared index.
+Thanks for the patch, this was interesting to read.
 
-You're right, and I verified this. I reverted my fsmonitor.c patch
-from seen, applied the fix below in write_shared_index(), and ran
-t9210 with GIT_TEST_SPLIT_INDEX=yes on Fedora:
+[snip]
+> When git diff is invoked without a backing repository,
+> INDEX_WRITE_OBJECT is never set in flags, meaning only the hash is
+> needed and nothing should be written to the object store.
 
-  Without either fix:     not ok 12, not ok 13 (BUG assertion)
-  With only skipHash fix: passed all 22 test(s)
+From my understanding, this avoids using the object database in
+non-repository scenarios by forcing the use of index_core() when
+INDEX_WRITE_OBJECT is not set, which makes sense since we only
+need the hash in that case.
 
-The fsmonitor.c patch is not needed. I'll drop it from the next
-version of the series.
+I had a small question regarding coverage:
 
-Happy to submit this as a separate patch or include it in my
-series if that's helpful. Or if someone is already working on the
-skipHash + split-index interaction, I'll stay out of the way.
+- Do we already have tests for cases like:
+  git diff -- <file1> <file2> outside a repository,
+  especially with large files triggering this path?
 
---- >8 ---
+It might be useful to add one to ensure this behavior is
+preserved.
 
-diff --git a/read-cache.c b/read-cache.c
---- a/read-cache.c
-+++ b/read-cache.c
-@@ write_shared_index
- 	move_cache_to_base_index(istate);
- 	convert_to_sparse(istate, 0);
+Also, are there any other callers of index_fd() that might
+rely on similar assumptions about repository initialization?
 
--	trace2_region_enter_printf("index", "shared/do_write_index",
--				   the_repository, "%s", get_tempfile_path(*temp));
--	ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags);
--	trace2_region_leave_printf("index", "shared/do_write_index",
--				   the_repository, "%s", get_tempfile_path(*temp));
-+	/*
-+	 * The shared index is identified by the hash of its contents
-+	 * (sharedindex.<oid>).  If index.skipHash is set, do_write_index()
-+	 * would produce an all-zero hash and the shared index would not
-+	 * be found on re-read (is_null_oid() check in read_index_from()).
-+	 * Temporarily force hashing for the shared index write.
-+	 */
-+	{
-+		struct repository *r = the_repository;
-+		int save_skip_hash;
-+
-+		prepare_repo_settings(r);
-+		save_skip_hash = r->settings.index_skip_hash;
-+		r->settings.index_skip_hash = 0;
-+
-+		trace2_region_enter_printf("index", "shared/do_write_index",
-+					   the_repository, "%s", get_tempfile_path(*temp));
-+		ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags);
-+		trace2_region_leave_printf("index", "shared/do_write_index",
-+					   the_repository, "%s", get_tempfile_path(*temp));
-+
-+		r->settings.index_skip_hash = save_skip_hash;
-+	}
-
- 	if (was_full)
- 		ensure_full_index(istate);
-
-Paul
+Thanks,
+Pushkar
