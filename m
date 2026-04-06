@@ -1,137 +1,76 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B5A31194C
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 21:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F333331A49
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 21:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775510226; cv=none; b=B3Z9JBl0zmtOry6bxCivkb2ch57RPj9TxMuvrnh6zyUiYclElnQAgqmqkR946bArGZeKseNjhtBPOQIXENGt/DxtbpWg4QwSh+dmFEew3fiITAlgJW5denqqeTzyC74kDTdvONtNNgOPn/0CZumIJdsbJipc3Je7teeavsoluhs=
+	t=1775510980; cv=none; b=QdrDUIJ+GGA9gn0Lb+q6LZxb7z+5dMIpoZAFazZxFTzaN0Vtix6WfTQr4d+1TmGE1T7BN+0J4oF9ClZK10qWdQMVUK9YgcWhTg7rZU+MBTDcqh8gkDkn0tLNCbUNmgPCTPEku/i2t8Fc1b5Fphy1DKV7CYEyYZKFFkxKTCpf0E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775510226; c=relaxed/simple;
-	bh=asUSt2kFT1YzF9BvHLHpgef/kg+P2fu7UkF42bOHNIY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pwrgD20ry/VmuL3QVLHx5qQUw1HRdQ07XsNyRutakfQ20t1VADd/5YRjO5SO17p1nqWHplHoSJ0GH4Q17/1/qdB6BkJG4+5fCXYILRAsWGOI3JIZkiKRm7xElCjNrmpm5co57sA+dZ3lJCSx3AJrNHwr5E+fqBiXWWV6+bqdyn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VP4CvD3f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qP7F1GHo; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775510980; c=relaxed/simple;
+	bh=uwLKA4/iwUBsZM4hFZUShgYFQOwgtzgQ3ajT+TYpI5g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OSaM1wUslBuIoWQl1WlvFLyDhdcAqp/XNxb33IWrzvhn8ZyN2kX1N00YeZqBiEwH+AeSYaNnL98KRVsMd40bBcRhhN/raMh7H85D6I160sh6wWmPJTgBrcLBvs4i/6WHmT/y/kEmHEuipzc1CE7F53lMggbiWdZu5fDIRraZLLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QI07BXMU; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VP4CvD3f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qP7F1GHo"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 25D65140025D;
-	Mon,  6 Apr 2026 17:17:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 06 Apr 2026 17:17:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775510224; x=1775596624; bh=wFI1hj7NEt
-	lF8IA8EhPadz9sChRuzbNk5g3mZ3JPNQw=; b=VP4CvD3fpLMNBeoLiCRU1KPiJp
-	T9fe9wDez1qKiClfHYR7znxq2QWKxEhbF4RGQ3YSCC4L+G8OnMsS51nDLcZhtdgU
-	bbJNgLJePMzqxlMwbP/poxveSty5K4bo2ajScs06/WvDk5lzIMs+9N0QJiEeGes/
-	RESIb86EdYVUU7ROtGrTFyDLKcv4qbm/VmZHMTys6/m8dmbVTV/I2YuN+ZHXFyRG
-	ivxHRQ5dwR1/LOG+tFjADe0FeWM1MZHFNCj4ao1SeUJgmYOJ5MIjulhvhA72WfRk
-	6fOzbiGWQeu7HXCtThZzvte9iq8LVV0ilRSNgTdyx7bkBsJNNF8zvYcpyITg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775510224; x=1775596624; bh=wFI1hj7NEtlF8IA8EhPadz9sChRuzbNk5g3
-	mZ3JPNQw=; b=qP7F1GHopPFrpXUZvq0O39kFaSDi5s4+nTw0D+FlhULBiZJnRtz
-	q8/uMDV2exGkpw6ltXVbTGnz6dA4x7jOnmc7UTiTsA0TTHW3yQ3k0ewtGudnt93B
-	IR96jM7yATu7Ru/Om44QccNmoXCxTbyv/37fsPmUmK78+M+jbeCQL+a1C5jXAX5k
-	6ZHkvj+dpNx/xk+O/6ZtIfylWkmWeCGECP77R8lHd2/e9QQ/KFm7Ot295hfa+Mnd
-	IlgqvOz+dMQmLIDLdOnvbHDTKkmDEhK3h1pp5ZLce1ZI9gxDxoTtHDnu04orLQF2
-	3AQWnegjvFZD9aczIdGR14c0gTkcc2dIyiw==
-X-ME-Sender: <xms:zyLUac_dSO018IpDPI4nrJpuvYxf0-iZGgbfUSkOqnuPC9MFtPejcw>
-    <xme:zyLUaXRL1q6Mxey1yqHQq8odAR3r-ydy6mZDdd6kyu-br6nlK_TexNsb0bkKHiLy6
-    tv4fVD__tvsRE-qt027Xhm9r3d3V2Z-fv9MW5nEiD76mwQVMQ>
-X-ME-Received: <xmr:zyLUaVotFqcAPxXvnId2DKF-QHm6yipvXMCmeNWOfAxAQmY12RE1UeksbCHFpZpm43NRpTHsn1pylZja6tUMR0WpMMuoRuZ8cg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeektdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpefgteejgeduveeuteeiudfhhfeguddtjefhjedvffelteelhfdtveejueehudff
-    ueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhorh
-    gvnhiiohdrphgvghhorhgrrhhivddttddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    tggrthesmhgrlhhonhdruggvvhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpd
-    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zyLUacngtPnWQ7fqzTmcQyPTM6cUaggPCRj1Cc4FMVy2Uc-QuFEjAg>
-    <xmx:zyLUaWd7xNxQkuYrKrRsNm_Jg01kt-G_JxBWrDFV-msNdLMcYX3vtQ>
-    <xmx:zyLUaQrLHK2WsB_ovIsQjx4SvNTOpXDVZS9DLWl9X0pxAGUoGpL3jQ>
-    <xmx:zyLUaYNr7DUTE4PMlkgx4w1DNJ75GjUXMoqh5L7XqmTFE-RM2evH3g>
-    <xmx:0CLUaYgyYdu7zW3pSi0KorGaLF7Xglvq6Pho2rJuV_qoe35UXQTfG_RY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 17:17:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,  Derrick Stolee
- <stolee@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor
- file after repack
-In-Reply-To: <adP-MYYSmElK9wL3@lorenzo-VM> (Lorenzo Pegorari's message of
-	"Mon, 6 Apr 2026 20:40:49 +0200")
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
-	<cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
-	<3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
-	<f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
-	<adP-MYYSmElK9wL3@lorenzo-VM>
-Date: Mon, 06 Apr 2026 14:17:02 -0700
-Message-ID: <xmqqeckraiwh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QI07BXMU"
+Received: (qmail 265871 invoked by uid 106); 6 Apr 2026 21:29:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uwLKA4/iwUBsZM4hFZUShgYFQOwgtzgQ3ajT+TYpI5g=; b=QI07BXMUYRtWEdU9ZDXvmvRQ2YD5Q28ndPqZT7rWbKA2k8HJBog3Mm7TdzRhw+R56c9uipzl/LHotzh14gVSmNoWOhP97msxMq7myR95MYdiEPOGoonTIB8fmTKtS2VYx23jOjM7QnogiCjVuwxxDhoD5TMUWE+QVoCXRkW6gbCD41d9O6iTBqANK7/Qbh3STNikhUn9cfgIIsCicYLDgnwcMB7zgVvmJCMl9MfZoQU5041nAZQxYNAOBDYiyLy8wwNVFvFKt5yDvLUChBcPL8nTJnShHctyf1v3X7CnX6F11+SBgu5jwxG/V9HQlrEX0LAlJ9IJOocSdyCpntrGFQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 06 Apr 2026 21:29:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 435603 invoked by uid 111); 6 Apr 2026 21:29:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Apr 2026 17:29:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 6 Apr 2026 17:29:37 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren <newren@gmail.com>, "Raymond E. Pasco" <ray@ameretat.dev>,
+	git@vger.kernel.org
+Subject: Re: [WIP PATCH] fast-export: emit deletions first
+Message-ID: <20260406212937.GA30202@coredump.intra.peff.net>
+References: <20260406063607.15353-1-ray@ameretat.dev>
+ <xmqqo6jwau34.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo6jwau34.fsf@gitster.g>
 
-Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com> writes:
+On Mon, Apr 06, 2026 at 10:15:27AM -0700, Junio C Hamano wrote:
 
-> On Tue, Apr 07, 2026 at 01:22:16AM +0800, Tian Yuchen wrote:
->> Hi,
->> 
->> On 4/6/26 08:24, LorenzoPegorari wrote:
->> 
->> > +		while (strbuf_getline(&line, source) != EOF) {
->> > +			struct strbuf **parts;
->> > +			struct object_id oid;
->> > +
->> > +			/* Split line into <oid>, <ref> and <time> (if <time> exists) */
->> > +			parts = strbuf_split_max(&line, ' ', 3);
->> > +
->> > +			/* Ignore the lines where <oid> doesn't appear in the dest_pack */
->> > +			strbuf_rtrim(parts[0]);
->> > +			get_oid_hex_algop(parts[0]->buf, &oid, repo->hash_algo);
->> > +			if (!find_pack_entry_one(&oid, dest_pack))
->> > +				continue;
->> 
->> Memory leak here;
->
-> Yep, `strbuf_list_free(parts)` is missing here. Ack.
+> In any case, it is a bit surprising that fast-export survived this
+> long without having encountering the problem you are solving.  I
+> wonder if fast-import handles such an output with some smart to
+> avoid the issue?
 
-Also strbuf_split*() is a bad API.  Unless you need all the parts[]
-strbuf instances all editable at the same time, an array of strbuf
-is a data structure that is way overkill.  Splitting into string-list
-may make it more palatable, I think.
+I think it has come up a few times, but we never actually applied a fix:
 
-We even went through a series of patches (and follow-up effort by
-other contributors) [*] to rewrite callers that unnecessarily call
-strbuf_split*().
+  2015: https://lore.kernel.org/git/alpine.DEB.2.10.1508191532330.31851@buzzword-bingo.mit.edu/
+  2017: https://lore.kernel.org/git/1493079137-1838-1-git-send-email-miguel.torroja@gmail.com/
+  2023: https://lore.kernel.org/git/BBB169A5-0665-47C9-819B-6409A22AB699@lanl.gov/
 
-[References]
-  https://lore.kernel.org/git/20250731225433.4028872-1-gitster@pobox.com/
-  https://lore.kernel.org/git/cover.1761217100.git.belkid98@gmail.com/
+Looks like discussion got hung up on ordering other types of
+modifications, like renames (which can actually have cycles). But I
+don't see anything to contradict the view that putting deletions first
+solves real problems and would not harm anything. And the answer to "it
+hurts to fast-export with renames" is probably "don't do it".
 
+It's also possible that sorting should be the responsibility of the
+receiver. I.e., should fast-import see:
+
+  M 100644 :blob_label a/b
+  D a
+
+and figure it out? Or maybe we want both (to help other consumers of
+fast-export, but also to help fast-import when consuming output of other
+sources).
+
+-Peff
