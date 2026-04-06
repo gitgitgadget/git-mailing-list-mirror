@@ -1,145 +1,116 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB67A390988
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 19:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187663254A2
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 19:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775503686; cv=none; b=GE7JRq5igAMYqtHjZBU7GhHLOHu99rDjU7lvXgInb+VWBu7kBis5bzxhk6Q2tNBnIPkdXABlFKnhSOuMU7s+fxV00qXcaJk2X4MVLUeepvwC3tTmyFOX7XXnBy5G/YCc8OrkDDJz5gmtZp5gz81DJRJJ6tOpH4QXA6oADAKONGY=
+	t=1775503906; cv=none; b=m+NBu+Z/LusU1s409HauPX+13qwqEOfvNXtK2I9V6m+CN+rjvL9ueGPBw+oMan/b7Uv6U4uMnd30dy+yWZqRV2GDQsEIulI72iMIBpT6GDEUHwLHGnjQl4oyDIRou+QHFBw6DtIzgf0AdZ5Epr3DOdlSWcR6d/5eJinVnjgef2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775503686; c=relaxed/simple;
-	bh=Ari0zVBkfE43UH4bmdn/a3SFCnxDAnh+fqA+3Jgnhwo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ez7RM24I9xSYXoKh2NjbUvJpV4fJnxyguhk74J1KkZ0twE2pivKEkN+KEh/jucbME8X4sR8RC2SxaEzjIFCkj3dAKVa0/gXF/JYcOkke5aSmdiKGA6Y2uv6SbMsu7y8+gDUGwtuFcnLKHtfwq7j6Qt6km4AvXkzEVVwlN4vkzcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=btMndcUR; arc=none smtp.client-ip=209.85.222.171
+	s=arc-20240116; t=1775503906; c=relaxed/simple;
+	bh=ZkpxhbqegUChxrc40+XRTyFT3GOUdqcX8s0fFiUd2t8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eX7tdVmbOhs1JyokAoohHLGYnO2hEnNhEVfFr7zfphWMrKAa/NUTLTGm13NgXNuTdLW7HYblh21O0tQNDjzuy2UzvGu3r2f0tpXKy9QkkilAPgnWvn56ZKN/ZVMvGJKJ2yZw3eoaRoChWCwHK3Z3QRaM+ZCGLvI2Vq/XXEGRQ3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZtuvCDvt; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="btMndcUR"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8d933da14f0so62571585a.2
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 12:28:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZtuvCDvt"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43d029f346eso3654156f8f.3
+        for <git@vger.kernel.org>; Mon, 06 Apr 2026 12:31:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775503684; x=1776108484; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5M5RQc75RnAhIBm88J4JX5bYDHqhK+qJyxB5bvWSHa4=;
-        b=btMndcURZPtngMEA9ULafTi/MdpGtz3rL/CP1/57Wa/a3oUFe6PXTQ4Z62kdQzGPeY
-         M6MBZ+PLdMEoO+RJ1G4Qu1E4vUiYp2//bjBHvga5UvuBp3dlU0Tdz74VZMq9kC9v6ERP
-         Zw7XN7phLonTz5LB9wRbtedHJj9h5blSeeJs03lyMEN1/6dpUOpVXiuw2+uoKpuAsLWM
-         cybODuqBvgWEzuKPO8OPTrrZJln+lR8bBT3RnrvX/o++QfotWh8b9vwYihhtXkxvU4Xp
-         VW+zeiUbZTRgIJma9Khr9OJ5uT8SwbD+/CJJ8EFHYEDF9K1PS5XT+V9J4dOB/57YQYUu
-         XSrg==
+        d=gmail.com; s=20251104; t=1775503903; x=1776108703; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZkpxhbqegUChxrc40+XRTyFT3GOUdqcX8s0fFiUd2t8=;
+        b=ZtuvCDvtU57XRToWu9mh42n4KvzSzEhWZSpWHtUGH/BcvH2LHnthMgrznZxuVGNz97
+         3Cq2dGItlJ+vsMs9Y5ryPeSMDa5F+wYkDe+8eXOgWx2VBf57BLyTqfQjwc4aN+sfjpJn
+         ab+th+tZmr+hNWSFebZLL6fqzG9G+F1oSDvJueqL0MjNbkA3yJfgiA//JOFDpzxFNSWj
+         xEq0crSCJNWuz3NEGbmX8MvcM1JzCXBqxXAkLwhw4OhNjnxEOY2gV3fAoiiV07DDX8bP
+         gYDTgBEZOlv82/FJgCEzi+YzLsNG1HG8bfbVCNPjm2+2w0emYzBVYIaSPoY28ouqwk4D
+         nwxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775503684; x=1776108484;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5M5RQc75RnAhIBm88J4JX5bYDHqhK+qJyxB5bvWSHa4=;
-        b=YLOaA1NdqXjMuh0dMDUh/zkk5AdeniapyVBMGYEtL5nVOIKx82sSh3urCqRQJOt1x4
-         IYErGB88oQ1i8v+8zVndafroackimizcTCTVEFzmJgL4hIN50K79k1kLF0fM7IvJuq5q
-         iWaYHcKtzvpPEejikPMTLtkRDH66cnmcFbCsJe5oTRWBuEhP0b3/kwtc8kEIinRlgnLt
-         J/W5xcwkfPSRlPdQ/pk0E65LDNyqxoVRaQag94Ji2BDi9tMUugDC4eVvDliNLF+CRuL2
-         v0RI+znSakI0S1U9eI9f/MolpT+61b0WwW1X8hdvbDAuRX9+eCJtF2aZoORVLOpB3tp3
-         uGpQ==
-X-Gm-Message-State: AOJu0Yy41Ogkq2YPWe6Br9xzKkbXj/gv0RJ3Mheh9CnjgxPiS7oD4h3M
-	byuYCrd70wriaDEdX9TPGBJ1OZC5R1dU4VR5vAjQ/Z14pQoEBla2qdISIuROcRv+CgM=
-X-Gm-Gg: AeBDieuOE5qb1wbLcZsPuga+/nVhUkSpTiFopnrCR5FJtJwX0GVLvUe0AZTibCBuk0w
-	Htjy0Yrv3yfSEuiAouIpFVgPq2A/x6A32t+dD9Jgd5i96HhF2CJb2BNG8Mn/vVDycbFmm9yVKLl
-	ENKQFVPaIbZeZvGlqt6N42/z041Wb7JfPWh+282UEeYtg44q6SORwnH5knvTQyLC/xVr2c3PcsQ
-	w2GJ8dK+IyVaICcWP2yIIHS282cTU+W6iaH3Qe5iWEzdtFxSKNbkrU0FEmme8MEm4xTU21EQeHr
-	AD2ZWYXVHf0dGpjgjY2KUJKhDhSFDB6RY6i3HjyUs5ROepbycXEv9P2735loJ0ocQ/YHyEvBOW/
-	d0BDlUoa+9pAVkk4Hu1sz1RGOcZp0e8XbLgGIsW0/Go1htrLqXXBxdX9e7ZXwlu0xiVVgNWtfBn
-	Z9yBwGRazJk5nbExpPorUJPzL6WjSlvJbZqts=
-X-Received: by 2002:a05:620a:1228:b0:8d6:39c0:e6a0 with SMTP id af79cd13be357-8d639c0ec01mr949227985a.54.1775503683490;
-        Mon, 06 Apr 2026 12:28:03 -0700 (PDT)
-Received: from st-davidlin1 ([70.54.98.79])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a1307586sm1123199985a.0.2026.04.06.12.28.02
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 06 Apr 2026 12:28:03 -0700 (PDT)
-From: David Lin <davidzylin@gmail.com>
-X-Google-Original-From: David Lin <davidlin@stripe.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	davidlin@stripe.com,
-	davidzylin@gmail.com,
-	ps@pks.im,
-	stolee@gmail.com
-Subject: [PATCH v2] cache-tree: fix inverted object existence check in cache_tree_fully_valid
-Date: Mon,  6 Apr 2026 15:27:11 -0400
-Message-ID: <20260406192711.68870-1-davidlin@stripe.com>
-X-Mailer: git-send-email 2.52.0.ge17bebe515.stripe
-In-Reply-To: <xmqqcy0bc4bf.fsf@gitster.g>
-References: <xmqqcy0bc4bf.fsf@gitster.g>
+        d=1e100.net; s=20251104; t=1775503903; x=1776108703;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZkpxhbqegUChxrc40+XRTyFT3GOUdqcX8s0fFiUd2t8=;
+        b=geSGktU1siztHsjo7eIhGd3JjQ3XYG3qscer2Rdsf8nyzM6YTePwfa+SLlBiRDQziD
+         X9GyuB+i3hGp0qp3HatlNrN8wOhVQHqqJLW0jsMD0iurKqqgrG/ZHBbvwirFnbK21j6e
+         qBan/5eIZ059/LNGVCW1YzqHpRttJhqvnev/Xkxt56BG6VMnYep7SDnp1VI73ph6j9N2
+         QSs1fIS/vo68sSiv1aYKNjqiimMIZaq2trty+MyOqEQ0DVvSkEG93mFt2K7rz2LWIPWK
+         h2eABXCr3xcKmkzwKPw3L81iffM69d7S51Bj80FYzEbzqwFBGV6kTcLaWjAqLT+9VHlO
+         j/3w==
+X-Gm-Message-State: AOJu0YxweT8Glr2mAxWF91+Qu35K1+m3L+3aN34p/nn44DbvMA4MGhpw
+	mirzLISmUF270VYnQ9LUZf0VaGW+2eEYgnZOblty4s8AZf4NjaThDJDF
+X-Gm-Gg: AeBDietBAgiO5R7mVGkUZCjCqDOXY8Mgk6vOHUI3M6FB2lo1mvOCmG+0zB4/9OTZ0NK
+	nyC53k/W5gIl4SuLdwG3ShRcF8I8nHgz7XjIFVvahLJfNbROy36ORkLHxIsUecvj9tON2HML6FZ
+	Y5NqB5p2zLUwrqZASbS5Yo+NMw7MmKHpWbQ55qU3cmOo9+HCj73Py0vHbQkpOTvgPI1tm8KJYzH
+	KYBOBZ9ar2XPh0eIA8vyG+00R4l3xHbgbM4fyvLdRIgvDOqAUXI9rfj4X6YDci2vq9Y4Kd/jfLc
+	jXBcOl4frWvX1Lpm6bzN6OmkuGCWPiCsIYY9MW+O+D7V3aYZY8mStTSRebRRcpFC7qN72QvPbO9
+	n3siDyPt2XnuSqC2YUxW/lNNOFy1GIwSPqOjS5y+EwWJiX/Tgdd1q21WyAGZmsXLQuxF+wqpowC
+	hh4ptd5hve10jQqUb4qYxTs9dRgMfRVr9oJMKNPetg32wPANs2jOqQYvAvhvDT4E7LvYjpORMJ7
+	9yKXz7C
+X-Received: by 2002:a5d:5847:0:b0:43b:4e13:221f with SMTP id ffacd0b85a97d-43d29300bf1mr20956255f8f.47.1775503903106;
+        Mon, 06 Apr 2026 12:31:43 -0700 (PDT)
+Received: from [192.168.50.249] (host-79-30-45-36.retail.telecomitalia.it. [79.30.45.36])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e2a6f5bsm39228278f8f.7.2026.04.06.12.31.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Apr 2026 12:31:41 -0700 (PDT)
+Message-ID: <568cb40a-373e-4ad1-a6a0-fb7289da92e2@gmail.com>
+Date: Mon, 6 Apr 2026 21:31:39 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] object-file: don't use object database without a
+ repository
+To: Justin Tobler <jltobler@gmail.com>, Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, cat@malon.dev
+References: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
+ <20260405064651.GA1452907@coredump.intra.peff.net>
+ <145b6c7f-c037-4a87-b561-d2b4d8c5a0cd@gmail.com>
+ <20260405191750.GA1525850@coredump.intra.peff.net>
+ <adP0hnV7Gl08qqqf@denethor>
+Content-Language: en-US
+From: Luca Stefani <luca.stefani.ge1@gmail.com>
+In-Reply-To: <adP0hnV7Gl08qqqf@denethor>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The negation in front of the object existence check in
-cache_tree_fully_valid() was lost in 062b914c84 (treewide: convert
-users of `repo_has_object_file()` to `has_object()`, 2025-04-29),
-turning `!repo_has_object_file(...)` into `has_object(...)` instead
-of `!has_object(...)`.
 
-This makes cache_tree_fully_valid() always report the cache tree as
-invalid when objects exist (the common case), forcing callers like
-write_index_as_tree() to call cache_tree_update() on every
-invocation.  An odb_has_object() check inside update_one() avoids a
-full tree rebuild, but the unnecessary call still pays the cost of
-opening an ODB transaction and, in partial clones, a promisor remote
-check.
+On 06/04/2026 20:17, Justin Tobler wrote:
+> On 26/04/05 03:17PM, Jeff King wrote:
+>> But I think the actual code change in your patch is the wrong thing, so
+>> I also don't think we'd want to just squash that test in. I'm hoping
+>> Justin has some insights on how to do a more complete fix.
+> I agree with Peff here that the correct fix should continue to use the
+> object streaming mechanisms. To avoid this segfault, we really should
+> avoid using ODB transactions when there isn't an ODB in the first place.
+>
+> I replied in another thread[1] with how we could go about fixing. To
+> summarize, it just so happens that I already have a patch[2] out on the
+> list that appears to resolve this issue.
 
-Restore the missing negation and add a test that verifies write-tree
-takes the cache-tree shortcut when the cache tree is valid.
+Thanks, just verified it works as expected.
 
-Helped-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: David Lin <davidlin@stripe.com>
----
-
-Notes:
-    Changes since v1:
-      - Use test_grep instead of bare grep (Stolee)
-
- cache-tree.c          | 2 +-
- t/t0090-cache-tree.sh | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 60bcc07c3b..9fe057355c 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -238,7 +238,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
- 	if (!it)
- 		return 0;
- 	if (it->entry_count < 0 ||
--	    odb_has_object(the_repository->objects, &it->oid,
-+	    !odb_has_object(the_repository->objects, &it->oid,
- 			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		return 0;
- 	for (i = 0; i < it->subtree_nr; i++) {
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index d901588294..0964718d7f 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -278,4 +278,12 @@ test_expect_success 'switching trees does not invalidate shared index' '
- 	)
- '
- 
-+test_expect_success 'cache-tree is used by write-tree when valid' '
-+	test_commit use-valid &&
-+
-+	# write-tree with a valid cache-tree should skip cache_tree_update
-+	GIT_TRACE2_PERF="$(pwd)/trace.output" git write-tree &&
-+	test_grep ! region_enter.*cache_tree.*update trace.output
-+'
-+
- test_done
-
-base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
--- 
-2.52.0.ge17bebe515.stripe
-
+>
+> For the use case here, git-diff(1) is only interested in generating the
+> hash for the "large" blobs and not actually writing anything to the ODB.
+> This patch introduces a separate "hash-only" variant of
+> `index_blob_packfile_transaction()` and is used to bypass creating an
+> ODB transaction when object writes are not needed.
+>
+> If this is the route we want to go down, I can extract this patch from
+> the current series and send it as a separate fix. :)
+If this ends up happening CC me and I'll gladly stamp it with Tested-by :)
+>
+> -Justin
+>
+> [1]: https://lore.kernel.org/git/adPjXKGIT5O7SK6E@denethor/T/#m9cee420941b66abfb0244ea4b7762ba8d0ff7b52
+> [2]: https://lore.kernel.org/git/20260402213220.2651523-5-jltobler@gmail.com/
