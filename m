@@ -1,115 +1,138 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D1C34D4CB
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:38:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3962338F922
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:40:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775500710; cv=none; b=Jd1sPC6SA2s8aFH21Hv/gBY8R9yEhoDmvxgTmXt4KlH95fjeVcv+YPuMnNUWD4/VZBHQur6J9NJ1PAytUpnRo1seVg/OFSLz53q77O66P8WNYTMSBItHQ7Sl1SIO4M/DVYGBCv2pNAEJHXadJ5Y+4AZa5KCRNLFHLbiuBpD6khg=
+	t=1775500855; cv=none; b=Cxfz9Z2SJwJOrMurBxaje6oCQ7b8ki1wcpE93YBXx3z6fuwCIrpGSdvd9N08U/RoMnEhQZfwmEpJW9aTLZ7JYtoEzIwnIqSdvcr2fq/2yQpzVGUIbzmw9NBnGNrn7p5ObSTj2W1rlxvKV/s9RdKyoFM4lypdHkwIuySnsOjkDpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775500710; c=relaxed/simple;
-	bh=7zIplN2DQGpvxhG+n4AnS+wtD0ZrO/SIdHeENSXE/PU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=UUmm+D3eWTDYCaKO1pJgz6ah/n2La0XRPyPMwG5POKDYEThGesdCIg5oz59mcGsB3qfai7ywX4Bm/q3T58UZ+gVmJG8IvfxCTh0xwYzbl0pf4QokCXjEzVH1FxZZAfX+SqvqbZfuuhKYEBE2UZ7PVec+mRh+ZbrALVZwlQ6HTs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ieVNmKmj; arc=none smtp.client-ip=209.85.219.54
+	s=arc-20240116; t=1775500855; c=relaxed/simple;
+	bh=V0GeOPAx+2RV8y9QmrPVvYWqtxLGZfov+NbiFrC/nw8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J3Jh/2A2dwxG8lZCIyjeYRGsEVcTsRrS2jpzCaqoJzL8E8xP0RJSALR6RH+bQvRHqNck3ef74yV7MkJoqIESrewclmJrhhkZb2p00L8WW4lalD8hx1ZnzN+NFC6pzmm48fkl1lbZy7UAv2wztlb9Ejy7Tt50IgHxEVb3f4eONw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p0n+lsH6; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ieVNmKmj"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-89fc349b5ceso71481416d6.3
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 11:38:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p0n+lsH6"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48897fd88ebso28239915e9.2
+        for <git@vger.kernel.org>; Mon, 06 Apr 2026 11:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775500708; x=1776105508; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CJIYOmDBqozbvQolI3rpKMQgX6P7rIX0+o0J+dBZa2Y=;
-        b=ieVNmKmjelcg+snG/4433br5NDvX8uWIBRwufBHSv6YEc6G29RDVtl7l5TqUu5+hJC
-         HpSCoaoyZRDlvLOpEO1V7bHHAI4HUqPrJkU0kGbkl6pxn9l+Cev8n6zNRxXsfMmo9q4r
-         5V9EExg2munUigMaaEUKobAu5xtEFiKh4pilitj6Y/Hiwte1pr8Crb6v8EYu0bfwos96
-         aTPaTYbSGIcJNKt3HPEwR8nV5eWha8G9FPokumWO5rrxNyb/udxdcRNhs8K927MYGjsM
-         CQba21jKd0LsFYiSZFYnfz/M+kdJfX6CVQyt7jWo15oEQ91jffjBrV+8uTVZn1eietM+
-         TIDw==
+        d=gmail.com; s=20251104; t=1775500853; x=1776105653; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LMOd6xUZdZ29TgPMelZcwSAbhKQsTn0MyYwEPDBgp6A=;
+        b=p0n+lsH6lIM0oKa2z0uYnhxea2Ca9zHa4pFIU7KCD9uT5GLxrx6zE7OuqUFvmI68Iu
+         IYGLS1GCs3KX8dyFq9ieOV3ed4qtRzxtkVmDiE9eLI90b1ELslzkmc+t94AW5P6EXUnZ
+         4CLhe2Sxe0oAQu1j5x2mhHeKSnT/sk/jNlA3zwrrGRypHV2K9OArCpo14oMzHDNT7LCx
+         fIC0AqL2t91YWdjBHjyBMQInEwFEkkxgkzQHR4AtqkmGxsqumAKVVuxJc1deDsKNYKem
+         ZQPv8UbsViC3D96YtsYqUGd073LEIwhkqrztnJ/MXDgRR/PcHpCgJG5KZCtKYEJc3FdT
+         67XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775500708; x=1776105508;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CJIYOmDBqozbvQolI3rpKMQgX6P7rIX0+o0J+dBZa2Y=;
-        b=cXRtXBMTN5quXpSoLp9Dni8Og4/5VrrB77FQwC4zKc8CFiGnhPmYne2AU7KZCwe8Pu
-         4lV7MG57lzW8OUnW6DebP7u/2VTKAx8qX1Wy+bhoXqUUt9kDHlqudGwCZHmdIPigKrG8
-         wA7NbTR1SwkoaxLEQ6h63ww8W2zBx4MYm2E70dKbPxokxc5Q+kXdtQYp629MsHBILrjb
-         hGNEdFPlkhYD6r9yBHKkXtuc7r/WD7YJFjnNzOdZcy02/pmKkA1+VjnNG0mnrrSCBVUa
-         QGuFNkuUp5ZJGcu5xRVarK/oMdIQYG2BnbnTVbrgpI3QYodbiUL1w2XCma4P/hFS5zPg
-         oZhA==
-X-Gm-Message-State: AOJu0Yw5EI663+FMdOqvJxY9CfaTFWNPMVvJR05YDzvIrXDf7iO+jzjP
-	zH9R4M7tpNulUajiYNYDdDXgwLm2Hxe2HgvTruHii8dfIrXFOyxAgtu82aTw1w==
-X-Gm-Gg: AeBDiesj3JCT+77OEt3Uo7zak1si4xpq4jI/MDMd5TjBqzbnFPXVpdkdnEHYGDtrTLJ
-	03LMOLWZqNe9QvDyyo0rCLdDSdirHE1XYh+sxYiqh75tOJALP0wJJC83UxsJewIBKUVX3QDrqG6
-	NHTuZcb18Ef4rY28SMdM4OEYsF7v8QjPoW4JSktWlFbXfaItSZqu9W9tijMhMes+RB9PNgsIMy6
-	w/Zed+7PPqIvAgYQ7FBQDOnjL8gikwpcwIIRawHPCcAXKH2JDDtvMOIrZ0s1W3Kyqseso1BQawL
-	KKy0jamKSTQldF78SwXYbfAaYzrYE4K/J06c5tYOMLMctYVTMnrbisFfiEiLo/oHQcxgW5r8Cuv
-	0zsc/VW2Ovqg2rNnHKUvJsqPqeNl8EzsIVA8136JN9U20N+Q6dNGkwaUeKf7j1bi9Mix9/Yb6NK
-	1dszm4g9mnDCqBWBIwUSEaWJIS1F4/
-X-Received: by 2002:a05:6214:600e:b0:89d:b093:936f with SMTP id 6a1803df08f44-8a70568c757mr209724196d6.52.1775500707983;
-        Mon, 06 Apr 2026 11:38:27 -0700 (PDT)
-Received: from [127.0.0.1] ([135.119.132.152])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a5979d92fbsm158554406d6.48.2026.04.06.11.38.27
+        d=1e100.net; s=20251104; t=1775500853; x=1776105653;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LMOd6xUZdZ29TgPMelZcwSAbhKQsTn0MyYwEPDBgp6A=;
+        b=JADSsb5D/38vf0mmDZzZwokFrSiDMKHTePu+GK0GBO1+r6UZLKefcbxp+lftjkMdFa
+         mWE9H/FuMXKZeZ44kZiqBgH4BLH+hzMFeYyFVb/qd1o2K79EuzGJgaIL+qXJ9gbQE8++
+         k6WJtEuGeH+JIVgZzjIryYtxyanR5/oAK3MowalAO1/V/9KZQ0CGjw2PLtSKJrbBdyB8
+         R3OQv8mD2wCqbjs3AI4gV80k9e6/iuhEfCXEJ8T8Uhjlo8TbJl3kbE81LaYS0mz9grce
+         vCBtW/4tKt1bawa4vR/pJsv0TXM6+/Sy9tvmrza6YaZtBwH1FTz6dVCve5vVJPB97p7/
+         cvuA==
+X-Gm-Message-State: AOJu0Yw/iel3++dEv0/rG0jA+PlhrHWPhVGIQ5fxZkUmsnU1esFgU7mz
+	zEB9NUmP6RiaNwceZwsFYgk3rY5iWuLuxA2zEhDBPWJXNbircTWTaHq6
+X-Gm-Gg: AeBDiev7i4j1YEALlRN7eAbzLIF4bEdz1GWvsD4lwDJQVzwThHtxWLUfAyrvS/gxfCA
+	VQk9evLkjEg3Vur/HQZ/zMFZQtShCrHDSbwPoPaTS6FTPrgR8hiCTbdepoERm3Af84iEPMfQIVo
+	mZOmvKlI6TWd/ttLaFOlBaXRo08UuNG0HQR/+oOTWmPtdgUsV4I4x4nt6DYqAjwlFq0/pHhRZF3
+	p7uolMxeFj4PDrUhjvoM06ISOLvZ9uI5kMsx28kKoVEf4u+S7I1qJGM4z2ZOVLDw69uinObAS9X
+	41epwtI71fVkcW01oHkCccXpSEgr+6rShhK6aXq/IXKclu6zPLZ0ARWbtmMmNNARz2fGTmTO+Nv
+	KfJiyeGGECHKeQ1i0NA4JffkJR2+i0F54u/azn0MCQ4cz1iANVFbz4WQ1gG/WKOdersNHDllPDL
+	OCJF5zBkd2dpu4RDEr1zjv1VEmuSIDyeop
+X-Received: by 2002:a05:600c:638e:b0:483:6d4a:7e6d with SMTP id 5b1f17b1804b1-488997d4dbdmr197202135e9.30.1775500852362;
+        Mon, 06 Apr 2026 11:40:52 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.160.4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48897fd5594sm97582795e9.3.2026.04.06.11.40.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 11:38:27 -0700 (PDT)
-Message-Id: <pull.2084.git.1775500706920.gitgitgadget@gmail.com>
-From: "aubrey via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Apr 2026 18:38:26 +0000
-Subject: [PATCH] parse-options.c: display subcommands properly in check_typos
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 06 Apr 2026 11:40:51 -0700 (PDT)
+Date: Mon, 6 Apr 2026 20:40:49 +0200
+From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor file
+ after repack
+Message-ID: <adP-MYYSmElK9wL3@lorenzo-VM>
+References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
+ <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
+ <3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
+ <f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: aubrey <aubyomori@gmail.com>,
-    aubymori <aubyomori@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
 
-From: aubymori <aubyomori@gmail.com>
+On Tue, Apr 07, 2026 at 01:22:16AM +0800, Tian Yuchen wrote:
+> Hi,
+> 
+> On 4/6/26 08:24, LorenzoPegorari wrote:
+> 
+> > +		while (strbuf_getline(&line, source) != EOF) {
+> > +			struct strbuf **parts;
+> > +			struct object_id oid;
+> > +
+> > +			/* Split line into <oid>, <ref> and <time> (if <time> exists) */
+> > +			parts = strbuf_split_max(&line, ' ', 3);
+> > +
+> > +			/* Ignore the lines where <oid> doesn't appear in the dest_pack */
+> > +			strbuf_rtrim(parts[0]);
+> > +			get_oid_hex_algop(parts[0]->buf, &oid, repo->hash_algo);
+> > +			if (!find_pack_entry_one(&oid, dest_pack))
+> > +				continue;
+> 
+> Memory leak here;
 
-Before this, mistyping a subcommand with one dash (e.g. `git stash -list`)
-would display a message telling the user to try it with two dashes.
-Since subcommands are parsed with no dashes, this is incorrect and simply
-results in the help message for that command being shown.
+Yep, `strbuf_list_free(parts)` is missing here. Ack.
 
-This commit changes check_typos to check the command type and display a
-proper message for subcommands.
+> > +
+> > +			/* If <time> doesn't exist, retrieve it and add it to line */
+> > +			if (!parts[2]) {
+> > +				struct tm tm;
+> > +				localtime_r(&source_stat.st_mtim.tv_sec, &tm),
+> 
+> Typo.
 
-Signed-off-by: aubymori <aubyomori@gmail.com>
----
-    parse-options.c: display subcommands properly in check_typos
+Ack.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2084%2Faubymori%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2084/aubymori/master-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2084
+> 
+> > +				strbuf_addch(&line, ' ');
+> > +				strbuf_addftime(&line, "%Y/%m/%d-%H:%M:%S", &tm, 0, 0);
+> > +			}
+> > +
+> > +			/*
+> > +			 * Add the finalized line to dest_to_write and dest_content if it
+> > +			 * wasn't already present inside dest_content
+> > +			 */
+> > +			if (strset_add(&dest_content, line.buf)) {
+> > +				strbuf_addbuf(&dest_to_write, &line);
+> > +				strbuf_addch(&dest_to_write, '\n');
+> > +			}
+> 
+> It looks good elsewhere, at least in this patch 2/5. (ゝ∀･)
+> 
+> Regards, Yuchen
 
- parse-options.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Thank you Yuchen!
 
-diff --git a/parse-options.c b/parse-options.c
-index a676da86f5..2c4530bb8c 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -633,7 +633,10 @@ static void check_typos(const char *arg, const struct option *options)
- 		if (!options->long_name)
- 			continue;
- 		if (starts_with(options->long_name, arg)) {
--			error(_("did you mean `--%s` (with two dashes)?"), arg);
-+			if (options->type == OPTION_SUBCOMMAND)
-+				error(_("did you mean `%s` (with no dash)?"), arg);
-+			else
-+				error(_("did you mean `--%s` (with two dashes)?"), arg);
- 			exit(129);
- 		}
- 	}
-
-base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
--- 
-gitgitgadget
+Lorenzo
