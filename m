@@ -1,86 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634038B7C5
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:49:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07086314A9E
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 19:27:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775501353; cv=none; b=Mczshq7X0mGshMrucZq52Nj+46EW5LWj1xrbbu9IssAQET1qjxmzwcZ+/1UzYclgobG2iQgiljlnCwyN9tAHAHaqEGBvSpRzBL1H6zMsEjMKY0l94Df4OUI1ArK+7c1SCIBeJiQTMwK5tx0UCejTKRAk6tKjZgtCO1D/a5771P8=
+	t=1775503641; cv=none; b=Nf7XDpDB78I5W9dy418tY4cYv+1Pq6loySisg4BjRxX1yYR7g7rlhGxuZA+IG3eqxGRKDkM4MU6PNTYdIeKR3q/QP36GTDmEYSFeO0+6Xs3RCoQpn1Fj78+0Gscbuc/RBLoF6JIfEqMF7S3o5cwRlsf8bITzV1Ep6oNGcoraZC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775501353; c=relaxed/simple;
-	bh=t3faZrzx6EnXYRj360ouRieloM68Cw/l2E3PPlhcliY=;
+	s=arc-20240116; t=1775503641; c=relaxed/simple;
+	bh=3rvB5f/pbeEOAq5I6W1d7+rAo2tKqghX02lZk86kzfA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PTynGSc1DKMLixqyPJuwXy8HKcp/+8tjEsDrMvpihvUVa2Rx5WE9u+Esb2g5XQzkGrJZx+1A9N/FfBitmgF04S5avWxJSdeh1+EY+scWRJugvTQkAKDajKByGqeWQo1rEFrNfiNC3WgWuSis9uEh1Hrm5p6BV08pQV7zOFmOMWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kBmwF2O2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BD0Hezs5; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=ENeLpkyooSHtWg7o+bogfskbPsuGAsNGxfHuLRXeQZvIT6D198Qw/c4DcfvfUKGgznkcrYN2Za06OSoo6R6plRkyT3u3WssV8UF+ow87HYgwITxLWPUOdxJ279c8kRdAna4ixVKw84qx6H5wvTzZ0KL62tFt/ct0nY1zmApRjbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dfFHC8uZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JA59ngZC; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kBmwF2O2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BD0Hezs5"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dfFHC8uZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JA59ngZC"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AFE7A140011C;
-	Mon,  6 Apr 2026 14:49:10 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 35BAEEC0450;
+	Mon,  6 Apr 2026 15:27:19 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 06 Apr 2026 14:49:10 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 06 Apr 2026 15:27:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775501350; x=1775587750; bh=mb6rGNrqAf
-	vmrO7cDqKioOiZe2JTHNS9mNjnlANlp34=; b=kBmwF2O2Fbs1otH+z73eJpBmbZ
-	LXZu+ia9e4HLsoMIVpDYRDPCh9FGPGAx5SYdOgDbpMOqidpZrPYFX7U4Yi1r5nhY
-	YlG6Jmn8hoa4Aw6G0+fSNUrfhGHsIZBD/PM3NZOIa/S5h0Jx+mf+kapJKYQiVU28
-	omzrQI/wCoG2aTCUw9bQXxRsxH+wrLacyKKBdN89VWXywCkQCpNUi0qYk3vL6zag
-	XJblDxggdjPnsZ7yoBJGoL0mlRIrOdICOWoqBnYnibB2RNwhOuNic8EMqM1LHScQ
-	uCI3Qd5d93V6JNjqkESChacqy0uoxwCixI7xrySwKvEHjQgJufiGrxU+bLzQ==
+	:subject:to:to; s=fm1; t=1775503639; x=1775590039; bh=24Q/nqtlFk
+	H6N/cK1k1LxMrS9RamG/hbeNu31SfX19Y=; b=dfFHC8uZpFLRP09N3I9jbcyunV
+	FAj1hy3wTzaCZ0W23+LO1/aNVUCK8PXfXTyesyelzWolQPC5+HkUjtMxDW/xKxzP
+	J9FO8vnpBA5Qoxwb/Ezktk1/dmqdyCZ1C4RQ2/hjxmfSg0o3q9gcRObRAssbDxXD
+	2tm5akl4AwbZ8l4xSgy2xut1s4LILy1eZKWSflSV883v/6CTTPTj66A8DSJo64Nx
+	hcQvRADYeEhYwPQrqR/+Vk0l+xAGwHZ/3obbA5ZGtWgrIv895rUw3d9mbdTseAPs
+	VWQrplVX5jlsx6SI/StTGyq6TYq7ZgJbPZbyyHHfuXcUwIJaHwNz/B2DIlnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775501350; x=1775587750; bh=mb6rGNrqAfvmrO7cDqKioOiZe2JTHNS9mNj
-	nlANlp34=; b=BD0Hezs5X87q3DhMvugkq3uL6ftTP0RlceceP9uPN8GYHS33iLf
-	52LrEKEeiZETLAbmGbnTMSGo2UjiFiqnlqlOcFT+0oNIiXCGgIo5CUfPT0XxopBJ
-	DzWqRtNdn5gbAPClVTcdH7vQ8dsgULFiFOpyXvC/u/5/s0//B2dm1J1MvFIjh5i1
-	kKBV/qhazGmlXuQH7WEVH7wYsbXyXLE4j2wqcyHIUIfX4AmudlPI+7UbBFiv3jUU
-	W2KCu+HWY6E4UmM35Q5tMmW7+UjHmb1yCwBMJQoxmmYiB4932cmhAcYo+H7tXeer
-	2oyB8eU+dnysiy+L4YY+z4UcAidrLXHBLwQ==
-X-ME-Sender: <xms:JgDUaWHx3PE1gQ2WmBndxLp-gjjm35JgOBp1tJFoDZeCk3yAqEfykA>
-    <xme:JgDUabAtzRZG6-Pu9SUeH-5Ho99ZxKuUYpNEZTsx6Z9R-4gX3pOeqLkigB-yU7BXu
-    tZzGJQIj5KlVZtQijV4RCrmMdQYdinLkJKJ1z1hCOoO2w9om1Fs5w>
-X-ME-Received: <xmr:JgDUaZ_uaxPLRqA_fm6ym6PfNg98mSL7TztIcUiBRjNasaUhTqeyadqHhtgsG-IbaMJ1Zmifdvg0PrvYEgyM_Vdi2j_VkcLcbw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeehtdcutefuodetggdotefrod
+	1775503639; x=1775590039; bh=24Q/nqtlFkH6N/cK1k1LxMrS9RamG/hbeNu
+	31SfX19Y=; b=JA59ngZCAXGFbC4INTYb3t7diUWKzJ+mOrLBP89pr8gdw7S0umk
+	WSYHM9GcfX3m5dIRRvSaoQEHogfGmM7/LNVaagN5W00NU6JzuMq7VvRC8n61dacQ
+	aBDXibhkYd+S66Hs0Xvuci5hIvrP2tuHH/5f/I1ev4YVW+N/gFWBIy9tfXd7HFyu
+	ZhxuwRlFhnrDZ2KF4grl04/7al/D7kAMM6Cbqw4DWiEBPWyQ560pasm0qA6Eqz8k
+	8sL7xREWkCApLPbacYbYRIMyxCuwAEn60uhett89zqRVP/PwVU3OlvDUsViirGM/
+	HulnoKxUoYge0vR5s8j3D8UMAuqNrulkjMQ==
+X-ME-Sender: <xms:FwnUaf7439j0jz1OflMmOVYLQSK3mDu3e_cAvQCLWZC01wHsYxRULQ>
+    <xme:FwnUab74Z8Jcw7lt3VHJv7icTFtTtwPjHp0YxTEQyiIzSyv_euvFMAPZDA09DI8eQ
+    lJ4aNlTJA7X5nww0ScBCTV9gQomOEUPNOWAmAs91d0QDp8tgizibQ>
+X-ME-Received: <xmr:FwnUabeq0bDbzauYyhK5wXDgX35uZZ7kTvMRtsDLvRajB87nFEkFjA-MIZDJjV997l9mpsyXxTuYo59yrDQmomK-Slw6fe4ULQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeehkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopegurghvihguiiihlhhinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopegurghvihgulhhinhesshhtrhhiphgvrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:JgDUaXDj2P3IhwqB96MzsrByqCNMo5igD2DX8R9s35QHgR4Zju-75Q>
-    <xmx:JgDUaeRFZSN2RbdMt7pIuShNIgK5HD0yKmvm6j5jjKGCvEWyYMIJBA>
-    <xmx:JgDUaeu4ScTc5U8GtR3NTrwP7Pr5yux8gorNgNxggDjjPJYRPiwHrw>
-    <xmx:JgDUaa1UMyBzbu04SoFyvhQlcssQQ-Xn3s9kIps8SaZQXQYVyM6aig>
-    <xmx:JgDUaYCelHZMWlDXh-KS2-Qp1b2IrZ_bAWtdbH77i43p1QLBZSpuE9hi>
+    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
+    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegruhgshihomhhorhhisehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FwnUafAnepTie_AIXua_4SVX1NIDZ6WLLzsAghwNELP67L5pev-gaQ>
+    <xmx:FwnUae_WZZYxUvBN6EJn2SVikbir_ptYIqLUybbv8VUo7UAoiJSm9Q>
+    <xmx:FwnUaaKLYT30e7Sw-AnoOKOlZqI1Dxs51wBGBmaLYBrS0BhHFrwqSw>
+    <xmx:FwnUaXgTP4MTliSeA5NfWkR40XI2_oSebIBGJZZUfckdEJsNyWfTkA>
+    <xmx:FwnUaa-7GTdVjGexbU7EE7Z0GtR_yrevNLiDLGVxk_j61tje50_KC7aD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 14:49:10 -0400 (EDT)
+ 6 Apr 2026 15:27:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: David Lin <davidzylin@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
-  David Lin <davidlin@stripe.com>
-Subject: Re: [PATCH] cache-tree: fix inverted object existence check in
- cache_tree_fully_valid
-In-Reply-To: <b0ee86fb-2fb8-4c7f-904d-66140b58164d@gmail.com> (Derrick
-	Stolee's message of "Mon, 6 Apr 2026 14:10:16 -0400")
-References: <20260406151456.63620-1-davidlin@stripe.com>
-	<b0ee86fb-2fb8-4c7f-904d-66140b58164d@gmail.com>
-Date: Mon, 06 Apr 2026 11:49:08 -0700
-Message-ID: <xmqqcy0bc4bf.fsf@gitster.g>
+To: "aubrey via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  aubrey <aubyomori@gmail.com>
+Subject: Re: [PATCH] parse-options.c: display subcommands properly in
+ check_typos
+In-Reply-To: <pull.2084.git.1775500706920.gitgitgadget@gmail.com> (aubrey via
+	GitGitGadget's message of "Mon, 06 Apr 2026 18:38:26 +0000")
+References: <pull.2084.git.1775500706920.gitgitgadget@gmail.com>
+Date: Mon, 06 Apr 2026 12:27:17 -0700
+Message-ID: <xmqqy0izanze.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,66 +87,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+"aubrey via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 4/6/2026 11:14 AM, David Lin wrote:
->> cache_tree_fully_valid() is supposed to return 0 (not valid) when a
->> tree object is missing from the object database. The condition
->> currently returns 0 when odb_has_object() succeeds, which is the
->> opposite of what is intended: the cache tree should be considered
->> invalid when the object does not exist.
+> From: aubymori <aubyomori@gmail.com>
 >
-> It looks like this negation occurred two refactors ago in
-> 062b914c84 (treewide: convert users of `repo_has_object_file()` to
-> `has_object()`, 2025-04-29) which had this diff:
+> Before this, mistyping a subcommand with one dash (e.g. `git stash -list`)
+> would display a message telling the user to try it with two dashes.
+> Since subcommands are parsed with no dashes, this is incorrect and simply
+> results in the help message for that command being shown.
 >
-> diff --git a/cache-tree.c b/cache-tree.c
-> index c0e1e9ee1d..fa3858e282 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -238,7 +238,9 @@ int cache_tree_fully_valid(struct cache_tree *it)
->         int i;
->         if (!it)
->                 return 0;
-> -       if (it->entry_count < 0 || !repo_has_object_file(the_repository, &it->oid))
-> +       if (it->entry_count < 0 ||
-> +           has_object(the_repository, &it->oid,
-> +                      HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
->                 return 0;
->         for (i = 0; i < it->subtree_nr; i++) {
->                 if (!cache_tree_fully_valid(it->down[i]->cache_tree))
->  
-> This was one hunk among many, so it is easy to miss that the ! was
-> lost as the function was renamed and moved to another line.
+> This commit changes check_typos to check the command type and display a
+> proper message for subcommands.
 
-Thanks for archaeology.  It deserves to be recorded in the proposed
-log message.  David, would you mind updating the message and repost
-a v2 of the patch?
+The usual way to compose a log message of this project is to
 
-I wonder what the practical effect of this breakage was.  The added
-test only checks what happens in the trace, but what was the effect
-externally observable?   We did not rebuild the cache-tree when we
-should have, causing "write-tree" to record a set of tree objects
-that do not match what is in the index?
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
 
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
 
->>  	if (it->entry_count < 0 ||
->> -	    odb_has_object(the_repository->objects, &it->oid,
->> +	    !odb_has_object(the_repository->objects, &it->oid,
->>  			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
->>  		return 0;
+ - Give commands to somebody editing the codebase to "make it so",
+   instead of saying "This commit does X".
+
+in this order.
+
+So, "Before this, " is unneeded, "This commit changes" should be
+more like
+
+    Make check_typoes() check the command type and show a proper
+    message for subcommands.
+
+Also it would want a new test to cover this case somewhere.  I am
+not sure where, though perhaps a new test in t0040 with update to
+t/helper/test-parse-options.c or something like that.
+
+This is a tangent, but I was hoping that "git stash lost" or "git
+remote got-url origin" would get their misspelt subcommand names
+corrected with this fix, but that is not what this patch alone can
+do, because all calls to check_typos() in parse_options_step() are
+gated with (*arg == '-') and cannot kick in for these two examples.
+parse_options_step() instead routes such input to parse_nodash_opt()
+and there is no such typo correction there.
+
+It is not so surprising that nobody has complained about this, as I
+understand that the condition to trigger this is rather narrow.  You
+have to give a single '-' (not two, only one) before a subcommand
+that usually is spelled without any dash in front in order to
+trigger it?
+
+Thanks.
+
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2084%2Faubymori%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2084/aubymori/master-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2084
 >
-> This fix (respecting the has_object to odb_has_object refactor)
-> is the correct one.
+>  parse-options.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
->> +test_expect_success 'cache-tree is used by write-tree when valid' '
->> +	test_commit use-valid &&
->> +
->> +	# write-tree with a valid cache-tree should skip cache_tree_update
->> +	GIT_TRACE2_PERF="$(pwd)/trace.output" git write-tree &&
->> +	! grep region_enter.*cache_tree.*update trace.output
+> diff --git a/parse-options.c b/parse-options.c
+> index a676da86f5..2c4530bb8c 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -633,7 +633,10 @@ static void check_typos(const char *arg, const struct option *options)
+>  		if (!options->long_name)
+>  			continue;
+>  		if (starts_with(options->long_name, arg)) {
+> -			error(_("did you mean `--%s` (with two dashes)?"), arg);
+> +			if (options->type == OPTION_SUBCOMMAND)
+> +				error(_("did you mean `%s` (with no dash)?"), arg);
+> +			else
+> +				error(_("did you mean `--%s` (with two dashes)?"), arg);
+>  			exit(129);
+>  		}
+>  	}
 >
-> nit: I think this would be better as "test_grep ! ..."
->
-> Thanks,
-> -Stolee
+> base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
