@@ -1,54 +1,54 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C63914B950
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 15:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CCE345751
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 16:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775490336; cv=none; b=cyT06pFAQIGhg5+jcJW/RugRej2ddSa7ynlee1folOWvwH+kExDXbOPI3uheg9BgM8fckMg6DJM5WeXsY7eIUekL3MvsP63pVjX79PDwBQy3naiRJr5183CfLgpiGs3F93YM88B/UCf+j8iYsbbxW60gfA5l9Glq1niKv2c1mQg=
+	t=1775491215; cv=none; b=VrNEgiQUn0uSfjzCCYmczp8itGfxNJBSbroUyRev+F/k0JKDNpz7bOEk/JrWC9MP5+YEq7radA5cP+7nnIRWPcgqccyrs+vbJlRNsq9TnnFCnVXwrz65PdeD2U08eN8NWGsIKsFb3uqElTKVAfOQCjANcvXi93ak2o4qQSsUyis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775490336; c=relaxed/simple;
-	bh=k+YjLFP4mSWH8MnLYuwxi9YF1y6VfJ8l0dtQU+eifY0=;
+	s=arc-20240116; t=1775491215; c=relaxed/simple;
+	bh=Q3gE7fCrRKg8BhfFAJPwZHpS7I2xewKPUqtr7H0PozQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q2nDepcB4VdZiyrCaZu8jcezhsqhE6scZKKXV4ghfhV4qgf6XWhGoMgLmSf1priYWDnuYpg1E5NQyh+qilDdjCjChzky5UTxwR3xEu6ltA+ZV6TcuEIZMWlwzAQAvMG3+6h57TKoUKAtfUlMdXbLVxMJdLwSzdbZ6Ioa4lMGauI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=npAijgqO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dQWmLwZK; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=X6SDrfgLMkDC1TMSjyzvSEmIm4v4i8cAN4HYZW7YejGExQedINl4f1TbApFC+v3R2SugP6Uh9kTEJ+GTPLURzMYIDrDc7pQR/zw/1V8ORgJSBf7odo/0LFmgODPjWUNH6eK2r5xoTHZeM32hxC5vkIKDsflqMmRSHKPce+Ny1/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GfFb79Bm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EWkOVGqv; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="npAijgqO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dQWmLwZK"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5D1BF1D001E2;
-	Mon,  6 Apr 2026 11:45:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GfFb79Bm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EWkOVGqv"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 503011D001C7;
+	Mon,  6 Apr 2026 12:00:12 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 06 Apr 2026 11:45:33 -0400
+  by phl-compute-07.internal (MEProxy); Mon, 06 Apr 2026 12:00:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775490333; x=1775576733; bh=Eowrd1qIfq
-	Xcd9IJiS3bqb5sEH7eP2uVAyUWvfL3LX8=; b=npAijgqOYVu3qPj3U1WgINWz+S
-	5Zk613JJTP8YYJw27IS2xj/C2iO+YY+JwZPnQ7G5g2j6F/Fkcv/LXTHymIhDWMuE
-	HfjFSVVD+DY/p/r6QT9ndsFrmRgbdyzufz7zue6fdO6vbnWQ/X9S2Anuo/Rw9Qwg
-	f6ciMal3JQk/MTtyXy0VJawGySoY3rnrmZactH3/Iul4ojl7KOIK3mhw1L+8PrDR
-	Ys3ZxBtHk0CZwPrHyx04SbC/5hxBiXHAsKYc0wkmxp2d4Ehr6ToLE8Ao+AbXAciI
-	+79jerPls5OgXVmk96R8q2o79H0cuMxOL4yUBhIkeiey8kOa9W74VIye/H6w==
+	:subject:to:to; s=fm1; t=1775491212; x=1775577612; bh=nJmE6DdaRr
+	h1YZMvQEU2hY3kt93BWadJBX92f2cWBco=; b=GfFb79BmiAPqv7NNM901hOV/tI
+	qnoZ2TKujZY8MuLE2AVUT5rojH5pxd1Gk7jpn4yBdXgOZYDRAVZ4s5seKeLKrkiO
+	A+uHMT+wlKLa5EXHwfLzOuaXwGjSeF4xhWdlkl7E2fqv/XSj/RIcbrDKDQkcg2Sn
+	PfbyuWiWbjjTCUpnJUY20RyYltjscRgVS1VnNQ8xH/2D9uuZuzKIbK3owPMGc+rq
+	b7TAU85MCeR6rKYz79ZosPrs386KcOcfIOoda29h2c6OKJMuBhseoCB8+QGehhfD
+	XroRDAiHDdFpBJWmhJ2UqjbqQVx5Qfc/x5pf5J0MsVYcAkygG8272JNHg+BA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775490333; x=1775576733; bh=Eowrd1qIfqXcd9IJiS3bqb5sEH7eP2uVAyU
-	WvfL3LX8=; b=dQWmLwZK7Ks07nNG5oxVkHnzrsVd9UIeGau57J5CMKSIXfmucZH
-	eQ2I2dSLMyTVMdQ6uONDWwEjkx1XwAIJT7qI+TNmjc6S9Za76uHEBqrw5qofdrr7
-	fy/77UgPpofzN2eR7/gxNuJZtUMTlwWqQVYmVmqWYN7dYUn1Gqw5pk4KZ63SNTDY
-	fStVDu9TSf634uA9MRHPiI6xZBDvAwLJoYx96PWS5bl02wgZU6rDlDfb/3ndUaVe
-	d5cxzyobHINmymIJEFPaWS6YMN3aWB9ece1GZf806kX1D/rj1mXWbNnEGYWSwzj3
-	lLQjbG0Fol0hfF0P8nLdwxFzan+6jQdl/4w==
-X-ME-Sender: <xms:HdXTaXCjzf73D4QXyO9V9aIHBnm314HW_x-UmqRkw8GFqyh2epWQaw>
-    <xme:HdXTaUj302yBFohF77CYouZ_nwI-oAFdyl8abn1XAGf1iREY5oeGbwCxa6bWU9oyt
-    42UpR0-xBNadiyYaI59fbWVgDTnwaPB60g5xLmfnGzkctDfiTn5kg>
-X-ME-Received: <xmr:HdXTaXkHtZp9ohYn1QfPUD9ebU9CUxeKF3GnIcXUrG5Lt2P6J-WpRTQXkDVfmhAqb2ICgqW-420fP3njfCNaGJg3-X_F_TvVPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeduvdcutefuodetggdotefrod
+	1775491212; x=1775577612; bh=nJmE6DdaRrh1YZMvQEU2hY3kt93BWadJBX9
+	2f2cWBco=; b=EWkOVGqvnFllGYwiMjXqHJSEHFHGrH8M4zE5yi5lOFkovivHj1w
+	8XwBqB0IwlVPGMTAGUr4+b+ImI6ViFC5Evn+pDMnix/Y4UBd5rcJZhG4k498kX80
+	voBiLAK2r4/OR6zRXy56x338IZ4yMwoEL6ElMOBm9KqCrBxCeFUWaB1spvmrUXHo
+	uKinYDd4bjgalVUKS/yoxg6JNBM+MJcaP5Xcy5QPOvkdMG7qOfXMAjMwncgkskJE
+	XrINQ9ZclgWoYMQzeMBOaFcFTpuRc65g1frPJtv8be6GPJDLBfNQJtRbClSSwqgC
+	aN7EgENy43fU6X+st0nQRYKH03+tHIauJ+Q==
+X-ME-Sender: <xms:i9jTae_R-KELKoIUgz3fT3wywQRnPm0rBFL8VtVPYGn1MQnwUQjUaA>
+    <xme:i9jTaVvdELHwVfJDIQo0Fzhj789I7q6M7jyybCJeFR1LyouR-Lmd8vZKbFb7hYi2Z
+    VuJN7Z2lg60NtmkhENJprzEIOcCUFvYfnfQ5nJEQ1tC5fnCxZys>
+X-ME-Received: <xmr:i9jTaZAP3PIeAZiqRbb-IwjUv8bgqteBkptEIZKE3Nd9JGH-7V9Nxx08MhLxyS3TD84SIEYrSrPiI5dVkLl-juNoM4jDt8pm_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -56,30 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeduvdcutefuodetgg
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
-    igrdguvgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
     hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HdXTaYrydi7ue_3_6PQudTh9i2OydROQPqHe47QvAYaULI447Xz1aw>
-    <xmx:HdXTaYF2BpeRy_yuuEV2RvOq3RPjEkTNDKzMO3ttBFDat1aJOwuBrw>
-    <xmx:HdXTacyouofAyp0ToAJWFKUefyM8dGbU5sTfakP3yePLXlxgBm7BKQ>
-    <xmx:HdXTaVo6HIr0zzn5HtKTPgikBCgJp1iC1Ee_63pvI20PUVCV1CtSSw>
-    <xmx:HdXTac8XOID42NosMOsRizbgxmvItSUmGR-4g2Xg1v7QZAjSNsopcIDW>
+X-ME-Proxy: <xmx:i9jTaVUOji_Syh5DQ_MlXahMjuXYTNHQbSFx5g1l2llcuFQaqxjSNQ>
+    <xmx:i9jTafCt-Xn9IlwmMTm6AUDKUs398-XmYRP5lyhsVlClEnfGSWXo4w>
+    <xmx:i9jTaQ_9agnFSQ2vmb84m9z3Ul8DGdi6rMW3Wt7No81KbeppoFgldQ>
+    <xmx:i9jTaeFMqPVNn9pKwWKGq_T-9ZdkXmEYRYe_-JHchh2PAoVfw-7trQ>
+    <xmx:jNjTaWbm1oYNYuNz3omXqChjxKMlZ2-oeB0g7fBr6XoViKX3a-0hX8sU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 11:45:32 -0400 (EDT)
+ 6 Apr 2026 12:00:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 00/17] tests: access bare repositories explicitly
-In-Reply-To: <dcb8c6f1-1410-9f04-c389-6f69ac4fe842@gmx.de> (Johannes
-	Schindelin's message of "Sat, 4 Apr 2026 21:45:31 +0200 (CEST)")
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 01/17] t0001: allow implicit bare repo discovery for
+ aliased-command test
+In-Reply-To: <a1cdbd58f0af27be689230b7d8009d93bc34abca.1775332197.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Sat, 04 Apr 2026
+	19:49:41 +0000")
 References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
-	<xmqqeckxqld8.fsf@gitster.g>
-	<dcb8c6f1-1410-9f04-c389-6f69ac4fe842@gmx.de>
-Date: Mon, 06 Apr 2026 08:45:31 -0700
-Message-ID: <xmqq1pgsdrdw.fsf@gitster.g>
+	<pull.2076.v2.git.1775332197.gitgitgadget@gmail.com>
+	<a1cdbd58f0af27be689230b7d8009d93bc34abca.1775332197.git.gitgitgadget@gmail.com>
+Date: Mon, 06 Apr 2026 09:00:10 -0700
+Message-ID: <xmqqse98cc51.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,82 +90,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->> Shoudln't there be a patch [01/18] before everything else that
->> updates Documentation/BreakingChanges.adoc to propose the default
->> change?
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Well, yes and no. There should be an update to BreakingChanges to propose
-> that default change, but obviously it should not only be a documentation
-> change: It should also adjust `Documentation/config/safe.adoc` to mention
-> the intended change of behavior, and it should introduce
-> `WITH_BREAKING_HANGES`-specific conditional code in `setup.c`.
-
-Ah, very true.
-
-And of course we'd need some tests conditional to breaking-changes
-prerequisite in the meantime, to make sure that the default is to
-allow "all" before breaking changes, and with the prereq the test
-checks the new behaviour is to deny by default.
-
-As to the changes to existing tests (i.e., this patch series started
-doing), they have a bit of balancing act.
-
- * Most importantly, they need to make sure their indivial
-   operations, when working on a bare repository is allowed in any
-   unspecified means, continue to behave sensibly.  "git log -p" in
-   a bare repository should still produce patches, "git bisect" in a
-   bare repository should work and assume --no-checkout, etc.
-
- * Then all of them would need to be somehow told that working on a
-   bare repository is allowed in suitable way.  For most of then it
-   should be done by setting safe.bareRepository in the global
-   scope, just like many tests specify the default branch name
-   upfront just once (this is a tangent, but we should find a way to
-   get rid of GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME variable support
-   in our binary and instead set it up in the test environment's
-   ~/.gitconfig), some may add --git-dir=., etc.  But the primary
-   focus with this change is to preserve what individual operation
-   each test wants to validate (see above).
-
- * There may need to be some tests behind the WITH_BREAKING_CHANGES
-   prerequisite that makes sure that the access to the repository is
-   blocked without the configuration loosening the condition, but
-   they hopefully would be minimum---unlike "how this particular
-   command should operate in a bare repository?" that vary per
-   command, "no command should work in a bare repository unless ..."
-   that is enforced in the setup phase do not have to validate each
-   and every command.
-
-> And, crucially, it should pass the test suite under WITH_BREAKING_CHANGES.
+> 8d1a7448206e (setup.c: create `safe.bareRepository`, 2022-07-14)
+> introduced a setting to restrict implicit bare repository discovery,
+> mitigating a social-engineering attack where an embedded bare repo's
+> hooks get executed unknowingly. To allow for that default to change at
+> some stage in the future, the tests need to be prepared.
 >
-> To do that, a lot more needs to happen than just the 17 patches in this
-> here patch series. Most of the additional changes are quite mechanical,
-> and can be validated relatively easily despite their sheer number. And
-> only at the very end of those changes can that `safe.bareRepository`
-> change even be proposed.
+> This commit adjusts a test accordingly that runs `git aliasedinit`
+> from inside a bare repo to verify that aliased commands work there.
+> The test is about alias resolution, not bare repo discovery, so add
+> `test_config_global safe.bareRepository all` to opt in explicitly.
 
-I agree with all the flow you propose here.  And for that process, I
-think the early parts of the effort (i.e., there ~20 patches) that
-prepare existing tests that make sure the operations of individual
-commands in bare repositories should be kept to bare minimum by
-freezing the world to allow bare repositories, just like initial
-branch names are frozen to either 'master' or 'main' in many test
-scripts.  Adding "--git-dir=." (regardless of the "-C there") you
-proposed in the other thread is a valid way (but it may be tedious
-to do and verify); doing "git config --global safe.bareRepository
-all" upfront, if it works, might be simpler.  Any approach that
-would achieve what we want is fine.
+Yes, I think most of the tests we run things in a bare repository is
+not about bare repository discovery but how individual commands
+behave in a bare repository, and these commands must be kept working
+even after a future version of Git starts to tighten the rules.
 
-> I plan on proposing that patch in due time, to start the discussion
-> whether or not it is a good idea to change the default of
-> `safe.bareRepository` in Git 3.0.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t0001-init.sh | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index e4d32bb4d2..6bd0a15dac 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -77,6 +77,7 @@ test_expect_success 'plain nested through aliased command' '
+>  '
+>  
+>  test_expect_success 'plain nested in bare through aliased command' '
+> +	test_config_global safe.bareRepository all &&
+>  	(
+>  		git init --bare bare-ancestor-aliased.git &&
+>  		cd bare-ancestor-aliased.git &&
 
-Yup, I do not think it is a bad thing in the longer term, even
-though I suspect it might be a bit more disruptive than others
-we have in the breaking changes document.
+So I very much recommend the use of "safe.bareRepository all" in
+these tests, not in individual test but upfront, just like many
+tests freeze use of 'main' as the default initial branch name.
 
+I also have to wonder if this alternative patch shouldn't be a
+better starting point?  The idea is that most of the tests that
+validates how individual operations work in a bare repository are
+*not* interested in the fact that bare repository access will become
+opt-in in future version of Git, but they are interested in ensuring
+that the commands they are testing will keep working as expected
+when accesses to bare repositories are allowed.  So we'll run all
+existing tests with this in the global config after we set up $HOME
+for testing.  We'll need to write a very few *new* tests to prepare
+for the default change, and I expect them to explicitly remove the
+setting from the global config, and checks if the default truly
+allows or forbids access to a bare repositories.  But I am hoping
+that most of the existing tests shouldn't need changes sprinkled all
+over.
 
-Thanks for working on this.
+Thanks.
 
+ t/test-lib.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git c/t/test-lib.sh w/t/test-lib.sh
+index 70fd3e9baf..fe85a0bf89 100644
+--- c/t/test-lib.sh
++++ w/t/test-lib.sh
+@@ -1563,6 +1563,11 @@ HOME="$TRASH_DIRECTORY"
+ GNUPGHOME="$HOME/gnupg-home-not-used"
+ export HOME GNUPGHOME USER_HOME
+ 
++if test -n "$WITH_BREAKING_CHANGES"
++then
++	git config --global safe.bareRepository all
++fi
++
+ # "rm -rf" existing trash directory, even if a previous run left it
+ # with bad permissions.
+ remove_trash_directory () {
