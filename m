@@ -1,71 +1,71 @@
 Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24B823DD
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 00:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F0823DD
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 00:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775435125; cv=none; b=JF3fe4UwMtS5eyd/Hsq/daVACMcmA0Bnmg+Xi2x8ITaaQWrznLNr7u5tIDD0PGMiu6Nonilxu29A5c0IVgkU6wIQAX2uL80B0hk8J7zMFx0xV6MvYIff4gq+k7qPEEP9J3TBIMkRZra05xzQ9OcMNoFLnH0WYieZgA+9A60t4FI=
+	t=1775435134; cv=none; b=ITOBvGdIb2VbMAZrqqqomiBO4X/pshbefYv4c5pAuq5xUP19yFmZgkYkS6VLwgrzaX4w2HFhIq+g/g7lmGy82ibjJHqeo91PoH9fWlOoHydmX9k7RUv66++1aX+Y4VzEynKEtyKBD58ELJa+FYF5kj/FZnaFSGYOZPP4ccxVtEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775435125; c=relaxed/simple;
-	bh=re6m+rXQISYijsgyaIxEHUvPjrUcszI7rVhgi62k14o=;
+	s=arc-20240116; t=1775435134; c=relaxed/simple;
+	bh=sRF7GLfebicBePHPR1jD96WDS/MImaCOZYb4Ieabc6A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h4Vpnia2phGevf3HvVNSratwwNQSJ+oWfyG5RgyquCXAfMEJLEbeIghEYxUGesXggjAlR2tJTKwjhUiRKmUAYEpnfxitLZv3fAsKRKM1bMLNimvNLseY1jVQD2Q3whJvWfHHr+JvF6G97dbxL02MJUHmhP9Jxa4Y0PvVQI9NMug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y+IqPhwt; arc=none smtp.client-ip=209.85.221.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=LIveuccMzUfIuoYOfBI2hxFMbH5uAZMZooSLWJNAUIxeGDdQ0R/JxZZF62kkr2o/hYfe673dqcoEu4loxh6N6sayPUo3lEkLhs0r/oTSHCLSQe5/RWDJnujGZngP3sMVEVZqWc2Dx+YCNT/wfAz0znRUQL9dN5GiAmFFxXy4enI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gDiUq86x; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+IqPhwt"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43d02a71526so2010685f8f.3
-        for <git@vger.kernel.org>; Sun, 05 Apr 2026 17:25:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gDiUq86x"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43b87970468so2902897f8f.3
+        for <git@vger.kernel.org>; Sun, 05 Apr 2026 17:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775435122; x=1776039922; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775435131; x=1776039931; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a+XC24Yj4agLNJq3PWfwGat85r2AIivXFUhENTxvQsg=;
-        b=Y+IqPhwt7OCOKQhH7qFG47tUuw+1+0IR9ebS0BHFfrG3O2blGc6tYCGOUHUBfnXH8z
-         Om+e3oo5ovlYt8NKyQGDLQkzxCRZe8ZXL0LH6nYmVJiSX2wcvasUoQxvhj3Y2q5HoPj4
-         M9tLMb0c7IA92fXZIAerWaxYGXdV8RF+9d/oXARQrYBvK9S+hXKWI1DOvN6zWeZINib8
-         01IeCi3G8fuc2MwRVH7mZH8vfvAyj/n8IRkUSrF8if93i9hTW/CSflwJJ6z4kdssSFjz
-         ztOQ4gtzTsuNZXvfuTTHa6pkzTobPo08lKWesPLg9e9zcUorBm/A969AZRAW2+RgU126
-         GL8A==
+        bh=sVNXlPJN0zoVaJUoba/icsxGoAbKWe2ess9+hUyRAM8=;
+        b=gDiUq86xUhnfFGL4BmzJKojU8zEF5SJCW0TZL2OPlSGuzUnYglO75pDR4TBanqbGY6
+         hdecFcE2TXd56NRrW/LJqy070JqPj0hYivWEztYOxhKtvXVYYAc3f7+IL31DaVvvUQUA
+         DcHs2Oekin5HSijyQflFjx4X1veyJoI6TZCDCtSCQtejiefN+8YlYImzQRHCIP3oMbNc
+         APWroqN7sYvsn9TNJxlUWnhsnbNmXr7JUIFzp9FeHoBiqsZ9F7O4YN91MpDxMveebt7C
+         9L0YARFS9RBcYYQcmVSpM+67iw8dWCsoKK35tqpkLabh0GdYJZj7HIsHTTFJYMz9Oq3+
+         B1MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775435122; x=1776039922;
+        d=1e100.net; s=20251104; t=1775435131; x=1776039931;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=a+XC24Yj4agLNJq3PWfwGat85r2AIivXFUhENTxvQsg=;
-        b=mixbnNEkv1V5VbsxjyvdiQohy0bLm8QlwFY9HundTrZ6IwVZLXPC2Qd9cBzNfOA7mN
-         dZZreHUGaCiXTIm2Dk8E1xO6vENmS3aSuDJeDeWQxq3HwkHk8h/OIX2zGMgpqYjsydYK
-         VqdfEPOrNx8ux3zYGwg1ZR1Nkln2WlauzEbxQCyV5qlYAPjU6UntCpu0MEA8AWUz8tgq
-         alFaqd7magOYjEP/5UDiciy+R/FYYDB0dup13FquytlF+83nIvOQSWoz5VQRxcmeuU7m
-         0Q7gZCvIIbYy9ubzMogmPEFZU1pGDnrnxydBjfRrZjwdGkLPZet/sIWTYy7iUsQe9mkl
-         TA8g==
-X-Gm-Message-State: AOJu0YwXrO1z/yg0YMl9bgWRyaL6R3fZGmZrqoROQmq/FlJ08Twmee0y
-	meUm8oQ5twe5r9NGR1LpL++JN16tGt3gB00G8P36hiidB44mruTreK26bLzAkPpuuZQ=
-X-Gm-Gg: AeBDieuSmEcaWzVkkyFtsLc+O/kRDPesyM+sPc77ADrzbfU/hyfFkQwaEeSzRl/mKrh
-	VhYrq+msefoDzAeH/TysnHmlw0OxwxQCIlFeU9x0CWs0Yi9/dt1TFspAiZ3qq/LvCQHbvPeA45I
-	kF7Q6ymVPvgUolSulRdpWycoqZlyyCcEsm2RDh92Hum3/Xw/ccJo1rwripr31NoUsjbwgbz5drV
-	0lLNv2xsbqEBpdizjF0iM5PKmhxjd2EAAFGLMumeQZyxmX6jpbJ06QzTiTZIKi29cBV5CxxBwTD
-	45pbYl1fO7S0pns+ckMmIFpHUPAT9Uea4ew4K3TV4NxG5XFJK6VF5cUMK5A5KvbDQ6ToDqsjA3a
-	hegYFdl8XzukfzguG/tiNt/EkWPWBfushcJOPE9Lf07wGoLoe9iLfbqZH2mmF/nBvOt7dPhWfPL
-	XylFrIgojdM3aMZFwbZwdcmJI+6Brki8GD
-X-Received: by 2002:a05:6000:1a8d:b0:43c:f793:f1b0 with SMTP id ffacd0b85a97d-43d292ff470mr15167747f8f.40.1775435122497;
-        Sun, 05 Apr 2026 17:25:22 -0700 (PDT)
+        bh=sVNXlPJN0zoVaJUoba/icsxGoAbKWe2ess9+hUyRAM8=;
+        b=GmgiS806Ou3h7D0vWvhUh7bjGaolIk8Lw2Ua+WCYVebyJRBXCfqs+syuFD87/Kbo28
+         AgejhGcOxuQH7DXcR85tbdwiS7vWyiPnvQu9dsREMLj5XGo6OW8az/YG3DhdYxv40VZF
+         MZ0gbmiw+hrPmLhPpl9lkFiqc1cZgA2NoDuI+jQEpkeT3dFV4nb06FJEjqe8c4Z+t7Fu
+         lV+DKrHVxQONrszzzvP0GBCdT5t0dX+R768I/6OJ4bZjxnOvOumAirKyOXPzYBfrnZhD
+         C/YLmJUdQkX3B5uNgd65vn3xMmFAKT1IZKh7bRRNG7tlZ1xvkZPtTduQbdS1u8PoaZRP
+         j8JQ==
+X-Gm-Message-State: AOJu0YyBCAfwRtFhKdX6LrwugZF4u9LrwYBOvtX3s1vfZiMozBJk1u4H
+	fFZifePuTrLKOyLFWfmyhvWP+024m1nOe5pl24/UyOgbqQx+nXptLwCF6BV8EwXjrSY=
+X-Gm-Gg: AeBDievqhZvY+nKCtxbSehlPa2e8cULCkgYkPmieYzXT1aIu4noXLVOpX3PHGO4mGFx
+	I0Wj0ZonTzae6ZNq68Zvm5R0pDAewGBqi0Kub4zkLM/BT1A3TCgK9fafc7QK+s05WjIHWg1c00W
+	I2URj7gyCBRJJKecROLbwzZWDN9v5MvuH7lqpP3gwYmwOK5JUgaWiu3fcHjfEJIKLtZDugt08Ye
+	rNo9w4puqentyz7gSNMmJHeJS6yG/Buzs+okGvkJo3zrIckuKZQWb0jUJnRKBynteQveYNgcIkh
+	y5Yp/TuzVN4ROORnqmb91iBZ4S3BB0iRoMtjbAn1SuAZY15vhuH7DvgWHuXK7BIUwHtMzEhMMEh
+	Tk5pULY0J32BE3tH67SOFUmIZxZ32ipkym15MfTJ2lVOfv1ktRghhUqmlIHsp00PH9AKp46ymJb
+	R7BumFzxGeSFgMaKGzGtHNUgLWtkp6mFiv
+X-Received: by 2002:a05:6000:4383:b0:439:c62a:6dc2 with SMTP id ffacd0b85a97d-43d292e188fmr16130492f8f.41.1775435131045;
+        Sun, 05 Apr 2026 17:25:31 -0700 (PDT)
 Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e1fe0b0sm36474414f8f.0.2026.04.05.17.25.21
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4f843dsm34074725f8f.37.2026.04.05.17.25.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Apr 2026 17:25:22 -0700 (PDT)
-Date: Mon, 6 Apr 2026 02:25:19 +0200
+        Sun, 05 Apr 2026 17:25:30 -0700 (PDT)
+Date: Mon, 6 Apr 2026 02:25:28 +0200
 From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [GSoC PATCH v3 4/5] t7700: test for promisor file content after
- repack
-Message-ID: <8e58c1263d15fb8dba8ce1d2866d369e938bf2b6.1775431990.git.lorenzo.pegorari2002@gmail.com>
+Subject: [GSoC PATCH v3 5/5] t7703: test for promisor file content after
+ geometric repack
+Message-ID: <1533fa96a8e2ed135504dee54535b2ed38fe5dab.1775431990.git.lorenzo.pegorari2002@gmail.com>
 References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
  <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
@@ -78,82 +78,61 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
 
-Add tests that checks if the content of ".promisor" files are correctly
-copied inside the ".promisor" files created by a repack.
+Add test that checks if the content of ".promisor" files are correctly
+copied inside the ".promisor" files created by a geometric repack.
 
 Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
- t/t7700-repack.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+ t/t7703-repack-geometric.sh | 42 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 63ef63fc50..89a2116641 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -904,4 +904,67 @@ test_expect_success 'pending objects are repacked appropriately' '
+diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+index 04d5d8fc33..231db98743 100755
+--- a/t/t7703-repack-geometric.sh
++++ b/t/t7703-repack-geometric.sh
+@@ -541,4 +541,46 @@ test_expect_success 'geometric repack works with promisor packs' '
  	)
  '
  
-+test_expect_success 'check one .promisor file content after repack' '
++test_expect_success 'check .promisor file content after geometric repack' '
 +	test_when_finished rm -rf prom_test &&
 +	git init prom_test &&
 +	path=prom_test/.git/objects/pack &&
 +
 +	(
-+		test_commit_bulk -C prom_test --start=1 1 &&
-+		
-+		# Simulate .promisor file by creating it manually
-+		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-+		oid=$(git -C prom_test rev-parse HEAD) &&
-+		echo "$oid ref" >$prom &&
-+
-+		# Save the current .promisor content, repack, and check if correct
-+		prom_before_repack=$(cat $prom) &&
-+		git -C prom_test repack -a -d &&
-+		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-+		# $prom should contain "$prom_before_repack <date>"
-+		test_grep "$prom_before_repack " $prom &&
-+
-+		# Save the current .promisor content, repack, and check if correct
-+		cat $prom >prom_before_repack &&
-+		git -C prom_test repack -a -d &&
-+		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-+		# $prom should be exactly the same as prom_before_repack
-+		test_cmp prom_before_repack $prom
-+	)
-+'
-+
-+test_expect_success 'check multiple .promisor file content after repack' '
-+	test_when_finished rm -rf prom_test &&
-+	git init prom_test &&
-+	path=prom_test/.git/objects/pack &&
-+
-+	(
-+		# Create 2 packs and simulate .promisor files by creating them manually
-+		test_commit_bulk -C prom_test --start=1 1 &&
++		# Create 2 packs with 3 objs each, and manually create .promisor files
++		test_commit_bulk -C prom_test --start=1 1 &&  # 3 objects
 +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
 +		oid=$(git -C prom_test rev-parse HEAD) &&
 +		echo "$oid ref" >$prom &&
 +		prom_before_repack1=$(cat $prom) &&
-+		test_commit_bulk -C prom_test --start=1 1 &&
++		test_commit_bulk -C prom_test --start=2 1 &&  # 3 objects
 +		prom=$(ls -t $path/*.pack | head -n 1 | sed "s/\.pack/.promisor/") &&
 +		oid=$(git -C prom_test rev-parse HEAD) &&
 +		echo "$oid ref" >$prom &&
 +		prom_before_repack2=$(cat $prom) &&
 +
-+		# Repack, and check if correct compared to previous saved .promisor content
-+		git -C prom_test repack -a -d &&
-+		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-+		# $prom should contain "$prom_before_repack1 <date>" & "$prom_before_repack2 <date>"
++		# Create 2 packs with 12 and 24 objs, and manually create .promisor files
++		test_commit_bulk -C prom_test --start=3 4 &&  # 12 objects
++		prom=$(ls -t $path/*.pack | head -n 1 | sed "s/\.pack/.promisor/") &&
++		oid=$(git -C prom_test rev-parse HEAD) &&
++		echo "$oid ref" >$prom &&
++		prom_before_repack3=$(cat $prom) &&
++		test_commit_bulk -C prom_test --start=7 8 &&  # 24 objects
++		prom=$(ls -t $path/*.pack | head -n 1 | sed "s/\.pack/.promisor/") &&
++		oid=$(git -C prom_test rev-parse HEAD) &&
++		echo "$oid ref" >$prom &&
++		prom_before_repack4=$(cat $prom) &&
++
++		# Geometric repack, and check if correct compared to previous saved .promisor content
++		git -C prom_test repack --geometric 2 -d &&
++		prom=$(ls -t $path/*.pack | head -n 1 | sed "s/\.pack/.promisor/") &&
++		# $prom should have repacked only the first 2 small packs, so it should only contain
++		# the following: "$prom_before_repack1 <date>" & "$prom_before_repack2 <date>"
 +		test_grep "$prom_before_repack1 " $prom &&
 +		test_grep "$prom_before_repack2 " $prom &&
-+
-+		# Save the current .promisor content, repack, and check if correct
-+		cat $prom >prom_before_repack &&
-+		git -C prom_test repack -a -d &&
-+		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-+		# $prom should be exactly the same as prom_before_repack
-+		test_cmp prom_before_repack $prom
++		test_grep ! $prom_before_repack3 $prom &&
++		test_grep ! $prom_before_repack4 $prom
 +	)
 +'
 +
