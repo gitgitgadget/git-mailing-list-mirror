@@ -1,107 +1,179 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F217327603F
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:17:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472863242BE
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:30:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775499443; cv=none; b=FYdf9ESz/k0Rxv6r/bR0RCRuCb90RS011nbUUsCzGJFlOdotiuuFuqmkwzKeCHd6oFrdCKC4/hb023pixGXa6NZr6AG7l6B1XrdJdYfnlC6CqZLT4JyFkMiL0OKdxAap9ggxHD7yUNuDWgSdNeIPZB6lrRnfzrtNvqnG95PV9TU=
+	t=1775500249; cv=none; b=nYJRUUtVC43AmQzB94MIGR8qeMy+oKuXImAAjP37eudPJBmJyRIwSKyywEOf03CQq91FuH/Gg6Zf9btnJ1wGg+eHkJtdV4Angeiv9uqyQYJsFpMLZcr82qQzpXQ11L4YeKjCGT0qoOnDNv2HTOYmUzYgI8qwC/pYUl8s4yIJI1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775499443; c=relaxed/simple;
-	bh=753QzuN//pbEO2xG6MMlUdYiGvW72Mh0dL2ChrGHdVs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HwGvW6ryXL6Fp1vh5vfmJf+6ibQD4sURCIxjxCkA75q8OLfjox/f4vVv3iGDWpZDIrGItP5hSdP3SsEqGR6EUVAqT7nONTU1sbOsmD7iLsxPep8jWD18fCCSrOrpOPgL84SQ+XPxxr3O80kDktVlI+R/W515RIWWC/hm/UFaLZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=emcvIn4k; arc=none smtp.client-ip=209.85.161.52
+	s=arc-20240116; t=1775500249; c=relaxed/simple;
+	bh=+pgyDuEN/QNLFqvN4GBo1W5uOTLKHKFL+TWmzdOPhmU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sNiGx0SOPhIcgfJ2l0C/u1BXaK8sqHDQhqSfHlDz1uBO75MFrKJtdNtUnHUmZtxKVmOiV7SWkQdMxXc4JdatTIvuMxNYQIxnrKxcpj5vQS/MaICReSW+M4OaXlmhyntIBGrzv5c5C/+41nMyhFJhimHbCv1DvKzXRgHi9XASBCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sti44T0l; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emcvIn4k"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-685013eb590so876609eaf.1
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 11:17:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sti44T0l"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35da1af3e10so3800440a91.3
+        for <git@vger.kernel.org>; Mon, 06 Apr 2026 11:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775499441; x=1776104241; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=753QzuN//pbEO2xG6MMlUdYiGvW72Mh0dL2ChrGHdVs=;
-        b=emcvIn4kjlD4raPc9crluT/YsVdTX8Z9J418mFsJAkj0SsWnxCU5iW0LUJSkl4gCsZ
-         8QPRBUS85cSpOxp2QTo/izGeYYf0tbdLZ0cRkTVYffLkO3HYeXVwFeKSJ1BQfm7UodQd
-         LbkCM4wCOd526Zi8jNPH4dzaVHa0GvDiqMfI9RP56AfAA/Tf5Va8vzyuZWmd7TQxz9+U
-         zMiKUe2hfaZGDJjSk6O2Ds8hO8XVxV/TRvETqXqTPLGvTP7cmC9Bx92psjXhIKtJspS+
-         V9n+DIeJfXrW4EbLtNusl0MnhVLQT50BZMvwKKBtkFX5WfIudlLPWCHdjeWd2iV3WrfH
-         t8GA==
+        d=gmail.com; s=20251104; t=1775500247; x=1776105047; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xbEVj9PUkB0W+4mRH6L6iiGdhe+5WG2Fsg7sYh2th8Q=;
+        b=Sti44T0lfwmsNvf+dNvDAJj1sIR/DzvsKtBY0B1+kaDLSgRzYM/8CwRS13wKG2VK5G
+         ziIP6fGLdUTzD1lDXOSTk8elj5VMF0miYtC3GR1hIrNzpauAuCOQI7y8Ommwx/vQ7dpZ
+         8GbH/ghI2+IAU3eQPbgTvejEQi4uOjlWkpv8VOokLgaEyXOVxvsE/yjCjs+Qln6oVzzd
+         HgnnJ+W81dbLWaBIoF007GQMjCR8vFYpeG/J3NebKhspCdXGkmPGBZHdRFvz0ZG4PB7p
+         Xtrf2lrvD68HsDA6q4flFORaZ5yfYf2wUiOoxpo0TSv9sBTqnHSoxGkTEce88k1aJaht
+         vWSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775499441; x=1776104241;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=753QzuN//pbEO2xG6MMlUdYiGvW72Mh0dL2ChrGHdVs=;
-        b=q9n3CdnwhikAsXKE9HT+QzcjxZ6l0zXP8erlQEuSLLgRWdErIBLYoqbeYdSVFakayF
-         0IG18aMPnS9JQEl++z12yaBtp1JJkDJz1Yf47+DGA1uSNNgor7Ld+gy/dOS7iU9lvHRl
-         TyMMzvWgiivh5DengBHhbkSGyeINxF0X1x6ivWH6qg+w/6lAPYecnJ4BTmHF2Eh2Jf6/
-         FNrMw1TxmnnzP9zCVTi/RhQ6+t2gPz5f6ZpqjUO8mZONMDqToL8np36lLh8aIQUGKYOa
-         1SyryWu9PwQKep6A++2UkNpw0kvgZ3OxIBx2HQXP4dPfsZiz12KFOO0GldluxMhjrCwU
-         gnvg==
-X-Forwarded-Encrypted: i=1; AJvYcCUg6T2pikziXrmg1Eqm4wKd5szp0XkFKmvNUEn5FbCSalIW3cYYBLE/2DLoKbvTwRbBixU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGP54UomBCwRBmx/ZlWd6hbosRTY2+T4JFvsyXLky3B+FW1FQu
-	vDDVwu1eyeEo8zQYt7K9zZQU1A8kk0x5TK8ZlVCRXQVgnxBRdADM8CzcOSLRRQ==
-X-Gm-Gg: AeBDietmpiTwAupcxkPJkrdUMOzuBfogkcIyPztso4r22Safmfk3m6bnIvNASdC2XKt
-	I/R5n2VHTnodisx1wn6lFG9girGp9dj6JqtPOCKfgbMvL+MEJWo3+XjWWDGS2IaeuI2c/bYA7aM
-	H5MhrxR1brbngBrXwbue6JlC+AGsH5/lxNFlBh6E9xS+nj15KGv9RZAi2IdjZhBbloIVm+10ORA
-	J8hFxeFeCIU9a/ThG6F6a79w8pOfPEWS018aMI2Sjmy4UPVp5a8niQEXjWKIQrYDBNVQGXsy9h4
-	u5xxy6eMmpRzZdd6LH3Qts8OVCuWFw2MYj90Imt3EHGfyRWjKTdrixR3uo7A+PiKmcxheQVR0KZ
-	J19kj8hAezOdNiSOwDHKIrr1e6SO447e0ciJ3KRtD74XQ2i4GapoCCqAu4dhRTrBQCUuBbipiwT
-	B/hyfPY5HcU1Sk9pn1
-X-Received: by 2002:a05:6820:818f:b0:67e:f6a4:385a with SMTP id 006d021491bc7-68220845f36mr6421179eaf.24.1775499440778;
-        Mon, 06 Apr 2026 11:17:20 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-680a540002csm8981955eaf.1.2026.04.06.11.17.20
+        d=1e100.net; s=20251104; t=1775500247; x=1776105047;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xbEVj9PUkB0W+4mRH6L6iiGdhe+5WG2Fsg7sYh2th8Q=;
+        b=atznUrEU1A+iersgX4ZrdRVp6V5yMEKSnmbKWhfsFua+haXNW6MMVu64lc0xB2Gd9v
+         uepf0SRbCXf/TkDBeZTqFLxLnSqgDHSBYIdse9n3BZvN6l25zIdCLg9SCQwMXppENLzn
+         bkiyqffuujktA8QWKmFpLEGI9iZj83IBx9X99rmHvDw8j3A9hzFaecWjg6LKuVLYiSDV
+         2mUIPLDQjHlNVagRwCMHLsyn0HRY6H2W6R+41RmZant81vjmLT+hkLlJ2U1DvatMKscY
+         PJqT5xSuPsBzeM0dnf0EWLUiWKgHrt8uYack3s7RFs3T//S3pfueOuhopCJp0NjsefOm
+         I3ag==
+X-Gm-Message-State: AOJu0Ywu65tc9Abysy0kx2N9CuvXkaKVuggpnUl2WUABuKE8/rI8VMLW
+	ahM/pBtKvf+ov7J6b8fFM58YiekkuGoPPUmxeRVifMxzLDPkBIwjCEsyS0i+H3hy
+X-Gm-Gg: AeBDiethFLiz8V5acQ2B450Hs5Lm/Hg0CmXjRZ6Ei3RCBxAnLVOn2Go/nka+xqPUH+D
+	C5HRkIApoIac65PBputr18dMqwAt5WvCoufTegs1GXt+wqCMYH6k1XRkAGDvq3mBLE7ryGata3F
+	QHabVqs9XYIjGdnr06uw1rOt8DdeVz8+/j9GUwISVmSUipGVX3jEfX0c/81dEkeSEXoTU4TbxQg
+	ROBU+yRMMW9Hjq8lceNnNNNmx0QZiNYvT7Jtn/JC5ectj6s1ki2rfEEfnDDDobBZGfLhWiCI/Lt
+	n/iYE/f064HChXOTcevZ42fza+TEAniPTHBlGdSFSgMygls3Jb74mRMyDV4ChDeQhNkza5Z46G/
+	z4pNyvyhxLRgKmTpaPlE+q9PztNNJJrdv0dJQPGZKdyLOzlMlfAecGdd1GMNk2NNC0ME8Z1JMb1
+	deOhV57ITEbmJl68GogmHy9LGf30A/CQamG22YQXP4UwIp4KKVsmgRxYBEghqaxYIoW0B/O6NV5
+	VeSTEbnmM4dWZVTmOeK
+X-Received: by 2002:a17:90a:1216:b0:35e:1d33:2324 with SMTP id 98e67ed59e1d1-35e1d333c7fmr150614a91.14.1775500246852;
+        Mon, 06 Apr 2026 11:30:46 -0700 (PDT)
+Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local ([27.122.242.65])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dd368f538sm21353614a91.14.2026.04.06.11.30.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 11:17:20 -0700 (PDT)
-Date: Mon, 6 Apr 2026 13:17:17 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: Luca Stefani <luca.stefani.ge1@gmail.com>, git@vger.kernel.org, 
-	cat@malon.dev
-Subject: Re: [PATCH] object-file: don't use object database without a
- repository
-Message-ID: <adP0hnV7Gl08qqqf@denethor>
-References: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
- <20260405064651.GA1452907@coredump.intra.peff.net>
- <145b6c7f-c037-4a87-b561-d2b4d8c5a0cd@gmail.com>
- <20260405191750.GA1525850@coredump.intra.peff.net>
+        Mon, 06 Apr 2026 11:30:46 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: git@vger.kernel.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>
+Subject: [GSoC PATCH] promisor-remote: fix promisor.quiet to use the correct repository
+Date: Tue,  7 Apr 2026 03:30:41 +0900
+Message-ID: <20260406183041.783800-1-vikingtc4@gmail.com>
+X-Mailer: git-send-email 2.53.0.750.g0a20ceeeef.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260405191750.GA1525850@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On 26/04/05 03:17PM, Jeff King wrote:
-> But I think the actual code change in your patch is the wrong thing, so
-> I also don't think we'd want to just squash that test in. I'm hoping
-> Justin has some insights on how to do a more complete fix.
+fetch_objects() reads the promisor.quiet configuration from
+the_repository instead of the repo parameter it receives.
 
-I agree with Peff here that the correct fix should continue to use the
-object streaming mechanisms. To avoid this segfault, we really should
-avoid using ODB transactions when there isn't an ODB in the first place.
+This means that when git lazy-fetches objects for a non-main
+repository, eg. a submodule that is itself a partial clone opened
+via repo_submodule_init(). The submodule's own promisor.quiet
+setting is ignored and the superproject's setting is used instead.
 
-I replied in another thread[1] with how we could go about fixing. To
-summarize, it just so happens that I already have a patch[2] out on the
-list that appears to resolve this issue.
+Fix by replacing the_repository with repo in the repo_config_get_bool()
+call. The practical trigger is git grep --recurse-submodules on a
+superproject where the submodule is a partial clone.
 
-For the use case here, git-diff(1) is only interested in generating the
-hash for the "large" blobs and not actually writing anything to the ODB.
-This patch introduces a separate "hash-only" variant of
-`index_blob_packfile_transaction()` and is used to bypass creating an
-ODB transaction when object writes are not needed.
+Add a test where promisor.quiet is set only in a partial-clone
+submodule; a lazy fetch triggered by "git grep --recurse-submodules"
+must honor that setting.
 
-If this is the route we want to go down, I can extract this patch from
-the current series and send it as a separate fix. :)
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+nit: This cleanup was explicitly noted as needed in 5d215a7b3e
+("promisor-remote: make promisor_remote_reinit() not depend on
+the_repository", 2024-10-17), where Patrick Steinhardt wrote:
+"Those sites should eventually be cleaned up in a later patch series."
 
--Justin
+ promisor-remote.c        |  2 +-
+ t/t0410-partial-clone.sh | 45 +++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 45 insertions(+), 2 deletions(-)
 
-[1]: https://lore.kernel.org/git/adPjXKGIT5O7SK6E@denethor/T/#m9cee420941b66abfb0244ea4b7762ba8d0ff7b52
-[2]: https://lore.kernel.org/git/20260402213220.2651523-5-jltobler@gmail.com/
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 96fa215b06..225260b05f 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -46,7 +46,7 @@ static int fetch_objects(struct repository *repo,
+ 		     "fetch", remote_name, "--no-tags",
+ 		     "--no-write-fetch-head", "--recurse-submodules=no",
+ 		     "--filter=blob:none", "--stdin", NULL);
+-	if (!repo_config_get_bool(the_repository, "promisor.quiet", &quiet) && quiet)
++	if (!repo_config_get_bool(repo, "promisor.quiet", &quiet) && quiet)
+ 		strvec_push(&child.args, "--quiet");
+ 	if (start_command(&child))
+ 		die(_("promisor-remote: unable to fork off fetch subprocess"));
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 52e19728a3..dff442da20 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -717,7 +717,29 @@ test_expect_success 'setup for promisor.quiet tests' '
+ 	git -C server rm foo.t &&
+ 	git -C server commit -m remove &&
+ 	git -C server config uploadpack.allowanysha1inwant 1 &&
+-	git -C server config uploadpack.allowfilter 1
++	git -C server config uploadpack.allowfilter 1 &&
++
++	# Setup for submodule repo test: superproject whose submodule is a
++	# partial clone, so that promisor.quiet is read via a non-main repo.
++	rm -rf sub-pc-src sub-pc-srv.bare super-src super-work &&
++	git init sub-pc-src &&
++	test_commit -C sub-pc-src initial file.txt "hello" &&
++
++	git clone --bare sub-pc-src sub-pc-srv.bare &&
++	git -C sub-pc-srv.bare config uploadpack.allowfilter 1 &&
++	git -C sub-pc-srv.bare config uploadpack.allowanysha1inwant 1 &&
++
++	git init super-src &&
++	git -C super-src -c protocol.file.allow=always \
++		submodule add "file://$(pwd)/sub-pc-srv.bare" sub &&
++	git -C super-src commit -m "add submodule" &&
++
++	git -c protocol.file.allow=always clone super-src super-work &&
++	git -C super-work -c protocol.file.allow=always \
++		submodule update --init --filter=blob:none sub &&
++
++	# Allow file:// in the submodule so that lazy-fetch subprocesses work.
++	git -C super-work/sub config protocol.file.allow always
+ '
+ 
+ test_expect_success TTY 'promisor.quiet=false shows progress messages' '
+@@ -752,6 +774,27 @@ test_expect_success TTY 'promisor.quiet=unconfigured shows progress messages' '
+ 	grep "Receiving objects" err
+ '
+ 
++test_expect_success 'promisor.quiet from submodule repo is honored' '
++	rm -f pc-quiet-trace &&
++
++	# Set promisor.quiet only in the submodule, not the superproject.
++	git -C super-work/sub config promisor.quiet true &&
++
++	# Push a new commit+blob to the server; the blob stays missing in the
++	# partial-clone submodule until a lazy fetch is triggered.
++	test_commit -C sub-pc-src updated new-file.txt "world" &&
++	git -C sub-pc-src push "$(pwd)/sub-pc-srv.bare" HEAD:master &&
++	git -C super-work/sub -c protocol.file.allow=always fetch origin &&
++	git -C super-work/sub reset --mixed origin/master &&
++
++	# grep descends into the submodule and triggers a lazy fetch for the
++	# missing blob; verify the fetch subprocess carries --quiet.
++	GIT_TRACE2_EVENT="$(pwd)/pc-quiet-trace" \
++		git -C super-work grep --cached --recurse-submodules "world" \
++		2>/dev/null &&
++	grep negotiationAlgorithm pc-quiet-trace | grep -e --quiet
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+-- 
+2.43.0
+
