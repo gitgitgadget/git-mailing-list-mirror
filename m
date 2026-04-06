@@ -1,70 +1,70 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13BA390CB7
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 17:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156743939D9
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 17:55:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775498104; cv=none; b=IkeND3dtMlDT1uwYem5RuWKgdHN1vmDza2FrbDnvM4SDk4GewU2G0l335NuwhsUYz1jrXX673aAugUmv7kRl5spODEUT4rM4FEGAo3qetKe1X0ZHO8IRBQ9hOXZUSCO0bDcnpcuUVuKiWqpJaAJ1Y3S2N1MF1I97vDmHrAB28I4=
+	t=1775498105; cv=none; b=VGz1GBhquLK+aKS3j5EK+QfIbL81PvBCGA6ogm0U7s3ImEOK4vZB7QTEl/HgXaVUFRezCSyF8Ta0xCWY1J1KgzaPlRGSJ5I1vq+t9nMpJV9IGls0KDcl6UmMe3QjyaUS2OmjYPRf37lV4NrNyta2QrUny1wOc9IHxrUnS3VhLcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775498104; c=relaxed/simple;
-	bh=yGPDGYA+aETZGTlz8YhNuSgwBMHP6+EAN6O7tnZN/9g=;
+	s=arc-20240116; t=1775498105; c=relaxed/simple;
+	bh=kZCKYWKyg9DS8EoHsGaWFGh2Wl0poRQmQmTdw+w1+EA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tEbHha4bVPVJHB1cxuPaG5eh3DAoDgT8/s9bkUqqvkejSxAplchhw96hs9zdFXDBOQcMDX1Nqhpik8a+8glOlOYhx+3XEbsIvceN9r/VEA4xKqkcSuF47v+ygXOq/axPCItpry5OcsnSutDoBu6Uxrnu3bb6ir+hnzFUlMwdqrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GxArSVfr; arc=none smtp.client-ip=74.125.82.46
+	 MIME-Version:To:Cc; b=CmvlQ1Ua8HiBltbWMWceFndjik3QwsvqBBKf5MkKcFZIR1dxHa4k8bPufz7LaCSc9QdrRP9gMb/V2Yztja1XkXwLErqyQXHcPe829iDQavO6txy2HhLyCgdkz+Ebthm8wMGPSuvDOzTn28tI8sO9EGZj5rPo3aK73VQPuShIm14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mAN65oOR; arc=none smtp.client-ip=74.125.82.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GxArSVfr"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1279eced0b9so4702550c88.0
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 10:55:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAN65oOR"
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2cbdd9852aaso3483354eec.0
+        for <git@vger.kernel.org>; Mon, 06 Apr 2026 10:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775498101; x=1776102901; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775498103; x=1776102903; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q1PhL24B8f/cr98SZ2Vz5OYarB1c60hf5Un3FDLfjnc=;
-        b=GxArSVfrk8fWD7w4XDSPb5q06L8wCfIsJIeejwcWqd+Dg6kv3BL7TTkscC1anji+di
-         6dbiRnYSzxhXGEDLoFlABlxT/5UIOUzlH3l/Md3g3I4O0WxcaNVAbvwS4YBivj7O1yj8
-         GCJIT2w4THnrTYXOciNuipV2+mBEnjiq0j9hEpKpjKE6tYG0Qje19WIRQEMs5HEUN4Cv
-         FMgBX9jY2Z3Ww3ZplOO7AWwcv7WzI0JRmSV0wxYXAs56sHzGbKJCoG3dAsU0V75F5o7y
-         LS0E2EpCOTOzHOoUDSlhpjh75j1sc66jstElO3ZpLhAaXS0ga3e3oYxUK4/23pmIaJme
-         AefA==
+        bh=UmuwVlSNcYGN0z2yoU7zYYEc5mUkisvlkjXgXsRAv7A=;
+        b=mAN65oORdi7TS+4PXIWptrXVexeREJ3u95NRsKVtb0HdnVaAXWpBJiUMhXM6g5B15U
+         iWXk1MCFEuld4dfsR7F8dVP8FPz2thPJzVsRwOq6+fgkkzz5+Foo+mgSCsaju7fCMOUc
+         ZU4zJJLflbxBCVs8jdl7zVKi9OTPwLGoSojuHR0IA6udKFxMiH4cw9Sfvb05keyTSoZ6
+         7Y+VEWTTbHKtael3KcSRVSWIzz3ZzMcvI+WrZNv9byoetyx7bb+fMGGLF6+xOCr1hEny
+         uXqx1ClOSRusAxGiNfMfbwHDjbn8V5irG+s6zHqZfc6TB+DuVdaqfzvixJM1upFTOg4M
+         UbrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775498101; x=1776102901;
+        d=1e100.net; s=20251104; t=1775498103; x=1776102903;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Q1PhL24B8f/cr98SZ2Vz5OYarB1c60hf5Un3FDLfjnc=;
-        b=mTXja7nnNrBC4Gs2ooda+NcyMPWo96pRPPTkTlQcvIxsjiIQrCXLiXJmPNvMMcgLoe
-         lKA+p0tGK3kE9NNlTNbyi58xd7+ihGUjGchoAyLqNS/je5e+JfCqGBJ97GisE4dplYkb
-         pN1JCi0fQu/fxGJAYPpITbLRuZr8JNOmas8i19usOsZ1N33WmqX+2TsC87cYRPHr+PJi
-         j8wuZ1gXfsxi6rzup5U/EtVTQ034+k4ICFW54Nacj+t5c1JLKcxSKIRabF7ilQm0/d77
-         8yzZHPCg5lGy8YqssST4vqBj6oyJbd2qfO5pwPmxrpDem8dB6sEQPOcKYaYkLEqPeJmr
-         +TUQ==
-X-Gm-Message-State: AOJu0Yy9zoQvckpD62proLaHE6c8dZ7v4WTWYyHpw7s6+bDGNFBK0/L9
-	PZsNMhskmArjnujtdMIMl6Vr4tKLERp5Qex/x6n1RWlt3ldW5gIReHeLvwMU8A==
-X-Gm-Gg: AeBDieuR4eVHLwitkm2/D3AypwAGa766n/U+r033agyvTDBtYJpJCTT8k2KtEu945KP
-	Gug9AYHAJY+Ek2Mb7yagRfXhifAREUt8EffHghCAd1tOmbVtf554BoybBNN3i+U/9g/IaXnFebw
-	/MpA82CsqbXod2xylUcALmITjP/UgehxM4M2Os/+aBxm7UhoQ0Xg/2wszuxRHGzcmofJprkH2pZ
-	refxpOlOh+wl60+CJjkJc5LAmoBpt6ScIvHLBSBF3no5tONXwYyRCMIEzIYFcdDGz1X5r1bSMyA
-	9lOXcRW0B3Sjb7Qy15jGgVOOj11TVts2jys/pc7mfgbOfflK60faAnONs81ZH/bUwuR8iTTc7KA
-	icm8wVLeydkAeVkcwZcwFaO5I/YfUwGOeuC75fvEHb77PIDrl9Q8L/WWthnpJfYEIXaJYo4DUN1
-	gWFAio/S3H9tg+4LwYntBEBrj6jnI=
-X-Received: by 2002:a05:7022:90e:b0:12a:8ea4:252 with SMTP id a92af1059eb24-12bfb6e7a31mr5662335c88.4.1775498101113;
-        Mon, 06 Apr 2026 10:55:01 -0700 (PDT)
+        bh=UmuwVlSNcYGN0z2yoU7zYYEc5mUkisvlkjXgXsRAv7A=;
+        b=UBhvM47IgTd2upwdqzCJpulM+QbaHU9nRaiINtTu/+PYiVnsJWrynBD4tiSl7aRaOl
+         XC9lgtgaybORyqAGI1Mrx2u11mab6ScOG4E7CExllJYG1H9R8pjc1VGQPEN0pwXmP2aj
+         hkDG5p/zNE2WIYbCBvr8qNCl1KlGZ8smFPvilteDQ3z+laLlZ1gnBNfJucAcUdRPFwMn
+         e7g5rJerAM/v5io41+eVu4x0GfMPOHhb4M2USVdxiCzpyaxti/xq+rRMjIu2S2Ua7cVO
+         zWKwztYjbwMHtYZScCniP7/+jY8GGdgQFlmVSjcL553+YXHdUso64v/nlgBMgIvlvDYY
+         DgOg==
+X-Gm-Message-State: AOJu0YyHE7gqQbRUi4exrRPdaR0b5gUeZsZbklhFjcMsyqx8wqlIVSY6
+	8JnSuFNAH21otv4zwuvMC5+DQ8QUHnOVUKUf0QGnEoPdaepMPSf35brGruMEYA==
+X-Gm-Gg: AeBDietU4eFUZuVwNHRVnmNk4CWMj2nCUqatlkfpTzqsfzuYKFGUcmACjBy2Q513zvZ
+	2DnhxYivKbOSoaevfrm3ndEF5VQvmcJ6iddPSFkSFOP6zApVkO3fsEDJ3kuRnCdjO9Dn5ASSs8N
+	abVMwTDAEWrPXfeghaeiiAQDOc7SxTceZCw07kn/mmW6nDRbw3L+iFZgtbmO+lPrr8VaBA8urDC
+	dxaeMnmc7cxSwR640+qidPYSuS6s5790KzSRQiJ/Wxf+bFPN+deOEWXT7ks2rbYIt65u6/LbA5I
+	1dnM8BHLTDwnZ0LXOABqF8mDGSe5xbaN3clrSSW6QeVLXbLZVXEJXCSVQ5aLeby7M39c48rY8k9
+	RHJOlPlFpw8E4ZDRRqOn40oXrQvux30eCU48MneciLdtV03l2Dj/gvMw10iVQgdMax7BGBAsJXW
+	3wmluwsbD1vlvaXoNELf7zzWz+70M=
+X-Received: by 2002:a05:7301:1006:b0:2c6:55cf:de42 with SMTP id 5a478bee46e88-2cbf9af8b8fmr6098363eec.7.1775498102665;
+        Mon, 06 Apr 2026 10:55:02 -0700 (PDT)
 Received: from [127.0.0.1] ([57.151.128.242])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12bf90973b6sm12661603c88.9.2026.04.06.10.55.00
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ca760b0518sm13973093eec.0.2026.04.06.10.55.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 10:55:00 -0700 (PDT)
-Message-Id: <28c5aca413dc0966df62a3d04f8ed76bdd9a5bf1.1775498098.git.gitgitgadget@gmail.com>
+        Mon, 06 Apr 2026 10:55:02 -0700 (PDT)
+Message-Id: <9f666beea7aa9a5f38e91ccdf4c2806506acadf4.1775498098.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2147.v13.git.git.1775498098.gitgitgadget@gmail.com>
 References: <pull.2147.v12.git.git.1774937958.gitgitgadget@gmail.com>
 	<pull.2147.v13.git.git.1775498098.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Apr 2026 17:54:46 +0000
-Subject: [PATCH v13 01/13] t9210: disable GIT_TEST_SPLIT_INDEX for scalar
- clone tests
+Date: Mon, 06 Apr 2026 17:54:47 +0000
+Subject: [PATCH v13 02/13] fsmonitor: fix khash memory leak in
+ do_handle_client
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,52 +82,52 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-index.skipHash (Scalar default) and split-index are incompatible:
-the shared index gets a null OID when skipHash skips computing the
-hash, and the null OID causes the shared index to not be loaded on
-re-read.  This triggers a BUG assertion in fsmonitor when the
-fsmonitor_dirty bitmap references more entries than the (now empty)
-index has.
+The `shown` kh_str_t was freed with kh_release_str() at a point in
+the code only reachable in the non-trivial response path.  When the
+client receives a trivial response, the code jumps to the `cleanup`
+label, skipping the kh_release_str() call entirely and leaking the
+hash table.
 
-Disable GIT_TEST_SPLIT_INDEX in the scalar clone tests that hit
-this, matching the existing workaround in test 16.
+Fix this by initializing `shown` to NULL and moving the cleanup to the
+`cleanup` label using kh_destroy_str(), which is safe to call on NULL.
+This ensures the hash table is freed regardless of which code path is
+taken.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
- t/t9210-scalar.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ builtin/fsmonitor--daemon.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
-index 009437a5f3..f2a6df77ce 100755
---- a/t/t9210-scalar.sh
-+++ b/t/t9210-scalar.sh
-@@ -152,6 +152,10 @@ test_expect_success 'set up repository to clone' '
- '
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 242c594646..bc4571938c 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -671,7 +671,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	const struct fsmonitor_batch *batch;
+ 	struct fsmonitor_batch *remainder = NULL;
+ 	intmax_t count = 0, duplicates = 0;
+-	kh_str_t *shown;
++	kh_str_t *shown = NULL;
+ 	int hash_ret;
+ 	int do_trivial = 0;
+ 	int do_flush = 0;
+@@ -909,8 +909,6 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 		total_response_len += payload.len;
+ 	}
  
- test_expect_success 'scalar clone' '
-+	# index.skipHash (Scalar default) and GIT_TEST_SPLIT_INDEX are
-+	# incompatible: the shared index gets a null OID and fails to
-+	# load on re-read.
-+	sane_unset GIT_TEST_SPLIT_INDEX &&
- 	second=$(git rev-parse --verify second:second.t) &&
- 	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	(
-@@ -182,6 +186,7 @@ test_expect_success 'scalar clone' '
- '
+-	kh_release_str(shown);
+-
+ 	pthread_mutex_lock(&state->main_lock);
  
- test_expect_success 'scalar clone --no-... opts' '
-+	sane_unset GIT_TEST_SPLIT_INDEX &&
- 	# Note: redirect stderr always to avoid having a verbose test
- 	# run result in a difference in the --[no-]progress option.
- 	GIT_TRACE2_EVENT="$(pwd)/no-opt-trace" scalar clone \
-@@ -307,6 +312,7 @@ test_expect_success '`scalar [...] <dir>` errors out when dir is missing' '
+ 	if (token_data->client_ref_count > 0)
+@@ -954,6 +952,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
  
- SQ="'"
- test_expect_success UNZIP 'scalar diagnose' '
-+	sane_unset GIT_TEST_SPLIT_INDEX &&
- 	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	git repack &&
- 	echo "$(pwd)/.git/objects/" >>cloned/src/.git/objects/info/alternates &&
+ cleanup:
++	kh_destroy_str(shown);
+ 	strbuf_release(&response_token);
+ 	strbuf_release(&requested_token_id);
+ 	strbuf_release(&payload);
 -- 
 gitgitgadget
 
