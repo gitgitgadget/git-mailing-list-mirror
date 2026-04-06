@@ -1,116 +1,143 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E365B21A
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 16:36:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB61E38B7AA
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 16:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775493368; cv=none; b=V1ZLqDBG5/c+kvl//3ooniff+uGn7j8cw7ZopF2Oj7KWMxtvNvu8kL2OQgqOkciBksNQDpyLR3nFlsokycKBzcRchNtjc5SvnS9cDN5zqcOxrPt480pDk4vACj8tHLe4fgkMnl2iI1Cg8gzpj8YDoqHL3Z82pwX2SJVykeHuglM=
+	t=1775493604; cv=none; b=gBx0yFjBdI5JTtpG1ohs4Pg6D6u50JZJ1M39YDudtYoDsfD4VMCWfmgWmog2B0QPivVRZE1dVsXhkVZ42zVm44E12qsKkvJXxrgv9L0e3I4Y8TZk+hGGknTRa+jaWCZWEQHFnxYGuW++9tcWOLqhCEJomP50BhF1T2JnljPrho0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775493368; c=relaxed/simple;
-	bh=RuRN36OnPVd7um15yNTGwqEzpXlOJyXDgWX8lFplkRI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U3s9dBqBvrn9hcwk74O+pfik/1Xzdn1+H4Ejzte3qHFonbdm5B1hGskQIMhbcDMbFEKBcUOdfwe5KYa5G4hRQhae6QheeaOUv7KCcYB1JjHPtdoL4MUVQ5npkYk/R32V1EGGHPjbBZvKxrDLaqU/c7UpG+RoL/FpZboCa+63PhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YbvpCiwG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UCCyCZbV; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775493604; c=relaxed/simple;
+	bh=b9Gi0OEmdKp2dcLhfiSh/i0JirAmygsUlMoGgq3QDqw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PMFFUqH5/bL1bS8GRAZ584PRoHoGA+Q3d8cxfu+qoC8CCDZkKSuxXqDk+PvU+S5oA6/D0QlHmxSFq8TjyJjhbQIEW0oBqmF1SccNeChbe6zuWnuyCJ546Wjn1w6UISWbjc0rdGiXrnv4mXeKG8bJWv7t4mLeQywAKZCgADfpaH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4eKjOFO; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YbvpCiwG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UCCyCZbV"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E109B7A01C6;
-	Mon,  6 Apr 2026 12:36:05 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 06 Apr 2026 12:36:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775493365; x=1775579765; bh=W3Ut/9I5fT
-	MkFw4Sj2EeAeullNZ0yNd9YkmVSnCCQBs=; b=YbvpCiwGiLCHqSZbI0xzoawXqO
-	ODrkgHL/eB6IQxF87VIHDIjHCRa6Je9zMzsquoysRKMevRpCDYmyJ8x1le7K2NJf
-	eVI+uuuTebRg9nLi9nuqcyknz1dTMLbuzO8qaxe4Ye8HXrwR9NczbtEOzNNlFb22
-	M2dAtaw8E0T95XUylwS0c+vu9fOP1d6X+8T7jNdtWROUxt7lAGHY1L0v84akJTGr
-	8JX9NZp6N4KXiJripz0nA7ryxoljg3/Er7KFJUvQfyfXtF6yM0LX4HB47VFtSALg
-	zG+J/P/F24vvTnYDq47e6jZOFwHvttXg3jxoIGf82f2hY4bk0mbLqX0qKHNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775493365; x=1775579765; bh=W3Ut/9I5fTMkFw4Sj2EeAeullNZ0yNd9Ykm
-	VSnCCQBs=; b=UCCyCZbV+6gxM7lD3KqxYg+D7PBpmNSB62nGCEbR361IzPfANGI
-	cLGLD5enYooGmXkPbOiC25eF3JYsES54FmG0Edg8bgZvODpkkG7BjyvS6Cki8HPs
-	JYEyZEvbELHW5nWaa6YdG7Ar5MdVJy0uIYxVwLZIZahmYueMMxoZUQkZwR/f2KLs
-	3U0maxH9bir7zs3rvnQIFFvp8SXTXS3jduOURSNqPlQLpsyESa7qG7fmc9sPQfLG
-	6GqnQ2FGdKgItO1ItRnSHI8AxPRTB9SUpaZXjRazitGWDlrRcaXEiB4S+56LGpYv
-	cL00xCMIl2sFklrWlU/5aM8aMifL8mq24JQ==
-X-ME-Sender: <xms:9eDTadfC4IL5NFhoCNlDOWVNaffbgjHQr-DioA2EjvVt6QTGhHC2EQ>
-    <xme:9eDTaSoXxmqoYh5iu_Gu5Z6DLmWmPTNPliIEhkkFL_0p3RELpZsxztF7xu-oPBf4w
-    qRzSNF1Juk7-1TKwxCTf2KMskcM2rEQajyDuC1oIPh5j-75H3yb6A>
-X-ME-Received: <xmr:9eDTaT6hXWq0dKRJOzbsd9aj7TCXgSuZTrc5VQsJAXynCfHsNvMLrWrHLDsaqqAmjsGCTl8cbXZ1EVqFTa_ejoMxka0yta7W5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukedvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehthhhitggrnhesthhhihgtrghnrdhnvghtpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9eDTaQrfrbpsTtEFyMtsBE0DaJqyLQdQxMR8p8kKIPePOjjz-DH1VQ>
-    <xmx:9eDTadhuBGbdsDv8vjXc8161QqYKrxYySzc2hTWVCIqFg9e5Qt1aNg>
-    <xmx:9eDTaSLDKvWFgnacBzrLtaNY8oJj2EpTVCxKa4-MgTppkbIuQVmJCQ>
-    <xmx:9eDTaVCrsJvfl6Kj4mf-d6e38_AwpG24tJz7F4IEzieuVyRfcysnEA>
-    <xmx:9eDTaZUyVQeTDTVZqx6km-zZayHHx_2qza5lDPUx_WtmMK4eO6LxiUDH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 12:36:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Thibaud CANALE <thican@thican.net>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH] switch: provide configurable detach
-In-Reply-To: <njuf62lav6akkmdyqutwk7pim5yutw5cuicjidwpe5eh6qnkqr@4ir6q4uhhvht>
-	(Thibaud CANALE's message of "Sat, 4 Apr 2026 16:28:57 +0200")
-References: <njuf62lav6akkmdyqutwk7pim5yutw5cuicjidwpe5eh6qnkqr@4ir6q4uhhvht>
-Date: Mon, 06 Apr 2026 09:36:03 -0700
-Message-ID: <xmqq7bqkcah8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4eKjOFO"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488af9fdaa7so6306035e9.1
+        for <git@vger.kernel.org>; Mon, 06 Apr 2026 09:40:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775493600; x=1776098400; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=G2ES/ys7lGyxb3ZR15hkyfPNMeQHq9fjsAxWAqDRLW4=;
+        b=f4eKjOFOmjp92AI1T0XJGo/R14ZYzu/gK3UpeUxWmG72h7J3BVGqdxXkJu34QpClEv
+         Z5EYXtEhkbkUgHnoqbgZHTFGj/SBWMHicWkvml2wuXSffHkANsCrGoRnt1HL+ArtwOfK
+         vzeGro6yNp62txeBxPiscO32i7gF0Q4wdoQT5Raxc+UhKUoe7CrSQUQv511HPbfabrKR
+         T4FK+m0+8zt3ctF6Rk9D7zD5mWvVzMcBc4P2FHhXJ6FEMzu0tk6b+3RFpgWgJu4Z3lBb
+         jaL0c/4QkQeeHg8wFYu4opl93kbWuXTan/9bvYSUhvAPZOBsN3tBvpRpLdc7XKFLwQu2
+         Ki3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775493600; x=1776098400;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G2ES/ys7lGyxb3ZR15hkyfPNMeQHq9fjsAxWAqDRLW4=;
+        b=TizPvfcfK5mfq6EfX5hIrsy3VlXUeR6yQ4ywnMMCQ+rDUUC2J7ENnzw+7lzuCsj23L
+         w8hgrxGfrdpyYciTK2ZVsM/PZtiD6ARuO8Xa0s9EH68FNLHQSef+pxftbY2myzdP5bYK
+         Ab5hW3eZgBAQi+3RAWpSKAB4zRNNYWXGbcm9+fgQjbRrOYUmAJpnHuRJ6OOS+v5RJRHr
+         /hqLGN4s7Fxtz28rOaCWkIEXWLQOKDgEQbC8jK3N02XtUby2akreWXTvADM3w7VTPmuu
+         jOd0utU72onDoq7LLDbr99uR8fMoJ+hrQoGhjc86bYXa03n03B6TS9xmsJHib+/a5mua
+         Rx7Q==
+X-Gm-Message-State: AOJu0Yy3LMABFdmQ0TRT4f1j79VM0jhDIg5FP3wbpg33ZgPnzWeXUQDF
+	1VqJKAOd9ovOrfRGuHpQGisPjSk30VQFVlJ2OJffRotkGYC4cNi87Jyj
+X-Gm-Gg: AeBDiesQwPEOX4e0J7pOKrBT0uDKedfdsPjcqsPIjQK8NDMnpAMxEY/+h38eE0oBJ/1
+	WrV6zERQbHkew2GXSWBigYi2gpN7opZJcQeFatPpUl/h7lxj87VXXmCZUQl9ObN9XbnlMYJqaBu
+	X6ORhNS8VxOBJ8emxSTgCKIwKHo62TOuKY6xeVEt2dPGJkjRZymhDtffRFhmvqauxKqSSDU/M6j
+	+oFZStoeG9dkNPC/qoM+zPAiNmnOO5+tYLaTN6J3aXZlGH0rctRlXqjY3pmuH6j2DoJXMXbYRsO
+	wiRvdiavp/XHfNWCPdvDhy4mjRSfXK2VvcRQ9l+UGZyqIcfFTRj/l/xZhO24pr6GY4TKHAgjzVR
+	eBBUowgMruqONkUyKCZxk/PUJ4e+YYH40cbYlsFbRFyLL7k1fBD4AJViphYt80BriILOBSUBZBz
+	Dq4wWNpgKFN2zeU9pdafnZ6KkMteVfY9whLNFLR+rrUJOy2gHneaXl
+X-Received: by 2002:a05:600c:c16f:b0:488:aa3d:faca with SMTP id 5b1f17b1804b1-488aa3dfd4amr92539235e9.18.1775493599637;
+        Mon, 06 Apr 2026 09:39:59 -0700 (PDT)
+Received: from localhost (78-131-14-223.pool.digikabel.hu. [78.131.14.223])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d214f2b63sm37598820f8f.28.2026.04.06.09.39.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Apr 2026 09:39:59 -0700 (PDT)
+Date: Mon, 6 Apr 2026 18:39:48 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 05/12] hook: include hooks from the config
+Message-ID: <adPh1GHnPH034u3V@szeder.dev>
+References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
+ <20260301184500.1488433-1-adrian.ratiu@collabora.com>
+ <20260301184500.1488433-6-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260301184500.1488433-6-adrian.ratiu@collabora.com>
 
-Thibaud CANALE <thican@thican.net> writes:
-
-> Its purpose is to provide for git-switch(1) same detach behavior on
-> commit it than git-checkout(1) through configuration option
-> `checkout.switchDetach`.
->
-> Signed-off-by: Thibaud CANALE <thican@thican.net>
+On Sun, Mar 01, 2026 at 08:44:53PM +0200, Adrian Ratiu wrote:
+> Teach the hook.[hc] library to parse configs to populate the list of
+> hooks to run for a given event.
+> 
+> Multiple commands can be specified for a given hook by providing
+> "hook.<friendly-name>.command = <path-to-hook>" and
+> "hook.<friendly-name>.event = <hook-event>" lines.
+> 
+> Hooks will be started in config order of the "hook.<friendly-name>.event"
+> lines and will be run sequentially (.jobs == 1) like before.
+> Running the hooks in parallel will be enabled in a future patch.
+> 
+> The "traditional" hook from the hookdir is run last, if present.
+> 
+> A strmap cache is added to struct repository to avoid re-reading
+> the configs on each rook run. This is useful for hooks like the
+> ref-transaction which gets executed multiple times per process.
+> 
+> Examples:
+> 
+>   $ git config --get-regexp "^hook\."
+>   hook.bar.command=~/bar.sh
+>   hook.bar.event=pre-commit
+> 
+>   # Will run ~/bar.sh, then .git/hooks/pre-commit
+>   $ git hook run pre-commit
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 > ---
->  Documentation/config/checkout.adoc |  4 ++++
->  builtin/checkout.c                 | 18 +++++++++++++++---
->  t/t2060-switch.sh                  | 27 +++++++++++++++++++++++++++
->  3 files changed, 46 insertions(+), 3 deletions(-)
 
-Sorry, but I am fairly negative on this change.
+> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+> index d1380a4f0e..3a95cfe16d 100755
+> --- a/t/t1800-hook.sh
+> +++ b/t/t1800-hook.sh
+> @@ -1,10 +1,26 @@
+>  #!/bin/sh
+>  
+> -test_description='git-hook command'
+> +test_description='git-hook command and config-managed multihooks'
+>  
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-terminal.sh
+>  
+> +setup_hooks () {
+> +	test_config hook.ghi.command "/path/ghi"
+> +	test_config hook.ghi.event pre-commit --add
+> +	test_config hook.ghi.event test-hook --add
+> +	test_config_global hook.def.command "/path/def"
+> +	test_config_global hook.def.event pre-commit --add
+> +}
+> +
+> +setup_hookdir () {
+> +	mkdir .git/hooks
+> +	write_script .git/hooks/pre-commit <<-EOF
+> +	echo \"Legacy Hook\"
+> +	EOF
+> +	test_when_finished rm -rf .git/hooks
+> +}
 
-"switch" was an attempt to give folks an improved experience over
-"checkout".  The implied "--detach" was deliberately removed from
-the command and I do not think it was a bad move for our user base
-who wanted to have "switch" that can only be used to switch branches
-(as opposed to "checkout" that hecks out both files and branches).
-With fewer choices in a single command that does only a single
-thing, the hope was to make it simpler to teach.
+There is no &&-chain in these test helper functions.
 
-And it is backwards to make "switch" configurable in that context.
-It defeats a major point of "git switch".
-
-FWIW, "git checkout" that knows what is and what is not a branch
-name and does not require "--detach" when detaching to anything that
-is not a branch name is always available and will not be going away.
