@@ -1,126 +1,114 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8CA3033E3
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 20:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98EA30FC1D
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 20:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775507888; cv=none; b=aByR3udAmS/NsFCqJde/DOlZVCaJpkX5UkrhxDY8Udrtw1/ErV++FTJbal4/gbVfMQ4V9BBsKMuZmPyjhQ5E4xjTI1/xtRtCjmJOc75NcpJQq5AZXFJE+2XZieVn5kdh5CPoq4yP1Hcl7+YhcQNkl7RIXMOEe0BwH02Dt0i/uk0=
+	t=1775508319; cv=none; b=MC/aZ0CTd/w7tuil3hnKoh3H3nT2rM77q8VuL3ssrY4LFkfySEAFPsylXx/k3zkm0Dc4WM0RS+JafLH2ZdzeZ8DPVvkRIl8a8024XkO2/skXJKRgbSjQTyzzz8aaxelz3RC9hLR0v5f912aFDre2+dzOYAIRDkqlOyVk6YPSbHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775507888; c=relaxed/simple;
-	bh=mC8d84fM94Ali62bOEUVPJC6ZZMJwQps1M74vo7GAI4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CihRkcwQDBWPKOnmZIfccMCKGJBA8o53LQ3gBpNFizKLzASpAXorn88jM9kpdFWAJRqQSdU2ffRy88ofQI6/Z556by+4KOfTRMxdxe1R6qprZVMTrDnZYnwToyQcAmfytbCgC+86TFnKst0y8ScYIjrboR7+zXojt6w4VWgLjwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mvz/Flp8; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775508319; c=relaxed/simple;
+	bh=EEXR8jj1gJI1oSaQnbw1OznRrmSFaAY6SxzLPFIwhY4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t2ANjTQdVsE8fuLgbz/4gBTFFfvj+Lx4KWBQuE2EMKzVYumiKij95sFdNavPKEf6Iaes+LCKeYOlNHwxA2pqcuw+2NKBGGHnDXvNBS+9JXvvYy2nK4SRMROWpimeBrS1wlFm5nd4+Zz8ONA8rydyexoocPYN2gHmfOvslwqH6/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n7d/7Z97; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y5EvUi6N; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mvz/Flp8"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7d7f09aa39fso5380659a34.0
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 13:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775507886; x=1776112686; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SAB7ir6vnXh6x5rqMrTtGEc24zLjTVUlux6jjOH61jk=;
-        b=mvz/Flp8/QeSkXZPIVtzY28ciA9SabUIjH3dQ+Tz8CURobhtyCv+3ln+EB2MjYS46p
-         3/pkHpd/wmWCPOpeunQND3pmXdEvBBS10pt1Mg0FiLaF6m1rBpgD5KLUxYYXJUw5GTgP
-         yPT0tATOfbJYeiYv1kptfyZQyIUWBQGNzw8vWOSyToUc75FjqvITpcRvfdMRGEBs6Co8
-         RKHGBWgdv2qRnO34N58PDoitCfVEYEJtAvzjz1fWHjykFuzOoW7L7zi/9uL5gYYcrxoE
-         MuRKw5vdtITDENiqqjGoTKlMdUQlzXTvYRsaJhjhjJmSlqTnbP9YOWKw9Y3uKowxoFNO
-         EhWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775507886; x=1776112686;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SAB7ir6vnXh6x5rqMrTtGEc24zLjTVUlux6jjOH61jk=;
-        b=o0gJTCoM8HN7qQmf49TDgyxZNzqpnGN+U+KwpEmEbX12EDEAE5026s+G/2L2uZrBft
-         6DiW07kPE310Vahqy7iGLNH27awxUiKbYWhG/gbZj0faRi308iI9AgZSXsmy9RB05M4a
-         P/ZOdu/CsN/ScNfG0I7aB9CEZJG5KhpP7cbRwPclMGSw9b3uOSSK4rSe6xFACd8nGP3a
-         dab2JVmbfP7vh+Oukda5vLs19PdWUBXcnjdoVLRuipyIoIhUKg4gvpoeWl0O9CpitcfI
-         kgBwa7SEVJm22D4jNM+XK200oEuGalQetbha1AoYI5kXxSYBOj7pJwzgFKPycjoBb+Sz
-         O+Jw==
-X-Forwarded-Encrypted: i=1; AJvYcCWxS1QBuNdsQRFw3rOPS/2+vm2Obbu9BwS6J6xrMVhkw5sKvuFqc3tOGINtiZBP7stgJ2U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyixijczSEhrZbEffyv98NdkkQfJ4cKgFIHz9dWdHCiq5KZk+OY
-	KwAJ+cjtYCdAneB+Cr/+JPjit23PnptWJWriVza5OJ60G9+3DXbPLKulGIY+DA==
-X-Gm-Gg: AeBDiesWgi7l+4WIb4Jj+MtdOmdVTlpZImwYo8xk77B3SE7XBm3ZHvL+rLGCktr3qwj
-	rnqOSIGn8MXK71wcBNPJRehh5EyheFYZ5GPrSX0tcrDEsfGL7HxO2wAm1T8MPY3LW7Tk1GDvneu
-	ViGq1ToYY+V+w25eAuFh9rE7csvzq1Bxosc+7JpIy6pa0b9eZlUu8N5ZvGPWchpbm95ZpB5b5w3
-	mKjAtnIp1a0jyoKt/xExx0Sw91CeMp78mDi6apC1hTPCObzCO/gCa1yE53qFEvELUYn6/seOoBU
-	+6Gg36AIpd3DKVlmYO6E81E0RLrdv8kU/hg741/GmaRIDmONktrOrF2yngpiDMV2s+XOxy+KzPA
-	jKuSHPBduLvCW1V9WY5s7Y6pkMSoEi9hBdfCr3gTxg1Xsyzk1Qow0eM9sAFXpKnIh/gm6zAUg3O
-	2apOmj495ykoSTvy4JpI41xscv0hM=
-X-Received: by 2002:a05:6820:81c4:b0:67e:2dcd:e847 with SMTP id 006d021491bc7-68220941f51mr7545220eaf.61.1775507885975;
-        Mon, 06 Apr 2026 13:38:05 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4232eb3d0e4sm7614625fac.6.2026.04.06.13.38.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 13:38:05 -0700 (PDT)
-Date: Mon, 6 Apr 2026 15:38:05 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: Luca Stefani <luca.stefani.ge1@gmail.com>, git@vger.kernel.org, 
-	cat@malon.dev
-Subject: Re: [PATCH] object-file: don't use object database without a
- repository
-Message-ID: <adQYS_ThpOzxCLTi@denethor>
-References: <20260404172817.2995133-1-luca.stefani.ge1@gmail.com>
- <20260405064651.GA1452907@coredump.intra.peff.net>
- <145b6c7f-c037-4a87-b561-d2b4d8c5a0cd@gmail.com>
- <20260405191750.GA1525850@coredump.intra.peff.net>
- <adP0hnV7Gl08qqqf@denethor>
- <20260406200651.GA26091@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n7d/7Z97";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y5EvUi6N"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E2CF1400133;
+	Mon,  6 Apr 2026 16:45:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 06 Apr 2026 16:45:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775508317; x=1775594717; bh=Nynx+HhkiO
+	c8O5wIbxbKQs1MBog6xGF1Az+faoD+m3g=; b=n7d/7Z97D/5T0hQntpeBKFTB4e
+	4ctzmHqCSndQ3j4hnNuat8AbOKvzpBdmAbCS36tD9p+dwodAhValZF2Alm3v7aa7
+	mlcgZwU0atBAkQyoZL0ZPfMWIyt9OeqO/FHBe6kd2Stql1shnAS+Rm8eX61wuRGl
+	bdhw7ld30cYJuPRd7XU8ngC8MNJPubhI4bXOF7jd3x9dOA/ihoujFXtJpJNpS6I5
+	p3jNIG8zWZAL/xuegnR1eUjw30JLRcKYfWwVvfV3GdouMAbTgTIPculvxFZrXx1M
+	o97xn+xIrtP4JZbo3JtA1xVQ0VgGIj30AO87pidzCL6nchLLmzIeOzWdybzw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775508317; x=1775594717; bh=Nynx+HhkiOc8O5wIbxbKQs1MBog6xGF1Az+
+	faoD+m3g=; b=Y5EvUi6NKACmetVx/p/bf34bjHmeJwbq5niD9U/3WFo2Tu1H9QF
+	6sWuJK1bjxWYLx+yTRPq/KzN9nTOMLOCD9lpqH3pf6Vh1qRxqSVBXYdMMAfj8fwa
+	3RTgUtfjdlFrgyNay2uEVCd9iIJ4mTc894pFWw0zr0qGt5vXZ2JV6zdmrJSNqdcI
+	iYai0QXaRWlsVdeJo6jh7gk15oAgeX9SuP8vBEsq9Z0z+Wr41BOABlN/v+JKpYa7
+	XOT66XZcuNjYzyKrTExpjoFCZUatzBgvTQTcjkrfZ72ZHeAM59jZqyKU0JWupLOs
+	hgH2McDtVBu6Yn03F+HiouL8iclG/rqafqg==
+X-ME-Sender: <xms:XBvUacQ1CMdMY1k__FsT3V-RO5aWQrkBB7pgktC9ph9p4UVaISli-g>
+    <xme:XBvUadc97p5gtxq0nIIykPtHv-r_otxdW3JWK3MnK4vfkjmovkdURmKmo0ofc4tUJ
+    DQPtdxU-kQzCnu1Ryxh7Jh6lYvDtLiiwxiDw6a_pQGs6cd066lqgA>
+X-ME-Received: <xmr:XBvUaTrZ9nPvnbdm95X1gpDzuCSXeso-8dXKbiAst1pyc1ztEPECbMJT2aaq1uDtFBQEnG3N3XxQSDtlGoIQKI3-H77bPHKu5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptggrthesmhgrlhhonhdr
+    uggvvhdprhgtphhtthhopehluhgtrgdrshhtvghfrghnihdrghgvudesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:XBvUaW8JqpjtWKU9-1nI-pju4KxVyx9hWx1krIxFhrcWnqvg8Raycw>
+    <xmx:XBvUaXeNqR9CCG-mdQyviYSBVDvW_SXSbO8N24axvFbeSM6HztVF7Q>
+    <xmx:XBvUaYJELvswUTwWy4TUmDHryuXuvsms7VX4e7Hzt02KokurCNFV_g>
+    <xmx:XBvUafhtIHZyXU2JRoR2yHt42Kr88jEK5uPegdykpJ1smdio8Iq3tA>
+    <xmx:XRvUaSgFwTnBa78G-XQeukJE4E7N3kTmmO54iGKu9e_PXaWA3rkrsMva>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Apr 2026 16:45:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Jeff King <peff@peff.net>,  Tian Yuchen <cat@malon.dev>,  Luca Stefani
+ <luca.stefani.ge1@gmail.com>,  git@vger.kernel.org
+Subject: Re: [BUG] git diff --no-index segfaults on large files (NULL object
+ database)
+In-Reply-To: <adPjXKGIT5O7SK6E@denethor> (Justin Tobler's message of "Mon, 6
+	Apr 2026 12:57:07 -0500")
+References: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
+	<d6c63949-1998-4cde-8cb0-902fd7db988c@malon.dev>
+	<CAO0HQ0VEJsG6MYrp_bSTuU09PDsypGPrM0XazvM8er0kB32Gqg@mail.gmail.com>
+	<4be492cf-347b-4fa5-9bdd-83e7ea8abd92@malon.dev>
+	<20260404230939.GA1360412@coredump.intra.peff.net>
+	<adPjXKGIT5O7SK6E@denethor>
+Date: Mon, 06 Apr 2026 13:45:15 -0700
+Message-ID: <xmqqjyujakdg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260406200651.GA26091@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On 26/04/06 04:06PM, Jeff King wrote:
-> On Mon, Apr 06, 2026 at 01:17:17PM -0500, Justin Tobler wrote:
-> 
-> > I agree with Peff here that the correct fix should continue to use the
-> > object streaming mechanisms. To avoid this segfault, we really should
-> > avoid using ODB transactions when there isn't an ODB in the first place.
-> > 
-> > I replied in another thread[1] with how we could go about fixing. To
-> > summarize, it just so happens that I already have a patch[2] out on the
-> > list that appears to resolve this issue.
-> > 
-> > For the use case here, git-diff(1) is only interested in generating the
-> > hash for the "large" blobs and not actually writing anything to the ODB.
-> > This patch introduces a separate "hash-only" variant of
-> > `index_blob_packfile_transaction()` and is used to bypass creating an
-> > ODB transaction when object writes are not needed.
-> > 
-> > If this is the route we want to go down, I can extract this patch from
-> > the current series and send it as a separate fix. :)
-> 
-> Yeah, I think this is a good path forward. I took a look at making the
-> transaction begin/end conditional, but that's not nearly enough anymore.
-> The transaction object stores state which is used under the hood by
-> index_blob_packfile_transaction(). So we'd really need some kind of fake
-> noop transaction that understands how to stream.
-> 
-> Just having the caller divert to a "hash this without having an odb"
-> interface is way simpler (especially since this is the only spot that
-> needs it, so we are only paying the price once either way).
-> 
-> I gave a cursory look at the patch you linked. For a maint fix like this
-> I think we could probably slim it down a bit: introduce the new
-> hash-only helper but _don't_ actually rip flag support out of
-> index_blob_packfile_transaction(), so we know that we can't accidentally
-> break it. Though maybe that is being overly cautious; it only has one
-> caller, and that caller would no longer be passing in any meaningful
-> flags.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Ya, I think slimming down the patch probably makes sense. I'll start
-working on it and make sure to include some tests too. :)
+> IMO it is already questionable as to why we would want to start an ODB
+> transaction if it is already known that the object won't be written.
+> IOW, if we are only interested in streaming the object to get its hash
+> we shouldn't have to start a transaction.
 
-Thanks,
--Justin
+Very well.
+
+> The other option would be as Peff suggested and to make
+> `odb_transaction_begin()` just return early with NULL or some type of
+> no-op transaction if there is no ODB set up. I do think the former
+> approach would be preferable though as I'm not sure there is really a
+> good use case for supporting ODB transactions when there isn't an ODB
+> set up.
+
+Let's not go there.  I agree that odb transactions without odb does
+not make any sense.
