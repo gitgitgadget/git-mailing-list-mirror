@@ -1,140 +1,100 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A9338D019
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 17:15:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115B2390CBE
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 17:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775495732; cv=none; b=rXnKHqojQ6Cg6wx+tndX+Nz7VwFcH9K5WlM3g8I4pqAwrOsG2iR5pkOQcCbRtpKSTqiQ8EQ/NvFwqXskLgblr0/tTu8oBjJDrBYjs4ODUy2VpT/74QcYo3dfRQJDpt1AhRMAcf+wMLx86/teKMf9aglm0UnSAgkqmiI139K+qMo=
+	t=1775496145; cv=none; b=BotYBa10JykqJXIAPXVCpjjkEgtXTfApPys6WrIYxKJVI+YvA7vyN7i35jSyEmtWKJLH+aVoq8N9Z0cE3jWopWbT5INE4q6p/8GYnOlf+TlrdiITkpANdpHP8gmbg4yabgaOT6L4fNfZFJQnsqaIHxX47U2SbpKKmgnP2xDdObQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775495732; c=relaxed/simple;
-	bh=SaQ4uSWyCJ3MlXBlRUWz9cqz9Z5xq5dz15zzhykU/rA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DQxCeIVGeMckp7KzUq0f86uWVq7iyApVS+eXh/WaQVghWCwStWoUwoTUQw7kmvOZTKwB8XzyXJJ3Na+t0fB6KkV0D5yMZjaZAIp8o9gFnbjlNTB4DrzzX1cz6xD42x6NZL0s5BEOp+kw5cKdHXdL2qUxLi6KZBDD1l4SP79TQW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=x3Bb5BSI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mSjFUXJJ; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775496145; c=relaxed/simple;
+	bh=K8bHWS9T2gLN4jAZJJFL58bzx+o1I+WmOLP6AZSDukY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HjUh2WQ5hroHC3nHY9N4E01H92t07CxERKCg56uMI8MaXcktV58PLp9hEhqI/ZGTZQhHXHq8B5egKEWwiuMo/mc9gSePhTkS1hi7Bgj9wyVaAK+JE8uXnMTq9E5LUW3dc90bOO4sun4m+tV1gUlqV5Rd5Uem91DRn9Z8tXDqTVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=r6Ez0TAm; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=STPzaypE; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="x3Bb5BSI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mSjFUXJJ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D81A67A02C6;
-	Mon,  6 Apr 2026 13:15:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 06 Apr 2026 13:15:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775495729; x=1775582129; bh=apTmOoShI6
-	Br/MrUqkH9SBt215s1E7DViidsauiZ3dg=; b=x3Bb5BSIiF04uIK0uBFIWzpYi3
-	kik2SazJ4E4jC04kO5IDqkUbPEb0tcba9R1h2p5IGv3ncZCgLxnytQlCnR8lhop3
-	KhTG+ya45G41CpvdKfkVgzPB2U7/80urLa34b2N3zEhNoPdxFS0OYr/umAqJ1nUJ
-	4hcIIvEzn9hHrPTkghrlwwRo1kd2DpETYpM9dhRHzvxKcruJik2JFGMHTEKqb6qk
-	l+bef8L2MFG40yLlwJzArhXtVRs50CXDY4AdZt9lifc/O2sDgGfXf0aQOL77YdcI
-	hJalj45F7CeQAbGFwdT6YRqbRsSryD3XB6grgZAF2KEzXBzTzTmv0SEuVqPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775495729; x=1775582129; bh=apTmOoShI6Br/MrUqkH9SBt215s1E7DViid
-	sauiZ3dg=; b=mSjFUXJJ26kkfhpKkUPvuZZr7+lmtIXHJqaIglNhS0Ftyzt64Zd
-	NDCBFVAChoHxoL3b3ZCgARgm7zw6c4Zkw04bHg8V+bi6jmmqr7whXuhsAXSHIoHM
-	N3yruyUTGwzVmmIWqeipnE+QwGO/hmef/3pdhdjuYvZoCwL9ohNX4xVRbEbrpBzv
-	Rf4f0dZ+xr1KvpQfQdn+9GhSmHyD6xlX/gMEl4FIF5//ygS7RCaFsVubDStnR8EF
-	zpgpUO20dYcb9bI8QiKqzWJQS1YCYPf42UxBqFn+9+8Vfd5XrNdjJ5xHnOEp6318
-	9VDI/wDL/TJM1SSfPU0NxM98NTwvjM7eK5A==
-X-ME-Sender: <xms:MerTaXkqV1Jpq9ioi5e2_ep9YUJBOv4T3T4sREsH3XtO0JLmUW1e0w>
-    <xme:MerTaSTDoybQFbIdntljvD8JJondhKO4hXeTaO0cO8-Kahhv9w8vKkwm66cYYngBj
-    oRanpL41KVkg9wPq4YRZ_r9BoJkNCw1a_SgYg5BHQmzaMHl5Rs>
-X-ME-Received: <xmr:MerTabB2uuYF1DZKvheEnTGhz6ATYP9pDmFV_lowPOmnhbkAV6zEnsXt5i637ItCdO6Nw6rdtEcwXnFlRym38vcT3GoIzTLDaQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeeftdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrhiesrghm
-    vghrvghtrghtrdguvghvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MerTaZQsEbdz8BdUR_zuJuf5_hLHlkxERS1KF0KzJdNsHTOYbTIx9w>
-    <xmx:MerTaZpuLjsgsRelw-Df2dNj-TqEsXd5NRKGR5-XXDm2LZChHY7hwQ>
-    <xmx:MerTabz0rHY68FX_zSTJFgfoZMjtzifEkfV1yKPSlt4grYnJg475Sg>
-    <xmx:MerTaeIlqP4ZafllROtggN9N5anh57SSXmKVzqnwBEDfHRLeZlfPeQ>
-    <xmx:MerTab7BuZNdlb131T9Eb0QQC7qLe24vq2I9qlYfXIFTg8lDcBMIbrxm>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 13:15:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Raymond E. Pasco" <ray@ameretat.dev>
-Cc: git@vger.kernel.org
-Subject: Re: [WIP PATCH] fast-export: emit deletions first
-In-Reply-To: <20260406063607.15353-1-ray@ameretat.dev> (Raymond E. Pasco's
-	message of "Mon, 6 Apr 2026 02:36:03 -0400")
-References: <20260406063607.15353-1-ray@ameretat.dev>
-Date: Mon, 06 Apr 2026 10:15:27 -0700
-Message-ID: <xmqqo6jwau34.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="r6Ez0TAm";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="STPzaypE"
+DKIM-Signature: a=rsa-sha256; b=r6Ez0TAmWeA6avsAgfyOsotlmm5Pj7yUAJq1ZbpPfcqWjvMHwljWVa3lrmkdvksEJ2fUGN3VfCTzqBwtndtZSpFVO6o3HhvjD6wrm9MKvWl1tsVo5fee5wK6HW8dCN7zXwEgVHAzjj3BdeIW+zw5GJWZ2pVM0t7QWOpA09sGSKPlDLQI7pTmMRCwqlod/HI4LftzyXUSF5IAGkSc2dDN3WuYzdsUnZx+yBfIPmB+UquV4IWfJAj1d4X3O22YLmKCosefXgkDHnXosfKXOUj25YijdGUXhSG25NfpMIwDosaf9Jc7nBR7PF7KthCFedvoyASBLjW62O/pHcvojS1r9w==; s=purelymail2; d=malon.dev; v=1; bh=K8bHWS9T2gLN4jAZJJFL58bzx+o1I+WmOLP6AZSDukY=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=STPzaypEUQFER4Gq+8rOd1pVMdGcW88v2x9UE++zpv4JzqBTQcc8maIT2CaKI6fsfMXCuqQd/mXMxOdpZCnz7p4G0IlGTZriVHl+OCLqVEJLJMuDstFeL/dw/h8gvWodWCpNSaeIY+o6vDXrI3Zk6FZr3UJ9/KjybuYX30pA5eTfY25K5qZQj/M3tfTIgN5YuacmHEwQ1pPPWnImLS7S57tUsWh9c+S3ugQRaIJGo1SfNHc4+0Bu9clGwLuMJH9NGDnAiBl7WW2q2dd/UT5QE3MIk6j4OyJAMhhQQZBnXpe2Qi2/Pbxuo/CpcYVXLjd/JaiXXL/O7J5PW6/fquJXug==; s=purelymail2; d=purelymail.com; v=1; bh=K8bHWS9T2gLN4jAZJJFL58bzx+o1I+WmOLP6AZSDukY=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -2075129831;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 06 Apr 2026 17:22:21 +0000 (UTC)
+Message-ID: <f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
+Date: Tue, 7 Apr 2026 01:22:16 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor file
+ after repack
+To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>, git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+ Elijah Newren <newren@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
+ <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
+ <3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-"Raymond E. Pasco" <ray@ameretat.dev> writes:
+Hi,
 
-> fast-export chooses its output order by pathname, sorting longer
-> paths earlier. However, this causes faulty output when the deleted
-> path is a prefix of the added one. For example, deleting a file 'a' and
-> creating a file 'a/b' emits:
->
-> from :prev_label
-> M 100644 :blob_label a/b
-> D a
->
-> Fix this by sorting deletions to come before other types of change.
->
-> Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
-> ---
->
-> This is a quick and dirty fix for the bug. However, I do want to spend a
-> little more time on it - it may be that we only want to reverse the sort
-> when the deletion is specifically the prefix of some addition, and I
-> want to fence this off with new tests.
+On 4/6/26 08:24, LorenzoPegorari wrote:
 
-I recall doing something like this in "git checkout" and also "git
-am" to ensure that a thing deep in the hierarchy will not be
-affected by a D/F conflict at a shallower level, so I do not have
-objection to this kind of change in principle.  I do not know if
-depth_first() is the right place to make this decision or if the
-function should keep its name if it turns out to be the right place.
-
-In any case, it is a bit surprising that fast-export survived this
-long without having encountering the problem you are solving.  I
-wonder if fast-import handles such an output with some smart to
-avoid the issue?
-
-Thanks.
-
->  builtin/fast-export.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index b90da5e616..82d73b2f43 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -354,6 +354,12 @@ static int depth_first(const void *a_, const void *b_)
->  	int len_a, len_b, len;
->  	int cmp;
->  
-> +	/* emit deletions first */
-> +	int a_deletes = (a->status == DIFF_STATUS_DELETED);
-> +	int b_deletes = (b->status == DIFF_STATUS_DELETED);
-> +	if (a_deletes != b_deletes)
-> +		return b_deletes - a_deletes;
+> +=09=09while (strbuf_getline(&line, source) !=3D EOF) {
+> +=09=09=09struct strbuf **parts;
+> +=09=09=09struct object_id oid;
 > +
->  	name_a = a->one ? a->one->path : a->two->path;
->  	name_b = b->one ? b->one->path : b->two->path;
+> +=09=09=09/* Split line into <oid>, <ref> and <time> (if <time> exists) *=
+/
+> +=09=09=09parts =3D strbuf_split_max(&line, ' ', 3);
+> +
+> +=09=09=09/* Ignore the lines where <oid> doesn't appear in the dest_pack=
+ */
+> +=09=09=09strbuf_rtrim(parts[0]);
+> +=09=09=09get_oid_hex_algop(parts[0]->buf, &oid, repo->hash_algo);
+> +=09=09=09if (!find_pack_entry_one(&oid, dest_pack))
+> +=09=09=09=09continue;
+
+Memory leak here;
+
+> +
+> +=09=09=09/* If <time> doesn't exist, retrieve it and add it to line */
+> +=09=09=09if (!parts[2]) {
+> +=09=09=09=09struct tm tm;
+> +=09=09=09=09localtime_r(&source_stat.st_mtim.tv_sec, &tm),
+
+Typo.
+
+> +=09=09=09=09strbuf_addch(&line, ' ');
+> +=09=09=09=09strbuf_addftime(&line, "%Y/%m/%d-%H:%M:%S", &tm, 0, 0);
+> +=09=09=09}
+> +
+> +=09=09=09/*
+> +=09=09=09 * Add the finalized line to dest_to_write and dest_content if =
+it
+> +=09=09=09 * wasn't already present inside dest_content
+> +=09=09=09 */
+> +=09=09=09if (strset_add(&dest_content, line.buf)) {
+> +=09=09=09=09strbuf_addbuf(&dest_to_write, &line);
+> +=09=09=09=09strbuf_addch(&dest_to_write, '\n');
+> +=09=09=09}
+
+It looks good elsewhere, at least in this patch 2/5. (=E3=82=9D=E2=88=80=EF=
+=BD=A5)
+
+Regards, Yuchen
+
+
