@@ -1,143 +1,113 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB61E38B7AA
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 16:40:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D318B38BF9A
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 16:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775493604; cv=none; b=gBx0yFjBdI5JTtpG1ohs4Pg6D6u50JZJ1M39YDudtYoDsfD4VMCWfmgWmog2B0QPivVRZE1dVsXhkVZ42zVm44E12qsKkvJXxrgv9L0e3I4Y8TZk+hGGknTRa+jaWCZWEQHFnxYGuW++9tcWOLqhCEJomP50BhF1T2JnljPrho0=
+	t=1775494322; cv=none; b=qQ3xPde3mKgJbbHhxGd/fukZ6A3E/FVn/DXlieaXrY/pHOiHQ27m2yirKhFwtWrivqORalIEbOiJSSdILM5OXguFLMpXn6tAgjEWmB/PToomYK0MG73GwtY5LezcV6ttGiy+nf90U7mBf5mbqNbE0yG9EbPwCHggGRNsdLd4Kvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775493604; c=relaxed/simple;
-	bh=b9Gi0OEmdKp2dcLhfiSh/i0JirAmygsUlMoGgq3QDqw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PMFFUqH5/bL1bS8GRAZ584PRoHoGA+Q3d8cxfu+qoC8CCDZkKSuxXqDk+PvU+S5oA6/D0QlHmxSFq8TjyJjhbQIEW0oBqmF1SccNeChbe6zuWnuyCJ546Wjn1w6UISWbjc0rdGiXrnv4mXeKG8bJWv7t4mLeQywAKZCgADfpaH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4eKjOFO; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775494322; c=relaxed/simple;
+	bh=ka9VYSxsYDX4ERym586lg9S4IIJ9NuHn9ikQsabigHw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pUqsgHOO5xLFtABXOc3pEoIg7sbIKjsuvPKibofzAkrBJpsA7MdN880Dnz/XYLbIxL8Q3z2XBQvzKmERBNha6E6R5smKZDf1D11oayukrw4us0cYdRjD9iGfSram/yyfEjaQOrQXAabWfgbN0otTgUiXmY/pmDk6g7pu2c/T0Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=brZYJxHt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mBmM3BxP; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4eKjOFO"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488af9fdaa7so6306035e9.1
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 09:40:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775493600; x=1776098400; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=G2ES/ys7lGyxb3ZR15hkyfPNMeQHq9fjsAxWAqDRLW4=;
-        b=f4eKjOFOmjp92AI1T0XJGo/R14ZYzu/gK3UpeUxWmG72h7J3BVGqdxXkJu34QpClEv
-         Z5EYXtEhkbkUgHnoqbgZHTFGj/SBWMHicWkvml2wuXSffHkANsCrGoRnt1HL+ArtwOfK
-         vzeGro6yNp62txeBxPiscO32i7gF0Q4wdoQT5Raxc+UhKUoe7CrSQUQv511HPbfabrKR
-         T4FK+m0+8zt3ctF6Rk9D7zD5mWvVzMcBc4P2FHhXJ6FEMzu0tk6b+3RFpgWgJu4Z3lBb
-         jaL0c/4QkQeeHg8wFYu4opl93kbWuXTan/9bvYSUhvAPZOBsN3tBvpRpLdc7XKFLwQu2
-         Ki3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775493600; x=1776098400;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G2ES/ys7lGyxb3ZR15hkyfPNMeQHq9fjsAxWAqDRLW4=;
-        b=TizPvfcfK5mfq6EfX5hIrsy3VlXUeR6yQ4ywnMMCQ+rDUUC2J7ENnzw+7lzuCsj23L
-         w8hgrxGfrdpyYciTK2ZVsM/PZtiD6ARuO8Xa0s9EH68FNLHQSef+pxftbY2myzdP5bYK
-         Ab5hW3eZgBAQi+3RAWpSKAB4zRNNYWXGbcm9+fgQjbRrOYUmAJpnHuRJ6OOS+v5RJRHr
-         /hqLGN4s7Fxtz28rOaCWkIEXWLQOKDgEQbC8jK3N02XtUby2akreWXTvADM3w7VTPmuu
-         jOd0utU72onDoq7LLDbr99uR8fMoJ+hrQoGhjc86bYXa03n03B6TS9xmsJHib+/a5mua
-         Rx7Q==
-X-Gm-Message-State: AOJu0Yy3LMABFdmQ0TRT4f1j79VM0jhDIg5FP3wbpg33ZgPnzWeXUQDF
-	1VqJKAOd9ovOrfRGuHpQGisPjSk30VQFVlJ2OJffRotkGYC4cNi87Jyj
-X-Gm-Gg: AeBDiesQwPEOX4e0J7pOKrBT0uDKedfdsPjcqsPIjQK8NDMnpAMxEY/+h38eE0oBJ/1
-	WrV6zERQbHkew2GXSWBigYi2gpN7opZJcQeFatPpUl/h7lxj87VXXmCZUQl9ObN9XbnlMYJqaBu
-	X6ORhNS8VxOBJ8emxSTgCKIwKHo62TOuKY6xeVEt2dPGJkjRZymhDtffRFhmvqauxKqSSDU/M6j
-	+oFZStoeG9dkNPC/qoM+zPAiNmnOO5+tYLaTN6J3aXZlGH0rctRlXqjY3pmuH6j2DoJXMXbYRsO
-	wiRvdiavp/XHfNWCPdvDhy4mjRSfXK2VvcRQ9l+UGZyqIcfFTRj/l/xZhO24pr6GY4TKHAgjzVR
-	eBBUowgMruqONkUyKCZxk/PUJ4e+YYH40cbYlsFbRFyLL7k1fBD4AJViphYt80BriILOBSUBZBz
-	Dq4wWNpgKFN2zeU9pdafnZ6KkMteVfY9whLNFLR+rrUJOy2gHneaXl
-X-Received: by 2002:a05:600c:c16f:b0:488:aa3d:faca with SMTP id 5b1f17b1804b1-488aa3dfd4amr92539235e9.18.1775493599637;
-        Mon, 06 Apr 2026 09:39:59 -0700 (PDT)
-Received: from localhost (78-131-14-223.pool.digikabel.hu. [78.131.14.223])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d214f2b63sm37598820f8f.28.2026.04.06.09.39.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 09:39:59 -0700 (PDT)
-Date: Mon, 6 Apr 2026 18:39:48 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Josh Steadmon <steadmon@google.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 05/12] hook: include hooks from the config
-Message-ID: <adPh1GHnPH034u3V@szeder.dev>
-References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
- <20260301184500.1488433-1-adrian.ratiu@collabora.com>
- <20260301184500.1488433-6-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="brZYJxHt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mBmM3BxP"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A8447A0164;
+	Mon,  6 Apr 2026 12:51:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 06 Apr 2026 12:52:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775494319; x=1775580719; bh=+Ka1xopCji
+	l2omC1ISuy7quUUmRcFaBBOw7jn88DjIM=; b=brZYJxHtMjDcKEY3DqvtXuberc
+	ZYa20OiRo+6CCmDx6ICzG4tjKEImH4tlb4UQwzYfdoxepp+jU0KLDw6AOikOIfrN
+	y6bru6QhWLupXXHBsUpacqumaEv3ubz+rpo3Tb3l6A83svZ+YvQo2H+ao/AwgI4x
+	+gL6jYgQimcZNfuwIkvcHLpcF6Nua398zJZnIBYqsELK3rB6sWCo0ubGFZXkPRI4
+	giILHFOSoLtA86S1kvDqdafU92zsbWMeGj08EvTGklieYGT7XLlXRHpoWeeBvqSW
+	dTnH/UKhwW5SFfoakpTYPB62vaTU9OFGzhoGrw5BHhbu+hbSimW4j0mPWgFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775494319; x=1775580719; bh=+Ka1xopCjil2omC1ISuy7quUUmRcFaBBOw7
+	jn88DjIM=; b=mBmM3BxPWtzeYvX1cFm4TrJ1/ayynlGM9reG3Hzlar0pbsm6Wkc
+	97WzSBgovy6mW/da8fUZHn0FYV9SV44G25keyFZNy0A2ti5z6FzR6kVWsJGIVYOi
+	zMqw1nEXRJon9asWNbxJKOYgwTj4e5FnTl4uwRa6NaMVqVVdwlK22F/cd/AS9EWn
+	f0OiDFEFHasy6pGfbBeaXsFVbzkNj56xULGl1utv7PkG2MlSAhRH4iq/HljB8O8L
+	Js66PUJ/c+bsLZp7lKHzCIW/OPCKgBGCVyiLDzbMKbf1PFUfgpCEvvnm2M8lwWXr
+	I6//mrEKLueB5QMBGAy+QwYvkIBKVPcXbYA==
+X-ME-Sender: <xms:ruTTaQJ10SdkDphgaqhaCoqTzVNnunTG09iZQFoupRdWj3XQ0b-Ckw>
+    <xme:ruTTaSai9Lul1zjIZOb_5RlVQJJqCYgP_Gp9-8L7oPxeGdm8VGCC9HykbeJ_wwD4-
+    HSWkMmASxwH5aY-a0TIs1BCBQG-1tShYKBTjm5ey2IAWzeppptx0g>
+X-ME-Received: <xmr:ruTTaS8KIyvqxKvfb6oktlACG9wgQK3ssVNo9oNO4hLiysHAT_TSfNfwEnjvqJDhDtuQV8ss4hwRRSil8UEP-0keJV5W8JFRXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukedviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehprghulhesphgruhhlthgrrhhjrghnrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ruTTaTb-FI1Ur1zAAn8esBvJ_1p234gTjo5G8zF02XsyfNB9sLrkVA>
+    <xmx:ruTTaWOV0WNaB2ZqCh5ug8fsj2quu6gYoOhXQTZgwQOXc9o2QVh6SA>
+    <xmx:ruTTafDsBLBJmCoAZ-3DmhagRZlEvA_qa7atJSZPALl5CZUwdphk0Q>
+    <xmx:ruTTadLdEmB9drd1UU-PbgH8KfciRRgzIyC3s-rnx0MJSh00UORjZg>
+    <xmx:r-TTafDVA6G4dyyMqomP3MWGN3qfVXsLTeJzuAeP0HquhUj2E1GU1bPJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Apr 2026 12:51:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Paul Tarjan <paul@paultarjan.com>,  git@vger.kernel.org,  ps@pks.im,
+  stolee@gmail.com,  gitgitgadget@gmail.com
+Subject: Re: [PATCH v12 13/13] fsmonitor: fix split-index bitmap bounds in
+ tweak_fsmonitor()
+In-Reply-To: <cd82f960-88ff-661e-1e31-a119beb817e7@gmx.de> (Johannes
+	Schindelin's message of "Sun, 5 Apr 2026 11:26:02 +0200 (CEST)")
+References: <b96ed977-525e-c3fc-a626-db1a4b3da376@gmx.de>
+	<20260405051528.74435-1-github@paulisageek.com>
+	<cd82f960-88ff-661e-1e31-a119beb817e7@gmx.de>
+Date: Mon, 06 Apr 2026 09:51:57 -0700
+Message-ID: <xmqq3418c9qq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260301184500.1488433-6-adrian.ratiu@collabora.com>
+Content-Type: text/plain
 
-On Sun, Mar 01, 2026 at 08:44:53PM +0200, Adrian Ratiu wrote:
-> Teach the hook.[hc] library to parse configs to populate the list of
-> hooks to run for a given event.
-> 
-> Multiple commands can be specified for a given hook by providing
-> "hook.<friendly-name>.command = <path-to-hook>" and
-> "hook.<friendly-name>.event = <hook-event>" lines.
-> 
-> Hooks will be started in config order of the "hook.<friendly-name>.event"
-> lines and will be run sequentially (.jobs == 1) like before.
-> Running the hooks in parallel will be enabled in a future patch.
-> 
-> The "traditional" hook from the hookdir is run last, if present.
-> 
-> A strmap cache is added to struct repository to avoid re-reading
-> the configs on each rook run. This is useful for hooks like the
-> ref-transaction which gets executed multiple times per process.
-> 
-> Examples:
-> 
->   $ git config --get-regexp "^hook\."
->   hook.bar.command=~/bar.sh
->   hook.bar.event=pre-commit
-> 
->   # Will run ~/bar.sh, then .git/hooks/pre-commit
->   $ git hook run pre-commit
-> 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-> ---
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-> index d1380a4f0e..3a95cfe16d 100755
-> --- a/t/t1800-hook.sh
-> +++ b/t/t1800-hook.sh
-> @@ -1,10 +1,26 @@
->  #!/bin/sh
->  
-> -test_description='git-hook command'
-> +test_description='git-hook command and config-managed multihooks'
->  
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY"/lib-terminal.sh
->  
-> +setup_hooks () {
-> +	test_config hook.ghi.command "/path/ghi"
-> +	test_config hook.ghi.event pre-commit --add
-> +	test_config hook.ghi.event test-hook --add
-> +	test_config_global hook.def.command "/path/def"
-> +	test_config_global hook.def.event pre-commit --add
-> +}
-> +
-> +setup_hookdir () {
-> +	mkdir .git/hooks
-> +	write_script .git/hooks/pre-commit <<-EOF
-> +	echo \"Legacy Hook\"
-> +	EOF
-> +	test_when_finished rm -rf .git/hooks
-> +}
+> This patch essentially tells Git to disobey the `index.skipHash` config,
+> at least under some circumstances. While that _looks_ like it works around
+> the observed problem, it is unlikely to be desirable in the long run
+> because such an inconsistency is prone to cause problems down the line.
+>
+> The fundamental problem at hand is that the split-index _requires_ the
+> index' hash to be calculated, while the `index.skipHash` config
+> specifically _skips_ it. In other words, those two features are
+> fundamentally incompatible with one another.
 
-There is no &&-chain in these test helper functions.
+Thanks for clearly spelling out the core problem ...
+
+> So the safest approach I can think of really is what I suggested, to force
+> the `GIT_TEST_SPLIT_INDEX` variable to be unset in `t9210-scalar.sh`.
+
+... and a clear recommendation.  Very much appreciated.
 
