@@ -1,138 +1,155 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3962338F922
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634038B7C5
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 18:49:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775500855; cv=none; b=Cxfz9Z2SJwJOrMurBxaje6oCQ7b8ki1wcpE93YBXx3z6fuwCIrpGSdvd9N08U/RoMnEhQZfwmEpJW9aTLZ7JYtoEzIwnIqSdvcr2fq/2yQpzVGUIbzmw9NBnGNrn7p5ObSTj2W1rlxvKV/s9RdKyoFM4lypdHkwIuySnsOjkDpo=
+	t=1775501353; cv=none; b=Mczshq7X0mGshMrucZq52Nj+46EW5LWj1xrbbu9IssAQET1qjxmzwcZ+/1UzYclgobG2iQgiljlnCwyN9tAHAHaqEGBvSpRzBL1H6zMsEjMKY0l94Df4OUI1ArK+7c1SCIBeJiQTMwK5tx0UCejTKRAk6tKjZgtCO1D/a5771P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775500855; c=relaxed/simple;
-	bh=V0GeOPAx+2RV8y9QmrPVvYWqtxLGZfov+NbiFrC/nw8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J3Jh/2A2dwxG8lZCIyjeYRGsEVcTsRrS2jpzCaqoJzL8E8xP0RJSALR6RH+bQvRHqNck3ef74yV7MkJoqIESrewclmJrhhkZb2p00L8WW4lalD8hx1ZnzN+NFC6pzmm48fkl1lbZy7UAv2wztlb9Ejy7Tt50IgHxEVb3f4eONw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p0n+lsH6; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775501353; c=relaxed/simple;
+	bh=t3faZrzx6EnXYRj360ouRieloM68Cw/l2E3PPlhcliY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PTynGSc1DKMLixqyPJuwXy8HKcp/+8tjEsDrMvpihvUVa2Rx5WE9u+Esb2g5XQzkGrJZx+1A9N/FfBitmgF04S5avWxJSdeh1+EY+scWRJugvTQkAKDajKByGqeWQo1rEFrNfiNC3WgWuSis9uEh1Hrm5p6BV08pQV7zOFmOMWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kBmwF2O2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BD0Hezs5; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p0n+lsH6"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48897fd88ebso28239915e9.2
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 11:40:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775500853; x=1776105653; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LMOd6xUZdZ29TgPMelZcwSAbhKQsTn0MyYwEPDBgp6A=;
-        b=p0n+lsH6lIM0oKa2z0uYnhxea2Ca9zHa4pFIU7KCD9uT5GLxrx6zE7OuqUFvmI68Iu
-         IYGLS1GCs3KX8dyFq9ieOV3ed4qtRzxtkVmDiE9eLI90b1ELslzkmc+t94AW5P6EXUnZ
-         4CLhe2Sxe0oAQu1j5x2mhHeKSnT/sk/jNlA3zwrrGRypHV2K9OArCpo14oMzHDNT7LCx
-         fIC0AqL2t91YWdjBHjyBMQInEwFEkkxgkzQHR4AtqkmGxsqumAKVVuxJc1deDsKNYKem
-         ZQPv8UbsViC3D96YtsYqUGd073LEIwhkqrztnJ/MXDgRR/PcHpCgJG5KZCtKYEJc3FdT
-         67XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775500853; x=1776105653;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LMOd6xUZdZ29TgPMelZcwSAbhKQsTn0MyYwEPDBgp6A=;
-        b=JADSsb5D/38vf0mmDZzZwokFrSiDMKHTePu+GK0GBO1+r6UZLKefcbxp+lftjkMdFa
-         mWE9H/FuMXKZeZ44kZiqBgH4BLH+hzMFeYyFVb/qd1o2K79EuzGJgaIL+qXJ9gbQE8++
-         k6WJtEuGeH+JIVgZzjIryYtxyanR5/oAK3MowalAO1/V/9KZQ0CGjw2PLtSKJrbBdyB8
-         R3OQv8mD2wCqbjs3AI4gV80k9e6/iuhEfCXEJ8T8Uhjlo8TbJl3kbE81LaYS0mz9grce
-         vCBtW/4tKt1bawa4vR/pJsv0TXM6+/Sy9tvmrza6YaZtBwH1FTz6dVCve5vVJPB97p7/
-         cvuA==
-X-Gm-Message-State: AOJu0Yw/iel3++dEv0/rG0jA+PlhrHWPhVGIQ5fxZkUmsnU1esFgU7mz
-	zEB9NUmP6RiaNwceZwsFYgk3rY5iWuLuxA2zEhDBPWJXNbircTWTaHq6
-X-Gm-Gg: AeBDiev7i4j1YEALlRN7eAbzLIF4bEdz1GWvsD4lwDJQVzwThHtxWLUfAyrvS/gxfCA
-	VQk9evLkjEg3Vur/HQZ/zMFZQtShCrHDSbwPoPaTS6FTPrgR8hiCTbdepoERm3Af84iEPMfQIVo
-	mZOmvKlI6TWd/ttLaFOlBaXRo08UuNG0HQR/+oOTWmPtdgUsV4I4x4nt6DYqAjwlFq0/pHhRZF3
-	p7uolMxeFj4PDrUhjvoM06ISOLvZ9uI5kMsx28kKoVEf4u+S7I1qJGM4z2ZOVLDw69uinObAS9X
-	41epwtI71fVkcW01oHkCccXpSEgr+6rShhK6aXq/IXKclu6zPLZ0ARWbtmMmNNARz2fGTmTO+Nv
-	KfJiyeGGECHKeQ1i0NA4JffkJR2+i0F54u/azn0MCQ4cz1iANVFbz4WQ1gG/WKOdersNHDllPDL
-	OCJF5zBkd2dpu4RDEr1zjv1VEmuSIDyeop
-X-Received: by 2002:a05:600c:638e:b0:483:6d4a:7e6d with SMTP id 5b1f17b1804b1-488997d4dbdmr197202135e9.30.1775500852362;
-        Mon, 06 Apr 2026 11:40:52 -0700 (PDT)
-Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48897fd5594sm97582795e9.3.2026.04.06.11.40.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 11:40:51 -0700 (PDT)
-Date: Mon, 6 Apr 2026 20:40:49 +0200
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor file
- after repack
-Message-ID: <adP-MYYSmElK9wL3@lorenzo-VM>
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kBmwF2O2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BD0Hezs5"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AFE7A140011C;
+	Mon,  6 Apr 2026 14:49:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 06 Apr 2026 14:49:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775501350; x=1775587750; bh=mb6rGNrqAf
+	vmrO7cDqKioOiZe2JTHNS9mNjnlANlp34=; b=kBmwF2O2Fbs1otH+z73eJpBmbZ
+	LXZu+ia9e4HLsoMIVpDYRDPCh9FGPGAx5SYdOgDbpMOqidpZrPYFX7U4Yi1r5nhY
+	YlG6Jmn8hoa4Aw6G0+fSNUrfhGHsIZBD/PM3NZOIa/S5h0Jx+mf+kapJKYQiVU28
+	omzrQI/wCoG2aTCUw9bQXxRsxH+wrLacyKKBdN89VWXywCkQCpNUi0qYk3vL6zag
+	XJblDxggdjPnsZ7yoBJGoL0mlRIrOdICOWoqBnYnibB2RNwhOuNic8EMqM1LHScQ
+	uCI3Qd5d93V6JNjqkESChacqy0uoxwCixI7xrySwKvEHjQgJufiGrxU+bLzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775501350; x=1775587750; bh=mb6rGNrqAfvmrO7cDqKioOiZe2JTHNS9mNj
+	nlANlp34=; b=BD0Hezs5X87q3DhMvugkq3uL6ftTP0RlceceP9uPN8GYHS33iLf
+	52LrEKEeiZETLAbmGbnTMSGo2UjiFiqnlqlOcFT+0oNIiXCGgIo5CUfPT0XxopBJ
+	DzWqRtNdn5gbAPClVTcdH7vQ8dsgULFiFOpyXvC/u/5/s0//B2dm1J1MvFIjh5i1
+	kKBV/qhazGmlXuQH7WEVH7wYsbXyXLE4j2wqcyHIUIfX4AmudlPI+7UbBFiv3jUU
+	W2KCu+HWY6E4UmM35Q5tMmW7+UjHmb1yCwBMJQoxmmYiB4932cmhAcYo+H7tXeer
+	2oyB8eU+dnysiy+L4YY+z4UcAidrLXHBLwQ==
+X-ME-Sender: <xms:JgDUaWHx3PE1gQ2WmBndxLp-gjjm35JgOBp1tJFoDZeCk3yAqEfykA>
+    <xme:JgDUabAtzRZG6-Pu9SUeH-5Ho99ZxKuUYpNEZTsx6Z9R-4gX3pOeqLkigB-yU7BXu
+    tZzGJQIj5KlVZtQijV4RCrmMdQYdinLkJKJ1z1hCOoO2w9om1Fs5w>
+X-ME-Received: <xmr:JgDUaZ_uaxPLRqA_fm6ym6PfNg98mSL7TztIcUiBRjNasaUhTqeyadqHhtgsG-IbaMJ1Zmifdvg0PrvYEgyM_Vdi2j_VkcLcbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
+    hopegurghvihguiiihlhhinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
+    htthhopegurghvihgulhhinhesshhtrhhiphgvrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:JgDUaXDj2P3IhwqB96MzsrByqCNMo5igD2DX8R9s35QHgR4Zju-75Q>
+    <xmx:JgDUaeRFZSN2RbdMt7pIuShNIgK5HD0yKmvm6j5jjKGCvEWyYMIJBA>
+    <xmx:JgDUaeu4ScTc5U8GtR3NTrwP7Pr5yux8gorNgNxggDjjPJYRPiwHrw>
+    <xmx:JgDUaa1UMyBzbu04SoFyvhQlcssQQ-Xn3s9kIps8SaZQXQYVyM6aig>
+    <xmx:JgDUaYCelHZMWlDXh-KS2-Qp1b2IrZ_bAWtdbH77i43p1QLBZSpuE9hi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Apr 2026 14:49:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: David Lin <davidzylin@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
+  David Lin <davidlin@stripe.com>
+Subject: Re: [PATCH] cache-tree: fix inverted object existence check in
+ cache_tree_fully_valid
+In-Reply-To: <b0ee86fb-2fb8-4c7f-904d-66140b58164d@gmail.com> (Derrick
+	Stolee's message of "Mon, 6 Apr 2026 14:10:16 -0400")
+References: <20260406151456.63620-1-davidlin@stripe.com>
+	<b0ee86fb-2fb8-4c7f-904d-66140b58164d@gmail.com>
+Date: Mon, 06 Apr 2026 11:49:08 -0700
+Message-ID: <xmqqcy0bc4bf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
+Content-Type: text/plain
 
-On Tue, Apr 07, 2026 at 01:22:16AM +0800, Tian Yuchen wrote:
-> Hi,
-> 
-> On 4/6/26 08:24, LorenzoPegorari wrote:
-> 
-> > +		while (strbuf_getline(&line, source) != EOF) {
-> > +			struct strbuf **parts;
-> > +			struct object_id oid;
-> > +
-> > +			/* Split line into <oid>, <ref> and <time> (if <time> exists) */
-> > +			parts = strbuf_split_max(&line, ' ', 3);
-> > +
-> > +			/* Ignore the lines where <oid> doesn't appear in the dest_pack */
-> > +			strbuf_rtrim(parts[0]);
-> > +			get_oid_hex_algop(parts[0]->buf, &oid, repo->hash_algo);
-> > +			if (!find_pack_entry_one(&oid, dest_pack))
-> > +				continue;
-> 
-> Memory leak here;
+Derrick Stolee <stolee@gmail.com> writes:
 
-Yep, `strbuf_list_free(parts)` is missing here. Ack.
+> On 4/6/2026 11:14 AM, David Lin wrote:
+>> cache_tree_fully_valid() is supposed to return 0 (not valid) when a
+>> tree object is missing from the object database. The condition
+>> currently returns 0 when odb_has_object() succeeds, which is the
+>> opposite of what is intended: the cache tree should be considered
+>> invalid when the object does not exist.
+>
+> It looks like this negation occurred two refactors ago in
+> 062b914c84 (treewide: convert users of `repo_has_object_file()` to
+> `has_object()`, 2025-04-29) which had this diff:
+>
+> diff --git a/cache-tree.c b/cache-tree.c
+> index c0e1e9ee1d..fa3858e282 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -238,7 +238,9 @@ int cache_tree_fully_valid(struct cache_tree *it)
+>         int i;
+>         if (!it)
+>                 return 0;
+> -       if (it->entry_count < 0 || !repo_has_object_file(the_repository, &it->oid))
+> +       if (it->entry_count < 0 ||
+> +           has_object(the_repository, &it->oid,
+> +                      HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+>                 return 0;
+>         for (i = 0; i < it->subtree_nr; i++) {
+>                 if (!cache_tree_fully_valid(it->down[i]->cache_tree))
+>  
+> This was one hunk among many, so it is easy to miss that the ! was
+> lost as the function was renamed and moved to another line.
 
-> > +
-> > +			/* If <time> doesn't exist, retrieve it and add it to line */
-> > +			if (!parts[2]) {
-> > +				struct tm tm;
-> > +				localtime_r(&source_stat.st_mtim.tv_sec, &tm),
-> 
-> Typo.
+Thanks for archaeology.  It deserves to be recorded in the proposed
+log message.  David, would you mind updating the message and repost
+a v2 of the patch?
 
-Ack.
+I wonder what the practical effect of this breakage was.  The added
+test only checks what happens in the trace, but what was the effect
+externally observable?   We did not rebuild the cache-tree when we
+should have, causing "write-tree" to record a set of tree objects
+that do not match what is in the index?
 
-> 
-> > +				strbuf_addch(&line, ' ');
-> > +				strbuf_addftime(&line, "%Y/%m/%d-%H:%M:%S", &tm, 0, 0);
-> > +			}
-> > +
-> > +			/*
-> > +			 * Add the finalized line to dest_to_write and dest_content if it
-> > +			 * wasn't already present inside dest_content
-> > +			 */
-> > +			if (strset_add(&dest_content, line.buf)) {
-> > +				strbuf_addbuf(&dest_to_write, &line);
-> > +				strbuf_addch(&dest_to_write, '\n');
-> > +			}
-> 
-> It looks good elsewhere, at least in this patch 2/5. (ゝ∀･)
-> 
-> Regards, Yuchen
 
-Thank you Yuchen!
-
-Lorenzo
+>>  	if (it->entry_count < 0 ||
+>> -	    odb_has_object(the_repository->objects, &it->oid,
+>> +	    !odb_has_object(the_repository->objects, &it->oid,
+>>  			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+>>  		return 0;
+>
+> This fix (respecting the has_object to odb_has_object refactor)
+> is the correct one.
+>
+>> +test_expect_success 'cache-tree is used by write-tree when valid' '
+>> +	test_commit use-valid &&
+>> +
+>> +	# write-tree with a valid cache-tree should skip cache_tree_update
+>> +	GIT_TRACE2_PERF="$(pwd)/trace.output" git write-tree &&
+>> +	! grep region_enter.*cache_tree.*update trace.output
+>
+> nit: I think this would be better as "test_grep ! ..."
+>
+> Thanks,
+> -Stolee
