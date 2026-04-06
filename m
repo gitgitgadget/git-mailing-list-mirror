@@ -1,72 +1,133 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2215738F225
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 17:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A99835A385
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 17:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775496971; cv=none; b=tiwlOGvD4H32Vu9QQhMNELrktQG4z0ZXMHKSS45kdVwB+SAuSuMpSGNCNa2wWDS0qHAwXs/GjQSrNRaytynkEGMPgViA3o1AUxXgOrzD9RoHSDGjk7YztZuzuzlWW6lBjiREBzdib5d6DYkwn5I7zLNmWnxq3zR3lWtMtFYavi8=
+	t=1775497751; cv=none; b=cxmej3V548dx0QGu+inb1Zjgi7cAUFL7QsgIuMxqdmUoQxXrAQ21rNlm2PIKQd+yfjC4Kq1KDWSCV1C2sdcg6hy7vHaf3MzdPhWN/ZMccB1rkselLV386kYsFoWjbY1nr9uCs/T8RxlTs9SpgT6Jtt3rXcUNrivHTl58DYg5D9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775496971; c=relaxed/simple;
-	bh=OdsUsPzzXy/ZR2A6HbQDbIm/XRv+KW6H3B4a7DXMkgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F3yaFh85Xxl4weqz26pYzqDP8WNo/ZTpPF3YRmdUdRzWgHLEYqdDV6P/hHxfRJ7oSjbDNlvjzkei4dqro0FfavUdHTBCPjpemMTSp3/AKPKTDm8PLEGo2wr0qtlCiaUoZ9BJzQ3sT+9RUtbP4lqs8ebort0gr+rb+pa1KWSNY4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=MReA6Vs5; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=t1A8e3KQ; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1775497751; c=relaxed/simple;
+	bh=zrqPAIswThkNHPqz9Bi1Xb6I9vlQ1ESfLE5g6m5h0OE=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=pvoHUAYodXMDprnc+HgxzFg2EMfqAUFcbMY7YfX1teafWzs7pyiEmti3ZbLpBo8UV0H/9J+/hpKGy30mkmKtiOZQR0b4pCZjdEXPQaRN5qbbLPnyMYvSDHKDtq3/hobtw2WB5W7vBT7sLDDBmVf/xvMmQ5H978xPRHH6NSqeHVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FXFTWni5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GZeH5QVl; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="MReA6Vs5";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="t1A8e3KQ"
-DKIM-Signature: a=rsa-sha256; b=MReA6Vs5W+HK1P/qICYz5uI40Kg4tHxOcM0T3RUPHWF9ZKKz/mgetwib6n7ZyBe5UL/FEbiBL95HOk5vNVTZu/bXGgjlP47CDvHiqnOFoTxXxLQzfbmYXrvP4DYgqvamqZgV4ClXnPA48T304RozHerlv4/z4vy7ZfU7q4Ujp55Nsyqd6O0XXs4K/ehXOgXqxrd4eQohQiHWrwx76W6MNpUTCsDhNLEATL/fMyKLYrZSLguLNCimR+oiEtxKviMwgvStcT7i4fiuV5wY4X7J+MmClRbDM6wfbY81d0M0X3vAq8abON2O6OKfc7kFEu3o6SNBfXkvZYzdC+TjJeUanQ==; s=purelymail2; d=malon.dev; v=1; bh=OdsUsPzzXy/ZR2A6HbQDbIm/XRv+KW6H3B4a7DXMkgM=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=t1A8e3KQ8jsPRmDeLMWlKv0Y0K6boqFvVNGT4YAlJW+FDgmuKCleejtoHWsnV3dukGfK8NM/w45Sq6ZYowuT0QLjOU+91Hv/0r24v8z9VaVG5+hvkK+XkkiFy3PFGo6X+4xFyA6wTnIjBia4fyVSlq9P/EYDn7ErboBh3F/vZC+SswtAhjWkKkLau1cymXP5pt9FSz8v6Bi/dkNZyLKAnw0Fjh9J8CPKHb7aAxzXfSScmXYFDmRCWW8Q07k22/GWsPCqe3uEY3gUuOAdR/hJtBLaTcW4/ADfeiJuPBmdmbwPojHyyEyT10a8baGBebiP7Bvs2NpmwAkoEyWPw21m7Q==; s=purelymail2; d=purelymail.com; v=1; bh=OdsUsPzzXy/ZR2A6HbQDbIm/XRv+KW6H3B4a7DXMkgM=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 658461399;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 06 Apr 2026 17:36:06 +0000 (UTC)
-Message-ID: <9639df15-8498-4dd0-8ea1-6ebaf4533476@malon.dev>
-Date: Tue, 7 Apr 2026 01:36:02 +0800
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FXFTWni5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GZeH5QVl"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A3EED14001B0;
+	Mon,  6 Apr 2026 13:49:09 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 06 Apr 2026 13:49:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775497749;
+	 x=1775584149; bh=b86io1xjHyPEKlcPByrMtsAmQs1udt+wmc//9P2VaLE=; b=
+	FXFTWni55gC/tVoULmT/QH+BmurFpp3KMm5qC1Gt/OO0te1jaMe2Th+IKmxvlGuy
+	JTpDC8ZjHzbWGoN6J7JJ3gROERCUJhclx0LEPRS9WV2WO7BTV9QWDlnTu+FrQ18V
+	0Xiycdwf0i+K2ssLiOL3qI0Qegqmh712X05/bVcUZ0LU9aiqm9hupO8v15jEufkf
+	hAURde/j2nO5BLCRrOOVJv4UF0iFoRIWW9USg0WjO2kR+Xr78Hwev0y6n+ofidHa
+	oQreEj7ymFMGyZpC9Tpflg37rdQlKQtShzpE+Q+mHs+or5pFMNXSEQZKFG+6LOpl
+	DBKZLxrLtRaQH5Aq8sw23g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775497749; x=
+	1775584149; bh=b86io1xjHyPEKlcPByrMtsAmQs1udt+wmc//9P2VaLE=; b=G
+	ZeH5QVlJLN2unWw6ttgTDyFo6Rdp7ywXyOE10zaKNLpxPbLsQKenvqGTNmtxYRt8
+	6AVFceJzWst7sP/TFDGSRQKeO4nrXD4+fsSqT0opDep4SSx1bOTtuMDvlQ7VOeK5
+	p/Xb0IJB6p1FQXjJSJbaSG8aLK2NAlII9ritk9AP/JQ8l0hDxI9oe5ts7g/AOrtL
+	NR8q0iVU4WgfIb/LRXNeWVtpt/Q5Inv4pgmoiEKRCkVmDNlslYBmBAVJkL/fx5cd
+	tQZnM81xyBejxVR2r8ZHhsxvy8LX7j2KghXfHnHvmAhl0WfiTcAbV1rR9FZY3bXH
+	opanvWV8S873GmGqlyPiA==
+X-ME-Sender: <xms:FfLTacFqbij9dLE9JHra1uvMZDMYD51Nytmh319Ouw0vpdosSnp3ssQ>
+    <xme:FfLTaQKuZw46PQbnKFYIrhbvgxA4HyjEGEmYhO9l4qT6-u-yU2qEd5SNjs8dCrnCj
+    iMuXmBwIpbEmjziW-H6t5Kw47xceUEKUJYJBCm6wECHaNK50zVQiRg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpefhvedvfefhjedu
+    gfduffeuueelhfelhfdufeehueelveeuteevtdffueefjefhffenucffohhmrghinhepgh
+    hithdqshgtmhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehthhhitggrnhesth
+    hhihgtrghnrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:FfLTaVDKcxoqPQTr2QotH1KtbgxqiAckwgvMNDsawQRS1AeudPelAw>
+    <xmx:FfLTabSHmxWOqaveb1T5oBuatBUixPIqHpYosz21LSxvzHRRp4vyoQ>
+    <xmx:FfLTaTr7dYuG8ScOn4sznDaIUzC4XIziKvThQDNOsCcYMLIWVBo42A>
+    <xmx:FfLTadyU-1APDcjyNo_q4gEQjOVfc6qZtlRDZ9lts6Q_V7bFpJI93g>
+    <xmx:FfLTaQgAnZd62apqZYTzWEYIdDcV8sIwodfhU7FHNZZp8L-EHPjbvlbS>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5EC461EA006B; Mon,  6 Apr 2026 13:49:09 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1] t2000: modernize overall structure and path checks
-To: Karthik Nayak <karthik.188@gmail.com>,
- Zakariyah Ali <zakariyahali100@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-References: <20260327234019.95591-1-zakariyahali100@gmail.com>
- <20260405011135.125912-1-zakariyahali100@gmail.com>
- <CAOLa=ZTuk-33xz4RQJDv-nyK-MqFzLWHM7zdmBBGnXjYiJBsSQ@mail.gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <CAOLa=ZTuk-33xz4RQJDv-nyK-MqFzLWHM7zdmBBGnXjYiJBsSQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: AB0u5Grf0JAw
+Date: Mon, 06 Apr 2026 19:48:49 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Thibaud CANALE" <thican@thican.net>
+Cc: git@vger.kernel.org
+Message-Id: <f0276575-9c75-45fb-8fcc-b465619d1b97@app.fastmail.com>
+In-Reply-To: <xmqq7bqkcah8.fsf@gitster.g>
+References: <njuf62lav6akkmdyqutwk7pim5yutw5cuicjidwpe5eh6qnkqr@4ir6q4uhhvht>
+ <xmqq7bqkcah8.fsf@gitster.g>
+Subject: Re: [RFC PATCH] switch: provide configurable detach
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-On 4/6/26 06:04, Karthik Nayak wrote:
->=20
-> Shouldn't all the tests above (since 'mkdir path2') be a single test
-> block? First we setup the data, validate the data, the previous test
-> runs 'git-checkout-index' and finally here we're verifying the endstate
-> here. I think this should all fit into one test block.
+On Mon, Apr 6, 2026, at 18:36, Junio C Hamano wrote:
+> Thibaud CANALE <thican@thican.net> writes:
+>>[snip]
+>>  3 files changed, 46 insertions(+), 3 deletions(-)
+>
+> Sorry, but I am fairly negative on this change.
+>
+>[snip]
+>
+> FWIW, "git checkout" that knows what is and what is not a branch
+> name and does not require "--detach" when detaching to anything that
+> is not a branch name is always available and will not be going away.
 
-That makes sense. I didn=E2=80=99t mention this earlier because I hadn=E2=
-=80=99t noticed=20
-that the patch title had changed from 't2000: modernise path checks with=20
-test_path_is_* helpers' to 't2000: modernise overall structure'. If this=20
-is a overall refactor, then it would be worth revising this outdated=20
-test structure as well ;)
+On the one hand, I personally mostly use git-checkout(1) because I never
+use it to check out files and I like the detach behavior. So from that
+perspective I don=E2=80=99t understand Git users who interject when you =
+provide
+examples for something and you (incidental to the example and point) use
+git-checkout(1) because that=E2=80=99s what you are used to. And they in=
+terject
+because git-checkout(1) is =E2=80=9Cobsolete=E2=80=9D or something and y=
+ou are setting a
+bad example (or something).
 
->=20
-> Thanks,
-> Karthik
->=20
->>   test_done
->> --
->> 2.43.0
+On the other hand, the BreakingChanges document does call
+git-checkout(1) =E2=80=9Csuperseded=E2=80=9D.  And in that light I do un=
+derstand why
+people want to actively avoid git-checkout(1), including implementing
+replacements for all relevant checkout-use cases in git-switch(1).
 
-Regards, Yuchen
+    Superseded features that will not be deprecated
+
+    [...]
+
+    =E2=80=A2 The features git-checkout(1) offers are covered by the pai=
+r of
+      commands git-restore(1) and git-switch(1). Because the use of
+      git-checkout(1) is still widespread, and it is not expected that
+      this will change anytime soon, all three commands will stay.
+
+https://git-scm.com/docs/BreakingChanges
