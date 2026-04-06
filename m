@@ -1,125 +1,170 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A69301460
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 15:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C63914B950
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 15:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775488526; cv=none; b=CKckCm5g+vC10ymxqijp2+iMrMF1o5y9v0UqrRX6UiYttHbqcQRWeFjlNtGvIPaK4ZjI7KWRFwkTBOmnWcc4lmJfFlltpkwSb2GbMIBG7FautpB3hSRyEZJCL7S19canTH5Pj+lqHjiVxqCRGTEYFhk07D0vvMuhO5qUnAck8KY=
+	t=1775490336; cv=none; b=cyT06pFAQIGhg5+jcJW/RugRej2ddSa7ynlee1folOWvwH+kExDXbOPI3uheg9BgM8fckMg6DJM5WeXsY7eIUekL3MvsP63pVjX79PDwBQy3naiRJr5183CfLgpiGs3F93YM88B/UCf+j8iYsbbxW60gfA5l9Glq1niKv2c1mQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775488526; c=relaxed/simple;
-	bh=nrlr0XMImZMRVrPfb3WQXLMokTvUZeGPrUAl8RgyXP0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Vib40vNOFN1clsMQaM+f9f2uL2luOOX5lj0eYtqT+ySNQIGsunEqW0/XuOBAwP4jsmBJVHd/82dbwCpcKEvF61sL2ZKgIYmsXAhbYeDK3ZceLvjd4ywyC+VtRb//3sq9w2HDnJTPNGwoJB6T9NZ6xurbP2dM1VVwtczDPOEN714=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qtUMy3Yi; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775490336; c=relaxed/simple;
+	bh=k+YjLFP4mSWH8MnLYuwxi9YF1y6VfJ8l0dtQU+eifY0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q2nDepcB4VdZiyrCaZu8jcezhsqhE6scZKKXV4ghfhV4qgf6XWhGoMgLmSf1priYWDnuYpg1E5NQyh+qilDdjCjChzky5UTxwR3xEu6ltA+ZV6TcuEIZMWlwzAQAvMG3+6h57TKoUKAtfUlMdXbLVxMJdLwSzdbZ6Ioa4lMGauI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=npAijgqO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dQWmLwZK; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qtUMy3Yi"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8c6f21c2d81so364192385a.2
-        for <git@vger.kernel.org>; Mon, 06 Apr 2026 08:15:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775488525; x=1776093325; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=R5GZut//GhYZ4bxcJN/dycKJedtunfbmpY0XQyGVGdc=;
-        b=qtUMy3Yi3Z9oOU1JKo3Cp8wOoL1byUh1TNcVHsRNRlwa7LM48BU/YH/xFB2WlpkRJE
-         JaNRVocuH/yVC3jbrVsxLl7Kin5Cr7gL2VUAk7lLni43xzmhh5Jr1+Kwc8KtO+/u4nak
-         uiGQzFGygx2kgpCCGh7IoyxVGeIVLc8oThHij11v2QnDTmhYssd9pISQMwWTulkJZzlj
-         nfVG/X8JRpc8y4pYizJUOf6HSncnMlQDePB5vqQoWHi81ePmQSYXrJrMjlLfJBYAbrI5
-         AH8XgkczeevkVJ3uGvZTlSpdrLe8VdFGv3hDGs5D1dxucbOOyqXepoSAz3COTBbCh4KE
-         0Tww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775488525; x=1776093325;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R5GZut//GhYZ4bxcJN/dycKJedtunfbmpY0XQyGVGdc=;
-        b=oVCLnYcpH0Gg2c+tCjgu0XmlEJ/kzeG1nSpmg5HHIoYNI7KUev+JaXr5EeyglT35Oh
-         PB1VzQgQTKadgflkHvp8XBHzJqXl6LElCLk8EHXh+mR8Sf6/uyvUKCiobp37qFD+I6s0
-         NfbOJ/51qM/jRFE3oZXsPv6ufz5hwBm8ReviKfTTN4viu+mLfBdluZm/tX0GDtsWBXnq
-         h2eWh0yRysVM3P9LlvJ/jPKfmexOEBdSmhrjKZY/9xwYX0HdwQybtGBZZAhuieb/QqLl
-         +JCbNJBaVnWVHpAiqzuJT4GSx49j1ROKWCrvixZyIvzSZnF77p0GfWB8nNIucv5R6FJk
-         UFSw==
-X-Gm-Message-State: AOJu0YzBJq8A54B+cN8yo0EIR4gOCJW7PfG3lLlRMswvWpByuRKyMYd8
-	BPA+Dr4SMRLjUAEjBZY/60MezY0H/JHtKZUk1UaQJZYDDzoxd3o9/Z+Jy5t1RM85Hu8=
-X-Gm-Gg: AeBDiesJrfs4E21fmfNFF7Er8168LASoEqHH3npFNc+fqvVaLuNYZJwBIzVxNOzwosZ
-	BD+3RSUluVyby7Xr4xfij/pUNxMw11JGR0SSgtWbNnO/jC5tVoTazheh/vkvy30kpROtdtvLHUV
-	G2QODIa2jIpNCtKaZdSHlbiVt/Fu8KSIzOoIp/63Na0dOghs7hbC4/Q2ReDPIx/oKGNYF73SDdb
-	sm6hULgy9hZYV43pJhZy+c8msWxew0MTaqru/El63jK/kVbvdxLg4lAwrzLhjfx/Mx7o4ktohxv
-	HohMEAdTFv9ihpLmrhkSwQP1vcgsAKR2g+9aaxfQZ6MsrtPTecBgzJWbD/KbF6nPqP3hEkmC+jx
-	IkjbLMgVyBhSdzM6WbOyqlAP4CdrJIm18X8EMybCsH+FUtFc5VxkchuUpZVlU8iroC1/dQC7BNI
-	bpOOJivpvrJLfrmrNHDZQgNsGhEMTUlsRVTV2/7YXdpJnb3g==
-X-Received: by 2002:a05:620a:1a11:b0:8cf:c75d:29fa with SMTP id af79cd13be357-8d41b8dee1bmr1913846385a.11.1775488519846;
-        Mon, 06 Apr 2026 08:15:19 -0700 (PDT)
-Received: from st-davidlin1 ([70.54.98.79])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a8067c73sm1029986485a.24.2026.04.06.08.15.18
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 06 Apr 2026 08:15:19 -0700 (PDT)
-From: David Lin <davidzylin@gmail.com>
-X-Google-Original-From: David Lin <davidlin@stripe.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	David Lin <davidlin@stripe.com>
-Subject: [PATCH] cache-tree: fix inverted object existence check in cache_tree_fully_valid
-Date: Mon,  6 Apr 2026 11:14:56 -0400
-Message-ID: <20260406151456.63620-1-davidlin@stripe.com>
-X-Mailer: git-send-email 2.52.0.ge17bebe515.stripe
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="npAijgqO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dQWmLwZK"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5D1BF1D001E2;
+	Mon,  6 Apr 2026 11:45:33 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Mon, 06 Apr 2026 11:45:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775490333; x=1775576733; bh=Eowrd1qIfq
+	Xcd9IJiS3bqb5sEH7eP2uVAyUWvfL3LX8=; b=npAijgqOYVu3qPj3U1WgINWz+S
+	5Zk613JJTP8YYJw27IS2xj/C2iO+YY+JwZPnQ7G5g2j6F/Fkcv/LXTHymIhDWMuE
+	HfjFSVVD+DY/p/r6QT9ndsFrmRgbdyzufz7zue6fdO6vbnWQ/X9S2Anuo/Rw9Qwg
+	f6ciMal3JQk/MTtyXy0VJawGySoY3rnrmZactH3/Iul4ojl7KOIK3mhw1L+8PrDR
+	Ys3ZxBtHk0CZwPrHyx04SbC/5hxBiXHAsKYc0wkmxp2d4Ehr6ToLE8Ao+AbXAciI
+	+79jerPls5OgXVmk96R8q2o79H0cuMxOL4yUBhIkeiey8kOa9W74VIye/H6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775490333; x=1775576733; bh=Eowrd1qIfqXcd9IJiS3bqb5sEH7eP2uVAyU
+	WvfL3LX8=; b=dQWmLwZK7Ks07nNG5oxVkHnzrsVd9UIeGau57J5CMKSIXfmucZH
+	eQ2I2dSLMyTVMdQ6uONDWwEjkx1XwAIJT7qI+TNmjc6S9Za76uHEBqrw5qofdrr7
+	fy/77UgPpofzN2eR7/gxNuJZtUMTlwWqQVYmVmqWYN7dYUn1Gqw5pk4KZ63SNTDY
+	fStVDu9TSf634uA9MRHPiI6xZBDvAwLJoYx96PWS5bl02wgZU6rDlDfb/3ndUaVe
+	d5cxzyobHINmymIJEFPaWS6YMN3aWB9ece1GZf806kX1D/rj1mXWbNnEGYWSwzj3
+	lLQjbG0Fol0hfF0P8nLdwxFzan+6jQdl/4w==
+X-ME-Sender: <xms:HdXTaXCjzf73D4QXyO9V9aIHBnm314HW_x-UmqRkw8GFqyh2epWQaw>
+    <xme:HdXTaUj302yBFohF77CYouZ_nwI-oAFdyl8abn1XAGf1iREY5oeGbwCxa6bWU9oyt
+    42UpR0-xBNadiyYaI59fbWVgDTnwaPB60g5xLmfnGzkctDfiTn5kg>
+X-ME-Received: <xmr:HdXTaXkHtZp9ohYn1QfPUD9ebU9CUxeKF3GnIcXUrG5Lt2P6J-WpRTQXkDVfmhAqb2ICgqW-420fP3njfCNaGJg3-X_F_TvVPQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:HdXTaYrydi7ue_3_6PQudTh9i2OydROQPqHe47QvAYaULI447Xz1aw>
+    <xmx:HdXTaYF2BpeRy_yuuEV2RvOq3RPjEkTNDKzMO3ttBFDat1aJOwuBrw>
+    <xmx:HdXTacyouofAyp0ToAJWFKUefyM8dGbU5sTfakP3yePLXlxgBm7BKQ>
+    <xmx:HdXTaVo6HIr0zzn5HtKTPgikBCgJp1iC1Ee_63pvI20PUVCV1CtSSw>
+    <xmx:HdXTac8XOID42NosMOsRizbgxmvItSUmGR-4g2Xg1v7QZAjSNsopcIDW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Apr 2026 11:45:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH 00/17] tests: access bare repositories explicitly
+In-Reply-To: <dcb8c6f1-1410-9f04-c389-6f69ac4fe842@gmx.de> (Johannes
+	Schindelin's message of "Sat, 4 Apr 2026 21:45:31 +0200 (CEST)")
+References: <pull.2076.git.1775140403.gitgitgadget@gmail.com>
+	<xmqqeckxqld8.fsf@gitster.g>
+	<dcb8c6f1-1410-9f04-c389-6f69ac4fe842@gmx.de>
+Date: Mon, 06 Apr 2026 08:45:31 -0700
+Message-ID: <xmqq1pgsdrdw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-cache_tree_fully_valid() is supposed to return 0 (not valid) when a
-tree object is missing from the object database. The condition
-currently returns 0 when odb_has_object() succeeds, which is the
-opposite of what is intended: the cache tree should be considered
-invalid when the object does not exist.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Add the missing negation so the function correctly invalidates cache
-tree nodes whose objects are absent.
+>> Shoudln't there be a patch [01/18] before everything else that
+>> updates Documentation/BreakingChanges.adoc to propose the default
+>> change?
+>
+> Well, yes and no. There should be an update to BreakingChanges to propose
+> that default change, but obviously it should not only be a documentation
+> change: It should also adjust `Documentation/config/safe.adoc` to mention
+> the intended change of behavior, and it should introduce
+> `WITH_BREAKING_HANGES`-specific conditional code in `setup.c`.
 
-Signed-off-by: David Lin <davidlin@stripe.com>
----
- cache-tree.c          | 2 +-
- t/t0090-cache-tree.sh | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+Ah, very true.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 60bcc07c3b..9fe057355c 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -238,7 +238,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
- 	if (!it)
- 		return 0;
- 	if (it->entry_count < 0 ||
--	    odb_has_object(the_repository->objects, &it->oid,
-+	    !odb_has_object(the_repository->objects, &it->oid,
- 			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		return 0;
- 	for (i = 0; i < it->subtree_nr; i++) {
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index d901588294..2c6b7a0899 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -278,4 +278,12 @@ test_expect_success 'switching trees does not invalidate shared index' '
- 	)
- '
- 
-+test_expect_success 'cache-tree is used by write-tree when valid' '
-+	test_commit use-valid &&
-+
-+	# write-tree with a valid cache-tree should skip cache_tree_update
-+	GIT_TRACE2_PERF="$(pwd)/trace.output" git write-tree &&
-+	! grep region_enter.*cache_tree.*update trace.output
-+'
-+
- test_done
+And of course we'd need some tests conditional to breaking-changes
+prerequisite in the meantime, to make sure that the default is to
+allow "all" before breaking changes, and with the prereq the test
+checks the new behaviour is to deny by default.
 
-base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
--- 
-2.52.0.ge17bebe515.stripe
+As to the changes to existing tests (i.e., this patch series started
+doing), they have a bit of balancing act.
+
+ * Most importantly, they need to make sure their indivial
+   operations, when working on a bare repository is allowed in any
+   unspecified means, continue to behave sensibly.  "git log -p" in
+   a bare repository should still produce patches, "git bisect" in a
+   bare repository should work and assume --no-checkout, etc.
+
+ * Then all of them would need to be somehow told that working on a
+   bare repository is allowed in suitable way.  For most of then it
+   should be done by setting safe.bareRepository in the global
+   scope, just like many tests specify the default branch name
+   upfront just once (this is a tangent, but we should find a way to
+   get rid of GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME variable support
+   in our binary and instead set it up in the test environment's
+   ~/.gitconfig), some may add --git-dir=., etc.  But the primary
+   focus with this change is to preserve what individual operation
+   each test wants to validate (see above).
+
+ * There may need to be some tests behind the WITH_BREAKING_CHANGES
+   prerequisite that makes sure that the access to the repository is
+   blocked without the configuration loosening the condition, but
+   they hopefully would be minimum---unlike "how this particular
+   command should operate in a bare repository?" that vary per
+   command, "no command should work in a bare repository unless ..."
+   that is enforced in the setup phase do not have to validate each
+   and every command.
+
+> And, crucially, it should pass the test suite under WITH_BREAKING_CHANGES.
+>
+> To do that, a lot more needs to happen than just the 17 patches in this
+> here patch series. Most of the additional changes are quite mechanical,
+> and can be validated relatively easily despite their sheer number. And
+> only at the very end of those changes can that `safe.bareRepository`
+> change even be proposed.
+
+I agree with all the flow you propose here.  And for that process, I
+think the early parts of the effort (i.e., there ~20 patches) that
+prepare existing tests that make sure the operations of individual
+commands in bare repositories should be kept to bare minimum by
+freezing the world to allow bare repositories, just like initial
+branch names are frozen to either 'master' or 'main' in many test
+scripts.  Adding "--git-dir=." (regardless of the "-C there") you
+proposed in the other thread is a valid way (but it may be tedious
+to do and verify); doing "git config --global safe.bareRepository
+all" upfront, if it works, might be simpler.  Any approach that
+would achieve what we want is fine.
+
+> I plan on proposing that patch in due time, to start the discussion
+> whether or not it is a good idea to change the default of
+> `safe.bareRepository` in Git 3.0.
+
+Yup, I do not think it is a bad thing in the longer term, even
+though I suspect it might be a bit more disruptive than others
+we have in the breaking changes document.
+
+
+Thanks for working on this.
 
