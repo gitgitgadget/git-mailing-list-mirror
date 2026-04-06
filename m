@@ -1,69 +1,69 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CDB3090D7
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 05:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6465CA45
+	for <git@vger.kernel.org>; Mon,  6 Apr 2026 05:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775454336; cv=none; b=JCqzLgg+waYRFO6acXf5fz2qBCtkl4E4qxA8qn8+tzQFC6/LNvBgvt8l2Ul+OTiRsAb6LMy8702RSMcD176OO7GyddSqsPyVfIuXFJ1a4o4aOJG44vdHa3Y2QgOjy6IkmLecFjp4Nrq69UaanjWWZpl/isAZfxdQ2mWOz5qzMgQ=
+	t=1775454338; cv=none; b=gqjNIRUYcStZC0sKfrrbRiPz0ZcRSWdC3WpMtsgtMaLoDQ12XEpzD21KTufBGN4v0Pr0XHBVTki8Ty8lcuiE/RomsmpWeY4mGfBYGqC3jWahJlhXYyD8EHVMDv84ju18wVCmC7uN77LZswbdqOgshIRPRFFzh/4rkHlKpfwzARA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775454336; c=relaxed/simple;
-	bh=EjXMnB36E6CvpHaSicKNy5mADUZO5/vNoeKm7ZHArGE=;
+	s=arc-20240116; t=1775454338; c=relaxed/simple;
+	bh=R5LFTfzuuGeW2JcC3owsFD7Q/S06cvb4LkZpU+ta9z0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=DcthnwWa1tKJWJ30+B0WsE3MMDPrXfYQS20egvcRxloQaEcqCan3O7LUcpaEBohgRS214xPsphVgAtm643GKki7IM+Yu35ra66nC4I9h7u+dKGtSAitrTgxTUZ8ffoBNHEjx7l1Z7UMNyyRWLstFkQ6K4REdPzC6Ah+Xwx5R6i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fxAH5Ngx; arc=none smtp.client-ip=209.85.219.50
+	 Content-Type:To:Cc; b=duSj1m4niHnFQVBJcZTeUxB5aKRwe7YIztdWZ1rR1V6jFD34F5JYR17nMhKOKgY4p5NFvZF33hbZw0AKoiCoHTncO//6QEqwKH+OU7uTOdS5kl1WlCb2HzYO4pz+CqJbd6l/ZHgnZWyqe6iySXNYOM7110SpVrWkPBrYIVa/6nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iScxcay0; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fxAH5Ngx"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8a05c388b27so74714586d6.3
-        for <git@vger.kernel.org>; Sun, 05 Apr 2026 22:45:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iScxcay0"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8cfc2d1fdbfso285015685a.3
+        for <git@vger.kernel.org>; Sun, 05 Apr 2026 22:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775454334; x=1776059134; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775454335; x=1776059135; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mBtG+qxacYM/C6vOSTPXDVTNGPkcm+oD/59K0C1GTfs=;
-        b=fxAH5NgxrAq1FUXlyJ8C651ORyTiqgm29A2yR2RlPZm5G7hfZ+YAGO+myFZf3MRzLQ
-         Aa7hTan2dHeUp5jDb7qOn+KPnWG+gV8DK0C9zzK7EWg+GTsToIGO3NX4yya3pVNxmfN3
-         f2SXWseQUYdSOptnv9gOp499G6d5v18+VseVtWZ0hsVg5p+vVSjrCcPboR6EUBJzgZ4N
-         fngNv5Rpvptmov5YRSf5urJXStbPq8JtUFDW6KqTOOJo1VKc6nrwAUom4+33Y0/8iuBk
-         /S6w9qzf+4K3YXsn33Uhk3d4nAWKTWabhTJ9IA6ktdTUBs8sGURiUOWUsxDn7jwIqAFY
-         tgZQ==
+        bh=AR8w7edUWq2Uac5H2XYq7L7HW1t1F5yvVa5k3t0qt7Q=;
+        b=iScxcay0cpjnX84QKWr7b9my2w4lCZeNwqHKavXm/p87VdvCNTUWeLLI1LAMSQTVk1
+         +7tWKLDRdLdMJKTf+uySZxhxYy9UqYLypXYw7TOEgyoQoeuU4V5PEVzknIlC0mJ4TgRl
+         rbqM/AXDwkcvUqqPwv8PVvzEUEykOIE35nlTrFqmy3qeksmtE+7xTWskLKkVW+4wNM+h
+         gne/6dpgMizG2NHNTUwzPhlHrRYZG8PY6Acpx6m+9D0P+K9a4A3zcPhQ+hYqwrY2OMYj
+         Qs+zyTWCkNl3RPTVjLamG7MpDPwi+jvHM2A9TjXFgkfKwZx5Sh1ycfJBmenUUZpevJ4H
+         TydA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775454334; x=1776059134;
+        d=1e100.net; s=20251104; t=1775454335; x=1776059135;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=mBtG+qxacYM/C6vOSTPXDVTNGPkcm+oD/59K0C1GTfs=;
-        b=bpg6CclCRJy/qBiH5+dhFkfPsqmNVXa265FAwlzKsHvlXpmQGOIb+NMvKWNFpbCFFg
-         3MXL5sYxE73GUnctWZ9a3Dmg8rElW8pG42LrnKnqdPlM3nQmAKK9C7DQ5uoh4GTDiRFC
-         3K+htyDkLfdSu8LzUGq6dCgQL8jcPfG1nKVN/MPWxvOGzGzURLQx4Zz6QgvsKFiSsOM/
-         xmkUVVh6IYS0/4+NWiN+aza049lZ2QTPXrW2d6xSk3YYPQBQ1KjxX9pUzwYKdmieZD7i
-         y3/QZZXEKNiaHrDd/ML/miH6GHKJb7NLhPw6cb6M/k/PJSQ6WpaepRdo/oe8RtFup8H7
-         pl4A==
-X-Gm-Message-State: AOJu0Yz2I+b3TZDAn6z6q0imvEfUTfUPC0jckMgq46JKe+N21H1wexuY
-	F9BvGvNlsh5cjsS4ORMUUahLHRUakE6nhD1y8XEgCGXZf+nh/N9nxBMcqq6fuw==
-X-Gm-Gg: AeBDiev6T5cpM0BZvH3iKQycfagkTK7La6ES07EFZ6ohpydcROWfLaJr/y3StQKr2QW
-	pVUMUGylPaaEsRn7WyRG5tPDouA1bA+uLGU2HrcR36cVeP82PMCdPNhFz6utRrNh9cMYVuBFT9c
-	wawY2ExWxT3517IFgMyu7cbVZwdjUTOm8A+3d3idmnUhL3cHvKxTvgYWOks5vRR8zZI+pRg7mfv
-	T9tuWcOqBaQAdeepf0JrFmj304w5oaa7C72K6efRx75d3yOKMVF9P0PI14BHTvLSBDTTleEXtLP
-	EujE9jc+0aLRxpqTFnsBf14lG7arYjljEEUQ+yNL7JWYvdLAqYPCCgRaEOnajy06+Fs32PAxLYc
-	Kd7alzyy3rg51ETE1OjEHdnWGkxkbS9N4nysIpojeWROlfToJlYqVcAlMvt2tf2vybLfIXFQz3s
-	UQwEQZNVHUShpr/y0IKGANrbKbHas=
-X-Received: by 2002:a05:6214:260b:b0:89c:8669:18a5 with SMTP id 6a1803df08f44-8a704bb73f1mr201027336d6.50.1775454334038;
-        Sun, 05 Apr 2026 22:45:34 -0700 (PDT)
+        bh=AR8w7edUWq2Uac5H2XYq7L7HW1t1F5yvVa5k3t0qt7Q=;
+        b=sXCY3pFPWHjPZeZFeiD3k2J3SoO5L9wruCRw8U7FY88ktySzDuQcqhGDftwg4FQDni
+         AN2BxFGkmjuukN87zdJ57NuqtYF9t6Aai5HQn7sE1xzu0L+x6X/yE+dE5uiMZIt9RYKk
+         g+E7AV+TLEgW9RXCbdyaaTA6NlD0dA8tHbxrw+Ry+03vqKLVk5VdvrAg2jV7QqRM3k4o
+         FLhptykO9YNgFfJ90PqEqYqJXQB+1Ergq+c4HZ5zW/PEfVKFH3S/ko8YEdLJ07rXyPl0
+         13ArTLJ+6sR5il4pTVKmPYjR7Qk4qOkEMAEml3gd7ECWnIwKMtBY3NhLdqPsMyZx7T8V
+         w9zg==
+X-Gm-Message-State: AOJu0Yyz+x5DUDVtsZaEm9AQ4RqcQZ2IS9qHv8tYhXVhuUgTtlE1kV5d
+	gvbrJ+y+WP+Sy6ctuPZQ/OGvcYLVXdY2TXxoWlBwd6VLGvcXEhXeWZTCazWdvA==
+X-Gm-Gg: AeBDieufLlatP66H/fgG94ZfmBkiJSme7RvpaW/YIXSU4AfSsjeq4+JvoWwcznSXUTe
+	V9Brs+0tNb6HbIc8O1gg6kdxcUtfchEnixJd7rtelgHrvzJgo7p4+onGq86pkuuvFVdFPP9cyf7
+	QIRbMv1eJ1NuPIlYwAqIVBVUwIdDsNHdaFGowfTJKGCxrqnlICKeVjlXqv+LJiQGd35nql/dQ2v
+	n1kY8IZlfBsKejLelW91dRvBeWAKitGSPFHkalsEqoO1WHtaj6Guk7IuX1RrKFcVs18utETNiXO
+	vi3hNfrT6elVmcIlaK4FJsY/rX+mpshWC20kvYWiLCqJhGbb9zdh48sYvZJCwja1SZHXH8AmFQW
+	8vDW1LggpZbHoUpW4TCqFhv9G7fteQa2aZpEF6XHAAuLfTju2+CaePE0I9mrhWZ/g6W8c7IGvD/
+	C96/7VXATWrtl8719Romu/fr1CUzw=
+X-Received: by 2002:a05:620a:2a0b:b0:8d7:e7f4:7e9b with SMTP id af79cd13be357-8d7e7f484d3mr348750785a.44.1775454335098;
+        Sun, 05 Apr 2026 22:45:35 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.140.198])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a5974dda27sm112744006d6.42.2026.04.05.22.45.32
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a596ff619asm138415056d6.37.2026.04.05.22.45.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Apr 2026 22:45:32 -0700 (PDT)
-Message-Id: <949696de7ac069cc98fd6f0d06507635bda7ede6.1775454330.git.gitgitgadget@gmail.com>
+        Sun, 05 Apr 2026 22:45:34 -0700 (PDT)
+Message-Id: <0b50c30cdd97e52212dcbbd13f16632f04258431.1775454330.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2081.v2.git.1775454330.gitgitgadget@gmail.com>
 References: <pull.2081.git.1775386448854.gitgitgadget@gmail.com>
 	<pull.2081.v2.git.1775454330.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Matthias=20A=C3=9Fhauer?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Apr 2026 05:45:29 +0000
-Subject: [PATCH v2 1/2] unify and bump _WIN32_WINNT definition to Windows 8.1
+Date: Mon, 06 Apr 2026 05:45:30 +0000
+Subject: [PATCH v2 2/2] compat/winansi: drop pre-Vista workaround
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,104 +79,76 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-Git for Windows doesn't support anything prior to Windows 8.1 since 2.47.0
-and Git followed along with commits like ce6ccba (mingw: drop Windows
-7-specific work-around, 2025-08-04).
+1edeb9a (Win32: warn if the console font doesn't support Unicode,
+2014-06-10) introduced both code to detect the current console font on
+Windows Vista and newer and a fallback for older systems to detect the
+default console font and issue a warning if that font doesn't support
+unicode.
 
-There is no need to pretend to the compiler that we still support Windows
-Vista, just to lock us out of easy access to newer APIs. There is also no
-need to have conflicting and unused definitions claiming we support some
-versions of Windows XP or even Windows NT 4.0.
-
-Bump all definitions of _WIN32_WINNT to a realistic value of Windows 8.1.
-This will also simplify code for a followup commit that will improve cpu
-core detection on multi-socket systems.
+Since we haven't supported any Windows older than Vista in almost a
+decade, we don't need to keep the workaround.
 
 Signed-off-by: Matthias Aßhauer <mha1993@live.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c              | 2 +-
- compat/nedmalloc/malloc.c.h | 2 +-
- compat/poll/poll.c          | 4 ++--
- compat/posix.h              | 2 +-
- compat/win32/flush.c        | 2 ++
- 5 files changed, 7 insertions(+), 5 deletions(-)
+ compat/winansi.c | 37 ++++---------------------------------
+ 1 file changed, 4 insertions(+), 33 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 338ec3535e..2023c16db6 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2464,7 +2464,7 @@ repeat:
- 	if (supports_file_rename_info_ex) {
- 		/*
- 		 * Our minimum required Windows version is still set to Windows
--		 * Vista. We thus have to declare required infrastructure for
-+		 * 8.1. We thus have to declare required infrastructure for
- 		 * FileRenameInfoEx ourselves until we bump _WIN32_WINNT to
- 		 * 0x0A00. Furthermore, we have to handle cases where the
- 		 * FileRenameInfoEx call isn't supported yet.
-diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
-index 814845d4b3..e0c567586c 100644
---- a/compat/nedmalloc/malloc.c.h
-+++ b/compat/nedmalloc/malloc.c.h
-@@ -500,7 +500,7 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
- #ifdef WIN32
- #define WIN32_LEAN_AND_MEAN
- #ifndef _WIN32_WINNT
--#define _WIN32_WINNT 0x403
-+#define _WIN32_WINNT 0x603
- #endif
- #include <windows.h>
- #define HAVE_MMAP 1
-diff --git a/compat/poll/poll.c b/compat/poll/poll.c
-index a2becd16cd..ea362b4a8e 100644
---- a/compat/poll/poll.c
-+++ b/compat/poll/poll.c
-@@ -20,7 +20,7 @@
+diff --git a/compat/winansi.c b/compat/winansi.c
+index ac2ffb7869..3ce1900939 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -32,47 +32,18 @@ static int non_ascii_used = 0;
+ static HANDLE hthread, hread, hwrite;
+ static HANDLE hconsole1, hconsole2;
  
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
--/* To bump the minimum Windows version to Windows Vista */
-+/* To bump the minimum Windows version to Windows 8.1 */
- #include "git-compat-util.h"
- 
- /* Tell gcc not to warn about the (nfd < 0) tests, below.  */
-@@ -41,7 +41,7 @@
- #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
- # define WIN32_NATIVE
- # if defined (_MSC_VER) && !defined(_WIN32_WINNT)
--#  define _WIN32_WINNT 0x0502
-+#  define _WIN32_WINNT 0x0603
- # endif
- # include <winsock2.h>
- # include <windows.h>
-diff --git a/compat/posix.h b/compat/posix.h
-index 3c611d2736..94699a03fa 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -76,7 +76,7 @@
- 
- #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
- # if !defined(_WIN32_WINNT)
--#  define _WIN32_WINNT 0x0600
-+#  define _WIN32_WINNT 0x0603
- # endif
- #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
- #include <winsock2.h>
-diff --git a/compat/win32/flush.c b/compat/win32/flush.c
-index 291f90ea94..7244ff69ac 100644
---- a/compat/win32/flush.c
-+++ b/compat/win32/flush.c
-@@ -6,7 +6,9 @@ int win32_fsync_no_flush(int fd)
+-#ifdef __MINGW32__
+-#if !defined(__MINGW64_VERSION_MAJOR) || __MINGW64_VERSION_MAJOR < 5
+-typedef struct _CONSOLE_FONT_INFOEX {
+-	ULONG cbSize;
+-	DWORD nFont;
+-	COORD dwFontSize;
+-	UINT FontFamily;
+-	UINT FontWeight;
+-	WCHAR FaceName[LF_FACESIZE];
+-} CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
+-#endif
+-#endif
+-
+ static void warn_if_raster_font(void)
  {
-        IO_STATUS_BLOCK io_status;
+ 	DWORD fontFamily = 0;
+-	DECLARE_PROC_ADDR(kernel32.dll, BOOL, WINAPI,
+-			GetCurrentConsoleFontEx, HANDLE, BOOL,
+-			PCONSOLE_FONT_INFOEX);
++	CONSOLE_FONT_INFOEX cfi;
  
-+#ifndef FLUSH_FLAGS_FILE_DATA_ONLY
- #define FLUSH_FLAGS_FILE_DATA_ONLY 1
-+#endif
+ 	/* don't bother if output was ascii only */
+ 	if (!non_ascii_used)
+ 		return;
  
-        DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NTAPI, NtFlushBuffersFileEx,
- 			 HANDLE FileHandle, ULONG Flags, PVOID Parameters, ULONG ParameterSize,
+-	/* GetCurrentConsoleFontEx is available since Vista */
+-	if (INIT_PROC_ADDR(GetCurrentConsoleFontEx)) {
+-		CONSOLE_FONT_INFOEX cfi;
+-		cfi.cbSize = sizeof(cfi);
+-		if (GetCurrentConsoleFontEx(console, 0, &cfi))
+-			fontFamily = cfi.FontFamily;
+-	} else {
+-		/* pre-Vista: check default console font in registry */
+-		HKEY hkey;
+-		if (ERROR_SUCCESS == RegOpenKeyExA(HKEY_CURRENT_USER, "Console",
+-				0, KEY_READ, &hkey)) {
+-			DWORD size = sizeof(fontFamily);
+-			RegQueryValueExA(hkey, "FontFamily", NULL, NULL,
+-					(LPVOID) &fontFamily, &size);
+-			RegCloseKey(hkey);
+-		}
+-	}
++	cfi.cbSize = sizeof(cfi);
++	if (GetCurrentConsoleFontEx(console, 0, &cfi))
++		fontFamily = cfi.FontFamily;
+ 
+ 	if (!(fontFamily & TMPF_TRUETYPE)) {
+ 		const wchar_t *msg = L"\nWarning: Your console font probably "
 -- 
 gitgitgadget
-
