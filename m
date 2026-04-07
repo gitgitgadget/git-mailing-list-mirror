@@ -1,63 +1,63 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015203A5421
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 11:53:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7370C3A6B83
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 11:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775562789; cv=none; b=j55uB2n0mMFbk6x8kYRLcVLvtqazcc4g/njihR0cBpYf6rsJXceGBAA65gC9RwJkyk6sFkG5LumK1oDT4GPq7XU58VUm4XlsbykAo7c20SXsjuXr98HzFVjrvK9E62tlLkdmbDuNLmvLfyem6AhuMonINj+RkvrAIw3M0SWq5Kg=
+	t=1775562791; cv=none; b=DRPr8PWyuj70bWu5uPTCPmEKOJSHhgjXNMhMBFUqzWoTVZdrfbD0XHQ7fcFD3TCux6PfcpecfOsYQWY7aBkUY+aJTRLmfnvAJ9t2i8tC0l/9WX0eS1u2anXxxrUs6yeUu0FavvoDksYpSZ6hzZVZMSB7BTYoZq4fO1fTmGvzUM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775562789; c=relaxed/simple;
-	bh=dV00p/3ed03oWf8VZpfcoXQtWV9jmYRXCYvfYCGDKUQ=;
+	s=arc-20240116; t=1775562791; c=relaxed/simple;
+	bh=hVmAI0tDhz8jEf46dpieGcl9z911r0oJLTIdbrz4Xng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GI3m20l2eON5NKCU2iIQKnLWzJr+Y7aZxm3WQRPzlFJ3bYpB/tA3PPe0BJ52LQWz5kS1H/fDxEHB5y6IAyc4csfAcQvNpv6xiz/PfTw3c/tgCs5T8Sk/AZW91quP9SelSQh13mmEhn8w8vTrI/2DWxVmKBNcIe3NGNr/6gLga+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kkSbPJQE; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version; b=kXLtUxpaRMjX3QAxSJxnlVSPxkuNBOw/hkJxwNV/QJKtVih7fYH9RE0MOFBpjDTgL8zxDtCPVzRRNyOqaGivrOGsa+sBD5dpiQxJ3nHAL4aFTh1g/ukGnbOU+4oJpI9zLdCgEsMwinGDUFJiik1v0YQ8ma4q7v1gncC5TZqsmB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gTzdJbPK; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kkSbPJQE"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-43cf8d550bdso4533701f8f.0
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 04:53:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gTzdJbPK"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-43cf906b007so2604104f8f.0
+        for <git@vger.kernel.org>; Tue, 07 Apr 2026 04:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775562786; x=1776167586; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775562788; x=1776167588; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2S/OdA17721OMefW8Kr9qB+tx1LcL2+rDEh1y40JVtQ=;
-        b=kkSbPJQEmJoCZBTirUXMkEDG15IOgX7SnyIoJ4O5fJBnsgSmEOm9GRqwy7Nby61c0I
-         ve98kujQsxRbJy0ub8Uo+KzKtc286v86a6yi7/v5M08ILY/WjYvvRGtV/3JY78ARvEo2
-         2+ER9fh8LdBLLCYi2RXiL/XQQ173q6dIp8KVDgy08Bw5y6JPmlZeWL9zpoGjIzjJ9yvK
-         9Iavpva0NQOgqIX35XyxvB+mxOZasTW2gWl5Z49A2ggmKIXGgHt9MRPBkbhBa0GIS7xh
-         L5EOtucW+PnuaJ6ctumN6SrGtRdOErsnAqlL+AwVhviUxYGTDlHlRk3DGvE3giTN7KOq
-         0Amw==
+        bh=Q9LwMGDTe5srAu/izrDXk+9lDvNPSLMDIW31RrS35kA=;
+        b=gTzdJbPK1BeVElpMnXBFoSCU5kjIsWeZSmS0xYI/om+rOQ8IiySUizQFPdbd7vxJ4u
+         gaTf7vk7bUi/AQ+pPjINVT968OMFGbyjgNT5xXh+RfxIVFRAdOU3fmjMXNcDTENGhMt4
+         j+w1ZLEP2XkBwB4+PdZUhAowvY4qSO7AJ0R/ut9h9hCz1aa70yXNkEuMp3uHlTFzSOaK
+         VrcMx6Sb7SLsbWc+ffDfvh0cNB2YqCpgrA+G5EGO7lsqrKc1aDeqeN7RJJyKY7hW30un
+         iPV5FFmq6mZJaBhubu5amFQY43DcsWAYi4ekM1JocZoEvw59ddXt6uOVhMIVyF8GR6a6
+         w8KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775562786; x=1776167586;
+        d=1e100.net; s=20251104; t=1775562788; x=1776167588;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2S/OdA17721OMefW8Kr9qB+tx1LcL2+rDEh1y40JVtQ=;
-        b=TPGhoMUzNW0CRlViMeq8ZtZXvsye2ejKCLwwwY+/0Pb0JRnRkI14Ng7dTT8r3uzcCE
-         wfWho/v3Rpa8a3Ksf/uVlZ4DRuyRv4MmcQBejfR8hQ8pETQRjxTRk3is8Xa6fU/F9WjU
-         brJc6O9iBQ2SorO0hi6GF3orIp6qMhskuWP/j6e9AyIs6rz0NAzqtAqFsQCyMkmcKRrY
-         3XNEFw7UM/Y9rpXICNKOx5WPJYiUAO1ZJRgWjsgxBQymzKQZUlKw/GGeWZ7Bqa3zM/+F
-         30EovFb+4oLOwBThpBvzJZC8aH2oPm3fR8hMBEAtdnXCrVAmfCapxm1Y9Co+svTz30Ok
-         k1og==
-X-Gm-Message-State: AOJu0Yx6B203fE18whH6RR+SYT8jEEPc8Tt1g2TSLRqMyEheYDWVJhi3
-	sUhpv40aKN0npc78duqBAzEpY/Kk8gsVM0jtKQNN85UebDdRQM/cGa139lGwTg==
-X-Gm-Gg: AeBDiet4y6fKXBuiWFD+CYY5q74VxjKHIsxmgSXGPaHQMBPZtsqvPs0XfSxf+7jUefz
-	49Je1vjVF/8u7h/8FxHpd7WFdiMbqxo061fte62STka8JzurlHLqKwTcKrBf7BvV7FWly6ZXNJW
-	f1xxfibqVj6JeBY2qJEAwyR4gKAgWgiR/GCfYgLNJxz0Z0JKfCiOMNS5W28Mdpnu9J6EYzafgyk
-	MikRCNvDMbQUfqnUMMHFfsjkldVz6nF0GaNTUlQNFotEs29n4cWXXtRyHAdNlOop6isU9SgLUE9
-	hdD2k0JUcPZH+9V8Rgv/7LBeHpP6GAY2Yhj0a315pIENNjisU8FhWa8rrx252Ya858rpWbicWCQ
-	XZb46ca7eXP86wGAZFLnBgksmHUpbx2FWeQlz7IQm+5i4tG/rGau4Y/Mbz79PeiwunDaVJ669vE
-	ljMm3bo7SGTe5AjkXecC5UtboJnCNgWtPTc/hoTzyjiPJGhFN6NRl6jFIRWBEUVRcjW5cKMjcWB
-	XktnJQ8wIiS3ddXTNhF+32cQJXj8V9Mp95Dta0=
-X-Received: by 2002:a05:6000:1a8d:b0:43d:b99:bde3 with SMTP id ffacd0b85a97d-43d292d51e0mr23883675f8f.25.1775562785787;
-        Tue, 07 Apr 2026 04:53:05 -0700 (PDT)
+        bh=Q9LwMGDTe5srAu/izrDXk+9lDvNPSLMDIW31RrS35kA=;
+        b=WTyt0Pp1Ru1zcSwJ1eyW+C8T6U+GmaehUu/dJFSORV7liEzDMXfeq5prjiaBugFlPh
+         o8C7UCLAJRyIrdEtkSmV3F3AfLXHdBfrmMSByMsSb4+QDrkQoxE26gJCfgG3rj70KpLM
+         UBJwhq87BWP1+cKO4cEJUOalQrPf/UytyAtiLzdsPnvW0Wvuf/ASeDRqKglLFulhZdsi
+         g64KqFvGPt14FmCh3xSkZJYBsZfwrFOfqDDzougmEqB1u6nRDeIr5mytr+T63uRlNMrr
+         SFFwPsUZUxMmCWPl2HJ9B+DhWOGimzIJ6ZsmkJuSgsbzyWv+y7xdoZCINOTdZOR9bU0G
+         IxMg==
+X-Gm-Message-State: AOJu0Yykpj1RAwLrcFmx4L1y2e/59ktPJMagmYQDTJyZ2pDqvfftJ7hv
+	M2M21Sn9GmOKz0+TcOEHC+jvezv4wT4MOntuKB7Qm5xjMSj3RBWc6DozyOeWpA==
+X-Gm-Gg: AeBDievL0Kf41Bk1t8KUC0ccorDvCAlZn/n4QJQnb5bXmM3wouyG41noUqxPZ/FxdmF
+	U8vBMjjSvBkxdxaSzMXsgMYk0obgP9yFApavtZViXs/IkGfSITcfvktnTInmBIHlJJJ48hvyeth
+	Y0zLH4JHTozbTZmXloyBs+NnQDNPy31XU4UCqjjsuQ22Kgsc/f1lhkxijVndhtPWdb9eewm+mQh
+	1e0oSAskO71b+dQpXgZGY4X6kfonX2ZStvd0vL+Uw77qKrTD4NpIvMjS9mpMDsaoGE0Y6d/nhUy
+	c3fVPZnUb2qf/uSFnxQM8UrKnxewXkNeVGjmjKzp/CzQrY/TGBZBNl7jYqQWBLFmUzVffxdXxXp
+	+Z+0ErfLvcwwyWAvDrtfjFVV59yk4T6o5dZNLsGRtxMIovb0NGcY5LJxbh7Vzp5a8mIyb2E+Lov
+	4+PL1VXs6pF209L6LTrZ6vsySQSwaJS8gn61outzBsEBe3IVj0+LZxGKaYxIApHQZIluMugJ4N+
+	0hZq+p5w6ozEu3Iy5JanDY1jm678sjQ/lO49aU=
+X-Received: by 2002:a05:6000:4020:b0:43c:f4df:923b with SMTP id ffacd0b85a97d-43d292ff5c4mr23911066f8f.50.1775562788332;
+        Tue, 07 Apr 2026 04:53:08 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e2a6f5bsm45050794f8f.7.2026.04.07.04.53.04
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e2a6f5bsm45050794f8f.7.2026.04.07.04.53.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 04:53:05 -0700 (PDT)
+        Tue, 07 Apr 2026 04:53:07 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 04/10] promisor-remote: reject empty name or URL in advertised remote
-Date: Tue,  7 Apr 2026 13:52:37 +0200
-Message-ID: <20260407115243.358642-5-christian.couder@gmail.com>
+Subject: [PATCH v2 06/10] promisor-remote: refactor has_control_char()
+Date: Tue,  7 Apr 2026 13:52:39 +0200
+Message-ID: <20260407115243.358642-7-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.54.0.rc0.114.g05d466edb8
 In-Reply-To: <20260407115243.358642-1-christian.couder@gmail.com>
 References: <20260402070613.85934-1-christian.couder@gmail.com>
@@ -82,35 +82,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In parse_one_advertised_remote(), we check for a NULL remote name and
-remote URL, but not for empty ones. An empty URL seems possible as
-url_percent_decode("") doesn't return NULL.
+In a future commit we are going to check if some strings contain
+control characters, so let's refactor the logic to do that in a new
+has_control_char() helper function.
 
-In promisor_config_info_list(), we ignore remotes with empty URLs, so a
-Git server should not advertise remotes with empty URLs. It's possible
-that a buggy or malicious server would do it though.
-
-So let's tighten the check in parse_one_advertised_remote() to also
-reject empty strings at parse time.
+It cleans up the code a bit anyway.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- promisor-remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ promisor-remote.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/promisor-remote.c b/promisor-remote.c
-index 8e062ec160..8322349ae8 100644
+index 5860a3d3f3..d60518f19c 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -722,7 +722,7 @@ static struct promisor_info *parse_one_advertised_remote(const char *remote_info
+@@ -642,6 +642,14 @@ static int all_fields_match(struct promisor_info *advertised,
+ 	return 1;
+ }
  
- 	string_list_clear(&elem_list, 0);
++static bool has_control_char(const char *s)
++{
++	for (const char *c = s; *c; c++)
++		if (iscntrl(*c))
++			return true;
++	return false;
++}
++
+ static int should_accept_remote(enum accept_promisor accept,
+ 				struct promisor_info *advertised,
+ 				struct string_list *config_info)
+@@ -772,18 +780,14 @@ static bool valid_filter(const char *filter, const char *remote_name)
+ 	return !res;
+ }
  
--	if (!info->name || !info->url) {
-+	if (!info->name || !*info->name || !info->url || !*info->url) {
- 		warning(_("server advertised a promisor remote without a name or URL: '%s', "
- 			  "ignoring this remote"), remote_info);
- 		promisor_info_free(info);
+-/* Check that a token doesn't contain any control character */
+ static bool valid_token(const char *token, const char *remote_name)
+ {
+-	const char *c = token;
+-
+-	for (; *c; c++)
+-		if (iscntrl(*c)) {
+-			warning(_("invalid token '%s' for remote '%s' "
+-				  "will not be stored"),
+-				token, remote_name);
+-			return false;
+-		}
++	if (has_control_char(token)) {
++		warning(_("invalid token '%s' for remote '%s' "
++			  "will not be stored"),
++			token, remote_name);
++		return false;
++	}
+ 
+ 	return true;
+ }
 -- 
 2.54.0.rc0.114.g05d466edb8
 
