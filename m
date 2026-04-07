@@ -1,161 +1,226 @@
-Received: from cornsilk.maple.relay.mailchannels.net (cornsilk.maple.relay.mailchannels.net [23.83.214.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D02D35836E
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 20:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.214.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775592832; cv=pass; b=G1qf3iLUyRkUn21E9cUJytotxWEfy6/kr7TzhzqjOJDQ61BsDueDnyUX/8TxJUHzg/sHEjWbyXPYMdnnxm7I8SSKu6C3hda5LDwlP13NLSkqRFx359KsEpJHvwWoDL4lB9NsVeP6JrKxFhoJmVa6q4B9+lsXfF7p+1NVHH/BdNA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775592832; c=relaxed/simple;
-	bh=IDttAmpaj2L2gZQzrlRG6C4C31Z01jIeLuNsCbMlIdM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ALHYyw0s1rxilL8SyGeU40Ui1z2uce+OTXvZkNzYx0vitvWqPoSgvb9yNlLmBv4HJ6/98DN9mXfG1Im1Ug5qnP/3jF0Kl19AQC63FXkc1V+n17kJyWMHJMyNphLEtteJCeHJL1LVpXSo/JPZFTFJGJfyzU0nohTqTgp3quqJMRI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=ZvbwzD6P; arc=pass smtp.client-ip=23.83.214.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924CA26158C
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 20:17:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775593057; cv=none; b=EgC+XAxidusYW+ggNlwLOeVyX2ya2GRn/YFaoeiLhEiGZ22ka1ohJapWu2dnF4rDpNfvT1FQMptjp819VFgPRVKS95PdvoboMHZUgY9uv0S6Lc9GhrTG+IAsQnmeEVplboS/JnIjn37+8GXCqTsdebny9iXIzaUepRR7foCIAvI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775593057; c=relaxed/simple;
+	bh=nXxcyyf00MGe4P2sYJew8Q510pj9uyZ5UylZw+y+zGw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g9QcyVuGHn4V4goS3uwf8LVagRfPWnHbI1ET8zTuxmTmu3v499v1OcuQgjO8+billwV8QaL3LkhMQhwzEg+wpMaimox6tLBigA8c0Pzt38ZHAYytmHz+A4AQWmMzTwXifYFT+aLHweXghCqn2hO6VWkp4lF8NzhIU4HFsEhmIVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kG8rtey4; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="ZvbwzD6P"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 4A2EF224361;
-	Tue, 07 Apr 2026 20:13:44 +0000 (UTC)
-Received: from pdx1-sub0-mail-a254.dreamhost.com (100-121-211-194.trex-nlb.outbound.svc.cluster.local [100.121.211.194])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id C0401225186;
-	Tue, 07 Apr 2026 20:13:43 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1775592823;
-	b=Php4NbC0KU24CqdGQuo8wFtpXL8o6gAosYH4ozoGPqzP1WZaJKe7Nsa4x/LfDGwjUPbhmQ
-	mA66/83fi+IfvO8a/Pv8aP0aeW0xkQwhzALxVHV8a21Q4OFeK18DcVVCPOdzUoOzLzuS1A
-	Rzvc4jI0JRgil1CE8tUnZBdweYWAbGxugIyg6GGEpi1FM1oOPEy2GDO7Do6G15nrmusens
-	s+cPXqNnXpIfLIlghOAEzie2kOEP5NpfCxJDvS1V9eoo6+afCHmI1FwkR7OdVxBiAcQYT3
-	UUG2jGkFDXVzjYiQO8TqPGTPruLQux3DQdKdApImpX1f1O/rqcagPHCqHThQlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1775592823;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=/BjGQjatwU/hPmj5g44EdAvAiY/YPQjXAFahkz3drJA=;
-	b=H3TZFRPl3FxbHf45FbAS6yyNNIcTQ2oDWe5dDHyWb/2+VcBbADF/wGW5gL6o8wRzLZGmWp
-	oC1mo5yJEVvUvuG27IX5ByNmjnkWDlHXN6IxYCtOHc7Q89noxiUxmoFrCIcz0vxCq/yZE1
-	toA3S/RHOOjFiq/8uUP6Ga5BFpwGqBoIJfs4ERapqiYtNuGHM+TzF8Xw6SkQF3OZYvv34Y
-	fx8ZiESHk3OKV0cJf9GVPVOm1Pzqfx+fq9Jaz5ic9Yoo2DAuqVEs9eASUVNLbhvBMqnToL
-	2EtM7Hze+BMmvxT+SIQw4ZH8HqTNPUQzIVRu/kt7upVc/k32FDrPzD0MaKZNMg==
-ARC-Authentication-Results: i=1;
-	rspamd-7d86dcc447-fwgr6;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Scare-Reign: 12131016459ed8d9_1775592824097_1956159044
-X-MC-Loop-Signature: 1775592824097:267555371
-X-MC-Ingress-Time: 1775592824096
-Received: from pdx1-sub0-mail-a254.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.121.211.194 (trex/7.1.5);
-	Tue, 07 Apr 2026 20:13:44 +0000
-Received: from ubby (unknown [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a254.dreamhost.com (Postfix) with ESMTPSA id 4fqy7p0463z107X;
-	Tue,  7 Apr 2026 13:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1775592823;
-	bh=/BjGQjatwU/hPmj5g44EdAvAiY/YPQjXAFahkz3drJA=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=ZvbwzD6Ppueku8GERIt/WW7MxMM9elSdaZdmVE5/lDkHwp8ZEUes1ym0IcLf9CGok
-	 bOYHdEJeFTirMAdv6zG8WYioyW2dLjVLfujzJ6FfITlqM51uqZprO63eZXDJxo/Z1m
-	 sPx71mo34W+QaRwPHSfYfG4IDhWo8OgM8I4FQq68zSM0u/8TdEdNQHh3L/j16bwMKj
-	 eTYISfVBGaOUVeJmpZXmPTpVYNIYzTLcNxKnScBChjjfVqR9rBH8EYQe2lkcMRUXD/
-	 ke5CQ10gmfRTjS3Vn1Id30fPswx9QALhIKym1D9qnfBe415RuTynZ1+HfppRHADgh1
-	 YeY8BEkLTzcCQ==
-Date: Tue, 7 Apr 2026 15:13:39 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, Matt Stark <msta@google.com>,
-	git@vger.kernel.org, ps@pks.im,
-	Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev,
-	Edwin Kempin <ekempin@google.com>, schacon@gmail.com,
-	philipmetzger@bluewin.ch, konstantin@linuxfoundation.org,
-	newren@gmail.com, tytso@mit.edu, rikingcoding@gmail.com
-Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
- cherry-pick.
-Message-ID: <adVlc/y8HjvSG8KQ@ubby>
-References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
- <xmqqqzor76nh.fsf@gitster.g>
- <adSO6zPwtFOWBcOw@ubby>
- <68e5a1eb-ec7b-43ca-98d1-ffdf7fef013f@gmail.com>
- <adUoR/T17fKr+YLN@ubby>
- <xmqqtstm68to.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kG8rtey4"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-463a0e14abfso3016382b6e.2
+        for <git@vger.kernel.org>; Tue, 07 Apr 2026 13:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775593054; x=1776197854; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3itD/jUm7L4FU4CJbm1JdokHiEk5WG3uqGl66QAM0sc=;
+        b=kG8rtey4VKRJ6bayD2TsDF9JhaXI8Y/QKlAsy1JTKzut5mYP1GU85tKfezb1BjVOI+
+         tGHGvq3HQx92P9ltcI50xC5ZMNekWW1JFoDKN3rCTNvxIS/W9K8VwjEh1keqp5X7vKjN
+         zAzRJDJRO8Nd7Bt0BPnSugGFrw4wjRSl90gb0f4HdZ6SaUhtk1Kq3uK4AMR7kceoWCkO
+         DEIIGdoVYNM/SxWlQWpGzRbd5A00EpDC2nlYIzgBZUpmWQbyihlgC3AXtRYlyooySwhZ
+         nrOL3bnzfG7im+IftdnnTu88g4PVyvnkMWl3dGpBjcnEFKbWqIcIDgghS4TS4a2XQ6cs
+         d3rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775593054; x=1776197854;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3itD/jUm7L4FU4CJbm1JdokHiEk5WG3uqGl66QAM0sc=;
+        b=Ta+7EG/eMZ2qexqq3UbofNpeFQpoVCdSsuNteS3rtq3+ej+IlViZOWVJOSW50qBMGJ
+         a+JxJ42tGBLZ+ElaI/tTSMrcHehtW5pW4HvXay9W8zi97DsHa86oJ+kkdFV9/z8bys/T
+         znrnOvJxK3MGMRcvD+AG3NBs8PBWsOKDa/pjiE8MB+DNjHJcKPsxzODk5sv7hpL/csih
+         CVY1esotq8L4maXXwRoNUgKQTsplzbHmlZDppYtg1ewjG/uKXJD0boBWj1sko8CTFFL0
+         VbtJHthKvgNvIIjC5MeCHp3G9Urj38IonEv+jVM1NIjJyLPq5jygqfTzTeqna8aCbX29
+         VuYw==
+X-Gm-Message-State: AOJu0Yy1Nbh4WUPvYP/ww8G+wenKS2MzSDpIDffoSzjCB3/FAWV/PSul
+	PBPPFbD7l3Dp1bd0nZh6UVHkYoaIVj0vtj41UP+cQgavm7tTXyhKmnk74MrrBw==
+X-Gm-Gg: AeBDieuGiH6Uy8SmmOmCuaHoM3VJtgDvbJSXPPuoSf5l4zrD2u9mQoKX65q20Dk+AsN
+	YV1aWdLVf4ElaIhzpMb9wkxGuk5Vo9GHHsGrNmKEqLmUS2iKML8azMCZONs+4ddIfnlNILkr5sK
+	/3du7JrcH9I6WiKaBs1UdGSPiCU0HVW/f11Y74FWdYs2e1l2Z8SzRLgkgbze19Wp18/4i1FPoIO
+	C28Zd9vnzCHIeJ0cVK5BkKTMIJMuw1wH/IVt1GoSUj7CC1AMGirGdfU2p6mwSMZzb0cNT+JMz6j
+	vUPjZmHCF4sjf1l9fD3C/HiYOGPn/UvEhQvPk+Q2UETZRfMU8RaYZsHgX+kGOVIOPZJOqxJmZ+5
+	xT2RoEoU/IchE4VNYIW9OW7ZZVcVmkgFYTDmJJozKqaZhnpHnXQPNYQshe5jTpc3tQ39gIk1Bd4
+	VVpEDYdfnSecdE8w9VXVIfzviideYWg5w=
+X-Received: by 2002:a05:6808:1302:b0:45e:e088:5f3e with SMTP id 5614622812f47-46ef8d5bf69mr9949172b6e.49.1775593054251;
+        Tue, 07 Apr 2026 13:17:34 -0700 (PDT)
+Received: from denethor.localdomain ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-46d9387a763sm10510177b6e.18.2026.04.07.13.17.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2026 13:17:33 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	peff@peff.net,
+	luca.stefani.ge1@gmail.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] object-file: avoid ODB transaction when not writing objects
+Date: Tue,  7 Apr 2026 15:17:30 -0500
+Message-ID: <20260407201730.2526914-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.53.0.381.g628a66ccf6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtstm68to.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 07, 2026 at 09:20:35AM -0700, Junio C Hamano wrote:
-> Nico Williams <nico@cryptonector.com> writes:
-> > Well, I said "site-local" and "for some definition of site", and the one
-> > I had in mind is that the upstream provides this [default] configuration
-> > for clones.  Sure, authors could override this locally, but presumably
-> > they wouldn't, and presumably upstreams would check for adherence to
-> > their rules.
-> 
-> This does sound quite sensible.  What you called "site", I called
-> "project" in my earlier responses.
-> 
-> Some projects do already check that the changes are signed off with
-> the "Signed-off-by" trailers.  If change-id or original-change-id or
-> whatnot are deemed essential to a project, and are expected to be
-> formatted in certain ways, the project will certainly validate them.
+In ce1661f9da (odb: add transaction interface, 2025-09-16), existing ODB
+transaction logic is adapted to create a transaction interface at the
+ODB layer. The intent here is for the ODB transaction interface to
+eventually provide an object source agnostic means to manage
+transactions.
 
-Cool!  Maybe we can achieve consensus.  Here's a strawman:
+An unintended consequence of this change though is that
+`object-file.c:index_fd()` may enter the ODB transaction path even when
+no object write is requested. In non-repository contexts, this can
+result in a NULL dereference and segfault. One such case occurs when
+running git-diff(1) outside of a repository with "core.bigFileThreshold"
+forcing the streaming path in `index_fd()`:
 
- - upstreams publish (where?) a set of policies for
+        $ echo foo >foo
+        $ echo bar >bar
+        $ git -c core.bigFileThreshold=1 diff -- foo bar
 
-    - change-id
-    - original-change-id
+In this scenario, the caller only needs to compute the object ID. Object
+hashing does not require an ODB, so starting a transaction is both
+unnecessary and invalid.
 
-   regarding:
+Fix the bug by avoiding the use of ODB transactions in `index_fd()` when
+callers are only interested in computing the object hash.
 
-    - commit splits
-    - commit squashes
-    - cherry-picks
-    - rebases
+Reported-by: Luca Stefani <luca.stefani.ge1@gmail.com>
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
 
- - these policies should reference named hooks that have to be locally
-   installed in the clone (that way the upstream can't just cause
-   arbitrary remote execution clone-side) -- hooks that can transform
-   change IDs
+Greetings,
 
-We should probably also have options for cherry-pick and rebase that a
-user can use to provide useful context such as "this is a backport to
-...", or "this is for <ticket>" (adds change-id).
+This patch addresses a bug report[1] where performing git-diff(1) on
+files that exceed "core.bigFileThreshold" outside of a repository causes
+a segfault. Originally this patch was included in another series sent to
+the mailing list[2] as a preparatory refactor. Since it happens to fix
+the reported bug though, I've extracted it from that series with the
+hope of upstreaming more quickly.
 
-Hooks could do things like create child tickets, etc.
+I wasn't entirely sure if this patch should be based on master or maint.
+I went with master, but am happy to resend if this is incorrect.
 
-Punting all semantics to hooks and upstream policies leaves only generic
-things to decide, namely: what operations call what hooks.  And that
-should leave us nothing to argue passionately over.
+Thanks,
+-Justin
 
-> None of that requires us to hide this information in the commit
-> object header, by the way.  And indeed, it is easier to validate
-> what is in the "git log" output (where optional header elements like
-> "encoding" are not shown).
+[1]: <CAO0HQ0X_pQmew5tJReOL=u+CMxCjAQynx8JfjykoYAUE59YNzw@mail.gmail.com>
+[2]: <20260331033835.2863514-1-jltobler@gmail.com>
 
-Yes, for sure, this could just be commit message formatting practices
-enforced by hooks.  In this case there should be a hook for extracting
-change ID(s) from a commit message.
+---
+ object-file.c           | 57 ++++++++++++++++++++++++++++++++---------
+ t/t1517-outside-repo.sh |  8 ++++++
+ 2 files changed, 53 insertions(+), 12 deletions(-)
 
-Nico
+diff --git a/object-file.c b/object-file.c
+index 4f77ce0982..63408fc290 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1640,6 +1640,34 @@ static int index_blob_packfile_transaction(struct odb_transaction_files *transac
+ 	return 0;
+ }
+ 
++static int hash_blob_stream(const struct git_hash_algo *hash_algo,
++			    struct object_id *result_oid, int fd, size_t size)
++{
++	unsigned char buf[16384];
++	struct git_hash_ctx ctx;
++	unsigned header_len;
++
++	header_len = format_object_header((char *)buf, sizeof(buf),
++					  OBJ_BLOB, size);
++	hash_algo->init_fn(&ctx);
++	git_hash_update(&ctx, buf, header_len);
++
++	while (size) {
++		size_t rsize = size < sizeof(buf) ? size : sizeof(buf);
++		ssize_t read_result = read_in_full(fd, buf, rsize);
++
++		if ((read_result < 0) || ((size_t)read_result != rsize))
++			return -1;
++
++		git_hash_update(&ctx, buf, rsize);
++		size -= read_result;
++	}
++
++	git_hash_final_oid(result_oid, &ctx);
++
++	return 0;
++}
++
+ int index_fd(struct index_state *istate, struct object_id *oid,
+ 	     int fd, struct stat *st,
+ 	     enum object_type type, const char *path, unsigned flags)
+@@ -1661,18 +1689,23 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
+ 				 type, path, flags);
+ 	} else {
+-		struct object_database *odb = the_repository->objects;
+-		struct odb_transaction_files *files_transaction;
+-		struct odb_transaction *transaction;
+-
+-		transaction = odb_transaction_begin(odb);
+-		files_transaction = container_of(odb->transaction,
+-						 struct odb_transaction_files,
+-						 base);
+-		ret = index_blob_packfile_transaction(files_transaction, oid, fd,
+-						      xsize_t(st->st_size),
+-						      path, flags);
+-		odb_transaction_commit(transaction);
++		if (flags & INDEX_WRITE_OBJECT) {
++			struct object_database *odb = the_repository->objects;
++			struct odb_transaction_files *files_transaction;
++			struct odb_transaction *transaction;
++
++			transaction = odb_transaction_begin(odb);
++			files_transaction = container_of(odb->transaction,
++							 struct odb_transaction_files,
++							 base);
++			ret = index_blob_packfile_transaction(files_transaction, oid, fd,
++							      xsize_t(st->st_size),
++							      path, flags);
++			odb_transaction_commit(transaction);
++		} else {
++			ret = hash_blob_stream(the_repository->hash_algo, oid,
++					       fd, xsize_t(st->st_size));
++		}
+ 	}
+ 
+ 	close(fd);
+diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+index c824c1a25c..c1dbc6359a 100755
+--- a/t/t1517-outside-repo.sh
++++ b/t/t1517-outside-repo.sh
+@@ -93,6 +93,14 @@ test_expect_success 'diff outside repository' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'diff files exceeding bigFileThreshold outside repository' '
++	cd non-repo &&
++	echo foo >foo &&
++	echo bar >bar &&
++	test_must_fail git -c core.bigFileThreshold=1 diff -- foo bar >actual &&
++	test_grep "diff --git a/foo b/bar" actual
++'
++
+ test_expect_success 'stripspace outside repository' '
+ 	nongit git stripspace -s </dev/null
+ '
+
+base-commit: 1adf5bca8c3cf778103548b9355777cf2d12efdd
 -- 
+2.53.0.381.g628a66ccf6
+
