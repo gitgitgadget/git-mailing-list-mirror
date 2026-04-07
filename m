@@ -1,110 +1,107 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D54D3A4F3B
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372B93C6A56
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:24:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775578868; cv=none; b=pNY6hcvgrlegGvlEN7tMBc1cG49nYDEvJUDGrn1jg1XfNSIDCk0fLSfRlsxP+g5xwIYAfkIuGPfIdnuvLmlYEI6VO2AEIG+ColyMywQuK2W8tZ+Ust0jQ8NqER1EPYbY92UrHc9q/8/PfPSF4Evc+N87oq/G7jrS18FwSjSsc7Q=
+	t=1775579044; cv=none; b=uhHWhh3yKftFS1eFzn5+iP+ofQchPsz1iwnPq/kMa/PJe0xetEqKjQSUHmKlIustHdEW4e7EhlXnN7MUeTJc/Z9k8D0EIb1aKg1yl5QfIuYuLxftY6Tsi6nZP4yyb9yUsVFYn8pNG+Hk2v4hpUTdZfb04Ca8CQnNpcKa8i7OYSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775578868; c=relaxed/simple;
-	bh=Sf4xUJ/zP3MfqFatmoIlAHLDXNwErmyKIVuFbHj6iJA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iXJB3R89Opdzg5DUq8+5UI7Cifv/2VB+PKcYnXT3PJafceGB9HPICgLrrQIg5mbObWPF+UcZF72IApffKGlTDo4mYMVoLxt5PHr4MmqkdA8r6eRTBYHS0YLUpE/KWSOVF4OUPgniV9WIrc3swgza2fcFwa5vkOzVHaohabo4Q/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=afrq8Gs1; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775579044; c=relaxed/simple;
+	bh=k4KXNe5VP0X9VIlMApRVmP+KJqgjUa6+j23jy2q3CwM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KZku/48OxAk4NPm89oUdJjULaqRKvpck6qMLAmVLF3sR1U3u3Cw1WUZWwxMG12bxXDh5zo/+NqrHxX5VdDhSUN9lbAV63YuwViDLijUpAV8XQ29Yt6deRzNjUAHxVqXfn33/loCzXzBc01N2FIOozMwp0qoaw37NXiyNfhEVS+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ITLeFn0Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jaQrooC1; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="afrq8Gs1"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-35d99031e4eso3023886a91.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 09:21:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775578867; x=1776183667; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=raX9M6/8fb+roopLtAcTqR32hFDYX+U8OBozIS5yOHw=;
-        b=afrq8Gs1Ivjk6UOaD4AqfPCyQDTcJ5RXpsYcV+WgdMDmE9rRFnPMEf+P4dcTZDsRHI
-         tj89UFuDd6B00k5CB6eYOzj1D4PIgBCqWfWCs0F5QqOhHHzsQRnQsGWD/Q/JILNsdeHj
-         4M2keU+C1OYq+eF9vM7c2Cd/TxaKWqu7HQc5uys4pR7elJ/6x47UAQpDOGwWBGE7kBZm
-         74IvZ/PnRN3c7jYSlxAEXvJEwIweX1OvLX/pQpph2rrdTCG5kKZDArr4Z5flICU59I4I
-         T7Rfsx8mF7p3N62hHGl3XJELnDHzs2rAXEY91eBni1/nIPugxgepvMNBPApNXZE3WFNl
-         OF5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775578867; x=1776183667;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=raX9M6/8fb+roopLtAcTqR32hFDYX+U8OBozIS5yOHw=;
-        b=Ty7davLLO1RCfSoW2cQzt5wkB40GY3fHn8msKi6J9gRg0EZ4Ty+lNlUQIU1wMg1309
-         4BYZEF4TFL4IEH0XF7gNUBW3BnoCowP16OQEtx7dt4Geg+nIvXV3VCqzxO4Rjxdg36sv
-         67Q8g+rZoZ4Ikg1I33vxHR6ckS4Eap3Man61cqXwuwrkxgChAUBkDAnxRlhWRJyQGMj3
-         uqAghPAqTvpm+xyiKxF/c46GEK5FFU0q/jb79qWUkx/FxkJUfER7a750yvcSX94CfcJJ
-         LfZdll470YU4yQlKDEKIx+pn/5IlUvZJ+vVxBJFOccLc2NLM6luPVqGxN5oXdEQFr16N
-         eIng==
-X-Gm-Message-State: AOJu0YyidvxBHmV2ZQA03G2oGMhVj61v26Qab+VrdKGzyV3aftZxjyxv
-	PyAMY9tViRka26xHKC7kPsekPeTQLQxKl3ZewxmXcd8oDw6YyBe+I3i2QikC6g==
-X-Gm-Gg: AeBDievs4govakDtGEWJQrcdILm2E6FOOko8xfj9I6lKgpB4NBWQ5aLddaSzirJwdpl
-	SSNwhMe/8BYoRnHmyN4Y5vXwL4okT7sbmpQcIXy10qfyme48zvpLcsP9uzZYde8nh7n8YHGnLTh
-	8OEJoOf5HX7zIu1qkGBjPQw0q6dzdroun9YufDCxIeuTSmksUw7HF0yVZG7CzLKyz8+oewSL9pM
-	DhP72XFELK5kO/p85WoUYkT8dutP+xJA0EKh7tIHxlIrrLxwuEvYXHzDMn/AlFW1wOe+I1nSndU
-	Fb3Jom8N0bd8cSQI1y1ukCRNTkVUQCuZRs4odEINN4P5pkakVhlaa1qwZbvBX4lPw01ms22ezP7
-	G4cKJ/0PAVPN2S7fMA+V3Wtz8QO8PwCBZgKy4rauUnvVPQQHCs7AkaVvdXx/uEk3wlt0J/554ji
-	u+tyxGLPkr7TLxIP6wWkZTkQejmIIbwXavGhnjePuZgqBBfw==
-X-Received: by 2002:a17:90b:2e46:b0:35b:96bb:47b9 with SMTP id 98e67ed59e1d1-35de68d5e83mr16060267a91.19.1775578866505;
-        Tue, 07 Apr 2026 09:21:06 -0700 (PDT)
-Received: from Pushkar.localdomain ([49.37.115.50])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e27ad5674sm9519a91.1.2026.04.07.09.21.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 09:21:05 -0700 (PDT)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	peff@peff.net
-Subject: [RFC] archive: behavior of --prefix with absolute or parent path components
-Date: Tue,  7 Apr 2026 16:21:01 +0000
-Message-ID: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ITLeFn0Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jaQrooC1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6D212EC0477;
+	Tue,  7 Apr 2026 12:24:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 07 Apr 2026 12:24:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1775579041;
+	 x=1775665441; bh=z+AVn214JmWeqC2pOGHP7JqWmt3gcH0cDC6tEdh+qDY=; b=
+	ITLeFn0QprlJdJTPevRBVrPTfWFGNyr3bA2rMwiLtFFVRYrghIWt3bmNji2rGZyE
+	vjqusxnDk050CPt8hJLFJ/jQRSVYg25dWWKEHpcBYCFCFd03gbQW3KADtIsW/MMW
+	xunJQm7tL+4lMr4Npz5gbetEsEo0LvF9LTted73qsuOVBbAeSjlqk/b2oyE8P6mP
+	M8nm5z4js3yGhOxd2sIciQXia6zSDcfuOupnf71v50C5fcH/0Zgfvpgq99waTZIV
+	uxc1Bz6ETlO2zJEfWd3vQsJHUqkY67Z4+DlrPeuK5HO8/uFAxHrnzOqnPHzLDmZB
+	Zf9GgYOHdiF/28iyIaVnJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775579041; x=
+	1775665441; bh=z+AVn214JmWeqC2pOGHP7JqWmt3gcH0cDC6tEdh+qDY=; b=j
+	aQrooC1BcGia1yuJSNY2xHUXRs2CrrHxlzo6jHrVWhRY+yiLEV5DUL/06rILNecG
+	8+HC26H0Bg+txNtsTjKznyCeqxgyGjFZGfN6QiZSXaoRWol4arDGx4MWCB35mjrg
+	3ZFQyCTO0nOGwGo9QFkYI5wITSLXxQAvfB36PKOET3b2uhlj2AwGxuya8OsoM22F
+	cv/l4UkRfZzxfrKzMx9SToqwSia1TZ8oqpLW+Zk+4VFeuEnHdKle238wrwmP0KCo
+	ugif+Xb0hAgjEFccjcu2MWD0HHqNh0cWfEzV3bVz9ybbJJ88yvX4l5IPxbKgY+5p
+	PFydWg5ySKd/JH7N6x1KQ==
+X-ME-Sender: <xms:oS_VaTRcn7PeO0qPv_trBiLaEl7L9t3KycDaOELSks4NJkxA0nCSCw>
+    <xme:oS_VaQSNs2JS2q-4ApU6WJHVKHu04Sk7AsnS9MW6lvHmUZtGdpfWvC0gvA2EI6DXE
+    IfOn6f6DKYcPJeeSoox9XskgaBvGl_yFG3B11VKuXqJv9IGS7c1vw>
+X-ME-Received: <xmr:oS_VafTMdVTj9AtqXTpRRIdw65fNgk9hvDJqyGai8P4oCZ0lh9J6vAV980Prt26sJFCTVnEfWk5Dl9rFM0x19ifEW-81cC2xkg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhephfetvdejheduheegleehfeeivedtgeelfedvffdtvedtudffieekieeijedv
+    lefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvg
+    hnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjvghskhhosehstghh
+    figrrhiivghrshdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtrdhvghgvrhdrkhgvrhhnvghlrdhorhhgsehstghhfigr
+    rhiivghrshdruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:oS_Vad44UYrcARlN9v48lSfAOythDO3fW9SfutPqv_ihjhAAYqRuxg>
+    <xmx:oS_VaT0EUdJ_S1Bw_fxD-goKd0zCNod6-LZ2qGXDFqP8stN_o9O-xg>
+    <xmx:oS_VaQDkwno3X2cdzLMJwx_Y68g5426zuxv2SFx9uL98WJ7vTQaPoQ>
+    <xmx:oS_VaWNVRIWxnM7yOxIZOHkzEH6CwNHEORBgOKtE_dcoFFYn2tEeZg>
+    <xmx:oS_VaVMGxsWPbgYnvAq1HSeQBjfujBmLZgB0dhR-c-yH1DvdMrx8MlNK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Apr 2026 12:24:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Jesko Schwarzer <jesko@schwarzers.de>,  git@vger.kernel.org,
+  git.vger.kernel.org@schwarzers.de
+Subject: Re: checkout: clarify "up to date with origin/" uses local
+ remote-tracking ref
+In-Reply-To: <5DFBE9D6-0EC8-4702-99C5-827AEF8C6265@gmail.com> (Ben Knoble's
+	message of "Tue, 7 Apr 2026 12:13:27 -0400")
+References: <xmqq4ilm7q1n.fsf@gitster.g>
+	<5DFBE9D6-0EC8-4702-99C5-827AEF8C6265@gmail.com>
+Date: Tue, 07 Apr 2026 09:23:59 -0700
+Message-ID: <xmqqpl4a68o0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi,=0D
-=0D
-While experimenting with "git archive", I noticed some behavior around=0D
-the --prefix option that might be worth clarifying.=0D
-=0D
-Currently, --prefix accepts values such as absolute paths or ones with ..,=
-=0D
-e.g.:=0D
-    git archive --prefix=3D/ HEAD > out.tar=0D
-    git archive --prefix=3D//// HEAD > out.tar=0D
-    git archive --prefix=3D../../ HEAD > out.tar=0D
-=0D
-Upon listing the archive contents (e.g., tar -tf), you get entries like:=0D
-    /a.txt=0D
-    ////a.txt=0D
-    ../../a.txt=0D
-=0D
-In such cases, tar emits warnings like:=0D
-    "Removing leading '/' from member names"=0D
-    "Removing leading '../' from member names"=0D
-=0D
-This suggests that Git passes the prefix through as-is, relying on =0D
-downstream tools to sanitize potentially unsafe paths.=0D
-=0D
-From a user perspective, I was wondering:=0D
-  - Is this behavior intentional (i.e., leaving validation to archive=0D
-    consumers)?=0D
-  - Would it be worth documenting this explicitly?=0D
-  - Or should there be any normalization or validation at the Git level?=0D
-=0D
-I understand that Git generally avoids enforcing policy decisions in =0D
-such cases, but I wanted to confirm whether this behavior is intentional.=0D
-=0D
-I=E2=80=99d appreciate any thoughts on this :-)=0D
-=0D
-Thanks,=0D
-Pushkar=
+Ben Knoble <ben.knoble@gmail.com> writes:
+
+> I seem to recall a recent (last ~6 months) thread about “last
+> fetch time” and there being some question of how to record
+> it. Alas I haven’t searched the archives to find it.
+
+Is it a bit older thread?
+
+    https://lore.kernel.org/git/xmqqh65b2ci3.fsf@gitster.g/
+
+
+
