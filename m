@@ -1,86 +1,95 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B3837E2FF
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 21:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A8637EFFE
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 22:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775598837; cv=none; b=DjDkvnf+t2n7pcaIYcbPPZ6g6lnZz8quFDPOl7T9jWEQcUKyogIR3U27s8kVnpO1Pe8zzWFbQ7HPHUfPYa1bQlmjfVy2h/dHVo0qEIA7U6kJV1gkgNqHp8jnMk2MJo6cxUPDW4tnTWAgvIrYwUX/7ebjLg2pmWoGvuefTCHZwao=
+	t=1775599434; cv=none; b=ndDq4Qanafbu8qXGe9WHCdWZDgQuoutXw2QjYbzHvyDmKA2VB6R1QUhyj9xeA5a60so5Rrx/D23P3YXIBE5beR07r7RTxCjikRi2n0/C7TofmX5iVWDPH6hi74lbNkoEq244NQpSGqnuXKDKDebdnNJ8+41HIA2+mOvv/y/bdx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775598837; c=relaxed/simple;
-	bh=XHPmaUotBiyNtSlE9iiCrjUXxh+k2UgAz8ZLieOhyD8=;
+	s=arc-20240116; t=1775599434; c=relaxed/simple;
+	bh=UhLf1w/osH0PRrP29tZwI+5ZRvl5H1PGhTPF8X+Bu0M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dFxtXlr9rLLVlHTYHvw+itpS9nYlSxPVigP+hw3SZeDRgQmka3KF/ug32+B+lIZp0hfhNYDmi4wbrhQI8LrbFPGryx8LBMdwUAVb4eJ3q3Gx5kdluOS9L7ToUt2UUtrLJ0tlNrxyjCvqmXgCgWCJVmHkVm2ih4fsSRRElmSCNSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uBEjblE2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uGoSbvbW; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=NtoA+vIO5j2ldHrNezzacjdizFQHbydOcTYOBAZdWjyCH4UN27iQwDSmUAbXDfF2FiLecmNqXNKdfLD+zSSJL9Igce2Ie2RaZbGYr7S0h1Nvu1hFXpCf2NmdmETmPOCzfXXyvLW6GGUznTM+4eB/LNe00G/MdP37DXMpdirB7zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k5WXcwgp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GPPmTNoW; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uBEjblE2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uGoSbvbW"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 00441EC03F4;
-	Tue,  7 Apr 2026 17:53:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k5WXcwgp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GPPmTNoW"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1E47DEC048C;
+	Tue,  7 Apr 2026 18:03:52 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 07 Apr 2026 17:53:56 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 07 Apr 2026 18:03:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775598835; x=1775685235; bh=6wDvx/ua9/
-	0BY1a6SpEnRxpuF5ulutVPIZhZKDuzQMY=; b=uBEjblE27tJvGShOSRREZP6L0D
-	9jKJu/HhGiJWsKQv5rzdP9Zeq5nU907hK5tRR40Iwd+BfgC5VvHRKLB8EHJpz6MG
-	ACfEHiwWbtF+1dGA3/hf1H/hquqBEBh4kvql4jpw0iq9+ng0J/SLTZGYChgdyiSO
-	RnbKRyfPntnz6sibIlqKjLkOI/7YWsZq7zGosfnOF8cbIN8USxVB7jzmVXZDaTvu
-	WpX5ymQlZz6D8YN+OUMEyPm53okFa2ejVLLJ74qASlVxGG2geJp74Xba1+9p3e/6
-	t3RhqX7a3yk8CbHc6PxaUb1rbzkka8ItsKYIYKNjTmQSPAa4GRw9Nbhpvg1A==
+	:subject:to:to; s=fm1; t=1775599432; x=1775685832; bh=WF/bpxSrJ0
+	QZ+jwlE5lPgSt95HZ/6qK9Zh86i+hQrlY=; b=k5WXcwgpKLKIVmw8eV3EufccoB
+	ue3MoN55YFZpXSvAltY+3hUerAvN5QK4jAr+UG6suxm3m72SWSpOOFe0uTVltN3N
+	hUfVRE6a/rYJ33oQhmoSQaS0QlRliperh82qzS2Chnq3AD36YHb5F0fVGaWpEZ9c
+	bnHAmo1o/5zLlgGQIN1pemrpKr85xSY0PETWsdCOwJhvIBUuXydoIL5GzTdDhCB9
+	95AWv8RWTX8dMvjMTJ5V6Ri38ED3t+5YIq4pYrEu/H4TUhJqDtMbne9Az/kb+m+1
+	RmRWicSwg3kNogyDs98khW0toHk+OP61Sc0oXqxnHCU7Hs+YMmRMf+lpnWOw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775598835; x=1775685235; bh=6wDvx/ua9/0BY1a6SpEnRxpuF5ulutVPIZh
-	ZKDuzQMY=; b=uGoSbvbWkxUjYMbAYK0Bte2pYJLftnTQle4GaKD6Z0IZgMX65mN
-	Z3myo3KneSQUr3or9rr+lfCSdr6QkcwtQynM1vQmYKMTJxPSUFSjLPc3dD51t0cu
-	MNtYXx7du/Ab1ro9NJL68rMTN7IKtYX6DYQYS/izdqEglZWyUguWDCv+g1mF27MS
-	BYAbpX1+nj0lahqn9lsRIBdh26YIO2azWeAaCU6djCnV1yGGFLAXrVJi4JYcPJ7a
-	wbZ6B3uXwDLGbiFZ5vjou1iE1YizD9wAm+LJfJcjg59tAQQnCEC3rbOcCDkwbV9Q
-	r1vHsHRJ3mdBtoXdlk5BaoCf1CT/W13O8Lw==
-X-ME-Sender: <xms:83zVaTlXAx6DE0wAvTpwwwXXDIX0PldhabjENIokYfT_eHa63MRS8g>
-    <xme:83zVafSzGOeQJtp5DiQnfRXyPEBFYj61kKBw7K58VDbcPzuQeNz1BHEInXsTXn8fm
-    9hAEHadq1JF_ryo1N5QzahQQKtMuDyjH4uSZmFrz2rPnJii9m5aRA>
-X-ME-Received: <xmr:83zVaaFGD_iL6o_ga9d1yavarCJmfs9b0WDm3t49aRjxF9fbO9CeeOFskxJthu8CJd7gGNPOKXvWWjjXtgqJIPXU0pSjk8sPeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvudektdcutefuodetggdotefrod
+	1775599432; x=1775685832; bh=WF/bpxSrJ0QZ+jwlE5lPgSt95HZ/6qK9Zh8
+	6i+hQrlY=; b=GPPmTNoWIPsy93Z2LE9kWerFovrAsRdriqqnvGKeS6FlzC3gGV+
+	1qnkOYuN9mq3F4/7f0PI33a23q6pPOjxZOMvd+qDHivShRfs4tAMx+tSS2pXwzL9
+	7CbDTY8WWNCmdYAz/GTVd2dQhCTCEdD+iePXI1dBmU9fu83zGk3zT7J8omSr3fpa
+	rh/f8lj6xpXS6o6/vKwqpff1Gs40V3dqhypXxOqbumeeS2fzwqf0RxCtWvBUSR2R
+	jrQnITwnNCaoeClgECbNgHGcZWQZzwe4xQgQxTuFEDrJCZa+MZwAfbpfbxSSRRqu
+	H4e0vCOUcY0pXsv2fE+6ULptZk88z5Kpv8A==
+X-ME-Sender: <xms:R3_VaeUFXGzZOGA_D-ApvmIPNKy3101GmL7z8p907q6P0ntntRZAvg>
+    <xme:R3_VadIgSgjwSC5Sh-JXj50DwMBTDPQjQjcSiS9C0eVS1Zg6d1J2CSfSF-ei-00cz
+    CegN1NcP9s9W13wKbY3Eo9FDA22uSZU_sUU3K4w1B5dQ1sylgpwwN8>
+X-ME-Received: <xmr:R3_VaWB6wgUcwJIOYgahb-EKzRnwqZpc4fqt-UwmE1GUXazuMcVhc4Bkl9pGavtq-b78BCyN0Hk5-1GvT8dNldPpLYUgk-z1Fw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvudekvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
-    hutggrrdhsthgvfhgrnhhirdhgvgdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:83zVacGH13i23z3lBxh9gW7Gn8B5S-oPTy-FXRxI4ZgBhwFfgpsguA>
-    <xmx:83zVaQRS2Coq5Va_cgkTzJSfVdLMPHYWTKt4KoY1rCqf6AM2cLZZXA>
-    <xmx:83zVaVL6grm76ZzOtTDTfD-RbEAR0QgeV43HGNavKGhEV8m7Iq-ygA>
-    <xmx:83zVaTZFEIhCgpTt0yqwcBh_2yFajA4rermI6Q9FwW-_ZbD9isHQHg>
-    <xmx:83zVadBePBCK0RVX5MEdWOdLGuaXKALuieqH77mL0Bb9-GeXhnVBvVDg>
+    gvrhhnpeeiffduveehheeulefhieeiueekkeelgfekveejjeegkefgudeihfegffekgefh
+    geenucffohhmrghinhepshhtpghmthhimhdrthhvpdhgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehlohhrvghniihordhpvghgohhrrghrihdvtddtvdesghhmrghilhdr
+    tghomhdprhgtphhtthhopegtrghtsehmrghlohhnrdguvghvpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtth
+    grhihlohhrrhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:R3_VaVcQzUsqEOwWS-l5N_D7ehEs0cKgswrpMBkWxiyS6_D3WAHQig>
+    <xmx:R3_Vad1OsoZ3OkRHYDPUrVPWePBREpa9FLnwKHy8WI4j6vd0jWTL0A>
+    <xmx:R3_VaUjYI_gE__RdPFrAQ-B4JdYLw08kolfihPAKJUzsQpWPy_DGrw>
+    <xmx:R3_VaenC-nar3VkwtPRYMjwwCQi8LfJDGeTPdVLs2S7MMg1DXl5z-Q>
+    <xmx:SH_VacLOyb02-Qyt9tgj8KRU-0zOuGRzrf0MWt3u2IFJZ0_BZwF6AarT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Apr 2026 17:53:55 -0400 (EDT)
+ 7 Apr 2026 18:03:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  peff@peff.net,
-  luca.stefani.ge1@gmail.com
-Subject: Re: [PATCH] object-file: avoid ODB transaction when not writing
- objects
-In-Reply-To: <xmqqo6ju31wx.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	07 Apr 2026 14:18:06 -0700")
-References: <20260407201730.2526914-1-jltobler@gmail.com>
-	<xmqqo6ju31wx.fsf@gitster.g>
-Date: Tue, 07 Apr 2026 14:53:54 -0700
-Message-ID: <xmqqfr563099.fsf@gitster.g>
+To: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,  Derrick Stolee
+ <stolee@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor
+ file after repack
+In-Reply-To: <adV8iP668rgxK-9k@lorenzo-VM> (Lorenzo Pegorari's message of
+	"Tue, 7 Apr 2026 23:52:08 +0200")
+References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
+	<cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
+	<3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
+	<f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
+	<adP-MYYSmElK9wL3@lorenzo-VM> <xmqqy0iz7clt.fsf@gitster.g>
+	<adV8iP668rgxK-9k@lorenzo-VM>
+Date: Tue, 07 Apr 2026 15:03:50 -0700
+Message-ID: <xmqqbjfu2zsp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,20 +99,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com> writes:
 
-> I'd appreciate it if you can give your eyeballs to the attached to
-> see if that is how you would fixed the bug in the original context
-> of v2.52 track.  If everything looks OK, then there is no need to
-> spend time backporting on your side.  We have everything necessary.
+> On Mon, Apr 06, 2026 at 07:01:18PM -0700, Junio C Hamano wrote:
+>> Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com> writes:
+>> > On Tue, Apr 07, 2026 at 01:22:16AM +0800, Tian Yuchen wrote:
+>> >> On 4/6/26 08:24, LorenzoPegorari wrote:
+>> >> > +
+>> >> > +			/* If <time> doesn't exist, retrieve it and add it to line */
+>> >> > +			if (!parts[2]) {
+>> >> > +				struct tm tm;
+>> >> > +				localtime_r(&source_stat.st_mtim.tv_sec, &tm),
+>> >> 
+>> >> Typo.
+>> >
+>> > Ack.
+>> 
+>> Not just an unintended use of comma operator, this is not portable
+>> and breaks OSX build
+>> 
+>>   https://github.com/git/git/actions/runs/24058681172/job/70170218891#step:4:213
+>
+> Yeah, I was shocked that it compiled at all on my system with no issue
+> whatsoever.
+>
+>> >> > +				strbuf_addch(&line, ' ');
+>> >> > +				strbuf_addftime(&line, "%Y/%m/%d-%H:%M:%S", &tm, 0, 0);
+>> 
+>> I suspect that storing seconds since epoch as a large integer would
+>> be simpler and much less error prone than storing localtime in
+>> textual form without even recording the timezone.
+>
+> Yeah, maybe for this kinda specific debugging info being less error
+> prone is more important then "looking good". Will do that.
+>
+> Thanks,
+> Lorenzo
 
-Another thing.  Your jt/odb-transaction-write topic (in 'seen')
-already addresses this issue, so we may merge this single patch down
-to 'next' and 'master' first, but the merge that brings in the topic
-can just supersede this patch, perhaps keeping the test added to
-t1517.
+Before moving on, please fetch what I pushed out and see if
+SQUASH??? commit I made on top (you should be able to find it out of
+'seen') is any useful for your update.
 
-Do I understand correctly?  The t1517 part of the patch, when
-applied to 'seen', does indicate that the problem is not there.
-
-
+Thanks.
