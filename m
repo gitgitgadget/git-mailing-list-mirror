@@ -1,146 +1,274 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6855DEED8
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 02:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775527284; cv=none; b=p+h6C7szVrQCl5l61HZC6zCwspAYab9+2KLtr+JP2qVw6se9hLZR00bMRSd1kzFxScyOqfCOhWUHQ9AyFzP8cS629VChrEGq8IjstbSbSPRZZl//f9Bu/R/JI3OcElp8JHZmzcg1VnNcbN+l3nRbLHW/295jR6pGMXA4794pYAk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775527284; c=relaxed/simple;
-	bh=H2EQ14raH5n2li7h70SQM2Z1uMK1dKbVradhDlw9o7s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gnUHKvfHmmPjiJdD5jFqyLbqDNdEePq7bVHPfCPV5dUQmoE/uKL2SwGH3vH2E9OMXXiHQxW3PhDjaa5kzbwGSUliSDSKYbUdjwYP5VW7F/vTvDS6bhxGyfbfGOW7oJNOnZ59EtbCj7QIoiUtR7pk5VZBGRpNaE69ric9bgMIb8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LsZugA0i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vPKV/29+; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7631CAA7D
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 03:13:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775531618; cv=pass; b=UIP8/ZtZRj6E71Ll9Acr9yQIFIM/W6dxHAEbmncEBK8SVkutIkkl4F6cYSTZmqZzx5Cw112+9ksLr2bEaev9BSe9009Z33WYWh8zSC3k+MPYanWyKu0sHhikH0kNQmuG3tntcxDJC60ThvRteeTQ0ZV5pQmvyS63Tvnpq/rVRzo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775531618; c=relaxed/simple;
+	bh=PUi2rvrg1GRzSmIg07GujlkCBR2BeFA2LIz/JQjPsP0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Qjq6eKrxpVCasI2W6pTwO5SX6eVae/vessRTwr6YeNr9c36lxl3WeQ5NbxX/TDcRRm6BRgz+I6YRBXLnef20/C7SF5EOd2FWG3sdD4K/cgPF/y/PqQvPb+RrJamd13lnn4hyot+yMB8S3H0+ydmXDJ3gxTmMhaW9mmiCte8BP1Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c/GOE4OY; arc=pass smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LsZugA0i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vPKV/29+"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43B46EC000B;
-	Mon,  6 Apr 2026 22:01:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 06 Apr 2026 22:01:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775527280; x=1775613680; bh=2a4Tt+dKVw
-	C0uJBXNQd0fCSNAA6QzHXpsSRPWy9TzPE=; b=LsZugA0iXxKJei5oyLS6ilHjll
-	bm+qoCIsOuTuRhecD4blnLW0mvZ1/GgQjDFGbOsYny2d2obGCrHh2yaZLYprOZgv
-	2tefbbzwMOHT/h2zNWFVBfQzFEWHLwvhF0B/23kDv+91f6blyR/rsBVCwczg6Vg8
-	x4FZe/wuy2Uj2g7VAZRR4A3qmMjikO7S2cvM1Yb/kJiDd+GXqDAE/ChrBDE5OS6c
-	HUzqryitftubqg82cmy9TDz2Wz2R4lHKhYWJE1adhHQBsbZYcchhXKDAILKfnNBA
-	XwzLMP8MEyOKQfibwC89FfbkJ0SUT0QAKouGE+Aqn2zlOuq/LMjNHw3q/8yA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775527280; x=1775613680; bh=2a4Tt+dKVwC0uJBXNQd0fCSNAA6QzHXpsSR
-	PWy9TzPE=; b=vPKV/29+VupYt9OXp9WzKaGew2UrPkJHarBEEGhB16AD9M1wZhZ
-	i9qFWjUNAnKTv2ywJVD9zN/UN3589QxirhAewdAamf21Wz/YQg1NhYmRx511UY/d
-	3x6xudLFhSTV7RwQx2Pnqw6AKOqPk90F8nhxlCKYFqK3PKbsILK6BIuYOihHGWGv
-	VjyJjuIvIjFIB7gMaUylag4zTzzGxrKVw8Ld6sujorC5MbG48Oa57pFJjQh2KD42
-	Q9mxJu2PbNHas2muLc9hnb6BRbE+xNAMkTrS0f7OT9zYUnwiOXFw0VCaa1tSAdyF
-	ZQYdQqpP4uza+NiEkRWbrLvdTGzEI9ADl6w==
-X-ME-Sender: <xms:b2XUaYuCVA-MPrcGypgAVKSmreCIxTP3cBKfXJkNUFMR3YzNMaNN0A>
-    <xme:b2XUaYBXHIkxMIdq4G111KNy_qFm90oS4IMy6xdohc4yp-L8IRJ2BnpEexvGwi3x8
-    gaVWLC3fjEIrcqlMq4LHwJWbYdHAkpzwH_DuX9GuP1xC4sWE9t2Cg>
-X-ME-Received: <xmr:b2XUaXYWzAgEDvtqaT9RHdRbU0u5ajXM1f5o4-bBMCwmB3mNBUIufCR3k5tutm2ELoS1lT9qevJ-0zU-WiFMak1IvyD3FYoa5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduleeflecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeiffduveehheeulefhieeiueekkeelgfekveejjeegkefgudeihfegffekgefh
-    geenucffohhmrghinhepshhtpghmthhimhdrthhvpdhgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuth
-    dprhgtphhtthhopehlohhrvghniihordhpvghgohhrrghrihdvtddtvdesghhmrghilhdr
-    tghomhdprhgtphhtthhopegtrghtsehmrghlohhnrdguvghvpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cGXUabVJaDHAy-d_mZb46BwuiF10FTc3I89iTcsvEnG1ihwBphT59g>
-    <xmx:cGXUaeMv_CXjoaHqbY40xsjmfroRiPOmqBSt6MwKVSHNkd_LV-vrcQ>
-    <xmx:cGXUadYLTNAHbbYTl_GjeXduy26EX5Z6V4Lcjmi5U7U0wEqGdSRjNg>
-    <xmx:cGXUaV9KUklEULVd6T6dqkFFLM3e86svmobgXKroUicvdQQD__DZ_Q>
-    <xmx:cGXUaYj2BngUdCfp01D-74KCeOm2vRDAaW985kYPSCDmsITcWJTsW1mX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 22:01:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,  Derrick Stolee
- <stolee@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Elijah Newren <newren@gmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor
- file after repack
-In-Reply-To: <adP-MYYSmElK9wL3@lorenzo-VM> (Lorenzo Pegorari's message of
-	"Mon, 6 Apr 2026 20:40:49 +0200")
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
-	<cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
-	<3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
-	<f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
-	<adP-MYYSmElK9wL3@lorenzo-VM>
-Date: Mon, 06 Apr 2026 19:01:18 -0700
-Message-ID: <xmqqy0iz7clt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c/GOE4OY"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-126ea4e9697so28953c88.1
+        for <git@vger.kernel.org>; Mon, 06 Apr 2026 20:13:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775531615; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YfxUWQgKGAD8vYR39EAB2I8dkGoVd3h6tJs6s8Aivna8HjcNYC3wlvykrVxR2n/ncG
+         ze4HIJ0mYYoSyOIV1MjEs+ERyT6WZVufQW4hX/Rzt1ewnrCbDuECOxYd09Sjh9ajSFvS
+         rZ/f1FMsyGrC0pv2RHznLi8rh6QI9YXPawjTnprNtJJiAmdvC78T8FUdO063ybCXN+Qo
+         GNlOaT5qaFiVPSKs6rX94rYZ3kFHVAHOLpmlKYNkcx9WDmNSW7q6RqgvD1aarSZes5Fz
+         WhoUHoyP7Q5C8KEPjLtShmGuzMFr+ipfjdZP2k9OpO1/je8j4cfh7ScZdLfUNs4eNUle
+         Ndmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=sGMiZyW+HjrRP4sBPm78RDnwAzByp14nZvLCnjrBLfg=;
+        fh=2IhH4Nl2QL3ayusMZSXHpWkT0wg8dTX3brNw7zyM9ps=;
+        b=Ib0/B4oDs3H9feqSCdG2ewmNyepvqNsvmyx+IXdFnHeeCGqSSMg2NY+XATyrbtKNoD
+         oAzUoaAncpnJRMnOhEHIUdjyI0wHIfWYZbYi/w3u6z79xnmGOL8/95jZ5pksK4CpeQ6q
+         UDVsr6A/s2hhy//zCa7MAnWixc0Lc6BJmx4YaIy//u4Cvi2fDif1/emS+rFIbu8MAZ7u
+         XdtdzXlHRABSAT7HfhRBmzUEyiuRkFVDM0wwAwajqzI+3RK1yLSoHzVXg+fg2/6fkor4
+         Sy7YBUGoBbrm5vH4mwNxRei1CCkl1zBMXa3P/ELg3gjdb+/mKdL1YaQ9BqJGDQSurIrF
+         Wucg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1775531615; x=1776136415; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=sGMiZyW+HjrRP4sBPm78RDnwAzByp14nZvLCnjrBLfg=;
+        b=c/GOE4OY1B1k/gNoOCjUMHMjWp5yZLbPKERcWrl+uq2jgRNqDFxuPdVr5/EdzKq4CQ
+         xa+FErSai0qDpByTxq8YM1Si8vms6TJ3vcV6uO1pZd/sMlc3KrVCT7JhTF84RovK9cs4
+         S0MXrK168dPPwc1m1bbGoInioEzWnegga4Nge5ssIxB/h4NJYE/B7NGt1ZtelwXpYcri
+         mCY4lGE8HIseT6M+krZ45p9bfwU0uoGWPwW4tDsZHT4NYTcZukGwNmW1g5zItRLvWqyL
+         8p7hldysy5NnLIN8kAToR1tIDHeI6Ululra2py5Pl85PsjC5+JNymLzKJHAZhYrruwQv
+         OZ2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775531615; x=1776136415;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sGMiZyW+HjrRP4sBPm78RDnwAzByp14nZvLCnjrBLfg=;
+        b=YWUE7EeQ0fvQhugqpKRw18CglKZLwAjqNwRG6nwXGlIkz3yruJvjOh8YbHQS59e1H2
+         m+vd2ASanWetSNpVpnsHTP37Z14AIMNagrCdmOGrZ9K47QcX/dxl1yEwAoI+oipc1y9R
+         LjeoGp7pzd5VoZTDL4s/4fiNKmCxUmSnv8eeLn+PIfkDKLpy83z2S9s4VZsk1Rqgf96f
+         rlzbwrR+b9FE/kZa10Ntajl0lg+MX510s9EIXHKxg7cL8Cu1jM/5jMDGI6W+yco/GxVZ
+         FHzA11sCDqhcjEHSy3e9eABSt1LGeEK03+Llp7wiO+SLHZ5t3jCdvtlq3nfVtXXyAnoY
+         jTnQ==
+X-Gm-Message-State: AOJu0YxHo6tJ3wmpmelvD1BnTrxAB02JXqIof4Qa5TQ0Foo/24VMQLLy
+	O55OGJPV9ELsYUTrdsMaYJcCVAHG7K6webp1VM8W2Srr5L3bv5/Zfc4DK1KryNlBY6z/Ob6YTWt
+	ORGGdk1cxcwBDoFJPGgJPuPfnR3hEGlIJebmF3hFArkaI5JHBFSCS1WIXOWtfgQ==
+X-Gm-Gg: AeBDieuowg/ym0evSZVce6qdihKjCPZtdrBzVwYAJChuUyu0RJq7CRWUpJJUW0suoB0
+	2BrGAJTjkzwJT9wixmXMc8GWikBi2GoZoPWLrWBAV7/HgJdVxkmijD/DkU6/9XyUPWQrhoE/0tV
+	ejN1zpY+rxZ8DSkXLF4temCR8jCZbvMbwxSB8kpo3XWlc62YcCJRKwmmBClGeASQdR2OXdcyod0
+	pp6kSkst2+x8hSpKZ44eosB3aXJ8dDBHivSzkb8QwFmUmFiiZE6Ysnnr3pzSEj/X5gSKoxwnujy
+	/NPiSaA=
+X-Received: by 2002:a05:7022:438e:b0:12b:fa7f:e24b with SMTP id
+ a92af1059eb24-12bfc53a65fmr385319c88.13.1775531614648; Mon, 06 Apr 2026
+ 20:13:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Matt Stark <msta@google.com>
+Date: Tue, 7 Apr 2026 13:13:18 +1000
+X-Gm-Features: AQROBzCWaygz6u4n6gdReqadCQTbnho36xfB2i7zpBXMmGQ47hzH6k_FqmzAi04
+Message-ID: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
+Subject: [PATCH] headers: Preserve 'change-id' header in rebase / cherry-pick.
+To: git@vger.kernel.org
+Cc: ps@pks.im, gitster@pobox.com, phillip.wood@dunelm.org.uk, 
+	Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev, Edwin Kempin <ekempin@google.com>, 
+	schacon@gmail.com, philipmetzger@bluewin.ch, konstantin@linuxfoundation.org, 
+	newren@gmail.com, tytso@mit.edu, nico@cryptonector.com, 
+	rikingcoding@gmail.com, Matt Stark <msta@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com> writes:
+In the discussions on
+https://lore.kernel.org/git/Z_OGMb-1oV0Ex05e@pks.im/T/#m038be849b9b4020c16c562d810cf77bad91a2c87,
+it seems to be that:
+* There is consensus that a `change-id` header provides good value
+* There is not consenus on what precise format that should take
 
-> On Tue, Apr 07, 2026 at 01:22:16AM +0800, Tian Yuchen wrote:
->> Hi,
->> 
->> On 4/6/26 08:24, LorenzoPegorari wrote:
->> 
->> > +		while (strbuf_getline(&line, source) != EOF) {
->> > +			struct strbuf **parts;
->> > +			struct object_id oid;
->> > +
->> > +			/* Split line into <oid>, <ref> and <time> (if <time> exists) */
->> > +			parts = strbuf_split_max(&line, ' ', 3);
->> > +
->> > +			/* Ignore the lines where <oid> doesn't appear in the dest_pack */
->> > +			strbuf_rtrim(parts[0]);
->> > +			get_oid_hex_algop(parts[0]->buf, &oid, repo->hash_algo);
->> > +			if (!find_pack_entry_one(&oid, dest_pack))
->> > +				continue;
->> 
->> Memory leak here;
->
-> Yep, `strbuf_list_free(parts)` is missing here. Ack.
->
->> > +
->> > +			/* If <time> doesn't exist, retrieve it and add it to line */
->> > +			if (!parts[2]) {
->> > +				struct tm tm;
->> > +				localtime_r(&source_stat.st_mtim.tv_sec, &tm),
->> 
->> Typo.
->
-> Ack.
+This commit, rather than attempting to standardize the format, simply
+preserves the change-id header in whatever format it used previously.
 
-Not just an unintended use of comma operator, this is not portable
-and breaks OSX build
+If we so choose, we can later decide on a standardized format, but since
+git only preserves existing headers, this should not create backwards
+incompatibility.
 
-  https://github.com/git/git/actions/runs/24058681172/job/70170218891#step:4:213
+Signed-off-by: Matt Stark <msta@google.com>
+---
+ sequencer.c                           | 39 ++++++++++++++++++++++-----
+ t/t3400-rebase.sh                     | 20 ++++++++++++++
+ t/t3501-revert-cherry-pick.sh         | 15 +++++++++++
+ t/t7501-commit-basic-functionality.sh | 15 +++++++++++
+ 4 files changed, 83 insertions(+), 6 deletions(-)
 
->> > +				strbuf_addch(&line, ' ');
->> > +				strbuf_addftime(&line, "%Y/%m/%d-%H:%M:%S", &tm, 0, 0);
+diff --git a/sequencer.c b/sequencer.c
+index b7d8dca47f..093d47d42a 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1530,12 +1530,12 @@ static int try_to_commit(struct repository *r,
+  struct strbuf *msg, const char *author,
+  const char *reflog_action,
+  struct replay_opts *opts, unsigned int flags,
+- struct object_id *oid)
++ struct object_id *oid,
++ struct commit_extra_header *extra)
+ {
+  struct object_id tree;
+  struct commit *current_head = NULL;
+  struct commit_list *parents = NULL;
+- struct commit_extra_header *extra = NULL;
+  struct strbuf err = STRBUF_INIT;
+  struct strbuf commit_msg = STRBUF_INIT;
+  char *amend_author = NULL;
+@@ -1721,7 +1721,8 @@ static int do_commit(struct repository *r,
+       const char *msg_file, const char *author,
+       const char *reflog_action,
+       struct replay_opts *opts, unsigned int flags,
+-      struct object_id *oid)
++      struct object_id *oid,
++      struct commit_extra_header *extra_headers)
+ {
+  int res = 1;
 
-I suspect that storing seconds since epoch as a large integer would
-be simpler and much less error prone than storing localtime in
-textual form without even recording the timezone.
+@@ -1735,7 +1736,7 @@ static int do_commit(struct repository *r,
+     msg_file);
 
+  res = try_to_commit(r, msg_file ? &sb : NULL,
+-     author, reflog_action, opts, flags, &oid);
++     author, reflog_action, opts, flags, &oid, extra_headers);
+  strbuf_release(&sb);
+  if (!res) {
+  refs_delete_ref(get_main_ref_store(r), "",
+@@ -2511,10 +2512,36 @@ static int do_pick_commit(struct repository *r,
+  oid_to_hex(&commit->object.oid), msg.subject);
+  } /* else allow == 0 and there's nothing special to do */
+  if (!opts->no_commit && !drop_commit) {
+- if (author || command == TODO_REVERT || (flags & AMEND_MSG))
++ if (author || command == TODO_REVERT || (flags & AMEND_MSG)) {
++ struct commit_extra_header *extra_headers = NULL;
++ if (commit) {
++ unsigned long size;
++ const char *buffer = repo_get_commit_buffer(r, commit, &size);
++ size_t out_len;
++ // The Gerrit, GitButler, and Jujutsu projects all have a concept of
++ // a "change id", and it behaves in a similar way between the three
++ // tools. The change id is conceptually associated with a commit.
++ // It follows a commit as its rewritten (e.g. by amending and
++ // rebasing).
++ // While git doesn't add this header itself, and currently has no plans
++ // to do so, there is consensus that if the header is added by another
++ // tool, git should at least preserve it.
++ const char *header_value = find_commit_header(buffer, "change-id", &out_len);
++ if (header_value) {
++ extra_headers = xmalloc(sizeof(*extra_headers));
++ *extra_headers = (struct commit_extra_header){
++ .next = NULL,
++ .key = xstrdup("change-id"),
++ .value = xmemdupz(header_value, out_len),
++ .len = out_len
++ };
++ }
++ repo_unuse_commit_buffer(r, commit, buffer);
++ }
+  res = do_commit(r, msg_file, author, reflog_action,
+  opts, flags,
+- commit? &commit->object.oid : NULL);
++ commit ? &commit->object.oid : NULL, extra_headers);
++ }
+  else
+  res = error(_("unable to parse commit author"));
+  *check_todo = !!(flags & EDIT_MSG);
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index c0c00fbb7b..6b5d6fe56f 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -474,4 +474,24 @@ test_expect_success 'git rebase --update-ref with
+core.commentChar and branch on
+  test_grep "% Ref refs/heads/topic2 checked out at" actual
+ '
+
++test_expect_success 'rebase preserves change-id header' '
++ test_commit "source-for-rebase" file-rebase content-rebase &&
++ git cat-file commit HEAD >commit_obj &&
++ awk "/^committer / { print; print \"change-id my-change-id\"; next
+}1" commit_obj >commit_obj_mod &&
++ new_commit=$(git hash-object -t commit -w commit_obj_mod) &&
++ git branch -f source-branch $new_commit &&
++
++ git checkout -b target-branch HEAD^ &&
++ echo "unrelated" >file-unrelated &&
++ git add file-unrelated &&
++ git commit -m "unrelated" &&
++
++ git checkout source-branch &&
++ git rebase target-branch &&
++
++ git cat-file commit HEAD >result_obj &&
++ grep "^change-id my-change-id$" result_obj
++'
++
+ test_done
++
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 8025a28cfd..0ada99f216 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -256,4 +256,19 @@ test_expect_success 'cherry-pick is unaware of
+--reference (for now)' '
+  grep "^usage: git cherry-pick" actual
+ '
+
++test_expect_success 'cherry-pick preserves change-id header' '
++ test_commit "source-for-cherry" file-cherry content-cherry &&
++ git cat-file commit HEAD >commit_obj &&
++ awk "/^committer / { print; print \"change-id my-change-id\"; next
+}1" commit_obj >commit_obj_mod &&
++ new_commit=$(git hash-object -t commit -w commit_obj_mod) &&
++ git branch -f source-branch $new_commit &&
++
++ git checkout -b target-branch HEAD^ &&
++ git cherry-pick source-branch &&
++
++ git cat-file commit HEAD >result_obj &&
++ grep "^change-id my-change-id$" result_obj
++'
++
+ test_done
++
+diff --git a/t/t7501-commit-basic-functionality.sh
+b/t/t7501-commit-basic-functionality.sh
+index a37509f004..e25dd9dc6f 100755
+--- a/t/t7501-commit-basic-functionality.sh
++++ b/t/t7501-commit-basic-functionality.sh
+@@ -793,4 +793,19 @@ test_expect_success '--dry-run --short' '
+  git commit --dry-run --short
+ '
+
++test_expect_success 'amend preserves change-id header' '
++ test_commit "source-for-amend" file-amend content-amend &&
++ git cat-file commit HEAD >commit_obj &&
++ awk "/^committer / { print; print \"change-id my-change-id\"; next
+}1" commit_obj >commit_obj_mod &&
++ new_commit=$(git hash-object -t commit -w commit_obj_mod) &&
++ git reset --hard $new_commit &&
++
++ echo "amended content" >>file-amend &&
++ git add file-amend &&
++ git commit --amend --no-edit &&
++
++ git cat-file commit HEAD >result_obj &&
++ grep "^change-id my-change-id$" result_obj
++'
++
+ test_done
+-- 
+2.53.0.1213.gd9a14994de-goog
