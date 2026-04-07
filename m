@@ -1,90 +1,86 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EB51E0DD8
-	for <git@vger.kernel.org>; Mon,  6 Apr 2026 22:05:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FFF2B9A4
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 00:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775513142; cv=none; b=Mpc0clbMR5d3HBWKnTius2rMOuYNhnLgEG9irmCi7+mzMJ8lFXIvinTbXPhHyDMSJHCER6alEUCXPEa6KRCQf650FHRl95VAZTjI2ZF1oJGADJ+mTxCr10dOUwLEzLHtXTwg85dQS9p4hMdD5P/WHYnnDL0g7uMcfIGZwKDhn+w=
+	t=1775523016; cv=none; b=hch2tNnOsyZwUn+7Hvg6rYgaMuKOQSddxVR2i1G7G+lKLZPGDuaGOy/AlIQrnH5yO/9WQe+ifdLCbXBx4E6Ns0tyZTRizUzoQY3QEVCQ7wQ170bqUcBUWE1r7vfLQ8Wgk5rsCpsoNmNoN3XwdeYgVbZFe4nGZKf1A28VZDySYUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775513142; c=relaxed/simple;
-	bh=fpJ0H1FKyNWvyanBaTRaGJxbvMAuflsbfLb5uiFBSoc=;
+	s=arc-20240116; t=1775523016; c=relaxed/simple;
+	bh=XWH2+b/yUN+N7fwgwQHlL0dGP2fodUFZZsA2TsLA+3I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nqx34XEFpfP0+2jCz96lqbOATEXW6fEa9YFHJc9knS1i1GZSNZb8yPy6CfzhX2imaJkCyVRFaiFSdeoLAPDpFiwFEJPeL/gKFOJ65f+PFTOFOUJo68SsMJe19qgSsCzNy4ZYJR6D1zFnPWEzTMXIq1ZskE4lSUlg8l/fn4o9L5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VewlCUBo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tkEEitQ3; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=ewNyCNNJFslT1WZx8Llg6rnlIsNV8dKpQneXezMH5NX+iPaU3jQLTM4OpLgb8hCc9w0vhxwbPWHL8Z3da7yEWQWBC6dqE20jZHUQRMpoHHny4lhq0ttVaJuMDA0u5DCgshk9InN+ta4trEE+x8rxKCuXbXZw8oXQv+CWSKOsoOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AYpM+4EX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v1/Ph4Sy; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VewlCUBo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tkEEitQ3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 28EBCEC0455;
-	Mon,  6 Apr 2026 18:05:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AYpM+4EX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v1/Ph4Sy"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ABC7214001BE;
+	Mon,  6 Apr 2026 20:50:13 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 06 Apr 2026 18:05:40 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 06 Apr 2026 20:50:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775513139; x=1775599539; bh=flPTWMVc9S
-	Fnz8Cf0ajTaAQI6dznIRMt5NaJmuRxZ5M=; b=VewlCUBo5B2EPG+rIV03T9tTtl
-	2cRom63arvaxuYd7asH0GpqrvK7YoVwkX04RqAphzFIDoy28EQAUZD3J6SW/QRat
-	k+lYWfwtVixD3IySZfhABO8HT0ovJBjdf64pA/y9YWspoCwAbZEQ2QGHKz1xWNCw
-	ZnhI4Z+NH8bMnIsGl1X7UvcAvpZUOGOPZ0YnMDw01wmIRs4A77jf8+4bHk3toZHI
-	56Yy04ys+i6nOlsTYEF5iagDHohbsLkBUft44ncQfBL6gW43sdjkCPYzt/hbrPsJ
-	U3SQZm54EoXrLyYlXGXEtOcTtOqTM7lYsGMlPl9niHUotoRkMEew6692s1jw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1775523013;
+	 x=1775609413; bh=ope3uPKIyFFhRKoEX/F6kggd/o0BEloSxXKFn6Hnnck=; b=
+	AYpM+4EX3As2tZrFalVg223dFcAXZtcxNJw7AmzkuczhuuRRKLRj1x34MpJ4UnBV
+	Xs8uRwKetsKPkJDC1eK6GqZj2Uy3QlDSVZtjkJ40GPTZG+FuxWuQeBBYG/GHXtGp
+	fO6hjTae97k5J58yxiux9Xqljk7It5MB/mFOvaIiRzaJL0y/rON2oS1PVJ3fPZAX
+	dB5Ro5uTSHdjpSCVuDHrxcPabg7FrItXP/VH9nUhDBw/GtprQyjjLYDoliucf4NC
+	m5yySpP4773VAuqtmdW0WpVKpOvzRQOYChnSZ8fiPW+mhgFm9SROxe70u5NG1BM9
+	Qvt2b3IAfZkmeyMGVp9GGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775513139; x=1775599539; bh=flPTWMVc9SFnz8Cf0ajTaAQI6dznIRMt5Na
-	JmuRxZ5M=; b=tkEEitQ36U+OYZnDdVjrx39CnxHkUIveztxTlJjxI7DyG154y0b
-	276NaI7hj+HyJnjojElqrkElT4qWTYjmMVg5PSC7CoHJ1Xvs19L8xgizO9wlusAd
-	ztZHx7aV7EhnZqIGXKg/f/Jma//2OWDdDcH1/L0R8hyAkI+WZdR0mCwcjPREbN0o
-	wjW0A4Z4dLO1ERluDtWz1VhCi9KT1xqFQ7Ah+z8LxzaK51anTwZZo16RZucs7o3E
-	p/LF9+kWGktjh+LURMYpj2mn4cjW1ufZSvXOcV9qBFVi1DK0bk90H5Xkq9dbTgow
-	2S3AJ+B/PkG6UoItXnkzXQGlhRWleJmd7XA==
-X-ME-Sender: <xms:My7UaRUGlbe7GXu9q3ksDOYukx0Sm_w6bvuQwy28uoVT8bTgLhU9KA>
-    <xme:My7UaQpwr22ojBY9q6mhR_ms2DKY23XaGdg-w6Pe6MeSJFKPV0rivcdnZkoL6OU_G
-    B2crwYt2Tnd1m5G8u-AdU7vGFZfHvzQ5bACi0JoTx8tOQjCgP-o>
-X-ME-Received: <xmr:My7UaTluINupk8N4P3qw3zV7Re-atSzBaJvxIRrybm_SEwfP_wVb1A_Jej2sppsm_WGzTwyk9rGL8_y54lb6CLQoAUuyIZTJoA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddukeeklecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775523013; x=
+	1775609413; bh=ope3uPKIyFFhRKoEX/F6kggd/o0BEloSxXKFn6Hnnck=; b=v
+	1/Ph4SyPKBkSbH7njQsbliQB3NIXUIxQDmf9wprSKmBWWvXtVQT+lprFVQ2ELDUW
+	R8v6bjwMQqAwm3qTtwilozBiuLNfF+MvAR0bjwt5GsjoQM7SQiB+FA6ypb+T3mTU
+	SXHZASZfy8HrsJ+h0FfZC4idtbC6Zx4TeuLOEpWsV//g+oumWY4pVeb/HH26ZUTU
+	ykmrr1o7N6DqHCLbY5JkN2dBaQY3+FqXEhihZuKjJRhuEm83sLoShSthvdcSDFNx
+	oMo1Z7WP23+oT6Zha5LGHwkpSt8joig8G2ncQbCunVFK7JvbmkR05sJnhiV9QwhA
+	js3GdCu+wgXuFZGHuPAfw==
+X-ME-Sender: <xms:xVTUafsV8jixU62xZz3FKtSxiDLgIpYmbRfh5vNWCRfgnnSqiL1O2A>
+    <xme:xVTUaXeeZQ-T9GhAUguoLyBrGmQ2TiaVKWI-2iA-PVczCEOqMiPVomcOFeWHlSwii
+    haOkvdEiNt2LoRTbEYzgJtEmZdMcRo2R2qTD2IlD1V24jpRgynizg>
+X-ME-Received: <xmr:xVTUaXxwQZCn9rYYDHzsvYOGVviR7mNr5FN0HnKx1BUhmCu-MqbDAHyjXqnN7NJUpqRucPMYLWJk-Nzgd2vkQTC9c84m8wtLDA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduledvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehlohhrvghniihordhpvghgohhrrghrihdvtddtvdesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:My7UaQ1CS--shkQ3J_WINvrnTVQLTtkQ-Z-oFuHIOgGPbfVXaC3C_A>
-    <xmx:My7UaQRcndLCE1XHsZsFpsNWMr8x9oWFWOLX8mjCNpQ07vFGBWceyA>
-    <xmx:My7UaZzDEzoZd8pAyoVfuSRAJj5T3PLFNRfe3-0Rb4p76c4C56MT8Q>
-    <xmx:My7UaQDCu5oxKqNcaFbxZ2AeWStevFVS980VtNEXFqZuuZyXXEz0AQ>
-    <xmx:My7UaZ7oS0JMO-MG7DTMf85VK5uFf-BFX3J2TvQZqlf9PQxysvfJ2SWg>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepthhhihgtrghnsehthhhitggrnhdrnhgv
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xVTUadFaXEpxEqzQf349T97GoXmVX7xOyiL71YRs771fSz3KylMsyg>
+    <xmx:xVTUabym10bGmVcry-RMo1AlF-20lkSoA9O-eYH78_f-eiq1L5O4PQ>
+    <xmx:xVTUaeszhfVfz5FiXBzLypUCcgIZHbnE7ds76Qu1i2zAL0H4URw8qQ>
+    <xmx:xVTUaY1Q62TS_zKdsusNl1RFE0veyon7I6y1p9ncugnuFYDKPT69pQ>
+    <xmx:xVTUaZ0UQcwsLuGNxx25HTZ9kjM26XBAAQnNSYFnZmENitRwHgcO27pe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Apr 2026 18:05:39 -0400 (EDT)
+ 6 Apr 2026 20:50:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Elijah Newren
- <newren@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 4/5] t7700: test for promisor file content after
- repack
-In-Reply-To: <8e58c1263d15fb8dba8ce1d2866d369e938bf2b6.1775431990.git.lorenzo.pegorari2002@gmail.com>
-	(LorenzoPegorari's message of "Mon, 6 Apr 2026 02:25:19 +0200")
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
-	<cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
-	<8e58c1263d15fb8dba8ce1d2866d369e938bf2b6.1775431990.git.lorenzo.pegorari2002@gmail.com>
-Date: Mon, 06 Apr 2026 15:05:37 -0700
-Message-ID: <xmqqldez9232.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Thibaud CANALE" <thican@thican.net>,  git@vger.kernel.org
+Subject: Re: [RFC PATCH] switch: provide configurable detach
+In-Reply-To: <f0276575-9c75-45fb-8fcc-b465619d1b97@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Mon, 06 Apr 2026 19:48:49 +0200")
+References: <njuf62lav6akkmdyqutwk7pim5yutw5cuicjidwpe5eh6qnkqr@4ir6q4uhhvht>
+	<xmqq7bqkcah8.fsf@gitster.g>
+	<f0276575-9c75-45fb-8fcc-b465619d1b97@app.fastmail.com>
+Date: Mon, 06 Apr 2026 17:50:11 -0700
+Message-ID: <xmqqh5pn8ugs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,152 +88,39 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> +test_expect_success 'check one .promisor file content after repack' '
-> +	test_when_finished rm -rf prom_test &&
-> +	git init prom_test &&
-> +	path=prom_test/.git/objects/pack &&
-> +
-> +	(
-> +		test_commit_bulk -C prom_test --start=1 1 &&
-> +		
-> +		# Simulate .promisor file by creating it manually
-> +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
+> On the other hand, the BreakingChanges document does call
+> git-checkout(1) “superseded”.  And in that light I do understand why
+> people want to actively avoid git-checkout(1), including implementing
+> replacements for all relevant checkout-use cases in git-switch(1).
+>
+>     Superseded features that will not be deprecated
+>
+>     [...]
+>
+>     • The features git-checkout(1) offers are covered by the pair of
+>       commands git-restore(1) and git-switch(1). Because the use of
+>       git-checkout(1) is still widespread, and it is not expected that
+>       this will change anytime soon, all three commands will stay.
 
-So "prom" is a list of filenames; since $path does not have any
-funny letters that interferes, later use of unquotd $prom will
-list these files.  OK.
+Perhaps a good first step would be to stop calling checkout
+"superseded".  As they stand, all three are equally viable.  In
+other words, I would not exactly call "switch/restore" a failed
+experiment, but it wasn't a clear success story, either.
 
-> +		oid=$(git -C prom_test rev-parse HEAD) &&
-> +		echo "$oid ref" >$prom &&
+I think "still" and "anytime soon" in the above paragraph are doing
+disservice by implying that somehow we want to remove checkout but
+we cannot yet, when the reality is that we wanted to be able to
+replace checkout with switch/restore in the distant past, but that
+was a misguided attempt and did not work very well.
 
-Oh, not quite.  How are we guaranteeing that there is only one file
-in the list of files in $prom?
-
-In any case, quoting from Documentation/CodingGuidelines:
-
- - Redirection operators should be written with space before, but no
-   space after them.  In other words, write 'echo test >"$file"'
-   instead of 'echo test> $file' or 'echo test > $file'.  Note that
-   even though it is not required by POSIX to double-quote the
-   redirection target in a variable (as shown above), our code does so
-   because some versions of bash issue a warning without the quotes.
-
-	(incorrect)
-	cat hello > world < universe
-	echo hello >$world
-
-	(correct)
-	cat hello >world <universe
-	echo hello >"$world"
-
-
-> +		# Save the current .promisor content, repack, and check if correct
-> +		prom_before_repack=$(cat $prom) &&
-
-This is misleading, unless you plan to update the early part of this
-test to store a more realistic data in the $prom file.  Wouldn't it
-be equivanent to
-
-		prom_before_repack="$oid ref" &&
-
-at this point?
-
-> +		git -C prom_test repack -a -d &&
-> +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-
-We expect that there is only one .pack and .promisor file.  Why
-are we listing .pack and turning them to .promisor, instead of doing
-
-		prom=$(ls $path/*.promisor) &&
-
-here?  Don't we expect that this "repack" to recreate .promisor file
-as well (and if we do not see the file then we detected another bug,
-which is a good thing)?
-
-> +		# $prom should contain "$prom_before_repack <date>"
-> +		test_grep "$prom_before_repack " $prom &&
-
-I do not quite understand this test.  Ahh, OK.  We expect that there
-was only a single entry in the original, because that is what we
-placed in the original .promisor file.
-
-Enclose $prom inside a pair of double quotes, as it is misleading
-without.  I wasted a few minutes wondering where you are expecting
-these possibly multiple promisor files from.
-
-> +		# Save the current .promisor content, repack, and check if correct
-> +		cat $prom >prom_before_repack &&
-
-		cp "$prom" prom_before_repack &&
-
-would be more standard.
-
-> +		git -C prom_test repack -a -d &&
-> +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-
-The same comment about "don't we know .promisor file should exist,
-and shouldn't we check it directly?" applies here.
-
-> +		# $prom should be exactly the same as prom_before_repack
-> +		test_cmp prom_before_repack $prom
-> +	)
-> +'
-
-
-Same comment applies from earlier to the next test piece, I suspect.
-Let's take a look.
-
-> +
-> +test_expect_success 'check multiple .promisor file content after repack' '
-> +	test_when_finished rm -rf prom_test &&
-> +	git init prom_test &&
-> +	path=prom_test/.git/objects/pack &&
-> +
-> +	(
-> +		# Create 2 packs and simulate .promisor files by creating them manually
-> +		test_commit_bulk -C prom_test --start=1 1 &&
-> +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> +		oid=$(git -C prom_test rev-parse HEAD) &&
-> +		echo "$oid ref" >$prom &&
-> +		prom_before_repack1=$(cat $prom) &&
-
-> +		test_commit_bulk -C prom_test --start=1 1 &&
-> +		prom=$(ls -t $path/*.pack | head -n 1 | sed "s/\.pack/.promisor/") &&
-
-Do not pipe head into sed, as sed is more capable.
-
-		ls -t $path/*.pack | sed "s/.../;q"
-
-> +		oid=$(git -C prom_test rev-parse HEAD) &&
-> +		echo "$oid ref" >$prom &&
-> +		prom_before_repack2=$(cat $prom) &&
-
-But more importantly, this may become a source of flakiness.  These
-two packfiles are likely to have very close timestamps and depending
-on the timing, how heavily loaded the machine is, and the phase of
-the moon, it is not guaranteed that you'd grab the name of the new
-pack.  Instead of sorting by type or getting the first one, which
-would not work reliably, grab both and filter out what you already
-have seen.
-
-> +		# Repack, and check if correct compared to previous saved .promisor content
-> +		git -C prom_test repack -a -d &&
-> +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> +		# $prom should contain "$prom_before_repack1 <date>" & "$prom_before_repack2 <date>"
-> +		test_grep "$prom_before_repack1 " $prom &&
-> +		test_grep "$prom_before_repack2 " $prom &&
-> +
-> +		# Save the current .promisor content, repack, and check if correct
-> +		cat $prom >prom_before_repack &&
-> +		git -C prom_test repack -a -d &&
-> +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> +		# $prom should be exactly the same as prom_before_repack
-> +		test_cmp prom_before_repack $prom
-> +	)
-> +'
-> +
->  test_done
+It is not like switch/restore pair did not work well or anything,
+and in that sense switch/restore themselves are by no means
+failures, but it was a failed experiment to introduce these two as a
+way to replace and kill checkout.  For those users to whom both
+"checking out files" and "checkout out a branch" appear as clear
+concepts, there is no reason to abandon checkout.
