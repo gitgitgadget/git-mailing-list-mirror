@@ -1,78 +1,114 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F4633ADAB
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 14:53:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1AF38657B
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 15:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775573610; cv=none; b=dV0740zuzAdDyMMw/uoGseQU+5j81YZrNSdlaRNZhqv2MtrtUWoy+0TOamahmGJzIz94iKWUViivlLto6Jj1RVE7HgiDyJzNQqkAmoISNR+1LxdHKKvifsDSWPgI2mDQGosJ4g1o27tGIeHc7sBzw8yw/AGnfwhC9UMixjq8AWo=
+	t=1775575402; cv=none; b=MG/Fs2fqqjIupAJuyduUnWB8Oyt23imts8R7vKBSd/3Ji/9D6y1toaJT3WWDl/iwowR1kkVMmLPfX7P1XZo43YRXhH1sYrKRfFEu09KzlzALg4yP2NodyYkx1elFpesLp7WDYqugcshNBA024xDreuRvNdg0KiBfTbzFwRjdtgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775573610; c=relaxed/simple;
-	bh=rHNbBcMAoIDkvKluZmVQD0Atgjg/iwIOMxR2TDgk9LM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qxt0uT+fPoO2O6ajnbzG4vBOacmrVrKfBXjx21ohsh/aSCM0bpxfKAqJb5EV75jn926jD/y4mboaQSyVy5eoHKzNRC21r9sXNw2Po+izPwgnbOM5NrnWCRdJt2o+dkJNFG5odt2Gmmxgt0/pqif40LajJqIhXCxZRGbsME8rnt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=TnPC2P2g; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+	s=arc-20240116; t=1775575402; c=relaxed/simple;
+	bh=SRhMWXU/uohFi4Bd1U4Gax5mvfRWfPURNphn+I7SSPg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YlGlNfNNNS1UY1EqUOWWiGLhnW7YewfsbP+7aiasrTH6fQ1vI3IV8RQdyEbC9+wPM45CWAod+24ZGk1SwCk8SpVm2FMz5h4zuFWt73SaYgTaSuQhCj6rMRCftk36iBjtX4ZJ4aYIS3/i2UUKhLHg/6g0540axJTyFyoAb1dnfrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ttv95rsX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UBuMLmER; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="TnPC2P2g"
-Received: from macsyma.thunk.org (pool-173-48-119-176.bstnma.fios.verizon.net [173.48.119.176])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 637ErPK4006049
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Apr 2026 10:53:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1775573606; bh=MEOSL+5XuUn+K017MlRARlJYQ17ZBfBk15ewcT6YTb0=;
-	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
-	b=TnPC2P2gsKS7v0JIjWWvYcWkIts94vA/tkgMcd7U7MguBdCn27fTDTeuMyFljWGee
-	 byzPwUloZpimgx0OOF5KlYeVZifXt30GeDMQ3BWsJnAsqUU0aw+/wUkCR9b7tRRjLn
-	 ezG5h6tLbfaVCX+v9X6nNGhkmfMywy/I/P3j0ws/bSDLMoksfFscVDoLDi8Bbj9Wmw
-	 DjtmnvtBeIWUZsv/ImEvdOULEkMwhaVevWoSXpKQUVpit9M/fp7AwIOCOzI6fCPTMt
-	 BTkncThCGknXl8kR9KX2oi7sQOwi9rvkWkPtWZs823J6ofYZNq5FEC7hnnwNXj5nbT
-	 k/iFjJx/ukzfA==
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
-	id D590462272E8; Tue,  7 Apr 2026 10:52:24 -0400 (EDT)
-Date: Tue, 7 Apr 2026 10:52:24 -0400
-From: "Theodore Tso" <tytso@mit.edu>
-To: Gabor Urban <urbangabo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Super repository
-Message-ID: <20260407145224.GB81690@macsyma-wired.lan>
-References: <CAL=1hhxP08w=pMa39izN7SyFzsv+5HWZhtzhh136ZmG2dg7Xtw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ttv95rsX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UBuMLmER"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 85962EC0415;
+	Tue,  7 Apr 2026 11:23:18 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 07 Apr 2026 11:23:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1775575398;
+	 x=1775661798; bh=UOYANnQkTebVwmiPo2KQuBQau/sxkmxJXtWP8F09yFI=; b=
+	ttv95rsXBqFfO08zMOspo2vohSGBnZhdUCMuFeNDe2rxl5YcHkoW/DoEFITJRG5t
+	D0mv7GJSXhXTYzEYc44wc3DWKBV9G4cgdVxwxXtEGs48fGxIN/yfxOishfae2hyG
+	3bjhv9i8tbKwBaTpzer2vb1FzK+dNKM5QlbskToeKR6GmIm/sqgxBA0QwC8UR8MR
+	fLDHES48RUxuH4EujE8xgw8m/63L3FBwHkf9TjnPBuF0SXuKtKz8bRAyRP0JYkdP
+	AeTplge/7WCP96JtMa0xK1uN2Ur93CRay1VqiUTnE+AxeiCOH4pyhQzPipS9ITKL
+	yznlExnwE2n0VaVZ8HBevw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775575398; x=
+	1775661798; bh=UOYANnQkTebVwmiPo2KQuBQau/sxkmxJXtWP8F09yFI=; b=U
+	BuMLmERsBLNm66mzVQ4U7DYQwSItlLpuSjxxgRMjyzGGLXu/1QY6kFcHqonLqwLb
+	SvI0jHojL/hLjj5GRmzsUA5Eme1BnsPyBUgIOsjhBBtdLSnWTyEjtZSgroDxWBfW
+	OWJ+2X49QnMjfb7Xkajbh4v/lVM+KFSDSrbcWjdka1LOu9aA9iKJrhi1M9zAijOA
+	nCHFQTFWNfiuwZ+K3ksSR+VaerVgix3KGv/GU/hDqW5PYpawghX/1JD8eJGIydAq
+	0D76Ht0nCWY3HlaWgKO2JC1ap2XRyt92gJHK+7V5MeIidcLciAdjSE4QQL9WTYLj
+	1ztXJNhWlmauExskPxsMg==
+X-ME-Sender: <xms:ZiHVaadN3RqAy7cgm-C48RgImJpdEfg0agKH2BRh1tF6SHZaYPwizg>
+    <xme:ZiHVabPaIA8k_A65mOIf0nDAyB63kJzb55e_u7EhN-NqP6Vd8ztc5I3dEHGfC3fDT
+    fSMVKnFtGr4fG136h1yYPIYzMweUodY5Vrc8Jx8YVnmmNBJJ26afQ>
+X-ME-Received: <xmr:ZiHVaQj-Zzp_86aVMZywTfEyt6c8Ss_qxarBOiFQcC8naOtf95CEgcyoUkZG9zBqzct6BTEmoqRtLRTWbJIj62Dn8lYALcX4gA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdellecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhgvshhkohesshgthhifrghriigvrhhsrdguvgdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thdrvhhgvghrrdhkvghrnhgvlhdrohhrghesshgthhifrghriigvrhhsrdguvgdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ZiHVaW1nAkV-S8gN34E3hzIhT9gh9J4plKREpftuNAd8Ak9ADchvXQ>
+    <xmx:ZiHVaSgtrxYYd6r8dNClS5JR451ZMe1RPLCwFmdhYcGfUG3HxpMq7g>
+    <xmx:ZiHVaed3nqpYBTdd7bBi8iDVn9qVgWguWPRtJz0G7iNAFAqpq_PiIQ>
+    <xmx:ZiHVadmqEWgveM4-mbQzjmfRi9nH1uid_m2kMTbVwvaxFnKtzMWM0Q>
+    <xmx:ZiHVadet2Cxt1430G3TYRS_9TqCbgTEgxaZdN6yDoWXdVIxYx2Up5Ym8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Apr 2026 11:23:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jesko Schwarzer <jesko@schwarzers.de>
+Cc: git@vger.kernel.org,  git.vger.kernel.org@schwarzers.de
+Subject: Re: checkout: clarify "up to date with origin/" uses local
+ remote-tracking ref
+In-Reply-To: <956b1bec-99ec-4d28-8229-804eb14e6d3a@schwarzers.de> (Jesko
+	Schwarzer's message of "Tue, 7 Apr 2026 15:10:25 +0200")
+References: <956b1bec-99ec-4d28-8229-804eb14e6d3a@schwarzers.de>
+Date: Tue, 07 Apr 2026 08:23:16 -0700
+Message-ID: <xmqq4ilm7q1n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL=1hhxP08w=pMa39izN7SyFzsv+5HWZhtzhh136ZmG2dg7Xtw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Apr 06, 2026 at 08:36:08AM +0200, Gabor Urban wrote:
-> 
-> We have a project in:../foo/Project1 under git locally for a while. In
-> a couple of days (or weeks) we are to start two new projects.
-> According to the management we have to make ../foo/Project2 and
-> ../foo/Projetc3 to be brought under git.
-> 
-> The real issue: we are told the create a new repository for all 3
-> projects (inf /foo/), but we must not lose the development history
-> stored in the local git repositiy of Project1
-> 
-> Is there any good solution for that? Thanks for your help in advance.
+Jesko Schwarzer <jesko@schwarzers.de> writes:
 
-So in general this is a bad idea if Project 2 and Project 3 hare going
-to be separate projects and you aren't planning on merging them into a
-single tree.  Is your company trying to do this because they are too
-cheap to pay github for more than one private repository, by any
-chance?
+> Would the project consider one of the following?
+>      1. *Clearer messaging*, e.g. indicating that the comparison is 
+> against the last-known origin/<branch> (or similar wording that does not 
+> imply a live remote check).
 
-In any case, depending on what exactly you are trying to do, take a
-look at the two answers here:
+Surely.  Patches to start discussions are very much welcome.
 
-https://www.reddit.com/r/git/comments/17wj0bj/merging_multiple_repositories_into_one/
+>      2. *Optional context* when available (e.g. from reflog or last 
+> fetch time), so users know how stale the origin/* ref might be — if that 
+> is technically and policy-wise acceptable.
 
-						- Ted
-						
+I am imagining that #1 above would add something that conveys
+"relative to the last known state", and this will extend/replace the
+phrase you would choose for "the last known state" with "as of N
+days ago" or something when necessary pieces of information is
+available, right?  That sounds entirely feasible.
+
+> I understand Git deliberately avoids implicit network access on 
+> checkout; the issue is only that the status text does not make the 
+> "local remote-tracking ref" semantics obvious to everyone.
