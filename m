@@ -1,249 +1,108 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7053C870E
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4D1331205
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:13:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775578228; cv=none; b=mNOxmNsUwD5Yd52z/HecurwcVF46hnON+F5p036uu2xdjS2rELNxFvVSLyzJD/it9u/kZqsU6VHooRebeZwMHZmshK3A+OywHsVCnK5/YCl0qstXERAqb2SoL9SmE2mCV7z39k3aNedMC8kTVgAUFPNPDKrnTTeIqUko8fI2f+8=
+	t=1775578422; cv=none; b=b7mN2hqCaP3c4NZ0DLXtAiTluCFDkARXrdoFAkAtVF4nPmlVGRp3sZXkXO1xfACL3pzC4lDyhXRw8eXvOYBncmUzd40WJUkD1aRERQDXc1lB4oc9y+XW42BiVCG/ac6ncwLP9GcefLqzZiEIXYYPpJZ66k59oey7qL3kdV02V1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775578228; c=relaxed/simple;
-	bh=TJNpSV12v3Sv1jQB4YdkW5eryacW9sIInTQbgxQ8wh4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Dfed7Y3+JZbnn0ciEt3nAhNyShXZLrv7Ousk115D7xxl/Eec6Lxge1c4fpzTjQxYvgqj0r6blBsNRUzjfZMFW2rZXw97rXGAriYip9LgR+GSBs7Zl16PeHog7q4sG8K2j5k34zP1QJUKqwHhiyKGJ8x9TPzgW4F90TdSPAMNQ24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BJr3GImI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NuRhqSyv; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775578422; c=relaxed/simple;
+	bh=c3O+5cqAibEko1nEaZwjOyGT+4/fWdldggBIbmBhQjM=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=m/mTpVbR/dY90LvoHXuPxyan+vguj34T5dU+FS+vFFMKeZL1z8P93oJSSnWT3pTcK6Kr8TYX7qxxlU4HalCt+fABhmQzTO7eFBctdcyPGK3gWGmWW2ZUQMsy6UtK30Rzg4+89YmqYRrRk33kGwOg5Cek//r1hqa6YFybEA2wjf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L0kSsvze; arc=none smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BJr3GImI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NuRhqSyv"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0447CEC0081;
-	Tue,  7 Apr 2026 12:10:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Apr 2026 12:10:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775578219; x=1775664619; bh=/wsSORNn5e
-	OVsuaMC6mlUFkqaevO7tdcip5U9e7K45s=; b=BJr3GImIk7cm+Xyc576OoD+5YN
-	5M4Zy8Vz9H+/HOqGn/n5NWUb6KvhZxODSlQQsQ58SUc4k59v1NjZ6CDZWonnJHf3
-	uDdwsqYuyEHFToAfELl554X+1MqVuxpU7Gms6ek2aG2zInd6UShGzuIJDB8N0d/1
-	A3tWVHKbUC5TZJPOz8LIquIYdAnfD3TdDkMObib2c7WjUW+/7gPOCJVVoRq1Fl9u
-	S3yMR9ZOTlpYyrnzSv75dR61L8prRNnULeq7pco+7PMPH3FHGDgE1xTWONB+g/eR
-	XCV5OhHDhen4os35S/ZjBkUu3k7UoR9ln+a3R/8bDXj1u+ReavLXAmPgdeHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775578219; x=1775664619; bh=/wsSORNn5eOVsuaMC6mlUFkqaevO7tdcip5
-	U9e7K45s=; b=NuRhqSyvzI9Fwg0TyGq1pMy1gy4y3Q9TvToc4m7xADALZZAfzWE
-	Fw5x5uTTbHZef6/pfASi6z5h9f7cfhWTdOdNjDfZ7jqZ3l8bJrdrxbQRNIAlPLps
-	xhDR1WSGkc3b0IguebrQQpLeQQmjSC3RNV1noVZwZ2SL8QtpKyoRfsS9J9mzSwiz
-	FfruofCs2vIIIePNHDu78TmRLnyCfkhTwXHemZ9QyJnJ+/7S2vBgL/F7Ldeo1Iiv
-	kP2kiZuFB9/CrbONuADWoCu3GZR14wvr0bHRa4F2pQ6VHwe5dMk+wQnptz1IQCrJ
-	Xg1vzF+sj9CClsost/iXrGUMLnssVoWEp0A==
-X-ME-Sender: <xms:ayzVaTDZpwyYW1TXNvKIhN4zkaOX-61GIoJT4IHVvHYJmT45_tLXqw>
-    <xme:ayzVaQaABSQ9YqMjLCZOGOi8Kfqt7mL3u29-ddE00M7X_1SBWfJJtRcwqguQuSEjM
-    bZRnKziK5HqY00zc5JfTSP0xGscnXvgiSG-u1uYnWCXh-cw2ymhOwY>
-X-ME-Received: <xmr:ayzVaW559yPCMVpB2pJ9zJldY7sKI4wLStWqjIYtqDkJhmFeIzfxna_6EGgpqoLMiCOCx3rtpFbx9ib1b_3r0bRVu4PKBB3K7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvuddtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopeiirghkrghrihihrghhrghlihdutddtsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrth
-    esmhgrlhhonhdruggvvhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ayzVaRaygIJT8bMD2xNFTbrUiYQjLqbggFCvQzrZxXDCQL6-woVzOw>
-    <xmx:ayzVaVhUKaZmqKQQUdSjxCAmwljr0Rx5Kj_s9TouhqZ0LXRxAsMK2A>
-    <xmx:ayzVaS9TfPbZ1UFpVLxZMCqCeUywZMrfbymnBxmW1D9z4SQH9B9acw>
-    <xmx:ayzVaQrtOG186ApC8Yu1XTN3MX5xIkV5e5NVLx0jxl6aIq1AfaWTvw>
-    <xmx:ayzVaXq0hfo2MIG6iRAzcveSQF4ghU7p7n3zv83Tk5fJPZbZThhZu3fS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Apr 2026 12:10:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Zakariyah Ali <zakariyahali100@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,  Tian Yuchen <cat@malon.dev>
-Subject: Re: [PATCH v5] t2000: modernize overall structure and path checks
-In-Reply-To: <xmqqmrze7sj9.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	07 Apr 2026 07:29:30 -0700")
-References: <20260405011135.125912-1-zakariyahali100@gmail.com>
-	<20260407034446.409175-1-zakariyahali100@gmail.com>
-	<xmqqmrze7sj9.fsf@gitster.g>
-Date: Tue, 07 Apr 2026 09:10:18 -0700
-Message-ID: <xmqqzf3e69at.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L0kSsvze"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-6501d32b04bso5764081d50.2
+        for <git@vger.kernel.org>; Tue, 07 Apr 2026 09:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775578419; x=1776183219; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vEMkKgFqa2rBFOwKk4npCreddCc7Z7jv/0lhcfPirLQ=;
+        b=L0kSsvzeLABAALcHA0EKpyXLicnejuzOhi3k6PXq/mOdQABTEolS2w29oKJTPBdg0A
+         I9s8vqv0eTNTkAL2WzNePFjw7swlz2iju/5GMKf0qu8myRb9RGNbEJ1O4r7JESVIvOSd
+         tbGpm2qECInK6103BngzmlecJPsoCQmOtYockXUM3K/Hb5/+lCi93npNzkQJW1S5u1xd
+         XlsYbE7MJPCXfcHuoCQdlSq7NFZT99AzQEc11S2MupaPcyuK0VikarhdxyAJcd569B2g
+         hpDfn0dAyerv1bF+ZR477P59M/eTYr9Jb994UqrrF/gJES+sdec/2jDo1WueTinPHfTJ
+         UN2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775578419; x=1776183219;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vEMkKgFqa2rBFOwKk4npCreddCc7Z7jv/0lhcfPirLQ=;
+        b=PBUnFAPlEF58ayhspPRSu358HL3ydbZwHvx9mirbejNPYIXmj6cF3+WoxUvt2iiSg2
+         fJZVVAxPxtRNp+WAUM78MHAl4M0upFOzFUBxVC1u2VTANO/JaY1AmD+8BL2xN2S2ohi1
+         ip6yn+Ciw+RWNmnPGAfEKaAM0ob1HScwhhK6XsCqPXnmPqrFt+/BARVl0XbfQiKacYwE
+         TU21Sm/QIkLag9FGHjFj++eZkO5v/YDQV2YxE8Jm1hZsYxn1Qd4LwVBN3aIk0cqZULvX
+         0H5OMyGBWXRBUet1ubmkN3nZQeIVgh9kp/gQ4bC+Tsit9XAoQweQqI4M71w2Tm6XOhHe
+         D3wg==
+X-Forwarded-Encrypted: i=1; AJvYcCVM9kHdbzgh2SDKBSOZpF9w0FlHB5wfLrtVKrNbYVgGTKRVIJyXlCA9s+O/oEFvpj05vqQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoE3vQNh6c4mKdIjMN8g0KQTjQZNMGux8LLanFD/83l6Dp+/qE
+	cCwnGXIy4nsjFRHijsPOm0g9l5IbEuNA6mIr/AGY4vIqsi26C4+PaQpwPnkWjw==
+X-Gm-Gg: AeBDieuzRhlH6wxp3ypBAcNhdkIWZ7T+o8B6tSpNyOX9WRD+bqjdhwuPiFEAHY3hK7R
+	jNKfA8nYobY85FmMNXyMKzJpRpxbtZsmfecm3B1lNwBRd65j3NSzK7xteqajEMYMR4s3hhYe4Wo
+	a8y8F1yi83hwJqVdIwyjb9y5fiDcmUg4c9l+KIqouutqISOobiEPQ05pjFKkhmzj1YEXn7WfJ8u
+	kGzrtzG8MbMJyvffP4cqc8zWmnxYk4ZtdrhNZ6BOfb3koV6jqaaJnhJZSOj6f0EAO0Q52XPFIfw
+	DEhhqwNcy8A1q4idp64iqIuFF++Sh/Dj7NJh2Ocjj8EqQT3+KwUussLD763hJIddVEOyiUBJ1H8
+	XJ/3J1pYfMBRB8+KO503CxSrxXLsmREkxdPQ+s+pqSP9DNpX9kRZkcZYsPo/PoAgCEV3fl5BcU6
+	pgAr7GQJg+2w4UPGXjbGgwsVAuzvibLT0fZFjZ5P9ucD2IZ632mfwxFVvzLOtuumr460UC/5XXZ
+	4x5xMLBE55ZOTkZTiU36Gvfr0kawKspRkWrl+W9ChUe
+X-Received: by 2002:a05:690e:c4f:b0:650:8945:b0a7 with SMTP id 956f58d0204a3-6508945b0c9mr72702d50.14.1775578419155;
+        Tue, 07 Apr 2026 09:13:39 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:4d36:eac:7121:d122])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6503a824d46sm7970890d50.4.2026.04.07.09.13.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2026 09:13:38 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: checkout: clarify "up to date with origin/" uses local remote-tracking ref
+Date: Tue, 7 Apr 2026 12:13:27 -0400
+Message-Id: <5DFBE9D6-0EC8-4702-99C5-827AEF8C6265@gmail.com>
+References: <xmqq4ilm7q1n.fsf@gitster.g>
+Cc: Jesko Schwarzer <jesko@schwarzers.de>, git@vger.kernel.org,
+ git.vger.kernel.org@schwarzers.de
+In-Reply-To: <xmqq4ilm7q1n.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> The description of this v5 patch looks suspiciously similar, as its
-> patch text, so I suspect it won't apply to my tree.
+>=20
+> Le 7 avr. 2026 =C3=A0 11:28, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
+it :
+>=20
+> =EF=BB=BFJesko Schwarzer <jesko@schwarzers.de> writes:
+>=20
+>> Would the project consider one of the following?
+>>     1. *Clearer messaging*, e.g. indicating that the comparison is
+>> against the last-known origin/<branch> (or similar wording that does not
+>> imply a live remote check).
+>=20
+> Surely.  Patches to start discussions are very much welcome.
+>=20
+>>     2. *Optional context* when available (e.g. from reflog or last
+>> fetch time), so users know how stale the origin/* ref might be =E2=80=94 i=
+f that
+>> is technically and policy-wise acceptable.
+>=20
+> I am imagining that #1 above would add something that conveys
+> "relative to the last known state", and this will extend/replace the
+> phrase you would choose for "the last known state" with "as of N
+> days ago" or something when necessary pieces of information is
+> available, right?  That sounds entirely feasible.
 
-So, I applied this "v5" to a slightly older 'master', immediately
-before the za/t2000-modernise topic was merged, and compared the
-result with what we already have in 'master'.
-
-    $ git log -1 --oneline 0713d3b7f6
-    0713d3b7f6 Merge branch 'za/t2000-modernise'
-    $ git checkout 0713d3b7f6~1
-    $ git am patch-v5.mbox
-    $ git diff 0713d3b7f6 HEAD
-
-There are some things that are better, and some that do not look
-improvements.
-
-> diff --git a/t/t2000-conflict-when-checking-files-out.sh b/t/t2000-conflict-when-checking-files-out.sh
-> index af199d8191..44728329f3 100755
-> --- a/t/t2000-conflict-when-checking-files-out.sh
-> +++ b/t/t2000-conflict-when-checking-files-out.sh
-> @@ -35,19 +35,18 @@ show_files() {
->  	sed -e 's/^\([0-9]*\)	[^ ]*	[0-9a-f]*	/tr: \1 /'
->  }
->  
-> -test_expect_success 'prepare files path0 and path1/file1' '
-> -	date >path0 &&
-> -	mkdir path1 &&
-> -	date >path1/file1 &&
-> -	git update-index --add path0 path1/file1
-> -'
-> +date >path0
-> +mkdir path1
-> +date >path1/file1
->  
-> -test_expect_success 'prepare working tree files with D/F conflicts' '
-> -	rm -fr path0 path1 &&
-> -	mkdir path0 &&
-> -	date >path0/file0 &&
-> -	date >path1
-> -'
-> +test_expect_success \
-> +    'git update-index --add various paths.' \
-> +    'git update-index --add path0 path1/file1'
-> +
-> +rm -fr path0 path1
-> +mkdir path0
-> +date >path0/file0
-> +date >path1
-
-All of the above look regression to me, for the purpose of
-"modernization" effort.  We want the steps to prepare for tests
-(e.g., creation of test files and directories and preparation of
-their contents), the steps of actual tests (e.g., running git
-commands and ensuring that they succeed or fail as expected), and
-the steps to verify the results, all contained inside a single
-test_expect_success for each step of the test. 
-
-On the other hand, the below looks like moving things in a better
-direction.  The original has a logically single test split into
-multiple pieces and code to debug tests sprinkled all over,
-like ...
-
-> @@ -83,59 +82,22 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
->  # path path3 is occupied by a non-directory.  With "-f" it should remove
->  # the symlink path3 and create directory path3 and file path3/file1.
->  
-> -test_expect_success 'prepare path2/file0 and index' '
-> +test_expect_success 'checkout-index -f resolves symlink conflict on leading path' '
->  	mkdir path2 &&
->  	date >path2/file0 &&
-> -	git update-index --add path2/file0
-> -'
-> -
-> -test_expect_success 'write tree with path2/file0' '
-> -	tree1=$(git write-tree)
-> -'
-> -
-> -test_debug 'show_files $tree1'
-
-... this one.  And consolidating them into a single logical piece
-may make sense.
-
-But it seems not quite complete and needs a bit more cleaning.  For
-example, ...
-
-> -test_expect_success 'prepare path3/file1 and index' '
-> +	git update-index --add path2/file0 &&
-> +	tree1=$(git write-tree) &&
->  	mkdir path3 &&
->  	date >path3/file1 &&
-> -	git update-index --add path3/file1
-> -'
-> -
-> -test_expect_success 'write tree with path3/file1' '
-> -	tree2=$(git write-tree)
-> -'
-> -
-> -test_debug 'show_files $tree2'
-> -
-> -test_expect_success 'read previously written tree and checkout.' '
-> +	git update-index --add path3/file1 &&
-> +	tree2=$(git write-tree) &&
->  	rm -fr path3 &&
->  	git read-tree -m $tree1 &&
-> -	git checkout-index -f -a
-> -'
-> -
-> -test_debug 'show_files $tree1'
-> -
-> -test_expect_success 'add a symlink' '
-> -	test_ln_s_add path2 path3
-> -'
-> -
-> -test_expect_success 'write tree with symlink path3' '
-> -	tree3=$(git write-tree)
-> -'
-
-... we used to write out $tree3 here only because ...
-
-> -
-> -test_debug 'show_files $tree3'
-
-... we use it to debug that tree here.  In the updated version, we
-still write out ...
-
-> -# Morten says "Got that?" here.
-> -# Test begins.
-> -
-> -test_expect_success 'read previously written tree and checkout.' '
-> +	git checkout-index -f -a &&
-> +	test_ln_s_add path2 path3 &&
-> +	tree3=$(git write-tree) &&
-
-... the same tree3 here, but because we lost the test debug, we no
-longer use the resulting tree object name.
-
->  	git read-tree $tree2 &&
-> -	git checkout-index -f -a
-> -'
-> -
-> -test_debug 'show_files $tree2'
-> -
-> -test_expect_success 'checking out conflicting path with -f' '
-> +	git checkout-index -f -a &&
->  	test_path_is_dir_not_symlink path2 &&
->  	test_path_is_dir_not_symlink path3 &&
->  	test_path_is_file_not_symlink path2/file0 &&
-
-I didn't go through the updated version with fine toothed comb, so
-there may be other "why is this thing left?" and/or "this update
-changes what is being tested, no?" gotchas that I missed.
-
-In any case, can you update the patch so that it applies cleanly to
-a more recent "master" to resurrect the good bits out of what you
-have?
-
-Thanks.
+I seem to recall a recent (last ~6 months) thread about =E2=80=9Clast fetch t=
+ime=E2=80=9D and there being some question of how to record it. Alas I haven=
+=E2=80=99t searched the archives to find it.=20=
