@@ -1,119 +1,109 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B5E37C936
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 21:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B3837E2FF
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 21:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775598733; cv=none; b=VjrcEkYneIVhgZ1xb4gOrQRtQHJPdru2d5IomIQ2Xiw49zjpuhVrazE4cUHNeV/J6ei40LBC/zJ0bseNleZ95FSK5UU8+k8kFC2a4AsVZmqozWa3wevENk2NMCiNVtOU5rw+Uxwnsmc6O0u81+1iddUMMKQa6O4/zJ2BYj8Sx/I=
+	t=1775598837; cv=none; b=DjDkvnf+t2n7pcaIYcbPPZ6g6lnZz8quFDPOl7T9jWEQcUKyogIR3U27s8kVnpO1Pe8zzWFbQ7HPHUfPYa1bQlmjfVy2h/dHVo0qEIA7U6kJV1gkgNqHp8jnMk2MJo6cxUPDW4tnTWAgvIrYwUX/7ebjLg2pmWoGvuefTCHZwao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775598733; c=relaxed/simple;
-	bh=VBUVOcLoHzWh+YIXYupbLVyUvupgmkE5l0vGL2o9qQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WkVSjG7An5pR1Ox4yMtj5skzxeRLTGNdN/bx0edSjHHxiIrNLAre0rQ4fgBbD9ucCEBt+Ko2BplZBWd7LOH5W+UQsz1VbPntXVOqmBQ1Hed4LHi0vJaO0VcqWl3L5D7fvIE5A4JXHnTVSCdye+ZfXgD6Yp0tHFtWSAyfvvpy+JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tI71PVQ9; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775598837; c=relaxed/simple;
+	bh=XHPmaUotBiyNtSlE9iiCrjUXxh+k2UgAz8ZLieOhyD8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dFxtXlr9rLLVlHTYHvw+itpS9nYlSxPVigP+hw3SZeDRgQmka3KF/ug32+B+lIZp0hfhNYDmi4wbrhQI8LrbFPGryx8LBMdwUAVb4eJ3q3Gx5kdluOS9L7ToUt2UUtrLJ0tlNrxyjCvqmXgCgWCJVmHkVm2ih4fsSRRElmSCNSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uBEjblE2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uGoSbvbW; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tI71PVQ9"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-488b0046078so26611885e9.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 14:52:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775598730; x=1776203530; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VdMGB8t47+/+KLbyHlStVUBdo+k4OL68aEG4uOPN1Uk=;
-        b=tI71PVQ9K9A2rQGkSItqUGhByzWcqQU2rpeBsmL12u1ckNdfKMYhfY4iAhiVVQuSAv
-         WxRcUsEBxyM5BD0YfxayUZvb/LqDuKTDeQ89Bo4vzkY5mrFFPtI4v3y/vgCG4ToayMsy
-         kLoN6V9svSk/vJz9S2YyP+oXm1/J4xrKqh7fbzi5cbN7n2ysmHz379uC5eW/DN4Qk8fg
-         utJZ10t7qO8WUiRByxZ/v1dlqOMWSNhNdqF8AyvHphu4wGjeJI91lwr5ubW2dN75qIGo
-         3bgg+ETNAmWnDYtFtYk4EsBueo6kW/KJsG4plyXLNmGs6yoqnvuKKqQ7IYKIAK6KNn3x
-         E5ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775598730; x=1776203530;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VdMGB8t47+/+KLbyHlStVUBdo+k4OL68aEG4uOPN1Uk=;
-        b=HCHVhJ8VGzrQEtZU4rJ3WlF3rXTDD8L+z+YxwpcZH23+nac+E7pU2kIDqtuX5eXS6P
-         MScFjRxWv0Maix2dZP6vno8XqBSFSW5Y9nRAvwX8XzCTNv2gqka2kKQEtKKhCp2WL29n
-         u1XvUgPFQRSqkd3bAwcvBoK7JG3CvWWEzmcxuZKypPJRZ48YEEiOJ1P06S2+EwA6OIh6
-         COZj58xy3yiD921+VwgoAVheWrd7OPOHviDci70z5QnK7sD0v3GnIPCeeezLuEjlgf5o
-         drCzZ4Mn5dOECHq8MNt12e0pRanTAmuApMBB0dAMxihitIwUnhuftjuu+8oYLSlZih58
-         zZZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVliFz/pkl+UNN9SsD6x4yXk9dP88PrAgjFsd4cuyOrtr98MCmULm+CKcZf5fMsUa+ArKU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyC9APSpNmlUmXOsLa3RedGPQvxH2Kg6XV+SL/UNhdoSU8Rh2K1
-	PEclA8KzTEktg9PA8JTemK4yb95eUMmVx6/XSo+Bm785xXGFUe7BnX5p
-X-Gm-Gg: AeBDieuSi5qEUbSjPugD8fhrFRl0Tc1FXcdv6WJyBaTACoxRHWYfNuEmiAEIxCZImSA
-	XhY+hAqjjRN+BwxF/X/jLDsBZ7PgVwmxhtoJvyCNIKTNZJjV2K5y0xiPkDPPgBVGDBVOnRLP0lY
-	Q+JwwI+cuNJJUm1S2PvyVybNlb5A1RaIvfcETtZZtoy5fOS+PtL24bjhsGqBYP2Zb+1RrpITZtU
-	IE1Ov1XprBVqIyz1plAZdLLx9qgTeH+H5NkVO+4O3YAxmQm/OQfFxAsl0Ddjnm8es0iKgWD31iJ
-	KTc23oubgUll59Ysjat9PovP8y7XZ9HSyTSOR31fpJvfScgE7BNDd09WNvybi6JS1Il0+xcA694
-	Pv8Am4zgWD9eWdkf2VFA8lv/FOVzaGtWWQwxw/NzuI/+WaclQFbiBdp6+LQRcaV07j/ecjFSipd
-	jh7OUjZUBGqQ/ABAveL8M5AWnAyPWJ/Pp/
-X-Received: by 2002:a05:600c:6216:b0:488:b9c6:11ba with SMTP id 5b1f17b1804b1-488b9c6139amr76827505e9.28.1775598730423;
-        Tue, 07 Apr 2026 14:52:10 -0700 (PDT)
-Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4e5890sm52241381f8f.31.2026.04.07.14.52.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 14:52:10 -0700 (PDT)
-Date: Tue, 7 Apr 2026 23:52:08 +0200
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Tian Yuchen <cat@malon.dev>, git@vger.kernel.org,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 2/5] pack-write: add helper to fill promisor file
- after repack
-Message-ID: <adV8iP668rgxK-9k@lorenzo-VM>
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <3cd15429194c763727fbfd5981ba38c1dc2cc907.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <f2540dc1-fe76-48ec-91a7-82e32ced75fc@malon.dev>
- <adP-MYYSmElK9wL3@lorenzo-VM>
- <xmqqy0iz7clt.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uBEjblE2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uGoSbvbW"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 00441EC03F4;
+	Tue,  7 Apr 2026 17:53:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 07 Apr 2026 17:53:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775598835; x=1775685235; bh=6wDvx/ua9/
+	0BY1a6SpEnRxpuF5ulutVPIZhZKDuzQMY=; b=uBEjblE27tJvGShOSRREZP6L0D
+	9jKJu/HhGiJWsKQv5rzdP9Zeq5nU907hK5tRR40Iwd+BfgC5VvHRKLB8EHJpz6MG
+	ACfEHiwWbtF+1dGA3/hf1H/hquqBEBh4kvql4jpw0iq9+ng0J/SLTZGYChgdyiSO
+	RnbKRyfPntnz6sibIlqKjLkOI/7YWsZq7zGosfnOF8cbIN8USxVB7jzmVXZDaTvu
+	WpX5ymQlZz6D8YN+OUMEyPm53okFa2ejVLLJ74qASlVxGG2geJp74Xba1+9p3e/6
+	t3RhqX7a3yk8CbHc6PxaUb1rbzkka8ItsKYIYKNjTmQSPAa4GRw9Nbhpvg1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775598835; x=1775685235; bh=6wDvx/ua9/0BY1a6SpEnRxpuF5ulutVPIZh
+	ZKDuzQMY=; b=uGoSbvbWkxUjYMbAYK0Bte2pYJLftnTQle4GaKD6Z0IZgMX65mN
+	Z3myo3KneSQUr3or9rr+lfCSdr6QkcwtQynM1vQmYKMTJxPSUFSjLPc3dD51t0cu
+	MNtYXx7du/Ab1ro9NJL68rMTN7IKtYX6DYQYS/izdqEglZWyUguWDCv+g1mF27MS
+	BYAbpX1+nj0lahqn9lsRIBdh26YIO2azWeAaCU6djCnV1yGGFLAXrVJi4JYcPJ7a
+	wbZ6B3uXwDLGbiFZ5vjou1iE1YizD9wAm+LJfJcjg59tAQQnCEC3rbOcCDkwbV9Q
+	r1vHsHRJ3mdBtoXdlk5BaoCf1CT/W13O8Lw==
+X-ME-Sender: <xms:83zVaTlXAx6DE0wAvTpwwwXXDIX0PldhabjENIokYfT_eHa63MRS8g>
+    <xme:83zVafSzGOeQJtp5DiQnfRXyPEBFYj61kKBw7K58VDbcPzuQeNz1BHEInXsTXn8fm
+    9hAEHadq1JF_ryo1N5QzahQQKtMuDyjH4uSZmFrz2rPnJii9m5aRA>
+X-ME-Received: <xmr:83zVaaFGD_iL6o_ga9d1yavarCJmfs9b0WDm3t49aRjxF9fbO9CeeOFskxJthu8CJd7gGNPOKXvWWjjXtgqJIPXU0pSjk8sPeQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvudektdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
+    hutggrrdhsthgvfhgrnhhirdhgvgdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:83zVacGH13i23z3lBxh9gW7Gn8B5S-oPTy-FXRxI4ZgBhwFfgpsguA>
+    <xmx:83zVaQRS2Coq5Va_cgkTzJSfVdLMPHYWTKt4KoY1rCqf6AM2cLZZXA>
+    <xmx:83zVaVL6grm76ZzOtTDTfD-RbEAR0QgeV43HGNavKGhEV8m7Iq-ygA>
+    <xmx:83zVaTZFEIhCgpTt0yqwcBh_2yFajA4rermI6Q9FwW-_ZbD9isHQHg>
+    <xmx:83zVadBePBCK0RVX5MEdWOdLGuaXKALuieqH77mL0Bb9-GeXhnVBvVDg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Apr 2026 17:53:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  peff@peff.net,
+  luca.stefani.ge1@gmail.com
+Subject: Re: [PATCH] object-file: avoid ODB transaction when not writing
+ objects
+In-Reply-To: <xmqqo6ju31wx.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	07 Apr 2026 14:18:06 -0700")
+References: <20260407201730.2526914-1-jltobler@gmail.com>
+	<xmqqo6ju31wx.fsf@gitster.g>
+Date: Tue, 07 Apr 2026 14:53:54 -0700
+Message-ID: <xmqqfr563099.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy0iz7clt.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Apr 06, 2026 at 07:01:18PM -0700, Junio C Hamano wrote:
-> Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com> writes:
-> > On Tue, Apr 07, 2026 at 01:22:16AM +0800, Tian Yuchen wrote:
-> >> On 4/6/26 08:24, LorenzoPegorari wrote:
-> >> > +
-> >> > +			/* If <time> doesn't exist, retrieve it and add it to line */
-> >> > +			if (!parts[2]) {
-> >> > +				struct tm tm;
-> >> > +				localtime_r(&source_stat.st_mtim.tv_sec, &tm),
-> >> 
-> >> Typo.
-> >
-> > Ack.
-> 
-> Not just an unintended use of comma operator, this is not portable
-> and breaks OSX build
-> 
->   https://github.com/git/git/actions/runs/24058681172/job/70170218891#step:4:213
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah, I was shocked that it compiled at all on my system with no issue
-whatsoever.
+> I'd appreciate it if you can give your eyeballs to the attached to
+> see if that is how you would fixed the bug in the original context
+> of v2.52 track.  If everything looks OK, then there is no need to
+> spend time backporting on your side.  We have everything necessary.
 
-> >> > +				strbuf_addch(&line, ' ');
-> >> > +				strbuf_addftime(&line, "%Y/%m/%d-%H:%M:%S", &tm, 0, 0);
-> 
-> I suspect that storing seconds since epoch as a large integer would
-> be simpler and much less error prone than storing localtime in
-> textual form without even recording the timezone.
+Another thing.  Your jt/odb-transaction-write topic (in 'seen')
+already addresses this issue, so we may merge this single patch down
+to 'next' and 'master' first, but the merge that brings in the topic
+can just supersede this patch, perhaps keeping the test added to
+t1517.
 
-Yeah, maybe for this kinda specific debugging info being less error
-prone is more important then "looking good". Will do that.
+Do I understand correctly?  The t1517 part of the patch, when
+applied to 'seen', does indicate that the problem is not there.
 
-Thanks,
-Lorenzo
+
