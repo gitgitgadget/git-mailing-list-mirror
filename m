@@ -1,83 +1,93 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3580938AC84
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 14:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3613296BC1
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 14:33:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775572174; cv=none; b=XB0xyqRKSTUZR7omqIvzbyOu/U59y4KbCVSib8oLlw0z4WTef5Ru2ey0D/Rq5hJwMLm5YBisZNEUmF5RvYuDHJQY+FJvGJEWcY7z2GWsnHjE9+/+mwkbEN/KQYtHJA3JA3M/KN4N8SqC+pfieZ+kL5JdTp8jsVnKAG3gFYsdBJ0=
+	t=1775572399; cv=none; b=YT7ijkUSTKf70utFJ+me96vCaLGtb7Z6SYyHYPcvU1yrJu7Gp8cAZzCAX+pHirstLV4gLRYUc1ThmbOg1OTkb4be6QX5Rmjgl2RWAaSbxuPxbp1yps5MayLWqRl0DqaIQwpK8QZTD8O51ESD7bEHjlRGPL+FvIZpnx1ufqot84Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775572174; c=relaxed/simple;
-	bh=gH7Uvkv4LqVU9u/MNW28CXT5VgV6S9A6r9JLYsffOd0=;
+	s=arc-20240116; t=1775572399; c=relaxed/simple;
+	bh=pOZNHlRKlAnWjdGlnIF1ZafySZJGkTNoV48y3OoUzEQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OspOHFowCexWij5qYjBiM1B4B5Ltdq4YoMRyM4/adH65qsTzCh/S/zy24rRveIZOLzoULr0t+Xj/N/07u34Aa44bkaWWsrgd9b+84mYQZxEGdldR6KdqDRpEN/y3vuyoPPc5l5hgmzO8GkXEA9DGp2trltV30NMVPpSDmlPaXRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xEKYmRNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MfMH3AMV; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=ECEnlfXgrXhWlbJzVFK2eNqzQzAdmkxvGSfhBxcD6ze3t7afhJpcjmpS48qtl8ty3/Gj6YtF2/3p5B3CuKtg+wiQIQD18mf+AmfV1SA8zLx5ozpLvhJ4GynmcXBJEdYIy6d0tZPxpCyqrvjD2bybiYbYuu53KP6K0eJpSvrmXeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EycHm9+/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vveMUL4R; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xEKYmRNP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MfMH3AMV"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6039D14001EC;
-	Tue,  7 Apr 2026 10:29:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EycHm9+/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vveMUL4R"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 18D76EC017E;
+	Tue,  7 Apr 2026 10:33:17 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 07 Apr 2026 10:29:32 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 07 Apr 2026 10:33:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775572172; x=1775658572; bh=4XX/B0CVS7
-	b63EQvzsf7oAP3D+ePTftcjQOhoMK/36E=; b=xEKYmRNPVMtO5Bz7KgyzfUOb4m
-	o84TqjXlq9E1cUoQXhMiCZ4a5Oq4xBW4uO+teDqCaFF98Oxu2C2vwN+cE28Dy7wo
-	fkYYI4I933aKJOC5vOanS/wzWRqMlBfcdHVkpJ5WFxXwXvrqEHhhijKfx5F2g8SV
-	VTpdcmRUrzJgAD1oGbGDc8IdSPvH06nu6BaxKaXQWipQppfRSROCve+2fIFGrrRQ
-	BpO+ouqGhtqH66lcyXj1BdXvFeu0nN9DAYc4oOQrAebAzCBI/EbcU2wYj+27EFXl
-	PvOMmcclsZV9VTzL/aVajuAVLC9NxmK+pWJHBWSViSKzaep2qpVS6MkqfDPA==
+	:subject:to:to; s=fm1; t=1775572397; x=1775658797; bh=7aatUH7UaK
+	CQJV/7piZ+8kvkSJMV1tVsF/HfK24Y5ys=; b=EycHm9+/xWfQaojALj0Bv5q8mA
+	hgIXD4JNGauz+a08XPzp4ql6Rw1UtzdHvlrRGBrtGXnf00rWo6jq2LVvN3cyzfdB
+	U//W3Yk5GmfwSLTHJ4bkJQgEqAPG81WyWwZd8K2MjG0TcrZzigu6k8HKy5Q1q0yL
+	7Fa5/zc6W/JOVOgP1afyzPf58c6nIJPcLEJZPcaCZXleXYOUNGaRgfKE1rhcXYeT
+	rggYrOE02MtVA04f6ay2seX73W38dA1ilTw88gd/sjcmTnqCElf5Mfr9KsA6j55a
+	7JjNGRJQksY8AgtI52rKb2zoJQ1Igs1Yg4OMFNTRbUAjWaI2IErfxG5n+j6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775572172; x=1775658572; bh=4XX/B0CVS7b63EQvzsf7oAP3D+ePTftcjQO
-	hoMK/36E=; b=MfMH3AMVRw1WamQmpPSK1VhiOIGixGoSz7aE/1VMisF3oLMmB6h
-	uWxwlgMElX6mBl0XMf4xTYvnbQG177x0GAn6/yALJ8hr9KQQf6YnAZKEF94UNQK5
-	dKCJNXNHKXgnF/sMXSBbsMwLF6aPraFae74tH6vSnxgS+zdovTdHzz9ts5dHmffl
-	LMvhHwgmImV9zoJbEaBItLaTZVHiu5nqZtFFg/KRLo6vw2Mnb6MmVRj9doHlG7Ru
-	yfvAZf6sr8pPL30hDK/oohIoDv9pq+lVehpk8CAZ67ZcEF5INAdoUoETyW5D98hW
-	pRY4TtuFVauATgdgdJPRd03I6e4jKfvmVIg==
-X-ME-Sender: <xms:zBTVaTJ7_0qo5PmkqHVAI8eQufwhCBXflgTpmdK4zz6gyS3eyz6fgQ>
-    <xme:zBTVaeBGu4BGeZaSnaGrB8gj3pMeN9zBk6UhV9Zjoy6HsvLI7dheKEbk0Wd8glfmL
-    scMxwTnCNbA73-319IeiyaFDkOYpH6igntY3sNkTJJCJmCy36VhLA>
-X-ME-Received: <xmr:zBTVaUAA_Up3I66tAjh1FD-6s3uW0iZRlEmSD5nZMDRntfmBkd9NFeCfuN9_ljLmEqSkhLkQKmv1Wgts_uLPJ0fffZgyLIgC5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdekkecutefuodetggdotefrod
+	1775572397; x=1775658797; bh=7aatUH7UaKCQJV/7piZ+8kvkSJMV1tVsF/H
+	fK24Y5ys=; b=vveMUL4RWRjwWBuJiPTsSz9SLnftPRj93d5zBItA4R4VHocDiqM
+	r5PeixfIaZIYAaAUdCu6IDE/7mxXi6bcGYXXc32fDE2hP/Totew+lgQ8kyDWVQeo
+	omXbYW17BxDXfgth+czHqIWScnaDFMQy9KRBAGm15rnFcL197CNrO084oBmt0o9s
+	iKPRy8M7er2XZKzT3MdQjs6MKSGMy3Yd9o6o2mQwINB5AkG0LmTUDEuZjo0btEV/
+	IuFwkuIXnkL2YULG4YODfdtR0nfKEBEIr12Ijyj2ieOEGHqIkLFb9ZJG6mhRWtIS
+	8PM4OzXu/6ykoVjx1scK5QuGAJLUVu3RfKQ==
+X-ME-Sender: <xms:qxXVaU8Hv79maCa6-fPqvSIl6rPQFqdaOnIOAZ77B-DUC-jJaiaG4g>
+    <xme:qxXVaXEr8ApYHLBfxfwKvyldWfkErKenpQe8DVeoSzJ2EvvBZcdmoktEdgNgDB2Pj
+    q-FYJMq81R3z5IuMQ1Jd1EjAdzec-D4CQMk4JWUxCqqDwRtvxn4ob0>
+X-ME-Received: <xmr:qxXVaQKlPCbfiLZpTP2997_abbJyJYBD6VL0MSwMJrj81VW8U-htI1Q94f9ahaq_CLl-63iF35FgZ7eCIG-t_UGQmkEBfRZfpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopeiirghkrghrihihrghhrghlihdutddtsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrth
-    esmhgrlhhonhdruggvvhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zBTVaYDFk3ycOy0yHGL1C0mfNE9CLKKsnmjCu9T8NtQRNQa6BFAi6A>
-    <xmx:zBTVaXrUcRWVOcp6JJSd-TZoq6fI7W6YjEpNPFaEw60etAjbuCLXbg>
-    <xmx:zBTVaalt0RYb7VdxuVwJbwx2CYTQKiBbunpB_zpSR2lf7eQ4YOQzWw>
-    <xmx:zBTVafzOtttzJD_ep8NzjxxloZ4KIs5bKyvkvAbVpfVTF4873fVO2g>
-    <xmx:zBTVaRQhb2uWQUH2kkCkcvRyB0M-na60p8M4BJoQ-ZtSUGAcvfoTeSWJ>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepnhhitghosegtrhihphhtohhnvggtthhorhdrtghomh
+    dprhgtphhtthhopehmshhtrgesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtg
+    hpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghp
+    thhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehrvg
+    hmohessghuvghniihlihdruggvvhdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhl
+    vgdrtghomhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:qxXVafkxUbkBCw8o9lIG2GE4jcx-EH4RY0-cui7qDOOiWRPabDPUMg>
+    <xmx:qxXVaRwCL25wqallRG8T-sxaJrLfh8s6Yn8amx6OsHlaiQT3OX6Srw>
+    <xmx:qxXVaRuBY5N875yrLv9ZwI1YeKVMn0Hd_Fv0wGgzoiNWES4VAyl68g>
+    <xmx:qxXVabGqI_euYChyRFL9I4bXWNhKzy_8ta28MxUhSWUWv5X5z4w1Hw>
+    <xmx:rRXVaajDOYvFlQofA0TdDiCVfX119g9ED1PNmZi5-Z8tFLG0c-fsfNlO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Apr 2026 10:29:31 -0400 (EDT)
+ 7 Apr 2026 10:33:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Zakariyah Ali <zakariyahali100@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,  Tian Yuchen <cat@malon.dev>
-Subject: Re: [PATCH v5] t2000: modernize overall structure and path checks
-In-Reply-To: <20260407034446.409175-1-zakariyahali100@gmail.com> (Zakariyah
-	Ali's message of "Tue, 7 Apr 2026 04:44:46 +0100")
-References: <20260405011135.125912-1-zakariyahali100@gmail.com>
-	<20260407034446.409175-1-zakariyahali100@gmail.com>
-Date: Tue, 07 Apr 2026 07:29:30 -0700
-Message-ID: <xmqqmrze7sj9.fsf@gitster.g>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Matt Stark <msta@google.com>,  git@vger.kernel.org,  ps@pks.im,
+  phillip.wood@dunelm.org.uk,  Martin von Zweigbergk
+ <martinvonz@google.com>,  remo@buenzli.dev,  Edwin Kempin
+ <ekempin@google.com>,  schacon@gmail.com,  philipmetzger@bluewin.ch,
+  konstantin@linuxfoundation.org,  newren@gmail.com,  tytso@mit.edu,
+  rikingcoding@gmail.com
+Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
+ cherry-pick.
+In-Reply-To: <adSPznztKWo63Tjr@ubby> (Nico Williams's message of "Tue, 7 Apr
+	2026 00:02:06 -0500")
+References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
+	<xmqqqzor76nh.fsf@gitster.g> <adSO6zPwtFOWBcOw@ubby>
+	<adSPznztKWo63Tjr@ubby>
+Date: Tue, 07 Apr 2026 07:33:14 -0700
+Message-ID: <xmqqh5pm7sd1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,25 +97,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Zakariyah Ali <zakariyahali100@gmail.com> writes:
+Nico Williams <nico@cryptonector.com> writes:
 
-> This test script that dates back to 2005 certainly shows its age and
-> both its style and the way the tests are laid out do not match the
-> modern standard. Modernize it to match the current testing standards:
-> ...
+> On Mon, Apr 06, 2026 at 11:58:19PM -0500, Nico Williams wrote:
+>> Maybe that's the trick: local configuration for determining the
+>> copy-or-drop semantic for different operations, and maybe hooks for
+>> altering when copying.  [...]
+>
+> I should add that I would want an original-change-id header that could
+> be used (again, optionally) to relate commits that get cherry-picked or
+> rebased but end up having different change-ids.
 
-How does this relate to d8e34f97 (t2000: modernise overall
-structure, 2026-03-28) that was merged to 'next' at 279c41a3 (Merge
-branch 'za/t2000-modernise' into next, 2026-03-31) and is now in
-'master' at 0713d3b7 (Merge branch 'za/t2000-modernise', 2026-04-06)?
-
-The topioc appeared first in the issue 2026/03 #12 of the "What's
-cooking" report (Mar 30th), marked for 'next'.  Then the issue
-2026/04 #01 of the report (Apr 1st) listed the topic in 'next'
-slated for 'master'.  The issue 2026/03 #02 (Apr 6th) reports it is
-now in 'master'.
-
-The description of this v5 patch looks suspiciously similar, as its
-patch text, so I suspect it won't apply to my tree.
-
+With these people with (possibly just slightly) different wants
+different project may have, wouldn't it work to record this kind of
+random pieces of information either in notes (the benefit being that
+it can be corrected without having to rewrite history) or in
+trailers?
 
