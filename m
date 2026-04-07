@@ -1,128 +1,111 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D732325CC79
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 13:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3580938AC84
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 14:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775567796; cv=none; b=Z6RzMGNn0xEf7bKLudcS+JDcFqAQa3EBJ0MCB+pY01n5XMiBIX28SpVNEDXbaTYP/r6sEh6TaggQToF/Y1Aps5Rh9f9nQvyfAjS3BWHl0Kzq1wWvi19zrOuWcLYRp6ApTpUvqqJn0fZBNkBDkl3FT8KlwwyaNIaqXBnEgN4QsR0=
+	t=1775572174; cv=none; b=XB0xyqRKSTUZR7omqIvzbyOu/U59y4KbCVSib8oLlw0z4WTef5Ru2ey0D/Rq5hJwMLm5YBisZNEUmF5RvYuDHJQY+FJvGJEWcY7z2GWsnHjE9+/+mwkbEN/KQYtHJA3JA3M/KN4N8SqC+pfieZ+kL5JdTp8jsVnKAG3gFYsdBJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775567796; c=relaxed/simple;
-	bh=NBi/4euOTxE+9UOaC421aObAaHYYzvPqGmDRL4XUaZI=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=TsKxRNOyAAbilKNY83AYXZNHQ1ApEFHnrXiLwo0lsmAZA3C0ej3lSuqljuJhZ4Mkw90hFpUfBxmKu514wSQzzZIliWE8irR/+uwFPKIdMEQV/qNXysH33P6FaV9wiN+dAI4EeZKllr/i0/QkTg9F+O6wlt6GKtoASHWK4ze5KEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schwarzers.de; spf=pass smtp.mailfrom=schwarzers.de; dkim=pass (2048-bit key) header.d=schwarzers.de header.i=jesko@schwarzers.de header.b=hmEdm5ff; arc=none smtp.client-ip=212.227.126.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schwarzers.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schwarzers.de
+	s=arc-20240116; t=1775572174; c=relaxed/simple;
+	bh=gH7Uvkv4LqVU9u/MNW28CXT5VgV6S9A6r9JLYsffOd0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OspOHFowCexWij5qYjBiM1B4B5Ltdq4YoMRyM4/adH65qsTzCh/S/zy24rRveIZOLzoULr0t+Xj/N/07u34Aa44bkaWWsrgd9b+84mYQZxEGdldR6KdqDRpEN/y3vuyoPPc5l5hgmzO8GkXEA9DGp2trltV30NMVPpSDmlPaXRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xEKYmRNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MfMH3AMV; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=schwarzers.de header.i=jesko@schwarzers.de header.b="hmEdm5ff"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schwarzers.de;
-	s=s1-ionos; t=1775567793; x=1776172593; i=jesko@schwarzers.de;
-	bh=NBi/4euOTxE+9UOaC421aObAaHYYzvPqGmDRL4XUaZI=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Cc:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=hmEdm5ffSJt660IAQGcNwFP3aOdEQ5TXujn5r8THj2Q1jPQRAbeTkV2CkdRRqNP2
-	 wl2j7pdLiO1VWQBUR53OLJ4N7MFxIjOfNs1vrH1qNTLd+pRY7+J8XG9dJuc4FmCkj
-	 6a4/FhqikAwCVTUerYyHHL/RpAYTyl0amiA1HC6VdpyCDiWiCKuiEwOUWm9BjSHAA
-	 sZxcH4nrbThyafBVG8gdsHTJpzx+a8EY/JSrNZH93vMSehYdAzbz/BSKi0mSDVfz1
-	 UmoDtNqMk78xUYYkjja2S7szFE1aAJ01mkU/EJk6QjVjbxVFe7KTd7RHYHIejxXZG
-	 Wb7qs8MXPPF4cq3UXw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue011
- [212.227.17.165]) with ESMTPSA (Nemesis) id 1MqK2d-1vflSV2wvD-00ncqJ; Tue, 07
- Apr 2026 15:11:20 +0200
-Message-ID: <956b1bec-99ec-4d28-8229-804eb14e6d3a@schwarzers.de>
-Date: Tue, 7 Apr 2026 15:10:25 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xEKYmRNP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MfMH3AMV"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6039D14001EC;
+	Tue,  7 Apr 2026 10:29:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 07 Apr 2026 10:29:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775572172; x=1775658572; bh=4XX/B0CVS7
+	b63EQvzsf7oAP3D+ePTftcjQOhoMK/36E=; b=xEKYmRNPVMtO5Bz7KgyzfUOb4m
+	o84TqjXlq9E1cUoQXhMiCZ4a5Oq4xBW4uO+teDqCaFF98Oxu2C2vwN+cE28Dy7wo
+	fkYYI4I933aKJOC5vOanS/wzWRqMlBfcdHVkpJ5WFxXwXvrqEHhhijKfx5F2g8SV
+	VTpdcmRUrzJgAD1oGbGDc8IdSPvH06nu6BaxKaXQWipQppfRSROCve+2fIFGrrRQ
+	BpO+ouqGhtqH66lcyXj1BdXvFeu0nN9DAYc4oOQrAebAzCBI/EbcU2wYj+27EFXl
+	PvOMmcclsZV9VTzL/aVajuAVLC9NxmK+pWJHBWSViSKzaep2qpVS6MkqfDPA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775572172; x=1775658572; bh=4XX/B0CVS7b63EQvzsf7oAP3D+ePTftcjQO
+	hoMK/36E=; b=MfMH3AMVRw1WamQmpPSK1VhiOIGixGoSz7aE/1VMisF3oLMmB6h
+	uWxwlgMElX6mBl0XMf4xTYvnbQG177x0GAn6/yALJ8hr9KQQf6YnAZKEF94UNQK5
+	dKCJNXNHKXgnF/sMXSBbsMwLF6aPraFae74tH6vSnxgS+zdovTdHzz9ts5dHmffl
+	LMvhHwgmImV9zoJbEaBItLaTZVHiu5nqZtFFg/KRLo6vw2Mnb6MmVRj9doHlG7Ru
+	yfvAZf6sr8pPL30hDK/oohIoDv9pq+lVehpk8CAZ67ZcEF5INAdoUoETyW5D98hW
+	pRY4TtuFVauATgdgdJPRd03I6e4jKfvmVIg==
+X-ME-Sender: <xms:zBTVaTJ7_0qo5PmkqHVAI8eQufwhCBXflgTpmdK4zz6gyS3eyz6fgQ>
+    <xme:zBTVaeBGu4BGeZaSnaGrB8gj3pMeN9zBk6UhV9Zjoy6HsvLI7dheKEbk0Wd8glfmL
+    scMxwTnCNbA73-319IeiyaFDkOYpH6igntY3sNkTJJCJmCy36VhLA>
+X-ME-Received: <xmr:zBTVaUAA_Up3I66tAjh1FD-6s3uW0iZRlEmSD5nZMDRntfmBkd9NFeCfuN9_ljLmEqSkhLkQKmv1Wgts_uLPJ0fffZgyLIgC5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdekkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopeiirghkrghrihihrghhrghlihdutddtsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrth
+    esmhgrlhhonhdruggvvhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zBTVaYDFk3ycOy0yHGL1C0mfNE9CLKKsnmjCu9T8NtQRNQa6BFAi6A>
+    <xmx:zBTVaXrUcRWVOcp6JJSd-TZoq6fI7W6YjEpNPFaEw60etAjbuCLXbg>
+    <xmx:zBTVaalt0RYb7VdxuVwJbwx2CYTQKiBbunpB_zpSR2lf7eQ4YOQzWw>
+    <xmx:zBTVafzOtttzJD_ep8NzjxxloZ4KIs5bKyvkvAbVpfVTF4873fVO2g>
+    <xmx:zBTVaRQhb2uWQUH2kkCkcvRyB0M-na60p8M4BJoQ-ZtSUGAcvfoTeSWJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Apr 2026 10:29:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zakariyah Ali <zakariyahali100@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com,  Tian Yuchen <cat@malon.dev>
+Subject: Re: [PATCH v5] t2000: modernize overall structure and path checks
+In-Reply-To: <20260407034446.409175-1-zakariyahali100@gmail.com> (Zakariyah
+	Ali's message of "Tue, 7 Apr 2026 04:44:46 +0100")
+References: <20260405011135.125912-1-zakariyahali100@gmail.com>
+	<20260407034446.409175-1-zakariyahali100@gmail.com>
+Date: Tue, 07 Apr 2026 07:29:30 -0700
+Message-ID: <xmqqmrze7sj9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Jesko Schwarzer <jesko@schwarzers.de>
-Subject: checkout: clarify "up to date with origin/" uses local
- remote-tracking ref
-Cc: git.vger.kernel.org@schwarzers.de
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:64c1R6/h8nexDV5BavCTDmoK5O542bo6JVz8MbGElLkBDWOxyUy
- BAqfbCs+taLhY3k4URccdGaU0qZLVheu5AYwv1JBplNK8CrY39LD08tem7o6xlU3d4eFz7n
- 8a5tPq6wnPB9jw1m8NeiXr0ptVLvlSfArczeUnCH12up0mcY5oUg/NL6eRPjntsiKb3bLbK
- /UyV/j1f9RDowVHR2O4yw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lQnmF9SoTQI=;7zUNWDYHxyDuK5m9J+az3eC4JGW
- u9JV9JTBgNbsz4qY1LJ3qyJz0ZScjnOGgA30tOe3JBfS1jy3wHIVXAmiTw24GsctiRCNo4gkX
- RLGtGPTxub5ydNq3CR50OaHVxk9nUJ6lj+NatHkiF7g99qQ5K+z7p6EQw1nOwhzwerBdfiSzr
- 29uThe1x+xS7lZx6tfpasfC1j8cA35ix7eVHw5C5n0QGpHmHTLR5sYk8OVjGF0FSpAbel5SVP
- hRoYPpBifdlAabz7obi3QtF6pD5Fnbpbgt7H4HZnnSx5lJeCMCUjr+4UVt8H1IOrY+B+r3sc8
- +9XIOr0ooy6aix6MOOEk64yDi38uk5r2uI5yEQ0+9Kq06inhdwg3Y/dwZrvLDFqy77WKnwuFr
- IMEUtYtlHmMriDP3lyds7Aw5vkSg7pTpmqlhDOuy4ZSrTX8nRc/QEBsQagVnvuKs9mS7K56If
- l5Hp9gvXu52IuF2sXJq65/QrWevH7Z9aVj4ymvgJa/0VuXX9rVm6lvjzEftq4Ds8FTRPIQnEL
- LL1vmCv8eCvWg/M1DVj3fVbAGUmHNW3Gi9lOiWtvkn0G4oWqeHl5wTsycczVQwidv2kIvPTVe
- rHIDbAWNG7CcDkU6U9v50RaI8E5HVnzyngqZAYh02M2Dr9Qs8qJVXHYyLcyGdeMlbyPrxKhoV
- +adf0Hb44bJxbAibJv/50j70sipdXWjVRqaqz+wrldyFjdn+/4d2kZbklQ9eNOqtWbkFsyRmI
- FYIN9Mm2IhixZ2jvHOOrK40f+UpwiTA0iaAxrXSu+hWfsG9imRMfO9nCQrNnUD4qhC8kfcNa0
- B6rTS39Ziri+TACtsqNvq6k3ld+UivRGg6HeEj9nncW1OmWu5pUvHaugYEztklS5zty9W57xV
- 5WnS5Mpw+Byf2yNScaqI5gJCbnfbIEfqtyAD4EoD//HVmx9KiNBJjfYQ1i0nsn0mu0UmKl7Y4
- 15zk/CWwx4tpW0EMB1IIMr8lV7HQnvHuMtKDrQcLOpQnHmuVNvIp6Kp2Y8fqxyNdVNM8Mpjhv
- YTg/qpHCaSFHBb0+OcA4iVtwU3n2VV7Fx3sxgvT5YZRRSw7IxlOLKCLlTP1weAvv9/73q6fVV
- zlYuc47HR6rzgQQ9Cwy8tFhdGdj6NPd7gMRK/0CZGhNpagGODWnRUNjQHQKNHaaPVoR1NKH/U
- WW3rPPPQSO2mCcZldp50VJkZPwKqaxzxqd1F/JfYUCzK8X7ubZX8UMPB0QAtqKFKQMhCollMl
- 7QZFF26u3z98InWWc5awgRpHiuAYl0Mv41Kt//K0rx0NiVHLzcTCYl2uhMm1xftHuAriwT0S7
- pafYXhVuWX/s86x+2hI+90avQTnEfJRVPTIIt6auhe2sMBkvppjS8HRR2inSbsQHDKBUhrN3O
- 0AKxq6oGbIaeOFH7XeFmG6gMkHp+VKhF92Vb7lVnzKyvbm6vyGR14JhqcSlZNz7+oeD/LtqSr
- HCTHOjW/oIdJPrL7gu46gElm685OiftPvAh6PhY+oNQOdpAEtFvwQu2ZHNlBe2TX7e1RMSa3D
- ScDiX05g/ZQfdJKeDnmMlwEZ6FsVcU/q9AyEDxUTxunnjxTTqPGdq7dpsciIohx+6dt2CaU92
- BCai0LqwoqOe3ukSJ89OMA1wCUWvDzBYFcseq4CR/6VDXHEd1xidob4MUmQ5OresXxNe4VX9X
- 0BamiRzYpRXNvnlVWZZHBwbivP8e1rkFJOokrkK1CoPXt61kTkxa8hOiP/cfnYmDWWtsSypmC
- U7xpljpK6LMmE1M/hXOL/wIYAsR3gANTXkQpN4Gb/DvDIIzs8Mrq8+EWOAaItTA/8Rh74+HKt
- sVPoLcvC00hgnvqC/SsdRu9Te9U021mZyHqfMRFK0/TvZtWCBW/gJ8H6Fj4gXtiQKaSEXBHc8
- FFGZTNIHsQbfXrAMinEoEZ8VgJZnlZyGw3pX5X8M2z7lVwCfxkmJCgjNPjKaYqeGBh6zvl6zj
- VTCpj3B0wVEDgw7k9Y2b7Y6pvzKr8=
+Content-Type: text/plain
 
-Hello together,
+Zakariyah Ali <zakariyahali100@gmail.com> writes:
 
-this is my first post. I am using git*version 2.43.0* on Ubuntu 24.04LTS=
-=20
-and have an UX proposal:
+> This test script that dates back to 2005 certainly shows its age and
+> both its style and the way the tests are laid out do not match the
+> modern standard. Modernize it to match the current testing standards:
+> ...
 
-When I run git checkout master on a branch that tracks origin/master,=20
-Git often prints:
+How does this relate to d8e34f97 (t2000: modernise overall
+structure, 2026-03-28) that was merged to 'next' at 279c41a3 (Merge
+branch 'za/t2000-modernise' into next, 2026-03-31) and is now in
+'master' at 0713d3b7 (Merge branch 'za/t2000-modernise', 2026-04-06)?
 
-Your branch is up to date with 'origin/master'.
+The topioc appeared first in the issue 2026/03 #12 of the "What's
+cooking" report (Mar 30th), marked for 'next'.  Then the issue
+2026/04 #01 of the report (Apr 1st) listed the topic in 'next'
+slated for 'master'.  The issue 2026/03 #02 (Apr 6th) reports it is
+now in 'master'.
 
-I naively read this as "my branch matches the current state of the=20
-remote repository." In practice, origin/master here is only the local=20
-remote-tracking ref; it is not refreshed unless I run fetch/pull. If the=
-=20
-remote has moved on since my last fetch, the message can still be "up to=
-=20
-date" while git pull immediately brings new commits (fast-forwarding=20
-origin/master and then master).
-So the comparison is correct relative to the cached=20
-refs/remotes/origin/master, but the wording is easy to *misread *as "I=20
-just verified against the server."
+The description of this v5 patch looks suspiciously similar, as its
+patch text, so I suspect it won't apply to my tree.
 
-Would the project consider one of the following?
- =C2=A0 =C2=A0 1. *Clearer messaging*, e.g. indicating that the comparison=
- is=20
-against the last-known origin/<branch> (or similar wording that does not=
-=20
-imply a live remote check).
- =C2=A0 =C2=A0 2. *Optional context* when available (e.g. from reflog or l=
-ast=20
-fetch time), so users know how stale the origin/* ref might be =E2=80=94 i=
-f that=20
-is technically and policy-wise acceptable.
 
-I understand Git deliberately avoids implicit network access on=20
-checkout; the issue is only that the status text does not make the=20
-"local remote-tracking ref" semantics obvious to everyone.
-
-Thanks for maintaining Git,
-mit freundlichen Gr=C3=BC=C3=9Fen/Best regards
-/Jesko
