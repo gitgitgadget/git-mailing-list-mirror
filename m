@@ -1,54 +1,54 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C9B317163
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 17:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB54E3431E6
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 17:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775582880; cv=none; b=WOWandn1nmBgdwffcAoh5B74Rqj8+zRby8GhziU1k9BqrXCol9LdAVkAUzTCFMaQPbkLCvEMfVNpX8XoGMXj0avf4Ty3sRijuuj6izxOuzyeqepaXJYqokVYC5zzekF14RCUzClG5qCNIaUgRsdoMjIRewiBtMj4bjSaAOg6IbA=
+	t=1775583409; cv=none; b=Rsd/AQ5vHQT39hqDT548wloEl67dT3NhQ2QwFS0g/502ZNv6y6ihPBfE2RIC0VGdQXuNBrFlJ5NBqy2FfJzkjrJ+qqX0Yl3OcGNmEdBNd940wrI1pAYoG7/XiEQiHom643UhYYR5We7QSaTIbT9tzXTFMxd61t8jRUg+m8K2M/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775582880; c=relaxed/simple;
-	bh=VyR4oeO5uSqKUPGpKP873dfXT3FGUbKapy0K1+fPsaw=;
+	s=arc-20240116; t=1775583409; c=relaxed/simple;
+	bh=6Jb+NyZK1p4MnatLfkIDmpaG5Nni61ZJFwbvH0AfHvg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qTnc7NYOtpfYiPMHSdQTpiZ0xcjIm8I6keOFzHRF1ab4e560A6PPoblw8aAcfmlM4Ep4Jb8WavzJi/sWSMFRrWQ7DCeDP+ovX3ShxSN2Jb4ofBakMsWy1sqCI1a9dAaH8kk5h93eRZzhePoEYFZ5WsaS+H++R9nE6qblq73I/k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=agjkzwFb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WYpOH11S; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=b+4KvK0dBcQ4+2BDAHgWBlUodYLrjUW5dd9SObn62VNfZONBYpZe0LAX5LMCWyvIRMdWnYOX4NnnnOQ+3GYdesJ/eNmZZ8eEcj+nlBMqnJTLSIrgkoNuRPjWT/9UMjzdFHdnZaKEkEq7i/UCPU2J3A2MreyHTzGLhjGmHDm+ze8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZPQXhvqY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ryY45eQE; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="agjkzwFb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WYpOH11S"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D90414002E9;
-	Tue,  7 Apr 2026 13:27:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZPQXhvqY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ryY45eQE"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 07A93EC00F2;
+	Tue,  7 Apr 2026 13:36:47 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 07 Apr 2026 13:27:58 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 07 Apr 2026 13:36:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775582878; x=1775669278; bh=4Rg+j9AE7P
-	TLEqef+HOqMdYCfcsGoFmWmqfBkD0+bYw=; b=agjkzwFbhpklFR2SmsAj/RfGmX
-	nV3RDNyI9oUDvHtS0pkQHD0BWsFKckhxWOa5bjUZqfwO7K6V1MZmTTF8mRcYMgkI
-	cIdloQ34wTee4ia68dxSNRh27m9VCb4LS79Opwfm4NQaAr1QWbkBLsP3pNlq+Mg+
-	5N5O9ROTInLxbeIQCVwR1PY4GBVC+8/FDmRQn3ybnwgj3LMWyL7m+SR7TrMLpRyg
-	dFnCA+IwuPWTlh7CezwioxDoIsTqTbsd0GFigtnlKERBAgNdvNmcc+eHax7B6uPU
-	KGfHl+U7D0+5hjgwtHBd9AyLnynJKhKU7LPdOTrllKATqA/xgCJqLiUWk5HQ==
+	:subject:to:to; s=fm1; t=1775583407; x=1775669807; bh=+GDz72/2g0
+	G3/iJHXDJ3lxnJD0rBEA2+3KvOniQlehY=; b=ZPQXhvqYdQqtsnD8TP9KzDDL2y
+	UDipXPUsOT/65tz71GP/aRh3QrQgSH7Ea4ipmxBCB8f5IK1clKdzC5sRzlSNSe9A
+	mAB8SS0+POp3DhSery/qCfQbp2pEYbLzuoV6Kug4E784If+iFZNDWFotby1hISy0
+	A5Pk2JiIxF7M2+MZ3Q8XJ3SuSY0wAerxnAjOAjJg6dJRtRcMHVsuanS6u8yPrwGy
+	VEZ3Uz2Jz4pFmQQC+3zlMmE2qeY+ON0HRW53sObGi3LkzCH7PNMe8eTIQ4YHENeB
+	gF6NThZ306bZk+FZHQEfeWYrDLDlcTeQWiLkRFcgPv5u/LmYxGThTfVw5S4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775582878; x=1775669278; bh=4Rg+j9AE7PTLEqef+HOqMdYCfcsGoFmWmqf
-	BkD0+bYw=; b=WYpOH11SHl92aKr3NHfjE2f1Y7nVsCNpJJjK44SLPdnV2TdGp1h
-	SJ7mOdb5g3W2HKIInnak5hVTFUJZDrLPce6RQsZue9ujBxSKrgUZHzF1O925mBnz
-	iqV1z3iMzDJn8s9CPhrd5WvtMMsWGY5bpKtutYRAwujpCfQDQP6UGH4JbDtncF/7
-	1NXHksyTnrj1l4/N5ql73yBmZyxJzLpPpiThwNHZxIYO7m7GN9AO9jgnS4L5+YCV
-	MoMlXhHEWNCyOQYsf2OXMO78343ScIxVfWaMZ4RpWwbN3b5fVCjkoemnM6ijA5l9
-	XloMZ2UfGeVlOxyJMMpUOI8wciDgdsPalHw==
-X-ME-Sender: <xms:nj7VaSyyRdVtJNdkt86WGEZtr8fkMf6D7XgqHQBJy-A72azUAoT8nQ>
-    <xme:nj7VadVfuWMkr7Z9_MiFD8r82rvylNnjvReWlb-Dvu11ZrqZwjxtOL7E18FQILlSR
-    jBr-9VZxzCZeUKuPkvrd3M8GzmeUBooCM5V2_qclLMkrM2-PRkeng>
-X-ME-Received: <xmr:nj7Vaajp76O17fE-PQo4AueIaVPMQjBQRNNdeAis-lqUtRPwI5BvluIKGYTQAbl0N9l2hIAHauPmu1ctv1F-mpcLBTgpbIXXlA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvuddvhecutefuodetggdotefrod
+	1775583407; x=1775669807; bh=+GDz72/2g0G3/iJHXDJ3lxnJD0rBEA2+3Kv
+	OniQlehY=; b=ryY45eQEgyQxCdD3IKCrRAmeOFG5WVwlL08JhTM9l421a7U+FTe
+	Uyzbn2HgXuEgrKpKon3LrXyd2PYlgyfrZsy4ifoXKoeeGlP7wuY+qWC4Gwwa26Nz
+	srIZJumhPopVBeJrf59Uqu/J5vZcmsBGUY7XKI8eBdi4HGEWN8qOxuhEmLuW5LIb
+	ULLv5C8j2OJ/e2GqllSQBavL9Z25szKHUhCr4Qkuu1ooJ7Cp9+N6nYDKck2b/DYZ
+	G9uT9ktriD1EbuyHkR5krFWWZsGzpVFDlwBUzBfbi0QIfLzIjDA0ntkIzyujqBcb
+	qFM6Q5KBDdKxpP2jLbtAn2qbHTteI5vXCZQ==
+X-ME-Sender: <xms:rkDVaUjgB-nQuavJjQuURBQAjzi7SiG4ww-pVrMLYtBwqBMRh0ONkQ>
+    <xme:rkDVacEppAwmvdi8-c8oe2NZag8KuuysHIBcNXAW7DUKWefmMvW5U8usuoZE8Quey
+    LI86nGMaK6VWhAh7CGC_Mkqs2JSV6Qq1Gm-GlyEwZ8PobXyt-YZXQ>
+X-ME-Received: <xmr:rkDVaSTr4U6IALcMvDdvCFDBQj1SG-mWHUtrMlJM_gmYI_4RdEgS-kmm5PAHd--qL-0oC_iyKyZuvmOIEwc6dfXYtqOaHdiG1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvuddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -63,27 +63,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvuddvhecutefuodetgg
     thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghooh
     hlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
     gidrtghomh
-X-ME-Proxy: <xmx:nj7VaVCK3OStnItDRN9C0gt4FfQWJ3MwcnPtWaY44_NkixJlTYZONg>
-    <xmx:nj7VaYtSKaBecWoWQ_gR9teBnYOC-NQRklyr62QToFAGhRDTQU5Lfw>
-    <xmx:nj7VaRcFndQmlVB-14SdK9S4W2nqgQgsl8erhUw8wyXJFg6PpFuP4g>
-    <xmx:nj7VaV8lZb-z_yE9FTEGOt1eEn8V0j7fB3L_qsOmlCfDhXg-Pnu9Hg>
-    <xmx:nj7VaaTRrX6R2hWWSDiGU_S-D96NSVOiWMg7_MUEUBMEZRo5QAg90sg7>
+X-ME-Proxy: <xmx:rkDVaRyUjAHWg9yHwFTXToCUqZJPh9hEVzdkU2-COP2gC-AwWaiXhQ>
+    <xmx:rkDVaWfG-u-wGfc_CoLcc3Wiknqj0SiCMRMO_tcL8jRZGSUBKWYULQ>
+    <xmx:rkDVacMBs5U3sRxrCtFb-1zEbTiGtp-cc3J_PgzpwIWNGvZ2lBikiA>
+    <xmx:rkDVaZtCVM0oA2_2Ngvbqv9wSlJzLPc4I0MU_6N_YkR-x1Zibt-DKw>
+    <xmx:r0DVaaC--qHIdXPUvFeTEypA1_6C0ywrExAMIXJot9-vn8AVQWJbN1VX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Apr 2026 13:27:57 -0400 (EDT)
+ 7 Apr 2026 13:36:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
  <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Elijah Newren
  <newren@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 03/10] promisor-remote: clarify that a remote is ignored
-In-Reply-To: <20260407115243.358642-4-christian.couder@gmail.com> (Christian
-	Couder's message of "Tue, 7 Apr 2026 13:52:36 +0200")
+Subject: Re: [PATCH v2 04/10] promisor-remote: reject empty name or URL in
+ advertised remote
+In-Reply-To: <20260407115243.358642-5-christian.couder@gmail.com> (Christian
+	Couder's message of "Tue, 7 Apr 2026 13:52:37 +0200")
 References: <20260402070613.85934-1-christian.couder@gmail.com>
 	<20260407115243.358642-1-christian.couder@gmail.com>
-	<20260407115243.358642-4-christian.couder@gmail.com>
-Date: Tue, 07 Apr 2026 10:27:56 -0700
-Message-ID: <xmqqbjfu65pf.fsf@gitster.g>
+	<20260407115243.358642-5-christian.couder@gmail.com>
+Date: Tue, 07 Apr 2026 10:36:45 -0700
+Message-ID: <xmqq7bqi65aq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,40 +96,44 @@ Content-Type: text/plain
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> In should_accept_remote() and parse_one_advertised_remote(), when a
-> remote is ignored, we tell users why it is ignored in a warning, but we
-> don't tell them that the remote is actually ignored.
+> In parse_one_advertised_remote(), we check for a NULL remote name and
+> remote URL, but not for empty ones. An empty URL seems possible as
+> url_percent_decode("") doesn't return NULL.
 >
-> Let's clarify that, so users have a better idea of what's actually
-> happening.
+> In promisor_config_info_list(), we ignore remotes with empty URLs, so a
+> Git server should not advertise remotes with empty URLs. It's possible
+> that a buggy or malicious server would do it though.
+>
+> So let's tighten the check in parse_one_advertised_remote() to also
+> reject empty strings at parse time.
 >
 > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 > ---
->  promisor-remote.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
+>  promisor-remote.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-I agree that it makes sense to add the final disposition to the
-message.  It would be even better to rephrase so that it, the most
-important part of the message, comes first.  E.g.,
+Personally, I am not enthused to see "NULL or empty", primarily
+because it is an entry into a slippery slope.
 
->
+Sure, an empty string is implausible, but would a single letter URL
+a lot more plausible?  Not at all.  How about three letters?  Would
+it be now a bit more plausible than an empty string?  Drawing the
+line there between "" and "x" does not sound sensible.
+
+Don't we have a code that _uses_ these URL strings to protect it
+against a malformed or otherwise unusable URL already?  Can't we
+rely on that working correctly to omit this check?
+
 > diff --git a/promisor-remote.c b/promisor-remote.c
-> index 6c935f855a..8e062ec160 100644
+> index 8e062ec160..8322349ae8 100644
 > --- a/promisor-remote.c
 > +++ b/promisor-remote.c
-> @@ -670,15 +670,16 @@ static int should_accept_remote(enum accept_promisor accept,
->  		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
+> @@ -722,7 +722,7 @@ static struct promisor_info *parse_one_advertised_remote(const char *remote_info
 >  
->  	if (!remote_url || !*remote_url) {
-> -		warning(_("no or empty URL advertised for remote '%s'"), remote_name);
-> +		warning(_("no or empty URL advertised for remote '%s', "
-> +			  "ignoring this remote"), remote_name);
-
-I would find it easier to understand if it is phrased this way.
-
-		warning(_("ignoring remote '%s' that advertises no usable URL"),
-			remote_name);
-
-i.e., conclusion first, the reason for the conclusion next.
-
-Thanks.
+>  	string_list_clear(&elem_list, 0);
+>  
+> -	if (!info->name || !info->url) {
+> +	if (!info->name || !*info->name || !info->url || !*info->url) {
+>  		warning(_("server advertised a promisor remote without a name or URL: '%s', "
+>  			  "ignoring this remote"), remote_info);
+>  		promisor_info_free(info);
