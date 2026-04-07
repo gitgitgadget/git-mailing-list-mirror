@@ -1,54 +1,54 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3613296BC1
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 14:33:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573B72236EE
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 14:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775572399; cv=none; b=YT7ijkUSTKf70utFJ+me96vCaLGtb7Z6SYyHYPcvU1yrJu7Gp8cAZzCAX+pHirstLV4gLRYUc1ThmbOg1OTkb4be6QX5Rmjgl2RWAaSbxuPxbp1yps5MayLWqRl0DqaIQwpK8QZTD8O51ESD7bEHjlRGPL+FvIZpnx1ufqot84Y=
+	t=1775572929; cv=none; b=NZBnVIFQ+d9442OOaTpVczkkIFoxWG0tFx78xjBwr/xLLC664bZc/UjImWxkx3t4Z+udBcSQFlV4osp56IOgDirYOssBPHyrzG4G79D4teLlP3S5SMQ6VxhuM6AOb7GLm5KluZ5xQlxZ4YP7iP6GRD1uBxsTLuh2wMqRn6gCDbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775572399; c=relaxed/simple;
-	bh=pOZNHlRKlAnWjdGlnIF1ZafySZJGkTNoV48y3OoUzEQ=;
+	s=arc-20240116; t=1775572929; c=relaxed/simple;
+	bh=9ZbCUe1XkEsvL6YR0isC2OX7AfE222J59KZvN+mvf5I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ECEnlfXgrXhWlbJzVFK2eNqzQzAdmkxvGSfhBxcD6ze3t7afhJpcjmpS48qtl8ty3/Gj6YtF2/3p5B3CuKtg+wiQIQD18mf+AmfV1SA8zLx5ozpLvhJ4GynmcXBJEdYIy6d0tZPxpCyqrvjD2bybiYbYuu53KP6K0eJpSvrmXeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EycHm9+/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vveMUL4R; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=qhA+Zwg+FVJfDEphZsYk6PVxfnQnLF52NMAw0r7QFizUUFnJd/Zv7m38emZ8UScbpe94UYquagGwVrZj3qdxsN1x+3BTpwz83bXUFrM1WLbglqJO08JzWSdSGQCi4qgnaaMosKBlQrNMFCasngSmVUI/6+MbXG6OMuplawe7azM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fxDUMg74; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UVdwPRZl; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EycHm9+/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vveMUL4R"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 18D76EC017E;
-	Tue,  7 Apr 2026 10:33:17 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 07 Apr 2026 10:33:17 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fxDUMg74";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UVdwPRZl"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8A4BC14001D1;
+	Tue,  7 Apr 2026 10:42:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 07 Apr 2026 10:42:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775572397; x=1775658797; bh=7aatUH7UaK
-	CQJV/7piZ+8kvkSJMV1tVsF/HfK24Y5ys=; b=EycHm9+/xWfQaojALj0Bv5q8mA
-	hgIXD4JNGauz+a08XPzp4ql6Rw1UtzdHvlrRGBrtGXnf00rWo6jq2LVvN3cyzfdB
-	U//W3Yk5GmfwSLTHJ4bkJQgEqAPG81WyWwZd8K2MjG0TcrZzigu6k8HKy5Q1q0yL
-	7Fa5/zc6W/JOVOgP1afyzPf58c6nIJPcLEJZPcaCZXleXYOUNGaRgfKE1rhcXYeT
-	rggYrOE02MtVA04f6ay2seX73W38dA1ilTw88gd/sjcmTnqCElf5Mfr9KsA6j55a
-	7JjNGRJQksY8AgtI52rKb2zoJQ1Igs1Yg4OMFNTRbUAjWaI2IErfxG5n+j6w==
+	:subject:to:to; s=fm1; t=1775572927; x=1775659327; bh=vxyY0g/+0j
+	5kdHevd97bL8CZvj27kEi6FRY/yBNREFw=; b=fxDUMg74m4gF6Ola3iB8rzaebH
+	/4Wc5T4jAlbqT7wIfYUE/47wV0yDlVB5hj/45qC0Rib4FNdV/n8wqEkJl90xj3fD
+	ql0f9Da+LdP2ajUApzDkaB8pdBCtgPPRZWOM96Sgox1O8Whtt4F3dqNySqdg2CMG
+	sR2joi9Qds1Gg9IO0bjVVAZsxqc6PkdO4sKU9g0f63eSGJ1MAFqsEcVjS2ySips0
+	1bxQcxya7eCztp7Zz9lxJYlHqkYVOUrhbAGpBuPqm94vbAc3wENv/3DszDmIL2B8
+	4k/dJcxK6EsKUrUjd0QoZRWKZuLgstpXqb80cm+4iqxON6iVT/Fr1uy5BVYw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775572397; x=1775658797; bh=7aatUH7UaKCQJV/7piZ+8kvkSJMV1tVsF/H
-	fK24Y5ys=; b=vveMUL4RWRjwWBuJiPTsSz9SLnftPRj93d5zBItA4R4VHocDiqM
-	r5PeixfIaZIYAaAUdCu6IDE/7mxXi6bcGYXXc32fDE2hP/Totew+lgQ8kyDWVQeo
-	omXbYW17BxDXfgth+czHqIWScnaDFMQy9KRBAGm15rnFcL197CNrO084oBmt0o9s
-	iKPRy8M7er2XZKzT3MdQjs6MKSGMy3Yd9o6o2mQwINB5AkG0LmTUDEuZjo0btEV/
-	IuFwkuIXnkL2YULG4YODfdtR0nfKEBEIr12Ijyj2ieOEGHqIkLFb9ZJG6mhRWtIS
-	8PM4OzXu/6ykoVjx1scK5QuGAJLUVu3RfKQ==
-X-ME-Sender: <xms:qxXVaU8Hv79maCa6-fPqvSIl6rPQFqdaOnIOAZ77B-DUC-jJaiaG4g>
-    <xme:qxXVaXEr8ApYHLBfxfwKvyldWfkErKenpQe8DVeoSzJ2EvvBZcdmoktEdgNgDB2Pj
-    q-FYJMq81R3z5IuMQ1Jd1EjAdzec-D4CQMk4JWUxCqqDwRtvxn4ob0>
-X-ME-Received: <xmr:qxXVaQKlPCbfiLZpTP2997_abbJyJYBD6VL0MSwMJrj81VW8U-htI1Q94f9ahaq_CLl-63iF35FgZ7eCIG-t_UGQmkEBfRZfpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdeklecutefuodetggdotefrod
+	1775572927; x=1775659327; bh=vxyY0g/+0j5kdHevd97bL8CZvj27kEi6FRY
+	/yBNREFw=; b=UVdwPRZlfF3A4hOalNiM4w7sqRflyfhO2ZwtZqRlHeWvUbqBqU1
+	KhVYfZvtd+NWrzQObkSFtKQXUC74YBfC8KFuViePXBhY6LZfq0kiaEVrLY2TxtuI
+	G8vmAzsnXp285/BpgYdHXSrwwv4apnWhdAstCUzvO//LLXhic/Asd87sjmCeGaUp
+	y01tOOJDfMPtLyuY4LiFEemsZcdp/sEn6+ikozhuJHKKI0KqTyRVCns2MCzxso4v
+	l2FOvWxvJ7kNCUQLCU0VPsqNyDHlETJh7dPgZ55ewIsi2B0IFDvjFyImlxHCjJGq
+	cgnoRyFL6sr8VxIA2GdlgkkwPOSoEPh+gRA==
+X-ME-Sender: <xms:vhfVaVM1u4W_ZP9iH3bVCtq7BRRGMfMG1Nn9mVlPe0ehteLDLI2Pkw>
+    <xme:vhfVaSVbV8xyiote3QOTz7sb340CK0nQ6WY-6phPvvk_Y4NoqMxygdEYqPotMCqYp
+    m6zWUuOJ7a1NMW0863k0oF9OjkMHbFzpqQUwR2O6DH5-gOJTxOHsw>
+X-ME-Received: <xmr:vhfVaaas90UghPPnVVsSEFPN_n6FR5XRHHY1D9xj53dSze5J9UdBwEe-mfqzt5yHftRfK5oaQqANThuKHCwIRdIgWP0voGOWOA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdeludcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -63,14 +63,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvtdeklecutefuodetgg
     thhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehrvg
     hmohessghuvghniihlihdruggvvhdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhl
     vgdrtghomhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:qxXVafkxUbkBCw8o9lIG2GE4jcx-EH4RY0-cui7qDOOiWRPabDPUMg>
-    <xmx:qxXVaRwCL25wqallRG8T-sxaJrLfh8s6Yn8amx6OsHlaiQT3OX6Srw>
-    <xmx:qxXVaRuBY5N875yrLv9ZwI1YeKVMn0Hd_Fv0wGgzoiNWES4VAyl68g>
-    <xmx:qxXVabGqI_euYChyRFL9I4bXWNhKzy_8ta28MxUhSWUWv5X5z4w1Hw>
-    <xmx:rRXVaajDOYvFlQofA0TdDiCVfX119g9ED1PNmZi5-Z8tFLG0c-fsfNlO>
+X-ME-Proxy: <xmx:vhfVac3KAIgKUr8eCnF3Gx696hCMO8g-4bD94ZFIkq8E8E_nREF2Jg>
+    <xmx:vhfVaWCMse1o8WrtHNeKsJzmp1E_YWGQaTOlyHZNe3wpLPHXLFnwmg>
+    <xmx:vhfVaQ944ZT13ccyaEQ-kqJWB1E-s4-VhOUnAX1wUFuCYqnzQwgNWg>
+    <xmx:vhfVaZUIlQbSebTcKU2Hx67XYiJsa6GbAspZkngAi4MizuJaDtDNzg>
+    <xmx:vxfVaYcisvhVd2lpop1GaLW2WVYM_q2dC-cUxdJ_yrkJWGq-OP_mhB7s>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Apr 2026 10:33:15 -0400 (EDT)
+ 7 Apr 2026 10:42:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Nico Williams <nico@cryptonector.com>
 Cc: Matt Stark <msta@google.com>,  git@vger.kernel.org,  ps@pks.im,
@@ -81,13 +81,12 @@ Cc: Matt Stark <msta@google.com>,  git@vger.kernel.org,  ps@pks.im,
   rikingcoding@gmail.com
 Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
  cherry-pick.
-In-Reply-To: <adSPznztKWo63Tjr@ubby> (Nico Williams's message of "Tue, 7 Apr
-	2026 00:02:06 -0500")
+In-Reply-To: <adSO6zPwtFOWBcOw@ubby> (Nico Williams's message of "Mon, 6 Apr
+	2026 23:58:19 -0500")
 References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
 	<xmqqqzor76nh.fsf@gitster.g> <adSO6zPwtFOWBcOw@ubby>
-	<adSPznztKWo63Tjr@ubby>
-Date: Tue, 07 Apr 2026 07:33:14 -0700
-Message-ID: <xmqqh5pm7sd1.fsf@gitster.g>
+Date: Tue, 07 Apr 2026 07:42:05 -0700
+Message-ID: <xmqqcy0a7rya.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,18 +98,39 @@ Content-Type: text/plain
 
 Nico Williams <nico@cryptonector.com> writes:
 
-> On Mon, Apr 06, 2026 at 11:58:19PM -0500, Nico Williams wrote:
->> Maybe that's the trick: local configuration for determining the
->> copy-or-drop semantic for different operations, and maybe hooks for
->> altering when copying.  [...]
+>> Format is one thing, but what it means is much more important.  When
+>> is it inherited?  What happens when you split a single commit into
+>> three pieces, which piece, if any, among the resulting three will
+>> inherit thee parent's?  Should rebase, cherry-pick, and replay
+>> behave the same way (IIRC, rebase and cherry-pick behaves
+>> differently while propagating notes).  Etc., etc.
 >
-> I should add that I would want an original-change-id header that could
-> be used (again, optionally) to relate commits that get cherry-picked or
-> rebased but end up having different change-ids.
+> Exactly.  I remember I argued that cherry-pick and rebase should have
+> the same behavior given that rebase is logically a script of
+> cherry-picks, but others had strong arguments that the two should not
+> have the same behavior (something which is not hard to implement if you
+> make the inherittance / non-inherittance an option to cherry-pick has
+> different defaults for cherry-pick than for rebase).
 
-With these people with (possibly just slightly) different wants
-different project may have, wouldn't it work to record this kind of
-random pieces of information either in notes (the benefit being that
-it can be corrected without having to rewrite history) or in
-trailers?
+Yes.  Even though I often feel irritated when I use cherry-pick and
+see the "amlog" note not propagate when I should have used rebase, I
+think it makes sense to allow cherry-pick and rebase to behavve
+differently.  This is because rebase is a rewriting operation, where
+the old incarnation of the topic is discarded (other than that it
+can be resurrected from the reflog of the branch for the topic) and
+only the new incarnation will stay in the history, while cherry-pick
+is a duplicating operation, where the new copy is an adaptation of
+the original commit into a different context and both of them will
+stay in the history serving different purpose.
 
+> That the value of this header should not have a format imposed -- that
+> much is certainly the case as far as consensus goes, I think.  Basically
+> it should be site-local, for some definition of site.  But the tooling
+> can just treat it as opaque, perhaps with hooks to do any interpretation
+> of those values.
+
+And there is nothing to prevent us from doing all of the above (and
+more) with trailers.  The existing interpret-trailers mechanism may
+be lacking, but hopefully it gives enough framework to build on top
+to allow projects to customize what they want them to mean and how
+they behave.
