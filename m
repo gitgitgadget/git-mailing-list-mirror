@@ -1,108 +1,133 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4D1331205
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA08A35BDBB
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775578422; cv=none; b=b7mN2hqCaP3c4NZ0DLXtAiTluCFDkARXrdoFAkAtVF4nPmlVGRp3sZXkXO1xfACL3pzC4lDyhXRw8eXvOYBncmUzd40WJUkD1aRERQDXc1lB4oc9y+XW42BiVCG/ac6ncwLP9GcefLqzZiEIXYYPpJZ66k59oey7qL3kdV02V1Y=
+	t=1775578839; cv=none; b=LDP6svLra21KYo7veOgzLn7NXYCB3KU8TdfZzbtmSWFwnLV9okjhv4C+MhA7lnHnwQXuIaKp4A6FmSp+L9ErxWyjiisx5AKGp615ykZu2PCADDIDXaMY9yTD2DcF9ufW7JKcXigddEC/MGgkBtRoBCnxSzMtCF9zY/nOwW4DsKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775578422; c=relaxed/simple;
-	bh=c3O+5cqAibEko1nEaZwjOyGT+4/fWdldggBIbmBhQjM=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=m/mTpVbR/dY90LvoHXuPxyan+vguj34T5dU+FS+vFFMKeZL1z8P93oJSSnWT3pTcK6Kr8TYX7qxxlU4HalCt+fABhmQzTO7eFBctdcyPGK3gWGmWW2ZUQMsy6UtK30Rzg4+89YmqYRrRk33kGwOg5Cek//r1hqa6YFybEA2wjf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L0kSsvze; arc=none smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775578839; c=relaxed/simple;
+	bh=XgTQtPJfJj2dNtm3oRa+1w5H90X5g8sF3q/UjwCtqvw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TDL5IogI4UWakzy0WBkH+BJyIfIZlLLS+wthII/1EKOWjoj/IksxfWsGEHeQ2gk7LcpmP4rD6N++oRAdGf9I6mDxC44B8+3ZAdBgMn/G/vtuG0Uqk93OIl3s1hxGyYdF+OfEBbFwUFg6pUTrWY0wRVxqOqhhw9OGN6ecGS/5Uoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cu0ffc7I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U4fkgm7Q; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L0kSsvze"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-6501d32b04bso5764081d50.2
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 09:13:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775578419; x=1776183219; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vEMkKgFqa2rBFOwKk4npCreddCc7Z7jv/0lhcfPirLQ=;
-        b=L0kSsvzeLABAALcHA0EKpyXLicnejuzOhi3k6PXq/mOdQABTEolS2w29oKJTPBdg0A
-         I9s8vqv0eTNTkAL2WzNePFjw7swlz2iju/5GMKf0qu8myRb9RGNbEJ1O4r7JESVIvOSd
-         tbGpm2qECInK6103BngzmlecJPsoCQmOtYockXUM3K/Hb5/+lCi93npNzkQJW1S5u1xd
-         XlsYbE7MJPCXfcHuoCQdlSq7NFZT99AzQEc11S2MupaPcyuK0VikarhdxyAJcd569B2g
-         hpDfn0dAyerv1bF+ZR477P59M/eTYr9Jb994UqrrF/gJES+sdec/2jDo1WueTinPHfTJ
-         UN2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775578419; x=1776183219;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vEMkKgFqa2rBFOwKk4npCreddCc7Z7jv/0lhcfPirLQ=;
-        b=PBUnFAPlEF58ayhspPRSu358HL3ydbZwHvx9mirbejNPYIXmj6cF3+WoxUvt2iiSg2
-         fJZVVAxPxtRNp+WAUM78MHAl4M0upFOzFUBxVC1u2VTANO/JaY1AmD+8BL2xN2S2ohi1
-         ip6yn+Ciw+RWNmnPGAfEKaAM0ob1HScwhhK6XsCqPXnmPqrFt+/BARVl0XbfQiKacYwE
-         TU21Sm/QIkLag9FGHjFj++eZkO5v/YDQV2YxE8Jm1hZsYxn1Qd4LwVBN3aIk0cqZULvX
-         0H5OMyGBWXRBUet1ubmkN3nZQeIVgh9kp/gQ4bC+Tsit9XAoQweQqI4M71w2Tm6XOhHe
-         D3wg==
-X-Forwarded-Encrypted: i=1; AJvYcCVM9kHdbzgh2SDKBSOZpF9w0FlHB5wfLrtVKrNbYVgGTKRVIJyXlCA9s+O/oEFvpj05vqQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoE3vQNh6c4mKdIjMN8g0KQTjQZNMGux8LLanFD/83l6Dp+/qE
-	cCwnGXIy4nsjFRHijsPOm0g9l5IbEuNA6mIr/AGY4vIqsi26C4+PaQpwPnkWjw==
-X-Gm-Gg: AeBDieuzRhlH6wxp3ypBAcNhdkIWZ7T+o8B6tSpNyOX9WRD+bqjdhwuPiFEAHY3hK7R
-	jNKfA8nYobY85FmMNXyMKzJpRpxbtZsmfecm3B1lNwBRd65j3NSzK7xteqajEMYMR4s3hhYe4Wo
-	a8y8F1yi83hwJqVdIwyjb9y5fiDcmUg4c9l+KIqouutqISOobiEPQ05pjFKkhmzj1YEXn7WfJ8u
-	kGzrtzG8MbMJyvffP4cqc8zWmnxYk4ZtdrhNZ6BOfb3koV6jqaaJnhJZSOj6f0EAO0Q52XPFIfw
-	DEhhqwNcy8A1q4idp64iqIuFF++Sh/Dj7NJh2Ocjj8EqQT3+KwUussLD763hJIddVEOyiUBJ1H8
-	XJ/3J1pYfMBRB8+KO503CxSrxXLsmREkxdPQ+s+pqSP9DNpX9kRZkcZYsPo/PoAgCEV3fl5BcU6
-	pgAr7GQJg+2w4UPGXjbGgwsVAuzvibLT0fZFjZ5P9ucD2IZ632mfwxFVvzLOtuumr460UC/5XXZ
-	4x5xMLBE55ZOTkZTiU36Gvfr0kawKspRkWrl+W9ChUe
-X-Received: by 2002:a05:690e:c4f:b0:650:8945:b0a7 with SMTP id 956f58d0204a3-6508945b0c9mr72702d50.14.1775578419155;
-        Tue, 07 Apr 2026 09:13:39 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90fb:c300:4d36:eac:7121:d122])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6503a824d46sm7970890d50.4.2026.04.07.09.13.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 09:13:38 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cu0ffc7I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U4fkgm7Q"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1605DEC04A6;
+	Tue,  7 Apr 2026 12:20:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 07 Apr 2026 12:20:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775578838; x=1775665238; bh=bAs9po8fSE
+	VbQUHXhd/GoNg7b1GHY2T66tCzIxPv+H8=; b=cu0ffc7IxpH8dPLv5HhPgMXKq/
+	iVMmMy25jd4HlhTLlehD4dNZa0zR8wI02VsuLsQ3j7fczkHoa9F4U5E3+jSJiChy
+	KnzoRZq4oKlHI9RtMZ9bipbCUzYCeVN52YZ9B65SokbrkNTG0cD8S94xE/z3nEiy
+	4GCuzdW5sp0/AR/1xjThZbcia9uegud6TRme1W1jooNoQWxfh5Gl5tNGr43z194H
+	kvdk633uRdMk1YRKX4U0vb5lUDytt9yWBwC+4pmDuVBea1VGfZeGqxqaGOSmSRD0
+	mNkf9Q6gsrWNoScIJu+DGN8CaeBbiGoAFjKxnLfqypOFfeZmxvt9x9pXbE0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775578838; x=1775665238; bh=bAs9po8fSEVbQUHXhd/GoNg7b1GHY2T66tC
+	zIxPv+H8=; b=U4fkgm7Qqxt7fK3+1w6MafIxCqH+G/gWYWKalS0N1EkqFh/s1PR
+	/otkfjNgo/M5CANST8MYU8wgh1YNBzHAcTzSQmQAuUUbumNYnLYJpSe61BmbnqJ+
+	CPAtbb/zleobNT8xFIwyEJwfew4X/0nfN3ENg0KIle9Gb+Lm+NnlTTzWvoNjSDFd
+	YiHq0ci9noUuPE/4d9cUnBhZq6dg3LzbOydMnPpTO9onYqJMdPjWRmy2uzJGJ6Qj
+	L9D4W66jLTgfUz0MSLcQa9BI8IitkJz1RGyp8FoS7Mmgd4TZacNXOCrvzfH1mI92
+	uhI3NdT94anJH32RJs8BLPjmMg9VUpEYLWg==
+X-ME-Sender: <xms:1C7VaXw6pE1lTIQSIziggluDkM4cDIBtPAVTvgMQADGLhHGL6C1gbA>
+    <xme:1C7VaZpj_ZT1_GU796ES0OHeIZtYW0VX5N2IQuGXJH6XIuHIPjg7M7n6GF4LVn1Ff
+    sLfSGZkHPu1NfVF56WyeE00saqbTABtSAFNRs8CrQvcCFU_VvXVQg>
+X-ME-Received: <xmr:1C7VaXdkHiKW1t0Dkh2Th3Hr4g8aZDw82F6e8J6OTYaPOOoEVSwI5vU1oGaC-auyegBlL6SfLlAKDMfGE4AWIT0o6o8ZSYHO_Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvudduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepnhhitghosegtrhihphhtohhnvggtthhorhdrtghomh
+    dprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdp
+    rhgtphhtthhopehmshhtrgesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehrvg
+    hmohessghuvghniihlihdruggvvhdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhl
+    vgdrtghomhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:1C7VacrUTsAlNmkTjlfLFshJVIdTYgLo9y6KvbkbAwrZpSSNf5GpEw>
+    <xmx:1C7VaRkbIZ8V06BzQAj2bYjvJrJ-XIYzJNkWo9wE6FKFP-zTpndfPg>
+    <xmx:1C7VadRyJ1xpA3_6Hz4JEzqAxUgm1Okd5SlqejuHJ8MIvPsXL4cVRA>
+    <xmx:1C7VaXbMScLDVqRiBB7XNxGimNIWPU1xO4WGIzEy7dUzIaV3NK5NhA>
+    <xmx:1i7VaXRA2888X-8HEvtohybTyiDEnY0CG-bly4mocIDF8XY1bBt5xka8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Apr 2026 12:20:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Nico Williams <nico@cryptonector.com>
+Cc: phillip.wood@dunelm.org.uk,  Matt Stark <msta@google.com>,
+  git@vger.kernel.org,  ps@pks.im,  Martin von Zweigbergk
+ <martinvonz@google.com>,  remo@buenzli.dev,  Edwin Kempin
+ <ekempin@google.com>,  schacon@gmail.com,  philipmetzger@bluewin.ch,
+  konstantin@linuxfoundation.org,  newren@gmail.com,  tytso@mit.edu,
+  rikingcoding@gmail.com
+Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
+ cherry-pick.
+In-Reply-To: <adUoR/T17fKr+YLN@ubby> (Nico Williams's message of "Tue, 7 Apr
+	2026 10:52:39 -0500")
+References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
+	<xmqqqzor76nh.fsf@gitster.g> <adSO6zPwtFOWBcOw@ubby>
+	<68e5a1eb-ec7b-43ca-98d1-ffdf7fef013f@gmail.com>
+	<adUoR/T17fKr+YLN@ubby>
+Date: Tue, 07 Apr 2026 09:20:35 -0700
+Message-ID: <xmqqtstm68to.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: checkout: clarify "up to date with origin/" uses local remote-tracking ref
-Date: Tue, 7 Apr 2026 12:13:27 -0400
-Message-Id: <5DFBE9D6-0EC8-4702-99C5-827AEF8C6265@gmail.com>
-References: <xmqq4ilm7q1n.fsf@gitster.g>
-Cc: Jesko Schwarzer <jesko@schwarzers.de>, git@vger.kernel.org,
- git.vger.kernel.org@schwarzers.de
-In-Reply-To: <xmqq4ilm7q1n.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
+
+Nico Williams <nico@cryptonector.com> writes:
+
+> On Tue, Apr 07, 2026 at 10:55:00AM +0100, Phillip Wood wrote:
+>> On 07/04/2026 05:58, Nico Williams wrote:
+>> > 
+>> > Maybe that's the trick: local configuration for determining the
+>> > copy-or-drop semantic for different operations, and maybe hooks for
+>> > altering when copying.
+>> 
+>> I think the danger with making it configurable is that you cannot rely on
+>> the semantics because they vary between commits created by different
+>> authors. [...]
+>
+> Well, I said "site-local" and "for some definition of site", and the one
+> I had in mind is that the upstream provides this [default] configuration
+> for clones.  Sure, authors could override this locally, but presumably
+> they wouldn't, and presumably upstreams would check for adherence to
+> their rules.
+
+This does sound quite sensible.  What you called "site", I called
+"project" in my earlier responses.
+
+Some projects do already check that the changes are signed off with
+the "Signed-off-by" trailers.  If change-id or original-change-id or
+whatnot are deemed essential to a project, and are expected to be
+formatted in certain ways, the project will certainly validate them.
+
+None of that requires us to hide this information in the commit
+object header, by the way.  And indeed, it is easier to validate
+what is in the "git log" output (where optional header elements like
+"encoding" are not shown).
 
 
->=20
-> Le 7 avr. 2026 =C3=A0 11:28, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> =EF=BB=BFJesko Schwarzer <jesko@schwarzers.de> writes:
->=20
->> Would the project consider one of the following?
->>     1. *Clearer messaging*, e.g. indicating that the comparison is
->> against the last-known origin/<branch> (or similar wording that does not
->> imply a live remote check).
->=20
-> Surely.  Patches to start discussions are very much welcome.
->=20
->>     2. *Optional context* when available (e.g. from reflog or last
->> fetch time), so users know how stale the origin/* ref might be =E2=80=94 i=
-f that
->> is technically and policy-wise acceptable.
->=20
-> I am imagining that #1 above would add something that conveys
-> "relative to the last known state", and this will extend/replace the
-> phrase you would choose for "the last known state" with "as of N
-> days ago" or something when necessary pieces of information is
-> available, right?  That sounds entirely feasible.
-
-I seem to recall a recent (last ~6 months) thread about =E2=80=9Clast fetch t=
-ime=E2=80=9D and there being some question of how to record it. Alas I haven=
-=E2=80=99t searched the archives to find it.=20=
