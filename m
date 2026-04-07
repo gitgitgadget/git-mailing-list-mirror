@@ -1,68 +1,117 @@
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50224379EEF
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 21:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A0D37B417
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 21:29:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775597373; cv=none; b=DKgxBBz3zZyHM+bOnPfxJqUTBPotnSXudqSGoAr8vR//pmdeRnzlOitL9+yPZ/kse3YGx74TZC14wq+lUZz7JG32Ryovqu0barFe82XqxvlgZ+jpPXydG02jG1MU1+OUvcva64QKPI3BMDFuLslKIAQRtReS5WIJOe9Y6EuyRlI=
+	t=1775597379; cv=none; b=ivGpweRuykZ0uUytkC9dJLBolcHP1LIbsYDV/2M+GAB3my2Hs6ijoGw1I4sDRclcgptr+SSeK9uh9FnKWvufozX4JkI1wIxVgVZ37y7zcAdNcUYRR4HLTL2EJ1rbwkiMHz+9tpXNDv4lK0+aTxoOQf4HuWqUeHx+lHDDKJApnm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775597373; c=relaxed/simple;
-	bh=lpS2EF4JFZi6facQDiOoFOUkyjl7cUdGCvbHzkURNDo=;
+	s=arc-20240116; t=1775597379; c=relaxed/simple;
+	bh=SDg3Ontw/faEXgcnjlrAdh5eGGbV+3b/yP4l6EMSRuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iXH8HmzI/W2nxzP/kgumoBvSmTjmFCLvcas/NNiS2G4dHM+oXx8FIzOz9emRzeFhmib1B7Lf8KV20dLAx2IkFnxjgl+AYMQpqIp3d0QvPL4ObKQfaRwomeh06BCuDH/osAYNoXBJP4SbRKxRbue0GjHBUgK3Lm3ZO9gyQ/foRq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=THaE3guh; arc=none smtp.client-ip=91.218.175.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
+	 Content-Type:Content-Disposition:In-Reply-To; b=VXiP27jWOumpRpoEuT/38q1Owuu4A+R06uVu+32yzno8z69ikXnY86QJg6R/p/rOqm7YsVfS2bIxsHUY1ccB2rWI6tYrFglwii3yrfzgPSokyHH3vj/t7Z1AomJnRXanOXDQYEhwdPEDZC6QpDb9qwggzuDCu4ByvTQ7zV9l8h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Fo6C7ZzC; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="THaE3guh"
-Date: Tue, 7 Apr 2026 17:28:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-	s=default; t=1775597369;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZbyXmKgWxTOrg5BToc3uDj5w0oeuIERX1TaGNRc4iW0=;
-	b=THaE3guhBQITdJkF2AvWlNiI1rUyGkPjUlikew6USV5uEDuIzR2AUGGOy7uf323F7osgJN
-	w0IPECX+TiKl8gK0jLnbwwMxzWLfvw1lNjr7dwESAHuxU36Ccabbni/gj8aW+PNABcovxz
-	rRq/zX3gEWZuze1C9dZtblyUlqAcW7s=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Raymond E. Pasco" <ray@ameretat.dev>
-To: Elijah Newren <newren@gmail.com>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	git@vger.kernel.org
-Subject: Re: [WIP PATCH] fast-export: emit deletions first
-Message-ID: <qrxjw6qtagcfcwbzqjkoy37nu22no6kteskge3lpoyxmumzfqv@35hyc7dys63c>
-References: <20260406063607.15353-1-ray@ameretat.dev>
- <xmqqo6jwau34.fsf@gitster.g>
- <20260406212937.GA30202@coredump.intra.peff.net>
- <CABPp-BHhXQc-s8rF1n+AQ0VodX2KuiahcAOcg2msR1eZrUSsCA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Fo6C7ZzC"
+Received: (qmail 275976 invoked by uid 106); 7 Apr 2026 21:29:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SDg3Ontw/faEXgcnjlrAdh5eGGbV+3b/yP4l6EMSRuY=; b=Fo6C7ZzCI+RCxf5htXNScbrABo4fMON+kasMDCutYMlO2z0N+TlKxevqR7DwQrNWXsTgpqeHFIpqJGR72QvJgdbms5O+mbAYXCjqYv7H3moCca4B4sJXaPD30MjTsbguudV5BF92ssk9A9Dc8wFfh7M6YlRy4W+KX11fnCgDq8/yXUQ4R7qibdFaN1BbeKRXe9onO73A8yimy6mYpM6mRLf2lcCztfsgFUpWGVWHbE/MD9yK0kgE0JyURoTVYMRcvmAumFj7CIC25rqgqbXQLccaqt3uGiivUD9O1gCx+csosVPoaTTSywXfC4AdeUAe/I7vZPw69r8Ws/0/rfPBtw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Apr 2026 21:29:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 452097 invoked by uid 111); 7 Apr 2026 21:29:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Apr 2026 17:29:30 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 7 Apr 2026 17:29:30 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, ps@pks.im,
+	luca.stefani.ge1@gmail.com
+Subject: Re: [PATCH] object-file: avoid ODB transaction when not writing
+ objects
+Message-ID: <20260407212930.GA1315247@coredump.intra.peff.net>
+References: <20260407201730.2526914-1-jltobler@gmail.com>
+ <xmqqo6ju31wx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BHhXQc-s8rF1n+AQ0VodX2KuiahcAOcg2msR1eZrUSsCA@mail.gmail.com>
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <xmqqo6ju31wx.fsf@gitster.g>
 
-On 26/04/06 02:44PM, Elijah Newren wrote:
-> On the creator side, I agree that fast-export would definitely want to
-> sort its deletes before modifies to avoid D/F conflict issues.  That
-> doesn't help with renames, but I agree with you that the answer for
-> renames is probably "then don't do that."
+On Tue, Apr 07, 2026 at 02:18:06PM -0700, Junio C Hamano wrote:
 
-fast-export does force 'R'enames (of a to b) to appear after other lines
-operating on a, 4ce6fb80 (fast-export: ensure that a renamed file is
-printed after all references).
+> From: Justin Tobler <jltobler@gmail.com>
+> Date: Tue, 7 Apr 2026 15:17:30 -0500
+> Subject: [PATCH] object-file: avoid ODB transaction when not writing objects
+> [...]
+> +static int hash_blob_stream(const struct git_hash_algo *hash_algo,
+> +			    struct object_id *result_oid, int fd, size_t size)
+> +{
+> +	unsigned char buf[16384];
+> +	struct git_hash_ctx ctx;
+> +	unsigned header_len;
+> +
+> +	header_len = format_object_header((char *)buf, sizeof(buf),
+> +					  OBJ_BLOB, size);
+> +	hash_algo->init_fn(&ctx);
+> +	git_hash_update(&ctx, buf, header_len);
+> +
+> +	while (size) {
+> +		size_t rsize = size < sizeof(buf) ? size : sizeof(buf);
+> +		ssize_t read_result = read_in_full(fd, buf, rsize);
+> +
+> +		if ((read_result < 0) || ((size_t)read_result != rsize))
+> +			return -1;
+> +
+> +		git_hash_update(&ctx, buf, rsize);
+> +		size -= read_result;
+> +	}
+> +
+> +	git_hash_final_oid(result_oid, &ctx);
 
-I think all Ds first works for the patterns fast-export actually uses.
-According to a comment, the reason it's sorting by depth at all is a
-subset of this, to put D a/b before M 120000 a, or similar.
+This looks correct to me. In the back of my mind I felt like we might
+already have a function to check a streaming hash, but I was just
+thinking of how parse_object() streams blobs for its hash-check. And
+that is always coming from the object database, whereas here we are
+taking data from elsewhere. So we do need this new function.
 
-The additional roundtripping tests I'm writing should handle all this, I
-hope. I think now is a good time to get round-trips down, since people
-might potentially use fast-export | fast-import to switch hash functions
-(when commit and tag resigning are fully in fast-import).
+I probably would have used fewer parentheses in the conditional, but
+that may be personal preference. ;)
+
+> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+> index c824c1a25c..c1dbc6359a 100755
+> --- a/t/t1517-outside-repo.sh
+> +++ b/t/t1517-outside-repo.sh
+> @@ -93,6 +93,14 @@ test_expect_success 'diff outside repository' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'diff files exceeding bigFileThreshold outside repository' '
+> +	cd non-repo &&
+> +	echo foo >foo &&
+> +	echo bar >bar &&
+> +	test_must_fail git -c core.bigFileThreshold=1 diff -- foo bar >actual &&
+> +	test_grep "diff --git a/foo b/bar" actual
+> +'
+
+This does a "cd" outside of a sub-shell, which affects all of the
+subsequent tests.
+
+We also are already using the "nongit" wrapper in this script, so it
+could be used here.
+
+Thought it was found originally with diff, the bug can also be
+demonstrated with just hash-object, which does make the test a little
+simpler.
+
+The second and third are more style/taste questions, but I think the
+first is a blocker.
+
+-Peff
