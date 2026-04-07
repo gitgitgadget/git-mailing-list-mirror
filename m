@@ -1,133 +1,110 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA08A35BDBB
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D54D3A4F3B
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 16:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775578839; cv=none; b=LDP6svLra21KYo7veOgzLn7NXYCB3KU8TdfZzbtmSWFwnLV9okjhv4C+MhA7lnHnwQXuIaKp4A6FmSp+L9ErxWyjiisx5AKGp615ykZu2PCADDIDXaMY9yTD2DcF9ufW7JKcXigddEC/MGgkBtRoBCnxSzMtCF9zY/nOwW4DsKE=
+	t=1775578868; cv=none; b=pNY6hcvgrlegGvlEN7tMBc1cG49nYDEvJUDGrn1jg1XfNSIDCk0fLSfRlsxP+g5xwIYAfkIuGPfIdnuvLmlYEI6VO2AEIG+ColyMywQuK2W8tZ+Ust0jQ8NqER1EPYbY92UrHc9q/8/PfPSF4Evc+N87oq/G7jrS18FwSjSsc7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775578839; c=relaxed/simple;
-	bh=XgTQtPJfJj2dNtm3oRa+1w5H90X5g8sF3q/UjwCtqvw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TDL5IogI4UWakzy0WBkH+BJyIfIZlLLS+wthII/1EKOWjoj/IksxfWsGEHeQ2gk7LcpmP4rD6N++oRAdGf9I6mDxC44B8+3ZAdBgMn/G/vtuG0Uqk93OIl3s1hxGyYdF+OfEBbFwUFg6pUTrWY0wRVxqOqhhw9OGN6ecGS/5Uoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cu0ffc7I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U4fkgm7Q; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775578868; c=relaxed/simple;
+	bh=Sf4xUJ/zP3MfqFatmoIlAHLDXNwErmyKIVuFbHj6iJA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iXJB3R89Opdzg5DUq8+5UI7Cifv/2VB+PKcYnXT3PJafceGB9HPICgLrrQIg5mbObWPF+UcZF72IApffKGlTDo4mYMVoLxt5PHr4MmqkdA8r6eRTBYHS0YLUpE/KWSOVF4OUPgniV9WIrc3swgza2fcFwa5vkOzVHaohabo4Q/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=afrq8Gs1; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cu0ffc7I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U4fkgm7Q"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1605DEC04A6;
-	Tue,  7 Apr 2026 12:20:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Apr 2026 12:20:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775578838; x=1775665238; bh=bAs9po8fSE
-	VbQUHXhd/GoNg7b1GHY2T66tCzIxPv+H8=; b=cu0ffc7IxpH8dPLv5HhPgMXKq/
-	iVMmMy25jd4HlhTLlehD4dNZa0zR8wI02VsuLsQ3j7fczkHoa9F4U5E3+jSJiChy
-	KnzoRZq4oKlHI9RtMZ9bipbCUzYCeVN52YZ9B65SokbrkNTG0cD8S94xE/z3nEiy
-	4GCuzdW5sp0/AR/1xjThZbcia9uegud6TRme1W1jooNoQWxfh5Gl5tNGr43z194H
-	kvdk633uRdMk1YRKX4U0vb5lUDytt9yWBwC+4pmDuVBea1VGfZeGqxqaGOSmSRD0
-	mNkf9Q6gsrWNoScIJu+DGN8CaeBbiGoAFjKxnLfqypOFfeZmxvt9x9pXbE0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775578838; x=1775665238; bh=bAs9po8fSEVbQUHXhd/GoNg7b1GHY2T66tC
-	zIxPv+H8=; b=U4fkgm7Qqxt7fK3+1w6MafIxCqH+G/gWYWKalS0N1EkqFh/s1PR
-	/otkfjNgo/M5CANST8MYU8wgh1YNBzHAcTzSQmQAuUUbumNYnLYJpSe61BmbnqJ+
-	CPAtbb/zleobNT8xFIwyEJwfew4X/0nfN3ENg0KIle9Gb+Lm+NnlTTzWvoNjSDFd
-	YiHq0ci9noUuPE/4d9cUnBhZq6dg3LzbOydMnPpTO9onYqJMdPjWRmy2uzJGJ6Qj
-	L9D4W66jLTgfUz0MSLcQa9BI8IitkJz1RGyp8FoS7Mmgd4TZacNXOCrvzfH1mI92
-	uhI3NdT94anJH32RJs8BLPjmMg9VUpEYLWg==
-X-ME-Sender: <xms:1C7VaXw6pE1lTIQSIziggluDkM4cDIBtPAVTvgMQADGLhHGL6C1gbA>
-    <xme:1C7VaZpj_ZT1_GU796ES0OHeIZtYW0VX5N2IQuGXJH6XIuHIPjg7M7n6GF4LVn1Ff
-    sLfSGZkHPu1NfVF56WyeE00saqbTABtSAFNRs8CrQvcCFU_VvXVQg>
-X-ME-Received: <xmr:1C7VaXdkHiKW1t0Dkh2Th3Hr4g8aZDw82F6e8J6OTYaPOOoEVSwI5vU1oGaC-auyegBlL6SfLlAKDMfGE4AWIT0o6o8ZSYHO_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvudduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepnhhitghosegtrhihphhtohhnvggtthhorhdrtghomh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdp
-    rhgtphhtthhopehmshhtrgesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehrvg
-    hmohessghuvghniihlihdruggvvhdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhl
-    vgdrtghomhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:1C7VacrUTsAlNmkTjlfLFshJVIdTYgLo9y6KvbkbAwrZpSSNf5GpEw>
-    <xmx:1C7VaRkbIZ8V06BzQAj2bYjvJrJ-XIYzJNkWo9wE6FKFP-zTpndfPg>
-    <xmx:1C7VadRyJ1xpA3_6Hz4JEzqAxUgm1Okd5SlqejuHJ8MIvPsXL4cVRA>
-    <xmx:1C7VaXbMScLDVqRiBB7XNxGimNIWPU1xO4WGIzEy7dUzIaV3NK5NhA>
-    <xmx:1i7VaXRA2888X-8HEvtohybTyiDEnY0CG-bly4mocIDF8XY1bBt5xka8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Apr 2026 12:20:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Nico Williams <nico@cryptonector.com>
-Cc: phillip.wood@dunelm.org.uk,  Matt Stark <msta@google.com>,
-  git@vger.kernel.org,  ps@pks.im,  Martin von Zweigbergk
- <martinvonz@google.com>,  remo@buenzli.dev,  Edwin Kempin
- <ekempin@google.com>,  schacon@gmail.com,  philipmetzger@bluewin.ch,
-  konstantin@linuxfoundation.org,  newren@gmail.com,  tytso@mit.edu,
-  rikingcoding@gmail.com
-Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
- cherry-pick.
-In-Reply-To: <adUoR/T17fKr+YLN@ubby> (Nico Williams's message of "Tue, 7 Apr
-	2026 10:52:39 -0500")
-References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
-	<xmqqqzor76nh.fsf@gitster.g> <adSO6zPwtFOWBcOw@ubby>
-	<68e5a1eb-ec7b-43ca-98d1-ffdf7fef013f@gmail.com>
-	<adUoR/T17fKr+YLN@ubby>
-Date: Tue, 07 Apr 2026 09:20:35 -0700
-Message-ID: <xmqqtstm68to.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="afrq8Gs1"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-35d99031e4eso3023886a91.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2026 09:21:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775578867; x=1776183667; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=raX9M6/8fb+roopLtAcTqR32hFDYX+U8OBozIS5yOHw=;
+        b=afrq8Gs1Ivjk6UOaD4AqfPCyQDTcJ5RXpsYcV+WgdMDmE9rRFnPMEf+P4dcTZDsRHI
+         tj89UFuDd6B00k5CB6eYOzj1D4PIgBCqWfWCs0F5QqOhHHzsQRnQsGWD/Q/JILNsdeHj
+         4M2keU+C1OYq+eF9vM7c2Cd/TxaKWqu7HQc5uys4pR7elJ/6x47UAQpDOGwWBGE7kBZm
+         74IvZ/PnRN3c7jYSlxAEXvJEwIweX1OvLX/pQpph2rrdTCG5kKZDArr4Z5flICU59I4I
+         T7Rfsx8mF7p3N62hHGl3XJELnDHzs2rAXEY91eBni1/nIPugxgepvMNBPApNXZE3WFNl
+         OF5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775578867; x=1776183667;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=raX9M6/8fb+roopLtAcTqR32hFDYX+U8OBozIS5yOHw=;
+        b=Ty7davLLO1RCfSoW2cQzt5wkB40GY3fHn8msKi6J9gRg0EZ4Ty+lNlUQIU1wMg1309
+         4BYZEF4TFL4IEH0XF7gNUBW3BnoCowP16OQEtx7dt4Geg+nIvXV3VCqzxO4Rjxdg36sv
+         67Q8g+rZoZ4Ikg1I33vxHR6ckS4Eap3Man61cqXwuwrkxgChAUBkDAnxRlhWRJyQGMj3
+         uqAghPAqTvpm+xyiKxF/c46GEK5FFU0q/jb79qWUkx/FxkJUfER7a750yvcSX94CfcJJ
+         LfZdll470YU4yQlKDEKIx+pn/5IlUvZJ+vVxBJFOccLc2NLM6luPVqGxN5oXdEQFr16N
+         eIng==
+X-Gm-Message-State: AOJu0YyidvxBHmV2ZQA03G2oGMhVj61v26Qab+VrdKGzyV3aftZxjyxv
+	PyAMY9tViRka26xHKC7kPsekPeTQLQxKl3ZewxmXcd8oDw6YyBe+I3i2QikC6g==
+X-Gm-Gg: AeBDievs4govakDtGEWJQrcdILm2E6FOOko8xfj9I6lKgpB4NBWQ5aLddaSzirJwdpl
+	SSNwhMe/8BYoRnHmyN4Y5vXwL4okT7sbmpQcIXy10qfyme48zvpLcsP9uzZYde8nh7n8YHGnLTh
+	8OEJoOf5HX7zIu1qkGBjPQw0q6dzdroun9YufDCxIeuTSmksUw7HF0yVZG7CzLKyz8+oewSL9pM
+	DhP72XFELK5kO/p85WoUYkT8dutP+xJA0EKh7tIHxlIrrLxwuEvYXHzDMn/AlFW1wOe+I1nSndU
+	Fb3Jom8N0bd8cSQI1y1ukCRNTkVUQCuZRs4odEINN4P5pkakVhlaa1qwZbvBX4lPw01ms22ezP7
+	G4cKJ/0PAVPN2S7fMA+V3Wtz8QO8PwCBZgKy4rauUnvVPQQHCs7AkaVvdXx/uEk3wlt0J/554ji
+	u+tyxGLPkr7TLxIP6wWkZTkQejmIIbwXavGhnjePuZgqBBfw==
+X-Received: by 2002:a17:90b:2e46:b0:35b:96bb:47b9 with SMTP id 98e67ed59e1d1-35de68d5e83mr16060267a91.19.1775578866505;
+        Tue, 07 Apr 2026 09:21:06 -0700 (PDT)
+Received: from Pushkar.localdomain ([49.37.115.50])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e27ad5674sm9519a91.1.2026.04.07.09.21.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2026 09:21:05 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	peff@peff.net
+Subject: [RFC] archive: behavior of --prefix with absolute or parent path components
+Date: Tue,  7 Apr 2026 16:21:01 +0000
+Message-ID: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Nico Williams <nico@cryptonector.com> writes:
-
-> On Tue, Apr 07, 2026 at 10:55:00AM +0100, Phillip Wood wrote:
->> On 07/04/2026 05:58, Nico Williams wrote:
->> > 
->> > Maybe that's the trick: local configuration for determining the
->> > copy-or-drop semantic for different operations, and maybe hooks for
->> > altering when copying.
->> 
->> I think the danger with making it configurable is that you cannot rely on
->> the semantics because they vary between commits created by different
->> authors. [...]
->
-> Well, I said "site-local" and "for some definition of site", and the one
-> I had in mind is that the upstream provides this [default] configuration
-> for clones.  Sure, authors could override this locally, but presumably
-> they wouldn't, and presumably upstreams would check for adherence to
-> their rules.
-
-This does sound quite sensible.  What you called "site", I called
-"project" in my earlier responses.
-
-Some projects do already check that the changes are signed off with
-the "Signed-off-by" trailers.  If change-id or original-change-id or
-whatnot are deemed essential to a project, and are expected to be
-formatted in certain ways, the project will certainly validate them.
-
-None of that requires us to hide this information in the commit
-object header, by the way.  And indeed, it is easier to validate
-what is in the "git log" output (where optional header elements like
-"encoding" are not shown).
-
-
+Hi,=0D
+=0D
+While experimenting with "git archive", I noticed some behavior around=0D
+the --prefix option that might be worth clarifying.=0D
+=0D
+Currently, --prefix accepts values such as absolute paths or ones with ..,=
+=0D
+e.g.:=0D
+    git archive --prefix=3D/ HEAD > out.tar=0D
+    git archive --prefix=3D//// HEAD > out.tar=0D
+    git archive --prefix=3D../../ HEAD > out.tar=0D
+=0D
+Upon listing the archive contents (e.g., tar -tf), you get entries like:=0D
+    /a.txt=0D
+    ////a.txt=0D
+    ../../a.txt=0D
+=0D
+In such cases, tar emits warnings like:=0D
+    "Removing leading '/' from member names"=0D
+    "Removing leading '../' from member names"=0D
+=0D
+This suggests that Git passes the prefix through as-is, relying on =0D
+downstream tools to sanitize potentially unsafe paths.=0D
+=0D
+From a user perspective, I was wondering:=0D
+  - Is this behavior intentional (i.e., leaving validation to archive=0D
+    consumers)?=0D
+  - Would it be worth documenting this explicitly?=0D
+  - Or should there be any normalization or validation at the Git level?=0D
+=0D
+I understand that Git generally avoids enforcing policy decisions in =0D
+such cases, but I wanted to confirm whether this behavior is intentional.=0D
+=0D
+I=E2=80=99d appreciate any thoughts on this :-)=0D
+=0D
+Thanks,=0D
+Pushkar=
