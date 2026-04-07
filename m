@@ -1,125 +1,128 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729051A683C
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 12:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775563567; cv=pass; b=Vtb8nxBbCiGRCq8RcAwtMmMmsxtt06ihiZlBoQ9+1H536TGLDITOmfe2NAN3x04J/5WUNoVX2BiiqumB92pxuRoKoHDpZNaasGhfC440Dw6x+YI+yh+meiaSB3zHJbLTlqrzjNMAoT4JgDUES6aznMsKO2eRupM++Ce/uu2pVvE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775563567; c=relaxed/simple;
-	bh=rTSDHixgHdkDNk2yF42Z+Fgx+DzcVhbQRqa/z3S9q5w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SvtwzmP5+ZQekH55naTczPT/qb9xuG7KFx2eCHz3mlddzKtK9sf32Ci25Mov3qfqhzXP0+qGzyWnt4iRwkB/INF/zWWayrd8LfJkCalT8KiEFmmmfYE6abz9rLrWpzaCAAHLJlSOTKHj2VCiIBLrspGmjH0dNS/lDVftnnFPEIU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rR/xPDxw; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D732325CC79
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 13:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775567796; cv=none; b=Z6RzMGNn0xEf7bKLudcS+JDcFqAQa3EBJ0MCB+pY01n5XMiBIX28SpVNEDXbaTYP/r6sEh6TaggQToF/Y1Aps5Rh9f9nQvyfAjS3BWHl0Kzq1wWvi19zrOuWcLYRp6ApTpUvqqJn0fZBNkBDkl3FT8KlwwyaNIaqXBnEgN4QsR0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775567796; c=relaxed/simple;
+	bh=NBi/4euOTxE+9UOaC421aObAaHYYzvPqGmDRL4XUaZI=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=TsKxRNOyAAbilKNY83AYXZNHQ1ApEFHnrXiLwo0lsmAZA3C0ej3lSuqljuJhZ4Mkw90hFpUfBxmKu514wSQzzZIliWE8irR/+uwFPKIdMEQV/qNXysH33P6FaV9wiN+dAI4EeZKllr/i0/QkTg9F+O6wlt6GKtoASHWK4ze5KEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schwarzers.de; spf=pass smtp.mailfrom=schwarzers.de; dkim=pass (2048-bit key) header.d=schwarzers.de header.i=jesko@schwarzers.de header.b=hmEdm5ff; arc=none smtp.client-ip=212.227.126.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=schwarzers.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schwarzers.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rR/xPDxw"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12c19d23b19so398031c88.0
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 05:06:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775563565; cv=none;
-        d=google.com; s=arc-20240605;
-        b=AAjQqPdEegJPGyRJxJ9YLvncGLxd+5fvQ9eI9XRawml+Jb2rEADj5lqixXB/ivN0rh
-         nRh4MM13K3oMMhNDGQ9ftRtVPTh9xWWqzg3XbBzb6GzdMqLqbD2RTM/VCNNJCsQLLm67
-         +DYr/JJzZsmDSxIqRL5/5QurCQqhJEOqBqrPvEaRB8K2cxsDiYC9SBKkgMaTH32fj2jb
-         NzfPUHpLTPRXGmGZACib1pt2xv+cwu2wNVof6qOieNxrdJZxSQFIf69iiGRPBzx07oUT
-         tSZvJnW2pXZX5aYD+Q7ksLLz02CSgi3YHGgjvoUEVYbqRUpXpNtKdLy4ixcAoSJ/kY6B
-         Pnjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=2XN+TwqJCDIVD0wY2nAZx+aoG9yO9B9y6RkvMiODNUM=;
-        fh=aY+RodnsZwaVQgtho/D2F/LrJl8TcIGRGapA9S/T9w8=;
-        b=H9CpZ/UXPcZh4gd7ApM0luzuxf8HM9EToS3v69VLoUbyzr8r3dHtz/AW/Rki+Vdpr0
-         +NssfpZ/X9X59OmjjZDnbLv5yAthRGxPWWBWK7LaeHx2vCSc7gsQSSIf7LlPhmbT37dB
-         sINOvcb3396BEXHyPv5Mkue839efDKY9KylYxa5L2G/pw/rrtBuTO972y92VaJr0IbTT
-         m8nhKN4Cr5XLTVXeiKBUCUZ9OEL0I3i2UCneJyy6vnB80uBTb6HIn5Jv5g4B2hFmg2Wa
-         lW9b5Iwgb9a3UCpXsto9W1PXIa5vklN4VvHvyfa1n2J5GnAM8bajYks8MFLPUac5RsN7
-         Q/rQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775563565; x=1776168365; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2XN+TwqJCDIVD0wY2nAZx+aoG9yO9B9y6RkvMiODNUM=;
-        b=rR/xPDxw/oblleu4fr+qQQBahnO0eqIo68EUxGznwDXpH2QA3bvfE2YudIIQm3A4zr
-         TDaESvNnkenIX7gwKgYkbnLN3qUX9xJlWCAeeyovNHpl/rGm+dN9i0zTbugX3l+KbkYC
-         QfaF8npAGtArblTzbLZTz43ztnh4mF6Rm69wReSBE1aNB0STMkGGkweIC73Z3PGG8uQ1
-         vQUhDnTYzVFUTrKmfADKeIDc2nuI3Ye+EgSxKI3pvGRI83Rrok82+3Jq5FTi9O04Mmeq
-         79BUCTVZdtII+dIloXYjL6R1vbEYNDi8/tnsb2j/Cylm6E+oolDLjHgYt6qrpqxEBOfs
-         qwBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775563565; x=1776168365;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2XN+TwqJCDIVD0wY2nAZx+aoG9yO9B9y6RkvMiODNUM=;
-        b=Hvc/lVvkwTtkfEP65Li9n3zQU+VoXdTXVPPSGxdRm1josPEeIuP/W5ooH09hE/WuXd
-         kEzZlta0sJvJxD0ewNJrmnelLIYiFZRrwSjgv5OZIDMOyhALho8owfp5XlumAPfUIKQn
-         UGpEcsbprSNG/kqGVucHX6054CgvnyjUbWeHQl4etkZMKoq+XxBOXGE1agn4KdmOdHxj
-         O31/FyHpu8dV0JwWrt+46POVQyH+1P3sqxPrLYx3RMhEPa5FoUhp9xRYOaFiZwQ0GY+P
-         tAI2aSj/fhcyxY13ASG8Q4ztyb8DPBG5jie+UTN/P2GkDtA+idbmRhEugmDqtmDGNggW
-         IXRQ==
-X-Gm-Message-State: AOJu0YzL9MUUkPPDGzhZb074ubs34Ly7l3XPoZGF2PAYs0gn/QIkMYv9
-	ovTtqfyR9O+jC8kUH9KN7FhL8PMjTCkNRKa/xQDDKXr1YKROZRtm60lZQy5DU1fIyJZoRzco76Y
-	J2YxAz8fH0mhgsQSYckpMr1QM/qtOwyY=
-X-Gm-Gg: AeBDieuAJAqrtPfwd9FpEcF3Y1ckSd5roZIS/SLI1fTsGSsbJtQc6VErXAJXhF3ZsP3
-	EDvzEXOkJ9JgdFgPhgW69qZRoZKktk/5e3NcNKzBw78pXGu1axdqh1v0Qz51xa4aNbr8XVf96cc
-	vQqA32iUTQqzRCIPjB6SDGruW+lfYFiVnpnMoIGd5ZOHadZSah2rdUZYe7QYPCDCpFfCYM/h/nx
-	lT+mSZdsLU8wAQqww+bUKJoJR1MTqa61+Gf5WdZl/E0gTfz5uIpDrbktvt2eaW7byFP5k4Qc/2U
-	aR0kRURXVoSb8JXF0kYG6RamlCireZItI/yq6AhEuCCaqDuGSYouvzuZImNxfIdRwITf
-X-Received: by 2002:a05:7022:62aa:b0:12b:f899:7185 with SMTP id
- a92af1059eb24-12bfb711224mr8124877c88.16.1775563565334; Tue, 07 Apr 2026
- 05:06:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=schwarzers.de header.i=jesko@schwarzers.de header.b="hmEdm5ff"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schwarzers.de;
+	s=s1-ionos; t=1775567793; x=1776172593; i=jesko@schwarzers.de;
+	bh=NBi/4euOTxE+9UOaC421aObAaHYYzvPqGmDRL4XUaZI=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Cc:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=hmEdm5ffSJt660IAQGcNwFP3aOdEQ5TXujn5r8THj2Q1jPQRAbeTkV2CkdRRqNP2
+	 wl2j7pdLiO1VWQBUR53OLJ4N7MFxIjOfNs1vrH1qNTLd+pRY7+J8XG9dJuc4FmCkj
+	 6a4/FhqikAwCVTUerYyHHL/RpAYTyl0amiA1HC6VdpyCDiWiCKuiEwOUWm9BjSHAA
+	 sZxcH4nrbThyafBVG8gdsHTJpzx+a8EY/JSrNZH93vMSehYdAzbz/BSKi0mSDVfz1
+	 UmoDtNqMk78xUYYkjja2S7szFE1aAJ01mkU/EJk6QjVjbxVFe7KTd7RHYHIejxXZG
+	 Wb7qs8MXPPF4cq3UXw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue011
+ [212.227.17.165]) with ESMTPSA (Nemesis) id 1MqK2d-1vflSV2wvD-00ncqJ; Tue, 07
+ Apr 2026 15:11:20 +0200
+Message-ID: <956b1bec-99ec-4d28-8229-804eb14e6d3a@schwarzers.de>
+Date: Tue, 7 Apr 2026 15:10:25 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260402070613.85934-1-christian.couder@gmail.com>
- <20260402070613.85934-2-christian.couder@gmail.com> <ac4evWK9k69LIV91@pks.im>
-In-Reply-To: <ac4evWK9k69LIV91@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 7 Apr 2026 14:05:53 +0200
-X-Gm-Features: AQROBzDWHxuvJW5RcDoDj1fXAyiqRguc9_kT-PAD7AwFIObg6wDxUZHTGkHIzwQ
-Message-ID: <CAP8UFD1iT12ap7_A7Hq1KVPia_mPwqXN7W8Q0atMo0hz3qn8FA@mail.gmail.com>
-Subject: Re: [PATCH 01/10] promisor-remote: try accepted remotes before others
- in get_direct()
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Elijah Newren <newren@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Jesko Schwarzer <jesko@schwarzers.de>
+Subject: checkout: clarify "up to date with origin/" uses local
+ remote-tracking ref
+Cc: git.vger.kernel.org@schwarzers.de
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:64c1R6/h8nexDV5BavCTDmoK5O542bo6JVz8MbGElLkBDWOxyUy
+ BAqfbCs+taLhY3k4URccdGaU0qZLVheu5AYwv1JBplNK8CrY39LD08tem7o6xlU3d4eFz7n
+ 8a5tPq6wnPB9jw1m8NeiXr0ptVLvlSfArczeUnCH12up0mcY5oUg/NL6eRPjntsiKb3bLbK
+ /UyV/j1f9RDowVHR2O4yw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:lQnmF9SoTQI=;7zUNWDYHxyDuK5m9J+az3eC4JGW
+ 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
+ VTCpj3B0wVEDgw7k9Y2b7Y6pvzKr8=
 
-On Thu, Apr 2, 2026 at 9:46=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Thu, Apr 02, 2026 at 09:06:04AM +0200, Christian Couder wrote:
+Hello together,
 
-> > +test_expect_success "init + fetch two promisors but only one advertise=
-d" '
-> > +     git -C server config promisor.advertise true &&
-> > +     test_when_finished "rm -rf client unused_lop" &&
-> > +
-> > +     # Create a promisor that will be configured but not be used
-> > +     git init --bare unused_lop &&
-> > +
-> > +     mkdir client &&
-> > +     git -C client init &&
->
-> Tiniest nit, not worth rerolling over: this could just be `git init clien=
-t`.
+this is my first post. I am using git*version 2.43.0* on Ubuntu 24.04LTS=
+=20
+and have an UX proposal:
 
-I copied this from another test, and I didn't think it was worth it to
-add a preparatory patch just to fix this in the other test, so I left
-it like this.
+When I run git checkout master on a branch that tracks origin/master,=20
+Git often prints:
 
-It could be a microproject idea to clean things like this in all the
-test scripts.
+Your branch is up to date with 'origin/master'.
 
-Thanks.
+I naively read this as "my branch matches the current state of the=20
+remote repository." In practice, origin/master here is only the local=20
+remote-tracking ref; it is not refreshed unless I run fetch/pull. If the=
+=20
+remote has moved on since my last fetch, the message can still be "up to=
+=20
+date" while git pull immediately brings new commits (fast-forwarding=20
+origin/master and then master).
+So the comparison is correct relative to the cached=20
+refs/remotes/origin/master, but the wording is easy to *misread *as "I=20
+just verified against the server."
+
+Would the project consider one of the following?
+ =C2=A0 =C2=A0 1. *Clearer messaging*, e.g. indicating that the comparison=
+ is=20
+against the last-known origin/<branch> (or similar wording that does not=
+=20
+imply a live remote check).
+ =C2=A0 =C2=A0 2. *Optional context* when available (e.g. from reflog or l=
+ast=20
+fetch time), so users know how stale the origin/* ref might be =E2=80=94 i=
+f that=20
+is technically and policy-wise acceptable.
+
+I understand Git deliberately avoids implicit network access on=20
+checkout; the issue is only that the status text does not make the=20
+"local remote-tracking ref" semantics obvious to everyone.
+
+Thanks for maintaining Git,
+mit freundlichen Gr=C3=BC=C3=9Fen/Best regards
+/Jesko
