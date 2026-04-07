@@ -1,257 +1,179 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2E5388E52
-	for <git@vger.kernel.org>; Tue,  7 Apr 2026 23:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C159C37F002
+	for <git@vger.kernel.org>; Tue,  7 Apr 2026 23:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775604526; cv=none; b=L6lGoMWEbQ4fEMqbvdHzHECLoOP8Suq79oMF7MQYw6sPfSOYGEXS9b01JDmHX9aOzJa1Q7HoTTISESQSGhgsVFu8H7S6Gt/kxRHO8a53QMk8zkG2PiJFDE82GQLqnm8oN7+I3FoXPmuvqmQz+UR7hmDSzupGXT/o2Fts7InRPbM=
+	t=1775604526; cv=none; b=FbQjlsez6dp4/nOGmA7OcrvSRM7Ve4DAQUbPbMD+EVKuMsfIbccHKIR48PBRVH3NuT+NkkaDQdwqT0OrtD1gI9U0VnLY+j0axuDvT7+LGrU4l6emUE8exsRMY4jKsI4DcIZv7L6La2vJQ6bKFF9mbGpsztynEhsmaDapD0aEjas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775604526; c=relaxed/simple;
-	bh=+Wkaht5LmLbkyxQBIW7NNf7WMEx467zh7omapYjtJZ8=;
+	bh=CoYhXAr4oXpJffYkYLyWprpBRHTNIQx/NjmVb9d/e5s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sA0QBFGH5jEA6Kh17jSF7AuSIsm2CMxmI1uLzb95Z19VUdJ7AEgXaniPMN8MfuHBuFvSxJdss6zxaRW3kaicUQZydZscygDi1Bbpm+O0rSoSNQATl194/1/yewqmMANJsIUmbeTWX8C6eXprax/2zOI8I3KBbW5lqUZP/Pg88xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tFMY/C91; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=g5RPe09UifjNCSj/C7y5hwwpqjKY2oX2Tl5n4wZF9Pzn55+rIUhKVA0Tp5wgP65+2S4LzTWwe1I1IuRtvaIpgVBUphqfmskGgNByif1/pCbB/5RNzF0bGe9ULg68QPcDzpmgIok7Q8/jMkEhm5RV1Tzu3nIw/bPO/4h8HgrUITE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=g8zri001; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tFMY/C91"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43cfac48bc7so3065940f8f.0
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 16:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775604524; x=1776209324; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ahj+rdFw5S3uUhNWjxeq5tFBU2UfLXjjUU+vd6lf8GA=;
-        b=tFMY/C91scoX3/NnBCSP35E8u7eopqoF8Stvta6N0kS0e84zhIViqPNxZChQu1S21A
-         ILGiCVZ0fg27InSdv71sudZ/pXsuePrz8HEtceu78v23aSgsLhi+mdUdh4hkFrTST0zb
-         T/jqcUcRAgGVQ+uVm+4soeO6+gHqgwxrsSRZxeV6Y/zU3e8vU0TDPLpPOVIZlANJaea9
-         5Ultz4cVGPaYFu2BitSH3BNZA4xEkWLMCif0kbQhOlSCaU/pSecSja75IlDdp+kCr6gQ
-         bzsUuOtAXpQ6kHz0YimOP7yKdbqE2+9aUUTYrUkDnxKuilEdZxxrf+NYBpMHwT+ED3GH
-         N6Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775604524; x=1776209324;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ahj+rdFw5S3uUhNWjxeq5tFBU2UfLXjjUU+vd6lf8GA=;
-        b=S8dqb0qjXsx80sm+cSNHwabAgaxKawS9OdNpMrrC1kG0Pl5YccDAw/cRzLgzspfDYv
-         Ygu/GQYaBS8msE9nukAMTdxth9rCr29Nv/1cEEj92J54W+ZhAO5wehdto8HtvZHOMKBv
-         LKi+n55uVRxwpTMLIMxkJhieUsXqPsZfjMzgJpVyp2+6d4kpfmKsmUAfIyz9JLYfHd4j
-         8cEG1Y7hw3Gkm+OqALQs6QUUqRtui2BkLA8sTTv1EYDk6RrFyXdgwetwjC6HLvwtKIr+
-         F3ufqyTF25Homovh/L5Gvh9k3Va+3/qELWsg7J1YG/TRETjNR/CXkWFNHTf7a7pG2Gpm
-         tCwQ==
-X-Gm-Message-State: AOJu0Yx1n3UHPkNb5Vm14KBjOEALIGyxHR0WMYPsYArEB4mxqs/0iIBh
-	vSuN3F/BVhnhDayrjPeepJ0GoVaFZor4K6hbEdNL3Yhp8+8M6lr06iaH
-X-Gm-Gg: AeBDietPXm5yquBdSNGHQbKVN7oa0JmQsS1BsdbzrHw3zQWG6dzWAtWzHUHALi6hulO
-	rL9Dy07LUmobhlybvfNKEocawJNjcfDoMCWUIHQFOzUcDu2K4UQLe3FcnEMYU80mTaWl2DqaM6x
-	RnhnXmwURCCVliCZD4NDwaeIGRSnqpnQUcYq0SZ0voJvtq4UpuuCSC6575A7s4QXNgOI8nFzbuI
-	WQxQVAjbPtgSJmHejdwhTlHSAVnedkarYXtNP21OYkuIxSD/OniuvBa+Bo7lSF1i0P/68o2fIDO
-	Nip9hPyPDXt8+PnCYeToM4cttv2M7rWLRmLFQQaCG7aYXbZIotRdyZGXREg/Lh/Xen3ORj5yUCq
-	k0loyGqB9/8CT3/nn2fdm3lfPjTOU2cS9GSSIp2Z06Pa34iaY23g94Z8pAj5azJg1CY9GTIfTX2
-	TJA5x/2G18G12VE7rJXjCCcBpywGmrgoet
-X-Received: by 2002:a5d:588c:0:b0:43b:5097:6f60 with SMTP id ffacd0b85a97d-43d292e1927mr27716437f8f.32.1775604523373;
-        Tue, 07 Apr 2026 16:28:43 -0700 (PDT)
-Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4f7d4esm46840510f8f.34.2026.04.07.16.28.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 16:28:42 -0700 (PDT)
-Date: Wed, 8 Apr 2026 01:28:39 +0200
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	Elijah Newren <newren@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 4/5] t7700: test for promisor file content after
- repack
-Message-ID: <adWSMUZtlh7ct9bX@lorenzo-VM>
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <8e58c1263d15fb8dba8ce1d2866d369e938bf2b6.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <xmqqldez9232.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="g8zri001"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1775604523;
+	bh=CoYhXAr4oXpJffYkYLyWprpBRHTNIQx/NjmVb9d/e5s=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=g8zri0015IivGPm39iMgnF8VtjEcV0wNk43MJxIZkMvPpLnr1vXQylqIY2gtD8d2h
+	 dRecyniKh7XW6hu4W/v2idcSpTh31hsTQidYqUf2eEBdPtY2Wi2OPw5ILA58GlKsRs
+	 F9fiBcgwcw0GKZLnvchG48Pd6356b1LIN3L7DrEqICxREWY+dmgZlO+acHcKqicgUu
+	 l3RhsletL5UIJIgLaD8wPjxQr991CX4fnxvNYuUUcQ4wpnhV52rVDVWoWA1t64C9QX
+	 aAR/xXUOw68aQFr+Mw50rY3N63axdOJqFK4KFHdbgWo+JGAt4/3IgkAGwx9zaESHhy
+	 +0b0ySSYWPwF1hxueYZD6su6CEAwMS5CjDP+qfMPMhWv7HiJBYq7TITQccJvpB16ww
+	 AwjKrlZURCvQm0JoYXYJUfb/t+q7c5xGfAXJDohMQNChGZn+JJpunUev0bDouQaf9L
+	 4pWfCU7aAa1htPVPYv+JmU801d/qjA+CM/2dipnOjvpBOj7n1ZO
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9492:b8ae:a7e1:509f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A652B20144;
+	Tue,  7 Apr 2026 23:28:43 +0000 (UTC)
+Date: Tue, 7 Apr 2026 23:28:42 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Matt Stark <msta@google.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com,
+	phillip.wood@dunelm.org.uk,
+	Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev,
+	Edwin Kempin <ekempin@google.com>, schacon@gmail.com,
+	philipmetzger@bluewin.ch, konstantin@linuxfoundation.org,
+	newren@gmail.com, tytso@mit.edu, nico@cryptonector.com,
+	rikingcoding@gmail.com
+Subject: Re: [PATCH] headers: Preserve 'change-id' header in rebase /
+ cherry-pick.
+Message-ID: <adWTKt20ISC3qz2g@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Matt Stark <msta@google.com>, git@vger.kernel.org, ps@pks.im,
+	gitster@pobox.com, phillip.wood@dunelm.org.uk,
+	Martin von Zweigbergk <martinvonz@google.com>, remo@buenzli.dev,
+	Edwin Kempin <ekempin@google.com>, schacon@gmail.com,
+	philipmetzger@bluewin.ch, konstantin@linuxfoundation.org,
+	newren@gmail.com, tytso@mit.edu, nico@cryptonector.com,
+	rikingcoding@gmail.com
+References: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0M4Jca071uXnXa+Q"
 Content-Disposition: inline
-In-Reply-To: <xmqqldez9232.fsf@gitster.g>
+In-Reply-To: <CAH7WC73-4p0RrqKNSh2G-xfpfO7QHZiXHbU_UFRkM3Q=bMWTDw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Mon, Apr 06, 2026 at 03:05:37PM -0700, Junio C Hamano wrote:
-> LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
-> 
-> > +test_expect_success 'check one .promisor file content after repack' '
-> > +	test_when_finished rm -rf prom_test &&
-> > +	git init prom_test &&
-> > +	path=prom_test/.git/objects/pack &&
-> > +
-> > +	(
-> > +		test_commit_bulk -C prom_test --start=1 1 &&
-> > +		
-> > +		# Simulate .promisor file by creating it manually
-> > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> 
-> So "prom" is a list of filenames; since $path does not have any
-> funny letters that interferes, later use of unquotd $prom will
-> list these files.  OK.
 
-`test_commit_bulk` creates a single ".pack" file. We use `$prom` to
-create the associated ".promisor" file.
+--0M4Jca071uXnXa+Q
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > +		oid=$(git -C prom_test rev-parse HEAD) &&
-> > +		echo "$oid ref" >$prom &&
-> 
-> Oh, not quite.  How are we guaranteeing that there is only one file
-> in the list of files in $prom?
+On 2026-04-07 at 03:13:18, Matt Stark wrote:
+> In the discussions on
+> https://lore.kernel.org/git/Z_OGMb-1oV0Ex05e@pks.im/T/#m038be849b9b4020c1=
+6c562d810cf77bad91a2c87,
+> it seems to be that:
+> * There is consensus that a `change-id` header provides good value
 
-Yes, because `test_commit_bulk` specifically creates a single pack.
+I'm not sure I agree.
 
-> In any case, quoting from Documentation/CodingGuidelines:
-> 
->  - Redirection operators should be written with space before, but no
->    space after them.  In other words, write 'echo test >"$file"'
->    instead of 'echo test> $file' or 'echo test > $file'.  Note that
->    even though it is not required by POSIX to double-quote the
->    redirection target in a variable (as shown above), our code does so
->    because some versions of bash issue a warning without the quotes.
-> 
-> 	(incorrect)
-> 	cat hello > world < universe
-> 	echo hello >$world
-> 
-> 	(correct)
-> 	cat hello >world <universe
-> 	echo hello >"$world"
+Absent some well-defined documentation describing what it means, I don't
+see how it could provide good value.  It sounds like you're saying a
+persistent commit ID is generally useful, but I don't see the value and
+I associate persistent IDs with online tracking and advertisements,
+which are neither useful to me nor particularly ethical.  Since nobody
+has explained the compelling reasons in documentation, I am left to
+speculate on them myself and have come up empty.
 
-Ack.
+> * There is not consenus on what precise format that should take
 
-> > +		# Save the current .promisor content, repack, and check if correct
-> > +		prom_before_repack=$(cat $prom) &&
-> 
-> This is misleading, unless you plan to update the early part of this
-> test to store a more realistic data in the $prom file.  Wouldn't it
-> be equivanent to
-> 
-> 		prom_before_repack="$oid ref" &&
-> 
-> at this point?
+I think stabilizing this before a format is defined is a mistake.
 
-Yeah, simply using "$oid ref" would be better at this point. One less
-confusing variable.
+Even if, for the sake of argument, we agree that this is a generally
+useful thing to have, we'd want to have a standard format (ideally
+produced in a deterministic way for the reproducibility of the testsuite
+and downstream projects), which we don't have, before we persist this.
+We would probably want to have `git fsck` verify that the format is
+correct and this is not being used as a way to store random information
+as part of the initial change.  I assure you that users will very much
+try to shovel random, arbitrary, malformed information in there
+otherwise, since I've seen this in the author and committer headers[0].
 
-> > +		git -C prom_test repack -a -d &&
-> > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> 
-> We expect that there is only one .pack and .promisor file.  Why
-> are we listing .pack and turning them to .promisor, instead of doing
-> 
-> 		prom=$(ls $path/*.promisor) &&
-> 
-> here?  Don't we expect that this "repack" to recreate .promisor file
-> as well (and if we do not see the file then we detected another bug,
-> which is a good thing)?
+> This commit, rather than attempting to standardize the format, simply
+> preserves the change-id header in whatever format it used previously.
+>=20
+> If we so choose, we can later decide on a standardized format, but since
+> git only preserves existing headers, this should not create backwards
+> incompatibility.
 
-100% correct. I just copied it from above without thinking enough. Will
-do this. Thanks!
+As I mentioned before in other threads, this needs to be off by default
+or configurable.  This kind of ID provides tracking of commits, which is
+useful in some situations but may also be undesirable for privacy or
+other reasons.  Unlike other headers in commits, it is not easily
+visible (one can easily tell if a commit is signed, for instance, or
+what its tree is) and so therefore has potential privacy implications.
 
-> > +		# $prom should contain "$prom_before_repack <date>"
-> > +		test_grep "$prom_before_repack " $prom &&
-> 
-> I do not quite understand this test.  Ahh, OK.  We expect that there
-> was only a single entry in the original, because that is what we
-> placed in the original .promisor file.
+This is especially true since historically a great deal of information
+has been automatically rewritten when rebasing or cherry-picking
+(leaving only author and message alone), so users will have come to
+expect this.
 
-Exactly.
+This is also a great way to leak information, such as secret keys.  I
+can shovel sensitive keys or IDs into a commit (in a possibly encrypted
+form), push them somewhere I have access to, and then exploit them.
+Nobody will ever notice since corporate firewalls don't actually see the
+raw object information, only the compressed and deltified packfile.  I
+can even have my colleague rebase my commit with --reset-author and push
+it so I have plausible deniability.
 
-> Enclose $prom inside a pair of double quotes, as it is misleading
-> without.  I wasted a few minutes wondering where you are expecting
-> these possibly multiple promisor files from.
+As an example of a problematic situation, say user A creates a commit
+and publishes it somewhere on a remote.  It doesn't get picked up into
+the main branch.  A year later, user A changes their name (because they
+transition, marry, acquire a new citizenship[1], or for any other good
+and valuable reason) and suddenly go by the name B.  Six months later,
+they rebase the patch on the current main branch and, because the
+project has advanced quite a bit, it looks completely different (so `git
+cherry` will no longer identify it in any meaningful way).  They adjust
+the message substantially due to the change and sign it off as user B
+and submit it.
 
-Will do that.
+The user in this case may not have wanted the two commits to be
+associated (very especially so if they transitioned), so this poses a
+substantial risk of unintended disclosure.  The fact that Git makes this
+a problem already is not a good excuse for making it worse here; to the
+contrary, we should be making the situation better, not piling on.
 
-> > +		# Save the current .promisor content, repack, and check if correct
-> > +		cat $prom >prom_before_repack &&
-> 
-> 		cp "$prom" prom_before_repack &&
-> 
-> would be more standard.
+[0] For instance, some people want to provide timestamps that are larger
+than 2^64, despite the fact that it is remarkably unlikely that humans
+will still exist 5=C3=9710^11 years in the future, let alone that Git will
+still be in use.  Unsurprisingly, most programming languages don't
+appreciate these timestamps, so problems ensue.
+[1] Some countries require that citizens have a name which can decline
+grammatically in the native language or otherwise meets linguistic or
+cultural norms in that country.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Ack.
+--0M4Jca071uXnXa+Q
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> > +		git -C prom_test repack -a -d &&
-> > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> 
-> The same comment about "don't we know .promisor file should exist,
-> and shouldn't we check it directly?" applies here.
+-----BEGIN PGP SIGNATURE-----
 
-True. Ack.
+wr0EABYKAG8FgmnVkykJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZyjkB5+JUJvQxvaPsBjmsHSwXebLWhLdxjE7LmEOAR3F
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOMKAQCdzUoXbncTkLwjUVE31elqkxSx
+vecVSzIfrxasRtqZhgD/c/RWH6/LRmPv/Nijhsm+ouKBUAYv0+5DuaKucwo69ww=
+=qWp3
+-----END PGP SIGNATURE-----
 
-> > +		# $prom should be exactly the same as prom_before_repack
-> > +		test_cmp prom_before_repack $prom
-> > +	)
-> > +'
-> 
-> 
-> Same comment applies from earlier to the next test piece, I suspect.
-> Let's take a look.
-> 
-> > +
-> > +test_expect_success 'check multiple .promisor file content after repack' '
-> > +	test_when_finished rm -rf prom_test &&
-> > +	git init prom_test &&
-> > +	path=prom_test/.git/objects/pack &&
-> > +
-> > +	(
-> > +		# Create 2 packs and simulate .promisor files by creating them manually
-> > +		test_commit_bulk -C prom_test --start=1 1 &&
-> > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > +		oid=$(git -C prom_test rev-parse HEAD) &&
-> > +		echo "$oid ref" >$prom &&
-> > +		prom_before_repack1=$(cat $prom) &&
-> 
-> > +		test_commit_bulk -C prom_test --start=1 1 &&
-> > +		prom=$(ls -t $path/*.pack | head -n 1 | sed "s/\.pack/.promisor/") &&
-> 
-> Do not pipe head into sed, as sed is more capable.
-> 
-> 		ls -t $path/*.pack | sed "s/.../;q"
-
-Ack.
-
-> > +		oid=$(git -C prom_test rev-parse HEAD) &&
-> > +		echo "$oid ref" >$prom &&
-> > +		prom_before_repack2=$(cat $prom) &&
-> 
-> But more importantly, this may become a source of flakiness.  These
-> two packfiles are likely to have very close timestamps and depending
-> on the timing, how heavily loaded the machine is, and the phase of
-> the moon, it is not guaranteed that you'd grab the name of the new
-> pack.  Instead of sorting by type or getting the first one, which
-> would not work reliably, grab both and filter out what you already
-> have seen.
-
-Makes sense. Ack
-
-> > +		# Repack, and check if correct compared to previous saved .promisor content
-> > +		git -C prom_test repack -a -d &&
-> > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > +		# $prom should contain "$prom_before_repack1 <date>" & "$prom_before_repack2 <date>"
-> > +		test_grep "$prom_before_repack1 " $prom &&
-> > +		test_grep "$prom_before_repack2 " $prom &&
-> > +
-> > +		# Save the current .promisor content, repack, and check if correct
-> > +		cat $prom >prom_before_repack &&
-> > +		git -C prom_test repack -a -d &&
-> > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > +		# $prom should be exactly the same as prom_before_repack
-> > +		test_cmp prom_before_repack $prom
-> > +	)
-> > +'
-> > +
-> >  test_done
-
-Thank you so much Junio,
-Lorenzo
+--0M4Jca071uXnXa+Q--
