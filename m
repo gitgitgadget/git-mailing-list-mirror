@@ -1,114 +1,126 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BBD3D8918
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 18:12:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775671978; cv=none; b=G0fLvGMdqXmixH7Q3Pw0lbC1ewKjA9GpcC3vWYLQBCcodBkCbGJSrdvuuUR26MyGjebAb/lllDkk5utdrUz2SXdWY9QDQh7JuBXRzRfs5L28e/M2q+HHyuihySfvKj2ePkQxBDyONvO6dXOJr67Sl4jW6M6xxXljBFJ7xVSV9TM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775671978; c=relaxed/simple;
-	bh=tdUSur+c5xsAsWZiIQvnQ1cFzTFD9GDLuo3p7LkufeU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NbLxd3a1oo7R2ynzcYfeHEjfRtLy4jarGPhW6EwbVuoIdSnLnfhl/BmfEpU/pGwb7fzrxXv8rwndEyJ3wWUsE/vBryuP7ygvTnEGtIsj3tnqYbWlo5H5V/leJjit9lDeqj3xYvE8LWFoe75Uq7uZv85BZJ2ud/SSOTSMeKwXr3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bskwJV3J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hEWlQOwJ; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3253AEF45
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 18:14:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775672077; cv=pass; b=R3S/mwfGgEIDKFlJZzI7nKNpwsam3/ghhuBH+Qnt1tgbQseBRszrUywNIi5VcidIzE1l0fpJZvd4YlHVfb0GITFbdXg0/kFEjUkzdEp53ARaSuOz6WdfdHk7bZfhP6azRlcXJnEN761Dd3yFXFH7Fi+TiR0QPDcj69SKPN3NHTw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775672077; c=relaxed/simple;
+	bh=UaDdqYgzFDiwuGZ7InvTVN3b70+0UXx69vdMnJMvb/g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LmS6GDSXpNc10SgHhxHcAOK/3ykee7xel/ovVz6j356bkkfaVpEow1fdGjoCbOLGhf2ChNm6Km4mGkCvb3mhmmnamsqrWnb5sF0pD6rbVmvovId9qkN2GKr95pVHqiIYN8xiTb7cQ/YNJ0Lb50Um5d/OisndU4MJOKdKtqQd/Ow=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BR/zJgu1; arc=pass smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bskwJV3J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hEWlQOwJ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B4B84140015D;
-	Wed,  8 Apr 2026 14:12:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Apr 2026 14:12:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775671976; x=1775758376; bh=Qx0o3lUk25
-	QndvEF2+zGUTAtERLuauNUr+xbAN3oEoo=; b=bskwJV3Jectj4zsM84UP4BF5i5
-	putYljifl2PkLhCjProSjB82QT62/qHQNOtMzzIhXfdjA2iFZ+RT56VXAPPysGET
-	etYvO1SEm/iiBdbiCSHVMAuJ0QV9i8comaBvrDxuODCKC4jxOyixDdUlSGo6hIxX
-	Bc1pPqE0KiKPKhROP3QQs5bM8rXKAtrFUVY+IGUHFyZOy8tQqcAS+MurGPjXCLF0
-	PJQdbZm+a+TPl/r+0vBax18y5u56CpkCo8XtaOg1dea4/64ewduUaKiVonlOVek0
-	SkknmZSjFsf+oYe4wsl7WcvnkggH0lyUtECBHMzlnedYg6BZNHXTNENNO2Mg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775671976; x=1775758376; bh=Qx0o3lUk25QndvEF2+zGUTAtERLuauNUr+x
-	bAN3oEoo=; b=hEWlQOwJuZ7W8evMVxVWL1x2v3atQxFTs+r4XDEI+2XetUpW9FF
-	7xibzrImfagES0o0nMvLvq9XZ99ylwdj8+podIU1VWN3VGgnSxZohIhmg64WCDOa
-	uJl7KdcU7VVCb/J78tt5hwN8Cuppxqu9LuvD4u01mA4315Vcr+nU3ze1jDDYU7HS
-	N/loGzV+hxMGLn0C1PgZKIwLaDs/KQPUz87eqAPmsswqtttm19gScKVGPzsGcBzf
-	vy5Am+EVQGfYgbuADllvpAOwea1IFn7ONvssWazGf2/kQhuEeZy4FCfXRX0UTteP
-	WvcHU8Td/DhjDfgR1UaIAnlpylw5qL0N2cg==
-X-ME-Sender: <xms:qJrWaetZsk17xjlZhBBlpyTSRk7oyO0lHLOsqBdqNT4h65CKnXCV3g>
-    <xme:qJrWaacrjGPO3qlzW2Kzz6p_Tc9QnERavUosNW1TjQCmCrNrKmXMIu3rJhp9iU6C7
-    KnZWMiHjksxTRMnsJN7aE3B2AQCkgYTFCwHwe7qJuVAfwV-6ggN5w>
-X-ME-Received: <xmr:qJrWaeytxM8KpXJA4PovNlxHCY6RsYayF7wVMNhzcDbwVAFy55En68bU5nEz00NkBCQ8-zHkgf2167_bJZEXa9P67hxCsojLZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvgedviecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qJrWaYEjsAGNrWHHzFTBwDS_CN7XbhgcDOo-nBamEdI3jqxv8CPNxg>
-    <xmx:qJrWaaw5Ej4MXDmGryb-cCmMbR3F24Gwvwd2Ok-7OOdNlb-mz-uJLg>
-    <xmx:qJrWaRtkuW45alMtoNW2t49KRRFJtpHugexauLU9HYiO3I0DSoAGLg>
-    <xmx:qJrWaf30ru8OwpmvQFPXlCg1-UwJcWTvAg9JO5vPInYQ0zKBlI2pnQ>
-    <xmx:qJrWaXzVNXOfpWjC1f5U67q2YKhzIU5Erjm1Q5EsHxvhwvSlRaFmZIrb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Apr 2026 14:12:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: rsbecker@nexbridge.com,  git@vger.kernel.org
-Subject: Re: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
-In-Reply-To: <20260408173949.GB2850002@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 8 Apr 2026 13:39:49 -0400")
-References: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com>
-	<20260408041716.GA1324339@coredump.intra.peff.net>
-	<011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
-	<013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com>
-	<20260408173949.GB2850002@coredump.intra.peff.net>
-Date: Wed, 08 Apr 2026 11:12:54 -0700
-Message-ID: <xmqq4illz5g9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BR/zJgu1"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2b0ba3bfe16so12276085ad.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2026 11:14:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775672076; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YJstQCrnZcOCb28khc4s9h/ubrNJ/WWtbTUXD8kmvkCzEdhpAoXbXSZGLNSW9y9+BO
+         guXTbMtrNF99h2RT7DKfc6X2vAi0vOvHS9cNMDjQ9YEOVc5jHsaiKVAuVHucbowPPNFR
+         PBjh5u+8hVrYeU76t5QZ2sB8gtIJKFR5SYgpzSsC+4WwuzZQf21Yg7KPrtgMWW1Y2DMm
+         15OIhAe7R+L/CiVDmOtWCNhe1wb7rZ2tvDylr1OE2WHc9OsSkyPtZS8VtVTOzTm0u3Wv
+         fMkYISXeHu6RUxKMdCmCe8iGe0yeAXZOZGpWGJ96/qOpQyWABOE++6moChS5MLR+J60N
+         iNGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NSPOD65+QE8VUl0lF08xA+Wm3TWEy8k3M4eIX3hGQf8=;
+        fh=Zf4UIQDULNtxLJHlDYx9xEuHM9LnA324xYtJg41u+VA=;
+        b=TBMX+dk0XWJ4trGA4FjCdhi/bp5cgG4KtJi+dZs96h74POVBTk9oAleLO8LeHDAPAB
+         xW21hAPwqjwmgLJOmul5Q2HVUEPcxq96y88m/d7pq+j5cysAcnFQBLCivHX426q31XQK
+         RO5g+r36icX6+xO9yBxLTwLaPJYNScHCWLrTbM3xo5k7RikPeYWnDHhuq8wXLBU6UW1f
+         FT7M73P6rYjjDgpQBc5qoA4fTEah4WUMccoWkvxtdOaHgXe/yKrewj14gkdlEyDRfdKe
+         qI56EegZKlQ9HLzcOJ+wZQw6C2AkqeNVY8VAaanMVWPWalAg+DoXgKF+7PVRuNy8tp57
+         OVig==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775672076; x=1776276876; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NSPOD65+QE8VUl0lF08xA+Wm3TWEy8k3M4eIX3hGQf8=;
+        b=BR/zJgu1GJ9egWIR6Cnaq2BCT+fYgGJiepSdJTnezxayh5vdjOJk9NNtISLWuydQHu
+         ppenmzJBrxN5lEKqFAqsP7+9lzul8I0kKp+qprOpGbn6xVlRWamp6T0MWFwTHD0ppNv6
+         thWGfsFvA3aybl6pR6iMfEPo5mEQ78T5YDpwm4ikJ+M6o124nV9KaryO2i0bhccQGeN2
+         gUs1rzLuAk4v/6evgFjpTruLC8dbdPT2BIcXRUGDCiSubIbreSTFueqzr5x2En4qgml7
+         LYy3xSXCUdtKiUwOjyUHGGA0Qas/tI/ij8r+jzS+n3x/nXOddn7p1ubhqyLV8FvN64ln
+         CrQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775672076; x=1776276876;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NSPOD65+QE8VUl0lF08xA+Wm3TWEy8k3M4eIX3hGQf8=;
+        b=ZCXavW8NEuBuiLR4yNWmbaw7z3VCkwg9tk5rIOaVRYSlllucXGFfYbh2GshL3qO1D8
+         CY9X232gDZbU84HUdwTpyZ2hhmlxVRfk/n7ljw7zPWo9uxsg77VBpZ6b8F02pDGCcsDM
+         o7lDdwXJYYU+pj05XhE3AIDlNA4sJWjuqH1+6zfekgpI2wFif1qO1u+0CUwdURhi/m8N
+         gqKs1P8QVpKjcZsy6Gzctvv+4XwWKgAq1oGY37j9NcP8+zBSoA66k5pNpnpIrIHsc4yk
+         cMEtnKoZvB+KcHnXPmWtbVQbVfJ2neNR/aE0YwIImUhfk07CIxpBhbCB24hEIMyheQU5
+         jWuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXUKIfmYgI41mUNKJuwNdcvFHeEK1OATU9M6dqGQxfX8AFmfLdy4FgYPPdwAsU4TlUeLj8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy17ccJ+hXMR28ghNU8FduBbRVk1AYMm9OKoKwvvVb1OkIUxabH
+	YZGbzsb69zAc5NSEHUsSpKHwn85wK3rwzpMxsNqadgl26VuntWiHsivvrwVU6P2mlZD2VjgWtRW
+	pJkiCjsYoYc6Uf7OCVCf0zHtVFtcBze/8E1ip
+X-Gm-Gg: AeBDievfxiPUXQw4dF0SMgZvMxMZsfSmRRJ7RdCPARMM7I3vVTEq+E8GZja64SBxmpi
+	LmStcFlPIhq0VnMuipjsW8fhrtIQwtDN9LuOERCP4j3MlCLm24qKVTyn6y6jLXJZ1uL/zqs1KJA
+	+nIfbIZUVbKfVgHZEI01E6mlEQfqJk1cUqlJLBBcyhQpZskEhT3b3dc8IksXywWr6aTpjt3+nCz
+	WFhrRTTRZxx9arsIYNyeCQr+32Jf4j9vpp1MFBK7Dxf23iZs1NtS+6/rmD0cksamlLsNsxTvYZ7
+	yxNU4RgXhyONRN9QBnVU0RPDniYGDStPktDGOubNrjoXEYzmKs/r/sZN9ZraH0A2xhHONNQ48Iq
+	NWxR09Nh4hcybBTzvmxnp52yi3X8=
+X-Received: by 2002:a17:902:f64c:b0:2b2:5168:2f82 with SMTP id
+ d9443c01a7336-2b2c7384dddmr3602935ad.24.1775672075882; Wed, 08 Apr 2026
+ 11:14:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqq4ilm7q1n.fsf@gitster.g> <5DFBE9D6-0EC8-4702-99C5-827AEF8C6265@gmail.com>
+ <xmqqpl4a68o0.fsf@gitster.g> <xmqqldey68ir.fsf@gitster.g>
+In-Reply-To: <xmqqldey68ir.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 8 Apr 2026 14:14:24 -0400
+X-Gm-Features: AQROBzD6CuOCD6OAe7_fR9yP3PIzi8W7rgfkg8QuUkca23N--ZP5wUKdmUxo7Hc
+Message-ID: <CALnO6CCwKXCxBobO5x2MZZz-AG75haJMaOANjc=KWzjHz1kTrA@mail.gmail.com>
+Subject: Re: checkout: clarify "up to date with origin/" uses local
+ remote-tracking ref
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jesko Schwarzer <jesko@schwarzers.de>, git@vger.kernel.org, 
+	git.vger.kernel.org@schwarzers.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Apr 08, 2026 at 12:25:47PM -0400, rsbecker@nexbridge.com wrote:
+On Tue, Apr 7, 2026 at 12:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->> This is also impacting t5608 and t7700. Anywhere where writev() is
->> used, seemingly. We went through MAX_IO_SIZE issues years ago, instead
->> of using ssize_t as a basis of how big communication is. I think
->> writev() is not valid. It worked on Lunix, but had issues elsewhere.
->> This broke the compat layer.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> I wondered briefly if the problem could be that we're violating
-> MAX_IO_SIZE here, as our use of writev() does not respect it at all. But
-> the only spot that uses it is feeding pkt-line packets, which max out at
-> 64k. So unless your MAX_IO_SIZE is smaller than that, I doubt that is
-> the problem.
+> > Ben Knoble <ben.knoble@gmail.com> writes:
+> >
+> >> I seem to recall a recent (last ~6 months) thread about =E2=80=9Clast
+> >> fetch time=E2=80=9D and there being some question of how to record
+> >> it. Alas I haven=E2=80=99t searched the archives to find it.
+> >
+> > Is it a bit older thread?
+> >
+> >     https://lore.kernel.org/git/xmqqh65b2ci3.fsf@gitster.g/
+>
+> Wrong link.  This one is better.
+>
+>   https://lore.kernel.org/git/CALnO6CB2TjwRWr0=3Dc2nWY5DnwLeqXiaA5fCiEeF8=
+5zivmLggjA@mail.gmail.com/
 
-Good point.  The original did not use write(2) directly but used
-write_or_die(), that is write_in_full(), that loops over xwrite(),
-so it would have worked even with a lot lower MAX_IO_SIZE limit.
+Yes, I think that thread ended up with some discussion of what
+timestamps are available and what are not:
 
-According to man7.org, writev() is allowed to transfer fewer bytes
-than requested, so our use of writev() may have to be a bit more
-careful, though.
+    https://lore.kernel.org/git/xmqqseottxld.fsf@gitster.g/
+
+--=20
+D. Ben Knoble
