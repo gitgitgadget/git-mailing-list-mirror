@@ -1,112 +1,109 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65A033F36B
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 21:48:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1682153EA
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 22:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775684936; cv=none; b=A3ATPJVqL8ZspOs5NQ1HPLtGw7ygVHMl5wZcnDhkWzPH7oZvk2GFKe/GE4qdFMVK8Gv63k98dytIiPijTGU2Nj6wL/B8l2fttY0QZqOReP6UEupkssm7K/FXmBGMKPuXf2k6Rkt9wknjbZIm1OVtwPuTj11iI+2FYZylQmOmmW0=
+	t=1775685853; cv=none; b=O09j8rfwS5eQZoUPKtWBF5yOs0IGMubrc+46Nhf3FlOtTFjOrwqoXnyEdOiBHdpvjJwX5lFtVd47iS4tFJl646mymYNitibqU7YqIA/WM+djJwdHnzCZX2cNBWNh33aRDrGhWt7DE0uWbA/utRtouZP9mrIQKxr3avbCss51yHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775684936; c=relaxed/simple;
-	bh=HxB5k9zcnOOPv3Ozes5Ub16JFSfz7HUfID4MNavGHxM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TF6rcXwKqKrzePWPGxW2B5hswu72OSU95xCx6amnzcLtHA4GCbPD6/gpUeUrSZ9DMpyC8je84CWd3jwcORs49AEhbiv1z51P9kwtPRCBgJ4t+FIm8u+6Ss4twwwXNUWScrKgyg1FrgacBl4t0YwWZW+je6/In24giz4mNZh6cv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e0DkInA1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QR4K6RIn; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e0DkInA1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QR4K6RIn"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 35D12EC0412;
-	Wed,  8 Apr 2026 17:48:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Apr 2026 17:48:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775684934; x=1775771334; bh=7u1JieHZZG
-	/fjL/qjSmmx46YPNOyUWZbFhlHGOTG2FU=; b=e0DkInA1FRlouhFmPJis5ax+aP
-	9ovNOgj1IebkFJCDDyWYKJyq/TR6BPOG/2RSnE73XhMVBEn/SB3dPAcOGTXofEnA
-	hGKyZXNCPqOqNqVcRhHNyyBayEE92OM3ndz1M1dVC/38+Ysj2sw88SGcKnE4jzgc
-	+Vyb5cqBjYq3R6qFS0/gV9OYVJESGBAjEnZFDQiImjCfZppUc+wXXLUPW1a8zaXW
-	o8VNFSC47PxKU5ahyKNr7A4vZSLFYbtbiyIvLMdZh+hjgWX4qw5T2TSWxCzdEUZm
-	vWt4f8RmSM7XlDoBnxPt0MsghMV/CdpHgKDwfQklMikS1xwVqHI4gje5ZMEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775684934; x=1775771334; bh=7u1JieHZZG/fjL/qjSmmx46YPNOyUWZbFhl
-	HGOTG2FU=; b=QR4K6RInCKOXPqJwQeHA+wTQLIDRxiPz1PWnsvBoLWoGI7U5Qzt
-	gd0w2wRCm8DgMJXv3+LH+vZI6J3A4+pxYdmRa3S2lo+1/e5KlrXZ7MQJ41wYpdHQ
-	Lj7FOxwnb0PTq4fzP5Xl7jaMzPCkKWoyP8BQvHry0Ga6Gc4UN5rxUrdcFTElLrm9
-	5fhgm4wirsWSzD+1cGhrW7kwa7bEmLZlKmBPP3iSRgQv2YMFHgQoWUz7T9K6mUVG
-	H7V+fHxteXss4M3a2Ys9BDpZFrO+0G7/KpKRQCrDIsJ0UovXgIJsUevEJr+Rj3cH
-	HFFOfzmn/QZcgxcLkRy9bT8MAxnuKwRBopg==
-X-ME-Sender: <xms:Rs3WafcYsJocNlLcnCk9GkSERfDCwdLoiDF460rc4CSfaXSlgpQNQA>
-    <xme:Rs3WacqC7vrLfB55YKODN8q7bKqhk-Wlsz0mkqEzIpuuKJcJJ1e5UY0_8mg0ctWQQ
-    hvsT6nIECx-BNGrSWx_pUKLI56bOX5pTaK64WZiLuAP9wdhvpqbUgo>
-X-ME-Received: <xmr:Rs3WaV40xRMCrx3g3YAc3qFdUYhJyFQGzJJAmOftTQ-95xxa-f0LSMjQ6FbsyFsWU0XcE7eYUvanIwEnLLihosc7s8fHiTvFtg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvgeeilecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:Rs3WaapDdksL10z7h-zbQsvSW9PeeECJZGikZPmDOLubbOAqJHaxmQ>
-    <xmx:Rs3WafgGP5m1m2zRuRQNSUMqqQhOAYBoN5Px2Y2E2UpnY6Hdd9CVYQ>
-    <xmx:Rs3WacJISmcWSUfrgQVAJ7Q993CQzLD0Peu6JS5APme_78sR4wxTug>
-    <xmx:Rs3WaXBQqnTJFvesWznj2rRfALqh2XnxYqIG8FmPGOhkuVOt5Y_F8g>
-    <xmx:Rs3WacwdpTFz9Wksj2EOtiEtsnImNz0VnhNbdVgtRCRyjYecsmWu8XY8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Apr 2026 17:48:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/16] odb: introduce "inmemory" source
-In-Reply-To: <adYQPmnajLmVr-vh@pks.im> (Patrick Steinhardt's message of "Wed,
-	8 Apr 2026 10:22:22 +0200")
-References: <20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im>
-	<xmqqa4vknjab.fsf@gitster.g> <adYQPmnajLmVr-vh@pks.im>
-Date: Wed, 08 Apr 2026 14:48:52 -0700
-Message-ID: <xmqq5x61xgvv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1775685853; c=relaxed/simple;
+	bh=vdQbe4pSU/qQk5PQC4nR+nRpfgcutUDI4/a2LiAQJhI=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Dy6UlsRYKYVJpr/19c1ljpkzkFntTb3g4QnkgXWoUnhuq+QoSD354MZJvC/Yd/4pnguudRSRZ+n+ckVfyHtfp380WMAJJ04NyS2k4P5hNiSBi7j6f7KS10Gw4HtfSYHS8YZbWUmg939XtWAfe7TS/aoFOK8EMHAC1NzLzAP1SIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 638M47qW3375397
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Apr 2026 22:04:07 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+Cc: "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>,
+        "'Patrick Steinhardt'" <ps@pks.im>
+References: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com>	<20260408041716.GA1324339@coredump.intra.peff.net>	<011701dcc767$8c2ab400$a4801c00$@nexbridge.com>	<013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com>	<20260408173949.GB2850002@coredump.intra.peff.net>	<xmqq4illz5g9.fsf@gitster.g>	<014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com>	<xmqqqzopxkxa.fsf@gitster.g>	<016b01dcc79e$87472860$95d57920$@nexbridge.com> <xmqqcy09xh53.fsf@gitster.g>
+In-Reply-To: <xmqqcy09xh53.fsf@gitster.g>
+Subject: RE: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
+Date: Wed, 8 Apr 2026 18:04:01 -0400
+Organization: Nexbridge Inc.
+Message-ID: <016e01dcc7a3$9f0d06e0$dd2714a0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIImllt8JGdGqh7Bu9hfV8wd5a54AFtvwh7AomCUMsCTyy1LAGZ2yzlAlGDzHcBlyeC0wIgPQjWAstiUjQB3KW4kLTpiBSw
+X-Antivirus: Norton (VPS 260408-8, 4/8/2026), Outbound message
+X-Antivirus-Status: Clean
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Fri, Apr 03, 2026 at 08:41:16AM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > this patch series introduces the second object database source type,
->> > which is the "inmemory" source.
->> 
->> I cannot read the word without a hyphen, i.e.e.g., "in-memory".
+On April 8, 2026 5:43 PM, Junio C Hamano wrote:
+><rsbecker@nexbridge.com> writes:
 >
-> Fair. I think I'll keep it as `odb_source_inmemory` in the sources,
-> which I find easier ot parse than `odb_source_in_memory`, but will adapt
-> to "in-memory" in prose. I already did this for most of the part, but
-> not in the cover letter indeed.
+>> On April 8, 2026 4:22 PM, Junio C Hamano wrote:
+>>><rsbecker@nexbridge.com> writes:
+>>>
+>>>> On my box, I have the following note:
+>>>>
+>>>> Specifying  the sum of the iov_len values in the iov array greater
+>>>> than the OSS I/O size limit for that open causes the  writev()
+>>>> function  to return  -1  and  set errno to [EINVAL].
+>>>
+>>>That is unexpected.
+>>>
+>>>writev() may fail if the sum of iov_len would not fit within ssize_t
+>>>with
+>> EINVAL, but
+>>>unless your "the OSS I/O size limit" is the same as SSIZE_MAX, what
+>>>you
+>> have above
+>>>is not quite the same.
+>>>
+>>>Does your build work with NO_WRITEV=Nope?  I think I saw it asked a
+>>>few
+>> times
+>>>but I do not recall seeing it answered.  At least we know
+>>>xwrite() seems to work well enough on your system, which is what the
+>>>writev() emulation is written in terms of, so I suspect it would.
+>>
+>> Yes, NO_WRITEV=Nope does compile and execute. I am including it in our
+>> CI/CD job for now. Can we plan on a fix for this?
+>
+>What I have heard so far indicate that the code that uses writev() would
+need to
+>loop over to prepare for short writes, but your
+>writev() that fails for "the OSS I/O size limit" (whatever it is) does not
+sound like
+>something we want to change the callers to chomp the writev() calls into
+smaller
+>chunks for.  Such a platform is far better off using the compat/writev for
+the code
+>path we recently started using writev() in.
+>
+>To be quite honest, I am not sure if it is even worth using writev() if we
+need a loop
+>that protects against shrot writes, so unless I am grossly mistaken (e.g.,
+perhaps
+>there is some guarantee that there won't be any short writes for writev()
+that sends
+>data smaller than 64k that I missed in the docs), the best course of action
+might be
+>to revert the change to use writev() and use the two write(2)s as before,
+*if* we
+>actually observe that the current code is broken by short writes.
 
-Fair.
+I am 100% sure that EINVAL is returned by writev() on NonStop if the size
+exceeds 52K
+In 32-bit models. Whether it supports 868K for 64-bit is conjecture.
+NO_WRITEV=Nope
+works, which I am trying for everything at RC1, then we can live with this.
 
-FWIW, we do the same for "in core" or "in-core" in prose, and
-"incore" in identifier names, so the above is understandable
-position to take.
-
-But stepping back a bit, does this new "in memory" refer to a
-concept that is different from what the rest of the system uses "in
-core" to represent?
