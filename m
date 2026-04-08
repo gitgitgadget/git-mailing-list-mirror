@@ -1,183 +1,129 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6C01F4180
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 00:39:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB9C2D8382
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 00:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775608743; cv=none; b=Dc/EWJ/XxELrH9bGrOMQdRZBHhzVIChfutLp5jg1dWcmeV3sIdRMF8VONABtkXv1LiU/YYzPg/33vL9TGhE8nVhUd+TladhmNul/AX9WuA5wLoDNtEmMswJi2QiFryrMKd4iSGCjTL7+bPu8YNdst4qWuh2/IJdPcNhE5lerm04=
+	t=1775608926; cv=none; b=Op+j+cMyJL1beJ1YJz7TQFl72gvKvhhYGI8dWaHdZRBm67C0EN+xK2ECEZsgFoNDRPNeByvVA52InEFUsIilad0hP/GN9mLxAoP6f5hFXnOXjuIrXUWfMkbcIDFAlyvUMFK2nkbYp6vViBXb+NadIvEG1qKFWV677uqE7F9oOfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775608743; c=relaxed/simple;
-	bh=+I+CIoOG4hCwzHS7xffXHCYiFfl5Tad3c+zm13gU7Bk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DIRfXu2CH58oJByerUCKNiB+C8Coiw+2RfDR+XSRlFx0FfKdLulPxLu3DTzcN1Hv54C/LUp63aJsMcR6VMeZG8LS5Xf+vzzaO0yGnXUx20HP0tQP4mdDuOeqFqRLlUVIlm2AzMzkrLomAgQuIoR6PAF+NHHST+0QfwWMwjokD6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6r2dl9x; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775608926; c=relaxed/simple;
+	bh=ZhLANxvpGRb2mYYUgHMisf1qlbtPpVimHu3e1cn8knE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=P1rTzPGcQiViQaC0/Gz9KfJIZIvAroLsBa6lyM+HYefsiHLRMK4eXLjWGXvZDCKnMQLBjXLveiPkQeN6RGTCT7WNZirysCVkL0JH++V6pQSEl2BdfWAfoUWldbiPDccFvF+40R0NOsn7WGs7lLvMWbRLkz2RfDonxV3y57Diq6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pMO79tX8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P6an9Iw+; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6r2dl9x"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-43ba1f3fa7eso5915333f8f.2
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 17:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775608740; x=1776213540; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=e2oLVw0nW7eWdFtuOFtj2iJ8Ubt2tAds4n/W1JIa8a4=;
-        b=b6r2dl9xbGCiMorUCx2k/o/B4mcCzlTe6UssoF/crQjla26S4Xf20ebDQMZXm+Cmmy
-         pXrV0vhPlh/VmENza2trwRVg036Dh6DZmo91dHEVWplelUQvFttvSTejdMlo1QxQ/4MG
-         WROGS0VPPOfD+z3EmPBoQT3Aeq/WoeZFgMhYhOQyVDrNnceySnRMh25+AbUpM+v/LXRb
-         BmYJ1BmZfKLaS6hw0/r6WbyM6GGZBDl3gEQvHVFUjReWItUaBpE6idE4IrvBxlkd+2UM
-         S3tV4NAMo2u3Vdwr4W96UDdxmS70Gq/ZJrOtSmwjIRQLiYa09f29IieehYbe+smbMrWa
-         iKPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775608740; x=1776213540;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e2oLVw0nW7eWdFtuOFtj2iJ8Ubt2tAds4n/W1JIa8a4=;
-        b=gs/fyJWI7aKlMZKnjao9+2Hn42rkSaE765RdDQOy1ofODKeqMz76KeRd7nTYIuViTC
-         VYkmvmABbGgGltUtae1NZA3sEVbx+51zW7IdhUhc3T/7pGBoKwkaV8TAmOsGd9G3j4L9
-         S6OUJ/johjg/yY2231KYGaJVpcXAc8JcuTa4J0+nvBv2lhymKeaKavSv698BnB2S16Je
-         fFDXZRxToifhUB3wrzJRoBtxMxSqYdxAKxCEn0Er1+ZW0VRdlSd6lCcsdrBlBoNanefw
-         xYJy4iMofYkA13uYUwvxYfgycgQQsj7q/M6gBj+UGt/gMzaDJyfYzNoqbXCzuem1Hv3L
-         /ghQ==
-X-Gm-Message-State: AOJu0Yy45+UUenkmG/asGCAxj2p5Z/7QkjZ/QAGSoZmgmaeTyySPgxn0
-	JESYEnxC20rQZ8CcmVTSEml723IpElBy4bvOBVK+5S9RlW8+UCBhO1io
-X-Gm-Gg: AeBDiesaskCf63Z/MKtHIcM0omO4jYZXM63+Agukwt1M+kpJHViGeZbxdxvL5mqPAWH
-	z5G+2/3TH+gbmR6T5MYoXtugcuToRPus9va5KF51/OL4c/OXqLt35ijeXDzHJfUxCV1P5Hz2v7+
-	eolMttjMqBUhagfmyKWD6pRIymgQov1ypUpQjQjL78/fnrA4avE7DQhOjGpMYoWcV+HDlm53yzS
-	/89tEyQhrsBT9P6VCBWcXHA/4cap4Uz9VD3M2TUHVX8X3JH/p8SlrJwk0M3uxk/e6Ms5tULXSEp
-	7EVXAmzb3BtWHnA2/tUaq0P87aiXMqoWuaXh7cAkaMxHcmieOvpGw6rySsJTtsWH5zBW9CGDDKv
-	oRtmvu5EijcoeJmP0Lh3NnhGRjovzve03ajdZViIDoQAGBcWcESA//IheYUxpiYRbXqdlR7LoML
-	p7phLMYUiEQ49kOCp3aA8M/LBX6rO8hYsH
-X-Received: by 2002:a05:6000:1446:b0:43b:3d02:7806 with SMTP id ffacd0b85a97d-43d292d4dbfmr28827065f8f.28.1775608740325;
-        Tue, 07 Apr 2026 17:39:00 -0700 (PDT)
-Received: from lorenzo-VM ([84.33.160.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4d2738sm55340841f8f.24.2026.04.07.17.38.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 17:38:59 -0700 (PDT)
-Date: Wed, 8 Apr 2026 02:38:56 +0200
-From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	Elijah Newren <newren@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC PATCH v3 4/5] t7700: test for promisor file content after
- repack
-Message-ID: <adWjoIENaTDDHerq@lorenzo-VM>
-References: <cover.1774205661.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <8e58c1263d15fb8dba8ce1d2866d369e938bf2b6.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <xmqqwlyi4p6t.fsf@gitster.g>
- <adWPLhGeo-4Mqfbh@lorenzo-VM>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pMO79tX8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P6an9Iw+"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6E416EC0175;
+	Tue,  7 Apr 2026 20:42:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 07 Apr 2026 20:42:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775608924; x=1775695324; bh=+rDvPzXwaf
+	4bVvJ5zSr+yjMiNR4rMVGN6NSYkXbrFX0=; b=pMO79tX8DHmz7TuaN1EU14e5L4
+	K/HaF94d0OAIxnH3/t3l+AJ6y6GbTMYFEpc7w4PcGPpWCk0/q+f1bsMgBf+g0Coz
+	oHD477QJuecM08rbIC3/Ezh0sfIMlMZs0JyXYRJhyuNRX8SU6ple4pq8piuF6Lgl
+	Pz5F63Litr4jlA8UdNoHfBFTe9F5LjtGpr7VQ2BKVJuowprmoQbY2lMyTp4ch7RM
+	iUCzgSoj74MZS/QUXLilOJd+R0I6wAYMtLr0WCjIUiT0Ti25phLM4ccltRT5025c
+	qy8clgQ4n0m686fl9WL+GAsY09q06ExoH2ijUmxXnbYNtL7BWSeJtYFvynWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775608924; x=1775695324; bh=+rDvPzXwaf4bVvJ5zSr+yjMiNR4rMVGN6NS
+	YkXbrFX0=; b=P6an9Iw+DXBxYaAps1mHgibDbrYek0dFfRKaGCIB2DAqbxbKTz7
+	jFSVNbx/91udGRunSLWOWQqFRtGS1Cb8IHGJa4itSQJxUOnr7gnWigwVXr7z8dPC
+	qa0T7F+lmjC8C3b06cYgVRpUiJkhEX2oV9qP+spg5y2Q0DOYIuIKZdBfeu0uBFmO
+	4VYepdLF7pFVuvrT3gUj1ChQzylBx7XCZylSblUI1Sb0vZgiY++fkCzZc5U02pWh
+	tzvbf4BCwGjrQKpJ43YzR4QaLcvawQvOHFZ+PhaZtfdjfLoXjHsmLYnqKoiMR3Ii
+	AmF2NYbeqEQLUImgNG832u3HHq2gfyI13KQ==
+X-ME-Sender: <xms:XKTVaYiC8N81luKaa6VK-pV1q5xWATwRDl3OuwTlq6MmbnEPpILOzQ>
+    <xme:XKTVaUsFf6sDHkXZT8PTCOF6LTt96nrEcQHszryizBhn0lTDzzrncD9JbGM2qaN6C
+    LQ9b9SpbCC7ee1e_z4MaKjfILPy1eSJicosiFLf2Y1NJh91FMScey8>
+X-ME-Received: <xmr:XKTVaZ79vVeGxRd0YFbxPGgMw88Vrzsp1WeWgu48deTYyptluriZrC6g3wLOqNGgaMUJt_9kp0pPKpBNT7YA5Clo5PqX0zp6cQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvvddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
+    hutggrrdhsthgvfhgrnhhirdhgvgdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:XKTVaQNgVsPo9EKW20EY67Nz-ZJ2hkgiRPHA_NeFaesdQLra9QNfsA>
+    <xmx:XKTVaXtiQ0navsLuVQLfGxXoA0ShPCJgiCj_mhNzWO632_k_ZHc8FA>
+    <xmx:XKTVaTaPv75lPD0AJ5VxYY-ZU281jnpzOlgBIejbLqaKoqd9jS3NWQ>
+    <xmx:XKTVaZz0CjpZGUJee1YY5Y2949PCPgcqapszG7cbEmSkyyKLMSGMNA>
+    <xmx:XKTVacLSJgp1M6Zt5rhUSuNWq28hrfo3idAWLTddGVZ0esdS9A6FtX7o>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Apr 2026 20:42:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  peff@peff.net,
+  luca.stefani.ge1@gmail.com
+Subject: Re: [PATCH] object-file: avoid ODB transaction when not writing
+ objects
+In-Reply-To: <adWGjWNTXlR-glgt@denethor> (Justin Tobler's message of "Tue, 7
+	Apr 2026 17:41:12 -0500")
+References: <20260407201730.2526914-1-jltobler@gmail.com>
+	<xmqqo6ju31wx.fsf@gitster.g> <xmqqfr563099.fsf@gitster.g>
+	<adV-NI-t6-jgJK7D@denethor> <xmqq7bqi2yux.fsf@gitster.g>
+	<adWGjWNTXlR-glgt@denethor>
+Date: Tue, 07 Apr 2026 17:42:02 -0700
+Message-ID: <xmqq34162sh1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <adWPLhGeo-4Mqfbh@lorenzo-VM>
+Content-Type: text/plain
 
-On Wed, Apr 08, 2026 at 01:11:42AM +0200, Lorenzo Pegorari wrote:
-> On Tue, Apr 07, 2026 at 11:10:02AM -0700, Junio C Hamano wrote:
-> > LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
-> > 
-> > > Add tests that checks if the content of ".promisor" files are correctly
-> > > copied inside the ".promisor" files created by a repack.
-> > >
-> > > Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-> > > ---
-> > >  t/t7700-repack.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 63 insertions(+)
-> > >
-> > > diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> > > index 63ef63fc50..89a2116641 100755
-> > > --- a/t/t7700-repack.sh
-> > > +++ b/t/t7700-repack.sh
-> > > @@ -904,4 +904,67 @@ test_expect_success 'pending objects are repacked appropriately' '
-> > >  	)
-> > >  '
-> > >  
-> > > +test_expect_success 'check one .promisor file content after repack' '
-> > > +	test_when_finished rm -rf prom_test &&
-> > > +	git init prom_test &&
-> > > +	path=prom_test/.git/objects/pack &&
-> > > +
-> > > +	(
-> > > +		test_commit_bulk -C prom_test --start=1 1 &&
-> > > +		
-> > > +		# Simulate .promisor file by creating it manually
-> > > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > > +		oid=$(git -C prom_test rev-parse HEAD) &&
-> > > +		echo "$oid ref" >$prom &&
-> > > +
-> > > +		# Save the current .promisor content, repack, and check if correct
-> > > +		prom_before_repack=$(cat $prom) &&
-> > > +		git -C prom_test repack -a -d &&
-> > > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > > +		# $prom should contain "$prom_before_repack <date>"
-> > > +		test_grep "$prom_before_repack " $prom &&
-> > > +
-> > > +		# Save the current .promisor content, repack, and check if correct
-> > > +		cat $prom >prom_before_repack &&
-> > > +		git -C prom_test repack -a -d &&
-> > > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > > +		# $prom should be exactly the same as prom_before_repack
-> > > +		test_cmp prom_before_repack $prom
-> > > +	)
-> > > +'
-> > > +
-> > > +test_expect_success 'check multiple .promisor file content after repack' '
-> > > +...
-> > > +
-> > > +		# Repack, and check if correct compared to previous saved .promisor content
-> > > +		git -C prom_test repack -a -d &&
-> > > +		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-> > > +		# $prom should contain "$prom_before_repack1 <date>" & "$prom_before_repack2 <date>"
-> > > +		test_grep "$prom_before_repack1 " $prom &&
-> > > +		test_grep "$prom_before_repack2 " $prom &&
-> > 
-> > This test seems to be flakey.
-> > 
-> >   https://github.com/git/git/actions/runs/24095497271/job/70292906676#step:10:5274
-> > 
-> > shows that $prom gets two file names, and because test_grep is
-> > expecting a single source to grep inside, the first test_grep
-> > fails.
-> 
-> Uff yeah, I see.
-> 
-> I also saw your other mail regarding the "SQUASH???" commit you made
-> (inside the `seen` branch). I'm not so sure if it is useful to solve
-> this issue tho.
-> 
-> It looks like, for some reason, `repack -a` fails to repack everything
-> into a single pack, but I believe that `repack -a -f` should force it to
-> repack everything no matter what (I think??).
+Justin Tobler <jltobler@gmail.com> writes:
 
-Ok, I think that I have fixed it. Forked the repo and tested multiple
-times with the GitHub Actions-based CI. Issue doesn't appear anymore.
+> Thanks, I'll make sure to double check.
+>
+> I'm not sure if you already included an update for the test per Peff's
+> comments, but if not we can do something like below. If you would like I
+> can send another version with it included too.
+>
+> Thanks,
+> -Justin
+>
+> --- >8 ---
+> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+> index c1dbc6359a..e1d35170de 100755
+> --- a/t/t1517-outside-repo.sh
+> +++ b/t/t1517-outside-repo.sh
+> @@ -93,12 +93,12 @@ test_expect_success 'diff outside repository' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success 'diff files exceeding bigFileThreshold outside repository' '
+> -	cd non-repo &&
+> -	echo foo >foo &&
+> -	echo bar >bar &&
+> -	test_must_fail git -c core.bigFileThreshold=1 diff -- foo bar >actual &&
+> -	test_grep "diff --git a/foo b/bar" actual
+> +test_expect_success 'hash object exceeding bigFileThreshold outside repository' '
+> +	(
+> +		cd non-repo &&
+> +		echo foo >foo &&
+> +		git -c core.bigFileThreshold=1 hash-object --stdin <foo
+> +	)
+>  '
 
-Thank you super much for the help Junio.
-
-May I ask you for a tiny bit more of your time to answer the following
-question that I originally asked in the cover letter:
-
->The "CodingGuidelines" explicitly state that:
->  "A C file must directly include the header files that declare the
->   functions and the types it uses, except for the functions and types
->   that are made available to it by including one of the header files
->   it must include by the previous rule"
-> where "the previous rule" is (if I understand correctly), the one related
-> to "<git-compat-util.h>". From what I understand then, I should have
-> added an include for "strmap.h" (which is needed for `strset`), correct?
-> And if I am correct, shouldn't "strbuf.h", "hash.h", "odb.h",
-> "string-list.h" and "strvec.h" also be included?
-
-Thank you so much in advance. Pretty sure the next patch version will be
-the last one.
-
-Lorenzo
+I'll redo the material with the above.
