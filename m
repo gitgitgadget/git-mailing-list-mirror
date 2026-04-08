@@ -1,139 +1,143 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B70E1F4180
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 15:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A687E1EE7C6
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 15:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775663111; cv=none; b=nQeF7FTGPqy3H5JULoeg1Gz0cb6SM7V+smWh4Q/9OYmq1jZPuzkomEuMu1KCJ5F1T+852HPs4ncRTonSFDsehgZYurJVEjf3FQ5CFfKnPIPC1tSs36YWsGY1V1etbS/LRxm3UG0A0AiPkxl5lib3948RvCOPW6xDKZDWhpOd2U0=
+	t=1775663419; cv=none; b=clcMNN8HY9UIXf9NDEEjQb04nGr/0w8H9K658dteNDD2V43bOzRtCB1GYuSExcU+P00xYIqV23gxUOSH32xrQYKjot7EHDsLJvXJJwSNoBWKyj+QJc3AsGH12PUobRl1tdboAG3RwGtxDdcxZQuWoP0u9A6Ma8sCcInaMwSo9Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775663111; c=relaxed/simple;
-	bh=FycG1Ac1/6kW4f6287h/+N2A6rf+1HqE+Omelh40ETQ=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HrqAjqCNlMpuhjSDiH2IJYkzzgwT3wPMANBGs64JydxG3rKzF5Hmp8um86Ef6FjWgpZQh1kPqU2tSzmsTVNvyOcjVMXLP8xJP3+o1icTaWhQGZ36RqmaDiOi+I2W1ph3VT+JpjmGdViBmSxzt+I7tpjD9eCvKBh8SWS5jea9LQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 638Fj2763301749
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Apr 2026 15:45:02 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Adrian Ratiu'" <adrian.ratiu@collabora.com>,
-        "'Jeff King'" <peff@peff.net>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com> <20260408052031.GB1324339@coredump.intra.peff.net> <20260408054347.GA2284358@coredump.intra.peff.net> <871pgp3byq.fsf@collabora.com>
-In-Reply-To: <871pgp3byq.fsf@collabora.com>
-Subject: RE: Help needed on 2.54.0-rc0 t5301.13 looping.
-Date: Wed, 8 Apr 2026 11:44:56 -0400
-Organization: Nexbridge Inc.
-Message-ID: <012001dcc76e$aa0449d0$fe0cdd70$@nexbridge.com>
+	s=arc-20240116; t=1775663419; c=relaxed/simple;
+	bh=sPLbKA4fKYzJm4Uk5l5QuQIS+QYXUbiQ+EevBo/yVG0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cpoNTSK759KctBdoZP27aXdxaM1f/Y7sRAzAg4xHz9R1Yve+9hsfbNPfYrk7QOYNRuloBQ7DoaDX7q2ZVVz0t3XE72Do6Bgh1puAgVKXMC6Xd7hQ55e35R0k5IIkTtbhVpRP9z3n6x/k305uW+5ygjfuMdJojESPvsCP4TOlVg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YeucRZRw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LdVA/hl5; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YeucRZRw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LdVA/hl5"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id E8480EC01D1;
+	Wed,  8 Apr 2026 11:50:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 08 Apr 2026 11:50:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775663416; x=1775749816; bh=MJO+IUF7Ub
+	P0wo0ZjpD/xFZJMIdzYXAuX9WnET7Diwk=; b=YeucRZRwmC4g4ZHMlC7x6DlkLS
+	ADsU8HLsQT5LBYIqbniKnWHXtN21g0JsAeM90wKYhm2vjrZrfTG+XnwpH5+n9wiC
+	6TDlsFWfqyd6fJsSwFh/ciIw4F8CwQqezsO8I9LFCPFMQpkCxzPK4C9uKVHv/VV7
+	nEGXsdBrJvGyehI3WCz7dvXHLhA3tK65gSCRIeW76E4yIColAlJb+vTcMK/kzQBJ
+	QnrT58OAqw9/OSp7a3Ykyzm5jfraISZYxtYBUZzp/0nZUg7T8lSStXStj+NxAHXF
+	rTxcZQcpjBMDVri4619ONHSAIP3/nUok5gz0UwAeCG0qh/aTsvZBQeUBTPdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775663416; x=1775749816; bh=MJO+IUF7UbP0wo0ZjpD/xFZJMIdzYXAuX9W
+	nET7Diwk=; b=LdVA/hl5BV5Q3faCD5jHsiD6spY4Sg/iVnwC/3QHXDbeO2fg/wK
+	ngKbnzhE9tcbLs7Q9/BExnKWYUM9/eUKT1XHw9SUUqs7nYnmBbBQ4eVG2vgzFlXY
+	uB1PA1029sdlUpCBcPzXPk/w4+4tIvi4WSEk0hNt41PBVLPdoxToe7vOz/zrjMrn
+	ab5FUc6w9Nhfg8C7vFay3hn3gGhwoLgy4qCm41CaaJpKVBB0oHo5uEVBN1bnOgrU
+	7abygIkyJtNG0tT+cM/veJ2uznyDiyJZKQ8PKhm/4AuPwqA3wowuzirq6dKuQu2f
+	QmL3ww+jp3Pna+hewcfHMlUsAEhsj2Cwr3w==
+X-ME-Sender: <xms:OHnWacGupt9ansgXlcdYRAvV9OtQI-mDLz6UQ6Ef-R1iS-1SAIiBdg>
+    <xme:OHnWacO0Eo48L0bUNWdHQ_G-qAkEQizPTF8FevVvfSqoCS2LGyfelUIw9-SFbWcCv
+    Rka3H0UmmRoKu5jvEbG9w5eBfhLvLECh15Gdo1wyxBAdy_M0evW1g>
+X-ME-Received: <xmr:OHnWaee7NK2J2tYwrRAOd-Cd7VGSouQYvToDIjWu39MUaIc4x-kKE_V8Ak8PFgUAUgLqL34WjeovaxN49L7MKG6QIurxlbXacQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvfeeljecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprh
+    hssggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtoheprggurhhirghn
+    rdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:OHnWaZu12jD_9jzygsmyHvmoOt3wtwFXO8bQLQ3AhQFzDKGQb1R7Lw>
+    <xmx:OHnWaflRQlY9eRAXojvUNzlpqTHLMcLxiXYf59GsX_SYvsNkZ77OTg>
+    <xmx:OHnWabz2atOOU3qFP8nJdJOuDYDWfrzYRh5b3EZpSilsnEPfsKm_7w>
+    <xmx:OHnWaRM-wfFGad5H_grfdHOI_HHRqE0omcCva_IZzW6YuPeZjWOs0w>
+    <xmx:OHnWaZrYBjDnQpPLurrWDO-AyOFwQOkxQVnLXj1Q2vLTmfAEyvnRnlUH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Apr 2026 11:50:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: rsbecker@nexbridge.com,  Adrian Ratiu <adrian.ratiu@collabora.com>,
+  git@vger.kernel.org
+Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
+In-Reply-To: <20260408052031.GB1324339@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 8 Apr 2026 01:20:31 -0400")
+References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
+	<20260408052031.GB1324339@coredump.intra.peff.net>
+Date: Wed, 08 Apr 2026 08:50:14 -0700
+Message-ID: <xmqqpl491mfd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHvBjVJZsXG7N1gHKdCJ4V3u2kT9AFYabqHAkdaE8oCPPreZ7WB6jrA
-X-Antivirus: Norton (VPS 260408-0, 4/7/2026), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On April 8, 2026 7:53 AM, Adrian Ratiu wrote:
->On Wed, 08 Apr 2026, Jeff King <peff@peff.net> wrote:
->> On Wed, Apr 08, 2026 at 01:20:31AM -0400, Jeff King wrote:
->>
->>> I suspect we could construct a related case that does fail on Linux
->>> without the patch above. Imagine we actually have two hooks running in
->>> parallel. The first one is fast and does not read its input, and the
->>> second one is slow. We'll get SIGPIPE writing to the first one, and then
->>> kill _both_ children. But that's wrong! There is no reason to kill the
->>> second hook, as our intent was to ignore SIGPIPE.
->>
->> This would require running hooks in parallel, which isn't implemented
->> yet for v2.54.0. But if I build on top of the ar/parallel-hooks topic,
->> then this test:
->>
->> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
->> index 44ec875aef..97257763d3 100755
->> --- a/t/t5401-update-hooks.sh
->> +++ b/t/t5401-update-hooks.sh
->> @@ -139,4 +139,43 @@ test_expect_success 'pre-receive hook that forgets
-to
->read its input' '
->>  	git push ./victim.git "+refs/heads/*:refs/heads/*"
->>  '
->>
->> +test_expect_success 'hooks in parallel that do not read input' '
->> +	# Add this to our $PATH to avoid having to write the whole trash
->> +	# directory into our config options, which would require quoting.
->> +	mkdir bin &&
->> +	PATH=$PWD/bin:$PATH &&
->> +
->> +	write_script bin/hook-fast <<-\EOF &&
->> +	# This hook does not read its input, so the parent process
->> +	# may see SIGPIPE if it is not ignored. It should happen
->> +	# relatively quickly.
->> +	exit 0
->> +	EOF
->> +
->> +	write_script bin/hook-slow <<-\EOF &&
->> +	# This hook is slow, so we expect it to still be running
->> +	# when the other hook has exited (and the parent has a pipe error
->> +	# writing to it).
->> +	#
->> +	# So we want to be slow enough that we expect this to happen, but
-not
->> +	# so slow that the test takes forever. 1 second is probably enough
->> +	# in practice (and if it is occasionally not on a loaded system, we
->> +	# will err on the side of having the test pass).
->> +	sleep 1
->> +	exit 0
->> +	EOF
->> +
->> +
->> +	git init --bare parallel.git &&
->> +	git -C parallel.git config hook.fast.command "hook-fast" &&
->> +	git -C parallel.git config hook.fast.event pre-receive &&
->> +	git -C parallel.git config hook.fast.parallel true &&
->> +	git -C parallel.git config hook.slow.command "hook-slow" &&
->> +	git -C parallel.git config hook.slow.event pre-receive &&
->> +	git -C parallel.git config hook.slow.parallel true &&
->> +	git -C parallel.git config hook.jobs 2 &&
->> +
->> +	git push ./parallel.git "+refs/heads/*:refs/heads/*"
->> +'
->> +
->>  test_done
->>
->> fails reliably. And applying the patch I suggested earlier fixes it.
->>
->> So I think it's probably a good idea regardless, though I'm still
->> curious to see if it solves Randall's non-parallel case on NonStop.
->
->Thanks Peff for the in-depth analysis, fix and test.
->It is very much appreciated. I missed this case.
->
->I agree with your assesement: this must be fixed regardless if it also
->fixes Randall's case or not (might be a separate root cause).
->
->I would proceed like this (obviously crediting you for the fix & test):
->
->If it fixes Randall's case:
->   send a standalone bug-fix patch, then integrate the test into the
->   parallel series.
->else
->   integrate both the fix and the test into the parallel series.
->
->@Randall please let us know if the fix proposed by Peff in the other
->response works for you.
+Jeff King <peff@peff.net> writes:
 
-Yes, this fix worked on NonStop. Thanks Peff. The new test also passed.
+> I think the root of the issue is that we should not be trying to
+> propagate SIGPIPE to the child in this case at all. Our handler is
+> pushed there only because it's part of sigchain_push_common(), which is
+> sensible: in general if we are dying to SIGPIPE we want to do our
+> cleanup. It's just funny in this case with the ordering of our SIG_IGN,
+> because now that SIG_IGN isn't on top of the stack anymore.
+>
+> I.e., I think we want to reorder like this:
+>
+> diff --git a/run-command.c b/run-command.c
+> index 32c290ee6a..8a95f7ff1e 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1895,14 +1895,19 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+>  					   "max:%"PRIuMAX,
+>  					   (uintmax_t)opts->processes);
+>  
+> +	pp_init(&pp, opts, &pp_sig);
+> +
+>  	/*
+>  	 * Child tasks might receive input via stdin, terminating early (or not), so
+>  	 * ignore the default SIGPIPE which gets handled by each feed_pipe_fn which
+>  	 * actually writes the data to children stdin fds.
+> +	 *
+> +	 * This _must_ come after pp_init(), because it installs its own
+> +	 * SIGPIPE handler (to cleanup children), and we want to supersede
+> +	 * that.
+>  	 */
+>  	sigchain_push(SIGPIPE, SIG_IGN);
+>  
+> -	pp_init(&pp, opts, &pp_sig);
+>  	while (1) {
+>  		for (i = 0;
+>  		    i < spawn_cap && !pp.shutdown &&
+>
+> Does that make your problem go away?
+>
+> I suspect we could construct a related case that does fail on Linux
+> without the patch above. Imagine we actually have two hooks running in
+> parallel. The first one is fast and does not read its input, and the
+> second one is slow. We'll get SIGPIPE writing to the first one, and then
+> kill _both_ children. But that's wrong! There is no reason to kill the
+> second hook, as our intent was to ignore SIGPIPE.
 
+Oh, I am very much impressed by this analysis.
+
+As -rc1 has already been tagged (but not pushed out yet), we would
+probably want to apply a fix before -rc2, I suppose.
+
+Thanks.
