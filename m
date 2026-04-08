@@ -1,69 +1,125 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BE83D6694
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 18:36:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768EE3D411F
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 18:59:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775673398; cv=none; b=Hl3TNkogQ4vmIUJoiTSFUEh1b1WDNh0P/jp8HiO8LIECSjHEwXeeZpB9/gx5GLxL/uocimkMKn/BZOt+brOPbbYGayT+40UsYYGHUAnvrypprdKulJbQWlXg59RwUb6Q3mQK5KsH/WAY/9w7QfYiPq0Yvz7Nuyc4/iZRBugNdHU=
+	t=1775674754; cv=none; b=QZYt08eQb9YdOo4zbaLFKyqXAic2FrQY6tT0rgjJiCwVzm4Pupvu5tZ5OgxW6Qz1a6ZJ5+1D7pQqeWGmg2/yN3BS6xVy1kM5rVHkcFiDj3av7bTIA2tmlmQsuxUmsbS5iB6qEbSF/4NORhCys4ORodKjd177Od7UFcxLyUtpcEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775673398; c=relaxed/simple;
-	bh=P2EKbJ+3TteYOMAZm4XjWGh8HkRhZtHKv2489PYIALA=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AwI4sd4TBzYY/VAwL4B3UQRSKzi3x/FkxqM2UB5dkVSUumxTLRW+EomtuYFm9y2/BynuN0JzTNFUz4Xr9gO4sK6GI6Gy1MKXsdl7LBtrhUtiCC+v+ZbNOJNyVFFKeBtQCqFWPh0L8aYTnBjMOrdLL+w/ZwL1cLHi8QfPU677lZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 638IaXKW3338286
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Apr 2026 18:36:34 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Jeff King'" <peff@peff.net>
-Cc: <git@vger.kernel.org>
-References: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com> <20260408041716.GA1324339@coredump.intra.peff.net> <011701dcc767$8c2ab400$a4801c00$@nexbridge.com> <013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com> <20260408173949.GB2850002@coredump.intra.peff.net>
-In-Reply-To: <20260408173949.GB2850002@coredump.intra.peff.net>
-Subject: RE: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
-Date: Wed, 8 Apr 2026 14:36:27 -0400
-Organization: Nexbridge Inc.
-Message-ID: <014801dcc786$9ff5bf60$dfe13e20$@nexbridge.com>
+	s=arc-20240116; t=1775674754; c=relaxed/simple;
+	bh=SeYp+RGuXQNx3nG3Qxv94eTm38WFXe3b8w+Vghxbnb4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ve8t9ODlLvY/ajgiVT0lFMrfiY3Fhg9a4cET9vxvjLkDYSGSF/pEketJP0oq09ykxSYrl0Huci7FO7o21ntjZu3PMZdPRFzn2Kzo5/62GpU7KZPpxMjVvt1DjYrijKuPkoOOIBcqr5kJAXZ67Q4aQ/zuWaimPjl5+xfaBsJfEEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DvJLMFa3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pj6/z1CB; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DvJLMFa3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pj6/z1CB"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB771EC040C;
+	Wed,  8 Apr 2026 14:59:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 08 Apr 2026 14:59:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775674752; x=1775761152; bh=kk/rriiU8i
+	Bka1CcJ1LKQBUKykCaYduEu5bCF1eLEVo=; b=DvJLMFa3L+P51WVUnEbOaQ2Dzw
+	F3juzYUY0MHH86PifRZWrx/1jh9FlbjyxWBXrIQ6LzLLYFVVS2QNSWNqS2EJMJ2y
+	wvS2V7ZS30x2CcOeOWOAJxPXwiEyoMcCOZC4bmcJlgcxc9fTKqigE116oQ+qwQGC
+	0DeCxi1hhLbx+6dBNWHLqv72Shscj0FyxWnnWMu9/q12ZTYd2RUXDhNCfHwkaybW
+	WP/VJVQoMkPtNT5NY+zpYLve/0segGbiO1OGbKdL5dv5Z2gDk6TuQg62YyEpV6ZW
+	grM0yLV4jJXrzUfeqf91zvPK6tkqPwtAGsCiY8N7joypepi2UTAK8WwNV8MA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775674752; x=1775761152; bh=kk/rriiU8iBka1CcJ1LKQBUKykCaYduEu5b
+	CF1eLEVo=; b=Pj6/z1CBt9ld4WeoDHKefrEth+Tjkdf/fyuI/I8T0VJgyg51/yp
+	8LEL56z57j8FlK33i00YHj9+CkRwGUJaNn8mPlQXtDYoBA7vbd8Y6tX9/XSc+qiO
+	At20dRN+ovBQQMdPC2uBR1xEcuSJG4c/VKAtJqMiMLhjYLr+WJFPVQlennN7w1+C
+	U/DvSrVoYJf3ZsQH6kQH5m9QVVQeQ+p5N2exdftVdMR26nGeSK+pD6M6v6wVvCaf
+	6O5Oyx+DKHdXqUQjjYkjhGS+CdsqcdJ+hEnsGTDPUr+enVXvSVWdum6yrmYwkbYD
+	kl6s3eu8aJjV5muL2R9fkyPagQf+gg9CGSg==
+X-ME-Sender: <xms:gKXWabLjUsdarOJ51zWhYiVmy3U36Qt9feD5Zt7gz70iqbRe4jbMDg>
+    <xme:gKXWaRbjwpnS38gWHC9S7Wsfy7tQV14mn5PTiZxs3NN_5-lxAh-Z0rHBn2Gc5Isk_
+    sWgfPQOSrfOayezO9VuhrYo2SSDvWE7Cl5M3wQ2BLoIAeJgjLRo6A>
+X-ME-Received: <xmr:gKXWaV9QjOelBpyFB3vUEgonQa3LQPIYhIlCfw6KKdPrP4hc8wocYbuVoWDn-tc4HLab3Gnh1q_0c4SGycvVdtoFpx0VMKp-yw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvgeefhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtoheptghhoh
+    hoghhlvghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhr
+    tghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gKXWaaYAN69MZ3iZDyOxkyVk3Ps4i49vo76BBbXI2n6Lg4E043x2HA>
+    <xmx:gKXWaRM_vdkJsrDY9TgZFCooYmHN0UcY5xJ4RBZflmCilr14w4R7Kw>
+    <xmx:gKXWaeBMEK7f6GbRFTxzPQEh0-RGaZywEPkpGlE6HixGvrhsaU1Lbg>
+    <xmx:gKXWaQJXXFTnBGVwY0YQ4KiERMUJoSgnUxIkoTLc1gcnE6DFdbv2fg>
+    <xmx:gKXWaaFi7eAynxJZiaxhwFdO2kYxDGqzqYLPHAbKqQ6K0nWsuIfmdC2w>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Apr 2026 14:59:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  jonathantanmy@google.com,  chooglen@google.com,
+  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 0/4] fetch: add --must-have and remote.*.mustHave
+In-Reply-To: <pull.2085.git.1775658970.gitgitgadget@gmail.com> (Derrick Stolee
+	via GitGitGadget's message of "Wed, 08 Apr 2026 14:36:06 +0000")
+References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
+Date: Wed, 08 Apr 2026 11:59:10 -0700
+Message-ID: <xmqqv7e1xoqp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIImllt8JGdGqh7Bu9hfV8wd5a54AFtvwh7AomCUMsCTyy1LAGZ2yzltT7VFiA=
-X-Antivirus: Norton (VPS 260408-8, 4/8/2026), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On April 8, 2026 1:40 PM, Jeff King wrote:
->On Wed, Apr 08, 2026 at 12:25:47PM -0400, rsbecker@nexbridge.com wrote:
->
->> This is also impacting t5608 and t7700. Anywhere where writev() is
->> used, seemingly. We went through MAX_IO_SIZE issues years ago, =
-instead
->> of using ssize_t as a basis of how big communication is. I think
->> writev() is not valid. It worked on Lunix, but had issues elsewhere.
->> This broke the compat layer.
->
->I wondered briefly if the problem could be that we're violating =
-MAX_IO_SIZE here,
->as our use of writev() does not respect it at all. But the only spot =
-that uses it is
->feeding pkt-line packets, which max out at 64k. So unless your =
-MAX_IO_SIZE is
->smaller than that, I doubt that is the problem.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-SSIZE_MAX on platform is 53248, so yes. We expected git-compat-util.h at =
-line
-696 to be honoured.
+> Based on my understanding, the '--negotiation-tip' option is close but not
+> quite what I want. I could have the client only advertise 'release' and
+> 'main' and never advertise any user branches. But then we'd download all
+> content from each user branch every time it updates. Perhaps this would
+> happen even with opportunistic inclusion of more haves, but I'd like to
+> explore this area more.
+>
+> There's also an issue that the '--negotiation-tip' feature doesn't seem to
+> have a config key that enables it without CLI arguments. This is something
+> that we could consider independently.
+> ...
+> Big picture questions to think about:
+>
+>  * Is this a valuable addition to the fetch negotiation?
+>  * Is the interaction between --must-have and --negotiation-tip correct?
+>  * Is the "must have" name sensical to users? I expect that this only
+>    matters to experts, but I'm open to better names that could be more
+>    self-documenting.
+>  * Should we add a similar config key for --negotiation-tip?
+
+Just like you, I hate the name "must have", but stepping back a bit,
+would it work if we add a single boolean option that says "use the
+negotiation tips as the primary source of 'have's you'd send, but
+unlike the way how the original negotiation-tip feature worked
+without this bit enabled, which did not send anything other than the
+ones reachable by negotiation tips, do advertise opportunistically
+other tips", essentially turning the existing negotiation-tips
+feature into your must-have feature?  You could even call the option
+"--negotiate-better(=(yes|no))" or something, perhaps?
+
+
 
