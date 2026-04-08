@@ -1,60 +1,78 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B683D7D88
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 17:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81FB3D8912
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 17:49:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775670047; cv=none; b=JwwfL2CYd38MAJIFKwbL/A37Y6o2vHgFNAubt1QqO+XyQvQxYURzK6jdPXMrBLb0AfEqCiIa5DLwbV3ayJ+b3vsqDxbZnYYyXsyI+H3VrUPnl4F955fhT5WnMJaJG3LQcxmtNpNTl4oCOYB/313400RnBaus+6gOxfW+DxG39qo=
+	t=1775670551; cv=none; b=MTWXk/r9RXYSfEiwGQkL+LDrXah9a8wUHtOic81RJnmXAo7veZpmiz4fLJrJWvQmasicMpq0Ph4Y2aXsj/Dn/d+O0NIsjO3BWhBVCmHu+QNl5sWETWb1rWkpyRN4C5gBYXsOB/GjJEspncQiQhgzf04qAx7c4ukExLnjJVCjywI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775670047; c=relaxed/simple;
-	bh=PBrTljG+AVc2Euqw++JwzS7wl2qPI2fYrQWhBd+uYD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZOkZ1deJNvgD2OIx1jKqfryd4DPEM6T6BxLVialJL7AimwerA0hCwqO5XW3Q28OVKtiVgUStM5zhpvH2VlmR4xhtBnXkCIDWkFaZlGKGWzJYXlSnHUOML+jvmjw2uhh8GU+DpyXoW8c37LBM+1AKZ9sXPLkDhNARu8teZG/xEwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=K++DKfvG; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1775670551; c=relaxed/simple;
+	bh=AyOHVh2IiH0JUXa2b6jSThlkdNp365+00Lce2L8wLAg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=e6aQFnOEQ3j8LQuHQm0SQjL/tKxs8jSpfvAUp6QnS0Iznr73iq505Wufk6ZVkAqKMrJ2tYi6zcjSqT/yhq9/tZOU/8rvWZg8Nlm/HILskq4/09nHG3L4zX7Gtvwh+6Q3ccGMvYKYvdPA6hTuaVJe4ycHUPCqtl3LoL5MobU9nvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=ESEUCo+U; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=PNlRXAbt; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="K++DKfvG"
-Received: (qmail 284019 invoked by uid 106); 8 Apr 2026 17:40:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=PBrTljG+AVc2Euqw++JwzS7wl2qPI2fYrQWhBd+uYD4=; b=K++DKfvGPh1AvEOkeuMt2qa8y3W0FGVAt/UOZGeF4c72H+j6QQO7mFIzlIyoAhQcO592swo/Aqr4wMtvrcIz4HgzOu+n2FhmMopy8qLw17QltFqCbv58Nyt6NH0vekkdQdHwagO+n8aRoLvK7bhw1dzOLQGs8sqwYKmaczVOb7LI4d1Rhv+eDAawd3ppUoUneFNqaAABf1YN9c6WtH9gIRg7+A3OltL7GIW9CUosH6ssqajAOOVFaa/6DlF2cZmQW+sw2ZbgCdtShm0Q/qy7cxq+4IblCxyZiDrceXuVb2ly08Muw5Wd88BV5/e3ozvdeqe0732rVwX/C37YFF7e+A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Apr 2026 17:40:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 466488 invoked by uid 111); 8 Apr 2026 17:40:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2026 13:40:44 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 8 Apr 2026 13:40:43 -0400
-From: Jeff King <peff@peff.net>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] archive: document --prefix handling of absolute and
- parent paths
-Message-ID: <20260408174043.GC2850002@coredump.intra.peff.net>
-References: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
- <20260408160005.193621-2-pushkarkumarsingh1970@gmail.com>
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="ESEUCo+U";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="PNlRXAbt"
+DKIM-Signature: a=rsa-sha256; b=ESEUCo+U5H7Lsqoz56Zt//R01ilBA02kB9i6twLshXdTMd3rf1I4LFzyILVvGGW+UWIniKUcsgljdXsk2VKCwibMjyjnNwnZfVY1w7A+VbRGp3xvzj/s+PFp03ACzx7cVY1y88Jk3Oe+B0cfaJerBaBFllLkkTQboStsX3qlu9qmgQ/PrZRPY0k0VlmP1a4Z2WxJue2TXVPTq9Ra4DHWnROASqjKUwNZaCrSPUbnUYtzlHM2z7VtnkyvTljCaphFHP5vdn/ZqnT2g2EN7kxJ0uR31pq/hgM1XPddhsjKQHDpShD8RW+SyRZZ/YVd3Q6xU8fLn579h2At0lfuXxZ8Dg==; s=purelymail3; d=malon.dev; v=1; bh=AyOHVh2IiH0JUXa2b6jSThlkdNp365+00Lce2L8wLAg=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=PNlRXAbtpQSQdYP/iufzUQpOIy8r47Gej/QwRVfeR3SbLLWQCsavdtLOa889q6YZfOCIMDxjTXnJXeOcaTs07Q/WDBdbLY6D2N9MSagMGWCBmHdk7sOeb2+rOE6SnBi6QD+bEsN08QSH9uf0GKShJCFxlepH1FEuq61W+FEQ6IoEglp4qrGFaUXtzunZgDXJC5ZK3M1sBqCNXvg/0jk2zi5j3aNgA7Wc8pg2Vbr6SGgtsSzULcQ8pTc1YxHsVnz3h0XUAi+ENJpuZAHKPGvlsC8AMxS7VLIVASI9ByKbG7VtodFAxe04XD1HAg2tEuLk3eHUgJNYW+ZI6Q39xp3cMg==; s=purelymail3; d=purelymail.com; v=1; bh=AyOHVh2IiH0JUXa2b6jSThlkdNp365+00Lce2L8wLAg=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 59422705;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Wed, 08 Apr 2026 17:49:02 +0000 (UTC)
+Message-ID: <fbe81fee-ef1a-499e-bf53-d6f1761bb30e@malon.dev>
+Date: Thu, 9 Apr 2026 01:48:59 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260408160005.193621-2-pushkarkumarsingh1970@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH] promisor-remote: fix promisor.quiet to use the
+ correct repository
+To: Trieu Huynh <vikingtc4@gmail.com>, git@vger.kernel.org
+References: <20260406183041.783800-1-vikingtc4@gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <20260406183041.783800-1-vikingtc4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 08, 2026 at 04:00:06PM +0000, Pushkar Singh wrote:
+On 4/7/26 02:30, Trieu Huynh wrote:
 
->  	Prepend <prefix>/ to paths in the archive.  Can be repeated; its
->  	rightmost value is used for all tracked files.  See below which
->  	value gets used by `--add-file`.
-> ++
-> +The <prefix> is used as given and is not normalized. It may
-> +include leading slashes or parent directory components (e.g.,
-> +`../`). Some archive consumers may treat such paths as
-> +potentially unsafe and adjust or warn during extraction.
+I strongly recommend you to run a patch locally before sending it.
 
-Thanks, this reads fine to me.
+	not ok 38 - promisor.quiet from submodule repo is honored
 
--Peff
+> +test_expect_success 'promisor.quiet from submodule repo is honored' '
+> +	rm -f pc-quiet-trace &&
+> +
+> +	# Set promisor.quiet only in the submodule, not the superproject.
+> +	git -C super-work/sub config promisor.quiet true &&
+> +
+> +	# Push a new commit+blob to the server; the blob stays missing in the
+> +	# partial-clone submodule until a lazy fetch is triggered.
+> +	test_commit -C sub-pc-src updated new-file.txt "world" &&
+> +	git -C sub-pc-src push "$(pwd)/sub-pc-srv.bare" HEAD:master &&
+> +	git -C super-work/sub -c protocol.file.allow=always fetch origin &&
+> +	git -C super-work/sub reset --mixed origin/master &&
+> +
+> +	# grep descends into the submodule and triggers a lazy fetch for the
+> +	# missing blob; verify the fetch subprocess carries --quiet.
+> +	GIT_TRACE2_EVENT="$(pwd)/pc-quiet-trace" \
+> +		git -C super-work grep --cached --recurse-submodules "world" \
+> +		2>/dev/null &&
+> +	grep negotiationAlgorithm pc-quiet-trace | grep -e --quiet
+> +'
+> +
+>   . "$TEST_DIRECTORY"/lib-httpd.sh
+>   start_httpd
+>   
+
+Regards, Yuchen
+
