@@ -1,92 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD4A40DFA0
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 04:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9B030EF8F
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 04:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775621839; cv=none; b=GI15lu/5nJr6WksvsiX+rosmsFQ0rLO7fB/3wFGsvSAZGNqGrltwbuei/ENxuohsYwP0X8Fh5aCdO009BIl4AMi0KR9IKwJlbEmJZICqqLYhtjgg1nU4TfF1npNzDs9yJ1KHfGKNYfzZrJXb8Qz31hTn/Nw6ZagkZZR2CNTP7d4=
+	t=1775622391; cv=none; b=W+iK70Jg9J1TUgRSahdnSZA363NwHkEeUm0gSQLeRXsBt9golOpSjtLu3x94nJMbKJjLCMvM7FJxJQniKW4HF0miczgw6n3JhBm3qWPqCSsEkyFNTOxA4hstB4EYQWdNFbWKqyRupTQCey/NNYYFhj1wHPKT9xlZcDir4cwGHcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775621839; c=relaxed/simple;
-	bh=rCyyJemzYm6k3edVRlyxhhfj0KFYf6qU2w0uB0Gwwf0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tUOsKnAUdjvKBDW95ZCizGIX5Ko6JTGq0Pn/yQHUyj4du/HToCEtaTHzp7R8B7notcRskMu4dqYcwmhZHTYmlCeqUydwqLuaJI3jHrDbZqdPxMhwFSHA3HjXSOduy7BjW3EdJ6LZVV7OVV25hm75xqJsftmReP6+9PLmSAInqrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fXwQJQYA; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1775622391; c=relaxed/simple;
+	bh=xztSemg6oCdhqdKZkcXWWUlIRQ+IJPqvZj/UPxij7uk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=eplpWda33L/KGaoJzQ4Xyd2nzQ8SAtouzbU8E2SwYpUzfwcPj/X6RSvGVrJWAF/MwfMQKMo/o97khv4Ps2fdE47HSdDOx/uVBHYS7JI5nxNlfJAlmF8NZLF5cNGwuQIgPfHk6kp/vSkxtILY4Q4lRSOpsCWAkV4WIOwDRqnFzw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U1opL4RO; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fXwQJQYA"
-Received: (qmail 279233 invoked by uid 106); 8 Apr 2026 04:17:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rCyyJemzYm6k3edVRlyxhhfj0KFYf6qU2w0uB0Gwwf0=; b=fXwQJQYA1h5isbHNi9/4Gx/Ovrcms9CiefW3lVJyBgqSNVUn6E/lgCq1EdWzCP2/JZJCUdC7jPyN2ecNvWtpqrrdW5no+q8SD+p9XBqRwhjRYEV4M4oY9ERAOdCTmDU9Ux7U9tuFN7C20VwoGeccW3+0ZF3/GqtHa55UB4iin+r1NhTDuygbfgKr74jffc62SGT2QQ4oKHnPP7zg1VxFhycB7lNCavdkQaNmDdiricPKc384jVxOqVYuzI3l/im7FDOLSqGMh5B+koNGuLOkHTKq2mg3vCDJf4yzOHb4FKfBPuvLpRa8ZYajFtGxWolq3oOaWIe4SjvCGeI+dBBT7g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Apr 2026 04:17:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 456867 invoked by uid 111); 8 Apr 2026 04:17:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2026 00:17:16 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 8 Apr 2026 00:17:16 -0400
-From: Jeff King <peff@peff.net>
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org
-Subject: Re: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
-Message-ID: <20260408041716.GA1324339@coredump.intra.peff.net>
-References: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U1opL4RO"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8296dabef74so5499249b3a.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2026 21:26:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775622389; x=1776227189; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xztSemg6oCdhqdKZkcXWWUlIRQ+IJPqvZj/UPxij7uk=;
+        b=U1opL4ROYMb2k+lNdNYNG2wjrOcHwEx8DdZg2vvdPWoQuZTqFe6l3UARDqmMEBAzsJ
+         NeiN+e6QJYIbAeJlqL/ikbFU5kShhNwhlwi1s1ghh1n3TT3jZ6jfjFMz35QvJBIzHtYV
+         nFAad1oqT8vtUR7Jhiq3enVXuf5LdvhMR2zlZD9eA/IsE8D9QI+8Q5lGhFHFqPIUxaO9
+         L8cZvji6RzPa8FklwgTY2xRHGrXyNQ/8qnE3ASOpRelDlDSDSphG0kCQ6WOkwCctGgR6
+         VkhQ7zVnxHQ16rafJ/rjyCXSk2Fc4wLqyM3DodTQxadKmsz6uCa+pmxLzWkeuzwUTOlH
+         ouGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775622389; x=1776227189;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xztSemg6oCdhqdKZkcXWWUlIRQ+IJPqvZj/UPxij7uk=;
+        b=SVo6UzfY/PW6sti0DEq/IYz1SazGkqmAMDty7f6Me3KqyJLvdcYf+lWZ119jUHLEV7
+         xBbJc6Rrs/oI7YhCMAt/6FPmh+oaopjWrNSDhSD4G2hn+Bqg3SGrey0fNXk73MMi8cmd
+         jNZaqjcXQKy0xzos9EXd6qPxF9pCgUoxNKeavH+e94gKPA1vv3DTeNHrlCRH8bdZLQ1b
+         gRgjIcj1hfoJuaa8c/tKXbVJTrCl1CPjiV3g0UjgOTr/OVkuHqAT5TaoosMxrhIYMdci
+         T9FEyHvZCahm39D3Dgz2r7tytw2Sir0hcZC9DFNfeZVUqDFs2MUBTPZx/yByKe/RvAoL
+         IgVg==
+X-Gm-Message-State: AOJu0YxcrRsqJI5NAHZVoBCYrJNHe9PyjgMcjovgzuOEAXy3i9/DLGzp
+	UwLaVoELQoOaEWdfxUjFvEB9FnFyYZFz58kETm7X5v8PDdQmO4pv3FhKucNMzzuH
+X-Gm-Gg: AeBDieuvYq4XF6oiPvl+kUXXv2q5hQRGM8DZyfc3PtkKd8ZrTsYrYAXBrEJvEhC/PKw
+	G/mNRZL65NHrvY7HCNK49hZzQH4sH+nEpkQ37io32K8dl4wvrIt5zmdOxe+wzUxT4E54SVGA+Qx
+	uyJfDfrD+ESnnoIdegpHha3YBCledmKHp0OIqMW1zo1X7SDD3MOunotavz+SDBhtPnSWN7gvXDb
+	agXaDX547Y3ogep3m1dMBVAP/kkJp8cFAqHFP/lyI2hSiEdKCjrwcJd8H8A9O9jkKWvWl8YSM/I
+	bPCSvNrEClfx3magNlzGq5GUah97+IqB9WXu7qIX3TcaKA1d12IXnb1XVUecK1W+gFi0/ywQ6bY
+	DgM+0L2tRHxnZmbufnbdUdS62I5qgmj8T0ZUBJcJoBx1BW14HrrKjVdx3cl5hRQiIyo+3S9KRJN
+	7nC/tSHeZT9k60lCi5CuAnfjdc92DlpATehuRI+N5tm++dFbygo+FNfAqvuMlPaHLhucfAWb5RE
+	aeEOygvxh9hGg97JqmY
+X-Received: by 2002:a05:6a00:278b:b0:82a:7f6b:3fa1 with SMTP id d2e1a72fcca58-82d0db5abfbmr18582558b3a.33.1775622389532;
+        Tue, 07 Apr 2026 21:26:29 -0700 (PDT)
+Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82d11f76c09sm14874760b3a.55.2026.04.07.21.26.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Apr 2026 21:26:27 -0700 (PDT)
+Sender: Paul Tarjan <ptarjan@gmail.com>
+From: Paul Tarjan <paul@paultarjan.com>
+X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	gitgitgadget@gmail.com
+Subject: Re: [PATCH v13 01/13] t9210: disable GIT_TEST_SPLIT_INDEX for scalar clone tests
+Date: Tue,  7 Apr 2026 22:26:25 -0600
+Message-ID: <20260408042625.31843-1-github@paulisageek.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqqse9g0xbx.fsf@gitster.g>
+References: <xmqqse9g0xbx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 07, 2026 at 07:29:50PM -0400, rsbecker@nexbridge.com wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I can getting numerous issues in t5310, t5326, t2527 relating to the
-> following use of --git-dir:
-> 
-> In t5310:
-> fatal: not a git repository: 'clone.git'
-> not ok 55 - fetch (full bitmap)
-> #
-> #                       git --git-dir=clone.git fetch origin second:second
-> &&
-> #                       git rev-parse HEAD >expect &&
-> #                       git --git-dir=clone.git rev-parse HEAD >actual &&
-> #                       test_cmp expect actual
-> #
+> Not just "suspect", but it does break exactly at t9211.
 
-This test hasn't changed recently. The clone.git directory should have
-been created by an earlier test. Can you try running with "-i" and make
-sure that this is the first failing test, and we didn't fail earlier?
+Thanks. I've added sane_unset GIT_TEST_SPLIT_INDEX at the top of
+t9211 (every test there does scalar clone) and verified both t9210
+and t9211 pass with GIT_TEST_SPLIT_INDEX=yes on Fedora against
+seen.
 
-Especially because...
-
-> In t5326 and t5327:
-> fatal: writev error: Invalid function argument
-> fetch-pack: unexpected disconnect while reading sideband packet
-> fatal: early EOF
-> fatal: fetch-pack: invalid index-pack output
-> not ok 24 - clone from bitmapped repository
-> #
-> #                       rm -fr clone.git &&
-> #                       git clone --no-local --bare . clone.git &&
-> #                       git rev-parse HEAD >expect &&
-> #                       git --git-dir=clone.git rev-parse HEAD >actual &&
-> #                       test_cmp expect actual
-> #
-
-...it looks less like --git-dir is a problem here, and more like the
-introduction of writev() is. It is now used in sideband_send(), so it
-seems plausible that a similar failure might have broken the git-clone
-operation that the other test was using to create clone.git.
-
-As for why writev() is failing, I don't know. If it were totally broken
-on your system I'd expect almost everything to be failing. But maybe try
-building with "make NO_WRITEV=Nope" and see if that makes the problems
-go away? The compat implementation just does a series of write() calls,
-which is what send_sideband() was doing before.
-
--Peff
+Paul
