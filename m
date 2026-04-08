@@ -1,140 +1,118 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAD539DBD8
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:25:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775665557; cv=none; b=V9acM6TcA0SUVOPlE248TSEagGw8Rk83jhokSQgG4fnZLe2L+vG0J6RJW0GAPG90m/CptbdyzqMWs3MoBzlhXu3pt4+QejpojtL51/IcMcAYzlV978ZqC0UeVn+ahiXgPxYM24ZO9DergjsEpZMXOqjZQEwfwJqIcsjGwFr1htk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775665557; c=relaxed/simple;
-	bh=qayxorjR8xKFn4Ltyfgy5aFhZEEvE9SOLl09N34nxQ0=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Pq0mKianHtZDDBAttElrBf5cVuIvhpTVP/vyg2yFHn0x/j2LQsKzzD35tgB8TvrbE/tP3YiYK484wAjt0g+aEt1fId211BLABAilK2qM3ohVD3xONF/7em0kwMCJxF1SiIm6al1A1O5kDoZ4zJQpLne5yJ4CBAn7Ckwr807R1Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 638GPqxD3311538
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Apr 2026 16:25:53 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: <rsbecker@nexbridge.com>, "'Jeff King'" <peff@peff.net>
-Cc: <git@vger.kernel.org>
-References: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com> <20260408041716.GA1324339@coredump.intra.peff.net> <011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
-In-Reply-To: <011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
-Subject: RE: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
-Date: Wed, 8 Apr 2026 12:25:47 -0400
-Organization: Nexbridge Inc.
-Message-ID: <013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B248839DBCA
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775665632; cv=pass; b=hNv3qLz15cR8dNGAVDzYNAJ7S1FqSYVe2KRYyWjs5sKR3lwxQUorYhuUn+YHQmarg7IMcCyMEUMyPp5DqHObPsudbwRT5G63RVlcVQvPcomt2IsI3HdtlVzaxIrjOcHnxh29c7eSa49BXp70aaKAbUnS2DxW13LDlRgd1UdTJAE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775665632; c=relaxed/simple;
+	bh=GfR+n4gi+FsdoTs6xw13kp21rSq/b3V4pg2yW0qsyg8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gWHe1ZPEKDlYFJR9Nhthk8z840fmnyWddwfYRXhIIUJdI7drL5utTHQVsmpciqL+sWeF5tsHqOftWmkKvOyhssFaEDLUUpyxlHeBosR8klq9mRshY56r4i4EOABeU7G3/1xAU+oyO4hBwayvH/6gsNJW9ifDQRhI8oIke0CYHYs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=OM3zHVzh; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="OM3zHVzh"
+ARC-Seal: i=1; a=rsa-sha256; t=1775665624; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=eiDrIWxJ+dS3aDfUrl3JMfVR+qyl8xa7UJiHhrx3+14jgbKgKoYmRwetAD9jzPWeKYsQgn0VMSwLqfWnm1W+6pn4FDlrM8NvxcOGmMKK5n7IAmSS4+dntdbL+P94qT9T9tWrh3VYArvo+9TzWQOgVqhwcw4aZvmHi85D4AaGLrU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1775665624; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=oCWYtzgpPM7oaTPMRJondRnFAOOjUUKpSdI33h+rRjs=; 
+	b=ET2Hm/PQE/RUswUsB1psexDeRyxq9PLg099wa8WyH2+r/uB3flcmknDdiRam0PxGO1CYWLLx/zrIDLpXyYcizamtQF+2cRhiw0+0fDt9pLkTL8TdNnDipQunJ8BVAvfmbSliWrdhdLH18A2nhr9GK13ifsX4moTqa5UBlOTYCd4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775665624;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=oCWYtzgpPM7oaTPMRJondRnFAOOjUUKpSdI33h+rRjs=;
+	b=OM3zHVzh8zKT3zgMcKGBKTyu/+BQGd7KD2xch6Dwh135QqxQAMAAMTMhCXMg8bwm
+	bEJl34dE8hVqZrLzn0hl7rOThh4AKe7xwiyenumKVDszkHBTY73YDZiShsoMQRzT1Bx
+	t+X2cL6V/N4SNrd96YRXqXdXHLUSyilUze8cypNI=
+Received: by mx.zohomail.com with SMTPS id 17756656229811010.5714132579644;
+	Wed, 8 Apr 2026 09:27:02 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc: rsbecker@nexbridge.com, git@vger.kernel.org
+Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
+In-Reply-To: <xmqqpl491mfd.fsf@gitster.g>
+References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
+ <20260408052031.GB1324339@coredump.intra.peff.net>
+ <xmqqpl491mfd.fsf@gitster.g>
+Date: Wed, 08 Apr 2026 19:26:59 +0300
+Message-ID: <87y0ix1kq4.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIImllt8JGdGqh7Bu9hfV8wd5a54AFtvwh7AomCUMu1XfehMA==
-X-Antivirus: Norton (VPS 260408-0, 4/7/2026), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-On April 8, 2026 10:54 AM, I wrote:
->To: 'Jeff King' <peff@peff.net>
->Cc: git@vger.kernel.org
->Subject: RE: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
+On Wed, 08 Apr 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
->On April 8, 2026 12:17 AM, Jeff King wrote:
->>On Tue, Apr 07, 2026 at 07:29:50PM -0400, rsbecker@nexbridge.com =
-wrote:
+>> I think the root of the issue is that we should not be trying to
+>> propagate SIGPIPE to the child in this case at all. Our handler is
+>> pushed there only because it's part of sigchain_push_common(), which is
+>> sensible: in general if we are dying to SIGPIPE we want to do our
+>> cleanup. It's just funny in this case with the ordering of our SIG_IGN,
+>> because now that SIG_IGN isn't on top of the stack anymore.
 >>
->>> I can getting numerous issues in t5310, t5326, t2527 relating to the
->>> following use of --git-dir:
->>>
->>> In t5310:
->>> fatal: not a git repository: 'clone.git'
->>> not ok 55 - fetch (full bitmap)
->>> #
->>> #                       git --git-dir=3Dclone.git fetch origin =
-second:second
->>> &&
->>> #                       git rev-parse HEAD >expect &&
->>> #                       git --git-dir=3Dclone.git rev-parse HEAD =
->actual &&
->>> #                       test_cmp expect actual
->>> #
+>> I.e., I think we want to reorder like this:
 >>
->>This test hasn't changed recently. The clone.git directory should have =
-been created
->>by an earlier test. Can you try running with "-i" and make sure that =
-this is the first
->>failing test, and we didn't fail earlier?
+>> diff --git a/run-command.c b/run-command.c
+>> index 32c290ee6a..8a95f7ff1e 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -1895,14 +1895,19 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+>>  					   "max:%"PRIuMAX,
+>>  					   (uintmax_t)opts->processes);
+>>  
+>> +	pp_init(&pp, opts, &pp_sig);
+>> +
+>>  	/*
+>>  	 * Child tasks might receive input via stdin, terminating early (or not), so
+>>  	 * ignore the default SIGPIPE which gets handled by each feed_pipe_fn which
+>>  	 * actually writes the data to children stdin fds.
+>> +	 *
+>> +	 * This _must_ come after pp_init(), because it installs its own
+>> +	 * SIGPIPE handler (to cleanup children), and we want to supersede
+>> +	 * that.
+>>  	 */
+>>  	sigchain_push(SIGPIPE, SIG_IGN);
+>>  
+>> -	pp_init(&pp, opts, &pp_sig);
+>>  	while (1) {
+>>  		for (i = 0;
+>>  		    i < spawn_cap && !pp.shutdown &&
 >>
->>Especially because...
+>> Does that make your problem go away?
 >>
->>> In t5326 and t5327:
->>> fatal: writev error: Invalid function argument
->>> fetch-pack: unexpected disconnect while reading sideband packet
->>> fatal: early EOF
->>> fatal: fetch-pack: invalid index-pack output not ok 24 - clone from
->>> bitmapped repository #
->>> #                       rm -fr clone.git &&
->>> #                       git clone --no-local --bare . clone.git &&
->>> #                       git rev-parse HEAD >expect &&
->>> #                       git --git-dir=3Dclone.git rev-parse HEAD =
->actual &&
->>> #                       test_cmp expect actual
->>> #
->>
->>...it looks less like --git-dir is a problem here, and more like the =
-introduction of
->>writev() is. It is now used in sideband_send(), so it seems plausible =
-that a similar
->>failure might have broken the git-clone operation that the other test =
-was using to
->>create clone.git.
->>
->>As for why writev() is failing, I don't know. If it were totally =
-broken on your system
->>I'd expect almost everything to be failing. But maybe try building =
-with "make
->>NO_WRITEV=3DNope" and see if that makes the problems go away? The =
-compat
->>implementation just does a series of write() calls, which is what =
-send_sideband()
->>was doing before.
+>> I suspect we could construct a related case that does fail on Linux
+>> without the patch above. Imagine we actually have two hooks running in
+>> parallel. The first one is fast and does not read its input, and the
+>> second one is slow. We'll get SIGPIPE writing to the first one, and then
+>> kill _both_ children. But that's wrong! There is no reason to kill the
+>> second hook, as our intent was to ignore SIGPIPE.
 >
->First fail is as follows in subtest 25:
+> Oh, I am very much impressed by this analysis.
 >
->expecting success of 5310.25 'clone from bitmapped repository':
->                rm -fr clone.git &&
->                git clone --no-local --bare . clone.git &&
->                git rev-parse HEAD >expect &&
->                git --git-dir=3Dclone.git rev-parse HEAD >actual &&
->                test_cmp expect actual
->
->Cloning into bare repository 'clone.git'...
->remote: Enumerating objects: 629, done.
->fatal: writev error: Invalid function argument
->fetch-pack: unexpected disconnect while reading sideband packet
->fatal: early EOF
->fatal: fetch-pack: invalid index-pack output
->not ok 25 - clone from bitmapped repository
->
->I think the invalid function argument maybe an ioctl or socketioctl not =
-supported for
->the file type.
+> As -rc1 has already been tagged (but not pushed out yet), we would
+> probably want to apply a fix before -rc2, I suppose.
 
-This is also impacting t5608 and t7700. Anywhere where writev() is used, =
-seemingly. We went through
-MAX_IO_SIZE issues years ago, instead of using ssize_t as a basis of how =
-big communication is. I think
-writev() is not valid. It worked on Lunix, but had issues elsewhere. =
-This broke the compat layer.
+Yes, that is fine.
 
+All my local tests also look good with Peff's patch
+(including the parallel series).
+
+@Peff
+
+Please let me know if you wish me to send a patch or if you wish to send
+it yourself, since this investigation is your work & effort. :)
