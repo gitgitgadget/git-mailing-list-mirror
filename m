@@ -1,101 +1,140 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E753A346FA4
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:12:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775664758; cv=pass; b=fB5k50K6v+M+N4sC4qnPI8XfvGJqsEmxgqauXVMMbOxIwHR4OTViskpaPcROB4vmvXELg5tNDiMagbvXb3xqfcBpq99kvn/P8AKqRD+E4kKGKLRq1FTLig+rPGFtE3mhtw5tFnxrsYiRO7QjD4TFdVxqhBvchHxpFWebXaF6PLA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775664758; c=relaxed/simple;
-	bh=ANcht5Nur3VkqPIcmchS2yJwgZuKaKe902CB/WmIPt8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fR67f4jhgcYV5FEcP2v145zSnHulM4BSc7uGAgKgp3Dl5DQgFLJ0hbI8qtMmWfNboTNHoXz+vYyHsBlFHYKtP6jC4KezbxrZ1xQoA9wmq5EG4oRPVIOBxNlQ0iLbHFxzksMbR+6W0uhkVDVWZJCW2KzE23tB6B9HA1p4ffbgQlc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=UIOryzoJ; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="UIOryzoJ"
-ARC-Seal: i=1; a=rsa-sha256; t=1775664750; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=WuyTN4lvr0JsMJkrRRYmHik7ZGVXtPw8+8ylm7I2yLFRz9uakKVY9aJ6I9eFJq69f2Cjd9A3vOjEAe4VPqhvzmoTaCLN/IebfF52ydQuPHbFPqwemejgeZQdfaDhbBjs+MpohAWLbN+gFsUnItZMuEA8NuM2kq6gzToEZrSgcdc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775664750; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=2sNbqB2bc+f2/aa/6zS1FOnrt41aZu6UVdbF9mQ2dwk=; 
-	b=cr3AO43kCOS7pq/wyICyG/RVQAiqykltTimao+Z0Mtgw6Dm4uLgCD5EUx3I9I8YGg/GV0Yn/2OIYwPYHUK03k4QUS+1VraCgcVTwya8LkR59YfCwvgWW9j4pOO3D9lUHGmLDikSWgKYVU6N04brf0zR3H1+ZNb1ePjoYK0poQxI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775664750;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=2sNbqB2bc+f2/aa/6zS1FOnrt41aZu6UVdbF9mQ2dwk=;
-	b=UIOryzoJKH/PZPKr1XdNDedmIuI149EpUZwymnu9fDzw1a1LEcpFRkaYthzihpOr
-	0FnUHfVSUXx+5f3OHVazFyZqaLr04xvYNVPLdU4Z+27PapnLv7RydhK0tJH/pGWkgfC
-	DG4son5+jTwcX2HNlq0WcDcif0NdMY4/TIdgWoiQ=
-Received: by mx.zohomail.com with SMTPS id 1775664748783483.9610036800681;
-	Wed, 8 Apr 2026 09:12:28 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t1800: add &&-chains to test helper functions
-Date: Wed,  8 Apr 2026 19:11:48 +0300
-Message-ID: <20260408161148.2064854-1-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.52.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAD539DBD8
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775665557; cv=none; b=V9acM6TcA0SUVOPlE248TSEagGw8Rk83jhokSQgG4fnZLe2L+vG0J6RJW0GAPG90m/CptbdyzqMWs3MoBzlhXu3pt4+QejpojtL51/IcMcAYzlV978ZqC0UeVn+ahiXgPxYM24ZO9DergjsEpZMXOqjZQEwfwJqIcsjGwFr1htk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775665557; c=relaxed/simple;
+	bh=qayxorjR8xKFn4Ltyfgy5aFhZEEvE9SOLl09N34nxQ0=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Pq0mKianHtZDDBAttElrBf5cVuIvhpTVP/vyg2yFHn0x/j2LQsKzzD35tgB8TvrbE/tP3YiYK484wAjt0g+aEt1fId211BLABAilK2qM3ohVD3xONF/7em0kwMCJxF1SiIm6al1A1O5kDoZ4zJQpLne5yJ4CBAn7Ckwr807R1Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 638GPqxD3311538
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Apr 2026 16:25:53 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: <rsbecker@nexbridge.com>, "'Jeff King'" <peff@peff.net>
+Cc: <git@vger.kernel.org>
+References: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com> <20260408041716.GA1324339@coredump.intra.peff.net> <011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
+In-Reply-To: <011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
+Subject: RE: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
+Date: Wed, 8 Apr 2026 12:25:47 -0400
+Organization: Nexbridge Inc.
+Message-ID: <013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIImllt8JGdGqh7Bu9hfV8wd5a54AFtvwh7AomCUMu1XfehMA==
+X-Antivirus: Norton (VPS 260408-0, 4/7/2026), Outbound message
+X-Antivirus-Status: Clean
 
-Add the missing &&'s so we properly propagate failures
-between commands in the hook helper functions.
+On April 8, 2026 10:54 AM, I wrote:
+>To: 'Jeff King' <peff@peff.net>
+>Cc: git@vger.kernel.org
+>Subject: RE: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
+>
+>On April 8, 2026 12:17 AM, Jeff King wrote:
+>>On Tue, Apr 07, 2026 at 07:29:50PM -0400, rsbecker@nexbridge.com =
+wrote:
+>>
+>>> I can getting numerous issues in t5310, t5326, t2527 relating to the
+>>> following use of --git-dir:
+>>>
+>>> In t5310:
+>>> fatal: not a git repository: 'clone.git'
+>>> not ok 55 - fetch (full bitmap)
+>>> #
+>>> #                       git --git-dir=3Dclone.git fetch origin =
+second:second
+>>> &&
+>>> #                       git rev-parse HEAD >expect &&
+>>> #                       git --git-dir=3Dclone.git rev-parse HEAD =
+>actual &&
+>>> #                       test_cmp expect actual
+>>> #
+>>
+>>This test hasn't changed recently. The clone.git directory should have =
+been created
+>>by an earlier test. Can you try running with "-i" and make sure that =
+this is the first
+>>failing test, and we didn't fail earlier?
+>>
+>>Especially because...
+>>
+>>> In t5326 and t5327:
+>>> fatal: writev error: Invalid function argument
+>>> fetch-pack: unexpected disconnect while reading sideband packet
+>>> fatal: early EOF
+>>> fatal: fetch-pack: invalid index-pack output not ok 24 - clone from
+>>> bitmapped repository #
+>>> #                       rm -fr clone.git &&
+>>> #                       git clone --no-local --bare . clone.git &&
+>>> #                       git rev-parse HEAD >expect &&
+>>> #                       git --git-dir=3Dclone.git rev-parse HEAD =
+>actual &&
+>>> #                       test_cmp expect actual
+>>> #
+>>
+>>...it looks less like --git-dir is a problem here, and more like the =
+introduction of
+>>writev() is. It is now used in sideband_send(), so it seems plausible =
+that a similar
+>>failure might have broken the git-clone operation that the other test =
+was using to
+>>create clone.git.
+>>
+>>As for why writev() is failing, I don't know. If it were totally =
+broken on your system
+>>I'd expect almost everything to be failing. But maybe try building =
+with "make
+>>NO_WRITEV=3DNope" and see if that makes the problems go away? The =
+compat
+>>implementation just does a series of write() calls, which is what =
+send_sideband()
+>>was doing before.
+>
+>First fail is as follows in subtest 25:
+>
+>expecting success of 5310.25 'clone from bitmapped repository':
+>                rm -fr clone.git &&
+>                git clone --no-local --bare . clone.git &&
+>                git rev-parse HEAD >expect &&
+>                git --git-dir=3Dclone.git rev-parse HEAD >actual &&
+>                test_cmp expect actual
+>
+>Cloning into bare repository 'clone.git'...
+>remote: Enumerating objects: 629, done.
+>fatal: writev error: Invalid function argument
+>fetch-pack: unexpected disconnect while reading sideband packet
+>fatal: early EOF
+>fatal: fetch-pack: invalid index-pack output
+>not ok 25 - clone from bitmapped repository
+>
+>I think the invalid function argument maybe an ioctl or socketioctl not =
+supported for
+>the file type.
 
-Also add a missing mkdir -p arg (found by adding the &&).
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
-This is a small fix reported by Szeder, based on the master branch
-GitHub branch: https://github.com/10ne1/git/tree/refs/heads/dev/aratiu/tests-add-missing-and-chains
-Clean CI run: https://github.com/10ne1/git/actions/runs/24137982261
----
- t/t1800-hook.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 96749fc06d..33decc66c0 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -6,16 +6,16 @@ test_description='git-hook command and config-managed multihooks'
- . "$TEST_DIRECTORY"/lib-terminal.sh
- 
- setup_hooks () {
--	test_config hook.ghi.command "/path/ghi"
--	test_config hook.ghi.event pre-commit --add
--	test_config hook.ghi.event test-hook --add
--	test_config_global hook.def.command "/path/def"
-+	test_config hook.ghi.command "/path/ghi" &&
-+	test_config hook.ghi.event pre-commit --add &&
-+	test_config hook.ghi.event test-hook --add &&
-+	test_config_global hook.def.command "/path/def" &&
- 	test_config_global hook.def.event pre-commit --add
- }
- 
- setup_hookdir () {
--	mkdir .git/hooks
--	write_script .git/hooks/pre-commit <<-EOF
-+	mkdir -p .git/hooks &&
-+	write_script .git/hooks/pre-commit <<-EOF &&
- 	echo \"Legacy Hook\"
- 	EOF
- 	test_when_finished rm -rf .git/hooks
--- 
-2.52.0
+This is also impacting t5608 and t7700. Anywhere where writev() is used, =
+seemingly. We went through
+MAX_IO_SIZE issues years ago, instead of using ssize_t as a basis of how =
+big communication is. I think
+writev() is not valid. It worked on Lunix, but had issues elsewhere. =
+This broke the compat layer.
 
