@@ -1,88 +1,216 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDAF3537DF
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 17:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775667700; cv=pass; b=cZ3ftomuaDmUqL0EL0t2fi/Tlj3hXVURUEPSKmMXIqHmwhbJIR01u0qi4ZBPFGOYZfWvu0w/e8XFMueI+pAwD3DNn8g8vwUz65KtXvB9Wtpfb1fwpgnq0cV8Kyv6IhIjEazUDaquzVaZXfu3jDg7JsNluFKrHMg6Y2BRjzwkHys=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775667700; c=relaxed/simple;
-	bh=ahWxAYi/o84w7J1m0TFYvrNGoViWS4b7PkVneQEty5E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P7dPiVdJ2P/CJH3IKFrUjRaHChjtldQYS//4WeUEvsmd+bPZUmnAZOtzmKWtPPC0Ed7Sb+aptGexPRSY0mZE1VI507zRy8Uq//drlxHx9v3u8zw9YELrBC3LW0Kbgn35qLPlMhh2c+uyNmGmNbVny1fXtH7uK9+gImDeAagSC18=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=bcTd46zO; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D292935DA52
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 17:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775668139; cv=none; b=MydgUPgseYUiZro4DWVCaCQe16X4VhM7J97+hl066ArkJy0/Cw0y1QLc9M0lh6ht6qERMXEckaWJKo4khnAacQLt0XJkT/kdIxeHVpkLlqkIw3mpPNxltIprDQmoKyVH7+EQrmyRM2X1QLXmh0cv4w9A3ojAoAmrlJsapqFOpEM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775668139; c=relaxed/simple;
+	bh=BIA5IalMgqLlWaj6r4m1b75sLiDiQ6GgsfaveXIfygk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XX8SKsofy+3FpbOpBOIDHiJMZpqwi3a68gOkQM/WngEasLMuAHGRZv8u2p6hGKCGGbgtjMLq/Vk2He0qWSW0l1/j3gbjzIQgEDDLzobkE60sMKB3Mzihe6witD8LbbdCmsLjMfGPV7RtTwQRpZwzim1aapBb21G5BJD/tYqy8oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EJykcI5X; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="bcTd46zO"
-ARC-Seal: i=1; a=rsa-sha256; t=1775667691; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=PJjFYniEDWQtXOwq2/4kGWNq54mPM63qu4dPxUwvFYRjRUh+DWjIGB8kmXCXtiB84eSx9TNNlfTh6FZTOLmIkDslaarwdhfCcsq50f27MST7FfBU3ejlHx+uIzyL8N1epkqlJtPGhNNnda3sjOIPKL4foVWpicUF741oXqBT9kU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775667691; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ExC75DTdOE39DWXVuH5eGnF6wwXTU4Nlt2b5T8dn/uI=; 
-	b=KjcpBoHYZwBaRn1wcgm2Dbi7wKt46AsxDiQ7ZFgKnrAXYlHQrJEE3RV7iAcmWXnRfFSiu/Y67uqSc4EgPDE0Q9RekRWPkwaT8Lodn6Ha2CLoAx5+rhqAHT9Ol2CeQZuInQ323JBOhghRCY/s5sYvNuOLGP0JyZyRFpAUZO55SEM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775667691;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=ExC75DTdOE39DWXVuH5eGnF6wwXTU4Nlt2b5T8dn/uI=;
-	b=bcTd46zO15A5fSXqoaO7kQzVegS4t2xuPDNIVtjoDqi2niOPvcO1IvRUkwdhtbQJ
-	OgY+TZYcIpbURHukk7IKFzvPo87bl3fHxsYoMEVqoS+zEq/Vrm/bIvjzXfEiX6qZA+f
-	1m11vzffX9CWtGmCiI2HJ7S7tgvH0bHYPe8hFJ/A=
-Received: by mx.zohomail.com with SMTPS id 1775667688900486.5350672964074;
-	Wed, 8 Apr 2026 10:01:28 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, rsbecker@nexbridge.com, git@vger.kernel.org
-Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
-In-Reply-To: <xmqqcy091jht.fsf@gitster.g>
-References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
- <20260408052031.GB1324339@coredump.intra.peff.net>
- <20260408054347.GA2284358@coredump.intra.peff.net>
- <871pgp3byq.fsf@collabora.com> <xmqqcy091jht.fsf@gitster.g>
-Date: Wed, 08 Apr 2026 20:01:25 +0300
-Message-ID: <87v7e11j4q.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EJykcI5X"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35c1a131946so722592a91.0
+        for <git@vger.kernel.org>; Wed, 08 Apr 2026 10:08:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775668137; x=1776272937; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YON3BBlxaZm7pF3jMVtqOhIHgm6+XmeNbpBlVDfVHPc=;
+        b=EJykcI5XtTcmL/ZX/cBvQQbJSAzeUbDc3++GfGlKPPHBcXb259syWCpRx+tpahfFuP
+         ynxxY0fHgtW+UTTMGkemH2g64QX7uC3fOLNsaS08HIoF0NKHSBz5VXWf+7IvIwD+/une
+         pSJVohlk7GRMm6GRzC8BDa3jifzicXEreqCEIAWXDmHzxOtX75dYcTRc7OR1MhkQv4+g
+         Xg+kOSCAxnNAW2tkD62BxAKFkExKxHHtm0swZIQIFpjtMx8ARx24T81l5uh158IJGQNB
+         xu2+JT2nkBBBcN49Xh+3txJMLCSEb1crQQOUNYdqWMy+6QHZ2pRYLDV9OOYQotCG8cCy
+         /1Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775668137; x=1776272937;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YON3BBlxaZm7pF3jMVtqOhIHgm6+XmeNbpBlVDfVHPc=;
+        b=Nhpg8x27NzRsfbPnxHDdygjdzaF+HNpL5jgQ2lJM8QaPpTc1MAVElHZM+SaafTIG/F
+         JEFwQbultXJpkp3Hbz7Ci3mbEhAKReGaxULA035Ahe52jPFn0sOa26+TrKrYsNfXojPs
+         HSf6uyasZnse2gL/WnAJRpNNusJTyTD4D8YkXawx/Xr9IsmFCSFttjHLPNbJ7oql1Zg0
+         stnY8b7zu01+p6p6+c0kSyqWyyrxB5IRj92vZZ6z0dEITqWMfigivKAWw/xSdCXKBMpK
+         aaQgpTpIfSMIB6mGhTx0OiAHFtfBnyYd7e+unjQlIEhaaxRFwds75VxlozDpt8tBeWQg
+         v4HQ==
+X-Gm-Message-State: AOJu0YzUs+Fm+BuAdaR1EhcH524g7VaKIwKgRwiuRjQnuM1JjeLXNiKt
+	t1Wngdb9L6SdmRIazfUWCcZxvO1fOD5CdaaSJTWIq/WBoPUzlCeMOpd9+tr2uw==
+X-Gm-Gg: AeBDieuYJWqJXCbTbwRk/EGgkbadSeBv95eAE5yR71PGIEbULDHAjEOq82ONBKeYWRJ
+	PK+gLpTwz3IdyakNAG66egGz3We8wG80YDITxFFtC7RUvcTZVGRbBWxi+qJob10+/tgT2LqVebQ
+	b9f5uhNLe2Q6HVoZsDV/wGdPheVaSSfqnNwxLEQwprPR7khl2bAvPLHG5ijzCKK4s75yMz1d2fQ
+	OlqTrGA8VSRVQca36LKM1DBve8fC8GOjxIG/0K/raCtDWoJ28TkYXADozDh+ZPUgyRW/OXBA15i
+	ITXad5WXYnJi64QJ7X5IFUIYUbdkvkYMj8lABVkLYYCnKBPnqXztfxYagvv7G4Yq2rLyc5m+WxT
+	D0aShASJTTtWi2g6oD2Ae/9sE1fLkyg4r0AR7A+GxoHXGn6TOVJbHVCBuy2veHSgUq+CTGKW1g0
+	jwQnNQ5ujQf94fMjJxItRLTgTK
+X-Received: by 2002:a05:693c:2d91:b0:2d2:d5a3:e97c with SMTP id 5a478bee46e88-2d40fce99ccmr116733eec.12.1775668136496;
+        Wed, 08 Apr 2026 10:08:56 -0700 (PDT)
+Received: from [127.0.0.1] ([68.220.59.55])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2d1b152f3adsm7602357eec.20.2026.04.08.10.08.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Apr 2026 10:08:55 -0700 (PDT)
+Message-Id: <pull.2264.v2.git.git.1775668134796.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2264.git.git.1775150062407.gitgitgadget@gmail.com>
+References: <pull.2264.git.git.1775150062407.gitgitgadget@gmail.com>
+From: "Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 08 Apr 2026 17:08:54 +0000
+Subject: [PATCH v2] repo: add paths.toplevel to repo info
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+    Jayesh Daga <jayeshdaga99@gmail.com>,
+    Jayesh Daga <jayeshdaga99@gmail.com>
 
-On Wed, 08 Apr 2026, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
->
->> Thanks Peff for the in-depth analysis, fix and test.
->> It is very much appreciated. I missed this case.
->>
->> I agree with your assesement: this must be fixed regardless if it also
->> fixes Randall's case or not (might be a separate root cause).
->>
->> I would proceed like this (obviously crediting you for the fix & test):
->>
->> If it fixes Randall's case:
->>    send a standalone bug-fix patch, then integrate the test into the
->>    parallel series.
->> else
->>    integrate both the fix and the test into the parallel series.
->>
->> @Randall please let us know if the fix proposed by Peff in the other
->> response works for you.
->
-> It sounds sensible, but a standalone fix early before 2.54 final, as
-> the problem and the fix shown by Peff here looked correct, without
-> waiting for NonStop may be simpler to work with.  Then, rebuild
-> parallel series on top of the 'master' that has the fix applied,
-> perhaps?
+From: Jayesh Daga <jayeshdaga99@gmail.com>
 
-Yes, that is the path forward now that Randall also confirmed the fix
-works on NonStop (btw thank you Randall). :)
+repo info currently does not expose the repository's
+working tree root, even though this information is
+available via `repo_get_work_tree()` and
+`git rev-parse --show-toplevel`.
 
-Just waiting for Peff to tell me if he wants to send it himself.
+Add a new field `paths.toplevel` to expose this value.
+
+While doing so, document the correspondence between
+`git rev-parse` options and `repo info` fields to make
+it easier to identify missing or future additions.
+
+For bare repositories, this value is empty, consistent
+with other non-applicable fields.
+
+Signed-off-by: Jayesh Daga [jayeshdaga99@gmail.com](mailto:jayeshdaga99@gmail.com)
+---
+    repo: add paths.toplevel to repo info
+    
+    repo info currently does not expose the repository's working tree root,
+    even though this information is available via repo_get_work_tree().
+    
+    This makes it harder for scripts to retrieve the repository root through
+    a structured interface, often requiring the use of git rev-parse
+    --show-toplevel.
+    
+    Add a new field paths.toplevel to git repo info that returns the working
+    tree root. For bare repositories, this value is empty, consistent with
+    other non-applicable fields.
+    
+    This provides a consistent and script-friendly way to query repository
+    paths without invoking additional commands.
+    
+    Signed-off-by: Jayesh Daga jayeshdaga99@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2264%2Fjayesh0104%2Frepo-toplevel-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2264/jayesh0104/repo-toplevel-v2
+Pull-Request: https://github.com/git/git/pull/2264
+
+Range-diff vs v1:
+
+ 1:  448dfae6a1 ! 1:  05e34bfe2c repo: add paths.toplevel to repo info
+     @@ Metadata
+       ## Commit message ##
+          repo: add paths.toplevel to repo info
+      
+     -    Expose the working tree root via `git repo info` as
+     -    paths.toplevel, matching the semantics of
+     +    repo info currently does not expose the repository's
+     +    working tree root, even though this information is
+     +    available via `repo_get_work_tree()` and
+          `git rev-parse --show-toplevel`.
+      
+     +    Add a new field `paths.toplevel` to expose this value.
+     +
+     +    While doing so, document the correspondence between
+     +    `git rev-parse` options and `repo info` fields to make
+     +    it easier to identify missing or future additions.
+     +
+          For bare repositories, this value is empty, consistent
+          with other non-applicable fields.
+      
+     -    This allows scripts to retrieve the repository root
+     -    through a structured interface without invoking
+     -    rev-parse.
+     -
+     -    Signed-off-by: Jayesh Daga <jayeshdaga99@gmail.com>
+     +    Signed-off-by: Jayesh Daga [jayeshdaga99@gmail.com](mailto:jayeshdaga99@gmail.com)
+      
+       ## builtin/repo.c ##
+      @@ builtin/repo.c: static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+
+
+ builtin/repo.c       | 12 ++++++++++++
+ t/t1900-repo-info.sh | 16 ++++++++++++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 71a5c1c29c..d0491f6c66 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -62,6 +62,17 @@ static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+ 	return 0;
+ }
+ 
++static int get_paths_toplevel(struct repository *repo, struct strbuf *buf)
++{
++    const char *wt = repo_get_work_tree(repo);
++
++    if (!wt)
++	return -1; /* match existing error style */
++
++    strbuf_addstr(buf, wt);
++    return 0;
++}
++
+ static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
+ {
+ 	strbuf_addstr(buf,
+@@ -87,6 +98,7 @@ static const struct repo_info_field repo_info_field[] = {
+ 	{ "layout.bare", get_layout_bare },
+ 	{ "layout.shallow", get_layout_shallow },
+ 	{ "object.format", get_object_format },
++	{ "paths.toplevel", get_paths_toplevel },
+ 	{ "references.format", get_references_format },
+ };
+ 
+diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+index 39bb77dda0..470e06e8c2 100755
+--- a/t/t1900-repo-info.sh
++++ b/t/t1900-repo-info.sh
+@@ -155,4 +155,20 @@ test_expect_success 'git repo info -h shows only repo info usage' '
+ 	test_grep ! "git repo structure" actual
+ '
+ 
++test_expect_success 'repo info paths.toplevel' '
++    git repo info paths.toplevel >actual &&
++    echo "paths.toplevel=$(git rev-parse --show-toplevel)" >expected &&
++    test_cmp expected actual
++'
++
++test_expect_success 'repo info paths.toplevel (bare repo)' '
++    git init --bare bare.git &&
++    (
++	cd bare.git &&
++	git repo info paths.toplevel >actual &&
++	echo "paths.toplevel=" >expected &&
++	test_cmp expected actual
++    )
++'
++
+ test_done
+
+base-commit: 256554692df0685b45e60778b08802b720880c50
+-- 
+gitgitgadget
