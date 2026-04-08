@@ -1,105 +1,101 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6242E06E6
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775664085; cv=none; b=Ng2aC3/Nyb+kGwsP6GTnuoIjxLU3xptI18MqBCdrA21mHBAmtzMoMoTS2MtVd5va5RvA6K9WiG2wzW2xiK/5r/NQ6pfFLHdzWGKDpLf0XJP5vOp2r4LpQ8IiCr8o9YM0njYxKszsHA9jPQwbqeJxK4x36JRCGddUytU+vxoB5SY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775664085; c=relaxed/simple;
-	bh=+GhJJ+qnONiCpI3YGPB8uOTOYNhydHEV5ezEyIBycf8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciUpp8b6L/nKudS1jCWFWYj6wf/IeOE3jxgj+JWMinamjUysQOfKmYLzelvxu7dxZeilUteYIEaK5+KuHkEOWO7JBtJX5vAmI5tifuTrE6zLLPBGoCM91v09xv2iyeJsruXNjtWmTk+QPSwNTSrYTlSMXFxi0quCE6N+qKglxoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFof5ScG; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E753A346FA4
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775664758; cv=pass; b=fB5k50K6v+M+N4sC4qnPI8XfvGJqsEmxgqauXVMMbOxIwHR4OTViskpaPcROB4vmvXELg5tNDiMagbvXb3xqfcBpq99kvn/P8AKqRD+E4kKGKLRq1FTLig+rPGFtE3mhtw5tFnxrsYiRO7QjD4TFdVxqhBvchHxpFWebXaF6PLA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775664758; c=relaxed/simple;
+	bh=ANcht5Nur3VkqPIcmchS2yJwgZuKaKe902CB/WmIPt8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fR67f4jhgcYV5FEcP2v145zSnHulM4BSc7uGAgKgp3Dl5DQgFLJ0hbI8qtMmWfNboTNHoXz+vYyHsBlFHYKtP6jC4KezbxrZ1xQoA9wmq5EG4oRPVIOBxNlQ0iLbHFxzksMbR+6W0uhkVDVWZJCW2KzE23tB6B9HA1p4ffbgQlc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=UIOryzoJ; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFof5ScG"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c76cce85bd9so16872a12.1
-        for <git@vger.kernel.org>; Wed, 08 Apr 2026 09:01:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775664083; x=1776268883; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3FplesCmT3ATePXQcxAQEs7WUBqvH88lU1gBZ4xu8nk=;
-        b=PFof5ScGg6A8CBjCo2k+mkfn4Q9VWEn8EkqGNVdxSSbrV9uQWTLfdwkqxCG0Gw1hGh
-         h8y/gkNfICXcLJbuGogGfHO4z0ozWp4jpP90uEXM27fNzGMqUFRurEW4AnqLvLXanzUC
-         6o9Bc7H+GEGO6YhpRvn9wRNDYDvNjSsDwJEyYjRXMdOd0ruoGk1VylooB/9K8Lf2ixv/
-         W5339aXpw0zDfXck3HFbDmdcZtpJnYFEhUKEzxbEDl3JSrBtn3K1wVS2jWjYU2C0VAu1
-         kFLuAkzZMqN2NJbh2QtvTrJua9da+vBM1E2bcqHj3WRzrrm1b73qJwlZnuI9Li1kxsbJ
-         xGBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775664083; x=1776268883;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3FplesCmT3ATePXQcxAQEs7WUBqvH88lU1gBZ4xu8nk=;
-        b=F/knHqZ5mpbA3D9YbHvfu0nFVmQu6Z18T3s3YrfwEvZxOpN9NTv51cG6SW5wpCRY1G
-         18qzM9TJVg92TlVZbqSsOrgECIsPgqqEg4lg0oIPRYK0bV9w44Ei7QKe+fk2ZQcT0eNM
-         Vc7gI2bLbEIumbBSlNVQNrmDy/ZMoggzXIrPWqKRm1P3/HdIc4cJXxwGq0zjvrBoy558
-         Z849vpi+X6YB75gbVD7i+xkd584/0KEDB3x+nN0abXhErVtrbeQGqgSATlvnCgYOwE2e
-         Wt8MJtnNFFnGnUSHpHZMJZnE4/itIIGtf5nf5p+SsTCkkohsZW59fTu44owjzOFJj8gj
-         t2ag==
-X-Gm-Message-State: AOJu0YxzZcjZVrqbSJU6F/tPivZyUPCeV4YC4eG4PC1sCMrDaTPWPsN9
-	J0MHa6Wbqbt3u3ipj5aVjH9zE4mOOf8hv8l8qicFqA1W2QHHxxH1cWW7
-X-Gm-Gg: AeBDiev/rLMLWju5KZ1rUj6CBXKw6EW4UWvPHC8H/vSP11N5s/VGLTe5ZW+R6M+f8F4
-	GBT/nkYzlkL4mCCOqTL83ov7WXCcrPSUfb0L7D2Ea8xxWVBP3RkxAvx5ruEzGNJAei+hjk0BK6j
-	0lUsQlWvkoRv5H5jMKqBDpQkmmsRphiE2naBrCvnWeuRXF7ohBfXhPadpHjHVAhdNY+CxwSM5Ls
-	grjNU/1zH9cEBudoA1DuzyV8KBICBnhU/VWdS0v2h7QV3ulEUl/0hRC88ArTFqCxv3hjooQMt1s
-	SdjGwQctoCFHt0QQjWJJBLbPJNAxA2kdLNWn+IfHFnZZI7ieydEowNeLBSFlhbAvNhTgnxfnoWL
-	ROmI9JzZGNYdSsrz0g6r1nxBqz17wZNSaytov3c/edtcfxI1CGPHdE5R8NoiTThpFIVVwTWJAU5
-	jh1hZatHt6yx4o2qoel8pMZ29No4ldUoeh0gBqMK1otrLDFf0=
-X-Received: by 2002:a17:90b:1dc6:b0:35d:a843:6b1f with SMTP id 98e67ed59e1d1-35de6899ce5mr20937356a91.11.1775664083104;
-        Wed, 08 Apr 2026 09:01:23 -0700 (PDT)
-Received: from Pushkar.localdomain ([49.37.115.122])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e3512f27asm42822a91.10.2026.04.08.09.01.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Apr 2026 09:01:20 -0700 (PDT)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: pushkarkumarsingh1970@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	peff@peff.net
-Subject: [PATCH] archive: document --prefix handling of absolute and parent paths
-Date: Wed,  8 Apr 2026 16:00:06 +0000
-Message-ID: <20260408160005.193621-2-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
-In-Reply-To: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
-References: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="UIOryzoJ"
+ARC-Seal: i=1; a=rsa-sha256; t=1775664750; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=WuyTN4lvr0JsMJkrRRYmHik7ZGVXtPw8+8ylm7I2yLFRz9uakKVY9aJ6I9eFJq69f2Cjd9A3vOjEAe4VPqhvzmoTaCLN/IebfF52ydQuPHbFPqwemejgeZQdfaDhbBjs+MpohAWLbN+gFsUnItZMuEA8NuM2kq6gzToEZrSgcdc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1775664750; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=2sNbqB2bc+f2/aa/6zS1FOnrt41aZu6UVdbF9mQ2dwk=; 
+	b=cr3AO43kCOS7pq/wyICyG/RVQAiqykltTimao+Z0Mtgw6Dm4uLgCD5EUx3I9I8YGg/GV0Yn/2OIYwPYHUK03k4QUS+1VraCgcVTwya8LkR59YfCwvgWW9j4pOO3D9lUHGmLDikSWgKYVU6N04brf0zR3H1+ZNb1ePjoYK0poQxI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775664750;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=2sNbqB2bc+f2/aa/6zS1FOnrt41aZu6UVdbF9mQ2dwk=;
+	b=UIOryzoJKH/PZPKr1XdNDedmIuI149EpUZwymnu9fDzw1a1LEcpFRkaYthzihpOr
+	0FnUHfVSUXx+5f3OHVazFyZqaLr04xvYNVPLdU4Z+27PapnLv7RydhK0tJH/pGWkgfC
+	DG4son5+jTwcX2HNlq0WcDcif0NdMY4/TIdgWoiQ=
+Received: by mx.zohomail.com with SMTPS id 1775664748783483.9610036800681;
+	Wed, 8 Apr 2026 09:12:28 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] t1800: add &&-chains to test helper functions
+Date: Wed,  8 Apr 2026 19:11:48 +0300
+Message-ID: <20260408161148.2064854-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Clarify that --prefix is used as given and is not normalized,
-and may include leading slashes or parent directory components.
+Add the missing &&'s so we properly propagate failures
+between commands in the hook helper functions.
 
-Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Also add a missing mkdir -p arg (found by adding the &&).
+
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/git-archive.adoc | 5 +++++
- 1 file changed, 5 insertions(+)
+This is a small fix reported by Szeder, based on the master branch
+GitHub branch: https://github.com/10ne1/git/tree/refs/heads/dev/aratiu/tests-add-missing-and-chains
+Clean CI run: https://github.com/10ne1/git/actions/runs/24137982261
+---
+ t/t1800-hook.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-archive.adoc b/Documentation/git-archive.adoc
-index a0e3fe7996..086bade6d8 100644
---- a/Documentation/git-archive.adoc
-+++ b/Documentation/git-archive.adoc
-@@ -54,6 +54,11 @@ OPTIONS
- 	Prepend <prefix>/ to paths in the archive.  Can be repeated; its
- 	rightmost value is used for all tracked files.  See below which
- 	value gets used by `--add-file`.
-++
-+The <prefix> is used as given and is not normalized. It may
-+include leading slashes or parent directory components (e.g.,
-+`../`). Some archive consumers may treat such paths as
-+potentially unsafe and adjust or warn during extraction.
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 96749fc06d..33decc66c0 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -6,16 +6,16 @@ test_description='git-hook command and config-managed multihooks'
+ . "$TEST_DIRECTORY"/lib-terminal.sh
  
- -o <file>::
- --output=<file>::
+ setup_hooks () {
+-	test_config hook.ghi.command "/path/ghi"
+-	test_config hook.ghi.event pre-commit --add
+-	test_config hook.ghi.event test-hook --add
+-	test_config_global hook.def.command "/path/def"
++	test_config hook.ghi.command "/path/ghi" &&
++	test_config hook.ghi.event pre-commit --add &&
++	test_config hook.ghi.event test-hook --add &&
++	test_config_global hook.def.command "/path/def" &&
+ 	test_config_global hook.def.event pre-commit --add
+ }
+ 
+ setup_hookdir () {
+-	mkdir .git/hooks
+-	write_script .git/hooks/pre-commit <<-EOF
++	mkdir -p .git/hooks &&
++	write_script .git/hooks/pre-commit <<-EOF &&
+ 	echo \"Legacy Hook\"
+ 	EOF
+ 	test_when_finished rm -rf .git/hooks
 -- 
-2.53.0.582.gca1db8a0f7
+2.52.0
 
