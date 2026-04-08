@@ -1,161 +1,105 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC02D77E5
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 15:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6242E06E6
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 16:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775663716; cv=none; b=Rs/xSYZQVNn7abMkTv6JHnhEpvEWXuyg4cn51+p7cSJ+p2KtEZy+jAcvuOXcLDxlMq9yCv83CwAc7QMj7qxnQ9D1LsHMc8y0TUEpHNSjeSgyu3fHGe156tY4DoPmcpMam5MxBJsFBJP+GkXiMeB/5gESSYPoZi2ZYEe0k1pY2Oc=
+	t=1775664085; cv=none; b=Ng2aC3/Nyb+kGwsP6GTnuoIjxLU3xptI18MqBCdrA21mHBAmtzMoMoTS2MtVd5va5RvA6K9WiG2wzW2xiK/5r/NQ6pfFLHdzWGKDpLf0XJP5vOp2r4LpQ8IiCr8o9YM0njYxKszsHA9jPQwbqeJxK4x36JRCGddUytU+vxoB5SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775663716; c=relaxed/simple;
-	bh=XSfwfPXH42lbGgUyHC1SlFtFERxZNgMw0M+F1TYaJCM=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UU5vJSfsWLx4Wad230MfmZQtaAQ4oF+FpuZJgGIvgGt8uiIXhtXbrQPvYu0Juvms4NdED4zHfhNC5XXP4pRYjvQrm3KKanjawHtlYUwHkmvFmmOHY/rOouXkWI66IMwszLPQGFcu9bDJ5d19jIuxaaxSBbEPx1ZsMRzgOesLDSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 638Ft66T3304612
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Apr 2026 15:55:07 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Adrian Ratiu'" <adrian.ratiu@collabora.com>,
-        "'Jeff King'" <peff@peff.net>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com> <20260408052031.GB1324339@coredump.intra.peff.net> <20260408054347.GA2284358@coredump.intra.peff.net> <871pgp3byq.fsf@collabora.com> 
-In-Reply-To: 
-Subject: RE: Help needed on 2.54.0-rc0 t5301.13 looping.
-Date: Wed, 8 Apr 2026 11:55:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <012b01dcc770$126425d0$372c7170$@nexbridge.com>
+	s=arc-20240116; t=1775664085; c=relaxed/simple;
+	bh=+GhJJ+qnONiCpI3YGPB8uOTOYNhydHEV5ezEyIBycf8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ciUpp8b6L/nKudS1jCWFWYj6wf/IeOE3jxgj+JWMinamjUysQOfKmYLzelvxu7dxZeilUteYIEaK5+KuHkEOWO7JBtJX5vAmI5tifuTrE6zLLPBGoCM91v09xv2iyeJsruXNjtWmTk+QPSwNTSrYTlSMXFxi0quCE6N+qKglxoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFof5ScG; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFof5ScG"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c76cce85bd9so16872a12.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2026 09:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775664083; x=1776268883; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3FplesCmT3ATePXQcxAQEs7WUBqvH88lU1gBZ4xu8nk=;
+        b=PFof5ScGg6A8CBjCo2k+mkfn4Q9VWEn8EkqGNVdxSSbrV9uQWTLfdwkqxCG0Gw1hGh
+         h8y/gkNfICXcLJbuGogGfHO4z0ozWp4jpP90uEXM27fNzGMqUFRurEW4AnqLvLXanzUC
+         6o9Bc7H+GEGO6YhpRvn9wRNDYDvNjSsDwJEyYjRXMdOd0ruoGk1VylooB/9K8Lf2ixv/
+         W5339aXpw0zDfXck3HFbDmdcZtpJnYFEhUKEzxbEDl3JSrBtn3K1wVS2jWjYU2C0VAu1
+         kFLuAkzZMqN2NJbh2QtvTrJua9da+vBM1E2bcqHj3WRzrrm1b73qJwlZnuI9Li1kxsbJ
+         xGBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775664083; x=1776268883;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3FplesCmT3ATePXQcxAQEs7WUBqvH88lU1gBZ4xu8nk=;
+        b=F/knHqZ5mpbA3D9YbHvfu0nFVmQu6Z18T3s3YrfwEvZxOpN9NTv51cG6SW5wpCRY1G
+         18qzM9TJVg92TlVZbqSsOrgECIsPgqqEg4lg0oIPRYK0bV9w44Ei7QKe+fk2ZQcT0eNM
+         Vc7gI2bLbEIumbBSlNVQNrmDy/ZMoggzXIrPWqKRm1P3/HdIc4cJXxwGq0zjvrBoy558
+         Z849vpi+X6YB75gbVD7i+xkd584/0KEDB3x+nN0abXhErVtrbeQGqgSATlvnCgYOwE2e
+         Wt8MJtnNFFnGnUSHpHZMJZnE4/itIIGtf5nf5p+SsTCkkohsZW59fTu44owjzOFJj8gj
+         t2ag==
+X-Gm-Message-State: AOJu0YxzZcjZVrqbSJU6F/tPivZyUPCeV4YC4eG4PC1sCMrDaTPWPsN9
+	J0MHa6Wbqbt3u3ipj5aVjH9zE4mOOf8hv8l8qicFqA1W2QHHxxH1cWW7
+X-Gm-Gg: AeBDiev/rLMLWju5KZ1rUj6CBXKw6EW4UWvPHC8H/vSP11N5s/VGLTe5ZW+R6M+f8F4
+	GBT/nkYzlkL4mCCOqTL83ov7WXCcrPSUfb0L7D2Ea8xxWVBP3RkxAvx5ruEzGNJAei+hjk0BK6j
+	0lUsQlWvkoRv5H5jMKqBDpQkmmsRphiE2naBrCvnWeuRXF7ohBfXhPadpHjHVAhdNY+CxwSM5Ls
+	grjNU/1zH9cEBudoA1DuzyV8KBICBnhU/VWdS0v2h7QV3ulEUl/0hRC88ArTFqCxv3hjooQMt1s
+	SdjGwQctoCFHt0QQjWJJBLbPJNAxA2kdLNWn+IfHFnZZI7ieydEowNeLBSFlhbAvNhTgnxfnoWL
+	ROmI9JzZGNYdSsrz0g6r1nxBqz17wZNSaytov3c/edtcfxI1CGPHdE5R8NoiTThpFIVVwTWJAU5
+	jh1hZatHt6yx4o2qoel8pMZ29No4ldUoeh0gBqMK1otrLDFf0=
+X-Received: by 2002:a17:90b:1dc6:b0:35d:a843:6b1f with SMTP id 98e67ed59e1d1-35de6899ce5mr20937356a91.11.1775664083104;
+        Wed, 08 Apr 2026 09:01:23 -0700 (PDT)
+Received: from Pushkar.localdomain ([49.37.115.122])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e3512f27asm42822a91.10.2026.04.08.09.01.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Apr 2026 09:01:20 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: pushkarkumarsingh1970@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	peff@peff.net
+Subject: [PATCH] archive: document --prefix handling of absolute and parent paths
+Date: Wed,  8 Apr 2026 16:00:06 +0000
+Message-ID: <20260408160005.193621-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
+In-Reply-To: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
+References: <20260407162101.2285-1-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHvBjVJZsXG7N1gHKdCJ4V3u2kT9AFYabqHAkdaE8oCPPreZ7WB63cAgAAB55A=
-X-Antivirus: Norton (VPS 260408-0, 4/7/2026), Outbound message
-X-Antivirus-Status: Clean
+Content-Transfer-Encoding: 8bit
 
-On April 8, 2026 11:53 AM, I wrote (accidentally):
->To: 'Adrian Ratiu' <adrian.ratiu@collabora.com>; 'Jeff King'
-<peff@peff.net>
->Cc: 'Junio C Hamano' <gitster@pobox.com>; 'git@vger.kernel.org'
-><git@vger.kernel.org>
->Subject: RE: Help needed on 2.54.0-rc0 t5301.13 looping.
->
->On April 8, 2026 7:53 AM, Adrian Ratiu wrote:
->>To: Jeff King <peff@peff.net>; rsbecker@nexbridge.com
->>Cc: Junio C Hamano <gitster@pobox.com>; git@vger.kernel.org
->>Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
->>
->>On Wed, 08 Apr 2026, Jeff King <peff@peff.net> wrote:
->>> On Wed, Apr 08, 2026 at 01:20:31AM -0400, Jeff King wrote:
->>>
->>>> I suspect we could construct a related case that does fail on Linux
->>>> without the patch above. Imagine we actually have two hooks running
->>>> in parallel. The first one is fast and does not read its input, and
->>>> the second one is slow. We'll get SIGPIPE writing to the first one,
->>>> and then kill _both_ children. But that's wrong! There is no reason
->>>> to kill the second hook, as our intent was to ignore SIGPIPE.
->>>
->>> This would require running hooks in parallel, which isn't implemented
->>> yet for v2.54.0. But if I build on top of the ar/parallel-hooks
->>> topic, then this test:
->>>
->>> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh index
->>> 44ec875aef..97257763d3 100755
->>> --- a/t/t5401-update-hooks.sh
->>> +++ b/t/t5401-update-hooks.sh
->>> @@ -139,4 +139,43 @@ test_expect_success 'pre-receive hook that
->>> forgets to
->>read its input' '
->>>  	git push ./victim.git "+refs/heads/*:refs/heads/*"
->>>  '
->>>
->>> +test_expect_success 'hooks in parallel that do not read input' '
->>> +	# Add this to our $PATH to avoid having to write the whole trash
->>> +	# directory into our config options, which would require quoting.
->>> +	mkdir bin &&
->>> +	PATH=$PWD/bin:$PATH &&
->>> +
->>> +	write_script bin/hook-fast <<-\EOF &&
->>> +	# This hook does not read its input, so the parent process
->>> +	# may see SIGPIPE if it is not ignored. It should happen
->>> +	# relatively quickly.
->>> +	exit 0
->>> +	EOF
->>> +
->>> +	write_script bin/hook-slow <<-\EOF &&
->>> +	# This hook is slow, so we expect it to still be running
->>> +	# when the other hook has exited (and the parent has a pipe error
->>> +	# writing to it).
->>> +	#
->>> +	# So we want to be slow enough that we expect this to happen, but
-not
->>> +	# so slow that the test takes forever. 1 second is probably enough
->>> +	# in practice (and if it is occasionally not on a loaded system, we
->>> +	# will err on the side of having the test pass).
->>> +	sleep 1
->>> +	exit 0
->>> +	EOF
->>> +
->>> +
->>> +	git init --bare parallel.git &&
->>> +	git -C parallel.git config hook.fast.command "hook-fast" &&
->>> +	git -C parallel.git config hook.fast.event pre-receive &&
->>> +	git -C parallel.git config hook.fast.parallel true &&
->>> +	git -C parallel.git config hook.slow.command "hook-slow" &&
->>> +	git -C parallel.git config hook.slow.event pre-receive &&
->>> +	git -C parallel.git config hook.slow.parallel true &&
->>> +	git -C parallel.git config hook.jobs 2 &&
->>> +
->>> +	git push ./parallel.git "+refs/heads/*:refs/heads/*"
->>> +'
->>> +
->>>  test_done
->>>
->>> fails reliably. And applying the patch I suggested earlier fixes it.
->>>
->>> So I think it's probably a good idea regardless, though I'm still
->>> curious to see if it solves Randall's non-parallel case on NonStop.
->>
->>Thanks Peff for the in-depth analysis, fix and test.
->>It is very much appreciated. I missed this case.
->>
->>I agree with your assesement: this must be fixed regardless if it also
->>fixes Randall's case or not (might be a separate root cause).
->>
->>I would proceed like this (obviously crediting you for the fix & test):
->>
->>If it fixes Randall's case:
->>   send a standalone bug-fix patch, then integrate the test into the
->>   parallel series.
->>else
->>   integrate both the fix and the test into the parallel series.
->>
->>@Randall please let us know if the fix proposed by Peff in the other
->>response works for you.
->
->This fix, however, causes an unreported infinite loop in t5571:
->
->expecting success of 5571.11 'sigpipe does not cause pre-push hook
-failure':
->        test_hook --clobber pre-push <<-\EOF &&
->        exit 0
->        EOF
->        git push parent1 "refs/heads/b/*:refs/heads/b/*"
->
->Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0) <and hung>
+Clarify that --prefix is used as given and is not normalized,
+and may include leading slashes or parent directory components.
 
-I was not patient enough. This continued eventually and passed.
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+ Documentation/git-archive.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/git-archive.adoc b/Documentation/git-archive.adoc
+index a0e3fe7996..086bade6d8 100644
+--- a/Documentation/git-archive.adoc
++++ b/Documentation/git-archive.adoc
+@@ -54,6 +54,11 @@ OPTIONS
+ 	Prepend <prefix>/ to paths in the archive.  Can be repeated; its
+ 	rightmost value is used for all tracked files.  See below which
+ 	value gets used by `--add-file`.
+++
++The <prefix> is used as given and is not normalized. It may
++include leading slashes or parent directory components (e.g.,
++`../`). Some archive consumers may treat such paths as
++potentially unsafe and adjust or warn during extraction.
+ 
+ -o <file>::
+ --output=<file>::
+-- 
+2.53.0.582.gca1db8a0f7
 
