@@ -1,91 +1,162 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9B030EF8F
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 04:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3F22206A7
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 05:20:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775622391; cv=none; b=W+iK70Jg9J1TUgRSahdnSZA363NwHkEeUm0gSQLeRXsBt9golOpSjtLu3x94nJMbKJjLCMvM7FJxJQniKW4HF0miczgw6n3JhBm3qWPqCSsEkyFNTOxA4hstB4EYQWdNFbWKqyRupTQCey/NNYYFhj1wHPKT9xlZcDir4cwGHcs=
+	t=1775625635; cv=none; b=q77yUJ85Fcu+Pty0wpY565AJH5I8pbpnux7BUeLqIaMNh4d9GRonhRnr3/l3HJwoRQ0Lusgq/PqfY7cGCGEtSRlhoPkiSzz0q0W5p96r9SPKeYPpXlxxLuHb7X/JQXYR6pqFjUcNY7jvmpJB4In/LQ8D6nlittqHicSA9ol9UKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775622391; c=relaxed/simple;
-	bh=xztSemg6oCdhqdKZkcXWWUlIRQ+IJPqvZj/UPxij7uk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eplpWda33L/KGaoJzQ4Xyd2nzQ8SAtouzbU8E2SwYpUzfwcPj/X6RSvGVrJWAF/MwfMQKMo/o97khv4Ps2fdE47HSdDOx/uVBHYS7JI5nxNlfJAlmF8NZLF5cNGwuQIgPfHk6kp/vSkxtILY4Q4lRSOpsCWAkV4WIOwDRqnFzw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U1opL4RO; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775625635; c=relaxed/simple;
+	bh=uwU7fdxjS/28N8Z52k7qjowdpWTWRnaOxyPQYD33vjU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YmsXyGWY+i0ci0Wu1gugQbGVoBUD7ARVc/Ks2BtQaWqCiToX/hzvstq9vrUe/+CJNzAc14aTjwc68zSavfp8XQG0q8UAhyKe15XKCH1APfHC/Sjq4w1qPFlbE7x6JUoTBKug2bjL7n2VEV8zP3leQzwTQBPDs1OZ/jEfIbVA2Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VgP8DZvr; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U1opL4RO"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8296dabef74so5499249b3a.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2026 21:26:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775622389; x=1776227189; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xztSemg6oCdhqdKZkcXWWUlIRQ+IJPqvZj/UPxij7uk=;
-        b=U1opL4ROYMb2k+lNdNYNG2wjrOcHwEx8DdZg2vvdPWoQuZTqFe6l3UARDqmMEBAzsJ
-         NeiN+e6QJYIbAeJlqL/ikbFU5kShhNwhlwi1s1ghh1n3TT3jZ6jfjFMz35QvJBIzHtYV
-         nFAad1oqT8vtUR7Jhiq3enVXuf5LdvhMR2zlZD9eA/IsE8D9QI+8Q5lGhFHFqPIUxaO9
-         L8cZvji6RzPa8FklwgTY2xRHGrXyNQ/8qnE3ASOpRelDlDSDSphG0kCQ6WOkwCctGgR6
-         VkhQ7zVnxHQ16rafJ/rjyCXSk2Fc4wLqyM3DodTQxadKmsz6uCa+pmxLzWkeuzwUTOlH
-         ouGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775622389; x=1776227189;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xztSemg6oCdhqdKZkcXWWUlIRQ+IJPqvZj/UPxij7uk=;
-        b=SVo6UzfY/PW6sti0DEq/IYz1SazGkqmAMDty7f6Me3KqyJLvdcYf+lWZ119jUHLEV7
-         xBbJc6Rrs/oI7YhCMAt/6FPmh+oaopjWrNSDhSD4G2hn+Bqg3SGrey0fNXk73MMi8cmd
-         jNZaqjcXQKy0xzos9EXd6qPxF9pCgUoxNKeavH+e94gKPA1vv3DTeNHrlCRH8bdZLQ1b
-         gRgjIcj1hfoJuaa8c/tKXbVJTrCl1CPjiV3g0UjgOTr/OVkuHqAT5TaoosMxrhIYMdci
-         T9FEyHvZCahm39D3Dgz2r7tytw2Sir0hcZC9DFNfeZVUqDFs2MUBTPZx/yByKe/RvAoL
-         IgVg==
-X-Gm-Message-State: AOJu0YxcrRsqJI5NAHZVoBCYrJNHe9PyjgMcjovgzuOEAXy3i9/DLGzp
-	UwLaVoELQoOaEWdfxUjFvEB9FnFyYZFz58kETm7X5v8PDdQmO4pv3FhKucNMzzuH
-X-Gm-Gg: AeBDieuvYq4XF6oiPvl+kUXXv2q5hQRGM8DZyfc3PtkKd8ZrTsYrYAXBrEJvEhC/PKw
-	G/mNRZL65NHrvY7HCNK49hZzQH4sH+nEpkQ37io32K8dl4wvrIt5zmdOxe+wzUxT4E54SVGA+Qx
-	uyJfDfrD+ESnnoIdegpHha3YBCledmKHp0OIqMW1zo1X7SDD3MOunotavz+SDBhtPnSWN7gvXDb
-	agXaDX547Y3ogep3m1dMBVAP/kkJp8cFAqHFP/lyI2hSiEdKCjrwcJd8H8A9O9jkKWvWl8YSM/I
-	bPCSvNrEClfx3magNlzGq5GUah97+IqB9WXu7qIX3TcaKA1d12IXnb1XVUecK1W+gFi0/ywQ6bY
-	DgM+0L2tRHxnZmbufnbdUdS62I5qgmj8T0ZUBJcJoBx1BW14HrrKjVdx3cl5hRQiIyo+3S9KRJN
-	7nC/tSHeZT9k60lCi5CuAnfjdc92DlpATehuRI+N5tm++dFbygo+FNfAqvuMlPaHLhucfAWb5RE
-	aeEOygvxh9hGg97JqmY
-X-Received: by 2002:a05:6a00:278b:b0:82a:7f6b:3fa1 with SMTP id d2e1a72fcca58-82d0db5abfbmr18582558b3a.33.1775622389532;
-        Tue, 07 Apr 2026 21:26:29 -0700 (PDT)
-Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82d11f76c09sm14874760b3a.55.2026.04.07.21.26.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 21:26:27 -0700 (PDT)
-Sender: Paul Tarjan <ptarjan@gmail.com>
-From: Paul Tarjan <paul@paultarjan.com>
-X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	gitgitgadget@gmail.com
-Subject: Re: [PATCH v13 01/13] t9210: disable GIT_TEST_SPLIT_INDEX for scalar clone tests
-Date: Tue,  7 Apr 2026 22:26:25 -0600
-Message-ID: <20260408042625.31843-1-github@paulisageek.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqqse9g0xbx.fsf@gitster.g>
-References: <xmqqse9g0xbx.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VgP8DZvr"
+Received: (qmail 279554 invoked by uid 106); 8 Apr 2026 05:20:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uwU7fdxjS/28N8Z52k7qjowdpWTWRnaOxyPQYD33vjU=; b=VgP8DZvr2Jpxob+XPK7Nj133s0buXxyg0dbNZg+2NhXdNP4hEt00LFLJuBCU7XQckzJ8gdFFbdWyQc2HIV16K/L5/NfSpdHNYVF1PcvmCUPzQOW/Z8wOT8zuhysnGBdX7TT5IunyeyYGThDSGxL63KcvhJM9/W3fe4Q0xahNxxGrv4T8bK/5A4rHxT4od/5CInB4eHkbBSv/diNO4GohELPCONQLkUENenQOF8JUR29rAcC+GysbpqY8gmFhJPuQxq4Wx7q34539UWqn9/duHNZUE30aNMAzLLhXaB0fz/otAo5khcOIahQESaLJPXvHPReKpoOiOozgJ5Y4u3Uekw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Apr 2026 05:20:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 457470 invoked by uid 111); 8 Apr 2026 05:20:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Apr 2026 01:20:31 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 8 Apr 2026 01:20:31 -0400
+From: Jeff King <peff@peff.net>
+To: rsbecker@nexbridge.com
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org
+Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
+Message-ID: <20260408052031.GB1324339@coredump.intra.peff.net>
+References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Apr 07, 2026 at 07:37:49PM -0400, rsbecker@nexbridge.com wrote:
 
-> Not just "suspect", but it does break exactly at t9211.
+> Weird fail on t5401.13. Any opinions or advise on this?
+> 
+> expecting success of 5401.13 'pre-receive hook that forgets to read its
+> input':
+>         test_hook --clobber -C victim.git pre-receive <<-\EOF &&
+>         exit 0
+>         EOF
+>         rm -f victim.git/hooks/update victim.git/hooks/post-update &&
+> 
+>         test_seq -f "create refs/heads/branch_%d main" 100 999 |
+>         git update-ref --stdin &&
+>         git push ./victim.git "+refs/heads/*:refs/heads/*"
 
-Thanks. I've added sane_unset GIT_TEST_SPLIT_INDEX at the top of
-t9211 (every test there does scalar clone) and verified both t9210
-and t9211 pass with GIT_TEST_SPLIT_INDEX=yes on Fedora against
-seen.
+OK, so this test is trying to feed a bunch of data to a pre-receive hook
+that doesn't read anything, and we want to make sure we aren't killed by
+SIGPIPE.
 
-Paul
+When the test was added originally in ec7dbd145b (receive-pack: allow
+hooks to ignore its standard input stream, 2014-09-12), we just stuck a:
+
+  sigchain_push(SIGPIPE, SIG_IGN);
+
+at the top of the hook function. But now that function has been
+rewritten to use the hook API, and that sigchain_push() is gone.
+
+What does the new hook API do? It works with run-command's
+run_processes_parallel() function. Which similarly ignores SIGPIPE,
+courtesy of ec0becacc9 (run-command: add stdin callback for
+parallelization, 2026-01-28):
+
+          /*
+           * Child tasks might receive input via stdin, terminating early (or not), so
+           * ignore the default SIGPIPE which gets handled by each feed_pipe_fn which
+           * actually writes the data to children stdin fds.
+           */
+          sigchain_push(SIGPIPE, SIG_IGN);
+
+OK, so far so good. But that's not quite the end of the story. In
+pp_init(), we then sigchain_push() another handler, but this time it's a
+real function:
+
+  static void handle_children_on_signal(int signo)
+  {
+          kill_children_signal(pp_for_signal, signo);
+          sigchain_pop(signo);
+          raise(signo);
+  }
+
+So now when we get a SIGPIPE, we end up there. It tries to propagate the
+signal to any child processes we spawned. Which is a bit funny, since it
+was the child process closing that caused us to get the signal in the
+first place, but of course our handler doesn't know that.
+
+And then afterwards, it pops itself off the handler stack and re-raises.
+But that will hit the SIG_IGN we pushed earlier and do nothing. So that
+part isn't interesting.
+
+What is interesting is that we end up calling "kill(<pid>, SIGPIPE)" on
+the child via kill_children_signal(). At least on my Linux system that
+works fine, since we haven't reaped the process via wait() yet. But of
+course nothing interesting happens to the child, which has already
+exited. Killing it with SIGPIPE does not seem to affect its exit code.
+
+However, I could believe that on some other system it might behave
+differently. Possibly even racily. For example, if the child process had
+closed its pipe (giving us SIGPIPE in the parent) but not yet fully
+exited, could our kill() cause it to change its exit code? And then it
+would look like the hook reported failure (because it died by signal).
+And I'd expect the output you saw.
+
+I think the root of the issue is that we should not be trying to
+propagate SIGPIPE to the child in this case at all. Our handler is
+pushed there only because it's part of sigchain_push_common(), which is
+sensible: in general if we are dying to SIGPIPE we want to do our
+cleanup. It's just funny in this case with the ordering of our SIG_IGN,
+because now that SIG_IGN isn't on top of the stack anymore.
+
+I.e., I think we want to reorder like this:
+
+diff --git a/run-command.c b/run-command.c
+index 32c290ee6a..8a95f7ff1e 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1895,14 +1895,19 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+ 					   "max:%"PRIuMAX,
+ 					   (uintmax_t)opts->processes);
+ 
++	pp_init(&pp, opts, &pp_sig);
++
+ 	/*
+ 	 * Child tasks might receive input via stdin, terminating early (or not), so
+ 	 * ignore the default SIGPIPE which gets handled by each feed_pipe_fn which
+ 	 * actually writes the data to children stdin fds.
++	 *
++	 * This _must_ come after pp_init(), because it installs its own
++	 * SIGPIPE handler (to cleanup children), and we want to supersede
++	 * that.
+ 	 */
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+-	pp_init(&pp, opts, &pp_sig);
+ 	while (1) {
+ 		for (i = 0;
+ 		    i < spawn_cap && !pp.shutdown &&
+
+Does that make your problem go away?
+
+I suspect we could construct a related case that does fail on Linux
+without the patch above. Imagine we actually have two hooks running in
+parallel. The first one is fast and does not read its input, and the
+second one is slow. We'll get SIGPIPE writing to the first one, and then
+kill _both_ children. But that's wrong! There is no reason to kill the
+second hook, as our intent was to ignore SIGPIPE.
+
+-Peff
