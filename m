@@ -1,130 +1,141 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8143B6BFA
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 11:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01672C3248
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 11:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775647761; cv=pass; b=i8+nO5XP2i481+/YDitg3R5Rcs9a9t4oycpnsc7yjeA8yqlzDX7+XAqqBXn4HT+OCWoZUh7Og0oZndul/2Fa9xCamqFqx6OtcNC13u52HtFrdk9b5eCZtHzfdbUHp+B57bsdNwZleA0+v98Mkp9otewp9ctCRWZasvDeNZDa+4E=
+	t=1775649212; cv=pass; b=mWlKNG0EHu3+FDPRPV6/S9cX+lsx0+jew/JssCRLsEI9+o+EmjfvWzvKA9mg0a7/w9/z/lqJJx2XmgUQOZjDwS7T8b/3LHyJ4B6ft62amtFu7vpnDV6/K+/8IGI3ew0AmbOtPttbWzBalxiIjvPRCixjM9ryBjjVyLbB+97zvME=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775647761; c=relaxed/simple;
-	bh=jyeyIEyhmUMr6iXTw9jyQWMYdr8Lt3MlmDwalEbaksM=;
+	s=arc-20240116; t=1775649212; c=relaxed/simple;
+	bh=xsdVZLD8x3DyBd7AcTZ+01tktS6T7F5qnnQ4RkVO1As=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rp3g0vnxA6h1EB2Piz+JncDc4NXRH5X07gJ/ZmDESeM2lLiBYnzil9V+QfrBi6mtEplVeciStGgDeIyRwRO7DA8IQvGtDoUk+lKQ/E+rw+tZ4EW39I4ZzYYW6s38De/Ld2ggqNpkOqfrOz33+MBtPOiCypwtM5CsXl/lY2yag64=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=E8AnKYbf; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version:Content-Type; b=s8g4bdR+JNTSP8jLQRwiUiGHLRkh8DTZSXGuyxDS5RFkLV3L4eaF99dr3xIHrjh1F8KGzcbj66xGNQXvWrpCwQQiAxi4/DqX5R3XXefy+Pg9wEh0X6As2XAlFwIB9PeJjz8zCn02jFT92smIldWGZ7aEhPoPV0+zHUa8CAjkW2E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Khku6EKU; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="E8AnKYbf"
-ARC-Seal: i=1; a=rsa-sha256; t=1775647741; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Khku6EKU"
+ARC-Seal: i=1; a=rsa-sha256; t=1775649203; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=MC2eaI2JSf3erdzSX6BY78hHrHJxwUQD+HjjvHgp5cDlSvmwihuOs5R9Uc4GJx890KyE/BidalRyf176/2uJJpNqhf8qfhl78EPrHf1Wq6TAastLgevfONz2zix1TUzKVybCOJbfOUTGzggw043vGgaYvO07gOHH0HXdjHbV4pQ=
+	b=RmCJ20Uu1JRe++KCFVEq3egEKOsA/k0mPQzkAt3dQSc7HYvGanfo3FdE420bLv9ZKzr3dxwchpunj4MOM7/bjDm9jLPp1DgNPBxYHdp0mR4PAlHEZMZ72L47JbEs5niAVhE3bO1HqmpnY3EpBbJZUFnE5rIpTA0eF60phLhOB5o=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775647741; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=QTnZ5vQAqNnzu7C1hALPMNryL3b12O3rWd5eE56ZeSI=; 
-	b=lnl4xCUS13PS4AWpdjmbt9Sjc7o+BOxL+aNziL9S8d+8rhFyIspB2JwzmHj1et3132vzhJE+sLp4420kEDPaqt4NmoOKIdF5KCTYwlF0VEo94QWrf7KPHBu93WV3Cy2OC309dC5IYvkVB7M81Od6km3t/FqB78T6MPBBe3cX1ho=
+	t=1775649203; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=66BCz+E42kI1S3hydmD4Q1JiGKcBZR06Xr/W0vG0ZyI=; 
+	b=JPS9RnYCGzCsiyZzTIBKS6KYbUsTjt7Im5ft7oGpY0TJbRlPFijcnF3x2H6CmwMbcLxdTQsrYQFXOcIoG0nTGv7FjP32YZtPtzxnt9uWk4gLbWot4duKQcUzepbq0vEIPEMSbRDvA8uz9vjyR9jCapVTbS+FY32HyHb0iAVRE9g=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775647741;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775649203;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=QTnZ5vQAqNnzu7C1hALPMNryL3b12O3rWd5eE56ZeSI=;
-	b=E8AnKYbfp45RJ3LjvFUFJ0hPbxikXgq2Q1wS6SkgN1Y4y2gsTI9oAiMcROQVZJmH
-	YVR1Pvx0HMtclUFCW3BX+G16GZ825DqG0pHFJSqAq4eZiEaA/HJwBfAwLBdEGBjCH2p
-	zdU75w8K7tQ57sAWNBJuH+0OXVQh0RV1g0V0Ut/E=
-Received: by mx.zohomail.com with SMTPS id 1775647739646346.2250801652575;
-	Wed, 8 Apr 2026 04:28:59 -0700 (PDT)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=66BCz+E42kI1S3hydmD4Q1JiGKcBZR06Xr/W0vG0ZyI=;
+	b=Khku6EKUGThbNbbz7ejfOJztOSOlOHPAMsu4eJYH4enNAO/o0+43QMTr1PLMiYHh
+	3kDnaz6cH6O4gbF86gJT7BclO+fiZani4OxyKpsbUQ+7bPp/fACFDkCE7TdMYqEFjXt
+	gv2Eli+aI1DbYSIPUWRoXliRkjVuYMkarKOUErtQ=
+Received: by mx.zohomail.com with SMTPS id 1775649201182453.8092905544304;
+	Wed, 8 Apr 2026 04:53:21 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Emily Shaffer
- <emilyshaffer@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick
- Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 05/12] hook: include hooks from the config
-In-Reply-To: <adPh1GHnPH034u3V@szeder.dev>
-References: <20260204165126.1548805-1-adrian.ratiu@collabora.com>
- <20260301184500.1488433-1-adrian.ratiu@collabora.com>
- <20260301184500.1488433-6-adrian.ratiu@collabora.com>
- <adPh1GHnPH034u3V@szeder.dev>
-Date: Wed, 08 Apr 2026 14:28:54 +0300
-Message-ID: <874ill3d3d.fsf@gentoo.mail-host-address-is-not-set>
+To: Jeff King <peff@peff.net>, rsbecker@nexbridge.com
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
+In-Reply-To: <20260408054347.GA2284358@coredump.intra.peff.net>
+References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
+ <20260408052031.GB1324339@coredump.intra.peff.net>
+ <20260408054347.GA2284358@coredump.intra.peff.net>
+Date: Wed, 08 Apr 2026 14:53:17 +0300
+Message-ID: <871pgp3byq.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-ZohoMailClient: External
 
-On Mon, 06 Apr 2026, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
-> On Sun, Mar 01, 2026 at 08:44:53PM +0200, Adrian Ratiu wrote:
->> Teach the hook.[hc] library to parse configs to populate the list of
->> hooks to run for a given event.
->>=20
->> Multiple commands can be specified for a given hook by providing
->> "hook.<friendly-name>.command =3D <path-to-hook>" and
->> "hook.<friendly-name>.event =3D <hook-event>" lines.
->>=20
->> Hooks will be started in config order of the "hook.<friendly-name>.event"
->> lines and will be run sequentially (.jobs =3D=3D 1) like before.
->> Running the hooks in parallel will be enabled in a future patch.
->>=20
->> The "traditional" hook from the hookdir is run last, if present.
->>=20
->> A strmap cache is added to struct repository to avoid re-reading
->> the configs on each rook run. This is useful for hooks like the
->> ref-transaction which gets executed multiple times per process.
->>=20
->> Examples:
->>=20
->>   $ git config --get-regexp "^hook\."
->>   hook.bar.command=3D~/bar.sh
->>   hook.bar.event=3Dpre-commit
->>=20
->>   # Will run ~/bar.sh, then .git/hooks/pre-commit
->>   $ git hook run pre-commit
->>=20
->> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
->> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
->> ---
+On Wed, 08 Apr 2026, Jeff King <peff@peff.net> wrote:
+> On Wed, Apr 08, 2026 at 01:20:31AM -0400, Jeff King wrote:
 >
->> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
->> index d1380a4f0e..3a95cfe16d 100755
->> --- a/t/t1800-hook.sh
->> +++ b/t/t1800-hook.sh
->> @@ -1,10 +1,26 @@
->>  #!/bin/sh
->>=20=20
->> -test_description=3D'git-hook command'
->> +test_description=3D'git-hook command and config-managed multihooks'
->>=20=20
->>  . ./test-lib.sh
->>  . "$TEST_DIRECTORY"/lib-terminal.sh
->>=20=20
->> +setup_hooks () {
->> +	test_config hook.ghi.command "/path/ghi"
->> +	test_config hook.ghi.event pre-commit --add
->> +	test_config hook.ghi.event test-hook --add
->> +	test_config_global hook.def.command "/path/def"
->> +	test_config_global hook.def.event pre-commit --add
->> +}
->> +
->> +setup_hookdir () {
->> +	mkdir .git/hooks
->> +	write_script .git/hooks/pre-commit <<-EOF
->> +	echo \"Legacy Hook\"
->> +	EOF
->> +	test_when_finished rm -rf .git/hooks
->> +}
+>> I suspect we could construct a related case that does fail on Linux
+>> without the patch above. Imagine we actually have two hooks running in
+>> parallel. The first one is fast and does not read its input, and the
+>> second one is slow. We'll get SIGPIPE writing to the first one, and then
+>> kill _both_ children. But that's wrong! There is no reason to kill the
+>> second hook, as our intent was to ignore SIGPIPE.
 >
-> There is no &&-chain in these test helper functions.
+> This would require running hooks in parallel, which isn't implemented
+> yet for v2.54.0. But if I build on top of the ar/parallel-hooks topic,
+> then this test:
+>
+> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
+> index 44ec875aef..97257763d3 100755
+> --- a/t/t5401-update-hooks.sh
+> +++ b/t/t5401-update-hooks.sh
+> @@ -139,4 +139,43 @@ test_expect_success 'pre-receive hook that forgets to read its input' '
+>  	git push ./victim.git "+refs/heads/*:refs/heads/*"
+>  '
+>  
+> +test_expect_success 'hooks in parallel that do not read input' '
+> +	# Add this to our $PATH to avoid having to write the whole trash
+> +	# directory into our config options, which would require quoting.
+> +	mkdir bin &&
+> +	PATH=$PWD/bin:$PATH &&
+> +
+> +	write_script bin/hook-fast <<-\EOF &&
+> +	# This hook does not read its input, so the parent process
+> +	# may see SIGPIPE if it is not ignored. It should happen
+> +	# relatively quickly.
+> +	exit 0
+> +	EOF
+> +
+> +	write_script bin/hook-slow <<-\EOF &&
+> +	# This hook is slow, so we expect it to still be running
+> +	# when the other hook has exited (and the parent has a pipe error
+> +	# writing to it).
+> +	#
+> +	# So we want to be slow enough that we expect this to happen, but not
+> +	# so slow that the test takes forever. 1 second is probably enough
+> +	# in practice (and if it is occasionally not on a loaded system, we
+> +	# will err on the side of having the test pass).
+> +	sleep 1
+> +	exit 0
+> +	EOF
+> +
+> +
+> +	git init --bare parallel.git &&
+> +	git -C parallel.git config hook.fast.command "hook-fast" &&
+> +	git -C parallel.git config hook.fast.event pre-receive &&
+> +	git -C parallel.git config hook.fast.parallel true &&
+> +	git -C parallel.git config hook.slow.command "hook-slow" &&
+> +	git -C parallel.git config hook.slow.event pre-receive &&
+> +	git -C parallel.git config hook.slow.parallel true &&
+> +	git -C parallel.git config hook.jobs 2 &&
+> +
+> +	git push ./parallel.git "+refs/heads/*:refs/heads/*"
+> +'
+> +
+>  test_done
+>
+> fails reliably. And applying the patch I suggested earlier fixes it.
+>
+> So I think it's probably a good idea regardless, though I'm still
+> curious to see if it solves Randall's non-parallel case on NonStop.
 
-Nice catch, we need the && chains to ensure we propagate any failures.
+Thanks Peff for the in-depth analysis, fix and test.
+It is very much appreciated. I missed this case.
 
-I'll send a separate patch fixing this since the series landed.
+I agree with your assesement: this must be fixed regardless if it also
+fixes Randall's case or not (might be a separate root cause).
 
-Many thanks, appreciate it.
+I would proceed like this (obviously crediting you for the fix & test):
+
+If it fixes Randall's case:
+   send a standalone bug-fix patch, then integrate the test into the
+   parallel series.
+else
+   integrate both the fix and the test into the parallel series.
+
+@Randall please let us know if the fix proposed by Peff in the other
+response works for you.
