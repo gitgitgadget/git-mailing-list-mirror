@@ -1,51 +1,84 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01672C3248
-	for <git@vger.kernel.org>; Wed,  8 Apr 2026 11:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775649212; cv=pass; b=mWlKNG0EHu3+FDPRPV6/S9cX+lsx0+jew/JssCRLsEI9+o+EmjfvWzvKA9mg0a7/w9/z/lqJJx2XmgUQOZjDwS7T8b/3LHyJ4B6ft62amtFu7vpnDV6/K+/8IGI3ew0AmbOtPttbWzBalxiIjvPRCixjM9ryBjjVyLbB+97zvME=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775649212; c=relaxed/simple;
-	bh=xsdVZLD8x3DyBd7AcTZ+01tktS6T7F5qnnQ4RkVO1As=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3DE3D092A
+	for <git@vger.kernel.org>; Wed,  8 Apr 2026 14:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775658017; cv=none; b=KVzdp8PG+/qbOUGNT+GJT1W6AbPl3+nGkBnxq59w9UQ5Y/ieVp+43S2CLVh/qbLHJsT9ZygQtDfZjnLccLtHK1RUWxJ7DOvSQ9B+qzIfXbk/2fOKS/xryMIjArq45h4/vOyMUTQijcsM8yMXWUQoxyY6wOFWzt8JTj1IVP/SVoc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775658017; c=relaxed/simple;
+	bh=Ew4I2EWUQCwmMCrmFfZSudJf/fsnq9B5esAEv3ocsyw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s8g4bdR+JNTSP8jLQRwiUiGHLRkh8DTZSXGuyxDS5RFkLV3L4eaF99dr3xIHrjh1F8KGzcbj66xGNQXvWrpCwQQiAxi4/DqX5R3XXefy+Pg9wEh0X6As2XAlFwIB9PeJjz8zCn02jFT92smIldWGZ7aEhPoPV0+zHUa8CAjkW2E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Khku6EKU; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=AtemNcMoQhvtehmoTVhCf1cHFi+2gsZfHbtl+YvqknGhRSiWxD3FPCwojy59KptzIx6o8jBl7HWeJS8ebXnOax+HIHh4uwdjHlxwxpNso2MvFMshwg7s5zBsO0B6Q07DA/XM1fikxzDiGF5ibWE+YaVyf6cOCkchgLt+kdYyBAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ybIeVexu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QGm33ZQE; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Khku6EKU"
-ARC-Seal: i=1; a=rsa-sha256; t=1775649203; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=RmCJ20Uu1JRe++KCFVEq3egEKOsA/k0mPQzkAt3dQSc7HYvGanfo3FdE420bLv9ZKzr3dxwchpunj4MOM7/bjDm9jLPp1DgNPBxYHdp0mR4PAlHEZMZ72L47JbEs5niAVhE3bO1HqmpnY3EpBbJZUFnE5rIpTA0eF60phLhOB5o=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775649203; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=66BCz+E42kI1S3hydmD4Q1JiGKcBZR06Xr/W0vG0ZyI=; 
-	b=JPS9RnYCGzCsiyZzTIBKS6KYbUsTjt7Im5ft7oGpY0TJbRlPFijcnF3x2H6CmwMbcLxdTQsrYQFXOcIoG0nTGv7FjP32YZtPtzxnt9uWk4gLbWot4duKQcUzepbq0vEIPEMSbRDvA8uz9vjyR9jCapVTbS+FY32HyHb0iAVRE9g=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775649203;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=66BCz+E42kI1S3hydmD4Q1JiGKcBZR06Xr/W0vG0ZyI=;
-	b=Khku6EKUGThbNbbz7ejfOJztOSOlOHPAMsu4eJYH4enNAO/o0+43QMTr1PLMiYHh
-	3kDnaz6cH6O4gbF86gJT7BclO+fiZani4OxyKpsbUQ+7bPp/fACFDkCE7TdMYqEFjXt
-	gv2Eli+aI1DbYSIPUWRoXliRkjVuYMkarKOUErtQ=
-Received: by mx.zohomail.com with SMTPS id 1775649201182453.8092905544304;
-	Wed, 8 Apr 2026 04:53:21 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Jeff King <peff@peff.net>, rsbecker@nexbridge.com
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Help needed on 2.54.0-rc0 t5301.13 looping.
-In-Reply-To: <20260408054347.GA2284358@coredump.intra.peff.net>
-References: <00f501dcc6e7$8ef295c0$acd7c140$@nexbridge.com>
- <20260408052031.GB1324339@coredump.intra.peff.net>
- <20260408054347.GA2284358@coredump.intra.peff.net>
-Date: Wed, 08 Apr 2026 14:53:17 +0300
-Message-ID: <871pgp3byq.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ybIeVexu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QGm33ZQE"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 79A9814001A3;
+	Wed,  8 Apr 2026 10:20:14 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 08 Apr 2026 10:20:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775658014; x=1775744414; bh=UsHoPvYqIa
+	e6vGGZGCn4rR7s3SaiytsQuvV013wv4l0=; b=ybIeVexu/7J5P7G4qlWytuvdO+
+	KDj8LtqC67J/9SxcAGCvol63F8GWePFWgw1FPFI4YndeFgRizK/GwOXXuLRkI1QJ
+	bOL0ZSpFlZFGPumJvuXkyZRCKIt2A2y/NgVyQU4cd8c9pSjEhOioXpPSy3x6+/IJ
+	YWCSAQ7UeFPRRNeAJvjAqHT8k20jzSZwVXksNULrlUiHF+uw4cWLWSCfnfTSyd8T
+	UrFJ2RoifmI98u2nJdXML63T5OdxG2ccuqkP4PKqLwZet4iqfwdi4ruVYoflKYWS
+	Y10CQTRS511dwiXGawESDVpJa+jhSlEwmDP3zkZklPXdsZfb3jWtJIVZVESA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775658014; x=1775744414; bh=UsHoPvYqIae6vGGZGCn4rR7s3SaiytsQuvV
+	013wv4l0=; b=QGm33ZQEnUvYfhk3vyD2xpXegk2V9uurDWxNPfWlpK3cBiieGK3
+	2l9fE8amgSLvLa0v5DdgYgJtVGUfFQtdm1NwDDra7U1OtO5ifDmRbWJ02nqVokLt
+	ce1qNuolsjr0VReR2pXYVwXo1q1TEF4762OkUZFo0P7G0d5hoVqh8X41ayNL9MCN
+	uTTteZwOyffgq8NhM1J+vvkNBJi8VoFYaWQYvYz1p29f68Gn5O/pL7ynelGy0tnC
+	gd5P+zuqMkEHJKefGt6SyY+h6f/SScUIdHtuPzGnL5jYYhjLopbl++sRYbObmDJT
+	KcRynUb0kiv2/fXrRWloKYD06z3ETC8yAEg==
+X-ME-Sender: <xms:HmTWaePigvErwo-cPVuZvpIWMojuwaxHjrdbOEf0QghPdg3cpi1KhA>
+    <xme:HmTWaT9NBdNxKcxozapdsULQojEoZnkMp8Sa8m5Eo79_ywg7f8phpC8CkXgRQgDUO
+    KaSJlmrVwt1rhuZ6leDzKt-ZokhucRE6usrJ6AIUI8pJkyMCh8Jqg>
+X-ME-Received: <xmr:HmTWaaSLpuKTfAda3whueU5aP6568rW9fOKYAz5B9qgMfOGoAoNWt5lqXgAwHCotZXrvIfTlOQ9hzcT5m6bR0HVaprGyjujKfA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvfeejlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshgrnhgurg
+    hlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:HmTWadnaru7T7ojxrPoGE86A_EWu4swRsnR0cJw_EvzdIgXr4qqfCw>
+    <xmx:HmTWaSRaX1S83o5OxpW38eLqP4UAsacRSmESi9zneHtTO5SgjemP4Q>
+    <xmx:HmTWaTMHXDfZJJbYQm_OY4rBEVxoEZ0VQil0WCeuD5_Yefv7FOwj4g>
+    <xmx:HmTWaTX2laV955vfCq-Dx45XfphQnHKIfdKqwSnBwyEjLAI2rUtKSg>
+    <xmx:HmTWaYWq5oxVZErc7gGWn2mVOCpIqpVnQtGLGKvsupCuwqIxySSCGb5L>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Apr 2026 10:20:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: [PATCH] docs: correct information about reftable
+In-Reply-To: <adX65j-4Vb24GpF8@pks.im> (Patrick Steinhardt's message of "Wed,
+	8 Apr 2026 08:51:18 +0200")
+References: <20260402224241.4104726-1-sandals@crustytoothpaste.net>
+	<adX65j-4Vb24GpF8@pks.im>
+Date: Wed, 08 Apr 2026 07:20:12 -0700
+Message-ID: <xmqqy0ix1qlf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,89 +86,24 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-ZohoMailClient: External
 
-On Wed, 08 Apr 2026, Jeff King <peff@peff.net> wrote:
-> On Wed, Apr 08, 2026 at 01:20:31AM -0400, Jeff King wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Thu, Apr 02, 2026 at 10:42:41PM +0000, brian m. carlson wrote:
+>> Our description of the reftable format is that it is experimental and
+>> subject to change, but that is no longer true.  Remove this statement so
+>> as not to mislead users.
+>> 
+>> In addition, the documentation says that the files format is the
+>> default, but that is not true if breaking changes mode is on.  Correct
+>> this information with a conditional.
 >
->> I suspect we could construct a related case that does fail on Linux
->> without the patch above. Imagine we actually have two hooks running in
->> parallel. The first one is fast and does not read its input, and the
->> second one is slow. We'll get SIGPIPE writing to the first one, and then
->> kill _both_ children. But that's wrong! There is no reason to kill the
->> second hook, as our intent was to ignore SIGPIPE.
+> Makes sense to me, thanks!
 >
-> This would require running hooks in parallel, which isn't implemented
-> yet for v2.54.0. But if I build on top of the ar/parallel-hooks topic,
-> then this test:
->
-> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-> index 44ec875aef..97257763d3 100755
-> --- a/t/t5401-update-hooks.sh
-> +++ b/t/t5401-update-hooks.sh
-> @@ -139,4 +139,43 @@ test_expect_success 'pre-receive hook that forgets to read its input' '
->  	git push ./victim.git "+refs/heads/*:refs/heads/*"
->  '
->  
-> +test_expect_success 'hooks in parallel that do not read input' '
-> +	# Add this to our $PATH to avoid having to write the whole trash
-> +	# directory into our config options, which would require quoting.
-> +	mkdir bin &&
-> +	PATH=$PWD/bin:$PATH &&
-> +
-> +	write_script bin/hook-fast <<-\EOF &&
-> +	# This hook does not read its input, so the parent process
-> +	# may see SIGPIPE if it is not ignored. It should happen
-> +	# relatively quickly.
-> +	exit 0
-> +	EOF
-> +
-> +	write_script bin/hook-slow <<-\EOF &&
-> +	# This hook is slow, so we expect it to still be running
-> +	# when the other hook has exited (and the parent has a pipe error
-> +	# writing to it).
-> +	#
-> +	# So we want to be slow enough that we expect this to happen, but not
-> +	# so slow that the test takes forever. 1 second is probably enough
-> +	# in practice (and if it is occasionally not on a loaded system, we
-> +	# will err on the side of having the test pass).
-> +	sleep 1
-> +	exit 0
-> +	EOF
-> +
-> +
-> +	git init --bare parallel.git &&
-> +	git -C parallel.git config hook.fast.command "hook-fast" &&
-> +	git -C parallel.git config hook.fast.event pre-receive &&
-> +	git -C parallel.git config hook.fast.parallel true &&
-> +	git -C parallel.git config hook.slow.command "hook-slow" &&
-> +	git -C parallel.git config hook.slow.event pre-receive &&
-> +	git -C parallel.git config hook.slow.parallel true &&
-> +	git -C parallel.git config hook.jobs 2 &&
-> +
-> +	git push ./parallel.git "+refs/heads/*:refs/heads/*"
-> +'
-> +
->  test_done
->
-> fails reliably. And applying the patch I suggested earlier fixes it.
->
-> So I think it's probably a good idea regardless, though I'm still
-> curious to see if it solves Randall's non-parallel case on NonStop.
+> Patrick
 
-Thanks Peff for the in-depth analysis, fix and test.
-It is very much appreciated. I missed this case.
+Thanks for this ack---the patch message somehow escaped from my
+radar.  Will apply.
 
-I agree with your assesement: this must be fixed regardless if it also
-fixes Randall's case or not (might be a separate root cause).
 
-I would proceed like this (obviously crediting you for the fix & test):
 
-If it fixes Randall's case:
-   send a standalone bug-fix patch, then integrate the test into the
-   parallel series.
-else
-   integrate both the fix and the test into the parallel series.
-
-@Randall please let us know if the fix proposed by Peff in the other
-response works for you.
