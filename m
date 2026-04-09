@@ -1,124 +1,104 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E45C2472A6
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 20:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BCA40855
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 20:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775766701; cv=none; b=BSjaP7h430w5CyZgLqJtvD58aveDprZvl+kiNHPO1LDobtngkSxTetdaeEO5v6UnaA2LurCPswergMKDIonuV22Ovmz7UyO8kDIGMrj13s2An6eKU3DJC4LAgpCy/0nNYAJi9XFEDzPxlT4dHZ27Lb8ahFNOhlKDKBjcxn0iTNk=
+	t=1775766707; cv=none; b=g2i66A6paf1olyWFmX/dDE4RS4tevXXKNbwElUhpOHZO9DoLz8u5iI4e+McUXSvoxOGI23f9/3c7zyujV3sJNgEy11BEwN1D5qtJBNmoreuZ+kfISGeHWWZ8Q7D3UdbEcakmRDvNjnZ/Ip3zbh7hBN92Jf0Er4zZKy586Zw5nMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775766701; c=relaxed/simple;
-	bh=R5DWppzqCYNVnpKt/YNVjprCc4mv/zACdQcTRrUXnuU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nIi5HXiYvZ7MrGvL88v6W5Z7Gl1a8SneRJidwtL2wTBwWvyOz6xf5SspKkIwUEQ1+/R7BrXDuhcTG53iDkvbk9obpHts+MUDNWj8xnEVujnH6XCtAUoknGyK5N/W25OpO+EcHwfOhDImOP1j977waKFCWXx0X30c63b9RXo3iJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SWd6i0DO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ghVttaRs; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775766707; c=relaxed/simple;
+	bh=pgYw71IuBkJbomKJQGrDvyklB2LbJRLkmuXpTPSr36s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qQyLiU/gDgHD8Oie7WKDlINDceCutoZLemDijRY+f/6PZ0/0lanQa6hTy/vvifJaX9AOCBtxZCGdb8I70uF92UVtz0zCJC6xtvswCXl7sg6+1UpaaBH65Ft1x9oQFUrEUnC878ZOD6TSAiXow9ZYEAWNRunLZGabZbT/AkKeiUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFG19Ypp; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SWd6i0DO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ghVttaRs"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9A0C87A0265;
-	Thu,  9 Apr 2026 16:31:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 09 Apr 2026 16:31:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775766699; x=1775853099; bh=lpV5fXwNIZ
-	lg+eF/9RuzIev8BCQ7k4WrG3i/VJKzR5M=; b=SWd6i0DOxvrBlKlEAPdslA2EQg
-	F65ByAdYEUsvXrssjsIwiI6mWf8BaB5RK/XL+HNDX6WDZGbpJZWvv32insoE1vlr
-	6yl3vGiB50Dh7Qm6NdirvET+ImmMKrZ67Z9OEkdxLyVeU/SPIF1l62N1tQLAnTw7
-	0Smlfsz5gi7dgwBoetbMQ5u4dKlGoA4mAvKtHx2V2AoxQWigY7ZXRPFz45CsI2Yt
-	n0pRi2FJwsVCWleE4UpGrawkjQLjpx3btT7Qvj2sN/d7TVtIJ6En7gIP4CrX9M6h
-	PuPmgEynvOCCFbDFH137EiU059kB6r0yCOQ5T8U5pAr2yocOEHAzAVNfn17A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775766699; x=1775853099; bh=lpV5fXwNIZlg+eF/9RuzIev8BCQ7k4WrG3i
-	/VJKzR5M=; b=ghVttaRsYfgoBJ4RQEd6PRrv4F7zmcMs1awpZh0jOPAre0UoHja
-	FI/j4uWBFboD1MAiG5f28bqnPe3qZKUoT/rrqYmVnmek6DoiQPtFCYdYuWmkmOQq
-	34seIjah/TDeDjwi61js8NimMvGIjoCMMuLCVFwil1i9Nuj8fQUSo1jMZ+2uk/wX
-	lzlzpSigIfWHpOKt2iDPmNpValAab75FkJVb2sw0c2rMRf/X42YUhkkLyWu4Oquv
-	CiuKWXbEtaus0ro3fyPHppPakEIF/O3+pHnnAjj+pS8Smq9tMvi3lJtykyt4jo9J
-	JIZ7Dg9mSsWFaSOV3oELh/PGpQrurOl1nCg==
-X-ME-Sender: <xms:qwzYaXbUzgos4jTBYh4E4Kh9snAoAxMlmOKsb6bvfwXEAbVVS9jw2w>
-    <xme:qwzYaYp-iJxUiDPtb3vqKBxFoedjOYiZ3JCWyOIxfA6RUGOK-XS5mvBtNP3WN24ej
-    T8ZP4G80YVwbkZU4XLVi02OCkMkZU448ii0nylTcsEGT9ItpqwsCg>
-X-ME-Received: <xmr:qwzYacO4SYZUTKMkQ-ekqUAYWmgYdiruBGhtQ1maTZt8g6yzfYnPQxdmxp1WLLp1ITliFvVv_Ki6JiYl7O8KB7Z8y484XbV7bg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvjeegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprhgtphht
-    thhopeguvghvvghshhhighhurhhgrghonhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgs
-    lhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepqhhuvghnthhinhdrsggvrhhnvghtse
-    gslhhuvgifihhnrdgthhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qwzYaTpL1mUy4Ya_iiTHdYTFLe6roewRaJFqMSMMyNuN75a5YYYbNQ>
-    <xmx:qwzYaRf4ANHg-J2GH9n8fx4WAFXxmyYfhN84EF0OnTmdSke5H_76iQ>
-    <xmx:qwzYaZSrz9X4dNDEfCMdP6lqw0vZdlNUfHPnQoQUhnwPi3X93H2t1w>
-    <xmx:qwzYaaZh3ZWrvYn3ZGa6DfC8ykCR-QDH1F5QTG4-zuhguiffiX9pTQ>
-    <xmx:qwzYaR5-SEhqFj7-OXnz_-Jty0rKhaxk6jDq97Zvt96_v9A7VlRroFJ8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 16:31:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Mirko Faina <mroik@delayed.space>,  Deveshi Dwivedi
- <deveshigurgaon@gmail.com>,  git@vger.kernel.org,  ben.knoble@gmail.com,
-  quentin.bernet@bluewin.ch
-Subject: Re: [PATCH v3] stash: infer "push" when push-specific options are
- given
-In-Reply-To: <a280c7de-1357-44a9-afdd-bd473fd4e2a4@gmail.com> (Phillip Wood's
-	message of "Tue, 7 Apr 2026 10:36:13 +0100")
-References: <20260404143640.6679-1-deveshigurgaon@gmail.com>
-	<20260405110953.3316-1-deveshigurgaon@gmail.com>
-	<adP3JZhS7IHDuUxm@exploit>
-	<a280c7de-1357-44a9-afdd-bd473fd4e2a4@gmail.com>
-Date: Thu, 09 Apr 2026 13:31:37 -0700
-Message-ID: <xmqqa4vbswnq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFG19Ypp"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a2bd236adbso1432189e87.1
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 13:31:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775766705; x=1776371505; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uMyBa5XeMQZnKoJ1H5ru/BujrVegBPxHwpJDKLBRtdg=;
+        b=PFG19Ypp47buwQz/VR4eez69uJfFx59F/UtOsFYyWqc9oKLsVQclEAlvLXghWc6bSD
+         A/X+rqSQz4fierHXu/pLzMzLc9aLwZGbwTqsnRiZyxBkUBX+cGrN2L2TZYw5XIW0N0Ly
+         UteOlgESMTmh1LvMrpHP/tVjQ2eHrfVCvd1e8Y21B/pQ7tJdMRpjuJqusr9qZNextRW8
+         p3QBz01CsgE6cPIrS5whZcw9aEg7JjyOqCRUYjqJTPQGtA9v4SNploKAiUrfkY6gjvzN
+         zq/u/f4nbd2wdrfJKSS6OSORmns5CsiFMpiqodZ91/ELCEObkxLJoD0MuRcCAqEbvYCg
+         +aNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775766705; x=1776371505;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=uMyBa5XeMQZnKoJ1H5ru/BujrVegBPxHwpJDKLBRtdg=;
+        b=SQoxgq1QFLXqczMzHwBzz/3v/fCYVnwsgHplUuwtv1q/sqjsQ54GVYzF+CG9uKntaD
+         nFaTwHHqC2xyglszO4kpJ9/WLVwOnAzFT3eMEeTYqmHDYl9ZiGcN+I/xTHB7Hv0X/bhX
+         D1k1nyksHSMZESfbFEuD5iIetpTVpXaxEJMNk3ITewu26Xubomh72h+/ITKXkPt4uiYZ
+         iYfp1gaVa/6B73bTWRxiR3lUD4AW7o/3tknlSZFrlYtzBuUzhHsp+jRspCVwxXV0LcEF
+         1n+Jopw9UDKoDkRFqx7AWV/IJkjPg2k6HXy3xwcTxJ2xbtyacMAov8hm60vEKYTZXUy8
+         uBqQ==
+X-Gm-Message-State: AOJu0Yx2Olb5NxwJyfzZ7JUIKBwb+JWeRfGdqH76ySyaQyNTgecjWEwV
+	LMoXbl5FBP1DX72plTd82v5JQHk4knSHTWMEd0qguSqPlFZdweeZWDgq
+X-Gm-Gg: AeBDieudK3WpuDa398FQdoF8cVdmH8q34fbNQ2590fQvgv4muVjFFXUX9+QT6Qw9v0e
+	ZIGWSSrTNBgRunAw+uqQmPnpUoyxiCavnSHNo7zn9MpUAFstDOXbmdx69SHpWhZR7ScT5uUBCrL
+	wiPPioeYov6g6diVl3A+vHdY3fwW6wZojQqIZDLQ+D9Snh977texLbGv8UMLKqv5eZT0wERhcpc
+	j5IuBQWQprKeNCVSXp9119YTUEx95XGcGYVwOKmS5dU40ZH5yurZxyjOEVddpVxsOfOtM96hxws
+	Qusz+d+f9KgOWglwrR5PBLYHXn3nwUC6STmh4E7rP1fV+dU4KD8MKLT0qTk5uAUp54J6F+VxC9i
+	bxlD/Q3xwC7B97YLvjSpT4vSfqBVyZKW8y4UoH2h0wVXgrV/OdTklzol0EgETvaITNrqudRPkiN
+	s/iX3SQuTYkiUGyBX4VzzBY2sHyZciuucgxC0IB0Z9Sz7Fe9gcs3+sGc5FswQd3MymCFbVx9lZW
+	Yq1YXVuMD170Vyd
+X-Received: by 2002:a05:6512:1110:b0:5a2:c66a:d6d1 with SMTP id 2adb3069b0e04-5a3f0848711mr90903e87.6.1775766704556;
+        Thu, 09 Apr 2026 13:31:44 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a3eeee12fesm136816e87.40.2026.04.09.13.31.43
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 09 Apr 2026 13:31:44 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Thu,  9 Apr 2026 22:31:43 +0200
+Message-ID: <20260409203143.19012-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq7bqgujto.fsf@gitster.g>
+References: <xmqq7bqgujto.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+> Two and a half things I noticed.
+> 
+>  * use "test_grep" to validate the result, like you did in other
+>    patches to the tests.  t3903 is rather old and has uses of raw
+>    "grep" but majority of the tests should already be using
+>    test_grep.
+> 
+>  * Not validating the base line is a bit unexpected.  Even without
+>    giving --base-label to the "stash apply" command, we could make
+>    sure that the output says "|||||||" (and nothing else) for the
+>    base label.
+> 
+>  * When these labels are set to an empty string, I think we should
+>    refrain from adding a trailing " " after these marker characters.
+>    Should we add a test case for that, e.g.
+> 
+>   test_must_fail git stash apply --ours-l= --theirs-l= &&
+>   test_grep "^<<<<<<<$" file &&
+>   test_grep "^>>>>>>>$" file
 
-> "create" accepts "-m" as well so that's not unique either. I agree with 
-> Junio's suggestion in the link above that we should assume "push" when 
-> there is no subcommand given and error out if we see an unsupported 
-> option.
+Fixed, thanks!
 
-Yeah, if -X were unique for "pop" and -Y were unique for "push", it
-is tempting to DWIM "git stash -X" to "git stash pop -X" while
-DWIMming "git stash -Y" to "git stash push -Y", but the thing is
-that the urgency of each "stash" subcommand is different.  As the
-"the boss is here and tells me to work on this completely unrelated
-thing, clear the desk as quickly as possible to switch context"
-command, "push" deserves to have more quick access than other
-commands.
 
-It also makes it resilient if we said "a command line that begins
-with an option cannot be naming any 'git stash' subcommand, so we
-will unconditionally insert 'push' before that first option",
-because 'push' may later acquire "-X" or 'save' may acquire "-Y" and
-making these options no longer unique to a single subcommand.  A
-version of Git may have treated "git stash -Y" as "git stash push -Y"
-but if the next version that has "git stash save -Y" stopped accepting
-"git stash -Y" as "git stash push -Y" because -Y is not unique, the
-end users will be unhappy.
-
-And of course it is far easier to document and teach.
-
+Harald
