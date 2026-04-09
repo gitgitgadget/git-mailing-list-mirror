@@ -1,112 +1,234 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E36368293
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 14:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291E43E022F
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 15:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775746118; cv=none; b=g1hjFzhFaDCXFzN1olw9k+f50/3Zmm1erCbEQkUzQib2XBX05liSVfjPRmdEeEorsrg4InOj9ulovzaJZ+xzjLlR3fudVGI2HCT0QIfzneYj06uUCopNMWK5Ap1mu0OpbYR5jQ+OA6fBVvqM2UQqtb//ADd4J0KyDBQrsvSVVTM=
+	t=1775749601; cv=none; b=Ft3G4Hml0xL+ua6W+Cw0oQpRwtAy5SUcznBSdD/bWExD/mybLfFvYhpslano9bHXgZ6IcygeG7d5gjS5lE7SQpcy2IlWjyIFFAyvXSnPs+APhYr7PCN/VzzfvMg4LoIrVDGr9rWCU1YZJp2iaV9UrmSUX/Ut3jdbIiu8f3eyPtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775746118; c=relaxed/simple;
-	bh=qgPVS756c+oJaSDs7F4cSgygpN1q8pGrRMH3RGHtRkc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sKMLb6qYTf0rFAwkb/iXHNr/uIQLuu1Emkj60MXrqPaGj7Vs6iv3tC/YlSPiau8giCNy5/jef1ilGerM2OkS/4AM3NezpXFKjSQyAcQJzTNwYvAPB2pYxKOnqS8gnAxbMrHfFUGJhqIfNy8TwY7K7ItZom9NXcl6msfwq97SBII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YAy7qPOO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZP1/E8pB; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775749601; c=relaxed/simple;
+	bh=Pk+l5CF5h1K3lFXinVeegyPB8wjxXk5LtTXIg+SgUOk=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=XkjyhxiTpsolcZHRc0NqA+bq81B3oQSTSaoqmurqTunjoQ/cN+FsyLrO7qvoR3ikb8UjU39USndpxsZd/0cmuanMNRL+QjIU1yRAz37YilfuHQ3oedH1B0wbKNPJomaVG9f6MDs0KGUJXQ5UJoqwRixJmBFhbxySrgRWpNemeOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=USXEbS4L; arc=none smtp.client-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YAy7qPOO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZP1/E8pB"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C336114001F8;
-	Thu,  9 Apr 2026 10:48:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Apr 2026 10:48:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775746106; x=1775832506; bh=UvbX3fLQuy
-	f11T3fdSUDbQ7KlhWW4e7AtL9ndkERNX0=; b=YAy7qPOOajWgNox4fe8g8aiF6w
-	OeXjfxiezT+DpR6BkhxMmlZuQ4hJ68ZXOQj8EBQeGvOR88dvIk8HT061oRApmOLb
-	R/Pv45y+KZNeiQMxrWuNnw8er59wgS5bNsqA4QUfx1gCVeaGtYv/vWBT4VZ5l4ez
-	dIxesT0qGPLf6Fe36pd8z3AW/8hbiopTNaFctdafOyeuoCY36+o1gKyP3P4nSAEL
-	D3nl41eoPcrry06E67JokRCkzEQNFDc9eNxmJrIkiewiNZkpdPheOxCCc5MpzzKu
-	f5mnl3MZysAU0HgL2lB8JKYVo6V9HUHN45DLDidWJUTh0L5JTOBkBT9RY/xw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775746106; x=1775832506; bh=UvbX3fLQuyf11T3fdSUDbQ7KlhWW4e7AtL9
-	ndkERNX0=; b=ZP1/E8pB206JuKddXKch4uOl/U/k2ddFvBDOGedL/+Ad4Bp+82k
-	L+LKsqnHz1W5xhsj2gmOgn9tGyEJsejAtk2oIvCvMjGaOtRWepVDAk5RVArsXkoa
-	Dwu2RY3DbL8EYcg3VktpW32TszCA/lNHrYvCu/nybABkyhDhE9DFNSH2bdDkU0fL
-	z4ZJrwqu2LT7mjXkqBTexvtO9vJfWQGWdaEJL7TFGHcKGjTqw5soLAtKGQW4ssUH
-	TPO4L/omG5PQiJkLF/Bk3iWsbT5nBiyK9C08IAicqxhPRosZjpdykOBBOeTE25Wj
-	w5b4XInoI5n0Ro67oYUlNEhDp7dEVlhT1tQ==
-X-ME-Sender: <xms:OrzXaW27M_h-vmxNF8tKoanFRPrtAhxeRlvUCCjaYbhHA_-yxVrujw>
-    <xme:OrzXacz8V25pzMXdL4y_ZV9Ncm7gLWMtj9uTvtDX1DGYayPVhsetuyIE6QU0eGM9E
-    MSMxf6-YLPEva16OpxsxBx1kxDDpe9l0_4hZMxhlH3LTxGjo0SWMg>
-X-ME-Received: <xmr:OrzXaYtFaUVWw9sfQlmM-fPbKgAkYrArhwXj5qQz8m1bGmMsSg17ncwnalp1EPWpkdoHYBv9G4eJx9yoez85fzEbcSjpNpEiYQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvieejiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehjrgihvghshhgurghgrgelleesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:OrzXaeztXqwpy5KJcCF1P7GXh-hw14BZjN3drM5OQBiseyyWrlaBGg>
-    <xmx:OrzXabAkMxKzc9zHs0EUS4M960gkjEiLigeaPW0WzeBG7PGPB5xaBA>
-    <xmx:OrzXacfdLLQwJpTcN5aX4xASHLhT7w08uiyY57EQPKfOZcgPSVLldg>
-    <xmx:OrzXaVmu1xkilds2pIaX5DP01e0lQBsM5fSdx3b9MBsLSQLuRNZhQQ>
-    <xmx:OrzXadaE5-Umq3FCN5kJ7K9mLpxQCfnGXG0zjGu-V67ejEfxw7yW-Z0C>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 10:48:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Jayesh Daga
- <jayeshdaga99@gmail.com>
-Subject: Re: [PATCH v3] repo: add paths.toplevel to repo info
-In-Reply-To: <CAOLa=ZRo2qWES4XW3UuDxe1Wjew_z7PDy48qQdsjQzD=G8E2ew@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 9 Apr 2026 09:13:35 -0400")
-References: <pull.2264.v2.git.git.1775668134796.gitgitgadget@gmail.com>
-	<pull.2264.v3.git.git.1775714492944.gitgitgadget@gmail.com>
-	<CAOLa=ZRo2qWES4XW3UuDxe1Wjew_z7PDy48qQdsjQzD=G8E2ew@mail.gmail.com>
-Date: Thu, 09 Apr 2026 07:48:25 -0700
-Message-ID: <xmqq4ilkw5om.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="USXEbS4L"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6501d242e2fso1122708d50.3
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 08:46:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775749597; x=1776354397; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YZJdo90HWUjPh3Vc6O16+5ViS6QIpUqFTIjPUahm25o=;
+        b=USXEbS4Lis2sp7JQpSegBk0X9pohYda/Pcl7wR4RtCho9MFjLHECT/XcqMPN3dcoNO
+         jnFzU8gEAlW1d+VyluyRNWcFG9NTfowylZFOcs6RVluGoz50SPN1p/GECPIcfg4ZE6Vi
+         z8Cx22jDktmK//C+KW5ZWGGiV2S0xH+ZPLmKA11e31+E/dl7M1zQ628xTbpl10X7WBHF
+         QvUYqkjrrIgbmCcrQzTakRbWXx39EvVYyaDqZb7kNJ+vjzcgqnUh5YpqFxp/S6HTxOLe
+         1HWciz/6WGo+WfrxgHIB5wWRYw12tKk78l+YiE4xBpxr+fjhogC5c0shMo6F4Mchr41C
+         w3Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775749597; x=1776354397;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=YZJdo90HWUjPh3Vc6O16+5ViS6QIpUqFTIjPUahm25o=;
+        b=ARIOijDEyoiwOjVWHGWvrdYc9Qx/Wn1pFYxGhoHFEvEgMqJHsw4FlvbKQHjGnsVuVr
+         nX3ePK0FNHDoAQDwZH+PWyYaG5FDEAXFWkEsvVMWk62BD82+iM18oFjcI0BzRLm9nDHw
+         D1gVrYmxq8v0krFevTW9r+skjbMwPDSQD7dnInpNhk05ctMlQDt6A6/Tlwpj1hqUPf5p
+         W1mtNeWBtSg5j7cGf2rUAJ+fRHz2rVmiSXfWn5/47sUMQAulD1I3dUX4kylubraMVXuP
+         HOk9e9VsUVtSEf/AsHwMwwIDaqO5oCwjft7fkK3bABiAKHgzQc+fPTxwB3PGsOgSv2Qo
+         hteA==
+X-Gm-Message-State: AOJu0Yw/VME6jbJPDHb2tF/KWi+3u7IjTNgl7dHxG0s73F2XJEky2gW0
+	AzeErVE132XlrdHTmhrAkBa6N53yidQhUWXAdjFhnZo9/DYxW6wKa0T9sgJOH8tu
+X-Gm-Gg: AeBDies8L1F5tOTOWJiDBF2wjOPzV81mci6+xP3QG6aGCs9hQp/HRCjOjM9hdJMdkEw
+	txxPGEtOraUW0SzaxUti8vW/F18kKL9ghG/DV4zl0eAe+W2CN2eU0CureMqL9ONR8guj5zL5JYC
+	OJWJwVcPAWaWQpt01WlLkxPRbYWSE6jG8qDwZw94d5m1VFQVd+w3cKPicWdI28CVtydyqxEEPh9
+	RYiwqGkLmMQWMaPVYvF0RwkjZu/rW2z4+MxoNIWSPmX810X0x3/aOIt105xvB+h0ktua3NO4HCT
+	2MXsvaL8l5lVRF0v8jBrNnNpvc5WJA2DH7PtlHZiSox20Vnclwh+m5p1u++XAzUsjUI5i7mwGBZ
+	Oi2FCjzgFzrvsIDroNorBXXy4eClIKJhXiQJqCzp238gnTd2bmvQnnopUvMdVetlPceERk6m9AS
+	1ZzXbT+hVdigt9RXw71pCcFa51pEEjNkwTwNH9hVtlLlGRU3CyDZM3cxKWvj4YpPNmzFn8vZtzt
+	hKJCiDrGMPQNaFbkXjde/y1cIohkMMbnWKQdVvX5Tik
+X-Received: by 2002:a05:690e:1445:b0:650:895a:19c6 with SMTP id 956f58d0204a3-650895a1d56mr7799128d50.33.1775749596426;
+        Thu, 09 Apr 2026 08:46:36 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:6078:d96e:8f4:935d])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6503a9d8c2fsm11194522d50.20.2026.04.09.08.46.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2026 08:46:35 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] wrapper: properly handle MAX_IO_SIZE in `write_in_full()`
+Date: Thu, 9 Apr 2026 11:46:24 -0400
+Message-Id: <98E6F739-4ECA-44A4-8645-0B153C969E36@gmail.com>
+References: <20260409-b4-pks-writev-max-io-size-v1-1-81730e8f35df@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ "Randall S. Becker" <randall.becker@nexbridge.ca>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Randall Becker <randall.becker@nexbridge.ca>
+In-Reply-To: <20260409-b4-pks-writev-max-io-size-v1-1-81730e8f35df@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (23D8133)
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Admitting I am out of my depth here=E2=80=A6
 
-> Don't we still have to decide how we want to support relative vs
-> absolute paths? [1]
+> Le 9 avr. 2026 =C3=A0 08:52, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
-I suspect more than just a few requests to this command yield
-path-valued response, so do we want an independent boolean "if we
-are showing a path, show it in relative (yes) or absolute (no)"
-option, or something?
+>=20
+> =EF=BB=BFSome systems like NonStop set a comparatively small `MAX_IO_SIZE`=
+, which
+> limits the maximum number of bytes we're allowed to write in a single
+> call. We already handle this limit properly in `xwrite()`, but we have
+> recently introduced wrappers for writev(3p) where we don't. This will
+> cause the syscall to return EINVAL in case somebody passes an iovec
+> entry to writev(3p) that is larger than `MAX_IO_SIZE`.
+>=20
+> Introduce a new function `xwritev()` that is similar to `xwrite()` in
+> that it handles such platform-specific nuances. The logic is rather
+> simple: we simply coalesce all iovecs that don't exceed `MAX_IO_SIZE`
+> and pass those to writev(3p). If the first iovec already exceeds the
+> limit, we'll instead pass it to `xwrite()`, which handles the limit for
+> us.
+>=20
+> Adapt `writev_in_full()` to use this new wrapper. As this wrapper
+> already knows to to call writev(3p) in a loop already it doesn't need
+> any further adjustment.
+>=20
+> Reported-by: Randall Becker <randall.becker@nexbridge.ca>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi,
+>=20
+> this fixes the issue reported by Randall in [1].
+>=20
+> I mostly wanted to get this patch out there so that we can discuss a
+> proposed fix, but as said in the thread I'm also happy to revise course
+> and instead set NO_WRITEV on NonStop for now. I think we'll want to
+> eventually land a fix like the one proposed here though, and at that
+> point the workaround would not be required anymore.
+>=20
+> Thanks!
+>=20
+> Patrick
+>=20
+> [1]: <00f401dcc6e6$7183c0f0$548b42d0$@nexbridge.com>
+> ---
+> wrapper.c | 51 +++++++++++++++++++++++++++++++++++++++++++++------
+> wrapper.h |  1 +
+> 2 files changed, 46 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/wrapper.c b/wrapper.c
+> index be8fa575e6..d989c78b4b 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -323,21 +323,60 @@ ssize_t write_in_full(int fd, const void *buf, size_=
+t count)
+>    return total;
+> }
+>=20
+> +ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
+> +{
+> +    ssize_t bytes_written;
+> +    size_t total_length;
+> +    int i;
+> +
+> +    /*
+> +     * We need to make sure that writev(3p) call does not write more than=
 
-> Also seeing that you're a GSoC candidate and this is part of the project
-> that you've (and other potential contributors) applied for, our
-> recommendation is to not start working on a project before the selection
-> process.
+> +     * `MAX_IO_SIZE` many bytes. If we do exceed that limit, we only pass=
 
-Perhaps I should refrain from commenting on these patches to
-discourage the authors if that is the case.  I am not raising an
-objection, but do you have a pointer to the rationale behind the
-recommendation?
+> +     * those iovecs to writev(3p) that sum up to less than the limit.
+> +     *
+> +     * If on the other hand the first iovec entry already exceeds this
+> +     * limit we'll instead use xwrite() to write it, which knows to handl=
+e
+> +     * `MAX_IO_SIZE` for us.
+> +     */
+> +    for (i =3D 0, total_length =3D 0; i < iovcnt; i++) {
+> +        if (unsigned_add_overflows(total_length, iov[i].iov_len))
+> +            break;
+> +
+> +        total_length +=3D iov[i].iov_len;
+> +        if (total_length > MAX_IO_SIZE)
+> +            break;
+> +    }
+> +
+> +    if (i < iovcnt) {
+> +        /*
+> +         * The first entry exceeds MAX_IO_SIZE, so we pass it to
+> +         * xwrite, which knows to handle this case.
+> +         */
+> +        if (!i)
+> +            return xwrite(fd, iov->iov_base, iov->iov_len);
+
+It took me starting to write this email wondering =E2=80=9Cbut i could be >=3D=
+ 1?=E2=80=9D to realize that this comment applies to the !i case below. Darn=
+.
+
+Still, I find the declaration (=E2=80=9Cthe first entry exceeds=E2=80=9D) be=
+fore the check a bit confusing. Is that typical of our style (in which case l=
+eave it be)?
+
+> +        iovcnt =3D i;
+> +    }
+> +
+> +    bytes_written =3D writev(fd, iov, iovcnt);
+> +    if (!bytes_written) {
+> +        errno =3D ENOSPC;
+> +        return -1;
+> +    }
+> +
+> +    return bytes_written;
+> +}
+> +
+> ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
+> {
+>    ssize_t total_written =3D 0;
+>=20
+>    while (iovcnt) {
+> -        ssize_t bytes_written =3D writev(fd, iov, iovcnt);
+> -        if (bytes_written < 0) {
+> +        ssize_t bytes_written =3D xwritev(fd, iov, iovcnt);
+> +        if (bytes_written <=3D 0) {
+>            if (errno =3D=3D EINTR || errno =3D=3D EAGAIN)
+>                continue;
+>            return -1;
+>        }
+> -        if (!bytes_written) {
+> -            errno =3D ENOSPC;
+> -            return -1;
+> -        }
+>=20
+>        total_written +=3D bytes_written;
+>=20
+> diff --git a/wrapper.h b/wrapper.h
+> index 27519b32d1..a6287d7f4d 100644
+> --- a/wrapper.h
+> +++ b/wrapper.h
+> @@ -16,6 +16,7 @@ void *xmmap_gently(void *start, size_t length, int prot,=
+ int flags, int fd, off_
+> int xopen(const char *path, int flags, ...);
+> ssize_t xread(int fd, void *buf, size_t len);
+> ssize_t xwrite(int fd, const void *buf, size_t len);
+> +ssize_t xwritev(int fd, struct iovec *iov, int iovcnt);
+> ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+> int xdup(int fd);
+> FILE *xfopen(const char *path, const char *mode);
+>=20
+> ---
+> base-commit: b15384c06f77bc2d34d0d3623a8a58218313a561
+> change-id: 20260409-b4-pks-writev-max-io-size-e9b803439ae8
+>=20
+>=20
