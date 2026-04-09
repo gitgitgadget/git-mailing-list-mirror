@@ -1,221 +1,206 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722273B47DA
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 09:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775728089; cv=none; b=bmT7SJkQmVp52OYQORA2Sn0HSv2XXLr3ZsSyNcGzHTycmz9SKR+7PGGU7qGiSvmZRepyNVsMfiR7d3ZMVQdBPeoHLDjd/ap4vMsd+z2eTVk/BN3cAIFtjXzy4eYfSenITLscywHXeqmdfQjUZTbcDPp55c66FEEYK7PnnLaHdB0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775728089; c=relaxed/simple;
-	bh=cAvagc781EJXN9+Q0Q/3gUS3fT1P7/Bks1wTllqIUVM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=W2gkpICKjpl8cngDy5URRb0LSc2czc715jkYSGMyKWzPyMjxamwq+Ynpobf+BKtTGFRznQhDGUmzG/HrqzCDKL0EoXf7e9fVbu/EXSCj4ZCC7BcaBS3YgCHDKI+XJ3b0/B8SzeBvws7WPs4IdaVjX2Sji0ENK9WGNvnbEjgG2sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J7XRhPA/; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175AB36E476
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 09:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775728175; cv=pass; b=SlO0EzGL2d6/J8b8XhjQYRZgBdwdhrdXpQpv0mv10TXu8k/l1J66Z6BGgvJuK5uFEnC+WKahXyTfIwtKWGP5DdCgk4C/1yb4hQ5OdDHC3+FKlGVWJ4pzrsEN/ne2rGz4GK1t4BKuDkUQ6JuwIMGpjaJUCdh5vxQ2oWQ9D3AEPDQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775728175; c=relaxed/simple;
+	bh=Ce5mmliIliMGA6rSCkhB+yUJ5BGypq1u47AdsIlApmw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pa1qON+242JhH7w1YqHXykugFzh+8DSjwAGHncXFNKMj7D6nY8CPTTKL2qv6XaN/Hn/9TTzMWRCxNoTE+PIe2WUdIMxPnAjUpEqKYNbUHDTvMCkHEmne2KIlQD7aAERXb5XrtffBMnd9eAJgP27TQrJuIKzZv11TdWCxqGOsT+0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CDiFbeJ9; arc=pass smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J7XRhPA/"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488a14c31eeso5142555e9.0
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 02:48:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CDiFbeJ9"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-56a8fdaddebso228000e0c.0
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 02:49:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775728173; cv=none;
+        d=google.com; s=arc-20240605;
+        b=liUMRlOoFZUI4cZw4aAIPPo8SfNIXh33UCSmyWsvUXoHmH5m7fIGlgqcVrOh1m8Nb7
+         Cez8u1vuWJDNKAnlg1CG0SCjOHkHsdOB5XXp7Q7YurTanBcTdKmCRF8pB6yJFRfsP4lR
+         mqye6daWaHcmwcrnpNnYb0N9wPiOdenUEeagFSz4cFA0uZRtOXYDG/ZBzJ8Rn3OCU9rw
+         +UqJib8a6L6erfDyfknsAWqN9nQv0AprZQwBHVS0OvWGwwAsmcmfC7UB1Ay53/v4X3wM
+         KmvwOVgZM93kLJqrTYOr/Pb//fpPOpMTHdCRQnBuY1ELTIMh5nblVChZrc54mqAcziDt
+         Shiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=G7KjFq4q44YpO/o2LxU7BYbJXueWiQrNO/rfCXMPVlA=;
+        fh=wikfRd3LKV1pMTCnH48n+XuyS1M+529ecCv/GujeVSU=;
+        b=ZMk85igBL6v+dJMgLuD6Jak7P2RyLEL3dvaspQN5U3IiMJhEaY7uzJWOyClt5ocLTP
+         YjDKciJrz4Voq9aT9izDB89P836dvpRJvVc5+WQZWUuAErRRZuJHDHALtwwRHgjzbvTi
+         LyGYg+VkQ509JdJXqieLXytPfvYcC89AjNXUTdE31WoOYWlCrd/KuXPeEM9kvf7BjQRy
+         EZOzEhuSlZ5CcLhQMByDHELiZc3mhpOOqIdsCg7Fyn3X3XfA9xbQqc/m3aOjMRgYiNR4
+         WKbxfK48tlR3RK1r8pZxKmH8vR6LEf7JNqvry+NlhDK2TYUH0i/LWwn4RcfaY/3HQqWE
+         RmHg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775728086; x=1776332886; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5h4bWQuf2muIvVB6V8tOCjPFSMwT5hVY09jNB3gyfBw=;
-        b=J7XRhPA/O/Zh02YbnyZH3C1TFAIUL8i7ybC34OUs16dPje07epSS7T87BvvtWkQavW
-         32KguxTDjM+PMHf/GbzDWlwijMZDJsxVf/GUlGSZ/q92S9lDAo0Ez5yTepE/HFHXA4Vi
-         mvqLczGc6qj1t2QtGpiEoKjXBEUr2+omEEmqUq6RjnjjzKXYMIEPVf1BD3d1Vx5OouTz
-         5+axg7NL2g2KDnc5pv8nLh9xUH7GHQKqp4owc0LjVkt4b5hqRZ94Zef+AocJYZXaFXOK
-         OTqzktMhjaXbZdFBONFixTrMSKxJnsJry6RtPhqDfCzhxKUqqMSa9UPZ5NKGkblxjDhi
-         pHUQ==
+        d=gmail.com; s=20251104; t=1775728173; x=1776332973; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=G7KjFq4q44YpO/o2LxU7BYbJXueWiQrNO/rfCXMPVlA=;
+        b=CDiFbeJ9+wznHGtAKIYMtiia/YrOguY/b7VH2uoVyr0nCXVHGqTcP+Tl6D6ZL1QKpb
+         yIT+MPf/BvA9IWDe7QqRlEcay7C4tQKS9UDfxbX5o6/Z+dHxe6VG/ZxAcUc6dhKGD3BR
+         9GnawH6ONufDoGYwCn9KqPKi9zrdU49hQKc97HUPH/8rStcJ9M7449633CH++lmkt7/y
+         GmrFypKFCwaKLzIbwZswVf8gFbaow5ep2XadboGwmIy4JbNJv40+D2wL410ajgLAfytJ
+         O6Bl4kPlhCrJhXzcowl2xqxmZO1nKhPR55Q4Ae3vjuPzrAlTKUDVhQcsXanv5eMxsfLh
+         Kyug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775728086; x=1776332886;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5h4bWQuf2muIvVB6V8tOCjPFSMwT5hVY09jNB3gyfBw=;
-        b=At0oDmHVxOIcc2TSY+kSV3UnVYK86Zlr4XjseCJVN6C30CpN9vOLJQSyh9e3DK3h7z
-         F82FFARqh3eeuIDeRJ1ai+SqfK4Jbq84grOtgB4h0m0eKsP9oCGltX7XvQRvED01mrMZ
-         Tb5hucob+UD/CgpU4ZcS9e0yUO0nIY4Y6GkaHIEYHjD78veEX7hjdyuwPVr0PL98BhsD
-         jaOdAknSxvZFwBh1885ayTQw53vsVutKXPMklZgZ6KD8g9keFaoL7fmOoMQFgKW5uMEO
-         ZIAQO1BIHiTc76BiP7UhNRyy6YtunPuBMH3VIXDc7zITv8k1cnudhbwzzu052POCWQaU
-         GLew==
-X-Forwarded-Encrypted: i=1; AJvYcCW7qAbKE40guK19/zAOJM/XgUDd3lDe1ILr17QgSzchL2aU5i7LqIVtzcCUwsST/iKGD+s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOCwAfDpCJZY6Kib/Blk3CwCJlEN6Q+LHddtDjAWODC5lNBslF
-	B/e0do8/LP/3DNql4y/hl3uVjGVGYH6zRYqXxi8um9RPD4bFCCxYHMNR
-X-Gm-Gg: AeBDieuPA/AIv5+y2KpW11zHAETe+fImSAOFPfcIyKLkthz+/1/Mh+mrMNppye/SZJA
-	PI26NaN8ShXB0AxfqJK7V34JUO0AYSbarCc59xlB9VeqsTwoBAW6bq2QnTsK3JS1E8UKr4L6jD+
-	CpONXKL09ZQkLTA8eTaSpPKhbe97L/zjDoMPbh/kixU9/4XmIW/nFq+1gu0bmM5BiBZQDYgpoqY
-	G0GX0OAsvjJQGz7UkpdEhoq95iyXCQu0/mPueIyrCqgcsVkuiw3k9ZiMrVYE2vjfNe5/u1+e+IU
-	mA4TE48RLZPNrww932P5Fyeg5Qm3eKt/zN6ClTdW0+cNxtGL7W6Hs3MX/O/sTGqVaPCm7cNq9Bf
-	8TN6pG4GOSRPhpCMmVbXLlgqpFHMfrElDd31PlfyZn7ol6nC3xepz6WctS07IcnbzL5wyhIbM/g
-	CZoHSuMfa+Fz/ZZ1JI6XZvoJ8pXqmRmfrM+BYmc4vE9zcbEi2RDqxVUQh2wX1m5it/kj+yX8Paj
-	a2GCD9BH+x3Pg==
-X-Received: by 2002:a05:600c:348d:b0:488:be21:54b9 with SMTP id 5b1f17b1804b1-488be2155c0mr154925475e9.8.1775728085477;
-        Thu, 09 Apr 2026 02:48:05 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488cd18de6fsm19427585e9.25.2026.04.09.02.48.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2026 02:48:04 -0700 (PDT)
-Message-ID: <90c6112d-6447-45e0-8d15-a0a3f1f25013@gmail.com>
-Date: Thu, 9 Apr 2026 10:48:02 +0100
+        d=1e100.net; s=20251104; t=1775728173; x=1776332973;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G7KjFq4q44YpO/o2LxU7BYbJXueWiQrNO/rfCXMPVlA=;
+        b=fDcWIVM5IChE0PMYlln7kxrEJLmR6P5hHJ4Q9VSSaf11rTg2gjZv8f5aT10pLjcEuj
+         EBCeHKpgNc7h4fX/aFu7lLDJgfE9Fr3wfgkmZc5KKY0A33TOWRUcKJcIqVD46gd3CsNM
+         O4CfCjlc1qHl5MBVCoO7SYgMSv4jaNaF5NSPoeBULUsjJqxJ9fJ9C4sTox5VP7rx7s5v
+         eMA+NLTaEza076NdtwHqRBQK2olyNY6eWqyFYwyvwBZtZyOWEgzuOjnCFp3uWWuj4WdA
+         Ap6DkuyNRYsZN6IRFsX85rdOAJhkUc5yhybc46BCog9DcDtlqM2dKXPo0dqlxbmAWlXc
+         zjsA==
+X-Forwarded-Encrypted: i=1; AJvYcCV5f9sP9SoEq13tIMIPRJPtFZDlSoGiNRjoBgYPbcuUuk9SX5/EYlYppLje5vRZUGaRK1I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyY5tUxRgTBzv/OirZ5ZYJgPUwB+VehLB6ca+Oe0W3UYFaklecY
+	vwwDyFPfSLoV+P32eqOPDbK1evSOppMXY5PZRM8Rt9Qmv1LH0MnTNKyY5cMbC1M0nyE2uZdkvMv
+	33Od/nhe5ec6h+uxY1Uejb5Pc/9Oog50=
+X-Gm-Gg: AeBDiev7yiiPhX/mGoUbLsN9VMualbdLeGfaCieF7cIROFNRdml24T1TXLdX8cc0Iyi
+	rvcgEdNU/OniKU9TVKodk/rugroSqhP5MREfA+W+bmeTsO8HPWEiuNwOPvdbkLWFFx9t5s8RUSa
+	wyUkWXramOLn/fdUSoiwZk/GqlfjvBA2FqipCR6ougSz3QxKGHq9MG6QwMbsiWX4FyU8irsx9uI
+	8/3IE0UBL/BcBY3h+j0VAFPoV3+4M5QY+RBAHU9ClvUBX6/ydvln7QQbUgrBGs7iCEnwvqIjUk5
+	yi8TZz/cvgSIO1WJ9Q2U7IWL4cAmw3G7iMxLldl1
+X-Received: by 2002:a05:6102:c52:b0:605:6650:465c with SMTP id
+ ada2fe7eead31-6085c82fdedmr1448509137.13.1775728172975; Thu, 09 Apr 2026
+ 02:49:32 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Apr 2026 05:49:32 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Apr 2026 05:49:32 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-5-f02b4f1c0f13@pks.im>
+References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im> <20260409-b4-pks-odb-source-inmemory-v2-5-f02b4f1c0f13@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
-To: Patrick Steinhardt <ps@pks.im>,
- "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King
- <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
- git@vger.kernel.org
-References: <011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
- <013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com>
- <20260408173949.GB2850002@coredump.intra.peff.net>
- <xmqq4illz5g9.fsf@gitster.g> <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com>
- <xmqqqzopxkxa.fsf@gitster.g> <016b01dcc79e$87472860$95d57920$@nexbridge.com>
- <xmqqcy09xh53.fsf@gitster.g>
- <20260408223233.GB2873736@coredump.intra.peff.net>
- <adbwyvQ-R2Ag1vox@fruit.crustytoothpaste.net> <addgkjiB80pgKw69@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <addgkjiB80pgKw69@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Thu, 9 Apr 2026 05:49:32 -0400
+X-Gm-Features: AQROBzAFfHifN_aGSMOTNyPPwS2upitYMjqWe3R7u-7QDBw35vvryEu0o72u1gM
+Message-ID: <CAOLa=ZSHAF25zbJ=KHp=u0pFCpAHb-jd45A3dxTSn9pwKHkxFQ@mail.gmail.com>
+Subject: Re: [PATCH v2 05/17] odb/source-inmemory: implement
+ `read_object_stream()` callback
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000f7eccb064f03ee94"
 
-On 09/04/2026 09:17, Patrick Steinhardt wrote:
-> 
-> One question to Randall though: does MAX_IO_SIZE apply to the overall
-> size of the iovec or to the individual iovec entries? 
+--000000000000f7eccb064f03ee94
+Content-Type: text/plain; charset="UTF-8"
 
-In <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com> Randall says
+Patrick Steinhardt <ps@pks.im> writes:
 
-     Specifying  the sum of the iov_len values in the iov array greater
-     than the OSS I/O size limit for that open causes the  writev()
-     function  to return  -1  and  set errno to [EINVAL].
+> Implement the `read_object_stream()` callback function for the in-memory
+> source.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb/source-inmemory.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+>
+> diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+> index 12c80f9b34..4a68169430 100644
+> --- a/odb/source-inmemory.c
+> +++ b/odb/source-inmemory.c
+> @@ -1,6 +1,7 @@
+>  #include "git-compat-util.h"
+>  #include "odb.h"
+>  #include "odb/source-inmemory.h"
+> +#include "odb/streaming.h"
+>  #include "repository.h"
+>
+>  static const struct cached_object *find_cached_object(struct odb_source_inmemory *source,
+> @@ -53,6 +54,54 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+>  	return 0;
+>  }
+>
+> +struct odb_read_stream_inmemory {
+> +	struct odb_read_stream base;
+> +	const void *buf;
+> +	size_t offset;
+> +};
+> +
 
-So it is the overall size which fits with POSIX limiting to overall size 
-to SSIZE_MAX.
+To stream objects, we have a new structure which is used in the callback.
 
-Thanks
-
-Phillip
-
-> I think it should
-> be the latter, but I cannot easily verify and couldn't find any docs
-> around this. So could you please try the patch at the end of this mail
-> to verify that it works on your system?
-> 
-> In any case, I've tested that my patch also works when defining
-> MAX_IO_SIZE to 128 bytes on my system, which hopefully demonstrates that
-> it works as expected:
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 4b4ea2498f..8e02b5f673 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -690,14 +690,8 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
->    * to override this, if the definition of SSIZE_MAX given by the platform
->    * is broken.
->    */
-> -#ifndef MAX_IO_SIZE
-> -# define MAX_IO_SIZE_DEFAULT (8*1024*1024)
-> -# if defined(SSIZE_MAX) && (SSIZE_MAX < MAX_IO_SIZE_DEFAULT)
-> -#  define MAX_IO_SIZE SSIZE_MAX
-> -# else
-> -#  define MAX_IO_SIZE MAX_IO_SIZE_DEFAULT
-> -# endif
-> -#endif
-> +#undef MAX_IO_SIZE
-> +#define MAX_IO_SIZE 128
->   
->   #ifdef HAVE_ALLOCA_H
->   # include <alloca.h>
-> 
-> I'm happy to go either way, but think that we should definitely aim for
-> the below patch eventually. Just let me know which way you prefer and
-> I'm happy to polish up the patch.
-> 
-> Patrick
-> 
-> diff --git a/wrapper.c b/wrapper.c
-> index be8fa575e6..645dbc5f20 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -323,21 +323,50 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
->   	return total;
->   }
->   
-> +ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
+> +static ssize_t odb_read_stream_inmemory_read(struct odb_read_stream *stream,
+> +					     char *buf, size_t buf_len)
 > +{
-> +	ssize_t bytes_written;
-> +	int i;
+> +	struct odb_read_stream_inmemory *inmemory =
+> +		container_of(stream, struct odb_read_stream_inmemory, base);
+> +	size_t bytes = buf_len;
+
+
+
+> +	if (buf_len > inmemory->base.size - inmemory->offset)
+> +		bytes = inmemory->base.size - inmemory->offset;
+> +	memcpy(buf, inmemory->buf, bytes);
 > +
-> +	/*
-> +	 * We need to make sure that no individual iovec entry exceeds
-> +	 * `MAX_IO_SIZE`. If there's any entry that does exceed this limit
-> +	 * we'll pass all entries up to it to `writev()`, and then process the
-> +	 * exceeding entry via a call to `xwrite()`.
-> +	 */
-> +	for (i = 0; i < iovcnt; i++)
-> +		if (iov[i].iov_len > MAX_IO_SIZE)
-> +			break;
-> +	if (i < iovcnt) {
-> +		/*
-> +		 * The first entry exceeds MAX_IO_SIZE, so we pass it to
-> +		 * xwrite, which knows to handle his case.
-> +		 */
-> +		if (!i)
-> +			return xwrite(fd, iov->iov_base, iov->iov_len);
-> +		iovcnt = i;
-> +	}
-> +
-> +	bytes_written = writev(fd, iov, iovcnt);
-> +	if (!bytes_written) {
-> +		errno = ENOSPC;
-> +		return -1;
-> +	}
-> +
-> +	return bytes_written;
+
+Shouldn't the offset also be set and we only memcpy offset onwards?
+
+> +	return bytes;
 > +}
 > +
->   ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
->   {
->   	ssize_t total_written = 0;
->   
->   	while (iovcnt) {
-> -		ssize_t bytes_written = writev(fd, iov, iovcnt);
-> -		if (bytes_written < 0) {
-> +		ssize_t bytes_written = xwritev(fd, iov, iovcnt);
-> +		if (bytes_written <= 0) {
->   			if (errno == EINTR || errno == EAGAIN)
->   				continue;
->   			return -1;
->   		}
-> -		if (!bytes_written) {
-> -			errno = ENOSPC;
-> -			return -1;
-> -		}
->   
->   		total_written += bytes_written;
->   
-> diff --git a/wrapper.h b/wrapper.h
-> index 27519b32d1..a6287d7f4d 100644
-> --- a/wrapper.h
-> +++ b/wrapper.h
-> @@ -16,6 +16,7 @@ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_
->   int xopen(const char *path, int flags, ...);
->   ssize_t xread(int fd, void *buf, size_t len);
->   ssize_t xwrite(int fd, const void *buf, size_t len);
-> +ssize_t xwritev(int fd, struct iovec *iov, int iovcnt);
->   ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
->   int xdup(int fd);
->   FILE *xfopen(const char *path, const char *mode);
-> 
+> +static int odb_read_stream_inmemory_close(struct odb_read_stream *stream UNUSED)
+> +{
+> +	return 0;
+> +}
+> +
+> +static int odb_source_inmemory_read_object_stream(struct odb_read_stream **out,
+> +						  struct odb_source *source,
+> +						  const struct object_id *oid)
+> +{
+> +	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
+> +	struct odb_read_stream_inmemory *stream;
+> +	const struct cached_object *object;
+> +
+> +	object = find_cached_object(inmemory, oid);
+> +	if (!object)
+> +		return -1;
+> +
+> +	CALLOC_ARRAY(stream, 1);
+> +	stream->base.read = odb_read_stream_inmemory_read;
+> +	stream->base.close = odb_read_stream_inmemory_close;
+> +	stream->base.size = object->size;
+> +	stream->base.type = object->type;
+> +	stream->buf = object->buf;
+> +
 
+So the object is simply mapped to the structure which is propagated in
+`read()`. Since we don't copy any new data over, `close()` has nothing
+to do.
+
+[snip]
+
+--000000000000f7eccb064f03ee94
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: cdca028dd47ed402_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1uWGRpb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mdzFQQy80anB1bHg5OWIvY2xxeTlKQ3diMjZVWUd1aQpOanFheU1pVWtz
+UHhFZ0pRRTVvUExXOVZ2RUlXUFJPSksyQTBTNEM3Vk1tMmhmWk9vYWRHLzRIUWNGNlZITFQ0Cklv
+cGpuWmhGUjIrVFJTV1VtVDdxKzlLS2dlZWpoMlhHN2VPcGFNSkxDb0tFczhhZVRXcWVUNWl1SWVm
+NEFSYSsKN3JBYklBOEtES0dBWWNDUDhBY2pjcXdUNlBkeThmaEt2aHVxdE1xUGJsRGQ5alhzUVlN
+djFkOEc0YXVYYlFXegpnaXNtdU0vV255ZmtsMW9Kc0szTVFVU2JGVDNGdUJuZ2lCQkJKT3dJY1RP
+dmVFc0k2WlBRYWIrUDdFaXJNR3h6CjR4aFVlcXhBSkkxS2JFWlBrTGJLcG15bzJ2aFh6N2VTU05n
+Qkc4Z2Uwc2xnNGR2blB5UEV0NlE1SXZMSUdOS04KSXdraThKdHppWGxMN3ZrZXhqV05ZSGUzd3dx
+WmZRWkNJMjArQkh5U2dRbkNsQ0l1VHZWbEMvWmQxalEvaWRQUwp3bndrY2RzYWllWTYrVjVJTHFP
+d1gwTTNXQytGMi9UMEpHdHY0blFwWndVM0NhbkQ1NEtYeERGbG0vS1lxN3Y0CnQyUVlHVEFQT3Jn
+Ync2c1NoUTVnb1hJZ21CS1lBd25mS3hPVitaVT0KPXZZQUcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f7eccb064f03ee94--
