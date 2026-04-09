@@ -1,69 +1,70 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA88278161
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 13:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4930628469A
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 13:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775741274; cv=none; b=SyVns3bKTfxcsHzLDSyoH1UVpqe3Dtv7xtEFXnRBGJJJAeSHQorWmECwd0UF7luBBeUAtj9BrE7qK2Cn9/c13y7SIJGJsD5qmTwJm7bVaFgV0YvCCoNWEEQ0jxlc6S7i8VxmGLGL1PDNrPKSGXfeC2icihOEIYmhl5VvcQALCAI=
+	t=1775741275; cv=none; b=cLMLFT5g8d4GUtm2w8iqYrWTncKHjaFC34msG09K1Vm250NPM+SKUTZeSwxoaYFdUuTNGdyc1744eTeK16LZuzVXDgE9FK/sgXzq69e9zPszmZ+KRCTYhtFgN+5ntYRh4j6XmQH2ScbdNHPaGpYY8GAIOV8YKOTAluEggeBwnxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775741274; c=relaxed/simple;
-	bh=aerVltdC9CL0GTUN+goGZKeYyjOQdtGrqjYAIwKWgUM=;
+	s=arc-20240116; t=1775741275; c=relaxed/simple;
+	bh=8eWWKxxpLPFmK+QNTlM21yQ8eFBbgUvvDxppG5+lGh4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ihPkw5k9EVjB0DLt3DGPkjBz3CVlsvCuGSRllo7DHmwNFKsSBIv5Egtx8aX0H5riW5GpsewS3RxIBihSg8bFIBZqSuhMUpkRv8iT6Su3TgIWr9XjUdmI5D/DmoPgTZZIB16i4xcqrzJYc+FEXXNAPuzv65uhBcv9XsK+Lxbwa70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S6EjF9Ae; arc=none smtp.client-ip=209.85.160.173
+	 MIME-Version:To:Cc; b=bOkvB539FEli2/YMB1LU2N+5/Sue9oPU9hMCC+Q1in1w95wdAJNMrydLIuJYYuBmFWv39uVJNbUfcXt25MhjRrnW3sNqe8woXFeFdi3+a4pYWvCAr2uldTPS2Xb2NYw9ZnP73y2qE6LJ+lhRzUepJStjagNwFcc9l1kEbrWySdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EeJFau7o; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S6EjF9Ae"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-506362ac5f7so6852391cf.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 06:27:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EeJFau7o"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cfd44fa075so96113785a.0
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 06:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775741271; x=1776346071; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775741273; x=1776346073; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K9yzHLL0eDNEtURdXCitrp7JMf+msL9yqpE3QQ0aCxM=;
-        b=S6EjF9AegsyeXqHVGK+fMg+j4Yz+Eu1wETMOV8p9tq2OeK9itnjYeyNLEuUWPqpn9M
-         KOts9UpXrl6MRK7Os8RBWKX1StJYNRS4V7OLRuXKDvcBiydFdwNjujHXwQRL97Bhm96K
-         7jb6K+e+wmQl0lW/36xaJHJMOGrWfBYNdJd0qeQbg4czZN8lpjdfL4UJ8NaczWz/sYTj
-         EnZOfk8n1R9ybCpSPlxxrCAYRHVwcolo66RKl7jTi6Yfs032Mf9RFm/JtC5QLL8KyJ33
-         OmruX+C/NTLh3pl8YsUyT4TXEAxl6g+7OrtU09xIG9TDZDl9GU1D3MvARwTFqAB5JXOl
-         /SwA==
+        bh=BP+ojuKtizSbHJeP1fJK0w8aVZ3X3PAIJUPTv5wJUE8=;
+        b=EeJFau7omOBXwsRs+UD0Dg/gpwzfNQCh2q0To5fjl67lL1J5CaH311RoR8HhTcVdA6
+         3IO1NuFRb7PzcxBbK6HJS6dqPG61SArZTu0OM3wbAUgjUt1dB2tYB2/UPGwbJzdndrGQ
+         3aJ/NVKCoHLhomLPBBcooPVTg8fJsIsgLaxcnmuSu4nbNYNgS5daW8iZTLRlOEfAmNcn
+         7+QG68YMqQTxOK/tftyzs4jgecNqY2WIbQ6SMBhh4+TTjlbx4/TAtTLui5vJUuJo38V4
+         vDIuQcoZYrCtgdqzertnA1g1Y6RYKuJ4Gwhhnm3Ks6FRVeL3SazqCmxZf+Si71PXOb0/
+         iBNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775741271; x=1776346071;
+        d=1e100.net; s=20251104; t=1775741273; x=1776346073;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=K9yzHLL0eDNEtURdXCitrp7JMf+msL9yqpE3QQ0aCxM=;
-        b=jMmzZ35wTw17p+cJXgsp7bscTSMqBWly6GXCcxIW3enL2gpGoUwCHhgPUn2pIqETh+
-         EC4hYozunAZh3tVtd7tUiRgELtFaL8K7F60yuQBVdcnih4ohq2nf8l2Exqnz1BGyO2p0
-         RztJw81+a0YWEIWP2MAW4LQf5rMBm1XSoUDlAf5+MLSS5I+k1cWQN01ACmSiQ0zjrYfg
-         9r0E2nGuISBzSNJRV7n5qEXsbNjHFa2HffiRXbqqaaSfTsXu6orZm0KUSJpT35JchEr1
-         SqZM9Q0CE0A1vPSQ42gTSCGKy0+MAsP/bl2kb1DFhOpF3xUl6iw3EHs2uyc623RthH6R
-         z8Ig==
-X-Gm-Message-State: AOJu0YyolBkzA9AMMculSz0kUhKM36eXT1n48/FlChgID4NR1nP1dPLJ
-	Ckbxa65kTGW31WR1PJc6jy7nqTZNRbK6U1091Re+LhWou+YDW39hnny0rxv/fA==
-X-Gm-Gg: AeBDievJeFiICd6J4y5OCyCuYs2z+wQYGPjgZjBdaD/qzIpbdoBnXc27UdJDzVoRUVf
-	ubwWhl3FCEhgVC/npBUlrret6/GV4i1X3rAXYFzGDGU5i0AvN6eGvnYdK2XRmf5P9PBt6eGRRhr
-	mwrE53zczozsRiNOZKGf150zwC42DaVRXxnGvnzQv/0Wpj2qsKNwd8j6gzUtC6NwPyWQRswE4na
-	ofCjwyJpOmiS8Ud9b/AVG61zO62XxXYoDORfs3N+5hKEDtGqJsYwlfA4JFnQhzNP2dR02xIXLj1
-	CgACbBwWXLB5Nxc+H7MRDZ+1IxNb2L/DaHWGgbc2AUhv0Mwbxrkyxrr4zNoBbnK7cV62I0jDSyD
-	YqUG73jSMN2mjI2LJCKw3645R5J8TkzhZH2CoFN01nrd5vi0zxloTMroj6QIXzle+83rGhBaiKS
-	Kvm0pgAAMPegrw047ekvTuZHuiE7ETF3ONN6zPMA==
-X-Received: by 2002:ac8:7d89:0:b0:50d:6b06:a44e with SMTP id d75a77b69052e-50dc2115b10mr51877321cf.17.1775741271038;
-        Thu, 09 Apr 2026 06:27:51 -0700 (PDT)
+        bh=BP+ojuKtizSbHJeP1fJK0w8aVZ3X3PAIJUPTv5wJUE8=;
+        b=d0ZDC8J5K1fVFwWLY6GVk5olMvAf51/V3MqaGPuS4Bp6wqWTkqAXO1eVgbV06hdnT6
+         PnI2zlD66Ygq+Nms8tKlCOg+RryVSZL8+/B54XeTDDBa9Y5FSFtizieAw+vz8tR7Nsku
+         BeVKhUNnbFvQxcANgrKBvulVu12SaMEEk3MtlCDDr5cvc39WRJO8t4WP6gYab5RyUcp5
+         0cwFcfGIgb/NcwjbmoQtgS3eIC7596uvMIK09juCK/CcxKvzhZsVE+tS/8AEssSgn6un
+         N4K7USXQAu0Tq6ypy4nFzG9xtuBX+FuxhOmoIsu5FHjTRZwms6JPZJvvuzBSy0CPAT3d
+         XyCw==
+X-Gm-Message-State: AOJu0YxcI3YcVk3c5lXlPaKpBSm8tgDOlzPzbZ3wgO9wUYZKnLnQt/vJ
+	vCyjHhk9iQyqGZAw5JX85Zlq04PBHYMHt/coLtbaBiUNX60k78MndePhjf54ZQ==
+X-Gm-Gg: AeBDieviFeJWFXiSvLVxT+hypjikJmEvMc256wy9rmFeH/D+BR91G9j/auKyu8+dPvy
+	1lUgodv1PJKPxVHWb4fCEnTjWqU8GYNAyzG9qeuaMZHyA7hzjbeoo1su3/Gg8Oe9YOdBtr41cID
+	hKbvNZ8wb0BBJyZeA0EVprE+FcB4etLJ6ciUNhp5P2fK0NmoS+p2+sCVBNYehsxuBaTTIDQymkq
+	fcBxEE8Lpj1mM92x0K8pVxRgXV27uIX+DRoYKJiHz1CscZhlmCz7DxqQOrq4xE+jbcwYlILb9/i
+	o9EnMAbYOP6DKLTl76OEG1wdTD71Ff28U2VMxZKbx0r21u+BhYDFAmmKJa/AuV54bLR6P1eh1XW
+	1xVww0FB+2AsLjCk4H+u7QgaIsh5/k9kEpo5iBlT25FqZF0on8qzouGC1CvAQ5pf188q8CKJCCX
+	4RFsp2arYwvJyciARqlL6LR0zt2dw=
+X-Received: by 2002:a05:620a:710b:b0:8cd:b70b:fd00 with SMTP id af79cd13be357-8d41c3b5d36mr3401249885a.16.1775741272778;
+        Thu, 09 Apr 2026 06:27:52 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.200.119])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50d8e11b927sm128126811cf.23.2026.04.09.06.27.49
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d2a5d5a096sm1784950385a.19.2026.04.09.06.27.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Apr 2026 06:27:50 -0700 (PDT)
-Message-Id: <64261e3cb6ea6e63bf78f5354e18aa94cf9b9c27.1775741265.git.gitgitgadget@gmail.com>
+        Thu, 09 Apr 2026 06:27:52 -0700 (PDT)
+Message-Id: <c0d6b4b4c0a53af2fd76d23e04c540418ddd086d.1775741265.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
 References: <pull.2234.v6.git.git.1773740139.gitgitgadget@gmail.com>
 	<pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Apr 2026 13:27:43 +0000
-Subject: [PATCH v7 2/4] sequencer: allow create_autostash to run silently
+Date: Thu, 09 Apr 2026 13:27:44 +0000
+Subject: [PATCH v7 3/4] sequencer: teach autostash apply to take optional
+ conflict marker labels
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,73 +81,119 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Add a silent parameter to create_autostash_internal and introduce
-create_autostash_ref_silent so that callers can create an autostash
-without printing the "Created autostash" message.  Use stderr for
-the message when not silent.
+Add label1, label2, and label_ancestor parameters to the autostash
+apply machinery so callers can pass custom conflict marker labels
+through to "git stash apply --ours-label/--theirs-label/--base-label".
+Introduce apply_autostash_ref_with_labels() for callers that want
+to pass labels.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- sequencer.c | 15 +++++++++++----
- sequencer.h |  1 +
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ sequencer.c | 34 +++++++++++++++++++++++++++-------
+ sequencer.h |  3 +++
+ 2 files changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index b7d8dca47f..e500a94a59 100644
+index e500a94a59..79dceab579 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -4657,7 +4657,8 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
- 
- static void create_autostash_internal(struct repository *r,
- 				      const char *path,
--				      const char *refname)
-+				      const char *refname,
-+				      int silent)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct lock_file lock_file = LOCK_INIT;
-@@ -4702,7 +4703,8 @@ static void create_autostash_internal(struct repository *r,
- 					&oid, null_oid(the_hash_algo), 0, UPDATE_REFS_DIE_ON_ERR);
- 		}
- 
--		printf(_("Created autostash: %s\n"), buf.buf);
-+		if (!silent)
-+			fprintf(stderr, _("Created autostash: %s\n"), buf.buf);
- 		if (reset_head(r, &ropts) < 0)
- 			die(_("could not reset --hard"));
- 		discard_index(r->index);
-@@ -4714,12 +4716,17 @@ static void create_autostash_internal(struct repository *r,
- 
- void create_autostash(struct repository *r, const char *path)
- {
--	create_autostash_internal(r, path, NULL);
-+	create_autostash_internal(r, path, NULL, 0);
+@@ -4729,7 +4729,9 @@ void create_autostash_ref_silent(struct repository *r, const char *refname)
+ 	create_autostash_internal(r, NULL, refname, 1);
  }
  
- void create_autostash_ref(struct repository *r, const char *refname)
+-static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
++static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
++				    const char *label1, const char *label2,
++				    const char *label_ancestor)
  {
--	create_autostash_internal(r, NULL, refname);
-+	create_autostash_internal(r, NULL, refname, 0);
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int ret = 0;
+@@ -4740,6 +4742,12 @@ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
+ 		child.no_stderr = 1;
+ 		strvec_push(&child.args, "stash");
+ 		strvec_push(&child.args, "apply");
++		if (label1)
++			strvec_pushf(&child.args, "--ours-label=%s", label1);
++		if (label2)
++			strvec_pushf(&child.args, "--theirs-label=%s", label2);
++		if (label_ancestor)
++			strvec_pushf(&child.args, "--base-label=%s", label_ancestor);
+ 		strvec_push(&child.args, stash_oid);
+ 		ret = run_command(&child);
+ 	}
+@@ -4784,7 +4792,8 @@ static int apply_save_autostash(const char *path, int attempt_apply)
+ 	}
+ 	strbuf_trim(&stash_oid);
+ 
+-	ret = apply_save_autostash_oid(stash_oid.buf, attempt_apply);
++	ret = apply_save_autostash_oid(stash_oid.buf, attempt_apply,
++				      NULL, NULL, NULL);
+ 
+ 	unlink(path);
+ 	strbuf_release(&stash_oid);
+@@ -4803,11 +4812,13 @@ int apply_autostash(const char *path)
+ 
+ int apply_autostash_oid(const char *stash_oid)
+ {
+-	return apply_save_autostash_oid(stash_oid, 1);
++	return apply_save_autostash_oid(stash_oid, 1, NULL, NULL, NULL);
+ }
+ 
+ static int apply_save_autostash_ref(struct repository *r, const char *refname,
+-				    int attempt_apply)
++				    int attempt_apply,
++				    const char *label1, const char *label2,
++				    const char *label_ancestor)
+ {
+ 	struct object_id stash_oid;
+ 	char stash_oid_hex[GIT_MAX_HEXSZ + 1];
+@@ -4823,7 +4834,8 @@ static int apply_save_autostash_ref(struct repository *r, const char *refname,
+ 		return error(_("autostash reference is a symref"));
+ 
+ 	oid_to_hex_r(stash_oid_hex, &stash_oid);
+-	ret = apply_save_autostash_oid(stash_oid_hex, attempt_apply);
++	ret = apply_save_autostash_oid(stash_oid_hex, attempt_apply,
++				       label1, label2, label_ancestor);
+ 
+ 	refs_delete_ref(get_main_ref_store(r), "", refname,
+ 			&stash_oid, REF_NO_DEREF);
+@@ -4833,12 +4845,20 @@ static int apply_save_autostash_ref(struct repository *r, const char *refname,
+ 
+ int save_autostash_ref(struct repository *r, const char *refname)
+ {
+-	return apply_save_autostash_ref(r, refname, 0);
++	return apply_save_autostash_ref(r, refname, 0, NULL, NULL, NULL);
+ }
+ 
+ int apply_autostash_ref(struct repository *r, const char *refname)
+ {
+-	return apply_save_autostash_ref(r, refname, 1);
++	return apply_save_autostash_ref(r, refname, 1, NULL, NULL, NULL);
 +}
 +
-+void create_autostash_ref_silent(struct repository *r, const char *refname)
++int apply_autostash_ref_with_labels(struct repository *r, const char *refname,
++				    const char *label1, const char *label2,
++				    const char *label_ancestor)
 +{
-+	create_autostash_internal(r, NULL, refname, 1);
++	return apply_save_autostash_ref(r, refname, 1,
++					label1, label2, label_ancestor);
  }
  
- static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
+ static int checkout_onto(struct repository *r, struct replay_opts *opts,
 diff --git a/sequencer.h b/sequencer.h
-index a6fa670c7c..570f804457 100644
+index 570f804457..1aefd25646 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -230,6 +230,7 @@ void commit_post_rewrite(struct repository *r,
- 
- void create_autostash(struct repository *r, const char *path);
- void create_autostash_ref(struct repository *r, const char *refname);
-+void create_autostash_ref_silent(struct repository *r, const char *refname);
- int save_autostash(const char *path);
- int save_autostash_ref(struct repository *r, const char *refname);
+@@ -236,6 +236,9 @@ int save_autostash_ref(struct repository *r, const char *refname);
  int apply_autostash(const char *path);
+ int apply_autostash_oid(const char *stash_oid);
+ int apply_autostash_ref(struct repository *r, const char *refname);
++int apply_autostash_ref_with_labels(struct repository *r, const char *refname,
++				    const char *label1, const char *label2,
++				    const char *label_ancestor);
+ 
+ #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+ #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
 -- 
 gitgitgadget
 
