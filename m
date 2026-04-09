@@ -1,87 +1,84 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E25D40855
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 20:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FDC1448E0
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 20:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775766760; cv=none; b=pjCuZVgPf1rcbzsOZRj+E/0kqT5lw/o5AHpRXe9OUi3ZbHX/5nn/mE699zjxz2b3Oh6xm+U6fGZZQJRYTethNfjmbWZ7xeCgTxlAO9j6IdG0mdJ2j07yBryBgTFwGqlvF+asNW8eOYvgKwMazrfRTf4cChzLeL+q392HkWnk36c=
+	t=1775766821; cv=none; b=uiG7sOMP4AegzarIGIWwHJi8FJhPTivcHAu7qR2xZHXjPSMqBRW1qWDrmuq7PyHviLLP/yYi5pl09o817NAlkqcKsL2pskKtAqoArY4S+5uy7Uih4z9uc7zuUzViVj7WffFmi8fCOgLm2odsdxQFn/ANeoGN9IcaFpz/D16sC3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775766760; c=relaxed/simple;
-	bh=CSIrsihMD4Eq4hnWD7owpw4LD2gRQBtkU3/la9IcX+4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7dzewY5crqw3kgJcarMbP7Y347yX3KYZ96gGNy7moU5VgABIruNnIN3levYOfKstWf2KHOwZLnwSYc4irGlLM5McJrFsX3/en7j/1UXJEJHo6/afJR6k3od9EKX1pHAXepE1Dmqdk306eHaSi/cwRg+GXL0Av3ww+wJk/9kDZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LMzG2IcU; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775766821; c=relaxed/simple;
+	bh=epe1kRWJ5CQ/mu+MGw/Y+EDTuFQteiWdMvAlguRy428=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MyUw05+FdKp4sXExAbpzYQxtjmnxb1p7Jq0Yx8VxVmWi+jAhcBj8QNl57vooG/j69Xcq3YzYvmIb5j2V4dmjehgaYy8RT9d8wqClrHDCxeIrIGrCsOF5dLT/ThBdt87losDwlu5OWLcF3KTIPrC+zPj0zQnSzyKeqC5kd3bt360=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AoT5kir7; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LMzG2IcU"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38df1889fb9so15050511fa.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 13:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775766758; x=1776371558; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CSIrsihMD4Eq4hnWD7owpw4LD2gRQBtkU3/la9IcX+4=;
-        b=LMzG2IcUEC/UP/J2/zCEPRtd+qToL5v6/RQqM9XkqzlhnNFD9ytMvSKYQdg3A5Y4dg
-         rV9BHC+CgMCuRwQr63YJH5GYIRyjaTUWCzLvALK+RsLdofg4l+cpGEINBowV+4mTKUbI
-         dUmktr3Q092AcLExNss3S3H2HifiP2qOOjmvdDPWWFdrEu98KjCeFQf6nfEocmfSFLg2
-         xoy6UQv2o4qlhy+NtFsHMFZgKhZCTbyPj20h8KLf7e8aTKHKNkt4oc69YSIIYbPJrS1r
-         N+gD5Ze16axFSndSl1KuCXqKWX9JHWj0GGC3dI8iX/5245IgODTG6YUqFDfQ7ec7UeM5
-         FC5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775766758; x=1776371558;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CSIrsihMD4Eq4hnWD7owpw4LD2gRQBtkU3/la9IcX+4=;
-        b=jz3twPlKRup1xJsx3Z3ncFDFd5uC9/0v1Gbh4o8AnbxWijM5x/vQEeKFZrE3M7fkKK
-         uIkc3yT3L+giXHhxNBfvXeRQr/nibP/jQucMZLgARMIl2ZobEf7W2FWrfGISCQyezuS2
-         ymRt8Pom/2SBsrPb/Pd4L3lJMyHK+MuCx+yAkml79qepTtU29DVIMXY+/FSMu/t86Piu
-         kDXdV4SM9x/LdTL8XnA0fIXobMCDRBRGC3YvFMfkio4ochK+gAURr//lJmXHXwwEob24
-         vjxZD80Y2OBKAaeqMwkgzHkyFqeR4r7mPPgQQuel7A9Ydo8C2J7uQ4htmBqVvPR/fEOx
-         zcbA==
-X-Gm-Message-State: AOJu0YyB8WR9eGQKsh/MZIURLBGjEYTu3bWPYDb19LroFjZwbW66RaXk
-	RmPsPblFNUuEEIaY2BnXoXj4nxJQp0PhSRZNE3QyDuSxDWV0wS3B1O7c
-X-Gm-Gg: AeBDieuiQqF2Gz2vjdxkCSQeDLgtYXQ50Y6OpRpRKC2Hwf0HzD9L3kuZii+bhYAmbFh
-	c8HqJ16A4EBTDMkwz9QeJaC9ac46giiOIPPIbJ/+c5N+C6FWwQa4C4F0QLbkmLUBFgNoTR9/E1B
-	jdIOVjc1eUZbkpDFXoA8rgj6tPlYbb9cpPfcHllsktLeGADt7oa9v82Gd226xVG92194F5c4Yqz
-	WEXeYRNNLRCUk/+1fXIJCBh08zLbCePTSBFuQQBpJyubpPVnm4s656UP1WmlyanhtCJrWUmRFNy
-	hSML3jvqxKzDU5mDigYmYZT2rorMt5ZquEtlXUJ8kTZNMf0UrjZd1S0waGBazrCr/UX7f9yNYQD
-	cFTMA6P2521sjI8Dq2Azr8xFiT1VJPt6KOJOdpDoWEcZ+dQo4lKoitSQctg/yNxFkf7ebaTQVWr
-	0nlFR5ns9FZ8/JpRlHf0e0kM0HyAGrVGiPGhxbnscUxzSjfKzVwnKMoAwG9lKMvOeGykGRbjKXl
-	vyQsnZPgs3Z5DWx
-X-Received: by 2002:a2e:b8d1:0:b0:38a:4dd3:6a48 with SMTP id 38308e7fff4ca-38e4bf6873bmr678371fa.26.1775766757414;
-        Thu, 09 Apr 2026 13:32:37 -0700 (PDT)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e4926fc89sm1672011fa.4.2026.04.09.13.32.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 09 Apr 2026 13:32:35 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH] checkout: add --autostash option for branch switching
-Date: Thu,  9 Apr 2026 22:32:33 +0200
-Message-ID: <20260409203233.19082-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <xmqqjyugt3v8.fsf@gitster.g>
-References: <xmqqjyugt3v8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AoT5kir7"
+Received: (qmail 294884 invoked by uid 106); 9 Apr 2026 20:33:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=epe1kRWJ5CQ/mu+MGw/Y+EDTuFQteiWdMvAlguRy428=; b=AoT5kir73ia5l8DcPJcUq32VpdJWlbdcf42wfKBiRY9ll+sCwexqU8qBhsierTGJRJR8V1znBjvw+/IOz/5/gaWWYDQ/p4bNJ5NiT/A3kzaEgv405kCDr3RXO5zmAy6iZkzCqDAbl6K6eiV8T8AqT7/3Yfsnp/uXd5DzyaMxhkuodX1tifr9gb6tY40YGYOJdeFOSi9Z5YJeCnJctw2SkDCNqxP0LmyU7nYgZ7aRhiSPEpa33nok68grNwQp0MNBwwLRfi2DGl+OhDyXHK7qA09zo7sBWkT5nZfh8CJImpWuhhBgJXqsMFK/pCzGg1PHJlnOw+Fj5VtndLSM81lFTg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Apr 2026 20:33:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 487339 invoked by uid 111); 9 Apr 2026 20:33:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Apr 2026 16:33:39 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 9 Apr 2026 16:33:38 -0400
+From: Jeff King <peff@peff.net>
+To: rsbecker@nexbridge.com
+Cc: 'Patrick Steinhardt' <ps@pks.im>,
+	"'brian m. carlson'" <sandals@crustytoothpaste.net>,
+	'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
+Message-ID: <20260409203338.GB3076846@coredump.intra.peff.net>
+References: <20260408173949.GB2850002@coredump.intra.peff.net>
+ <xmqq4illz5g9.fsf@gitster.g>
+ <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com>
+ <xmqqqzopxkxa.fsf@gitster.g>
+ <016b01dcc79e$87472860$95d57920$@nexbridge.com>
+ <xmqqcy09xh53.fsf@gitster.g>
+ <20260408223233.GB2873736@coredump.intra.peff.net>
+ <adbwyvQ-R2Ag1vox@fruit.crustytoothpaste.net>
+ <addgkjiB80pgKw69@pks.im>
+ <021a01dcc827$4e6342c0$eb29c840$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <021a01dcc827$4e6342c0$eb29c840$@nexbridge.com>
 
-> Should we or should we not see an extra stack entry saved at this point?
-> Don't we want to test it?
+On Thu, Apr 09, 2026 at 09:46:39AM -0400, rsbecker@nexbridge.com wrote:
 
-All of these should be fixed as well. Thanks!
+> >--- a/git-compat-util.h
+> >+++ b/git-compat-util.h
+> >@@ -690,14 +690,8 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
+> >  * to override this, if the definition of SSIZE_MAX given by the platform
+> >  * is broken.
+> >  */
+> >-#ifndef MAX_IO_SIZE
+> >-# define MAX_IO_SIZE_DEFAULT (8*1024*1024) -# if defined(SSIZE_MAX) &&
+> >(SSIZE_MAX < MAX_IO_SIZE_DEFAULT) -#  define MAX_IO_SIZE SSIZE_MAX -# else
+> -
+> >#  define MAX_IO_SIZE MAX_IO_SIZE_DEFAULT -# endif -#endif
+> >+#undef MAX_IO_SIZE
+> >+#define MAX_IO_SIZE 128
+> [...]
+> Please do not make the change in git-compat-util. This will break xwrite().
+> We already have MAX_IO_SIZE working and verified from years ago. Changing
+> that will remove our platform from being supportable.
 
+I think that was just there to demonstrate that the patch works
+regardless of the size, and would not be included in the final.
+Building with:
 
-Harald
+  make CFLAGS=-DMAX_IO_SIZE=128
+
+is probably a nicer way of doing that, though. ;)
+
+-Peff
