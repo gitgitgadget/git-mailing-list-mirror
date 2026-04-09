@@ -1,54 +1,54 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6CF2BB13
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 11:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FE43368BA
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 11:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775735187; cv=none; b=E4tvyVJ5NnPa+3BwgCcdEdixjZXeKkpGq4dhQ/4jyL/KIGgADgIANc71DLBEQBOU0hZCBKvJKgVgQZROuf1cP6xEDG8/omTw3O6ZdP78gj3IF4/T/Q5jpHtPg7EEZb7Xm4RRTgZEO5jbGowCbCfC+4jq62T9KxmcxAriqykbJf0=
+	t=1775735296; cv=none; b=WtZ47CJlb2nle4by/zVt0Gjk4BYmyn+whqbl0/CgaIbEYNY8HxchqVKTwZntTgWIS8uq2RcIJThagV5RABfiuN7bi2We9Ps4131e3IErZlvzdDNKFk3CPTDM2mXYaC2CL2STca86In05OO8+AI1E0iYD+EOr8LnkmMQLrrgYUmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775735187; c=relaxed/simple;
-	bh=LVYn2mwpjNajqmpx8caAXUnPHY10sw4xdm+IR7hzjr4=;
+	s=arc-20240116; t=1775735296; c=relaxed/simple;
+	bh=R9h9/mCc5e3jog9+DOKGsGhyKVKpaZ4JUnxRm4bJetU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FK3a92h3lRzYRPZcLz6kkwePOu6e1Rqxb6ZZc26UVoNY2NTfqmr+hhK3fLfnRPBLagGfUPkHpAQmiSs6tmZHstFBOGv52D0CrUog3i9+K64ci38MVPJn7+Rh3W7HDuwKSePyum1q/HAOghL4Y9KjrwXos1R19SjGT+N9PkrcmRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tYwa8/Ru; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LcDDID6R; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=D8/l9f97I/4cnmzZ5qpaLSPDR6hzSLsG5eNSGVMnyWVxGkf8ZyOBO5QPK3nUVTMOrV5SS1USkST55i0uuQyU0+/M7c6xLX+y/BMbhwTKMHPs/xNhIvrW6Oj+ds3p2iFt1ujs9jycFyXEX1/5M8DxQnetm1Xr37kmStPt3oTkfew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LopORrDN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=US82mOFI; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tYwa8/Ru";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LcDDID6R"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3904C1400015;
-	Thu,  9 Apr 2026 07:46:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LopORrDN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="US82mOFI"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 45BC61400287;
+	Thu,  9 Apr 2026 07:48:14 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Apr 2026 07:46:25 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 09 Apr 2026 07:48:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775735185; x=1775821585; bh=aIgqx7GGfs
-	Ke1tkFCPL2XsJPtoL02sYAt7yIcVR8l4I=; b=tYwa8/RuW9VKAx/b2cpYVQRs5U
-	fBnxlMLUOhR5VJg3liIEef0XSp05LZcXKohBJqR768YDgMrVz1svs/qSjquPx+eg
-	njSeKoZZiVt/YPhiiK4qlpy6EpGAuncuuMrVk7AnFp0CBrw2LTqLHQ3ebN+YFsGN
-	SvUojdvHbTEzpb4Lr7973yKQBIpYc/iL8vGNPjJk8vzOjuC74zO/IoYGNY+fhe84
-	GpqpfU+wbaCRquvHdgjR6kW05/7VZBuelG/Z5Qpkom9Y+hKNRdZbkztPfgO3EWaq
-	s78NbEPPgpx2HBedKLvfhzKYHEEqSQeRRGQzLKo/kRG6j7IJx8hA3Zjgreow==
+	:subject:to:to; s=fm2; t=1775735294; x=1775821694; bh=mg6ez/Fc4w
+	LmT7WmgXzlcXEHA9pWMJhEfnYIzHsa8Bs=; b=LopORrDNeogDjPq5i021G9OUYy
+	HErRbwGIw3aFICTxPnzfoqEmeM5SprDdy4bNnwzT+9neWRXAp5SEwfbs4KTchsNs
+	Wij04M+HEkK31vPqSFXaVpmtRwQ/nIjjHN3gNk1ZKDP1HV1VpE19PpiC2Y+uPP40
+	ac0l2NHwNnTO5rYZkm9HN9nJ+3xNeOXxH9PwIDBeQStu6ZCUFmQrdxkKq7BOsjxz
+	8dJ/oExubENwze1IB+0sgXqdhGaHx1C2qSC1Gc3lldFw7oSlb09/UHWuHJ0BKwxR
+	RhC9pHNx9y7wauwocgArFgQ9MIgGzu99Z9DssLoP3RW9Kek8iRAMRImOHMMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775735185; x=1775821585; bh=aIgqx7GGfsKe1tkFCPL2XsJPtoL02sYAt7y
-	IcVR8l4I=; b=LcDDID6R3l6cAfGQn5B1inHT3h6QCzCAz+qBGx52nV/rKh4N/jQ
-	SgZcaZsZqyNRFgGTwDg4jLyCUXh0lpZwMSBvwrJRpi/Zb00rL+UzK5MGoRf9DCvv
-	+ioiWwcjfXPUNJfCtN4hQT2OWwwwyn84y31x+4261I/1uRVsUQhDgoaHR3bTyrzz
-	S8it68viQ2LCUxzD/oRM8ohQODTqR4eq1geY3snxZAld+dxC4HFE4VmNX9WXmcsf
-	iBJPsc7BfmljTnq5hyPSIncpr/ZwIttr7VFNDY9Rui5D0yYurwltu9VpMFUNxHYq
-	q4ggI0edUZUDsJKvnQAaSvFfTXyoLGET/4g==
-X-ME-Sender: <xms:kZHXaQ56J_x4okhcBd0F0r6waoC5ZWPAdUu0KvMzbd6k71Cul0bVIw>
-    <xme:kZHXaY5MjuDeuaKqKdDqkZC0JDY19cM03XKAibLRK_60xPfYM5YatY5TzZDyfwYBf
-    B0V-kH03NiepjqvYEE04MLugkZRe34fWHYneDqd1WfpbRHupMLh>
-X-ME-Received: <xmr:kZHXaUc6MJrtyYYjasuIl6QT7BVjmjsWImyAEN3Gz5uvASnkhtIH4lwsGvY_uStYNK5cm54defewMQru8_XnRc7j51GDz7hyJftZqgjD1fY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvieeflecutefuodetggdotefrod
+	1775735294; x=1775821694; bh=mg6ez/Fc4wLmT7WmgXzlcXEHA9pWMJhEfnY
+	IzHsa8Bs=; b=US82mOFI/fb84uQGmcHsUYN+5Hy8j/xRKWCGUvyZcX3de8A9IT6
+	Tg9xKLa32PkUdpyQyb0cZr/8hikT6iqfrhH+CYUk7jvJF4egjBGD3Z54piODDL0n
+	MDyuF48chVJsnTq4iMxLuvNojC4IDp8nISf5/6/ghFic4x0zJPYjECMkmijJfdBO
+	e7EtYJkieWVAJ6CQSxMbEo2v7+3ESf0vET3GagqApF0rVhmdFwIGvRd8nFXMaZvf
+	hX7M1x4iMLcXwuMgYS9fFWe89Wpvg27rqMBmOumbtObJ5bkEwueQVmL53GfmmcU6
+	fv2cbiEIH6KbbNGmCtjOg/gV+XbAUusLZJQ==
+X-ME-Sender: <xms:_pHXaTjtDCKtn5n6ng0___gVkQ3JywFU6dQckuxRSt9mUoYqcIGalw>
+    <xme:_pHXaXARcL-MVijdoMvK1YKpIRxvwthDaEUYC18B5Fr4ZI5IU13Al6SdBjSM3zEmV
+    I6vVAr2rAPy-Qvixp7jJZPfeE0CgHxIdXE9jiNc2QkRzRw7hZn_ITw>
+X-ME-Received: <xmr:_pHXaYEajNNdYLLL04tZeuTSc55mozmn-so_CefZ3D5_DKW2e2x-rSR4WXc4oJVjTiLrF1_NaUt70xFcAiM4cbIcMRkcL8yQLDMYIauDXMY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvieegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
@@ -56,31 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvieeflecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kZHXaUCoeB-y9k4QM3baRiIpcPDK0RGo3Oi-F8K5AFBrxZCh8N0vow>
-    <xmx:kZHXaf9YyhXjYZxEafnC1l6XEGOErnnbxDB7kSrRd-dReVheRIv-Mg>
-    <xmx:kZHXaXJMx4419WJiUfS8t3NVRQou2LkOC0OC2C5c8lw9dd4G3aiZXg>
-    <xmx:kZHXaQgMjbY5I1xcwm4A9gZBqqx2Fm1sPLy6y1H6M4YvYivlr0ZBPA>
-    <xmx:kZHXaT9f4agVX3YfV-TO_4yoJ1-VYnThWFt5p9KteY9htzqZo3Kv6pLx>
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:_pHXafI8gxiA5W51FAcQWpVB7ZZ_OSm4hbKfFqjBSLbZct38kYQzHw>
+    <xmx:_pHXacmU-xD-W_iIaYK8qgzXtS2x8UIeSyEN7Zwq96we0GQx-dsLDg>
+    <xmx:_pHXaXQ9rQggEdMCK-B2MVxfQYj__S5wFQ_rOdVNgSnBZGbt-yhYQw>
+    <xmx:_pHXaeJ11B3445l5sIJ5a6N-Nuwyue4634zrPLvxwP7FiqFXDrs2GA>
+    <xmx:_pHXafkLSH_91SfD8kFeXgh287fC1awfOXgSwHvIhVaeX3l4QhL8wE8L>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 07:46:24 -0400 (EDT)
+ 9 Apr 2026 07:48:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 84a1a70c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Apr 2026 11:46:22 +0000 (UTC)
-Date: Thu, 9 Apr 2026 13:46:20 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 813f19c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Apr 2026 11:48:12 +0000 (UTC)
+Date: Thu, 9 Apr 2026 13:48:09 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 09/17] cbtree: allow using arbitrary wrapper
- structures for nodes
-Message-ID: <adeRjBmWsRX1rLDi@pks.im>
-References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
- <20260409-b4-pks-odb-source-inmemory-v2-9-f02b4f1c0f13@pks.im>
- <CAOLa=ZREniG1jkqk4SW6W1s6hLHh42fLQK+8tox59jprn2hPPg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] odb: introduce "in-memory" source
+Message-ID: <adeR-VSCkH8BrFGE@pks.im>
+References: <20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im>
+ <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
+ <CAOLa=ZTOOTqNv7j-DFdC2cMje=5MBdNBkqp9PhgUC7dQFKLz3A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,28 +88,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZREniG1jkqk4SW6W1s6hLHh42fLQK+8tox59jprn2hPPg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZTOOTqNv7j-DFdC2cMje=5MBdNBkqp9PhgUC7dQFKLz3A@mail.gmail.com>
 
-On Thu, Apr 09, 2026 at 07:36:50AM -0400, Karthik Nayak wrote:
+On Thu, Apr 09, 2026 at 07:44:17AM -0400, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> [snip]
-> 
-> > diff --git a/cbtree.h b/cbtree.h
-> > index c374b1b3db..3ce0d6b287 100644
-> > --- a/cbtree.h
-> > +++ b/cbtree.h
-> > @@ -23,18 +23,19 @@ struct cb_node {
-> >  	 */
-> >  	uint32_t byte;
-> >  	uint8_t otherbits;
-> > -	uint8_t k[FLEX_ARRAY]; /* arbitrary data, unaligned */
-> >  };
+> > Hi,
+> >
+> > this patch series introduces the second object database source type,
+> > which is the "in-memory" source.
+> >
+> > This source may seem somewhat odd at first: it always starts out empty,
+> > and any object written into it will only exist in memory until the
+> > process exits. But the source already serves a purpose in our codebase,
+> > where some commands, for example git-blame(1), write an in-memory
+> > worktree commit.
+> >
+> > Furthermore, I think that going forward it can serve more purposes as we
+> > now have an easy way to write and read objects that will not get
+> > persisted. I could see that this may be useful when for example
+> > re-merging diffs. But eventually, once we have the object storage format
+> > extension wired up, callers might even want to manually set up an
+> > in-memory database as the primary ODB for write operations so that no
+> > data will be persisted in an arbitrary write.
+> >
+> > Last but not least, this patch series also serves the purpose of
+> > eventually getting rid of the `struct object_info::whence` member.
+> > Instead, we'll simply yield the ODB source a specific object has been
+> > read from, together with some backend-specific data, which gives
+> > strictly more information compared to the status quo.
+> >
+> > The series is based onb15384c06f (A bit more post -rc1, 2026-04-08)
+> > with jt/odb-transaction-write at ddf6aee9c6 (odb/transaction: make
+> > `write_object_stream()` pluggable, 2026-04-02) merged into it.
 > >
 > 
-> Seems like we need to update the comments at the top of the header file
-> which still talks about this field.
+> Was a nice read, only a few comments from me. Should be good with a
+> re-roll!
 
-Good eyes, will adapt.
+Thanks! Will send the new version tomorrow to wait for some more
+feedback.
 
 Patrick
