@@ -1,151 +1,169 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E4533F58E
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 13:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775740419; cv=pass; b=CLd8hNhuJNez3QotWiJCkcSyEjo/pPccLJ5nCee+G0I+JkROGeo10z52zOSEx485O4neR2okKxsJ6GOVDQ7arpG1tq6Cg7BqmHbYcVChs9BYlfH1shMEvHMlJ4NXxZ6zKeuB6MBUysNpp6BxRBz7ogEqVmFapTNmiuKhnYvay3s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775740419; c=relaxed/simple;
-	bh=thX5SXaE3mD+a0diLvIMvEAshYt0m0xPTALXqGgynRk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gfrC20+0xYMsVhag8Qd2RPrfvMOi4TwUggEiFLn7jQIMgH777r90s2M2teXjbA68I6eZfBTsNrSMTsW88pDKTGm4K9auOcE9yCtNS5s6PZrQtRWPUTSwK+zzDmqJoi2WL/2Si0EDMVqVH57VYmM+kLcT+AHWTZPqry6MrIu0+28=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=alq9ypBU; arc=pass smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EC3278161
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 13:27:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775741271; cv=none; b=lkMIYwqkGd5nY/L4l8rRMvX6jy3N79vLtBssTwQjK9FeK7c61SdQBfyvoCfHmeI39ZDH/B8KqqnpEhbtAInZvSgAAjNT/1R5H0VQj/VSRSaMtI4wtYNSKcmxQOOPty6lkZgDoduVdg9ZmdTtm750s6epnNQ7dNYRctEmjc7Pa8I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775741271; c=relaxed/simple;
+	bh=4l8tUtcI50ZHNPi7yWFsgFjpNOvmr4HvsXiCVIysRuk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=d6nS10DKb13X1NELh7KeSx/NNW0CIgv7xlzKKkqOIje6njJKoAXg27niw7RbEpKWuham0Tuc++WB1ADhwFueyLF7WbTv+Ij2n5B3ADynwmDam6qH0dSHOFLH7Zd14OqFYJN2TktpMrpEkhYBIqFnk8GpbUBzwQ2blOrOSlPPWKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bLr+0+7z; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="alq9ypBU"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-605a3cff8d0so521009137.3
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 06:13:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775740417; cv=none;
-        d=google.com; s=arc-20240605;
-        b=eHpD2Wiz2+/BfpKLgfIy0AEiJs/srmhPLKdc2lpUWGfhBF6zyvCn1fuhbkWxTaQ5Rt
-         usdmabPXBaa8egHfYieOpBvo67zebBAavZEFhskIPxtPuL59CxfY2+oSGjHPwM+h/681
-         ezzNhQFkjqUv4Ykk1QYIIAoXam618H7uurK2gpgRnPFnTbMPacyzF3WYNUlNJwR8yWeE
-         lt4DZplaTlUVhBgUZsBn86F12mwsZVWE6kpoHTGcF7weA6wzXFhLDYmpvjesrguGULRt
-         ixSXiYWrKvd4e5XSZtSkDUnOzAb+qSPNmYV2WhJ5vRT9+5pG6BkSShoDYwDVGLYu3cV+
-         xrIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=thX5SXaE3mD+a0diLvIMvEAshYt0m0xPTALXqGgynRk=;
-        fh=ONaWtvEHOEKUQqglOZUk6A/zSpt0vZW1+2aeFuOtydg=;
-        b=N9NE8RzrgM5bBFDeiTuL8VakrChFnXxqcQMIAT3Lv97eKGVGqbnXaMoFaO3biuxVBO
-         YTYzH7Nj9jYrm9qPJnHBF2TnmuNIizEwrkFMqzIDtCPlYadqkPpM5Oj2Hz9549wZ8sKo
-         0zqKqchLbd5Z3aYfjxWABsep9mcKgkALyINtEPJ7KA+LiEPgDSbZ+6EuUgR6gT4qu8MB
-         ESub5aaNSWlN83savCuboaCrZ9L9pRwffEmKGwBiOs787EiNOvR6zqDG3auo2paXBkc+
-         GxayibshdmiVeg0MPgedVYtoEwdCskV4s2Vxx2tZ7DH38ch4QSD6toeandT2J9EeGNN6
-         nxzA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bLr+0+7z"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8a3b0242631so10639336d6.3
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 06:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775740417; x=1776345217; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=thX5SXaE3mD+a0diLvIMvEAshYt0m0xPTALXqGgynRk=;
-        b=alq9ypBUmXMzzHp+dlEl5akiffP3So4m31HOOxli3oOpec/HJrSNJUd98wedIgi3w7
-         F6dNCWh52XKnE7opwywmujYhRlaRoWl8MQZfFZootXzCZIeuzXjWNtZ7+jFECRv5HR2u
-         NCck/yuFe+zb2hJiYrP/fVu4MWxdH3HPf8BTDp6O/Uwu2cq7zrIUV6Ap1+zpF7qu6pAE
-         ffDjC3li9AQm710NaxxHgtbdLPdKkssQ4+MS2P01bypennhIoU9fFsf5Baad0W6Xfe+E
-         5729C8ix2L2zgtDU8PaQbhFJiCMuvUVT1RSwtpgyhJjPpZGD/OPV24joagymF4QerPFK
-         5btQ==
+        d=gmail.com; s=20251104; t=1775741268; x=1776346068; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hP988JqBHdXKei8KSk4IgTvPcE7SMhmJuiZbk2tOne8=;
+        b=bLr+0+7zhjc/uMWMD9Aq0szkj0qH3fizjzkr55cWKK/yzHSlufhUibCYEVY1JeE7ZB
+         UfOuFXbEo2ovA5XZLcZddGv6POnkmnJq16sNGxRFhWOL+gWQxiKI5nQ7WWV9Pr7fP9qO
+         /b/Ss0jsSWnr7jaJuyZqUa9/hpVrUgeYZfGNmV3SjjXvxD79mYH8Ka9wku73hc3SBmKz
+         BbhjICHL2/ypQ6vqLa9vzUqyS+hH1oiICExFPMqVhHaFz6fObNATZgU15NQuOhOHURMx
+         c7ik2gSLZ6bbQbJIMcesZrl93v+YTTS+HUHgq5nE6hNnjm0RlUIg7nj7jZ2cZ/HNC1LK
+         JKBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775740417; x=1776345217;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=thX5SXaE3mD+a0diLvIMvEAshYt0m0xPTALXqGgynRk=;
-        b=kymsYvGXreth/i8u2IonoRCgEfL4wsoAUFCjetaDUVhL6twLGy8A0dbMomNTXXfTBa
-         rHBGUFxDqQylBYX6UcXXC0XvkIR9Day3NNTwakohr8SQ4S7wpiDm/uMvbsWPSzRobgxt
-         FztbQ9XQXbIflhT/YAUAL7FVi2UynJjb05m/UnPmWwEISVydH4BNQq9NH/lR70UgBBi4
-         UNGgFjaBcbFvbgXBNOAMR1i+vaKTE5PlnkjhUI9UppnG1+dapEga9l/saWrI+5zKBvHg
-         mcHClf1eztMpLrLtgAWZh1taKB7NzCpzros/u0pIokrrNRrJz8H1YBMqT/WAAwbmVjWZ
-         LkPw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQt8fcDyap0VZPTdgDypNjUTlnQVmNCegp/10tx2qtTc9bNz1mj49nrmwU9DmtxR8oFP0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8sIDioKjjio4cTsHwGnnLpDXBxw0MWgJRMXbNQ5oz4+fdNR0J
-	QYUHhzZ0jizddCbmZHfxC8EYv4Z+NB5fgH1QrQqtrDCiA+xh9VEL0R5dTuI9gxO/3QdtEOnaef4
-	QcYm+hcRcb6CV5bdkGQLiiD/XyU9F22Q=
-X-Gm-Gg: AeBDiesY9AKJtEiONotOgIhx05vD76ep3eWHR7s1atnAlEewNVGsAeqwR07WlqjZft1
-	U5aH55mlpQtFWWj7Z04ltBZBzyhY6KDyxrV+7GWLJS9dqWEJarW9Z6+ULkv196TlcroOVpyv31P
-	PKovsJz/CX7ay7RczXeiWhDqGn/WEVb0Hglu+zLjkqaJKRSA/T3QPIuDrFU0WgfYnQsRohMA3q9
-	xF7z54X5Le6dwYxTBXxjqiudtVDsgDTbscT7IXrlg7A5TQWgO1m+jhl/RNpsVdzJINsWuUViejv
-	xLQVWniYc0krDxe6c+zf4tpPkB9wpfqmo70pOihtJQ==
-X-Received: by 2002:a05:6102:c52:b0:602:ba51:5235 with SMTP id
- ada2fe7eead31-6085e8af2e8mr1993710137.29.1775740417036; Thu, 09 Apr 2026
- 06:13:37 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Apr 2026 09:13:35 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Apr 2026 09:13:35 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <pull.2264.v3.git.git.1775714492944.gitgitgadget@gmail.com>
-References: <pull.2264.v2.git.git.1775668134796.gitgitgadget@gmail.com> <pull.2264.v3.git.git.1775714492944.gitgitgadget@gmail.com>
+        d=1e100.net; s=20251104; t=1775741268; x=1776346068;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hP988JqBHdXKei8KSk4IgTvPcE7SMhmJuiZbk2tOne8=;
+        b=TWUL1mFt5NvEgLyt79WnCJAsHrCHHm4wx0oFmDsiHCbYZn/qNBcu1acLJ26m9feGLk
+         IZxRZ09FL4ZZMgKAYmBtFdrIdXHe+peoCqWvxi8Lejr7cSpH4c/X5CsW5nawH9yhpQaC
+         6ESEELmS6cbAb84Mr68iCgwVZjnJq6Alw5/EyPCOn5IXVG5D0xWWLOzYrrxSuT+elqkz
+         /ShGOtoU1puP61bh2kgGDoCnMO5ujEPvokFQzWAlwIzFAK6AK/ci8vsDGdJEQ9IV9WEb
+         Xhxr7+cZUO9r4lLmiTlAPVvM7DlhN1N3HLRYF6EJpiT2w4pni1x6HFYt2jVGpjiSl2gC
+         hZuw==
+X-Gm-Message-State: AOJu0YxUXMZd9Or6bT5NgHakk0WcC50YbADIfT4xdeNGnKpu4o1am18J
+	Ped01kFMAm+WawZo9ghPF9ZZ13lx7VlXuTCCho5KthZctNMCMu8bcUls6BX2xA==
+X-Gm-Gg: AeBDieuSDzsv33ZQIjwZyo/fwS3fh3N5OMjIuAigyWVMKT9d0+dU7F+qmffK3+49s2a
+	Oh1qefOealbsE9Tq5Dse7pfcO4kVALMqODXgp4CnCsclU8XVyLtM3zWM5Rnvr9Y92fCtk5lQJat
+	XVI9jDQbCq6NCUqwXAqZYQh96LeNUZQNmTKNq3VN9Qm+JC+zj+MOHeYxNccTxAfOhLHGkhTQ05a
+	nqjgtnpIqO/TCE9XVUlEUuy7nUTqdajqo17AjwYo14oMR9R8qHa2rm0J5GPH21ndYUjHRY3L+JL
+	gVtcceeDXVo8q3zATIomRa5YvhSwGixU8hpyA8f5FZ9lnLUYzcnj4Vs/A54t44qzbmvGj40dIqk
+	E5aX3Hpm8W79dWneUbVNff8ZVC5ag1iEo9otfoTkdBEDi28hUANAPv4mXJCapBM9K88sPavE01B
+	3hme+rkcuF9q0gRDL/hQVxtD/gu3v0XHmdKhcRDA==
+X-Received: by 2002:a05:6214:501a:b0:8a6:268e:a17d with SMTP id 6a1803df08f44-8a7025b8639mr415573316d6.21.1775741267541;
+        Thu, 09 Apr 2026 06:27:47 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.200.119])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a593bf2769sm194455256d6.14.2026.04.09.06.27.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2026 06:27:46 -0700 (PDT)
+Message-Id: <pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2234.v6.git.git.1773740139.gitgitgadget@gmail.com>
+References: <pull.2234.v6.git.git.1773740139.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 09 Apr 2026 13:27:41 +0000
+Subject: [PATCH v7 0/4] checkout: 'autostash' for branch switching
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 9 Apr 2026 09:13:35 -0400
-X-Gm-Features: AQROBzA76qhPmgWvpzBmWW0r7Tps8DwwLa0OmFeDCHp-h8ppRJEZbnA3XP8S5MQ
-Message-ID: <CAOLa=ZRo2qWES4XW3UuDxe1Wjew_z7PDy48qQdsjQzD=G8E2ew@mail.gmail.com>
-Subject: Re: [PATCH v3] repo: add paths.toplevel to repo info
-To: Jayesh Daga via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Jayesh Daga <jayeshdaga99@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000c579b6064f06c879"
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
---000000000000c579b6064f06c879
-Content-Type: text/plain; charset="UTF-8"
+Harald Nordgren (4):
+  stash: add --ours-label, --theirs-label, --base-label for apply
+  sequencer: allow create_autostash to run silently
+  sequencer: teach autostash apply to take optional conflict marker
+    labels
+  checkout: -m (--merge) uses autostash when switching branches
 
-"Jayesh Daga via GitGitGadget" <gitgitgadget@gmail.com> writes:
+ Documentation/git-checkout.adoc |  58 +++++-----
+ Documentation/git-stash.adoc    |  11 +-
+ Documentation/git-switch.adoc   |  27 ++---
+ builtin/checkout.c              | 138 ++++++++++-------------
+ builtin/stash.c                 |  32 ++++--
+ sequencer.c                     |  67 +++++++++---
+ sequencer.h                     |   4 +
+ t/t3420-rebase-autostash.sh     |  24 +++-
+ t/t3903-stash.sh                |  18 +++
+ t/t7201-co.sh                   | 188 ++++++++++++++++++++++++++++++++
+ t/t7600-merge.sh                |   2 +-
+ xdiff-interface.c               |  12 ++
+ xdiff-interface.h               |   1 +
+ 13 files changed, 431 insertions(+), 151 deletions(-)
 
-> From: Jayesh Daga <jayeshdaga99@gmail.com>
->
-> repo info currently does not expose the repository's
-> working tree root, even though this information is
-> available via `repo_get_work_tree()` and
-> `git rev-parse --show-toplevel`.
->
-> Add a new field `paths.toplevel` to expose this value.
->
-> While doing so, document the correspondence between
-> `git rev-parse` options and `repo info` fields to make
-> it easier to identify missing or future additions.
->
-> For bare repositories, this value is empty, consistent
-> with other non-applicable fields.
->
 
-Don't we still have to decide how we want to support relative vs
-absolute paths? [1]
+base-commit: b15384c06f77bc2d34d0d3623a8a58218313a561
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2234%2FHaraldNordgren%2Fcheckout_autostash-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2234/HaraldNordgren/checkout_autostash-v7
+Pull-Request: https://github.com/git/git/pull/2234
 
-Also seeing that you're a GSoC candidate and this is part of the project
-that you've (and other potential contributors) applied for, our
-recommendation is to not start working on a project before the selection
-process.
+Range-diff vs v6:
 
-[snip]
+ 1:  cd9c64ba60 ! 1:  284075600a stash: add --ours-label, --theirs-label, --base-label for apply
+     @@ Documentation/git-stash.adoc: git stash list [<log-options>]
+      -git stash apply [--index] [-q | --quiet] [<stash>]
+      +git stash apply [--index] [-q | --quiet] [--ours-label=<label>] [--theirs-label=<label>] [--base-label=<label>] [<stash>]
+       git stash branch <branchname> [<stash>]
+     - git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+     + git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+       	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
+      @@ Documentation/git-stash.adoc: the index's ones. However, this can fail, when you have conflicts
+       (which are stored in the index, where you therefore can no longer
+ 2:  d572c4bb7d = 2:  64261e3cb6 sequencer: allow create_autostash to run silently
+ 3:  80a98116fc = 3:  c0d6b4b4c0 sequencer: teach autostash apply to take optional conflict marker labels
+ 4:  7ecb0835b7 ! 4:  1c29e19971 checkout: -m (--merge) uses autostash when switching branches
+     @@ builtin/checkout.c: static int merge_working_tree(const struct checkout_opts *op
+      -					0, 0);
+      -			init_ui_merge_options(&o, the_repository);
+      -			o.verbosity = 0;
+     --			work = write_in_core_index_as_tree(the_repository);
+     +-			work = write_in_core_index_as_tree(the_repository,
+     +-							   the_repository->index);
+      -
+      -			ret = reset_tree(new_tree,
+      -					 opts, 1,
+     @@ t/t7201-co.sh: test_expect_success 'checkout --merge --conflict=diff3 <branch>'
+      +	git reset --hard
+      +'
+      +
+     ++test_expect_success 'checkout -m applies stash cleanly with non-overlapping changes in same file' '
+     ++	git checkout -f main &&
+     ++	git reset --hard &&
+     ++	git clean -f &&
+     ++
+     ++	git checkout -b nonoverlap_base &&
+     ++	fill a b c d >file &&
+     ++	git add file &&
+     ++	git commit -m "add file" &&
+     ++
+     ++	git checkout -b nonoverlap_child &&
+     ++	fill a b c INSERTED d >file &&
+     ++	git commit -a -m "insert line near end of file" &&
+     ++
+     ++	fill DIRTY a b c INSERTED d >file &&
+     ++
+     ++	git checkout -m nonoverlap_base 2>stderr &&
+     ++	test_grep "Applied autostash" stderr &&
+     ++	test_grep ! "resulted in conflicts" stderr &&
+     ++
+     ++	fill DIRTY a b c d >expect &&
+     ++	test_cmp expect file &&
+     ++
+     ++	git checkout -f main &&
+     ++	git branch -D nonoverlap_base &&
+     ++	git branch -D nonoverlap_child
+     ++'
+     ++
+      +test_expect_success 'checkout -m -b skips stash with dirty tree' '
+      +	git checkout -f main &&
+      +	git clean -f &&
 
-[1]: https://lore.kernel.org/git/CA+rGoLfbzXqP1Tw+94jMmWcSGPoefMv5E_fvwriad-O5CUeKHQ@mail.gmail.com/T/#m1e2b69b6b097c42b06088349947e43831cf5988f
-
---000000000000c579b6064f06c879
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a37ca238e801ab98_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1uWHBmMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meW96Qy8wV1RwR3g0LzRXeG1GODVsZFQ2Z2p6V3ZoRApGeTlMWUZaa0E0
-NktRUEY3N01uYTJFankzRmhJeUl5bTlGYVNJUTNiMm1JdFNWd0lNRTBvRlIvaTRseHh0ZW5BCnQw
-NzlmRTJKZFFNU2QvQiszRkRBdHRuZEJrZHZxelFhaGc3Zkxqb29wM1J1YnpHdzVlTlZ4UEZWMXhx
-WkNoWEMKR1R2NTk0dHlhK1hFSVEwT2Zub1JUSXQ4SG5RVXhzbkk0Q0FCbW5ZVWFibFRUb3FDdjl6
-YUhVNnZteWtPdkJUcQowTXFqM2VMNXkxTUdDbjV0NXp0eXlxTTZQRTJqa3dVV1Blcjl1VG1NSWgy
-T2VKcU5pY1BVVURBc1l4cHR0U2o4ClBZLzFzcFJickRMZmlYQXlWV0lTVDl3TjB3dDYyZkxna1hM
-SlNZQnNRNGgvVjcyWEl6dngySHNIWkxmYkhTWXQKTkJJNUNvNmVvZlVhN3hmRWRld2ZHMmw0ZkZR
-S014a0puVTZTUC8yVDdGcjkwUnIxcE1KTzExMzZKRHF6bFdnQQpqTWVyb2FaWWxVY3puQndEWnVw
-VEdNUU15YWFTTnUyeWFtT1pHeUFRYlF3cUg3SlFmeENJak9hWVBDLytlblVECnRNbTVhOU5za3Bl
-RzBpMmVPcm1US1NRcnR2RmFwbDhyYXI2SjB3RT0KPU92cC8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c579b6064f06c879--
+-- 
+gitgitgadget
