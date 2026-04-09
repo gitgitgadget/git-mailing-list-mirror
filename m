@@ -1,104 +1,326 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5324E204C3B
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 18:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C731C8BE9
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 19:17:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775759709; cv=none; b=bHh3wn9k6kj8D5Nn4B7hCAZq9DD1cgvEGCw4AcRG//3UflAJgiuk7y5/imTvtgaCELgk7EZcn1WB978cpdMdq52hFGnQyMn6ocymong205iPvMjVAUm6IGfG9xa8qx8ntKLmsZbVogYizE6r5xe37vBTK6sSEE8sOyrmkhDD3JU=
+	t=1775762240; cv=none; b=dsoWzLmHlZHQgX3iiwbqXnpxat1iC0qkvIWq5Oz05gRi/j/tUa1I4t6Lf/5XIfnCwDRX/vTrU17WcTxz53Nji1nI/RwXm9jTk81wdKr71I48cuR2NiqeSWb805xjm+9T+9zvn66QuLfdwkODXph/lvxYka3Pho7MrlpZfbrpp1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775759709; c=relaxed/simple;
-	bh=Hj6IWGq4pPK9ouuMfjmzCBl1jSsiaNiDro2W9utJ00c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o1ir8MPY+P3vJqsTAYW/RR4yCgZCfwcuHTj6YcjTi/S6PUqR5IjY38JMmKxG85fhwQCU0QUz2V7wrmAWacCm4Bvuo3L8h25BGJ7F51XIaTJeUFSsIQnFhzGhpruCA079GdUe3RQYIpD4B+iT4CXU8P+wyn49XfeJc4puRDfWptA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CbT5oDUz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iHkUmNRZ; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775762240; c=relaxed/simple;
+	bh=S/ZRzi3b8PZGUD4O2bKCuHlPzPM56x4e2T88TDQL258=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=N077zIMC+pAhBREHl9hJJzUYDAldXYsI4rzdZwmRLHwWIpMYTMKOmRB8v+SprrXnrsirtZQgpunM/joosJAOOfmnzii4KwJJfKOnkiFbJQBuiFmIQGcBdb4yGTpdK+FlJeC+qYQmH6mwtVxJTELYxb8AuBbDEDcSNFJ5SyCDw5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jNQn76/D; arc=none smtp.client-ip=74.125.82.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CbT5oDUz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iHkUmNRZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2496C1D0021D;
-	Thu,  9 Apr 2026 14:35:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 09 Apr 2026 14:35:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775759707; x=1775846107; bh=YCbony8iwW
-	A9B9GyKfNfzadVxCAl/qNnLX7D6P+gnY8=; b=CbT5oDUzhUDi+K04z7pCVy0jGY
-	j0h2bRwHUbNsXe4OoHIxnjMoR+nB2mYm3BhlF5r9M9I6vTq6YogRJ4GANqGv5ypt
-	hzkiPVE5ob6TtDMMwMbizn278iUtTuhtdhJp+8vq0VKNqah1f6YWhJf4bVOvjGW+
-	3ICvnFPpYmPIiIosq1FXKxSJUSlnPkk6Gtet0Vu3WUZCd34Egn3hbTg/1fXz/U6/
-	Fw8sP7vNOwRWrNeLE35LURWjZwUde0p7w+pWDol0Y8ga+StzfaQ9wa8uoTvRwl4d
-	ACq61iIGc00Rh4IQFPOIsZFVMas/2XqVTG33XHQDu3opStkYlPBPXRQ4zj0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775759707; x=1775846107; bh=YCbony8iwWA9B9GyKfNfzadVxCAl/qNnLX7
-	D6P+gnY8=; b=iHkUmNRZtuYo3KJVoJWE4TvYvnBWU5VQpSkLIxrYO2XAMnwc6hM
-	T7rWiEGOd1no3kkRjHGdahvBXYmV1NGtdvFYVGfmzPnUhb7hMGyJdUw4vguc7UYr
-	2NtHA9NvodFqOi8HlfQJStSrGmXaHXFW4cfa0S7oU3xTDxYh2rTGDpv7LYZHtHsI
-	IyHc53qKDqG3lMqcBFOQMBYUBWyLD6xHDcBnqYPZ4PYx5m99Vxmlz4mC/gP/Mjc4
-	SKqtH9mxEwfNU7aoo6/bTVAHgEZeDsWiAQdKDj5tLaHj5Xv05LSdhzUAk1hXN1Vv
-	TZ+M0XgkVgk27REoqiA3dPyu4tRYIIZoUHg==
-X-ME-Sender: <xms:WvHXaaHbrCJo6znYBgWvQJtsLu4HDQpkk_4yBz7CogKvbauiC5w8CA>
-    <xme:WvHXaSMQhUK78wM5lrSlW_GJ984rjiqM09zJCmuZrpCkbl_cEo-mg4dr3_zuXl6CZ
-    zOI-PGRdbYGyBwZC3aKHDc1zP0JxLSdsORdJ9wnxHTPB3d2twAw-g>
-X-ME-Received: <xmr:WvHXacfjfbwcA-wUfPOCJSjS8ymYnZZotFXghAe68hKVkeYGoLZF-0yI-bu0vTu0xO3UcUlliHqTpxhVktORqv9oI5mRNOQalw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvjedvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
-    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgrrh
-    grlhgunhhorhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WvHXafvvU28avYenn306nDOoUnyejlGSPm7hZOzKsAGxthUw-K_TxA>
-    <xmx:WvHXadls0uq1KHrLsjiwVxFEJrTvjdurOuq2jw7El9lyEqVtGcIu8Q>
-    <xmx:WvHXaRyoa5N8hkJeyKN18KjtLc7tx2BDY5cfknqgrvqxmNtxcX_xtw>
-    <xmx:WvHXafMD6RU46jk9PQaDXfzeqrf8y6owTK-ow2-rkt64JRGyp2ljrw>
-    <xmx:W_HXae_55B1R8sly_z_uZ3ctgIHMFg2yLlf1ms_Q2jGIHgMhiZnCYlTN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 14:35:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com,  phillip.wood123@gmail.com
-Subject: Re: [PATCH] checkout: add --autostash option for branch switching
-In-Reply-To: <20260409120631.12207-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Thu, 9 Apr 2026 14:06:31 +0200")
-References: <20260331121633.14907-1-haraldnordgren@gmail.com>
-	<20260409120631.12207-1-haraldnordgren@gmail.com>
-Date: Thu, 09 Apr 2026 11:35:05 -0700
-Message-ID: <xmqqbjfst21y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jNQn76/D"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b6b0500e06so1644819eec.1
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 12:17:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775762237; x=1776367037; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ti0VP9LOio4NOQCrHSPTPzOhI8k1KDm8Yl3+bL/jFeo=;
+        b=jNQn76/DNvM8HmoAH7Y22oU/72qx5DBCT0QJfoDW6ZGZqAINPYIvJTrgiTnifqxmSy
+         bUyoAaoeyXcSUeyPWL31h8OXebnFCSgJPAwilke4fD9/OA5Qa1WaupUKiIJY5qx1GXpr
+         aOpRUMITf+6h64j9au8RknERGhH3sSD05zTDUAr3QpJt+yg6hgco5rDHXpeMHcJIi9ot
+         VGnqJiWd3F9u3JGjdNdsTRmxfg8c7l7RChRlZc2ldmxs16K/QFJZBR/y9oUpBSa5FD/p
+         md8rCuU5vsieUf+TLGnOvyTSKcBMLo1aXdtLIRgeIxSomkVO68g29hkum74d0C9mpDcU
+         ZhNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775762237; x=1776367037;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ti0VP9LOio4NOQCrHSPTPzOhI8k1KDm8Yl3+bL/jFeo=;
+        b=YVu7nrCdXqH7QRo1ZvGrwqXY/2pgiFJBFOMyuN6td6YBdbEaKmwJ5UA3cDGw4gQVvW
+         wvt6p3USJlgqOnweXJNUy9Jl5zqp0NmcDMXzHga2mZffNkHCyEUi7R45EpD3QmtC8cf+
+         QpiZytdf5MVk/3t8uz3AzZ2yJTLw4Q0s2aPLBR9gHjx35DI+FuQ5nQAylG6PRAjvSZVg
+         7a7eELIkGMTkA5pvE0HtqIn24t9rMQG8pzvKmoUOu4Pwsdw0ZNrkeHt5HNFL4oJmfOM6
+         WNfIUAR1S6z3aJsUMNoqs1zm8jSCCWMZaFBt4KLsuvFJnO1Dd/H4c/pPZj4tfatl7hsw
+         LnSg==
+X-Gm-Message-State: AOJu0Yz98fRrAHPdNpFtiMAIYuHRST9GOqHwgI8TaaGo5EeWyHa5elQI
+	KwyJYf0NGgasH3OGuA0wzDxENA9/RzLn6fa/FRRlrl272nKcSu9hSb4NB6Mz8Q==
+X-Gm-Gg: AeBDieuE6hr/gL7pfd2Yug583mAjcC7mLL8lIp4njQOkIGkz037tHEG+P/e9C998Sd/
+	C5nBfgkd1YPUr2ZlbtHy47xZB3qoojAa987GQYntbBecrHzp7XdZGLaOsP8O0c+GE98HfrQfA7Y
+	RI6XrVs//Gj7S+fskFrQNXwLyf2TpcwaNyJrvsy1wvH0Z9i+UijUfXTPrs80lRmRvMQRIdIByot
+	/J0SCNZvUiPusSGoUgLEj2YYXAwc5BZvS68LHpfFRPSAcgcEhPbBgGa9Es9B86AQZrsRHj2ObPc
+	Dyb+kFzEkl/7Ft0gv5KUZKyMsWXYANe3rH/CyLMe52PydPVlHEjoGollFQnIbs0Fpj/IncgiFEi
+	38kKQZjiycr2SFzDoSHyN8/ue8uu+N+qiZxx5NNrpp9UwgcmcR/ZtTSYnsmI/U4ihMkwSNTmT5s
+	yXP+dGvvuXQ31SANITO40RegLig/MQ
+X-Received: by 2002:a05:7300:7316:b0:2d0:239a:23cb with SMTP id 5a478bee46e88-2d5891766c4mr201907eec.16.1775762237298;
+        Thu, 09 Apr 2026 12:17:17 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.195.132])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2d562db64c4sm884378eec.27.2026.04.09.12.17.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2026 12:17:16 -0700 (PDT)
+Message-Id: <pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
+References: <pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 09 Apr 2026 19:17:11 +0000
+Subject: [PATCH v8 0/4] checkout: 'autostash' for branch switching
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Harald Nordgren (4):
+  stash: add --ours-label, --theirs-label, --base-label for apply
+  sequencer: allow create_autostash to run silently
+  sequencer: teach autostash apply to take optional conflict marker
+    labels
+  checkout: -m (--merge) uses autostash when switching branches
 
-> Update on this: I realized that the issues I ran into was happening
-> because of a sub-shell, so it's resolved by running like this:
->
->     export GIT_EXEC_PATH=/Users/Harald/git-repos/github.com/git/git && \
->       /Users/Harald/git-repos/github.com/git/git/git checkout -m -
->
-> So thus, it's not a real problem.
+ Documentation/git-checkout.adoc |  58 +++++-----
+ Documentation/git-stash.adoc    |  11 +-
+ Documentation/git-switch.adoc   |  33 +++---
+ builtin/checkout.c              | 138 ++++++++++------------
+ builtin/stash.c                 |  32 ++++--
+ sequencer.c                     |  67 ++++++++---
+ sequencer.h                     |   4 +
+ t/t3420-rebase-autostash.sh     |  24 +++-
+ t/t3903-stash.sh                |  37 ++++++
+ t/t7201-co.sh                   | 195 ++++++++++++++++++++++++++++++++
+ t/t7600-merge.sh                |   2 +-
+ xdiff-interface.c               |  12 ++
+ xdiff-interface.h               |   1 +
+ xdiff/xmerge.c                  |   6 +-
+ 14 files changed, 463 insertions(+), 157 deletions(-)
 
-In other words, you were not consistently trying the version of Git
-you just built?
 
-Thanks for a good news.
+base-commit: b15384c06f77bc2d34d0d3623a8a58218313a561
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2234%2FHaraldNordgren%2Fcheckout_autostash-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2234/HaraldNordgren/checkout_autostash-v8
+Pull-Request: https://github.com/git/git/pull/2234
+
+Range-diff vs v7:
+
+ 1:  284075600a ! 1:  8fcf377820 stash: add --ours-label, --theirs-label, --base-label for apply
+     @@ t/t3903-stash.sh: test_expect_success 'restore untracked files even when we hit
+      +		echo upstream >file &&
+      +		git add file &&
+      +		git commit -m upstream &&
+     -+		test_must_fail git stash apply --ours-label=UP --theirs-label=STASH &&
+     -+		grep "^<<<<<<< UP" file &&
+     -+		grep "^>>>>>>> STASH" file
+     ++		test_must_fail git -c merge.conflictStyle=diff3 stash apply --ours-label=UP --theirs-label=STASH &&
+     ++		test_grep "^<<<<<<< UP" file &&
+     ++		test_grep "^||||||| Stash base" file &&
+     ++		test_grep "^>>>>>>> STASH" file
+     ++	)
+     ++'
+     ++
+     ++test_expect_success 'apply with empty conflict labels' '
+     ++	git init empty_labels &&
+     ++	(
+     ++		cd empty_labels &&
+     ++		echo base >file &&
+     ++		git add file &&
+     ++		git commit -m base &&
+     ++		echo stashed >file &&
+     ++		git stash push -m "stashed" &&
+     ++		echo upstream >file &&
+     ++		git add file &&
+     ++		git commit -m upstream &&
+     ++		test_must_fail git stash apply --ours-label= --theirs-label= &&
+     ++		test_grep "^<<<<<<<$" file &&
+     ++		test_grep "^>>>>>>>$" file
+      +	)
+      +'
+      +
+       test_expect_success 'stash create reports a locked index' '
+       	test_when_finished "rm -rf repo" &&
+       	git init repo &&
+     +
+     + ## xdiff/xmerge.c ##
+     +@@ xdiff/xmerge.c: static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+     + 			      int size, int i, int style,
+     + 			      xdmerge_t *m, char *dest, int marker_size)
+     + {
+     +-	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
+     +-	int marker2_size = (name2 ? strlen(name2) + 1 : 0);
+     +-	int marker3_size = (name3 ? strlen(name3) + 1 : 0);
+     ++	int marker1_size = (name1 && *name1 ? strlen(name1) + 1 : 0);
+     ++	int marker2_size = (name2 && *name2 ? strlen(name2) + 1 : 0);
+     ++	int marker3_size = (name3 && *name3 ? strlen(name3) + 1 : 0);
+     + 	int needs_cr = is_cr_needed(xe1, xe2, m);
+     + 
+     + 	if (marker_size <= 0)
+ 2:  64261e3cb6 = 2:  86cf68d024 sequencer: allow create_autostash to run silently
+ 3:  c0d6b4b4c0 ! 3:  78300e0e9a sequencer: teach autostash apply to take optional conflict marker labels
+     @@ sequencer.c: void create_autostash_ref_silent(struct repository *r, const char *
+       
+      -static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
+      +static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
+     -+				    const char *label1, const char *label2,
+     -+				    const char *label_ancestor)
+     ++				    const char *label_ours, const char *label_theirs,
+     ++				    const char *label_base)
+       {
+       	struct child_process child = CHILD_PROCESS_INIT;
+       	int ret = 0;
+     @@ sequencer.c: static int apply_save_autostash_oid(const char *stash_oid, int atte
+       		child.no_stderr = 1;
+       		strvec_push(&child.args, "stash");
+       		strvec_push(&child.args, "apply");
+     -+		if (label1)
+     -+			strvec_pushf(&child.args, "--ours-label=%s", label1);
+     -+		if (label2)
+     -+			strvec_pushf(&child.args, "--theirs-label=%s", label2);
+     -+		if (label_ancestor)
+     -+			strvec_pushf(&child.args, "--base-label=%s", label_ancestor);
+     ++		if (label_ours)
+     ++			strvec_pushf(&child.args, "--ours-label=%s", label_ours);
+     ++		if (label_theirs)
+     ++			strvec_pushf(&child.args, "--theirs-label=%s", label_theirs);
+     ++		if (label_base)
+     ++			strvec_pushf(&child.args, "--base-label=%s", label_base);
+       		strvec_push(&child.args, stash_oid);
+       		ret = run_command(&child);
+       	}
+     @@ sequencer.c: int apply_autostash(const char *path)
+       static int apply_save_autostash_ref(struct repository *r, const char *refname,
+      -				    int attempt_apply)
+      +				    int attempt_apply,
+     -+				    const char *label1, const char *label2,
+     -+				    const char *label_ancestor)
+     ++				    const char *label_ours, const char *label_theirs,
+     ++				    const char *label_base)
+       {
+       	struct object_id stash_oid;
+       	char stash_oid_hex[GIT_MAX_HEXSZ + 1];
+     @@ sequencer.c: static int apply_save_autostash_ref(struct repository *r, const cha
+       	oid_to_hex_r(stash_oid_hex, &stash_oid);
+      -	ret = apply_save_autostash_oid(stash_oid_hex, attempt_apply);
+      +	ret = apply_save_autostash_oid(stash_oid_hex, attempt_apply,
+     -+				       label1, label2, label_ancestor);
+     ++				       label_ours, label_theirs, label_base);
+       
+       	refs_delete_ref(get_main_ref_store(r), "", refname,
+       			&stash_oid, REF_NO_DEREF);
+     @@ sequencer.c: static int apply_save_autostash_ref(struct repository *r, const cha
+      +}
+      +
+      +int apply_autostash_ref_with_labels(struct repository *r, const char *refname,
+     -+				    const char *label1, const char *label2,
+     -+				    const char *label_ancestor)
+     ++				    const char *label_ours, const char *label_theirs,
+     ++				    const char *label_base)
+      +{
+      +	return apply_save_autostash_ref(r, refname, 1,
+     -+					label1, label2, label_ancestor);
+     ++					label_ours, label_theirs, label_base);
+       }
+       
+       static int checkout_onto(struct repository *r, struct replay_opts *opts,
+     @@ sequencer.h: int save_autostash_ref(struct repository *r, const char *refname);
+       int apply_autostash_oid(const char *stash_oid);
+       int apply_autostash_ref(struct repository *r, const char *refname);
+      +int apply_autostash_ref_with_labels(struct repository *r, const char *refname,
+     -+				    const char *label1, const char *label2,
+     -+				    const char *label_ancestor);
+     ++				    const char *label_ours, const char *label_theirs,
+     ++				    const char *label_base);
+       
+       #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+       #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+ 4:  1c29e19971 ! 4:  aa18313362 checkout: -m (--merge) uses autostash when switching branches
+     @@ Documentation/git-checkout.adoc: $ git checkout mytopic
+      +When the `--merge` (`-m`) option is in effect and the locally
+      +modified files overlap with files that need to be updated by the
+      +branch switch, the changes are stashed and reapplied after the
+     -+switch.  If the stash application results in conflicts, they are not
+     -+resolved and the stash is saved to the stash list:
+     ++switch.  If this process results in conflicts, a stash entry is saved
+     ++and made available in `git stash list`:
+       
+       ------------
+       $ git checkout -m mytopic
+     @@ Documentation/git-checkout.adoc: $ git checkout mytopic
+      
+       ## Documentation/git-switch.adoc ##
+      @@ Documentation/git-switch.adoc: variable.
+     - 	If you have local modifications to one or more files that are
+     - 	different between the current branch and the branch to which
+     - 	you are switching, the command refuses to switch branches in
+     + 
+     + `-m`::
+     + `--merge`::
+     +-	If you have local modifications to one or more files that are
+     +-	different between the current branch and the branch to which
+     +-	you are switching, the command refuses to switch branches in
+      -	order to preserve your modifications in context.  However,
+      -	with this option, a three-way merge between the current
+      -	branch, your working tree contents, and the new branch is
+     @@ Documentation/git-switch.adoc: variable.
+      -paths are left unmerged, and you need to resolve the conflicts
+      -and mark the resolved paths with `git add` (or `git rm` if the merge
+      -should result in deletion of the path).
+     -+	order to preserve your modifications in context.  With this
+     -+	option, the conflicting local changes are automatically
+     -+	stashed before the switch and reapplied afterwards.  If the
+     -+	local changes do not overlap with the differences between
+     -+	branches, the switch proceeds without stashing.  If
+     -+	reapplying the stash results in conflicts, the entry is
+     -+	saved to the stash list.  Resolve the conflicts and run
+     -+	`git stash drop` when done, or clear the working tree
+     -+	(e.g. with `git reset --hard`) before running `git stash pop`
+     -+	later to re-apply your changes.
+     ++	If you have local modifications to one or more files that
+     ++	are different between the current branch and the branch to
+     ++	which you are switching, the command normally refuses to
+     ++	switch branches in order to preserve your modifications in
+     ++	context.  However, with this option, the conflicting local
+     ++	changes are automatically stashed before the switch and
+     ++	reapplied afterwards.  If the local changes do not overlap
+     ++	with the differences between branches, the switch proceeds
+     ++	without stashing.  If reapplying the stash results in
+     ++	conflicts, the entry is saved to the stash list.  Resolve
+     ++	the conflicts and run `git stash drop` when done, or clear
+     ++	the working tree (e.g. with `git reset --hard`) before
+     ++	running `git stash pop` later to re-apply your changes.
+       
+       `--conflict=<style>`::
+       	The same as `--merge` option above, but changes the way the
+     @@ t/t7201-co.sh: test_expect_success 'checkout --merge --conflict=diff3 <branch>'
+      +	git clean -f &&
+      +
+      +	fill 0 x y z >same &&
+     ++	git stash list >stash-before &&
+      +	git checkout -m side >actual 2>&1 &&
+      +	test_grep ! "Created autostash" actual &&
+     ++	git stash list >stash-after &&
+     ++	test_cmp stash-before stash-after &&
+      +	fill 0 x y z >expect &&
+      +	test_cmp expect same
+      +'
+     @@ t/t7201-co.sh: test_expect_success 'checkout --merge --conflict=diff3 <branch>'
+      +
+      +	fill DIRTY a b c INSERTED d >file &&
+      +
+     ++	git stash list >stash-before &&
+      +	git checkout -m nonoverlap_base 2>stderr &&
+      +	test_grep "Applied autostash" stderr &&
+      +	test_grep ! "resulted in conflicts" stderr &&
+      +
+     ++	git stash list >stash-after &&
+     ++	test_cmp stash-before stash-after &&
+     ++
+      +	fill DIRTY a b c d >expect &&
+      +	test_cmp expect file &&
+      +
+
+-- 
+gitgitgadget
