@@ -1,87 +1,84 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4BF2D7804
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 20:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834FB279DA6
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 20:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775764955; cv=none; b=I8ePxlQij7c4IXiI/meeuIvkjWuiivCjwG7La+t5b1EiEm+Pdfr/eYOnAC6PrV73737ry5hcC/0sfDzJf7mZWy9ZDszVfZw8/O9I9K0RATbLSr9TTupJ+nayyznoBqtVbi9/JRrxEcBhbQEqlvVzjHrGZkV2hhNjAgtP9KHzxGs=
+	t=1775765366; cv=none; b=YFDLFxJNA6URYY90JBiFyJ2i8TS5QdHqxy8dj4c5VqFtwSjdZ/ofbo4EjHdw1QU0lAkugQghGnVFCQfJm4+GccNy7YqD09MIMgWYpzbIU/qXaRFWa6LPqx5L4FaHCPIv1+RSbLiQx+HuiuFsJThBHDS2r+AySxg426UBPruuLzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775764955; c=relaxed/simple;
-	bh=XRFF387hbdATr0kMO2UZzEf2nRBHw2uWc7qQ0bUlnHs=;
+	s=arc-20240116; t=1775765366; c=relaxed/simple;
+	bh=Wzq4tHJOAFEgGgvG7VaxozD1W4EY227wzF6UC8MIlkw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KgHVnhk/rAXPxPEmMI5huR+zpS0k7CaRNFsFIdkxdvKKepWvcAe0B2+fs+NQdBUAhS04GKMlcuZmtmEv+Hd2wzEzaTOpYf1w1a5PaQew2hQHl4nnlAjC3qV5z5soDhcHc9y/kX+BmImdpK7IH++R6Oo0Fgz/Akqhi2JYK/L5+Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=slp6TEEv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wdjq8M2S; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=ZTlj/TTTWqjF34HRvOMBVYBs4CljmTjJvuchrIBDVlZvmmdEPqY91/UGaS7oWRQJeegVRMZmiSmS9Cwpz8xEl0Pudf5P8fNR3YxuE0JRnqey79E+fKsSMOaW5oDFKzEmjx4hDpf++7RM09EwL0sfsUX1y5CI6fmYbbCeGIlgg5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RoT8gbJw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tKlP/vTB; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="slp6TEEv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wdjq8M2S"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RoT8gbJw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tKlP/vTB"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 72C367A0095;
-	Thu,  9 Apr 2026 16:02:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 09 Apr 2026 16:02:33 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 993E27A00A6;
+	Thu,  9 Apr 2026 16:09:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 09 Apr 2026 16:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775764953; x=1775851353; bh=Lq1+BuqZc7
-	NnmtcC8r/6/9yQznUQKI77Er6mujKlobM=; b=slp6TEEva8pmcv+adfdR/a4Zla
-	rYJEVFXhMzOrtHGKtpL5oJEkYnJtYnQ+yXx4oiL8+BSi3UTNih2B5rqIqg8nTtZS
-	7HSYJ8R9CA2UzuhvTijD5DNYM3YxlULo3u86XC2hluO+OJXcPXRjQ7ta96AKe2ox
-	Bz3pq+VkUNd89xnZvIU8I3B46uOEDNMImPS0w7SQDU4enayV3siw4HZ6u2UkMNXX
-	ZqLLPlGqh2fQBGnVvv8sVzK5OIQJFt6wWsDkA+CTla+LySYa91sGU3qEwQO4qgzK
-	qXahWEFzNpmxQ5tWwye68Bu4GMU/De63o/uq0GLT3wIoRtrw3i0XoQpecvQA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1775765364;
+	 x=1775851764; bh=lpLsr3eXHihCbQUryfJnOsfTkXvGUS/xEgDvok6ld5E=; b=
+	RoT8gbJwAqFxwAtW8ux1On3NJYcfFtjjWnE0gdzuK182bexviss4EtXwjTNu8czK
+	GSbMCl0yXpqkEDCYy72VXCLrmkzABLYrpz7bcIqDXSif8mJRIOiPYtqtZw1pnu91
+	ywvloXyHYFCoLKW9o8NqwEy/PHk6MBQUhFPq0R1RALEIVe9NIE/iZ5Ehf+CiaktX
+	3EChEoUsz9wvgmKjtJaq7bpjDbF4J3NN4MYG8yUQAsRq6ghgOJvwfMtgfN2GLQXW
+	0cM/v/4fgk9UdDycQiQJPtH+ucwx9oAh6oy1Yskqv4deAwqnc+uSRW/1j6bZVf9B
+	t1C75C/5wN69iLwH6LKfhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775764953; x=1775851353; bh=Lq1+BuqZc7NnmtcC8r/6/9yQznUQKI77Er6
-	mujKlobM=; b=Wdjq8M2SS709/IiJYGjaNRL40cVRIcjE3Vehq1yE7sC+vr394FP
-	BH9VpcLOs6gREfbgNd6WTs8e2IS6XxoDei9tK/qiVcgiUeaz6iBUfBY2Sz7cJqUs
-	z+rf4EBjc4/kAaW4rtawzLXqe0K7i82/eaiYNaP2ul5q4sZ/RIDfZ14UHaX4BLPY
-	2146LOknr5NRA2CjV19hALk1KvuNrXbmpWqtV7si9VR/t+mGWfjAtZ2yTzIp4xyf
-	NgAiEVYnK93Y07wjdmeHP1HwV3a80eBofAEDCsfRGtDhzxqzewFNZ7x1v13zHyhG
-	MxkdFb7XUExPrjphiGHtwAncvaNcp9KiaVA==
-X-ME-Sender: <xms:2AXYacBCbdKes5_EnpzSHJLoS5TS5bfeuwqn_qBwI2hZDvYouVR6Ow>
-    <xme:2AXYaSMt78IzP6I2rmT9qou4TDev6K89K95RMbPqzC1we_8n8NfOxVyP4rANMBtQq
-    4Yw4ycaNB7KigW4pQJkOmzwvZHmQzBJSzzuOpWtpJD9bkJfH7Zrog>
-X-ME-Received: <xmr:2AXYaZYEayH_eeGFH7T8Pbna44i4p9zXOf1asPSdt3zn-6_7VT_ibFHcz2BKOR5wff_nPGC_g4D-U319kqveAMp8Q2LB7Xzb_g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvjeegudcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775765364; x=
+	1775851764; bh=lpLsr3eXHihCbQUryfJnOsfTkXvGUS/xEgDvok6ld5E=; b=t
+	KlP/vTBsQiLa3z+deVofYr4PxdKgo8kESphuM3eeyBpyfQCwNnlydHXa2bT/pUpm
+	Z0sPltc3W3tEqkQPHbtU7FSYB9EHwYgeUSZbOb43C075Q3XoKZ+HnJE2rx2VuShG
+	1++K4isdFqDWDEqb84TEfye91JSgtYbdrMSK5O3e1lr/ClQ6Y4FXZzz26Aam3pg6
+	spYxPBgwcdlIhpbH73Yn+PgXJ+h1x0F1a6e2feykVanf3dfRo6ciHxeOtNz1JoCh
+	U+Q6qUXa26smumh2AfVH+UDoxhrXKWzb36Fk+aHPFynIa15z2xfvA5iQMcD5WAlB
+	DKoiN3rGzVdrRx3I5VdSw==
+X-ME-Sender: <xms:dAfYadJXBiUgrYz54RbFhjHFXE-Oi5IAwNxKwQVWXQjBXE1lptllEw>
+    <xme:dAfYaQkIBDp06yZCxUKAl7z92PD32zXw0hKFWEXIsFzowjq6-ieMyhX-eqlTgWBpH
+    Evure76a3NUATSVOjhC5ZAM1qcfsbDLHZW2I69txl7GdXZT5ZmrGw>
+X-ME-Received: <xmr:dAfYaTGKub0tpZyNjIT_GDd-paGerV2p8RcYHVvAkJL-B4e9xD1XVFwMzdq4T8159BQjdtkmS7bUDiDzxwWbbDAx7Bp0deTUwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvjeegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopeihohgrnhhnrdhvrghlvghrihestggvrgdrfh
-    hrpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2QXYaZsn5ZIHZJnMS4V-8wpoAXHU-V51gwA9ULijeHv03xoJkl7DpQ>
-    <xmx:2QXYaTPugMBqxKFSTG7KbZkm-RekpTgijuQLQ-b-fPYGwyHK-YOA1w>
-    <xmx:2QXYaY5cGy34hDtzalzZ0ilCGZLw3XFZmdvseDAYqP7GrBZVG9MgLw>
-    <xmx:2QXYaRRzvk4gixE5U5gdQPSfUVJCZR0TCftmrRY5gToDSVsFxKEcJQ>
-    <xmx:2QXYaUEhbEtTY1m08ugS7Klel2kjy7W1yxfQCkqL7LtvumwxXk6N_w4X>
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkefotd
+    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgfdtuedvjeffgfehueefueeghf
+    dtjefhgfekhffhteeiffetheelhedtgfehtdenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhr
+    seifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dAfYaYFgHkb2zNVOTeTKB3PVB_lgNUVFDLVBblCLDot95-qo-B9R0w>
+    <xmx:dAfYaYN48GSay5PVSL3Mb3ZPIylglxwWuOgzH5M--f0TKpuYspO3_A>
+    <xmx:dAfYafGC_sN848KHy00tQhqtKLzbkPe8qbj7D9M4JEn6BUYGBR8Apw>
+    <xmx:dAfYaXNQAT9oJWKYhe4oennNPbddlmx9F9Lr4CIGWPMtpfC7EURapA>
+    <xmx:dAfYaROQBoYHxMk0X2tpsP8rDFwZvDzmbL2ulgOpcAOWWIPA52atOL00>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 16:02:32 -0400 (EDT)
+ 9 Apr 2026 16:09:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "VALERI Yoann via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Yoann Valeri
- <yoann.valeri@cea.fr>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 2/2] branch: add 'branch.namePrefix' config param
-In-Reply-To: <80d1ffde9d3d55d0ff2b28219e2484fb12d543d9.1775731390.git.gitgitgadget@gmail.com>
-	(VALERI Yoann via GitGitGadget's message of "Thu, 09 Apr 2026 10:43:10
-	+0000")
-References: <pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
-	<pull.2202.v4.git.git.1775731390.gitgitgadget@gmail.com>
-	<80d1ffde9d3d55d0ff2b28219e2484fb12d543d9.1775731390.git.gitgitgadget@gmail.com>
-Date: Thu, 09 Apr 2026 13:02:31 -0700
-Message-ID: <xmqqqzonsy08.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2026, #01)
+In-Reply-To: <1c0e5ba9-9623-4e7f-b4e7-f7e3343ad94e@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Thu, 9 Apr 2026 21:54:29 +0200")
+References: <xmqqikaatfhp.fsf@gitster.g>
+	<1c0e5ba9-9623-4e7f-b4e7-f7e3343ad94e@web.de>
+Date: Thu, 09 Apr 2026 13:09:22 -0700
+Message-ID: <xmqqmrzbsxot.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,38 +86,40 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"VALERI Yoann via GitGitGadget" <gitgitgadget@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> +test_expect_success 'create branch with config prefix' '
-> +	test_config branch.autosetupmerge false &&
-> +	test_config branch.namePrefix blob &&
-> +	git branch -- -with-prefix &&
-> +	test_ref_exists refs/heads/blob-with-prefix &&
+> On 4/2/26 1:42 AM, Junio C Hamano wrote:
+>> * rs/use-strvec-pushv (2026-03-24) 2 commits
+>>   (merged to 'next' on 2026-03-24 at 7c6487dcaf)
+>>  + use strvec_pushv() to add another strvec
+>>  + Merge branch 'ps/build-tweaks' into rs/use-strvec-pushv
+>> 
+>>  Code paths that loop over another array to push each element into a
+>>  strvec have been rewritten to use strvec_pushv() instead.
+>>  source: <084f3b43-91ac-4553-8305-03944e97eaa6@web.de>
+>
+> Curious:
+>
+>    commit 250e977a2b0aa8cc1c8063c64c44597a166e79f5
+>    Author: Junio C Hamano <gitster@pobox.com>
+>    Date:   Tue Mar 24 12:26:58 2026 -0700
+>
+>        use strvec_pushv() to add another strvec
+>
+>        Add and apply a semantic patch that simplifies the code by letting
+>        strvec_pushv() append the items of a second strvec instead of pushing
+>        them one by one.
+>
+>        Suggested-by: Junio C Hamano <gitster@pobox.com>
+>        Signed-off-by: René Scharfe <l.s.r@web.de>
+>        Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> I guess you became the author when you resolved the merge conflict
+> caused by moving contrib/coccinelle/ to tools/?
+>
+> René
 
-Another thing I noticed.
-
-Wouldn't you rather want to have a mechanism where the user does not
-have to prefix the end-user supplied value ("with-prefix" in this
-case) without leading dash?  From the look of what you are trying to
-configure with the variable, the desire seems to be to allow the
-user to make many branches that share the same prefix, so
-conceptually, among blob-master, blob-maint, blob-feature branches
-that would result in "git branch $name" where name is taken from the
-vocabulary (master, maint, feature), the responsibility to supply
-the word-separating hyphen belongs to either the prefix side (i.e.,
-"blob-") or the mechanism that does prefising (i.e., the prefix
-configuration @{current} comes up with a prefix string "blob", and
-with the end-user supplied value of "with-prefix", the mechanism
-that pastes these two strings makes the result "blob-with-prefix",
-supplying the hyphen between "blob" and "with-prefix".
-
-I said that I am negative in my previous message, simply because I
-didn't get the intended use case at all, but even if there were a
-good use case explained in future messages to make me change my
-mind, I doubt that a design that requires the hyphen in front of
-"with-prefix" the end-user is supposed to supply is a good thing to
-have.
-
-Thanks.
+Curious indeed, thanks for noticing, and sorry for the mistake.
