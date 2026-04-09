@@ -1,107 +1,420 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC7C3B4E9D
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 10:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCF73B6379
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 10:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775731315; cv=none; b=sTjvm1Ya8IXxs0DAyIP/94Ml4Hdvo2KWIXaiUKJlQyqbBbrq9NdyKq18nsbKLYmTefrIamMiWa6GytkSewuk9klWH8grJQyNSshy9C4ylBFNuRzoquFqkSkHeri+V03r/sDHn2KeRm2wCCfGUN3MtanP5Jjm/xZqIsufIOAd1u0=
+	t=1775731394; cv=none; b=qYOrgbwjLDKunNUQalLWH2GJh48V2Z74BQ/OskDmLZ2YfHPnXaDf7mfTBnnYtujnIBsp16+vA/k3TgfXM25utDorzOxEaKx/ZdrafT499RqAnaX9xGNmjKuyQ22DeTd0FTKVriZr2bC3yGeqOJblWoy7k5URiGc90sBSuf47DaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775731315; c=relaxed/simple;
-	bh=qRhN0rhQOIV4gJJcbhCIKtpb6JfVm8DcrdqkUc4diCo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N+PSA4eBuCOSn3FuPx2wZHUhofdkr2yOPqebwNdNnC68X3gUH//QwQPsfGGHKjXCjoF2wcwW5ejie06eO1MTxtwML1dB9Ean86OX6z8u8xtUY0ClOFE4l0F3zD1e1o93O/8Jt0OuXTHjRDnA/NplL6PmAy5HMfvTFSNWnVFM5Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jCC/ljiJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V/pSPPjN; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1775731394; c=relaxed/simple;
+	bh=BBAIqt0t4LysbJQILHTVIIfXdnHUHJPCwuXgPqG0Gaw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qjZ1EX9DsGchM2qBmy8a0lstZbkZqK1R8gsdtuMOX9MmF5pMItTPFyC5b1RkryJjFqJgrhNIMzbkt+3guAmIzFfqXMOXua8Hc1F3lbdwupb0K0BFOesxhsTbU8bLSG6lRHPCDZEhRR5g9Ki/sSdL8jvZCrTIFT3oRyXsZNR6PMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T0xgjUv9; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jCC/ljiJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V/pSPPjN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C47461400303;
-	Thu,  9 Apr 2026 06:41:53 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 09 Apr 2026 06:41:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775731313; x=1775817713; bh=bu40UJNa5W
-	pp25JT/fWpnrIBDx5I19YF83ojJyZnlvs=; b=jCC/ljiJsbxyMGExDvWTc4p+d6
-	caGKPKllA22vJPeerLNDfEbV788tBj+hSVbVU50YFyZRcaDbNZs5o924aW7WEkUT
-	UKFnyXxYICvin0je96QbBmkLk9ppEeDdx7M4i4Jtu28DfVlQmk8bNuuLuG98WOAF
-	zUD/hEJYLKsEnXn1+6pVYv8S1whx0V2pjjd0dtH0tLNGIxaYxLxuzSO1GJ9RtNMp
-	Uvgcs8gpjpTpUlfVQQSSGvm2joktajf/UbBOoa+j8hbUqZTZiVqdswM8sd+QRlvd
-	9rMgDrOQKHHBCfAkEKzHfRDB9L0k5rRLpTkMOJV23vdmw1C3SXEO/GKS1T5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775731313; x=1775817713; bh=bu40UJNa5Wpp25JT/fWpnrIBDx5I19YF83o
-	jJyZnlvs=; b=V/pSPPjNFIQw7p+Dqm/T1RDneA1mgrkXzRmSIWkv3ZmLxy+TIZ8
-	mBHpM0hFKDbAZABfigp1ZpIJNpAMvqLNko8qW8hKxxJ9NdPtyi5rjI9YkQR8hncA
-	krk3L+GVjcjrjj4DyJN0FzUxBHpGclEhlNMX6VPR3jON+ocmIFz7FbsOnjrGbo+x
-	liIKg+D5sVQ7SA1HIbmgNLUFPmerEIUh8bB7ub3KzkDVG7ysPitkp2TCc88ipvyM
-	9xtwd5SrVHm5TW9OQwDxDwd7aujgW3Qjmyg0GmUQc0caZDyd/+mTUw3kKXHhsu4o
-	OVhI89SXIrd42qGEdMRQvLHlR+j0BlzkTBA==
-X-ME-Sender: <xms:cYLXaduSi2hOySUTtojarDRYcC81iKMHEx9d_7JNJCtceRHgaRKQIg>
-    <xme:cYLXadcJcZhcFyosb9qsQKScYOlB4aUYxv_3Hvthu2af-Xc_Mt-qvFJRvNosdLr9p
-    6lbsPnFVEi0kxJKbs7ZHVQf-vkTnRWnjExkcmXj8M638zRggAB4>
-X-ME-Received: <xmr:cYLXaVxoFmmXoh8PH8aqS9GQhoTH_L051ZOqKBXmM8jWNz9W6_ubQLQaSoOSETraZPIs9EcT5f3oDGwh3mkbzGIXx71MdBtcrr9jWGG7p1Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddviedvjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:cYLXaTElPba1uAGzqvXNvpe245SP8_l7CIjURgl7fbvB0wFriWKO1Q>
-    <xmx:cYLXaZwR4PtazJodCZdTfT0gAzdxS2TlUU33VNtflnOG4zI3h41-hg>
-    <xmx:cYLXaUv1n2A2xkNEu7MVGo98x5drYiyMa64mDRw-B8EVc_mKbppf1g>
-    <xmx:cYLXaW3mi40SjfSMNFi3JXwCpVaa4qipMwkVYz5s9n8YeQrFmlM5Cw>
-    <xmx:cYLXaZQZ0b5kfGpBr6CqwM2-76KHX5jef51ClreD1tgst9OoitF31dOb>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 06:41:52 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 417c8e38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Apr 2026 10:41:51 +0000 (UTC)
-Date: Thu, 9 Apr 2026 12:41:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 07/17] odb/source-inmemory: implement `write_object()`
- callback
-Message-ID: <adeCbStzfZS40IYj@pks.im>
-References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
- <20260409-b4-pks-odb-source-inmemory-v2-7-f02b4f1c0f13@pks.im>
- <CAOLa=ZQHyhDGGLLcGBjFwG9FOtvjpyjgmrnOO_u3rwZyAYoDHQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T0xgjUv9"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-506a7bbe9d0so6102541cf.0
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 03:43:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775731391; x=1776336191; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hYfPaWSJ0J08dbV8dqdFq+C41sFzxB7yeU1HRVYMOf8=;
+        b=T0xgjUv9C/0qDt/2ubHJXbCG7/WJKXVY2Ys3k/+aeIx5/MvWFVU3GWEA+m8cYASqty
+         aDZWIgy+fV4pASc6sfve8RmCYs6GOnBktnJ+UIM1UhCQwJ8F6FevMGfv/u8zxX73jwI9
+         hnuR71Zj6WmeeTYDFfB2nwaw3vc/BjgeAjtNtgiWUz/5bzTv2SWum+Nq5IUbvpz2zvwb
+         H0p8YCwXwVoMIaLZTXztmmJ+Ik4Q47BRTCFSPA6DzXea7KSI2ggGRfGqef/xOSmoEBW5
+         FPXX1wNdQtbfIbJgTH/ZZQL/LGUlW1GcbOysNsTju17FCjDSf2hNlI6qIHdnyX7pQge7
+         G3pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775731391; x=1776336191;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hYfPaWSJ0J08dbV8dqdFq+C41sFzxB7yeU1HRVYMOf8=;
+        b=RRFEsCx8px1HqhF8e5t3/VoLxvtPthQJllR1QhMDQnHPQYqyZcuM51ZuSrOuaaR7Bg
+         JHPeFLFuowL+w59kzLCcLTQdjie1iHEy0liBYjnamU/C9U1W2KuW1S+fi3QmjfjbqP9t
+         FSh3ozmE/y/ebhX6xGW0dL5rvaNDxCfx5pRJ3ZzZe1yx9MeRL3OplXe5xW/vGE1lIFkP
+         XXjtJ612tyM7P9xcSZFudByxiJYxF+o+Gpp/TEMhUXfwnyoD5p1awBEa+aWzudQW+Blg
+         tGFSIBAXYrKlvR/RE2MW40vw83cD0Ugq0ftrXM4h9553YYcCQqneQPLZAa/rk3SlLe1C
+         Sgag==
+X-Gm-Message-State: AOJu0YzxpIp2i6Bc1TGMr8gPS36ql3+A/6mxD5IiTDJw2EFsNrany1il
+	ep89pZZUHV+YXMM5zdSuICF8e4h/nbyLunv3OxNjhB52aOxVtVA5+Dgp8pomOQ==
+X-Gm-Gg: AeBDietziUsISUol9eSVw4eEsQtS8nN1GOlIuY1tb17i/vPkrizw1iW/+cmPEhhfZv+
+	oL2ZssWnw/JhdiGpyQ4UWaMrzX0Pg+O2zdIvoJrL/OF1JmT1ZmlHCHm3lhS6cUeikRW5y1z6r9y
+	TfUZorU1Kb8ARAczqA2rJo3P0bwBLB6BIBbChTK6ekC6OQGJEidXLnU+4DdMkOJ24SLElUrylYa
+	Pm4XtjBj+sLMwGZlna4AkBVe8zaI1+bU3aZThfrWVjx2mqcGo5KvevZxeZ0rmwVWKhECZT3t+d3
+	YKNFifwGHDEabHNlqmh9bVJznyRJLgUlfKcMJM1PBxehtBCQJZIKKoysbkUcXZ31c8EROAByGEZ
+	5dokZRL/DOTXl7yQcOP1QAzUcrYMmqsYYLABRLkiyHvZwY/o1fBOB06wvY5jJIT/tn75+QA8AGp
+	0Stm7S6eQEUF4VIVtqIyvrfADOCxQl/5vTNeYa
+X-Received: by 2002:ac8:5a0c:0:b0:50d:7f60:621f with SMTP id d75a77b69052e-50d7f6065demr281580681cf.29.1775731391257;
+        Thu, 09 Apr 2026 03:43:11 -0700 (PDT)
+Received: from [127.0.0.1] ([20.161.28.177])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50d4b1a05a2sm182123221cf.2.2026.04.09.03.43.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2026 03:43:10 -0700 (PDT)
+Message-Id: <pull.2202.v4.git.git.1775731390.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
+References: <pull.2202.v3.git.git.1772802872.gitgitgadget@gmail.com>
+From: "Yoann Valeri via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 09 Apr 2026 10:43:08 +0000
+Subject: [PATCH v4 0/2] branch: add prefixes to new branch names
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQHyhDGGLLcGBjFwG9FOtvjpyjgmrnOO_u3rwZyAYoDHQ@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Junio C Hamano <gitster@pobox.com>,
+    Yoann Valeri <yoann.valeri@cea.fr>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Yoann Valeri <yoann.valeri@cea.fr>
 
-On Thu, Apr 09, 2026 at 06:27:27AM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Implement the `write_object()` callback function for the in-memory
-> > source.
-> >
-> 
-> rebase error? Seems like the commit message as the last commit.
+This PR adds a way to add prefixes to a new branch being created. The goal
+is mostly to ease the developer process of creating new branches by adding
+shortcuts that can be set either with a command-line option or with
+configuration parameter. This is useful especially when you have to do
+similar backports on multiple branches, removing a bit of the need for
+finding names or typing the names over and over again.
 
-I saw the empty new commit in the range diff, but somehow didn't get
-what was happening. But yes, this obviously needs to be squashed into
-the preceding commit, thanks!
+One instance of where this feature would be useful is for software stacks
+based on distribution versions (for instance the Ocean software stack for
+HPC centers https://ocean.eupex.eu/). Here, stacks for the different
+versions are organized in git branches, one per versions. Since multiple
+softwares will go on multiple version branches, we have to create the same
+package for each of those version branches, which result one work branch per
+version branch. For instance, if we want to update a package for AlmaLinux
+8.10, we have to create another branch specifically for that package and
+that version. Therefore, if we have a lot of version branches to update,
+that means double the work branches, and specifying each time the version
+branch the work branch is based on becomes annoying and can be error prone.
+That is especially true if many people (around 40 for the Ocean stack) work
+on this stack.
 
-Patrick
+So I propose this new feature to simplify this process. While it could be
+done with a script or an alias, both of those require either the developer
+to share the script or to create it, or to define an alias they may forget.
+Hence, an even easier way to ease the process is with this configuration
+parameter which is a one and done deal.
+
+Changes since v1:
+
+ * Added a '--no-prefix' option to git branch
+
+Changes since v2:
+
+ * Changed the PR structure, with 3 patches:
+   * first patch adds the '--name-prefix' option
+   * second adds the 'branch.namePrefix' configuration parameter
+   * third adds the '--no-name-prefix' option
+ * Those patches only target 'git branch' now
+
+Changes since v3:
+
+ * Changed the PR structure, with 2 patches:
+   * first patch adds the '--[no-]name-prefix' option
+   * second adds the 'branch.namePrefix' configuration parameter
+ * Fixed the different issues pointed out by reviewers, especially regarding
+   option/configuration management
+
+VALERI Yoann (2):
+  branch: add '--name-prefix' option
+  branch: add 'branch.namePrefix' config param
+
+ Documentation/config/branch.adoc |  6 ++++
+ Documentation/git-branch.adoc    | 11 +++++-
+ branch.c                         | 57 ++++++++++++++++++++++++++++++++
+ branch.h                         | 12 +++++++
+ builtin/branch.c                 | 29 ++++++++++++----
+ t/t3200-branch.sh                | 39 ++++++++++++++++++++++
+ 6 files changed, 146 insertions(+), 8 deletions(-)
+
+
+base-commit: 256554692df0685b45e60778b08802b720880c50
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2202%2Fvaleriyoann%2Fbranch-with-prefix-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2202/valeriyoann/branch-with-prefix-v4
+Pull-Request: https://github.com/git/git/pull/2202
+
+Range-diff vs v3:
+
+ 1:  6cbb950d8b ! 1:  322f94d121 branch: add '--name-prefix' option
+     @@ Documentation/git-branch.adoc: git branch [--color[=<when>] | --no-color] [--sho
+       git branch [--track[=(direct|inherit)] | --no-track] [-f]
+      -	   [--recurse-submodules] <branch-name> [<start-point>]
+      +	   [--recurse-submodules] [--name-prefix=<token>]
+     -+           <branch-name> [<start-point>]
+     ++	   <branch-name> [<start-point>]
+       git branch (--set-upstream-to=<upstream>|-u <upstream>) [<branch-name>]
+       git branch --unset-upstream [<branch-name>]
+       git branch (-m|-M) [<old-branch>] <new-branch>
+     @@ Documentation/git-branch.adoc: Note that this will create the new branch, but it
+       new branch.
+       
+      +With a `--name-prefix` option, you can add a prefix to the branch to create.
+     -+This can either a simple name, or a token. Currently, only '@{current}' is
+     -+managed as token, and will use the current branch name as prefix.
+     ++This can either be a simple name, or a token. Currently, only '@{current}' is
+     ++supported as token, and will use the current branch name as prefix.
+      +
+       When a local branch is started off a remote-tracking branch, Git sets up the
+       branch (specifically the `branch.<name>.remote` and `branch.<name>.merge`
+     @@ branch.c: int read_branch_desc(struct strbuf *buf, const char *branch_name)
+       	return 0;
+       }
+       
+     -+void add_branch_prefix(const char *name_prefix,
+     -+					   const char *current_branch, struct strbuf *buf)
+     ++static char *get_current_branch_name(void)
+      +{
+     -+	int value = 0;
+     ++	const char *const prefix = "refs/heads/";
+     ++	struct object_id rev;
+     ++	const char *p;
+     ++	char *output;
+     ++	char *path;
+     ++	int flag;
+      +
+     ++	path = refs_resolve_refdup(get_main_ref_store(the_repository),
+     ++							   "HEAD", 0, &rev, &flag);
+     ++	if (!path) {
+     ++		warning(_("Failed to get the current branch's path"));
+     ++		return NULL;
+     ++	} else if (!(flag & REF_ISSYMREF)) {
+     ++		FREE_AND_NULL(path);
+     ++		warning(_("Failed to get the current branch's name"));
+     ++		return NULL;
+     ++	}
+     ++
+     ++	if (skip_prefix(path, prefix, &p)) {
+     ++		output = xstrdup(p);
+     ++		free(path);
+     ++		return output;
+     ++	}
+     ++
+     ++	warning(_("Failed to get the current branch's name"));
+     ++	return NULL;
+     ++}
+     ++
+     ++int add_branch_prefix(const char *name_prefix, struct strbuf *buf)
+     ++{
+      +	if (!name_prefix)
+     -+		return;
+     ++		return 0;
+      +
+      +	if (name_prefix[0] != '@') {
+      +		strbuf_addstr(buf, name_prefix);
+     -+		return;
+     ++		return 0;
+     ++	}
+     ++
+     ++	if (strcmp(name_prefix, "@{current}") == 0) {
+     ++		char *current_branch_name = get_current_branch_name();
+     ++
+     ++		if (!current_branch_name)
+     ++			return 1;
+     ++
+     ++		strbuf_addstr(buf, current_branch_name);
+     ++		free(current_branch_name);
+     ++	} else {
+     ++		advise(_("Token '%s' unrecognized, only '@{current}' is managed currently"),
+     ++			   name_prefix);
+     ++		return 1;
+      +	}
+      +
+     -+	if (strcmp(name_prefix, "@{current}") == 0)
+     -+		strbuf_addstr(buf, current_branch);
+     ++	return 0;
+      +}
+      +
+       /*
+     @@ branch.h: int install_branch_config(int flag, const char *local, const char *ori
+      + * string 'name_prefix'. It can either be a simple string to a shorthand
+      + * starting with '@'.
+      + *
+     -+ * Currently, only '@{current}' is managed, and will use 'current_branch' as
+     -+ * prefix.
+     ++ * Currently, only '@{current}' is managed, and will retrieve the current branch
+     ++ * to use as prefix.
+     ++ *
+     ++ * Return 1 if the function failed to set the branch prefix, 0 otherwise.
+      + */
+     -+void add_branch_prefix(const char *name_prefix, const char *current_branch,
+     -+					   struct strbuf *buf);
+     -+
+     ++int add_branch_prefix(const char *name_prefix, struct strbuf *buf);
+      +
+       /*
+        * Check if a branch is checked out in the main worktree or any linked
+     @@ builtin/branch.c
+      @@ builtin/branch.c: int cmd_branch(int argc,
+       	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+       	struct ref_format format = REF_FORMAT_INIT;
+     + 	struct repo_config_values *cfg = repo_config_values(the_repository);
+     ++	char *name_prefix = NULL;
+       	int ret;
+     -+	const char *name_prefix = NULL;
+       
+       	struct option options[] = {
+     - 		OPT_GROUP(N_("Generic options")),
+      @@ builtin/branch.c: int cmd_branch(int argc,
+       		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+       		OPT_BOOL(0, "recurse-submodules", &recurse_submodules_explicit, N_("recurse through submodules")),
+     @@ builtin/branch.c: int cmd_branch(int argc,
+       		const char *branch_name = argv[0];
+       		const char *start_name = argc == 2 ? argv[1] : head;
+      +		struct strbuf new_branch_name = STRBUF_INIT;
+     ++		int rc;
+       
+       		if (filter.kind != FILTER_REFS_BRANCHES)
+       			die(_("the -a, and -r, options to 'git branch' do not take a branch name.\n"
+     @@ builtin/branch.c: int cmd_branch(int argc,
+       
+      -		if (recurse_submodules) {
+      -			create_branches_recursively(the_repository, branch_name,
+     -+		add_branch_prefix(name_prefix, start_name, &new_branch_name);
+     ++		rc = add_branch_prefix(name_prefix, &new_branch_name);
+     ++		if (rc)
+     ++			die(_("Failed to add a branch prefix to '%s'"), branch_name);
+     ++
+      +		strbuf_addstr(&new_branch_name, branch_name);
+      +
+      +		if (recurse_submodules)
+     @@ t/t3200-branch.sh: test_expect_success 'errors if given a bad branch name' '
+       '
+       
+      +test_expect_success 'create branch with --name-prefix' '
+     -+	git config branch.autosetupmerge false &&
+     ++	test_config branch.autosetupmerge false &&
+      +	git branch branch-with-prefix &&
+     ++	test_ref_exists refs/heads/branch-with-prefix &&
+      +	git branch --name-prefix "blob" -- -with-prefix &&
+     ++	test_ref_exists refs/heads/blob-with-prefix &&
+      +	test_must_fail git branch --name-prefix "blob" -- -with-prefix &&
+      +	git branch --name-prefix "@{current}" -- -with-prefix &&
+     ++	test_ref_exists refs/heads/main-with-prefix &&
+      +	git switch blob-with-prefix &&
+      +	git branch --name-prefix "@{current}" -- -with-prefix &&
+     -+	test_must_fail git branch --name-prefix "@{current}" -- -with-prefix &&
+     -+	test_ref_exists refs/heads/branch-with-prefix &&
+     -+	test_ref_exists refs/heads/main-with-prefix &&
+     -+	test_ref_exists refs/heads/blob-with-prefix &&
+      +	test_ref_exists refs/heads/blob-with-prefix-with-prefix &&
+     ++	test_must_fail git branch --name-prefix "@{current}" -- -with-prefix &&
+     ++	git branch --name-prefix "blob" --no-name-prefix branch-with-no-prefix &&
+     ++	test_ref_exists refs/heads/branch-with-no-prefix &&
+      +	git checkout main &&
+     ++	test_config alias.bn "branch --name-prefix=blob" &&
+     ++	git bn --no-name-prefix bn-with-no-prefix &&
+     ++	test_ref_exists refs/heads/bn-with-no-prefix &&
+      +	git branch -D branch-with-prefix main-with-prefix blob-with-prefix &&
+     -+	git branch -D blob-with-prefix-with-prefix
+     ++	git branch -D blob-with-prefix-with-prefix branch-with-no-prefix &&
+     ++	git branch -D bn-with-no-prefix
+      +'
+      +
+       test_done
+ 2:  d51f71708c ! 2:  80d1ffde9d branch: add 'branch.namePrefix' config param
+     @@ Documentation/config/branch.adoc: This option defaults to `never`.
+      +`branch.namePrefix`::
+      +	When a new branch is created with `git branch`, use the provided value as
+      +	prefix for its name. Can be '@{current}' to use the current branch's name
+     -+	as prefix.
+     ++	as prefix. This value can be overriden by using the '--[no-]name-prefix'
+     ++	option of `git branch`.
+      +
+       `branch.<name>.remote`::
+       	When on branch _<name>_, it tells `git fetch` and `git push`
+       	which remote to fetch from or push to.  The remote to push to
+      
+     - ## branch.c ##
+     -@@ branch.c: int read_branch_desc(struct strbuf *buf, const char *branch_name)
+     - void add_branch_prefix(const char *name_prefix,
+     - 					   const char *current_branch, struct strbuf *buf)
+     - {
+     --	int value = 0;
+     -+	char *config_prefix = NULL;
+     + ## builtin/branch.c ##
+     +@@ builtin/branch.c: int cmd_branch(int argc,
+     + 	struct ref_format format = REF_FORMAT_INIT;
+     + 	struct repo_config_values *cfg = repo_config_values(the_repository);
+     + 	char *name_prefix = NULL;
+     ++	char *safekeep_name_prefix;
+     + 	int ret;
+       
+     --	if (!name_prefix)
+     --		return;
+     -+	if (!name_prefix) {
+     -+		if (repo_config_get_string(the_repository, "branch.namePrefix",
+     -+								   &config_prefix))
+     -+			return;
+     + 	struct option options[] = {
+     +@@ builtin/branch.c: int cmd_branch(int argc,
+     + 	else if (!skip_prefix(head, "refs/heads/", &head))
+     + 		die(_("HEAD not found below refs/heads!"));
+       
+     --	if (name_prefix[0] != '@') {
+     --		strbuf_addstr(buf, name_prefix);
+     --		return;
+     -+		name_prefix = config_prefix;
+     - 	}
+     - 
+     --	if (strcmp(name_prefix, "@{current}") == 0)
+     -+	if (name_prefix[0] != '@')
+     -+		strbuf_addstr(buf, name_prefix);
+     -+	else if (strcmp(name_prefix, "@{current}") == 0)
+     - 		strbuf_addstr(buf, current_branch);
+     ++	repo_config_get_string(the_repository, "branch.namePrefix", &name_prefix);
+     ++	safekeep_name_prefix = name_prefix;
+      +
+     -+    free(config_prefix);
+     - }
+     + 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
+     + 			     0);
+     + 
+     +@@ builtin/branch.c: int cmd_branch(int argc,
+     + 	ret = 0;
+       
+     - /*
+     + out:
+     ++	free(safekeep_name_prefix);
+     + 	string_list_clear(&sorting_options, 0);
+     + 	return ret;
+     + }
+      
+       ## t/t3200-branch.sh ##
+      @@ t/t3200-branch.sh: test_expect_success 'create branch with --name-prefix' '
+     - 	git branch -D blob-with-prefix-with-prefix
+     + 	git branch -D bn-with-no-prefix
+       '
+       
+      +test_expect_success 'create branch with config prefix' '
+     ++	test_config branch.autosetupmerge false &&
+      +	test_config branch.namePrefix blob &&
+      +	git branch -- -with-prefix &&
+     ++	test_ref_exists refs/heads/blob-with-prefix &&
+      +	test_must_fail git branch -- -with-prefix &&
+      +	test_config branch.namePrefix "@{current}" &&
+      +	git checkout main &&
+      +	git branch -- -with-prefix &&
+     -+	test_ref_exists refs/heads/blob-with-prefix &&
+      +	test_ref_exists refs/heads/main-with-prefix &&
+     -+	git branch -D blob-with-prefix main-with-prefix
+     ++	git branch --no-name-prefix branch-with-no-prefix &&
+     ++	test_ref_exists refs/heads/branch-with-no-prefix &&
+     ++	git branch -D blob-with-prefix main-with-prefix branch-with-no-prefix
+      +'
+      +
+       test_done
+ 3:  8f45374007 < -:  ---------- branch: add '--no-name-prefix' option
+
+-- 
+gitgitgadget
