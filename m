@@ -1,129 +1,87 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D34308F23
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 19:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AEF307AC6
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 19:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775763546; cv=none; b=mB48PhHWhnAqBh7cDlX0Z1PsgtqLc4rCTLdlRG9lh0qKigtfTSUq7WrqLGd6PfQkqZUeGtE5eJrqModEe4u00iGljjKocIOX5OZvczRehH2w72BfCunLTgroD+kd8tQLq+IT4qyYw8MTPJltyEmETeJialdHdDoc2lEhC/sRVuU=
+	t=1775764106; cv=none; b=XCFIq4SQeCbJFv5HcjuX5UT5WDnyQOJ+bQmfdybRWXO0JoC6fpAK89vxSnRWWG6bWMpatJjjil4fRS8sSCrwRB3I1zRmVyJksruPOo+RkxMRjiZmwMIuYvc1qCXXFaQCYQ7iyl6ewJJa1kd43cSCynUWQQTTHQiASFRhnqWRLgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775763546; c=relaxed/simple;
-	bh=5eLEEveqcRqu7/h6TMhSDVp+HCgvDf5x2qaPFtz3PB0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jpngRIRP0PpFho5IXCtlz8NXLJ3yHUMK/zr5qvroyQKSr3dkt/Y0yQCXZe4fspyqZhao7M3A0bPPy5APz7Z3K+BPlinIoBc3FtQRDFqAqjmipV4HbAcXxM1uhJl6vNzKEGV/aCXl4njqbFFQHAdGNUl8Lq/jQqaGeYQxVVWzApI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d6iK6PtW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aAhuX9Qe; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d6iK6PtW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aAhuX9Qe"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 29D197A0200;
-	Thu,  9 Apr 2026 15:39:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 09 Apr 2026 15:39:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775763542; x=1775849942; bh=ssjKfZBEi1
-	d8gakma9CjxRVZyHptVylX+bK3K6N0xMU=; b=d6iK6PtWgxJpkiCcAvk/GYfT8j
-	6eBE4yWXBjL+UOHUGHLQoHTYlwA/jNZj5qj+N+JHrgM+Ad2NEnwL4kap4wBPS0FL
-	w0gGiE8zPjlGCehykZRC29bb/XpMKIlMOFt1og0alpBHXqH074GtPduqOMxEcUq+
-	jHvvhGig9Zp4Cgv3gawFsrQSAnX8kAVEYL0otBcwKvS0n+mvJzIVmzAVTqv/+4qP
-	+yq9X2Hc1fap6cSBN531JBuPYZhHh7ql7+h3tBV/8Lt+4/gZsk5Wl2Ej1d6O5vLl
-	QSfr32vWh4Q8x0N6FFMulye3ssNoyyDZ3TGTTJzNmmkaIyDchSE4AM7alGlA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775763542; x=1775849942; bh=ssjKfZBEi1d8gakma9CjxRVZyHptVylX+bK
-	3K6N0xMU=; b=aAhuX9QecACoJZ+MTtqpNj8FR5fJIqMFRtVviHeUldH11Xbyhgx
-	kXtC2w6HO1cImrsCV2pYfeYfml3FmXGUjCFl5J30dbURdGtfWHbBjG81dl7n9E0+
-	QKK9cXW72iSj98edIMLtkrNQtOg2cZivqjqPIzJqqVc/0vSn/4KD3/LS1DkAlsNM
-	L68slVCJTwavC3xC7TJv8E5H/0iGhFx1hEbqVNYFYSHyhJrxlVTeMHgQjg0KGvhP
-	WebbRj3XZnZ8HflFMgFQdAZlWpMvLGK7ooGFD5a9ni29AH2EkBwux5tMy3EXDgWa
-	SFQXFlU5zGwE3kLQ0mUh7d8i3Q2CYwjf+OA==
-X-ME-Sender: <xms:VgDYaUQVuF5mK2P0o8ej_19L-2TvEHtWX0nA2lf7h1cZDiJYdeQkIw>
-    <xme:VgDYaYzmWq26OjgO0ORCDpyb_VDcVfvei79WMZNMDhmrCOcwCInNkHk-LXEcQpcGK
-    JLAwI84pOW8lqvVOX7wa4eiZiG7G0CktaUZh8woln3ZF-7QiLDxWw>
-X-ME-Received: <xmr:VgDYaW3_z9lp336b8BboUQTGFXGbEhcqqr9GPXcDlgQzuw1Rs9kSrmhNOK1WwRECS3KgajFTD5HVX_keDskpsTrD66B32j6bNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvjeefiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:VgDYaW69p3QgPzIIDkgNrMlAjjApdVZP1TfgR-o4OEaNtrm0GMbnjg>
-    <xmx:VgDYaZWxRRIhQ5ccMcVQIAdbax49ZCMBjbPZY41AAxq6QyX5fxLOrQ>
-    <xmx:VgDYaVDIKp-cZXubwOsCiSxTATRj8D1F6LJ26s4wBCFDAJhlZNwvsA>
-    <xmx:VgDYaY492sYVRkypZl9CGSQHZQ1YMsD6USiBtsfysPT66YRsFiZ0Hg>
-    <xmx:VgDYaeXPFjuZTJxyCQHnzSutcQwXhMS9y7wNhsoDaKb6sTRN5ooUr9rF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 15:39:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 16/17] odb/source-inmemory: stub out remaining functions
-In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-16-f02b4f1c0f13@pks.im>
-	(Patrick Steinhardt's message of "Thu, 09 Apr 2026 09:24:37 +0200")
-References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
-	<20260409-b4-pks-odb-source-inmemory-v2-16-f02b4f1c0f13@pks.im>
-Date: Thu, 09 Apr 2026 12:39:00 -0700
-Message-ID: <xmqqzf3bsz3f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1775764106; c=relaxed/simple;
+	bh=b8n5KcRKmRU8K2DWJVQg7642/+kYmHU22DJ+KQxVJ2E=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=peEssk2hfgvZgM0A4dPooA26YB5IBW0/z59uRkcppTXAJWy6nkm0AziM+g8SmgHdp7YdoBk7V2Ny6dDHKwiFU+gxGiRZXme+5gDjZDSe7rLUlISppC7qxdipnGnEbh8GY8K3jc8yn0AxV7f1fr8fxC9ig8gHBhZQv9fMrB9yex8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 639JmLXP3657999
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 9 Apr 2026 19:48:22 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: <git@vger.kernel.org>
+Subject: 2.54.0-rc1 NO_WRITEV=Nope  does not work
+Date: Thu, 9 Apr 2026 15:48:16 -0400
+Organization: Nexbridge Inc.
+Message-ID: <028901dcc859$d2419470$76c4bd50$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AdzIVhmHh0dGYx9nRQmmGl3fJAgzgA==
+X-Antivirus: Norton (VPS 260409-6, 4/9/2026), Outbound message
+X-Antivirus-Status: Clean
 
-Patrick Steinhardt <ps@pks.im> writes:
+With a completely clean build, we are getting writev() being used anyway =
+on
+NonStop:
 
-> Stub out remaining functions that we either don't need or that are
-> basically no-ops.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-inmemory.c | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
->
-> diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-> index 15a6a5ae64..1140b1b916 100644
-> --- a/odb/source-inmemory.c
-> +++ b/odb/source-inmemory.c
-> @@ -299,6 +299,32 @@ static int odb_source_inmemory_freshen_object(struct odb_source *source,
->  	return 0;
->  }
->  
-> +static int odb_source_inmemory_begin_transaction(struct odb_source *source UNUSED,
-> +						 struct odb_transaction **out UNUSED)
-> +{
-> +	return error("inmemory source does not support transactions");
-> +}
-> +
-> +static int odb_source_inmemory_read_alternates(struct odb_source *source UNUSED,
-> +					       struct strvec *out UNUSED)
-> +{
-> +	return 0;
-> +}
-> +
-> +static int odb_source_inmemory_write_alternate(struct odb_source *source UNUSED,
-> +					       const char *alternate UNUSED)
-> +{
-> +	return error("inmemory source does not support alternates");
-> +}
+/usr/coreutils/bin/make NO_TCLTK=3DNoThanks NO_WRITEV=3DNope V=3D1
+prefix=3D/usr/local-ssl3.5 CFLAGS=3D-g -O2 -D_LARGEFILE64_SOURCE=3D1
+-D_FILE_OFFSET_BITS=3D64 -Winline -I/usr/local-ssl3.5/include
+-I/usr/coreutils/include -I/usr/tandem/xml/T0625L01_AAE/include
+LDFLAGS=3D-D_LARGEFILE64_SOURCE=3D1 -D_FILE_OFFSET_BITS=3D64
+/usr/coreutils/lib/libz.a -L/usr/local-ssl3.5/lib -L/usr/coreutils/lib
+-L/usr/tandem/xml/T0625L01_AAE/lib SHELL=3D/usr/coreutils/bin/bash
+GIT_VERSION=3D2.54.0.rc1
 
-OK, 00/17 said it only fixed log message, but the messages or
-anything end-user facing should consistently say "in-memory".
+Down to the first instance:
 
-Or, "in-core", if "incore" is chosen as part of identifiers to be
-consistent with the rest of the system.
+Cloning into bare repository 'clone.git'...
+remote: Enumerating objects: 629, done.
+fatal: writev error: Invalid function argument
+fetch-pack: unexpected disconnect while reading sideband packet
+fatal: early EOF
+fatal: fetch-pack: invalid index-pack output
+not ok 25 - clone from bitmapped repository
+#
+#=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 rm =
+-fr clone.git &&
+#=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 git =
+clone --no-local --bare . clone.git &&
+#=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 git =
+rev-parse HEAD >expect &&
+#=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 git =
+--git-dir=3Dclone.git rev-parse HEAD >actual &&
+#=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =
+test_cmp expect actual
+#
+
+Did I mess this up?
+
+--
+Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)
+NonStop(211288444200000000)
+-- In real life, I talk too much.
+
+
