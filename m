@@ -1,81 +1,80 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA56040855
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 07:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A57306486
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 07:24:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775719477; cv=none; b=fL4YlML/dk5MPldTrjwtTDTDD8JDw9P+m2A57rks6f4Af0JqxUDoGqEt+ehF8s9xyAgnM8xHIZYq7WbD0KzVuszVJ9inXgT2OL1+A+JR0KbxYfRc2iv5qBN+WberZ/WNNc1n1Ebl3ivo+8yWf34cx9hjcY0ehILH9HnuMDgh080=
+	t=1775719477; cv=none; b=cf0QBznwjBKZiBzpFnl19oZgEej6FNCxRzjxXQykBziOYMt0LjZEzaPLHmB3U52XRN+VBvQxpDHqvgHa4LkS8+vvd0RksleA0yB7BxyFY5tH/A2DabZI+MnorN/oweGqAuROnDwt2d4sGKCaQcxJWsQmMRCD4vdAYxHFLzp2sfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775719477; c=relaxed/simple;
-	bh=zARagarksiO8BnxqhwNrQk817xunbFJOFVshL6QCJE8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=EXmFOn8hqz/SM5tk2lRF9a4Xpy+X2VC2+HCBt+Kur1xrpdxn0UXFyzFX1QSuJcgLbNmoC+nfHTsJPTX7eXrg7UVz1Lb8gOISNaYLt+ZcxdSyYnwNF4kJOp+nfKgRdyzCyHE3DedpOvFdaKRKmSD72gGcSMmsjR+BvmPciLy8GcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V/EgDYOL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kqKkxVpq; arc=none smtp.client-ip=103.168.172.157
+	bh=C5QUQW5Jo9+9bniiHqiDfBbzjiONmH/vfAGw5oOhOhY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ilGPVHY0f57nUEMnvi+2wZjL1r7ufEIhbZcWIYQWdUopSFeIWW77K5467YNIadAc2Bg7FUygP1VsKXbZG5fE55O0jQBCcX4IoGZilFo5HSozQq/5mbQHrOiL3bR/4DEAbPBKFzyte+b2H4BEyoJP5p5VKJfSdlTGevv3Tq1jsQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QfqYju12; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OZNMVJ9G; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V/EgDYOL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kqKkxVpq"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QfqYju12";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OZNMVJ9G"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3637114001F1;
-	Thu,  9 Apr 2026 03:24:34 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 28B45EC046D;
+	Thu,  9 Apr 2026 03:24:35 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Apr 2026 03:24:34 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 09 Apr 2026 03:24:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775719474;
-	 x=1775805874; bh=SCSA8jjHMvndUV5Hl7L4UDwN4tm+HAknhF1sDA4HqUg=; b=
-	V/EgDYOLgiAU7F9ZpmC6yAqjc2pUVH5I+1imoynfFFJTsUoafFAlK9mYWcc/z64k
-	WLGrVdkX0FUDxABIc9/BV0QUSdHNsxTxf8EvuHZgfueVL0itZ+patH4ceAnmow9R
-	LjEEQH5ikkWEfpx1Ue9SAKyi4ugb70Hre6VG/4s4F0Sr6dAws+CxzLLsUELrKwvI
-	gnmOUTo5JEiU5oNeoDLsuVr2tgOCkuH8aVmXpw8kRMAM2cix6Q+hfDQ9L+tHzx9u
-	V1IEvPKG6tZwLsY8zLWn5B2q1Q8xcQCOeg7RbX6Zvayk6D9/ObgzM9Tg3kJYBfBQ
-	0npZSNmTk1HIfTESO1HU7w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775719475;
+	 x=1775805875; bh=NRM6qlpL6WqX0a9z37KZxKwnHiptG5aArjFAdolI/qY=; b=
+	QfqYju12B4fcPGDDsh1xpVInEGoVsoGLRhxwX3P2thgPmK5gbLeYe1+1fwX6JJkR
+	uWhktmZs56aUJdpUGK2h8dVqsru5fLlNt9KAZu2vc+anEIZkKEXBzyEdEpccOvyp
+	dy/1GGG01n4/qmaIjYzFCr89Tfz1iLLZecuJzNpMJtwLf3vzXQAUjd23iovcX8uu
+	pPiaAJj53al0/LB8I1r9oKldil8mmSmeyh7rbO+BaP7L/vosqRQR0C92tQldlAL7
+	FkraWicKUEtHbVGStojbFbzPDmYFs04IW0xTQWTC8cNkygVU9mTqhfKwngehNY8R
+	CIDhDW9Yli86EOvhRZfRzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775719474; x=
-	1775805874; bh=SCSA8jjHMvndUV5Hl7L4UDwN4tm+HAknhF1sDA4HqUg=; b=k
-	qKkxVpqvD2PlSRlxDd6919NIvrthMe4bpWJYfVY82UmB3xglOWTl9ol3bqyibtLA
-	jHxGNvG9TNTdVouhyySB2COOwM4GT9Tx2H2qgjX0rLmiwHriMGrurDmfv2U7VvK5
-	FCeN6RwhBuLesqA+wGYV9IqyJtsB2Eeab5m2ygWSbQ81BRdnehtyTRTe9GIdOpLR
-	hHitIERZYIwhn65I1bl1zFV5Re9P3HoDTejYVGs9ZXXEYyDJviRy/Jlf92CWsC9p
-	+P797yjkKa0/bV+S7d2KpYG+Ncgc8ETy6DL2Hq0TceSwoeetsnyvzB7fk1XzD+Qj
-	q0au9YlqAm33uygkbUCqQ==
-X-ME-Sender: <xms:MVTXadUcXhtQwvubCnC4eD-QXN34xC4srvMH9PCVI8hR4F28T6oKnw>
-    <xme:MVTXaVCcJzGFrFpuLiz_K26JHCWbzJxX7eyO8F-L-PetutEX65ELJucUs4a9eIQ7Q
-    VO9ixMl3RvumcdI1Op0obXEUFoW9cfcu5BrZMp_MzdiQUtQzYnz>
-X-ME-Received: <xmr:MVTXaWx2izJQreRFFgYXKQpaxrGR3MLJiiuRaX9tTc_a-LwnvOm89qZXpZI4po8Rr0ruKYtinnCIkJPByD6I69DrX_nnHszTrD4jzSYGvdk>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775719475; x=
+	1775805875; bh=NRM6qlpL6WqX0a9z37KZxKwnHiptG5aArjFAdolI/qY=; b=O
+	ZNMVJ9G3LbVmsg3KE3zqIgaGsxK32y7fxcZh49pY1z/wT7Dccs+UjQRszK8bP4cl
+	82C4MCxW1fFciqMcyVOlbneBejD+LvC+t5b8pKmIC3Bag7XQzGLul3DWAzKvTiFe
+	DWGXRVbO8G+VOT1XiEZYlhhTZjhIaCH4ec9YTAtyz13HfGbt9M/0M3Kj1TcuQz7G
+	sJVo+l1o2u9ZlH9rqqTL4eTxBEZpVyMNFUykLzu29vkDwLQWRYtOr5Gt4l9xtGTz
+	AEAjjOqxWn6WLXXYQZ8fIwO7xLoObtBXhZUXth992hJFaxe9X8eJd1KeXLtqH59A
+	qq4StiYi4KrGj7QGIv35Q==
+X-ME-Sender: <xms:M1TXafOo0cT4JiuAPeIAAfWYJEbUI-1EbrHfgG5ZAZmAEXgOLj6suw>
+    <xme:M1TXaRY55VawUCHq5EFxUN_wbmTnalFDsYzqMfphiCx-Yphv1yxSkxDlaAiCOAWv_
+    dKlLaa94VoQS6Z6vxtpfEeXnbqaQmDbxLrOC6T5SeL_fQ_LIzxJ>
+X-ME-Received: <xmr:M1TXaboaqdk4DUrEh8ZBe6QXIzb5cj8qECwcEvm8TMuNQJNMSCDcVSK1Lz_g3YX-VOTEOe8HUt7h-EkducLvXOuNlWA-19xc02HY9eBRdtY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvheekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdffkeektdefleetveegueethedtfeeugeegvddvhfdvtdetieeiueekhefgfeehnecu
-    ffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:MVTXaaD3II5isoAOW1NHM1MVxlPoRRiPTwKcd7-oYuQMy8O0HpMpOw>
-    <xmx:MVTXabaqZJTl8s4srZOj5BAPyyq0k_DGNE2NcYLQ5b4SxNQV8BSMtg>
-    <xmx:MVTXaai0ld4ofsZSJx4l8t2tCWNDf00ZIAua8ezxjnNdcZn1Ew-8tQ>
-    <xmx:MVTXaV7lv-4qlr05PlJlMumqBjeV-hjRiyiwu5mHbwLJ-f2qygq8ww>
-    <xmx:MlTXaZDKBTjLkbCs7fvwDSXGh96KQg3nmNztrCPFDg7Tvrv76QM5J_ot>
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:M1TXadYARnPF6A2MM6XITeglwPYzeO3_w_2qhmGvrrRvwJwXKvfKIQ>
+    <xmx:M1TXabQaOL3BLZBLZcAFabJ2Z3HFedplviFc0XSYHj4eEGSGBRKYdQ>
+    <xmx:M1TXac6XYrkEmfFaiENJ19l4NqFtQ1b-pmqwRYtn5XQ20dbJpPayfA>
+    <xmx:M1TXaYzAGIe7YsNqZfWZSEYv4ZuFWIC4l--dChx22fEb7qawmo43KQ>
+    <xmx:M1TXadbalnOY6ErlzN00qNsuInY2wV0uiajewY0I-LVd38ksTqNvefOA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 03:24:32 -0400 (EDT)
+ 9 Apr 2026 03:24:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ca08dd74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Apr 2026 07:24:31 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 387952fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Apr 2026 07:24:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/17] odb: introduce "in-memory" source
-Date: Thu, 09 Apr 2026 09:24:21 +0200
-Message-Id: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
+Date: Thu, 09 Apr 2026 09:24:22 +0200
+Subject: [PATCH v2 01/17] odb: introduce "in-memory" source
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,305 +83,231 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACZU12kC/32Nyw6CMBBFf4V07Zi2oKAr/8Ow6GOU0UBJB4iG8
- O8WjFuXNzn3nFkwRkIW52wWESdiCl0aepcJ15jujkA+baGlPspCKrAF9E+G4C1wGKNLQNdiG+I
- bSqtKV+X+hEUukqCPeKPXJr/W382jfaAbVuNKNMRDem71Sa3cL5T/C00KJFS28spYY/QBL4ncU
- yvqZVk+/wNoWNMAAAA=
-X-Change-ID: 20260401-b4-pks-odb-source-inmemory-7b17c83d9e43
-In-Reply-To: <20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im>
-References: <20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im>
+Message-Id: <20260409-b4-pks-odb-source-inmemory-v2-1-f02b4f1c0f13@pks.im>
+References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
+In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.1
 
-Hi,
+Next to our typical object database sources, each object database also
+has an implicit source of "cached" objects. These cached objects only
+exist in memory and some use cases:
 
-this patch series introduces the second object database source type,
-which is the "in-memory" source.
+  - They contain evergreen objects that we expect to always exist, like
+    for example the empty tree.
 
-This source may seem somewhat odd at first: it always starts out empty,
-and any object written into it will only exist in memory until the
-process exits. But the source already serves a purpose in our codebase,
-where some commands, for example git-blame(1), write an in-memory
-worktree commit.
+  - They can be used to store temporary objects that we don't want to
+    persist to disk, which is used by git-blame(1) to create a fake
+    worktree commit.
 
-Furthermore, I think that going forward it can serve more purposes as we
-now have an easy way to write and read objects that will not get
-persisted. I could see that this may be useful when for example
-re-merging diffs. But eventually, once we have the object storage format
-extension wired up, callers might even want to manually set up an
-in-memory database as the primary ODB for write operations so that no
-data will be persisted in an arbitrary write.
+Overall, their use is somewhat restricted though. For example, we don't
+provide the ability to use it as a temporary object database source that
+allows the user to write objects, but discard them after Git exists. So
+while these cached objects behave almost like a source, they aren't used
+as one.
 
-Last but not least, this patch series also serves the purpose of
-eventually getting rid of the `struct object_info::whence` member.
-Instead, we'll simply yield the ODB source a specific object has been
-read from, together with some backend-specific data, which gives
-strictly more information compared to the status quo.
+This is about to change over the following commits, where we will turn
+cached objects into a new "in-memory" source. This will allow us to use
+it exactly the same as any other source by providing the same common
+interface as the "files" source.
 
-The series is based onb15384c06f (A bit more post -rc1, 2026-04-08)
-with jt/odb-transaction-write at ddf6aee9c6 (odb/transaction: make
-`write_object_stream()` pluggable, 2026-04-02) merged into it.
+For now, the in-memory source only hosts the cached objects and doesn't
+provide any logic yet. This will change with subsequent commits, where
+we move respective functionality into the source.
 
-Changes in v2:
-  - Fix handling of object IDs when writing objects.
-  - I've changed the base of this series to include Justin's
-    refactorings for the ODB write streams. I've updated the above
-    paragraph detailing the merge base accordingly. @Junio: I'm fine to
-    defer this patch series a bit until Justin's patch series has been
-    merged to `next` in case this causes inconvenience.
-  - Use "in-memory" instead of "inmemory" in commit messages.
-  - Link to v1: https://patch.msgid.link/20260403-b4-pks-odb-source-inmemory-v1-0-8b8d1abaa25e@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (17):
-      odb: introduce "in-memory" source
-      odb/source-inmemory: implement `free()` callback
-      odb: fix unnecessary call to `find_cached_object()`
-      odb/source-inmemory: implement `read_object_info()` callback
-      odb/source-inmemory: implement `read_object_stream()` callback
-      odb/source-inmemory: implement `write_object()` callback
-      odb/source-inmemory: implement `write_object()` callback
-      odb/source-inmemory: implement `write_object_stream()` callback
-      cbtree: allow using arbitrary wrapper structures for nodes
-      oidtree: add ability to store data
-      odb/source-inmemory: convert to use oidtree
-      odb/source-inmemory: implement `for_each_object()` callback
-      odb/source-inmemory: implement `find_abbrev_len()` callback
-      odb/source-inmemory: implement `count_objects()` callback
-      odb/source-inmemory: implement `freshen_object()` callback
-      odb/source-inmemory: stub out remaining functions
-      odb: generic in-memory source
+ Makefile              |  1 +
+ meson.build           |  1 +
+ odb.c                 | 21 +++++++++++++--------
+ odb.h                 |  4 ++--
+ odb/source-inmemory.c | 12 ++++++++++++
+ odb/source-inmemory.h | 35 +++++++++++++++++++++++++++++++++++
+ odb/source.h          |  3 +++
+ 7 files changed, 67 insertions(+), 10 deletions(-)
 
- Makefile                 |   1 +
- cbtree.c                 |  25 +++-
- cbtree.h                 |  11 +-
- loose.c                  |   2 +-
- meson.build              |   1 +
- object-file.c            |   3 +-
- odb.c                    |  82 ++--------
- odb.h                    |   4 +-
- odb/source-inmemory.c    | 378 +++++++++++++++++++++++++++++++++++++++++++++++
- odb/source-inmemory.h    |  33 +++++
- odb/source.h             |   3 +
- oidtree.c                |  66 ++++++---
- oidtree.h                |  12 +-
- t/unit-tests/u-oidtree.c |  26 +++-
- 14 files changed, 532 insertions(+), 115 deletions(-)
+diff --git a/Makefile b/Makefile
+index 22a8993482..3cda12c455 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1218,6 +1218,7 @@ LIB_OBJS += object.o
+ LIB_OBJS += odb.o
+ LIB_OBJS += odb/source.o
+ LIB_OBJS += odb/source-files.o
++LIB_OBJS += odb/source-inmemory.o
+ LIB_OBJS += odb/streaming.o
+ LIB_OBJS += odb/transaction.o
+ LIB_OBJS += oid-array.o
+diff --git a/meson.build b/meson.build
+index 6dc23b3af2..ffa73ce7ce 100644
+--- a/meson.build
++++ b/meson.build
+@@ -404,6 +404,7 @@ libgit_sources = [
+   'odb.c',
+   'odb/source.c',
+   'odb/source-files.c',
++  'odb/source-inmemory.c',
+   'odb/streaming.c',
+   'odb/transaction.c',
+   'oid-array.c',
+diff --git a/odb.c b/odb.c
+index 40a5e9c4e0..60e1eead25 100644
+--- a/odb.c
++++ b/odb.c
+@@ -14,6 +14,7 @@
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "odb/source-inmemory.h"
+ #include "packfile.h"
+ #include "path.h"
+ #include "promisor-remote.h"
+@@ -53,9 +54,9 @@ static const struct cached_object *find_cached_object(struct object_database *ob
+ 		.type = OBJ_TREE,
+ 		.buf = "",
+ 	};
+-	const struct cached_object_entry *co = object_store->cached_objects;
++	const struct cached_object_entry *co = object_store->inmemory_objects->objects;
+ 
+-	for (size_t i = 0; i < object_store->cached_object_nr; i++, co++)
++	for (size_t i = 0; i < object_store->inmemory_objects->objects_nr; i++, co++)
+ 		if (oideq(&co->oid, oid))
+ 			return &co->value;
+ 
+@@ -792,9 +793,10 @@ int odb_pretend_object(struct object_database *odb,
+ 	    find_cached_object(odb, oid))
+ 		return 0;
+ 
+-	ALLOC_GROW(odb->cached_objects,
+-		   odb->cached_object_nr + 1, odb->cached_object_alloc);
+-	co = &odb->cached_objects[odb->cached_object_nr++];
++	ALLOC_GROW(odb->inmemory_objects->objects,
++		   odb->inmemory_objects->objects_nr + 1,
++		   odb->inmemory_objects->objects_alloc);
++	co = &odb->inmemory_objects->objects[odb->inmemory_objects->objects_nr++];
+ 	co->value.size = len;
+ 	co->value.type = type;
+ 	co_buf = xmalloc(len);
+@@ -1083,6 +1085,7 @@ struct object_database *odb_new(struct repository *repo,
+ 	o->sources = odb_source_new(o, primary_source, true);
+ 	o->sources_tail = &o->sources->next;
+ 	o->alternate_db = xstrdup_or_null(secondary_sources);
++	o->inmemory_objects = odb_source_inmemory_new(o);
+ 
+ 	free(to_free);
+ 
+@@ -1123,9 +1126,11 @@ void odb_free(struct object_database *o)
+ 	odb_close(o);
+ 	odb_free_sources(o);
+ 
+-	for (size_t i = 0; i < o->cached_object_nr; i++)
+-		free((char *) o->cached_objects[i].value.buf);
+-	free(o->cached_objects);
++	for (size_t i = 0; i < o->inmemory_objects->objects_nr; i++)
++		free((char *) o->inmemory_objects->objects[i].value.buf);
++	free(o->inmemory_objects->objects);
++	free(o->inmemory_objects->base.path);
++	free(o->inmemory_objects);
+ 
+ 	string_list_clear(&o->submodule_source_paths, 0);
+ 
+diff --git a/odb.h b/odb.h
+index 9eb8355aca..c3a7edf9c8 100644
+--- a/odb.h
++++ b/odb.h
+@@ -8,6 +8,7 @@
+ #include "thread-utils.h"
+ 
+ struct cached_object_entry;
++struct odb_source_inmemory;
+ struct packed_git;
+ struct repository;
+ struct strbuf;
+@@ -80,8 +81,7 @@ struct object_database {
+ 	 * to write them into the object store (e.g. a browse-only
+ 	 * application).
+ 	 */
+-	struct cached_object_entry *cached_objects;
+-	size_t cached_object_nr, cached_object_alloc;
++	struct odb_source_inmemory *inmemory_objects;
+ 
+ 	/*
+ 	 * A fast, rough count of the number of objects in the repository.
+diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+new file mode 100644
+index 0000000000..c7ac5c24f0
+--- /dev/null
++++ b/odb/source-inmemory.c
+@@ -0,0 +1,12 @@
++#include "git-compat-util.h"
++#include "odb/source-inmemory.h"
++
++struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
++{
++	struct odb_source_inmemory *source;
++
++	CALLOC_ARRAY(source, 1);
++	odb_source_init(&source->base, odb, ODB_SOURCE_INMEMORY, "source", false);
++
++	return source;
++}
+diff --git a/odb/source-inmemory.h b/odb/source-inmemory.h
+new file mode 100644
+index 0000000000..95477bf36d
+--- /dev/null
++++ b/odb/source-inmemory.h
+@@ -0,0 +1,35 @@
++#ifndef ODB_SOURCE_INMEMORY_H
++#define ODB_SOURCE_INMEMORY_H
++
++#include "odb/source.h"
++
++struct cached_object_entry;
++
++/*
++ * An inmemory source that you can write objects to that shall be made
++ * available for reading, but that shouldn't ever be persisted to disk. Note
++ * that any objects written to this source will be stored in memory, so the
++ * number of objects you can store is limited by available system memory.
++ */
++struct odb_source_inmemory {
++	struct odb_source base;
++
++	struct cached_object_entry *objects;
++	size_t objects_nr, objects_alloc;
++};
++
++/* Create a new in-memory object database source. */
++struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb);
++
++/*
++ * Cast the given object database source to the inmemory backend. This will
++ * cause a BUG in case the source doesn't use this backend.
++ */
++static inline struct odb_source_inmemory *odb_source_inmemory_downcast(struct odb_source *source)
++{
++	if (source->type != ODB_SOURCE_INMEMORY)
++		BUG("trying to downcast source of type '%d' to inmemory", source->type);
++	return container_of(source, struct odb_source_inmemory, base);
++}
++
++#endif
+diff --git a/odb/source.h b/odb/source.h
+index f706e0608a..cd14f9e046 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -13,6 +13,9 @@ enum odb_source_type {
+ 
+ 	/* The "files" backend that uses loose objects and packfiles. */
+ 	ODB_SOURCE_FILES,
++
++	/* The "inmemory" backend that stores objects in memory. */
++	ODB_SOURCE_INMEMORY,
+ };
+ 
+ struct object_id;
 
-Range-diff versus v1:
-
- 1:  b7cd1ae8d1 !  1:  df8567d908 odb: introduce "inmemory" source
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-     
-      ## Commit message ##
-    -    odb: introduce "inmemory" source
-    +    odb: introduce "in-memory" source
-     
-         Next to our typical object database sources, each object database also
-         has an implicit source of "cached" objects. These cached objects only
-    @@ Commit message
-             for example the empty tree.
-     
-           - They can be used to store temporary objects that we don't want to
-    -        persist to disk.
-    +        persist to disk, which is used by git-blame(1) to create a fake
-    +        worktree commit.
-     
-         Overall, their use is somewhat restricted though. For example, we don't
-         provide the ability to use it as a temporary object database source that
-    @@ Commit message
-         as one.
-     
-         This is about to change over the following commits, where we will turn
-    -    cached objects into a new "inmemory" source. This will allow us to use
-    +    cached objects into a new "in-memory" source. This will allow us to use
-         it exactly the same as any other source by providing the same common
-         interface as the "files" source.
-     
-    -    For now, the inmemory source only hosts the cached objects and doesn't
-    +    For now, the in-memory source only hosts the cached objects and doesn't
-         provide any logic yet. This will change with subsequent commits, where
-         we move respective functionality into the source.
-     
-    @@ Makefile: LIB_OBJS += object.o
-      LIB_OBJS += odb/source-files.o
-     +LIB_OBJS += odb/source-inmemory.o
-      LIB_OBJS += odb/streaming.o
-    + LIB_OBJS += odb/transaction.o
-      LIB_OBJS += oid-array.o
-    - LIB_OBJS += oidmap.o
-     
-      ## meson.build ##
-     @@ meson.build: libgit_sources = [
-    @@ meson.build: libgit_sources = [
-        'odb/source-files.c',
-     +  'odb/source-inmemory.c',
-        'odb/streaming.c',
-    +   'odb/transaction.c',
-        'oid-array.c',
-    -   'oidmap.c',
-     
-      ## odb.c ##
-     @@
- 2:  298758b4d5 !  2:  e1ffe26ca9 odb/source-inmemory: implement `free()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `free()` callback
-     
-    -    Implement the `free()` callback function for the "inmemory" source.
-    +    Implement the `free()` callback function for the "in-memory" source.
-     
-         Note that this requires us to define `struct cached_object_entry` in
-         "odb/source-inmemory.h", as it is accessed in both "odb.c" and
- 3:  b57997d027 =  3:  f58424bb80 odb: fix unnecessary call to `find_cached_object()`
- 4:  9ae26b9aa1 !  4:  786a240391 odb/source-inmemory: implement `read_object_info()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `read_object_info()` callback
-     
-    -    Implement the `read_object_info()` callback function for the inmemory
-    +    Implement the `read_object_info()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
- 5:  5d9781009e !  5:  22d3e7134b odb/source-inmemory: implement `read_object_stream()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `read_object_stream()` callback
-     
-    -    Implement the `read_object_stream()` callback function for the inmemory
-    +    Implement the `read_object_stream()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
- 6:  bc9620c608 !  6:  139e7f2beb odb/source-inmemory: implement `write_object()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `write_object()` callback
-     
-    -    Implement the `write_object()` callback function for the inmemory
-    +    Implement the `write_object()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
- -:  ---------- >  7:  7f5ab16d1c odb/source-inmemory: implement `write_object()` callback
- 7:  6d9f8634e1 !  8:  6006f5e782 odb/source-inmemory: implement `write_object_stream()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `write_object_stream()` callback
-     
-    -    Implement the `write_object_stream()` callback function for the inmemory
-    +    Implement the `write_object_stream()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    @@ odb/source-inmemory.c: static int odb_source_inmemory_write_object(struct odb_so
-     +						   size_t len,
-     +						   struct object_id *oid)
-     +{
-    ++	char buf[16384];
-     +	size_t total_read = 0;
-     +	char *data;
-     +	int ret;
-     +
-     +	CALLOC_ARRAY(data, len);
-     +	while (!stream->is_finished) {
-    -+		unsigned long bytes_read;
-    -+		const void *in;
-    ++		ssize_t bytes_read;
-     +
-    -+		in = stream->read(stream, &bytes_read);
-    ++		bytes_read = odb_write_stream_read(stream, buf, sizeof(buf));
-     +		if (total_read + bytes_read > len) {
-     +			ret = error("object stream yielded more bytes than expected");
-     +			goto out;
-     +		}
-     +
-    -+		memcpy(data, in, bytes_read);
-    ++		memcpy(data, buf, bytes_read);
-     +		total_read += bytes_read;
-     +	}
-     +
- 8:  45f9c761ce =  9:  392d9bf6ed cbtree: allow using arbitrary wrapper structures for nodes
- 9:  5eb7742886 = 10:  9fd88ffd16 oidtree: add ability to store data
-10:  4f95cd0a51 ! 11:  6d4a77b47c odb/source-inmemory: convert to use oidtree
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: convert to use oidtree
-     
-    -    The inmemory source stores its objects in a simple array that we grow as
-    +    The in-memory source stores its objects in a simple array that we grow as
-         needed. This has a couple of downsides:
-     
-           - The object lookup is O(n). This doesn't matter in practice because
-    @@ odb/source-inmemory.c: static int odb_source_inmemory_write_object(struct odb_so
-     -	struct cached_object_entry *object;
-     +	struct inmemory_object *object;
-      
-    + 	hash_object_file(source->odb->repo->hash_algo, buf, len, type, oid);
-    + 
-     -	ALLOC_GROW(inmemory->objects, inmemory->objects_nr + 1,
-     -		   inmemory->objects_alloc);
-     -	object = &inmemory->objects[inmemory->objects_nr++];
-11:  fc231e22dc ! 12:  5f345d76ef odb/source-inmemory: implement `for_each_object()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `for_each_object()` callback
-     
-    -    Implement the `for_each_object()` callback function for the inmemory
-    +    Implement the `for_each_object()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-12:  c2437b2ba5 ! 13:  b428a1760b odb/source-inmemory: implement `find_abbrev_len()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `find_abbrev_len()` callback
-     
-    -    Implement the `find_abbrev_len()` callback function for the inmemory
-    +    Implement the `find_abbrev_len()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-13:  fee0586da7 ! 14:  564cc60392 odb/source-inmemory: implement `count_objects()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `count_objects()` callback
-     
-    -    Implement the `count_objects()` callback function for the inmemory
-    +    Implement the `count_objects()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-14:  634392eaf9 ! 15:  9ddfb6f67b odb/source-inmemory: implement `freshen_object()` callback
-    @@ Metadata
-      ## Commit message ##
-         odb/source-inmemory: implement `freshen_object()` callback
-     
-    -    Implement the `freshen_object()` callback function for the inmemory
-    +    Implement the `freshen_object()` callback function for the in-memory
-         source.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-15:  3d1f08a849 = 16:  d76329a424 odb/source-inmemory: stub out remaining functions
-16:  29deff493d ! 17:  41cd562975 odb: generic inmemory source
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-     
-      ## Commit message ##
-    -    odb: generic inmemory source
-    +    odb: generic in-memory source
-     
-         Make the in-memory source generic.
-     
-
----
-base-commit: a3ebc5a08e67ccac4c915622049a968a31e48662
-change-id: 20260401-b4-pks-odb-source-inmemory-7b17c83d9e43
+-- 
+2.54.0.rc0.680.geaeac8ef83.dirty
 
