@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089CA395D9F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AD1396572
 	for <git@vger.kernel.org>; Thu,  9 Apr 2026 22:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775774678; cv=none; b=j45WW8H4ZfAe2RFG0uh6CVI/t+S18n1Hi0zFi5G+I5MqHuZS4HYZMP11BkruMfcT/oCdBK5h2I3s63XjahkFHfdf6pQUz6pCR27VsjsgH1DXOZXXpHsL9iBGwkWDplRITyGnbs3yH4ayEzjV3I5WqKSidzvBoH0upngiVtpOegk=
+	t=1775774678; cv=none; b=szuwXr6iy1PR7db1rawpfOz3/KKNioIE+4sy21G8mzUW9njhOemX23VyEQCpdRWqwn+Rv9ApPXRmvmsWRLlEFJnP/6JdL7kMqN/BAsCB6XQOfRAFirhZbFyd2aqrywdcsrPUFGvHg9D6oI5FxmdqvFOWUR8Ruy28fi1xhWI94xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775774678; c=relaxed/simple;
-	bh=uof5NXHfYlbZGdNi8ldfg9xjmVLC5Auxx3ouo/3MHJI=;
+	bh=7bfvpvsAkQ8aeGJMhbs8Uje0JYa4tqibIRXu/PLv+cI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWwGhOiUWNnS3X2CFIOJpm5fpRJrBTniBi04Ami221rj36P8ehmFD00aBQakDbIB7lbRDCVp3yWBzh/vabMCMp3A+ANduaHwofx6UktPo4kBT7sOX5kp0OhAYJScGXzD+LZ/ARf74RPbgH9BQ3x/S076U77IZloyynPGmyc5MAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=oU9qRMdc; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=UCMVEwa6i2oGovGadtth5cInldXqVDZPEcEFzPc6y014GIFxe+6cuD6OK7T3LJGXko4FfnI8ORu96wWvNob7O+Io3Ns7mxARFj1SIdbHaCBmIn6IocnwVeZVkwfxrK9yDBO9DYenoDoKBGz+3wdmRKGf8RHu61z1CJhJ8bK7J7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kpZU2GI/; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oU9qRMdc"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kpZU2GI/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1775774676;
-	bh=uof5NXHfYlbZGdNi8ldfg9xjmVLC5Auxx3ouo/3MHJI=;
+	bh=7bfvpvsAkQ8aeGJMhbs8Uje0JYa4tqibIRXu/PLv+cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=oU9qRMdcEFCLmyYtVtlHzQUTdJ8yISY4sewZP4mHb3G5cHB0fkCTbWFir7rvvBkc3
-	 wzUqVy8g43aCzX6DInDq/MCo5gzA+Wn9Y7+Ms+Sxd5zgnnQFx8MPjU8WSYMSXPALfj
-	 WEFqEg+5hsgV+oY0yhXdX4HfK8mIXP4N9wBrpNz4blZ10U6VTukNi6Cq2lvMGbNhUY
-	 DUYcn+1/gdQsTS88MH9RSKd6IXiAsijg6UQa+T+N3zKbsYd/fX127f/8f+T+epar/1
-	 s/iQ8BoL3sazUZXxPKOEm8MBtKHpk859o45n1CfgRoMLsEfs89jzaCKH0GkL7B+nOq
-	 UjFPVo5Ilmx+/E4etgv6LmHYoSCYYoqh8aGlv36UxnoTS0fMXhvcA+eVLQhkXWevLj
-	 BffhI7fqf9mgKy7/tABXdxRMkyrQ/M2tfE64cG1QhhgqyT6la9Gh9/X8SFU5NGck7R
-	 t0c47f2vIbzfGBB6n50SJ8H1Y0oRhZSIfH9XWs4vfa/NEiFJQLy
+	b=kpZU2GI/S3Qggij6NT2kq3m0x1Ke1qo1ihOuetQlTRECE2AE0NoPwzMmG13jPnT9K
+	 +S00kHJQyyh21SLAJ4cj49utJ8QVrSrMe3iAKPdfK9V67LQbyIjnGbfSkuxCKRoOyD
+	 tRDMaWrCrWNAbLJTWJJpOJlp31R3s3J0sepx1BkJ3yrD4fGRylDnWPXJSmtE0uBXvz
+	 AsQJ6gGmVqIY6WXI1KV5nxTdWlDRuXyL6FY6HC35sSs3YMCpqTAghFw2lW87ydvdYn
+	 oBmVcZcYiX1lMcgd0EA9/KXRwM5UlfJnvtmHBo0njej8wfrKeCeCwKMMN0ZrGTqKqv
+	 pvac/D/6AJ1KG58M/xtLKK7kePUAJsslFv5W0ewezCA1zNRz8N1JmQfoYdLvojPkbx
+	 We/7RzPuTtpMVc5qJAwO8Vu2a1tntz3x/P0cML537vQ7E+nhMXpHjQrqWjOe9moySC
+	 +tNRaABOm8VOUV6OVPuEMGzu4CKDiUJOmTcfZcD5gutoguQ0E02
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:fec4:70ef:431f:d174])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 429C720144;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 54E8F24402;
 	Thu,  9 Apr 2026 22:44:36 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: [PATCH v2 1/4] docs: update version with default Rust support
-Date: Thu,  9 Apr 2026 22:44:31 +0000
-Message-ID: <20260409224434.1861422-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 3/4] Linux: link against libdl
+Date: Thu,  9 Apr 2026 22:44:33 +0000
+Message-ID: <20260409224434.1861422-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
 In-Reply-To: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
 References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
@@ -55,25 +55,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We missed the cut-off for Rust by default in 2.53, but we still can
-enable it by default for 2.54, so update our breaking changes document
-accordingly.
+Older versions of Rust on Linux, such as that used in Debian 11 in our
+CI, require linking against libdl.  Were we linking with Cargo, this
+would be included automatically, but since we're not, explicitly set it
+in the system-specific config.
+
+This library is part of libc, so linking against it if it happens to be
+unnecessary will add no dependencies to the resulting binary.  In
+addition, it is provided by both glibc and musl, so it should be
+portable to almost all Linux systems.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/BreakingChanges.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index f814450d2f..510ed98b65 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -190,7 +190,7 @@ milestones for the introduction of Rust:
- 1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
-    disabled in our Makefile so that the project can sort out the initial
-    infrastructure.
--2. In Git 2.53, both build systems will default-enable support for Rust.
-+2. In Git 2.54, both build systems will default-enable support for Rust.
-    Consequently, builds will break by default if Rust is not available on the
-    build host. The use of Rust can still be explicitly disabled via build
-    flags.
+diff --git a/config.mak.uname b/config.mak.uname
+index ccb3f71881..7aab56c590 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -63,6 +63,7 @@ ifeq ($(uname_S),Linux)
+ 	PROCFS_EXECUTABLE_PATH = /proc/self/exe
+ 	HAVE_PLATFORM_PROCINFO = YesPlease
+ 	COMPAT_OBJS += compat/linux/procinfo.o
++	EXTLIBS += -ldl
+ 	# centos7/rhel7 provides gcc 4.8.5 and zlib 1.2.7.
+         ifneq ($(findstring .el7.,$(uname_R)),)
+ 		BASIC_CFLAGS += -std=c99
