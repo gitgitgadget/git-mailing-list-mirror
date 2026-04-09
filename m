@@ -1,179 +1,130 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1326B757EA
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 12:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775739187; cv=none; b=A4KTegB7gwe4wTcQPRJ9aKsLhrnvpfnqwqIfDbQjF1m/0rC5d6XN1diFPTD4F80P0q0DCZ4inx9voEVfKIp+mX1CJfTgfInt424U0cXZ7DYp6Ou/5lxPhvyty+bMHUKz1P9fzm3FJGVJaXAlRJ56kV2JQtYdJviaZb7tYfMV5Gk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775739187; c=relaxed/simple;
-	bh=GJynfOd7K6B2um1cEtOnyillEYtso4pJj9Ecuxs0xas=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kUkT3iYXtYs57xtX3QNqjmrF8C4RS6BcBUBWpBkvdX6xjQS8iMfDa+Ix/v7fhxuKsLtFf6Qq9vTHK1uwMmfsKGcYWl8B+LCppyUtfUshTsUy0O3Ca3BgwGYK+M0Io+ZhDCcVpcvPTSEaDlCl+o8KOO2xz3Wl8zBkLZtEqZhVXjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mWZQhiDg; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA7B2D46C0
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 12:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775739489; cv=pass; b=CzZB5TX+ppI2TAVM+lie30iDxac21Ckpmo7T48SziF6OAJhpp6kEHbXNN4PHDlohh5eJfhWHct7NngZsY6x8HDjbjy81AxPmjB8JOu+EwksbgtnTcQL3fgYrD1oNR39KR1eJR2xwbv29hm+F7ksFNJ8tCa3646arpt9m8cGsRBQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775739489; c=relaxed/simple;
+	bh=21GIwrrss73xjkXXjE/sPphqo72CfRXHShaCHT4CPtM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=L8MxYKbuSNWHw+cGpJmRuKb010UNC0hyFbIr8Q+Sx9dZVvDLI9DZWMYu2I9P1vR87tgp1eMr1YnvnILH6mXadgvEY1YHnRtG3ytNILTNMpL0Ox82x/3FUy3FRTZoj67OQ/wCv+ZoA7LMBP2RMu77ZyB+AAnl0yLVdEFerYYGTnM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SaJovDCR; arc=pass smtp.client-ip=209.85.221.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mWZQhiDg"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-899d6b7b073so8564366d6.2
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 05:53:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SaJovDCR"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-56a9076813bso441381e0c.3
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 05:58:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775739487; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jjD561OMvjI67tb0AyGq3RsAJBX3dFqhxZv4cUNYOLN2qT9o6ky2/hcL+Bp3+S+G6B
+         4E5V+nMNqIr6ZJKUWkNrsMAOUpJol/HML3olTYQ3vk2A7IjpVn908TChThIrhEnNoBn4
+         S2jC1L+uwWZxwjYNfuo61thsGQCRTaC0R9SziZnLO2GAzkkVDXqkbbgXLYkxI96wl42H
+         0T3oEhjdJ4hQl/WaIRRumBwTW4iDTasYeeT3WwuOG5mOGCBDuBaXI878zvsT6w0NOOKz
+         NlhP3iFA483Ko0UhWEbQheu+WalmWjyL6cHM/uC5j7D1eRQCP76YQNlMztlvPrNEg9l/
+         K6pw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=21GIwrrss73xjkXXjE/sPphqo72CfRXHShaCHT4CPtM=;
+        fh=5xVFw2I/zuc6GTqlqauEVmGl5t7YHAX+j1vRw8fBc0E=;
+        b=fkFPjlBkq+266wPp0zdPGck9p+b3XMiG8km2wy/fBLj98ALCIXT+lv7oCgzO/JEvhN
+         PJuwF+kUxRJMS3tajE6V3NTWg6BXydFPHpIEU+8xkQJ3mtrL5ubbBt2E/Jrtsz0uYUT/
+         HyfNEw5vzLbqeLxP1tiHSTvry6r+L9lWF6FiZ6kyBQjcKr0ndbh6/AqoL0X8yOAY9N1w
+         6vqPOzOtG9oAfVYemn2jpApGvAJN62HkyyvWswAFLORAg0HcL4v8Y8w/STXL7NxlHFFU
+         nLnuxvV9AJxwH/HyHIo2Gs2eJ6kqesOwOOPdSkjXQm5skbexG/mv2w1ZGcn9Yv5Iw2BO
+         ygHw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775739185; x=1776343985; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20251104; t=1775739487; x=1776344287; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BGCLQDmLfAuiVJtJrqSQSEauLn/XuE8rAJaaDkzviQQ=;
-        b=mWZQhiDgQVD2e0Mjvbsi+PFcLzzkCNMe3gwWzaL7sxtQA2UyNRRy7zgqREfIx10s+s
-         amoY4n2AY0hD31XVpwbStL1Z+xljdKpEYpIIKXmHKH5xRB5yzxI+G5pd59HGWtEz4dWe
-         qmMzJS5k7o1nMFVLtiMgl6xaNonoAIEN0D3kK7LA21DuG1ZK8pwHPpJabMbjmoHSdWwz
-         rnuXl1uTJ+q6toljDhKpnhAJtZVuj3wSxdFg0COsVP/1XxCSRtlCIlxs/upFXp4yMKbc
-         CfgyjsMAflvRqaZkiqfLsKtZKYeKZx0Q1vzhTY93ZTnikg/7jeu+RBmbK9SmK/1WDcK0
-         vxdA==
+        bh=21GIwrrss73xjkXXjE/sPphqo72CfRXHShaCHT4CPtM=;
+        b=SaJovDCRsuuULIkt453eNcIOE0AEkIr3byXDC1Bs2vIGuC3q0okpQ+kbVpkpaOGePG
+         7uW5e7K7Zmep74qR9uoXOeOVUARAK6+kOFUn+VcgN0q3nd7dBZJYd4bRthH2NQBNeaXu
+         Bj8f+zZTXRB1xgK7uh4xd4xmqp0rLh/3GgUqwRIPtRVseipgkbJFY3O7gGgynkK+a2nX
+         K8Mj6OECN3R/YPm3e+IdCeYl93JUiTNQmjQPHEE5qQRuKxnWUWrFKeAcje21CLfuZnCv
+         LhxjHSOQBjJ0/1FjmKBP0lGe2ZQWys/t5Obp+djZIW2vzA1WiroherS7LA3EXFVUHm2j
+         /v5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775739185; x=1776343985;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20251104; t=1775739487; x=1776344287;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BGCLQDmLfAuiVJtJrqSQSEauLn/XuE8rAJaaDkzviQQ=;
-        b=TztE2fHPqiPmzsoQSiFrGgd+73KTa6hLOrhCgT69cosz77fsTVVRqPpl7EiluKAoMQ
-         gUyXfe2RJvbWz2+oUCe8PW17e92loZR+ROl1NwiFOZptTi/Vuo0GnHONNYtHVXi9T9WK
-         5bGlKuSdCCshq1Ib/w4NASKbK9K0AIIIeGjEkTb6IlCTkMTIuMvA4rYxSzsHm7bV4btx
-         6fB6IyFuyODBVYb+XZ0UprLgDNQKKseLnToqfhYgewdvU2QS9+LqZJ/GhJT6Z0aQiJKP
-         OAOhn8TUG+RLlo/jLbdtqAGac25QGkDk0SvNig0BxCwlh2Jm/pqPj3p6f3vRo+XP6usf
-         YShg==
-X-Gm-Message-State: AOJu0Yzri7uD9JMFqpM9YWYHcHV66+dRZte+QfTtkTTXUi+7narAm6hq
-	iYT1CP9qlQcoE7Y6AZ5MJw8zjZDSVL36Z/BCInCqSt+j0RYSQJyQNetEI9inWQ==
-X-Gm-Gg: AeBDievv+avUuu45gSWW1Ks35Xn0JiaOhImDUBfR4sdPAOSQp6X7s3WZUQC0BJ0u3dx
-	LEIaE83wejViSSIefaebPhM6LIt82JDCJ58ASycfGrws2CZBp2wIUhsev3nFfJ8pq2u4i3tnVV3
-	Hd1kIGB1EIGv68LTxYWeW3AMJHPAhv3ZYbsOPYUDPJuznZDI8wBsASSdQxbNqoZSHox9PQdjxpW
-	/Onyj0AwSfxO43Se1VwjT2mIXyWx9qf3YkaB8EDefBIudkXrkCwSgnxOnr1/YrlTSA6RrIQjnUi
-	BnAfu65HFlH5HMrWpIhd7rHb43slntVPSiwaJ0rhNs9tSP1FSvLHbFS0n+ROt/Dfqu0QUxOMaji
-	cL9bsYpUcjIH1D5fCnJQtZVS6wUZHu2JMiHulEdYt2c91Yt/jEtIo+gtaY/p6s1tB097gB4nWFO
-	aG3KoEK+aLt5AOWHzwFNzygPImavJ7Hds7QS8WK7pAWCzxMqQoC2w5AXSPhK+f3FBdRDN4tT9wA
-	NF4GbsZ
-X-Received: by 2002:a05:6214:3210:b0:89c:bcbd:c26e with SMTP id 6a1803df08f44-8ac743c89e4mr56377716d6.25.1775739184823;
-        Thu, 09 Apr 2026 05:53:04 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a596e03cd8sm189161436d6.33.2026.04.09.05.53.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2026 05:53:04 -0700 (PDT)
-Message-ID: <e9634014-6829-4158-9444-7831640f782b@gmail.com>
-Date: Thu, 9 Apr 2026 08:53:03 -0400
+        bh=21GIwrrss73xjkXXjE/sPphqo72CfRXHShaCHT4CPtM=;
+        b=RYASxIGkja/kGMN5rncsvkRCMceDFxuBkZhwD9By3GRaPC+0pL7Y0stEebZUQUVWoa
+         3VmWAM+S7tFzcShXlUTLc0++ayFf7wLnS9CrGE6DibKy/9TPoDJMfRBTn4FBjSlnRVCt
+         BTmGIXCPReq5kOBA5aYNp5N5qD5lh/TsgyXdjVzrb2FWHpw4JdlRwwnsJO92HxwDVdO5
+         1CMMdaNdm6dvVD4yoaAmZ4lMANDr/i4J88F7H6VOQnrMqKj/YScrE8T3ZiiUH4t3oog0
+         k3unHhw+YHzRyTo6mcWVNJfVXYjx7KNLrs8uEyoU7L//WETbs/yT9bgT+XyA+eknlIuI
+         q+iQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAzlu0DaoWMzQku5aXeTCZBxlEIYf7Lo+XIT6bZNCZa1Z2qtu4pS4UZGG8Kq7K2of4Lu4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw642hxcj59MSeapSjyY4aXY2Q6pElt913oTxX0S6UDRa/UO9RA
+	X6EdNuUKIWxvqymWFoNXmeLtECO6Wf6qF7++tVPThE86/efdY8OGWSUaaKlLlaf+TRrjHYerYH4
+	6rdyrakWRGDm+TMdvgpnj1aHZwk7vYq0WyA==
+X-Gm-Gg: AeBDieuJ6M+fcke/Db+JsnpbPmgFudDcc1Iss5++NmzFGuS9RuedUEeI8zDWCkk4c2T
+	PhLG+L6P4KmmAMPTmfNPw4ZwyuoBMQbGjF5oe/eGE6SwQ9+iYX9hdBRZ1tbnkCAeVEO8ihtmklT
+	yIMDEx+BAYUd43KgnqUEav3YmRZfrIb6snLdEE3CtYN6ZJ/1vNM/VuVFnpua8rrwo3O1TLcOCeU
+	iOl8AFm+8KYJKBPaiLjsIG1mzeF7hnstTXHinTWx3GRCWJtHpsTOt5Y4GTkRKR8IjiCn5Q41X97
+	qmAohMI76F6T6i9PzUSzylqy1hetdIs9k3mc+r32mw==
+X-Received: by 2002:a05:6122:3701:b0:56c:db8b:504e with SMTP id
+ 71dfb90a1353d-56daba11cbamr10577061e0c.13.1775739487323; Thu, 09 Apr 2026
+ 05:58:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Apr 2026 08:58:03 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Apr 2026 08:58:03 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260330-pks-setup-wo-the-repository-v1-3-0d2e822837aa@pks.im>
+References: <20260330-pks-setup-wo-the-repository-v1-0-0d2e822837aa@pks.im> <20260330-pks-setup-wo-the-repository-v1-3-0d2e822837aa@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] fetch: add --must-have and remote.*.mustHave
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, jonathantanmy@google.com, chooglen@google.com,
- ps@pks.im
-References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
- <xmqqv7e1xoqp.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqv7e1xoqp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Thu, 9 Apr 2026 08:58:03 -0400
+X-Gm-Features: AQROBzATxNeiooV76F70F48Y8Jmwu6b3grXvvJRqvxs4wCp2dp3eDNmKD9OBXKk
+Message-ID: <CAOLa=ZS-bHiG0wyjwfzSbX4TgC_Jfpk2NXHAf=dUm6CvVxx80Q@mail.gmail.com>
+Subject: Re: [PATCH 03/18] setup: stop using `the_repository` in `is_inside_git_dir()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000005b2f44064f06918a"
 
-On 4/8/2026 2:59 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Based on my understanding, the '--negotiation-tip' option is close but not
->> quite what I want. I could have the client only advertise 'release' and
->> 'main' and never advertise any user branches. But then we'd download all
->> content from each user branch every time it updates. Perhaps this would
->> happen even with opportunistic inclusion of more haves, but I'd like to
->> explore this area more.
->>
->> There's also an issue that the '--negotiation-tip' feature doesn't seem to
->> have a config key that enables it without CLI arguments. This is something
->> that we could consider independently.
->> ...
->> Big picture questions to think about:
->>
->>  * Is this a valuable addition to the fetch negotiation?
->>  * Is the interaction between --must-have and --negotiation-tip correct?
->>  * Is the "must have" name sensical to users? I expect that this only
->>    matters to experts, but I'm open to better names that could be more
->>    self-documenting.
->>  * Should we add a similar config key for --negotiation-tip?
-> 
-> Just like you, I hate the name "must have", but stepping back a bit,
-> would it work if we add a single boolean option that says "use the
-> negotiation tips as the primary source of 'have's you'd send, but
-> unlike the way how the original negotiation-tip feature worked
-> without this bit enabled, which did not send anything other than the
-> ones reachable by negotiation tips, do advertise opportunistically
-> other tips", essentially turning the existing negotiation-tips
-> feature into your must-have feature?  You could even call the option
-> "--negotiate-better(=(yes|no))" or something, perhaps?
-I like this line of thought. You essentially want to use the existing
-scaffolding of the --negotiate-tip option but change it from being a
-_maximum set_ to being a _minimum set_.
+--0000000000005b2f44064f06918a
+Content-Type: text/plain; charset="UTF-8"
 
-## Considering --negotiation-tip-mode=<mode>
+Patrick Steinhardt <ps@pks.im> writes:
 
-With that in mind, we could have an option like --negotiation-tip-mode
-that takes one of a few options. Here are some word choices that I
-immediately thought about:
+> Similar as with the preceding commit, `is_inside_git_dir()` determines
+> whether the current working directory is located inside the gitdir of
+> `the_repository`. Perform the same refactoring by dropping the caching
+> mechanism and injecting the repository that shall be checked.
+>
 
-* maximum|minimum: Are these sets a maximum set to choose from or a
-		   minimum set to include?
+The patch looks good. I do wonder if these functions need a new home,
+'setup.c' is fine, but it is also bloated.
 
-* restrict|include: Are we restricting the haves to this set, or are
- 		    we including these tips by default?
+--0000000000005b2f44064f06918a
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f13465dcb84d01_0.1
 
-* v1|v2: Use numerical versions to indicate the mode without commentary
-	 so it could be extended in the future to v3 or more.
-
-None of these jump out as a clear winner in my head. I'm interested in
-more exploration of this space before rerolling.
-
-## To mix modes, or not to mix modes?
-
-One downside of this approach is that it disables the ability to use
-both modes, at least in its most obvious implementation. What if someone
-wants to force a minimum set of wants but also wants to focus the set
-of additional wants to a specific ref space?
-
-Theoretically, we could implement the option to toggle with multiple
-options, using
-
-  --negotiation-tip-mode=minimum --negotiation-tip=refs/remotes/origin/main \
-  --negotiation-tip-mode=maximum --negotiation-tip=refs/remotes/origin/*
-
-and as we process the --negotiation-tip options we'd put the input data
-into different lists. Would this complexity be worth it compared to making
-a new set of options?
-
-This also becomes more complicated how to describe the interaction of
-these options and any config options that enable them by default. When
-exactly does the config get ignored in favor of CLI options?
-
-## Considering --negotiation-(required|restricted)
-
-We could alternatively create two new types of options that are clearly
-related:
-
-* --negotiation-restricted works exactly like --negotiation-tips and
-  would be a synonym (with the old one being "deprecated" in favor of
-  the newer one).
-
-* --negotiation-required works like the --must-have in this series.
-
----
-
-Thanks for considering these options with me. There is a lot of room
-for creativity here. This series isn't even my first attempt at this
-functionality because there are so many possible ways to accomplish
-this goal.
-
-Thanks,
--Stolee
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1uWG9sZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMUU3REFDV3RSNmNkUE95RWRjTjhGaWw0ZGhQUDZkWQpmcEY0dW83SzNo
+UlEwMzBFK2lnZnUzU3d4WVVPQUpyWWg3QmlwWGJqajZPdzlrNWk5M0haR20xU2xBZjE2Vm9qCmVG
+RDJKamxaOFZpaldqd1RSV3dqWURGNG1xc0tBWlhxRGFFWFlqYW01NzloM1lHdUJVQ2V1K3dNdjk4
+TnZlTHkKOEdKR0lWOEtmU1FDT1Vua2s3bGpIcmk0UnFmQ1c3eHF6b25SZ2tPZ2lnNWlROGpZT0Jh
+cmJxbXNYR2VJNXhrZApJZlFrM0lMaERUczhPVkxqaS8yZzdhemZkVURZMC93TlRjU3EwQVR6WXhF
+MTVyVUlYVEJyR3lOTGx1anY4dmFSClNSUGtUNGl6WXYzRGpZWXN3YS9NNzJtckUvaTd0dFVWWDVR
+VmE2WGg2dENHMzEyQU9LWllaaXlVVDlrZHI4WTgKOHQ3K1BBRHpwU2o3UnhlaThPek42ZStXRFdw
+cDZST3JDUGp2RS9xeitiMk42RTVuY2svMVZEancyci9QdTVmdwpCMVk4N1V0QUNMd29aRHRZM1d0
+WkdQSzl6SDNKbFFTaGJJWTBmaVp1ZUsrdEp1aW1kQ1lhVklFVWRDRlBrQUMxCmk2WnNacUNyWXNj
+RkMvSGdGQTBrVkhjQjhBcmN6Y0Vyd1RoQlJSOD0KPUlrRXcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005b2f44064f06918a--
