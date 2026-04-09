@@ -1,159 +1,221 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B97439E176
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 09:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775727606; cv=pass; b=LpVzQEmlO48BsfoqkdjouBJgFj0WY2IJVESaSQMPtnInw3lpJlzXAeXzJ+kBuzIqhWzmNF6mrwSnuLBP+o4pOQR7LPVCuz6UUqfM5xwpSSOuuR4gb7WiP4XsZwnBE53IHTkS6vFK5D7mNxa6KfSTfEbmPR66gmBcAqckUdIc9Rc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775727606; c=relaxed/simple;
-	bh=kM82dPlaCfoqVZbw/ry/9xZ4JA4n2imaQzebs9k8kXc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=owrUu3bsi7dWZXGX++TPBneuAdBMRkgpGtsYahdNjy9EVelcm6N1EwqWt8C+sX3fno3mMcpKSwiNVJuLyrkGklA8e1uQaBeVQQxKohB94fsDvuwCT/DRqlNZXrDJ9Rzt6dJXlHI5A/KNVAk9YYTtAlRN/Du4VmOP+X84i+4J7Hs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Au0d8OL7; arc=pass smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722273B47DA
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 09:48:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775728089; cv=none; b=bmT7SJkQmVp52OYQORA2Sn0HSv2XXLr3ZsSyNcGzHTycmz9SKR+7PGGU7qGiSvmZRepyNVsMfiR7d3ZMVQdBPeoHLDjd/ap4vMsd+z2eTVk/BN3cAIFtjXzy4eYfSenITLscywHXeqmdfQjUZTbcDPp55c66FEEYK7PnnLaHdB0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775728089; c=relaxed/simple;
+	bh=cAvagc781EJXN9+Q0Q/3gUS3fT1P7/Bks1wTllqIUVM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=W2gkpICKjpl8cngDy5URRb0LSc2czc715jkYSGMyKWzPyMjxamwq+Ynpobf+BKtTGFRznQhDGUmzG/HrqzCDKL0EoXf7e9fVbu/EXSCj4ZCC7BcaBS3YgCHDKI+XJ3b0/B8SzeBvws7WPs4IdaVjX2Sji0ENK9WGNvnbEjgG2sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J7XRhPA/; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Au0d8OL7"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-953acf7ae20so374570241.0
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 02:40:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775727602; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kYE1KnVCUI97Z8l4MYH9RzGajCOiPfJ9hF0EyPVlMer41Bc7zT/jjKMvA60aEify7v
-         PieB9daciGCjToNbB/y+2TQ7vcjUCE11pldkiI3tqeGcfln0xOypxuYkUFIRBjPA+/6o
-         3dCplSStuWxkos9lG1BuRghrmLpKAi4K2bd6UuKsBVo6TAzV2cxjsZn/uOXHSjCULFkf
-         aFaUNbRGV0o7mOgl7CHEilnRshE4nEBjvwR1i5RpsD9FBZsvFw9QkeSPGl8jFuLU70L4
-         vieGDJTUdzWEaR5kzEFJDF+FZd1Z/XJh9ZNKmono8wfE1yVQB89Uab0n9cFhFP4DVgyy
-         cWtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=1zQWV8IA/2pon2HgvW52KmC6/7ZRp448Ti07T/pxbsw=;
-        fh=ervua8mI2R0rEBVc6o4a8RxIghhGv+AXqtqG92z6iPs=;
-        b=ghH28/tfd+1buzE7rq9B5fGyOyamUGtlV6+7g4IZGoFMM2GzoVYK0xnRUwsqIOPDMi
-         0YM6YjIQ/d5cHYPq5J4qwaC26t+JuZ0ws4A6adEc4DM06LxzZWrrJ8/OZKa7O1Yk6/vF
-         g/jzuPTAw2p1DezN/UG4CBgaaMHU8mr5ZgIf0E26HcI9S2K+5U6NBsYiJr4mr0CGIU3K
-         H94S8QBYIRPo5Yzk0KdqS4MitOaO5KSAOenk0NCmArsOm8Ua2ccm3D6lMkpiyrzqvG6B
-         nfZEmxmviBJ3KyxYcBWOov6sWU2olV5q+EwAuXMNV8eTK+HvB3OKtv/Jz5WOwNYEoNF7
-         YhvQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J7XRhPA/"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488a14c31eeso5142555e9.0
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 02:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775727602; x=1776332402; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1zQWV8IA/2pon2HgvW52KmC6/7ZRp448Ti07T/pxbsw=;
-        b=Au0d8OL7ihHtUFv6LhbyAXyzsFUVSlsmt8Ve3Oou7e0SesVwx8YwkM+DPSmj1pdNKd
-         17vKeFU4dHVP8PUL43rCi7RzrQ9P1nTzHPfdxBETW+CHBSkeJ9lWEwYyAgXsi/95jEs8
-         ZgwV+RdZVXNttXyqgqxkPH0zh1fvqrCKv6QdaY6OV/Nmys9f1e3y26CCJFQy1mSzh/Ev
-         y4KpEd0xILcmeyW+Aujv/RvLODijQK5O5FRwMPvyoGeRl7qDuCkvmxPo0Vr+/rx5aBwN
-         +T6dYiSPzizHJXkRZUIGBHz/SWEuQbOufosN+giYuEiw6/rJ+Yqus6R2kG6r2NAAMgWb
-         +qig==
+        d=gmail.com; s=20251104; t=1775728086; x=1776332886; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5h4bWQuf2muIvVB6V8tOCjPFSMwT5hVY09jNB3gyfBw=;
+        b=J7XRhPA/O/Zh02YbnyZH3C1TFAIUL8i7ybC34OUs16dPje07epSS7T87BvvtWkQavW
+         32KguxTDjM+PMHf/GbzDWlwijMZDJsxVf/GUlGSZ/q92S9lDAo0Ez5yTepE/HFHXA4Vi
+         mvqLczGc6qj1t2QtGpiEoKjXBEUr2+omEEmqUq6RjnjjzKXYMIEPVf1BD3d1Vx5OouTz
+         5+axg7NL2g2KDnc5pv8nLh9xUH7GHQKqp4owc0LjVkt4b5hqRZ94Zef+AocJYZXaFXOK
+         OTqzktMhjaXbZdFBONFixTrMSKxJnsJry6RtPhqDfCzhxKUqqMSa9UPZ5NKGkblxjDhi
+         pHUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775727602; x=1776332402;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1zQWV8IA/2pon2HgvW52KmC6/7ZRp448Ti07T/pxbsw=;
-        b=gPSQ5J73gsEwIikz3U8WasGSmEj3pc4G2hTsifWdfxEW0JCHRY5J4meiZeRHYLDv8Z
-         h29yT+loopwfbqP1gMd8zX22roQQkfbYS8p6pVLK3L61t/f6t2od7yY4Vvw4qJxJlIhg
-         N0bwQcmSj/nx2vw3Z50DU1vDnc1oj4bHHyNw1N4sx2NaFYX30B91A5boB19T+9HMK7zE
-         aG4QIHXtlxXTc4GWJE9Gwgf5j+aXZ2R86Vt8MhR+mOack9iWiamRqZPI08U5/aKxdrRj
-         Mn9DK4XqOZrniQ7XTz3YJFLXaUVZiZ3u/lS7W59ooJPgqLoLA7NUnvVa4fqYWlHrccKr
-         rppQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNNHN+zOZXb4zGjyTa+sSd6hUYxC4nPncvyhIvhmJbne+ddf7YUO9f91rLLLjn3aU4I38=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmjZXhKo/9xjiIOr+W8aPIZgYor/zH92YQtOe8j4G4QP6aUDpn
-	8TNpyXhPXEbyYsxXVjEf+dw7HTC33mkX/JLYtxsz4GueWa+hJGJSAdOIc8vbGbrtZoPqUT0GWLs
-	9s7O4WneeD9eyyE7NKWX8vkyScOCm5cY=
-X-Gm-Gg: AeBDietqdAOUL8KvCPcFXsfRYw7PsaeBE9+oJShBlPrr5/2Yk1az5AbYfJW9IkZWLNi
-	3q5IZkR4DXFaMXREZassax1elxGyxusO7C2MwzxMhUgp6iZe+cbHDpisKZ2SNjvPzlMUO8sarr5
-	/wkttbt7lcST49xQQgUSo31x1+rW0geesejUBzl6z53+836Qgu2jXR6yN5J9vWTFLxS3PvxGkdW
-	ihImJ5CJZpVzobKig5uYnl2K8axl+fH4Axo2m/RQAx1i/40lmEWUv5rhaMskHpzoXL+v/uvA0+a
-	dLvkZn7pIIkrYDz2u+sTQ9M+4xEihsnWt3zmTv5NEgdyQgPOdEg=
-X-Received: by 2002:a05:6102:e10:b0:5ff:11dc:2ed7 with SMTP id
- ada2fe7eead31-608706c31cfmr909918137.16.1775727602151; Thu, 09 Apr 2026
- 02:40:02 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Apr 2026 05:40:01 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Apr 2026 05:40:01 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-4-f02b4f1c0f13@pks.im>
-References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im> <20260409-b4-pks-odb-source-inmemory-v2-4-f02b4f1c0f13@pks.im>
+        d=1e100.net; s=20251104; t=1775728086; x=1776332886;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5h4bWQuf2muIvVB6V8tOCjPFSMwT5hVY09jNB3gyfBw=;
+        b=At0oDmHVxOIcc2TSY+kSV3UnVYK86Zlr4XjseCJVN6C30CpN9vOLJQSyh9e3DK3h7z
+         F82FFARqh3eeuIDeRJ1ai+SqfK4Jbq84grOtgB4h0m0eKsP9oCGltX7XvQRvED01mrMZ
+         Tb5hucob+UD/CgpU4ZcS9e0yUO0nIY4Y6GkaHIEYHjD78veEX7hjdyuwPVr0PL98BhsD
+         jaOdAknSxvZFwBh1885ayTQw53vsVutKXPMklZgZ6KD8g9keFaoL7fmOoMQFgKW5uMEO
+         ZIAQO1BIHiTc76BiP7UhNRyy6YtunPuBMH3VIXDc7zITv8k1cnudhbwzzu052POCWQaU
+         GLew==
+X-Forwarded-Encrypted: i=1; AJvYcCW7qAbKE40guK19/zAOJM/XgUDd3lDe1ILr17QgSzchL2aU5i7LqIVtzcCUwsST/iKGD+s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOCwAfDpCJZY6Kib/Blk3CwCJlEN6Q+LHddtDjAWODC5lNBslF
+	B/e0do8/LP/3DNql4y/hl3uVjGVGYH6zRYqXxi8um9RPD4bFCCxYHMNR
+X-Gm-Gg: AeBDieuPA/AIv5+y2KpW11zHAETe+fImSAOFPfcIyKLkthz+/1/Mh+mrMNppye/SZJA
+	PI26NaN8ShXB0AxfqJK7V34JUO0AYSbarCc59xlB9VeqsTwoBAW6bq2QnTsK3JS1E8UKr4L6jD+
+	CpONXKL09ZQkLTA8eTaSpPKhbe97L/zjDoMPbh/kixU9/4XmIW/nFq+1gu0bmM5BiBZQDYgpoqY
+	G0GX0OAsvjJQGz7UkpdEhoq95iyXCQu0/mPueIyrCqgcsVkuiw3k9ZiMrVYE2vjfNe5/u1+e+IU
+	mA4TE48RLZPNrww932P5Fyeg5Qm3eKt/zN6ClTdW0+cNxtGL7W6Hs3MX/O/sTGqVaPCm7cNq9Bf
+	8TN6pG4GOSRPhpCMmVbXLlgqpFHMfrElDd31PlfyZn7ol6nC3xepz6WctS07IcnbzL5wyhIbM/g
+	CZoHSuMfa+Fz/ZZ1JI6XZvoJ8pXqmRmfrM+BYmc4vE9zcbEi2RDqxVUQh2wX1m5it/kj+yX8Paj
+	a2GCD9BH+x3Pg==
+X-Received: by 2002:a05:600c:348d:b0:488:be21:54b9 with SMTP id 5b1f17b1804b1-488be2155c0mr154925475e9.8.1775728085477;
+        Thu, 09 Apr 2026 02:48:05 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488cd18de6fsm19427585e9.25.2026.04.09.02.48.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Apr 2026 02:48:04 -0700 (PDT)
+Message-ID: <90c6112d-6447-45e0-8d15-a0a3f1f25013@gmail.com>
+Date: Thu, 9 Apr 2026 10:48:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 9 Apr 2026 05:40:01 -0400
-X-Gm-Features: AQROBzBLFOBjjDiXmAmhzfPIyuePa49bLaaJ3yROSgAD0r_WG2nRwyzgHfgGGcE
-Message-ID: <CAOLa=ZRwv_NYqtNyvhi=5auLhVx+FDbt+RP6Kj_ZqjF=VsefyA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/17] odb/source-inmemory: implement
- `read_object_info()` callback
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000f1d330064f03cce8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
+To: Patrick Steinhardt <ps@pks.im>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King
+ <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+ git@vger.kernel.org
+References: <011701dcc767$8c2ab400$a4801c00$@nexbridge.com>
+ <013301dcc774$5e9fffb0$1bdfff10$@nexbridge.com>
+ <20260408173949.GB2850002@coredump.intra.peff.net>
+ <xmqq4illz5g9.fsf@gitster.g> <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com>
+ <xmqqqzopxkxa.fsf@gitster.g> <016b01dcc79e$87472860$95d57920$@nexbridge.com>
+ <xmqqcy09xh53.fsf@gitster.g>
+ <20260408223233.GB2873736@coredump.intra.peff.net>
+ <adbwyvQ-R2Ag1vox@fruit.crustytoothpaste.net> <addgkjiB80pgKw69@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <addgkjiB80pgKw69@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000f1d330064f03cce8
-Content-Type: text/plain; charset="UTF-8"
+On 09/04/2026 09:17, Patrick Steinhardt wrote:
+> 
+> One question to Randall though: does MAX_IO_SIZE apply to the overall
+> size of the iovec or to the individual iovec entries? 
 
-Patrick Steinhardt <ps@pks.im> writes:
+In <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com> Randall says
 
-[snip]
+     Specifying  the sum of the iov_len values in the iov array greater
+     than the OSS I/O size limit for that open causes the  writev()
+     function  to return  -1  and  set errno to [EINVAL].
 
-> diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-> index ccbb622eae..12c80f9b34 100644
-> --- a/odb/source-inmemory.c
-> +++ b/odb/source-inmemory.c
-> @@ -1,5 +1,57 @@
->  #include "git-compat-util.h"
-> +#include "odb.h"
->  #include "odb/source-inmemory.h"
-> +#include "repository.h"
-> +
-> +static const struct cached_object *find_cached_object(struct odb_source_inmemory *source,
-> +						      const struct object_id *oid)
+So it is the overall size which fits with POSIX limiting to overall size 
+to SSIZE_MAX.
+
+Thanks
+
+Phillip
+
+> I think it should
+> be the latter, but I cannot easily verify and couldn't find any docs
+> around this. So could you please try the patch at the end of this mail
+> to verify that it works on your system?
+> 
+> In any case, I've tested that my patch also works when defining
+> MAX_IO_SIZE to 128 bytes on my system, which hopefully demonstrates that
+> it works as expected:
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 4b4ea2498f..8e02b5f673 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -690,14 +690,8 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
+>    * to override this, if the definition of SSIZE_MAX given by the platform
+>    * is broken.
+>    */
+> -#ifndef MAX_IO_SIZE
+> -# define MAX_IO_SIZE_DEFAULT (8*1024*1024)
+> -# if defined(SSIZE_MAX) && (SSIZE_MAX < MAX_IO_SIZE_DEFAULT)
+> -#  define MAX_IO_SIZE SSIZE_MAX
+> -# else
+> -#  define MAX_IO_SIZE MAX_IO_SIZE_DEFAULT
+> -# endif
+> -#endif
+> +#undef MAX_IO_SIZE
+> +#define MAX_IO_SIZE 128
+>   
+>   #ifdef HAVE_ALLOCA_H
+>   # include <alloca.h>
+> 
+> I'm happy to go either way, but think that we should definitely aim for
+> the below patch eventually. Just let me know which way you prefer and
+> I'm happy to polish up the patch.
+> 
+> Patrick
+> 
+> diff --git a/wrapper.c b/wrapper.c
+> index be8fa575e6..645dbc5f20 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -323,21 +323,50 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
+>   	return total;
+>   }
+>   
+> +ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
 > +{
-> +	static const struct cached_object empty_tree = {
-> +		.type = OBJ_TREE,
-> +		.buf = "",
-> +	};
-> +	const struct cached_object_entry *co = source->objects;
+> +	ssize_t bytes_written;
+> +	int i;
 > +
-> +	for (size_t i = 0; i < source->objects_nr; i++, co++)
-> +		if (oideq(&co->oid, oid))
-> +			return &co->value;
+> +	/*
+> +	 * We need to make sure that no individual iovec entry exceeds
+> +	 * `MAX_IO_SIZE`. If there's any entry that does exceed this limit
+> +	 * we'll pass all entries up to it to `writev()`, and then process the
+> +	 * exceeding entry via a call to `xwrite()`.
+> +	 */
+> +	for (i = 0; i < iovcnt; i++)
+> +		if (iov[i].iov_len > MAX_IO_SIZE)
+> +			break;
+> +	if (i < iovcnt) {
+> +		/*
+> +		 * The first entry exceeds MAX_IO_SIZE, so we pass it to
+> +		 * xwrite, which knows to handle his case.
+> +		 */
+> +		if (!i)
+> +			return xwrite(fd, iov->iov_base, iov->iov_len);
+> +		iovcnt = i;
+> +	}
 > +
-> +	if (oid->algo && oideq(oid, hash_algos[oid->algo].empty_tree))
-> +		return &empty_tree;
+> +	bytes_written = writev(fd, iov, iovcnt);
+> +	if (!bytes_written) {
+> +		errno = ENOSPC;
+> +		return -1;
+> +	}
 > +
+> +	return bytes_written;
+> +}
+> +
+>   ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
+>   {
+>   	ssize_t total_written = 0;
+>   
+>   	while (iovcnt) {
+> -		ssize_t bytes_written = writev(fd, iov, iovcnt);
+> -		if (bytes_written < 0) {
+> +		ssize_t bytes_written = xwritev(fd, iov, iovcnt);
+> +		if (bytes_written <= 0) {
+>   			if (errno == EINTR || errno == EAGAIN)
+>   				continue;
+>   			return -1;
+>   		}
+> -		if (!bytes_written) {
+> -			errno = ENOSPC;
+> -			return -1;
+> -		}
+>   
+>   		total_written += bytes_written;
+>   
+> diff --git a/wrapper.h b/wrapper.h
+> index 27519b32d1..a6287d7f4d 100644
+> --- a/wrapper.h
+> +++ b/wrapper.h
+> @@ -16,6 +16,7 @@ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_
+>   int xopen(const char *path, int flags, ...);
+>   ssize_t xread(int fd, void *buf, size_t len);
+>   ssize_t xwrite(int fd, const void *buf, size_t len);
+> +ssize_t xwritev(int fd, struct iovec *iov, int iovcnt);
+>   ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+>   int xdup(int fd);
+>   FILE *xfopen(const char *path, const char *mode);
+> 
 
-Silly questiong, would it make more sense to check for empty_tree before
-iterating over all objects?
-
-The rest looks good
-
-[snip]
-
---000000000000f1d330064f03cce8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5cbf57c6f466c478_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1uWGMrOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMU1FQy85aTV4MEYzeHl3TVI3cDFDR2E2Vk96OXkrdApzZGdveDdrUDVz
-WmpJMFVOeld4L0dzNVBPNWtXVTNYaWVzZGVJT2dMRUFmQnk5MEpTcTZVOWdRQ0N3WWxkNEJNCnk1
-eGordnRtV0llaEMxVmYvSCs1UTE5bUY0WnY0SXFSNWhsYlJDL0pidUpSVmxLWU5IMEpYVy9xdGZx
-bzhqOTQKazczNHBXWW5HRGlGdXMrd3R3Y3piR2IzVlFoRkJaN3pCNGg2bHpsZWpYS3YvZXdvY2VI
-blJXeW92NTlhU05OMApSek9iK09JZWhzdlZoYWdEcjNZUEM1SEllTWFDYkc3dTgxcUE4QWV0Ukl1
-SWFuZkdQUGtBT2VNVnRLblRjL0c3CnNkTlVoQmtPelJDM3V2YTFLbk9UL2tUdmllVzV5Uzhnaldo
-YUdXR1BTQk4xZUltV09HMVRrOE1QYzFIMzVrQmkKeUhKMjVIb1JGUDdLS0haT3NibEV5alB0YUlr
-NVRaNWk1NXNkZFNCR2MrRkxWQ1hnZmV6SjhGMkxTUTUyRWpWVQpyQm5WNVM5aVpCejk4WURTeDFq
-YXRqanRUdWlGZWlPalZWcEE5RXRGUVhiMnI5OGFnTlFtd3A5V0YyaXRyUHEzCko3UkI2Q2hLejhS
-R0RjN3FpUVB3NmRweDdPKzNla1NhdkE2OE1WRT0KPWl6VTkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f1d330064f03cce8--
