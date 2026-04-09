@@ -1,208 +1,142 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E6D3C1416
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 11:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775734169; cv=none; b=Z4dOd3GogMMJO3WqbZP3CC3WD3fFPHl8y9JFr1CR70D+2fHGpH+ZebDgGq07g3qNrTfhkmgwmeNDV7Ln1Ilo9a2S8j6a8GhS774xcgjWY9ql85xXFwuLaDmcLOsQu1gUAB5d9Pp5F4+Gv9R3kDf4j6NE1B3c5dRdc5rvCU1Sw68=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775734169; c=relaxed/simple;
-	bh=IHc0Q9/cWXeKXgOhodzcWEuFMT5Cuub4MuyAn4JJvy4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sqtqPYDPHbBLdmLPQ/pPIm0cY2PiXeSJnM/HGQRptOp2XZrxr7302jMtVE1R3A5Cu8fZ5JRsmQZolVii7ZapSnQJph2jWVfXXGkU3OeW88WWTkU4JqkXxKe5qgPyongn3oeQjwjyEv/oM/GqAMRxPuWzQivZVXxI+5/wMyo9eN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yuQ/q6E0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MSi3urS0; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C29325B2FA
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 11:36:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775734616; cv=pass; b=FPXzcuRs7CH+LB9p1J9D2+mGMQxu9/pEdCJvB9MDjGIWfQ5IEGVozA+mM5lae4V11PTt8ud4Di4sP5hiRWRe7ugWjFx+6yWAfphD1EiBPU6XZK6CkKSRNguGZ3isNheh5NhqqYW6TpcGOGjhQG79k8/D3JBV7t/CCoYszTsxJYw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775734616; c=relaxed/simple;
+	bh=+100ODoDGNYCRPfH3cGnfWLHKMol78knDD/V6p3i7Vo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QMT9JLyJIJv9lX1XW04OsV2GtobICZEEDQO4AjrMf20Q35rnU4ZIuQmzuhjutfMB5fecxRiygZ7sZn4GrV5Mm+dMg++G0wGKl2kEPbgkjbObVQ6EBqiboGYhN5sZn/1kqsXQMCkCytziOPOJXA/OeYfHHX19GrXwzF8JxyMj6xw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RS3UQk5j; arc=pass smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yuQ/q6E0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MSi3urS0"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED8CB1400288;
-	Thu,  9 Apr 2026 07:29:26 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 09 Apr 2026 07:29:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775734166; x=1775820566; bh=D04Y20X9ML
-	g1NYffsZsluCMlAcVhO1R6Y1uNdtB2v+U=; b=yuQ/q6E0+g8cuNhKTzxE65eEUU
-	gD0dkQgzqINDrYvTe4L7/3nDXOTAxzRWMimthrwPk7zR+l05rJmiT4sQ78KcEX/9
-	QHtXzXY6fgwTvXTt7bzUabx82dbKB54fXd0yzrj7AVoYpkIljvNla6AlJ5oxOoM3
-	Bp8B81yvlMTqRNeQfi2vsZJp1LCV1jg57BYusk8UifsqSRYbNXz69CLjhbevKjeE
-	UbOShOZJOLdDcinODdKQDWAiN2JfhSXW3kzHU57Tz4VaED+bSu+6vXQWRAkoyCZ8
-	Db5AAL4q5Yngj5P+Wv1lkl1tt6b8NcnEFX1bpX/zd0MfLndmilshqLeatvyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775734166; x=1775820566; bh=D04Y20X9MLg1NYffsZsluCMlAcVhO1R6Y1u
-	NdtB2v+U=; b=MSi3urS0PZhcW5XKZafI3zvco8Bsi13DhvfUFq0AHscEegDCdRl
-	F354Zja7PshaVJOxSKA50LK8x7iB64o8Z6s5CrmSWpiGB4hxBnD9k3NfNduCXMOk
-	nPgnrt4uMjCx2W9m3LPZWPmiGNvbHqFCcWTh0WiUsz7CUNCKtVWWFmkFzaXKdShX
-	rP2NHStmMGntWyOLYxBNnmm/YVbTBfbGuxoL7N+jYf5Ladhkc6H65/gZwNMlnC/O
-	P3emPIbwQbXUL5Gu2Rvy/gJPXJzqg//w05nqnlT9umqocEwfyd+WUC46chM7Lv3Q
-	651Xiu0lgBhWUQTp6sq11CmY9yZj0q3zuzg==
-X-ME-Sender: <xms:lo3XaV5rhpUPW6DPieu5u-YsWJreV0mUPsCf98NZN6U8nBHXoQJFLQ>
-    <xme:lo3XacOaR9FDJL7JiSPlRsuQgmxz764_IoyPizd4e5G9cJptkYz-7jwSHfE37S3G_
-    PxDs_rbu2JoZn3RUY0GCNmnQPflJq9PiFD8VflEVYPrwLizcRULFA>
-X-ME-Received: <xmr:lo3XaTvmwZwnr41SnY8O4wZGSGMUWBt89TNAa7rR7h4vEL10lSA5rG44EI40hWCP1N3Shu_6CDHleRfoXPX_q-gxxGt5H4Mg9k2pBaWIhTw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvieefiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgv
-    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrg
-    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehp
-    hhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:lo3XafYn_OpyfZdhXCuCwJDz6EMvJLK3oTri5yOkDL7DpjaJykgraQ>
-    <xmx:lo3XaVx-FNICkVCnMFYOFSAToP5Ie2MBrPDxq1fJLy7RgxHJEPoxRg>
-    <xmx:lo3XaXh53h9w1l0cw9w_XW6iWh5OeT4WI-XvW3jUQ0Biu-S4D1csKg>
-    <xmx:lo3XaRlkv2gxlSMQz5gRcV0ZHzAOxqrDNFPFAyxzKvjTmJes-qCnJg>
-    <xmx:lo3Xadww2WH_M5TBCVlztlVWvyJy_8SmAVt6xBD28F21qjv93YH2aboO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Apr 2026 07:29:24 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dea81f6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Apr 2026 11:29:23 +0000 (UTC)
-Date: Thu, 9 Apr 2026 13:29:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	rsbecker@nexbridge.com, git@vger.kernel.org
-Subject: Re: Git 2.54.0-rc1, subtests of t5310, t5326, t5327
-Message-ID: <adeNjEBSlXd7ykEx@pks.im>
-References: <20260408173949.GB2850002@coredump.intra.peff.net>
- <xmqq4illz5g9.fsf@gitster.g>
- <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com>
- <xmqqqzopxkxa.fsf@gitster.g>
- <016b01dcc79e$87472860$95d57920$@nexbridge.com>
- <xmqqcy09xh53.fsf@gitster.g>
- <20260408223233.GB2873736@coredump.intra.peff.net>
- <adbwyvQ-R2Ag1vox@fruit.crustytoothpaste.net>
- <addgkjiB80pgKw69@pks.im>
- <90c6112d-6447-45e0-8d15-a0a3f1f25013@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RS3UQk5j"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-56d9ed609d2so229312e0c.1
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 04:36:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775734614; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kWtjMbIVSrBEoGTSFkdBvYum6bXf0DXTHNfN9M5pm/jO1eABlmPbYqo+q1XOEt3L4D
+         gowiv5jGqNi/cI+V4p7/KptygSaLZd20Vc28/rg5CliqrHvcHUAbHbdZ20pGPu8Ghaof
+         lywsDmQJ9zfR9obd3j6cAvG0Vgn+m8+252Szr9tI24KtBcyEbeZCNTG1WYiIUXt8KKQc
+         EtTpY2cx/fu1UkX4qHM2hfuxmJhV+GQG9WA2O0lzTNMe1IpKQnFdPi414zXtED5lmqCi
+         3dA6rZ2cM2cDFW48piU1ugfw9Jvw8M5Gj4JCNzcjAkeRqqpN286GIXg+BYcLeEi7eeNG
+         jivQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=ocLZ7a2EuvgGvrAI7I5FTR4VV5EYbMTBaZJQKA36srM=;
+        fh=/iPEXjRvKaGr2iuhz5/2IK4L4iUTK7Xc7InsfvOFf1g=;
+        b=IkNVVNRP4vRpyDmQu3KLoyAsXtIPdaSNZRy0jTO4JHSdIqE8D2ohcZixi2/arJ7873
+         SijbE1K7+n/8fR5Ifc2tEQiXOrzbzL82YPCBDN0i3XFPlxx6jCwGb1VflIP8LlJj+b8y
+         XIj/f1HJliSYaf7u61+ECqJaBeyti5GGxzaADPuVlXmdPfMoerj1Rxw1VGffyeEMGhNI
+         4EQ+5Ykrbht2C4mJtCZaTihxuMHJjVbTXwAdMlQydK7MElx4SbO75bVHVf2Idol6Y93p
+         rV8mOo9bcNRRKYtZ/VEU6qzhQE57osSb+1HN7fB8MjwI/mUeIBaGRc4P9XTiPVAv5pV6
+         ngFA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775734614; x=1776339414; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ocLZ7a2EuvgGvrAI7I5FTR4VV5EYbMTBaZJQKA36srM=;
+        b=RS3UQk5jMOvjdIBgLSw8LzqzlOIkZddV4bjFFHayOhAK1nq3mvOZRJFlYmIa5CfGld
+         N1+ZyInUBhp9GnFjYrphAU5OPVIZ3PG0zLMrlV9PkYNEsyAGVh8hCJ75BwSw6E7O2TKU
+         lp9Ls5CFGQ7Ma/RXggf8t1W/12R+LV5pUN7TBd8WENqIYXT8adF9c3cbUufTq1IIPYoK
+         bsKXuvCUVxTZlxErx16HcSzTdoWLHMj41NuBBWdzirsedp5rysKuVLLou436lFX0yzc4
+         ZI0RtzQ+NPZaYG1RmPMTbtaCjwmXlDeX1/RvJjUUbH1Lcv7dATYpWMK1aLflclYqsCx5
+         O+xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775734614; x=1776339414;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ocLZ7a2EuvgGvrAI7I5FTR4VV5EYbMTBaZJQKA36srM=;
+        b=qdwYDF/JNbMJMEydHC+WLDcsp4tbB7vxT51gkf00oUa8M2O9sEuHHQo4HdRMbhskFS
+         krr8vTZX+3tTYthj0IZGaCxY5Uytd4BfiLffZc7EtxyYiWgx4qLP43dcvtzfEM+9UOq0
+         X5rrzGH/OZJX22l+Eu6slrVBKWs6FmhZAm9Mc4tnZreE9iTgMrCpuB19TDL8c/qhkhKR
+         mDYXgzvk/yuA3imf+StLmi/fd4JDtCJvQ8tFrqAstnoORFLYagmgtbr7F9m2VQa9jeKc
+         mWkT2lPRxH9jgbeBLV7FyPHMA0IjEs/gZl7LWsJtIVo5cAtOS/WG9a2JvPIlQe5xGBTh
+         5PIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVwglU0qMXsXffeKJLKbw2BGDaOqB/7aatgfu8Ydw5mosMnc9ES6s19PxTLPsunM54if3c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkDlIPiOi5xKzeLWralmPadb3uFOJjKLoV06pPjZyPsYRpVvBd
+	OTduM2NguY8Pwvg5ToL5iYMIiXwegWQCoo1RX9Sb980NMqn3oj6oUvrnMoiuxIHs3oZ7jv4BDUD
+	Rd7pkwj/H5yEW3rABc3I+ZCLVu+NAN01Jgw==
+X-Gm-Gg: AeBDiesA4cTDodqN/I/nhawARSWA0ILRm4uCTFkL2bgwsCtp/vlB8m24Nq0mnySQZGU
+	CqYNpKL7aLE/VmFgLFtUlbIfxb4ObICIYAkPyZG0av+CbUeetRTPW27TrB+4urDmZeoc2t7Thun
+	+B5p/8/avNZe0eFtqClnfnAibi4jsl6Yp9GLTfpqPINoIKi3ohggVk8RK6bme3hdkk2mICJhX9+
+	+rKQAICE57ScjgNak/zCxBL1RLxuLL/9Mn9yn+VNq8CI3ZF16KRlNE7BUNwG3l9fw/n1CIGIv0L
+	FG/26v4PyLqlPM35HYRrdpKUfJ0F9FhgDVjRneORL7/YqQlSAzk=
+X-Received: by 2002:a05:6122:2a53:b0:56e:f5be:1068 with SMTP id
+ 71dfb90a1353d-56ef5be1ca2mr6677020e0c.1.1775734614492; Thu, 09 Apr 2026
+ 04:36:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Apr 2026 07:36:50 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Apr 2026 07:36:50 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-9-f02b4f1c0f13@pks.im>
+References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im> <20260409-b4-pks-odb-source-inmemory-v2-9-f02b4f1c0f13@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <90c6112d-6447-45e0-8d15-a0a3f1f25013@gmail.com>
+Date: Thu, 9 Apr 2026 07:36:50 -0400
+X-Gm-Features: AQROBzDTmGbfHK57710vXKoVskn5o94ZsHsBh7CfbmmC4IfBxDHQmtrS-uU_BVo
+Message-ID: <CAOLa=ZREniG1jkqk4SW6W1s6hLHh42fLQK+8tox59jprn2hPPg@mail.gmail.com>
+Subject: Re: [PATCH v2 09/17] cbtree: allow using arbitrary wrapper structures
+ for nodes
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000e9a2fc064f056ec8"
 
-On Thu, Apr 09, 2026 at 10:48:02AM +0100, Phillip Wood wrote:
-> On 09/04/2026 09:17, Patrick Steinhardt wrote:
-> > 
-> > One question to Randall though: does MAX_IO_SIZE apply to the overall
-> > size of the iovec or to the individual iovec entries?
-> 
-> In <014e01dcc793$8a9bab90$9fd302b0$@nexbridge.com> Randall says
-> 
->     Specifying  the sum of the iov_len values in the iov array greater
->     than the OSS I/O size limit for that open causes the  writev()
->     function  to return  -1  and  set errno to [EINVAL].
-> 
-> So it is the overall size which fits with POSIX limiting to overall size to
-> SSIZE_MAX.
+--000000000000e9a2fc064f056ec8
+Content-Type: text/plain; charset="UTF-8"
 
-Ah, thanks for the pointer. I've adapted the patch a bit to the below
-one. Again, I've tested it with `#define MAX_IO_SIZE 100` to verify that
-it works as expected.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I guess I'll send a polished version to the mailing list in a bit.
+[snip]
 
-Patrick
+> diff --git a/cbtree.h b/cbtree.h
+> index c374b1b3db..3ce0d6b287 100644
+> --- a/cbtree.h
+> +++ b/cbtree.h
+> @@ -23,18 +23,19 @@ struct cb_node {
+>  	 */
+>  	uint32_t byte;
+>  	uint8_t otherbits;
+> -	uint8_t k[FLEX_ARRAY]; /* arbitrary data, unaligned */
+>  };
+>
 
-diff --git a/wrapper.c b/wrapper.c
-index be8fa575e6..d989c78b4b 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -323,21 +323,60 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
- 	return total;
- }
- 
-+ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
-+{
-+	ssize_t bytes_written;
-+	size_t total_length;
-+	int i;
-+
-+	/*
-+	 * We need to make sure that writev(3p) call does not write more than
-+	 * `MAX_IO_SIZE` many bytes. If we do exceed that limit, we only pass
-+	 * those iovecs to writev(3p) that sum up to less than the limit.
-+	 *
-+	 * If on the other hand the first iovec entry already exceeds this
-+	 * limit we'll instead use xwrite() to write it, which knows to handle
-+	 * `MAX_IO_SIZE` for us.
-+	 */
-+	for (i = 0, total_length = 0; i < iovcnt; i++) {
-+		if (unsigned_add_overflows(total_length, iov[i].iov_len))
-+			break;
-+
-+		total_length += iov[i].iov_len;
-+		if (total_length > MAX_IO_SIZE)
-+			break;
-+	}
-+
-+	if (i < iovcnt) {
-+		/*
-+		 * The first entry exceeds MAX_IO_SIZE, so we pass it to
-+		 * xwrite, which knows to handle this case.
-+		 */
-+		if (!i)
-+			return xwrite(fd, iov->iov_base, iov->iov_len);
-+		iovcnt = i;
-+	}
-+
-+	bytes_written = writev(fd, iov, iovcnt);
-+	if (!bytes_written) {
-+		errno = ENOSPC;
-+		return -1;
-+	}
-+
-+	return bytes_written;
-+}
-+
- ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt)
- {
- 	ssize_t total_written = 0;
- 
- 	while (iovcnt) {
--		ssize_t bytes_written = writev(fd, iov, iovcnt);
--		if (bytes_written < 0) {
-+		ssize_t bytes_written = xwritev(fd, iov, iovcnt);
-+		if (bytes_written <= 0) {
- 			if (errno == EINTR || errno == EAGAIN)
- 				continue;
- 			return -1;
- 		}
--		if (!bytes_written) {
--			errno = ENOSPC;
--			return -1;
--		}
- 
- 		total_written += bytes_written;
- 
-diff --git a/wrapper.h b/wrapper.h
-index 27519b32d1..a6287d7f4d 100644
---- a/wrapper.h
-+++ b/wrapper.h
-@@ -16,6 +16,7 @@ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_
- int xopen(const char *path, int flags, ...);
- ssize_t xread(int fd, void *buf, size_t len);
- ssize_t xwrite(int fd, const void *buf, size_t len);
-+ssize_t xwritev(int fd, struct iovec *iov, int iovcnt);
- ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
- int xdup(int fd);
- FILE *xfopen(const char *path, const char *mode);
+Seems like we need to update the comments at the top of the header file
+which still talks about this field.
+
+[snip]
+
+--000000000000e9a2fc064f056ec8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 2f64dc1fdc5af072_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1uWGoxQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md2pKQy85RjNPQ21qdTMyaldrNW5iK3krS0lTL2hwTQpYZTQ5aGQ0dXZW
+SG1hSk9RNlowVXlZNVJPa3lLdkh4b0hwWWg5cUJ0aEdGNzNuRW4vLzRsMktEajU1SUVscEROCnBs
+N053WmZUTzY0ZkJaN0VGcTRrOVZvbFBtV3FoOTVTMkxKNmF3MUlTQ2tMODU0dHFxS3oyZ2NaTGZn
+bHp6T1YKc0JXc1NtUWs0OEJBWFVVa2dvajQxcXpQMEFHeDdKMTd4UTlOTUhta0dGdGFiREcvbndq
+dGJjeHpwcGN6eXZPNQpvazhxTmxWRTROL0xNazZucnIydDBqODdYK29oQUxMU1JaaGlPVDhuMVkv
+U2t5TWZ4ZzY1WURubHJ5Q1kxVlZGClh5cldVQkpJamFNUTkwUkhXbEMraWxyb1NZUVlJd0x3ZmI3
+STZNQVRKS1ZOZGc5MDgwMnZXL1Mwc2FGMlF6S3YKbmNxVG5GcmVLYTIzNlJIMXIwajllQVoyTFp2
+blRFcWJKRndLZDg2NEx4QlhPN09sem9SL3BYclphancrcFBvbApiTER5K1l0eUN2TkthajB1R2ln
+SDVuT0FGUzlhMVZJZjZQMUp3UzduQW5UYnFrdnZ5dytDZHNVck0ycU5QeG56CitUbVh1RGJZS0VH
+VXlOa0V0SjZya2pRVTZkTEh5U0xvR2N5VjdyOD0KPTZJQTAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e9a2fc064f056ec8--
