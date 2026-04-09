@@ -1,304 +1,159 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48183AD503
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 09:26:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B97439E176
+	for <git@vger.kernel.org>; Thu,  9 Apr 2026 09:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775726816; cv=pass; b=iBzHWDsY/GJ0APcmHGuYCB9ssBtyaAv5HCt6kGHVK7NxTtTsPYya9RswnFA3Rht9s6VxTj3hxOP9HrrpyW191WFSEKcFd5As2aPAErVUt3emSSSPzCN7/q6LvngilwHjSYCecOhv/MqNPPn2VGp/oghZf+WAPLQQ+9aqg6P/3Ho=
+	t=1775727606; cv=pass; b=LpVzQEmlO48BsfoqkdjouBJgFj0WY2IJVESaSQMPtnInw3lpJlzXAeXzJ+kBuzIqhWzmNF6mrwSnuLBP+o4pOQR7LPVCuz6UUqfM5xwpSSOuuR4gb7WiP4XsZwnBE53IHTkS6vFK5D7mNxa6KfSTfEbmPR66gmBcAqckUdIc9Rc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775726816; c=relaxed/simple;
-	bh=1St0LzENMS/L2RiE9XeE3joOEj1DClmWyO5f2mJJX1Y=;
+	s=arc-20240116; t=1775727606; c=relaxed/simple;
+	bh=kM82dPlaCfoqVZbw/ry/9xZ4JA4n2imaQzebs9k8kXc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LD+y/mcqD2xhjGq6hh7SOb6n/zwI2hE5TNJbo6nQIR+y58/nbvEZ+ReGrMiqviO5dHxL3DapoIoU24iHYNyh8ucxXInHvclacO/CpKJ7oSbEY3Nru76wigh72mpuWaa+///qkfH/LhTs3wwvLYACmx8X9d6QP5oxK08Qosc790A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pUdNAYB4; arc=pass smtp.client-ip=209.85.217.52
+	 To:Cc:Content-Type; b=owrUu3bsi7dWZXGX++TPBneuAdBMRkgpGtsYahdNjy9EVelcm6N1EwqWt8C+sX3fno3mMcpKSwiNVJuLyrkGklA8e1uQaBeVQQxKohB94fsDvuwCT/DRqlNZXrDJ9Rzt6dJXlHI5A/KNVAk9YYTtAlRN/Du4VmOP+X84i+4J7Hs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Au0d8OL7; arc=pass smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pUdNAYB4"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-604f327bafcso199999137.0
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 02:26:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775726812; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Au0d8OL7"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-953acf7ae20so374570241.0
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 02:40:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775727602; cv=none;
         d=google.com; s=arc-20240605;
-        b=IrLvQHpTpDf1ra/EdAfpeurFU0jngCCm2W5EUWuWmsrVrdc8LqMhn+O/iNddW/G5QF
-         LBvrSiQRH8X2SDuU/ZL+gTvkEqYfQB5L8DERDr0aUEamy4F+iSseCe7/LwPdWAXTGimc
-         NO/8UvQu9ggZH2BtS1ijxtAcI+tMi5xtNFtMLeZlAuZ9zqN0PD4ixMHD+Gfw3QnnAQ0D
-         bdexvrRqfCJAhfh/ilTAJ5DGicC4nHqTjAt8OMTWaKECFzbqo8tK7o3fPpj3jrmwdHA6
-         ZCdVnPbyBx+YEAmtFXtouikBEwh8cYaJtDgc/7WtXRy7O2QAuXwHNXazBBpm6oesgUlT
-         LplA==
+        b=kYE1KnVCUI97Z8l4MYH9RzGajCOiPfJ9hF0EyPVlMer41Bc7zT/jjKMvA60aEify7v
+         PieB9daciGCjToNbB/y+2TQ7vcjUCE11pldkiI3tqeGcfln0xOypxuYkUFIRBjPA+/6o
+         3dCplSStuWxkos9lG1BuRghrmLpKAi4K2bd6UuKsBVo6TAzV2cxjsZn/uOXHSjCULFkf
+         aFaUNbRGV0o7mOgl7CHEilnRshE4nEBjvwR1i5RpsD9FBZsvFw9QkeSPGl8jFuLU70L4
+         vieGDJTUdzWEaR5kzEFJDF+FZd1Z/XJh9ZNKmono8wfE1yVQB89Uab0n9cFhFP4DVgyy
+         cWtQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=KqT+ti7MuY2UiO35fJ7pZ+f7eDdDj0uX/Zy575RRfeA=;
-        fh=7AewTDgNNKwfBN6EJIG1CTX2QA/Dc+pKG+I42JSN5QA=;
-        b=dFS/vIKmLlTt1zdNZntyFNZCNpDgkBG8nYNfHQpM/v3iWqVZ+7Lso7T5a9iBRm6d4z
-         3O7tghsNHM2Sm30TrFqaRtGKXt+6mm6zUDU36QaxMmtQh0xu0vEiWqZPVbktWKdINlXy
-         4mLOCkORyobHfphJrd6KD/9j0KovBYBe/DW2ARNdT2SYzg0dT0pzW6xniGuymXFFYJxe
-         K0EcnRNKMpvPw8Ve/Md64hX7SuDVoZHRvC2AgSjTzIJaQL9SwdOncVYgDQ1OE3LSI+4d
-         iAiuab4+18HtLzPDCyUO/y16ePB1t8UuBOjrnNl9wbYAKHIKSyCMMa9H1/MGKKOC4inx
-         6ibw==;
+        bh=1zQWV8IA/2pon2HgvW52KmC6/7ZRp448Ti07T/pxbsw=;
+        fh=ervua8mI2R0rEBVc6o4a8RxIghhGv+AXqtqG92z6iPs=;
+        b=ghH28/tfd+1buzE7rq9B5fGyOyamUGtlV6+7g4IZGoFMM2GzoVYK0xnRUwsqIOPDMi
+         0YM6YjIQ/d5cHYPq5J4qwaC26t+JuZ0ws4A6adEc4DM06LxzZWrrJ8/OZKa7O1Yk6/vF
+         g/jzuPTAw2p1DezN/UG4CBgaaMHU8mr5ZgIf0E26HcI9S2K+5U6NBsYiJr4mr0CGIU3K
+         H94S8QBYIRPo5Yzk0KdqS4MitOaO5KSAOenk0NCmArsOm8Ua2ccm3D6lMkpiyrzqvG6B
+         nfZEmxmviBJ3KyxYcBWOov6sWU2olV5q+EwAuXMNV8eTK+HvB3OKtv/Jz5WOwNYEoNF7
+         YhvQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775726812; x=1776331612; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775727602; x=1776332402; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KqT+ti7MuY2UiO35fJ7pZ+f7eDdDj0uX/Zy575RRfeA=;
-        b=pUdNAYB4Sw5UAQR1ba9SBML1BqQtoI70vDt/K29jTxeFR1JUWKxSS4KZRQzSti1MtD
-         n7tjojKy+WT6hZNpbUe0qgeBGQ+3+NCPEz1W4pFxNUSUJ6aa06t76FKt1kpB0/AgLv+u
-         1q+VqVa7vNJzv4naiBgsztpfMianontrC8g/UxF//I9byzt3WoOjfOSlvkIha6Imwc4h
-         D+RI0cqNai/60N41HvXFrCbfuv4xWoCB/vCSbFy+fNmbVdpffCa0GJT0L4MnpwyF86Uw
-         lMQMws3U0syic6XAVUIB07mLMwcVB1rD3FQLQ+a74SeqtlESWT0TbYVT5DQl2a8vEIZe
-         UJPw==
+        bh=1zQWV8IA/2pon2HgvW52KmC6/7ZRp448Ti07T/pxbsw=;
+        b=Au0d8OL7ihHtUFv6LhbyAXyzsFUVSlsmt8Ve3Oou7e0SesVwx8YwkM+DPSmj1pdNKd
+         17vKeFU4dHVP8PUL43rCi7RzrQ9P1nTzHPfdxBETW+CHBSkeJ9lWEwYyAgXsi/95jEs8
+         ZgwV+RdZVXNttXyqgqxkPH0zh1fvqrCKv6QdaY6OV/Nmys9f1e3y26CCJFQy1mSzh/Ev
+         y4KpEd0xILcmeyW+Aujv/RvLODijQK5O5FRwMPvyoGeRl7qDuCkvmxPo0Vr+/rx5aBwN
+         +T6dYiSPzizHJXkRZUIGBHz/SWEuQbOufosN+giYuEiw6/rJ+Yqus6R2kG6r2NAAMgWb
+         +qig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775726812; x=1776331612;
+        d=1e100.net; s=20251104; t=1775727602; x=1776332402;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KqT+ti7MuY2UiO35fJ7pZ+f7eDdDj0uX/Zy575RRfeA=;
-        b=Inur7oX03ZPItbVFoGlJPRgdaG6QNcFMUxI+vPofeQg8AhFidxYq67Vq8VqLezH/uf
-         TXvLjE4XXfSsu9rfJow5htRFKLixZzeTBHWep9TXchaGDLdWZPm0BAIiwcqHHHWgbRfE
-         MCP/Fxr0DukAQPFq0Hq+k9aeiYj8bpOEUWO2ON+/Ad1HQfF76jjIepPKAkm7sSzzWZZL
-         2ouKsimwcfcoY1URzjXObc3EDASwAmhchwy8fWVhcVcoImabTZPCalWTkd/x31xHv4ai
-         p5ZnUJPGA+ejWqCTPoVBeINKY7GQXN8G3hEa56jubKrqIpP9tHarm+9DKqyqr6IZ/fXQ
-         2Dpg==
-X-Forwarded-Encrypted: i=1; AJvYcCWf7TKGk5ym5Ey7VrbjoAVTjStLxqxaME5ZkLYTJHzqW4lG1MLqbpkKpI7tKV6Itn+Q97k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyb546oFyP17iQy63zCqg5NYxVWcXV4XK9n4UG1aQI2qlvWOtLs
-	uMvz2H0c3/uaeySDDkdgK2HUDH3O8L0FJ+pSo8AL318WRni73aUmoORiHzGc4vfD0JTpKA63ej8
-	HeSFWqrRjQs9MoxrFdkXZzw/wwJhQFhcktQ==
-X-Gm-Gg: AeBDies0VGQ+D9C2oOayIqkPPM6eLGjiqdirMNwzJb/zOUSJMlMjMY7a3JtQhGjT/2L
-	oL8UIcPC97iCxWqMsvlnuTxkrYFcC6YIwh7AwclQaavWBOCSFKGbVxGL7yZppr/EaZi97tmnsjl
-	lafvMPlQKOe9RYQaMT8Jnk84SDMI15uJfNpwAP9DOduRqLP/IoN58+f/MtfOn+5Y1og8UgPh1Qe
-	y2pc938gLbZwO1WB0eQ0KJJs0pRezl5Yu4scY28Pvyrw8J0Cxjluw0Dyp8+WUDMH1ved+wSV7vN
-	mTS25SjafTawdPkH2a+FGuOYKhcxpcGssvKuE4mA
-X-Received: by 2002:a05:6102:1623:b0:607:a394:1841 with SMTP id
- ada2fe7eead31-607a3941b0dmr2032682137.0.1775726812034; Thu, 09 Apr 2026
- 02:26:52 -0700 (PDT)
+        bh=1zQWV8IA/2pon2HgvW52KmC6/7ZRp448Ti07T/pxbsw=;
+        b=gPSQ5J73gsEwIikz3U8WasGSmEj3pc4G2hTsifWdfxEW0JCHRY5J4meiZeRHYLDv8Z
+         h29yT+loopwfbqP1gMd8zX22roQQkfbYS8p6pVLK3L61t/f6t2od7yY4Vvw4qJxJlIhg
+         N0bwQcmSj/nx2vw3Z50DU1vDnc1oj4bHHyNw1N4sx2NaFYX30B91A5boB19T+9HMK7zE
+         aG4QIHXtlxXTc4GWJE9Gwgf5j+aXZ2R86Vt8MhR+mOack9iWiamRqZPI08U5/aKxdrRj
+         Mn9DK4XqOZrniQ7XTz3YJFLXaUVZiZ3u/lS7W59ooJPgqLoLA7NUnvVa4fqYWlHrccKr
+         rppQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUNNHN+zOZXb4zGjyTa+sSd6hUYxC4nPncvyhIvhmJbne+ddf7YUO9f91rLLLjn3aU4I38=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmjZXhKo/9xjiIOr+W8aPIZgYor/zH92YQtOe8j4G4QP6aUDpn
+	8TNpyXhPXEbyYsxXVjEf+dw7HTC33mkX/JLYtxsz4GueWa+hJGJSAdOIc8vbGbrtZoPqUT0GWLs
+	9s7O4WneeD9eyyE7NKWX8vkyScOCm5cY=
+X-Gm-Gg: AeBDietqdAOUL8KvCPcFXsfRYw7PsaeBE9+oJShBlPrr5/2Yk1az5AbYfJW9IkZWLNi
+	3q5IZkR4DXFaMXREZassax1elxGyxusO7C2MwzxMhUgp6iZe+cbHDpisKZ2SNjvPzlMUO8sarr5
+	/wkttbt7lcST49xQQgUSo31x1+rW0geesejUBzl6z53+836Qgu2jXR6yN5J9vWTFLxS3PvxGkdW
+	ihImJ5CJZpVzobKig5uYnl2K8axl+fH4Axo2m/RQAx1i/40lmEWUv5rhaMskHpzoXL+v/uvA0+a
+	dLvkZn7pIIkrYDz2u+sTQ9M+4xEihsnWt3zmTv5NEgdyQgPOdEg=
+X-Received: by 2002:a05:6102:e10:b0:5ff:11dc:2ed7 with SMTP id
+ ada2fe7eead31-608706c31cfmr909918137.16.1775727602151; Thu, 09 Apr 2026
+ 02:40:02 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Apr 2026 05:26:50 -0400
+ HTTPREST; Thu, 9 Apr 2026 05:40:01 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Apr 2026 05:26:50 -0400
+ HTTPREST; Thu, 9 Apr 2026 05:40:01 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-1-f02b4f1c0f13@pks.im>
-References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im> <20260409-b4-pks-odb-source-inmemory-v2-1-f02b4f1c0f13@pks.im>
+In-Reply-To: <20260409-b4-pks-odb-source-inmemory-v2-4-f02b4f1c0f13@pks.im>
+References: <20260409-b4-pks-odb-source-inmemory-v2-0-f02b4f1c0f13@pks.im> <20260409-b4-pks-odb-source-inmemory-v2-4-f02b4f1c0f13@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 9 Apr 2026 05:26:50 -0400
-X-Gm-Features: AQROBzC_sUKfxHicg4NvP2EBQ6xh0-Yd2nruYh5uKcvv8zTOYNSyO0DelbEULx0
-Message-ID: <CAOLa=ZRkctXNkpTqiTSTkvskajPZTid9WTG3fKr0YV641_5qrw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/17] odb: introduce "in-memory" source
+Date: Thu, 9 Apr 2026 05:40:01 -0400
+X-Gm-Features: AQROBzBLFOBjjDiXmAmhzfPIyuePa49bLaaJ3yROSgAD0r_WG2nRwyzgHfgGGcE
+Message-ID: <CAOLa=ZRwv_NYqtNyvhi=5auLhVx+FDbt+RP6Kj_ZqjF=VsefyA@mail.gmail.com>
+Subject: Re: [PATCH v2 04/17] odb/source-inmemory: implement
+ `read_object_info()` callback
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000d99a5a064f039dee"
+Content-Type: multipart/mixed; boundary="000000000000f1d330064f03cce8"
 
---000000000000d99a5a064f039dee
+--000000000000f1d330064f03cce8
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Next to our typical object database sources, each object database also
-> has an implicit source of "cached" objects. These cached objects only
-> exist in memory and some use cases:
->
->   - They contain evergreen objects that we expect to always exist, like
->     for example the empty tree.
->
->   - They can be used to store temporary objects that we don't want to
->     persist to disk, which is used by git-blame(1) to create a fake
->     worktree commit.
->
-> Overall, their use is somewhat restricted though. For example, we don't
-> provide the ability to use it as a temporary object database source that
-> allows the user to write objects, but discard them after Git exists. So
-> while these cached objects behave almost like a source, they aren't used
-> as one.
->
-> This is about to change over the following commits, where we will turn
-> cached objects into a new "in-memory" source. This will allow us to use
-> it exactly the same as any other source by providing the same common
-> interface as the "files" source.
->
-> For now, the in-memory source only hosts the cached objects and doesn't
-> provide any logic yet. This will change with subsequent commits, where
-> we move respective functionality into the source.
-
 [snip]
 
-> diff --git a/odb.c b/odb.c
-> index 40a5e9c4e0..60e1eead25 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -14,6 +14,7 @@
->  #include "object-file.h"
->  #include "object-name.h"
->  #include "odb.h"
-> +#include "odb/source-inmemory.h"
->  #include "packfile.h"
->  #include "path.h"
->  #include "promisor-remote.h"
-> @@ -53,9 +54,9 @@ static const struct cached_object *find_cached_object(struct object_database *ob
->  		.type = OBJ_TREE,
->  		.buf = "",
->  	};
-> -	const struct cached_object_entry *co = object_store->cached_objects;
-> +	const struct cached_object_entry *co = object_store->inmemory_objects->objects;
->
-> -	for (size_t i = 0; i < object_store->cached_object_nr; i++, co++)
-> +	for (size_t i = 0; i < object_store->inmemory_objects->objects_nr; i++, co++)
->  		if (oideq(&co->oid, oid))
->  			return &co->value;
->
-> @@ -792,9 +793,10 @@ int odb_pretend_object(struct object_database *odb,
->  	    find_cached_object(odb, oid))
->  		return 0;
->
-> -	ALLOC_GROW(odb->cached_objects,
-> -		   odb->cached_object_nr + 1, odb->cached_object_alloc);
-> -	co = &odb->cached_objects[odb->cached_object_nr++];
-> +	ALLOC_GROW(odb->inmemory_objects->objects,
-> +		   odb->inmemory_objects->objects_nr + 1,
-> +		   odb->inmemory_objects->objects_alloc);
-> +	co = &odb->inmemory_objects->objects[odb->inmemory_objects->objects_nr++];
-
-Okay so we introduce the inmemory object storage and directly write
-objects to it. I guess in the upcoming commits, we'll swap to using the
-API as we implement them.
-
-Makes sense for now.
-
->  	co->value.size = len;
->  	co->value.type = type;
->  	co_buf = xmalloc(len);
-> @@ -1083,6 +1085,7 @@ struct object_database *odb_new(struct repository *repo,
->  	o->sources = odb_source_new(o, primary_source, true);
->  	o->sources_tail = &o->sources->next;
->  	o->alternate_db = xstrdup_or_null(secondary_sources);
-> +	o->inmemory_objects = odb_source_inmemory_new(o);
->
->  	free(to_free);
->
-> @@ -1123,9 +1126,11 @@ void odb_free(struct object_database *o)
->  	odb_close(o);
->  	odb_free_sources(o);
->
-> -	for (size_t i = 0; i < o->cached_object_nr; i++)
-> -		free((char *) o->cached_objects[i].value.buf);
-> -	free(o->cached_objects);
-> +	for (size_t i = 0; i < o->inmemory_objects->objects_nr; i++)
-> +		free((char *) o->inmemory_objects->objects[i].value.buf);
-> +	free(o->inmemory_objects->objects);
-> +	free(o->inmemory_objects->base.path);
-> +	free(o->inmemory_objects);
->
->  	string_list_clear(&o->submodule_source_paths, 0);
->
-> diff --git a/odb.h b/odb.h
-> index 9eb8355aca..c3a7edf9c8 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -8,6 +8,7 @@
->  #include "thread-utils.h"
->
->  struct cached_object_entry;
-> +struct odb_source_inmemory;
->  struct packed_git;
->  struct repository;
->  struct strbuf;
-> @@ -80,8 +81,7 @@ struct object_database {
->  	 * to write them into the object store (e.g. a browse-only
->  	 * application).
->  	 */
-> -	struct cached_object_entry *cached_objects;
-> -	size_t cached_object_nr, cached_object_alloc;
-> +	struct odb_source_inmemory *inmemory_objects;
->
->  	/*
->  	 * A fast, rough count of the number of objects in the repository.
 > diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-> new file mode 100644
-> index 0000000000..c7ac5c24f0
-> --- /dev/null
+> index ccbb622eae..12c80f9b34 100644
+> --- a/odb/source-inmemory.c
 > +++ b/odb/source-inmemory.c
-> @@ -0,0 +1,12 @@
-> +#include "git-compat-util.h"
-> +#include "odb/source-inmemory.h"
+> @@ -1,5 +1,57 @@
+>  #include "git-compat-util.h"
+> +#include "odb.h"
+>  #include "odb/source-inmemory.h"
+> +#include "repository.h"
 > +
-> +struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
+> +static const struct cached_object *find_cached_object(struct odb_source_inmemory *source,
+> +						      const struct object_id *oid)
 > +{
-> +	struct odb_source_inmemory *source;
+> +	static const struct cached_object empty_tree = {
+> +		.type = OBJ_TREE,
+> +		.buf = "",
+> +	};
+> +	const struct cached_object_entry *co = source->objects;
 > +
-> +	CALLOC_ARRAY(source, 1);
-> +	odb_source_init(&source->base, odb, ODB_SOURCE_INMEMORY, "source", false);
+> +	for (size_t i = 0; i < source->objects_nr; i++, co++)
+> +		if (oideq(&co->oid, oid))
+> +			return &co->value;
 > +
-> +	return source;
-> +}
-> diff --git a/odb/source-inmemory.h b/odb/source-inmemory.h
-> new file mode 100644
-> index 0000000000..95477bf36d
-> --- /dev/null
-> +++ b/odb/source-inmemory.h
-> @@ -0,0 +1,35 @@
-> +#ifndef ODB_SOURCE_INMEMORY_H
-> +#define ODB_SOURCE_INMEMORY_H
-> +
-> +#include "odb/source.h"
-> +
-> +struct cached_object_entry;
-> +
-> +/*
-> + * An inmemory source that you can write objects to that shall be made
-> + * available for reading, but that shouldn't ever be persisted to disk. Note
-> + * that any objects written to this source will be stored in memory, so the
-> + * number of objects you can store is limited by available system memory.
-> + */
-> +struct odb_source_inmemory {
-> +	struct odb_source base;
-> +
-> +	struct cached_object_entry *objects;
-> +	size_t objects_nr, objects_alloc;
-> +};
-> +
-> +/* Create a new in-memory object database source. */
-> +struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb);
-> +
-> +/*
-> + * Cast the given object database source to the inmemory backend. This will
-> + * cause a BUG in case the source doesn't use this backend.
-> + */
-> +static inline struct odb_source_inmemory *odb_source_inmemory_downcast(struct odb_source *source)
-> +{
-> +	if (source->type != ODB_SOURCE_INMEMORY)
-> +		BUG("trying to downcast source of type '%d' to inmemory", source->type);
-> +	return container_of(source, struct odb_source_inmemory, base);
-> +}
+> +	if (oid->algo && oideq(oid, hash_algos[oid->algo].empty_tree))
+> +		return &empty_tree;
 > +
 
-Interesting, in the refs namespace the downcast functions are added to
-the source file (.c). This works too, is there any reason though?
+Silly questiong, would it make more sense to check for empty_tree before
+iterating over all objects?
+
+The rest looks good
 
 [snip]
 
---000000000000d99a5a064f039dee
+--000000000000f1d330064f03cce8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 4ad4334c18075de0_0.1
+X-Attachment-Id: 5cbf57c6f466c478_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1uWGNOZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1menJuQy85bjJjNlhlSmc5enlsQ1hJTDd1N2Nhc0xLNwpaUUdncXp6U0hO
-bmZPMENDL3lUL0U3TC9FK1ZIdFdValRhVzBuWCttMVltN05OVGZuMDNsN1JuQ1gxZ3Q4UW5KCnJQ
-ZWNHdGtGbUZTY09EdjBFUEVFTVRxU1dqNmF0dWd4QjlRZzc5UitNdmJTbExDWE05SEJ4ajYyVFM3
-MWNrbW8KRlZTUWo3dWFnMHFIVnYrcG4vU3JwU0Zadmo5Wks1QlhGaFU3NmpHa0FMTDVYSExjdHpp
-NEF0UWRYSGFlZWpLQgorUFBtMmRES3QwSUp3VzBHU0tpdW9OdnFPU2JHNlM4ZTd6TWo0SG9hbkRB
-ZlVvcFhsSGVLTDliUFFYVk1PdGlaCkt1RkxaVjBHOFBKN0xHTkM2VmU2Vnl6dWNOeVM4ampKYlhV
-UXFZVFl0WFlLcnFaYmZDR040dktNNTVFc2xuRDAKZnNuU0ZsR2xxVXQwZ2s4Z0xRb09tZU1CcDNE
-SWptY0xJS0VoRGJHS1RJRGlERVZNcWtjU2RlR01HY2FYRkN5MgpZZkZsWEwycFQ2ZUdUckNqcStC
-dmpXRGlCS1RSaTZ0SlB0NzRpUkVzMFNwQ2NDQlozZVd4RlAycXN1dFFrUWRaCmdxWnZrRldHamhs
-WC8zeVdpVFBLT0IzZW11UG91ZTZiaktRR3psQT0KPVBjS0UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1uWGMrOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMU1FQy85aTV4MEYzeHl3TVI3cDFDR2E2Vk96OXkrdApzZGdveDdrUDVz
+WmpJMFVOeld4L0dzNVBPNWtXVTNYaWVzZGVJT2dMRUFmQnk5MEpTcTZVOWdRQ0N3WWxkNEJNCnk1
+eGordnRtV0llaEMxVmYvSCs1UTE5bUY0WnY0SXFSNWhsYlJDL0pidUpSVmxLWU5IMEpYVy9xdGZx
+bzhqOTQKazczNHBXWW5HRGlGdXMrd3R3Y3piR2IzVlFoRkJaN3pCNGg2bHpsZWpYS3YvZXdvY2VI
+blJXeW92NTlhU05OMApSek9iK09JZWhzdlZoYWdEcjNZUEM1SEllTWFDYkc3dTgxcUE4QWV0Ukl1
+SWFuZkdQUGtBT2VNVnRLblRjL0c3CnNkTlVoQmtPelJDM3V2YTFLbk9UL2tUdmllVzV5Uzhnaldo
+YUdXR1BTQk4xZUltV09HMVRrOE1QYzFIMzVrQmkKeUhKMjVIb1JGUDdLS0haT3NibEV5alB0YUlr
+NVRaNWk1NXNkZFNCR2MrRkxWQ1hnZmV6SjhGMkxTUTUyRWpWVQpyQm5WNVM5aVpCejk4WURTeDFq
+YXRqanRUdWlGZWlPalZWcEE5RXRGUVhiMnI5OGFnTlFtd3A5V0YyaXRyUHEzCko3UkI2Q2hLejhS
+R0RjN3FpUVB3NmRweDdPKzNla1NhdkE2OE1WRT0KPWl6VTkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000d99a5a064f039dee--
+--000000000000f1d330064f03cce8--
