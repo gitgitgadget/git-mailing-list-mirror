@@ -1,63 +1,63 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692563D9036
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6C33A1CE6
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:04:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775833380; cv=none; b=p8c2A0nbrvellPK+D2Iz2j1+hUSrfsvoCEt6uwOell4KMBLg1yOMfmD8IKbXBKAyGXtn8sGc6z4qznlTqTSD3z6N41WDAchILVA/kjNlvEEIzx9BqpaVXk0OsEW9nLthTP3kWH4aYL8gtbhAGnhqJXXgssbl6eYkRDtsbO8S68E=
+	t=1775833443; cv=none; b=kbdVZH9x+sYsLLj/u0c8uozNzwvcqi2Kb/VpKlN5R90qAmmcwIb/2vTqfXJ8guRzs+EV/7MPQWhCfiX5Uu8b7n2dIfM05DZgBoahBsOVZzocDlBPQgTReCfuCrkAO+YSwZMs8JoMH+LSXkLWcWKBJmRhfk+gXlwV1c1ShOvFffU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775833380; c=relaxed/simple;
-	bh=QAOx5COX2coQmVtWCLJ9gHN6DaW9OpaHeALEODaugx8=;
+	s=arc-20240116; t=1775833443; c=relaxed/simple;
+	bh=h/QQdXi7YjEThjF5UCRx0Nok0siJ5J2e4mYfQX8Tztc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XSPyJdmkxoNZqwIU27RYsI2tSfPKjFhKByAsSlmtckkoompJm3waqfnMZLk+lIdZdAJJg2ht7FG0fxdEwE5HSMZx5LEWkXcmdQAn63PiwPDsPYs0Az9o/z6EIxdyPCg5wqT6RH1h+jDzQsVeuskbCQtvekp9CFRcM4v9PSAAJdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sr9dDVKK; arc=none smtp.client-ip=209.85.128.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=V1GwXVIYyzA4HA8/qw0SJKUS7jiClDjxTV6CD4lk05NujGLSFws2wsG3oBXXzdo8HSFpIY/NNDYdwOj/oj4Fd/AxEZzepRXxa15gBFkhQCkVpkc+GUtfTLFDrqZVQGYY0IsN3Wn6TjvqZXND+lzKPKx+OYJa+n4yhBhTzS70vYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jhx2EB1w; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sr9dDVKK"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4888375f735so21168125e9.3
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:02:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jhx2EB1w"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-488ad135063so19893915e9.0
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775833375; x=1776438175; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775833440; x=1776438240; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AW4Sf7Q72XcfWHzLIgSuLUaEXdV7icRN74StEjFd7Vo=;
-        b=Sr9dDVKKzYiaIKJQWF8Zf3yMtP5s1vLN1QdmzbOa+5rcQ5DuU7+ItnJsLLBtom2IHA
-         /fQUv5Fq0rxMyY3D3EhH4UGUAxN5VPXrq9JmH5hQu4TkbT7M90OLPBk/IX7trytUGvsl
-         4mo64UTcnf/0KtFM0YsjRha5GJFVKIL3KrbqRn3vMCQMYuAjGqSsMqNvx0e4uMigkVOZ
-         ACh9S4KlBUqFNTUN9KB8NnK9aWym/k6DLXDWzUXPvnIYsjha874JEi2trkcNLAC5MEyp
-         TzXKeXP0ja7Z71gGHOpVoZo6uXxAVt4f+4GJaveEJpMNIOKiBF8UmQ8WS8cXW1ClJtVZ
-         0WGg==
+        bh=302L+ih3NFo6fZRwKKT/wvJtKsWOsx2nOfZucYhHQJc=;
+        b=jhx2EB1wjEUxDU12A2jyPBnlnChMvlJ6v1OHBy5v8BxMEeze190JY7qUFboMzgy8Vx
+         VAwNV1vV+ng962xTEcMtiaS5JOJ1e4g1nyYuZi3LsvxiMdJ5J+as9IWgxgwVZ4rxA4bm
+         x+XJdAodQLcJ1gtzuJ7pJrQr2pz2gtELDE3Y58P7OvRAeOUc/XPI515yrc6NaGlHLf5G
+         EPu+D2BQ548gnqlSzWxCDlhsrt83ShRuZZgaDSApFNIsCIZ64vbwejAeu7aCrSWFBOM5
+         5RlOz/BdgnpLJ4Uq+o2f0l1CTMjbeLGDFe4D0XYfrdE5XsMglw/RG9FYrPc/VDr6jf+c
+         EX7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775833375; x=1776438175;
+        d=1e100.net; s=20251104; t=1775833440; x=1776438240;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AW4Sf7Q72XcfWHzLIgSuLUaEXdV7icRN74StEjFd7Vo=;
-        b=jWOKU2J8y5BQbZqyFqPeYFysmJrVOwyBzJDw+To1kA8IUHlwqtKBwqZHUk3RZ2z5MO
-         7dtsMiEwShIfdoxcQt2p4EuxTw3LP1KTWkG4hKM7/D4kDc63BNqwBxN89kMz0vdSYoZA
-         vBUZwTojOpX3IgsCjmZuwIaMwA2rrMLNLTQbyrYVu/QB2rRaax8hIaS+jHnbEo6NfuBP
-         5u1UKPDKpbNNJL4RP4MvwMHL40aYSMPaFR5IIymfD0Bp/m6QnZ11Vazd5ibTX/2pI/Kp
-         O9/UF39LR7Mj0jneluGDX9KF5Ecge7C2XYrWgLN+vn1j5yuWwtSpZeQGqYT7cEZFdKBH
-         4IEA==
-X-Gm-Message-State: AOJu0YwE316ZVxHP24BE6zWEwF7R/ha4cwnAzlKAGBH8bV+GAUmja9lW
-	ANmlybGm5I7ISzlirx3pWFAISDJ43bQk0b40cQvc/3IvXSdTUMFAwRmw6u9IYTOuW14=
-X-Gm-Gg: AeBDieuypqxIdU0sjtfOFJ71+AZPbeTle3m4DOF9Yt023qudyr1T0FmUIixgp3eDQEV
-	neS+jojyTJeVISEMzrBtnlNRELIMuR92/JK24IUgQ2XfPgBjuDb1epVv83aOLcWqsSr/pkE/4N2
-	W13R5kqnLZRZwdEiPYBLEW2R7ZSew7PCTRHQVMxWYD1LCwpsSzvMfXEU/SPx5kGvDv9arbKYYeO
-	Nq6U7vTciCAHXieUilJ8qjTXVQ9xifPxATz8H4C4Cb7rDxncUOjfmWOd7XwU/qa/i+ZjYjSqL6j
-	aTTLUhxte251SYIenXLjGp3gyTvA3Sxvl1yJkrq87hdCmFxNJkCQ8nirKe8MUO1KMrkFR44C1qR
-	2s6+3+/9SJjXXYl64iDRVQ7xjBnnbg0FzuKyECv5xGB/oSLN+VMDRHAdFkbNG/V7KATr5802Ih7
-	833sfwutgzAqsMUbgd4qvwZMFpHEDhnRmlyotvSbB4vohrIIvRvvHLyrg92W+tGyIGGHNrWeNxp
-	Dvb+Xjn
-X-Received: by 2002:a05:600c:64cf:b0:485:b6dd:5066 with SMTP id 5b1f17b1804b1-488d67ce664mr43157055e9.7.1775833374744;
-        Fri, 10 Apr 2026 08:02:54 -0700 (PDT)
+        bh=302L+ih3NFo6fZRwKKT/wvJtKsWOsx2nOfZucYhHQJc=;
+        b=aFZaPgBQ9xK+avRR1QnnxiYZ+09CoF3l6tCzZeqsTmdRBSymId+TpgwfVerpRTKaCK
+         QzjGOVAo7pPHh0nNTznEvxrV0UJMAkXlq9eXMWLIwz8AYlC6xq2MH/xvvwn8Lp4Ia47u
+         tRVtw/Q0QBEV7zSIjKt5do5LVla5GBrGwFFqisvfLERIFhJAtwNJ8xaSkLlw9QoUhXbA
+         CUX1+ekWY3jYnRl5epn1QIWuO6Xn1ZSti7ZkncbfXbVmRfH0GKjXERP8rXjHSZ+u2hOr
+         NJ4CRU0lRzuZqSZFc323tQTD1QfSaTJ8eV5apYFjcNd/zmGcQkzQGYpiTPqwSMaWK730
+         w8PA==
+X-Gm-Message-State: AOJu0YzM+vOThd5208VboRIyncONvTR648Md21WKPsgAzsXo/puC108W
+	PVkfmQpJKyQYxprLGFiVzLsabIUy0ZkgUF87fn3FcjbrglGJ7PrYAYSNn2tKPbL1xc8=
+X-Gm-Gg: AeBDieuLuPJ611VyOBZQvsLSy3DQfxGKOltkDEeCtAB4E28451mXWJDQ6kLmvHpuQLR
+	PZMMs0k6pxIY8w3huMO9lJDQ3XB3WX52pFEd2sED/Ip4xLPuNKWX0h7Fp/YGu2Dpr/FRQ4G39Mx
+	/YaSaEvxu+2ReenKfKBoA6v+CffKb8Y9Hi9i0Dl+0Xy1I7Odb22Ox7z/YIflWABJFHvbAqHfczf
+	ieYOv1RVcS3DabiTerCWhiyhlilPqfIvI4Mz4tVNw2Jy88GiXC0BnkdkG/6dhuwa+xxXA5rWADO
+	D1pJBYszORaFh1iTpc9c8Gnghs0ADigXe1ut1LeuFr2EZ0qeV1+VHnBVRW7pOQUB99nrN+o8glV
+	cxhoA+mBCv6J2mO1igtkJ5KzIOlqj7AYeVfyPPoFeV1tuXnstHnFR9Hg1TFjO6cb90RgE+whPns
+	WeLxEbe3PlQSIcTBRRvLiCLT9bcsVDX6acK3Hk8uYS1xeG7n/J1BTbnZ/vo/jXzEBtukEyd+hea
+	Ax3rEJ/
+X-Received: by 2002:a05:600c:8b27:b0:488:af7f:775f with SMTP id 5b1f17b1804b1-488d68766c7mr41807375e9.18.1775833439481;
+        Fri, 10 Apr 2026 08:03:59 -0700 (PDT)
 Received: from lorenzo-VM (host-79-19-37-238.retail.telecomitalia.it. [79.19.37.238])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d532ed4dsm75065145e9.4.2026.04.10.08.02.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d538c03esm79050795e9.13.2026.04.10.08.03.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 08:02:53 -0700 (PDT)
-Date: Fri, 10 Apr 2026 17:02:51 +0200
+        Fri, 10 Apr 2026 08:03:58 -0700 (PDT)
+Date: Fri, 10 Apr 2026 17:03:56 +0200
 From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
@@ -66,9 +66,9 @@ Cc: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
 	Elijah Newren <newren@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Tian Yuchen <cat@malon.dev>
-Subject: [GSoC PATCH v4 2/5] pack-write: add helper to fill promisor file
- after repack
-Message-ID: <34c4e793113f22c393a6196d6e99a96d78cc3ab9.1775832056.git.lorenzo.pegorari2002@gmail.com>
+Subject: [GSoC PATCH v4 3/5] repack-promisor: preserve content of promisor
+ files after repack
+Message-ID: <72ef2378b9cd50941b1c0c485bcbacb820e798c9.1775832056.git.lorenzo.pegorari2002@gmail.com>
 References: <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
  <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
@@ -81,174 +81,115 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
 
-A ".promisor" file may contain ref names (and their associated hashes)
-that were fetched at the time the corresponding packfile was downloaded.
-This information is used for debugging reasons. This information is
-stored as lines structured like this: "<oid> <ref>".
+When a repack involving promisor packfiles happens, the new ".promisor"
+file is created empty, losing all the debug info that might be present
+inside the ".promisor" files before the repack.
 
-Create a `copy_promisor_content()` helper function that allows this
-debugging info to not be lost after a `repack`, by copying it inside a
-new ".promisor" file.
+Use the "copy_promisor_content()" function created previously to preserve
+the contents of all ".promisor" files inside the first ".promisor" file
+created by the repack.
 
-The function logic is the following:
- * Take all ".promisor" files contained inside the given `repo`.
- * Ignore those whose name is contained inside the given `strset
-   not_repacked_names`, which basically acts as a "promisor ignorelist"
-   (intended to be used for packfiles that have not been repacked).
- * Read each line of the remaining ".promisor" files, which can be:
-    * "<oid> <ref>" if the ".promisor" file was never repacked. If so,
-      add the time (in Unix time) at which the ".promisor" file was last
-      modified <time> to the line, to obtain: "<oid> <ref> <time>".
-    * "<oid> <ref> <time>" if the ".promisor" file was repacked. If so,
-      don't modify it.
- * Ignore the line if its <oid> is not present inside the
-   "<packtmp>-<dest_hex>.idx" file.
- * If the destination file "<packtmp>-<dest_hex>.promisor" does not
-   already contain the line, append it to the file.
+For geometric repacking, we have to create a `strset` that contains the
+basenames of all excluded packs. For "normal" repacking this is not
+necessary, since there should be no excluded packs.
 
-The function assumes that the contents of all ".promisor" files are
-correctly formed.
-
-The time of last data modification, for never-repacked ".promisor" file,
-can be used when comparing the entries in it with entries in another
-".promisor" file that did get repacked. With these timestamps, the
-debugger will be able to tell at which time the refs at the remote
-repository pointed at what object. Also, when looking at already
-repacked ".promisor" files, the same ref may appear multiple times, and
-having timestamps will help understanding what happened over time.
+Also, update the documentation accordingly.
 
 Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
- repack-promisor.c | 116 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 116 insertions(+)
+ Documentation/git-repack.adoc |  4 ++--
+ repack-promisor.c             | 30 +++++++++++++++++-------------
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
+diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
+index 673ce91083..33d3c8afbd 100644
+--- a/Documentation/git-repack.adoc
++++ b/Documentation/git-repack.adoc
+@@ -45,8 +45,8 @@ other objects in that pack they already have locally.
+ +
+ Promisor packfiles are repacked separately: if there are packfiles that
+ have an associated ".promisor" file, these packfiles will be repacked
+-into another separate pack, and an empty ".promisor" file corresponding
+-to the new separate pack will be written.
++into another separate pack, and a ".promisor" file corresponding to the
++new separate pack will be written (with arbitrary contents).
+ 
+ -A::
+ 	Same as `-a`, unless `-d` is used.  Then any unreachable
 diff --git a/repack-promisor.c b/repack-promisor.c
-index 90318ce150..797314d7b9 100644
+index 797314d7b9..0c373c8820 100644
 --- a/repack-promisor.c
 +++ b/repack-promisor.c
-@@ -34,6 +34,122 @@ static int write_oid(const struct object_id *oid,
- 	return 0;
- }
- 
-+/*
-+ * Go through all .promisor files contained in repo (excluding those whose name
-+ * appears in not_repacked_basenames, which acts as a ignorelist), and copies
-+ * their content inside the destination file "<packtmp>-<dest_hex>.promisor".
-+ * Each line of a never repacked .promisor file is: "<oid> <ref>" (as described
-+ * in the write_promisor_file() function).
-+ * After a repack, the copied lines will be: "<oid> <ref> <time>", where <time>
-+ * is the time (in Unix time) at which the .promisor file was last modified.
-+ * Only the lines whose <oid> is present inside "<packtmp>-<dest_hex>.idx" will
-+ * be copied.
-+ * The contents of all .promisor files are assumed to be correctly formed.
-+ */
-+static void copy_promisor_content(struct repository *repo,
-+					      const char *dest_hex,
-+					      const char *packtmp,
-+					      struct strset *not_repacked_basenames)
-+{
-+	char *dest_idx_name;
-+	char *dest_promisor_name;
-+	FILE *dest;
-+	struct strset dest_content = STRSET_INIT;
-+	struct strbuf dest_to_write = STRBUF_INIT;
-+	struct strbuf source_promisor_name = STRBUF_INIT;
-+	struct strbuf line = STRBUF_INIT;
-+	struct object_id dest_oid;
-+	struct packed_git *dest_pack, *p;
-+	int err;
-+
-+	dest_idx_name = mkpathdup("%s-%s.idx", packtmp, dest_hex);
-+	get_oid_hex_algop(dest_hex, &dest_oid, repo->hash_algo);
-+	dest_pack = parse_pack_index(repo, dest_oid.hash, dest_idx_name);
-+
-+	/* Open the .promisor dest file, and fill dest_content with its content */
-+	dest_promisor_name = mkpathdup("%s-%s.promisor", packtmp, dest_hex);
-+	dest = xfopen(dest_promisor_name, "r+");
-+	while (strbuf_getline(&line, dest) != EOF)
-+		strset_add(&dest_content, line.buf);
-+
-+	repo_for_each_pack(repo, p) {
-+		FILE *source;
-+		struct stat source_stat;
-+
-+		if (!p->pack_promisor)
-+			continue;
-+
-+		if (not_repacked_basenames &&
-+			strset_contains(not_repacked_basenames, pack_basename(p)))
-+			continue;
-+
-+		strbuf_reset(&source_promisor_name);
-+		strbuf_addstr(&source_promisor_name, p->pack_name);
-+		strbuf_strip_suffix(&source_promisor_name, ".pack");
-+		strbuf_addstr(&source_promisor_name, ".promisor");
-+
-+		if (stat(source_promisor_name.buf, &source_stat))
-+			die(_("File not found: %s"), source_promisor_name.buf);
-+
-+		source = xfopen(source_promisor_name.buf, "r");
-+
-+		while (strbuf_getline(&line, source) != EOF) {
-+			struct string_list line_sections = STRING_LIST_INIT_DUP;
-+			struct object_id oid;
-+
-+			/* Split line into <oid>, <ref> and <time> (if <time> exists) */
-+			string_list_split(&line_sections, line.buf, " ", 3);
-+
-+			/* Ignore the lines where <oid> doesn't appear in the dest_pack */
-+			get_oid_hex_algop(line_sections.items[0].string, &oid, repo->hash_algo);
-+			if (!find_pack_entry_one(&oid, dest_pack)) {
-+				string_list_clear(&line_sections, 0);
-+				continue;
-+			}
-+
-+			/* If <time> doesn't exist, retrieve it and add it to line */
-+			if (line_sections.nr < 3)
-+				strbuf_addf(&line, " %lld", (long long int)source_stat.st_mtim.tv_sec);
-+
-+			/*
-+			 * Add the finalized line to dest_to_write and dest_content if it
-+			 * wasn't already present inside dest_content
-+			 */
-+			if (strset_add(&dest_content, line.buf)) {
-+				strbuf_addbuf(&dest_to_write, &line);
-+				strbuf_addch(&dest_to_write, '\n');
-+			}
-+
-+			string_list_clear(&line_sections, 0);
-+		}
-+
-+		err = ferror(source);
-+		err |= fclose(source);
-+		if (err)
-+			die(_("Could not read '%s' promisor file"), source_promisor_name.buf);
-+	}
-+
-+	/* If dest_to_write is not empty, then there are new lines to append */
-+	if (dest_to_write.len) {
-+		if (fseek(dest, 0L, SEEK_END))
-+			die_errno(_("fseek failed"));
-+		fprintf(dest, "%s", dest_to_write.buf);
-+	}
-+
-+	err = ferror(dest);
-+	err |= fclose(dest);
-+	if (err)
-+		die(_("Could not write '%s' promisor file"), dest_promisor_name);
-+
-+	close_pack_index(dest_pack);
-+	free(dest_idx_name);
-+	free(dest_promisor_name);
-+	strset_clear(&dest_content);
-+	strbuf_release(&dest_to_write);
-+	strbuf_release(&source_promisor_name);
-+	strbuf_release(&line);
-+}
-+
+@@ -153,7 +153,8 @@ static void copy_promisor_content(struct repository *repo,
  static void finish_repacking_promisor_objects(struct repository *repo,
  					      struct child_process *cmd,
  					      struct string_list *names,
+-					      const char *packtmp)
++					      const char *packtmp,
++					      struct strset *not_repacked_basenames)
+ {
+ 	struct strbuf line = STRBUF_INIT;
+ 	FILE *out;
+@@ -171,19 +172,15 @@ static void finish_repacking_promisor_objects(struct repository *repo,
+ 
+ 		/*
+ 		 * pack-objects creates the .pack and .idx files, but not the
+-		 * .promisor file. Create the .promisor file, which is empty.
+-		 *
+-		 * NEEDSWORK: fetch-pack sometimes generates non-empty
+-		 * .promisor files containing the ref names and associated
+-		 * hashes at the point of generation of the corresponding
+-		 * packfile, but this would not preserve their contents. Maybe
+-		 * concatenate the contents of all .promisor files instead of
+-		 * just creating a new empty file.
++		 * .promisor file. Create the .promisor file.
+ 		 */
+ 		promisor_name = mkpathdup("%s-%s.promisor", packtmp,
+ 					  line.buf);
+ 		write_promisor_file(promisor_name, NULL, 0);
+ 
++		/* Now let's fill the content of the newly created .promisor file */
++		copy_promisor_content(repo, line.buf, packtmp, not_repacked_basenames);
++
+ 		item->util = generated_pack_populate(item->string, packtmp);
+ 
+ 		free(promisor_name);
+@@ -223,7 +220,7 @@ void repack_promisor_objects(struct repository *repo,
+ 		return;
+ 	}
+ 
+-	finish_repacking_promisor_objects(repo, &cmd, names, packtmp);
++	finish_repacking_promisor_objects(repo, &cmd, names, packtmp, NULL);
+ }
+ 
+ void pack_geometry_repack_promisors(struct repository *repo,
+@@ -234,6 +231,7 @@ void pack_geometry_repack_promisors(struct repository *repo,
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	FILE *in;
++	struct strset not_repacked_basenames = STRSET_INIT;
+ 
+ 	if (!geometry->promisor_split)
+ 		return;
+@@ -247,9 +245,15 @@ void pack_geometry_repack_promisors(struct repository *repo,
+ 	in = xfdopen(cmd.in, "w");
+ 	for (size_t i = 0; i < geometry->promisor_split; i++)
+ 		fprintf(in, "%s\n", pack_basename(geometry->promisor_pack[i]));
+-	for (size_t i = geometry->promisor_split; i < geometry->promisor_pack_nr; i++)
+-		fprintf(in, "^%s\n", pack_basename(geometry->promisor_pack[i]));
++	for (size_t i = geometry->promisor_split; i < geometry->promisor_pack_nr; i++) {
++		const char *name = pack_basename(geometry->promisor_pack[i]);
++		fprintf(in, "^%s\n", name);
++		strset_add(&not_repacked_basenames, name);
++	}
+ 	fclose(in);
+ 
+-	finish_repacking_promisor_objects(repo, &cmd, names, packtmp);
++	finish_repacking_promisor_objects(repo, &cmd, names, packtmp,
++			strset_get_size(&not_repacked_basenames) ? &not_repacked_basenames : NULL);
++
++	strset_clear(&not_repacked_basenames);
+ }
 -- 
 2.53.0.585.ge25071d955
 
