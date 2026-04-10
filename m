@@ -1,136 +1,101 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5043AD511
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5390A3A7585
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775833483; cv=none; b=dUJnPy5JQJJYx/NYSm67+bN0kA6aru8X2Ea02D414KhgBHdLrbRMP6QKyMSwYo9MgdmF01vnAz6DnpJUyhL/sf3I1zxuE3u2mIKC9aEx+i80ZHHAwpltpciwVb2I/XIFSBP21SUwsIlu3+tka2IRRjHsUbbAZHLFpVYS7SFuXUY=
+	t=1775833564; cv=none; b=iKFu3BsIh8ojwCLwq43BJ7GWEe/TgwoHk1vvpSH+Dmy8cd3ePJK0xQEetK016Wj60i0BmFRHo5zde1OeoFArwsd1dAUpQZzvwZvAE3ewpHuPinLXC5sV8Gp68C+HlkGtRLpO//lGZo216ASZ7Kms8OE3ubr0haIr0e0xKR0IiuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775833483; c=relaxed/simple;
-	bh=dbjYZa1Y5MTMHXRLZMl+EaeslbFYZvBoxS41hISj+1k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FP9JnVBtiZEu9nvm4Mq8D8gv3gQdcutkXbajeNM8zPo7NpL7MiDitXdPMxImdUW2TUVq+qYoEb2aeZWYR34XLCnoGvTGQLp9q9Yj6M+FsjMngR835By/eYGPUtAGeb2c7iL6MXiIAXuV1+c+m+f3KKbE2+XoPlBsv0Km+dnMeV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kxkObzIG; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1775833564; c=relaxed/simple;
+	bh=eYbsrVY/PvttbJ6YcHB/QskPjFDYn2IxX4NvsG+gTno=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W19Oo0m0m/Ny6yGKHqzGY54y5b3/3eI6BXWnLcDADKxZaqIUzFiy6KpLovUXpaAbwHNtAMSK9IztxfJMmuJQwwhcwKJnPLHgotro8D10dpdWJbr5Wgc0dPcNJ83zACU+o76z7fJ7l6yxInQRiMxi8YmQ6wmebfHhlHGGF51QLUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pnBDijgL; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kxkObzIG"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-43b983bb07eso1371624f8f.0
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:04:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pnBDijgL"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-89cc68655f8so23873206d6.0
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775833480; x=1776438280; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CrYUFOHuNbCtkGQ08HoSGWHf0RM9+OArmRtLYj4mT4w=;
-        b=kxkObzIGf9pYpKUgeVwx1DsXCs+4j0RfhVU4NOu847BheqjjLom2V0FH6gA5GsRmKs
-         YY0U6EAvIRYK6c/LN13DkwzK9se4Cbvo7SqE0M3Le80blK2EM5nc8iNYvsuzQ8tdKTfZ
-         23aelGKe7SvXeZ9znQckyF+PoIBsNK6XWxaglwGVCHIKXlQd+ULflhg30KlcjIVKbweW
-         edZ+ybaJiUgwpE+xngV4Q2TniWFczeo3XpZy5mNPj+oPJsGZAibWtULSbrTlG8xHVPNl
-         xBXbnitxJy4xxRLu/Lug9jmGPEAzimsMQDQV/5rzlIR/duYB3ElJm3cYAiGDxvnemz/U
-         Cs+g==
+        d=gmail.com; s=20251104; t=1775833562; x=1776438362; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bY7jp9PK1WeWO9ztTMzzDJvck7pJwv7YEjIEba9IANM=;
+        b=pnBDijgL0AZ4xkTgxog30jEBqXB5ohzC5PE3BGRq/cBGTJQZU2AraEidKAfer+wdHg
+         oGX+JCsdWU+7KZFtcX3md+r0EBkSWSKIbel9HZjd9vsl4UvHlWHvkRVhe6MlJGgAMQ+9
+         rpsybYjCK6FAmetMskAIpBy+Hn5sAse4yCoCSzBpjDXwEQGAJr+s5t99rJ/WgGZgG7I5
+         6LOHdoofaNhVoU47qR3ksDEwV+aqMsX/armnRkaVNQJZXC0u5Dd62X5bXBWaGK9N4Qba
+         j+sFJiudhqi8hdUHZnxr8qB9rW55FlI6Jw6b3kzPrYNjHGuy9F2/AS+7pE/G46GC4tzM
+         wr7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775833480; x=1776438280;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CrYUFOHuNbCtkGQ08HoSGWHf0RM9+OArmRtLYj4mT4w=;
-        b=q5O1bPed3ECZSiVJynSi3gs1LZZVUNbSZ2i20WVJS6j+UsKbGiGi0s2zdTij12lRYu
-         P6TtFZo9mw2w0YvamgBgKszqZQeOHiYKCDVJ5JR19cvhBjPjJJWQktaWbTqbv+A3bPzX
-         BTOksO57HnsbxKfqDkuZwqqIPQCX04xFNGxNRYvferR7iN69gEXJTerg214yeIrgOWvT
-         l/oX5MwPVrYgDNsTh7hIYLvt28wMIQUZYr5t9WvcnWMh4ISfhFOXyef5XdEPkMTZMmeF
-         555M5sjMVxWGOTbG8eQInqjqapTsNFMDTdTvuBbe24zyH40OaCrMssW6au36PIRRJuTy
-         M1bw==
-X-Gm-Message-State: AOJu0YxKpIR/H6gknDC4znYbKJHJAtlc+r6IekCqTWj4JCmBgyR62Xcr
-	TQaBxjeqJZPQG1hqVfoB1z7Qgy0ZMI+GXjtOApEGVJyu5Hhg/JLwXrN3nfjsd6rm0QI=
-X-Gm-Gg: AeBDieudoOpFXTeZAnWPeT9h+ykSBsGLVpr+TdpE7l3PHVk51L953JJnKlXBLb/KCdB
-	lwPr8LGErkH6ufnwWL7qvJiSwZ/dBXB9e2H0wFDiwScG6rZpi+SE0Mo67dM8Ash93ol7ZWiCThc
-	oRJwuWdE26he6WqSJAeNVSzY2Luuq7+zISQoF7qyTn+3SmwRWpee2shH05EZC2gTmutIrQE42+Y
-	ieSEJQrmj9Uj7xjehCksLkLtM4uzeMzyXTokPD6SWrnv0/OmxOzrWJlQIlJLzTRf2HZxDbO80JT
-	0jL5FbrmYIqc34U10WVsKS8R2g/+lo2so+ZvgUIm0twtYclL3qo4l/LyTZK83tyttOl9eZ4a+6a
-	ZDt3HSkYyeRi8ONS3dzBlL19yfiL/o41rs1+zheIz3zTloeQAcBjWRCq7Ioz5+N0Woafe2XO16V
-	OgW8E7LrlUJ6ehdxRfs15vNXQlL1eaa0K1CROt/DhJAmV3oQgZhEWlYG2motZgPlY/KI+Y0XLI/
-	bxSrUNc
-X-Received: by 2002:a05:6000:2906:b0:43d:604:56d8 with SMTP id ffacd0b85a97d-43d642c9610mr5241105f8f.49.1775833480278;
-        Fri, 10 Apr 2026 08:04:40 -0700 (PDT)
-Received: from lorenzo-VM (host-79-19-37-238.retail.telecomitalia.it. [79.19.37.238])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63de2a48sm8565692f8f.7.2026.04.10.08.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 08:04:39 -0700 (PDT)
-Date: Fri, 10 Apr 2026 17:04:37 +0200
-From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-	Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Tian Yuchen <cat@malon.dev>
-Subject: [GSoC PATCH v4 5/5] t7703: test for promisor file content after
- geometric repack
-Message-ID: <d9f63414818419031c61a54cc3550506405478d5.1775832056.git.lorenzo.pegorari2002@gmail.com>
-References: <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
+        d=1e100.net; s=20251104; t=1775833562; x=1776438362;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bY7jp9PK1WeWO9ztTMzzDJvck7pJwv7YEjIEba9IANM=;
+        b=cPi8eBmtVgbFsin2zIKskYucTSeIwFfBCZ/VINWl1EZmhlbiTXP1NzMBtU6exc5CJS
+         PJXkbGZn8z6Hslhcs3Nng3g5FXaj9zQ+2O1VX25kpVtI4reNi/pisITDEzQLMsm1jdVL
+         s55mYzugH2HRfRb6ppHdcCFBmO1EHKK2Az9UOCtIiG3E501sJ6QG5gppmIwzgi5qRD1w
+         3ANBSI6j9V+B2jx6M0CJtw1DmOEVB1siIZ+n9M8xvTTOZ2IG5N8mxMn84IRC3cyg9oIh
+         WdRkR55nXzGAJNLwae1JJdmWGR+lKAvjYDotY+wtUuPZm5TtuAkA18iHNHAjLHou3+Rp
+         7gVA==
+X-Forwarded-Encrypted: i=1; AJvYcCVzBVESTeSf6PK5CSYI34nMVX2xIIac7iuQXU1Ff1Nsyb783g1zmoOKAytDLUpvBG7We08=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0moTzw8og6YDfGHilbL2UEMnhWrkI7Oj/zHbX6ElgukxwjZ58
+	yapRYJP2yNiv9eeu+jtmdeY9Cb1oCv2Q84r+uT9FaFQXFtWjxPIcCtaP
+X-Gm-Gg: AeBDieuGmpoPvS5NjK4V8TcdFSMrYwZLDLMCURZDXDP0QwvQoVSGUimOXgGCvXlm+dC
+	zBm7VKQyLq6ST8ux8jJDd9k6fbpVBizr+cHFiugTbfBJpcUwhzWoQTSu35XcIgtUI6PlTOuGOt0
+	mZpZGqrT3y2uAV8tQDgazwaG8aKmaYCnZnz8ct7YG9hSDt2a9mWkQL3l/id1h0d/I+Y8DolfJXD
+	scTkbOlbIHHjsSF7EEOkmpXzD6HWVbxr7vhXvikRKNq7ywH4mqd11UGoRR+vQs/xv+xR/8W4lyK
+	+yFCeu5t/XtR69Jou9qSLn7asEXFeKM2239YGdm8GWbiCPnGcsu3iXoY4/OtGH4dCEHiAuFRK67
+	O9NStOXb0IUrEh8ZOhAkvauGA7NfrgqjVCfzyit7hZ68niILJ8mIgAnXP8v9hbAjUKdOpGoG47j
+	y2ZtNEAjkampriVdisQd7rCaR0S5XVm+IdOR2ByGAH7tGIRJvCcjJdQGyMCzTtunZsgmdK2A==
+X-Received: by 2002:a0c:be86:0:b0:8ac:9314:a725 with SMTP id 6a1803df08f44-8ac9314a7d2mr110326d6.3.1775833562039;
+        Fri, 10 Apr 2026 08:06:02 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ac849e2891sm32987926d6.5.2026.04.10.08.06.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Apr 2026 08:06:01 -0700 (PDT)
+Message-ID: <6eb384e6-7134-4f99-a6b6-e8608ccc9dca@gmail.com>
+Date: Fri, 10 Apr 2026 11:06:00 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] Enable Rust by default
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add test that checks if the content of ".promisor" files are correctly
-copied inside the ".promisor" files created by a geometric repack.
+On 4/9/2026 6:44 PM, brian m. carlson wrote:
+> Our breaking changes document said that we would enable Rust support by
+> default in Git 2.53, while still leaving the ability for it to be
+> disabled.  Unfortunately, we forgot to do that and my time machine is
+> broken right now, so this series sets it up for Git 2.54.
+The discussion about how to handle the 2.54.0/2.55.0 release details
+seems to have concluded, so I went to review the series more carefully.
 
-Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
----
- t/t7703-repack-geometric.sh | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+If we take Junio's patch instead of this series's patch 1, then patches
+2-4 look good.
 
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 04d5d8fc33..a8e3e6ae3f 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -541,4 +541,37 @@ test_expect_success 'geometric repack works with promisor packs' '
- 	)
- '
- 
-+test_expect_success 'check .promisor file content after geometric repack' '
-+	test_when_finished rm -rf prom_test &&
-+	git init prom_test &&
-+	path=prom_test/.git/objects/pack &&
-+
-+	(
-+		# Create 2 packs with 3 objs each, and manually create .promisor files
-+		test_commit_bulk -C prom_test --start=1 1 &&  # 3 objects
-+		prom1=$(ls $path/*.pack | sed "s/\.pack/.promisor/") &&
-+		oid1=$(git -C prom_test rev-parse HEAD) &&
-+		echo "$oid1 ref1" >"$prom1" &&
-+		test_commit_bulk -C prom_test --start=2 1 &&  # 3 objects
-+		prom2=$(ls $path/*.pack | sed "s/\.pack/.promisor/; \|$prom1|d") &&
-+		oid2=$(git -C prom_test rev-parse HEAD) &&
-+		echo "$oid2 ref2" >"$prom2" &&
-+
-+		# Create 1 pack with 12 objs, and manually create .promisor file
-+		test_commit_bulk -C prom_test --start=3 4 &&  # 12 objects
-+		prom3=$(ls $path/*.pack | sed "s/\.pack/.promisor/; \|$prom1|d; \|$prom2|d") &&
-+		oid3=$(git -C prom_test rev-parse HEAD) &&
-+		echo "$oid3 ref3" >"$prom3" &&
-+
-+		# Geometric repack, and check if correct
-+		git -C prom_test repack --geometric 2 -d &&
-+		prom=$(ls $path/*.pack | sed "s/\.pack/.promisor/; \|$prom3|d") &&
-+		# $prom should have repacked only the first 2 small packs, so it should only
-+		# contain the following: "$oid1 ref1 <time>" & "$oid2 ref2 <time>"
-+		test_grep "$oid1 ref1 " "$prom" &&
-+		test_grep "$oid2 ref2 " "$prom" &&
-+		test_grep ! "$oid3 ref3" "$prom"
-+	)
-+'
-+
- test_done
--- 
-2.53.0.585.ge25071d955
+I had some initial confusion about patch 4's references to Rust being
+"optional" and it helps to know that there is a mechanism to _opt out_
+of Rust builds. So the real conclusion is that we're moving from an
+opt-in system to an opt-out system. This is a nice way to make progress
+relatively safely.
+
+Thanks,
+-Stolee
 
