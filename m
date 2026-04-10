@@ -1,107 +1,125 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEB93A16A2
-	for <git@vger.kernel.org>; Thu,  9 Apr 2026 23:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775778604; cv=pass; b=gZWW0HYvxq7Slx+tPb5rLARzR1/oR2mshLMjt4P7af9/c1EpyXHV2+bXYzPbeGO0vYxCNAza3lq8UmaNogI/lqYqksG3sgfxk2ZIsrbRwP3QMKvKSKt0pCgOEuVTQ/urQngzoFvDU18XWbXwZzB9BSGjXRTJ6jiyvFrekEKE+gg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775778604; c=relaxed/simple;
-	bh=PGB9VhfmQOLAJ04t4QnTr9s3hsxDLxF6q8F9KPtGgR8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z4au/mFwQqfPpkIVUCRgK2k00OQdBdpL7grQq92o+Red95BhmuBPpf8v3EFy1yrLJx79wrK7g9aUcxqWW6GBCxrCsgsYBpKu07YNq8AlMBovtRYSVu+JQcrXu0AcQMVnsyaKPKgbjhyjw4qIMqrGexmajwafnL9DtFRkLL6SvMM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TksxRB80; arc=pass smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3F424466C
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 03:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775790095; cv=none; b=m3iE3nK02dHmuyUtKOPpX3QP8x88gLT2Zt3LWbeLkKWprwVYJx6If3oz187ixjWFSk8G1QRnAnJSiD+tVJvoL0WoTy+ddrc5xWstL6icv0kdlLXqT6jLPqINbGsP24LmYMBMkTJ/YMEpI1JbIIqbC57xdXKTjTeUYHFMAtl9bSI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775790095; c=relaxed/simple;
+	bh=iqkARBgcn/PVy7ccHyStRus4B3WxyIfFfUeDi6qRgaU=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=tbNiuU93dSE4hqjWBcIhoLkb2T6gWOBvQDK6y7UF0N4Ehxt9XM0YCBnno6fC+3WMw1Xgg+yUqwMPnk/rP3CYzOYv0eUQsFpg2Yqz33aD3+MRlahNplKq95VQkLY3TxCgN9MyA1G1sKqJVNzaDIh+grf1fkFi7o4uFZF2S3shk3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sq9nQwdU; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TksxRB80"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-38e0c167fdcso11580981fa.3
-        for <git@vger.kernel.org>; Thu, 09 Apr 2026 16:50:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775778601; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JnfNz7zTNR5kJnFEHwYW1h6YC12p4BEutfdNVKI63edk7imbS2OzQNv4Ek+0H3J28T
-         op4vEkDaAngGbmlllmadO5Oudz6FvGZcjNu9OcAs+GRIMx2PG9kDC9A9jLjmn30qOUbd
-         6S8yKh6wsTb5qsFoxnN8h2sWQbhnqThTW7ddKG8EJh8I6wHRUqSlpsS/gEf+ughzyH0k
-         DqGnA1ue/nbGAWAdReL8i5zUy0VPaX/P0HlDiFi7MqKz83gCRRSMe5afLsLifxN6YWLz
-         zVTjOA8MdT9tdPswZbhVVs66wpJ+ioLkuGC24tXEdAA5u1NTOtlFe15wm+/Xw6aD/sdx
-         Whmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PGB9VhfmQOLAJ04t4QnTr9s3hsxDLxF6q8F9KPtGgR8=;
-        fh=q5RBUwYaDIprwubB9TUfN+lDkw55bRlTeAPpqS9AOKM=;
-        b=SGED7+L+CkV+LATRAiS0Gc1C260NiGkuJbMs8coRvvHM4IYlTTlj1Su26KdTUYk7Ja
-         tPx5ry3sw3de5yhggKx9SPuB066n/ea9J9eYIjxdn5RPAGfNSNgCNE/CZVLGxibbDTIq
-         1qfGX9aCqpmphyqILA7tDBtlLHX0XwB6iAo20ysd0U6C2SVXlCsbHdkv0FxU9BI/BfUt
-         UUAOgdi7tnh8GmNmU2yekgGkaEyPYknQ5R8J0MgomXcoQdQg7FEO/leSER9HG5EJhLqy
-         cQ8dBQBTkVJJP8xwUgsuQkAI06tq1PHnNlp/1qNnxpF7bmjVjOW25O1QkvsAt7KMmm5P
-         Lehg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sq9nQwdU"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-82c70e4654eso738656b3a.2
+        for <git@vger.kernel.org>; Thu, 09 Apr 2026 20:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775778601; x=1776383401; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1775790094; x=1776394894; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PGB9VhfmQOLAJ04t4QnTr9s3hsxDLxF6q8F9KPtGgR8=;
-        b=TksxRB80vX2nHX2RiGKl6XDfmRfGXd3+Gomq6lxNEnrEhH2mKcUiTxmUc1j5RcCjNK
-         TzDxAQd/oxFKIEGKjwZwQuO3//YtzSCwH8RtJhYgE93IVSi5GDIIf7BNxcJafNc6D/lq
-         AYPnVtJeiGTZS1xNTQlykBRY3CpilmHzo9wbG8/meUWy7CtsvigOTCZGH/TbBE6xPHMp
-         sPQhZJJuY7RVE/QUR5jqfKzLxCFdppDmRsNh1DC08lqy6xFqm/aO+ta192xXyGbMdQyV
-         JC7TyjkUJnDbExJcWO6ZLP0q5QIeoYfurVYc+Hc/2SD+EQ+uaV08zICDENOIge1TEHpU
-         B5FA==
+        bh=XvOMTr8wvlso60qrbYOO21hw9Rj7ObwP983Yw7Ya5MA=;
+        b=Sq9nQwdUQlbKE1yqNuaEGQXmPrRWiORqrwyYAGRXiqdAc0aTNiiDxNI3E/QzRAxVpY
+         6pOwPm/kAJs+P68uJoDjWyGYC7+OaXpc15dWd5QsPYkxNltAJJxXcdLDU2NnAzvTYOzS
+         TlbBZfkh84EVFhRGRiX/0CW/jBwTvX0lxceWopmlxaDqTGlKROGK/LOZnvNUygLvMaBd
+         +jEJ8o9QgNEsELDE9v6itcrYFjsHeHnvvxvV+G5uPpSHBDLQmy8KaoFqoB/VHhrVgPlH
+         9Fg4LMsSsxNlgOC8ztMmkhtonC/RLBO8fStA67X1I2+COaaFo+c6mxybk0jyNYi+Yqu3
+         WwFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775778601; x=1776383401;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PGB9VhfmQOLAJ04t4QnTr9s3hsxDLxF6q8F9KPtGgR8=;
-        b=kVGcAGYsSxOZN35k5Z+Gu3qkF5nPqE+CMRVKHlBqD8E1d9LD17OGYFmCGmkfbHJsm2
-         gHfFehwzfCT5wQfKZJGqwvMVLn8b/8AynOS+kssEqQuBxXl8Unvqob96/zs2JE54uvZI
-         S78uTu6Nr6c+j9+21vZ5oqLsxZYgEtyVWa2rXHvjeQfxKrDprpNUqR5rgZW7n+KoeP3Z
-         WDOjmUGIJVX5PXa57H7vGstnRKyOKBzPu0bjAqzLCuF352iEdejXt4zVnDsKzAjxE/z3
-         jMt0yFuQahYuBqp9Y5roAkHBoUj/38vL7868SMJR5m1YyP3oYq3cAEgSmn5M2HmQpFMP
-         erHw==
-X-Gm-Message-State: AOJu0YwetpNH8oBqk36S/N/BLKbb7UreewcaSDEo3eVOiHmUmKZtd3RZ
-	kXcCJtq44jDr2ETuh07FtX064LbJvBMVm2t8vKg1SJy57I10gN3AKcN4FnRHzg1zrxZMmWGh+81
-	Rzv7Uh1fKBfon+gbFwTbmgbXMJmi1PTg=
-X-Gm-Gg: AeBDievfvZA9n2QPknEJEgh4UR5GhXL5SE/h7h7lvnVJae+EEqI3jYgnOJlRfSHwvlP
-	TnwGAQu2txS1CQ2Ry89Zn7H64nEC5vKjM9MCljJVYY59kZT4Wr/MpzViL4ElmYJbGCD3EHmEHuM
-	QxfG6C1a1jlP6Rh9MIk6C3nhpn/Zcw+8KWB1VOkkLGBDIlvMMiG8E55u6s320W50jE/0NGMS+gY
-	B1ZnB+4bKPJTSiPcgJtH+9ORu/LjLo9auWC8nhyf2PB25PEiy5bcnrC3Lv+3C/6DeEsLsTqDmg3
-	smj0LlDg
-X-Received: by 2002:a2e:b8d1:0:b0:38a:4dd3:6a48 with SMTP id
- 38308e7fff4ca-38e4bf6873bmr2149711fa.26.1775778601185; Thu, 09 Apr 2026
- 16:50:01 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775790094; x=1776394894;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XvOMTr8wvlso60qrbYOO21hw9Rj7ObwP983Yw7Ya5MA=;
+        b=JEZ88Gxb+5oSapGWi85NuzjK3PVug+Z+vWyXxuyAhztq3pVKgba03IUp0JzwuqRUUs
+         dhyMNmgTDdW8kRzZ2Pjh5G3z3Ca/n/3JJrMFXgjK7cDdG9e+T+gmE+92uLvrczLZfDcb
+         rJDjKLQFLxgULVexYlQ+eKkBJAx/HRIfXr+i+Lj6OYLcgcTcUqpWpbMRMbQHwTp/ZwIQ
+         D62tMkT+Sw0gywrxMQH6KA13V39O5HZpkkl6cumi/0dAQ8DikhCjcbdkjqYP3wxTCn7g
+         MrBsj8gpfK28a0BVUWvcZhpQYGtmw5LC/6d7rARZZ1z5Rv0Rl1kp0SIC21Q5VvuM81TL
+         sO2g==
+X-Gm-Message-State: AOJu0YzYpQ22E5bE2tHXbVmZLPt7rgbnelhlXhgsSv4Jj81NAJ4Lx7G4
+	YPpwqqzdt/xihrEPrUdLtPGOtUVEg8WPqui0+ySi0HyKYAFkKYsrACMolcWG+A==
+X-Gm-Gg: AeBDiesFv1cI3dmGauuIrDmhpvbsMy9ergxk8Q5aio9OVhe+7BArEaKPGb6KHlhRmfE
+	2vlWpH7EMoYoIiPRusfqZE7htCJ7ZILzkPNcI1KkY7aI23epamm+ZaNxlnK8+4V3E3bTkuhDpr6
+	OUS+4Z2EqZCj8dCW1nP6ZZq4fSudIp24Msho0LItcGUc5pIMHTqKRYxsRAODYBDJYKEvOuVRnz7
+	ULfLvuVJTmjwbswC5wq89ZFeMXTTpOoFqNz7TMt/43n5sunvHc3MpBtBrfJIiR+3t5+Uax0c1/K
+	svVHMX1tC1IqqzRSblHhN3C2h7RLcb7nsNO3HhRmRBs5HpKHya/vuT38EeVNcizHaPadctkDUi2
+	S/UG49ORolJhmzTnZ/0RXh+fPdAMihR1EkavkwWxdeux8YnP5reeJ/Rvtga0UK0o/dOR/QrcRSh
+	nTOcqysClCYe9WxIryCeVoyiq1+wxO9Njb4qFoSCveTYgJvIOs8yOLvoq6rPetn1xO0rv+DaEC7
+	sS0AhO+wQ==
+X-Received: by 2002:a05:6a00:14c7:b0:82c:6b1b:7ad4 with SMTP id d2e1a72fcca58-82f0c250a1dmr1778420b3a.3.1775790093871;
+        Thu, 09 Apr 2026 20:01:33 -0700 (PDT)
+Received: from ?IPV6:2401:4900:93f1:72e7:7147:28f0:d3fa:f2d1? ([2401:4900:93f1:72e7:7147:28f0:d3fa:f2d1])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c500415sm922689b3a.51.2026.04.09.20.01.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Apr 2026 20:01:33 -0700 (PDT)
+Message-ID: <7207a7f0-3806-4ff3-a3d2-2cdcc23f913a@gmail.com>
+Date: Fri, 10 Apr 2026 08:31:22 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
- <pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com> <aa1831336297478e53ad1a2a2ab9246860181366.1775762235.git.gitgitgadget@gmail.com>
-In-Reply-To: <aa1831336297478e53ad1a2a2ab9246860181366.1775762235.git.gitgitgadget@gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Thu, 9 Apr 2026 16:49:49 -0700
-X-Gm-Features: AQROBzBa_pWMJsGnsXmUg5pRPadtb8klNgtoQscqnttlN03HvBpWb3qBqCNhNdc
-Message-ID: <CAPx1GvfGRx4rEEhqNbgsSKmW77o+uD2f+977cX_U_amyYdz8rg@mail.gmail.com>
-Subject: Re: [PATCH v8 4/4] checkout: -m (--merge) uses autostash when
- switching branches
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git <git@vger.kernel.org>
+Cc: Christian Couder <christian.couder@gmail.com>,
+ karthik nayak <karthik.188@gmail.com>,
+ Siddharth Asthana <siddharthasthana31@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Chandra Pratap <chandrapratap3519@gmail.com>, Patrick Steinhardt
+ <ps@pks.im>, Justin Tobler <jltobler@gmail.com>,
+ Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [GSoC] Call for Mentors - Help Us Welcome More Contributors to Git
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 9, 2026 at 12:18=E2=80=AFPM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> ... If reapplying causes conflicts, the stash is
-> kept and the user is told they can resolve and run "git stash drop",
-> or run "git reset --hard" and later "git stash pop" to recover their
-> changes.
+Hi all,
 
-I might suggest that this should recommend "git stash pop --index"
-(either always, or if the stashed index differs from the stash's parent).
+We have great news and a small challenge — and we need your help.
 
-Chris
+This year, Git received 19 GSoC proposals, which speaks to the growing 
+interest in contributing to our project. We have 5 strong project ideas 
+[1] and are working to select as much candidates as possible (at the 
+moment we're capped at 3-4). We're constrained not by the quality of 
+proposals, but by mentor availability. Right now, we have only 6 mentors 
+(3 primary, 3 co-mentors), and that limits how many promising 
+contributors we can take on.
+
+That's where you come in.
+
+If you have experience contributing to Git and can spare some time this 
+summer, we'd love to have you on board as a mentor or co-mentor. 
+Mentoring is one of the most direct ways to grow our community — many of 
+today's long-term contributors got their start through exactly this kind 
+of guidance. Karthik, Ayush and Chandra are examples of GSoC 
+contributors now turned into community members contributing outside GSoC.
+
+Even stepping up as a co-mentor makes a real difference.
+
+We also have one self-proposed project from a candidate this year [2]. 
+If anyone is willing to mentor them specifically, that would be very 
+welcome.
+
+If you're interested or have questions, please reply to this thread. 
+Every additional mentor means one more contributor we can nurture into a 
+long-term member of the Git community.
+
+Thank you!
+
+[[ References ]]
+
+[1]: https://git.github.io/SoC-2026-Ideas/
+[2]: 
+https://public-inbox.org/git/CAOAgETPhYra3XrevHptFu0x-se8D9ovRtgfomwFbhq9rSTXu6A@mail.gmail.com/
+
+--
+Sivaraam
+
