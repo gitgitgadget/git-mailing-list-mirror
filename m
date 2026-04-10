@@ -1,70 +1,69 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60163A63EC
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 21:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E8836165A
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 21:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775854886; cv=none; b=nCVW/DABE4t73jU/WY5sE/IYRpMDC1QMX9IVHWBBVORjA0kpOBAzSdrz+LfeDj6G+7BpeKNYeIZHp9zl9GBYmzULHUBlP70aBg7dUcsmmNiEMrA25CUqcEAMnu5m6AhBXaUGhMaEJmA5pii3dR8MDcTOgtUa4g1fcUg48t2RyRY=
+	t=1775854896; cv=none; b=YmrWHgaZKOcIRjlAiPIQ6PG2m8d8euhVOq527t6WjGzjXSUHPspEpQfD0w3LAes/0ifCSBSDRUxJYRyFJdguoekXhceeMDaPd34ilhVJMZX8c0nUOg0z+tnCRuh40VoZ7D2S/QqPtf1p80Z5Tx6pfEVeRTrd16bYKg3/JZ89C6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775854886; c=relaxed/simple;
-	bh=DowXi/3E22xhFvx1n/CLdBIzo5ubTOOKY3GKDBXLo7A=;
+	s=arc-20240116; t=1775854896; c=relaxed/simple;
+	bh=wM6X1kOQ8RlWuvfEoeb3y4LRctIqntGIPQzSL9sCO5Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=txOeE9HXWsjhJV2201F0io1kNcJ0BWM1Y6LqdWMvvIyRpBRGZwamzT+Hu5dU7lpHzgh8eSHc3gU8eFVFPjgCfcjel4hbYBUS2OmPCRHX7uiec+HOSH/3zV51tm0Jabzhk0wnyrnfDm0G3fK/3LJtFo+2S2UffyFUPzjC+Ey0Gdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4q/kEdR; arc=none smtp.client-ip=209.85.221.182
+	 MIME-Version:To:Cc; b=rHPbiWvtfTq05mFnxJV3YtqXkf3bgNQ3BjzEnYGNe3qcc/Ny1Jo6YU+rZZSxJHvNcMslqLRP7AF6PlKOFUSu6iOyTdDAPbtIj+yxR0AXN1Srf1yYMDlxeYHamcCWB90mvTWCJdjgJgpoEUCFxMkZOiBxRATx0hfR6XNrnTSE7Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lh79bGpE; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4q/kEdR"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5637886c92aso1082997e0c.0
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 14:01:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lh79bGpE"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8cfbbf35354so293916985a.0
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 14:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775854882; x=1776459682; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775854892; x=1776459692; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I8rYER8XINRJx2coGLNG/i9Bb9xb3QV9NkhPmSJXdUI=;
-        b=f4q/kEdRqbst3aEnZ2SSLLtdegnzNkYXjIitxbFKNmk69qjluAQRzuTUpbZGk9as23
-         6ZziYG+LBVzEEewcwIP6jdC2GiLO5UMZd+JyszxJKKdlBmpD0+1Vgsg60H2Bft/MO13I
-         Y38Wb76t97VEGfPUV0mt7i48N7hGICSzgyLuvq7CgvYF8OOzFy2u+eeM5ISYFFI3/cyC
-         cejK9DUlawjeulAtrEXaMvgcWkvU5SYpGLRED/uVL0nMfF79XeKN4rNOoaR1gT+MAAIO
-         alMdjLFELop8bvXQquagfqjKHlgxt8OlJpirGtmbGBvbWnf0qD+xvjiPtjbcVy9wE6DE
-         t9kg==
+        bh=45kNGcKZbNJJ2R6xHYB9UH7NOBs25a7xMtYNOIXh2zs=;
+        b=lh79bGpEBdAsmjF5IpDgbkfJnOBGDT+N2W126OxdOI8E5Z8jqYL3o+n73Rsj6fBClI
+         yWEl7bDSDD/yaDn6q7QfVCy7IxnTkkv6gDwNCq05YteFOz0nRLW1TIICTbXYKEsb3iav
+         B9iZXybBxptc8hUIc2PkRRfzm19kI3ZfQELj3EBEYdQhAbi40LlYErkPR1YHXMlPGl/i
+         0odWY1xq4vLVJv7+Av6voSXndTXfMIV3pFjWv8H3bD/Fh+E8Y2avlThWGnPaw9fpjr3o
+         0nIN0S1HnhokRbMw2AVkISCYfywLawVeNbtPBiRBoh2AtcMmuOe9u+LvqVzFJDx8AyAM
+         jMZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775854882; x=1776459682;
+        d=1e100.net; s=20251104; t=1775854892; x=1776459692;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=I8rYER8XINRJx2coGLNG/i9Bb9xb3QV9NkhPmSJXdUI=;
-        b=OjGYyYZOT37ZqpI+ceKmueb8ulNyfhsXSiNvIsHRL9RpkacvZE9+vcXT9tk91m2bEi
-         6n2gSKMOIWwUO5SOcatDzv0Bl9yed93V2zCXumg8Ph3MiM1GNLWc/hSKVTbjALsJOfD4
-         jOTnnuGHBkW/yih48aoABIaADhJNerHAVRx8Zo5LHHY4lP37yphlYAVG6ZKi6qo73C8N
-         Y5ibs0pIr/MPIt2SbmEufOHFw9u19jwsOTz4glCvS+X8W/dX9JrXyseCupBIydqIuls2
-         b/vGflH2iqQbHoEbJt8+/kcqB5+y+r7wthRVN353OAjYssQ4/O9rKxPzHmp2wzyLCCzf
-         zpgg==
-X-Gm-Message-State: AOJu0YzzwVysByEcBO0hoqmeQkke8vdmFJWUKMRxOvd+OY7BYoZOMxU3
-	Au3qRlqiEpwq1MZVlmDOlYOzlrAK/MTT2xaFewZnfuuOsd6UH03jAIctHX2VOQ==
-X-Gm-Gg: AeBDies4e8hZvSc1YSy1T6oWLuxpUrKeyCt92Fv10LogJON8vRsK1y4TD/laLcTro/A
-	2uoBrrOwQ23rVt4YqacbjZgT7VLVTr/7GnXTkSjOysPTIBs12EySVlW07y79aFyWsClWSdMn5gh
-	jJfZpOfUMBA0ehvn31PwJb5qwbthf/vMUR5HTdito+Nhr7/O2tvQcNiUIIQRhKtqNuHmom9yHrV
-	OWFcdMxxPVsmjdAokBa5O4rVUnmX3sx226P85Lc9ybcMfeGeq2IaEY5/YMmRzzxYLp6FaggVqUH
-	W47fb5RmRN+esPSaSzyRXfY7XcwrEtazmISRv8ajvZosjgrmQ4DjMTPfDaQGz2yMLgnT4/DKM8f
-	VQP0zKP/77fNA9G1Zuy02MrZOJngQsx6TmyOxtyzzKPKK8QYVgs9O0OcXs7r7oy1Vb3nljkvMQV
-	laeMv26o9jINYqIO/n0U5AxvEjkA==
-X-Received: by 2002:a05:6102:f8e:b0:608:94e3:bd89 with SMTP id ada2fe7eead31-609fe9b15d9mr2245272137.1.1775854882164;
-        Fri, 10 Apr 2026 14:01:22 -0700 (PDT)
+        bh=45kNGcKZbNJJ2R6xHYB9UH7NOBs25a7xMtYNOIXh2zs=;
+        b=cKLE9Yvb7cJaehmBAUp/kjlekswezfeiWxPclnkdD+N9Se3qABIRLt5lLnQOxzoO4Z
+         l/y71AqLr/I3Y/zz4kYio9F2HGQY6zhtW1s0l7nhQNshYRxBaUJCAM5gK05HFgAgweoK
+         QtVykZ3yeSZo9Cq/j30hT+y7sJ7mSfea/aKVqAgANzo/Dbra6vQve6JCM3o3FHfX5mRf
+         elukHvGVJrWqugcRaQL7fLjiMiDCQ6SD7XF8kAg5nqWaULeRqJo0VOOMJ0tyQLp216AQ
+         7lY3kuJ9UsiWH5IQiNXPxER6oRcqkiN0pKpQgYdFp1W0vlU4wnynsKemZFqC6I1nKTjI
+         POpQ==
+X-Gm-Message-State: AOJu0YzX2r0zaQzyCIBDQF9JQor6QKOzrtpPNok1S4PxLRUMIxa9KSIq
+	ibF4oR+7Nx4Fp11RWqkN0nKae3rdOQYcQwMXFsBzEsQNUNwDSrEaU3vYt6GeNA==
+X-Gm-Gg: AeBDievRNUsajtpk0m+AfST5/LvR6GEF41mWTPbJNfABRDtUyNrTvfaFlIc/NlIy31H
+	sa78/dpHK+3dtBf5ZLXz/t5KrvT0tUZYJTRbiBu54c3dzovJQpCbApT2fHdsst5Qt1mr3cCON2y
+	FK7fHxnOKfU+GT2G4MtQjptrFnc2HnpnPwoUMqdr08zcxHtXMCknhlCP1dSfeITM4/oJ0cEjueJ
+	WG78d54eiKERakD8BN2lBtxUPqahDT/0CkgNs+FYjmBBs1xtaShd39TGN+POLHlMKDrdw7pAvly
+	rGS/hF6iRBkjS2swNBe1dogwoUXiS3uEnWz/4tSfUzqT+STyeo+KQsVYRXoTrP92LYn4UOC5JcY
+	oiqvpXGitJ2fjQnBimVbplHDfdtRp02QuoF0HE9QSxxTrN69XKlHZhmK2qAbpKobfL67lT5aBvr
+	9o4FgvCZGWCzVwwd87AZgmdBpMAA2kaOyXbkTq
+X-Received: by 2002:a05:620a:2688:b0:8d7:6d40:713e with SMTP id af79cd13be357-8ddcf5b32f1mr694169085a.39.1775854879373;
+        Fri, 10 Apr 2026 14:01:19 -0700 (PDT)
 Received: from [127.0.0.1] ([52.150.30.136])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ac84cffe76sm39000166d6.47.2026.04.10.14.01.21
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ddb5f88a19sm289916185a.7.2026.04.10.14.01.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 14:01:21 -0700 (PDT)
-Message-Id: <00e0b3196cd158244cb15bfd7edb7d9d3f0954a2.1775854874.git.gitgitgadget@gmail.com>
+        Fri, 10 Apr 2026 14:01:17 -0700 (PDT)
+Message-Id: <a1fa04a965017797e9c500bd2e6148ac4b0e4431.1775854874.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
 References: <pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com>
 	<pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Apr 2026 21:01:13 +0000
-Subject: [PATCH v9 4/4] checkout: -m (--merge) uses autostash when switching
- branches
+Date: Fri, 10 Apr 2026 21:01:11 +0000
+Subject: [PATCH v9 2/4] sequencer: allow create_autostash to run silently
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,724 +81,72 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-When switching branches with "git checkout -m", local modifications
-can block the switch.  Teach the -m flow to create a temporary stash
-before switching and reapply it after.  On success, only "Applied
-autostash." is shown.  If reapplying causes conflicts, the stash is
-kept and the user is told they can resolve and run "git stash drop",
-or run "git reset --hard" and later "git stash pop" to recover their
-changes.
+Add a silent parameter to create_autostash_internal and introduce
+create_autostash_ref_silent so that callers can create an autostash
+without printing the "Created autostash" message.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/git-checkout.adoc |  58 +++++-----
- Documentation/git-switch.adoc   |  33 +++---
- builtin/checkout.c              | 138 ++++++++++------------
- sequencer.c                     |  18 ++-
- t/t3420-rebase-autostash.sh     |  24 +++-
- t/t7201-co.sh                   | 195 ++++++++++++++++++++++++++++++++
- t/t7600-merge.sh                |   2 +-
- xdiff-interface.c               |  12 ++
- xdiff-interface.h               |   1 +
- 9 files changed, 346 insertions(+), 135 deletions(-)
+ sequencer.c | 15 +++++++++++----
+ sequencer.h |  1 +
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 43ccf47cf6..70dd211ee3 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -251,20 +251,19 @@ working tree, by copying them from elsewhere, extracting a tarball, etc.
- 	are different between the current branch and the branch to
- 	which you are switching, the command refuses to switch
- 	branches in order to preserve your modifications in context.
--	However, with this option, a three-way merge between the current
--	branch, your working tree contents, and the new branch
--	is done, and you will be on the new branch.
--+
--When a merge conflict happens, the index entries for conflicting
--paths are left unmerged, and you need to resolve the conflicts
--and mark the resolved paths with `git add` (or `git rm` if the merge
--should result in deletion of the path).
-+	With this option, the conflicting local changes are
-+	automatically stashed before the switch and reapplied
-+	afterwards.  If the local changes do not overlap with the
-+	differences between branches, the switch proceeds without
-+	stashing.  If reapplying the stash results in conflicts, the
-+	entry is saved to the stash list.  Resolve the conflicts
-+	and run `git stash drop` when done, or clear the working
-+	tree (e.g. with `git reset --hard`) before running `git stash
-+	pop` later to re-apply your changes.
- +
- When checking out paths from the index, this option lets you recreate
- the conflicted merge in the specified paths.  This option cannot be
- used when checking out paths from a tree-ish.
--+
--When switching branches with `--merge`, staged changes may be lost.
- 
- `--conflict=<style>`::
- 	The same as `--merge` option above, but changes the way the
-@@ -578,39 +577,44 @@ $ git checkout mytopic
- error: You have local changes to 'frotz'; not switching branches.
- ------------
- 
--You can give the `-m` flag to the command, which would try a
--three-way merge:
-+You can give the `-m` flag to the command, which would carry your local
-+changes to the new branch:
- 
- ------------
- $ git checkout -m mytopic
--Auto-merging frotz
-+Switched to branch 'mytopic'
- ------------
- 
--After this three-way merge, the local modifications are _not_
-+After the switch, the local modifications are reapplied and are _not_
- registered in your index file, so `git diff` would show you what
- changes you made since the tip of the new branch.
- 
- === 3. Merge conflict
- 
--When a merge conflict happens during switching branches with
--the `-m` option, you would see something like this:
-+When the `--merge` (`-m`) option is in effect and the locally
-+modified files overlap with files that need to be updated by the
-+branch switch, the changes are stashed and reapplied after the
-+switch.  If this process results in conflicts, a stash entry is saved
-+and made available in `git stash list`:
- 
- ------------
- $ git checkout -m mytopic
--Auto-merging frotz
--ERROR: Merge conflict in frotz
--fatal: merge program failed
--------------
-+Your local changes are stashed, however, applying it to carry
-+forward your local changes resulted in conflicts:
- 
--At this point, `git diff` shows the changes cleanly merged as in
--the previous example, as well as the changes in the conflicted
--files.  Edit and resolve the conflict and mark it resolved with
--`git add` as usual:
-+ - You can try resolving them now.  If you resolved them
-+   successfully, discard the stash entry with "git stash drop".
- 
-+ - Alternatively you can "git reset --hard" if you do not want
-+   to deal with them right now, and later "git stash pop" to
-+   recover your local changes.
- ------------
--$ edit frotz
--$ git add frotz
--------------
-+
-+You can try resolving the conflicts now.  Edit the conflicting files
-+and mark them resolved with `git add` as usual, then run `git stash
-+drop` to discard the stash entry.  Alternatively, you can clear the
-+working tree with `git reset --hard` and recover your local changes
-+later with `git stash pop`.
- 
- CONFIGURATION
- -------------
-diff --git a/Documentation/git-switch.adoc b/Documentation/git-switch.adoc
-index 87707e9265..ee58a4d0fd 100644
---- a/Documentation/git-switch.adoc
-+++ b/Documentation/git-switch.adoc
-@@ -123,18 +123,19 @@ variable.
- 
- `-m`::
- `--merge`::
--	If you have local modifications to one or more files that are
--	different between the current branch and the branch to which
--	you are switching, the command refuses to switch branches in
--	order to preserve your modifications in context.  However,
--	with this option, a three-way merge between the current
--	branch, your working tree contents, and the new branch is
--	done, and you will be on the new branch.
--+
--When a merge conflict happens, the index entries for conflicting
--paths are left unmerged, and you need to resolve the conflicts
--and mark the resolved paths with `git add` (or `git rm` if the merge
--should result in deletion of the path).
-+	If you have local modifications to one or more files that
-+	are different between the current branch and the branch to
-+	which you are switching, the command normally refuses to
-+	switch branches in order to preserve your modifications in
-+	context.  However, with this option, the conflicting local
-+	changes are automatically stashed before the switch and
-+	reapplied afterwards.  If the local changes do not overlap
-+	with the differences between branches, the switch proceeds
-+	without stashing.  If reapplying the stash results in
-+	conflicts, the entry is saved to the stash list.  Resolve
-+	the conflicts and run `git stash drop` when done, or clear
-+	the working tree (e.g. with `git reset --hard`) before
-+	running `git stash pop` later to re-apply your changes.
- 
- `--conflict=<style>`::
- 	The same as `--merge` option above, but changes the way the
-@@ -217,15 +218,15 @@ $ git switch mytopic
- error: You have local changes to 'frotz'; not switching branches.
- ------------
- 
--You can give the `-m` flag to the command, which would try a three-way
--merge:
-+You can give the `-m` flag to the command, which would carry your local
-+changes to the new branch:
- 
- ------------
- $ git switch -m mytopic
--Auto-merging frotz
-+Switched to branch 'mytopic'
- ------------
- 
--After this three-way merge, the local modifications are _not_
-+After the switch, the local modifications are reapplied and are _not_
- registered in your index file, so `git diff` would show you what
- changes you made since the tip of the new branch.
- 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e031e61886..52c84bbe84 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -17,7 +17,6 @@
- #include "merge-ll.h"
- #include "lockfile.h"
- #include "mem-pool.h"
--#include "merge-ort-wrappers.h"
- #include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
-@@ -30,6 +29,7 @@
- #include "repo-settings.h"
- #include "resolve-undo.h"
- #include "revision.h"
-+#include "sequencer.h"
- #include "setup.h"
- #include "submodule.h"
- #include "symlinks.h"
-@@ -783,8 +783,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	struct tree *new_tree;
- 
- 	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
--	if (repo_read_index_preload(the_repository, NULL, 0) < 0)
-+	if (repo_read_index_preload(the_repository, NULL, 0) < 0) {
-+		rollback_lock_file(&lock_file);
- 		return error(_("index file corrupt"));
-+	}
- 
- 	resolve_undo_clear_index(the_repository->index);
- 	if (opts->new_orphan_branch && opts->orphan_from_empty_tree) {
-@@ -797,14 +799,18 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	} else {
- 		new_tree = repo_get_commit_tree(the_repository,
- 						new_branch_info->commit);
--		if (!new_tree)
-+		if (!new_tree) {
-+			rollback_lock_file(&lock_file);
- 			return error(_("unable to read tree (%s)"),
- 				     oid_to_hex(&new_branch_info->commit->object.oid));
-+		}
- 	}
- 	if (opts->discard_changes) {
- 		ret = reset_tree(new_tree, opts, 1, writeout_error, new_branch_info);
--		if (ret)
-+		if (ret) {
-+			rollback_lock_file(&lock_file);
- 			return ret;
-+		}
- 	} else {
- 		struct tree_desc trees[2];
- 		struct tree *tree;
-@@ -814,6 +820,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL, NULL);
- 
- 		if (unmerged_index(the_repository->index)) {
-+			rollback_lock_file(&lock_file);
- 			error(_("you need to resolve your current index first"));
- 			return 1;
- 		}
-@@ -846,82 +853,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		ret = unpack_trees(2, trees, &topts);
- 		clear_unpack_trees_porcelain(&topts);
- 		if (ret == -1) {
--			/*
--			 * Unpack couldn't do a trivial merge; either
--			 * give up or do a real merge, depending on
--			 * whether the merge flag was used.
--			 */
--			struct tree *work;
--			struct tree *old_tree;
--			struct merge_options o;
--			struct strbuf sb = STRBUF_INIT;
--			struct strbuf old_commit_shortname = STRBUF_INIT;
--
--			if (!opts->merge)
--				return 1;
--
--			/*
--			 * Without old_branch_info->commit, the below is the same as
--			 * the two-tree unpack we already tried and failed.
--			 */
--			if (!old_branch_info->commit)
--				return 1;
--			old_tree = repo_get_commit_tree(the_repository,
--							old_branch_info->commit);
--
--			if (repo_index_has_changes(the_repository, old_tree, &sb))
--				die(_("cannot continue with staged changes in "
--				      "the following files:\n%s"), sb.buf);
--			strbuf_release(&sb);
--
--			/* Do more real merge */
--
--			/*
--			 * We update the index fully, then write the
--			 * tree from the index, then merge the new
--			 * branch with the current tree, with the old
--			 * branch as the base. Then we reset the index
--			 * (but not the working tree) to the new
--			 * branch, leaving the working tree as the
--			 * merged version, but skipping unmerged
--			 * entries in the index.
--			 */
--
--			add_files_to_cache(the_repository, NULL, NULL, NULL, 0,
--					0, 0);
--			init_ui_merge_options(&o, the_repository);
--			o.verbosity = 0;
--			work = write_in_core_index_as_tree(the_repository,
--							   the_repository->index);
--
--			ret = reset_tree(new_tree,
--					 opts, 1,
--					 writeout_error, new_branch_info);
--			if (ret)
--				return ret;
--			o.ancestor = old_branch_info->name;
--			if (!old_branch_info->name) {
--				strbuf_add_unique_abbrev(&old_commit_shortname,
--							 &old_branch_info->commit->object.oid,
--							 DEFAULT_ABBREV);
--				o.ancestor = old_commit_shortname.buf;
--			}
--			o.branch1 = new_branch_info->name;
--			o.branch2 = "local";
--			o.conflict_style = opts->conflict_style;
--			ret = merge_ort_nonrecursive(&o,
--						     new_tree,
--						     work,
--						     old_tree);
--			if (ret < 0)
--				die(NULL);
--			ret = reset_tree(new_tree,
--					 opts, 0,
--					 writeout_error, new_branch_info);
--			strbuf_release(&o.obuf);
--			strbuf_release(&old_commit_shortname);
--			if (ret)
--				return ret;
-+			rollback_lock_file(&lock_file);
-+			return 1;
- 		}
- 	}
- 
-@@ -1166,6 +1099,9 @@ static int switch_branches(const struct checkout_opts *opts,
- 	struct object_id rev;
- 	int flag, writeout_error = 0;
- 	int do_merge = 1;
-+	int created_autostash = 0;
-+	struct strbuf old_commit_shortname = STRBUF_INIT;
-+	const char *stash_label_base = NULL;
- 
- 	trace2_cmd_mode("branch");
- 
-@@ -1203,10 +1139,31 @@ static int switch_branches(const struct checkout_opts *opts,
- 			do_merge = 0;
- 	}
- 
-+	if (old_branch_info.name)
-+		stash_label_base = old_branch_info.name;
-+	else if (old_branch_info.commit) {
-+		strbuf_add_unique_abbrev(&old_commit_shortname,
-+					 &old_branch_info.commit->object.oid,
-+					 DEFAULT_ABBREV);
-+		stash_label_base = old_commit_shortname.buf;
-+	}
-+
- 	if (do_merge) {
- 		ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
-+		if (ret && opts->merge) {
-+			create_autostash_ref_silent(the_repository,
-+						   "CHECKOUT_AUTOSTASH");
-+			created_autostash = 1;
-+			ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
-+		}
- 		if (ret) {
-+			apply_autostash_ref_with_labels(the_repository,
-+						       "CHECKOUT_AUTOSTASH",
-+						       new_branch_info->name,
-+						       "local",
-+						       stash_label_base);
- 			branch_info_release(&old_branch_info);
-+			strbuf_release(&old_commit_shortname);
- 			return ret;
- 		}
- 	}
-@@ -1216,8 +1173,29 @@ static int switch_branches(const struct checkout_opts *opts,
- 
- 	update_refs_for_switch(opts, &old_branch_info, new_branch_info);
- 
-+	if (opts->conflict_style >= 0) {
-+		struct strbuf cfg = STRBUF_INIT;
-+		strbuf_addf(&cfg, "merge.conflictStyle=%s",
-+			    conflict_style_name(opts->conflict_style));
-+		git_config_push_parameter(cfg.buf);
-+		strbuf_release(&cfg);
-+	}
-+	apply_autostash_ref_with_labels(the_repository, "CHECKOUT_AUTOSTASH",
-+				       new_branch_info->name, "local",
-+				       stash_label_base);
-+
-+	discard_index(the_repository->index);
-+	if (repo_read_index(the_repository) < 0)
-+		die(_("index file corrupt"));
-+
-+	if (created_autostash && !opts->discard_changes && !opts->quiet &&
-+	    new_branch_info->commit)
-+		show_local_changes(&new_branch_info->commit->object,
-+				   &opts->diff_options);
-+
- 	ret = post_checkout_hook(old_branch_info.commit, new_branch_info->commit, 1);
- 	branch_info_release(&old_branch_info);
-+	strbuf_release(&old_commit_shortname);
- 
- 	return ret || writeout_error;
- }
 diff --git a/sequencer.c b/sequencer.c
-index 913be115f2..72967886d7 100644
+index b7d8dca47f..1197d7d8a0 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -4766,15 +4766,23 @@ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply,
- 		strvec_push(&store.args, stash_oid);
- 		if (run_command(&store))
- 			ret = error(_("cannot store %s"), stash_oid);
-+		else if (attempt_apply)
-+			fprintf(stderr,
-+				_("Your local changes are stashed, however, applying it to carry\n"
-+				  "forward your local changes resulted in conflicts:\n"
-+				  "\n"
-+				  " - You can try resolving them now.  If you resolved them\n"
-+				  "   successfully, discard the stash entry with \"git stash drop\".\n"
-+				  "\n"
-+				  " - Alternatively you can \"git reset --hard\" if you do not want\n"
-+				  "   to deal with them right now, and later \"git stash pop\" to\n"
-+				  "   recover your local changes.\n"));
- 		else
- 			fprintf(stderr,
--				_("%s\n"
-+				_("Autostash exists; creating a new stash entry.\n"
- 				  "Your changes are safe in the stash.\n"
- 				  "You can run \"git stash pop\" or"
--				  " \"git stash drop\" at any time.\n"),
--				attempt_apply ?
--				_("Applying autostash resulted in conflicts.") :
--				_("Autostash exists; creating a new stash entry."));
-+				  " \"git stash drop\" at any time.\n"));
- 	}
+@@ -4657,7 +4657,8 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
  
- 	return ret;
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index ad3ba6a984..e4e2cb19ce 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -61,18 +61,30 @@ create_expected_failure_apply () {
- 	First, rewinding head to replay your work on top of it...
- 	Applying: second commit
- 	Applying: third commit
--	Applying autostash resulted in conflicts.
--	Your changes are safe in the stash.
--	You can run "git stash pop" or "git stash drop" at any time.
-+	Your local changes are stashed, however, applying it to carry
-+	forward your local changes resulted in conflicts:
-+
-+	 - You can try resolving them now.  If you resolved them
-+	   successfully, discard the stash entry with "git stash drop".
-+
-+	 - Alternatively you can "git reset --hard" if you do not want
-+	   to deal with them right now, and later "git stash pop" to
-+	   recover your local changes.
- 	EOF
+ static void create_autostash_internal(struct repository *r,
+ 				      const char *path,
+-				      const char *refname)
++				      const char *refname,
++				      bool silent)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct lock_file lock_file = LOCK_INIT;
+@@ -4702,7 +4703,8 @@ static void create_autostash_internal(struct repository *r,
+ 					&oid, null_oid(the_hash_algo), 0, UPDATE_REFS_DIE_ON_ERR);
+ 		}
+ 
+-		printf(_("Created autostash: %s\n"), buf.buf);
++		if (!silent)
++			printf(_("Created autostash: %s\n"), buf.buf);
+ 		if (reset_head(r, &ropts) < 0)
+ 			die(_("could not reset --hard"));
+ 		discard_index(r->index);
+@@ -4714,12 +4716,17 @@ static void create_autostash_internal(struct repository *r,
+ 
+ void create_autostash(struct repository *r, const char *path)
+ {
+-	create_autostash_internal(r, path, NULL);
++	create_autostash_internal(r, path, NULL, false);
  }
  
- create_expected_failure_merge () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	Applying autostash resulted in conflicts.
--	Your changes are safe in the stash.
--	You can run "git stash pop" or "git stash drop" at any time.
-+	Your local changes are stashed, however, applying it to carry
-+	forward your local changes resulted in conflicts:
-+
-+	 - You can try resolving them now.  If you resolved them
-+	   successfully, discard the stash entry with "git stash drop".
-+
-+	 - Alternatively you can "git reset --hard" if you do not want
-+	   to deal with them right now, and later "git stash pop" to
-+	   recover your local changes.
- 	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 9bcf7c0b40..8f02a664f4 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -210,6 +210,201 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
- 	test_cmp expect two
- '
- 
-+test_expect_success 'checkout --merge --conflict=zdiff3 <branch>' '
-+	git checkout -f main &&
-+	git reset --hard &&
-+	git clean -f &&
-+
-+	fill a b X d e >two &&
-+	git checkout --merge --conflict=zdiff3 simple &&
-+
-+	cat <<-EOF >expect &&
-+	a
-+	<<<<<<< simple
-+	c
-+	||||||| main
-+	b
-+	c
-+	d
-+	=======
-+	b
-+	X
-+	d
-+	>>>>>>> local
-+	e
-+	EOF
-+	test_cmp expect two
-+'
-+
-+test_expect_success 'checkout -m respects merge.conflictStyle config' '
-+	git checkout -f main &&
-+	git reset --hard &&
-+	git clean -f &&
-+
-+	test_config merge.conflictStyle diff3 &&
-+	fill b d >two &&
-+	git checkout -m simple &&
-+
-+	cat <<-EOF >expect &&
-+	<<<<<<< simple
-+	a
-+	c
-+	e
-+	||||||| main
-+	a
-+	b
-+	c
-+	d
-+	e
-+	=======
-+	b
-+	d
-+	>>>>>>> local
-+	EOF
-+	test_cmp expect two
-+'
-+
-+test_expect_success 'checkout -m skips stash when no conflict' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 0 x y z >same &&
-+	git stash list >stash-before &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	git stash list >stash-after &&
-+	test_cmp stash-before stash-after &&
-+	fill 0 x y z >expect &&
-+	test_cmp expect same
-+'
-+
-+test_expect_success 'checkout -m skips stash with non-conflicting dirty index' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 0 x y z >same &&
-+	git add same &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	fill 0 x y z >expect &&
-+	test_cmp expect same
-+'
-+
-+test_expect_success 'checkout -m stashes and applies on conflicting changes' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 1 2 3 4 5 6 7 >one &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	test_grep "Applied autostash" actual &&
-+	fill 1 2 3 4 5 6 7 >expect &&
-+	test_cmp expect one
-+'
-+
-+test_expect_success 'checkout -m with mixed staged and unstaged changes' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 0 x y z >same &&
-+	git add same &&
-+	fill 1 2 3 4 5 6 7 >one &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	test_grep "Applied autostash" actual &&
-+	fill 0 x y z >expect &&
-+	test_cmp expect same &&
-+	fill 1 2 3 4 5 6 7 >expect &&
-+	test_cmp expect one
-+'
-+
-+test_expect_success 'checkout -m stashes on truly conflicting changes' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 1 2 3 4 5 >one &&
-+	test_must_fail git checkout side 2>stderr &&
-+	test_grep "Your local changes" stderr &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	test_grep "resulted in conflicts" actual &&
-+	test_grep "git stash drop" actual &&
-+	git stash drop &&
-+	git reset --hard
-+'
-+
-+test_expect_success 'checkout -m produces usable stash on conflict' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 1 2 3 4 5 >one &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep "recover your local changes" actual &&
-+	git checkout -f main &&
-+	git stash pop &&
-+	fill 1 2 3 4 5 >expect &&
-+	test_cmp expect one
-+'
-+
-+test_expect_success 'checkout -m stashes on staged conflicting changes' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 1 2 3 4 5 >one &&
-+	git add one &&
-+	git checkout -m side >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	test_grep "resulted in conflicts" actual &&
-+	test_grep "git stash drop" actual &&
-+	git stash drop &&
-+	git reset --hard
-+'
-+
-+test_expect_success 'checkout -m applies stash cleanly with non-overlapping changes in same file' '
-+	git checkout -f main &&
-+	git reset --hard &&
-+	git clean -f &&
-+
-+	git checkout -b nonoverlap_base &&
-+	fill a b c d >file &&
-+	git add file &&
-+	git commit -m "add file" &&
-+
-+	git checkout -b nonoverlap_child &&
-+	fill a b c INSERTED d >file &&
-+	git commit -a -m "insert line near end of file" &&
-+
-+	fill DIRTY a b c INSERTED d >file &&
-+
-+	git stash list >stash-before &&
-+	git checkout -m nonoverlap_base 2>stderr &&
-+	test_grep "Applied autostash" stderr &&
-+	test_grep ! "resulted in conflicts" stderr &&
-+
-+	git stash list >stash-after &&
-+	test_cmp stash-before stash-after &&
-+
-+	fill DIRTY a b c d >expect &&
-+	test_cmp expect file &&
-+
-+	git checkout -f main &&
-+	git branch -D nonoverlap_base &&
-+	git branch -D nonoverlap_child
-+'
-+
-+test_expect_success 'checkout -m -b skips stash with dirty tree' '
-+	git checkout -f main &&
-+	git clean -f &&
-+
-+	fill 0 x y z >same &&
-+	git checkout -m -b newbranch >actual 2>&1 &&
-+	test_grep ! "Created autostash" actual &&
-+	fill 0 x y z >expect &&
-+	test_cmp expect same &&
-+	git checkout main &&
-+	git branch -D newbranch
-+'
-+
- test_expect_success 'switch to another branch while carrying a deletion' '
- 	git checkout -f main &&
- 	git reset --hard &&
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 9838094b66..cbef8a534e 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -914,7 +914,7 @@ test_expect_success 'merge with conflicted --autostash changes' '
- 	git diff >expect &&
- 	test_when_finished "test_might_fail git stash drop" &&
- 	git merge --autostash c3 2>err &&
--	test_grep "Applying autostash resulted in conflicts." err &&
-+	test_grep "your local changes resulted in conflicts" err &&
- 	git show HEAD:file >merge-result &&
- 	test_cmp result.1-9 merge-result &&
- 	git stash show -p >actual &&
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index f043330f2a..5ee2b96d0a 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -325,6 +325,18 @@ int parse_conflict_style_name(const char *value)
- 		return -1;
- }
- 
-+const char *conflict_style_name(int style)
-+{
-+	switch (style) {
-+	case XDL_MERGE_DIFF3:
-+		return "diff3";
-+	case XDL_MERGE_ZEALOUS_DIFF3:
-+		return "zdiff3";
-+	default:
-+		return "merge";
-+	}
+ void create_autostash_ref(struct repository *r, const char *refname)
+ {
+-	create_autostash_internal(r, NULL, refname);
++	create_autostash_internal(r, NULL, refname, false);
 +}
 +
- int git_xmerge_style = -1;
++void create_autostash_ref_silent(struct repository *r, const char *refname)
++{
++	create_autostash_internal(r, NULL, refname, true);
+ }
  
- int git_xmerge_config(const char *var, const char *value,
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index fbc4ceec40..ce54e1c0e0 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -55,6 +55,7 @@ void xdiff_set_find_func(xdemitconf_t *xecfg, const char *line, int cflags);
- void xdiff_clear_find_func(xdemitconf_t *xecfg);
- struct config_context;
- int parse_conflict_style_name(const char *value);
-+const char *conflict_style_name(int style);
- int git_xmerge_config(const char *var, const char *value,
- 		      const struct config_context *ctx, void *cb);
- extern int git_xmerge_style;
+ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
+diff --git a/sequencer.h b/sequencer.h
+index a6fa670c7c..570f804457 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -230,6 +230,7 @@ void commit_post_rewrite(struct repository *r,
+ 
+ void create_autostash(struct repository *r, const char *path);
+ void create_autostash_ref(struct repository *r, const char *refname);
++void create_autostash_ref_silent(struct repository *r, const char *refname);
+ int save_autostash(const char *path);
+ int save_autostash_ref(struct repository *r, const char *refname);
+ int apply_autostash(const char *path);
 -- 
 gitgitgadget
+
