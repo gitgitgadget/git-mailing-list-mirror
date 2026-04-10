@@ -1,80 +1,80 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B713BE642
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C6B3BE646
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775823203; cv=none; b=WaGFhucaBrn2i01YQe9ilpAwGbz4vYWUt9fI0XqRw1Y+0H4S98gf88yWFW/XnCMX7OyLK2sS9/fl4+uM4ERS+rPmPqhn56H0/w5LnePB4X1o82r6Tb3VwEKuTi/8+FJAtfmUCsVOrlG6zUYdMTNGjavvqSUQMpNnLiR+HG4J+xo=
+	t=1775823205; cv=none; b=avXDlOLG1HibTyjOF13oFe6So3NLl8FxbWmjZw5y9Pf83nP7Xs+dHsvIcSLZ841n5uBha6dJA6XTxVwgleBe3GEM+H4hfxapa+snpSB9d3c5PXYVdznrhhqYcSFJ2dI7nV4LNA0w2D3oWka+qQQbz627J3NLr6SnV5qiAghukFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775823203; c=relaxed/simple;
-	bh=hqpii/w5IErUfpDIOmLlk5YQ4siRIrISdaijWQf9sxs=;
+	s=arc-20240116; t=1775823205; c=relaxed/simple;
+	bh=dH3uNK0dd4WaXSTjxC4juFZTq6vG4jHOGbORMBrfHgs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mnn7eMVgbwmvTRGW8KDHdr1abay70rw8v4FPrje1SUDRCrixjXb4kRrRggKdvDHx/eATN9hZ5opkQ+MQQu2zInVgow5nFToQjqkMTwV/ulhzG8njaKX//tFH9Yz4oZYVxZ4KHbIKI3NxjvPFtJbD6hbyqZsZADP7vYEbywQAL4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bghk/J+t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m7JcDUd6; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=V6c0/Sc3tzUjQu0WFSVTXEpJcsM0dGWLF9pSimHvhap32MQjNhKKZQN7M8nvgVi0rpNlVqJ9vReqWeN7+84wRJPNU4/xf4Vi5at0/gLTyHIt2fdtwvwDRC8rbKs0HcPZ2uDRFeZWYDbCxuVdH22ZIvBTflfp8z2PaY4vT266yHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vyqcA/Rf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FLuY1LCd; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bghk/J+t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m7JcDUd6"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C8F747A029D;
-	Fri, 10 Apr 2026 08:13:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vyqcA/Rf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FLuY1LCd"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 15E0D1D001DB;
+	Fri, 10 Apr 2026 08:13:24 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 10 Apr 2026 08:13:21 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 10 Apr 2026 08:13:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823201;
-	 x=1775909601; bh=Yiqup8lHp+TIyyrOwiPXNreXnORAKftCV3z7K2c9Lw4=; b=
-	Bghk/J+tC9bzIoOBPYVH4O3Sh9orVfR2EsRd2H0RJ+UwMZEQkhBnHeVeUViYOgg1
-	Hbu7rJWTZCbItLpkKilsMy5ZOwwiQQgiuxT2fa2CQuqLKUhWM2oIVqbcnZNXtFvz
-	l7poD+57ysxHdFiTC2gqJ/5xiVVLceGKncm73ajGmUGdGIAtBHeoTkDy3dhTgt/N
-	+3aGLrsFjtRUugY73I6Eqly75AHLEaQvFvhbnicj/rDs60e1Digs+oTBkIBbsfnV
-	5QsZKCnw8lY7iL8SD+PyZNvETMLc2wUAPuLZD2FeOfGNH4KrU88gKehTHjnZDEJa
-	aGLovG9ce/9aMAg8FJQaXA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823203;
+	 x=1775909603; bh=f1Sb3hDKLof7Ts3YheJ7Ngk/MH8lF6KtQS1kXAaOgto=; b=
+	vyqcA/RfA4y94TivEx5i3Q+YDDwXHbIpnO+1ckxh5/N0s6v6Ia8deKtpwUoi0at4
+	XvMqv9xiOKSntM8R4mDTkVRQ2MSNkDKUbCbyt3/qx2GD+3RCVhgiR7Rn5Y5VGQMe
+	eK2HwlGnJissLWI+skNKTvjiEkv6FYIWX457b/F8B6Tw8wwcn+ew1iAAi41tMu9C
+	LIrdCnDfJynoirCz/X0ec63M2/ToHax+FbRSl5yX2ukdCh8WlAZPwvBXd/nVCSFd
+	0+IiYhJf+lQm9oKDyQV9swUoRFw6HLGKk1v4a4nh+TtRFPXZF7pF5zeD7t9q6AVy
+	DdpkMc6sgUyRdWk5L6FimQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823201; x=
-	1775909601; bh=Yiqup8lHp+TIyyrOwiPXNreXnORAKftCV3z7K2c9Lw4=; b=m
-	7JcDUd6bU7Nj3UGlbLmci64OV0TtUeM1FP8EhOesi+/Upn2NnLDDYwH+7d8ITtqf
-	THCdahA6qmOatG4GdSNwxj8nviYZRciN/w3kbcum3Ye53OYTAj+8LMAZODDdcQWc
-	WJ1r8+myKNyAvq9l5n9XxhUnRtb75D4/RnpEB+IDwHZE3qYLoYYHb43MBSvwq1qw
-	vfD0w/LVelbpUZv06AZUcH7nRstWQKfLk24xVXElc/8aDgXnSaWJbhCtLk0lGv79
-	ctYw/iL6HphSYgAw25Ar2c8QjcPmlocGhjHuZv8mmDuZKwtMNsae6AuiLELaMQs+
-	sd/dxX9JDNb0syHgOEzkQ==
-X-ME-Sender: <xms:YenYaQUre7MU-pCplzSdFcf3Z8_spdkY2MTQ8-P61UBVFgUh7sIspQ>
-    <xme:YenYaX3XMUcC1bye5qtfMtbiiE3zriwyCg7aE9gT4lPrQ6G6Lk8JK-nSVF02VwIjT
-    lnbCnAbElVOws7I6r8--IhWNU0Es_nQZKrZqw9VcLi5qtMhEIEJ>
-X-ME-Received: <xmr:YenYad2R2Q0ZKW3fxL94EdsckDgm49r3zVPmuukbuRosMrLIU8o02TGLiO1VJ4WkhPwPRszOGtMzTDcubVJ6TQMi0jEHPYm0XVwzrtWXn4kJZw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823203; x=
+	1775909603; bh=f1Sb3hDKLof7Ts3YheJ7Ngk/MH8lF6KtQS1kXAaOgto=; b=F
+	LuY1LCdC2Fci5Bef+nxlZ7VEefGYrzMXSVPxO//UVjDDGfFOgEUgaRtOsmcSDx2T
+	IdksDTlT4dJKxL0Azo7F9F3T007FuQSy0m6HqC1pfSrw0LtKaaVYEm3n5nFwUu27
+	eFmhJ5auLLbxsLCwkcWPp+gLWtQCUmc7GwPs/60BNemyD1CH6USfmMf0F9qlPBGG
+	GkEqtfoB1LYLQ4dUTorcdQKktfe2kOlGiO9E3bbS681eujiS2beRToSQcZi+STqW
+	Qvg2ctI3ynAwmiJ0RvjUc7DGLF8O7qk+pDkanG3RW/dJ92G76JoPwhPbeJ1COL/9
+	nb+qEz8z6tn+fe/oyzMnQ==
+X-ME-Sender: <xms:Y-nYab_NR6vXdlH4vMen39-ieh6LF1LaxY1aT4Yj4u4eP35g0bnGmw>
+    <xme:Y-nYafIrUnAJwiBSLJNgp9dHzRu9_cfH91QpPWQeKfOMPVQc21QP_j-zM9GmlXMHG
+    hW0q2boXa1qLpwBmNecVxW0CbSw4o0uLM3BPHtEn5rRP3kjbolxtQ>
+X-ME-Received: <xmr:Y-nYaWYqDjqcMMYIM1ND41ybToFQaZO-K84HkppXKS1ATiRfqI-VqXgqeBJGiPl4rKLxDwVHfJXjkW0KkCZ5IPfahl7_zIlznZYZbouqTRdZYg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleefkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepheenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:YenYaa8kzeZIZvF7GqGjO3iY4SJae7Zvfe3lksp-3u3sLA41mzbjVQ>
-    <xmx:YenYaa1ZMzIU5J6pz5hB1_d6xsp3UiHHvMaOli8hz4pSBJ6lmz-p7w>
-    <xmx:YenYaX-mvaETNL4chFsl-KzpQFq7t0q7wfaZjaCk32ohMNgYu0snDQ>
-    <xmx:YenYaau-mEN8XRWr98K4Ir2tljhOuZOXXo-sjtk29PwyW3tSllHD_Q>
-    <xmx:YenYaUeqMjinALCb8usVdvV2XgXDLffF2pEgYBVHK1MfI1iSxDq9sRXt>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:Y-nYaRI18uQcFFJ8hx6jf6EGFqqHoj2EdUZcpXz6tPunmcD-ii_qpA>
+    <xmx:Y-nYaUBAyAnaywpWOzSsVb2nq2pr4m2u15aiCk-9Dt1KuYmzLPc-Hg>
+    <xmx:Y-nYaWpcjtn2GmcBK8pS7m9ToFxVGs50Kt_Slv68gTNmYv99t6F8sg>
+    <xmx:Y-nYafieLxRYeh33IY45YMOWo0VmroZobo4NjlKDBdifNGManQUY5g>
+    <xmx:Y-nYabJ4QcexqXQ5R-4O0Rg2v1CyGiMq_TJdj5a5jhqQ_RCMyNDXksuS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 08:13:20 -0400 (EDT)
+ 10 Apr 2026 08:13:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 50280460 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 12:13:19 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id adbad51a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Apr 2026 12:13:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 10 Apr 2026 14:12:43 +0200
-Subject: [PATCH v3 13/17] odb/source-inmemory: implement `count_objects()`
+Date: Fri, 10 Apr 2026 14:12:44 +0200
+Subject: [PATCH v3 14/17] odb/source-inmemory: implement `freshen_object()`
  callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,59 +84,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-13-22fd0fad58fe@pks.im>
+Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-14-22fd0fad58fe@pks.im>
 References: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 In-Reply-To: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.1
 
-Implement the `count_objects()` callback function for the in-memory
+Implement the `freshen_object()` callback function for the in-memory
 source.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-inmemory.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ odb/source-inmemory.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index 44d9bbedec..674dbcad30 100644
+index 674dbcad30..8934e0f547 100644
 --- a/odb/source-inmemory.c
 +++ b/odb/source-inmemory.c
-@@ -207,6 +207,25 @@ static int odb_source_inmemory_find_abbrev_len(struct odb_source *source,
+@@ -294,6 +294,15 @@ static int odb_source_inmemory_write_object_stream(struct odb_source *source,
  	return ret;
  }
  
-+static int count_objects_cb(const struct object_id *oid UNUSED,
-+			    struct object_info *oi UNUSED,
-+			    void *cb_data)
++static int odb_source_inmemory_freshen_object(struct odb_source *source,
++					      const struct object_id *oid)
 +{
-+	unsigned long *counter = cb_data;
-+	(*counter)++;
++	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
++	if (find_cached_object(inmemory, oid))
++		return 1;
 +	return 0;
 +}
 +
-+static int odb_source_inmemory_count_objects(struct odb_source *source,
-+					     enum odb_count_objects_flags flags UNUSED,
-+					     unsigned long *out)
-+{
-+	struct odb_for_each_object_options opts = { 0 };
-+	*out = 0;
-+	return odb_source_inmemory_for_each_object(source, NULL, count_objects_cb,
-+						   out, &opts);
-+}
-+
- static int odb_source_inmemory_write_object(struct odb_source *source,
- 					    const void *buf, unsigned long len,
- 					    enum object_type type,
-@@ -314,6 +333,7 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
- 	source->base.read_object_stream = odb_source_inmemory_read_object_stream;
- 	source->base.for_each_object = odb_source_inmemory_for_each_object;
- 	source->base.find_abbrev_len = odb_source_inmemory_find_abbrev_len;
-+	source->base.count_objects = odb_source_inmemory_count_objects;
+ static int inmemory_object_free(const struct object_id *oid UNUSED,
+ 				void *node_data,
+ 				void *cb_data UNUSED)
+@@ -336,6 +345,7 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
+ 	source->base.count_objects = odb_source_inmemory_count_objects;
  	source->base.write_object = odb_source_inmemory_write_object;
  	source->base.write_object_stream = odb_source_inmemory_write_object_stream;
++	source->base.freshen_object = odb_source_inmemory_freshen_object;
  
+ 	return source;
+ }
 
 -- 
 2.54.0.rc0.707.g0fbf48f4d6.dirty
