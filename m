@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8E03B9D9A
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 09:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175D93B583D
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 09:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775812048; cv=pass; b=ShV6W8McYDR+1LP2DjwZMx+UK5P04yDiotJ6s/u7Gl3NM1bGb3bX4r2lNCdhFIipcyaYtHDmw7DnCat62tqqEytEJkxgeGHjNGTikY0IJ5v6zygt+YmoiJqLFFEMH3IuKn/OfNZrrc+uMSdJ+LrDZrWv2rpDiZLyJBJfOzTE/MA=
+	t=1775812053; cv=pass; b=FiBiJFC4vyzRHzsAWDYsqfEzFKDMpl3/Bw7nX/VyTesIJrp4uubt1eM1Qo3z/5JwVGhiGrg8LY56UjDDWwd/ETGs60zc6lgAFQLHYNXo62vkBjDy8x6dhpDt0lrFci0PqDFi+vES2H8DLKu/bi1PL7h7bdwwrR7CKafxTZ+FAhs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775812048; c=relaxed/simple;
-	bh=QABYY0ha+Vdg2eQJ2joKp6R6LIhgnzt5kajDHS5pb0U=;
+	s=arc-20240116; t=1775812053; c=relaxed/simple;
+	bh=HhHW0fvUfhcFsIFl+oEQmPtfQCZwZ+uqQj2O+pl/Kq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNExUUrXdnLts+jk+cRUb+F2TINSldYyN3KSxAa/OGfG0RBZeYKgQmBajOMFkABZ3suszliISRmqjg5B8O6PIt36XjDKIR6WCG7DfknZzOw8IThskWVhH3zbIOObwF3FPQsHotIjHDZZHQU+7MByEwcrGi5j85aUHyFR2e56Dlc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=SkHyzTUr; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=I6qsnSHrfISS4ykBn7GvsqU58e/BySBkDgAgUm4LnICt0wRBvXUEd5FAihTnpc8qsTLB0bIVfBI37QQ8jdazPpMf0R3f3u95gPHYBs+y1Pq68LyI5CJ9SKT5eOBz/dGaAYoY3dEtjGqmdreRb4MndbO1Kk24mrZtkFmR04No4JM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=IwMi+QVM; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="SkHyzTUr"
-ARC-Seal: i=1; a=rsa-sha256; t=1775812031; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="IwMi+QVM"
+ARC-Seal: i=1; a=rsa-sha256; t=1775812035; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=enfI1Kv+5GgBqgoa4iIwFnoAYmJ/AjGoqI/5NJSzjCeEBUL8iIa8Yw9Jviektoel8VBCfyiLYTh7E2SneWkL1t5A6+VA4iXsgjVDU3RWRO3CX9iSpg/mu4N/vAXz3ssoCIOuw7BGh6SK0b4Vt1rO59lIIgovUuzPWVatn3tLha8=
+	b=EEfYwAVf4Vuf0qRdSugJ0I8meRYvpHT2rXq1vLWNvmTDAMfz2qisHv/Pc1QztCA604+nykw4FshneFvaQtVr+0+BVNTK9tRzmiyO+jJJLu0F7QK/jwHKZgsQmAEPsY4MmZdNyvqPCa3ncK8H4vWUCOyrxEfRaaZlFS1iJ25Dn9I=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1775812031; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=hprDJDJVD3Quso/zGc8MJcw5C4qN57SNjwqspEfufUk=; 
-	b=WkPUAAdg6qOllx/wHGXpAfypZADj7GBcWOxwRLxayjCboFGK3R6dPlTRWLcMToVjQpkyJsCxOCqBI9eYVGeIu1CxJ3leBvLWz9nxkWu/MBv085ZV7GIrNa+MMaQLQyFKJS7EzxrMphz8m8/YglhzqBJkHyebEJVKGlyEzEjDrYw=
+	t=1775812035; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Q+NH0784jIvyhW4s+UjESa+ILq4bk4nVfGaW0CGTV2w=; 
+	b=m7rnA0e8eCFeeaqkIQL8+oSRH/OFdIExmQluUrWaiQ1ZMZ4Ng32t+ZSuyNG6gBi80I7vZAy06ARyilgjDKjIBq8I/DVhyjrjy1aVEEVyS1OMEXu9K4ujPSt7I8bg7YSFCKQSjapU8u/gfgVEUpJzDobppAEsPoKwcHe7IvopKKk=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775812031;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1775812035;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=hprDJDJVD3Quso/zGc8MJcw5C4qN57SNjwqspEfufUk=;
-	b=SkHyzTUrP5lHgRKyqNBvR/vOrZE4IWCW9vOS9q2S9ttCPic3AxPBHs18g4uXTB4r
-	kgZAwlfNfiCX0WcH0xRiMSAv+sEt/ViL1eCynupDbNgfI2JdhOxDnV11LGQbTVOJgtE
-	3OkhXanLZ9me+P5aTnRGDe/ZqozwPJnPoHTWGeEc=
-Received: by mx.zohomail.com with SMTPS id 1775812028918566.0775693778116;
-	Fri, 10 Apr 2026 02:07:08 -0700 (PDT)
+	bh=Q+NH0784jIvyhW4s+UjESa+ILq4bk4nVfGaW0CGTV2w=;
+	b=IwMi+QVMIW93btNpX7/3wrhyY8/bR3j3N+7dluqkBfXE3VEaaNuJxDnEOx0Uo+9w
+	gfPbnZixBiVGTNWo4qzBSId9mthYT/q7ork59DSvQemL32Zh1vVNkkMJWKEqpjx56Cc
+	NQpuEBOZ5nqnqX7/mF91bKkxOoaJ8dW1bsYKLcvM=
+Received: by mx.zohomail.com with SMTPS id 1775812033014153.3289183413906;
+	Fri, 10 Apr 2026 02:07:13 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
@@ -46,9 +46,9 @@ Cc: Jeff King <peff@peff.net>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v7 09/13] hook: warn when hook.<friendly-name>.jobs is set
-Date: Fri, 10 Apr 2026 12:06:04 +0300
-Message-ID: <20260410090608.75283-10-adrian.ratiu@collabora.com>
+Subject: [PATCH v7 10/13] hook: move is_known_hook() to hook.c for wider use
+Date: Fri, 10 Apr 2026 12:06:05 +0300
+Message-ID: <20260410090608.75283-11-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260410090608.75283-1-adrian.ratiu@collabora.com>
 References: <20260204173328.1601807-1-adrian.ratiu@collabora.com>
@@ -62,118 +62,155 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Issue a warning when the user confuses the hook process and event
-namespaces by setting hook.<friendly-name>.jobs.
+Move is_known_hook() from builtin/hook.c (static) into hook.c and
+export it via hook.h so it can be reused.
 
-Detect this by checking whether the name carrying .jobs also has
-.command, .event, or .parallel configured.  Extract is_friendly_name()
-as a helper for this check, to be reused by future per-event config
-handling.
+Make it return bool and the iterator `h` for clarity (iterate hooks).
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+Both meson.build and the Makefile are updated to reflect that the
+header is now used by libgit, not the builtin sources.
+
+The next commit will use this to reject hook friendly-names that
+collide with known event names.
+
+Co-authored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- hook.c          | 40 ++++++++++++++++++++++++++++++++++++++++
- t/t1800-hook.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+)
+ Makefile       |  2 +-
+ builtin/hook.c | 10 ----------
+ hook.c         | 10 ++++++++++
+ hook.h         |  6 ++++++
+ meson.build    | 24 ++++++++++++------------
+ 5 files changed, 29 insertions(+), 23 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 5d22394c2e..c4e83823e4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2675,7 +2675,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+ 
+ help.sp help.s help.o: command-list.h
+ builtin/bugreport.sp builtin/bugreport.s builtin/bugreport.o: hook-list.h
+-builtin/hook.sp builtin/hook.s builtin/hook.o: hook-list.h
++hook.sp hook.s hook.o: hook-list.h
+ 
+ builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
+ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+diff --git a/builtin/hook.c b/builtin/hook.c
+index bea0668b47..1839412dca 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -4,7 +4,6 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hook.h"
+-#include "hook-list.h"
+ #include "parse-options.h"
+ 
+ #define BUILTIN_HOOK_RUN_USAGE \
+@@ -13,15 +12,6 @@
+ #define BUILTIN_HOOK_LIST_USAGE \
+ 	N_("git hook list [--allow-unknown-hook-name] [-z] [--show-scope] <hook-name>")
+ 
+-static int is_known_hook(const char *name)
+-{
+-	const char **p;
+-	for (p = hook_name_list; *p; p++)
+-		if (!strcmp(*p, name))
+-			return 1;
+-	return 0;
+-}
+-
+ static const char * const builtin_hook_usage[] = {
+ 	BUILTIN_HOOK_RUN_USAGE,
+ 	BUILTIN_HOOK_LIST_USAGE,
 diff --git a/hook.c b/hook.c
-index d98b011563..0493993bbe 100644
+index 0493993bbe..19076f8f2b 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -279,6 +279,44 @@ void hook_cache_clear(struct strmap *cache)
- 	strmap_clear(cache, 0);
- }
+@@ -5,6 +5,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hook.h"
++#include "hook-list.h"
+ #include "parse.h"
+ #include "path.h"
+ #include "run-command.h"
+@@ -12,6 +13,15 @@
+ #include "strbuf.h"
+ #include "strmap.h"
  
-+/*
-+ * Return true if `name` is a hook friendly-name, i.e. it has at least one of
-+ * .command, .event, or .parallel configured. These are the reliable clues
-+ * that distinguish a friendly-name from an event name. Note: .enabled is
-+ * deliberately excluded because it can appear under both namespaces.
-+ */
-+static int is_friendly_name(struct hook_all_config_cb *cb, const char *name)
++bool is_known_hook(const char *name)
 +{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *e;
-+
-+	if (strmap_get(&cb->commands, name) || strmap_get(&cb->parallel_hooks, name))
-+		return 1;
-+
-+	strmap_for_each_entry(&cb->event_hooks, &iter, e) {
-+		if (unsorted_string_list_lookup(e->value, name))
-+			return 1;
-+	}
-+
-+	return 0;
++	const char **h;
++	for (h = hook_name_list; *h; h++)
++		if (!strcmp(*h, name))
++			return true;
++	return false;
 +}
 +
-+/* Warn if any name in event_jobs is also a hook friendly-name. */
-+static void warn_jobs_on_friendly_names(struct hook_all_config_cb *cb_data)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *e;
-+
-+	strmap_for_each_entry(&cb_data->event_jobs, &iter, e) {
-+		if (is_friendly_name(cb_data, e->key))
-+			warning(_("hook.%s.jobs is set but '%s' looks like a "
-+				  "hook friendly-name, not an event name; "
-+				  "hook.<event>.jobs uses the event name "
-+				  "(e.g. hook.post-receive.jobs), so this "
-+				  "setting will be ignored"), e->key, e->key);
-+	}
-+}
-+
- /* Populate `cache` with the complete hook configuration */
- static void build_hook_config_map(struct repository *r, struct strmap *cache)
+ const char *find_hook(struct repository *r, const char *name)
  {
-@@ -295,6 +333,8 @@ static void build_hook_config_map(struct repository *r, struct strmap *cache)
- 	/* Parse all configs in one run, capturing hook.* including hook.jobs. */
- 	repo_config(r, hook_config_lookup_all, &cb_data);
+ 	static struct strbuf path = STRBUF_INIT;
+diff --git a/hook.h b/hook.h
+index 01db4226a6..5a93f56618 100644
+--- a/hook.h
++++ b/hook.h
+@@ -234,6 +234,12 @@ void hook_free(void *p, const char *str);
+  */
+ void hook_cache_clear(struct strmap *cache);
  
-+	warn_jobs_on_friendly_names(&cb_data);
++/**
++ * Returns true if `name` is a recognized hook event name
++ * (e.g. "pre-commit", "post-receive").
++ */
++bool is_known_hook(const char *name);
 +
- 	/* Construct the cache from parsed configs. */
- 	strmap_for_each_entry(&cb_data.event_hooks, &iter, e) {
- 		struct string_list *hook_names = e->value;
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 24a3c92b6d..89fedc48ff 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -1028,4 +1028,34 @@ test_expect_success 'hook.<event>.jobs still requires hook.<name>.parallel=true'
- 	test_cmp expect hook.order
- '
+ /**
+  * Returns the path to the hook file, or NULL if the hook is missing
+  * or disabled. Note that this points to static storage that will be
+diff --git a/meson.build b/meson.build
+index 8309942d18..f438d5545d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -563,6 +563,18 @@ libgit_sources += custom_target(
+   env: script_environment,
+ )
  
-+test_expect_success 'hook.<friendly-name>.jobs warns when name has .command' '
-+	test_config hook.my-hook.command "true" &&
-+	test_config hook.my-hook.jobs 2 &&
-+	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
-+	test_grep "hook.my-hook.jobs.*friendly-name" err
-+'
++libgit_sources += custom_target(
++  input: 'Documentation/githooks.adoc',
++  output: 'hook-list.h',
++  command: [
++    shell,
++    meson.current_source_dir() + '/tools/generate-hooklist.sh',
++    meson.current_source_dir(),
++    '@OUTPUT@',
++  ],
++  env: script_environment,
++)
 +
-+test_expect_success 'hook.<friendly-name>.jobs warns when name has .event' '
-+	test_config hook.my-hook.event test-hook &&
-+	test_config hook.my-hook.command "true" &&
-+	test_config hook.my-hook.jobs 2 &&
-+	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
-+	test_grep "hook.my-hook.jobs.*friendly-name" err
-+'
-+
-+test_expect_success 'hook.<friendly-name>.jobs warns when name has .parallel' '
-+	test_config hook.my-hook.event test-hook &&
-+	test_config hook.my-hook.command "true" &&
-+	test_config hook.my-hook.parallel true &&
-+	test_config hook.my-hook.jobs 2 &&
-+	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
-+	test_grep "hook.my-hook.jobs.*friendly-name" err
-+'
-+
-+test_expect_success 'hook.<event>.jobs does not warn for a real event name' '
-+	test_config hook.test-hook.jobs 2 &&
-+	git hook run --allow-unknown-hook-name --ignore-missing test-hook >out 2>err &&
-+	test_grep ! "friendly-name" err
-+'
-+
- test_done
+ builtin_sources = [
+   'builtin/add.c',
+   'builtin/am.c',
+@@ -739,18 +751,6 @@ builtin_sources += custom_target(
+   env: script_environment,
+ )
+ 
+-builtin_sources += custom_target(
+-  input: 'Documentation/githooks.adoc',
+-  output: 'hook-list.h',
+-  command: [
+-    shell,
+-    meson.current_source_dir() + '/tools/generate-hooklist.sh',
+-    meson.current_source_dir(),
+-    '@OUTPUT@',
+-  ],
+-  env: script_environment,
+-)
+-
+ # This contains the variables for GIT-BUILD-OPTIONS, which we use to propagate
+ # build options to our tests.
+ build_options_config = configuration_data()
 -- 
 2.52.0
 
