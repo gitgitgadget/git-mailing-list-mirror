@@ -1,129 +1,101 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F17145A05
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85AA13A258
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 13:02:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775824277; cv=none; b=AsbAbCq6cGt9lJLDwl7xt8SLzEJHpUUCk1Ndgr+gfnFGKIToKKePTOANylqaEBZrkPoB7/67APtK/0vTue/q9hIoai3OKyKkkb9iiAF2r6wuGZK/PdRlaZug69K8ucwYydzudDYdPvnvtmXsAgQbRwm2pH3tiMxSmS65UcjQNnE=
+	t=1775826138; cv=none; b=OSr1jWNjySTTmoFRR98j7e9pEAuUyB7R74zhNpjFqUEwZ9VAMOh3M9CvvhqGtum9Zhulzrq0E8clC/Xq9p982/H0YVZgmUYgKyI5e6O9eQ0oWBWrYGztLO3h4rZU+PfTnf7rxLXYqoF8ROKtsWnYN8ZB7/bfQoBMVyBKTJcMu9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775824277; c=relaxed/simple;
-	bh=RNM3R2fcL1+emjJBiqfJy73nJpEVywiyw/qaSHLuvBA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=awrKE+0nRnlE33iPt/Bn/RhTT2vYyxs9ojmV+gcqm9KJN8ZuckhqylEXP9oloWnDepR+vpC1ilEbPdYHx5zHNC7IJOGQ5OP3wJokZ1ljbwiuDX4kKxmoRnkS8pnX/ujI+NN0pJY69lf5Uo2W7P9We3ZMEdt6L9q4reDkJUwqWbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LXD/2aJc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aicUu55e; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1775826138; c=relaxed/simple;
+	bh=CwBcWx0Wccrdot1FSW1qsianEFsUsNcvKmSVhu+QcI4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GXVm4PggJcw+7zTlZe7YJDjM/J5N8XcWFWjptOQVwkthV1UrMQLktXo9jupWJJozy72xTL5euATc7N+vgzsTQfTP/dehBfXfpR/syKRUZsa4StUb/TWx2H3752+zzxqiXhsJLcfZ2KUx8orGb88toftrUU8+ibvCHWl97Wo2FMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AFtV4+MU; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LXD/2aJc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aicUu55e"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 763F11D00262;
-	Fri, 10 Apr 2026 08:31:15 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 10 Apr 2026 08:31:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775824275;
-	 x=1775910675; bh=BbwK3CFGgzuZL7KYWAdlvAw2WzzgW2rrylr1uRuyuvU=; b=
-	LXD/2aJcBpaGA7gJaVMP+XUVzvkbGVoevyODUVDiLRMH3O2aypLE+WfcaoJnkvgt
-	7/Ir2v0RhA5qWqtkmzhdl0cLYRE+6o02rjJMNoYXHeSsnWynqyj/U6V9zN/sf59H
-	h1ZTA9JFjGZwh9otiIU4Kc0PtQ46ymUm3TN4yXAApd6wXyI4XP59uAQqHgcipDP2
-	ISLwDJlRmqgGpikAA3JuzJiNTiNE2KJzmFNYtz0L+Pr4YA2DvuAsGxy5tgKExZYv
-	o0aqQebrRyWqQf1YszosLr8OfZUJ4ECabIfn8EwZf9lgZCnX0xdj4JxaiK5nK3Z/
-	Mt4V5rQfW4ogJx2RPjyeJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775824275; x=
-	1775910675; bh=BbwK3CFGgzuZL7KYWAdlvAw2WzzgW2rrylr1uRuyuvU=; b=a
-	icUu55eySaNQ6stjANZWKrObH+jB5Q4S7usJkY/zyIEmQgiK7sP6/DlTzGP4LJyy
-	XFkhv3HfnJ2rtSX6eAelxmtUWl+/DCaSfwgzCdWl880MA71FTMiStla3+CbI27IJ
-	Bx7ClwsM/5mqnxOBXQF+ELwdLSMvk9mirXIGMLriK4j1+UvTHqU2tNwgsM1Hg30y
-	dbQDaccb+B6AOhWFmPH85guPmTvqPON1k1+AvQOYdUkBNmhzU0IMuurnwvAnLoil
-	4TLdkYovdT3qhaeXhO9BHtu97h2s050YL8VcNzmTbY6ZlvyYKDZBeafZBUhRYJsw
-	aglJa+NWkgMKKGuYQhenA==
-X-ME-Sender: <xms:k-3YaQb1i54HVrsOHE-EFctfLcYzrUc6qfXdilHQSi7xAqAQko7uBQ>
-    <xme:k-3YaRZX1i3GCEUP1gVb4Giza4t2WAguwg2M6oylyOXQlI9Rn0q_0mTt9j97QdDcR
-    5_vUe8MF-WqhetYLuDO0rTo1bPPiHpxiiOInk9hwHuxRFSbw3uq>
-X-ME-Received: <xmr:k-3YaYnOEafjE-pHWvOzLxvQk8RZlVVEIe04fnjqEoQImJjJKQwDhasWnqTmBZUKBuIC-nKMpjAfAWNi6R3s3amrvitLP3mo_qGHBZxh7bIPmg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
-    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
-    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehphihthhhonhhikhhssehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:k-3YaVxPSn6SiuiEh0mQOh_qEk2n-19Q5mCi0m9SIUth_J6pRtS89A>
-    <xmx:k-3YaePvhmNGEkOAnTWtDHPBDyF9cVOKRKOsPmCjt8BxgP4vktOjEw>
-    <xmx:k-3YaRQB1jgVEI8oEHKsjHpCYt5CcVLULkesqEqOPaeZKMWidPy9Xw>
-    <xmx:k-3YaUYgG6pbfHoSaSRNwhuu1U0PWFlBzpAumW3A3N-rR3Zaf7qEYw>
-    <xmx:k-3YaWJQzFnL73RsGB-R8RMEBn_GdJyYvMVJAL1OuZavRzyF120bjcRM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 08:31:14 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 95ea289b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 12:31:12 +0000 (UTC)
-Date: Fri, 10 Apr 2026 14:31:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Pascal Chambon <pythoniks@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bug - git fsck never ending on git-for-windows
-Message-ID: <adjtjv76Th_lPRKv@pks.im>
-References: <a07a6a49-0520-44c7-b9c5-2173465cc1ca@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AFtV4+MU"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8d428da4300so210218785a.3
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 06:02:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775826136; x=1776430936; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T7tXH1ONZzv2NBpBV3m7W0mmjvqsvOau0eIozg2sS5Q=;
+        b=AFtV4+MU2IcVfIU+Qi6oAJdEJ/VR+HCeHJKDF4JlG5SWrjIVXziJCXmot3HSE6pmff
+         9JtsvubRUq3bA69a/3qw8RWYrGUr49vYly03iVnj3n4Hjh+6GITIj9tZ2xAmYPhMj7Y5
+         qEhbWvY0Y/X6sRu/BC3S20im3f0br3pMT+DEkZkNUjyyFCPeKQfzerjeGzrkI2FWfdWZ
+         5Fb1/AbreHEuJ4hZ9JzyCWY0zhx/kqxBN+lSre0n21zzZHZgegUfOmUpNTKQX91aLUDd
+         1p9z/WzRqGn9CLtrVBLttb1US4StNsuP7s4S5aEGycqxdEkMnguDgb8B+bGBdLm9Jjz1
+         7y7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775826136; x=1776430936;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T7tXH1ONZzv2NBpBV3m7W0mmjvqsvOau0eIozg2sS5Q=;
+        b=ipGWneeeK6TZX9yemUA82ea27wlQDhS5YQDFIRLnxo3/GMtaufautsuN0Xci3jtwM5
+         c91aSDCiZgEC96nXD2FB+4Qh+ZQ6oyY/98t07WkS2gLY+QZijdGC9MoELFtMi5uXP+IG
+         9dV0f7IR7kOf0uD7e7q8DMVO2XEcj2YB8yXCJeD+WEARCRNHu4JImwRKlr7IbpENtGV5
+         aqO3U6j7RCkwpZ1OC933cwCQkFFRDytjoSyxRBxOSx4UFii5YwFxhaGZsgRWhqVCLfBB
+         GyZKhYFTzWKbeZqJPzxcVNbfxkyG6lmeirvESxDP7DX8ytipVXbLiaOhog/uG0LlZKB2
+         5fSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVe+rPvli39HO/tGUng/Ken6H/JdUGy9U95G8hGo7R8Oaw+l0YTVMuzytf3NP1ObjFwpGY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzV9M8+6x27/JgN+3ZtQOuXRMD5LjqLiTmVTbcM6evZGo9rKIZS
+	exOYV/0QNTCQW06aed5JM7YmELpj+gD8vChUQIP2gmyoL0nC/ov7DrqZ
+X-Gm-Gg: AeBDieus4bh10N5l5KsMhoN3eCJvYxWaozMfTJeQQCJHzlC3ptyfAt/uHiKxhXYlmYe
+	3/IaxJn38DrSzdv4TvCpgV2vhRDwF+g0vz2gJ4d6kZ/a2aEq2FulIXFzg8xZqbEdpNOGNj4KEAx
+	gRCnpS37Kn488H7yWnwaHnvn2IAGHTdZ0S/xNrDsQ9Uoc0j/yBH8WuTC1AElX6zR9dw7N7ANsXG
+	KcugF2cOiQP3GA+U+mZsQDBJt5TwDqotLDcL8aJTPeb3Eeg1xk5Jm0Pe9K6pWqaAFSfDQLrQBNe
+	sbdEtLQFrpNOsPIsyiVpaqLESALHx+pqVD/tj/T+MPs03bC5m7nh1knCVsIrYdfLkZp6Ip+IOxU
+	AN4PfJvtNlNkIwxsFgkNTPhx/34AZsZXQ3PzyXfniOxaNJsO6DlU1AZ0YtB94N4dSgpwJrHNY7T
+	gWCAy7kHbZP1g8CqEhGcAGJr276xs/FVu3xoqtoAgZEZoRPTNTe2CmLKLSzeQse0zsxs8WUw==
+X-Received: by 2002:a05:620a:1a11:b0:8cf:e2b3:5b1c with SMTP id af79cd13be357-8ddcf2bfc1amr406629385a.35.1775826135531;
+        Fri, 10 Apr 2026 06:02:15 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8dead5143b3sm30264785a.3.2026.04.10.06.02.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Apr 2026 06:02:14 -0700 (PDT)
+Message-ID: <4efc4133-3726-4b9d-8f06-03c07d48af99@gmail.com>
+Date: Fri, 10 Apr 2026 09:02:13 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a07a6a49-0520-44c7-b9c5-2173465cc1ca@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] Enable Rust by default
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Apr 10, 2026 at 09:20:20AM +0200, Pascal Chambon wrote:
-> 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
-> > I launched "git fsck" (with various arguments)
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> > A long run of fsck and then it's over
-> 
-> What happened instead? (Actual behavior)
-> 
-> > A (seemingly) neverending run of fsck, exceeding the expected count of
-> objects to check:
-> > $ git fsck
-> > Checking ref database: 100% (1/1), done.
-> > Checking object directories: 100% (256/256), done.
-> > Checking objects: 190% (54090/28351)        -->  (process still
-> turning...)
-> 
-> What's different between what you expected and what actually happened?
-> 
-> > Normal, finished fsck run, vs neverending checking of objects.
-> 
-> Anything else you want to add:
-> 
-> > This is a quite old repository (from 2012) with quite heavy media files in
-> it (70 GB total).
-> > I've tried to "git gc --aggressive", it worked, and pack files are
-> numerous and about the same size, but the fsck anomally remains.
+On 4/9/2026 6:44 PM, brian m. carlson wrote:
+> Our breaking changes document said that we would enable Rust support by
+> default in Git 2.53, while still leaving the ability for it to be
+> disabled.  Unfortunately, we forgot to do that and my time machine is
+> broken right now, so this series sets it up for Git 2.54.
 
-This strongly reminds me of the issue fixed in 13eb65d366 (pack-check:
-fix verification of large objects, 2026-02-23), which is going to be
-released with Git 2.54. Could you maybe verify whether that commit fixes
-the issue you're observing?
+I'm glad you're remembering to help us follow through on this promise.
 
-Thanks!
+However, I'm worried that we shouldn't do this change during the rc
+window for 2.54.0. Perhaps we could get a small patch that updates the
+docs to say "we really mean 2.55.0" that lands in the 2.54.0 release,
+and then we merge the requirements for the build in the first batch
+after the release.
 
-Patrick
+This would give us a full release cycle to simmer with the requirement
+instead of slipping it in for the last rc.
+
+Thanks,
+-Stolee
+
