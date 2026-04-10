@@ -1,81 +1,80 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14353BE62A
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5138C3B9618
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775823191; cv=none; b=hxng4IZBaT0gUfbptwfqm5sz4G29Zr/zXxioL/O5mTNEAXfB8C1AzxXsS3woljSvahPUmoXz7C64qVevbahdcgQxjtBrVddI02cJxqlgNKfpdF2Gl3jC4vsZUZWVUqitQVhAHD7qbmXzSKYYI0EoiRC3xf4RFhUPEYQMFNqy2Lk=
+	t=1775823193; cv=none; b=Euw3vFQj8mjZRFqBGznoYvpUHCDgVkOf5er2nCw3na9jheZQUTVJALH+dFJXD65RW8dPu/O+g+5J5mhisiwTOrF8AtiazevCUmA64f3oDccK1ZsoRkoawtPQmA93vSvdh4EWDDjIXO1+t098wWO/6i8dGyzi48AhjN46eIeJ+fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775823191; c=relaxed/simple;
-	bh=Ae3uSf2iLm2WZDBpmkPMOI/rYeQR6DEL4LDHTTA1+Z8=;
+	s=arc-20240116; t=1775823193; c=relaxed/simple;
+	bh=ze+GDiGYD5tY5gNeiDNREh3XquIKSvH48fM1X9j0DDA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BJGHMyz0gT6R5AnKvuFu3rQg4irdA+5IRx7SOkeUSsPH/CO3VVtKPbzw8hQYkO4ITrnrjgLKMUej+51WOWermJigYaP5IlIzHMSCpZqkrg97nC/6yRaD0GStmmvCrdejrmtF6B+lzOW5l8WHSA1BN1euYrFVxw/uxVKvl6dbPi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=t+WyVIQV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AyrvWI2J; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=ajvJXwwi1IAh9NvsnlADalbrjbU5eUbsmg4JC3XXHuO/WBeiSBGeYdDdo14YpWthPXdE8+l+MvGBx9iC20tfbB1Ltw8O36LLBmUY3reYmVbLYAF/g7ITjpKoHkLRkaMScSbFHq2XI6sHDBBgDFyLUUBC1HELJrL3Lhg/Dp8j1aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A+6oqQ/I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E6XLjaJc; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t+WyVIQV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AyrvWI2J"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E0497A029B;
-	Fri, 10 Apr 2026 08:13:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A+6oqQ/I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E6XLjaJc"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7A7241D001DB;
+	Fri, 10 Apr 2026 08:13:11 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 10 Apr 2026 08:13:09 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 10 Apr 2026 08:13:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823189;
-	 x=1775909589; bh=JlZjra7Q8H99YvXnG06UjvibKfNpUEUIELFSbEkVSxE=; b=
-	t+WyVIQV77L2JCeDNmPZTDmAoQ4o+ZL4ae8ch7d+00iR0OCDCYjLA/7gDUdocIwb
-	kNGtWLDSkFWwnUWebuEL4ymZ4V7nBlpu//DYU5zNgkh3ZrvIIKAbGfzWotFxo5GJ
-	RTQaQOGWCWUyIwIi9jnwL3Of08gqJqSy6aKQEUeS9BwiD5zAp6TDK7VgB7n9z84P
-	pKuCWXzjfZXUwkWNIxwJsTmF9kvWPwGEFaezlh/NGKEduNi4PNWutEJLuaxGll77
-	UqV4wgoh/eIaLeJab+73mZpfBmgcrLTrfkAoBepGu2of+uxN7VEA01nCBugdzMTL
-	MdR5Ytk8WTJhQAsQd4xTwg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823191;
+	 x=1775909591; bh=T/LL3tWuJ0zaUL9ktHv7+6PfGLhKt2yaBWME7cqjpDg=; b=
+	A+6oqQ/IvztTZ2fZFdOZhTwi9QcTXRNVIAZaCp0w1X2rDe3GPqenZl8WAgspDoMO
+	5chqXDzxXIB8Mg0CpTimr5+1S7gU6KRTK9GIMaTuJE1u3Yd4HCV5Tl+wAcwjnfKT
+	QWVSVvRb2PeUw7nvY8tbFk3WFk0rdkcFLsWtVVXn0kw2kSHWoL/T6USkhhCMu/YK
+	BUtLVGVT5jUobK8ss27tM/Hy6DB/wNYFYhRIYngYTbfRWHXUcQJiszYKS5JJH6sn
+	CHpBtliRYwVJ7MVdV8IT6IvyHezI8W7cOMwlwd96U1CS0v/PWkhWTeMPCOeuu8lT
+	EQaHyIgg66hyHCtuqzJRhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823189; x=
-	1775909589; bh=JlZjra7Q8H99YvXnG06UjvibKfNpUEUIELFSbEkVSxE=; b=A
-	yrvWI2JXvhtRKhBEaaiicrToy3bJS4+q2DJJYv/HYN5iUA5en9PSsTFtTylOoz4n
-	TtE1jC1BqHV5+Y7cOlM1X/Xs9DvIgxcgdD83M8z4q+y3OzqvL/riYfpGkkP5doWn
-	I5UxmTlt1pb+GG3SZiujK1k3vZSBtHVQkRN31dkU/DO+oO8xRU1XFkXU9Y+wXNhX
-	n6TA6Do82SbIbVTsVnRykSy9w6pG4Cq6+I1T3HslUjY0kTgpovA6GzS35/6N8yph
-	/Nhps5CpiijVh+WYxiTf5vOqn1sxoRlEUJB3l1QQkdWtFogH59OGUwo+cJcpBPEM
-	T1vRCjbeIVjeZBfgEJ/5w==
-X-ME-Sender: <xms:VOnYadZdHOEWpDEI_snqHDz_NTqis9nnKPc1t9XVhRRwoBVuWWR78A>
-    <xme:VOnYab0vfBy9GJOUzRqcQaykxzO8JXB89r6d4ugBQCMX5cMAm8e4ViRYNU5V6lbWQ
-    n5PZbA1G2XJbsK6NElLtrg7Yz1V8eBxIM4p23xRoEzEY35e1Qq0DQ>
-X-ME-Received: <xmr:VOnYadUpftCyhEin0gcoLo5Gmkvz07Hbx4cT8Oz5sVeLksDt0W-tVauaXh9lO-Q0yXwddfw49ldbO0UWHp7TlEq9iNYPwEeCAzKLe7s_P_nEZw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823191; x=
+	1775909591; bh=T/LL3tWuJ0zaUL9ktHv7+6PfGLhKt2yaBWME7cqjpDg=; b=E
+	6XLjaJcr1/fUScB4jMnLyJNTz/Za5dFZwL59ou8WVXscUROa3MddzpT8khlQcGUg
+	vI5Qj6dzT9IDVczoqdwIo+NwwSdnMvVnjn/iibaLVl5ZxIuZDn6PNzLnaZOTgWEh
+	MwgvJsWh5HdrkrbCx6rXP9h5zMc2ZrvrRcf9uDZLH8YfBpIdCA3Rlu3rp8hVXCTm
+	pc/SkU8Dm15VG49500wGrB2CvHS2oJjYwk4dllPVMVfAVpMLHDwRYJPsb6KBlaaa
+	Eg93xcDYnmuckx85g4hd825p6YaRChrW9jwHEYq4pb1GjMt2zXWAw3spLyXT+8/D
+	kY9z48E/VUS4IMYXkCA5A==
+X-ME-Sender: <xms:V-nYacavad0m3_bu3lOkB5lZS2WzlDQCf9Q6MA85tPMMLmKPTVAbzw>
+    <xme:V-nYae2yRapCEoKJaRMiznrqxbNu5fBqNiDkWy1SpOxH8ukQjXC6Oa7N5Lao5-CDk
+    __1V1OjAPUE7ZMe161Pz5F46Kq9x4bzCh68OR-iYciW69PKAt_2zjo>
+X-ME-Received: <xmr:V-nYaUUlaMuk15c13w58MIBqJhmhBJnv-PHLvWdxF6SLUGNx5nPm4ind_xw0uT_sL_Ukmi1n7aEKkkEa_HorzyIKU7h5R9ZEdaN2fT9EhmviRQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleefkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:VOnYaVWxc05VUJKxnlugkrH1bPzVOZRmu2QhJVoscAYs6MlK5PhhfA>
-    <xmx:VOnYacdaUvODJ7CJU_JXN35O7XBxNMlSTDAJc7R2J8DpYayh4j4sBw>
-    <xmx:VOnYaeXxpOOBfAjkQwchnza-6B4ASeQ9qqVBL4Sp08sFMVt3JPeDYg>
-    <xmx:VOnYaVfGfSF7hAs_xuuftaO0X8FnRU4KVbGngEHCUio1FB5hfF84HQ>
-    <xmx:VenYaT0I_3FxIpAnN-QwmF321R6-C2LDHJ-5kjtzU9ItwfJpoGoqfABG>
+X-ME-Proxy: <xmx:V-nYaQVgOkeqP7VAwr9qsCOomwEXNDzZVDZI2KuAvZyG7x42Xo-3Wg>
+    <xmx:V-nYabfbHAtNLo-DlMKLbB9VYtgBWoXWpTjnXnXHKj3b6ViOXfTw5w>
+    <xmx:V-nYaRV49fHuAymLHHSelDZycpYRO2NPP0x9R5_pOuLSw8rVm82gPA>
+    <xmx:V-nYaccIluYxISZBZteoM-3KuSMw3Y6qrFIjkhCxPrkH_59Hfg1KUQ>
+    <xmx:V-nYaW1naqhG-0wyz8pKHMSNgrWD6GiZhY6ijFBn9Ll43k2bDWIj-KzC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 08:13:08 -0400 (EDT)
+ 10 Apr 2026 08:13:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 41efcb29 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 12:13:07 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7ea0b36e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Apr 2026 12:13:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 10 Apr 2026 14:12:38 +0200
-Subject: [PATCH v3 08/17] cbtree: allow using arbitrary wrapper structures
- for nodes
+Date: Fri, 10 Apr 2026 14:12:39 +0200
+Subject: [PATCH v3 09/17] oidtree: add ability to store data
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,267 +83,242 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-8-22fd0fad58fe@pks.im>
+Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-9-22fd0fad58fe@pks.im>
 References: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 In-Reply-To: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.1
 
-The cbtree subsystem allows the user to store arbitrary data in a
-prefix-free set of strings. This is used by us to store object IDs in a
-way that we can easily iterate through them in lexicograph order, and so
-that we can easily perform lookups with shortened object IDs.
+The oidtree data structure is currently only used to store object IDs,
+without any associated data. So consequently, it can only really be used
+to track which object IDs exist, and we can use the tree structure to
+efficiently operate on OID prefixes.
 
-In its current form, it is not easily possible to store arbitrary data
-with the tree nodes. There are a couple of approaches such a caller
-could try to use, but none of them really work:
+But there are valid use cases where we want to both:
 
-  - One may embed the `struct cb_node` in a custom structure. This does
-    not work though as `struct cb_node` contains a flex array, and
-    embedding such a struct in another struct is forbidden.
+  - Store object IDs in a sorted order.
 
-  - One may use a `union` over `struct cb_node` and ones own data type,
-    which _is_ allowed even if the struct contains a flex array. This
-    does not work though, as the compiler may align members of the
-    struct so that the node key would not immediately start where the
-    flex array starts.
+  - Associated arbitrary data with them.
 
-  - One may allocate `struct cb_node` such that it has room for both its
-    key and the custom data. This has the downside though that if the
-    custom data is itself a pointer to allocated memory, then the leak
-    checker will not consider the pointer to be alive anymore.
-
-Refactor the cbtree to drop the flex array and instead take in an
-explicit offset for where to find the key, which allows the caller to
-embed `struct cb_node` is a wrapper struct.
-
-Note that this change has the downside that we now have a bit of padding
-in our structure, which grows the size from 60 to 64 bytes on a 64 bit
-system. On the other hand though, it allows us to get rid of the memory
-copies that we previously had to do to ensure proper alignment. This
-seems like a reasonable tradeoff.
+Refactor the oidtree interface so that it allows us to store arbitrary
+payloads within the respective nodes. This will be used in the next
+commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- cbtree.c  | 25 ++++++++++++++++++-------
- cbtree.h  | 17 +++++++++--------
- oidtree.c | 33 ++++++++++++++-------------------
- 3 files changed, 41 insertions(+), 34 deletions(-)
+ loose.c                  |  2 +-
+ object-file.c            |  3 ++-
+ oidtree.c                | 37 ++++++++++++++++++++++++++++++++-----
+ oidtree.h                | 12 ++++++++++--
+ t/unit-tests/u-oidtree.c | 26 +++++++++++++++++++++++---
+ 5 files changed, 68 insertions(+), 12 deletions(-)
 
-diff --git a/cbtree.c b/cbtree.c
-index 4ab794bddc..8f5edbb80a 100644
---- a/cbtree.c
-+++ b/cbtree.c
-@@ -7,6 +7,11 @@
- #include "git-compat-util.h"
- #include "cbtree.h"
+diff --git a/loose.c b/loose.c
+index 07333be696..f7a3dd1a72 100644
+--- a/loose.c
++++ b/loose.c
+@@ -57,7 +57,7 @@ static int insert_loose_map(struct odb_source *source,
+ 	inserted |= insert_oid_pair(map->to_compat, oid, compat_oid);
+ 	inserted |= insert_oid_pair(map->to_storage, compat_oid, oid);
+ 	if (inserted)
+-		oidtree_insert(files->loose->cache, compat_oid);
++		oidtree_insert(files->loose->cache, compat_oid, NULL);
  
-+static inline uint8_t *cb_node_key(struct cb_tree *t, struct cb_node *node)
-+{
-+	return (uint8_t *) node + t->key_offset;
-+}
-+
- static struct cb_node *cb_node_of(const void *p)
- {
- 	return (struct cb_node *)((uintptr_t)p - 1);
-@@ -33,6 +38,7 @@ struct cb_node *cb_insert(struct cb_tree *t, struct cb_node *node, size_t klen)
- 	uint8_t c;
- 	int newdirection;
- 	struct cb_node **wherep, *p;
-+	uint8_t *node_key, *p_key;
- 
- 	assert(!((uintptr_t)node & 1)); /* allocations must be aligned */
- 
-@@ -41,23 +47,26 @@ struct cb_node *cb_insert(struct cb_tree *t, struct cb_node *node, size_t klen)
- 		return NULL;	/* success */
- 	}
- 
-+	node_key = cb_node_key(t, node);
-+
- 	/* see if a node already exists */
--	p = cb_internal_best_match(t->root, node->k, klen);
-+	p = cb_internal_best_match(t->root, node_key, klen);
-+	p_key = cb_node_key(t, p);
- 
- 	/* find first differing byte */
- 	for (newbyte = 0; newbyte < klen; newbyte++) {
--		if (p->k[newbyte] != node->k[newbyte])
-+		if (p_key[newbyte] != node_key[newbyte])
- 			goto different_byte_found;
- 	}
- 	return p;	/* element exists, let user deal with it */
- 
- different_byte_found:
--	newotherbits = p->k[newbyte] ^ node->k[newbyte];
-+	newotherbits = p_key[newbyte] ^ node_key[newbyte];
- 	newotherbits |= newotherbits >> 1;
- 	newotherbits |= newotherbits >> 2;
- 	newotherbits |= newotherbits >> 4;
- 	newotherbits = (newotherbits & ~(newotherbits >> 1)) ^ 255;
--	c = p->k[newbyte];
-+	c = p_key[newbyte];
- 	newdirection = (1 + (newotherbits | c)) >> 8;
- 
- 	node->byte = newbyte;
-@@ -78,7 +87,7 @@ struct cb_node *cb_insert(struct cb_tree *t, struct cb_node *node, size_t klen)
- 			break;
- 		if (q->byte == newbyte && q->otherbits > newotherbits)
- 			break;
--		c = q->byte < klen ? node->k[q->byte] : 0;
-+		c = q->byte < klen ? node_key[q->byte] : 0;
- 		direction = (1 + (q->otherbits | c)) >> 8;
- 		wherep = q->child + direction;
- 	}
-@@ -93,7 +102,7 @@ struct cb_node *cb_lookup(struct cb_tree *t, const uint8_t *k, size_t klen)
- {
- 	struct cb_node *p = cb_internal_best_match(t->root, k, klen);
- 
--	return p && !memcmp(p->k, k, klen) ? p : NULL;
-+	return p && !memcmp(cb_node_key(t, p), k, klen) ? p : NULL;
+ 	return inserted;
+ }
+diff --git a/object-file.c b/object-file.c
+index 3e70e5d668..d04ab57253 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1857,6 +1857,7 @@ static int for_each_object_wrapper_cb(const struct object_id *oid,
  }
  
- static int cb_descend(struct cb_node *p, cb_iter fn, void *arg)
-@@ -115,6 +124,7 @@ int cb_each(struct cb_tree *t, const uint8_t *kpfx, size_t klen,
- 	struct cb_node *p = t->root;
- 	struct cb_node *top = p;
- 	size_t i = 0;
-+	uint8_t *p_key;
- 
- 	if (!p)
- 		return 0; /* empty tree */
-@@ -130,8 +140,9 @@ int cb_each(struct cb_tree *t, const uint8_t *kpfx, size_t klen,
- 			top = p;
- 	}
- 
-+	p_key = cb_node_key(t, p);
- 	for (i = 0; i < klen; i++) {
--		if (p->k[i] != kpfx[i])
-+		if (p_key[i] != kpfx[i])
- 			return 0; /* "best" match failed */
- 	}
- 
-diff --git a/cbtree.h b/cbtree.h
-index c374b1b3db..4647d4a32f 100644
---- a/cbtree.h
-+++ b/cbtree.h
-@@ -6,9 +6,9 @@
-  *
-  * This is adapted to store arbitrary data (not just NUL-terminated C strings
-  * and allocates no memory internally.  The user needs to allocate
-- * "struct cb_node" and fill cb_node.k[] with arbitrary match data
-- * for memcmp.
-- * If "klen" is variable, then it should be embedded into "c_node.k[]"
-+ * "struct cb_node" and provide `key_offset` to indicate where the key can be
-+ * found relative to the `struct cb_node` for memcmp.
-+ * If "klen" is variable, then it should be embedded into the key.
-  * Recursion is bound by the maximum value of "klen" used.
-  */
- #ifndef CBTREE_H
-@@ -23,18 +23,19 @@ struct cb_node {
- 	 */
- 	uint32_t byte;
- 	uint8_t otherbits;
--	uint8_t k[FLEX_ARRAY]; /* arbitrary data, unaligned */
- };
- 
- struct cb_tree {
- 	struct cb_node *root;
-+	ptrdiff_t key_offset;
- };
- 
--#define CBTREE_INIT { 0 }
--
--static inline void cb_init(struct cb_tree *t)
-+static inline void cb_init(struct cb_tree *t,
-+			   ptrdiff_t key_offset)
+ static int for_each_prefixed_object_wrapper_cb(const struct object_id *oid,
++					       void *node_data UNUSED,
+ 					       void *cb_data)
  {
--	struct cb_tree blank = CBTREE_INIT;
-+	struct cb_tree blank = {
-+		.key_offset = key_offset,
-+	};
- 	memcpy(t, &blank, sizeof(*t));
+ 	struct for_each_object_wrapper_data *data = cb_data;
+@@ -2002,7 +2003,7 @@ static int append_loose_object(const struct object_id *oid,
+ 			       const char *path UNUSED,
+ 			       void *data)
+ {
+-	oidtree_insert(data, oid);
++	oidtree_insert(data, oid, NULL);
+ 	return 0;
  }
  
 diff --git a/oidtree.c b/oidtree.c
-index ab9fe7ec7a..117649753f 100644
+index 117649753f..e43f18026e 100644
 --- a/oidtree.c
 +++ b/oidtree.c
-@@ -6,9 +6,14 @@
- #include "oidtree.h"
- #include "hash.h"
+@@ -9,6 +9,7 @@
+ struct oidtree_node {
+ 	struct cb_node base;
+ 	struct object_id key;
++	void *data;
+ };
  
-+struct oidtree_node {
-+	struct cb_node base;
-+	struct object_id key;
-+};
-+
  void oidtree_init(struct oidtree *ot)
- {
--	cb_init(&ot->tree);
-+	cb_init(&ot->tree, offsetof(struct oidtree_node, key));
- 	mem_pool_init(&ot->mem_pool, 0);
+@@ -25,15 +26,22 @@ void oidtree_clear(struct oidtree *ot)
+ 	}
  }
  
-@@ -22,20 +27,13 @@ void oidtree_clear(struct oidtree *ot)
- 
- void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
+-void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
++struct oidtree_data {
++	struct object_id oid;
++};
++
++void oidtree_insert(struct oidtree *ot, const struct object_id *oid,
++		    void *data)
  {
--	struct cb_node *on;
--	struct object_id k;
-+	struct oidtree_node *on;
+ 	struct oidtree_node *on;
++	struct cb_node *node;
  
  	if (!oid->algo)
  		BUG("oidtree_insert requires oid->algo");
  
--	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on) + sizeof(*oid));
--
--	/*
--	 * Clear the padding and copy the result in separate steps to
--	 * respect the 4-byte alignment needed by struct object_id.
--	 */
--	oidcpy(&k, oid);
--	memcpy(on->k, &k, sizeof(k));
-+	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on));
-+	oidcpy(&on->key, oid);
+ 	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on));
+ 	oidcpy(&on->key, oid);
++	on->data = data;
  
  	/*
  	 * n.b. Current callers won't get us duplicates, here.  If a
-@@ -43,7 +41,7 @@ void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
+@@ -41,13 +49,19 @@ void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
  	 * that won't be freed until oidtree_clear.  Currently it's not
  	 * worth maintaining a free list
  	 */
--	cb_insert(&ot->tree, on, sizeof(*oid));
-+	cb_insert(&ot->tree, &on->base, sizeof(*oid));
+-	cb_insert(&ot->tree, &on->base, sizeof(*oid));
++	node = cb_insert(&ot->tree, &on->base, sizeof(*oid));
++	if (node) {
++		struct oidtree_node *preexisting = container_of(node, struct oidtree_node, base);
++		preexisting->data = data;
++	}
  }
  
- bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
-@@ -73,21 +71,18 @@ struct oidtree_each_data {
- 
- static int iter(struct cb_node *n, void *cb_data)
+-bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
++static struct oidtree_node *oidtree_lookup(struct oidtree *ot,
++					   const struct object_id *oid)
  {
-+	struct oidtree_node *node = container_of(n, struct oidtree_node, base);
- 	struct oidtree_each_data *data = cb_data;
--	struct object_id k;
--
--	/* Copy to provide 4-byte alignment needed by struct object_id. */
--	memcpy(&k, n->k, sizeof(k));
+ 	struct object_id k;
+ 	size_t klen = sizeof(k);
++	struct cb_node *node;
  
--	if (data->algo != GIT_HASH_UNKNOWN && data->algo != k.algo)
-+	if (data->algo != GIT_HASH_UNKNOWN && data->algo != node->key.algo)
- 		return 0;
+ 	oidcpy(&k, oid);
  
- 	if (data->last_nibble_at) {
--		if ((k.hash[*data->last_nibble_at] ^ data->last_byte) & 0xf0)
-+		if ((node->key.hash[*data->last_nibble_at] ^ data->last_byte) & 0xf0)
+@@ -58,7 +72,20 @@ bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
+ 	klen += BUILD_ASSERT_OR_ZERO(offsetof(struct object_id, hash) <
+ 				offsetof(struct object_id, algo));
+ 
+-	return !!cb_lookup(&ot->tree, (const uint8_t *)&k, klen);
++	node = cb_lookup(&ot->tree, (const uint8_t *)&k, klen);
++	return node ? container_of(node, struct oidtree_node, base) : NULL;
++}
++
++bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
++{
++	struct oidtree_node *node = oidtree_lookup(ot, oid);
++	return node ? 1 : 0;
++}
++
++void *oidtree_get(struct oidtree *ot, const struct object_id *oid)
++{
++	struct oidtree_node *node = oidtree_lookup(ot, oid);
++	return node ? node->data : NULL;
+ }
+ 
+ struct oidtree_each_data {
+@@ -82,7 +109,7 @@ static int iter(struct cb_node *n, void *cb_data)
  			return 0;
  	}
  
--	return data->cb(&k, data->cb_data);
-+	return data->cb(&node->key, data->cb_data);
+-	return data->cb(&node->key, data->cb_data);
++	return data->cb(&node->key, node->data, data->cb_data);
  }
  
  int oidtree_each(struct oidtree *ot, const struct object_id *prefix,
+diff --git a/oidtree.h b/oidtree.h
+index 2b7bad2e60..baa5a436ea 100644
+--- a/oidtree.h
++++ b/oidtree.h
+@@ -29,18 +29,26 @@ void oidtree_init(struct oidtree *ot);
+  */
+ void oidtree_clear(struct oidtree *ot);
+ 
+-/* Insert the object ID into the tree. */
+-void oidtree_insert(struct oidtree *ot, const struct object_id *oid);
++/*
++ * Insert the object ID into the tree and store the given pointer alongside
++ * with it. The data pointer of any preexisting entry will be overwritten.
++ */
++void oidtree_insert(struct oidtree *ot, const struct object_id *oid,
++		    void *data);
+ 
+ /* Check whether the tree contains the given object ID. */
+ bool oidtree_contains(struct oidtree *ot, const struct object_id *oid);
+ 
++/* Get the payload stored with the given object ID. */
++void *oidtree_get(struct oidtree *ot, const struct object_id *oid);
++
+ /*
+  * Callback function used for `oidtree_each()`. Returning a non-zero exit code
+  * will cause iteration to stop. The exit code will be propagated to the caller
+  * of `oidtree_each()`.
+  */
+ typedef int (*oidtree_each_cb)(const struct object_id *oid,
++			       void *node_data,
+ 			       void *cb_data);
+ 
+ /*
+diff --git a/t/unit-tests/u-oidtree.c b/t/unit-tests/u-oidtree.c
+index d4d05c7dc3..f0d5ebb733 100644
+--- a/t/unit-tests/u-oidtree.c
++++ b/t/unit-tests/u-oidtree.c
+@@ -19,7 +19,7 @@ static int fill_tree_loc(struct oidtree *ot, const char *hexes[], size_t n)
+ 	for (size_t i = 0; i < n; i++) {
+ 		struct object_id oid;
+ 		cl_parse_any_oid(hexes[i], &oid);
+-		oidtree_insert(ot, &oid);
++		oidtree_insert(ot, &oid, NULL);
+ 	}
+ 	return 0;
+ }
+@@ -38,9 +38,9 @@ struct expected_hex_iter {
+ 	const char *query;
+ };
+ 
+-static int check_each_cb(const struct object_id *oid, void *data)
++static int check_each_cb(const struct object_id *oid, void *node_data UNUSED, void *cb_data)
+ {
+-	struct expected_hex_iter *hex_iter = data;
++	struct expected_hex_iter *hex_iter = cb_data;
+ 	struct object_id expected;
+ 
+ 	cl_assert(hex_iter->i < hex_iter->expected_hexes.nr);
+@@ -105,3 +105,23 @@ void test_oidtree__each(void)
+ 	check_each(&ot, "32100", "321", NULL);
+ 	check_each(&ot, "32", "320", "321", NULL);
+ }
++
++void test_oidtree__insert_overwrites_data(void)
++{
++	struct object_id oid;
++	struct oidtree ot;
++	int a, b;
++
++	cl_parse_any_oid("1", &oid);
++
++	oidtree_init(&ot);
++
++	oidtree_insert(&ot, &oid, NULL);
++	cl_assert_equal_p(oidtree_get(&ot, &oid), NULL);
++	oidtree_insert(&ot, &oid, &a);
++	cl_assert_equal_p(oidtree_get(&ot, &oid), &a);
++	oidtree_insert(&ot, &oid, &b);
++	cl_assert_equal_p(oidtree_get(&ot, &oid), &b);
++
++	oidtree_clear(&ot);
++}
 
 -- 
 2.54.0.rc0.707.g0fbf48f4d6.dirty
