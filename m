@@ -1,75 +1,72 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE973D8915
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844913C9438
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:37:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775834271; cv=none; b=EcsS59SWtdfZDbTovUw/ncFHI2arU8UXCf08+7zXdpq9//Q/rqbI4E7tS5i7epjpC16Ks21ojzqXSm8FnWUec1mqTnyFTq6VfMsIWsBPfNq4bT11ztt1lXAZsAWYGpkgjd+mQfDPIiAE2Fu8/IGpC6WeArQTFm2XtXpUI2Exm5I=
+	t=1775835421; cv=none; b=oo9xm6Sbzdxug4PFqr2KmrxSnSVnoEhE4/AGRJGOodIJb5H/n1JU1U1ltuTI9avTNwUSbGy/ZiBmUgKKvZZ02fxWr26IxOlgoM56aWrR3DmVwTfOckUuatPwdOcnAsh6LL+odJ0+FiP4olwoy254daXuCzpDzJAO8Re1EaP37JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775834271; c=relaxed/simple;
-	bh=v+jS8zYPIEd6EKAh12ZTO0PKpXP391N2G9PcBrKkh2U=;
+	s=arc-20240116; t=1775835421; c=relaxed/simple;
+	bh=kveYGtHLDDTOFwafvkS3QTFsiVm5XaSyb4RPPs8HiNw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TYH0zBgSqrwWEpnOrbz6TEF/lWr+CPZzzxyz3VDMl7ZXlrn/PlKfAuBP33aRBugSPDUZsfnmi1r8GW4Q7Lhcw0LDaBLLUcMdh6hwIzv7NBFSlLMNm/oW7pqq+5WWg4Lo3LoXQcZ1HV+MYmbERQ0vRroEmyaHwPAjS0nAQC5bSEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGYc56VO; arc=none smtp.client-ip=209.85.128.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q5QE3v/nvKF3HseBMLLiM9DYGhMsYbGhtp8G6A8rJsFIo7GymfD4l8wWV2AYzD9ZeZekqKUKwNjcoDKX08O6n13XpdrJUm7tFyRUcGXxT7BBDqgZxi+OZfhsQk1XJ6QnkEnF12QiXrSDCATaIZftpHzHllRO3kcUr0HVhX/oQyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nwZ1ftT6; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGYc56VO"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488b00ed86fso23271585e9.3
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:17:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nwZ1ftT6"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-43cff5dafc3so1636824f8f.1
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775834268; x=1776439068; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775835419; x=1776440219; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=iuvT3o+nxnRjdL2NtpnmT//+OJcBjFlBA+hgIss6lsU=;
-        b=bGYc56VOKnZAXxHqAbAGIdnpx3Yv0dJmsAOvMrAT8/zKGkdS2vJ1Xk6EPgyDiqdpuZ
-         kZTWX7NPUldU5BrmdK/O571AYnWzKEcGJc4Uk77PprTZWl2JhO2LnVfhaHhUgKBgZyIB
-         TEfkMp8D0fbmWjqLvWiq0UgjfpjWXPpphhzVWYQjmx40xW0DMjrGr3svVN8orHG5vhcU
-         iv1kc25Fym29GnroStntUNwZ8qlHM3AD6uOE8PdsV9w+vl13RjL3amCSafYZwYvZD6UO
-         HYuJUNgUjScXDkQ7eUgECTzkL2cvxQfkHDS0fVP6HPzT+fxJ51ernwsvnZQUNTbz+CC7
-         3iCA==
+        bh=BpSyCwFAxPpSpoe+PsNd4aG4fod/5YdJyWLA7d0XC+Y=;
+        b=nwZ1ftT6ckFqK+7xqwefQ5/1n4Bogt5/t0GgXDknEfDgTMNJ6GTz8xmcwVHwCJpngk
+         05JZ5dPfRtVTIIzPeOP1MWseEzFVHtE11ppEPoMhiU9rJbATd42fb94VBjq+nir0is5F
+         pVozQbeMkncFW2FLUA/68geKSHfER4QhqU6hbUxyuaH3yIN3RRVetxnJxZBorYBEp18N
+         Sssx7o1Krd4TqSmjGmrxFfBLwJafwLaF/4tqFcO1KsgjgHlP+WakgF2xOYFkJh7NxsF5
+         LBd0oCTGHKx7TweYV00gqdLQgFg+RJdvCZIoZFHMGhSe8INOKIF5XEYJnpFxK8u7uszb
+         LCRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775834268; x=1776439068;
+        d=1e100.net; s=20251104; t=1775835419; x=1776440219;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iuvT3o+nxnRjdL2NtpnmT//+OJcBjFlBA+hgIss6lsU=;
-        b=r2nH+nbA2ejbiAJkiP0vJAczwZkZ8krB4DSTyp5pEr0rGLAc/Yw5MV81NWTd0nbuoo
-         KstpV83OwJxd7makp2drcT/3D6d2xrwy80edxlsXs136S/P5wZGmbrBr/T3UAWLAIsMX
-         2gGm6OKrimDvi2/EGzfEK7Y8Yoay66W/3vt4JKk8YRlrT7ovcv5vWe+C/7T05VmTXCK1
-         p77EfuFmaZ9Skq7yd+wpgh12SZvMXAdDYCdW7aOu0laoCVjnmYjBNUVCLpQGeDBb6nhe
-         XHHMq++XUJiLzuXBLIdc0wL8yoeVWLk35+/N7tSKlCI1jsHC7qLN6D+zRa8s2Xix+lSy
-         V/jw==
-X-Forwarded-Encrypted: i=1; AJvYcCUsi0Z+OHW16sCdR/AorCsD0ql+xwXZN9jKN+vjqxkaPofLEF7LitidtMPRqH+XszufWig=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4wt0UCiQyCQHxStwP/MLKFae9JmuA9w6q485FlUrrOTvRFmVO
-	VlKp+yVYsAnhq8RbMMK8n0RNECQqzmYxFXv/P2Z49JWQOYpWnt1srkJBulpqMg==
-X-Gm-Gg: AeBDiesoD0ZmYDG6bqlnCYOcmh0JbomKrACx0gpX3k2Am91KSfTK3AIG4jOgMtNXf67
-	utvXX0zsTYwuTTIHIF+KuiJEzscvzKEiZznzWnqZHhX8hCDBB0IbGiQIVC8zxgXNKiGqNQ6lpHb
-	lFzLPb2RNxtnRywnKR2hpOt42NLm8SOUqRoYKXVlxcjvO+fXJ7VBWiNMZ0XQ3VQnwA/y3iCmvgA
-	W8tpNVFO16VFrwVTS/dBZyL9AJ4KGb2pKB4PTge8FYILaTo1vHitgzZrWnNRK6gzARQkh9ypOIC
-	C7NGYChOUpVrWmTCgQVyYfhrrVN44UoB8Yr9WmV8ro5WU+3wmb0Pu5Fg9S1rnpJoZkRIP7cPcW8
-	DA0dUuNmkvFceC4b84fqFXtyW9IkJz/XTO/jc6G7hM4OjkQOkIRS1ALE40RE8WdfvGe1CgY3o9Z
-	whZlc77IL2thLnDy8ESvbSWt9nLuSV6VSrHlsljcCJrGXL022H/NIl
-X-Received: by 2002:a05:600c:64c9:b0:488:c40b:c8b9 with SMTP id 5b1f17b1804b1-488d67b8d4emr54370885e9.3.1775834268051;
-        Fri, 10 Apr 2026 08:17:48 -0700 (PDT)
+        bh=BpSyCwFAxPpSpoe+PsNd4aG4fod/5YdJyWLA7d0XC+Y=;
+        b=fyytuFw1E9RoTQoz+jMRrx8uGBs1wfoQbLfvguknIZLL8niKWfqhDy+V/Zp34deCIb
+         b4vMl7KjHUMvB8yijaEeSWqGLNo9HD7PybH9EYqrOJ0BF6b/phoQpEp49N8a+Qo//u40
+         LPUeKdEfcYz9CBUO052n7s7ae6rIPqJagrDCvutgZRSdcvr4Y9BLkl0vqsW3LiIPruPA
+         ED7M2z5yqHd3I8K3BaoA0giOZD0zXViPNCbISkQh/gMgmgdLR0hyaEZs3GvMS588HQ51
+         wfpOhIb0d/ayPe3ntphKf65mJuaLo/YATOUuB8wTqjUruvGQb1Crg8L0ndBSaWYI21kq
+         CYDA==
+X-Gm-Message-State: AOJu0Yy5hiJG65YhEKrkWNIKgE3NozGLQhTFWb4aaMoXUjX5xM7iN9UR
+	MlXnBc8UjfuikmIxCSwnXXdhmh6gJlqJ3xwDpwqwHX2pbhXjFzLwRfVc
+X-Gm-Gg: AeBDieuOLxqSYzSmxY3TI9naqqWLuy9j3w+tEEmwobYfegnwv73E9JMbAM5YFe6S5VU
+	mKh1n457o5/PRAlXkA84i0TWBWewQtJCQ3rGAyzmwY18UQu9Ot67lrjzFWNUnZ7m9ybraQBLVxO
+	VP1+KN9gVO2RaoXxe0raUm/Y8Gu9pG1oC8lCBWnOkuqqIpKJHUcPMaIfGiTkJlcbaFilOiAmseE
+	xMmxlQZIHjl29GOEOBZYrNNbCNKANJNVmagvHi25GcVUjl3BMlxXVpkcu0Xlaqsbu0exNh2y7/9
+	eTLqYMOadCvmsoNxm/OXS4VUlmXYpUZxsUDgucREExcg9PmiAVd0tQQkn5FSPhzZAJZvieq7KcZ
+	NhKpIq83uL8+cc5O1qssU0qJRjQmqBAu5FEBQRR7th9Qn4FgtcLRXDu74v3UFf3QMKPQeXJZjAH
+	NAdDYJSZMFH9HwSYeuRnyIZoDqk5MjkGFwl4Bm0cjcn3NGHjeixjN/
+X-Received: by 2002:a05:6000:2dc7:b0:43c:f793:f1c0 with SMTP id ffacd0b85a97d-43d642da86emr5452045f8f.31.1775835418650;
+        Fri, 10 Apr 2026 08:36:58 -0700 (PDT)
 Received: from localhost (62-165-238-49.pool.digikabel.hu. [62.165.238.49])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d5cf2e70sm42306225e9.0.2026.04.10.08.17.47
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e5c98fsm8963302f8f.35.2026.04.10.08.36.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 08:17:47 -0700 (PDT)
-Date: Fri, 10 Apr 2026 17:17:46 +0200
+        Fri, 10 Apr 2026 08:36:58 -0700 (PDT)
+Date: Fri, 10 Apr 2026 17:36:57 +0200
 From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: [PATCH 7/8] meson: compile compatibility sources separately
-Message-ID: <adkUms2ee8aKIdAB@szeder.dev>
-References: <20260310-b4-pks-build-infra-improvements-v1-0-ec75d0710d6a@pks.im>
- <20260310-b4-pks-build-infra-improvements-v1-7-ec75d0710d6a@pks.im>
- <a5d1ea70-12dd-461d-b5c5-a1127e017d01@gmail.com>
- <debb89c9-2fab-4922-af1a-6048094baf9f@gmail.com>
- <abH6dayn5tJBMY9p@szeder.dev>
- <abJbhQwc-X0T6S_B@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 8/8] meson: precompile "git-compat-util.h"
+Message-ID: <adkZGavssyxWj27a@szeder.dev>
+References: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
+ <20260319-b4-pks-build-infra-improvements-v3-8-82f5fb3edc3f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,51 +76,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <abJbhQwc-X0T6S_B@pks.im>
+In-Reply-To: <20260319-b4-pks-build-infra-improvements-v3-8-82f5fb3edc3f@pks.im>
 
-On Thu, Mar 12, 2026 at 07:21:57AM +0100, Patrick Steinhardt wrote:
-> On Thu, Mar 12, 2026 at 12:27:49AM +0100, SZEDER Gábor wrote:
-> > On Wed, Mar 11, 2026 at 02:56:24PM +0000, Phillip Wood wrote:
-> > > On 11/03/2026 14:32, Phillip Wood wrote:
-> > > > On 10/03/2026 17:52, Patrick Steinhardt wrote:
-> > > > > In the next commit we're about to introduce a precompiled header for
-> > > > > "git-compat-util.h". The consequence of this change is that we'll
-> > > > > implicitly include that header for every compilation unit that uses the
-> > > > > precompiled headers.
-> > > > 
-> > > > Is that a meson thing? I know it defines precompiled headers on a per-
-> > > > target basis but does it somehow force each source file to include the
-> > > > precompiled header? Looking at the gcc documentation it seems like the
-> > > > precompiled header is only included where the original header is
-> > > > included.
-> > > 
-> > > Answering my own question the precompiled header is included via "-include"
-> > > on the commandline. This is necessary in the general case because a
-> > > precompiled header cannot be used once the first C token is seen.
-> > > 
-> > > As an aside in git we could probably get away without using "-include"
-> > > because if we include "git-compat-util.h" it is always the first thing we
-> > > do, or we inculde another file like "builtin.h" which immediately includes
-> > > "git-compat-util.h" and so it is included before the first C token is seen.
-> > 
-> > I couldn't find this in the GCC docs, but Make's documentation states
-> > that "you cannot include a precompiled header from inside another
-> > header." [1]
+On Thu, Mar 19, 2026 at 06:33:27AM +0100, Patrick Steinhardt wrote:
+> Every compilation unit in Git is expected to include "git-compat-util.h"
+> first, either directly or indirectly via "builtin.h". This header papers
+> over differences between platforms so that we can expect the typical
+> POSIX functions to exist. Furthermore, it provides functionality that we
+> end up using everywhere.
 > 
-> I think you must have confused something, because the link _does_ point
-> to GCC's documentation, which does contain the quote.
+> This header is thus quite heavy as a consequence. Preprocessing it as a
+> standalone unit via `clang -E git-compat-util.h` yields over 23,000
+> lines of code overall. Naturally, it takes quite some time to compile
+> all of this.
+> 
+> Luckily, this is exactly the kind of use case that precompiled headers
+> aim to solve: instead of recompiling it every single time, we compile it
+> once and then link the result into the executable. If include guards are
+> set up properly it means that the file won't need to be reprocessed.
+> 
+> Set up such a precompiled header for "git-compat-util.h" and wire it up
+> via Meson. This causes Meson to implicitly include the precompiled
+> header in all compilation units. With GCC and Clang for example this is
+> done via the "-include" statement [1].
+> 
+> This leads to a significant speedup when performing full builds:
+> 
+>   Benchmark 1: ninja (rev = HEAD~)
+>   Time (mean ± σ):     14.467 s ±  0.126 s    [User: 248.133 s, System: 31.298 s]
+>   Range (min … max):   14.195 s … 14.633 s    10 runs
+> 
+>   Benchmark 2: ninja (rev = HEAD)
+>     Time (mean ± σ):     10.307 s ±  0.111 s    [User: 173.290 s, System: 23.998 s]
+>     Range (min … max):   10.030 s … 10.433 s    10 runs
+> 
+>   Summary
+>     ninja (rev = HEAD) ran
+>       1.40 ± 0.02 times faster than ninja (rev = HEAD~)
+> 
+> [1]: https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  meson.build         | 2 ++
+>  tools/precompiled.h | 1 +
+>  2 files changed, 3 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index cd00be1c23..2002f4795e 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1760,6 +1760,7 @@ libgit = declare_dependency(
+>        c_args: libgit_c_args + [
+>          '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
+>        ],
+> +      c_pch: 'tools/precompiled.h',
+>        dependencies: libgit_dependencies,
+>        include_directories: libgit_include_directories,
+>      ),
 
-Indeed.  I wanted to say that I couldn't find this in the GCC *man
-page*...  And then mixed up which documentation site I was looking at,
-as they very much look alike.
+Well, I don't do meson, but...
 
-> But yes, overall there can only be one precompiled header, and it cannot
-> be used after the first token indeed. The use of "-include" is also
-> explicitly noted for "projects not designed with precompiled headers in
-> mind", which fits Git. After all, we still have the ability to compile
-> without precompiled headers, and I don't expect that to go away.
+If I understand this right, this section here compiles all the source
+files listed in "libgit_sources" using our new precompiled header.
+But "libgit_sources" contains all source files under "reftable/",
+which, with the sole exception of "reftable/system.c", don't include
+"git-compat-util.h".
+
+Now, building the reftable sources with "git-compat-util.h" included
+through the precompiled header apparently didn't cause any compilation
+errors...
+But I think that's just accidental, and if a source file doesn't
+include "git-compat-util.h", then it shouldn't be compiled with the
+precompiled header.
+
+
+> @@ -1820,6 +1821,7 @@ test_dependencies = [ ]
+>  
+>  git_builtin = executable('git',
+>    sources: builtin_sources + 'git.c',
+> +  c_pch: 'tools/precompiled.h',
+>    dependencies: [libgit_commonmain],
+>    install: true,
+>    install_dir: git_exec_path,
+> diff --git a/tools/precompiled.h b/tools/precompiled.h
+> new file mode 100644
+> index 0000000000..b2bec0d2b4
+> --- /dev/null
+> +++ b/tools/precompiled.h
+> @@ -0,0 +1 @@
+> +#include "git-compat-util.h"
 > 
-> Patrick
+> -- 
+> 2.53.0.959.g497ff81fa9.dirty
 > 
-> > [1] Second bullet point at:
-> >     https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html
