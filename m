@@ -1,172 +1,128 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844913C9438
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BAC3A3E86
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775835421; cv=none; b=oo9xm6Sbzdxug4PFqr2KmrxSnSVnoEhE4/AGRJGOodIJb5H/n1JU1U1ltuTI9avTNwUSbGy/ZiBmUgKKvZZ02fxWr26IxOlgoM56aWrR3DmVwTfOckUuatPwdOcnAsh6LL+odJ0+FiP4olwoy254daXuCzpDzJAO8Re1EaP37JI=
+	t=1775835488; cv=none; b=AKYdr99DPkuYgkLaJmYprl7yRKVIAhjeStRa0CVDjeL/XutUNIsDahN7kOYlUUEWNLPTsrBfVdRCY2+5Cz8zB7OmT5X54Q6om/DHNrfEG2ti+BZwBDGPvi3lQ4j+IQGnQ1EBuId4owTAyz75nZ4iFkXvdXgI/8ihSLgpRkiOKW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775835421; c=relaxed/simple;
-	bh=kveYGtHLDDTOFwafvkS3QTFsiVm5XaSyb4RPPs8HiNw=;
+	s=arc-20240116; t=1775835488; c=relaxed/simple;
+	bh=jIwHfZaCUrG/h6IC3x6zirCo2A/k77S9nG36VxW55vw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q5QE3v/nvKF3HseBMLLiM9DYGhMsYbGhtp8G6A8rJsFIo7GymfD4l8wWV2AYzD9ZeZekqKUKwNjcoDKX08O6n13XpdrJUm7tFyRUcGXxT7BBDqgZxi+OZfhsQk1XJ6QnkEnF12QiXrSDCATaIZftpHzHllRO3kcUr0HVhX/oQyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nwZ1ftT6; arc=none smtp.client-ip=209.85.221.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=LC9mRI5oMPhJiGiPjnop8u7W164y12JUVrEhgUwD5I8VoG7J1+QYM56rrhaOf4wj6pZHL5impiJfzw9EkAwNmrtyzhbwZBWD7G0PnCbSO+B4AyPwSCYTRs2wPmRnplhsgkYExyG9gOeEsmjwNS1p26XIf9WyziaEy/bV3Og5qf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OULaZTY3; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nwZ1ftT6"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-43cff5dafc3so1636824f8f.1
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:37:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OULaZTY3"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7dbcd92eda5so1610613a34.2
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775835419; x=1776440219; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BpSyCwFAxPpSpoe+PsNd4aG4fod/5YdJyWLA7d0XC+Y=;
-        b=nwZ1ftT6ckFqK+7xqwefQ5/1n4Bogt5/t0GgXDknEfDgTMNJ6GTz8xmcwVHwCJpngk
-         05JZ5dPfRtVTIIzPeOP1MWseEzFVHtE11ppEPoMhiU9rJbATd42fb94VBjq+nir0is5F
-         pVozQbeMkncFW2FLUA/68geKSHfER4QhqU6hbUxyuaH3yIN3RRVetxnJxZBorYBEp18N
-         Sssx7o1Krd4TqSmjGmrxFfBLwJafwLaF/4tqFcO1KsgjgHlP+WakgF2xOYFkJh7NxsF5
-         LBd0oCTGHKx7TweYV00gqdLQgFg+RJdvCZIoZFHMGhSe8INOKIF5XEYJnpFxK8u7uszb
-         LCRw==
+        d=gmail.com; s=20251104; t=1775835486; x=1776440286; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Hi6tHwroFBhdAFN2HIOuzFwpLkNK+9JF+KvPmOk8GU=;
+        b=OULaZTY3NsUQ1bJgJ3uhFlSDB6i2Gc71cEqaAZc03uvHRl3pL02B7lXPEFNO4RLni7
+         8G5L3NBNC7eLRs5wHlyWHvpPd/0HnUpuqskEQm01HvXvhG/+j9LYy2ATYmL+uKkL4GK3
+         oyhb0ynANJnK66ki2XU2hSDDb11JIkYNEwaSmOPI6RNSmoZNDe3+wjrFt/9H3ZDuqxj9
+         3TuzYWMGU3rEu5fJ7xDwnIYYYOmE3rmbxoMmmxaH2P1Uax7BsPAJ7upX+QYoMT0mV5Vr
+         ATENhgJxOV31JSP/1DCOfVkHTmT+hQBhasjW7MWc514aCULfe0iSC0nG0FtMsWaJkENg
+         GjnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775835419; x=1776440219;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BpSyCwFAxPpSpoe+PsNd4aG4fod/5YdJyWLA7d0XC+Y=;
-        b=fyytuFw1E9RoTQoz+jMRrx8uGBs1wfoQbLfvguknIZLL8niKWfqhDy+V/Zp34deCIb
-         b4vMl7KjHUMvB8yijaEeSWqGLNo9HD7PybH9EYqrOJ0BF6b/phoQpEp49N8a+Qo//u40
-         LPUeKdEfcYz9CBUO052n7s7ae6rIPqJagrDCvutgZRSdcvr4Y9BLkl0vqsW3LiIPruPA
-         ED7M2z5yqHd3I8K3BaoA0giOZD0zXViPNCbISkQh/gMgmgdLR0hyaEZs3GvMS588HQ51
-         wfpOhIb0d/ayPe3ntphKf65mJuaLo/YATOUuB8wTqjUruvGQb1Crg8L0ndBSaWYI21kq
-         CYDA==
-X-Gm-Message-State: AOJu0Yy5hiJG65YhEKrkWNIKgE3NozGLQhTFWb4aaMoXUjX5xM7iN9UR
-	MlXnBc8UjfuikmIxCSwnXXdhmh6gJlqJ3xwDpwqwHX2pbhXjFzLwRfVc
-X-Gm-Gg: AeBDieuOLxqSYzSmxY3TI9naqqWLuy9j3w+tEEmwobYfegnwv73E9JMbAM5YFe6S5VU
-	mKh1n457o5/PRAlXkA84i0TWBWewQtJCQ3rGAyzmwY18UQu9Ot67lrjzFWNUnZ7m9ybraQBLVxO
-	VP1+KN9gVO2RaoXxe0raUm/Y8Gu9pG1oC8lCBWnOkuqqIpKJHUcPMaIfGiTkJlcbaFilOiAmseE
-	xMmxlQZIHjl29GOEOBZYrNNbCNKANJNVmagvHi25GcVUjl3BMlxXVpkcu0Xlaqsbu0exNh2y7/9
-	eTLqYMOadCvmsoNxm/OXS4VUlmXYpUZxsUDgucREExcg9PmiAVd0tQQkn5FSPhzZAJZvieq7KcZ
-	NhKpIq83uL8+cc5O1qssU0qJRjQmqBAu5FEBQRR7th9Qn4FgtcLRXDu74v3UFf3QMKPQeXJZjAH
-	NAdDYJSZMFH9HwSYeuRnyIZoDqk5MjkGFwl4Bm0cjcn3NGHjeixjN/
-X-Received: by 2002:a05:6000:2dc7:b0:43c:f793:f1c0 with SMTP id ffacd0b85a97d-43d642da86emr5452045f8f.31.1775835418650;
-        Fri, 10 Apr 2026 08:36:58 -0700 (PDT)
-Received: from localhost (62-165-238-49.pool.digikabel.hu. [62.165.238.49])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e5c98fsm8963302f8f.35.2026.04.10.08.36.57
+        d=1e100.net; s=20251104; t=1775835486; x=1776440286;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1Hi6tHwroFBhdAFN2HIOuzFwpLkNK+9JF+KvPmOk8GU=;
+        b=MnxX3slsT+jvqyWWRRW/W8UA+kRuucA6Xljq81RnWTwR2QkeHBFVpDOHF9lwSXblPz
+         /AJKswFQr+bZp+lUwc1LnnnyVg0QAJQ2Trr+XLQiyunbOGYxsugg1wJDNADYeFuGGBmG
+         uABKZCSnXe401W6HiVKhuTs+cxQNB+2ifqDYD/YYXxP51EJB+eqKudI8Yq1ktWhLjsOT
+         ZquHDbSwk7seWJq9vqAy1JamZv4b2ETLM618t2jJobQ11bviuq+m1WmNTEonmlUSWn++
+         AbIxg4Lu0p7gZQ2KYUlpeVT/S3cXtJgCp7Iro7o/Pf/rvYOsZmeaECmiapY9ShwGISzP
+         nZMg==
+X-Forwarded-Encrypted: i=1; AJvYcCV070fFSci4HxT5n0aQSbmPJTgUdMzZKvDLbmGmTbDd0+23L42nuSFYOKx3lg82kCyAoX4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmLb4RvLqto6r5/JlNFh0Kt3VG/XSifN+aJpTy6cqgmFXkWk+r
+	VeUdJNFomtVAz5iUnrjrPtcSCUEu0Diic4LV2ZqyzfMpWYyi1GdkcI9YauV0+w==
+X-Gm-Gg: AeBDiet2iIeCDh1ELRzbKhkyF/6jAs/aBW3nIBuT3sQzNvhU5YvAaqYVWFjeGZ7NsXi
+	a67ZqNhN16YrxZgK15e1lRz1ye0WV/zVLn/9RpF6Vp7PNWih/Nl5tHM+7nDLhgzpKusffeKMryj
+	701BnlL7YFQ02gfe+To0jTxZINoLze4QQVZTNb6sy3KSEcQt2d3zPnVVkkjC/0Olh4by0vTGQKO
+	nnK+luDMAb2PYJwmTKJZNKApPZuiIl8MdMWS5kP1n6B5/sH+cvJNwsJbKFOz8KSxXk38CDIdFPy
+	qcgHUPxZyFqIfpqk4qhzI1FoyBW0Z1DoxO9pnaeBKSQ61D3FotDuX63zsQfDLD5Z6NpsYdX3IGE
+	LYRe0MUAuyEK1hQxrBvkbJnn8S4zqW/N0X96wi+Zgx26/BNh6mA+rxgyoppy+IkJDH59hwcnorh
+	skg5dw3euYBcfRD+DY
+X-Received: by 2002:a05:6830:82a7:b0:7db:b7ae:ef05 with SMTP id 46e09a7af769-7dc27c67c51mr2538385a34.4.1775835486197;
+        Fri, 10 Apr 2026 08:38:06 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7dc2660ef75sm2148957a34.10.2026.04.10.08.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 08:36:58 -0700 (PDT)
-Date: Fri, 10 Apr 2026 17:36:57 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        Fri, 10 Apr 2026 08:38:05 -0700 (PDT)
+Date: Fri, 10 Apr 2026 10:38:02 -0500
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 8/8] meson: precompile "git-compat-util.h"
-Message-ID: <adkZGavssyxWj27a@szeder.dev>
-References: <20260319-b4-pks-build-infra-improvements-v3-0-82f5fb3edc3f@pks.im>
- <20260319-b4-pks-build-infra-improvements-v3-8-82f5fb3edc3f@pks.im>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Subject: Re: [PATCH] bundle-uri: drain remaining response on invalid
+ bundle-uri lines
+Message-ID: <adkOJLfxs8TNGRjr@denethor>
+References: <20260408-toon-bundle-uri-no-uri-v1-1-d4a0e3937eba@iotcl.com>
+ <adZ6yyGsoyjm7t0Q@denethor>
+ <adiZTBH_70nrpiHe@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260319-b4-pks-build-infra-improvements-v3-8-82f5fb3edc3f@pks.im>
+In-Reply-To: <adiZTBH_70nrpiHe@pks.im>
 
-On Thu, Mar 19, 2026 at 06:33:27AM +0100, Patrick Steinhardt wrote:
-> Every compilation unit in Git is expected to include "git-compat-util.h"
-> first, either directly or indirectly via "builtin.h". This header papers
-> over differences between platforms so that we can expect the typical
-> POSIX functions to exist. Furthermore, it provides functionality that we
-> end up using everywhere.
+On 26/04/10 08:31AM, Patrick Steinhardt wrote:
+> On Wed, Apr 08, 2026 at 12:49:48PM -0500, Justin Tobler wrote:
+> > On 26/04/08 10:58AM, Toon Claes wrote:
+> > > Because bundle-URIs are optional by design, I believe the changes in
+> > > this series are sufficient. Also, the series [2] takes a similar
+> > > approach: have the client gracefully continue in case of misconfigured
+> > > bundles.
+> > 
+> > I'm still largely of the opinion that a server-side fix should be
+> > implemented first. Unless we really don't care that a server may
+> > advertise invalid bundle-uri info to a client, making the client ignore
+> > the error doesn't address the root of the problem. I don't see a good
+> > reason why we would want servers to keep doing this anyways.
+> > 
+> > To be clear, I'm not against also making the client more resilient since
+> > a "fixed" client may still try to talk to an older server that still
+> > misbehaves though.
 > 
-> This header is thus quite heavy as a consequence. Preprocessing it as a
-> standalone unit via `clang -E git-compat-util.h` yields over 23,000
-> lines of code overall. Naturally, it takes quite some time to compile
-> all of this.
-> 
-> Luckily, this is exactly the kind of use case that precompiled headers
-> aim to solve: instead of recompiling it every single time, we compile it
-> once and then link the result into the executable. If include guards are
-> set up properly it means that the file won't need to be reprocessed.
-> 
-> Set up such a precompiled header for "git-compat-util.h" and wire it up
-> via Meson. This causes Meson to implicitly include the precompiled
-> header in all compilation units. With GCC and Clang for example this is
-> done via the "-include" statement [1].
-> 
-> This leads to a significant speedup when performing full builds:
-> 
->   Benchmark 1: ninja (rev = HEAD~)
->   Time (mean ± σ):     14.467 s ±  0.126 s    [User: 248.133 s, System: 31.298 s]
->   Range (min … max):   14.195 s … 14.633 s    10 runs
-> 
->   Benchmark 2: ninja (rev = HEAD)
->     Time (mean ± σ):     10.307 s ±  0.111 s    [User: 173.290 s, System: 23.998 s]
->     Range (min … max):   10.030 s … 10.433 s    10 runs
-> 
->   Summary
->     ninja (rev = HEAD) ran
->       1.40 ± 0.02 times faster than ninja (rev = HEAD~)
-> 
-> [1]: https://gcc.gnu.org/onlinedocs/gcc/Precompiled-Headers.html
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  meson.build         | 2 ++
->  tools/precompiled.h | 1 +
->  2 files changed, 3 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index cd00be1c23..2002f4795e 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1760,6 +1760,7 @@ libgit = declare_dependency(
->        c_args: libgit_c_args + [
->          '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
->        ],
-> +      c_pch: 'tools/precompiled.h',
->        dependencies: libgit_dependencies,
->        include_directories: libgit_include_directories,
->      ),
+> I think that addressing the client-side is a good first step, as we need
+> to also be mindful that Git is not the only implementation used on the
+> server side. So even if we fixed Git itself to not report garbage bundle
+> URIs, other servers still very much might. So ensuring that clients can
+> handle these gracefully is a good thing to do.
 
-Well, I don't do meson, but...
+I think it is questionable for a Git server to be sending clients
+malformed bundle-uri configuration. Do other Git implementations on the
+server-side exhibit this same behavior? If so, or we reasonably think
+they could and just want to be safe, then I agree that adjusting clients
+first to ignore invalid bundle-uri configuration from the server is
+reasonable.
 
-If I understand this right, this section here compiles all the source
-files listed in "libgit_sources" using our new precompiled header.
-But "libgit_sources" contains all source files under "reftable/",
-which, with the sole exception of "reftable/system.c", don't include
-"git-compat-util.h".
+Generally, I'm of the mindset that when a server is sending
+malformed/garbage data that the client doesn't expect, the client should
+should be more strict and error out. In this case though, since there
+are known affected Git versions and bundle-uri is an optional feature to
+begin with, it probably doesn't hurt to be more permissive.
 
-Now, building the reftable sources with "git-compat-util.h" included
-through the precompiled header apparently didn't cause any compilation
-errors...
-But I think that's just accidental, and if a source file doesn't
-include "git-compat-util.h", then it shouldn't be compiled with the
-precompiled header.
+> That being said, I also think that we should fix the server side.
+> Whether that needs to be part of this patch series though is a different
+> question. Based on the proposed patch you posted it seems to be trivial
+> enough though, so maybe it's worth it to just add that in as a second
+> patch.
 
+Ya, my main concern was that a client-side fix would mask its root
+cause. As long as it gets addressed though it's fine. I think it would
+be worth adding to this series, but if not I'm happy to send a follow up
+patch to fix it too.
 
-> @@ -1820,6 +1821,7 @@ test_dependencies = [ ]
->  
->  git_builtin = executable('git',
->    sources: builtin_sources + 'git.c',
-> +  c_pch: 'tools/precompiled.h',
->    dependencies: [libgit_commonmain],
->    install: true,
->    install_dir: git_exec_path,
-> diff --git a/tools/precompiled.h b/tools/precompiled.h
-> new file mode 100644
-> index 0000000000..b2bec0d2b4
-> --- /dev/null
-> +++ b/tools/precompiled.h
-> @@ -0,0 +1 @@
-> +#include "git-compat-util.h"
-> 
-> -- 
-> 2.53.0.959.g497ff81fa9.dirty
-> 
+-Justin
