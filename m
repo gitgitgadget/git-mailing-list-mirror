@@ -1,105 +1,222 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40A03C5558
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 16:16:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775837787; cv=none; b=Cfb9vDAaHleqR7z+QmceB33M9//4VdT7Sv2j8wPbaE4d4x5rMG+mRGFNlH4RriIUNvr3ajLuvRxI8VxtLSc3C11N8An4nbY3Yvag69J1Q2KnmrXxlR2W+0FG9FqEk+Ly2zOJ++X/p9zgSu2CcAvbQRluqXr7lpjA6pqUxwWmz3k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775837787; c=relaxed/simple;
-	bh=6/DdGiwpzfbjVu+3T6ypqlIHuUcOAY7dQEEDNuGy7Do=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cLwxMxtw6yMJvijKGvXmYs0D0a8ePtTcR51j3eHfQgyQiwpD5nSylsEW+0mslnTyJVQq2g4gEF6aGLE+ACFeXnD2wBLLnH100d5u0+xab/ElD7e16ysyv1sj7jmfSFIFDVleDBJ5tgv8IyRoT0ZPdrxfW02u/qrmZcpogcznBUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wPGPVseP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T2h2Y93i; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE171DE8BF
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 16:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775838321; cv=pass; b=sFoXgvp+jB440V126pikAX9NCcc99rNHYZjOvY7dquTgzap7Copc9s1uUC4oGSKDiXw+hZgJGLijpXLzyo39mazuKyfqeEeUVNWISUH5DoNXNXgcwOq5dEgYwyibrdaAFeTCXDhNYCDKauhwo4ryL6sVnp3kFMU0SU3uamdC1/E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775838321; c=relaxed/simple;
+	bh=OoG13t5fMRo06fZmFNgpTUcetWwaXCMgRnWZXOe6uoU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ym0P29ozfq83ffpcCGCuBzStWM/abyyFjYgHk283vbZNkN1tykM00qY29gRjwNS9ZVdeIzSIaN9utv/0i0T+7rmHgzWiJNvy2xtXF15dFW0elznF31OZmk1kUinqqGAkmPj3OHJyqQ+DJ3eq2g+U91XS+zjgFtHgwpcM3KZHRaM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GjYZERbH; arc=pass smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wPGPVseP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T2h2Y93i"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2DCCEEC01C1;
-	Fri, 10 Apr 2026 12:16:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 10 Apr 2026 12:16:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775837785; x=1775924185; bh=SPM3Pg1MS+
-	OEfet99Sb5OJ2g8k5uIZbpUpnddxrisJY=; b=wPGPVsePO9G5IecXdXNUh2ul94
-	z375i3UQOl87DGRoaBRqXdk5FvUcZ5/BhdHxwOZ2s3SQeOB7d1TcbGRfzEur51Ga
-	xfm4cELalvHGNdoBJOmlGBpo8osYBxZ1YwWnAyR8If6pHnfN7HZFmVfhdM1HT2Ku
-	n0oIuFNItqB/PRvqEyLhW2cTGEUk0J0tR/vvHIl4qpBdSqnHQHNb3WNERJf5B07b
-	YJFih55PrxgSgEedQk8P+eRxwwsvcaDTGl2fLmxPJFMQ3R4wVCYgVnRoYtGdYeHk
-	i/qvzB5uqnzCfH1ar1s2oxgqDydFANkh5hXOpog7PUq7WcIRdh7PJEAEkt+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775837785; x=1775924185; bh=SPM3Pg1MS+OEfet99Sb5OJ2g8k5uIZbpUpn
-	ddxrisJY=; b=T2h2Y93iFCCF5wiSv5VYigzC59uBD85jVyDNbyVjYUXju6OR2Q3
-	fyGc8oIawXjOGHX9CGDQRilGdBshE/WML7a+ISTjZw7a88aVVhBP7p5BX40Pysah
-	1cE8Wa6sK78w0JzuefAyfB6rm0wdsMTcNFwQw+U5gnBbwMeKRjEGxIcrxgNQxqJ6
-	aFvdb2Xf/5LMY36mH/WtSH9eQMuwDxJv4OURbKU3UtzQ6lj7zjtCviCp+HWDpKqa
-	lgOPdVe2K0a8lldoyQZopjoBHPayjKHgG02HWEi4XarmKKfbHn9D2DkMlsm2V5GG
-	qWM3Wn2p6ETOAvd+k0TU/urq1TvHnCkkSVA==
-X-ME-Sender: <xms:WSLZab0fyibPVwUxx9Qj-SYhKhGGwrQqLDefa4LbJOVDHlJ1zxu2Sg>
-    <xme:WSLZaQ84_F_O_VEfPhwxu4hPvC3h4ME8SHC6m1RAQNoxImAWH1Bn-TwJFOpcY0GRW
-    03J8vKDAhPUaKUeaclcyOTEu9klMmIz36uepRaFQb_5hnRg7dj9>
-X-ME-Received: <xmr:WSLZaUPrp8s2JQ9xnRVDibD8x_l5tmqX1wdFU4q0jIYsl1ynU05W3RzwjB79YyXyFmZ3wV3MXiW7Q60vnRo2Q6wjh860D5r3lQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleekjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrg
-    hrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:WSLZaceHQhU3o5ZKXib7Uf2k5eQFvIdD-nMzTqsgj-McPookMmAByw>
-    <xmx:WSLZabVW2sUUq4uMA6iRqUiB4olPahxvPDIYH0JEK_7GxXWqmnhnoA>
-    <xmx:WSLZacjitVA4S0AXwXxijhDkAKFRLRDGixA8qxkSk8GHIaqanhASOg>
-    <xmx:WSLZaS-Hyp20DSsje80rZp5UK2FEnqg0rIncnEsIj64EHkNQRmik3g>
-    <xmx:WSLZabvIxncOjeeXEoexwM_OrDH7m-BWZ6fWrrU_DqIrK4tWhhvspzVd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 12:16:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v8 2/4] sequencer: allow create_autostash to run silently
-In-Reply-To: <f8902ea9-8b18-48b2-9daa-08c7324e60f4@gmail.com> (Phillip Wood's
-	message of "Fri, 10 Apr 2026 16:39:27 +0100")
-References: <pull.2234.v7.git.git.1775741265.gitgitgadget@gmail.com>
-	<pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com>
-	<86cf68d0240ef90ce941cc162ada658a5058795b.1775762235.git.gitgitgadget@gmail.com>
-	<f8902ea9-8b18-48b2-9daa-08c7324e60f4@gmail.com>
-Date: Fri, 10 Apr 2026 09:16:23 -0700
-Message-ID: <xmqqeckmpz8o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GjYZERbH"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-79a46260385so26050107b3.3
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 09:25:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775838318; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Q2G6jasMT34rmgt8phNDC75U5JP2OJXaDc3gOqYfSzbZ2joBfOXmDWvpE1R6/5fE5l
+         vPBFMt2F7YvoRt/b+RZXQd7ysRw7RJY+joIvVsDgkEF3/IMyx4/G3IExL9xE0XdfoeRW
+         nWVDdYiozu5ieYEZaiQ7PQBL8Sf5fgg3NxxzIUatCcW8jGVdppFKK6IfY7cMy31Q+oUd
+         tIYDFjLM+l/NTLyFInRW8M8YDwzIemGiFSQdI22ulQRU0lWSP76jzV1YrDV371t0YMqT
+         B7xUK2PJTQOyYi6ZI8d9v8p+JNZRag0IYW2gmTimNTs265D2lbTLArRF4A44nfxPNgWo
+         aaFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aOafYtGdAJCkg1zCvNbEejS9Rxnp/PpHYzzcYKXo4XU=;
+        fh=4opnlJvYV2nW8sHhvyX0EQ4qARKRNpDSXSTZ7/64WvI=;
+        b=dBKZ1iBofvOw3BqASh0MmSjF2hMb6Mr0GtwnoKJhUAm+CXze1qVTC7MN06Ao08XB88
+         qS+cYUmR3GYbNP4qLgFHLK4t6DQh322fpaystS/OTO4qxwdKnGMbtR3gfsTckJzAHxyK
+         TxmyZyu9RLjS+7WTdbjl2NL9GZrmXWRhdU8RRMu2pWhYl4tgcuIjuwj6Eej3NYs/K2Z4
+         YMiokUaduNgOI1gszc6Q4m+okzBOsKIfTKsd8P+Vy3MYm8OkYbCAPse152hL9wE02M73
+         HpGzv0eEGA8P/usVM8kUnYk9mpeGjIJNJ7w8PzC3ZuO6z/F3DFMTATKPXl7iTMsAay2m
+         EwmQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775838318; x=1776443118; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aOafYtGdAJCkg1zCvNbEejS9Rxnp/PpHYzzcYKXo4XU=;
+        b=GjYZERbHs3Wkc6PCHhLDLym8rKzLt1gBWZiuDyOFuFFnitIZNGAHNHOiJ7xGWpunYR
+         TXdKTWokMRv/SoCdINv4MeR1loCSc8WHbecXs39L2HTobRO/yWtH+xjHGQZ84rlTYk4V
+         8lS+xkprpl+wdRelFjNjCZqwPyIRKqDrLgjBMgYxEve4qbh1clIHAKw841xeYx5xwrqA
+         efBg6QgvHLB5bsCAWT+pSzhZNiO7zij/LKlxP1XnfMH4a1k3kqvDuwa7pTNxqCq13khK
+         MQtfTKZ9MkIvuB/+iJ4g0/rW548E1txCAHvimfiQ/qW3Y2bENjbGC79C2WcM9wVJcosI
+         7Qkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775838318; x=1776443118;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=aOafYtGdAJCkg1zCvNbEejS9Rxnp/PpHYzzcYKXo4XU=;
+        b=JuxklHd3znpzCkW4tNQ538YYWKfwuTCqcBTEQ8QLqZUsdNbADwETJpPVz9kwDK3T/h
+         HiuE+9pOi7Sbk/0cG9SlNKe0/3uKu02/Vu1iRTkhVCUmTlhTYScJFOkKisXomk7HzeDY
+         PgRyBwAskhCnid7bpnB6617ahPdeDwET2ZyC5dsXwn/phtwGaY0t5i89VGqTM80AtaQH
+         KEf/oM2HQxfJUQ+ebphGrzkPYnxueAYJipo4oRWBkYy4EmdTA8gn/ITsARLtQQVJ9El7
+         EXfgvlqnwohfmKin7fMHOiOhf/tusCryIyqFQSRKAlDtGGQVRLhVkuK4pxHaIUtAxXyp
+         BeIg==
+X-Gm-Message-State: AOJu0YwTEv2knOlSce90ZpnXasbKfSqQYACVCZg1GYE4EdUdr7q497KJ
+	0hvwXxylWHUa3ZQW72//dZCrq9vxmISkULE9QORKban34OInHBFxM9Lvq6CKiFDMzuSlFj3KRHw
+	/gHBXPlS7vgycYfzKzZsEVq70Rvc3IWiUcoBvVCc=
+X-Gm-Gg: AeBDieu6JD/BYzT84nA1aRjN8luXxRKxv6xCrcqrluP9FSO+iQEOqIBAVAF75f52dkg
+	UGFq3rGOKtKAApYuRP/onGbPvGrX/BRWLzyImkvZQ7SbOnbxnZixJxtUBIW/KXvg2pjSlEep1H0
+	WNmj+C5ckPetdwZ5MHbBxjT2RXNtjp5iz7ZYy+9FKwQnt2byvROkOdaG/qGEAUWK9UudA/YlXle
+	g98f9b4kUFHHrkyoZ+HMbpgstMaOgCHzznOr8/xz7ZZEyCedZsoiilUdUA34ZnxPZoMr8b4j7qt
+	+ha5iIhkIVYU79xGi1jPhCxxcXFiTl7LLtWy6MyJitRhvHtiMxMBLX9v76FD1dd0STj/Y4qEAvN
+	T9szqdk6sT3E87xZKA+Ck2w==
+X-Received: by 2002:a05:690c:83:b0:799:2b4c:1d49 with SMTP id
+ 00721157ae682-7af71a57a55mr40343747b3.36.1775838318441; Fri, 10 Apr 2026
+ 09:25:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260402211717.3604688-1-pabloosabaterr@gmail.com> <20260404092425.550346-1-pabloosabaterr@gmail.com>
+In-Reply-To: <20260404092425.550346-1-pabloosabaterr@gmail.com>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Fri, 10 Apr 2026 18:25:03 +0200
+X-Gm-Features: AQROBzDGLrsqyK7vtbU3W0h9Qzl1zM7490bJgJ-OVY_NCLW9Orj01t0BKh_2ZRA
+Message-ID: <CAN5EUNSEt+W4kQsoTfLVJQ+KFYkcPCx3_=YTSwh8zhBMFDttEw@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH v2 0/1] graph: add indentation for commits
+ preceded by a parentless commit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com, christian.couder@gmail.com, karthik.188@gmail.com, 
+	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com, 
+	chandrapratap3519@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
->> Add a silent parameter to create_autostash_internal and introduce
->> create_autostash_ref_silent so that callers can create an autostash
->> without printing the "Created autostash" message.  Use stderr for
->> the message when not silent.
+El s=C3=A1b, 4 abr 2026 a las 11:24, Pablo Sabater
+(<pabloosabaterr@gmail.com>) escribi=C3=B3:
 >
-> Why do we want to change where the message is printed? It is not 
-> necessarily a bad idea but it would be helpful to explain why we want 
-> that particular change.
+> When having a history with multiple root commits or commits
+> that act like roots (they have excluded parents), let's call
+> them parentless, and drawing the history near them, the
+> graphing engine renders the commits one below the other, seeming
+> that they are related.
+>
+> e.g.:
+>
+>   * parentless-B
+>   * child-A2
+>   * child-A1
+>   * parentless-A
+>
+> This issue has been attempted multiple times:
+>   https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+>
+> This happens because the engine prints left to right from the first free
+> column and these parentless commits for the next row, their column
+> becomes empty and the engine fills that gap with the next commit (child-A=
+2)
+> seeming that parentless-B and child-A2 are related when they are not.
+>
+> The actual implementation is very minimal.
+> This patch makes the parentless commits to be kept alive at least one mor=
+e row to avoid
+> that, indenting the next commit to the next column and then clean the map=
+ping
+> letting the indented commit to naturally collapse to the column where the
+> parentless commit was.
+>
+> e.g.:
+>
+>   * parentless-B
+>     * child-A2
+>    /
+>   * child-A1
+>   * parentless-A
+>
+> This is done by adding a is_placeholder flag to the columns, the parentle=
+ss
+> commit is actually there but marked as a placeholder
+>
+> e.g.:
+>
+>    * parentless-B
+>   (B) * child-A2
+>     /
+>    * child-A1
+>    * parentless-A
+>
+> (B) would be parentless-B column with the placeholder flag active.
+>
+> By teaching the rendering function to print a padding ' ' when meeting a
+> placeholder column hides them, printing the second example.
+>
+> There could also be the case where there are multiple parentless commits
+>
+> without the patch:
+>
+>   * A parentless
+>   * B parentless
+>   * C parentless
+>   * D1 child
+>   * D parentless
+>
+> with the patch, the indentation cascades:
+>
+>   * A parentless
+>     * B parentless
+>       * C parentless
+>         * D1 child
+>      _ /
+>     /
+>    /
+>   * D parentless
+>
+> the _ / might look weird but that's how the collapsing rendering does it
+> for big gaps, this case being from the 4th column to the 0th column.
+>
+> Another patch could change the collapsing rendering for placeholders?
+> I haven't done it to keep it minimal, but a follow up could make it
+> to be straight '/'. This would make it bigger but easier for the eye to f=
+ollow.
+> IMO is not worth it, but opinions are welcome.
+>
+> The patch also adds tests for different cases like a parentless commit
+> preceding multiple parents merges and the examples above.
+>
+> There could be some edge cases still so any testing is very welcome.
+>
+> PSA: the tests are on t4215-log-skewed-merges.sh, which is not very relat=
+ed,
+>      but other graph related tests have +140 tests, and this one has less=
+ than
+>      20 and some of them are also not very related and differ in style.
+>      A cleanup patch before this renaming the file and style of the tests=
+ is fine?
+>
+> Changes from v1:
+>
+> - Changed to parentless commits instead of root commits to make it more g=
+eneric
+> - Fixed the branch names to pass CI and fixed tests style.
+>
+> Pablo Sabater (1):
+>   graph: add indentation for commits preceded by a parentless commit
+>
+>  graph.c                      |  70 ++++++++++++++++++--
+>  t/t4215-log-skewed-merges.sh | 124 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 188 insertions(+), 6 deletions(-)
+>
+>
+> base-commit: 8de2f1b07a8053d7f1aad70dc1131d6afcf5a28a
+> --
+> 2.43.0
+>
 
-Yes, this is a great point.
+Hi,
+I'm sending this because I think it has fallen through.
+Sorry about the ping,
+Pablo
