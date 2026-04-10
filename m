@@ -1,86 +1,92 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368BB330B14
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 04:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FFA31327A
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 05:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775797079; cv=none; b=UWPZXo3dc/qw8rNe7cXvrKkeLsqJ0klcB5/nG5Krr+AVE8H1S2de2JDBKe+PL3KuqoR5MPuFBrIM3+Rgxp98WYUC2dYkFqf5Sr0pgiPKISUFp9dlyxgj/FmkC6KPGMhBXc2wMw9a8PqaJPbRSxINe92C4jRPd1NlHRg0YpcG/I8=
+	t=1775798409; cv=none; b=kr2KrfaMvoLWDOGVN7gapGkgoYwT/IjqW0O/AAzc222Wg6kCFPbAakqs4v14T13/iPFgqxp4mPAD1oMq0tXNlmKpVp6REyMaWL/zM2u7VcZ79/9TLUFCtHalJchbxOSdd1AUxeSgouUnSPTgnpMSJwA/ZNaJg7X6mt4O1gWkm+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775797079; c=relaxed/simple;
-	bh=jOGSS53qlPEbsPe1qTv38ejfyUP/63mOiXahLZGwK8U=;
+	s=arc-20240116; t=1775798409; c=relaxed/simple;
+	bh=eTrG3CbUVIcyAguzdYbPxXWEe126YP+bDEnq/5a0mLI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mv1cTFWFMB7yZxM1gwuNnk5Q8uNUhyK6cXEzjJKG0egpCjQSHxUHQzReDWJ+Xt95g/zErIJlyMI0Oin4xAlmzs7QsSM0bFMUcUyrg8f1iWbhRsUyv38KMcBRVQvsvsoRmHoDxaZ1hXRoSz8hgwdoKur0rOOkWFIdVK5680QTzhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iA6Z4qhc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L++qloEn; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=VuuwUB2fwG0e9KPmNMwcmdj+YEsIFgM+DRJst+Y/rpjkf46yFm77jiDfc4kQIEtFt3pfLJihJ0Ir/dltG0EuGJ4bBJ4cF4QlRhN8AbxbCFjT1ojimj/4FYGWVozICx92vYCKJgBaRc0U7SHg6xmGpKCBI28fpbY2MA20dWTVAKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SzpIMUam; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F8ahhZS8; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iA6Z4qhc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L++qloEn"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 87AB7EC0402;
-	Fri, 10 Apr 2026 00:57:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SzpIMUam";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F8ahhZS8"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 187C91400281;
+	Fri, 10 Apr 2026 01:20:07 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Fri, 10 Apr 2026 00:57:57 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 10 Apr 2026 01:20:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775797077; x=1775883477; bh=10k1e/k074
-	a+l2RERmnsbvWiJBk/J2lk1zkjLTO2y2A=; b=iA6Z4qhcd1dPhGG3uKHYWMOXe7
-	yodyRQV2sT8ttPgbf3skC88fNwkiG0jAtBAtWWaRoeV63yppe9dxZCcZA8qYIeVd
-	DTTR7mxOt49DVoLuKVfNVuz+4AYnMK7rDfy+zxLqE9y/0Xyc80AgVfSicJJ/EXt8
-	BD+spSQK8wfSyhUwWRCixzphC6tBWnb0zH4aWe4zFZ6g4cP3Y9JASah8QwL3Oe1n
-	YuW35K7+n8y37e1MF42x/vR9nqJAgOdZsawB3+xB/t9Mxj50AH5odwkoDPNd2taD
-	PtGSs8BvVXJozpg+l1CZ0vnH0MDBte+cvKSv2pDctYTBKb9BmTp8TuUY94Tw==
+	:subject:to:to; s=fm2; t=1775798407; x=1775884807; bh=3cZk10y7SV
+	NiHw5XkEwgYEGBXyK5j0zNZbtc8eEat6Q=; b=SzpIMUamo4heHOza7V+xp9Pp0L
+	J3kwsPC3JxSa9+51cSRa6euf9o2LDngSP2+cS5xMnhJTPBHgJ8vqa7dmAAUQAoaq
+	kU7MJoFOYo+NDq4vFzp1kRG9bfowOQK3ykaIFS+7FLDvfo8/rYtTs6N+rcdM2bQS
+	r+pzd+Z4g0ii5gwl2usvoXJ4WuZM4pGy31iDYb/hM5udOa5o4cJWuPUi8Lwj1Bks
+	hnHDd3GvViFtrfjn7dtJ9C78d+skfOBpFeZfP15AAx9lQS8RSvbgVf6YTZo5F7Gj
+	Hk7svdTUhapnpDfXtTaxzOHN+RQHncaVF47g1e+kdAYPeUQMl0O52Ab/9pHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775797077; x=1775883477; bh=10k1e/k074a+l2RERmnsbvWiJBk/J2lk1zk
-	jLTO2y2A=; b=L++qloEn398/4TcsddaVUzEEy99vfsEYEk32doKU+zR2awJBxPB
-	rXmatMoRyttf97Pd095Sx2Hs0rFulDKddtkQ7qD6IG8je8dXBPDYTRY3unELyQCZ
-	GxM4r5Es+lqq4/Kr6sX+dSzD/KHGO8chudcT7hGBjLM7J4RvU2ikNQWffcmx+Jk0
-	2wyzGNxnQ9+FHV3qEC2tfi399haVEFgr/A9D0aJuLuMknHI0BavKU9AHgWo9pliZ
-	h4QqY8OKh1G+KLu/2oj5XXZZRc306LAGyaVtqwFLDJyAzCc8UgSU3udvV2844zVp
-	mwXyzXGXnp54aEwHxvHkfHvuOaRDLIfqtCA==
-X-ME-Sender: <xms:VYPYaR1WdFauOD1Bl7A2BC79O3u2Rp3EqWlaYaxBoTQ7D-fP-flD3Q>
-    <xme:VYPYafF40UBkTfU4FhScW9RctJ0rOS4W_YFaOMBM8jX0Z2l4gF1edainSmOxzHUz6
-    Itqz0u4AkSr8ZT_zi3gfUgdIeskGyUfBcCmsLwS0GF5dInDoNuw4Q>
-X-ME-Received: <xmr:VYPYaW4S77W8rVHxoS9o2icq6vyvmepdDko_n8zBa1qADwjL7GBndFp6tHCdp9oVmV0Tnu6fURlamewcgRgy-XMc4W2E9sdSvOjy4Qb4u9LEIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvkeehtdcutefuodetggdotefrod
+	1775798407; x=1775884807; bh=3cZk10y7SVNiHw5XkEwgYEGBXyK5j0zNZbt
+	c8eEat6Q=; b=F8ahhZS8VvqVlERL8bcG2Pv4oHsj4pUmnjy54Mc76gwI68xPMIa
+	uFOKY8GOJgly8XHEQHy9SVaX3JYalQbKrcs0N+51aNvflKIyTD3XEcMbN8+Qyaxp
+	swwzDeuIi0Rii+p3CKvZpLtbGB1Isg+fcOSZK4QH3VgB/rKF360agfBc/PR8+sMp
+	ffiidtBFpH0Y9hhrz8VEGFEoAkaQFaOghCVEoYrTJwxXsYQHG6fD8oTbi9gOPUM+
+	qEmCXlb/jgQHg2p5o/czSNuZ/vbAD9As3uM78/M6oNz8d2jYlghSOojZ+q5Yqnuk
+	asbc6r3vqMGTPjzjPNnsNz3Wf/qGk2Hj6hA==
+X-ME-Sender: <xms:hojYaQwyqQ_kJ0uSOHH8N2Cr4gqWPN56mnet4x_Mdgh0d5LHmwdAxw>
+    <xme:hojYadmG_hwadISSlPAkaG08_l7LW94JSop5J6dBDDh5H1aaPQIVGfVDIKZdYEk1j
+    hnmYDVCM_m3z1HY-vrV0fljk7LxTC9cvfl3a9WKwqNDmflDeUAGVw>
+X-ME-Received: <xmr:hojYaZkvCOrQkECsOUD3FY_HUHJtTSMKuGc3R8F-_scYP57jW6UUtnxUEHIw6MknOytv2nX0IeHIaachfthISKDNvYSSQIa3XGDOh2sIF7uRcw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvkeehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgv
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvth
-X-ME-Proxy: <xmx:VYPYadu64Xv_iTpPdfRdHu_lD60jyWHXqq1xuU4AT-IMTyTCgZ6IYg>
-    <xmx:VYPYaf6GImZKLc0Kc5lGIu3LqUAB3F4lPL04Tw1lnHDIH_-v-c-V6w>
-    <xmx:VYPYaQX8uYZhhDYmoNXtRuVlLiMDpUob46XvegRAM-B7GipB5bUPDg>
-    <xmx:VYPYaZ_fI6gXV6usEFgQqCfVMJlswXwOZyqr8n-DUEgOdAiMKzVsvA>
-    <xmx:VYPYaS6DFdlZsAPP_95S5iOUbhAM4fcjrJPdTrN6fuuydOeVLIuzd_Zd>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunh
+    gvlhhmrdhorhhgrdhukhdprhgtphhtthhopehrrghnuggrlhhlrdgsvggtkhgvrhesnhgv
+    gigsrhhiughgvgdrtggrpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:hojYafzYex5vNOvOwCwsABZRtg_V-ylBiUHGaF8FGTQGG5j1T9ZaqA>
+    <xmx:hojYaepBBt41bmCB4CGwekLEw8FJVBzH-NJ1T24ttX0K-M-qFlqxOA>
+    <xmx:hojYae5QaNaKjb8Dmm_BXZQ7vzv2BfYoaVIHt-B0CuTgtAmI6Lc1iQ>
+    <xmx:hojYaVclzO2AXdqHC9XoYcQiGLMvttkpMaufy-TWeljAHF9APt4g9w>
+    <xmx:hojYaVs5UvBshV7JGTta1HHVskpefs237bfw14JJVySTWvBzCxMhBKNy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 00:57:56 -0400 (EDT)
+ 10 Apr 2026 01:20:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fd44290a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 04:57:55 +0000 (UTC)
-Date: Fri, 10 Apr 2026 06:57:52 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0a1a5612 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Apr 2026 05:20:00 +0000 (UTC)
+Date: Fri, 10 Apr 2026 07:19:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, rsbecker@nexbridge.com, git@vger.kernel.org
-Subject: Re: Re* 2.54.0-rc1 NO_WRITEV=Nope  does not work
-Message-ID: <adiDUFOl6OaoResZ@pks.im>
-References: <028901dcc859$d2419470$76c4bd50$@nexbridge.com>
- <20260409211049.GA3119065@coredump.intra.peff.net>
- <xmqqmrzbreav.fsf_-_@gitster.g>
- <20260409222131.GA3130242@coredump.intra.peff.net>
- <xmqqik9zrcj1.fsf@gitster.g>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Randall S. Becker" <randall.becker@nexbridge.ca>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] wrapper: properly handle MAX_IO_SIZE in `write_in_full()`
+Message-ID: <adiIfQjobtK3MDPW@pks.im>
+References: <20260409-b4-pks-writev-max-io-size-v1-1-81730e8f35df@pks.im>
+ <xmqqika0ultp.fsf@gitster.g>
+ <20260409202329.GA3076846@coredump.intra.peff.net>
+ <xmqq5x5zsw8r.fsf@gitster.g>
+ <20260409205928.GD3076846@coredump.intra.peff.net>
+ <xmqqzf3brgbt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,54 +95,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqik9zrcj1.fsf@gitster.g>
+In-Reply-To: <xmqqzf3brgbt.fsf@gitster.g>
 
-On Thu, Apr 09, 2026 at 03:31:46PM -0700, Junio C Hamano wrote:
+On Thu, Apr 09, 2026 at 02:09:42PM -0700, Junio C Hamano wrote:
 > Jeff King <peff@peff.net> writes:
 > 
-> > On Thu, Apr 09, 2026 at 02:53:28PM -0700, Junio C Hamano wrote:
+> > On Thu, Apr 09, 2026 at 01:40:36PM -0700, Junio C Hamano wrote:
 > >
-> >> > Yuck. I think for 2.54 we either have to truly implement MAX_IO_SIZE
-> >> > support, or we have to revert the use of writev() in send_sideband()
-> >> > until we do.
+> >> >> As the width of ssize_t in bits can be a lot smaller than size_t,
+> >> >> the above "unsigned_add_overflows() triggers way too late for the
+> >> >> check to matter, no?
+> >> >
+> >> > I think it is correct as-is.
+> >> >
+> >> > The real check against ssize_t is later, when we compare total_length to
+> >> > MAX_IO_SIZE (which is clamped to SSIZE_MAX). So this is just making sure
+> >> > we do not overflow size_t when counting up the total (and if we do, we
+> >> > _know_ we are going to overflow ssize_t, which must be smaller).
 > >> 
-> >> Sigh again.
+> >> But then what happens after it breaks out of the loop?  We cannot be
+> >> at i==0, so let's say we have a reasonably small iov[0] and iov[1]
+> >> that is so large and makes size_t wraparound.  We break out here,
+> >> and then send the iov[0] with writev().  But have we checked if
+> >> iov[0] is under MAX_IO_SIZE in that case before calling writev()?
 > >
-> > Yeah, I feel the same way. :(
+> > I think so. Either:
 > >
-> > I would be happy if somebody could prove me wrong, though.
+> >   - We completed the first iteration of the loop successfully (and i >=
+> >     1), in which case we added iov[0].iov_len to total_length, and then
+> >     compared total_length against MAX_IO_SIZE, but did not break out of
+> >     the loop. So we know iov[0] is within the limits.
 > >
-> >> $ git log -Swritev --oneline 8023abc632^..
-> >> 89152af176 cmake: use writev(3p) wrapper as needed
-> >> 26986f4cba sideband: use writev(3p) to send pktlines
-> >> 1970fcef93 wrapper: introduce writev(3p) wrappers
-> >> 3b9b2c2a29 compat/posix: introduce writev(3p) wrapper
-> >> 
-> >> Reverting them gave us the following patch relative to the tip of
-> >> 'master'.
-> >
-> > If we are planning to improve the topic post-release (and I think that
-> > is a good idea), then we can do a much smaller revert. If we just revert
-> > 26986f4cba (sideband: use writev(3p) to send pktlines, 2026-03-13), then
-> > nobody calls writev (neither the real one nor our fallback). The
-> > wrappers are dead code until we bring it back, but it may make things
-> > easier for fixing post-2.54.
-> >
-> > -Peff
+> >   - We bailed at i==0 either because of addition overflow, or because of
+> >     the MAX_IO_SIZE check. Either way, we will bail to xwrite() because
+> >     i is 0.
 > 
-> Yes and no.  While excising know callers is certainly safer in the
-> code space, I do not want to hear about some compilers complaining
-> about dead code, etc.
+> Yup, you're right.
+> 
+> There is no addition overflow at i==0, but I do not think we can
+> construct a case where the sum is not checked against MAX_IO_SIZE
+> before the vector is passed to underlying writev().
+> 
+> iov[0].iov_len that is slightly smaller than MAX_IO_SIZE would allow
+> us to keep looping to i==1 at which time iov[1].iov_len is so big
+> that we may trigger unsigned_add_overflows() check, but then what we
+> send to writev() is the first segment, which is smaller than
+> MAX_IO_SIZE, so we are OK.
+> 
+> iov[0].iov_len that is slightly larger than MAX_IO_SIZE would stop
+> us moving to i==1 at the end of the loop, and directly punt to
+> xwrite(), so we are OK, too.
 
-I guess they wouldn't as the function signature is part of a header.
-
-> I am preparing another set of integration to be pushed out, queueing
-> the reverts in 'seen'.
-
-But anyway, I'm okay with this as the safest way forward. I'll then
-reintroduce early in the next release cycle and hopefully weed out the
-existing issues.
-
-Thanks, all!
+Let's drop this patch for now. I'll pick it up again in the next release
+cycle when reintroducing writev(3p). Thanks, all!
 
 Patrick
