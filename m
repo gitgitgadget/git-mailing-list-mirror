@@ -1,120 +1,133 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4A63876DB
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 06:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C233624BA
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 07:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775802714; cv=none; b=E4Sjsa7OIQiYgtq5pSdSWJlhXos1dV1GOJggr1THyU6qS8x5+EbYr8dhd9ISUZ4C6kaH2+bNybxpbbJqig+LIFw73jKViRO+x/wfvW2n9nuqO11qCe1xk7A6Fw5TqQ/NWhXr4sKtD3oqCdb6hFO0dDl+sUoqUnVPVi9X3iQ0YjM=
+	t=1775805624; cv=none; b=G17Xf35hNFgytI9/3H5g021aly2hQdgZpFENKjuDVUBl2vPXCwpT3bwxoEPHY0wygiq++HiihQw9bj0A+ZD1/hDuR7Qg+epUmWqR9Y+LLD1mRql1ObeTjsFqoFXtOkFaKTh6alnr3LjboymGG12sToONsceGsZDqZ2pWlA5+0LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775802714; c=relaxed/simple;
-	bh=T/F/WVhc7wlMSoJva2nqbs5i0WB/g3+0pNZXcL+rsbg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q2OEIc65bFrbhqeIlE+dP0CZ5CFwwR07OV5eTwPFaBWMZgU9qSGRfc5vLlQDqJbwWTQUk4Yl7/Y6dLnUaS4DQq2bmsKzDf/IL3OUI0WmSxFUUfaF4gHLL12mjtQ9z92YM+KzMH2Q7PIvGKOGDAypRf8qyu8JSolGbFWxbzdf9ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ob/dRR1H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=beXVboXJ; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1775805624; c=relaxed/simple;
+	bh=np51Z2jNOunSMUEBFmKlS6Y5fMvTGMoeiOm0d/XKT4M=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=LBgKwhzmF/GuJh9Bzb8nYzCfEgao+0aH6SFSXvuzo5ms/Lprts/Ydd1b3grNc9pHgstEtHjxkhpL6isHLPXmZl5qOLgX2brIP3kfs8oW4lW7fNbeqaM0xhIr4xO74rXx0I5cuPmtG53hsZwW0krigsrjgo60fz4cBicNnVhdUFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7YKgqIs; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ob/dRR1H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="beXVboXJ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C0A617A0053;
-	Fri, 10 Apr 2026 02:31:51 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 10 Apr 2026 02:31:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1775802711; x=1775889111; bh=odJqttXeNT
-	Tj4S0U1bFS5oQPxUW+rmFjijbdlJPTwMs=; b=ob/dRR1HNkaZPXkDXgSN6OzYEs
-	JBPTDudVkj5RCyp6xPwEsszcKreYSeeslhVVbPPiSvTRT+Ow9F/acTPvz8g1kHOM
-	Wsvg5UdfdlZB6cjdORQC/RYkJFlFPEP5PFtOqwJK2D4Y6zHShsPZ5vsIup9JwWZW
-	luXs97Z5257Q+zh6NwvxKduyCaG/YBYF4D2Ok8Q+S57PeKmgT3/7/aAW/bpSS794
-	L2/Jw4AgWGzOsIn2HHRZYMwSpYc4x8MDQ4J/lFfGjnzMbG69do4FOdwdBABPsaY0
-	HMz0WVqgtcsOaks9L+utkzHoEC3i+wKiYq6nSFPjFtREvOliofK6+E0o734g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775802711; x=1775889111; bh=odJqttXeNTTj4S0U1bFS5oQPxUW+rmFjijb
-	dlJPTwMs=; b=beXVboXJu0KdonmDMILf93ZfqjSzNgWncrfFjRaUEekYNKGGi3e
-	H02pie+lIK6FOMSMRRSUbnLhpinQjEjnqVXWPATrqdaq8scB4U9DZruIvBzOQMvQ
-	Z7kIKwq+PE6dqAhomelERsetRqULEy0neVVmQEQl7wTZl/eS8PtzZa7JkWmu1mmP
-	uXD0qh5OVXpVmwfnJNAByXBkRe/vXf3GibqAcjv9eM505qGbApDxoTZProUnP+ky
-	LFhT0dYmFAZ7ulcnoIfaeTz7+qdYg3+R2sKiOSxxHZZOYhNpPU5JUNV0BEpSq6Ph
-	0GHfytT1LK1AruNCZs2SURuRF/W9FCIo1cw==
-X-ME-Sender: <xms:V5nYaRw4J9z5d0Rxb4GMJCz3JPjVtkFpJUfnwPXikPc8QkkSGkTzSA>
-    <xme:V5nYaYsDvqxcBCQXHahTdyxQpZx5kRZ9NY_JeKSWilSiZ2xxAZpoBidoqjumoY1KL
-    3YL33BftRyQvyhbZbK_GokHVdNUtRf4xkHkQ41ueRsLnWr0r5jwtQ>
-X-ME-Received: <xmr:V5nYaYtsuEb8iTcNgpM3SIGs1autsJQ0N-PqpGr-5KzdjsxSy-P7ZuCowhVTn1JoHHqaTVgVw4DLHu6K7tM-_eoClvWODQAXfdBK0ay7_Z2VmA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvkeeikecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehioh
-    httghlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:V5nYadOc-VDq6ZBN0Zs70ghOu0v1vPy_eG8fq0eJKMmNsI2_2m2Aqw>
-    <xmx:V5nYaW3TErQvYov_9qvenW2MkrP8UwsG93ls8VUbjg0RysIAZGaJYQ>
-    <xmx:V5nYaZN0BQ-dJVcSGO9E8367oV71WOZNJSCTQ_rT3Ppals-UA92meg>
-    <xmx:V5nYaW2-ZatcKa29UXfpz1pYEdVM2eJDQcAByPa0Yb_XomaxMm8Eeg>
-    <xmx:V5nYaYtp1CbeG8VsmgShWyp2VIbLlYE25U0mavU-VocSN3xfHmvC3eL8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 02:31:50 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e3650f51 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 06:31:48 +0000 (UTC)
-Date: Fri, 10 Apr 2026 08:31:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Subject: Re: [PATCH] bundle-uri: drain remaining response on invalid
- bundle-uri lines
-Message-ID: <adiZTBH_70nrpiHe@pks.im>
-References: <20260408-toon-bundle-uri-no-uri-v1-1-d4a0e3937eba@iotcl.com>
- <adZ6yyGsoyjm7t0Q@denethor>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7YKgqIs"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-43b95e5b3afso1032531f8f.3
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 00:20:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775805621; x=1776410421; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9TPHAA68qc2veRHEzImDUf6X+TitMg/XktRFAR6+Nmg=;
+        b=R7YKgqIs5LofRcApVoxOvLm0DAoNSiU06DpaOsaaTV+iL5FCHiF/5lL/ftdjgjRcac
+         TpMw4mUX8XKx8B3nWZsIY5UOF2/eDoGVtFRMILa9XOYHMWaPJTa8AXi54xFrhYlk0wc/
+         GP4FmxMyQW+tvQ0bT3Xehev9fmm3lXw1oJ7yrwriTkC02LwJ5Mg2NHz7OctIcNeApzx1
+         W1d7ozXCGzfveiJoNyLqaL3O5hDMiYshGd+f/e6rc5mEpi0RAtRP1Fd5r4yyHmDn6M6D
+         46UimQD54enmO3aM59xxtLBEKQJgB68cmmHytce5h8GgdBt9YYcYXuAs8vCr+h8PyRMt
+         zOSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775805621; x=1776410421;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9TPHAA68qc2veRHEzImDUf6X+TitMg/XktRFAR6+Nmg=;
+        b=hdHm9r4Hc3qObPJ0to7L0o06d+7Jj3/37JqQB2GZNZBCVVHtqPz8qcp1i4u2HoCMos
+         214MofF6Fa5Ca7OJymYe2YmC8fqaWX6vfCXSKOOZPPX4VvcHIQpOsRWSLfJB3fKaKE1T
+         8ubo+6Gjq+FyCDKaLh9QVlBLhtuVchRU4f+VRrmA1yZbmrKYZZZ4mSW8EAcetv6wqfSZ
+         FWyHs2Zcg3tt58GzKNvVUWbPpaOfzNFo8kidiVJv2nNGFzdT3T5bWKpQSTAirO1WDBVw
+         x3qQdTcuEOoB0gjI44FCzZTwg7bO+jQRV2xV58Bo2HrEyzc0rBSPCycFYLXU1iZlprzj
+         I0XA==
+X-Gm-Message-State: AOJu0YzLas43QBrVC46ngQoo/MWLCZ0+k1+f0/Df8VEW9EsD41mS4hG/
+	2XXgbTwlFzzWB5Y6HahFSSIquogaXGIszjhwcP9wrlZ474LVwX8xFydjgQmvkA==
+X-Gm-Gg: AeBDiesq5/a/r0bLD8DswXK0exQ8rawc/Xrlxd1mtP7TnjKjrH5KMffIMqNd8qJnC1O
+	j9hBKNAVgVFitDqgIusIX6zydJvsODFHeR9N2HSGkk2tq6Yx6yaaMLTIu7P6uSSJ87Wx2kkbmPC
+	zh6GIQfpxNUMv/DnolZeugIlNM2f3edxJSbuM+Mp8AIq/xT4JIS5g6PdmT7J/0td8rvnpWNqRXu
+	lWBC19vvPJL5lBtsbl5FqkVoiG8xvLsbrX0G/JR96ljquqbBtIiQM42JD4iKElgo6Qi9SSgQ+17
+	BVI36umu6gkHTIj00MNjqQWkKZCN8gD6WNKiv1qdyNFSoj1iJbswb6k2Qb+iiVz2u53iAn6/Z+P
+	9luroXtMM1h+z0Zp+0yZcK0j8kjxb41QCeIX2OsZqhdpB5uvsqdXg1SBYpgZYyl9DVhEtefoNxP
+	bnhk/WMULvsFzmw0kNLCBtdpP2LLRJ2iSRySdMRKPrwlL9RF+MrzHXqDJEtL+/R0XZVmbamfAKg
+	3UVrSMhY+gQIRJKVZUd/Rhh0CpHPga2zHpHDVL9x96fNh3hnfQV1IgZj8P4jLMcZA==
+X-Received: by 2002:a05:6000:2411:b0:43b:8858:1146 with SMTP id ffacd0b85a97d-43d642c1adfmr2831643f8f.41.1775805621376;
+        Fri, 10 Apr 2026 00:20:21 -0700 (PDT)
+Received: from ?IPV6:2a02:8429:4dfd:eb01:15be:fbd0:655a:eb21? (2a02-8429-4dfd-eb01-15be-fbd0-655a-eb21.rev.sfr.net. [2a02:8429:4dfd:eb01:15be:fbd0:655a:eb21])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63de2e4csm5549306f8f.2.2026.04.10.00.20.20
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Apr 2026 00:20:20 -0700 (PDT)
+Message-ID: <a07a6a49-0520-44c7-b9c5-2173465cc1ca@gmail.com>
+Date: Fri, 10 Apr 2026 09:20:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <adZ6yyGsoyjm7t0Q@denethor>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Pascal Chambon <pythoniks@gmail.com>
+Subject: Bug - git fsck never ending on git-for-windows
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 08, 2026 at 12:49:48PM -0500, Justin Tobler wrote:
-> On 26/04/08 10:58AM, Toon Claes wrote:
-> > Because bundle-URIs are optional by design, I believe the changes in
-> > this series are sufficient. Also, the series [2] takes a similar
-> > approach: have the client gracefully continue in case of misconfigured
-> > bundles.
-> 
-> I'm still largely of the opinion that a server-side fix should be
-> implemented first. Unless we really don't care that a server may
-> advertise invalid bundle-uri info to a client, making the client ignore
-> the error doesn't address the root of the problem. I don't see a good
-> reason why we would want servers to keep doing this anyways.
-> 
-> To be clear, I'm not against also making the client more resilient since
-> a "fixed" client may still try to talk to an older server that still
-> misbehaves though.
 
-I think that addressing the client-side is a good first step, as we need
-to also be mindful that Git is not the only implementation used on the
-server side. So even if we fixed Git itself to not report garbage bundle
-URIs, other servers still very much might. So ensuring that clients can
-handle these gracefully is a good thing to do.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-That being said, I also think that we should fix the server side.
-Whether that needs to be part of this patch series though is a different
-question. Based on the proposed patch you posted it seems to be trivial
-enough though, so maybe it's worth it to just add that in as a second
-patch.
+ > I launched "git fsck" (with various arguments)
 
-Patrick
+What did you expect to happen? (Expected behavior)
+
+ > A long run of fsck and then it's over
+
+What happened instead? (Actual behavior)
+
+ > A (seemingly) neverending run of fsck, exceeding the expected count 
+of objects to check:
+ > $ git fsck
+ > Checking ref database: 100% (1/1), done.
+ > Checking object directories: 100% (256/256), done.
+ > Checking objects: 190% (54090/28351)        -->  (process still 
+turning...)
+
+What's different between what you expected and what actually happened?
+
+ > Normal, finished fsck run, vs neverending checking of objects.
+
+Anything else you want to add:
+
+ > This is a quite old repository (from 2012) with quite heavy media 
+files in it (70 GB total).
+ > I've tried to "git gc --aggressive", it worked, and pack files are 
+numerous and about the same size, but the fsck anomally remains.
+
+
+[System Info]
+git version:
+git version 2.53.0.windows.2
+cpu: x86_64
+built from commit: e9edee0b34751bf4d7d1feda0e2535bff64d4e77
+sizeof-long: 4
+sizeof-size_t: 8
+rust: disabled
+feature: fsmonitor--daemon
+gettext: enabled
+libcurl: 8.18.0
+OpenSSL: OpenSSL 3.5.5 27 Jan 2026
+zlib: 1.3.1
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Windows 10.0 26200 -> actually Windows 11 Professionnel 25H2
+compiler info: gnuc: 15.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+(none)
+
