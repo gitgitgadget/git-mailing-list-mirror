@@ -1,152 +1,154 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E8836165A
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 21:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0213A7595
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 21:13:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775854896; cv=none; b=YmrWHgaZKOcIRjlAiPIQ6PG2m8d8euhVOq527t6WjGzjXSUHPspEpQfD0w3LAes/0ifCSBSDRUxJYRyFJdguoekXhceeMDaPd34ilhVJMZX8c0nUOg0z+tnCRuh40VoZ7D2S/QqPtf1p80Z5Tx6pfEVeRTrd16bYKg3/JZ89C6I=
+	t=1775855627; cv=none; b=qcelRhiX9Esm8kGErAAdSdIjLdvX0fQ+xz+wzvfWZe2QakUs4laSQSP0wuc1AQRhZH8W5tqyVp0+45RM29Lp8MZbZCzD+jLfeVXOBlfQOvPznPOuLVl8TJAfoTPdj4To8wQKt2FkHjQXQiNOwNzQlU3jlccjYaaQi5QimLbo85k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775854896; c=relaxed/simple;
-	bh=wM6X1kOQ8RlWuvfEoeb3y4LRctIqntGIPQzSL9sCO5Y=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rHPbiWvtfTq05mFnxJV3YtqXkf3bgNQ3BjzEnYGNe3qcc/Ny1Jo6YU+rZZSxJHvNcMslqLRP7AF6PlKOFUSu6iOyTdDAPbtIj+yxR0AXN1Srf1yYMDlxeYHamcCWB90mvTWCJdjgJgpoEUCFxMkZOiBxRATx0hfR6XNrnTSE7Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lh79bGpE; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775855627; c=relaxed/simple;
+	bh=jOAiIdXbL2mmlGlrO6bJiJwuqHfRAqBhuLaZDLzisTE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tICM7L8vchN2ldTU9naMANa6zduHxJC81uvFVILN9Z0Re717utzMc7tbM/sIcBbOonw7JeMhAMV6/WWFSNl3NGDN9MY95GcKTiJbLJoTo+tdrejkYhdlD9I8Wys7TDeLdew+AsGiz6u0rWR4+dIqUVqd/0wrfvv8vNOj/YiSNHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YE5soCvf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ShqiTAIm; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lh79bGpE"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8cfbbf35354so293916985a.0
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 14:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775854892; x=1776459692; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=45kNGcKZbNJJ2R6xHYB9UH7NOBs25a7xMtYNOIXh2zs=;
-        b=lh79bGpEBdAsmjF5IpDgbkfJnOBGDT+N2W126OxdOI8E5Z8jqYL3o+n73Rsj6fBClI
-         yWEl7bDSDD/yaDn6q7QfVCy7IxnTkkv6gDwNCq05YteFOz0nRLW1TIICTbXYKEsb3iav
-         B9iZXybBxptc8hUIc2PkRRfzm19kI3ZfQELj3EBEYdQhAbi40LlYErkPR1YHXMlPGl/i
-         0odWY1xq4vLVJv7+Av6voSXndTXfMIV3pFjWv8H3bD/Fh+E8Y2avlThWGnPaw9fpjr3o
-         0nIN0S1HnhokRbMw2AVkISCYfywLawVeNbtPBiRBoh2AtcMmuOe9u+LvqVzFJDx8AyAM
-         jMZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775854892; x=1776459692;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=45kNGcKZbNJJ2R6xHYB9UH7NOBs25a7xMtYNOIXh2zs=;
-        b=cKLE9Yvb7cJaehmBAUp/kjlekswezfeiWxPclnkdD+N9Se3qABIRLt5lLnQOxzoO4Z
-         l/y71AqLr/I3Y/zz4kYio9F2HGQY6zhtW1s0l7nhQNshYRxBaUJCAM5gK05HFgAgweoK
-         QtVykZ3yeSZo9Cq/j30hT+y7sJ7mSfea/aKVqAgANzo/Dbra6vQve6JCM3o3FHfX5mRf
-         elukHvGVJrWqugcRaQL7fLjiMiDCQ6SD7XF8kAg5nqWaULeRqJo0VOOMJ0tyQLp216AQ
-         7lY3kuJ9UsiWH5IQiNXPxER6oRcqkiN0pKpQgYdFp1W0vlU4wnynsKemZFqC6I1nKTjI
-         POpQ==
-X-Gm-Message-State: AOJu0YzX2r0zaQzyCIBDQF9JQor6QKOzrtpPNok1S4PxLRUMIxa9KSIq
-	ibF4oR+7Nx4Fp11RWqkN0nKae3rdOQYcQwMXFsBzEsQNUNwDSrEaU3vYt6GeNA==
-X-Gm-Gg: AeBDievRNUsajtpk0m+AfST5/LvR6GEF41mWTPbJNfABRDtUyNrTvfaFlIc/NlIy31H
-	sa78/dpHK+3dtBf5ZLXz/t5KrvT0tUZYJTRbiBu54c3dzovJQpCbApT2fHdsst5Qt1mr3cCON2y
-	FK7fHxnOKfU+GT2G4MtQjptrFnc2HnpnPwoUMqdr08zcxHtXMCknhlCP1dSfeITM4/oJ0cEjueJ
-	WG78d54eiKERakD8BN2lBtxUPqahDT/0CkgNs+FYjmBBs1xtaShd39TGN+POLHlMKDrdw7pAvly
-	rGS/hF6iRBkjS2swNBe1dogwoUXiS3uEnWz/4tSfUzqT+STyeo+KQsVYRXoTrP92LYn4UOC5JcY
-	oiqvpXGitJ2fjQnBimVbplHDfdtRp02QuoF0HE9QSxxTrN69XKlHZhmK2qAbpKobfL67lT5aBvr
-	9o4FgvCZGWCzVwwd87AZgmdBpMAA2kaOyXbkTq
-X-Received: by 2002:a05:620a:2688:b0:8d7:6d40:713e with SMTP id af79cd13be357-8ddcf5b32f1mr694169085a.39.1775854879373;
-        Fri, 10 Apr 2026 14:01:19 -0700 (PDT)
-Received: from [127.0.0.1] ([52.150.30.136])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ddb5f88a19sm289916185a.7.2026.04.10.14.01.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 14:01:17 -0700 (PDT)
-Message-Id: <a1fa04a965017797e9c500bd2e6148ac4b0e4431.1775854874.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
-References: <pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com>
-	<pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Apr 2026 21:01:11 +0000
-Subject: [PATCH v9 2/4] sequencer: allow create_autostash to run silently
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YE5soCvf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ShqiTAIm"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C05F07A0174;
+	Fri, 10 Apr 2026 17:13:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 10 Apr 2026 17:13:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775855624; x=1775942024; bh=Z8ncmmWoPV
+	zlbQriqxh2lpiGfdTg7OmqCYvFpmpWjyc=; b=YE5soCvfa/KW6rFE9EbXE9Gm62
+	oGahp6/qASvXIwPFeFkVVrmTVTWYqvIsqiK89c8jy8HkUAhCwatFjOM/PpAdWt5t
+	qnb2Y9IJdaL/3dlDB5V5Wf3nClN6jejJsy0R4H5aprgOmf1nWLPGangfoNZL5eoE
+	ejWfSedYHJV2EvfncDIQbu+2d2F5n3FxNb2iEd34PBBGbz1S5mCvVZVkdI7yepGx
+	0WzXRZrR6H0jm/2d7aNoyv6wRWKKKO9NbV1iZl2NQvRA5MAQCnSrUZt8cGkheASl
+	FY/4dj8fS4dnUxOTncoMqcuYkXviMM8veSqHujfLCXSObkpESdfjIQbpfCnA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775855624; x=1775942024; bh=Z8ncmmWoPVzlbQriqxh2lpiGfdTg7OmqCYv
+	FpmpWjyc=; b=ShqiTAImE6La4r8RggJ+jJV/RKCxShCDgKa6f95ErTtaDQKOVAY
+	AI+4W6OmuBwEmiHzub8pjJh8ME0UouE8CJ3wZuqNwQaCmSd4qLZCOU/L+14uxzW9
+	i69pUMeVJ2Ru9LxGjMY47GYNG670XXIzS0n6GGrtt4LICicw37kDsNbtug4Vpsdl
+	FdjwYID4OrQ4k0qx+dGegydGIiV9ft/glKKCnnJ59vhd7gGcoUs/1Qtu/3NdXUGk
+	vRYsot/Qv9GaLSejqkNctHkfLHkFlz5NKwV0QmYA4CusEjuMkKKbemnME9RZ4JVv
+	glfuEpGnXcbBb3PCzuqdMwYeHqJJuO/GMmg==
+X-ME-Sender: <xms:CGjZaTpI2dhvCltMaoZEKcwev2NuuZxv9Ct7mctsik2BuVCOlopL3Q>
+    <xme:CGjZaRUeUWSQnnJLsA2NYugcp2LybhFtLgAz5byOHlmUe3oY7ud_bMe-M4eFSj9eo
+    h2lKAG6D_5_AgdCqGc9egT_82VR2ZqNwGJON386L6UaINoibxKJjQ>
+X-ME-Received: <xmr:CGjZaaAHsNFK38GEDGFdR9vGY0SvzqIGOk3UN5xnK4jAfbllJzqSbPQizgsPnINM8dLS3rYsmdA-GdPyn9vU8o969DyRJpvdxw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeftdegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghl
+    shestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhssehpkh
+    hsrdhimhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:CGjZad1uOhrZPKNB0Mu0YFy_LS_fxo1ANA3jymT2fBqq-xSm7Sld_A>
+    <xmx:CGjZaU2Rreqyqr6cBICYSQu5k3nfS_KSwE35HRtZ6LFOcnNvPVLihA>
+    <xmx:CGjZaaAqniQpdfPJaLe_0TAuLnjGJS3vina9TTh-cofWtOuki5oOdQ>
+    <xmx:CGjZab5cLMutPfumt99TDkka1ytkYYaO8cKuSCEk_Dm9kKNkYEOQnQ>
+    <xmx:CGjZad1F50wDY2NgUWY0vGXaUdV5lzIRPSApKm5ztXmHGmXDJ6O0F1rZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Apr 2026 17:13:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 0/4] Enable Rust by default
+In-Reply-To: <adlXscAv57Xd7p01@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Fri, 10 Apr 2026 20:04:01 +0000")
+References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+	<4efc4133-3726-4b9d-8f06-03c07d48af99@gmail.com>
+	<adlXscAv57Xd7p01@fruit.crustytoothpaste.net>
+Date: Fri, 10 Apr 2026 14:13:42 -0700
+Message-ID: <xmqq4ilio6wp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-    Chris Torek <chris.torek@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Add a silent parameter to create_autostash_internal and introduce
-create_autostash_ref_silent so that callers can create an autostash
-without printing the "Created autostash" message.
+> This was actually sent out just before rc0, but Patrick requested some
+> changes in v1.  (I forgot to thread it to the previous version,
+> unfortunately.)
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- sequencer.c | 15 +++++++++++----
- sequencer.h |  1 +
- 2 files changed, 12 insertions(+), 4 deletions(-)
+Proudly saying "It was sent before rc0", as if that gave community
+plenty of time to adjust, is not something I was expecting to hear.
 
-diff --git a/sequencer.c b/sequencer.c
-index b7d8dca47f..1197d7d8a0 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4657,7 +4657,8 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
- 
- static void create_autostash_internal(struct repository *r,
- 				      const char *path,
--				      const char *refname)
-+				      const char *refname,
-+				      bool silent)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct lock_file lock_file = LOCK_INIT;
-@@ -4702,7 +4703,8 @@ static void create_autostash_internal(struct repository *r,
- 					&oid, null_oid(the_hash_algo), 0, UPDATE_REFS_DIE_ON_ERR);
- 		}
- 
--		printf(_("Created autostash: %s\n"), buf.buf);
-+		if (!silent)
-+			printf(_("Created autostash: %s\n"), buf.buf);
- 		if (reset_head(r, &ropts) < 0)
- 			die(_("could not reset --hard"));
- 		discard_index(r->index);
-@@ -4714,12 +4716,17 @@ static void create_autostash_internal(struct repository *r,
- 
- void create_autostash(struct repository *r, const char *path)
- {
--	create_autostash_internal(r, path, NULL);
-+	create_autostash_internal(r, path, NULL, false);
- }
- 
- void create_autostash_ref(struct repository *r, const char *refname)
- {
--	create_autostash_internal(r, NULL, refname);
-+	create_autostash_internal(r, NULL, refname, false);
-+}
-+
-+void create_autostash_ref_silent(struct repository *r, const char *refname)
-+{
-+	create_autostash_internal(r, NULL, refname, true);
- }
- 
- static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
-diff --git a/sequencer.h b/sequencer.h
-index a6fa670c7c..570f804457 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -230,6 +230,7 @@ void commit_post_rewrite(struct repository *r,
- 
- void create_autostash(struct repository *r, const char *path);
- void create_autostash_ref(struct repository *r, const char *refname);
-+void create_autostash_ref_silent(struct repository *r, const char *refname);
- int save_autostash(const char *path);
- int save_autostash_ref(struct repository *r, const char *refname);
- int apply_autostash(const char *path);
--- 
-gitgitgadget
+"This is expected to be a big impact change, so I am sending it
+before -rc0 of this cycle, so that it can be in the first batch that
+graduates to 'master' for the next cycle" would have been a lot more
+understandable, though.
 
+This, and other small things like writev() topic, reminds me what
+I've been wondering for some time about our development process.
+
+We have been operating this way:
+
+ - There are 6 to 8 weeks of period, during which at any time
+   anybody can send in any random changes, and as soon as a rough
+   consensus is reached that it is a good idea, a topic is merged to
+   'next' and after spending a week there merged down to 'master'.
+
+ - There is a "cut-off" time at -rc1.  After that we go into
+   "regression fix only" prerelease freeze.  We typically do an -rc2
+   and the final after that, and this process typically takes 2.5
+   weeks.
+
+This forces topics that are apparently (even though in retrospect it
+only was superficially) good topic that came late to spend too little
+time to make the cut-off time.
+
+I wonder if we should do this a bit differently.
+
+We may want to have a mechanism to sift topics (as they come in)
+into "architecturally important high impact" changes and the rest by
+community concensus.  We require that the former be kept in 'next'
+until the final release, unless they mature before '-rc0'.
+
+Essentially, '-rc0'would become the new cut-off time for these high
+impact topics, while '-rc1' will be the cut-off for the rest.
+
+And we move '-rc0' way before '-rc1'.  Perhaps to week 3 or 4 of the
+cycle, from the current week 6 to 8.  Currently "rc0" is no more
+than "we happen to have accumulated these random topics during this
+cycle and this is a preview", which is boring, but we can reframe it
+as "there may be more smaller topics coming, but all architecturally
+important high impact changes in the upcoming release are in here
+and no more will be added until the final release." preview.  If you
+are not in the mainstream (you are on a minority platform, or your
+workflow is pecurilar, or you depend on some third-party tools on
+top of Git, etc., etc.), this is the version to test and report
+breakages in, to make sure that the next release won't hurt you.
+
+Would that improve the process and allow us to experiment with
+larger changes early in the cycle, with plenty time to correct
+course, allowing us scramble less at the last minute during the
+prerelease freeze period?
+
+I dunno.
