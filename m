@@ -1,144 +1,120 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6D9313272
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 21:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A318A346777
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 21:53:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775857694; cv=none; b=asw1+wfPtx3RgozRc5+OYlGkKuGZQ2H/Zy+8nUSDtRYcEU1/jC0dYHIWYZvT7C1yTOC2q99pEAYzvGmh0e4GVtNEsVm5l0zlDZBbRkp8wxYt1VEndwcKtLkm9HJs8gCvgFU85GH2DHpYGcghFoUZb1xSLVCt+9YVuZano383DEA=
+	t=1775858011; cv=none; b=gTnH1zu6rawdGgZTADm5UfQHwlMnF1wwiOfcT85z2wlYTFGg3v10hCIrC+uKzMQ9e2tG0DvzZfKOhWzCAssJNJ/s9yeqjmmFVvN0DPLfqOl8+pJBoGd1Dh9T7kLlsVlxU+EgCuF2duy8MDOTmFG5jVASb61CAAj6TpTmZE8MEyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775857694; c=relaxed/simple;
-	bh=WwmOTan0yrUoyRqx7mCe/56yHlyfhkERsrlPM2d6oFY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cFvcRpTIHcCi2ioU+5J40KvX4d76RPufFhabisTNIK/WfJpD4vjIulSx3bePTAlPnbcUUSCspxjFpjO2XiDwr3kfhmuRlfKG7YP2r1O/xKLvpiug9/1OIS380zELq22K3EuseAXBkzgE9Fb7V/LvZ8Jm1EZg+qC5Xs2crp6TRQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=XKjkV58o; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1775858011; c=relaxed/simple;
+	bh=Dp3nbXvYRjjRgMwAiWGq1PrfuKk6igJNanifPy920H8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cG3cdCeqFt5wyRLSYJlBxtnCSCCQHyyg0K7hptut58PhqyjY0NSMlWK3pe+MNK0mOSxO0L2h2u2PPjsZMCE1McL9KrjlKFnKX4M1OYpO7ATv7YEgqHJz0gSTJrEWgA1IQpU/F0DKCUQKdtVf84uhlOWjAv9VUIYpaLZRD9q/y+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vcoenZVj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UYW82Yvi; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XKjkV58o"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1775857691;
-	bh=WwmOTan0yrUoyRqx7mCe/56yHlyfhkERsrlPM2d6oFY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=XKjkV58oMLfU4xZq3xtiAuReb3Sfk26B8NpBjPgKuBt+/g6YxyUtqVX2wAVctDAmb
-	 S9xRG0cS4PXBGyZLEC0TV3IA0DliIHOuQ3iFyyYUCVPW/eX9bRBEoiTbzOK/bOtsWG
-	 eiNIRq9UI3PjWq2eDFchvsCo+mrgsXgU0ecBytNfUL/WaUt2cOeHqbwGDr1ezhovnu
-	 5MzQ2PCTwji9+yI8gsnMVOkOO5arCWgwa+0k/QlSMGKINrepfRPP4VwTfsmhrgyLDG
-	 b2vIu5U+p6tYZW+rTFpWgPc0bBprf+/7+AXe02/1G1d4kFUQyWM/neO3AXFwTU0F6W
-	 aemaklGQ6rbPYXcDLm3ImO927pqWTYTDtRWFPZ/XrpBjscuBraSD32iZB2ubV2U4go
-	 RhOrKiDTdR4AHE075ZcqQQVeFiI0J8aH3s0nZ+iXN9cC2flkYwqPR/o3mIyVk4HSgq
-	 mBvR3EMKtVrwJNcYT+kM447cuYede+9OUizfKuHuqFctAYD+Efi
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:690:ed17:613c:3cb7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2F49220039;
-	Fri, 10 Apr 2026 21:48:11 +0000 (UTC)
-Date: Fri, 10 Apr 2026 21:48:10 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 0/4] Enable Rust by default
-Message-ID: <adlwGv8LPdfwP8Yv@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
-References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
- <4efc4133-3726-4b9d-8f06-03c07d48af99@gmail.com>
- <adlXscAv57Xd7p01@fruit.crustytoothpaste.net>
- <xmqq4ilio6wp.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vcoenZVj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UYW82Yvi"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 876487A00BF;
+	Fri, 10 Apr 2026 17:53:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 10 Apr 2026 17:53:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1775858008; x=1775944408; bh=AqlIN7NZsa
+	FC491qhlOhfIxpnootS1Mtu/awNIXvH/o=; b=vcoenZVjde4ZMcYU2xjQFlpuA4
+	PZBD04DAzRFk6SdejsMD+pk/HjgCPCqGdmsPtdw5lgQiMNwmkZCcYKBSxebeu1YA
+	ROP1ZsqPqmCKP7vNytzKxeIU3XrVSXNouUq96t9BTzwtzEo1TDTP4kPUIUNMceB+
+	aJWgLyf8EYsW6CJx7p1u6vPCFcu0iG5VWGdSyUsWk/jLuhggEHfJkSSTN0GCbjfP
+	t9pO9M2RtPXjBU0zBbCvKgN73OlTSHWRO0wq+DZ5jPp3o4Hga/NPrANazG5eHMOS
+	7jwRfst9tIfBLqUlpBvxTiIfRTk/PTNyS5ClFj3Qpw1N9dqFLhUmWK1CaMCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775858008; x=1775944408; bh=AqlIN7NZsaFC491qhlOhfIxpnootS1Mtu/a
+	wNIXvH/o=; b=UYW82YviMsDTYYyKt4x49rv4c489cohWERDVc10PRjPMrnHuNPG
+	fhnFh0iMR8iEn36eP7NJSfBnkfXyE7TRrtQ4j5y49vqyyDd9uNMsIJN1LHZdQic6
+	2pPRLH/YHoAlUUJRSvQbNFZ4Y4oAsZVDLoskFNlcdGb2nk4xV/0dvsQJXgEH6GhW
+	iNaUp1qSwB1o9Q6IwpEFgytaqDFZyqUzxfMKGb/CGJ6pU/3kcXsvkSeY6e+ZqxwJ
+	cRPzMj5Xr0iZ4oKqV7yobCiANPKNiaWpg/UFtEjsm5lECTbwyCY33FcLcpnzS1Jq
+	pPEeeVXXXEmwargA2YjmaLj/s1j/pmHq9Sw==
+X-ME-Sender: <xms:WHHZaQrodEg5-pW3dr1uGHmnOQo2Q-v5zm-6rA3ogfJ_BXMpF66H3g>
+    <xme:WHHZaaUJ6W5qvaaYU8i2WntJ73BA6eQCmTXqgt4YPzmgm48hmU97rrA4HwyxVCZEg
+    S7gYNtYGXJ-nRqE6qvW-B1jxBgPs12JERoUxSRoJ1dSc7Ryn53-iA>
+X-ME-Received: <xmr:WHHZafCzwtqcJY-HbFhcdm-Z9BopZ9otPyAVK_xDVdPqBl1S5cSMJBJn4qUFrqDmp7M2FWMGlTNLvyv8MPFiguap8Lz12MpSiw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeftdehhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthh
+    hrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohephhgrrhgrlhgunhho
+    rhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:WHHZae2svfcb4ry-w1a18RbzKkoJYQ3LeEA5rYpDmnx-wqSmR2-JSQ>
+    <xmx:WHHZaR1eETzaTFStEtvrsOSkGrrdMpt_hHJXn4IIKrdsnBGI4TFBwg>
+    <xmx:WHHZaTA_36VHoeik7yS2tijts6phx5hpnfq8YuSqRQIpxIttyyegrg>
+    <xmx:WHHZaQ5-GyG7t-TD2gp_mDQZ89Dvuy1hYzgqspiAGUdO00XkIG5RCQ>
+    <xmx:WHHZaYPoteYVpJ2ElIV_MLX4ituXCIhltJ21Otf_bF5UK3hnkDb6vD9x>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Apr 2026 17:53:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Chris
+ Torek <chris.torek@gmail.com>,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v9 0/4] checkout: 'autostash' for branch switching
+In-Reply-To: <pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Fri, 10 Apr 2026 21:01:09
+	+0000")
+References: <pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com>
+	<pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
+Date: Fri, 10 Apr 2026 14:53:26 -0700
+Message-ID: <xmqqy0iumqi1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sZVgnsykj7+rf5Mi"
-Content-Disposition: inline
-In-Reply-To: <xmqq4ilio6wp.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---sZVgnsykj7+rf5Mi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>      -    stash: add --ours-label, --theirs-label, --base-label for apply
+>      +    stash: add --label-ours, --label-theirs, --label-base for apply
+> ...
+>      -+`--ours-label=<label>`::
+>      -+`--theirs-label=<label>`::
+>      -+`--base-label=<label>`::
+>      ++`--label-ours=<label>`::
+>      ++`--label-theirs=<label>`::
+>      ++`--label-base=<label>`::
 
-On 2026-04-10 at 21:13:42, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > This was actually sent out just before rc0, but Patrick requested some
-> > changes in v1.  (I forgot to thread it to the previous version,
-> > unfortunately.)
->=20
-> Proudly saying "It was sent before rc0", as if that gave community
-> plenty of time to adjust, is not something I was expecting to hear.
->=20
-> "This is expected to be a big impact change, so I am sending it
-> before -rc0 of this cycle, so that it can be in the first batch that
-> graduates to 'master' for the next cycle" would have been a lot more
-> understandable, though.
+I guess it is a good change that makes things align better .  One
+potential downside is that "--labels-o<TAB>" is slightly longer than
+"--ours-l<TAB>", but I do not mind too much either way.
 
-This change was announced on the list and in the documentation, so its
-appearance should not be a surprise.
+>      @@ sequencer.c: static void create_autostash_internal(struct repository *r,
+>        
+>       -		printf(_("Created autostash: %s\n"), buf.buf);
+>       +		if (!silent)
+>      -+			fprintf(stderr, _("Created autostash: %s\n"), buf.buf);
+>      ++			printf(_("Created autostash: %s\n"), buf.buf);
 
-I didn't realize that I was sending it directly before -rc0 because I'm
-not usually very attuned to the timeframe in between releases, to be
-honest.  I usually send patches as my schedule allows and I try to fix
-anything I've broken relatively quickly and even faster in the -rc
-period, and I generally let you decide how and when to merge them.
-
-In this particular case, I merely remembered that it was something we
-committed to because I actually was looking at the BreakingChanges
-document for other reasons, so I sent a patch as soon as possible.  That
-just happened to be right before -rc0.  Had I remembered earlier, I
-would of course have sent the patch earlier.  It appears, however, that
-we all had a memory lapse in this case and I do apologize for my part in
-that.
-
-I don't have a strong opinion here and if you prefer, we can defer to
-2.55.  I agree that would be less risky at this point in the release
-cycle and, of course, you are the maintainer.
-
-I have been operating under the assumption that Git 3.0 is destined for
-September 2026 based on the discussions we had at the September 2024
-Contributors' Summit in Berlin where we said 1=E2=80=932 years, as well as =
-other
-discussions on the list, and that is the message I have been
-communicating to other people and projects[0].  I am fully aware that
-that date might slip due to various reasons[1], but I do very much want
-to get as many things set up as possible so people can test and there
-will be fewer surprises, which was of course the reason for sending in
-this series.  I imagine, for instance, that Debian might ship a
-WITH_BREAKING_CHANGES version in experimental for testing to find all
-the exciting things that will break (of which I am aware of quite a
-few).  (I will suggest that to them shortly.)
-
-[0] This is true in both my personal and professional roles.
-[1] Although I am unable to be more specific, let us just say that I am
-endeavouring to do everything I can such that the date does not slip for
-any reasons within my control.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---sZVgnsykj7+rf5Mi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmnZcBkJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZwSrrOQ3CX1h5ojKS9jfuMQL/1h9+nZ0fqp+F+ikg7QD
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAFVcAP4mDWzs2i+V/r5ioUrgBv8aZfMj
-Q/FowuDRd1vd2onmRAEA3jZ0qHH4quv2lEQWL885IiXUpn3poL1DNkXgTUlxewA=
-=RESM
------END PGP SIGNATURE-----
-
---sZVgnsykj7+rf5Mi--
+Keeping the behaviour of shared code path unchanged would be a safer
+move, I guess.  Sending progress-like messages that are meant for
+human consumption to the standard error stream may be a good change
+but should not be part of this topic, I think.
