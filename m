@@ -1,105 +1,105 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DAE3446A7
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 19:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDC938C2AA
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 20:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775848725; cv=none; b=BknoQ8DzN8exuZ9V1wxh13jCoSNPH1pgVqAv6AWgEBQesXxxV2NWF4VWHHAKDjL8aPJw0sPTDPcgW7DC57dYXctYmRXXMiQKJ1VTn1P1dTHBJJJrnmjF8Cflz6KeqezggKViZB+wzZzNiC6kPVqVYyuJ4x59syXf95bTlf8BAPQ=
+	t=1775851454; cv=none; b=EBHjfs90yRlwlZq30pjf0YOif4NDawZTaDpZ7aWqnToafQQH//PNk7oKrpVOkOwNo0yfuqakmkKbT9QypIv+MiN0zFDTmNoGUOnA1vkmnc1oDdaicbc5EZUqRg+yO3DJMVn2T3mVLu3h0hOSHORdxDCiQYLsZiNuhokOuGAKJes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775848725; c=relaxed/simple;
-	bh=m9hz5U+Qqv4EguwkSSeNa4/fdmVVQ6KIqQs7T273mOM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdDaz+iJag78jW79hd0YJ52sNT7BsgEGLN04cH8NKpBSfnN4SeDjbmWf46CHaDE2/BvQ9skDY4ZT8KtsY0Rp1UpaHHcuhwavk6Y1G8lAq+/U1GxDBN6mPch4UESmUTLX7FO3V4WFW3Pn375SzNaq40Td7OYLVJzn4Pi0nzNyafY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hxBld/Qw; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775851454; c=relaxed/simple;
+	bh=Q1ljhmsHBC3jIlxtneKHsx+2du7A9Yq+xUfJKPYAXfM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C+ZnQVRvMx0zTdV0SgQfL4jngCnrkXzZpQr5/Z7kMJivbhe3iDbif1VUqZVsvgb8PAqj9Lpp7lMZ9NIMa/f/frL9aUoNBfjLWJ+BpjaA0yrcgHl4fI59hvxnR5TewD1wC/NYCeTk3+XEt90TIFuptPz/q34SnDgnVT8FsCYb1MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=CmN/c+Cm; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hxBld/Qw"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59dea72099eso2378782e87.0
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:18:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775848722; x=1776453522; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7ddZDfwdOGm89/KkKgDbKBdrqb5+fTjCTjDRLoH+PfM=;
-        b=hxBld/Qw2Pj/K14iJyIB29tiPWORb9kfw6toFmFF8t5iil91Ehyep2mjND0ODhgOe7
-         uD3vqJcdxV3oEM2ZYbD897dLMlhRWgk0f0CqwzJ1XUnt8+DRCSvqbM5IHLEodBhvgku0
-         swltXcj4jccZ2g79iS1EHO3ildlrSzVbnhKap0tK5U5M/PJLVHfMIMM3qCmgyNw433Z2
-         lx05xBrcMdXWbPd6Mb1FhF7iy5ve2Q9iV0JomOlxQba533rg4Mnj+amsDY2iesDlEdTU
-         z8sbNggBxx6+V3WypRK19Nt4y4TzctEuD7fOfyWhCyxMtO+DMsgz/5dMtq34rcAQ5MG+
-         g02w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775848722; x=1776453522;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7ddZDfwdOGm89/KkKgDbKBdrqb5+fTjCTjDRLoH+PfM=;
-        b=osw5k/f8LLXqQt6UdHp0L1W5cYsbl3mJmMa/q4U/DCxPytKQ4ZWJgwLwiIvHqSS53y
-         5dkSMNsGw+aFftnutL9z70SlhPNGWhx8Ul79L1H01S5N1iEXM6v6vx5jbUom/meVrEM9
-         eefGqvnTTj3gGgoNkthm1855N9l6vWUmmLgw1Y+bdZMH6tOoNg8fSeh9kVd4FgjLDU0n
-         G75Ls3a6irHaGo/T/hs2/rRYwBPPDF03/lo/bOumJdf1+FAze2rI0rc3X4Pqf4NobG2E
-         n3uq6aNaYiyLjdkcbY7d0ZhOicYtPM0nnU3StSchaXaDICxXr02sLymJIR6A2rUM6QV+
-         zZaA==
-X-Gm-Message-State: AOJu0YxG1sQyj1YKhH8Gz5f34Zo1pB/ssc1x2KUwdXUIXaFiEqI5WjWN
-	cK5cmMGvDSX9WaKqWb94tNReLSFG2HFV3ozSiAQSXQbEM9WFw5myZYJo
-X-Gm-Gg: AeBDiet/7tIXey4B8AeSnkPVl4p7u6tEnnJuZDc9kXrnlnbeqjH5VwCPbHsRf+FR+lR
-	TD5ZhdmpZmF1wXmRzap86XSMWBD2eOgo39v3oQnA0RUeRHHG/ofeSeq6h+9KltjzapdQcmQaQmB
-	acLHwkkLz4MH+kluTUy+U3jEuC4c7mg4NjsZXo9smkPkNPNSFJQuRY13qmiL+Zif1tOAYf3TrQo
-	UV4teePRNkRuNuUgPleFlNgzexrKorT5FpfsBxwweX08RkH74zi+eyQ3DlevkuCIvUsz3DKvhSs
-	X27HVvutP63WJSFs3g+5qFC6n9Olg06byvYb1H2fSYr6it8Kq9b866ee3yrwIAmos+gMVMC2Dtp
-	9WKUzPWOhtMFNwfe1nYAzs7l2UX+f+H86QoruIcoO5E+OlBdPVYivqxTQ0VIPwEDF1MnkxUglqc
-	BTKJfLeORl7YeYFShDM2vRw1xD9isn8YNw0rmwrmAkKIJIhVJhbQk5Vq69rTx9NUnkiYvV8EEpi
-	CzhEZkqLgJC1sni
-X-Received: by 2002:a05:6512:3ca2:b0:5a1:3bd8:a068 with SMTP id 2adb3069b0e04-5a3efb45508mr1347920e87.30.1775848721811;
-        Fri, 10 Apr 2026 12:18:41 -0700 (PDT)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e4957eb4csm8400231fa.33.2026.04.10.12.18.40
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 10 Apr 2026 12:18:41 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: phillip.wood123@gmail.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] checkout: add --autostash option for branch switching
-Date: Fri, 10 Apr 2026 21:18:40 +0200
-Message-ID: <20260410191840.38747-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <0d1c7bf2-6404-4779-a0d6-6db592510a04@gmail.com>
-References: <0d1c7bf2-6404-4779-a0d6-6db592510a04@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CmN/c+Cm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1775851442;
+	bh=Q1ljhmsHBC3jIlxtneKHsx+2du7A9Yq+xUfJKPYAXfM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=CmN/c+Cm9HE++q48PpMk0ss0LCEXVpvuL2r4v9yQl2M7a13mz+VeYdfzQQmEr6sN9
+	 QtXVq1gzkpDY7ry5JNpPFYR6O0nFTBt17I/ASI3MAKyoiyhq6GFwKmi3AjUl0D/ZSq
+	 8vmYlcJf+YLxj2pD2N2HmSyZwuCvOy2GW8b/SKqSG3t2JE0zc3mmOqVT2oomrRaqXH
+	 s/UPpK550gXP0bzzoKdTfz44qLzwtwtyCqiqF3oDiEeohXRa0loMR/VdGQxd7i8ZaR
+	 YeGnjMfOOwQNwOaMNmUBxO2yVnw+ckMtpW8rB4RiPo+5n9GF81o38OTAvanuuOYZDl
+	 meeBpXd1OP+bVDxnSbE4GBVKMOlxyfQpbCp0bdx5RPYWJyffqiUsgGTj97I/hYvnip
+	 +03JPNJ4rGnNr46zyfbwCZy2yJYcZtWkwdLIl0U5S9gkTqEtafItGpIFcAQET8Mnl/
+	 JsONGwNazvrpTuijGa9tD/EeZlHBIfNN+PgoGROhMzA3mMdoXmj
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:690:ed17:613c:3cb7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EA9A020041;
+	Fri, 10 Apr 2026 20:04:02 +0000 (UTC)
+Date: Fri, 10 Apr 2026 20:04:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 0/4] Enable Rust by default
+Message-ID: <adlXscAv57Xd7p01@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+ <4efc4133-3726-4b9d-8f06-03c07d48af99@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-> This patch seems to be missing the implementation of these new options. 
-> Before submitting a patch series I find it is very helpful to run
-> 
->      git rebase --keep-base -x make -x 'cd t && prove -j6 <tests that I 
-> think might fail>'
-> 
-> to catch any mistakes.
-
-Wow, that command is so powerful! Thanks for sharing that!
-
-Will shift that definition to an earlier commit in my set.
-
-> Why do we need to create a new repository just to stash some changes?
-
-Isn't it good to do it in isolation, for when the test and/or its cleanup
-fails. I tried to change it now, but it's not trivial, I quickly broke a
-lot of subsequent tests.
-
-> We have a helper test_commit() for creating commits (it is documented in 
-> t/test-lib-functions.sh)
-
-Thanks, will update!
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="37+0V378igOde9Cn"
+Content-Disposition: inline
+In-Reply-To: <4efc4133-3726-4b9d-8f06-03c07d48af99@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-Harald
+--37+0V378igOde9Cn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2026-04-10 at 13:02:13, Derrick Stolee wrote:
+> I'm glad you're remembering to help us follow through on this promise.
+>=20
+> However, I'm worried that we shouldn't do this change during the rc
+> window for 2.54.0. Perhaps we could get a small patch that updates the
+> docs to say "we really mean 2.55.0" that lands in the 2.54.0 release,
+> and then we merge the requirements for the build in the first batch
+> after the release.
+>
+> This would give us a full release cycle to simmer with the requirement
+> instead of slipping it in for the last rc.
+
+This was actually sent out just before rc0, but Patrick requested some
+changes in v1.  (I forgot to thread it to the previous version,
+unfortunately.)  I would like to have it in 2.54 if we can because I
+suspect 2.55 will be the last release before 3.0, so that doesn't give
+much time for people to update and adjust if there are problems.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--37+0V378igOde9Cn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmnZV7EJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ+/nsq8htVcYMnWrc8DEzV/zRpYh8aDcXEYmC04NyRkc
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAN3eAPoDji/0EOnTG7o1Z6cRdJjtmgfq
+9pPDazG3C6X/hfYpXwEAhM0OQd6n/yXefssBaV/5+Th/u5TcI/YsFTL0qu0SGg8=
+=Y+hR
+-----END PGP SIGNATURE-----
+
+--37+0V378igOde9Cn--
