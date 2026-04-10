@@ -1,81 +1,81 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422CB3BB9F3
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B713BE642
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775823201; cv=none; b=chbiJ5vJXtV4LyBgmlDNZqZXzWbjPTtatf9VnloEu/QRXDwozZtLypm30o8NzLQ5aN/CT5DElY+BeDcZcWzmwAQuPkGgeuDiaRsyLMkMIzsFqnWsPSaQzzZFbrhQxfP+jdCWg3LIOj0N6hfe8MHzKHPjz1P/FT/AZduK7p3m3dU=
+	t=1775823203; cv=none; b=WaGFhucaBrn2i01YQe9ilpAwGbz4vYWUt9fI0XqRw1Y+0H4S98gf88yWFW/XnCMX7OyLK2sS9/fl4+uM4ERS+rPmPqhn56H0/w5LnePB4X1o82r6Tb3VwEKuTi/8+FJAtfmUCsVOrlG6zUYdMTNGjavvqSUQMpNnLiR+HG4J+xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775823201; c=relaxed/simple;
-	bh=THb90QdkL2DR2uEd7U2Ta56+5iHGYNUqT2Q0oYtIYL8=;
+	s=arc-20240116; t=1775823203; c=relaxed/simple;
+	bh=hqpii/w5IErUfpDIOmLlk5YQ4siRIrISdaijWQf9sxs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sOMp6M3dIbRSoEr3sjrGAPlIHZc8YSgJMxxruWdT8kohfbAXc6nRtNY6c8HCGCB2cVMlOndBb6mSEOdEKOf+LDTIUkz08FrHN6FWxMNYDR22hNVs/0SlnX5cZg6fUKn7Bk4rP1w3zRGON0crtBOvtNiVTOdAr3dal93CRQKPfYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KAHGKm0t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fBjkuC8t; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=mnn7eMVgbwmvTRGW8KDHdr1abay70rw8v4FPrje1SUDRCrixjXb4kRrRggKdvDHx/eATN9hZ5opkQ+MQQu2zInVgow5nFToQjqkMTwV/ulhzG8njaKX//tFH9Yz4oZYVxZ4KHbIKI3NxjvPFtJbD6hbyqZsZADP7vYEbywQAL4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bghk/J+t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m7JcDUd6; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KAHGKm0t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fBjkuC8t"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 81D1C7A00EB;
-	Fri, 10 Apr 2026 08:13:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bghk/J+t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m7JcDUd6"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C8F747A029D;
+	Fri, 10 Apr 2026 08:13:21 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 10 Apr 2026 08:13:19 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 10 Apr 2026 08:13:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823199;
-	 x=1775909599; bh=l4lQ6NPafr2gQqfu0Q4iT3IUhbaOnnqUR/MM+XlHYIc=; b=
-	KAHGKm0tdMeOijMcBXxKtauwGGT7cp9A2jgX+Y3m7LoRvi9MTi8N/pt8rZSqAe5e
-	GvCayyjLeQvx8NmVWuFJAGvaH6LD+4qsK/jvjRPbC7VYD7SuEzrl+vb8c4OChDwM
-	3FaQiEAB3/u96i1VJkOD8T1KWbc+aR7gHamZ2ZZszbEXUWVUvfYXGeWv7t2Q3x/d
-	JKpBT5VOGFb94oQkS7yWzwcZwVFc89s83fBIY2FvQOcYwh46GQkEnK6J9g04L3v2
-	CMJJmQum1GVdFYsebOZQp4BV9UIFpYYYf6DT5tZQjCxMesOB2iangglX8zosMdeg
-	kWFpE0s5y/tuQW5LnyiyMw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823201;
+	 x=1775909601; bh=Yiqup8lHp+TIyyrOwiPXNreXnORAKftCV3z7K2c9Lw4=; b=
+	Bghk/J+tC9bzIoOBPYVH4O3Sh9orVfR2EsRd2H0RJ+UwMZEQkhBnHeVeUViYOgg1
+	Hbu7rJWTZCbItLpkKilsMy5ZOwwiQQgiuxT2fa2CQuqLKUhWM2oIVqbcnZNXtFvz
+	l7poD+57ysxHdFiTC2gqJ/5xiVVLceGKncm73ajGmUGdGIAtBHeoTkDy3dhTgt/N
+	+3aGLrsFjtRUugY73I6Eqly75AHLEaQvFvhbnicj/rDs60e1Digs+oTBkIBbsfnV
+	5QsZKCnw8lY7iL8SD+PyZNvETMLc2wUAPuLZD2FeOfGNH4KrU88gKehTHjnZDEJa
+	aGLovG9ce/9aMAg8FJQaXA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823199; x=
-	1775909599; bh=l4lQ6NPafr2gQqfu0Q4iT3IUhbaOnnqUR/MM+XlHYIc=; b=f
-	BjkuC8tT32ov0cJ/9iO3nj5fG2X0kvrSsQymPyEf9yM/HLY2DtYLCO0rWo7UYKzx
-	gq2vaXWDHzMeiwWSGSgqDuaLSHfxSAfeKiVIH0/21GuLgDY2QWoklPlBz1FdOZhn
-	2Q4Wept4FefWaSYAK36TxTx/0hXU/7pvF3fevHONJhC+4D1bp/W87W4undH/s8QU
-	RBVzPcdziPdEFqSz7L0vbsPz1wyq3g5skqzAzB5rv9FYnOmLgtZ7bVUGSG7/kbdR
-	7TVgjxdoGn94Mdpf+FmcCmkJmRXO6UQQ0NyQfOFHK10oRahPde14xicr3sHNbW5t
-	K8439bIS/apR2gT4wSg+g==
-X-ME-Sender: <xms:X-nYabZK6_YJKbqe0z4bAD0nXsQAUD63orYDzr3qv0mRdoU2FwfSVg>
-    <xme:X-nYaR1L6OyWe8znTjUEXhVvPdq2RnSbcEK2SXQCKDrLxqx85niDRQ3w5UOLBg9uT
-    vVTSLWXphoaK2x-Iv1254PTEnChvnJfGt60vRZ9ZhPPa-R0Pt_Eig>
-X-ME-Received: <xmr:X-nYabURniuBBb1ZkABCZ6M5EhLCKyRahYrI9-214YAlbYWoxPv3HlntG4Fs3_1QgINXM037v77Te6S5v7hUJ9fU-pFEjbt_7-eteFBnEA2sjA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823201; x=
+	1775909601; bh=Yiqup8lHp+TIyyrOwiPXNreXnORAKftCV3z7K2c9Lw4=; b=m
+	7JcDUd6bU7Nj3UGlbLmci64OV0TtUeM1FP8EhOesi+/Upn2NnLDDYwH+7d8ITtqf
+	THCdahA6qmOatG4GdSNwxj8nviYZRciN/w3kbcum3Ye53OYTAj+8LMAZODDdcQWc
+	WJ1r8+myKNyAvq9l5n9XxhUnRtb75D4/RnpEB+IDwHZE3qYLoYYHb43MBSvwq1qw
+	vfD0w/LVelbpUZv06AZUcH7nRstWQKfLk24xVXElc/8aDgXnSaWJbhCtLk0lGv79
+	ctYw/iL6HphSYgAw25Ar2c8QjcPmlocGhjHuZv8mmDuZKwtMNsae6AuiLELaMQs+
+	sd/dxX9JDNb0syHgOEzkQ==
+X-ME-Sender: <xms:YenYaQUre7MU-pCplzSdFcf3Z8_spdkY2MTQ8-P61UBVFgUh7sIspQ>
+    <xme:YenYaX3XMUcC1bye5qtfMtbiiE3zriwyCg7aE9gT4lPrQ6G6Lk8JK-nSVF02VwIjT
+    lnbCnAbElVOws7I6r8--IhWNU0Es_nQZKrZqw9VcLi5qtMhEIEJ>
+X-ME-Received: <xmr:YenYad2R2Q0ZKW3fxL94EdsckDgm49r3zVPmuukbuRosMrLIU8o02TGLiO1VJ4WkhPwPRszOGtMzTDcubVJ6TQMi0jEHPYm0XVwzrtWXn4kJZw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleefkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:X-nYabWr3MdW-tqfqa5kq1nz7aD04Li6yyXV3_65IcziyqsoAP7pXg>
-    <xmx:X-nYaac1dwaSiY-yXbgk1hwyqKRJOvYpO2-aj-jMZHIxYburEOklgA>
-    <xmx:X-nYaUVjey3Jm9A7mjT4UEISbsLoDMB_AKb_BJ15z6-kiECIBb6M3A>
-    <xmx:X-nYaTdMKAAH20tYROpvW91ioH-zXetA5Z0fcfY631z8OGjDxsZhfQ>
-    <xmx:X-nYaZ0b-4CEbnGqAv1nMv6m6cE9iITVIviUe_ZMH65FdyM97L8ac_NI>
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:YenYaa8kzeZIZvF7GqGjO3iY4SJae7Zvfe3lksp-3u3sLA41mzbjVQ>
+    <xmx:YenYaa1ZMzIU5J6pz5hB1_d6xsp3UiHHvMaOli8hz4pSBJ6lmz-p7w>
+    <xmx:YenYaX-mvaETNL4chFsl-KzpQFq7t0q7wfaZjaCk32ohMNgYu0snDQ>
+    <xmx:YenYaau-mEN8XRWr98K4Ir2tljhOuZOXXo-sjtk29PwyW3tSllHD_Q>
+    <xmx:YenYaUeqMjinALCb8usVdvV2XgXDLffF2pEgYBVHK1MfI1iSxDq9sRXt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 08:13:18 -0400 (EDT)
+ 10 Apr 2026 08:13:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 072a07a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 12:13:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 50280460 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Apr 2026 12:13:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 10 Apr 2026 14:12:42 +0200
-Subject: [PATCH v3 12/17] odb/source-inmemory: implement
- `find_abbrev_len()` callback
+Date: Fri, 10 Apr 2026 14:12:43 +0200
+Subject: [PATCH v3 13/17] odb/source-inmemory: implement `count_objects()`
+ callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,75 +84,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-12-22fd0fad58fe@pks.im>
+Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-13-22fd0fad58fe@pks.im>
 References: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 In-Reply-To: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.1
 
-Implement the `find_abbrev_len()` callback function for the in-memory
+Implement the `count_objects()` callback function for the in-memory
 source.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-inmemory.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ odb/source-inmemory.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
-index f60eecbdbb..44d9bbedec 100644
+index 44d9bbedec..674dbcad30 100644
 --- a/odb/source-inmemory.c
 +++ b/odb/source-inmemory.c
-@@ -169,6 +169,44 @@ static int odb_source_inmemory_for_each_object(struct odb_source *source,
- 			    odb_source_inmemory_for_each_object_cb, &payload);
+@@ -207,6 +207,25 @@ static int odb_source_inmemory_find_abbrev_len(struct odb_source *source,
+ 	return ret;
  }
  
-+struct find_abbrev_len_data {
-+	const struct object_id *oid;
-+	unsigned len;
-+};
-+
-+static int find_abbrev_len_cb(const struct object_id *oid,
-+			      struct object_info *oi UNUSED,
-+			      void *cb_data)
++static int count_objects_cb(const struct object_id *oid UNUSED,
++			    struct object_info *oi UNUSED,
++			    void *cb_data)
 +{
-+	struct find_abbrev_len_data *data = cb_data;
-+	unsigned len = oid_common_prefix_hexlen(oid, data->oid);
-+	if (len != hash_algos[oid->algo].hexsz && len >= data->len)
-+		data->len = len + 1;
++	unsigned long *counter = cb_data;
++	(*counter)++;
 +	return 0;
 +}
 +
-+static int odb_source_inmemory_find_abbrev_len(struct odb_source *source,
-+					       const struct object_id *oid,
-+					       unsigned min_len,
-+					       unsigned *out)
++static int odb_source_inmemory_count_objects(struct odb_source *source,
++					     enum odb_count_objects_flags flags UNUSED,
++					     unsigned long *out)
 +{
-+	struct odb_for_each_object_options opts = {
-+		.prefix = oid,
-+		.prefix_hex_len = min_len,
-+	};
-+	struct find_abbrev_len_data data = {
-+		.oid = oid,
-+		.len = min_len,
-+	};
-+	int ret;
-+
-+	ret = odb_source_inmemory_for_each_object(source, NULL, find_abbrev_len_cb,
-+						  &data, &opts);
-+	*out = data.len;
-+
-+	return ret;
++	struct odb_for_each_object_options opts = { 0 };
++	*out = 0;
++	return odb_source_inmemory_for_each_object(source, NULL, count_objects_cb,
++						   out, &opts);
 +}
 +
  static int odb_source_inmemory_write_object(struct odb_source *source,
  					    const void *buf, unsigned long len,
  					    enum object_type type,
-@@ -275,6 +313,7 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
- 	source->base.read_object_info = odb_source_inmemory_read_object_info;
+@@ -314,6 +333,7 @@ struct odb_source_inmemory *odb_source_inmemory_new(struct object_database *odb)
  	source->base.read_object_stream = odb_source_inmemory_read_object_stream;
  	source->base.for_each_object = odb_source_inmemory_for_each_object;
-+	source->base.find_abbrev_len = odb_source_inmemory_find_abbrev_len;
+ 	source->base.find_abbrev_len = odb_source_inmemory_find_abbrev_len;
++	source->base.count_objects = odb_source_inmemory_count_objects;
  	source->base.write_object = odb_source_inmemory_write_object;
  	source->base.write_object_stream = odb_source_inmemory_write_object_stream;
  
