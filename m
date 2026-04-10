@@ -1,80 +1,80 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5138C3B9618
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE703BE155
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 12:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775823193; cv=none; b=Euw3vFQj8mjZRFqBGznoYvpUHCDgVkOf5er2nCw3na9jheZQUTVJALH+dFJXD65RW8dPu/O+g+5J5mhisiwTOrF8AtiazevCUmA64f3oDccK1ZsoRkoawtPQmA93vSvdh4EWDDjIXO1+t098wWO/6i8dGyzi48AhjN46eIeJ+fs=
+	t=1775823195; cv=none; b=jqgID3ONU+s+AsarGerQQuHW5DfOYNg8x+l37zzY09SCRCPM8raP9VFPWgpN2XApUZ5JvRm1n6DC3u5ZeWzn2PLB6rl6QX+5rEZIRJ3vNIsYvLk2UKZYMbhshk3s5DCRSvt91Ck9MC/6jcsXy9z7W6C5prS6GWVVyAMKo1XoFf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775823193; c=relaxed/simple;
-	bh=ze+GDiGYD5tY5gNeiDNREh3XquIKSvH48fM1X9j0DDA=;
+	s=arc-20240116; t=1775823195; c=relaxed/simple;
+	bh=YUbtHQCyXHukym1+61bkrNegebB3senu/f1n1+Zv8VA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ajvJXwwi1IAh9NvsnlADalbrjbU5eUbsmg4JC3XXHuO/WBeiSBGeYdDdo14YpWthPXdE8+l+MvGBx9iC20tfbB1Ltw8O36LLBmUY3reYmVbLYAF/g7ITjpKoHkLRkaMScSbFHq2XI6sHDBBgDFyLUUBC1HELJrL3Lhg/Dp8j1aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A+6oqQ/I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E6XLjaJc; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=eaf2Dfk8GigAehwc18U5s1Fa4Xs4RiggXIPYE8SdaRomdkGESSLopNLnSBLr4RdZMOhXXlcqZBQRTOwvf3/9KlWm/gcHx6Lr8CHIIKDns0Eu2idizUmJBF9P3B+Befn7Uv2G8z1cDSENngbVZb71OEYuCaoHs/tZXrm+kagJjto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jIbJKV8H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eljg0UHa; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A+6oqQ/I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E6XLjaJc"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7A7241D001DB;
-	Fri, 10 Apr 2026 08:13:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jIbJKV8H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eljg0UHa"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id E8EC21D00178;
+	Fri, 10 Apr 2026 08:13:13 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 10 Apr 2026 08:13:11 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 10 Apr 2026 08:13:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823191;
-	 x=1775909591; bh=T/LL3tWuJ0zaUL9ktHv7+6PfGLhKt2yaBWME7cqjpDg=; b=
-	A+6oqQ/IvztTZ2fZFdOZhTwi9QcTXRNVIAZaCp0w1X2rDe3GPqenZl8WAgspDoMO
-	5chqXDzxXIB8Mg0CpTimr5+1S7gU6KRTK9GIMaTuJE1u3Yd4HCV5Tl+wAcwjnfKT
-	QWVSVvRb2PeUw7nvY8tbFk3WFk0rdkcFLsWtVVXn0kw2kSHWoL/T6USkhhCMu/YK
-	BUtLVGVT5jUobK8ss27tM/Hy6DB/wNYFYhRIYngYTbfRWHXUcQJiszYKS5JJH6sn
-	CHpBtliRYwVJ7MVdV8IT6IvyHezI8W7cOMwlwd96U1CS0v/PWkhWTeMPCOeuu8lT
-	EQaHyIgg66hyHCtuqzJRhA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775823193;
+	 x=1775909593; bh=KrVOvL9T0SPXQzy8T7/4TE18+fx0r0kspEKdh4vUYOA=; b=
+	jIbJKV8HXeA4a6Xh/1ivWFgiPaYczwtFkqQOXFOyVYX+c2O+Mp3OWts2OGkHCFRC
+	5d1ZhMADUaGheFngxTTLn1WX9TOW05ss8PnKcPI1bGu6hBAgBJxZe5HKxININsD7
+	cnUuJ5CWl3f8YxYnOhjWmqQetjt5ON0O31XLXS+eaji6IFksZOpkoJEhVBaIhybu
+	aHgOkXhsRm+VHZnpUAXk4BLKw0Gum6ozTavWcKGenaU/VxklTp/B69xHoBGm7Tk/
+	2aGE5laqWbbZOQ8owqGiX/rFnguMuOrxn26XmU6KVDt6phgeTAFh+C9N7okSX99K
+	2fQC/ASA7h3EUf47c4xJwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823191; x=
-	1775909591; bh=T/LL3tWuJ0zaUL9ktHv7+6PfGLhKt2yaBWME7cqjpDg=; b=E
-	6XLjaJcr1/fUScB4jMnLyJNTz/Za5dFZwL59ou8WVXscUROa3MddzpT8khlQcGUg
-	vI5Qj6dzT9IDVczoqdwIo+NwwSdnMvVnjn/iibaLVl5ZxIuZDn6PNzLnaZOTgWEh
-	MwgvJsWh5HdrkrbCx6rXP9h5zMc2ZrvrRcf9uDZLH8YfBpIdCA3Rlu3rp8hVXCTm
-	pc/SkU8Dm15VG49500wGrB2CvHS2oJjYwk4dllPVMVfAVpMLHDwRYJPsb6KBlaaa
-	Eg93xcDYnmuckx85g4hd825p6YaRChrW9jwHEYq4pb1GjMt2zXWAw3spLyXT+8/D
-	kY9z48E/VUS4IMYXkCA5A==
-X-ME-Sender: <xms:V-nYacavad0m3_bu3lOkB5lZS2WzlDQCf9Q6MA85tPMMLmKPTVAbzw>
-    <xme:V-nYae2yRapCEoKJaRMiznrqxbNu5fBqNiDkWy1SpOxH8ukQjXC6Oa7N5Lao5-CDk
-    __1V1OjAPUE7ZMe161Pz5F46Kq9x4bzCh68OR-iYciW69PKAt_2zjo>
-X-ME-Received: <xmr:V-nYaUUlaMuk15c13w58MIBqJhmhBJnv-PHLvWdxF6SLUGNx5nPm4ind_xw0uT_sL_Ukmi1n7aEKkkEa_HorzyIKU7h5R9ZEdaN2fT9EhmviRQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775823193; x=
+	1775909593; bh=KrVOvL9T0SPXQzy8T7/4TE18+fx0r0kspEKdh4vUYOA=; b=e
+	ljg0UHa6RksB+WvrqCQm2P+wOnubryqf8WDR3h2Opt2S37F4NU6ul7dcmwLAxbXZ
+	Dpm0QzY8zN7ztT5f5rwNKc0pqcuphZCtBcguCajSJFOt7obB5wo1DKiYuCuqdVnI
+	fLFnTJ990s8ZzjYY0QqcPaAytODuH/6TCKFbUFvFZnxCHiXs3ksd89Ozn9IKaExZ
+	xGI9RNCX3ujdFqFMazxbKZmhLzrWswd+NrWzEXPKcRq+ycedHQutJ4LWhXWjD2Oo
+	a9KZuMonBxNiFJMJxK5UQS8znOPG5b+spTZ9u7SQ0aALjBz7VucLXmMDCTqb5foz
+	GkvyP4GwUgScQdLXKLYdw==
+X-ME-Sender: <xms:WenYaSybYSA0WPlXOjl8tRlIxw8i95lu7Bnnvd9r1J3rGRnUBjxSXQ>
+    <xme:WenYaVuRWmGk7hYK7yw47DQ9O05RdOzaSH1WJL8Z4K8UlM8Ms3b2wJaPlAXYJQVeM
+    r_lElJiUlk6mWUNIwF7Y169tGVCMDxm3ofym6brJOT5d8BAuER0>
+X-ME-Received: <xmr:WenYaRuuifDxwX925K0UajhIW2qM_xcvppv59nH5_PdrAXaKj_QXdwoMeFh5xdc_9gvZaS1c_EWoZ3P8I3SHNfGcq4AS854FIpDhhDm4iziqGA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvleefkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepieenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:V-nYaQVgOkeqP7VAwr9qsCOomwEXNDzZVDZI2KuAvZyG7x42Xo-3Wg>
-    <xmx:V-nYabfbHAtNLo-DlMKLbB9VYtgBWoXWpTjnXnXHKj3b6ViOXfTw5w>
-    <xmx:V-nYaRV49fHuAymLHHSelDZycpYRO2NPP0x9R5_pOuLSw8rVm82gPA>
-    <xmx:V-nYaccIluYxISZBZteoM-3KuSMw3Y6qrFIjkhCxPrkH_59Hfg1KUQ>
-    <xmx:V-nYaW1naqhG-0wyz8pKHMSNgrWD6GiZhY6ijFBn9Ll43k2bDWIj-KzC>
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:WenYaSPnufDrJXTBkKIpbKzDvBBqnSqxZBekCL2zHHQqWwP-ttnKvw>
+    <xmx:WenYaX1Xdl3bYOvjP-b8O4JDkmOP1qik8HVrC10ushSi5F5m1ysTwQ>
+    <xmx:WenYaWMPyzUPymMz30Jo3zfenpdRyqyd7-9Ri1SdRYP19f9Br-NWqQ>
+    <xmx:WenYaf2IX86er2Qmrz0yknsrtGnBsP2IYsEVs20XC8ZDg4YUAV_CvQ>
+    <xmx:WenYaVtbrjd9F-Ser2bb79DfU_y3a_swGLGG9_PdnRq4vbUjfZkezZ6m>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 08:13:10 -0400 (EDT)
+ 10 Apr 2026 08:13:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7ea0b36e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 10 Apr 2026 12:13:09 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cde4d92e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Apr 2026 12:13:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 10 Apr 2026 14:12:39 +0200
-Subject: [PATCH v3 09/17] oidtree: add ability to store data
+Date: Fri, 10 Apr 2026 14:12:40 +0200
+Subject: [PATCH v3 10/17] odb/source-inmemory: convert to use oidtree
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,242 +83,189 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-9-22fd0fad58fe@pks.im>
+Message-Id: <20260410-b4-pks-odb-source-inmemory-v3-10-22fd0fad58fe@pks.im>
 References: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 In-Reply-To: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.1
 
-The oidtree data structure is currently only used to store object IDs,
-without any associated data. So consequently, it can only really be used
-to track which object IDs exist, and we can use the tree structure to
-efficiently operate on OID prefixes.
+The in-memory source stores its objects in a simple array that we grow as
+needed. This has a couple of downsides:
 
-But there are valid use cases where we want to both:
+  - The object lookup is O(n). This doesn't matter in practice because
+    we only store a small number of objects.
 
-  - Store object IDs in a sorted order.
+  - We don't have an easy way to iterate over all objects in
+    lexicographic order.
 
-  - Associated arbitrary data with them.
+  - We don't have an easy way to compute unique object ID prefixes.
 
-Refactor the oidtree interface so that it allows us to store arbitrary
-payloads within the respective nodes. This will be used in the next
-commit.
+Refactor the code to use an oidtree instead. This is the same data
+structure used by our loose object source, and thus it means we get a
+bunch of functionality for free.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- loose.c                  |  2 +-
- object-file.c            |  3 ++-
- oidtree.c                | 37 ++++++++++++++++++++++++++++++++-----
- oidtree.h                | 12 ++++++++++--
- t/unit-tests/u-oidtree.c | 26 +++++++++++++++++++++++---
- 5 files changed, 68 insertions(+), 12 deletions(-)
+ odb/source-inmemory.c | 72 +++++++++++++++++++++++++++++++++++++--------------
+ odb/source-inmemory.h | 13 ++--------
+ 2 files changed, 54 insertions(+), 31 deletions(-)
 
-diff --git a/loose.c b/loose.c
-index 07333be696..f7a3dd1a72 100644
---- a/loose.c
-+++ b/loose.c
-@@ -57,7 +57,7 @@ static int insert_loose_map(struct odb_source *source,
- 	inserted |= insert_oid_pair(map->to_compat, oid, compat_oid);
- 	inserted |= insert_oid_pair(map->to_storage, compat_oid, oid);
- 	if (inserted)
--		oidtree_insert(files->loose->cache, compat_oid);
-+		oidtree_insert(files->loose->cache, compat_oid, NULL);
+diff --git a/odb/source-inmemory.c b/odb/source-inmemory.c
+index d05a13df45..3b51cc7fef 100644
+--- a/odb/source-inmemory.c
++++ b/odb/source-inmemory.c
+@@ -3,20 +3,29 @@
+ #include "odb.h"
+ #include "odb/source-inmemory.h"
+ #include "odb/streaming.h"
++#include "oidtree.h"
+ #include "repository.h"
  
- 	return inserted;
- }
-diff --git a/object-file.c b/object-file.c
-index 3e70e5d668..d04ab57253 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1857,6 +1857,7 @@ static int for_each_object_wrapper_cb(const struct object_id *oid,
- }
- 
- static int for_each_prefixed_object_wrapper_cb(const struct object_id *oid,
-+					       void *node_data UNUSED,
- 					       void *cb_data)
- {
- 	struct for_each_object_wrapper_data *data = cb_data;
-@@ -2002,7 +2003,7 @@ static int append_loose_object(const struct object_id *oid,
- 			       const char *path UNUSED,
- 			       void *data)
- {
--	oidtree_insert(data, oid);
-+	oidtree_insert(data, oid, NULL);
- 	return 0;
- }
- 
-diff --git a/oidtree.c b/oidtree.c
-index 117649753f..e43f18026e 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -9,6 +9,7 @@
- struct oidtree_node {
- 	struct cb_node base;
- 	struct object_id key;
-+	void *data;
- };
- 
- void oidtree_init(struct oidtree *ot)
-@@ -25,15 +26,22 @@ void oidtree_clear(struct oidtree *ot)
- 	}
- }
- 
--void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
-+struct oidtree_data {
-+	struct object_id oid;
+-static const struct cached_object *find_cached_object(struct odb_source_inmemory *source,
+-						      const struct object_id *oid)
++struct inmemory_object {
++	enum object_type type;
++	const void *buf;
++	unsigned long size;
 +};
 +
-+void oidtree_insert(struct oidtree *ot, const struct object_id *oid,
-+		    void *data)
++static const struct inmemory_object *find_cached_object(struct odb_source_inmemory *source,
++							const struct object_id *oid)
  {
- 	struct oidtree_node *on;
-+	struct cb_node *node;
+-	static const struct cached_object empty_tree = {
++	static const struct inmemory_object empty_tree = {
+ 		.type = OBJ_TREE,
+ 		.buf = "",
+ 	};
+-	const struct cached_object_entry *co = source->objects;
++	const struct inmemory_object *object;
  
- 	if (!oid->algo)
- 		BUG("oidtree_insert requires oid->algo");
- 
- 	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on));
- 	oidcpy(&on->key, oid);
-+	on->data = data;
- 
- 	/*
- 	 * n.b. Current callers won't get us duplicates, here.  If a
-@@ -41,13 +49,19 @@ void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
- 	 * that won't be freed until oidtree_clear.  Currently it's not
- 	 * worth maintaining a free list
- 	 */
--	cb_insert(&ot->tree, &on->base, sizeof(*oid));
-+	node = cb_insert(&ot->tree, &on->base, sizeof(*oid));
-+	if (node) {
-+		struct oidtree_node *preexisting = container_of(node, struct oidtree_node, base);
-+		preexisting->data = data;
+-	for (size_t i = 0; i < source->objects_nr; i++, co++)
+-		if (oideq(&co->oid, oid))
+-			return &co->value;
++	if (source->objects) {
++		object = oidtree_get(source->objects, oid);
++		if (object)
++			return object;
 +	}
- }
  
--bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
-+static struct oidtree_node *oidtree_lookup(struct oidtree *ot,
-+					   const struct object_id *oid)
+ 	if (oid->algo && oideq(oid, hash_algos[oid->algo].empty_tree))
+ 		return &empty_tree;
+@@ -30,7 +39,7 @@ static int odb_source_inmemory_read_object_info(struct odb_source *source,
+ 						enum object_info_flags flags UNUSED)
  {
- 	struct object_id k;
- 	size_t klen = sizeof(k);
-+	struct cb_node *node;
+ 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
+-	const struct cached_object *object;
++	const struct inmemory_object *object;
  
- 	oidcpy(&k, oid);
+ 	object = find_cached_object(inmemory, oid);
+ 	if (!object)
+@@ -88,7 +97,7 @@ static int odb_source_inmemory_read_object_stream(struct odb_read_stream **out,
+ {
+ 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
+ 	struct odb_read_stream_inmemory *stream;
+-	const struct cached_object *object;
++	const struct inmemory_object *object;
  
-@@ -58,7 +72,20 @@ bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
- 	klen += BUILD_ASSERT_OR_ZERO(offsetof(struct object_id, hash) <
- 				offsetof(struct object_id, algo));
+ 	object = find_cached_object(inmemory, oid);
+ 	if (!object)
+@@ -113,17 +122,23 @@ static int odb_source_inmemory_write_object(struct odb_source *source,
+ 					    enum odb_write_object_flags flags UNUSED)
+ {
+ 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
+-	struct cached_object_entry *object;
++	struct inmemory_object *object;
  
--	return !!cb_lookup(&ot->tree, (const uint8_t *)&k, klen);
-+	node = cb_lookup(&ot->tree, (const uint8_t *)&k, klen);
-+	return node ? container_of(node, struct oidtree_node, base) : NULL;
-+}
+ 	hash_object_file(source->odb->repo->hash_algo, buf, len, type, oid);
+ 
+-	ALLOC_GROW(inmemory->objects, inmemory->objects_nr + 1,
+-		   inmemory->objects_alloc);
+-	object = &inmemory->objects[inmemory->objects_nr++];
+-	object->value.size = len;
+-	object->value.type = type;
+-	object->value.buf = xmemdupz(buf, len);
+-	oidcpy(&object->oid, oid);
++	if (!inmemory->objects) {
++		CALLOC_ARRAY(inmemory->objects, 1);
++		oidtree_init(inmemory->objects);
++	} else if (oidtree_contains(inmemory->objects, oid)) {
++		return 0;
++	}
 +
-+bool oidtree_contains(struct oidtree *ot, const struct object_id *oid)
-+{
-+	struct oidtree_node *node = oidtree_lookup(ot, oid);
-+	return node ? 1 : 0;
-+}
++	CALLOC_ARRAY(object, 1);
++	object->size = len;
++	object->type = type;
++	object->buf = xmemdupz(buf, len);
 +
-+void *oidtree_get(struct oidtree *ot, const struct object_id *oid)
-+{
-+	struct oidtree_node *node = oidtree_lookup(ot, oid);
-+	return node ? node->data : NULL;
- }
++	oidtree_insert(inmemory->objects, oid, object);
  
- struct oidtree_each_data {
-@@ -82,7 +109,7 @@ static int iter(struct cb_node *n, void *cb_data)
- 			return 0;
- 	}
- 
--	return data->cb(&node->key, data->cb_data);
-+	return data->cb(&node->key, node->data, data->cb_data);
- }
- 
- int oidtree_each(struct oidtree *ot, const struct object_id *prefix,
-diff --git a/oidtree.h b/oidtree.h
-index 2b7bad2e60..baa5a436ea 100644
---- a/oidtree.h
-+++ b/oidtree.h
-@@ -29,18 +29,26 @@ void oidtree_init(struct oidtree *ot);
-  */
- void oidtree_clear(struct oidtree *ot);
- 
--/* Insert the object ID into the tree. */
--void oidtree_insert(struct oidtree *ot, const struct object_id *oid);
-+/*
-+ * Insert the object ID into the tree and store the given pointer alongside
-+ * with it. The data pointer of any preexisting entry will be overwritten.
-+ */
-+void oidtree_insert(struct oidtree *ot, const struct object_id *oid,
-+		    void *data);
- 
- /* Check whether the tree contains the given object ID. */
- bool oidtree_contains(struct oidtree *ot, const struct object_id *oid);
- 
-+/* Get the payload stored with the given object ID. */
-+void *oidtree_get(struct oidtree *ot, const struct object_id *oid);
-+
- /*
-  * Callback function used for `oidtree_each()`. Returning a non-zero exit code
-  * will cause iteration to stop. The exit code will be propagated to the caller
-  * of `oidtree_each()`.
-  */
- typedef int (*oidtree_each_cb)(const struct object_id *oid,
-+			       void *node_data,
- 			       void *cb_data);
- 
- /*
-diff --git a/t/unit-tests/u-oidtree.c b/t/unit-tests/u-oidtree.c
-index d4d05c7dc3..f0d5ebb733 100644
---- a/t/unit-tests/u-oidtree.c
-+++ b/t/unit-tests/u-oidtree.c
-@@ -19,7 +19,7 @@ static int fill_tree_loc(struct oidtree *ot, const char *hexes[], size_t n)
- 	for (size_t i = 0; i < n; i++) {
- 		struct object_id oid;
- 		cl_parse_any_oid(hexes[i], &oid);
--		oidtree_insert(ot, &oid);
-+		oidtree_insert(ot, &oid, NULL);
- 	}
  	return 0;
  }
-@@ -38,9 +38,9 @@ struct expected_hex_iter {
- 	const char *query;
+@@ -167,12 +182,29 @@ static int odb_source_inmemory_write_object_stream(struct odb_source *source,
+ 	return ret;
+ }
+ 
++static int inmemory_object_free(const struct object_id *oid UNUSED,
++				void *node_data,
++				void *cb_data UNUSED)
++{
++	struct inmemory_object *object = node_data;
++	free((void *) object->buf);
++	free(object);
++	return 0;
++}
++
+ static void odb_source_inmemory_free(struct odb_source *source)
+ {
+ 	struct odb_source_inmemory *inmemory = odb_source_inmemory_downcast(source);
+-	for (size_t i = 0; i < inmemory->objects_nr; i++)
+-		free((char *) inmemory->objects[i].value.buf);
+-	free(inmemory->objects);
++
++	if (inmemory->objects) {
++		struct object_id null_oid = { 0 };
++
++		oidtree_each(inmemory->objects, &null_oid, 0,
++			     inmemory_object_free, NULL);
++		oidtree_clear(inmemory->objects);
++		free(inmemory->objects);
++	}
++
+ 	free(inmemory->base.path);
+ 	free(inmemory);
+ }
+diff --git a/odb/source-inmemory.h b/odb/source-inmemory.h
+index d1b05a3996..a88fc2e320 100644
+--- a/odb/source-inmemory.h
++++ b/odb/source-inmemory.h
+@@ -3,14 +3,7 @@
+ 
+ #include "odb/source.h"
+ 
+-struct cached_object_entry {
+-	struct object_id oid;
+-	struct cached_object {
+-		enum object_type type;
+-		const void *buf;
+-		unsigned long size;
+-	} value;
+-};
++struct oidtree;
+ 
+ /*
+  * An in-memory source that you can write objects to that shall be made
+@@ -20,9 +13,7 @@ struct cached_object_entry {
+  */
+ struct odb_source_inmemory {
+ 	struct odb_source base;
+-
+-	struct cached_object_entry *objects;
+-	size_t objects_nr, objects_alloc;
++	struct oidtree *objects;
  };
  
--static int check_each_cb(const struct object_id *oid, void *data)
-+static int check_each_cb(const struct object_id *oid, void *node_data UNUSED, void *cb_data)
- {
--	struct expected_hex_iter *hex_iter = data;
-+	struct expected_hex_iter *hex_iter = cb_data;
- 	struct object_id expected;
- 
- 	cl_assert(hex_iter->i < hex_iter->expected_hexes.nr);
-@@ -105,3 +105,23 @@ void test_oidtree__each(void)
- 	check_each(&ot, "32100", "321", NULL);
- 	check_each(&ot, "32", "320", "321", NULL);
- }
-+
-+void test_oidtree__insert_overwrites_data(void)
-+{
-+	struct object_id oid;
-+	struct oidtree ot;
-+	int a, b;
-+
-+	cl_parse_any_oid("1", &oid);
-+
-+	oidtree_init(&ot);
-+
-+	oidtree_insert(&ot, &oid, NULL);
-+	cl_assert_equal_p(oidtree_get(&ot, &oid), NULL);
-+	oidtree_insert(&ot, &oid, &a);
-+	cl_assert_equal_p(oidtree_get(&ot, &oid), &a);
-+	oidtree_insert(&ot, &oid, &b);
-+	cl_assert_equal_p(oidtree_get(&ot, &oid), &b);
-+
-+	oidtree_clear(&ot);
-+}
+ /* Create a new in-memory object database source. */
 
 -- 
 2.54.0.rc0.707.g0fbf48f4d6.dirty
