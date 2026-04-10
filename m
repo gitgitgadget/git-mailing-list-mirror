@@ -1,122 +1,118 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A927F3C8736
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53C23D9DA9
+	for <git@vger.kernel.org>; Fri, 10 Apr 2026 15:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775833362; cv=none; b=RhFTRUJU5b+9qz1iRhVzbD9EXNpPnLvnF4LdYfPBT8YLAXazUB49exVm6+AArY1BG6rLO56pcvTVO43/lHxWOUlwNSMwC3K/AG1qI14ps84Ejjr6p9+fcWKgRb402JZ1DMRIcR00OfO2cerqRB/DsoIk8yyO3q0oBdjjQRrmBL8=
+	t=1775833379; cv=none; b=B1cyToEj4HnOQrVfd9UrA3HdzvLkY1mwcZ7x1/1zmytIXCKF+y5YUbhc88XieR+JB1K4JGD/2nlrX4KqwnYwagyy8PSkZ+8njH4oDv/A/bgwRD5mbJ+YvfB7462hGUAa58tS5hLVWOqOSWt0tYjnkxVP2cAFCOfOWHxq8g9j78E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775833362; c=relaxed/simple;
-	bh=wHG1rEo5EGGfQAj9w7ID5CnG13NxbBr8aFfDBi0xj58=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D6wFVT6KNulpS8MoIHuTZOQZz3s7AOfWGeD9Z9uAC6DMvFej8Al09EF1kKFEVP2owLQHVlNzp4svQI+Oy0GQ269ZQ2QSjOSvLHiLsl13XyYiB7/axuBuhlcLX3aQZTbioxJUvy4lbvheFMOC5SUhG7XcIE1YwpTH81EqzO/Hhoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HEUKlkwO; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1775833379; c=relaxed/simple;
+	bh=X7Qk9IXa4khKPdQtG5CpcIJ0omzDk6U5L1oiHEAyQ9Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TuXB1c77dhJa1x9Ws7Je/Q9ht9dcA2Xu01BvlWD1nXmhpwseJU/T7QUGUAriRrnBlqXK34d0oL6Gb3E8o55jQB45iGUshlG5wpYmaUoEn0gTy4v1QhwiPgdYDFqRJpP572UjkPwQg5IQNPP/bqOfarzeB3/sSCmQ4zeM/LCJJdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qUWLwdKP; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HEUKlkwO"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-43d572f7437so1490206f8f.1
-        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:02:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qUWLwdKP"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-682d981b025so1273353eaf.3
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 08:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775833359; x=1776438159; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lCT8rBX+ICK7q8SDjaMogUbYcOcdYJWGbM+9eBWCmX0=;
-        b=HEUKlkwOoPesGCLeSroOJd8J8gp6IqLok1QzW/1DkurKSnnkeMP91VKFspWFFFqolu
-         +gN6unt+GCD/ehBkVioMTn1MWaFBU/8JLYfDVri7pa6IAnjplnMLboOT4JECFiKfIhPu
-         GtA/xp/U+YjKZA82WrO2ZsRP18zZzr+XZwiNbFZ5BB2oexIrotrWJDW4vIMXCSsOsLS0
-         KS3EzAYli29LOEybYVNH+osEtDKpPKirDSR8JX6KD+s6Y80WkmCIuDABs+andDFcVoJs
-         PGkzQ9s6Fya6KxMZq7LKyGMBKSdzKtjVPczYCrgEU/6NK5fYkblSO7yfp7GsNzlL+4gF
-         O/MQ==
+        d=gmail.com; s=20251104; t=1775833376; x=1776438176; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iOznAv4cKg76GGEEqQr/jTzrWZBL4FIQbYmm1nypbKQ=;
+        b=qUWLwdKPNP9m+YlevpM1sUklQN5RPKfT9Y1jEyGXr7lV72K2ifWG3EHCJ08NdwyvpC
+         COXflhEG30LVa73msm/Kr7q1wtnc7xL183Fc66TropoZMTlUoDJEkiFzt16L0pdI+lkq
+         ll6CcgloIgEZQF7Ngu5mBpIvd6sbT8yHV/Mtm0VdPLyCkIiE8YltL3l0L+GZJ9twmAKi
+         HidQpYzGIRhq9C5xFBXzkzI/kRoEU9YAtWTRcopBJ6ZXTKfXD20jpKQBDeB9QV12WHEB
+         ptvH6aDuMxsJGVhazuu/G/9hepX93MOyhP+rW7ngqWOlDGaijhxPDRQVfTZBlP/ytOmd
+         n8yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775833359; x=1776438159;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lCT8rBX+ICK7q8SDjaMogUbYcOcdYJWGbM+9eBWCmX0=;
-        b=AsVga+YBoa4yUzyMy3JTXAStQoW+KL1bmX5U10lqwg/WddOpu6DIAYkqPAgCSaYhe9
-         IJa3bFsksPQGrgcDHXmvXt48LB+DX5/LqW8j3rEc99NHoGLtALJ+Mc1uYc83Uxlpj6tg
-         bQr4G05eZ0hsCS1b6nEIxkUU5E8r1E8ihCOxyODiFgkkSFaRO9730hgIJVLVedz/yUz2
-         thyupak+HSUaqL+X9rOKlw9OIb1wWyOlEOu4N/j8+eLcN68pY0o6DaK7lMlxvwyTvR4Q
-         cBhaqSPNTLkAnKhjgS6qoQm0M1Imq13YL0y3Dcxz2gFc4dHVY6OdMNZkpSg8+dLPoBSi
-         PYOQ==
-X-Gm-Message-State: AOJu0YwsUuO5Qmqe6BU1LyL17X/Be26YNO2/+L1mUukSf2ox8xNFgCZK
-	FpFPIUgH8Oi/uxLOtcf/ALtnbBLop/oo0V2FN5lUdNiM/WT0KJGMbbJogGDZ6OYNy8U=
-X-Gm-Gg: AeBDietOvC94EUBkNT/klQRaTTuPngsZM39gXjumh3WjXYZ6c/qZDfAY4c3tJUyC294
-	5Y67HvPeWizoY+pgQ8I6J9CZ/NJk0fx/fnzigUBBbgQCEnU2+f18DCPnmQPOwWI4Qks1f2t4Eel
-	X2A4w2K8H4RAnfLI5tbbi7IHXegY7rM6XryDx1OB4A+clu0FBwIVUye84W3MKFHXG7A6rm1dtxV
-	WZKieD3Td8z9HRLt2OIVz6dCtkkhpJhgrS/cVw79IHpZ7k465gKAMXV5fdiy3YbkPjFwqLdyy8K
-	JONhwJkySwNoDWx3wjkUoBoSf/NqJCRByDN2xgZ+s+GYGGAWdVESXWgGK7Hq7jtpN39jxbnwXEb
-	5ytYgFu6sygeMqi56DXLrtIUccV8mT8iMWSzjQ6gO1hlAuUrikeBZZmsn+1K603YhLpxLg0EBmL
-	VzwKLeFeVIvjA/HauV9+Y7uJIIOy/bn9WEj6aqVIW8s7Ujg3xUXg8wrV/MK+eeIT9MRlawmaUDY
-	3FwZrOlofnHL1kIUGE=
-X-Received: by 2002:a05:6000:401e:b0:43b:9227:bc6e with SMTP id ffacd0b85a97d-43d642c778fmr5475024f8f.24.1775833358626;
-        Fri, 10 Apr 2026 08:02:38 -0700 (PDT)
-Received: from lorenzo-VM (host-79-19-37-238.retail.telecomitalia.it. [79.19.37.238])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e50015sm8740013f8f.27.2026.04.10.08.02.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Apr 2026 08:02:37 -0700 (PDT)
-Date: Fri, 10 Apr 2026 17:02:35 +0200
-From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-	Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Tian Yuchen <cat@malon.dev>
-Subject: [GSoC PATCH v4 1/5] pack-write: add explanation to promisor file
- content
-Message-ID: <b4990fcdf0759dc8f0e95b497daee54e08b09e0d.1775832056.git.lorenzo.pegorari2002@gmail.com>
-References: <cover.1775431990.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
+        d=1e100.net; s=20251104; t=1775833376; x=1776438176;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iOznAv4cKg76GGEEqQr/jTzrWZBL4FIQbYmm1nypbKQ=;
+        b=PjcmduSO0WM0fSe+wZnl/yt+cHdkSE81bbZYk/2bWQGAvJS+kQ5H4ClkmJ1ReFFxSN
+         2JidiLS5/gW+r7nSZY7uhpZFNMsgqOYgGL8R5VBFj46jO93bu4GiiZe3g20qgJ0q7B68
+         qUEz9FCo9f6RBNjrBIcGpuFweJ5SQdqHpa8Sa9l7c38ELln9IhlSBOfmQjY9yhoMMmES
+         bmnj0ex9lBDMQsrSgwuE3vIBWgEct9TgMo3zeQ6QYR3zomApJhMCa/sVVQEw0VjhGMXt
+         +VD+rMgEOx+ibiuxfmn/sCbGh4uuIEU/wzhHdApJr38SaZEjvogz1zvMiJaLVRC7Eo3/
+         oPLg==
+X-Forwarded-Encrypted: i=1; AJvYcCWyOQjaXJ1ig7y3hKcihoIqoBjitpSfO7pAeb28fXaAbqahEpYWvqob+L9yYNM4EdrVWtE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynldTRxwGA5H5V4IEXEHN3idZYCkFYYRvV7WrCh1DG8Gx7SrFK
+	7te0bTI9fNW7vo9rzWBfTIK6uYDcs1XadquwhVOeVgDlujUpWRIIvwy2
+X-Gm-Gg: AeBDies+PkAz/jNt3vZvePgD8cGlsaVwsOehfSqc/jFz3Rugamb5Mt57TbhyXE/Es+T
+	wrhKslH4pdioSNR2rrYf3Ohib7WpObJDTTW+nOfWQnxBj/ASoQeFMoFOoxfbVJ/THXGmU8mbLSR
+	1M7r/DiFTVy7+wewQMojg+CMkNNFHTq3jzUD5d0fg1xN7og3N4qHrgEhdHwFzREjGgi1/4sk4Bv
+	6NhOaNGXQiyU2za5jrqfx2YVNganzoTSYR9g927HrsOvzQ61986f7uwqGPTQnqt6pAmIcxx4MJk
+	cmSmvsGK6XS1UfCjp+CTzZwIoRNeTJSymn7xIDe4BwUf0XFniR1v8jtt+QF0PoRFk1u8nYMzo51
+	ooByw9LJ9HCSYzc2SNfy6aM73idmNNKm1C7UMk0wN7Av9pglVsTx44FYRa3+IPA9UhMYIUXMmSp
+	UFMUsMHTOitwUtxHpiT+vEscv5GK4i7nfrp45ItKOn1Ljkqf4x3yQ08DCUcng0w1YmkOubbDnMx
+	CC6wgyd
+X-Received: by 2002:a05:6820:1903:b0:67e:42b0:b35e with SMTP id 006d021491bc7-68be5e56d44mr1769740eaf.4.1775833365422;
+        Fri, 10 Apr 2026 08:02:45 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50dd54dd851sm23225141cf.16.2026.04.10.08.02.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Apr 2026 08:02:39 -0700 (PDT)
+Message-ID: <00b7a590-28db-409c-bfa0-27327e6aefa7@gmail.com>
+Date: Fri, 10 Apr 2026 11:02:33 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re*: [PATCH v2 0/4] Enable Rust by default
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>, Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20260409224434.1861422-1-sandals@crustytoothpaste.net>
+ <4efc4133-3726-4b9d-8f06-03c07d48af99@gmail.com>
+ <xmqqa4varhod.fsf_-_@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqa4varhod.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-In the entire codebase there is no explanation as to why the ".promisor"
-files may contain the ref names (and their associated hashes) that were
-fetched at the time the corresponding packfile was downloaded.
+On 4/10/2026 10:52 AM, Junio C Hamano wrote:
+> Subject: rust: we are way beyond 2.53
+> 
+> Earlier we timelined that we'd tune our build procedures to build
+> with Rust by default in Git 2.53, but we are already in prerelease
+> freeze for 2.54 now.  Update the BreakingChanges document to delay
+> it until Git 2.55 (slated for the end of June 2026).
+> 
+> Noticed-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Helped-by: Derrick Stolee <stolee@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/BreakingChanges.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git c/Documentation/BreakingChanges.adoc w/Documentation/BreakingChanges.adoc
+> index f814450d2f..af59c43f42 100644
+> --- c/Documentation/BreakingChanges.adoc
+> +++ w/Documentation/BreakingChanges.adoc
+> @@ -190,7 +190,7 @@ milestones for the introduction of Rust:
+>  1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
+>     disabled in our Makefile so that the project can sort out the initial
+>     infrastructure.
+> -2. In Git 2.53, both build systems will default-enable support for Rust.
+> +2. In Git 2.55, both build systems will default-enable support for Rust.
+>     Consequently, builds will break by default if Rust is not available on the
+>     build host. The use of Rust can still be explicitly disabled via build
+>     flags.
 
-As explained in the log message of commit 5374a290 (fetch-pack: write
-fetched refs to .promisor, 2019-10-14), where this loop originally came
-from, these ref names (and associated hashes) are not used for anything
-in the production, but are solely there to help debugging.
+This patch LGTM and safe to add within the release window.
 
-Explain this in a new comment.
-
-Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
----
- pack-write.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/pack-write.c b/pack-write.c
-index 83eaf88541..b8ab9510ff 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -603,6 +603,15 @@ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_
- 	int i, err;
- 	FILE *output = xfopen(promisor_name, "w");
- 
-+	/*
-+	 * Write in the .promisor file the ref names and associated hashes,
-+	 * obtained by fetch-pack, at the point of generation of the
-+	 * corresponding packfile. These pieces of info are only used to make
-+	 * it easier to debug issues with partial clones, as we can identify
-+	 * what refs (and their associated hashes) were fetched at the time
-+	 * the packfile was downloaded, and if necessary, compare those hashes
-+	 * against what the promisor remote reports now.
-+	 */
- 	for (i = 0; i < nr_sought; i++)
- 		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
- 			sought[i]->name);
--- 
-2.53.0.585.ge25071d955
+Thanks,
+-Stolee
 
