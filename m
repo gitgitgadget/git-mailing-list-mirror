@@ -1,116 +1,91 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AB7EEBB
-	for <git@vger.kernel.org>; Sat, 11 Apr 2026 18:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6188427470
+	for <git@vger.kernel.org>; Sat, 11 Apr 2026 18:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775931959; cv=none; b=t9fQ8NEO21mQwgGs2Vzq8yCj2ppgee+BdGJc2nkVYfwzsaLB5J0ntyb1ouRI2FoxxpKGs6+JDBshctbdUcMYjO63sfX1v9aVoHT6Gha/C7OysV6Hwj6f0NczWTQTpEXWj95ehTuUh0znVdHSOdNcDgCZMxpNjk6d5PYGaz35P3s=
+	t=1775932714; cv=none; b=Rkzw49YLSIq9c1OIJzDGYyq+kTT3yTJ34hDqA6D7R/hlF5jD96WZp2zEr+CrXM5vzC1vFazxKJeSabHuS15FCjdMtkRllWa34uj4SAqc3kPvYF2LVAAZIL1A4Z8UdOz1S+DyRXTU05Bg/dvw5KBeWPaQNGMjA6KBRuMHUiGL9jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775931959; c=relaxed/simple;
-	bh=FfYWplnxb1Ewan6k+SgEYlvV9/ekdZYEcrAtGGdbYSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MYhzfkgJuce3+U7IxYCfh9wy21ZItWI0sipUVI+2DjYQmaUq7JDekGIeN5eIeeeGluFFy11iTdq06FSgaDOwEVbxFAKJkqUEd7bTMyBkkLPyGvqPs9dtD/0BmwE7WbIYKm6rVTFBwW2nhW6Ty6JLIxhiiY8FcxzemFJ5Mk9nQUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=vvvFnYhV; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=2F9dnfBz; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1775932714; c=relaxed/simple;
+	bh=qKaTwHyodjiggrGgXBYQmt0y4rYDEixcKnA0wuAyv9U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JnwEPO4uUD2M1YsytrW1kwCoS7Y8KyIQKki0n0+3YgNt+mszqxuyTGn378kISi1Lmw/qmVzg3RglbA1A5dxFN2kGsdZqACKeINzMtwYeyVwypgkfHYLuQan7Tn+HkvK57kGAOyooQbPq3fGWR+8pTbuerFCbBmLFZEVcq5Zk7Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YCjKW2C5; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="vvvFnYhV";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="2F9dnfBz"
-DKIM-Signature: a=rsa-sha256; b=vvvFnYhVQzWXBrGCKwQNZQEYftcHrZUfomPpQSq3R9igog22KFhMmto/kHIihVbrdOLPs2QS57Ndn5DUDEWByundoI2Xxt6WkmE+ctTaT4tbdSah/IW+hwp1jFYh36yNRvuVIQCqXc+vLkP6SYoMnnvzSKJvtW+aZrY8u/vYIGmxpcyk6UpUSxxZIvWEDczfBhHvLBflyGlk2cc7j492kzxmTU2L+7pP/foM6+pIal/G45aKdUS6ULyxijRN3bizd/X9uwWKmDtKhFD/7joVYZse8j/nol7OGrJYLJ/BCtbdT/R4h4sP7MgrUQyA13b3va4QPLinIFnYdAFOkMFuQg==; s=purelymail3; d=malon.dev; v=1; bh=FfYWplnxb1Ewan6k+SgEYlvV9/ekdZYEcrAtGGdbYSw=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=2F9dnfBzcxIQNFeNxFWaI++Q90fpfUJZ1+fuY8XX4MosUZ7WjU3QyZTBLqlumXYZqOrOmkPlwLiSU5Pp/YakEoRrdp9qhZwdLIlsWa1G2shr42kJtzJshnplDEiu1beD1wnSB8A8mKTM2/Z8Qh0mkBXWIPS31kweZrNvsmUyq1M52C1Qu+KwEYIjiJmrrKefjRbU8f5bCXvc8szsNBLNttFXBUGi77WPp7Pr54U0P2KTKXDHJCLX1/lYqpeUwYJs8mnbWChsa1golZancPQpHKvu7DiNVqyZsCMScSWwDHJTgeqwMoCF7q5bNyH5hMBdrZurWMsDNUS2oSCUK9foLA==; s=purelymail3; d=purelymail.com; v=1; bh=FfYWplnxb1Ewan6k+SgEYlvV9/ekdZYEcrAtGGdbYSw=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 388746152;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 11 Apr 2026 18:25:55 +0000 (UTC)
-Message-ID: <641a7a4c-f836-4811-bbeb-ef534716c3a9@malon.dev>
-Date: Sun, 12 Apr 2026 02:25:50 +0800
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YCjKW2C5"
+Received: (qmail 317676 invoked by uid 106); 11 Apr 2026 18:38:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=qKaTwHyodjiggrGgXBYQmt0y4rYDEixcKnA0wuAyv9U=; b=YCjKW2C5NEAoBD0oqInV3uoRofcHjO0LP/0vZjKvGcRKRAtkBZe9CYDQ2NWHVCKZGgwaV02ve2OmDaFeSdbr2SPkmTN8wyJJ4Q9IWsDMILM+zLqNQzxc0RFu0SGLKB/A+xxC5Bbq4XMCAAS1K09PNkwsUZFIZmHSXIqHHzb0QW+Ihp7lxclCZ5YYfYnLWf5HYKtQ5kk5LYId/tFd/qhl88pfjQ4ntG+jPsP2XpGXTK+ehLKy/beoWnLjg9+aLOSlu8KAbZQlA844c6D72uwQ/LflGAo0OmoqZY34XBRmEdSWVmlln7TCEYvewyLQkQ4rPsdP5/WZM9YvYGbDqjKziA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Apr 2026 18:38:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 524851 invoked by uid 111); 11 Apr 2026 18:38:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Apr 2026 14:38:23 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 11 Apr 2026 14:38:23 -0400
+From: Jeff King <peff@peff.net>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+	Chris Torek <chris.torek@gmail.com>,
+	Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v9 4/4] checkout: -m (--merge) uses autostash when
+ switching branches
+Message-ID: <20260411183823.GA672575@coredump.intra.peff.net>
+References: <pull.2234.v8.git.git.1775762235.gitgitgadget@gmail.com>
+ <pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
+ <00e0b3196cd158244cb15bfd7edb7d9d3f0954a2.1775854874.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC PATCH v5 3/6] repack-promisor: preserve content of promisor
- files after repack
-To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>, git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Eric Sunshine <sunshine@sunshineco.com>, Elijah Newren <newren@gmail.com>
-References: <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
- <cover.1775861047.git.lorenzo.pegorari2002@gmail.com>
- <b483be7558f0efc1a6780b5cff13f4ccc3afd069.1775861047.git.lorenzo.pegorari2002@gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <b483be7558f0efc1a6780b5cff13f4ccc3afd069.1775861047.git.lorenzo.pegorari2002@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <00e0b3196cd158244cb15bfd7edb7d9d3f0954a2.1775854874.git.gitgitgadget@gmail.com>
 
-On 4/11/26 06:55, LorenzoPegorari wrote:
+On Fri, Apr 10, 2026 at 09:01:13PM +0000, Harald Nordgren via GitGitGadget wrote:
 
-> @@ -171,19 +172,15 @@ static void finish_repacking_promisor_objects(struc=
-t repository *repo,
->  =20
->   =09=09/*
->   =09=09 * pack-objects creates the .pack and .idx files, but not the
-> -=09=09 * .promisor file. Create the .promisor file, which is empty.
-> -=09=09 *
-> -=09=09 * NEEDSWORK: fetch-pack sometimes generates non-empty
-> -=09=09 * .promisor files containing the ref names and associated
-> -=09=09 * hashes at the point of generation of the corresponding
-> -=09=09 * packfile, but this would not preserve their contents. Maybe
-> -=09=09 * concatenate the contents of all .promisor files instead of
-> -=09=09 * just creating a new empty file.
-> +=09=09 * .promisor file. Create the .promisor file.
->   =09=09 */
->   =09=09promisor_name =3D mkpathdup("%s-%s.promisor", packtmp,
->   =09=09=09=09=09  line.buf);
->   =09=09write_promisor_file(promisor_name, NULL, 0);
->  =20
-> +=09=09/* Now let's fill the content of the newly created .promisor file =
-*/
-> +=09=09copy_promisor_content(repo, line.buf, packtmp, not_repacked_basena=
-mes);
+>  	if (do_merge) {
+>  		ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
+> +		if (ret && opts->merge) {
+> +			create_autostash_ref_silent(the_repository,
+> +						   "CHECKOUT_AUTOSTASH");
 
-Here, the file opened by copy_promisor_content() is an empty file. Is=20
-this line necessary? ;)
+This tries to create a root-level ref called CHECKOUT_AUTOSTASH, which
+violates the syntax rules given in gitglossary's "ref" entry:
 
-...hold on. I recall you mentioning in one of the versions that you had=20
-downgraded this helper from a generic function to a static one. Since it=20
-now only serves this particular business logic, I think the=20
-implementation should be tweaked slightly as well.
+  Ref names must either start with refs/ or be located in the root of
+  the hierarchy. For the latter, their name must follow these rules:
 
-> +=09/* Open the .promisor dest file, and fill dest_content with its conte=
-nt */
-> +=09dest_promisor_name =3D mkpathdup("%s-%s.promisor", packtmp, dest_hex)=
-;
-> +=09dest =3D xfopen(dest_promisor_name, "r+");
-> +=09while (strbuf_getline(&line, dest) !=3D EOF)
-> +=09=09strset_add(&dest_content, line.buf);
+    •   The name consists of only upper-case characters or underscores.
 
-If file contains a large number of unique lines, dest_to_write, which is=20
-a strbuf, may keep realloc memory until the loop ends, at which point=20
-all the memory is released. I wonder if this might be wasting some heap.
+    •   The name ends with "_HEAD" or is equal to "HEAD".
 
-If it were me, I might write it like this:
+Our enforcement of these rules has some holes, but I have a local series
+to fix that (which is how I noticed the problem). The entry continues to
+list some exceptions:
 
-=09struct strset seen_lines =3D STRSET_INIT;
-=09dest =3D xfopen(dest_promisor_name, "w");
-=09while (strbuf_getline(&line, source) !=3D EOF) {
-     =09=09if (strset_add(&seen_lines, line.buf)) {
-         =09=09fprintf(dest, "%s\n", line.buf);
-     =09=09}=09
-=09}
+  There are some irregular refs in the root of the hierarchy that do not
+  match these rules. The following list is exhaustive and shall not be
+  extended in the future:
 
-It also prevents file pointer misalignment.
+    •   AUTO_MERGE
 
-(I think we still need to discuss what should ultimately become of this=20
-helper; at the moment, it seems a bit disjointed, doesn=E2=80=99t it?)
+    •   BISECT_EXPECTED_REV
 
-Thank you, Yuchen
+    •   NOTES_MERGE_PARTIAL
 
+    •   NOTES_MERGE_REF
 
+    •   MERGE_AUTOSTASH
 
+We can add CHECKOUT_AUTOSTASH to the list of exceptions, but I wonder if
+there is another name we could use that would conform to the usual
+rules.
+
+-Peff
