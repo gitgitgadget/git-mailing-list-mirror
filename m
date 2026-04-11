@@ -1,66 +1,152 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98BE239E63
-	for <git@vger.kernel.org>; Sat, 11 Apr 2026 19:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7C040DFC5
+	for <git@vger.kernel.org>; Sat, 11 Apr 2026 20:16:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775934666; cv=none; b=bOW+0I8YDPofAmOkhpjHYxYLZmoLEl0OIWxSk8+HatfeAOoWH0MDT3JfshFBpVBRT2cfMcO+MnS76v6Qv7DlbEY0BBmz3S++1QgjoW46MaBwJP1INWsMop+48NgaXtvYI6f4HxiNt+qS7ckievy0irmckpzKt5GwAiwzMC82NzM=
+	t=1775938563; cv=none; b=DPzz9pbUWZU/j5SftQNoNTf/LqEcULQV1YeQ90yobqakXMpPngnbOXZ5hGqZp8F8dmF60ZjdLdLYnw2H6/1/kUK1oOki+knEwPJZqHXOv95dhD7g/sjFiu+QkB32GU57GgAmRDakKjZOT+rvVjMRbuJonpyeMEWc26ELE63Q+tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775934666; c=relaxed/simple;
-	bh=RHjoKD2dlEd0U0yXutkibU2DZJtHg7SLR1dRi++wYVc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NcXNNbDB7RWNStD885B0m5/1/02nps9uklq3BGE4+2VjlwU5Qmz+KYovU6nHheOCpGu93UeqOCVUR+FzmByKajQv6p+BZaS5J66qKgxssjoPvncqHBYExKmMFmni0sEtMAjJxoPZ28MhhXzvXiiO4jsJDTpP8Ie3RXbiHsZED7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HfwtTV/P; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1775938563; c=relaxed/simple;
+	bh=67XrlGDxI9P3zT1puG7ATKYsMYq4Az4tnoXbjmJHj+A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=B7AqP7kW6RTKf5paC8UD20/la5QTxOjFWN+I0nw1r5QwThI/5IvMhXBW3vkjKRbdGm+NMmFzlrUytNe5JlnwwaRiZnfne3rA/pjqIRyXYnGsWfymyNARpW2nBhoCgHCW0Fgz+mbxOROb3CBl2G6EtNYmjSOicDj6J2OKy4qtxOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=GmOxOS7u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sNvjQGez; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HfwtTV/P"
-Received: (qmail 317925 invoked by uid 106); 11 Apr 2026 19:11:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=RHjoKD2dlEd0U0yXutkibU2DZJtHg7SLR1dRi++wYVc=; b=HfwtTV/PcoiDgnAldne74uiOELVL/0captva5is4zNnfZKRWCatEhC3vZf0HcSfd8Ua3ST2W4dXpdVqXVgAZC9tI2uHoWHNQUq1Vno3EDzJ1pWKiZi02F+NhnbaqqNwxucrdO80fyV2sFQzgVrOC2aJAJQzzUYDg2b8ejw4+3V5dlFsdeBA8z3HDWgvKnFRRilJmM2qxnRqjIlkoRM6Al2y88h1crz3JA5lIOvbZPMaR2pnoygRck3LOdARkZiDxC64x0lcXRaES1wsClBtL+P6Mi9oZfPgzz7dJYNct8iy0NVM1WtlFApwFbIHG/ukiKM50qXqNRqaOCJFFomJfoA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Apr 2026 19:11:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 525236 invoked by uid 111); 11 Apr 2026 19:11:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Apr 2026 15:11:03 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 11 Apr 2026 15:11:03 -0400
-From: Jeff King <peff@peff.net>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: chris.torek@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH] checkout: add --autostash option for branch switching
-Message-ID: <20260411191103.GA774963@coredump.intra.peff.net>
-References: <20260411183823.GA672575@coredump.intra.peff.net>
- <20260411185109.37795-1-haraldnordgren@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="GmOxOS7u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sNvjQGez"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1EE13140006E;
+	Sat, 11 Apr 2026 16:16:00 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Sat, 11 Apr 2026 16:16:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1775938560; x=1776024960; bh=3k
+	tbqpX0wcgOydABCs83Y3ux04F1463geca+TY7gqPo=; b=GmOxOS7utECibjSd7V
+	phFJ/Qj2K6xo1UH3/Pn1EYfhMvuUONAgr7tOQnTIL4bp0wYA8/DxKCQ61BmrzxT8
+	Y4pI75pe3HN01ectumG6AXvoiCUdziqK2IR4/5sjynOX54bW7CKDw+2l3x0cCDSn
+	Ji/KksPGxJlQ+MTelppba3Ny5yTjXXvAF0QPcVAWc1cQ+z9N4TKFwBIt0vNtB5m+
+	zLiny71NhB0lHpF/uMMb2i71mzV77fe5qFmH+iUkLapn9qeoermj2948wGhHqzyP
+	GkvWnHSMO1z7akMbFpjgj3IRl8pPLlKV0WOKvtplTvG4kCLVgcuiCR4BVpAQf2I2
+	DyiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1775938560; x=1776024960; bh=3ktbqpX0wcgOydABCs83Y3ux04F1
+	463geca+TY7gqPo=; b=sNvjQGezBqOlRAlR1YXtKI+Y2W8e3nTllipo0m4H3DRh
+	KJib+hJk2KtViizLBpmsC4degxlFXa+akC96eSeLNf8LqY13yi+cMfFBA/wpNcaL
+	vget7rXAz5jhXKRx/Jcn+DyNFDM+Rzd/HgFgIFpOy965yo1uYkDcZpqzd6Sb6HZR
+	PCd5iGZKtH9HCBbjjDmy2l6tB3nUgTN6MVirFMEzfqDKb9hZQ1pPmE/P+aTc1ind
+	vueqYEgpeZj8XP/IZt6/EalQQqDYs5wkcYfercDIvS5NMbC1dSsY+rkSyoXjhLK4
+	6ojbCRkRc1BXZ8XgT+tcCVUAcxxaO9KOg/JsukLa/w==
+X-ME-Sender: <xms:_6vaaaTS79KhhBmQIPAPzTGC4Q6kh7IMyY4-c26l5iFYE5R-86vwJ5I>
+    <xme:_6vaaVynH4eEdV57QvqsEHDAgUtby68ClqZKDZDraB5AX3g7vbp6KAmAboiJVL-q0
+    h_J3CSLPZV9_XgHD_xlKDlYgg-FFoDEz6nABLHRhiE-zJ6jBkQ5YQ>
+X-ME-Received: <xmr:_6vaaVfg7z2WN3gm9OmsDAMOiDL-04p1QNfLQ680CDLxfip-Fc7PEfkHQP3a73JULV2XcHxRcnZWVp-BWuIxVfdgF-A5iK1IJTbGzMj1i_eH0RjfhWrqdVM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeffeefudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhephffvvefuff
+    fkofggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhs
+    sggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpeetgfekjeffud
+    effeffgeekvefgvedvgeffueejjeelgeduhfdtffeikeelfefhgfenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrg
+    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:_6vaaRL4vkzX38XpZe0RzXpkKJ8krTuoch0dk3Rhx7KnNlpgQEw9EQ>
+    <xmx:_6vaaWFJjnb9N5p_tDQwb6ZQXbbKl9AloFXTw6xaCZyDOQPlay0liQ>
+    <xmx:_6vaabpPhrFS9qI90YV59824TDJGgX4oQkClZDcSLgdId2BIouPTAA>
+    <xmx:_6vaafTA3ejmHwD1BRVPyzGYuhklxH7x38J7DXbMbovDN_nhPhm2jQ>
+    <xmx:AKzaadoCdxd3ZxKq-GF_Gn1SJB2r-nESj-QzLEOBex7Dp3KuLFC2Iy0F>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 11 Apr 2026 16:15:58 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] doc: am: revert Message-ID trailer claim
+Date: Sat, 11 Apr 2026 22:15:50 +0200
+Message-ID: <msg-id_is_not_trailer.570@msgid.xyz>
+X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260411185109.37795-1-haraldnordgren@gmail.com>
 
-On Sat, Apr 11, 2026 at 08:51:09PM +0200, Harald Nordgren wrote:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> > This tries to create a root-level ref called CHECKOUT_AUTOSTASH, which
-> > violates the syntax rules given in gitglossary's "ref" entry:
-> > 
-> >   Ref names must either start with refs/ or be located in the root of
-> >   the hierarchy. For the latter, their name must follow these rules:
-> > 
-> >     •   The name consists of only upper-case characters or underscores.
-> > 
-> >     •   The name ends with "_HEAD" or is equal to "HEAD".
-> 
-> 
-> So maybe easiest is just to rename it to CHECKOUT_AUTOSTASH_HEAD?
+I claimed in 3c18135b (doc: am: say that --message-id adds a trailer,
+2026-02-09) that `git am --message-id` adds a Git trailer. But that
+isn’t the case; for the case of a commit message with a subject, body,
+and no trailer block:
 
-Yeah, that is syntactically valid, if a mouthful. I can't offhand think
-of a shorter variant.
+    <subject>
 
--Peff
+    <paragrah>
+
+It just appends the line right after `paragraph`:
+
+    <subject>
+
+    <paragraph>
+    Message-ID: <message-id_trailer.323@msgid.xyz>
+
+It does work for two other cases though, namely subject-only and with an
+existing trailer block.
+
+This is at best an inconsistency and arguably a bug, but we’re at the
+trailing end of the release cycle now. So reverting the doc is safer
+than making msg-id act as a trailer, for now.
+
+Revert this hunk from commit 3c18135b except the only useful
+change (“Also use inline-verbatim for `Message-ID`”).
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    Topic name: kh/doc-am-message-id-not-trailer
+    
+    Topic summary: Revert claim that `git am --message-id` adds the msg-id
+    header as a trailer.
+    
+    This is based on topic kh/doc-am-xref which was merged to `master` in
+    05c4af5c (Merge branch 'kh/doc-am-xref', 2026-03-02).
+
+ Documentation/git-am.adoc | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
+index 403181baa9f..14f83a8920a 100644
+--- a/Documentation/git-am.adoc
++++ b/Documentation/git-am.adoc
+@@ -84,11 +84,10 @@ OPTIONS
+ 
+ -m::
+ --message-id::
+-	Pass the `-m` flag to linkgit:git-mailinfo[1], so that the
+-	`Message-ID` header is added as a trailer (see
+-	linkgit:git-interpret-trailers[1]).  The `am.messageid`
+-	configuration variable can be used to specify the default
+-	behaviour.
++	Pass the `-m` flag to linkgit:git-mailinfo[1],
++	so that the `Message-ID` header is added to the commit message.
++	The `am.messageid` configuration variable can be used to specify
++	the default behaviour.
+ 
+ --no-message-id::
+ 	Do not add the Message-ID header to the commit message.
+
+base-commit: b10e0cb1f391a4466f8d7c4b2550a8b89fda3573
+-- 
+2.53.0.32.gf6228eaf9cc
+
