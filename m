@@ -1,112 +1,147 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0F72D7DEF
-	for <git@vger.kernel.org>; Sat, 11 Apr 2026 20:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E152DF132
+	for <git@vger.kernel.org>; Sat, 11 Apr 2026 20:34:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775938820; cv=none; b=Ecueju6swU14qhDyRgWWl3RGEKB+Kw/d7Cy0il6AI49LN0QMPf6pYvsP+5YgWAFFsCCZlw/gFYuQvVOhI3pRqjcQ3JSlHHla+k7N9lcOsne4nSgbpNNLnm0Xpb7QPfDVDN9QaDPJAfBiMaYGWZBaEuddCkcMbHg9TQVZ3lPG+l4=
+	t=1775939690; cv=none; b=ozwXTNu0WC6iT3UbLpIh6nicV7d9Lnk1j/eUAb/1mRLxs/seb5kgUmjNk3DiKUZxnNxDvXOzZGbDmpU18fxIgGoVD/P6R7Ys0vi8cDL9J4JToFNDer/jgKJXOyjNq5LbrAFp7MITMTf8NiYZHue6fvH0auACZApSJOQ7eefcwG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775938820; c=relaxed/simple;
-	bh=DpGCKyWDxwWLb2Mmv/CVAxqr9OpWScI46b7ZURD5oGM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tlzrSiX1rOJh0RI4qGRr/FZ0BCsp6XwWB26gQEoDkjwfmEx8GHRNO4vjsU/MYimf9jeWVzOMtTVuQNqbf4OxGR51rJtzAp2oRAoPC3LVnhoKy0kloEGo7qdDs/jIEsn5L2wuf2RQFPMzKcq8XazmXK0o/5u5c6ZajghIKhbN3Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=PMDbbza8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T6dzGO4n; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1775939690; c=relaxed/simple;
+	bh=DrfsXqixUwC8arIJYa8Xz7ajGjStrfe4+66wUDU3Nfc=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=PppSbjI3nTf0TADtHaWCWOChXYgocrUbaygkMrLvaZ9/+J4XTrLuQucU+lXHv2KuscfN3D2byvJQb9WahRLSvdUhKnd9QYO+Aa991StHHOW4ypnBBY+TKV0gYw+6x6Y/7SbbpfzINeQ8JnsvGsV5ycr7m0zIyMzeczB2F+mOkyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=OZ623CPd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cTJcG+r3; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="PMDbbza8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T6dzGO4n"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="OZ623CPd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cTJcG+r3"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 541B6EC00AD;
-	Sat, 11 Apr 2026 16:20:18 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sat, 11 Apr 2026 16:20:18 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 866291400082;
+	Sat, 11 Apr 2026 16:34:48 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Sat, 11 Apr 2026 16:34:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm2; t=1775938818; x=1776025218; bh=v+f46FSYg1seWIq6R+pxr
-	M5VLsh1hz/Nvwlm5AOOX3g=; b=PMDbbza86LwZn6pezESKVrgaT6v6bU5XU10Y5
-	n4esM3HIU50vE65tOof3d7F0o4b56vi0gK/gBHcv53a64AKZJDaqiF5v8Q9Vw87P
-	DZuCnDsaQNPc6mnYZmUwmDkNl1fv7ccP88MEIrcFEf0pODf8wJWgeqgQ9ZJqcUqE
-	Er1Lrm4NObkVUdycthqBo39SjrEnC/PLFPMoTRrZ5Yl9PA1+y+mOmNgFb3EeSQiv
-	L/kK4hAU2xrv45mAJiuLmpmWvg40yNAZwicaogjACEyWV1tI6OsD0CAQStV2mb+J
-	WcO1+v7EjXG0eAwWqQ9I7fgo3ITwOkgKpIhcY/mhYqvyYUFXA==
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775939688;
+	 x=1776026088; bh=ZesyROLc2jA4DDrUtljDLWvp8e2E+I9arpytlYG0HpE=; b=
+	OZ623CPdC/3wV77C8C7h67F9CXW9PvQITqgW+j14t4ldPtVVWk8LWKUonBkM4bEv
+	M6UAn2IUdqMszCCS8Mk4O9Yhw2fhwWZ1uBrvv/kQNbQnSQPHfU4MLvsIUGaXjjNg
+	U1VODostGD2dH5C/kKRwN09BMJov0ZXM/+0EDvosEFAuF6OP2452LKDeFRjHszhX
+	3temzAw6o63fK4/FzEgmwWpiilJwF6695fHhLlk/ooYUbjkkwS8wOzHzykODDRgO
+	dGn46NzyT1jCky8E4vNs0ieeY6E327IMWy/4vTeDUHLo7Zq78knXuPlybgbzLTts
+	73DWA0tXbm77eVpZyumFPw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775938818; x=1776025218; bh=v+f46FSYg1seWIq6R+pxrM5VLsh1hz/Nvwl
-	m5AOOX3g=; b=T6dzGO4nvmxijMs9RNvvg9i6VKZrTUa2YO3hF9clotIJicFHP6m
-	kS765jiSW+0QI4T/GcX2rJOmFeoIpQFZspBe2jXjE4U/v6KWMuN8iDGGDmaqrNKy
-	ORdpteyZX4EYHDGHZxUpKylSkbjtY3bPKMOGy8NwSIm/a6DPM8RMT+VzYK4jPXXe
-	PqbG85mfKWdsPXgNc97FwH96qYTR3EC6XKVmD0p7xQFb82jZo90c2BBfogtHrKJ9
-	msQBH95YqPbSP5zIz7wt2UdsJgb0ND9YLyAvVhYdHlpA6xDAwyhZ+8YMvwhdC5Of
-	oFpwfhaNqgcYHXbskn7TkpepDO1QDMIlQWw==
-X-ME-Sender: <xms:Aq3aabBzRUpS-FRitTI48LxTMxfTfhSSTfzLaMeA_TWwkItMfgqOJ5o>
-    <xme:Aq3aaXgBViRmHfA_lCcKfRCy8WcD_VuWtG9VrvFC8GbLLWDfb7DGGIpel8JGs2q6w
-    DBRB98bwEfniPrJyvQjBYwtbn5pSfB_hyQ0PTcwLQSZcLxQouCHhw>
-X-ME-Received: <xmr:Aq3aaUNm2VxBKRgBCfsrCEAskwSnLpGYL6CGvJKAWPWc-hqR_RnGO5-d4UFJqYPkljlxmNndZnDDI6dK7ZB9_O3x0Q10P7xLdh4VyNraSI0VE6HIrwUay2w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeffeefudcutefuodetggdotefrod
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1775939688; x=1776026088; bh=Z
+	esyROLc2jA4DDrUtljDLWvp8e2E+I9arpytlYG0HpE=; b=cTJcG+r3Er4IGBmzc
+	YjIp5vSl2RIgFLVbxkMSTdSHjoHzJDTb3wwy7TnHcN/I9uAUWLfNH5YzxwSaS4Qv
+	MtpjNuJ4zdNWqvnMWoyfUJrWM7hn5LVsJSE1FSNlP/Rxv8AgzFoXmugMZ4NPEONm
+	lSYbHVYglilm77j37xEN9hxQA8FfUtSZ6KD0Cj42bYQVfEn/bjln4biYVvQTy2g+
+	4FBPkTgrV6bHBsBqkyvNdoIvw3Vw/PMJIToFEaeNJy25dLxMG82dwfVXSYGwshNi
+	QePtGHk2FEYUBUJr7isNEzQ/RvX63ZmRFg/htBHkIjyJ5Eb+vtN36BDmXIvwcPQE
+	57uFw==
+X-ME-Sender: <xms:aLDaaYZsLqPixNzWnOOlTnnh5ZJPbzRI3H0AnJiEbf6zMvYdhmOrWYg>
+    <xme:aLDaaeNsW0vsiM91_Pqo8D0ymP3d-CsaYqkQ2i-BEcCvvTKmAn0JQ_w44x0P73I-r
+    PLytMth-xKu2lIDv8fl4jDNSn-JaTeRcv-Mu8H_PjqrxC2TWUR-Zp8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeffeefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhephffvvefuff
-    fkofgggfestdekredtredttdenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgs
-    rghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepveelleeitedtud
-    dvvdeitedvhfelfeffvdehhefhfffhuddtvefftedtfeelgeevnecuffhomhgrihhnpehm
-    vghsshgrghgvihgurddqqdhnohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:Aq3aaY4FD2IbvZ6XgkicSHyAUxQW8gZC9YmEDHghJ0bjHw6eK__wTw>
-    <xmx:Aq3aaS1vEWxK3Cz3j7r7SLqxQjLZdg0DlzNhqDgVgCNANksfSe6EMA>
-    <xmx:Aq3aaZavYs7WPBhl5gH-JeKD0-zV4I0hzGO_IZiDnDQNcSHhfZaUww>
-    <xmx:Aq3aaaA5ole87-kPxuNpZ-5f5L-kNL6TQ1bUstMLeR8obPonQRXiVA>
-    <xmx:Aq3aaeYZTnrxXEL5li_KOG9tsjPstlLRw0pPbVfcGL7MEdGvBz9hmtgY>
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
+    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
+    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
+    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:aLDaaTEBpTOlTxTmlGLg50LJReTE-xRJRiWr_z73vVMwk3dj7pfx1Q>
+    <xmx:aLDaaeTQWftCDHHqwM5c52OvhfY3ywhzNKl2XIJM_UY0UOkHdBoMKA>
+    <xmx:aLDaactG4erhuveoW3kZMsZcc50wXcRTN_TYvGPM-jM9KBcyxDZPxg>
+    <xmx:aLDaadxxQVLBdAITUumjtLxcVHdSXeEJk-xN1tIaXKO3gte12MYlYw>
+    <xmx:aLDaaSqBeLcYJRTzyqo8nx4vhgyNnubn_aZlnTmCpo95y_kn30iWCHNx>
 Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 11 Apr 2026 16:20:17 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] doc: am: correct to full --no-message-id
-Date: Sat, 11 Apr 2026 22:20:10 +0200
-Message-ID: <typo_--no-message-id.572@msgid.xyz>
-X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 4E7A51EA006B; Sat, 11 Apr 2026 16:34:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: A__05JlRJZT-
+Date: Sat, 11 Apr 2026 22:34:27 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Jeff King" <peff@peff.net>, git@vger.kernel.org
+Message-Id: <fb4dff1b-d304-4f29-a96c-373b1a73989b@app.fastmail.com>
+In-Reply-To: <20260411190625.GA754966@coredump.intra.peff.net>
+References: <20260411190625.GA754966@coredump.intra.peff.net>
+Subject: Re: [PATCH] gitglossary: fix indentation of sub-lists
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Sat, Apr 11, 2026, at 21:06, Jeff King wrote:
+> The glossary entry is a list of terms and their definitions, so
+> multi-paragraph definitions need "+" continuation lines to indicate
+> that they are part of a single entry.
+>
+> When an entry contains a sub-list (say, a bulleted list), the final "+"
+> may become ambiguous: is it connecting the next paragraph to the final
+> entry of the sub-list, or to the original list of definition paragraph=
+s?
+>
+> Asciidoc generally connects it to the former, even when we mean the
+> latter, and you end up with the next paragraph indented incorrectly,
+> like this:
+>
+>   glob
+>     ...defines glob...
+>
+>     Two consecutive asterisks ("**") in patterns matched
+>     against full pathname may have special meaning:
+>
+>     - ...some special meaning of **...
+>
+>     - ...another special meaning of **...
+>
+>     - Other consecutive asterisks are considered invalid.
+>
+>       Glob magic is incompatible with literal magic.
+>
+> That final "Glob magic is incompatible" paragraph is in the wrong spot.
+> It should be at the same level as "Two consecutive asterisks", as it is
+> not part of the final "Other consecutive asterisks" bullet point.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+`Documentation/doc-diff` confirms that this is the effect of this change.
 
-Notes (series):
-    I should have spotted this while working on topic kh/doc-am-xref.
+>
+> The same problem appears in several other spots in the glossary.
 
- Documentation/git-am.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+And that it is the effect for all the other spots at as well: pull a
+paragraph out of a bullet list back to the previous block (or level).
 
-diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
-index 384e0cd7f9b..26c6670f6fc 100644
---- a/Documentation/git-am.adoc
-+++ b/Documentation/git-am.adoc
-@@ -92,7 +92,7 @@ OPTIONS
- 
- --no-message-id::
- 	Do not add the Message-ID header to the commit message.
--	`no-message-id` is useful to override `am.messageid`.
-+	`--no-message-id` is useful to override `am.messageid`.
- 
- -q::
- --quiet::
+> We can fix this by using "--" markers, which put the sub-list into its
+> own block. This should catch all of the unordered lists in the glossar=
+y,
+> which I found by grepping for " -" list markers.
 
-base-commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
--- 
-2.53.0.32.gf6228eaf9cc
+Yes, for what it=E2=80=99s worth I think open blocks (`--`) are a great =
+cure for
+this when you are lucky enough to not already be in an open block.
 
+AsciiDoc is certainly a format.
+
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Just happened to notice this while looking at the "ref" entry.
+>
+>  Documentation/glossary-content.adoc | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+>[snip]
