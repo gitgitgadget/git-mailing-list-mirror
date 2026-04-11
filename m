@@ -1,231 +1,212 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0271A239A
-	for <git@vger.kernel.org>; Fri, 10 Apr 2026 23:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2AA195811
+	for <git@vger.kernel.org>; Sat, 11 Apr 2026 01:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775863845; cv=none; b=i0EH8Z6D6J9XLw+2IW+/i9BLwf3IRyNse0sIg9EFhmiNA7gge3Y/48nuaDCZSJUxjw8XBDKOdJDA1Q02QKr/1aFx1SYUW96L6n8y2JDi/uu65rr8UtjPb29OhXu6mfVr81PAA9epnFw277NkOLX8bulFFXo0rfLNrbBD37tf+qc=
+	t=1775872756; cv=none; b=f7gJAwbyrvnB1QDg9jo/XTm/+dvrWF+fCY6gOR99/2EAG3Qv84ZPmF+xGkkOEs5gJpeFrY23fxOkDB3kMhNLEtXo7gUB3s8Cv31qRFVK2LkUmqZxi0wJdFKj+ehGXR62dEeWhl5Nzj+tSF5e3i4k1/kZdfQrjPkohyqzXHXZ3bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775863845; c=relaxed/simple;
-	bh=PuY9ijr6H13tYpWuPRZdqmlZuA4cor7w4EvcXEVT4/s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TfAlVpNClYKZibBeLdwPdTGtjj9oWELciSDyi7XOVnIHjibMoCiJ+UZHejoY7clsZPUdVcarcou9ruvQRQnDh2ULEV0aNeakmq1IVlI6md3U40pAJ/2C9msjAS8SNypPdaw+UjHKqkdir3Y5a44WbbCBDXvzSs0qGjRDyGYhHm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DseI6dfK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LL3BNR2y; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1775872756; c=relaxed/simple;
+	bh=cTMWaXSbG7t98qOUFP8K10/O9zBGgZBhlOS1Jp58S/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZwmjJEye35AYQzqVwoyyIj/JAtjUE7yzwgW/ppEsFsUEXRfNuQHRQN7eb0pJIsndYUfNGfOGRlxLjcntla18NgMg1GnyRdlrzRAhd/TFv+NL6FX1pzhX6wYxrUJcG1f6evYdprucyeqrDjvNNP4EcqF77yT8YlqajKlQBrHRwsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OlzTelDZ; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DseI6dfK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LL3BNR2y"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B70257A01C4;
-	Fri, 10 Apr 2026 19:30:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 10 Apr 2026 19:30:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1775863842; x=1775950242; bh=xa9C652P5G
-	/WUK3jlUYZxg14tL27r2JH9DmN5W7xNyc=; b=DseI6dfKYAT9OEn3W1yynBHqUf
-	7onLNIyuXybl9LXDAZfNyJ+sJYVj8t+dqiO2kDdexDLuh+KiBNWvCUhnkNT6aUCS
-	d9lHi4rhpV7V3gVcLFv1uaVE2nK6ojJJObtwMYFxdIHmiyyVhqpWjmVqHDUyq+Ku
-	K8ucGf7cnOuNb6UJ2HE9sq8SH/78f7mG6G9ewnrLJSZ/ZrD5awpgIr4ekGaNrdhB
-	HzEpQh1llvWXFDg0G3QQ+DC/PqxC85J7MYA1B3UFaezhmEc7Be4MAMbVjxuwNECN
-	Em8tLcbNiRa7owtbjNHEMlqHgT2ZTakJeLl91Z6ZQng4z2yp/VGs4JkNIqMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1775863842; x=1775950242; bh=xa9C652P5G/WUK3jlUYZxg14tL27r2JH9Dm
-	N5W7xNyc=; b=LL3BNR2ytlS4/1o9zoRYCf5ev7U3CYZZvbOF9zLnZ01aDEnvCh6
-	SFUsk8p0ylFn8qW5q9K21BaOwmWuqMnL7fWvr8NE4hWeRYagoi6n2Aen/IZaMOlX
-	1JY2oowdJKZZfEhE7z+YxAOgAEpx/wTKlDbdoKHwpIrBWAvHjGf6xHI9RxdTelMi
-	YjGX5FfQgd1RuStE3bJbxVKq1edm+wPdckGW+l63hQtNctE1XeKr7cMOWhEoOqhG
-	mML/0YqFHEAgVRJ7ykXN0dd9YOyhIwGzjrPThswIyyMVsLG05le1KxiMkOsVNEug
-	Sd318ePzO0QeCTFoHJ1Ifpi8EdjjUKAgVTA==
-X-ME-Sender: <xms:IojZafS8x8VFem59HxVyFuFRSj2i3K8qDmr7aC8dXPG14eHADSO1Zg>
-    <xme:IojZadWSiuqnxCENFrta8Y0eYaitPEkDotlN4zmkUtXcu-yZfNiVXy9itahV_MuX5
-    c8VaKIF6Sa0scf5O_Vm4e_bnd2-b7By1S06WPslyCOfVY866FZeyA>
-X-ME-Received: <xmr:IojZaZQb7uK4nRC_6lPqFai4dVWkRSRnotMJzdRYuJ-UwnaDFOV1hVgGiDiD3bD6lNIPFBc7YnzmlkitLLRLBkHNjg0wIXFqxw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeftdejhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhhorhgvnhiiohdrphgvghhorhgrrhhivddttddvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihloh
-    hrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
-    thhopegtrghtsehmrghlohhnrdguvghvpdhrtghpthhtohepshhunhhshhhinhgvsehsuh
-    hnshhhihhnvggtohdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IojZaV23DYEJStq0p6BXfjcdL2YiFpfJp7w1YNIib2NgaIM7bjKXQA>
-    <xmx:IojZaZd4blFZxl40gpfBphiHU9vr67REb5qonCq9jjufnNRlwOHk3w>
-    <xmx:IojZadN5l-I9CtQNveGb7R6sCWBHtetg-BdIolIp23URB3VcfNwhiA>
-    <xmx:IojZadXZNm6ABmiepFzif3dDVq9ZSCUStWFvbFb_384f83HV7JRjow>
-    <xmx:IojZaa0Tj9JUKkYFZNjrCbZIG-uzlMCXTyR_ean1YPPdRTfcJCLQMeUG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Apr 2026 19:30:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>, Patrick Steinhardt
- <ps@pks.im>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee
- <stolee@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Tian Yuchen
- <cat@malon.dev>,  Eric Sunshine <sunshine@sunshineco.com>,  Elijah Newren
- <newren@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OlzTelDZ"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-483487335c2so28092535e9.2
+        for <git@vger.kernel.org>; Fri, 10 Apr 2026 18:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775872753; x=1776477553; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=js7H+KM8Dst4U88sfuqVZ5Tz4DwQsJLSt6QcQCHFrT4=;
+        b=OlzTelDZIhIjZ5xTTLblqTQKSCSLlzBwnO2M86GsZn+hiR3JD/q4S5t+W/eeQAMU5c
+         yoUh9VnU1f8F69RPSu5rZ62FiT16Q6y99vqa/lL+LIM1r5Yv8yM5pxyhtmh/gEKwMgEF
+         jopE5KAE0fMWMi022tvINNO8SbIGAhluU7RngvGgfN+j9a6MQ2xrQRlGVQtsKuh7Rqvx
+         WjmcodAniUiSOG4g+3a7dZITLXwR0Fwf8GI3hJLcxAIQxs7XZhsGSnbtxfAbaHoQok0B
+         Y9GrYZdvFjldUFjknuZYiYzCoObzZnFJ5705DM5oVFIQb/rExKORshwESfupIxGyEF76
+         DS8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775872753; x=1776477553;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=js7H+KM8Dst4U88sfuqVZ5Tz4DwQsJLSt6QcQCHFrT4=;
+        b=W31svnj8BihrO5YnA0YmLvgH0NJeYaYQnhE88owopylYOvBX6WG8SU/CZsREdGDxYp
+         J2hpvph+0ba9RBIMDG6n9xaoyqhDv2WGsyp14SB4xAroZwvFc1CBuDlEWIcRIOnFUVvr
+         LNVDMPrShJ5O+27gcdP5nxeBy33Eel7/UUABJvA073Tndyulm3hrUMiQA9kGVaZ0Shyc
+         sdpmLIOYSe4PJlqRWkLsb//Y4YKQza1UG/RJMUvJzq/TTTbY9BJhySfwd4qAW3aX7W1J
+         AeilMgPI30ofd0IhLu+Q8Tc8YNpPn9fgnkykiRxJRu1ypWhtcEXmXfMNvdn16PXKtcNb
+         I/DA==
+X-Forwarded-Encrypted: i=1; AJvYcCVzL0m7ZtUqx9LxpIg/goU3aA94PULhaqk/4+oCQoMFQqDhGcAw8/PIwzykL4n/9Nju6h8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxK59C8Xllw6U7TaQ0CWVRO0MVFj0X/n8aMo2aMmD+Qd+6tjKfE
+	yvu5hrn7MiGG6sC1JUZa6yIqg6m/Z4Qkx9aESgu000tevpjXxKslSI2dO8i8pUSIe2o=
+X-Gm-Gg: AeBDietjLJXXi+WrulBW9R0ty3Z9Fkp055WkT1Q2U64xAG2J77Y+iNudQaG56r3H35t
+	dP5Gk3EGKGjt7bijKVXtW7pAV5a3NtN9mwM8nf62kpUMMI1TxPfv/ZeB+01i52Vvc0a2tNvmXKv
+	68gk/9eJ8YF5gWtPTKNgGBKdyRY6DFYEiuupBJw0OHuPKE6VLs2s9eG2yO4tcGls5rCQ/+4gagJ
+	/iaYFCV/pV9TLrS3+MsBsr8RDB8EgAUXUylN7Ycx1Wbj4Yv91ZLB4uhQ/7PLdZnsU8elrtWlHUb
+	2fXTJbMkZ8oKnUjrRyQ/E5guzLp+W/WLafw3lM+Lp2miQjmIbprLR268YgvKcr/K5KPlesmTe+b
+	ZEU4ghHL1PUPwrgEIMu0pwQDJKcpAxYP2gHDyX1ecQdYdjcwqf8xVN1ftyQYLXoBLTrKrj9oHVB
+	QPslITh5Z5BLWvD6XwR52AVpaNV4Idht5E
+X-Received: by 2002:a05:600c:8883:b0:488:b87b:3052 with SMTP id 5b1f17b1804b1-488d689b400mr49561155e9.29.1775872752521;
+        Fri, 10 Apr 2026 18:59:12 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.160.4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d5347ea5sm128843775e9.8.2026.04.10.18.59.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Apr 2026 18:59:12 -0700 (PDT)
+Date: Sat, 11 Apr 2026 03:59:09 +0200
+From: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+	Tian Yuchen <cat@malon.dev>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Elijah Newren <newren@gmail.com>
 Subject: Re: [GSoC PATCH v5 2/6] repack-promisor add helper to fill promisor
  file after repack
-In-Reply-To: <3558bb38956b522c91057598db645eb42ffb48b2.1775861047.git.lorenzo.pegorari2002@gmail.com>
-	(LorenzoPegorari's message of "Sat, 11 Apr 2026 00:55:11 +0200")
+Message-ID: <admq7TA9sEPjskO5@lorenzo-VM>
 References: <cover.1775832056.git.lorenzo.pegorari2002@gmail.com>
-	<cover.1775861047.git.lorenzo.pegorari2002@gmail.com>
-	<3558bb38956b522c91057598db645eb42ffb48b2.1775861047.git.lorenzo.pegorari2002@gmail.com>
-Date: Fri, 10 Apr 2026 16:30:40 -0700
-Message-ID: <xmqqo6jqmlzz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <cover.1775861047.git.lorenzo.pegorari2002@gmail.com>
+ <3558bb38956b522c91057598db645eb42ffb48b2.1775861047.git.lorenzo.pegorari2002@gmail.com>
+ <xmqqo6jqmlzz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6jqmlzz.fsf@gitster.g>
 
-LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
+On Fri, Apr 10, 2026 at 04:30:40PM -0700, Junio C Hamano wrote:
+> LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
+> 
+> > +	dest_pack = parse_pack_index(repo, dest_oid.hash, dest_idx_name);
+> 
+> parse_pack_index() has this comment:
+> 
+>         /*
+>          * Parse the pack idx file found at idx_path and create a packed_git struct
+>          * which can be used with find_pack_entry_one().
+>          *
+>          * You probably don't want to use this function! It skips most of the normal
+>          * sanity checks (including whether we even have the matching .pack file),
+>          * and does not add the resulting packed_git struct to the internal list of
+>          * packs. You probably want add_packed_git() instead.
+>          */
+>         struct packed_git *parse_pack_index(struct repository *r, unsigned char *sha1,
+>                                             const char *idx_path);
+> 
+> The function can return NULL, but this caller does not seem to be
+> prepared for it to return NULL (i.e., the loop introduced by the
+> repo_for_each_pack() macro we see below, nobody assumes dest_pack
+> could be NULL).
 
-> +	dest_pack = parse_pack_index(repo, dest_oid.hash, dest_idx_name);
+That's true. The function is created assuming that the promisor files
+are correctly formed, but this is unrelated to the promisor files
+content, so it should be checked to avoid any issue. I will add a
+`die()` if `parse_pack_index()` returns `NULL`, since this means that
+something bad happened considering that we literally just created the
+pack that we want to retrieve.
 
-parse_pack_index() has this comment:
+> But what pack index file are we parsing here?
 
-        /*
-         * Parse the pack idx file found at idx_path and create a packed_git struct
-         * which can be used with find_pack_entry_one().
-         *
-         * You probably don't want to use this function! It skips most of the normal
-         * sanity checks (including whether we even have the matching .pack file),
-         * and does not add the resulting packed_git struct to the internal list of
-         * packs. You probably want add_packed_git() instead.
-         */
-        struct packed_git *parse_pack_index(struct repository *r, unsigned char *sha1,
-                                            const char *idx_path);
+`parse_pack_index()` is used to create a temporary `packed_git` for the
+just created pack, so that we can then check if <oid> (for each line of
+each ".promisor" file) appears in it (and then append that line to the
+".promisor" file of the just created pack).
 
-The function can return NULL, but this caller does not seem to be
-prepared for it to return NULL (i.e., the loop introduced by the
-repo_for_each_pack() macro we see below, nobody assumes dest_pack
-could be NULL).
+> Isn't it already part
+> of the running system that we should be able to find on the list of
+> packfiles in the packfile store?
 
-But what pack index file are we parsing here?  Isn't it already part
-of the running system that we should be able to find on the list of
-packfiles in the packfile store?  Is this because we lack "find a
-packfile on this packfile store by name" API, because what we want
-to find if each of <oid>s we have appear in the particular packfile
-or not, and packfile_list_find_oid() is not sufficiently precise (i.e.
-"the object appears in one of the packfile on the list" is not what
-we want to know, "the object appears in this particular packfile" is)?
+No, the new pack's `packed_git` doesn't appear in the
+`repo_for_each_pack` macro loop, if that is what you are asking.
 
-	Patrick CC'ed primarily because this part of the API and the
-	data structures have been reshuffled to add quite a lot of
-	abstraction since I last looked at the area.
+> Is this because we lack "find a
+> packfile on this packfile store by name" API, because what we want
+> to find if each of <oid>s we have appear in the particular packfile
+> or not, and packfile_list_find_oid() is not sufficiently precise (i.e.
+> "the object appears in one of the packfile on the list" is not what
+> we want to know, "the object appears in this particular packfile" is)?
 
-As close_pack_index(dest_pack) does not release resources held by
-dest_pack itself (even though the region of mmaped memory that is
-pointed at by its index_data member is unmapped), I think that is
-where the memory leak is breaking the CI jobs (see my other message).
+Yes, it's pretty much this.
 
-But I am not sure if the use of parse_pack_index() - close_pack_index()
-API is the right thing to use here.
+> 	Patrick CC'ed primarily because this part of the API and the
+> 	data structures have been reshuffled to add quite a lot of
+> 	abstraction since I last looked at the area.
+> 
+> As close_pack_index(dest_pack) does not release resources held by
+> dest_pack itself (even though the region of mmaped memory that is
+> pointed at by its index_data member is unmapped), I think that is
+> where the memory leak is breaking the CI jobs (see my other message).
+>
+> But I am not sure if the use of parse_pack_index() - close_pack_index()
+> API is the right thing to use here.
+
+I struggled a lot to understand how to deal with a pack opened with
+`parse_pack_index()`, considering that this function is only used once
+in the codebase. In the end I decided to simply use `close_pack_index()`
+as it is done in this other instance where `parse_pack_index()` is used.
+
+Having done more research now, I realized that the issue is that the
+code is missing a `free(dest_pack)`. With this line, no leak happens,
+and all GitHub Actions-based CI tests are green.
+
+Also, I think that `close_pack_index()` is indeed the correct way to
+close a `packed_git` opened with `parse_pack_index()` (instead of using
+the generic `close_pack()`, or not closing it at all).
 
 
+Finally, having looked more deeply at that other instance where
+`parse_pack_index()` is used, I believe there actually is a possible
+memory leak that might rarely ever happen. Isn't there a `free()`
+missing, like this:
 
-> +	/* Open the .promisor dest file, and fill dest_content with its content */
-> +	dest_promisor_name = mkpathdup("%s-%s.promisor", packtmp, dest_hex);
-> +	dest = xfopen(dest_promisor_name, "r+");
-> +	while (strbuf_getline(&line, dest) != EOF)
-> +		strset_add(&dest_content, line.buf);
-> +
-> +	repo_for_each_pack(repo, p) {
-> +		FILE *source;
-> +		struct stat source_stat;
-> +
-> +		if (!p->pack_promisor)
-> +			continue;
-> +
-> +		if (not_repacked_basenames &&
-> +			strset_contains(not_repacked_basenames, pack_basename(p)))
-> +			continue;
-> +
-> +		strbuf_reset(&source_promisor_name);
-> +		strbuf_addstr(&source_promisor_name, p->pack_name);
-> +		strbuf_strip_suffix(&source_promisor_name, ".pack");
-> +		strbuf_addstr(&source_promisor_name, ".promisor");
-> +
-> +		if (stat(source_promisor_name.buf, &source_stat))
-> +			die(_("File not found: %s"), source_promisor_name.buf);
-> +
-> +		source = xfopen(source_promisor_name.buf, "r");
-> +
-> +		while (strbuf_getline(&line, source) != EOF) {
-> +			struct string_list line_sections = STRING_LIST_INIT_DUP;
-> +			struct object_id oid;
-> +
-> +			/* Split line into <oid>, <ref> and <time> (if <time> exists) */
-> +			string_list_split(&line_sections, line.buf, " ", 3);
-> +
-> +			/* Ignore the lines where <oid> doesn't appear in the dest_pack */
-> +			get_oid_hex_algop(line_sections.items[0].string, &oid, repo->hash_algo);
-> +			if (!find_pack_entry_one(&oid, dest_pack)) {
-> +				string_list_clear(&line_sections, 0);
-> +				continue;
-> +			}
-> +
-> +			/* If <time> doesn't exist, retrieve it and add it to line */
-> +			if (line_sections.nr < 3)
-> +				strbuf_addf(&line, " %" PRItime, (timestamp_t)source_stat.st_mtime);
-> +
-> +			/*
-> +			 * Add the finalized line to dest_to_write and dest_content if it
-> +			 * wasn't already present inside dest_content
-> +			 */
-> +			if (strset_add(&dest_content, line.buf)) {
-> +				strbuf_addbuf(&dest_to_write, &line);
-> +				strbuf_addch(&dest_to_write, '\n');
-> +			}
-> +
-> +			string_list_clear(&line_sections, 0);
-> +		}
-> +
-> +		err = ferror(source);
-> +		err |= fclose(source);
-> +		if (err)
-> +			die(_("Could not read '%s' promisor file"), source_promisor_name.buf);
-> +	}
-> +
-> +	/* If dest_to_write is not empty, then there are new lines to append */
-> +	if (dest_to_write.len) {
-> +		if (fseek(dest, 0L, SEEK_END))
-> +			die_errno(_("fseek failed"));
-> +		fprintf(dest, "%s", dest_to_write.buf);
-> +	}
-> +
-> +	err = ferror(dest);
-> +	err |= fclose(dest);
-> +	if (err)
-> +		die(_("Could not write '%s' promisor file"), dest_promisor_name);
-> +
-> +	close_pack_index(dest_pack);
-> +	free(dest_idx_name);
-> +	free(dest_promisor_name);
-> +	strset_clear(&dest_content);
-> +	strbuf_release(&dest_to_write);
-> +	strbuf_release(&source_promisor_name);
-> +	strbuf_release(&line);
-> +}
-> +
->  static void finish_repacking_promisor_objects(struct repository *repo,
->  					      struct child_process *cmd,
->  					      struct string_list *names,
+---
+ http.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index 8ea1b9d1f6..e765852071 100644
+--- a/http.c
++++ b/http.c
+@@ -2446,8 +2446,10 @@ static int fetch_and_setup_pack_index(struct packfile_list *packs,
+ 	if (!ret)
+ 		close_pack_index(new_pack);
+ 	free(tmp_idx);
+-	if (ret)
++	if (ret) {
++		free(new_pack);
+ 		return -1;
++	}
+
+ 	packfile_list_prepend(packs, new_pack);
+ 	return 0;
+--
+ 
+> > +	/* Open the .promisor dest file, and fill dest_content with its content */
+> > +	dest_promisor_name = mkpathdup("%s-%s.promisor", packtmp, dest_hex);
+> > +	dest = xfopen(dest_promisor_name, "r+");
+> > +	while (strbuf_getline(&line, dest) != EOF)
+> > +		strset_add(&dest_content, line.buf);
+> > +
+> > +	repo_for_each_pack(repo, p) {
+> > +		FILE *source;
+> > +		struct stat source_stat;
+> > +
+> > +		if (!p->pack_promisor)
+> > +			continue;
+> > +
+> > +		if (not_repacked_basenames &&
+> > +			strset_contains(not_repacked_basenames, pack_basename(p)))
+> > +			continue;
+> > +
+
+Thanks Junio,
+
+Lorenzo
