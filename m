@@ -1,73 +1,73 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E152DF132
-	for <git@vger.kernel.org>; Sat, 11 Apr 2026 20:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351233A6B77
+	for <git@vger.kernel.org>; Sat, 11 Apr 2026 20:47:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775939690; cv=none; b=ozwXTNu0WC6iT3UbLpIh6nicV7d9Lnk1j/eUAb/1mRLxs/seb5kgUmjNk3DiKUZxnNxDvXOzZGbDmpU18fxIgGoVD/P6R7Ys0vi8cDL9J4JToFNDer/jgKJXOyjNq5LbrAFp7MITMTf8NiYZHue6fvH0auACZApSJOQ7eefcwG8=
+	t=1775940479; cv=none; b=cczO0wbBhs3DoSDagmyvRNljzYW0cxz58fYWztcSKTRtmWeS0OlNDhcAMxBa4wldm0DT4QG1ljAg5hA9809gxd1xaMcS4/25Ahf8Q0FsKTCJuUDfxU4rs0lhFGshsVc4/H+HXohlW968DafLDT9xLROtA3bpFZ8vMyqf/TummSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775939690; c=relaxed/simple;
-	bh=DrfsXqixUwC8arIJYa8Xz7ajGjStrfe4+66wUDU3Nfc=;
+	s=arc-20240116; t=1775940479; c=relaxed/simple;
+	bh=YirgbTfSVCn7DOmyzjYZDGZNGDUCFiMoCsjqOtdL7oI=;
 	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=PppSbjI3nTf0TADtHaWCWOChXYgocrUbaygkMrLvaZ9/+J4XTrLuQucU+lXHv2KuscfN3D2byvJQb9WahRLSvdUhKnd9QYO+Aa991StHHOW4ypnBBY+TKV0gYw+6x6Y/7SbbpfzINeQ8JnsvGsV5ycr7m0zIyMzeczB2F+mOkyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=OZ623CPd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cTJcG+r3; arc=none smtp.client-ip=103.168.172.155
+	 Subject:Content-Type; b=ESnFOMMvT2a+9KGuKQQmeuv4gdHq26n1T+0uZanQXEI6c74W3xGL5WgDBGPADZKEG9R3DAn7QOkpM0XRfBPL9cK49KcMStqt9UrSTV4xNt3wLgv8pbEZbf2gThoib1F2ES394LtuSMdUI7ze23z7UBHpLxWQ+DkZ0D8eAVP5H/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WG+cDhjX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bmnJBD8w; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="OZ623CPd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cTJcG+r3"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WG+cDhjX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bmnJBD8w"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 866291400082;
-	Sat, 11 Apr 2026 16:34:48 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 4946FEC0094;
+	Sat, 11 Apr 2026 16:47:56 -0400 (EDT)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Sat, 11 Apr 2026 16:34:48 -0400
+  by phl-compute-06.internal (MEProxy); Sat, 11 Apr 2026 16:47:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1775939688;
-	 x=1776026088; bh=ZesyROLc2jA4DDrUtljDLWvp8e2E+I9arpytlYG0HpE=; b=
-	OZ623CPdC/3wV77C8C7h67F9CXW9PvQITqgW+j14t4ldPtVVWk8LWKUonBkM4bEv
-	M6UAn2IUdqMszCCS8Mk4O9Yhw2fhwWZ1uBrvv/kQNbQnSQPHfU4MLvsIUGaXjjNg
-	U1VODostGD2dH5C/kKRwN09BMJov0ZXM/+0EDvosEFAuF6OP2452LKDeFRjHszhX
-	3temzAw6o63fK4/FzEgmwWpiilJwF6695fHhLlk/ooYUbjkkwS8wOzHzykODDRgO
-	dGn46NzyT1jCky8E4vNs0ieeY6E327IMWy/4vTeDUHLo7Zq78knXuPlybgbzLTts
-	73DWA0tXbm77eVpZyumFPw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1775940476;
+	 x=1776026876; bh=cMgzzMF458oWlDlI7Wtar31wfS2ToQi5emJekVG/ZMM=; b=
+	WG+cDhjXIszQO6NoNECPl1LspU9PI70Et60TisA+js0+CTUfVjN39+JCo7oeh2Tn
+	z8O1puW7tgQiOyZjeEubjro6qdRMdVaJzGLDUAeicS7xkAzrifUXnxSf/QQiuFBC
+	rdKboBYeyaQD4Uf59HLj8H+wB/XEKovPvIf6lIlJDL3A5Lbx6J7p2/km9CtkHUj6
+	FCG1AH7RRVJmlzH2UqbZAfPnnmDgdq6U5SF1T0mrdEYor/7BK5BP0/25dKXCWrQM
+	JyeQ9+UnzXMhLZRXeH/0ZcLtBvaTRMoTHE5UU26XoGLeuSzJTEeAqJqKbbFOPgEH
+	gC1JXehHBEWULLVqqWwlLQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1775939688; x=1776026088; bh=Z
-	esyROLc2jA4DDrUtljDLWvp8e2E+I9arpytlYG0HpE=; b=cTJcG+r3Er4IGBmzc
-	YjIp5vSl2RIgFLVbxkMSTdSHjoHzJDTb3wwy7TnHcN/I9uAUWLfNH5YzxwSaS4Qv
-	MtpjNuJ4zdNWqvnMWoyfUJrWM7hn5LVsJSE1FSNlP/Rxv8AgzFoXmugMZ4NPEONm
-	lSYbHVYglilm77j37xEN9hxQA8FfUtSZ6KD0Cj42bYQVfEn/bjln4biYVvQTy2g+
-	4FBPkTgrV6bHBsBqkyvNdoIvw3Vw/PMJIToFEaeNJy25dLxMG82dwfVXSYGwshNi
-	QePtGHk2FEYUBUJr7isNEzQ/RvX63ZmRFg/htBHkIjyJ5Eb+vtN36BDmXIvwcPQE
-	57uFw==
-X-ME-Sender: <xms:aLDaaYZsLqPixNzWnOOlTnnh5ZJPbzRI3H0AnJiEbf6zMvYdhmOrWYg>
-    <xme:aLDaaeNsW0vsiM91_Pqo8D0ymP3d-CsaYqkQ2i-BEcCvvTKmAn0JQ_w44x0P73I-r
-    PLytMth-xKu2lIDv8fl4jDNSn-JaTeRcv-Mu8H_PjqrxC2TWUR-Zp8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeffeefgecutefuodetggdotefrod
+	:x-me-sender:x-sasl-enc; s=fm2; t=1775940476; x=1776026876; bh=c
+	MgzzMF458oWlDlI7Wtar31wfS2ToQi5emJekVG/ZMM=; b=bmnJBD8wOg0toASxL
+	ZEvII0Q8xmNPvo868eL8081u2YdKdeopbTbi1twRt/HW1M2wLnfQlA2czEWxqstA
+	lqwWvuMEyVaHoPMnkRlOs0zyo5pntKfXusis3gcA0sBW5AMHd8hTJnLBL7FdazJs
+	dOrHdaQYoCSA2Kk/EnAyROAy6YI/PnQzJzUYmMmMODRVGPq1RQsSc9iXpDXvWhcN
+	ZLRXjxUO5pN9DqzkraZhRpEQAqDugnoQ3BfcOJHJwsTYSyboFtA1W4L8f5W5K11N
+	Kp2LKYi2Qr8UBDJ8jTyasP1+lD56v5h/J05PMDBbzmJCn313bcE88fLzavPWKJ5i
+	bC0iQ==
+X-ME-Sender: <xms:e7PaaeDUvcUQChxpr3I4RssB26e0BuT8_w_i1uHg132f8KKk7MDTZf4>
+    <xme:e7PaaTW3Ixmsz7uj-oQ6hg1mAkx4rEtu57VWj1eA-cz2zYp3VRsnl-yq6kQUTjTbM
+    J45UIiX_xTqsR8tbW39LSIVHChIyQe-cAD7d6hNDjQ4XotIRfxBBA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeffeefjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
-    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
+    dttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
     ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
-    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    frrghtthgvrhhnpedvieegtdfgteeghfffteetleduveehteefkeffheehfeeihedukeev
+    leevfffhjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
     hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
     nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfh
     hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:aLDaaTEBpTOlTxTmlGLg50LJReTE-xRJRiWr_z73vVMwk3dj7pfx1Q>
-    <xmx:aLDaaeTQWftCDHHqwM5c52OvhfY3ywhzNKl2XIJM_UY0UOkHdBoMKA>
-    <xmx:aLDaactG4erhuveoW3kZMsZcc50wXcRTN_TYvGPM-jM9KBcyxDZPxg>
-    <xmx:aLDaadxxQVLBdAITUumjtLxcVHdSXeEJk-xN1tIaXKO3gte12MYlYw>
-    <xmx:aLDaaSqBeLcYJRTzyqo8nx4vhgyNnubn_aZlnTmCpo95y_kn30iWCHNx>
+X-ME-Proxy: <xmx:fLPaaQs0pyHgAHORmebeHa5I6dF6rLcyK5-w4yNXnYqBjj_4fA9ilw>
+    <xmx:fLPaabZT8Tgz3QGW1WEh3PZfuviND0kPrplzZgu7uW7uTENnIT_hYg>
+    <xmx:fLPaaTWmhPl-10DMPwIlqqNEnAOq25_zWNuG0iLVknXmQZvr2ed6Hw>
+    <xmx:fLPaaf5NQjdpCTY1gczejxxdHmIzSaJDG8hlh2-k_b7i8rnw_4gRZg>
+    <xmx:fLPaaby062mjUc5fcEE-IFn8MVKg0u0Jt_-066iWSKz3LASIHIcSwWs6>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4E7A51EA006B; Sat, 11 Apr 2026 16:34:48 -0400 (EDT)
+	id D1A1E1EA006B; Sat, 11 Apr 2026 16:47:55 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,72 +76,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-ThreadId: A__05JlRJZT-
-Date: Sat, 11 Apr 2026 22:34:27 +0200
+Date: Sat, 11 Apr 2026 22:47:34 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
 To: "Jeff King" <peff@peff.net>, git@vger.kernel.org
-Message-Id: <fb4dff1b-d304-4f29-a96c-373b1a73989b@app.fastmail.com>
-In-Reply-To: <20260411190625.GA754966@coredump.intra.peff.net>
+Message-Id: <236b32a3-a04b-4d20-8290-02a464037b1d@app.fastmail.com>
+In-Reply-To: <fb4dff1b-d304-4f29-a96c-373b1a73989b@app.fastmail.com>
 References: <20260411190625.GA754966@coredump.intra.peff.net>
+ <fb4dff1b-d304-4f29-a96c-373b1a73989b@app.fastmail.com>
 Subject: Re: [PATCH] gitglossary: fix indentation of sub-lists
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Sat, Apr 11, 2026, at 21:06, Jeff King wrote:
-> The glossary entry is a list of terms and their definitions, so
-> multi-paragraph definitions need "+" continuation lines to indicate
-> that they are part of a single entry.
+On Sat, Apr 11, 2026, at 22:34, Kristoffer Haugsbakk wrote:
+> On Sat, Apr 11, 2026, at 21:06, Jeff King wrote:
+>>[snip]
 >
-> When an entry contains a sub-list (say, a bulleted list), the final "+"
-> may become ambiguous: is it connecting the next paragraph to the final
-> entry of the sub-list, or to the original list of definition paragraph=
-s?
+> `Documentation/doc-diff` confirms that this is the effect of this change.
 >
-> Asciidoc generally connects it to the former, even when we mean the
-> latter, and you end up with the next paragraph indented incorrectly,
-> like this:
+>>
+>> The same problem appears in several other spots in the glossary.
 >
->   glob
->     ...defines glob...
+> And that it is the effect for all the other spots at as well: pull a
+> paragraph out of a bullet list back to the previous block (or level).
 >
->     Two consecutive asterisks ("**") in patterns matched
->     against full pathname may have special meaning:
->
->     - ...some special meaning of **...
->
->     - ...another special meaning of **...
->
->     - Other consecutive asterisks are considered invalid.
->
->       Glob magic is incompatible with literal magic.
->
-> That final "Glob magic is incompatible" paragraph is in the wrong spot.
-> It should be at the same level as "Two consecutive asterisks", as it is
-> not part of the final "Other consecutive asterisks" bullet point.
 
-`Documentation/doc-diff` confirms that this is the effect of this change.
+But with `make html` there are some `+` artifacts:
 
->
-> The same problem appears in several other spots in the glossary.
+    + Glob magic is incompatible with literal magic.
+    [...]
+    + Note that when matching against a tree object, attributes are [...]
 
-And that it is the effect for all the other spots at as well: pull a
-paragraph out of a bullet list back to the previous block (or level).
+This is very off the cuff since I have to go now. So I might be missing
+something/made a mistake.
 
-> We can fix this by using "--" markers, which put the sub-list into its
-> own block. This should catch all of the unordered lists in the glossar=
-y,
-> which I found by grepping for " -" list markers.
+I think the first thing is caused by the context already being in an
+open block?
 
-Yes, for what it=E2=80=99s worth I think open blocks (`--`) are a great =
-cure for
-this when you are lucky enough to not already be in an open block.
-
-AsciiDoc is certainly a format.
-
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Just happened to notice this while looking at the "ref" entry.
->
->  Documentation/glossary-content.adoc | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
 >[snip]
