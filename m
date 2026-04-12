@@ -1,70 +1,69 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA699379991
-	for <git@vger.kernel.org>; Sun, 12 Apr 2026 11:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DE437B416
+	for <git@vger.kernel.org>; Sun, 12 Apr 2026 11:51:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775994711; cv=none; b=JqMg0GDEQ6aOEcat/UadOc7vaIddkI3DHaVo40pisMppQW/lPy2neNx4KxbIShstBy3v0kBiOeK4tPh0dlWRaj2EwpwrTIGqkdWuxsg3NJWW8cbA8kLwyy2fj404vPT5BHygESOgWrknuaxitGa3Eo3C7Zsswph/rcWkK+7Z/XY=
+	t=1775994712; cv=none; b=lw0HbI1b3ZKO7s6BznTW3hs2ucrEpLG1DyFpInBYYD8Gi2Ne3lueUakLpRFlmaaO40zluMEHk2KYMIGBDZELTqslKKUzRbjVlRtU7K6QgaK7O2Wn8+ofTjGh7gnV+fLlXgjoaJSiNOZRl/NnfeufbgX52k/Ddjd+Dnk3A2pp7hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775994711; c=relaxed/simple;
-	bh=BhbBMlHe2weVPQhjLVck9zpJsbjGkl2KYvB1ip6Kxb0=;
+	s=arc-20240116; t=1775994712; c=relaxed/simple;
+	bh=wM6X1kOQ8RlWuvfEoeb3y4LRctIqntGIPQzSL9sCO5Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ksNc1hn9L2rZzrjrkggaOeAfD5925+jzCv1Qqp/0vmmP6RZSY32wVod1Lm7gfKVhfKuRjyLgP924k6nu6Hk/El0zhrBqVCnvciPqfwJmRxYB4pX3fvf4XCpioPeMalvvvCAFOtMyKTI/H870QVs3objn8ywXIrf1kmSPlkqlLFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R0smmgp1; arc=none smtp.client-ip=74.125.82.176
+	 MIME-Version:To:Cc; b=Q2moEVofCTc9/b4ey2f8gKxBOiTGSOd3nj16Kj0yot/TPdM+mZ8lgZRVz7gGsdPsY+juaz83fOEm8xAUF0IB+X/owCQzCjozefU8nPsuj2rcG65Em1vVLXS6p1DsJqRCnM5+VQJ4K4lBhD7XP//KSpZqLn1Cldr1G6K1j39Q9hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sx5+DZJy; arc=none smtp.client-ip=74.125.82.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0smmgp1"
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-2c15849aa2cso4211817eec.0
-        for <git@vger.kernel.org>; Sun, 12 Apr 2026 04:51:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sx5+DZJy"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2d64c756111so2891432eec.1
+        for <git@vger.kernel.org>; Sun, 12 Apr 2026 04:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775994708; x=1776599508; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1775994710; x=1776599510; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ij+z/COhdj/tGRH/945uWYZ7SWfYyfPgzOr9ewVDN6Q=;
-        b=R0smmgp1CXvR32cJM9vsg/htG2K4s966AE7gHUBrn1WYh6jH2iZiAo1czKfQQTywK0
-         NhnGrpLuAng+dY074Sm1Abo98OTh0GhPjQIowuOY40aF5qt1envO1bqGIbp4ttlkSe4q
-         A80h+DzD6+fsdpgMTNQvBC2ZhttO71x4MQ0/uzMbBDXmbZtU2uqXaKY1vq4HEFPgbq7d
-         QGVYzEpsN6l3dfCmxI1EJoEWGlJ1rtJa3XBzqEbu2MFKQw0iFgnmF42N/UBz5RKJZyW0
-         VTIhPg3oUYmzsUgYmUUMJ1k09khy+jikBvjTjQ+zColbdQdTE93JkUeihwybUk2ic/ZI
-         HgrQ==
+        bh=45kNGcKZbNJJ2R6xHYB9UH7NOBs25a7xMtYNOIXh2zs=;
+        b=sx5+DZJy0MaDzcdAscOx5vXoTnvHdGz4oBLyUnt/rk92ten8OySJmN+W+NOyf+BkV0
+         8a8zSvUVfyFa/2vqBuzcBkPw+ZrIOmhOcUhikSWcA0kx+bJZzgb8PXjDFHLo8EJqnxjI
+         suAQJmAj3zsdcC4LJDkwlJSql6JJ1SRkiq00YKAVkqRNGJYCgKUumQeGmGzDfOR7x1iF
+         vJA123gG45iv8wcn/7GFzpCx6xOGJNDxXoqNGUKMzKIbwZlcnWLfkaS4Xi80fCIrRNit
+         zCTyr7X6RWMaixfZngZl7UYrBPR+Hib5p25hYYMn+MDvDXZjl85OmTCypmVxcNXnN0C6
+         Fyiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775994708; x=1776599508;
+        d=1e100.net; s=20251104; t=1775994710; x=1776599510;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ij+z/COhdj/tGRH/945uWYZ7SWfYyfPgzOr9ewVDN6Q=;
-        b=AL6gwKsVhiKkTDZ1Yj7ttrx58j0XHSi1JU0tVQCbTR6ccuThJwtoQBHo8zhkdEB+YD
-         APdwlkQonlBLU5TBMxLvBPO4fJ79z8kjDb8lB795wev0Ga8ssmS95tlOusPgF6tc6ivE
-         TbuLy7dZbjjifEEzIRGjBmMmJPU4PsOhml4aeXbtrM5t48HrCaNPHlrj5mUGCbZLY3d1
-         p3mIIQvxR27xmgeiPd1U2X0RDmQwVZXY0Q58lyic/ixZ/Gl7yUParArz8WcWEK2XUhr2
-         PEagiLHsJZilphqajeElsbWoIu0YzZVgk8Blg/9jA504w6rcq8yxdJKRJft2buXBxJrO
-         YClg==
-X-Gm-Message-State: AOJu0YwYticqyJ/0xaGIToLxpuMMt+UFH6H47732VUGpewBufPBhFcaK
-	GtgdwqZjHDGPorwpcv/R+HeyIF01Ten4XI5nvpz8X4Y0xUmecXqZhJbFqpkvgA==
-X-Gm-Gg: AeBDietGcvVtJkICfAepfEHT/alo750NoVX8sL07akvE7nPRgesw2h3l45Q3b2U4rz5
-	UeWFZc6TvWWEErGoZxTev9spjS6TtJIHwjJ6aaI0uHOaek7qQvwygDxPQcHGlJkP36KnvekeHXz
-	gjAAUQRHoBhFLM4wCAjL5LIBey/r6xJcYuGQlc8seziQhl94pzD7J48svJ3SkzfK4yju9+ZotTi
-	jo79urk5b/5pclhOpsf12fUx7e6+22K9qQJ2Tb2MOzLbmGnWY+cUsDkSWXgGhdDJtfItiZHZm75
-	Kx7XdokFs5LsfxHOE8OJ9n1YJEvyOCuH3ZuMR1dUaBv761Bf8fqOKwt6oBeL/LRPTDoGtnF9TFc
-	wHdAgopvs3CqpEgiG4rPTAU1H4IfWg85BrPJ48umWW6ohlZ05SwzUsm9S5VX4+wsFfNOaWjx0OL
-	C2Qis4LycNTamgTDNfsAK9TA3/spLw
-X-Received: by 2002:a05:7300:e82b:b0:2d2:d7b7:5c61 with SMTP id 5a478bee46e88-2d5881a91femr5602237eec.14.1775994708253;
-        Sun, 12 Apr 2026 04:51:48 -0700 (PDT)
+        bh=45kNGcKZbNJJ2R6xHYB9UH7NOBs25a7xMtYNOIXh2zs=;
+        b=Tq0xfVNWAsX+BjEXkH9e6CWrA3LlY1T4Ch/RKjDZ3dEre7Dl8BsG6+pNGyUtIjZA0Z
+         4Js8OH+SzLTPJST89F+GrHuq81vvYAQz0xW6JMzG4zeN1bpjzmXwwDMMyikUBzR5JAml
+         FBUhCmWEKLeApeZ2bIZ3BM9chjkFuhWLp1Ov/xqZXl8aUAxHk9r77xJJQ2N0qkT9X+He
+         V4OWwY1SfE27dRQgFlVYZHNh1T3A/2J71tVLwaY3/7GIG+ixVuR/0H8KcPUv0HK3JIvf
+         Ule4c2AVq6HW40HM6ZdlhIDJxWcbxHBC+XlCi8u8itu4gXeD8u/zSTpVuVQijI3766K5
+         ePtg==
+X-Gm-Message-State: AOJu0YxRweEDzP4cuIllswo4XVxpTgCB8+01qYj0HKvnb4msAhbWqDOm
+	VoVFyWaBgPOguksEdQQK8Oi+Ze3ELp1Y5fnVVZw30WNL1Be9FARmw4x9/PN7rg==
+X-Gm-Gg: AeBDieuLJYCZ5VFosgRRkeSm8L3lOciUl1Rt3/1prrElYiVhTfEqzN3zvQ4kwwIrrrh
+	rbqkF2K7deBXl9pmaqwnRRi1I6i8Vy/EYt+RgAiYuaDb+HkBdGp4tz5ga4x/Z2zePF3X+a2yvtK
+	6ivmjsfuvwRhZ02XlabRMsI2qLoLEyOF+EX9ae0gj4/m2BSyqwmO+hV/DbSVt1xOoU7ZlUWraUv
+	z0XSzkm/KQdSAk+9U866v3DRnPBRRTwfmsl/tHl839SAlaMxi4nZrzpVMe77A+RO1NxoS8c4B2d
+	F1x1dMBy0nT468cUpkYQD4Iig3GGGTt3NzRHOWKNpV+euXYLblr9MiYT+SE2y7O2M/Ub4Nv5aSP
+	zHe8GnprrWYnYKOd6LOjErzqgLh1xyzH9G3marrKQlVHHmLcVx/Fw/beL0TyD5w/cvOWb5YO08g
+	F+7JOUiADBu6+T5ApL+Ms5qmkRq3wO
+X-Received: by 2002:a05:7301:6706:b0:2b8:5159:eca5 with SMTP id 5a478bee46e88-2d5881ad264mr5946160eec.14.1775994709654;
+        Sun, 12 Apr 2026 04:51:49 -0700 (PDT)
 Received: from [127.0.0.1] ([172.182.226.129])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2d55ce46a65sm12490051eec.0.2026.04.12.04.51.47
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2d561cd2c09sm14720046eec.18.2026.04.12.04.51.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Apr 2026 04:51:47 -0700 (PDT)
-Message-Id: <aa519c50be74b36a188f761d82e11e3ebf84adf9.1775994705.git.gitgitgadget@gmail.com>
+        Sun, 12 Apr 2026 04:51:49 -0700 (PDT)
+Message-Id: <8173a4eb724646e66aaf6cd8d78b1560e18c14a2.1775994705.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2234.v10.git.git.1775994705.gitgitgadget@gmail.com>
 References: <pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
 	<pull.2234.v10.git.git.1775994705.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 12 Apr 2026 11:51:42 +0000
-Subject: [PATCH v10 1/4] stash: add --label-ours, --label-theirs, --label-base
- for apply
+Date: Sun, 12 Apr 2026 11:51:43 +0000
+Subject: [PATCH v10 2/4] sequencer: allow create_autostash to run silently
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,186 +82,72 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Allow callers of "git stash apply" to pass custom labels for conflict
-markers instead of the default "Updated upstream" and "Stashed changes".
-Document the new options and add a test.
+Add a silent parameter to create_autostash_internal and introduce
+create_autostash_ref_silent so that callers can create an autostash
+without printing the "Created autostash" message.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/git-stash.adoc | 11 ++++++++++-
- builtin/stash.c              | 32 +++++++++++++++++++++++++-------
- t/t3903-stash.sh             | 29 +++++++++++++++++++++++++++++
- xdiff/xmerge.c               |  6 +++---
- 4 files changed, 67 insertions(+), 11 deletions(-)
+ sequencer.c | 15 +++++++++++----
+ sequencer.h |  1 +
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
-index b05c990ecd..50bb89f483 100644
---- a/Documentation/git-stash.adoc
-+++ b/Documentation/git-stash.adoc
-@@ -12,7 +12,7 @@ git stash list [<log-options>]
- git stash show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
- git stash drop [-q | --quiet] [<stash>]
- git stash pop [--index] [-q | --quiet] [<stash>]
--git stash apply [--index] [-q | --quiet] [<stash>]
-+git stash apply [--index] [-q | --quiet] [--label-ours=<label>] [--label-theirs=<label>] [--label-base=<label>] [<stash>]
- git stash branch <branchname> [<stash>]
- git stash [push] [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
- 	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
-@@ -195,6 +195,15 @@ the index's ones. However, this can fail, when you have conflicts
- (which are stored in the index, where you therefore can no longer
- apply the changes as they were originally).
+diff --git a/sequencer.c b/sequencer.c
+index b7d8dca47f..1197d7d8a0 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4657,7 +4657,8 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
  
-+`--label-ours=<label>`::
-+`--label-theirs=<label>`::
-+`--label-base=<label>`::
-+	These options are only valid for the `apply` command.
-++
-+Use the given labels in conflict markers instead of the default
-+"Updated upstream", "Stashed changes", and "Stash base".
-+`--label-base` only has an effect with merge.conflictStyle=diff3.
-+
- `-k`::
- `--keep-index`::
- `--no-keep-index`::
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 0d27b2fb1f..00314e2b13 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -44,7 +44,7 @@
- #define BUILTIN_STASH_POP_USAGE \
- 	N_("git stash pop [--index] [-q | --quiet] [<stash>]")
- #define BUILTIN_STASH_APPLY_USAGE \
--	N_("git stash apply [--index] [-q | --quiet] [<stash>]")
-+	N_("git stash apply [--index] [-q | --quiet] [--label-ours=<label>] [--label-theirs=<label>] [--label-base=<label>] [<stash>]")
- #define BUILTIN_STASH_BRANCH_USAGE \
- 	N_("git stash branch <branchname> [<stash>]")
- #define BUILTIN_STASH_STORE_USAGE \
-@@ -590,8 +590,11 @@ static void unstage_changes_unless_new(struct object_id *orig_tree)
- 		die(_("could not write index"));
- }
- 
--static int do_apply_stash(const char *prefix, struct stash_info *info,
--			  int index, int quiet)
-+static int do_apply_stash_with_labels(const char *prefix,
-+				      struct stash_info *info,
-+				      int index, int quiet,
-+				      const char *label_ours, const char *label_theirs,
-+				      const char *label_base)
+ static void create_autostash_internal(struct repository *r,
+ 				      const char *path,
+-				      const char *refname)
++				      const char *refname,
++				      bool silent)
  {
- 	int clean, ret;
- 	int has_index = index;
-@@ -643,9 +646,9 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct lock_file lock_file = LOCK_INIT;
+@@ -4702,7 +4703,8 @@ static void create_autostash_internal(struct repository *r,
+ 					&oid, null_oid(the_hash_algo), 0, UPDATE_REFS_DIE_ON_ERR);
+ 		}
  
- 	init_ui_merge_options(&o, the_repository);
+-		printf(_("Created autostash: %s\n"), buf.buf);
++		if (!silent)
++			printf(_("Created autostash: %s\n"), buf.buf);
+ 		if (reset_head(r, &ropts) < 0)
+ 			die(_("could not reset --hard"));
+ 		discard_index(r->index);
+@@ -4714,12 +4716,17 @@ static void create_autostash_internal(struct repository *r,
  
--	o.branch1 = "Updated upstream";
--	o.branch2 = "Stashed changes";
--	o.ancestor = "Stash base";
-+	o.branch1 = label_ours ? label_ours : "Updated upstream";
-+	o.branch2 = label_theirs ? label_theirs : "Stashed changes";
-+	o.ancestor = label_base ? label_base : "Stash base";
- 
- 	if (oideq(&info->b_tree, &c_tree))
- 		o.branch1 = "Version stash was based on";
-@@ -717,17 +720,31 @@ restore_untracked:
- 	return ret;
+ void create_autostash(struct repository *r, const char *path)
+ {
+-	create_autostash_internal(r, path, NULL);
++	create_autostash_internal(r, path, NULL, false);
  }
  
-+static int do_apply_stash(const char *prefix, struct stash_info *info,
-+			  int index, int quiet)
-+{
-+	return do_apply_stash_with_labels(prefix, info, index, quiet,
-+					  NULL, NULL, NULL);
+ void create_autostash_ref(struct repository *r, const char *refname)
+ {
+-	create_autostash_internal(r, NULL, refname);
++	create_autostash_internal(r, NULL, refname, false);
 +}
 +
- static int apply_stash(int argc, const char **argv, const char *prefix,
- 		       struct repository *repo UNUSED)
- {
- 	int ret = -1;
- 	int quiet = 0;
- 	int index = use_index;
-+	const char *label_ours = NULL, *label_theirs = NULL, *label_base = NULL;
- 	struct stash_info info = STASH_INFO_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_BOOL(0, "index", &index,
- 			 N_("attempt to recreate the index")),
-+		OPT_STRING(0, "label-ours", &label_ours, N_("label"),
-+			   N_("label for the upstream side in conflict markers")),
-+		OPT_STRING(0, "label-theirs", &label_theirs, N_("label"),
-+			   N_("label for the stashed side in conflict markers")),
-+		OPT_STRING(0, "label-base", &label_base, N_("label"),
-+			   N_("label for the base in diff3 conflict markers")),
- 		OPT_END()
- 	};
++void create_autostash_ref_silent(struct repository *r, const char *refname)
++{
++	create_autostash_internal(r, NULL, refname, true);
+ }
  
-@@ -737,7 +754,8 @@ static int apply_stash(int argc, const char **argv, const char *prefix,
- 	if (get_stash_info(&info, argc, argv))
- 		goto cleanup;
+ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
+diff --git a/sequencer.h b/sequencer.h
+index a6fa670c7c..570f804457 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -230,6 +230,7 @@ void commit_post_rewrite(struct repository *r,
  
--	ret = do_apply_stash(prefix, &info, index, quiet);
-+	ret = do_apply_stash_with_labels(prefix, &info, index, quiet,
-+					 label_ours, label_theirs, label_base);
- cleanup:
- 	free_stash_info(&info);
- 	return ret;
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 70879941c2..00bcb1f802 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1666,6 +1666,35 @@ test_expect_success 'restore untracked files even when we hit conflicts' '
- 	)
- '
- 
-+test_expect_success 'apply with custom conflict labels' '
-+	git init conflict_labels &&
-+	(
-+		cd conflict_labels &&
-+		test_commit base file &&
-+		echo stashed >file &&
-+		git stash push -m "stashed" &&
-+		test_commit upstream file &&
-+		test_must_fail git -c merge.conflictStyle=diff3 stash apply --label-ours=UP --label-theirs=STASH &&
-+		test_grep "^<<<<<<< UP" file &&
-+		test_grep "^||||||| Stash base" file &&
-+		test_grep "^>>>>>>> STASH" file
-+	)
-+'
-+
-+test_expect_success 'apply with empty conflict labels' '
-+	git init empty_labels &&
-+	(
-+		cd empty_labels &&
-+		test_commit base file &&
-+		echo stashed >file &&
-+		git stash push -m "stashed" &&
-+		test_commit upstream file &&
-+		test_must_fail git stash apply --label-ours= --label-theirs= &&
-+		test_grep "^<<<<<<<$" file &&
-+		test_grep "^>>>>>>>$" file
-+	)
-+'
-+
- test_expect_success 'stash create reports a locked index' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 29dad98c49..659ad4ec97 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -199,9 +199,9 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 			      int size, int i, int style,
- 			      xdmerge_t *m, char *dest, int marker_size)
- {
--	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
--	int marker2_size = (name2 ? strlen(name2) + 1 : 0);
--	int marker3_size = (name3 ? strlen(name3) + 1 : 0);
-+	int marker1_size = (name1 && *name1 ? strlen(name1) + 1 : 0);
-+	int marker2_size = (name2 && *name2 ? strlen(name2) + 1 : 0);
-+	int marker3_size = (name3 && *name3 ? strlen(name3) + 1 : 0);
- 	int needs_cr = is_cr_needed(xe1, xe2, m);
- 
- 	if (marker_size <= 0)
+ void create_autostash(struct repository *r, const char *path);
+ void create_autostash_ref(struct repository *r, const char *refname);
++void create_autostash_ref_silent(struct repository *r, const char *refname);
+ int save_autostash(const char *path);
+ int save_autostash_ref(struct repository *r, const char *refname);
+ int apply_autostash(const char *path);
 -- 
 gitgitgadget
 
