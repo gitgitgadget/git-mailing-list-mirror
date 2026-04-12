@@ -1,208 +1,135 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190742D8793
-	for <git@vger.kernel.org>; Sun, 12 Apr 2026 19:37:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B85243387
+	for <git@vger.kernel.org>; Sun, 12 Apr 2026 19:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776022626; cv=none; b=KwJxIideelwEs/chjOLnra1dZBkaZZ5l0uK9kQLkqPpn3hTlZ4k9Y8WqtdAWPATUjAg5hju0cbXpjc9kFxD+UZa/pnDP0MqWy2aMpikoLyce8WzUaA2VOzXJX/UeDX3dPrsOOtHO8KK4iGjqAZDW42GHbyuBmI1j4Omz4l5UMbg=
+	t=1776023181; cv=none; b=HEBuJFCywWrnIvZfZ+MDCQlGuOO3wu9LucmQLPAzS3C6lNKVYahUBfKxtCnANCx3SqeARyon4b6JYgWXt4LfuAEYCdMr+aJ1La5l7INuU+dW4h3D4mN3+tiAY+rbV1N9EAU7ZDOnxRV0sYD4/nOdIMVKkzY+1ZSOvD61zQYg5iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776022626; c=relaxed/simple;
-	bh=gzTZ1WimXzJBQp72tkSH6vwGyCyTJln36YnT/yVdYN8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OKtrGRfRCBcDlyFJAH3QASZ4Psj5VTwxfVRO6+llWjHm2UULjUI1ipvA0XNDKhnXGQnW6fofpKlXMtppTolxRq7fgNIsI2KaGyc/ORgtVsrrSs/fFSG7j5c09XXFc2I9EFbVd3L9mNGGqjuQlgm/K//qJihwdngLRKpVAhaI9h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YYSot3Qq; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1776023181; c=relaxed/simple;
+	bh=2HEF4m8H7RI8TjouQayU97WUCMq4lV7v3wz0fYOum14=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=njacnYPY0y6xeBnWhsNDFb92d8VNfodYdyaLSMlK437vx6R6/iMxgGTBIb9mhYgwBDWwfGwna6rhdwS8ch00ybI6tJq6a7f2bBL/GJ4ZdG+9GalT/Ms0zQmlOx+BLyK398hM7NAQStR4yE3n6jBBjkfl5cvy2m1PBk1mBKUiGBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=khJnK4aP; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YYSot3Qq"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-824c9da9928so2604153b3a.3
-        for <git@vger.kernel.org>; Sun, 12 Apr 2026 12:37:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="khJnK4aP"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-506a6cf8242so28071501cf.1
+        for <git@vger.kernel.org>; Sun, 12 Apr 2026 12:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776022624; x=1776627424; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MzTb5yrsZp1FbK1iAO8jRJGxQjfjLpvOpcsSMmYU6oE=;
-        b=YYSot3QqiMo8f/03/0aJegM/eKRD9VPGMtB20zWIHhkPOFvgh4bIyhjiF97Q0iDIH1
-         laAs0qW0a7IYKr6zc4oVhThmddZy6xEFlYJEqrOalaqsT+PjJGh9L8Y/I6huUHSiEdso
-         jA//Q5LYfJ8oDV8VfOGDx3/z78AAy70sX9xYQ6KPWTO0KOP7NBLOWWz2kCehLY2s0Aqn
-         lOS79AsUfuNG84LWFUjdmgKC8F3nkQvUhOb3Wb0XyPNmQqAekB5zzgohOTFXH4TbZB5C
-         kxb+KV0+GDuEypV4V5JRugJscyDxTT3Q+9cvPxOL4DIDsl+WJnj6HVvBb57yVO9+AWOp
-         Vn1w==
+        d=gmail.com; s=20251104; t=1776023179; x=1776627979; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qTBLZxDh0BK2sh+SVJc16Qg8UvLHHj9ntet1003zDGc=;
+        b=khJnK4aP8zecdfPrsy5GpjJqjXLwjOYFyysXR8YU6WvNnTUnaISlh2qwDSlC0XTU5t
+         NxibyWxBAYi1nPWMpviQgRmt92qierpyIeNHht1myT5FPjeyD94MVv/+HpAZ5LIyjI50
+         UvF4Eag361t65gMCo0a+ikXT5Yztdqc1xO4EXfEiLzxlnE0k4KTK7p6lMUyoOkkoBlpx
+         BYacMw+PuHY2MTYCBBTO9sYeSiIiDt8N600PflfZzfU2cf6d+HSG8BNRb4jkHE9afOPo
+         tutvlIc67GqbZ1EtfyKk+DX55e+WzTVtp/E8qaLd5w2JimeR4EEulnL++UV1Hsx0+4qu
+         jWUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776022624; x=1776627424;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MzTb5yrsZp1FbK1iAO8jRJGxQjfjLpvOpcsSMmYU6oE=;
-        b=PbfCt2KxzszoOJCbWQvYbrR4LyhptylFxsA0ODQXFXVKT1vDB8+5iu3+JVRchb5Y6G
-         U+NYsTqrEdJ+5Y+G5jeJy66FwSHgpEaWK1IHASy2q+1Cex6JxcI6Y+Eym5pD/9HK3gfv
-         9geHtOEv+imJJwbvFiVGEEzUEelDpPSKwsefToF51iInDRk5rRXb52SKja1qTBxoolEm
-         7IA5c06u6n8XClHhSRS/7HK/m/v6K09ciPHTOu7oevgGwJ1ksS8VJevt9WZpuUjx6BfV
-         ZrM40ozajlPdeq8IB7MQyo7Gq1G2XHFxdzDZUNjS9MNi+OmJiUs0N3Z5T00QbYTtTizz
-         Nyxw==
-X-Gm-Message-State: AOJu0YzkNGC3K1VR4x8uMQA0liLYeY6OC1N1AA0mCTyWCn/XE0Z/Nxhb
-	LvfTLsvlCGMuTJj91NsdtCtHQrOdkdBiSZaF+QZzP8ZazoiJ+yh3O5x7
-X-Gm-Gg: AeBDiesdWj+/rVLYiVxsfzHaJ0C7C77DMok0mEuDvD4OhIgvtyHDKm4lNltImN2CEbj
-	I1Om2dgUz9ybuN1b5P9njZiyfvG+P/p5WiYwq7Otpc4N5hjbOa9HOd6UchxIDWon4TL4LvVgNqQ
-	CFV27QiT3ckaroC9lkp8JptFskZuy3ZpW0cVZ0MqwR2pbxTo4GHICZJPTHAa0iburI5EaMNfkCy
-	xB/0tZaeJz249jqpPBlz85o9Pb1ED2jQRAHzBQo+Ys5kokw9KneSEMSJaBsH26OokoiLBwc7hGZ
-	kBUd9Ootg/SdT/vi4AKps5c/aDOtGx4z4hqR6FLr/tOVTG6XIYjcmUazv6HguJrUnI0xdfruekn
-	dNAtetI2T1+vf6J+zuUOIrOLhRJYkDPKdpC+1IAy9E/jFfQNnAo3AkEKJ7A+iZyQg0/HCe7MbB/
-	99Us8Ohwn44sOAar6oE2T4zF1JYaYEtm8g6p/h83ksgK0BrQ==
-X-Received: by 2002:a05:6a20:7f97:b0:398:9b42:69f7 with SMTP id adf61e73a8af0-39fe3f1ce8emr10994814637.39.1776022624307;
-        Sun, 12 Apr 2026 12:37:04 -0700 (PDT)
-Received: from localhost.localdomain ([42.113.141.88])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c79216fedfdsm8469417a12.4.2026.04.12.12.37.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Apr 2026 12:37:03 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
-To: stolee@gmail.com,
-	gitster@pobox.com
-Cc: git@vger.kernel.org,
-	Trieu Huynh <vikingtc4@gmail.com>
-Subject: [GSoC PATCH v2] backfill: add --[no-]progress option
-Date: Mon, 13 Apr 2026 02:36:59 +0700
-Message-ID: <20260412193659.26288-1-viking4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20251104; t=1776023179; x=1776627979;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qTBLZxDh0BK2sh+SVJc16Qg8UvLHHj9ntet1003zDGc=;
+        b=bpSwIZcfJprE+X0auqgAADOYhoV9iNcLxd7s9LYKTY/mtzVZdu1miNQtzv6xsvQxTF
+         opllUa7b9UzjHmhE5lwSKPiEymLlFhHaehlDihggmaBMXhkA47ifJyTTBqfdDrHIedp1
+         kIJy+tDhe/aDshIgG3SkXW/8cKanpIo5sJZ0ectRgcej41yDBTE+DdzYI8jb6EPNudxM
+         q+Iu8z/WDiaA+TWR4d+UMY0ZOWhCs/0TNQ+OqrLbY9kkfBgYbDRGRd+EPB3vWICeEw1r
+         gGZQlyi5YI74Cw/z+FlAecn6avshiPIR11W4PfBQRdzP/4+TczPXK0OCDMHNh0jSxGHx
+         IZGg==
+X-Gm-Message-State: AOJu0YwaGNx97N9rP3OLq7folu31F6q7jph0aoV557xyZwaqBFrgqXzA
+	Zwxv8+W6/LYYfMj+Xt5GyxSsSXJfsChAJrdZTxf5Pv5u+PdYWAOvFffcyo8r+jBO
+X-Gm-Gg: AeBDietaaq0u0d7152yqCcfH2jDhdy9V0XIFvYrQvj9JUSyFMCjORdX/JFTpvLzIPXO
+	RTmDIGnYzBxDrtzDlgEnaq3L/PW3uDpcuReOHj9BhzZknWvFStq9y/midgTkguLaMXfikAr4Y8c
+	57NEw5R7X6SAdMZLfS5o5trvpTaGptksazqSUvMbfY3puW/AbswLcmzB5hQZnImeRJN0L0RfCx9
+	fZidEjgmC0Kq6k67JIUasElx6/5nlbTgowRIOJGHGBRRk/0Z+a/WKi4NpG2m3lz0cmtNl8332eu
+	U+s/YsL8nkiIZF+GoU+rcF8weACliTB+qY6v57Hmmw5iE1jgaCWVGuSl5MoKp6ri+QzQxPDKToj
+	FcCGBhVEvuB87kIUEfVzFpOQVcR9p3docqgSJ/jfnC1XHo6GjVte+OSjMoGcw7qgpbrhKaKN6E8
+	bK0yuUudJCy2//aMlDrQPX0Y0uoR68oZP04jo7p448A+uD+ZN+5IBUtHvCIwYxy/JaVpHZNIS9J
+	Qp+zucbJzRmpAVk4IAB2zdZm1ely3j83L4yNh/9/ANtDA==
+X-Received: by 2002:a05:622a:2b06:b0:50d:714a:327a with SMTP id d75a77b69052e-50dd5aac203mr173726101cf.10.1776023179437;
+        Sun, 12 Apr 2026 12:46:19 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:84d:e5ce:d94:dc76? ([2605:a601:9b88:8300:84d:e5ce:d94:dc76])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50dd5cde374sm75383941cf.17.2026.04.12.12.46.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Apr 2026 12:46:18 -0700 (PDT)
+Message-ID: <d2cf741c-a381-42a6-9d26-e38481696adb@gmail.com>
+Date: Sun, 12 Apr 2026 15:46:17 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH v2] backfill: add --[no-]progress option
+To: Trieu Huynh <vikingtc4@gmail.com>, gitster@pobox.com
+Cc: git@vger.kernel.org
+References: <20260412193659.26288-1-viking4@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260412193659.26288-1-viking4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Trieu Huynh <vikingtc4@gmail.com>
+On 4/12/26 3:36 PM, Trieu Huynh wrote:
+> From: Trieu Huynh <vikingtc4@gmail.com>
+> 
+> 'git backfill' does not show an overall progress bar across
+> batches, giving no cross-batch feedback during potentially
+> long-running operations on large repositories.  By contrast,
+> 'git fetch', 'git gc', and 'git index-pack' all support
+> --[no-]progress.
+> 
+> Add a --[no-]progress option that tracks the total number of
+> missing blobs downloaded across all batches, defaulting to
+> showing progress when stderr is a terminal (matching the
+> behaviour of 'git fetch').
+> 
+> Add tests to verify that:
+>   - progress is shown by default on a TTY
+>   - --progress forces output regardless of TTY
+>   - --no-progress suppresses output
 
-'git backfill' does not show an overall progress bar across
-batches, giving no cross-batch feedback during potentially
-long-running operations on large repositories.  By contrast,
-'git fetch', 'git gc', and 'git index-pack' all support
---[no-]progress.
+I think the tests do show an improvement, but we're missing
+the interaction with the underlying fetch's progress
+indicators. I don't see any mention of how your backfill
+progress indicators will work with or against the fetch's
+progress from the remote and index-pack steps.
 
-Add a --[no-]progress option that tracks the total number of
-missing blobs downloaded across all batches, defaulting to
-showing progress when stderr is a terminal (matching the
-behaviour of 'git fetch').
+Further, if a user supplies 'git backfill --no-progress'
+then they are probably saying "I don't want any progress
+indicators" and that would signal also that the fetch should
+be quiet. This is perhaps the key detail that makes your
+current version unable to move forward. It creates an
+implication that it doesn't follow-through on.
 
-Add tests to verify that:
- - progress is shown by default on a TTY
- - --progress forces output regardless of TTY
- - --no-progress suppresses output
+One way to go about this is to hide the 'git fetch' output
+entirely by passing '--quiet' unconditionally from the
+backfill command. But this may also be too much for users
+who want to watch the download statistics from the remote.
 
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
----
- builtin/backfill.c  | 18 +++++++++++++++++-
- t/t5620-backfill.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 1 deletion(-)
+Perhaps a way to have a robust set that allows all things
+to interact is to do the following:
 
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index d794dd842f..e90c899071 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -26,7 +26,7 @@
- #include "path-walk.h"
- 
- static const char * const builtin_backfill_usage[] = {
--	N_("git backfill [--min-batch-size=<n>] [--[no-]sparse]"),
-+	N_("git backfill [--min-batch-size=<n>] [--[no-]sparse] [--[no-]progress]"),
- 	NULL
- };
- 
-@@ -36,6 +36,9 @@ struct backfill_context {
- 	size_t min_batch_size;
- 	int sparse;
- 	struct rev_info revs;
-+	int show_progress;
-+	size_t nr_downloaded;
-+	struct progress *progress;
- };
- 
- static void backfill_context_clear(struct backfill_context *ctx)
-@@ -48,6 +51,7 @@ static void download_batch(struct backfill_context *ctx)
- 	promisor_remote_get_direct(ctx->repo,
- 				   ctx->current_batch.oid,
- 				   ctx->current_batch.nr);
-+	ctx->nr_downloaded += ctx->current_batch.nr;
- 	oid_array_clear(&ctx->current_batch);
- 
- 	/*
-@@ -55,6 +59,7 @@ static void download_batch(struct backfill_context *ctx)
- 	 * avoid possible duplicate downloads of the same objects.
- 	 */
- 	odb_reprepare(ctx->repo->objects);
-+	display_progress(ctx->progress, ctx->nr_downloaded);
- }
- 
- static int fill_missing_blobs(const char *path UNUSED,
-@@ -121,12 +126,16 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 		.min_batch_size = 50000,
- 		.sparse = -1,
- 		.revs = REV_INFO_INIT,
-+		.nr_downloaded = 0,
-+		.show_progress = -1,
- 	};
- 	struct option options[] = {
- 		OPT_UNSIGNED(0, "min-batch-size", &ctx.min_batch_size,
- 			     N_("Minimum number of objects to request at a time")),
- 		OPT_BOOL(0, "sparse", &ctx.sparse,
- 			 N_("Restrict the missing objects to the current sparse-checkout")),
-+		OPT_BOOL(0, "progress", &ctx.show_progress,
-+			 N_("show progress while downloading missing objects")),
- 		OPT_END(),
- 	};
- 	struct repo_config_values *cfg = repo_config_values(the_repository);
-@@ -150,7 +159,14 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 	if (ctx.sparse < 0)
- 		ctx.sparse = cfg->apply_sparse_checkout;
- 
-+	if (ctx.show_progress < 0)
-+		ctx.show_progress = isatty(2);
-+
-+	if (ctx.show_progress)
-+		ctx.progress = start_progress(ctx.repo,
-+					      _("Downloading missing blobs"), 0);
- 	result = do_backfill(&ctx);
-+	stop_progress(&ctx.progress);
- 	backfill_context_clear(&ctx);
- 	release_revisions(&ctx.revs);
- 	return result;
-diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index f3b5e39493..a75b84d8ac 100755
---- a/t/t5620-backfill.sh
-+++ b/t/t5620-backfill.sh
-@@ -133,6 +133,30 @@ test_expect_success 'do partial clone 2, backfill min batch size' '
- 	test_line_count = 0 revs2
- '
- 
-+test_expect_success TTY 'backfill shows progress on tty by default' '
-+	git clone --no-checkout --filter=blob:none \
-+		--single-branch --branch=main \
-+		"file://$(pwd)/srv.bare" clone-tty &&
-+	test_terminal env GIT_PROGRESS_DELAY=0 git -C clone-tty backfill 2>err &&
-+	test_grep "Downloading missing blobs" err
-+'
-+
-+test_expect_success 'backfill --progress shows progress' '
-+	git clone --no-checkout --filter=blob:none \
-+		--single-branch --branch=main \
-+		"file://$(pwd)/srv.bare" clone-progress &&
-+	git -C clone-progress backfill --progress 2>err &&
-+	test_grep "Downloading missing blobs" err
-+'
-+
-+test_expect_success 'backfill --no-progress suppresses progress' '
-+	git clone --no-checkout --filter=blob:none \
-+		--single-branch --branch=main \
-+		"file://$(pwd)/srv.bare" clone-no-progress &&
-+	git -C clone-no-progress backfill --no-progress 2>err &&
-+	test_grep ! "Downloading missing blobs" err
-+'
-+
- test_expect_success 'backfill --sparse without sparse-checkout fails' '
- 	git init not-sparse &&
- 	test_must_fail git -C not-sparse backfill --sparse 2>err &&
--- 
-2.43.0
+1. Add a --[no-]verbose option that is off by default. The
+    implementation sends the --quiet flag to 'git fetch' if
+    --verbose isn't provided from the user. This reduces the
+    noise for the default user.
+
+2. Add a --[no-]progress option as you've provided here.
+
+The complexity at the end is about what happens when the
+user provides both --verbose and --progress, which is the
+situation that this patch is currently in. How do the
+progress indicators mingle with the verbose fetch output?
+
+Thanks,
+-Stolee
 
