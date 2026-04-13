@@ -1,123 +1,140 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573AF346AD7
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 22:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F061C68F
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 23:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776120322; cv=none; b=WxGnZzdhTngt+umuAVGqOQdH/MrqhXp/llfvxICyJvrcIA7SKt/IbS7K2MqoAncH+W0/c7Sly0gzJikoLcYofFXM6SWq+oRjjDH+aV1Ugqiy2VWmmar7u/Ykkc9dwr3/stqcjXNc8jj5DR6CotSYDJHK8pEFDoqZeYhHsJ1PeqY=
+	t=1776124601; cv=none; b=Oqpe7PYUHoPOpEmvX4ZhRsxDWm3a77WbkOxefB9nPbM6neVzQjs1mium/k6ieYESnwfToDegFwNAuK/wmuka7kxwfbyNT+pd+O/YhT8D/IncovAYo158U6kodYLcC/g3Lb+cqkA2uBiHtN8gxVWtyS0ziEf0f+UI0WAKNN4s+/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776120322; c=relaxed/simple;
-	bh=p+ZYhF2CPsbUhxiFvbYoPlhREgl3acLhkhTsoxGLYIA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GyRY+9LXr2XVygtMGMuJiXhU9bY5h9ZhTzObvEk8j/gKXWG31RHyiBRztqWMwhHrOIlp+9Ggt69QUoNAzzaH6fIGjojpoxolfJk0o+RGkcbwHMjoHqzWZZgHkxuQ0KlpS7GUgoT6aMhI1rJrPSE5l9VbNQzW2PksPF0WOCsoDCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WFdOP1/V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dx9ej/Hx; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776124601; c=relaxed/simple;
+	bh=7LZKCh5vDUgXSax/VikLnzMJrRA2As5wVsRUi8LrWhc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=hmV+WIPwpqiaHzg12PMsQNygZYCVF1S4FiZT98SqpglhOKeEtAAG+oQapn5KCAD3SkrPdIGR2C0NNl/bUmdzi5Nk91m6NUwc8/Zwramm1JRBNN0xN6FBYXTin1i3GDQgW9jchFOtllO0SEihOgbPi6OaIZM9pDye1WSbz2SrMns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=dGt9HCU7; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WFdOP1/V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dx9ej/Hx"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id AA7F5EC046D;
-	Mon, 13 Apr 2026 18:45:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 13 Apr 2026 18:45:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776120320; x=1776206720; bh=a/KL99uujS
-	Yl8z5bi+9ZHnQeW4Ia5Qziivyo+FiUBcA=; b=WFdOP1/Vo25FSuYjGowAM5IXlE
-	y/gYXUbGHIkhBKMytLy0JJbV3gOAlxaSZEkGTNEMDGXdURrr74+xLKMi8nh4jx89
-	1zCQErrECKHnlcVheb2umjk74qq2kgqVYBabsbXkNDJLjU1INv+WJ/ShB58fbwIx
-	t28RVciY5qOhZzJaiJLlUsrwcjZEgat6g3kxBSl9M9m8/eUubS4hfnSBpM35n0cO
-	EEArkAcg5VuvLNgajLVswMLEhVNyfF/0s6Gz7p0LIrdlIQIsH/uvTA5Xt1KPxOWT
-	+sD/lu21iasSWEw1HQr0902pXFRAfaSm1muCtGIGrqITu5rmTYm4C3Q1kUlw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776120320; x=1776206720; bh=a/KL99uujSYl8z5bi+9ZHnQeW4Ia5Qziivy
-	o+FiUBcA=; b=dx9ej/HxYz+/rNNJWoLKPAo3VksoX7V15Uk5doHWd+folF6pVms
-	HWQI65vFP9c63wEE5onsVPshlzSOLP8iPBUK+6lF1pIi3JphOzufaWpy/AgGypSn
-	G6PYmXgxRlnLhsAJQ2ZaKq+AtQDoLz/q+6hX56DZfzEMqDkMjpXrrw7y/YnHuoDy
-	DLTki4KsC1EPEFw7KT0zxNboYAJBm2vDChVDDai00xv/fSkEaczn3mwFJqH7Tea5
-	DPJfnEjpdsC7X00EtyyjXcNUVPLgfdxQA8KwCsuklDOr0rXf2fJ10Vw3lcT0L9s6
-	/vQsEN4XzF031mCG7Z3NrgPW9to5Vrb9Z/w==
-X-ME-Sender: <xms:AHLdafNzukZT70oZ9qTIWiIb7hOEvKPRgkiiXh5sCfjWVhwfowSU5g>
-    <xme:AHLdacO0YT49LA7VCX5HofKKdhKuv-_yj5vtEsjqpYFavBtodYqXfKo5j5LZ6ta6F
-    9L3g-0Xddi4rLkW74iOMTx8uz9gwNmrffay1aatJgbBmq0NE_APfA>
-X-ME-Received: <xmr:AHLdaQgFCQEIzX22H79mQPpjyDZGH5DhZD3DDYZdbCk2XzMxaxOHCeomGXqhbiHRlR79aLtw9mIB-1l3HShVe9tDpWPTkg2B3Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefleegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthh
-    hrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:AHLdaZvCa601wx0WsN9gQhEsuqCF3s_3tcDgCjs6Gb8-4Jw4uHHaMg>
-    <xmx:AHLdaWTyUcDHiWSPb-XBk0_g1ka9e9ZNgZevK2qaxjfuj4HOjrl8gg>
-    <xmx:AHLdaV1sJwFgDWm7sJCVojHrcc0HqALsj_ccIjUiyBBrOxJ93HqLxQ>
-    <xmx:AHLdaTsNu-gh1qah8wzuTgJdrKop0uGyRQ-DE0S4TCeQ0oQ53F4lfw>
-    <xmx:AHLdabR7tHkYk4qEtfu7KUdy4rW7-uEE0xeQLZ6fq8fw1OsjC25IvLMw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Apr 2026 18:45:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Chris
- Torek <chris.torek@gmail.com>,  Jeff King <peff@peff.net>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v10 0/4] checkout: 'autostash' for branch switching
-In-Reply-To: <pull.2234.v10.git.git.1775994705.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Sun, 12 Apr 2026 11:51:41
-	+0000")
-References: <pull.2234.v9.git.git.1775854874.gitgitgadget@gmail.com>
-	<pull.2234.v10.git.git.1775994705.gitgitgadget@gmail.com>
-Date: Mon, 13 Apr 2026 15:45:17 -0700
-Message-ID: <xmqqa4v6fpj6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="dGt9HCU7"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79a2ee65171so59059297b3.2
+        for <git@vger.kernel.org>; Mon, 13 Apr 2026 16:56:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1776124599; x=1776729399; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jJpCfobZUo9Pt4LA/hVYFLkC0tTiZCaKr1U0xhXhHX4=;
+        b=dGt9HCU7aq4T299ixSfYvz1H8/tP4m+gBg+rdSvNtLZojv1lnVF14JuLOA2zlkuwk4
+         pnQbm05S5urf//m/FPnEx0C5OcALOrmwr4y0SlzygJQnzpHJ4fH12GlNNmFaHOcE5FqY
+         r1Yskw3JVAozv+4xkxXSanAt2tss2F6gYfJl/RHZO4YwYE8K2NvSN7019m5xApYcIf82
+         T5RrD6lO9PuJuPyRyecLf9NQFIFvpmJrr6tzA9HKervb4+4l90/MjEO8pSnMwW6CA0yI
+         QGf5lpoiwfzvNn8RMNp8GNHmowWanY0ZnfjsfXXgsswK/RMrZxAYI83Lsf5Kpy/B9TTE
+         SRvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776124599; x=1776729399;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jJpCfobZUo9Pt4LA/hVYFLkC0tTiZCaKr1U0xhXhHX4=;
+        b=BMaFpYtZmO0S76ehsugPrPin58peNdYAdcPpTgy0y5zhf4i1Uov8pc4R6J/x1ZITv9
+         6qx1d97W+xpbUIMQvxfF4iJpmDVSZC7cD47r920wVAnJRrggn8IhNRfNc4GriFJSnZVx
+         aty+Amehd7Y5zv238zCRtB3GQ0RTxKKpQ99n1HE1VzX7ew9/QfMH0IyKaUNjwnqinoF/
+         LAw3oEFrfMGsRgPytAWh7KqNOnwIP6H2YiiA5HcISSNfp/j0QWMx7ifsL2M3Oxc2XGgR
+         QjUKVsRWHxqDSL+RMixa9bswm88yoUSqlES73yT+jNn6FPgjMV2bV/sf4lUVNTkMCHLh
+         r8tQ==
+X-Gm-Message-State: AOJu0Yyrm9K/MPCQHnN7G1tswqJK9OU4zXE3p9Grs8Kj6AVM6gzsxEst
+	aLu7OAwxxCIRPyW0MjtQx7iYZGGpb07A2PGNNq0mM9pRQF5pA594CurHmYkoO/v/ee6nBCIeo//
+	oFjXd2Sk=
+X-Gm-Gg: AeBDietZTVPUR+pDKQlOaqFxFZfRyK2KomzveJn+EeuZ/UwQtdVC/m2hlFNq58w12VU
+	rm06fJGvX5V7l5HfWBhO4G/UxGnAmzvyWYaumM1l1eiJPX8JAIY2RKlVMftedScEKmMbXa+tUlE
+	+uC0L69/UYmKvbAUQb1S2t+T7kysxpc3qrkNl3vuR164LzvnyRNrh+m3rSJX4P5GZXAcFoDaT2l
+	YXfx3FKjyj02W830OShF4Lr4BvfGgXoykqcN0Hi59W4nxgFxvJ/lyblJzZnv0KQn6Q9wGfYaNMJ
+	jSi5i4iXClxykexbKPOGPJJqndDTE5hdWx4UAqCLgtKGO2EfKI+tEyfpy+yLsf3DhRHcFk+bVtb
+	Bg3I2uirsBi5cahwwuaX/o8sooAUmVLxsQt16kGxy4JV6juGCGRitYuVqv8WnpIamNF1J9pki3N
+	FrDBNWaLP0XHXz43TMmIKyDmgol1IalRxnQ/NsCOuZWBlfc154pVwU/8IBD8pfK5f6mKFx/A8ck
+	Gg8+aw8R+4mEIhyssYoNOOzckMFFQeRekSzy8iBUcMtkav61pnBx9y0vIrqoihX0XpRQRAuORfM
+	QCAnp5m1BZ+HZ9MbydwpbpyhjhE=
+X-Received: by 2002:a05:690c:c511:b0:7a4:e4e5:3900 with SMTP id 00721157ae682-7af714762edmr162786197b3.31.1776124599007;
+        Mon, 13 Apr 2026 16:56:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b2efe89b47sm21387987b3.10.2026.04.13.16.56.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2026 16:56:38 -0700 (PDT)
+Date: Mon, 13 Apr 2026 19:56:37 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/8] pack-bitmap: fix various pseudo-merge bugs
+Message-ID: <cover.1776124588.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This series fixes several bugs in the pseudo-merge bitmap implementation
+that caused the pseudo-merge application path to be effectively broken
+during fill-in traversal.
 
-> Harald Nordgren (4):
->   stash: add --label-ours, --label-theirs, --label-base for apply
->   sequencer: allow create_autostash to run silently
->   sequencer: teach autostash apply to take optional conflict marker
->     labels
->   checkout: -m (--merge) uses autostash when switching branches
+Peff noticed that this code path was never triggered by the existing
+test suite, and investigating that observation uncovered a handful of
+bugs, some compounding.
 
-I have been trying this in my real workflow and noticed only one
-minor annoyance, which is that the stash entry only says
-"autostash", which is not very illuminating.
+The first two patches introduce test infrastructure: a 'bitmap write'
+test helper that gives tests precise control over which commits receive
+individual bitmaps, and a set of "test_expect_failure" tests
+demonstrating each bug.
 
-Because I almost always have either 'master' or 'next' checked out,
-when I start outlining a "how about this" kind of change, they are
-made on top of these branches, but when I say "checkout -m topic"
-after that, I _know_ that the rough draft change that becomes a
-stash entry is meant to be part of the "topic", either to extend it
-or refine it.  Because the code that creates the stash entry knows
-that we were in the process of moving to 'topic', it would be nice
-to see the name of the branch we are moving to (i.e., 'topic') on
-the title, e.g., "autostash while switching to 'topic'".
+The next four patches fix the bugs in the per-commit pseudo-merge
+lookup:
 
-Other than that, it is a very pleasant usability enhancement.
+  - The pseudo-merge commit lookup table was sorted by OID rather than
+    by bit position, causing the reader's binary search to fail.
 
-Thanks.
+  - The binary search in pseudo_merge_at() had its lo/hi updates
+    swapped.
+
+  - The extended pseudo-merge lookup path had three compounding bugs: a
+    wrong entry-size calculation in the writer, a misinterpretation of
+    extended table entries in the reader, and a silently-swallowed error
+    check.
+
+The final two patches fix issues in pseudo-merge group selection:
+
+  - find_pseudo_merge_group_for_ref() did not parse commits before
+    inspecting their dates, so all candidates had date == 0 and were
+    unconditionally placed in the "stable" bucket.
+
+  - The config validation for bitmapPseudoMerge.*.sampleRate accepted 0,
+    which leads to a division by zero once the date classification is
+    fixed and the unstable code path is exercised.
+
+There is also a small fix for a regex leak when the pattern key is
+overridden in config.
+
+Thanks in advance for your review!
+
+Taylor Blau (8):
+  t/helper: add 'test-tool bitmap write' subcommand
+  t5333: demonstrate various pseudo-merge bugs
+  pack-bitmap-write: sort pseudo-merge commit lookup table in pack order
+  pack-bitmap: fix inverted binary search in `pseudo_merge_at()`
+  pack-bitmap: fix pseudo-merge lookup for shared commits
+  pack-bitmap: parse commits in `find_pseudo_merge_group_for_ref()`
+  pack-bitmap: reject pseudo-merge "sampleRate" of 0
+  pack-bitmap: prevent pattern leak on pseudo-merge re-assignment
+
+ pack-bitmap-write.c             |  23 +++-
+ pseudo-merge.c                  |  19 ++-
+ t/helper/test-bitmap.c          | 110 ++++++++++++++-
+ t/t5310-pack-bitmaps.sh         |  24 ++++
+ t/t5333-pseudo-merge-bitmaps.sh | 230 ++++++++++++++++++++++++++++++++
+ 5 files changed, 396 insertions(+), 10 deletions(-)
 
 
-
+base-commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
+-- 
+2.54.0.rc1.73.g8f4e0170952
