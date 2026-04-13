@@ -1,62 +1,103 @@
-Received: from outbound.pv.icloud.com (pv-2004j-snip4-4.eps.apple.com [57.103.65.165])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C603BFE41
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 11:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.65.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722C13C343F
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 13:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776078811; cv=none; b=o3f+RDQI9VSn8K2+2ggNUYSt8ybFnmk6c05zFKDsvKJTSP/nWrY7qhWcNUqPTp5WZzMnHBdnPxcmYKnkFW4IdvkkS8pX+8ZDTjoEJ8vLIiEGcZHL9aNTK4MbWTsYi/6WsChw2+9ZHEtL2wzNOZoB6orSduVcxvceTXCtji7/rwo=
+	t=1776086821; cv=none; b=DuGmFKxm/hYirPmDfPRIrZjTpuI82PiGJ0rHp1V0RDPdDeQdfKaDWOr/MkXZGJAZJjKv1dIpUmjHCgg3pS39dz4Ao3lE8L5nwxKLp4crhX6Vvfkv6xqxQRRjUc5z+wcCh/OZYk5XklL68aeU14LCxmPdAeerh8TuUEnKoYJHQQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776078811; c=relaxed/simple;
-	bh=BxHwjCABiI3nlcGkkw8QZso2Q1DLLzU+Fh8dCZaZLPU=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=kiFouDypE9JLQ/zFHheaxJZy2g8VfklLniBs2X5ZaxO876+b6z/RmbiiSoXPzlFwmE8aRLzyvwh44IWhVz48MF8KFSCNinEAcC/pFgdz129EeedNnHEeVS0/ilMtzjatkmK1jYf0ytC2cUEg1S5Sqte05tnO2W+FXRakPw8vfqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=jQIBhaUG; arc=none smtp.client-ip=57.103.65.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1776086821; c=relaxed/simple;
+	bh=WdJMTYBCL29dGQMR6fWs2nb2nF5sYou6Gf2kdphCjWM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=KozVwnAwNuLh2OkOUWnt/Vvr7bXfRj6fEt3fKTp9lJTliy2k4jjoVsQeJThn2CpKuopu69wrPRunb/q1VHt5GaUlyu9YhkMJIT2T6f7170AEYo1k2t2RJ5XRtoCnff7vPWYWjQ3YCVp8xQnUEFpBkYP4KtMyQzsIyREN+6A1dYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=brWg9Jch; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzoIJVsu; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="jQIBhaUG"
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-west-1a-100-percent-8 (Postfix) with ESMTPS id 1CDA218001A4
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 11:13:28 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1776078810; x=1778670810; bh=BxHwjCABiI3nlcGkkw8QZso2Q1DLLzU+Fh8dCZaZLPU=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=jQIBhaUGwkd44kdiaIf0bzVAtLFH9BbOGkdhhMzbSSBuGgZ/nEPCl+hjapj5dI4ZNm/lp3AvIotbDVDLrorSolOzwNwzBVlf374SJW0z10UhiuNI5LPPQyGC+wi2sy/46ulKxrBmMiO/yi3LGoDUbk9pN7Vih5MJyRwy5DlsEyOqawiq5Y1y2uUopPfqwlwdQZyUTPjsxGwS5rtNVYEKIwNwNbUaz1MRNDa4qRyZOsOT6QoqpxZ5uFJHiGZfd+UHQf2w6ff+FtzRa8QdbKA116h9PL7j++Lxfe35iAznF0NUfq2SETSSA79TtpQN/pkoFEi9gqeyubEMdEVWMjMvJQ==
-Received: from smtpclient.apple (unknown [17.56.9.36])
-	by p00-icloudmta-asmtp-us-west-1a-100-percent-8 (Postfix) with ESMTPSA id 1E28E1801AA9
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 11:13:28 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: =?utf-8?Q?=C4=90=C3=A0o_Th=E1=BB=8B_Y=E1=BA=BFn_Hoa?= <daothiyenhoa1988@icloud.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="brWg9Jch";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzoIJVsu"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A6B36EC0448;
+	Mon, 13 Apr 2026 09:26:57 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 13 Apr 2026 09:26:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776086817;
+	 x=1776173217; bh=WdJMTYBCL29dGQMR6fWs2nb2nF5sYou6Gf2kdphCjWM=; b=
+	brWg9Jch9AFYKZNn7+TSZU0bL1qRBhJkgye8cSLzhyYiwRI8R6tEcDLuj9HlerOM
+	BPgFLUQKWeg5u9iu+IO9QH3S0Hnabfd7uODc7Zx26HNvSrPmKriro9O3ew+Sp5RR
+	DJSaRkCPerDLkutWpKdz83kePJc1ymgnOjeY6N2erG2CqudHfPJjTz/XLokjVXMz
+	679rC1bOhUFTLkfHVjL1XDe7bozcqZ8IbTFeL+1YQyzKCrSKx2X6WdNZiDf2Rmn4
+	iERlBYwk5Q5rZj5UpHGlIo1rsXEWj+cjn1xYRhXpOX0J/QVf/JcR9I4NQlTst0Pp
+	NyLhPVOAZh26IxTKXin7dw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776086817; x=
+	1776173217; bh=WdJMTYBCL29dGQMR6fWs2nb2nF5sYou6Gf2kdphCjWM=; b=j
+	zoIJVsuL09JU0p5MFdRXjveEMUOj5brCe6XibpMI3ZvZtC2PXn6U2YBMhJTEWJuM
+	7nLefM/SbWgrwSMNwQVDQNSOCntkfOZ8N9zpjVQGos7UxqKe046PZhp7tOUmFT1J
+	TNfDOOuTvsAbPWBA9bnolb7JRDnmHvlkxKmCM8lsWVhfYAAc7ppWWat2YGBVJtMo
+	MyCJiyaic3Cs45kt+n/bBjsjAvPNBm+NYnXqPloyndTlfpeYuQ0KFwD9oqHe1xto
+	K4Csp6e0c8bNd8BLtUSiQupbD1te8r1uu7/MdYmwaYfue7KBYYhVa/rxiJWLz2qG
+	KeebcwT/ejOg/PUAXh2NQ==
+X-ME-Sender: <xms:Ie_caYMe4PhAWVsxVG4nQ48-5ee8t1UdvyBG-1HaPtE40CmSnbpj6B0>
+    <xme:Ie_caZyDKenueBLxYU3lVe-Zih0XEZOIDO99mu9kSbgI9rl3yBmDkv0PlwWb7JvlH
+    7VRANY9NcQ4zObpF7mkV5i1IrmKWuwxUdB1sG-zqMypvtW0me-jTA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefkeefhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepjhgrtghkmhgrnhgssehgohhoghhlvgdrtghomh
+    dprhgtphhtthhopehlihhnuhhssehutghlrgdrvgguuhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Ie_caX0HmCBX3qIUloyo-oQ2UBmRCe_oFykz0jMKJMhDd8i2km73fQ>
+    <xmx:Ie_caT6M0Z2DHD3D1DVyE4sMDFOlyJXtUhRMrOQYrf_Rwq8AU6_6Lw>
+    <xmx:Ie_caSWgoTALSwapuBw7sXmJoaBeHrFDtJ2EIvTOGqKKb-CRuEzTaw>
+    <xmx:Ie_caaC7ZPGFFGUUO792l2woOHJLEfxnIF5K_AIvclXSoB_TnM11_g>
+    <xmx:Ie_cab5Mq58I2OydLhvzwt6RlrfpWXzr1_AcM_G0QTSxDmCHJfBVI2iV>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 35C831EA006B; Mon, 13 Apr 2026 09:26:57 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Mon, 13 Apr 2026 18:13:13 +0700
-Subject: ji
-Message-Id: <44A59B29-D5E6-480C-8C01-6342544F1A3F@icloud.com>
+MIME-Version: 1.0
+X-ThreadId: AUgMtfrvVkyR
+Date: Mon, 13 Apr 2026 15:26:36 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
 To: git@vger.kernel.org
-X-Mailer: iPhone Mail (23C71)
-X-Proofpoint-ORIG-GUID: L5Fl6Aok7wBjU7Vw16kpnZ0q7iyqmLYo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDExMSBTYWx0ZWRfX5ihoYRNrylnh
- pjdQUPhH3haFV9t+bn/nkrwpMKuteUQqSfJ4Dl/kWjQfOWqTsDzwd5wRGBiNxvQxUeCxcX3go/1
- 96lCMR8mE+HnAeU0g07/9XbgsHdaemynXdjACzv45Nmz6PqjKsXEHY+giNLfU5ElvD57EP0lPc9
- VjETOq+xv2msByrlISo4KwPBLUJiMfUr0DtOVR3tgW/Q/fp5b/n/itAAb7tYFbU1vuJTc0PQehw
- ic7yU/yPLOJerC7zIbatxhHhaiBiheDlmOhlbqvkCUy2a4dFKI/WbVC6F4eWlxj3vzG9O7KA5HL
- XbnP7jpj4mC3nHqHMOcCpbb/qhBaAmUqnoj0OB4wZnSXODDgWtRyvFwOPSKICg=
-X-Proofpoint-GUID: L5Fl6Aok7wBjU7Vw16kpnZ0q7iyqmLYo
-X-Authority-Info-Out: v=2.4 cv=KajfcAYD c=1 sm=1 tr=0 ts=69dccfd9
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=M51BFTxLslgA:10 a=x7bEGLp0ZPQA:10 a=gzsT_StbWjkA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=R3LUhDQCI47KWELQOWwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-13_03,2026-04-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- adultscore=0 mlxlogscore=476 bulkscore=0 clxscore=1011 lowpriorityscore=0
- mlxscore=0 phishscore=0 malwarescore=0 spamscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2604130111
+Cc: "Christian Couder" <christian.couder@gmail.com>, jackmanb@google.com,
+ "Linus Arver" <linus@ucla.edu>
+Message-Id: <5302cfb4-f2a4-48bf-98ce-98b74e7a6568@app.fastmail.com>
+In-Reply-To: <V2_trailer_comment_lines.61c@msgid.xyz>
+References: <CV_doc_int-tr_key_format.533@msgid.xyz>
+ <V2_CV_doc_int-tr_key_format.613@msgid.xyz>
+ <V2_trailer_comment_lines.61c@msgid.xyz>
+Subject: Re: [PATCH v2 9/9] doc: intepret-trailers: document comment line treatment
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+> [PATCH v2 9/9] doc: intepret-trailers: document comment line treatment
 
-=C4=90=C6=B0=E1=BB=A3c g=E1=BB=ADi t=E1=BB=AB iPhone c=E1=BB=A7a t=C3=B4i=
+s/intepret-trailers/interpret-trailers/
+
+Didn=E2=80=99t line up
+
+On Mon, Apr 13, 2026, at 12:21, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>[snip]
