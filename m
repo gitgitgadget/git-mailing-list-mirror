@@ -1,155 +1,140 @@
-Received: from mail-lf1-f68.google.com (mail-lf1-f68.google.com [209.85.167.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB26AF4F1
-	for <git@vger.kernel.org>; Sun, 12 Apr 2026 23:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.68
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776037511; cv=pass; b=M/ScHheeaff5M/y4tZk55lkr628b9y53xvHQFC3UNRHdGZsShXeqxw2vWoL8p6601lClD3LDFX3fO+XahbSdgYnfc099uFmG/l1/EvTeKe2fW1SrwSfOv4gbq4lEnliuu+15kvN9+ige48084Jr2Oha2GJzXSxjO26Qzhufd4mk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776037511; c=relaxed/simple;
-	bh=ONQO7k/tbjALq9RAMf4UOGWfI/lOEFoPUbUqeU46ZR8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=PQc9XNHX9YoV790eT4ZR5l3GtkJz3PX1WTNrO31STq5XERA4JSW6BgSZiF6W2j7BLvIhs0Ala+vVEl0Hf/oWgwz3RycvUELqPIded4epGJxbnu5m+IQSR7Nik38p3qh6d5BvjLZQZrZpDPPsNIG8sXCmj9JLPsuC7XYc0aumJ00=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KSMtTpVF; arc=pass smtp.client-ip=209.85.167.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4149F23372C
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 05:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776059286; cv=none; b=njSmpbRUrxCYg5rWTndfJVZC3cuku0pMPkPayMaS17HkMoaMLB1PtRC3dJ3sLZAreTLt2GEShdjbZFgpv8uGcE27p+qVp2ClaKzuVjSJaJ1Mzt9bzMiCia3FbU49bAMtpMUpBnL66oIX0tWod5d3en6kSm8bLwnnuM8KwesNhtA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776059286; c=relaxed/simple;
+	bh=SloxuybH2O2qgvl3484AUgUhi0j5LHLzDAXhyeGEhbI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KfpIesr+lM90tiC+vYl3AtTEzsZUDZ2SbojfG5QyJDRmEfzr1XGr0qZaNDgJZJnTK25QviJZStuUexdgbAKjq3sWnW+HOwe4P8fu3QJErz35R+ru7eBN3ypfYp2i9OMlFymZWKelMK0F6rYMzToUKKZatSwhisj21RbS7sBoX0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=0PwI9DvU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KqV/Cbe0; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KSMtTpVF"
-Received: by mail-lf1-f68.google.com with SMTP id 2adb3069b0e04-5a3af1b7549so4793731e87.1
-        for <git@vger.kernel.org>; Sun, 12 Apr 2026 16:45:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776037507; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jeSudXOn3cUCcuyyVEzTL9SFU3FkxkMdfBcZCAu899BmxqIiAbnCbj1sau4W2w0xIS
-         QLQl1cSjpovb0RN9A5VKEK5+hBr7dTL0RMpW80MAQSgN9Ppr+b50dXLZQzqFpdFoNdm3
-         ffEf59QfvrNWR7aMAjNCfFEmuH7QvjFCO/kWk4n1N7D4p4cwlILFFOx7tqn5Kb7/77hE
-         ae7umGRWvmBJf51+sH3sYRmKv/AC6ZFqXg0240It26iFYSx11pnaFv/33mrGr9W5ccrC
-         4OSPPRkgWw0b4EAPjLuwy61Qiy0n3GI1L58dDByHNHTX6NEsqBhjRe2aznjJyaGGuGRx
-         /Yog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=EcugTq8nV4ACyRi3tMDqDF0ZM/zCWTG4TOTLs3kjIpQ=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=E1IYsHDLi2AcTjacPvlTeFmFwl/PrckQMfj9pp4b9KevNltytwo38DHvn+AKbOWZFx
-         xYSG0hIKvT+jPvYXlOU7JInJY3t+YMfO3d7TOetU+lyAEyk0DAzy3wUnJvNzFvfgTkG6
-         08yy/SsFqzzJENw7XXprascuGO2JPDWnkQBZZaPIAj4GMr6oWilKuTPj7maTeNtAl3l6
-         7GmlyshI4PA2szREI3SI9MKYZJj3xtoz8J6c1trd4X4Iv3ldj6rtcCnIG7zVpTjo304t
-         IQQiXiwVBUqKRbKMmG2f9BpLsLod1D8RYC5IMCWlCrPJkVKhdXCUVcabJFvSCwnzFdT9
-         47AA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776037507; x=1776642307; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EcugTq8nV4ACyRi3tMDqDF0ZM/zCWTG4TOTLs3kjIpQ=;
-        b=KSMtTpVFdU1bWJ5t6NZhcVg74UJIjP9mozL7hJAO1tu/MClKmLLzUplOlur1y90T0z
-         yOdqJKi/PaYfrdl6FJESesm7MOSZ0+/uaw+6bidOC4kNqFjGbNaPEABRZLFAH1pFoPPc
-         bJCPqIyfPmyFB0aeGV5ajbBOdsywgNxSzm94w1X4CSujdPJuFs8aF+k9zta7KaYRihVR
-         nAaRvQIi7HxAMlXMjMZ0YW2NtTS7A5gAqA8zdkcOw/uzel9+Grslf2Y5ch0V7ATA+Wjo
-         6zvd0PuStryF2ftgEWefN0hQLxvmrj1IbectAfZOQxuRB7KBAd4TPAsb7EZ3Ja9qGioA
-         TR4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776037507; x=1776642307;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EcugTq8nV4ACyRi3tMDqDF0ZM/zCWTG4TOTLs3kjIpQ=;
-        b=V2gfOD3H4tzO/Ro5jwZdwbxQ7F9KlTrUQj0r7zK32fJkKAL3zFe8+bbp5XxCHND6dB
-         Gpo8FjqKyFUGCorCVvOTRumWfGcntZzAh1rZkCL0qF2f8iR1nNi96Vu1kWsx6tOA5u+Z
-         Kdy/MEQTUchkgQrGuNH1XEdDlAqgqjYFa/BsE6rHnojdilAgLCmpBzcpaft328gblE2S
-         gyU/UGCzGMPEgbpC283ZZIYjOwOrsFM0ZZLqdwFt5pU8J5p5mYL3Kc0dryXYpahGnfrh
-         UIXiJf1rb9/Oz1KMyxEwOim85rJqybPc53TW3s08i6y0ZUsyB4YJP+Wh/P14Z7flMEhv
-         s7hQ==
-X-Gm-Message-State: AOJu0YwDoNtLdOHYCiVCBDzI/70txsCarVf2b1ovGJUjkGZ6AYY0rp7e
-	qBEFGXcQIAiKYeGKiQmy6wwGBerHkExvtqo/1Srwroz1FhBt5EwTSIP+bLfNK8bt8zFscZKsMJH
-	W/sZy49Yz5Xs5lZNIXydF6PQ50HYQILW9DTlJUha0Sw==
-X-Gm-Gg: AeBDietvOPx2LGu9Jh7eRzoq9xqjFzQxITeVGcwufzi5CXVuMlXjnq9iDnkkkKgH9iS
-	2dNF+FaoybzxNhiCRWvQ/ts9d5preP7tBb2/c47KkU3pQOZMIjlaFMccWe5MLw6LxD7YQ1Lr4H9
-	mzB1MOB1fWq8Y8e5ls7eitEuVO0Ldp0PpdyiwPO905uZ/veYiAfPIO4aEnsFq8MazxtvDVW+F/H
-	k6trLB2a4Ly/4zzoLd6mSqq5oP4jUBIHQbxxTYkODECLwxcAZDEm82EJ/sKZKEzYWaiiVbqLAiH
-	GHmRgIaWWXj8vQvfuuFhVLWZAJcDLZnlvNnKdPAsjov2EA3AOYCR5YmyARsLbDkxq2Ds0OCKkVc
-	=
-X-Received: by 2002:a05:6512:3194:b0:5a3:ff6b:cff5 with SMTP id
- 2adb3069b0e04-5a3ff6bd3b0mr137207e87.20.1776037507229; Sun, 12 Apr 2026
- 16:45:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="0PwI9DvU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KqV/Cbe0"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F3A531400054;
+	Mon, 13 Apr 2026 01:48:01 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 13 Apr 2026 01:48:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1776059281; x=1776145681; bh=LZFaT8x0Wz
+	Vr7kZe8pbrlX/qV8oyK/HR9egDM6YmwH8=; b=0PwI9DvULXnCSqIupsLsWbt5KY
+	p7grh7sPXZt5CJZw8tTu0zM8EYSEwTrXVIg903ZJcgM6klJcHJEJ5jSxJOUkwR12
+	wAENOG1rH9SCo9vf9Z3adkqxqbC9d0Iv8MM+YPcRz28eYGdPCDL8iRYn3k3bkW5D
+	44oQCngRORyfvpXT9ACTXpGtOD4WcR2ZcPVaZBfVE2JKWVxBQMB27Yi9kziRKOOO
+	OncNbxLGK52t4EOxzKGaWm7duf9s1UgNa23/NfoSzmV724nj0nDUB7K/4mHR3PSA
+	oks2eRsHaVKx5IeeuLcKIG/pq7bYLbyGtNhPyU5/OWzPGab/sArRd1BCLlEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776059281; x=1776145681; bh=LZFaT8x0WzVr7kZe8pbrlX/qV8oyK/HR9eg
+	DM6YmwH8=; b=KqV/Cbe0pyoXC9yJcBQQrw1vYazzVcxPCnjiLaRtbIL/tezmS7m
+	Fi+RfT2NfL8OjW6b9qINgdnqFOY4NuXUxqQ6VV7mHrac4PxRfqdbNZ5ta7QHj5sk
+	zi+D72Ti2Xpy+URGu/EBvbkGfi5iqr1rJMNchGns7qZKvd8bkG6S/t5+IZVYLcWs
+	xZVZHC+FDunuxAsTL4RkiK9O7AOUZugD5RrPHWKGHk2+R9ia5N88/+S/lm847cDR
+	XKrGUEdqnUMcPCs1ldjFd3MzkMGZfPUIAEeImX52qe5M2K1Q1HLFPhB0TYZknOIR
+	FjfNGKxxGRQYfi9BBV1CHn99FLm96/WwTLQ==
+X-ME-Sender: <xms:kYPcacy0GxmJrkAotEN6sFeLjV-eZhV3miB1ZhFJrEA7-QXAC0qeCw>
+    <xme:kYPcaWTi3gEJof61xM__it8eHvLgCwrQszBzAwRixY87Fn65s32a9COU6e8yl_Cwq
+    3i-ZdIfYwPwVXZMGV3ylkdmbmsHzdeM4lx3Kjt8NZPsSywzLSqyFQ>
+X-ME-Received: <xmr:kYPcab8yxauvgyPn3Pb6xqpqX11ebnRNH4gstS2G4H3U2_hgSyC2ETPcsS-Qc8J-sqFogLB3LNonY3uL3xS5_HOFhOtcJO8R07MKbyw6yOU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefjeegvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kYPcaVp-fOAXBlVnDxdS8a4UsLav9QwWu8fjBLX9E3Og_iJdFIAFgQ>
+    <xmx:kYPcaQkmRd-eKn7siWPDVPmtX6AgOYFQ7AkMbDluhxcsrXVW3ealKA>
+    <xmx:kYPcaUIzgayJiZ4HHTbVDbqXLLBOzQFhVftXVcDFdq8NMNK0bk6d0w>
+    <xmx:kYPcadzRfN-WlEyJXiUYnF7dgHfWkUAAzKTSt-AgKv4dFCjz84s2sw>
+    <xmx:kYPcaYgcdEgW9QFzFHoHRn746TN3uhZ9dxM04vFH6Jbo70LiNGTeJHZq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Apr 2026 01:48:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8c58fff8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Apr 2026 05:47:59 +0000 (UTC)
+Date: Mon, 13 Apr 2026 07:47:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 03/18] setup: stop using `the_repository` in
+ `is_inside_git_dir()`
+Message-ID: <adyDiEW0-wRlgp6E@pks.im>
+References: <20260330-pks-setup-wo-the-repository-v1-0-0d2e822837aa@pks.im>
+ <20260330-pks-setup-wo-the-repository-v1-3-0d2e822837aa@pks.im>
+ <CAOLa=ZS-bHiG0wyjwfzSbX4TgC_Jfpk2NXHAf=dUm6CvVxx80Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: AMMAAAR BAKSHI <the.ammaar.ic@gmail.com>
-Date: Mon, 13 Apr 2026 05:13:34 +0530
-X-Gm-Features: AQROBzAXo2Gt6ZPUIIbtb8cESXWwwN17yPxy7Kx6wlAfP8comwpxQqumeiE47AU
-Message-ID: <CACqkj0pxih1BSa8z9+Yw-g55G1rNcvvQao+SLwQ7B-eQodcvgg@mail.gmail.com>
-Subject: [RFC] New command: git-recall -- a developer standup/activity tool
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZS-bHiG0wyjwfzSbX4TgC_Jfpk2NXHAf=dUm6CvVxx80Q@mail.gmail.com>
 
-Hi,
+On Thu, Apr 09, 2026 at 08:58:03AM -0400, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Similar as with the preceding commit, `is_inside_git_dir()` determines
+> > whether the current working directory is located inside the gitdir of
+> > `the_repository`. Perform the same refactoring by dropping the caching
+> > mechanism and injecting the repository that shall be checked.
+> >
+> 
+> The patch looks good. I do wonder if these functions need a new home,
+> 'setup.c' is fine, but it is also bloated.
 
-I'd like to propose a new command: `git recall`.
+I agree that they don't really make a ton of sense in "setup.c". In
+general, I would love to split up that file into two pieces:
 
-## Motivation
+  - The pieces required to detect a repository and discover its exact
+    configuration. So scanning the current working directory and its
+    parent directories, paying attention to environment variables, and
+    detecting the repository format.
 
-Developers often need a quick way to review what they (or their team)
-committed recently -- for standups, weekly summaries, or general
-self-review. Currently this requires constructing a `git log` invocation
-with --author, --since, --oneline, and formatting flags, which is
-non-obvious for casual users.
+  - The pieces required to configure the repository based on the
+    findings.
 
-## Proposal
+I would really like to completely detangle these two things from one
+another so that the detection logic will basically just give us a
+structure that contains all relevant information. And that info can then
+be passed into "repository.c" to create a new repository for us based on
+the info.
 
-`git recall` would be a porcelain command that shows a formatted
-summary of recent commits, grouped by date:
+This would unlock a couple of benefits:
 
-  git recall              # last 1 week (default)
-  git recall --day        # last 1 day
-  git recall --week -2    # last 2 weeks
-  git recall --month      # last 1 month
-  git recall --year       # last 1 year
+  - Creating a repository will become "pure", as we only depend on
+    passed-in info and not on the environment anymore.
 
-Example output:
+  - We can unify the creation of a repository into, instead of having
+    roughly the same logic in both "setup.c" and "repository.c".
 
-  --------------------------------------------------
-    git recall  --  Last Week  (since 2026-04-06)
-  --------------------------------------------------
-    2026-04-11
-    448e66e  Add login page  @ 19:41  Alice
-    2026-04-10
-    91bc3fa  Fix null pointer  @ 14:22  Bob
-  --------------------------------------------------
-    Total commits: 2
-  --------------------------------------------------
+  - We can remove some logic that essentially re-configures a repo
+    multiple times as we currently do in "setup.c", which should lead to
+    a much cleaner design.
 
-## Implementation
+This is already thinking ahead quite a bit though. The next step would
+be to de-globalize some other functionality in "setup.c" first in the
+next patch series. But afterwards I'd indeed like to tackle this problem
+in the subsequent step.
 
-I have a working standalone implementation in pure C with no
-dependencies, available at:
+Thanks!
 
-  https://github.com/AMMAAR-IC/git-recall
-
-It currently runs as an external binary (git-recall). I am interested
-in contributing this as a built-in Git subcommand if the community
-finds the idea worthwhile.
-
-I am aware that similar output can be produced via:
-
-  git log --oneline --since=1.week.ago --author=$(git config user.name)
-
-However, git recall aims to provide a more discoverable, human-friendly
-interface for this common workflow, similar to how `git switch` and
-`git restore` were introduced to simplify `git checkout`.
-
-## Questions for the community
-
-1. Is this functionality considered within scope for a built-in command?
-2. Would `git recall` be an appropriate name, or would something like
-   `git activity` or `git standup` be preferred?
-3. Are there existing plans or discussions around a similar feature?
-
-I am happy to write a proper patch series if the idea is well-received.
-
-Thank you for your time.
-
-Ammaar Bakshi
-https://github.com/AMMAAR-IC/git-recall
+Patrick
