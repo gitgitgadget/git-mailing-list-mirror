@@ -1,86 +1,85 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7C9355F4E
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 10:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158CA4A0C
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 10:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776075711; cv=none; b=ZiLG6VdgCgSmu9mLDj98N99GKNmdJ/NEX6bn4N7++cmtZ++OLEzjUcMKx+0jMvjoYHWDEnm4/uY3NqUy3oyKr/7tgml47L6+fuP++aYBmspM2JZn1bQwaT6dI552pmNFPmimsONCnAjkpdT7RRkksGiL8gPUfTW8LW0wAuuzN7A=
+	t=1776075729; cv=none; b=u0Y3nL8SJu80bwlqkWk3oHDmeBc0cyrMasuQ2bBPBwXHMYbsDZPjYydGTLtXERZmnGGRP2Ma3VdLXQHNw6haeQV3N42OFDkvBFYBLTvDhRMqek3+1wHkpMe2aJpQOmswYg5bzS3afTT/aq+4aVEzDKe3rTto0Is5OxocNqHRdHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776075711; c=relaxed/simple;
-	bh=C43/kAkcj5GBI6SZXPanOjb2neRTu7BvVIj2RVDJB90=;
+	s=arc-20240116; t=1776075729; c=relaxed/simple;
+	bh=r1YNEZJmYZTXMSkQ4Dww/7s3FUNvKyv+TsvK71qTD2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LWDGXa0HrRG9gGx4xG9HLml5eNFQr9KT/Eh4nWJbrg8+vF+S92XdczIawl3hUrnofOveT6WgaHxtkatsTtc/z2KcDQI2jnGOLubZ5tQ1whftNXckYEq7fDi7r8PmfxaXedkkZOQ8QJpdKh0XFtWjZp0qy9tn7aCdlY6fSwfQnfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Qn2Ik05S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fWf7rL2I; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=FTV+y91YH+XoihHVstK8qgYvR7jDam1Ip2Y0fgoOQGE//yVBTpruiU1d505gVRbOWPJrduFKnBq69gqPcKi7Q13edO6moFV+srpMlEWUz9dMIEESAAtLQHbONbns+X79Jx9xptpyVh1WITon1MDddQCE+MsKzHXKlEAVHz+aXjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=gwNf6nqp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nRWTw6wu; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Qn2Ik05S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fWf7rL2I"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E7C3814000EA;
-	Mon, 13 Apr 2026 06:21:48 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="gwNf6nqp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nRWTw6wu"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 45D46EC03F7;
+	Mon, 13 Apr 2026 06:22:07 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 13 Apr 2026 06:21:48 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 13 Apr 2026 06:22:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776075708;
-	 x=1776162108; bh=KusFap9jl6s8QBzNYX4mQvcyGc13sblTvJOk9u148Sw=; b=
-	Qn2Ik05SHxp+klmucQ7YE++wdVpGaQM2yF+M1HsWTz1HY/oJKBcAu1DlcAG3qcmN
-	qE53VV/dVUxaHtIgeB7VF/mmIk/rc5fIq4X9axTcjHQEl/O3L0Q38AYoKzD+RuZQ
-	hT6ka+myrLU0vtRGaNSnTB/kklOmcUwk8IbmvFMPpc9P9li28MouPEsnXJXjxORg
-	qR8qAC4XZ42e1VIz2zKa89V3djcKs1k2WhnjQbQv9RLiVxnzlLWv4yko2pQJZY3U
-	iP4knp7PaT9lJtImStyHkFa0gPht4nU4MoxRhr2cLH7ByGSPOKYmTz4cXUF5gHy5
-	KUMZyQkjrfnetPxC8199pQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776075727;
+	 x=1776162127; bh=bRmjhgNS9Be1KICWfEtd6/XEvgJ1JTJEEGG+8PfOs4I=; b=
+	gwNf6nqpYYg+cqDPupdksASBHL/5rjlQadk74DRhfOy7qaX8TdJimFBmudOuowkT
+	EpcLovAvBb4xZq/KwXKnP8HsgfHPMsJNz6UVEd5wNpxZUsz9OawDYuP4BPq2136v
+	3gC7Scfvjwk+e5cOoNygs5GPxfojjkDWsAoYnMbjl9hjrpfJSXkaySZ2v7BUb+yl
+	p/qapVAsa8gSFUk03bNufJfnb5F3cJPov0uJ533sKQ4mkE9tGAEIykSJF9qBm8Ph
+	uPJrcPTHiF7IlDxQxopr/OXxuMZWAVEfe6R1Z7pdOb3hHjC/Adok8DeklfcmRs9K
+	TFOmbHyglBM6M4Wg5sAtww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776075708; x=
-	1776162108; bh=KusFap9jl6s8QBzNYX4mQvcyGc13sblTvJOk9u148Sw=; b=f
-	Wf7rL2IBM/NOe4b1swp7rMEaKn9SM5uQMLEMtKVT5TH9B76XtYhIOSXv3+t7sv9+
-	U2Ph8bjT8wbh12+WpZIyo9HZ+oQU1m3yyO3JU9bJlaYoWPUiqKP00tFjmxOYN3v1
-	77LcglJ76j4bpquAMxAfWb/tkWpbQ0+ug/yvD+gEHRdT8w9DoXVpWN9CQ4nTPV6M
-	MN9TM+e7pilNBoLIps/nT7nL8/srRnZ31jHvGH8cUwoR8EbOSqk04kWzINFCECdZ
-	xGAoTqile74r8rh20iCY/zrr62TtydEFbIdg++YFgWqGboQi0X1LpmOcacg0LO8M
-	P9QianNiAWX5NkBqgxYbA==
-X-ME-Sender: <xms:vMPcaSK9h0wSOvTK-xpDGqEs-UvuoNLX3yUJRtzYzHuPosDeZgUkpKM>
-    <xme:vMPcaRD6PHwnI_zfrLC8feiqaR4evhMXnhJub6PKRxQxjkJMyEkhP6RRq8cZpp5dP
-    sk5XFsIO6T2OvxM_PLiXOlnCsh2or8ZAoUBSBvC0YtcDM7KyQZ6cJw>
-X-ME-Received: <xmr:vMPcabBrc7j2QZa6myfTc85IpZgSla0IAJlNXbLszUYOltulo68wkfH9CW4tQC91OMB5NsEcldJaLEVJ8LOJhqL9d--KV4cnLjEWFz-5iKt_PTJF-gY0STI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefjeelkecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776075727; x=
+	1776162127; bh=bRmjhgNS9Be1KICWfEtd6/XEvgJ1JTJEEGG+8PfOs4I=; b=n
+	RWTw6wuUhU8l/CDQRibLYQuuLeKspeAMYGu4PSmJk3hK81I1uh4mE39Wd9osudxS
+	vN7GEFUIwspEmOzq/F2ojAUf1ibb9xLUmewEgJwZH8Dw5oJjJke1tMZI08SpAgp+
+	P9ecbLGRIGtqx2kvRyc7dK9mPNq2TpGuHf/kytP9Kq/Jfl5gMbBZpQySei0kiQI9
+	4mX+ycig3ZgdXGw42k5R7DOvMT7lALPvbNMTlG5Bxw3o8kWYmUOwh5Qjd/Vb01xm
+	fY1i+RpPo8oTGJUNsLgFa02MJ1pmkUfpLxkL/bCFibm7f/wcPVHPnUE2hbo3IuDE
+	uO+ZvOfvkX+WJYQJIMLQA==
+X-ME-Sender: <xms:z8PcacbadqrJOXT4_bsWBI1a7JnafYTyyZy0wiN2VuDcbdQ1ql9TRPE>
+    <xme:z8PcaeTw3dp7it8CzQTej1xA-_IzTdGGfixb7g06XxHhc-ib27YU762sPvuLx2Kob
+    2YLA6rtwH-pLSjzm_uEbQQ1PzKc5vsnZNC7m5cmEQhvWH3G5l4AWA>
+X-ME-Received: <xmr:z8PcafT7LgRxDD0MM7xDeE-MXrvuY9oje1jMg1dTWMRtHeCHuxxez5SZGNWp69wP-hpFsUAZmL1ACiWra6AtA4HXtQUC0S3VTTkf49b1YN3rI3oKsUEUF2E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefjeeljecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
-    cuvffnffculddvfedmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdej
+    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdej
     necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpedulefgueeiueetkeelieefgedufeehteekhfej
-    ffekvdeuhedtvefhkeeikefhgfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtth
-    hopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
-    gvpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepjhgrtghkmhgrnhgssehgohhoghhlvgdrtghomhdprhgtphhtthhope
-    hlihhnuhhssehutghlrgdrvgguuh
-X-ME-Proxy: <xmx:vMPcaTAkxqdx2mh2Y0Ysuui-68HwLjy4E6YVVdYxGoek8I_I-E0UgA>
-    <xmx:vMPcaWpFNqUqx8mdrC3H3ceRjp-oeGH4I7jUrA-rmgmGArHc-5Q7lA>
-    <xmx:vMPcadkjLQjQa-k9t45878DXdCYmv900RTZjQXZcceyER4ETUMx26Q>
-    <xmx:vMPcaWyBsplLp2RiDgpAa63WXV1pZ22JHig3MRrv7wUO_-ac3xC4Mw>
-    <xmx:vMPcaURmf2lFUTeY2Qf98EKEmlqYDVD_K7XKAH1qIK_7HHCkTf2FyjHr>
+    drtghomhenucggtffrrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeiheegfedt
+    udduffegjefhkeetudeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
+    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopegthhhrihhsthhirghnrd
+    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjrggtkhhmrghnsgesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtoheplhhinhhushesuhgtlhgrrdgvughu
+X-ME-Proxy: <xmx:z8PcaSSp72D3JljDlNhVXaDoiP6L0Ysq2aitMceRDW1k6MvyL8TW0w>
+    <xmx:z8PcaU4ZR_IBh_Sbsj-qUl3etGIXy8Xsa6nyxEA8J10Yjo9NEYfUnA>
+    <xmx:z8Pcae0z5gStVXBhzS2-eoXLW2xN-2q7Q6S1bqDQCBAbvrlvzVybbw>
+    <xmx:z8PcafBRYKNYApre8G3v6SuuI-8qndlhDCH7cpQAeW9KVfBvWEmY-w>
+    <xmx:z8PcaZhUHzK0GxgifAZ0AV2nTS0O_6gUqISwJpde598CVlhlVgdbR8g7>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Apr 2026 06:21:46 -0400 (EDT)
+ 13 Apr 2026 06:22:05 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	christian.couder@gmail.com,
 	jackmanb@google.com,
 	Linus Arver <linus@ucla.edu>
-Subject: [PATCH v2 1/9] doc: interpret-trailers: stop fixating on RFC 822
-Date: Mon, 13 Apr 2026 12:21:00 +0200
-Message-ID: <V2_less_RFC_822_focus.614@msgid.xyz>
+Subject: [PATCH v2 2/9] =?UTF-8?q?doc:=20interpret-trailers:=20replace=20?= =?UTF-8?q?=E2=80=9Clines=E2=80=9D=20with=20=E2=80=9Cmetadata=E2=80=9D?=
+Date: Mon, 13 Apr 2026 12:21:01 +0200
+Message-ID: <V2_metadata_not_lines.615@msgid.xyz>
 X-Mailer: git-send-email 2.53.0.32.gf6228eaf9cc
 In-Reply-To: <V2_CV_doc_int-tr_key_format.613@msgid.xyz>
 References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V2_CV_doc_int-tr_key_format.613@msgid.xyz>
@@ -95,77 +94,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This command handles the trailers metadata format. But the command
-isn’t introduced as such; it is instead introduced by stating that
-these trailer lines look similar to RFC 822 email headers.
+We removed the initial comparison to email headers in the previous
+commit. Now the introduction paragraph just says “trailer lines”, and
+the only hint that this is metadata/structured information is the
+“otherwise free-form” phrase.
 
-This is overwrought; most people do not deal directly with email
-headers, and certainly not email RFCs.
+Let’s replace “lines” with “metadata” since that is their purpose.
+This also makes the introduction more consistent with how I chose
+to define trailers in the glossary:[1] “Key-value metadata”. (We will
+introduce “key–value” in the upcoming commit “explain the format after
+the intro”.)
 
-Trailers are just key–value pairs that, like email headers, use colon
-as the separator. The format in its simplest form is easy to describe
-directly without comparing it to anything else; we will do that in the
-upcoming commit “explain the format after the intro”.
-
-For now, let’s:
-
-• remove the first mention of email headers;
-• keep the second, innocuous comparison with email line folding in the
-  middle; and
-• remove the now-unneeded disclaimer that trailers do not share many of
-  the features of RFC 822 email headers—there is no invitation to
-  speculate that trailers would follow any other email format rules
-  since we do not compare them directly any more.
-
-***
-
-Talking about trailers as an RFC 822/2822-like format seems to go back
-to the `--fixes`/`Fixes:` trailer topic,[1] the thread that precipitated
-this command and in turn the first trailer support in git(1) beyond
-adding s-o-b lines.
-
-† 1: https://lore.kernel.org/all/20131027071407.GA11683@leaf/
+† 1: 68e3c69e (Documentation/glossary: describe "trailer", 2024-11-17)
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v2:
-    • Use `***` as a thematic break instead of `❦`
-    • Change to “metadata” instead of “key–value pairs” since this series
-      version adds a paragraph after this one where we dig into this
-      term. And “metadata” describes the purpose of this format.
+    v2: [new]
 
- Documentation/git-interpret-trailers.adoc | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ Documentation/git-interpret-trailers.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/git-interpret-trailers.adoc b/Documentation/git-interpret-trailers.adoc
-index 77b4f63b05c..1878848ad2a 100644
+index 1878848ad2a..3f60fd9b720 100644
 --- a/Documentation/git-interpret-trailers.adoc
 +++ b/Documentation/git-interpret-trailers.adoc
-@@ -14,9 +14,9 @@ git interpret-trailers [--in-place] [--trim-empty]
+@@ -14,7 +14,7 @@ git interpret-trailers [--in-place] [--trim-empty]
  
  DESCRIPTION
  -----------
--Add or parse _trailer_ lines that look similar to RFC 822 e-mail
--headers, at the end of the otherwise free-form part of a commit
--message. For example, in the following commit message
-+Add or parse _trailer_ lines at the end of the otherwise
-+free-form part of a commit message. For example, in the following commit
-+message
+-Add or parse _trailer_ lines at the end of the otherwise
++Add or parse trailers metadata at the end of the otherwise
+ free-form part of a commit message. For example, in the following commit
+ message
  
- ------------------------------------------------
- subject
-@@ -107,9 +107,6 @@ key: This is a very long value, with spaces and
-   newlines in it.
- ------------------------------------------------
- 
--Note that trailers do not follow (nor are they intended to follow) many of the
--rules for RFC 822 headers. For example they do not follow the encoding rule.
--
- OPTIONS
- -------
- `--in-place`::
 -- 
 2.53.0.32.gf6228eaf9cc
 
