@@ -1,85 +1,83 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA873335072
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 17:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BCF351C31
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 17:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776101023; cv=none; b=NIc0P+0hIJBmFgFO2hCR839Y+dB4F4Mth8nOtpI8gLSWqowh4PQShmQiI2SeGIKRpJKxIfsSasBtUPFQctEur3mDEpChq8rjZeRRKH/WsQAl4WnYsWVTh4PEUDgNkX3BJdm3tNdf+5lDmPhyRRQH29/Eq8AYUnF1ugnxcGLxhuI=
+	t=1776101285; cv=none; b=EegZ21w/xp4xaIEIPXDE/NG5jKKvQk7BwDYSPlluoP8aKue2WZFP4eyV+hJKXT/M6/WjRHQaAP7XxqjcfWkfVNIKRvlwPEN8eIo2nSxKL+nPv5vnVWY/oV3kXF2GaAl58YCJOcl0s4GdSmy1YFgNz1T+WjJ+OYslksqbIJe12ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776101023; c=relaxed/simple;
-	bh=b0q9h3B/ghQwsdHHo2nOTHsBSSzdT1sYCtXXRKRDvuo=;
+	s=arc-20240116; t=1776101285; c=relaxed/simple;
+	bh=d6FI3g5w7Nz6UX1/IYzvaGxUyfiwq+PccmVKdzIXC/w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Awn+RRTBMWojO4OUPo2Rq2/qB/V6ib9rSOFeXmGG0lxkTpTJ4ETP2pAV6fYpV54mYfSAdpboxdupTQEFJ5qw+WzlRWZQNaUNkQwMe8dhg67uprQdH9A577jHPBe4x0v9exxflhkhnMnglkRungcCTbyJ4ZQbtG3Wfn3ByczeN60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K4ltqkDI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=scJhS09G; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=rGzkNy2of68Gt2DLxjJvGeTLCpqsWBmbPR1LeJj9JlUVOqJVnR44CUPOY22JJDPy/6kR7AyxTfEv1ShDFyV7iavSDLw3D54cxBdJ+1MQoLGhe2zSYBDIGzadSwk1d09O6gvkiILB3vNU44vD0Dbbz8OjFvHQIxiAKN9ZkX2dZLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D62XoblR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K9mmuBD1; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K4ltqkDI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="scJhS09G"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 44BA51D00237;
-	Mon, 13 Apr 2026 13:23:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D62XoblR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K9mmuBD1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1AE837A0265;
+	Mon, 13 Apr 2026 13:28:02 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 13 Apr 2026 13:23:41 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 13 Apr 2026 13:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1776101020;
-	 x=1776187420; bh=dHirngFdj8Lt1vvp/1+pgq4wh7dtCPhBSv9aEBSIn9I=; b=
-	K4ltqkDI0yWP5zMBp6jeVjHyWnHDDwbC+FG0o93UNF+ANyewV2Q8diM3Dd/DGJRp
-	/n+qTcVIrsL1/WbT5PNJserXAeKavnkyk5tMUeRooXRPbGFN39MW8Rijx0LhOgWK
-	MgMH2+IcBbrommtErEN58S2j/GqfGYbJFYdPkFZaE51A05VZtLc7xUJobWCw+YDr
-	rbzfcTCxugs+DBo9bJ9h+W8RtvtDD8UW6vZPmc66hL2dyzQs1jr225GO9B6NlsDX
-	juYLllfySRGXiUXfQ8W74XhYLgttJPdwmW+/y13PVKsYuR9q4sSe/0NVDfQFgYXD
-	mjN7YE4qphn2Z21wR21ntw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1776101282; x=1776187682; bh=o25Gjbw1h1
+	wTkrbuSlO/B4SATy4s6tgDImdHnGei+iQ=; b=D62XoblRk6LNPooJ7Hc3ZT4aJX
+	wPZTh2Wv4Hwb8wggpJvteJdhtF1MTJcEDr6K+xJHQ6TRl+8u9uwakx9COGw29d3I
+	mwgT3OAkhGGgBUMoDtUNkRAUieOBqI47NMhxrLAgAx7bx8VzrVRmdapBOTT3/kxe
+	qAjG8X9+TqxUBy8bDwWLo0kCwvNr/tq9XdGItzaxqjlYMpzZzlYmSp5sHdphhx9l
+	ZeM70Yh0msDn+xqb9q8yupMv1v5WBxUM3cseodRye8n6rhgcNFby4qfAjRiIlBLo
+	oXkBMAsKg3tPiZpux2bE1RCiai8QfMaWO4Do1QHLmg8+WMJyZKk12QQNkWLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776101020; x=
-	1776187420; bh=dHirngFdj8Lt1vvp/1+pgq4wh7dtCPhBSv9aEBSIn9I=; b=s
-	cJhS09G6bw8nPPfq79iAcsiwHuZDSNz+chjOE/l7C0JGeWJPXMltGDS0iDhm+Qfb
-	nbK4l9oKitH5ntMxYjtvON6ztdJWR4wFDMVncjgMA4DY4PzvhmXUDpU1zLDNHTFV
-	zruXbpNNiG64z84LPZDwkOK+Zmn0CZPDCZ/vuXIb09Yh72LynJGQtTKkV51cnjh/
-	JLe54Tl19TJdkopX3cbggmRuygJh+Ak6tW5/nXC7ExNTmPd9wivOyFiAuOwOygXB
-	tHGfe00QYbqZ1uoqEq6BY9KeBaHCsEzeheSJhJa93piaS5Rmn5g6ljTJvanh2lrc
-	Q77DNqYWHfsiIc6NF/L3w==
-X-ME-Sender: <xms:mybdaU8j89zIymTmlkhFf6IxBsbeJGepT_rWK3CeMiN5nz02bkLH5Q>
-    <xme:mybdaUL65EXI2VUXahkQm-1qIRpCPRHQKSN63K2HEbFS3STSWEpUxiw4qHCH08WMP
-    Pw_gcTzjvYC9fgh4ELa6yi2YB90rplgdMUh45wvms-OpphbZKd0>
-X-ME-Received: <xmr:mybdaXbiq6BoPEzoxu75m2OQxbW2H7NCKuAN8PKL2YFKPC4yq6_vJVjjI_HiCDcKDDc5wgBCgRbik7jkV9Ca2ljd0hRchmzOdA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefkeekvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776101282; x=1776187682; bh=o25Gjbw1h1wTkrbuSlO/B4SATy4s6tgDImd
+	HnGei+iQ=; b=K9mmuBD1u/ZiEWLNz2pDu11rCxrHoSaf41nj8PsMrzDon2QOLLS
+	W3cekGz7atmoAH5PE+yt5CldGvdh2qWlvsiLIo4DW/9r5K4p6EuqVyEzFX/y7ris
+	UEgIg11AhJXXxPQofuh14pqsCCgKOmECRcpI9/655b7F8N8NLpX5K7dk27F2jE6P
+	eVqZprqJE0d0wsKsu11BRHQmgR0xOZCadgz+BdQCN0B8zYIwRr8vb85b8R83OEUe
+	g2rYM5OGjxDctvlS+Y5WKhFmuobh/g0b0wy0U2rXrYXAv2Rkc7ftIRQnKQbrxJPJ
+	XbbA/NMt9ooGSJGyH/JNtQvSvz7kltP9rpg==
+X-ME-Sender: <xms:oifdaWD5l8fu5r_KdrGXbWYCPdSOtCG6jsQC9Sv1-d1fcq_Z9YPLJA>
+    <xme:oifdaX9lE1yEsmePARATZNc77RVlSTCJtzka5nJlkWC8qsNzuUiyvGceOB-2Ltn8o
+    Sz58nz_93QjjshZeabAysiYgkOBVBJFzZ9_ux7tkEUQo_Z__zhNsX0>
+X-ME-Received: <xmr:oifdaW9ZBImmJ3B4vOkfO4npyo5mJeCZszkow87SoQ-YkNObcmOKBcs3-nHyQcAt-RGG4USqockJCal6k_HPxv6vMNOmhgouww>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefkeekfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:mybdaeLzN9jOdgxbzzMyJUtksiRjx3hGa24IsGc1rADv-GNSgMF5cA>
-    <xmx:nCbdadBeqY9cj2sy_ebdOstrhoxE112TzQXezlmlrgi1vD2b9gGmcA>
-    <xmx:nCbdabq_nSgN-GoScg3q3qMLQX4-MhjXFagfgL5xFe25vAKnHTyO0A>
-    <xmx:nCbdaQjItn4PfZmiZ-8X8s35sW6aLjTJ2Uor7L5V3Pt4SzG2MiFA5w>
-    <xmx:nCbdaUSxRIMZaFGtZAlvcpcegptnUuIIyjaK9gpQaZ_UA4PQRRcoCEzS>
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:oifdaedRUtxfGkgBSICjBARUULDKbyDC7MHSRAw5Qg-kbezYVy-HpA>
+    <xmx:oifdafHk9wEmRHi3wmkUrhsPr-fg40pclAaiFISqSa81V_3Kk5usdA>
+    <xmx:oifdaceB-qSdsPDHjkAksiImNbETKPzVqaNpalSBe0P8XXy8PenBuA>
+    <xmx:oifdaZEVifLkH3PG2PjhXSN1gMd4MyK_PB-fpar5EkFWmc16veJ_pw>
+    <xmx:oifdaQF_grqr7xRJsJdTL-a6gCk6doHamiAuFhCldIFSgbgctDHqvsdi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Apr 2026 13:23:39 -0400 (EDT)
+ 13 Apr 2026 13:28:01 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/12] t: prepare `test_when_finished
- ()`/`test_atexit()` for `set -e`
-In-Reply-To: <20260413-b4-pks-tests-with-set-e-v1-7-5b83763a0e84@pks.im>
-	(Patrick Steinhardt's message of "Mon, 13 Apr 2026 11:49:28 +0200")
+Subject: Re: [PATCH 08/12] t0008: silence error in subshell when using `grep
+ -v`
+In-Reply-To: <20260413-b4-pks-tests-with-set-e-v1-8-5b83763a0e84@pks.im>
+	(Patrick Steinhardt's message of "Mon, 13 Apr 2026 11:49:29 +0200")
 References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
-	<20260413-b4-pks-tests-with-set-e-v1-7-5b83763a0e84@pks.im>
-Date: Mon, 13 Apr 2026 10:23:37 -0700
-Message-ID: <xmqqpl42ixk6.fsf@gitster.g>
+	<20260413-b4-pks-tests-with-set-e-v1-8-5b83763a0e84@pks.im>
+Date: Mon, 13 Apr 2026 10:28:00 -0700
+Message-ID: <xmqqjyuaixcv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,92 +85,41 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Both `test_when_finished ()` and `test_atexit ()` build up a chain of
-> cleanup commands by prepending each new command to the existing cleanup
-> string. To preserve the exit code of the test body across cleanup
-> execution, we append the following logic:
+> In t0008 we use `grep -v` in a subshell, but expect that this command
+> will sometimes not match anything. This would cause grep(1) to return an
+> error code, but given that we don't run with `set -e` we swallow this
+> error.
 >
->     } && (exit "$eval_ret"); eval_ret=$?; ...
->
-> The intent of this is to run the cleanup block and then unconditionally
-> restore `eval_ret`. The original behaviour of this is is:
->
->    +------------------+---------+------------------------------------+
->    |test body         │ cleanup │ old behaviour                      │
->    +------------------+---------+------------------------------------+
->    │pass (eval_ret=0) | pass    │ && taken -> (exit 0) -> eval_ret=0 |
->    +------------------+---------+------------------------------------+
->    │pass (eval_ret=0) | fail    │ && not taken -> eval_ret=$?        |
->    +------------------+---------+------------------------------------+
->    │fail (eval_ret=1) | pass    │ && taken -> (exit 1) -> eval_ret=1 |
->    +------------------+---------+------------------------------------+
->    │fail (eval_ret=1) | fail    | && not taken -> eval_ret=$?        |
->    +------------------+---------+------------------------------------+
->
-> This logic will start to fail once we enable `set -e`. When `$eval_ret`
-> is non-zero, the subshell we create will fail, and with `set -e` we'll
-> thus bail out without evaluating the logic after the semicolon.
->
-> Fix this issue by instead using `|| eval_ret=\$?; ...`. Besides being
-> a bit simpler, it also retains the original behaviour:
->
->    +------------------+---------+------------------------------------+
->    |test body         │ cleanup │ old behaviour                      │
->    +------------------+---------+------------------------------------+
->    │pass (eval_ret=0) | pass    │ || not taken -> eval_ret unchanged |
->    +------------------+---------+------------------------------------+
->    │pass (eval_ret=0) | fail    │ || taken -> eval_ret=$?            |
->    +------------------+---------+------------------------------------+
->    │fail (eval_ret=1) | pass    │ || not taken -> eval_ret unchanged |
->    +------------------+---------+------------------------------------+
->    │fail (eval_ret=1) | fail    | || taken -> eval_ret=$?            |
->    +------------------+---------+------------------------------------+
->
+> We're about to enable `set -e`. Prepare for this by ignoring any errors.
+
+It is curious that true is explicitly spelled out, unlike the
+earlier steps in the series that used ":" in "|| :".
+
+Loss of extra spaces around the statement inside $() is a good
+touch.
+
+
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/test-lib-functions.sh | 4 ++--
+>  t/t0008-ignores.sh | 4 ++--
 >  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index f8bc77619b..0eac676109 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1516,7 +1516,7 @@ test_when_finished () {
->  	test "${BASH_SUBSHELL-0}" = 0 ||
->  	BUG "test_when_finished does nothing in a subshell"
->  	test_cleanup="{ $*
-> -		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_cleanup"
-> +		} || eval_ret=\$?; $test_cleanup"
-
-Hmph, it seems this "&& (exit $eval_ret)" pattern has been with us
-forever since it was introduced at 3bf78867 (test-lib: Let tests
-specify commands to be run at end of test, 2010-05-02), and survived
-a slight modification to work around issues on FreeBSD done in
-b6b0afdc (test-lib: some shells do not let $? propagate into an
-eval, 2010-05-06).  When a major part of test-lib.sh was split into
-test-lib-functions.s at 12a29b1a (Move the user-facing test library
-to test-lib-functions.sh, 2012-02-17), this part was copied intact.
-
-Does this interact well with the glitch b6b0afdc (test-lib: some
-shells do not let $? propagate into an eval, 2010-05-06) tried to
-work around, by the way?
-
-Thanks.
-
->  }
+> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> index e716b5cdfa..1218005b54 100755
+> --- a/t/t0008-ignores.sh
+> +++ b/t/t0008-ignores.sh
+> @@ -122,8 +122,8 @@ test_expect_success_multiple () {
+>  	fi
+>  	testname="$1" expect_all="$2" code="$3"
 >  
->  # This function can be used to schedule some commands to be run
-> @@ -1544,7 +1544,7 @@ test_atexit () {
->  	test "${BASH_SUBSHELL-0}" = 0 ||
->  	BUG "test_atexit does nothing in a subshell"
->  	test_atexit_cleanup="{ $*
-> -		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_atexit_cleanup"
-> +		} || eval_ret=\$?; $test_atexit_cleanup"
->  }
+> -	expect_verbose=$( echo "$expect_all" | grep -v '^::	' )
+> -	expect=$( echo "$expect_verbose" | sed -e 's/.*	//' )
+> +	expect_verbose=$(echo "$expect_all" | grep -v '^::	' || true)
+> +	expect=$(echo "$expect_verbose" | sed -e 's/.*	//')
 >  
->  # Deprecated wrapper for "git init", use "git init" directly instead
+>  	test_expect_success $prereq "$testname${no_index_opt:+ with $no_index_opt}" '
+>  		expect "$expect" &&
