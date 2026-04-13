@@ -1,152 +1,176 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2D436F40D
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 17:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373D83E274A
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 18:07:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776102248; cv=none; b=WQ8kdSj+lULCSSVjkrVrzSli7GZqj85l0ceywcDaLRrwkGyNr4hjwnbbSs6P94cS4aTAm8S8eCqGj4M/c5HiCHgmHAALhLremY+C8N2kawtTl85Llp7CzcL8PAKiagJk1rYMZcnJcPxFyzFsG+XnV5DU2lr1cKxDUeCUY3jeS6Q=
+	t=1776103652; cv=none; b=G/kSLU8RLTo6zNjzVIqGAf0TTLC4V/JX3XLeuynT0ONNNeqytg3TLtr7bKDUhgWLVoNs3Axe4+uBsLJZcRRDorYgdzdnTuc8LTaHOXIesy90jiM6dgz6QeHsOjAM6a/r9aBlrGiExAmDegsGOvYFgVDcjUSBLFNuaSQh2FqVuFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776102248; c=relaxed/simple;
-	bh=5R5DHTC5dYl+MBVuWbDmJEja//lHVnjeaxRRxwkx0E8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jG1t3WZAgp6+xlqQ2LDepZM/xnw1iHoaQwOXAk9Z5TlrbwNrSGIt7qwmhdg9OJrnSWXDVGb1EhGj7tND7h4MOCW/9yVGCFinGAjJr9fbgVYfp1BUtTsPk1TugLdSkZhMO4GI+NNFXotBLg9udyxASq0Oz3Kt+0niX+/od1qiq8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=z0bwXldJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eWc8zE4O; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776103652; c=relaxed/simple;
+	bh=HMHzc1l7F54cU6VtKXEwec/CpmQ4LlqQ3F5eYUvkHuI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=jslr92ytLN2xCPZEG63UCQtBScEDWkYrRMcm7k1ida/UGzJxp9pm8KHCoOPiigfNRQrPiR7WU3Y0858UxI3XSxvgh+yZLPH6ypJ7cGIR8R9LsPHzhosluhh75AgM5WzhjPTj87dTpmy3R/l7ST22je/0r8vtg011/L2QPHV22Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=uOeQE1KY; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=hw5sYdNC; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="z0bwXldJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eWc8zE4O"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6B6A07A01B1;
-	Mon, 13 Apr 2026 13:44:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 13 Apr 2026 13:44:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776102246; x=1776188646; bh=+bFeJveVa7
-	VguKWZ33lH722IO8dHBgsDoB9s1/TfB2E=; b=z0bwXldJus6T/nkJ+n+375It5D
-	zGlSTXKWZnZnG56eHHhSvGQ1vzk+ZUBIk7MzCpBDcQO+Of+M6KW440ZxhzCkxW0g
-	uwbvd4v8dJ0PAhJqnbq5iDurFGHxbNGPOkZVEetmdv1LbUHGSkgtU4eg12Ma+Z6F
-	Yhby/Sm6nz4Gw175PHuI54BpFU7SsUpO/8AxOgPxJx7UTRYzXFvAN5UbeNKmMOJ5
-	+oSrsCHUujh8PJpEIOY5wfZDfb5/SK8Rq+0SDN0nmpQEny/OjjZfkd7W4O+3dM9X
-	gKKKtUUBtpQ+GUd2K5FxyA++zx3CP+k045LZLbUuRCRxjsofoH3NLwCQXyWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776102246; x=1776188646; bh=+bFeJveVa7VguKWZ33lH722IO8dHBgsDoB9
-	s1/TfB2E=; b=eWc8zE4OGC9jNz0x6GR2GTKaE2tF/0/jVQbegYyzHq2MGnQ1ase
-	llgf7Xd/x+n81FSXlA5jE+O8wlzWiBAWE34Ya6DTMnnjF93303pF4i86VnClfNTx
-	zMFcGbXyRXsQxNVe57NWuCmh8wlzuTubOTFnPCBAXXkiDWIKJJDxZ05eax+p8MYe
-	84a4VHdMO3f0bdUvVzLJ0qCO255RHUECNYhBuPUQ3F1WFMHKPSPpOM01UqdqvXI8
-	defGbETM2Q+MDFd2c1CwrvlQeM6xDMk3cQ6LhZdVVB/6KMCd4VRotil0aFHD7JD9
-	/DLOlX+x7cgPu+h6gf/SJQGQ1hgYPL0fD9Q==
-X-ME-Sender: <xms:Zivdacm9IAH8u2Waf-DgKknzdjtblCUTiVhYMSZ8fIrMHLOCt-enOw>
-    <xme:ZivdaS0l7otBdJV0x42LrVyex79z50E0WYIDxz4LJQyxUmGMTpqfUD5x5ow8G_oT2
-    Ky5oosMJWyxuWI0IivO0NCyp1FUoA30dNLftyksoxoLP9WrZ3VlJQ>
-X-ME-Received: <xmr:ZivdafpPMkPIpiL1tjNuCREWvXeOi5RzjIHGxfgb7aXzXqEAqOA4PpNyyJFUzdUmDKSurQ_bmWqmVt3qgxMxlwi40e9btbFd0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefkeekiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeejvdekfeevgffgfeefffejleekleeufedthfeugfevueeuhfefleeijedvhfeg
-    teenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhrvghlvggrshgvshdrmhgunecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrg
-    hnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ZivdaXe33i_C9SIctjn6oGvFB7mOhIr7nGf_qUFgHlbFkjH0qAQu1Q>
-    <xmx:ZivdaWo9nnvrhq8ijnlqs-woYAZRTbhWkdom-7CBf-dEf1IJfQsR-A>
-    <xmx:ZivdaQGw26XIlDnLrmD6YeRqPQvkRhLKZNEXB9w0QvOTOJUs4-TrdA>
-    <xmx:ZivdaevpgaXKkIO6g2Ry1F71TQ_tLNapQaqLIi0dM1KuKsKqfiBHIQ>
-    <xmx:ZivdadAdVCWNLevHMpCUJZ5ENOKesr8X1NS3LkLHoqr0sa8hGEfdiYfe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Apr 2026 13:44:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] codeql: bump actions/cache from 4 to 5
-In-Reply-To: <pull.2086.git.1776097457136.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Mon, 13 Apr 2026 16:24:17
-	+0000")
-References: <pull.2086.git.1776097457136.gitgitgadget@gmail.com>
-Date: Mon, 13 Apr 2026 10:44:04 -0700
-Message-ID: <xmqq7bqaiwm3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="uOeQE1KY";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="hw5sYdNC"
+DKIM-Signature: a=rsa-sha256; b=uOeQE1KY9OekH4IFmRp+xNRHZiuY89+5jotehLKcoG4kCLxvd4oPDWtrbeX8GHO7+La/GDpxcUiFTh3DDJG+1/93QHuKiIPXT2OAz/l5UFC2GUndAhmUGLstRDL5DVP4FmphlOXSfO6PdFOqTUF/chihkb5zLmfsfX1npThLleZBSewGLBgCK5xQwGds6AtX6HZAg9NdxCx4IyMVwMit+m0HnH08T1bdNmw33AfLbXtM4944JkZMOX8gdZ2OhvxSHvrxdncVyJXO+BWVKWbnlcsbLfjpjiAz85innq08XDYW37LdHGE8F2Nf91eb7H9Y7gcD4Z5cFHtxqPhTRjvZlw==; s=purelymail3; d=malon.dev; v=1; bh=HMHzc1l7F54cU6VtKXEwec/CpmQ4LlqQ3F5eYUvkHuI=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=hw5sYdNCKfIHoFGXEjkRtrXgcZyjtIsBvcOX59CvRuBdYiHC4RSeEsR2fV+rI3HmjVC1cewIQ6B2trJiuxLE1/GBRzvnm/97iiTWyd4WCHylrI/6Bw3/9rCHBk6xqZ+ObToLu+x92pYVwKP1+qWrjAGmxAnacqxXNw/UL4nzZhQMSOmH9tDfF0xMmfZxH63f98wZIHqBXzsoQC3hB/nSm+3YmQGKpd4yb9rWTL4mxEVHGg4X7W08Wo+vUtqR/dQ7pgrlMCLiymHMEZh3BpB4U6rQVL7S7PSIAwyaUJF+t/U9dP9QbvqTqdgOws7WRLBQRrvuQX+mrNua91poqQtjIg==; s=purelymail3; d=purelymail.com; v=1; bh=HMHzc1l7F54cU6VtKXEwec/CpmQ4LlqQ3F5eYUvkHuI=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1249727085;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 13 Apr 2026 18:07:20 +0000 (UTC)
+Message-ID: <31c50eb0-0fc0-46fb-a277-b5fbb28d1d9a@malon.dev>
+Date: Tue, 14 Apr 2026 02:07:16 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] New command: git-recall -- a developer standup/activity
+ tool
+To: AMMAAAR BAKSHI <the.ammaar.ic@gmail.com>, git@vger.kernel.org
+References: <CACqkj0pxih1BSa8z9+Yw-g55G1rNcvvQao+SLwQ7B-eQodcvgg@mail.gmail.com>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <CACqkj0pxih1BSa8z9+Yw-g55G1rNcvvQao+SLwQ7B-eQodcvgg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Amar,
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Bumps [actions/cache](https://github.com/actions/cache) from 4 to 5.
-> - [Release notes](https://github.com/actions/cache/releases)
-> - [Changelog](https://github.com/actions/cache/blob/main/RELEASES.md)
-> - [Commits](https://github.com/actions/cache/compare/v4...v5)
->
-> ---
->     codeql: bump actions/cache from 4 to 5
->     
->     Just a regular GitHub Actions bump
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2086%2Fgit-for-windows%2Fdependabot%2Fgithub_actions%2Factions%2Fcache-5-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2086/git-for-windows/dependabot/github_actions/actions/cache-5-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2086
->
-> updated-dependencies:
-> - dependency-name: actions/cache
->   dependency-version: '5'
->   dependency-type: direct:production
->   update-type: version-update:semver-major
-> ...
->
-> Originally-authored-by: dependabot[bot] <support@github.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+On 4/13/26 07:43, AMMAAAR BAKSHI wrote:
+> Hi,
+>=20
+> I'd like to propose a new command: `git recall`.
+>=20
+> ## Motivation
+>=20
+> Developers often need a quick way to review what they (or their team)
+> committed recently -- for standups, weekly summaries, or general
+> self-review.=20
 
-You should not need to be reminded on how our log messages should
-look like.  Also your sign-off must come before the three-dash line.
+Standups, weekly summaries or general self-review...? These feel more=20
+like workflow conveniences =E2=80=94 is a built-in command really the right=
+=20
+place for them?
 
-Thanks.
 
->  .github/workflows/coverity.yml | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
-> index cfa17d394a..3435baeca2 100644
-> --- a/.github/workflows/coverity.yml
-> +++ b/.github/workflows/coverity.yml
-> @@ -98,7 +98,7 @@ jobs:
->        # A cache miss will add ~30s to create, but a cache hit will save minutes.
->        - name: restore the Coverity Build Tool
->          id: cache
-> -        uses: actions/cache/restore@v4
-> +        uses: actions/cache/restore@v5
->          with:
->            path: ${{ runner.temp }}/cov-analysis
->            key: cov-build-${{ env.COVERITY_LANGUAGE }}-${{ env.COVERITY_PLATFORM }}-${{ steps.lookup.outputs.hash }}
-> @@ -141,7 +141,7 @@ jobs:
->            esac
->        - name: cache the Coverity Build Tool
->          if: steps.cache.outputs.cache-hit != 'true'
-> -        uses: actions/cache/save@v4
-> +        uses: actions/cache/save@v5
->          with:
->            path: ${{ runner.temp }}/cov-analysis
->            key: cov-build-${{ env.COVERITY_LANGUAGE }}-${{ env.COVERITY_PLATFORM }}-${{ steps.lookup.outputs.hash }}
->
-> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+> Currently this requires constructing a `git log` invocation
+> with --author, --since, --oneline, and formatting flags, which is
+> non-obvious for casual users.
+
+Adding a line like 'standup =3D log --since=3Dyesterday --author=3D...' in=
+=20
+'.gitconfig' is another nice way of achieving this ;-)
+
+>=20
+> ## Proposal
+>=20
+> `git recall` would be a porcelain command that shows a formatted
+> summary of recent commits, grouped by date:
+>=20
+>    git recall              # last 1 week (default)
+>    git recall --day        # last 1 day
+>    git recall --week -2    # last 2 weeks
+>    git recall --month      # last 1 month
+>    git recall --year       # last 1 year
+>=20
+> Example output:
+>=20
+>    --------------------------------------------------
+>      git recall  --  Last Week  (since 2026-04-06)
+>    --------------------------------------------------
+>      2026-04-11
+>      448e66e  Add login page  @ 19:41  Alice
+>      2026-04-10
+>      91bc3fa  Fix null pointer  @ 14:22  Bob
+>    --------------------------------------------------
+>      Total commits: 2
+>    --------------------------------------------------
+>=20
+> ## Implementation
+>=20
+> I have a working standalone implementation in pure C with no
+> dependencies, available at:
+>=20
+>    https://github.com/AMMAAR-IC/git-recall
+>=20
+
+Good to hear that;
+
+> It currently runs as an external binary (git-recall). I am interested
+> in contributing this as a built-in Git subcommand if the community
+> finds the idea worthwhile.
+>=20
+> I am aware that similar output can be produced via:
+>=20
+>    git log --oneline --since=3D1.week.ago --author=3D$(git config user.na=
+me)
+>=20
+> However, git recall aims to provide a more discoverable, human-friendly
+> interface for this common workflow, similar to how `git switch` and
+> `git restore` were introduced to simplify `git checkout`.
+
+I suppose the 'checkout' command was split up and simplified because its=20
+meaning isn=E2=80=99t particularly intuitive for ordinary users, is it? 'gi=
+t=20
+log', on the other hand, is, in my view, a very clear and=20
+straightforward read-only command.
+
+You said this is a more discoverable and human-fridenly interface. If=20
+that=E2=80=99s the case, I think we should compare the merits of this metho=
+d=20
+with defining aliases directly in .gitconfig.
+
+>=20
+> ## Questions for the community
+>=20
+> 1. Is this functionality considered within scope for a built-in command?
+
+I don=E2=80=99t think it should be a built-in command.
+
+> 2. Would `git recall` be an appropriate name, or would something like
+>     `git activity` or `git standup` be preferred?
+
+To be honest, the name 'recall' is a bit odd.
+
+According to dictionary.cambridge.org, 'recall' has at least two=20
+meanings. I think this is your intention:
+
+"...to bring the memory of a past event into your mind, and often to=20
+give a description of what you remember..."
+
+However,
+
+"...to order the return of a person who belongs to an organization or of=20
+products made by a company..."
+
+is another valid meaning. We say "recall an email" "recall defective=20
+products". This suggests that the word carries a connotation of=20
+amendment/revocation. However, based on your description, this is a=20
+*read-only* operation, right?
+
+If a "casual user" sees this command name, might he think: "This is a=20
+logging command, but why is it called 'recall'? Will it alter my commit=20
+history? Could there be other side effects?" This is something we need=20
+to think about.
+
+> 3. Are there existing plans or discussions around a similar feature?
+>=20
+> I am happy to write a proper patch series if the idea is well-received.
+>=20
+> Thank you for your time.
+>=20
+> Ammaar Bakshi
+> https://github.com/AMMAAR-IC/git-recall
+
+Thanks, Yuchen
+
