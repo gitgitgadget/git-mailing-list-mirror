@@ -1,238 +1,150 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C124F3988E3
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 09:08:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDE53A2569
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 09:49:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776071298; cv=none; b=UDb9ea8X7hnDgcg3BMF7S8FWXZvh8NL1lXNc0TnbSEHJZvJz7Nr9lVEY/8mfNyKdAus8mz3nkSvZRKohpfEpzpLKwPEinWZ4d4EdhZ9q3dLNK98zpW4I+tu2fzQ2tOfQYopHfy+wOzrrDLxE2zUvVtkwE5kaRj/QLVlmTWey+Vc=
+	t=1776073772; cv=none; b=GHklMm8ZEct60I+yt80lT+wsdk/G0cVm+PDQxeEOb49Mn13xwSG/svsfBRrS0VEZpmjLZBRNl6QDdsTkl9XsUmQJnqH1Wl5XDaNZpisyD1zbJLNfgh+3Tk5vxXu7CF67ruxywHoj8gkb6pK8iqxWoy5TPRZMuGYIP4nCHjmse60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776071298; c=relaxed/simple;
-	bh=mUfHFpHLqspw3WqmeY31PYBWCzQOkpo+YIKzkzSWghQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BX+WUDbMjX5EDryfFRtEUNnpXQ3n66kWGN6B+WRoJZkvPxMx5wuHySp7yJfxx46GejCgVL09zCo1pJm5d10xanlzVL0WeyCDFG86vX7VJIryNrzRhFbANHbvfiGbf0bxR8MzW6ncANLWMyU264n/GrL94UWXyOKntletHoO3/lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lQ9ANUKh; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776073772; c=relaxed/simple;
+	bh=Q/QSASH4969F7SbltRjeRkekpdrC5vHiIUw6Gz6hB2Q=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=p3bnb9vGkMRetExfENkfQkjnUPNskZdBv56PvFXgAcepAmO8X6Z9vjHdT6gDwL9EnKO+mpFBNWA25L37rDJ/YfLpgZZqc3VhFuKydRIHRo+/h1BFNJf84xM7HSXKitgAHgY5U8MK+dGWEK0y51b9n+ylgEEdz/U+Zk4jAPIAAX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vm6e3faB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n6XiBXvB; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lQ9ANUKh"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48334ee0aeaso39265885e9.1
-        for <git@vger.kernel.org>; Mon, 13 Apr 2026 02:08:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776071295; x=1776676095; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UEwJrkGM4GDSSTiPWU85NlMzOw9c1Hia90AxfT8WoFs=;
-        b=lQ9ANUKhaH++1EPSExFHwPeqdc3gdKnIyYUujgmx5USrJI1cuzrPgBqBHucSgmiVTF
-         wgbENDtEvaoiRyaZ+z7tQoxgzLIAbvAaQhfUozGxfzci7lJtlz389Vdy5OjeOqVg9aNO
-         32hpM0LGTLkZvxPl9CXSWd7UhP/C5Nbq952ay4dD/rW4OqA8yMObYTFlfa7M9WXsZ7zc
-         EqsM7BY6sAAw2Y8yQbGSi8JkIr/BgxeAmQiTPtcjRcRhfEWLi2xABEkzEXJuFYClcLyN
-         KIgGJfBlGvBoXI9pBmUmLqQEA10y5xshszjqsJMP5fiBA0Me8EzYTZplRtdFm17s1yza
-         EJUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776071295; x=1776676095;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UEwJrkGM4GDSSTiPWU85NlMzOw9c1Hia90AxfT8WoFs=;
-        b=bxoxd8WcSvPcHLX1X9DPxe5GOjc/Pf6zcAmb4KB6VOUdDNr8av+ECTpRGQx3U7aRFH
-         sdzis8hESoraIjxvqsl1evQc4uUx47RRv+YSR5xEtJ15ulT4btlPlNh+EP/rBnjsmuLz
-         p8BDtAK5RFu3TwgU1x6VBIpoEv/3wiXAicsfRFH2h9/KlKu7DoK4u35tRlRmCbFhL1cX
-         ncCAkJdrBlTn8NiCxO4rw9bhyzPpEPCqF5+ulk8N4RA/L6qyxU1FbHtd4dvHwSJdTmVx
-         dnpNTMW+Dm1f4aMOwBB5VTIMA2Ou99/TRzUUaBMNzi3bvX6qUoEqvjXd9FX1L6dTmAx6
-         XsUw==
-X-Forwarded-Encrypted: i=1; AFNElJ/mSUdXb3IvXIOO0OLhnTKM7Ias5j2S801UUeBRxizKo43zHqfw19N+QkXEfLiVJasIKqo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmP2lBO/DCyUeD8rrMNuk+A0WerwdeRGtM8W3a8dR2KmHCdAau
-	8iaurwbp/KJuocyjSEgfiipQtVeWzBlM7/PcgIIK6Y0kKbYEhha67jY6
-X-Gm-Gg: AeBDietgLXMgcUaQR4o77OAJxVzQ2bLQBOPIwZoOBMsc+njjX05d/m3eixoJGZgEXE3
-	ljoY8ur3ZqhwA2JSL/8PmIR4xszbVjUTF5LruckC8BH2Tl/HSvxlfCU/Nqk6mp3BafKbKgKzppO
-	FeroZniS01/KRkIBFamMOGwow/Ru1/CJQplUtVxCcRPl0j88UuqpElklB7b5fRFNAjNcwWBpjWl
-	JDa6YWbbLTFWHwvFgQlE4jCdvJmygYrZdGL9FuXZPAurIlnTZ796UBUtNHhjftDNmhYSTDibGho
-	/P0AYVhrJ94y1bsycEvKUaxnfzIkeIUM/G1ZmId2UFhY2TnMIObiF60Vi6XHnl/skWE5UbG+WUy
-	Wm+51zKXz708uKoSgyHWVC3QXMwjmFYgXMzsU4eTPcNuN0Ax7kAtfnW5PRFWt8w27Is49KKZ3BP
-	LTloK4ZK9qAMFrEJFv4/7mot297gVrF2GfifnlJZ5AolZEYEyMGVDQ6EeVqOfDBgy0lgLTKZvvH
-	4o=
-X-Received: by 2002:a05:600c:3f0a:b0:488:afb5:6a21 with SMTP id 5b1f17b1804b1-488d68764b0mr169232615e9.15.1776071294935;
-        Mon, 13 Apr 2026 02:08:14 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488df2a1237sm333101515e9.6.2026.04.13.02.08.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Apr 2026 02:08:14 -0700 (PDT)
-Message-ID: <00b92c0b-8602-45e4-bec3-c7c538bd288b@gmail.com>
-Date: Mon, 13 Apr 2026 10:08:13 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vm6e3faB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n6XiBXvB"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DE5F1140011B;
+	Mon, 13 Apr 2026 05:49:29 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 13 Apr 2026 05:49:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1776073769; x=1776160169; bh=a07rvLnRMQ
+	Yjs51ILEKQP+gEh3ZP1koFx7Fsa8oKxMc=; b=vm6e3faB1duJ4Fj7Dymtd3kafn
+	1bRT4P+fpcHtVfW3OrKXHpZ1Y8p1EIPyvS5oNtCigN7zedOG8Zz8AElH2Q548KLr
+	40+IoQly49DcUbKFRcM6pzsG2HWQS7pp99/GnDvDm8g6cLYXqcVYZjF82hmLmKNd
+	8JZkULbnlE72NU0nkVu9UH3TDpo/5efTGXpyPI2DVtIf0wAphU7KZ7M+Mvr+LNFH
+	qmxohMSaTqmopOStp6GEBIf85AXSm7vZ30DhR71+bL4XphvLd5/8P4qrRFPuzK6B
+	9QxBgJsu2lNCVgX0VB5jMmQjtZRM5W9wiyuhP9qwh3jr1HQSrmwYRbjpWBtQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1776073769; x=1776160169; bh=a07rvLnRMQYjs51ILEKQP+gEh3ZP
+	1koFx7Fsa8oKxMc=; b=n6XiBXvBXYAjyWriAo7ob2zDuQuYHNCUcPdpshxx5/42
+	r1zIlzRrfyOAQgiZfs1RyLzIMWH5Tl4jmiNmkliYoOgUR1z4s1QN9+qEt6SQCX0m
+	apwfaQsEZqqtKRqs+UCk+8YIlVkZR3jM3fZsPFtTAiZv2ay7G00sz1cIPH+Bl8TK
+	m2goXd8MUPlrqEEMaIRXGz/raEzH7OIQ8fgjopDRRfR+CSVDFeT+C4AWR6AELX0p
+	Mskds5ABZzedz5IZsfN6l0qIMwwa8kYVRXxLwYhxhBhp9gwhfX0NS8JAhUptD9TI
+	xGi8XQ5bllCvodCcQutf7iJvzL2XaoRvzBoxYMQ+sg==
+X-ME-Sender: <xms:KbzcabsYAJSIEMc4ycQd0T5SsA6wl4kaZGfL6vAP3tSUQyuwonslRA>
+    <xme:KbzcaScpOulm6rTZ3owhe1RXTlSvL8L9MJRc9GyvimyVUPVc_hw12iZj-DRPv84Da
+    D4z9f0kwr5KQ20OYZRqeroYKRIL4qW3KSVU-XgTXkNbemznUIskEw>
+X-ME-Received: <xmr:KbzcacaF-YQBUaNjd9kGvOT9ZrUiLAa4LrEqEnJmcXg5r69SmPMkKttMi8sRdTxoF0vIdy2H-YfZCJJQJD3QucVFc3Q94H3faaGDrSOJ0FA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefjeeludcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffufffkgggtgffvvefosehtjeertdertd
+    ejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeeiveegffdvleekudekvdefveelvdfgleegveeije
+    dttefffeegkeegkedtgffgieenucffohhmrghinhephhhtthhpugdrshhhnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:KbzcaVUi0PrxwtkLYq0q5rpUEmscSDrb-GcFaljJ6tr-gOLloWx9sg>
+    <xmx:Kbzcaeh5mQ_-vvClWM6FWXepnQ03qMGvpURcvRLYEc6KHdmVZ6f8sg>
+    <xmx:KbzcaTVDV7ePZcLuE2TPy7zKL34jrTnaIplPQJbBRFnlzVO8GNZTVg>
+    <xmx:KbzcaVPu-TzKQ6jNFG_VqQk7CGN1cGMJdIwZ69cGMe_qKtqvr_1Y7w>
+    <xmx:KbzcaXEgb6--GT2h7iZv9LgzWpgeDiz087GwVZevOhgwb9a_MZqIYrAm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Apr 2026 05:49:28 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 75efc5e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Apr 2026 09:49:26 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/12] t: detect errors outside of test cases
+Date: Mon, 13 Apr 2026 11:49:21 +0200
+Message-Id: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4] stash: infer "push" when command line starts with an
- option
-To: Deveshi Dwivedi <deveshigurgaon@gmail.com>, git@vger.kernel.org
-Cc: ben.knoble@gmail.com, mroik@delayed.space, quentin.bernet@bluewin.ch,
- gitster@pobox.com
-References: <20260404143640.6679-1-deveshigurgaon@gmail.com>
- <20260412195204.4636-1-deveshigurgaon@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260412195204.4636-1-deveshigurgaon@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACK83GkC/yXMQQ6CMBBG4auQWTtJWytGr2JYUPyF0QRJZ0ATw
+ t2tuvwW762kyAKlc7VSxiIqz7HA7yrqhnbswXItpuBC7aJ3nCJPD2WDmvJLbGCFMXjfIh5PKcR
+ 08FTqKeMm79/50vytc7qjs++Otu0Do/FpDHsAAAA=
+X-Change-ID: 20260410-b4-pks-tests-with-set-e-3ae479b24b51
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.1
 
-On 12/04/2026 20:52, Deveshi Dwivedi wrote:
-> When "git stash" is run without the "push" subcommand, the command
-> tries to assume "push" but rejects any non-option arguments (i.e.,
-> pathspecs without "--") to avoid treating a misspelled subcommand
-> name as a pathspec.  The only exception is "-p", which sets
-> force_assume and allows pathspecs to follow.
-> 
-> This means "git stash -m foo file" is rejected even though "-m" is
-> clearly an option and not a subcommand name, and the user's intent
-> is clear.  The same applies to any command line that begins with an
-> option.
-> 
-> A command line that begins with an option cannot be naming a "git
-> stash" subcommand, so unconditionally assume "push" in that case and
-> allow pathspec arguments to follow without requiring "--".  This is
-> simpler and more robust than checking a specific list of options,
-> and remains correct even if push or other subcommands gain new
-> options in the future.
-> 
-> Note that this does not check for negated options, so "git stash
-> --no-staged [<pathspec>]" is still rejected.  Handling negated
-> options would require teaching the inference logic about them
-> explicitly.
+Hi,
 
-That was true of the implementation in V3 which checked to see if any of 
-the option variables were non-zero. Looking below, it now checks if the 
-first argument begins with "-" which means that force_assume will be 
-true when "--no-stage" is given.
+this is a follow-up to the recent discussion we had around `set -e` to
+make our tests more robust and basically supersedes Junio's [1].
 
-The implementation looks good, I've left a couple of comments below.
+I've tested the patches with both Bash and Dash, and all tests are
+passing on my machine with both of them. CI seems to be happy, as
+well. But I would expect that this change probably has some fallout,
+even though I hope that it's generally going to be small and contained.
 
-> This was marked as #leftoverbits in [1].
-> 
-> [1] https://lore.kernel.org/git/xmqqtsu1jipp.fsf@gitster.g/
->  
-> Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-> ---
-> 
-> Changes since v3:
->    - Rewrote the approach per Junio and Phillip's suggestion: instead of
->      checking a specific list of push-only options, unconditionally
->      assume "push" whenever the command line begins with any option.
->      This is simpler and robust against future option additions, and
->      sidesteps the fact that -m and --include-untracked are not unique
->      to "push".
->    - Updated the test to reflect the new rule and switched cleanup to
->      test_when_finished per Junio's suggestion.
->    - Updated documentation accordingly.
-> 
->   Documentation/git-stash.adoc |  7 ++++---
->   builtin/stash.c              |  6 ++++--
->   t/t3903-stash.sh             | 26 ++++++++++++++++++++++++--
->   3 files changed, 32 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
-> index 235d57ddd8..135719611a 100644
-> --- a/Documentation/git-stash.adoc
-> +++ b/Documentation/git-stash.adoc
-> @@ -61,9 +61,10 @@ COMMANDS
->   +
->   For quickly making a snapshot, you can omit "push".  In this mode,
->   non-option arguments are not allowed to prevent a misspelled
-> -subcommand from making an unwanted stash entry.  The two exceptions to this
-> -are `stash -p` which acts as alias for `stash push -p` and pathspec elements,
-> -which are allowed after a double hyphen `--` for disambiguation.
-> +subcommand from making an unwanted stash entry.  Pathspec elements
-> +are allowed after a double hyphen `--` for disambiguation.  When
-> +the command line begins with an option, "push" is inferred and
+This series is based on 8c9303b1ff (Merge branch
+'jc/no-writev-does-not-work', 2026-04-10).
 
-"assumed" might be easier to understand than "inferred"
+Thanks!
 
-> +pathspec arguments are also accepted without `--`.
->   
->   `save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-u | --include-untracked] [-a | --all] [-q | --quiet] [<message>]`::
->   
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 95c5005b0b..be96338d35 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1871,13 +1871,15 @@ static int push_stash(int argc, const char **argv, const char *prefix,
->   	if (argc) {
->   		int flags = PARSE_OPT_KEEP_DASHDASH;
->   
-> -		if (push_assumed)
-> +		if (push_assumed) {
->   			flags |= PARSE_OPT_STOP_AT_NON_OPTION;
-> +			if (argc > 1 && argv[1][0] == '-')
-> +				force_assume = 1;
+Patrick
 
-We assume push was given if the first argument starts with '-'. That 
-makes sense. If we get on invalid option we'll display the push usage as 
-we did before.
+[1]: <20260325062114.2067946-1-gitster@pobox.com>
 
-> +		}
->   
->   		argc = parse_options(argc, argv, prefix, options,
->   				     push_assumed ? git_stash_usage :
->   				     git_stash_push_usage, flags);
-> -		force_assume |= patch_mode;
->   	}
->   
->   	if (argc) {
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 70879941c2..88f2b3c86b 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -410,8 +410,30 @@ test_expect_success 'stash --staged with binary file' '
->   '
->   
->   test_expect_success 'dont assume push with non-option args' '
-> -	test_must_fail git stash -q drop 2>err &&
-> -	test_grep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
-> +	test_must_fail git stash someunknown 2>err &&
-> +	test_grep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''someunknown'\''" err
+---
+Patrick Steinhardt (12):
+      t: prepare `test_match_signal ()` calls for `set -e`
+      t: prepare `test_must_fail ()` for `set -e`
+      t: prepare `stop_git_daemon ()` for `set -e`
+      t: prepare `git config --unset` calls for `set -e`
+      t: prepare conditional test execution for `set -e`
+      t: prepare execution of potentially failing commands for `set -e`
+      t: prepare `test_when_finished ()`/`test_atexit()` for `set -e`
+      t0008: silence error in subshell when using `grep -v`
+      t1301: don't fail in case setfacl(1) doesn't exist or fails
+      t6002: fix use of `expr` with `set -e`
+      t9902: fix use of `read` with `set -e`
+      t: detect errors outside of test cases
 
-This is based on the existing test, but there is no need for "-e" and we 
-normally match a single quote as "${SQ}" (which is defined by the test 
-suite) or simply "."
+ t/lib-git-daemon.sh                | 13 ++++++++++---
+ t/lib-git-svn.sh                   |  3 +--
+ t/lib-httpd.sh                     |  3 +--
+ t/t0005-signals.sh                 |  4 ++--
+ t/t0008-ignores.sh                 |  4 ++--
+ t/t1301-shared-repo.sh             |  2 +-
+ t/t3600-rm.sh                      |  2 +-
+ t/t4032-diff-inter-hunk-context.sh | 14 ++++++++------
+ t/t6002-rev-list-bisect.sh         | 17 ++++++++++-------
+ t/t7450-bad-git-dotfiles.sh        | 24 +++++++++++++-----------
+ t/t7508-status.sh                  |  4 ++--
+ t/t9138-git-svn-authors-prog.sh    |  4 ++--
+ t/t9200-git-cvsexportcommit.sh     |  3 +--
+ t/t9400-git-cvsserver-server.sh    |  5 +++--
+ t/t9401-git-cvsserver-crlf.sh      |  4 ++--
+ t/t9402-git-cvsserver-refs.sh      |  4 ++--
+ t/t9902-completion.sh              |  2 +-
+ t/test-lib-functions.sh            | 12 ++++++++----
+ t/test-lib.sh                      |  8 ++++++--
+ 19 files changed, 76 insertions(+), 56 deletions(-)
 
-> +'
-> +
-> +test_expect_success 'assume push when command line starts with option' '
-> +	test_when_finished "git reset --hard" &&
-> +	test_when_finished "rm -f untracked-file" &&
-> +	echo changed >file &&
-> +	git add file &&
-> +	git stash -m "implied push" file &&
-> +	git stash pop &&
-> +
-> +	git add file &&
-> +	git stash --staged file &&
-> +	git stash pop &&
-> +
-> +	git add file &&
-> +	git stash --keep-index file &&
-> +	git stash pop &&
-> +
-> +	echo untracked >untracked-file &&
-> +	git stash --include-untracked untracked-file &&
-> +	test_path_is_missing untracked-file &&
-> +	git stash pop
->   '
 
-This test looks good
-
-Thanks
-
-Phillip
-
->   test_expect_success 'stash --invalid-option' '
-> 
-> base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
+---
+base-commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
+change-id: 20260410-b4-pks-tests-with-set-e-3ae479b24b51
 
