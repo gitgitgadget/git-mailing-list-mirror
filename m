@@ -1,133 +1,238 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66173358CA
-	for <git@vger.kernel.org>; Mon, 13 Apr 2026 05:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C124F3988E3
+	for <git@vger.kernel.org>; Mon, 13 Apr 2026 09:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776059302; cv=none; b=r7s27cVluCNWWU73Isbn8fkFbDQFVh3vw5qXkRWMhnPExv59eZAmP19hVAzbahUkbUw4UWWiwdJ+vFwuMj0eE2dPpt7aMg948ph2C/xZV9vQkgkemK24SJckA5x+JFkfk1wDh3KZvyrU0/Pl7Q83O+RrzyvY2Bpx+R4fDNBruo4=
+	t=1776071298; cv=none; b=UDb9ea8X7hnDgcg3BMF7S8FWXZvh8NL1lXNc0TnbSEHJZvJz7Nr9lVEY/8mfNyKdAus8mz3nkSvZRKohpfEpzpLKwPEinWZ4d4EdhZ9q3dLNK98zpW4I+tu2fzQ2tOfQYopHfy+wOzrrDLxE2zUvVtkwE5kaRj/QLVlmTWey+Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776059302; c=relaxed/simple;
-	bh=9zfmCQ02/I0HXTbWqjb4LJJ2MQUpdqR3xg9tOnXqEAE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J+hfMgPuEgdPpppRePhp0N+hckQ19rHFcClUrtN1LWJBY3VHqSC6F8/TuC/q/zbb3VyHHeQjbKS4Tb8d2UF1Mvi98eVftkwXLOdMzr7ZFeXK1lpYGaFm4NC3x+lEMi4MBINmjFV8wY0GWqImF1Mf/owC+eMv2jEJTp0rtg5m/8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B5h27hx8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rte0ULsw; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1776071298; c=relaxed/simple;
+	bh=mUfHFpHLqspw3WqmeY31PYBWCzQOkpo+YIKzkzSWghQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BX+WUDbMjX5EDryfFRtEUNnpXQ3n66kWGN6B+WRoJZkvPxMx5wuHySp7yJfxx46GejCgVL09zCo1pJm5d10xanlzVL0WeyCDFG86vX7VJIryNrzRhFbANHbvfiGbf0bxR8MzW6ncANLWMyU264n/GrL94UWXyOKntletHoO3/lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lQ9ANUKh; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B5h27hx8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rte0ULsw"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F00E71400054;
-	Mon, 13 Apr 2026 01:48:12 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 13 Apr 2026 01:48:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776059292; x=1776145692; bh=RHAADobL7c
-	Izeu2tTd9THAws1PiXr1/cbmhD8Qk27as=; b=B5h27hx8BwjhsiWMV7DCrLVnkY
-	l6vXZDdtCaMaYzuofYAGKuYRBPhiwonLZrkq3zlOfz/d26caEspPprlwWTjGGAng
-	KFBMeqI23RM9+LFY8nGP/eeLE8kDbigazR1mJyyJ1HXeHpFtsvNaR/0H6lfukkeS
-	yQYWOXO/N/LQ7BqdsZ8AnhtS2U4ee2kLSeevru8tgZdzt0GdpSfjGkxmMB/bcW2k
-	0pwH10xgvJkjA4XWyzxbr44pB6c15Lq2t/A1ZiT6AAbUEq9nSTP5+HD4pXaRfm7P
-	LHnsG36alIHPft5uO48C8YTs1KfH0AW8tV5tqhHK1gRmy27XFv5z5ksX2Q3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776059292; x=1776145692; bh=RHAADobL7cIzeu2tTd9THAws1PiXr1/cbmh
-	D8Qk27as=; b=rte0ULswUKFvHwsYvv4bVS3kHLegwhXT1tAbZC0n4M1tT47cKRw
-	7z+sFZeJtxRnzKzxc3ZsoY0CuJOtj50NvntB5ZjunyIzXFA09ItGpchm2I5eF+00
-	ayI2z8TknyoqUzhZMvu2A69oLNVEchmkHHcU3RK54LlxKQYcNB/RY3qjOYUzkT3U
-	5IHBF4CK/Bnk9vWV9MPR2D2Aj/iJWKnSgp/gQ2ztbhH5csFAnVWp07QOdhtw4FP9
-	SFEVnOq+kf8gxy4qWhlkzNg8VatMGSJA4yeRb8TZHzRcOqvSJZP+/8ebfOyIN7eJ
-	hb6FOaQes3xZA+q3pQxpGnmI/Hkk2f1aADw==
-X-ME-Sender: <xms:nIPcadrzM-Tp-JXCOaDoe5m8GgWmnDJFbuzv4oGRl2I5iCcfWef58g>
-    <xme:nIPcaVpPwIjORTtSVeiNNQEKxk9t9eWIS_Iw7Qtq30ILJk1DBFc7HLJQHfGoKfbBR
-    F6YOt2Gtd1ViXXp5W2WGfMGEFNCq1vptQP0uVzhbCqcEYX6nDrRew>
-X-ME-Received: <xmr:nIPcaX2bbWiNPiOD1OXnA29Om8GS2Z5qJRrYUQJfBWrcCmZn9yqEIl-JbzKz8Xn00ypjxFeFHqPdeQ3uOLH7ebxb3nuYW6oGOUnHI7dX7HI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdefjeegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:nIPcaUDLc9V6VBuly2q-K-utWDqlpiguupc_N2As3VPX6FLGX_n3Tw>
-    <xmx:nIPcafeHr7PAQirL3Cz1Y3v993tU4CctTU6SlqNxzNCkcutHLsAtZQ>
-    <xmx:nIPcaZi5MF2_GeIAqjltwW9nmAqRjx-EiUe6P1M50hlZ0wv0vmZSVw>
-    <xmx:nIPcaXpIMji8f91ylchINs3yoXIr_ejFVlqTX4aZJPpb2W67XVh7cg>
-    <xmx:nIPcaXYcLRq1Oc10q45XqQt-Bo7INSEhKPX56YC8S838PL4d7CKsAFaH>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Apr 2026 01:48:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c8175f97 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Apr 2026 05:48:11 +0000 (UTC)
-Date: Mon, 13 Apr 2026 07:48:08 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/18] setup: drop uses of `the_repository`
-Message-ID: <adyDmC-y_P0gB_79@pks.im>
-References: <20260330-pks-setup-wo-the-repository-v1-0-0d2e822837aa@pks.im>
- <CAOLa=ZRrK_5shCZwOar47kODe1kDKzcfXo764o9mE5ZA7xGePw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lQ9ANUKh"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48334ee0aeaso39265885e9.1
+        for <git@vger.kernel.org>; Mon, 13 Apr 2026 02:08:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776071295; x=1776676095; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UEwJrkGM4GDSSTiPWU85NlMzOw9c1Hia90AxfT8WoFs=;
+        b=lQ9ANUKhaH++1EPSExFHwPeqdc3gdKnIyYUujgmx5USrJI1cuzrPgBqBHucSgmiVTF
+         wgbENDtEvaoiRyaZ+z7tQoxgzLIAbvAaQhfUozGxfzci7lJtlz389Vdy5OjeOqVg9aNO
+         32hpM0LGTLkZvxPl9CXSWd7UhP/C5Nbq952ay4dD/rW4OqA8yMObYTFlfa7M9WXsZ7zc
+         EqsM7BY6sAAw2Y8yQbGSi8JkIr/BgxeAmQiTPtcjRcRhfEWLi2xABEkzEXJuFYClcLyN
+         KIgGJfBlGvBoXI9pBmUmLqQEA10y5xshszjqsJMP5fiBA0Me8EzYTZplRtdFm17s1yza
+         EJUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776071295; x=1776676095;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UEwJrkGM4GDSSTiPWU85NlMzOw9c1Hia90AxfT8WoFs=;
+        b=bxoxd8WcSvPcHLX1X9DPxe5GOjc/Pf6zcAmb4KB6VOUdDNr8av+ECTpRGQx3U7aRFH
+         sdzis8hESoraIjxvqsl1evQc4uUx47RRv+YSR5xEtJ15ulT4btlPlNh+EP/rBnjsmuLz
+         p8BDtAK5RFu3TwgU1x6VBIpoEv/3wiXAicsfRFH2h9/KlKu7DoK4u35tRlRmCbFhL1cX
+         ncCAkJdrBlTn8NiCxO4rw9bhyzPpEPCqF5+ulk8N4RA/L6qyxU1FbHtd4dvHwSJdTmVx
+         dnpNTMW+Dm1f4aMOwBB5VTIMA2Ou99/TRzUUaBMNzi3bvX6qUoEqvjXd9FX1L6dTmAx6
+         XsUw==
+X-Forwarded-Encrypted: i=1; AFNElJ/mSUdXb3IvXIOO0OLhnTKM7Ias5j2S801UUeBRxizKo43zHqfw19N+QkXEfLiVJasIKqo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmP2lBO/DCyUeD8rrMNuk+A0WerwdeRGtM8W3a8dR2KmHCdAau
+	8iaurwbp/KJuocyjSEgfiipQtVeWzBlM7/PcgIIK6Y0kKbYEhha67jY6
+X-Gm-Gg: AeBDietgLXMgcUaQR4o77OAJxVzQ2bLQBOPIwZoOBMsc+njjX05d/m3eixoJGZgEXE3
+	ljoY8ur3ZqhwA2JSL/8PmIR4xszbVjUTF5LruckC8BH2Tl/HSvxlfCU/Nqk6mp3BafKbKgKzppO
+	FeroZniS01/KRkIBFamMOGwow/Ru1/CJQplUtVxCcRPl0j88UuqpElklB7b5fRFNAjNcwWBpjWl
+	JDa6YWbbLTFWHwvFgQlE4jCdvJmygYrZdGL9FuXZPAurIlnTZ796UBUtNHhjftDNmhYSTDibGho
+	/P0AYVhrJ94y1bsycEvKUaxnfzIkeIUM/G1ZmId2UFhY2TnMIObiF60Vi6XHnl/skWE5UbG+WUy
+	Wm+51zKXz708uKoSgyHWVC3QXMwjmFYgXMzsU4eTPcNuN0Ax7kAtfnW5PRFWt8w27Is49KKZ3BP
+	LTloK4ZK9qAMFrEJFv4/7mot297gVrF2GfifnlJZ5AolZEYEyMGVDQ6EeVqOfDBgy0lgLTKZvvH
+	4o=
+X-Received: by 2002:a05:600c:3f0a:b0:488:afb5:6a21 with SMTP id 5b1f17b1804b1-488d68764b0mr169232615e9.15.1776071294935;
+        Mon, 13 Apr 2026 02:08:14 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488df2a1237sm333101515e9.6.2026.04.13.02.08.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Apr 2026 02:08:14 -0700 (PDT)
+Message-ID: <00b92c0b-8602-45e4-bec3-c7c538bd288b@gmail.com>
+Date: Mon, 13 Apr 2026 10:08:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRrK_5shCZwOar47kODe1kDKzcfXo764o9mE5ZA7xGePw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4] stash: infer "push" when command line starts with an
+ option
+To: Deveshi Dwivedi <deveshigurgaon@gmail.com>, git@vger.kernel.org
+Cc: ben.knoble@gmail.com, mroik@delayed.space, quentin.bernet@bluewin.ch,
+ gitster@pobox.com
+References: <20260404143640.6679-1-deveshigurgaon@gmail.com>
+ <20260412195204.4636-1-deveshigurgaon@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260412195204.4636-1-deveshigurgaon@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Apr 09, 2026 at 09:05:21AM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On 12/04/2026 20:52, Deveshi Dwivedi wrote:
+> When "git stash" is run without the "push" subcommand, the command
+> tries to assume "push" but rejects any non-option arguments (i.e.,
+> pathspecs without "--") to avoid treating a misspelled subcommand
+> name as a pathspec.  The only exception is "-p", which sets
+> force_assume and allows pathspecs to follow.
 > 
-> > Hi,
-> >
-> > I've had enough of "setup.c" and its complexities, so I finally decided
-> > to take the bullet and start refactoring this subsystem. This here is
-> > the first out of the following three steps:
-> >
-> >   1. Drop all uses of `the_repository`. This doesn't yet allow us to get
-> >      rid of `USE_THE_REPOSITORY_VARIABLE`.
-> >
-> >   2. Convert a couple of global variables and drop
-> >      `is_bare_repository_cfg`, which then allows us to drop
-> >      `USE_THE_REPOSITORY_VARIABLE`.
-> >
-> >   3. Refactor the subsystem a bit so that we stop intermixing repository
-> >      discovery and repository initialization. This is my original
-> >      motivation as I want to get rid of `odb_prepare_alternates()`, but
-> >      due to the way we initialize the repository it has proven to be
-> >      extremely tedious.
-> >
-> > Most of the patches in this series here are rather mechanical. There's
-> > only a handful of patches that warrant more attention:
-> >
-> >   -  2/18: setup: stop using `the_repository` in `is_inside_worktree()`
-> >   -  3/18: setup: stop using `the_repository` in `is_inside_git_dir()`
-> >   -  9/18: setup: stop using `the_repository` in `setup_work_tree()`
-> >   - 10/18: setup: stop using `the_repository` in `set_git_work_tree()`
-> >
-> > Those patches don't only mechanical move stuff around, but also change
-> > some logic to make it work.
-> >
-> > The series is based on 5361983c07 (The 22nd batch, 2026-03-27). There is
-> > a single merge commit with "seen", but it's trivial to resolve.
-> >
+> This means "git stash -m foo file" is rejected even though "-m" is
+> clearly an option and not a subcommand name, and the user's intent
+> is clear.  The same applies to any command line that begins with an
+> option.
 > 
-> The series looks good to me as is, like mentioned most of the patches
-> were fairly straight forward where we simply inject the repo variable
-> into the function. Thanks
+> A command line that begins with an option cannot be naming a "git
+> stash" subcommand, so unconditionally assume "push" in that case and
+> allow pathspec arguments to follow without requiring "--".  This is
+> simpler and more robust than checking a specific list of options,
+> and remains correct even if push or other subcommands gain new
+> options in the future.
+> 
+> Note that this does not check for negated options, so "git stash
+> --no-staged [<pathspec>]" is still rejected.  Handling negated
+> options would require teaching the inference logic about them
+> explicitly.
 
-Thanks!
+That was true of the implementation in V3 which checked to see if any of 
+the option variables were non-zero. Looking below, it now checks if the 
+first argument begins with "-" which means that force_assume will be 
+true when "--no-stage" is given.
 
-Patrick
+The implementation looks good, I've left a couple of comments below.
+
+> This was marked as #leftoverbits in [1].
+> 
+> [1] https://lore.kernel.org/git/xmqqtsu1jipp.fsf@gitster.g/
+>  
+> Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+> ---
+> 
+> Changes since v3:
+>    - Rewrote the approach per Junio and Phillip's suggestion: instead of
+>      checking a specific list of push-only options, unconditionally
+>      assume "push" whenever the command line begins with any option.
+>      This is simpler and robust against future option additions, and
+>      sidesteps the fact that -m and --include-untracked are not unique
+>      to "push".
+>    - Updated the test to reflect the new rule and switched cleanup to
+>      test_when_finished per Junio's suggestion.
+>    - Updated documentation accordingly.
+> 
+>   Documentation/git-stash.adoc |  7 ++++---
+>   builtin/stash.c              |  6 ++++--
+>   t/t3903-stash.sh             | 26 ++++++++++++++++++++++++--
+>   3 files changed, 32 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+> index 235d57ddd8..135719611a 100644
+> --- a/Documentation/git-stash.adoc
+> +++ b/Documentation/git-stash.adoc
+> @@ -61,9 +61,10 @@ COMMANDS
+>   +
+>   For quickly making a snapshot, you can omit "push".  In this mode,
+>   non-option arguments are not allowed to prevent a misspelled
+> -subcommand from making an unwanted stash entry.  The two exceptions to this
+> -are `stash -p` which acts as alias for `stash push -p` and pathspec elements,
+> -which are allowed after a double hyphen `--` for disambiguation.
+> +subcommand from making an unwanted stash entry.  Pathspec elements
+> +are allowed after a double hyphen `--` for disambiguation.  When
+> +the command line begins with an option, "push" is inferred and
+
+"assumed" might be easier to understand than "inferred"
+
+> +pathspec arguments are also accepted without `--`.
+>   
+>   `save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-u | --include-untracked] [-a | --all] [-q | --quiet] [<message>]`::
+>   
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 95c5005b0b..be96338d35 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -1871,13 +1871,15 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+>   	if (argc) {
+>   		int flags = PARSE_OPT_KEEP_DASHDASH;
+>   
+> -		if (push_assumed)
+> +		if (push_assumed) {
+>   			flags |= PARSE_OPT_STOP_AT_NON_OPTION;
+> +			if (argc > 1 && argv[1][0] == '-')
+> +				force_assume = 1;
+
+We assume push was given if the first argument starts with '-'. That 
+makes sense. If we get on invalid option we'll display the push usage as 
+we did before.
+
+> +		}
+>   
+>   		argc = parse_options(argc, argv, prefix, options,
+>   				     push_assumed ? git_stash_usage :
+>   				     git_stash_push_usage, flags);
+> -		force_assume |= patch_mode;
+>   	}
+>   
+>   	if (argc) {
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 70879941c2..88f2b3c86b 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -410,8 +410,30 @@ test_expect_success 'stash --staged with binary file' '
+>   '
+>   
+>   test_expect_success 'dont assume push with non-option args' '
+> -	test_must_fail git stash -q drop 2>err &&
+> -	test_grep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
+> +	test_must_fail git stash someunknown 2>err &&
+> +	test_grep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''someunknown'\''" err
+
+This is based on the existing test, but there is no need for "-e" and we 
+normally match a single quote as "${SQ}" (which is defined by the test 
+suite) or simply "."
+
+> +'
+> +
+> +test_expect_success 'assume push when command line starts with option' '
+> +	test_when_finished "git reset --hard" &&
+> +	test_when_finished "rm -f untracked-file" &&
+> +	echo changed >file &&
+> +	git add file &&
+> +	git stash -m "implied push" file &&
+> +	git stash pop &&
+> +
+> +	git add file &&
+> +	git stash --staged file &&
+> +	git stash pop &&
+> +
+> +	git add file &&
+> +	git stash --keep-index file &&
+> +	git stash pop &&
+> +
+> +	echo untracked >untracked-file &&
+> +	git stash --include-untracked untracked-file &&
+> +	test_path_is_missing untracked-file &&
+> +	git stash pop
+>   '
+
+This test looks good
+
+Thanks
+
+Phillip
+
+>   test_expect_success 'stash --invalid-option' '
+> 
+> base-commit: 2855562ca6a9c6b0e7bc780b050c1e83c9fcfbd0
+
