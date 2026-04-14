@@ -1,165 +1,151 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F5F3BB57
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 14:19:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776176342; cv=none; b=Tf9ewR3IFNa0pvpp5uM0NWFY4rK01H9pQ4ynwgn/7ifcE85HSxYl4F35kSfO8q/DgFlGpNev93B09w3qFbPzvYtOWtzoGpx8NLO3t918ncWaZ+b4mhVcufTqqV1cSA9c8BHmikQeZ29tKB8MRQtxmDmVzUHenvf4lEcAw/bKVO0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776176342; c=relaxed/simple;
-	bh=icG7JULuLtkOJ30YQoZIct2gBOEnJrCh2tk6bZt+bOM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qETtGx1ZLj/0J4/kVV+wM/tv+4Lzrrn2oP2eHc6kabZAYQLnpVJql4kELpbDFRTexCKpDdEXd8OQFYPToKPG6WGxolYMcAU/JeBJmhOVIgOMyC8fO/K0OqPtLqXr+SG5crLaqleb0o19hRZdK7OdZXMXR4G4pbJi5uLunJfO/SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KaRejJMJ; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BB73E5EE2
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 14:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776176788; cv=pass; b=ItLtASN7g4UMITE+t6ZQ1l1MrimGsR5amj7rsbZk4PDvutrmKsWaj0G3rHAnfraMRlfORNJhBHbKsByVk/9zVXFCaQoYRdYG37f2Jtw7VcxNIRgEGLZPgyytWNV5GS2ru9ZFDw5YxInbSs/i5CY6/pa/AEalGsyCoJ87y9ljnjs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776176788; c=relaxed/simple;
+	bh=EUF8lNMxazv/jM6Zi9FyARPPKTnbS8VPoaXPUg/xPag=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d+eXICDbjwTmCGPcYGvc4lktrKzmGreeLBu3i/g2UvY7FaOR8tsnLHbpB/vEGRdF87YwgVCArG8jAtD7uHbC4kw5s8H1+iQL08EA4oaIuSBSAiSU58kenDWa0U+3uIvPDNaRm8vVrK0d3uPp52baTvhnQcrI+Z0/ag9Yh/NDLWk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2TcyqzS; arc=pass smtp.client-ip=74.125.82.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KaRejJMJ"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-82cd5c07f93so2473816b3a.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:19:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2TcyqzS"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-12c19d23b19so6342077c88.0
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:26:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776176785; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RstmsvtNRJ5NKFiJESOp/LJXZZm3ZihNDvhyN8SrCBlB1xrsMA/skNPC6SnOsna4gd
+         NHwrB93wqeG65Xzx+VBzXQ2YGjq5ANAu8PvqDNczGjSigTuCwBo+1dTkWJsZgklfIvjb
+         6cn22PO72Z47HMKBd2q0JS+HK/FbpohEqAUDw4Wd97+Blu/oOKanhbgjSchqfkr7LVAI
+         iFosmQh248nlSNu4/IddzghbZYSdGgMc9snhyHn12Liz+uTz9U8xZR79JouYbOhgPZR0
+         JyZUGoy7W6ISiJ1fjhRP5Hr8DP/N9XhpO0k1KZn1SgXpryQYCtmOany0lDfSoscbBKWk
+         Y9ZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=eHhEyHGGV0lVOHKSViiRTMviLtST0zqqz3j9kQVsuaU=;
+        fh=lBPmdbGtIqLcrOfOHWor4SBa+dA9MPlYNnuFeiowut4=;
+        b=Hgvvc72+cLJbHH/nnv9lVk5dWVD73HYSe1uo81ImHyQcKbM9yNpdZ18M+m3jrAvayj
+         NzE/UI75ToxOr1BfXJaqsR/SAK4h6WYetvVhYf5BhRLogniuXzlzmndOZKuS4qNY4ffZ
+         coGtwvyzgYUtDZsEtilAOYB1wa8OpeLiTbLwQXXpgSFkIfTv6ADavRs8nVGdUMfTJNmc
+         Ni5HX2nTmqAgGfUqHTviZ9QRUtzMHwupOygqEbjRUcITEYEzzJ3GzCCKaP4a5Apfy5T4
+         9+wUL10H7orUjw0284YobTVNKS4cMVyaEQsyrpf2JRCE9nV6n/MMhSr+GadzCNugjUvj
+         /OkA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776176340; x=1776781140; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1776176785; x=1776781585; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7Yn4RIxGbdFcaFoildEH3jozObbRaTT+YBVGVFqJl/8=;
-        b=KaRejJMJDOPIfTJpU6lI8UZCxAXJGdZ7Hd9oNAS/HNgTsCc74zvxdiT57P3/N2z27J
-         OOZx5vQZgUS702nuMM/+xqLyxyTh4TL+hoAzzw20Aqkho2ukccyWFOiu9Qdh9hZQPmG3
-         iBfX/4C5Wi6g+bKZ8xHP4ulPoJm9PPu5HJ9dIUnOV1w+Z8gcDzwbtJg89vjKNl3+rTs9
-         6+8I6f5DjEJrTxTTKlRIw2UlVXWkzMAVwfmKUD+4g1z1HC+JcLhdZgdDA1FQ6fWsq2b9
-         pm882dO0e6jqjaBkQnfFC5pFvU/ID48QCM6dhNmjVYb/cMOnJuKTssHNV8ZpuOYtrROB
-         F2PQ==
+        bh=eHhEyHGGV0lVOHKSViiRTMviLtST0zqqz3j9kQVsuaU=;
+        b=c2TcyqzSYZCqw9v/cXcAeR4F5Cx8lN5JShnV0UCKExdieTvsezvgaLQFOvgSh/hWaw
+         b7Hj7RB7NXDNwDxSyzfa6IsVi3lYSoU+snAbYmcgYZUotP1+98ECI2WygC7xagJbKl9Y
+         I3yv9z+p0C0k4gdkgl7bTAF8fkzHHSQowEmY6l5R9AsNcxK3RhMR1lu3tiYhqEYKbdHc
+         JkrT5f/75TDUjSjMUQvnb/a/ZEESBXi0Lt88mt/JMYgmljjiFU1uhCAoNduKnRQUm1jm
+         mSjC/Y7f5t5T1nVmd2CUBKgxyJG8G0kUc0L5nN4xIVzfadoDPkPb2ird5SV+G0GRJ69q
+         I5fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776176340; x=1776781140;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1776176785; x=1776781585;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7Yn4RIxGbdFcaFoildEH3jozObbRaTT+YBVGVFqJl/8=;
-        b=QqAElnOaStzc4PpAxvQe5eqCG4Mzgf5B+fawJ8BUoA4R+hpAW+/U6jnhcOn3q9Zbwi
-         P6VUoJAY1MuXoOSDaE1gu4F0Gv2XpRUHCJFrfregw6KKUSo8X3q8rCSrAjOA8o8INz2a
-         eHK3kcGOyhgdRiKTYgtSbrKtLboCLXaErhiBfGGg/JlgLw7lt8jPBqWxL6iQUDch7rjS
-         q1I8m0JLH28sqwWzhxInCS8RnqsLgX6Y0N6Y3up0kC4+j3If1S3VpE35o7lOYE1pNgJE
-         gjuTP0dvXFHWM9RDzp9cCc2RdLX1ebgNlvkqD1JcfhMvX9inuNNwvq2cVjWQhGrhEoI+
-         qQcw==
-X-Gm-Message-State: AOJu0YxImaxeNtl8yAq8u7imzFbKtJS4Genz6P/ejfmsJQeycOw8STv5
-	lKf88ZkU1bFeV2ycOKXAZO6YXes3Fvegbr2fIqT3tA5hORJg01ngfM2WY8Ehng==
-X-Gm-Gg: AeBDietuhuJISktELfG997Gu69ml5yYJdsCq6u0K4GHSfCkOR9pJyZZDg743FCsSV/e
-	L+YWUfvBAeQrkpkfDHsKbaLEThVOW1ZXR+h3lc9m3xeesW1c68vGRs+6sJgYAw9b0WpCIEeZGJL
-	aBHmyuEyv4rHmGt4PGwPhNf7GX8bHnYa6cEFbV3EKqCFau0UjXaJbDdHcLSdtsM0D4ELQygNjmM
-	w7SxL+lXt8YkMULyDb5CZ5l1Tb4OPjl7wdkn4XdDWNH2z01W/N2Fv8Q8b3a1AWmE0cS3r9FmiKY
-	vf6kl2wNePVPF75pdNr/ZLyOgbFgZrxKZg/jJMGhIEU6PWNb/4xkO/AWoOH+2sVrcNeB4aJvdBL
-	fGnV5wnk334QTFIWBI5LOHJigOAUkGTCW4EDcPKhpHj8MSClVkaKoBFgnJtmKGxNpfmPpj/6Swm
-	ftFHTBdQcK1eTbpiLqu9AzcqyuN+C3IYbUDy5fPLrX6P+cMrHtDUzzAnXexR1QIdu8aEFBJ+QPd
-	inHajrJzn0wy5F7FplW30ZQKa7dWAzTsCmdlihVyvbxqpy2nE7Cu0K4hF8VHBfVeA==
-X-Received: by 2002:a05:6a00:94fa:b0:82f:592f:2eda with SMTP id d2e1a72fcca58-82f592f35c4mr2072151b3a.43.1776176339605;
-        Tue, 14 Apr 2026 07:18:59 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:79f3:3c56:74cd:64f0:3838:afaa])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c30ee32sm15145048b3a.7.2026.04.14.07.18.55
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 14 Apr 2026 07:18:59 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	abdobngad@gmail.com,
-	ps@pks.im,
-	bence@ferdinandy.com,
-	john.a.passaro@gmail.com,
-	r.siddharth.shrimali@gmail.com
-Subject: [PATCH 3/3] t7004: avoid subshells to capture git exit codes
-Date: Tue, 14 Apr 2026 19:48:28 +0530
-Message-ID: <20260414141828.27576-4-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
-References: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
+        bh=eHhEyHGGV0lVOHKSViiRTMviLtST0zqqz3j9kQVsuaU=;
+        b=nMKyYlIDLZgQkza1U8/5iIw2IijB4nrJUgwLsFU9/9+Dyc0kweB+C76yv9jZN6lEL7
+         yAhjCYhZ5U9mSNYPECbNom65S+lgrAhfJEXUbsE7e2KJFLOqEOIGa+S3I9AuavkMFvSW
+         zZMj5sqRrtu9Ot5wsUFhrGVRAHImQowiQyGW4oEP74XWI5yUpV3UUlc3hNmcA4IdSfHK
+         PO6J3Zys4bxpFdm765BhPcfyaSWeEiX1D6/cJpkOTqXO+HxwxtTolyzz5p6aYYsoW7tz
+         2Mw+ut5NmBckaRWDVGZVESPCOo4VHaTK1/JOUPFmQeSIweELXyTuZwiAcr70kUSpeD81
+         TIVw==
+X-Gm-Message-State: AOJu0YxZdjUN8+6xV15oRyZKlqRaxqxEtObL/AW0oD74dKm9Ok2WLH9s
+	dnzXx4dEy/Dte5VH8Gx034p8whssSZC7ZKXqXV5US/AOKSmIqlQmplBJP1nYsKv8XlAcJFINZ0r
+	BvXpLoTZ6DrF6dozU+Mz7+NS5Ko1TLXg=
+X-Gm-Gg: AeBDietXwxPPLdlbKO7WSQVbYkZgY/N/6XWaOxKZNgHo/wErsDeCWd0YA5P3FKgLO3W
+	35wtMW0gYoefXlT6Ho7HMhrbw1hBd3qhDsxxOwIwzAeDo6syCiIMrAVuTCN2Mk/6hr0Fk6zXzad
+	VxBm0cpbSMufitWRI7gA+EfvFG1+17eheCy8fhs8tEZKe4hs+5cesqdURTqDmxiIAW4hpTzmOhF
+	B+lZmuWbGtRk5mJctlgfMaTxaUSSRJ+fW5pkzjX6ktGht/7H85SR7UAvCxT9QVE7GDBthExbHoc
+	9dgeoM1jZ1vcxXCjARFeX854Qzm/GoZs/DFXG7p4xqrUS/WDp17vs3CRPejiplqcKbflpnzbRf9
+	X
+X-Received: by 2002:a05:7022:6b8d:b0:129:fe5:117e with SMTP id
+ a92af1059eb24-12c34edd87dmr9726073c88.26.1776176785074; Tue, 14 Apr 2026
+ 07:26:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260324123750.157143-1-belkid98@gmail.com> <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Tue, 14 Apr 2026 15:26:12 +0100
+X-Gm-Features: AQROBzCskDTn3v13i1LcOwnsY3PiattBzRv8ei7cfU1Lbzv0nDv32rq1xpRwlJc
+Message-ID: <CAD=f0L8UM=6vZR24_7Lz9g+yMDDPbcizzcs+DcqQW05PsTOzDw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] repo_config_values: migrate more globals
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood123@gmail.com, gitster@pobox.com, 
+	christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
+	kaartic.sivaraam@gmail.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Several tests in t7004 use the 'test$(git ...) = ...' or the '! (git ...)'
-subshell pattern. This swallows git's exit code. If git crashes
-(e.g. segmentation fault) the crash would go undetected, and the test
-would fail due to a mismatch or an inverted exit code.
+On Tue, 14 Apr 2026 at 10:10, Karthik Nayak <karthik.188@gmail.com> wrote:
+>
+> Olamide Caleb Bello <belkid98@gmail.com> writes:
+>
+> > Overview
+> > =3D=3D=3D=3D=3D=3D=3D=3D
+> > This series continues the effort to migrate repository-specific global
+> > variables into struct repo_config_values, further reducing global
+> > state and improving repository isolation.
+> >
+> > The previous series introduced the infrastructure for storing
+> > repository-dependent configuration in repo_config_values. This series
+> > extends that work by moving additional environment-related globals into
+> > that struct and updating their call sites accordingly.
+> >
+> > This helps avoid cross-repository interference when multiple
+> > repositories are used within the same process, and continues preparing
+> > Git for improved library usage and better encapsulation of repository
+> > state.
+> >
+> > Changes since v1:
+> > - Dropped "Base series" section as the dependency has been merged.
+> > - Fixed handling of pack_compression_level: removed use of a local copy=
+ and
+> >   updated code to operate directly on cfg->pack_compression_level to av=
+oid
+> >   inconsistencies with option parsing.
+> >
+>
+> I had a look at the series, the changes look good. I do think this is a
+> nice opportunity to set some of the variables to be of type bool as
+> needed. Apart from that, I'd like to see some more comments about each
+> of the variables and improved commit messages talking about why this
+> change is done this way.
+>
+> Thanks,
+> Karthik
 
-Modernize these tests by directly writing output to files(actual) and
-verifying them with 'test_cmp' or 'test_grep'. Replace subshell
-negations with 'test_must_fail'. This way, if git crashes, the test
-fails immediately and clearly instead of hiding the error behind a
-string mismatch.
+Hi Karthik,
 
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
- t/t7004-tag.sh | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+Thanks for taking a look.
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 4fdd47cd21..e8c59c9105 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -155,8 +155,10 @@ test_expect_success 'Multiple -l or --list options are equivalent to one -l opti
- '
- 
- test_expect_success 'listing all tags if one exists should output that tag' '
--	test $(git tag -l) = mytag &&
--	test $(git tag) = mytag
-+	git tag -l >actual &&
-+	test_grep "^mytag$" actual &&
-+	git tag >actual &&
-+	test_grep "^mytag$" actual
- '
- 
- # pattern matching:
-@@ -166,11 +168,15 @@ test_expect_success 'listing a tag using a matching pattern should succeed' '
- '
- 
- test_expect_success 'listing a tag with --ignore-case' '
--	test $(git tag -l --ignore-case MYTAG) = mytag
-+	echo mytag >expect &&
-+	git tag -l --ignore-case MYTAG >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'listing a tag using a matching pattern should output that tag' '
--	test $(git tag -l mytag) = mytag
-+	echo mytag >expect &&
-+	git tag -l mytag >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'listing tags using a non-matching pattern should succeed' '
-@@ -427,8 +433,12 @@ test_expect_success 'listing tags -n in column with column.ui ignored' '
- 
- test_expect_success 'a non-annotated tag created without parameters should point to HEAD' '
- 	git tag non-annotated-tag &&
--	test $(git cat-file -t non-annotated-tag) = commit &&
--	test $(git rev-parse non-annotated-tag) = $(git rev-parse HEAD)
-+	echo commit >expect &&
-+	git cat-file -t non-annotated-tag >actual &&
-+	test_cmp expect actual &&
-+	git rev-parse HEAD >expect &&
-+	git rev-parse non-annotated-tag >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'trying to verify an unknown tag should fail' '
-@@ -1517,11 +1527,11 @@ test_expect_success GPG 'verify signed tag fails when public key is not present'
- '
- 
- test_expect_success 'git tag -a fails if tag annotation is empty' '
--	! (GIT_EDITOR=cat git tag -a initial-comment)
-+	test_must_fail env GIT_EDITOR=cat git tag -a initial-comment
- '
- 
- test_expect_success 'message in editor has initial comment' '
--	! (GIT_EDITOR=cat git tag -a initial-comment >actual)
-+	test_must_fail env GIT_EDITOR=cat git tag -a initial-comment >actual
- '
- 
- test_expect_success 'message in editor has initial comment: first line' '
--- 
-2.51.2
+I=E2=80=99ll review the series and update variables to use bools where appr=
+opriate.
 
+I=E2=80=99ll also improve the commit messages to explain better why each va=
+riable is
+moved into `repo_config_values`, and add comments describing their purpose
+and why they are safe to scope per-repository.
+
+I=E2=80=99ll send a v3 with these updates.
+
+Thanks,
+Olamide
