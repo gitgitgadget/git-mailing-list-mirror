@@ -1,280 +1,197 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02C723E358
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 20:20:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E1715E5BB
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 20:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776198055; cv=none; b=cXZEuONV+0H5zVvkVMto9GkICOo07NjEP2qC3knmf7oPoDW/baEvfuOH2KxFBgyLYzCbMJKOccbFOuUKFrKHC4FQpyMvqyOvYHtCw1VVGLiLeQvR9paM6RVHQamVPuMus8UjqBjvZ5z5Xu0PS+AmtBm2MPe+8MDs2PBs8WZSgqA=
+	t=1776198914; cv=none; b=b9rM+L5DloJBz9stKUcHIljclbIONXKF60QKBMexiUvv2pzbwQggaDUlHYBD1XH1llCtTKFZ176qnO9hp9KDVKktoOZxPigI34kEJwCRr1lCCoV1YBJBa7k07Mu7xQJVWFWTUQO8bfp6rLcQohPv964NlZaPDOVvbh8CithpFKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776198055; c=relaxed/simple;
-	bh=MJv1Rcww/S5C5pbf3jwF3s4Galg3xpNlnzNlZCKlZs8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pl+Y6V29lmJOxqnVH2HfWtXnUe4RTvmt6l+hbO9AMdUC6ToaBboZb/6vlbMrBD2GD1kUSFh2iKA9gQxP4WMRDGz8NYiC/lfm0jQbFpPNQFAefoHzRakRxX2acnyMoHAd6sWpMXtfV8/AZXnkqKoWabJB1uZtZnWfMP+kvtglXro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tKrCLms8; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776198914; c=relaxed/simple;
+	bh=8qJO718KhxaK5C0C/39OqHY0oKm4Wu0w58644YVJrcQ=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=JfkQjL6Ncm34+YPk0e6DkBMJYoVNWk/RHMopByced1wwEe/VV0MpNGo47WXf+nftoAcuTXob4g82PNgGXwB7udHW/szQ5dBQ4+Z2j2MQkYkZpLlcxeYA7ZBk3HzE6Pda60dPvKCT57kL5XbiwEmxrTdCeXeJc9G8llmm6tySReM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=UuM5kShw; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tKrCLms8"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43cfde3c3f3so6053164f8f.3
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 13:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776198052; x=1776802852; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hsr4kCdpYj41pkrrrVjDIncopagxioB2XTc1y7jTjIU=;
-        b=tKrCLms8ZYajOX8eMHLrwNUiHoUhNi/CKUZ9k08v6P+AD40bySpiJEtPRy4Ow1Vodk
-         ELIzUoB72l7lE9l/HJa1cHYbBScIOyOp2YTbj5vwU0I6ksqvAD8jWF3PhOw+RhBBxw2d
-         V2YV6N28ND874y9PlZdJNL8SmUwtomXDMd76JhG+bRi5eCJ1GNpBVw4qGf7/95u1WEKG
-         2g+z/i2XP5GDA8rj0JjerwP0GLk19CkPgBXoYLjzwFD8giE7r5mpgnYMmg3jq9MVNSP2
-         +g+H4idY/8XBTlfnC24cqcEW+6CZEw3+ZPMAKxusbqS1OhTs2Ktlujx5weDCiZTS8dCt
-         JShA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776198052; x=1776802852;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Hsr4kCdpYj41pkrrrVjDIncopagxioB2XTc1y7jTjIU=;
-        b=fcND2iyjbUeyZd/7wTkX8wCK8SediGptgd4nJMgmdfxZvIqQSZz1rsAh30KzajZa3q
-         sx4inAYoXoyLL1dMftNxAuj+V97F1Nd+j8lYkweoytJ4hITo/kcNQcjn17y4zfwz2HP4
-         0wSOT+kMb2oEPeSI5ASBtZdVbyPJRxaGJr4Tt6VkzxFrh0GZ/QyhJ2r3RtVclz+mWEbT
-         32k1EaygOyshsea6+HBxvHDE1yWmr5aXEoLXsMrS+oYE12P+iW/lGy3YZuLeHd2OWyUT
-         NeH0YA5f3tn8QZh4xBx73L8kZpVPQ6nLrmm1qJfZHhUS96JyPNx7Qc9kBlCcQuBeKTT/
-         w96A==
-X-Gm-Message-State: AOJu0YwS+TXzpTS1aztdarI2BZcmE/UHoQ2oiLSnRvciqoW0sqp+3r12
-	MQJAahJYgk/6coFZu9Sw3Mu9f62tOKtTn4xZOYa8+oWSIxX5Q9xgmfJF
-X-Gm-Gg: AeBDiesH8p/nt7CCNxJq1OfCHSW9sxHDDURef81pt/XLzgBbByYNWMFk/Q80QiwnOVU
-	m+Qfp7iM/r3Braizxk0EpUEWmmCfeikafRhKKeLb+cyO6jxuIaxGMCK5HIVNrbX+SMQIuml34Ot
-	xzN/0YWex9t5/0AglijhdcBSB0yDGQK2gGFBFCYwot5OuIFg3oijWTFG65x8D4JQ8aQc69vdWA2
-	qoijC7ffkOhTlEjjzSmSvJzAd+iPld8pHB741gQDoLZPx1xgipp2+88JHpyvGp6x7c4eYrzTw+q
-	UL8Vg5fUBWgmq5xawQJo1NuCrG25zmwBGPhjuQNkRTFLSwmxIgwBRIEfalrvtlXA9aHYMcf/eE6
-	2aNy7WHJb8iXrLcvci9ibUwwAF8lOYXW5fQqdTBrJpUUm5g+IuxBOIbOZDHdou9cxBAMdrUOcD3
-	hXNTlUbVroCPPqGOwz0/iTJ0uQvGJY5/ZB2c+v6s1tTVN3yTp8vOJr
-X-Received: by 2002:a05:6000:41c1:b0:43d:70de:1c70 with SMTP id ffacd0b85a97d-43d70de343amr15480478f8f.32.1776198052043;
-        Tue, 14 Apr 2026 13:20:52 -0700 (PDT)
-Received: from localhost (94-21-146-148.pool.digikabel.hu. [94.21.146.148])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d7b543057sm16525381f8f.6.2026.04.14.13.20.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 13:20:51 -0700 (PDT)
-Date: Tue, 14 Apr 2026 22:20:50 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Paul Tarjan <paul@paultarjan.com>,
-	Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v14 12/13] fsmonitor: add tests for Linux
-Message-ID: <ad6hovxCkwMTG11U@szeder.dev>
-References: <pull.2147.v13.git.git.1775498098.gitgitgadget@gmail.com>
- <pull.2147.v14.git.git.1775710775.gitgitgadget@gmail.com>
- <f85983ca93761bf6cec115d680af8c7d2938505d.1775710775.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="UuM5kShw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1776198910; x=1776803710;
+	i=johannes.schindelin@gmx.de;
+	bh=9VnFkfL/OIS34x0FD7DacUuYb+s05H0S4Xn0GQcsIBY=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=UuM5kShw38xAYCLhgno0+JnUZTjxbaPo3qCvwydHmJT4jiduTc4ZdAmPJLp9cvL6
+	 VzsIF8BOT5vRivK3YQsfXT1HxsrP6BtiWEPqxqfii3xXJ17IFoAEQjhlZLkGhLOO3
+	 glOOi2hlEds8niyn/iNnJPX7iqjZkKPba9Hhal0jMUU0LtFHGuKBCFxYhkl8DuO7V
+	 M1ujZCjT0SGd6uhRQXd12Ix7dNBe9TENIOSVUGv66scJv/9qFAkc40/4FLLX11wKv
+	 WpTsoeAFKFaEe0mbhPCUM3ceb8Td6vpdmgoPV7HtwYUyH/QKkRjHhPLC/A+Lxps9o
+	 eb0hV+zxmI3oPFMi+g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZCbB-1vzsPX29tB-00U7rX; Tue, 14
+ Apr 2026 22:35:10 +0200
+Date: Tue, 14 Apr 2026 22:35:08 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.54.0-rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f85983ca93761bf6cec115d680af8c7d2938505d.1775710775.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1Ml6qC-1visl82M1c-00mU8M@mail.gmx.net>
+X-Provags-ID: V03:K1:Hz7JJMZ5pcnTbG+Pe2LPmV6kEIWb2YoraHNUIXlu4MiMwZnBvc+
+ x45o1SmbYQ/hcW6p+aEQkP7xkyShzXJf/yf1sgQLvj5uTl6PC9aFJypBruVcilu1+bkIFqy
+ ClIoYd2ibNQq5HRaBgG5OM1xa15NQZkmUPEBCyKtw+mGoYJbxrcAL9Y/eeMlzDgGKws0ibM
+ JbSO+NlIyjoR+2432OfQA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:PjMVGftdiAw=;R8sBy1HebM6ktnmcUwBSHx3BmUw
+ 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
+ BW
 
-On Thu, Apr 09, 2026 at 04:59:34AM +0000, Paul Tarjan via GitGitGadget wrote:
-> From: Paul Tarjan <github@paulisageek.com>
-> 
-> Add a smoke test that verifies the filesystem actually delivers
-> inotify events to the daemon.  On some configurations (e.g.,
-> overlayfs with older kernels), inotify watches succeed but events
-> are never delivered.  The daemon cookie wait will time out, but
-> every subsequent test would fail.  Skip the entire test file early
-> when this is detected.
-> 
-> Add a test that exercises rapid nested directory creation to verify
-> the daemon correctly handles the EEXIST race between recursive scan
-> and queued inotify events.  When IN_MASK_CREATE is available and a
-> directory watch is added during recursive registration, the kernel
-> may also deliver a queued IN_CREATE event for the same directory.
-> The second inotify_add_watch() returns EEXIST, which must be treated
-> as harmless.  An earlier version of the listener crashed in this
-> scenario.
-> 
-> Reduce --start-timeout from the default 60 seconds to 10 seconds so
-> that tests fail promptly when the daemon cannot start.
-> 
-> Harden the test helpers to work in environments without procps
-> (e.g., Fedora CI): fall back to reading /proc/$pid/stat for the
-> process group ID when ps is unavailable, guard stop_git() against
-> an empty pgid, and redirect stderr from kill to /dev/null to avoid
-> noise when processes have already exited.
-> 
-> Use set -m to enable job control in the submodule-pull test so that
-> the background git pull gets its own process group, preventing the
-> shell wait from blocking on the daemon.  setsid() in the previous
-> commit detaches the daemon itself, but the intermediate git pull
-> process still needs its own process group for the test shell to
-> manage it correctly.
-> 
-> Signed-off-by: Paul Tarjan <github@paulisageek.com>
-> ---
->  t/t7527-builtin-fsmonitor.sh | 89 +++++++++++++++++++++++++++++++++---
->  1 file changed, 82 insertions(+), 7 deletions(-)
-> 
-> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-> index 409cd0cd12..774da5ac60 100755
-> --- a/t/t7527-builtin-fsmonitor.sh
-> +++ b/t/t7527-builtin-fsmonitor.sh
-> @@ -10,9 +10,58 @@ then
->  	test_done
->  fi
->  
-> +# Verify that the filesystem delivers events to the daemon.
-> +# On some configurations (e.g., overlayfs with older kernels),
-> +# inotify watches succeed but events are never delivered.  The
-> +# cookie wait will time out and the daemon logs a trace message.
-> +#
-> +# Use "timeout" (if available) to guard each step against hangs.
-> +maybe_timeout () {
-> +	if type timeout >/dev/null 2>&1
-> +	then
-> +		timeout "$@"
-> +	else
-> +		shift
-> +		"$@"
-> +	fi
-> +}
-> +verify_fsmonitor_works () {
-> +	git init test_fsmonitor_smoke || return 1
-> +
-> +	GIT_TRACE_FSMONITOR="$PWD/smoke.trace" &&
-> +	export GIT_TRACE_FSMONITOR &&
-> +	maybe_timeout 30 \
-> +		git -C test_fsmonitor_smoke fsmonitor--daemon start \
-> +			--start-timeout=10
-> +	ret=$?
-> +	unset GIT_TRACE_FSMONITOR
-> +	if test $ret -ne 0
-> +	then
-> +		rm -rf test_fsmonitor_smoke smoke.trace
-> +		return 1
-> +	fi
-> +
-> +	maybe_timeout 10 \
-> +		test-tool -C test_fsmonitor_smoke fsmonitor-client query \
-> +			--token 0 >/dev/null 2>&1
-> +	maybe_timeout 5 \
-> +		git -C test_fsmonitor_smoke fsmonitor--daemon stop 2>/dev/null
-> +	! grep -q "cookie_wait timed out" "$PWD/smoke.trace" 2>/dev/null
-> +	ret=$?
-> +	rm -rf test_fsmonitor_smoke smoke.trace
-> +	return $ret
-> +}
-> +
-> +if ! verify_fsmonitor_works
-> +then
-> +	skip_all="filesystem does not deliver fsmonitor events (container/overlayfs?)"
-> +	test_done
-> +fi
-> +
->  stop_daemon_delete_repo () {
->  	r=$1 &&
-> -	test_might_fail git -C $r fsmonitor--daemon stop &&
-> +	test_might_fail maybe_timeout 30 \
-> +		git -C $r fsmonitor--daemon stop 2>/dev/null
+Dear Git users,
 
-"test_might_fail" only allows a few select commands and functions, and
-the "maybe_timeout" helper function introduced in this patch is, of
-course, not one of them, so it returns with error and without running
-the given command.  Consequently, after this test script is finished I
-have still two fsmonitor daemon processes running in the background.
+I hereby announce that Git for Windows 2.54.0-rc2 is available from:
 
-Alas, this went unnoticed, because this patch broke the &&-chain and
-redirected "test_might_fail"'s
+    https://github.com/git-for-windows/git/releases/tag/v2.54.0-rc2.windows.1
 
-  test_must_fail: only 'git' is allowed: maybe_timeout 30 git -C test_explicit fsmonitor--daemon stop
+Changes since Git for Windows v2.53.0(3) (April 14th 2026)
 
-error messages to /dev/null.  With the &&-chain restored over 40 test
-cases fail because of this.
+Due to persistent maintenance challenges, git svn is no longer included
+in Git for Windows. Users who still need this command are highly
+encouraged to use a Linux version of git svn via the Windows Subsystem
+for Linux instead, or switch to a regular MSYS2 setup: install MSYS2,
+then run the following command in the MSYS2 UCRT64 Bash: pacman -Sy
+mingw-w64-ucrt-x86_64-git-svn. After that, the git svn command will be
+available in that Bash. On Windows/ARM64, you will want to use the
+CLANGARM64 variant instead (and install
+mingw-w64-clang-aarch64-git-svn).
 
->  	rm -rf $1
->  }
->  
-> @@ -67,7 +116,7 @@ start_daemon () {
->  			export GIT_TEST_FSMONITOR_TOKEN
->  		fi &&
->  
-> -		git $r fsmonitor--daemon start &&
-> +		git $r fsmonitor--daemon start --start-timeout=10 &&
->  		git $r fsmonitor--daemon status
->  	)
->  }
-> @@ -520,6 +569,28 @@ test_expect_success 'directory changes to a file' '
->  	grep "^event: dir1$" .git/trace
->  '
->  
-> +test_expect_success 'rapid nested directory creation' '
-> +	test_when_finished "git fsmonitor--daemon stop; rm -rf rapid" &&
-> +
-> +	start_daemon --tf "$PWD/.git/trace" &&
-> +
-> +	# Rapidly create nested directories to exercise race conditions
-> +	# where directory watches may be added concurrently during
-> +	# event processing and recursive scanning.
-> +	for i in $(test_seq 1 20)
-> +	do
-> +		mkdir -p "rapid/nested/dir$i/subdir/deep" || return 1
-> +	done &&
-> +
-> +	# Give the daemon time to process all events
-> +	sleep 1 &&
-> +
-> +	test-tool fsmonitor-client query --token 0 &&
-> +
-> +	# Verify daemon is still running (did not crash)
-> +	git fsmonitor--daemon status
-> +'
-> +
->  # The next few test cases exercise the token-resync code.  When filesystem
->  # drops events (because of filesystem velocity or because the daemon isn't
->  # polling fast enough), we need to discard the cached data (relative to the
-> @@ -910,7 +981,10 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
->  start_git_in_background () {
->  	git "$@" &
->  	git_pid=$!
-> -	git_pgid=$(ps -o pgid= -p $git_pid)
-> +	git_pgid=$(ps -o pgid= -p $git_pid 2>/dev/null ||
-> +		awk '{print $5}' /proc/$git_pid/stat 2>/dev/null) &&
-> +	git_pgid="${git_pgid## }" &&
-> +	git_pgid="${git_pgid%% }"
->  	nr_tries_left=10
->  	while true
->  	do
-> @@ -921,15 +995,16 @@ start_git_in_background () {
->  		fi
->  		sleep 1
->  		nr_tries_left=$(($nr_tries_left - 1))
-> -	done >/dev/null 2>&1 &
-> +	done >/dev/null 2>&1 3>&- 4>&- 5>&- 6>&- 7>&- &
->  	watchdog_pid=$!
->  	wait $git_pid
->  }
->  
->  stop_git () {
-> -	while kill -0 -- -$git_pgid
-> +	test -n "$git_pgid" || return 0
-> +	while kill -0 -- -$git_pgid 2>/dev/null
->  	do
-> -		kill -- -$git_pgid
-> +		kill -- -$git_pgid 2>/dev/null
->  		sleep 1
->  	done
->  }
-> @@ -944,7 +1019,7 @@ stop_watchdog () {
->  
->  test_expect_success !MINGW "submodule implicitly starts daemon by pull" '
->  	test_atexit "stop_watchdog" &&
-> -	test_when_finished "stop_git; rm -rf cloned super sub" &&
-> +	test_when_finished "set +m; stop_git; rm -rf cloned super sub" &&
->  
->  	create_super super &&
->  	create_sub sub &&
-> -- 
-> gitgitgadget
-> 
+New Features
+
+  * Comes with Git v2.54.0-rc2.
+  * Comes with Bash v5.3.9.
+  * Comes with Git Credential Manager v2.7.2.
+  * Comes with MinTTY v3.8.2.
+  * The shell aliases in Git Bash that ensured that interpreters such
+    as Python and Node.JS are executed via winpty are no longer
+    necessary, and have therefore been dropped.
+  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
+    Cygwin v3.6.7.
+  * Comes with cURL v8.19.0.
+  * Comes with OpenSSH v10.3.P1.
+  * Comes with OpenSSL v3.5.6.
+
+Bug Fixes
+
+  * The iconv executable, which was inadvertently dropped from Git for
+    Windows v2.53.0's installer, is now included again.
+  * In some circumstances, when typing while a still-running program is
+    about to terminate, the typed characters could arrive out of order
+    in Git Bash. This bug was fixed.
+  * Similar to how git clean already avoids traversing NTFS junctions,
+    git worktree remove now does the same.
+  * The number of CPU cores is now detected correctly on multi-socket
+    systems.
+  * When fetching/pushing via Secure Channel (the default TLS/SSL
+    method), the timeout to renegotiate (e.g. using client
+    certificates) was recently reduced to 7 seconds, which was too
+    short. It has been extended to 60 seconds.
+  * The recent security bug fix that disables NTLM by default missed
+    the NTLM fallback in the Kerberos protocol. This fallback is now
+    disabled, following the cURL project's guidance.
+  * A really old bug which prevented Kerberos authentication from
+    working with the default http.emptyAuth ("auto"), was fixed.
+
+Git-2.54.0-rc2-64-bit.exe | de00b78d1a95511c5e80368fcf7b8ceeee487f9b00afc2fb44c05856343f9cdf
+Git-2.54.0-rc2-arm64.exe | 8ec8e9b4dbe94517e7356e1f204c12564681a7edf9f315f5ffd52841036cf136
+PortableGit-2.54.0-rc2-64-bit.7z.exe | d0109858c7da928c3251a01201a433722882809148045786dc4cddf092cd20e9
+PortableGit-2.54.0-rc2-arm64.7z.exe | 66c613f18d190eee833a7a5e40d38ed95ac032a716fb3f094e0765cfe85b742a
+MinGit-2.54.0-rc2-64-bit.zip | 684e11c6972b2c4718f4aa38cbfd420b635e0d0e52734ddb7da6e92862f04a67
+MinGit-2.54.0-rc2-arm64.zip | e75b603b5627cc053497ac268b97d8caa21b2b7d2f7bb0121f7b64b183c41b73
+MinGit-2.54.0-rc2-32-bit.zip | f3538df09a79dc005169225a65e80f8278052ffe4b4de97addbbecae61dd0969
+MinGit-2.54.0-rc2-busybox-64-bit.zip | b1b9bcb9448a9815a01f0bca620223ad5d6f64654433f6062cbe1a8af84a59f6
+MinGit-2.54.0-rc2-busybox-32-bit.zip | 752a774cace37345597ba6b4126e5c64a859f4b0f2eaf9a8c0edb08634c592e0
+Git-2.54.0-rc2-64-bit.tar.bz2 | 8cb1d6f22563eb1b16ea8ad88525bdf9c4d700cc58cd8da6e7171dce694fa8b4
+Git-2.54.0-rc2-arm64.tar.bz2 | 58ac72aa2c7d3d4c3535c8ffe61d139a0a795c348a0f11a7d80e5d39218b328a
+
+Ciao,
+Johannes
