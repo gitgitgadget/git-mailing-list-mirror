@@ -1,81 +1,81 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369C937D133
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370B137DEA5
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776151422; cv=none; b=cz2ff6A2oHXYr+kPR8YRROXIQxEb8cMC/KcHg5jz8VjAxITyfX3Nb0DBp+h9Umb1pi27YhllBPUGy747x7kIjZqI7QA8Ylf2uLEoDTFPcNnjDGHp1hB24Bp9Fvj+rhZOlGRhO0E7qv1hdPr9Sndz7tAvTcrC7iMWJknPpl4dyOk=
+	t=1776151432; cv=none; b=d78ylVlu9IHc747X+R2lgGd0wQLGnbBooVIsC1osZtDvLD8uAb+VVSw3w79TyelpDCy9chi8i27I8U0CGbcKpos5adqTXJTeI4XYjcuMjh0oTT888IbgTmovFOPZL2lHH4C2QIf3Upld8XNX7Lfy1/xEi95c6OhLOBMizg4e+mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776151422; c=relaxed/simple;
-	bh=tgwK0rKnKHUYnyk6/8UdFOYVdcqrAIz+6rwXbzaXHoU=;
+	s=arc-20240116; t=1776151432; c=relaxed/simple;
+	bh=VTLpSd0b3R1p+jztDfj4qEfdNana4Pp0Y3loCQ/nu+k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NLWp85JPeDFQ7vX+XsHjI4Vqqk03+CBouGRYeE1jnVa5p+RhFGywlRCeXdx91AeguIEBq/8jcwuYzFzp4oMV3oQO5BeR8hRTll/ckTGT1YFMN4c1/sJHPq/H3RmtdSH9/j/rMBNE8pcmYi35MRjImm/bZaHTIR4UrcHpfkSJ4iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=0a7jQdzm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HJX10a1Y; arc=none smtp.client-ip=202.12.124.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=TJ6Bei2EpMUzecO4S4o9WrKExjiDV6V7fNwDAd3kFGEafCA4s1+Q9atSTv/feWZqOEHURF1MJan/GjPUPoA9s3U8QjsLg3tEYRvxK0FHCVLKy9u2GD0EaC3+vEVCmo/j52SCtUHFGlOxLzl0HiMqVGRI2QEe9pzzNraW+DFrZH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s5aqRooY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e5GtNdxS; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="0a7jQdzm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HJX10a1Y"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 547FC7A00DC;
-	Tue, 14 Apr 2026 03:23:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s5aqRooY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e5GtNdxS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 69F307A00AB;
+	Tue, 14 Apr 2026 03:23:50 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 14 Apr 2026 03:23:40 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 14 Apr 2026 03:23:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776151420; x=1776237820; bh=/Hm/Pmp56A
-	OZhHb3L6w9Ttq8jT3bo7Cp/Z+kT+cY/HE=; b=0a7jQdzmHTqWv35LfI25ZsUupN
-	VtM4xwa+d7hgfYSN8ld55cFXXDiExn3cHv4G4St+z3MegZAjTm52w7CsPa4xV/q1
-	5Ze5HtnJtKOtnRm+rdpnoUQCXkSkpMkgxaucIbGIeCZX0XQgnETgKfr1tbJbRTFd
-	qYg851yxixsiiLaWj80S+3pYno32LDizQmBQpMWrYsY83csbe7P576R3Qm0S7YsC
-	4zLx2jPcnelStU/wjv2G7sBYKKLFjkgC+wpod7gEIKf9I+e7JPgZHNzhW7qSvE27
-	zhdULiYXP/I4qZ/kL1Ois9x/D06CuOLN87MDX91hc+i3/EB8lll25TVGnrrA==
+	:subject:to:to; s=fm2; t=1776151430; x=1776237830; bh=LDGfeFGVQC
+	bWMjmAbF2rPYI58AhhTUPfYh1UolWB9a8=; b=s5aqRooYyHyikHVaiyAK8bPVWT
+	VSAn9ruSa1cfYaunT3ulMqz9qgpYbx5NWnxEQEkML8oMeCd4r1lohySKrtQf1MJV
+	MhilCYdsz4Oubjzd7orWLsmwhHz33T34eV0tzy5tiF5JDJXnJE8zpl8cFbPhBVAs
+	DtoIGV8AH3gV0bAdXsYkDDn/UIDVB/H3lljimWIxX+aDqc2xofvdXH+7K9R/Vrch
+	AjU+aU6jtkS+KXeyDs/Wf2cOXvYtf02H7eQPGLZDeoebE3Y5Xu6TuVnsJhfJBzvc
+	cGiQ8Z+xiZawbGM+b0DFN4U5BSmIdzOk2cKmbbgLuh5+N7In0iDT8ocdgcaw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776151420; x=1776237820; bh=/Hm/Pmp56AOZhHb3L6w9Ttq8jT3bo7Cp/Z+
-	kT+cY/HE=; b=HJX10a1YnIQHowg/klRSBq5l5Mf0KfGwc61M6GwcI5AkblSjgS5
-	0Jk0GPU9Z3v/WCQ9kR6EAOJscC2ejJ3cxThdv0RrzdqA4Pxba4a1zDomIi087LmH
-	655obh7O6/gxob8/y1rFRB3j3SDf2pjk3qukCr+HBxeN4JqeRFDuUiWt4tt7E/Sx
-	3+Qvuhs7rqpr7dnVVSSpiDfJupRrDhDIHH7utG6AGlLMEwgQ734muaI/ScJEH+NG
-	dDcCBzJV7iQz4TwHTB0Z8/EVR/YOOczz9IbEaGHsdu/6Hb0JbcugpE0ydIDzCI/B
-	0f07UXDky+b1sQpiw8dLBAn1Y2YyCySLZzg==
-X-ME-Sender: <xms:fOvdaUUOgPidcT6Ecy14q83OxobBR9a1sAfR0boxtL8fJJJ5OcuyqA>
-    <xme:fOvdaemwh7EeLXnxrE4NnbFZEDxBIAKBS8Ptm4Jjy5f9F4_5RgR6sHeIOdfRzpgqp
-    5bZ1Yrp7FWavfD4sNoWnmvgrfcL5OBdL8EqzDsKEe6TkA0iayl2>
-X-ME-Received: <xmr:fOvdaWCfzNiC8GUkRcBNIGtj3NNsNxec-eLicyUDnaNU2mNKs9R2kwcoteR7RUryUxkm-5x7bFgd1YEowEmeTER0kaY4cwbWDIj0FN8MtqBxXA>
+	1776151430; x=1776237830; bh=LDGfeFGVQCbWMjmAbF2rPYI58AhhTUPfYh1
+	UolWB9a8=; b=e5GtNdxS40CO9SjADJxNnqfjRF1gUI5wQqfcYA9nHYvNDjKsgs9
+	eyWJqRUVJwUSgyucZaOZRpwFI+jVKH5qq3daySitJl13POvAWmO113t7ov8ePesM
+	EUCjHx1kszHWMJclqzbr2xX28+TBX8VMhux6g0+0/hF1SmAxld48NRw/GcNsjIA5
+	FlDh1kaJJEFfaZvwn4WRwGWRSy2IRS4oTBWZBdCG1Au62vtuYWucTTnJLRxkvwC/
+	tlEzySEazcQYzibI0EI0pWfOXUCMAlq/DmNho1JS2ihhlPlAMWOOH7q2JrUWF9ck
+	1qSB6OUs8LWpM/Lg4vBmwkJxP6kt1/CMAvQ==
+X-ME-Sender: <xms:huvdafRAQ3N0_XnFlKYGKz0VDeXLtyLaUH8yelNnvIPtX8SL9uCd6g>
+    <xme:huvdaWx_gdFTD9RltrhHadJZAUkWt_EkK-SR_1lRSzWiVJnWjDUZt4TRG_5L5ha-d
+    8SqPq_5ek7ZxlmllG-gPxEPN8fA0_brh76J_cCHFiYMNUqkoY8uUg>
+X-ME-Received: <xmr:huvdaSc_d-AMd-AADXcGDuHUnHOUUDKwj6JjmvEPYOAImxNOvWxdrMOh1229pYfTK9f-qrnPIQ7XCFLygxMePniqiSnxOPtYs57yMsEiQLasjQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegtdehfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
     dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhephfejteeugfekhfeffeektdegvdeffeeiffehue
-    fhtdejveeivdfgtdduieevvddunecuffhomhgrihhnpehgihhthhhusgdrtghomhdphhht
-    thhpugdrshhhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphho
-    uhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:fOvdaedkqnrCQQlTVl2pDJuehdYzVDKEYpx_ClwKumOMrTGtQ6yVwg>
-    <xmx:fOvdaRL-7pGa2HYPRXRgYwytdGFVzjInNCfRBFdE3NN3MdAZYLNWpQ>
-    <xmx:fOvdaRdFNk2hEtjZaoHbQGR_QKsQeY5Rt7Po-O_oRQPw_v0_9S5QKA>
-    <xmx:fOvdaY3H9iAA2n7jnprfeRyYYcBikEZUkU30oHFtm2bBg2xcSJJ4ug>
-    <xmx:fOvdafui2oeW23rPtv6LpbvwO6iOzkouswPEdMzuYQWrDbkwaYBufEyK>
+    rdhimheqnecuggftrfgrthhtvghrnhepfedvlefhgeelleeluefgtdekhfejfeetlefgge
+    dtjedutefhudduhfetgfdtteeunecuffhomhgrihhnpehgihhthhhusgdrtghomhdphhht
+    thhpugdrshhhpdhhthhtphdqshhtrghtuhhsrdhshhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphht
+    thhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:huvdaaI2UedEArCUzwl1gEXkjC72yesN0oRJVz2Z4-JzNCAyi7OXiA>
+    <xmx:huvdabFMyDcw25JIttJrMetzhj4e1O_23v-RaAmsGqdH-Cvs_Knizg>
+    <xmx:huvdacqY84O7vuTJgXmB7V0fCuA2U9sG0IaBZbQb2TznfbhcYEJfYg>
+    <xmx:huvdacQ8yutHqunbIqYzgPKVYu0CV0qLov-4SnZhYm4m8hgUmxIqDw>
+    <xmx:huvdaSrZL6YKudF1mpmWfJNNXKAZuLyIJvxVKuLpG-pd_bX6sdM5Tivj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Apr 2026 03:23:39 -0400 (EDT)
+ 14 Apr 2026 03:23:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 93ed2176 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Apr 2026 07:23:38 +0000 (UTC)
-Date: Tue, 14 Apr 2026 09:23:35 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b88d172b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Apr 2026 07:23:49 +0000 (UTC)
+Date: Tue, 14 Apr 2026 09:23:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
  commands for `set -e`
-Message-ID: <ad3rdxVSrV9U4a9D@pks.im>
+Message-ID: <ad3rgbgadjIZRgaz@pks.im>
 References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
  <20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
  <xmqqeckifq59.fsf@gitster.g>
@@ -121,7 +121,7 @@ On Mon, Apr 13, 2026 at 06:09:08PM -0700, Junio C Hamano wrote:
 > >  then
 > >  	if test $x -eq 42; then
 
-Thanks, I will squash this fix-up into my branch.
+Thanks, I've queued that change locally.
 
 > The above is queued as a squash fix-up on top of the topic, but with
 > the topic merged to 'seen', we seem to be getting a CI failure that
@@ -156,7 +156,38 @@ Thanks, I will squash this fix-up into my branch.
 >  t/test-lib-functions.sh            | 12 ++++++++----
 >  t/test-lib.sh                      |  8 ++++++--
 >  19 files changed, 78 insertions(+), 58 deletions(-)
+> 
+> which does match what is contained in this topic.
 
-I'll investigate, thanks for the hint!
+I knew it was a bad idea to not also run tests on GitHub Actions :) I'll
+do that before the next reroll.
+
+Anyway, looking at the failing test t9501, I assume that Perl isn't able
+to enable the DATE_PARSER prerequisite. So something like the below
+patch might hopefully fix it.
+
+Thanks!
 
 Patrick
+
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index 32814e75df..3acb58125b 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -15,12 +15,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./lib-gitweb.sh
+ 
+-#
+ # Gitweb only provides the functionality tested by the 'modification times'
+ # tests if it can access a date parser from one of these modules:
+-#
+-perl -MHTTP::Date -e 0 >/dev/null 2>&1 && test_set_prereq DATE_PARSER
+-perl -MTime::ParseDate -e 0 >/dev/null 2>&1 && test_set_prereq DATE_PARSER
++test_lazy_prereq DATE_PARSER '
++	perl -MHTTP::Date -e 0 ||
++	perl -MTime::ParseDate -e 0
++'
+ 
+ # ----------------------------------------------------------------------
+ # snapshot settings
