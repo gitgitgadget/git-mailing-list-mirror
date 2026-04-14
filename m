@@ -1,118 +1,186 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1634217723
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 13:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7478E38D005
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 14:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776174102; cv=none; b=VjcM8zBbWj6YhlLmdz/np2Vkt9zcmV7ESBYIjTbQ6T/KYjxkPERv0sTB9hcR3cdjnMivuN+1/pzAN7Iz6nw0itb8tskxYYJisDoWyyjZyq+aoFq6iNNTDX2Yvty/Q0jVG0ZNBOwCbPH08OrQMJdU4Uxgy09ysq8lw5ldO3GAWEQ=
+	t=1776175544; cv=none; b=IvT+L5fAHDqAwL9l84EIwG3iPtljVEHuzuItNCwyGbZdG6x1B/7YiI7nyowOEAWkXsKSQfR6tloMIRPE0m3WX8iTsZd0p13PA78CsIe+LTOIFi+MlnRF1UylntQKygFkECFpboCVAKtn8la3kwRyxf/FZODucH0KSnXzJbnsnRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776174102; c=relaxed/simple;
-	bh=ofY0iaUMyuZUTHd+ITetJWJELEr5ErZnZ81fb6nU7yM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FIDadweSHhVO76zUsz9TefL+wiXLTukuM/6JK8lpA/v2qdlCV9JiHA1vF8XXvMLwb5e9siizxyV2tRZt/nqV7f1Qj3SfGHXxkWcBPtv6QHdpRMTeIlKGkFlpbA5yYLKnShB/69sr3nEk9GvnbKc+PSo2k47Qll/8TrjTs/EqArQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cEIW11Nh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TkAqz/oz; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776175544; c=relaxed/simple;
+	bh=c2eqdm67d8RTSyyNpuv07bXNuZc1ZeZJ50DrP1gYd5U=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=u0xKzgAuJXwvNaxWWxr+HRbDsKunCNKTo1hrxeehRsJufjTIulqHpLH7Ej//PauTwv9EeQ/VWv7QPF3D/hcF2BXypyJrWpyZ/yzeI6Rm+ONuEzONfPY7H2N6P23eE01p5Bjm01RvxYrqH1Y2IafkxBTwLRp1vE9viwld8znjE3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s+P8yWc0; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cEIW11Nh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TkAqz/oz"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E9F57A0067;
-	Tue, 14 Apr 2026 09:41:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 14 Apr 2026 09:41:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776174101; x=1776260501; bh=fD2zatYke1
-	jn6pM6dKo/j8D0JWfzFUoVF/O8WgQ+JbY=; b=cEIW11NhUP63xH5K1cnQ/ya9+j
-	y+LXeXGi3pWb7+t84PfUNDC8Vn5IOxHxGpIcsYkK3XKANZFofr6ugvArnd9ZM4Uq
-	vtaGMWm5cJUaKrUR/qi07QQIZM5RyiY2iTZgs9e83LNTG/XQTCI804/o6N3fbftM
-	iKNEHl3T5v5tQUw2uq00Kf3GSA3fvTNuh2JBf/f5tj6LUxTb+0G/sAhFVNqty9S9
-	IlfjB/bliFQT7DD13kEPRs/Ene5WyMCJ20oyaMRzgGROO8BEsTre5Mb8ngV7+EMW
-	IKxMQH5q3Wje7W+1ipkI05c78Hu9qTaJ1jord3t1MS90FcS46qAZsq9O4cgQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776174101; x=1776260501; bh=fD2zatYke1jn6pM6dKo/j8D0JWfzFUoVF/O
-	8WgQ+JbY=; b=TkAqz/oz36PSlyUIOlKaSfdQmfn7mywLluUfvdocbt1EOQmXtDP
-	iDg4CGP/TUR1wSeEIyU2O6V/fD2y87z1NInNqgRc3T2hMr/zCQxngU1ZWS0omYkK
-	U+qn6n5nDDt50z/P4pQyHV0Xogule1hqE25BDHO2nMOx6+OoWWB9elB6lVe34Kh4
-	UrZUzGAA71eWSx0JZD6fv0IqPfosvVRYV/cavIeV3qQN397c3OGirnjUBgXGhql6
-	FZPEkhJtT8Je/gqTHOEnAvp7updI5NOQVDLHiB7vwDHl3ovf7w6R/h/Ln48rZCOO
-	5mBAFHNylu269HApJk2aB8ISVGWnA/vzoKg==
-X-ME-Sender: <xms:FETeaQiBGe75aSLcMYecRazmCFbO9g6_9GvUMn1_8rHmqbntmnIk4A>
-    <xme:FETeaQcY-99jOLkIIHD66gjHcvw6ACXsfxNQhdTla9zEmWUNZN70KBG_AM7Om9fKa
-    AI8H8Nz6V89r1KjvHu8TtNsm0cX6SFtOrlE3PDSfJjlm-MKIAy7og>
-X-ME-Received: <xmr:FETeaVeNcWKyh7DF2411CKwjqVo969ytslC0O3z8_SmPIB0ULoXgU7Ruxlp-Ic4QZWoCqJCP8lvD7ck3M5j2xQGqyfc3w8T7CA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegudeftdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:FETeaa_bU5ZfEwCU3jSYGaAaLc4LFklTqZmBNud4_GYdFmWn0Z71gQ>
-    <xmx:FETeaRk_yQpOK2FmvY_bPS55bEu6NTsEGoH5rbFBcnoHDo3xncNg_g>
-    <xmx:FETeac_U_Um04BzKKHBdlMNAuRAvvidFht94ZY7_2LymW4vi614p9Q>
-    <xmx:FETeafmf7KwipJoijY2AamHrIT7rPsXz42VsUbWJ_gG5bHlkcjWbwA>
-    <xmx:FUTeaYkVHuTbZK0-jsX-9g1KeLIh1uvfgiTmxAyFEtI9mTcsymSpUqAF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Apr 2026 09:41:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
- commands for `set -e`
-In-Reply-To: <ad3riiF5QWuMmUeT@pks.im> (Patrick Steinhardt's message of "Tue,
-	14 Apr 2026 09:23:54 +0200")
-References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
-	<20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
-	<xmqqtsteiy7s.fsf@gitster.g> <ad3riiF5QWuMmUeT@pks.im>
-Date: Tue, 14 Apr 2026 06:41:39 -0700
-Message-ID: <xmqqeckhek18.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s+P8yWc0"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43cf8d550bdso5294904f8f.0
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:05:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776175542; x=1776780342; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HINkGZk4Bm64ZkyO4+1MsVEuy5mfA75hwb56PAw/FNk=;
+        b=s+P8yWc0ebclewDpnk/2Sr4UJ/NL1AubG2Vk5op1FcrohU6AsrufPsmgwO56I30eDX
+         2K6ve3bgWqdilfZcjDdQLZZuoDeghQ+yzHym0YobwlFJFDAw71mrrO7LhSnFnMMLul5V
+         ob2t7nJ3FBr7cPzYAuLgvT98gRhb/dM91q8l4p5aZA+l57dpO5sszJNKQBaB5Fem7siq
+         zCUa/TJHwZCmofzjQw5atp8SJabKMrdg0HYk/WmFwrUUpgqAozNxwC0xR2VqmOWE4inf
+         sGDuComEGpURtRmH7vtsJWo7ZzP170wyuRbXX2g6ef6loz9Lkw7sUbgXzUFDfFQJ6BIc
+         u7kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776175542; x=1776780342;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HINkGZk4Bm64ZkyO4+1MsVEuy5mfA75hwb56PAw/FNk=;
+        b=Pi3QQ0WhRO//0zSRo9VTZ2AkxfTSL2848pt3Jmxu2TvlmZjZgZQ+f0b+sFdcL3U6gL
+         XGu6Ql/HNiQe/7scZ3d/Um+fXbNuBDJrRgVG/dYhixE/zq2eGzpGTrYGNZXMJtVYtH7m
+         nXXNOONGkHEy4a8vb5cVPt8i58BYvnfNVdMBA3aWU665RQzEUXpWIXfDrs4E/qyDcz+2
+         Ay6Jm/zENF14vetxb8lG9S1ixjyeHhxzl3vuFRIanYbQHfhBmCCEiy0Xb8Q41sj0rsWS
+         NBvbQgzWfF11xTsNZgeuEmm9+MMvmL2h0w8Pr2pVM6XGGPpmyXAECgb5nGypsfsGqfE2
+         KGKg==
+X-Forwarded-Encrypted: i=1; AFNElJ8Smx+xqcAGneicwaca8Io9dg/DwIEMdaOgiSfU24RkMEYG4oY9j5cMXl9uOglpJNjSA1w=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyi8Of6Rtz0Y3FrC2ZpMlYzxPjPFAqywthm08TblwEitMs1EaYL
+	Q6c/rMV5mxGUbn1gK8ZRRgZOMnwcSm0xS20yASB8x3XHwwyCGMEJwOla
+X-Gm-Gg: AeBDievOD5Y7DrMeZPrTKDUHf4l3+4a6I08jlOi8YWdMPaV1pRD1gCf0C6/59ycpMWN
+	ZbBzWigrSw1ssSNsGKtyv5jmwDWndcen/0Pk148CJ2llUlMnLp+9z3KsHxKImHgDgXQmsSHVg/I
+	jM5f1BXFbSPHkr9aaPyrWQTCxdZMNI24LUjYcsd5cio9NTrOnMv5fHNN69Q4zN6WBiWGma2y5wQ
+	DEoJJzhpSHia6LcDpo6vDkKEtm+4vj5OUSDOVxvUKnZZI4znSzxDvM0brYs64BboKjLFGiYdzPB
+	wGoFFpF+epSBc0TFtvnGps0sCsYqRQsv1F1rMBH9zAlZ43aGf4crp666r3Lps8PAy4h5iYXgUjI
+	8+Rst68CAB+fp45eMAg07M48V1cV60BUKu9jCWIrB2vRjkGzGO+F+Y8+PL1xJpfrtMbaY2hZGDT
+	Qbw80ZdqePkIyUh2DknGRKPr7HAco2ejG3ZS33Ozcwyz0ok4WF2kvYgZgfkFFRgZmzYmo8lDcHC
+	aU=
+X-Received: by 2002:a5d:5f48:0:b0:43d:2be:e4e with SMTP id ffacd0b85a97d-43d642dd674mr27354371f8f.46.1776175541523;
+        Tue, 14 Apr 2026 07:05:41 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d7d5812dcsm11320782f8f.32.2026.04.14.07.05.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Apr 2026 07:05:40 -0700 (PDT)
+Message-ID: <d5a47638-545b-44b3-9da5-803c06b3f98a@gmail.com>
+Date: Tue, 14 Apr 2026 15:05:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v12 1/4] stash: add --label-ours, --label-theirs,
+ --label-base for apply
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Chris Torek <chris.torek@gmail.com>, Jeff King <peff@peff.net>,
+ Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2234.v11.git.git.1776163819.gitgitgadget@gmail.com>
+ <pull.2234.v12.git.git.1776171585.gitgitgadget@gmail.com>
+ <9ab5431b4773c29097ae9bdd497822477c7ba56a.1776171585.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <9ab5431b4773c29097ae9bdd497822477c7ba56a.1776171585.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Harald
 
-> I'm a bit confused. We do exactly that in "test-lib.sh" now, see the
-> below hunk that is part of this patch. Am I missing something?
+On 14/04/2026 13:59, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> Allow callers of "git stash apply" to pass custom labels for conflict
+> markers instead of the default "Updated upstream" and "Stashed changes".
+> Document the new options and add a test.
+> 
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> [...]
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 0d27b2fb1f..00314e2b13 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -44,7 +44,7 @@
+> [...]
+> -static int do_apply_stash(const char *prefix, struct stash_info *info,
+> -			  int index, int quiet)
+> +static int do_apply_stash_with_labels(const char *prefix,
+> +				      struct stash_info *info,
+> +				      int index, int quiet,
+> +				      const char *label_ours, const char *label_theirs,
+> +				      const char *label_base)
 
-No, I was misreading the patch and "$GIT_BINARY" >/dev/null in *preimage*
-was pulling my attention away from the fixed one with "version".
+There are only four callers of do_apply_stash so it might be better just 
+to change the function signature and update the existing callers rather 
+than adding another function.
 
-Thanks for correcting me.
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 70879941c2..00bcb1f802 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1666,6 +1666,35 @@ test_expect_success 'restore untracked files even when we hit conflicts' '
+>   	)
+>   '
+>   
+> +test_expect_success 'apply with custom conflict labels' '
+> +	git init conflict_labels &&
+> +	(
 
->
-> Patrick
->
->> > diff --git a/t/test-lib.sh b/t/test-lib.sh
->> > index 70fd3e9baf..81380fe978 100644
->> > --- a/t/test-lib.sh
->> > +++ b/t/test-lib.sh
->> > @@ -143,8 +143,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->> >  ################################################################
->> >  # It appears that people try to run tests without building...
->> >  GIT_BINARY="${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X"
->> > -"$GIT_BINARY" >/dev/null
->> > -if test $? != 1
->> > +
->> > +if ! "$GIT_BINARY" version >/dev/null
->> >  then
->> >  	if test -n "$GIT_TEST_INSTALLED"
->> >  	then
+I'm still unclear why we're creating a new repository here. Our test 
+suite is slow enough already without each test spending time creating 
+its own repository. There doesn't seem to be anything here that requires 
+isolating the test in this way.
+
+Apart from that everything else looks good to me
+
+Thanks
+
+Phillip
+
+> +		cd conflict_labels &&
+> +		test_commit base file &&
+> +		echo stashed >file &&
+> +		git stash push -m "stashed" &&
+> +		test_commit upstream file &&
+> +		test_must_fail git -c merge.conflictStyle=diff3 stash apply --label-ours=UP --label-theirs=STASH &&
+> +		test_grep "^<<<<<<< UP" file &&
+> +		test_grep "^||||||| Stash base" file &&
+> +		test_grep "^>>>>>>> STASH" file
+> +	)
+> +'
+> +
+> +test_expect_success 'apply with empty conflict labels' '
+> +	git init empty_labels &&
+> +	(
+> +		cd empty_labels &&
+> +		test_commit base file &&
+> +		echo stashed >file &&
+> +		git stash push -m "stashed" &&
+> +		test_commit upstream file &&
+> +		test_must_fail git stash apply --label-ours= --label-theirs= &&
+> +		test_grep "^<<<<<<<$" file &&
+> +		test_grep "^>>>>>>>$" file
+> +	)
+> +'
+> +
+>   test_expect_success 'stash create reports a locked index' '
+>   	test_when_finished "rm -rf repo" &&
+>   	git init repo &&
+> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+> index 29dad98c49..659ad4ec97 100644
+> --- a/xdiff/xmerge.c
+> +++ b/xdiff/xmerge.c
+> @@ -199,9 +199,9 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+>   			      int size, int i, int style,
+>   			      xdmerge_t *m, char *dest, int marker_size)
+>   {
+> -	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
+> -	int marker2_size = (name2 ? strlen(name2) + 1 : 0);
+> -	int marker3_size = (name3 ? strlen(name3) + 1 : 0);
+> +	int marker1_size = (name1 && *name1 ? strlen(name1) + 1 : 0);
+> +	int marker2_size = (name2 && *name2 ? strlen(name2) + 1 : 0);
+> +	int marker3_size = (name3 && *name3 ? strlen(name3) + 1 : 0);
+>   	int needs_cr = is_cr_needed(xe1, xe2, m);
+>   
+>   	if (marker_size <= 0)
+
