@@ -1,134 +1,163 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9459D31ED93
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 17:15:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F03A17A2EA
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 17:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776186943; cv=none; b=s3snCExpjBlXDStpwtIP2/5izdLMTEeqNLhMLS7PUDNZxW17A8Cw/lH89dlPHiCit81rio6Yt4vwV6hVJUSHuH3cEhiHP32Gt+N5+9DMhk1uZkXKm6GJGCjwofKvbdYxmy2ML9BP+40Eo+x9fC8fm+1hCk5olwJwN45qPa9fkHY=
+	t=1776187897; cv=none; b=osVV8yFvJDQ7I1uIW0Tg19DNKhKD/+w5BgUHQNFBgWGoWhTwvpIOmoGMtPEVmCbCzEjsLSUYBGiSMB+iAFynj2ZKM6OZwLzR517KR8g++JcH+cLByV+eNy9km33ZDP3o9CAMgaeKPLv5XBvMSPygP2frRFBxj1JpFrsC2iS685U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776186943; c=relaxed/simple;
-	bh=zedui7LfpjeVjQ9jCGCAdO2zC6BePjJLfh+YfmghZhI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iXBB8YlYj+wEvLGVSfHVQew5Wgt3XvS68nPns/tLs/sGxawIwDC5ELGouqVAagJymlNDr0NNVtKH7oAHSK+UQN58uQ3hDXx4BjI5zj2AmoYuSdQBbil+3zgC7jb00DQ/zFxNkuZCpaNtsZfDHwyqM96ooOAF8JpAKq+AdD3b7rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yMhmv0s/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jxS7R23T; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776187897; c=relaxed/simple;
+	bh=QfkZ4UzgY2QcJoKyoMCEDZXw4jjSs6dYlXyhyKiQaqI=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=pTaTQgNkagh06CgF5m7B23bSapaHMSQe2cA3Ql8Maj3Sowh2rdpxP3gYtGmp7eXFms3bMI4cnqG7q3xQvjT5kDqjjL0hq2KLW3yZPR6lPGurdfL3/llAog/Zi7cz3SyhwvoF/3u/gUCcK8cbTX+n6a4FO1PquWuV9eNcfiVPqQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=BAYP4M98; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yMhmv0s/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jxS7R23T"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A446A7A0289;
-	Tue, 14 Apr 2026 13:15:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 14 Apr 2026 13:15:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776186941; x=1776273341; bh=my2yQtAynH
-	2Kgp6X3iiJX1h8oAdcKTWdSrhAGFFqjiU=; b=yMhmv0s/ssZGJwQzkZvFSn1ck1
-	EeWF6krS9pJfLBvsMZQFIFkpN6k30Edpl280fycdI1H9gt4sXcY2uCh0JJsOYGuS
-	LrUpeJTG9iJpxXvEPKE3+DTl5DHc/m0lkonbj5Up9q/40Jzv8kouOwTZhCeAz1m+
-	CHyCeYDQiCWtZ0W85f+ZKBmzzb9ksHHNYJIKATrmVbxFxyONHZ3VwsMjgcKVsUsa
-	Y/tnG+SdLmVNB1RuZKDiD26r7C5c0z0GOOetpD08MHHlOXPfo+TtmhPq6mYbz+nd
-	BfiA5+ahISVqRpjdgH4kZQ0bcxzfKtEQ9Ub/6X3nvRe0/n75IzrogeMVU6OA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776186941; x=1776273341; bh=my2yQtAynH2Kgp6X3iiJX1h8oAdcKTWdSrh
-	AGFFqjiU=; b=jxS7R23TuuAbYjV0zcKJhf6Iz+PKO5E36uRwtAS57dExk8xAWwN
-	t9zdxsyLueKrTQCZWuoKnNWfe2qOAVJj45uOpDNmhVuRaVWoCZ/CL51rUDKKJkDz
-	awbuOO2w8Vg3aExDkwo7WVwl2qokbCvTl4ixoCgAtF6YLGx02s7qhUYqSQ2khcN/
-	kin4G+Mu5vleCH52SEMrOHYlKRrRqZfY5t098CTWgc45K6ms72UlkvLwYy0wmq2V
-	E8p668arhgmSI/QxV+XwQ5KHAKiGOip2rLlyD/BQoXBWQbO4AY71wcTdjW3gik5E
-	MHqN1hA1GS6n/BJTIzh2qI3Zj+YTDJCSF2w==
-X-ME-Sender: <xms:PXbeaQ_3VKUwkUc2kqpeT_mMXMh0668MeLC9Fs4wOlY5JOI4xP0QNA>
-    <xme:PXbeabSLrLGypFLu6PbIVi-c96eAYcb4pwmkAUnjSJzHEGii_FCLFwaS3zf55mVKq
-    uXQixBkxSk7aAgwEn7qhjVP1LyTYugPY4p3Lt8TxK9sNKEvwsxj>
-X-ME-Received: <xmr:PXbeaZoICRUbiUQcTA2SIIWoMhUOQrKjpToNnoVjIU5oSO5K78Rm8iz9NeVvDdAq6ZBBKVs37XW1wbgpNI6qP4N0pzR9jybE9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegudejfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
-    phhtthhopegsvghlkhhiugelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtgho
-    uhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmih
-    dvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgr
-    rghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PXbeaQm7F5r32VXnevOQ_KUzU0sU7ThQwsu37LH6SEvNkMLP5nSNBQ>
-    <xmx:PXbeaafo8KkZnkYNUiUup1HE-kbTGr7uk8hfGxmaD5csQDLL7I-qxQ>
-    <xmx:PXbeaUrPLirGA8gS0tnClpYGhIVBsDxvJb9YdgCi3AN7qns9ow_N5g>
-    <xmx:PXbeacO6aREY5JwMYVA-3CeSkl0MpJsb_T0C02ZPqBTqcd-KHEkXCw>
-    <xmx:PXbeafNUQBdTZegExetcfD3FsEdmU1U-MZL-EuOi1rVGqvZtHLbq_yvF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Apr 2026 13:15:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  Olamide Caleb Bello
- <belkid98@gmail.com>,  git@vger.kernel.org,  christian.couder@gmail.com,
-  usmanakinyemi202@gmail.com,  kaartic.sivaraam@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v2 1/8] environment: move "trust_ctime" into `struct
- repo_config_values`
-In-Reply-To: <53f43b85-b274-4352-938b-d40f942bfb2d@gmail.com> (Phillip Wood's
-	message of "Tue, 14 Apr 2026 10:35:50 +0100")
-References: <20260324123750.157143-1-belkid98@gmail.com>
-	<20260324123750.157143-2-belkid98@gmail.com>
-	<CAOLa=ZTD+qqgyB4Pn4bcOfP+Ks8Zch+AWZkzhrRRbk-eJvS-mg@mail.gmail.com>
-	<53f43b85-b274-4352-938b-d40f942bfb2d@gmail.com>
-Date: Tue, 14 Apr 2026 10:15:40 -0700
-Message-ID: <xmqqa4v5bgzn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="BAYP4M98"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1776187892; x=1776792692;
+	i=johannes.schindelin@gmx.de;
+	bh=pOe2kSi35Z1m63GZeRL4dfItaOwLcPC2u14JCMkdGV0=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=BAYP4M98kMIyZvzOezK7OqkGdV6ZFJjWP5pTzn8gPdyDZ/3alAIopcsR5sSuhQDx
+	 Ur+bBCVm3CG3VzsAYGU/zgO2Cb5LBh7xxRQYLAYJzO2nBIB70k+hTDDPWTZCKhrOz
+	 qWTEhaJf+uotiEw5lsVVcX/DSS5cyC95r0eCB7zSaGZPCUVH99jkIZNKFDxUihYGw
+	 ZI/+BUQAj2b9pISZnbUtywNrEOwkp2DQqpHcAInblu0ebihA2b9yEMXGeNahnrJSx
+	 wuG9NTETmrOh0WrW6HKzFkv+YlmGWxEXcOVz/2Ud4t54UEzPk9OVwgt1h1A52CA8D
+	 0ka0JJ/+7EX0kBEtoQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MatRZ-1vb9w72bT1-00ZV9u; Tue, 14
+ Apr 2026 19:31:32 +0200
+Date: Tue, 14 Apr 2026 19:31:31 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.53.0(3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1Mz9Un-1vHHb52kbr-00xk70@mail.gmx.net>
+X-Provags-ID: V03:K1:fSmkx7JSaBTaQbzE6J4wXczc5nC6Ye6kRQOF+UfNp+Wpo3KB0O0
+ MKHd4xOEt+kGoaVwA1SOnWFgZfkbxjhOEFXK4mjb+uticAsWb1tLV9wpV1LjAuGu+9zRqvz
+ pKXHJRpThi8hTYcMsKMEQmfvdBKBW1vrRx+4fM/mflodutzyhTsjbdJvu8pQdQwiKJWyPz2
+ AwqHFL7Sz8K8EgUsjmfEg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:AuvkUEPTPuQ=;wIZGtQJN2KO8kKfCch3uxH4hf8k
+ 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
+ 52
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Dear Git users,
 
-> On 14/04/2026 09:52, Karthik Nayak wrote:
-> ...
->> Nit: I was hoping you'd also shed light on why this can go into
->> `repo_config_values()`. Does it need to be eagerly parsed? If so, why?
->
-> If trust_ctime was lazily parsed where it is used we'd end up dying in 
-> match_stat_data() which would be quite unexpected, make it very hard to 
-> reason about the code, and hamper the libification efforts. I'd much 
-> rather we put the onus on patch authors to justify any conversion from 
-> eager parsing to lazy parsing rather than forcing them to justify 
-> continuing to parse settings eagerly.
->
-> Thanks
->
-> Phillip
+I hereby announce that Git for Windows 2.53.0(3) is available from:
 
-I too often get confused while looking at these "global static
-variables holding parsed configuration values are bad, let's move it
-elsewhere" patches between the on-demand and upfront parsing.
+    https://gitforwindows.org/
 
-I agree that what has traditionally been parsed upfront are mostly
-fundamental things (e.g., in core.* namespace) that is better parsed
-upfront, and what has been parsed on-demand are often very operation
-specific thing whose misspelt values do not matter when we are not
-running that specific operation, so it is better parsed on-demand.
-There may be exceptions and some variables that the current code
-parses upfront might be better parsed on-demand and vice versa, but
-the default for these rewrite effort ought to be to keep the
-existing semantics unless there is a good justification for changing
-it.
+Changes since Git for Windows v2.53.0(2) (March 10th 2026):
 
-Thanks for injecting a dose of sanity so clearly.
+This is a security fix release, addressing CVE-2026-32631.
 
+  * CVE-2026-32631, Git for Windows: When a user clones a repository
+    containing symbolic links pointing to network drives, Git follows
+    those symlinks during checkout, causing Windows to transparently
+    perform NTLM authentication and disclose the user's NTLMv2 hash to
+    an attacker-controlled server. Since NTLM hashing is weak, the
+    captured hash can potentially be brute-forced to recover the user's
+    credentials. This is addressed by preventing git clone from
+    following symbolic links that point to network drives during
+    checkout.
 
+Git-2.53.0.3-64-bit.exe | bc88381e192bd5b17a131755d837828d8a570da1ead89cfcde0d45ae38133c0b
+Git-2.53.0.3-arm64.exe | 9cc821d1c402f4a5fd397ab0757ed67b7d91d3401ea171131acd745334056a9b
+PortableGit-2.53.0.3-64-bit.7z.exe | b365da794b1d2225eb24d5f5e09ef7792cfd5fa26c3a3586210280c80dff3a2a
+PortableGit-2.53.0.3-arm64.7z.exe | 0db54010054c01f35501cf69e1e32d3710138ecb934d188bd77093afed24300e
+MinGit-2.53.0.3-64-bit.zip | 0d7c85a26e45668b35d0d0aeb763289376cfc039e55e0938a617ed0dfa32e433
+MinGit-2.53.0.3-arm64.zip | 4e023ced9acba38d45b63cafadde57a11c754c0b46df8968117cd243f8f58ef4
+MinGit-2.53.0.3-32-bit.zip | 2a55bcec4de958570f4e27ae59dfa9f91d98c816113189e2fc6af8afe85ed66a
+MinGit-2.53.0.3-busybox-64-bit.zip | cab3a8dfb2bdd7328d79c0f8dbc934d038f755573ab22d4f72bcdd8ff9f86c26
+MinGit-2.53.0.3-busybox-32-bit.zip | 98ddcfe902949cfb656e2bc518f1053217d54d88a22317d02c026eda7aeeb984
+Git-2.53.0.3-64-bit.tar.bz2 | 1661f02e85a7901ad7920e2a358ee3772ed9066b00d8590bf2d9046ef10aa8b2
+Git-2.53.0.3-arm64.tar.bz2 | 4015f05a68bd2bcf3cc6c426e8d44b65d670fbb879225bb7b7c347cfc3a2758a
+
+Ciao,
+Johannes
