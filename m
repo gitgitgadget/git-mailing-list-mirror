@@ -1,61 +1,63 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0013469F4
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 14:18:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A6D31159C
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 14:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776176323; cv=none; b=m2e6ZFS2igLIgV1vN6MGR90vfYwOF8Cz2CMDGU/LjgppI04g4epSsKIfFs0ybNOvhnf1tw1fGKloNtIc5amuGGc6qTKpWqPQQWZC/Fv0IpbcSJaCkM99d3YEN/aTARXCuccoXyQaPiyk+hTmNbxjmPljhUmwsyGftmiIavJJ4+U=
+	t=1776176330; cv=none; b=Cc34YSJHdb0+vqnicFKBAzxbsaPNp1Q6sAIMTkz9wgkQ9Rfb/Cdr13gOBOncVL5Lule+m089YeMwpXiMygdyPvGzujCXnwo8I4ABrof0uAApMVwX21K6QYoDeu0Equy90IBCOM0vXYAKfS+/HSM+++wlw2JM7BbmaZf8cPghI08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776176323; c=relaxed/simple;
-	bh=TFLcTS4KlvYZtDwmoV72blsf4SS5MxUkvUhCEvokqu4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ty9XgZjn1evEG18CQMRbX1KWvTpUIYhYw4/qlLjqWKXMxnqSe7/HZ4g+wqY2MQ7gZNT0JTnBTeOiCGKuqp44y7zHOUIeIje/2SY/QepQyeVdFUsnnwmLGgrnXErUSaKxdih08dmdJfLj3XReqKo3I/F+WmeOlcIJ9bDtkRiOg1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7G3jtBF; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1776176330; c=relaxed/simple;
+	bh=DAAJSu0qJYVXE+yjhumi0dafgAUGnpOM+109Yx6MjwU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UMeSJFQUFPfsqCvVBOsCfNxY/XpvDgfTHkWxKjJGbxVl6+TVBVLhBXNW8hGhMn6c5+wMIyAyPlT7iNTkB/lW5mQa03LBRno5FgVa/dbLPl8FvLeJ5S6cWJ4NwMQi44lVwXBVPWcTh2rFvmPOpEufebx8R9siP4W7bYkapZmhIDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o/uTOigh; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7G3jtBF"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-82a655cfab5so4665496b3a.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:18:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o/uTOigh"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-82cd70febc7so3777006b3a.2
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 07:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776176321; x=1776781121; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IwtF6tvNpLyxBevjpJ0VC82eCCB2LE5sxINBxeclKnM=;
-        b=K7G3jtBF7VlUDPlEtkJW46ztQf/b22cyRkqTtfcuF52H3w/IsJEb8Ft9PbTWCz1GP0
-         kygk0otoNkz9zbs3XnU/sbRSZiVHHBQQujtaD8/8wbaQx53ytiHARQvNlttgUVctDzs7
-         CooQiZma5Y8BULMU/oRk8Wuoc96PeY/AF0vlO5sEYq0vyddw9K1QyO+83cDcYnZY8NnJ
-         lGAfLHqCMNpTAP44FQ4v6VHaOOG4hLp+r0UEYdau6u7awWFo9adC8QMPlz9qSs/LwA14
-         GaXMG3jQ2engA9uVUwHfSh9L1EF6qMZXU3D5ExvwTsgwTr6yjGVX22Hv1Cgxs7lZ+oSi
-         vWsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776176321; x=1776781121;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1776176327; x=1776781127; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IwtF6tvNpLyxBevjpJ0VC82eCCB2LE5sxINBxeclKnM=;
-        b=QRmP7fbcDjXGFk50jsO3OUBZHq+Ps0M157jp2/jjbAhZswzmStU99Aws7EDTK2iUPi
-         ECGzm46+KBsGmmBNK1BUi7YjZzNEMVWtFaGYmtu1/BnAGPpq0ZnBDwcZb59NRpmgsZIG
-         wO9ouNSzflaeAwlF1aoaXFcQhV3gw2OIm1bu9Hz7PZdKiBEsdA0YAU1wNSjJGMEiBnaN
-         Tlr9DAN5x7znOzjMj39MF9NF3pQnqve/PlLFn86JXdQoZayNA/KqKPMrmQDxxKJd2ETj
-         ojP5X/d321puh415iw6GUKm9Rt0viuI4c2NiiSOSgXzsav7MsUxx1dvOA7zpmJH6c+d+
-         qCww==
-X-Gm-Message-State: AOJu0YzJX5USJ5V+868tNM3E3WOTtx3NCgSgj/+BrWWLcHUmn4FXlbEA
-	hEuqcYz6EIasMLx0oDS+rL4xXjen4NV/DZ4/8YsVzUFLInOIUjoyfBPbrCONDw==
-X-Gm-Gg: AeBDietI1vS5dFcvdQ2c9dOOBWIJD0ryco8gOdBHCLtXDjzCJxqth6PsjI7S2VoXzwc
-	LpLnfM1UbigqAtXxp1Eg5YYRYK+X0HXRsr+tCJWLvO5QxoUCYGPmRMBeO6YZYRrlAMrpAyRM6+3
-	C0tv3X+wgwJxeiBuJGtK6iw8VbZfCG1MPnthbcX94LNqBuaycQyQ9uotZZvuoBdpLZzKjMkuU0A
-	I2xtNoxMHYwktilgU4TxvPUl3c1r0hJ4kiNSSWXkW2LJcpyW+aqB2LRZnnmdDzbYoZycJQu2QCW
-	obUBTUAFhpjSi50vAT4TMhjztRZ21fyNz2a79tkxmFVU4XejfFORMQD6Tg5CJknSZ54BWxFLIUo
-	QI/L/IejU0QxWRJuMiDjXwUriOa9vbF3X019I8KJLoKGzRUiWWcZxlxLDn+jaSSIJWuncixpZHy
-	vy4d6VckE7l0xWM9wuqnl5M41hYVSkOHjcn9NvoZcKPS9rMNgLzHzZFFCwbTQeGXL71TCNcm9Rm
-	xNGU/H3Trf0/0Bl4G3uiEoq5crCPnA60ljyq1HA+Oxatpb0iUcMnYfweQ6qmWeZSQ==
-X-Received: by 2002:a05:6a00:1305:b0:82f:b5:8044 with SMTP id d2e1a72fcca58-82f0c1e261amr18728252b3a.6.1776176320541;
-        Tue, 14 Apr 2026 07:18:40 -0700 (PDT)
+        bh=jbO8v+wLlfuwy3EtpWDotEO5LW3iNHgx4k2E10LZoOw=;
+        b=o/uTOighMUcQzySZuLeanlwsmoK7SVB2fGivp8po7vfQDV00U+n36JPNJngCE8Lc3k
+         lnyyF6QCGvc6rWdUIHs/TBKymsB0CFc6jyIobl+JlAG8QEWSo03pse56RYvB6X72RrH9
+         kgkJr9d0+4+C3SC2H8T3bQbgB1Yo2S0SgQnh6m6T/HYCryJNDki5em71hlaioqsXR+oZ
+         rMHvwY2Nqx7FvcpOLh76npEDIwxeqGoAmtL9borRYzpD+l9fIx9VX2bwBGzTazYxGDQ4
+         Xos87peYiLOcZdT62r/htnR70mHcnsh2vlUJq30l4D6UT5PqA5pusOAKI98qO4ut/vR1
+         OZ9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776176327; x=1776781127;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jbO8v+wLlfuwy3EtpWDotEO5LW3iNHgx4k2E10LZoOw=;
+        b=nNiWGKMRYDQuFYMOrh2BOIrz98djJSKdSoILNYBXmBJJKJm9ccfMR9ZScSTE6leu55
+         6rLEWZ1jecbNjnQ7accbfTWtJCGMmShJwDi/aMyv6hKcUcUAgpTtGTb5SFJMnDBa+XXF
+         SD6o1wpgQGuU/9f0niv/ebdyEMcP7ICNaR+m/R119DUpEvD1ia2GBBf92CkqieIHQMdv
+         FhnAhSvP/fMevnVGSh1qQ7+++fW3XQugolk19dQ43SWn11GLVKD2QEeMiJ9Sw8N1dbKc
+         fRraa9ykVfLnUsUdFePf5XetXPDxLQ3aTS8ROLW1He1+qxkL0OAF1xmuUr6O5NsUrQBN
+         gt3A==
+X-Gm-Message-State: AOJu0YxgxZ0MPpTkV2BSv+QAsvbQhLwWsewQopWJwwqSc2aK3mVH7zLQ
+	aDNq2GWcQDAG/BK7uvMzIrzyLCf7Mh7t835+xoyyPDB3MdKW8RfWadtTXTmXPQ==
+X-Gm-Gg: AeBDietzdBTtPhbaG536FfyYQpQEvzC0Sqiyx0lHAPixYIb7LaE3HEXt6v2owoWLFRr
+	t4i1KOJJmtgNY22X6HUxzzZYiXAow/bb9qx3mcvu9CSEfWlJVi7tjs6KouuP4N9KPkpEiT2hi4x
+	bYnG8oMfu1VsWuXG1I8IFxFcR6oeC1i+HnBfp7mVFGBlc2nuZ7l6FaQ4fsQkChel53uFWVFX1hv
+	sZ7/q4Ql9+ISG5vvexStWTAVA9MmNtAH60Dg6DGoKgCIUzEctJuSDyWh+2Pfrp6DSRnn66rA4le
+	Ld0k6bK3ZI5gj9RJe7jI2bW2aG7fdgg+tVZQh0GlbcRJGfQcJB6VuuMbiVL9XeK228G5IVw2C2Y
+	eRKNiL5vgUtCeK9Ri+PfsDiEgq0Z/cHm6k7Ki7YElWkhMAoXq05qatBSu64EMyozmyh95mjBmCs
+	IgOn3NvmcSEf46R4mft8CHqckBtbFvE2sU3pDjb2WKjsNP4GEEMNJjH1iQRtpZqBK5macA3LZVG
+	8YIKkG6vVHgsh/Ytvt755uxROT3oi91OE6Nw7FH+ln30ArjtjAJYCZxSlsCZa1emw==
+X-Received: by 2002:a05:6a00:bc0b:b0:82c:24d5:21cb with SMTP id d2e1a72fcca58-82f0c1d9baamr15998358b3a.8.1776176327325;
+        Tue, 14 Apr 2026 07:18:47 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:79f3:3c56:74cd:64f0:3838:afaa])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c30ee32sm15145048b3a.7.2026.04.14.07.18.36
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c30ee32sm15145048b3a.7.2026.04.14.07.18.42
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 14 Apr 2026 07:18:40 -0700 (PDT)
+        Tue, 14 Apr 2026 07:18:46 -0700 (PDT)
 From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -64,10 +66,12 @@ Cc: gitster@pobox.com,
 	bence@ferdinandy.com,
 	john.a.passaro@gmail.com,
 	r.siddharth.shrimali@gmail.com
-Subject: [PATCH 0/3] t7004: cleanup and modernize brittle tests
-Date: Tue, 14 Apr 2026 19:48:25 +0530
-Message-ID: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
+Subject: [PATCH 1/3] t7004: drop hardcoded tag count in invalid name test
+Date: Tue, 14 Apr 2026 19:48:26 +0530
+Message-ID: <20260414141828.27576-2-r.siddharth.shrimali@gmail.com>
 X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
+References: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,27 +80,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patch series addresses some brittle testing patterns in t7004-tag.sh
+The test 'trying to create a tag with a non-valid name should fail',
+checked that exactly one tag existed in the repository before and after
+attempting to create invalid tags.
 
-The first patch follows a suggestion by Junio to remove redundant tag
-counting in the invalid name test. The second and third patches extend
-this cleanup to hardcoded global state and modernizing subshell patterns
-that could otherwise suppress git exit codes.
+As pointed out by Junio, this makes the test brittle by relying on a
+specific global tag count. If future tests are added or removed before
+this test, the expected state changes and this test would break for
+completely unrelated reasons.
 
+Since we already use 'test_must_fail' to guarantee that the invalid
+tags are rejected by Git, counting the tags before and after is redundant.
+
+Drop the 'test_line_count = 1' checks so the test doesn't rely on the
+exact number of tags left behind by earlier tests.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 ---
-This series is a follow-up to my previous patch "t7004: replace wc -l 
-with modern test helpers". Thanks to Junio for the feedback on the last
-patch. I have applied those changes here and have gone through the rest
-of the file and fixed similar issues.
+ t/t7004-tag.sh | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-Siddharth Shrimali (3):
-  t7004: drop hardcoded tag count in invalid name test
-  t7004: dynamically grab expected state in tests
-  t7004: avoid subshells to capture git exit codes
-
- t/t7004-tag.sh | 43 +++++++++++++++++++++----------------------
- 1 file changed, 21 insertions(+), 22 deletions(-)
-
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index faf7d97fc4..6ca5c75b57 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -191,15 +191,11 @@ test_expect_success 'trying to create a tag with the name of one existing should
+ '
+ 
+ test_expect_success 'trying to create a tag with a non-valid name should fail' '
+-	git tag -l >actual &&
+-	test_line_count = 1 actual &&
+ 	test_must_fail git tag "" &&
+ 	test_must_fail git tag .othertag &&
+ 	test_must_fail git tag "other tag" &&
+ 	test_must_fail git tag "othertag^" &&
+-	test_must_fail git tag "other~tag" &&
+-	git tag -l >actual &&
+-	test_line_count = 1 actual
++	test_must_fail git tag "other~tag"
+ '
+ 
+ test_expect_success 'creating a tag using HEAD directly should succeed' '
 -- 
 2.51.2
 
