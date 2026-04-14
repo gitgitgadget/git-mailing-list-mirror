@@ -1,74 +1,45 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F16374160
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 22:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E9F1D61A3
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 22:13:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776204594; cv=none; b=KtFGYqGMbOSoUuiZUvnffP/STUqg+nADSWbLZ9XMBI8yp3QvPX8Hyc3eSPMws82HrpA/D0IoYrJrJWMw2hAcR0VTmHzHwvmUH8gX3y652LqVDHtvMN4Y2EfKtyqNSwU82HBPzwH7LiapkHYLSiK7SvmqqQlCNlvbgZCS1E16qpA=
+	t=1776204818; cv=none; b=tk5h5+nRNHOqcE6fe78eudb9XfSgX3XFK/J0XkImxApID1HQe9HQdnUjDnrWHs89UoAi4jb9XhPByD4fIKKs//mJ78OGUh2J3smLtIqL5Oei2BAEaM3xRaB+WoBxmlRtxdHieZhwJn9KwUgriShBAy0iAxy4TdmAH1xIdWQCaQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776204594; c=relaxed/simple;
-	bh=HyRSYOb8vLSN/AQaoiiwiMkEW69rt3Lv4/WkR52BkKg=;
+	s=arc-20240116; t=1776204818; c=relaxed/simple;
+	bh=npvwOZpzLOXejnGDa06oVXyTM/8ODEl7A2ONxbkZBIc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g/4TD/jWYRL98Bg/8fJNuyBpQXZaCyg/beyik2hA/xqQCRvLKawD9kQKoBse2yaFjVB4jX/xJ4hyPXahwmFVMx/0mDDeg1iTgrMaT1PQeEY8tIn+PkoRZDeG+L8lPYikC5zsBTPo8sxNMqsaAVNY1XxRby5HmzCjE1YKfaTCo2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=bliM77F0; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=GANQ63MSK4d3xn5xKs2zkcxbNdg8ZBzvOETCD81+BLavwHZkb7fdMQeWrQOnjOILZqJeGQyx4feDD42clcDcP/HCs8T/4ZH2fsi3nZVxL3tA1lcWrWPI8lzLjcCOhqXkZr1GQjVnBt4w7yMHqjy+6YW9GFIgvNGVexhRN24AXuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Aw3XYImG; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="bliM77F0"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7b4ee3a88e1so14968957b3.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 15:09:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1776204592; x=1776809392; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yGB1lqmMR78E81O+7AX9UkhUHarTn6FgCIhig2JMZ7U=;
-        b=bliM77F0uB5buExp62EYmqxloV8WyktB64tifC/emXNOFfuwds+O8SF/MG1Ugzypuh
-         0rs6fkp0X2KV5CkCsAJGAe/C+15ktIp9aM2K9A/gS3pyY5bqzS1rU80BCpGbvBnJNg4k
-         Sj+n7SpRyVjNehrzRd2tC277PcNC4RPgxY0e2fPeCoW3e5RGCLrTn14HdkHMp66XXNGI
-         kRTaWg4wOcEnj4FPpPvDRKLzyX6h/sB+MKfFGiI88btMfZtFho5fv09DUZkDZwfU0mVr
-         avKWfIJ4GK0Z0a2cPNFAMSagwIwGcaUAgW/WgW0ikZzn8GJB9cbElOmSfzQ+EgVAXPN7
-         9hMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776204592; x=1776809392;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yGB1lqmMR78E81O+7AX9UkhUHarTn6FgCIhig2JMZ7U=;
-        b=jFuZ099VNrFGxJaIfaPXp3qXK4vYDcxTWIt0TDVzP42jo1g7ywFwktBdi2/6vtqe1n
-         GSnA8juXz4Hj8b+0CykjKjG2EDId9j47iOKFLxnbWaEk8QlKNW7TEMjEUDeteED8m10P
-         69FdZXZ8LE0+X91kFvP/VHhQmlEbMv5QNgHlrp/ycAEFxSyadVzEfDQfeQpA6w1KsJgB
-         7pa/ste92GW8puAaRo33cOc4PW4nXVi0pfyByAC5sa+CLC/7Iaf4FRNQcqW/NkL2OQyM
-         cnyc539Ws0grEV3DVmlb9GM1foVgHNy2iBNyEeds/ovfkOC6Btl67QECln+/Ff7VqvIy
-         L4mg==
-X-Gm-Message-State: AOJu0YwHtPssHFHONj8l8VLU8QKNECs+fFFLdlBBgHkgZ+h3YD8Z0MLh
-	0TkBjdNORcqd6HMHlLFgTIXoSlQZ8I3VyFQDNTue6MQvh3RmRgL4PfPd0G0JlwZcSPk=
-X-Gm-Gg: AeBDies6I6GVkIO93Svi9MilaKKd5K2z1ArnOKvqbkCTtGAlaqyQBQz1v5g/j/fiLkQ
-	hGxwwWThBH93D9JBeOIEUcu44QPzlYuiQ+WvUEhYIFkjVB+fE4M+lhKcIRXC8J1XmaJfLw0wChG
-	bVgC6u2fr7w8lMfkmHmPAVyaYPx6//s7NftGPNcO+cjwGn2bd4mt2iKVkwzRerpcDgJs8Az8MEY
-	PxtMm3JWnu7ym+AKqucwaS6l1iYW4XzfIif/aZqDqzZ5MG2zBPVWL5/KkZjUsD9ICdR6WcmKo/k
-	P+DQjY/06mlZ6WvOCZ5hoKxio/0oXNQi/h0VYE5j1fZbb+L80hhdjUFWrSn9XKA9CwJLbLX1AB2
-	tXq5QR0FPXF9sZRAi+gL7YfGgQDBxHH5dB/3d1FDjyMt3vrSTvS9bvENLG7mwgOh857x5+l9zMw
-	u0/vj0FVkPz4v5SIglMqXqeWJFZTSKGhylf+lU5L+TXzL0nKMJmcx1GLEcb0SOHyRqVxkLpmHkr
-	4Ob17VMfNY8FI2eFPYA6mEIeZj+Zj2Xkq4rHMqmTYQHOFy+aZs0Hafp1uDBb/t8nmAyXqGytKSK
-	7kdAsT1+rC48cBCD7HLXcs8Tw3I=
-X-Received: by 2002:a05:690c:6309:b0:79a:b0c8:da68 with SMTP id 00721157ae682-7af6f32a538mr227090787b3.10.1776204591858;
-        Tue, 14 Apr 2026 15:09:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b7662147d6sm93017b3.5.2026.04.14.15.09.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 15:09:51 -0700 (PDT)
-Date: Tue, 14 Apr 2026 18:09:50 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 06/16] midx: support custom `--base` for incremental MIDX
- writes
-Message-ID: <ad67LgVcCeQubMbO@nand.local>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <6b42d284b79a25e97d506e22c709e4dbe6fddd58.1774820449.git.me@ttaylorr.com>
- <20260407055753.GA714878@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Aw3XYImG"
+Received: (qmail 350725 invoked by uid 106); 14 Apr 2026 22:13:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=npvwOZpzLOXejnGDa06oVXyTM/8ODEl7A2ONxbkZBIc=; b=Aw3XYImG2aqAyIcF5p18YCJsHUtnXgW9/O3SVnicF52XpVz2peTb7Ien2fCNKkoOWcCuG8xabIkkYvLFB1OgLAH0zGy5m3rFq8dOMauJ9ulyyeUH3xGnw7arX2Qejkotj6OuPaZ6mm0+XrLyH8OZmu/QUUiJZQG65jXu6bS/N81ZKXU9DauS0v5A8shnOqQFoGkSd6CbLHxpJWqrppJ3VRwQfIvxL37aZvkoecYatoGG1+lBVSCO9jcuc2GdPEaowpokpIC+Kz9g0Fp4tX1op2q0kIptjUPFv0nyx7WiB49Jbyj+B3MaR8CkT0Dd4Rzi6QETSxp9uU22p6RF5QOv+g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Apr 2026 22:13:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 587001 invoked by uid 111); 14 Apr 2026 22:13:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Apr 2026 18:13:35 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 14 Apr 2026 18:13:35 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Paul Tarjan <paul@paultarjan.com>,
+	Paul Tarjan <github@paulisageek.com>
+Subject: Re: [PATCH v14 12/13] fsmonitor: add tests for Linux
+Message-ID: <20260414221335.GA3483791@coredump.intra.peff.net>
+References: <pull.2147.v13.git.git.1775498098.gitgitgadget@gmail.com>
+ <pull.2147.v14.git.git.1775710775.gitgitgadget@gmail.com>
+ <f85983ca93761bf6cec115d680af8c7d2938505d.1775710775.git.gitgitgadget@gmail.com>
+ <ad6hovxCkwMTG11U@szeder.dev>
+ <xmqq5x5t9sxl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,66 +48,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260407055753.GA714878@coredump.intra.peff.net>
+In-Reply-To: <xmqq5x5t9sxl.fsf@gitster.g>
 
-On Tue, Apr 07, 2026 at 01:57:53AM -0400, Jeff King wrote:
-> On Sun, Mar 29, 2026 at 05:41:06PM -0400, Taylor Blau wrote:
->
-> > Introduce a new `--base` option for both subcommands to specify the
-> > checksum of the MIDX layer to use as the base. The given checksum must
-> > refer to a valid layer in the MIDX chain that is an ancestor of the
-> > topmost layer being written or compacted.
->
-> OK, that makes sense.
->
-> > The special value "none" is accepted to produce a root layer with no
-> > parent. This will be needed when the incremental repacking machinery
-> > determines that the bottommost layers of the chain should be replaced.
->
-> My gut feeling on reading is that a chain based on "none" is really just
-> a non-incremental midx, so we could just write that. But:
->
->   1. I don't recall off-hand how expensive it is to convert a
->      non-incremental to an incremental one. I.e., can we just rename the
->      file and write out a chain link and it becomes incremental?
->
->   2. Even if it is cheap to convert, I can believe it makes geometric
->      repacking easier to think about if we just always think about it as
->      an incremental midx.
->
-> And perhaps (3), I am just wrong that they are the same thing. ;) I
-> haven't thought it through all that carefully.
+On Tue, Apr 14, 2026 at 01:40:38PM -0700, Junio C Hamano wrote:
 
-In this case we are truly writing an incremental MIDX layer without any
-parent. So it's logically similar from a non-incremental MIDX in the
-sense that there is only a single layer, but it is still an incremental
-MIDX nonetheless.
+> diff --git c/t/t7527-builtin-fsmonitor.sh w/t/t7527-builtin-fsmonitor.sh
+> index 774da5ac60..dfa06395f6 100755
+> --- c/t/t7527-builtin-fsmonitor.sh
+> +++ w/t/t7527-builtin-fsmonitor.sh
+> @@ -60,8 +60,7 @@ fi
+>  
+>  stop_daemon_delete_repo () {
+>  	r=$1 &&
+> -	test_might_fail maybe_timeout 30 \
+> -		git -C $r fsmonitor--daemon stop 2>/dev/null
+> +	maybe_timeout 30 git -C $r fsmonitor--daemon stop || : &&
+>  	rm -rf $1
+>  }
 
-We have to write these as incremental layers, since we can't replace the
-main $GIT_DIR/objects/pack/multi-pack-index, so that takes (1) off of
-the table.
+Do we need to put it in curly braces to avoid interfering with the &&
+chain? Otherwise a failure of anything before the maybe_timeout will hit
+the "||".
 
-> > If no `--base` is given, behavior is unchanged: `compact` uses "from's"
-> > immediate parent in the chain, and `write` appends to the existing tip.
-> >
-> > For the `write` subcommand, `--base` requires `--checksum-only`. A plain
-> > `write --incremental` appends a new layer to the live chain tip with no
-> > mechanism to atomically replace it; overriding the base would produce a
-> > layer that does not extend the tip, breaking chain invariants. With
-> > `--checksum-only` the chain is left unmodified and the caller is
-> > responsible for assembling a valid chain.
->
-> OK, makes sense. If we are using --base we are doing something clever
-> and weird, and the chain tip should be left untouched. I guess "midx
-> write" would never delete an incremental (it is always just adding one
-> more to the chain), so we don't have to worry about that. Presumably
-> we'll eventually write out the new chain tip from the caller, which will
-> then have to remember to delete the now-orphaned chain elements. But
-> that's kind of the point of the new geometric approach, so it seems like
-> things are falling into place.
+I guess in this case it is just "r=$1", which will never fail, but it
+feels like we should model best practice.
 
-Yup, that is driven at the 'repack' layer and will appear later on in
-this series.
-
-Thanks,
-Taylor
+-Peff
