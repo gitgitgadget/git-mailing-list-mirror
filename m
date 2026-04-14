@@ -1,202 +1,119 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD0931354C
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 19:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D30D19CD0A
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 20:06:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776196133; cv=none; b=AyLnVC9nigrlX6sGpyuSV5lKy2RJP4+Bqg8BVeunLUg4mSsX120CKavtvuFZeDGRZnS0VgS5FA8B9DJxGVM59nxzpYVHmCjIQR01A1UacrOlVqEsAda+OGSj2sfaeArBvVn/DJ46/2vG1tQkLvp1lhamu6Jsw1yJ4qtGiqAMc/w=
+	t=1776197205; cv=none; b=t1OaixuXtP4t/aI4jhySUKwdzfKJNr0hmFiZNfxDLkOepTKHLLg6AiCIAHiGfyE7E3zg/qCn12YlorE8SG2cDQw+2qP+/u3fSwOuguRxpnMbENihJ3I7nkWdMY7Ybz5/4YhPF5mTmz8wY8buMpsTgZg0Z5PIXc1Xi5D6/oNkbwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776196133; c=relaxed/simple;
-	bh=OkjjUGq72qoTOa54INHdVEHuuq0/bKkdx/f4vMouiBM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E8jG8QCcTZD9vwg7ScIBudeOlN4vjV8DNhBZ5mgDRvQMMRYA5OHFsbXm4X+TEE0OHvqvj5+uF+FQODKagmN+kxae7c+getU/H7GixZs99hQhYC79hu5gXEyv1z/oXMVYTapc9B1ul7/zOK7eXM+5RNeiP0ZjM5F0BQ5oc2y1a90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XCPiw+Lz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzXEun4c; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776197205; c=relaxed/simple;
+	bh=Qaoscr9xkhdS1lzG93e7M3RRgpFWh6tCPhSl064tyTM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=a7nB3EBE+3s/IkHo/PdGJ+zbIXdJ4F9MTLYXvy/p39PLoamLAWdHwmF9i6p5SRS0JDahozXNBYcBTVtZeth0Oiq6F88R/J2eTF2vOrZNzQww3ETRaCfZbFELMNxLaUhntHvV1YGNHjaVIa7n5rwPgt8GJpQweEU7mJr73LsIoWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gs0VCwJQ; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XCPiw+Lz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzXEun4c"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 243AFEC0121;
-	Tue, 14 Apr 2026 15:48:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 14 Apr 2026 15:48:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776196131; x=1776282531; bh=ex+7Qh7EAJ
-	waZMRPwKvhRdb+34FQAuuIcEP0oMaRysI=; b=XCPiw+Lzf1pSKjbLkhjAgZvzhK
-	VaztqKeLo7boq7jtXn0r/EaEM/l9EbH89PI2su3wDzvvOdJtflO57gSeR4jcMwaH
-	L72xWoOsOduPJCHnZ3NpBZ8hq3yUMGt6QG6W84KZiR3cuwqLPxeRvQNFzp68IdoL
-	XLHqCuwWDYnBZx0awYqM848Sh8OHPJ7XSHbK0EZS5lKq7STyEhFbwOWR9+hOwR1r
-	spH6giuef2ikgGEtGtS1hMq/EvGeFeblRK/54mqthjtf/9W1R7w8liMB/N4/85ys
-	l7dL5rrgoMHi3nsBZs+308UQg/1HbA2qA/e/Qix5HBDcdYZKYYozEqdTtlcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776196131; x=1776282531; bh=ex+7Qh7EAJwaZMRPwKvhRdb+34FQAuuIcEP
-	0oMaRysI=; b=jzXEun4cl9iwrkrDd6jSfKKwjW5KVpDv7lC/jWsemEH/FM/PZSq
-	Gkn8cQgI7fZGDcendQMu0lYUlkXpUO6SlhgInBs1PSl/tCawZBDG8zZXH0WdpATD
-	u5DnfSd4USK7tdo4yl0g3w0XDVuag743rI3yXQkslVS7ktIctEOwYBfBZW8WZpbr
-	LncVOWG8usZj4BXgOBiwDIq19rZz7QCwdtRxah6Mx3DQAAgQF3iuhgkkKXfHIDqH
-	Eg5uMDjU+cfGZBIbZZpqxxZkMgEeRXU92Icqpb29XmctHR+1D87MYPt7UiZn+jvX
-	8zDdlR41AxaYXEtKW8+Eqni9uEn+9doST2w==
-X-ME-Sender: <xms:IpreaesZKg_uXk3f6IfhZ7zFv752mYJcvvH42nv5sP9spRFHJdLKig>
-    <xme:IpreaaURBxJuDbZRaqQLZA0AQlhTfi9C9mKi9LmZRvClPdlxSEe-zoD-mYxdy0Y1t
-    70Sir6kBqEL1yLmOy9XCCUJeQGGw4OawI3QHrQLlpcVFh20Hk3nhw>
-X-ME-Received: <xmr:IpreaSFUCwTp1BeFd9auQbb8t6Ne6sy4o_y7fh_SUWy7tDf0asaru1XHUvimGznMMXD0Lk1F1lg5MvzbmPzknSL9NRuTq6ASEQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegvddthecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:IpreaU2idZjJpIle-Hq2grcGNOW-Ofn-9ROnANPjU-kXr2l08F2Fiw>
-    <xmx:IpreacMF-TNvvVBcGrZY_fN2VqcbpgfWUViOuORNem3rA2a30UqrRA>
-    <xmx:Ipreab7_9EmAGip_Kl8hYsLPF04Wto_LmWkDN_unYVKO2M95Az5MSw>
-    <xmx:Ipreae3fdnj-FpNFf-vwtRZEW-qTB6LUC5bx9on1q8HOA3BIbrh1AQ>
-    <xmx:I5reaRUimotJJKnZ6V62PbSPLBuwpPT-gUMtpihEbkeHGyy5nKByeyrW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Apr 2026 15:48:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH 1/8] t/helper: add 'test-tool bitmap write' subcommand
-In-Reply-To: <d5ef6b959fd7c05c73bd33aa2b394558320aceac.1776124588.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Mon, 13 Apr 2026 19:56:40 -0400")
-References: <cover.1776124588.git.me@ttaylorr.com>
-	<d5ef6b959fd7c05c73bd33aa2b394558320aceac.1776124588.git.me@ttaylorr.com>
-Date: Tue, 14 Apr 2026 12:48:49 -0700
-Message-ID: <xmqqik9t9vby.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gs0VCwJQ"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38ddeb0f5abso49207491fa.3
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 13:06:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776197202; x=1776802002; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3yKFXI5SGhdqmLcpFs3wSUdFH8iaThgpwXdZfR2YB2w=;
+        b=gs0VCwJQOt+hfhmmZ830MChtiZzJM+ilJk2pIeWFys0UH7scNr3+qKW3NOkq9bahVn
+         MAt+T7Ocy25yYKs0mGCDM6b5qKoaoc/Yf0mgYcElguERX5Ykw4mY9SP81K7vI3mwxN4h
+         pYKJopY222yCXnDKS3PNcBabR5cqmCK17YSueusDWnniJemgW6I4aT7aYwOVYSVISvsY
+         4qhQ53tXzErtMzHy1q9Fw8oxN05U7UC4fktev7cn1O9lZjnFKapwHE5aBF2DpgRzbqJa
+         MDM+gAq5aOAbG3Fxt4K3M+7eBR6m5DLZ8xgm7mR9dvlC7vBiHVEMfrwvcXALM92WOzKm
+         Io+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776197202; x=1776802002;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3yKFXI5SGhdqmLcpFs3wSUdFH8iaThgpwXdZfR2YB2w=;
+        b=iXiuCOs+/dZzgRZFacDumcZuq9oGDezWE7fd1q+GfkzMi5NEajjvQlH7bjWHZA9BR5
+         mEzACZkpkV/37zF7iJE5iwliVgNa7mAPGyVMkcgKTOzpQsy+VJvsucJWdt/b/mQed6kb
+         jH1JnTVvkEHr2RVmSzwrHVYof/lKED2KjVbhKOZxSb5lPZTdOVS1sSuLET8Nlvmuw91D
+         MgmAkXAzW4K82pHG26LxNg26PsvKwfCQKRYDNb0RO8l+Z8m1MEZSEqygFEPWCGopS5xa
+         93aPEcxf/z8t92+iYZaqV/RTXa4srp7Z6UXHsMpewP7/AEwSwYmt4G8kwDYa8Hz0vgIF
+         xLLA==
+X-Forwarded-Encrypted: i=1; AFNElJ+BL2ukKTXi75w3d074pJMiIh0RIAxCgdjx3PA3SzFsoNyfuJSQsD+pZgXEatxINuGzYHo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxT2BaN2u/Ao61/MRMzwdR6624U/ZWQF8EjiqYUV0dYBWkLJBXU
+	sA71Uad62mPwE0984xswvHKt9TIDajwXAsAnCCP+tU7ztaUvzYQUTbjr
+X-Gm-Gg: AeBDietX75bUW7fO8jUk9l9Q8tttRlLeNKPlSeRQdjngPuN3UhuJFAqk0UFSrOTIdEk
+	gRD/s+7p8AbKrK37L+nmNfXbPao1eEDjD8b13p0siMyLgzct6CnK+9gQ3XIWMNBDfvRl3XSEMw/
+	pxL91n/kMu7b4dhsSyBuKFexn6aHdIab/3Fv635jl7Q4ZU6df9efXME3HR18lUYm9SVK/SR+bvI
+	Bizedq2WuCDMp7QqNvLxWiUbirWXkZmp0SvAxJdThw22+L3k/OoFX2nWTrPoGPk2fZRpCPICC+s
+	j8bU4NQ450TcxiQ1WjXgr5pQv9U4XRC9L9Lox5h1OdRbAq7oroEnX+74+re6sqkq1NOINsVeDHE
+	zzg4SFWmLOz77hvjmOhRx95IMhtX1798tBvHxqvP3Vnab8Q91vHTzRPsjAPeFg+rbubP6Xi8juo
+	HLp8UO9py98vKAsFs335vVdWkNP6yD+S8YwZingqdZ6HR+7T6P0sCVNPL6M9fYoa0ie4vsfyfbX
+	jUZQZZ+ap/zvztPCE70s3q2gsU=
+X-Received: by 2002:a05:651c:e16:b0:38a:8602:71aa with SMTP id 38308e7fff4ca-38e4bf6e6ffmr41329541fa.16.1776197202136;
+        Tue, 14 Apr 2026 13:06:42 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e85a550ccsm10554651fa.42.2026.04.14.13.06.41
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 14 Apr 2026 13:06:41 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Tue, 14 Apr 2026 22:06:40 +0200
+Message-ID: <20260414200640.50910-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.rc1.77.g97a5d87c81
+In-Reply-To: <f012cc7e-14fa-40d2-84dc-7407fdceb36d@gmail.com>
+References: <f012cc7e-14fa-40d2-84dc-7407fdceb36d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+> The changes up to here look like fixes for an existing bug and so would 
+> be better in a separate patch.
 
-> In f16eb1c091 (pseudo-merge: fix disk reads from find_pseudo_merge(),
-> 2026-03-31), we noted that `apply_pseudo_merges_for_commit()` is never
-> triggered by the existing test suite, and that this bears further
-> investigation.
+👍
+
+> Sometimes we return "1" and sometimes "-1" what does that signal to the 
+> caller?
+
+I just tried to follow a pattern, I'm not knowlegable of how this return code will be used. Futher down in the file we check 'ret == -1' and turn it into 1, so maybe 1 is correct?
+
+> > +                                                    autostash_msg.len ? autostash_msg.buf : NULL);
+> 
+> Can we create an autostash without setting a message in autostash_msg?
+
+No, seems not. I'll simplify it!
+
+> > +     if (created_autostash && !opts->discard_changes && !opts->quiet &&
+> 
+> Wouldn't it be a bug if we've created and autostash when
+> opts->discard_changes is set? Why do we need to check it?
+
+I'll simplify it!
+
+> > +	    new_branch_info->commit)
+> > +		show_local_changes(&new_branch_info->commit->object,
+> > +				   &opts->diff_options);
 >
-> This patch is the first one to begin that investigation. The following
-> patches will expose and fix a variety of bugs in the implementation of
-> pseudo-merge bitmaps.
->
-> In order to do so, however, many of these tests require very precise
-> selection of which commits receive bitmaps and which do not. To date,
-> there isn't a standard approach to easily facilitate this. Address this
-> by introducing a `test-tool bitmap write` subcommand that writes a
-> bitmap for a given packfile, reading the set of commits which should
-> receive individual bitmaps from stdin like so:
->
->     test-tool bitmap write <pack-basename> </path/to/commits.list
->
-> , where "<pack-basename>" is the filename for a specific packfile (e.g.,
-> "pack-abc123.pack"), and "/path/to/commits.list" is a list of commit
-> OIDs which will receive bitmaps.
->
-> The helper respects `bitmapPseudoMerge.*` configuration for creating
-> pseudo-merge bitmaps alongside the regular commit bitmaps.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  t/helper/test-bitmap.c  | 110 +++++++++++++++++++++++++++++++++++++++-
->  t/t5310-pack-bitmaps.sh |  24 +++++++++
->  2 files changed, 133 insertions(+), 1 deletion(-)
+> So this is a change to the output when using "checkout -m"? If so it 
+> might be better as a separate change.
 
-I haven't been paying attention at all to pseudo-merge stuff, so my
-comment may be too trivial and/or misses the point, but please bear
-with me.
+Do you mean to drop if from my patchset, or just make it a separate
+commit within this series?
 
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index f693cb56691..9489e59fa55 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -648,4 +648,28 @@ test_expect_success 'truncated bitmap fails gracefully (lookup table)' '
->  	test_grep corrupted.bitmap.index stderr
->  '
->  
-> +test_expect_success 'test-tool bitmap write' '
 
-It is very unclear what aspect of "test-tool bitmap write" is being
-tested to me.  Let me think aloud to see if I can convey my
-puzzlement.
-
-> +	git init bitmap-write-helper &&
-> +	test_when_finished "rm -fr bitmap-write-helper" &&
-
-A tangent but the above two lines may want to be swapped.  "rm -fr"
-does not fail when bitmap-write-helper directory does not yet exist,
-so "prepare to clear anytime it fails from now on and then create"
-would be a safer order than "create, and prepare to clear anytime it
-fails from now on".
-
-> +	(
-> +		cd bitmap-write-helper &&
-> +
-> +		test_commit_bulk 64 &&
-> +		git repack -ad &&
-> +
-> +		pack="$(ls .git/objects/pack/pack-*.pack)" &&
-
-So we bulk-created 64 commits, repacked into one, and then
-
-> +		git rev-parse HEAD >commits &&
-
-wrote the tip-commit in "commits".
-
-> +		test-tool bitmap write "$(basename $pack)" <commits &&
-
-And told the new tool to write a bitmap file, with only that HEAD
-commit and nothing else to get bitmap.
-
-> +		test-tool bitmap list-commits | sort >actual &&
-> +		sort commits >expect &&
-> +		test_cmp expect actual &&
-
-And compare the list of bitmapped commits with the singleton HEAD
-(it is puzzling to sort a single element list, though).
-
-> +		git rev-list --count --objects --use-bitmap-index HEAD >actual &&
-> +		git rev-list --count --objects HEAD >expect &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  test_done
-
-If we look at the implementation of bitmap_write() below, the object
-name for HEAD is fed to bitmap_write_push_commit() with pseudo bit
-off.  After reading the list (which has only one element), we call
-select_pseudo_merges().  What do we expect to happen in this call?
-Since no bitmap_write_push_commit() call is made with pseudo bit on,
-we will return immediately without doing anything?
-
-After that bitmap_write_build() is called, and as this is expected
-to add bitmaps to the commits fed to bitmap_write_push_commit(), we
-are expecting to see bitmap given to HEAD (and nothing else)?
-
-I said it is unclear what is being tested.  Putting it another way,
-what could go wrong to cause this test to fail?  We give commit A,
-B, and C to "bitmap write", and it somehow chooses other commits to
-also give bitmap, which will be reported by "bitmap list-commits"
-and we detect that as a failure?
-
-Thanks.
+Harald
