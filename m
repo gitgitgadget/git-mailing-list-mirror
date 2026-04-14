@@ -1,114 +1,115 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCB839B4A3
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 08:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B0F1A38F9
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 09:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776157085; cv=pass; b=W+umEF/futugIu2UCgPtXnNu0yTlfV3bXZqTQkzZujv0gRB1LDnmAOanoSWkmblayUca06eH7YiGSy/enT75cESW4aA82C5cgldQ1PyTQy+d80/k1y01sGPynS4r5+aCXxEVcujRCpiGzxFT6ahDRKsljPxqvpDG1zNC8DEI1S0=
+	t=1776157625; cv=pass; b=TloK5lcYAe61JwWPeYmii0ttUwey3JqgLPeDNutltPPqQChk2ob5yIXQDG4gsS9OWG7DFmD0uVItQxW6pVEq9v+tbNCgmI53sajaPasWK4BkzUZX36Jlt//aqU4GVgy1aERi9Uum9YTQ0VD+CoIHNpS3k0To07Jgxhtrfkv+ihs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776157085; c=relaxed/simple;
-	bh=YcsWHiMSSc8NuGQcUL0xWAo78Rj1mhOIlyFxIgiXB7o=;
+	s=arc-20240116; t=1776157625; c=relaxed/simple;
+	bh=Ar1zN7LkfLtPlicdPPw0Hc8MzKupAU1ZOqrEt/rP4Zk=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z2i/iwAmCkdfq6tWykYhw06yXWBblTZ2ssq9cSiS56rE5epOq5myJ5piuKWjbHF5gns6LJ2KQjaZ+TgMbUIgS+EtuNWr0/HhzXG4sk2JAwNod7alIn2YoddjB/kFfSqAsj19ITIIe3rEU/nkpzCVnJRxD0ryHVtTFmo9yz0tvz4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AKIGU7FO; arc=pass smtp.client-ip=209.85.217.43
+	 To:Cc:Content-Type; b=OsFW863GT3SHlpjD0bx3mbkcuktv+CZIws9XNjT7C4EaUo3CcAVJ3KLHsbBv/7YFKuy1eXtzBxI3FqS1ZSF7guue4m2BwJilXC3wdBmdefAkqJR5Y8ZYFDS3DsfXe8Ex8GwqDNrSN3hQoL5oWD7adVVSRK0TvohzJCc8vsp+6QA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QasY6jpx; arc=pass smtp.client-ip=209.85.222.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AKIGU7FO"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-6058a955e04so3206867137.0
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 01:58:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776157083; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QasY6jpx"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-953b0a7ee18so1365645241.3
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 02:07:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776157623; cv=none;
         d=google.com; s=arc-20240605;
-        b=BcWMHXJWoomKuqk07FEgiytXNaVXhYK8JI22YWjBQH2mBfuyQNXbl/XHWngbRNVqcV
-         LgHzYMayArEW68OWll8O9Q/XV5VcYJ8T1MafSymn0Ha7uHycpnUb4S5CmypwZ3VXm4S1
-         JVrrz3gyYYmtzdAfBhFynJrC7yuvRQZe2ws6co1s08ZMtpayRumUWSFL735i6c0breEl
-         gayRz2DKfabRk06yGNLRTMvA+9UxWP6NRwt/0e6JpIbUyiXsB2rxdpQJxNIJRtz8DIwn
-         umoPpoEdmduw6Zl4CkY+xS8x9pxOHKS2EaSH3IOqhmTiVfl66r/+ocn3RUdB98hyadTv
-         PVvA==
+        b=F75Xc3UGHdMdljaRh5XZqli0fP3DpvWZC9oIOlpbI8ScEKcwRDSEgCAK2TKk+toXfE
+         N4VcHWKHDWZp8ABIoGv/NZ7NYgeYaCpItkbC9/At3EisCOtJKLZoRRtTkgCxeCp8g/SW
+         Z4WQN8q3BX1E6WMxWinLu3A4H+bULfpFxtQgheQNUn9XDaA9rL38FWtCC3RTOrcACsw6
+         vXYmOtK0o7VuCWw3R9V3m0aYKSI9wS26xj+frWCdleWdETU39QN9oIZw5MwpNGtVJp7W
+         MNTuaa3+3ExOAW9++f5c1Qo2JWik98GR1fzs3QQ1MJMAMVfvqD+D0gQIvt3gUji4BvEr
+         +xQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=cgM10LQCqWk8cPmzWrj8KjO2aq3C1qxYpTuNgjBow38=;
-        fh=vYxtVbkM3ooHDcj0iKCXcxMjFsQ1/dn2+oQEq1pxJ80=;
-        b=k6H7maNk8TfDG38QUiJJ11t2BEd1BFWhF3Pq8a0qmpNgxav5Vi27UqGLu/cNCVoMUc
-         KrxxP+Jct1TQqD7AMAOyYFPxKRac0n+BvxHOhw6mruFynF543fzkIW/3AVgYHk1uj8oc
-         1AqhRAFrOmZ1CDSLl8YiojydkpgFSaUGyhLerO7KGgav1lkNeIEvi3Voreis4BDyiCXY
-         n2JP1k0Hi10zlF4euQJK304eBWbtlNo8xSzxNwx0jC7AAKVucOmuI2427VpbABsXCJdT
-         mpUalXMHwrmQkrq9j07F2Qtyw4soluK8ZvS6Hy5fN0kQykwY3ihNsCKgQgBpzd/nwFDc
-         jbRQ==;
+        bh=kTMYPCLDXI1AJ9cacqb8NOpz9tlLJA1gTW66qLOqCuU=;
+        fh=dEDWhiTuzBSNrUm4Vm0GCLrCA/gN9k+KXHGR4+Q5ReI=;
+        b=B86YF2ZCHhYtE8sr1AoKE7Is76zXpzYTwL+f1Bq7+yuRhsOJsb5b9Xh6G0CF2EpZlS
+         iXmKTlwH0x6ybqApCZvHKXFUZQytemz8YyOTQMocLwHBzpGElild/2w96tgfrsKWFd4j
+         DvBLmtwe9/6mXR1dyMUCjpuOvbLUGn+8sd0d4Hq9qPaewMtatUo39wfsSV11cyq+lmCv
+         Ed58e8Zzbfd6Nr6B/EGWOW8Q/htjzg5gOkaCwTwnRos21YqKJJ0Irsfue9DH+Lh/+SW8
+         D735xtQlw4zZ76nh9p3KI6GRwNVhOiBcHderfKlYz6atnwVYnSB57kcr+fqQMlb1lX2A
+         4Etg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776157083; x=1776761883; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776157623; x=1776762423; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cgM10LQCqWk8cPmzWrj8KjO2aq3C1qxYpTuNgjBow38=;
-        b=AKIGU7FOaNLqJ/dOEAV2zuIYOkeTtLYdKyCjcJF0ImkZkWwDvRufZTxdjNcrJxB0uH
-         ijbUk7+kMnkclXs56w8vsCBuNQTTf3tQNWL9SB6+zc2x+N4HzdzemLV8GNHz/J7+OXHz
-         mSkyPDtSOX99+wCuuCn+QWd6S9bhVGPASMATNYMtQlYrjE80OITplEDtJQ/fyb7FQCgE
-         Ceh8x4SPw3lPgvfpdqqRZGJfMuYTv/aRCNGnw6LZ2FcrCZnZsEijtcrPuKbIlkUI95S+
-         GBBUFg+p3J7MSZ8HA7yTBWBKWHDeN/NxxuB7tT1NLVQGjEegiRT9d8zY4J5BMYLugFdk
-         Qq0Q==
+        bh=kTMYPCLDXI1AJ9cacqb8NOpz9tlLJA1gTW66qLOqCuU=;
+        b=QasY6jpxIae16zBwZusgCIKXaqn24473fQqZsXYspDfwkuFdkKJBMG+VKtQ7Vl4K7k
+         qwsylfBreG/YtNJ9CNWnk6zraSKuFo+1E5NZxjzDnrb3wPVGXBA7M7/mLbgrs5InVXWE
+         gm+ZCW1EasTz5Aw8NljSP/GfQzhvMvFaupZ6R6c7hMH7EImqTgsNfzNNDxD61MNhA43b
+         cF1oQdTa9JUpmF9bB9IMhnTUQ7mIFAgqZh8iwlpikLYF5w8XYc8JHtMVX0xvq2CowX5l
+         nFkvIYpDFB0Rq68tOa3DwWtvs9ZGmTgz2redxWM0FAWD2GbuK/V2kJIYnQL8g67i/zA+
+         anbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776157083; x=1776761883;
+        d=1e100.net; s=20251104; t=1776157623; x=1776762423;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cgM10LQCqWk8cPmzWrj8KjO2aq3C1qxYpTuNgjBow38=;
-        b=O3QX4I8h8p7J4YdFIX8BkaRSsXXAcRRVKNhtObSU3lVQMYuzfKqLAlF+A73WsTP56T
-         s6TugpqJwi6KOM7n2Vyd2ibgXUOzLI2Qg7woyIL0DEpuZkzIDHwr/R7qO9DFjfmu+I7z
-         f2qYcwI++mTSu7BOgtApWZaJXckUuhexVX5C6ld+NA8eRrIYM3/RTbmWDixwwplYUdou
-         eQgQS6cisj22t9KJuprlimwaeIUrEnZBIYX/YUiDjlKkOjIz0TnGkMUCn4xfZpAwVRtx
-         AvyC413KEe2+NDnd9bu6J6JHS1MJ/Nf6fsCYjB9ieS9eQmlvtdM+aF83MCalFusg25go
-         Mr5Q==
-X-Forwarded-Encrypted: i=1; AFNElJ8gC7CCG3s3mAG9CoNVQo5BKGtnIiC8nr3EhSFXWxtvmTZZqNZwNT3U1aZEh1XWjhtvC6c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGu9e7HkvAk0DqrzUtT6/eH9ZMJSkCygPmX4XeVLRIMxGOiKsD
-	xOtKdCTYQdIhk9sF5dXbc+uK/NSauK21oz3/qRm6RQ4xwmBkIzOVUgM92euDRny258I2NCTNqw7
-	dwmO0J13qo4cfuSMcLiXKM+KF2cttqdw=
-X-Gm-Gg: AeBDieu6WqiP8UGXqaNvSAVI1p6oBqRdtJwqlwT9zvwcgAxLpxi1ruX3S/fZMLxpBN8
-	66Coag/yt8uk7RLNki84jbWs/uNgASgAmes++gR/N8srBdJwgW6+gIEidzPagDekiT3vWuWMZnw
-	ln9pOz06Ru54sY9NQrrnR3HV3++GyGDYqJLo+CAcXzQz4pooT7GsetPWPts1Q8h6izcGkjGyUwD
-	jiVMfppbigM3mW45DJAqL9PKjKlMzANQ9w6S0NBEK1mpdc/2fR7/9s8jz6SWN3q37RQCbwPuq8I
-	FAkxPS8C0gzayiOc74u/ifQm2oq/3YjqVrEGiU6YVw5OYKpGZ0rC
-X-Received: by 2002:a05:6102:4403:b0:602:8894:b76c with SMTP id
- ada2fe7eead31-60a09146276mr5030066137.5.1776157083321; Tue, 14 Apr 2026
- 01:58:03 -0700 (PDT)
+        bh=kTMYPCLDXI1AJ9cacqb8NOpz9tlLJA1gTW66qLOqCuU=;
+        b=hfeVnA6jZknxBsyqOveqMs+Yhz3T7jzFnJDPodh8egtR7IV1QEJCKoD0H3DLmkbReq
+         04kPGOu4hTujzZ4XQbveXGBZ+7qLy4gYoV8UgWixVv0T9jtAmRjOCL+rbtNe+PYWwnVi
+         Ew4w/WVgv1ka3O1+x2GKSv4iLTzpaSdu4vmP/3/SbsuCwiw/i8tJD8HoapHqh6HjcnvC
+         n/NHR0tk9hsakhwFIEhKdn8ey4mQbkQfGod8u7GZcRSvDVhRGsFc8AY0TohqdyPFn7cV
+         qs9rUhSHaJWLHhFwA6Kz6EqlMudKQNhUXkOD1sDA/SId6zGcdhnfJSxNO7DZVkUzOInb
+         i5gA==
+X-Forwarded-Encrypted: i=1; AFNElJ9RDvU+tWYd/UCjiCDocg4tbJ2wlu9rn95BusHoL/3HYQfU586ldXT+xaWVJerml4GulDw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyt5HVO00e651w2IQ6c0ToDfo6vf9Zj+K2OuQ/s90MjoMFEcb75
+	c1b2+DRVblZf2WFjiNTyViF+B+1ihrWaoo4J4zSERoONU1EbkXnBh1QBqiiWl9t1/evOxyPXv9w
+	VwwMbFwngL+sX/L2UKGIYQKKAKMd7XyAAsw==
+X-Gm-Gg: AeBDieskGvivIWdNr74+LW6ANPdZzRRe184RwvmsAWzxFkcMNqlJVj9k4nAP8a7j2tO
+	Wu2tdQviWZpDrxunQAVQ89aRZM3C+MUzK//fiPSBnlHq86UwogRqqIwUAXjBTHtsRSK8TgFOBMy
+	eN6Zk/RhH0jZ+s0qPr+IEp6PyiavAUQ3zkTIQX3mtSi9FZY7WTaZPyyBjcrYKCqxjS66Fy9vvTq
+	Dwdx166VZLbJksLTgETtmVIpJbW30A1gYyhoY0QaB0Qz1sXkZxodqJBVeA08/eZExjzYPQAliC8
+	EuY767rvXuOql9TU2bhUYoy13tAc+gAq1YT4Q5Ljqg==
+X-Received: by 2002:a67:e7c1:0:b0:602:a9f3:74d8 with SMTP id
+ ada2fe7eead31-60a00f49ca2mr6691202137.25.1776157622799; Tue, 14 Apr 2026
+ 02:07:02 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Apr 2026 01:58:02 -0700
+ HTTPREST; Tue, 14 Apr 2026 02:07:01 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Apr 2026 01:58:02 -0700
+ HTTPREST; Tue, 14 Apr 2026 02:07:01 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260324123750.157143-4-belkid98@gmail.com>
-References: <20260324123750.157143-1-belkid98@gmail.com> <20260324123750.157143-4-belkid98@gmail.com>
+In-Reply-To: <20260324123750.157143-6-belkid98@gmail.com>
+References: <20260324123750.157143-1-belkid98@gmail.com> <20260324123750.157143-6-belkid98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 14 Apr 2026 01:58:02 -0700
-X-Gm-Features: AQROBzC2ktx8x-GlMskuDRJlDA8cAZUl4cn_2DSCveT5DN7TPskHTvudlFqkPmU
-Message-ID: <CAOLa=ZRexa+uYj=F2++=vijBb760MgjdTwq3REPpxcwk02caHg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] environment: move `zlib_compression_level` into repo_config_values
+Date: Tue, 14 Apr 2026 02:07:01 -0700
+X-Gm-Features: AQROBzAzQpAEz-GB42K7eJi2tvfrdxVARv6YQY_q--VE7bpeLQFFVDOeI-1dFxk
+Message-ID: <CAOLa=ZRE8O7UANkzr4p9__ReV1OX3KBBpqbKpfCJ+EvyziwtTA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] environment: move "precomposed_unicode" into
+ `struct repo_config_values`
 To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
 Cc: phillip.wood123@gmail.com, gitster@pobox.com, christian.couder@gmail.com, 
 	usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com
-Content-Type: multipart/mixed; boundary="0000000000000461db064f67ccdb"
+Content-Type: multipart/mixed; boundary="0000000000002c4420064f67ec1c"
 
---0000000000000461db064f67ccdb
+--0000000000002c4420064f67ec1c
 Content-Type: text/plain; charset="UTF-8"
 
 Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-> The `zlib_compression_level` configuration is currently stored in the
-> global variable `zlib_compression_level`, which makes it shared across
+> The `core.precomposeunicode` configuration is currently stored in the
+> global variable `precomposed_unicode`, which makes it shared across
 > repository instances within a single process.
 >
 > Store it instead in `repo_config_values` so the value is associated
 > with the repository from which it was read. This preserves existing
-> behavior while avoiding cross-repository state leakage and continues
-> the effort to reduce reliance on global configuration state.
+> behavior while avoiding cross-repository state leakage and is another
+> step toward eliminating repository-dependent global state.
 >
 > Update all references to use repo_config_values().
 >
@@ -116,114 +117,154 @@ Olamide Caleb Bello <belkid98@gmail.com> writes:
 > Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 > Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
 > ---
->  builtin/index-pack.c | 3 ++-
->  diff.c               | 3 ++-
->  environment.c        | 6 +++---
->  environment.h        | 2 +-
->  http-push.c          | 3 ++-
->  object-file.c        | 3 ++-
->  6 files changed, 12 insertions(+), 8 deletions(-)
+>  compat/precompose_utf8.c | 20 +++++++++++++-------
+>  environment.c            |  4 ++--
+>  environment.h            |  2 +-
+>  upload-pack.c            |  3 ++-
+>  4 files changed, 18 insertions(+), 11 deletions(-)
 >
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index b67fb0256c..dd82eed76f 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1416,8 +1416,9 @@ static int write_compressed(struct hashfile *f, void *in, unsigned int size)
->  	git_zstream stream;
->  	int status;
->  	unsigned char outbuf[4096];
+> diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+> index 43b3be0114..0e94dbd862 100644
+> --- a/compat/precompose_utf8.c
+> +++ b/compat/precompose_utf8.c
+> @@ -48,16 +48,18 @@ void probe_utf8_pathname_composition(void)
+>  	static const char *auml_nfc = "\xc3\xa4";
+>  	static const char *auml_nfd = "\x61\xcc\x88";
+>  	int output_fd;
+> -	if (precomposed_unicode != -1)
 > +	struct repo_config_values *cfg = repo_config_values(the_repository);
->
-> -	git_deflate_init(&stream, zlib_compression_level);
-> +	git_deflate_init(&stream, cfg->zlib_compression_level);
->  	stream.next_in = in;
->  	stream.avail_in = size;
->
-> diff --git a/diff.c b/diff.c
-> index 501648a5c4..4bc0297873 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3365,8 +3365,9 @@ static unsigned char *deflate_it(char *data,
->  	int bound;
->  	unsigned char *deflated;
->  	git_zstream stream;
+> +
+> +	if (cfg->precomposed_unicode != -1)
+>  		return; /* We found it defined in the global config, respect it */
+>  	repo_git_path_replace(the_repository, &path, "%s", auml_nfc);
+>  	output_fd = open(path.buf, O_CREAT|O_EXCL|O_RDWR, 0600);
+>  	if (output_fd >= 0) {
+>  		close(output_fd);
+>  		repo_git_path_replace(the_repository, &path, "%s", auml_nfd);
+> -		precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
+> +		cfg->precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
+>  		repo_config_set(the_repository, "core.precomposeunicode",
+> -				precomposed_unicode ? "true" : "false");
+> +				cfg->precomposed_unicode ? "true" : "false");
+>  		repo_git_path_replace(the_repository, &path, "%s", auml_nfc);
+>  		if (unlink(path.buf))
+>  			die_errno(_("failed to unlink '%s'"), path.buf);
+> @@ -69,14 +71,16 @@ const char *precompose_string_if_needed(const char *in)
+>  {
+>  	size_t inlen;
+>  	size_t outlen;
 > +	struct repo_config_values *cfg = repo_config_values(the_repository);
+> +
+>  	if (!in)
+>  		return NULL;
+>  	if (has_non_ascii(in, (size_t)-1, &inlen)) {
+>  		iconv_t ic_prec;
+>  		char *out;
+> -		if (precomposed_unicode < 0)
+> -			repo_config_get_bool(the_repository, "core.precomposeunicode", &precomposed_unicode);
+> -		if (precomposed_unicode != 1)
+> +		if (cfg->precomposed_unicode < 0)
+> +			repo_config_get_bool(the_repository, "core.precomposeunicode", &cfg->precomposed_unicode);
+
+So if the variable is unset, we parse the config again. My question is
+why doesn't this flow already have the config parsed, or in other words,
+is there a way we reach here without the repository being setup. Would
+be nice to add this in the commit message.
+
+> +		if (cfg->precomposed_unicode != 1)
+>  			return in;
+>  		ic_prec = iconv_open(repo_encoding, path_encoding);
+>  		if (ic_prec == (iconv_t) -1)
+> @@ -130,7 +134,9 @@ PREC_DIR *precompose_utf8_opendir(const char *dirname)
 >
-> -	git_deflate_init(&stream, zlib_compression_level);
-> +	git_deflate_init(&stream, cfg->zlib_compression_level);
->  	bound = git_deflate_bound(&stream, size);
->  	deflated = xmalloc(bound);
->  	stream.next_out = deflated;
+>  struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+>  {
+> +	struct repo_config_values *cfg = repo_config_values(the_repository);
+>  	struct dirent *res;
+> +
+>  	res = readdir(prec_dir->dirp);
+>  	if (res) {
+>  		size_t namelenz = strlen(res->d_name) + 1; /* \0 */
+> @@ -149,7 +155,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+>  		prec_dir->dirent_nfc->d_ino  = res->d_ino;
+>  		prec_dir->dirent_nfc->d_type = res->d_type;
+>
+> -		if ((precomposed_unicode == 1) && has_non_ascii(res->d_name, (size_t)-1, NULL)) {
+> +		if ((cfg->precomposed_unicode == 1) && has_non_ascii(res->d_name, (size_t)-1, NULL)) {
+>  			if (prec_dir->ic_precompose == (iconv_t)-1) {
+>  				die("iconv_open(%s,%s) failed, but needed:\n"
+>  						"    precomposed unicode is not supported.\n"
 > diff --git a/environment.c b/environment.c
-> index 8542ac3141..5b0e88b65c 100644
+> index d0d3a4b7d2..739b647ebe 100644
 > --- a/environment.c
 > +++ b/environment.c
-> @@ -52,7 +52,6 @@ char *git_commit_encoding;
->  char *git_log_output_encoding;
->  char *apply_default_whitespace;
->  char *apply_default_ignorewhitespace;
-> -int zlib_compression_level = Z_BEST_SPEED;
->  int pack_compression_level = Z_DEFAULT_COMPRESSION;
->  int fsync_object_files = -1;
->  int use_fsync = -1;
-> @@ -377,7 +376,7 @@ int git_default_core_config(const char *var, const char *value,
->  			level = Z_DEFAULT_COMPRESSION;
->  		else if (level < 0 || level > Z_BEST_COMPRESSION)
->  			die(_("bad zlib compression level %d"), level);
-> -		zlib_compression_level = level;
-> +		cfg->zlib_compression_level = level;
->  		zlib_compression_seen = 1;
+> @@ -72,7 +72,6 @@ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+>  int grafts_keep_true_parents;
+>  int core_sparse_checkout_cone;
+>  int sparse_expect_files_outside_of_patterns;
+> -int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+>  unsigned long pack_size_limit_cfg;
+>
+>  #ifndef PROTECT_HFS_DEFAULT
+> @@ -532,7 +531,7 @@ int git_default_core_config(const char *var, const char *value,
+>  	}
+>
+>  	if (!strcmp(var, "core.precomposeunicode")) {
+> -		precomposed_unicode = git_config_bool(var, value);
+> +		cfg->precomposed_unicode = git_config_bool(var, value);
+
+We parse a bool value, but....
+
 >  		return 0;
 >  	}
-> @@ -389,7 +388,7 @@ int git_default_core_config(const char *var, const char *value,
->  		else if (level < 0 || level > Z_BEST_COMPRESSION)
->  			die(_("bad zlib compression level %d"), level);
->  		if (!zlib_compression_seen)
-> -			zlib_compression_level = level;
-> +			cfg->zlib_compression_level = level;
->  		if (!pack_compression_seen)
->  			pack_compression_level = level;
->  		return 0;
-> @@ -721,4 +720,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
->  	cfg->branch_track = BRANCH_TRACK_REMOTE;
->  	cfg->trust_ctime = 1;
+>
+> @@ -723,4 +722,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
 >  	cfg->check_stat = 1;
-> +	cfg->zlib_compression_level = Z_BEST_SPEED;
+>  	cfg->zlib_compression_level = Z_BEST_SPEED;
+>  	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
+> +	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
 >  }
+
+But set -1 to showcase that this is not set. We should add that comment
+here.
+
 > diff --git a/environment.h b/environment.h
-> index 1d3e2e4f23..93201620af 100644
+> index 514576b67a..508cb1afbc 100644
 > --- a/environment.h
 > +++ b/environment.h
-> @@ -93,6 +93,7 @@ struct repo_config_values {
->  	int apply_sparse_checkout;
->  	int trust_ctime;
+> @@ -95,6 +95,7 @@ struct repo_config_values {
 >  	int check_stat;
-> +	int zlib_compression_level;
+>  	int zlib_compression_level;
+>  	int pack_compression_level;
+> +	int precomposed_unicode;
+>
+>  	/* section "branch" config values */
+>  	enum branch_track branch_track;
+> @@ -174,7 +175,6 @@ extern char *apply_default_whitespace;
+>  extern char *apply_default_ignorewhitespace;
+>  extern unsigned long pack_size_limit_cfg;
+>
+> -extern int precomposed_unicode;
+>  extern int protect_hfs;
+>  extern int protect_ntfs;
 
-Nit: applies to existing values too:
-1. Perhaps it would be nicer if these were sorted alphabetically, I
-assume we'll add a lot more fields here.
-2. Have a comment stating the purpose of the variable?
-
-The patch looks good to me otherwise.
-
---0000000000000461db064f67ccdb
+--0000000000002c4420064f67ec1c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 5a588e124600ae04_0.1
+X-Attachment-Id: a7327fd15cb67283_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1uZUFaY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNEYrQy85TVBUYXlrVjVpanN0L1duU0tiU2p4bGlRQwp0MHdlSFp3N3Zr
-VjEvWW1lU1RpYlR3YnVKNFVJS28zMUVNN3VwckFkMXM0WnFpTytrd3JURWNza2NlQjJSdXRSClVi
-MWt5VGx0Zm0yREJyN3lsNFcvT0Vua3Jkd3M5eWVVVlFwVzUvUUprdnNTQVJSWWJGY293RFNwbDF5
-WHdlNS8KTENUbmNMSXkzNkc3ZHlkOUVxVysvRHlFN0QzM0VpYyt1WlF4bVdFSXBPRWJuR3RGME5l
-dUlHV1RHN2poeTErcApOMlVrVExZZjhnSzJKdzRyQmFuRVFPbEZIRDJxMm4vUnVQRVJOeXFQQWkz
-SUcwNjAvMGZzNTFxWEpyZ25BdHFVCmpxS0d2ZlJ5dGo2ZVFlaWs1V05vbWFENGlrZWZkcHZ5TUZK
-WUpBRkl5TnFra3VYSWdjQmdaek9qVi93cjNqSmwKYjZpL0RtaDN0elhGWWdwSzdkWDduL2xIeFFV
-dDFDaStaWGoxT3BJMzlFV2R6TU1qbkpScHNDYU1tbnRTQXNWQwoyeFY5N0lhcXI3WWhiQzh3dmt0
-clU4a2wyMEJmVkw0TDNMdzVPNmlsSmNLSzJLRkFtdWJQcTgyRkRkWWM1OTNzCk5PZXZxWndSUk4w
-b0pTQVJzaGl6dGJwMjNsYUcreW82d1hISUFsYz0KPVJFcjQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1uZUE3TVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK0xuQy9zSGZsVzYraVR0MmJCVjBuZms2ZEx1b3VsLwprZ2c3Qy9CQmZ1
+Y25HYnBXajdDY25wVUZBV2tXOHdZMmdENzMrZDlXMC8xa3FJVnlZaGFlN0RxcCtLKzcyeFc0CjNk
+c2FFa2pYNU01c0VwNGFFcjYyOW5KZ2pBN3BBdEM4clArcmQrTlJXeTYvNHNpRTY0UFVoUmQ3ZmZz
+U2NXdlMKZSt3R1QweVFJQUJ0YzdwVEIvWkh3ZU5CRGdIajBzaUp5aVJvY3NLNm1GRWFLTkUvWHNT
+RmNVSTlVTGNKNzl3NQo1bXdnaFVVZ2dieU0zV0lBWkhSSk9XcHliVC9VWTY1eXJzcVNNbExzZ1dv
+bXJYRllWNlJFRDgzd2syREF2RUJMCnd0d2Zvcm56RTZHSFh4K3RIYjZzT2xrY05qVEdDN0MraSt0
+aHZEQlBzajVXU1VyeS8vNmFCRVFLUHAyeVdEKzEKWjcxTVFCR2doUnhEakxpeVgweVR3WUVtY1dt
+T0tqU1FXSFIySVE4ZHFLL21rVFFDa25FWm9oVnpPcjJhVnBBZQpLbTF2T3lJRWJRTEs3T2YyenUz
+enVudlEvNE1EK1hxQi85b1UxZzJZUHB4RnpuY25CL2hYK28wUy82UUdlUnV2CmZXUDB5SFBTek1o
+R0R1OENwL1dWSThMTlMrYmRIeXVyajl4ekJCVT0KPVVSUjYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000000461db064f67ccdb--
+--0000000000002c4420064f67ec1c--
