@@ -1,100 +1,111 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D89371D1F
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 20:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5C2275AFB
+	for <git@vger.kernel.org>; Tue, 14 Apr 2026 20:56:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776199957; cv=none; b=CUcQtdsgrZA7goNAQduyIZW7DXElYgYkPbAfAkVsPt2m7v+8RTwP2ve+X3OZwdoNE4oLnjbFGf0E9s/i1KudEwPQGrlYi6qgK2aSdfmeKEtaETKgNXxYzsYnx3vvpWh841MU89DURCD1PZn7mbW4dTEA/7fnLsUGcMMwMKIfzmU=
+	t=1776200211; cv=none; b=p1apUmfXiXYMeBEqZ+yPTereKi74Ww074jgwzJzbl7a+AWF7GBtdWOwrMm5drSbs7xzw2+iUj/0XE5j79J7iYPF9cCB9kKn0UQlhcN+R6p+AFznmFPB/NKodAOe1FLH396u9hG8UOiZlNKVtsNF9aRdMukivX288U8iRIvBz9bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776199957; c=relaxed/simple;
-	bh=lZ/6/U+RC4BhESWsYXRIMedOhCiRz//cK6n3sqiG16c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UUfWEpy/e/UogqDqRwVGjUYID9fsUlRGLroqdMWjPux+4BVb1Hyw9dwfuiG4qZ5/4xNtBFkSrHIeIkWwFI1TTIZ3hNmZfL9OzRCpnYg3SiQR0GmFriI4uYqa8yjvFTmEgKIzJCvJ43BDlmmelEyTlpc3mSpnxOYKJONTAet8EdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O/h+plaM; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776200211; c=relaxed/simple;
+	bh=4Hj0CfibSYuGlg+GUeM7OW8Ey4UisWnswhQp0xwSuXg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tehiKA0XUEF7iHVQJGjqGMbn5GyN0+vitygbfhwfWfOjnj7mDPIN0uBkbP8unC02oe6YVujzco+h8rXsOTYwovBjkRwS2Llasxj6thNk1MkRdt2otlNGXO4OFP8fbLrWlSVzBOSqWt01agcBFtSI1yoWOOdNstIk13WfOmuAWNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ycalDr1D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qlA3sg2P; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O/h+plaM"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-488af96f6b2so79777505e9.0
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 13:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776199955; x=1776804755; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MDaqjRJOVTJ0fmwzLGIp/zbceZP052CIL/kFOBO2wO8=;
-        b=O/h+plaMcVwfaw3AbV3E3hZHGcqkMpDXhkm23CLknAZd6WxHHvKqtrPwF/mwVr3iDC
-         kSrFzv+xRytHIWDUvi3nkMzjVQx/p7lu+CYrbi7t1Qiug/T2d/jMB6DI8dPDtPdObNDS
-         5ZKXCaH6hmHQk+fZ0CgBeoKbBlMtPIMtGErLZhpWEIg4Lo/VEMwrdaV5C6OgcyHVRKfq
-         sGRIAo9Z4eO3figSuuWi1XKRPb0f8YMxIVboUISxdW9RJrMQ6Bm6qHz53MmgQ/a5Xdmx
-         9gKPUrFZPfCJXWGJ/s50tukEtUPpJkzABdy1UVkSl4RqvQPwxjhKu1GL84McRHiwq8uS
-         t9OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776199955; x=1776804755;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MDaqjRJOVTJ0fmwzLGIp/zbceZP052CIL/kFOBO2wO8=;
-        b=Dk+ekzKYWVzqdX72KMDJxAxoUmwLFTLIDza2/X7kWlpYlmgOU5eSopUcsphN5llIzu
-         WLDqgRF6LWZCejWR/KLjPbsitw2KypeQz4xt/MQzeIaBr9jsbqMGT2nO6L39BZvazSrX
-         ez8SmG4bSJlS1Bd3RRAbPwpd1epJrF/gCSLjL8/09ioZGS9qwP4+EdMqNAUXw8dqja5s
-         WN1O9P/PrsD+GpfqG1EKaiC5Hp91O8dGbh8SLbRNmA9sKnKhnI1DXjgDx/dZ4JU/avsX
-         DCRvfvVK0URFUcU8RnE+YcubWY/JPVjFVLo5Q2s2jVywADwsK4zDKg/tjHsiiVIK6+Gv
-         TAYA==
-X-Gm-Message-State: AOJu0YwZ1Va0OWC2eusxx72K16WpWe/9Y4x10Ue8FrsGdtEFlX8IIBqf
-	rSmXUexqZ2uid+6glvYLzsuUT41KvQrxD/Dw8KuKppS9mKq9iZVUXnP9
-X-Gm-Gg: AeBDietIu3m7Nd4nGzJyQ/vrGApEJKjv3OGmxu0uQrmIfV4ZmzKDrZn5eLl0LywdRez
-	cZIwl9BWvZIxig75Lk1WHMzgD19a9rRIxR83JlXlNpOIayovV4+lAKP+YFZBV1AAnkxZ9OnP83L
-	0WBS4UU8icYWdI2XV5aB1gdIo8jstGOCbNKbB8KFEh8FLl9JmS2y8BGMqoFfLPZ/bihzL9idmAh
-	KxdoRnlSkIN8IvAHnskUmC4H9e8dL/bBjRhYazWd1ajKnwMpQFErmlEcl3B8Dy8f3EF5xHsZm5g
-	SKtXX31n+kL60Ljg8X7243jXmBaCERMmojieC3tLgVy+YBJUEB3ZpIqKZZlpZX9s2E/DJPYffhT
-	mLYkcIcn1D3Zxl6MX9es+qCNiyxErzCRfZU/abziudHwQ7IGudosl/fjJc+dssakFMABa+Zj+tu
-	cz78+3JzPCwKbxa6/mVphZRbe8TOyGfylpwPM4yG6C2biYtLpyk0Yi
-X-Received: by 2002:a05:600c:c171:b0:488:a894:b27a with SMTP id 5b1f17b1804b1-488d67f0105mr271884815e9.8.1776199954714;
-        Tue, 14 Apr 2026 13:52:34 -0700 (PDT)
-Received: from localhost (94-21-146-148.pool.digikabel.hu. [94.21.146.148])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488ede25a12sm67427375e9.9.2026.04.14.13.52.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 13:52:34 -0700 (PDT)
-Date: Tue, 14 Apr 2026 22:52:33 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 2/2] test-lib-functions: use BUG() in 'test_must_fail'
-Message-ID: <ad6pEbnSKzUOkS2k@szeder.dev>
-References: <20210221192512.3096291-1-szeder.dev@gmail.com>
- <20210221192512.3096291-2-szeder.dev@gmail.com>
- <YDLXf+OoJabrJTWu@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ycalDr1D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qlA3sg2P"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3E9EB14000F2;
+	Tue, 14 Apr 2026 16:56:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 14 Apr 2026 16:56:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1776200209; x=1776286609; bh=q5nCjUEP5l
+	EINZPZMpoBvdU47mzPsbbvEEVJAFk1M0E=; b=ycalDr1DqsyWmq6J0YfRhP64L6
+	b1VBwCBZtWKwFVF2OjCP07E+IopI9ffwFqgjae6ctGbKV8IP6n4uZkt6nu1z+8hZ
+	oCrR3C03WwK+F4qsAdolQd56InJRgZsE6pyJhV7WssCZpwmKuHnUSzuNw7MpenX+
+	HLNDSE7yJ4SFmHY5ynS7GcllXlmWL5i+j0PAKF4HAs8eyxKF7CvlsE938X2rOEPL
+	JLGrwNGaenErnATHhcZ+tcOiNteHz5WlUesSY1Llc+CWKFJaXgKtcyJvMCPl8TZi
+	+nMY0UBkll0rcjIPUX+KvFooTTOgCJbVEUYOnmx9hKMlIaE8mEDmpvSwjEWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776200209; x=1776286609; bh=q5nCjUEP5lEINZPZMpoBvdU47mzPsbbvEEV
+	JAFk1M0E=; b=qlA3sg2PKIqMSPHkFFYdE0RA4SVZSG72eSNQ+0+hHehJE2Whu7u
+	3zMm9VvOy+hsgdzb7Hs5WROwhxR15CxawVRfeemo1Euluxp7huN0oLmL/Mw5LTz/
+	DJSRas6abmKysqar2L4UzqRmui0MEgAF9sjS54heM+2vMOCFXu0dMirbBDFd8fqU
+	i14yeUAl5MY+R2oZHfpGiqyca1HAs6iLyF8FOggGXr02KdPM6mZqHBbUx1JDDbhX
+	9CDZDE4zMvdWqRGuewnnxv24Ytrfs6pCKHXPxy8L73P1LTSWtTnyyzkmc03mHZj2
+	4HhCCRdAX7JeLM0jSejpLXMlRTtb03Silmg==
+X-ME-Sender: <xms:EareaVrBpBu47w9wIK0JOetJH5NSq1IWwE5nTltkMxY8bFghW2BtLw>
+    <xme:EareaZ4zoxT29KeYuvEHxa6HgNRmfIx8xWPz-CBY_A38a9ikdFSPXuZEmCnCuTjGd
+    c8Gp2Cemhw0368oyqAdP8whWapZVEy3s-3FEjMrhloBV1YHEse2FA>
+X-ME-Received: <xmr:EareaUfKyO7O2AeDTNhyJPGRgrBuHUjmHaXu25RyS36wJvPG8C87iBSZ3Y6b2CJiCKn-REETOqMzzu-hFfLhV9tQxvgKcGDeXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegvddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
+    rdhnvghtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EareaW5YXauQ3k2uPFyqQM_zcceIrsyI8-qJ9pmqESBkoBthr_5Nbw>
+    <xmx:EareaTtPTgVRmqIwrGyg9kU-GzbbF4Rjf8wya_rtWOXQaR1iaBgdOg>
+    <xmx:EareaegdOCRgQFqKegKk4v_MlZOOgkYZgoELHJS42g73o8axevmJkg>
+    <xmx:EareaWqHfQze9prkYnm7RwIKYoRboPLTdKGB1AIff_A8irN1CF0xGw>
+    <xmx:EareaV-nqQlunYCtwx0zs4VRk3cBR3ulnMapoz3DptzPkwBeA7x1pY3I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Apr 2026 16:56:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: chris.torek@gmail.com,  git@vger.kernel.org,  gitgitgadget@gmail.com,
+  peff@peff.net,  phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+In-Reply-To: <20260414201636.51956-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Tue, 14 Apr 2026 22:16:36 +0200")
+References: <xmqqfr4xcz7s.fsf@gitster.g>
+	<20260414201636.51956-1-haraldnordgren@gmail.com>
+Date: Tue, 14 Apr 2026 13:56:47 -0700
+Message-ID: <xmqq1pgh9s6o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YDLXf+OoJabrJTWu@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Sun, Feb 21, 2021 at 04:58:23PM -0500, Jeff King wrote:
-> On Sun, Feb 21, 2021 at 08:25:12PM +0100, SZEDER Gábor wrote:
-> 
-> > In many test helper functions we verify that they were invoked with
-> > sensible parameters, and call BUG() to abort the test script when the
-> > parameters are buggy.  6a67c75948 (test-lib-functions: restrict
-> > test_must_fail usage, 2020-07-07) added such a parameter verification
-> > to 'test_must_fail', but it didn't report the error with BUG(), like
-> > we usually do.
-> 
-> OK. I do not care all that much between BUG() and not-BUG here, since we
-> are unlikely to have a test where test_must_fail returning 0 yields
-> success. I guess the most interesting outcome is that we would notice a
-> bug in a test_expect_failure block.
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-If I had managed to send a new version of this patch series in the
-last 5 years :), then this would have caught the issue noted in:
+>>    The description of the Pull Request will be used as cover
+>>    letter, ...
+>>
+>> so perhaps your pull-request comment should have something more than
+>> just the list of CC: recipients?
+>
+> I'll give it a try!
 
-  https://public-inbox.org/git/ad6hovxCkwMTG11U@szeder.dev/
+;-)
+
+I find that many topics by Patrick Steinhardt and Jeff King with
+multiple iterations often come with good cover letters that outline
+updates between iterations.
+
+Thanks.
 
 
