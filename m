@@ -1,160 +1,142 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E316C3793C1
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 11:16:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776251787; cv=pass; b=pGRM4NP/f1sIltb2n2/Pb562zRui/RGmY+mFUy5NboKd6nE84w8Cm1mwxm1Te+LfVldIryXezhtK6TS00A7L3cHPWIzKQ5m7ip+0bppF9G93JCv073HbY/qfCequIbWQsVIU+X2CUyigpxzeW/aBiC4mUeqMRoejwgxwhfpUp9M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776251787; c=relaxed/simple;
-	bh=jXuiwdyLCUjN2qsQNSoyns0tdY4tQXPWzWGYMubBl+c=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z1+aWLcc0Gu7ZgpwLhuykTOL9twJV4SG3Z/krLZo1UV4HCJ/sdmFuR5OYclIcD/YuVFU/25PZz5b2WvMB1sHJ7skRhYkpfykgGYhSRVeUnCIu/2zRz4HxChcY8N9XRsBw8oxY3IvnbKXAzDbq/pauoaId12ohaVA7UD9bAyiLSk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nd4xn7e6; arc=pass smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC1D38C41C
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 13:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776258403; cv=none; b=s3rmpBz44j1LOO0uVr1KNjFKzxh95dJdh4qKsq9yGlkRAm73Juii+oZVKKb66k/GZ66tOux7blU5r6oI22k3KiO3OAGh/0L7r3eaWdhfABM4PsJZePrCZV4MHOoT2+w2WM1P0DVcLjll4M81mxxubV1S8eVrtYYVqEJAGqxfE0E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776258403; c=relaxed/simple;
+	bh=YXT7/poVCz51SQ52IQLErSmPA1zRE6DtveYVXQBFA0g=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=GuaU27gxXMtFVt4kc5gejh0boOPcrnOOB/SmMq0wxvUi+YEFP11XrFxkpq1KnruZ+bEwc/XZpdmmmkHMaghB5zgRWyB/m+lnO6LYrUGu1y8uMWgR4CNKDeXexhhPUNZ2yfCI5xGObU6D7kmJdUFaMMlYKYi8/41BZWgDEGdmJY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BqSVfAnz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZErLDUG; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nd4xn7e6"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-953a2a4761cso3511846241.1
-        for <git@vger.kernel.org>; Wed, 15 Apr 2026 04:16:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776251785; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GCOxdPI7tmNdp0e7FV7pKP/asR508QZzwaPhdC6wrstdTyHvLhfCPFezmqJ4PeKFb0
-         F5E9OC74tUvw2M2YoR4qtKV5oflZ1nsT952a1U9wwj+3xP7rqEbq66Fq+Ax1Sv7wXmv+
-         E/dc2fjwlZFqfPjs6Utm53KYa+MRoVPAfAPMNmMoesnr7+nfZRUN65kV+E+OGmiJTH6P
-         5pbpsySJ03MQ7PplKzDazvxKDk/tviGW0+UQbAMvvR8aDKAQAuGvmzK7eONeUrJQnTgZ
-         ryL/JeUvGfdlZQI+Cq1dW7N6w08TuPK0sKjzDIXXkq9ZLXei44zTL7V7r+w3LUjrJrg5
-         mADg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=jXuiwdyLCUjN2qsQNSoyns0tdY4tQXPWzWGYMubBl+c=;
-        fh=rspzcE39wx1ohF16KidSnNGHZtrdbOflClrfsrwGZ08=;
-        b=SFQvUIu5wQJVAGIubZ6Djz5KTbTxCa7+bv1iZg8iBxTU1lXVzvkZm2//ROLh2fMnnC
-         2tLZRdPMYPvIXAOFbTa+wALT1YY7LaQXn3hc1iLfFxjeIGf8uIS2H75iwzwPSI33ZPp8
-         lpXSFa23DzRN3/oJ0+OVoYNZ4qMbPYqf0aOsAb+AP2oEdVYKDB9+ak4InVw8IrX8+2DD
-         wxrFkoiklxH87kksvCcDU2RVp/e/Y82Sv+2IquusJQbbM4SjPIdC83FGSr9gBrLYmaUt
-         VrxfqWTPf5UmbGegmXihcUjgeP//Jesj80QH+Pd5lgdeEc7yNAw26oT0Pxr7f3cK5ORk
-         2XGA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776251785; x=1776856585; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jXuiwdyLCUjN2qsQNSoyns0tdY4tQXPWzWGYMubBl+c=;
-        b=nd4xn7e6AHSMdWt0OaCvDw7c1u4vBHKMny5Odha9xRQruUo5IthyHIAXJaq3woMSNd
-         0s1/famDCNrgpcQtcydtERtGeioPTT+m1r58tmgU8y5sJct1135L5iseyozyRdXr/lxJ
-         DFO4hz27GwDeMRp7Rlw1Q+iNj/zYmvbWLV30FYumoG71rcifANG6dpEyVGQG+WQn2nnm
-         jdR0XBi9CS9egNCaWcFfOS13eLeuG8VE1TDpKtkZeITBv56MUsb5ZgaRyXIrJY76o18e
-         bu1H5WmBIgTalt+IlUZuz8NNcCWoDxhnST1mOSwHyi64/hzq8jhV2tWMvfqhGVKHpcrF
-         bSLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776251785; x=1776856585;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jXuiwdyLCUjN2qsQNSoyns0tdY4tQXPWzWGYMubBl+c=;
-        b=WKAADSwVcVdd/SRMTynGyAp+Ms0N1hHUZ0DiaBHGGtYyS2HQ1zuuqBrWEB6r3f1l6n
-         wOwDP8b+XIwjMvIW3qtSxkgLZmPKdEhKMgv+kzVkC0o4FnUVp3nv9mpTi8iAM53Ec6kx
-         F08DbN7BXRHYhB6RKW9A3sPHREHnR5pNsn6bNsM9WN6uOC46VOeGUZn3BxVqEl4zLT3u
-         Fj1ILIPnVyKxCzXnQukjwRfQm70QleUPU0yP5UGbcAWboPE4Hpz2YmM+HNZ3kWohRUQj
-         Xt1Xa3coyzR38lD3ZZmHUbvvNFDh5PB97od7bHN+Pbmsy6WBsSduQ2X0WDJ/5+7jYM3d
-         zx4Q==
-X-Forwarded-Encrypted: i=1; AFNElJ8oqP3geTT/NRryP9qALqALExzLMtUOtVoOnMK+u9c2sPpMeABnc/Q5jiQ+BppP9iQAMZA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/bwCQMVsfkAmvSNHpcIZUcOPhODgP0SqoK275ZPbkwhYGIocY
-	5kFF1SxOkybu8Xxeto5A4OD20x6mi4m4Id95XhtEfR7ni6inCEnkT7DISrcujrpFUGMaBTNmybU
-	JB27QLHXgNbJFjlBp4BL+DjsyOwvqKH8=
-X-Gm-Gg: AeBDietDiwMgiBXphBOSpgEfgTt4GD20+YkMHFNkp8NEKDEFUhB59nICaf+npOqPATY
-	v1ogG3GlhSM1SfoDe4RSNMnW1c8DxNsqrRwKiCquPHfU3rBSWDqyf5j8dHhRDQtd8/0XcDiiTFh
-	xgBMaQkzgvvHQzIRsMVmeOPjT1jTVBKZXNUDWtZIBudm0K8u5ziM3CijOOsoQEPxE86uNiEUI4N
-	+aRhpxdPcXKn0VWhBmaOhqRPv3twWvmtcSEavinfd8PkccvFz7604yb+UfvrJ6kc9EaZkNSVUjI
-	kDx/3z4KzZICPHK4BaNRY0ITmF0tkqQce8Gy1QzIqeMsvT5GJq82
-X-Received: by 2002:a05:6102:83cb:b0:5fe:af0c:79f5 with SMTP id
- ada2fe7eead31-609fecbd698mr9584563137.5.1776251784803; Wed, 15 Apr 2026
- 04:16:24 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Apr 2026 04:16:23 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Apr 2026 04:16:23 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <53f43b85-b274-4352-938b-d40f942bfb2d@gmail.com>
-References: <20260324123750.157143-1-belkid98@gmail.com> <20260324123750.157143-2-belkid98@gmail.com>
- <CAOLa=ZTD+qqgyB4Pn4bcOfP+Ks8Zch+AWZkzhrRRbk-eJvS-mg@mail.gmail.com> <53f43b85-b274-4352-938b-d40f942bfb2d@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BqSVfAnz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZErLDUG"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 14E4CEC0295;
+	Wed, 15 Apr 2026 09:06:41 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Wed, 15 Apr 2026 09:06:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776258401;
+	 x=1776344801; bh=mMwjZrEM95Od0bQugABsmaEZIyZWB4R542aDuTUvirA=; b=
+	BqSVfAnz3FLIUmY5ILrErDLM4lq5SiFId9dg2wWen9BvEZc+7tg2b80KlLqPi+KM
+	4D5ZJXNQvsZdVEUqtHrhQEjMlJYAGiC//rP1ExKjbwMI7EYC0gmbqR0LRUrbqFsO
+	oggZUdaCmwFx8LBOYPyUvtNqN9qX9Rdiedfv88exSKYvdQ1gk6LdjfdSFk/YjdVM
+	ZlHaf9Ngy580hD3wr9Ss99pMpRahjkf4Nom9IwuJNd1OHFSK6E60e2fR+pk/k1d4
+	+dik0Xl+6aTnGzlpug3q9xXpn3O/Wkl8haWqygBA9+xdM42P4YN8xXNGxoMTwjrJ
+	RrVjd8Yl6I6o/WlUnfyBNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776258401; x=
+	1776344801; bh=mMwjZrEM95Od0bQugABsmaEZIyZWB4R542aDuTUvirA=; b=M
+	ZErLDUGWopemVsvX5ZG+oAwOWz88xqAGUuByzf/csTiGf2leKJP0MeTAniEZ8yHx
+	D9ik2Nc3lSu1lNRwXwXQDp4CqGyKKE/OLBqmulxgYwD35Wqu0lA7RJQRQr/yF+fx
+	SRHjbpD2jEr5v6UQFkZIYQId2dzx8pKZ+3Ec/fm3LA25Fw5Zy9o3PDuI16O42Ejq
+	vKe/FKuvytXqIndGYNp+bBOqd6TI4N854eYVFljgZNNOyAL1Hc8dB5fxmvWecjSm
+	WKYHL5dlBpsureUid+kULZfC66ptb03YmCmVC5sMYnHgt78upt8tZuIWHzRnefmF
+	0Fiqsz74iB+/vPV8v51jw==
+X-ME-Sender: <xms:YI3faSslIGZiWMrIB4a020crtCsS97bpqjrcimLBaxlw5qGJc1t7gg>
+    <xme:YI3fae5sipy6_Wcgrgo-nfEP6JORG10QpHgsEuEZBj0abYGQuLeW-h-iRZ-A_yFqL
+    oDpgmWhBZSyt7qoMihKc_RSbUqpIj7rNN6CdXHiEadZ9wxrtHA9fA>
+X-ME-Received: <xmr:YI3fabI9tAju8CqUUaT_AsidEKaZ8MU331jQ_Byp-SVn30Mj5XRQF067XsBBnMlOrxOa-fg2oWfbWYlwgZRi_5ufY7qZXl0r2dl_U_0yc8U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggedujecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
+    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:YI3faW60Dsk1_IWz-ObYF45tJGnLLcpOCZvjDGVUK1us2ogxkDjgdg>
+    <xmx:YI3faWwiJ_UO2gGydzuUSiIDIt3t8Oy7F4bCvoW3k0HEakO18pgDBg>
+    <xmx:YI3faSYxuPgjk2Ym7k8Dg6QPyNtt92dyHrts4Vt4o02dZw6EJknZyg>
+    <xmx:YI3faQQbcBMkQsmeqDcp6Pk4yytSu7vnIGBnF48mFXz4UMl_AmqjtA>
+    <xmx:YY3fafqLHpm-YVTQoXf45S3Ko4MkRT3UinCfHEnHj6IUp092VopTZ0MX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Apr 2026 09:06:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 252bc19c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 Apr 2026 13:06:39 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Wed, 15 Apr 2026 15:06:34 +0200
+Subject: [PATCH v2 01/12] t: prepare `test_match_signal ()` calls for `set
+ -e`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 15 Apr 2026 04:16:23 -0700
-X-Gm-Features: AQROBzCyMCnrQMnDlIDakeHlRt-3OQdZ3_YstzztVoXhFXIt3WSWMNbtFB5uK5E
-Message-ID: <CAOLa=ZT8H3xLXjact9it9jveviztL4Q72KNMk5nxW_ouq0T0=A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] environment: move "trust_ctime" into `struct repo_config_values`
-To: phillip.wood@dunelm.org.uk, Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, christian.couder@gmail.com, usmanakinyemi202@gmail.com, 
-	kaartic.sivaraam@gmail.com, me@ttaylorr.com
-Content-Type: multipart/mixed; boundary="000000000000aa54d9064f7dd838"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260415-b4-pks-tests-with-set-e-v2-1-4e4904a96f15@pks.im>
+References: <20260415-b4-pks-tests-with-set-e-v2-0-4e4904a96f15@pks.im>
+In-Reply-To: <20260415-b4-pks-tests-with-set-e-v2-0-4e4904a96f15@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-Mailer: b4 0.15.1
 
---000000000000aa54d9064f7dd838
-Content-Type: text/plain; charset="UTF-8"
+We have a couple of calls to `test_match_signal ()` where we execute a
+Git command and expect it to die with a specific signal. These calls
+will essentially execute the process in a subshell via `foo; echo $?`,
+but as we expect `foo` to fail this will cause the overall subshell to
+fail once we `set -e`.
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Fix this issue by using `foo && echo 0 || echo $?` instead.
 
-> On 14/04/2026 09:52, Karthik Nayak wrote:
->> Olamide Caleb Bello <belkid98@gmail.com> writes:
->>
->>> The `core.trustctime` configuration is currently stored in the global
->>> variable `trust_ctime`, which makes it shared across repository
->>> instances in a single process.
->>>
->>> Store it instead in `repo_config_values`, so the value is tied to the
->>> repository from which it was read. This preserves existing behavior
->>> while avoiding cross-repository state leakage and continues the effort
->>> to reduce reliance on global configuration state.
->>>
->>> Update all references to use repo_config_values().
->>>
->>
->> Nit: I was hoping you'd also shed light on why this can go into
->> `repo_config_values()`. Does it need to be eagerly parsed? If so, why?
->
-> If trust_ctime was lazily parsed where it is used we'd end up dying in
-> match_stat_data() which would be quite unexpected, make it very hard to
-> reason about the code, and hamper the libification efforts. I'd much
-> rather we put the onus on patch authors to justify any conversion from
-> eager parsing to lazy parsing rather than forcing them to justify
-> continuing to parse settings eagerly.
->
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t0005-signals.sh | 4 ++--
+ t/t3600-rm.sh      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Agreed. A note in the commit message that this belongs in
-`repo_config_values()` because it's eagerly parsed would be enough.
+diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+index afba0fc3fc..84319cf169 100755
+--- a/t/t0005-signals.sh
++++ b/t/t0005-signals.sh
+@@ -42,12 +42,12 @@ test_expect_success 'create blob' '
+ '
+ 
+ test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
+-	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
++	OUT=$( ((large_git && echo 0 1>&3 || echo $? 1>&3) | :) 3>&1 ) &&
+ 	test_match_signal 13 "$OUT"
+ '
+ 
+ test_expect_success !MINGW 'a constipated git dies with SIGPIPE even if parent ignores it' '
+-	OUT=$( ((trap "" PIPE && large_git; echo $? 1>&3) | :) 3>&1 ) &&
++	OUT=$( ((trap "" PIPE && large_git && echo 0 1>&3 || echo $? 1>&3) | :) 3>&1 ) &&
+ 	test_match_signal 13 "$OUT"
+ '
+ 
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 1f16e6b522..a371ea690e 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -260,7 +260,7 @@ test_expect_success 'choking "git rm" should not let it die with cruft (induce S
+ 
+ test_expect_success !MINGW 'choking "git rm" should not let it die with cruft (induce and check SIGPIPE)' '
+ 	choke_git_rm_setup &&
+-	OUT=$( ((trap "" PIPE && git rm -n "some-file-*"; echo $? 1>&3) | :) 3>&1 ) &&
++	OUT=$( ((trap "" PIPE && git rm -n "some-file-*" && echo 0 1>&3 || echo $? 1>&3) | :) 3>&1 ) &&
+ 	test_match_signal 13 "$OUT" &&
+ 	test_path_is_missing .git/index.lock
+ '
 
-> Thanks
->
-> Phillip
->
+-- 
+2.54.0.rc2.529.gd9106f7525.dirty
 
-[snip]
-
---000000000000aa54d9064f7dd838
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: deef50731264e3e3_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1uZmM0VVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meHdWQy80K1RHYUlkaldoMlk3Wnd4LzhKOUR4ZmthaQphdVpTaGdCYnZq
-VEFXTTdYMUVOOUQzRkQ5dzI1VlFLRUdTT2JhVTdubHJNRjZpanRnaElyT0NoNkhzQnZwaGZXCm5G
-ZVkzejJmK3p5R0lyRG01VG5PWmRJSDBTNlpRNEZ0WDkraEpNZG9jcmJoTDFoSWNTM2NpdFVOVGV5
-UmtJM1QKNnA5YkJMVmdiR2FPdkY4OVhOaXlDZDRqaEVhblg5c3VQbWd3bk9ydGd3b3ZrdHJmd3Y4
-ZHpoVk5GR3JKZzNSVApQUlRoU3lWZ0ZSMlQ1amhRejRFb2VQY2RCU29HSVViMmk1bTdYYUdYc1BP
-NWUrK2l2cVAxcElyU2ZrclpoWVlJCmhjc0VoM2FpbE9MUmxISDViVENldE5wQ0hEY05udzNKd09Z
-Tm4wNFRvOEhpSGNjOW5ZYTZ1Z0lMQk9rSWN6OXQKcUg1Rzk4dVZiY3VJS05hVFArdVRoZjRSSm9m
-Q3JiTVFGTWwxdEZRQWRvbUhtUTRZUldXdFU0OWZOSE5zbUxROQprZ1F2VHo0cVV4RUZ4OHpTb090
-NEgySXg5YlZrYTZ4YmlOZW54MEZ3aWxoODNNV1RCZU1XVFd1TjAreG9lU1oyCit2YThVeGpMd2VI
-MUQwMnBoeFlIOUVIaUpMZnpaSDNKRmJudXhIUT0KPXRGWWgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000aa54d9064f7dd838--
