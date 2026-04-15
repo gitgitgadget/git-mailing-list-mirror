@@ -1,68 +1,70 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6398298CAB
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:27:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B908246BCD
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776220068; cv=none; b=ASroLc/TllKMlR+kHP6X7NvnNia96X+MDiEPjS+BpnsblAomK4L+mo7rvlecqbO8d0X1fz7F+kl3OwPKVxFRs7aU+Q+n2CqHOQ8tdOu320Iemv7UK76sZ7WkjZKScN8l7T7HHZ42QHnFeWIvwT4QBCo9NnwL8Pm6w5YsoxPPYoo=
+	t=1776220071; cv=none; b=GIPJQL6Nc/mFFbZpqu9lwmn82mymqI4Gfwx/h/y08s2yWLp6GGfbQwXU3dqF0505p0x16VfN6bcWLoVsr0hWoOXTpft167HY3snedd7g/K+xRIyX2FwHrvnq5RJG43YeumKDxMnChJrNBNO79eQY81hU5X5UAHmrz3yXaQgK9zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776220068; c=relaxed/simple;
-	bh=c4uE7GvRpO1LapB1HobWcxSNs/UfQI4zY3RlaEpluoA=;
+	s=arc-20240116; t=1776220071; c=relaxed/simple;
+	bh=NlaHTLt5aFv2KaC7Lrv2oKkUy22T1rrmHaU3BZA/1Lg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GDvmz2aTDYEN6xjbaRJ+iFhMtisTx81cCMMNMye1zNFGpYC5J1oveixF2HKNMTpHq1Bsdu5eiimbFSYIhYS5u/AnpQAqWl0MMV7zNAQDA3YqIuKwNk1B+UKT/V7zioMuGC2zgWD9VbcNT73yFotBH+AUFqcfZQTm0SnXwGqMa8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSLCupfE; arc=none smtp.client-ip=209.85.222.181
+	 MIME-Version:To:Cc; b=hgoFLPWG9NxqTJPCyS3r7Fe/uMtuz4ms8kQrnQozH2gzWnYNDNXzCxFMlS/5wjEKYECelmWkLummuhgOoDwXhoq8W79lB8haP1IGfPlDDrY+hWz4Vm10tP7lEo2U22mSQvqvrfyaA0LAUtioX0q0dy9SroEKtWg6sIQFgjRkbvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g2h6UyoA; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSLCupfE"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8cd71fb9f06so390811685a.2
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 19:27:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g2h6UyoA"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50d6b9bca48so81916601cf.2
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 19:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776220065; x=1776824865; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776220068; x=1776824868; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t+rCuLdfTelJGToDVvn3nnRjHn/eLEYm1f0Hm2sn0rs=;
-        b=kSLCupfEZYX3jCum2+TydQ2D22ORruKJuZU2OMETXB/Uz+nS5uOdPu1ixAuw/VuOry
-         GnJ2L6HPfb78t4pvwV1bxqIGBgFgWwm749up35YC6Hw78v2ZfSYEXm0qIFNnSJpvrBKp
-         pkf/nfRpvMEF0+20bdQoZ8cYee3tVIGYxRsrD7pArq4mwVmxSp68DlEBqcVr61WDEvmn
-         Vw4tUAr6FQvdU6BK6h+zkn/P50B+4guM/3J0kLvqXs8hl2Allzw3lWw5r8X/2MEvFrkZ
-         ULy0KMXAPyLbBOOBstLtv7TgqHuQUhHSdwy2IdlsW325i9INlQsognAV2fkVpL6qMIPh
-         /plA==
+        bh=2MJ4xXcqZpD3fobelMtSgMsQnMHQ3H4YfSN81/sQArM=;
+        b=g2h6UyoAMJjwwWxUAmpFowPswquR2Ch9Quv+zm8Ab+pqLzFqpVSrQfHE+hzFeTmkBU
+         c+EtfUgLQkdhwl4u3fL5GtyBJbnLtpVHiO3SOEgwO0vaZibNOOlB5Tr4jH/2zQYAUPra
+         QipmU7sAQu7LkTcFGIlfdSiYxYktecN3vbTRHC6Pgm5twGLRTsl5tNs+1TNdfIXrev00
+         NbMEakdA9nDtBnf+6nfH+X0QrhjAZYwV36hmFqOPkEHwbOWKgwIKqBgSlNB9a8tfmeYI
+         6SPSPaVtMsnbiwJ3FvTvRmC1jLibUz74ESDKUlVZrYFHc99jm04lcBYel9m8xlhScML7
+         YH6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776220065; x=1776824865;
+        d=1e100.net; s=20251104; t=1776220068; x=1776824868;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=t+rCuLdfTelJGToDVvn3nnRjHn/eLEYm1f0Hm2sn0rs=;
-        b=WkOQZXzNu3odXB+3XduxoJvsHuGCbYmhVP9a9YtI2EDJazhaMSOJEfphJPBa5vVZbh
-         6eEEUySvDEiir8pPdgHt2wSHdMrSzqLXtCkluKnOT6vFmKesB4jlaXwjOFtQXyhM51/t
-         f0fpFUKu/CzBT6nvmLdrH6ZMOmxoiwXP2z168l/A5mSLwJO3Tv5kaFZ85U3vZ8mjPQfz
-         17ysiPwjUVBpBGVVeu5c0Ao7+cldvH7wPcMAg0vaaMKjUaJUGyVHqnkNfumk4qFbSV5T
-         q/mkBr7uBy45KJEQEVRhce3lmsRVOrNBE3OFatBllfoPbNyx6oqmiL/AG6qlV1ZFbXtI
-         8DpQ==
-X-Gm-Message-State: AOJu0YxlQ7IPKjhlvV9IKVseOErrJ5Bgp1Rw26Q1p4fkuQO8VtLX1l7V
-	dacWAhPF7Z3Z1smut9KT++4aHtezSuuGQudVuZvpPxynMnBsEi/dt3TWz5OOLA==
-X-Gm-Gg: AeBDietoRKrHwh2XrgIKGYcC7qKJS0yvLX6YkL2e4P8AfnYCywy+Cwhrx/SWCvEywVe
-	GySQE17+gaX24x6nMgAp/w6saewrqjsBfOeqY7uOmHB139omMT+l+R9+LCLnylcCNhRNX1ocETX
-	Wxqw6q4w0Bn6cAvJo6XPVh1PqGSRzhznn/rHRBD2BxKXCpPG/DDWZLCsSsGN1EwGM4JeuU0B4fU
-	HpF+SXq+8cQ5B3hPZoQOceBGomjGK1iCrAhElivNl07kmTCxjMbRYodc4X3DZD9wzScI7vxNvW9
-	gJVRMvc55UqxEMq3H5rjKoCsOEjv9VY3IVoZE75amaGeoGdXkIDFksTg3rMWphudYzUNH5BrRgk
-	3d7sZyBMfrpeQCV6WI8G9HV6F3QtlMwL+TIuJXEhK3dFMZHvXGCNy1sL3STBrpJR9qeO88zkJqo
-	zVBmsro8ux3pFSrCYzzkRGm8BW+7Q=
-X-Received: by 2002:a05:620a:a29b:20b0:8de:d009:2ff2 with SMTP id af79cd13be357-8ded0093040mr1804837285a.25.1776220065186;
-        Tue, 14 Apr 2026 19:27:45 -0700 (PDT)
+        bh=2MJ4xXcqZpD3fobelMtSgMsQnMHQ3H4YfSN81/sQArM=;
+        b=dvw42+q0tHoMORV42fFduBsDCc6/5H0qc61cuB6OhrrI+QdO58Wuocj1g2NH/PeDdS
+         qzSPdJpX3NhwrJI0gPyyJRx1KtYHi/b6xZrGlxdn37cE+LAKBbnXLBAzzLrtWhb/jKC2
+         9/WGQodvxhwSbWM3q2NhwqAx6qKgcq9ZI/b48k2+djVo/BfcRK0UGcA0zEzNl0aJYcUe
+         dKXJpHYgeyD6E2OGmQSjVfQRZcMIz6CVa/ea5WEOCpOHKZFfMV1L/kk6Ze1UiDF5U5b7
+         F9bhlbl/7ZkmG+atVQ8h/7mRx5Jhm5FDuXeAHl47Zh/GotLZQhmJrGx0ln5IE7w4CYhl
+         fZNg==
+X-Gm-Message-State: AOJu0Yw81O8JHSY7ezlKEpQHXg9US8eIdGZ9iyoVJ+lxJs8BEJDhkdY7
+	Jf4G6LDDmlxwRAUOCcs8xBRbq0418RHl4LrhyrI0nL9KU/Hq8XA0MRQuiihBlw==
+X-Gm-Gg: AeBDieu3kpWDtoXDi4KIq6PtZ1CFrispucs57au3Dmig1hhk82fArnnCbNtFHMY0TXd
+	avy/Qvn2ViYTHwJWbwr9q2ukZK7fXUAGj3FwUdteET2FCkqUD5RSRbeu7oP4Gr3Hn5fxHfOeFPx
+	57qRKdRdtNXd/SN01RaDAQdXapL77Li2Op+ndv/mBp92E0ZIK9DyDYo6asRRC6hlUQfusx/xU+E
+	J8mF+0GPYjzYjRe/o6Evgt2XtckcTpiirIm+cWj3EeSKrbCqX+AZWp/JqbuvfAMDLxyoKzfK7HY
+	KRXqQUFhFYIVKCrTqSEnIF/fl2ynR1ifDR8MNYkhwdQJPG/t+kx/TORADo1ZiZBW++lTPzw84e4
+	1SeUswmtWJeZZYN8loBGn4ZpjGCyF3a801WHBgv+Y5aGwUfFmpyseDP5ii/SYJLnSa2g2prQ7Ye
+	prCN+mTiYniQqo4aCCay56pCaSvZvehRDLJyMB1A==
+X-Received: by 2002:a05:622a:2295:b0:50b:47ae:8abd with SMTP id d75a77b69052e-50dd5b96015mr298929041cf.2.1776220067587;
+        Tue, 14 Apr 2026 19:27:47 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.201.35])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e4ef33b477sm23894985a.20.2026.04.14.19.27.43
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e1ad9663bsm3704221cf.4.2026.04.14.19.27.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 19:27:44 -0700 (PDT)
-Message-Id: <pull.2000.v4.git.1776220063.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2000.v3.git.1768519120.gitgitgadget@gmail.com>
+        Tue, 14 Apr 2026 19:27:46 -0700 (PDT)
+Message-Id: <8e0b1e3d013ee379335bc89801525a861047929d.1776220063.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2000.v4.git.1776220063.gitgitgadget@gmail.com>
 References: <pull.2000.v3.git.1768519120.gitgitgadget@gmail.com>
-From: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 15 Apr 2026 02:27:41 +0000
-Subject: [PATCH v4 0/2] userdiff: extend Scheme support to cover other Lisp dialects
+	<pull.2000.v4.git.1776220063.gitgitgadget@gmail.com>
+From: "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 15 Apr 2026 02:27:42 +0000
+Subject: [PATCH v4 1/2] userdiff: tighten word-diff test case of the scheme
+ driver
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,97 +80,77 @@ Cc: Junio C Hamano <gitster@pobox.com>,
     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
     Jaydeep P Das <jaydeepjd.8914@gmail.com>,
     "D. Ben Knoble" <ben.knoble@gmail.com>,
-    "Scott L. Burson" <Scott@sympoiesis.com>
+    "Scott L. Burson" <Scott@sympoiesis.com>,
+    Johannes Sixt <j6t@kdbg.org>
 
-Common Lisp, Emacs Lisp, and other dialects have some top-level forms, most
-importantly 'defun', that are not matched by the current Scheme pattern.
-Also, it is common in these dialects, when defining user macros intended as
-top-level forms, to prefix their names with "def" instead of "define"; such
-forms are also not currently matched. Some such forms don't even begin with
-"def".
+From: Johannes Sixt <j6t@kdbg.org>
 
-On the other hand, it is an established formatting convention in the Lisp
-community that only top-level forms start at the left margin. So matching
-any unindented line starting with an open parenthesis is an acceptable
-heuristic; false positives will be rare.
+The scheme driver separates identifiers only at parentheses of all
+sorts and whitespace, except that vertical bars act as brackets that
+enclose an identifier.
 
-However, there are also cases where notionally top-level forms are grouped
-together within some containing form. At least in the Common Lisp community,
-it is conventional to indent these by two spaces, or sometimes one. But
-matching just an open parenthesis indented by two spaces would be too broad;
-so the pattern added by this commit requires an indented form to start with
-"(def". It is believed that this strikes a good balance between potential
-false positives and false negatives.
+The test case attempts to demonstrate the vertical bars with a change
+from 'some-text' to '|a greeting|'. However, this misses the goal
+because the same word coloring would be applied if '|a greeting|'
+were parsed as two words.
 
-This commit disjoins a regexp employing these heuristics to the existing
-Scheme regexp, so it will still match everything that it did previously.
+Have an identifier between vertical bars with a space in both the pre-
+and the post-image and change only one side of the space to show that
+the single word exists between the vertical bars.
 
-Johannes Sixt (1):
-  userdiff: tighten word-diff test case of the scheme driver
+Also add cases that change parentheses of all kinds in a sequence of
+parentheses to show that they are their own word each.
 
-Scott L. Burson (1):
-  userdiff: extend Scheme support to cover other Lisp dialects
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Scott L. Burson <Scott@sympoiesis.com>
+---
+ t/t4034/scheme/expect | 5 +++--
+ t/t4034/scheme/post   | 1 +
+ t/t4034/scheme/pre    | 3 ++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
- Documentation/gitattributes.adoc           |  3 ++-
- t/t4018/scheme-lisp-defun-a                |  4 ++++
- t/t4018/scheme-lisp-defun-b                |  4 ++++
- t/t4018/scheme-lisp-eval-when              |  4 ++++
- t/t4018/{scheme-module => scheme-module-a} |  0
- t/t4018/scheme-module-b                    |  6 ++++++
- t/t4034/scheme/expect                      |  5 +++--
- t/t4034/scheme/post                        |  3 ++-
- t/t4034/scheme/pre                         |  3 ++-
- userdiff.c                                 | 22 ++++++++++++++++------
- 10 files changed, 43 insertions(+), 11 deletions(-)
- create mode 100644 t/t4018/scheme-lisp-defun-a
- create mode 100644 t/t4018/scheme-lisp-defun-b
- create mode 100644 t/t4018/scheme-lisp-eval-when
- rename t/t4018/{scheme-module => scheme-module-a} (100%)
- create mode 100644 t/t4018/scheme-module-b
-
-
-base-commit: 9e8f4e9c04e3efa494e78b710e0c5f6cc77a0a5e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2000%2Fslburson%2Flisp-userdiff_driver-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2000/slburson/lisp-userdiff_driver-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/2000
-
-Range-diff vs v3:
-
- 1:  e20ac5b6a6 = 1:  8e0b1e3d01 userdiff: tighten word-diff test case of the scheme driver
- 2:  fb4c8dc5d4 ! 2:  0bd51e02ba userdiff: extend Scheme support to cover other Lisp dialects
-     @@ Commit message
-      
-       ## Documentation/gitattributes.adoc ##
-      @@ Documentation/gitattributes.adoc: patterns are available:
-     + 
-       - `rust` suitable for source code in the Rust language.
-       
-     - - `scheme` suitable for source code in the Scheme language.
-     -+Also handles Emacs Lisp, Common Lisp, and most other dialects.
-     +-- `scheme` suitable for source code in the Scheme language.
-     ++- `scheme` suitable for source code in most Lisp dialects,
-     ++  including Scheme, Emacs Lisp, Common Lisp, and Clojure.
-       
-       - `tex` suitable for source code for LaTeX documents.
-       
-     @@ t/t4034/scheme/expect
-         ; This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function.
-         (<RED>this\place<RESET><GREEN>that\place<RESET> (+ 3 4))
-      -  (define <RED>|the greeting|<RESET><GREEN>|a greeting|<RESET> "hello")
-     -+  (define <RED>|the \greeting|<RESET><GREEN>|a \greeting|<RESET> |hello there|)
-     ++  (define <RED>|the \| \greeting|<RESET><GREEN>|a \greeting|<RESET> |hello there|)
-         ({<RED>}<RESET>(([<RED>]<RESET>(func-n)<RED>[<RESET>]))<RED>{<RESET>})
-         (let ((c (<RED>+ a b<RESET><GREEN>add1 first<RESET>)))
-           (format "one more than the total is %d" (<RED>add1<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
-     @@ t/t4034/scheme/pre
-         ; This is a really cool function.
-         (this\place (+ 3 4))
-      -  (define |the greeting| "hello")
-     -+  (define |the \greeting| |hello there|)
-     ++  (define |the \| \greeting| |hello there|)
-         ({}(([](func-n)[])){})
-         (let ((c (+ a b)))
-           (format "one more than the total is %d" (add1 c))))
-
+diff --git a/t/t4034/scheme/expect b/t/t4034/scheme/expect
+index 496cd5de8c..138abe9f56 100644
+--- a/t/t4034/scheme/expect
++++ b/t/t4034/scheme/expect
+@@ -2,10 +2,11 @@
+ <BOLD>index 74b6605..63b6ac4 100644<RESET>
+ <BOLD>--- a/pre<RESET>
+ <BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,6 +1,6 @@<RESET>
++<CYAN>@@ -1,7 +1,7 @@<RESET>
+ (define (<RED>myfunc a b<RESET><GREEN>my-func first second<RESET>)
+   ; This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function.
+   (<RED>this\place<RESET><GREEN>that\place<RESET> (+ 3 4))
+-  (define <RED>some-text<RESET><GREEN>|a greeting|<RESET> "hello")
++  (define <RED>|the greeting|<RESET><GREEN>|a greeting|<RESET> "hello")
++  ({<RED>}<RESET>(([<RED>]<RESET>(func-n)<RED>[<RESET>]))<RED>{<RESET>})
+   (let ((c (<RED>+ a b<RESET><GREEN>add1 first<RESET>)))
+     (format "one more than the total is %d" (<RED>add1<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
+diff --git a/t/t4034/scheme/post b/t/t4034/scheme/post
+index 63b6ac4f87..0e3bab101d 100644
+--- a/t/t4034/scheme/post
++++ b/t/t4034/scheme/post
+@@ -2,5 +2,6 @@
+   ; This is a (moderately) cool function.
+   (that\place (+ 3 4))
+   (define |a greeting| "hello")
++  ({(([(func-n)]))})
+   (let ((c (add1 first)))
+     (format "one more than the total is %d" (+ c second))))
+diff --git a/t/t4034/scheme/pre b/t/t4034/scheme/pre
+index 74b6605357..03d77c7c43 100644
+--- a/t/t4034/scheme/pre
++++ b/t/t4034/scheme/pre
+@@ -1,6 +1,7 @@
+ (define (myfunc a b)
+   ; This is a really cool function.
+   (this\place (+ 3 4))
+-  (define some-text "hello")
++  (define |the greeting| "hello")
++  ({}(([](func-n)[])){})
+   (let ((c (+ a b)))
+     (format "one more than the total is %d" (add1 c))))
 -- 
 gitgitgadget
+
