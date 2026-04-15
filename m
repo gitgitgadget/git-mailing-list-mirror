@@ -1,70 +1,70 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B908246BCD
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6152B30EF86
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776220071; cv=none; b=GIPJQL6Nc/mFFbZpqu9lwmn82mymqI4Gfwx/h/y08s2yWLp6GGfbQwXU3dqF0505p0x16VfN6bcWLoVsr0hWoOXTpft167HY3snedd7g/K+xRIyX2FwHrvnq5RJG43YeumKDxMnChJrNBNO79eQY81hU5X5UAHmrz3yXaQgK9zA=
+	t=1776220071; cv=none; b=DE67tYP55laH5Sj1omnMJlaRoq4TfM1MRllK8Def7dXrr+X5wi4gHwJuCxnqYQeP8Yz+n+FsqLL5kd3+SWwIcz1D34ga9zycIcBaLMYPFf/Ij6a74jACv1BsUXm/HaKoNfC0+ks5YEYVZPODc3PQgaApd81D6svQv24W644YFw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776220071; c=relaxed/simple;
-	bh=NlaHTLt5aFv2KaC7Lrv2oKkUy22T1rrmHaU3BZA/1Lg=;
+	bh=etk2SsSx+NTkBoicN5aNkH8TANb7vm/XCdXdrOIOvKI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hgoFLPWG9NxqTJPCyS3r7Fe/uMtuz4ms8kQrnQozH2gzWnYNDNXzCxFMlS/5wjEKYECelmWkLummuhgOoDwXhoq8W79lB8haP1IGfPlDDrY+hWz4Vm10tP7lEo2U22mSQvqvrfyaA0LAUtioX0q0dy9SroEKtWg6sIQFgjRkbvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g2h6UyoA; arc=none smtp.client-ip=209.85.160.173
+	 MIME-Version:To:Cc; b=R80dITNdQk6+BImrZWKUyCoCyg0C/HALs4/ldwpyzvW1dj8B3rLehPii8fiD9TeBFOYZpTipGqTZUHS7AeShuzHnWL7hCXKsSScnvtTadlaqlR6I4+eSa7OysdKR9Eo2QLOWWOmXLCH5yWnr7sqLTra0k0cKO4x54m2S78Js324=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VwY7JT+o; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g2h6UyoA"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50d6b9bca48so81916601cf.2
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 19:27:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VwY7JT+o"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8dfb9139008so280690485a.1
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 19:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776220068; x=1776824868; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776220069; x=1776824869; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2MJ4xXcqZpD3fobelMtSgMsQnMHQ3H4YfSN81/sQArM=;
-        b=g2h6UyoAMJjwwWxUAmpFowPswquR2Ch9Quv+zm8Ab+pqLzFqpVSrQfHE+hzFeTmkBU
-         c+EtfUgLQkdhwl4u3fL5GtyBJbnLtpVHiO3SOEgwO0vaZibNOOlB5Tr4jH/2zQYAUPra
-         QipmU7sAQu7LkTcFGIlfdSiYxYktecN3vbTRHC6Pgm5twGLRTsl5tNs+1TNdfIXrev00
-         NbMEakdA9nDtBnf+6nfH+X0QrhjAZYwV36hmFqOPkEHwbOWKgwIKqBgSlNB9a8tfmeYI
-         6SPSPaVtMsnbiwJ3FvTvRmC1jLibUz74ESDKUlVZrYFHc99jm04lcBYel9m8xlhScML7
-         YH6g==
+        bh=EHGxfvEbJektW0qRjuLA8TY2XyrGwYTqQFOfyfPcv6A=;
+        b=VwY7JT+oTCnxZ8Xpoz9gdgkWxxu53S9imCBKpjPnmu9GvUKSgL/9HexC7CWkA0Y483
+         Er+Cl2fibqExB6JoAd8Z0mVP2hsMSxxtDddmOKddMxFFRc7LZvjg6i9oZox4Vth+AFiY
+         eU+dB36cCeCnKiwEDRftxTjbJPxgecixZwmg6PLA6jl59tagJgxzrISSuQR2e5w8Hdxx
+         HhJQOxu4Q6AalmY79yMgwCFm9446N6eiHLpanvVN9k0d+FdLM4xzDrB9UUAyv4CosVs0
+         674/Mf2DJglMVvTqpOL/OaytmtCCa2Cbw/q/G3iqhfEq59OH4uQubg1wa40MQMkIBhkk
+         J54g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776220068; x=1776824868;
+        d=1e100.net; s=20251104; t=1776220069; x=1776824869;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2MJ4xXcqZpD3fobelMtSgMsQnMHQ3H4YfSN81/sQArM=;
-        b=dvw42+q0tHoMORV42fFduBsDCc6/5H0qc61cuB6OhrrI+QdO58Wuocj1g2NH/PeDdS
-         qzSPdJpX3NhwrJI0gPyyJRx1KtYHi/b6xZrGlxdn37cE+LAKBbnXLBAzzLrtWhb/jKC2
-         9/WGQodvxhwSbWM3q2NhwqAx6qKgcq9ZI/b48k2+djVo/BfcRK0UGcA0zEzNl0aJYcUe
-         dKXJpHYgeyD6E2OGmQSjVfQRZcMIz6CVa/ea5WEOCpOHKZFfMV1L/kk6Ze1UiDF5U5b7
-         F9bhlbl/7ZkmG+atVQ8h/7mRx5Jhm5FDuXeAHl47Zh/GotLZQhmJrGx0ln5IE7w4CYhl
-         fZNg==
-X-Gm-Message-State: AOJu0Yw81O8JHSY7ezlKEpQHXg9US8eIdGZ9iyoVJ+lxJs8BEJDhkdY7
-	Jf4G6LDDmlxwRAUOCcs8xBRbq0418RHl4LrhyrI0nL9KU/Hq8XA0MRQuiihBlw==
-X-Gm-Gg: AeBDieu3kpWDtoXDi4KIq6PtZ1CFrispucs57au3Dmig1hhk82fArnnCbNtFHMY0TXd
-	avy/Qvn2ViYTHwJWbwr9q2ukZK7fXUAGj3FwUdteET2FCkqUD5RSRbeu7oP4Gr3Hn5fxHfOeFPx
-	57qRKdRdtNXd/SN01RaDAQdXapL77Li2Op+ndv/mBp92E0ZIK9DyDYo6asRRC6hlUQfusx/xU+E
-	J8mF+0GPYjzYjRe/o6Evgt2XtckcTpiirIm+cWj3EeSKrbCqX+AZWp/JqbuvfAMDLxyoKzfK7HY
-	KRXqQUFhFYIVKCrTqSEnIF/fl2ynR1ifDR8MNYkhwdQJPG/t+kx/TORADo1ZiZBW++lTPzw84e4
-	1SeUswmtWJeZZYN8loBGn4ZpjGCyF3a801WHBgv+Y5aGwUfFmpyseDP5ii/SYJLnSa2g2prQ7Ye
-	prCN+mTiYniQqo4aCCay56pCaSvZvehRDLJyMB1A==
-X-Received: by 2002:a05:622a:2295:b0:50b:47ae:8abd with SMTP id d75a77b69052e-50dd5b96015mr298929041cf.2.1776220067587;
-        Tue, 14 Apr 2026 19:27:47 -0700 (PDT)
+        bh=EHGxfvEbJektW0qRjuLA8TY2XyrGwYTqQFOfyfPcv6A=;
+        b=WqdhjisCfHMNoiSh9Z+erYWKsymc4zV4tzdV5QAPjI1h1TNiESVGcv96XZYpEfOvPg
+         XxWdA1M7sVvogVcIyi4mbXBVpQbyZ7MRbKnB6eCT7EptWTmLhqeQGKBFUQTeOtfmJI53
+         JVakyuFS6+uCQYafLGa8evix3Qlug/AUuWQbCVZs/lfuF8YtQOCMKzMr960Z1jJjmdfW
+         Y5Te2z8LJUAZwcpgS88IhZa3u/2FKwWpcOcUgHY/14M9CD/M1zG8nEuw/ENQN6jVMIH+
+         oB1WV6gmf9JFXL5emsjA+S7ui2zLzp3tW1BBpY3S0p6dO6fLmTPjSQahRVdWCP4k4ogA
+         DhyA==
+X-Gm-Message-State: AOJu0Yx/UmSjQrgjyEo5QhwHxo8QZZtrOVvt1wPer1EH0zPSVTsc0IEe
+	RHiK1WMKOLdf4CdDrWntN5PmtyoG1hQNlPpTVlrfbfonxlscCZjF9ywJnUTbrQ==
+X-Gm-Gg: AeBDietsgC8alzycdgu8DbUxT0FwEsi9InSZHyzDoC3oNzvuVK1C8Q8ppRRlTNNvD01
+	jOauVNTFbRULfVa+82db/3UBIrLRUZ6RxwS1NORlurEof33Q+tAVugV4AhPug7FNc/i45DEUSFs
+	PBPWf3Am49X2gDChdsdi4giAzwgQd52QWcZjK8VP/nTrXGsCpf6j/dsVMJTsVNox86Y/mXPvVjo
+	pmTnhUVnG1yb3HTF0HV6FIk7E/PvAs9xVSKph7Z5Vx1an7n3CemtQ753kX2RwdRtqrViCEWeGw6
+	QZl2cIKr8OgLwaVMXQTHHWgR9xYsZOKQpth8zeveS3j2eUO+jd9/tOnETdHzeV12i8RL5zdkRra
+	o/LZDd30u/WPtINUBMxBJDoBqdSUaQKKM5+bKlok/daaoW4JmGMQa1O2GwxGBZsMfyLlovZfw/Z
+	xzNlBbI9gQh86fT6wIQLfgIrp7+oXCUuZJwh8kbA==
+X-Received: by 2002:a05:620a:4588:b0:8d6:255d:877a with SMTP id af79cd13be357-8ddcdbe3b22mr2845271485a.15.1776220068879;
+        Tue, 14 Apr 2026 19:27:48 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.201.35])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e1ad9663bsm3704221cf.4.2026.04.14.19.27.45
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e4eed6eef3sm25914085a.2.2026.04.14.19.27.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 19:27:46 -0700 (PDT)
-Message-Id: <8e0b1e3d013ee379335bc89801525a861047929d.1776220063.git.gitgitgadget@gmail.com>
+        Tue, 14 Apr 2026 19:27:48 -0700 (PDT)
+Message-Id: <0bd51e02ba1aec92f2149a3c870af2dd1fc200b4.1776220063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2000.v4.git.1776220063.gitgitgadget@gmail.com>
 References: <pull.2000.v3.git.1768519120.gitgitgadget@gmail.com>
 	<pull.2000.v4.git.1776220063.gitgitgadget@gmail.com>
-From: "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 15 Apr 2026 02:27:42 +0000
-Subject: [PATCH v4 1/2] userdiff: tighten word-diff test case of the scheme
- driver
+From: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 15 Apr 2026 02:27:43 +0000
+Subject: [PATCH v4 2/2] userdiff: extend Scheme support to cover other Lisp
+ dialects
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,76 +81,183 @@ Cc: Junio C Hamano <gitster@pobox.com>,
     Jaydeep P Das <jaydeepjd.8914@gmail.com>,
     "D. Ben Knoble" <ben.knoble@gmail.com>,
     "Scott L. Burson" <Scott@sympoiesis.com>,
-    Johannes Sixt <j6t@kdbg.org>
+    "Scott L. Burson" <Scott@sympoiesis.com>
 
-From: Johannes Sixt <j6t@kdbg.org>
+From: "Scott L. Burson" <Scott@sympoiesis.com>
 
-The scheme driver separates identifiers only at parentheses of all
-sorts and whitespace, except that vertical bars act as brackets that
-enclose an identifier.
+Common Lisp has top-level forms, such as 'defun' and 'defmacro', that
+are not matched by the current Scheme pattern.  Also, it is more
+common in CL, when defining user macros intended as top-level forms,
+to prefix their names with "def" instead of "define"; such forms are
+also not matched.  And some top-level forms don't even begin with
+"def".
 
-The test case attempts to demonstrate the vertical bars with a change
-from 'some-text' to '|a greeting|'. However, this misses the goal
-because the same word coloring would be applied if '|a greeting|'
-were parsed as two words.
+On the other hand, it is an established formatting convention in the
+Lisp community that only top-level forms start at the left margin.  So
+matching any unindented line starting with an open parenthesis is an
+acceptable heuristic; false positives will be rare.
 
-Have an identifier between vertical bars with a space in both the pre-
-and the post-image and change only one side of the space to show that
-the single word exists between the vertical bars.
+However, there are also cases where notionally top-level forms are
+grouped together within some containing form.  At least in the Common
+Lisp community, it is conventional to indent these by two spaces, or
+sometimes one.  But matching just an open parenthesis indented by two
+spaces would be too broad; so the pattern added by this commit
+requires an indented form to start with "(def".  It is believed that
+this strikes a good balance between potential false positives and
+false negatives.
 
-Also add cases that change parentheses of all kinds in a sequence of
-parentheses to show that they are their own word each.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Scott L. Burson <Scott@sympoiesis.com>
 ---
- t/t4034/scheme/expect | 5 +++--
- t/t4034/scheme/post   | 1 +
- t/t4034/scheme/pre    | 3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ Documentation/gitattributes.adoc           |  3 ++-
+ t/t4018/scheme-lisp-defun-a                |  4 ++++
+ t/t4018/scheme-lisp-defun-b                |  4 ++++
+ t/t4018/scheme-lisp-eval-when              |  4 ++++
+ t/t4018/{scheme-module => scheme-module-a} |  0
+ t/t4018/scheme-module-b                    |  6 ++++++
+ t/t4034/scheme/expect                      |  2 +-
+ t/t4034/scheme/post                        |  2 +-
+ t/t4034/scheme/pre                         |  2 +-
+ userdiff.c                                 | 22 ++++++++++++++++------
+ 10 files changed, 39 insertions(+), 10 deletions(-)
+ create mode 100644 t/t4018/scheme-lisp-defun-a
+ create mode 100644 t/t4018/scheme-lisp-defun-b
+ create mode 100644 t/t4018/scheme-lisp-eval-when
+ rename t/t4018/{scheme-module => scheme-module-a} (100%)
+ create mode 100644 t/t4018/scheme-module-b
 
+diff --git a/Documentation/gitattributes.adoc b/Documentation/gitattributes.adoc
+index f20041a323..bd76167a45 100644
+--- a/Documentation/gitattributes.adoc
++++ b/Documentation/gitattributes.adoc
+@@ -911,7 +911,8 @@ patterns are available:
+ 
+ - `rust` suitable for source code in the Rust language.
+ 
+-- `scheme` suitable for source code in the Scheme language.
++- `scheme` suitable for source code in most Lisp dialects,
++  including Scheme, Emacs Lisp, Common Lisp, and Clojure.
+ 
+ - `tex` suitable for source code for LaTeX documents.
+ 
+diff --git a/t/t4018/scheme-lisp-defun-a b/t/t4018/scheme-lisp-defun-a
+new file mode 100644
+index 0000000000..c3c750f76d
+--- /dev/null
++++ b/t/t4018/scheme-lisp-defun-a
+@@ -0,0 +1,4 @@
++(defun some-func (x y z) RIGHT
++  (let ((a x)
++        (b y))
++        (ChangeMe a b)))
+diff --git a/t/t4018/scheme-lisp-defun-b b/t/t4018/scheme-lisp-defun-b
+new file mode 100644
+index 0000000000..21be305968
+--- /dev/null
++++ b/t/t4018/scheme-lisp-defun-b
+@@ -0,0 +1,4 @@
++(macrolet ((foo (x) `(bar ,x)))
++  (defun mumble (x) ; RIGHT
++    (when (> x 0)
++      (foo x)))) ; ChangeMe
+diff --git a/t/t4018/scheme-lisp-eval-when b/t/t4018/scheme-lisp-eval-when
+new file mode 100644
+index 0000000000..5d941d7e0e
+--- /dev/null
++++ b/t/t4018/scheme-lisp-eval-when
+@@ -0,0 +1,4 @@
++(eval-when (:compile-toplevel :load-toplevel :execute)  ; RIGHT
++  (set-macro-character #\?
++		       (lambda (stream char)
++			 `(make-pattern-variable ,(read stream)))))  ; ChangeMe
+diff --git a/t/t4018/scheme-module b/t/t4018/scheme-module-a
+similarity index 100%
+rename from t/t4018/scheme-module
+rename to t/t4018/scheme-module-a
+diff --git a/t/t4018/scheme-module-b b/t/t4018/scheme-module-b
+new file mode 100644
+index 0000000000..77bc0c5eff
+--- /dev/null
++++ b/t/t4018/scheme-module-b
+@@ -0,0 +1,6 @@
++(module A
++  (export with-display-exception)
++  (extern (display-exception display-exception))
++  (def (with-display-exception thunk) RIGHT
++    (with-catch (lambda (e) (display-exception e (current-error-port)) e)
++      thunk ChangeMe)))
 diff --git a/t/t4034/scheme/expect b/t/t4034/scheme/expect
-index 496cd5de8c..138abe9f56 100644
+index 138abe9f56..fb7f2616fe 100644
 --- a/t/t4034/scheme/expect
 +++ b/t/t4034/scheme/expect
-@@ -2,10 +2,11 @@
- <BOLD>index 74b6605..63b6ac4 100644<RESET>
- <BOLD>--- a/pre<RESET>
- <BOLD>+++ b/post<RESET>
--<CYAN>@@ -1,6 +1,6 @@<RESET>
-+<CYAN>@@ -1,7 +1,7 @@<RESET>
+@@ -6,7 +6,7 @@
  (define (<RED>myfunc a b<RESET><GREEN>my-func first second<RESET>)
    ; This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function.
    (<RED>this\place<RESET><GREEN>that\place<RESET> (+ 3 4))
--  (define <RED>some-text<RESET><GREEN>|a greeting|<RESET> "hello")
-+  (define <RED>|the greeting|<RESET><GREEN>|a greeting|<RESET> "hello")
-+  ({<RED>}<RESET>(([<RED>]<RESET>(func-n)<RED>[<RESET>]))<RED>{<RESET>})
+-  (define <RED>|the greeting|<RESET><GREEN>|a greeting|<RESET> "hello")
++  (define <RED>|the \| \greeting|<RESET><GREEN>|a \greeting|<RESET> |hello there|)
+   ({<RED>}<RESET>(([<RED>]<RESET>(func-n)<RED>[<RESET>]))<RED>{<RESET>})
    (let ((c (<RED>+ a b<RESET><GREEN>add1 first<RESET>)))
      (format "one more than the total is %d" (<RED>add1<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
 diff --git a/t/t4034/scheme/post b/t/t4034/scheme/post
-index 63b6ac4f87..0e3bab101d 100644
+index 0e3bab101d..450cc234f7 100644
 --- a/t/t4034/scheme/post
 +++ b/t/t4034/scheme/post
-@@ -2,5 +2,6 @@
+@@ -1,7 +1,7 @@
+ (define (my-func first second)
    ; This is a (moderately) cool function.
    (that\place (+ 3 4))
-   (define |a greeting| "hello")
-+  ({(([(func-n)]))})
+-  (define |a greeting| "hello")
++  (define |a \greeting| |hello there|)
+   ({(([(func-n)]))})
    (let ((c (add1 first)))
      (format "one more than the total is %d" (+ c second))))
 diff --git a/t/t4034/scheme/pre b/t/t4034/scheme/pre
-index 74b6605357..03d77c7c43 100644
+index 03d77c7c43..e16ee75849 100644
 --- a/t/t4034/scheme/pre
 +++ b/t/t4034/scheme/pre
-@@ -1,6 +1,7 @@
+@@ -1,7 +1,7 @@
  (define (myfunc a b)
    ; This is a really cool function.
    (this\place (+ 3 4))
--  (define some-text "hello")
-+  (define |the greeting| "hello")
-+  ({}(([](func-n)[])){})
+-  (define |the greeting| "hello")
++  (define |the \| \greeting| |hello there|)
+   ({}(([](func-n)[])){})
    (let ((c (+ a b)))
      (format "one more than the total is %d" (add1 c))))
+diff --git a/userdiff.c b/userdiff.c
+index fe710a68bf..b5412e6bc3 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -344,14 +344,24 @@ PATTERNS("rust",
+ 	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
+ 	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+ PATTERNS("scheme",
+-	 "^[\t ]*(\\(((define|def(struct|syntax|class|method|rules|record|proto|alias)?)[-*/ \t]|(library|module|struct|class)[*+ \t]).*)$",
+ 	 /*
+-	  * R7RS valid identifiers include any sequence enclosed
+-	  * within vertical lines having no backslashes
++	  * An unindented opening parenthesis identifies a top-level
++	  * expression in all Lisp dialects.
+ 	  */
+-	 "\\|([^\\\\]*)\\|"
+-	 /* All other words should be delimited by spaces or parentheses */
+-	 "|([^][)(}{[ \t])+"),
++	 "^(\\(.*)$\n"
++	 /* For Scheme: a possibly indented left paren followed by a keyword. */
++	 "^[\t ]*(\\(((define|def(struct|syntax|class|method|rules|record|proto|alias)?)[-*/ \t]|(library|module|struct|class)[*+ \t]).*)$\n"
++	 /*
++	  * For all Lisp dialects: a slightly indented line starting with "(def".
++	  */
++	 "^  ?(\\([Dd][Ee][Ff].*)$",
++	 /*
++	  * The union of R7RS and Common Lisp symbol syntax: allows arbitrary
++	  * strings between vertical bars, including any escaped characters.
++	  */
++	 "\\|([^|\\\\]|\\\\.)*\\|"
++	 /* All other words should be delimited by spaces or parentheses. */
++	 "|([^][)(}{ \t])+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+ { .name = "default", .binary = -1 },
 -- 
 gitgitgadget
-
