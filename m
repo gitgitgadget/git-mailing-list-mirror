@@ -1,125 +1,66 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C8A3ED137
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F443793B3
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 18:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776275910; cv=none; b=qUeuWz1op8SUUQX7hVFuzABolfBJBn2VVHKZm0uupjVbY+l4ca600cRTiownbdZ2tHmCJgKHZXFC6Y4Hn7Frq1AtlBw1PArT1f3/FzIRAAolaeWjh9epo2Ig+ix3pGbFtlXG8UFmcjI1eXbud+hsy1xA/FnckXdug+5la0IGZNQ=
+	t=1776276191; cv=none; b=HvukSl5Mird9+d2y8BbqspcIkKlbdbrXDQQ+PzYV10w4RZTaxpVR3B/njyBTq7/WkXYInOYbyaWugowbf+mui0ult8YEf+bFINQkPc03K8yKuLwIfC26m/3QXTAoPJE+V6e971wOunFc3Embh4gw9FGMjhnIWuYBiYEevE2CRGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776275910; c=relaxed/simple;
-	bh=Fl2TDJBA+sE2HaCnJGWQRamXokVv6uEeRUQpJ3aqARA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FkXiTZZ4oML0T/qW3cNfM3H/CIzupYNsyzKckYI4BuGslZDLyILF/ELul3yuxrhbhrdcNku0cAsxK4hKoiOrlEKRBA1gyymRmT1goyqyM/fdoxMhLUABuuSbeUrhEZFFmprgyE2ut5XkhhhcsKwgRUyQTb+sTaggAyPFrx1WBrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LHUZFuqq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zaem6iBU; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776276191; c=relaxed/simple;
+	bh=wnaF4oMBsvVlevhgDr0C0/rvFaRRczsb0LLe9m/8t20=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j9wOi4rKLzC/mk9GlZyQwpZPuAbsITOE6TUa0y30G33jYyVrRua7Nfcl17zX6lBTWb/R4N3Y7HlCuICgxILvksZU363CHd6vAY3RNwQSv87r0aE5A2wOowbF+g4tgXVrBLJu8OKaBjtSWwVRffSqvb3KVDvxceyLoUwB5xG22nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=baqWBoU1; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=bYos9O+b; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LHUZFuqq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zaem6iBU"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 384C67A00EB;
-	Wed, 15 Apr 2026 13:58:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 15 Apr 2026 13:58:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776275906; x=1776362306; bh=YLRFisogbK
-	Q5ql4AuJ+UXIoIOEr0UDbMtklp2kaqfxs=; b=LHUZFuqqzZpF73zomdNjdWRlp1
-	GwLmGbZ7zNLYzz4z5r29X6kUMxI2FttUNi5iedPN7sFF7ubuGNV16ZvcfuWNtLiV
-	gjPj+OE6VAU6OZn5uaN31dj1j0lknVWj0jtwCr+rX8M9HZ5IYhLqgDRnraFF4y4k
-	Kfw8CUw4rMeyg+BWT/Lv0hBG3yEfMYNyDyH0aI5M234VkaXmblAsEwEIDW3PEh0M
-	Oq08JXkmTNo+PWkBxhn6SuTRDgl1o6NNhoaUZXMET3laQQ+MrWbVn0Xl7cjHpFE4
-	kOZB93RdcTRIW+0Hn5YQtGDTKFDfiwGfB4iZwgGTXzEm7wq2eILxEFy++IMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776275906; x=1776362306; bh=YLRFisogbKQ5ql4AuJ+UXIoIOEr0UDbMtkl
-	p2kaqfxs=; b=Zaem6iBU48gu8iWqpx3+Z+P49Tkp1x45Ro222txhBg0N6srxcJN
-	mwoXKHYtS+IL32OMLelV3ggNGYgoZqP3L60fW7PNBFsMuXj/pLfwmuX1p0c5oj6q
-	1IPxPQHoad8S6A4s3i0BWC+EjI0lFIZggoeHYuoPe0dPv3OMwPXyeirQqLlC58bM
-	XM7Vd4FpSws7SwviSAK0yLl7rebvsAQ7GaSiCaW2FG9oaorDJHeZ6YoIa3zwOdZe
-	WPhFylB02j3dPl5UZRyVBBZHhUyq8gWDiO8EwMAtGy/7SHk4sB97rYqjfJdh1xL2
-	qBAUpUF3zIwEKUDCpkDfJ6xgvLAxb2fPprQ==
-X-ME-Sender: <xms:wdHfaRBViHLdiTFT3CnscVGCix0CG-O1sAQWFT1ZrGfuGPJYBfFevQ>
-    <xme:wdHfaZn3hd0dkd8XlQydrkukHL4zeD6Gy7lPNcZqt_fxagYF9vgW6LpjTOtB6ql8D
-    dZkxu4n5r-UHP8RzW09IYuh7zOm3-lkCu74YzHCs1T6NyTq72d5ug>
-X-ME-Received: <xmr:wdHfacc9ZBExgMhDKbDTt_zyoWUs40Ev0DQw5U9D1-wZ4tGklPYIzNQxNuRr-b71vAW-4Fyrb9GXHp1fWq_VkDtMLFJ9H_Jhiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeejhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprhgtphhtthhopegthhhr
-    ihhsthhirghnsehhvghushgvlhdrvghupdhrtghpthhtohepghgvohhrghgvsehmrghilh
-    drughivghtrhhitghhrdhpuhgspdhrtghpthhtoheplhhishhtsegvfihorhhmrdguvgdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:wdHfadQSDIuPWTbWNQfX0H5LRM-_R0HYv8yvcpcFS_Snb2GDvR7IVw>
-    <xmx:wdHfaTs6C9R14YV1XMzUV_RcY--YZoKE9_hSCdZWYEM99AQKFridMQ>
-    <xmx:wdHfaefqZayz_OhaJT359lSLguAtaFf6juiwW5KMIDeuaFTYtx_cGQ>
-    <xmx:wdHfadYco_9d3Gztd6uUSkGn7xA7YvJHNGa7JAzRnynh40eXFDyDcg>
-    <xmx:wtHfaZlRsF3RY7ToWnHmAtscMc4pU_MX3aYmiPH21KuZpEZDZ36dnuCc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 13:58:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Colin Stagner <ask+git@howdoi.land>, Christian Heusel
- <christian@heusel.eu>,  george@mail.dietrich.pub,  Christian Hesse
- <list@eworm.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
-In-Reply-To: <xmqqbjgr1g9q.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	13 Mar 2026 16:06:09 -0700")
-References: <20260215201748.889866-1-ask+git@howdoi.land>
-	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
-	<xmqqldfv1gxc.fsf@gitster.g> <xmqqbjgr1g9q.fsf@gitster.g>
-Date: Wed, 15 Apr 2026 10:58:23 -0700
-Message-ID: <xmqqo6jk6r7k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="baqWBoU1";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="bYos9O+b"
+DKIM-Signature: a=rsa-sha256; b=baqWBoU1BgsgANjsePZkT6l7N/aAjWE+hMTDOyS5T9yMh7xOLPHt0qCRY+0aEWB99UVnlMr1jlMqbzU7/n+LWnCjkCstG6SnWG0Eo7ldyOJzq3su5JKTXWG4DVRpMtrdQE47JmtzNUsiRcWgn9xdADKbBHSjkXAVWb+rmjeuUgHJ6UhkQGdKnxVGzsYTIzjm8wdDRdJsDCDvkirewCZNXhLLjD60A6E1G7hlq0NTwkNGdI3fUZQ+ywon/TxezR2H119qT1SjTf/Kdepgd/7VLBDkTo1cZx7kNyv2c+VHnCFOpjcCb/GhR/oBCd0i57JLVhjEFcNEfDibF8nB5kTx2A==; s=purelymail1; d=malon.dev; v=1; bh=wnaF4oMBsvVlevhgDr0C0/rvFaRRczsb0LLe9m/8t20=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=bYos9O+bY9yaA/dzpui6PR0ttVYs00s5BSR4rzrdbaZko67o4rLoyuR0I7LQ+9Uh1FIWlMJZQUzRANLvZU2SYYLJK65umiCzGYVGdHP0d1yiKSYdcgBDUxXeYwUrxDIpc9Laph97mUWXrSyjFHdo+94LH8H1fLQiK+I7HEHqgipOJ8Kzq5gU85HRrehJ5sSmX4XbdEsnOHehV0pN7CFQq7d/ywA1rfflvrC5huG8XvpTBUeK9zdGL1JsthsRHXfHkG9887yURQlkxMht97VX4hop5PzUo9jxk47U36Zkq3Rm5U9b9p15jC9vE5kigArd+SbBMER0ORS8I0FoAR6XVA==; s=purelymail1; d=purelymail.com; v=1; bh=wnaF4oMBsvVlevhgDr0C0/rvFaRRczsb0LLe9m/8t20=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1138729646;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Wed, 15 Apr 2026 18:03:05 +0000 (UTC)
+Message-ID: <c87f1f12-d0cc-4150-8f43-4dc9cc1fe24f@malon.dev>
+Date: Thu, 16 Apr 2026 02:03:00 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH] promisor-remote: fix promisor.quiet to use the
+ correct repository
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>, Trieu Huynh <vikingtc4@gmail.com>
+Cc: git@vger.kernel.org
+References: <20260406183041.783800-1-vikingtc4@gmail.com>
+ <fbe81fee-ef1a-499e-bf53-d6f1761bb30e@malon.dev> <xmqqzf3dxqdy.fsf@gitster.g>
+ <a6382ad3-6ce4-4e85-bdff-8e90068f25dd@malon.dev>
+ <fcnv7hv53khhctafvzqn6dygbyq2tkyy4i2gawcbahdnevg2hw@7h6bvxlub7ib>
+ <xmqqwly86s3a.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqwly86s3a.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 4/16/26 01:39, Junio C Hamano wrote:
+>=20
+> The discussion thread stalled at this point.  Are we happy with the
+> proposed changes?
+>=20
+> Thanks.
 
->>> Depending on the history graph, subtree split can recurse deeply
->>> enough to encounter this limit. Rewrite the rejoin-deepening
->>> algorithm to reduce recursive calls.
->>>
->>> ---
->>> Changes in v2:
->>> - Rebase on master
->>
->> We have seen two iterations of this series without anybody
->> commenting on it.  Is it a sign that the topic, or possibly "git
->> subtree" itself, is of interest to nobody?  Or is it that it is so
->> well done that nobody had any comment on it?
->>
->> I don't use "git subtree" myself, and I do not know of anybody who
->> will scream at me if I break it by merging an unreviewed patch, so I
->> can merge it without worrying too much about fallout personally, but
->> that is a tad irresponsible as the maintainer ;-)
->>
->> So...?  Any volunteers among those who have a higher stake in the
->> program than I do (which admittedly is not a high bar to cross)?
->
-> FWIW, I can see that [1/3] is a benign clean-up that should not
-> change any semantics.  [2/3] talks about the variable $sub, which is
-> used elsewhere, is not protected ...
-> ... in "git subtree" to verify), but otherwise the change looks benign
-> to me.  I have no idea if what [3/3] does is sensible or not (and
-> again, I'd rather want to see somebody with stakes to double check).
+After running it a week later, the error had (surprisingly) disappeared,=20
+and I couldn=E2=80=99t reproduce it no matter what I tried.
 
-So, yet not any volunteers?
+Since the code works well on everyone=E2=80=99s computer and on the CI test=
+s, I=20
+suppose I must have got it wrong earlier.
+
+Thanks, Yuchen
