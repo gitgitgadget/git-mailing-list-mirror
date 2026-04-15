@@ -1,180 +1,101 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBC2314A82
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537213CAE95
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:50:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776274765; cv=none; b=cbeplBWfraw+PYNadzbQ4gbAqnEUttnbyz2eoxoaHOY02G9UFoQg8K2dXBmgMQJ+OgmcLEwp3Ee81sq/ItFNV/2geAA73Gpc2xl3Gt+XOaoXWJDioXFu5x1BjGmKts2GdS0jsXcm7sv93jWK6s55UrGsuMh0BlrDymBK9uypKTc=
+	t=1776275433; cv=none; b=WGXZJsb45I1nuHr+N2O88fB4fZnCaqUpHc5EGifdggI1v3yrvqKGJh4b2OeEbDV5ZH/M/yGqcZG6iNSIVctOBMpiRjbpKpbi5zFEzxapSBQ4Uuw93WVjnMvL+vMDaaDw0adridy68eZNrChILcOJ2JDrmWH1tGpWrJKeVZOgbk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776274765; c=relaxed/simple;
-	bh=xCgtwpxyRqkZWcXBM8c8PJPyD/4aVd1/QWMCDGGyK68=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R5bpMvARAi4s5wkIsrtRsbev/cIgsDC/DJw4gFkEtcTztd5NGG9Eyl4N5kRpm8byr6RfBeb+uWa+roMILigbyqU+Mnzxvca696Rp7DTH/ZUnejtju6lHb05I3Ksjmbig5G3GrHMhtAuOhYAube16vAs4K2699YyPBZ7EY+z+lOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t25SgKE/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bmOnFyEE; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776275433; c=relaxed/simple;
+	bh=TwR+Cd0168n2BDdXkaygseJMrmbQeShTYPdC7eM370M=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=aUCY9ynrFnzOg3/gGb+UyEcuqpVWWmkKYbzGnRqZ9G62vgfFqgsH7ERJSn2m7NO/1RK6Z28tmxaaZX9grSSiEgVhgywhjFtzSHCDFA2qj/4L5hK7U57VWyH+bYOq7IrYzLLzHlqnoYiIjvwk5ZHoep4TKddHyG+xfD0Js4VJefw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NXpOorZN; arc=none smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t25SgKE/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bmOnFyEE"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 513237A011C;
-	Wed, 15 Apr 2026 13:39:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 15 Apr 2026 13:39:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1776274763;
-	 x=1776361163; bh=8UBMhRHlOkog6PZTUOkDDl6YPSWaRO9u1/4ZuuX9/yg=; b=
-	t25SgKE//9QQRr3BLzp3XRiQ/hjK8e4TEaKXpeLWrgwYcQyXltobO8ceJzumnYZy
-	lbqoGWocUQ7QINofinmZffQKL9b7sbTq132GUfRayaslW8ZLM3ieV81hKAmevU2p
-	sc70SR5DdEC/LSUJT7Uiv3p7355+2gbnUK5OK/GHmlEs942eg1JUJs29GK7gt0Ci
-	n4yGbLImIAcuCfCw7NI6/dHWKYSvuTHhCOsnod7pikSSjqV2d9sJ+SCXVgAreUGc
-	nRxhkY1aFaQ2awlr5CRBq/6KNv1GA8kqGRhImCQ+faHJ3A20st3fZbl48rADJETC
-	aTaP0i7V+BQiYLXwquphlA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776274763; x=
-	1776361163; bh=8UBMhRHlOkog6PZTUOkDDl6YPSWaRO9u1/4ZuuX9/yg=; b=b
-	mOnFyEEAfXltMBaSePWDiylQW/cB1/hp4EC2LJRJPJ78LhPa/vGH4+qZzkWZ0SqM
-	nKr3az80qnbinlzXMxDRPk6LRmsllOwSWlLURVXu4CW8NyO1frlW4z/9lC9K7qDJ
-	R4g/DcrY2TbNrWOoKQDuKr/aqure893uHmZm7oYaqaPLFmfBiJ1Uh+wyv5YxTFCW
-	aYoPQL7WycAm5kuekR9tyDl6R8eab4TJ8HRrE4C01nu5dHptCyyUwAf5H8269lO7
-	4aw3AgO0gfkDL1jt8LBIvxIuUVUmbhfvGrgoo5NsKB3KyRAdI00twJ2zlKVgVbJB
-	LPkygXcAazoYOfTm7NyLQ==
-X-ME-Sender: <xms:S83faa3_B3DwSqL6vzE5xU5Ick_bXJmzRuZWUfYPkOUd7jpkflZ7ZA>
-    <xme:S83faUELyP9MHgs5H9y3o8M-NbK9kvH6AxRW_pOciTCTlaOgOe5NbEjEZhGUOvfOa
-    b2isFw34bPpUMczSlMMGXV61nkjWFX5E8Mzx_AjTdhjrUhGK9aGA-E>
-X-ME-Received: <xmr:S83faX4-H87dEHJSdIqUnu0d_lxy8hhFWCzn3BnmfSQM-XkjmP3Ukke1G7tHOSGQmvvHV22bn8xgl-Zl5llh6um7CfXn3QpT6g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeejudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
-    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
-    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehvihhkihhn
-    ghhttgegsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:S83faavduo6F26UUOY6eZ2t1AS6NNkM2Fx9A-oQPW6bgy6lRpDKqDg>
-    <xmx:S83faY45nflPEEHyHo6A6dGgdLLCHuzFHwk10vrjmqupWk9BieiR-g>
-    <xmx:S83faVVjJQsVB_bS4k0jpvAaQFCagt6eb76iM3DGxzQxmH9gE970uQ>
-    <xmx:S83faa-8cCYaXaMnXTkJUgI8R6loS_8TmafXZUGxunZ5oA3sCao62A>
-    <xmx:S83faUqYSoGlNimUcsKbw_FfLFVGYVOZ1MdJ8Ry37hG4gkstXFVIBxZx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 13:39:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org
-Subject: Re: [GSoC PATCH] promisor-remote: fix promisor.quiet to use the
- correct repository
-In-Reply-To: <fcnv7hv53khhctafvzqn6dygbyq2tkyy4i2gawcbahdnevg2hw@7h6bvxlub7ib>
-	(Trieu Huynh's message of "Tue, 14 Apr 2026 01:22:00 +0700")
-References: <20260406183041.783800-1-vikingtc4@gmail.com>
-	<fbe81fee-ef1a-499e-bf53-d6f1761bb30e@malon.dev>
-	<xmqqzf3dxqdy.fsf@gitster.g>
-	<a6382ad3-6ce4-4e85-bdff-8e90068f25dd@malon.dev>
-	<fcnv7hv53khhctafvzqn6dygbyq2tkyy4i2gawcbahdnevg2hw@7h6bvxlub7ib>
-Date: Wed, 15 Apr 2026 10:39:21 -0700
-Message-ID: <xmqqwly86s3a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NXpOorZN"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-651bc8f864fso2907628d50.1
+        for <git@vger.kernel.org>; Wed, 15 Apr 2026 10:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776275431; x=1776880231; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TwR+Cd0168n2BDdXkaygseJMrmbQeShTYPdC7eM370M=;
+        b=NXpOorZNZ/Ycm3+BmQaKlfLvhQTnJ6fQqDYUxlMnvmEO+qqRT6bNW7hbG23IGcywqw
+         c1/I7Gsipv6B+atncFb6tO7ieABf/jysCULAQ9CMX+zfTUW/4cWbhCPZhPhA7W3w128z
+         CWvoCnulyUUKN4cTKBEIGUkoMv1V3hvHLHvWUWWfBbNHNLQwdiHACTDkJR+vOBcFwGGL
+         vo1c2myreVtVedlsgcf5RA9nJSyisa/l6JLcuna+0WTMgOgS69gQG5UONZUGBzkTIfmL
+         JqFPCkjlEPGxFwnlF0HUEAJBjX2pPmPDX/B2O134JknupLf7LK9tdN3bcl2IKAa2XKJQ
+         FFCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776275431; x=1776880231;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TwR+Cd0168n2BDdXkaygseJMrmbQeShTYPdC7eM370M=;
+        b=hiJBW0v5Te6PSInx+yg7KwF13W9um83byyscQ+9rCAo7IdJuQPXu3O6g6hJl7AOdcY
+         iecDAJJ/7COXxGp2n0p6rsaacKkJyzAPParEGZJrIFYlKTxTLJVB8qHkrUkAgK0YzICa
+         WNDh4MVWHn/sJTWsvM6+QPr0koSSDiIPTvEOhTfm8rOJG+KMsx0Zi02gRCfGDMkEIjZT
+         S+k39oej/aP7hxnWTv1ua20m7c/vYR4qP1qSFeTA73ve5/M8U5i4LoEsZWCVCbJ5twlv
+         KvxR3WhDbLi35Ic+1ta1ISAky8QUpN2w2X5PEuev90C8JWn2C3RAKRbA7XLeCdgI2LTZ
+         k9AA==
+X-Gm-Message-State: AOJu0YyWv/DVoRIHenBxwZRf6s66lOu2+rB3EGyxk27PFvqGw4ypdsdi
+	SZ8CB0nEcRMjzDWZo55cVQvkby/do3fT8MAD743uHe5CqsKtUMuHUb44
+X-Gm-Gg: AeBDiet7ycp7f774Gut88GgPiGzTSeA9O2WMFd1rHkELI8CWLjCde0o15kxki4UJ3Rm
+	q7r4cxou9PwgIlEMGxmD3htQhAtfx0xNO+JJTQJK0eUiqgq/kkbSbrNUcxZfhs5aFrlF1Yp0y1s
+	RfwrWwW2cybj0++U1f7BwHzZpjBAzYRU0nagi36ymJJunlBHa5g4YShUOPUz9qIeh1P3JsCjJ3b
+	w8XkNcd5+KAbKZSmEMFe1YOBGY6N21ZDjNHZItly8Y26wFIhXPlIliLwlkaOm7QQY6Ts32RMCS1
+	yyLWrUyr1U+r/xnEMmDGjb1sPaS5EfmN81CjFc9i/qu/3fAdRAxtDaS4pu1UWg8Hz2PB7XQzLWK
+	xm6p9EWkOLq0GCOq8/olR+sucjQ8SC7UktJfU1jfMhUspc19Eva9Xz+Y1X1JAyOtgugNoytlKQs
+	C/Oa6LJ4Fx4s/ktNKFhw+s6TYmfdEefSt4QphOS2OSW6oIWE4hIb2xzrj7UUxL0bRgOFoSIGK1S
+	v4BXfLelNmwJn794Da4NxMFmAhBBJ4/qGEhjb+B/T7Twh4XCPi677Lz2/SipzpO
+X-Received: by 2002:a53:edc4:0:b0:650:17fe:1a9c with SMTP id 956f58d0204a3-65198b73110mr16492666d50.33.1776275431319;
+        Wed, 15 Apr 2026 10:50:31 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:97:2f3d:46f9:d043])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-652e47d3c41sm1032113d50.19.2026.04.15.10.50.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2026 10:50:30 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v15 00/13] fsmonitor: implement filesystem change listener for Linux
+Date: Wed, 15 Apr 2026 13:50:19 -0400
+Message-Id: <487628C4-596C-4870-A652-E1670C700AD7@gmail.com>
+References: <pull.2147.v15.git.git.1776259657.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Paul Tarjan <paul@paultarjan.com>,
+ =?utf-8?Q?G=C3=A1bor_SZEDER?= <szeder.dev@gmail.com>,
+ Jeff King <peff@peff.net>, Paul Tarjan <github@paulisageek.com>,
+ Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>
+In-Reply-To: <pull.2147.v15.git.git.1776259657.gitgitgadget@gmail.com>
+To: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Trieu Huynh <vikingtc4@gmail.com> writes:
 
-> On Thu, Apr 09, 2026 at 12:34:47PM +0800, Tian Yuchen wrote:
->> On 4/9/26 02:23, Junio C Hamano wrote:
->> 
->> > FWIW, I didn't see it fail in my local environment (both in 'seen'
->> > and also standalone) or at GitHub CI (in 'seen'), so it is a bit
->> > hasty to conclude that the patch was sent without proper testing.
->> 
->> You’re right, I was a bit hasty.
->> 
->> > I wonder what is different in _your_ environment (note, I am not
->> > saying your environment is _wrong_.  It is just different, perhaps
->> > the compiler I use and your build environment may align things
->> > differently, or perhaps on-stack "uninitialied" pieces of memory
->> > happen to have different values that the code is reading that causes
->> > different behaviours---in which case it is the code that is wrong.
->> > Asking for environment differences is the first step to figure out
->> > what incorrect environment dependencies the code has).
->> > 
->> 
->> ---
->> 
->> git version 2.43.0
->> cpu: x86_64
->> no commit associated with this build
->> sizeof-long: 8
->> sizeof-size_t: 8
->> 
->> Using built-in specs.
->> COLLECT_GCC=gcc
->> COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
->> OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
->> OFFLOAD_TARGET_DEFAULT=1
->> Target: x86_64-linux-gnu
->> Configured with: ../src/configure -v --with-pkgversion='Ubuntu
->> 13.3.0-6ubuntu2~24.04.1'
->> --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs
->> --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr
->> --with-gcc-major-version-only --program-suffix=-13
->> --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id
->> --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix
->> --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu
->> --enable-libstdcxx-debug --enable-libstdcxx-time=yes
->> --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace
->> --enable-gnu-unique-object --disable-vtable-verify --enable-plugin
->> --enable-default-pie --with-system-zlib --enable-libphobos-checking=release
->> --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch
->> --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64
->> --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr
->> --enable-offload-defaulted --without-cuda-driver --enable-checking=release
->> --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
->> --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
->> Thread model: posix
->> Supported LTO compression algorithms: zlib zstd
->> gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1)
->> 
->> Linux malon-Yoga-14sARE-2020 6.14.0-37-generic #37~24.04.1-Ubuntu SMP
->> PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
->> 
->> ---
->> 
->> By the way, I find this bit of code rather confusing to me:
->> 
->> > +	GIT_TRACE2_EVENT="$(pwd)/pc-quiet-trace" \
->> > +		git -C super-work grep --cached --recurse-submodules "world" \
->> > +		2>/dev/null &&
->> > +	grep negotiationAlgorithm pc-quiet-trace | grep -e --quiet
->> 
->> Is this grep pattern correct?
->> 
-> AFAICT, this intent is to check that "--quiet" appears as an argument
-> in the trace2 event that contains "negotiationAlgorithm". That said,
-> the "-e" flag tells grep to treat the next argument as the search
-> pattern, so "grep -e --quiet" searches for the literal string "--quiet"
-> rather than grep misinterpreting as one of its own options.
->
-> BRs,
-> Trieu Huynh
->> Thanks, Yuchen
+> Le 15 avr. 2026 =C3=A0 09:27, Paul Tarjan via GitGitGadget <gitgitgadget@g=
+mail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFThis series implements the built-in fsmonitor daemon for Linux us=
+ing the
+> inotify API, bringing it to feature parity with the existing Windows and
+> macOS implementations. It also fixes two memory leaks in the
+> platform-independent daemon code and deduplicates the IPC and settings log=
+ic
+> that is now shared between macOS and Linux.
 
-The discussion thread stalled at this point.  Are we happy with the
-proposed changes?
+Troubleshooting a Gentoo build failure of next has me pretty convinced this t=
+opic is in there already. Junio should probably check my math, but I think t=
+hat means we want to see fixes on top of that base now (unless we are revert=
+ing this topic from next and queuing a new version?).
 
-Thanks.
+(The failure is a Gentoo-ism; we carry a patch that stops applying with this=
+ series. Not anything this project needs to worry about.)=
