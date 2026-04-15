@@ -1,201 +1,158 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475942236F2
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 19:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3C138B15F
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 20:50:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776282632; cv=none; b=utN8o19meZ99dFwAVwIGUhlYwyLFaEhVmO+yFwhX5psC7KbcR7NSUVjNjH8Wx9fB2eKUfq2gD6dMjT8U+tGSOlJy4p4o8lycSjvwaDF8qGDiZrmVmF5cWYTCmOuEFdVYCbk2m6JYrExG5ytfdK6xyu1YMctxLi8al3GW6PII8Yg=
+	t=1776286247; cv=none; b=j6QNvVmcLXEXEbn42v3L9vBAcLsMbEkWOMNkvDcHRoFEi4TzoqE5fTwBdw+wA95nzPS3wR72TiYuXUMf7UWwRxh1ZRsL+QaH14CrufIcLtoLRBjVaHpizQSa7IQ2t2Xn25ENUdkM1N4o4hP647j5DdR8p5AbEa5/QuqmWfweCEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776282632; c=relaxed/simple;
-	bh=aV+0YK/lxV2dnIrUQbMuE1mUAUSGQO9Ad4rJ/7kmU10=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hAWueJhjP+3oYH6oEntjNkhNYtvAD9a4g0PgBqE4s2240uPUTsKXvrDqRaVbmWEE9A3AvIj0D4El2AKKIidEAHdnIVPh613XdbKTDYU5Hxx4n/BqIknl+z8XpXVxgVIavejafNcw8qk8jUoFfO0m0+kHZySZCl50xgRYQmaCOAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f2LgyuSg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JsuQekjE; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776286247; c=relaxed/simple;
+	bh=IVogQCQ43nBPlSI6KNindGGBSlP/vVLHEaoZd1q0+M0=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=M5JNRwhddnYfQZ+LdfZ+xzSztW6sH9jRDOy9liA/dg9y/Hzw5ZvPSIE6aOuor01+naG3jY63lm74opvVyRtcvW1XJnyjwoptx8WsPb9uN0RXRPXaquZ8ohcydoTMX3bCGmpyQMiB+22+MXwgI5dzb/5qTXP6DlDSd8g9Q+O0xUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Nf5zQZsc; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f2LgyuSg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JsuQekjE"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 839B01D00287;
-	Wed, 15 Apr 2026 15:50:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 15 Apr 2026 15:50:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776282629; x=1776369029; bh=z1NE1MdsyZ
-	9slOU4IUGQCGC9iFVkIqxy3eAscXw0mVQ=; b=f2LgyuSgQseDDRaOmd/DhRQOxX
-	gGvwEyMcdLtYOppc0YR1C4XXnczJFBkhwne4aOA/ZJAbH66NalLQjsVkDhKx4/mk
-	2XqN028+BfY0WofK0Xw5BZud875bnwG6kpdtCYskaUg4dG0uiJ1Eo++9xbONAGbo
-	G3xVPusgCbWroWxVN+4+AQRR/sjJkRrk5URrXCOQE/3FBVhfwRrgZIaWbPse22yy
-	3XEdNcAUIjDtbzxHQ/vJDywtvyFVO+b1vtAm7KlwWUEeECk4B7Ubt3dEmrBwivRo
-	NgW5SnZyMi7/SIQK/VA80VcxFMGLbLWh6WDqdkGTvTPN2NdGTo/ZYdEWxIfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776282629; x=1776369029; bh=z1NE1MdsyZ9slOU4IUGQCGC9iFVkIqxy3eA
-	scXw0mVQ=; b=JsuQekjE0YyPAnXpRWWV9DSU4A5qsSTYoKHhSpeCriS7+CCQJYz
-	ygbijrv9/uMy/ow0IjgFZAmYtRpKAEWHUv33EcHQRhSqZBqHd8p6d6XwRJbD5RlY
-	1kYkYmlYJw5W0CauzmS8YwU4Gb2IQnHdpdePIzyB6gsNafS8/F1netaNFqLlxPrE
-	gNTZ9PoEVXjF3q0AbpNe0BtaqEibii4lBL64I99g/mlGXKwJGHXjT1c17dsXPycv
-	lEz+46sVbCuFFI/r1SewCwI65oKrour4qMc09S+hE28NTbZWqr168uYQb+6gIcb8
-	253MqYl/bw/wRwu1axIxWted6hiKK7m9OHw==
-X-ME-Sender: <xms:BezfaU0mtMzmFmCD52su5My5pD4jXeliYKYxlTAX59YH83D8rZwWIw>
-    <xme:BezfaV9jRjM26tW88Z4AFkPqvQwLBke7uX-yEdyX4g8rYfAakY35bDNlM3KOh_Ad4
-    ppAl7CBpOeh7WYotEPbmJ6NRZGZLYCmwpF7Ct98EbJflDCkfqiSpg>
-X-ME-Received: <xmr:BezfaVM85rLszh0xu9Q7cSERwieP9hc0js15vqkzlILlh-iUftXbe8E7Pld2NviqXyckWXsTGAGVGUpfn1IZ3EOSHiQSK6oSYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeelkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:BezfaZdrXyJ0pbpdu896zLgxcAijJ-LdmRjgnAbd8jYFRoW44sacqA>
-    <xmx:BezfaUU2lLNavKqMfJLD13Rbbt0-AzG5DEYCSZp-UjPS-dgnOR0Xcg>
-    <xmx:BezfaRhzdYBTPgXY4fFSUMAW6CbbW_uNcxeO6C50kruMcxHNPtsulg>
-    <xmx:BezfaT_ZwnfZQZ93Gg2CrHRFriURJ6SjOUdgu3vORtxQ865siIOxYw>
-    <xmx:BezfaYuQqE7se2fmQb87e2jddMYcxD094rIt9H0oLYBeMe9h81kb4eG8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 15:50:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 5/7] fetch: add --negotiation-require option for
- negotiation
-In-Reply-To: <49c80cef2e25ecadf894cf42661d39dc82493f47.1776266066.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 15 Apr 2026
-	15:14:24 +0000")
-References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
-	<pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
-	<49c80cef2e25ecadf894cf42661d39dc82493f47.1776266066.git.gitgitgadget@gmail.com>
-Date: Wed, 15 Apr 2026 12:50:27 -0700
-Message-ID: <xmqqik9s57gc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Nf5zQZsc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1776286243; x=1776891043;
+	i=johannes.schindelin@gmx.de;
+	bh=ADBGWxux7oQnOrLjNLRgsp/ifPqrYVbRkhvCISFCq3o=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Nf5zQZscELgYtfJaiYIJxMoiu56r0oRs3GO90ITmFRgfnZ1ZlNuK+93vKVmX44yj
+	 k+HAVZnV2cwYnAOLD1CKC4CrnAO9Z3DHr+9fc6+Z97aMpOc2TbVoA7i91uCb0gYyb
+	 Ap1mxy49uCKtYgOkOawwlKEv2ZndydBGC/KVBzZKeRYyhGswL9vkUUDEYzlKOKzeP
+	 tow3/4heR6v9ElQcnjKmia/RC7DoOl261amnOfv4xkTQ1kUyrbW+B8rjE2oYc+zRQ
+	 2nd4++2MM81fLFFQznMkwCRyhpcW6ILkIHHyp0dDoOaDE6157yttGg7ypxB+VPQqQ
+	 hhfF/RHLp9iJY3ZORg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKsnF-1vrrzC2PrZ-00YlV8; Wed, 15
+ Apr 2026 22:50:43 +0200
+Date: Wed, 15 Apr 2026 22:50:41 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
+In-Reply-To: <xmqqqzohd0sh.fsf@gitster.g>
+Message-ID: <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
+References: <xmqqqzohd0sh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:fvlOZTdFyfetmH1ZxCkV8KlvwbXR3HdrPKxAMIkkoyP8yz9qUBE
+ R15Q30ZHSw/5LQ1T11Cyqn3kQ1I0juqebifenj1+BDsP0283jb2ZlnmLpeZCGysVnmU7CRs
+ xer0yUHgvoawZXhQRX4xCOtU4v3vU7f1SUU6+juMsN1gy15QX5xpp0YwpdYRqj6ykEtdnOX
+ wiznViIFSo3vLbeyb0TfA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:gd2QjurY3o0=;qohUkHlHgWj9BsxbN9ndb4ykURK
+ kOi07AM8VK9BlWFnYQlAyQ6lz1TNbRRcvTvN+LIczbxSbY8hdjiiogIJ04QGdSS//Cw08PNMe
+ IM2Wr4BQURqjK8Hri1f9e8/pRzWahKHg1NqWDw7ry5New/ARVIJoFrkgRP58HkvduhMzIL0ll
+ ZbfXbwjTfhp5L0LTm4h3H1JWB2WdgPEouJgJynUT0Ru+W1dYwCobdXvl4fkTHQ4xYlszkflve
+ UtpTmAYPFmiOZaOZ1DMN+3tuKT8U+1YqYDn52XF6qVWlXSlWfuKCFCy3TMcr1XUXb2k5Pj6/s
+ jmYPm+5b585xACDOSwgnyfwrQqDFz5PoqTjW+tfKWUwBaiti94WRmyoSuxqH9FEg2QC1/Ru4L
+ 2ttATupuRVifwoE3EApdW2a3JXGT5l1scf594Dr+rz35VZI61jEC+lD6cM8t1QNc8LsokCTet
+ 91DFtYoW+LBnsKC7TnlaA2el5DUZDli2UzdaAT5/mBGSz46jqVHsM+BdIzRFA3Q0nvsmfo/bn
+ 9td6sEv+1ybxIniVCcU1jrm8r0jDoJKbCnBEu8EyY0l887KRKJ01ktYy62rVhBN5CAv6bu7w+
+ sXofTaNWmH3zyyGtAcODPBKl7wmDX+R1aEv5Ie+75kv6NM4YI5rZTYL9yJV5/gaRBed7expVr
+ 17mwhMHLUUidn0rr3O9atKXGTMwg43PFexk5ihaURWUfH/QCuwleFFds72IrwkJkQg2yRaIbZ
+ DPxUJWeF0tOwUoGsQ3+KJk1IsiQxWYnsJMYgGVsVtWxyPZq8Cr/0GzXR4twDxEkaRaj5XdOBx
+ GERQfLTLIos62KqoBUw+vIa9OXVwAzn8mzWQCtGUOb6xxDyYhr+avFLBkZMrXt80ixd2u/OSf
+ MFZ1+sdEppiZ1srGKQUKK41IjJ6xkN+Luey5qsOPAGNET/nhggLMGhZvaW/m0TtcNro2KUwMP
+ jB21YAxxMFmb83qtR2s7gzObFyJ/0iVGBvpy0aMCG54hmeW5tJuGFwO/83bjr0aCR5/2k0BwJ
+ kIdy3O8CpKx2NpQs9R7e2eg8R3SyBtT2Va84VG5UgtnZ1wM9M76z2S/fOzyMySMN2u+F7J+95
+ ZEgg9Mxg8wNFLvkqpqk+LX/Opyx9cmbxbYEdQHROfJyA1iX8QsNDxNxlQniVzF+pT9OUPpzMR
+ X80l6l6odYcb0uI3An5TS3Jlpz2M43PZTEOXIR7a3+o0UcxpJ5M515kYBjel48uCeZcaT/G9r
+ N0+dXR9GPwi1MPbVcN/fwHs9g0q06Xh8fSnpnOXZtkf1t1ANhAA2V2tDBU79LqG8ZupyDH9c5
+ P+EAvyfwd2Jxui7zpK7pZksTDVMhjFV8w8gYZ5J3g+HpuVLxqpo9fsLPUAyBEDq1RMC5dcVfF
+ i8UCLAh/j90gy5EMW4avoXYeYbhTH3Z00F2a/aEC83IeXlKb422YJQcZWwWSsVwDEA66TrG7M
+ WhdfcG6+5qA0C/X+WSrNEaUNCi8FEirsARnXMSBmiUXBSCCcqAZsyy02Vv4AIPjiPe8dtlSaO
+ x/WD2Xo49nVOphlStN10IhV5H1wXJkym6QhvxRD1ZhOUr6mLtCRRbBOoCY2E/+mbCNkSoCC2X
+ j8U7WXtEV1FF9g2Ym30/mSK/ox0tgGLh/iBl2eui2CHeHxeXeSKUTBu1F4ZPhP8KZg9Quxgfl
+ SzouKhP16Uw5XRUxBVguyQzcTbfDVkBaT249Xj3Jw6gcZtoX+mRtu2UpPZFIJW1EtAByVsU06
+ ajtsKwjSJaiQaeisYpKfpO6nu4m0SDtUaPUhLZjSSKmLRzT8mYTX/oWraE+nbBwUxooGeQ2pe
+ QKZwa2LmfO6QzFNaOfv1/xOAlh2iFa4siPiNO2v8pCwPbArNQWPDgkJZPYHpqBOhVfkjBqcRm
+ DUQcaCY4VDSYCO9Rb8xLnNRqHNvNZX0ReI/arjroh5JI+b9ML7vA7WixiEUvXfK86lxQzLGbk
+ yLT7Hgo07oBchbiVRJ4Inc/IIvsvZ8YrQ6Olx7Fszn5jG7UgyOE1MZ65ieUGl51o/DibPS1i/
+ DacrWrLRXXvk0QAlz1o5oakIoLXbHKXSi8MWICdBNlwN2tZbqc4AMAVpFoA9S+F9VLVIqEcwE
+ so6njbSI8IYaWzP+QKDqN+raIBXDUq0nnFbaEhMeeST2/vi7Vt2lLCCQXcqOwKkOiIa+9o0uH
+ sIUgLe23V3Ob1mXCiHmqGmDVVMgYOmpZeNp/wgrYQPVl0MrOK2Gz2t9hztDeXiCv58P0oAa/X
+ +5kKXwaB5zALhqRPB6vKawzaFqBPxw8jCQLqxMgbKd5OjcY/S84k40gv8tvG7pmPN1j4xpLyF
+ fmWpySohCxYZxWYOCrYNmEsSB2GOT73enjCvQpcTsAR95ae0r1BdTGr8sSKtRcBzFXIjD1GTR
+ IIMwz4WNpFIET2GxZWHaB2xVup5vdhxgJv1WlDiYQanNGY1IyeMJmLoPZHZunVqkafZSl91cT
+ /abrTs68czEWyZZTj06Oijb2exQ3zxBGmdvWQUNpftP82a00ZIG9fvYeJoeSUoEGomGFe+5Ua
+ +ZLABx1OCR56bQzgVem/O7CxvFiQ32opMkarlxYw0Aj1aUy30Vb3g8/8fqCzZ2Z6Nyq6bKAF4
+ R5qARfHKyG74kpuD2wFeDKzPlsVJ4dftG563eAUetv377KiNm2AMYJVQ1I7zzkyo5RqJU9vZh
+ b6Gcoe+lLS+L4yryZkdHTsIcbGAuFmQOCJ+KkFF1H1BGp+mfbOxOlQBG/RaJ/6HC3KRPUCZAC
+ nJZDmw4cznmiQSNxw7aFfTcQdDlVS3CMuKFlY0BfxebpH8vdSksC97cPRMMV6VlBzJATdLD9S
+ kkGXowtceXi8iUEbysc/z+66/WR1FpnaKKDJ+3uDrFnbbCFHizX0Ibi/iEuVxKQ7jPZ0o10fe
+ 1SqGM7QLKxbSYjr9WY8DV8zn7HK6zVwj1W6OgwlpcHCZQEFLdp7syLZv9ZAKj4yVkvZqoY8ZX
+ A16z3pld2JJNLxjOvITL+Weow+F5II0F/7irEzrA7YGy4wlnAmyy05IpDgkHAzvJxaqTxuOLA
+ F+Cl7huSkDF3jgr1LrNfld63ndOmWUPt/UfHkI8YP2mgH67qQBszYgJEO5Ykz+sQGDylVIWR7
+ w5nBtwzQU1IA0mHQYgQ6/Gx88GKA7K5tBspmvwVbG7VZd2w3JjC6jLI7epe7dTL4xfSM/nc3N
+ Wj+GEbZ3EyLnazVFYRzUdRpSEjywIYoRLK2XVCArNbC1Z0z1WnJHf0EIsBJGbajH0RE877ugi
+ TF/OHWvazqGqo2uvkFU9E5xgJ9d8OYmbdfa9AwOl5RJw3Y+P52JO/BFYU7eVp0mSjsc5hkW1F
+ gkVY+ZFRsUVEp4zadRMci+gRD8FW2e+FCLlkZSOmYGjAVF9ATF/noL8Xq3X3jSb125mBSWQCt
+ 6KGObUQ7pr8tHMjUhoZ3QOAyDGg+B2DFJVFaB5p+6UhVdkKi/ZRWuC52vAXTj1HL0/93GFPEj
+ JmnYYkrpt0OQpB3gb3h3din1NkPp0o1ta7LZyJ8KmnuEJ4zbTnwUO7InBRA//rWVORmeu4+dO
+ +v0PPqSD8D+B6S07riI3rl/Y9YfBiaUXbOrmuak+Le5qwzHwQGEMUXb+NpiN0uoetfCQtuxnA
+ cDHfSK6Ch88SGQVPrqA7JL3jo37w7au1kOkjHhhzDWsmyZpcI6Dc/bC9LPqu4tpu+qb2AAehH
+ 61DRTWryJc5G3+pjjGHa6wzA8TpKiJU71oxFNvz377ohGl3hYEl0gyjsKgrG8ozyux86JQRVo
+ a1gpEu4sC//Ks3LjYbT75Lk+g2xM/Sm+H2zkhPG+ask7vR5A36AdFCq5veoGottNmh7we1E2+
+ emmeX9HlGnXT4rRmc+EonRsJq8kNlSp28KerXXZUhL/37AjVcutQhlhLwfulauuzQ2X+z28Qm
+ KWvFwYVn6S3Gj/GWyfNdQxIBrj0HxnNjG2epDgfiZe3mkqsinOcfBWg6uXdBJF8B3q1Fnszlh
+ cfsXHa7/Jwh1EwcdfkQhWEXODXx/xpPjbpIOJI2HLQL4ylUFfqCNuY7e+hzQMLtztvhK7JR1b
+ cJNnUMTfH5+Hfy+qv5gxKs2aVzpzYPKn7k00pGtLrF3tp05UPpcP22NTJoGyv/Qfgm1yAlefv
+ 1MEmkm05oWKHztIasr9HjEyncSdyKT2q5CbcYhIeAC2on5K60dpZOnpGIkeYdp+bAMZiT8qvd
+ vjZY5ZrQVAj3sUERaB/8qwXa3BBl4XHNio4+dOgU9XeHFHugG/XhPhwFpvbjrLPjtP+6zgQGF
+ 8eWai+1pX8U9lpgIZ/HUeGWNuX1MUnE//VR4nesoy6xJqVWpf3Xgd1r4NWEvqJEk32jPlCDoT
+ 6hD0iqt7ZZifS5n7fUjc7TBc5QvsbUL9O1503xDHyX2wMmGX1ZG16VocjVjXVYCVi69wXt1Dc
+ cJJOlYFfuGVN1mv2+rNRNBZLhMbKQ7e/m5NGbd5grbAqY+eTfduQ9ztiWcEo5951rkZvbyYDI
+ oqRqiQ5qLcNi1oIi7sE4y2g/QWU49TyIG+H4ixnku93aM7yh7yIQ/p8y0jWENru7Rt0mJ+IKQ
+ TqsHCImpBIrBnweu33h97sw4GWzCqwgHGObN4I742FPKaqh7nnzGXGCjb10/SGz8jVtcy/ox9
+ 8vbQ39kVf091Yr+CH3B231C3ELBSeBnvEPO7xHPxYHN9q94xep2IWUv+8oxEvIChvi7TItXU5
+ 0GPHil66E0WYJbxHyNnaNhvwgZ0iexr6zOkRxjY2kW/g8RL736b2eY0NBulT/xZ1FYRD+xime
+ J4WrG81ZPSEV7Pj79RMkHpB+aVMamtc0ihv6ll7yjEnWKXXbJODmumVtYxEvoDuoYwFOSrlLA
+ ljQ3Q2JShPxh8febKdxJFzVjqMniEZitUUuozSsgAe+J6L5e7iVu1hzOsFte+qxE+tSfihcF9
+ C2th7Za/ZsnxkEJxmH/CMI8QVFNMLlyaB7NDbSn08oBK0u6/tlM9cJLNepyAmXp3CPw27ry17
+ ZAWUghqKKFbk8wKElAx0snVa4DEUTws5rI0UycJsW+IxhoOJgVj2tfVyeGb9WERNV+BJKJ5n4
+ fdv/wUa75e8G+PZn9JV+3gOJ51aZb/USXLb4kw9ydXyi6hF55DHdokxBlWpuI4+an+uTfz0ja
+ eBhXzCL5u1NQmzjgUms2WuN7bzcvHe07FEbDHe/FCxGfZYF5INi1+nIlL73KtgvE1JdcHsAuV
+ pbUdC0qKwHon3v2pSSDztmr5mhhSz4DQvbdVZzPC3zbvdL8tE0G/qrFNdb8ltyzNSmoH9acYR
+ ORNhFH9nhNTyvdpWiBGMb9H9oDgoRbUdGHsiw29Cm8zfQ4yla53HhOWmtWdtpVFEMasiI4pdB
+ YvOMlstINrdYglUeA6QUupqCSHj211VjvLTaO4x3bgPLdwXYdZRqyGOmPeoOg4NZnfIjuqRhT
+ qSi3VU3kunv5ZAAkAxFVZo3Q==
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Junio,
 
-> +`--negotiation-require=<revision>`::
-> +	Ensure that the given ref tip is always sent as a "have" line
-> +	during fetch negotiation, regardless of what the negotiation
-> +	algorithm selects.  This is useful to guarantee that common
-> +	history reachable from specific refs is always considered, even
-> +	when `--negotiation-restrict` restricts the set of tips or when
-> +	the negotiation algorithm would otherwise skip them.
-> ++
-> +This option may be specified more than once; if so, each ref is sent
-> +unconditionally.
-> ++
-> +The argument may be an exact ref name (e.g. `refs/heads/release`) or a
-> +glob pattern (e.g. `refs/heads/release/{asterisk}`).  The pattern syntax
-> +is the same as for `--negotiation-restrict`.
-> ++
-> +If `--negotiation-restrict` is used, the have set is first restricted by
-> +that option and then increased to include the tips specified by
-> +`--negotiation-require`.
+On Tue, 14 Apr 2026, Junio C Hamano wrote:
 
-Very readable.  Nice.
+>  * Further work on incremental repacking using MIDX/bitmap
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 57b2b667ff..b60652e6b1 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -99,6 +99,7 @@ static struct transport *gsecondary;
->  static struct refspec refmap = REFSPEC_INIT_FETCH;
->  static struct string_list server_options = STRING_LIST_INIT_DUP;
->  static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
-> +static struct string_list negotiation_require = STRING_LIST_INIT_NODUP;
+I just noticed that a fetch with v2.54.0-rc2 into an existing repository
+rendered it unusable for Git v2.53.0:
 
-I thought _tip was renamed to _restrict in an earlier step, but that
-was only in the transport in [3/7].  Perhaps we want to rename the
-file-scope static variable negotiation_tip to negotiation_restrict
-in an earlier step, like in [2/7]?
+  fatal: multi-pack-index version 2 not recognized
 
-> +	for_each_string_list_item(item, negotiation_require) {
-> +		if (!has_glob_specials(item->string)) {
-> +			struct object_id oid;
-> +			if (repo_get_oid(the_repository, item->string, &oid))
-> +				continue;
+Is it possible that v2.54.0-rc2 forcefully uses a MIDX version that has
+_just_ been introduced?
 
-The configuration (or command line) says --nego-require=refs/heads/main
-but this old repository only has refs/heads/master; we do not want
-to error out in such a case.
+If so, that might have been a premature bump of the default MIDX version,
+if even the preceding Git version fails to handle that MIDX version. It is
+guaranteed to cause substantial problems in setups where e.g. libgit2 or
+JGit is expected to be used interchangeably with Git. It also causes
+problems when users have to downgrade Git, or use several Git versions
+side by side (e.g. using GitHub Desktop, which bundles its own version of
+Git).
 
-Is it true, though?  nego-{require,restrict} feels quite tied to
-each project and unless the configuration or command line options
-are applied blindly regardless of the project, such an error should
-not happen.  Perhaps the user who gives a command line option
-"--nego-require=refs/heads/naster" may want to be reminded of a
-possible typo?
-
-> +			if (!odb_has_object(the_repository->objects, &oid, 0))
-> +				continue;
-
-This is a bit curious.  When does the first condition holds but not
-the second?  A lazy clone whose ref-tip contains a missing commit
-promised by somebody else?
-
-In the presense of "promised objects are allowed to be missing"
-rule, silently skipping a missing object here is certainly
-conservative, but this is not an object that is buried deep in a
-tree hierarchy, but the top-level commit or tag that is directly
-pointed at by a ref, isn't it?  I am a bit uneasy that we ignore
-such potential repository corruption (i.e., a missing object may not
-be something a promisor remote promised but simply missing).
-
-> @@ -474,7 +511,25 @@ static int find_common(struct fetch_negotiator *negotiator,
->  	trace2_region_enter("fetch-pack", "negotiation_v0_v1", the_repository);
->  	flushes = 0;
->  	retval = -1;
-> +
-> +	/* Send unconditional haves from --negotiation-require */
-> +	resolve_negotiation_require(args->negotiation_require,
-> +				    &negotiation_require_oids);
-> +	if (oidset_size(&negotiation_require_oids)) {
-> +		struct oidset_iter iter;
-> +		oidset_iter_init(&negotiation_require_oids, &iter);
-> +
-> +		while ((oid = oidset_iter_next(&iter))) {
-> +			packet_buf_write(&req_buf, "have %s\n",
-> +					 oid_to_hex(oid));
-> +			print_verbose(args, "have %s", oid_to_hex(oid));
-> +		}
-> +	}
-
-OK.  I think it makes sense to send these early.  We have already
-dealt with the usual "tips" by calling mark_tips() way earlier, but
-that hasn't produced any "have" yet, and these will go before the
-ones from traversal.  We do not traverse from these "require" and
-that may be why these are not called "_tips"?
-
-And sending these early means the other side has much less chance to
-say "we've heard enough, stop!", so in a sense they are of much
-higher priority "have"s (I wonder what happens when they do want to
-say "stop!" while we are giving a lot of "have" from this loop,
-though).
-
->  	while ((oid = negotiator->next(negotiator))) {
-> +		/* avoid duplicate oids from --negotiation-require */
-> +		if (oidset_contains(&negotiation_require_oids, oid))
-> +			continue;
-
-If objects rechable from "require" are traversed like others, then
-this "avoid duplicate" would become unnecessary, right?
-
+Ciao,
+Johannes
