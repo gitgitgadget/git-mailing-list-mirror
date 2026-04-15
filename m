@@ -1,136 +1,106 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E07390C88
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 13:07:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF7D3A5E64
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 13:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776258433; cv=none; b=cwz2tvemNdiDh4rmwDSttlTfCCRhKFRdpOjf0Ar+Sdm4z3Vrek1WBaTxcss4yNbRaFjx95QbQwECIpmKiXrA/cuPH/6tcNFob9SGVoIaI3c2VxQl2hoAG0+YUbybwBYpCpJDXmExQZMWuDJTwKEpOtHGEMgw+KzWbmJppOURiGY=
+	t=1776259580; cv=none; b=VzkZYqjO8Ga/WFfNpjpC+pmzSyaBiU7M/kIzyyKJFV72ou0I18kPR0yLegaP5yC79tvimqLDq/yRNIWzNWFmK29ZqW7mRPp423iGsH03VilmOQZTUJdaDQtriC78lkaVu+EgC63JSTYJNwu96qYFHFwlKLPrEHkwWq44NjchRGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776258433; c=relaxed/simple;
-	bh=Gjo6EkohCkszc++BkHfJk5tbfB1+QhwvKaUy3wFbnlQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N0wsexyHHZnW3c6S1I6eyjGw8seNkiqYmF3f/DzF3j69Rm6ijD14T3pNXV8r63iUDXvDuu+uL6DwSfSIpRJR83UnlmKFLZdoOUuqo0ai5YC9kjmBNgf0U3bitHh7qK9idZGJ6236IvRaE4rA5XX89OHKTAfulJS5NdXl6RKvqVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ncGtIj53; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mjr/xw5/; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1776259580; c=relaxed/simple;
+	bh=8JeJbH9C+BY9k2KwcZAZUdHvN7Q3qlG11Tu5DT9eJu8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=q9BSa93j2q/5QmAiWu0Qf7P57UXR7x6Vwo8q2KYTQVDv2xO86kgDIY5m5UeYdBNdnz4GfOXjSK3jeYdEumc/uMcyhCQWNQgHMcxZMkl4tckQOH6Y+0sCmabOSzEXheuEIRODXrCUQMPZ3SDxjempIiWj1eizHKxbbsVo1ZysyeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IhwX4yvg; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ncGtIj53";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mjr/xw5/"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C06E81400062;
-	Wed, 15 Apr 2026 09:07:09 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 15 Apr 2026 09:07:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776258429;
-	 x=1776344829; bh=oY0FuX8rBaWizgUElbZF1xzMfiAbOpq3ImEuYV5Zrhk=; b=
-	ncGtIj53tKQVJD56y4opnxDko9cWvXBIhfIq66k6M1pC6dMUrjmgZmwbPV9by76X
-	NDTysDAcOXX1I97kfx6v757mpJvgpH521P0ceB3jGLLTksiEVUqtW/ScUcqn5Q2h
-	bTc5a6MvKVe+UAbbjr4V86AnNSJo8yfvJRNXn8dNYwjpxZpxqPHSNZdrC0SsSXpL
-	jNmRkBgMQu1B1DGSL4oRoUyUfIJeaUf4nvqrWSYLotS2S9XIGN1jx/sFuaieOE7m
-	xS7m32nk46HEisS3pWfKcMyVMJdt02Zna1tEeilk93ax7mFMxHGSDcho1R/neOYJ
-	r02dqTHC+aeG7f/KWMS6Ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776258429; x=
-	1776344829; bh=oY0FuX8rBaWizgUElbZF1xzMfiAbOpq3ImEuYV5Zrhk=; b=M
-	jr/xw5/xruGvd2JqJtIU4N4IHfYGyFUwUL2DLlxo+0ngRv0jzyrfE0TxWK8LXSos
-	CKJLGt16/v0dHSv5rl69GamqZh/EDvQMb6xiXCgVNqP6SRcBVAX5PFDhrcv4zjNU
-	cXDOGRcX9BbDBcpmQeIcqi1Z8+Aqrs5Du4rRD1N9y4pLOgAFaK9+e9qSNvsXfrpm
-	5PwXdnbG0wX8MGIHmYSrC4IrdKxhRE3ydSXyZUtuKfwS+6e7QMFlkhf9uDbCO2qO
-	8c/g7vVxX0RKobDRRkaqZWnAA9n8YrzyKDKUrqNdvctsl+fARQ93b/B1I8DYXCVU
-	+Q9GBzPkKzJs4nQuJhqNw==
-X-ME-Sender: <xms:fY3faVk0s9ouYU7okPKVfJYFOjq1QvfJenTRbKaVDr9TuKW7QeeWlg>
-    <xme:fY3faYQ3M0FmV6kfKqbUKML8_5ZODfgwErQ4RqNTwQXqgOj5MUm-mPfqwkc4VMqVC
-    l82a8xCLYBGJBkb3wstPuHsZMF_piY309Mc21ELMG8CEKlLlGYcTg>
-X-ME-Received: <xmr:fY3faZBD3aCquuq7iAlgYcxgjWL_vwQlut3-e-MX46emUHNl_5ryAJXHR9QookagEV_t9C8-wZ7XFxQJaVQSWaYD8XPr8XJN8JJ_yS9U0pE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggedujecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
-    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeegleejtdelfeffleetvdeivdeuuefgheetje
-    ehudetjeehhefhheejteeugfffvdenucffohhmrghinhepghhnuhdrohhrghenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:fY3fafSnc1qYzgv7Q3KY6f__E520Ad85w1cq_pFuSlCJpN6TNX67PA>
-    <xmx:fY3faXo2dUNf4Q81hufq937XcyOX6w8IzIfRZHTREkgMGv5oVPJcbA>
-    <xmx:fY3faRxP4xY2TpjYXelPE0OSZbukfcp4KT5WO3-wGhfDvz8Q23K0Bw>
-    <xmx:fY3facLgfpuedLUqSmQqRO_NAAFzPc9oDQDeWo6mBGKsIcnNSserJQ>
-    <xmx:fY3faVA2NuRW3_-PKprB--irCddu4qE7V7T1YULiDIaqaCf9Ql4kVdUc>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 09:07:08 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b46c2f65 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 Apr 2026 13:07:08 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 15 Apr 2026 15:06:45 +0200
-Subject: [PATCH v2 12/12] t: detect errors outside of test cases
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IhwX4yvg"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ad4d639db3so35307025ad.0
+        for <git@vger.kernel.org>; Wed, 15 Apr 2026 06:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776259577; x=1776864377; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XajuCgpr9WGMS5zPg1avRImN3lx5ayzvnVezIOtZZzs=;
+        b=IhwX4yvgrWYhfNFgWuENrRxg++Ls7qctWNGXGT4pB0ysfpAJ4j9hPZiXPhppOTkpsB
+         pggy2n0BJNsTjhasD5Nu7A+vHKw+qsPwb90Lfkh8hEGw2z/Mte/ZFb6NxkWRAMw8CDxL
+         3Q1e0pLp+goRDt/Sa8GauNuWOtM6D1ONyNDZ0r56lzqPLUA9zxI/DlFm9O8xyJtuumkl
+         xyuoLUACJpztFDCWydcseaE72qjA3kF5hnNPvNyWxwI8ObhAvWMcAisTLJ0Q3PfVDnRv
+         X2nZdMk3w5myxip46kkd++n7Us9d0kWgh5K7LwnW7OjXAzbXP6wKGUTc0Ik6RGkMzzqX
+         JKPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776259577; x=1776864377;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XajuCgpr9WGMS5zPg1avRImN3lx5ayzvnVezIOtZZzs=;
+        b=BHoRArAzCqjeLdUWaPiamDQ6phHSDJzABsWBKFBJApk8SmRczMhPanJvwdFiTakuld
+         ckK+/QOEqZoPZ6tTdl//tgJ499tl/tAQsr3mOYwjcCj+Moumdp2BxHkP8vpAUtBYNdwX
+         Xw/suksj6RfoXzYdBN4UyRV72iNBgr6U25Ix2Tm3PioX+neRoOwbtoorCTBmeqvEN6fR
+         VKc+TOtDlZyDzQX4UpcMna9n7H+TMZMGZGadZpbzJvYZmHGm1I31Ymlb2sHGmL3GtBdH
+         TJKf3t5bBo74aV3CgDbk0bGs4lP/S7DnsSr945kdpTitXa+CPvabp3AyaBgNRg9Nly20
+         swsQ==
+X-Gm-Message-State: AOJu0YxWZ7PI7UG8OTYN0H8WVsw4cKmwyvkg2mkr3jvfhwxxfElD3ERn
+	rTWf0ZdWUfl49W8hVsXiHQLbcI7zGSkUqXIqD8LF+obvpml30Zy7liBJt+tB5O12
+X-Gm-Gg: AeBDietyONey4L/yb4jkRf6x7mMnpZdYkf4mzd5ug3DEbbSJTyyH6ZqqBuSRKbJgLUN
+	X0yYx4sEf2R2u48FuqtQ5rzqTuXLMBL31pgSUqNTgPfOT1WeY6JUrNMzOfW+OPZxAE9fl4dUJ6R
+	3mYY91iVLDAcR0jddkHKFK3fZCUnUnZa2lA0YvwoIru6v9dBPSSOROrnLa3UFJsb2CNAiqVQvol
+	LqKzpkPxCS4o9gRhCJMzXh5Vj3swvohCfrgyH8n/WFcDYEl4PWo24esysx4vl13JEidzyJtKts2
+	TaFOPdU+8IwUQ5igMk1Bl4ylq+h2eqsnlPGyWk5HrLhxOqt6e6SjiZTRFbd0nGTqWgcnU3ob7wL
+	f1nd5aRZ/FKGDhBa7CetNYl+qj7anKj4hO5qCU4D0YlXiBhueCLhGvVEvNbSOsYDbc8edyxK+bk
+	SQIUBliiT+O9AVtfc9ZBuqehAkdnNAikTwb4bVgZXGZ+5vv0WciWwdwM7vWwheYuriX2M16IifJ
+	a5+5wMGhQ==
+X-Received: by 2002:a17:902:f34d:b0:2b0:7026:24bf with SMTP id d9443c01a7336-2b2d59c7601mr151908835ad.14.1776259577440;
+        Wed, 15 Apr 2026 06:26:17 -0700 (PDT)
+Received: from localhost.localdomain (d75-158-111-22.abhsia.telus.net. [75.158.111.22])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b4780ef741sm21739775ad.11.2026.04.15.06.26.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2026 06:26:16 -0700 (PDT)
+Sender: Paul Tarjan <ptarjan@gmail.com>
+From: Paul Tarjan <paul@paultarjan.com>
+X-Google-Original-From: Paul Tarjan <github@paulisageek.com>
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+	szeder.dev@gmail.com,
+	gitster@pobox.com,
+	ps@pks.im,
+	gitgitgadget@gmail.com
+Subject: Re: [PATCH v14 12/13] fsmonitor: add tests for Linux
+Date: Wed, 15 Apr 2026 07:26:15 -0600
+Message-ID: <20260415132615.47913-1-github@paulisageek.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260414221335.GA3413665@coredump.intra.peff.net>
+References: <20260414221335.GA3413665@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260415-b4-pks-tests-with-set-e-v2-12-4e4904a96f15@pks.im>
-References: <20260415-b4-pks-tests-with-set-e-v2-0-4e4904a96f15@pks.im>
-In-Reply-To: <20260415-b4-pks-tests-with-set-e-v2-0-4e4904a96f15@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-Mailer: b4 0.15.1
+Content-Transfer-Encoding: 8bit
 
-We have recently merged a patch series that had a simple misspelling of
-`test_expect_success`. Instead of making our tests fail though, this
-typo went completely undetected and all of our tests passed, which is of
-course unfortunate. This is a more general issue with our test suite:
-all commands that run outside of a specific test case can fail, and if
-we don't explicitly check for such failure then this failure will be
-silently ignored.
+Jeff King <peff@peff.net> writes:
 
-Improve the status quo by enabling the errexit option so that any such
-unchecked failures will cause us to abort immediately.
+> Do we need to put it in curly braces to avoid interfering with the &&
+> chain? Otherwise a failure of anything before the maybe_timeout will hit
+> the "||".
 
-Note that for now, we only enable this option for Bash 5 and newer. This
-is because other shells have wildly different behaviour, and older
-versions of Bash (especially on macOS) are buggy. The list of enabled
-shells may be extended going forward.
+Good point. Fixed in v15:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/test-lib.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+  stop_daemon_delete_repo () {
+      r=$1 &&
+      { maybe_timeout 30 git -C $r fsmonitor--daemon stop 2>/dev/null || :; } &&
+      rm -rf $1
+  }
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index de7d9e7b92..1f7868c537 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -15,6 +15,15 @@
- # You should have received a copy of the GNU General Public License
- # along with this program.  If not, see https://www.gnu.org/licenses/ .
- 
-+# Enable the use of errexit so that any unexpected failures will cause us to
-+# abort tests, even when outside of a specific test case. Note that we only
-+# enable this on Bash 5 and newer, as `set -e` has wildly different behaviour
-+# across shells. The list of allowed shells may be extended going forward.
-+if test "${BASH_VERSINFO:=0}" -ge 5
-+then
-+	set -e
-+fi
-+
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in 'trash directory' subdirectory.
- if test -z "$TEST_DIRECTORY"
+Thanks for catching this. The broken &&-chain and
+2>/dev/null were hiding the test_might_fail error.
 
--- 
-2.54.0.rc2.529.gd9106f7525.dirty
+Verified that test_might_fail rejects maybe_timeout (exit code 1,
+command never runs), while the { ... || :; } version actually
+executes the stop. No other instances of test_might_fail maybe_timeout in the
+repo.
 
+Paul
