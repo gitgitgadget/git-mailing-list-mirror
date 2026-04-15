@@ -1,87 +1,88 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03198FC0A
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C8A3ED137
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776275707; cv=none; b=QXJI8xF1756N41NKQvGf9BcrLuEIhadFLpbhX0K6WVGeyZq8wtgy5uehuOxAuoQmF+EPGbmxJA8bljmy8lSfs/V1wEhWfWfzDAbumw3vxrQzeYTXA1+hNahm5vnsFYBxv/A62LOOEDTltSbsZRYhKxQkMibZEnbghG9GZrR2IaQ=
+	t=1776275910; cv=none; b=qUeuWz1op8SUUQX7hVFuzABolfBJBn2VVHKZm0uupjVbY+l4ca600cRTiownbdZ2tHmCJgKHZXFC6Y4Hn7Frq1AtlBw1PArT1f3/FzIRAAolaeWjh9epo2Ig+ix3pGbFtlXG8UFmcjI1eXbud+hsy1xA/FnckXdug+5la0IGZNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776275707; c=relaxed/simple;
-	bh=m4ab1HLnhIumibH1Zr549gSJkl6PVf1XABDDqAROQyk=;
+	s=arc-20240116; t=1776275910; c=relaxed/simple;
+	bh=Fl2TDJBA+sE2HaCnJGWQRamXokVv6uEeRUQpJ3aqARA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O5ZhTftEjVVz8hu0m5MY6s00fN11TnWIVdv21DWuWL54iYZ1qxWbidh35PhrVwzwmYQuQfusfj76zVd0g5ibPz9X7ad46NlyYXCO+C3U/OW5KECLRniZFJMyRb2VuCl4u4xkuc+8npvw6MqHoOPska3mLd9O1vDK6GDlz1jNvpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cf5qCdsk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MwTgqkPC; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=FkXiTZZ4oML0T/qW3cNfM3H/CIzupYNsyzKckYI4BuGslZDLyILF/ELul3yuxrhbhrdcNku0cAsxK4hKoiOrlEKRBA1gyymRmT1goyqyM/fdoxMhLUABuuSbeUrhEZFFmprgyE2ut5XkhhhcsKwgRUyQTb+sTaggAyPFrx1WBrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LHUZFuqq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zaem6iBU; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cf5qCdsk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MwTgqkPC"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id EDFCC1D00257;
-	Wed, 15 Apr 2026 13:55:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 15 Apr 2026 13:55:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LHUZFuqq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zaem6iBU"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 384C67A00EB;
+	Wed, 15 Apr 2026 13:58:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 15 Apr 2026 13:58:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776275704; x=1776362104; bh=8dT5UHmx3g
-	VqFZXhLOQJyJNhQsiP5lUrSLTfUd8e1Lk=; b=Cf5qCdskPP7GTxsApLXNZXEbJL
-	2UgGDZvwI9TOFeD5Ick9EcRNSqQcUH94WZMEreWkVmYMfsaP+0viIN+DROTJkU/W
-	/JNAs1+NPgi34vEadmp6n/41divGGDGTBYDfSdorajJ7oFegtyo+OGuLrTtIgh/Q
-	DAG1OWmQO6SJD7oa2CAKXZr5BaEQzS+rbH4PonnXHozwDi2T6DKA8FP/rRZDq93n
-	RSVBwMi8kkfRvuVAsUH8DkWixVGijJPshwExy23MvAVKaCoCnUCltnnUx+jM+vdC
-	/oNeix87VBl01AAuXiRDZ8Q4NIYJ0ziL5zOJo6DvdH9r6NUrb1a/ZoqE3IgA==
+	:subject:to:to; s=fm1; t=1776275906; x=1776362306; bh=YLRFisogbK
+	Q5ql4AuJ+UXIoIOEr0UDbMtklp2kaqfxs=; b=LHUZFuqqzZpF73zomdNjdWRlp1
+	GwLmGbZ7zNLYzz4z5r29X6kUMxI2FttUNi5iedPN7sFF7ubuGNV16ZvcfuWNtLiV
+	gjPj+OE6VAU6OZn5uaN31dj1j0lknVWj0jtwCr+rX8M9HZ5IYhLqgDRnraFF4y4k
+	Kfw8CUw4rMeyg+BWT/Lv0hBG3yEfMYNyDyH0aI5M234VkaXmblAsEwEIDW3PEh0M
+	Oq08JXkmTNo+PWkBxhn6SuTRDgl1o6NNhoaUZXMET3laQQ+MrWbVn0Xl7cjHpFE4
+	kOZB93RdcTRIW+0Hn5YQtGDTKFDfiwGfB4iZwgGTXzEm7wq2eILxEFy++IMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776275704; x=1776362104; bh=8dT5UHmx3gVqFZXhLOQJyJNhQsiP5lUrSLT
-	fUd8e1Lk=; b=MwTgqkPCM2garxokI81/UhJ131akQdvT+eKkm8OVqTWDroWXjKR
-	VpJ6bZG5dgwauHq2G4CZikJIelVZ1/70602mRjZJ0BkZZibdNHsPFiU2yE5m7Ejx
-	F9ycwfGAXBRsNjVUh2YSAKEwwH9O4u0AmjnYPh1TyvneXEX1fX9YFTAxrjlbfml6
-	uWEBthCY+KmSMuwYfsepo/WwcvsPnvMM1aMblYbPzpdfQvk1/KNRZAWn9azrIKt/
-	gu2eydkXhVymu3fCntZQ2j6Pa4LwW48MIqKu0NkUFVaE/c5ES7FzuOaoO6BxpeWc
-	NfQYHnbUMItx9FNWbVWuZ20OxD6lTjGtkRA==
-X-ME-Sender: <xms:-NDfafOAKUegNfzjMGAU4K85XUWKjS1Jp8Hk2S4W1fit7HJkQBjV6w>
-    <xme:-NDfaQ0gt0t109MuFAoUTBtrJDOGrCk9JekCwxlcV3A2jcH7VU2TgDCLYMicwHWVZ
-    1cApOW_YMeUdHtdd0a7TpsP42Nkmzo1IM4-3TaYhuiqdT-vdDhlAQ>
-X-ME-Received: <xmr:-NDfaWnm0jjNjAODnLqXg8oUdHqONL8F2D5AssOicM0rS1Tsm1AvQGHEj4zZE5Bjlt_ZHHl2DRtANUQCevCjxDq_hTFCwt9bZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeejgecutefuodetggdotefrod
+	1776275906; x=1776362306; bh=YLRFisogbKQ5ql4AuJ+UXIoIOEr0UDbMtkl
+	p2kaqfxs=; b=Zaem6iBU48gu8iWqpx3+Z+P49Tkp1x45Ro222txhBg0N6srxcJN
+	mwoXKHYtS+IL32OMLelV3ggNGYgoZqP3L60fW7PNBFsMuXj/pLfwmuX1p0c5oj6q
+	1IPxPQHoad8S6A4s3i0BWC+EjI0lFIZggoeHYuoPe0dPv3OMwPXyeirQqLlC58bM
+	XM7Vd4FpSws7SwviSAK0yLl7rebvsAQ7GaSiCaW2FG9oaorDJHeZ6YoIa3zwOdZe
+	WPhFylB02j3dPl5UZRyVBBZHhUyq8gWDiO8EwMAtGy/7SHk4sB97rYqjfJdh1xL2
+	qBAUpUF3zIwEKUDCpkDfJ6xgvLAxb2fPprQ==
+X-ME-Sender: <xms:wdHfaRBViHLdiTFT3CnscVGCix0CG-O1sAQWFT1ZrGfuGPJYBfFevQ>
+    <xme:wdHfaZn3hd0dkd8XlQydrkukHL4zeD6Gy7lPNcZqt_fxagYF9vgW6LpjTOtB6ql8D
+    dZkxu4n5r-UHP8RzW09IYuh7zOm3-lkCu74YzHCs1T6NyTq72d5ug>
+X-ME-Received: <xmr:wdHfacc9ZBExgMhDKbDTt_zyoWUs40Ev0DQw5U9D1-wZ4tGklPYIzNQxNuRr-b71vAW-4Fyrb9GXHp1fWq_VkDtMLFJ9H_Jhiw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeejhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopeefleessggrrhhrohhithdrshhhpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrphhlrghtthhnvghr
-    sehnvhhiughirgdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-NDfafWaO6nFVKJb2FRjZ4FTHgILABTxHMC5iCkINVri2vNaTj1FFg>
-    <xmx:-NDfaUvViiDgFVMXJdfxlvYKtyu5UiPBwle_1YyrJmfKBQwJ274tGA>
-    <xmx:-NDfaaaM3kV9QjSI1b6j1adsPI3l9yjegNp9g-jfBiVAz5RQUm5-Dw>
-    <xmx:-NDfabVOYKU8fDKI3tvtL2izDxfgjW0VrtgoMtP1HxxG4jF0kVsRhg>
-    <xmx:-NDfac4EXecR7rECcYiG5ToYav1DpzwujRP4ZG5yC7_Tew9gxS3pVBta>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprhgtphhtthhopegthhhr
+    ihhsthhirghnsehhvghushgvlhdrvghupdhrtghpthhtohepghgvohhrghgvsehmrghilh
+    drughivghtrhhitghhrdhpuhgspdhrtghpthhtoheplhhishhtsegvfihorhhmrdguvgdp
+    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wdHfadQSDIuPWTbWNQfX0H5LRM-_R0HYv8yvcpcFS_Snb2GDvR7IVw>
+    <xmx:wdHfaTs6C9R14YV1XMzUV_RcY--YZoKE9_hSCdZWYEM99AQKFridMQ>
+    <xmx:wdHfaefqZayz_OhaJT359lSLguAtaFf6juiwW5KMIDeuaFTYtx_cGQ>
+    <xmx:wdHfadYco_9d3Gztd6uUSkGn7xA7YvJHNGa7JAzRnynh40eXFDyDcg>
+    <xmx:wtHfaZlRsF3RY7ToWnHmAtscMc4pU_MX3aYmiPH21KuZpEZDZ36dnuCc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 13:55:03 -0400 (EDT)
+ 15 Apr 2026 13:58:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jiamu Sun <39@barroit.sh>
-Cc: git@vger.kernel.org,  Aaron Plattner <aplattner@nvidia.com>,  Karthik
- Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 07/10] parseopt: autocorrect mistyped subcommands
-In-Reply-To: <ME0P300MB08117F31CDFE8D038C3E0557CE41A@ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM>
-	(Jiamu Sun's message of "Tue, 17 Mar 2026 12:21:42 +0900")
-References: <SY0P300MB0801C6F21C2D8F49892DF8E7CE46A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	<SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	<SY0P300MB0801E3F75349DFDF98C221F6CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-	<xmqqse9zo93p.fsf@gitster.g>
-	<ME0P300MB08117F31CDFE8D038C3E0557CE41A@ME0P300MB0811.AUSP300.PROD.OUTLOOK.COM>
-Date: Wed, 15 Apr 2026 10:55:00 -0700
-Message-ID: <xmqqse8w6rd7.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Colin Stagner <ask+git@howdoi.land>, Christian Heusel
+ <christian@heusel.eu>,  george@mail.dietrich.pub,  Christian Hesse
+ <list@eworm.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
+In-Reply-To: <xmqqbjgr1g9q.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	13 Mar 2026 16:06:09 -0700")
+References: <20260215201748.889866-1-ask+git@howdoi.land>
+	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
+	<xmqqldfv1gxc.fsf@gitster.g> <xmqqbjgr1g9q.fsf@gitster.g>
+Date: Wed, 15 Apr 2026 10:58:23 -0700
+Message-ID: <xmqqo6jk6r7k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,32 +92,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jiamu Sun <39@barroit.sh> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> I would have expected that we would just emulate what we already do
->> to the main commands, and later with experience with the subcommand
->> typo detection/fixes, would tweak the parameters either only to the
->> subcommand part or to the both with justifications.
-> ...
-> Because of this, I was confused about whether I should copy this
-> behavior. I chose not to.
+>>> Depending on the history graph, subtree split can recurse deeply
+>>> enough to encounter this limit. Rewrite the rejoin-deepening
+>>> algorithm to reduce recursive calls.
+>>>
+>>> ---
+>>> Changes in v2:
+>>> - Rebase on master
+>>
+>> We have seen two iterations of this series without anybody
+>> commenting on it.  Is it a sign that the topic, or possibly "git
+>> subtree" itself, is of interest to nobody?  Or is it that it is so
+>> well done that nobody had any comment on it?
+>>
+>> I don't use "git subtree" myself, and I do not know of anybody who
+>> will scream at me if I break it by merging an unreviewed patch, so I
+>> can merge it without worrying too much about fallout personally, but
+>> that is a tad irresponsible as the maintainer ;-)
+>>
+>> So...?  Any volunteers among those who have a higher stake in the
+>> program than I do (which admittedly is not a high bar to cross)?
 >
-> However, if we want the main commands and subcommands to act the same, I
-> can do that and try to move the logic to autocorrect.c so both places
-> share the exact same typo detection.
->
-> Do you want me to do this?
+> FWIW, I can see that [1/3] is a benign clean-up that should not
+> change any semantics.  [2/3] talks about the variable $sub, which is
+> used elsewhere, is not protected ...
+> ... in "git subtree" to verify), but otherwise the change looks benign
+> to me.  I have no idea if what [3/3] does is sensible or not (and
+> again, I'd rather want to see somebody with stakes to double check).
 
-Either do that (which is probably conceptually simpler), or explain
-in the proposed log message why they have to be different.  My gut
-feeling is that you should start from identical settings that has
-been used for years, and then in a separate topic propose to improve
-the parameters to improve the behaviour for both main commands and
-sub commands at the same time, but that is largely because there
-weren't any explanation why subcommands correction should behave
-differently from main commands ("Correction for main commands
-behaves strangely and I do not want to inherit it" is not a good
-explanation as it invites a natural question "if you have a better
-behaviour you can use for subcommand correction, can't it be used
-also for main commands?  If not, why not?").
-
+So, yet not any volunteers?
