@@ -1,67 +1,67 @@
 Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45035335562
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 09:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A2C3264D4
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 09:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776245719; cv=none; b=NDlNvlxVpOPoGK08x3h4nYsSQvQtAeI2+a2rxtms5f8passMIV8m2XJippMlZnhtMbscI85BKG7hVUDeqfD9Hxjmp2r+In3SrAUCbyCAUFszrDrqAiXrMj60+QEy/OFT1E4VrYqtt4pH4BWCbyj0FoocCSmGUi8aUgSfyOfgRyA=
+	t=1776245798; cv=none; b=dOMxoNRaRnPBUr19Ke1Hx34pjqNPmAJp8zmk4zbfGOi/JAYKksjbSBZgCVgU1cHtPdfbL9rhTZTjNmisVn0lM4cwlACbxO/RJ5ef33IiFg6xYCVlBXn45qN7Z4AUbMYwkD7e+D7WE6bW8cAT69Nloj10nzqFp20KE7GpfCoTOro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776245719; c=relaxed/simple;
-	bh=vSaY+wrKRmpMc6P86YbUBhWbhKrwLpC1uooGlfWkYz0=;
+	s=arc-20240116; t=1776245798; c=relaxed/simple;
+	bh=Lj0fWZSwfWUCTUR12wpck8HiUdugCqe18ISTpEwaa2Q=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=FPJ1y3UNSHzy96lGNCffJZ3Xe9xEBxXVp7ldEfW6Wi7Q4WbmtAgxZ1JI3EqNBVv0Ijmlpk7IRKpeu/qcdSCmd6q9RvjbR50v8jRZv6qRh1LYoENSaPp8GMwdcrxqiQkBB9LEUuDJ9m4Mh1j4Y24vY7d6EIHkHt9mO0fTO2J5UWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mROGnz6A; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:Content-Type; b=uBT8m+H2zgxzfcWqK/PizNIKzjMvOK4+aEV/hR1WL/Un2rv0j+m5w+MK4HM5FG4JuAKPqYzsfXfUFOkKHbQHa1+I85axugnE1qvx8zmMExQUEU3ITDDPrZVA/PmXhEM7owFKysHqW5+gAw8woiONU0pVG9AVQ/UI47kpvKxU+2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e9sXLAN2; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mROGnz6A"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-488aa77a06eso107639325e9.0
-        for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:35:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9sXLAN2"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-488b00ed86fso67531625e9.3
+        for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776245717; x=1776850517; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776245796; x=1776850596; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TDokZDG7krjZARlidrQwa4lD+K+eWTwhpwoJ0DVtNYc=;
-        b=mROGnz6AH8m/hGneFxE0emLnDFFTLz9m8X5etM1lkeYdBCRlalxZC1tSmU5ho6ZH3z
-         Og0ZqHRme9r+fIKnrunaFiFt53it3n8HgLJMt9T7cvvY3awoq4FK7vcIpbRLvE5bVuOF
-         ik1WQjac/s9DDgy9Q87pfz+8mRfxgTbBK2ypMd+l2GdMrp/kpeN+x158RnKod94Jhi9b
-         TxbcF9AvqBt2u3bVTLOU9DLgZ7+mwSKn9JlHm0Tn57SJK+TiWtyMPkfFiitaTFHNWWoL
-         SYNjO/XIztJ0HkXl0Kp8mhvoqYVNr1qT0UG6BZEhRNTCEmebDnntSjH9Lh8EzHHGy45g
-         5OiA==
+        bh=T2w4TTKKmGrDv7JsuIm1nEJsnJXizn4cjguzdxcNKqY=;
+        b=e9sXLAN2QpuSy7XjRbIWO96jf9Kh9kPsZN0C3G4YKnZ26lFUu8FgEQjLygWr2us+Sx
+         N2uWy4BeP1d7NDHoRZmhASj+JPJrIdXOOeqQuttTxeMlb0v2B2PbABHd0lWLvguYpp5R
+         GAgv/aA3vR7pB80go59ZXsFw9vXdvZzpEXjH51o4EclKfexSMS9NsOBi0g/vf6hSM5Mc
+         rL5MkJxqnmftn7rAnQnVX/qnsavl566lO9CpiL3NoX7s2HGSjE+XBP55ydmL3/cIzL1W
+         fXrad1pN8DT0I7vAZpjbJvaTgfDYlNMk5FJC1W4mY+ksIOQhQjmqetyzUHitkHp5QcjJ
+         xcvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776245717; x=1776850517;
+        d=1e100.net; s=20251104; t=1776245796; x=1776850596;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TDokZDG7krjZARlidrQwa4lD+K+eWTwhpwoJ0DVtNYc=;
-        b=sd1swVMuJ7e8SXCJ+LyE9+5hqoT6pvrRc8bq492MI0hB8KPKOAUUb83NgNRjgx2dGQ
-         0fUbuP03aX8Vxqvf5hR8/Pba9qG4erAdprk1UBiC/5ua1XYWBTSrRLlSpXy2t8xueoir
-         OVnF+ut3ntSVDCd0lMsZYZhmWshw5BMLZ1ArDa9d57Y6zSIQx+q/+zOrveXEKO4n7wG0
-         PEGtI8PWr/+pNO7y4RlsHJ2h1fgWNMDMlmwpqliuzJdfYgS1gGTdgiLIFmujqg0BbDxs
-         NJ94SOj6i+T31Y//+6GYSBDK5KYY7HY/58lm7pEQFhOOrTXPY4c9fvtL9RIvhz/QkprI
-         nbsg==
-X-Forwarded-Encrypted: i=1; AFNElJ9F7Sjpaar7qK+ziP6vb/V0QZkKNXXFpYqdpQalz8ao3uCplSu/wCxl8/+WDmCSJ5/TSJY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzy8b6N9Nuf0ZSgPtlQ5Y7H+1hNgJ/n78dMCDzlPiEhPN19czhv
-	OGzyzuyXJaPsYnpYHO9HBkniWyT+ETmT+K3JQRyes/ok9+yslNooEes3dI5MPQ==
-X-Gm-Gg: AeBDieuNDGVs+fqpPDaZK6jzToSt8lL0WSwiLpMnLkuKMGyRbY4th6whzxbT0un7k9v
-	X0hOuu1u4qqKT3cAaCLm33BrJVGQer4iMInSDBHHhsrDpwk0LDpkZpuSgJTTXFVSPZ35tgHf/ew
-	y9/TF4D+q433AQeB/XiksF2iVIUYGnJ/uvZvkE9ZD6tbYPpmkyj8bCrCXC2V8F0p6JPDpBJtQn3
-	fKoUZstK78oCngHWn9acZMB4IKopjwwybXOgHOGAEf/xkdcvOOVTrNzimqCQlk6epncI9BE26hP
-	ULzs8/UdVu5Sb0iAz48N9P4rX7N4jwTgOK9jKtLFeuTwS9BWAqTTwMs8p/NU9tZLjHNofu1sBlV
-	QBPXJ29AXcr82glZANdjK3G03+BrzvcFUIALgrxyWppQCHF1rtZohmdVqtIxlUqZhH55O8Mlhwi
-	3YEKJ3uT2EyQMwsrmYEwI52F1OxHpH2Bq41sSCa+pqnY+mftkkLJFLxA4z/W7QyZFKvhorCtOI5
-	LY=
-X-Received: by 2002:a05:600c:3b24:b0:488:b811:51c4 with SMTP id 5b1f17b1804b1-488d6872ed0mr292502375e9.25.1776245716616;
-        Wed, 15 Apr 2026 02:35:16 -0700 (PDT)
+        bh=T2w4TTKKmGrDv7JsuIm1nEJsnJXizn4cjguzdxcNKqY=;
+        b=B5sy5npRUM/msT3EenmFqDKaRZAmlOTIc+SXNi4BecjNDMLSleHmLRtVjKxekJkYvZ
+         VKgbx8X+YnlKuhdcsDet4MEDP/NoKAJwlWiFmV8GiWmCKQDIccHX4HM+kFd0bfKyiCQR
+         iOMdK857yd+SJ4c9zzMz+0IOogJO8D9YcLyW8sozAC3/ZqZT7rMqWbGLNx5uyOdPVotm
+         t8fJOBpclVWgyculctKbHA1vW8Wej9wkrwVFvQmypivREIVHi1qqMSHiiZFtFOeoiZf4
+         DoPhpRT2gr9BTSs7tRHgzE43ER7c8AWooLmA6BlCa4TbFcymoSKQ/qYUxp8i9KzE8ihX
+         OBlQ==
+X-Forwarded-Encrypted: i=1; AFNElJ94c/XrVcp88Cr72wKdGHMTDt31blJhqrah8MAq6OAi+5cfRRZ5xhGztQRWwQaBciTCDzA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJKLJnKzDlgI39eU7dZqIowVXjak5vjtYWFHN4HUT8knqxprQB
+	lHsJtzV+2MC9PVS8U260o49MuYlt2j+5bQPUx8XWCZLUaxb38hm3fUXN3oU1oA==
+X-Gm-Gg: AeBDievcqe8RqGmbW8tBzJrwRp8sUxPQc5w8mVT+l7gOzVBYSYkG+kLutf+mUvJ+qe7
+	SEYNFP4pezPur0LtnME7iZV6vDjFtfPeIyRnTrYwBRdg9VJv+c/MrKvWkh0BnYbZ6ktk8jQhCMU
+	y7aT+vNayaZRUGGc/xwwLpuHkL6yimXeitIM40Uz4dlELc+tsaOztWR0quopt3WnmDBdFzBOM2h
+	E0mnishQPLp75E5uvW0vVj8H3CHW2Y4GnDTeqi+OOIFB7z0QjZ86+4VeUVXy/5wD1kpSoHtozUQ
+	PmMe99tnOVyV/P7QViBOJh3ENx7rSHlYChLMuKeyI8Hv/0p5eCmdyRWaQmjQvgo/jwXAB7zbsPb
+	yhtSNOXAToLIc0wGbKvocrQ2nsIF4pEXtlU6A+ANRz9Y4wC1AtSdm7K8FVNn6jKsuaAGkFXjDIZ
+	K6rZRBAn2lBPRfDqT4S/GDFR1ljwVLlPAlBPfexhp+WT9JiG0wqqwHCZSs8XG9nebzygMVQV9Fk
+	g8=
+X-Received: by 2002:a05:600c:198c:b0:485:3fd1:9936 with SMTP id 5b1f17b1804b1-488d67b8d43mr288881645e9.5.1776245795894;
+        Wed, 15 Apr 2026 02:36:35 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43ead33d665sm3726031f8f.7.2026.04.15.02.35.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488f1dd899esm36471235e9.1.2026.04.15.02.36.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Apr 2026 02:35:16 -0700 (PDT)
-Message-ID: <b7e4eec5-bd2e-4652-bbb5-f2a2d0709280@gmail.com>
-Date: Wed, 15 Apr 2026 10:35:13 +0100
+        Wed, 15 Apr 2026 02:36:35 -0700 (PDT)
+Message-ID: <21c205c6-687f-41b4-9f43-22e6ea6928b3@gmail.com>
+Date: Wed, 15 Apr 2026 10:36:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,39 +76,58 @@ To: Harald Nordgren <haraldnordgren@gmail.com>
 Cc: chris.torek@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com,
  peff@peff.net, phillip.wood@dunelm.org.uk
 References: <f012cc7e-14fa-40d2-84dc-7407fdceb36d@gmail.com>
- <20260414200640.50910-1-haraldnordgren@gmail.com>
+ <20260415081659.86783-1-haraldnordgren@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20260414200640.50910-1-haraldnordgren@gmail.com>
+In-Reply-To: <20260415081659.86783-1-haraldnordgren@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 14/04/2026 21:06, Harald Nordgren wrote:
->> The changes up to here look like fixes for an existing bug and so would
->> be better in a separate patch.
+On 15/04/2026 09:16, Harald Nordgren wrote:
+>>> +	if (old_branch_info.name)
+>>> +		stash_label_base = old_branch_info.name;
+>>> +	else if (old_branch_info.commit) {
+>>> +		strbuf_add_unique_abbrev(&old_commit_shortname,
+>>> +					 &old_branch_info.commit->object.oid,
+>>> +					 DEFAULT_ABBREV);
+>>> +		stash_label_base = old_commit_shortname.buf;
+>>> +	}
+>>> +
+>>>    	if (do_merge) {
+>>>    		ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
+>>> +		if (ret && opts->merge) {
+>>
+>> As we saw above merge_working_tree() can return non-zero for a variety
+>> of reasons. We only want to try stashing if the call to unpack_trees()
+>> failed. Even then if you look at the list of errors in unpack-trees.h
+>> you'll see that only a few of them relate to problems that can be solved
+>> by stashing. The old code just tried merging whenever unpack_trees()
+>> failed so it probably not so bad to do the same here but we should not
+>> be stashing if merge_working_tree() returns before calling unpack_trees().
 > 
-> 👍
+> What you are saying makes a lot of sense.
 > 
->> Sometimes we return "1" and sometimes "-1" what does that signal to the
->> caller?
+> I gave this a shot now, trying to return an error code that only attempts
+> the stashing when it has a chance of improving the outcome. Not at all sure
+> if it's correct though!
+
+That sounds like the right approach
+
+>>> +						   autostash_msg.buf);
+>>> +			created_autostash = 1;
+>>> +			ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
+>>> +		}
+>>>    		if (ret) {
+>>
+>> I'm confused by this - if we stash then don't we expect the call to
+>> unpack_trees() in merge_working_tree() to succeed and therefore return
+>> 0? If opts->merge is false then we should not be trying to apply the
+>> stash when merge_working_tree() fails.
 > 
-> I just tried to follow a pattern, I'm not knowlegable of how this return
- > code will be used. Futher down in the file we check 'ret == -1' and
- > turn it into 1, so maybe 1 is correct?
+> I'm attempting to fix this by making call to apply_autostash_ref
+> conditional on whether or not the autostash was actually created. Makes
+> sense?
 
-But you can read the code to see how it is used. Tracing the return path 
-of merge_working_tree(), the return value get propagated back up to the 
-top of the call stack i.e. cmd_checkout() or cmd_switch() and used as 
-the return value there. I had wondered if we were using the value on the 
-way back up the stack and doing something different based on the whether 
-it was "1" or "-1" but we don't so it only affects the exit code of "git 
-checkout". That means returning "1" is sensible I think.
-
-> Do you mean to drop if from my patchset, or just make it a separate
-> commit within this series?
-
-A separate commit in this series. As "git checkout" without "-m" can 
-also carry local changes across we probably should do the same there as 
-well.
+Yes, exactly
 
 Thanks
 
