@@ -1,110 +1,180 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B019C3E5599
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBC2314A82
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 17:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776272716; cv=none; b=GQ2hsg4N5oSUD8Ef8MYLK/DFPTuSUBuao4tQb0Bg10XyhaMxx5Pp55IpLa92zAUBtNUHyQcgOd1QqaVUKxTixk1HssY6sgP15tcPvuRdr7aUsQUedCyPY8ZZBcznhZ1U/z3VC0Pky0jSV8OjDjLZ6TvpKFOK87laDOdSvtq6lAU=
+	t=1776274765; cv=none; b=cbeplBWfraw+PYNadzbQ4gbAqnEUttnbyz2eoxoaHOY02G9UFoQg8K2dXBmgMQJ+OgmcLEwp3Ee81sq/ItFNV/2geAA73Gpc2xl3Gt+XOaoXWJDioXFu5x1BjGmKts2GdS0jsXcm7sv93jWK6s55UrGsuMh0BlrDymBK9uypKTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776272716; c=relaxed/simple;
-	bh=qAAk576ZikLV7Lb/kDIsKecVFudt77zXPwbXGTdKZNc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GHBv6TjVN49igwbf9bPrqn+gmkMzYuYbJhdZGmJmCqX6U2dQBRnQT2JY7CYTUaLx+mNYgrfQX626nvoM+XpyQFvwCBD2lPm2Rh6HTx8Gpx/UIUvFynGp3Kq3POSGcLQ0IDQHrGVWSug+I/9+EnylmdzPsgVNC5p5QxbF4jRqeGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=P2C+o8mZ; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=T5woVbXO; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1776274765; c=relaxed/simple;
+	bh=xCgtwpxyRqkZWcXBM8c8PJPyD/4aVd1/QWMCDGGyK68=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=R5bpMvARAi4s5wkIsrtRsbev/cIgsDC/DJw4gFkEtcTztd5NGG9Eyl4N5kRpm8byr6RfBeb+uWa+roMILigbyqU+Mnzxvca696Rp7DTH/ZUnejtju6lHb05I3Ksjmbig5G3GrHMhtAuOhYAube16vAs4K2699YyPBZ7EY+z+lOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t25SgKE/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bmOnFyEE; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="P2C+o8mZ";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="T5woVbXO"
-DKIM-Signature: a=rsa-sha256; b=P2C+o8mZsjDNjVhGgEBysJydLFZmu6wJGyigGIS+K8BY0IREAID6TC8r6MwQR/yJnlTEpf6QzhUzAhb7wGB2F6Wm0IwPF4MoGJZPq+2cZQthzlptRF4LsNT+q77TPWCo1TQKx+02o1JXmWK9m6cWyu+VNGYi9Nyh3/dMmqHxbL59AkSYiHYLzl4zJl1UIS42tO4Ql29IkpuBrNSxLoPcWU+kVUhIa3DuJkFfJg+2BLM2mTkne/0g+aKKyakN3hxTcOmT0V5HEaEawUa7QFip4z4uhSuMIpr9I2uDW62mnIVw8fahm00QtLh2hmSK/jFn15kHONLkGJqmeo3BtJukiQ==; s=purelymail1; d=malon.dev; v=1; bh=qAAk576ZikLV7Lb/kDIsKecVFudt77zXPwbXGTdKZNc=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=T5woVbXOaqcXeI3IqH5sKm54w2+K7QPzYV5/r8tAO/qS/VU86GxuhnvB67mff2VS/clVcnLR2A6ES06Ja+qr/EZg8KJgYYNGU5ijL6AGhCFAPDf1WN+8pjDqIOGZkzdmBwR8VnJkPXsAgtpK31y5lbLe6kM9wal+swK4BexLzxj3dYCl7E1eJ81ZnCWQxYqDmqlmGivT5hrHHEkG16+j0jFTgWh75QoAQfyHyS2CXuyCwy1vbYj9Z0GU/JepbEBw6ZUNxyJ34Du2ZUBZNeycYp/FmSAWGfEB9jRxlG0EgEh/aygGj93EpAP0Ry3AwRZJ423JSZ2aqw9ChIP4DwDg9Q==; s=purelymail1; d=purelymail.com; v=1; bh=qAAk576ZikLV7Lb/kDIsKecVFudt77zXPwbXGTdKZNc=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1854087482;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 15 Apr 2026 17:05:03 +0000 (UTC)
-Message-ID: <21c10a52-82f4-4aa0-9027-21bb660b54cc@malon.dev>
-Date: Thu, 16 Apr 2026 01:04:58 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t25SgKE/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bmOnFyEE"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 513237A011C;
+	Wed, 15 Apr 2026 13:39:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 15 Apr 2026 13:39:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1776274763;
+	 x=1776361163; bh=8UBMhRHlOkog6PZTUOkDDl6YPSWaRO9u1/4ZuuX9/yg=; b=
+	t25SgKE//9QQRr3BLzp3XRiQ/hjK8e4TEaKXpeLWrgwYcQyXltobO8ceJzumnYZy
+	lbqoGWocUQ7QINofinmZffQKL9b7sbTq132GUfRayaslW8ZLM3ieV81hKAmevU2p
+	sc70SR5DdEC/LSUJT7Uiv3p7355+2gbnUK5OK/GHmlEs942eg1JUJs29GK7gt0Ci
+	n4yGbLImIAcuCfCw7NI6/dHWKYSvuTHhCOsnod7pikSSjqV2d9sJ+SCXVgAreUGc
+	nRxhkY1aFaQ2awlr5CRBq/6KNv1GA8kqGRhImCQ+faHJ3A20st3fZbl48rADJETC
+	aTaP0i7V+BQiYLXwquphlA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776274763; x=
+	1776361163; bh=8UBMhRHlOkog6PZTUOkDDl6YPSWaRO9u1/4ZuuX9/yg=; b=b
+	mOnFyEEAfXltMBaSePWDiylQW/cB1/hp4EC2LJRJPJ78LhPa/vGH4+qZzkWZ0SqM
+	nKr3az80qnbinlzXMxDRPk6LRmsllOwSWlLURVXu4CW8NyO1frlW4z/9lC9K7qDJ
+	R4g/DcrY2TbNrWOoKQDuKr/aqure893uHmZm7oYaqaPLFmfBiJ1Uh+wyv5YxTFCW
+	aYoPQL7WycAm5kuekR9tyDl6R8eab4TJ8HRrE4C01nu5dHptCyyUwAf5H8269lO7
+	4aw3AgO0gfkDL1jt8LBIvxIuUVUmbhfvGrgoo5NsKB3KyRAdI00twJ2zlKVgVbJB
+	LPkygXcAazoYOfTm7NyLQ==
+X-ME-Sender: <xms:S83faa3_B3DwSqL6vzE5xU5Ick_bXJmzRuZWUfYPkOUd7jpkflZ7ZA>
+    <xme:S83faUELyP9MHgs5H9y3o8M-NbK9kvH6AxRW_pOciTCTlaOgOe5NbEjEZhGUOvfOa
+    b2isFw34bPpUMczSlMMGXV61nkjWFX5E8Mzx_AjTdhjrUhGK9aGA-E>
+X-ME-Received: <xmr:S83faX4-H87dEHJSdIqUnu0d_lxy8hhFWCzn3BnmfSQM-XkjmP3Ukke1G7tHOSGQmvvHV22bn8xgl-Zl5llh6um7CfXn3QpT6g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeggeejudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
+    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
+    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehvihhkihhn
+    ghhttgegsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:S83faavduo6F26UUOY6eZ2t1AS6NNkM2Fx9A-oQPW6bgy6lRpDKqDg>
+    <xmx:S83faY45nflPEEHyHo6A6dGgdLLCHuzFHwk10vrjmqupWk9BieiR-g>
+    <xmx:S83faVVjJQsVB_bS4k0jpvAaQFCagt6eb76iM3DGxzQxmH9gE970uQ>
+    <xmx:S83faa-8cCYaXaMnXTkJUgI8R6loS_8TmafXZUGxunZ5oA3sCao62A>
+    <xmx:S83faUqYSoGlNimUcsKbw_FfLFVGYVOZ1MdJ8Ry37hG4gkstXFVIBxZx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Apr 2026 13:39:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org
+Subject: Re: [GSoC PATCH] promisor-remote: fix promisor.quiet to use the
+ correct repository
+In-Reply-To: <fcnv7hv53khhctafvzqn6dygbyq2tkyy4i2gawcbahdnevg2hw@7h6bvxlub7ib>
+	(Trieu Huynh's message of "Tue, 14 Apr 2026 01:22:00 +0700")
+References: <20260406183041.783800-1-vikingtc4@gmail.com>
+	<fbe81fee-ef1a-499e-bf53-d6f1761bb30e@malon.dev>
+	<xmqqzf3dxqdy.fsf@gitster.g>
+	<a6382ad3-6ce4-4e85-bdff-8e90068f25dd@malon.dev>
+	<fcnv7hv53khhctafvzqn6dygbyq2tkyy4i2gawcbahdnevg2hw@7h6bvxlub7ib>
+Date: Wed, 15 Apr 2026 10:39:21 -0700
+Message-ID: <xmqqwly86s3a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC PATCH v2] backfill: add --[no-]progress option
-To: Trieu Huynh <vikingtc4@gmail.com>, stolee@gmail.com, gitster@pobox.com
-Cc: git@vger.kernel.org
-References: <20260412193659.26288-1-viking4@gmail.com>
-Content-Language: en-US
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <20260412193659.26288-1-viking4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 4/13/26 03:36, Trieu Huynh wrote:
-> @@ -133,6 +133,30 @@ test_expect_success 'do partial clone 2, backfill mi=
-n batch size' '
->   =09test_line_count =3D 0 revs2
->   '
->  =20
-> +test_expect_success TTY 'backfill shows progress on tty by default' '
-> +=09git clone --no-checkout --filter=3Dblob:none \=20
-> +=09=09--single-branch --branch=3Dmain \
+Trieu Huynh <vikingtc4@gmail.com> writes:
 
-[1]
+> On Thu, Apr 09, 2026 at 12:34:47PM +0800, Tian Yuchen wrote:
+>> On 4/9/26 02:23, Junio C Hamano wrote:
+>> 
+>> > FWIW, I didn't see it fail in my local environment (both in 'seen'
+>> > and also standalone) or at GitHub CI (in 'seen'), so it is a bit
+>> > hasty to conclude that the patch was sent without proper testing.
+>> 
+>> You’re right, I was a bit hasty.
+>> 
+>> > I wonder what is different in _your_ environment (note, I am not
+>> > saying your environment is _wrong_.  It is just different, perhaps
+>> > the compiler I use and your build environment may align things
+>> > differently, or perhaps on-stack "uninitialied" pieces of memory
+>> > happen to have different values that the code is reading that causes
+>> > different behaviours---in which case it is the code that is wrong.
+>> > Asking for environment differences is the first step to figure out
+>> > what incorrect environment dependencies the code has).
+>> > 
+>> 
+>> ---
+>> 
+>> git version 2.43.0
+>> cpu: x86_64
+>> no commit associated with this build
+>> sizeof-long: 8
+>> sizeof-size_t: 8
+>> 
+>> Using built-in specs.
+>> COLLECT_GCC=gcc
+>> COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+>> OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+>> OFFLOAD_TARGET_DEFAULT=1
+>> Target: x86_64-linux-gnu
+>> Configured with: ../src/configure -v --with-pkgversion='Ubuntu
+>> 13.3.0-6ubuntu2~24.04.1'
+>> --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs
+>> --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr
+>> --with-gcc-major-version-only --program-suffix=-13
+>> --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id
+>> --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix
+>> --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu
+>> --enable-libstdcxx-debug --enable-libstdcxx-time=yes
+>> --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace
+>> --enable-gnu-unique-object --disable-vtable-verify --enable-plugin
+>> --enable-default-pie --with-system-zlib --enable-libphobos-checking=release
+>> --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch
+>> --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64
+>> --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr
+>> --enable-offload-defaulted --without-cuda-driver --enable-checking=release
+>> --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+>> --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+>> Thread model: posix
+>> Supported LTO compression algorithms: zlib zstd
+>> gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1)
+>> 
+>> Linux malon-Yoga-14sARE-2020 6.14.0-37-generic #37~24.04.1-Ubuntu SMP
+>> PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+>> 
+>> ---
+>> 
+>> By the way, I find this bit of code rather confusing to me:
+>> 
+>> > +	GIT_TRACE2_EVENT="$(pwd)/pc-quiet-trace" \
+>> > +		git -C super-work grep --cached --recurse-submodules "world" \
+>> > +		2>/dev/null &&
+>> > +	grep negotiationAlgorithm pc-quiet-trace | grep -e --quiet
+>> 
+>> Is this grep pattern correct?
+>> 
+> AFAICT, this intent is to check that "--quiet" appears as an argument
+> in the trace2 event that contains "negotiationAlgorithm". That said,
+> the "-e" flag tells grep to treat the next argument as the search
+> pattern, so "grep -e --quiet" searches for the literal string "--quiet"
+> rather than grep misinterpreting as one of its own options.
+>
+> BRs,
+> Trieu Huynh
+>> Thanks, Yuchen
 
-> +=09=09"file://$(pwd)/srv.bare" clone-tty &&
-> +=09test_terminal env GIT_PROGRESS_DELAY=3D0 git -C clone-tty backfill 2>=
-err &&
-> +=09test_grep "Downloading missing blobs" err
-> +'
-> +
-> +test_expect_success 'backfill --progress shows progress' '
-> +=09git clone --no-checkout --filter=3Dblob:none \
-> +=09=09--single-branch --branch=3Dmain \
+The discussion thread stalled at this point.  Are we happy with the
+proposed changes?
 
-[1]
-
-> +=09=09"file://$(pwd)/srv.bare" clone-progress &&
-> +=09git -C clone-progress backfill --progress 2>err &&
-> +=09test_grep "Downloading missing blobs" err
-> +'
-> +
-> +test_expect_success 'backfill --no-progress suppresses progress' '
-> +=09git clone --no-checkout --filter=3Dblob:none \
-> +=09=09--single-branch --branch=3Dmain \
-
-[1]
-
-> +=09=09"file://$(pwd)/srv.bare" clone-no-progress &&
-> +=09git -C clone-no-progress backfill --no-progress 2>err &&
-> +=09test_grep ! "Downloading missing blobs" err
-
-[2]
-
-> +'
-> +
->   test_expect_success 'backfill --sparse without sparse-checkout fails' '
->   =09git init not-sparse &&
->   =09test_must_fail git -C not-sparse backfill --sparse 2>err &&
-
-[1] I reckon you can reuse the git-cloned repository; there=E2=80=99s no ne=
-ed to=20
-clone in every test. It's up to you ;-)
-
-[2] You mentioned that you want test script to verify that=20
-'--no-progress suppresses output', but are you referring to the output=20
-brought by the '--progress' parameter itself, or *all* output?
-
-I believe the second scenario is a bit more meaningful. If that is the=20
-case, then the matching condition 'Downloading missing blobs' is clearly=20
-a necessary but insufficient condition. The output from the internal=20
-call to 'git fetch' within 'git backfill' will not be matched, which=20
-results in a false negative.
-
-Regards, Yuchen
-
-
+Thanks.
