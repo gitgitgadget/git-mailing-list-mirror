@@ -1,156 +1,127 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A06D315D3E
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 06:58:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D1B22CBE6
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 08:17:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776236329; cv=none; b=oStlopNgb8ryMSd1msWZbm6pVBqwCGHm3Rk8KSwlEFk/WRUeR3o4KsQ29oMeQf/3MM/NAP7ghXNSOM7twTUA23FQi4nT9RQmAaAvt1FLpBWFyZCZ1MAfUl1d3fOhvuCZl/PrHZiX73WB0OOcAqeRMFbG2zQ9L2wIWEsOQt52F/w=
+	t=1776241024; cv=none; b=jpJotCKhyl0eXXp0SNcidTp5cgcKCaUI02z/oiFu5BR/F2CVkYPWEgdpCFtxxfdG4OHvh8B6afCIbi+pRxhIS7SnEVzVnzfjBRfrCLB3K9prvQuzJTTc9pTA8lRoEXvYKB74xR9lnyCFIAfFBIY5V1eZcVz8W8tm30DBVZYrFb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776236329; c=relaxed/simple;
-	bh=OLK4/y0TT4Kn2ZVI58seA5YsF0wRPIhb4ZVodMFarPc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aJ7Jgt7WOMc+6HqQfiNaZlJd4ItDhj31F474dUSLCMUnLRfL/OtTu2Tb4goN6bwuuX3ES+1zEwqgDnI7uLcaeYIEMfzIGrcZRaaaa8W7f7v2tmhUbWT1JMedq7afPurhFGQ2GkHWZX6G7/7lzQNOHj8aUMrjR72CK0WhjZzu8eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lTjzMoY2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kiVfcNvS; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1776241024; c=relaxed/simple;
+	bh=+6f9AYxM5JDaf/nLzeKg6fYoAxq+7RVrjOhj15Jy+G4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JUjAVhht8o/QqnYFWODeYVBagmkXhTLCGDVM2MKcrcZ0uIjliSgyDpmxfMUEAa7bH6K3aYuTzqH82ZBDkUxoPpg2KzC8l8XPWliikfgRRzAVDULvJmPzlBKDN962DmhnC4PV3JzieGapxXEwmpTAlfKMA2WzWzyMpYf+glaVA1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jSMAKhvU; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lTjzMoY2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kiVfcNvS"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4183F1400134;
-	Wed, 15 Apr 2026 02:58:47 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 15 Apr 2026 02:58:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776236327; x=1776322727; bh=pg8Y2pwldK
-	TcbSEHaQ7n2lvdAYzg7TwoilPR58oJimw=; b=lTjzMoY2JZN1lAPuayvcqeyvji
-	z8ZVa7Pdi1yUaaJyp24SaS/PaF+roj6GCs9pwvmYozGYt/SvLybU8kV3m+2d1hw/
-	A5ZwnGHMXsyF2SgPAtKYEbgLUcaEmEkdWIN5uLMDqYlnuJAEhiLgPP9eVxBsTd1R
-	5P9uWcdP176HTAu14/cEhZQpfyAYKESY70tmwMolZ2LioXt0PSq6ObZJa5Zi6gFj
-	/sMhnJImxTNVrEFkfi/dwWWK1TQsW4U2JQw87ET3fQGuFIMX5fheYcPNAZUblrx5
-	UKhAyOvckt2jOfyc1Y8DLS2lCMqdcEWD7jU0xHkQ/TZn6hzYJ3FKXlQJbRpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776236327; x=1776322727; bh=pg8Y2pwldKTcbSEHaQ7n2lvdAYzg7TwoilP
-	R58oJimw=; b=kiVfcNvSgCUmEI59c6rKCbFg1O0vPdXRi4h2IM0T3iq0NrPGopS
-	+lglzgkZsa0b1zqVKjIs2prC3+x2n1c11WtPc2cAKO0/gVjnb2mRR0O36bDhTdis
-	6ksEWkealgwt/joyuhr6wxPsmt9fd1XDWjzKK11jI0a0xG6ce+8gerVl87J5G6wn
-	jWM2cvahmO2nmS2RessozgaUltEIyalg1Ln7SzzlgC/lJPqnIEEUxUgspCa6Xaqu
-	REj/mhjMXvJ1k44MisxaFhRBMKqKqpirSWLcKdr5bGf5Ws9KLJZAPlDpbzL0b+qn
-	O9Nhve8vSaHRGAEjb/Cvezy6p2IQdNzz3Gw==
-X-ME-Sender: <xms:JzffaTEaoLSEhweV4NOUduEE3-1cSRdc3GrAR3KmWOIAuD_X4mxH8g>
-    <xme:JzffaTk1XZf9SAZtBrCEVho0iRbYzGynN0W-En5_ogdpOo4tzGR1e250TNpDhH9RQ
-    H36S5w3EYz_sDJOBucMhMxsSXtNcxFsHDfZU7zyJMT2lkBuFYlQZ9Y>
-X-ME-Received: <xmr:Jzffaeli15czqMpl5KLaX0Sqv32eYole4PSWpJOr5YCPbORMXFI-sVyj4a40nyTtZeu_jrAM7l4xmjF3VQt3u8vMPMuEug3PLhXpjKPr0zE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegfeegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepffegheefjeduhedtffekueegfffgvedulefgke
-    ejudeiieefkeelhfdvvdduiedvnecuffhomhgrihhnpehophgvnhhgrhhouhhprdhorhhg
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Jzffacvuv9BB4DEAlCmZ4I3H-4xKMhNC6wxqTQBx6MFGfjoHfUpYmA>
-    <xmx:JzffaZmP-InPlkBR_WbNwXc2GALhqJP-Rt28BZ5nWFbWAoC4Ovvf0w>
-    <xmx:Jzffafujt4z3wqVC6TBLRAgkYE8N6wjr_WmTDqpB6tFkCSpmgEhk5w>
-    <xmx:JzffaXcUFyD4HYDG7lQ7UmA-Z57AsVIytTRLaANNLzakgEyMR1eQsw>
-    <xmx:JzffaZqyoqmHuit--UyuOxxeVZCvgQIJj2IQgoSy7Rh9rK65Psq2Llrb>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 02:58:46 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3704423a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 Apr 2026 06:58:44 +0000 (UTC)
-Date: Wed, 15 Apr 2026 08:58:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 02/12] t: prepare `test_must_fail ()` for `set -e`
-Message-ID: <ad83IHKLtO4-gsG-@pks.im>
-References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
- <20260413-b4-pks-tests-with-set-e-v1-2-5b83763a0e84@pks.im>
- <20260414062345.GA2902286@coredump.intra.peff.net>
- <xmqq5x5tbfsm.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSMAKhvU"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38e7b8e3f38so24062621fa.3
+        for <git@vger.kernel.org>; Wed, 15 Apr 2026 01:17:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776241021; x=1776845821; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=crscsUcDLJHHEiqNNi9O8aGPYFkcpH4uNV0U23Lz2kQ=;
+        b=jSMAKhvUHOf4LArbmi8xN/0dpBa+foXZcKJjW559pBd2WZry80feLEJVPId/ahZcAR
+         VzT7r3NV/3wtw4qNDjC8uNq0xXWB3KT42iMvspNk0P/9bZG6IFBgPwXolPGcEnvkSwED
+         AEUURUMtEDw8Ki0WukXepFTb46r+SuMPHOPQ5g9OL3Jb2iwo8zbd105W8pqWN+cnQh7W
+         JX0lbo+oxZAlfBYO15gjXuxPCTdq7yVKv48s/xp0ZKOehjYriBdGRr62ybRczmYAtIsj
+         T/u0Hnt7Qcll2k7Zd3ErWbRU0j33u9g3l/9iSadVEumtxidi7EFzXv5lKc5wEWM9KxIp
+         32XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776241021; x=1776845821;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=crscsUcDLJHHEiqNNi9O8aGPYFkcpH4uNV0U23Lz2kQ=;
+        b=ULMaADTIshsocbTubxzfr4DFgHbwUZnyRRxi9wHDM9S71sjdQA85q5aL4DPpwk9MnY
+         Jcz3k3b/szNtnWp8dhdHeq3I2uB4AlPKrB/w0NgIooqQsZmpk5azs0vF0l42E9ZTPnMI
+         spdnBH+ZrPFLnyccrcL7lu7zEyJnEra0IOLbXlVALSw/JGBSX+Rfuw7wmOF+brv3dTri
+         nBIHcwp7nr5OcZq9iOFvITLycVdp/u1yXi13iKK+6RqLOiU5t07ZQ8u7plveXvj8cqsV
+         iEWCnBvL05ZX0GQn6GDDOXJjyPQrmR3Zhm6oTDeXLv/dnEbzJAE80Wi+szxJ74hnmIqx
+         X9Ww==
+X-Forwarded-Encrypted: i=1; AFNElJ8XSX0i6AwgxX1WbVRcgu6VKGv8tL5L01CyM+O2dbmVEd5DFFNMclsqCcft/Iwm81hL++I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiaGUEF1Ml+MZlt65ZIaxvFaAdWurcjHFskY991XhPmPHDc62g
+	moC2PAKXHOUAa+dMc1sw/fgQdibOTJnSGRHJsYlIeRBUDOnR70E+WeyJ
+X-Gm-Gg: AeBDietUf5rlXA2PBVjHzNyoSfsoXQDsMFn3uvFhzWkJOduXmmh17a/35ySvTFpbQaJ
+	cuTbYPMO0Mny3fLrmcND4eVtsUR+Y4fJznfdEW5mV/coUam1zHn95Ais98jRXnO9N8gyrJRQZCd
+	liJ5Z1ip28nTM/J+Fk54EHUA6znvs6wvJexZMwv5dDSw7lt6IipVEiVaR/baggKLggMpdxUHKzP
+	9DoG41BKEzHDdPBwRyxDIaYRz06y1BhTeuUpJpiTozDD6YRPBPE3aWn/c2hTZvp2U/URNg0Yruz
+	IbFk/UYBioC0FGAYQg6ybzQrs7yoS9Inb15RrEn0J+JKxtJNrSOqk9A8SXpi2TgBWu47ghLvwFz
+	oRHTFwtBjoYxawJaW4hhRkmtnY1Tm9VbmbTI7QY8aHIdqZDVTn2BTyPblxIcM97mRfG7vaSzQ4D
+	TzGZrx5NbkfGUwWIpIkqh1i6ClqO60ThIw1+95s0png5676Yocc1Z1+84sAHZJ3T5psLEJicHv5
+	G64kH2ybudMxpAjdKPKfXqV/hPtZbUP
+X-Received: by 2002:a05:6512:32c1:b0:5a3:feed:31cc with SMTP id 2adb3069b0e04-5a3feed320emr3270763e87.24.1776241021222;
+        Wed, 15 Apr 2026 01:17:01 -0700 (PDT)
+Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a2fa62csm281601e87.59.2026.04.15.01.17.00
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 15 Apr 2026 01:17:00 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Wed, 15 Apr 2026 10:16:59 +0200
+Message-ID: <20260415081659.86783-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.rc1.77.g97a5d87c81
+In-Reply-To: <f012cc7e-14fa-40d2-84dc-7407fdceb36d@gmail.com>
+References: <f012cc7e-14fa-40d2-84dc-7407fdceb36d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5x5tbfsm.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 14, 2026 at 10:41:29AM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+> > +	if (old_branch_info.name)
+> > +		stash_label_base = old_branch_info.name;
+> > +	else if (old_branch_info.commit) {
+> > +		strbuf_add_unique_abbrev(&old_commit_shortname,
+> > +					 &old_branch_info.commit->object.oid,
+> > +					 DEFAULT_ABBREV);
+> > +		stash_label_base = old_commit_shortname.buf;
+> > +	}
+> > +
+> >   	if (do_merge) {
+> >   		ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
+> > +		if (ret && opts->merge) {
 > 
-> > On Mon, Apr 13, 2026 at 11:49:23AM +0200, Patrick Steinhardt wrote:
-> >
-> >> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> >> index f3af10fb7e..f8bc77619b 100644
-> >> --- a/t/test-lib-functions.sh
-> >> +++ b/t/test-lib-functions.sh
-> >> @@ -1195,8 +1195,12 @@ test_must_fail () {
-> >>  		echo >&7 "test_must_fail: only 'git' is allowed: $*"
-> >>  		return 1
-> >>  	fi
-> >> -	"$@" 2>&7
-> >> -	exit_code=$?
-> >> +	if "$@" 2>&7
-> >> +	then
-> >> +		exit_code=0
-> >> +	else
-> >> +		exit_code=$?
-> >> +	fi
-> >
-> > One subtle interaction here is that the command in "$@" will be run with
-> > "set -e" suppressed if it's a shell function (even if the body
-> > explicitly says "set -e").
-> >
-> > I think it's mostly academic since we don't tend to use "set -e" in the
-> > tests at all, but it may be an eventual gotcha.
-> 
-> Yeah, ugly, but this is tricky that they felt the need to explain it
-> with an example in the informative section X-<.
-> 
-> "set" is described in
-> 
->   https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_26
-> 
-> and the description for "-e" does not even talk about any function.
-> The application usage notes associated with the "set" gives this
-> 
->     Application writers should avoid relying on set -e within
->     functions. For example, in the following script:
-> 
->     set -e
->     start() {
->         some_server
->         echo some_server started successfully
->     }
->     start || echo >&2 some_server failed
-> 
->     the -e setting is ignored within the function body (because the
->     function is a command in an AND-OR list other than the
->     last). Therefore, if some_server fails, the function carries on to
->     echo "some_server started successfully", and the exit status of the
->     function is zero (which means "some_server failed" is not output).
-> 
-> which greatly helps.
+> As we saw above merge_working_tree() can return non-zero for a variety 
+> of reasons. We only want to try stashing if the call to unpack_trees() 
+> failed. Even then if you look at the list of errors in unpack-trees.h 
+> you'll see that only a few of them relate to problems that can be solved 
+> by stashing. The old code just tried merging whenever unpack_trees() 
+> failed so it probably not so bad to do the same here but we should not 
+> be stashing if merge_working_tree() returns before calling unpack_trees().
 
-The funny thing is that I discovered shells where this is not the case,
-and `set -e` _does_ extend into functions. Anyway, I think I'll follow
-Peff's suggestion and just enable `set -e` for Bash 5 and newer. This
-should ensure that the behaviour is a lot more uniform without having
-negative fallout on other platforms that don't use Bash, but we'd still
-get a failing CI as we use Bash in some of the jobs.
+What you are saying makes a lot of sense.
 
-Patrick
+I gave this a shot now, trying to return an error code that only attempts
+the stashing when it has a chance of improving the outcome. Not at all sure
+if it's correct though!
+
+> > +						   autostash_msg.buf);
+> > +			created_autostash = 1;
+> > +			ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
+> > +		}
+> >   		if (ret) {
+> 
+> I'm confused by this - if we stash then don't we expect the call to 
+> unpack_trees() in merge_working_tree() to succeed and therefore return 
+> 0? If opts->merge is false then we should not be trying to apply the 
+> stash when merge_working_tree() fails.
+
+I'm attempting to fix this by making call to apply_autostash_ref
+conditional on whether or not the autostash was actually created. Makes
+sense?
+
+
+Harald
