@@ -1,66 +1,103 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A465738AC8E
-	for <git@vger.kernel.org>; Tue, 14 Apr 2026 23:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776208094; cv=none; b=sdGWpcPxblF+TfiiWQcslp28l15n7TXwVnbLuEAMPuvIgocDWar7WkU5jmqxaWxvkt/naMXBzmvIKSglIb8XlK4xo9bgvuUtGpF6zqb70gU8qIqZq2EznuITETeYb3s9EVysfu6NLN5KRr6/qSXYvAawddhRyqq/2giQBDrHo4o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776208094; c=relaxed/simple;
-	bh=U7udbx/VCL2hC3Ix69YuV3z796dpJITxh1qbZgG0THY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IvVbxgvXDmcJaR/1mx7OHlwbYtAlK5SZPty89n0iABvoQjZ+l0p2LO5rpsEfqpclgqGzBfYVO8d0QtuBHRIcR/zwcdANdPN9/T+QvIa4s6r4jEwTxQrywYXj2JX0If+Xw80uxOjIOesnXY1QmTiDTDD1Fu4QswwF6vsml/N5Ic8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SaV88Oyn; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0D640DFCB
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 00:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776211566; cv=pass; b=Qjal44HxBEvsMAmg1nfmshnlEVET9rfIqlRYO0QuPAMY/2A7o9wtqM2luhHU1jglGbGxBey6odzzlsE9Bt/pRLIDZc8dmc8/dNUFrb5NGt6pIIJB2nExiv1GwXgDMAW2IqiX+yeCmp+NlEdGBnwTSsoUHImQKuY2PCm32Ms7W2I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776211566; c=relaxed/simple;
+	bh=jqN8Yd8DlaxHaGEOekBvKf1k9gIsn7ylAFzkrGBLmDo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=cZJ69X3eyOOCVLjbQb+Lm6i2//g0YsR4kf55ykHA75vpOnXNbq+y4j1M6Cn3JCtya1BvwIUQY8yLbZCqJ9gi04LXkFqzVWiOiCRPUEeBmMY4sWXDjDOJMMyZgHnQqdtof0q5VqTBW2VtTiA1IJZWEt0eHGv1hI0yi5U+aBFof3E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qcY8Xk12; arc=pass smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SaV88Oyn"
-Received: (qmail 351028 invoked by uid 106); 14 Apr 2026 23:08:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=U7udbx/VCL2hC3Ix69YuV3z796dpJITxh1qbZgG0THY=; b=SaV88Oyntz7iFw8JilhJTZYiv11GwkBpHlRBHiRo/A/OdmtjM06VwPniXKiW0DSk/t9WvalnB8fPMZxuf/xXeo4TlZMNwt5qXvW9yBsYFsjWH9bN3LqGZB2L1nuOZ+8cTqqcAkOD9jJT69HX/eE1qRZrYPg4KmCS/+p8dRFLNOFcKdAsa3lmOqKWu5QggQRArkDebuBWpjBqOpa7D5Y7/iTRrfXl+/Cbnq0WeIwI/q0czMWrUqqLl+oXhXZWdIjDe3EdIaK8pM+GNJDZVPWLzasf+UEIVokb8vXxWNNRjfJyB3LndQRLteUhZxZgSHVNUNRBkrlAh8Xb2SIGxItCAQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Apr 2026 23:08:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 587691 invoked by uid 111); 14 Apr 2026 23:08:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Apr 2026 19:08:11 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 14 Apr 2026 19:08:10 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
- commands for `set -e`
-Message-ID: <20260414230810.GA3528448@coredump.intra.peff.net>
-References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
- <20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
- <xmqqeckifq59.fsf@gitster.g>
- <xmqq340yfivf.fsf@gitster.g>
- <ad3rgbgadjIZRgaz@pks.im>
- <20260414220347.GA3475127@coredump.intra.peff.net>
- <20260414225206.GA3486072@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qcY8Xk12"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-12714f01940so322004c88.0
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 17:06:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776211564; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ad+bdadR+5i2tLWFi63AvtvxtalUqUJICjEUcvdt2UT6UnNJcSijQhvVrD/UG6G+8A
+         773JBn3UEFcPNLbJFeRS2eL6kWNL4STB/0au4m/p1WqHR1h6Iy/L5uAAQDR0gi5CiGj4
+         Sr8fHPXeqN4FpBcEGHvVLAsEutw8hOFHoXyGySy5XBGQBazlLeXtjQylnbqTA6BfrmFN
+         TOVW7rvz3barLQl+H6eoF3BMwalLd5k8mzYk00k6tUR24zZXuUWVKxWeoz1FMtLNXcZg
+         wzy1bkBhhbaqW+c/kVnBRjq+Qzl+QF1KNl0caba4D7NimCJtUWVrMk7If8s5I/xuZuqy
+         hrcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=jqN8Yd8DlaxHaGEOekBvKf1k9gIsn7ylAFzkrGBLmDo=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=bsvjbNlYuDFV2N2hTtgaJZyevWt17lKOXXXG+pfWyxzsuxbFeED82MF4F4QU9CSYuf
+         3jjko6OijfUtCBQRCsmEiVUVn2jwOhg4P4W/yKFPDvmv8VCGGjjUjDSunNBRMGcLn3kI
+         LuY1ey8GMbloswci2OHOC6Iq+qtHkp3ra4i4k0iJIS0ueyxvQ5k9TT6soV4F7Y7DUOu6
+         r1McWdQ5bEDqJUuoxdBTacUKAyzosVcKWCw+NiegbaBhFrAzniOKQtMJmMa7aCUwf90z
+         3x5j1lgaOHE10/gvE035m4IuBWCD97J46FuCZDEEq54XccPgkTa2ANu1U1EBo9i4iqhW
+         iISg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776211564; x=1776816364; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jqN8Yd8DlaxHaGEOekBvKf1k9gIsn7ylAFzkrGBLmDo=;
+        b=qcY8Xk12qGZm1wNswsrOCDUN+xvpg7KPxB7Xj7Dvd3VvQm4+GrjNnwvYupQiezGjcl
+         uKiBt63gzk6M5G1ZF8tLxWo/3qOFZnJ3KOKrQ9xiM9xomsy9XvqOpPt3DHdQ/NGXghEY
+         IjBnh59dCfaf6DKzAN1CmuGKurzo0q3uburSXvGkX1hCkqo6iYjMNL6WXe6xik8KPBTq
+         AHkk44gIHChSiRYlKgoyEoYqF6xuan/fPygDq+baH1mv6aVC/ytQwEuDxiVW6rUuVDE9
+         w+M8RIaZvoWkpsWYz2Y/9t0+G9C3ypIWqprxR8egkECz8AVJ/p0uJXOSkhaXypzXDUDV
+         kSYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776211564; x=1776816364;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jqN8Yd8DlaxHaGEOekBvKf1k9gIsn7ylAFzkrGBLmDo=;
+        b=hpqYKs6wsFIl3w3S6Rgc/LTRcnz4c8VxdGeOUHi+mjSD18WJtO8e3LpGdQZLHtIQlu
+         WL2vSQvZytYpNOOnmY5RTGf3M2YJAOFeEqn6yucWQkezOK9Jmj9Uw47Y+oZFhECtXNWo
+         8rEtU94PfR2LWrbr4tcZCmuLz2sIwGL27kDtodx6Cx2FTFB2XW0zS1y0caLu694oqTRP
+         o4UWqxX1eakEcd98gzh3gfVSft1EiLPkKMVpOS0WqIHABmGuNqWOeB3bS7E48XWY0R00
+         e5SPrRCce9WGqyVe48OrM+P3k2lHvhcGBoTim1VGI60eCaE0V9T/SKF67xv8Est48mKy
+         H7Zw==
+X-Gm-Message-State: AOJu0YwYCiIF9l3HVvSvNSbkcpPxP2Qs39L/MaeKmz3ZRSBiKXJYabNh
+	d0FMsFBOHRxZWsy47Gq07uc3O431wqpW8T9nLCX60E0IBNpl7QxDFXQpm7MDtjlDXpg/wECO0I5
+	XjPlTHdDZs6dmJbKnAGSyKPh11TnrXPWmm9q9
+X-Gm-Gg: AeBDieswNkveePixX5Ak46MpqldRqLnZeVqZld124AP9JdS3uzZIkr8nuPMksLDyRb8
+	0d9LRfPP6rQHEYeW6jACAtx4brY42HAs3FlmTGwCNQqgnXWgXgwYeTrNTUNdRlTgGxmQXktkObf
+	fRwekZwE2FDU7wQjUw4qaWCxql8hzN3YVB6rkv+YVG7ZnFRgy1Bi9WugARDlj21xjvFrYDTv+52
+	Z3JrB7HEAGQmfnZxFx1Q1PT+iHbqAcrKMqfs7s3jsGbFb9V7KpgPkmpC4MmwwTw2E3waUeqie34
+	SU+2uT/Ww5Ubcc2dh+fM/8w/6gOYbVCULjPletWo
+X-Received: by 2002:a05:7301:6091:b0:2c7:2cac:8149 with SMTP id
+ 5a478bee46e88-2de7c0785e2mr76545eec.7.1776211563599; Tue, 14 Apr 2026
+ 17:06:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260414225206.GA3486072@coredump.intra.peff.net>
+From: Alix Brunet <alixbrunetcontact@gmail.com>
+Date: Wed, 15 Apr 2026 02:05:50 +0200
+X-Gm-Features: AQROBzA_zFOV_5x1KzeQcOcH67C4fLplSCNfxqHpQ63OIHSLOPKK5_5E0NCS9IE
+Message-ID: <CAPCeX5b0T6WOnr-aCWV0CfMvPSk0KgzbnshgYgREELWjdGe=hw@mail.gmail.com>
+Subject: git fetch second argument parsing inconsistency
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Apr 14, 2026 at 06:52:07PM -0400, Jeff King wrote:
+Hello team.
 
-> Short of requiring a third-party shell, the only workaround I can think
-> of is to manually "set +e" before using "command", and then restore it
-> with "set -e". Gross.
+I just "discovered" that the git fetch second argument parsing is
+inconsistent
 
-I guess one other option is to avoid turning on "set -e" at all for
-known-buggy shells. We are not relying on it working everywhere, but
-rather hoping that if at least one platform uses it, it will find
-programming errors in the test script.
+`git fetch <url>` silently fails, but `git fetch <url> ""` fetches the
+default branch
 
-Personally, I am still skeptical that all of this is worth it versus
-just checking stderr.
+I quoted "discovered" because imagine this might have been discovered
+before, but it took me too long to figure out, and the docs page (
+https://git-scm.com/docs/git-fetch ) doesn't mention it either.
 
--Peff
+I figure this is either an unwanted behavior, an error that should not be
+silent, or at the very least something that needs documentation.
+
+Sincerely,
+Malix - https://github.com/Malix-Labs
