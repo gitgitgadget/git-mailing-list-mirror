@@ -1,127 +1,118 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3886031282C
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 21:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C127C19D8BC
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 21:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776287088; cv=none; b=PNwrnqDqfT9PdxatfUewpMWc5+Qz7thIWUUC/+/dVGdUWZQpbfsjR6tKCKFSPRb82EjPgrtZKm+VP0zU1NS0oOpCrbZluGE2aeWVhCTyVcIYvt5hIvXu5anYREd0u+VmZW0cALmnNyzUeB5lxT+2eaTbYnthxjeCUmTmMlbybIo=
+	t=1776287888; cv=none; b=aTnUO3diUKZoQljwGUoOFNveRpyA7aEmwbvLwWVty98oOzhXdp5VFsQSiPsPa12LttDKYrQ6RyoSuHX586AIHdRHTs7vjHYICtXJRjH3belh3BuBN8ClboKCT+hTwZ5nzVoVSjtQjfjRekRAei2CF60zXhCi1MxU7nRkS3WWd1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776287088; c=relaxed/simple;
-	bh=TDp+x1YwPDjKUdu1pADLNCURhWOIZN3/0w6iYz9CIUY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uwiHvuu8mHnFxYRXdbIcAp9nWkoodKu0bTyejpIMKRiGb7aWH6XEFTf0DaAoQGK3BVWsP/ErMURDIFvpn1XVS4dPKyuuRdiu4EUKvTjm51LTpe6n4pTg4M6l5bjxdoyB+Yiy8YIErQKnlUnVnDUIX8aPqhHubiE0ZqLMzLPBiK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tI+aQky9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eFS/tQ9U; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776287888; c=relaxed/simple;
+	bh=/7h+aC6MBVf7J5P9g9R7gehyR6DD6b4VLhU+Yv5wncA=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=CAu9+j7bvor7/dkhoQVS5zcBz4K6bFCkptdImrJDS1Vwpxb7pB/79+ziTeeVYFMVMIru3BNAS8zfpL3CYYP835o4t/KuMM6Y6v+bjwYXsJuoZk8T515IKcp+Txu+8J1Vw+lhb9rYEQxFvuSJs9xP0IndX7BNbaqQ5pjirRp10hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O07MEeDK; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tI+aQky9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eFS/tQ9U"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 26B761D0025C;
-	Wed, 15 Apr 2026 17:04:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 15 Apr 2026 17:04:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776287085; x=1776373485; bh=zeLdErpDQF
-	TK/bsK4k8K/QWloGQMOjPGwFV9WzzlXJs=; b=tI+aQky929NBuWPxGcz2O/doPM
-	2THiVJ6EIpynZnci0SyuRCguN8xieTY7TEJVHSYU8O/HqdPPRaVV9SpyU3CTxBhD
-	7REvz2VClKj/NdtkPBURxOPT37KpBVgVKA/GqMJkyrNfPrSbYwGFjT//BVuzibTl
-	KMkL3w6JZKdsNtIjD58kcjP4F//KV6PsIFFLErVuK5hgXUdKmmgWr9B6z0cEGIFy
-	pUTP9UeicNeCpDrRSJZz4F6uKHDBPta+YUFVyHycpQDwhvwM7OcfBcONMOB4LGcK
-	dXo6ROU8mOGqdJrqB6ykM9Tjb4qhuhiWGg5rnFyb0E4uYEov5aSWUIe0Y3og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776287085; x=1776373485; bh=zeLdErpDQFTK/bsK4k8K/QWloGQMOjPGwFV
-	9WzzlXJs=; b=eFS/tQ9UQLeJC1BDGU4p4pcoXTSosRsmySQvk/JC/vnWhNFXzk5
-	JoavKJHGmI6QeiD/liSpoMgPd4NpF1c4Eqf+NkEC+dsACJPkatSOJ8RIuAk1SC2v
-	vO/soAfZuV9nqPA3nrR95tX60yibixUDB55vALj6a1G9rVWri6XkLpApGo/rr+bv
-	3zILiZSAk7p5Z3ILqPR75nLRhHEcv4x2VscPQkuciyfrHVExURUzR42OB6MpLKjw
-	OW0dtDmRliOi8TfuEhUEtITPNP+rEV5aVIz3Kql3YgCHMY4iyOtkX+Hd+9Zfzwrr
-	bRiJZ8XFIS4pWqDXTESD60q2BkIXJQyt1uw==
-X-ME-Sender: <xms:bf3faUqEy9nqClc0Ud-bT6QuI_ScfW2pDVTMx7XJZ3c0Kdr--DviDw>
-    <xme:bf3faRqQ6BftC67mH0JHMMlppCQVC_2bgKATRd62o1fP4oo9Q7D7IVgUYQt39AphS
-    -SrU_9sZbVqy1MHanGhpr7YmpWv1lzOgE0mXwjnxTjnIVqGRGWIpA>
-X-ME-Received: <xmr:bf3faePEXvFjK0VWKXwi4NAOM2UWqcy01YjMAY9CK9wk2-8zpK3a9FYJbAZT1gzwwAwIjUHXQcqPkbYat9gBJ6U78Yb9rMgHSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeghedufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgv
-    shdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bf3faazUoR5FCmdZVJJBtefyHIeXYtGULxwYq9Z1W4yVjSbfLy-CrQ>
-    <xmx:bf3faftKy1OycKc6z16-AwA-5eCDtnL2Jmm5D8y9OWluEhxsS4J-dw>
-    <xmx:bf3fab685mpMUGUQTzJ7nD04_FGU7urUZaWeWm3u2FNqw0TIz4TL5A>
-    <xmx:bf3faWQk5Bz70EXZwpPBdo3eBEu60dAHkON7a06qhxvmNKIIULj65Q>
-    <xmx:bf3faULX8g0K1vAlPnMMJRm-dmfhCvd-P6d47ms6JBk7lQEOl0s8WYn3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Apr 2026 17:04:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
-In-Reply-To: <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de> (Johannes
-	Schindelin's message of "Wed, 15 Apr 2026 22:50:41 +0200 (CEST)")
-References: <xmqqqzohd0sh.fsf@gitster.g>
-	<8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
-Date: Wed, 15 Apr 2026 14:04:44 -0700
-Message-ID: <xmqq5x5s540j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O07MEeDK"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-79ab3e26cceso71673527b3.3
+        for <git@vger.kernel.org>; Wed, 15 Apr 2026 14:18:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776287887; x=1776892687; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6kgJ0J6SBjjvbm9ksIfeedVHQ9OIzSlZLFnyh7lDSN4=;
+        b=O07MEeDKGmFidFRryrt0ge4xvF7QBL53SlKJ5bQLcIxWUWp8YZtXvSFKMslMlTSmvS
+         oCgTFvnoF23f2cIwK/9cpcnP8wPS2TtJXKMf3tYoQRVXSKBoCpoVWh5DgMhmeKYGdUJe
+         ky+hjRO6UezJpdLJCvEm9Sd3P8VxYFZJzTPFL663aleLv7jv+YNcWXVDWp4U9lyFvdkA
+         qEA7lGlvJCdlipIxT/c/QRD069GR9Bhci3u7a5JRePBp+xVTnLQtjbdej5QVEybu8KfB
+         L5qleEo2KvghCY67eDjxGBcwLJDmb6woycYnUeqE4POEv+xUK2xvH3zej1Eq7Z9Gek7e
+         eOkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776287887; x=1776892687;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6kgJ0J6SBjjvbm9ksIfeedVHQ9OIzSlZLFnyh7lDSN4=;
+        b=DqDWDWJjhaPQbn8++aZXcOv88i3cwZYq1VFL73N+fjhh0wyTJx/DTpkgkfxUXzFMg6
+         JGMVAiagd4r31cW3vAEe4rTIZko1DjEMQqeew4Kc4yCessEF9Ja/wyEnd/bRMWoA/BYs
+         RjGWgBgDLHqGMQTSsKR/jWtDLvq5rKC+q3nG36u9cG0VnTlgDQvIRrJPpNiutGlA+CVe
+         nSwCg3lRqULcHkWUa27b4AlpCuKAWxWJ7lL657o/jqBW1Ow+H/33ADPa37OkcV64PU9P
+         ZMpds2AQX5UCzwFhsjj9h/5oIA9ogMsEPcMLjDoVKs1NkTdcN/3QA2Apvvt/+qzD/StJ
+         Rdmg==
+X-Forwarded-Encrypted: i=1; AFNElJ/kwRfl7W0x1K82Wu7cYejzOOdGk7Rb97d9JzyIEKVjjVbPdF9BKUM2HJC73CwjqZ4/09g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YycO6idf+7gSyu3qJVTZQyeapA5Qua7TcAAJcS17G5qmd8IJvHG
+	lbOD6BiBbBOoxY6rpEscJQKU0Ga4MzaxeAtAkONYQsczsL8JnIH68vyb
+X-Gm-Gg: AeBDievtqGOzTYaRhCe8zPAyYuW1xhqJ2PDAsMEsNC4s/1r6CRvNhJ0zvRpYOESXFWL
+	nOUfJGZDAKSsV0p46kz4HrpTBDIPFB3MyPVOUnoLY2OoqZJwLfE2vkhXQarr4We5Nxi4K2qCZua
+	EPZs7o0sSzRTYu3VAOZ2jAmFR5n3GARJeJpjJp2a3JdoL3+sLMbAUCzOkfglDGTg0aMAnZV6iYY
+	KI1w5Wb3P7LOn5iiYfyZCOk/HzbIzm5DK8bsjN5EV8sv1jD3XcCvvjH3kGNMQWnKpzM5yD8kmjM
+	4PIjG5d9aE3Wtjef3h1EsDUonkEzY8uc7KNeLDVVfIdaQn/RTiMVBczovgjp84ngT2x+8Z+KTGD
+	8motw84xFxuxf8bhDq6ntmGa2m9v/+J+2usjwPdvi/mDqNxHJWSAdj13ozNgV5AqpjrlNwcfDfP
+	u8ZzLXkjFABfnm4fQUS7Vt81O458OPCfLcOEw74uJORzz1l69KMNimWYEUvvtfk2xz/W3UufOVv
+	kCzcEpMu0BMpx+958e4on1h8RUlGgOYY1AaETrbnKXqK2Enf/IMgfw=
+X-Received: by 2002:a05:690c:7108:b0:7b3:f33:35e5 with SMTP id 00721157ae682-7b30f334018mr149384807b3.16.1776287886685;
+        Wed, 15 Apr 2026 14:18:06 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:4cb2:f26:96d0:1bb3])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b7667f8de7sm14815707b3.19.2026.04.15.14.18.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Apr 2026 14:18:06 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v15 00/13] fsmonitor: implement filesystem change listener for Linux
+Date: Wed, 15 Apr 2026 17:17:55 -0400
+Message-Id: <57A4EEF1-6D80-4CCB-9D42-EB919A3A7692@gmail.com>
+References: <xmqq5x5s6p3w.fsf@gitster.g>
+Cc: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Paul Tarjan <paul@paultarjan.com>,
+ =?utf-8?Q?G=C3=A1bor_SZEDER?= <szeder.dev@gmail.com>,
+ Jeff King <peff@peff.net>, Paul Tarjan <github@paulisageek.com>
+In-Reply-To: <xmqq5x5s6p3w.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->>  * Further work on incremental repacking using MIDX/bitmap
->
-> I just noticed that a fetch with v2.54.0-rc2 into an existing repository
-> rendered it unusable for Git v2.53.0:
->
->   fatal: multi-pack-index version 2 not recognized
->
-> Is it possible that v2.54.0-rc2 forcefully uses a MIDX version that has
-> _just_ been introduced?
->
-> If so, that might have been a premature bump of the default MIDX version,
-> if even the preceding Git version fails to handle that MIDX version. It is
-> guaranteed to cause substantial problems in setups where e.g. libgit2 or
-> JGit is expected to be used interchangeably with Git. It also causes
-> problems when users have to downgrade Git, or use several Git versions
-> side by side (e.g. using GitHub Desktop, which bundles its own version of
-> Git).
+>=20
+> Le 15 avr. 2026 =C3=A0 14:43, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFBen Knoble <ben.knoble@gmail.com> writes:
+>=20
+>>>> Le 15 avr. 2026 =C3=A0 09:27, Paul Tarjan via GitGitGadget <gitgitgadge=
+t@gmail.com> a =C3=A9crit :
+>>>=20
+>>> =EF=BB=BFThis series implements the built-in fsmonitor daemon for Linux u=
+sing the
+>>> inotify API, bringing it to feature parity with the existing Windows and=
 
-Is b2ec8e90 (midx: do not require packs to be sorted in
-lexicographic order, 2026-02-24), which says
+>>> macOS implementations. It also fixes two memory leaks in the
+>>> platform-independent daemon code and deduplicates the IPC and settings l=
+ogic
+>>> that is now shared between macOS and Linux.
+>>=20
+>> Troubleshooting a Gentoo build failure of next has me pretty
+>> convinced this topic is in there already. Junio should probably
+>> check my math, but I think that means we want to see fixes on top
+>> of that base now (unless we are reverting this topic from next and
+>> queuing a new version?).
+>>=20
+>> (The failure is a Gentoo-ism; we carry a patch that stops applying
+>> with this series. Not anything this project needs to worry about.)
+>=20
+> I reverted it yesterday out of 'next'.  I do not recall I had a
+> chance to push it out, but my intention is keep this round in 'seen'
+> but out of 'next' until people are happy with it (which means folks
+> who test diligently like you do would need to peek into 'seen' as
+> well as 'next').
 
-    This change produces MIDXs which may not be correctly read with external
-    tools or older versions of Git. Though older versions of Git know how to
-    gracefully degrade and ignore any MIDX(s) they consider corrupt,
-    external tools may not be as robust. To avoid unintentionally breaking
-    any such tools, guard this change behind a version bump in the MIDX's
-    on-disk format.
-    
-relevant?  The version bump seems to be doing more harm to "older
-versions of Git" that "know how to gracefully degrade" by not
-allowing them to degrade.
-
-Taylor, perhaps you would want to add some instructions on how to
-recover?  Like "rm -f .git/objects/pack/*.midx" or something?
-
-Thanks, all.
+Thanks. Hopefully I=E2=80=99ll get to both seen and next soon.=20=
