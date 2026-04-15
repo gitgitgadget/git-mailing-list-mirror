@@ -1,302 +1,174 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6870F10785
-	for <git@vger.kernel.org>; Wed, 15 Apr 2026 00:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776212097; cv=pass; b=PS4gjST27afWvpKwZEl5seOs1/Mii0tnSKEIEmWi0fkM9PyzB6YtjXM2BzZVUssk1uEuGdr86lNHKz4E0IJnXoQHi9wrH4g9cvBU2SLjrw5KmA5JaW8/srd7JVXxs6ChhSdFwVFnh31KXs6yotIVE2jtr/hf7tFslgwLybb5hPg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776212097; c=relaxed/simple;
-	bh=Q/we6USFeOrL23SJ+A1bXbmp345nZIIhbgIh8i4MHPY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=LvS6prlRPjN/jyESRTuU0lcmqRuxmXnZYUL4pez78OeYRZcHdUB21HW//BBA8AxPqH0hedcE8JBJrcspF53QjZu0pwoHSW3AzLmpq89lFJYcnoKpG6zjSxTpa1R+IKsaXiKtkD3ei3zMHygSrQxE55G8h+B9+bvEs1S4qv4og54=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qVSszDTZ; arc=pass smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6398298CAB
+	for <git@vger.kernel.org>; Wed, 15 Apr 2026 02:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776220068; cv=none; b=ASroLc/TllKMlR+kHP6X7NvnNia96X+MDiEPjS+BpnsblAomK4L+mo7rvlecqbO8d0X1fz7F+kl3OwPKVxFRs7aU+Q+n2CqHOQ8tdOu320Iemv7UK76sZ7WkjZKScN8l7T7HHZ42QHnFeWIvwT4QBCo9NnwL8Pm6w5YsoxPPYoo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776220068; c=relaxed/simple;
+	bh=c4uE7GvRpO1LapB1HobWcxSNs/UfQI4zY3RlaEpluoA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=GDvmz2aTDYEN6xjbaRJ+iFhMtisTx81cCMMNMye1zNFGpYC5J1oveixF2HKNMTpHq1Bsdu5eiimbFSYIhYS5u/AnpQAqWl0MMV7zNAQDA3YqIuKwNk1B+UKT/V7zioMuGC2zgWD9VbcNT73yFotBH+AUFqcfZQTm0SnXwGqMa8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSLCupfE; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qVSszDTZ"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79a7109f568so73086777b3.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2026 17:14:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776212095; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UPSfdNbmT7JJ5FPMFp4VIhQIJXFWXsoL7y0in3lHKLZatgIvOfJcpmYK0hML6f0W8v
-         RtosXvrXpaWFlNZWfLMeRRZpA6hptXd9PiEpeeVUU9okaRy6biInf9k8tFgHs6+GX4z2
-         tbVcY44aXyPk+MWqR/a+YYEoZhtkKsh4bVVh7BI7pjKll9463KeZc0mHOG82fHq6i/sT
-         9jTdufhisS/p13AjbXJ63N7Y58LT8PyPt/QV07wwlL+LIhHgR6CBVPjIhh+6b1dT+gd3
-         0JDhvR3SoKpFn86+vqc4YwnZE+N9iW5c9ZTd4HbI0mmWHOnKyfE1twmVxLSdBsErY+iZ
-         IM+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=Q/we6USFeOrL23SJ+A1bXbmp345nZIIhbgIh8i4MHPY=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=DcfFH1iK+639GbL2Rjb8u1yKVoIJEEj5SiGrIQPjqZkPXxCEoQL4F61/DNVZYLGKJd
-         LYFPFlOP2x/+ZUezsMjEWGQTyvcqC4RMfunaZfaKGoSWAEKamrJqqpJ/Hf8g52QALtDF
-         mv9+hBP/69vXO2oo4tZ9BsaKgOQgTTRleA45n3EZ8+EDP+djG4R8MFJl1FCK21pIv4pc
-         v4pJeifeRNy9t7WKzUfGH3xNnLhAX0810JpFZ7w4kN4s5w6Jmz70qBXQ7qdMTg6WY+v5
-         7lN/67+m2+ICg8Zpnh8+58wUdIy+bQclzp5E+JMhzMvoWSptCxA+LGXps2p0H9Cc0iT6
-         6+MQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSLCupfE"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8cd71fb9f06so390811685a.2
+        for <git@vger.kernel.org>; Tue, 14 Apr 2026 19:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776212095; x=1776816895; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Q/we6USFeOrL23SJ+A1bXbmp345nZIIhbgIh8i4MHPY=;
-        b=qVSszDTZGKOKGjv06w8pC48j0j1qraVMR+TTx8x6ReUmqj7RjJSksObDFtrxNHB4OH
-         +WxWpYjyiujYQ1tEbn2w1C6ELZaCi7uKX+P6r6Dfrth9AtDQfvK7OkXSbmFvzSP+CpGc
-         jnhlwBHK4Y5xx2Z8zOg+zXedJ1iQRS0KFLLPoBXSIcY8aCb5QxNzTW2uqBItJpOIpoq/
-         H/7RTMbF5BVVsnaGiWLQ6wo4Fw+e7I33Pd5HP6A3gnHHFbcJ/P9gHf/ZxkUw7oNUFUJQ
-         MD4nFDuqQoToaPBJUsWZ1NTfMOPGL5R+NtDGZrcsDXUVSFSDKNQJ3qoDC4AB2gExGWUY
-         sgKg==
+        d=gmail.com; s=20251104; t=1776220065; x=1776824865; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t+rCuLdfTelJGToDVvn3nnRjHn/eLEYm1f0Hm2sn0rs=;
+        b=kSLCupfEZYX3jCum2+TydQ2D22ORruKJuZU2OMETXB/Uz+nS5uOdPu1ixAuw/VuOry
+         GnJ2L6HPfb78t4pvwV1bxqIGBgFgWwm749up35YC6Hw78v2ZfSYEXm0qIFNnSJpvrBKp
+         pkf/nfRpvMEF0+20bdQoZ8cYee3tVIGYxRsrD7pArq4mwVmxSp68DlEBqcVr61WDEvmn
+         Vw4tUAr6FQvdU6BK6h+zkn/P50B+4guM/3J0kLvqXs8hl2Allzw3lWw5r8X/2MEvFrkZ
+         ULy0KMXAPyLbBOOBstLtv7TgqHuQUhHSdwy2IdlsW325i9INlQsognAV2fkVpL6qMIPh
+         /plA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776212095; x=1776816895;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q/we6USFeOrL23SJ+A1bXbmp345nZIIhbgIh8i4MHPY=;
-        b=rQv6kBczSFelM/mhAo+oy+mEqelv7BC3a8j/+2k81jF4HESTIt1uqypG89cycDQi6p
-         n7FsmktapzMumF/nPQbibiryQpal6VHAB0GZeZigEYwdT0//ZcJTD1+j6pbqVX/lBfZc
-         mAAexA5z39pjUlJrLf7tNO7xmquSL5HGHhxl0bGv6EYCrMhBsV1VH4AdahF7CEJ1izDt
-         dT6LM1tYi9z2xWiZBZCp9mvwhWCJFr+iIYAIUw6aXmsyluMRBuA6sPNHHZ6JOJFroQL/
-         fE3vWfniAoUT7VY0WnSfrzzDf11U4H44XTTYCniYk3s7HAkHX1GoB4gRghlZ/DnE7hCn
-         h23w==
-X-Gm-Message-State: AOJu0YwGXfQImVEkldf7H+9L64q2Ykk6m8U1lyNFSpRkLshOYCYa2LAJ
-	4NHsf5+v5CV+j28YkPpkK6FdrMj4vTxWe8S+XTkCK+R+HtijV5P/cXUJJec5FhVu3go6xBfE8WN
-	1+769RVI1GKe+6/jXKTrv919q5+O0Le7JDkUd
-X-Gm-Gg: AeBDieuHSJKmZCuiuHSDWdjkcWoEgZg+Yn3kEm0eWh4blzAvz7uN2U5Jc0hxTmRN1Ji
-	nSI0XcdimwO994sYftOKUPYbAkJVW3UJqfca1EYv8NwwbHpuEdz75s3rU/53RBIkCe4lcRwfq1q
-	8UtEn0cvp5bsX035QBG7caBS2yLNISgmJq0eLy41Q7DvaqFfEONC20z9QGMfcTq/HUW7SNVPaag
-	rR72ZqzpzCYyBZso4AONmvePrm7ngw1NbSK5ldi+17MeZy4MNn7mbmBmhFWe5G/AfSgZTE8GuWK
-	W7uoOmSfkcC2HEjR6EkNHIMYjd6nB8w3+8Zqo+ff4dnlHqq01uIrIyO6eOT881TwMIoAaobADTU
-	pTAU=
-X-Received: by 2002:a05:690c:6983:b0:7b4:378c:f732 with SMTP id
- 00721157ae682-7b4378cf950mr75629797b3.46.1776212095002; Tue, 14 Apr 2026
- 17:14:55 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1776220065; x=1776824865;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=t+rCuLdfTelJGToDVvn3nnRjHn/eLEYm1f0Hm2sn0rs=;
+        b=WkOQZXzNu3odXB+3XduxoJvsHuGCbYmhVP9a9YtI2EDJazhaMSOJEfphJPBa5vVZbh
+         6eEEUySvDEiir8pPdgHt2wSHdMrSzqLXtCkluKnOT6vFmKesB4jlaXwjOFtQXyhM51/t
+         f0fpFUKu/CzBT6nvmLdrH6ZMOmxoiwXP2z168l/A5mSLwJO3Tv5kaFZ85U3vZ8mjPQfz
+         17ysiPwjUVBpBGVVeu5c0Ao7+cldvH7wPcMAg0vaaMKjUaJUGyVHqnkNfumk4qFbSV5T
+         q/mkBr7uBy45KJEQEVRhce3lmsRVOrNBE3OFatBllfoPbNyx6oqmiL/AG6qlV1ZFbXtI
+         8DpQ==
+X-Gm-Message-State: AOJu0YxlQ7IPKjhlvV9IKVseOErrJ5Bgp1Rw26Q1p4fkuQO8VtLX1l7V
+	dacWAhPF7Z3Z1smut9KT++4aHtezSuuGQudVuZvpPxynMnBsEi/dt3TWz5OOLA==
+X-Gm-Gg: AeBDietoRKrHwh2XrgIKGYcC7qKJS0yvLX6YkL2e4P8AfnYCywy+Cwhrx/SWCvEywVe
+	GySQE17+gaX24x6nMgAp/w6saewrqjsBfOeqY7uOmHB139omMT+l+R9+LCLnylcCNhRNX1ocETX
+	Wxqw6q4w0Bn6cAvJo6XPVh1PqGSRzhznn/rHRBD2BxKXCpPG/DDWZLCsSsGN1EwGM4JeuU0B4fU
+	HpF+SXq+8cQ5B3hPZoQOceBGomjGK1iCrAhElivNl07kmTCxjMbRYodc4X3DZD9wzScI7vxNvW9
+	gJVRMvc55UqxEMq3H5rjKoCsOEjv9VY3IVoZE75amaGeoGdXkIDFksTg3rMWphudYzUNH5BrRgk
+	3d7sZyBMfrpeQCV6WI8G9HV6F3QtlMwL+TIuJXEhK3dFMZHvXGCNy1sL3STBrpJR9qeO88zkJqo
+	zVBmsro8ux3pFSrCYzzkRGm8BW+7Q=
+X-Received: by 2002:a05:620a:a29b:20b0:8de:d009:2ff2 with SMTP id af79cd13be357-8ded0093040mr1804837285a.25.1776220065186;
+        Tue, 14 Apr 2026 19:27:45 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.201.35])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e4ef33b477sm23894985a.20.2026.04.14.19.27.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2026 19:27:44 -0700 (PDT)
+Message-Id: <pull.2000.v4.git.1776220063.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2000.v3.git.1768519120.gitgitgadget@gmail.com>
+References: <pull.2000.v3.git.1768519120.gitgitgadget@gmail.com>
+From: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 15 Apr 2026 02:27:41 +0000
+Subject: [PATCH v4 0/2] userdiff: extend Scheme support to cover other Lisp dialects
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: JAM <kratsbinovish@gmail.com>
-Date: Wed, 15 Apr 2026 02:14:43 +0200
-X-Gm-Features: AQROBzCboavZFuVquz90573UuzXpKbjptCzXXUtIFM-V71BcHKduoUKS3SfUuFA
-Message-ID: <CAPSFGa8uu9CEEPH3XVjfN5VEOfcnb2p8YgXVuansjKc0S2S_tA@mail.gmail.com>
-Subject: [RFC] worktree: add --recurse-submodules support to git worktree add
 To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000f8589b064f749a0c"
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
+    Jaydeep P Das <jaydeepjd.8914@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    "Scott L. Burson" <Scott@sympoiesis.com>
 
---000000000000f8589b064f749a0c
-Content-Type: multipart/alternative; boundary="000000000000f8589b064f749a0a"
+Common Lisp, Emacs Lisp, and other dialects have some top-level forms, most
+importantly 'defun', that are not matched by the current Scheme pattern.
+Also, it is common in these dialects, when defining user macros intended as
+top-level forms, to prefix their names with "def" instead of "define"; such
+forms are also not currently matched. Some such forms don't even begin with
+"def".
 
---000000000000f8589b064f749a0a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On the other hand, it is an established formatting convention in the Lisp
+community that only top-level forms start at the left margin. So matching
+any unindented line starting with an open parenthesis is an acceptable
+heuristic; false positives will be rare.
 
-Back in 2022, Glen Choo noted [1] that git worktree add leaves submodules
-unhandled and suggested a --recurse-submodules flag to fix that. The thread
-went quiet. The 2015=E2=80=932016 discussions by Duy and Beller [2][3] had =
-flagged a
-deeper design concern: submodule existence (which worktrees have which
-submodules checked out) is tangled up with submodule configuration (URL,
-path),
-making per-worktree submodule support tricky to reason about.
+However, there are also cases where notionally top-level forms are grouped
+together within some containing form. At least in the Common Lisp community,
+it is conventional to indent these by two spaces, or sometimes one. But
+matching just an open parenthesis indented by two spaces would be too broad;
+so the pattern added by this commit requires an indented form to start with
+"(def". It is believed that this strikes a good balance between potential
+false positives and false negatives.
 
-This proposal sidesteps that concern entirely. Rather than touching
-submodule
-configuration at all, the idea is to reuse the git object data that's
-already
-present in the main repository =E2=80=94 the same thing git worktree add al=
-ready
-does
-for the top-level object store, extended down to the submodule layer.
+This commit disjoins a regexp employing these heuristics to the existing
+Scheme regexp, so it will still match everything that it did previously.
 
-The use case has also grown more pressing: multi-agent development workflow=
-s
-(where several autonomous coding agents work concurrently on different
-branches
-of the same repository) rely heavily on worktrees for isolation, and fall
-apart
-on projects with submodules.
+Johannes Sixt (1):
+  userdiff: tighten word-diff test case of the scheme driver
 
-Concretely, git worktree add --recurse-submodules would:
+Scott L. Burson (1):
+  userdiff: extend Scheme support to cover other Lisp dialects
 
-1. Hardlink $GIT_COMMON_DIR/modules/ into the new worktree's entry.
-Independent directory trees, shared inodes =E2=80=94 no extra disk, no netw=
-ork.
-2. Rewrite core.worktree in the hardlinked config and config.worktree
-files to point at the new worktree's working directory instead of the main
-repo's.
-3. Run git submodule update inside the new worktree to write the .git
-pointer files into each submodule directory. Entirely local since the
-modules directory is already there.
-4. Populate working trees with git read-tree HEAD && git checkout -- . per
-submodule, since the hardlinked index files start empty.
+ Documentation/gitattributes.adoc           |  3 ++-
+ t/t4018/scheme-lisp-defun-a                |  4 ++++
+ t/t4018/scheme-lisp-defun-b                |  4 ++++
+ t/t4018/scheme-lisp-eval-when              |  4 ++++
+ t/t4018/{scheme-module => scheme-module-a} |  0
+ t/t4018/scheme-module-b                    |  6 ++++++
+ t/t4034/scheme/expect                      |  5 +++--
+ t/t4034/scheme/post                        |  3 ++-
+ t/t4034/scheme/pre                         |  3 ++-
+ userdiff.c                                 | 22 ++++++++++++++++------
+ 10 files changed, 43 insertions(+), 11 deletions(-)
+ create mode 100644 t/t4018/scheme-lisp-defun-a
+ create mode 100644 t/t4018/scheme-lisp-defun-b
+ create mode 100644 t/t4018/scheme-lisp-eval-when
+ rename t/t4018/{scheme-module => scheme-module-a} (100%)
+ create mode 100644 t/t4018/scheme-module-b
 
-A shell script implementing this as a prototype is attached.
 
-The worktreeConfig extension case (step 2) is the one place that needs care=
-,
-since core.worktree may live in either config or config.worktree
-depending on the submodule. The prototype handles both. The other open
-question
-is policy for submodules not yet initialized in the main repo =E2=80=94 ski=
-p
-silently,
-warn, or error out.
+base-commit: 9e8f4e9c04e3efa494e78b710e0c5f6cc77a0a5e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2000%2Fslburson%2Flisp-userdiff_driver-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2000/slburson/lisp-userdiff_driver-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/2000
 
-Would there be interest in a proper patch series for this?
+Range-diff vs v3:
 
-[1]
-https://lore.kernel.org/git/kl6lwnimyxbq.fsf@chooglen-macbookpro.roam.corp.=
-google.com/
-[2]
-https://lore.kernel.org/git/CACsJy8D8Ur4W348t-WFUPrb7SQxmff5MJ4aRp+w+ZiQ7VV=
-vipg@mail.gmail.com/
-[3]
-https://lore.kernel.org/git/CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pn=
-yv+w@mail.gmail.com/
+ 1:  e20ac5b6a6 = 1:  8e0b1e3d01 userdiff: tighten word-diff test case of the scheme driver
+ 2:  fb4c8dc5d4 ! 2:  0bd51e02ba userdiff: extend Scheme support to cover other Lisp dialects
+     @@ Commit message
+      
+       ## Documentation/gitattributes.adoc ##
+      @@ Documentation/gitattributes.adoc: patterns are available:
+     + 
+       - `rust` suitable for source code in the Rust language.
+       
+     - - `scheme` suitable for source code in the Scheme language.
+     -+Also handles Emacs Lisp, Common Lisp, and most other dialects.
+     +-- `scheme` suitable for source code in the Scheme language.
+     ++- `scheme` suitable for source code in most Lisp dialects,
+     ++  including Scheme, Emacs Lisp, Common Lisp, and Clojure.
+       
+       - `tex` suitable for source code for LaTeX documents.
+       
+     @@ t/t4034/scheme/expect
+         ; This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function.
+         (<RED>this\place<RESET><GREEN>that\place<RESET> (+ 3 4))
+      -  (define <RED>|the greeting|<RESET><GREEN>|a greeting|<RESET> "hello")
+     -+  (define <RED>|the \greeting|<RESET><GREEN>|a \greeting|<RESET> |hello there|)
+     ++  (define <RED>|the \| \greeting|<RESET><GREEN>|a \greeting|<RESET> |hello there|)
+         ({<RED>}<RESET>(([<RED>]<RESET>(func-n)<RED>[<RESET>]))<RED>{<RESET>})
+         (let ((c (<RED>+ a b<RESET><GREEN>add1 first<RESET>)))
+           (format "one more than the total is %d" (<RED>add1<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
+     @@ t/t4034/scheme/pre
+         ; This is a really cool function.
+         (this\place (+ 3 4))
+      -  (define |the greeting| "hello")
+     -+  (define |the \greeting| |hello there|)
+     ++  (define |the \| \greeting| |hello there|)
+         ({}(([](func-n)[])){})
+         (let ((c (+ a b)))
+           (format "one more than the total is %d" (add1 c))))
 
-Signed-off-by: Jimmy Aguilar kratsbinovish@gmail.com
-
---000000000000f8589b064f749a0a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Back in 2022, Glen Choo noted [1] that git worktree add le=
-aves submodules<br>unhandled and suggested a --recurse-submodules flag to f=
-ix that. The thread<br>went quiet. The 2015=E2=80=932016 discussions by Duy=
- and Beller [2][3] had flagged a<br>deeper design concern: submodule existe=
-nce (which worktrees have which<br>submodules checked out) is tangled up wi=
-th submodule configuration (URL, path),<br>making per-worktree submodule su=
-pport tricky to reason about.<br><br>This proposal sidesteps that concern e=
-ntirely. Rather than touching submodule<br>configuration at all, the idea i=
-s to reuse the git object data that&#39;s already<br>present in the main re=
-pository =E2=80=94 the same thing git worktree add already does<br>for the =
-top-level object store, extended down to the submodule layer.<br><br>The us=
-e case has also grown more pressing: multi-agent development workflows<br>(=
-where several autonomous coding agents work concurrently on different branc=
-hes<br>of the same repository) rely heavily on worktrees for isolation, and=
- fall apart<br>on projects with submodules.<br><br>Concretely, git worktree=
- add --recurse-submodules would:<br><br>1. Hardlink $GIT_COMMON_DIR/modules=
-/ into the new worktree&#39;s entry.<br>Independent directory trees, shared=
- inodes =E2=80=94 no extra disk, no network.<br>2. Rewrite core.worktree in=
- the hardlinked config and config.worktree<br>files to point at the new wor=
-ktree&#39;s working directory instead of the main<br>repo&#39;s.<br>3. Run =
-git submodule update inside the new worktree to write the .git<br>pointer f=
-iles into each submodule directory. Entirely local since the<br>modules dir=
-ectory is already there.<br>4. Populate working trees with git read-tree HE=
-AD &amp;&amp; git checkout -- . per<br>submodule, since the hardlinked inde=
-x files start empty.<br><br>A shell script implementing this as a prototype=
- is attached.<br><br>The worktreeConfig extension case (step 2) is the one =
-place that needs care,<br>since core.worktree may live in either config or =
-config.worktree<br>depending on the submodule. The prototype handles both. =
-The other open question<br>is policy for submodules not yet initialized in =
-the main repo =E2=80=94 skip silently,<br>warn, or error out.<br><br>Would =
-there be interest in a proper patch series for this?<br><br>[1] <a href=3D"=
-https://lore.kernel.org/git/kl6lwnimyxbq.fsf@chooglen-macbookpro.roam.corp.=
-google.com/">https://lore.kernel.org/git/kl6lwnimyxbq.fsf@chooglen-macbookp=
-ro.roam.corp.google.com/</a><br>[2] <a href=3D"https://lore.kernel.org/git/=
-CACsJy8D8Ur4W348t-WFUPrb7SQxmff5MJ4aRp+w+ZiQ7VVvipg@mail.gmail.com/">https:=
-//lore.kernel.org/git/CACsJy8D8Ur4W348t-WFUPrb7SQxmff5MJ4aRp+w+ZiQ7VVvipg@m=
-ail.gmail.com/</a><br>[3] <a href=3D"https://lore.kernel.org/git/CAGZ79kZB8=
-U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com/">https://lore.ker=
-nel.org/git/CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.=
-com/</a><br><br>Signed-off-by: Jimmy Aguilar <a href=3D"mailto:kratsbinovis=
-h@gmail.com">kratsbinovish@gmail.com</a></div>
-
---000000000000f8589b064f749a0a--
---000000000000f8589b064f749a0c
-Content-Type: application/x-shellscript; name="create-worktree.sh"
-Content-Disposition: attachment; filename="create-worktree.sh"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mnzard4h0>
-X-Attachment-Id: f_mnzard4h0
-
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojIGNyZWF0ZS13b3JrdHJlZS5zaCDigJQgQ3JlYXRlIGEgZ2l0
-IHdvcmt0cmVlIHdpdGggc3VibW9kdWxlcyBoYXJkbGlua2VkCiMgZnJvbSB0aGUgbWFpbiByZXBv
-IChubyBuZXR3b3JrLCBubyBleHRyYSBkaXNrIGZvciBnaXQgb2JqZWN0cykuCiMKIyBVc2FnZTog
-Li9jcmVhdGUtd29ya3RyZWUuc2ggPGJyYW5jaC1uYW1lPiA8d29ya3RyZWUtcGF0aD4KCnNldCAt
-ZXVvIHBpcGVmYWlsCgp1c2FnZSgpCnsKICAgIGVjaG8gIlVzYWdlOiAkMCA8YnJhbmNoLW5hbWU+
-IDx3b3JrdHJlZS1wYXRoPiIgPiYyCiAgICBleGl0IDEKfQoKIyDilIDilIAgMS4gQXJndW1lbnRz
-IOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgAoKaWYgW1sgJCMgLW5lIDIgXV07IHRoZW4KICAgIHVzYWdlCmZpCgpC
-UkFOQ0g9IiQxIgpXT1JLVFJFRV9QQVRIPSIkKHJlYWxwYXRoIC1tICIkMiIpIgoKIyDilIDilIAg
-Mi4gRGV0ZWN0IHNvdXJjZSByZXBvIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgAoKTUFJTl9SRVBPPSIkKGdpdCByZXYtcGFyc2UgLS1zaG93LXRvcGxldmVsIDI+
-L2Rldi9udWxsKSIgfHwgewogICAgZWNobyAiRXJyb3I6IG5vdCBpbnNpZGUgYSBnaXQgcmVwb3Np
-dG9yeS4iID4mMgogICAgZXhpdCAxCn0KCmVjaG8gIlNvdXJjZSByZXBvIDogJE1BSU5fUkVQTyIK
-ZWNobyAiQnJhbmNoICAgICAgOiAkQlJBTkNIIgplY2hvICJXb3JrdHJlZSAgICA6ICRXT1JLVFJF
-RV9QQVRIIgoKIyDilIDilIAgMy4gUHJlLWZsaWdodCBjaGVja3Mg4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgppZiBbWyAtZSAiJFdPUktUUkVFX1BBVEgi
-IF1dOyB0aGVuCiAgICBlY2hvICJFcnJvcjogZGVzdGluYXRpb24gYWxyZWFkeSBleGlzdHM6ICRX
-T1JLVFJFRV9QQVRIIiA+JjIKICAgIGV4aXQgMQpmaQoKIyDilIDilIAgNC4gQ3JlYXRlIHRoZSB3
-b3JrdHJlZSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi
-lIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi
-lIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCkxPQ0FM
-PSQoZ2l0IC1DICIkTUFJTl9SRVBPIiBicmFuY2ggLS1saXN0ICIkQlJBTkNIIikKCmlmIFtbIC1u
-ICIkTE9DQUwiIF1dOyB0aGVuCiAgICBlY2hvICJCcmFuY2ggJyRCUkFOQ0gnIGZvdW5kIGxvY2Fs
-bHkg4oCUIGNoZWNraW5nIGl0IG91dC4iCiAgICBnaXQgLUMgIiRNQUlOX1JFUE8iIHdvcmt0cmVl
-IGFkZCAiJFdPUktUUkVFX1BBVEgiICIkQlJBTkNIIgplbHNlCiAgICAjIE9ubHkgc2VhcmNoIHJl
-bW90ZXMgd2hlbiB0aGUgYnJhbmNoIGlzIG5vdCBmb3VuZCBsb2NhbGx5CiAgICBtYXBmaWxlIC10
-IFJFTU9URV9SRUZTIDwgPChnaXQgLUMgIiRNQUlOX1JFUE8iIGJyYW5jaCAtciAtLWxpc3QgIiov
-JEJSQU5DSCIgfCB0ciAtZCAnWzpzcGFjZTpdJykKCiAgICBpZiBbWyAkeyNSRU1PVEVfUkVGU1tA
-XX0gLWVxIDAgXV07IHRoZW4KICAgICAgICBlY2hvICJCcmFuY2ggJyRCUkFOQ0gnIG5vdCBmb3Vu
-ZCBsb2NhbGx5IG9yIG9uIGFueSByZW1vdGUg4oCUIGNyZWF0aW5nIG5ldyBicmFuY2ggZnJvbSBI
-RUFELiIKICAgICAgICBnaXQgLUMgIiRNQUlOX1JFUE8iIHdvcmt0cmVlIGFkZCAtYiAiJEJSQU5D
-SCIgIiRXT1JLVFJFRV9QQVRIIgogICAgZWxpZiBbWyAkeyNSRU1PVEVfUkVGU1tAXX0gLWVxIDEg
-XV07IHRoZW4KICAgICAgICBSRU1PVEVfUkVGPSIke1JFTU9URV9SRUZTWzBdfSIKICAgICAgICBl
-Y2hvICJCcmFuY2ggJyRCUkFOQ0gnIGZvdW5kIG9uIHJlbW90ZSBhcyAnJFJFTU9URV9SRUYnIOKA
-lCBjcmVhdGluZyBsb2NhbCB0cmFja2luZyBicmFuY2guIgogICAgICAgIGdpdCAtQyAiJE1BSU5f
-UkVQTyIgd29ya3RyZWUgYWRkICIkV09SS1RSRUVfUEFUSCIgLWIgIiRCUkFOQ0giICIkUkVNT1RF
-X1JFRiIKICAgIGVsc2UKICAgICAgICBlY2hvICJCcmFuY2ggJyRCUkFOQ0gnIGZvdW5kIG9uIG11
-bHRpcGxlIHJlbW90ZXM6IgogICAgICAgIGZvciBpIGluICIkeyFSRU1PVEVfUkVGU1tAXX0iOyBk
-bwogICAgICAgICAgICBlY2hvICIgICQoKGkgKyAxKSkpICR7UkVNT1RFX1JFRlNbJGldfSIKICAg
-ICAgICBkb25lCiAgICAgICAgd2hpbGUgdHJ1ZTsgZG8KICAgICAgICAgICAgcmVhZCAtcnAgIlBp
-Y2sgYSByZW1vdGUgWzEtJHsjUkVNT1RFX1JFRlNbQF19XTogIiBQSUNLCiAgICAgICAgICAgIGlm
-IFtbICIkUElDSyIgPX4gXlswLTldKyQgXV0gJiYgKCggUElDSyA+PSAxICYmIFBJQ0sgPD0gJHsj
-UkVNT1RFX1JFRlNbQF19ICkpOyB0aGVuCiAgICAgICAgICAgICAgICBicmVhawogICAgICAgICAg
-ICBmaQogICAgICAgICAgICBlY2hvICJJbnZhbGlkIGNob2ljZSwgdHJ5IGFnYWluLiIgPiYyCiAg
-ICAgICAgZG9uZQogICAgICAgIFJFTU9URV9SRUY9IiR7UkVNT1RFX1JFRlNbJCgoUElDSyAtIDEp
-KV19IgogICAgICAgIGVjaG8gIlVzaW5nICckUkVNT1RFX1JFRicg4oCUIGNyZWF0aW5nIGxvY2Fs
-IHRyYWNraW5nIGJyYW5jaC4iCiAgICAgICAgZ2l0IC1DICIkTUFJTl9SRVBPIiB3b3JrdHJlZSBh
-ZGQgIiRXT1JLVFJFRV9QQVRIIiAtYiAiJEJSQU5DSCIgIiRSRU1PVEVfUkVGIgogICAgZmkKZmkK
-CiMg4pSA4pSAIDUuIFNldCB1cCBzdWJtb2R1bGVzIHZpYSBoYXJkbGlua3Mg4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgpHSVRf
-RElSPSIkKGdpdCAtQyAiJE1BSU5fUkVQTyIgcmV2LXBhcnNlIC0tZ2l0LWNvbW1vbi1kaXIpIgpX
-T1JLVFJFRV9FTlRSWT0iJChiYXNlbmFtZSAiJFdPUktUUkVFX1BBVEgiKSIKCmVjaG8gIkhhcmRs
-aW5raW5nIHN1Ym1vZHVsZSBnaXQgZGF0YSBmcm9tICRHSVRfRElSL21vZHVsZXMgLi4uIgpjcCAt
-YWwgIiRHSVRfRElSL21vZHVsZXMiIFwKICAgICAgICIkR0lUX0RJUi93b3JrdHJlZXMvJFdPUktU
-UkVFX0VOVFJZL21vZHVsZXMiCgplY2hvICJGaXhpbmcgd29ya3RyZWUgcGF0aHMgaW4gc3VibW9k
-dWxlIGNvbmZpZ3MgLi4uIgpmaW5kICIkR0lUX0RJUi93b3JrdHJlZXMvJFdPUktUUkVFX0VOVFJZ
-L21vZHVsZXMiIC1uYW1lIGNvbmZpZyAtZXhlYyBcCiAgICBzZWQgLWkgInN8d29ya3RyZWUgPSAu
-Ki9jb250cmliL3x3b3JrdHJlZSA9ICRXT1JLVFJFRV9QQVRIL2NvbnRyaWIvfCIge30gKwoKZmlu
-ZCAiJEdJVF9ESVIvd29ya3RyZWVzLyRXT1JLVFJFRV9FTlRSWS9tb2R1bGVzIiAtbmFtZSBjb25m
-aWcud29ya3RyZWUgLWV4ZWMgXAogICAgc2VkIC1pICJzfHdvcmt0cmVlID0gLiovY29udHJpYi98
-d29ya3RyZWUgPSAkV09SS1RSRUVfUEFUSC9jb250cmliL3wiIHt9ICsKCmVjaG8gIlJlZ2lzdGVy
-aW5nIHN1Ym1vZHVsZXMgKGxvY2FsLCBubyBuZXR3b3JrKSAuLi4iCmlmICEgZ2l0IC1DICIkV09S
-S1RSRUVfUEFUSCIgc3VibW9kdWxlIHVwZGF0ZSAyPi9kZXYvbnVsbDsgdGhlbgogICAgZWNobyAi
-UmV0cnlpbmcgd2l0aCBzdWJtb2R1bGUgaW5pdCAuLi4iCiAgICBnaXQgLUMgIiRXT1JLVFJFRV9Q
-QVRIIiBzdWJtb2R1bGUgaW5pdAogICAgZ2l0IC1DICIkV09SS1RSRUVfUEFUSCIgc3VibW9kdWxl
-IHVwZGF0ZQpmaQoKZWNobyAiUG9wdWxhdGluZyBzdWJtb2R1bGUgd29ya2luZyB0cmVlcyAuLi4i
-CmdpdCAtQyAiJFdPUktUUkVFX1BBVEgiIHN1Ym1vZHVsZSBmb3JlYWNoIFwKICAgICcoZ2l0IHJl
-YWQtdHJlZSBIRUFEICYmIGdpdCBjaGVja291dCAtLSAuKSAyPi9kZXYvbnVsbCB8fCBlY2hvICJT
-S0lQOiAkbmFtZSInCgojIOKUgOKUgCA2LiBEb25lIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgAoKZWNobyAiIgplY2hvICJXb3JrdHJlZSByZWFkeS4iCmVjaG8gIiAgU291cmNlIHJlcG8g
-OiAkTUFJTl9SRVBPIgplY2hvICIgIFdvcmt0cmVlICAgIDogJFdPUktUUkVFX1BBVEgiCmVjaG8g
-IiAgQnJhbmNoICAgICAgOiAkQlJBTkNIIgplY2hvICIgIFN1Ym1vZHVsZXMgIDogaGFyZGxpbmtl
-ZCBmcm9tIG1haW4gcmVwbyAoaW5kZXBlbmRlbnQsIG5vIG5ldHdvcmspIgplY2hvICIiCmVjaG8g
-IiAgY2QgJFdPUktUUkVFX1BBVEgiCmVjaG8gIiIKZWNobyAiTm90ZTogYnVpbGQgZGlyZWN0b3Jp
-ZXMgYXJlIG5vdCBzaGFyZWQg4oCUIGNvbmZpZ3VyZSBDTWFrZSBzZXBhcmF0ZWx5LiIKZWNobyAi
-VG8gcmVtb3ZlIGxhdGVyOiIKZWNobyAiICBybSAtcmYgJFdPUktUUkVFX1BBVEgiCmVjaG8gIiAg
-Z2l0IC1DICRNQUlOX1JFUE8gd29ya3RyZWUgcHJ1bmUiCg==
---000000000000f8589b064f749a0c--
+-- 
+gitgitgadget
