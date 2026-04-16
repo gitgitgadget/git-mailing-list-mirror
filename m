@@ -1,128 +1,135 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65F02BD5A8
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:12:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C66A346E78
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:26:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776370379; cv=none; b=NPV7m35h81YlrHVLwQI4qSH523EWDVeJhCg1qfwgd3FvEhx28QtXSuxz7yavQYOOHzDee6QyuoY58ND0+dSNJ53jFxE2BLeRcxvWP7TCS+6Bgdd619hQ7ANZ2nfztUL2eJ/nIqfUYqAXsW03KmAqRcdUwD6/l0A8Aef4XUyepQs=
+	t=1776371180; cv=none; b=B5siY/rRMzlpMdAxEA3YX2yjpt3pGS3OC5h5d4SxMVVys6gXFeq9aHemL1PjPWriyE/GcUDeov23m+wzcr+OMWmaY1SfQGYZ2ijU483UIS2KmArIpf1QCDNdBfe9/AZFbnjC7Z1bVe7sfjO8EH4yvakgwXyltxZvU2N84qw5DTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776370379; c=relaxed/simple;
-	bh=gExnuJoibM299vWQoCpFgdFj+ky/D0S9/zygtn4C8N8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aA8HRa07Je7/ywVJxk4bU61h7kOiSTh8y+3dSAPIl0NfCCVDpXpZsmcq0fCPLAe0wZNBaHra9V5GnRZ5wlsVkLcFhmUpYbOLxOwbLfr2OouuFeLZgd5GAN+sstYj2jJ5lOAuC5wqoh347XpaXoqEgqJGM0ATPWZxPGViOqmvXWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u/49dWvq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O8+lOF/k; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776371180; c=relaxed/simple;
+	bh=LRpGX7UbqycBF+b42Rgw/tcoqNlD4vET4TJFlD30I/g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uz9DxtqtWSG07bC1wywR+DEfO0CHisxxkvVomRjzL+WLint9AJ8mcJzy+1MaEiYvM6gicoMzkoNPDXu7mH3phi4qCfSi8oD2Af5A3K6TngmcvPmpVpG3wHvOBwoGQvgh5PnNr6lpF0govQ5jF4lceaCfdKwEKxvffX6bRqCCP+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=XU+CknhN; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u/49dWvq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O8+lOF/k"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 51DA9EC01F3;
-	Thu, 16 Apr 2026 16:12:52 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Apr 2026 16:12:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776370372; x=1776456772; bh=jttYzYEgdb
-	IQKN0IcqOPzyBZVbPhV/8nVwalvZ30dVY=; b=u/49dWvqdvdRgdAps3n+vxzFCx
-	kUBEXmPllziIQSHUmduSUF0nDBG7wViySFpH6pTh6vMqNwFcL5mb398sES05AvxO
-	6gXEL551vs8KDbCPQspKyZ5JibOka8io2Rxlx871Emnzl5JwK8Av4t/vcGZkigyG
-	3Saf56pZe02/wGbQgkoTLMqpuwxk8WjJRk8EnqGiBJGJit0hrlj2hn1a+3r/l5DX
-	RpeZ5Ct5J9qhL504TOzANqvSshBSB/VGWpdOItgnRRZYUrZny12Kq9+Y1sZN7LT7
-	DPg9zr6V1b1aWuUVz/HQFM0E65ZAhLSRgm25FOazp4tYyz6qB4FklUkIktrw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776370372; x=1776456772; bh=jttYzYEgdbIQKN0IcqOPzyBZVbPhV/8nVwa
-	lvZ30dVY=; b=O8+lOF/kSpM7ZA+da1nm3zTm/RYdH7fT++1p0fFVuyxb+aH6mUA
-	mzH8g6nFaur59ef32wB6EqqDXQtOB3R66uB6HynbPg8DfpxBdNsUMipzCLMHfuwb
-	3zjZ4qA2VLl4gh2YuVtYvwOwUSdh9RkKWT9R498BJ8l0Gb6s/Iecd5rtzaPPBr+N
-	wwK1b6xOuX8l1NwTDFO3yMuVJT4wDJa8kQxXlKtlqGFbvyLCn8cASiHBhjvMiexw
-	EOCYMDmksZCjAZKrXSeGTXWvvP87NJP5uA1Ese6rYl2sCVj3T0dKCYfrh7GTcn7V
-	oJCojBVlUhFL94SzmZRc2FGy1A9lSMaSMuA==
-X-ME-Sender: <xms:xELhabVWuXb7qk2BhBbrBP1sIqd4csEilGLgUrb42sIo4-5NrWtWlg>
-    <xme:xELhaadv2RD4Owxcz1aeCyBcbKYSAd2oCDCldilgO54ODMDT1NOa_aBvgU-QkI754
-    9vSx119U6F15_wvjT4me3MI9JXdG-PgGognG9-Z4tKQniV-4wFf>
-X-ME-Received: <xmr:xELhafsm6-mP7y3dXkBfSqaoc4vu7B4EFLZ_8I8oBoBvFllFL8FvJ5X-rALYa_TeBgmWj80_6IaG5phaMfpsFgfrAtgfQO-gyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjeelfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmh
-    gvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xELhaR9FKv2PbY4v2aFZ2JR02F5ZQbLoKX1b3PExB0uMv7eto2DWYQ>
-    <xmx:xELhaS0Fw5TfQEYGkaPf2VZ_eXwXYEYtQi0Bi_EImMZqwav3-umN5Q>
-    <xmx:xELhaeD7J10G8F31BCqcC9w8nCepMvYDg5l2Mm6OtmUhQizaYGyhUg>
-    <xmx:xELhaWfGCl9SpxMYFb6RePstao8l1lR8lvA2kd8DLmYDV5BWaFvhOQ>
-    <xmx:xELhaQViKWpmAavsH0adhgEP5K_XmjaA6Jn_U37tlUrDZn4nQR3MBgZK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 16:12:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="XU+CknhN"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-79ee5037d44so207517b3.0
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 13:26:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1776371178; x=1776975978; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=STYWHmLl/A9psAXNcAOqkpkXpx7h8xuFkNnYnSyaZ8k=;
+        b=XU+CknhNhLSjp0NEhbVhEII2n7lpepvjSXri9N6D7oiQAOxC+/FGLyV8/ayGTQcaCQ
+         PqeScgc/GonxfLQWoQNlB+PYeg6VowIxvocGew2TVKXcYuHPIoQxqZpX+hJlKYMeO0zy
+         lbrT/QWOi7LqY520R6fqPd9ODbU9P7S4mZswCHLBqJZqnFym8QEOERFpS7G0D12o5nie
+         SUeJFCNcYhyFaQ1h3gj6pbNhMctBUARwS0NdeNlklAEcKhfwBMw+FObIv9ouct2t4Wu8
+         APKlH8goEBH3aVquocJZHVJ/SchiwzBtzAJFHPI/HIvAv6XEYMVKtnYVbnxFShQidx+4
+         cDPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776371178; x=1776975978;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=STYWHmLl/A9psAXNcAOqkpkXpx7h8xuFkNnYnSyaZ8k=;
+        b=r1lxYP4wO8xYAq+EA+sud7zKt0KKAOAGkRP7CgUpFu6kOYm0EPmWcBUC4Rr7dTs3G4
+         mdh7rp2YViSzZKF/3dGDxD/9Hdk9BoIbAkp3AypOuLt7bghA9SrauxhvahAhJXSW3Mn4
+         0MqfzQE2UHCEua+K4/9fljPe+V+I82XsAIo8XeW16U1tjtrE5lYo8kR2SM3Dj+4DsyCI
+         JUUC+n9j7a7wBcTR6sRZNpnfK1ygQlTsnPVt41RdalJfoqD1BbAZB16GRFtmo+oKMXRt
+         iPKzWgyTiecGGIEltMaJ7W9u2hvAC8VBApq+FuSaVxLsx/XHdLy1EO9SXpFEraKuAE4o
+         iG2w==
+X-Forwarded-Encrypted: i=1; AFNElJ/9fOpvQI/W+GhAD6fi+fbWAwFDxxkH6bMNDw7LaD9C5uPam5Ar5aisoYkiVzHsJ15qaoY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwALSFnDF9X2im0u37KYzMWbY7NZvQl6ptFwKVOqbARJ3WX2DL3
+	gXJVI5ZslHUNzdM5jApzctsyK8K/UjA4Oo56MjpUNF+W/whTH3Tl4jXsbw6qXDJn9E4=
+X-Gm-Gg: AeBDieulfdm1ale7gPJm7c52j81HD7bsfcxiJVZhYtY5GDkP8f2vQ1ixzfbELwEb4FX
+	YBHVLYmBVpvBGAEVx/a1nBwX7xR2FiCtAEIdOCTUX5aAzt2F3dfarWap/sEAJ9eJsNgJb24pnwP
+	tYbLpfr5poJU5VJrbDBHsUZziSYOtB4/9u4oftOvQDr3F7RJlxubVpHygz4atVxwpz1WRnqTDn4
+	UBzHZJ7SDdcHktZrZcfirNPg83aCRXrL4vSGcCCmfYqh4/omjNpmnqmEnhjx4Wha2S7HiEdVCl7
+	ZwBo6IMDeQKhrD4F52QMm5z+lHyK88KBmzssamjBAeOwdPzuHQGYQNpoKzPHq4MEmJ+pvO/cVdj
+	Sl7zvBSSz30Jjw92WvX2mJLkQYRhAthmyEZURfnUSkOg27QEcYsMcqDPiyC+WudTQkZbh0m3dS9
+	eDOF4F61uQ+COdohEhIMyBqWacN+LqwqOIAFHnsq5k6pJDUbGbjWjksjvuGqtmcSaxCP3pb4M7p
+	RtM7VOTgaNC/N7IOwEGJMkSAE2ejJ4CB7ez7PwP8jQICFpYb+Js0Ttnoe/y422OOm0qY1GXLXN+
+	NAMl3+PGJrUbqDlzhWzYp5ueQbw=
+X-Received: by 2002:a05:690c:67c8:b0:79a:b8d6:110a with SMTP id 00721157ae682-7b9d6081692mr8170717b3.5.1776371178455;
+        Thu, 16 Apr 2026 13:26:18 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b7636be8f5sm27904427b3.0.2026.04.16.13.26.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2026 13:26:17 -0700 (PDT)
+Date: Thu, 16 Apr 2026 16:26:14 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
-In-Reply-To: <20260416194922.GA1887222@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 16 Apr 2026 15:49:22 -0400")
+Message-ID: <aeFF5s5m76Yz7F/Q@nand.local>
 References: <xmqqqzohd0sh.fsf@gitster.g>
-	<8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
-	<xmqq5x5s540j.fsf@gitster.g>
-	<20260416051732.GA48541@coredump.intra.peff.net>
-	<20260416053435.GA646718@coredump.intra.peff.net>
-	<xmqqldem22uw.fsf@gitster.g> <xmqqh5pa22h0.fsf@gitster.g>
-	<20260416194922.GA1887222@coredump.intra.peff.net>
-Date: Thu, 16 Apr 2026 13:12:50 -0700
-Message-ID: <xmqqqzoezmt9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
+ <xmqq5x5s540j.fsf@gitster.g>
+ <20260416051732.GA48541@coredump.intra.peff.net>
+ <20260416053435.GA646718@coredump.intra.peff.net>
+ <621c9da9-2ec0-462d-ae51-0be5e0ca6ab2@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <621c9da9-2ec0-462d-ae51-0be5e0ca6ab2@gmail.com>
 
-Jeff King <peff@peff.net> writes:
-
-> Yeah, I agree that re-wording would be a good idea here.
-
-I actually no longer think so.
-
-> I think this
-> can happen post-release. We'd like for this to have happened long ago,
-> but it didn't. Doing it in 2.54 versus 2.55 does not really matter, as:
+On Thu, Apr 16, 2026 at 09:24:31AM -0400, Derrick Stolee wrote:
+> On 4/16/2026 1:34 AM, Jeff King wrote:
+> > On Thu, Apr 16, 2026 at 01:17:33AM -0400, Jeff King wrote:
+> >
+> >> I think removing the .midx file (and optionally regenerating with the
+> >> old version) would be the appropriate workaround, but I wonder how hard
+> >> it would be to go back to generating v1 midx files by default. I know v2
+> >> is a building block for more advanced features, but for those who are
+> >> not using those features yet it is a strict regression.
+> >
+> > I think doing so is just this one-liner:
+> ...
+> > and then here we need to use v2 for the new compaction feature:
+> ...
+> > So that would make things work as usual for anybody mixing and matching
+> > multiple versions of Git, but does make life slightly worse for anybody
+> > who wants to use the new feature (they have to set the config). We might
+> > need a doc update, or possibly even to automatically default to v2 when
+> > using the compact command. But that could come post-2.54.
+> >
+> > At this point I'll stop poking and speculating and see what direction
+> > Taylor suggests. ;)
 >
->   1. We still have to worry about 2.53 and earlier anyway, so one
->      version is not much in the grand scheme of things.
->
->   2. For midx v2, 2.54 knows how to read it anyway, so is not affected
->      by the problem. ;)
+> I think this is a good change to make. This fits with the standard
+> approach of not making breaking file changes by default, but letting
+> users opt-in to new versions (at least for a few major releases).
 
-I agree 100% with this.
+Yeah, I agree, and sorry for the trouble here. A few thoughts:
 
-Looking at the later part of load_multi_pack_index_one() function,
-it is full of die() calls, not prepared to degrade gracefully at
-all.
+ - In the immediate term, we should downgrade the default format to
+   write V1 MIDXs for the compatibility issues pointed out by this
+   thread. That would seem to be the minimal thing to do to make sure
+   that the 2.54 release is as smooth as possible.
 
-The reason why I do not think reword is worth doing is that as far
-as this function (i.e., "Here is an MIDX file---please read it and
-give me struct multi_pack_index back") is concerned, these error
-returns are giving diagnosis on the nature of errors.  Sometimes we
-cannot learn the length of the file, sometimes we find that the file
-is unreasonably short, sometimes it is not sorted properly, etc.
-None of the existing "error + cleanup" says "we are continuing
-anyway" and that is good.  The decision to keep going without using
-midx file (or not) belongs to the caller, so if we wanted to say
-that, we should say so in the caller, not here.
+ - In the medium term (i.e., on the other side of 2.54) we should
+   implement the changes that Peff sketched earlier in the thread to
+   make loading the MIDX robust towards unrecognized versions.
 
+   Of course, that doesn't fix any old clients who don't upgrade and at
+   some point want to fetch from or otherwise interact with a repository
+   that has a V2 MIDX. But it does improve things for, say, users that
+   are on an eventual 2.55 if we make the V1->V2 by default change in
+   2.56.
+
+ - In the long term (i.e., in 2.56 or otherwise in a release after the
+   above change is implemented) we should make V2 the default format for
+   MIDXs.
+
+Thanks,
+Taylor
