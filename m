@@ -1,133 +1,118 @@
-Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47503BA248
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AAF1A0BE0
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776349871; cv=none; b=GR2bw+f3BidTW9r+Ov6Oez05vUI7leTu07IFWGiIBd5+QFpvKfZrfgVshoSxXb3/OfdYM9Elzs4Op22+Nqi6vgHlOA14dtx9hwmDTQXvFG+jpuUV6G9JoYEU2PbtqMBVHw489ui37PnySnbJxGZuluenlWHbGOKHUd60aU53YSI=
+	t=1776350071; cv=none; b=SRkjq0Hx4B2aA11aBWg8lUCZ2rvzWpjMqOndemE8nLrbq8C8RzdFajUoOWetkUJ4dyrBBRhNBb3sWVfAD8YPE2TEjb4kzBRM1wOD9q7IoRHp4KmKZrPPSelUUPuEUw6SC+MtKXp3mONbMyjgpGaZMbgnWmV84jseM8ouy7onmpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776349871; c=relaxed/simple;
-	bh=nvJSMguOGNZLCYDyOshKv0ezKeF9fRz2qCjeZCL+GjQ=;
-	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
-	 In-Reply-To:References; b=oMwCHRls9hFPgu4NPooxyxGLbdh/k2DGYdnqLrTeRqMgW6nftS+VeWAF3/un9XV5EdUhyQDvQUsnBMlr2eg+Jj2Pp9Zrh/bpT22FAin93XdkMoUeB6kHo3G+XzmAF+0rcQlIpqOzLClyyy+N8w68Ss/xMEFv2UjYHgwWtGnVbac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=Af0WZ3Bv; arc=none smtp.client-ip=93.93.131.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
+	s=arc-20240116; t=1776350071; c=relaxed/simple;
+	bh=QH7dGlDAmUb9BdhUJAherTzdOEzB5BqydcUOrhbfxSc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WHGdtOFuf82JO0RViaPFajW4FgimJM8ODqE8LlSdOthkQglfgCXLa25rLdDyoJ8FpAAyi5xCsnThNf/PcsKhFbhHi6dxYT4iLVM5E+5JBPpS4G24V1xbWOwfWyb2nkk/MwNlMwKXtb+u5rFZ8YGDGb2DlclQ9lac2pNWjCbUZ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GBjXCnRk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jyQSB8IE; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="Af0WZ3Bv"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=chiark.greenend.org.uk; s=e.chiark; h=DKIM-Signature-Warning:References:
-	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
-	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=HjIHLaXOD1s+NdBj0TkjNdLRYFz1ostv6tLxYOamijc=; b=Af0WZ3BvAD5H
-	UDJv2DLWNp0k6acIR9A+YBpffOhqx+EHZEseIlS3qXZnwYoqqTkGbWy1WnY24RcJIV6YsNGILuQiF
-	vd4hTQRTEV8citsVRY23Xj3Ifq1qb6vwJE9r5AownL6vWaz1QIdD+80HXNgR+kLRaJ+yGgSS7DpnA
-	4gZcVhgSW3vtHipesk86ape6IDNFgOQXQrWNJIGL8ft8wj2llRIRlSGg68FcMHcGyUU094OSb1cte
-	4nqW8ZF8/zR+C7HDMFLOH1WelZ8WPQc8zN5YghcJKlx21VpeRs2PFLWppc5Eg/bZaDZu95KT9RL5E
-	uU0ifVboxuB7tw35jEx8CQ==;
-Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1wDNkH-0005hD-MZ; Thu, 16 Apr 2026 15:31:05 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GBjXCnRk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jyQSB8IE"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id E65C21D002AF;
+	Thu, 16 Apr 2026 10:34:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 16 Apr 2026 10:34:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1776350068; x=1776436468; bh=9zkoFGP6n2
+	vl6q6jfXI8IR6RDkUWT/Yeb8NJNn8K1M0=; b=GBjXCnRkBKHwPKyANK8DX0BpCy
+	l6fSsKctVc0FQpzl0wbj+cEMG51SzL1qphLjtcrW4gbN3XnrDRsswJfed6dOxrt2
+	RBggbFZVgDC5vJuvrbELl/Apmmtzr/iGhjU26aK7F3zAdap4UjGEAIm0ocySBH9o
+	Ot+7YG1yPkfawXilBpjmXgwuIkD8aImQPjhmbGsFOJiBLvXAiALd2Zke0+fxspQP
+	AQtOEqws3n+adPNEHucSifMEUMBkRDVC+Wuq1FzHduYbJ0WVpsKVvBMdpVeWoNu0
+	Ds/TEdPjxs8cRUca+mpu+8mxVym/o1jMj435/69sQRTcCZWBHVOi5aF3nOGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776350068; x=1776436468; bh=9zkoFGP6n2vl6q6jfXI8IR6RDkUWT/Yeb8N
+	JNn8K1M0=; b=jyQSB8IEa9wJ3JGhnLjRNkT20ECpZD2tp9gqeuioZlF1Vv+TTCK
+	lc9bG7+0XWBQzOTMp5nYhY3dks9kzmFwOROSlSMZW1Q93kCMRtOSdefyeZGUttjB
+	OExEEu8kHIF8mTWLYkkhZLKA0HN16fLv4cJlpR+98IGIFCEPTzmYaZhftFtGiDU/
+	UsC9CwZdNe4wDvTn5o/JaFGYERoumfh0iNAv1NIJtblokHsSUJGTfxoj26iECaHw
+	2wxjMswCiSBXJb246atSI2GoL7WWfFaVKnm3xEWUFU7InxQoNFZv6BwPTyQuuaxU
+	jeIKbdvzJNT7GaabE4L+QtPZ4dhPvoJYv6Q==
+X-ME-Sender: <xms:dPPgaZXguR4hYflW2xqYN_NhUQdslNePyPnoOFElfoNiKDNXWRRlNA>
+    <xme:dPPgaQk-dbfZZXD7jGA32AkVUWX29IBUtzS1JjUsj7bFY_kuDPc1nw_zwS9b6KLuu
+    iObCUXEf5D92ZF2idwp15wPcCadCbEIbhAe14fxT-PH1MEnY4__>
+X-ME-Received: <xmr:dPPgaaaN3d76dPrr8Ds94dfCb4_qyTb2fFOV6NIF1gAvZXWfFdb0rUKvFkQ_lbovjRUvstLvE4y9KEolqKBRkz_1Mj1uoMmBEg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjedvhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dPPgabOBwFO4SSF0pEOScY6YJ6kj6oQnLdKWuDc5ySrrxkqPWQYimg>
+    <xmx:dPPgafZAwxW7kKr5UZYjV09Nv3M7tLBzOVOb9n-X_hxHa7erjqThsg>
+    <xmx:dPPgaZ363TXi7LQH7PWAnDUwxJdSFdyjC39gYVjwkHhplUuI4_ZNFg>
+    <xmx:dPPgaVfWUxXwJJrMKWLZW6ceupdhZ7leaFHcf4W44hGWlTLhdmAkDg>
+    <xmx:dPPgabVptvZ78EZW7aMpoGw9GeAKHvqMrAU86hB8BAyhdZMQcQLarC8O>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Apr 2026 10:34:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
+ commands for `set -e`
+In-Reply-To: <20260416054924.GB646814@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 16 Apr 2026 01:49:24 -0400")
+References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
+	<20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
+	<xmqqeckifq59.fsf@gitster.g> <xmqq340yfivf.fsf@gitster.g>
+	<ad3rgbgadjIZRgaz@pks.im>
+	<20260414220347.GA3475127@coredump.intra.peff.net>
+	<20260414225206.GA3486072@coredump.intra.peff.net>
+	<20260414230810.GA3528448@coredump.intra.peff.net>
+	<ad80r_oY-uAV2zVt@pks.im>
+	<20260416054924.GB646814@coredump.intra.peff.net>
+Date: Thu, 16 Apr 2026 07:34:26 -0700
+Message-ID: <xmqqtstb3rf1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <27104.62121.658449.222834@chiark.greenend.org.uk>
-Date: Thu, 16 Apr 2026 15:31:05 +0100
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: git@vger.kernel.org
-Subject: Re: git subtree bugs (mishandled merges, recursion depth)
-In-Reply-To: <e9611b58-3886-4f04-8f49-16d140ebfc15@howdoi.land>
-References: <26263.63341.878041.155047@chiark.greenend.org.uk>
-	<e9611b58-3886-4f04-8f49-16d140ebfc15@howdoi.land>
-X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
-DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/63/6398e3c18559ae9fcc00a4cf06dd3d8f.pem
+Content-Type: text/plain
 
-Colin Stagner writes ("Re: git subtree bugs (mishandled merges, recursion depth)"):
-> On 7/17/24 11:55, Ian Jackson wrote:
-> > Actual behaviour (git 2.20.1, Debian ancient 1:2.20.1-2+deb10u9):
-> > 
-> >  Takes a very long time.  Everntually produces an output commit
-> >  which has most of arti.git#main in its history.
-> 
-> Even with my patch series applied, there are many more than a "few dozen 
-> commits" in the history. For me this splits as
+Jeff King <peff@peff.net> writes:
 
-Hi.  (For future reference, that patch series is
-  [PATCH v2 0/3] contrib/subtree: reduce recursion during split
-in the other thread.)
+> I'm still concerned that this approach is going to create extra friction
+> for test writers down the road. This series needed to clean up several
+> spots to avoid false positives, and some of the spots were non-trivial.
+>
+> Now that was the accumulated cruft of 20 years of test-writing, so it's
+> not clear to me how often new test-writers will run into this. But when
+> they do, I worry that it may be hard to even figure out what is going
+> on.
+>
+> But I've said as much in earlier rounds, and I'm not sure Junio agrees.
+> So we can note my dissent in the captain's log, and I can reserve the
+> right to told-you-so later if need be. ;)
 
->      9a2422685e6cc05625f47a1fe709f1908f31fc87
-> 
-> with 12307 commits in the history graph.
-> 
-> The reason for this is likely e7b07376e5 (Merge branch 
-> 'rs/subtree-fixes', 2018-10-26), which was merged around that time. 
-> Previous versions discarded too much history, and that patch series 
-> added more merge-base ancestry checks.
-> 
-> When merges come into play, the task of choosing which history is 
-> "important" and which history is "not important" is not always clear-cut.
+The alternatigve to allow us to be sloppy is alluring from the point
+of view of a test writer in me.  But do we have an easy/canned way
+to run tests and see the unexpected failures outside test_expect_foo
+while ignoring all the noises from passing tests?  Perhaps running
+tests (with and without prove) while redirecting the standard output
+stream to /dev/null or something?
 
-I have some thoughts about this.
-
-I didn't find a formal description of git-subtree's data model, or how
-git subtree split works, precisely.  So I'm going to make some
-suppositions.
-
-I observe that git-subtree split doesn't record any metadata in the
-split versions of the commits (for example, the downstream project
-commitid they were split from).
-
-Repeated splits ought ideally not to constantly generate additional
-material.  So the algorithm ought to be deterministic.  An easy way to
-do that is to make splitting a pure function from downstream commits
-to subtree commits.
-
-If one can run git subtree split on every commit in the downstream
-that has a git subtree merge as an ancestor, then one might think that
-means the split must produce as many commits as there are in the
-downtream.
-
-But we can map multiple downstream commits to the same subtree
-commit.  Consider the cases, for some downstream commit D.
-
- 0. D is a single parent commit that *does* change the subtree.
-    This becomes a new commit with parent split(D~).
-
- 1. D is a single parent commit that doesn't change the subtree:
-    We reuse the parent's split: split(D) = split(D~)
-
- 2. D is a multi-parent commit.  Determine \forall{i} split(D^i).
-    Discard all split(D^i) which are ancestors of any split(D^j).
-    If any remaining split(D^i) is not subtree-treesame D,
-    or there is more than one remaining split(D^i),
-    construct a new commit with those remaining split(D^i) as parents.
-    Otherwise all remaining split(D^i) are the same,
-    and they are treesame to D, so discard: split(D) = split(D^i).
-
- 3. D is a subtree merge commit.  split(D^1) is explicitly stated
-    in the git-subtree metadata.  Calculate split(D^0) as above.
-    Then calculate split(D) according to point 2.
-
-In fact, 0 and 1 are special cases of 2.
-
-Do you think it would be worth me prototyping this?  I think at least
-for my case it would produce considerably fewer commits, but until I
-try it that's just guesswork.
-
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
-
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
