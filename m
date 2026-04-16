@@ -1,81 +1,101 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665FB3A1D0F
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 23:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5773A6EF8
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 23:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776382184; cv=none; b=L/XCmxQjCj7u/0inpj2ShjtuJYAfJo9HhyTZl3ciptZW2oPldF5y6ZAFQluZbPUDBgqGLWd3ExjUP15gp1/jFZb1mxbbDUpHZMVol13f5HSX/PRTvwEAoqD91YOKgfe8OWRwIwXarnF/46IsVFD8Pluex2v55xKbnQhapwd4lZs=
+	t=1776382597; cv=none; b=V8XUxG9hj0QazUJfRRClaWPYljurWHUJ2bRGxOtGX6QFgJN8LiEZv1MrUP7aSEJitQTO3pHXGrDJVQ7R2EYT+8ef6bjvWTWHpyt06NswwUp7L496YBtPBhCw1rjX0x6fI3EMr5naTQEYJDHAZI2aMZG2ZmDKdAIucth4qp9e3+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776382184; c=relaxed/simple;
-	bh=aiqlGHmPNVQkKITSUp794Hjlvt6KMpHo8Et0NmhACQU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rvBKKTwitpQh8ca98e5ajH7H22KsQ5SyY98poRkyB9MssyxIt3SfKVd06XL7DwysaZw2ErwSd0dm6rAX+0kqtNk6GC7tHUUuOggC5zduDrBCNzxQr/b+/NIcocdWAxbzAXC1e4io1ysT8jiP3wpMVagTOberhimzhjRFnhd/Vcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DrcD5nfM; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1776382597; c=relaxed/simple;
+	bh=XS0MdE4wraVCPdTxQ8ioTgsOvkmx4mbN7aW30/aqLxU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=cF2lFeLvgIMj3u/nkghXgInoGh+CRokvxF22H3kbRCP82SEtsOzBU4WIPzl0j8yOUJXIxh1arJ3bKsc8e5LdU8Jeutp7EH27bM3itr+7gxmWmeYs8S2tnlay6qc5rXj8pXrM2nakjoQmPVfF8XUj5Mv/KMsPfqFN9Z8GfSO5Wvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PZ6rmNva; arc=none smtp.client-ip=74.125.82.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DrcD5nfM"
-Received: (qmail 375161 invoked by uid 106); 16 Apr 2026 23:29:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=aiqlGHmPNVQkKITSUp794Hjlvt6KMpHo8Et0NmhACQU=; b=DrcD5nfMZrrCmFAZC4M7PGLZoA8UPmFVZ+HETMHRNDsV8qOJxRuJlFxNYCP9y9p3FzclCUbqEONGVIRiXYhoEf9G3z78vzYOnQ78uhfYcCszxQju+/+aopcQ8w02dvNuNIOpbso0As6OjcxwxzoAyODcrEUFM+G5d3yPGPgpRC9sN3ReH0ae5le6U/vDeQWNi7l2/5451CxGvzRbym/FPryvwd2NRpNMbXEPgo9dw5Ivq1AfNqlfutHgb3e8KtgOLaAxcuzGL6Qew9RnuNZS/ljt9BIZItlRfI41aIvDXRvnhepf2wReAmpyMDmUP7mqLdsHs7tBLmAQfK4q4Vh4kw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Apr 2026 23:29:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 625503 invoked by uid 111); 16 Apr 2026 23:29:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2026 19:29:42 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 16 Apr 2026 19:29:41 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
-Message-ID: <20260416232941.GD1904316@coredump.intra.peff.net>
-References: <xmqqqzohd0sh.fsf@gitster.g>
- <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
- <xmqq5x5s540j.fsf@gitster.g>
- <20260416051732.GA48541@coredump.intra.peff.net>
- <20260416053435.GA646718@coredump.intra.peff.net>
- <621c9da9-2ec0-462d-ae51-0be5e0ca6ab2@gmail.com>
- <aeFF5s5m76Yz7F/Q@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PZ6rmNva"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-12c42a23c8eso93777c88.1
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 16:36:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776382593; x=1776987393; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=I0gLbMMq+SR4rDB15fy+eFrGV5uE08ZnPW2Mpm8sRx0=;
+        b=PZ6rmNvasqOcAkJdhMwWNIM/v++A3pUZPsy9KGhmJz+tgjhaxt0Z3CoWgfk1pDkNjM
+         m5LaVRerjcDguyLRXazdGbB7GszXna2oCC6K29lBeu78kC4exZ5qtJ90r3CabP4H4byG
+         QhvFBVcyhVYm8p40tKsA6SKPHyJespkUVJ+wyCy2gNJg0e7dqWqLSby3jEhPseWstPOc
+         ikzAIgZC3UX3cxKEKyLIPAO3psJEQG1y6z7wnMMl1bIP6BnuEFX/xBtaYNIqfTEEPJSR
+         pmllvAOfvmjPyg/BuB77Y9IBjUWeIp3NESAP9nZG1iTqymuwdpWZhYy36ZenNmJvTUyu
+         D/Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776382593; x=1776987393;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I0gLbMMq+SR4rDB15fy+eFrGV5uE08ZnPW2Mpm8sRx0=;
+        b=SEliQNxMPM12lVZ+22lAY46f1VbNdr4WjhtMmtD/RLdzmXwaFGH1igdbzISuwjXNBM
+         +ClsgJdQJTsJLqBrR4bemDO3Ag0FfYegIb4iVA6gmMT1ArvHgDn3p5BOE7JJPK65RG5s
+         cPAR4BkOqD0S2EgvdDst9mfOeaCvXlWky48ExcfmfTwAA3Pa+GU0hfR4Tdk6RWK8lInC
+         ressPkn2hwoptfygWbSyLwau0H/kwFClQc6+3nYuxGa6UCeod/SR8KXEPgzv/17gqpy+
+         0ULuuczCjpcSqwJNElT2I/KIFaaBcH4w3bGRjBFwagjrojG97yPbPJXOrtT/+CgQ2tx4
+         gk3Q==
+X-Gm-Message-State: AOJu0YwDGJo+c8dVQnuxFwAcWitfKnIUxRk+WtTloRjylQcDYXfMPOLU
+	N12FLcCOoNkBVGeqDWgec4PARMDg8tKrDUAb7iqUgheohySogJPvr2CFaEzZjw==
+X-Gm-Gg: AeBDiessV0YfCETAoOHC6ySGDh4gaINTFSUaEBY63GgXqefR8S8hcbARF03ll7hhh3g
+	2O4sQwI2k3vcBlplPNHN0s0dkMy+iL1vXTDx3E4Bx6JA18Q77Yt8Ls2tpHS+eJP4RU9OJttoWXv
+	J9cC+jKKOlzk94seCHrHci/LsfTaS9sK5vTXMAWw8a9QMm77acK8vs+NTKN34X4a6bPDnYbvpdc
+	LrYl716NOT2xDEgq6gm9L6PmN35cJ+RipJeLMjoyV7IV53nfdO95PDL9E0TNW8qa1ghv+3RlIVm
+	nXzEBV5VZB3/FIWzMayMJMDNDoYxjhVnEyo4owAyt/Q6ICbDLdhUEngZjyZPgdW0tPuJznAsmWb
+	uSQkxmib6fuIcVxMS5yiLQTrSJxXuCYbVOlIYUfXHUfNo3DYGaZpNTopLkQHI+byXPAKinJUlN+
+	sPeuhwgN2mSbGbaUGuQpgxl0a7iehFT9fYlUM=
+X-Received: by 2002:a05:7022:6b8d:b0:128:ca90:3301 with SMTP id a92af1059eb24-12c73f71963mr198629c88.11.1776382592680;
+        Thu, 16 Apr 2026 16:36:32 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.51.70])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12c5e6a8778sm7335806c88.9.2026.04.16.16.36.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2026 16:36:32 -0700 (PDT)
+Message-Id: <pull.2092.git.1776382591.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 16 Apr 2026 23:36:25 +0000
+Subject: [PATCH 0/6] Documentation fixes for changes made this cycle
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aeFF5s5m76Yz7F/Q@nand.local>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
 
-On Thu, Apr 16, 2026 at 04:26:14PM -0400, Taylor Blau wrote:
+This series fixes some simple documentation issues in the release notes,
+Coding Guidelines, and regular documentation, all of which address issues
+new to this cycle.
 
-> Yeah, I agree, and sorry for the trouble here. A few thoughts:
-> 
->  - In the immediate term, we should downgrade the default format to
->    write V1 MIDXs for the compatibility issues pointed out by this
->    thread. That would seem to be the minimal thing to do to make sure
->    that the 2.54 release is as smooth as possible.
-> 
->  - In the medium term (i.e., on the other side of 2.54) we should
->    implement the changes that Peff sketched earlier in the thread to
->    make loading the MIDX robust towards unrecognized versions.
-> 
->    Of course, that doesn't fix any old clients who don't upgrade and at
->    some point want to fetch from or otherwise interact with a repository
->    that has a V2 MIDX. But it does improve things for, say, users that
->    are on an eventual 2.55 if we make the V1->V2 by default change in
->    2.56.
-> 
->  - In the long term (i.e., in 2.56 or otherwise in a release after the
->    above change is implemented) we should make V2 the default format for
->    MIDXs.
+Elijah Newren (6):
+  RelNotes/2.54.0: fix typos and grammar
+  CodingGuidelines: fix subject-verb agreement
+  doc: fix self-referential config in sendemail.smtpSSLClientKey
+  doc: fix plural agreement in pack.preferBitmapTips
+  doc: fix singular/plural mismatch in git-rerere
+  doc: fix grammar errors in submodule description
 
-That all seems reasonable. I think the only question is how long the "in
-the long term" period should be. Two versions is not very long,
-especially for people who are using OS packages (think moving from one
-Debian stable release to another). But that can be sorted out later.
+ Documentation/CodingGuidelines      |  2 +-
+ Documentation/RelNotes/2.54.0.adoc  | 20 ++++++++++----------
+ Documentation/config/pack.adoc      |  2 +-
+ Documentation/config/sendemail.adoc |  2 +-
+ Documentation/config/submodule.adoc |  2 +-
+ Documentation/git-rerere.adoc       |  2 +-
+ Documentation/gitmodules.adoc       |  8 ++++----
+ 7 files changed, 19 insertions(+), 19 deletions(-)
 
--Peff
+
+base-commit: 9f223ef1c026d91c7ac68cc0211bde255dda6199
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2092%2Fnewren%2Ffix%2Fdoc-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2092/newren/fix/doc-fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2092
+-- 
+gitgitgadget
