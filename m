@@ -1,46 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E108E14A4CC
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 05:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37CA33BBD1
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 06:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776318568; cv=none; b=aRtiKU7t3fUFDHtju+febZZHc0uJLWDpJRRNe7O88yc3brXlCn0iH70Pr+tgy+ZcyRMo0XyYCxcB1y8E5MWncxx+gAtFiMqjTLH5A3YrQ6I8fnUg72oX/91u1dgmNFwK19ILXlesrF3BpqmvC5LDPVxg7Om65lCs76968aBne78=
+	t=1776319262; cv=none; b=APEOYpf3CKFAXyrLBayGfW0XoDJnrKAadK8cwbzuHl6AVeL5v3pB2QdV5HAcLbB1L43tJ64PAQ//XTKnioHo2DEl8pHLEZRPLfZwC04+788TKQEjsxlwEPcNXSsRr/i5gnOJ9Cpjdh4a7RPLcgdU2T73FhSRqHFIXj+qx4cLu0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776318568; c=relaxed/simple;
-	bh=j3F7jkUEqtNIs7s9KNb6seud1IW9yjRDJNHgrB2nStU=;
+	s=arc-20240116; t=1776319262; c=relaxed/simple;
+	bh=vi9o41/Sm0SavoBz47lml9ATFmxT6uQaRCFBXG8fQU4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LUVRGRTDqpdb67ORrWSVqKRUASGpu7pD094cRbw8UBzek+FJjhgBTVAbXbUAETgTJerX1NCi+OhDJtqSexITFS2UoDDuwwPIrYQ7LUske6OBECZUJtJOoZcOacJP9yc6ZJk+wYpsXlT63avc29VF75l9CCFmjtarY37Gblmc6Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MLbFJUkj; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=uPSCWqSyhDFhyNP21x2yqEM9g/ibFKN/3G092LXZd6oYTurWr72uVsY7I2fRI4584/TrEPTxUTj88DfgHTA1IPItdAsljuUaDVCKvmIgrsbbIZDKBq1U9nbKc4SzxjuO8epMxLC01l29F/a+IHTybDLhmj2va+3mpPAlDNywWfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bLNFnTDw; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MLbFJUkj"
-Received: (qmail 365996 invoked by uid 106); 16 Apr 2026 05:49:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=j3F7jkUEqtNIs7s9KNb6seud1IW9yjRDJNHgrB2nStU=; b=MLbFJUkjW/7GJqcSRdN5bbU5z/MqOsa106Y+TzRKsAj4DHfE7R7mZJ548lFTEVp/xVuRzILXjswCUf3iQTVSX3r6OGhlSpk5nMVzG14MYWpleAeTFbm/CvGkhGzZ0GCpv4iEvyH6amyjyfyXzfNIDUMURguryrAcwPVWombsGwIMMorqXgixXamV40cBVN1UAOQKlsMFZYz3sYGLiA67WkHbfdP06rCVTio6eu1uztMPneWdP4V3khGOK5hAC0D52TUSBba1lCgOCLpp9puaHQK0Q8ze5cD9qdy53AGrb2/iBne1sn/Ebd7c1DS3xjZcgPOe399Gclru1ebkcSlZcQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bLNFnTDw"
+Received: (qmail 366080 invoked by uid 106); 16 Apr 2026 06:01:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vi9o41/Sm0SavoBz47lml9ATFmxT6uQaRCFBXG8fQU4=; b=bLNFnTDwFzxdHWm/ETnllut72mw12evHn8tgo70sodtod2ldfnvEcRd/g3Ac156WSoX+bcdAUDcWFJ9Fvl8ZCF9PBybsRRWsenRB6eybQdscwu2z67cyFFsOhMLs7TO4TEhe5ul2K0Y0zZ1nxetipO/MFsN1oi3nq+DidEcSBlym/a3v9wbEiAY4cZMqCaZa6YvEr94bZpGg10t2OUM48TQpZsceziv3UrYq0dcuSYFY0gCgy9rUTwsXDYLLnyxsP/Sk093m441uxRH071Cgq9Du3sqWFMzgnDA8Rwabx2aI+w052HpLHxyWYB9GqNTBwV6wU583m4iLH9kL4BVxzQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Apr 2026 05:49:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Apr 2026 06:01:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 611172 invoked by uid 111); 16 Apr 2026 05:49:24 -0000
+Received: (qmail 611393 invoked by uid 111); 16 Apr 2026 06:00:59 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2026 01:49:24 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2026 02:00:59 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 16 Apr 2026 01:49:24 -0400
+Date: Thu, 16 Apr 2026 02:00:59 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
- commands for `set -e`
-Message-ID: <20260416054924.GB646814@coredump.intra.peff.net>
-References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
- <20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
- <xmqqeckifq59.fsf@gitster.g>
- <xmqq340yfivf.fsf@gitster.g>
- <ad3rgbgadjIZRgaz@pks.im>
- <20260414220347.GA3475127@coredump.intra.peff.net>
- <20260414225206.GA3486072@coredump.intra.peff.net>
- <20260414230810.GA3528448@coredump.intra.peff.net>
- <ad80r_oY-uAV2zVt@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 12/12] t: detect errors outside of test cases
+Message-ID: <20260416060059.GC646814@coredump.intra.peff.net>
+References: <20260415-b4-pks-tests-with-set-e-v2-0-4e4904a96f15@pks.im>
+ <20260415-b4-pks-tests-with-set-e-v2-12-4e4904a96f15@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,38 +41,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ad80r_oY-uAV2zVt@pks.im>
+In-Reply-To: <20260415-b4-pks-tests-with-set-e-v2-12-4e4904a96f15@pks.im>
 
-On Wed, Apr 15, 2026 at 08:48:15AM +0200, Patrick Steinhardt wrote:
+On Wed, Apr 15, 2026 at 03:06:45PM +0200, Patrick Steinhardt wrote:
 
-> > Personally, I am still skeptical that all of this is worth it versus
-> > just checking stderr.
+> Improve the status quo by enabling the errexit option so that any such
+> unchecked failures will cause us to abort immediately.
 > 
-> Yeah, the more I dive into this topic the more sceptical I get, as well,
-> as shells behave wildly different around `set -e`. So I'm starting to
-> feel somewhat uncomfortable with the idea of blanket-enabling it for all
-> shells, as that will for sure lead to lots of fallout on platforms that
-> we're not testing.
-> 
-> Maybe we should really only do this for an allow-listed set of shells.
-> Starting with Bash 5 and newer might be good enough, and given that we
-> use Bash for some of our CI jobs we can assume that this would weed out
-> failures anyway.
+> Note that for now, we only enable this option for Bash 5 and newer. This
+> is because other shells have wildly different behaviour, and older
+> versions of Bash (especially on macOS) are buggy. The list of enabled
+> shells may be extended going forward.
 
-Yeah, an allow-list is probably much better than trying to come up with
-a list of buggy shells. But that only helps with portability.
+OK, we know that this does not cause false positives because all of the
+tests should pass. It would be nice if we could verify that it catches
+bugs, too. Doing this:
 
-I'm still concerned that this approach is going to create extra friction
-for test writers down the road. This series needed to clean up several
-spots to avoid false positives, and some of the spots were non-trivial.
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index e4d32bb4d2..5521f21e64 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -980,4 +980,6 @@ test_expect_success 're-init reads matching includeIf.onbranch' '
+ 	test_cmp expect err
+ '
+ 
++test_expect_foobar 'baz'
++
+ test_done
 
-Now that was the accumulated cruft of 20 years of test-writing, so it's
-not clear to me how often new test-writers will run into this. But when
-they do, I worry that it may be hard to even figure out what is going
-on.
+will fail for me, but only if I specially ask to use bash, either
+manually or by setting TEST_SHELL_PATH (since /bin/sh is dash on
+Debian). Is there something in both GitHub and GitLab CI that will
+reliably use an acceptable version of bash?
 
-But I've said as much in earlier rounds, and I'm not sure Junio agrees.
-So we can note my dissent in the captain's log, and I can reserve the
-right to told-you-so later if need be. ;)
+I guess perhaps Windows, though I don't know what version is used there.
+But should we maybe set TEST_SHELL_PATH in at least one of the linux
+builds?
 
 -Peff
