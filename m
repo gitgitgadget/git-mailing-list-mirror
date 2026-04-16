@@ -1,150 +1,127 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFDB291C10
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 18:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1261C33ADA7
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 18:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776363519; cv=none; b=u6JJlzFcUL+qrw53kh3OVUxahv/oN5F48kaBFHPNfVxBV8oXhx5BWJYYWt6exhcdvnH4C48pRbKrAtNT221dlKD8i1y9c302I7erUkbR5NGxPyelsIoJm65oJPn8kjcEwYFufugIBUsSXNx0dt3cvkS0MfhbSKKgaBo2NYcc794=
+	t=1776364700; cv=none; b=g4uFH1tQgJhzcqDGRyYybj7r3WMBIviGlu/Lwfr2aSkXO/jE3bfMLOYJo0S1iKnvdZSeB6QVJapOtDgwQUergz61v9BbTWe+12HrkuPTzd1w+K7Hf4KVvf1/i4AuBPLyQjipQbn6CJp3LJcSQ6IWXxJvA3J1ZqqhSk/1t7aarXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776363519; c=relaxed/simple;
-	bh=77qGZmWgJgRriC1jcSSlt0gsnsam7tVJ+w1HSHcEdpA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YU55J5zssCGOyLtjdZeMVQROc/qYwAaUt33a2I9kU6iGM5gCYUswbHS9QSb0uHBkOlhIAU9v+EEOikFnIqSjPePT5BUKS9uGusxRWGGPxNOxfGrwmXT/cw5Vd8sV4eYKlKV7bmiNRJG2B5C4zQGJi5kSRJiFp4EwdiZv1J9lIac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e2QYmNjT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nhwkuxQy; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776364700; c=relaxed/simple;
+	bh=AR73yR71RP7ek1qe62atvk8DZZaoUioD/0dcZnfGNds=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fUgo2boiw0lOoDYclSD+VE7ScXZ3ugc4SQTJNKYFSUOWpfLBt99mWTyYm7G4w6wteIlnFk7oQ20DhRHKU7pa2NXt2J6VH4Gwn1jLdyurQAQpkll+yWZOEGXVeulqi5izyFgZUr0+/VDVzv2XejjzhbdPK15EQWDZgi7UktGOGDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=priyfrTT; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e2QYmNjT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nhwkuxQy"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 44F7414000BF;
-	Thu, 16 Apr 2026 14:18:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Thu, 16 Apr 2026 14:18:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776363517; x=1776449917; bh=+E2Mr5ZqTr
-	wVcqkMrN9z8iEnjSnH/EkgM6pAKmyypHY=; b=e2QYmNjTlcOT7/qH476uVWvGFE
-	SyFcL/NZ9CqTb6xzBZqpukBqZRavoaiZkNi94S/3D3ZdRr0fB+HluwKtf71qTbo9
-	5brXw0m9uRJlVpJa9yb0TVF4FcB7QEAk4EMo06RQsBEW21223gH8C4Kg4a787Q12
-	Q72YDDen1dTilKFzNSDfkTzZEh2HNDvlBDHoPheKgIFvBh2YHEZ5xhPT+FtaFKBg
-	gnXxUs5skG2M8VpPNCyzzEXofnLi1GP2VkunuaPjEeQO+izMwlwOYPGO7jkongaj
-	MPqErULi2LM6jJbqDqjUH0Zsea33g7q4g/RB6zF0d+4oWU0F154oS3IntFjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776363517; x=1776449917; bh=+E2Mr5ZqTrwVcqkMrN9z8iEnjSnH/EkgM6p
-	AKmyypHY=; b=nhwkuxQy/F6YCJaT1scR3YJuo+TQCMyvcuxhnVknrdiSRPm6YfX
-	XBOAHZydlAhDLm2K4UrgkmeQSgLZsWY1eJT3CIa/E1DCNV/zdveK0nSo645mB8Qb
-	4dPnv8dNax982JdsChaz9t9X1yF+h3GkZZqi/2FsKvwixUQ7/b4jyC+VhFAY8wSB
-	jciYZsbUxLhLy4obp2G+9HXZTtbtuYZwKlWUW1QqIUdwJOhzTUzmZAa6DtUGk2g8
-	ZgFclXMP9+3OjxwL6qM8xgkJpnI2sQqiTb4lZlsE89NmLRxJ+Ddz6UR3O2HZl1y7
-	4BT7aB+DRJhKVR+EZw0uMG5ROobl9GpYD2A==
-X-ME-Sender: <xms:_Sfhae_8maMqOh96h70x-Hk3XRS54KKsOP8YbVngH_DFQog9SJnQhw>
-    <xme:_SfhaVlSUIvFDXpaZEkV3veso315VudgQ316H3FgdItKtotKaVWqhRZqkCjV0BHvl
-    6Vi9j0HKNzUNOCHw6tUimDJfZNLCdjSdE4XLu6qrv8-BCqwZlcamg>
-X-ME-Received: <xmr:_SfhacWYTTZUoNWMXeZZLqi9oLQNCJMD11wJBan2PgWHlI6K568l5wxUQuMw6cXrbZwNRgBuXhpbMMW8Ck_zgsO9T1OjiLne0w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeetleefuddvvdejiedtjeeugfefteetudekteelteevuedttddtkefgieetkeej
-    ueenucffohhmrghinhepmhhiugigrdgtfienucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnh
-    hnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_SfhaSE0iAcLn1gcP1LnA3nODkUPsi3dVVwV7C59OncDZmecabBDzg>
-    <xmx:_SfhaQeVVXXeUJKs7AS4dFSEeCUGficBh0ceQMX8gjrwk4hqO6KN2g>
-    <xmx:_SfhabIXxVEYzueanSGkyW8PrSZgNogoxWEWnSBUtrGDC1C1Rb4Azg>
-    <xmx:_SfhadFKhm7dJM4oNYHq4zmE4lX8AGA-73ohBSjGoeKgO5zBjGt6KQ>
-    <xmx:_SfhaQfMWc1MDeCMH62mlRmlE2QEUO7ujKfJRRUPcPZdZ6FbUh6dY6v1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 14:18:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
-In-Reply-To: <xmqqldem22uw.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	16 Apr 2026 11:10:15 -0700")
-References: <xmqqqzohd0sh.fsf@gitster.g>
-	<8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
-	<xmqq5x5s540j.fsf@gitster.g>
-	<20260416051732.GA48541@coredump.intra.peff.net>
-	<20260416053435.GA646718@coredump.intra.peff.net>
-	<xmqqldem22uw.fsf@gitster.g>
-Date: Thu, 16 Apr 2026 11:18:35 -0700
-Message-ID: <xmqqh5pa22h0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="priyfrTT"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a2c77c62d7so8492895e87.0
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 11:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776364697; x=1776969497; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LgReXKHRzURjGgSSEwrhcwgXY4NUXpeGBnLgGvU/lmo=;
+        b=priyfrTTfauC6iMHThBnelBnMrrWOXdTok7VDvpR+em2iTPnJxfrjp4NBl9YwoC8Ds
+         gPDT7Dw8QNtqZrjGGnBUKSJHR1ymXVFOxTFuPtZZeL6pupl1bB6/QtoAX+s3en+KV0Yp
+         cil5g3u9zbADkiev51iYfj407GM1pZuPv6u8khk/sNVRYIIhHKC3Qr4exoCbQclu1Pb2
+         xi2BVnKcP8zX1zaRc2DecR73Kkhq4cU4XaqmJJCLi1SE9qTJ6hmd42ZwnGUvJjmi8r6e
+         dnWq0PqXYHdHW0QSmw2HwJsuy07TlX3JN0L//eurCGGBbCAHbdgJmnVEBozu06fTf1Nd
+         z25A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776364697; x=1776969497;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LgReXKHRzURjGgSSEwrhcwgXY4NUXpeGBnLgGvU/lmo=;
+        b=dyTRRHGw5nJJN0wQmN9rSPRaQOxfeIAb+qbth5Mga/3wzSptwI5+HnyO0J6pRn8ACQ
+         /fxMBia8RgNXL5sqpcqeq+IX9Nr4R4WPHF8PgLl156UwtOcHhzzEp2MN4Ir36ybie9+2
+         euGTpil/Pg7IUkzxB+wa/gbxeqvXSJ1rhpkenCMljyDkD1pbPfTSmh8QgJeFNVXldJ9S
+         yOCmijbQmdVty01JXDj0AMoJpRoa3945nBfxMKBty6VOIqAm+HyYOD8vbM0IK6bfWg25
+         yGPEpf1cT3RgrqeAbppotitZjM4YNlBZkipaTOkEo5a83xzomaUMMtWKucoGMKeEKALd
+         usFg==
+X-Gm-Message-State: AOJu0YxL07vMCjMf5Scb+2YQuKKXMWP+4RmWNrpsDXgc+g27l580JlLs
+	Q2sVl5lQ8n0OyfLB5td+FOxRkWzOJJzfBRJXK/lNaDgvOL0uOwsIuHHW
+X-Gm-Gg: AeBDietbG7kxp3b8UU9KBM7fVqM2Muv7xD1/nkbDr4o7bKMssiS7oQCFPzVuYahlo5c
+	/4Ax6nqcU0bzaAEVSu/gpbm8oRqA8IwFMW73tJhWhx1/0fRvMlr2D3aIx7ugI9XgBPYvVQh9sZL
+	ABzRxUYsesJ6yx2P+sSdsAe2mL0+XcweadnK0G4hgrB2sNJfF+z0mZBbve9BkGGsUzk2byW6h2C
+	Nrc7Ne1aV6PWnrzExbQ+dKjI2XjcAutzznfLXaqTAtuW7+yQqUWl2QR1qxeqQCeVpTkg7AYqCoL
+	DOcxUWcW4J599n1W0fm7hJgbCXVkzI7GoQrYi11Rj0yERd6xI0/IdDjLfbq9tcK3steDmqL5Vg1
+	ilWoHuycZnyfaBb/y6/Sq57UaLRu2x2vn/4NEUHJzQU30LSXwk5sFJlHZjumWRS4SNU3qMRwA/S
+	8Nc0NCd6zqWlB0tdXBz90evjDkw/ro6d/63E8GKFVCPlK0yA==
+X-Received: by 2002:a05:6512:2243:b0:5a1:3b7f:450e with SMTP id 2adb3069b0e04-5a4155839d1mr128594e87.42.1776364696967;
+        Thu, 16 Apr 2026 11:38:16 -0700 (PDT)
+Received: from [192.168.1.201] ([90.254.45.214])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a30909fsm1469659e87.79.2026.04.16.11.38.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Apr 2026 11:38:16 -0700 (PDT)
+Message-ID: <19b86e02-6842-42f0-8226-c86ad6669ec4@gmail.com>
+Date: Thu, 16 Apr 2026 19:38:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/3] worktree: add --recurse-submodules support to git
+ worktree add
+To: Junio C Hamano <gitster@pobox.com>,
+ Jimmy Aguilar Mena <kratsbinovish@gmail.com>
+Cc: git@vger.kernel.org
+References: <aeEMU-ohKz2tnSWq@RTX> <xmqqzf3225u1.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqzf3225u1.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 16/04/2026 18:05, Junio C Hamano wrote:
+> Jimmy Aguilar Mena <kratsbinovish@gmail.com> writes:
+> 
+>> The approach follows Phillip Wood's and Junio's feedback: each linked
+>> worktree gets its own per-worktree submodule gitdir under
+>> $GIT_COMMON_DIR/worktrees/<id>/modules/<name>/, so HEAD, refs, and
+>> the index are independent per worktree while pack files and loose
+>> objects are shared via hardlinks.  The gitdir isolation is the same
+>> model git worktree already uses for the superproject.
+> 
+> I do not quite follow.  The point of git-native worktree support
+> (which improved a lot compared to its precursor, "git-new-workdir",
+> is that it can work well in a hardlink-challenged platforms.  You
+> shouldn't worry about "hardlinking" yourself at all.
+> 
+> After the superproject successfully did "submodule init", you can
+> move the submodule's repository with "absorbgitdirs" to
+> $GIT_DIR/modules/<submodule>/ of the superproject.  The primary
+> motivation behind this feature was that you can switch to a commit
+> in the superproject that does *not* have the submodule bound to it
+> at all (and obviously you do not want to lose the submodule
+> repository only because you tentatively switch to such a commit and
+> have to re-download when you switch back), but I think it gives the
+> single instance of submodule repository that you can share across
+> worktrees of the submodule.  Because the single directory created
+> with "absorbgitdirs" looks like a bare repository, you should be
+> able to create two worktrees off of that, with their own HEAD etc.
 
-> Jeff King <peff@peff.net> writes:
->
->> On Thu, Apr 16, 2026 at 01:17:33AM -0400, Jeff King wrote:
->>
->>> I think removing the .midx file (and optionally regenerating with the
->>> old version) would be the appropriate workaround, but I wonder how hard
->>> it would be to go back to generating v1 midx files by default. I know v2
->>> is a building block for more advanced features, but for those who are
->>> not using those features yet it is a strict regression.
->>
->> I think doing so is just this one-liner:
->
-> Let's do this before Git 2.54 final, then.
+I haven't thought much about it but that would mean that "git worktree 
+remove" ought to remove the submodule's worktree when the worktree 
+containing the submodule is removed. Worktrees avoid hardlinks by 
+creating a "commondir" file in the worktree's gitdir which contains the 
+relative path to "$GIT_COMMON_DIR". I think we could probably do the 
+same here and create 
+"$GIT_COMMON_DIR/worktrees/<id>/modules/<name>/commondir" containing 
+"../../../../modules/<name>" if we want to store the submodule's gitdir 
+under the worktree's gitdir. That way removing a worktree's gitdir 
+removes all the gitdirs of its submodules without any extra effort. 
+There are probably other tradeoffs between the two approaches that I've 
+not thought of.
 
-As to the other change, rebased to our current codebase, we could
-sell it as "futureproofing" for similar breakages we make next, but
-that means we are promising ourselves that we will forever keep the
-MIDX purely optional feature.  I do not think we want to decide that
-we are comfortable with that position during -rc period, so I am not
-sure.  These error() messages should be reworded to make it clear
-that we are _ignoring_ the corrupt multi-pack-prefix file(s) as a
-result, and then further weakened into warning(), I think, if we
-were to go in that direction.
+Thanks
 
- midx.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+Phillip
 
-diff --git c/midx.c w/midx.c
-index 81d6ab11e6..06535ffd46 100644
---- c/midx.c
-+++ w/midx.c
-@@ -145,14 +145,18 @@ static struct multi_pack_index *load_multi_pack_index_one(struct odb_source *sou
- 	m->source = source;
- 
- 	m->signature = get_be32(m->data);
--	if (m->signature != MIDX_SIGNATURE)
--		die(_("multi-pack-index signature 0x%08x does not match signature 0x%08x"),
-+	if (m->signature != MIDX_SIGNATURE) {
-+		error(_("multi-pack-index signature 0x%08x does not match signature 0x%08x"),
- 		      m->signature, MIDX_SIGNATURE);
-+		goto cleanup_fail;
-+	}
- 
- 	m->version = m->data[MIDX_BYTE_FILE_VERSION];
- 	if (m->version != MIDX_VERSION_V1 && m->version != MIDX_VERSION_V2)
--		die(_("multi-pack-index version %d not recognized"),
-+		error(_("multi-pack-index version %d not recognized"),
- 		      m->version);
-+		goto cleanup_fail;
-+	}
- 
- 	hash_version = m->data[MIDX_BYTE_HASH_VERSION];
- 	if (hash_version != oid_version(r->hash_algo)) {
