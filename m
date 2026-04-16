@@ -1,180 +1,107 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6918639A074
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 09:21:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7D3395257
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 10:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776331267; cv=none; b=SRIqqA5rRIa3Hz6vGTu7Q+4fcc+qnJoedcMMIJPRfLMrY9JzoO8t1qcJYECnQ4kL9CmT5oafL18OqA4ZBCuJidMEe9uJrDEU6peBChe3kjszc29FfbloxAsQBt6E8ZXntb4ZPNF7P+ActsyA51jTxlsaufInkLSE6ph5b917nkU=
+	t=1776333961; cv=none; b=QKyA97whAT41SDjkA67yfk/9Zx0Q3uLfI6Os5W7dL4dwb/sI3v2PqFwsrVS3wbNgFXXForNwytM82RZ9Jf6rD/x5qmix5wZZu+IB4ymq2j4bk/hY5dNrcndFwBjMfHYgjjBLoAIewJi24g0oHOjB4AoHXwhPkTZjw/Jq66Gx1QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776331267; c=relaxed/simple;
-	bh=l5bkgj922K3/Znvr5Ig0KUDr2SUDzuTh2ovtpzoUWlc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=AsRDz9CiJxZ39pRopkV6HAGdAhjOQs1bI2KJmwFndILCxtjQG+mnhewy529L2jbQhCQ2vQD2uzev+xslpk+rDR+mTazomcX8DF2sQoydSRCJHWXwztgAGLHDJC4Y4+MfLtkVKpZ3/jT9aQ2A2mz262i+v9mkWpafTVyToMEh52Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNyxbNEL; arc=none smtp.client-ip=74.125.82.43
+	s=arc-20240116; t=1776333961; c=relaxed/simple;
+	bh=IDnvwqEs5oj+Bo3RjI5GS8IJpl9CNfQUmkaoe6Vg8sg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Gy3DOQrElgaUvpGEnzBvI3XlZa/qQp5DMElOBSnZ2KwP3rXYi7lc5PFQ3ebCCkEN9OK1RF7TTHX1QXOP3HhPITgXCJTiTS4Iuv9MMIA3iohkwM7eRtmQHK4nizdbM1swfCHq+fSnWn484Tbhr+/LFq2VsJiZNN57umESr8wkj4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dlJPn5N7; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNyxbNEL"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-12c6df0b9bbso364039c88.1
-        for <git@vger.kernel.org>; Thu, 16 Apr 2026 02:21:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dlJPn5N7"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-38e68e4389cso51702041fa.3
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 03:05:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776331265; x=1776936065; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1776333958; x=1776938758; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L5JAe2OO06TJMnUvgcXKJDQFJEzcVOJ+jSMj947jAcM=;
-        b=HNyxbNELAMLVGRcRMOA1NCpKSaXZZhDgdHFJiw+FWrmB/q3IBsWDHWZozvkuYJ0c2d
-         1X6tlUE/AcBKpBQxwFJU3l4KHGqUDaXhyl2aRKWXSlhCnjxl9xHikTR6EuLB3B4IAv6G
-         Lh0KzUdQwupnIMbxiZtoo2YQUtquwuuo5wx+QRwScqMv2ZN7BPLUsse1N4xUTnjdzKwv
-         y02QopStHvdfWy+QjF6MROYxtzAwucVPvxfbgCYxD5ujZyues10lDPV39+Gbpk3KGjXc
-         gspOvG8cw+7KwKsYCJdRl7JvksOctx9jH5LG35ZMTJRpirfvU1gZRxFCepg2eVr1U5E+
-         b6UA==
+        bh=fDhq5dSclHa2EMussik7LliMfMEassB2txOnb9PUC+E=;
+        b=dlJPn5N7vto0bpIFuIQPAnUfQbyFdmIYDkRWNVwiMINfgWOCPocJo7QjS8AdGEJTyf
+         2eQSCCJrhUri2wOXjVvs05wYnX2+QdW0swflF2STZ5KlET53/VGhwa4oigwsTJ4Iu9Rk
+         pcTdBrxcL9r8e5xjg39/oqTJauzPoNfwtzQpa7/mu4EBcakIvyzAYkh8+snjdmwQ9eoI
+         2QtNkzosFMmax7fPH0GLIUTZck+QuhznlgOoRepntKEQYMFo3w+nIiU3kmixofLD79Eb
+         H/GEOMaXrW0aSH9S6GxGYfj7VW4AZSyC+Wp+xzA+d/ZoeSCrVcN8i7kx4AS9oD0mSTTe
+         v9Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776331265; x=1776936065;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1776333958; x=1776938758;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=L5JAe2OO06TJMnUvgcXKJDQFJEzcVOJ+jSMj947jAcM=;
-        b=oaQgyr1lLOdzPIVdNccaituLt63Wy4Ip/eV9gg4V62J4xzKsVsh/XexvtT7FSasWAN
-         CUwGoZCVBjYcJ2rNR6lqNjg8PP6kuJB96wc0byvcN8526MNFTCx3ZBBlsGIKn7saeXbg
-         v7j2AAwLqEvEYxCrYzPCrZGtrQBMaY1rQEnE1MGX99iOxvqJVHL1MFn/pmPp58iZeA+H
-         HRs250NQZvdqPXvQMjwQ94bdSTTbELadrqP17lsaBnNk6uF3+jDQ3BTlOtwPiLxB2SGn
-         jylrpzNc48vQCqMJdt1qp1PuL4AoAh2hcv4ccIq5YZgl6VXZ3F/UojPV/MkjQtY3cnkK
-         a1Aw==
-X-Gm-Message-State: AOJu0YxuumFw3tdKWy5ft9YKdrNleWHp+ptkbU75Z7rgzjsCf7Uwx3SR
-	s0WuKsK4AC8my4fKxtEhjPdJeg/Ll1DfxJn0TxaSLl6eFkc5swdY5hecKUgOOw==
-X-Gm-Gg: AeBDietBZ0S2xKoGqlE76Nx/SOvPJ5WkW+Yzq9/T5a+rgBY+fohoH1fV2lMZGCC9GNs
-	s8RZwec8KdO1lkp1aE8xkXthhCRR2SRLgZiH7RQBg0GH7lcVGPCDhNbdIk8ceQYS5apcuVB2B+Z
-	PtbJaRwNgmh60rcBAntFYdO1tTKwyhPk2Uf+1q12uJwciplmbPQyRPZiz8NXlDDxRotNCmK29m6
-	ICu4rq2lUJWbUkLMfQ4pMginG48j8tyWvHcMdl+ZRr3nLQk2ZFvCTHQBgESuI535LFtTsa4yNM+
-	CE5N2erFd7X6NBIDIKoa0HlwsGCtERXBFyoOQ59zsgm8cy75VI4/QkTXhaKH33SidURwOfRa/gt
-	b9vjiSRfFYV0dhcQudWDpE67xDkCR9mv4zl0+eFU7c/DdDRAJNA+YzxfloKN/zIxhpH5wQpQ7qR
-	jfxALUm7odQnIswlBvIRRXAe0=
-X-Received: by 2002:a05:7022:eac7:b0:127:33e0:ea33 with SMTP id a92af1059eb24-12c34ede98bmr13973067c88.22.1776331265041;
-        Thu, 16 Apr 2026 02:21:05 -0700 (PDT)
-Received: from [127.0.0.1] ([20.169.72.2])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12c5e6a860fsm5115740c88.11.2026.04.16.02.21.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2026 02:21:04 -0700 (PDT)
-Message-Id: <650acab79ef5e45b6835b523a37cde184ad60e04.1776331259.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
-References: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
-From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 16 Apr 2026 09:20:59 +0000
-Subject: [PATCH 3/3] t5563: add tests for http.emptyAuth with Negotiate
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=fDhq5dSclHa2EMussik7LliMfMEassB2txOnb9PUC+E=;
+        b=lBHXK0+W7HC0l8+5hkvSY2k2tkb2k+HrcEgbfxxFzLTXSsgzl9JSR5/4jpqS2qV+Vb
+         Na3S6hxvmmvrPQX0yum7PbL8T7Sx/U7f/vJdrz5wXLsxSNNO6zkVC6EniLq0pFXIFF2y
+         MnwQ4yNB1JxEL1WuhiXz290N+fK+mmmw2PVFlZ2tDLQl3YOfPLXstrFq0LoGl1Kx8wmn
+         XGrCriQjGK+tQFD3s8WWlUeHfnqzLlzcregryaV94rYfocTtXOHxCEHgeTTE432ypT1i
+         y0kbkAXmUZzW0ZOGoIPiyMPkSdAnWctBhT+TuH0exvU0dAMWaps+ulpHNS3Rl2+qFYWI
+         i5pQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+vqlZkP/OjeR188QNpBkmlerXKaAVcKwCdNAscru7Gn0GThom6TfbelIRQbHjebfA4sYY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxstrSoGvCih7PtoNvSmv+MFL/7klgyrMmcUhzHfb0tCSVSQ8u
+	AMqKSnqD9oxoCnqpShaGmNZPP+fkXbWPEkg3yv5yf6Io7E2RMEg7Q5nS
+X-Gm-Gg: AeBDievKpJUe1paHbpdvkqy56Gh8KUUKmEROAuRfmlrzSHIsrOW4WcxTs3opG0OmSeU
+	uSnXbPmxSUOSTGWZYkKwyUSATdWMqtgYd1sbmuKXv7YCEHkLXU6K6MjBFnQI4xcq9lIXyTPDmWW
+	L9vfzm0WBRJ2bNjXoVo3SdUWRU8li0mf8WCybcNIeepj9capFHS1o6OSTeO7ruc6w7F3Cjksqsm
+	qILg1qyjd8Nlbd6pTfwUVlbO8ET5237KS37kZxvp99yWGuCSmRpoFYicjcj+puMUQJgfla7WoRF
+	J8BN0RPmDNJRvyqmIW9QpnT5hezgmsN4hfESoRZCN28RZkDazocWf28jrTSyEYojscJ5beZKCoz
+	4VAjTXYcgk6LtPnFhhCa0WFhyVdfncOXcI7GplSTnoIl3hNpdd+MlSMdayA+T4FkNmOjuyj2/Je
+	RiEH4+tKT2ezHabwoBviJ3u34IQ03mmh/6xEBL3z65GC72OR9mfE2q8rHRw99qx2cAN10TvK9NP
+	azkp6O/c7JzU/LwQ7gqz0I4yYzT6tZSUYXPBg==
+X-Received: by 2002:a05:6512:39d0:b0:5a4:b18:427c with SMTP id 2adb3069b0e04-5a40b184b1dmr1713259e87.9.1776333958054;
+        Thu, 16 Apr 2026 03:05:58 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a308521sm1169156e87.74.2026.04.16.03.05.56
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 16 Apr 2026 03:05:57 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Thu, 16 Apr 2026 12:05:56 +0200
+Message-ID: <20260416100556.27823-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.rc1.77.g97a5d87c81
+In-Reply-To: <xmqqfr4xcz7s.fsf@gitster.g>
+References: <xmqqfr4xcz7s.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    johannes.schindelin@gmx.de,
-    Matthew John Cheetham <mjcheetham@outlook.com>,
-    Matthew John Cheetham <mjcheetham@outlook.com>
+Content-Transfer-Encoding: 8bit
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+> It shows 350+ lines of range-diff to show mostly irrelevant noise,
+> when the true difference between v11 and v12 is only that two helper
+> functions create_autostash_ref_silent{,_with_msg}() are merged into
+> one create_autostash_ref_with_msg_silent() helper function.
+> 
+> It is much easier to read that read from the diff between the
+> results of applying v11 and v12 on the same base commit, which is a
+> mere 55 lines (shown at the end).
+> 
+> I would not expect you to teach GGG to produce a better range-diff
+> or add an option to instead show an interdiff, but doesn't GGG
+> already have a way to add some human-written comment
 
-Add tests exercising the interaction between http.emptyAuth and
-servers that advertise Negotiate (SPNEGO) authentication.
+I will work on my cover letters, that's a very fair point.
 
-Verify that auto mode gives Negotiate a chance via empty auth
-(resulting in two 401 responses before falling through to
-credential_fill with Basic credentials), and that false mode
-strips Negotiate immediately (only one 401 response).
+I do think there is some possibility to handle this via maybe a new
+option 'git range-diff --rebase', or directly via GitGitGadget. This would
+automatically create a diff with only the files actually changed, which
+saves both author's and reviewer's time.
 
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
----
- t/t5563-simple-http-auth.sh | 74 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+Perhaps this: https://github.com/gitgitgadget/gitgitgadget/pull/2212
 
-diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
-index 0063581615..a7d475dd68 100755
---- a/t/t5563-simple-http-auth.sh
-+++ b/t/t5563-simple-http-auth.sh
-@@ -719,4 +719,78 @@ test_expect_success 'access using three-legged auth' '
- 	EOF
- '
- 
-+test_lazy_prereq SPNEGO 'curl --version | grep -qi "SPNEGO\|GSS-API\|Kerberos\|negotiate"'
-+
-+test_expect_success SPNEGO 'http.emptyAuth=auto attempts Negotiate before credential_fill' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	id=1 status=200
-+	id=default response=WWW-Authenticate: Negotiate
-+	id=default response=WWW-Authenticate: Basic realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	GIT_TRACE_CURL="$TRASH_DIRECTORY/trace-auto" \
-+		git -c http.emptyAuth=auto \
-+		ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	# In auto mode with a Negotiate+Basic server, there should be
-+	# three 401 responses: (1) initial no-auth request, (2) empty-auth
-+	# retry where Negotiate fails (no Kerberos ticket), (3) libcurl
-+	# internal Negotiate retry. The fourth attempt uses Basic
-+	# credentials from credential_fill and succeeds.
-+	grep "HTTP/[0-9.]* 401" "$TRASH_DIRECTORY/trace-auto" >actual_401s &&
-+	test_line_count = 3 actual_401s &&
-+
-+	expect_credential_query get <<-EOF
-+	capability[]=authtype
-+	capability[]=state
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=Negotiate
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+'
-+
-+test_expect_success SPNEGO 'http.emptyAuth=false skips Negotiate' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	id=1 creds=Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	id=1 status=200
-+	id=default response=WWW-Authenticate: Negotiate
-+	id=default response=WWW-Authenticate: Basic realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	GIT_TRACE_CURL="$TRASH_DIRECTORY/trace-false" \
-+		git -c http.emptyAuth=false \
-+		ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	# With emptyAuth=false, Negotiate is stripped immediately and
-+	# credential_fill is called right away. Only one 401 response.
-+	grep "HTTP/[0-9.]* 401" "$TRASH_DIRECTORY/trace-false" >actual_401s &&
-+	test_line_count = 1 actual_401s
-+'
-+
- test_done
--- 
-gitgitgadget
+
+Harald
