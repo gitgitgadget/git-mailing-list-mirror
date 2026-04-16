@@ -1,69 +1,68 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D705276049
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 16:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C371DE894
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 16:34:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776357144; cv=none; b=Aj6xaUMonit7EttP1QjAuK8RaIGvS6L8xY3KzFxUr43Lc5IujigD6Y4Yz8YfJ8u2ablAg1uUTOv3c8OHPprdbL83PUO1x81nwcDuVdAATS9FAfyCcyUfpaHNTq9KzeC6RtBNxKN3StBKyPVCVGMKK+nh6oDeJ0rvHzpoE8EBQEA=
+	t=1776357260; cv=none; b=NkWJ3TG6diX9Scti9J0eKxxBr4N5jHGGAmPYYAEmuy/9ChY57RutYHl8R2tfrbmQ2dBInbczlX84w2A5jgPnBZipLafnPOcta5822Q5F030wA0NrWUMRjl0vOz1iVgdEyohg7VTnD5YO+xetxoZmqGcKC0LDIYC9BfH9PMIAPRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776357144; c=relaxed/simple;
-	bh=j5VHmlWWOj9a890rQg41cmRL4mqXgjvG3N9anMx9bfU=;
+	s=arc-20240116; t=1776357260; c=relaxed/simple;
+	bh=6yLGLGdNT/btWSr+wkwW2HhjI5a6xJzuzZ3EVjtC8bU=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=C0VwA+4uohSxxNuvEL3Q2q4r7XU8dIPwaywWjjpb6psymo0bhx04HhS8rJdQmpW92l04zLAqUPZAlQvGJwfmbRKDkktn8k0ZEl39bgewac7mifLQwJnmXmAqxhUrCgqR3Ir+NqoADv82bIbysZ8zulJGXj9Muj8v360FtPXuwOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jZRaibR8; arc=none smtp.client-ip=209.85.128.49
+	 Content-Disposition; b=Auca5JybLl9GCtIwiQ/E6ThCpN+PwAgFn4Ht9ino+faOsqs4o1iCvSoBiQBzLjwiXtp7l1DRQX71HCZoKW5wxAUJCtnzeYX2SxH2rzqwS7ZuhLsULmEswR+TAvD8US/iaa2EeS8LrIbhnUZk2ey5YBTpje7NlIQfeFoickfyQBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DILGrogy; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jZRaibR8"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso77703875e9.3
-        for <git@vger.kernel.org>; Thu, 16 Apr 2026 09:32:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DILGrogy"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so126878735e9.2
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 09:34:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776357141; x=1776961941; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776357258; x=1776962058; darn=vger.kernel.org;
         h=content-disposition:mime-version:reply-to:message-id:subject:to
          :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QaBWD7vwZ6tZF+XjV+DN0+BCwivEGIUumB13udclUlA=;
-        b=jZRaibR8PlNdMBxEaZWgHVgAHBG6judWM+GYK+NmD8joryH38+ETCdBiIrODAbnArh
-         gT08g7HzV/pQOStVOikRWz55/1BbDR+jrSj4NP4NJIdpa8RbBOuOInr145a02LmE7zCQ
-         rK0XTcJ1aiAUmmhy7INk1rcGm4EJN+0VbS8Bo+zmneRUyLatyIto6k4diVd73Y9ITqLd
-         VqIO7/CI2rrUA/4ewdLPgvJewkCc7TBjpKFVJqI2yKJCaL+BvifAFOzJfGaNd6ASsOMH
-         kntzXQ5RdaByzhF9NQD+JlELzLCbs5+3zVYIpHR5yL4KhOEr++6/YEzLSNTVgmKnCnK3
-         LR7A==
+        bh=XeCVzeql+c596VUl2Zt4k9G3frieqG1PFrCvUbsXOW4=;
+        b=DILGrogypn7OtJqYH//DJ5OnkkbTZjUwmpFEuXqJPOQa5x1DWSwdP68E3ZiK4udnXC
+         1B8HjjTgHkTkXVeof4dSErmOE5KaxOw4mX3SkM5XNU1XhqPrLhVFec3LKAzCbmVstgna
+         irjwJmI2571k1NJeBIyVxjhVaiibN9szyc1pHc0Pi9MqtzNDuemnTqYCRe+n3POG0OYt
+         k2ViM0sBMMM3RzO1VsJzUomLWCY0YwGtdBanAQk0soNW67t7COLog6QaX17cPAsyG8mg
+         q7s6hvOzT693vgq+3uJ8AUTV7nrgx7QacSmnqaW4X8fkpDiWQ1YHgEbsmW1CYWwLbU7f
+         v4jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776357141; x=1776961941;
+        d=1e100.net; s=20251104; t=1776357258; x=1776962058;
         h=content-disposition:mime-version:reply-to:message-id:subject:to
          :from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QaBWD7vwZ6tZF+XjV+DN0+BCwivEGIUumB13udclUlA=;
-        b=pCg9fYJ/Ttxz+nMWuR5AdygJxj56E6pxsx8SeHZZ7vz4WTCsjHCiDabMkxoGVSJ1qO
-         fudZECKFpsJySK6yN1i8qRQZtY/y1EPs84by0tuEjvXednM8cWLbKF3etubC925lYZ3v
-         fw+Z/caX0bUKVN7MCdU3XTE2K66uqd7roAqeJWzNseSX7+x7zsi9JBEiqigD50nR8brn
-         GR6TDUpRO4n0v6mGy6+g3axCIQX2vFZuNtjZH7I1ptpzV8o0CsGVy6z6W2gZWWVlaK2E
-         nLLcIyL2YPpt7xCkwYaf5zfI3ehnbDw98VKJxhScevtebNOSTU39CBlV50jG37W07xEn
-         xBEQ==
-X-Gm-Message-State: AOJu0YzSB7Fy1rAspSuxy+M2aImdSa/bTvfMUhG6fUMDlQ30rmU80D9I
-	Qw/EaD7AKteeAsacNKrOgHOSFCQP3NLS/niaR4+GJfXZoQLvF/mRe754UweqwQ==
-X-Gm-Gg: AeBDiet6eaVKP08CeF52Rop8Ib8wGx7pxTqKeJT1Vzs+nluf7TbjgWKqvjo+rrOa/Z2
-	w9PfRCmK3GF54eTsTC81lD8hSxnuZYK+yOUxgbMa5aEdYI7c967upVGMd9aV6WjDxdgh3zMDfFR
-	+Ve9lC3lJdpzmzxRGzlO99z5TouqEWGprgdDyEEKrLmehncKs22fc9HkCNUfVvuUvMuFZAONBnS
-	O6GYzWlqx1kgW7W/411D/+cayVFmDVpHwTkISTY8QS0zWDSqAdf9Nli9M4Vg45OjjHAhLWxnRnw
-	B4wZhJvrykoyKcylNYAZQU6NfsNdPIzsmaSNCwYAq9yT0E3C6SB5yYZWdF7ETsDlPJMNna6nL1P
-	E4VHRLzua6723w0PtkLpZjZp3ud3kzEF1tBXetISBTCNurDPh24+rLXVzmFFSGqvMr4nC0rPPhh
-	g56Ug49aLf4z6hF9pHaUp77Afeir8vyD8yrC0mjAdBX2veMxBd5n0LNDGML9GjCUIWVuGeoGN9X
-	H+5DJEcMcQDBrV4
-X-Received: by 2002:a05:600c:45c9:b0:480:4a8f:2d5c with SMTP id 5b1f17b1804b1-488d689cf9emr361917695e9.29.1776357140728;
-        Thu, 16 Apr 2026 09:32:20 -0700 (PDT)
+        bh=XeCVzeql+c596VUl2Zt4k9G3frieqG1PFrCvUbsXOW4=;
+        b=pzhF8ZfY9RH1/ckqZHWBuo9sqzfNjXoBdYzu4E/yn+tSa/UNjWbNU21ucQC/zlTvIr
+         AUmz61HmOCB9RSWtSu8DC+Y+DUuWEi9fdyOsySsSaj6fsLNKNglomO6NSnfoqLhNCVjg
+         5ynMumZHZ5tcrsl2e/QUS7D0cTBN1D7v2CeVNjrSAs98z5TyGdSeQUYbgrcgCu4MB1/u
+         RKb1B4oUW/56BnIo1T7lZTPUp/EsJIFwUs47w6dgqWvnMAVLZgiOuuntkQJYSJZ3Z9QC
+         ZvYrv96ZA/dLJk7othcAEwVAyv1NIyIlq9SzKLjz1D6crltLPimNtepEOGVBnBLokgF9
+         1FRA==
+X-Gm-Message-State: AOJu0YxsBRtE6RuWudUN1axKzMEej857dDvEkIniNUvBKQe2Jo+xQOnE
+	L2VRwj7Ohick22K52jgOZV6RLkO2grWCrSf00x998pVKfAl2i3L/XWHC8y0C9A==
+X-Gm-Gg: AeBDieteSYX6dwb7/pbwtbookRZ6bVbSCZ5m+p4C7kdds+tpqezLgyBwo5iUxy2/R37
+	xrPBQwh6wRSa5rXKU5jM6WFybewnEevfAUEnJswyp9XCu61e0eCruJfyfmIsIgbPY4WU4jVXoOH
+	omSEPZiCCr7FBdFSIpqCDkG9sfHU46awHE9Y5SXqHcPibSEuJpzRcS2SNsDFghntRb32uTVbVKv
+	l4QfVB3zHjwKoQuWurXi6Ze8EgEZpFVbS356mVode7BMoua441IhfX551gRHrS4w42WfwtcULZ8
+	ndmFFklcIOomBEdukWGmueLeFqI6gciYEXPvuTTnGKFWkbwvOMxy3pl+eegt7QeDU8invJgQ1wm
+	TW0cg3zczBJko7uEGPbjMi1yam6P3oDgNlruGK/DjFLS6sJnAi1gO0q+XKMq+sx5T2PDLBE3yqJ
+	LVHZ22gTHSxGhaU5UNuxAVsDJ6C1gSFHUXsig0BGESlQfwFJYhzMvsI9bP2wVXMnMshG58UFG8G
+	l/53S16yKq+et5JSaDzSkRU91c=
+X-Received: by 2002:a05:600c:45ce:b0:485:3e19:9e01 with SMTP id 5b1f17b1804b1-488d6890c9dmr370231115e9.28.1776357257482;
+        Thu, 16 Apr 2026 09:34:17 -0700 (PDT)
 Received: from RTX ([79.117.197.70])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488f5854163sm66538705e9.13.2026.04.16.09.32.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fa6727d6sm1557385e9.7.2026.04.16.09.34.15
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2026 09:32:20 -0700 (PDT)
-Date: Thu, 16 Apr 2026 18:32:18 +0200
+        Thu, 16 Apr 2026 09:34:16 -0700 (PDT)
+Date: Thu, 16 Apr 2026 18:34:14 +0200
 From: Jimmy Aguilar Mena <kratsbinovish@gmail.com>
 To: git@vger.kernel.org
-Subject: [PATCH 0/3] worktree: add --recurse-submodules support to git
- worktree add
-Message-ID: <aeEMU-ohKz2tnSWq@RTX>
+Subject: [PATCH 1/3] worktree: add --recurse-submodules flag to worktree add
+Message-ID: <aeEPGNJ0Ge72l94j@RTX>
 Reply-To: CAPSFGa8uu9CEEPH3XVjfN5VEOfcnb2p8YgXVuansjKc0S2S_tA@mail.gmail.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,47 +73,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
 
-This series implements the native --recurse-submodules flag for
-"git worktree add" discussed in the earlier RFC thread.
+git worktree add leaves submodules untouched: the linked worktree is
+checked out but its submodule working trees are empty.  Users must run
+"git submodule update --init" by hand afterwards.
 
-The approach follows Phillip Wood's and Junio's feedback: each linked
-worktree gets its own per-worktree submodule gitdir under
-$GIT_COMMON_DIR/worktrees/<id>/modules/<name>/, so HEAD, refs, and
-the index are independent per worktree while pack files and loose
-objects are shared via hardlinks.  The gitdir isolation is the same
-model git worktree already uses for the superproject.
+Add a --recurse-submodules flag that does this automatically.  After
+checkout_worktree() succeeds, a child "git submodule update --init
+--recursive" is run with its working directory set to the new worktree
+path so that $GIT_DIR is resolved correctly.
 
-Patch 1 adds the --recurse-submodules flag to builtin/worktree.c and
-calls "git submodule update --init --recursive" from within the new
-worktree after checkout.
+The flag is incompatible with --no-checkout (nothing is checked out, so
+there is nowhere to put submodule working trees) and --orphan (the
+branch has no commits and therefore no submodule configuration to
+follow).
 
-Patch 2 teaches clone_submodule() in builtin/submodule--helper.c to
-detect when the main worktree already has the submodule cloned and
-reuse it via "git clone --local --no-checkout --separate-git-dir"
-instead of fetching from the remote URL.  This avoids redundant
-network access and disk use: the objects are already present locally.
+Signed-off-by: Jimmy Aguilar Mena <kratsbinovish@gmail.com>
+---
+  builtin/worktree.c | 23 +++++++++++++++++++++++
+  1 file changed, 23 insertions(+)
 
-Patch 3 adds tests to t2405-worktree-submodule.sh covering both the
-happy path and the gitdir-isolation invariant.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 4fd6f7575f..f3dacb0e5c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -123,6 +123,7 @@ struct add_opts {
+  	int checkout;
+  	int orphan;
+  	int relative_paths;
++	int recurse_submodules;
+  	const char *keep_locked;
+  };
+  
+@@ -593,6 +594,20 @@ static int add_worktree(const char *path, const char *refname,
+  	    (ret = checkout_worktree(opts, &child_env)))
+  		goto done;
+  
++	if (!ret && opts->checkout && opts->recurse_submodules) {
++		struct child_process cp = CHILD_PROCESS_INIT;
++		cp.git_cmd = 1;
++		cp.dir = path;
++		strvec_pushl(&cp.args, "submodule", "update",
++			     "--init", "--recursive", NULL);
++		if (opts->quiet)
++			strvec_push(&cp.args, "--quiet");
++		strvec_pushv(&cp.env, child_env.v);
++		ret = run_command(&cp);
++		if (ret)
++			goto done;
++	}
++
+  	is_junk = 0;
+  	FREE_AND_NULL(junk_work_tree);
+  	FREE_AND_NULL(junk_git_dir);
+@@ -823,6 +838,8 @@ static int add(int ac, const char **av, const char *prefix,
+  			 N_("try to match the new branch name with a remote-tracking branch")),
+  		OPT_BOOL(0, "relative-paths", &opts.relative_paths,
+  			 N_("use relative paths for worktrees")),
++		OPT_BOOL(0, "recurse-submodules", &opts.recurse_submodules,
++			 N_("initialize submodules in the new worktree")),
+  		OPT_END()
+  	};
+  	int ret;
+@@ -842,6 +859,12 @@ static int add(int ac, const char **av, const char *prefix,
+  	if (opts.orphan && !opts.checkout)
+  		die(_("options '%s' and '%s' cannot be used together"),
+  		    "--orphan", "--no-checkout");
++	if (opts.recurse_submodules && !opts.checkout)
++		die(_("options '%s' and '%s' cannot be used together"),
++		    "--recurse-submodules", "--no-checkout");
++	if (opts.recurse_submodules && opts.orphan)
++		die(_("options '%s' and '%s' cannot be used together"),
++		    "--recurse-submodules", "--orphan");
+  	if (opts.orphan && ac == 2)
+  		die(_("option '%s' and commit-ish cannot be used together"),
+  		    "--orphan");
 
-Cleanup is automatic: submodule gitdirs under worktrees/<id>/modules/
-are removed when "git worktree remove" calls remove_dir_recursively()
-on the worktree entry, exactly as with the superproject's per-worktree
-state.
-
-Changes since the RFC:
-- Replaced the shell-script cp -al prototype with a native C
-   implementation in builtin/worktree.c and builtin/submodule--helper.c.
-- Per-worktree gitdir isolation is now handled by the existing
-   submodule_name_to_gitdir() path; no extra plumbing is needed.
-- Added t2405 tests verifying both behaviour and gitdir placement.
-
-Jimmy Aguilar Mena (3):
-   worktree: add --recurse-submodules flag to worktree add
-   submodule--helper: reuse main-worktree gitdir in linked worktrees
-   t2405: add tests for worktree add --recurse-submodules
-
-  builtin/submodule--helper.c   | 54 +++++++++++++++++++++++++++++++++++
-  builtin/worktree.c            | 23 +++++++++++++++
-  t/t2405-worktree-submodule.sh | 24 +++++++++++++++-
-  3 files changed, 100 insertions(+), 1 deletion(-)
