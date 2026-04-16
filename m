@@ -1,163 +1,99 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B086128816
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 17:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DB026A1A4
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 17:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776360448; cv=none; b=coxaJ5pyaSG5+0+v8huARGbGKCQVzS4G+LJ4eErxcPuVFy2D0d+vZIX6Kd+q4c28nw9Qads1FtlAhfIhPBeg0v84uq8Wtx5R0IwiFZkfSN63FHCSIcimARVLkgZshPdhix0TYiNsJr15vGWDhRDJ3r2cPHKgSO+02PQL1OtnbPY=
+	t=1776362008; cv=none; b=M9pcEVeqN2KHL9KQ+sMde7fVUGWv5xxbAlbsOEabkJaiEceFllFG+md5q9gCZTKNmmoFdYbLOG8621UIeh7O0hft6LhhK0uK7jqPKT1L/s6C85oVMinl0JqS7ZOA47JxkxDOpvUd6RBAjOjzPEZ0RkwYJIPoBTyQBeraIow7TrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776360448; c=relaxed/simple;
-	bh=tk2gPMBeJqwUQP400GfKLgEOqeqJpfd1p9YSX8CNlIs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=keJ8hF+d4e3VN9DU22bE1pLYGQ/VgxAxvMd31kgvzMy0Y0n2q4wtHIy9p1sMqXWRg76wQZapsGkelwurnS9dYoW3T0QEO7ynzFE/HqXSznxXOlGiusqj6JqDzx/E3nOX5OXChFmsIc1gOXhPnQ1YHUZT0MfX3GpGGcnE/9BO0GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L+cF5KhV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xa0ANYXo; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776362008; c=relaxed/simple;
+	bh=o7i8kEKYnvzIizkiN4VjniqsNnaYx2LB3TWfctwAGhw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IuqqBVIoXpTblBBFObotQiLeEiTiOW+mYy+AnFCuneSvcCfPMH28Nkf6hzHPJvdhjfVSoQTG0bbG4EKIvx+kNTBIPoxeg3VAHRwe8pOyv0ATwv/YFRTcGhdYowKd4nzK2UfuH9vHNJ5SV6qB46DG3l9isKE3gjO4Vw3ozgraUKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hv7zSxnB; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+cF5KhV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xa0ANYXo"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4AC361D002B2;
-	Thu, 16 Apr 2026 13:27:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 16 Apr 2026 13:27:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776360446; x=1776446846; bh=RYJ1Ohjv5m
-	G4044vva6F79jENKcSxkwMfc32GBDh/TM=; b=L+cF5KhVhlHvXLhqNLhG6cL6uu
-	HZ9ZCjSDfDka0WV8UgAu7crjHPGRD27VG/HtAe1P62jdcorO4wXBpt1m0yg0/oRT
-	glK63G+yP+CDM+F7hjxeGErriuYdOLGWgg42qROW5ralT/yDmPnPbSGLjU+Dsfcf
-	oASr7mEEcNpxkJhuOG0qYcZKVpQH7W2p+gM8Gyvx2pkjcbGoxdYMle4xWIFFGTOF
-	bHEpU6zM1ZHjtHzDrTSrONWc5dyMpSSEcNWNKYtp9N8tFD4KqYM/uTcno4HGp4iF
-	gOQMwvhODX6CJTqvOCFREXPY3bVS/F0AI7sKCN7ZosnaPKQqb+0QOIPLSl5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776360446; x=1776446846; bh=RYJ1Ohjv5mG4044vva6F79jENKcSxkwMfc3
-	2GBDh/TM=; b=Xa0ANYXoSu+SWGlMUVr0tAFVFH1lkv9O5l9PApyfj0TccsAWPIs
-	llAKK/+ZDXRNf5FfN00BqvZhFwy87LtKGDMrLMq2ftL8tsQvzBP8jv0NViXvITPM
-	YZ46buWfJosalkMj6ARYw1cRhH/WH7/1ngvu62DQM2dmFMoR7mrIxaullCzxv82i
-	Zvl2CdHGmZe4xRfM31uFBl1wz/KDzIKUcRFuTUHh28y2+nQ2Ye8ZjsOKiIKoTYmq
-	EBYmf3UhJQOkhdhHdxc6iTSzQRZ25gSjeKxlwrtdaLH403usP7x7aRDsZy5QbxnD
-	gwQhFNLJM4Xyf+Z+VT22pgw5L66hwV8WQFA==
-X-ME-Sender: <xms:_hvhaVxgsTj1dDRtjashx-VSh6AuqVnYYtb_Sc_JsAaQVp9x1sm18A>
-    <xme:_hvhacumus7tGByntWwSIevDr_KgqnKKtOQNWw60H1LvB8XF_u9xQkCO4ReHLgsXD
-    wInmF4zz4dsKBhx2dl9F_iwiBLEdAwQTN-33HaWRtpvPga9Z-dDYg>
-X-ME-Received: <xmr:_hvhactu9bhfbkTo_k0dMjqrNnvRg2KKVEChfKKSdWFxuDRekCh8TDtVYKAnfRn7yWFgAsM2HamA1FGRkCyQFaB__o2BmlKEgw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjeeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrrghtshgs
-    ihhnohhvihhshhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_hvhaRMS-VcQrFDue9-D7qoz37AJvOy5uXVKRaTi6BzkqS89_HMiiQ>
-    <xmx:_hvhaa0_L8mxfN9UzoOfUx8-f2F9mOEso2aVO6VlC_38ezlSiqzQ7Q>
-    <xmx:_hvhadMLYeB4vQ3MII5tMJgADS80ZjmaYbcEgfoGUJk80WJyeikm-w>
-    <xmx:_hvhaa2kSAijD5ZsV4jCjKJ-YG_YaQEK0wMJZjpQBaVaxMKfQmBHXg>
-    <xmx:_hvhacuchboGz68OnbRmp5RacYMRoOPC5y55JJ9EdhPyadYrxJHt9gLZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 13:27:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jimmy Aguilar Mena <kratsbinovish@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] worktree: add --recurse-submodules flag to worktree
- add
-In-Reply-To: <aeEPk7m5gwPnmMUZ@RTX> (Jimmy Aguilar Mena's message of "Thu, 16
-	Apr 2026 18:35:36 +0200")
-References: <aeEPk7m5gwPnmMUZ@RTX>
-Date: Thu, 16 Apr 2026 10:27:24 -0700
-Message-ID: <xmqqpl3y24ub.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hv7zSxnB"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59dcdf60427so7992844e87.3
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 10:53:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776362006; x=1776966806; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FT+ewZYVIcbyn7Icpt8OFml24I8w/vehYyvzhcnLJrA=;
+        b=Hv7zSxnBrCKYMTm6FdeKOMYzNCuLwAcotNqR52bwQFUAdY4Hk0hwizn7RFqd56kTEI
+         m0GS2BXtB05rz+uTrq3RCbE6AYdvKUBqa/6aDg/JQhzU4ty7xnh3OFNOr8s2lrAM6LNq
+         L2KVhzwY/eud7sjdyBGela7f7Q5S4/Vq9TxBJ2L3m8Dg3wA9qyHwDiosRKQomKVGzOq1
+         jCSU8O+TEYpYA0ey/3x8PFpzGSErlZZAZ74Yyb0gpNJ9Iqci3M8omH8yy5vamsbvAP5F
+         EE9fXf/7I+cjqdq0O26GYPma3oQr6Zvt84gi7sEggjDA000NFATPoRUVy8p4zex+CQv7
+         naww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776362006; x=1776966806;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FT+ewZYVIcbyn7Icpt8OFml24I8w/vehYyvzhcnLJrA=;
+        b=Z0THWikpZsxHpC3wiNK1rePOfK7rOcdmyFdOEtDeSoyD1786+JxxeV9/riFwtFFfsK
+         7pAlcNq3FaLuos95X+27nkw+PYuwjuqbkFUmxl/iBV7sDQRgnR1lLP+WIH63efQ9B0LD
+         XF1RhR3oSEXoiDfpsG8HSyi7ZPfEPevzfDcR8pjYSgsCPm51FGLATMlAbNeSEu4ZKd3Q
+         dI2RIApc7wlzJkTbh0OEhPCxdhU70Y0B1sqBtk9nDZS90tlZjZjw7KLw+auEfZsdUwYO
+         LD8dF30QXItwEIgB1vqyph0QiMdqoQvYrvRO9RGPcAG4J7wTEM/gbpqPbbB69pGYbUPS
+         V0gQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9CuGccpCJZSEQA/MSar66DK85XtpVerUwyQe9NkB5B1d9yVulc7MlCpPRG8cQ4eQc8Em8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6jNpVcQ0XKZlSeUmLSd3K6rVnEN1lS85cFrcYz+cwv/XyAjPS
+	UofWm3orhIeWyCLBwlgDMBtz6JnJB3UX/WNjVnFMjQgG/YUORVbqOE8T
+X-Gm-Gg: AeBDies0dlC+hJTreuhh55PO7+hNZU76amfwXjxKicLFD8yIO07YoWEfHzxHwfC1yxv
+	ceBThLlYTd/RQBZylgqLvJTXacXHC9fKRI9SgSjwVZEMQBC3moy4oLG2VGajAwD4Ie/L7PJGCfJ
+	/mPYqS/RPx/CGV6fmOsYz4Vo79FAkpIDmmdLPB2OCrKPce7eBJ3MLBeurc1H2G8NG2QdtE6h2Fp
+	KwZZTvOoH3bnidcybjXvR8QxrLSmDRRUmg8yQTu+tsJdjnpwHu5PZjJzc/tMeDc7w9Bdye//L8d
+	cvveJKXo8tQmy5jWuGOa2Do/vrzvh/8pccu3XVwPJETmGxuU0KHrtmjzc7bz42EcMaWE+bGNuqY
+	H4+BM9NnyBcLEGYPous1h7pyoCfAWdccSQrdZgwMRBl2j+UFAKDxBT7pcUpIyMnsicLwTNz/yFy
+	ImowCEbG++quDYVrxy4eMT4i2M995L3YTfHkqc54Wu9xkVzkTD4FCx5QWEUUh+QpISxY43mN6AD
+	xXgTsoqdAXBXMF7tS4dy4RLKRg=
+X-Received: by 2002:a19:521a:0:b0:5a1:1496:922 with SMTP id 2adb3069b0e04-5a415566f77mr71704e87.33.1776362005440;
+        Thu, 16 Apr 2026 10:53:25 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a2fbae2sm1445714e87.63.2026.04.16.10.53.24
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 16 Apr 2026 10:53:24 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Thu, 16 Apr 2026 19:53:23 +0200
+Message-ID: <20260416175323.92708-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.rc1.77.g97a5d87c81
+In-Reply-To: <xmqqpl3z3qwg.fsf@gitster.g>
+References: <xmqqpl3z3qwg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jimmy Aguilar Mena <kratsbinovish@gmail.com> writes:
+> I am not sure.  Have you actually tried to apply two iterations (I
+> think it was between v11 and v12 but please double check) on the
+> same base and ran range-diff, and compared the result with what I
+> complained about?
 
-> +	/*
-> +	 * If we are populating a submodule in a linked worktree and the main
-> +	 * worktree already has this submodule cloned, reuse its objects via a
-> +	 * local clone (hardlinks) instead of fetching from the network.  The
-> +	 * common-dir path "$GIT_COMMON_DIR/modules/<name>" is where the main
-> +	 * worktree stores the submodule gitdir; the per-worktree path returned
-> +	 * by submodule_name_to_gitdir() diverges from it only in linked
-> +	 * worktrees.
-> +	 */
-> +	{
+Fair enough, it's not great!
 
-I think you identified the right place to hook into.  But instead of
-"clone --local", shoudln't you be running "git worktree add" here?
+> And that is why I kept saying that the cover letter needs some
+> comments written by the author to guide readers which parts of the
+> changes are notable.
 
-"clone --local" means you have two logically separate repositories
-for this single submodule that are used by two worktrees of the
-superproject.  If you add a new commit to one, shouldn't that commit
-become available in the other?  Two separate repositories created by
-"clone --local" will not allow you to do so.
+I hear you loud and clear! Next patch will have a better cover letter
+if or when it comes!
 
-> +		struct strbuf common_sm_gitdir = STRBUF_INIT;
-> +		strbuf_addf(&common_sm_gitdir, "%s/modules/%s",
-> +			    the_repository->commondir, clone_data->name);
-> +
-> +		if (!file_exists(sm_gitdir) &&
-> +		    strcmp(sm_gitdir, common_sm_gitdir.buf) &&
-> +		    is_git_directory(common_sm_gitdir.buf)) {
-> +			/*
-> +			 * Main worktree has the submodule; reuse it locally.
-> +			 * git clone --local creates hardlinks for pack files so
-> +			 * no extra disk space is needed for existing objects.
-> +			 */
-> +			if (clone_data->require_init && !stat(clone_data_path, &st) &&
-> +			    !is_empty_dir(clone_data_path))
-> +				die(_("directory not empty: '%s'"), clone_data_path);
-> +
-> +			if (safe_create_leading_directories_const(the_repository, sm_gitdir) < 0)
-> +				die(_("could not create directory '%s'"), sm_gitdir);
-> +
-> +			strvec_push(&cp.args, "clone");
-> +			strvec_push(&cp.args, "--local");
-> +			strvec_push(&cp.args, "--no-checkout");
-> +			if (clone_data->quiet)
-> +				strvec_push(&cp.args, "--quiet");
-> +			strvec_pushl(&cp.args, "--separate-git-dir", sm_gitdir, NULL);
-> +			strvec_push(&cp.args, "--");
-> +			strvec_push(&cp.args, common_sm_gitdir.buf);
-> +			strvec_push(&cp.args, clone_data_path);
-> +
-> +			cp.git_cmd = 1;
-> +			prepare_submodule_repo_env(&cp.env);
-> +			cp.no_stdin = 1;
-> +
-> +			if (run_command(&cp))
-> +				die(_("local clone of '%s' into submodule path '%s' failed"),
-> +				    common_sm_gitdir.buf, clone_data_path);
-> +
-> +			strbuf_release(&common_sm_gitdir);
-> +			goto connect_wt;
-> +		}
-> +		strbuf_release(&common_sm_gitdir);
-> +	}
-> +
->   	if (!file_exists(sm_gitdir)) {
->   		if (clone_data->require_init && !stat(clone_data_path, &st) &&
->   		    !is_empty_dir(clone_data_path))
-> @@ -2005,6 +2058,7 @@ static int clone_submodule(const struct module_clone_data *clone_data,
->   		    sm_gitdir);
->   	}
->   
-> +connect_wt:
->   	connect_work_tree_and_git_dir(clone_data_path, sm_gitdir, 0);
->   
->   	p = repo_submodule_path(the_repository, clone_data_path, "config");
+
+Harald
