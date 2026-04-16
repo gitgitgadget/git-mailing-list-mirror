@@ -1,136 +1,74 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5614434DB54
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 19:38:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE62B3E8695
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 19:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776368315; cv=none; b=ZwyvgGozhJNCzfdNUQXAHqwTLZ4vFYnuiELKONF2/M4Ulr9j+UpCMlfaTWe+P7PXQRS/me9SsqD848hYcBAF/m5RGpnLoidXLFPDCfVRbtDYXRbnEzMoRBpMxmQ/2zCKCRoA7OBd4u1XPLDp0t8OprpDErdUjgSz4vV0ofyoqGU=
+	t=1776368975; cv=none; b=QVq8v40WLFglEXs/0TqrICdhoHiuk7LsiKxz+F3Rmd0Yl4n/JfSzN61elzu5+j/68OeNMPX6NhQfkxFH0Mj0fox9/D/9fV63tcxE529AMVvj2w5HWekDR8O2HfwOOGaf7vN8fSW6IZTt7glnYA5ge+dEuq3VPWCvdrQlzPpNIeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776368315; c=relaxed/simple;
-	bh=hRHEPWQVyYHaPysblMQpjC43kSo5vmFo+kQWDcZHIUk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jzy5eb9p7qrLyt/3kksuTFshxgcm8kJr9R2m3gU4/Q7UcBpCOV/KKGJb2UMGFXWegh33QrtCMubdN1/rcMgYB4mXfz7XYH18yw6g37zNNhUD8K6jUaAq30Yzl8HQATY7ibPkNr9ytm6BQTnaxKP6yfaUEtOgBBji9P5bNPncy08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zvW442HQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DfFgfH81; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776368975; c=relaxed/simple;
+	bh=Re6oFsJaV6tLN1TZ+vDUguP+1it5p2BaegqlPzClngA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pn3UWelHgMU5c5Cf95syi0LAJD8amQF2JDTs5gopST1Ol48WbmDXExVBeMB8/2dgjix1qESzJslOL2lqwv8TpMGKZKQEIO2uX7DJsxvtUqKIP3Fs2lLdFlCuobcckiu6cK/7rQqh2sQhg8H5rP8Cp4qbKPdBHkF3mc7qeLrXTIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=htjgUs9a; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zvW442HQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DfFgfH81"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3EEA41400057;
-	Thu, 16 Apr 2026 15:38:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 16 Apr 2026 15:38:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776368312; x=1776454712; bh=IC10fhwILJ
-	tHl2p9Uxs3rlajpNG8UFgRR+dCmYeYkZ4=; b=zvW442HQi/L403J/q9s0003no/
-	zSCXcYK7RBjqa2BXQpHHU+gukD+PYIvTOayOx4F/SzyNEH+RDQ2IqTFKIpvJbGi2
-	K9CJl+SY6uZ+1KTsDa0Go2nsGgZ00e6mvhlIDb7rXjAZ69V8cV4ZgKc6usylFUCe
-	vtC2zyYWpvJTLnxTUVXQ0vRUFCt40LVxZCFqSpnWze9jtKzUpl1KT1FqLETFXASy
-	XTPOOier5MW1v++uZXMWZkjNuBFHTHSSE77IuAAJkaqo+Nbeg0LvjGZMakwob2yp
-	KuNkHBLU2nUzQRLkmYtwVhHzEgQ1RoZEhZIWBVDfp0A9YAHQQjYco6HOW2TQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776368312; x=1776454712; bh=IC10fhwILJtHl2p9Uxs3rlajpNG8UFgRR+d
-	CmYeYkZ4=; b=DfFgfH81QJSjt1KJiSw/l/GVccpKcSU2VhWC1e7WURKKiEqdGiR
-	HLOtKBDKh04hxRmkjNx5TP3N39BzKratbJKbIpwzndlPkq2KDij6M5YfdZUqYmGG
-	smeAPFkbbneMXEjB/FPwoPOTnDcx0wHPl1VpY6w9ThJPK8knPWaOhvWlHq614qxa
-	hRdq19IBwpbp3gsyEqM9WcCDiQsln+UdDBRw0uxspuUw1NEh3AA2OcoH7a0a8FAa
-	Vbv/ytvbFrCAXz2hcvOqRLSMFSj1Osd80vJV9iUE3i9lE/e0P1dig36X4DVtGwyv
-	5Ff2ulrn18EDnEfRuFHAcBchfkRbiUX+ZUw==
-X-ME-Sender: <xms:uDrhafLeBFbH2_TSKEv9VirDZqtLGSboAM7rxp4ylh0wqg_S_KRDwg>
-    <xme:uDrhaaA_pX6PaFcXzVeU0kLLdOaaRgHviRbLSOt2YpYUltd1mlFWgzBZkm10yWwjE
-    toRDwEVfGhZQJj19PY5HlFEXcjXHc3U47EFfiVuyotS7SCG-dg>
-X-ME-Received: <xmr:uDrhaQBqGG73xGJZX1CJPCL_QuTL7pJna1SqL26st9yuQbTscjoA5lGbk0IcykZlDdk8xsTaObs9NZPnM-Hd8EYt8rKpodJwRQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjeekiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:uDrhaUBMQg0imTOE0jbyuXGaW-iVu12Iz_yeltVbVT7GfXf1eafF2w>
-    <xmx:uDrhaTq00TVpdGLDsnWDfIxdJHuVNJtvOkm9zgbmZEQJ15gT2wk_4g>
-    <xmx:uDrhaWkyqscgk4bqHqTR3gWy8kpDSP3NB3WrLO7mdy7SCuwg49MnCw>
-    <xmx:uDrhabwUx8my0m3lR3XJAgf5X6y-yftBNqIRojdyh47PNdLvXqdAyw>
-    <xmx:uDrhabEB1DFjjMm_5TqQefEBupnBVnBAIQrHnkgx8WVy7TFFCcR-30le>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 15:38:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] MIDX: revert the default version to v1
-In-Reply-To: <xmqq8qam217m.fsf_-_@gitster.g> (Junio C. Hamano's message of
-	"Thu, 16 Apr 2026 11:45:49 -0700")
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="htjgUs9a"
+Received: (qmail 373746 invoked by uid 106); 16 Apr 2026 19:49:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Re6oFsJaV6tLN1TZ+vDUguP+1it5p2BaegqlPzClngA=; b=htjgUs9a4Hlz+InsnziCujGQT0/POl8HpxSKfObgBBVZCTU4z6eXWBvx90FGU4nsJXlLPyaG6U6/kNgdagyfQtPvZ1IrmOBLJ648IATjY4kEvQqOEKThGmpigAWcnunoUAj+8mrmxTAOyKXpvRD0WqdEtCotUMX06/fgZhznfY+Il9lf9XELEwmstGKajv/oug2D9PZy/DuPC9K1Isb1w3KawVRyhWYVyPtxgWXRGxTK7fqYx0MuWzhIc+QBkTSZYEqdWk9sbH211sbh8QDE9S2+IjP4UwHO6e90QvSwuLZ6yDU1I0nSSZUSZzypdcsvdG7wNA2KYTZfbjqHh1TX/A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Apr 2026 19:49:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 622114 invoked by uid 111); 16 Apr 2026 19:49:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2026 15:49:22 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 16 Apr 2026 15:49:22 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
+Message-ID: <20260416194922.GA1887222@coredump.intra.peff.net>
 References: <xmqqqzohd0sh.fsf@gitster.g>
-	<8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
-	<xmqq5x5s540j.fsf@gitster.g>
-	<20260416051732.GA48541@coredump.intra.peff.net>
-	<20260416053435.GA646718@coredump.intra.peff.net>
-	<xmqqldem22uw.fsf@gitster.g> <xmqq8qam217m.fsf_-_@gitster.g>
-Date: Thu, 16 Apr 2026 12:38:30 -0700
-Message-ID: <xmqqv7dqzoeh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
+ <xmqq5x5s540j.fsf@gitster.g>
+ <20260416051732.GA48541@coredump.intra.peff.net>
+ <20260416053435.GA646718@coredump.intra.peff.net>
+ <xmqqldem22uw.fsf@gitster.g>
+ <xmqqh5pa22h0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh5pa22h0.fsf@gitster.g>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Apr 16, 2026 at 11:18:35AM -0700, Junio C Hamano wrote:
 
-> From: Jeff King <peff@peff.net>
->
-> Dscho reports that fetching into a repository with Git 2.54-rc2 made
-> it unusable with Git 2.53, as the recent code by default writes
-> version 2 multi-pack-index files.  Version 2 is the base of more
-> advanced features to come, but using it where these features are not
-> used is a strict regression.
->
-> As deployed versions of Git and its reimplementations may not be
-> ready for the format bump, let's revert the default version of MIDX
-> file we write back to V1, and adjust tests that exercise V2-specific
-> features to explicitly request V2.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * Let me reword the proposed log message to talk about background a
->    bit more why we want to do this.
+> As to the other change, rebased to our current codebase, we could
+> sell it as "futureproofing" for similar breakages we make next, but
+> that means we are promising ourselves that we will forever keep the
+> MIDX purely optional feature.  I do not think we want to decide that
+> we are comfortable with that position during -rc period, so I am not
+> sure.  These error() messages should be reworded to make it clear
+> that we are _ignoring_ the corrupt multi-pack-prefix file(s) as a
+> result, and then further weakened into warning(), I think, if we
+> were to go in that direction.
 
-Of course, the tip of tb/incremental-midx-part-3.3 needs to be
-adjusted with this before merging to 'seen'.  I think my tree is
-getting ready to push the "revert the default" down to 'master'.
+Yeah, I agree that re-wording would be a good idea here. I think this
+can happen post-release. We'd like for this to have happened long ago,
+but it didn't. Doing it in 2.54 versus 2.55 does not really matter, as:
 
------ >8 ----
-SQUASH??? adjust for MIDX version default reversion
+  1. We still have to worry about 2.53 and earlier anyway, so one
+     version is not much in the grand scheme of things.
 
-diff --git a/t/t7705-repack-incremental-midx.sh b/t/t7705-repack-incremental-midx.sh
-index 562554e69b..7eb1109ec5 100755
---- a/t/t7705-repack-incremental-midx.sh
-+++ b/t/t7705-repack-incremental-midx.sh
-@@ -63,6 +63,9 @@ create_layers () {
- 	done
- }
- 
-+# These incremental MIDX tests requires the V2 format.
-+git config --global midx.version 2
-+
- test_expect_success '--write-midx=incremental without --geometric' '
- 	git init incremental-without-geometric &&
- 	(
+  2. For midx v2, 2.54 knows how to read it anyway, so is not affected
+     by the problem. ;)
+
+-Peff
