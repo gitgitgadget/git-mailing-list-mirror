@@ -1,141 +1,136 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56B42701BB
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 08:03:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1B53803D9
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 09:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776326605; cv=none; b=SOUF1dH35/IxjKu89dLRXAPh0DhdI7GT9fN8g3snAq6gMp2AZsVqoyjVpee14+iVKS3pdnu+++zHOnx83fnsO4dIYF1GjA9Z8uuye7EAY0+ZsOESkRomqr/xxQSDnr1TXmw2+iWAAJHH0fmr3UtV6oztSFCcxapzwDckrBbXZHo=
+	t=1776331263; cv=none; b=sI+gYA5oHGjtvw1UFUzwBlFlOpri48cTlI8P8f0n8czmR41R5P5rCFkCmokFMnvUL69czshxWOyC0aOtauyczXumomc4bfucPQfuEFPwORjkGiyQms4TaAbvjDaAo5iRVL6djtxwGW5xs9HJM3QEcvS5Nk8HHgetOJ2pmjYrUMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776326605; c=relaxed/simple;
-	bh=mPqlrYE3aCKDK1K/Gouy55lXXQatoM7b8J2DFTs6gpg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qbm9Yg+khCVpyZIu+35bFOE4v7OQASY+ryInyW/+sXOokfIpmVWcBlKhEB0WeGBsYWmOVD3U2BL4DWZcqZpFLJrUvakGvXbkwMXzLqbXQi1ckCsQ3rvhcS16GQNvRuE984Dv2v+DiM3OVGjgO2krMiHAulFJWWT76Jwjawzyn/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=t6CBKBZ5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vje7ateB; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1776331263; c=relaxed/simple;
+	bh=vugdgNLKcd9UH2zJ+D0lI4ienwUhAuRq11nhR8QkoFA=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fYCoP/oY4f8sj8vHBKiHtMBZuQLAs4eH++klhxyYWYBNxrHyHkmawSglSPRay3oJxDBgkounY4xBOUG9oBeaoL5vTIdHs4fVm1rkghvi+bms9Y6te7dYyubn4kxmmmJG4Uvcc7cB82dXTTPU5CIbK+/L37J2L2STt+cAzZNUNKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LP8UNlW5; arc=none smtp.client-ip=74.125.82.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t6CBKBZ5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vje7ateB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 017287A019B;
-	Thu, 16 Apr 2026 04:03:22 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Apr 2026 04:03:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776326602; x=1776413002; bh=r2Q4ICNc5h
-	cXrlJG6hpP38c720jy3KX7u6n/eCOdy+Y=; b=t6CBKBZ5I7E6OkveQnJ76j+FNV
-	KobUVaBlJZ0XgfpbXqqDy0u6eZt48I6GNMRjPRG1ceFcCBOZgEv0t/zanCoflaMK
-	8Ibz1krydXErux92//lAjjfwBcRD051E2fIBgIly8HEfqty+CA0qOMruHTeS3z1c
-	1O6p8q8ak4yV7F848/mb/8ySdxlLI38ZX4yFngYlO6KTMvBTGwATI99T5ZBjr6pJ
-	+s6NRp+jKpZIPzPYz7mjkHnW8kg9RPNFRSf62tMzwKX7cKtbpf2SuiAXkeokegXs
-	8elQPmZgfj43FaWuCJRySRuGl5CyBqxjAhTd/WJ5ikOOY9SuJl9phy/J6/Wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776326602; x=1776413002; bh=r2Q4ICNc5hcXrlJG6hpP38c720jy3KX7u6n
-	/eCOdy+Y=; b=Vje7ateBoio7mOpHrW12SkM1QbB8n2HZFvYMEXVs7dme14pywU/
-	EXGHf0nJS5qjy6hJFUO8BLD6P5Kt8UaqL+i5RZQWZmPE515znkaEj+nNdMDLEfSf
-	fouX0yF/YSwPGq0HeRa1Un9KKh7eiUd670i8E2yP/GogxGr3zdlIiNVYfEdaCQMK
-	vlSHISH9Jts0GA+quBnn+9I1cdIPr7iGU5NnSqJR00Suw09TlFEsU2Sysstdi+pI
-	NR3AVCPfAofGD8P67oisdut1gPh3LdOPlBukBbgQQgB7ahT6CdVw68U3HdI9htU6
-	UukMF9FKjMBBbvzjXdeu/owiUPx1s/gfclw==
-X-ME-Sender: <xms:ypfgafKcplxTjX1bwzSvlZz4ye1U9cQy3bgtEozxbuz3yDih2f3BdA>
-    <xme:ypfgaak23GBQ9WZYeITyKCCOrVkG6SYtMEYs5wjDqwqcHImpAaVqcZ0Hy7s3XKnkR
-    CgeWvof1rKz5GqMBdn02xTFwJJ7GcWEux7gxilC-mqoNizgY5aqdW4>
-X-ME-Received: <xmr:ypfgaVEkKT1DQeDgjYuBNXFP1fk5xlyv6dYwM7HKc5pNLp77JY-oU3YayYiMgQjpCTXLOyx9pRibb6fSFi3vk_ovf87T5-VPPEPgC2-vlA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegieegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ypfgaSHAm6Jp4JbCJpJlGAhqVst40puiuzPQmHc7EOYVaKMDdUqbSw>
-    <xmx:ypfgaaPvu1FqW1VKk9T3w1TtQwdXqjtYkQumDIE9xEtQfqYh-cAx-Q>
-    <xmx:ypfgaZH7JvW1LFy9YSJXvlJ2aa-B9-nzpt6dBZdCy9tnz5c0VR_IDw>
-    <xmx:ypfgaZNsHH2mM-Pb1OVmt86YhmmygCkodP-T7W1BtcuL6DcbJwXbNw>
-    <xmx:ypfgaZXbh8uvQp6tbnsGSem7L0swFAEpUqW9Mq7wIDMBQ62_C8X8qMDX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 04:03:21 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3ec851dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Apr 2026 08:03:20 +0000 (UTC)
-Date: Thu, 16 Apr 2026 10:03:17 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
- commands for `set -e`
-Message-ID: <aeCXxdru6GqfA4lR@pks.im>
-References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
- <20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
- <xmqqeckifq59.fsf@gitster.g>
- <xmqq340yfivf.fsf@gitster.g>
- <ad3rgbgadjIZRgaz@pks.im>
- <20260414220347.GA3475127@coredump.intra.peff.net>
- <20260414225206.GA3486072@coredump.intra.peff.net>
- <20260414230810.GA3528448@coredump.intra.peff.net>
- <ad80r_oY-uAV2zVt@pks.im>
- <20260416054924.GB646814@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LP8UNlW5"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2bdd40d3c61so6954827eec.1
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 02:21:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776331261; x=1776936061; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=7WhMfnNJ0DwYVCO0LXBirkZcK1Y27Wji9MaKjSHGCPA=;
+        b=LP8UNlW5V9nFvzMi0mII21Xe7KtZSYj6lF1tu7s1sOk7QwRY7lezcrhSWPaJMeoOsR
+         PVbpdgIYfkfy4GpIJEx3nsHvP0yB+IjZ3Bti91IxihSpTpKstC+2W9/2KyGfJ4clg39F
+         sfBLViU6bo+hs66m53cWXZH20w8gvEkBWZppbZW5P4hj7givjvqrSP31+w/hMicxZiyQ
+         Xd9+Q+xY33KStQt4mLaJS/zlDcSxZnFFbROPNze4/qQZfWebxyYSLuqoyIqK1yGj4Df+
+         X/DsEPDn8rgiFPn7t1R6hquHWx1UfC6RR5/ogvHHPPceJFl+CW1r2oMtFmWu6WSBzKiy
+         sv4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776331261; x=1776936061;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7WhMfnNJ0DwYVCO0LXBirkZcK1Y27Wji9MaKjSHGCPA=;
+        b=VFqJJnM4BCNt7O1ohuoYKmTnv17GHun80+1hPabR8xzC1pW60qvaYzXPez1ErprN8g
+         SVJoh9HHru8lsxQEwn9Cy7MDTE4VgDnKYkk9GPfq7KFS25YABeocAxBTQwp2LWlbON+g
+         80usg9x8gXJJUMC7OnWgvm3sxgRq9ks9ueye39d3MZoXbXWYWdyP2fDrYZ7gxckWFT+V
+         bXQoZEdlhwDKySrUn8/eYWbr8jYjhQwGxn4Yagry6RfdJ0fAGuR6B4hyhVbahthIecQR
+         pKVw0cOmfpIFYYntWzxVxUBBR0ANTV+hZRNUTX+OLIh3eQVXevtZt/tiXZrvjYl4k98Y
+         LZQQ==
+X-Gm-Message-State: AOJu0Yz/MbbI5ReakYdt+0m6JJa3iJqEV1sVZy6opt73EqV7nMpqDs6U
+	iTbIV1cfFGfj/smJ4eq1tdCU94S253wu9+WmPuu2YLiYZWGTYCRINVDtysSyYg==
+X-Gm-Gg: AeBDievao6nFxnRAXNSTYDiBNR4J5ciiv7KbuWIYCVYQIL1uB9l/FCNRUjUmauXeOg1
+	MFE/9LMMJum2uz8jLxipu0YlCXT12nrMN1z/FcEhoIF3MO1cQI4WnMTKfpHrnMzUnt7XBG/XsRA
+	yPvy/hl3AyNW+mO1PdJVXIhcs3bVhOYUthLE94Iw6NIz7lsnBhpXTW8+43IpDJ4GT7kdC/7z22o
+	JwQczuUBLgffaXqktbN80MUX15Ccy5dIJ7hlVOY3uEiIgHTUg5yN+7qSMKZ1JAACxoeESql090b
+	fOIxx8r9EzKV4B9arXE4nVG89ICQ2COWq+xeGLkRnhNahX1YSzF/6rLu1VJ6na40sD1UVELUwkD
+	DeXF3uUOCJPglTwKSJPjLj/McO0ejaX0QHxEs5iV3sD2fXH7opUU3GPRN0t09c/eRzqTuTFrUm6
+	7NRcPWsFOqLdnM6kHTfEOK6l4=
+X-Received: by 2002:a05:7300:dc06:b0:2be:7fc2:fc38 with SMTP id 5a478bee46e88-2d5870ad65fmr14717887eec.5.1776331260756;
+        Thu, 16 Apr 2026 02:21:00 -0700 (PDT)
+Received: from [127.0.0.1] ([20.169.72.2])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2de8c90cd7esm8100678eec.13.2026.04.16.02.20.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2026 02:21:00 -0700 (PDT)
+Message-Id: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
+From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 16 Apr 2026 09:20:56 +0000
+Subject: [PATCH 0/3] http: fix emptyAuth=auto for Negotiate/SPNEGO
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260416054924.GB646814@coredump.intra.peff.net>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    johannes.schindelin@gmx.de,
+    Matthew John Cheetham <mjcheetham@outlook.com>
 
-On Thu, Apr 16, 2026 at 01:49:24AM -0400, Jeff King wrote:
-> On Wed, Apr 15, 2026 at 08:48:15AM +0200, Patrick Steinhardt wrote:
-> 
-> > > Personally, I am still skeptical that all of this is worth it versus
-> > > just checking stderr.
-> > 
-> > Yeah, the more I dive into this topic the more sceptical I get, as well,
-> > as shells behave wildly different around `set -e`. So I'm starting to
-> > feel somewhat uncomfortable with the idea of blanket-enabling it for all
-> > shells, as that will for sure lead to lots of fallout on platforms that
-> > we're not testing.
-> > 
-> > Maybe we should really only do this for an allow-listed set of shells.
-> > Starting with Bash 5 and newer might be good enough, and given that we
-> > use Bash for some of our CI jobs we can assume that this would weed out
-> > failures anyway.
-> 
-> Yeah, an allow-list is probably much better than trying to come up with
-> a list of buggy shells. But that only helps with portability.
-> 
-> I'm still concerned that this approach is going to create extra friction
-> for test writers down the road. This series needed to clean up several
-> spots to avoid false positives, and some of the spots were non-trivial.
-> 
-> Now that was the accumulated cruft of 20 years of test-writing, so it's
-> not clear to me how often new test-writers will run into this. But when
-> they do, I worry that it may be hard to even figure out what is going
-> on.
-> 
-> But I've said as much in earlier rounds, and I'm not sure Junio agrees.
-> So we can note my dissent in the captain's log, and I can reserve the
-> right to told-you-so later if need be. ;)
+When a server advertises Negotiate (SPNEGO) authentication alongside Basic,
+the "auto" mode of http.emptyAuth should allow libcurl to attempt Kerberos
+authentication using the system ticket cache before falling back to
+credential_fill(). Currently this never happens due to an interaction
+between two older features.
 
-I don't necessarily disagree with your take, I do think this has the
-potential to cause some pain. I guess the question is _how_ painful it
-will get, and whether that additional pain is worth it to help us avoid
-silent breakage like we recently had.
+The Negotiate-stripping logic from 4dbe66464b (remote-curl: fall back to
+Basic auth if Negotiate fails, 2015-01-08) removes CURLAUTH_GSSNEGOTIATE on
+the first 401, before the auto-detection from 40a18fc77c (http: add an
+"auto" mode for http.emptyauth, 2017-02-25) gets a chance to see it as an
+"exotic" method. The result is that auto mode silently degrades to the same
+behavior as emptyAuth=false for any server whose only non-Basic/Digest
+method is Negotiate, forcing Kerberos users to manually set
+http.emptyAuth=true to get seamless ticket-based authentication.
 
-So I'd take a "merge and see" approach here, and if we ever notice that
-it's too annoying we simply revert the last commit that introduced `set
--e`. It doesn't have to be a one-way decision.
+This series fixes the interaction by delaying the Negotiate stripping in
+auto mode by one round-trip, giving empty auth a chance to use the system
+Kerberos ticket. If there is no valid ticket, Negotiate is stripped on the
+second 401 and we fall through to credential_fill() as before. The true and
+false modes are unchanged.
 
-Patrick
+Patch 1: Extract a http_reauth_prepare() helper from the three retry paths
+that call credential_fill() on HTTP_REAUTH. Pure refactor, no behavior
+change.
+
+Patch 2: Delay the GSSNEGOTIATE stripping in auto mode and teach
+http_reauth_prepare() to skip credential_fill() when empty auth should be
+attempted first.
+
+Patch 3: Add tests verifying that auto mode produces an extra round-trip
+(empty auth attempt) compared to false mode, using the existing
+nph-custom-auth.sh CGI infrastructure.
+
+There is a trade-off in auto mode: when a server advertises Negotiate but
+the client has no valid Kerberos ticket, there is one extra round-trip
+compared to the current behavior. This matches the trade-off already
+documented in 40a18fc77c. Users who want to avoid it can set
+http.emptyAuth=false.
+
+Note: this patch series was taken early into Git for Windows for the
+2.54.0-rc2 release.
+https://github.com/git-for-windows/git/commit/8e94b65c003783d7d7b09d9fccdf06a1363e347c
+
+Matthew John Cheetham (3):
+  http: extract http_reauth_prepare() from retry paths
+  http: attempt Negotiate auth in http.emptyAuth=auto mode
+  t5563: add tests for http.emptyAuth with Negotiate
+
+ http.c                      | 32 +++++++++++++++-
+ http.h                      |  6 +++
+ remote-curl.c               |  4 +-
+ t/t5563-simple-http-auth.sh | 74 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 112 insertions(+), 4 deletions(-)
+
+
+base-commit: 2b39a27d40682c09ac1c031f099ee602061597cd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2087%2Fmjcheetham%2Fspnego-fix-upstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2087/mjcheetham/spnego-fix-upstream-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2087
+-- 
+gitgitgadget
