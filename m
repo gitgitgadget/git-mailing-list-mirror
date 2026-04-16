@@ -1,138 +1,170 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A5F3438BC
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 17:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33B2D738F
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 17:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781802190; cv=none; b=LZL67A8Yl0FIglviIt1AIfhMvxAlIu2i5XTQk9ggZx/VXGWQHklbwgr8EByTb5WM6TQ4I7OEnGXF1UEMc3lpbc0OPTwT+IUkbdiguBo8JYZ1or0H/mWIO5o5c74xcpOwCQppN+osQ0AtRpoobA7WQn18Q9P0PiJLWxWNpoIoOHE=
+	t=1781802379; cv=none; b=UkkyxdAdd63OELoQAiEdLlA1U6EDCEnuhByM6TCCtkh+b7O5Mic0M68byDV04VS4lGYNv6557LyLXjA0PggtNVzlDduDlGD+4GBmIzMEWBU6k9Na0siB+XKLi/c9VLYavfe06lG/etvNa+pktUdYLFucVCb+QuKhZr6D1W8ivw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781802190; c=relaxed/simple;
-	bh=JngWDhLG7yIBeS3LenVJR7XO1JsAgJvCrVqZlL8Q42U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DuSgCu9nwm1f+qEJCWAGDGz6uVJXTFu7VOSeYgYJEOGEnRncoOUj2wvha/I3/bj1z1RPC7TBy4VOCzYZ+f7Qnu/AV2VkPT7kXffhsI/u0ZS5eqVDW9nYwRjxxp8fcs42Fj8cGjBxImdrBjEZHK7pbvSId250wmslXqgBCyimOT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FuvQwbO6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IVN9r6Le; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781802379; c=relaxed/simple;
+	bh=kT4MTcAG6pmEA1aRYpLyd1RaChS5paa54GLwOnjRYzk=;
+	h=Content-Type:MIME-Version:From:To:Cc:Subject:Date:Message-ID:
+	 MIME-Version; b=i5gLD0cjKcOtUZIoZIJYJYwvlVCo+tu4LIwacVKiWdviT5p/vSKje14v7mEwl57ByuWGcpJrSN5//iEBBeuQ18F68TYoaOlpbJ+V5ivN8KlaJMQakuivJaWILLTXh0G0P2jepgaXS8g4jYzEWu5JbNGfXxWbD3spfpydWtdD2zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R0rcVQzT; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FuvQwbO6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IVN9r6Le"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9B6B0EC00B5;
-	Thu, 18 Jun 2026 13:03:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 18 Jun 2026 13:03:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781802188; x=1781888588; bh=f+d5FbYFTB
-	X4VF5/YgRjoKX9rThfymcQTGdirnE2bEY=; b=FuvQwbO6pw/LP7DPkdIIo/nyz0
-	PDj83L0QcpYZ0uNTWT9017tEKjl25Z1p/2cTFLuBOxNZ1Y/ogwLaGCd/CscI24Ta
-	O5sm8iy0u+U4eqZS9coTkKT97ongcGeik6iY8/se1DtxmsZj5bUVdg20j2z1ZBUS
-	NO2ELrZZzLDxXRZXne5MMnYYH0HUHaOYf154ifOiMAtaZSbR6ZrYoaBMrQu29Pd+
-	xh0ROxGtUY0CsA73aACDUG4a4wJckRTRIw1VgNhBpyikQj84anJr1YQ6UhzRDzKA
-	cJMumyikTHYc9fjxr/g1glgaquKjk+6Bi2hZQidSU6O3Bi+1TIKw0nZp8++g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781802188; x=1781888588; bh=f+d5FbYFTBX4VF5/YgRjoKX9rThfymcQTGd
-	irnE2bEY=; b=IVN9r6LeAQODeTIDMebj8L7SB9tqVtHbBzNd5iEA1AKGarCkNfw
-	kZNsKzT4F5rv5fYnbQSAoxcyFu3LRyS6AE0f4VpFAFjaQZ9DqUXcSo1J2p+gRXd/
-	rrKB/Pttmj+SlL8OKqkXERIK0b8COjTJJVgM3BpIZrV2WylK/MAsBYINI+PaqI4d
-	dFP01gUYf3xBL/ni8m40fMuMRNlqA3JwK4O86hB0K4h1W0oj8RYfGMOp/iOv2og0
-	JhJN6icoVBLxiEw1Zm+QfIctL6QrMnmBo257Bm3vjCB2GqUSiB+89ywt6TekmM6b
-	nP+PwPUEOkU0nZuBBcsGkQboUH8RWWRWlow==
-X-ME-Sender: <xms:zCQ0alpwArsLORoEuID4YgBKXKJVZG6oxCWNSrpWGClfo6qjMxsm8Q>
-    <xme:zCQ0aupyIdNLZLEzeEbNYxeX1whLiAHxnvGLHFm6-JrGAJhe4T7YG2O8Ls3IVOllr
-    u-uqRsQm6Ve0XWiDue31ngoCqcPrIQbKFIN83gAtEPY5Rakfw5lIA>
-X-ME-Received: <xmr:zCQ0anM3Hjz6AlznTb5zZIXXKvp7Qr2FVarQ_3ivj20KSgxsBNHDx2v-t4Gacobuy4mcObbL7n-Mc1QXgOeyyLbkwcxbFH6Xe4UE>
-X-ME-Proxy-Cause: dmFkZTFelVzqSk82mACs49Ndau9ZOe5MZqUGmD8SbTO1ODpPm3cauvniLFWxtsQso/y/9d
-    WoT7L3YviplgrI+1dlrSWWFlgIGGDgMAfyTqCj8utw5Gfa9TNS1pdh4B7oAz8uYbZGqOUt
-    skGSh+S1jP2QN7Geh8AUP40aH3fAwrdE7tQdRZTZWE23p2BZRwdefOH3yb3vRY5ZQvgkNI
-    DURUkUGkuOMiHdKcuf1aow6iKk4UatpvN8Vf8yQlJ+kcDR1mH+bb/HMqGFd/iOTkaea66a
-    iHgd8BA+f61vkLaQYY3BQes7pvtHFz+eAua/omd2xg6hucxfsYbaBMCbac8x8SX1khwBVD
-    4gpWrodIb+Aj1DZm8gMVJAFwP+xyGVZF+Ca3+4sbYh+/0NGO9upQdg+ikMCxLZbJUoxPpU
-    c0Kp/Js5HXmoQ+tiEHYRQIq+jBO27aEVxF8ChW1mD7pajHHRHI5izS0iD4kJFLEaRymVgG
-    EWE2EEx/pf3TRg6JtU/gOuY7ouMxe4JSYS3yuLTMm3dfqrg1LChTmSw2NpZPHeX/p4VaHY
-    74R4/LWLVRV5HPZoZOPAnfC2Z+yZ0EV0bhiSSKiG6Yw7h/f3ZlnWgDP3r9sTBm31QFTIax
-    0whc//XiUj5kW+bmMtiWBaEuHx2YiI6dvOKQjQ1EHuFN+YJn4OfaXZfCp6og
-X-ME-Proxy: <xmx:zCQ0avz70m_N_PsCr6JXaJuNI5R8WrW7jhYd-klyDxXxKmO0H5x-kw>
-    <xmx:zCQ0agvoyqyBvUFSTOb8054GVcFky19ptqCU8cKdQC9JWfxcvO9Z8g>
-    <xmx:zCQ0ao78mKEzZysu4mf4Wbfx1sl7hscatsp00Tflhj5lpZ6dorTzaA>
-    <xmx:zCQ0avQv3r-iHwU3OgrWB2Jff_pWFQfJyxKlSTLN87Amr37UZz-fyA>
-    <xmx:zCQ0aslWsVNcNPtHlNiZgu4_lL2tjuy8qOcnDhgZLovuNoFpOf0T70JM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 13:03:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] zlib: properly clamp to uLong
-In-Reply-To: <pull.2153.git.1781790619424.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Thu, 18 Jun 2026 13:50:18
-	+0000")
-References: <pull.2153.git.1781790619424.gitgitgadget@gmail.com>
-Date: Thu, 18 Jun 2026 10:03:06 -0700
-Message-ID: <xmqqzf0rrdbp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0rcVQzT"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c892935bcdeso532929a12.3
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 10:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781802378; x=1782407178; darn=vger.kernel.org;
+        h=mime-version:message-id:date:subject:cc:to:from
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kT4MTcAG6pmEA1aRYpLyd1RaChS5paa54GLwOnjRYzk=;
+        b=R0rcVQzTso34OT53pbOS1jffxMxrAF3m2TQSCbzKFUJA/UFRm4fS5b1WR/eYqcObc9
+         OfSUxeLFXeHCk6Ob4liELSxteo/kXUlrBf2EbQNBjhERQE9yH3YTT5SeUHT/rcRQRndK
+         uMyup7Gr81MGWrbY24/Gt/V8+Mjs6mnqnabwKh4PQyJQnMFF+ucoW2Ju9hbnd1alrQ0y
+         sfH5t9WLPjSw+l/nSGT33nzPC4l9jAZANmbO0BHTbALReYDANl/LX1xhfWpEphPvpj6L
+         ydK1Yu2Gs9/lZyHrV4wkH7ycGTdZYU9fQmyzKvdgNaBFg8uj9TQ0v4yg6yN5DINEvfV4
+         JNeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781802378; x=1782407178;
+        h=mime-version:message-id:date:subject:cc:to:from
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kT4MTcAG6pmEA1aRYpLyd1RaChS5paa54GLwOnjRYzk=;
+        b=ImUSowSlDSdJ/fXTg4550QzFbAXuI4JFvl9ZqBsgVFab6H81BHGRXAmJOWFrJmsahd
+         bT9BuY/zK09oZKbKWbZwphlpGy9XsEHXlTwJ2zN+xJXvdYDrjBnIO5EIKX65YcT5PaFA
+         Av7+wPRv5Uiavj/qN4AZsf3xcvL9q8u1R8Ahf/LZqVPqmKLcquPvknENi1AoQ6UitObv
+         6STyhlpjqut1Q3V+VK/u40kBybdUWrjUpanZ3Z8VOpKKGjl6oF9yfCMmGBfzb3COsTww
+         NVOeilMDZt0HmlmV6vpLZUX58ABHFPjhvTOWhzon38GYR+pzbSsuwFZXRBj1K6Tblwt0
+         qqRg==
+X-Gm-Message-State: AOJu0Yyxe9RtXAvPn/sTHHda/Tu8V0j9zDqTC4rX0rYJGNepsI4tVIGU
+	x9ZsCOrTxDGha1EJ4h9rmn72GUJV0lLz84jTxc7hQehWC98uTziWMbgEpvKHsxVb
+X-Gm-Gg: AfdE7cme5wREhvTpc45J8FkT8fGSxtZ2caKjYcUmfg9tjVTumsdaNH5vwvv9dAFumAq
+	isgE0xOAsI+ppSRuPlO4Xd8Hs21TR3MoOI2MdQbg1rvhUYz/YM0EHb9z8Xxi5k8QyB7Mlsz0cc0
+	wVO1FBCdDrM6xi+bh0hOHtbu7aA6xdVYAtSb1QpgsW3suMlUlVl4a9FWf6DmfL6HQyJSpY0pr2N
+	wT8E2jxsvE0YjTEOgn+SySXrKO6fbgcGzXeW6nOwMAD8lpjP1DtQUK7/75QYLARSb/RW5eBlP9K
+	tPiJI9Qa747yLqTjqzxcfMr9+RF64Q66cJzEI9wEFMWpLfJRepCXHihqIxLT6aPGMjj02Lgwr6n
+	P1CDjjt5oq2jdwlkpXCIRjWc4kWXF5uS19G8w2Sw7sMzsqIhDOIghQvh7/YTujFGzEz635Q9GHl
+	4z3KCOc1rsima40QIcNYGG+7/aYt9cBSZvmNdWJbEBaZ2bLSGaugyoWUO+m6bmTyjO96Ihp0cK2
+	4xj0F9eVNmvSK7nxzsh0f2VQmKlUyOR/A0oxdYmvxRpWaTT3nGDTTY=
+X-Received: by 2002:a17:903:98b:b0:2bd:ba44:6c07 with SMTP id d9443c01a7336-2c718f83ca3mr452655ad.16.1781802377558;
+        Thu, 18 Jun 2026 10:06:17 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2404:c0:a301:1642:8040:7870:cfeb:ba5d])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c4327aca78sm217509325ad.54.2026.06.18.10.06.16
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 18 Jun 2026 10:06:17 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: base64
+From: irsalshydiq <ichalprov@gmail.com>
+To: git@vger.kernel.org
+Cc: irsalshydiq <ichalprov@gmail.com>
+Subject: [PATCH] doc: detail LMAP binary format specification
+Date: Thu, 16 Apr 2026 12:55:42 +0700
+Message-ID: <20260619000000.3286-1-ichalprov@gmail.com>
+X-Mailer: git-send-email 2.50.1
+MIME-Version: 1.0
 
-The original in js/objects-larger-than-4gb-on-windows says things
-like:
-
-+	s->z.total_in = (uLong)(s->total_in & ULONG_MAX_VALUE);
-+	s->z.total_out = (uLong)(s->total_out & ULONG_MAX_VALUE);
-
-Your patch ...
-
-> +static inline uLong zlib_uLong_cap(size_t s)
-> +{
-> +	return s < ULONG_MAX_VALUE ? (uLong)s : ULONG_MAX_VALUE;
-> +}
-> +
->  static void zlib_pre_call(git_zstream *s)
->  {
->  	s->z.next_in = s->next_in;
->  	s->z.next_out = s->next_out;
-> -	s->z.total_in = (uLong)(s->total_in & ULONG_MAX_VALUE);
-> -	s->z.total_out = (uLong)(s->total_out & ULONG_MAX_VALUE);
-> +	s->z.total_in = zlib_uLong_cap(s->total_in);
-> +	s->z.total_out = zlib_uLong_cap(s->total_out);
-
-... is an obvious fix for that.
-
-> @@ -60,7 +65,7 @@ static void zlib_post_call(git_zstream *s, int status)
->  	 * We track our own totals and verify only the low bits match.
->  	 */
->  	if ((s->z.total_out & ULONG_MAX_VALUE) !=
-> -	    ((s->total_out + bytes_produced) & ULONG_MAX_VALUE))
-> +	    ((zlib_uLong_cap(s->total_out) + bytes_produced) & ULONG_MAX_VALUE))
->  		BUG("total_out mismatch");
-
-Because we now clamp (not "taking lower bits of") s->total_out to a
-value between 0..4GB and store it in s->z.total_out in pre-call, let
-zlib do its thing that increments s->z.total_out modulo 4GB, and we
-clamp the s->total_out (before incrementing) the same way in
-post_call here, both sides of "!=" above even out.  But the comment
-before this comparison that claims that "we ... verify only the low
-bits match" is a bit off the reality, I suspect.
-
-> @@ -68,7 +73,7 @@ static void zlib_post_call(git_zstream *s, int status)
->  	 */
->  	if (status != Z_NEED_DICT &&
->  	    (s->z.total_in & ULONG_MAX_VALUE) !=
-> -	    ((s->total_in + bytes_consumed) & ULONG_MAX_VALUE))
-> +	    ((zlib_uLong_cap(s->total_in) + bytes_consumed) & ULONG_MAX_VALUE))
->  		BUG("total_in mismatch");
->  
->  	s->total_out += bytes_produced;
->
-> base-commit: 7a094d68a27e321a99c8ab6b700909e503904bd9
+VGhlIGV4cGVyaW1lbnRhbCBSdXN0IGltcGxlbWVudGF0aW9uIGluICdsb29zZS5ycycgaW50cm9k
+dWNlcyBhIG5ldwpiaW5hcnkgZm9ybWF0IGNhbGxlZCAnTE1BUCcgZm9yIG1hcHBpbmcgYmV0d2Vl
+biBkaWZmZXJlbnQgb2JqZWN0IElECmZvcm1hdHMgKGUuZy4sIFNIQS0xIGFuZCBTSEEtMjU2KS4K
+Ckhvd2V2ZXIsIHRoZSB0ZWNobmljYWwgZG9jdW1lbnRhdGlvbiBmb3IgdGhpcyBmb3JtYXQgd2Fz
+IG1pc3NpbmcgZnJvbQp0aGUgJ0RvY3VtZW50YXRpb24vdGVjaG5pY2FsLycgZGlyZWN0b3J5LCBt
+YWtpbmcgaXQgZGlmZmljdWx0IGZvcgpDIGRldmVsb3BlcnMgdG8gdW5kZXJzdGFuZCB0aGUgZm9y
+bWF0J3MgbGF5b3V0IGFuZCBsb2dpYy4KCkFkZCAnRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbG9v
+c2Utb2JqZWN0LW1hcC5hZG9jJyB0byBwcm92aWRlIGEgYml0LWJ5LWJpdApzcGVjaWZpY2F0aW9u
+IG9mIHRoZSAnTE1BUCcgZm9ybWF0IGFuZCByZWdpc3RlciBpdCBpbiB0aGUgYnVpbGQgc3lzdGVt
+cy4KClNpZ25lZC1vZmYtYnk6IGlyc2Fsc2h5ZGlxIDxpY2hhbHByb3ZAZ21haWwuY29tPgotLS0K
+IERvY3VtZW50YXRpb24vTWFrZWZpbGUgICAgICAgICAgICAgICAgICAgICAgICB8ICAxICsKIERv
+Y3VtZW50YXRpb24vdGVjaG5pY2FsL2xvb3NlLW9iamVjdC1tYXAuYWRvYyB8IDcyICsrKysrKysr
+KysrKysrKysrKysKIERvY3VtZW50YXRpb24vdGVjaG5pY2FsL21lc29uLmJ1aWxkICAgICAgICAg
+ICB8ICAxICsKIDMgZmlsZXMgY2hhbmdlZCwgNzQgaW5zZXJ0aW9ucygrKQogY3JlYXRlIG1vZGUg
+MTAwNjQ0IERvY3VtZW50YXRpb24vdGVjaG5pY2FsL2xvb3NlLW9iamVjdC1tYXAuYWRvYwoKZGlm
+ZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vTWFrZWZpbGUgYi9Eb2N1bWVudGF0aW9uL01ha2VmaWxl
+CmluZGV4IDI2OTlmMGIyNGEuLjhhZDkwOGQ2MmMgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24v
+TWFrZWZpbGUKKysrIGIvRG9jdW1lbnRhdGlvbi9NYWtlZmlsZQpAQCAtMTI2LDYgKzEyNiw3IEBA
+IFRFQ0hfRE9DUyArPSB0ZWNobmljYWwvZGlyZWN0b3J5LXJlbmFtZS1kZXRlY3Rpb24KIFRFQ0hf
+RE9DUyArPSB0ZWNobmljYWwvaGFzaC1mdW5jdGlvbi10cmFuc2l0aW9uCiBURUNIX0RPQ1MgKz0g
+dGVjaG5pY2FsL2xhcmdlLW9iamVjdC1wcm9taXNvcnMKIFRFQ0hfRE9DUyArPSB0ZWNobmljYWwv
+bG9uZy1ydW5uaW5nLXByb2Nlc3MtcHJvdG9jb2wKK1RFQ0hfRE9DUyArPSB0ZWNobmljYWwvbG9v
+c2Utb2JqZWN0LW1hcAogVEVDSF9ET0NTICs9IHRlY2huaWNhbC9tdWx0aS1wYWNrLWluZGV4CiBU
+RUNIX0RPQ1MgKz0gdGVjaG5pY2FsL3BhY2tmaWxlLXVyaQogVEVDSF9ET0NTICs9IHRlY2huaWNh
+bC9wYWNrLWhldXJpc3RpY3MKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdGVjaG5pY2FsL2xv
+b3NlLW9iamVjdC1tYXAuYWRvYyBiL0RvY3VtZW50YXRpb24vdGVjaG5pY2FsL2xvb3NlLW9iamVj
+dC1tYXAuYWRvYwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwMDAwLi42ZThkYmQ2
+YzZmCi0tLSAvZGV2L251bGwKKysrIGIvRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbG9vc2Utb2Jq
+ZWN0LW1hcC5hZG9jCkBAIC0wLDAgKzEsNzIgQEAKK0xvb3NlIE9iamVjdCBNYXAgKExNQVApIGZv
+cm1hdAorPT09PT09PT09PT09PT09PT09PT09PT09PT09PQorCitUaGUgbG9vc2Ugb2JqZWN0IG1h
+cCBmaWxlIChMTUFQKSBwcm92aWRlcyBhIHdheSB0byBtYXAgYmV0d2VlbiBkaWZmZXJlbnQgb2Jq
+ZWN0CitJRCBmb3JtYXRzIChlLmcuLCBTSEEtMSBhbmQgU0hBLTI1NikgZm9yIGxvb3NlIG9iamVj
+dHMuIEl0IGlzIGRlc2lnbmVkIGZvcgorZWZmaWNpZW50IGxvb2t1cCBhbmQgc3RvcmFnZSBvZiB0
+aGVzZSBtYXBwaW5ncy4KKworQWxsIG11bHRpLWJ5dGUgaW50ZWdlcnMgYXJlIGluIG5ldHdvcmsg
+Ynl0ZSBvcmRlciAoYmlnLWVuZGlhbikuCisKKz09IEZpbGUgTGF5b3V0CisKKy0gQSBoZWFkZXIg
+KDIwIGJ5dGVzKQorLSBBbiBPYmplY3QgRm9ybWF0IFRhYmxlICgxNiBieXRlcyBwZXIgZm9ybWF0
+KQorLSBBIFRyYWlsZXIgT2Zmc2V0ICg4IGJ5dGVzKQorLSBEYXRhIFNlY3Rpb25zICh2YXJpYWJs
+ZSBsZW5ndGgsIDQtYnl0ZSBhbGlnbmVkKQorLSBBIFRyYWlsZXIgKHZhcmlhYmxlIGxlbmd0aCwg
+ZGVmaW5lZCBieSBoYXNoIGFsZ29yaXRobSkKKworPT09IEhlYWRlcgorCistIDQtYnl0ZSBzaWdu
+YXR1cmU6IGBMTUFQYAorLSA0LWJ5dGUgdmVyc2lvbiBudW1iZXI6IFRoZSBjdXJyZW50IHZlcnNp
+b24gaXMgMS4KKy0gNC1ieXRlIGhlYWRlciBzaXplOiBUaGUgdG90YWwgc2l6ZSBvZiB0aGUgaGVh
+ZGVyLCBpbmNsdWRpbmcgdGhlIE9iamVjdCBGb3JtYXQgVGFibGUgYW5kIFRyYWlsZXIgT2Zmc2V0
+LgorLSA0LWJ5dGUgbnVtYmVyIG9mIGl0ZW1zOiBUaGUgbnVtYmVyIG9mIG9iamVjdCBJRHMgbWFw
+cGVkIGluIHRoaXMgZmlsZS4KKy0gNC1ieXRlIG51bWJlciBvZiBvYmplY3QgZm9ybWF0czogVGhl
+IG51bWJlciBvZiBkaWZmZXJlbnQgaGFzaCBhbGdvcml0aG1zIHN1cHBvcnRlZCBpbiB0aGlzIGZp
+bGUgKG1pbmltdW0gMikuCisKKz09PSBPYmplY3QgRm9ybWF0IFRhYmxlCisKK0ZvciBlYWNoIG9i
+amVjdCBmb3JtYXQgKGFzIHNwZWNpZmllZCBpbiB0aGUgaGVhZGVyKSwgdGhlcmUgaXMgYSAxNi1i
+eXRlIGVudHJ5OgorCistIDQtYnl0ZSBGb3JtYXQgSUQ6IFRoZSBpZGVudGlmaWVyIGZvciB0aGUg
+aGFzaCBhbGdvcml0aG0gKGUuZy4sIGAweDczNjg2MTMxYCBmb3IgU0hBLTEsIGAweDczMzIzNTM2
+YCBmb3IgU0hBLTI1NikuCistIDQtYnl0ZSBTaG9ydGVuZWQgTGVuZ3RoOiBUaGUgbWluaW11bSBu
+dW1iZXIgb2YgYnl0ZXMgbmVlZGVkIHRvIHVuYW1iaWd1b3VzbHkgaWRlbnRpZnkgYW4gb2JqZWN0
+IElEIGluIHRoaXMgZm9ybWF0IHdpdGhpbiB0aGlzIGZpbGUuCistIDgtYnl0ZSBEYXRhIE9mZnNl
+dDogVGhlIGFic29sdXRlIG9mZnNldCBmcm9tIHRoZSBiZWdpbm5pbmcgb2YgdGhlIGZpbGUgdG8g
+dGhlIHN0YXJ0IG9mIHRoZSBkYXRhIHNlY3Rpb24gZm9yIHRoaXMgZm9ybWF0LgorCis9PT0gVHJh
+aWxlciBPZmZzZXQKKworLSA4LWJ5dGUgVHJhaWxlciBPZmZzZXQ6IFRoZSBhYnNvbHV0ZSBvZmZz
+ZXQgZnJvbSB0aGUgYmVnaW5uaW5nIG9mIHRoZSBmaWxlIHRvIHRoZSBzdGFydCBvZiB0aGUgVHJh
+aWxlci4KKworPT09IERhdGEgU2VjdGlvbnMKKworRWFjaCBvYmplY3QgZm9ybWF0IGhhcyBhIGNv
+cnJlc3BvbmRpbmcgZGF0YSBzZWN0aW9uIHN0YXJ0aW5nIGF0IHRoZSBvZmZzZXQgcHJvdmlkZWQg
+aW4gdGhlIE9iamVjdCBGb3JtYXQgVGFibGUuIEVhY2ggZGF0YSBzZWN0aW9uIGlzIGFsaWduZWQg
+dG8gYSA0LWJ5dGUgYm91bmRhcnkuCisKKz09PT0gRm9ybWF0IDEgKFN0b3JhZ2UgRm9ybWF0KSBE
+YXRhIFNlY3Rpb24KKworVGhlIGZpcnN0IGZvcm1hdCBsaXN0ZWQgaXMgY29uc2lkZXJlZCB0aGUg
+InN0b3JhZ2UiIG9yICJtYWluIiBmb3JtYXQuIEl0cyBkYXRhIHNlY3Rpb24gY29udGFpbnM6CisK
+KzEuICoqU2hvcnRlbmVkIEluZGV4Kio6IGAobnVtYmVyIG9mIGl0ZW1zKSAqIChzaG9ydGVuZWQg
+bGVuZ3RoKWAgYnl0ZXMuCisgICBUaGlzIHRhYmxlIGNvbnRhaW5zIHRoZSBmaXJzdCBgc2hvcnRl
+bmVkIGxlbmd0aGAgYnl0ZXMgb2YgZWFjaCBvYmplY3QgSUQsIHNvcnRlZCBsZXhpY29ncmFwaGlj
+YWxseS4gVGhpcyBhbGxvd3MgZm9yIGJpbmFyeSBzZWFyY2ggbG9va3VwLgorCisyLiAqKkZ1bGwg
+T0lEIFRhYmxlKio6IGAobnVtYmVyIG9mIGl0ZW1zKSAqIChoYXNoIGxlbmd0aClgIGJ5dGVzLgor
+ICAgVGhlIGZ1bGwgb2JqZWN0IElEcyBmb3IgdGhlIHN0b3JhZ2UgZm9ybWF0LCBpbiB0aGUgc2Ft
+ZSBvcmRlciBhcyB0aGUgU2hvcnRlbmVkIEluZGV4LgorCiszLiAqKk1ldGFkYXRhIFRhYmxlKio6
+IGAobnVtYmVyIG9mIGl0ZW1zKSAqIDRgIGJ5dGVzLgorICAgQSB0YWJsZSBvZiAzMi1iaXQgaW50
+ZWdlcnMgcmVwcmVzZW50aW5nIHRoZSB0eXBlIG9mIGVhY2ggb2JqZWN0OgorICAgLSAwOiBSZXNl
+cnZlZCAoZS5nLiwgbnVsbCBPSUQsIGVtcHR5IHRyZWUvYmxvYikKKyAgIC0gMTogTG9vc2UgT2Jq
+ZWN0CisgICAtIDI6IFNoYWxsb3cgQ29tbWl0CisgICAtIDM6IFN1Ym1vZHVsZSBDb21taXQKKwor
+PT09PSBTdWJzZXF1ZW50IEZvcm1hdCAoQ29tcGF0aWJpbGl0eSkgRGF0YSBTZWN0aW9uCisKK0Zv
+ciBlYWNoIHN1YnNlcXVlbnQgZm9ybWF0LCB0aGUgZGF0YSBzZWN0aW9uIGNvbnRhaW5zOgorCisx
+LiAqKlNob3J0ZW5lZCBJbmRleCoqOiBTaW1pbGFyIHRvIHRoZSBzdG9yYWdlIGZvcm1hdCwgYnV0
+IGZvciB0aGUgY29tcGF0aWJpbGl0eSBhbGdvcml0aG0ncyBPSURzLgorCisyLiAqKkZ1bGwgT0lE
+IFRhYmxlKio6IFRoZSBmdWxsIG9iamVjdCBJRHMgaW4gdGhlIGNvbXBhdGliaWxpdHkgYWxnb3Jp
+dGhtLgorCiszLiAqKk1hcHBpbmcgVGFibGUqKjogYChudW1iZXIgb2YgaXRlbXMpICogNGAgYnl0
+ZXMuCisgICBBIHRhYmxlIG9mIDMyLWJpdCBpbnRlZ2Vycy4gRWFjaCBlbnRyeSBhdCBpbmRleCBg
+aWAgcHJvdmlkZXMgdGhlIGluZGV4IGluIHRoZSAqKnN0b3JhZ2UgZm9ybWF0J3MqKiB0YWJsZXMg
+dGhhdCBjb3JyZXNwb25kcyB0byB0aGlzIGNvbXBhdGliaWxpdHkgb2JqZWN0IElELgorCis9PT0g
+VHJhaWxlcgorCistIFZhcmlhYmxlIGxlbmd0aDogVGhlIGhhc2ggb2YgYWxsIHByZWNlZGluZyBi
+eXRlcyBpbiB0aGUgZmlsZSwgY2FsY3VsYXRlZCB1c2luZyB0aGUgbWFpbiBoYXNoIGFsZ29yaXRo
+bS4KZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdGVjaG5pY2FsL21lc29uLmJ1aWxkIGIvRG9j
+dW1lbnRhdGlvbi90ZWNobmljYWwvbWVzb24uYnVpbGQKaW5kZXggZWMwNzA4OGM1Ny4uZGMxMjQ5
+ZjlhYSAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbWVzb24uYnVpbGQKKysr
+IGIvRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbWVzb24uYnVpbGQKQEAgLTE2LDYgKzE2LDcgQEAg
+YXJ0aWNsZXMgPSBbCiAgICdsYXJnZS1vYmplY3QtcHJvbWlzb3JzLmFkb2MnLAogICAnbG9uZy1y
+dW5uaW5nLXByb2Nlc3MtcHJvdG9jb2wuYWRvYycsCiAgICdtdWx0aS1wYWNrLWluZGV4LmFkb2Mn
+LAorICAnbG9vc2Utb2JqZWN0LW1hcC5hZG9jJywKICAgJ3BhY2tmaWxlLXVyaS5hZG9jJywKICAg
+J3BhY2staGV1cmlzdGljcy5hZG9jJywKICAgJ3BhcmFsbGVsLWNoZWNrb3V0LmFkb2MnLAotLSAK
+Mi41MC4xIChBcHBsZSBHaXQtMTU1KQoK
