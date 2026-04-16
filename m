@@ -1,44 +1,71 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A72536BCD7
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCEE275B15
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776370028; cv=none; b=KBSoyLcJbKAEM9S2Vc8SpHYDru7fB10g9pNQJ9/S3qo3AhAp+frgPV9tp4fmXqTAPshhJfDNGzIzgFlBilwt/9WcervJNLGjX2qiEDvByqXdh/vTXRIOGmX3HgNhN7sNqGOsvPWRIJe8pxnF3iTquMuLBTHK/xR/Ehy6Rqiwz5Q=
+	t=1776370355; cv=none; b=tOjK+mQ3uuaZmPa1ohlxx0h1eJPpugbVQH5wTS/H01SipQ7FA8+2hi1zLUHStUXQ6s6cqv7VxFQK04LuvOaBdh7P3j4x0Zsq2hw5EbtQkadDbnhOYP94DYwf9sJDXNUvZLTnndRR3kZAFvIKytIhDIW6HRw76dju/tlnS8jGKis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776370028; c=relaxed/simple;
-	bh=w94QZ9xe/hCqCxdUxywUZFBqu40aVbITfuBZ8m854Pc=;
+	s=arc-20240116; t=1776370355; c=relaxed/simple;
+	bh=utScv6z/hXFqM8gYgYfHpwu0yU09fzOCBe8/Bh1FIx8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s8K/jxzRdOoXIOODbOBaX2qRsJLgiqglslPuY5WyZEv1U8/u0UGuLudiUBrcfg1dzEm1QlrY7u76pF1az0kbOOgBr2PXe81o5usfCjIgaF5XLDT6j82gm1NabcS2bD/OiWqIigqmAjUFf8OjP0D84ergk6Vg1Xu/OX/7tULoGC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ibgGbH1G; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=fttU2zuDd24DkEkUKuhOQmPCcwQMiryHqJ70YcBii1/3jNP7q9SxBKI97vunyZPvAZAB/uCQBArnAAHwbgQyAiWEe9TNeiosNQ3tnLIESw4wLPc1BL2LL5062am+iCXvEk8pkfneu1ZYCqITcNI65GdeCYWfpBv83uZs+mbDEm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ptGD3F7M; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ibgGbH1G"
-Received: (qmail 373843 invoked by uid 106); 16 Apr 2026 20:07:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=w94QZ9xe/hCqCxdUxywUZFBqu40aVbITfuBZ8m854Pc=; b=ibgGbH1GK8eCKTh+uK55H6T6wmSPEjzKeNcAqIpVuils6twzCmaakUN3yq3nP5pSxS8nzxan8tZ75Ug5XGJbqQNEoQE16Eh1AhpUkyYNT+Xv7G5dj0XwUhCDKzaMtgftXc2a8EAK7NYHIewVFWE4Cmpe/eEB0izQxYUfNTBDW/FwdrlbW63Rjf2uZv8AKIxJi9yjUpT4y4he+uzNruY6aqJsVfZ0ebwNsGBC2fYnVS4QjdN3Rgx6yVkySf/t7ZoiEHJqS3rmODzdhpWGOEb7xc0hyXk2PdzyUa8+UIshoUvVhmLNRrbDMEPtcF+/bm8aP9h+kpK7Z2TNTWyLnHioOQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Apr 2026 20:07:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 622295 invoked by uid 111); 16 Apr 2026 20:06:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Apr 2026 16:06:59 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 16 Apr 2026 16:06:59 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] MIDX: revert the default version to v1
-Message-ID: <20260416200659.GB1887222@coredump.intra.peff.net>
-References: <xmqqqzohd0sh.fsf@gitster.g>
- <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
- <xmqq5x5s540j.fsf@gitster.g>
- <20260416051732.GA48541@coredump.intra.peff.net>
- <20260416053435.GA646718@coredump.intra.peff.net>
- <xmqqldem22uw.fsf@gitster.g>
- <xmqq8qam217m.fsf_-_@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ptGD3F7M"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-483487335c2so92304205e9.2
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 13:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776370348; x=1776975148; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6m0r6T2zFs+Hg7pp06d/BQD53Eq27CtNKJt1/jKNs5M=;
+        b=ptGD3F7Mwaz6Uz5rWHCCBcfS6Bnmq9UvzQ98B1mQDUDVS50pUYpJK7RlOZHUIQNsXM
+         38BpJXGt60Umk7QI7G0VnbToO/xiSYxuiOzgt6v/kw3G0XF8gK9+DAaoI2jFrOE1/etC
+         b8ZUl+A/tJo5KiU+DR3Qxxd0P9c17UpA6swW63wFjc8s03X6edRMkj6T4lnwNGwB0Dxb
+         agvp8K0ddwXZjnU0dZ9MiFvfHYv4OVEYlcNCfGiS2OIoP7zbBDLje9DimUS9NfeNEk8X
+         DUZt1Voo5Ga2GTW2Ot/jdmjNVqF/OmPubPzZNayfm8qfkkf2QFExHJ4zVC+LJ+JvrcYQ
+         aH2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776370348; x=1776975148;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6m0r6T2zFs+Hg7pp06d/BQD53Eq27CtNKJt1/jKNs5M=;
+        b=VT7mbTFd1F93XlAm/7NJWEzsb73xr1Q22JTe9+3eCYSIoKTVVjaB5J9rJXhpWHDXMv
+         VswwCHVKoYKip8mgD7ZKfPUDwI1iS9P3YDqYedrxKN21XJoXgo8Ozoldxsm0D8Q4ATeC
+         qxr3WVEmEpsBJHs8S9dj+7mjLPpiOCn9ZNOE68BTXK1UnD7TrpQiYW8p7nhAV+pN/Myt
+         mIvHZrmvMdTek2c4hidO3eg7O2WTamgCMoJcQLnPkrtVPtqFDfPD1ZzguiQuAa7xdiU8
+         ebIDnDXIWwukDbXV12lEw/4LVqDEQ3d7gBiTxRUt5CkRd73YjUm1TX8qDW+HBF5jdfA9
+         nh9A==
+X-Gm-Message-State: AOJu0YwMSP3cv8oNQVSYwHmo2aUGCpMki0yxhDF6C93OinXF/xaxf/MZ
+	e90zpobI0sVTouHos7fXHc01R4IGCamAhpQcslzQi3x7eJ+XtbcXZsL9
+X-Gm-Gg: AeBDiesfZCq+EBdzz1vn3ZkPQIFE7ZYFqraMW+52iEyp4R8XsW25IT21zqA2hjJAFwu
+	lBDMQJBmUcgrntTJiy5MPIF73KK6g19fCiFPgtdUZ6GMe1iBar1rYV7Oq0z3oFMeIEMF4M/s2G6
+	KBgHggQcQ9d7UFuBu9LD7Yo7pL5DYWwWM6ZP0NMGxESVTa/2Aaf1RJghnTKxTNgQhS24w/9v3Zz
+	LHcJKsxC/fAnDKnRTueB7RLCmkbfiUsYZ7jaoDO5IC7m6T8liG/tI2a6YpfmzOvZyXIBtqWnbqV
+	2+yKBZlUtoXKF3/161KUJanolIP3f6vlZ1Y7PIPZlBE6j1LllT1RhCwY6vTJSPJu2/VV43rL1nC
+	19yNI493QuDZG1gQk9DW9sMZ6u15VI/L4pgIUd42LxBy0xA0Ft9xyWIz1MW3nQ5Dm4VnVrtmzkp
+	KNHagi/6qV2v2Th7gcnZFTpnw44a4GRYMBS3Ul96SMV9SePvFPx9tT95UP0XMzr5gbWbf2PYe4o
+	GFhxS42zIDRJBlngzy/WIdBAbzXp+e5hg==
+X-Received: by 2002:a05:600c:8582:b0:488:a82f:bbb0 with SMTP id 5b1f17b1804b1-488fb798fe0mr413305e9.27.1776370348228;
+        Thu, 16 Apr 2026 13:12:28 -0700 (PDT)
+Received: from localhost (20014C4D24C75900EBDDC50441E421E2.dsl.pool.telekom.hu. [2001:4c4d:24c7:5900:ebdd:c504:41e4:21e2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488f5818da1sm75323955e9.6.2026.04.16.13.12.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2026 13:12:27 -0700 (PDT)
+Date: Thu, 16 Apr 2026 22:12:26 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 11/12] t9902: fix use of `read` with `set -e`
+Message-ID: <aeFCqhGIWQgE9lq6@szeder.dev>
+References: <20260416-b4-pks-tests-with-set-e-v3-0-7a90e5dccadd@pks.im>
+ <20260416-b4-pks-tests-with-set-e-v3-11-7a90e5dccadd@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,123 +74,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq8qam217m.fsf_-_@gitster.g>
+In-Reply-To: <20260416-b4-pks-tests-with-set-e-v3-11-7a90e5dccadd@pks.im>
 
-On Thu, Apr 16, 2026 at 11:45:49AM -0700, Junio C Hamano wrote:
+On Thu, Apr 16, 2026 at 01:19:28PM +0200, Patrick Steinhardt wrote:
+> In t9902 we're using the `read` builtin to read some values into a
+> variable. This is done by using `-d ""`, which cause us to read until
+> the end of the heredoc. There is a gotcha though: when the delimiter
+> isn't found at all, then the read builtin will return an error.
 
-> From: Jeff King <peff@peff.net>
+The absence of the delimiter doesn't make "read" return an error, EOF
+does (that's why a "while read ..." loop works).
+
+> This
+> hasn't been an issue until now as we didn't run with `set -e`, but
+> that'll change in a subsequent commit.
 > 
-> Dscho reports that fetching into a repository with Git 2.54-rc2 made
-> it unusable with Git 2.53, as the recent code by default writes
-> version 2 multi-pack-index files.  Version 2 is the base of more
-> advanced features to come, but using it where these features are not
-> used is a strict regression.
+> Prepare for this change by silencing the error.
 > 
-> As deployed versions of Git and its reimplementations may not be
-> ready for the format bump, let's revert the default version of MIDX
-> file we write back to V1, and adjust tests that exercise V2-specific
-> features to explicitly request V2.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t9902-completion.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 2f9a597ec7..e3a7df7691 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -590,7 +590,7 @@ test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
+>  	__gitcomp "$invalid_variable_name"
+>  '
+>  
+> -read -r -d "" refs <<-\EOF
+> +read -r -d "" refs <<-\EOF || :
+>  main
+>  maint
+>  next
 
-This looks fine to me, and you can add my S-o-b if you want. But let me
-propose a slight alternative that reduces the test churn and may make
-things easier going forward.
+So AFAICT what this "read" does is equivalent to:
 
--- >8 --
-Subject: [PATCH] MIDX: revert the default version to v1
+refs='main
+maint
+next
+seen'
 
-We introduced midx version 2 in b2ec8e90c2 (midx: do not require packs
-to be sorted in lexicographic order, 2026-02-24) and now write it by
-default. The rationale was that older versions should ignore the v2 midx
-and fall back to using the packs (just like we do for other midx
-errors). Unfortunately this is not the case, as we have a hard die()
-when we see an unknown midx version.
-
-As a result, writing a midx with Git 2.54-rc2 puts the repository into a
-state that is unusable with Git 2.53. And this midx write may happen
-behind the scenes as part of normal operations, like fetch.
-
-Let's switch back to writing v1 by default to avoid regressing the case
-where multiple versions of Git are used on the same repository.
-
-There is one gotcha, though: the v2 format is required for some new
-features, like midx compaction, and running "git multi-pack-index
-compact" will complain when asked to write a v1 index. The user must set
-midx.version to "2" to make the feature work.
-
-So instead of always using v1, we'll base the default on whether the
-requested feature requires v2. That does mean that running midx
-compaction will create a repository that can't be read by older versions
-of Git. But we never do that by default; only people experimenting with
-the new feature will be affected.
-
-We have to adjust the test expectation in t5319, since it will now
-generate v1 files. And our "auto-select v2" is covered by the tests in
-t5335, which continue to check that compaction works without having to
-set midx.version manually (and also explicitly check that asking for v1
-with compaction reports the problem).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I have a feeling there are probably some gaps in v2 testing in t5319,
-since we are no longer using v2 for the bulk of the tests. IMHO that is
-OK to sort out post-release.
-
- Documentation/git-multi-pack-index.adoc | 3 +++
- midx-write.c                            | 4 +++-
- t/t5319-multi-pack-index.sh             | 2 +-
- 3 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
-index 6125683014..3a5aa22778 100644
---- a/Documentation/git-multi-pack-index.adoc
-+++ b/Documentation/git-multi-pack-index.adoc
-@@ -98,6 +98,9 @@ compact::
- 	--[no-]bitmap::
- 		Control whether or not a multi-pack bitmap is written.
- --
-++
-+Note that the compact command requires writing a version-2 midx that
-+cannot be read by versions of Git prior to v2.54.
- 
- verify::
- 	Verify the contents of the MIDX file.
-diff --git a/midx-write.c b/midx-write.c
-index 0ff2e45aa7..a89ac53045 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1259,7 +1259,6 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	struct tempfile *incr;
- 	struct write_midx_context ctx = {
- 		.preferred_pack_idx = NO_PREFERRED_PACK,
--		.version = MIDX_VERSION_V2,
- 	 };
- 	struct multi_pack_index *midx_to_free = NULL;
- 	int bitmapped_packs_concat_len = 0;
-@@ -1275,6 +1274,9 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 	ctx.repo = r;
- 	ctx.source = opts->source;
- 
-+	ctx.version = opts->flags & MIDX_WRITE_COMPACT ?
-+		MIDX_VERSION_V2 :
-+		MIDX_VERSION_V1;
- 	repo_config_get_int(ctx.repo, "midx.version", &ctx.version);
- 	if (ctx.version != MIDX_VERSION_V1 && ctx.version != MIDX_VERSION_V2)
- 		die(_("unknown MIDX version: %d"), ctx.version);
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 58e0b685b1..fa0d4046f7 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -21,7 +21,7 @@ midx_read_expect () {
- 	EXTRA_CHUNKS="$5"
- 	{
- 		cat <<-EOF &&
--		header: 4d494458 2 $HASH_LEN $NUM_CHUNKS $NUM_PACKS
-+		header: 4d494458 1 $HASH_LEN $NUM_CHUNKS $NUM_PACKS
- 		chunks: pack-names oid-fanout oid-lookup object-offsets$EXTRA_CHUNKS
- 		num_objects: $NUM_OBJECTS
- 		packs:
--- 
-2.54.0.rc2.265.g593c85fc46
+Isn't this much easier to read!?  OK, the first ref is not aligned
+with the rest...  But I admit I had to look up the docs to see what
+the empty string as delimiter actually does, and even after that I had
+to add a printf '>%s<\n' "$refs" command to the test script to see
+what's exactly going on.
 
