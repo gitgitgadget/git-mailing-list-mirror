@@ -1,108 +1,128 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D5A1CFBA
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 17:06:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776359214; cv=pass; b=AqV78U/PjpGmxsuQ78xYZ16y6wMg5i84EuRtqJ7ff6y82COIuVDlYCysweiny+yesqtSbUy8FuapzG8/TsDVcwxIqqffw29hO6JiNMRepJpIvq5XdJZMh7Ms3NbtTwqEatnct/QD235PPiizYLnXQHMRfkZWSKB5pv3ZgZRP0MA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776359214; c=relaxed/simple;
-	bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=slTuSLcUGO4jEoRYqZXwPsu0sldREKLb6LRsbxKrfEgCsbMJdZy6A0HbbJNi6FZBaU28YFVcvQNpJm72qhEnN5zm0kikSQKltXwyftWIQdOLChvL0rko7AeHmJn4p3B+qJa7TlDkF0N2yb0KFlLpVWDnBpYOGkChi49TVpTBRbc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rx/W4uOE; arc=pass smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF0930EF9A
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 17:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776359885; cv=none; b=htC5yYILmGY8gnprN+hceZKJLpK4HdRSzCjEqqfcKZt9mB/Rk0I4oDDSfL/7IWNaU67IYcd/X1y6YGb2ZdtTeZ0+lKI/zy7GAQRNMBu+/NqSo6TWzLN3djnlfL7uSOyEgytYv+OkttIukbs8omX5f3PnWE/8s47CvrR7KXPgkGY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776359885; c=relaxed/simple;
+	bh=p6V6lmtfnO4NsGkxE4VT8+q/qNweDinrzeoqtQGPpww=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xr69zZPYXTPtqiuxmA8vyEKRbKbud+yPFxG2UwcP163eyTIKi+RvAhPyvcEoh/lFSduJVlWQNBNr9bJ3zGgrnNmeVfIS6/wRO9nZWxiMHBeJb4525WgcrDLzkU4BkP8cP8yT5ade5R09bE/81glSfcBMdkmJ1TylsjT9Y/HzVvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KJEBBJBp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mNmLGvIV; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rx/W4uOE"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-79ee5037d44so14354117b3.0
-        for <git@vger.kernel.org>; Thu, 16 Apr 2026 10:06:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776359212; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gOAzoXugeXd4GUJIG7+k4YF9oZ4iB38Jy9cy8l0nnHGJ71mafUS2Z7IEvUM2Umia30
-         1wJDttgdqDa+9Uf1wu4vxHeiNZ/x42Y+1Fn8q/+d78gAX1B8zdtkfVBBZq0V3fwBD5gJ
-         YIyzubSJaMLFBCzymjXy1tnAk87lEQUzMnX6CQ8Mj35WIOMWpEilyB4pgs75N6qP40Cb
-         GfyP9cIUgis4rrqX5tzWmbm+oPpTK96kHCrz1CfzRs+pTFTpjwGdQCCG4LW/Ld7D289F
-         xExCjjsgpR6qF+ThrMjoblJMQdX5bLTmzDYtE0cQGzMar+PaSgZK9qTnd9MhAJCMtLt+
-         iVdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=LnbK+30+iYb9IJF2uS4Sz3k57PwXELDEq1bLdNLneFek58owf+0UXZU9EmZyGI8yhT
-         w1TLyOrIADnEmkEKe3bkuV34xSYv3OkAHY7abMzFwcu+pw7nSr0cE+BuC33/doI0MqJO
-         pnERR9YiQg6Wf1/sHT9GTjEQ1nOGxAnowVJ2/YkoS/EQwB08RR8LsbzmcVCZInbj8WGL
-         ncHssNdoWwQKhfUDfIcfXwt+LqNpNf67Qq6IxFrGT+UEFVnDHlQmWOX7EsSYT30511kJ
-         fRHDc3Fdj5prYU+nDcMJWRwndMA3llCSkpX60LBxHLsUMiP73MSwWMdfZ8DExfpD9pnX
-         XnWQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776359212; x=1776964012; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
-        b=Rx/W4uOEW5r60koiBExfEEgZI4TghLzrENIBt+EWuT/1T7cBQqRsTN9qMmhetzpwI8
-         vP99K0374rbiuXuv0Mu+p1UyXCkTcU9sD36IYWfKU9s9VKEiLvY7o6rYLHf5kwFNVfmC
-         o6nOfNnNJgdp4F4vEpuNWgyDT+kTpqCYCPbLnjNDq7DjGdFhA9mSstAHPYBZclqreyjn
-         n5jXzQeQwDSmRwjlqAZzbhm/eotjcglcuPgg53Lc4JCQV1UXAG8qv8YgE5ZbZ2bgs/dQ
-         vjqzuYPgoYcP0DLMRaPlN1iXx2c52cj9ZB8sc+ScNmscbhFntgUZqaG3o0KjBLejBAvG
-         biCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776359212; x=1776964012;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
-        b=K5XN4jdpm4OfebErsm5rqDpInDu3iTpKw+yinsQrMj41oOwaBy1ht3cu+zUVIPMYcu
-         V8m0wzQCoSR3Cb3q52mqvbfHDItX5TFWw8M6b0BqwTA5yCF3T/DcZ35zoULXnURrSH3k
-         URpvXawKX8D2ApfMWEg6WY6uGMNnOwJU31YGduddoPZ5okIK15Ia+kKwhv0jSrHvmvM3
-         jHWvHtcQG2lEk+o3Lf6bcvY0NB42vzrYB+oa+W56j3vUu8XR6BDOSXL09zzGjSX7BHvR
-         MK/9MD4BDQxpbfuk3vuvf7ew5jK162Z/RKVefKU9snEBihmwELWcum68sV+FEKTE1xlv
-         CXYw==
-X-Gm-Message-State: AOJu0YzUHS5+o3ilnlI6bRMwqshxoFnS8dSWHCsGGaNuHvg6RcV6+ffR
-	zltX2+LVt/rYDuyZovGbpIQZAuW5WBhRCGE0vG7MJEMrK9nfdvh4UmHFzCMKAHUivc1+b3Tkz3g
-	FLRwKEgVzJBVPR0GdzztYjBzAElBzRhARFjcl
-X-Gm-Gg: AeBDiesu+tA4TQ6l0J71+Yniih01X28qLC3ghFLPNUUTqgPi1vj8ro18HHPpeYS0nej
-	+ImsGVRY9OX0aFrE3NNLRLLzN2ahPTedyOJNu0EQxLxnv0O9dOuiS3eBgcsp1dmTiNCs9cfJLML
-	eUlm/OarB/SKYgB7p5ReGKnCBjITdAhzjhK7yr2zMM8ApPM0xSvMYyBtlDEZnMNGRduRmT9UaME
-	VDbpl3tSthG5++zD9bGyM72Ro3gp+ofy1/5Kik8Q/LKiziczk0lwV4G8mT59XS70EcdOyK8x3Uq
-	fnnQhBe+2LXpv0M=
-X-Received: by 2002:a05:690c:16:b0:79a:da8f:d26b with SMTP id
- 00721157ae682-7b9d819c8e6mr456157b3.18.1776359211803; Thu, 16 Apr 2026
- 10:06:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KJEBBJBp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mNmLGvIV"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9FF5E1D0028C;
+	Thu, 16 Apr 2026 13:18:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 16 Apr 2026 13:18:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1776359883; x=1776446283; bh=r+0fW/grha
+	/zPQC1wMO4h1BcW6F/oPmCAVsy+LOVgVE=; b=KJEBBJBpDV6Mw9XJ5A1re3EFQT
+	TxnWD2lKOAiHFxS9LbQst4aV/ZIIGHGTSXuehm+iT/5AoK4bfgf8ofyf9WDkMtub
+	gNpyO6WabddzleCHJoNev6Fn8gYCzp9puxQxxsOx/fiieFP4IAmtrzFOARxp/1VI
+	rYvD5cALMjJmhl8qP89Afh33bnW7ZZK4v5nSmkVBqtF/tyrTrMoD/+r0KrhljtRm
+	SOAFNh226oJhBjNWESNMXf5r6g8wtYnCjF96oIHZeTkBCaJzH7q7eUMkuF/X7A/U
+	Mx0I37apLYiufrLn/qVMbf8wVM6IPJFAAsxrrmPrECkxAk2jAkBzay/41tlw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776359883; x=1776446283; bh=r+0fW/grha/zPQC1wMO4h1BcW6F/oPmCAVs
+	y+LOVgVE=; b=mNmLGvIVFDsP7QvCwSxRsaFukKP6n/+HFTZvsRr0uWqoPRsmVp1
+	GRSulyXXObod+v7LfzB3AxTlffUyyxhmCstTjUth64iQq0LefvaMa3p8VHLSP1TT
+	hxQtS4B3ZHjPBFgZf60KsOsVALZa+g7F2/f9bmR61XxTFbg92SMemRQJNywLYZeM
+	ufUF6ZUj3hFPljjj2+zQ6Q25vHBUITPyIWRX1Icaxyx7ETACmynnf/13eaPADlpE
+	MELZgvepSADtWamnDdthfOXaoMc1Srx3ZW4iSZNznRGtw4b5FSvUvrkb4mifO+MT
+	cTvpIg3Wk2DwBnaIFqTYlaG/jkKvzME7wSA==
+X-ME-Sender: <xms:yxnhaWwm-wQDG605MXDh1akT9gHymhh4zOIsVTrrx3e9cCpcrkPJkQ>
+    <xme:yxnhaZtb1oiGtE6wDYaIZaNF3LxbGBIrGgzJPCpy1w8bmIv-PNip-sHSCbOnfBVoF
+    T4x2WHllmoINSOPCkO24JhNpx4E_nDuDU2Le1EebmIrR_X1bcWDQA>
+X-ME-Received: <xmr:yxnhaVtL9OolPGNhNqYbpa-ToHb5Hldu6ZhzIqd7-SvxaEOY-yvHIUwplcsN174JnNna-M9-TojvlslDamLMi9-hDJB3-aT3gg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjeehkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepveeikedttdehgfdvgffhkedvhedtud
+    ekgeeivddvhffhueffueefveejleehgeelnecuffhomhgrihhnpehgihhtqdhstghmrdgt
+    ohhmpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjuhhsthdufedrtdekud
+    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yxnhaWNbZtATj2utjA0xeMi7lwfuq59NgMNoz2SJdouBoHDAiG9jzQ>
+    <xmx:yxnhab1WVTV2ZqXFEjCxmuR_ImneTSKt7YKxALrgBQvHxZGxVh6SjA>
+    <xmx:yxnhaaM9EUhY158WVbxMyUQBLh4naFQj_SE3FSm9BorwwaDkTqHC9g>
+    <xmx:yxnhaT26zsYVkjjzm8rsx6Z_UoWMvABapDz9uYyp7h_whtFwUcJfTg>
+    <xmx:yxnhaZt1tXEY5DIM_8-VuLFrsPnO0bEwflszBjrDxgdYOch7PiSZrqpu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Apr 2026 13:18:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chester <just13.0818@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: I still heavily use git whatchanged after more than 10 years
+In-Reply-To: <CAHvvhRS9VJgyAdivR6J1Hz14jSuBJOj8Bpdu+g4fV45LRSeS8A@mail.gmail.com>
+	(Chester's message of "Fri, 17 Apr 2026 01:06:40 +0800")
+References: <CAHvvhRS9VJgyAdivR6J1Hz14jSuBJOj8Bpdu+g4fV45LRSeS8A@mail.gmail.com>
+Date: Thu, 16 Apr 2026 10:18:00 -0700
+Message-ID: <xmqqtsta259z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Chester <just13.0818@gmail.com>
-Date: Fri, 17 Apr 2026 01:06:40 +0800
-X-Gm-Features: AQROBzAvND5BvZlc9pJncCpoJkJXkipCPOvs-KECPDg59PDaGntJSA0lEhyYN5Q
-Message-ID: <CAHvvhRS9VJgyAdivR6J1Hz14jSuBJOj8Bpdu+g4fV45LRSeS8A@mail.gmail.com>
-Subject: I still heavily use git whatchanged after more than 10 years
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Dear Git developers,
+Chester <just13.0818@gmail.com> writes:
 
-I saw the message that git whatchanged is now nominated for removal
-and requires the --i-still-use-this flag.
+> Dear Git developers,
+>
+> I saw the message that git whatchanged is now nominated for removal
+> and requires the --i-still-use-this flag.
 
-I want to let you know that I have been using git whatchanged for more
-than ten years, and I still use it very frequently in my daily
-workflow.
+You should have seen:
 
-It has become a muscle-memory command for me, and I find the
-combination of showing the log with raw diffs (while skipping merges
-by default) very convenient.
+    $ git whatchanged
+    'git whatchanged' is nominated for removal.
 
-I understand that it can be replaced with git log --raw --no-merges,
-but after so many years, git whatchanged just feels more natural and
-quicker to type for my use case.
+    hint: You can replace 'git whatchanged <opts>' with:
+    hint:	git log <opts> --raw --no-merges
+    hint: Or make an alias:
+    hint:	git config set --global alias.whatchanged 'log --raw --no-merges'
 
-Thank you for maintaining Git and for reaching out to users before
-removing long-standing commands.
+    If you still use this command, here's what you can do:
 
-Best regards,
-Chester
+    - read https://git-scm.com/docs/BreakingChanges.html
+    - check if anyone has discussed this on the mailing
+      list and if they came up with something that can
+      help you: https://lore.kernel.org/git/?q=git%20whatchanged
+    - send an email to <git@vger.kernel.org> to let us
+      know that you still use this command and were unable
+      to determine a suitable replacement
+
+    fatal: refusing to run without --i-still-use-this
+
+> I understand that it can be replaced with git log --raw --no-merges,
+> but after so many years, git whatchanged just feels more natural and
+> quicker to type for my use case.
+
+You are asked to send a message to this list whene you were unable
+to determine a suitable replacement, but it is hard to believe that
+is the case with your use case.
+
+The "alias" hint above seems to give exactly the suitable
+replacement to help folks who cannot adjust due to the muscle
+memory.
+
