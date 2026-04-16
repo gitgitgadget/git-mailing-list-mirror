@@ -1,112 +1,194 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sar.suljee.de (suljee.de [46.23.91.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91FD372EE0
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 21:17:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B8612CDBE
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 21:36:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.23.91.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776374262; cv=none; b=t0f449Rmj3iTaOGsJY0kAGIHzxeWXfpYV+j2rDrt+g52+BDFFnfyLfbMY1aU0SIFnElHhKJ/eBE1HF6wyLHwVjX76PtF0T61C0caWZr4GUAg8DfNDePi1NG+fUPg9h1bJMKpmJDK1+VmQj55u1LvO59BGqE58h7goWxWNH+4584=
+	t=1776375406; cv=none; b=QIdr1rrV9w3CZSLjupnkFY2xaXEnB5wT2Ja63JJlL5ntnQCI5EMrE3GSQAVdXpR3VVmD6E9BnpMpONNP18PoDs2WsDNOmnbXf3Glbpd0LY4wis/ZigXGWWfocaK3GwxRFDNmYFkEW2RCHFyihZa27xvYMjlFnG5U1qkB0CADtSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776374262; c=relaxed/simple;
-	bh=PsnmfRC5Kq4+4S2LXTKrOSp69Qry92nnU3hXzDK6UYU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ezg5Vv5eL8Kywot/IxHz/b/+QWE7VLiI2qLrEtWZiUHusqvOScBSnEg2SWYQNZWMgC6UiuqpOjzxTTHxPuujb6e7SFx8oYHHAS0qvWgXLMUCtIINQ4JHx2Q3jx2lV2t0vRMbArc6feoQKF1Rrr8+0iQwTbcZW5o7TX+8xkMshE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=kdnRN8Q/; arc=none smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1776375406; c=relaxed/simple;
+	bh=4LxjDb/QAfvHUbL2erP9XqOh+fPOP1rmrGai4LETHPU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=RL7jzPjMxklHttxFHMKG8sMGA8yi/ab2IOJgwCCOUlgTAZY7SrbZJiCrpNW2nRiZeoiFhi/ThKwJtf6F+jhhqYHdO2AQ3WHRjir86g+BG5YOaW8ya37khnbsHLVl4r+5mqDBAfW3v0wM8RR68jgSp3+L6e+7gjVeHwQOk//TlNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suljee.de; spf=pass smtp.mailfrom=suljee.de; dkim=pass (2048-bit key) header.d=suljee.de header.i=@suljee.de header.b=EUg0ibYY; arc=none smtp.client-ip=46.23.91.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suljee.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suljee.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="kdnRN8Q/"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-652fcd5a6d7so49927d50.2
-        for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1776374260; x=1776979060; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=r9p+uJFp/pZAJ2lt3XHNRkDlhESsy1C1D20YGQN7pkQ=;
-        b=kdnRN8Q/QbB7hHh4Ixa7bOxXS9WtgiLFZ547FdU3jYWkbbgpStVJ74UC4hZ84a3FSa
-         awoE+nC+NmtoHC9Jka80zIjelN34MHvKUMDtiJJv3nkafmfoDgE0ohGweWgvDR2blBsl
-         4E10MIygGW1HN2L9+Laek6UdTEODowHt5yhHwvPxuzIwmld953zNsNllPEnPwB/nXebF
-         F3KCV73vGjJMSua8ELWdQqwGNzMlbau3Ap65UpGIq/ekQAMdledD/HR4OfDL1aCbpEw5
-         0qyK/2lDr+WXPt5Ohd126/c267s5k9ICcKUvfbl1Ij1jC/imvaaK8Hlq+EFiPugomcIJ
-         op8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776374260; x=1776979060;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r9p+uJFp/pZAJ2lt3XHNRkDlhESsy1C1D20YGQN7pkQ=;
-        b=Nkwk4gGGYanD5SU90BGWaC9Li/PN8uPx0QFVRKjxmghxzTlTvSU3jWJsgA+ycrWXfK
-         PoGY7D1ncFVZUN8E7wU9zdCbMsjwQqlEQqWE8Ris3/T2/f25k4nYtYcgGcGyHLFBsSVz
-         2k3lyPrvdskBsun8AFRDse3oZ6gfOCH77ab7YKq+iOOeZmxquNxSu59qYfQ/BQH4/1Is
-         990anKhZtsw55VKcJ7L4coMykzUbV2wCCBeHS5f2B+IGAFCHYE9xgAcXv69ViS4n1XeF
-         3Xs5VOxtAfCvetUwvXOdpeYXXKIxZWPFiiNDZcIMiMAOSyoOw9hdBQF0SS8CLewixN22
-         dFuQ==
-X-Gm-Message-State: AOJu0Yxa8j+iFDDAIcGX4clc+W0/CvgBwFDpKWFoSB+JyqhkhZapmIje
-	eV4sm99uuENMbUGUyUVWGatNezh05QiCoGAOgXVMZq3W0/dytpNN8R1wFG/A3myg4Lw=
-X-Gm-Gg: AeBDieuXEQwnQbKw1PerGUPf1bcMMBoBPDzZa7BOQsK3M/1bkvj6V91xZ7N+El9ffiz
-	QrFxLkhusQyKRgfPjIw3d43omXMJTAM9VjDWE28/Zrxp8mD0EcneDjV8icBc2JiMRLTsbMdAkmy
-	1CTtv8xa+ex/7m5Qdl7jNtoUXoZDojljDWQRB8fDrXVZNOQt7xWWw6Ag4rnLEynizdxhhWtC/A/
-	wGXNo3RRJjjF+xFILOT7oH6qQ26DpoMS31+l+/MbHUbKPlyZfVM8QDGcoTD8Pf+ZjAqZ+QWuWl5
-	u2+PmmW6KEbJFRm+sdPHUx1G5+jKX0gtv6PUid/74zpqdi8g4kXka64KcBRRSbL0kzG/MUXC8YI
-	EXM4VhTo11/RMsvRv+8sZd7ilyrmhL6K5/acuIxpYSFAhx/rH+szCKaip666FUmCjVqAtlKb0Kn
-	Vcj2ilzh73sAEce6k6Az8G7WhwFJhNyEcAtOjCCmgQiGgjvuWsjgIoOqGHwQkzjaNW5zEr8E9ks
-	sJkG/VNEY2jybUy1CkvLliNppqu4IW6CQx9rWXDeMZZMa9pYCpL66nmiKMpcrQc40RHAXxPVE57
-	/fSPxq1G0nZZ9iGop0WyMSh5X0g=
-X-Received: by 2002:a53:bb8e:0:b0:649:ef87:5bc8 with SMTP id 956f58d0204a3-653107f6513mr221027d50.7.1776374259949;
-        Thu, 16 Apr 2026 14:17:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-652e4775a27sm2728623d50.14.2026.04.16.14.17.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2026 14:17:39 -0700 (PDT)
-Date: Thu, 16 Apr 2026 17:17:38 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] midx: state what failed correctly
-Message-ID: <aeFR8qOTBGA922eY@nand.local>
-References: <xmqqik9qzlv0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=suljee.de header.i=@suljee.de header.b="EUg0ibYY"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20231003; bh=4LxjDb/QAfv
+	HUbL2erP9XqOh+fPOP1rmrGai4LETHPU=; h=subject:to:from:date;
+	d=suljee.de; b=EUg0ibYYFR4Y0oBFN9ClEkmNyvTHGPlLx2rXPk1o9TYe5IT5He307Kk
+	MGP7DwXbH4fqINE3r3UcE9TTAG2xn0X+ai+5dqldVDn/j54y9xHrG3w5XuAVv+le7Q05Pi
+	Zg4bBQCymVtIQp+vh8/ks+XDhQDWB2PNrQWXT57UeUPmrQSx+cXpv7XZ/PVeetQitZlrZF
+	gedpj2UZ+FwNjuN6BWcjEmiNELOnXgJm0HkZhPweqbJ2DWDBSoAupo7fnFbK8hFLPAvwrj
+	D2VMgib/xqJ39+zQrrFyYX76Hy4AtgiOY0+HPdkaA9uTBhyIgZkJMpHgkH4S5AETUHRrpL
+	V0mRq2A==
+Received: from rosa.suljee.de (dynamic-095-117-017-018.95.117.pool.telefonica.de [95.117.17.18])
+	by sar.suljee.de (OpenSMTPD) with ESMTPSA id 23cbd23d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 16 Apr 2026 23:36:40 +0200 (CEST)
+Date: Thu, 16 Apr 2026 23:36:39 +0200
+From: Michael Warmuth-Uhl <michael.warmuth-uhl@suljee.de>
+To: git@vger.kernel.org
+Subject: gitk: race condition when changing view
+Message-ID: <20260416233639.32e5b481@rosa.suljee.de>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-unknown-openbsd7.9)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqik9qzlv0.fsf@gitster.g>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Thu, Apr 16, 2026 at 01:33:23PM -0700, Junio C Hamano wrote:
-> ---
->  midx.c | 26 +++++++++++++++++---------
->  1 file changed, 17 insertions(+), 9 deletions(-)
+Hi.
 
-The approach here seems very reasonable to me, and the implementation
-matches it faithfully. I think that this makes sense to pick up, though
-I suspect that there are other quality-of-life fixes that we could write
-on top, e.g., to suppress duplicate "failed to load"-like messages,
-which I recall having to deal with in the past.
+when displaying a bigger commit and then changing the view, gitk reports 
 
-The patch looks good to me, with one small nitpick:
+        can't read "treediffs(b107a60c5bed3002ecef93b4405a44d809776e6f)": no such variable
+        can't read "treediffs(b107a60c5bed3002ecef93b4405a44d809776e6f)": no such variable
+            while executing
+        "lsearch -exact $treediffs($ids) $fname"
+            (procedure "makediffhdr" line 7)
+            invoked from within
+        "makediffhdr $fname $ids"
+            (procedure "parseblobdiffline" line 56)
+            invoked from within
+        "parseblobdiffline $ids $line"
+            (procedure "getblobdiffline" line 16)
+            invoked from within
+        "getblobdiffline file6 b107a60c5bed3002ecef93b4405a44d809776e6f"
+            ("eval" body line 1)
+            invoked from within
+        "eval $script"
+            (procedure "dorunq" line 11)
+            invoked from within
+        "dorunq"
+            ("after" script)
 
-> @@ -339,7 +347,7 @@ static struct multi_pack_index *load_midx_chain_fd_st(struct odb_source *source,
->  		strbuf_reset(&buf);
->  		get_split_midx_filename_ext(source, &buf,
->  					    layer.hash, MIDX_EXT_MIDX);
-> -		m = load_multi_pack_index_one(source, buf.buf);
-> +		m = load_multi_pack_index_one(source, buf.buf, 0);
+It is reproducible with:
 
-Here you specify "missing_ok" as "0", but...
+        TCDIR=/tmp/testcase
+        N=512
 
-> @@ -387,7 +395,7 @@ struct multi_pack_index *load_multi_pack_index(struct odb_source *source)
->
->  	get_midx_filename(source, &midx_name);
->
-> -	m = load_multi_pack_index_one(source, midx_name.buf);
-> +	m = load_multi_pack_index_one(source, midx_name.buf, true);
+        rm -rf $TCDIR
+        git init $TCDIR
+        for i in `seq $N` ; do 
+            dd if=/dev/random status=none bs=1024 count=16 | uuencode "" > $TCDIR/foo_$i 
+        done
+        git -C $TCDIR add . 
+        git -C $TCDIR commit -m "commit" 
 
-Here you specify it as "true". Given the above I would have expected "1"
-here, but I think that this hunk is preferable, and the earlier one
-should use "false" instead.
+        cd $TCDIR
+        gitk --all
 
-Thanks,
-Taylor
+followed by an immediate change to "All Files" in gitk menu "View".
+
+That happens because proc showview (and some others) clear treediffs which is 
+still needed by tasks pending in runq.
+
+The patch below makes showview wait until runq is empty which is slow (waits for 
+useless operations) and feels wrong. I have no idea how to cleanly flush runq 
+instead.
+
+The same issue has been mentioned here before: 
+	https://stackoverflow.com/questions/17977996/gitk-cant-read-treediffs-error
+
+Michael
+
+---
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 2730274966..f40bb1aa8c 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -281,10 +281,11 @@ proc gitworktree {} {
+ # run before X event handlers, so reading from a fast source can
+ # make the GUI completely unresponsive.
+ proc run args {
+-    global isonrunq runq currunq
++    global isonrunq runq currunq runq_active
+ 
+     set script $args
+     if {[info exists isonrunq($script)]} return
++    set $runq_active 1
+     if {$runq eq {} && ![info exists currunq]} {
+         after idle dorunq
+     }
+@@ -297,8 +298,9 @@ proc filerun {fd script} {
+ }
+ 
+ proc filereadable {fd script} {
+-    global runq currunq
++    global runq currunq runq_active
+ 
++    set $runq_active 1
+     fileevent $fd readable {}
+     if {$runq eq {} && ![info exists currunq]} {
+         after idle dorunq
+@@ -318,12 +320,20 @@ proc nukefile {fd} {
+     }
+ }
+ 
++proc wait_runq_empty {} {
++    global runq runq_active
++    while {$runq ne {} || $runq_active > 0} {
++        dorunq
++    }
++}
++
+ proc dorunq {} {
+-    global isonrunq runq currunq
++    global isonrunq runq currunq runq_active
+ 
+     set tstart [clock clicks -milliseconds]
+     set t0 $tstart
+     while {[llength $runq] > 0} {
++        set $runq_active 1
+         set fd [lindex $runq 0 0]
+         set script [lindex $runq 0 1]
+         set currunq [lindex $runq 0]
+@@ -343,6 +353,7 @@ proc dorunq {} {
+         } elseif {$fd eq {}} {
+             unset isonrunq($script)
+         }
++        set $runq_active 0
+         set t0 $t1
+         if {$t1 - $tstart >= 80} break
+     }
+@@ -825,6 +836,7 @@ proc reloadcommits {} {
+     global showneartags treediffs commitinterest cached_commitrow
+     global targetid commitinfo
+ 
++    wait_runq_empty
+     set selid {}
+     if {$selectedline ne {}} {
+         set selid $currentid
+@@ -3660,6 +3672,7 @@ proc pop_flist_menu {w X Y x y} {
+     global ctext cflist cmitmode flist_menu flist_menu_file
+     global treediffs diffids
+ 
++    wait_runq_empty
+     stopfinding
+     set l [lindex [split [$w index "@$x,$y"] "."] 0]
+     if {$l <= 1} return
+@@ -4664,6 +4677,8 @@ proc showview {n} {
+     global hlview selectedhlview commitinterest
+ 
+     if {$n == $curview} return
++
++    wait_runq_empty
+     set selid {}
+     set ymax [lindex [$canv cget -scrollregion] 3]
+     set span [$canv yview]
+@@ -12909,6 +12924,7 @@ if {[file exists $themeloader]} {
+ set appname "gitk"
+ 
+ set runq {}
++set runq_active 0
+ set history {}
+ set historyindex 0
+ set fh_serial 0
+
+
+
