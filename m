@@ -1,53 +1,53 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2571E20DD51
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713B620DD51
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776372950; cv=none; b=VJ9cU7Xj/kiu5U4epT2HdMbLMrQzE0ZADj7RAgclTPHzvJDiF/1M+skcMJOUaVW7WRCepglEwDA908Z47RzAV+/qsCd0plKCYgTLhBysrYePWgOZuxbjOYNaBW80sS1W0MGaTG5WBnfFwmOtmIJQO8OjCQxbKK1Apgr27NadJHg=
+	t=1776373086; cv=none; b=KFvwpSXNmCRJ7VgCd2yAl5SLpdypYaDgDmXwp7+49Lt5wzeowKxekgGj6ax8PwzX6XexBMS7kVBP3PWvRLLDay74vFj1Q7PtrODs6BAcsZMvaPOWjTO9ynIJdxxOKHP+TDXALSJD49JukTp1oyWwf0g0gb7ZtMc4XqW2VQvxsWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776372950; c=relaxed/simple;
-	bh=vOVF58KhdC8ltkyWPTmKUS8t4hZFbb1LnkgyecdupUM=;
+	s=arc-20240116; t=1776373086; c=relaxed/simple;
+	bh=bzlaQ5UPwWuu3cPlt0v9VkWdVxvFD3kxWZBLnVdsX1Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iEI49C7C4imUVYQD9qnTM6O/DzSaaAqf4pGhizviu36AGZHeUFz5YVvwrt85fdw+hgqMrtRevI52KYlTUv6DN4/IMnveAF7FGaWd66S63FAiqGFlGKqTjWzTWlK8Ul08IfattpMvvcLf580Ls5uvfQiOQbu033J6AyEEk658J64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EoWR2fVK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EYE6AAOR; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=owHGhEIsnscdmexTDe5fTsIKVIoHOK5lfa7U31m+veUJBb8g5NqfEcHz52R+YmnOguOSFqs1sEtpNq0JmmBdZXRoJeaxBSYHD1pmt7xUQD9XQOozn7F1j05edEfxozVLZuPegH0NHhMPHSS0HhQAcizAaFJdCroJRmNbsHWrbXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u86/G3jb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h8r2Sy4N; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EoWR2fVK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EYE6AAOR"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6848A1400033;
-	Thu, 16 Apr 2026 16:55:48 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u86/G3jb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h8r2Sy4N"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id A1482EC0076;
+	Thu, 16 Apr 2026 16:58:04 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Apr 2026 16:55:48 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 16 Apr 2026 16:58:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776372948; x=1776459348; bh=ViSUTvML6Q
-	eyI6xBLaAQzlGv6+xEhaEyvo308zfGDEI=; b=EoWR2fVKBkd+ZGSUg1YqYWRiOQ
-	RGPosMWprDNWzbTLKMnnFX2lCO8Z3gkOdmIelt4VrO9Yiq3j5ekeMz+rTuu1TuUL
-	aAxmbOyoyQsweDprE6Jowls/mKKk37NONAE6CGugrfO5aSWhEc9pj8Q59Gd9q7Ss
-	Z2ifowgkLfz8HnLgBlB6U3qI3rcDF2v6+CdMwuvni5CPJKhfrQs+hXrF3tKJ35LL
-	3aDviSLDp0M6mWSIMtlzDGkCjOkEvx4NnLnzVK92ai6vlhrVDWEAXntHyWOnPN9k
-	NMyxF42JbHSlb+e7K8/+QSdy3XISlItSupwvFXWEY6bpQOaiYS2Vu4tDGU1g==
+	:subject:to:to; s=fm1; t=1776373084; x=1776459484; bh=F+hP+9MtSg
+	nvmLzhGHLwmmdISwAjxfhZJeuRb1+dkow=; b=u86/G3jbGLqXDbqlnu1SyrwItw
+	WH/SNxvxENtWtv3gvsaxrqQHZ4vBcB6V6sGcBxx6uAUOtJlAF4I8smJCcpOM2MoF
+	TGlgYHfsxOCpds+6b/X8TSvP7HTxY2I9pBd4rSFDRUNUBzs4zuQdcrWhnUltON1z
+	olEDCOaWGZaS9EWylSbnX0Sbiti6lmmdbqpeloe9wK0XOAB83VhpazkIVZ/eqiqY
+	pdPvFFgmXxX/dHLS4M5pI01K3FopDcyhGK/v7jqQf5u0zTIqrxNbdNgpn/CUGBn8
+	H9KjINa6VY4guueGsVlURcIg+DYYnPsjuti9KUhl0Gj5Q8s4cm07fe31TkNg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776372948; x=1776459348; bh=ViSUTvML6QeyI6xBLaAQzlGv6+xEhaEyvo3
-	08zfGDEI=; b=EYE6AAORFtOkwrh4x+8KWlGONbpa91BI7Z/wcNLtUebFIL2FxQL
-	hrU21XeTmcxdynynCKC3BrNH29tPuD9O9mk3XVtBeNY6XxfpxU/fSmFgF86o02Wm
-	cBdXVtlbUP7SYZChbmPj+i+VxW5o0IyjKgrWrDxH45gD6bsTlPY4PI4b+HnPnlZc
-	wnHyrUyFy60HSWqkTGZUQoYuDh/yllqLJ/wT0WnMstaNgr/17pd/rgSsSPgDfngs
-	UXpwwRfYWEzRrRtJpIVPnXsPDUE2hjwUGn+R2YXEHkfFtMcTHklw1irQgS0P2G2i
-	KlxFApydfE4ArkHzW9hamZNTC+anOXo3pKw==
-X-ME-Sender: <xms:1EzhaV3LqIpNC838STsfqw-dwUTNI0I8xclrVyACFz3UAtwNkLyB8A>
-    <xme:1EzhaS8Lfes1keJZFwAf_R5YXA4r9YWp-aYDJuYOZlmIOgEj1StrgpviO5cBcP6YX
-    _XM3VHwPIUByL0psxxcoWkBYNNVI6N2L6vbKnO4WrW_SMXhjKKOvQ>
-X-ME-Received: <xmr:1EzhaeOPsFDvuNXxdkN7sKNUeQhGrlTbpwng-iVDerogg9mE0jeiKQ1cHl0rOOwoQOeW6QlutnQawKmHgsEtZcIVo8ONhyffQA>
+	1776373084; x=1776459484; bh=F+hP+9MtSgnvmLzhGHLwmmdISwAjxfhZJeu
+	Rb1+dkow=; b=h8r2Sy4NjRPGpYsihY/nkxWUYWwsj/ryQMTuDYmGK9e/H8aPBg+
+	tZ7QCL+QyVEquwpn1pNnU8Dwb31LkMnKYpzn2M51VXHMY9PviD+iXDRXSZg9Oy1M
+	1DIlPcbXVYpydF7Oj7XZsvMwt/U80MRN1xVMPazqldX7woiFjNwOVMcOzzVqBdrd
+	1Ot41rWOD234xp77XL1+prBqB2qOKmZkpVap434WJ8iaLjGs/4JTPCOtI2K8dxvj
+	F+vfIKQcecIMKhpiOePP6P+wAHKJ0k5S0hQlPoOXfdVIpLdYmdN8UBZ0sok7gVoK
+	t3707N0dN2ag0bWLSmslqMI0blsXr04dxGA==
+X-ME-Sender: <xms:XE3haT45OjiEgejCb5A4GHmVUrBZJ562LyJNE_VUlIZumo4d8J2qcA>
+    <xme:XE3hafz5jORU1nljHTfEE4tANS9LPevIXKQFmKMlfO3H95jjFattaFTz_i1iCSwP3
+    mfF97JANiwmKAO3Cw4G4lhFATwWZEOGTSrypNpSz6kbNuXFJaTP5Q>
+X-ME-Received: <xmr:XE3haSxrAZgZcnLnB9F-wZd3kkVyaCEQCv9AUX2wjXtsu1p0BXsNJpsj67J7nuPORtT8mnXxNVxQ9fZPxhVHPaoZr0Ur9tvgfQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegkedtvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,34 +56,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegkedtvdcutefuodetgg
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmh
-    gvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
+    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
     vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
     hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:1EzhaedfWAG3PW4mPvUW6s98XCN83nlfacnt4YXMqfPVTav-9qK6AA>
-    <xmx:1EzhaVUc1OhQy4m8nqhuf_14Ux9if_IcgS97fjcY69b8PcrPxzor6g>
-    <xmx:1EzhaejHHIy567jY-b47O6iDKZXoM8s1J4tHAjBlD0FUEAXwPF0iMQ>
-    <xmx:1Ezhac_V9FOHr-PN87uhn-DAkO_FYuHtWDQ8zco7IRWlZBoxW3nZ7w>
-    <xmx:1Ezhac2ItMBem2hrJXztlBdWJuytL0oIQ83LFMhMkmgTXyNBkc8GPFZa>
+X-ME-Proxy: <xmx:XE3hafxTFXmz2Firt-iYzP8P7WCRDAB_3hDI8JWIfrhZji43niJHFg>
+    <xmx:XE3haUbn7uB8BPlXxXopbW9dHFS1mRigsR6pUXwbHCXsp9weFwiRfQ>
+    <xmx:XE3haYW2BVZDFTHHN044NV1I27Gc2PEDVmWvx6SWrUN1fHbXWG89Ug>
+    <xmx:XE3haah8P7FhnD2kTUcRjyPSplpGXthaulh-ppZbEiOnYQUo8FMQkQ>
+    <xmx:XE3haWJIcwiNmVvuUU5K2hk7b2PCgibVSnaTq03RlbvRAAU-CQ8ELvNL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 16:55:47 -0400 (EDT)
+ 16 Apr 2026 16:58:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] MIDX: revert the default version to v1
-In-Reply-To: <20260416200659.GB1887222@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 16 Apr 2026 16:06:59 -0400")
+In-Reply-To: <xmqqv7dqzoeh.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	16 Apr 2026 12:38:30 -0700")
 References: <xmqqqzohd0sh.fsf@gitster.g>
 	<8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
 	<xmqq5x5s540j.fsf@gitster.g>
 	<20260416051732.GA48541@coredump.intra.peff.net>
 	<20260416053435.GA646718@coredump.intra.peff.net>
 	<xmqqldem22uw.fsf@gitster.g> <xmqq8qam217m.fsf_-_@gitster.g>
-	<20260416200659.GB1887222@coredump.intra.peff.net>
-Date: Thu, 16 Apr 2026 13:55:46 -0700
-Message-ID: <xmqq5x5qzktp.fsf@gitster.g>
+	<xmqqv7dqzoeh.fsf@gitster.g>
+Date: Thu, 16 Apr 2026 13:58:03 -0700
+Message-ID: <xmqq1pgezkpw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,63 +93,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Apr 16, 2026 at 11:45:49AM -0700, Junio C Hamano wrote:
+> Of course, the tip of tb/incremental-midx-part-3.3 needs to be
+> adjusted with this before merging to 'seen'.  I think my tree is
+> getting ready to push the "revert the default" down to 'master'.
+
+I'll discard this patch, as Peff's latest one that enables v2 only
+when needed should make it unnecessary.
+
+Thanks.
+
+
+> ----- >8 ----
+> SQUASH??? adjust for MIDX version default reversion
 >
->> From: Jeff King <peff@peff.net>
->> 
->> Dscho reports that fetching into a repository with Git 2.54-rc2 made
->> it unusable with Git 2.53, as the recent code by default writes
->> version 2 multi-pack-index files.  Version 2 is the base of more
->> advanced features to come, but using it where these features are not
->> used is a strict regression.
->> 
->> As deployed versions of Git and its reimplementations may not be
->> ready for the format bump, let's revert the default version of MIDX
->> file we write back to V1, and adjust tests that exercise V2-specific
->> features to explicitly request V2.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> This looks fine to me, and you can add my S-o-b if you want. But let me
-> propose a slight alternative that reduces the test churn and may make
-> things easier going forward.
-
-I did merge it to 'jch' (which I also tested externally) and then
-'next', but haven't pushed out the 'next' integration out to test it
-externally, so I'll chuck it and replace it with this version, as
-the "compact is the only thing that needs v2" sound like a better
-workaround.
-
-> diff --git a/midx-write.c b/midx-write.c
-> index 0ff2e45aa7..a89ac53045 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -1259,7 +1259,6 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	struct tempfile *incr;
->  	struct write_midx_context ctx = {
->  		.preferred_pack_idx = NO_PREFERRED_PACK,
-> -		.version = MIDX_VERSION_V2,
->  	 };
->  	struct multi_pack_index *midx_to_free = NULL;
->  	int bitmapped_packs_concat_len = 0;
-> @@ -1275,6 +1274,9 @@ static int write_midx_internal(struct write_midx_opts *opts)
->  	ctx.repo = r;
->  	ctx.source = opts->source;
+> diff --git a/t/t7705-repack-incremental-midx.sh b/t/t7705-repack-incremental-midx.sh
+> index 562554e69b..7eb1109ec5 100755
+> --- a/t/t7705-repack-incremental-midx.sh
+> +++ b/t/t7705-repack-incremental-midx.sh
+> @@ -63,6 +63,9 @@ create_layers () {
+>  	done
+>  }
 >  
-> +	ctx.version = opts->flags & MIDX_WRITE_COMPACT ?
-> +		MIDX_VERSION_V2 :
-> +		MIDX_VERSION_V1;
-
-Just a sytle thing but I'd prefer to see this written like this:
-
-+	ctx.version = ((opts->flags & MIDX_WRITE_COMPACT)
-+		       ? MIDX_VERSION_V2
-+		       : MIDX_VERSION_V1);
-
-because you do not have to worry about the precedence between & and
-?: with an extra (parentheses), and a ternary split into multiple
-lines is easier to spot if you write it at the beginning of the
-line, with ?  and : aligned.
-
+> +# These incremental MIDX tests requires the V2 format.
+> +git config --global midx.version 2
+> +
+>  test_expect_success '--write-midx=incremental without --geometric' '
+>  	git init incremental-without-geometric &&
+>  	(
