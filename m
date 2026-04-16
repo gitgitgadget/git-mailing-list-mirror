@@ -1,124 +1,170 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713B620DD51
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 20:58:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E95375ADD
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 21:12:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776373086; cv=none; b=KFvwpSXNmCRJ7VgCd2yAl5SLpdypYaDgDmXwp7+49Lt5wzeowKxekgGj6ax8PwzX6XexBMS7kVBP3PWvRLLDay74vFj1Q7PtrODs6BAcsZMvaPOWjTO9ynIJdxxOKHP+TDXALSJD49JukTp1oyWwf0g0gb7ZtMc4XqW2VQvxsWs=
+	t=1776373955; cv=none; b=Gpjc1d/VxBuTsVspmzK0HTXhJgOPz/hCnwXff+up+qa2saY7REbChH+X+i/UUmAfM+Ml18b4ZXhlncf1z2RJ2plasJh7yn7ZxswovigDD77wNPv5QLeDYZFFLt38ERShHtl0hM9OcD3tMGMhvzBbjxqvOp5fa5n2DsK53w/8XuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776373086; c=relaxed/simple;
-	bh=bzlaQ5UPwWuu3cPlt0v9VkWdVxvFD3kxWZBLnVdsX1Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=owHGhEIsnscdmexTDe5fTsIKVIoHOK5lfa7U31m+veUJBb8g5NqfEcHz52R+YmnOguOSFqs1sEtpNq0JmmBdZXRoJeaxBSYHD1pmt7xUQD9XQOozn7F1j05edEfxozVLZuPegH0NHhMPHSS0HhQAcizAaFJdCroJRmNbsHWrbXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u86/G3jb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h8r2Sy4N; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776373955; c=relaxed/simple;
+	bh=NYhLG6wdChTetlEpu63Q3r/HjxPDoe1jGFALwm5xOyY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pbyct7vf1lsytXPHs1uAKQjCd2PyaXrSnK0WTfZXOM3rF9UCrD7Mxaeb2XZdTiBrBW2Ww+/WV7tCWWUJDJNVEuLSqu0L+peH4FT0NE75YPEsG5WU5y1j7yxzLLoiWy2LglYM6uqWxu1Nd4wu5sSjdHzFKISB4ASs65rF9u5Wk7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=El3XvHA6; arc=none smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u86/G3jb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h8r2Sy4N"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A1482EC0076;
-	Thu, 16 Apr 2026 16:58:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 16 Apr 2026 16:58:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776373084; x=1776459484; bh=F+hP+9MtSg
-	nvmLzhGHLwmmdISwAjxfhZJeuRb1+dkow=; b=u86/G3jbGLqXDbqlnu1SyrwItw
-	WH/SNxvxENtWtv3gvsaxrqQHZ4vBcB6V6sGcBxx6uAUOtJlAF4I8smJCcpOM2MoF
-	TGlgYHfsxOCpds+6b/X8TSvP7HTxY2I9pBd4rSFDRUNUBzs4zuQdcrWhnUltON1z
-	olEDCOaWGZaS9EWylSbnX0Sbiti6lmmdbqpeloe9wK0XOAB83VhpazkIVZ/eqiqY
-	pdPvFFgmXxX/dHLS4M5pI01K3FopDcyhGK/v7jqQf5u0zTIqrxNbdNgpn/CUGBn8
-	H9KjINa6VY4guueGsVlURcIg+DYYnPsjuti9KUhl0Gj5Q8s4cm07fe31TkNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776373084; x=1776459484; bh=F+hP+9MtSgnvmLzhGHLwmmdISwAjxfhZJeu
-	Rb1+dkow=; b=h8r2Sy4NjRPGpYsihY/nkxWUYWwsj/ryQMTuDYmGK9e/H8aPBg+
-	tZ7QCL+QyVEquwpn1pNnU8Dwb31LkMnKYpzn2M51VXHMY9PviD+iXDRXSZg9Oy1M
-	1DIlPcbXVYpydF7Oj7XZsvMwt/U80MRN1xVMPazqldX7woiFjNwOVMcOzzVqBdrd
-	1Ot41rWOD234xp77XL1+prBqB2qOKmZkpVap434WJ8iaLjGs/4JTPCOtI2K8dxvj
-	F+vfIKQcecIMKhpiOePP6P+wAHKJ0k5S0hQlPoOXfdVIpLdYmdN8UBZ0sok7gVoK
-	t3707N0dN2ag0bWLSmslqMI0blsXr04dxGA==
-X-ME-Sender: <xms:XE3haT45OjiEgejCb5A4GHmVUrBZJ562LyJNE_VUlIZumo4d8J2qcA>
-    <xme:XE3hafz5jORU1nljHTfEE4tANS9LPevIXKQFmKMlfO3H95jjFattaFTz_i1iCSwP3
-    mfF97JANiwmKAO3Cw4G4lhFATwWZEOGTSrypNpSz6kbNuXFJaTP5Q>
-X-ME-Received: <xmr:XE3haSxrAZgZcnLnB9F-wZd3kkVyaCEQCv9AUX2wjXtsu1p0BXsNJpsj67J7nuPORtT8mnXxNVxQ9fZPxhVHPaoZr0Ur9tvgfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegkedtvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XE3hafxTFXmz2Firt-iYzP8P7WCRDAB_3hDI8JWIfrhZji43niJHFg>
-    <xmx:XE3haUbn7uB8BPlXxXopbW9dHFS1mRigsR6pUXwbHCXsp9weFwiRfQ>
-    <xmx:XE3haYW2BVZDFTHHN044NV1I27Gc2PEDVmWvx6SWrUN1fHbXWG89Ug>
-    <xmx:XE3haah8P7FhnD2kTUcRjyPSplpGXthaulh-ppZbEiOnYQUo8FMQkQ>
-    <xmx:XE3haWJIcwiNmVvuUU5K2hk7b2PCgibVSnaTq03RlbvRAAU-CQ8ELvNL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 16:58:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="El3XvHA6"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6530dd51ccaso36833d50.3
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:12:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1776373952; x=1776978752; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TX+/wMWmLomQmqfbOSDeIW85BwBmIzuepL59z2ms/G4=;
+        b=El3XvHA6VG6XOYKBGXl6DSX7CDK5/eSwZ0JGY190LnYD3QFp84ol6jT7KMAJW1hFKd
+         mkcAKiWblJRM5Wz4nA6dieDtfJyYYj/SEnwyIuLBjFenAenBf8YefdYgvVVSS1EDMWYY
+         oqc0VUNG+8xXGceUuZVMfZfXvITn5PZZP518E4gpzmQFJ266SdObhRJRjqpwieckORWy
+         1jBS/TlMY96QQTQIKbHt3ROXCfHbFSfVqsF5lOTQK8IU40d9ZuvQAjvtFjHXXgYBRO4z
+         4FKUHw7kHq1x9+FO7u/Ah49Vmq0TO8Br6vBJPB89kkJEpjCuoZaT4Zuany6+IgiB+Pqo
+         9rdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776373952; x=1776978752;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TX+/wMWmLomQmqfbOSDeIW85BwBmIzuepL59z2ms/G4=;
+        b=cXi6vNixEefD/lLbsbxRAlK3gdhjrIufjStSIMNUyq/s3XhNmku2koFlRwHDo/kpoK
+         aFBx7sC98vKHz8E+6NGwRdtiXXNt/dMh+YnIh8xPjOl+W4liecbICqDh7qvMN9qLmb5u
+         yO56KtnreCvQSW3Sp6udHSpsqvrBVnRL7qiz/ZNRhhViqg1a70p1zIVaAAxTLoG3l97s
+         EFMIoG+VYgcnl8+Tnx24ztZewQypibbZAf9/R99k53u9K94mmVOOjL54kju49hxfrQ+V
+         Y4Ymdjv/shL45mMqmZX1H32DJfB+Ph6E9eqNqdmsnDOnv8oiZ4JqYX41FlKW6vvX8By+
+         OH1Q==
+X-Forwarded-Encrypted: i=1; AFNElJ+DS8t87P7levfghPO9c+S0OP9BAmsPzyrTpbEKlbzpnNAX1549XRTuOAnhGs/fvQdHnFw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7RTmUCE9KCGhd5fVHfdYdkvpUVDvTMnlag4MHEwD/hGLUb6Pk
+	kyNZu0FE2QbCFsapN8FOx/TASSJmWkJDQHGbzhMqvOEyadoX24tTxdW53X34aBJemAE=
+X-Gm-Gg: AeBDies3UYpTJTuD8PRbZfwvBSD/gHPPEkzYas2tBWFUVYgt+bBjDFQFIlBWgvsv8kR
+	yVr6DIVEakAF5oV5Okt5r6dXToDJx1ARXbn43U7XcZ6vfTimgI93+TJYZd5AAMUyxubxxucMSOQ
+	hEfPi0ZJc83ueGfxeejhqE7tBPIqOlsB2LBJ9Bd2NreOmkF/z/JAidraCbfQQ2iRcMJeTgauWt4
+	CYUh+ND5HoHOBcATVfLvrjvD6wkBIkYVpFo8U32JytoSeKbJ6BJEbPndtbLYn/3B4dXOfAlALLA
+	+HpJddzMSfwLD++bTYwkN3+4GcgoQMcf97uWTHzzcaJP8elIADZMjlXcF+MuZEku+B0U3yiJPHx
+	5Fbs5O1dE2dvC0w8nkf5yznMyBzrjomm6ThdiCYhUuV74VrgtdtEy/TQfWaI3t/065Rn1cTB/9r
+	R1bRy6B4BkRx3hvvqA3uXRUd2j+wFfZlFIx0W7oPeHJ1jmpiAFU8R2DF4yVNSw30EKKSVx17drk
+	rlDEbX+fWcSS8UQ2DapnV6jmekqlQ9xHNEs23lGHBmdRV7L/kDAVCriwsuifwePTE3pHPFiNg4O
+	xnm8rhV1OcoLQaPF/Tb2v2/3Hys=
+X-Received: by 2002:a05:690c:f06:b0:7b2:64f4:a2c0 with SMTP id 00721157ae682-7b9eceb5055mr2292667b3.5.1776373952144;
+        Thu, 16 Apr 2026 14:12:32 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b769812d1esm28607247b3.43.2026.04.16.14.12.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2026 14:12:31 -0700 (PDT)
+Date: Thu, 16 Apr 2026 17:12:30 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] MIDX: revert the default version to v1
-In-Reply-To: <xmqqv7dqzoeh.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	16 Apr 2026 12:38:30 -0700")
+Message-ID: <aeFQvu4iqJAQMjCy@nand.local>
 References: <xmqqqzohd0sh.fsf@gitster.g>
-	<8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
-	<xmqq5x5s540j.fsf@gitster.g>
-	<20260416051732.GA48541@coredump.intra.peff.net>
-	<20260416053435.GA646718@coredump.intra.peff.net>
-	<xmqqldem22uw.fsf@gitster.g> <xmqq8qam217m.fsf_-_@gitster.g>
-	<xmqqv7dqzoeh.fsf@gitster.g>
-Date: Thu, 16 Apr 2026 13:58:03 -0700
-Message-ID: <xmqq1pgezkpw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de>
+ <xmqq5x5s540j.fsf@gitster.g>
+ <20260416051732.GA48541@coredump.intra.peff.net>
+ <20260416053435.GA646718@coredump.intra.peff.net>
+ <xmqqldem22uw.fsf@gitster.g>
+ <xmqq8qam217m.fsf_-_@gitster.g>
+ <20260416200659.GB1887222@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260416200659.GB1887222@coredump.intra.peff.net>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Apr 16, 2026 at 04:06:59PM -0400, Jeff King wrote:
+> This looks fine to me, and you can add my S-o-b if you want. But let me
+> propose a slight alternative that reduces the test churn and may make
+> things easier going forward.
 
-> Of course, the tip of tb/incremental-midx-part-3.3 needs to be
-> adjusted with this before merging to 'seen'.  I think my tree is
-> getting ready to push the "revert the default" down to 'master'.
+Same here, I agree with the discussion earlier in the thread about what
+the right short- and medium-term solutions are, and I think that
+including Junio's patch is a good approach.
 
-I'll discard this patch, as Peff's latest one that enables v2 only
-when needed should make it unnecessary.
+If we take that, please also feel free to add my Acked-by, or
+Reviewed-by, or similar.
 
-Thanks.
-
-
-> ----- >8 ----
-> SQUASH??? adjust for MIDX version default reversion
+> -- >8 --
+> Subject: [PATCH] MIDX: revert the default version to v1
 >
-> diff --git a/t/t7705-repack-incremental-midx.sh b/t/t7705-repack-incremental-midx.sh
-> index 562554e69b..7eb1109ec5 100755
-> --- a/t/t7705-repack-incremental-midx.sh
-> +++ b/t/t7705-repack-incremental-midx.sh
-> @@ -63,6 +63,9 @@ create_layers () {
->  	done
->  }
->  
-> +# These incremental MIDX tests requires the V2 format.
-> +git config --global midx.version 2
-> +
->  test_expect_success '--write-midx=incremental without --geometric' '
->  	git init incremental-without-geometric &&
->  	(
+> We introduced midx version 2 in b2ec8e90c2 (midx: do not require packs
+> to be sorted in lexicographic order, 2026-02-24) and now write it by
+> default. The rationale was that older versions should ignore the v2 midx
+> and fall back to using the packs (just like we do for other midx
+> errors). Unfortunately this is not the case, as we have a hard die()
+> when we see an unknown midx version.
+>
+> As a result, writing a midx with Git 2.54-rc2 puts the repository into a
+> state that is unusable with Git 2.53. And this midx write may happen
+> behind the scenes as part of normal operations, like fetch.
+
+I'm not sure if it's worth mentioning, but I think that it's reasonable
+to say "Git 2.53 and earlier", with the implied lower bound being which
+version first introduced the MIDX. I think it's equally fine as-is,
+though.
+
+> Let's switch back to writing v1 by default to avoid regressing the case
+> where multiple versions of Git are used on the same repository.
+>
+> There is one gotcha, though: the v2 format is required for some new
+> features, like midx compaction, and running "git multi-pack-index
+> compact" will complain when asked to write a v1 index. The user must set
+> midx.version to "2" to make the feature work.
+>
+> So instead of always using v1, we'll base the default on whether the
+> requested feature requires v2. That does mean that running midx
+> compaction will create a repository that can't be read by older versions
+> of Git. But we never do that by default; only people experimenting with
+> the new feature will be affected.
+>
+> We have to adjust the test expectation in t5319, since it will now
+> generate v1 files. And our "auto-select v2" is covered by the tests in
+> t5335, which continue to check that compaction works without having to
+> set midx.version manually (and also explicitly check that asking for v1
+> with compaction reports the problem).
+
+I think that the test fallout that Junio's patch necessitates isn't all
+that bad, and in some sense I think the "write version 1 usually, but
+version 2 if the feature requires it" is a little magical. That being
+said, anyone doing things that would require a v2 MIDX likely already
+understand what the trade-offs are, so in that sense I think that this
+is less magical and more "do the sensible thing by default".
+
+I don't have strong feelings either way and would be fine with either. I
+think if anything I have a vague preference towards the approach taken
+here, but either would be fine with me.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I have a feeling there are probably some gaps in v2 testing in t5319,
+> since we are no longer using v2 for the bulk of the tests. IMHO that is
+> OK to sort out post-release.
+
+Perhaps, although you could make the opposite argument for v1 MIDXs
+when we previously switched the default to write v2 MIDXs. The format
+differs only in the version field, and the ordering constraints on the
+packs within the MIDX. That area and the compatibility issues here are
+the "interesting" parts to test IMHO.
+
+>  Documentation/git-multi-pack-index.adoc | 3 +++
+>  midx-write.c                            | 4 +++-
+>  t/t5319-multi-pack-index.sh             | 2 +-
+>  3 files changed, 7 insertions(+), 2 deletions(-)
+
+The patch itself looks as expected to me. Thanks for working on it, and
+sorry again for the mess here.
+
+Thanks,
+Taylor
