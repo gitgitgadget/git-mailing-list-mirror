@@ -1,66 +1,66 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875663DE427
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0499E3B52FB
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776348940; cv=none; b=R8TogtNik8daZeiNO1VQ3ltMFzSy1KWXIhciYYp9MHnOf4e86EF7xNiTcPLBOILzq3xwcm3I1H47u/oVQiLXpNPUQhy9qDEVu1yv3r+RMhWw/LuPHpUyg7db8//85P23cppR0gb+E5bPljUZLVPMMFynOnySCodY8+xNVu1p6hA=
+	t=1776349089; cv=none; b=sCrAC+U0sRr8HHQ3AleT0nOooVVWrKbJxNzwsAowmJ/vipPZh1NjLc2QhOgAqeo2h3vfh7mJ49QmWAJ0S34Myhe0+TnotabvUfuji03wv7Qh+tfxRPeutSnvdXxsJEEjCYKuH8cgWBbUbRkZ+1NTD9ujYnwDe5PbwY+sc8QFZ9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776348940; c=relaxed/simple;
-	bh=oWOGIdmafTL4WOYxboGbf/Ke6qIoiGVt26Iwb3JGatM=;
+	s=arc-20240116; t=1776349089; c=relaxed/simple;
+	bh=zLhAUHGK1qV6A9w4rC35+A/SEs3qCvD4n+bAUWvXgUU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UN1BKDGGD4AufGVXIiI4wkV/cI1onTYBgQRMvK+5NNcjdHTCefc3eT/H6mTkVdGrQ1fpC98lHuoGNgGPNLabvRD1i9xu21/sj4IiSHUOq5nWd1wE2mgKde4Oo99dtprlOdhUDjoMeTUTgx/uLlkfFIySvkOCInQkyCeH20rNFmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c7AeK3oo; arc=none smtp.client-ip=209.85.217.47
+	 In-Reply-To:Content-Type; b=qZhQhbflXz+GQozrCHsJX5xCrvzeq5/b7q/i3yraLN1MdtbBBY1yilfOLXAiBJKkWUymwpcI+Q9A67T+JSveCxqFp0Hq8gzcXJDhnGM8bw+ECImSO5g+mAgxocQpOVjtw1QSULwRlForoVpamod4i3BEiNDhyNRqRW8lLbfaWOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pqo2rG5F; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c7AeK3oo"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-6058a955e04so453997137.0
-        for <git@vger.kernel.org>; Thu, 16 Apr 2026 07:15:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pqo2rG5F"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5a10d130b37so710424e87.0
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 07:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776348938; x=1776953738; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776349086; x=1776953886; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AVY69b1/bJhhzbRGa6CIPHKWMeT618O9IB46xAGwmc4=;
-        b=c7AeK3ooVEHyB4oEbPakfxCoD0aJf/uDODJwXBucrVMjDUVqh9s6T79+BnYyHeYm2A
-         ZewnlstkOfso0ujvbTIWaZHoMhaxJH3N8RWYrsCC1BAwaGSXxbEqGpw/FZKgfHbhDbee
-         Rm0U0AAnX0wjiMx7rQ6CZwenCGl1flyGJi4LgeC69ls082avejdt4a/obXMMvywVZEjD
-         45fhfvuOdSlE1R1/wAxhDJ8eY5+wmpnEVVZll9KYHmwCLazxPsXnsfCvjL84DBlxe51I
-         ED6qgNDAx/M3FoSU2n+MHtnSvqaUJBpDwWRWY6CeeR0977O9KGyVwpeIcqqXD3piyjRQ
-         taCQ==
+        bh=kQFrnzkZ4Nm/lwIFw0rAvN9mfxJzMtpp7s36uLOPCQk=;
+        b=Pqo2rG5FTS7t3fvDoeUvMFaIUJOB1epTZbURsD1GK04q8EAU2aLkP6mBaCwzcE4sKr
+         NjxQ6YRgrsa4+FyJBxxoyqB3LNn599YA0NmbqCLIViBRPR4p2Lj1ymsi/nDBv/Rq6/YE
+         WJA475SJjMtgoKhBaFwVcGKxzbiRNMPklBwPD7KTs1Ih0WBZAJt8LY6kX4HP2D4sRYON
+         mVrEdgBrcvsO9KeD8thmABxWPrp+lZj4zB9z4ZxuxSsoWFoNPkkBGLAqOGyq4BJGmFX1
+         2kk+RnW7APOR8VBA+H1tShpmuFLYIphShQv82DtunjJuvz4tUI4jEBFxuqDGC3tmMaUh
+         ALBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776348938; x=1776953738;
+        d=1e100.net; s=20251104; t=1776349086; x=1776953886;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AVY69b1/bJhhzbRGa6CIPHKWMeT618O9IB46xAGwmc4=;
-        b=JBeD38g9glXO7JMrFW6Afaw/r0oKZtZSeZ+bN5Vhq/ETPluvVMhp0jaogx00HprsQM
-         7J/H4J8qTLcuajG5t548hEVFRrqyR7MTxlgzXoKu3TFjm9GWoYNBP9ScTWBl+bfWjckd
-         kgpBks/kfKDIPhSxuND/P/rulfOdhNYwK4SRtbvSnpVryaTJxf8IVBB1zphAejWnq0y3
-         1hfAPU9mArk6+HCLwrxrQrZB2eu1EzkTyofI/toNtet15BJ9JGh3TGEmRtyUWbRaxF4A
-         093Rc/Q5j16CGax4p09qaYYbgL04OglBzexj7EGcuCEGnjsZ8QoN8BKNBcSnchfJu2VV
-         JESw==
-X-Forwarded-Encrypted: i=1; AFNElJ/xIEfJo6oTSYB403YCMqflR2OwXS763Zxo8jzsrJjQazOkqVYzU5QFwVCCtAzAx7cglt8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVfnnnyi2ob6E8AsnrEOJLF/H25JkzolKnK08PeSAiICZa2qWv
-	Iz0qaw/AeKS1vkpNruNP4/w6Q/E1x8RpUCDLbTHa9pM5Xku31sotT6+e
-X-Gm-Gg: AeBDieua8ddxuSi8pk3yXA4vTVR2WJkPXGIm0sv0O1mHlYFyzlS8+r2loW6fVx6G18N
-	2Pq3eOzWo2UT9OA3zPxTlM18V8bdp14JsA4qfwMLKcEycZK9zL9FbR48Q7vcTDf+o64ch4pa62l
-	oAOC/93g/0o7uDCRCdX8ucvZuG7hNyeCeb7KLncPIzJ6HnUN0AJXxOMirRcO4UfqkaeVWFvjFvF
-	kEFIkkGppLGNfXSmX3yhcCxASLhlYbD6VgmoP2iWFU7vm4M7UzG0G5AHdFnFrAh5UHvDee2+LdX
-	T4v+sLSANZ+YDFA5qHwqWoJqCAPrctutV67bIzKzPwKFIfJ2N03+2iKZeN8DW/ch8Q+RF/QBGcI
-	hryLt/xSaCIipn8AnU1uM76HSX3BtJVOXQzeaVJyLZoHGDW2n7E46njMq1x4h916Xvdsqx/WZC0
-	XA7loQxNIUMfuSSDpb55U4ayBSkMqhSX2uxROrpqut48bWDVHVLfZHzldE425Jlg7dyflwFw==
-X-Received: by 2002:a05:6102:5695:b0:5f5:3739:100d with SMTP id ada2fe7eead31-613b7838b07mr1705335137.0.1776348937973;
-        Thu, 16 Apr 2026 07:15:37 -0700 (PDT)
+        bh=kQFrnzkZ4Nm/lwIFw0rAvN9mfxJzMtpp7s36uLOPCQk=;
+        b=iM3VgR9vNVuWRERyDtkj4OuGdlKE2uzAm8xC666vfkkNUqgqWuPDv3q7fy9Ms2gE/t
+         S/Gaz3kdgRe8PnDUajf8jKO+E/k2xN3ypfxckwhdCgzbuu1iYkceHMrGWMA9rGzYE/tE
+         hPuJVtChQ0HAVOj5Rj6fCNof/qut4HGIJtDrNWbfJ9nrJY9Xf5knDYsRUvYsMUA8RQZn
+         RsoTGNEDH85j1J1yv68CmdzmieeecGKyQj59Ymky7Nkfkp5nv3YXGfO/KaE4bmTMKx9P
+         Fm1Ph0PZvVwvYChnAAw9vjWVOpd1o4/RXWkbPYn4qtWnVecs3B7O3BnrQrB1QUhp9brk
+         O1CQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/jwBuQzxsIiYME74gNv6W6XZnRHwPFe9QR7VDlFYvkcu21/PkCXTnpjPsPC0pbg1ItHgA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUq1NH8SODd4gGLUONIZS2/k9AtSbjU/OJSoQrLqLBRLqkfYsF
+	JNYRx+gpYgkBGFxQLbFvxfSMHlLJpUiL3Pdj0GUZKp6pI0rOehSwkPFN
+X-Gm-Gg: AeBDietjjcgv/Jvr31RwgzX35+Fcn/7bhdCVpJK6+geH4BZGREaLQhFzafeL8lEZ/gf
+	9Tza42epTIU9t5T5ipBoFdSF+MRwythZDfRoa9I/Mfz5dVisj+agx1ZAJlZmPBOzD9vSrwj+V4r
+	hNxdAwsVrODDEL4hry3luvFDd/nH8XC+6Fms4kmtmuPmLi2Hw/Wc7OKLSAFM8Z/vYUbuM8dSqCf
+	TMU31SqW7EP8Yi360nv3mxm0s1E71EjMut7yYjnifPXOvZ71DlHCzrTWN49fO7Q7SoCQTaU/81h
+	c9vYfun5o/z9LlQkb32Vijv9WdLn+wjwCLyIhw0DFD6En6EYxaByd6her+VgS/YOvxQFrPWUfg2
+	R3RpfhZSomijwVyWw7CXMr1XhAPyjqMvhgaLuYo83Yt6hPJ+1NfZSSGCTLX4f487A6vxw/TdHkE
+	SSQ+Rs/5D1JBMfWLdcbSAwXQY8cozrjleUwAZ9BNQpp0e6fjq5MB0FsfamQVeQ6WyqMnpL3A==
+X-Received: by 2002:a05:6512:3e14:b0:5a4:b02:66b1 with SMTP id 2adb3069b0e04-5a40df72e59mr1274826e87.9.1776349085760;
+        Thu, 16 Apr 2026 07:18:05 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ae6ceb80f6sm35649396d6.46.2026.04.16.07.15.37
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a308521sm1318589e87.74.2026.04.16.07.18.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Apr 2026 07:15:37 -0700 (PDT)
-Message-ID: <74af0a09-4c1b-4c0a-b5b3-e5044fcd0aaa@gmail.com>
-Date: Thu, 16 Apr 2026 10:15:36 -0400
+        Thu, 16 Apr 2026 07:18:05 -0700 (PDT)
+Message-ID: <98503549-00ca-46f9-9f48-2a48131cd29c@gmail.com>
+Date: Thu, 16 Apr 2026 10:18:03 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,50 +68,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] backfill: default to grabbing edge blobs too
+Subject: Re: [PATCH 0/3] Backfill fixes and edges
 To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
 References: <pull.2088.git.1776297482.gitgitgadget@gmail.com>
- <607ed38e2a8ae94266b4a3d51610e604cca8df4f.1776297482.git.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <607ed38e2a8ae94266b4a3d51610e604cca8df4f.1776297482.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2088.git.1776297482.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4/15/2026 7:58 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On 4/15/2026 7:57 PM, Elijah Newren via GitGitGadget wrote:
+> This topic fixes a few minor issues in git backfill (from ds/backfill-revs
+> this cycle), although some might see the third patch as more feature than
+> fix, and the first two patches are pretty minor and probably do not merit
+> consideration before the release this late in the cycle.
+> 
+> Overview:
+> 
+>  * Patch 1: As a wise man once said, "Sending arbitrary command-line
+>    arguments to setup_revisions() creates an opportunity for behavior you
+>    are not expecting. For instance, can users...supply --first-parent? What
+>    happens if they add an --author filter?" ;-) I think these particular
+>    cases might work, but other rev-list options don't make sense, so let's
+>    error on ones that don't.
 
-> Add an extra --[no-]include-edges flag to allow grabbing blobs from
-> edge commits.  Since the point of backfill is to prevent on-demand blob
-> loading and these are common commands, default to --include-edges.
+I know that --first-parent was one of the options I _did_ want to
+include as a potential option (it helps focus the set to a "core" of
+commits and we can get more on-demand off the core if needed). Yes,
+--author is a little silly, but it didn't seem necessary to block it.
 
-I like this option and your motivation for including it.
+I agree with the reasons you gave to block _most_ of the options you
+blocked. The output-formatting options don't need to be a hard failure,
+but that could be a later improvement. For now, I think your change is
+entirely positive so doesn't need change.
 
-> @@ -116,6 +117,8 @@ static int do_backfill(struct backfill_context *ctx)
->  	/* Walk from HEAD if otherwise unspecified. */
->  	if (!ctx->revs.pending.nr)
->  		add_head_to_pending(&ctx->revs);
-> +	if (ctx->include_edges)
-> +		ctx->revs.edge_hint = 1;
+>  * Patch 2: Making documentation more consistent with other commands
+>  * Patch 3: Tweak the ranges so we actually prevent on-demand blob
+>    downloading better with a new --[no-]include-edges flag.
 
-This would still work if...
+I gave notes on every patch, but no meaningful changes are required.
 
->  		.revs = REV_INFO_INIT,
-> +		.include_edges = 1,
-
-...this was initialized to -1 to allow for "no user option".
-
-We don't need this change unless we were deciding to make a
-config option that specified a different default. That seems
-like overkill right now, so this doesn't need a change. Just
-something that I like to think about.
-
-I also like how your tests don't just verify the backfill
-behavior but the ultimate behavior of 'git log' and friends
-after the fact.
-
-Thanks,
+Thanks for helping to polish this feature!
 -Stolee
 
