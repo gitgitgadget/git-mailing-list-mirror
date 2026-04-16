@@ -1,115 +1,97 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0499E3B52FB
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03C139A05F
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776349089; cv=none; b=sCrAC+U0sRr8HHQ3AleT0nOooVVWrKbJxNzwsAowmJ/vipPZh1NjLc2QhOgAqeo2h3vfh7mJ49QmWAJ0S34Myhe0+TnotabvUfuji03wv7Qh+tfxRPeutSnvdXxsJEEjCYKuH8cgWBbUbRkZ+1NTD9ujYnwDe5PbwY+sc8QFZ9Y=
+	t=1776349424; cv=none; b=DSYUQoMIU6S3OvXTZV7SRGmn8zWFBMjsWzP0Vrv24Mvk+mzHfEiDXCJK4MrC82PUtiAZzpcBEkCxbwk304mUc99+TXIM1EXYqwip6Yvj+T5fi20bs7zzwZbr70FNspu47nO2Gp0Pdg+RoLvvYyTuq/lCWO6IWDredU2i1qzuBQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776349089; c=relaxed/simple;
-	bh=zLhAUHGK1qV6A9w4rC35+A/SEs3qCvD4n+bAUWvXgUU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qZhQhbflXz+GQozrCHsJX5xCrvzeq5/b7q/i3yraLN1MdtbBBY1yilfOLXAiBJKkWUymwpcI+Q9A67T+JSveCxqFp0Hq8gzcXJDhnGM8bw+ECImSO5g+mAgxocQpOVjtw1QSULwRlForoVpamod4i3BEiNDhyNRqRW8lLbfaWOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pqo2rG5F; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776349424; c=relaxed/simple;
+	bh=ZOBNlZ2MOYm7W1vYT1J62JgkQTe6p1iQ1apra2wkYA0=;
+	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
+	 In-Reply-To:References; b=EFN/J+/0KgaOVHJHJUryvA2ItqJ1fY2u9k0gCmxVvDbiAiQQhYOgyhTHoR22lLzUo+P4Evk4SKvJdPpD77+1+bsGisQd1MDMql6xxYAG9qWxW9uVSLRlKJPacRWtJN+wMsYfWMEzn02Tem7qocG8uRYTWywKkqov84MqpX/oi34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=Lf9BA+y4; arc=none smtp.client-ip=93.93.131.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pqo2rG5F"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5a10d130b37so710424e87.0
-        for <git@vger.kernel.org>; Thu, 16 Apr 2026 07:18:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776349086; x=1776953886; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kQFrnzkZ4Nm/lwIFw0rAvN9mfxJzMtpp7s36uLOPCQk=;
-        b=Pqo2rG5FTS7t3fvDoeUvMFaIUJOB1epTZbURsD1GK04q8EAU2aLkP6mBaCwzcE4sKr
-         NjxQ6YRgrsa4+FyJBxxoyqB3LNn599YA0NmbqCLIViBRPR4p2Lj1ymsi/nDBv/Rq6/YE
-         WJA475SJjMtgoKhBaFwVcGKxzbiRNMPklBwPD7KTs1Ih0WBZAJt8LY6kX4HP2D4sRYON
-         mVrEdgBrcvsO9KeD8thmABxWPrp+lZj4zB9z4ZxuxSsoWFoNPkkBGLAqOGyq4BJGmFX1
-         2kk+RnW7APOR8VBA+H1tShpmuFLYIphShQv82DtunjJuvz4tUI4jEBFxuqDGC3tmMaUh
-         ALBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776349086; x=1776953886;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kQFrnzkZ4Nm/lwIFw0rAvN9mfxJzMtpp7s36uLOPCQk=;
-        b=iM3VgR9vNVuWRERyDtkj4OuGdlKE2uzAm8xC666vfkkNUqgqWuPDv3q7fy9Ms2gE/t
-         S/Gaz3kdgRe8PnDUajf8jKO+E/k2xN3ypfxckwhdCgzbuu1iYkceHMrGWMA9rGzYE/tE
-         hPuJVtChQ0HAVOj5Rj6fCNof/qut4HGIJtDrNWbfJ9nrJY9Xf5knDYsRUvYsMUA8RQZn
-         RsoTGNEDH85j1J1yv68CmdzmieeecGKyQj59Ymky7Nkfkp5nv3YXGfO/KaE4bmTMKx9P
-         Fm1Ph0PZvVwvYChnAAw9vjWVOpd1o4/RXWkbPYn4qtWnVecs3B7O3BnrQrB1QUhp9brk
-         O1CQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/jwBuQzxsIiYME74gNv6W6XZnRHwPFe9QR7VDlFYvkcu21/PkCXTnpjPsPC0pbg1ItHgA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUq1NH8SODd4gGLUONIZS2/k9AtSbjU/OJSoQrLqLBRLqkfYsF
-	JNYRx+gpYgkBGFxQLbFvxfSMHlLJpUiL3Pdj0GUZKp6pI0rOehSwkPFN
-X-Gm-Gg: AeBDietjjcgv/Jvr31RwgzX35+Fcn/7bhdCVpJK6+geH4BZGREaLQhFzafeL8lEZ/gf
-	9Tza42epTIU9t5T5ipBoFdSF+MRwythZDfRoa9I/Mfz5dVisj+agx1ZAJlZmPBOzD9vSrwj+V4r
-	hNxdAwsVrODDEL4hry3luvFDd/nH8XC+6Fms4kmtmuPmLi2Hw/Wc7OKLSAFM8Z/vYUbuM8dSqCf
-	TMU31SqW7EP8Yi360nv3mxm0s1E71EjMut7yYjnifPXOvZ71DlHCzrTWN49fO7Q7SoCQTaU/81h
-	c9vYfun5o/z9LlQkb32Vijv9WdLn+wjwCLyIhw0DFD6En6EYxaByd6her+VgS/YOvxQFrPWUfg2
-	R3RpfhZSomijwVyWw7CXMr1XhAPyjqMvhgaLuYo83Yt6hPJ+1NfZSSGCTLX4f487A6vxw/TdHkE
-	SSQ+Rs/5D1JBMfWLdcbSAwXQY8cozrjleUwAZ9BNQpp0e6fjq5MB0FsfamQVeQ6WyqMnpL3A==
-X-Received: by 2002:a05:6512:3e14:b0:5a4:b02:66b1 with SMTP id 2adb3069b0e04-5a40df72e59mr1274826e87.9.1776349085760;
-        Thu, 16 Apr 2026 07:18:05 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a308521sm1318589e87.74.2026.04.16.07.18.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Apr 2026 07:18:05 -0700 (PDT)
-Message-ID: <98503549-00ca-46f9-9f48-2a48131cd29c@gmail.com>
-Date: Thu, 16 Apr 2026 10:18:03 -0400
+	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="Lf9BA+y4"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=chiark.greenend.org.uk; s=e.chiark; h=DKIM-Signature-Warning:References:
+	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
+	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=OuIjALvUj4pWZ3oDYHXW8vjwyOnVQ5OWqvvfUBlCGzM=; b=Lf9BA+y4fe+u
+	VMk2Po0ESrNWpDby1ryKaQzYxoSkB5IJfgN3w0EvclW4xMuWB1dcTga1PcpSnJ8vX6JnVu3K7IQO8
+	fiqC72VCKLxt6VZ5WLYFaXgTkhqeMmRjkB5IrJGVP0aDa1c4Dgif2CfGaxwA/aVJS70REBcI+ELHD
+	UyUKdWQjj03wkXkdqRl8hpVuJYDK9G/QVrlz25cVauuq7D1tQ9aXx/JhLECxjE5OuiFC6oKoelzfF
+	D2D8bKPEeivR5+AuK77/rZoV1fA5BB3pKa6ga2x98/xfUEjWv0MzHVDHh2QJCN3/K7clayhHgr4Ts
+	+Wox5cTgenDjHlN8KEtDvQ==;
+Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
+	(return-path ijackson@chiark.greenend.org.uk)
+	id 1wDMiV-00069b-1U; Thu, 16 Apr 2026 14:25:11 +0100
+From: Ian Jackson <ijackson@chiark.greenend.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Backfill fixes and edges
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
-References: <pull.2088.git.1776297482.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2088.git.1776297482.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
+Message-ID: <27104.58166.993109.63505@chiark.greenend.org.uk>
+Date: Thu, 16 Apr 2026 14:25:10 +0100
+To: Colin Stagner <ask+git@howdoi.land>
+Cc: git@vger.kernel.org,
+    Christian Heusel <christian@heusel.eu>,
+    george@mail.dietrich.pub,
+    Christian Hesse <list@eworm.de>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
+Newsgroups: chiark.mail.linux-rutgers.git
+In-Reply-To: <20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
+References: <20260215201748.889866-1-ask+git@howdoi.land>
+	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
+X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
+DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/63/6398e3c18559ae9fcc00a4cf06dd3d8f.pem
 
-On 4/15/2026 7:57 PM, Elijah Newren via GitGitGadget wrote:
-> This topic fixes a few minor issues in git backfill (from ds/backfill-revs
-> this cycle), although some might see the third patch as more feature than
-> fix, and the first two patches are pretty minor and probably do not merit
-> consideration before the release this late in the cycle.
-> 
-> Overview:
-> 
->  * Patch 1: As a wise man once said, "Sending arbitrary command-line
->    arguments to setup_revisions() creates an opportunity for behavior you
->    are not expecting. For instance, can users...supply --first-parent? What
->    happens if they add an --author filter?" ;-) I think these particular
->    cases might work, but other rev-list options don't make sense, so let's
->    error on ones that don't.
+Colin Stagner writes ("[PATCH v2 0/3] contrib/subtree: reduce recursion during split"):
+> On Debian's POSIX sh, shell recursion is artificially limited
+> to 1000 calls. You can check if your sh has limited recursion
+> with:
 
-I know that --first-parent was one of the options I _did_ want to
-include as a potential option (it helps focus the set to a "core" of
-commits and we can get more on-demand off the core if needed). Yes,
---author is a little silly, but it didn't seem necessary to block it.
+FTR Debian supports multiple options for /bin/sh.  The shell in
+question, with the limit that's troubling us, is dash.
 
-I agree with the reasons you gave to block _most_ of the options you
-blocked. The output-formatting options don't need to be a hard failure,
-but that could be a later improvement. For now, I think your change is
-entirely positive so doesn't need change.
+> Depending on the history graph, subtree split can recurse deeply
+> enough to encounter this limit. Rewrite the rejoin-deepening
+> algorithm to reduce recursive calls.
 
->  * Patch 2: Making documentation more consistent with other commands
->  * Patch 3: Tweak the ranges so we actually prevent on-demand blob
->    downloading better with a new --[no-]include-edges flag.
+Hi.  I'm a git-subtree user and indeed I was the one who reported the
+bug Colin is trying to fix.  I would be happy to do a code review of
+these changes.
 
-I gave notes on every patch, but no meaningful changes are required.
+However, before I get stuck into that, which seems like it will
+involve some serious staring at shell code, I'd like to ask what seems
+like a logically prior question:
 
-Thanks for helping to polish this feature!
--Stolee
+Why not run the script under bash in non-POSIX mode instead?  I think
+that would sidestep the problem.  If you don't want this program to
+always depend on bash, you could have a little snippet at the top to
+re-exec with bash if (1) it's available (2) we don't seem to be
+running under bash already.  (Presumably the Debian package of git
+would need to Recommend bash then.)
 
+TBH I was quite surprised, when I reported this bug some time ago, to
+find that git-subtree was written in shell.  If it had been me I would
+probably have used Rust and libgit2.
+
+Ian.
+
+-- 
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
+
+Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
+that is a private address which bypasses my fierce spamfilter.
