@@ -1,80 +1,79 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E37818050
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 11:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2EA31618B
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 11:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776338402; cv=none; b=EOjkyGKybVCPQ3eWRZR2MVM/OCjZWcpThbOq026f6fQOmGmi/q5CMGlyPSNWMQo8dhn+6x7GSaPu18KigRPdwUPmvLhu2niWrCd81dTYTYG5ft3rsK29bdUnhcJnsuu4DPMTJm/EGRqiI5Q+4WFFfd5msHiMx17JW1//X51zi5Q=
+	t=1776338407; cv=none; b=o7rK4ULe81I57F6OXifmRQwP1BrPMI8mZQ8m5vrOjr6933317iQ18vCdn8LI3wD0IRriSszjqdAkRw21+D/xmnr99y28jDAih5KH4u+Abf3PiJsoOgMmBcn0xTJdZKSS02m+Hp7Tfl4Q5oKW6tnCfhCSu4OvRiYci9RMlF9jgic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776338402; c=relaxed/simple;
-	bh=btpJKUiFNlUXA1LKD9q90pol3SWi1ccsm86g6cgPVbk=;
+	s=arc-20240116; t=1776338407; c=relaxed/simple;
+	bh=lf6HseCjtohku+/jC0a2mmYAPGUwz1dsu22ocKpLTkQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YbwRKfF5p+oOi4fhvR/MhIh2Y3mALOnFUDma0iGNNgPJQsRSXdul8I07UoF7FviWlMDMRPEAaXcyNaJ8kkJafSK/V/eS1vm90oGOEUMAWBBiakXc0inY7b30L2XYSox8VdbABccMSnX0JBSGly7DF5W9z/ghxmGpCsz2czOMDxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EonmW0Mx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzccn7+l; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=CNKz1AxgTnmbAQfYjDXQ0D51cfVD5lO8yOeN6kRrX7HFKWbqVeW8sGH6SZ0XNrvwexIwn6bClxhpwnOKaGIDuK/fm2a5BabXZ8wQo6aiVamPuN5vkx7sBvjtd7pPDQ/GlDJeWjdvKCWAD/pPzjaW9K7LtT5aUqJbMRgnH68xe98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qwy5v5JP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZJjp+3tM; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EonmW0Mx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzccn7+l"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8BF7C7A01F7;
-	Thu, 16 Apr 2026 07:20:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qwy5v5JP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZJjp+3tM"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BE9707A01F7;
+	Thu, 16 Apr 2026 07:20:05 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Thu, 16 Apr 2026 07:20:00 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 16 Apr 2026 07:20:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776338400;
-	 x=1776424800; bh=Qec/Dl8HiNegnp6O5X03Pa/AAEyuglTunFMmWaoK2V4=; b=
-	EonmW0MxrieaPGnaHOTtHTvWPEL8FVDZuVg1iTdWKwQ/KeOWbv0W2CQlGmcbCmvp
-	bAR4fVJGweUFUeQTazyOomKW0Pc7o9j89hTJ1FDkvO8OG987KmXoEldoDBIM9+Us
-	V4KyxUoDGABomf8FuvFttI6RBI5KVUTw+sA448M6xsgS+pr8JIOlRQxqf8x1IFo3
-	C8rH8lUJzXfop9+YZpviAPe8iXBtMJuRAVtngTaqZlWwa9LOXvemynlhziKEUfdL
-	cUJBZUkoJQhiHv/2GBbpTVxH8I0gXDZ3tS8zrPCBFo7kRQtpQ4oMq+8qWuUbD/qr
-	hevE/dt/sY9J9prMiJBOgw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776338405;
+	 x=1776424805; bh=aaRIbo5vrCDNLnoBzRKNfGSIO9qynSrUUu1iu1DJJpc=; b=
+	qwy5v5JPhhBAD+g6r9EGZQzdqx1n7u67SQfil6hOEQ3BZZ7EWGoMr+5auRgoNdw3
+	nWUZDQRYOde1QVM8p+sgQrr8iIESyhuBNTHWNpRpX0YEay1x34DzFn73vvqgVdY9
+	Ot3xfz+8FfrZs2uc6HRPbhgHIe+aYAu+Fiw4YOQtblq0SJ92TPgyPFVyYDLPORL4
+	i/wJAZWVJONqxgoFbU5G/dfavFSKLyaUgLSR9Wl9uvayAWYvEn+f84pWUEYOs7Y7
+	t3TLiAFMtPWshvebXyqYAxmw/zCMUR7abQAeoA7lv15S6cD7QbNRNxcIBFXbFTtx
+	nFiAeBUI3b0jcGP9JvnLYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776338400; x=
-	1776424800; bh=Qec/Dl8HiNegnp6O5X03Pa/AAEyuglTunFMmWaoK2V4=; b=j
-	zccn7+lVRHA7CV9bWHAHEOXJiVysb4L7ytADpoi2kPnJti5p+8kEIAoVTV08TSVN
-	G54Oxpf1lA5x/69m3Y7d7cinXQtGxy+MckzH+ZqL+WpJYw8nemFYU+/PpQyl5XDZ
-	Prztn7sIFBsTmFboDsrUG23E69UNTvFtlSjZVqHAkrUNErb4BIftcCCDUKVQEk3q
-	oSolS2/UYSOAbty+V7HD+vhQZKxtlCnTokpoyspnnJWtJorMp04Em/tQu8LSc+ha
-	GE0lLqf+HcZlVxsu81a6O9am3XPU3kKt28mziI3JOauFC/tYCvbrOA2+91MP+jsV
-	DkmFWp78ezzue7sXfX47A==
-X-ME-Sender: <xms:4MXgaUHN0TgQplBgtZ0kzqM5L8D4r4nv16pLAOS6B2IdZo6rnp4Bzw>
-    <xme:4MXgaUzCevfijg_BSksiknOGSzzIGWO1HO608DRQtqCF7TgXHtCTGSaobxx4GKt7R
-    qG-vyAmCEyr7VFU5EGUTdBL_E_VHpW9-0k6FpDY0rNqW0JVtTD63Q>
-X-ME-Received: <xmr:4MXgabgKY-Shs-bKQ4_VryrMWmObQlLciLYzI8essNcMQBFB9_HbQHs-dpagOQ3fGhmqWyYAVikOlAdNGeUU_zeubNfajVem4nk2Qk9hlA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776338405; x=
+	1776424805; bh=aaRIbo5vrCDNLnoBzRKNfGSIO9qynSrUUu1iu1DJJpc=; b=Z
+	Jjp+3tMnrMHHxq/1il0LXnlB3VZWMszUMhPeod6tTpFjS059jUWB9g7/MkmYCIn6
+	QrMdzdPCOu4x5hKKpJKMAp74EEaHQQCBw/AUI9TBiBkzMr+oQLnS0tcPb1yOIBj3
+	nT/HcXLLZEd8VfGNEiQJvWhHts7rA7RLq9aWnXgmSldGlMJbg3uytgUkazYor0Js
+	xXijoJd/EX1IkVH0KQVtxGfdOEAeD8p9jLlx4Oc9OjrtCflKKwUPXwc4TO13VNUi
+	Q/mTQfAV5eZ0+6bNHP4rfJcob9gGeomSIGQ/KkjVqWXh90O/eoW9nHDBiRlij7mx
+	FOLYbNulDD3AFmWb79ZNw==
+X-ME-Sender: <xms:5cXgaZLYjzbhGOjaHxXoOmLtKaoMslqFjc-pCy6deD1GDAQRMgmelg>
+    <xme:5cXgaclZPGy0ShAJSh75zqmS85P4dy2kT-nrgjMn_t4iWVviuHXQbaDqBQavRaWln
+    r99VSMDhTi-cIA8Cq1xg74t1rKRqaa1lh5w2B1icrLCEaQEI-F6xQ>
+X-ME-Received: <xmr:5cXgafHYJpZsTQKovax_gQ7U-Ug6V2wwOonENkI7ODxdp7S8aOjSkEoADDi36mc0s7n1zFdyn7GcPCbzA4h9jen3OyGOxqPE0bZTuRVKcQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegieekiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:4MXgafxjN5Rw-1kKa_Jx1ZShLVV6s7MwSo59Xp1EEjy3ljR6qXT9qg>
-    <xmx:4MXgaeJ1G_5LTVC0iywKwxDu4ZVuXytWG2kmdvhAtmAj5NhssfUq4A>
-    <xmx:4MXgaWS-g5Bhlx9s5s2FJE8YbNM8MXiTb82CJ1LoRQLmhxfOFdLHXQ>
-    <xmx:4MXgaWryKI_9cx0-9CqbcYlOoJrp7NNlmX3nCcfyNDrQjvF0CKeSUg>
-    <xmx:4MXgaRjWaskw_idjziwIF_Ac20oI_e-SwBjtPUvDYs_64SPWU4fr-EX_>
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:5cXgaUFoabrDpBtPTQWZdn4rWPOV4H3lbwMyMtLqO3BgBZPnk-yxpw>
+    <xmx:5cXgaUNF2fba2SzOHY9wsYh6UWYXFmJ-fuHihzEUMdw7yQB7yghaJw>
+    <xmx:5cXgabEwEk0rOdIW2_GiAO9KpYNvrEUDxtbVoC1olkVl4i3lGq_n9A>
+    <xmx:5cXgaTPLfPfsGSnXw_XBFmBz2YR5-1Vk6BlO_PxezaQzI-ZvkHQzyw>
+    <xmx:5cXgabVSv7tn-kxT56pFHsmHOhub1j7ShfuhY5h5DLondlMASV9fX-71>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 07:19:59 -0400 (EDT)
+ 16 Apr 2026 07:20:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8cdd12aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Apr 2026 11:19:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 58a0e761 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Apr 2026 11:20:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Apr 2026 13:19:26 +0200
-Subject: [PATCH v3 09/12] t1301: don't fail in case setfacl(1) doesn't
- exist or fails
+Date: Thu, 16 Apr 2026 13:19:27 +0200
+Subject: [PATCH v3 10/12] t6002: fix use of `expr` with `set -e`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,42 +82,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260416-b4-pks-tests-with-set-e-v3-9-7a90e5dccadd@pks.im>
+Message-Id: <20260416-b4-pks-tests-with-set-e-v3-10-7a90e5dccadd@pks.im>
 References: <20260416-b4-pks-tests-with-set-e-v3-0-7a90e5dccadd@pks.im>
 In-Reply-To: <20260416-b4-pks-tests-with-set-e-v3-0-7a90e5dccadd@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.15.1
 
-In t1301 we're trying to remove any potentially-existing default ACLs
-that might exist on the transh directory by executing setfacl(1).
-According to 8ed0a740dd (t1301-shared-repo.sh: don't let a default ACL
-interfere with the test, 2008-10-16), this is done because we play
-around with permissions and umasks in this test suite.
+In `test_bisection_diff ()` we use `expr` to perform some math. This
+command has some gotchas though in that it will only return success when
+the result is neither null nor zero. In some of our cases though it
+actually _is_ zero, and that will cause the expressions to fail once we
+enable `set -e`.
 
-The setfacl(1) binary may not exist on some systems though, even though
-tests ultimately still pass. This doesn't matter currently, but will
-cause the test to fail once we start running with `set -e`. Silence such
-failures by ignoring failures here.
+Prepare for this change by instead using `$(( ))`, which doesn't have
+the same issue. While at it, modernize the function a tiny bit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1301-shared-repo.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6002-rev-list-bisect.sh | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index 630a47af21..0e0d07a1a1 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -12,7 +12,7 @@ TEST_CREATE_REPO_NO_TEMPLATE=1
- . ./test-lib.sh
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+index daa009c9a1..f2de40b5ed 100755
+--- a/t/t6002-rev-list-bisect.sh
++++ b/t/t6002-rev-list-bisect.sh
+@@ -27,13 +27,16 @@ test_bisection_diff()
+ 	# Test if bisection size is close to half of list size within
+ 	# tolerance.
+ 	#
+-	_bisect_err=$(expr $_list_size - $_bisection_size \* 2)
+-	test "$_bisect_err" -lt 0 && _bisect_err=$(expr 0 - $_bisect_err)
+-	_bisect_err=$(expr $_bisect_err / 2) ; # floor
+-
+-	test_expect_success \
+-	"bisection diff $_bisect_option $_head $* <= $_max_diff" \
+-	'test $_bisect_err -le $_max_diff'
++	_bisect_err=$(($_list_size - $_bisection_size * 2))
++	if test "$_bisect_err" -lt 0
++	then
++		_bisect_err=$((0 - $_bisect_err))
++	fi
++	_bisect_err=$(($_bisect_err / 2)) ; # floor
++
++	test_expect_success "bisection diff $_bisect_option $_head $* <= $_max_diff" '
++		test $_bisect_err -le $_max_diff
++	'
+ }
  
- # Remove a default ACL from the test dir if possible.
--setfacl -k . 2>/dev/null
-+setfacl -k . 2>/dev/null || :
- 
- # User must have read permissions to the repo -> failure on --shared=0400
- test_expect_success 'shared = 0400 (faulty permission u-w)' '
+ date >path0
 
 -- 
 2.54.0.rc2.529.gd9106f7525.dirty
