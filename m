@@ -1,62 +1,62 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0801C17A30A
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 03:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF6517A30A
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 03:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776310377; cv=none; b=j6DuH8prF6rXyca2sZVz6gRH3e7rwQuoviU7gD4IngM3xcwysFJWhd6JSeCPwlnplcDsS4CJvx62nuSDa40hVSqhx3FHm1isD27krZUQQ+4Pr59fXphUpEdIarSIl02fVwCyQdmFPzLoKja9bTopH2PNG0RUufZlx0VVOw6Oqo8=
+	t=1776310382; cv=none; b=E3ObXZ+w5nTdwx+/lNIb6hsqxsSA5ECYUZawjUmQpPEdz3zvGgSJDSLJpVowWem8zA+hdNIkJPB5gCqKR6rbrAIj1hdovzEQ70DZnRKeS4KQB2Eu098hvLBCHu6se7yz++BH+pcPhChLZ+K6P7pynYCrObUVCxV6ApOBN4ehbJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776310377; c=relaxed/simple;
-	bh=QtYoMyRSBFJLhZORIKqjMv4QdD79SX8hrQtpM+ZqdIA=;
+	s=arc-20240116; t=1776310382; c=relaxed/simple;
+	bh=iC8ple29A+iIQPXVdUAAXMmTBzx2B7MSvlI9WtuLpSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3AfZqzEZZk9wnzAcBu1f8o+YxB1SQIVlVhYqmigkwhDHjKpqW4lKGJr07fYQuq4BkqA9VqKpgtZpxTSIIsch/j3M7yECs/FqmRHjpKIqyqPc1JKjuHDlspsnmpZdDnZB9QGOAbSgVMk+1vRZqHpeQ+Ac+AcpxF4p1ytHS7m0ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l96QRRi/; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=iLYYu2jnHiB2BLyDgTkn1HupvdhcBRs1uqXPW/G3fOUWXarW8Ak2iRG6WBWIsIvFIUgxyn93fd1sJJo1vwi9vAc6/aSAJsXJR6vdMbV2Z2CiD7mgAfUXE4RSttWHntT9G2nTpZsxJ8Y6Nyfq1ENjED91FimkxCx9ttXPkJpn/+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qLO3BBMj; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l96QRRi/"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-82d0b68837aso4104067b3a.2
-        for <git@vger.kernel.org>; Wed, 15 Apr 2026 20:32:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qLO3BBMj"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3591cc98871so3502255a91.3
+        for <git@vger.kernel.org>; Wed, 15 Apr 2026 20:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776310375; x=1776915175; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776310380; x=1776915180; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JYAYczqqQwj6k62PLJ+ag2/K4t3wBDgXxWfOVHZWqyc=;
-        b=l96QRRi/UC+YgHdAzerfP3Zptq25qmypP3DwxsgLwMkQP/6hK51v/Bz+cY32tjr7El
-         ZKklAlWNZ13cDQhgHwLpSMmTI/pF/56jnmgvk64ZlHVmvsYQyOAUfsXj2nFXTRckKW+l
-         EXdFkLVvO/eOhHGPC4JAxvbzqZl3WvqAC2xD4GrLwnPSub1x7Jjj9LNGPGyN0tZ1n8Wy
-         s48TQklq+Yw4DdIkhw0APwYLKbdB4OyEP5sShYvmF4qImFkmaVFOqfEo6AnFgvWbfmVB
-         7pMzSwuIbBUNfZJnXTOB9wtcZSugG6IK/guakVYVgUDws9B2gwMXC5Ha7PZ1o8xhHGHv
-         BQmg==
+        bh=J+keWVT7dnjeU8pErQFzUGHxU26c33GZlVgxT9K44KQ=;
+        b=qLO3BBMjWUmZbCMxazYlARA3Hko9aOQp32xwOk/HaPYgxfF6bnxdi7ayH6dwvcM97L
+         6Laqv12khK4qSasmkQwvAdoYfV9WWdnvPFY2SSnqFs6H3faIDenJK5zY45JlD9XWah0+
+         9j+bVjpsboItbih4vPl2nfsJ8x0kmZsJRdpRGs8jr/2EYhGfp1EV0T/sIeuBRJJH9Q0K
+         PZI1QOvKQ8NoTmu+fHV2EwreRgt9pp2cWgbGCWVbznefjH3CKi9ooiuroo5EmSI4tFOx
+         mD4ylsm34dw0p1VJMZ0tlmjQfN2m4KDOcX2aFjb+JTikYRNcTIdwYDiy0xLz7yGPqO90
+         J/jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776310375; x=1776915175;
+        d=1e100.net; s=20251104; t=1776310380; x=1776915180;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=JYAYczqqQwj6k62PLJ+ag2/K4t3wBDgXxWfOVHZWqyc=;
-        b=o0B+ej0LYdWWHJs1ROXlSmYs3Cpbzz0O2UzdWbvhz96RUTh7B02rYKPYuXRgW0Bhvs
-         UZMYz/IT6Gdq3ofXVbGnb5mKM0oQg7Tju/heMA7JJVVL09mHT+bZ1XmqTrEARdXUheLf
-         t5fGaCf+hXXrM/79mJ0RkJGaa32N0dQjcY7yvsuMz4fuySEhXp7x06ca1B5tv42hR5BD
-         dX4Q9yjvWwLCNm8zkPnT999/nHjSvlbyemw94sYf8+KKWWpTGwFial8JwPp8pCxWatr3
-         +SEMfpVpygOBxpzr3DjWEb2bDFWuGd9/QLEtqNm9jmV/XaLmbPRaxtQaMKgky1a+VnJ6
-         tT0Q==
-X-Gm-Message-State: AOJu0Yw5ghV86dl0H96NGyop0bOHeGjm/HT3XjepagG3RSq0WLbHzOFW
-	Gy3DMZg8wF/rlonVajACG2jU3u4UpDZ/7pYoVrzxH25mHWT0IWp+qfx2OFx2mg==
-X-Gm-Gg: AeBDieus3K7aoDV4JJWcp3xeh4uoURC7PHUMNPMh9QWqIBC0LZp/YpzPVFOZabPWPhq
-	eXmfGYfex39lnz211glIGgd3OOQNGyuPhedcWbzWxm3BfPA7dW8ZTKWOwgikVFRP+h8AdxeGcH1
-	/gIOexd4h4R4v0MpbNJCleNrn9xH6dBmCyVDApsM6uxklOK2xg8dZFzJamVnw/Bc0at/ulOIfVm
-	Ifwr8dMxsQnSn0ALxqrmPihMvlJt8siYvmK5r3mRR445g3LQWgHDKdiiHCW6QzHcjyEA3K5TkDC
-	RtopdyqZptsBZlRDkztRFAgG0Fgn5iUXvZMbjMNVNsTxI1qcz1pTfi3OXJdcAwTlYTPKDhvGOBl
-	H6wNrUFPQ3MwA2ZRUuthAcuxTnJYjUHZkInErUiUzDTNbxBV652u9CRaVLpZvmxmCY9I13lmK3I
-	w0Z9YvOKAutqMqvqEDKg287CQ8HGG85bqxKu1fsRoBoRDEpxA4OC5jZsy2Ew==
-X-Received: by 2002:aa7:8289:0:b0:82f:29fe:7239 with SMTP id d2e1a72fcca58-82f29fe8801mr12975754b3a.50.1776310375139;
-        Wed, 15 Apr 2026 20:32:55 -0700 (PDT)
+        bh=J+keWVT7dnjeU8pErQFzUGHxU26c33GZlVgxT9K44KQ=;
+        b=pqr0qdZGurKnkT+iM6cMLQ+qZK1gZhv/8VPMbkb4wX5EicGmKEidchUyk89tBfBxMG
+         FnqEPrsE4WOc26Cees2H63cW3RoDZD5yhBiANj8W+K3YK3cpDSAZ5gHZFzNUhPKzaQF0
+         pmixfY7HLtGQG7n17gE+TMNM5YFa+N11dmYh0JoZqTa2nMm107D3KRvVDE9O/EW2F+sm
+         DAHnroK9G0yT7+cAxUGSHEXdSmGJywYcg0ci1b6Y/tdoRMdZVjJigOUe/eUre8T0Fzuu
+         3/MuG3K1PJIDfE6G2PXg5sQfANI/PknAShzea5SSaNlw9yIA6rMgQXjzEi5IiCsvf4XH
+         LJcw==
+X-Gm-Message-State: AOJu0YxCT0ji/d0BNKMIm5R4S4tERAZf1htKZrnzyilhuy5nO+SOXjXs
+	2INc55ogiFje2DiP4G96ByTZqYSe8stwi9LX0yOaf3EdOKBraqFYKPj5wwI/sQ==
+X-Gm-Gg: AeBDiesfTSlDP/smitujNngnUlaZrGuNtQAH0i30mDbKG7B3f6zVkz8NNJx+iBB08x4
+	AWpIqukD1Tk6bgqeSREcI0/x/qtWT3xCX1UxbueqwSg7jFhXW+uS5P9VDcLW92xnZRn4rcGPObV
+	PusI8AcyuykOc+UAkTy1tevEOLoEoSp4FpaoJZFmwQpdBy79zpZrdGizJDobQX2k56GJnCWRKVQ
+	HM1HCCFoVLn5uA0+dhrVo5acuOCmzc3U4knp2LrgTN2kG3smWSzfwnpSG2Ms9RotF4G08qKhmgr
+	ztFYnIy5YBN3BVRyIXWFoI9DMGmUrP2EKaDEY35nWF2mA2VbBP4pixrK4Q514cKWxsmjTZG9sd3
+	IocPdmnfYZF0m6kORDqOOpZsU0J8hKLz7Gedh2gp+DcwGTtCneAt7HOVzkExNuwQ59JC6Msku0l
+	upKpmnJFOm22bqP3V6ToqWhFq38auxGuB6OCA1pns+J09pt1SJm999kDLEDg==
+X-Received: by 2002:a17:90b:4ac5:b0:359:fdc0:4621 with SMTP id 98e67ed59e1d1-35e42786883mr26887108a91.11.1776310379766;
+        Wed, 15 Apr 2026 20:32:59 -0700 (PDT)
 Received: from localhost ([2409:40e3:30ab:6862:6400:e3b3:3e97:389e])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f67449c3asm3680170b3a.53.2026.04.15.20.32.54
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b4782c17e4sm39262935ad.77.2026.04.15.20.32.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2026 20:32:54 -0700 (PDT)
+        Wed, 15 Apr 2026 20:32:59 -0700 (PDT)
 From: Siddharth Asthana <siddharthasthana31@gmail.com>
 To: git@vger.kernel.org
 Cc: karthik.188@gmail.com,
@@ -66,12 +66,13 @@ Cc: karthik.188@gmail.com,
 	toon@iotcl.com,
 	jn.avila@free.fr,
 	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v5 0/1] cat-file: add mailmap subcommand to --batch-command
-Date: Thu, 16 Apr 2026 09:02:49 +0530
-Message-ID: <20260416033250.4327-1-siddharthasthana31@gmail.com>
+Subject: [PATCH v5 1/1] cat-file: add mailmap subcommand to --batch-command
+Date: Thu, 16 Apr 2026 09:02:50 +0530
+Message-ID: <20260416033250.4327-2-siddharthasthana31@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260415150943.40493-1-siddharthasthana31@gmail.com>
+In-Reply-To: <20260416033250.4327-1-siddharthasthana31@gmail.com>
 References: <20260415150943.40493-1-siddharthasthana31@gmail.com>
+ <20260416033250.4327-1-siddharthasthana31@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,55 +89,225 @@ At GitLab, Gitaly keeps interacting with a long-lived git-cat-file
 process and it would be useful if --batch-command supported toggling
 mailmap dynamically on an existing process.
 
-This patch adds a `mailmap` subcommand to --batch-command that accepts
-a boolean argument and toggles mailmap dynamically for subsequent
-commands.
+Add a `mailmap` subcommand to --batch-command that takes a boolean
+argument (usual ways you can specify a boolean value like 'yes', 'true',
+etc., are supported). Mailmap data is loaded lazily and kept in memory,
+while a helper centralizes the one-time load path used both at startup
+and from the batch-command handler.
 
-The series is based on top of 5361983c07 (The 22nd batch, 2026-03-21).
+Extend tests to cover runtime toggling, startup option interactions
+(`--mailmap`/`--no-mailmap`), accepted boolean forms, and invalid values.
 
+Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+---
 CI: https://gitlab.com/gitlab-org/git/-/pipelines/2456596910
 
-Changes in v5:
-- Simplify documentation: remove the `;;` sub-list describing
-  `true`/`false` effects and replace with a single sentence noting
-  that mailmap data is read upon the first use and only once.
-- Link to v4: https://lore.kernel.org/git/20260415150943.40493-1-siddharthasthana31@gmail.com/T/#m5226263dafcf5c774c080a6688e9af0f402003c0
-- Link to v3: https://lore.kernel.org/git/xmqqv7dyoei6.fsf@gitster.g/T/#m0a109f3eb5129e619ecec5f2d58ead0c5a49a4f3
-- Link to v2: https://lore.kernel.org/git/xmqqv7dyoei6.fsf@gitster.g/T/#m445eab3b309bded92d1b130d225b882c73988ff2
-- Link to v1: https://public-inbox.org/git/a4ec7bfa-f16b-4505-9b37-d3dd137e93cb@gmail.com/T/#m5c62fb6ad0fbcc99a706dba4c78b66359c247acd
-
-Thanks,
-Siddharth
-
----
-Siddharth Asthana (1):
-  cat-file: add mailmap subcommand to --batch-command
-
  Documentation/git-cat-file.adoc |   5 ++
- builtin/cat-file.c              |  37 ++++++++++++--
- t/t4203-mailmap.sh              | 105 ++++++++++++++++++++++++++++++++++++++++
+ builtin/cat-file.c              |  37 +++++++++--
+ t/t4203-mailmap.sh              | 105 ++++++++++++++++++++++++++++++++
  3 files changed, 143 insertions(+), 4 deletions(-)
 
-Range-diff versus v4:
-
-1:  25ebffe39e ! 1:  b4d6f08b43 cat-file: add mailmap subcommand to --batch-command
-    @@ Documentation/git-cat-file.adoc: flush::
-     +`mailmap (<bool>)`::
-     +	Enable or disable mailmap for subsequent commands. The `<bool>`
-     +	argument accepts the same boolean values as linkgit:git-config[1].
-    -+	Possible effects are:
-    -++
-    -+`true`;;
-    -+	Mailmap data is loaded on first use and kept in memory until the
-    -+	process exits. Passing `true` again does not reload the data.
-    -+`false`;;
-    -+	Mailmap replacements are disabled for subsequent commands, but data
-    -+	already loaded stays in memory.
-    ++	The mailmap data is read upon the first use and only once.
-      --
-      +
-      
-
-base-commit: 5361983c075154725be47b65cca9a2421789e410
+diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
+index c139f55a16..86b9181599 100644
+--- a/Documentation/git-cat-file.adoc
++++ b/Documentation/git-cat-file.adoc
+@@ -174,6 +174,11 @@ flush::
+ 	since the beginning or since the last flush was issued. When `--buffer`
+ 	is used, no output will come until a `flush` is issued. When `--buffer`
+ 	is not used, commands are flushed each time without issuing `flush`.
++
++`mailmap (<bool>)`::
++	Enable or disable mailmap for subsequent commands. The `<bool>`
++	argument accepts the same boolean values as linkgit:git-config[1].
++	The mailmap data is read upon the first use and only once.
+ --
+ +
+ 
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index d9fbad5358..fa45f774d7 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -57,6 +57,20 @@ static int use_mailmap;
+ 
+ static char *replace_idents_using_mailmap(char *, size_t *);
+ 
++/*
++ * The mailmap is initialized with .strdup_strings set to 0,
++ * but read_mailmap() sets the bit to 1 (this is true even when
++ * not a single mailmap entry is read), so it can be used for
++ * lazy loading.
++ */
++static void load_mailmap(void)
++{
++	if (mailmap.strdup_strings)
++		return;
++
++	read_mailmap(the_repository, &mailmap);
++}
++
+ static char *replace_idents_using_mailmap(char *object_buf, size_t *size)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -692,6 +706,20 @@ static void parse_cmd_info(struct batch_options *opt,
+ 	batch_one_object(line, output, opt, data);
+ }
+ 
++static void parse_cmd_mailmap(struct batch_options *opt UNUSED,
++			      const char *line,
++			      struct strbuf *output UNUSED,
++			      struct expand_data *data UNUSED)
++{
++	use_mailmap = git_parse_maybe_bool(line);
++
++	if (use_mailmap < 0)
++		die(_("mailmap: invalid boolean '%s'"), line);
++
++	if (use_mailmap)
++		load_mailmap();
++}
++
+ static void dispatch_calls(struct batch_options *opt,
+ 		struct strbuf *output,
+ 		struct expand_data *data,
+@@ -725,9 +753,10 @@ static const struct parse_cmd {
+ 	parse_cmd_fn_t fn;
+ 	unsigned takes_args;
+ } commands[] = {
+-	{ "contents", parse_cmd_contents, 1},
+-	{ "info", parse_cmd_info, 1},
+-	{ "flush", NULL, 0},
++	{ "contents", parse_cmd_contents, 1 },
++	{ "info", parse_cmd_info, 1 },
++	{ "flush", NULL, 0 },
++	{ "mailmap", parse_cmd_mailmap, 1 },
+ };
+ 
+ static void batch_objects_command(struct batch_options *opt,
+@@ -1131,7 +1160,7 @@ int cmd_cat_file(int argc,
+ 	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
+ 
+ 	if (use_mailmap)
+-		read_mailmap(the_repository, &mailmap);
++		load_mailmap();
+ 
+ 	switch (batch.objects_filter.choice) {
+ 	case LOFC_DISABLED:
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 74b7ddccb2..249548eb9b 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -1133,6 +1133,111 @@ test_expect_success 'git cat-file --batch-command returns correct size with --us
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git cat-file --batch-command mailmap yes enables mailmap mid-stream' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	commit_sha=$(git rev-parse HEAD) &&
++	git cat-file commit HEAD >commit_no_mailmap.out &&
++	git cat-file --use-mailmap commit HEAD >commit_mailmap.out &&
++	size_no_mailmap=$(wc -c <commit_no_mailmap.out) &&
++	size_mailmap=$(wc -c <commit_mailmap.out) &&
++	printf "info HEAD\nmailmap yes\ninfo HEAD\n" | git cat-file --batch-command >actual &&
++	echo $commit_sha commit $size_no_mailmap >expect &&
++	echo $commit_sha commit $size_mailmap >>expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --batch-command mailmap no disables mailmap mid-stream' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	commit_sha=$(git rev-parse HEAD) &&
++	git cat-file commit HEAD >commit_no_mailmap.out &&
++	git cat-file --use-mailmap commit HEAD >commit_mailmap.out &&
++	size_no_mailmap=$(wc -c <commit_no_mailmap.out) &&
++	size_mailmap=$(wc -c <commit_mailmap.out) &&
++	printf "mailmap yes\ninfo HEAD\nmailmap no\ninfo HEAD\n" | git cat-file --batch-command >actual &&
++	echo $commit_sha commit $size_mailmap >expect &&
++	echo $commit_sha commit $size_no_mailmap >>expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --batch-command mailmap works in --buffer mode' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	commit_sha=$(git rev-parse HEAD) &&
++	git cat-file commit HEAD >commit_no_mailmap.out &&
++	git cat-file --use-mailmap commit HEAD >commit_mailmap.out &&
++	size_no_mailmap=$(wc -c <commit_no_mailmap.out) &&
++	size_mailmap=$(wc -c <commit_mailmap.out) &&
++	printf "mailmap yes\ninfo HEAD\nmailmap no\ninfo HEAD\nflush\n" | git cat-file --batch-command --buffer >actual &&
++	echo $commit_sha commit $size_mailmap >expect &&
++	echo $commit_sha commit $size_no_mailmap >>expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --batch-command mailmap no overrides startup --mailmap' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	commit_sha=$(git rev-parse HEAD) &&
++	git cat-file --use-mailmap commit HEAD >commit_mailmap.out &&
++	size_mailmap=$(wc -c <commit_mailmap.out) &&
++	git cat-file commit HEAD >commit_no_mailmap.out &&
++	size_no_mailmap=$(wc -c <commit_no_mailmap.out) &&
++	printf "info HEAD\nmailmap no\ninfo HEAD\n" | \
++		git cat-file --mailmap --batch-command >actual &&
++	echo $commit_sha commit $size_mailmap >expect &&
++	echo $commit_sha commit $size_no_mailmap >>expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --batch-command mailmap yes overrides startup --no-mailmap' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	commit_sha=$(git rev-parse HEAD) &&
++	git cat-file commit HEAD >commit_no_mailmap.out &&
++	size_no_mailmap=$(wc -c <commit_no_mailmap.out) &&
++	git cat-file --use-mailmap commit HEAD >commit_mailmap.out &&
++	size_mailmap=$(wc -c <commit_mailmap.out) &&
++	printf "info HEAD\nmailmap yes\ninfo HEAD\n" | \
++		git cat-file --no-mailmap --batch-command >actual &&
++	echo $commit_sha commit $size_no_mailmap >expect &&
++	echo $commit_sha commit $size_mailmap >>expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --batch-command mailmap accepts true/false' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	commit_sha=$(git rev-parse HEAD) &&
++	git cat-file commit HEAD >commit_no_mailmap.out &&
++	size_no_mailmap=$(wc -c <commit_no_mailmap.out) &&
++	git cat-file --use-mailmap commit HEAD >commit_mailmap.out &&
++	size_mailmap=$(wc -c <commit_mailmap.out) &&
++	printf "mailmap true\ninfo HEAD\nmailmap false\ninfo HEAD\n" | \
++		git cat-file --batch-command >actual &&
++	echo $commit_sha commit $size_mailmap >expect &&
++	echo $commit_sha commit $size_no_mailmap >>expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --batch-command mailmap rejects invalid boolean' '
++	echo "mailmap maybe" >in &&
++	test_must_fail git cat-file --batch-command <in 2>err &&
++	test_grep "mailmap: invalid boolean .*maybe" err
++'
++
+ test_expect_success 'git cat-file --mailmap works with different author and committer' '
+ 	test_when_finished "rm .mailmap" &&
+ 	cat >.mailmap <<-\EOF &&
 -- 
 2.53.0
+
