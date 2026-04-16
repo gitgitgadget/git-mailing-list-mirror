@@ -1,90 +1,86 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AAF1A0BE0
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C01725A642
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 14:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776350071; cv=none; b=SRkjq0Hx4B2aA11aBWg8lUCZ2rvzWpjMqOndemE8nLrbq8C8RzdFajUoOWetkUJ4dyrBBRhNBb3sWVfAD8YPE2TEjb4kzBRM1wOD9q7IoRHp4KmKZrPPSelUUPuEUw6SC+MtKXp3mONbMyjgpGaZMbgnWmV84jseM8ouy7onmpI=
+	t=1776350739; cv=none; b=Gm5/HsP7qEvmfU+kJsstMYc9ECU69h1y8MfRSknN19zUndOCo3Q2TfH5RYHzonaqJSyT3Jbqja0+NYb8DXSIZrHFcWQ1gOc37r0CyH6Yz9FBTuRo4/V38sgfpVdTXUN5Ubkr73+/kFjlck1v7TnmsBS2Cq+JkM770xY599ZBRXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776350071; c=relaxed/simple;
-	bh=QH7dGlDAmUb9BdhUJAherTzdOEzB5BqydcUOrhbfxSc=;
+	s=arc-20240116; t=1776350739; c=relaxed/simple;
+	bh=FAvlktzq4KeW6MQ2MEW43jQ9YxOajb9Vi2Dqw1Kg9ks=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WHGdtOFuf82JO0RViaPFajW4FgimJM8ODqE8LlSdOthkQglfgCXLa25rLdDyoJ8FpAAyi5xCsnThNf/PcsKhFbhHi6dxYT4iLVM5E+5JBPpS4G24V1xbWOwfWyb2nkk/MwNlMwKXtb+u5rFZ8YGDGb2DlclQ9lac2pNWjCbUZ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GBjXCnRk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jyQSB8IE; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=Faovb4gBmIwLY3HRurgn5kR4YIrV3XU24SxL8roDh9e8kmRnMJO0rqgU/LqxWx4juvGJ8YpnBzxIYOm+JjxZE9Y6cGFP17ItTYPacbtITfPy7WSUnh4NHUNrCYyvCtH4F2NAMczlSptT8/6yuPTjCgVZVdYBb9VAn46s7YqmPs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ybyOAFRS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kEQy2Buk; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GBjXCnRk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jyQSB8IE"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id E65C21D002AF;
-	Thu, 16 Apr 2026 10:34:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ybyOAFRS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kEQy2Buk"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 55B431D0024D;
+	Thu, 16 Apr 2026 10:45:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Apr 2026 10:34:29 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 16 Apr 2026 10:45:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776350068; x=1776436468; bh=9zkoFGP6n2
-	vl6q6jfXI8IR6RDkUWT/Yeb8NJNn8K1M0=; b=GBjXCnRkBKHwPKyANK8DX0BpCy
-	l6fSsKctVc0FQpzl0wbj+cEMG51SzL1qphLjtcrW4gbN3XnrDRsswJfed6dOxrt2
-	RBggbFZVgDC5vJuvrbELl/Apmmtzr/iGhjU26aK7F3zAdap4UjGEAIm0ocySBH9o
-	Ot+7YG1yPkfawXilBpjmXgwuIkD8aImQPjhmbGsFOJiBLvXAiALd2Zke0+fxspQP
-	AQtOEqws3n+adPNEHucSifMEUMBkRDVC+Wuq1FzHduYbJ0WVpsKVvBMdpVeWoNu0
-	Ds/TEdPjxs8cRUca+mpu+8mxVym/o1jMj435/69sQRTcCZWBHVOi5aF3nOGw==
+	:subject:to:to; s=fm1; t=1776350737; x=1776437137; bh=sWf8cftVSg
+	Sw24cc6PXZU5G7+vuMeCDtAkgK7b+OI+Y=; b=ybyOAFRS5NPJepZK9xdyW8baLR
+	yqHHhUqy7HoONoboznTI2CCCF4Jo+C9DWkz2LvrVg+U7P+4odL6iqqv9LGEVRb2e
+	gHe+Iiy5YsdKslFavANiUCscmA9s3VaCXc+AUaWPYPrewPR/xqTfn1ewz+1g1FqI
+	ZhcDbjydn9WUZ4Aqk/r6JPq/vYMm8WXpWTuUf6QqZBBbky0/R3SiLjrSTg2KfcfI
+	K4aPtD/q5gTdP3hrSaC+VuEHxDK+nQNZalr0PTV7hif6utiHBYCUirUancTVVrVf
+	ocrLWeZ0Bch0BUyb7fD5Joc8SogdjY9/QR5Rzlb8SedUHoIPFlHcInhct/3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776350068; x=1776436468; bh=9zkoFGP6n2vl6q6jfXI8IR6RDkUWT/Yeb8N
-	JNn8K1M0=; b=jyQSB8IEa9wJ3JGhnLjRNkT20ECpZD2tp9gqeuioZlF1Vv+TTCK
-	lc9bG7+0XWBQzOTMp5nYhY3dks9kzmFwOROSlSMZW1Q93kCMRtOSdefyeZGUttjB
-	OExEEu8kHIF8mTWLYkkhZLKA0HN16fLv4cJlpR+98IGIFCEPTzmYaZhftFtGiDU/
-	UsC9CwZdNe4wDvTn5o/JaFGYERoumfh0iNAv1NIJtblokHsSUJGTfxoj26iECaHw
-	2wxjMswCiSBXJb246atSI2GoL7WWfFaVKnm3xEWUFU7InxQoNFZv6BwPTyQuuaxU
-	jeIKbdvzJNT7GaabE4L+QtPZ4dhPvoJYv6Q==
-X-ME-Sender: <xms:dPPgaZXguR4hYflW2xqYN_NhUQdslNePyPnoOFElfoNiKDNXWRRlNA>
-    <xme:dPPgaQk-dbfZZXD7jGA32AkVUWX29IBUtzS1JjUsj7bFY_kuDPc1nw_zwS9b6KLuu
-    iObCUXEf5D92ZF2idwp15wPcCadCbEIbhAe14fxT-PH1MEnY4__>
-X-ME-Received: <xmr:dPPgaaaN3d76dPrr8Ds94dfCb4_qyTb2fFOV6NIF1gAvZXWfFdb0rUKvFkQ_lbovjRUvstLvE4y9KEolqKBRkz_1Mj1uoMmBEg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjedvhecutefuodetggdotefrod
+	1776350737; x=1776437137; bh=sWf8cftVSgSw24cc6PXZU5G7+vuMeCDtAkg
+	K7b+OI+Y=; b=kEQy2BukceZcztFzYf1NGVOi3wCZbQnIGxO087oQvqoPL38Jt3Z
+	o5DKBluXxd0wKCxFZ8y3fBxmhgrNlrGO1j6q9WI844W71REftOB2ddDAKzaadrh+
+	Z2avTvlIa74uzOlfiSGxA1+xOvkV//xWLCKLzq7gPefWjy2AX8pNTw6uA97KlBj3
+	P+v+X/pK93ogoqR5UbwDQkWwkaQ449c0L/37wtHJAGZ271FumQigO1mAO6Gh4dSD
+	l0u2Ilhwsjd9bgL2vbigSRI6FBs19hKM3o8/M7A/3k43ItwszAzXmfB2MXVZdxs8
+	qzXZFpCj5/CeU1Rm5b1DhFUWPm+Cxo4KmGQ==
+X-ME-Sender: <xms:Efbgab_qDDBfmDxzSp3NlP4Rzx0cqSTFipqgenBX8FboMkjbFNamvw>
+    <xme:EfbgaZ-RSRlchU-fh37LgRZOcnHIQa3ZJ6YjuppRWZ6F20Js320aq5TPW_5EfdBLh
+    62WAZ-ykwWsCVeYKfWpC3oY6cdteNJifNvjteU-LrhIwJtXd9zu1Cg>
+X-ME-Received: <xmr:EfbgabS2_-i60ZNscX4fgA-MO6XRt7uqPeXu0rgPK4RJIy_kLGXxh0krVxgD4Ck0uM4tqDog1h1eMrMfJDyB1U8nusa_m2NSyA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjedvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:dPPgabOBwFO4SSF0pEOScY6YJ6kj6oQnLdKWuDc5ySrrxkqPWQYimg>
-    <xmx:dPPgafZAwxW7kKr5UZYjV09Nv3M7tLBzOVOb9n-X_hxHa7erjqThsg>
-    <xmx:dPPgaZ363TXi7LQH7PWAnDUwxJdSFdyjC39gYVjwkHhplUuI4_ZNFg>
-    <xmx:dPPgaVfWUxXwJJrMKWLZW6ceupdhZ7leaFHcf4W44hGWlTLhdmAkDg>
-    <xmx:dPPgabVptvZ78EZW7aMpoGw9GeAKHvqMrAU86hB8BAyhdZMQcQLarC8O>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
+    rdhnvghtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EfbgadfwpQcktDVCF_KqdgmGeUMD1vvr-j9zwA8G27cYTFUk0EVDSw>
+    <xmx:EfbgafCJ8Rc5JpwjWU8h2xCLUTMrHne2fbnqEn0TwnMcNISFZRRgig>
+    <xmx:Efbgafm6Us-OLZRj4_TSqmPSYWRaXZ3ytUH6pbID7FQ-ceK-ibrRpA>
+    <xmx:Efbgaaetm1k3S3y_nhVoHX7eKqqm6y4zrYCRzH_ypO-Y3DJZuaYklw>
+    <xmx:EfbgadC8Bhv1zUk1YNNLSau64J5Tqd6i1fv4kgBYPYRdqHXUEQ0jJuK2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 10:34:27 -0400 (EDT)
+ 16 Apr 2026 10:45:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
- commands for `set -e`
-In-Reply-To: <20260416054924.GB646814@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 16 Apr 2026 01:49:24 -0400")
-References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
-	<20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
-	<xmqqeckifq59.fsf@gitster.g> <xmqq340yfivf.fsf@gitster.g>
-	<ad3rgbgadjIZRgaz@pks.im>
-	<20260414220347.GA3475127@coredump.intra.peff.net>
-	<20260414225206.GA3486072@coredump.intra.peff.net>
-	<20260414230810.GA3528448@coredump.intra.peff.net>
-	<ad80r_oY-uAV2zVt@pks.im>
-	<20260416054924.GB646814@coredump.intra.peff.net>
-Date: Thu, 16 Apr 2026 07:34:26 -0700
-Message-ID: <xmqqtstb3rf1.fsf@gitster.g>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: chris.torek@gmail.com,  git@vger.kernel.org,  gitgitgadget@gmail.com,
+  peff@peff.net,  phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+In-Reply-To: <20260416100556.27823-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Thu, 16 Apr 2026 12:05:56 +0200")
+References: <xmqqfr4xcz7s.fsf@gitster.g>
+	<20260416100556.27823-1-haraldnordgren@gmail.com>
+Date: Thu, 16 Apr 2026 07:45:35 -0700
+Message-ID: <xmqqpl3z3qwg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,25 +90,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-> I'm still concerned that this approach is going to create extra friction
-> for test writers down the road. This series needed to clean up several
-> spots to avoid false positives, and some of the spots were non-trivial.
->
-> Now that was the accumulated cruft of 20 years of test-writing, so it's
-> not clear to me how often new test-writers will run into this. But when
-> they do, I worry that it may be hard to even figure out what is going
-> on.
->
-> But I've said as much in earlier rounds, and I'm not sure Junio agrees.
-> So we can note my dissent in the captain's log, and I can reserve the
-> right to told-you-so later if need be. ;)
+> I do think there is some possibility to handle this via maybe a new
+> option 'git range-diff --rebase', or directly via GitGitGadget. This would
+> automatically create a diff with only the files actually changed, which
+> saves both author's and reviewer's time.
 
-The alternatigve to allow us to be sloppy is alluring from the point
-of view of a test writer in me.  But do we have an easy/canned way
-to run tests and see the unexpected failures outside test_expect_foo
-while ignoring all the noises from passing tests?  Perhaps running
-tests (with and without prove) while redirecting the standard output
-stream to /dev/null or something?
+I am not sure.  Have you actually tried to apply two iterations (I
+think it was between v11 and v12 but please double check) on the
+same base and ran range-diff, and compared the result with what I
+complained about?  You added one helper in the new iteration, that
+replaces two helpers you added to the old iteration, and the part of
+the range-diff that I called "less interesting" noise were the
+change to the callers to the original two helpers to make them call
+the unified helper, inevitably with different arguments.  I am not
+sure a mechanical textual comparison tool can tell them from the
+more interesting change that shows that two old helpers did not get
+added and instead one new unified helper got added.  I do not expect
+this to change if two versions compared were built on the same base.
 
+And that is why I kept saying that the cover letter needs some
+comments written by the author to guide readers which parts of the
+changes are notable.
