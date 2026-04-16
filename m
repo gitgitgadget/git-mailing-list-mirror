@@ -1,113 +1,108 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FD3165F16
-	for <git@vger.kernel.org>; Thu, 16 Apr 2026 17:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776359162; cv=none; b=iezd4FYBavcMrLB+KtWO5WON1yTRaNp7qwGD1DY3Wk/Ll42pv4SYXIC2jqIACuC/j6fYH68EFabJtwvWHy4ntLotIHcFYaH1VVsctfxQWbpNIazIQxwPzu1CXXdsoz09W4VzvK8ZHpYLCFgFdI9ndBneN0Wl/lCevDEAfMBV6u8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776359162; c=relaxed/simple;
-	bh=3/bxwrfsN5omzfwwdgCy/SQKSJUqMXWJGvIlt50WfFo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m+bNGNDkIyWr+hj6kYR+iMRGv8ifqyVmfetg5ljKL2LEsEucGK3L0WPHhsWosnh4tBFjm2GDwKnANdalqrJPRMUbbrSZhDIBGY8M4F+BUt7c4C6FM7M59lsgyzNOMTgimcj46dAawSQD7f6hMwJlJGYjA7JMKABycfuXu6cNJsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BOyZFtiJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kvYY6bde; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D5A1CFBA
+	for <git@vger.kernel.org>; Thu, 16 Apr 2026 17:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776359214; cv=pass; b=AqV78U/PjpGmxsuQ78xYZ16y6wMg5i84EuRtqJ7ff6y82COIuVDlYCysweiny+yesqtSbUy8FuapzG8/TsDVcwxIqqffw29hO6JiNMRepJpIvq5XdJZMh7Ms3NbtTwqEatnct/QD235PPiizYLnXQHMRfkZWSKB5pv3ZgZRP0MA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776359214; c=relaxed/simple;
+	bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=slTuSLcUGO4jEoRYqZXwPsu0sldREKLb6LRsbxKrfEgCsbMJdZy6A0HbbJNi6FZBaU28YFVcvQNpJm72qhEnN5zm0kikSQKltXwyftWIQdOLChvL0rko7AeHmJn4p3B+qJa7TlDkF0N2yb0KFlLpVWDnBpYOGkChi49TVpTBRbc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rx/W4uOE; arc=pass smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BOyZFtiJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kvYY6bde"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8CA6A1D002CB;
-	Thu, 16 Apr 2026 13:06:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 16 Apr 2026 13:06:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776359160; x=1776445560; bh=u87e4vqHZD
-	seZOIJj9/xYQrJytslJGZ1872wrK4Y98A=; b=BOyZFtiJ/ig3kisv9y/GNYIF9n
-	lfYBs72DEhJ5gjZvOWTW2InPxSS4KQN6deXIB2g2zQ+/Oc8iB5hdL+bbiVMHBQK1
-	n2rq21UJTP9k852yRL40bRQTsztsdrAkTkHe75gV+4zcKV2DSKikHt0IywYkm/J4
-	aMzmd8ysbTf/qvOwkjntDGC//K8BlSeyn2+0LjDdejAPea7XSrC+yesSyVRr43Vf
-	5DzZsz7gSbCeCinOiWo4gHDN4Ek2Q0y70UuUm3hl/G1PIOep+H8FRZCy/1PT9EaQ
-	sgNxTHjojJN7axk8JBoO8bj6ZtzylnsdMoE1Efa69hOX2jj0Tlq3jd0+0Nhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776359160; x=1776445560; bh=u87e4vqHZDseZOIJj9/xYQrJytslJGZ1872
-	wrK4Y98A=; b=kvYY6bdeXzghSjckJNGMQx66SwaS+MJrRpEIFFVmbqwFCQfSAqf
-	ha5eG014XJp+qIgwco3NBacVQYF3SPYeaWUU9xlnDT1L9I9KTtL41FZErVgbsMXl
-	BrZSkroOiTO6qX+xpfmx14V/nnlfuoNW/Dq3S2WBNmNnnbivMGjcC//S1j0OafSl
-	8fIsHAXXQaJ7Jf/PygPasia/7B3Zg2yK+nMRZudt0uWEpivJYX7PJ6uDj/uF9qqY
-	OY/xLYC9cSfzTT0vApVi346qAOqabXV0gCRZuzRVQtaTKBEWKBxnfUOFqVt61u21
-	LIbLpSGebNXmGtg9pqg7N1eCLeZjGwMUx/g==
-X-ME-Sender: <xms:-BbhaUuqFj9NIxkie31UcV8zi-U9AaUObs2XhjtvfFjDkTyj41RQ5A>
-    <xme:-BbhaY7bm_JvaxunfUExS6qbfQGTpLqlCrJd9P18IfOlZvjHxU-_yRJywFvgfwVEc
-    gIYigwopicNI0pdD14M0OjyetJaFa7u7hDMS1Yvk0G3KELYz2HW>
-X-ME-Received: <xmr:-BbhadIXBBNJzpENGDvuzqHs1ssAJIFoSuRgBSyAXXgFYW-7kYQPNYA1QUOalphU_jZ3OgiZWZ7wWeqPfpu3T1pmEISjQd4Uxw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegjeehiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrrghtshgs
-    ihhnohhvihhshhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-BbhaQ5Uh8CNCUuGosifo1k1ZdUof21qP15Ec2FV-0KhxleLT3MbuQ>
-    <xmx:-BbhaYzZbJonbEZTRtwKUhypXQ551afKSOyFr9Ts5W8Dc73D_26fEQ>
-    <xmx:-BbhacbpbYtGZVzmNSty9JxXwFTkPjZJErdwolcq4GLWB0UUfkWeDQ>
-    <xmx:-BbhaSR3L8IY-VaEqRWUBFJek7xztWfGAVgK9yCj_xVkclae6jrWyA>
-    <xmx:-BbhaU5DjDvhwJddzt2mJYkClcbVCUiiK4conHEdG3aI5JUMNQWk3UyG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Apr 2026 13:05:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jimmy Aguilar Mena <kratsbinovish@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/3] worktree: add --recurse-submodules support to git
- worktree add
-In-Reply-To: <aeEMU-ohKz2tnSWq@RTX> (Jimmy Aguilar Mena's message of "Thu, 16
-	Apr 2026 18:32:18 +0200")
-References: <aeEMU-ohKz2tnSWq@RTX>
-Date: Thu, 16 Apr 2026 10:05:58 -0700
-Message-ID: <xmqqzf3225u1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rx/W4uOE"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-79ee5037d44so14354117b3.0
+        for <git@vger.kernel.org>; Thu, 16 Apr 2026 10:06:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776359212; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gOAzoXugeXd4GUJIG7+k4YF9oZ4iB38Jy9cy8l0nnHGJ71mafUS2Z7IEvUM2Umia30
+         1wJDttgdqDa+9Uf1wu4vxHeiNZ/x42Y+1Fn8q/+d78gAX1B8zdtkfVBBZq0V3fwBD5gJ
+         YIyzubSJaMLFBCzymjXy1tnAk87lEQUzMnX6CQ8Mj35WIOMWpEilyB4pgs75N6qP40Cb
+         GfyP9cIUgis4rrqX5tzWmbm+oPpTK96kHCrz1CfzRs+pTFTpjwGdQCCG4LW/Ld7D289F
+         xExCjjsgpR6qF+ThrMjoblJMQdX5bLTmzDYtE0cQGzMar+PaSgZK9qTnd9MhAJCMtLt+
+         iVdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=LnbK+30+iYb9IJF2uS4Sz3k57PwXELDEq1bLdNLneFek58owf+0UXZU9EmZyGI8yhT
+         w1TLyOrIADnEmkEKe3bkuV34xSYv3OkAHY7abMzFwcu+pw7nSr0cE+BuC33/doI0MqJO
+         pnERR9YiQg6Wf1/sHT9GTjEQ1nOGxAnowVJ2/YkoS/EQwB08RR8LsbzmcVCZInbj8WGL
+         ncHssNdoWwQKhfUDfIcfXwt+LqNpNf67Qq6IxFrGT+UEFVnDHlQmWOX7EsSYT30511kJ
+         fRHDc3Fdj5prYU+nDcMJWRwndMA3llCSkpX60LBxHLsUMiP73MSwWMdfZ8DExfpD9pnX
+         XnWQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776359212; x=1776964012; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
+        b=Rx/W4uOEW5r60koiBExfEEgZI4TghLzrENIBt+EWuT/1T7cBQqRsTN9qMmhetzpwI8
+         vP99K0374rbiuXuv0Mu+p1UyXCkTcU9sD36IYWfKU9s9VKEiLvY7o6rYLHf5kwFNVfmC
+         o6nOfNnNJgdp4F4vEpuNWgyDT+kTpqCYCPbLnjNDq7DjGdFhA9mSstAHPYBZclqreyjn
+         n5jXzQeQwDSmRwjlqAZzbhm/eotjcglcuPgg53Lc4JCQV1UXAG8qv8YgE5ZbZ2bgs/dQ
+         vjqzuYPgoYcP0DLMRaPlN1iXx2c52cj9ZB8sc+ScNmscbhFntgUZqaG3o0KjBLejBAvG
+         biCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776359212; x=1776964012;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rUIBw7HVCptDP1750PXC4zVPsb7uenrTNB+qyZzu7b0=;
+        b=K5XN4jdpm4OfebErsm5rqDpInDu3iTpKw+yinsQrMj41oOwaBy1ht3cu+zUVIPMYcu
+         V8m0wzQCoSR3Cb3q52mqvbfHDItX5TFWw8M6b0BqwTA5yCF3T/DcZ35zoULXnURrSH3k
+         URpvXawKX8D2ApfMWEg6WY6uGMNnOwJU31YGduddoPZ5okIK15Ia+kKwhv0jSrHvmvM3
+         jHWvHtcQG2lEk+o3Lf6bcvY0NB42vzrYB+oa+W56j3vUu8XR6BDOSXL09zzGjSX7BHvR
+         MK/9MD4BDQxpbfuk3vuvf7ew5jK162Z/RKVefKU9snEBihmwELWcum68sV+FEKTE1xlv
+         CXYw==
+X-Gm-Message-State: AOJu0YzUHS5+o3ilnlI6bRMwqshxoFnS8dSWHCsGGaNuHvg6RcV6+ffR
+	zltX2+LVt/rYDuyZovGbpIQZAuW5WBhRCGE0vG7MJEMrK9nfdvh4UmHFzCMKAHUivc1+b3Tkz3g
+	FLRwKEgVzJBVPR0GdzztYjBzAElBzRhARFjcl
+X-Gm-Gg: AeBDiesu+tA4TQ6l0J71+Yniih01X28qLC3ghFLPNUUTqgPi1vj8ro18HHPpeYS0nej
+	+ImsGVRY9OX0aFrE3NNLRLLzN2ahPTedyOJNu0EQxLxnv0O9dOuiS3eBgcsp1dmTiNCs9cfJLML
+	eUlm/OarB/SKYgB7p5ReGKnCBjITdAhzjhK7yr2zMM8ApPM0xSvMYyBtlDEZnMNGRduRmT9UaME
+	VDbpl3tSthG5++zD9bGyM72Ro3gp+ofy1/5Kik8Q/LKiziczk0lwV4G8mT59XS70EcdOyK8x3Uq
+	fnnQhBe+2LXpv0M=
+X-Received: by 2002:a05:690c:16:b0:79a:da8f:d26b with SMTP id
+ 00721157ae682-7b9d819c8e6mr456157b3.18.1776359211803; Thu, 16 Apr 2026
+ 10:06:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Chester <just13.0818@gmail.com>
+Date: Fri, 17 Apr 2026 01:06:40 +0800
+X-Gm-Features: AQROBzAvND5BvZlc9pJncCpoJkJXkipCPOvs-KECPDg59PDaGntJSA0lEhyYN5Q
+Message-ID: <CAHvvhRS9VJgyAdivR6J1Hz14jSuBJOj8Bpdu+g4fV45LRSeS8A@mail.gmail.com>
+Subject: I still heavily use git whatchanged after more than 10 years
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jimmy Aguilar Mena <kratsbinovish@gmail.com> writes:
+Dear Git developers,
 
-> The approach follows Phillip Wood's and Junio's feedback: each linked
-> worktree gets its own per-worktree submodule gitdir under
-> $GIT_COMMON_DIR/worktrees/<id>/modules/<name>/, so HEAD, refs, and
-> the index are independent per worktree while pack files and loose
-> objects are shared via hardlinks.  The gitdir isolation is the same
-> model git worktree already uses for the superproject.
+I saw the message that git whatchanged is now nominated for removal
+and requires the --i-still-use-this flag.
 
-I do not quite follow.  The point of git-native worktree support
-(which improved a lot compared to its precursor, "git-new-workdir",
-is that it can work well in a hardlink-challenged platforms.  You
-shouldn't worry about "hardlinking" yourself at all.
+I want to let you know that I have been using git whatchanged for more
+than ten years, and I still use it very frequently in my daily
+workflow.
 
-After the superproject successfully did "submodule init", you can
-move the submodule's repository with "absorbgitdirs" to
-$GIT_DIR/modules/<submodule>/ of the superproject.  The primary
-motivation behind this feature was that you can switch to a commit
-in the superproject that does *not* have the submodule bound to it
-at all (and obviously you do not want to lose the submodule
-repository only because you tentatively switch to such a commit and
-have to re-download when you switch back), but I think it gives the
-single instance of submodule repository that you can share across
-worktrees of the submodule.  Because the single directory created
-with "absorbgitdirs" looks like a bare repository, you should be
-able to create two worktrees off of that, with their own HEAD etc.
+It has become a muscle-memory command for me, and I find the
+combination of showing the log with raw diffs (while skipping merges
+by default) very convenient.
+
+I understand that it can be replaced with git log --raw --no-merges,
+but after so many years, git whatchanged just feels more natural and
+quicker to type for my use case.
+
+Thank you for maintaining Git and for reaching out to users before
+removing long-standing commands.
+
+Best regards,
+Chester
