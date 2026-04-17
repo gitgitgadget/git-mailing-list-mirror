@@ -1,138 +1,149 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 7.mo584.mail-out.ovh.net (7.mo584.mail-out.ovh.net [178.33.253.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42842DCF74
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 17:08:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776445731; cv=pass; b=qDt/MGPY+GhqBMMZJCA9UZvy42YdUG8ujf2lilkJyPQJ1n7BOmZn8ceaZBHY5kFJ8ALDI09qeI2KskQap1Dt/XDQSsb6QvTn10Bj1qM62yCCTGSd3txqtd4iQvAP6rVT6JwI+5rdYxpeuPwcTfANjZRhsbAbk1KjcgksSdF1lFI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776445731; c=relaxed/simple;
-	bh=IaxVCUyKBkzKyNxSLeuOqivjnY6QRdaeqPoqmTV+r30=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eNg45+HpY87YYhyuRCdiYWf9P3yEd9JuDK+a0t14P+lEUWDZinV//P5FUCkH8g9lZdiByCzxdtR8EpHxYwdbD3OCEMNniH0IcSOQSlzipOCKtwX18A6eZdi1v/p7s9LXqH+ORhxaHF8ml6eElQLLWhl91syaovIwllZi1baAD7c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mroZjBZv; arc=pass smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mroZjBZv"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2b2589c26e3so8465475ad.1
-        for <git@vger.kernel.org>; Fri, 17 Apr 2026 10:08:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776445728; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lylgrXSil237yQipeV24H/zzR6mtl+zoob9oXd7pc6xyKo7tXDiBtkj+uXUHlI/GB+
-         Eftdt5zrJhiIo6GoIOIOLBCJHW5zgFL6hqiHDlsLcSgSAq36DTc+Pp2EXtKgzseaeRMS
-         MdXWdwepln6RnQvvPrZFySSy4hVBCz37TudCgzYep3yeCSWr6RAHy359ofrF0Cx0Ynjc
-         udNeVi/1fjS1TSu14hQo6tU9NS2GYGLKN0ALqUc1lfLSoHuIr4hsZhdPSOfbvVKhN6Yc
-         DhFwJKW+LJDz++4AK0Ww8l85YJWdqVCWlFb2qqxRZGNEh0IdK0gmn/sBQUWf/aSqArYj
-         l+pw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=x5S8myOrjS3IXXlHW+EcxO/KzVyfa8ZdRLnPEBmrcqw=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=LOTWOXKhg3cOTfTuYFsBH+j2ZszIa/pQqTZKEIJyUq77fMD40zYMuifVekW8mVZHwF
-         3NmvjXXqaoTVme03ia3NQchLmw46d5Ulz5IHysx4xNDeoBoYv9vPiiXToEy/J4FvT0fK
-         Ejlobo+W3hR0kMezkpOoQDoVTEEgLWgu4Bgl052l/IALHzL9jTz4n21frfC2witqFmge
-         6KuTF5rd9M6hzzLr11n5usmxvdhkQPIDNTKvDIWXheQTo2dPWwr6omPSjAXhzvCHREGs
-         JPgIFR5vhmqhwd7gid07VgtarijcTlYRUXzsCncA044ugrC4X7FH6u9dD7lOxY1LA2gq
-         R+qw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776445728; x=1777050528; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x5S8myOrjS3IXXlHW+EcxO/KzVyfa8ZdRLnPEBmrcqw=;
-        b=mroZjBZvHBZciyNMN5Z48vYR4+r7rI5ufk63kAew4Rd3IOlry3pmumTOd/p8hQlQ+Q
-         EuDZ9EBIqO4jcAlQrZvg+FZJEkOgXj85lM2RnwDOFm/MlnhKV3vnMYPqgII5o7IGdwRH
-         0Fhae+iDxsiwDYcYsmJ+JV+wM2piryyzQtV4oqOmZ9Qfgo6HJufZskeIERRuhRV+vssB
-         W2bZg4+SY5oZ8orPkRVTGbB+Jxrb7TGzV+36XXeYTWBY1CiMp1qSXc7QU9EvMg3SpiGH
-         1CMkYJBfiupZdiH5LddgS1d35YwZauMZh8wv/4S3hAoxpU1ZlYGSxm3vZIATKpZjVxV2
-         VCAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776445728; x=1777050528;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=x5S8myOrjS3IXXlHW+EcxO/KzVyfa8ZdRLnPEBmrcqw=;
-        b=Qd8TCKXILGKtwEhSL+Z+jzUbe0QJJp+OapjUate3uGLfbcRG6eWsqAdDMgjOiolabx
-         x5PYRHySlZFeu5uMdHJWfiHzmyW1Q1kq36aPtyuXAQ8Sdrx0j9ymEy9GwUfPh83J1HXW
-         F8Sh1BPFSRH/2UmDiPKLsut4jFUGP7aEYz8hqCVRHmsVVFml99BCrSGzZhnfTFY2f/Q/
-         EF761rqJFgPcY+S+AK77/ltjQnptWWjpJicLInffjhzeMxQZvq9yXkgRSVzKZWSEesl7
-         aXcExljwsFX7t+U6tRszZu7oExnR0HcaqCE9QqT2XScDN8BLF0nTfOjzJBGF/d6FaUzB
-         6EYw==
-X-Gm-Message-State: AOJu0YwQjA6XdNGeMeyKQv6fTd/uXKeMc2jsX9wvigFgTUwaG4Dythf8
-	aQfPp2y6cAxJitAriPI4S6ltqptSkjbGqp8E9nkRPGKyFtVXK5rsQpZ9p3XtovFdTY0LjqDhZJJ
-	20iQmGHbhVaGi56fPDbQDrj6/yKKIu/I=
-X-Gm-Gg: AeBDies3T5AZ2lp9K0aVFixP0HBA7r19rL6M0YSsRy0pm312cvtBQPyu/Dh3YzZwG+f
-	xYPNuCoeB4lFGDV/F2PgWzvO87mapN6hEEA6KbBwJoFDvswC6eJYyg+OK5VL/BDvJVYEQRwnn5c
-	egkstLDKQ02RgRDx31rQH9TRj11bsTYIWBMf21zSt7iN64A+dwl/xNYLm/tsblSgnFDkwcsQvkN
-	lwiou1XItn8P4ORrxnVsRMmUNcrFSId+TLrOMfT0KN1Ij2Rb/WnYD7Aje+EAw5hrAHcbTpSy4Cu
-	I5EeTsMjpl9YWPU5q7w5UoftGlclsmm3k0tNTjskQVbruTLlQ1aeeOmMAjRvhFBTwffUSWhU0BY
-	4fu7kzBYGr2C/mzOE9x+s5kuNz8rrnByXpQRP
-X-Received: by 2002:a17:902:b702:b0:2b0:ac1e:9720 with SMTP id
- d9443c01a7336-2b5f9f7d029mr27406865ad.23.1776445727812; Fri, 17 Apr 2026
- 10:08:47 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CEB3624AF
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 17:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.33.253.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776446765; cv=none; b=J7m5cxw23brCincTp1WqFclgHbOO8bMLDjs+A4SuT72PbjOFMMC+DOfsddFF3tefo3xlCMmIBmzndDPFdQ0STjBsupBsaqiLLiXllnAW3Ilh8QpHjz9IsVhyaqQVrEq9v+ctVboQcT1bHjwvuInjyT8yYPGTXbIF7K4eGWxvdMM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776446765; c=relaxed/simple;
+	bh=oUwFnuuTo+/ImUl0tvZAFSMMO7A2lr8UdSbLEZ/teUo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=imWaPGoHUrKRqkK6rZ8jVYTziETDe45iMU0RklkwEIUzWa8wLWKGYhwcM+f2sXsngLPjdEzRMRvf4EQ9DjuPlPhroUlpHBt2twg9gGOBI31d1hvMyzFWAfASfJiyVyOJYkbWcJ2X+yCMpaoLRIySDspLfEYZ7J03WnSPbIirj4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de; spf=pass smtp.mailfrom=schlaraffenlan.de; arc=none smtp.client-ip=178.33.253.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schlaraffenlan.de
+Received: from director1.ghost.mail-out.ovh.net (unknown [10.110.54.111])
+	by mo584.mail-out.ovh.net (Postfix) with ESMTP id 4fy16k72zjz8Jbx
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 16:48:46 +0000 (UTC)
+Received: from ghost-submission-7d8d68f679-7kq2m (unknown [10.110.188.214])
+	by director1.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 8B4BFC0FF4;
+	Fri, 17 Apr 2026 16:48:46 +0000 (UTC)
+Received: from schlaraffenlan.de ([37.59.142.102])
+	by ghost-submission-7d8d68f679-7kq2m with ESMTPSA
+	id qjjuJGtk4mn7tAwAN7lZ4w:T3
+	(envelope-from <kernel@schlaraffenlan.de>); Fri, 17 Apr 2026 16:48:46 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-102R0047e7b406f-dead-4fdd-8534-26c8b1e307fe,
+                    B7C68D824A8F199700666F34D4E97AF0708B992A) smtp.auth=mail@schlaraffenlan.de
+X-OVh-ClientIp:185.104.138.163
+From: Jonas Rebmann <kernel@schlaraffenlan.de>
+Date: Fri, 17 Apr 2026 18:48:31 +0200
+Subject: [PATCH v3 2/2] rev-parse: use selected alternate terms to look up
+ refs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260416-pks-libgit-in-subdir-v1-0-03afc731df55@pks.im> <20260416-pks-libgit-in-subdir-v1-2-03afc731df55@pks.im>
-In-Reply-To: <20260416-pks-libgit-in-subdir-v1-2-03afc731df55@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 17 Apr 2026 10:08:33 -0700
-X-Gm-Features: AQROBzA20ofxg1V6TH_uKbyEoFLWPNIRl0pOVVYDYB_hWb0-nG2s4kmAGNw02Yg
-Message-ID: <CABPp-BHr9R1_7P46v=azQE7FnecW7-WkLjVs48OLXBNZp-M-qQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 2/2] Move libgit.a sources into separate "lib/" directory
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260417-bisect-terms-v3-2-d659fa547261@schlaraffenlan.de>
+References: <20260417-bisect-terms-v3-0-d659fa547261@schlaraffenlan.de>
+In-Reply-To: <20260417-bisect-terms-v3-0-d659fa547261@schlaraffenlan.de>
+To: git@vger.kernel.org
+Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>, 
+ Jonas Rebmann <kernel@schlaraffenlan.de>, 
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+X-Mailer: b4 0.15-dev-bc6c4
+x-ovh-tracer-id: 7236721654852715487
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFweXHBPRtDYx/VT0BrMxm+tm7ZQPpIojW3v7HNJZLQGBRdwrXP41KUZsOUXQD4+APtvvOKL/N8LnBGLAwFEPNvfuhwjukkAaiIUND9JWnCvQ+W1uUG4KsacJROlTTr2vcLzlLWcwN6aDlDLzA2vT+X5p78bD1x6ucMNjli2yqWpx5p/9PXs2qdah92INfJIRInw/yJxjWEeGOU71/vUj0qapSLyJHH5a6qOJ/F4URtgSK+6gOz4KkF14rMlqKOeOpwRYMUQ/+EA8vWarRM1fgdv5FmC9dWMa8EB8xARjTLqrgFZB9te01ihNL5elukIjmXLkokaVjPt5+fRNtXuY5vIKRShyfAVTPRrTTzU67UztpRn4lAqKcI9JtnWDyDDpIp6Yj47ftV5U4/AoClhtz44Nmv2zXxSLhpGXisVCXsW5dqbZ8aIQ+HQKht75wdlgND+t4xiOQOYTyGxkdBFCZHEtsB6jE50s1m5DPhnGYfo3BZAUtq5C0Cfy9vKsbq/XhVenpmLn7Re40Y08AigAHVijRH/ec5tkOPogYSfONQ9nUt0+tw/jN94sfvUmazHReXbY1NeN80e2wBBscbpizr5x18U3rHWgozcJADXMvE5/p5hRqWJvIMk8b6N8fdegncQvyHYCl3NGy/dYfv5HZtcJCVoHvxUziozKr+pqHY/Q
 
-On Thu, Apr 16, 2026 at 6:33=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> The Git project is not exactly the easiest project to get started in:
-> it's written in C and POSIX shell, with bits of Perl, Rust and other
-> languages sprinkled into it. On top of that, the project has grown
-> somewhat organically over time, making the codebase hard to navigate.
->
-> These are problems that we're aware of, and there have been and still
-> are efforts to clean up some of the technical debt that is natural to
-> exist an a project that is more than 20 years old. Furthermore, we
-> provide resources to newcomers that help them out like our coding
-> guidelines, code of conduct or "MyFirstContribution.adoc".
->
-> But there is a rather practical problem: finding your way around in our
-> project's tree is not easy. Doing a directory listing in the top-level
-> directory will present you with more than 550 files, which makes it
-> extremely hard for a newcomer to figure out what files they are even
-> supposed to look at. This makes the onboarding experience somewhat
-> harder than it really needs to be. This isn't only a problem for
-> newcomers though, as I myself struggle to find the files I am looking
-> for because of the sheer number of files.
->
-> Besides the problem of discoverability it also creates a problem of
-> structure. It is not obvious at all which files are part of "libgit.a"
-> and which files are only linked into our final executables. So while we
-> have this split in our build systems, that split is not evident at all
-> in our tree.
->
-> Introduce a new "lib/" directory and move all of our sources for
-> "libgit.a" into it to fix these issues. It makes the split we have
-> evident and reduces the number of files in our top-level tree from 550
-> files to ~80 files.
->
-> This is still a lot of files, but it's significantly easier to navigate
-> already. Furthermore, we can further iterate after this step and think
-> about introducing a better structure for remaining files, as well.
+git rev-parse --bisect does not work when alternate bisect terms are
+used, simply listing no revisions at all.
 
-I think this change makes sense.  The only thing that made me raise an
-eyebrow was the moving of the sha1collisiondetection submodule into
-lib/ , but only because I think renames and submodules is bumpy in
-general.  Since we rarely update that submodule, that won't really
-affect us.
+This is because a such bisect using e.g. "old" and "new" in place of
+"good" and "bad" will name refs "refs/bisect/old" (or new) accordingly
+so the hardcoded "refs/bisect/bad" (and good) yields no results in a
+bisect using alternate terms.
+
+Use the current bisect_terms to make rev-parse --bisect work in an
+alternate term bisect.
+
+Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
+---
+ builtin/rev-parse.c  | 15 +++++++++++++--
+ t/t1500-rev-parse.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 218b5f34d6..7531edae9e 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -10,6 +10,7 @@
+ #include "builtin.h"
+ 
+ #include "abspath.h"
++#include "bisect.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "environment.h"
+@@ -940,13 +941,23 @@ int cmd_rev_parse(int argc,
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--bisect")) {
++				char *prefix;
++				char *term_bad = NULL;
++				char *term_good = NULL;
+ 				struct refs_for_each_ref_options opts = { 0 };
+-				opts.prefix = "refs/bisect/bad";
++				read_bisect_terms(&term_bad, &term_good);
++				prefix = xstrfmt("refs/bisect/%s", term_bad);
++				opts.prefix = prefix;
+ 				refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 						      show_reference, NULL, &opts);
+-				opts.prefix = "refs/bisect/good";
++				free(prefix);
++				prefix = xstrfmt("refs/bisect/%s", term_good);
++				opts.prefix = prefix;
+ 				refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 						      anti_reference, NULL, &opts);
++				free(prefix);
++				free(term_good);
++				free(term_bad);
+ 				continue;
+ 			}
+ 			if (opt_with_value(arg, "--branches", &arg)) {
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 98c5a772bd..38067d95f7 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -337,6 +337,31 @@ test_expect_success 'rev-parse --bisect includes bad, excludes good' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'rev-parse --bisect works with alternate terms' '
++	test_commit_bulk 6 &&
++
++	git bisect start --term-old=known --term-new=curious &&
++
++	git update-ref refs/bisect/curious-1 HEAD~1 &&
++	git update-ref refs/bisect/bad HEAD~2 &&
++	git update-ref refs/bisect/curious-3 HEAD~3 &&
++	git update-ref refs/bisect/known-3 HEAD~3 &&
++	git update-ref refs/bisect/curious-4 HEAD~4 &&
++	git update-ref refs/bisect/good HEAD~4 &&
++
++	# Note: refs/bisect/bad and refs/bisect/goood should be ignored because this
++	# is a bisect with custom terms (known/curious)
++	cat >expect <<-EOF &&
++	refs/bisect/curious-1
++	refs/bisect/curious-3
++	refs/bisect/curious-4
++	^refs/bisect/known-3
++	EOF
++
++	git rev-parse --symbolic-full-name --bisect >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '--short= truncates to the actual hash length' '
+ 	git rev-parse HEAD >expect &&
+ 	git rev-parse --short=100 HEAD >actual &&
+
+-- 
+2.53.0
+
