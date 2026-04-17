@@ -1,44 +1,66 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3AE2AD2C
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 04:50:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28C739FCD7
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 09:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776401441; cv=none; b=rwdoIyRfTXIvm9oCv0nhxtgHLNsEoP5xFLH8yaXp1lqLYia69worj8wJI9GbWNo7RnJrzA0xoy13llkkdeDQXJfFqRpWaLNP1P4YnqCce5o0IlrLjVkAu3PsfKHQwkn4rxU0pFgvwBQ5hdmxpepPD0qLgw78y3AXsN3J13Clvaw=
+	t=1776418705; cv=none; b=mY+vQwDHFX6p1lnh1s5w0IhwiPylQMhL0bN/Cyvw2irNG7LY/LLFXkZFQb34v9tS4vPjpFtJrFZDDUtih1ri7euX1hsBfppcHobZAJGohjEG2rknFGaqwnO8gSNu75zE6YFqkr2NnYL8Bu6gb8IXqEotyiTTMoDc3ZAliIzlpFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776401441; c=relaxed/simple;
-	bh=23R4gWOVKkDzdo+vhhMMDIA0Jzn8aSXW8+vPgaXqkqw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JaR0FxV3jA316lTcIsUGCYfKna/sNyk8LfYas7omi6JGankeGwhoBlc+yDTyPt5reWlMsW8q0ZNn6S5EK2KLZeUTqevjU5+hFEmZ/0a6yqbmW7bOLmj5sifibIPUX/e4ZVOyUUQDMLY0p96W9jGK0QPbSpojKTIIimhECnl033I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=pgMO6kf1; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1776418705; c=relaxed/simple;
+	bh=vRenIEK56IP6wxiGtv/GFw50h0YBvgF/6doH8GNwWTw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=g0EqOkj9GBRQIghb6dAbxUBn0/XGH0FYzPXlFvDFdscjeI0Ipziirouwsdd7DgDjbopna+407UlunyrhHbue1nPi/AAOZhjAi7xc2KiWNgHWO0PuzZYH4gbCZWCcJ86k7cKSWqWpXFD7P7SH2a8GVJXxhe6biJF43LAYXnUe+uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TxWgXx6x; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="pgMO6kf1"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1wDbA2-005Pe5-Ux; Fri, 17 Apr 2026 06:50:34 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=14WkgPKfXXHtMB4Is9ep1ksTCH0RNrB3/G/b7SMG6a0=; b=pgMO6kf1HONoGo6RguhWNaEUHl
-	Rlocjx5lyw1pARGQTDCvR5WRwK0hcL26RaClpqysBHireGnICBxPOB/Jo2CDfyOzK1hlQ0sv71EDb
-	vxbVZ+rHskYJHHugr5CMxtF/W9/zZdmFqTWySqTaSyJqJ1fIfLuEc6x+K0KTIen8RiZS2Ud/V/evX
-	ri4nuxr4P471dQxhtIty+CHBhEtw7slVixijGXIwiQeQnBdOhdb6BU3U0fyAPI/S0pSAFpp6lritU
-	4S481EKLH/MY2FAHZ7FaWQE4JEw/Zw/lFrgt/7eTqQcDpPXFVpgmRX8q1kkv0l7mMQ5uyY3Pze/k3
-	YCUPxDfg==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1wDbA2-0001cP-5w; Fri, 17 Apr 2026 06:50:34 +0200
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1wDb9r-002jlR-Mb; Fri, 17 Apr 2026 06:50:23 +0200
-Message-ID: <a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
-Date: Thu, 16 Apr 2026 23:50:21 -0500
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TxWgXx6x"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488a8ca4aadso5826805e9.3
+        for <git@vger.kernel.org>; Fri, 17 Apr 2026 02:38:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776418702; x=1777023502; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Nj9DslI+NsDfJdY6DIKb3gc4J059xUELqBPkkaL8hEo=;
+        b=TxWgXx6xoDa34GP6HXA5o+PYS4janRrzjZy0m4vra55FR0Gj7yJ31/NWB6JbQRkD/B
+         nh560/gHzCzcLDgaT3/Ee4LpYHaTRrNJgC22co5PZ9oFAyOel/fPit8G8gtDEz8wDaLV
+         r6PsHB+bTu25O2Glpes8JrWubREP+qOffAwZHylqBlxqG+uX2zuwp9/tIBUPo2N6n50D
+         AL1pCgJcA7/2qsvLm9sciaCyOov5qHQPlh1QDkGT7gUG1w+pI4e8PonYLIhVEg71nOKa
+         IzLjXcqgRMy4kBo5XyBin+uJMmdC0mgEcHrLmYn1+TCrWmIsYvypfbDyZ5wAscM9/znc
+         IYuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776418702; x=1777023502;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Nj9DslI+NsDfJdY6DIKb3gc4J059xUELqBPkkaL8hEo=;
+        b=V8In0akwwgKFkq6NRDbH+NKd6CdhhXs4fnx1oTbYu/y+JkFQMgONlYugJJVvH5njJq
+         1+ICurQCoYbdGH7jKuWnEDkozGh3H+ZKnamjCUtfcOQ2rxhLqT0fRc10/RPVbhJCg1s0
+         Og/sLwsfMdqW3H4Y+Tcddek356R1g7Vev+WoCK+pbRDSlpenJ6XL+443ohc5cCDiQuGz
+         JGXHOA4nQIyV/PknGEj0JE2kQlR6Gxu+6KGUp4gMzXFPa/Xb2nYkPLJJ3YdjV7HK9cU0
+         R/FP85oLOdadYtTw5WtrfJBZoRY8/N5wf7+vCRnsB2HJq9M1OBafr378KegJhw+e7h1j
+         Gs8w==
+X-Gm-Message-State: AOJu0YwHkdj9LLe7sMQlA2KTcKizR6dqB6ni0ArHPsGjH9Bsj25uCtIL
+	y2jVBQ0qwgyDTb9kcJlH4SL5SyX7SEbtO77l1zOu8e1/0Tw0DGMAKEcBjZmZJg==
+X-Gm-Gg: AeBDiesPorshWbAPfR/O63kTFnsmk4PS2eeM/654NCWq71+NT3ZbQKY6KhbxIokPXSI
+	sc7brdWGUZtMg8cRSWkSbJz9FS2P4mHwsWUgeAnv5nBCsqP/mqd8SFfvCOu9cg8q1aEvxF/x3SP
+	BTUzr6gRRJ+z8G0+Fl5+2yORJTz3xap1iiYkdzA7CAUM4ECDwuHXAlReBXvPja1VvpwPaDJc9hV
+	hhU9ZOmnEiL0HShj7DAvsS2GOh/UpE4sBC5mPAmHML8ADuyYtf/CzrF6O47BeL9KSTLle8gOssW
+	ZCBjO8zVMwV2/8xCkBaoBRzyx13DcuiIF/7CdZzBgaMLEPem/+Ii7sO3l48smcQSoZ3IGrJu9nO
+	X5NTk37+KFT6jVESYaNvxL/szh3uScBjj9WeSPA1ZoSiw7PzSWxqIN01Rks3Yk17d/FAY/unGgn
+	8WhMpWjRZG+72kID3og0IJqAXRgcn3JLf7CdpPXVazIdQ3yzqf+t5yARAh6dNZmYvJy4RC0Jx9/
+	fTZ6TRz29JAqkQe6sI6ex9z
+X-Received: by 2002:a05:600c:5252:b0:486:f9d0:aac8 with SMTP id 5b1f17b1804b1-488fb768483mr31871645e9.18.1776418702003;
+        Fri, 17 Apr 2026 02:38:22 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fb7bf7besm14412905e9.34.2026.04.17.02.38.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Apr 2026 02:38:20 -0700 (PDT)
+Message-ID: <9f46e619-2f34-465f-8bb8-6688f8b56cc0@gmail.com>
+Date: Fri, 17 Apr 2026 10:38:18 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,49 +68,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
-To: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Cc: git@vger.kernel.org, Christian Heusel <christian@heusel.eu>,
- george@mail.dietrich.pub, Christian Hesse <list@eworm.de>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
-References: <20260215201748.889866-1-ask+git@howdoi.land>
- <20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
- <27104.58166.993109.63505@chiark.greenend.org.uk>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/3] worktree: add --recurse-submodules support to git
+ worktree add
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+ Jimmy Aguilar Mena <kratsbinovish@gmail.com>
+Cc: git@vger.kernel.org
+References: <aeEMU-ohKz2tnSWq@RTX> <xmqqzf3225u1.fsf@gitster.g>
+ <19b86e02-6842-42f0-8226-c86ad6669ec4@gmail.com>
 Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <27104.58166.993109.63505@chiark.greenend.org.uk>
+In-Reply-To: <19b86e02-6842-42f0-8226-c86ad6669ec4@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 4/16/26 08:25, Ian Jackson wrote:
+On 16/04/2026 19:38, Phillip Wood wrote:
+> On 16/04/2026 18:05, Junio C Hamano wrote:
+>> Jimmy Aguilar Mena <kratsbinovish@gmail.com> writes:
+>>
+>>> The approach follows Phillip Wood's and Junio's feedback: each linked
+>>> worktree gets its own per-worktree submodule gitdir under
+>>> $GIT_COMMON_DIR/worktrees/<id>/modules/<name>/, so HEAD, refs, and
+>>> the index are independent per worktree while pack files and loose
+>>> objects are shared via hardlinks.  The gitdir isolation is the same
+>>> model git worktree already uses for the superproject.
+>>
+>> I do not quite follow.  The point of git-native worktree support
+>> (which improved a lot compared to its precursor, "git-new-workdir",
+>> is that it can work well in a hardlink-challenged platforms.  You
+>> shouldn't worry about "hardlinking" yourself at all.
+>>
+>> After the superproject successfully did "submodule init", you can
+>> move the submodule's repository with "absorbgitdirs" to
+>> $GIT_DIR/modules/<submodule>/ of the superproject.  The primary
+>> motivation behind this feature was that you can switch to a commit
+>> in the superproject that does *not* have the submodule bound to it
+>> at all (and obviously you do not want to lose the submodule
+>> repository only because you tentatively switch to such a commit and
+>> have to re-download when you switch back), but I think it gives the
+>> single instance of submodule repository that you can share across
+>> worktrees of the submodule.  Because the single directory created
+>> with "absorbgitdirs" looks like a bare repository, you should be
+>> able to create two worktrees off of that, with their own HEAD etc.
+> 
+> I haven't thought much about it but that would mean that "git worktree 
+> remove" ought to remove the submodule's worktree when the worktree 
+> containing the submodule is removed. Worktrees avoid hardlinks by 
+> creating a "commondir" file in the worktree's gitdir which contains the 
+> relative path to "$GIT_COMMON_DIR". I think we could probably do the 
+> same here and create "$GIT_COMMON_DIR/worktrees/<id>/modules/<name>/ 
+> commondir" containing "../../../../modules/<name>" if we want to store 
+> the submodule's gitdir under the worktree's gitdir. That way removing a 
+> worktree's gitdir removes all the gitdirs of its submodules without any 
+> extra effort. There are probably other tradeoffs between the two 
+> approaches that I've not thought of.
 
-> FTR Debian supports multiple options for /bin/sh.  The shell in
-> question, with the limit that's troubling us, is dash.
+I've realized that creating the submodule's gitdir under the worktree's 
+gitdir means that "git gc" running in the submodule repository wont see 
+the per-worktree refs and index file and will happily prune those 
+objects. Junio's suggestion avoids that problem.
 
-Correct, I experience this behavior in dash.
+Thanks
 
-> Why not run the script under bash in non-POSIX mode instead?  I think
-> that would sidestep the problem. 
-
-Our coding guidelines favor POSIX constructs over non-POSIX constructs, 
-including for shell scripts [1]. POSIX helps us stay portable.
-
-I'm not convinced that adding more shell interpreters to the mix would 
-be a net win in terms of stability or consistency. This patch series 
-addresses issues that arise from different implementations of sh. Adding 
-bash vs sh to the mix will probably just make more bugs.
-
-
-> If it had been me I would probably have used Rust and libgit2.
-
-git-subtree has been around since 2009, so you would have first needed 
-to invent Rust. :-) That said, a native Rust version of 
-git-subtree-split would be much faster and easier to read.
-
-
-Thanks for looking at this,
-
-Colin
-
-[1]: https://git-scm.com/docs/CodingGuidelines
+Phillip
 
