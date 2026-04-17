@@ -1,108 +1,111 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C0635C1B6
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 16:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776443949; cv=none; b=Q3Deki+N7Wf+JV/KnrdbWlcNJ7K1XtSXOffbeyhQDgf1eCWNw2mqiWM1IhJ1xHc1d6M/903Eq4iaPwnzCueGh/SvcR/q/k56cvhsOrXCmN5ypFTm8BNTjsLVtWCh8BO+EpJUEiTiCARUZSPj3FPRwoGZ2LoQn6kIGGdh9k9cnlg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776443949; c=relaxed/simple;
-	bh=xPeCdnfA4wtdGVl6CYTKBNciIsfkU6kMIzDDE3/3JMk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q6HIuRJjJbtxR/Arjd02cdZ+RQJ8ER5XKx/o2mdKhe84cZxYkb7wjHSmnotOhdv38tgjwIk9BDVbU5l43a2QW+T877MC1Was1HJlguu/bQRB1DyIPCrEwRxtsLU9Wt00DOjiLBqYo+ogbFCUbQPqyQRKvkVXKAELraz/gHVOMeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FdBBG7Nu; arc=none smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9438A397680
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 17:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776445434; cv=pass; b=pbzdHLdT4M3O1p4jUe2h2AStNMK5vsp3wdQZY9yxzK5cb0mNmWuFtjbzOxbAaRuxi974zem5M9btvheplMBOmk06jNNFDrq+DRnJyjWxmD5LXBClyCxjoQhVYDso8su9scTjQb16eG4mN0MYDkyp/58T2IjGmysSP4htmQUYUg8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776445434; c=relaxed/simple;
+	bh=C9LyQ/r9VXNRCD4sBDFh5+TNNt0TsudnLk+lY2Kni1I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QKD2Y/vFtO9l9nULjqJ0CZRn+p1UOqljEcBrJy1GZsfxYCQaaR7XjZ8NSKJD9nuCpHQptUx1Wd0vPnhaqq9aQUCqwtdI2Jsvp6LelAnImq+cmllhpxZnlvKHXSyr9z8o6zJXilmafHl6cgTyE5CZG5hWM1QgeDlWcNHcp1JjMrI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NtvZD5FW; arc=pass smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FdBBG7Nu"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-12c565dd3a7so1331229c88.1
-        for <git@vger.kernel.org>; Fri, 17 Apr 2026 09:39:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NtvZD5FW"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35da9c0c007so975280a91.2
+        for <git@vger.kernel.org>; Fri, 17 Apr 2026 10:03:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776445430; cv=none;
+        d=google.com; s=arc-20240605;
+        b=On4tPjnJKdv9NSVVZtCSTJxRSlcdMtzXoGsKAM+dyxzG0tu1pGlKbzt3FWEk6GdZHC
+         Frz2LRlTi2Wl5ALULvw+VwQaeLXrXP5zMtbtWw+53o1gwLxbBjKcwvMvJUK0biuOdPUW
+         ZAA9lv0hyBmhSTtTJr8o0XSNFk5VGxJQKSgFQq90vKjcHN3cjxm/ihIIEEoqgJo+yZfI
+         5lipQ33HHMck25jSR6rDq/POgW6scp7Yn5UtlREZD2KT58kvBb8O8kctvCoGQ4dS6qHx
+         Pl3Cx0QrUyo6O2zLIlzyAjuMEViOL57Xp16k7nMsP9H020FneiEmlAJNs6pqIAyol60d
+         y4VA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=0zkZoeTowZqxjC3m7DdL1jKQ7pdE2WsMMXAIcTsbHDM=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=CaPl4+p4nkJMDvYb+N95ZeDVa1uJv3fQZT9kPznqW8+ES+imyfPYdYVMDyQoRvsNzj
+         ej/AqRbCWvzutfC1wY5D3KTmM/8b9Ud4TObI4lTPbTDewU0WnOYifGMfja/8N3asdAff
+         rIckNXPZAlTU1gNc/lY+iJBH9CCemtDV24SREPHC3aBXg1JcOmYgLrx9T2rWt8B9w1rv
+         vr2SQ/pPPSB/0jgq4yyVzdTHIeRVk3xP5mFVNHTQit7FvTzaRElAFuXh8GYzplPePQO2
+         AFQUnHh9MrvKLgVwLTJ0Fa0ldOrO76aVLjuWjyDdMeAGVdyxZ2fkUCRTqCjloUpm8RXs
+         sZQA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776443941; x=1777048741; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1776445430; x=1777050230; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uctCA0Q/XHq2cDnAK0LyuSrVZmoPp38+g2V62PP450c=;
-        b=FdBBG7Nu7kf3iV4YJyKpSZJ+Oq3i7oDRzveSKP4x5B/lsD8pW/C8LGkygLyYzrKIgf
-         wnw7/HtcP8qCXmWTFVHC+x1Fy9uzHEBBsIPNJ6XSrNAooowDjw7ytGNsQgiJNDQWgMBc
-         wAIN7AB8K0OR2DXJ20wyUKiO+Fs21eVMu81Gak0iNWBKPle012Mu8bWrZpRcCmnldIhl
-         f4mxwMhrnEEH+zwSyEwaFOahE90Qk+pTiq66kcJuMNKH5tqhjjcDM8zdCG8E2v0ra9Or
-         kzapBJEgrIQaHhBvjnzB38PPSwEC6Cc+zMZyERkVczYjsPjT/8cy7EF2nYgHTrmonBO0
-         VCcQ==
+        bh=0zkZoeTowZqxjC3m7DdL1jKQ7pdE2WsMMXAIcTsbHDM=;
+        b=NtvZD5FWEmt77dEucqYI46ddEhmHTYQuXQXwFEH8LIuyR/moGNauPhfl8Mvt57X+Ze
+         upSX1+qXH/EDTCrMa4mgErAhj4DyadOD06CVMOYVE3BKy789pYm6bbECC9q0ajP/yntB
+         E86b61aBnK1eOTZzg63jyBeWP2tloJGKfqHVrdTyIoL7k9RkXAEIUnxTVPYb02iH2o7Y
+         wlJt9T45Si4AJI2YmA0vl+KDTbZ48vcPfCCDxhXsOV4LEvKY7qZMbAXV1VI/0CTGHPm2
+         80h5pfiEOSH329lE3taoo0Q+iZ5Qn7YIpLVKhiS6esuiLiUG/IKiiBdUDMt1ttGtSoI0
+         MWYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776443941; x=1777048741;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uctCA0Q/XHq2cDnAK0LyuSrVZmoPp38+g2V62PP450c=;
-        b=cyq6mYIVSOAZD/AYX94i946wkrl+2vo7fVfbV6dF+YdX/CmwQ7U7tKDfqxcZSkarPt
-         3gF8WRDEASKkaDsp4WC562pLs2WBtj1q2EvGotu+moEiS5+JzWW8q5jwBWJVcnjUz+ik
-         0WkeARj6A87/oqwwFWjTVhfR/9a/7zmDGErR5Uq+Drz5rzMZVUa/jtvkM06dONn6igvr
-         5x87A2QfslnzR+5uUta0CU2fhNHdbmBu3uH6iPuqdVXc+0SkqpI6OyjU+U6T5NdipyhG
-         D8ZTWFFCa8M4LJPH/sKtI9VmuYvnMwsCmN2AEYd8bMui0pWFYxT/wYF6tFssoFefCG3+
-         UyhA==
-X-Gm-Message-State: AOJu0YzItLGkDnX2oDL/O/ZlhJLU1enKVdL4FhwP8IwgVxaRFmMoeijB
-	XCEeSs7AI7/UQ8GeWqeT+6yuoIC8MFSvgdlQHFUqC4GKJkEEbKHkksE6o8mqnA==
-X-Gm-Gg: AeBDieuLBLwPpJ/+BJYQ11VjAIxcPxdewDuiyJ/y+MV2wQ2Rln734+91vrds0cuQKSb
-	SX5JjBNVEkq1+H26ZmkYuspQd8QAbTwGv4J+t3soMZEv0iacNZyK9sJbI9D0J7EWUJixefvq6qz
-	XTmOZ9fT95zq8D3EPCovlxTh7EcEBct4CO3kzRgqMHcn5jy8p6tHoMpBwU/q/vqqof+nmi0m+ky
-	todjCovoFbuiJmsKWZD6rww/EZOBDhqrp9Xx551UWQp1SipvN3RF9GahvrMrMHUDHcIibwWipOM
-	UbcG6wEnrKemrU14T8Aja2jgQKAHA9l7bOwZIazP+QcsYfIc2xFll73j7JaEI+QrYJUvva/WVp6
-	XMLUCDx9A0pYhY5I4MSlemYGqI4/th3E6x72up4osUBLRnPK62KUQrmi6/2dHFbMMf0GGyCL6fN
-	wQXfqCXhqOzKWPVDw=
-X-Received: by 2002:a05:7022:6988:b0:119:e56b:c75b with SMTP id a92af1059eb24-12c73faf85cmr1856509c88.32.1776443941137;
-        Fri, 17 Apr 2026 09:39:01 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::19df])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12c74a20b9csm2786099c88.12.2026.04.17.09.39.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2026 09:39:00 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Marcel Holtmann <marcel@holtmann.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH tig] Fix compiler warning with latest gcc
-In-Reply-To: <20260417161228.1578-1-marcel@holtmann.org>
-References: <20260417161228.1578-1-marcel@holtmann.org>
-Date: Fri, 17 Apr 2026 09:38:59 -0700
-Message-ID: <87pl3xsfrw.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20251104; t=1776445430; x=1777050230;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=0zkZoeTowZqxjC3m7DdL1jKQ7pdE2WsMMXAIcTsbHDM=;
+        b=IM0AfnDurs8//jRou+z8b2PhLV2VdiFM5LYEqM0uUH2LchMGnlZCCEglCY665aBjq9
+         YmDluy1wiKM+kAV8neoGHUky2WZnArlM+QBVV1/XINdEZDXCu1DbCW0dwv+jqONdC7hV
+         YmIlzRL9u4ye/mdpgotjB2CdfiCaDKQoNkqUY8zf4OasTGnV1YCv+Mw/DvGU6gKI+6IE
+         Hoj9fy9CeRZ0Oh/ZVxEHzLD34IY0jTzwuZuTWsIGwmdVBCjrtFVMnbhmQ/hZ8ZP87YPZ
+         HQUE9m8YoVZ394Z83nGbZHkBUGbAiY4gueigPP11FBUcbVfcbCPtLnXcWjDHdQFpHr9+
+         K6Yw==
+X-Gm-Message-State: AOJu0YzI7WP7LJ4Nv5419ZLUUqeHs/QlKrVMxrRmesOEcsierkdMtF8i
+	4uSDDTozVGv1kAksRPCzmXHzdDAEnM8LsrLeiT7uDAHtmvVfsVeuSZ1TQPw/IurSeF9b94Ge4B/
+	nwyfHOnTfQyDXmGGsorsMzp2PQ0P8UZU=
+X-Gm-Gg: AeBDieuTfVCoEBzLN6ttVjSHPQztjJghTpe1Qma9kwaby16TJqu1iKB7DEIW7iG62WV
+	vB4J3OcnGTNW5IazMEfJQsitQb/YAmXqG5MrE5JDL72hOROFX9h1vA4Iv9jjsImhaMRbn9CqiQn
+	cb2uY4R+TzXZt1/oiTx74MGNETvXP5m+qnbwECPD/7LJHrzWCZT7vkMtSts/d+A9SrY0nhVcVj3
+	wESiVTnw6c4zUwcLyyMevUvt8Z6PQ6A2+qCtgIiiwJl4COhWiaCJTwWAN2HljkAk19zTRLAKj0n
+	x08tbn53puiDaf/2TxXR/n/60z0UzGtMJMXyNrbqP/c8IjfhXvFaHphbIRuAf0c4BCLZbvhlKxq
+	UbEPhp7OzeOgIBik20WNG++hTBO/V9Cy8IgqD
+X-Received: by 2002:a05:6a21:32a5:b0:398:c4e6:fec1 with SMTP id
+ adf61e73a8af0-3a08d74a3demr4108458637.23.1776445430322; Fri, 17 Apr 2026
+ 10:03:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <xmqqqzohd0sh.fsf@gitster.g> <xmqq5x5py5ql.fsf@gitster.g>
+In-Reply-To: <xmqq5x5py5ql.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 17 Apr 2026 10:03:27 -0700
+X-Gm-Features: AQROBzD0rKhUfR8Vq4K38zqXxSvMJzChQUKE3KyG0uZ8-WIqI_kVFbNzqUtKXPs
+Message-ID: <CABPp-BHEL4upLLjFL_1j7HRov5oAUxgofocU_6G_562biCp=4g@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.54.0-rc2
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Marcel Holtmann <marcel@holtmann.org> writes:
-
->         CC  src/diff.o
-> src/diff.c: In function =E2=80=98diff_common_add_diff_stat=E2=80=99:
-> src/diff.c:191:22: warning: initialization discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Wdiscarded-qualifiers]
->   191 |         char *pipe =3D strchr(data, '|');
->       |                      ^~~~~~
-> ---
->  src/diff.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Fri, Apr 17, 2026 at 8:21=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> diff --git a/src/diff.c b/src/diff.c
-> index 6c670e4b4fb4..182ea349eb9c 100644
-> --- a/src/diff.c
-> +++ b/src/diff.c
-> @@ -188,7 +188,7 @@ diff_common_add_diff_stat(struct view *view, const ch=
-ar *text, size_t offset)
->  	const char *start =3D text + offset;
->  	const char *data =3D start + strspn(start, " ");
->  	size_t len =3D strlen(data);
-> -	char *pipe =3D strchr(data, '|');
-> +	const char *pipe =3D strchr(data, '|');
->=20=20
->  	/* Ensure that '|' is present and the file name part contains
->  	 * non-space characters. */
+> ...this pushout will pretty much be the
+> final shape of what should be in Git 2.54 final (modulo l10n),
+> although I might have another update later today.
 
-Minor nit about the commit message, but this is due to a glibc-2.43
-change. It isn't related to GCC versions.
-
-Collin
+I did find a pair of new issues in 2.54 (NULL pointer dereference,
+read past end of string), which might be worth considering for the .0
+release on Monday (see
+https://lore.kernel.org/git/pull.2093.git.1776443163041.gitgitgadget@gmail.=
+com/).
+It is only triggered with core.quotePath=3Dfalse and some pretty crazy
+filenames, so I could see delaying that patch until .1, but I thought
+I'd bring it up for consideration.  Sorry for not spotting the issue
+sooner.
