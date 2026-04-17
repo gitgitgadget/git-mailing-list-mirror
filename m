@@ -1,81 +1,82 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E7739B959
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 10:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C9237F735
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 10:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776423062; cv=none; b=j1AVjB5SDnb0vwgqR05Qntl1r8nmRjrcn8+8dnFBDy8x9UOwB1+mbGK51SDXvLWnLcrEu3FRBmSNxaI/FUSmBRO3AcGv0qBuAyio5FZ4LABb4tsRIQBCdT+Uu0KJj/YodAhaU5QIBG1uJguOQxz5g4uem9TakWfXtxAj3Baq5/s=
+	t=1776423062; cv=none; b=JkIq6+T6hyXAzNIHu8buPLRoQuNxR//a92v3VFmGx710l1qNihxaxC4AXOH86xUk3a9dGjXVuUYb3D3O3tHstKRKKxk2b2R3GW/63Mj7efMcRiJeHuMKJ4zxFTcYgZdUJ+nNJCdJBm2kh96Yq/i6LJDPGU7BBr+Nj/UePEGHpgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776423062; c=relaxed/simple;
-	bh=YXT7/poVCz51SQ52IQLErSmPA1zRE6DtveYVXQBFA0g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a0Te6+SB7t6TcAutRnG5DLoVTauiweiTJnBJFGpxsMPH9hme8lzMdHHk/38bdeRqHl29l09k4eqDYP4r6ryMlvj9HVwzOESMIGrJiSMfXubaycZEOMdaAAlrh3EoPc8lj/i+1QWcAEZW5INP3KjwzC+ZAiWyg3Vs1X9VfemP1S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HU6id9g7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pR5YX7d4; arc=none smtp.client-ip=103.168.172.157
+	bh=EXg08j7sb9nDeZvSawhqkLBQ6NoJ7ClExWk968Jtbfg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=ncE6rxmmx0jlRYY4VJm2QGNbufczF9wNewt/v09vfWBVXtLf+KjlPGfqVaRt3kPmDdcwU2LDxhzOo5dvA5YarcBIWNDB7WjHaJpaqi9VgbEE8ucn/pO3VinRRPMxNiebcQghmBRpxDe6r9UXJZHSMDUK9bB/d6KT20QHVOFMNRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jxjw4ner; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U6l8Jz6T; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HU6id9g7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pR5YX7d4"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A785D140012F;
-	Fri, 17 Apr 2026 06:51:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jxjw4ner";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U6l8Jz6T"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 85ECB140008A;
+	Fri, 17 Apr 2026 06:50:59 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 17 Apr 2026 06:51:00 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 17 Apr 2026 06:50:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776423060;
-	 x=1776509460; bh=mMwjZrEM95Od0bQugABsmaEZIyZWB4R542aDuTUvirA=; b=
-	HU6id9g7fCM6hLWS4KCahVgKOF5kr54OPBU2wnv9jo8Pj7nCbx7eULgLknbCX0SL
-	pFimiY5V5mG06oDSCIEeL45QP7qk8d3PosL3tT5/t/YMQBgvNPI3aGXG6j06WFPn
-	PYyfGkKrepmwXSx+I5rc2WNxcB4eKbKkPP+1H6osc9V24m5Y2bc7kaWjAipexWod
-	5f0XLJSUiEeoqVx+32iiSMw70NIpha0kORYOn+MV5jJIXRADwfqFBOfvG4YjPC70
-	JiSlXBHqnaCTwiK9jUl+1Mo+ybcAct4ah/rrlumATn3aYZpz8y6ACrleZyTylpDl
-	6w0lioFZOqGjmj1TZ4p3tw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776423059;
+	 x=1776509459; bh=RASbEe8KUORb23LyBaZxzt+GiBwzw0DlRr7diYQDPOc=; b=
+	jxjw4nerc0Yg7XAErEciR6YFm8zlArM/ULvOYcRxqWhUkpPTXNYF6WPN7Gy+q5Xn
+	t4R2HNbXqhUMsOKCjwy1WCH9rVM5OJA/uImNQNMxxFKwu393VTK1hLLc0q010S9R
+	qjYM2WNim/Nb5aT2KHUOr+DVa6+A9+adwMvDurVTmhA1bNcKrLDeDHHyXpDNpspE
+	wb3Xa+Uaz4sdOJfDJsR2UOgBJoMVWqvuHJ3UTPPi/ygCn0rPaLriyo6bC30R06iI
+	Lii7I8sKXnFHbWsJHyhhA3mK5GXI+TMNAczEGuZyUhHkWqoWXEjT6gGJwJNNySeM
+	RDyPEfPwkngWWZMkm0+fzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776423060; x=
-	1776509460; bh=mMwjZrEM95Od0bQugABsmaEZIyZWB4R542aDuTUvirA=; b=p
-	R5YX7d44tCOSsGSXwaY7nT83sF/hOTT5pAg6QNA9YZuaJu72camrzWSkR65iXKhI
-	bWMwjA2vQ5DKU38oVqe2V3X1+LNozl4bACSpydcsvFBdQAwkcbXeiQ/VUtRlEMZa
-	Bta67UuJShWyzxTU2AaKuDuLjSfaUffAnuHRLAfrjCBLhNW6YmCBs6+ON4t4B7Kh
-	uGEWOvKmfw2r5BBwYVWs2i9gF5sA6LHY2P0DrIHYMg4QlHxV+w6og6xc9tADbSB2
-	uwqh68V615uJxgvZdgncY/rXv/55wXUSuDrjUyy/YYex6lz+q0n/UBWRVZvAjxoN
-	AdxmDKBYOAHW/l180W3ww==
-X-ME-Sender: <xms:lBDiaU3gEiPDNbZ4Ky-PNAnV1Qd0HEB0IMYbP2BchiSqBMD_UOAxqg>
-    <xme:lBDiaWFvudQQyf9zIlZ3GmJjUOkBDWGBPd3GTBb5iQC-HevLdRXqio4CFL0IyCfjT
-    jVPjwNGsL5MIZh5ZNP9f88BLueqqlB88dIYwR2_jT1njRYf0USPWQ>
-X-ME-Received: <xmr:lBDiaR6gW2Y5YThQAqMYEB9yUKpJ_4Z8zy3F_7n5c-WzVSijoyt9S0EfbGZ6fK-0axDgmnqN_oqZjuz9MFwdaQgPApHxq4_JRIZ1z4z2p0di>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776423059; x=
+	1776509459; bh=RASbEe8KUORb23LyBaZxzt+GiBwzw0DlRr7diYQDPOc=; b=U
+	6l8Jz6THB72xeKZ5xuiflL1Tg1w80IlgwFGvs4hm3kST7q/0B2QbHeKHP0PmZ5lk
+	0zVeuHAstjJ8ltsrHpNGKNbFoVaibhu6l4gcfG/QRlYH9ibMaIh+baNRLAqcAGQm
+	jYZa4+2ZCjQVFhnk+ZSx7fmwLNFghm4riS41ICEe1W6/rGB9YUaWPKUPDbrkwY7z
+	dNIgEm6ZzabP3Ci4FpkcKKcv3wxELcSJGOySG0oaQ9D5rUtq4Ty3GOk50ODCuHz/
+	H7t3U1leiAVEmFn7BlQwgHAay/CIrmH9rS8yBYAuNOeCOn6v0bk7ZOaP0IK7P6GR
+	RAd72dBze4nWrH085aMNA==
+X-ME-Sender: <xms:kxDiaeAnuq1muxVPHVVRRPEZt6p-hJVpSZXXa8UbMQ6204e496Sbfg>
+    <xme:kxDiafj6xJ23b25Jp0Lg-is6AJbV9w-B4SXxBoK4i-fuOpSi1BDvxlAWsk86sLzBc
+    bRJHjJlLVf--rk8M629dTOgOG5G9-5BLRRi86xQM-tD-xUddqevSw>
+X-ME-Received: <xmr:kxDiaWm54wAgAYMrsY0DF0J2X_3wTPD4VvaLbuW-LFNyMLyuQjTAOdx1WqIlmWzS3j0NHCPA6EiS_ndUQotNcA_V-3Vw_1o5Si_8qTBw6xyu>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegleeilecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
+    ihhlohhuthemuceftddtnecunecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:lBDiacsupl9LKEq2Z2o1PRWmtVSUB3rvC1vMjiu2UKyO7bt5TA7e2Q>
-    <xmx:lBDiaS6EMeIBrBhP2kNaPR6Xza1DkvAv83alMLJllSTO1zrvn2pGUA>
-    <xmx:lBDiaXXp1NjWkbJl_1OG2B5nRnAnEvNa5LX9Hr76tYkKRC5BKh1mhg>
-    <xmx:lBDiaU-YLdJSe-XqcCPpxC1-lvtRMYHzrMBG8k6Bbi0Og0EnK_kPzA>
-    <xmx:lBDiaZ0uFKIiWP4M66gEMDZm6HKZcWQuAzxULwFZNqWV626h_F0x2i4v>
+    shdrihhmqeenucggtffrrghtthgvrhhnpedvleetjeeggfdvfeeutdejfeejhfehteeuje
+    dvkeffiefgleffgfeijeeiteekleenucffohhmrghinhepmhhsghhiugdrlhhinhhkpdhg
+    ihhtlhgrsgdrtghomhdpghhithhhuhgsrdgtohhmpdhhthhtphgurdhshhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvg
+    hffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:kxDiabpVds1MYiC9sbODzybgyNzXj5TSFcIMHtUL49_QAYEX6oJ2ng>
+    <xmx:kxDiafHRIM3dACJBmlKcZ0Ljw15BoxNBYVfSeDUqPtf-bhBJw5yswA>
+    <xmx:kxDiaXw3WqpOi9uCCoswS-xbp45YrF3PoHPOL6yb659sfy9fvkssIQ>
+    <xmx:kxDiaUobfsxkVmVXQpQFXBrQPN3Of2pFYUzsxqM3TC6i2wRYM6X-iA>
+    <xmx:kxDiaQgq-1ToBmyd8PM1stR1gXWM3cC5fgi8dGMlvxYrOFjI6MF_H0x1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Apr 2026 06:50:59 -0400 (EDT)
+ 17 Apr 2026 06:50:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e09d63be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Apr 2026 10:50:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 677dd3a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Apr 2026 10:50:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 17 Apr 2026 12:50:47 +0200
-Subject: [PATCH v4 01/12] t: prepare `test_match_signal ()` calls for `set
- -e`
+Subject: [PATCH v4 00/12] t: detect errors outside of test cases
+Date: Fri, 17 Apr 2026 12:50:46 +0200
+Message-Id: <20260417-b4-pks-tests-with-set-e-v4-0-44d43efdafb1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,61 +85,121 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260417-b4-pks-tests-with-set-e-v4-1-44d43efdafb1@pks.im>
-References: <20260417-b4-pks-tests-with-set-e-v4-0-44d43efdafb1@pks.im>
-In-Reply-To: <20260417-b4-pks-tests-with-set-e-v4-0-44d43efdafb1@pks.im>
+X-B4-Tracking: v=1; b=H4sIAIcQ4mkC/3XNzQ6CMBAE4FcxPbumP1sQT76H8dDCKtWohK2oI
+ by7RaPRA8dJZr7pBVMbiMVq1ouWusDhck4B5zNR1u68JwhVykJLnUlUEjxCc2SIxJHhFmINTBE
+ IjCPMC6/RWyXSumlpF+4vebN9Z776A5Vx5MZGHThe2sfrulNj7/NiJl86BRKsX5o8M07SEtept
+ ggnMV50+hex04hOCBIWEl2R7ZT9Q8wvkk0jJiG5KyTZqixdVX2RYRieGYJOZFcBAAA=
+X-Change-ID: 20260410-b4-pks-tests-with-set-e-3ae479b24b51
+In-Reply-To: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
+References: <20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
  =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 X-Mailer: b4 0.15.1
 
-We have a couple of calls to `test_match_signal ()` where we execute a
-Git command and expect it to die with a specific signal. These calls
-will essentially execute the process in a subshell via `foo; echo $?`,
-but as we expect `foo` to fail this will cause the overall subshell to
-fail once we `set -e`.
+Hi,
 
-Fix this issue by using `foo && echo 0 || echo $?` instead.
+this is a follow-up to the recent discussion we had around `set -e` to
+make our tests more robust and basically supersedes Junio's [1].
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+I've tested the patches with both Bash and Dash, and all tests are
+passing on my machine with both of them. CI seems to be happy, as
+well. But I would expect that this change probably has some fallout,
+even though I hope that it's generally going to be small and contained.
+
+This series is based on 8c9303b1ff (Merge branch
+'jc/no-writev-does-not-work', 2026-04-10).
+
+I've created an MR with GitLab [2] and a PR with GitHub [3] to verify
+that these changes work on both platforms.
+
+Changes in v4:
+  - Simplify how we read a multi-line variable value.
+  - Link to v3: https://patch.msgid.link/20260416-b4-pks-tests-with-set-e-v3-0-7a90e5dccadd@pks.im
+
+Changes in v3:
+  - Adapt `linux-TEST-vars` job to use Bash instead of Dash. Ubuntu
+    packet mirrors seem to be having problems, so I wasn't able to get
+    past installing dependencies in any jobs. All to say that I couldn't
+    verify that this works as expected :/
+  - Link to v2: https://patch.msgid.link/20260415-b4-pks-tests-with-set-e-v2-0-4e4904a96f15@pks.im
+
+Changes in v2:
+  - Use `ret=0; $command || ret=$?` pattern.
+  - Restore `echo 0` in SIGPIPE tests.
+  - Fix "lib-git-svn.sh" to gracefully handle the case where SVN Perl
+    modules aren't installed.
+  - Use `|| :` consistently instead of `|| true`.
+  - Fix up a couple of tests that fail on FreeBSD 15. The test suite is
+    now passing on this system, too.
+  - Only enable `set -e` on Bash 5 and newer.
+  - Link to v1: https://patch.msgid.link/20260413-b4-pks-tests-with-set-e-v1-0-5b83763a0e84@pks.im
+
+Thanks!
+
+Patrick
+
+[1]: <20260325062114.2067946-1-gitster@pobox.com>
+[2]: https://gitlab.com/gitlab-org/git/-/merge_requests/541
+[3]: https://github.com/git/git/pull/2270
+
 ---
- t/t0005-signals.sh | 4 ++--
- t/t3600-rm.sh      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Patrick Steinhardt (12):
+      t: prepare `test_match_signal ()` calls for `set -e`
+      t: prepare `test_must_fail ()` for `set -e`
+      t: prepare `stop_git_daemon ()` for `set -e`
+      t: prepare `git config --unset` calls for `set -e`
+      t: prepare conditional test execution for `set -e`
+      t: prepare execution of potentially failing commands for `set -e`
+      t: prepare `test_when_finished ()`/`test_atexit()` for `set -e`
+      t0008: silence error in subshell when using `grep -v`
+      t1301: don't fail in case setfacl(1) doesn't exist or fails
+      t6002: fix use of `expr` with `set -e`
+      t9902: fix use of `read` with `set -e`
+      t: detect errors outside of test cases
 
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index afba0fc3fc..84319cf169 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -42,12 +42,12 @@ test_expect_success 'create blob' '
- '
- 
- test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
--	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
-+	OUT=$( ((large_git && echo 0 1>&3 || echo $? 1>&3) | :) 3>&1 ) &&
- 	test_match_signal 13 "$OUT"
- '
- 
- test_expect_success !MINGW 'a constipated git dies with SIGPIPE even if parent ignores it' '
--	OUT=$( ((trap "" PIPE && large_git; echo $? 1>&3) | :) 3>&1 ) &&
-+	OUT=$( ((trap "" PIPE && large_git && echo 0 1>&3 || echo $? 1>&3) | :) 3>&1 ) &&
- 	test_match_signal 13 "$OUT"
- '
- 
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 1f16e6b522..a371ea690e 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -260,7 +260,7 @@ test_expect_success 'choking "git rm" should not let it die with cruft (induce S
- 
- test_expect_success !MINGW 'choking "git rm" should not let it die with cruft (induce and check SIGPIPE)' '
- 	choke_git_rm_setup &&
--	OUT=$( ((trap "" PIPE && git rm -n "some-file-*"; echo $? 1>&3) | :) 3>&1 ) &&
-+	OUT=$( ((trap "" PIPE && git rm -n "some-file-*" && echo 0 1>&3 || echo $? 1>&3) | :) 3>&1 ) &&
- 	test_match_signal 13 "$OUT" &&
- 	test_path_is_missing .git/index.lock
- '
+ ci/run-build-and-tests.sh          |  5 +++++
+ t/lib-git-daemon.sh                |  8 +++++---
+ t/lib-git-svn.sh                   |  7 +++----
+ t/lib-httpd.sh                     |  3 +--
+ t/t0005-signals.sh                 |  4 ++--
+ t/t0008-ignores.sh                 |  4 ++--
+ t/t1301-shared-repo.sh             |  2 +-
+ t/t3600-rm.sh                      |  2 +-
+ t/t3901-i18n-patch.sh              |  3 ++-
+ t/t4032-diff-inter-hunk-context.sh | 14 ++++++++------
+ t/t5000-tar-tree.sh                |  4 ++--
+ t/t6002-rev-list-bisect.sh         | 17 ++++++++++-------
+ t/t7422-submodule-output.sh        |  2 +-
+ t/t7450-bad-git-dotfiles.sh        | 24 +++++++++++++-----------
+ t/t7508-status.sh                  |  4 ++--
+ t/t9138-git-svn-authors-prog.sh    |  4 ++--
+ t/t9200-git-cvsexportcommit.sh     |  3 +--
+ t/t9400-git-cvsserver-server.sh    |  5 +++--
+ t/t9401-git-cvsserver-crlf.sh      |  4 ++--
+ t/t9402-git-cvsserver-refs.sh      |  4 ++--
+ t/t9902-completion.sh              |  6 ++----
+ t/test-lib-functions.sh            | 12 ++++++------
+ t/test-lib.sh                      | 19 +++++++++++++++----
+ 23 files changed, 91 insertions(+), 69 deletions(-)
 
--- 
-2.54.0.rc2.529.gd9106f7525.dirty
+Range-diff versus v3:
+
+ 1:  276cd1c541 =  1:  7e57f3ba57 t: prepare `test_match_signal ()` calls for `set -e`
+ 2:  3cbcf0298c =  2:  3b8f710de8 t: prepare `test_must_fail ()` for `set -e`
+ 3:  e97211a468 =  3:  9cf3f458b3 t: prepare `stop_git_daemon ()` for `set -e`
+ 4:  c974d59252 =  4:  8763cedd60 t: prepare `git config --unset` calls for `set -e`
+ 5:  e41064dd1b =  5:  8dc43cca62 t: prepare conditional test execution for `set -e`
+ 6:  890c11aa7a =  6:  ca0c250d39 t: prepare execution of potentially failing commands for `set -e`
+ 7:  a7b2bb9cd5 =  7:  4631ebe1d9 t: prepare `test_when_finished ()`/`test_atexit()` for `set -e`
+ 8:  17656428f9 =  8:  64df2f3975 t0008: silence error in subshell when using `grep -v`
+ 9:  7a6e730ba3 =  9:  f79e55dd96 t1301: don't fail in case setfacl(1) doesn't exist or fails
+10:  b762f10ac9 = 10:  fcf5ed7ced t6002: fix use of `expr` with `set -e`
+11:  bb588ffe22 <  -:  ---------- t9902: fix use of `read` with `set -e`
+ -:  ---------- > 11:  39a5e2ffcb t9902: fix use of `read` with `set -e`
+12:  9ffcb73e64 = 12:  7dfee331e9 t: detect errors outside of test cases
+
+---
+base-commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
+change-id: 20260410-b4-pks-tests-with-set-e-3ae479b24b51
 
