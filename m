@@ -1,155 +1,115 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4F13BB9F1
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 10:51:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A45022B8C5
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 15:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776423092; cv=none; b=X0/KWEhuOep0lkBMRJezHJ8gBEiokuPdadem0wVj7zBFgn5eUUwMAnkg6guxCuBbsdLW0HfVWz+A0zOf3nwXPsARPtu1ZE/X0Fcic/5YaQumj+gLVdDJNJWHWSseGP+iIlPmWuB2N2+ErAx5IMbNh0OxufWc9KujzXYNObDsjL4=
+	t=1776439159; cv=none; b=iFTGvw6H4kKRQcKEJk5S5Cuh7Y45xxVuqA9YKe7rUatAh1QfOuFr9vqBj3Rd+RM8c4mRNknBTqdTfXtCYdlHIz0mJ8mUeUeEKoSUo7dPdW15OC8p65qcuKEnzKuwGEHxaSMAGTh6gU93ptw/7EOJqa+q3GA6FC7xIr25zu8wL1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776423092; c=relaxed/simple;
-	bh=Dqxy33CX5R4Qaf9T3rk663knoZQ08rKY6d5Y3c2puPY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KqAFFD4pDvTeX+YLDOOwWwSk9ALsYosf0TJuQEDnk1N53xZYogAbFuPFDEtmQWodyn7ZwBK3vfOzJ8n9R18JTr+PnyBycw2/awy/ifdPpZXK3WBzMukbuFeD/XouLdEyeTX1VB2/VSlgOal+nxbUs98sQy9Q/1b99FbvXdglMjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ee22tU+S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNdRWjOL; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1776439159; c=relaxed/simple;
+	bh=zTkY61GIl6B4Or3SucQ+oQ/eBmzFtUgKpozfCIzLm5w=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Kv7bUKJK7J9kWtu2QhOvVBaqaCxG1PtJAdxoajKhYWu/iNA4JRzq3tzNUvb47oIF7TW8+W/ToAjfOlUc5MQB1LXd/KgVMWsXdADonNuniWVksMI20ANi53pfyDPHbaJ6eaTOA2lOzRXBDl1RCbWMKrng0njVABTmzz507dj3wFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UsdYKTnA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v92rTX0i; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ee22tU+S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNdRWjOL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2993A1400087;
-	Fri, 17 Apr 2026 06:51:29 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 17 Apr 2026 06:51:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776423089;
-	 x=1776509489; bh=Xj0s+aZBRxfUtEbxTEJcL8CLA+UUNpkqoqAxDq/3Y7c=; b=
-	Ee22tU+SvP5ToXrjqG9RYhQa39+njbQoTgNRqz26/30IGBULMvSQ+RpELRb6skeM
-	oIFhnXKewD4fIWUQTpAJ+xxlapI5mGNf6df9RvW6jGAfa3GOavho7E62Z+zfy+1v
-	JVjwERXxp6Lr7jlbovrzt/jFgIdQe/GgvLgsjVvcOMbnpVFPpYYLykseK3Ejn2Rp
-	ba2h4EYaQGWY7xp8GaxLwDCm55YJL28uPxuumyAJ3wh/642VbQ5lHm2v4Rvtdmdt
-	WS7fCnKqlXYHTbJVJvhDd+6cKN+DVTJ26/IN/zHde3mYeXsxb8qgyTxz8cBrn+da
-	V3if6BmqiIVnZHvyDYwxEA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UsdYKTnA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v92rTX0i"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8D7261D0011D;
+	Fri, 17 Apr 2026 11:19:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Fri, 17 Apr 2026 11:19:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1776439156; x=1776525556; bh=3/RbpfCNf4
+	xz+neZ5EKOHWoUmH5j5A3WIfvSep91w7U=; b=UsdYKTnAF3DFhKHbg2hU8ctnv3
+	89V7NoEITF9Y0phzniezH06FwLuQMv0DtuKOxwmRXe7+e8UycqaVEbHxAnFgcuSE
+	TgXKPz/CRzLiCdRY5mBJRDD4Pq60uLZErnhdGYA60cCZMp2zdikexvfNiq8sTdej
+	hgAztAp6LEii5AfmJ/0gV8ULBJDrf3m3F5SAupSJe6/fT/nN7m5IazyBIhzYjsll
+	3PzKOq5paDsCfRqmqfXz8G4XfGWkD1xEQuxNXymmBxhtdFovcMk31MraljwpbRN6
+	3FdobOv2koolcPDdstk/TMVCpj2rIwr01+aptnqjGtpjsS/lEUyHhEN3ccYQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776423089; x=
-	1776509489; bh=Xj0s+aZBRxfUtEbxTEJcL8CLA+UUNpkqoqAxDq/3Y7c=; b=T
-	NdRWjOLi0vRJf0F0FrpepNWWBbqbmY1iJ9Gfrh4RvzKRQEAylU474VsGQ5795xdf
-	7C2be8aYpYJtSXIIMMms4sfbt1PLG+XTrZQKQgNkHd/7sdkRR49KKQFYH36/mojb
-	0GI8UrkDjF8Ukg9r38EbkwmEDBok9zL/338T/cuqpZno4bk0Ha2c37BVnOleqgDM
-	vq+r1sbMgEWIZfUbABWzINAJPTtowFqcR5bwscrxlnW5ev5GS2bicinwWSPQbhdL
-	aDZHTYYWiVK5rTB813iOptfyXFSz5sORB5zasU/vLyYv7mIo/DSAY6PddUIVXSEA
-	Xse5H2aJoSO7HnAkWAfgg==
-X-ME-Sender: <xms:sRDiaZXqGIbmOL-YpHm0sbhbjkG6qqdCOwvj3Ccy7p-SkoHwl7X0tg>
-    <xme:sRDiaQmA6FUCVovShRw8X6WgNlFTQItsKHXEfCrySTBIu9uaF3y7Fn2gFX7oyA1Dk
-    oVllJGa-nSUh3b6jQHAcG3yCg4uNcEmkbd4eVAKh0RbhIj1wsGzHg>
-X-ME-Received: <xmr:sRDiaaanPLu1ws59H6ERXy4zalNr0mIBq8_ckKPQUO84OykALw8zPbpXm64hEC326a_cKKc5R04JdPA7cn8qJLfPnDaq7GOMmUlYj29qFUL1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdegleeilecutefuodetggdotefrod
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776439156; x=1776525556; bh=3/RbpfCNf4xz+neZ5EKOHWoUmH5j5A3WIfv
+	Sep91w7U=; b=v92rTX0ifki406/Phu6TkFaUFPpGj57FL2Nfuj2esiRFjDnF3Hb
+	S6EzdJIsykuOLazkzqoh3S6OmCb7mgYv4wEtbdU8DsLt0jbx0lCQUAdNf8iOeOGz
+	rDCv9cG0fb1e9mk7dnfEu4FxSkcj1wewgWZ33HpR+vWO/kegu/aut1I0RpmbT1hN
+	CzU6Nr9ZhZOMX7PayAiLp6eV3CenTBbBiM7znhhTK4ABHIAvBRyYurfe7HsjUKJA
+	vIXGNoNZkbo83s2+LWpQhTUlDHxIperYB1UCHNtnH1IM88tt6LL8r4JLcm6FnT9O
+	dNlR/8q8UQgbTAtGcziIIRQygTj2/dj6dqw==
+X-ME-Sender: <xms:dE_iaZQ6Ok7uEBuu9JLAZ1gmq4HpN5hRkCwt2Sco4coIRZl1qGZVeA>
+    <xme:dE_iaYyIb9DqcJYwrihUXDTsjNK5nFOjjD-rJOCQ_-tJ_iIC-w8O2s4QKOCjqCKh5
+    2fI9ULoKJPM9EQlQOXIXcdprPIQEqaAw131_uVeClJ4x3L8RfQ>
+X-ME-Received: <xmr:dE_iacfhg3FAz31cu4K4vCw2Cv_0Z4E45Guwvg9J5-uKfissbbOJXTYs_lLSgmPgUZPTRPmyDvy-AMwkOHNrvCg8JM2AMif3bg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehtddvvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
-    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeegleejtdelfeffleetvdeivdeuuefgheetje
-    ehudetjeehhefhheejteeugfffvdenucffohhmrghinhepghhnuhdrohhrghenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:sRDiabOTmpEEi_Z6ZuxxflfOnIkPeJfSRyU06aBe19tFXKqob9zcKQ>
-    <xmx:sRDiafbqyO8I3HC4wF3URCJ3nSJ25NmDsFvsmt0JYVlVh0HUF2tn1w>
-    <xmx:sRDiaZ1cA9nQD_OvRyc7GETjOKTn7rVEoOnoXgL3seGB0hjiRsA9xw>
-    <xmx:sRDiaVeQSnpzxTa7HwPDKtpX78axN4tHDxFtDSETfG-Bkuo2PP3CwQ>
-    <xmx:sRDiaSWZYt0Wi2gnLpDM-ogmWr_vEhR0j9IVC5qvWEXxELhHBza3OxJs>
-Feedback-ID: i197146af:Fastmail
+    ihhlohhuthemuceftddtnecunecujfgurhephffvufgjfhffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekhfeuudetkefgtdeugedvgfeuieeuvd
+    elgffgfeekvdffuddvvdekuefhieefjeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:dE_iacI0Tq-oXi4Ljx52bkri11P561NHLD8tzivm6qfRahpRjUt20Q>
+    <xmx:dE_iaVFAUbBvq9AT_MieWSBgoXr3C4Bnv59jmRFDbbO-tBizByvUPA>
+    <xmx:dE_iaeoTpTgUK3mRmEls969SwC9J04HhxCdIXYFTNANPTgJlh7r2oQ>
+    <xmx:dE_iaWRpepFCNhn3GYqBJS47P4INYZnddFwRCzsCxIHF98FdEsCVJQ>
+    <xmx:dE_iacoiRKGdvh9tVxyWslI78bNePPPDfG5qnIkZIudUEdbrN1rNqBh8>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Apr 2026 06:51:28 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7a153634 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Apr 2026 10:51:27 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 17 Apr 2026 12:50:58 +0200
-Subject: [PATCH v4 12/12] t: detect errors outside of test cases
+ 17 Apr 2026 11:19:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.54.0-rc2
+In-Reply-To: <xmqqqzohd0sh.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	14 Apr 2026 08:22:38 -0700")
+References: <xmqqqzohd0sh.fsf@gitster.g>
+Date: Fri, 17 Apr 2026 08:19:14 -0700
+Message-ID: <xmqq5x5py5ql.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260417-b4-pks-tests-with-set-e-v4-12-44d43efdafb1@pks.im>
-References: <20260417-b4-pks-tests-with-set-e-v4-0-44d43efdafb1@pks.im>
-In-Reply-To: <20260417-b4-pks-tests-with-set-e-v4-0-44d43efdafb1@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-X-Mailer: b4 0.15.1
+Content-Type: text/plain
 
-We have recently merged a patch series that had a simple misspelling of
-`test_expect_success`. Instead of making our tests fail though, this
-typo went completely undetected and all of our tests passed, which is of
-course unfortunate. This is a more general issue with our test suite:
-all commands that run outside of a specific test case can fail, and if
-we don't explicitly check for such failure then this failure will be
-silently ignored.
+An update to 'master' has been pushed out, which contains
+work by Elijah Newren, Jeff King, and Johannes Schindelin,
+on these issues:
 
-Improve the status quo by enabling the errexit option so that any such
-unchecked failures will cause us to abort immediately.
+ * documentation fixes (typoes, grammos, phrasos)
+ * fix to MIDX that wrote version2 file unnecessarily
+ * update for Coverity CI job.
 
-Note that for now, we only enable this option for Bash 5 and newer. This
-is because other shells have wildly different behaviour, and older
-versions of Bash (especially on macOS) are buggy. The list of enabled
-shells may be extended going forward.
+Git 2.54 final will be tagged at 10:00 US/Pacific (17:00 UTC) on
+Monday, Apri 20th, and I plan to go offline for a week or two
+immediately after that, so this pushout will pretty much be the
+final shape of what should be in Git 2.54 final (modulo l10n),
+although I might have another update later today.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ci/run-build-and-tests.sh | 5 +++++
- t/test-lib.sh             | 9 +++++++++
- 2 files changed, 14 insertions(+)
+Changes since v2.54.0-rc2 are as follows:
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 28cfe730ee..f0a3597184 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -15,6 +15,11 @@ fedora-breaking-changes-musl|linux-breaking-changes)
- 	MESONFLAGS="$MESONFLAGS -Drust=enabled"
- 	;;
- linux-TEST-vars)
-+	# Ubuntu uses Dash by default, but we only enable use of `set -e`
-+	# when using Bash 5+. Ensure that we have at least one CI job that uses
-+	# it.
-+	export TEST_SHELL_PATH=/usr/bin/bash
-+
- 	export OPENSSL_SHA1_UNSAFE=YesPlease
- 	export GIT_TEST_SPLIT_INDEX=yes
- 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index de7d9e7b92..1f7868c537 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -15,6 +15,15 @@
- # You should have received a copy of the GNU General Public License
- # along with this program.  If not, see https://www.gnu.org/licenses/ .
- 
-+# Enable the use of errexit so that any unexpected failures will cause us to
-+# abort tests, even when outside of a specific test case. Note that we only
-+# enable this on Bash 5 and newer, as `set -e` has wildly different behaviour
-+# across shells. The list of allowed shells may be extended going forward.
-+if test "${BASH_VERSINFO:=0}" -ge 5
-+then
-+	set -e
-+fi
-+
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in 'trash directory' subdirectory.
- if test -z "$TEST_DIRECTORY"
+Elijah Newren (6):
+      RelNotes/2.54.0: fix typos and grammar
+      CodingGuidelines: fix subject-verb agreement
+      doc: fix self-referential config in sendemail.smtpSSLClientKey
+      doc: fix plural agreement in pack.preferBitmapTips
+      doc: fix singular/plural mismatch in git-rerere
+      doc: fix grammar errors in submodule description
 
--- 
-2.54.0.rc2.529.gd9106f7525.dirty
+Jeff King (1):
+      MIDX: revert the default version to v1
+
+Johannes Schindelin (1):
+      codeql: bump actions/cache from 4 to 5
 
