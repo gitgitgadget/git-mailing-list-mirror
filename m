@@ -1,86 +1,85 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C555248F72
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 19:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F662494D8
+	for <git@vger.kernel.org>; Fri, 17 Apr 2026 21:18:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776455455; cv=none; b=lJWSXJZQHTtiUgqo49hhdFZwyvOVfxr8puAzsc9ibDhEGCGp1UTt+D74o6V1mnDGNPqxmnej6LremGag/3r5AwvNw++xZWYpkPuRgyUChH5hJPDEWJTGx1k/yebaW9WBrnMhcTeu6X+oa7IZ3KFbSnB/IlCL7qicBFPRmE6y2SU=
+	t=1776460726; cv=none; b=iuYf0dgwTX0Jv3xGW8ubuHzgGXzjuyQZdK/hneiS7p2qii1O8PBj+ZjDEMBqcMvUsbV+KL9NMalrxgQ3NRt5i1WpzkmbHz/kuQ+QxHjgQuW2w/t+2sHuT5FIZBCHpRZtlSziKV2qTb03SMm+fx80zyB2qCmd1aNPUCjR8k0og8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776455455; c=relaxed/simple;
-	bh=3h7B4CrM02Aqx/lK2+0FNIu3BnYac+UK11eBaYBEVi8=;
+	s=arc-20240116; t=1776460726; c=relaxed/simple;
+	bh=T3lFi5dvCPAqFTiY/CFUGtdgPyiwsq9ewjVv2ZzaTyk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rYagAJPCTnVrffNxZR5qYrYjxF9k/WbH/egTEVsCT1ciBYDeCfB0J31mAzYqz1FI6YyZa+EQ0eTPu381sbsLLURpPLxDvm5WBxfGpGFDo6d6wacZxjUQzcyiEq/IYCPUmAAPrccU79NJsVci/c9DeoaUlCBznAv9gPFyYRgQeUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dWXibXoq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qzXhA3qf; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=LYFWAaVym4iFNgS1Qfvyvj5L6cZAVj/KNhnvG5ZwOAaUnXHLYCmVAsk7ujNpz8Xz9GSZUxkJmp4uksO2SQIgOBg4kskC+tASGzXpc4SYhgeNiaTMRz4H4HrE+tYkSycqVswHxXn5x5oCagRLCTY3iFfUrnjM1AVPVbSdC3u5wi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V635DEIk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T1iMW3KV; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dWXibXoq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qzXhA3qf"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 634F11D00178;
-	Fri, 17 Apr 2026 15:50:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 17 Apr 2026 15:50:52 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V635DEIk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T1iMW3KV"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B9D1A7A01A8;
+	Fri, 17 Apr 2026 17:18:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 17 Apr 2026 17:18:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776455452; x=1776541852; bh=qy4qKCnhk0
-	PjuUEm84aHH/sLJOnXvGBlRBo+CBcamAA=; b=dWXibXoqSnl2OQciHuwtsh7p33
-	9IP6CZ1j6mmWHzIyQdYHvrvLVqJp76bshWCaASOnOZ/+varvusMG8dFuql8KM+gU
-	dOoRzoIFsBSKVUFt8/oPgNvK5+d+lT5beAvw4x1qMb+nVA6g7k8PqzXiuUyxYL9i
-	pSXm4lummXzYG06I3QGV4T3Q0dM+8Zw3LjFWmeW8mXnKxZ3GyP+AWhWSbrX56f1V
-	wORdLmAZ89BUhfYI3DgOIGoakqRi+qV6j00Gtw1eoenh22M8Ke/3tB3lDQ8ZC9dz
-	rvr556dQTuOz/eJtI0CGkjj9ctFea8cR1W2/VBTkn5qLyG8yJQVo6putd/GA==
+	:subject:to:to; s=fm1; t=1776460719; x=1776547119; bh=Lg8iDorqLJ
+	eRJB1qyBLrYcGFmT1t27U9CaNQ1wKzjSg=; b=V635DEIkYpg5mwQFkYKUX80c9s
+	/LWt89kCkGpTx8gQtURYU6g1+fJZOIyxZ8RoSUJE9IPU4DFNWjnz5rxcuBFIy0Pp
+	LzQhcfZr3KlSRzYE05r0z1ZlZXwgN991TRpZrCr+Octtkzw8Cxxne2KH2pv1stNn
+	haCa4R+kstv0kbSwJg2pxPoNGS7LU829Q0j0CbXqABJG6WevaMOg2IKgmJCKB12/
+	smHG0xxcCPItBQCort8sGlxTlz2fzCEsv19BlAJ5FaX0fJw3d5BOJVXJ07/59by+
+	cp3Il5L1IAzpOeo1YR7ckjjfSoooCHEu2n4F6SIhu0rdZu8QPl497hwPnQAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776455452; x=1776541852; bh=qy4qKCnhk0PjuUEm84aHH/sLJOnXvGBlRBo
-	+CBcamAA=; b=qzXhA3qf+hUYEcXUZ4Nnit+hJBMO+oYD9nEUourZZPP2TwR3Us7
-	Z9Fk3RMAyIRrJFb+JDA4vsycnAjfTWKRHg3n1KPFS1pYRutKA67EIkmFLNnXb+M5
-	MJ+g7IVuIJXD86MHLqFGxOmutyG013/3d56nNVtYPnbK8saFTqSihSSSyrQ6bauo
-	fCWlEqkWzXL5ZYyw3Y2u+usNyToXIKCKnL0U99SHpyeG9sJF0aAi2N4pejidCDpO
-	i1RTqCtvH/MZxDvaqqlZYGgq+husVu1E5NJ4gKdH9oUr1NZ57pvXMD9Ip/IZzN10
-	5Qd1gPK9RFyBcNaZxd9QTnZK0i2yCevJvkA==
-X-ME-Sender: <xms:G4_iaZtefX6fQEXiFb-DDzWYlchg3e1mb4_qJ8FzPTw0O4CCqv6ZjQ>
-    <xme:G4_iabz5MQOEzgABbMBmozfWyyxAUUVTh1mGyr4nnOIyMIFDF83PuLukMTP0ER3jD
-    Ku2boqxpG626q9zobZWb_ZpXXjrjjT0zk4d5nS4S7j8lNp7fH4LAg>
-X-ME-Received: <xmr:G4_iaUAMbOogO7hIU6he4gtjsTp3-wefV8pmlIqqxLS0qlMbersI-J_dWANSBPosrgah-wF0h3kiqnHAZ9QTrqlrIt3yNXQr1g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehtdejjecutefuodetggdotefrod
+	1776460719; x=1776547119; bh=Lg8iDorqLJeRJB1qyBLrYcGFmT1t27U9CaN
+	Q1wKzjSg=; b=T1iMW3KVk78Y6cvPQA72J1t+0dR9e4xsTtWBwtek7vz54L+Gl25
+	R29s9TeeoisCHPeA3LUL/N6ZTJl50ud0kkniIrT99UkxllnmfJ06lTPsuNfDsdrC
+	7WkhwkqEabaF2ESNTAYijqcnmcrMqUaEhGmFigEx1YV7oALOg8tMm/0D4v1C1cyf
+	SwWXghglWYyt5rsPPZUhMFiMt1WNSOO+AzNFvvQCfokppecXHYnogE3iVQt8Tn1e
+	mcZFQOsmuMiStSptX1n+xW3sCtJ2NeV1+qTkfJfdiOVYVBhHwfMSVjY9W/FeixSv
+	INL1Vyz88vyK/7iryD4acMPVNGcbobF2pdA==
+X-ME-Sender: <xms:r6Piae1tODN6SYkCBDevlMOMddy_-DEHY8L-AbtkS0w43fgBSVJWFw>
+    <xme:r6PiaYF8dMGx_bs4xdfi9cM9j9xwct4iPaW5ftnPm18YbByxZ-t6zjoizVF5WwqOB
+    04RzJSLLkhQOK94jAeCrwlWChVMH3iaop_1jN0yZhSG1NCfFvfbqg>
+X-ME-Received: <xmr:r6Piab72Shnr7Y9kQPuRSC0Umc3DZywj_d_ZWrPF2po3aUo36u9d8jAeV3Ae-dKdCMz59XCtMWwkemHLH9BhD_gNz39JaEJjlA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehtdelgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkvghrnhgvlhesshgthhhlrghrrghffhgvnhhlrghnrd
-    guvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    oheptghhrhhishestghhrhhishguohifnhdrnhgrmhgvpdhrtghpthhtohepphgvfhhfse
-    hpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhm
-    rdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:G4_iaRfWMj1tkgvEQnloFOYXXFdGpVGcfXi-uHiFHo96KKJ7K5Xrdw>
-    <xmx:G4_iaWlIOhg5oof-OGkQyEC0FZatEsgesHLoheaOfO1eOVDq_ILN3w>
-    <xmx:G4_iaQEveXv1HU2O1o_lInmoB3RICx2gDPUw3Ab3t1rqyEpkozOatA>
-    <xmx:G4_iaW7FA5EqAFG35t-VwiBuWWhifvONnT6cDnKk3zsEnH6hrda3_Q>
-    <xmx:HI_iaQzGNCVhu6IL9Nig0D7uA-UXiEtIbb5TJDa6y6DtgwuSVBaYC9Cu>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:r6PiaevQ4TLvSKlWbfb9fYY7bqcrrMLP0VPO9nBUhL-RJVo5iM7fpQ>
+    <xmx:r6Piac5LvptdAq-r08Z0VTzvhcmYi6b_8njJLdvPs3KKdf_GCMa3fw>
+    <xmx:r6PiaZWonxyEoQee-ZACmRXp-KvDqwtccMRPjhSh9ScFEu-Xj-7RUA>
+    <xmx:r6Piae-4t8hCMp-d1Y7vW0wRVAVzssimBI9YM56bBcveQoM4hEKa3Q>
+    <xmx:r6Piac-5W2TrvPDqHj5KO1dpX22gZvmQ1HhxuqGm-T1BAa8u72ldV3l2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Apr 2026 15:50:50 -0400 (EDT)
+ 17 Apr 2026 17:18:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonas Rebmann <kernel@schlaraffenlan.de>
-Cc: git@vger.kernel.org,  Chris Down <chris@chrisdown.name>,  Jeff King
- <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 1/2] bisect: use selected alternate terms in status
- output
-In-Reply-To: <20260417-bisect-terms-v3-1-d659fa547261@schlaraffenlan.de>
-	(Jonas Rebmann's message of "Fri, 17 Apr 2026 18:48:30 +0200")
-References: <20260417-bisect-terms-v3-0-d659fa547261@schlaraffenlan.de>
-	<20260417-bisect-terms-v3-1-d659fa547261@schlaraffenlan.de>
-Date: Fri, 17 Apr 2026 12:50:49 -0700
-Message-ID: <xmqqjyu5weli.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH RFC 2/2] Move libgit.a sources into separate "lib/"
+ directory
+In-Reply-To: <aeKHhHVPUxqMa18L@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Fri, 17 Apr 2026 19:18:28 +0000")
+References: <20260416-pks-libgit-in-subdir-v1-0-03afc731df55@pks.im>
+	<20260416-pks-libgit-in-subdir-v1-2-03afc731df55@pks.im>
+	<aeKHhHVPUxqMa18L@fruit.crustytoothpaste.net>
+Date: Fri, 17 Apr 2026 14:18:37 -0700
+Message-ID: <xmqqfr4twaj6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,59 +89,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jonas Rebmann <kernel@schlaraffenlan.de> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->  	if (!state.nr_good && !state.nr_bad)
-> -		bisect_log_printf(_("status: waiting for both good and bad commits\n"));
-> +		bisect_log_printf(_("status: waiting for both '%s' and '%s' commits\n"),
-> +				  terms->term_good, terms->term_bad);
+> On 2026-04-16 at 13:24:31, Patrick Steinhardt wrote:
+>> Introduce a new "lib/" directory and move all of our sources for
+>> "libgit.a" into it to fix these issues. It makes the split we have
+>> evident and reduces the number of files in our top-level tree from 550
+>> files to ~80 files.
+>> 
+>> This is still a lot of files, but it's significantly easier to navigate
+>> already. Furthermore, we can further iterate after this step and think
+>> about introducing a better structure for remaining files, as well.
+>
+> I have not reviewed the details of the patch in general, but I think
+> this is generally a good idea.  Most projects in non-C languages put
+> files into some sort of directory structure which seems to help
+> organization and discovery, so I think this would be useful here as
+> well.
 
-I think this was new in v2 (which I somehow did not pick up).  Good
-finding, but not limited to this one, I wonder how these custom
-terms interact with localization.  The 'quotes' around these terms
-do help by hinting that they are not a normal adjectives given to
-the noun 'commits', so that might be good enough, but that still
-assumes that the .term_good and .term_bad, even when they are not
-'good' and 'bad', are good adjectives that can apply to 'commits'.
-I'd expect in most use cases that would hold, but the command does
-not prevent you from calling more recent ones 'dog commits' and the
-ones before the transition point 'cat commits' ;-).
+I do not mind a move to thin the set of regular files out of the
+top-level directory.  I have forever been annoyed by my buil<TAB>
+no longer complete to builtin (anticipating either .h or /) and
+it would be nice if build.rs is renamed away, or builtin{.h,/}
+are moved away, to restore the convenience of tab completion back.
 
-Of course, rephrasing the above to
-
-	waiting for both commit(s) marked as '%s' and as '%s'
-
-would be ultra-awkward, even if it may be the safest.  So I dunno.
-
-> -				error(_("unable to verify %s on good"
-> -					" revision"), command.buf);
-> +				error(_("unable to verify %s on %s revision"),
-> +				      command.buf, terms->term_good);
-
-And from that point of view, this unquoted "ON good REVISION" might
-become a problem, because it asssumes that .term_good would be
-readable as an adjective given to the noun 'revision', which might
-not hold true even without translation.  The command.buf contains a
-command with its arguments, and .term_good contains the custom term.
-Perhaps both should be placed in '%s' quotes?
-
->  				res = BISECT_FAILED;
->  				break;
->  			}
->  			if (rc == res) {
-> -				error(_("bogus exit code %d for good revision"),
-> -				      rc);
-> +				error(_("bogus exit code %d for %s revision"),
-> +				      rc, terms->term_good);
-
-Ditto for quoting 'good' that is no longer a normal adjective that
-adorns the noun 'revision', in the context of a translated message.
-
-> @@ -1314,7 +1317,7 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
->  			puts(_("bisect run success"));
->  			res = BISECT_OK;
->  		} else if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
-> -			puts(_("bisect found first bad commit"));
-> +			printf(_("bisect found first %s commit\n"), terms->term_bad);
-
-Ditto for quoting 'bad' here.
