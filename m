@@ -1,269 +1,150 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDF621ADC7
-	for <git@vger.kernel.org>; Sat, 18 Apr 2026 08:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F778349AFF
+	for <git@vger.kernel.org>; Sat, 18 Apr 2026 12:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776499275; cv=none; b=a8HcxU/gTscJCksG/H5s53AQAl2GjQ2m8MDr5qEkTNMPyknuekwTwhuwmx9VR0aqBBw14kFYLz7vW37X6OKWw7hDowL8sv6D4AORayGXqy6QlFvl5u9kKxofrpIf7iNCAki34eoWKXq4n88Y/qoj/CS6XQu39n42JlFNedFhyLU=
+	t=1776514644; cv=none; b=hWdi8zTx43mtN44WSGXe1ibFBkhEaA8GBXWTO20hdimf46t5CDu+Fi0x2U8lRv9liYgd933bgPrivriv2L0vACnUeYaMtoSMyxGIRE+DwOk4olyU6WmE0TlUg5QTdspvojce6tplVQ2jDlVhPSzmGM69FoaBILrNWBMke1Nx7lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776499275; c=relaxed/simple;
-	bh=lEW03jM9stSmBUI7zLOHjVuGpVnroCPP2ruvCC0uVyY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G9JadhUnCkCqns54OU0bPAD60us3ew3DblPPQxFXQX/qQmRuI/Ce1OkDbrKlVuZnxcDGTe7mAl58fo4dpEhEypn3qwqcBh3hanrpysnjtbh2RkB5iKWKCc84Oqq0W+UhSvuWE/TqYjet8UJqjCpGMNc6aeSbYI7b/mAEnaBCvC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fCNGFiq8; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1776514644; c=relaxed/simple;
+	bh=W7riqNhaUa+KW7jKj9j3R1FZL69oyPxejkv4b7e0apM=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=OIFB61NB/3oISjSgVS/ltjboOfwxRYVt33+yUPjcJ7hKp5ZnZmNv82cJ8+uUphSPcuwzGqbL2r07k/Jw7Jv+qo0pf0hjjCvSAYNhD+qR2eM97Knj3Bwg6PUZFt+p2AZJfV72WLEkKDQDDd8pPN9CSaGQPQxuA5WUJs42bbkQqNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kVJDomNt; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fCNGFiq8"
-Received: (qmail 388590 invoked by uid 106); 18 Apr 2026 08:01:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lEW03jM9stSmBUI7zLOHjVuGpVnroCPP2ruvCC0uVyY=; b=fCNGFiq8eE988XHmU+pE/bCMruchyPPzEHytSWo43VAy0bdMbXzrQH6PSrVjhJH7eHls1pIlm7yrJsC2gvtIegU6VqNet5Ya2tblKQIcjFOFJBYphqRXP8C68YypsSosqhD7li/YQORWXatTEcsMgIUkLU2kskNxe5s1dWdGhe24LyO9l8GTawyxHPYBTIbM76/5yJfiNX1K+fzVumjpBDKsWVW531ny+cd+IyQ+GtVsRm9BYVJG7Y1DVJbbSGc6L0g4HvltPAZYBsT2EMU9fjwbB1lFCe1UzTr9CuCgQ/dM9/2ENyzziagQ6pUZ70MDPuizaGSOIA4PrIXDPuk5cg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Apr 2026 08:01:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 650459 invoked by uid 111); 18 Apr 2026 08:01:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Apr 2026 04:01:12 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 18 Apr 2026 04:01:11 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 06/12] t: prepare execution of potentially failing
- commands for `set -e`
-Message-ID: <20260418080111.GA3187789@coredump.intra.peff.net>
-References: <20260413-b4-pks-tests-with-set-e-v1-6-5b83763a0e84@pks.im>
- <xmqqeckifq59.fsf@gitster.g>
- <xmqq340yfivf.fsf@gitster.g>
- <ad3rgbgadjIZRgaz@pks.im>
- <20260414220347.GA3475127@coredump.intra.peff.net>
- <20260414225206.GA3486072@coredump.intra.peff.net>
- <20260414230810.GA3528448@coredump.intra.peff.net>
- <ad80r_oY-uAV2zVt@pks.im>
- <20260416054924.GB646814@coredump.intra.peff.net>
- <xmqqtstb3rf1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kVJDomNt"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-79a74765703so14070057b3.3
+        for <git@vger.kernel.org>; Sat, 18 Apr 2026 05:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776514642; x=1777119442; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MkzcGGom1mssS2pwl1OEdBJiIVf7c4B5XgUByXF7gF0=;
+        b=kVJDomNt8v+Irj0R8PpwGywdG+TY5hqdHX+yfLNyl3YqcFEBMXhGXvzmzUaxRf7BdW
+         2qM+pA1FM4Ur1nKwkBdg9mFW29l3IEDrDjMGLHjFalcVyB580CwUVWi8CMwH3n+HadfC
+         9SWpDg+iovAfHvfM3L88Q5xvfYUFp72u5TJMix9ya4pkOopyBw1944z4Xa+a+k+aBTQS
+         xLazQ5nInpziarm1D8zQGMW3X2oGMl8xvWJvtJVhHKzoNkSdtWs7DcTUv38O9ra4qPHl
+         p9mFmxQ6NK2s13JahapCpW5oEdv4/QYZwPCB6+w2p1C/ipGhWW0B2v4cvbQvkVgOVPcF
+         nrTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776514642; x=1777119442;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MkzcGGom1mssS2pwl1OEdBJiIVf7c4B5XgUByXF7gF0=;
+        b=LVimDqyMtsCUkW/cq6F+KCRaqVpmcyiFetOzFA33Ddo4hYvLCXpDAll6MLJp8xM1VO
+         HRKFX91ZTzCC/KXvcYeaeI2RHTqnQpFYGtOqmbECLLZeaWLKOz5j8rEQ2w5BHDpHJH2X
+         jBYiaw/JRdSDatjlYStKjgPFQU3GFxK+gQizyFmdWp1eZjQqSL2+ckfyZZ7OD6dGDYLA
+         g4hk4MWD5H64Zh4OqPymhC0TyCq7IZfDvLBCdFIOQw5VlwAPJPjBnRhow0L0jjFqyEwW
+         Yaz/PVe/YDPcB/OzrpsCuHL4GN4xa4E7CASj+8ygnsKXXmIa6B9HKuqC6TRbmUm1sOVz
+         4eXg==
+X-Forwarded-Encrypted: i=1; AFNElJ9e0NhWS0F2dNJRWTxBjnWFst1MbpsR1nOOxxIUlpR7Or+2+zcGYGnYZzbXvmB68EVErSw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwpZa3oN9oksAav3RSmLkn1291DhNT5Kukcy/TPn9dPXAnMmRJ
+	AFflZKew3vyUTzuTNhR53DCnhVA2UcGqgwqqsV/ttMxBhJmJNT9fzmum
+X-Gm-Gg: AeBDievgonhwGNKHLPgEF2BYursOXTIMROowEc8b13VnvxHVQFxdDP8dBIXsBzfArFF
+	iFeAhto61fz46/DH5btw5PoD4ulMCvesc0dGptycjNDP4u7EVZqogV9ILajquYW7FNf05N3qe7q
+	YbdAH+dgmjqXirmQd68SQMdgErHfjxS9Qet1IkIFkTY+5nS6Kqkj5v69pSBufFBj8iYUtsgSDvd
+	0NClzirYPOG2TrhIDPLXBd+JMvi54OUSqGwwH8gn9BXUMgtW9Zg36GVZ8r1OHsKy99R72kyimmc
+	or3a8Tb6rYhf8IzmOb6cz7hBK0U09QIv5pvjr/vMeP5j5/qomFY5iqh6KxPDIW7nXT0JNtmQCdq
+	DJgWQMXhxi5kPTOOF8VF0p73zGpDLKoxDOXmrkxiTobVfCRyzGOPBN0G3CJ1ci8ZJZ3KQ+BwCpW
+	xruGdakVbCo+DegEIBVYLe1fxrozvHdmLxp8UoxLAF6mXdji73caC+wcuxCiIxK/BE+XS78TJST
+	n039dXH9uTHI5+HyBo9bLW9ftmCTF8HWkJ13OcNwJHQq6EZd++inPGykXYZy1ABres=
+X-Received: by 2002:a05:690c:c50d:b0:79e:8299:751f with SMTP id 00721157ae682-7b9eceae705mr64974467b3.7.1776514641683;
+        Sat, 18 Apr 2026 05:17:21 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:bc38:40a1:74bc:499c])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b9ee9ccdc4sm18398437b3.43.2026.04.18.05.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Apr 2026 05:17:20 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtstb3rf1.fsf@gitster.g>
-
-On Thu, Apr 16, 2026 at 07:34:26AM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > I'm still concerned that this approach is going to create extra friction
-> > for test writers down the road. This series needed to clean up several
-> > spots to avoid false positives, and some of the spots were non-trivial.
-> >
-> > Now that was the accumulated cruft of 20 years of test-writing, so it's
-> > not clear to me how often new test-writers will run into this. But when
-> > they do, I worry that it may be hard to even figure out what is going
-> > on.
-> >
-> > But I've said as much in earlier rounds, and I'm not sure Junio agrees.
-> > So we can note my dissent in the captain's log, and I can reserve the
-> > right to told-you-so later if need be. ;)
-> 
-> The alternatigve to allow us to be sloppy is alluring from the point
-> of view of a test writer in me.  But do we have an easy/canned way
-> to run tests and see the unexpected failures outside test_expect_foo
-> while ignoring all the noises from passing tests?  Perhaps running
-> tests (with and without prove) while redirecting the standard output
-> stream to /dev/null or something?
-
-I took a stab at this. It's easy to do it hackily, but it proved a
-little trickier than I'd hoped to get something elegant.
-
-My main goals were that you would still get good output to either the
-terminal or the test-results/*.out files (so we can't just redirect
-stderr for all runs), and that we wouldn't spend too much extra CPU (so
-just running the tests an extra time with stderr redirected is right
-out).
-
-My first attempt was to teach test-lib.sh a mode where all of the test
-snippets are noops, stderr goes to a file in test-results/, and at the
-end of the script we complain if our stderr file is non-empty. And then
-we have a "test-lint-stderr" make target that runs each script in the
-special mode. That works, but:
-
-  1. Quite a few scripts do stuff inside their test snippets that affect
-     the environment, and then do stuff outside of a test snippet that
-     depends on that. Some of it is questionable, like running git
-     commands outside of test snippets to generate expected output. But
-     there's reasonable stuff like t0012 generating the list of builtin
-     inside a test snippet and expecting:
-
-       while read builtin
-       do
-               test_expect_success "$builtin..." ...
-       done <builtins
-
-     So I think the test suite is a little too free-form for this kind
-     of trickery.
-
-  2. It's way too slow, anyway. Even with all of the snippets as noops,
-     it still takes ~13s to run all of the scripts in parallel on my
-     machine. The real test suite only takes ~90 seconds! There's
-     probably low-hanging fruit to fix there, but it's still an order of
-     magnitude off what I'd hope the cost would be.
-
-So I think that's probably a dead end.
-
-The next obvious choice is redirecting stderr via tee or similar, which
-is easy-ish. We already do it for --verbose-log, but we combine it with
-stdout there (and we turn on verbose mode for the tests, which is going
-to generate a bunch of extra output).
-
-I think there's probably a way to do this with an extra tee for stderr.
-But actually...do we even need tee? The idea is that we are not
-expecting any output here, so if there is any, we'd bail and show it
-along with an error.
-
-So I think we might able able to get by with just redirecting descriptor
-2, and then making sure that test snippets stderr goes to the original
-stderr (which we already save as descriptor 7). And we catch only errors
-outside of the snippet.
-
-Something like this seems to work:
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1f7868c537..6657d56e52 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -728,7 +728,7 @@ then
- 	exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
- elif test "$verbose" = "t"
- then
--	exec 4>&2 3>&2
-+	exec 4>&7 3>&7
- else
- 	exec 4>/dev/null 3>/dev/null
- fi
-@@ -970,7 +970,7 @@ maybe_setup_verbose () {
- 	test -z "$verbose_only" && return
- 	if match_pattern_list $test_count "$verbose_only"
- 	then
--		exec 4>&2 3>&2
-+		exec 4>&7 3>&7
- 		# Emit a delimiting blank line when going from
- 		# non-verbose to verbose.  Within verbose mode the
- 		# delimiter is printed by test_expect_*.  The choice
-@@ -1052,7 +1052,7 @@ test_eval_ () {
- 			test 1 = $trace_level_ && set +x
- 			trace_level_=$(($trace_level_-1))
- 		fi
--	} 2>/dev/null 4>&2
-+	} 2>/dev/null 4>&7
- 
- 	if test "$test_eval_ret_" != 0 && want_trace
- 	then
-@@ -1234,6 +1234,14 @@ test_done () {
- 		EOF
- 	fi
- 
-+	if test -s "$TEST_RESULTS_BASE.stderr"
-+	then
-+		say_color >&5 error "FATAL: Unexpected output on stderr"
-+		sed >&5 's/^/# /' "$TEST_RESULTS_BASE.stderr"
-+		GIT_EXIT_OK=1
-+		exit 1
-+	fi
-+
- 	if test "$test_fixed" != 0
- 	then
- 		say_color error "# $test_fixed known breakage(s) vanished; please update test(s)"
-@@ -1982,3 +1990,9 @@ test_lazy_prereq FSMONITOR_DAEMON '
- 	git version --build-options >output &&
- 	grep "feature: fsmonitor--daemon" output
- '
-+
-+# Now that test-lib setup is done, direct our stderr to a file, as we want to
-+# catch and complain if anything ends up here. We can always access the
-+# original via descriptor 7.
-+mkdir -p "$TEST_RESULTS_DIR"
-+exec 2>"$TEST_RESULTS_BASE.stderr"
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v4 12/12] t: detect errors outside of test cases
+Date: Sat, 18 Apr 2026 08:17:10 -0400
+Message-Id: <AA6F33AD-25C2-4AB0-A624-35C7B0BE0F66@gmail.com>
+References: <20260418065009.GA2619713@coredump.intra.peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>,
+ =?utf-8?Q?G=C3=A1bor_SZEDER?= <szeder.dev@gmail.com>
+In-Reply-To: <20260418065009.GA2619713@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-Mailer: iPhone Mail (23D8133)
 
 
-If I stick a "test_expect_foobar" into a test script, it is found:
+> Le 18 avr. 2026 =C3=A0 02:50, Jeff King <peff@peff.net> a =C3=A9crit :
+>=20
+> =EF=BB=BFOn Fri, Apr 17, 2026 at 12:50:58PM +0200, Patrick Steinhardt wrot=
+e:
+>=20
+>> --- a/ci/run-build-and-tests.sh
+>> +++ b/ci/run-build-and-tests.sh
+>> @@ -15,6 +15,11 @@ fedora-breaking-changes-musl|linux-breaking-changes)
+>>    MESONFLAGS=3D"$MESONFLAGS -Drust=3Denabled"
+>>    ;;
+>> linux-TEST-vars)
+>> +    # Ubuntu uses Dash by default, but we only enable use of `set -e`
+>> +    # when using Bash 5+. Ensure that we have at least one CI job that u=
+ses
+>> +    # it.
+>> +    export TEST_SHELL_PATH=3D/usr/bin/bash
+>=20
+> Thinking on this a little more, it is a shame we cannot easily enable
+> this for dash. That would hit most CI jobs, but also the local builds of
+> most developers. And finding problems early and locally often saves a
+> lot of time versus finding them in CI.
+>=20
+> Unfortunately I could not find a way to detect whether we are running
+> dash at all, let alone a recent version. But what if we let the user
+> tell us? Something like:
 
-  $ ./t0001-init.sh
-  ok 1 - plain
-  [...]
-  ok 102 - re-init reads matching includeIf.onbranch
-  FATAL: Unexpected output on stderr
-  # ./t0001-init.sh: 983: test_expect_foobar: not found
+I was just wishing for similar! I imagine it would be useful for folks who o=
+ccasionally test Zsh=E2=80=99s POSIX mode and want to see how it handles -e
 
-And if I run scripts with "-v" or "-x", that output still goes to the
-terminal and does not trigger the stderr checker. Likewise with
---verbose-log, the log gets the verbose bits.
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1f7868c537..a0d07f75fb 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -17,9 +17,10 @@
+>=20
+> # Enable the use of errexit so that any unexpected failures will cause us t=
+o
+> # abort tests, even when outside of a specific test case. Note that we onl=
+y
+> -# enable this on Bash 5 and newer, as `set -e` has wildly different behav=
+iour
+> -# across shells. The list of allowed shells may be extended going forward=
+.
+> -if test "${BASH_VERSINFO:=3D0}" -ge 5
+> +# enable this by default on Bash 5 and newer, as `set -e` has wildly diff=
+erent
+> +# behaviour across shells. If you trust your shell's `set -e` implementat=
+ion,
+> +# you can set GIT_TEST_USE_SET_E manually.
+> +if test "$GIT_TEST_USE_SET_E" =3D 1 && test "${BASH_VERSINFO:=3D0}" -ge 5=
 
-It _almost_ passes a full "make test", but there's one lingering
-problem: random bits of code which want to output to stderr and bail,
-and use "echo >&2" to do so. But with our redirect, that stderr goes to
-the log file. t0000-basic notices this, because it is testing the test
-suite itself. And it notices that:
+> then
+>    set -e
+> fi
 
-  ./t0000-basic.sh --run=bogus
+I guess that should be || instead of &&?
 
-should complain to stderr, but now doesn't (it's swallowed by our log
-file). We can fix that with;
+>=20
+> And then those of us who want to stick:
+>=20
+>  export GIT_TEST_USE_SET_E =3D 1
+>=20
+> in our config.mak can do so, and we could even set it in the ci/ scripts
+> for all of the ubuntu builds.
+>=20
+> -Peff
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6657d56e52..aa6415b308 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -902,13 +902,13 @@ match_test_selector_list () {
- 				if expr "z${selector%%-*}" : "z[0-9]*[^0-9]" >/dev/null
- 				then
- 					echo "error: $operation: invalid non-numeric in range" \
--						"start: '$orig_selector'" >&2
-+						"start: '$orig_selector'" >&7
- 					exit 1
- 				fi
- 				if expr "z${selector#*-}" : "z[0-9]*[^0-9]" >/dev/null
- 				then
- 					echo "error: $operation: invalid non-numeric in range" \
--						"end: '$orig_selector'" >&2
-+						"end: '$orig_selector'" >&7
- 					exit 1
- 				fi
- 				;;
-
-but the same problem doubtless exists elsewhere. We could fix that
-globally like this:
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6657d56e52..72d60d9dac 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -762,6 +762,15 @@ die () {
- 	# test script run with '--immediate' fails, or when the user hits
- 	# ctrl-C, i.e. when 'test_done' is not invoked at all.
- 	test_atexit_handler || code=$?
-+
-+	# Dump the stderr log if we saw anything, since otherwise random
-+	# errors will never make it to the user when we do not have
-+	# a clean exit.
-+	if test -s "$TEST_RESULTS_BASE.stderr"
-+	then
-+		cat >&7 "$TEST_RESULTS_BASE.stderr"
-+	fi
-+
- 	if test -n "$GIT_EXIT_OK"
- 	then
- 		exit $code
-
-It's a little weird because the stderr message is delayed until we cat
-it out, but it makes sense. If we are bailing immediately, then the time
-between "echo" and "cat" is small. And if we are not bailing, then that
-is exactly the kind of bug our stderr log is trying to catch (and we
-will complain during test_done).
-
-I am not quite sure if this is an elegant solution or a terrible hack.
-
--Peff
+Thanks=
