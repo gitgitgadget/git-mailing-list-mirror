@@ -1,69 +1,68 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5F223BD02
-	for <git@vger.kernel.org>; Fri, 17 Apr 2026 22:45:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACB3175A5
+	for <git@vger.kernel.org>; Sat, 18 Apr 2026 00:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776465915; cv=none; b=GlegXBWkTiIn8p0ebMWroAs2e04WPSAsYeu8on81l17d0bXaJp2B+8MkyCml7hoqdBgn/3YJLbJl967VmM3tHONa2X2P8im2VNBAIJFfcNVbwBIdMbSHKzRRnyttirKHGmUjubnSN4fqczGPNyLBjAlaX/yl3KrLme++68ii2IA=
+	t=1776472353; cv=none; b=tmGsWg0UMEMrxJ2hFWFy4aDh6phVDjloPcT2zGFmMFB4pTccf3vHJul6PxHo9Wwf78nEHcLNLf9JPIPygB3wXKGKsw9twvpHp+OVSpHk6JRLlPKXQb17sqnsOl/LWjJ5Cw5kYbLZB29IRqvkYu9wCJs/2GSJ+8J4nGzqZ6KWD2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776465915; c=relaxed/simple;
-	bh=gIy9BuJMDy/IzaOngHtil/LaNmhpUOOgUW/in8N82J0=;
+	s=arc-20240116; t=1776472353; c=relaxed/simple;
+	bh=ekIVorwU6nDxg1DiUhXVmFDkNl2sV0AQPnblCGIf958=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hcMNj0JzyTup7iQAdNXClwijPTaPf7p4wVRRC28vYG5cc3uRnZvRKmfxLJuyXu/SCXHbTFnXgMpy/+9+wB2HT56gaL8V2Rv5K06rZdk8cQTAetTrh/5UwemVe63hjfUFCj7tAf4UVhXu+6fqHxwlrJ4/Jxkhxsh6gSwI++tQzaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nj7drW6m; arc=none smtp.client-ip=209.85.222.176
+	 MIME-Version:To:Cc; b=sQoOdZRrG5cqOOdlUeQOvJ40VbMjDQfYYdEUZhysT0PmAmPstYX/pdVN6ws4yL98GHqzDoIvyX7xXMeSkxAqSXORVEu9xkPE5/D8fSVO33zyk1OQ/9VLrhdqvRs/fyuMNbpFO7Y+UhXFKpgpJDwHTI5gxcyuoqGDtTAQnrqwzvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jiFvrPWq; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nj7drW6m"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cfc5941028so159435585a.1
-        for <git@vger.kernel.org>; Fri, 17 Apr 2026 15:45:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jiFvrPWq"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50d8da3e656so14084491cf.1
+        for <git@vger.kernel.org>; Fri, 17 Apr 2026 17:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776465912; x=1777070712; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776472350; x=1777077150; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mY3ZrY+mXaJHlh3DUDdsPL8ChiuWxNH9Os93hKoFd1w=;
-        b=Nj7drW6mbrq5tJy5hEVgYHL1yGiwyJ+X6nxFaay6Esv+rViJtCk2KejzKeuoVIoTVE
-         vUur3HWJqIHUXwSxjEFJUBbaLbK5+y5TZ6UEGllR1G3DI+GQcXmTEw9DjRELYF88La93
-         yGLcK3JlzzDfGD33nrdgS3jUgp/55w6JK6gbWcDXwCJrQft8FMgqn2oqvNNcWghsyk9X
-         kFVqxDpzInvw+0265m6qHlHGnp+3tgF4EeBhE3OC+ef8UldtGXTBRrILSNOPDW+QXvO8
-         Tx1mtYvD6rZQJesMR+tJZCwI7syAp+4+H8L1GIZVPs6xnvrILnLKinQ2IjV2AFXL4lWC
-         ve8A==
+        bh=Y9LMfTbCByFgowY3JDDHHKzd1XgOcAyyN8G9GabVxj8=;
+        b=jiFvrPWqqlhOlAOiPo2gsa2nnYHfuJ/VjSDwt2kx1fJJr8MZwG8CULiPGXJ3yOkVLb
+         c9rHwbXsSBHyjJZqsvYpN2h4w8aXftRaoZcqfYE6eKqreQhfCmHFI7geuP9kBZeOGmwy
+         BDPx54o9g+akvhe6aBtVczXqN9qO4zZDLiL5VlMuKtgLpxMIUC3WwAbFDxKRKZ3Ekyat
+         YBxoqL0kQdE2Tt0EgZ1kEwZb7EW9QLRC6UY30kkf0OzTsPDH0ra7pBiEadoCc4f/7rpe
+         W6gf3DUgH1qqW9k9b2XO/oR9B4qoTgN9J97nok0yo9qQnV5bpOYPfOHTi6PbydYcuLlq
+         z+/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776465912; x=1777070712;
+        d=1e100.net; s=20251104; t=1776472350; x=1777077150;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=mY3ZrY+mXaJHlh3DUDdsPL8ChiuWxNH9Os93hKoFd1w=;
-        b=ZqyazxaoRQDi3AbYPs/vvrzvf5yRq1pSm+lzWZSZ4F282DgGYXm/G01kbajgn2fKyE
-         L/VErPb8iZOhC3sgBODsVguY9gqhdo4anb9VzUUWPA+PtNttdSslVi8MJ1UADTT1Gi1F
-         fWZMl4lwk5UwUg6SpucSGILz2ExgWuVeNVD2VoJGwWea9jEDNaHV/YpkolEvkunCft0L
-         b673vb0LwtKD6oOru6UsTrwMlWS8pPKkxm8gyN87p8xQNazJ9cglDgdwfQ/JjDo4GkaG
-         O82bhL5aG5ilSpqRUT7Aptxag2brRcy5RLUz9m9Z60zDZNWf7gp5sSQRdncFf4pzS6kr
-         SAIg==
-X-Gm-Message-State: AOJu0Ywkrj7eQcfjaXrHUB4Ck+IHRETRoRwJJWAnpuYlvp3apBI7nYOw
-	Zmm+4PaB87wprWe9gky1KJkQKoXtSj9ck4yVvPnd8/Nbl0ay6VhdWxdjOJE94g==
-X-Gm-Gg: AeBDieumF3QKiaFaDnLG4loERCGklvJeiaD9nXyG99FL3nZ6qXF3FUZPmQqHWG8IokL
-	KMhjRVV08EHMj2ReDfsxqDGJLY55oZ9tvPPwp5knhuMAQ8jOn00UwiltXz8H8Y4Re00OvsaqeML
-	iwKgM31zDqIWaESaBdr/+bBgW+sri9INUNUpkRMaY2yojtQHvj1EetjoFGzes6W7WRbJ0sLTsxh
-	jQNBrchZDSeuad0Xvn36lsKt3bHlI6nXtPda4MG2pLNk8jveppY9JYuffKNziFWaNGjrfeLDCiT
-	daOm5NcC6zZK+6lMXAuxtkZfzJ9U3xogZzQMTeo+UKNxq3di35Tx4dOXAD+1sSUalel1GMUYvqL
-	Q24hAiaTC5wAOXTFUF3gXDrQRCP3f7IZZxTzf60PcwYMSoG8CHHbWYmDXsyfETyKqA0NJ5WYCN0
-	HRBEma62zs67IYYIP+uyXd9ef+F7VXNzYUOMfh5g==
-X-Received: by 2002:a05:620a:284a:b0:8cd:9231:8b54 with SMTP id af79cd13be357-8e792852ae7mr680776685a.62.1776465911733;
-        Fri, 17 Apr 2026 15:45:11 -0700 (PDT)
-Received: from [127.0.0.1] ([135.232.232.91])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d92ce037sm205562985a.32.2026.04.17.15.45.10
+        bh=Y9LMfTbCByFgowY3JDDHHKzd1XgOcAyyN8G9GabVxj8=;
+        b=rqRIv6RaRISQmDpWOOQT7jOjPWqJ/peiBq90CRosZN0SaDZXBXpvIXhIy0WHDXn+j2
+         pcPNTEugkTvCnNAfw6l/EEkSslKVJe8hWsSX31NV+np4aqExOBY6eW02aOBz0h3Aizph
+         O3azmR6LYflYr6mRbMH6BzIjRqgTM95YYGTxrsK/mZ0I57Fi/ePUcGhe1oYD/d0zUGg+
+         aZM/KCqDez/cDP/U7h4RsQGzxrzQKmaZJjCYvcAtSg5zeZHYncy98DdsvOgajg1AGWDY
+         e8sBLNlChD2/OdDdslk+GGgeSpJvAU7J7+LYj5RkwH3o4UDnKOxlnsI9CPJhUvg2HSEP
+         hfow==
+X-Gm-Message-State: AOJu0YyVMnt8bvFYyebWxYT0oBnaII3PCYmpOA7n/pw/rQgWAugRmNNs
+	5e0U59Q2oPTisR2lpy+72FG6loc5zUevNfsFa8s0KF2cNhBMnmyj8hZsdZn0Ag==
+X-Gm-Gg: AeBDieveux9fXdGB7leJoGSpRw1evOjsRuFq3xeddruDqSg8ZzeP1Qj5hHscKzriXLQ
+	LEBwX5ApRt1aCziGX9LIJA2cOzzykzyTpD8h/hQ3Cp7cjrVEGNmhoUlHfKp9tSrwOXOzzfXHaLz
+	eemUG2zdW2mEWccC+8tdTzkTs7nGaKHUGHHG/CiMJ5S6K4WWAinAUzlMNUk6hPp2IW9xUjsZjIY
+	ktWgk3rgo41OBVCorLHf2yqCGOyxI5jirYiOkG7TkV6MUI+wfkdWTk8lE2lDAd1HKHASEk2JHaC
+	+YxAQ5iNVtfzfJOa11y8r9VN2w62pHtXsdOHqiM4VeoCI4PVoT0azH5NHDonUZuNdmT5WpI1oHz
+	xOfblIZ1tIJRqMvXwKCl14bnBztmUo08cKzWiRBgd9MuPl5QJUZYFGkhRvuqb6Di8oIRmx+kEF2
+	QGFZyScLjVn7WzGjBHkyf6vMB7xipfvDX7vWIs2bY=
+X-Received: by 2002:ac8:7c56:0:b0:50d:9b07:9c2b with SMTP id d75a77b69052e-50e36c8da62mr77402811cf.56.1776472349900;
+        Fri, 17 Apr 2026 17:32:29 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.177.114])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e3944e4e0sm23217721cf.20.2026.04.17.17.32.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2026 15:45:11 -0700 (PDT)
-Message-Id: <pull.2093.v2.git.1776465910538.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2093.git.1776443163041.gitgitgadget@gmail.com>
-References: <pull.2093.git.1776443163041.gitgitgadget@gmail.com>
+        Fri, 17 Apr 2026 17:32:28 -0700 (PDT)
+Message-Id: <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
+References: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 17 Apr 2026 22:45:10 +0000
-Subject: [PATCH v2] diff: fix out-of-bounds reads and NULL deref in diffstat
- UTF-8 truncation
+Date: Sat, 18 Apr 2026 00:32:24 +0000
+Subject: [PATCH v2 0/3] Batch prefetching
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,243 +73,280 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
+Cc: Elijah Newren <newren@gmail.com>,
     Elijah Newren <newren@gmail.com>
 
-From: Elijah Newren <newren@gmail.com>
+Changes since v1:
 
-f85b49f3d4a (diff: improve scaling of filenames in diffstat to handle
-UTF-8 chars, 2026-01-16) introduced a loop in show_stats() that calls
-utf8_width() repeatedly to skip leading characters until the displayed
-width fits.  However, utf8_width() can return problematic values:
+ * Remove stray file that should have never been added. So embarrassing that
+   I didn't catch that before submitting.
 
-  - For invalid UTF-8 sequences, pick_one_utf8_char() sets the name
-    pointer to NULL and utf8_width() returns 0.  Since name_len does
-    not change, the loop iterates once more and pick_one_utf8_char()
-    dereferences the NULL pointer, crashing.
+Partial clones provide a trade-off for users: avoid downloading blobs
+upfront, at the expense of needing to download them later as they run other
+commands. This tradeoff can sometimes incur a more severe cost than
+expected, particularly if needed blobs are discovered as they are accessed,
+resulting in downloading blobs one at a time. Some commands like checkout,
+diff, and merge do batch prefetches of necessary blobs, since that can
+dramatically reduce the pain of on-demand loading. Extend this ability to
+two more commands: cherry and grep.
 
-  - For control characters, utf8_width() returns -1, so name_len
-    grows when it is expected to shrink.  This can cause the loop to
-    consume more characters than the string contains, reading past
-    the trailing NUL.
+This series was spurred by a report where git cherry jobs were each doing
+hundreds of single-blob fetches, at a cost of 3s each. Batching those
+downloads should dramatically speed up their jobs. (And I decided to fix up
+git grep similarly while at it.)
 
-By default, fill_print_name() will C-quotes filenames which escapes
-control characters and invalid bytes to printable text.  That avoids
-this bug from being triggered; however, with core.quotePath=false,
-raw bytes can reach this code.
+I'll also note that git backfill with revisions and/or pathspecs could also
+improve things for these users, but since backfill is a manual command users
+would have to run and requires users to try to figure out which data is
+needed (a challenge in the case of cherry), it still makes sense to provide
+smarter behavior for folks who don't choose to manually run backfill.
 
-Add tests exercising both failure modes with core.quotePath=false and
-a narrow --stat-name-width to force truncation: one with a bare 0xC0
-byte (invalid UTF-8 lead byte, triggers NULL deref) and one with a
-0x01 byte (control character, causes the loop to read past the end
-of the string).
+Also, correct a documentation typo I noticed in patch-ids.h (related to code
+I was using for the git cherry fixes) as a preparatory fixup.
 
-Fix both issues by introducing utf8_ish_width(), a thin wrapper
-around utf8_width() that guarantees the pointer always advances and
-the returned width is never negative:
+Elijah Newren (3):
+  patch-ids.h: add missing trailing parenthesis in documentation comment
+  builtin/log: prefetch necessary blobs for `git cherry`
+  grep: prefetch necessary blobs
 
-  - On invalid UTF-8 it restores the pointer, advances by one byte,
-    and returns width 1 (matching the strlen()-based fallback used
-    by utf8_strwidth()).
-  - On a control character it returns 0 (matching utf8_strnwidth()
-    which skips them).
+ builtin/grep.c    | 142 ++++++++++++++++++++++++++++++++++++++++++++++
+ builtin/log.c     | 125 ++++++++++++++++++++++++++++++++++++++++
+ patch-ids.h       |   2 +-
+ t/t3500-cherry.sh |  18 ++++++
+ t/t7810-grep.sh   |  35 ++++++++++++
+ 5 files changed, 321 insertions(+), 1 deletion(-)
 
-Also add a "&& *name" guard to the while-loop condition so it
-terminates at end-of-string even when utf8_strwidth()'s strlen()
-fallback causes name_len to exceed the sum of per-character widths.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    diff: fix out-of-bounds reads and NULL deref in diffstat UTF-8
-    truncation
-    
-    Changes since v1:
-    
-     * Simplified the loop to almost what we had before via a wrapper
-       function that always succeeds in advancing the string and never
-       returns a negative width. (Which, as a consequence, treats invalid
-       UTF-8 and control characters the roughly the same, unlike v1.)
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2093%2Fnewren%2Ffix%2Fdiffstat-utf8-loop-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2093/newren/fix/diffstat-utf8-loop-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2093
+base-commit: 9f223ef1c026d91c7ac68cc0211bde255dda6199
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2089%2Fnewren%2Fbatch-prefetching-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2089/newren/batch-prefetching-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2089
 
 Range-diff vs v1:
 
- 1:  fcd44d6cf8 ! 1:  4a72647ce2 diff: fix out-of-bounds reads and NULL deref in diffstat UTF-8 truncation
-     @@ Commit message
-          diff: fix out-of-bounds reads and NULL deref in diffstat UTF-8 truncation
-      
-          f85b49f3d4a (diff: improve scaling of filenames in diffstat to handle
-     -    UTF-8 chars, 2024-10-27) introduced a loop in show_stats() that calls
-     +    UTF-8 chars, 2026-01-16) introduced a loop in show_stats() that calls
-          utf8_width() repeatedly to skip leading characters until the displayed
-          width fits.  However, utf8_width() can return problematic values:
-      
-     @@ Commit message
-          0x01 byte (control character, causes the loop to read past the end
-          of the string).
-      
-     -    Fix the bug by:
-     -      - Adding a *name check to terminate the loop at end-of-string
-     -      - Detecting the NULL pointer from invalid UTF-8 and falling back to
-     -        showing the full untruncated name
-     -      - Breaking on negative width (control characters)
-     +    Fix both issues by introducing utf8_ish_width(), a thin wrapper
-     +    around utf8_width() that guarantees the pointer always advances and
-     +    the returned width is never negative:
-     +
-     +      - On invalid UTF-8 it restores the pointer, advances by one byte,
-     +        and returns width 1 (matching the strlen()-based fallback used
-     +        by utf8_strwidth()).
-     +      - On a control character it returns 0 (matching utf8_strnwidth()
-     +        which skips them).
-     +
-     +    Also add a "&& *name" guard to the while-loop condition so it
-     +    terminates at end-of-string even when utf8_strwidth()'s strlen()
-     +    fallback causes name_len to exceed the sum of per-character widths.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## diff.c ##
-     +@@ diff.c: void print_stat_summary(FILE *fp, int files,
-     + 	print_stat_summary_inserts_deletes(&o, files, insertions, deletions);
-     + }
-     + 
-     ++/*
-     ++ * Like utf8_width(), but guaranteed safe for use in loops that subtract
-     ++ * per-character widths:
-     ++ *
-     ++ *   - utf8_width() sets *start to NULL on invalid UTF-8 and returns 0;
-     ++ *     we restore the pointer and advance by one byte, returning width 1
-     ++ *     (matching the strlen()-based fallback in utf8_strwidth()).
-     ++ *
-     ++ *   - utf8_width() returns -1 for control characters; we return 0
-     ++ *     (matching utf8_strnwidth() which skips them).
-     ++ */
-     ++static int utf8_ish_width(const char **start)
-     ++{
-     ++	const char *old = *start;
-     ++	int w = utf8_width(start, NULL);
-     ++	if (!*start) {
-     ++		*start = old + 1;
-     ++		return 1;
-     ++	}
-     ++	return (w < 0) ? 0 : w;
-     ++}
-     ++
-     + static void show_stats(struct diffstat_t *data, struct diff_options *options)
-     + {
-     + 	int i, len, add, del, adds = 0, dels = 0;
-      @@ diff.c: static void show_stats(struct diffstat_t *data, struct diff_options *options)
-       			if (len < 0)
-       				len = 0;
+ 1:  7f5ac5942e = 1:  663816a344 patch-ids.h: add missing trailing parenthesis in documentation comment
+ 2:  610be2a49a ! 2:  a705852723 builtin/log: prefetch necessary blobs for `git cherry`
+     @@ builtin/log.c: int cmd_cherry(int argc,
+       		char sign = '+';
        
-      -			while (name_len > len)
-      -				name_len -= utf8_width((const char**)&name, NULL);
-     -+			while (name_len > len && *name) {
-     -+				int w = utf8_width((const char **)&name, NULL);
-     -+				if (!name) { /* Invalid UTF-8 */
-     -+					name = file->print_name;
-     -+					name_len = utf8_strwidth(name);
-     -+					break;
-     -+				}
-     -+				if (w < 0)  /* control character */
-     -+					break;
-     -+				name_len -= w;
-     -+			}
-     ++			while (name_len > len && *name)
-     ++				name_len -= utf8_ish_width((const char**)&name);
-       
-       			slash = strchr(name, '/');
-       			if (slash)
+      
+     - ## investigations/cherry-prefetch-design-spec.md (new) ##
+     -@@
+     -+# Design Spec: Batch Blob Prefetch for `git cherry` in Partial Clones
+     -+
+     -+## Problem
+     -+
+     -+In a partial clone with `--filter=blob:none`, `git cherry` compares
+     -+commits using patch IDs.  Patch IDs are computed in two phases:
+     -+
+     -+1. Header-only: hashes file paths and mode changes only (no blob reads)
+     -+2. Full: hashes actual diff content (requires reading blobs)
+     -+
+     -+Phase 2 only runs when two commits have matching header-only IDs
+     -+(i.e. they modify the same set of files with the same modes).  This
+     -+is common — any two commits touching the same file(s) will collide.
+     -+
+     -+When phase 2 needs a blob that isn't local, it triggers an on-demand
+     -+promisor fetch.  Each fetch is a separate network round-trip.  With
+     -+many collisions, this means many sequential fetches.
+     -+
+     -+## Solution Overview
+     -+
+     -+Add a preparatory pass before the existing comparison loop in
+     -+`cmd_cherry()` that:
+     -+
+     -+1. Identifies which commit pairs will collide on header-only IDs
+     -+2. Collects all blob OIDs those commits will need
+     -+3. Batch-prefetches them in one fetch
+     -+
+     -+After this pass, the existing comparison loop runs as before, but
+     -+all needed blobs are already local, so no on-demand fetches occur.
+     -+
+     -+## Detailed Design
+     -+
+     -+### 1. No struct changes to patch_id
+     -+
+     -+The existing `struct patch_id` and `patch_id_neq()` are not
+     -+modified.  `is_null_oid()` remains the sentinel for "full ID not
+     -+yet computed".  No `has_full_patch_id` boolean, no extra fields.
+     -+
+     -+Key insight: `init_patch_id_entry()` stores only `oidhash()` (the
+     -+first 4 bytes of the header-only ID) in the hashmap bucket key.
+     -+The real `patch_id_neq()` comparison function is invoked only when
+     -+`hashmap_get()` or `hashmap_get_next()` finds entries with a
+     -+matching oidhash — and that comparison triggers blob reads.
+     -+
+     -+The prefetch needs to detect exactly those oidhash collisions
+     -+*without* triggering blob reads.  We achieve this by temporarily
+     -+swapping the hashmap's comparison function.
+     -+
+     -+### 2. The prefetch function (in builtin/log.c)
+     -+
+     -+This function takes the repository, the head-side commit list (as
+     -+built by the existing revision walk in `cmd_cherry()`), and the
+     -+patch_ids structure (which contains the upstream entries).
+     -+
+     -+#### 2.1 Early exit
+     -+
+     -+If the repository has no promisor remote, return immediately.
+     -+Use `repo_has_promisor_remote()` from promisor-remote.h.
+     -+
+     -+#### 2.2 Swap in a trivial comparison function
+     -+
+     -+Save `ids->patches.cmpfn` (the real `patch_id_neq`) and replace
+     -+it with a trivial function that always returns 0 ("equal").
+     -+
+     -+```
+     -+static int patch_id_match(const void *unused_cmpfn_data,
+     -+                          const struct hashmap_entry *a,
+     -+                          const struct hashmap_entry *b,
+     -+                          const void *unused_keydata)
+     -+{
+     -+    return 0;
+     -+}
+     -+```
+     -+
+     -+With this cmpfn in place, `hashmap_get()` and `hashmap_get_next()`
+     -+will match every entry in the same oidhash bucket — exactly the
+     -+same set that would trigger `patch_id_neq()` during normal lookup.
+     -+No blob reads occur because we never call the real comparison
+     -+function.
+     -+
+     -+#### 2.3 For each head-side commit, probe for collisions
+     -+
+     -+For each commit in the head-side list:
+     -+
+     -+- Use `patch_id_iter_first(commit, ids)` to probe the upstream
+     -+  hashmap.  This handles `init_patch_id_entry()` + hashmap lookup
+     -+  internally.  With our swapped cmpfn, it returns any upstream
+     -+  entry whose oidhash matches — i.e. any entry that *would*
+     -+  trigger `patch_id_neq()` during the real comparison loop.
+     -+  (Merge commits are already handled — `patch_id_iter_first()`
+     -+  returns NULL for them via `patch_id_defined()`.)
+     -+- If there's a match: collect blob OIDs from the head-side commit
+     -+  (see section 3).
+     -+- Then walk `patch_id_iter_next()` to find ALL upstream entries
+     -+  in the same bucket.  For each, collect blob OIDs from that
+     -+  upstream commit too.  (Multiple upstream commits can share the
+     -+  same oidhash bucket.)
+     -+- Collect blob OIDs from the first upstream match too (from
+     -+  `patch_id_iter_first()`).
+     -+
+     -+We need blobs from BOTH sides because `patch_id_neq()` computes
+     -+full patch IDs for both the upstream and head-side commit when
+     -+comparing.
+     -+
+     -+#### 2.4 Restore the original comparison function
+     -+
+     -+Set `ids->patches.cmpfn` back to the saved value (patch_id_neq).
+     -+This MUST happen before returning — the subsequent
+     -+`has_commit_patch_id()` loop needs the real comparison function.
+     -+
+     -+#### 2.5 Batch prefetch
+     -+
+     -+If the oidset is non-empty, populate an oid_array from it using
+     -+`oidset_iter_first()`/`oidset_iter_next()`, then call
+     -+`promisor_remote_get_direct(repo, oid_array.oid, oid_array.nr)`.
+     -+
+     -+This is a single network round-trip regardless of how many blobs.
+     -+
+     -+#### 2.6 Cleanup
+     -+
+     -+Free the oid_array and the oidset.
+     -+
+     -+### 3. Collecting blob OIDs from a commit (helper function)
+     -+
+     -+Given a commit, enumerate the blobs its diff touches.  Takes an
+     -+oidset to insert into (provides automatic dedup — consecutive
+     -+commits often share blob OIDs, e.g. B:foo == C^:foo when C's
+     -+parent is B).
+     -+
+     -+- Compute the diff: `diff_tree_oid()` for commits with a parent,
+     -+  `diff_root_tree_oid()` for root commits.  Then `diffcore_std()`.
+     -+- These populate the global `diff_queued_diff` queue.
+     -+- For each filepair in the queue:
+     -+  - Check the userdiff driver for the file path.  If the driver
+     -+    explicitly declares the file as binary (`drv->binary != -1`),
+     -+    skip it.  Reason: patch-ID uses `oid_to_hex()` for binary
+     -+    files (see diff.c around line 6652) and never reads the blob.
+     -+    Use `userdiff_find_by_path()` (NOT `diff_filespec_load_driver`
+     -+    which is static in diff.c).
+     -+  - For both sides of the filepair (p->one and p->two): if the
+     -+    side is valid (`DIFF_FILE_VALID`) and has a non-null OID,
+     -+    check the dedup oidset — `oidset_insert()` handles dedup
+     -+    automatically (returns 1 if newly inserted, 0 if duplicate).
+     -+- Clear the diff queue with `diff_queue_clear()` (from diffcore.h,
+     -+  not diff.h).
+     -+
+     -+Note on `drv->binary`: The value -1 means "not set" (auto-detect
+     -+at read time by reading the blob); 0 means explicitly text (will
+     -+be diffed, blob reads needed); positive means explicitly binary
+     -+(patch-ID uses `oid_to_hex()`, no blob read needed).
+     -+
+     -+The correct skip condition is `drv && drv->binary > 0` — skip
+     -+only known-binary files.  Do NOT use `drv->binary != -1`, which
+     -+would also skip explicitly-text files that DO need blob reads.
+     -+(The copilot reference implementation uses `!= -1`, which is
+     -+technically wrong but harmless in practice since explicit text
+     -+attributes are rare.)
+     -+
+     -+### 4. Call site in cmd_cherry()
+     -+
+     -+Insert the call between the revision walk loop (which builds the
+     -+head-side commit list) and the comparison loop (which calls
+     -+`has_commit_patch_id()`).
+     -+
+     -+### 5. Required includes in builtin/log.c
+     -+
+     -+- promisor-remote.h  (for repo_has_promisor_remote,
+     -+                       promisor_remote_get_direct)
+     -+- userdiff.h         (for userdiff_find_by_path)
+     -+- oidset.h           (for oidset used in blob OID dedup)
+     -+- diffcore.h         (for diff_queue_clear)
+     -+
+     -+## Edge Cases
+     -+
+     -+- No promisor remote: early return, zero overhead
+     -+- No collisions: probes the hashmap for each head-side commit but
+     -+  finds no bucket matches, no blobs collected, no fetch issued
+     -+- Merge commits in head-side list: skipped (no patch ID defined)
+     -+- Root commits (no parent): use diff_root_tree_oid instead of
+     -+  diff_tree_oid
+     -+- Binary files (explicit driver): skipped, patch-ID doesn't read
+     -+  them
+     -+- The cmpfn swap approach matches at oidhash granularity (4 bytes),
+     -+  which is exactly what the hashmap itself uses to trigger
+     -+  patch_id_neq().  This means we prefetch for every case the real
+     -+  code would trigger, plus rare false-positive oidhash collisions
+     -+  (harmless: we fetch a few extra blobs that won't end up being
+     -+  compared).  No under-fetching is possible.
+     -+
+     -+## Testing
+     -+
+     -+See t/t3500-cherry.sh on the copilot-faster-partial-clones branch
+     -+for two tests:
+     -+
+     -+Test 5: "cherry batch-prefetches blobs in partial clone"
+     -+  - Creates server with 3 upstream + 3 head-side commits modifying
+     -+    the same file (guarantees collisions)
+     -+  - Clones with --filter=blob:none
+     -+  - Runs `git cherry` with GIT_TRACE2_PERF
+     -+  - Asserts exactly 1 fetch (batch) instead of 6 (individual)
+     -+
+     -+Test 6: "cherry prefetch omits blobs for cherry-picked commits"
+     -+  - Creates a cherry-pick scenario (divergent branches, shared
+     -+    commit cherry-picked to head side)
+     -+  - Verifies `git cherry` correctly identifies the cherry-picked
+     -+    commit as "-" and head-only commits as "+"
+     -+  - Important: the head side must diverge before the cherry-pick
+     -+    so the cherry-pick creates a distinct commit object (otherwise
+     -+    the commit hash is identical and it's in the symmetric
+     -+    difference, not needing patch-ID comparison at all)
+     -
+       ## t/t3500-cherry.sh ##
+      @@ t/t3500-cherry.sh: test_expect_success 'cherry ignores whitespace' '
+       	test_cmp expect actual
+ 3:  6dbfc7608b = 3:  8fbfe69bc4 grep: prefetch necessary blobs
 
-
- diff.c                 | 26 ++++++++++++++++++++++++--
- t/t4052-stat-output.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 2 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 397e38b41c..1a3b19f71f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2927,6 +2927,28 @@ void print_stat_summary(FILE *fp, int files,
- 	print_stat_summary_inserts_deletes(&o, files, insertions, deletions);
- }
- 
-+/*
-+ * Like utf8_width(), but guaranteed safe for use in loops that subtract
-+ * per-character widths:
-+ *
-+ *   - utf8_width() sets *start to NULL on invalid UTF-8 and returns 0;
-+ *     we restore the pointer and advance by one byte, returning width 1
-+ *     (matching the strlen()-based fallback in utf8_strwidth()).
-+ *
-+ *   - utf8_width() returns -1 for control characters; we return 0
-+ *     (matching utf8_strnwidth() which skips them).
-+ */
-+static int utf8_ish_width(const char **start)
-+{
-+	const char *old = *start;
-+	int w = utf8_width(start, NULL);
-+	if (!*start) {
-+		*start = old + 1;
-+		return 1;
-+	}
-+	return (w < 0) ? 0 : w;
-+}
-+
- static void show_stats(struct diffstat_t *data, struct diff_options *options)
- {
- 	int i, len, add, del, adds = 0, dels = 0;
-@@ -3093,8 +3115,8 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 			if (len < 0)
- 				len = 0;
- 
--			while (name_len > len)
--				name_len -= utf8_width((const char**)&name, NULL);
-+			while (name_len > len && *name)
-+				name_len -= utf8_ish_width((const char**)&name);
- 
- 			slash = strchr(name, '/');
- 			if (slash)
-diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
-index 7c749062e2..84c53c1a51 100755
---- a/t/t4052-stat-output.sh
-+++ b/t/t4052-stat-output.sh
-@@ -445,4 +445,29 @@ test_expect_success 'diffstat where line_prefix contains ANSI escape codes is co
- 	test_grep "<RED>|<RESET>  ${FILENAME_TRIMMED} | 0" out
- '
- 
-+test_expect_success 'diffstat truncation with invalid UTF-8 does not crash' '
-+	empty_blob=$(git hash-object -w --stdin </dev/null) &&
-+	printf "100644 blob $empty_blob\taaa-\300-aaa\n" |
-+	git mktree >tree_file &&
-+	tree=$(cat tree_file) &&
-+	empty_tree=$(git mktree </dev/null) &&
-+	c1=$(git commit-tree -m before $empty_tree) &&
-+	c2=$(git commit-tree -m after -p $c1 $tree) &&
-+	git -c core.quotepath=false diff --stat --stat-name-width=5 $c1..$c2 >output &&
-+	test_grep "| 0" output
-+'
-+
-+test_expect_success FUNNYNAMES 'diffstat truncation with control chars does not crash' '
-+	FNAME=$(printf "aaa-\x01-aaa") &&
-+	git commit --allow-empty -m setup &&
-+	>$FNAME &&
-+	git add -- $FNAME &&
-+	git commit -m "add file with control char name" &&
-+	git -c core.quotepath=false diff --stat --stat-name-width=5 HEAD~1..HEAD >output &&
-+	test_grep "| 0" output &&
-+	rm -- $FNAME &&
-+	git rm -- $FNAME &&
-+	git commit -m "remove test file"
-+'
-+
- test_done
-
-base-commit: 9f223ef1c026d91c7ac68cc0211bde255dda6199
 -- 
 gitgitgadget
