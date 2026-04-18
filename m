@@ -1,148 +1,140 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131197478
-	for <git@vger.kernel.org>; Sat, 18 Apr 2026 01:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F8A33987
+	for <git@vger.kernel.org>; Sat, 18 Apr 2026 01:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776474724; cv=pass; b=RZrfUxTi8bklMf2kQ0aKWatGEcjzWRVzgGfqaAMpY7bF7swCwRGTE+SKnRp8Mz9yA1/9FE/zFZglfaQTTcB+5LMyupiXYGsrTMQbdWzpiaIYBwSYhpJmVcjKEzS4rwa+dU7ETUV0Ak6hrOF7Ql5paQAFUawaVxdSmkF8pJtX05Q=
+	t=1776475004; cv=pass; b=Wow6m7qvjbfwH4sPDbBySS18i6mQtBMxKzQSZlNl6mHNWckULaWSUenPQqoqPLT7xQ8rHffsFAVux8sjlmov5i32gJHgDnkTivsmhoCuUNhJMetaxMYqp/UvHbIW6REzn+R7nCfp7SH20I5R6zvI/dDNdegj/ms6BTqJFXst2tM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776474724; c=relaxed/simple;
-	bh=Mu/eO8BLYE1TdkjPZbhiocOtgxOEgRlv2XK1oaPhUsY=;
+	s=arc-20240116; t=1776475004; c=relaxed/simple;
+	bh=5/5nrFNrJsTmH/M/q4CMYJOUdRpVLhOqRgpDoTgbmRM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l/+CDljMc9B/0eBURwholntr8VSk9hozd4umA9PgdemITGyyw4bCk6rSvQ5iophz0+0V8Wqf40fDWm+pI3DQ65Niuusi1LnlSyIZ9d/pThTq01RqE4t5TLGG1jBytE9sHi/cgDTw5A9LNn4ZewX7yHHbQejujcYbhx/OPu4THhw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L5zfFyu4; arc=pass smtp.client-ip=209.85.210.169
+	 To:Cc:Content-Type; b=cP1eufyRspzGywfSS2toaHWtyXqPYfLiS+x+DyvhjPbOAA5qM70sEIbkIz+VigzybHznOm5VD42ikW1jpZwfeugYplVsoMbz2tPMFWIP+DgLwOnXzXJRbL0NOOxXWmDXPzu2gtuWWhFh5exfnsJHmziiNTQdaU1YOkMlPdvXBDY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4pcpiNq; arc=pass smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5zfFyu4"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-82f943870baso335690b3a.1
-        for <git@vger.kernel.org>; Fri, 17 Apr 2026 18:12:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776474722; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4pcpiNq"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-358ed696623so582585a91.0
+        for <git@vger.kernel.org>; Fri, 17 Apr 2026 18:16:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776475003; cv=none;
         d=google.com; s=arc-20240605;
-        b=Y+F+GPx9LkPW85vij03owUdgslUpd1mgCNkSg3l2uIWCQDA+9W9fcu25yYHb8NHrl8
-         EHoY4Mcv5VdfObtOStsdzdA0C+uv//I6Q20QOBhL8kfb9DRCl8tRP3upf3Di8A1bMCtY
-         K+U8KQFIIukkhaJt58RwF+XV8rND+isShVQr4ISC8r1L5hpGIa9Hje6k5IVL1eof1A3B
-         LmS7PKF8XER07h1CHyhS4wBGgO0c9QYFxewzw0HYTwggC0XhDYlm8IuoRn4bsPluCkzV
-         +RojhYtyrbrtQuodh8iJ2N8aRYLDrLP0k4KOm6FJ3vTbnP5HJqzq3YnX8jTOGjAJLA7o
-         fcjg==
+        b=B7I/RRlFfOfTojbOV5O+rH5TZLVyEZToixIyFearhFSBIXJwvncNkmkLiaRCZrKEOz
+         jfSOz18QmR+z5wWxk7S4QuZH7X0S4ApLdcRaVaGooFg72t343OxyUoO+N5DIgmGcT+Sg
+         HBof8eBdRH5AfLu6oZbx9Mznoi6bGaTSinR5F91n0FHoxKUwAHH+2YjuX5JElzDORBU4
+         XV9LYfg4Px37RuZG/qlfFWZ84oQmIW+i56JSHpNmgVJ7fqER6l5c0FJWksO02t8RYGtM
+         lvAKHaTee2zU4fcXxW+wd8MThDlDqS0px2gL4oovh062MBjEV9h8RFLoCo/lTSjfz8dX
+         rpnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=CbKoGLLcogYijGsUJXehejf5FQx+Co1PY+5prU5L290=;
+        bh=a75XBNZygoTPvZ0TkqRKinimhM/ei4ak07xxYsmW1NQ=;
         fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=N4DnsikDBohv4zXsigs/2Q9kW2gOfhMoKP7B4UMiU9C4qz5W1uiIdFgkmNYQymY3MF
-         dXfrQR891sY8gtUDwncfQaSp9wLpKgP9+Gb3BqieND5Ae8QClPwgq6iM04/A8XYiT+OL
-         D8IY7/70t93bWhtdPJHYK9kH+4pTVZ+6ZifmXU1U+u5yXTZ910foLyh34v7iFw6rdbom
-         RV67Pc/3OfA2Z9EMNYd5KRpocC2XFcAZL4MuL72IlbpEVPKcL9Ugb9cRso+eFo+PAO/A
-         t6clR5SvaZgi7tNtOCZF/7utOHEqfQmZzsmqLHJa6Y+vWiO4bCnsKp8JSJo9k5ybZdKO
-         yjnw==;
+        b=efHwKE2H5657/6MuixjdxNt/fqdA6MzOjqKUv03giCSohBjetGGzX6eQ8e3jHF/VEC
+         ERXFIgShr90q41cXDr1sr/XnQDIGdkfblfLZ1GwOG9eW5cQkdOLxSGg1KjlAOGYRViPw
+         lh9/wpEeL/cGZglQZV944XYhH8stPw1zDkpK5hpU9G8y8BYQpaYdh7w3bPcs72iKVszd
+         gB+QcH1031BwW4m57gyBvX/oc1FTdIQsVF8fvxp+NhzToAdADtPwh/jEtW7SQ9YQFK7L
+         lBvKW+m5eeaXodus8KGIVH5Lkpucl0tegxwe0LC3y+sY6fJ2Cq5r5lQyn2t4GhkRkkwV
+         8jSA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776474722; x=1777079522; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776475003; x=1777079803; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CbKoGLLcogYijGsUJXehejf5FQx+Co1PY+5prU5L290=;
-        b=L5zfFyu4OguqQj/+993ydKBuPvfUCW6lwmYRCrYZx4fkuXpdfXP1wPRgfgt9aOCk08
-         OVOgbIUpf1WOcTdDsGJMwUeVTf8p34hQMATUR9iKs7i4lNuOW6ijkAJdJMlO/GgBpKZb
-         lDWTUR4azQkOpujWRKLprfyNSPzG31f6UFyw8DaHAoGh1MUSDFLec9UEW14OdsA50lMd
-         Ku8lZG9//V0YaltRFJzPY5R1RYKJWPdPwNDEJhTmm4x0bvNs2rQWtFZ5fXZIY+5ZgYis
-         MlAipnd0qCvugTSshmNSSftyK/gyqUKYwd7JjcwQ9FB+24g2tYiq6xkSMLBGW/PBh1fp
-         4eig==
+        bh=a75XBNZygoTPvZ0TkqRKinimhM/ei4ak07xxYsmW1NQ=;
+        b=H4pcpiNqAX+XZSQ7QKIF6kEiPGv5TbOKpG+V4zQWbtuMoOrynaQt0oUQAW8gQwcXuW
+         e3xkXQbmh6PKhjX/p6LWH+eSLFRXzmIkpVWePKiAsOl8tOem7l61iUpL5VscHWsrGXno
+         4uED2o9qIOiSveY3iJ8QTlbOqUyCw3aLEuUmWfu3wPyGtpDQUdUrWQpduuoe/ka6cdrR
+         si52Jb6Y+RAfqDqkP68Q3rXBqWwlFinWF5lfK/4XdBkv81Kb+KSWzuNFgjZIONQXZ8M8
+         bU3LrzFYQKNAs2jrsXZY/gdi5TUdYK2CDTdRqA0QFioWXtQwraSA3yz5lu8QjWkaCBf7
+         /JYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776474722; x=1777079522;
+        d=1e100.net; s=20251104; t=1776475003; x=1777079803;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=CbKoGLLcogYijGsUJXehejf5FQx+Co1PY+5prU5L290=;
-        b=TTFkyVZm1L4/dO+Kd2Mg3nDhZam48DXOKK8+o42t7ZJjTo7oO1nuIjBHdY0CV9lETt
-         uIQysj/ASqI4o4tjQIIiPpgAEhk3d+wrz3KDabBgeEuxGhWvXzlAmMRktu1qF/a1TZar
-         UIe1jXgT1AKy99N7Pzlsnym35lUMFFgvaorCP2acKpOAt3kxAFLpTySXYqZDHwzkUupV
-         JnJPxuyRWI2eWrygtVuGMHmkvXBoZjkcl1t2jtrfEEG9nxEig6lwzfv0j8jIAC3YchQA
-         SqP7OC9DcZgm5hnpHyw133e/i4vQ6am4U3KjDsAXJqeoWbQAvC4qOCwZ6teDvmX2eGsR
-         0jRQ==
-X-Gm-Message-State: AOJu0Yy1fxYdwcGUnDO8N5QA3arTudveGCSWrV8o/LyMfhIuoj998jiS
-	WEZtNzh6bSLWzcmNAp+8ZDfM5TA7l64GprB1GRbmjUZ77jQmpW0CsupKJqrs6Ktto2UA2aKQJpY
-	e8LEYPeq/4t8AOvuTXcmVM/gAwip+cFlpxA==
-X-Gm-Gg: AeBDievqc5JUKN4uvPfH42nRucu3ZoiJY/i2Ir8kAvMMxvc+5RuPFmcR6t/Co2oZy3S
-	r9UpHTHfcPAxqyDThubEV2Rgbu0UuAIaFIp4mkbsmKteDB2Ubr7THj0bu5xOXu6ia/sMC85ShX/
-	1RukyT+SjIN/vg71PHYX2oTr5bfPJ4B23iVrLRBkldhyJQ/npV53WL7Z9CMuQS98kAIN21idB7K
-	3FK6+M1ZpvPuH4j5nbBJp0NCvWCjliAkPVY8mre0UglRnTZ78EbX87gGGT1ljB2Y+IjFLZiJcIE
-	yu9jV8NnwU8ie8U8Hr65pnWd0wEBbIQE9siQGCX6ZXh2+ctUFbG61Ca67lOzaWK5TiL7dVqczHQ
-	/BqlYCqm7CmS9maqwgbgmugWrceBykWXdXcXa
-X-Received: by 2002:a05:6a00:bd0a:b0:82c:215d:5e9d with SMTP id
- d2e1a72fcca58-82f8c91b61dmr5376067b3a.32.1776474722261; Fri, 17 Apr 2026
- 18:12:02 -0700 (PDT)
+        bh=a75XBNZygoTPvZ0TkqRKinimhM/ei4ak07xxYsmW1NQ=;
+        b=ot2zMBPKlm2esHS+5U6oD0Rg2w0qJvpfmoQo3xmQaWtyNpI1OViXQkF4goj27yMC6b
+         fj6+d4IR84gwxsS9Er5lw7SRIxENXq7bkvaCZlDupHXUEToyaD52i3G3Cu3ZdcQgbqm8
+         1XDCi70LKzSrUHLcTtI5qK70HiprfP/pjtXMVBXoTmUO/s2bWTGthursQ2eK11Bh8f3r
+         0IDH6gVJeWD42FQUtfvc66sbxDqdw2qyY7aQcl81ex4gbvZ0KRQJziquy02shTou7HEg
+         WqlCfXi1DAm9goa3ASHGPNp3ZM63an23YR0LyGJQB9BexaxqbHDcvH4ARZiGAFJaBk+i
+         oZXw==
+X-Gm-Message-State: AOJu0YyGk+VjnQxHoKMisD69OOX3UBQ0lThLSVD+VBgFAI+mZZ61dYfm
+	hwUEpYzwbo9NvBSv6C3KjewaL7kgyd/7o5VbXih6Nv/Z8AD2solc0spkr1qMUQsIycUesIXDRmr
+	me3ddFOXeqWzANYfxdzZKk+k77GP7xBDH3Q==
+X-Gm-Gg: AeBDiesBXD62tcTDBox9B2S6yduGN5od1Wp4Sfb2M0OgNxLJnitJA5gO8h71FE4Pk+e
+	ypZTLISI/llQzi3InkMm2sRSK49Wgp8fKLGLlyoDXmzWRYwEw8EStv7Cw9uV+fpX5ZteDJlUSZF
+	NeSPbyouGtSZ5+QCRsBPgZFWeCGYQAQp9OLpSpSPXYqL5h+d/buH/dy14y2+EbD27418FGZoVg8
+	njHXLkWrnP6pTcuySoEG51y0lXECHnIh62TFAOVMakvtVA0NyXnwNSCiZeZIMYdJ8QnUehTGUUl
+	I2PNbBzUyvx8pMy668kQ2fWNVlQ137KC8HErheI1LmceTlAr2weBCeIo2kWVouORJKu+kbuDiT4
+	Gd3o0m4En1psH8EZLwcrAbS50emQrDCxguSqD
+X-Received: by 2002:a17:90b:54cc:b0:35b:9d3b:34cb with SMTP id
+ 98e67ed59e1d1-361403e0ff3mr5202737a91.8.1776475002882; Fri, 17 Apr 2026
+ 18:16:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260330-pks-setup-wo-the-repository-v1-0-0d2e822837aa@pks.im> <20260330-pks-setup-wo-the-repository-v1-9-0d2e822837aa@pks.im>
-In-Reply-To: <20260330-pks-setup-wo-the-repository-v1-9-0d2e822837aa@pks.im>
+References: <20260330-pks-setup-wo-the-repository-v1-0-0d2e822837aa@pks.im> <20260330-pks-setup-wo-the-repository-v1-10-0d2e822837aa@pks.im>
+In-Reply-To: <20260330-pks-setup-wo-the-repository-v1-10-0d2e822837aa@pks.im>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 17 Apr 2026 18:11:48 -0700
-X-Gm-Features: AQROBzCiDmHOLn7D-XEORPtFkKxm3LQ6bls2HXIe0tAnDNmifTtzoSIpv5BMVLA
-Message-ID: <CABPp-BHOvDaWXXDnpPsoDTe-En7T4LUaVqcJZ5Jst8zaQ-mrTg@mail.gmail.com>
-Subject: Re: [PATCH 09/18] setup: stop using `the_repository` in `setup_work_tree()`
+Date: Fri, 17 Apr 2026 18:16:30 -0700
+X-Gm-Features: AQROBzB51b4mO4iPZiZkxLv44zfj7gE6AImBDsq7Qk1hz7C24vvwHbeaavMnZ-w
+Message-ID: <CABPp-BEe0oN3ZfV6ZhFSADWWj_zEAx0_JUhc=Qc76-aqpSOxTw@mail.gmail.com>
+Subject: Re: [PATCH 10/18] setup: stop using `the_repository` in `set_git_work_tree()`
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 30, 2026 at 6:30=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+On Mon, Mar 30, 2026 at 6:19=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
 >
-> Stop using `the_repository` in `setup_work_tree()` and instead accept
+> Stop using `the_repository` in `set_git_work_tree()` and instead accept
 > the repository as a parameter. The injection of `the_repository` is thus
 > bumped one level higher, where callers now pass it in explicitly.
 >
-> Note that the function tracks bogus worktree configuration via a global
-> variable. If we have bogus configuration, and if later on some caller
-> tries to setup a worktree, then we'll die instead.
+> Similar as with the preceding commit, we track whether the worktree has
+> been initialized already via a global variable so that we can die in
+> case the repository is re-initialized with a different worktree path.
+> Store this info in the `struct repository` instead so that we correctly
+> handle this per repository.
 >
-> Of course, tracking this as a global variable doesn't make sense anymore
-> now that we can set up worktrees for arbitrary repositories. Move the
-> variable into `struct repository` instead.
-
-Okay, we don't want a global, makes sense.
-
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/clone.c   |  2 +-
+>  builtin/init-db.c |  6 +++---
+>  repository.h      |  1 +
+>  setup.c           | 24 +++++++++++-------------
+>  setup.h           |  2 +-
+>  5 files changed, 17 insertions(+), 18 deletions(-)
+>
 
+> diff --git a/repository.h b/repository.h
+> index abeef3129e..7ae3d34484 100644
+> --- a/repository.h
+> +++ b/repository.h
+[...]
+> +       bool worktree_initialized;
 > diff --git a/setup.c b/setup.c
-> index dca32addae..64a030c6cd 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -26,7 +26,6 @@
->  #include "trace2.h"
->  #include "worktree.h"
+[...]
 >
-> -static int work_tree_config_is_bogus;
+> -static int git_work_tree_initialized;
 
-So, we removed this global....
+Okay, so we replaced the global git_work_tree_intialized with a
+repository field named worktree_initialized, _and_ changed its type
+from int to bool...
 
->  enum allowed_bare_repo {
->         ALLOWED_BARE_REPO_EXPLICIT =3D 0,
->         ALLOWED_BARE_REPO_ALL,
-> @@ -485,7 +484,7 @@ int is_inside_work_tree(struct repository *repo)
->         return is_inside_dir(strbuf_realpath(&buf, worktree, 1));
->  }
->
-> -void setup_work_tree(void)
-> +void setup_work_tree(struct repository *repo)
->  {
->         const char *work_tree;
->         static int initialized =3D 0;
+> -       git_work_tree_initialized =3D 1;
+> -       repo_set_worktree(the_repository, new_work_tree);
+> +       repo->worktree_initialized =3D 1;
+> +       repo_set_worktree(repo, new_work_tree);
 
-...but we left this one...
-
-> @@ -493,10 +492,10 @@ void setup_work_tree(void)
->         if (initialized)
->                 return;
-
-...and because of this other global, we still can only set up one work
-tree in the process anyway.  Should 'initialized' also be moved to a
-field within repo?
+...yet we still set it to "1".  Shouldn't we initialize it to "true"
+given the typechange?
