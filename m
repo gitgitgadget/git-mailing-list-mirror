@@ -1,286 +1,190 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199AA199D8
-	for <git@vger.kernel.org>; Sun, 19 Apr 2026 08:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE36D1A704B
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 11:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776588532; cv=none; b=B3ynxVs2EQzBWNx/bU5Qe4NphaMKnd6VPnJq8X6aeihdnRPz2Vm3zihwhdiyBKnaOCt1KiccQGkgdkcrRUL2KiciHNBIWXnXcYdD4Ra73hnuI9buB/+xwjjHEujRGdnoZYANN8Gpz901Z9L9yzYWsDEDPE9s02/wTQdoKMdvqLE=
+	t=1776597104; cv=none; b=odzWA9wu7Kdjgw6NAZktfQHwLTQVi9kPZHlHnlKfeAleIg4KsB13Q/2HQYjuqKeuSPMBZjhWOSdIXQgyWXkEtHs8flSUGq9NKfK8aY3kJ1ahvrNqGmevct6xDQKLHFLEZKWDmi1VqKCgEKcopgGkJ9utn8xGKHE6s21NFN0hK04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776588532; c=relaxed/simple;
-	bh=2gAbsJZQe8tTacmOAoxdELDayDXAsBtYC+ThDcyb/xo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trL4x6vypSf1qQmLq8jk5pH4xrO6OFvTvtRtXpPPuNuIzH1JXRKpzsykeQ63OEPZnDKSI7av3KO56Fv7D3pN34nyqYqVMshYa/XKk4KqE8JZHGkgze7o6cfoHTXrLTrXAI+rFn6taPcTLdxm00gpqk9Etton5BR95YBENZ10x1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K/0Pfc8f; arc=none smtp.client-ip=209.85.216.52
+	s=arc-20240116; t=1776597104; c=relaxed/simple;
+	bh=6tLkElWvjhwMrQ+nuChnFz4zUaLpVElFwAS8wGrZxoA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ja1JuzWPvC9inq8Roal2bWY/eVtxzrAk97mQtSNnxz8Q9qsx609nIGB1zaqffXD2GiLjsp9i07lXXp4ryYaQu/PnHkLyh9agFt6czTW14Zf9IqmUxLWFsfsJpv6Cv36zAGeOJ7Z8rdDlMbGhSROXeoKt77t84nfex0v8UIpXztM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rzd/o0O6; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K/0Pfc8f"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3614826eca4so1424125a91.1
-        for <git@vger.kernel.org>; Sun, 19 Apr 2026 01:48:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rzd/o0O6"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7b186dfc1d0so28050717b3.1
+        for <git@vger.kernel.org>; Sun, 19 Apr 2026 04:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776588530; x=1777193330; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kXksBDVFwWINAUQw6MCwli3i4IzAGOENUMMLtIYqXNU=;
-        b=K/0Pfc8fwn6YKOpnpeYqCWzLD0Mh7xNRZu83V7LPGRyH2qOIWaS74eZCocVcxwQNZv
-         OA+8c5NzvFWArXuZPuqX3/dR7TFypp1vApQFT55nkgfZVtFpcp47qSQnTMdMs1GjlKZQ
-         7kdigXj3t1KmKBHvexMi+h/dgd1PZ8623ULHVjdEI3txUU9F5a3tJRlAzND9x+cKhBKI
-         H4t62Y2Z19lsw/fM7e/5MdZD7yh8/E9EVdB6E/JTI+SzxfiY5/IGDeGs3TVfb+4Abv8V
-         Uy3LOuTiYtHuu0bGG/J/NZ32kYRUu9ZTDGv+0OIDUk4ovxYCMRTJJ2DXa6rVuffLVHBJ
-         mkHQ==
+        d=gmail.com; s=20251104; t=1776597102; x=1777201902; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fLVtIrPPq/Eheno5G4KRPXLjIrhN+EaiWSNT0o8WVTs=;
+        b=Rzd/o0O6QMw2UBCnfmhwV6DNw916tHFkR66X4pXH+P9v9QY8aNBakET15CVOhPC8t8
+         M9/P6IVYi10NeirhhUth4MafHVKsOgjyemEkAkZ2CQN2R8/YG1mQ0n2jFhp1cKROMhtw
+         r9zsUZvOs73OhCRqlYGDpfvokRcWiX6c3lsIvHCKGNcuFpA3+RzKE9G7vaMmvcO2YAmk
+         4ZqZrgxr8DxfSkdYtof4IQFwzf9T7A67ErQAUoEWYQAMA+7KYp+6XxqriYCHslVxHhlB
+         ew8yzzKen1spu+/c84EiIoMStZucb2oO+xM/hhPQS4ZmueN62QOVCMGWJt5YJ4vVRA0b
+         N61Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776588530; x=1777193330;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kXksBDVFwWINAUQw6MCwli3i4IzAGOENUMMLtIYqXNU=;
-        b=o9zH/o7oe5sWs1WuQmR18+cVM1aBIAQbO25ni6fgzUQqLR4+yBKA8b1W18H9LYiHmO
-         OA4iBG4RCmcP5ZNnasVe2GHHW4Wypdu8sFbVL+ZF2bJ8yHQVMsKGI10pk/3h1myzdcIR
-         aVRkUzbR2b0PtNq8/zoAzlhBoQEtjlUcw8/Nv43AAf0fKRQJ6P8Fu2cIL4fMx9SZnIYJ
-         m1VA5ZZsWEjQtEqU652aNDjAVXFOEkp3fHk7GKior+4HTv8I1dYKIVdHsF9gwazjHlbc
-         tGSH0JpKSvh60VdzjMDmm67X9nFQyOwmbVpXgbVQ2Dc3nbDu0w/FmXkGVtxSm1n6vcrC
-         3H+w==
-X-Gm-Message-State: AOJu0YwyreP7N3s6Dd6pMbSsnh9EkE9ZbVQ6RDjyIzO0IM/QMT5onwgt
-	y265h257SUmGcx2SLfZNGQj9XKuMI4I/wcwR0BRlbfX54fuu2ONtpGPuFmcTTQ==
-X-Gm-Gg: AeBDiesaJXffBFteztDNfq5qEDv6wtNYphxhz0w9SxQUb+TFY9ciXDUGOixubj1uZwg
-	ybO5npIggZtR1ek75R26/W5eoGlr/UF10mP8cmLWDevSDum3bXyjpYyrDC1kjXTptsQ8B6YK0EO
-	NSEl95vdj/lvzjJdJD8eVN6Q4p+kTOrMyWlNR3OCjxKBM7Q+NFUwWgcJkqab0P+jmlmWzeFzKtq
-	Ckuj7apW1FuFcRZm6eGjDtYIaJslQrxNzUA2ZvmswJK1zaMi4I5+CSJhYEZQezDIMgYa68L+0M1
-	hrp859PVxO+sWa29M+MlE77iUUyNrQO5BXE6iQkm2xc3abnLcR3VNFGSLH1w/aBUyBdreMJ3W2q
-	Zp1QB2kvRfhTsUvM0dLHVPr1hOmf+w9sxYUDw9kh7/jTSDBYk8Y0j9VZo0EG7vpTIKamUV6Q82L
-	WeIY/rIRUvyTeWEWVhcIcJlYutTfyQ0EYuwtp8GDWfWZMrji9CO7N9cmrpDwhLTJpACmvUeDFpo
-	7jYg3k=
-X-Received: by 2002:a17:90b:1807:b0:35f:bb33:d728 with SMTP id 98e67ed59e1d1-361403f2bd5mr10626945a91.11.1776588529878;
-        Sun, 19 Apr 2026 01:48:49 -0700 (PDT)
-Received: from localhost ([2409:40e3:40f3:1d3c:b014:b093:7cf2:7c44])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36140fc575bsm6945162a91.4.2026.04.19.01.48.49
+        d=1e100.net; s=20251104; t=1776597102; x=1777201902;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fLVtIrPPq/Eheno5G4KRPXLjIrhN+EaiWSNT0o8WVTs=;
+        b=A0x2lba2+cvnoyEmHqVZtqnI71o9stwjk+H5yjr9Ydw+uyb+/Uy2QDeplQtRm9D3eQ
+         h2y3HbFoPJKN8YwZ9iAl/dfteDqiRqTC0AXfIg2iPGxkFNv18PYeBoA5fmIIpXrpyf3C
+         xvsdWqbRRPQrcsy86ODTzQQ8erHc3uuVAqM04eTEiIPRLCMnkj64OH4LdIw+F4cFQE7J
+         CXO01Op86XUVfZ7dNwvhNSsmafPwqhx0pSZdZgVQG+8cZyXKGLEP6L6ZIMjaTq61pn6P
+         DB9lcEtQIzgWqfzDIvK7jmFPYZbFOMmqPHXKft43mu593Hko+knTcu/zLkhA/BJYRNa1
+         noqQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+q+VkBJddaZ85wOBbNsR1TCKB2xEr2f9/syuFUqa/2QW+ifDO+vIJWZsg9i+MzbFd+zpo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynUgwMbH6pWrXppDJ7dQyCUNlx454dooeb0t/O6Cufe5LHPwIZ
+	vDHhTno9B/lecmRI7eg67HDvHUMtwkH6M891TtMKFQD4J/KgwJSow6bb
+X-Gm-Gg: AeBDiesMaAG0sMOmI2mMkPAtPYw8NPBZ+rW0BIGIo+aRiIG867ubvxmoeTnrSLaik3X
+	Lk/iyjDLcWRP1raNa6xCM46d3cJPyHDzVrB2BbGMB51uWTRatQv0Oc0NNXxo3kCWsWRZno/QpGj
+	WRjmwjKDrcdaJikhgeO7fGZoqGFzuXTzEvf69E+uiILyesHwqzNBkpgyLtCU/wmSho83IkdaWqS
+	+aw7V8WPwjO1tLtU8Iw94S5UcpJELJqXZ/gYgaFTTSls0mYHne+AHV2rpWzPcuiUxvApIWNibzm
+	DFyTv7PLhgaqRewy4A4XfedvvqAK82sF5dm3qj9F2g+eNCEbaM5XRPmEyRrhlbANt4DhUO4uWqc
+	M8cfvxITIDm7N1NpVMmtxPSyKlZwkqjs2fp3bCIflBillGREeNBdcO4+iQIgC5zl1GVYKr/0E2V
+	ewDdd6fnIK2XYxqxONwYpn+F4X4gZx+LDigzk9Hnct+VR7vgUYztm+AGLwlMn3FVao5Qqtm8g8e
+	sV8eV8cKLZpMUpqcfKumH56maWNJhx2TwZHAvRz06rEBecq0HICvR3EOR+u7cxJFIXKGvtMMGO3
+	LdHyRWrVdgNJRlJ+JwsH4g==
+X-Received: by 2002:a05:690c:3181:b0:7b4:ad41:482d with SMTP id 00721157ae682-7b9ed276d75mr69823897b3.3.1776597101818;
+        Sun, 19 Apr 2026 04:11:41 -0700 (PDT)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b9ee9ce50fsm29868697b3.47.2026.04.19.04.11.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Apr 2026 01:48:49 -0700 (PDT)
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-To: git@vger.kernel.org
-Cc: chriscool@tuxfamily.org,
-	toon@iotcl.com,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	justin@parity.io,
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v1 1/1] rev-list: add --missing=print-only mode
-Date: Sun, 19 Apr 2026 14:18:40 +0530
-Message-ID: <20260419084840.33986-2-siddharthasthana31@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260419084840.33986-1-siddharthasthana31@gmail.com>
-References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
+        Sun, 19 Apr 2026 04:11:40 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	A4-Tacks <wdsjxhno1001@163.com>,
+	=?UTF-8?q?Aindri=C3=BA=20Mac=20Giolla=20Eoin?= <aindriu80@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Arkadii Yakovets <ark@cho.red>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Emir SARI <bitigchi@me.com>,
+	Emir SARI <emir_sari@icloud.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Stefan=20Bj=C3=B6rnelund?= <stefan.bjornelund.gnome@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [GIT PULL] l10n updates for Git 2.54.0
+Date: Sun, 19 Apr 2026 19:11:31 +0800
+Message-ID: <20260419111136.1577323-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.51.0.rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-When working with partial clones, it's common to want just the list of
-missing objects. The current --missing=print mode does this but mixes
-present and missing objects together, with missing ones prefixed by '?'.
-Getting only the missing OIDs requires an extra pipe:
+Hi Junio,
 
-  git rev-list --objects --all --missing=print | perl -ne 'print if s/^[?]//'
+Please pull the following l10n updates for Git 2.54.0.
 
-Add --missing=print-only which outputs only the missing object OIDs, one
-per line, without any prefix. This makes the above one-liner unnecessary
-and the output directly usable by downstream tools.
+The following changes since commit b15384c06f77bc2d34d0d3623a8a58218313a561:
 
-Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
----
- Documentation/rev-list-options.adoc |  5 +++
- builtin/rev-list.c                  | 49 ++++++++++++++++++++++-------
- t/t6022-rev-list-missing.sh         | 26 +++++++++++++++
- 3 files changed, 68 insertions(+), 12 deletions(-)
+  A bit more post -rc1 (2026-04-08 11:00:10 -0700)
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 2d195a1474..5438be5975 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -1056,6 +1056,11 @@ Unexpected missing objects will raise an error.
- The form `--missing=print` is like `allow-any`, but will also print a
- list of the missing objects.  Object IDs are prefixed with a ``?'' character.
- +
-+The form `--missing=print-only` is like `print`, but will print ONLY the
-+missing objects (not the present ones), and without the ``?'' prefix.  This
-+is useful for scripting, as a simpler alternative to
-+`--missing=print | sed -n 's/^?//p'`.
-++
- The form `--missing=print-info` is like `print`, but will also print additional
- information about the missing object inferred from its containing object. The
- information is all printed on the same line with the missing object ID in the
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 8f63003709..ba7e3e3919 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -104,14 +104,22 @@ static void missing_objects_map_entry_free(void *e)
- 
- static struct oidmap missing_objects;
- enum missing_action {
--	MA_ERROR = 0,    /* fail if any missing objects are encountered */
--	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
--	MA_PRINT,        /* print ALL missing objects in special section */
--	MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing object info */
-+	MA_ERROR = 0, /* fail if any missing objects are encountered */
-+	MA_ALLOW_ANY, /* silently allow ALL missing objects */
-+	MA_PRINT, /* print ALL missing objects in special section */
-+	MA_PRINT_INFO, /* same as MA_PRINT but also prints missing object info */
-+	MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" prefix */
- 	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
- };
- static enum missing_action arg_missing_action;
- 
-+static inline int missing_action_prints(void)
-+{
-+	return arg_missing_action == MA_PRINT ||
-+	       arg_missing_action == MA_PRINT_INFO ||
-+	       arg_missing_action == MA_PRINT_ONLY;
-+}
-+
- /* display only the oid of each object encountered */
- static int arg_show_object_names = 1;
- 
-@@ -156,11 +164,16 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
- {
- 	struct strbuf sb = STRBUF_INIT;
- 
--	if (line_term)
-+	if (arg_missing_action == MA_PRINT_ONLY) {
-+		printf("%s", oid_to_hex(&entry->entry.oid));
-+		putchar(line_term);
-+		return;
-+	} else if (line_term) {
- 		printf("?%s", oid_to_hex(&entry->entry.oid));
--	else
-+	} else {
- 		printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
- 		       info_term);
-+	}
- 
- 	if (!print_missing_info) {
- 		putchar(line_term);
-@@ -209,6 +222,7 @@ static inline void finish_object__ma(struct object *obj, const char *name)
- 
- 	case MA_PRINT:
- 	case MA_PRINT_INFO:
-+	case MA_PRINT_ONLY:
- 		add_missing_object_entry(&obj->oid, name, obj->type);
- 		return;
- 
-@@ -246,6 +260,11 @@ static void show_commit(struct commit *commit, void *data)
- 		return;
- 	}
- 
-+	if (arg_missing_action == MA_PRINT_ONLY) {
-+		finish_commit(commit);
-+		return;
-+	}
-+
- 	if (show_disk_usage)
- 		total_disk_usage += get_object_disk_usage(&commit->object);
- 
-@@ -384,6 +403,8 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
- 	if (finish_object(obj, name, cb_data))
- 		return;
- 	display_progress(progress, ++progress_counter);
-+	if (arg_missing_action == MA_PRINT_ONLY)
-+		return;
- 	if (show_disk_usage)
- 		total_disk_usage += get_object_disk_usage(obj);
- 	if (info->flags & REV_LIST_QUIET)
-@@ -525,6 +546,12 @@ static inline int parse_missing_action_value(const char *value)
- 		return 1;
- 	}
- 
-+	if (!strcmp(value, "print-only")) {
-+		arg_missing_action = MA_PRINT_ONLY;
-+		fetch_if_missing = 0;
-+		return 1;
-+	}
-+
- 	if (!strcmp(value, "allow-promisor")) {
- 		arg_missing_action = MA_ALLOW_PROMISOR;
- 		fetch_if_missing = 0;
-@@ -967,8 +994,7 @@ int cmd_rev_list(int argc,
- 
- 	if (arg_print_omitted)
- 		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
--	if (arg_missing_action == MA_PRINT ||
--	    arg_missing_action == MA_PRINT_INFO) {
-+	if (missing_action_prints()) {
- 		struct oidset_iter iter;
- 		struct object_id *oid;
- 
-@@ -994,8 +1020,7 @@ int cmd_rev_list(int argc,
- 			printf("~%s\n", oid_to_hex(oid));
- 		oidset_clear(&omitted_objects);
- 	}
--	if (arg_missing_action == MA_PRINT ||
--	    arg_missing_action == MA_PRINT_INFO) {
-+	if (missing_action_prints()) {
- 		struct missing_objects_map_entry *entry;
- 		struct oidmap_iter iter;
- 
-@@ -1011,7 +1036,7 @@ int cmd_rev_list(int argc,
- 
- 	stop_progress(&progress);
- 
--	if (revs.count) {
-+	if (revs.count && arg_missing_action != MA_PRINT_ONLY) {
- 		if (revs.left_right && revs.cherry_mark)
- 			printf("%d\t%d\t%d\n", revs.count_left, revs.count_right, revs.count_same);
- 		else if (revs.left_right)
-@@ -1022,7 +1047,7 @@ int cmd_rev_list(int argc,
- 			printf("%d\n", revs.count_left + revs.count_right);
- 	}
- 
--	if (show_disk_usage)
-+	if (show_disk_usage && arg_missing_action != MA_PRINT_ONLY)
- 		print_disk_usage(total_disk_usage);
- 
- cleanup:
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-index 08e92dd002..105560ad21 100755
---- a/t/t6022-rev-list-missing.sh
-+++ b/t/t6022-rev-list-missing.sh
-@@ -198,6 +198,32 @@ do
- 	'
- done
- 
-+for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-+do
-+	test_expect_success "rev-list --missing=print-only with missing $obj" '
-+		oid="$(git rev-parse $obj)" &&
-+		path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+		# Capture present OIDs before hiding anything.
-+		git rev-list --objects --no-object-names HEAD ^$obj >present.raw &&
-+
-+		mv "$path" "$path.hidden" &&
-+		test_when_finished "mv $path.hidden $path" &&
-+
-+		git rev-list --missing=print-only --objects --no-object-names \
-+			HEAD >actual &&
-+
-+		# Only the missing OID should appear, without the "?" prefix.
-+		grep "^$oid$" actual &&
-+
-+		# Present objects must NOT appear in the output.
-+		while read present_oid
-+		do
-+			! grep "^$present_oid$" actual || return 1
-+		done <present.raw
-+	'
-+done
-+
- test_expect_success "-z nul-delimited --missing" '
- 	test_when_finished rm -rf repo &&
- 
--- 
-2.53.0
+are available in the Git repository at:
 
+  git@github.com:git-l10n/git-po.git tags/l10n-2.54.0-v1
+
+for you to fetch changes up to d0ab4e83765b7c68a88c1d2e8acb58dac392cf99:
+
+  Merge branch 'fr_v2.54.0' of github.com:jnavila/git (2026-04-19 18:41:17 +0800)
+
+----------------------------------------------------------------
+l10n-2.54.0-v1
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmnkthEACgkQk24VDd1F
+MtX14Q//S1lIO8jrnvQEmmdq4GKMIl9pkUX/lLwxSNhVNyUGvpV3xLghDWfjo8hg
+yTVTDzeh5lOyq8ZA3VdUgzCTXBzt09j/IooOrtxQptZyfKAM8aYaE7GIWG/hCAGn
+cC/aTtc/eajKur/16z2Ku64IOiWbO3B/lAUfcvg6EqqvBXxW0NYADfGrmZIXZI4b
+dLkdVg1bGwoD2xIPAR7HUDR3mYbzcjHK78pAF562KGBJn4/4wHQ28ZMpiYZ2F94R
+IQVm1UnOf7JGVxjVHx7SobeV1CApfL5DHIZafyt2QI+7f2FwKGfAD53NnjmzzDKR
+2DVZTzD06CBpOIJ/deSkYQ8d4WrCVFaYI1MZ9n8dhYIZTvjXI8Y6XYJxomFX/K3U
+meTQPbXZfdiPWVL+H64jYmwcIVQphSpM1S2I5qLpjgYVLRkZItvPoflwjrBuvhkg
+SGDn9sURnEhvKtTul9PseArRt8VK+NKiFT/6stvMY6FFFF/jRg+/jISKz3YznPX+
+Up8mv78mfxtOENZ3G2xOsU3C+IdnkagZA8dpOJGDKHpRKxGtbqKEkV+YMH7czLK+
+mEyJ8uEbcFdS8h/VpeEZV6xOAYLCWDI1APRGD/+2sjJpFpPs1vMOVbCHWqnnYHwX
+yW5ATIf1p/YrGRs3YSQbOX7QwZWZnoqd0B465Dsi/Jqlc2LPQGg=
+=i2Wh
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+A4-Tacks (1):
+      l10n: fix 'zh_TW.po' 'Applying patch'
+
+Aindriú Mac Giolla Eoin (1):
+      l10n: ga.po: update for Git 2.54
+
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (6226t)
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations
+
+Jean-Noël Avila (1):
+      l10n: fr: v2.54.0
+
+Jiang Xin (16):
+      l10n: add .gitattributes to simplify location filtering
+      l10n: docs: add AGENTS.md with update POT instructions
+      l10n: docs: add update PO instructions in AGENTS.md
+      l10n: docs: add translation instructions in AGENTS.md
+      l10n: docs: add review instructions in AGENTS.md
+      l10n: document AI and PO helper in po/README
+      Merge branch 'master' of https://github.com/git/git
+      Merge branch 'master' of https://github.com/git/git
+      l10n: zh_CN: post-2.53 code review
+      l10n: zh_CN: updated translation for 2.54
+      Merge branch 'zh_CN-2.54' of github.com:jiangxin/git
+      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+      Merge branch 'apply-patch-reject' of github.com:A4-Tacks/git-po
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch 'fr_v2.54.0' of github.com:jnavila/git
+
+Mikel Forcada (1):
+      l10n: Update Catalan Translation
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation
+
+Stefan Björnelund (1):
+      l10n: sv.po: correct various translations
+
+ po/.gitattributes |   35 +
+ po/AGENTS.md      |  877 +++++++++++
+ po/README.md      |   98 +-
+ po/bg.po          | 1606 +++++++++++++-------
+ po/ca.po          | 4215 ++++++++++++++++++++++++++++++++++++-----------------
+ po/es.po          |   34 +-
+ po/fr.po          | 1244 +++++++++++-----
+ po/ga.po          | 1457 +++++++++++-------
+ po/ru.po          |   28 +-
+ po/sv.po          | 1351 ++++++++++++-----
+ po/tr.po          | 1368 ++++++++++++-----
+ po/zh_CN.po       | 1454 +++++++++++++-----
+ po/zh_TW.po       |    2 +-
+ 13 files changed, 9891 insertions(+), 3878 deletions(-)
+ create mode 100644 po/.gitattributes
+ create mode 100644 po/AGENTS.md
+
+--
+Jiang Xin
