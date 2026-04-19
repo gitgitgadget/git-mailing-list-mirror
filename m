@@ -1,128 +1,108 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E29B13AA2D
-	for <git@vger.kernel.org>; Sat, 18 Apr 2026 21:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776549309; cv=none; b=ajbP9/ddp39M5wq6chqmK77RTbFm+tz+LQbUqlyd1sevccbxjWbkd9p80hthKFZeJ6C7gIpQb3SBv+WfLWoJgwP8qPD8kWiEHD3E4Qko76hx3u7Qj3Q/Uacq7oGPEpp/yM56mc1gfr05GWmAfGLz9o2swpvpbjgQMbCniSWa0FU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776549309; c=relaxed/simple;
-	bh=PpamzeTBg5r2KpNjsWfQclW9pmrVmmM+paVT+2CLuGI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SGLiyOsDHI9IgkXcrG1M69CayieD0NJsbo8w36cvqklthHPgARK1V12Br6kF9CeDlM74IRqPgKSl7IbNorppiiDwqo8DhowdiJx1FnPFlNeABsd9T2+V7GTzl+zomVR3QLK8pB6PS9kSIbGBK7KSA2kvUYMLq8JNQvQnDoCkdso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zRJo0huW; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CA97E0FF
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 00:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776558259; cv=pass; b=nqh+5YI2/ZYjbjTn1HYBwXgueHdEw79xk+s8sNAc9VEp528uHzWWU9NonlO/F+600GGGmDtW9tWH5FA4aY5tOn9vzKCU+N+BAwXfYdqEbIHVEyMdKkc1mvhcHKG1Y7RXKIH6XSmBqU5F9wLt1rLj+dxEqgDLK2GIbLqvucnuGCo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776558259; c=relaxed/simple;
+	bh=lf3jaY4ToSHxXlx2O7eou+Yxp/qVjkJFt+Vz+Kf5liY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fINwyxAMcKZGRrUoGyIpK2l9yQiFTk7Ce3cGJCqQm1UnehtzB5OznjbpdXA8QMV7cSSGmC7wA3E3dc1vIYpfts5im3lkGMjisdVVIfXrMVMttt63QW+7J4MtzzjLWKnBgiex7+FX+AU/ITyoBAInnDDMT3zUIg83alBvVpdnylg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMKa7LhV; arc=pass smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zRJo0huW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1776549299;
-	bh=PpamzeTBg5r2KpNjsWfQclW9pmrVmmM+paVT+2CLuGI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=zRJo0huWprSWgqY45qgbuymAhkHzrpvvjEwsP1nQwiaiU06G06F8gz6pDhY2SicF/
-	 YQ02p23tLn16RG51XwMOSzLjApjWmjzUODxe4xx7q8Vj4JsE+ZEd2h7crgI4HYVrNF
-	 NXkdDsjsqKQcdsx3+BLdQumsS/yYlg7p27NbWHHBINjDLP0V4cOOOUiVEhbievmbR5
-	 1Wj3mKyXkomNMGSbq/tUwLH8VrrnsvZMBX8v6d/YA5Y7s9fcUjT9mA898L8OEI8A1I
-	 urNg19110+GFPTdc25lEpWVMW4NlQ4OvpP5/YXLn15UQxGUIViQFfpVerr6fIng+oB
-	 UyKnz5LVcdpslnYREppJwNOh9mUWpE5SlNl7lxnd1KMVqJ0VUWQjWLfCyIgiDVoMlz
-	 XlAdzntpjfzAQSXd9xgX2Wz6n0qFIP8l26YGZRq6t+nX6vH8u8yNJ9Hr1x2EEFLuH5
-	 biW4XGi3kIvgrGLKmU+UNOOpZxLHwhQMa2BVnyw0DLxT20F4ykF
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:595b:551b:bb54:42ba])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9DEF6200FF;
-	Sat, 18 Apr 2026 21:54:59 +0000 (UTC)
-Date: Sat, 18 Apr 2026 21:54:58 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Ben Knoble <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?R8OhYm9y?= SZEDER <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 12/12] t: detect errors outside of test cases
-Message-ID: <aeP9stvssuTv0FD7@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Ben Knoble <ben.knoble@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?R8OhYm9y?= SZEDER <szeder.dev@gmail.com>
-References: <20260418065009.GA2619713@coredump.intra.peff.net>
- <AA6F33AD-25C2-4AB0-A624-35C7B0BE0F66@gmail.com>
- <aePY1x9uO39p6WDI@fruit.crustytoothpaste.net>
- <20260418213043.GB9632@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMKa7LhV"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2b24fdac394so17658475ad.3
+        for <git@vger.kernel.org>; Sat, 18 Apr 2026 17:24:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776558257; cv=none;
+        d=google.com; s=arc-20240605;
+        b=La4YS09UkPHIWKXkdDK+LfyvMb4baVbYRCTsNBwUjvwFfFrv0WHtMDB88IzS1b5PZF
+         q/mmC3ixEsSmSk0ezvtBRWVq8TUOa+hrQ8NBXfL4H+Wca9wgREVotbfl9pOI+mWNZ6wJ
+         4kMqs7PQA/M5ztM2ZyXG8C2pOgmifWrMQJNWMvPPy8MmnMaEOvxedHqHyKXl235G8hbS
+         SxnrrRZHU2vdO5u/ai/htvJssP4CwlpWAq5vxLfk4dig1iw21E9NbWAx127ID5es3uua
+         2SHEtu9414GDx7zlO6iRxHQTVWUdnrdN5tbDnJfcNGehAMlbZnB7yelfG3x+FiHKDM+A
+         ZePA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YsIF2LGe0TsB9mB/+pX9myIE64c+bQIeRiW5LMgOSRU=;
+        fh=SlejNgZhDGxYE3RoeDx16OjaGxHLTwSxXQ+/jdvn8IE=;
+        b=FhNvUWcFReSAfULCZbSmQVupHEG0Dq/MO8pFpCEsl7pgJGLSX3T0iU46pSXVfOZYz8
+         tappiqntRgbmdfjY3nugz9JM7+8VsP7KsGrpgojoKUVFgYXAMkOGUWTHgyqLXeq0NuKr
+         kDS0aMt6TZFkM8lqVDpbZBxGSVfP7AvPFXnR+WSD7Wqhb5p1DwezySkErlSXfgJUD5t7
+         jb+YJ0FjC/gOIVzCoNd/YNkxh4OkmyccXmkXSEzuKcCc3YiCBVOsPw9COGZGXg3X8jWx
+         GfBwlR8j9YBKgnOJkLyHsL036REgoSQ1JYV5suEEfLRYZmcHigeKHLiyedReP+nEzcjT
+         CNTg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776558257; x=1777163057; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YsIF2LGe0TsB9mB/+pX9myIE64c+bQIeRiW5LMgOSRU=;
+        b=VMKa7LhV9pCId1Cd9zFRYGt2SFDgyoGU9Uv9XzrJPLvUpeJKxGx+JLwI34HxN8d1pV
+         3DQ60AjQ2ASQ2WSFbAtpWVlne1jyXwAlMrT+TJmDMAAJeA7wh1yWdO8Ue/amH/6J2X09
+         LYEcqC9Il0IgqNebhbDcjix2H1RtfRxn4FchuePTEDXS3cQJN8a2nSjxi7pOg18luGpN
+         pFfw1kmLzw1UNJpFWk3p8XPjy7THrmW2u4VHCw0fw7NiJ6sDOWnO3KUmML+T8KgnuiCN
+         UP79mtqLcFXFczTmHB4+ETfuFwgxuO43bKjqPTcBYuIte9pphLMH7pdL214v1yFvpKBA
+         qAzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776558257; x=1777163057;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YsIF2LGe0TsB9mB/+pX9myIE64c+bQIeRiW5LMgOSRU=;
+        b=UfwOP/jWYYH17M/4hl2kncnYWvGqcJVrnjPUpDDk1/pOBau75t1pfD9JT5dbDtpb6u
+         kB/mEhZNLeCzZUisVvsl+7Gdv25ZaYJzuT6E67gDh63H6UktmgfVzsQjCvv4R17rjYpG
+         N2eDG/h26iyMbHSqhLIC/bCQCKMHLSVShO5Uj0GJSGm5Zi+RmsEBlIpc/QIHNWsoKdA/
+         To0+NOs/+Vwcjc9jb8L2mw0YF0GFKukt1kt6u7okJ57YrKtx9nkeN+CRqPeS8daS3wQi
+         cF89eHv8fXHnqgBApqFde6B33u4AiRdP3t1hNdXdyqfnHMKNC4hGtQOtcdMayCkSjZsl
+         TW3Q==
+X-Gm-Message-State: AOJu0Yz/VSukWhBcpgqUHpTBrYipGyORI1UXYVHSc/ZGC+Dz8U6GtVBl
+	KRtSQa3WCKGsoHKk42gc9X2qmLh2UrjMQ4dtbjQaJ+nKvboxRRltg4bBrrWAVzE5pXAU3Sv+z7h
+	zFi6zqCB2eeE3KQNzVlZXu/OEu7ah22k=
+X-Gm-Gg: AeBDievjX3oicViGaNiXCpSNuma5ow2C01zDQjkfDqyL+8B4mHyN1963oXwfbETt7xv
+	cQQwkecOjE0kVySwTCYess8Iw0iWcagIoVXJZcKb31zruIbBJNjMHJ9QSi0TgOejnCRv2EFzdNw
+	bzMU0vuGbz920bh+Y1HsUNCwvZsq1VvlXGLUfur8lc81fX3CzLcH08Ko8fcy/1EGyKHbqdnlqJI
+	U5fVK2Tnyq4V813tWinpMk0pK2hrMA9P1MNEzRSzlqKTxv5WZK3OHcpSJPQrHzd13ZLMQDPBITO
+	NlBn4alzXwdkKpwMB3K/z5pTw/WNC3anQtFWO+lUEawfIB9/hO/GjjWiFZFXvZ5cveHL4SAyu7g
+	aIlvR/oFQ+jdmPrDUr6vV4F61wj571nPpMPN3
+X-Received: by 2002:a17:902:7005:b0:2ae:55eb:f82d with SMTP id
+ d9443c01a7336-2b5f9eaf865mr60802425ad.1.1776558257318; Sat, 18 Apr 2026
+ 17:24:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hZ6kf2Pny/Grdu60"
-Content-Disposition: inline
-In-Reply-To: <20260418213043.GB9632@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---hZ6kf2Pny/Grdu60
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <cover.1776124588.git.me@ttaylorr.com> <d5ef6b959fd7c05c73bd33aa2b394558320aceac.1776124588.git.me@ttaylorr.com>
+In-Reply-To: <d5ef6b959fd7c05c73bd33aa2b394558320aceac.1776124588.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Sat, 18 Apr 2026 17:24:04 -0700
+X-Gm-Features: AQROBzDw_GclD_Ut_05qO4lRpBRUC8ygt9unPezIv2_Hv_xvCIDT4Ip2-DDgU_0
+Message-ID: <CABPp-BELG+poD67JCojze=bzYsWr0UvdXb2Vai=eEY=2CzaGCg@mail.gmail.com>
+Subject: Re: [PATCH 1/8] t/helper: add 'test-tool bitmap write' subcommand
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2026-04-18 at 21:30:43, Jeff King wrote:
-> If check_fsck() were run by itself then yes, this would be a problem.
-> But it is always run inside a test snippet, and there "set -e" should
-> always be suppressed because test_expect_success does:
->=20
->   if test_run_ "$test_body"
->=20
-> So we are inside a conditional, and the usual global "set -e"
-> suppression should happen. It sounds like it is not happening in your
-> version of mksh, but I was unable to get t1410 to fail at all using mksh
-> 59c-43 (from Debian unstable) or 59c-41 (from stable).
+On Mon, Apr 13, 2026 at 4:56=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+[...]
+> +               bitmap_writer_push_commit(&writer, c, false);
 
-It does fail with 59c-43 under `make prove` or if you do `sh ./t1410*.sh
---verbose`, assuming that `sh` points to `mksh`, but since the script
-has a `/bin/sh` shebang, you need to invoke it explicitly with the shell
-in question, or it will use the system `sh` (dash).  (I made this
-mistake when reproducing the problem.)
+$ git grep -h -A 1 bitmap_writer_push_commit -- '*.h'
+void bitmap_writer_push_commit(struct bitmap_writer *writer,
+                               struct commit *commit, unsigned pseudo_merge=
+);
 
-Note that the test in question does not exit, but returns this (with
-`--verbose`):
-
-----
-Checking ref database: 100% (1/1), done.
-Checking object directories: 100% (256/256), done.
-not ok 7 - corrupt and check
-----
-
-and this:
-
-----
-Checking ref database: 100% (1/1), done.
-Checking object directories: 100% (256/256), done.
-not ok 8 - reflog expire --dry-run should not touch reflog
-----
-
-It does seem like this _is_ a bug in mksh, though, which I've reproduced
-with a test script, so I'll report it there.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---hZ6kf2Pny/Grdu60
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8Fgmnj/bEJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZzPvBdVnNAEX2uxZUr6pdRkm7nxQNtzVtfFz6icoQ6H5
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAH2YAQC1s/MH/h3iaHv9WvcVotRAXbEV
-tTqQEkdYK4z9j5qe5wEA5SS+V8HY8fZfCII01falcTbn303IKo8UXbWu1W41lw4=
-=Z49d
------END PGP SIGNATURE-----
-
---hZ6kf2Pny/Grdu60--
+Not a big deal, but for consistency, would it make more sense to pass
+0 for the third argument, or to change the function signature change
+to accept bool instead of unsigned?
