@@ -1,93 +1,93 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CA97E0FF
-	for <git@vger.kernel.org>; Sun, 19 Apr 2026 00:24:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7470910F1
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 00:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776558259; cv=pass; b=nqh+5YI2/ZYjbjTn1HYBwXgueHdEw79xk+s8sNAc9VEp528uHzWWU9NonlO/F+600GGGmDtW9tWH5FA4aY5tOn9vzKCU+N+BAwXfYdqEbIHVEyMdKkc1mvhcHKG1Y7RXKIH6XSmBqU5F9wLt1rLj+dxEqgDLK2GIbLqvucnuGCo=
+	t=1776558370; cv=pass; b=Mu0dpJeWbx0FQKax2GHn5KGzW1uB9IQ63xYuQO4znYArz7dUPIkt88yHuzFynf6Ne0HSHYY8ZDZpnRdGb1rYqY6zOoaS26giF6kKIygaUtm9v41MVU31r9JD+9s4XD12f9h4XmZKxDQQEWyojUBVBIr0r+XGVBTcAuLmL45akHA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776558259; c=relaxed/simple;
-	bh=lf3jaY4ToSHxXlx2O7eou+Yxp/qVjkJFt+Vz+Kf5liY=;
+	s=arc-20240116; t=1776558370; c=relaxed/simple;
+	bh=3frXRPhQ1ajXt5pDJgCNGxt3JgyfRtPb1YegtIBrrcI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fINwyxAMcKZGRrUoGyIpK2l9yQiFTk7Ce3cGJCqQm1UnehtzB5OznjbpdXA8QMV7cSSGmC7wA3E3dc1vIYpfts5im3lkGMjisdVVIfXrMVMttt63QW+7J4MtzzjLWKnBgiex7+FX+AU/ITyoBAInnDDMT3zUIg83alBvVpdnylg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMKa7LhV; arc=pass smtp.client-ip=209.85.214.180
+	 To:Cc:Content-Type; b=iD1rE2nQMUFNUDUwRHGKWGvEhMZuXsc5GzC/mXhNO3r9A6R6LqK0PoIiEjk8uNVM5pz+HNw+LhXSJb1rKtfu1Npe0S6NZ+Cw1gG046PqSS6TBQjqpk56Tun/OvX76jled9T9jOJYaQap1eyf857u45wnDUQ6EDdlCNzM3PS4xOE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j31PJ7IA; arc=pass smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMKa7LhV"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2b24fdac394so17658475ad.3
-        for <git@vger.kernel.org>; Sat, 18 Apr 2026 17:24:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776558257; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j31PJ7IA"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2b458ca2296so13321015ad.0
+        for <git@vger.kernel.org>; Sat, 18 Apr 2026 17:26:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776558369; cv=none;
         d=google.com; s=arc-20240605;
-        b=La4YS09UkPHIWKXkdDK+LfyvMb4baVbYRCTsNBwUjvwFfFrv0WHtMDB88IzS1b5PZF
-         q/mmC3ixEsSmSk0ezvtBRWVq8TUOa+hrQ8NBXfL4H+Wca9wgREVotbfl9pOI+mWNZ6wJ
-         4kMqs7PQA/M5ztM2ZyXG8C2pOgmifWrMQJNWMvPPy8MmnMaEOvxedHqHyKXl235G8hbS
-         SxnrrRZHU2vdO5u/ai/htvJssP4CwlpWAq5vxLfk4dig1iw21E9NbWAx127ID5es3uua
-         2SHEtu9414GDx7zlO6iRxHQTVWUdnrdN5tbDnJfcNGehAMlbZnB7yelfG3x+FiHKDM+A
-         ZePA==
+        b=YPoVpviJmKpl3tn9KfyFP2J6ls1G9orgYG8b2DHRo6ogEd79jFnF/5qk7RsowmUZ4u
+         EbuP8xWXQK9vgzgq/21Y9P0pXZKyBggEcrIM1Du/5F8Rkdteg3jmoaKB5n6sLFxhkL6l
+         EdjjoWdhCKT9ab4uEU1Kv+yv7MsC605AbTgWiMmv/nfM64rFlL2tKXnZ0Aaw4nwEtzjt
+         U5JGxBoqpAfhDl0NsMhUFCu2OwmpVgysyDWRa3PCrrTgSQAdq29s1/e1dqEcM5VlsiWd
+         KZi408P1p1BUJrmKL9Us9apH9f76dPufdApgI7qCdX3M4viekvRSLjhNg+yKgqVhQMes
+         pZZw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=YsIF2LGe0TsB9mB/+pX9myIE64c+bQIeRiW5LMgOSRU=;
+        bh=Uh/648BuUna+N52tp8Vwa08Esg4sxKZLd+1Y+mVyIPM=;
         fh=SlejNgZhDGxYE3RoeDx16OjaGxHLTwSxXQ+/jdvn8IE=;
-        b=FhNvUWcFReSAfULCZbSmQVupHEG0Dq/MO8pFpCEsl7pgJGLSX3T0iU46pSXVfOZYz8
-         tappiqntRgbmdfjY3nugz9JM7+8VsP7KsGrpgojoKUVFgYXAMkOGUWTHgyqLXeq0NuKr
-         kDS0aMt6TZFkM8lqVDpbZBxGSVfP7AvPFXnR+WSD7Wqhb5p1DwezySkErlSXfgJUD5t7
-         jb+YJ0FjC/gOIVzCoNd/YNkxh4OkmyccXmkXSEzuKcCc3YiCBVOsPw9COGZGXg3X8jWx
-         GfBwlR8j9YBKgnOJkLyHsL036REgoSQ1JYV5suEEfLRYZmcHigeKHLiyedReP+nEzcjT
-         CNTg==;
+        b=iTQwuDGHR7r17rcnMxvz5PrbsB9LQKveyQ/T71r91qdMcczidjdoB+9kg7PvAAA8Rc
+         IE0OWLK1C4IFmB/I+/1RFCGUlI8I3ktoEniJ9HKBYttPD406wxdQ/ygspjmlAKzdgptX
+         qMrriPYOxqiwOA0Mg0Scq+f+dITAd7tAkIjjtfshnjh+C7zNs8CzoyeQchRGwy85VDsh
+         +uZRdvfdLeu5fdGOR4i5/LkS1O6XFIu7OS1D/47jePPFHMOxSfJTulIqB4jzXWojaktK
+         llIW5RKEx/VtHYG+CqSbt2jKzdKH9EbkiR/j9pfI6543UvwO8sJVxAnYqExmJWFSC96d
+         l6pQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776558257; x=1777163057; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776558369; x=1777163169; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YsIF2LGe0TsB9mB/+pX9myIE64c+bQIeRiW5LMgOSRU=;
-        b=VMKa7LhV9pCId1Cd9zFRYGt2SFDgyoGU9Uv9XzrJPLvUpeJKxGx+JLwI34HxN8d1pV
-         3DQ60AjQ2ASQ2WSFbAtpWVlne1jyXwAlMrT+TJmDMAAJeA7wh1yWdO8Ue/amH/6J2X09
-         LYEcqC9Il0IgqNebhbDcjix2H1RtfRxn4FchuePTEDXS3cQJN8a2nSjxi7pOg18luGpN
-         pFfw1kmLzw1UNJpFWk3p8XPjy7THrmW2u4VHCw0fw7NiJ6sDOWnO3KUmML+T8KgnuiCN
-         UP79mtqLcFXFczTmHB4+ETfuFwgxuO43bKjqPTcBYuIte9pphLMH7pdL214v1yFvpKBA
-         qAzQ==
+        bh=Uh/648BuUna+N52tp8Vwa08Esg4sxKZLd+1Y+mVyIPM=;
+        b=j31PJ7IAefg9Jy6EJLLV8AjHl0XA0Um3Rw7xVQMnXW9JLZordsFmXZYWoekHfz4H2Q
+         ClQ/biWIexzeDPg9wyQ1Ejj288WTslyP5sSDta9SW5WkWZtAFYuvWlYzC+ZtVduh8Zpc
+         uOS2S6v8gr0/kvsnDjvs6v3c8r4/jyrbOqR8UzotBH1ut4HafQmsF8nemDEHfhEUiSFr
+         qJce0THU/UMnyWm2zv/rG5AUHD3jiq3M6FATsk4ZNtMM5tLGMUcM/AFoplGk1ZvbaOVU
+         DBkU3p+SqS5vUJjRN7dFM/VABqeIcnCMw42p/V806bCDQ/PL+PoESEwlcoFKX05naatf
+         x53Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776558257; x=1777163057;
+        d=1e100.net; s=20251104; t=1776558369; x=1777163169;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YsIF2LGe0TsB9mB/+pX9myIE64c+bQIeRiW5LMgOSRU=;
-        b=UfwOP/jWYYH17M/4hl2kncnYWvGqcJVrnjPUpDDk1/pOBau75t1pfD9JT5dbDtpb6u
-         kB/mEhZNLeCzZUisVvsl+7Gdv25ZaYJzuT6E67gDh63H6UktmgfVzsQjCvv4R17rjYpG
-         N2eDG/h26iyMbHSqhLIC/bCQCKMHLSVShO5Uj0GJSGm5Zi+RmsEBlIpc/QIHNWsoKdA/
-         To0+NOs/+Vwcjc9jb8L2mw0YF0GFKukt1kt6u7okJ57YrKtx9nkeN+CRqPeS8daS3wQi
-         cF89eHv8fXHnqgBApqFde6B33u4AiRdP3t1hNdXdyqfnHMKNC4hGtQOtcdMayCkSjZsl
-         TW3Q==
-X-Gm-Message-State: AOJu0Yz/VSukWhBcpgqUHpTBrYipGyORI1UXYVHSc/ZGC+Dz8U6GtVBl
-	KRtSQa3WCKGsoHKk42gc9X2qmLh2UrjMQ4dtbjQaJ+nKvboxRRltg4bBrrWAVzE5pXAU3Sv+z7h
-	zFi6zqCB2eeE3KQNzVlZXu/OEu7ah22k=
-X-Gm-Gg: AeBDievjX3oicViGaNiXCpSNuma5ow2C01zDQjkfDqyL+8B4mHyN1963oXwfbETt7xv
-	cQQwkecOjE0kVySwTCYess8Iw0iWcagIoVXJZcKb31zruIbBJNjMHJ9QSi0TgOejnCRv2EFzdNw
-	bzMU0vuGbz920bh+Y1HsUNCwvZsq1VvlXGLUfur8lc81fX3CzLcH08Ko8fcy/1EGyKHbqdnlqJI
-	U5fVK2Tnyq4V813tWinpMk0pK2hrMA9P1MNEzRSzlqKTxv5WZK3OHcpSJPQrHzd13ZLMQDPBITO
-	NlBn4alzXwdkKpwMB3K/z5pTw/WNC3anQtFWO+lUEawfIB9/hO/GjjWiFZFXvZ5cveHL4SAyu7g
-	aIlvR/oFQ+jdmPrDUr6vV4F61wj571nPpMPN3
-X-Received: by 2002:a17:902:7005:b0:2ae:55eb:f82d with SMTP id
- d9443c01a7336-2b5f9eaf865mr60802425ad.1.1776558257318; Sat, 18 Apr 2026
- 17:24:17 -0700 (PDT)
+        bh=Uh/648BuUna+N52tp8Vwa08Esg4sxKZLd+1Y+mVyIPM=;
+        b=NPsfyDMwCue5K4msit+k9HxP1v3/+rFta82X5+RfK5w///oqh5g4PZehuyND5ruXm7
+         igNYGzud7CFibnLo/psb8xod92s8BS6okoGzg/A4i6u20jYl+aFJ+frv6/T8MivlAqTC
+         R+QkrEg/CLo2etDY9VNkqqsBSrlCcVquBExQ0aYpzsr/AtS5Qt/D+pEQHHoZNtnJmuVc
+         AbnpyMKraXgPuPYp5W+UdgO8XahgeyqQn0xHjIfVBolCDl6fv5kh3KeCXTXSlcG2Lo07
+         XX4PYoLOgvTYQqjwYGyu6v85CHxJseGByEiOoZMt9OYpzZrS6gBeZOYhKPnB2DMkZIAW
+         86eA==
+X-Gm-Message-State: AOJu0YzPwuw0ukM9g6mIP+IyVU4ZIiUi1hem4FC3fx+KG3uTkHNoeeaz
+	iKftfRKE0PGYY9+4eGZ/dlYJuU+WVPXHz+qd/Ul8nBA3MaqMY/n7GhO+ZxKtrOvIhMPhKqG7MUj
+	t4URQzMOoLCMGuXwECHHcA8ye/+POrQ0=
+X-Gm-Gg: AeBDieuHVNgJ5K9onvZvchu0aCOJbfNj6o+i2qKWiBGO6Ae4Kn07YixhtbT1SMWUPwA
+	pe81QcRVTU7K7xtWJJpUlzzB2pkYa2utTSB02PnclfU5R3DuPvfggwMaTfEoniO421kA5yUILQX
+	nIQFv8VA658ZqJYIcsjcUfq3x2vN3tdsDOyzGbjNjKlOuKE1itd66O4KWs7Zk/vkGWtPPX7RQrT
+	cEIzDThqMcfBnjZwjEG+KQ5DYMucOAWatKXKx61DLQYDZ8rzjgQeD4r6kEp3k8HX59dQSG75Ezd
+	MbphnxUMwW1VpNngR3Aq4Jduhb1cHJPN5hjoiILEnz6jC7tw2tZPV6SxP4pvBYBJJzjaN/bSEg1
+	oF+8adtk4Nk3kj5C7meKfpIUwQriJea8iSJz8
+X-Received: by 2002:a17:902:ea12:b0:2b0:6e4a:32d0 with SMTP id
+ d9443c01a7336-2b5f9fbbdacmr85307165ad.35.1776558368734; Sat, 18 Apr 2026
+ 17:26:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1776124588.git.me@ttaylorr.com> <d5ef6b959fd7c05c73bd33aa2b394558320aceac.1776124588.git.me@ttaylorr.com>
-In-Reply-To: <d5ef6b959fd7c05c73bd33aa2b394558320aceac.1776124588.git.me@ttaylorr.com>
+References: <cover.1776124588.git.me@ttaylorr.com> <f4899b668e229069a10d7fc627835dbdc12d7b39.1776124588.git.me@ttaylorr.com>
+In-Reply-To: <f4899b668e229069a10d7fc627835dbdc12d7b39.1776124588.git.me@ttaylorr.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 18 Apr 2026 17:24:04 -0700
-X-Gm-Features: AQROBzDw_GclD_Ut_05qO4lRpBRUC8ygt9unPezIv2_Hv_xvCIDT4Ip2-DDgU_0
-Message-ID: <CABPp-BELG+poD67JCojze=bzYsWr0UvdXb2Vai=eEY=2CzaGCg@mail.gmail.com>
-Subject: Re: [PATCH 1/8] t/helper: add 'test-tool bitmap write' subcommand
+Date: Sat, 18 Apr 2026 17:25:55 -0700
+X-Gm-Features: AQROBzC2qL5QGnSKmHVC-ZmOt1eFxztlItC32Mh-i1DChPu_ZVL3K0OqLcfSfxY
+Message-ID: <CABPp-BFFWpeHUemuDiJjXEhqyJ=amSOsEdrLFtYBrMWg3LpAmg@mail.gmail.com>
+Subject: Re: [PATCH 2/8] t5333: demonstrate various pseudo-merge bugs
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
@@ -95,14 +95,65 @@ Content-Transfer-Encoding: quoted-printable
 
 On Mon, Apr 13, 2026 at 4:56=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
 :
+>
+> Using the test helper introduced via the previous commit, add various
+> failing tests demonstrating bugs in the pseudo-merge implementation.
+>
+> These are all marked as failing with one exception. The "sampleRate=3D0"
+> test describes a latent bug, which is only reachable through a code path
+> that is itself masked by a separate bug. A future commit will fix that
+> bug, and, in turn, cause the aforementioned test to fail. Accordingly,
+> that commit will mark the test as failing, and it will be re-marked as
+> passing in a separate commit which fixes the once-latent bug.
+>
+> For the rest: the following commits will explain and fix the underlying
+> bugs in detail.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  t/t5333-pseudo-merge-bitmaps.sh | 198 ++++++++++++++++++++++++++++++++
+>  1 file changed, 198 insertions(+)
+>
+> diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitma=
+ps.sh
+> index 1f7a5d82ee4..20e77ab4390 100755
+> --- a/t/t5333-pseudo-merge-bitmaps.sh
+> +++ b/t/t5333-pseudo-merge-bitmaps.sh
+> @@ -462,4 +462,202 @@ test_expect_success 'use pseudo-merge in boundary t=
+raversal' '
+>         )
+>  '
+>
+> +test_expect_failure 'apply pseudo-merges during fill-in traversal' '
+> +       git init pseudo-merge-fill-in-traversal &&
+> +       test_when_finished "rm -fr pseudo-merge-fill-in-traversal" &&
+
+As suggested in the first patch, test_when_finished before the git
+init.  (Same issue occurs later in this file as well.)
+
 [...]
-> +               bitmap_writer_push_commit(&writer, c, false);
+> +               : >trace2.txt &&
 
-$ git grep -h -A 1 bitmap_writer_push_commit -- '*.h'
-void bitmap_writer_push_commit(struct bitmap_writer *writer,
-                               struct commit *commit, unsigned pseudo_merge=
-);
+The `: >trace2.txt` struck me as odd, since this file doesn't even
+exist yet in this test...but thinking more, is this just defensive in
+case someone adds inserts or modifies a previous test which writes to
+trace2.txt?  I like that idea; somehow hadn't seen it before.
 
-Not a big deal, but for consistency, would it make more sense to pass
-0 for the third argument, or to change the function signature change
-to accept bool instead of unsigned?
+> +               GIT_TRACE2_EVENT=3D$PWD/trace2.txt \
+> +                       git rev-list --count --objects --use-bitmap-index=
+ HEAD >actual &&
+
+I thought this was broken without quoting $PWD, but looks like I
+forgot shell quoting rules again.  Assignments don't undergo word
+splitting, globbing, or brace expansion.  So, nothing to see here
+either.
+
+> +               test_pseudo_merges_satisfied 1 <trace2.txt &&
+> +
+> +               test_cmp expect actual
+> +       )
+> +'
+
+Didn't spot anything different to comment on for the rest of the
+patch, so the only substantive comment I had was on the
+test_when_finished and init ordering.
