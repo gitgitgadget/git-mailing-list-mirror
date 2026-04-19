@@ -1,152 +1,84 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B7F1FA272
-	for <git@vger.kernel.org>; Sun, 19 Apr 2026 01:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776561965; cv=pass; b=mzMYZOtITrG1KbKSyrDICQddn0NdWRrEawwTuCvtcJr5NSfCDYrw7jUlY+dE13t5tDs7bri/Iq6faqL3Cvg4VVIECmfvYMXaOzcpWn1yJJW3XHUv4Ha7bdo2Xf1j4flV4dOwndPXtci4YC6xIuDDrZB0/RPiJ4YaqNlbgrsmsJE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776561965; c=relaxed/simple;
-	bh=PY5ztFBbHrMbIQ4m4Zz4dIQFyk8b7p2Ea03g9XWPupA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XOEPZCYSOB8hdT8+uEi8IbfMeoyfRgUGoWlw8/B23zKSpIfePqjciUB8j9To94lWiZp5pPVOABbQGJJWR1Lp2lp5sPlrEBKRvl4GP1UMP6kZIG9s14t4c72GhrtG0HlW+Z1UV1K7LB7GF79n07NEeKV3ve6AxOjrTNEOYesoGkA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jJyeDOMN; arc=pass smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC9913D503
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 02:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776564630; cv=none; b=JIvd+P+sFazY9iiYDZvZuwZY7NeZ9KU0rQr9zD1wBTp0j2Pn6SUmt62b7/VDa2B4KKDtZe75n7grp+miOK9mz/BgCnvk3ZBTRD7UwXs8bjD0TAFbciJrfM/lDbv0MYixaRod+15CJN4TXdD766i9xORLs+crSQxAeHVFIfwPuDk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776564630; c=relaxed/simple;
+	bh=gG29Gca4/wE+zWv0f+H4N76Fiw+sNXqg9xaVWGQFjbE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=leySJ2RvaQ9lU8/Bs6Q3crQowAJzFZu/k7zYsQhwYof1TFFD8Ll5ptlsC/PMgp5l8B2AR5KUdDEZmj4LRiAkvFLCm1BxzgMTsYacQZI+JVUUAvtdXGKQapRw2X5sKRCobSPLdVWuSeQNO5mJvxqDniWV+pCfprkcq2cqYnK7i78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cR4+WN4Y; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jJyeDOMN"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7dbdcb85067so1789179a34.1
-        for <git@vger.kernel.org>; Sat, 18 Apr 2026 18:26:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776561963; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Ajt/6bfPk2dU4kHNmJsOCfn+RshYJeN8P/V4FgcD0UuI1lP3SK4d/1zewUCcqiTrNd
-         7Vomsq6j/hXPHOMo58bAuEK2BRjTSbLhvNQ8bK0Y94yETQkKMxVw/QyaTrf/dw5ekxYs
-         VwHg7ZS6IgIxgeRSX7M55CmAyJ1ENv2Dja/YC3fsWhoVisR3aDij+67ShGjwZ5peqI0Q
-         VxWZLSCf7i2Un4/Jb6RJeaj+MjNwPHrRR3+b5rozJpQ7r5QJ5logFbUxIjca25lDnuMy
-         Cto4E7AurHRdfc490hkrcyxhgVB6hqUFykE4FbpIpxkfCN5hqc3DlcE3Xxd+DdyJu7KP
-         8ASA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=19/WVCCM5SEU4cmWT+Wrp8BaVhOyqD1yjUedkgGvfAk=;
-        fh=0ASywd76WohBCBaIDegnFFV1cK2SRQm/kn/1gdnBZWc=;
-        b=CXU535rnjpYjEn/oS2YlmDeG2F8cUHCt3t/6DRkcYOctlALQ+FXh+o9SZ0emafP1w6
-         XSe6H73xSA2LpKAZ4P3xa09U0cl1t8OHjp5Bdx6AXuK3gVHGAk+yD5wXj5l1UBvDHqz9
-         jF+umGKABpLIXLAoKxklBjKvkbFW7P9kPg2pZrvUDx7OiQRVLzmKGQ8+DEcKhYKcNaNv
-         hfQoGMc7tnS4X79UwInf413Nz2NVuhP06EbR5ch2E+vhAAD0BaDry3EMIpT04Uukd0Wy
-         SoFbKrpxDJFwGmEvF8hglOz876yMKgUcxRXvh5k5/nLP7rlmukAzBQ5WyVtbRaGmBTwf
-         XQOA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776561963; x=1777166763; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=19/WVCCM5SEU4cmWT+Wrp8BaVhOyqD1yjUedkgGvfAk=;
-        b=jJyeDOMNB8ri0pIJ2GgVDEGzSVJOaSAHnz8yfnwX59+jKmXuPUVzExrbXswwJMynNY
-         l5uIXJppQRvcnyqiF9H1e3kY1cLQAc543d861mcVbr+5h7VvXraFC9EX0EJmpxA5VInF
-         bNC+183Jh7B1J9YoEYvxeYp8Flmh0B3k0XfLWc4fXygIlvR57nZOu/TrdVteWZDvMNwu
-         C7TV8qZUFZYEzaVA/IZgMzlVocT0jVxnDn+GYSDNafHosF16oFKx+X0STQbfQ+maB9Os
-         D8S3LAgargjr3aTao98QSYlf7F3XSsEp7U8ekV3JhSgO8CLhlu+DVJnszESkGJ+jnlJi
-         HdLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776561963; x=1777166763;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=19/WVCCM5SEU4cmWT+Wrp8BaVhOyqD1yjUedkgGvfAk=;
-        b=Hdrt20yjXAyNTloKWedWNZ03oG9mvRU26hOtVpgNM7ENJgktKLU8RvJJMpxmqdlxno
-         Cg3vWdJWLY1gY0O/Hdmbp77/X4jgXghILC7p+GjcIitigQUS64OyaNGw8PfdR95T6KiK
-         Yxuxv3hzRd4vhCJlUcgQgGueRw/+uyvjPuHZ7nBPoOzGfMlrBQyd6qA1frgQpOLNIH5C
-         z/pDLtIa5wMNW5g8IpgrT2knnZ2S8tKMdamEuoCa4I3dWsePyGiIQAicBrQPl+/LUdbm
-         urWNkLSiULImbaO4P26XPmPVyl1qqD1jYEdtRzwi+Br1CvC9jF2ewZUBlKdJruLI5F1k
-         kuzA==
-X-Gm-Message-State: AOJu0YzKFdCDKaE9lHjGNuAKlSPnLPZ+IbL6WFdFevyk2ZqyLBG8SqIB
-	9L46XzHg71hJIvbZ6nUnFOZ91axjHPEuw2QIiH0+DyaZiYu2akTLraOOSzL8cLMHuJjaZODgbhK
-	hEZm/bYJvyAQyKEMKrg8mTBKgJAqBn40=
-X-Gm-Gg: AeBDiev7AiE1Q16UpsS2eVFubMHXxOCtYQWm4zKoxDT2P/eEVxSIPNXVQGLy/OFY8+w
-	VrR4NPyMf/IFAMTk9TfmkwbE9hFaQXEKGjlJIg+G7C96wVbR8/mvv+essn9ah/uNoW8iziD7oPa
-	Viqe9Op1zacly/uW1oeMt85R2aNhqYmUKVsoI+78XCsSCExHc9MfDhqoDKxQbFSGe4vAfDnbnCS
-	W/UECxv/6lS9nBW4r/VKhy1Q+VeHCNT63SDEqgM4akm5g40Jl2s+dVOIt2RyBCPIKvwX4ylNFs7
-	xbw/fY43srwMmQjl/1nY1jYmJtW70wwhyC+25aHcBHNpU9kd3eKwE8ZmsNfO4eXUpiUja5HxMB3
-	ZyZEQadbId34CgWfehkLaTIaGeZN2E7U94ZGK
-X-Received: by 2002:a05:6820:16a3:b0:680:3739:650 with SMTP id
- 006d021491bc7-69462f5e249mr4596395eaf.60.1776561962660; Sat, 18 Apr 2026
- 18:26:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cR4+WN4Y"
+Received: (qmail 394106 invoked by uid 106); 19 Apr 2026 02:10:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gG29Gca4/wE+zWv0f+H4N76Fiw+sNXqg9xaVWGQFjbE=; b=cR4+WN4YQtVmxbIz/lEgqLLP+RdKpqcPvZa3RmmGX7Gsc1yQ3N/76BmhSDElCsiSOvcqi1PJFE5YvFVmYAdeEVj3RcFYTQHKk7dBxnXMfzIDZzRnQhxvQ2WFYW8aSHxT0qlTD+a6ZCW6by/acSnejxNY2JMU+6HTXg4HeVDhVWDU/9/JyHWkBqBte8F/aKztsdTAOYxJBqsGzVD0yZZA00GSiIZxYf6sPbY2NIpVQyDpHaNuJX7PyXRGMhIUMHao+0XagvfyR4R9KIao87g4LYPspYA/uyhlQVEOWhiZis79F0xNUdVj5ayr6dEyO2d12J3aBqML7CxFFxS0Pl+bTg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 19 Apr 2026 02:10:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 898926 invoked by uid 111); 19 Apr 2026 02:10:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Apr 2026 22:10:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 Apr 2026 22:10:27 -0400
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Ben Knoble <ben.knoble@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?R8OhYm9y?= SZEDER <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4 12/12] t: detect errors outside of test cases
+Message-ID: <20260419021027.GA1079904@coredump.intra.peff.net>
+References: <20260418065009.GA2619713@coredump.intra.peff.net>
+ <AA6F33AD-25C2-4AB0-A624-35C7B0BE0F66@gmail.com>
+ <aePY1x9uO39p6WDI@fruit.crustytoothpaste.net>
+ <20260418213043.GB9632@coredump.intra.peff.net>
+ <aeP9stvssuTv0FD7@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260418163236.2382826-1-szeder.dev@gmail.com>
-In-Reply-To: <20260418163236.2382826-1-szeder.dev@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 18 Apr 2026 18:26:00 -0700
-X-Gm-Features: AQROBzBwe9f8fL-8VO6I6ZYduHb_yLL8yWJ-aPUjnn9q2e7vbRXFs8-DSj5dRFY
-Message-ID: <CABPp-BGV4DGwoSDCjjW2NWBhWXNDfeXwb-tPWSH_13mF0DCiRg@mail.gmail.com>
-Subject: Re: [PATCH] t6112: avoid tilde expansion
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aeP9stvssuTv0FD7@fruit.crustytoothpaste.net>
 
-On Sat, Apr 18, 2026 at 9:33=E2=80=AFAM SZEDER G=C3=A1bor <szeder.dev@gmail=
-.com> wrote:
->
-> e987df5fe6 (list-objects-filter: implement composite filters,
-> 2019-06-27) introduced a test to "t6112-rev-list-filters-objects.sh"
-> that checks the output of a Git command with the following commands:
->
->   grep ~$omitted_1 actual &&
->   grep ~$omitted_2 actual &&
->   grep ~$omitted_3 actual &&
->
-> Since the leading tilde in the pattern is not quoted/escaped, it is
-> subject to tilde expansion.  So if the system has a user whose
-> username happens to be equal to the content of one of those
-> "$omitted_*" variables, then "grep" would look for the user's home
-> directory.  Luckily, those variables contain object hashes, so this is
-> not very likely.
->
-> Furthermore, Bash versions v5.0 and earlier seem to be buggy and don't
-> handle this particular tilde expansion very well, and either segfault
-> right away or, in case of v3.2, get stuck in an endless loop and
-> segfault upon receiving ctrl-c.
+On Sat, Apr 18, 2026 at 09:54:58PM +0000, brian m. carlson wrote:
 
-Interesting find on the bash segfault behavior.
+> > So we are inside a conditional, and the usual global "set -e"
+> > suppression should happen. It sounds like it is not happening in your
+> > version of mksh, but I was unable to get t1410 to fail at all using mksh
+> > 59c-43 (from Debian unstable) or 59c-41 (from stable).
+> 
+> It does fail with 59c-43 under `make prove` or if you do `sh ./t1410*.sh
+> --verbose`, assuming that `sh` points to `mksh`, but since the script
+> has a `/bin/sh` shebang, you need to invoke it explicitly with the shell
+> in question, or it will use the system `sh` (dash).  (I made this
+> mistake when reproducing the problem.)
 
-> Quote those words starting with a tilde to avoid these issues.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  t/t6112-rev-list-filters-objects.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filte=
-rs-objects.sh
-> index 39211ef989..e0a825bccf 100755
-> --- a/t/t6112-rev-list-filters-objects.sh
-> +++ b/t/t6112-rev-list-filters-objects.sh
-> @@ -623,9 +623,9 @@ test_expect_success 'verify collecting omits in combi=
-ned: filter' '
->         omitted_2=3D$(echo a     | git hash-object --stdin) &&
->         omitted_3=3D$(echo abcde | git hash-object --stdin) &&
->
-> -       grep ~$omitted_1 actual &&
-> -       grep ~$omitted_2 actual &&
-> -       grep ~$omitted_3 actual &&
-> +       grep "~$omitted_1" actual &&
-> +       grep "~$omitted_2" actual &&
-> +       grep "~$omitted_3" actual &&
->         test_line_count =3D 3 actual
->  '
->
-> --
-> 2.54.0.rc2.650.gc37764ecfc
+Doh. The problem was none of that, but that I was using Patrick's
+version of the patch that only turns on "set -e" for bash.
 
-Looks good to me.  I wasn't able to find any other unquoted ~$ uses in
-the testsuite except mid-word (e.g. HEAD~$i), though I suspect your
-version of bash seg-faulting is a better check than my grep-fu anyway.
+So yeah, after actually enabling "set -e" I do see the failure.
+
+> It does seem like this _is_ a bug in mksh, though, which I've reproduced
+> with a test script, so I'll report it there.
+
+I looked up your report in Debian's system. I think you're right that
+the eval is the problem. The smallest reproduction I came up with is:
+
+  $ dash -ec 'eval "false; true" && echo ok'
+  ok
+
+  $ mksh -ec 'eval "false; true" && echo ok'
+  [no output]
+
+So it respects "-e" within the eval, which is wrong, and then doubly
+weird that "-e" bails from the eval but not the whole script.
+
+-Peff
