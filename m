@@ -1,190 +1,318 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE36D1A704B
-	for <git@vger.kernel.org>; Sun, 19 Apr 2026 11:11:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C4F22B584
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 12:06:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776597104; cv=none; b=odzWA9wu7Kdjgw6NAZktfQHwLTQVi9kPZHlHnlKfeAleIg4KsB13Q/2HQYjuqKeuSPMBZjhWOSdIXQgyWXkEtHs8flSUGq9NKfK8aY3kJ1ahvrNqGmevct6xDQKLHFLEZKWDmi1VqKCgEKcopgGkJ9utn8xGKHE6s21NFN0hK04=
+	t=1776600399; cv=none; b=Qg/1LRz60aPDkmFHUhfzGQ3vcoCJlLdc9x6tj0o7QHZJQxxoz2zXqAVosMu99Y8i2dojGbx9fuGcQ4NBuloqtjptxI7PM/YdptmB0Ciq63jcABQJ/H0Xdmdpo20eaLHgP3jDQFpZtkBrX1HqzZXnV7V27I3tVLrUIGge/DtKXMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776597104; c=relaxed/simple;
-	bh=6tLkElWvjhwMrQ+nuChnFz4zUaLpVElFwAS8wGrZxoA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ja1JuzWPvC9inq8Roal2bWY/eVtxzrAk97mQtSNnxz8Q9qsx609nIGB1zaqffXD2GiLjsp9i07lXXp4ryYaQu/PnHkLyh9agFt6czTW14Zf9IqmUxLWFsfsJpv6Cv36zAGeOJ7Z8rdDlMbGhSROXeoKt77t84nfex0v8UIpXztM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rzd/o0O6; arc=none smtp.client-ip=209.85.128.170
+	s=arc-20240116; t=1776600399; c=relaxed/simple;
+	bh=W+SjR/n63LEP/sHSSILoAq4uCkp6wNWKA/G4k/oqhxQ=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=QeDl+6zt8r0lDKAMqJ3/LfTFD7oCSeAe9JQ0lTfmkIU/lq/lpPGgQWAGkFN8mHVybD6oabZyI/g3grVtNWDJ/vB/ByIErGu+yxvzkoihovixHd5UifQ2ok6hhNGd2OkJWRt/BLtXuhrGC6E6/zOuvNfrrQI+IUjP7ItGkX/mIF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JYGsQHHy; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rzd/o0O6"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7b186dfc1d0so28050717b3.1
-        for <git@vger.kernel.org>; Sun, 19 Apr 2026 04:11:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JYGsQHHy"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-79ab5fd969aso20701907b3.0
+        for <git@vger.kernel.org>; Sun, 19 Apr 2026 05:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776597102; x=1777201902; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fLVtIrPPq/Eheno5G4KRPXLjIrhN+EaiWSNT0o8WVTs=;
-        b=Rzd/o0O6QMw2UBCnfmhwV6DNw916tHFkR66X4pXH+P9v9QY8aNBakET15CVOhPC8t8
-         M9/P6IVYi10NeirhhUth4MafHVKsOgjyemEkAkZ2CQN2R8/YG1mQ0n2jFhp1cKROMhtw
-         r9zsUZvOs73OhCRqlYGDpfvokRcWiX6c3lsIvHCKGNcuFpA3+RzKE9G7vaMmvcO2YAmk
-         4ZqZrgxr8DxfSkdYtof4IQFwzf9T7A67ErQAUoEWYQAMA+7KYp+6XxqriYCHslVxHhlB
-         ew8yzzKen1spu+/c84EiIoMStZucb2oO+xM/hhPQS4ZmueN62QOVCMGWJt5YJ4vVRA0b
-         N61Q==
+        d=gmail.com; s=20251104; t=1776600397; x=1777205197; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ezuTUKXz4gg8qeOW9KBKr9fJmJuViILjmTtMs6dHkbY=;
+        b=JYGsQHHyAFMLWhjyu8wh/6bKcekQnohRI+Ilq0twc4a1p+LqTgRZiPt+Dpw3MzwcFW
+         yQhigGqAm8F5Y89dR5D12dnPCegkrKFW7cTVQ1RjNDVsgm1LOkL7pypi//zZC1RmLUYE
+         guUShg2C58e//MTt0szQtfgwFDIBy3rirwyuj7BteZRRQXez5DiS+w8p5GzJRjYPX9k5
+         m+HkfEW8+8AenSpTG3Hahp05mToWRVPPJTDwbcgZXhDQhU/JJqFlBfdf0K6J+v2nIBJb
+         /6DSqEhvb40DFmdVtwOdQ4pLmE+GlWcNKnx2nn6SbxX2ioRMFqfgb8jDMHZtyFGddJfX
+         D+vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776597102; x=1777201902;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fLVtIrPPq/Eheno5G4KRPXLjIrhN+EaiWSNT0o8WVTs=;
-        b=A0x2lba2+cvnoyEmHqVZtqnI71o9stwjk+H5yjr9Ydw+uyb+/Uy2QDeplQtRm9D3eQ
-         h2y3HbFoPJKN8YwZ9iAl/dfteDqiRqTC0AXfIg2iPGxkFNv18PYeBoA5fmIIpXrpyf3C
-         xvsdWqbRRPQrcsy86ODTzQQ8erHc3uuVAqM04eTEiIPRLCMnkj64OH4LdIw+F4cFQE7J
-         CXO01Op86XUVfZ7dNwvhNSsmafPwqhx0pSZdZgVQG+8cZyXKGLEP6L6ZIMjaTq61pn6P
-         DB9lcEtQIzgWqfzDIvK7jmFPYZbFOMmqPHXKft43mu593Hko+knTcu/zLkhA/BJYRNa1
-         noqQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+q+VkBJddaZ85wOBbNsR1TCKB2xEr2f9/syuFUqa/2QW+ifDO+vIJWZsg9i+MzbFd+zpo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YynUgwMbH6pWrXppDJ7dQyCUNlx454dooeb0t/O6Cufe5LHPwIZ
-	vDHhTno9B/lecmRI7eg67HDvHUMtwkH6M891TtMKFQD4J/KgwJSow6bb
-X-Gm-Gg: AeBDiesMaAG0sMOmI2mMkPAtPYw8NPBZ+rW0BIGIo+aRiIG867ubvxmoeTnrSLaik3X
-	Lk/iyjDLcWRP1raNa6xCM46d3cJPyHDzVrB2BbGMB51uWTRatQv0Oc0NNXxo3kCWsWRZno/QpGj
-	WRjmwjKDrcdaJikhgeO7fGZoqGFzuXTzEvf69E+uiILyesHwqzNBkpgyLtCU/wmSho83IkdaWqS
-	+aw7V8WPwjO1tLtU8Iw94S5UcpJELJqXZ/gYgaFTTSls0mYHne+AHV2rpWzPcuiUxvApIWNibzm
-	DFyTv7PLhgaqRewy4A4XfedvvqAK82sF5dm3qj9F2g+eNCEbaM5XRPmEyRrhlbANt4DhUO4uWqc
-	M8cfvxITIDm7N1NpVMmtxPSyKlZwkqjs2fp3bCIflBillGREeNBdcO4+iQIgC5zl1GVYKr/0E2V
-	ewDdd6fnIK2XYxqxONwYpn+F4X4gZx+LDigzk9Hnct+VR7vgUYztm+AGLwlMn3FVao5Qqtm8g8e
-	sV8eV8cKLZpMUpqcfKumH56maWNJhx2TwZHAvRz06rEBecq0HICvR3EOR+u7cxJFIXKGvtMMGO3
-	LdHyRWrVdgNJRlJ+JwsH4g==
-X-Received: by 2002:a05:690c:3181:b0:7b4:ad41:482d with SMTP id 00721157ae682-7b9ed276d75mr69823897b3.3.1776597101818;
-        Sun, 19 Apr 2026 04:11:41 -0700 (PDT)
-Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b9ee9ce50fsm29868697b3.47.2026.04.19.04.11.39
+        d=1e100.net; s=20251104; t=1776600397; x=1777205197;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ezuTUKXz4gg8qeOW9KBKr9fJmJuViILjmTtMs6dHkbY=;
+        b=LgT16Je3qqdRp+c5oW1+1xt/Mop8u6x7djiF8DnJygVWvbdhVKtGOgUIH38QS96859
+         wC8XOopEIaFQe0hw+37G4yNQKiDsfwNEHuTZ5uacjjWXA9Hv615ycOWue4c9yBRPr6Y6
+         i/+gVdYjQDPTQEWUiOq+ERAnJbSdpold4R0t1FhLEPaV882k8TTPO8+7UOvOqaBOKYs8
+         bBF9amFCnWwvsSQ+LjsJXFgyHNIoJfcacfjHgTrwOw4eRnrbaPbOHAhT5NIBVmYuz67x
+         ILd4CxHKLLdwCpO5M9Mlhyb9CBEpmWU2nqUue6piGSxjRcCEqmZT0dw6eReCgeBHftFk
+         5hKg==
+X-Gm-Message-State: AOJu0YwFb70yCtUvSnBJaTIsApcgFBitTqwlULVWgsHENtjhpoHfLPFs
+	wzUiuiS3Kmr5ljChne+h3FIHXVD6m24qkUXhIO2Tc2QIYEccxvxQK3bupuIgKXKv
+X-Gm-Gg: AeBDieulhFJPYCf6GgjukkgQn3zqYsjwjez1u2Te1+BxJ94PQKTh3TWGhmBN972Umcm
+	H1M7x9sn8en5Chmr/DYqr6+q0+fS9jEs+M9jld2r9KvGIjVhXuRCiD7s5iDUq91Xf5L7mNT/oCh
+	Ees0UOgtABfOSU2Ay1dUUvluM5vvLNgixnAE79T8bwbcZWA96BA+AtpjB1rr8Pnl9rey7izg0y9
+	flCUeRrIFac/hyITVzTxJoYP2nx42DHAZq9XStuXsj2jQAXtHPKMBJreWjqML1bOkv6yKG1aFTL
+	Gxo1ljQTrD8hAyiKI0sPfuShsBtzvCMbCB25dWHRox/CtQWaM9gDFmdqcDBCunDIlF2XhenkY/L
+	maWeXO0BSHX4BqhkOQVRm52cgBh4IGC/yiQ3ysq8HMjjWp4dDh7+bdPVUMxRQ20gB4+cl2hJm+S
+	a2GPpaZHA7cOFsAyoPSwc7RXQPa8KsGwNw5hmRGNp9QlnjJtJHtxX+e4K6sFIKf7irChnQKKFmh
+	WuLL1mNabCQedn5pXne2gcg9TPN/HCp1ykR1e4ry41rFJcz/9BkWRgW
+X-Received: by 2002:a05:690c:4188:b0:79f:4e02:50bc with SMTP id 00721157ae682-7b9ed00bc47mr77829197b3.40.1776600397075;
+        Sun, 19 Apr 2026 05:06:37 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90fb:c300:d8a0:86da:c917:43b3])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7b9ee9b1f6fsm30050857b3.36.2026.04.19.05.06.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Apr 2026 04:11:40 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	A4-Tacks <wdsjxhno1001@163.com>,
-	=?UTF-8?q?Aindri=C3=BA=20Mac=20Giolla=20Eoin?= <aindriu80@gmail.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Arkadii Yakovets <ark@cho.red>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Emir SARI <bitigchi@me.com>,
-	Emir SARI <emir_sari@icloud.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?Stefan=20Bj=C3=B6rnelund?= <stefan.bjornelund.gnome@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [GIT PULL] l10n updates for Git 2.54.0
-Date: Sun, 19 Apr 2026 19:11:31 +0800
-Message-ID: <20260419111136.1577323-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.51.0.rc2
+        Sun, 19 Apr 2026 05:06:36 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] revision.c: implement --reverse=before for walks
+Date: Sun, 19 Apr 2026 08:06:24 -0400
+Message-Id: <C60EE993-97DA-45F7-89DE-2F97ABB0F685@gmail.com>
+References: <20260418164736.2367523-2-mroik@delayed.space>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Patrick Steinhardt <ps@pks.im>,
+ =?utf-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
+ Jeff King <peff@peff.net>, Mirko Faina <mroik@delayed.space>
+In-Reply-To: <20260418164736.2367523-2-mroik@delayed.space>
+To: Mirko Faina <mroik@delayed.space>
+X-Mailer: iPhone Mail (23D8133)
 
-Hi Junio,
 
-Please pull the following l10n updates for Git 2.54.0.
+> Le 18 avr. 2026 =C3=A0 12:57, Mirko Faina <mroik@delayed.space> a =C3=A9cr=
+it :
+>=20
+> =EF=BB=BFIn a revision walk `--reverse` can only be applied after any comm=
+it
+> limiting option. This makes getting a limited amount of commits from the
+> tail impossible. E.g.
+>=20
+>    git log --reverse --max-count=3D3
+>=20
+> Some would expect this to give back the first 3 commits of the project.
+> Instead it returns the last 3 but in reversed order.
+>=20
+> Teach `get_revision()` to accpet an argument `(after|before)` from the
+> CLI, and apply the reversal before or after the commit limiting options
+> based on this argument. If no argument is provided default to the
+> current behaviour, applying `--reverse` after the commit limiting
+> options.
+>=20
+> Signed-off-by: Mirko Faina <mroik@delayed.space>
+> ---
+> Documentation/rev-list-options.adoc |  6 ++--
+> revision.c                          | 42 ++++++++++++++++++++++---
+> revision.h                          |  7 ++++-
+> t/t4202-log.sh                      | 49 +++++++++++++++++++++++++++++
+> 4 files changed, 97 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-=
+options.adoc
+> index 2d195a1474..eed1813a92 100644
+> --- a/Documentation/rev-list-options.adoc
+> +++ b/Documentation/rev-list-options.adoc
+> @@ -914,10 +914,12 @@ With `--topo-order`, they would show 8 6 5 3 7 4 2 1=
+ (or 8 7 4 2 6 5
+> avoid showing the commits from two parallel development track mixed
+> together.
+>=20
+> -`--reverse`::
+> +`--reverse[=3D(after|before)]`::
+>    Output the commits chosen to be shown (see 'Commit Limiting'
+>    section above) in reverse order. Cannot be combined with
+> -    `--walk-reflogs`.
+> +    `--walk-reflogs`. `when` can either be `after` or `before`, if
 
-The following changes since commit b15384c06f77bc2d34d0d3623a8a58218313a561:
+=E2=80=9CWhen=E2=80=9D is not mentioned prior to here, so it=E2=80=99s expla=
+nation leaves the reader wondering what it refers to.
 
-  A bit more post -rc1 (2026-04-08 11:00:10 -0700)
+> +    omitted it defaults to `after`. If `before` is chosen,
+> +    `--reverse` will be applied before any commit limiting options.
+> endif::git-shortlog[]
+>=20
+> ifndef::git-shortlog[]
+> diff --git a/revision.c b/revision.c
+> index 599b3a66c3..8338ea7448 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2685,8 +2685,26 @@ static int handle_revision_opt(struct rev_info *rev=
+s, int argc, const char **arg
+>        else
+>            git_log_output_encoding =3D xstrdup("");
+>        return argcount;
+> -    } else if (!strcmp(arg, "--reverse")) {
+> -        revs->reverse ^=3D 1;
 
-are available in the Git repository at:
+The original handles multiple reverse options inverting each other=E2=80=A6
 
-  git@github.com:git-l10n/git-po.git tags/l10n-2.54.0-v1
+> +    } else if (starts_with(arg, "--reverse")) {
+> +        if (!skip_prefix(arg, "--reverse=3D", &optarg)) {
+> +            if (argc < 2) {
+> +                revs->reverse =3D 1;
+> +                return 1;
+> +            } else {
+> +                optarg =3D argv[1];
+> +            }
+> +        }
+> +
+> +        if (!strcmp(optarg, "after")) {
+> +            revs->reverse =3D 1;
+> +        } else if (!strcmp(optarg, "before")) {
+> +            revs->reverse =3D 2;
+> +        } else {
+> +            revs->reverse =3D 1;
+> +            return 1;
+> +        }
+> +
+> +        return optarg =3D=3D argv[1] ? 2 : 1;
 
-for you to fetch changes up to d0ab4e83765b7c68a88c1d2e8acb58dac392cf99:
+=E2=80=A6which I don=E2=80=99t see here.
 
-  Merge branch 'fr_v2.54.0' of github.com:jnavila/git (2026-04-19 18:41:17 +0800)
+I=E2=80=99m not familiar with this parsing code though so I can=E2=80=99t ad=
+d much about the test other than to say it is a bit hard to follow :/
 
-----------------------------------------------------------------
-l10n-2.54.0-v1
------BEGIN PGP SIGNATURE-----
+>    } else if (!strcmp(arg, "--children")) {
+>        revs->children.name =3D "children";
+>        revs->limited =3D 1;
+> @@ -4525,19 +4543,35 @@ struct commit *get_revision(struct rev_info *revs)=
 
-iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmnkthEACgkQk24VDd1F
-MtX14Q//S1lIO8jrnvQEmmdq4GKMIl9pkUX/lLwxSNhVNyUGvpV3xLghDWfjo8hg
-yTVTDzeh5lOyq8ZA3VdUgzCTXBzt09j/IooOrtxQptZyfKAM8aYaE7GIWG/hCAGn
-cC/aTtc/eajKur/16z2Ku64IOiWbO3B/lAUfcvg6EqqvBXxW0NYADfGrmZIXZI4b
-dLkdVg1bGwoD2xIPAR7HUDR3mYbzcjHK78pAF562KGBJn4/4wHQ28ZMpiYZ2F94R
-IQVm1UnOf7JGVxjVHx7SobeV1CApfL5DHIZafyt2QI+7f2FwKGfAD53NnjmzzDKR
-2DVZTzD06CBpOIJ/deSkYQ8d4WrCVFaYI1MZ9n8dhYIZTvjXI8Y6XYJxomFX/K3U
-meTQPbXZfdiPWVL+H64jYmwcIVQphSpM1S2I5qLpjgYVLRkZItvPoflwjrBuvhkg
-SGDn9sURnEhvKtTul9PseArRt8VK+NKiFT/6stvMY6FFFF/jRg+/jISKz3YznPX+
-Up8mv78mfxtOENZ3G2xOsU3C+IdnkagZA8dpOJGDKHpRKxGtbqKEkV+YMH7czLK+
-mEyJ8uEbcFdS8h/VpeEZV6xOAYLCWDI1APRGD/+2sjJpFpPs1vMOVbCHWqnnYHwX
-yW5ATIf1p/YrGRs3YSQbOX7QwZWZnoqd0B465Dsi/Jqlc2LPQGg=
-=i2Wh
------END PGP SIGNATURE-----
+> {
+>    struct commit *c;
+>    struct commit_list *reversed;
+> +    int max_count =3D revs->max_count;
+> +
+> +    if (revs->reverse && !revs->reverse_output_stage) {
+> +        if (revs->reverse =3D=3D 3) {
+> +            BUG("allowed values for reverse are 0, 1 and 2");
+> +            revs->reverse =3D 1;
+> +        }
 
-----------------------------------------------------------------
-A4-Tacks (1):
-      l10n: fix 'zh_TW.po' 'Applying patch'
+Is this possible? I guess I can see from the expanded bit width that it=E2=80=
+=99s a valid input, and there=E2=80=99s no protection stopping other callers=
+ accidentally adding this.
 
-Aindriú Mac Giolla Eoin (1):
-      l10n: ga.po: update for Git 2.54
+I haven=E2=80=99t looked, but it would be nice if we could use an enum inste=
+ad. Unfortunately that would probably take up more space in the struct, and I=
+ suppose the bit-packing is done intentionally for performance.=20
 
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (6226t)
+> +
+> +        if (revs->reverse =3D=3D 2)
+> +            revs->max_count =3D -1;
+>=20
+> -    if (revs->reverse) {
+>        reversed =3D NULL;
+>        while ((c =3D get_revision_internal(revs)))
+>            commit_list_insert(c, &reversed);
+>        commit_list_free(revs->commits);
+>        revs->commits =3D reversed;
+> -        revs->reverse =3D 0;
+>        revs->reverse_output_stage =3D 1;
+> +
+> +        if (revs->reverse =3D=3D 2)
+> +            revs->max_count =3D max_count;
+>    }
 
-Emir SARI (1):
-      l10n: tr: Update Turkish translations
+It looks we temporarily disable reversing and then re-enable it here, which m=
+akes some sense to me as a way to do =E2=80=9Cafter=E2=80=9D mode.=20
 
-Jean-Noël Avila (1):
-      l10n: fr: v2.54.0
+>=20
+>    if (revs->reverse_output_stage) {
+> +        if (revs->reverse =3D=3D 2 && revs->max_count =3D=3D 0)
+> +            return NULL;
+> +
+>        c =3D pop_commit(&revs->commits);
+> +        if (revs->reverse =3D=3D 2)
+> +            revs->max_count--;
 
-Jiang Xin (16):
-      l10n: add .gitattributes to simplify location filtering
-      l10n: docs: add AGENTS.md with update POT instructions
-      l10n: docs: add update PO instructions in AGENTS.md
-      l10n: docs: add translation instructions in AGENTS.md
-      l10n: docs: add review instructions in AGENTS.md
-      l10n: document AI and PO helper in po/README
-      Merge branch 'master' of https://github.com/git/git
-      Merge branch 'master' of https://github.com/git/git
-      l10n: zh_CN: post-2.53 code review
-      l10n: zh_CN: updated translation for 2.54
-      Merge branch 'zh_CN-2.54' of github.com:jiangxin/git
-      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
-      Merge branch 'apply-patch-reject' of github.com:A4-Tacks/git-po
-      Merge branch 'master' of github.com:nafmo/git-l10n-sv
-      Merge branch 'master' of github.com:alshopov/git-po
-      Merge branch 'fr_v2.54.0' of github.com:jnavila/git
+Hm. Why do we decrement here? Again, not an area I=E2=80=99m familiar with, b=
+ut a bit surprising.=20
 
-Mikel Forcada (1):
-      l10n: Update Catalan Translation
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation
-
-Stefan Björnelund (1):
-      l10n: sv.po: correct various translations
-
- po/.gitattributes |   35 +
- po/AGENTS.md      |  877 +++++++++++
- po/README.md      |   98 +-
- po/bg.po          | 1606 +++++++++++++-------
- po/ca.po          | 4215 ++++++++++++++++++++++++++++++++++++-----------------
- po/es.po          |   34 +-
- po/fr.po          | 1244 +++++++++++-----
- po/ga.po          | 1457 +++++++++++-------
- po/ru.po          |   28 +-
- po/sv.po          | 1351 ++++++++++++-----
- po/tr.po          | 1368 ++++++++++++-----
- po/zh_CN.po       | 1454 +++++++++++++-----
- po/zh_TW.po       |    2 +-
- 13 files changed, 9891 insertions(+), 3878 deletions(-)
- create mode 100644 po/.gitattributes
- create mode 100644 po/AGENTS.md
-
---
-Jiang Xin
+>        if (revs->track_linear)
+>            revs->linear =3D !!(c && c->object.flags & TRACK_LINEAR);
+>        return c;
+> diff --git a/revision.h b/revision.h
+> index 584f1338b5..5b23343f17 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -196,7 +196,12 @@ struct rev_info {
+>            rewrite_parents:1,
+>            print_parents:1,
+>            show_decorations:1,
+> -            reverse:1,
+> +            /*
+> +             * 0 no reverse
+> +             * 1 after
+> +             * 2 before
+> +             */
+> +            reverse:2,
+>            reverse_output_stage:1,
+>            cherry_pick:1,
+>            cherry_mark:1,
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 05cee9e41b..21e9a61994 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -1882,6 +1882,55 @@ test_expect_success 'log --graph with --name-status=
+' '
+>    test_cmp_graph --name-status tangle..reach
+> '
+>=20
+> +cat >expect <<-\EOF
+> +c3f451c Merge tag 'reach'
+> +046b221 to remove
+> +EOF
+> +
+> +test_expect_success 'log --reverse --oneline --max-count=3D2' '
+> +    test_when_finished git reset --hard HEAD~1 &&
+> +    touch to_remove &&
+> +    git add to_remove &&
+> +    git commit -m "to remove" &&
+> +    git log --reverse --oneline --max-count=3D2 >actual &&
+> +    test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'log --reverse after --oneline --max-count=3D2' '
+> +    test_when_finished git reset --hard HEAD~1 &&
+> +    touch to_remove &&
+> +    git add to_remove &&
+> +    git commit -m "to remove" &&
+> +    git log --reverse after --oneline --max-count=3D2 >actual &&
+> +    test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'log --reverse=3Dafter --oneline --max-count=3D2' '
+> +    test_when_finished git reset --hard HEAD~1 &&
+> +    touch to_remove &&
+> +    git add to_remove &&
+> +    git commit -m "to remove" &&
+> +    git log --reverse=3Dafter --oneline --max-count=3D2 >actual &&
+> +    test_cmp expect actual
+> +'
+> +
+> +cat >expect <<-\EOF
+> +3a2fdcb initial
+> +f7dab8e second
+> +EOF
+> +
+> +test_expect_success 'log --reverse before --oneline --max-count=3D2' '
+> +    test_when_finished rm actual &&
+> +    git log --reverse before --oneline --max-count=3D2 >actual &&
+> +    test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'log --reverse=3Dbefore --oneline --max-count=3D2' '
+> +    test_when_finished rm actual &&
+> +    git log --reverse=3Dbefore --oneline --max-count=3D2 >actual &&
+> +    test_cmp expect actual
+> +'
+> +
+> cat >expect <<-\EOF
+> * reach
+> |
+>=20
+> base-commit: e8955061076952cc5eab0300424fc48b601fe12d
+> --
+> 2.54.0.rc2.9.ge895506107
+>=20
+>=20
