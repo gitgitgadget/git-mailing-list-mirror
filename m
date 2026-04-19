@@ -1,67 +1,67 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDFC2DCBFC
-	for <git@vger.kernel.org>; Sun, 19 Apr 2026 22:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D69175A69
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 22:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776638199; cv=none; b=Ra8f+0lg4YbDC9BTiKQcerAwP8rPB51TK60vqr889sLEUWeDcN/VouJ0aTmskVu5UU8jp6X9btPHQ6coPEIAK482ugjrmeEeuSwTH0voSU1LItaJYSyvE+nMy+CU9nOYllvO+8eMo1m1eKcr1c55wOqSaEzwNmTwRnPKhV8FS8s=
+	t=1776638475; cv=none; b=WUgqOMNtWzZDGRg9kheL8q4wB/LGEXdlJtXQ4qD0ec8NEYF1gKEn/D5jkRQk0H4xNNeMWaKhTfWMbNHdvCGKpLIBTDa03+SjzC2RfqQalSXhZIStauZXZSd4h24DBms/ZvtxMX0vCwpD3fu2syVxMpQxvKjiHIYrsOXl3aRnsJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776638199; c=relaxed/simple;
-	bh=Wng+OVYzh0ei1+RMrJwjD10lwH6hZELelnwcaIJEDWI=;
+	s=arc-20240116; t=1776638475; c=relaxed/simple;
+	bh=IWYGU0/c7E1Gyi+IMcbkl+5PDhpRlevIZQgBeiWo9+o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HUBh/H21wlPVJt+G4ZglGSsYGKx+IOzPtPBRaxq+48zVhRO12NQU0l31t8Hxn2AWV0XReoU6hEmwH1OD9T2FOSM344sqR35hOHEDfXMxhjRnY6xpU3nxp5guwejGEEjBKjAZBo8ksaA3J/20J6q589kVo2+2b1Nw0wU2gjIgm3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MehELUFT; arc=none smtp.client-ip=209.85.219.51
+	 In-Reply-To:Content-Type; b=MrWa2CwWz4phPxYM+0w573idueZIQM+PHDow9RaWYrV/tYoJmnzGLfW3JDYTCfAM86ZvpOG1bSOtrYNm88N1i9vFha37qqs1YjSmmfybe7bgm5AFfnWdcOeGc17KsCtuZQW4vmr4O/t/v78A4NyU3yEcy3qhY7rKnuuVEBSydiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nHOVO5cY; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MehELUFT"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-89f87257904so21289176d6.1
-        for <git@vger.kernel.org>; Sun, 19 Apr 2026 15:36:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nHOVO5cY"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50d876329bbso32015461cf.2
+        for <git@vger.kernel.org>; Sun, 19 Apr 2026 15:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776638197; x=1777242997; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776638473; x=1777243273; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JdRqsvo7esrcpXtvM8kcvqPpRtN10o52c0DJJUtYkkA=;
-        b=MehELUFTyE2Ao7Av9v8BYF77LVCLctxR/uvdDUVV6G7t+I04depPIWFWCWRPeJ9N8Z
-         /YYtX3nvbJnjOMRq4S/Fm+vyv9tABlCPaM97AT3F6xYHI9TTNsNfeLNgEbjFYrox9ySm
-         Wy8MlXmj//dHUc2bq1zX12kCpv3psywnPXl0wrarsduvujD8KwqSafVvufnkzjWbjUge
-         4lM+9OMj1ZFjgL2XCMy/fXjhTECXaSRl46ReXhnqVXMHeUNXgwrhUtCF2XNlNANHODQa
-         2ehgoM4iNJR93/djb+hvsMFCu2lyx9jMUJsPgjgEBZRXmpufEh1y9KBEAoHmShnfznDj
-         yHBg==
+        bh=eUUbL5JTP/SyFXFzgqloda4BrNbz31QMcyVskF3YWko=;
+        b=nHOVO5cYPc6kXe36Wh1qgYuCpc0HWh2pYses4F5YPg3G4+BFcv0bOoLD3Xe/2T2tWh
+         zd+x32k6pKwEXWTf8aM485Ua+wJ1dXQqn//LCN8yU0OYDkgEV8jqovGH/N+hDrgVRfPz
+         lrGTHhAkQN64vl6H5dEl2tQPCHYPWpJwMV8mD5rUsAZmR4CZJcjqv+gpf4SvLlQmlG5c
+         gHs+MpU4wK/ryWmkDaLQ1llV0V0BwfEQRIxOUYEsBHv6Om7ou9eB4rHLc5dx/Iu5ojeP
+         BDmWND1otvyW0X7m1ykLlLvYrSemsltrE0BQBFpA3ykC0GNi6w19eTwSpGtZJzoEYEw8
+         +Y6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776638197; x=1777242997;
+        d=1e100.net; s=20251104; t=1776638473; x=1777243273;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JdRqsvo7esrcpXtvM8kcvqPpRtN10o52c0DJJUtYkkA=;
-        b=SaPRceXw0M46QVKGr3tdu4PcwiIhjoognujlNcUlxDukNYLXdfdtRsTAKv6yN0fq+i
-         1ArxF7qK3zBlFM50Q2J0ujVftIeJZsLDvBWuF8dS1qTBv2LG7JU2cjGwwqdSW+VkAbHc
-         Y8Is5lGp2Ell48zNCn8QWVItX3bETNC6GbuueWDnmhM6f1jO5ER4+ec+99iBm9GxbTGM
-         M3DrDI/S/Iwk9NGnubWcyQEMVUlZypPjTLRhvW1BYoSRGFYcsKUFaqlAjdkSTlx2DKg0
-         J2nkIrMlkac7xXWPwQFo78wfkZjRIJZyri/vTzKx8G0rV874IHv1S+vwi9Pt3YqSi0o+
-         8kzQ==
-X-Forwarded-Encrypted: i=1; AFNElJ81s9AtGaQhI2qBRC5D+yO2ZIj2w5HUcsUMLXVHB2H+5ta4qaPF44orO1Q80km4FsUbTPk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSyiwOKMjYFWxDBWeXZKOu/X0grXrqHD5rBwt48VCfV+sVjOzG
-	HdIkfYKLktLfP0u9MO3UCSCPVVXqsv6Vr91Dtap90Kt8Rp9Sxx1cnOb6
-X-Gm-Gg: AeBDiesIbqTk/jpvhs+oC4nmO3WEgBaujHUMAohZyrxOR6BWGPpMtBjIyRflXvHfRyv
-	3fCm1SV+po9Pj69dcu6LJkKZsWZPwLyLa4JkyIRrCAmduFAf6UsrDcNy/08GK0qloH+LLBGkIae
-	JSfmsunFQyTTTaELy8bqYJ87PvG2qro182YGuuGahA+5HTQZhQ8yYxy+6JHoz1ZtvtgrtwL6FVJ
-	VuGZywCM+x2VeqDXPkeP0arBWH8ji3cH/TqfL8DPtaB6o5w2Yg8BVO5A8IpKe4pO3+wIuF4KRws
-	bSOJ9ntEs7FEZIak4pLI8LZ7wgkR8KBLGMjMLJn5AbpbDQgiYNSYo2T6itcp2PTINHNSFB91r/p
-	gj6d/+Vc+AlyxMdo3wlTE2rN5MCv9fF/0t0qbDenOduBQ8aHLWXxIkGQ0unBGPVANbwArV5ke+5
-	lJl1oD8LTgAcdYhukaQuLcCMRu9tWFdZv1GrvEMk2WmvaU+53wFyu52yAC/t1VykLciq735LJ9E
-	FPKiAdYLNjQXZ9B1aP9NIXhFRCwCZovUG6enKZ5DMvE+ohXxBqKwogj
-X-Received: by 2002:a05:6214:27e7:b0:8ac:ae66:8eb9 with SMTP id 6a1803df08f44-8b028132d90mr177876916d6.46.1776638197263;
-        Sun, 19 Apr 2026 15:36:37 -0700 (PDT)
+        bh=eUUbL5JTP/SyFXFzgqloda4BrNbz31QMcyVskF3YWko=;
+        b=Zq11HbUSJIQOct4PdpQGqNPAS9HLbLrx9p69TzKHkffVDfVXh5PV5fxlyS/6eqE3EN
+         KArviKZ6enJB4s5kWGRpbWun6odgeiv2rIuK+VLKH2nCmldMLBmknafIKz6uIRzW1k0R
+         nm25S6tjaVffzDt0PPrc7NYQRwlNQrI1D42TYReNRp4hFeVF7BJdgT2m/Qy6/xpdEohF
+         TsA3waqFoWrSOBVS5G2YzHzZOTkhfD3yqYNPftXdKlJ5+GLpbYh2kw8aujAnj3Yt0aO7
+         azC43IGWTwbgLjRrbcE5LMcDF4hqH6oyrxB+0ZlWN0LgkgFCY0tib8c4c+ZrgzB9qwMX
+         6grA==
+X-Forwarded-Encrypted: i=1; AFNElJ/X0Ud9Q2nEigElLbhvmPWqTAy/kS14JOlznuD8aEcG/arrMXzSYUxZVcVNc/aS/fURUgY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+Qnt5oJojiqASVuSLrEIa7wxEYX8K7FnVuJWNloiuNuMX/9ex
+	rOEZ4tWVVN+2wmRWLXa+dRo8xWHDg0vQNei2v2p2YuiBllRKPmFG6zFz
+X-Gm-Gg: AeBDieu5HsJydaEItaGBHEjTmmpr+erUUqsAlom1qTgE8GOAJV9vA5oeZgBWlQ1rJxX
+	u5j7fWY0cRnagL9c4rZs2OUfDBimOJN+hZ3h0XmzE17VbOhosnQylZ2rPp5r0ph3oXtCDNB4EFr
+	59pU8HwQ6qbWa7+fJ1LIsxToiAk6YWGZNLQFsuPstAN8Zo9UqE47b38e1uknclN7GRNQgm6qKfJ
+	6Ral60FqCqEQQvuiCB/f//gk6rdKYEg7n8NehTfUGCkuagfZmMV4wU3Qujg1LC8HVlODuy++RwT
+	YIXxYlu9MpU0pu5ordF5iJTo2CGwRDCvhZpRf+5l/wIO3AyppMxcoe9F9By20+OUm9v7sZg0xr+
+	z4YqWCG5lqd3UAFz15yLjoa1AsGKLVAQGGfj7HuSKUogzqF1xOBZJBvswJ6Vux2ePmV9f2dAzI0
+	co+9ZDKzjIMUF/MgffIQSSR1mc4ubksuHbeUgFxEbJH3e/qWKpt0HW89lEcdVjtmo8NPMDE9GVo
+	K0nrTUA4orFtLbM+g28Gn94xzSkHmRfe8cBTuExaM3OsT7WaMdRBeVt
+X-Received: by 2002:a05:622a:4245:b0:50d:8e6b:96ac with SMTP id d75a77b69052e-50e36ec5cc2mr159627221cf.58.1776638473089;
+        Sun, 19 Apr 2026 15:41:13 -0700 (PDT)
 Received: from ?IPV6:2605:a601:9b88:8300:84d:e5ce:d94:dc76? ([2605:a601:9b88:8300:84d:e5ce:d94:dc76])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b02e035b0asm56136736d6.22.2026.04.19.15.36.36
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e3949c94fsm68224721cf.28.2026.04.19.15.41.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Apr 2026 15:36:36 -0700 (PDT)
-Message-ID: <4c9fee0b-99bb-4e41-9227-f09c63df9f9d@gmail.com>
-Date: Sun, 19 Apr 2026 18:36:36 -0400
+        Sun, 19 Apr 2026 15:41:12 -0700 (PDT)
+Message-ID: <24a970c5-0d01-4f1d-b6ea-50be646351b3@gmail.com>
+Date: Sun, 19 Apr 2026 18:41:11 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,163 +69,43 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: chriscool@tuxfamily.org, toon@iotcl.com, ps@pks.im,
- karthik.188@gmail.com, justin@parity.io
-References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
- <20260419084840.33986-2-siddharthasthana31@gmail.com>
+Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
+To: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <xmqqqzohd0sh.fsf@gitster.g>
+ <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de> <xmqq5x5s540j.fsf@gitster.g>
+ <20260416051732.GA48541@coredump.intra.peff.net>
+ <20260416053435.GA646718@coredump.intra.peff.net>
+ <621c9da9-2ec0-462d-ae51-0be5e0ca6ab2@gmail.com> <xmqqik9q3n15.fsf@gitster.g>
+ <aeFGumIlw+vcOt2a@nand.local>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260419084840.33986-2-siddharthasthana31@gmail.com>
+In-Reply-To: <aeFGumIlw+vcOt2a@nand.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/19/26 4:48 AM, Siddharth Asthana wrote:
-> When working with partial clones, it's common to want just the list of
-> missing objects. The current --missing=print mode does this but mixes
-> present and missing objects together, with missing ones prefixed by '?'.
-> Getting only the missing OIDs requires an extra pipe:
+On 4/16/26 4:29 PM, Taylor Blau wrote:
+> On Thu, Apr 16, 2026 at 09:09:10AM -0700, Junio C Hamano wrote:
+>>> The part that is striking about Johannes' report is that this happens
+>>> on a fetch, so it is being written automatically by normal maintenance
+>>> activities in that case. Without downgrading the default version back
+>>> to a compatible version, deleting the multi-pack-index(es) will not
+>>> keep the repo in a good state.
+>>
+>> I am not sure what you mean by "deleting will not keep the
+>> repository in a good state".  Isn't multi-pack-index totall
+>> optional?
 > 
->    git rev-list --objects --all --missing=print | perl -ne 'print if s/^[?]//'
-> 
-> Add --missing=print-only which outputs only the missing object OIDs, one
-> per line, without any prefix. This makes the above one-liner unnecessary
-> and the output directly usable by downstream tools.
+> I am also having trouble following this.
 
-I'm a fan of this mode. It saves time dealing with the I/O.
-
->   static struct oidmap missing_objects;
->   enum missing_action {
-> -	MA_ERROR = 0,    /* fail if any missing objects are encountered */
-> -	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
-> -	MA_PRINT,        /* print ALL missing objects in special section */
-> -	MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing object info */
-> +	MA_ERROR = 0, /* fail if any missing objects are encountered */
-> +	MA_ALLOW_ANY, /* silently allow ALL missing objects */
-> +	MA_PRINT, /* print ALL missing objects in special section */
-> +	MA_PRINT_INFO, /* same as MA_PRINT but also prints missing object info */
-> +	MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" prefix */
->   	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
-
-I'm not a fan of this adjustment of spacing on the comments,
-though I do see that MA_ALLOW_PROMISOR had already broken the
-pattern. MA_PRINT_ONLY would still work with the earlier
-comment alignment, though.
-
-> -	if (line_term)
-> +	if (arg_missing_action == MA_PRINT_ONLY) {
-> +		printf("%s", oid_to_hex(&entry->entry.oid));
-> +		putchar(line_term);
-
-Is there a reason you didn't use a printf("%s%c") here to
-put the oid and line_term together?
-
-> +		return;
-> +	} else if (line_term) {
->   		printf("?%s", oid_to_hex(&entry->entry.oid));
-> -	else
-> +	} else {
->   		printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
->   		       info_term);
-> +	}
-
-
-
->   	if (!print_missing_info) {
->   		putchar(line_term);
-> @@ -209,6 +222,7 @@ static inline void finish_object__ma(struct object *obj, const char *name)
->   
->   	case MA_PRINT:
->   	case MA_PRINT_INFO:
-> +	case MA_PRINT_ONLY:
->   		add_missing_object_entry(&obj->oid, name, obj->type);
->   		return;
->   
-> @@ -246,6 +260,11 @@ static void show_commit(struct commit *commit, void *data)
->   		return;
->   	}
->   
-> +	if (arg_missing_action == MA_PRINT_ONLY) {
-> +		finish_commit(commit);
-> +		return;
-> +	}
-> +
->   	if (show_disk_usage)
->   		total_disk_usage += get_object_disk_usage(&commit->object);
->   
-> @@ -384,6 +403,8 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
->   	if (finish_object(obj, name, cb_data))
->   		return;
->   	display_progress(progress, ++progress_counter);
-> +	if (arg_missing_action == MA_PRINT_ONLY)
-> +		return;
->   	if (show_disk_usage)
->   		total_disk_usage += get_object_disk_usage(obj);
->   	if (info->flags & REV_LIST_QUIET)
-> @@ -525,6 +546,12 @@ static inline int parse_missing_action_value(const char *value)
->   		return 1;
->   	}
->   
-> +	if (!strcmp(value, "print-only")) {
-> +		arg_missing_action = MA_PRINT_ONLY;
-> +		fetch_if_missing = 0;
-> +		return 1;
-> +	}
-> +
->   	if (!strcmp(value, "allow-promisor")) {
->   		arg_missing_action = MA_ALLOW_PROMISOR;
->   		fetch_if_missing = 0;
-> @@ -967,8 +994,7 @@ int cmd_rev_list(int argc,
->   
->   	if (arg_print_omitted)
->   		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
-> -	if (arg_missing_action == MA_PRINT ||
-> -	    arg_missing_action == MA_PRINT_INFO) {
-> +	if (missing_action_prints()) {
->   		struct oidset_iter iter;
->   		struct object_id *oid;
->   
-> @@ -994,8 +1020,7 @@ int cmd_rev_list(int argc,
->   			printf("~%s\n", oid_to_hex(oid));
->   		oidset_clear(&omitted_objects);
->   	}
-> -	if (arg_missing_action == MA_PRINT ||
-> -	    arg_missing_action == MA_PRINT_INFO) {
-> +	if (missing_action_prints()) {
->   		struct missing_objects_map_entry *entry;
->   		struct oidmap_iter iter;
->   
-> @@ -1011,7 +1036,7 @@ int cmd_rev_list(int argc,
->   
->   	stop_progress(&progress);
->   
-> -	if (revs.count) {
-> +	if (revs.count && arg_missing_action != MA_PRINT_ONLY) {
->   		if (revs.left_right && revs.cherry_mark)
->   			printf("%d\t%d\t%d\n", revs.count_left, revs.count_right, revs.count_same);
->   		else if (revs.left_right)
-> @@ -1022,7 +1047,7 @@ int cmd_rev_list(int argc,
->   			printf("%d\n", revs.count_left + revs.count_right);
->   	}
->   
-> -	if (show_disk_usage)
-> +	if (show_disk_usage && arg_missing_action != MA_PRINT_ONLY)
->   		print_disk_usage(total_disk_usage);
-
-I'm a little worried about all of these checks that need
-special-casing. These seem like options that are enabled
-by other options and could easily be grouped with the
-print-only setting.
-
-If there is something wrong here where these need to be
-disabled, then we should update the documentation to say
-how this interacts with those options. And perhaps some
-warnings to say "these options are not compatible".
-
-On that note: this patch is missing a document update.
+My wording was bad, but I just meant that in this scenario the
+maintenance was generating a new multi-pack-index without the
+user directly requesting it. If the two Git versions are still
+interacting (or Git 2.25.0 and libgit2 or similar) such that
+the multi-pack-index continues regenerating with version 2,
+then the deletion doesn't fix it _forever_.
 
 Thanks,
 -Stolee
-
 
