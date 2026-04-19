@@ -1,67 +1,66 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D69175A69
-	for <git@vger.kernel.org>; Sun, 19 Apr 2026 22:41:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5370F310785
+	for <git@vger.kernel.org>; Sun, 19 Apr 2026 23:00:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776638475; cv=none; b=WUgqOMNtWzZDGRg9kheL8q4wB/LGEXdlJtXQ4qD0ec8NEYF1gKEn/D5jkRQk0H4xNNeMWaKhTfWMbNHdvCGKpLIBTDa03+SjzC2RfqQalSXhZIStauZXZSd4h24DBms/ZvtxMX0vCwpD3fu2syVxMpQxvKjiHIYrsOXl3aRnsJ8=
+	t=1776639615; cv=none; b=sHBPsXpx454C6NdPLofR89Rwdcc7gzwHKD0aR6UUwR5c4+RSaz9/GjRKX/O1/qJEciuhRAkLnBlM95+zwsdTSYV3jozIMOXS+ibNb009Y/WANnokPYAg4N//iRdVcGOHCbKT2NN0lTrWZibLtAcfEVKHRwn0ZEkCRGwkOtmcbZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776638475; c=relaxed/simple;
-	bh=IWYGU0/c7E1Gyi+IMcbkl+5PDhpRlevIZQgBeiWo9+o=;
+	s=arc-20240116; t=1776639615; c=relaxed/simple;
+	bh=7fPrNsZlueKqDi8OBCkjBn9at163/DNF9vKhhl28Zuc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MrWa2CwWz4phPxYM+0w573idueZIQM+PHDow9RaWYrV/tYoJmnzGLfW3JDYTCfAM86ZvpOG1bSOtrYNm88N1i9vFha37qqs1YjSmmfybe7bgm5AFfnWdcOeGc17KsCtuZQW4vmr4O/t/v78A4NyU3yEcy3qhY7rKnuuVEBSydiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nHOVO5cY; arc=none smtp.client-ip=209.85.160.173
+	 In-Reply-To:Content-Type; b=qB15bWw9MnUe878PEF5XChSH9FhkYXVex9pnuM8wnqyqps05jR5QQzeFBwboH0szRY4eZnZCY7/p8mJVhpvnXSDHanZZ4us0f6Rm7fDSpHQF8Nc+Zfs2dEYwIufMo81Tl5Is2+wXKcaZIBKXfcnAIOxNS2aZjeoDT5CjzzVMOSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQgQbACC; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nHOVO5cY"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50d876329bbso32015461cf.2
-        for <git@vger.kernel.org>; Sun, 19 Apr 2026 15:41:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQgQbACC"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8dfb9139008so156209085a.1
+        for <git@vger.kernel.org>; Sun, 19 Apr 2026 16:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776638473; x=1777243273; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776639613; x=1777244413; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eUUbL5JTP/SyFXFzgqloda4BrNbz31QMcyVskF3YWko=;
-        b=nHOVO5cYPc6kXe36Wh1qgYuCpc0HWh2pYses4F5YPg3G4+BFcv0bOoLD3Xe/2T2tWh
-         zd+x32k6pKwEXWTf8aM485Ua+wJ1dXQqn//LCN8yU0OYDkgEV8jqovGH/N+hDrgVRfPz
-         lrGTHhAkQN64vl6H5dEl2tQPCHYPWpJwMV8mD5rUsAZmR4CZJcjqv+gpf4SvLlQmlG5c
-         gHs+MpU4wK/ryWmkDaLQ1llV0V0BwfEQRIxOUYEsBHv6Om7ou9eB4rHLc5dx/Iu5ojeP
-         BDmWND1otvyW0X7m1ykLlLvYrSemsltrE0BQBFpA3ykC0GNi6w19eTwSpGtZJzoEYEw8
-         +Y6Q==
+        bh=M7QZ59Nv44F4l4ARZYjf+6hwO6ZTtQWg3lRWfAhR/94=;
+        b=BQgQbACCZfDEKMXyFOBBkQYFXU4v9FIxo089mN6fUeOBgLlcYuv7R3NeHAyYrABL7n
+         l8jPV6nFgsm70qA3aCLtLWrUnv9gaKYN96Anti2HgUOFWebC9NN9+Er9yZh1AXzEOuGB
+         DNZ5Jpjus7CxKdVExqQ8y58awrizGD0oEk6CDKfpzACIiI6n7AZWsRPWVad+GrhTTq7I
+         k2wtCGLyDSKAfRrOoTIVaeVJmXfZl5wz2//5I6B2FzfLlB3nxGtqiXsWktg+s9WvBYkc
+         0+PulobSgyxQqTK+RVnXAmrYyF2vaD7LXiJKKJzMunE4P0WXzJ/gk2gmEQGC+DNxy9P0
+         yiUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776638473; x=1777243273;
+        d=1e100.net; s=20251104; t=1776639613; x=1777244413;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eUUbL5JTP/SyFXFzgqloda4BrNbz31QMcyVskF3YWko=;
-        b=Zq11HbUSJIQOct4PdpQGqNPAS9HLbLrx9p69TzKHkffVDfVXh5PV5fxlyS/6eqE3EN
-         KArviKZ6enJB4s5kWGRpbWun6odgeiv2rIuK+VLKH2nCmldMLBmknafIKz6uIRzW1k0R
-         nm25S6tjaVffzDt0PPrc7NYQRwlNQrI1D42TYReNRp4hFeVF7BJdgT2m/Qy6/xpdEohF
-         TsA3waqFoWrSOBVS5G2YzHzZOTkhfD3yqYNPftXdKlJ5+GLpbYh2kw8aujAnj3Yt0aO7
-         azC43IGWTwbgLjRrbcE5LMcDF4hqH6oyrxB+0ZlWN0LgkgFCY0tib8c4c+ZrgzB9qwMX
-         6grA==
-X-Forwarded-Encrypted: i=1; AFNElJ/X0Ud9Q2nEigElLbhvmPWqTAy/kS14JOlznuD8aEcG/arrMXzSYUxZVcVNc/aS/fURUgY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+Qnt5oJojiqASVuSLrEIa7wxEYX8K7FnVuJWNloiuNuMX/9ex
-	rOEZ4tWVVN+2wmRWLXa+dRo8xWHDg0vQNei2v2p2YuiBllRKPmFG6zFz
-X-Gm-Gg: AeBDieu5HsJydaEItaGBHEjTmmpr+erUUqsAlom1qTgE8GOAJV9vA5oeZgBWlQ1rJxX
-	u5j7fWY0cRnagL9c4rZs2OUfDBimOJN+hZ3h0XmzE17VbOhosnQylZ2rPp5r0ph3oXtCDNB4EFr
-	59pU8HwQ6qbWa7+fJ1LIsxToiAk6YWGZNLQFsuPstAN8Zo9UqE47b38e1uknclN7GRNQgm6qKfJ
-	6Ral60FqCqEQQvuiCB/f//gk6rdKYEg7n8NehTfUGCkuagfZmMV4wU3Qujg1LC8HVlODuy++RwT
-	YIXxYlu9MpU0pu5ordF5iJTo2CGwRDCvhZpRf+5l/wIO3AyppMxcoe9F9By20+OUm9v7sZg0xr+
-	z4YqWCG5lqd3UAFz15yLjoa1AsGKLVAQGGfj7HuSKUogzqF1xOBZJBvswJ6Vux2ePmV9f2dAzI0
-	co+9ZDKzjIMUF/MgffIQSSR1mc4ubksuHbeUgFxEbJH3e/qWKpt0HW89lEcdVjtmo8NPMDE9GVo
-	K0nrTUA4orFtLbM+g28Gn94xzSkHmRfe8cBTuExaM3OsT7WaMdRBeVt
-X-Received: by 2002:a05:622a:4245:b0:50d:8e6b:96ac with SMTP id d75a77b69052e-50e36ec5cc2mr159627221cf.58.1776638473089;
-        Sun, 19 Apr 2026 15:41:13 -0700 (PDT)
+        bh=M7QZ59Nv44F4l4ARZYjf+6hwO6ZTtQWg3lRWfAhR/94=;
+        b=l6cdCrgoG4uLEAbBjQ2AMVY7jU0ODlcH9JkRN6CmUK30eWfYChGA3Eime/Us9s5fBf
+         ls7jw8kMe3JAZFaFmAfGwuoXbbWnlijITgvt0RytlbklSMx5l/O5bepS65uFbTTr/fGs
+         yoF/oeVYf9jJSJS8PmGwnjSk3bENKregcFbebzweNb0mr28cGsW3XP4m4WH/EoTPEnyG
+         85kJeBovBWpy8imh4/EyxIPC0Q2EdgMIUDP+u3Sexi8k1Dj6I2pO9JOZOaJEjVE2gRVx
+         RgtzJnTJNS82MKchuigk3yiEcIng0jPWw3XjYVdjth8CG5cCzH7Ij+ejOX96+mFjt9LQ
+         5jVg==
+X-Gm-Message-State: AOJu0Yxq7Nu5DH/eDKxBQIHLikafvxw8NXIZLX0Ehb4SNVKB7orQvqS4
+	IM8CcNqhSRXqf3TpyT81EFi4smmu9mFbyfBqwF8gJTCqBQ2pjTyPwglDGyY79YKu
+X-Gm-Gg: AeBDieuWX5/L9yOKUwm+iGuT+76AEDQ3KiGi5taR/c2/FiP6KuDH3ReQEgoWfA3KnPn
+	grA3aoFNzYpC0yh05BdeYiztF2zIKV1xJ6MegOCKQhW1dTNgvme5ZR7tW4KW8RHLGyrUBC5LAkF
+	Yd7sHbL3CVDZGFIcmcfOClP3iA1wRtEu6HN7DpssKO3EiSM8Xd5S+KJ2gPYJZ4Ly5XwJlBXw5nm
+	0qtxRofuUKbtqopKDOO8Eql81dpq03CBCOCJs8NkBM+dqGoI2vtnGLxANtTmm3HbHAmJe4dRN1F
+	dqr9rYTXG2qKo5cUooJLATmoezyf7lXtUkE7RSJTE9EgW/MlmMfbGA5gc5Cp9/sYdnyvUD/H5II
+	tJ9ewcxSIPzreDAkB94vxENtiWgZeOH2+3bPw8lEJnXHbIZ4dvt08/CeLLGZAKY5V3mWvByitAp
+	hT6BM2DSNiEIuSDnyZ7nEp+8rb14tWNlkIHe3a/DM6KGm+3RkRpne5vNWCKd/2gamzZTemsy9x9
+	NaUqCXya8Ne6iiD9QH/oshNacnBgjmpAe7XmpH4tPXw21D8n26dVVbf
+X-Received: by 2002:a05:620a:4443:b0:8d5:e4a7:9b0c with SMTP id af79cd13be357-8e79236c284mr1595763585a.43.1776639613050;
+        Sun, 19 Apr 2026 16:00:13 -0700 (PDT)
 Received: from ?IPV6:2605:a601:9b88:8300:84d:e5ce:d94:dc76? ([2605:a601:9b88:8300:84d:e5ce:d94:dc76])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e3949c94fsm68224721cf.28.2026.04.19.15.41.11
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d93c2fffsm636209685a.36.2026.04.19.16.00.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Apr 2026 15:41:12 -0700 (PDT)
-Message-ID: <24a970c5-0d01-4f1d-b6ea-50be646351b3@gmail.com>
-Date: Sun, 19 Apr 2026 18:41:11 -0400
+        Sun, 19 Apr 2026 16:00:12 -0700 (PDT)
+Message-ID: <5370b884-30e8-44a9-a52e-4c518556fa24@gmail.com>
+Date: Sun, 19 Apr 2026 19:00:11 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,42 +68,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: MIDX woes, was Re: [ANNOUNCE] Git v2.54.0-rc2
-To: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <xmqqqzohd0sh.fsf@gitster.g>
- <8c1def10-9039-aecd-4ce4-fb4676b47e9b@gmx.de> <xmqq5x5s540j.fsf@gitster.g>
- <20260416051732.GA48541@coredump.intra.peff.net>
- <20260416053435.GA646718@coredump.intra.peff.net>
- <621c9da9-2ec0-462d-ae51-0be5e0ca6ab2@gmail.com> <xmqqik9q3n15.fsf@gitster.g>
- <aeFGumIlw+vcOt2a@nand.local>
+Subject: Re: [PATCH v2 2/7] fetch: add --negotiation-restrict option
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
+ <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
+ <9a25b0fadebb5f0219ceeca9496fc6f84abd020c.1776266066.git.gitgitgadget@gmail.com>
+ <xmqq1pgf6g5g.fsf@gitster.g>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aeFGumIlw+vcOt2a@nand.local>
+In-Reply-To: <xmqq1pgf6g5g.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/16/26 4:29 PM, Taylor Blau wrote:
-> On Thu, Apr 16, 2026 at 09:09:10AM -0700, Junio C Hamano wrote:
->>> The part that is striking about Johannes' report is that this happens
->>> on a fetch, so it is being written automatically by normal maintenance
->>> activities in that case. Without downgrading the default version back
->>> to a compatible version, deleting the multi-pack-index(es) will not
->>> keep the repo in a good state.
->>
->> I am not sure what you mean by "deleting will not keep the
->> repository in a good state".  Isn't multi-pack-index totall
->> optional?
+On 4/15/26 5:57 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> I am also having trouble following this.
+>> -			warning("ignoring --negotiation-tip=%s because it does not match any refs",
+>> -				s);
+>> +			warning(_("ignoring %s=%s because it does not match any refs"),
+>> +				"--negotiation-restrict", s);
+>> -			warning("ignoring --negotiation-tip because the protocol does not support it");
+>> +			warning(_("ignoring %s because the protocol does not support it"),
+>> +				"--negotiation-restrict");
+> 
+> These are nice touches to make sure translators cannot possibly
+> botch these option names that must be given verbatim.
 
-My wording was bad, but I just meant that in this scenario the
-maintenance was generating a new multi-pack-index without the
-user directly requesting it. If the two Git versions are still
-interacting (or Git 2.25.0 and libgit2 or similar) such that
-the multi-pack-index continues regenerating with version 2,
-then the deletion doesn't fix it _forever_.
+ >> @@ -2657,7 +2660,7 @@ int cmd_fetch(int argc,
+ >>   	}
+ >>
+ >>   	if (negotiate_only && !negotiation_tip.nr)
+ >> -		die(_("--negotiate-only needs one or more --negotiation-tip=*"));
+ >> +		die(_("--negotiate-only needs one or more --negotiation-restrict=*"));
+ >
+ > OK.  Shouldn't this also do the "%s" thing?
+
+I think I had focused on adding "%s" to strings that were not
+previously translated, but adjusting the string under translation
+is enough to require retranslation. I should make it easier to
+translate, too.
+
+>>   	}
+>>   	return transport;
+>>   }
+>> @@ -2567,6 +2568,8 @@ int cmd_fetch(int argc,
+>>   		OPT_IPVERSION(&family),
+>>   		OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
+>>   				N_("report that we have only objects reachable from this object")),
+>> +		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
+>> +				N_("report that we have only objects reachable from this object")),
+> 
+> Is OPT_ALIAS() suitable for this?
+
+I was not aware of this. Thanks for the pointer!
+
+I do plan to make "negotiation-tip" an alias for "negotiation-restrict"
+based on the new preference for *-restrict as the "real" option now. Is
+that the right way to do this?
 
 Thanks,
 -Stolee
