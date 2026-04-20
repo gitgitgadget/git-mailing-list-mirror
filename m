@@ -1,170 +1,247 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EBF3148C9
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 08:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B439E312825
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 08:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776672715; cv=none; b=bIb366tDa2qnmIU/eKQpnVrpRQCiHJnncPNm3gZUkresYAE6Di5kUPnPY4sU6IzaPBlhWCRUDp5hSiq6qo8hhqvpoBAJq+iKKPG/fvrHZjaI6LNhM2eeGxE3ytM/UsB5U31YtR4kSlQrRe0pOQwFVR0KlKKLLtgbNF+nHhnKrw4=
+	t=1776673367; cv=none; b=LfsnvlY28Sq20LvoXKWtuA8Jy7YJHAQ6Xdfy6YdhIAsB5GEBJXPhTeq/VMs64V68tdRjZsBescV4g5Sm7eIPo08EfhUvHwOi1PXIW6PpzE7mFPSwGJpypLH07ea/uPqi+wWRC/2c+mpILO+gB3H59WHxvDsvXwN0JvfXn2hKhTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776672715; c=relaxed/simple;
-	bh=BAVtYhR8JEX4XEE6itRDGE6Grv5ayysoxRzDcKijWVY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l9JvTBo2PKs86lA7ycLMsgZ/PC5sklKVJ04G/TVxOQZIytx18UXgBxABWfkM5K/yygri1t9kJ88SmEW91u3nQ4UJt93oRy6Bkg7F63XoPd4AAa92nTe5oLSYlZnwSxLIJhL0eFL1DSnRhlMooqZVWUAi45OLII2EnW4ga0wMMEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=v8HnjfGQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rtSYiKSj; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1776673367; c=relaxed/simple;
+	bh=54wHSl6M7D0p/MAzfBPInsOIc8rASjlrRF7lTwVL6SI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=E0UkOv/tnQri3jY+Yoz3shN5k7agx7zftD08e+Q4Y+4sjCCVozNNw6jTOhZzaebGRLwY397KnqVHt/+ODEVUdE4nMwUZDJ+vfHsMcQ88zuVWT096i4afM2HlDpWfpI4iLWuHZTRc4k9+Ylu2JqhSfimRaU1dEk5d/4zubtrW8KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lpo1WaAS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SkQgp3x9; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="v8HnjfGQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rtSYiKSj"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F920140004A;
-	Mon, 20 Apr 2026 04:11:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lpo1WaAS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SkQgp3x9"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id E6152EC019B;
+	Mon, 20 Apr 2026 04:22:44 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 20 Apr 2026 04:11:53 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 20 Apr 2026 04:22:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776672713; x=1776759113; bh=YJ+RHWd6cx
-	sAOiwWIXNPu9i7hF7AE7ZG+4NAWqxQSyU=; b=v8HnjfGQvtpyrrNdtOZulLNJxk
-	N9lrX9x10nqR9jD+FyJNcDif2Jjd7pR9iWuFOEcCDqSmHUDZVQUJ8f3gA9XNkYB7
-	2t2odLi8751vhCX0mj0cK2QNHjvwUxMrK87nOLwmjPsTFArcSN4hUgsIHmcem4lz
-	BKcTi/yO8BiDgXcKQd7OTN9/sQtjXg2YiGLL0ZRAWrDsLlPAKRi+bHdrb06OI7bP
-	wh3C4Epj/4TS0jiYASIxX1WLhgcBdUWU1kU9tj6lJ9TdfIN2Kw0QRi/T/Lh+vOdn
-	w6mvkSOkqpXKsbKDG0b/h/tfvN6scR71R9Ad4fG7SvHx0NrFh+085vCI8sKg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1776673364; x=1776759764; bh=QWwfS0KYks
+	gvgzLwxxzqYyK3VdMMWJ5/S0RsqrkNWnc=; b=lpo1WaASQwwRqI5M75PVAuwaie
+	sne9unqs0MCCZVHctLTHLhrE652YnATQQwx7Jh+MHd215RIfHU9ixd5pMMmg79sY
+	rH2YOJFxKymyY/i3Ns3y4KVN5rJG5zr51ZCl1gCRzQNXCU3UMjTVZ0Tvxc9vaj3n
+	iLjJsu0s5yUqjhG4XllE0QBlXm6wUTxvaK7I+RK+f5KvpAs1OgdyLcJBR903B9EJ
+	wykCUvuDti62r+KhKsOqbE0cGjaMQ67pJY35oPtdRTPkWha/HVnbbrwkU2rYl0g3
+	9cfYhQ3BMfKV8eneE9vnstlgRWYjWrMaLZL5syZEcraaW6d7HaJj5RYDWIRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776672713; x=1776759113; bh=YJ+RHWd6cxsAOiwWIXNPu9i7hF7AE7ZG+4N
-	AWqxQSyU=; b=rtSYiKSjaKjFgvHc+kVsdNuljupyduK2dATSJ/GPaCc0nC0Rg+z
-	me5LjzcZegVjhHqVyWIU7WLdx4pPvRiYiql98a3+iGJLToQjJ5dm4B6xRuAxIbCy
-	g5tiLfH7pIw8wBme29fWCKoUP8s3Iir9aAeAmcWw2MASDDGmnbUlPfXabTHFtWWE
-	DMFshQUxcuWZpvGJiv9/lYxciWV7FFQVQM7UB1b/9kDaE4B0KwdsdUtvkUzztyxj
-	RZ9abRnB6duRHd2FnRytmu2PD+TPLUoKccJz2KuHfsjs/mZv96zJtDXO9Ju6rVh6
-	zcut9cpx/avJ+2v4bVBfSmU/iob/lLvLn2g==
-X-ME-Sender: <xms:yd_laRYttg_0kzUqwNq612yEPVOPVn--lJJiDmk0f6_cGUC9CXkHRQ>
-    <xme:yd_lafa2iWQNiz0HH_VLULKpsaUuK7HQKE8w2nCvCoehEfriVwpARX6y2D0qAuQjA
-    8hCPB3uScN4WhHyGflqYXp1VuHP6NBpNDUVdIm_jU02o5hE9_yZlg>
-X-ME-Received: <xmr:yd_laY_4tfXG2SR8jnK2JNiTzi2QP7XiCSpX0Cbm6rfNQRDMSRSgD5IPvSgS0YJxunLfj89661ZDZLdp_uI59PanPx8B968YWIwxgauLzFXK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehkedtudcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1776673364; x=1776759764; bh=QWwfS0KYksgvgzLwxxzqYyK3VdMM
+	WJ5/S0RsqrkNWnc=; b=SkQgp3x9e6cP+mA1kzY2m1D738kdAC6pJuzsUreqYJOp
+	A/47Kr4ysR6EZBTZw89LjayUWxX5bGYOHgzz6qE8fDpm/WsjQzY/Lc2+jEVoorvO
+	Ow9JZZqtNrMP5jauY9BwkDV5p/QW8mKyK5J7qb0Ub4neyi5g+RnY7Lz2UNSl+p7r
+	aH5viHYupVuMvIX16ZHuAlhT/ojRcBt1KV8RnIh8Q20YS3YrxIVTN7H6tleIJLqR
+	YdXQmE+/eW5x3mISTx7mMm9ctWkJQQWO3ISJI4QJs4nQbaCjJcpPJITGm3hCdfk9
+	aBpwiDeOL2e/Anfk1DVFDS94ryW7U7x9MEkoOjcw6Q==
+X-ME-Sender: <xms:VOLlaYjl6ZcMwdrl6hPsWCabr9Vck-7zykoWQnI5fWM_gIoptmUKhQ>
+    <xme:VOLlabn4GMq_QMjYJ79AEoUKSEFKubiS-cWWhf6yhShKV16vMcoUy376dXRboopK1
+    0FTZ0pNJuH1DdUwt0giXHSIfq3P9Rj2jMwcUANawwZn_SDNGzTGsg>
+X-ME-Received: <xmr:VOLlacoqxA0Lu93Xsj_ao8CQFI9RtiD7gDJ87BRieqm-uYLHHh70ZIknpRt-UD3eOv6uou1BMeS-XYNBPzzW5UYPUXRt23dc4fkIZ4aSTyb1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehkedtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:yd_laehcvxpeZln6Au6YOBdMpq_CPu9pCsVwmXfEsiGYZEwgjMh3Ug>
-    <xmx:yd_laYc0FNQOMcJvy-kciK2MQkt864sI11HA8d3BaIQt5rlVX2_0tg>
-    <xmx:yd_laVr11UCU5qN4ADqpDefmY9ty7lxK5WTwtoEwQtNDmB70RdiFmQ>
-    <xmx:yd_ladBma5gEOim69797E97Xw7hdK1gTc4_oK-lyF6eUeHcRS0Xq_A>
-    <xmx:yd_laYfHYEJ2WR8JrDlNtGhSqWtBMTL1-rURZGAWabXR43uzKNUTnzfp>
+    hrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepke
+    eutdegtdeifeefveejffelgfdugeelueetffelvefgleefudeihffhieffkedvnecuffho
+    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:VOLlacHpcGaz8PIPBiobX7BWW1dwGn4xCIE1c2_NsI20B6WozemmdA>
+    <xmx:VOLlaQw7mTpDGPXzQTtX5q_HbF7O4WBaCyPOCAMUsialk_-JUivlcg>
+    <xmx:VOLlaZr_Rf3_TZawSWp5XXXWxE40T55RNE-EsO0DA3-i5ZJ_BG-ETQ>
+    <xmx:VOLlaSgXlwMCDJAIclypqAvutAGT9XRVpGwHDmTabah8XIsDHZgxZQ>
+    <xmx:VOLlaRT53pGNZrZ7jcW6axxbGnma1rNvbquEwo8aa2h2mdGMS01LuT9L>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Apr 2026 04:11:52 -0400 (EDT)
+ 20 Apr 2026 04:22:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7656558f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Apr 2026 08:11:51 +0000 (UTC)
-Date: Mon, 20 Apr 2026 10:11:46 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 33d91523 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Apr 2026 08:22:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 5/7] fetch: add --negotiation-require option for
- negotiation
-Message-ID: <aeXfwnHvfnujAiqF@pks.im>
-References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
- <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
- <49c80cef2e25ecadf894cf42661d39dc82493f47.1776266066.git.gitgitgadget@gmail.com>
+Subject: [PATCH 00/18] setup: drop uses of `the_repository`
+Date: Mon, 20 Apr 2026 10:22:30 +0200
+Message-Id: <20260420-pks-setup-wo-the-repository-v1-0-f4a81c4988e8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <49c80cef2e25ecadf894cf42661d39dc82493f47.1776266066.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEbi5WkC/yXMQQ6CMBAF0KuQWTtJC6lRr2Jc0PqV0YQ2naIQw
+ t2tunybt5IiC5ROzUoZL1GJY4XdNRSGfryD5VpNrWn3pusMp6eyokyJ35HLAM5IUaXEvPDBwlk
+ fnPNHS3VIGTeZf/v58rdO/oFQviVt2wdqRE2/fwAAAA==
+X-Change-ID: 20260330-pks-setup-wo-the-repository-81e51bc55b91
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Elijah Newren <newren@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.1
 
-On Wed, Apr 15, 2026 at 03:14:24PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <stolee@gmail.com>
-> 
-> Add a new --negotiation-require option to 'git fetch', which ensures
-> that certain ref tips are always sent as 'have' lines during fetch
-> negotiation, regardless of what the negotiation algorithm selects.
+Hi,
 
-When reading "--negotiation-require" my mind immediately shifts towards
-a mode where we require the remote to have a specific reference, and if
-not we'll abort. That's of course not what you're proposing here, but I
-would think that I may not be the only person making that connection.
+I've had enough of "setup.c" and its complexities, so I finally decided
+to take the bullet and start refactoring this subsystem. This here is
+the first out of the following three steps:
 
-Would an alternative like "--negotiation-include" or
-"--negotiation-expand" be better?
+  1. Drop all uses of `the_repository`. This doesn't yet allow us to get
+     rid of `USE_THE_REPOSITORY_VARIABLE`.
 
-> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-> index c07b85499f..85ffc5b32b 100644
-> --- a/Documentation/fetch-options.adoc
-> +++ b/Documentation/fetch-options.adoc
-> @@ -73,6 +73,25 @@ See also the `fetch.negotiationAlgorithm` and `push.negotiate`
->  configuration variables documented in linkgit:git-config[1], and the
->  `--negotiate-only` option below.
->  
-> +`--negotiation-require=<revision>`::
-> +	Ensure that the given ref tip is always sent as a "have" line
-> +	during fetch negotiation, regardless of what the negotiation
-> +	algorithm selects.  This is useful to guarantee that common
-> +	history reachable from specific refs is always considered, even
-> +	when `--negotiation-restrict` restricts the set of tips or when
-> +	the negotiation algorithm would otherwise skip them.
-> ++
-> +This option may be specified more than once; if so, each ref is sent
-> +unconditionally.
-> ++
-> +The argument may be an exact ref name (e.g. `refs/heads/release`) or a
-> +glob pattern (e.g. `refs/heads/release/{asterisk}`).  The pattern syntax
-> +is the same as for `--negotiation-restrict`.
-> ++
-> +If `--negotiation-restrict` is used, the have set is first restricted by
-> +that option and then increased to include the tips specified by
-> +`--negotiation-require`.
+  2. Convert a couple of global variables and drop
+     `is_bare_repository_cfg`, which then allows us to drop
+     `USE_THE_REPOSITORY_VARIABLE`.
 
-This interaction makes sense. You can basically say "send only local
-branches, but please _also_ send that one particular ref over there".
+  3. Refactor the subsystem a bit so that we stop intermixing repository
+     discovery and repository initialization. This is my original
+     motivation as I want to get rid of `odb_prepare_alternates()`, but
+     due to the way we initialize the repository it has proven to be
+     extremely tedious.
 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index baf239adf9..a0029253f1 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -474,7 +511,25 @@ static int find_common(struct fetch_negotiator *negotiator,
->  	trace2_region_enter("fetch-pack", "negotiation_v0_v1", the_repository);
->  	flushes = 0;
->  	retval = -1;
-> +
-> +	/* Send unconditional haves from --negotiation-require */
-> +	resolve_negotiation_require(args->negotiation_require,
-> +				    &negotiation_require_oids);
-> +	if (oidset_size(&negotiation_require_oids)) {
-> +		struct oidset_iter iter;
-> +		oidset_iter_init(&negotiation_require_oids, &iter);
-> +
-> +		while ((oid = oidset_iter_next(&iter))) {
-> +			packet_buf_write(&req_buf, "have %s\n",
-> +					 oid_to_hex(oid));
-> +			print_verbose(args, "have %s", oid_to_hex(oid));
-> +		}
-> +	}
+Most of the patches in this series here are rather mechanical. There's
+only a handful of patches that warrant more attention:
 
-Okay, so here we now unconditionally send our requested object IDs.
+  -  2/18: setup: stop using `the_repository` in `is_inside_worktree()`
+  -  3/18: setup: stop using `the_repository` in `is_inside_git_dir()`
+  -  9/18: setup: stop using `the_repository` in `setup_work_tree()`
+  - 10/18: setup: stop using `the_repository` in `set_git_work_tree()`
 
-One thing I was wondering is whether we need to flush eventually. It can
-happen that the user specifies millions of refs, either intentionally or
-by accident. But I guess the answer might be "no", as the intent of the
-feature is that we indeed want to send all of those to the remote side,
-and the remote is being asked to consider all of those OIDs.
+Those patches don't only mechanical move stuff around, but also change
+some logic to make it work.
+
+The series is based on 5361983c07 (The 22nd batch, 2026-03-27). There is
+a single merge commit with "seen", but it's trivial to resolve.
+
+Changes in v2:
+  - Remove static `initialized` variable in `setup_work_tree()`.
+  - Use enum values to initialize fields.
+  - Fix up a comment.
+  - Link to v1: https://lore.kernel.org/all/20260330-pks-setup-wo-the-repository-v1-0-0d2e822837aa@pks.im/
+
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (18):
+      setup: replace use of `the_repository` in static functions
+      setup: stop using `the_repository` in `is_inside_worktree()`
+      setup: stop using `the_repository` in `is_inside_git_dir()`
+      setup: stop using `the_repository` in `prefix_path()`
+      setup: stop using `the_repository` in `path_inside_repo()`
+      setup: stop using `the_repository` in `verify_filename()`
+      setup: stop using `the_repository` in `verify_non_filename()`
+      setup: stop using `the_repository` in `enter_repo()`
+      setup: stop using `the_repository` in `setup_work_tree()`
+      setup: stop using `the_repository` in `set_git_work_tree()`
+      setup: stop using `the_repository` in `setup_git_env()`
+      setup: stop using `the_repository` in `setup_git_directory_gently()`
+      setup: stop using `the_repository` in `setup_git_directory()`
+      setup: stop using `the_repository` in `upgrade_repository_format()`
+      setup: stop using `the_repository` in `check_repository_format()`
+      setup: stop using `the_repository` in `initialize_repository_version()`
+      setup: stop using `the_repository` in `create_reference_database()`
+      setup: stop using `the_repository` in `init_db()`
+
+ archive.c                                    |   2 +-
+ blame.c                                      |   2 +-
+ builtin/blame.c                              |   2 +-
+ builtin/check-attr.c                         |   4 +-
+ builtin/check-ref-format.c                   |   5 +-
+ builtin/checkout-index.c                     |   4 +-
+ builtin/checkout.c                           |   2 +-
+ builtin/clone.c                              |  12 +-
+ builtin/describe.c                           |   2 +-
+ builtin/diff-index.c                         |   2 +-
+ builtin/diff.c                               |  10 +-
+ builtin/difftool.c                           |   2 +-
+ builtin/grep.c                               |   8 +-
+ builtin/hash-object.c                        |   4 +-
+ builtin/help.c                               |   2 +-
+ builtin/init-db.c                            |   8 +-
+ builtin/ls-files.c                           |   4 +-
+ builtin/merge-file.c                         |   2 +-
+ builtin/mv.c                                 |   5 +-
+ builtin/read-tree.c                          |   2 +-
+ builtin/receive-pack.c                       |   2 +-
+ builtin/reset.c                              |   6 +-
+ builtin/rev-parse.c                          |  14 +-
+ builtin/rm.c                                 |   2 +-
+ builtin/sparse-checkout.c                    |  19 +-
+ builtin/stripspace.c                         |   2 +-
+ builtin/submodule--helper.c                  |   2 +-
+ builtin/update-index.c                       |  16 +-
+ builtin/upload-archive.c                     |   2 +-
+ builtin/upload-pack.c                        |   2 +-
+ daemon.c                                     |   4 +-
+ environment.h                                |   2 -
+ git.c                                        |  10 +-
+ http-backend.c                               |   2 +-
+ http-fetch.c                                 |   2 +-
+ http-push.c                                  |   2 +-
+ imap-send.c                                  |   2 +-
+ line-log.c                                   |   2 +-
+ list-objects-filter-options.c                |   2 +-
+ object-name.c                                |   4 +-
+ pathspec.c                                   |   2 +-
+ refs.c                                       |   2 +-
+ remote-curl.c                                |   4 +-
+ repository.h                                 |   4 +-
+ revision.c                                   |   6 +-
+ scalar.c                                     |   4 +-
+ setup.c                                      | 442 ++++++++++++++-------------
+ setup.h                                      |  43 ++-
+ submodule.c                                  |   2 +-
+ t/helper/test-advise.c                       |   2 +-
+ t/helper/test-bitmap.c                       |   2 +-
+ t/helper/test-bloom.c                        |   2 +-
+ t/helper/test-cache-tree.c                   |   2 +-
+ t/helper/test-config.c                       |   2 +-
+ t/helper/test-dump-cache-tree.c              |   2 +-
+ t/helper/test-dump-fsmonitor.c               |   2 +-
+ t/helper/test-dump-split-index.c             |   2 +-
+ t/helper/test-dump-untracked-cache.c         |   2 +-
+ t/helper/test-find-pack.c                    |   2 +-
+ t/helper/test-fsmonitor-client.c             |   2 +-
+ t/helper/test-lazy-init-name-hash.c          |   2 +-
+ t/helper/test-match-trees.c                  |   2 +-
+ t/helper/test-pack-deltas.c                  |   2 +-
+ t/helper/test-pack-mtimes.c                  |   2 +-
+ t/helper/test-partial-clone.c                |   4 +-
+ t/helper/test-path-utils.c                   |   4 +-
+ t/helper/test-path-walk.c                    |   2 +-
+ t/helper/test-reach.c                        |   2 +-
+ t/helper/test-read-cache.c                   |   2 +-
+ t/helper/test-read-graph.c                   |   2 +-
+ t/helper/test-read-midx.c                    |   2 +-
+ t/helper/test-ref-store.c                    |   2 +-
+ t/helper/test-revision-walking.c             |   2 +-
+ t/helper/test-scrap-cache-tree.c             |   2 +-
+ t/helper/test-serve-v2.c                     |   2 +-
+ t/helper/test-submodule-config.c             |   2 +-
+ t/helper/test-submodule-nested-repo-config.c |   2 +-
+ t/helper/test-submodule.c                    |  10 +-
+ t/helper/test-subprocess.c                   |   6 +-
+ t/helper/test-userdiff.c                     |   2 +-
+ t/helper/test-write-cache.c                  |   2 +-
+ worktree.c                                   |   2 +-
+ wt-status.c                                  |   2 +-
+ 83 files changed, 393 insertions(+), 383 deletions(-)
+
+
+---
+base-commit: 5361983c075154725be47b65cca9a2421789e410
+change-id: 20260330-pks-setup-wo-the-repository-81e51bc55b91
+
