@@ -1,317 +1,278 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4903939CE
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A1331A575
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776679959; cv=none; b=UOkc/REmXCrB1rZNXraREcPE+CBd/KScHwqxpGMGu01gM+I/FbyhON9weyRukpIkGF11KO2ZkQrL5pGJWNhz3DXYKe2xT8+NH4hFpJpV3XCLIUS2SqjzTm2lEANVEfTnVyDefzEQwmpkMuvrZNw0WbKIF0ZswmOqwO5ZfBh6ip4=
+	t=1776680683; cv=none; b=q4Zgv07DMnELSuKVKV9zzQ/0M8ToCjIpbOqJDsIXaU+2Mhh0beKHXb4I49CCb5xSk03negYyNlrtrx1F+cWV0KlC5kp7UT0MAR3wAJ9dzsgQw48STvlP3ERExqXOTYl+iM3nSDzKatbBgeEIyKPme+uyWPUQ6mVb6BxxwlpDqZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776679959; c=relaxed/simple;
-	bh=0R5pEsVxKQPpjtT5+Od1Zdn+c7c0gFqLPfwhTDcR21o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=I9KgyCzpZMg6J+cNF4vO+7VnzGY3dV8mzQBGfOS0+kHPFVpYLF2uYGSO5u/mbv4Gig8LzvkyA9ZJnNOkcQ1w7m2mHslclLsISYD1VlJ/hKzkHrkXiYsg8VF7psRXMyBXC3vTxJKldBzqZ4mj7jz1SY8oL1gKFlgBHoBZGdmm4gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nDW1HAv1; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1776680683; c=relaxed/simple;
+	bh=WYDL0vHheNZMLdJj7pYwZNFMtZk+07IwFe8kemcCj1M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QFHlX/jj60SPVZOVPXwvRtnyoBtDhauywwK55inAsmB8Jan/r7RCaafzPJFUgHA6ZMmBHsF2vbrkfkE1BJ7lAJRirXjPduEdlHTOnB58Q+EWE7ZJrrZTl+4meC5ek9qbhOOn7dGQzocVrwLMRyOvNY0CWi1xp6JZQzY7G0up+XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lwubk/Yq; arc=none smtp.client-ip=209.85.210.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nDW1HAv1"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43fe608cb92so1854175f8f.2
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 03:12:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lwubk/Yq"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-82fbdd60b64so334413b3a.3
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 03:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776679954; x=1777284754; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XjLzEi+ePEqU4pFh1HpqZLW3Qu54X1ENkWnqc6NtYOw=;
-        b=nDW1HAv18Cf/4CYK6QtEjqra4vfRnOKn5rqwZZKVId5M9U6+mG9wN8fw9YSqc3E/a6
-         +adz1ItDT8x66SozcJ3IBVZ31TCmFZiZPA6tGxxk2OS+XyuP9E/ekaSOGkGqpzTLZMfX
-         jOZuVfhXdx8Swigl9d0XmHS1FEHjuQE2XyVUAXUPxT1RvTi+szJaTNDWgu/VrJzdr7KE
-         bInJ00H0w7MhCq1KzwUJx5sw70iJuyt897WwDUAacD86aK1n+DqlM6FUzFuiDHMvIStm
-         7jreQ0YGc0AsdnFOIP/mnHCHCy3PGcHgoD4AicC7YEFzFadlTqV+QSEllz+4YbkylbuH
-         pm8w==
+        d=gmail.com; s=20251104; t=1776680682; x=1777285482; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i04ct64ZACqDhKgYnj5K9n1SwNokyqlv89h4gE8tDps=;
+        b=Lwubk/YqBAXzsqrQbpn/zGLlUB0+hbXOd7U9UDmSFKr+pqGZZsQdat9F4j4Hp2fV7p
+         I4aZaPDSCsiGLW/sBkg7TlqtQYWOVcno1Ij2Ii1SGQ/FNXLMOpUh+4IyLXlPid5w7vae
+         qE/XBPaIdIBH9IRRuA//MWFiQFwchoekYRkMJQeYzZMij+mxplwR69ZeNmB5cm6piJAa
+         /C6g+1HMyLVkhXMMR+Z0w/xFGjH0PswonD796JRbGiRjIoLWDtmwDUUxZg53WAa31vD5
+         SQAXa2i0rbPzB3Y8SYvJJDHpmnCf50XjLc6cSDnXCmH6QyzWFY5Wav5rd/zP4B4MtaOi
+         /z2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776679954; x=1777284754;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=XjLzEi+ePEqU4pFh1HpqZLW3Qu54X1ENkWnqc6NtYOw=;
-        b=kqY8lUkRyEloVEpT4Xe0DUI/jNEcu1p/mJLTOvEjZvjAKqxaWxKa2tLbLVw1PNc/a7
-         EkUz8f7CULhEuZXIQufwyPPu69fHYj3SbMBlCb7sWnUPbRa+sPvINcDvd78ANxvEMTXD
-         PXmaqPVz07lgU6so9HWLOiRlgyxo5J+GKeKuOc8puvYC4UkJ/BfMlghgyX7tPryyk/wn
-         p9V59FAYnS8xbB3bfhwB9utxb+2qyt4K4dSfe7f1y+YqPT8SQvQGyYpFZLvskSt84T9O
-         6QIQwfwgE+xqJnP5uVcXxN79NyspnBIIORqKJG9j08oJSCYlYzUiYh2NSh9WBcMAJoHR
-         Flzg==
-X-Gm-Message-State: AOJu0Yzd5eWtWMAF7GgQeyhU/sD0/iNBaWlNvUZuW5P50T754b/LWhg7
-	Xkkr8Pis1KpSpjTMX0who1isHwvSiiewLPp421VaqMhZH9SsqUmo+9qxyq4URg==
-X-Gm-Gg: AeBDietxjYhmjGhjzvkFQl4PjLSmS9x/AkQDL5a6irDmF3bUyS7UMLPGgh8CxMuRwvj
-	GmVxYqBzMRsutvhwvcEC4cgNHYQVzIpxvm8YyHnoM2EMlvFcK3HKazeUslxYyr1/H3wC32mQCRl
-	4peHmkZDQGtKNf9PHN4JvTJJuAJAh0v/qKT42l6aFAIKB0+nZSOMMS1rt1yZWJOId1vHbiqRGIb
-	ZChu9JSZOUGPAQXI4IzVUFVH15/qjV0MXO3+Gla56R9Bnmj9RYTVlj1Ze2VRnO+nVVbdlllq5i9
-	FzJ9d6mffQl364DTXqxd9BYTsVIGMb9nArYftjwLL6Hx3NU3pCRCFiwN79LkNPvL0T/LoMR8GEc
-	J7DtKn3eOowpieGxn1JpIdKA449Vw/UHrX4P+Ut2FumSyb0xovvb0SbChZh47YMneON5voPiC1k
-	D1+pihpUwiYErmiPmfrJYIUxQ8TkkzB5GNYlvll3E=
-X-Received: by 2002:a05:6000:25c7:b0:43c:f0c0:c571 with SMTP id ffacd0b85a97d-43fe3e12b2bmr20789293f8f.47.1776679953877;
-        Mon, 20 Apr 2026 03:12:33 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:8109:d906:4e00:293:ab4d:327e:e6dc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4cc375dsm25424997f8f.14.2026.04.20.03.12.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 03:12:32 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 20 Apr 2026 12:12:05 +0200
-Subject: [PATCH 7/8] refs: add peeled object ID to the `ref_update` struct
+        d=1e100.net; s=20251104; t=1776680682; x=1777285482;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i04ct64ZACqDhKgYnj5K9n1SwNokyqlv89h4gE8tDps=;
+        b=DwqYcJCJMCz1Kqnwm6Rv02XRvE87FF2qWA3f5NpHY1r4s3LrNfpcDF5/50XDAUfZOg
+         FrRCkC3dxd9ormA45rF74Z0jHlg7B3nypnNzWCyYBjRfQmsYlRof821nSmYkwB4Auin3
+         3b3pfqE9MEP4vddBeNwxpp8BANH7zHo8lZ1cbfzuc76E65sXEKPyszbOo1jcsLHrmx9W
+         3118NfDYioSIQq2jb1lcECucgt/R6xwwYth7fvNZ16eQuafVGvxhOQZrkL8YQ6JG6Bkw
+         g2sectPP8iRzwmIiFh6f2jSe5yLnYALJIJ56juBx7r3kcNzmVQmYNM8u2OCMKkcb/cXc
+         BpXA==
+X-Forwarded-Encrypted: i=1; AFNElJ+IAhW9w3DY9Vjt0JemviIjntF7T4Tz08G9bAEdYX0/ulfbAn03vZL0M6RmVndFtcxKFgo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRllvUHMplnqGEMI6Oyz2zFEOQcOTcR2Ka97FdB/l1vfMjJ8CZ
+	QWYk1nwnREwZCh4zrE4493GrhsNufoZDzyUYW0Gjfd8dZeFfvSD/cErr
+X-Gm-Gg: AeBDietDpXRQf1foL+SVg31bWFCcOGiBbC2sErLX9c1Xt31XlMcNasJFC+RuJrE/aXg
+	55JDaqEdMxhuFYaURuf3DxiIhWG7T7nr7MQ6Ddg+BZFlCNTYwYwyvNd8jbtZl092ee5iAkBVgGB
+	OmQmCn1agBqzGd0/KJNL20lKqkMDv/x4gb22A54mFPTK/U9h4afTT9TrBi3LzHQLHusJWDYU0Ty
+	3aGBAuI/DMfBw58AXWSSGuSiQhhcJ/v0fMxtAnqSoVrUlEC8zSkgsgOzm0Sa/aV6xAjwJEcjT2M
+	xxUxFsno5Qpjwi5eO3CxArISnTslJkZ9qEC3Ll8qdWLQx8p7zKNvbTpWSNDv65zKFyDTg2rBG19
+	jQu3iizHj1oJVsxGXWEvbUHWkNgN9d+z8W9sbmCrFbX8O6Za+pcYoXeeF8q8jve9xgDClafaaim
+	c0vkn42o7eRzOEJ+zpHhSylvVE6lXoeq+G5dkjLcENqP+50O7pg9xRbMNLL+0t5l+GOaCQmW592
+	6OERzgJUKOtObNfsgtjQ1VWLhzswikHhyV+i6BXTBl8
+X-Received: by 2002:a05:6a00:3397:b0:82f:2243:e448 with SMTP id d2e1a72fcca58-82f8c83048fmr13631509b3a.3.1776680681510;
+        Mon, 20 Apr 2026 03:24:41 -0700 (PDT)
+Received: from ?IPV6:2401:4900:86e8:71dc:a082:d961:4e27:7d6? ([2401:4900:86e8:71dc:a082:d961:4e27:7d6])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ebba485sm12576332b3a.38.2026.04.20.03.24.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Apr 2026 03:24:39 -0700 (PDT)
+Message-ID: <9e2ca91d-9091-4d4d-9427-ec8a23ee8909@gmail.com>
+Date: Mon, 20 Apr 2026 15:54:34 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260420-refs-move-to-generic-layer-v1-7-513e354f376b@gmail.com>
-References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
-In-Reply-To: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8667; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=0R5pEsVxKQPpjtT5+Od1Zdn+c7c0gFqLPfwhTDcR21o=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnl/AEcR41sGANVrN33ZixL76tJQhfkQomQV
- aOlbSmybtBtS4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp5fwBAAoJED7VnySO
- Rox/dgAL/j9c3jqkb+FcFkHMI1SOoF/8qFraki7+LM2BcZ+boDnFDMYd4rVCVwSrRhR/Ysvw1Gz
- OjEC2vGamX9flFWOh7Dd1OIMoGZJIAK/vUz1MxKdg3MEUFdtxyJOPUXQ1oB82eAlwNguZEJt5jU
- 5A3uX0hZmxOZaE0otrKbu0HOXzFTVr0TNXDMr5Dh5Ashw8pny20R9RGrwTABALNqwl0D1U9MYKO
- oKm+6BU8iw5GLl/zugTeM1lz4SlPJplNuHl+uDmSMwt28L3P+NgyE3LbnrLLV+X/9fXTkQuv+Mx
- 2XDyrFnnLLXiYwkwhyPWlMaEasJg0tz/NvL+a+OtpDIjzgOY7/X16A58cqY/FR/5L1qq8zBT5s0
- ic4YRNj4iHwOpCf5MjwIavAFAKjwGdJS5bpIWnxchagDqRg6Z6IBbYjKymsaycTK7NBCSpfxhy+
- zzxEkU2NaTqkeC5qz+7qPRPSxb1v+H0rSuyHqz+gdp/lV6E2eWVcRY7vPJabieY+AXj1XjKMDo6
- tU=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
+To: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Cc: chriscool@tuxfamily.org, toon@iotcl.com, ps@pks.im,
+ karthik.188@gmail.com, justin@parity.io
+References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
+ <20260419084840.33986-2-siddharthasthana31@gmail.com>
+ <4c9fee0b-99bb-4e41-9227-f09c63df9f9d@gmail.com>
+Content-Language: en-GB
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <4c9fee0b-99bb-4e41-9227-f09c63df9f9d@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Certain reference backend {packed, reftable}, have the ability to also
-store the peeled object ID for a reference pointing to a tag object.
-This has the added benefit that during retrieval of such references, we
-also obtain the peeled object ID without having to use the ODB.
 
-To provide this functionality, each backend independently calls the ODB
-to obtain the peeled OID. To move this functionality to the generic
-layer, there must be support infrastructure to pass in a peeled OID for
-reference updates.
 
-Add a `peeled` field to the `ref_update` structure and modify
-`ref_transaction_add_update()` to receive and copy this object ID to the
-`ref_update` structure. Finally, modify `ref_transaction_update()` to
-peel tag objects and pass the peeled OID to
-`ref_transaction_add_update()`.
+On 20/04/26 04:06, Derrick Stolee wrote:
+> On 4/19/26 4:48 AM, Siddharth Asthana wrote:
+>> When working with partial clones, it's common to want just the list of
+>> missing objects. The current --missing=print mode does this but mixes
+>> present and missing objects together, with missing ones prefixed by '?'.
+>> Getting only the missing OIDs requires an extra pipe:
+>>
+>>    git rev-list --objects --all --missing=print | perl -ne 'print if 
+>> s/^[?]//'
+>>
+>> Add --missing=print-only which outputs only the missing object OIDs, one
+>> per line, without any prefix. This makes the above one-liner unnecessary
+>> and the output directly usable by downstream tools.
+> 
+> I'm a fan of this mode. It saves time dealing with the I/O.
 
-Update all callers of these functions with the new function parameters.
-Callers which only add reflog updates, need to only pass in NULL, since
-for reflogs, we don't store peeled OIDs. Reference deletions also only
-need to pass in NULL. For others, pass along the peeled OID if
-available.
 
-In a following commit, we'll modify the backends to use this peeled OID
-instead of parsing it themselves.
+Thanks!
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- refs.c                  | 15 +++++++++++++--
- refs/files-backend.c    | 20 ++++++++++++--------
- refs/refs-internal.h    | 14 ++++++++++++++
- refs/reftable-backend.c |  6 +++---
- 4 files changed, 42 insertions(+), 13 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index bbe19155f4..63a54c460e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1307,6 +1307,7 @@ struct ref_update *ref_transaction_add_update(
- 		const char *refname, unsigned int flags,
- 		const struct object_id *new_oid,
- 		const struct object_id *old_oid,
-+		const struct object_id *peeled,
- 		const char *new_target, const char *old_target,
- 		const char *committer_info,
- 		const char *msg)
-@@ -1339,6 +1340,8 @@ struct ref_update *ref_transaction_add_update(
- 		update->committer_info = xstrdup_or_null(committer_info);
- 		update->msg = normalize_reflog_message(msg);
- 	}
-+	if (flags & REF_HAVE_PEELED)
-+		oidcpy(&update->peeled, peeled);
- 
- 	/*
- 	 * This list is generally used by the backends to avoid duplicates.
-@@ -1392,6 +1395,8 @@ enum ref_transaction_error ref_transaction_update(struct ref_transaction *transa
- 						  unsigned int flags, const char *msg,
- 						  struct strbuf *err)
- {
-+	struct object_id peeled;
-+
- 	assert(err);
- 
- 	if ((flags & REF_FORCE_CREATE_REFLOG) &&
-@@ -1432,10 +1437,16 @@ enum ref_transaction_error ref_transaction_update(struct ref_transaction *transa
- 				    oid_to_hex(new_oid), refname);
- 			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
- 		}
-+
-+		if (o->type == OBJ_TAG) {
-+			if (!peel_object(transaction->ref_store->repo, new_oid, &peeled,
-+					 PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE))
-+				flags |= REF_HAVE_PEELED;
-+		}
- 	}
- 
- 	ref_transaction_add_update(transaction, refname, flags,
--				   new_oid, old_oid, new_target,
-+				   new_oid, old_oid, &peeled, new_target,
- 				   old_target, NULL, msg);
- 
- 	return 0;
-@@ -1462,7 +1473,7 @@ int ref_transaction_update_reflog(struct ref_transaction *transaction,
- 		return -1;
- 
- 	update = ref_transaction_add_update(transaction, refname, flags,
--					    new_oid, old_oid, NULL, NULL,
-+					    new_oid, old_oid, NULL, NULL, NULL,
- 					    committer_info, msg);
- 	update->index = index;
- 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0e2bbe37a0..c7292a3c17 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1325,7 +1325,8 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
- 	ref_transaction_add_update(
- 			transaction, r->name,
- 			REF_NO_DEREF | REF_HAVE_NEW | REF_HAVE_OLD | REF_IS_PRUNING,
--			null_oid(the_hash_algo), &r->oid, NULL, NULL, NULL, NULL);
-+			null_oid(the_hash_algo), &r->oid, NULL, NULL, NULL,
-+			NULL, NULL);
- 	if (ref_transaction_commit(transaction, &err))
- 		goto cleanup;
- 
-@@ -2468,7 +2469,7 @@ static enum ref_transaction_error split_head_update(struct ref_update *update,
- 	new_update = ref_transaction_add_update(
- 			transaction, "HEAD",
- 			update->flags | REF_LOG_ONLY | REF_NO_DEREF | REF_LOG_VIA_SPLIT,
--			&update->new_oid, &update->old_oid,
-+			&update->new_oid, &update->old_oid, &update->peeled,
- 			NULL, NULL, update->committer_info, update->msg);
- 	new_update->parent_update = update;
- 
-@@ -2530,8 +2531,8 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
- 			transaction, referent, new_flags,
- 			update->new_target ? NULL : &update->new_oid,
- 			update->old_target ? NULL : &update->old_oid,
--			update->new_target, update->old_target, NULL,
--			update->msg);
-+			&update->peeled, update->new_target, update->old_target,
-+			NULL, update->msg);
- 
- 	new_update->parent_update = update;
- 
-@@ -2994,7 +2995,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 			ref_transaction_add_update(
- 					packed_transaction, update->refname,
- 					REF_HAVE_NEW | REF_NO_DEREF,
--					&update->new_oid, NULL,
-+					&update->new_oid, NULL, NULL,
- 					NULL, NULL, NULL, NULL);
- 		}
- 	}
-@@ -3200,19 +3201,22 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
- 			if (update->flags & REF_LOG_ONLY)
- 				ref_transaction_add_update(loose_transaction, update->refname,
- 							   update->flags, &update->new_oid,
--							   &update->old_oid, NULL, NULL,
-+							   &update->old_oid, &update->peeled,
-+							   NULL, NULL,
- 							   update->committer_info, update->msg);
- 			else
- 				ref_transaction_add_update(loose_transaction, update->refname,
- 							   update->flags & ~REF_HAVE_OLD,
- 							   update->new_target ? NULL : &update->new_oid, NULL,
--							   update->new_target, NULL, update->committer_info,
-+							   &update->peeled, update->new_target,
-+							   NULL, update->committer_info,
- 							   NULL);
- 		} else {
- 			ref_transaction_add_update(packed_transaction, update->refname,
- 						   update->flags & ~REF_HAVE_OLD,
- 						   &update->new_oid, &update->old_oid,
--						   NULL, NULL, update->committer_info, NULL);
-+						   &update->peeled, NULL, NULL,
-+						   update->committer_info, NULL);
- 		}
- 	}
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index eed13af4eb..620aeb8320 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -39,6 +39,13 @@ struct ref_transaction;
-  */
- #define REF_LOG_ONLY (1 << 7)
- 
-+/*
-+ * The reference contains a peeled object ID. This is used when the
-+ * new_oid is pointing to a tag object and the reference backend
-+ * wants to also store the peeled value for optimized retrieval.
-+ */
-+#define REF_HAVE_PEELED (1 << 15)
-+
- /*
-  * Return the length of time to retry acquiring a loose reference lock
-  * before giving up, in milliseconds:
-@@ -92,6 +99,12 @@ struct ref_update {
- 	 */
- 	struct object_id old_oid;
- 
-+	/*
-+	 * If the new_oid points to a tag object, set this to the peeled
-+	 * object ID for optimized retrieval without needed to hit the odb.
-+	 */
-+	struct object_id peeled;
-+
- 	/*
- 	 * If set, point the reference to this value. This can also be
- 	 * used to convert regular references to become symbolic refs.
-@@ -169,6 +182,7 @@ struct ref_update *ref_transaction_add_update(
- 		const char *refname, unsigned int flags,
- 		const struct object_id *new_oid,
- 		const struct object_id *old_oid,
-+		const struct object_id *peeled,
- 		const char *new_target, const char *old_target,
- 		const char *committer_info,
- 		const char *msg);
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index fdf7336c0f..7416bb72fa 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1107,8 +1107,8 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 		ref_transaction_add_update(
- 			transaction, "HEAD",
- 			u->flags | REF_LOG_ONLY | REF_NO_DEREF,
--			&u->new_oid, &u->old_oid, NULL, NULL, NULL,
--			u->msg);
-+			&u->new_oid, &u->old_oid, &u->peeled, NULL, NULL,
-+			NULL, u->msg);
- 	}
- 
- 	ret = reftable_backend_read_ref(be, rewritten_ref,
-@@ -1194,7 +1194,7 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 				transaction, referent->buf, new_flags,
- 				u->new_target ? NULL : &u->new_oid,
- 				u->old_target ? NULL : &u->old_oid,
--				u->new_target, u->old_target,
-+				&u->peeled, u->new_target, u->old_target,
- 				u->committer_info, u->msg);
- 
- 			new_update->parent_update = u;
+> 
+>>   static struct oidmap missing_objects;
+>>   enum missing_action {
+>> -    MA_ERROR = 0,    /* fail if any missing objects are encountered */
+>> -    MA_ALLOW_ANY,    /* silently allow ALL missing objects */
+>> -    MA_PRINT,        /* print ALL missing objects in special section */
+>> -    MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing 
+>> object info */
+>> +    MA_ERROR = 0, /* fail if any missing objects are encountered */
+>> +    MA_ALLOW_ANY, /* silently allow ALL missing objects */
+>> +    MA_PRINT, /* print ALL missing objects in special section */
+>> +    MA_PRINT_INFO, /* same as MA_PRINT but also prints missing object 
+>> info */
+>> +    MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" 
+>> prefix */
+>>       MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR 
+>> objects */
+> 
+> I'm not a fan of this adjustment of spacing on the comments,
 
--- 
-2.53.GIT
 
+You are right, unnecessary churn - will restore!
+
+
+> though I do see that MA_ALLOW_PROMISOR had already broken the
+> pattern. MA_PRINT_ONLY would still work with the earlier
+> comment alignment, though.
+> 
+>> -    if (line_term)
+>> +    if (arg_missing_action == MA_PRINT_ONLY) {
+>> +        printf("%s", oid_to_hex(&entry->entry.oid));
+>> +        putchar(line_term);
+> 
+> Is there a reason you didn't use a printf("%s%c") here to
+> put the oid and line_term together?
+
+
+I just followed the existing pattern in the same function where every 
+other path uses a separate putchar(line_term). Happy to combine if you 
+prefer.
+
+
+> 
+>> +        return;
+>> +    } else if (line_term) {
+>>           printf("?%s", oid_to_hex(&entry->entry.oid));
+>> -    else
+>> +    } else {
+>>           printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
+>>                  info_term);
+>> +    }
+> 
+> 
+> 
+>>       if (!print_missing_info) {
+>>           putchar(line_term);
+>> @@ -209,6 +222,7 @@ static inline void finish_object__ma(struct object 
+>> *obj, const char *name)
+>>       case MA_PRINT:
+>>       case MA_PRINT_INFO:
+>> +    case MA_PRINT_ONLY:
+>>           add_missing_object_entry(&obj->oid, name, obj->type);
+>>           return;
+>> @@ -246,6 +260,11 @@ static void show_commit(struct commit *commit, 
+>> void *data)
+>>           return;
+>>       }
+>> +    if (arg_missing_action == MA_PRINT_ONLY) {
+>> +        finish_commit(commit);
+>> +        return;
+>> +    }
+>> +
+>>       if (show_disk_usage)
+>>           total_disk_usage += get_object_disk_usage(&commit->object);
+>> @@ -384,6 +403,8 @@ static void show_object(struct object *obj, const 
+>> char *name, void *cb_data)
+>>       if (finish_object(obj, name, cb_data))
+>>           return;
+>>       display_progress(progress, ++progress_counter);
+>> +    if (arg_missing_action == MA_PRINT_ONLY)
+>> +        return;
+>>       if (show_disk_usage)
+>>           total_disk_usage += get_object_disk_usage(obj);
+>>       if (info->flags & REV_LIST_QUIET)
+>> @@ -525,6 +546,12 @@ static inline int 
+>> parse_missing_action_value(const char *value)
+>>           return 1;
+>>       }
+>> +    if (!strcmp(value, "print-only")) {
+>> +        arg_missing_action = MA_PRINT_ONLY;
+>> +        fetch_if_missing = 0;
+>> +        return 1;
+>> +    }
+>> +
+>>       if (!strcmp(value, "allow-promisor")) {
+>>           arg_missing_action = MA_ALLOW_PROMISOR;
+>>           fetch_if_missing = 0;
+>> @@ -967,8 +994,7 @@ int cmd_rev_list(int argc,
+>>       if (arg_print_omitted)
+>>           oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
+>> -    if (arg_missing_action == MA_PRINT ||
+>> -        arg_missing_action == MA_PRINT_INFO) {
+>> +    if (missing_action_prints()) {
+>>           struct oidset_iter iter;
+>>           struct object_id *oid;
+>> @@ -994,8 +1020,7 @@ int cmd_rev_list(int argc,
+>>               printf("~%s\n", oid_to_hex(oid));
+>>           oidset_clear(&omitted_objects);
+>>       }
+>> -    if (arg_missing_action == MA_PRINT ||
+>> -        arg_missing_action == MA_PRINT_INFO) {
+>> +    if (missing_action_prints()) {
+>>           struct missing_objects_map_entry *entry;
+>>           struct oidmap_iter iter;
+>> @@ -1011,7 +1036,7 @@ int cmd_rev_list(int argc,
+>>       stop_progress(&progress);
+>> -    if (revs.count) {
+>> +    if (revs.count && arg_missing_action != MA_PRINT_ONLY) {
+>>           if (revs.left_right && revs.cherry_mark)
+>>               printf("%d\t%d\t%d\n", revs.count_left, 
+>> revs.count_right, revs.count_same);
+>>           else if (revs.left_right)
+>> @@ -1022,7 +1047,7 @@ int cmd_rev_list(int argc,
+>>               printf("%d\n", revs.count_left + revs.count_right);
+>>       }
+>> -    if (show_disk_usage)
+>> +    if (show_disk_usage && arg_missing_action != MA_PRINT_ONLY)
+>>           print_disk_usage(total_disk_usage);
+> 
+> I'm a little worried about all of these checks that need
+> special-casing. These seem like options that are enabled
+
+
+Phillip suggested making this a separate --missing-only flag that 
+composes with existing --missing= modes - I think that's a better 
+design. will work v2 around it.
+
+
+> by other options and could easily be grouped with the
+> print-only setting.
+> 
+> If there is something wrong here where these need to be
+> disabled, then we should update the documentation to say
+
+
+Agreed - I will make --count and --disk-usage incompatible with 
+--missing-only and die() with a clear message instead of silently 
+suppressing them.
+
+
+
+> how this interacts with those options. And perhaps some
+> warnings to say "these options are not compatible".
+> 
+> On that note: this patch is missing a document update.
+
+
+There is a doc update in rev-list-options.doc, but it doesn't  cover 
+interactions with --count/--disk-usage. Will fix in v2.
+
+
+> 
+> Thanks,
+> -Stolee
+> 
+> 
+
+
+
+
+Thanks,
+Asthana
