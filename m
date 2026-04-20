@@ -1,147 +1,225 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552B138A733
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:32:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5932F260F
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776681163; cv=none; b=Y3aCzrMaSNw4wc+QOwMugGQsc1XtJOAGpMEHpwSoSmbhgrDiWwsMDxHZ/OaByVqaHo12vfp4sSsHJPiowUtRCxGGX8P752rHaoWX/TbcKPyMOhgsmXDtupubbrJxcX9eHH/r+k0OrM0+TXLR+5xcA4pnG3+htPsV683VEheEn78=
+	t=1776681225; cv=none; b=l+dS0TCT1iR166asyBwwDA+NKDk8U4Xqng3kOh8gKVRtFzAruQ0+Qd4e/XyzklEYpalmHElc3ulgJ1Q4QFIzvFi7T3c/BwTWTIomRiobJw7YiZ3TXN8fgdo3PUwRwy8V0D5VwKHrAGRjsHHOa6tAjgqUe9QJx3hBeVY0wxbCUPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776681163; c=relaxed/simple;
-	bh=fcKlDX3qnBG2GOEkbfba7D3enMLCYUnVKb7Cre36nyA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AbAZMKfS/e/6pkrhj7rXIBoxfXsaUwb/kjAJ+/bGpUD9tqcguCbxco5+LKN/hiImnQVWVDN3DWjTIKvHnTu6vSJZAywENdhxPTuiqih6Miaj9cMu1pKzv+1mYdafL4/0fc2fdxlfLsgVfIWDHXkKnO4k/bNeTCeRl+b+nSVB6xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mL2AG2KO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B8rsrjw2; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1776681225; c=relaxed/simple;
+	bh=Eh7N8Tq3c2IncpkELV09bKcn2W8/m2feAaqy18U+zGg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cuB2WIkPDtXCG6ZFjVzcq9gPpQcVL9n0TU+JCQQXLxbbm831gWXVoAAWvP8KjDIbeeFGKTqnEWUHPx2kN+J90Ejz1ZuJTbFg1+EHaegB88jMnjJW9Ufy8g9PXKDC+RNlK8lqtb+IdslCFbYrvbr0mrUTFEOFEzWy0DKsboL52pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q+Fx4dfP; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mL2AG2KO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B8rsrjw2"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8EB84140004E;
-	Mon, 20 Apr 2026 06:32:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 20 Apr 2026 06:32:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1776681160; x=1776767560; bh=05t6er7ZyA
-	aS3BkpZpgwiEZluO25N+6hvmx2oNYspMI=; b=mL2AG2KOa3kS4c4P1c3HO58sUZ
-	HQEQ7FLbjCOLChg4T14TwBMegbbiaESCU11Dup7JF6gPZAyK51EolR9PWHByWqvE
-	//IixwD9Upqw78kI+uYyW2qJjzUeAlBoMazc+j8TTkq5jVODySepiVtpEQkx2VAb
-	fwreGxa1qxq4qH+DOUOibxds2tQHe2xJ0XuBcW7fmmaM4sFxFkZKaXXJd8AnLRm+
-	9itgtSMQiGJ5TdSSxnwUNP1+b6OGIj1z+dIN93fHxtaR/LsYVMMblEuNkDw0fjMs
-	95t8nFtVDJORVaVLa2xLqamb2A2e1NmeCTqPhUWkc/vWsxCo94Tp3bUZpgeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776681160; x=1776767560; bh=05t6er7ZyAaS3BkpZpgwiEZluO25N+6hvmx
-	2oNYspMI=; b=B8rsrjw2AEZMoi68BQX9qF0aW0zzIAPoD2fTrVfTeRpNpW7r6t9
-	d4a0nk/09n8yEgH63ZL1mJri2vwyvQjpigGNB44q29y1DuzBuvjXm2JuswiZt6GV
-	j8IA4aanGGa9aG9k0W5fk5s0K7O5s/uZIq3nypLvM5HApZ6bm3cTOTYQcNIatKWW
-	mnnkt/97qdtpQ6d/kuwqHQdKTDqGEZS5Q36Z+e/mQOMIsPV1vFId3MWlFlMVNgJp
-	kOkluNByCGVGSjhQtPhI81EdG1LJ6vgGCw0lDD2GAZyqNSzuY6A6uYsCxths0Jni
-	EXHEIMbOsYJZK82o9bSvF7kX9FNDUsuX8zg==
-X-ME-Sender: <xms:yADmaV-9Jbjfu70LTD0GCwqmKvDgVCN5BNpChZPKV0Lp1ytl0SMvqQ>
-    <xme:yADmaQni9WD_C5XEJgCrGeT4hvVzt8bClBMZnr3nHimd5nK93xDrmWHHo_XVWKUcQ
-    ZJIYrTfMzbmE_rP_PzBiDUqJzWI74de9u1kQM1AfS0UYWXxiZ-BEg>
-X-ME-Received: <xmr:yADmabXmIwM4FcahL6XNSUwptYrPKEyrgf85oHhX9EjLriua4CDJAspr-zRjGYVzbnglr9-dy9Yj5PPYh54c99yFVgK6-Ot7iw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehkedvlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yADmaVEDDcInqB-sXv-ebYNcrU0uQ340AVsvbfe7qvCc3T0wwu_NKQ>
-    <xmx:yADmaXfsRtLh7sUmEeCc07WTsufQThjOM_C7amq0VK9arE-imHLqXw>
-    <xmx:yADmaWLyVXQkH2WHkSSaZqqg4NpbSYYRKWlPLWkWbXpL_TVj1pqAdQ>
-    <xmx:yADmacGH7YQF2hVOs3DlykDcyhUlzFB0VEIydkDBHTsog3bKhQUz1Q>
-    <xmx:yADmacVUYZbBN_PC0Ko7wtaRTWCeAgqSiXQurLJ0LgfpE-oL-YVBOUdf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Apr 2026 06:32:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2 2/7] fetch: add --negotiation-restrict option
-In-Reply-To: <5370b884-30e8-44a9-a52e-4c518556fa24@gmail.com> (Derrick
-	Stolee's message of "Sun, 19 Apr 2026 19:00:11 -0400")
-References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
-	<pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
-	<9a25b0fadebb5f0219ceeca9496fc6f84abd020c.1776266066.git.gitgitgadget@gmail.com>
-	<xmqq1pgf6g5g.fsf@gitster.g>
-	<5370b884-30e8-44a9-a52e-4c518556fa24@gmail.com>
-Date: Mon, 20 Apr 2026 03:32:38 -0700
-Message-ID: <xmqqjyu1udkp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q+Fx4dfP"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82f4a53ae20so2181723b3a.3
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 03:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776681224; x=1777286024; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xhJjl6QNu+4vtuKWgt372+XZ73jzk+LYaPrMn8FXvrM=;
+        b=q+Fx4dfP+YLUhtPsw8GC888FrUYngeqfWzMH+5NpRlJlwFwvA8Wf1YqKwRrpReEmnt
+         wYullgRkan8Bi0/JSMW2w/QjXj+j1awxAmOsjbz+IuPP4YS/WeqqjzGibYvNhKmcq6Et
+         EU27F83PB98fsFPPfI9ErFaCNwLg7gmkp7E8/GsN7j7lU3RSDylnX3vQIbKLL/LOYn0s
+         Ub3pU8BMBS68fenkQubvniDvZY/fvpSw+CsYMK+r4lUwtfBfyUKnqOSnrcu3kRkVC06o
+         tgtqVqV5/gEuDo9kFggDXOWve9Y2qCM7ifgzMxBvN4KhhBNGZmaPWie6v2Dj1aQctbax
+         sQ4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776681224; x=1777286024;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xhJjl6QNu+4vtuKWgt372+XZ73jzk+LYaPrMn8FXvrM=;
+        b=hPfjhr6nVZrF2MZQk8mWa0IcQxqWvllLieO+xTEliGS/aTggEoa5FtwK8xvHcnPevC
+         FckZdze3Z2kpwKbXmJQjuvV+TwMrU9AfZjpcp+yXc7L3JwV33pOi6vfSQMyVJR1GYr9M
+         S8Al129kBK2S6MzRmE4v9zT79ohb190jushncZBX0Mf32trAH9B92RygXy5GJf6YePrI
+         O0RYNCjy59dQ+hdtAR8kJqxfwXeAdPQSmh19MmyKcWb6g90MJiXXiqjcQFV1t+0aqlKe
+         l5XI3npl4pA/J8WcIvTRydyo9/LO8fXP3UIJJba/O41zu+hxNvcr8LSVve0DcxlakDbZ
+         lOCA==
+X-Gm-Message-State: AOJu0YzruBLkYtfO1LN6n70XE9DwoTu8q92bxIw1hFwRLUXiKRAeJsLS
+	XGUVJUTGa2AIWzLXGhTq+oMXgpvKJiTptHmxCu8kRqQcf4eO1comXTQW
+X-Gm-Gg: AeBDieu6WaOKPE0FsSpp5KJB0RV3dNN0cPJD/Adyvn8GyBBp28I5vYSzKQNqTG5Fmzn
+	7k8OVvjIm4DLpw4NoQ9Zzh0MvN5Kly0eRMs19QslLFapiu28OIw2CigGEz1YsD8c96F+H/w1Gva
+	XYNCPflpWcRBqqO7MhUV0cov6y3qV9h5l+Oq3XP6buMYphUu0GqExPb8d5agn0h3sCKrFOtnUUo
+	NV9d4xGLoduBy+VyNy3o5RM8af6PTUyeKR/AllzIR3JQtzxk9uJpB3B8RdQ5HDgu7u27pSq4Oq5
+	2t1qzNOVRj/pI2Ys3GWJByVOFkBdu3hX48Y9haPWGcTY4tYDE4XZ2+hRGNV2ddR5zkgpLVyz/Ex
+	XQ6hPATBv7iwoah3sQYcqYyX65bKwRiISEM4czXtAbkF2ylm2BOEpdxlOvCo49HaxcOEjH807x8
+	ArbTiXxntjFAbilqFE7dtTLu4MBCIdrsZYBIiitiLhP4vs3aOKYj5RB8fDjezVA62TJqxf2ambZ
+	nogu5hQokA9Qx/imjam1an1EKAXPZrl24faCt0v53fa
+X-Received: by 2002:a05:6a00:2ea5:b0:82f:8a29:e3e0 with SMTP id d2e1a72fcca58-82f8c91bc7dmr14940288b3a.42.1776681223700;
+        Mon, 20 Apr 2026 03:33:43 -0700 (PDT)
+Received: from ?IPV6:2401:4900:86e8:71dc:a082:d961:4e27:7d6? ([2401:4900:86e8:71dc:a082:d961:4e27:7d6])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8e9d35acsm10631408b3a.15.2026.04.20.03.33.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Apr 2026 03:33:41 -0700 (PDT)
+Message-ID: <3bb52232-ebe4-4c50-a674-943a175e983d@gmail.com>
+Date: Mon, 20 Apr 2026 16:03:36 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
+Content-Language: en-GB
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org, toon@iotcl.com,
+ karthik.188@gmail.com, justin@parity.io
+References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
+ <20260419084840.33986-2-siddharthasthana31@gmail.com>
+ <aeXZOAtILSr638LG@pks.im>
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <aeXZOAtILSr638LG@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Derrick Stolee <stolee@gmail.com> writes:
 
->>>   		OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
->>>   				N_("report that we have only objects reachable from this object")),
->>> +		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
->>> +				N_("report that we have only objects reachable from this object")),
->> 
->> Is OPT_ALIAS() suitable for this?
->
-> I was not aware of this. Thanks for the pointer!
->
-> I do plan to make "negotiation-tip" an alias for "negotiation-restrict"
-> based on the new preference for *-restrict as the "real" option now. Is
-> that the right way to do this?
 
-Let's see.
+On 20/04/26 13:13, Patrick Steinhardt wrote:
+> On Sun, Apr 19, 2026 at 02:18:40PM +0530, Siddharth Asthana wrote:
+>> When working with partial clones, it's common to want just the list of
+>> missing objects. The current --missing=print mode does this but mixes
+>> present and missing objects together, with missing ones prefixed by '?'.
+>> Getting only the missing OIDs requires an extra pipe:
+>>
+>>    git rev-list --objects --all --missing=print | perl -ne 'print if s/^[?]//'
+>>
+>> Add --missing=print-only which outputs only the missing object OIDs, one
+>> per line, without any prefix. This makes the above one-liner unnecessary
+>> and the output directly usable by downstream tools.
+> 
+> Naming is a bit tough, as "print-only" sounds as if we're only printing
+> them without doing anything else, but it doesn't quite convey the
 
-$ git grep OPT_ALIAS builtin/clone.c
-builtin/clone.c:		OPT_ALIAS(0, "recursive", "recurse-submodules"),
-$ git clone -h
-usage: git clone [<options>] [--] <repo> [<dir>]
 
-    -v, --[no-]verbose    be more verbose
-    -q, --[no-]quiet      be more quiet
-    ...
-    --[no-]recurse-submodules[=<pathspec>]
-                          initialize submodules in the clone
-    --[no-]recursive[=<pathspec>]
-                          alias of --recurse-submodules
-    ...
+The name came from Christian's original suggesttion in the issue [1], 
+but agreed it's ambiguous. Phillip's --missing-only approach solve this.
 
-I think we gave the operation the name "recursive", with a common
-short sightedness that anything we are adding "recursive" for is the
-only kind of recursiveness, and then prepared for a future where
-things other than submodules can also be sources of recursiveness by
-making "recurse-submodules" the official name, while still allowing
-historical name as the synonym.
+[1] https://gitlab.com/gitlab-org/git/-/work_items/80#note_464005298
 
-In this case, if "-restrict" will become the official name, it
-should be listed first, and then the historical name should be made
-its alias.
 
-So
+> relation to non-missing objects. I don't really have a better suggestion
+> though -- "print-exclusively" may convey the meaning a tiny bit better,
+> but still suffers kind of the same issue.
+> 
+>> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+>> index 8f63003709..ba7e3e3919 100644
+>> --- a/builtin/rev-list.c
+>> +++ b/builtin/rev-list.c
+>> @@ -104,14 +104,22 @@ static void missing_objects_map_entry_free(void *e)
+>>   
+>>   static struct oidmap missing_objects;
+>>   enum missing_action {
+>> -	MA_ERROR = 0,    /* fail if any missing objects are encountered */
+>> -	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
+>> -	MA_PRINT,        /* print ALL missing objects in special section */
+>> -	MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing object info */
+>> +	MA_ERROR = 0, /* fail if any missing objects are encountered */
+>> +	MA_ALLOW_ANY, /* silently allow ALL missing objects */
+>> +	MA_PRINT, /* print ALL missing objects in special section */
+>> +	MA_PRINT_INFO, /* same as MA_PRINT but also prints missing object info */
+>> +	MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" prefix */
+> 
+> Makes me wonder whether we'll eventually also want to have
+> `MA_PRINT_INFO_ONLY`.
 
-	OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, ...),
-	OPT_ALIAS(0, "negotiation-tip", "negotiation-restrict"),
 
-would be the right combination in the correct order, I think.
-Mention the official thing first, and then tell that another thing
-is an alias to what the readers have already seen after that (e.g.,
-c28b036f (clone: reorder --recursive/--recurse-submodules,
-2020-03-16)).
 
+Right - that's the strongest argument for --missing-only as a separate 
+flag. Gets us that for free.
+
+
+> 
+>>   	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
+>>   };
+>>   static enum missing_action arg_missing_action;
+>>   
+>> +static inline int missing_action_prints(void)
+> 
+> How about naming this `should_print_missing_object()` instead? That
+> gives the reader a bit more context.
+
+
+The function is a predicate on the mode, not on a specific object, so 
+that name would be slightly misleading. But with --missing-only this 
+helper might change shape anyway. WDYT?
+
+
+
+> 
+>> @@ -1011,7 +1036,7 @@ int cmd_rev_list(int argc,
+>>   
+>>   	stop_progress(&progress);
+>>   
+>> -	if (revs.count) {
+>> +	if (revs.count && arg_missing_action != MA_PRINT_ONLY) {
+>>   		if (revs.left_right && revs.cherry_mark)
+>>   			printf("%d\t%d\t%d\n", revs.count_left, revs.count_right, revs.count_same);
+>>   		else if (revs.left_right)
+> 
+> Not a fault of your patch, but I really feel like git-rev-list(1) is
+> becoming more and more tangled. The fact that we have to add this check
+> to so many different sites doesn't inspire confidence that we have
+> indeed catched all of them that need this check.
+> 
+> It would be great if this was reworked a bit to become more obvious, but
+> that's probably outside the scope of this patch series.
+> 
+>> diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
+>> index 08e92dd002..105560ad21 100755
+>> --- a/t/t6022-rev-list-missing.sh
+>> +++ b/t/t6022-rev-list-missing.sh
+>> @@ -198,6 +198,32 @@ do
+>>   	'
+>>   done
+>>   
+>> +for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
+>> +do
+>> +	test_expect_success "rev-list --missing=print-only with missing $obj" '
+>> +		oid="$(git rev-parse $obj)" &&
+>> +		path=".git/objects/$(test_oid_to_path $oid)" &&
+>> +
+>> +		# Capture present OIDs before hiding anything.
+>> +		git rev-list --objects --no-object-names HEAD ^$obj >present.raw &&
+>> +
+>> +		mv "$path" "$path.hidden" &&
+>> +		test_when_finished "mv $path.hidden $path" &&
+>> +
+>> +		git rev-list --missing=print-only --objects --no-object-names \
+>> +			HEAD >actual &&
+>> +
+>> +		# Only the missing OID should appear, without the "?" prefix.
+>> +		grep "^$oid$" actual &&
+>> +
+>> +		# Present objects must NOT appear in the output.
+>> +		while read present_oid
+>> +		do
+>> +			! grep "^$present_oid$" actual || return 1
+>> +		done <present.raw
+> 
+> How many present object IDs do we have? I'm a bit worried that we now
+> execute grep(1) hundreds of times. Can we maybe do some tricks with
+> comm(1) instead?
+
+
+Phillip's test_cmp approach is simpler, since we hide one object, the 
+output should be exactly that OID. Will use that.
+
+
+Thanks,
+Asthana
+
+
+> 
+> Thanks!
+> 
+> Patrick
 
