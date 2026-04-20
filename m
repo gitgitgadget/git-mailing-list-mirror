@@ -1,173 +1,160 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078C738F947
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6B32D8DC2
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776681457; cv=none; b=MMEGcCwSe+4WvvuAZA1mOLfR3dR+OZ+IBeHc0eRFUUVrHWutcj92vGIB6LQII/IMwAmobw2n68L1qP3zdqxGk3wYdE6U9I2Q6tOZ/NbjTosKlM8y9Jq3t2vNqKkr/xY2ulDgEU+gQjeJbl+Pn6ZUu00rB4fG03Olqtp/2CgeKcA=
+	t=1776682918; cv=none; b=FeLnRo7cjW1V9RoVgXSGP9OKJ42x5FUGZmDoJrLufVN4t1uUPtp7BgWngh5smWzUY9pEC6lPrxzzgz93YvVwLFzJ0YVxMdmAGUzopcMfOIuIDMnIQoLZq0WLZCbG09ayBSVtZteHNde8uX9HH/ChBBNIVGnen+Vhuocx0Z0BPBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776681457; c=relaxed/simple;
-	bh=6DUDJxYaInJi3wnxxpeUEWbfloIWdT/OQ1Wh40ccY5M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HgMk15OyUMOs/pGtaIkTJR8xy8d6lPTCx08VehXGkglClTEtF5G6EmHc4PmnT4Dgj31sJeXgD0W9FznJk0gYsMeow6uYXZjpJdR2ENcs0j61FIv46CuoJJl2ibONAUf1ResIBzSjYEjXUArC5Yau0F4g787tjxtTYqR63LNFdUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ACpwjA8K; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776682918; c=relaxed/simple;
+	bh=SpYXvVVWkOoYIx36Ca6sq3vUWctSMbCTLCGnT0ApOsA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=kcUyC/RVhvKzVuILCEHqzTckQQzGoabEDA+9fmpip84v49gVCcr7lAsBPZXgug2m2m7QlsGVsJzFxiatQLB/QzPKNinK5cg8/DgKqjvxVeMfjp5uxkKbINbccNg/3AB2GnZf0BGw6JrEmfNqtpvErfmLKRiVb/Pf4zNfdGXL/tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KPDB1fmA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fCUsIGn/; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ACpwjA8K"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c7358a7a8d1so1780356a12.3
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 03:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776681455; x=1777286255; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=drHDufs26TKiRM+nGfcRpIE3+6mdiaAHPqrZfPu6diY=;
-        b=ACpwjA8K02+pNatis1E1tnwFtT2SCZvxuCMANrxJqCLlImY53cT8sQJAMaZDVB7uUy
-         FDNLRPC1hUaOEk56U4prTVrDXRXrZ9/sfzbXXI+qO3vioGV3pPKlYTMa8j7KkEUFLBpB
-         YBr/hjygsj1te6D52l5vxW4imUyNUT71yUCmKWkNdxq4F1u3G1hv2S9SekVxl+Fhuq7T
-         OPyh3xBQ+CoQxt82FK2AC5r+18X5ZJojZpte571IkcV9IZjH/9QU62QdifunBF7zJa7y
-         APQx+PduF2lw+voGp950e0vCyLO/0wbUM796LFtjNLN+4ZIdPuAfL7/CXJA6/W913VaY
-         J92w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776681455; x=1777286255;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=drHDufs26TKiRM+nGfcRpIE3+6mdiaAHPqrZfPu6diY=;
-        b=JdOmFgmCjbJWauLAvXJ/oKlFvPLL3rtAfsZv8tG0YNeaIVOcUg5nZPk1XomuRoSB5/
-         tsmgNB9H6Ez1Kgb1PoKesMCzzO8AnWrFCBAe2LLw775OomNvLGEyMSUvtqflIiEhhynA
-         CLQN7WUxdHVD2vJHjICLRMR0Qz5BWALArj+o4g4m6K2AZO/NZI76I7io38VOIBWTZpTU
-         +cf2sL03A1fHTVfCc8KmyRX6+oA7pX3EGFcSODjz28B+0k1uySLmdsynvclBGbW/1JQR
-         IdhSbGfv00ivE/LYmYOXXLTF2+ss/s9tHDARFmgdmvWGi5uhdZWaCUJfvhzpZD8Ast2y
-         bEuA==
-X-Gm-Message-State: AOJu0YzaPI8dM9Xqi5lNSWqDQSZYX0uPv99QPlalShu/Is1UjTc43VR6
-	jOBgYGg/zLLmFTMOzGfghzIz6dB8hncvXzJ7UnoltkaycwSYniIKbc93
-X-Gm-Gg: AeBDiesWCY+RmnTDksGHBrdvsf7uZqUKhr5OR9QsVHvuTAtHYke95ZQBKfZ8WMHABO3
-	EKH9M9mbcr+M5wJe81EfVV2fHD+eoZa4iEyT5npAHh0vGZLNoj2cFk3i/XhmQn5H9TBZcvRt9hM
-	1zCOF5Tyku8a+1AvxgHilSCZed92VKcT/9PXlbUbxyyKCrqCfJDDbqE41eKtXB3MtvLZuC04Yxv
-	l3c2/3Vj76Yatj064E4YVhGuVhpQCvLaUNwVJusneiGte0oFKCgQRYaLz5ibmJHx5Kjd2C6URzG
-	aLj1UEtPoLZdVns8P0T80a52nRkQPNgjpXv9CGGpKta+F4lrp7EYFJH5om+EK2u/EFD2+8cNJ18
-	LIwdd5dEMrqmwyZTqzFv2cJeRl5V1LWgtmp4ibUV77TcZP8pqDe/Px8+0VdqelY4OQlxHFD2Zko
-	Bau8SXXXipYT0uBJPD/E75CvTatD8B0J2XAOuYWxeeuBEbpKimGXj+oBIyg27b5ylf5GzYP6Lph
-	841d4TcWNwgVh5k8+14xiQOT98UONOD+/TvQ9lamRcG
-X-Received: by 2002:a05:6a20:2591:b0:398:7d6e:27f4 with SMTP id adf61e73a8af0-3a08d6eb34cmr15620981637.1.1776681455277;
-        Mon, 20 Apr 2026 03:37:35 -0700 (PDT)
-Received: from ?IPV6:2401:4900:86e8:71dc:a082:d961:4e27:7d6? ([2401:4900:86e8:71dc:a082:d961:4e27:7d6])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c797701b0f0sm7923338a12.17.2026.04.20.03.37.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2026 03:37:34 -0700 (PDT)
-Message-ID: <3363a365-9529-44e5-bc4e-ba19bf97ed97@gmail.com>
-Date: Mon, 20 Apr 2026 16:07:27 +0530
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KPDB1fmA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fCUsIGn/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C19AD14000F6;
+	Mon, 20 Apr 2026 07:01:55 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 20 Apr 2026 07:01:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776682915;
+	 x=1776769315; bh=MR3eBNyM0I9Wdsep823KI+JGuQX//tUnMazmj+sn+xY=; b=
+	KPDB1fmANWxW3u+nARdZhoV7mahWKLF0wpyXwukC4xW5eat62We4eZxEJ/edobdj
+	6g0MvraKpxh11u3wercrlUeuygAQAVpmR0PL70dFz4oBSzi9BvLrzXAPOX+ASEfT
+	RHRcEQ4orbrgFTVAkyepE1nn/f1FZ1r1Hf7hFQ5c150vrDPlWo6Baa25RUklK2b4
+	3CTDo6CQYxBbWa+jlabu4etW3kzxSPzcoRkJz9NWfX6hOmkoHK924mmdmS4N49JP
+	HHfbiK8xF9L30rTfViDIPFm54px9OKGSVqHhcdK6T3ZpbhRCs/Rs/7mP88gHQLfG
+	dpB6f4/M6KOe1SkjJkjGNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776682915; x=
+	1776769315; bh=MR3eBNyM0I9Wdsep823KI+JGuQX//tUnMazmj+sn+xY=; b=f
+	CUsIGn/gwKjieTr34XDhel5cCEsbBLC9U2rmoprsbe9jMG/0+k8Ko5Qf0It/V3mp
+	CRwaQmCbSZJsYJY9NlC3TA74yss/spzTdP5CE1nwCMYs/Wm/Mi+qd6lKjO8aozb4
+	gJr2sCjzm4iG6tACd1VBsOe3xZVPBrBWUChueLpVYU0q9G/ylj+6wtF7Ejg9+enK
+	MSp3UgPHmJ16ylHDrOH3d2A+YfNc3oiN3Uq65Hd9E8FpDctXz9LNLN3pu5tHc/DV
+	F5vPZu6orEsYKVlVYnB6+HwLZ+DCeHirrLsoI/8HTM5y1o0L5pDOXTouQxbXlXze
+	lAMgSI7hflAc5Reqc1NHA==
+X-ME-Sender: <xms:ogfmaared6zHZLvghrwWXwpD39C5rBetRnNVbRyzQvCFBblmLEMOMAM>
+    <xme:ogfmaTdeXa3A5_PdKvpYJHpteYNHR5Pwzph3yWZbgdL-bh28xBtEBnBZGl9yOXtXz
+    IzsMVz1snSwOUtDch5G74YeSSew11JLm8I1_eTdChh0IWYCnqLmPg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehkeefhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
+    mhdrohhrghdruhhkpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdr
+    tghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehjuh
+    hsthhinhesphgrrhhithihrdhiohdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ogfmaaooIvG9oirR7guRVNc0BNlds8uGwniKLBGTDm-XLmcR8A8QFg>
+    <xmx:ogfmaUoKhCX1zMKvf2osCD-2Kw2rNLS5zlFXvUDgUMjqnarxHvHEGg>
+    <xmx:ogfmaRYucsUbP1cMkZwwakjERkc_Pt8Lzu-Ajat5YKo4urmcPFItXw>
+    <xmx:ogfmaa9DAWpoSG-05UjpsXI3fMB3_SYfVaOWXW3RKYvvaPuexhHGeg>
+    <xmx:owfmab4GwSnkRd-LHbqpLftvy2mEAjGbvxayi7xihMLU4IGaQ1do2zS->
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 95F531EA006B; Mon, 20 Apr 2026 07:01:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
-Content-Language: en-GB
-To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, toon@iotcl.com,
- karthik.188@gmail.com, justin@parity.io
+X-ThreadId: AwAT5KdOwvBo
+Date: Mon, 20 Apr 2026 13:00:53 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Patrick Steinhardt" <ps@pks.im>,
+ "Siddharth Asthana" <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org, "Christian Couder" <chriscool@tuxfamily.org>,
+ "Toon Claes" <toon@iotcl.com>, "Karthik Nayak" <karthik.188@gmail.com>,
+ justin@parity.io
+Message-Id: <5bf346c1-0577-4b9b-8713-6053c97c6121@app.fastmail.com>
+In-Reply-To: <491a27af-3ea4-4978-9d51-9c540ad31589@gmail.com>
 References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
  <20260419084840.33986-2-siddharthasthana31@gmail.com>
  <aeXZOAtILSr638LG@pks.im> <491a27af-3ea4-4978-9d51-9c540ad31589@gmail.com>
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <491a27af-3ea4-4978-9d51-9c540ad31589@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 20/04/26 14:27, Phillip Wood wrote:
+On Mon, Apr 20, 2026, at 10:57, Phillip Wood wrote:
 > On 20/04/2026 08:43, Patrick Steinhardt wrote:
 >> On Sun, Apr 19, 2026 at 02:18:40PM +0530, Siddharth Asthana wrote:
 >>
->>>   static struct oidmap missing_objects;
->>>   enum missing_action {
->>> -    MA_ERROR = 0,    /* fail if any missing objects are encountered */
->>> -    MA_ALLOW_ANY,    /* silently allow ALL missing objects */
->>> -    MA_PRINT,        /* print ALL missing objects in special section */
->>> -    MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing 
->>> object info */
->>> +    MA_ERROR = 0, /* fail if any missing objects are encountered */
->>> +    MA_ALLOW_ANY, /* silently allow ALL missing objects */
->>> +    MA_PRINT, /* print ALL missing objects in special section */
->>> +    MA_PRINT_INFO, /* same as MA_PRINT but also prints missing 
->>> object info */
->>> +    MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" 
->>> prefix */
+>>>   static struct oidmap missing_objects;
+>>>   enum missing_action {
+>>> -	MA_ERROR =3D 0,    /* fail if any missing objects are encountered =
+*/
+>>> -	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
+>>> -	MA_PRINT,        /* print ALL missing objects in special section */
+>>> -	MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing objec=
+t info */
+>>> +	MA_ERROR =3D 0, /* fail if any missing objects are encountered */
+>>> +	MA_ALLOW_ANY, /* silently allow ALL missing objects */
+>>> +	MA_PRINT, /* print ALL missing objects in special section */
+>>> +	MA_PRINT_INFO, /* same as MA_PRINT but also prints missing object =
+info */
+>>> +	MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" pref=
+ix */
 >>
 >> Makes me wonder whether we'll eventually also want to have
 >> `MA_PRINT_INFO_ONLY`.
-> 
-> Perhaps we'd be better to add a "--missing-only" option that limits the 
-> output to missing objects? That would avoid the problem of "-- 
+>
+> Perhaps we'd be better to add a "--missing-only" option that limits the
+> output to missing objects? That would avoid the problem of
+> "--missing=3Dprint-only" not really explaining what it does as well.
 
+The original `--missing` says what to do about missing objects. I find
+`--missing=3Dprint-only` to be surprising:
 
-Make sense, its orthogonal to --missing= and handles print-info-only for 
-free.
+=E2=80=A2 Do print missing
+=E2=80=A2 But also do not print present objects
 
-Question though: should --missing-only without --missing=print (or 
-print-info) be an errro? I am leaning towards requiring it explicitly so 
-the behavior is always obvious.
+Why would a `--missing` option dictate what to do about objects that are
+present (hide them)? That looks tacked-on.
 
-Will rework v2 around this.
+`--missing-only` is better but has the same problem, IMO, of dictating
+how present objects should be treated.
 
+From the cover letter:
 
-> missing=print-only" not really explaining what it does as well.
-> 
->>> +for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
->>> +do
->>> +    test_expect_success "rev-list --missing=print-only with missing 
->>> $obj" '
->>> +        oid="$(git rev-parse $obj)" &&
->>> +        path=".git/objects/$(test_oid_to_path $oid)" &&
->>> +
->>> +        # Capture present OIDs before hiding anything.
->>> +        git rev-list --objects --no-object-names HEAD ^$obj 
->>> >present.raw &&
->>> +
->>> +        mv "$path" "$path.hidden" &&
->>> +        test_when_finished "mv $path.hidden $path" &&
->>> +
->>> +        git rev-list --missing=print-only --objects --no-object-names \
->>> +            HEAD >actual &&
->>> +
->>> +        # Only the missing OID should appear, without the "?" prefix.
->>> +        grep "^$oid$" actual &&
->>> +
->>> +        # Present objects must NOT appear in the output.
->>> +        while read present_oid
->>> +        do
->>> +            ! grep "^$present_oid$" actual || return 1
->>> +        done <present.raw
->>
->> How many present object IDs do we have? I'm a bit worried that we now
->> execute grep(1) hundreds of times. Can we maybe do some tricks with
->> comm(1) instead?
-> 
-> If we want to verify that it only prints a single oid then
-> 
->      echo $oid >expect &&
->      test_cmp expect actual
-> 
-> would be much simpler more helpful if the test fails
+CV> At GitLab, Gitaly uses `rev-list --missing=3Dprint` to find missing
+CV> objects in partial clones. The current output mixes present and miss=
+ing
+CV> objects together, with missing ones prefixed by '?', so Gitaly has to
+CV> post-process the output to extract just the missing OIDs. Having a
+CV> dedicated mode that outputs only the missing OIDs directly would
+CV> simplify this.
 
+This makes me think that I want:
 
-yeah much cleaner, will use it. Thanks
+1. I do want missing objects
+2. I do not want present objects
 
+Which makes me think that something like `--present=3Dno-print` makes
+more sense.
 
+Just speaking as a user and not looking at the code.
 
-> 
-> Thanks
-> 
-> Phil
-
-
-Thanks,
-Asthana
+>[snip]
