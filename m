@@ -1,136 +1,117 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A3A39DBD6
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 20:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738B926461F
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 22:11:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776718364; cv=none; b=AjrEWJTDlgT1nKp4A0rBxSGoq+J+W3qqmjnL2cZtyeRjBOJSw+F+D8uUhiiG85wQMETn1y7Flg/nHTAS7mZ8ngLp2YeVX/JURWvPr91pEAiDoDmDhG1TZFg3bvC+myLRhrYsTmXuMfFmIj/qcBPIhR17jq7jzlheQxR6cT4VEkI=
+	t=1776723081; cv=none; b=HhOIETywSTc6VdhWBREKe/KaHlOoxoOA3HDrc3eW86w9bEIKltL2iN3pjFq/gvNK/NZOa4WhC6gjN4cPRR6uSdlwG+/AzqSjsqZng5F3P4C6T/0I+5IBTRFtOyJcEfi23xsNqkqfJGYu/VJeqcakg8DNW1iFeXi4LQ3lvqniE4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776718364; c=relaxed/simple;
-	bh=KNtheMCP91qD9dI6kQcgNWVcc9LrNRDSXT8+oL7RgNA=;
+	s=arc-20240116; t=1776723081; c=relaxed/simple;
+	bh=tjKhm5J4GQuP7zsuAue1bkRlnX64DqIZJPWfsHQd2lk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q2w4sslnQ2XJk6WuGz9XNAtQYBnYZS/PAfJ5xx9WzDG9VbDIbv0RZo1uKXxUryRD23lnSxSCIZrTguwhqxvneFRJE0f6b9Nx5mWXnqDh5YA1rEI+Kj65EvD43+m3CXJijF+oLnF7pBQjOkavPZFiq9dlfzWMOT21hOAeHNi90tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6vvjTpM; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=kh95623EwVVctGik1w+jibEL5I14JunnJNaS+qyktj+AGRt3cf9uyrwO4Qbeh/A1vNzcmXqjzRenlyx3h2Li6zfgjYYyJ8HpNnhhIB6fCWst4FhVhCPaPgIFPhrjrE0UsPMBjGLRLAIiMSktLJgvItdy489RF0v2b6seEvEuK18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=XeLMQej3; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6vvjTpM"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48a3e9862f0so6956835e9.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 13:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776718361; x=1777323161; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xRSjrq9QCyZsE/GhbwrGZEmpRouesyQRYJ1Y/KHkF8o=;
-        b=U6vvjTpMWNg5wnTuBMpMeOh+KUcM5+YSUVyFM/wJBe4lvG9IjWtAj9mC3ORRsWtD50
-         uKyX586/fN/dl7mIRDe7Y//iVzNIdIs9+AcW5wHDJTVh3asHSoYfKYHgWIDiU2SNMDhU
-         2gRkXVMxoH8joRTnmSGaB/j83OcLlvrRnDKyWZLT9qTyD8bAfnyYMhEr+SJhnI326Okf
-         rLby81jS6nnstfyn63tfhlJqAK59cv6/DeKUq+IYQU4REet8DJ89eT20b//zFKl559ih
-         Ph+ve1o3jZv34pY70oNAyrKkid+RAs7AB1IqsE2VYxKzeuLsi/Xdscx5jpETFvTfjV4A
-         j69w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776718361; x=1777323161;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xRSjrq9QCyZsE/GhbwrGZEmpRouesyQRYJ1Y/KHkF8o=;
-        b=CNQcl18rB3BSSgbhVg1VLeUho03BMaKvJCABfkiNPOxwB5fiU63V0fvyPBm7o6Bauf
-         lrbVK+SOGbNJ1Y/CjT0D04jMtbS3LYp0WDvCVErshPX2GUVPbp6eKlDOSYHJ0JU6Jrkp
-         XroSGJs+12gU+9S9UpWc5XQSKbDVUPg8NStk26uGcHIHcguRxcIOiFuWZ86gA6rTSO/d
-         w3ZUtpwY3ep0JGrz+lbLug6T0SEAGgw7zyjwcWhiPkhAbZG9g07hCAhf6DBk9j7B5U/w
-         B+TiDTAshDhJeki2TdoDoTwmI0/OGpkCguDeM4OKngfR9mH8+JA3kO/FmMxU/ZJXlngv
-         Yglg==
-X-Gm-Message-State: AOJu0YyQmUPLnVE+7+1DDbu0mvwfXint8h/KgGUxvVUaKKuKw63nh2O9
-	SywXuZbBy+l6CFHgoxd+7Vs9V/Tww0+lIrJatWRbO2TJb8PRIVEaORei
-X-Gm-Gg: AeBDievnWfr02qv5vpOVLoSio6RW1/2Fz7inxEJxbg3c/4rFOtXrMF0wxCZOLDl186Z
-	x4EzzARWkFFPpDmXdx5jD69Np18YLBHXVPiQynD69rPzMCx9v8HrvoNaEV+iutRgq/Q53dejbM3
-	sxnhxXFUUyPRS3AsOqXz+OQYA4nBFg8l+yCKcOmFCl5JegY3iPqJRaacy9dIatha8EzIUlU/7XE
-	6IbJMCMfFUlD+CcdWxPXCE0h7MxuTzpsus/1QOe+3zsB12ZE+xeVUtmgIx+F3zZB4pc++Wcdehw
-	eOR74OUecx9KCLn2j7G0OXHCo9VALCZeE7wndYfIcZUNO07jToYvL9nM4+sfGf67dMhtVJ9z9oI
-	2RGC8UTXMTRJ9QlXbQdbzmvbb/Q1vb4gwsqN58WpUvr5bGuqIFhftVgCtNRB+pah1Gx3GvgcHHv
-	fp/dSphFvPYCLXm/25iUDA949nO7C31KhoZ2ndkgaFwFkgNrD47+Slbt21R3Hg6u3K4hu0VwY=
-X-Received: by 2002:a05:600c:a305:b0:48a:53cb:8604 with SMTP id 5b1f17b1804b1-48a53cb8949mr19592355e9.14.1776718360527;
-        Mon, 20 Apr 2026 13:52:40 -0700 (PDT)
-Received: from localhost (94-21-29-205.pool.digikabel.hu. [94.21.29.205])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a52583fe7sm44858135e9.13.2026.04.20.13.52.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 13:52:39 -0700 (PDT)
-Date: Mon, 20 Apr 2026 22:52:16 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Elijah Newren <newren@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XeLMQej3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1776723072;
+	bh=tjKhm5J4GQuP7zsuAue1bkRlnX64DqIZJPWfsHQd2lk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=XeLMQej3Lfj3LpkXbkdjG5vs6axHu/kiawY/hCk0g/LlaEPxULjvZLY4W0YKyCcEv
+	 CUk6yPvbni2mFNubPx7RZwhxp1OBa47YXHBB7qp+W2b4+G7Yhsy+QnxWDsYWQr5TBb
+	 C3caffoUUVjJ3gWo3xMVfCL7V9M9Vj24gaFadSAjirjxMZS/I90o89FU+jnfovbf5a
+	 WqYAHrNv6xpC8GvGUgT5rahT1SX7edL0gS6cJ5W3SRr2e9HiYtSsAomRsww1JRxkl3
+	 6HhRAJacab3qBdUbqBD/s6PMq8V+TEQFBRkpO8LYTqIOkvlj3j0MiFytLUFfzFqbcZ
+	 JtGk0vhEC0DDLh2PwjbnJ378vabtEKS3AuvlYVzQiWzSTpuPZOpYCryvQ+vz4KdwcT
+	 H1G0hG2yFo/k1fQq6VODdJyfvLRxFXuTAJ5VOTytuI6wsfe7kJM94UZ45tevn650uF
+	 vl2HUY595onMmELIR7RUbrTroJ26GFZxYvF0Y0AhN7T2AgpokrI
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:57bc:7ea2:ca35:d24])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6CB8B200FF;
+	Mon, 20 Apr 2026 22:11:12 +0000 (UTC)
+Date: Mon, 20 Apr 2026 22:11:11 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kushal Das <kushal@sunet.se>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] t6112: avoid tilde expansion
-Message-ID: <aeaSAMOqg5RzfdIA@szeder.dev>
-References: <20260418163236.2382826-1-szeder.dev@gmail.com>
- <CABPp-BGV4DGwoSDCjjW2NWBhWXNDfeXwb-tPWSH_13mF0DCiRg@mail.gmail.com>
+Subject: Re: [BUG] v2.45+: git commit -S invalidates signature for non-UTF-8
+ messages
+Message-ID: <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kushal Das <kushal@sunet.se>, git@vger.kernel.org
+References: <4d5d04e2-49c4-4781-a289-f8cf79570643@sunet.se>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wdKFShtsPpJQ4jWS"
+Content-Disposition: inline
+In-Reply-To: <4d5d04e2-49c4-4781-a289-f8cf79570643@sunet.se>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--wdKFShtsPpJQ4jWS
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BGV4DGwoSDCjjW2NWBhWXNDfeXwb-tPWSH_13mF0DCiRg@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Apr 18, 2026 at 06:26:00PM -0700, Elijah Newren wrote:
-> On Sat, Apr 18, 2026 at 9:33 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> >
-> > e987df5fe6 (list-objects-filter: implement composite filters,
-> > 2019-06-27) introduced a test to "t6112-rev-list-filters-objects.sh"
-> > that checks the output of a Git command with the following commands:
-> >
-> >   grep ~$omitted_1 actual &&
-> >   grep ~$omitted_2 actual &&
-> >   grep ~$omitted_3 actual &&
-> >
-> > Since the leading tilde in the pattern is not quoted/escaped, it is
-> > subject to tilde expansion.  So if the system has a user whose
-> > username happens to be equal to the content of one of those
-> > "$omitted_*" variables, then "grep" would look for the user's home
-> > directory.  Luckily, those variables contain object hashes, so this is
-> > not very likely.
+On 2026-04-20 at 08:59:05, Kushal Das wrote:
+> Hi all,
+>=20
+> Every `git commit -S` since v2.45.0 produces a permanently-BAD
+> signature when the commit message contains bytes that are not valid
+> UTF-8 AND `i18n.commitEncoding` is unset (i.e. the default case).
+> Verification fails under both `gpg --verify` and any non-GnuPG signer.
+> The failure is deterministic: it happens every time, on every
+> non-UTF-8 commit, no card or external tooling needed.
 
-On second thought, tilde expansion should happen before
-parameter/variable expansion, so the above is wrong: we are looking
-for a user named "$omitted_1" and not a user named like whatever
-object hash the "$omitted_1" variable holds.
+I'm not sure that's a valid configuration.  The commit message either
+needs to be UTF-8 or you need to declare the encoding so Git can convert
+it.
 
-Still unlikely, but we should still avoid it.
+> My best guess is commit 6206089cbd0b1cb30a017ec904567f040ab4cea0 starting
+> this (and I am maybe 100% wrong in identifying the cause).
 
-> > Furthermore, Bash versions v5.0 and earlier seem to be buggy and don't
-> > handle this particular tilde expansion very well, and either segfault
-> > right away or, in case of v3.2, get stuck in an endless loop and
-> > segfault upon receiving ctrl-c.
-> 
-> Interesting find on the bash segfault behavior.
+It does bisect to that commit.  I wrote that patch originally, but it
+got modified and sent upstream by someone else.  I'm not sure where it
+got introduced, though.
 
-Actually, I'm going to take back that statement about the Bash
-segfault.
+> In pre-6206089cbd `commit_tree_extended`, `verify_utf8(&buffer)` ran
+> BEFORE `sign_with_header(&buffer, sign_commit)`. `verify_utf8` is not
+> a simple validator -- it mutates the strbuf in place, replacing
+> invalid-UTF-8 bytes with their Latin-1 -> UTF-8 two-byte form. The
+> signer therefore saw the transcoded bytes, and the same transcoded
+> bytes were then written to the object database. Signer and
+> verifier agreed.
 
-I tested older Bash versions with binaries that I compiled myself from
-the sources at git://git.savannah.gnu.org/bash.git, and those
-exhibited the segfault in v5.0 and below.  Bisect shows that v5.1 is
-not just the first release but the first commit that doesn't segfault
-on t6112.
+The fact that we have a function called `verify_utf8` that does more
+than verify is a problem.  I'll send out a two-patch series in a minute
+or two that first fixes that to be called `ensure_utf8` and then fixes
+the issue.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-However.
+--wdKFShtsPpJQ4jWS
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Bash v5.1 was released on 2020-12-06, about a year and a half after
-those unintended tilde expansions were added.  I find it hard to
-believe that noone stumbled upon this issue during that time...
-Suspicious, I booted my old laptop running an outdated Debian
-derivative with distro shipped Bash 5.0.17, and, lo and behold, t6112
-passed just fine.
+-----BEGIN PGP SIGNATURE-----
 
-So I'm inclined to think that something is wrong here...  No idea
-what, though.  I can reproduce the segfault with something as simple
-as "./bash-v5.0 -c 'v=~a'", and the segfault doesn't even come from
-Bash but from within getpwnam() called during tilde expansion.
-Oh, well.
+wr0EABYKAG8FgmnmpH8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ9ba7+A+5k+ZJn1vqeDNw8niHoIAS98cPnTvrjLvi+PR
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAACqCAP9J2CJjAlyevv7ahO3k9mFnkd/x
+j4vsI0TT7fdHLuE5zAD/ZtFVXpDm5ie+9P6smgE0jbjCLWt0FS6Lgm2upD4tcwU=
+=qMGH
+-----END PGP SIGNATURE-----
 
-Will send a patch with updated log message some time later.
-
+--wdKFShtsPpJQ4jWS--
