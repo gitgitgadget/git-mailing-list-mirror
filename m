@@ -1,67 +1,71 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EDF35C1AD
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 15:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E053435BDAD
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 15:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776697513; cv=none; b=IOvO/A+zm4Q26wNqbwYT36HkAEscUV+RCjeOgjkWlaT8EJwAn9ySqwerjGN+jk6j1i6QOiy0PSdFb3I6VU5lC9DqSBWMWtX0Vj9U5A4KUVBRdu/rRKftiRYI4rP9N0xRditlQj3YmwmNxjBwxJzUgx/xWVjMNhXifA0OXlufn7I=
+	t=1776697515; cv=none; b=QaUhngah7L8tkbsJ7LLRbAxzEd54p9B+hGwfYUIOqLsG5kUp2RqaGadQfTZjmDFKLN84DIrgoKg2+o9LhqzTFo/2JwNKn37kjyRLZ1b9kQXahQ+jWsbZ24B0QSPt6xErf/IZX2vEy9T648Zwo8pIKTF75detUmkBgVQ6mFlwvcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776697513; c=relaxed/simple;
-	bh=pFwaMsafGALrINBXboPnCV+P8YvcWvFlfR+veVwktd0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fi0rTHOu65uToXqhA6Noourh9WK17AKSmi1b0HlzDGmAEUXtOh3fkOGJ5udfrjCiMCipVTAP+O/I+T5Lc9Ufc1j+OB0JGNIKhMj638yJVC25cfxMXG5O8oRGw5sk3UoWpuFXczagTnMhr65nbWtGYafTvpsLsS4em1CzdIuN98U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LzQdVjgn; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1776697515; c=relaxed/simple;
+	bh=EwVJoVttJ2i3GWmnSN6VtWcVGssvnrXPXMmrhh7JjA4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Xj8bAIbAft462xLIzDjcT1Q3jMYcYCpWBmYjnB46mhhDWVbz8OfoWLN3X5AFtFRC/DX8Hv6bx1BaDl+2VzBHC1i0TykOI3+z72iV0AC3wG2MouryTprCeUJd6aK5rouN83qvJC9BHGL9HD08Ac2jnR2lhmwFMT8svN9W4o7L6us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sIo4AoZ+; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LzQdVjgn"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488a9033b2cso35931715e9.2
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 08:05:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sIo4AoZ+"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-43eb012ac4fso1932778f8f.0
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 08:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776697511; x=1777302311; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KJ4LOa6Lm97ca/GLPdqFV8bncBKQzgpGFaOmUWVtlhg=;
-        b=LzQdVjgnlDK/WPX/67qfe3yA29OL2Va4sKGeSOQAmfva9j5JZMPT2BJ9RTE+Y2upxY
-         N4KHZqKt1HkoEJGYcWhiwXNzhkarEJ9NXOejN6MjDDN8w/Gd9BHvSkLnB8Tm4ly9TP53
-         V1uUPihIPHGbfijmpvK7nS4Vqs2gIfuakmH3vIZZhafWiigVM3yMkv9yvqEHN1JX1Kho
-         VLGe7k7BPYUg7B2Ik2ADg0ZJ/6B/Fwhv2YTEtrohEE7CfMkyfT6RhAXJfUP209wCvKCV
-         omFMeE9vRF91UfvLA/MtJsM47izRhU9kY5W+8DzbNPgz32dgz3Gi2StqO0qhUWI0FQE2
-         TrmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776697511; x=1777302311;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1776697512; x=1777302312; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=KJ4LOa6Lm97ca/GLPdqFV8bncBKQzgpGFaOmUWVtlhg=;
-        b=FDp5ALi1CcGnWS4yeaka8dcXY7Ubbc2MsbZes6S5YoVYSBKFGacJtM0jsH0ltfceAo
-         mooOudtN/q9Q4EpFzp6vuXHzES0L/s/M4lkOBnWTYFvAoogqNoldXfFvJf0HsVcf5Ebi
-         jEwqtjzRxfR4qhAYMNW2782QcO3d14R/aeUFw5i83w2wuu7KliJDmdx7ZZ3tbER5BO5m
-         2tsJW0kuggJC3COflzLl+6i04koMqHPpXBf/E0C1HBFQCFIKBBh74SmtLZ7Tkk+wRuCx
-         Vf8e/W/BF7fV1OPizGS94N3zQkFIBI0/e9R2fXliMvzCavBsVLDDpUjVihsZ+qKiI1xW
-         5/0w==
-X-Gm-Message-State: AOJu0YwL1haucme9DRcr6Zkowlh1wQzXkuDBVp3rzTrSyR57fK0EEO6B
-	5giJVprDz3Uw4+4Pu1D7nLCr8dA53Nl2FdM/z0+DMCsLvpJzlrLUy0olRF0zpg==
-X-Gm-Gg: AeBDietz22wLgMtJN1Z3Y9BL4eq37x/Mo+C02yFhOxn3PPeMtxJwq9pJLCJjlsWQAF0
-	IDEhMy4OCZEchvVYHtjE6vlA7HjQHdQcQqurVarc9lm1/hhV0K7Gk5rxRRrmd6gwqSFIn69Hhd5
-	9IfJnMKgb5Wqq2zGuBadpcwsXQMdm8OtXAf2D0AJMV1dGFGR0wflkEsizKfze9ZSQ8ASoyD5trH
-	vKqp9OGjBagtcpnXgKoBPcSKypLqWtxg/6XXHTAmRrZ0Q3+O1hnk9LqdQhv8wOXNGZoUKpxzYkO
-	h/Vu+cV6nhqwbGg5ghvMN8FfR6w1YNtuVGoxULNcU/wk3BcH6hVLekltLQA9+oJzvFsd3TJFFaX
-	L6AW6GakoddwbrN5dWpFMusOzem4F9jti1QO2NublKkfgxyGrTVNBvaA5wWrcIa1cvLPjkxNzEG
-	3wQUtpZODDHeDa+s+C97qgP8L7g5LvHvrqEvjY
-X-Received: by 2002:a05:600c:1587:b0:489:1f97:6b1d with SMTP id 5b1f17b1804b1-4891f976b4dmr24243675e9.28.1776697510429;
-        Mon, 20 Apr 2026 08:05:10 -0700 (PDT)
+        bh=yWWgr3H0xEueCxQ1iV3aH3jbCqkMxwfRHZm6VOt5fyU=;
+        b=sIo4AoZ+qClfEeXgwYRuekWg6SuWOkXrXz3G4E1Gq5k8PEaNrRvt2mffrBp+JTlxVV
+         mGeynAf5UYnenuqHD/GlJeRSF+KX+CBVtD+cV9thFeXenckgVzqj+YVYtC8+BImeVXBd
+         irobC6DLoEK98rqI2I4OTU3KbvKPV8L4pnKaV6rgYDuGeLBT1B2dWGeKqmblzmO8Vybn
+         7MrqrPgBetOCc3SY3xf0K+kdR/qQrIzP/x6MOc3PfMhH+/Jhl0Ok57h3phN+BrN90MXw
+         3cEOytgXU7zfrmdWMc0FwgrulTkTBk+lSVSm+aUSWu3ro9AEphJdmnntoAy4zSD0TskR
+         g9qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776697512; x=1777302312;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yWWgr3H0xEueCxQ1iV3aH3jbCqkMxwfRHZm6VOt5fyU=;
+        b=Bm5MYVLtSHfp5vGD/wNN2c9zoSo1kHC3Ip/fBHHEcSn9nZr2Ay1ZV6GVjDuygO+NJB
+         X0sJqjOO4zUjE+asmQnjOhNP6C6w7ADISZKHtClLFNaF1Ic9atdQwuZ8KYOwnQ/0RenS
+         F9U57rUGuq/+yQxka1gAICmd5RMqMyYr4tTkKui3ZpunEH4ponunTm46oN5PC4HAeVYo
+         UmEldQXFc4SOxe6KjJAxQY8KAaXNpPPH22obSC8k61yd3f7OOlvwm5LlxCji18fkyXnt
+         gpgX3sZ11ppRWJMwuQZsz2aUDWNrJAnNtqNz5qE4fjMaUjIWeJg7qimGPm3HYi34+vSa
+         RDbA==
+X-Gm-Message-State: AOJu0Yw9+EQ0j/fz+MJKXNh9D+g/lBhc079yy6vay6Q9B7822WePT6ND
+	evZCFp/bhOdrkjWXbVNL9DsqSV3QiCUvdibt25/HAl8HM73aAJTsXQTvKmrpqg==
+X-Gm-Gg: AeBDieuEGteqY1fchajdWblKE5FTYEjJaKF6gGc3gbOtgHNnkJJhreZ3tgdD3sdUB06
+	0oV/NjQrW2kXRSQWJGMRNqho6OpaFEPHxBFqgK0svfLBABt3ak5fprjct5LHKwWZW1NVDZy5hle
+	wGAFNEX77jHQB60p+aGDjPJokBFA7zOSlatqKkqyYjxABVG4aUGFHpX47sEax/bMcjDbFjO/JMy
+	f3ifpUm7RF17qKAx3lHXmUNGFReVZu3eqD9txqeGfazd/XJ94tpbUxdLHj4NPE9yZ8HUI4xDfh0
+	zkl7JyhpgnCllu+b+P6BB6VA/j2+AdzTlc6rPaUgn91xNkgFvICs3m2xCgHwbAKsj1kYIJNRBu5
+	xk37GVfS+ldD6s8RGi8Q6yOvEPrY2rSWN5/BCcUKMl7ltglh4y7B02dr2FIVg4cMJWetlJysIcC
+	MF6QIZIpiFzCck/aYY2QfpBTg2mciduEktd4B5
+X-Received: by 2002:a05:600c:5295:b0:485:364e:9328 with SMTP id 5b1f17b1804b1-488fb77d12dmr193608875e9.16.1776697512159;
+        Mon, 20 Apr 2026 08:05:12 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a52583fe7sm27335685e9.13.2026.04.20.08.05.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a52583fe7sm27335685e9.13.2026.04.20.08.05.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 08:05:09 -0700 (PDT)
+        Mon, 20 Apr 2026 08:05:10 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 0/2] status: improve rebase todo list parsing
-Date: Mon, 20 Apr 2026 16:04:42 +0100
-Message-ID: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 1/2] sequencer: factor out parsing of todo commands
+Date: Mon, 20 Apr 2026 16:04:43 +0100
+Message-ID: <3d5135a719221031e50ad8067ff42740a3bbce0c.1776697483.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.54.0.rc1.174.gd833f386ac5.dirty
+In-Reply-To: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -71,36 +75,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When there is rebase in progress "git status" displays the last couple
-of completed and the next couple of pending commands from the todo
-list. When it does this is tries to abbreviate the object ids of
-the commits to be picked. Unfortunately it does not abbreviate the
-object ids when the line starts with "fixup -C" or "merge -C". It
-also mistakenly replaces the refname in "reset main" and "update-ref
-refs/heads/main" with the object id that the ref points to.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This series fixes that. The first patch factors out the sequencer
-code that parses the command names in the todo list. The second patch
-uses that function in "git status" to parse the command names so that
-it knows whether the line may contain "-C" and whether there is an
-object id that should be abbreviated.
+Move the code that parses todo commands into a separate function so that
+it can be shared with "git status" in the next commit.
 
-Base-Commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
-Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fimprove-status-todo-list-parsing%2Fv1
-View-Changes-At: https://github.com/phillipwood/git/compare/8c9303b1f...d20dc1f65
-Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/improve-status-todo-list-parsing/v1
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ sequencer.c | 45 ++++++++++++++++++++++++++++++---------------
+ sequencer.h |  1 +
+ 2 files changed, 31 insertions(+), 15 deletions(-)
 
-
-Phillip Wood (2):
-  sequencer: factor out parsing of todo commands
-  status: improve rebase todo list parsing
-
- sequencer.c            |  45 ++++++++++-----
- sequencer.h            |   1 +
- t/t7512-status-help.sh |  74 ++++++++++++++++---------
- wt-status.c            | 121 ++++++++++++++++++++++++++++++++---------
- 4 files changed, 174 insertions(+), 67 deletions(-)
-
+diff --git a/sequencer.c b/sequencer.c
+index b7d8dca47f..b8e860434a 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2625,6 +2625,27 @@ static int is_command(enum todo_command command, const char **bol)
+ 		return 1;
+ 	}
+ 	return 0;
++}
++
++bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd)
++{
++	const char *s = *p;
++
++	for (int i = 0; i < TODO_COMMENT; i++)
++		if (is_command(i, p)) {
++			*cmd = i;
++			return true;
++		}
++
++	if (starts_with(s, comment_line_str)) {
++		*cmd = TODO_COMMENT;
++		return true;
++	} else if (s[0] == '\n' || (s[0] == '\r' && s[1] == '\n') || !s[0]) {
++		*cmd = TODO_COMMENT;
++		return true;
++	}
++
++	return false;
+ }
+ 
+ static int check_label_or_ref_arg(enum todo_command command, const char *arg)
+@@ -2716,29 +2737,23 @@ static int parse_insn_line(struct repository *r, struct replay_opts *opts,
+ {
+ 	struct object_id commit_oid;
+ 	char *end_of_object_name;
+-	int i, saved, status, padding;
++	int saved, status, padding;
+ 
+ 	item->flags = 0;
+ 
+ 	/* left-trim */
+ 	bol += strspn(bol, " \t");
+ 
+-	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
+-		item->command = TODO_COMMENT;
+-		item->commit = NULL;
+-		item->arg_offset = bol - buf;
+-		item->arg_len = eol - bol;
+-		return 0;
+-	}
+-
+-	for (i = 0; i < TODO_COMMENT; i++)
+-		if (is_command(i, &bol)) {
+-			item->command = i;
+-			break;
+-		}
+-	if (i >= TODO_COMMENT)
++	if (!sequencer_parse_todo_command(&bol, &item->command))
+ 		return error(_("invalid command '%.*s'"),
+ 			     (int)strcspn(bol, " \t\r\n"), bol);
++
++	if (item->command == TODO_COMMENT) {
++		item->commit = NULL;
++		item->arg_offset = bol - buf;
++		item->arg_len = eol - bol;
++		return 0;
++	}
+ 
+ 	/* Eat up extra spaces/ tabs before object name */
+ 	padding = strspn(bol, " \t");
+diff --git a/sequencer.h b/sequencer.h
+index a6fa670c7c..20f6fac48a 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -262,6 +262,7 @@ int read_author_script(const char *path, char **name, char **email, char **date,
+ int write_basic_state(struct replay_opts *opts, const char *head_name,
+ 		      struct commit *onto, const struct object_id *orig_head);
+ void sequencer_post_commit_cleanup(struct repository *r, int verbose);
++bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd);
+ int sequencer_get_last_command(struct repository* r,
+ 			       enum replay_action *action);
+ int sequencer_determine_whence(struct repository *r, enum commit_whence *whence);
 -- 
 2.54.0.rc1.174.gd833f386ac5.dirty
 
