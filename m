@@ -1,88 +1,81 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973D93793DC
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9668256C8D
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776669237; cv=none; b=fFasnWLoNihdIKq2nBNon0l5ZX3ZROPXI9s6kz6pFxsNdg2BixA4O2mTyRf/z5vybKYNbMiuDmP55RZVkox8ndS0urMRacj7zYZa6FQFKgyC2AH5qD4bPeErPF34bHyOExXljp33ZypnwLTNwAdACu5DZGEQLE5lYZFWRPO+eEQ=
+	t=1776669561; cv=none; b=nmSBEhm6JDCIfvnbVDMN3f55AdRpFK0f9QKFs29vY+KiG3lFyAauU0ZRrbfrClv7NVAl8zsq5CumsR+fQNIhpRBbQ/1D0ckswPiP7JajtmgivxZliLQYwdUcDn4h+ue0E8YjILa8lQPRU91hbyjguzSVxLU20865CNy+80bh9vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776669237; c=relaxed/simple;
-	bh=jAijbz+PajhuSPZ5xISvvHg/ij12XMndxPyg/jLN5/M=;
+	s=arc-20240116; t=1776669561; c=relaxed/simple;
+	bh=Lh5SnKwrnlh/qyrYX9GMk3JeaBoGRymmywULeHvZBy8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AACED9MIwQ3i1mrqDgcfgTd4QhYao12SB2vlDrg+8AupLUlrdUHGG9VHuzKLDsHBHKaiHWDWeS5GON4sdvI4j3Ckzwa9cgybB11/EVp9nBYv54zTb6Pana4NpVaRyH6ETQdt2ACDCCz5YD9FL0dco30h+kKrKDikMaeWb+QOH+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b01dDq5/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fVHMWqhx; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yfj0UtX/Lka3vY6OEw1VvgGxhtJOeW+Ua9RITXy/xJcHXaRr9RZZ/mQXy1djGu80XcTHjJhna/oI8dh4VIL6fAbJtrj08u4eBhlp9Kbe7eBmQFaLtv9RldCbm6dfZSv8pzYhv9cd0kbASFYwrXck3NNaVRQE0uwRkGXoEwobwJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y7uCTrza; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q9asardX; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b01dDq5/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fVHMWqhx"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EAC98140016B;
-	Mon, 20 Apr 2026 03:13:55 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 20 Apr 2026 03:13:55 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y7uCTrza";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q9asardX"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 147B0EC031A;
+	Mon, 20 Apr 2026 03:19:19 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Mon, 20 Apr 2026 03:19:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776669235; x=1776755635; bh=qzL065nF8H
-	sia5MpgrKVY2ahBsd7yygPu3mFY0Hckvk=; b=b01dDq5/HIF3y1FcZfKk8foyQM
-	yVr1ECwHDkhd1ZOWU4nBbU03Ge+cD6Ha0vpRTya0+pp+t5OUP92SJv2h+bgeYenN
-	+7/DOWb2DPqCAhLJnEsFvKAzA1Hpq9oR5qaXUoarorOq2KEbU4iCSuGhxi4norld
-	2mwIX/FwcAuYBKAvGYupJR/U0sR0VovTBGI3qK4nRKlJ7i+QGAZy6z8rbmdB1Yli
-	mkdkpDzYsur1Br70rz7iio4Lof4YjWSVMSN9jddgNQ8rYSCeYVixAQnlGmhVqpua
-	oNLhBZzgkJ2SHdyvVmnuZXKdIPtGaQk6Y9tgI3Ci/m9JwFVBcIGOI46DQoRQ==
+	:subject:to:to; s=fm2; t=1776669559; x=1776755959; bh=852zSDIFiO
+	fKELYOskXxyPn+IBKF8W9XRudfqkY6Zsw=; b=y7uCTrzakB6mMlJPtWybVBfzHT
+	gWUAjYpfeb59CP3bVwZv9H7+ftNyb1nH/HRxb7xpgT3q54asTE1sU8lNfPr+qVxz
+	lhonxhPtuowev0vlrRyWydwCsxHDSwK8ew5RXwZUlPz9jzpgzRYYyWRnXbMhtXrT
+	Srp0BY8M8TGTdiqBSWVqQ2oe0wQlzJo425Z/FipA0oCS2K19rTNgSsDJWxMvYVDp
+	D3I1QnmknSY3b5oqgAgezcfz0rs7uUGJupFt9UIzGMr5l8egTcrFHRka3KYaYzTP
+	7WhumclolKfWWEu/nYQtE75Yhw95p+2yKhITQB39OFxTIqIJEoVyfIofFH5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776669235; x=1776755635; bh=qzL065nF8Hsia5MpgrKVY2ahBsd7yygPu3m
-	FY0Hckvk=; b=fVHMWqhxlOMkCNVoNYi7EGMuUjZpx6EW6zjwkYyjyApFqjRO14H
-	hd9CN4sxMT9MS/v/LGDfZijONcJGC+6TfAcghKsHAlk9phomfrXT0xPFZFrumJ5Y
-	qi2Lrh21VvPM6iF4SJ6hd8G4RpKM003+A3AEgZVg+4T67z8hZG+rd+GoSGgZ8sEo
-	R+uyKOHKvb5FIsNhgDqS4XNr2MYlJLD83UCGBKyYGiRU5jOHZCBTEt/Rry3fXCOY
-	J0/++Kre+T7SoDcOZTA3RkzJE8WSM80VKa6coYqEK3xUgWaCZVK466lsSZF5MaYB
-	TT79pyjtJvP8iVydTS01k8ckDTxX3COq2Ug==
-X-ME-Sender: <xms:M9LlaSLMNohdNjHxxlkANdNADuHFRJIiZJuZsK4WsEDURE7uSbhMDg>
-    <xme:M9Llad23hN2lSUTaIp_F1pIwDDh-dSWlIetMwySKf2WKnKFbP5CiBOVZ0juHP-7AO
-    1NzJ7tw3wFQqLvdAIekhKYkhlpIrEWWHrdrFVuY0nA4NBKRIWk>
-X-ME-Received: <xmr:M9LlacgxMv17qFT0zccnrjPNimMB72WNH6dtrh0tCEu7FBZntsbNA4O2fpuZ6ckXYIg7YXbXUdjTEENuqPF6ciJ5H2WTtQ8DDXIU6iVG1OMr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehjeeklecutefuodetggdotefrod
+	1776669559; x=1776755959; bh=852zSDIFiOfKELYOskXxyPn+IBKF8W9XRud
+	fqkY6Zsw=; b=Q9asardXUCPPgcFCVRgXzna1MjkL+ysx3GxM0x3RaHXf7CMnpTh
+	sK5HO6nU/ynpXHo9OBe3CpeCv0HplqaVCyNj2bYJ708jsgnR8Fo0y62Ve0dXSTT+
+	ae8XVb04wIm9Yldmq1g9KYQkT+P1NRrt4NcbyslraQL25IkjIlmwiMeEb5/b10+a
+	vgERC1mOMIdmCDBmHEY25pF2aXGV6jLmx2YLjWlkmFenGxiuRJ8O4dLpSRJTN0OH
+	Qz2S1Ax6Z0mOm8d7S1Ik7Wzq3YKk11g+WR64Us7skcJuMhBOddkaNTWM5RGWkkii
+	DpJ0h0BMWQs534n63OAuX3CFn74RJg2rGAQ==
+X-ME-Sender: <xms:dtPlaQiAoC3x93NPsguSfoyET2DI8YvBeAQDa5E9xY4I0skS5FMi1g>
+    <xme:dtPlafBSUXCwJug1IM44WsSkQExHhWtCYe6qsWvjzT7fgsyvv-ZNuvxfe0eF2ULiO
+    3hvBEfQyiMTl2zNxIxwPeZ5ueiLiNFf0GQr-TL5LYfBy7MYbFvt>
+X-ME-Received: <xmr:dtPlaVvmrKwm8ZbHRG8DYC-5vJSkxT_pCjT8AYeM-Xsdo8v-pz9eNbQpyi7nyJSrZOeWsvRDl_iZxeCIYHXdX7EM5dPkbDCGH1tEIXAMh84_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehjeeltdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pegrsgguohgsnhhgrggusehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhhnrdgrrd
-    hprghsshgrrhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhgtvgesfhgvrhgu
-    ihhnrghnugihrdgtohhmpdhrtghpthhtoheprhdrshhiugguhhgrrhhthhdrshhhrhhimh
-    grlhhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:M9LlaeVRZh8OXfzMG-p4RlDPotpIJy4eZfCaC79vZqRxSqN5Nnke3w>
-    <xmx:M9LlabVrtsftvvNbTxnZPfDv4D9E-AVKeJlVUNIF-fHyYoHCEyQz-g>
-    <xmx:M9LlaeiYfL2vux3ifs2URFLGQgaLkta3in54AmX8Y8ZsrHxrrZO5wg>
-    <xmx:M9LlaWYBVtMujEc61qBpAY-mFgJ5NKDocuu9zpi1qFupudbmHrRJ5Q>
-    <xmx:M9LlaQUPb2KFYo9Vx8X1itPcEtA5lcF8TsAXEIzzX3yssxvsHUYxFqt->
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepieelffekvdefiedujeehleffteethfdvudfgle
+    ekkedvteduvefhteejvdekgfejnecuffhomhgrihhnpehsuhhgghgvshhtihhonhdrphhs
+    pdihvghsrdhpshdpshgvrhhivghsrdhpthenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedv
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:dtPlacYfUkoVOWMvIbbLZ9XwICm4es7NzKYclGeJSbi-8Us0Mglfcg>
+    <xmx:d9PlaQXp0VUyLKObZWWL0amQ0yJvL5ZJ3P9TU-3IouKz2CSMpYJAlg>
+    <xmx:d9PlaY6g7uWmslOHuCmgB9UUyuIVO9yDDK0FDSywdCNxnRvvzfDtwA>
+    <xmx:d9PlaTijVk3Rn2cVZzu1e4JIgsHHuvS-NShJ2obXANQiQaEi6Gym2Q>
+    <xmx:d9PlaT4yngV-U7ZH2zp4xei_LId1c-ALG8t7raa8iLZlI2owyxKiUHho>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Apr 2026 03:13:54 -0400 (EDT)
+ 20 Apr 2026 03:19:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 807add01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Apr 2026 07:13:52 +0000 (UTC)
-Date: Mon, 20 Apr 2026 09:13:49 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b97fe8fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Apr 2026 07:19:16 +0000 (UTC)
+Date: Mon, 20 Apr 2026 09:19:13 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>,
-	git@vger.kernel.org, abdobngad@gmail.com, bence@ferdinandy.com,
-	john.a.passaro@gmail.com
-Subject: Re: [PATCH 1/3] t7004: drop hardcoded tag count in invalid name test
-Message-ID: <aeXSLcVl_eGFkagr@pks.im>
-References: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
- <20260414141828.27576-2-r.siddharth.shrimali@gmail.com>
- <xmqqmrz5bhz4.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2026, #05)
+Message-ID: <aeXTcZ7K9a6kUIbk@pks.im>
+References: <xmqqy0ilus5p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,50 +84,143 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqmrz5bhz4.fsf@gitster.g>
+In-Reply-To: <xmqqy0ilus5p.fsf@gitster.g>
 
-On Tue, Apr 14, 2026 at 09:54:23AM -0700, Junio C Hamano wrote:
-> Siddharth Shrimali <r.siddharth.shrimali@gmail.com> writes:
+On Fri, Apr 17, 2026 at 03:40:50PM -0700, Junio C Hamano wrote:
+> * ss/t7004-unhide-git-failures (2026-04-14) 3 commits
+>  - t7004: avoid subshells to capture git exit codes
+>  - t7004: dynamically grab expected state in tests
+>  - t7004: drop hardcoded tag count in invalid name test
 > 
-> > The test 'trying to create a tag with a non-valid name should fail',
-> > checked that exactly one tag existed in the repository before and after
-> > attempting to create invalid tags.
-> >
-> > As pointed out by Junio, this makes the test brittle by relying on a
-> > specific global tag count. If future tests are added or removed before
-> > this test, the expected state changes and this test would break for
-> > completely unrelated reasons.
-> >
-> > Since we already use 'test_must_fail' to guarantee that the invalid
-> > tags are rejected by Git, counting the tags before and after is redundant.
-> >
-> > Drop the 'test_line_count = 1' checks so the test doesn't rely on the
-> > exact number of tags left behind by earlier tests.
+>  Test clean-up.
 > 
-> The only thing I suggested was that relying on exact state before
-> this test makes this test brittle.  I do not necessarily think
-> "redundant" is bad.  Having belt-and-suspenders sometimes help.
-> 
-> Alternatively, if we wanted to catch a bug where "git tag" exits
-> with a non-zero status, satisfying test_must_fail, but still creates
-> the requested tag, then we could do
-> 
-> 	git tag -l >tags-before &&
-> 	test_must_fail git tag "" &&
-> 	... random attempts to create with invalid names ...
-> 	test_must_fail git tag "other~tag" &&
-> 	git tag -l >tags-after &&
-> 	test_cmp tags-before tags-after
-> 
-> instead.   And that is a belt-and-suspenders approach.
-> 
-> Having said that, the patch is already an improvement, so let's take
-> it as is.  Unless there are other things we may want to improve in
-> this or other patches in the series, that is.
+>  Will merge to 'next'?
+>  source: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
 
-Hm. We now rely on exit code alone, without verifying that the exit code
-actually results in the expected behaviour. I'm a bit torn myself
-whether this is sensible and a step into the right direction, and I
-would have preferred the `test_cmp` piece above that you propose.
+I think overall this series is an improvement, but I think that the
+first patch might warrant a reroll based on your suggestion.
+
+> * ps/odb-in-memory (2026-04-10) 18 commits
+>  - t/unit-tests: add tests for the in-memory object source
+>  - odb: generic in-memory source
+>  - odb/source-inmemory: stub out remaining functions
+>  - odb/source-inmemory: implement `freshen_object()` callback
+>  - odb/source-inmemory: implement `count_objects()` callback
+>  - odb/source-inmemory: implement `find_abbrev_len()` callback
+>  - odb/source-inmemory: implement `for_each_object()` callback
+>  - odb/source-inmemory: convert to use oidtree
+>  - oidtree: add ability to store data
+>  - cbtree: allow using arbitrary wrapper structures for nodes
+>  - odb/source-inmemory: implement `write_object_stream()` callback
+>  - odb/source-inmemory: implement `write_object()` callback
+>  - odb/source-inmemory: implement `read_object_stream()` callback
+>  - odb/source-inmemory: implement `read_object_info()` callback
+>  - odb: fix unnecessary call to `find_cached_object()`
+>  - odb/source-inmemory: implement `free()` callback
+>  - odb: introduce "in-memory" source
+>  - Merge branch 'jt/odb-transaction-write' into ps/odb-in-memory
+>  (this branch uses jt/odb-transaction-write.)
+> 
+>  Add a new odb "in-memory" source that is meant to only hold
+>  tentative objects (like the virtual blob object that represents the
+>  working tree file used by "git blame").
+> 
+>  Will merge to 'next'?
+>  source: <20260410-b4-pks-odb-source-inmemory-v3-0-22fd0fad58fe@pks.im>
+
+I think this series is ready, yes.
+
+> * ps/test-set-e-clean (2026-04-17) 12 commits
+>  - t: detect errors outside of test cases
+>  - t9902: fix use of `read` with `set -e`
+>  - t6002: fix use of `expr` with `set -e`
+>  - t1301: don't fail in case setfacl(1) doesn't exist or fails
+>  - t0008: silence error in subshell when using `grep -v`
+>  - t: prepare `test_when_finished ()`/`test_atexit()` for `set -e`
+>  - t: prepare execution of potentially failing commands for `set -e`
+>  - t: prepare conditional test execution for `set -e`
+>  - t: prepare `git config --unset` calls for `set -e`
+>  - t: prepare `stop_git_daemon ()` for `set -e`
+>  - t: prepare `test_must_fail ()` for `set -e`
+>  - t: prepare `test_match_signal ()` calls for `set -e`
+> 
+>  The test suite harness and many individual test scripts have been
+>  updated to work correctly when 'set -e' is in effect, which helps
+>  detect misspelled test commands.
+> 
+>  Will merge to 'next'?
+>  source: <20260417-b4-pks-tests-with-set-e-v4-0-44d43efdafb1@pks.im>
+
+I'll send one more version today that will add an explicit opt-in for
+this new infra, and make our CI use that opt-in.
+
+> * sp/refs-with-less-the-repository (2026-04-04) 3 commits
+>  - refs/reftable-backend: drop uses of the_repository
+>  - refs: remove the_hash_algo global state
+>  - refs: add struct repository parameter in get_files_ref_lock_timeout_ms()
+> 
+>  Reduce the reference to the_repository in the refs subsystem.
+> 
+>  Will merge to 'next'.
+>  cf. <adYV6NK93Kzg1EYG@pks.im>
+>  source: <20260404135914.61195-1-shreyanshpaliwalcmsmn@gmail.com>
+
+> * sp/refs-reduce-the-repository (2026-04-04) 3 commits
+>   (merged to 'next' on 2026-04-09 at bb1d626802)
+>  + refs/reftable-backend: drop uses of the_repository
+>  + refs: remove the_hash_algo global state
+>  + refs: add struct repository parameter in get_files_ref_lock_timeout_ms()
+> 
+>  Code clean-up to use the right instance of a repository instance in
+>  calls inside refs subsystem.
+> 
+>  Will cook in 'next'.
+>  source: <20260404135914.61195-1-shreyanshpaliwalcmsmn@gmail.com>
+
+(Shuffling things around a bit). I think these are both the same topic?
+I guess you accidentally included them twice.
+
+> * jt/odb-transaction-write (2026-04-02) 7 commits
+>  - odb/transaction: make `write_object_stream()` pluggable
+>  - object-file: generalize packfile writes to use odb_write_stream
+>  - object-file: avoid fd seekback by checking object size upfront
+>  - object-file: remove flags from transaction packfile writes
+>  - odb: update `struct odb_write_stream` read() callback
+>  - odb/transaction: use pluggable `begin_transaction()`
+>  - odb: split `struct odb_transaction` into separate header
+>  (this branch is used by ps/odb-in-memory.)
+> 
+>  ODB transaction interface is being reworked to explicitly handle
+>  object writes.
+> 
+>  Comments?
+>  source: <20260402213220.2651523-1-jltobler@gmail.com>
+
+I'm happy with the status quo of this patch series.
+
+> * pt/fsmonitor-linux (2026-04-15) 13 commits
+>  - fsmonitor: convert shown khash to strset in do_handle_client
+>  - fsmonitor: add tests for Linux
+>  - fsmonitor: add timeout to daemon stop command
+>  - fsmonitor: close inherited file descriptors and detach in daemon
+>  - run-command: add close_fd_above_stderr option
+>  - fsmonitor: implement filesystem change listener for Linux
+>  - fsmonitor: rename fsm-settings-darwin.c to fsm-settings-unix.c
+>  - fsmonitor: rename fsm-ipc-darwin.c to fsm-ipc-unix.c
+>  - fsmonitor: use pthread_cond_timedwait for cookie wait
+>  - compat/win32: add pthread_cond_timedwait
+>  - fsmonitor: fix hashmap memory leak in fsmonitor_run_daemon
+>  - fsmonitor: fix khash memory leak in do_handle_client
+>  - t9210, t9211: disable GIT_TEST_SPLIT_INDEX for scalar clone tests
+> 
+>  The fsmonitor daemon has been implemented for Linux.
+> 
+>  Will merge to 'next'?
+>  source: <pull.2147.v15.git.git.1776259657.gitgitgadget@gmail.com>
+
+I'm still somewhat torn on this series, mostly as I still haven't seen
+an in-depth review on later versions other than my own :/
+
+Thanks!
 
 Patrick
