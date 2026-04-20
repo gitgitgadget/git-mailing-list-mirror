@@ -1,65 +1,65 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31EB393DD1
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:12:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1672430EF95
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 10:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776679956; cv=none; b=P2Ay4W8kqE0jCUQ54T+ItVG68WhRzvGlcE2G3DvMKhQyqeSInLQW5konFgLOwGC3OaXuod9wVB9woJZtAQTeX2EbPDWqWNwfKxpC5uL0OKWxtHJv/Ci5Pljau6OTXvXF8UyN4jt5WxnkiqV1Guguaz/SA4N8KNggF3o5z5S89Kc=
+	t=1776679959; cv=none; b=FvXHOlOeF+Gj4a56R75RpcjufOQFeDS9+uR5hZyQFxW5A9NYhQ8f0FfGsqxwPEAkC4MHvLUYggoXoQGzOeld1+owuGdV5/i+r7HXk8z9nkC7JbJExQtQNt7k785PPpryg2iNCtW1Q67Ra9ECpbpGSmjNNc1M1hI7T7+eKZihZL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776679956; c=relaxed/simple;
-	bh=btAHqV4lAY5So/xsSjs2s9Xx85jGeydWY9vlzhZ4B80=;
+	s=arc-20240116; t=1776679959; c=relaxed/simple;
+	bh=05FGBkBlZNTfFRFTIr/adq+Vdu+zX8v99qhclV1GtBc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BdslfaW/5SYMA7q4DqCi3FPz8H4LeyVfvC3SdRBt3HpUMhPzt+Pkwwlfg0gkwOxSdYQ7ky3F5Veg7MaVv9cO/w5o2D3zqSuxugcGi0FuP2v6bKB6yXu3pyxa8atlugywrl4WSsFWyLlbcCUW9G6U74ub13zKlENVQX9hpBIypp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgcEfiuG; arc=none smtp.client-ip=209.85.221.44
+	 In-Reply-To:To:Cc; b=AP5LCr0LY9zqdM+DSmCh4gdyP9TCWVnynn3qH/mRNxEn2j3Vd2ZD0R8dWnxOlkunsyFUZvxK/7e9L+0V22AAHQ1PtwIIbzTx7z0aLoTDhmwrD6HQgxOR9+X5V5nBJsnJvJ5Tskd2QZ6zoHNUYXS3AKdN5ERcQOSA60aefE2oUrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+qXfdsm; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgcEfiuG"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43cfce3a195so1746588f8f.2
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 03:12:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+qXfdsm"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-488a14c31eeso21527385e9.0
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 03:12:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776679952; x=1777284752; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776679956; x=1777284756; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=n+uO3h+SGTvHW0FNsX3o1j0oqEsV79iBAq9N33ODQ4s=;
-        b=NgcEfiuGkhVCdoh/0FDtZz1AiiK5x6L1M7q04QalJ1vtthnzhzDcIQWbXO53SM3sAk
-         g4TyU3KIzaPfZ8sp3FguKjmbPgskXDkT5dgpqrWBNtkQXZ8SROC5UvbstNb+z/+p20Dg
-         97rVabepS/x38cyDXDwPtOvNrZeSVnBzoYEs6K9muw2zaTsv4asqgox+8sHc4EYHCT6k
-         04zytNHOxzKfx+495N8agEUAi7hEUgTC9PZERt94C8MiRR+leX/A8bP4nGwmY9PTMY+X
-         F6jnHFihcsrBjsekIZoQO5E8mVGGVe5l0esyQ4Mgf9qhDuoDUErIs94xGxYNOvYEEoVh
-         ZaPw==
+        bh=mbSOHbZGK7czeHbBDa6xwbbn1f0T81rSVyyRlQ8LqnU=;
+        b=h+qXfdsmT6amONpfsE6XHGII1zFlYM4QDsbDkmJhUfB13vz4KpGk2QvlN1lRImOuFe
+         1E01RDlWciftdSFiRKA5eZV4Q5zyLEnbrPsmzrM0OqNoA1H+YnNWa+IWGobkgBX1hzQ5
+         rhOOBJvjKtwHRUCcT/dRI7bqD2qbXOkg6W1WR/NUxI/nCrN1RUgV1hx8A40RGRc1pDKA
+         DIkGkKLCAWAZtp57GzQYKEyZgdb+4AHprSg8q7a7Ojt5lcr5tJKAQmdhs0yEgNqPbOts
+         o7cOY1m3W8QgzUzNeOpfwaOAjp+0Ggd3DFPq7XxDw1lS2fvvImv0xLA6xF6vlUIHmL88
+         B1jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776679952; x=1777284752;
+        d=1e100.net; s=20251104; t=1776679956; x=1777284756;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=n+uO3h+SGTvHW0FNsX3o1j0oqEsV79iBAq9N33ODQ4s=;
-        b=NaPvhLywFSUA9nYvzWUbilyx0RDe1vQu4x4N2SNOKfWM/Dr2X5G+7rDR+2Yd19nJoI
-         Iij5MZEKX537qOTPOkJoa93rhM1e1lE3xrygz8jUzQZwbYuN7XI0E9Rtd2F6R+1dxqek
-         dJT6LDhKlsa3Ybi3ZA78IFw7oblGcEdkeX/2kUvr+ieC+BYdj1bW4efGdUmoHxOA39CH
-         nSq7rCQjYgc9N4iSgQv30AXbbqzIRlgifcVNP4bcEei5RLyElUS/yuBix8h/oxnTkuWg
-         YDMlFMScaSdnZFL/bi0jR6k+9NJlFTxJln3jpjBviF2XBKwGYLCjMJYqrwv0b0+EaZOO
-         S9Gg==
-X-Gm-Message-State: AOJu0Yw1S5cJ+xPzobtSbgQQbQakUU20FWfe2VFhZPBgaMKmBL5tvfBK
-	KNkvnNUuZiDqim59GBANxmEvkHaS5yiqyQ/NfOXhF6BXqJ2Koqmnq2yFAH5+Mg==
-X-Gm-Gg: AeBDievww1HYn4osdh+u7LcvfN7Xv6D9lB6m+oopNzbqatbV8sjrOjKVIqJO/Z7rdJ5
-	T6jO8k3gdk0LzPWRTsK+BU2txzu9WSd3AMiYPZfhQA0PDZjv6eP5CN2fiX9fXnSGz3FtWwLFU1W
-	kq1FzPEUHWdNVSf83iotHBxayFP1BVl1dKWJcEf2xmbCE0/u6o87or0beXwARMXcT6ayuwr6Vq0
-	5BzeDTwAIbefCR8zPyc2QKOr3dGlaBLnJSRhtmoZRDIh8R2AxUREb7rtQKHinqNTKr9gzmi8Esk
-	OI9L7UCmZM9DuqPVCM1aDbw1qW+MFEQb7ttXpijKkgubTlGyPf9akL1WgRjeqdveSaDJ3qu9kwR
-	+I3iR39+kS8/xb42ia2zSIAvxvuKVDAzuwRd8gnuMQuTavGBvWrRlTb2uQRd3gQ6TkFA4iduIxy
-	g/T+g2noEM1o/BA7RPJx5jfWwtSkx2ToKkAnv9U80=
-X-Received: by 2002:a5d:588f:0:b0:43d:2be:e54 with SMTP id ffacd0b85a97d-43fe3dfd4aemr19095895f8f.39.1776679952005;
-        Mon, 20 Apr 2026 03:12:32 -0700 (PDT)
+        bh=mbSOHbZGK7czeHbBDa6xwbbn1f0T81rSVyyRlQ8LqnU=;
+        b=WEsIqsM2d8WRPLzQfQIfrWfeT0+cdHPqMhaaCxQ4snLe5h9i23syyNACPHB9UlAFMP
+         SZIZmp9vTEp1XpvWxxMFB7yWWrJ57kDjj1hp2fiSBM1Q4iMDY9CcNWv1Sv/Glo2QGPOO
+         LCkRkRLAVbzBiZftvByW9PRsQHPE2jxDTDvugik2PJE8FNBqlh4Euth8pK39qNAqugWv
+         wdeqKG7PycPCwM71rLGHKzNzos/JTIZCtLbjpyd8Wux0kZTxEn3sDpe4SujUrgY1tWc5
+         eDd1rZdwvaukVT44jOTdRaBl0W9LrWStExNu2Hy9b5Arz8oB/tFqHTpkjJfGilnouYsJ
+         vC3A==
+X-Gm-Message-State: AOJu0Yy4Ljs0OlWR5QzQ0ofPI1s/lu6TZbweRlADoAOQQihTUydP5nfX
+	GVyZT5pbf79YzT3aqfwjoEAPYbtzuTRVCrLhTyDxxZL+p/ES0ymaMYDIfCY7XA==
+X-Gm-Gg: AeBDiet96FhNJIZtFimsMEmBlFewZAYv6h8vahIh6omeZ/fbd34/Td8yy80vrD8Oz5G
+	TzyL/lFhT05nEsNN36HW4I3tkYBW7hjlAEt6yPEdxkmL+DBb+B0kradobduqP5bN6Ubj8Kwh7Rn
+	d6GqFRSOdXFEPH5QPKkJ0h1XG6zjUujkgNaUSHZ2uJXpWVLHtWxhs8yj5idcvIJZvoFGY3cdu9A
+	vhIv41I8ESCsUjvtQvpAgY4oQJoo8itoIcm4s2BAq6trI0kkfAE1apVyX3gVyfYjfSqpAGah6mA
+	KDs3SDxAPMCHyaPX1/kIJO+/U1zcDhvkz0e2HdFPocmMcMoIBkaP7s456bo238eZPj2WUmhgIRD
+	JoPZFqSXuCnZTMieFZ2SLAee8TcKljIYOvZVGRyuKOebSbT43GYDE8eQU8+PHNLPSADG+rdFX7t
+	MfamOZ+DYfk3kGCs60IbooUkXZIhiIbAdm+NbFvcY=
+X-Received: by 2002:a05:600d:8402:b0:488:ae26:435e with SMTP id 5b1f17b1804b1-488fb778d74mr141271065e9.16.1776679955641;
+        Mon, 20 Apr 2026 03:12:35 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:293:ab4d:327e:e6dc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4cc375dsm25424997f8f.14.2026.04.20.03.12.30
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4cc375dsm25424997f8f.14.2026.04.20.03.12.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 03:12:30 -0700 (PDT)
+        Mon, 20 Apr 2026 03:12:34 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 20 Apr 2026 12:12:04 +0200
-Subject: [PATCH 6/8] refs: move object parsing to the generic layer
+Date: Mon, 20 Apr 2026 12:12:06 +0200
+Subject: [PATCH 8/8] refs: use peeled tag values in reference backends
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,242 +68,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260420-refs-move-to-generic-layer-v1-6-513e354f376b@gmail.com>
+Message-Id: <20260420-refs-move-to-generic-layer-v1-8-513e354f376b@gmail.com>
 References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
 In-Reply-To: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8386; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=btAHqV4lAY5So/xsSjs2s9Xx85jGeydWY9vlzhZ4B80=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnl/ACXmoZoEF7MhAPdLrjCPeaLh+HOelSWH
- zg+nD/iEpFg3YkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp5fwAAAoJED7VnySO
- Rox/bvgL/3NZ1qdKxmIdWq3ccMxec5PHgV7o+OG+seEejHNZ9fKBrnWVdHI63VfkHZqN4lQyzl+
- W2HICI6ClNE05mMnVF1PPUtZbJjPG3mLrnyeHROAi76E5jbovQKX+O3EXZgM40FL7hvhwYxB93c
- YxhzA1+5hRwhFlzlpCWMbHmUMOxIaEt41TtZ7nc7voRRk3PuR/FuhMz7cstqniSQCa5JLON9ZA0
- O/1OBTuoJhHFAzKy5bQula/14+l9s833jA91iHA+2HMJwx1Tx/v/LDh961QRkkdABRVRNrf62ZL
- M93Kj0DYrrNBoWE8+T8pFe8mDvvca6UeOXSjA4QbHIX0Y2j+ycwskpQfPpPUG8TsxQ9HIJMMXXi
- l6Fw/hMcLm/8nj5+J1crDh7FVFrActHLFpI0rjvXvqu27u2yw3nsS3xrKz8vSt3zCqFeA9wmGU4
- 7BOQ3f1NTj6uDL/CK76YZkK1vbKwCN6fHR+39BGA+lOjJTuXEJVHmuDQkdmS9SmgdOTQwxVVnJ8
- aU=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2493; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=05FGBkBlZNTfFRFTIr/adq+Vdu+zX8v99qhclV1GtBc=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnl/AGx9yubrwMRbskFo3SXkBh/hvffjtd+r
+ x/rdlM/FwTUD4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp5fwBAAoJED7VnySO
+ Rox/FUYL+QHF3GwT2ZATEaHU+3HCdH2ZX4vMjPj3nevKAcOTZ7s0uI5sQKLmkDAPFsEifQadTMz
+ LAX+q6Hg7I9XJdwt6x1bCoNw/hmLJ1xsHIb4gW7ugJvqPCh0DXYzW9IUC4ObGrGgnZUKpD6iDab
+ K3zoQrE2Nbfk7EGVU7whHa7LH3q3pFpeGoSE/c58DeRfXYxSA/0H2GAyjxrT2qtr6oTt6YetR2d
+ e+jDjcyteRNPdkQGghRrtN1xPPiadS2omE8/b8/nAsAHgzz7JuUh5WwxHFANLEXaNFtKfYpydu4
+ wWINqPPP4VF1CIuW1hywQsuYv2buqmsdAr+X4BLlXzqXMG7rY9olWu/o+kybnfei7mxFwW/z6qk
+ 5e2FQJ7uIUqtLlhA54MZ5PI4hc1SBmacvJAwOrWodxxGoe8a7JFLYtAr0Ocz+tsfj7h++9RKCWE
+ hz+4lOgbCBuoXmHcTsw+QNH0inCuY06sA5hJ3gfJUMpQBZoifF2+Pb61fGyVktqlW8rQA6K9bC8
+ S0=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Regular reference updates made via reference transactions validate that
-the provided object ID exists in the object database, this is done by
-calling 'parse_object()'. This check is done independently by the
-backends.
-
-Let's move this to the generic layer, ensuring the backends only have to
-care about reference storage and not about validation of the object IDs.
-With this also remove the 'REF_TRANSACTION_ERROR_INVALID_NEW_VALUE'
-error type as its no longer used.
-
-Since we don't iterate over individual references in
-`ref_transaction_prepare()`, we add this check to
-`ref_transaction_update()`. This means that the validation is done as
-soon as an update is queued, without needing to prepare the
-transaction. It can be argued that this is more ideal, since this
-validation has no dependency on the reference transaction being
-prepared.
-
-It must be noted that the change in behavior means that this error
-cannot be ignored even with usage of batched updates, since this happens
-when the update is being added to the transaction. But since the caller
-gets specific error codes, they can either abort the transaction or
-continue adding other updates to the transaction.
-
-Modify 'builtin/receive-pack.c' to now capture the error type so that
-the error propagated to the client stays the same. Also remove two of
-the tests which validates batch-updates with invalid new_oid.
+The reference backends peel tag objects when storing references to them.
+This is to provide optimized reads which avoids hitting the odb. The
+previous commits ensures that the peeled value is now propagated via the
+generic layer. So modify the packed and reftable backend to directly use
+this value instead of calling `peel_object()` independently.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/receive-pack.c  | 22 +++++++++++++---------
- refs.c                  | 18 ++++++++++++++++++
- refs/files-backend.c    | 28 ++--------------------------
- refs/reftable-backend.c | 19 -------------------
- 4 files changed, 33 insertions(+), 54 deletions(-)
+ refs/packed-backend.c   | 6 ++----
+ refs/reftable-backend.c | 9 ++-------
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 878aa7f0ed..0fb3d57de8 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1641,8 +1641,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 			ret = NULL; /* good */
- 		}
- 		strbuf_release(&err);
--	}
--	else {
-+	} else {
-+		enum ref_transaction_error err_type;
- 		struct strbuf err = STRBUF_INIT;
- 		if (shallow_update && si->shallow_ref[cmd->index] &&
- 		    update_shallow_ref(cmd, si)) {
-@@ -1650,14 +1650,18 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 			goto out;
- 		}
- 
--		if (ref_transaction_update(transaction,
--					   namespaced_name,
--					   new_oid, old_oid,
--					   NULL, NULL,
--					   0, "push",
--					   &err)) {
-+		err_type = ref_transaction_update(transaction,
-+						  namespaced_name,
-+						  new_oid, old_oid,
-+						  NULL, NULL,
-+						  0, "push",
-+						  &err);
-+		if (err_type) {
- 			rp_error("%s", err.buf);
--			ret = "failed to update ref";
-+			if (err_type == REF_TRANSACTION_ERROR_GENERIC)
-+				ret = "failed to update ref";
-+			else
-+				ret = ref_transaction_error_msg(err_type);
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 195600cdad..64d2e105e2 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1531,13 +1531,11 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+ 			 */
+ 			i++;
  		} else {
- 			ret = NULL; /* good */
- 		}
-diff --git a/refs.c b/refs.c
-index 39fef1cca0..bbe19155f4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1416,6 +1416,24 @@ enum ref_transaction_error ref_transaction_update(struct ref_transaction *transa
- 	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
- 	flags |= (new_target ? REF_HAVE_NEW : 0) | (old_target ? REF_HAVE_OLD : 0);
+-			struct object_id peeled;
+-			int peel_error = peel_object(refs->base.repo, &update->new_oid,
+-						     &peeled, PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE);
++			bool peeled = update->flags & REF_HAVE_PEELED;
  
-+	if ((flags & REF_HAVE_NEW) && !new_target && !is_null_oid(new_oid) &&
-+	    !(flags & REF_SKIP_OID_VERIFICATION) && !(flags & REF_LOG_ONLY)) {
-+		struct object *o = parse_object(transaction->ref_store->repo, new_oid);
-+
-+		if (!o) {
-+			strbuf_addf(err,
-+				    _("trying to write ref '%s' with nonexistent object %s"),
-+				    refname, oid_to_hex(new_oid));
-+			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
-+		}
-+
-+		if (o->type != OBJ_COMMIT && is_branch(refname)) {
-+			strbuf_addf(err, _("trying to write non-commit object %s to branch '%s'"),
-+				    oid_to_hex(new_oid), refname);
-+			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
-+		}
-+	}
-+
- 	ref_transaction_add_update(transaction, refname, flags,
- 				   new_oid, old_oid, new_target,
- 				   old_target, NULL, msg);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 407b97cc44..0e2bbe37a0 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -19,7 +19,6 @@
- #include "../iterator.h"
- #include "../dir-iterator.h"
- #include "../lockfile.h"
--#include "../object.h"
- #include "../path.h"
- #include "../dir.h"
- #include "../chdir-notify.h"
-@@ -1589,7 +1588,6 @@ static int rename_tmp_log(struct files_ref_store *refs, const char *newrefname)
- static enum ref_transaction_error write_ref_to_lockfile(struct files_ref_store *refs,
- 							struct ref_lock *lock,
- 							const struct object_id *oid,
--							int skip_oid_verification,
- 							struct strbuf *err);
- static int commit_ref_update(struct files_ref_store *refs,
- 			     struct ref_lock *lock,
-@@ -1737,7 +1735,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	}
- 	oidcpy(&lock->old_oid, &orig_oid);
+ 			if (write_packed_entry(out, update->refname,
+ 					       &update->new_oid,
+-					       peel_error ? NULL : &peeled))
++					       peeled ? &update->peeled : NULL))
+ 				goto write_error;
  
--	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
-+	if (write_ref_to_lockfile(refs, lock, &orig_oid, &err) ||
- 	    commit_ref_update(refs, lock, &orig_oid, logmsg, 0, &err)) {
- 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1755,7 +1753,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 		goto rollbacklog;
- 	}
- 
--	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
-+	if (write_ref_to_lockfile(refs, lock, &orig_oid, &err) ||
- 	    commit_ref_update(refs, lock, &orig_oid, NULL, REF_SKIP_CREATE_REFLOG, &err)) {
- 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1999,32 +1997,11 @@ static int files_log_ref_write(struct files_ref_store *refs,
- static enum ref_transaction_error write_ref_to_lockfile(struct files_ref_store *refs,
- 							struct ref_lock *lock,
- 							const struct object_id *oid,
--							int skip_oid_verification,
- 							struct strbuf *err)
- {
- 	static char term = '\n';
--	struct object *o;
- 	int fd;
- 
--	if (!skip_oid_verification) {
--		o = parse_object(refs->base.repo, oid);
--		if (!o) {
--			strbuf_addf(
--				err,
--				"trying to write ref '%s' with nonexistent object %s",
--				lock->ref_name, oid_to_hex(oid));
--			unlock_ref(lock);
--			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
--		}
--		if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
--			strbuf_addf(
--				err,
--				"trying to write non-commit object %s to branch '%s'",
--				oid_to_hex(oid), lock->ref_name);
--			unlock_ref(lock);
--			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
--		}
--	}
- 	fd = get_lock_file_fd(&lock->lk);
- 	if (write_in_full(fd, oid_to_hex(oid), refs->base.repo->hash_algo->hexsz) < 0 ||
- 	    write_in_full(fd, &term, 1) < 0 ||
-@@ -2828,7 +2805,6 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
- 		} else {
- 			ret = write_ref_to_lockfile(
- 				refs, lock, &update->new_oid,
--				update->flags & REF_SKIP_OID_VERIFICATION,
- 				err);
- 			if (ret) {
- 				char *write_err = strbuf_detach(err, NULL);
+ 			i++;
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index bdc3e0aa19..fdf7336c0f 100644
+index 7416bb72fa..001be56e8c 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -1081,25 +1081,6 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
- 		return 0;
- 	}
+@@ -12,7 +12,6 @@
+ #include "../hex.h"
+ #include "../ident.h"
+ #include "../iterator.h"
+-#include "../object.h"
+ #include "../parse.h"
+ #include "../path.h"
+ #include "../refs.h"
+@@ -1584,17 +1583,13 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+ 				goto done;
+ 		} else if (u->flags & REF_HAVE_NEW) {
+ 			struct reftable_ref_record ref = {0};
+-			struct object_id peeled;
+-			int peel_error;
  
--	/* Verify that the new object ID is valid. */
--	if ((u->flags & REF_HAVE_NEW) && !is_null_oid(&u->new_oid) &&
--	    !(u->flags & REF_SKIP_OID_VERIFICATION) &&
--	    !(u->flags & REF_LOG_ONLY)) {
--		struct object *o = parse_object(refs->base.repo, &u->new_oid);
--		if (!o) {
--			strbuf_addf(err,
--				    _("trying to write ref '%s' with nonexistent object %s"),
--				    u->refname, oid_to_hex(&u->new_oid));
--			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
--		}
--
--		if (o->type != OBJ_COMMIT && is_branch(u->refname)) {
--			strbuf_addf(err, _("trying to write non-commit object %s to branch '%s'"),
--				    oid_to_hex(&u->new_oid), u->refname);
--			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
--		}
--	}
--
- 	/*
- 	 * When we update the reference that HEAD points to we enqueue
- 	 * a second log-only update for HEAD so that its reflog is
+ 			ref.refname = (char *)u->refname;
+ 			ref.update_index = ts;
+ 
+-			peel_error = peel_object(arg->refs->base.repo, &u->new_oid, &peeled,
+-						 PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE);
+-			if (!peel_error) {
++			if (u->flags & REF_HAVE_PEELED) {
+ 				ref.value_type = REFTABLE_REF_VAL2;
+-				memcpy(ref.value.val2.target_value, peeled.hash, GIT_MAX_RAWSZ);
++				memcpy(ref.value.val2.target_value, u->peeled.hash, GIT_MAX_RAWSZ);
+ 				memcpy(ref.value.val2.value, u->new_oid.hash, GIT_MAX_RAWSZ);
+ 			} else if (!is_null_oid(&u->new_oid)) {
+ 				ref.value_type = REFTABLE_REF_VAL1;
 
 -- 
 2.53.GIT
