@@ -1,67 +1,67 @@
 Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A362A39E18C
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729E51E5724
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 12:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776685488; cv=none; b=P10QAM1CtViDJh0X8/vto90evfcaebNtLK8x3n4D2VpcbbF3tTMfr4nkzYsf8bWi4FXlDAtjyHoEv+hgymSPGN3V55pMsYWGxNX3lMqZ6yHJnNqN4Kc0n4V8ApIBlrg+tKPZYc/NxN/G2jWRa9W93pvgA/OwRWukmnSFnlLq0T0=
+	t=1776686628; cv=none; b=jy3WYx43nJAba6cnvf0hh0osvRSVFfmORhD46HqMlpyXwQK6Zds8EzDJwTo2g9H89eHg4l1Xf48rrzicCoczKYK5HPbSraAu4yuPPJqlFxoyriCdMLgiQz1vTxx8It1A8WWDJUJ9bPlhrANHW0RyUimUUKh3c9jjyi2c5qBbJ74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776685488; c=relaxed/simple;
-	bh=kOoLirx+r6/LnBWjfDtSKfHIYBgIP31oLWrm6SaEQco=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tbU0Z+AfalV1XR5Pe9SOrRvHDhPsvfwRpTkbgD0ZeQbpQz1alOSHCCRbiI0SfxqW89eDlt9dNOPF0XbA+UVekisthLBc01RdCOkYSfXwoHwLbVFFGYBh9F/+soiZl10Tc+vbJc4IaMfhjIge1LNFRsjYbAB2LpDAmks1jgSkSLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CjzpPZL5; arc=none smtp.client-ip=209.85.222.176
+	s=arc-20240116; t=1776686628; c=relaxed/simple;
+	bh=ktPzv8bfxDo61EbcAsgFPHIfz3QRhiqNlvS/n/QWZjw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=IGumhnMhSw2kBQwnv/5E3KwT3A8XfBirI4wdKGhLVs9rQS/A4co40uWILVEHH9ccU8td+DJxphYDMKxV8Zv7b3QNe0xGVMcDCyVrixjcwGIIDogE+GvSXcbmDgikKZlhz7+qIX0Pvn00IKliVyNRxpMd1RBJQAYows2rchPclvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qVxJfTPi; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CjzpPZL5"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8ec37d52c0dso49692285a.0
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 04:44:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qVxJfTPi"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8cfd122d78fso469003585a.3
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 05:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776685485; x=1777290285; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776686626; x=1777291426; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fIzf0XPsAhz/8t3+FJPuZxmLsPQBayTBK/OeNxwFo+8=;
-        b=CjzpPZL5QAxy4JmXvd4s6529k1xzmY9ojdnMH6M0Hj+KIRSq2ESHfzCvvE4No1wlgJ
-         OY4rznKGXTUF6oXMA6eTIE8kVfTKFxCtKZoiLyXIccXv3EaPdm2UK7q+EMxCI1ipqm9F
-         CepEaK2JJRt2oDppFCtuQQ4D4VwB1y87WMfeyUE7+aEgeDYvvRoEc3aIAp/soKTVTuI2
-         oUpTuFArvMNi7gSx+cPg+vStwKWjB1YJX/iBMwNmgcSu4klQnZU8G4owYJbAG8VLRSMD
-         kdyWi3wiRHbyhVLHTToGdxiX0WPpqWSl2J2TtIgTXzzHYPQIagUvSepG7AO/UNr6cEG8
-         0wEQ==
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wLkTroODAwrs8rnhF0VIWN5Pbbr1/oWLErRMzc2Bwiw=;
+        b=qVxJfTPi5OMXn55PCFKcBfmzXqTdHFIWbcPjrbNxmmGT5XDLnblYW/C0cP0JKFYW+y
+         xSuJNpvGqRaNPmO4MivNLaFzIGPUPBr3uEZZZ8LyyLOnmKLQdsmMwzb1hfWO+ZFiVz/P
+         czBlyztEXrnS/9lIzcFKpgeMkaPd1Vf9jh7eBpLcoqJczBg2RxYJElatbF+pHHm0tnUV
+         LAd7RUS0YS4yYx0ZX2tfznErHLBqDNeavmsXzzMXcVgy3hhC4XijiitpdqFLJDFhXdca
+         6Iwmp3FFeVvYjZw64iVk7QbYEq4zLHV9gCJfwN4qdSsKeb7JubW+HWZNNvxoFRpQyEun
+         eDTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776685485; x=1777290285;
+        d=1e100.net; s=20251104; t=1776686626; x=1777291426;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fIzf0XPsAhz/8t3+FJPuZxmLsPQBayTBK/OeNxwFo+8=;
-        b=hm0aVa9vNx6PUWhK7pAqmTVggHPTxoa5hz+g0+kfVWpUDS2vVwKSyKN0yyfHrkKJSR
-         xRae09AmuUmjkC6vkc8hBS8zb3C+Xi5Ps7PH9nk+wDw4niRFLaTqgiAR2bOG5bUjINLU
-         HdAOOZ/Qu4pzgXykZJ2eZ+fL6U04ylwkihmA0WlnTzmr6qeBZjJviLhCXgdUx1JLoHWL
-         mpOCrVl1Y2GumY3rLnHnxjlzNaMqjbh8/97Wdo2ubG/Kwm45GY9UkP+ffJXyvoaylC4p
-         XNFhk5t52CmG1Q6ANh4sjCHMmJ1o76QsQrJS/b48tN9CfETFO7370v8t9OOm2aze8Fj9
-         x9DA==
-X-Forwarded-Encrypted: i=1; AFNElJ98IgAWwB30aK9xJrDjFz1Zp1mKffOLK2xgwj2hQH992VfH1TDQoW+NelF2dbGV+IyoPdE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YywrSYiove0OT40OC0XHFYAAqq9JwXk0cB+Jd9KyNdKlH6WhggF
-	pxbZQZSjSnpSOzs68k6Lcob/yCO5T7DGfMN872WP/M4vb5AtHymlIM0Z
-X-Gm-Gg: AeBDietIPUsjP7HZa0b8c1B0/drH6tEbt0+2TXZx8B11CP0cHIjQjtXoebS7WkpzZZ2
-	k+5/scCpf26t5KIHQvPn7oNgkstkdA69IWV7PfkSLmx88gf7R/TCEClmXKHpw53ONS3TXKupNx1
-	I5hZs9CksImTkvMeKlgykhVoc4XxCWuT/BatgXVCZe1phN/cbdoIFDaic8B2coopWN0t209UskE
-	gy8vAHZ9/usPtV0IED+6Dy2MpsVEVWBodPOQQvTxhPprHXTY44RCcmVoJ0dGbbfyk0mAm+BsA0n
-	UWctxBzgCpIQzPJGeoPgEjKMIvLVghFALe63/ykia9c9mp7+i6u/DnmWdy25vEBcAR8a6VmOFOZ
-	r2SjY9ajpEpZ1rwBZewpUJlhH4UI1FVTS7s1jseITa/ZJGo5zq9JYlm2MEthXm7BKNPZb7owbXd
-	6libYdf9X3l0Kk7RxyrrTYDbBANjVCLHsblNrKFr2GWH7u7pB96cmljD8N5skDJSS+JsGP+lU5X
-	XH/x7Z9YHnGyO0smmI=
-X-Received: by 2002:a05:620a:691a:b0:8ed:c5ef:119e with SMTP id af79cd13be357-8edc5ef1e44mr45954285a.22.1776685485580;
-        Mon, 20 Apr 2026 04:44:45 -0700 (PDT)
+        bh=wLkTroODAwrs8rnhF0VIWN5Pbbr1/oWLErRMzc2Bwiw=;
+        b=pStxCP3XJbYTX6deV+Ty/lI0tLGjD1D0PqkNpOahQG8NOZoj8I7rtCnsL3FAKdj7so
+         E/V5TQ2rkfRnoX6WdA+o0QarRAA/AqK9sPUTBhLNGLbZ7R53OKJlcc+lsuFvZyahghfn
+         l4uED56HuX8B4qP6aslc4g1PcG6OrIGd3AM72RpZTm9UStSKpLm0hcwHb3uK24SE4Qpg
+         6lenjAH+6SAZnGHRICe0J2w7khghb5NClgVCPT8aYV0phuCaIw/SNXlSIevP5zH/AQuj
+         QV+B/3vXVIWs+GPLwNUH0blglafeJ9W6JiN2oUdD+lgRuwY0K5Bk/TNNL13AnmLEFUGG
+         BxSw==
+X-Forwarded-Encrypted: i=1; AFNElJ9LsWLZNTUK1H1ep/WIfDMmmjkdB9EzD7cu9R+KSrhjsaUD2RDkWVHj4nS2I+SUCr4hJBQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRFXAUROn2Miev0iIXqecxYZgPxekhzuU7ihX/AH0K7pvd+w03
+	KCtXDdwLKIG3csf6J6Hl3yrgF0tPijj2fJpzsZMdBqmAsO6STYfUw7DrIHMOVj6Q
+X-Gm-Gg: AeBDietHc06WoM7kTH6sxSpEWkV7Ut8f/Q/0l1PcFaVwHOE1D99oCVLRRZ1pXEwrdcc
+	cg4ZDPRxVsqTPg/gKcHE1/qY6ARo6aKrfl9LIEJOIzqMWtX0mA3A089yhgbkOwam1C/vYJZwbPk
+	3nlk99mT+1Dw7HXV/ghxmQVAX55o0CaSCHYXyU1IIQkVxjNVg7GyX4qiq7K24swe1z4QVbZYHFB
+	DtdCbJ4ln4gLgfSTLCFriv0P+6zsohqmUSP3jASo40Xau/vihzrwBoHj2ruNuFKv1QgEtSA1w1+
+	Sfk/Pp0Txnu9QV3c5CQV1AefyT2MDFHXw5BRWqLCHaGmVgdWiuaivIZ4tekDtI2cRt5E0sqNF1P
+	W507Ivv0cYSetNJDG1Ddv4gHbCO+7QoS1JWRATGn/sYyri63lTPcCB6lnYPPV0Y4GjJHBxKDhyi
+	nM80dvpCFcN57ce8fmhjCdvPVzpXfY/m/0bMyvM+A++ApBUaiHVasturjSdpTotN2RXRDrE2TzJ
+	cuQXO4z
+X-Received: by 2002:a05:620a:2901:b0:8cd:900c:cfde with SMTP id af79cd13be357-8e7916b1f5amr1805524485a.39.1776686625982;
+        Mon, 20 Apr 2026 05:03:45 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d99c3c17sm787974385a.45.2026.04.20.04.44.44
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d92ce037sm759288785a.32.2026.04.20.05.03.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2026 04:44:45 -0700 (PDT)
-Message-ID: <8a3e3a38-3f8e-4363-9e45-b5610c3efbc5@gmail.com>
-Date: Mon, 20 Apr 2026 07:44:44 -0400
+        Mon, 20 Apr 2026 05:03:45 -0700 (PDT)
+Message-ID: <55bde257-ee25-4a7c-a17d-c902aa4f0324@gmail.com>
+Date: Mon, 20 Apr 2026 08:03:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,66 +69,90 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: chriscool@tuxfamily.org, toon@iotcl.com, ps@pks.im,
- karthik.188@gmail.com, justin@parity.io
-References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
- <20260419084840.33986-2-siddharthasthana31@gmail.com>
- <4c9fee0b-99bb-4e41-9227-f09c63df9f9d@gmail.com>
- <9e2ca91d-9091-4d4d-9427-ec8a23ee8909@gmail.com>
+Subject: Re: [PATCH RFC 0/2] Move libgit.a sources into separate "lib/"
+ directory
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20260416-pks-libgit-in-subdir-v1-0-03afc731df55@pks.im>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <9e2ca91d-9091-4d4d-9427-ec8a23ee8909@gmail.com>
+In-Reply-To: <20260416-pks-libgit-in-subdir-v1-0-03afc731df55@pks.im>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 4/20/2026 6:24 AM, Siddharth Asthana wrote:
-> On 20/04/26 04:06, Derrick Stolee wrote:
->> On 4/19/26 4:48 AM, Siddharth Asthana wrote:
-
->>> -    if (line_term)
->>> +    if (arg_missing_action == MA_PRINT_ONLY) {
->>> +        printf("%s", oid_to_hex(&entry->entry.oid));
->>> +        putchar(line_term);
->>
->> Is there a reason you didn't use a printf("%s%c") here to
->> put the oid and line_term together?
+On 4/16/2026 9:24 AM, Patrick Steinhardt wrote:
+> Hi,
 > 
-> 
-> I just followed the existing pattern in the same function where every other path uses a separate putchar(line_term). Happy to combine if you prefer.
+> this small patch series follows up on a discussion we had two years ago
+> during the Git Contributor's Summit in Berlin.
 
->>> +    } else {
->>>           printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
->>>                  info_term);
+Yes. "small". ;)
+ 
+> I'm fully aware that this will likely result in some discussion, which
+> is why I have labelled this as RFC. I'd be fine with a result of "let's
+> not do it" if we cannot agree on this step, but I think that the current
+> layout hurts discoverability quite a bit. Not only for newcomers, but
+> I'm also struggling with it quite frequently.
 
-I was just looking at this line in the patch context as
-comparison, but if there are other patterns that prefer
-"printf(); putc();" then that's enough for me.
+I agree that the flat layout can be hard to navigate. While we are not
+at a scale that needs something like sparse-checkout, but this wide root
+directory cannot be reduced by cone-mode patterns. This is meaningful
+only for niche cases like "I only care about Documentation/" or someone
+testing sparse-checkout performance on a copy of this repo. It's something
+that I do think worth mentioning whenever such a large refactor will be
+undertaken.
+ 
+> I also intentionally decided to send this close to the upcoming release
+> so that the series can be merged early in the next release cycle if we
+> were to agree on it.
 
->>> -    if (show_disk_usage)
->>> +    if (show_disk_usage && arg_missing_action != MA_PRINT_ONLY)
->>>           print_disk_usage(total_disk_usage);
->>
->> I'm a little worried about all of these checks that need
->> special-casing. These seem like options that are enabled
-> 
-> Phillip suggested making this a separate --missing-only flag that composes with existing --missing= modes - I think that's a better design. will work v2 around it.
+There are two really big disruptions that this will introduce. I bring
+them up only so that we can discuss them and make sure we handle the
+communication to the community and appropriately time the merge of this
+series:
 
-That's a good idea. '--missing=' formats the output while
-your mode _filters_ the output. They are different things
-and worth different options.
+1. It will conflict with most patch series in flight. How can we
+   communicate which topics will be caught up in the rename before it
+   merges, which will be modified at merge time by Junio, and which
+   will need to be sent anew on top of this rename?
 
->> how this interacts with those options. And perhaps some
->> warnings to say "these options are not compatible".
->>
->> On that note: this patch is missing a document update.
-> 
-> 
-> There is a doc update in rev-list-options.doc, but it doesn't  cover interactions with --count/--disk-usage. Will fix in v2.
+2. It will conflict with forks that have long-lived history that is
+   merged with or replayed on the core project. The examples I know
+   well are github/git, git-for-windows/git, and microsoft/git as
+   discussed in [1].
 
-You're right. I thought I had looked for it in the patch
-but missed it somehow.
+   Something that I think would help for these cases is for the rename
+   to be done as a solo topic merged into 'master' on top of a major
+   release, such as immediately after v2.54.0 (or similar). This would
+   allow a merge or rebase from the previous checkpoint to update to
+   the rename without any other upstream edits causing further conflicts.
+
+   Fork maintainers could then decide if they want to update their forks
+   onto the rename early in the release cycle or as part of the next
+   release cycle. My preference would be to update as part of the current
+   release cycle so any changes during the release cycle automatically
+   incorporate the change similar to working with the core project. (I
+   am not a maintainer of any of these, so it's not actually my decision.)
+
+[1] https://github.blog/developer-skills/github/friend-zone-strategies-friendly-fork-management/
+
+Finally, I looked at what's left after your renames and I see that the
+root directory has these categories of files remaining at root:
+
+* Dotfiles that must be at root.
+* Documentation that must be at root (README, code of conduct, etc.)
+* Root build logic.
+* .c and .sh files for root-level commands (git, git-*, scalar, etc.)
+
+Of these, I'd be interested to see if there was value in moving this
+final category of file into another directory, say 'cmd', 'commands',
+or similar. It's the only remaining knob that I think is technically
+possible to further trim this list of files.
+
+Did you consider moving these files, too?
+
+_If_ we were considering moving these files, then I'd rather make
+one big rename change instead of repeating this exercise multiple
+times.
 
 Thanks,
 -Stolee
