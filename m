@@ -1,80 +1,80 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B962D738A
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96A1385509
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776670081; cv=none; b=gko7Br2ltx/Ou/B1hF4kPyjNbxzr2U/uyzvFvPVllWYQLFoOhnoR8LqJqV/svGI+Gz2ptOEdhL/2Zem7ai4hnsMrQDdmB409xTrk/UUQhwNsWdJ6g2acCHyVcSGFCedNZFogmA+2ZvLnDWvnubiyLzwc2M64A2Q20ncMagRHskQ=
+	t=1776670085; cv=none; b=NI/oLKU++2Dkq+SzeFasaq4hDrf78t0vjnfmby0t03HKNI25HJgCZXPh7jyK79E4VI74lv24ENcFaIDILIiG3FPjYafivvJdyeKDs8UPrqRUQ46YgO9LJzi8+b6lGWQsrBagwP5eLny5z+70n7Oh9x/UZMyLIRuQOfX+c+vgQxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776670081; c=relaxed/simple;
-	bh=eLr5UW0gX3C9Z2uZ6dYS1I//vFk4Kr8GpJncaEvkm+8=;
+	s=arc-20240116; t=1776670085; c=relaxed/simple;
+	bh=BzuqyLeqYqcdu3LZjyb/Q20BHjCN0O7lza7zz/rbWjE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZJEbfgZnvnDgAZLm1w0zkkD9m39pR25NFuSlb2oKqSrDxAA+kI111i1Zj1kZ5bW7IaguQsMucvRmqd5pai0Vz3kaASBKbHg+cCZP0OGERdmFCJpWohJaeLM/vQ33nII5yTRzYeZ+Cu+gBLcFZgp4u7Og/cj0TblOMJYB8pPfdqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ii8BSCL7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sp4AfSvI; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=rieQ7SUn0mlAZ99ce2EOkMJHueTytfgNnwfqmuUADWsVYalAF8O8vrBqI1PSJsuTsK8O8RcBhPReYWZ0v3JCbtUFzNdZJwIRXklChQ5LWLXteXJkystvCADbTW2F/BQCC8ckorr3W/EhrSm5yZ2r9/MiWA8lChuJM9wC1lwwJMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e3frwWHf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLMUhKKb; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ii8BSCL7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sp4AfSvI"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e3frwWHf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLMUhKKb"
 Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EE2AB14000A7;
-	Mon, 20 Apr 2026 03:27:59 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 33B86EC00DB;
+	Mon, 20 Apr 2026 03:28:03 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 20 Apr 2026 03:27:59 -0400
+  by phl-compute-09.internal (MEProxy); Mon, 20 Apr 2026 03:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776670079;
-	 x=1776756479; bh=9zkuz8c6r4lzMh63DBjI2y2k++4EFB1LDLqGzRN1y/Y=; b=
-	ii8BSCL7gwPFqkFNwiasCSvt0e5lIJkwVwXlEnvojk06bL7hAxitNXm4fXeDnPOm
-	cicCAi2CiUwhl/gMP+WD6oiFtfrMtW/+OH8Y0wocliAoA3vWSpy6fnFfyF/A4j3M
-	IizxIcM1FvKcMcg1CprGsEwSlkX10//10XMi7lVLo46NFdNeBadFYfQqwl9EQASV
-	pEKER9Z/fL6DERRCqb4QInHbMuIQojl4dpNBWicLAy+K+nl1H7n9Gonw8xhG6MMJ
-	El2Da22y/Kvnz/VAL9MiIoVsyIhPuexwg1Q9bcgBvnpMFQdSTYDi+BS/A7MuEYSN
-	sQUm9YduhoExDET3odBK0w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1776670083;
+	 x=1776756483; bh=+4WaQ/IrBp6+eup5gGsqJZQhYQPHlGN5aLf0CbCK6VI=; b=
+	e3frwWHf2B+zvwQlvHzwMG4vl7vE2W/for//LPJtpCPtfnPM/tbNOkApRjBsrYPF
+	Z63cXLOU3n1mu78c7aTmttPNin7u56RJuE+S8nV3qG0joq+deq4IMWo9mLGZM8fp
+	WEKlFc7RsmXPzTWqW0LCRwv74Rdwl9S5cYDQfWeMtp/tnQPEUcKB7JiTVYa0oXtN
+	j/eWRKv4GOa/dGmsnvmbW4aij8Og+8+r9T6QFT6VZ/Zp0cV5dvl6NEzdnssaKd+M
+	x7Px633UiH6NVB+cjIwKsdLGRPsTRS51Az22ABsqKKrnUsUIq8X5WoBzCCtyV+CA
+	lJbwAv3+c5N4VZeCSxXy3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776670079; x=
-	1776756479; bh=9zkuz8c6r4lzMh63DBjI2y2k++4EFB1LDLqGzRN1y/Y=; b=S
-	p4AfSvIa8pgAzy2gtbPxXpsgZzB6DFH47GtV9YXoH1/SQFiVt8i4zpOQdVLDU6vF
-	p2vYlhY7AsjY54X5NqtcYhL8qfAqUwxZoWoVBLUCB3+4WZRJaq1hHEemRy6MiazC
-	AyIR+u6MOHBapSlM7Per2g3c9ukHhDp82YIbeT/Y6JWIrRXBSAjrnxgxwWOxkjS7
-	cE3JL1WE34JplOULjvOoIglvr0CQlHcUmTdHooTXQjhIY/hYICz2AfZCok09d45z
-	7LQV22VWABuX8yruCcYWEIl05Of8dVazT+1c5yZCFLPLKztgP69kAR7lTDjMqA3d
-	r9Fl0cn+oQTSlkyAtueyg==
-X-ME-Sender: <xms:f9XlaQ1utWhf0vy-phRuYGEf05bYL3omjhhbZt2soz_6UFDptA8vBg>
-    <xme:f9XlaSFKSrOUtDgnDORe0nPingff64aCr1RU_xNISellCdMLj--4G4_vZIxVluvd3
-    hXp4beLw4R7_W2AC-CYOge4nqaHSrmmBgNc56I1r3C4EvNyn81B>
-X-ME-Received: <xmr:f9Xlad5DkXfmup8paoI-ADKacKFIkeJ6iCNP8lQ6Ktb4BFAgQKAtzhXxJ_9edaNYMoFFTalLtvvWOJey0rtGaXtPWZwgyl1Sdc1eJXjX4-pN>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776670083; x=
+	1776756483; bh=+4WaQ/IrBp6+eup5gGsqJZQhYQPHlGN5aLf0CbCK6VI=; b=h
+	LMUhKKbYU+7fzydUuDyA1d7ACB/9qYQylTDUn7j9yYvTLUY6g1fjEn/CMZs+qwLK
+	tSOFY2R0ZQ4kGeQMD2c6IMHWLX6uiaN12unfIZv/lzC9WI1Y0V/A0Uyj6ykXpsKa
+	Yt68GQ8aQU/Rhe8lINT8EdSkRE+2kD/19awfVlHj8P0ddP7JulJbAHdNnxyeRpGl
+	AN70cWC6spPwTTLVynUXnsd6p/4YMTEvJpriENKWRAH1u6qrzP4jy9THwcebD8Se
+	KlxeeGanCUMb0Ndi9S2f7k0JIW5FxkIqT8X2p+lHIEWtJN/Zu9DlhSFbsZukSrUe
+	f9Yqy4obUAVB43adATJ8g==
+X-ME-Sender: <xms:g9XlaYZXIhho1v2VGikKMc-mtRkpQ9GFocgq5aEmeIglUlqyTIvZYg>
+    <xme:g9XlaaZo-GemFDVi-9iVh2tgp9KxkdkgcGhE0R9wlvBwPEYlTwBCSGrRoZLfWnyAW
+    GE0qHpGRSwF9ZHxCeNT03n_frpVM5-J5xC0jGR8Oke2qtTwxAXd>
+X-ME-Received: <xmr:g9XlaX_Au02fY2j601u3LkDbNF3lxjbaUQsX_Hh4OOde-9BmgigP7yNk3z4WxbbhnU3Crdqc9Ur34AaULPnveY80iNm4F_KhcpkTYG9q8sFJ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehjeelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertd
+    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgf
-    dtudffudevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsiigvug
-    gvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:f9XlaYtnm1nUiC14RoFAJEBMoJpGw8RtaRnKcIN6YPuX_O7AyNiXAg>
-    <xmx:f9Xlae4tl3ElZxoZj1RyV2IzAoOZc1ZVj5GNwdywkANXjh6vgqERZg>
-    <xmx:f9XlaTWwoDpyGmQuwQfARALTaGlCJYSu9a0Wuls1tZkfy7W9hlnfLg>
-    <xmx:f9XlaQ-4gUMozSlhbHzZqKUw_ag5250-ZqJn2Npv1paflKgjzVCexw>
-    <xmx:f9XlaV260mQ1WSEBQ2N-9RZLKEIpblmjiGQFwRJotjVz3YFhXV5e6c7r>
+    shdrihhmqeenucggtffrrghtthgvrhhnpeegleejtdelfeffleetvdeivdeuuefgheetje
+    ehudetjeehhefhheejteeugfffvdenucffohhmrghinhepghhnuhdrohhrghenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehs
+    iigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:g9XlaRgeFzgZ0JTCUeGtFHkSjY77KSzmXS2CILuOPk8F8cJ4f83qGA>
+    <xmx:g9XlafeVQuJpBb9cvGNrGaatYG1rJ1ExR9CwrviKNTpY7RcHdxuAiA>
+    <xmx:g9XlaQoSYOlRq-ylXYcLPpjE4QivTKnFcc0eY4RRjhtGROAqr1AUuQ>
+    <xmx:g9XlacC9P4P7M-KqUmDY-FqMep_PVNFew8fc0IPIUYjBLKQOvLjRzQ>
+    <xmx:g9XlaV6lIe2KthAOn8_YrBsmkEALhk6RqpE4cYtPeHUv0aDaLFsEuyol>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Apr 2026 03:27:58 -0400 (EDT)
+ 20 Apr 2026 03:28:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f2a6127e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Apr 2026 07:27:58 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c9c2b50c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Apr 2026 07:28:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 20 Apr 2026 09:27:30 +0200
-Subject: [PATCH v5 11/12] t9902: fix use of `read` with `set -e`
+Date: Mon, 20 Apr 2026 09:27:31 +0200
+Subject: [PATCH v5 12/12] t: detect errors outside of test cases
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,8 +82,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260420-b4-pks-tests-with-set-e-v5-11-7d3d68292f6b@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260420-b4-pks-tests-with-set-e-v5-12-7d3d68292f6b@pks.im>
 References: <20260420-b4-pks-tests-with-set-e-v5-0-7d3d68292f6b@pks.im>
 In-Reply-To: <20260420-b4-pks-tests-with-set-e-v5-0-7d3d68292f6b@pks.im>
 To: git@vger.kernel.org
@@ -91,41 +91,82 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
  =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 X-Mailer: b4 0.15.1
 
-In t9902 we're using the `read` builtin to read some values into a
-variable. This is done by using `-d ""`, which cause us to read until
-the end of the heredoc. As the read is terminated by EOF, the command
-will end up returning a non-zero error code. This hasn't been an issue
-until now as we didn't run with `set -e`, but that'll change in a
-subsequent commit.
+We have recently merged a patch series that had a simple misspelling of
+`test_expect_success`. Instead of making our tests fail though, this
+typo went completely undetected and all of our tests passed, which is of
+course unfortunate. This is a more general issue with our test suite:
+all commands that run outside of a specific test case can fail, and if
+we don't explicitly check for such failure then this failure will be
+silently ignored.
 
-Prepare for this change by not using read at all, as we can simply store
-the multi-line value directly.
+Improve the status quo by enabling the errexit option so that any such
+unchecked failures will cause us to abort immediately.
 
-Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
+Note that for now, we only enable this option for Bash 5 and newer. This
+is because other shells have wildly different behaviour, and older
+versions of Bash (especially on macOS) are buggy. The list of enabled
+shells may be extended going forward.
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t9902-completion.sh | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ ci/run-build-and-tests.sh |  6 ++++++
+ t/test-lib.sh             | 25 +++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 2f9a597ec7..28f61f08fb 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -590,12 +590,10 @@ test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
- 	__gitcomp "$invalid_variable_name"
- '
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 28cfe730ee..de08a08d59 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -7,6 +7,12 @@
  
--read -r -d "" refs <<-\EOF
--main
-+refs='main
- maint
- next
--seen
--EOF
-+seen'
+ export TEST_CONTRIB_TOO=yes
  
- test_expect_success '__gitcomp_nl - trailing space' '
- 	test_gitcomp_nl "m" "$refs" <<-EOF
++case "$jobname" in
++almalinux-*|debian-*|fedora-*|linux-*)
++	export GIT_TEST_USE_SET_E=yes
++	;;
++esac
++
+ case "$jobname" in
+ fedora-breaking-changes-musl|linux-breaking-changes)
+ 	export WITH_BREAKING_CHANGES=YesPlease
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index de7d9e7b92..cded7bd693 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -15,6 +15,31 @@
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see https://www.gnu.org/licenses/ .
+ 
++# Enable the use of errexit so that any unexpected failures will cause us to
++# abort tests, even when outside of a specific test case.
++#
++# Note that we only enable this on Bash 5 and newer, or when explicitly
++# requested by the user via `GIT_TEST_USE_SET_E=true`. This ib secause `set -e`
++# has wildly different behaviour across shells. The list of default-enabled
++# shells may be extended going forward.
++if test -z "$GIT_TEST_USE_SET_E" && test "${BASH_VERSINFO:=0}" -ge 5
++then
++	GIT_TEST_USE_SET_E=true
++fi
++
++# We cannot use `test-tool env-helper` here, as it's not yet available.
++case "${GIT_TEST_USE_SET_E:-false}" in
++1|on|true|yes)
++	set -e
++	;;
++0|off|false|no)
++	;;
++*)
++	echo "GIT_TEST_USE_SET_E requires a boolean" >&2
++	exit 1
++	;;
++esac
++
+ # Test the binaries we have just built.  The tests are kept in
+ # t/ subdirectory and are run in 'trash directory' subdirectory.
+ if test -z "$TEST_DIRECTORY"
 
 -- 
 2.54.0.rc2.529.gd9106f7525.dirty
