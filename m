@@ -1,219 +1,125 @@
-Received: from gw9138.fortimail.com (gw9138.fortimail.com [82.98.199.138])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798712BD11
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 00:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=82.98.199.138
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776644368; cv=fail; b=NV6lfhx75uXY5j/sZxYd9A/NV8YUjd+Zplhu21iVk+VkevWQQXIMztcad/iUUvv5+l7Yqvmw4f6RbxEN2kukhBAktEeOpgEvqi43lEqpQP4HBusrfLz4Ri1qHvFmqioIwyL43ia/KZ8Qmeuv06fbdg2aqIXUx63pVHoJ6aMhH3k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776644368; c=relaxed/simple;
-	bh=0kb1F6roUcsKhRxBn5/6Ww9RHsECrHqNAPuth9gdq00=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=qL8JQcReT4ue7Klmc2yg/7PgsdneiH2eIIEcJ6oz1IeO497NeFKdOLeRxtjFw+NxN00p3pVRTtDReKm1VtiBJWHSorzDxc5JCScq+ESfIwkXdyIlqtq3eOQgCUFupn1YmX6QpAbG7UkW327bBXmbaHUoDavXCrzBDdyL9DBPtLg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tr-advanced.co.jp; spf=none smtp.mailfrom=tr-advanced.co.jp; dkim=pass (1024-bit key) header.d=tokairika.onmicrosoft.com header.i=@tokairika.onmicrosoft.com header.b=Dfga+FWi; arc=fail smtp.client-ip=82.98.199.138
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tr-advanced.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tr-advanced.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F340DFCE
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 00:21:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776644482; cv=none; b=FPxxSeAyFQVj24+eWrML28v8zF/0Hsku4s+yNHsh4FZ44tRoUJInv/LBrloqPhKNA1UiL1PeGFTdEt4t/xnLV0LT09iWAei1l/GcoM/AzIKc+o7IEwH7wdrwpl2rtqYxhAqY1f42Bn5TGn9oJb11rYe8G/t8+VMgFIwypUYLkv8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776644482; c=relaxed/simple;
+	bh=FSbHFekIrPJRAk/37uIfEJLBzr/ArzFWo/BDnkzPhX0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=at5hXXfchRJMRJgTmSnY1Dr7mibW1R3rQGXnaXx7NQ3GyfEHEI6IGO/7gWlAlt3k8BmsFSm9W9LlT7YF1g+jieROU8/r8EzBBu+w9BbRQsI2PiUiMXPD2xzlPELxDsuqsJTUfAWBau0OFDbtGMHaW8ZgxH+udRXNPvmJ2VQBMDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XlvXjm9t; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tokairika.onmicrosoft.com header.i=@tokairika.onmicrosoft.com header.b="Dfga+FWi"
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11011032.outbound.protection.outlook.com [40.107.74.32])
-	by gw9138.fortimail.com  with ESMTPS id 63K0JEmk031849-63K0JEmm031849
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=OK);
-	Mon, 20 Apr 2026 09:19:15 +0900
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pXhP66Xw9gw3voA4kuDHLK5uJer+OkFe+Fqg4OPmeeeR2GiUec4YPGkajJPeQSqZTk66nDx7PB40MXyS9ZUduB09zH+bGaioqxQQIeTd3rcULutNUfftzoAwq1k8ZDve/e+1bD+fX7a0GY87EuteCwlCAjW39U5xNBtQB+SKgPckL7o5rJLx3KxZrqf+VztkYiPNgUfiejqWR5LOCwDtoMwihI8bdCbFJHu7x1/dYm6+JQi/O+6UFmcPvV2YCFWwnqkTdgKCXgb+NMGMW9ZauMQvMx/kBqGPtTbTvAaMzoxXCyAf9edJ3SyXCk6IPMjUkGWek9yCASqPAR7aF0qzHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0kb1F6roUcsKhRxBn5/6Ww9RHsECrHqNAPuth9gdq00=;
- b=Ur9zY1op7piXBd7WMnRv1V8PIQj6EfSQM2OD/iW8Gm7dOiPvGIuhGgzJbh25LQ0jshkyegsrvYUmX/G1+Wl+pMY3CIp/cmwF4JcQOISfryH7QPI1AXFaSOKg6SjXlzkF4kmr/umqAvhqrWTYgw9oxX15HoaRE2BAed0OhdmV1YlOiD1pLTF8+k2En/I0n/REqtR7YBrRYHWvuwnuv9GkevnTsOI75oATDFm/ViUNi+yavRLN9iizaAXMegurMaqyhp9K2DdGAqgEKEk53WzO8BA6IN+PMnsk03L1eUZtQ0yjVqojAmoTl+82+GiN4Da/RHhITFJ2k7++6OV8QSKuSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=tr-advanced.co.jp; dmarc=pass action=none
- header.from=tr-advanced.co.jp; dkim=pass header.d=tr-advanced.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tokairika.onmicrosoft.com; s=selector2-tokairika-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0kb1F6roUcsKhRxBn5/6Ww9RHsECrHqNAPuth9gdq00=;
- b=Dfga+FWip9GzSIN80DsgEPCeTTMu+/XMJCK1FqZfZGVZnOgpZu3OnZNlYvU2lBTxOj+3aKCjvOPj3wuVifzhiDnPnk8X4Ce0fd3Z+Db46Z+K6XCCG4hpbo1UJz93O4+jbW1n9JBAiXzyMLTOwOsS/YQiZfVaWtN8B4kz6AksqPc=
-Received: from OSCPR01MB13450.jpnprd01.prod.outlook.com
- (2603:1096:604:32e::14) by TYRPR01MB14302.jpnprd01.prod.outlook.com
- (2603:1096:405:21a::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.32; Mon, 20 Apr
- 2026 00:19:10 +0000
-Received: from OSCPR01MB13450.jpnprd01.prod.outlook.com
- ([fe80::8fd4:6b1d:4f1:4b46]) by OSCPR01MB13450.jpnprd01.prod.outlook.com
- ([fe80::8fd4:6b1d:4f1:4b46%5]) with mapi id 15.20.9818.032; Mon, 20 Apr 2026
- 00:19:10 +0000
-From: <kawai-m@tr-advanced.co.jp>
-To: <Johannes.Schindelin@gmx.de>
-CC: <git@vger.kernel.org>, <hattori-m@tr-advanced.co.jp>
-Subject: RE: Subject: Inquiry: Git versions you provide and Windows 11
- compatibility
-Thread-Topic: Subject: Inquiry: Git versions you provide and Windows 11
- compatibility
-Thread-Index: AdzLqvIiPp8/2/suQwqpKO+g0SPM4wCWm2SAAJVnozA=
-Date: Mon, 20 Apr 2026 00:19:09 +0000
-Message-ID:
- <OSCPR01MB13450E9AF83B914D507B77254EC2F2@OSCPR01MB13450.jpnprd01.prod.outlook.com>
-References:
- <OSCPR01MB134507F2EDA90C775EF1DC571EC252@OSCPR01MB13450.jpnprd01.prod.outlook.com>
- <57f4f6e7-f1ae-877a-8215-13e7dd5a18f1@gmx.de>
-In-Reply-To: <57f4f6e7-f1ae-877a-8215-13e7dd5a18f1@gmx.de>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=tr-advanced.co.jp;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSCPR01MB13450:EE_|TYRPR01MB14302:EE_
-x-ms-office365-filtering-correlation-id: 6212a982-f119-4247-0204-08de9e727163
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|1800799024|42112799006|38070700021|56012099003|22082099003|18002099003|3613699012;
-x-microsoft-antispam-message-info:
- cKzIXO9tgsF9SA66OWXV1GsnBnN22/IPv/crsiqeGuQWCOY75RZTJpD4GMPIxnUURFZDzr1Dti8plLT5oH1BofXnBGUWdmPBBl8S/E1A+tyjC0wmob3n5pUq6Xhwlh14DJNHrpgZWjnCkmShvJyMJ5irdDOHiv2N65z/aHs+e83wqEVG0RmDw+nDJYiXtDdOS+IvZ6ZCrrDRKa8TxX28YEp9pk48liSZydNE2+rGf2jFCKabfjdDeP3SSZjUY4ggtpmaWQ8ghaptMSBMB+7NBTIZ+hZ8Ug/EO+pXaFrfs8Jjir5JVCTe4OqZc6cKVrk9pP0jGTVzjO5Oucj9xHnnVxARcezy+eLHK6VVBxililHqOepEHPwxUadoK6D4qStUMr4Zl9lwd6A+CitTHgqQ3IJ7X0rSGeB56qANKXv2pBUxHDbPD5Kvx531jYU5n55SmnXQpT+GGzMt9oPa5jKDHTSnpy6UI5fIY+Xg1ljIrYvwsxshdmUG3Gf/KRiPVbGH6lxtp66YqWQX74Z8+dCPsUl3iImWtvVshL7FlTmz9C6+sl2zrDxBMOBB0oHWoU4OSXcqgq4wcZdVL2Q3SX7hLPlgqdDyafkexdrvHLrdTvFgEaCgo0MwFeNbkJ9glM5b4PphKpbpGvu5+si4i8KoWfpMlWKev9LezHg1lPyy0RsYlcaVhmW6Z5h2gxUGv/ldRjEi4B+4NVm/WoDnSXgd86PWCImz7h4106jeyCIQ8zGRjWQH6VPJvGA6yQwe7yoykCGuOekvfKIHpqKgC8Bmiw==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:ja;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSCPR01MB13450.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(42112799006)(38070700021)(56012099003)(22082099003)(18002099003)(3613699012);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-2022-jp?B?ZU8xbG8wNXdGdXBMWmZTMnFRdkZVVkRPMExJL1MrVG9LRi95QkNvYWxo?=
- =?iso-2022-jp?B?OGRuMjhZbE54MGorRnFKdHc4Q2E2bUpmTG4vd0kvTDF0NS9vSFZvUFY1?=
- =?iso-2022-jp?B?aFRDeGJ6T2JJWDNiSXZHdWRIMDNLMWNzaGRwRzM4ejVUZC8wTG1mOXFw?=
- =?iso-2022-jp?B?S0RCRFpwcDlQclNqdm1ZZDBES2pEZEl4R2NPMDRqZkg0MGhmTW55Z3Y3?=
- =?iso-2022-jp?B?MkJrNmkzOE9pTWJqZEQrRkJLVktEeVAwNVBwZnF1NUZzaDJuS1MvNGdB?=
- =?iso-2022-jp?B?ZW0xL1M2bGZpdEpKRUlxSWdzaW0wNE1QaUJaRDVlTGN4dTVWcklCTzJo?=
- =?iso-2022-jp?B?TmYyeENjUG9HYVRPbmRFYWc0Yzd6UHQydHR5M2x3U2ozSjlvMTd5RHNx?=
- =?iso-2022-jp?B?dnJZOGtkL1J1UGE1cUQwOW53VzQzZUdkNkRITXRlT29LeU93NWpPaHpL?=
- =?iso-2022-jp?B?Z1RrVGRuc2dnQWNKR29HL1UzRXNITEJ3WVlaand1bXcyZHA3dDFoRm15?=
- =?iso-2022-jp?B?UWp5WHZwS2FicFhLY1dBajBicHVFakFMV1BqR284NjZSb0lvYk12TjNX?=
- =?iso-2022-jp?B?MHY0VnZucHhsejJGWVFnaWIvbCtjT2h6UmJ2OENKb0tsbThoUS9pd05O?=
- =?iso-2022-jp?B?c3dNV054VlBVZEgrM2V6MHlhY0MxS2llR2pNT2NSWjdsMGMxaGJHcE9z?=
- =?iso-2022-jp?B?WVZ3NE5lUGs5T09HdHNuT0xqcDNCVks2TXVnQkFpTUR4dlBqZEtaelVp?=
- =?iso-2022-jp?B?WUphc3hPWEdCUE1uUWFpYlJ3eWlPcFJUeWNrQUdDZUxjMUd1UVhBMEdF?=
- =?iso-2022-jp?B?bys1amdPMnQ4Q21MQlJwRzMzUFlIQmI5Z3VBN3pPemsvRk9hRE5lbW9y?=
- =?iso-2022-jp?B?UmhLQ3dnQnB6d0pFS1k3VXp4MlIrRE1hU3FiWlV4ZlNkVFRSVXVaN2xn?=
- =?iso-2022-jp?B?N0IrUnBuYWZzN0xwM3RQQ2FuRi9pRkxSS1RMWDBJWXQ4eGhZclBwMm5E?=
- =?iso-2022-jp?B?M21Od0Z4NXVrWTZnZDE0YnlHQjZKL0VDaU5KMk5jdjZsODAwcjFNb3dD?=
- =?iso-2022-jp?B?VDlMaStnWklBdHpnQ1g0RFVIMWtyV242ZU1rWW1EQldKbWlaOFVYNlJL?=
- =?iso-2022-jp?B?Ym5sa081OVdUZGJSOFljQ2gxRktVbW9DNm1sa1h1YmRIS25WZDJBbXlG?=
- =?iso-2022-jp?B?Yi9aZERuY2FhcjU2TkE4bDYvQ3QyeC9FcEM4SjBleXlJeGcvK0UzSFVx?=
- =?iso-2022-jp?B?QlBFWVo1VGxHdW1jVXI0UHA2Z3l2QldPbWx1bG9USVFRazkrRDdiOFpS?=
- =?iso-2022-jp?B?eGZTbFpZSDA3eitOUXRwcDBnK0dYRXVGU1d2bUpQTDh6Yyt0TmR0M3Bn?=
- =?iso-2022-jp?B?NlA1SENyK013NVZ3RmVkeURGUUd4M2hONE1RQUhGWmV4bzZsWkRoWWll?=
- =?iso-2022-jp?B?UDMycWE3Y3R0UFJGM1JEeCtEQTNURkFjNnhYTk05dXZDTUcwOFllSkd3?=
- =?iso-2022-jp?B?R2VpUi9xSVdQT0xaQmVyaVE1Q214M1kxZ2VpSTI2MllxUmNOanNEanA5?=
- =?iso-2022-jp?B?SXhyYkgrdm9EcUk1VDZZNG9yb1Z5OXBhU2NaQzVsaTQvbEpKUkxkVWY5?=
- =?iso-2022-jp?B?Y21VVWlxdmtMaVExN0FYUzc0cHhYZ0tuUVdMcDBlRFVPaDNaWTBlRlpI?=
- =?iso-2022-jp?B?OFZJaG5WenlpOUxvZTB4NVFxZzdscnFhSWpHYVVOTldsVkh0NUpPQVA1?=
- =?iso-2022-jp?B?UFptWUJQMzJxY2wxajhWejhlRTRDTC9XYm84NVlRWTZoUm9zOW11TjVQ?=
- =?iso-2022-jp?B?OVJNTkptQ1VRMVVzRDBwSnR4YjViKzFjUCtLY0k1dmxDdnF5S0xNaTVz?=
- =?iso-2022-jp?B?ZFQxZlFsY0tic0cxM2ZxTEpJNzJXaXlQeGh0SG1lQ1lxQ3hSOUJNVjBq?=
- =?iso-2022-jp?B?T3U1ekVOYlJPVi9XRVVyalV1cXFUeGtzME1LTmgrRWZKMUhFbEZrV1By?=
- =?iso-2022-jp?B?c0EzbHR4VERheElabWRmdnY1OFVZWHRQZEdFeU1lS0pEWTZuU3JRaFA2?=
- =?iso-2022-jp?B?MjhGdkZCejJKSjFJMGdEUkg5SFFQTUxpR2hqTWwrWU8vbndjNzd0L2lu?=
- =?iso-2022-jp?B?dWRmdDY3djk3ay82T29SZExkZTV2cHRxbGwzUUNBVlliVnJjanNUYUda?=
- =?iso-2022-jp?B?QndsMllEYnowTDZIRVNxd0FEODRHaDdZeE16TTdEaFIrb21ZTEpMd0po?=
- =?iso-2022-jp?B?V2RFajBBVGZMd043L294Y1BlazgvNGFoN3VYLzZTMHY3aHFGem5raENO?=
- =?iso-2022-jp?B?M0RaVlZzTVdKK0VVZW9Bc05ObXpieTNyQldKbURNcUhuTGRwTjhsTk4w?=
- =?iso-2022-jp?B?QkVVbmVYc3BzUDFLUFNqc01aMTBPWDFxYmwydUtoTW9KQ0hGV2orOG40?=
- =?iso-2022-jp?B?ZHNWcGV3UXg5VlZGdmtCeFhuajJtU0kvU2FNdFdnWEJldjQ0Y1N2Wi9W?=
- =?iso-2022-jp?B?TXZNQ05WZlJRQmtvYmk3dVpjdlZlRmIxaVovdz09?=
-Content-Type: text/plain; charset="iso-2022-jp"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XlvXjm9t"
+Received: (qmail 402185 invoked by uid 106); 20 Apr 2026 00:21:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FSbHFekIrPJRAk/37uIfEJLBzr/ArzFWo/BDnkzPhX0=; b=XlvXjm9teven+WmtRUkfdZ5UGyndBYwjvpiRTAJX7S4bB9MnIpTRg2XuD2EdxGza7EwwSm7s4RlYjbGHYLzzbTKcGhrhXgo7V+cx5ysPsKji8xbvjR1AfQ1wnK3PqJTlsAxKb/tXjAn2jdK0ngsOi6oN2qhhgVbsgbd9aOb+uMQFTEw2D0LpcLfqCd5ACsq0kxkLDbGMOd7cPiVdppNPMq/6tCD5OB3w1l3OvJsq3A0Fp7HIfDY616KDYP1YTsYBxlkhmbAYSDEKJo1PEDiRQqLw93XxJSOuZ9B0S0JNk6aLIg8K9w4hCSAnBoQ3R1ce9lOCUJdv9kOT9SSvTKwrLA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Apr 2026 00:21:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 916600 invoked by uid 111); 20 Apr 2026 00:21:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 19 Apr 2026 20:21:18 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 19 Apr 2026 20:21:18 -0400
+From: Jeff King <peff@peff.net>
+To: Mirko Faina <mroik@delayed.space>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] revision.c: implement --reverse=before for walks
+Message-ID: <20260420002118.GB1238475@coredump.intra.peff.net>
+References: <20260418164736.2367523-2-mroik@delayed.space>
+ <C60EE993-97DA-45F7-89DE-2F97ABB0F685@gmail.com>
+ <aeUZUqSQI8FvRUco@exploit>
+ <CALnO6CACfSyzyguX4623Dk3y+QEM_Dbmfko8dTyM1p3JxBjZFg@mail.gmail.com>
+ <aeUqSltEWIWaPDh3@exploit>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	lJ/DVDXp0kGs78gAkaxihJnbNlBU9UTVxUF+k2FtKmMAkBw5/SnUj4I9wZBz/Ghdi/BRPlhu7HG0H5xsC5O3TGYfS3Sqnx79+U0X5w77zdSnpHa7m04M4HPCFYa041U8FyZqeCny+nOD1BgaEOXva2kNW5nu8RbmeGa0MNcAunTCAq1hh15s7PZgKKYadxjlH6fj/l9Gtkgszo+AJQW7xbcpdpSyMKcte/fjM0BUqO6DurIVnxc8jNoi7G2BH+Boc4cHju2P+RMRtdXxWnXU6f6gF/W9xxHwiSKncUOZstHjxwNBVEc8yxmjLlU/UHXQpkEol0Blo/m2DohjnqaGEQ==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	dG9EK8P76XfG488Lh/vvwojK4F9N0hx3XE8xU2Ewx9BTxFVz3Nzr+kexmFnVxjT/W/5MWlkFk1bkaEmx3pngR4RNMuyF7O9wxFPIpNv3IBWVLxKIQZnmhOdSkfHTevudM9W+dJuRAG2JbTucOEAx45byH+fs3uZodbqNmq7sWPAptci500uS65nEvV0mopK4noYao3bHqI8/G8KChyaHFL8lWe0d9fcFeV516xVLmuzOfWnsGgHSc1GZixZ9qv+/ER5xJImM7q3rzhxaaYwSF0WW30/BMWCEQcghGYH0PZkMxrrXczl/LEv84hNS3Blxh+g0VJMiruTYnKFaKC5Gaz+syLLmDodvDE9WZJk5csZ4w+tr8Skj78z6aO7cddMno432YF+IiBUcLWzkZQQ1hB10D9x9WY1w4kKOVs93waC41CdQCwiaTkY0hpvELj7jkRH/2MGqLLmPuqU6B0ybcPVJQxtWH823WFyEhHeXysXq12Md+eUeJIGWn7CneeoIvcHAQ5JNG/x7t3AKEbFRW7zCMJzhjQ08Hu6D72Ghc3xpaNOd9Qgj1qlhgqgDJMOiC8uB6c30wqVQpB6vfXjWYnCy0DKORe9icGW4KcTsiBduGDdYyas99HE+qK9ThT0M
-X-OriginatorOrg: tr-advanced.co.jp
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSCPR01MB13450.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6212a982-f119-4247-0204-08de9e727163
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2026 00:19:09.8826
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8d8aae5b-4dc8-477f-966f-70bb2d9eaa30
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FfczPDskXWuU2ayentXDUgOBPwc9CcYBtonIrRJvSCq+pv0X/ZreGHTJGmhJoGQIuNpeAo9P3Rq/hQsdGcozqjr4UbtSupelrdMg8wslWXk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYRPR01MB14302
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lJTslWFhYWlpfW1teSFpdSAMJHwkBRQUoHBpFCQweCQYLDQxGCwdGAhhIWUhaXkgiBwAJBgYNG0Y7CwABBgwNBAEGKA8FEEYMDUhYSFpIWVpIXFhGWVhfRl9cRltaSFBIWEhYSFpIWEhYSFhIWVFIDwEcKB4PDRpGAw0aBg0ERgcaD0hYSFpeSCIHAAkGBg0bRjsLAAEGDA0EAQYoDwUQRgwNSFg=
-X-FEAS-Client-IP: 40.107.74.32
-X-FE-Last-Public-Client-IP: 40.107.74.32
-X-FE-Policy-ID: 1:3:14:SYSTEM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aeUqSltEWIWaPDh3@exploit>
 
-Hello Johannes,
+On Sun, Apr 19, 2026 at 10:31:37PM +0200, Mirko Faina wrote:
 
-Thank you for your reply.
-I understand that the current version can also run on Windows 11.=20
-However, since the latest version (v2.53.0) is guaranteed to be supported,=
-=20
-I will also consider upgrading to that version.
+> > I think I mean that
+> > 
+> >     git log --reverse --reverse
+> > 
+> > shows commits in the same order as "git log"; what should
+> > 
+> >     git log --reverse=after --reverse
+> > 
+> > do? Or what about preserving the behavior of the original "git log
+> > --reverse --reverse," which I don't think is done here?
+> 
+> Yes, this is what I was getting at. Since it is no longer binary what
+> would a double reverse mean? What if "--reverse=after --reverse=before"?
+> How should that be handled?
 
-Sincerely,
-Kawai
+Yeah, I agree it gets weird, and I think it is OK if we don't try to
+combine before/after reverses (either making it an error, or using the
+usual last-one-wins to have "before" override "after" in this example).
 
-///////////////////////////////////////////////////////////////////////////=
-//////
-=1B$BK\%a!<%k!&E:IU;qNA$K5!L);v9`$,4^$^$l$F$$$k>l9g$,$"$j!"<h07$$$K$O=3D=3D=
-J,$4G[N84j$$$^$9=1B(B
-=1B$B!c%a!<%k%A%'%C%/!d!&!&!&#O#K$J$i!Z!;![!"3:Ev$7$J$$>l9g$O!Z!]![=1B(B
-=1B$B!Z!;![5R@h5!L)>pJsO3$($$!JNc!'?77?<VL>!&?7%0%l!<%I!"3+H/F|DxEy!K$N62$l=
-$O$J$$$+=1B(B
-=1B$B!Z!]![<R3008$GE:IU%U%!%$%k$K5!L)>pJs$r4^$`>l9g!"%Q%9%o!<%I$r@_Dj$7JL%a=
-!<%k$GAw?.$7$?$+=1B(B
-///////////////////////////////////////////////////////////////////////////=
-//////
-----------------------------------------------------
-=1B$B3t<02q<REl3$M}2=3D%"%I%P%s%9%H!!Bh=1B(B1=1B$B5;=3DQIt=1B(B
-=1B$B2O9g!!?.=1B(B
-TEL=1B$B!'=1B(B070-8848-1712 (=1B$BFb@~!'=1B(B889-2068)
-FAX=1B$B!'=1B(B052-551-8623
-=1B$B")=1B(B450-0002
-=1B$BL>8E20;TCfB<6hL>1X=1B(B4=1B$BCzL\=1B(B5=1B$BHV=1B(B28=1B$B9f=1B(B =1B$=
-B:yDLK-ED%S%k=1B(B4F
-e-mail kawai-m@tr-advanced.co.jp
-URL http://www.tr-advanced.co.jp/
-----------------------------------------------------
+But we should keep "--reverse --reverse" working as before, as there is
+no other way to countermand a previously-given reverse option, and
+because it has always worked.
 
+Usually we'd spell the option "--no-reverse", and it probably makes
+sense to add it (to override an earlier "--reverse=after"), but we'd
+still want to keep "--reverse --reverse" working for historical
+compatibility.
 
+So combined with the earlier suggestions for using an enum and
+disallowing the un-stuck "--reverse after" form, we probably want
+something like (totally untested):
 
------Original Message-----
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>=20
-Sent: Friday, April 17, 2026 9:59 AM
-To: =1B$B2O9g=1B(B =1B$B?.=1B(B <kawai-m@tr-advanced.co.jp>
-Cc: git@vger.kernel.org; =1B$BI~It=1B(B =1B$B1W@.=1B(B <hattori-m@tr-advanc=
-ed.co.jp>
-Subject: Re: Subject: Inquiry: Git versions you provide and Windows 11 comp=
-atibility
+diff --git a/revision.c b/revision.c
+index 599b3a66c3..89a58a65b7 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2686,7 +2686,20 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 			git_log_output_encoding = xstrdup("");
+ 		return argcount;
+ 	} else if (!strcmp(arg, "--reverse")) {
+-		revs->reverse ^= 1;
++		/*
++		 * This relies on "do not reverse" being the 0 value for our
++		 * enum, and historical "reverse after" having value 1.
++		 */
++		revs->reverse = !revs->reverse;
++	} else if (!strcmp(arg, "--no-reverse")) {
++		revs->reverse = 0;
++	} else if (skip_prefix(arg, "--reverse=", &optarg)) {
++		if (!strcmp(optarg, "after"))
++			revs->reverse = REVS_REVERSE_AFTER;
++		else if (!strcmp(optarg, "before"))
++			revs->reverse = REVS_REVERSE_BEFORE;
++		else
++			die(_("unknown value for --reverse: %s"), optarg);
+ 	} else if (!strcmp(arg, "--children")) {
+ 		revs->children.name = "children";
+ 		revs->limited = 1;
 
-Hi Kawai,
+Note that your original also allowed --reverse-o-matic, which we
+probably don't want (and is fixed here).
 
-On Tue, 14 Apr 2026, kawai-m@tr-advanced.co.jp wrote:
+I _think_ the negation from using "--reverse" after "--reverse=before"
+should be sensible here. And "--reverse=" with two different modes just
+overrides rather than trying to be clever. But you may want to
+double-check all of the combinations.
 
-> I would like to confirm the following regarding Git. As part of our=20
-> migration from Windows 10 to Windows 11, we are investigating whether=20
-> Git can be used on Windows 11 in the same way as before the upgrade.
->=20
-> Could you please let us know whether the following software versions=20
-> can be used on Windows 11 without any restrictions?
->=20
-> Git version 2.51.1
-> Git version 2.26.0
-> Git version 2.29.2.2
-> Git version 2.32.0
-> Git version 2.32.0.2
+This would all be much easier if revision.c used parse-options, of
+course, which has all of these sorts of rules baked-in. But that's a
+much bigger conversion, and probably not something you want to make a
+prerequisite for your series. ;)
 
-All of these are expected to run fine on Windows 10 as well as Windows 11.
-Do note, though, that all of the listed versions have known vulnerabilities=
-, both Windows-specific and non-Windows-specific.
-
-Ciao,
-Johannes
+-Peff
