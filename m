@@ -1,147 +1,106 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8C22F6188
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 14:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776696706; cv=pass; b=sDnBzyhIJdxbTvU7NB24/x8yxPRJhasma9hasp6PXsn5fSZA9CuqpKlT4dpb2F42OSPu3dF5macs4Zv277fcxoyaJYwJwzY0oLBsnCXdRiJzsaSGtKkkdn+EoRK9mIZNg09QD1YNDWpeXMtGtLg6Y77WuNgJo80wrvuEhm6u1YM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776696706; c=relaxed/simple;
-	bh=AFQ/c1cNknOJqsLeRmqS4Pjc9qLiH3vFf/hXCc7j77g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HDk73n0e6SWPXt3NCMfjLpsVx6QztpxzahF9a8bpkRULnvRMIJ0rUhHMofp9K8jvG5LTTVykw8wFSLxgzf2rpez5Q+EwMolLZtApeCLnlYLS7jhlZluztWSl+aKd5V3VZ2w0GNhSEV+0J6liTC/IK2ZnjhpWQEy7Qj87YZXBPmg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pphI41Wr; arc=pass smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EDF35C1AD
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 15:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776697513; cv=none; b=IOvO/A+zm4Q26wNqbwYT36HkAEscUV+RCjeOgjkWlaT8EJwAn9ySqwerjGN+jk6j1i6QOiy0PSdFb3I6VU5lC9DqSBWMWtX0Vj9U5A4KUVBRdu/rRKftiRYI4rP9N0xRditlQj3YmwmNxjBwxJzUgx/xWVjMNhXifA0OXlufn7I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776697513; c=relaxed/simple;
+	bh=pFwaMsafGALrINBXboPnCV+P8YvcWvFlfR+veVwktd0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fi0rTHOu65uToXqhA6Noourh9WK17AKSmi1b0HlzDGmAEUXtOh3fkOGJ5udfrjCiMCipVTAP+O/I+T5Lc9Ufc1j+OB0JGNIKhMj638yJVC25cfxMXG5O8oRGw5sk3UoWpuFXczagTnMhr65nbWtGYafTvpsLsS4em1CzdIuN98U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LzQdVjgn; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pphI41Wr"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-688a8e5fe5eso1493277eaf.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:51:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776696703; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GqYwUVrj6CZV9x7yqPPsyhTPJXtYy3uCAcfcGNqI2DQXFExT4nzo3Eet7r0Adx83jO
-         kqAOcgxBkZ4QWmDCPI9UJ9BFWiXn87PuPPjqvRAxUyBbGJ18AvBxca13lYhBgUF88BJY
-         kjXgrKAO2NyKmOpTIO47b3MCSn+swYiWqUtzGiiDxnP28cgbgkxuON2UK7AMHZAnBzYk
-         lIPq5If9rk5gRVfQXNUdBsKc0d7kasJy6XEhvbp1La/qyq3pq9MpNUrvH4YkcluP3i47
-         NVDK04IwDdojm6r5PF5t7tmasDXHXH1AAoYnJIokesNYM9GnPLifMf/Ia0sX5qhxoZHh
-         9QaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=mi3YN2RmI5Q8Fh5mf8VHyvrGMV3tcGuJkg1H1sfkwiI=;
-        fh=N+xGYu39Hzikqwi3BJgDM9PrlRRdfzs2vhr8Q8RthV8=;
-        b=LAZsE3IIvlnOtQEQD1H83yqJ7II+FJSZZNptqeC5AqhAvzOo+pHYclOoXJ4fAFLE20
-         y5aC78flYjNfc08STmXogLmgsh6dvAbkwdsYmQsjBHvRFtahbta7QqE8lvnsWbz9BYHt
-         dBQxDVdhMpZJjYswFBrmkIs7gfO16/oLF4qYDYucgeWElKmYEsBo1azDIYzFLyL4C079
-         CIGO6SEiIkxiYZwJK+fdnBamxSne+7fdgsZXq+zkVjTLqtndc5/hFhKe4VTBT8Q0QUfQ
-         RQemxVAY6xEtFgE1Q8WVbAILsp7KgQjADQKAfGwJWY7bBjasRnqy2FLbiNVQxDfWQbKT
-         kzMA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LzQdVjgn"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488a9033b2cso35931715e9.2
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 08:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776696703; x=1777301503; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mi3YN2RmI5Q8Fh5mf8VHyvrGMV3tcGuJkg1H1sfkwiI=;
-        b=pphI41WrrXnEMlloBSwU01/rsMH2wfzM2eETQUSQr/WKPJRhk3Ek3eamjXNWPT5P5G
-         7Pj9IfFg3aI8XpbiqYGIjtxQmqpq7cilA3T2TiKfqbDOcy2jECiXlo+V1wDpJz02zhj8
-         171n3SM75O5yFl1OuZjj7SeZh1ghrAs43yq1YQjgw3FwmBbcDskGfsaJ1Xi7ufFhApsy
-         lnOpMEiLiWbjYXqAGcixUaPjkTdsgwy3vCrof4wRbDB+W/jfeFpHbuzdM4El5+U1eLMV
-         +U7q5kUSVDWLzGV/kJxIsSWrbGlgklphhPvD3aDDQIc7P/LVpwFj6XrK17AbDEGsjx/k
-         zA6g==
+        d=gmail.com; s=20251104; t=1776697511; x=1777302311; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KJ4LOa6Lm97ca/GLPdqFV8bncBKQzgpGFaOmUWVtlhg=;
+        b=LzQdVjgnlDK/WPX/67qfe3yA29OL2Va4sKGeSOQAmfva9j5JZMPT2BJ9RTE+Y2upxY
+         N4KHZqKt1HkoEJGYcWhiwXNzhkarEJ9NXOejN6MjDDN8w/Gd9BHvSkLnB8Tm4ly9TP53
+         V1uUPihIPHGbfijmpvK7nS4Vqs2gIfuakmH3vIZZhafWiigVM3yMkv9yvqEHN1JX1Kho
+         VLGe7k7BPYUg7B2Ik2ADg0ZJ/6B/Fwhv2YTEtrohEE7CfMkyfT6RhAXJfUP209wCvKCV
+         omFMeE9vRF91UfvLA/MtJsM47izRhU9kY5W+8DzbNPgz32dgz3Gi2StqO0qhUWI0FQE2
+         TrmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776696703; x=1777301503;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mi3YN2RmI5Q8Fh5mf8VHyvrGMV3tcGuJkg1H1sfkwiI=;
-        b=mSWzdC3pdmKQU6QRJt3Hzx2BUkh/OKmiVQd9nFw8WDUWer3M/nMVJlqFXEzeHP7e7m
-         vO30ubYbZrKorFQ/ch91ybSEelvcV7At2Tg/sr2FapTQv08uZ6XSZmePrsDQF+0Z4aNY
-         RURg+0LDovjvdeu1365msetQ+slFjWgBVLxRaHIdqxTLJb9NhwXg70ng3ATA4ldPS1yU
-         dqivuT+fDivsuRTMeq1OTaaJnmB1YdaiE77gyMLOJhAgHjt3JwD9yesfPG+ntfm++Ivu
-         U0b8k+LSc2qDT2W7VJ6afK2vlOn4WFt7gudsiAhGRH/qAJD/pKt8tH5sjWGQpR8perIU
-         SwAg==
-X-Forwarded-Encrypted: i=1; AFNElJ/ehmm8lMkg2Q0S2rAMW5hJg6j423i6wMP6ArjlrI8+iD/RqLFHbCd8Qoi6C4SqyRO/V90=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxl0D1pPttsMn347G0VGuDHrURFUoSqdQeWk3pOGu9Ca142viTD
-	qKmyCujBdqY2Y3y/Pf98pLoXZqWDRRCck92WCEKf9WoNuYHPLG9geRR3gSphraoLjivJJRgoW0W
-	IRk9x3Gqrrsgxuy1+fggVdBdyOwlSAkU=
-X-Gm-Gg: AeBDieu/zzlqWgGxiGZu4ci6F9fXICHQSm086zAVOzKXB2emuuYBx9rivJLGKn5cktn
-	oyCQLtvW0cMvZD1kAp4/FoYDRuzE9OAHInPeiu1C8uqpcZWRwr1Xlpu3Noexp0co7cAemduC4E7
-	Cx68D0EjFMlDfPJEjUON/8N1sLie/ZrMhzSj0TLdKJYIFNAL6iVRdmXRT02mgHbp4nBu+34CfOp
-	D40rq/fZqwri8lGCGqMfERJf5/cZiV1Y6+reWhE2XyJSCl88HoWN6HfP9hrFzxIbWdrAQL/biD4
-	Ewmcp1uqXwwPiyu9m/BajAeCPZnRtBTbjxgMoflsz41o4K8/IB3UYIK1b7IuGPiGiYKwlbT/z94
-	n+2wGHJB2sUG0h6srgDYd6cbGlZOwV6cbySrV
-X-Received: by 2002:a05:6820:62a:b0:67d:e619:5c5a with SMTP id
- 006d021491bc7-69462e48395mr7861219eaf.16.1776696703599; Mon, 20 Apr 2026
- 07:51:43 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1776697511; x=1777302311;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KJ4LOa6Lm97ca/GLPdqFV8bncBKQzgpGFaOmUWVtlhg=;
+        b=FDp5ALi1CcGnWS4yeaka8dcXY7Ubbc2MsbZes6S5YoVYSBKFGacJtM0jsH0ltfceAo
+         mooOudtN/q9Q4EpFzp6vuXHzES0L/s/M4lkOBnWTYFvAoogqNoldXfFvJf0HsVcf5Ebi
+         jEwqtjzRxfR4qhAYMNW2782QcO3d14R/aeUFw5i83w2wuu7KliJDmdx7ZZ3tbER5BO5m
+         2tsJW0kuggJC3COflzLl+6i04koMqHPpXBf/E0C1HBFQCFIKBBh74SmtLZ7Tkk+wRuCx
+         Vf8e/W/BF7fV1OPizGS94N3zQkFIBI0/e9R2fXliMvzCavBsVLDDpUjVihsZ+qKiI1xW
+         5/0w==
+X-Gm-Message-State: AOJu0YwL1haucme9DRcr6Zkowlh1wQzXkuDBVp3rzTrSyR57fK0EEO6B
+	5giJVprDz3Uw4+4Pu1D7nLCr8dA53Nl2FdM/z0+DMCsLvpJzlrLUy0olRF0zpg==
+X-Gm-Gg: AeBDietz22wLgMtJN1Z3Y9BL4eq37x/Mo+C02yFhOxn3PPeMtxJwq9pJLCJjlsWQAF0
+	IDEhMy4OCZEchvVYHtjE6vlA7HjQHdQcQqurVarc9lm1/hhV0K7Gk5rxRRrmd6gwqSFIn69Hhd5
+	9IfJnMKgb5Wqq2zGuBadpcwsXQMdm8OtXAf2D0AJMV1dGFGR0wflkEsizKfze9ZSQ8ASoyD5trH
+	vKqp9OGjBagtcpnXgKoBPcSKypLqWtxg/6XXHTAmRrZ0Q3+O1hnk9LqdQhv8wOXNGZoUKpxzYkO
+	h/Vu+cV6nhqwbGg5ghvMN8FfR6w1YNtuVGoxULNcU/wk3BcH6hVLekltLQA9+oJzvFsd3TJFFaX
+	L6AW6GakoddwbrN5dWpFMusOzem4F9jti1QO2NublKkfgxyGrTVNBvaA5wWrcIa1cvLPjkxNzEG
+	3wQUtpZODDHeDa+s+C97qgP8L7g5LvHvrqEvjY
+X-Received: by 2002:a05:600c:1587:b0:489:1f97:6b1d with SMTP id 5b1f17b1804b1-4891f976b4dmr24243675e9.28.1776697510429;
+        Mon, 20 Apr 2026 08:05:10 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a52583fe7sm27335685e9.13.2026.04.20.08.05.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Apr 2026 08:05:09 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH 0/2] status: improve rebase todo list parsing
+Date: Mon, 20 Apr 2026 16:04:42 +0100
+Message-ID: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.54.0.rc1.174.gd833f386ac5.dirty
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2093.git.1776443163041.gitgitgadget@gmail.com>
- <pull.2093.v2.git.1776465910538.gitgitgadget@gmail.com> <aeVqqsdq9B7GE9gS@lorenzo-VM>
-In-Reply-To: <aeVqqsdq9B7GE9gS@lorenzo-VM>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 20 Apr 2026 07:51:31 -0700
-X-Gm-Features: AQROBzBhWTrfo20WDCvRHYJytFPilqrozfiu4M5QplucpM6zwZLpw3AkHDmOj6o
-Message-ID: <CABPp-BHgnyS_SB6SX1dzAezfExomHts1t02+qr+duCPW6sk1nQ@mail.gmail.com>
-Subject: Re: [PATCH v2] diff: fix out-of-bounds reads and NULL deref in
- diffstat UTF-8 truncation
-To: Lorenzo Pegorari <lorenzo.pegorari2002@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Apr 19, 2026 at 4:52=E2=80=AFPM Lorenzo Pegorari
-<lorenzo.pegorari2002@gmail.com> wrote:
->
-> > +test_expect_success FUNNYNAMES 'diffstat truncation with control chars=
- does not crash' '
-> > +     FNAME=3D$(printf "aaa-\x01-aaa") &&
-> > +     git commit --allow-empty -m setup &&
-> > +     >$FNAME &&
-> > +     git add -- $FNAME &&
-> > +     git commit -m "add file with control char name" &&
-> > +     git -c core.quotepath=3Dfalse diff --stat --stat-name-width=3D5 H=
-EAD~1..HEAD >output &&
-> > +     test_grep "| 0" output &&
-> > +     rm -- $FNAME &&
-> > +     git rm -- $FNAME &&
-> > +     git commit -m "remove test file"
-> > +'
-> > +
-> >  test_done
->
-> The only thing that I don't quite understand is this second test.
->
-> From my tests, the previous code using:
->
-> ```
-> [...]
-> while (name_len > len)
->         name_len -=3D utf8_width((const char**)&name, NULL);
-> [...]
-> ```
->
-> passes this second test just fine, while I believe it's supposed to
-> fail.
->
-> Am I missing something?
+When there is rebase in progress "git status" displays the last couple
+of completed and the next couple of pending commands from the todo
+list. When it does this is tries to abbreviate the object ids of
+the commits to be picked. Unfortunately it does not abbreviate the
+object ids when the line starts with "fixup -C" or "merge -C". It
+also mistakenly replaces the refname in "reset main" and "update-ref
+refs/heads/main" with the object id that the ref points to.
 
-Sorry, I did two things wrong -- I forgot to specify that the second
-test only fails under ASan, and I simplified the test too much such
-that it doesn't fail under ASan without the fixes (and simplified in
-three wrong ways: not enough control characters, wrong kind of control
-character, attempting to use hex control code to printf instead of
-octal) and apparently forgot to re-check afterwards.  Using the
-filename
-    FNAME=3D$(printf "aaa-\302\237\302\237\302\237-aaa") &&
-will trigger the out-of-bounds read under ASan before the fixes;
-removing the final \302\237 will make it pass with or without the code
-fixes.  I'll correct the patch and send in a new round.
+This series fixes that. The first patch factors out the sequencer
+code that parses the command names in the todo list. The second patch
+uses that function in "git status" to parse the command names so that
+it knows whether the line may contain "-C" and whether there is an
+object id that should be abbreviated.
 
-Thanks for checking closely.
+Base-Commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fimprove-status-todo-list-parsing%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/8c9303b1f...d20dc1f65
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/improve-status-todo-list-parsing/v1
+
+
+Phillip Wood (2):
+  sequencer: factor out parsing of todo commands
+  status: improve rebase todo list parsing
+
+ sequencer.c            |  45 ++++++++++-----
+ sequencer.h            |   1 +
+ t/t7512-status-help.sh |  74 ++++++++++++++++---------
+ wt-status.c            | 121 ++++++++++++++++++++++++++++++++---------
+ 4 files changed, 174 insertions(+), 67 deletions(-)
+
+-- 
+2.54.0.rc1.174.gd833f386ac5.dirty
+
