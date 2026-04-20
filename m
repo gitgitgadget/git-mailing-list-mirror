@@ -1,173 +1,79 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96A1385509
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:28:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E4F28641E
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 07:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776670085; cv=none; b=NI/oLKU++2Dkq+SzeFasaq4hDrf78t0vjnfmby0t03HKNI25HJgCZXPh7jyK79E4VI74lv24ENcFaIDILIiG3FPjYafivvJdyeKDs8UPrqRUQ46YgO9LJzi8+b6lGWQsrBagwP5eLny5z+70n7Oh9x/UZMyLIRuQOfX+c+vgQxM=
+	t=1776670860; cv=none; b=BobcSEsKw3kWSDcEhH/gHllY8v8KIwyrRMbBqkujbtgnf3KRdoCqXYTwJGCVKzV1qm5DvaVvln0u4ee1PSpKkwvKFCH3GwiY8TlvyaF6sdG2j73O0Yp0ic4TFAXq0p9uaJ0r3Nk/12NiBjhTGVWj6LdmqVkZXgp332PcPBxli7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776670085; c=relaxed/simple;
-	bh=BzuqyLeqYqcdu3LZjyb/Q20BHjCN0O7lza7zz/rbWjE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rieQ7SUn0mlAZ99ce2EOkMJHueTytfgNnwfqmuUADWsVYalAF8O8vrBqI1PSJsuTsK8O8RcBhPReYWZ0v3JCbtUFzNdZJwIRXklChQ5LWLXteXJkystvCADbTW2F/BQCC8ckorr3W/EhrSm5yZ2r9/MiWA8lChuJM9wC1lwwJMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e3frwWHf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLMUhKKb; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1776670860; c=relaxed/simple;
+	bh=l47MSXSP9+lis5rTGJHXZw3i0q2DO+l7eLUmBtd55jc=;
+	h=From:To:cc:Subject:MIME-Version:Content-Type:Date:Message-ID; b=BO18t5c9jDZCn6fCbZuzV5tQPXR8rGMeKhKrF30dWdisUJkye8nb7DvU7wvv2FLZ12ICX20N1j3K1qylHwBZeY8jpWwf8vvq/1wxyXP1+cLNnP2bS3NrF/kp4S9qdU+nKnBHT1o37zwWJk6s1iFLaDExl1GbwO9F3eq6BqvQ5N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YqLtQYGh; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e3frwWHf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLMUhKKb"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 33B86EC00DB;
-	Mon, 20 Apr 2026 03:28:03 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 20 Apr 2026 03:28:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776670083;
-	 x=1776756483; bh=+4WaQ/IrBp6+eup5gGsqJZQhYQPHlGN5aLf0CbCK6VI=; b=
-	e3frwWHf2B+zvwQlvHzwMG4vl7vE2W/for//LPJtpCPtfnPM/tbNOkApRjBsrYPF
-	Z63cXLOU3n1mu78c7aTmttPNin7u56RJuE+S8nV3qG0joq+deq4IMWo9mLGZM8fp
-	WEKlFc7RsmXPzTWqW0LCRwv74Rdwl9S5cYDQfWeMtp/tnQPEUcKB7JiTVYa0oXtN
-	j/eWRKv4GOa/dGmsnvmbW4aij8Og+8+r9T6QFT6VZ/Zp0cV5dvl6NEzdnssaKd+M
-	x7Px633UiH6NVB+cjIwKsdLGRPsTRS51Az22ABsqKKrnUsUIq8X5WoBzCCtyV+CA
-	lJbwAv3+c5N4VZeCSxXy3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776670083; x=
-	1776756483; bh=+4WaQ/IrBp6+eup5gGsqJZQhYQPHlGN5aLf0CbCK6VI=; b=h
-	LMUhKKbYU+7fzydUuDyA1d7ACB/9qYQylTDUn7j9yYvTLUY6g1fjEn/CMZs+qwLK
-	tSOFY2R0ZQ4kGeQMD2c6IMHWLX6uiaN12unfIZv/lzC9WI1Y0V/A0Uyj6ykXpsKa
-	Yt68GQ8aQU/Rhe8lINT8EdSkRE+2kD/19awfVlHj8P0ddP7JulJbAHdNnxyeRpGl
-	AN70cWC6spPwTTLVynUXnsd6p/4YMTEvJpriENKWRAH1u6qrzP4jy9THwcebD8Se
-	KlxeeGanCUMb0Ndi9S2f7k0JIW5FxkIqT8X2p+lHIEWtJN/Zu9DlhSFbsZukSrUe
-	f9Yqy4obUAVB43adATJ8g==
-X-ME-Sender: <xms:g9XlaYZXIhho1v2VGikKMc-mtRkpQ9GFocgq5aEmeIglUlqyTIvZYg>
-    <xme:g9XlaaZo-GemFDVi-9iVh2tgp9KxkdkgcGhE0R9wlvBwPEYlTwBCSGrRoZLfWnyAW
-    GE0qHpGRSwF9ZHxCeNT03n_frpVM5-J5xC0jGR8Oke2qtTwxAXd>
-X-ME-Received: <xmr:g9XlaX_Au02fY2j601u3LkDbNF3lxjbaUQsX_Hh4OOde-9BmgigP7yNk3z4WxbbhnU3Crdqc9Ur34AaULPnveY80iNm4F_KhcpkTYG9q8sFJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehjeelvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
-    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeegleejtdelfeffleetvdeivdeuuefgheetje
-    ehudetjeehhefhheejteeugfffvdenucffohhmrghinhepghhnuhdrohhrghenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehs
-    iigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:g9XlaRgeFzgZ0JTCUeGtFHkSjY77KSzmXS2CILuOPk8F8cJ4f83qGA>
-    <xmx:g9XlafeVQuJpBb9cvGNrGaatYG1rJ1ExR9CwrviKNTpY7RcHdxuAiA>
-    <xmx:g9XlaQoSYOlRq-ylXYcLPpjE4QivTKnFcc0eY4RRjhtGROAqr1AUuQ>
-    <xmx:g9XlacC9P4P7M-KqUmDY-FqMep_PVNFew8fc0IPIUYjBLKQOvLjRzQ>
-    <xmx:g9XlaV6lIe2KthAOn8_YrBsmkEALhk6RqpE4cYtPeHUv0aDaLFsEuyol>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Apr 2026 03:28:02 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c9c2b50c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Apr 2026 07:28:01 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 20 Apr 2026 09:27:31 +0200
-Subject: [PATCH v5 12/12] t: detect errors outside of test cases
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YqLtQYGh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1776670857;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=9jh/STLJe4e99VrBzEgIDCjpjJ2A2MME7myO4LRw6/w=;
+	b=YqLtQYGh6nBEUXtB7SMOeo/yy5ZT/uY91NqgtStYSyxLawmS1KrJV43jHbf6vq3+pb9DFf
+	gKgUmToaMTBIAC6Tyb359ecTEJacD/w8SEQ7iUfY31Ba0SEJgiAOZzt5l8EFXBPT2qLY8C
+	8YcJ2C4NLnSw6PQ/UVEgHA3rDUuT3XQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-f8sPLmHlOuaCNu7wQIiKxQ-1; Mon,
+ 20 Apr 2026 03:40:55 -0400
+X-MC-Unique: f8sPLmHlOuaCNu7wQIiKxQ-1
+X-Mimecast-MFC-AGG-ID: f8sPLmHlOuaCNu7wQIiKxQ_1776670854
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id AB6DB19560A7;
+	Mon, 20 Apr 2026 07:40:54 +0000 (UTC)
+Received: from warthog.procyon.org.uk (unknown [10.44.48.17])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 250593000C15;
+	Mon, 20 Apr 2026 07:40:52 +0000 (UTC)
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+From: David Howells <dhowells@redhat.com>
+To: git@vger.kernel.org
+cc: dhowells@redhat.com, brauner@kernel.org, netfs@lists.linux.dev
+Subject: git, network filesystems and is_path_owned_by_current_uid()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260420-b4-pks-tests-with-set-e-v5-12-7d3d68292f6b@pks.im>
-References: <20260420-b4-pks-tests-with-set-e-v5-0-7d3d68292f6b@pks.im>
-In-Reply-To: <20260420-b4-pks-tests-with-set-e-v5-0-7d3d68292f6b@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-X-Mailer: b4 0.15.1
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <1005890.1776670851.1@warthog.procyon.org.uk>
+Date: Mon, 20 Apr 2026 08:40:51 +0100
+Message-ID: <1005891.1776670851@warthog.procyon.org.uk>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 
-We have recently merged a patch series that had a simple misspelling of
-`test_expect_success`. Instead of making our tests fail though, this
-typo went completely undetected and all of our tests passed, which is of
-course unfortunate. This is a more general issue with our test suite:
-all commands that run outside of a specific test case can fail, and if
-we don't explicitly check for such failure then this failure will be
-silently ignored.
+Hi,
 
-Improve the status quo by enabling the errexit option so that any such
-unchecked failures will cause us to abort immediately.
+Can git's is_path_owned_by_current_uid() be made to check to see if the
+filesystem is a network filesystem (9p, afs, ceph, cifs, nfs, maybe orange?)
+before deciding that you're not allowed to do a command because your UID
+doesn't match?
 
-Note that for now, we only enable this option for Bash 5 and newer. This
-is because other shells have wildly different behaviour, and older
-versions of Bash (especially on macOS) are buggy. The list of enabled
-shells may be extended going forward.
+One way to do this would be to check the filesystem type returned by statfs:
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ci/run-build-and-tests.sh |  6 ++++++
- t/test-lib.sh             | 25 +++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+	statfs(".", {f_type=AFS_FS_MAGIC, ...
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 28cfe730ee..de08a08d59 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -7,6 +7,12 @@
- 
- export TEST_CONTRIB_TOO=yes
- 
-+case "$jobname" in
-+almalinux-*|debian-*|fedora-*|linux-*)
-+	export GIT_TEST_USE_SET_E=yes
-+	;;
-+esac
-+
- case "$jobname" in
- fedora-breaking-changes-musl|linux-breaking-changes)
- 	export WITH_BREAKING_CHANGES=YesPlease
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index de7d9e7b92..cded7bd693 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -15,6 +15,31 @@
- # You should have received a copy of the GNU General Public License
- # along with this program.  If not, see https://www.gnu.org/licenses/ .
- 
-+# Enable the use of errexit so that any unexpected failures will cause us to
-+# abort tests, even when outside of a specific test case.
-+#
-+# Note that we only enable this on Bash 5 and newer, or when explicitly
-+# requested by the user via `GIT_TEST_USE_SET_E=true`. This ib secause `set -e`
-+# has wildly different behaviour across shells. The list of default-enabled
-+# shells may be extended going forward.
-+if test -z "$GIT_TEST_USE_SET_E" && test "${BASH_VERSINFO:=0}" -ge 5
-+then
-+	GIT_TEST_USE_SET_E=true
-+fi
-+
-+# We cannot use `test-tool env-helper` here, as it's not yet available.
-+case "${GIT_TEST_USE_SET_E:-false}" in
-+1|on|true|yes)
-+	set -e
-+	;;
-+0|off|false|no)
-+	;;
-+*)
-+	echo "GIT_TEST_USE_SET_E requires a boolean" >&2
-+	exit 1
-+	;;
-+esac
-+
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in 'trash directory' subdirectory.
- if test -z "$TEST_DIRECTORY"
+Alternatively, we could add a statx() attribute flag in the kernel to indicate
+that the uid/gid is from a separate set of IDs (or fabricated entirely) and
+cannot by directly compared against system IDs.
 
--- 
-2.54.0.rc2.529.gd9106f7525.dirty
+Thanks,
+David
 
