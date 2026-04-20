@@ -1,66 +1,67 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F90C2D7DDD
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:41:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A362A39E18C
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776685281; cv=none; b=NEG5tJu2lzt0spFujeSQJLVxInjA2SzXrDOp/RenYe7pQ39a58lJVgLm1LkQZDZOuPg2mX2ELstBfXODuiBrhgQkBkk87Atwc3j/FBD01uXVsG96zMqTuS3YnYiVXti+25L0lPUW5OCr5hFpAzp3wZDhOIK73I1DfXcPubPVRl8=
+	t=1776685488; cv=none; b=P10QAM1CtViDJh0X8/vto90evfcaebNtLK8x3n4D2VpcbbF3tTMfr4nkzYsf8bWi4FXlDAtjyHoEv+hgymSPGN3V55pMsYWGxNX3lMqZ6yHJnNqN4Kc0n4V8ApIBlrg+tKPZYc/NxN/G2jWRa9W93pvgA/OwRWukmnSFnlLq0T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776685281; c=relaxed/simple;
-	bh=nj2XcsdSrwBRELcvq9v+g8+njKmwz6uKoL/7M9Skt40=;
+	s=arc-20240116; t=1776685488; c=relaxed/simple;
+	bh=kOoLirx+r6/LnBWjfDtSKfHIYBgIP31oLWrm6SaEQco=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HU2B62sfMEv8k5p/nz3nVa4dvFucg6ED5OeIKbbplgIdoL/BHJtZEvMokJacOaekH1gJKYdIViZC1JOsK2gaE1M6hxvshLjGT6LvkJkBjfogMKi7+pGU9MORQrb8hAC4Yk0qPBu7+0fchPSpM2sbZshXuozDoT354QgT6hfaTBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gE7huyjH; arc=none smtp.client-ip=209.85.222.171
+	 In-Reply-To:Content-Type; b=tbU0Z+AfalV1XR5Pe9SOrRvHDhPsvfwRpTkbgD0ZeQbpQz1alOSHCCRbiI0SfxqW89eDlt9dNOPF0XbA+UVekisthLBc01RdCOkYSfXwoHwLbVFFGYBh9F/+soiZl10Tc+vbJc4IaMfhjIge1LNFRsjYbAB2LpDAmks1jgSkSLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CjzpPZL5; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gE7huyjH"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8d7e7f48499so338357785a.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 04:41:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CjzpPZL5"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8ec37d52c0dso49692285a.0
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 04:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776685279; x=1777290079; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776685485; x=1777290285; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZUfnQP3wRHi9IoQNU4qVb5gx8JYHMlzrKLP0ObK2D4k=;
-        b=gE7huyjHRU2oso+IX+/PQzXLYdzER29BQoJccwVdGdrfNju9/0zAZuSNQZGbjfYNll
-         AHAc8XyHfU35ZMSm3de4Az1kV0U6PJqnNq8cdYUqEht3OzaQjrBg3kndm/2mpkl0FWVM
-         /ypOlDtAXM23X7vJzXzaniIZtATwiZ+eK1qZYfoUEw8lVbphDdDmZ6UI+R9X7JYQQCB+
-         4LmL/bqwDxoBfXcPDuRmIGUcH70dyna1cOKtbhqAcrBsVBHES1RM9X+f8Xik3+sohjyL
-         9Ahcy2h3pPmgZSK+vWq55/JOuT7PbP6rPdzptNWmz/hVG4WBHYh3UUNaEtvRNXDUkR5h
-         1JJw==
+        bh=fIzf0XPsAhz/8t3+FJPuZxmLsPQBayTBK/OeNxwFo+8=;
+        b=CjzpPZL5QAxy4JmXvd4s6529k1xzmY9ojdnMH6M0Hj+KIRSq2ESHfzCvvE4No1wlgJ
+         OY4rznKGXTUF6oXMA6eTIE8kVfTKFxCtKZoiLyXIccXv3EaPdm2UK7q+EMxCI1ipqm9F
+         CepEaK2JJRt2oDppFCtuQQ4D4VwB1y87WMfeyUE7+aEgeDYvvRoEc3aIAp/soKTVTuI2
+         oUpTuFArvMNi7gSx+cPg+vStwKWjB1YJX/iBMwNmgcSu4klQnZU8G4owYJbAG8VLRSMD
+         kdyWi3wiRHbyhVLHTToGdxiX0WPpqWSl2J2TtIgTXzzHYPQIagUvSepG7AO/UNr6cEG8
+         0wEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776685279; x=1777290079;
+        d=1e100.net; s=20251104; t=1776685485; x=1777290285;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZUfnQP3wRHi9IoQNU4qVb5gx8JYHMlzrKLP0ObK2D4k=;
-        b=AwFFa7ZebPI1bOOzEmeNcnNbIEtggTEAfnJFk4lguR03PgPy0/gSIVYS1mplI7AD33
-         Bslu70gemb6Y2BOg1/Mw0b//x2wLXJTfvghC2Ies2L0eedP/QKtm5hQZ/3gHz7329KNp
-         z/kB30oCFika1LhCGnnYWnqrUYBpss1Et8B8C62XY15B4E9gge7Ea6y1hRA5OM0dvVnm
-         gxo0ethELaEI9S0P4irrzCLF2GcZv9V87R5dcZwB4braANjsjW7PccX365SzMX7wYvNa
-         OPY70rgoEIEu+6S1uzTODKIUqCi6nmJRqDqiWQSb/6VL3wfRb8At7k4dyeU4eauWJdMX
-         Bsrg==
-X-Gm-Message-State: AOJu0YxxnrxTrZQOOfpKCYkoT4B1MRIXF/A72IQFnEibBkfiiRCoE1gW
-	M4VnX/rXy+1DcOAI9UEFwnYAGIE/RngS8xRBoXNW0mLndKDVgmUuEPiGLsbzVI9O
-X-Gm-Gg: AeBDiesDDn2aYfTERiwgJqr4V8DXAYPG20IgMrjfebKB9K8zfbYkpvV+nH5dYhEkPnM
-	rC0igYHdKkGWlwhmlvl/exxR4vifa1LmGp5mpbzuQx/fJKdxm65HWRXLLStn0y/GY5yRRzlpLn0
-	dafshrFTGmIPjGpC+mfr+XVYPiP5BfT4HXyFmXJPwZ431ma93PTi6SoP5a1Rirv0pqJVkl9OogA
-	5SRxDZmEi2hDuwd2/AONuxKyDej+h/qyNoWI7Gk2nsYucpSyXuKr82N9NZ3s/7DVQ6Azglc8LPI
-	woR5EeDS1ELXpdmnOSyo1FaliurG9sTvgkvvVpQS0Y1db8SuByT4L/YDM1lc5I8ajvWBipQ5HSz
-	uq6XGMuTWxhSQYcMxE3s3Ia+RH2RVon6JIlfjdun2tZxmh2uq6YIuBaaNqjTGOjdvxtzjMwa8iL
-	uf8PLw00s/VRU8P5Es4YEzyAQupJWzcSU9/N4/w6odohfsPuPzJB8KeS1bvE817rk7h8bnlIyl2
-	TYs5KhN
-X-Received: by 2002:a05:622a:28a:b0:50f:783d:8cb3 with SMTP id d75a77b69052e-50f783d8fa8mr11505231cf.1.1776685279210;
-        Mon, 20 Apr 2026 04:41:19 -0700 (PDT)
+        bh=fIzf0XPsAhz/8t3+FJPuZxmLsPQBayTBK/OeNxwFo+8=;
+        b=hm0aVa9vNx6PUWhK7pAqmTVggHPTxoa5hz+g0+kfVWpUDS2vVwKSyKN0yyfHrkKJSR
+         xRae09AmuUmjkC6vkc8hBS8zb3C+Xi5Ps7PH9nk+wDw4niRFLaTqgiAR2bOG5bUjINLU
+         HdAOOZ/Qu4pzgXykZJ2eZ+fL6U04ylwkihmA0WlnTzmr6qeBZjJviLhCXgdUx1JLoHWL
+         mpOCrVl1Y2GumY3rLnHnxjlzNaMqjbh8/97Wdo2ubG/Kwm45GY9UkP+ffJXyvoaylC4p
+         XNFhk5t52CmG1Q6ANh4sjCHMmJ1o76QsQrJS/b48tN9CfETFO7370v8t9OOm2aze8Fj9
+         x9DA==
+X-Forwarded-Encrypted: i=1; AFNElJ98IgAWwB30aK9xJrDjFz1Zp1mKffOLK2xgwj2hQH992VfH1TDQoW+NelF2dbGV+IyoPdE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YywrSYiove0OT40OC0XHFYAAqq9JwXk0cB+Jd9KyNdKlH6WhggF
+	pxbZQZSjSnpSOzs68k6Lcob/yCO5T7DGfMN872WP/M4vb5AtHymlIM0Z
+X-Gm-Gg: AeBDietIPUsjP7HZa0b8c1B0/drH6tEbt0+2TXZx8B11CP0cHIjQjtXoebS7WkpzZZ2
+	k+5/scCpf26t5KIHQvPn7oNgkstkdA69IWV7PfkSLmx88gf7R/TCEClmXKHpw53ONS3TXKupNx1
+	I5hZs9CksImTkvMeKlgykhVoc4XxCWuT/BatgXVCZe1phN/cbdoIFDaic8B2coopWN0t209UskE
+	gy8vAHZ9/usPtV0IED+6Dy2MpsVEVWBodPOQQvTxhPprHXTY44RCcmVoJ0dGbbfyk0mAm+BsA0n
+	UWctxBzgCpIQzPJGeoPgEjKMIvLVghFALe63/ykia9c9mp7+i6u/DnmWdy25vEBcAR8a6VmOFOZ
+	r2SjY9ajpEpZ1rwBZewpUJlhH4UI1FVTS7s1jseITa/ZJGo5zq9JYlm2MEthXm7BKNPZb7owbXd
+	6libYdf9X3l0Kk7RxyrrTYDbBANjVCLHsblNrKFr2GWH7u7pB96cmljD8N5skDJSS+JsGP+lU5X
+	XH/x7Z9YHnGyO0smmI=
+X-Received: by 2002:a05:620a:691a:b0:8ed:c5ef:119e with SMTP id af79cd13be357-8edc5ef1e44mr45954285a.22.1776685485580;
+        Mon, 20 Apr 2026 04:44:45 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e3bf260fbsm93482691cf.10.2026.04.20.04.41.18
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d99c3c17sm787974385a.45.2026.04.20.04.44.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2026 04:41:18 -0700 (PDT)
-Message-ID: <83b88782-96cd-443c-9a44-379a0e1b9275@gmail.com>
-Date: Mon, 20 Apr 2026 07:41:18 -0400
+        Mon, 20 Apr 2026 04:44:45 -0700 (PDT)
+Message-ID: <8a3e3a38-3f8e-4363-9e45-b5610c3efbc5@gmail.com>
+Date: Mon, 20 Apr 2026 07:44:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,74 +69,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] fetch: add --negotiation-require option for
- negotiation
-To: Patrick Steinhardt <ps@pks.im>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
- <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
- <49c80cef2e25ecadf894cf42661d39dc82493f47.1776266066.git.gitgitgadget@gmail.com>
- <aeXfwnHvfnujAiqF@pks.im>
+Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
+To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
+Cc: chriscool@tuxfamily.org, toon@iotcl.com, ps@pks.im,
+ karthik.188@gmail.com, justin@parity.io
+References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
+ <20260419084840.33986-2-siddharthasthana31@gmail.com>
+ <4c9fee0b-99bb-4e41-9227-f09c63df9f9d@gmail.com>
+ <9e2ca91d-9091-4d4d-9427-ec8a23ee8909@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aeXfwnHvfnujAiqF@pks.im>
+In-Reply-To: <9e2ca91d-9091-4d4d-9427-ec8a23ee8909@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 4/20/2026 4:11 AM, Patrick Steinhardt wrote:
-> On Wed, Apr 15, 2026 at 03:14:24PM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <stolee@gmail.com>
+On 4/20/2026 6:24 AM, Siddharth Asthana wrote:
+> On 20/04/26 04:06, Derrick Stolee wrote:
+>> On 4/19/26 4:48 AM, Siddharth Asthana wrote:
+
+>>> -    if (line_term)
+>>> +    if (arg_missing_action == MA_PRINT_ONLY) {
+>>> +        printf("%s", oid_to_hex(&entry->entry.oid));
+>>> +        putchar(line_term);
 >>
->> Add a new --negotiation-require option to 'git fetch', which ensures
->> that certain ref tips are always sent as 'have' lines during fetch
->> negotiation, regardless of what the negotiation algorithm selects.
+>> Is there a reason you didn't use a printf("%s%c") here to
+>> put the oid and line_term together?
 > 
-> When reading "--negotiation-require" my mind immediately shifts towards
-> a mode where we require the remote to have a specific reference, and if
-> not we'll abort. That's of course not what you're proposing here, but I
-> would think that I may not be the only person making that connection.
 > 
-> Would an alternative like "--negotiation-include" or
-> "--negotiation-expand" be better?
+> I just followed the existing pattern in the same function where every other path uses a separate putchar(line_term). Happy to combine if you prefer.
 
-"include" does sound good to me. I'm open to it. I'll let this idea
-stew and try prepping my local branch in this direction.
- 
->> +	/* Send unconditional haves from --negotiation-require */
->> +	resolve_negotiation_require(args->negotiation_require,
->> +				    &negotiation_require_oids);
->> +	if (oidset_size(&negotiation_require_oids)) {
->> +		struct oidset_iter iter;
->> +		oidset_iter_init(&negotiation_require_oids, &iter);
->> +
->> +		while ((oid = oidset_iter_next(&iter))) {
->> +			packet_buf_write(&req_buf, "have %s\n",
->> +					 oid_to_hex(oid));
->> +			print_verbose(args, "have %s", oid_to_hex(oid));
->> +		}
->> +	}
+>>> +    } else {
+>>>           printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
+>>>                  info_term);
+
+I was just looking at this line in the patch context as
+comparison, but if there are other patterns that prefer
+"printf(); putc();" then that's enough for me.
+
+>>> -    if (show_disk_usage)
+>>> +    if (show_disk_usage && arg_missing_action != MA_PRINT_ONLY)
+>>>           print_disk_usage(total_disk_usage);
+>>
+>> I'm a little worried about all of these checks that need
+>> special-casing. These seem like options that are enabled
 > 
-> Okay, so here we now unconditionally send our requested object IDs.
+> Phillip suggested making this a separate --missing-only flag that composes with existing --missing= modes - I think that's a better design. will work v2 around it.
+
+That's a good idea. '--missing=' formats the output while
+your mode _filters_ the output. They are different things
+and worth different options.
+
+>> how this interacts with those options. And perhaps some
+>> warnings to say "these options are not compatible".
+>>
+>> On that note: this patch is missing a document update.
 > 
-> One thing I was wondering is whether we need to flush eventually. It can
-> happen that the user specifies millions of refs, either intentionally or
-> by accident. But I guess the answer might be "no", as the intent of the
-> feature is that we indeed want to send all of those to the remote side,
-> and the remote is being asked to consider all of those OIDs.
+> 
+> There is a doc update in rev-list-options.doc, but it doesn't  cover interactions with --count/--disk-usage. Will fix in v2.
 
-The idea is indeed to send all of the requested OIDs, but this does
-present an interesting behavior where the Git client can allow the
-user to misconfigure themselves to send larger-than-normal negotiation
-requests. Previously, the client would protect the negotiation with a
-maximum set of haves.
-
-Is there any concern about this becoming a vector for increased load
-on servers?
-
-Would it be good to have some kind of advice message when the config
-matches a set of haves that we think is too large? That would maybe
-be a way to help users get out of a self-made problem.
+You're right. I thought I had looked for it in the patch
+but missed it somehow.
 
 Thanks,
 -Stolee
