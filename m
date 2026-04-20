@@ -1,160 +1,120 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6B32D8DC2
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2084A39D6FE
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776682918; cv=none; b=FeLnRo7cjW1V9RoVgXSGP9OKJ42x5FUGZmDoJrLufVN4t1uUPtp7BgWngh5smWzUY9pEC6lPrxzzgz93YvVwLFzJ0YVxMdmAGUzopcMfOIuIDMnIQoLZq0WLZCbG09ayBSVtZteHNde8uX9HH/ChBBNIVGnen+Vhuocx0Z0BPBY=
+	t=1776684961; cv=none; b=fjdCqNV5ZYzQ5vBgZF7XcIg6jZ5QYdZoI5oOpKaF3WFLq0tLSvmcpAn541qhzx5e3tGYykAh7fjtHL4SWTYOoYdZzB+Cl3AkvSQweGtO9WXQPVJ2vOgwb4VRqEOPPTSb/E2q0xG5JhKZTOlwCqTM/Z7olD3sV1mWhguGFUB62Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776682918; c=relaxed/simple;
-	bh=SpYXvVVWkOoYIx36Ca6sq3vUWctSMbCTLCGnT0ApOsA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=kcUyC/RVhvKzVuILCEHqzTckQQzGoabEDA+9fmpip84v49gVCcr7lAsBPZXgug2m2m7QlsGVsJzFxiatQLB/QzPKNinK5cg8/DgKqjvxVeMfjp5uxkKbINbccNg/3AB2GnZf0BGw6JrEmfNqtpvErfmLKRiVb/Pf4zNfdGXL/tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KPDB1fmA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fCUsIGn/; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1776684961; c=relaxed/simple;
+	bh=kB/JFf/dOvxu63yAzo4WtXThz/2oRy+ylVNzTdMMimo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qLRKTbcAdAq+0cYXrGJalkRnYIKyMSbZWha5KN7VjHmkCznvKrN3cDCu+iaOcfX51M1TYymWhjv0uc9g4Vj3Pj32ntD3Y+76Xnpm+a2dVTgmR8ODLsO+psemkgrQBymCVCRC8sZAtfaeE+hDIpLYL7CiDK63EVIL6ItIAamT958=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pwdi0rr7; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KPDB1fmA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fCUsIGn/"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C19AD14000F6;
-	Mon, 20 Apr 2026 07:01:55 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 20 Apr 2026 07:01:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776682915;
-	 x=1776769315; bh=MR3eBNyM0I9Wdsep823KI+JGuQX//tUnMazmj+sn+xY=; b=
-	KPDB1fmANWxW3u+nARdZhoV7mahWKLF0wpyXwukC4xW5eat62We4eZxEJ/edobdj
-	6g0MvraKpxh11u3wercrlUeuygAQAVpmR0PL70dFz4oBSzi9BvLrzXAPOX+ASEfT
-	RHRcEQ4orbrgFTVAkyepE1nn/f1FZ1r1Hf7hFQ5c150vrDPlWo6Baa25RUklK2b4
-	3CTDo6CQYxBbWa+jlabu4etW3kzxSPzcoRkJz9NWfX6hOmkoHK924mmdmS4N49JP
-	HHfbiK8xF9L30rTfViDIPFm54px9OKGSVqHhcdK6T3ZpbhRCs/Rs/7mP88gHQLfG
-	dpB6f4/M6KOe1SkjJkjGNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776682915; x=
-	1776769315; bh=MR3eBNyM0I9Wdsep823KI+JGuQX//tUnMazmj+sn+xY=; b=f
-	CUsIGn/gwKjieTr34XDhel5cCEsbBLC9U2rmoprsbe9jMG/0+k8Ko5Qf0It/V3mp
-	CRwaQmCbSZJsYJY9NlC3TA74yss/spzTdP5CE1nwCMYs/Wm/Mi+qd6lKjO8aozb4
-	gJr2sCjzm4iG6tACd1VBsOe3xZVPBrBWUChueLpVYU0q9G/ylj+6wtF7Ejg9+enK
-	MSp3UgPHmJ16ylHDrOH3d2A+YfNc3oiN3Uq65Hd9E8FpDctXz9LNLN3pu5tHc/DV
-	F5vPZu6orEsYKVlVYnB6+HwLZ+DCeHirrLsoI/8HTM5y1o0L5pDOXTouQxbXlXze
-	lAMgSI7hflAc5Reqc1NHA==
-X-ME-Sender: <xms:ogfmaared6zHZLvghrwWXwpD39C5rBetRnNVbRyzQvCFBblmLEMOMAM>
-    <xme:ogfmaTdeXa3A5_PdKvpYJHpteYNHR5Pwzph3yWZbgdL-bh28xBtEBnBZGl9yOXtXz
-    IzsMVz1snSwOUtDch5G74YeSSew11JLm8I1_eTdChh0IWYCnqLmPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdehkeefhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
-    mhdrohhrghdruhhkpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdr
-    tghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehjuh
-    hsthhinhesphgrrhhithihrdhiohdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:ogfmaaooIvG9oirR7guRVNc0BNlds8uGwniKLBGTDm-XLmcR8A8QFg>
-    <xmx:ogfmaUoKhCX1zMKvf2osCD-2Kw2rNLS5zlFXvUDgUMjqnarxHvHEGg>
-    <xmx:ogfmaRYucsUbP1cMkZwwakjERkc_Pt8Lzu-Ajat5YKo4urmcPFItXw>
-    <xmx:ogfmaa9DAWpoSG-05UjpsXI3fMB3_SYfVaOWXW3RKYvvaPuexhHGeg>
-    <xmx:owfmab4GwSnkRd-LHbqpLftvy2mEAjGbvxayi7xihMLU4IGaQ1do2zS->
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 95F531EA006B; Mon, 20 Apr 2026 07:01:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pwdi0rr7"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8eae9229110so149598485a.1
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 04:35:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776684959; x=1777289759; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/CWVAzor1FCh89m/ZPrHe4SftBnZ0mmdBrO3WG2pwjI=;
+        b=Pwdi0rr7Lami66CXEytjBSvLLgxsRdEYNjyfpKIXs3uxFSfw96bqA5JF05B2zHJ1It
+         msjfQl3kGFAhxA6wfUSzc8VvwjeNdqmzBeyehxNJIE6jY1Hv88nkv+oALcMYc5oMgyJZ
+         GiTp8PZDjZsnUHGJkp2LmTsutcUlYakTeDet67n4HrKd56qu/0m6CV8ipWiN9Xwtm4au
+         6kfM71IS6cdUXS3IRBDshLjeanmSX8ugyj+mw//PqwO0ojUZpjNwiK9D7dJt1J3ARTuN
+         L1QVkCN+jnrUayR9Gfqywnob/eWbia20X0QPjCF+jYXgS25oG6Lj2faPT5yjgUN93FxG
+         wzog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776684959; x=1777289759;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/CWVAzor1FCh89m/ZPrHe4SftBnZ0mmdBrO3WG2pwjI=;
+        b=UF6XUvgBdlmW4IX1nxlLRoOX4MT2+P5NrZcn6wG6H75v4osaKTyla/q6+V5uUGcMXv
+         s8k2LKN/5MXO3macVZ7ukoQzOXNM0BQ2Dtk6Br8DTove/XX+PrcUlejQu5O6UzUa7gou
+         C7jAgV0CL/1S6HPvCVdaBVhaFe0AKKA12C8v4qqTKO23yBYksHmbTfCsD7DSBJ7j/zR8
+         8iCzPGZJc0CCdPWHail93irKKs4oSFPzHLUPEE5Al6cjGdTWyRJ7rr6sPRLtwwri9vKw
+         nMoauugJ/0Wlstb1xcvCmEckDDV5yCMPiy7PZRgf9ymCL2yIBZtkzn7TAUnRQRzkS8Yw
+         oT5Q==
+X-Forwarded-Encrypted: i=1; AFNElJ+yIvX+51b8ycHUj91GP17KvVDR5PyhE5wSc3d2wi3iv/DTK60pGiIOiNQ/nAe0BXi2GH4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBev9xA6w8u1EMKgrBFcqj1W4Fmfat1eLJkzhv4GtqJRY5ZirV
+	l1Ca410X0kNsPhUdARqtfY4tv0+3DQwaKFcZim0oys85pW/c8/pDwzWFxYY013Kt
+X-Gm-Gg: AeBDieuJ/a3a0vrHD+2uZ6IiXjASXbqzmlBXZy5WGGTK6Rd7xTp35qQKBckjnjpH11L
+	Eu1SEIquZ8p2VgiSQUJJcuqUmE/JtoY1wDqyPKqeUbgFr9ewxd8vg4OoURf8IcIoRkoEDNGc96E
+	bqdJ200ly/ms6dXWSmA27kF6SK7+EXJGPi/uH8ODo0q2Qqa7ugzT9u0YbZjWoLqXRPCaCx54Ajp
+	K7OklxWYVpDTNZcvVkb/cdzHgyzlMrSwpul8PzAtNB/AS2o9Hjjove3PXov17gk8+571jHQBsSF
+	uHkIbKC3ugXtxkcaQ9r5BvRk9+15BrporipY6aF3vpOTJYLuztjKSwAN1c2YOBBh+ZN0NttiuYF
+	b1FqOtyWc6ZPRDVU5IhV7JjhzNR+il8q7+xbyMQlym8ubPutmXzBwrVN8fzqTfMQdLaYLCdibW8
+	wypy8LOEU9CMCk1yGfRKAXU0IzQQAzaVw9WqdcF9rhw4D90drPHr5wQYaPgAofSjAFJ6zF4EFhl
+	Csa7vj6FupUP6/zEqg=
+X-Received: by 2002:a05:620a:5be3:b0:8ea:addd:8942 with SMTP id af79cd13be357-8eaaddd8d51mr444239985a.58.1776684958961;
+        Mon, 20 Apr 2026 04:35:58 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d92ce037sm754678285a.32.2026.04.20.04.35.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Apr 2026 04:35:57 -0700 (PDT)
+Message-ID: <5a7d7847-90d5-4d64-8b7e-67731dcbf1dd@gmail.com>
+Date: Mon, 20 Apr 2026 07:35:57 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AwAT5KdOwvBo
-Date: Mon, 20 Apr 2026 13:00:53 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Patrick Steinhardt" <ps@pks.im>,
- "Siddharth Asthana" <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, "Christian Couder" <chriscool@tuxfamily.org>,
- "Toon Claes" <toon@iotcl.com>, "Karthik Nayak" <karthik.188@gmail.com>,
- justin@parity.io
-Message-Id: <5bf346c1-0577-4b9b-8713-6053c97c6121@app.fastmail.com>
-In-Reply-To: <491a27af-3ea4-4978-9d51-9c540ad31589@gmail.com>
-References: <20260419084840.33986-1-siddharthasthana31@gmail.com>
- <20260419084840.33986-2-siddharthasthana31@gmail.com>
- <aeXZOAtILSr638LG@pks.im> <491a27af-3ea4-4978-9d51-9c540ad31589@gmail.com>
-Subject: Re: [PATCH v1 1/1] rev-list: add --missing=print-only mode
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] fetch: add --negotiation-restrict option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, ps@pks.im
+References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
+ <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
+ <9a25b0fadebb5f0219ceeca9496fc6f84abd020c.1776266066.git.gitgitgadget@gmail.com>
+ <xmqq1pgf6g5g.fsf@gitster.g> <5370b884-30e8-44a9-a52e-4c518556fa24@gmail.com>
+ <xmqqjyu1udkp.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqjyu1udkp.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 20, 2026, at 10:57, Phillip Wood wrote:
-> On 20/04/2026 08:43, Patrick Steinhardt wrote:
->> On Sun, Apr 19, 2026 at 02:18:40PM +0530, Siddharth Asthana wrote:
+On 4/20/2026 6:32 AM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>>>>   		OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
+>>>>   				N_("report that we have only objects reachable from this object")),
+>>>> +		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
+>>>> +				N_("report that we have only objects reachable from this object")),
+>>>
+>>> Is OPT_ALIAS() suitable for this?
 >>
->>>   static struct oidmap missing_objects;
->>>   enum missing_action {
->>> -	MA_ERROR =3D 0,    /* fail if any missing objects are encountered =
-*/
->>> -	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
->>> -	MA_PRINT,        /* print ALL missing objects in special section */
->>> -	MA_PRINT_INFO,   /* same as MA_PRINT but also prints missing objec=
-t info */
->>> +	MA_ERROR =3D 0, /* fail if any missing objects are encountered */
->>> +	MA_ALLOW_ANY, /* silently allow ALL missing objects */
->>> +	MA_PRINT, /* print ALL missing objects in special section */
->>> +	MA_PRINT_INFO, /* same as MA_PRINT but also prints missing object =
-info */
->>> +	MA_PRINT_ONLY, /* print ONLY missing objects, without the "?" pref=
-ix */
+>> I was not aware of this. Thanks for the pointer!
 >>
->> Makes me wonder whether we'll eventually also want to have
->> `MA_PRINT_INFO_ONLY`.
->
-> Perhaps we'd be better to add a "--missing-only" option that limits the
-> output to missing objects? That would avoid the problem of
-> "--missing=3Dprint-only" not really explaining what it does as well.
+>> I do plan to make "negotiation-tip" an alias for "negotiation-restrict"
+>> based on the new preference for *-restrict as the "real" option now. Is
+>> that the right way to do this?
+> 
+> Let's see.
+...
+> So
+> 
+> 	OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, ...),
+> 	OPT_ALIAS(0, "negotiation-tip", "negotiation-restrict"),
+> 
+> would be the right combination in the correct order, I think.
+> Mention the official thing first, and then tell that another thing
+> is an alias to what the readers have already seen after that (e.g.,
+> c28b036f (clone: reorder --recursive/--recurse-submodules,
+> 2020-03-16)).
 
-The original `--missing` says what to do about missing objects. I find
-`--missing=3Dprint-only` to be surprising:
+Thanks! This is indeed what I have in my local copy in preparation
+for v3. It helps to have early confirmation about this.
 
-=E2=80=A2 Do print missing
-=E2=80=A2 But also do not print present objects
+-Stolee
 
-Why would a `--missing` option dictate what to do about objects that are
-present (hide them)? That looks tacked-on.
-
-`--missing-only` is better but has the same problem, IMO, of dictating
-how present objects should be treated.
-
-From the cover letter:
-
-CV> At GitLab, Gitaly uses `rev-list --missing=3Dprint` to find missing
-CV> objects in partial clones. The current output mixes present and miss=
-ing
-CV> objects together, with missing ones prefixed by '?', so Gitaly has to
-CV> post-process the output to extract just the missing OIDs. Having a
-CV> dedicated mode that outputs only the missing OIDs directly would
-CV> simplify this.
-
-This makes me think that I want:
-
-1. I do want missing objects
-2. I do not want present objects
-
-Which makes me think that something like `--present=3Dno-print` makes
-more sense.
-
-Just speaking as a user and not looking at the code.
-
->[snip]
