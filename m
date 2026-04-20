@@ -1,120 +1,140 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2084A39D6FE
-	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776684961; cv=none; b=fjdCqNV5ZYzQ5vBgZF7XcIg6jZ5QYdZoI5oOpKaF3WFLq0tLSvmcpAn541qhzx5e3tGYykAh7fjtHL4SWTYOoYdZzB+Cl3AkvSQweGtO9WXQPVJ2vOgwb4VRqEOPPTSb/E2q0xG5JhKZTOlwCqTM/Z7olD3sV1mWhguGFUB62Es=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776684961; c=relaxed/simple;
-	bh=kB/JFf/dOvxu63yAzo4WtXThz/2oRy+ylVNzTdMMimo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qLRKTbcAdAq+0cYXrGJalkRnYIKyMSbZWha5KN7VjHmkCznvKrN3cDCu+iaOcfX51M1TYymWhjv0uc9g4Vj3Pj32ntD3Y+76Xnpm+a2dVTgmR8ODLsO+psemkgrQBymCVCRC8sZAtfaeE+hDIpLYL7CiDK63EVIL6ItIAamT958=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pwdi0rr7; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A082D7DDD
+	for <git@vger.kernel.org>; Mon, 20 Apr 2026 11:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776685136; cv=pass; b=fNcThy1ppjUuLNIFLlhYnyikA59QlLKn+TOWiuILpCttPXoVroXLlNEgQCKOZQbC4JDJNOvmgckjtJxyDDC2ctEiJPrZiB51BjTRc3ZhdBW5uCUlhQbXWsHWUcCo8KSAepq1ngZjgZPAAUsywzoKS9bmBo4ma6GDL4J2u4WV/io=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776685136; c=relaxed/simple;
+	bh=yS7/htwcrWvqhkaRmU1Qoy0QcwBs5qnOinH9mpVmOj8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=m005rXD6dwAnINkhWB7KSNxf6lqmyI3bktNJNQkYH0yegKI4f45brOKCbNJiGafb1Ynim2P41P0cUW5Z/vVJ3T1K5O0wAb03A937Q92ctR4nclp9UEQOpxxKJR6dEv54EbtFRIokAVOtkpWSzyrDLlQWVh/OvsQA6QPID6U0tuk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/nQ4beh; arc=pass smtp.client-ip=74.125.82.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pwdi0rr7"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8eae9229110so149598485a.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 04:35:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/nQ4beh"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-12c565dd3a7so2337319c88.1
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 04:38:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776685134; cv=none;
+        d=google.com; s=arc-20240605;
+        b=aV9GnToYFtndGkmeLVLpIPDv4gAhPL/jUDTcL+QdB5/hVPEH6bMDbnwSb7quWtnYem
+         PSRe+IiFFEeAmwh0HMDYxdoD6FckwCTM9401XzOCI1d6Z29gDEipP7eTf8U7kBUBGtlH
+         vGIzz1Kr1TeT3XNZBLHGLLqgqVxHzRPH+7Ai27iNcz3hbAjKT9GX1eJ0KVTN+7MtJ8RL
+         TzhsC1VN77Cc1pmYPYsFe0Ot0fRgHWaNLkUQ1XnAc+fvH/2ATnpy4GZCDGB946rdwMll
+         miEjjf0X3WbJ4pLccEhFIRKvnMh90PwHgochR/BAXpnFEbph345Xz9dLVIMIVDcFgxwQ
+         hK4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=VJ10UKhhgiq9LAUjUnniNOYwxljbzZK3MSUjv5eKtlg=;
+        fh=t48Q2SN48i6WtDnDWQGGt4rrZ6UmcU4UL5Dq0xiMjPo=;
+        b=Rp9Gsf/1/kcPbX10GFrgE0of++LZC4bPLWD43o8jQgVYzINahSgwzBq7R73jnYMzZw
+         UyADlrGJ56YfKjdFzeitNH5LW4yJ7p5pgyeynker7fCJx4ZpwGCGXUVjn+0yfOLtCUNp
+         q8g7xyhi0xSPL75Vr3aak+IkL/y9bekwP9o+eGT208JlUoLCzpBPe0C/yk9zyHOQyD5G
+         Kfsikx/AoQ/cwVJ39FtQq0VwMQPIFwgL6JEMyWwREir37YqpVbADQimyV9PwI/BUJYCC
+         h2VPRSeM8H2E8A0d7sJz7BnHka1q5C2bbjKohwJ43aZHS7qwi/e8NGkITqZKWtCyc+It
+         9FbA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776684959; x=1777289759; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/CWVAzor1FCh89m/ZPrHe4SftBnZ0mmdBrO3WG2pwjI=;
-        b=Pwdi0rr7Lami66CXEytjBSvLLgxsRdEYNjyfpKIXs3uxFSfw96bqA5JF05B2zHJ1It
-         msjfQl3kGFAhxA6wfUSzc8VvwjeNdqmzBeyehxNJIE6jY1Hv88nkv+oALcMYc5oMgyJZ
-         GiTp8PZDjZsnUHGJkp2LmTsutcUlYakTeDet67n4HrKd56qu/0m6CV8ipWiN9Xwtm4au
-         6kfM71IS6cdUXS3IRBDshLjeanmSX8ugyj+mw//PqwO0ojUZpjNwiK9D7dJt1J3ARTuN
-         L1QVkCN+jnrUayR9Gfqywnob/eWbia20X0QPjCF+jYXgS25oG6Lj2faPT5yjgUN93FxG
-         wzog==
+        d=gmail.com; s=20251104; t=1776685134; x=1777289934; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VJ10UKhhgiq9LAUjUnniNOYwxljbzZK3MSUjv5eKtlg=;
+        b=h/nQ4behmUQwGLovSGrYpoeS8GQTwfrEzEFKLtFUQ3RIYQ/w7/k+LcL10GSFaOFHGV
+         ICIVQpKs/cAooTtWVanNduJR3ZKQEXuZiGPpD563BEm8e2T30mXhsaPk2ToJJXl1ziuO
+         prJfzkHn16wmlaOfj7xt4pho4V0eiYhepUStrn7pT6ooTSgP10Ei/OvGR004dF7H+5Wz
+         ImkpKowZhOENbeQgNaRDRrbVbrCnK1cHFnKBmnVAoor7BW3PjwQ3XqIyrpGuyzJ4jPss
+         AoVSFJlY13+7gLYeNm0BwpvzjDRaEOEGE+Rfznp/3ZdS4sbWFadB1LxEEjteaqxM+LwN
+         7BbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776684959; x=1777289759;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/CWVAzor1FCh89m/ZPrHe4SftBnZ0mmdBrO3WG2pwjI=;
-        b=UF6XUvgBdlmW4IX1nxlLRoOX4MT2+P5NrZcn6wG6H75v4osaKTyla/q6+V5uUGcMXv
-         s8k2LKN/5MXO3macVZ7ukoQzOXNM0BQ2Dtk6Br8DTove/XX+PrcUlejQu5O6UzUa7gou
-         C7jAgV0CL/1S6HPvCVdaBVhaFe0AKKA12C8v4qqTKO23yBYksHmbTfCsD7DSBJ7j/zR8
-         8iCzPGZJc0CCdPWHail93irKKs4oSFPzHLUPEE5Al6cjGdTWyRJ7rr6sPRLtwwri9vKw
-         nMoauugJ/0Wlstb1xcvCmEckDDV5yCMPiy7PZRgf9ymCL2yIBZtkzn7TAUnRQRzkS8Yw
-         oT5Q==
-X-Forwarded-Encrypted: i=1; AFNElJ+yIvX+51b8ycHUj91GP17KvVDR5PyhE5wSc3d2wi3iv/DTK60pGiIOiNQ/nAe0BXi2GH4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBev9xA6w8u1EMKgrBFcqj1W4Fmfat1eLJkzhv4GtqJRY5ZirV
-	l1Ca410X0kNsPhUdARqtfY4tv0+3DQwaKFcZim0oys85pW/c8/pDwzWFxYY013Kt
-X-Gm-Gg: AeBDieuJ/a3a0vrHD+2uZ6IiXjASXbqzmlBXZy5WGGTK6Rd7xTp35qQKBckjnjpH11L
-	Eu1SEIquZ8p2VgiSQUJJcuqUmE/JtoY1wDqyPKqeUbgFr9ewxd8vg4OoURf8IcIoRkoEDNGc96E
-	bqdJ200ly/ms6dXWSmA27kF6SK7+EXJGPi/uH8ODo0q2Qqa7ugzT9u0YbZjWoLqXRPCaCx54Ajp
-	K7OklxWYVpDTNZcvVkb/cdzHgyzlMrSwpul8PzAtNB/AS2o9Hjjove3PXov17gk8+571jHQBsSF
-	uHkIbKC3ugXtxkcaQ9r5BvRk9+15BrporipY6aF3vpOTJYLuztjKSwAN1c2YOBBh+ZN0NttiuYF
-	b1FqOtyWc6ZPRDVU5IhV7JjhzNR+il8q7+xbyMQlym8ubPutmXzBwrVN8fzqTfMQdLaYLCdibW8
-	wypy8LOEU9CMCk1yGfRKAXU0IzQQAzaVw9WqdcF9rhw4D90drPHr5wQYaPgAofSjAFJ6zF4EFhl
-	Csa7vj6FupUP6/zEqg=
-X-Received: by 2002:a05:620a:5be3:b0:8ea:addd:8942 with SMTP id af79cd13be357-8eaaddd8d51mr444239985a.58.1776684958961;
-        Mon, 20 Apr 2026 04:35:58 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d92ce037sm754678285a.32.2026.04.20.04.35.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Apr 2026 04:35:57 -0700 (PDT)
-Message-ID: <5a7d7847-90d5-4d64-8b7e-67731dcbf1dd@gmail.com>
-Date: Mon, 20 Apr 2026 07:35:57 -0400
+        d=1e100.net; s=20251104; t=1776685134; x=1777289934;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VJ10UKhhgiq9LAUjUnniNOYwxljbzZK3MSUjv5eKtlg=;
+        b=GAdkzpn6ZRx3RnSzzPE78jQN3+lm7I7Zt9qn0HxmlkoW3vGM630FUIArq7OpKBOxxS
+         DNZXy+bnfY6CYsOQRIB50swSBEsZ7UntmOj5YHmv2xupxZqsN+XDeqGfYUhpAW48wZzp
+         pE6aA6t2rOI71DG0pIo19/uifaK/952QrognVnk33CBQEnOOBUDkTHYi4bQ2FpECx4SB
+         SnBfYyKgxwuKSMdEp8uJQfQOWw+9PynfBE0W3x4+VTblIK9h58uYzyH1cQe8aqAtoUEv
+         pmqg5mD4qWaEohCQA3/c5+/bV60l8PHsE1z7v2DHAbZje2ZdFQNC3yfcCBJsnLOHbJ67
+         Z6aQ==
+X-Gm-Message-State: AOJu0YzvaoI2SuwyXFtnffAP69MoxQe8A+olTb0ANEmvCvCAarHVShm2
+	9TqBcq3wyo6o5LY01sEei+jkAriSyLG/IyeR+3rJ/jMFs36aJIjtWFLNZrLFo74aWjC06tx4oFW
+	9Nicvf+gsZyM31Wsy1oOYhIPEMCCctS3ztjcGz1I=
+X-Gm-Gg: AeBDieukiIhswX9IwnJO1lsH5CV5A56PhVlO0Tdd+b6yuq9QJWhaOGONo1CIy3BDAYY
+	ob3e8x0Rb6GvHUgmsMO4MSuljlic9MWPOLHSBJKsjpgJU6HS3GxROS/LaGJ1XfA9umMEnAgdLAa
+	molGElX2sRiOWZAv9pxAQVQQ5LL9kDj5PrOFAKF920w4lG5ySPs5awbhv17/z5Z4fb2DA8IdWfU
+	ryMrAz4UKAFVpZmpaLmjnO6JqdZwAVpnS1WzhFcUCzMicSvOvz9ZKtI7Xba2JBbheZ8R8yAY8Ou
+	GdG/AEkVLveycsm4PUlpyqIwFH091wWk9WGmwl1rBq9Q7YGU3CbzGbRPXtvA617XojOcqCHgYkQ
+	lN3ruFMNBv4QDldzttw==
+X-Received: by 2002:a05:701b:2706:b0:12c:873f:eb97 with SMTP id
+ a92af1059eb24-12c873fee1amr1458237c88.3.1776685134121; Mon, 20 Apr 2026
+ 04:38:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] fetch: add --negotiation-restrict option
+References: <20260419111136.1577323-1-worldhello.net@gmail.com>
+ <20260419235723.1579499-1-worldhello.net@gmail.com> <xmqqo6jetb1l.fsf@gitster.g>
+In-Reply-To: <xmqqo6jetb1l.fsf@gitster.g>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Mon, 20 Apr 2026 19:38:41 +0800
+X-Gm-Features: AQROBzAh30o8kWJ6sbZV197zvflKWcuIS-1oSh7vE_gzitTkB-Rus_lidNoT9tw
+Message-ID: <CANYiYbGvVh7R3u7AFVFNXK_-cRTsi=6s7sq5hafdJXi8qCs8qA@mail.gmail.com>
+Subject: Re: [GIT PULL v2] l10n updates for Git 2.54.0
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, ps@pks.im
-References: <pull.2085.git.1775658970.gitgitgadget@gmail.com>
- <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
- <9a25b0fadebb5f0219ceeca9496fc6f84abd020c.1776266066.git.gitgitgadget@gmail.com>
- <xmqq1pgf6g5g.fsf@gitster.g> <5370b884-30e8-44a9-a52e-4c518556fa24@gmail.com>
- <xmqqjyu1udkp.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqjyu1udkp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Alexander Shopov <ash@kambanaria.org>, 
+	Yi-Jyun Pan <pan93412@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/20/2026 6:32 AM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->>>>   		OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
->>>>   				N_("report that we have only objects reachable from this object")),
->>>> +		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
->>>> +				N_("report that we have only objects reachable from this object")),
->>>
->>> Is OPT_ALIAS() suitable for this?
->>
->> I was not aware of this. Thanks for the pointer!
->>
->> I do plan to make "negotiation-tip" an alias for "negotiation-restrict"
->> based on the new preference for *-restrict as the "real" option now. Is
->> that the right way to do this?
-> 
-> Let's see.
-...
-> So
-> 
-> 	OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, ...),
-> 	OPT_ALIAS(0, "negotiation-tip", "negotiation-restrict"),
-> 
-> would be the right combination in the correct order, I think.
-> Mention the official thing first, and then tell that another thing
-> is an alias to what the readers have already seen after that (e.g.,
-> c28b036f (clone: reorder --recursive/--recurse-submodules,
-> 2020-03-16)).
+On Mon, Apr 20, 2026 at 2:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> >
+> > Here are the v2 l10n updates for Git 2.54.0. Changes since v1 include u=
+pdates
+> > to the Bulgarian (bg) and Traditional Chinese (zh_TW) translations.
+> >
+> > Changes since v1:
+> >
+> >     po/bg.po    |   62 +-
+> >     po/zh_TW.po | 2699 +++++++++++++++++++++++++++++++++++++++---------=
+-----------
+> >     2 files changed, 1822 insertions(+), 939 deletions(-)
+>
+> Thanks, I only pulled v2 and thought about redoing the pull by
+> getting v1 first and then v2, but it seems you retracted v1 tag
+> already?  I assume that v2 is a superset of v1, in which case we are
+> perfectly fine ;-)
 
-Thanks! This is indeed what I have in my local copy in preparation
-for v3. It helps to have early confirmation about this.
+I removed the v1 tag this morning (UTC+0800) upon receiving two new
+pull requests, to prevent you from accidentally pulling it before the
+updated tag was ready.
 
--Stolee
+During this localization round, `po/.gitattributes` was introduced,
+which helped detect and prevent a style change in location comments
+from introducing a large number of unintended diffs. For example:
 
+ - https://github.com/git-l10n/git-po/pull/913
+
+It also caught blank lines and comments left over from deleted
+obsolete entries that gettext had failed to detect:
+
+ - https://github.com/git-l10n/git-po/pull/909
+
+`po/AGENTS.md` was introduced, and AI-assisted review was used to
+identify and fix translation quality issues in pull requests. For
+example:
+
+ - https://github.com/git-l10n/git-po/pull/906
+ - https://github.com/git-l10n/git-po/pull/917
+
+--
+Jiang Xin
