@@ -1,69 +1,69 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F89C1C701F
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 00:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40E51C701F
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 00:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776731180; cv=none; b=HOwR1pJmQ/5WDkv7LkZ+p541VEDRghK2nSWmcv1bre+N5Dv1AQWlwXGtChXzulESAFV+fT0bojk2sF75zEDD3TPECm8kM7b9w3dMUdxB/EYC99NLErN9oT+d1DzNpgkrvGZ+IpVVlPVptcZTrZgQVm8yBYFjTNMl0ZyayOiL5OU=
+	t=1776731183; cv=none; b=Zmck838HPgyQAFmn42Mdax11hgVii17K7+DMb4gvQyiNysgXPJCGaAHQxpxXJw91+8rRLtB5F2ztOfzF1Xcs/A9WyyDrLmv5Se7z5pZ6n/3K0vwEr9UJNibw67eoeArgh7nD40kKCymZk+hWVCRM/W5hO86HdzmBR9ZDzS7zR2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776731180; c=relaxed/simple;
-	bh=z1ltuKe8gUOCeFgE7SoQNqoe+F007gsIvrUULur7IOI=;
+	s=arc-20240116; t=1776731183; c=relaxed/simple;
+	bh=tCntjicGkzCIEfqEApBlMwlGSyQipQ05uvtQC4bkyFk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=irdE1DdayU9ll2eANNLYKHqjRucuor5H8onUOu+yHkgyD6occj1qFpXH4V0LwXtMF5k4lBdEMZJo21dy4KzwGtSQmpP+cB3Y86u0BGSk6aJuXICRt6/ZhgEUnacQJjDU8/ag5IPO+z84NZgKFDplNQAvuQfI2MW40kYccFqwe9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bIWEiq6h; arc=none smtp.client-ip=209.85.160.174
+	 MIME-Version:To:Cc; b=dw8AXrSvpbJlPbBTzYjaHQyq28++9H+Qj8HIfPUyzoBo5o2aDUbf+cVgPbbSVKr70WINmWU7PEYxOo5bEQeMC5vBOkfoLDsbcLNBX6VBeKOXVbzOimBRM0WDU1/knTfxhOgFhIrQvRQAG8AC/KxzuMMqQj+AfX1auJ1tjqVfoK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o+zW+Jgq; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIWEiq6h"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-506a747448dso27767011cf.0
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 17:26:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o+zW+Jgq"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8eb5ad01402so159356085a.2
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 17:26:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776731177; x=1777335977; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776731179; x=1777335979; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8m4W7Fumc3BZgE2B6iAplnAt2D5ybnRtQ5wy/RiIHRM=;
-        b=bIWEiq6hJn44zjIWbImmDMyZUsP2iY+NplfCCQOSYrXWyN5iamR1Uszv1KxRYfyOXD
-         iOGLkCP5pQXWNGhsmt1nVzYxQJDnOnnnkHmHOjKow3mLMf0owUbT0GPZZ9cv228r2Dc3
-         YV6NABNDFrCY7NcAXYEP6c0D4jcKt3LLnclx4nCOwy+kWSkykqf9h5Dl0LvVsBw8ZOem
-         QF59kfky8E5g5ZFEPMrRaeCvY2+/Uob5LlASY8PPd3mlDfuo7u06J9VrgrfRJGfjoktp
-         KOzz8wSXVIFHrmyPnLsNz3W3OScxFylfZ0KL7p6sydonGPtGtdIK8N41OdITmeQWsK4/
-         /S5Q==
+        bh=4n6I0u+HRI3v6guwV6ovxIEI/TED1NdGKWo0n+27bwo=;
+        b=o+zW+JgqMRnR7gcA/KYfJOhx8bDTPOjoSH8NgvzAQ4ah3JxpVYRXEvnHNkcZ/hRUNU
+         1aN1nrX8uZ9AWP0VnPUjJnPBJbG0Qb7e6xR+p0lHnGRHLvZj/fFJIG/wb2aPMuHT1RjK
+         F/hG3zvXvewfy6LyUHup+FlC6UC1cKLjCJWBjeP29dmk3ksJXac9zZSygjiLWdyG9v14
+         A2e0Dm9+odtnohzNFFIxT/qFKn/UiIn89bS7LWNqmia1vbUOyNWP3wBnyJTJMXU0HJVS
+         k9jHmlvpuCCQUgQ5JnSqNRpe6WgOTgrfKcsoaJ+tcpAm9tT8KrJnSW1ZcAYFWjq4Ci7Q
+         PpJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776731177; x=1777335977;
+        d=1e100.net; s=20251104; t=1776731179; x=1777335979;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=8m4W7Fumc3BZgE2B6iAplnAt2D5ybnRtQ5wy/RiIHRM=;
-        b=T6M/LxV7NfL9gXASRCGCgI4KwlMo+Vxd9hmnUHmKX7doW4CsxS5tHVra7p3qXIefBB
-         Cu/EH/2a7MzvRzBAn4GF4YL5avpLtGTqT6lW2pv/OKzFZCnnusuP1G4hcOtW+r3Ixz94
-         ZbvcAYxPtFssuRbIz8LkTsXH9D+yHF/JTw40p4UfIAKo2Uepcwv0YqBlKPheaaAS/nmq
-         zfbUgxGpOJ7/q8wifH9vwqcMx8KwwBMsT83VzbiSWJB2I32FXigsluSn+sCHjpOFPWdj
-         eggV4p3IcINV9iNOYpFC7z4RgGJ6mr3l2hzwlwU90lXHRI5a7V6k9o26S5WkNBEx//kE
-         AmpQ==
-X-Gm-Message-State: AOJu0YzwXRIl8M+keYk7lvkxYlHXd3x0abvOGCc1Pb/QE7YIdUSrNqpd
-	QfmNeRwNROhyL++QenOPbm/7F5QYUPp6Gpd4vFeb2k/wcVi5eJQxlB5Pm2Q46g==
-X-Gm-Gg: AeBDieuS6Gj6kUTEIDOdaJH4Wek6/qcKfxzhOXNuw28Xr2YyXvSMkw/SsitSAAN1mN4
-	i6rLR2HzPYu5YZwVkKBu3xPgaS2y6sLliBjGEYFA29ex1mVWS2J0EgWJZKb0bxxr2PFOOiHMF+v
-	87bkEyhJ4LqE13QeLBwflBTJiEos8tQYaGj9SpfrkxFq2uBZYMTu9DRJOR6nhTvpd52U71nFwBL
-	5mfNyDsQc/wR+M1j6nLh/FldU7j8+0fihC46TfGgnD+xa4ABxDimoi/cDkMqTFFrIQCL2rl6JFL
-	l+wVCEU5quCUa3Cu+35Js+D9x404ZhA11JyNKnvfN4S0g52TwPtHQIoXC4NSuHzz7FsLoSuduc0
-	ws9PlZePW6e4sQ+ITvq9D8H0tNjUJK0DhH7PRsWcRJEPE6rSFfrrVeM3MfMcIIcW6XVCkJ9dsBA
-	ImQ5168iUnkHYTVkDXhYIgGHsDmB8yZmi5teB/X5cgflH3iAs=
-X-Received: by 2002:ac8:5801:0:b0:50d:770f:ad23 with SMTP id d75a77b69052e-50e36bab74dmr237270961cf.26.1776731176829;
-        Mon, 20 Apr 2026 17:26:16 -0700 (PDT)
+        bh=4n6I0u+HRI3v6guwV6ovxIEI/TED1NdGKWo0n+27bwo=;
+        b=pZcX9PuRnC57KFFYSWXZoTvUizYCPSHYqJV9USK2J61rxaejVFiCQViyRlh/cfPDOG
+         CmTCmOrYv87fTJhz78fzos8AmB30hSRIZ/5l0pyI1+89AM3paXpu547rY6DKBVoYDCvD
+         Tgqt4IOqurObgFMN/sS/tYTJBC+FZLAqCHm+p8GUiwIrt44YdanPSHw28jGsS5LBKchL
+         jJOpujyTP5djJ94oJ0szIDxDc3/cLBVyR32306XfKZjTZKDvCag2HkRxEqq/j1PN0fuC
+         hAMP6d5+WiUlElOxOw4Jan/IKcrCLlRf0Kzmh/XKPDJyLu3FUYE6STM9RpGPKEHaEj6+
+         xIwQ==
+X-Gm-Message-State: AOJu0YxuF9w5qA1ckpH80OgGYzFp3CmyGDJCsoYNH+6bwHePvjzCDUSR
+	XwbcRjT4roW+EM44aR+v6vg4bQxU63cgyT8/+UNuCS1W19De6wR/qobb95w9zQ==
+X-Gm-Gg: AeBDiesJNcAUV1nzRYZIYkzjd5L7M1JRd0VzfVC9S8YM6frMB5YKxn+ZjjsBmI1QxLn
+	P/S/q/4Gx2NDfwuo+iKPlm2LBmN+sgCPPXR1vufCaJM9WybzUeQgwjZZqosIj/586kBqaWFxpU7
+	6axHdN6kx/DvtiCwzmKSXmOG30zVdr1/mWPy3NIQSY8SMe5UngqzZhOWMOaDhsdnfaLhGZ3vylx
+	MwaqciXJ2ByNBiI7TXj9/SW/VWJiUTsgvVYtFE+gTbl3VWZ5qZps7Z0E6GkFS8UslIPwox29JOf
+	QpUeUtZLe6RTJLKyqW66B54eAgCyZVlwYiUpskN5TN8206GDAJc3lUpfoWZMZKEqSBzd0YCbxrx
+	yr2Hlsdb6v2DAMKNQHOO5aEZdKkuyHeL28p71qarDVG2nrS0Sn3/HkRhtyHUtKNJ5AkdtJ3WdrC
+	pnN2TqFVN89KqXd9JKyegZOGFb3LQcWntq4pLv
+X-Received: by 2002:a05:620a:4455:b0:8ea:addd:8954 with SMTP id af79cd13be357-8eaaddd8df1mr1000049585a.24.1776731179464;
+        Mon, 20 Apr 2026 17:26:19 -0700 (PDT)
 Received: from [127.0.0.1] ([74.235.117.99])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e61c191basm35475881cf.16.2026.04.20.17.26.14
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d64cc559sm941991185a.13.2026.04.20.17.26.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 17:26:14 -0700 (PDT)
-Message-Id: <282f906d1b4767d95e2a66072c280c2294a93a9f.1776731171.git.gitgitgadget@gmail.com>
+        Mon, 20 Apr 2026 17:26:17 -0700 (PDT)
+Message-Id: <949b5d8e3f3aefd9497a7b85d860259b9d5db418.1776731171.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
 References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 21 Apr 2026 00:26:07 +0000
-Subject: [PATCH 1/5] merge-ort: propagate callback errors from
- traverse_trees_wrapper()
+Date: Tue, 21 Apr 2026 00:26:08 +0000
+Subject: [PATCH 2/5] merge-ort: drop unnecessary show_all_errors from
+ collect_merge_info()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,55 +79,36 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-traverse_trees_wrapper() saves entries from a first pass through
-traverse_trees() and then replays them through the real callback
-(collect_merge_info_callback).  However, the replay loop silently
-discards the callback return value.  This means any error reported by
-the callback during replay -- including a future check for malformed
-trees -- would be ignored, allowing the merge to proceed with corrupt
-state.
+collect_merge_info() has set info.show_all_errors = 1 since
+d2bc1994f363 (merge-ort: implement a very basic collect_merge_info(),
+2020-12-13).  This setting was copied from unpack-trees.c where it
+controls batching of error messages for porcelain display, but
+merge-ort has no such error-batching logic and never needed it.
 
-Capture the return value, stop the loop on negative (error) returns,
-and propagate the error to the caller.  Note that the callback returns
-a positive mask value on success, so we normalize non-negative returns
-to 0 for the caller.
+With show_all_errors set, traverse_trees() captures a negative callback
+return but continues processing remaining entries rather than stopping
+immediately.  Removing the setting restores the default behavior where
+a negative return from collect_merge_info_callback() breaks out of the
+traversal loop right away, allowing a future commit to exit early when
+a corrupt tree is detected.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ merge-ort.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 00923ce3cd..4b8e32209d 100644
+index 4b8e32209d..74e9636020 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1008,18 +1008,20 @@ static int traverse_trees_wrapper(struct index_state *istate,
- 	info->traverse_path = renames->callback_data_traverse_path;
- 	info->fn = old_fn;
- 	for (i = old_offset; i < renames->callback_data_nr; ++i) {
--		info->fn(n,
--			 renames->callback_data[i].mask,
--			 renames->callback_data[i].dirmask,
--			 renames->callback_data[i].names,
--			 info);
-+		ret = info->fn(n,
-+			       renames->callback_data[i].mask,
-+			       renames->callback_data[i].dirmask,
-+			       renames->callback_data[i].names,
-+			       info);
-+		if (ret < 0)
-+			break;
- 	}
+@@ -1740,7 +1740,6 @@ static int collect_merge_info(struct merge_options *opt,
+ 	setup_traverse_info(&info, opt->priv->toplevel_dir);
+ 	info.fn = collect_merge_info_callback;
+ 	info.data = opt;
+-	info.show_all_errors = 1;
  
- 	renames->callback_data_nr = old_offset;
- 	free(renames->callback_data_traverse_path);
- 	renames->callback_data_traverse_path = old_callback_data_traverse_path;
- 	info->traverse_path = NULL;
--	return 0;
-+	return ret < 0 ? ret : 0;
- }
- 
- static void setup_path_info(struct merge_options *opt,
+ 	if (repo_parse_tree(opt->repo, merge_base) < 0 ||
+ 	    repo_parse_tree(opt->repo, side1) < 0 ||
 -- 
 gitgitgadget
 
