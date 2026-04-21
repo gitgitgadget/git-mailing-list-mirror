@@ -1,120 +1,179 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED49378D71
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 19:21:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3322BEACD
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 19:34:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776799319; cv=none; b=d5XRO/QwdGcGdJPt8pPWzxyWibeqct11cTy+pNx0zPndPjJ04riAl2H/X6ATCOmBp+X76nrD6r9Idsmb768zH69sI4VP65HmDaUKEnBB84alAZvTAZCoAKA/JqpPlWtVj/5KOAO4LqAHeRyd8yc+4XANKWclXG9TLVInqCnBnYw=
+	t=1776800046; cv=none; b=XX9HY3qVs2AOGCmLG+cw0W3KUW82w1o04GBGnSCvUZHI9ZzDxR1QxJpOMZx1MM7hT/Lf+ZjNEIjAUDHULokqVxWs7kMjjk52XhQRuCX1Bf0ULYUuaUi06lUxvZHXsHSqL6Sxu4QA5TRqbXWAtKCLkwoFIhVxHQtwivTBnv15wLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776799319; c=relaxed/simple;
-	bh=/a595QzXjV8h7Vjkh34LAcwrS5+Wqh5yQ3Okiqr9blY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rDlW//73+FnM8uetXW+Bf1lGT1LDEe9IsH+QcEAnvl4Dvo5p1Y6wKIIwvrrqFUGLFAzUiFXesIEuA4YF5/M5L4zeeWZBTaaxt3FFwtcPKT+RP+RSyaaXSL/yqxkchZyWH3kgwLFW/LmwWDCnSXeZNaJCwFwNfA2YoiHnjIHfjDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HlvzsV/q; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776800046; c=relaxed/simple;
+	bh=bwAFGfy9DPex0hnb3cD1UNbedqckmsFqp3ALhHo4H1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lF39Q1B64m1GME+Lntqb/qAbVQ4ZqJUVitvMyCEiv+JTV1PNJ2qiLpjOT/ioHpOSd8rxhIIGB1ITJSQ0I1QHDLiRJKaImxLNqmSdPfLNJZKNFddIN09wNPLUztatr4pmroFWLbG3L1ESdLbjJkWPvMQ+944cR0bfbGH/39MdPLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Txc32sSb; arc=none smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HlvzsV/q"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43d7645adbdso2538153f8f.1
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 12:21:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Txc32sSb"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7dbd23bc684so2702410a34.2
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 12:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776799317; x=1777404117; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V6sZFK8xPB91x4pyxld2eOuoqtRiKleS2KbNgQEO/OA=;
-        b=HlvzsV/q2fpeZqe/9OJlKe2AHF3RH1zfnjXkEM7PHb21l/w4Eu2G1O0v07rDQAJTbY
-         jr4/Nf2THyf9T6dnqu4BdCycfq3MLjisSjamyjP8wnGPlVB3wvbfCmB/ReOkNmx+5ZVg
-         LFAL45kzmIOn6f2PExm2Fhue7lVrNKcPQtssbIZeBfjrKKDCsKXgMNOeeKjE6IHVJx+Z
-         trw/TWZxPedZpeFlkhbreSfGvQTy3vemvSwfZr1WxBiWP17felv/PTkyddrhDu6U9aUq
-         BwZ6e91MoyQA7y28AuGV6Xc8Awcmt274IH6H9aVsHXAARnn43EVaYlXIaIbmelpq4F7/
-         G4Zg==
+        d=ttaylorr.com; s=google; t=1776800044; x=1777404844; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=C9mas+CYpBmi8flUU/vXVFZLmRj+dfw7TTIhLguNrX4=;
+        b=Txc32sSbuc7AZp8vAw3oiPb0MfyAOmIiSOcv0J1pvfSbuy63nML299b0biOqO/Hi2Q
+         uQzEi+I/P/d26KgBpff9Jm3KHF6+OZ/e1VTVmq5Ij6TPPzPdzacoWb3u8/U8NP/adX6n
+         Uh+246kScezKov5add066HDlCulDaxxjC5Xgu4rOyc9+9L/GV7VXAChsLiWT3ja/fx2c
+         BD9uhC8xKnF11ZXl4OyR7CwExnsvKupl9ix3T17INM7yX7wEFnNVPbtxyqVYgob+9OqO
+         L54s3pTMWONxZR9U8d2sADtc+O9Em3G82UccHgLFNp88iupxOKzV16oSCmMV3jZZlE1v
+         voEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776799317; x=1777404117;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=V6sZFK8xPB91x4pyxld2eOuoqtRiKleS2KbNgQEO/OA=;
-        b=XtDrKHdoifSWUy+A/AIEmHzg2mYNY9jU6qnYAKy7rlSazqZZrT/od9t0uqdONxqM/g
-         nFulB1ajO5WlWEgpJqi2s5AomXbXzwEZ/LsuS77vyoKr3JwRdMwdVSz6X40wVC3OXXC/
-         agzf0BcOfbvxEOp3TlX7Cbi3OsCqoDxFrneKSvxkfpHsd5TMPMYlrIoec2hfRhKkWUgF
-         QDf/Az7Wa09/zaCvGhhn/FBBzuaQuhlT/ySiEkRu60oRLq9l3Dq4TTCXVLRZiL+ee4M8
-         Y3uhr07kF4rCC8NSb5yYYFkS0hqzCA+MZRI6wWOaD2aF841mgFPL1PPEyWK1nUj0ZG8c
-         A69g==
-X-Gm-Message-State: AOJu0YwiRAM4OyvzfgrxQDrjgwGGbdgAL3fgLXYvIAAnEGEsN/vkT7Ap
-	akzjCm0Zt1nJ/ZxAIiUBJoFzacbNfida8nO9/OlSVhe1vIUaNZTLy1OpvWgM2A==
-X-Gm-Gg: AeBDiet2o3vmOnaGGis93BO2lyhMyj1Xe2mz7lgqTwi/z9rQxbRfqMACI3XEX87o+35
-	XiVROwgYIn6PF7iUt6o+bXuZ0Kzkb0HMb45Ub57izfgGPiJRN4p9q8bDQwNZlD+p9rJ+PzzaMPs
-	DrGqOa9zOVNK4xkSooQItY5ItknQ0D5UdpvQB+yAfxL3My58kvHdlGgg9+l6pFpWiuf/RJUVkFH
-	5TGriCnHq+wnM+8zEwAIdGBzwklzy4YMYz4CY/D8RmAQoEFx+0dpRn5mXgdic3WE68jAuN9pHNF
-	DCJfP/AFaI7bFPrZ5SoUr28n6fVich7hTqMpzIdKvoyfa9jysDKFhs7+pYoJeaBg5TZ/X19jlPp
-	LoNy+P7CJIrKs2QcU1aX/GdMclMR2W31nP+6ftR2PsW59CZc7eJdaEzAF/Tbz3GQFycEeyZbo/j
-	9jSuUYr9n93NjMjKMlvYnZzWqAQcPoWQVB2gI9NSuC6uE45Kt140DnHsmVdj8qgbc=
-X-Received: by 2002:a5d:64e7:0:b0:43d:5ec9:246 with SMTP id ffacd0b85a97d-43fe3db2d0fmr29888830f8f.12.1776799316505;
-        Tue, 21 Apr 2026 12:21:56 -0700 (PDT)
-Received: from localhost (92-249-246-20.pool.digikabel.hu. [92.249.246.20])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4e3a79esm41726791f8f.17.2026.04.21.12.21.55
+        d=1e100.net; s=20251104; t=1776800044; x=1777404844;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C9mas+CYpBmi8flUU/vXVFZLmRj+dfw7TTIhLguNrX4=;
+        b=p+1BKzEh3+194ONSLgydbzYxX0XawohNB5a134VuIK/Lt+Zix66Dcdz1w/bZiyLK9A
+         8f5uzI5J/MnmpAII/ooP9Txqpup02KDnfId6KMdXylvyw2SO9pnOnlZtnHGWbJsHy9AN
+         F96YttjB7D3bXKQ+Zpam6z9u+DfW0nTKN0jZkX4sac08HbV0qbVAvTT8fJjqHnSmKqMJ
+         VXv4dkuv3HmlY/jqHVWGNgsHVLX+D4907rbzl5tIM4MvrUDNE9eboIXKGOmfeZiGhF8i
+         BhyTOU0WMLnVc7Q+1sunqN7wPZ63Ve5qi8VrlF3G0IcEK61uMp3e9qyBPSXp9q5X4HTS
+         N1kw==
+X-Gm-Message-State: AOJu0YwVDwKYNRqwUu4kk4YRL/n0tw3XnYKh5tuiCGkjpHNv7cNnX8rW
+	1kpKIPy3Ar6fZ/Uo+/BCzJulmnaz6QeyLogQf8YJq6hNLEDHxgnRxj/i0I/Qg8fVEcU=
+X-Gm-Gg: AeBDies2gYKGHcpu0rOqsauohDd3FJZiYEO2yxt6ufPxf/Ku6hSI7CpZXcwutY3N+DX
+	rO35unJPahb4TlbGc0awYqUtdsRqpZEtviV37uwwEIDRjAri6tDpzq/veccvxPbYeNHrn4D+1LO
+	li+fkFo1JH2U8lRd2keH+5U6VDxkUd2EeiMw0sibtO3PKpAFGwxLnU1lpoAJwDnG21AB12+HK0F
+	rxlJek+OAYu7zFDZje+DDkqB4ffFWIR4SzWrcIDGhZ/RDMM6lLA9GYkUm8hbk4p/ncCaqfemqyq
+	KA6TLY3lBVxFgu9NM4YGOfwhmxWQCfhHZ4vrGLbFSbJKqPKJXnwTj2CC1t++Cj23sEtKKxUSj/Y
+	J2F8SoVu4gYiPCYZ30/wGpP+NPGdLdz4LdCejJEoXdv5nbSUyO2IW/K6lNepVsI3/dqWSAPlFpi
+	7qx1SbDMVuVWsdJgOv7eyGIGcnUlTENqvbgnhzYpCIW+XBo5WC7YaTmuHFnCBKG4mCsCyp7yiu3
+	AQH6p6Q+PGEWyNbjP3lxQBF3bcmK7/Vw8Z6G2xrC+AWDcNt0TOs0NfGjGjQssvpAajStmNmXaZv
+	cAUMk8AjY4TSQEpMa+u3kV6+JIwioP2iQCKyzQ==
+X-Received: by 2002:a05:6820:a01:b0:694:90be:618e with SMTP id 006d021491bc7-69490be699fmr3980337eaf.6.1776800044053;
+        Tue, 21 Apr 2026 12:34:04 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69464fc7237sm8835273eaf.11.2026.04.21.12.34.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 12:21:55 -0700 (PDT)
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2] t6112: avoid tilde expansion
-Date: Tue, 21 Apr 2026 21:21:32 +0200
-Message-ID: <20260421192132.51172-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.54.0.655.g69726bb9dc
-In-Reply-To: <20260418163236.2382826-1-szeder.dev@gmail.com>
-References: <20260418163236.2382826-1-szeder.dev@gmail.com>
+        Tue, 21 Apr 2026 12:34:03 -0700 (PDT)
+Date: Tue, 21 Apr 2026 15:34:02 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 11/16] repack-geometry: prepare for incremental MIDX
+ repacking
+Message-ID: <aefRKvNO1XXtIe1K@nand.local>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <d2c667e841300c3310e3a23493ac27eb2b08992b.1774820449.git.me@ttaylorr.com>
+ <CABPp-BGhXzo7yLQ5z_pPztSNf4vEiPM2x2pMxty99rak_NU-CQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BGhXzo7yLQ5z_pPztSNf4vEiPM2x2pMxty99rak_NU-CQ@mail.gmail.com>
 
-e987df5fe6 (list-objects-filter: implement composite filters,
-2019-06-27) introduced a test to "t6112-rev-list-filters-objects.sh"
-that checks the output of a Git command with the following commands:
+On Thu, Apr 16, 2026 at 03:51:32PM -0700, Elijah Newren wrote:
+> Hi,
+>
+> On Sun, Mar 29, 2026 at 2:41 PM Taylor Blau <me@ttaylorr.com> wrote:
+> >
+> > ...If the tip layer has fewer packs
+> > than the threshold, those packs are excluded entirely; otherwise only
+> > packs in that layer participate in the geometric repack.
+>
+> "fewer packs than the threshold"; I'll come back to this below...
+>
+> >         repo_for_each_pack(existing->repo, p) {
+> > +               if (geometry->midx_layer_threshold_set && m &&
+> > +                   p->multi_pack_index) {
+> > +                       /*
+> > +                        * When writing MIDX layers incrementally,
+> > +                        * ignore packs unless they are in the most
+> > +                        * recent MIDX layer *and* there are at least
+> > +                        * 'midx_layer_threshold' packs in that layer.
+> > +                        *
+> > +                        * Otherwise 'p' is either in an older layer, or
+> > +                        * the youngest layer does not have enough packs
+> > +                        * to consider its packs as candidates for
+> > +                        * repacking. In either of those cases we want
+> > +                        * to ignore the pack.
+> > +                        */
+> > +                       if (m->num_packs > geometry->midx_layer_threshold &&
+> > +                           midx_layer_contains_pack(m, pack_basename(p)))
+> > +                               ;
+> > +                       else
+> > +                               continue;
+>
+> Should the commit message use "no more packs than" rather than "fewer
+> packs than"?  Alternatively, should this be >=  rather than >?  Or am
+> I just mis-reading?
 
-  grep ~$omitted_1 actual &&
-  grep ~$omitted_2 actual &&
-  grep ~$omitted_3 actual &&
+I think the goal was to have "fewer packs than" so the commit message is
+right here and the implementation is wrong.
 
-Since the leading tilde in the pattern is not quoted/escaped, it is
-subject to tilde expansion.  So if the system has a user whose
-username happens to be "$omitted_1", then "grep" would look for that
-user's home directory.
+> Also, the empty-if looks a bit weird; would it make sense to invert
+> the condition to get rid of the empty-if?  In other words, something
+> like:
+>
+>     if (m->num_packs <= geometry->midx_layer_threshold ||
+>        !midx_layer_contains_pack(m, pack_basename(p)))
+>             continue;
 
-Quote those words starting with a tilde to avoid this.
+I sometimes will use the empty-if style when the conditional is easier
+to explain in the positive than the negative, but reading it out like
+this I think that the conditional as written here is still clear. Thanks
+for the suggestion!
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
-Same diff, updated commit message.
+With the above "no more than" vs "fewer than", I changed this as
+follows:
 
- t/t6112-rev-list-filters-objects.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+--- 8< ---
+diff --git a/repack-geometry.c b/repack-geometry.c
+index 5b554da89f1..0469dc6496a 100644
+--- a/repack-geometry.c
++++ b/repack-geometry.c
+@@ -49,10 +49,8 @@ void pack_geometry_init(struct pack_geometry *geometry,
+ 			 * repacking. In either of those cases we want
+ 			 * to ignore the pack.
+ 			 */
+-			if (m->num_packs > geometry->midx_layer_threshold &&
+-			    midx_layer_contains_pack(m, pack_basename(p)))
+-				;
+-			else
++			if (m->num_packs < geometry->midx_layer_threshold ||
++			    !midx_layer_contains_pack(m, pack_basename(p)))
+ 				continue;
+ 		}
+--- >8 ---
 
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index 39211ef989..e0a825bccf 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -623,9 +623,9 @@ test_expect_success 'verify collecting omits in combined: filter' '
- 	omitted_2=$(echo a     | git hash-object --stdin) &&
- 	omitted_3=$(echo abcde | git hash-object --stdin) &&
- 
--	grep ~$omitted_1 actual &&
--	grep ~$omitted_2 actual &&
--	grep ~$omitted_3 actual &&
-+	grep "~$omitted_1" actual &&
-+	grep "~$omitted_2" actual &&
-+	grep "~$omitted_3" actual &&
- 	test_line_count = 3 actual
- '
- 
--- 
-2.54.0.655.g69726bb9dc
+> > @@ -173,6 +196,20 @@ void pack_geometry_split(struct pack_geometry *geometry)
+> >         geometry->promisor_split = compute_pack_geometry_split(geometry->promisor_pack,
+> >                                                                geometry->promisor_pack_nr,
+> >                                                                geometry->split_factor);
+> > +       for (uint32_t i = 0; i < geometry->split; i++) {
+> > +               struct packed_git *p = geometry->pack[i];
+> > +               /*
+> > +                * During incremental MIDX/bitmap repacking, any packs
+> > +                * included in the rollup are either (a) not MIDX'd, or
+> > +                * (b) contained in the tip layer iff it has more than
+> > +                * the threshold number of packs.
+>
+> This wording looks consistent with the previous check, but not the
+> commit message.  If the commit message is deemed correct, then you'd
+> probably need to update not only the above comparison but this comment
+> as well.
 
+Great catch, I would have definitely missed this if you hadn't pointed
+it out.
+
+Thanks,
+Taylor
