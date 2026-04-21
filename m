@@ -1,149 +1,97 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E46359A66
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 08:18:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776759506; cv=pass; b=lQOyiehcFtHbkePrMuy3si1hH65QPN35jlUfMxQEZPESh1NE5hakh7jjCMul0W6DSGQI/SnmjzI4KzEsqHud6Opw8IgbvOdpSEdsFGCA2/MhBIuCba56b4hEcw4DghGLJ31D5sLMVqyrt3xBIB14PIBWmWFxp0Y/EprcwAma1Ng=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776759506; c=relaxed/simple;
-	bh=ec4fj9V6JpV3LUvsbfmTzr36suRHt72HCqmA5Xb1fEQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H+eijISJdbWHGPlL7wSw+M4F0rK/L4FOPYSjW5bwtfuuUzGICjOuE23uLCMqTpDLxMuom5l+RElL/3X722ZaF0/HAv6toLsNvPAcafqRQCWSnl6rAygVFr/m74M0+6oAlkeVMRvovCKhDhk7ClWaoPqzrcuv2R8q0QPDEe2wUok=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nf7LEZfL; arc=pass smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBF13ACEE6
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 09:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776764088; cv=none; b=Uzh+L/2YXMK0ubgVlZ3er7DIdiPrqyu+ZKjbPPn5ZrQ0y6sXpvZ+78bR0vWyrzr/uQyDYMia1yiZPxh3Bk+q4tcZrhQ5Kgxo7mbaRx5mUo/5pAamvsDeCkpW65ODQce+/XLHOwvNh4JTG11OkWlZ0ZCGZT9WKyOhoPcUWqzv6xg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776764088; c=relaxed/simple;
+	bh=ohiHiKaVE12UunI2Q/Y/sL618IUC6/vjaNpvPbBOHmg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Xn2RzGWTyDKTz8oG00u6iV9egwiQVacR0HQ0T/UXa+uNnTC5kVOuxZIBtXd2M+Svgft2UrAq1kVAuRVMhwZQyEdHPJMimhOZZarumWI66FpkFoL9+cnsI+i/kYSyP0p5oSgWTQmpED1YK3N+2Va0ULoD1VyKOf+J4g/1up3p7K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XSt/zng9; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nf7LEZfL"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-12c1a170a50so4700426c88.0
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 01:18:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776759504; cv=none;
-        d=google.com; s=arc-20240605;
-        b=O0hV1N3Weirar8cjxjg3Pp2cWesBTn5NXqOn7qEJZhybTFmPYkpyXiftQd7txXrhQv
-         4IlmanYtExcuZKuiOr2ZS8oesbQaWNzTWwx9gead76Oc/XPm4hbSz4mj/wx87tml3PMy
-         ln1o41eqy7lK6ZhN4PCrl6aDviIBfGHXYU8VqhZsO1tGeMWl1HgGejZkXiBXNWR7fyKS
-         iKI3SxyNQXnju4/ENWxRUPTlEX17ICYx3hlyA+jKKL76F7QGdMlBXCEliTQnhVA+Ejep
-         5zMfKDfCESkwgs3ER5B6WYmMfBdV+GfITW1yn5IffqC35Md+uP1m2oFd5pIBbUsvMhBE
-         XDXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=P/dbFsb0OY4BRCiNAqRnfrrQfez6fdlbHWYVKnQ80W8=;
-        fh=fqFFP0GpI26PwP9xR+SsqeqwjlXYODB5uusbAzWKy8k=;
-        b=cOuIJE/hxK3JQtpoKVWedjJ8CSv77ZYc0VV/68ojyMlay/07OO5PP3VI8/t/WasOqe
-         LXO+GR6CILEbkll/mL/DDawlgCIPrDqW0l/4w8z8FVqMbumQ0oztmgFOUUVVC+nFGNBg
-         Z83JkKI0ebIG5J/OnqxQdnRWui/Y+J46HLVkMuAoXZO/7V0Oo2Y2CvkuGJt4gRgReevI
-         zHkMSBgPQ6W7V9Ft4jpKcEyWxzdtmiD6V3IXmkZmPrgVtcIHWRwUhZ5GYE1fTia0Q/fE
-         WNZyiQW9hlJbckAOEc8zK6zxDjCelwyx3mUDe4VXeSXmk2nKwnYKD3oKLwMzzJXCYiaA
-         7e3Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XSt/zng9"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4891e86fabeso24218585e9.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 02:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776759504; x=1777364304; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P/dbFsb0OY4BRCiNAqRnfrrQfez6fdlbHWYVKnQ80W8=;
-        b=Nf7LEZfLEctN8iTPxD+jxXKvvdVTdRWJ/xjYryloc0S3T60qySTATOjpNoE6cIyWi4
-         KGdEMF5qiTDHQHjh+5SjO6EaPetKzDR3gsEK5HCf3Nc85u8WC0mnOjFRTt8KHWgPxZFG
-         OSC8jQgwOTECD+/69mTjA7Loqvi+eQ8xR3G698I1RHa70aDe04CpByufKd2Mkh7n8qbu
-         Y0OC3lmV2qeFr1cXS2oWjUVDXgM2LQdBy0JrHi2MPcuj/SlocAmOeOEiyMBo2X1Z1uj+
-         ue+dK5Ooo3RXrXV/C6pEqoukuTa80KIzOvN95ItDvpl/C3GFkdoyvCTmatQmbBvLfuzJ
-         FVYQ==
+        d=gmail.com; s=20251104; t=1776764083; x=1777368883; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7kb7e9fTl8N8gg8PjdxZhQO9yTQNKfAnK/4yVZfdSEc=;
+        b=XSt/zng9lg7RHbPYilTLiAZOrITKU3gxmzfQ7QpSmET5ksO7NeHC/Sw3i6u1/U6vOo
+         s8SjnfTmJqM7o5VoBblQhtXYou3kEGP+Qaot5xap8zlNoY66L3OzcSEqImir9dEsjS/U
+         4sOVILW/IuHUFMTCsySd8J2IG8xsWPwD8sBw3KsnjqNdHifwUotif1b5Zc4nbC0Sdmxw
+         Fjis05ukdq3XLolcTdPprg51s6KINHA+fIPIDsw77NpXxzK262lGL4MqN+kfgHR/XV5T
+         ZIXUc+VrDHeBU9TbMU/b45JvgHD8hXuuZzjhybPnRJ1FIPElBp1pu4BzB10c8gx0WxAS
+         BkZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776759504; x=1777364304;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=P/dbFsb0OY4BRCiNAqRnfrrQfez6fdlbHWYVKnQ80W8=;
-        b=esQlbokVVp4/tbgimhIwMd8s6N6SiWJSbd80pq/Td//WFzbUgZ3AKsZkCQ+GMJPXv6
-         N9cEXf5ZyDO/Tu5FpBLDM1cZPlChcAEHoyQBohUDxKXssXVw8oCmBkj25OHB0N6SYmOm
-         jhPzyz9ucdXmAQcU1q3NzFC6yh246RgfVzgbM/4nZvLYtKjOY6yw/7a+fgckvTPp3xr4
-         qAg4b/4pW44CcZMTiCGZU+Vx6PyQn/GqO9Ayl32aaDwNR2ovH/FBpbhZn6C8DlJYoidA
-         wCnMyLlVsTCN/FwEsMpDNJRPNOVhwRf8ii4IZG1OJ/GOFY8iSLTgaXF4LgqmpCTIUz3f
-         YBhw==
-X-Gm-Message-State: AOJu0YwbdERNKlLam+OBrGL9O2m0RLWusxpkWJ/IzbEJf3LD8eGH1lee
-	lAPEJNJzMRlBhuzs+ONfU9aCnzY0L+9bsmkzGTB2O8+FgX30DUCjqltrT5dI7wwjfa4lr0NqjmN
-	FH4V0l1EZ7HkoER9cIy2ql3iQumJqHs1xVhbF
-X-Gm-Gg: AeBDievpAax/XXW+pYtAOtIWmvs72lswQUwxI1mM/dDisehkgpqAwmf9NYMClwcJL6L
-	00QzmxizgQeOZqEpa1ZEphNOVgmJfmSHpZigRwxdv2KdvnshN16jx1S3sHCuxSg1dKdzeLABdmd
-	lYU2wtzXDgS3kfsOE4mCg7p4KADXWI9od0S3W23Cuv3kUAinWzJULDdAAIwzOqxDVoJ72oYFbX+
-	/5HixE8wdBeNZzVs3ZED/U+voctLm46uLOhKVvz2yahU5tupg6na/QtrucL0SYuNRAfbcLmU3gg
-	e/1UWRz5A/FYylgPCkC/3/pEyNH+/HTqiKoyd5ZRhGkaWbIyR1bdztfU3/qYCSnjWUyS8E8Q9EP
-	i1FQ=
-X-Received: by 2002:a05:7022:3d87:b0:12a:85ef:1e50 with SMTP id
- a92af1059eb24-12c73f6c614mr9125382c88.12.1776759504188; Tue, 21 Apr 2026
- 01:18:24 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1776764083; x=1777368883;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7kb7e9fTl8N8gg8PjdxZhQO9yTQNKfAnK/4yVZfdSEc=;
+        b=GNurpUwcybhYCHmf/c4OIw4JcKSf9GkdnmF9nwuWBp5XqYTF7sQ9+cPUBzD7Testhz
+         ddYnAEGw2c0js+TitkUgGPrq6HVMM3Ok+zzxz5nZLweFANN79p84kGVXQ8E4E0wE2dTL
+         qnIARf8+BcZTUCJXpqT7SUtfNnj1MhdIsX20ZBly6JioXUsnZ6Oftx/6qxjfO27eLPhj
+         0StoQiwkisRQiKuuONGw/sUoe2yj8ef0STpcF9lnAKMd7BvpHePfBjWT1SjZtJYsaIWE
+         Dume/A0afiA4+/a4XXGI1HMKImZJgT4MNV4RyUamTUFEabzEZk/+pos/tjPFudc6XJb7
+         b8FQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+a1hO2qMrgJoiUBh2V5UhHV8hCycFC6pXqlLWHbcx4VOgA7OBWk/PkntTBBP5j/I6cxGg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbRoQvgqrFQbKjj0p9XfbXJAL5rW+XV0lVM6mS1OFIOt1VR4xn
+	WFh/K5hbIdvfOUCuTV0WGO89fkzFognQzu4AgMadSc9P0PcKiW+ILmbi6Hr0rQ==
+X-Gm-Gg: AeBDievyIjE8BlzQe3Z0iKT39gkK60IZWvhU4JFFJtck5yQTaktlejor7r/VADVTAdl
+	bZw5axljaq7fKpB54r8utoGuXWc8ZddAw0TuYDhZsCdK2KMR+OMBa1iUpvPZdGH1C6BWV30snRx
+	O1sznfd0BYt4DYfqM+UPWsvJMp/NhCfeDw9Z+bzMrgVdEVs3Lcm4ju/UUYfuz5Pgg0HmrD2Navg
+	A39v7OSA6YfMKL6HhmXNhOs0uT+SV+JYuxNYWWWHHmYnQuCFNi13rzZMUBmzg3k1dLvkDdDth8n
+	WrS7AAFjN4UF0UOINB65yZIDyUG8eLuCKeJfcglh3miwnv8jCtkVfsugQkmbrsZ0LWbJPCF78QG
+	ds3KtTWQmRJGgTVR00csc61k3ijdNZXGC4o7GkzlwlljDiG1Lak6V6T2EC34CM2IazjnrYGwLDd
+	NUsueKx4oycy2lI/voT43z1Eo0rn6jMYqOgNKc798RW+rFTZ9vWtpsJHlX1wQXJ1xH8KmgqVpSv
+	4bJiCQvq/3RLG2taUDvKz7S
+X-Received: by 2002:a05:600c:4fd1:b0:488:78f2:6b0 with SMTP id 5b1f17b1804b1-488fb78ede0mr247548165e9.29.1776764082924;
+        Tue, 21 Apr 2026 02:34:42 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a55dc9f58sm81180165e9.6.2026.04.21.02.34.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Apr 2026 02:34:42 -0700 (PDT)
+Message-ID: <09d1390e-8334-49e6-a0b5-42d298db4caa@gmail.com>
+Date: Tue, 21 Apr 2026 10:34:35 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com>
-In-Reply-To: <20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 21 Apr 2026 10:18:12 +0200
-X-Gm-Features: AQROBzD1LECzp8Y8cQ5sBj7xPRsFXfgELKVRsJhj6noFvVnFzSTIt5T0JZ8nzaE
-Message-ID: <CAP8UFD2vO415UfEUw34_Whh3bTG0ECV99APH=uaDyiGLiNq1yw@mail.gmail.com>
-Subject: Re: [PATCH] refs/files: skip lock files during consistency checks
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+To: Harald Nordgren <haraldnordgren@gmail.com>, gitgitgadget@gmail.com
+Cc: chris.torek@gmail.com, git@vger.kernel.org, peff@peff.net
+References: <pull.2234.v14.git.git.1776270259.gitgitgadget@gmail.com>
+ <20260421075300.49672-1-haraldnordgren@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260421075300.49672-1-haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 20, 2026 at 5:21=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
+On 21/04/2026 08:53, Harald Nordgren wrote:
+> Hi Phillip, did you have a chance to look at the latest changes?
 
-> @@ -3962,6 +3953,15 @@ static int files_fsck_refs_dir(struct ref_store *r=
-ef_store,
->                         strbuf_addf(&refname, "worktrees/%s/", wt->id);
->                 strbuf_addf(&refname, "refs/%s", iter->relative_path);
->
-> +               filename =3D basename((char *) iter->path.buf);
-> +
-> +               /*
-> +                * Ignore the files ending with ".lock" as they may be lo=
-ck files
-> +                * However, do not allow bare ".lock" files.
-> +                */
-> +               if (filename[0] !=3D '.' && ends_with(filename, ".lock"))
-> +                       continue;
-> +
->                 if (files_fsck_ref(ref_store, o, refname.buf,
->                                    iter->path.buf, iter->st.st_mode) < 0)
->                         ret =3D -1;
+Not yet, I should get round to it later this week. Junio is offline for 
+at least the next week, I'll make sure I've reviewed them by the time he 
+returns.
 
-This just moves code and associated comments, so the following are
-probably pre-existing issues, but still it seems to me that:
+Thanks
 
-- "do not allow" is not quite what is actually done. There is no ret =3D
--1 set for example, so if files_fsck_ref() succeeds with the ".lock"
-file it could be allowed, or I am missing something?
+Phillip
 
-- a filename like ".stuff.lock" would be treated in the same way as
-".lock". I wonder if it's what we want.
+> 
+> Harald
 
-Maybe ".lock" or ".stuff.lock" would fail a check_refname_format()
-somewhere, if they are not ignored, but it's still a bit confusing.
-
-It seems to me that either:
-
-1) we want to ignore all files that end with ".lock" as they might be
-used by some tool as lockfiles, and then:
-
-               if (ends_with(iter->path.buf, ".lock"))
-                       continue;
-
-is enough, or
-
-2) we want to check that all files matching "XXXX.lock" correspond to
-a valid XXXX ref, and then we should not completely ignore them, just
-ignore their content but check the XXXX part.
-
-For a bug fix, I think implementing 1) is enough. We could implement
-2) if we think it's worth it in a separate improvement (with perhaps
-a new "staleLockFile" fsck message).
-
-Thanks.
