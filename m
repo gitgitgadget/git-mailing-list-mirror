@@ -1,97 +1,115 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C8E316192
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4F28BE9
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776748071; cv=none; b=dy69BjVMI1KXBzZXR56QfiiG34z7KeIcxQ5MUTo42uan7lwRlAqvQUUiDkVmSDSeYdmds04YWRrREqTSWaqnwwvIG+tLRnocKkc5PkbpDzjMV2dkPBdNsyTVHQiWtU3xDymsc5ugz6bl6guEqQDQ8ZXxtYahC35avfxlpMmTAig=
+	t=1776749630; cv=none; b=sMdYKgXSwajRpl9JDYfzOkRInQImPfGDRbPAtt7i0ftvVc9hF9yHBxE5VAhL9TkFmux264IY9vmanlZwt7tOgKG8f3jVFplyB399M1TtBOAxXF3IcOrQeWwQMNOHrMlxSgqni2qwZylNiYAomGU9ApBd/sUetmLbKB1k65aVFKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776748071; c=relaxed/simple;
-	bh=aMBnWm6QrAINntxcNFvfoaVJLG5C1TZW4lK7ues3Jfw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gT9O6tfv1OjFYfi+UO8GFTirfzurMRSPsW/dqVVD7DGef6DQf/DLcHN5OumIsaRoWFyrY4L5LuW6pU5kXLnIHgJxD/lSNDMCkkyDIq1HxWtbrisU3vcu5e/PrZm6u3bLGswocHwXs/XkDQwMBFJp2LVH04uHe/6UMKnU5rv9IJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=JR0S5uJm; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
+	s=arc-20240116; t=1776749630; c=relaxed/simple;
+	bh=k/18KF2lATikXviArO7lSrdoZgeHuvnEovPchTQO1Ys=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OuJhoD0O6g/1pYZqz0s3SwodY34WOo9W/Wl/VNxXI7DhjSaxXBEnYJA3JxdrMp6NGi9dWNhWfIMNojg7p3LxTVa2SHVf7ngiHfCuqLSWuv49kTfPngIl7ZdQH1En3NWbPx+2sjNIKiAADzwD7Upu8tXSgsF9vv1tpf+SaW0sCtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HxgGYt5a; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="JR0S5uJm"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1wF3Kk-00Gk8W-0H; Tue, 21 Apr 2026 07:07:38 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
-	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
-	bh=jJ3SfKIiCfvHdT3H68j2p5RPYh9qSBlL8TjVF2CqL0E=; b=JR0S5uJmwzSCRb2IuQ+J9YC9n6
-	2AjAvF3ImtpyZrLXj/j8tdcmDJz79WsyUyyldpj3j51tKb9JW2CX7gBIm/DPMjEiDF1MKi3LTmY7B
-	2l19O5SeqSS1XNWhAhfsHNEEhQ+xNEgQSeb2AI5W9TKLYfPIECcc/wbeSGVC28AkA/pFRrqOjnubp
-	5LFqsxy7lOo3ewAv0yh/kkhTn03NM+RGmMoMbx9C+WtjLgs5TCHdgQJQj6Bj07dL1ueGUGKwzD3Vk
-	nUPMeUiz+uRxLFWSrj7Uz36BKGnpKQDI+zo48zTBmsa1JdmTyPKrnvDhD4SJTTY6/cSXqtBvLiK18
-	TkyGqvaw==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <ask+git@howdoi.land>)
-	id 1wF3Kj-0003fw-6W; Tue, 21 Apr 2026 07:07:37 +0200
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1wF3KY-00D15A-Qr; Tue, 21 Apr 2026 07:07:27 +0200
-Message-ID: <cca575ae-e5dd-4a5d-bde2-f493a3e62a87@howdoi.land>
-Date: Tue, 21 Apr 2026 00:07:22 -0500
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HxgGYt5a"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-354a18c48b5so3596945a91.1
+        for <git@vger.kernel.org>; Mon, 20 Apr 2026 22:33:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776749628; x=1777354428; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iz9Xt9VhHVFFzjSPrgaWJ9iqFbZcOZc4pizgFUC4Av4=;
+        b=HxgGYt5aJse5vM7+F/vA1hfSVSb2I47Rb/LriHeZ79n544Z2b8ZPiKkJ6/0FaSNzG6
+         bVBFvvDmKSNnAtg7K5m17sCa7SMrqf2d3yVt96LCAp3WNU9F0IoZZHBMsWdNhHASfbE5
+         Yebg9YHCZrjbbYM7HxfAIgKjuxQMiIo8qqLeOldC8ViRuyACmmrUc+f2UxEMsImPeez1
+         80QV5GUXYmvCj6oX08b9AdV8RvRLb9Ga2oRWK5jYctcnhHd1+P9WBgfCsJemMd3WejNh
+         qLpP2tKCKCMOolYeU2pmistACxyWwdSpshKuNuElW58yW88+a7DrnUSgA9JXR4ypgToF
+         4W8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776749628; x=1777354428;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=iz9Xt9VhHVFFzjSPrgaWJ9iqFbZcOZc4pizgFUC4Av4=;
+        b=hcpeD0IrLBZkWKCAkZWdbynCQpU12gD/00IS+yJe4mPRV653Sm0aw/U0l+5wQw07jc
+         nQ8ZFhX6JLVJ9Er7yUzvJoLN1Pyp2RVsXA/dPS3hkggDK+MKG6F+Bcg7CK1AG71qg41R
+         GJgTnt33SRmt/izwlBDU9ifjV8O1P52/Wy8uCSjEk+IpboRcutIz+77jM1W641Aixqa6
+         JX49jeMQQqumD6E8OvT6m1M+g46etmisf1PKUgxHFIFjUZUM3DVi2qkWQ++71avaqveV
+         nPRYb8O3w7+/LyVC2Zjd1sy2ZWn9XVZ7ihi+5RPXnU7Zn/RdXUb724/wm7XY6JpfyTiY
+         1oJw==
+X-Gm-Message-State: AOJu0YyyzPk/nvOw71vq3CXPdcNcBokycWtnpo65a3NROLPDtH2NsDfw
+	o80MQ6lH9X9zB33fvZK/Or5oGnDnve81umrqWI60wf2KgidoL2ghCBGIpsa8Xw==
+X-Gm-Gg: AeBDiesefXpKw45X9xMtrIkbMo/WKSV/7h2RaXvORnhHIK2n/wDT4Qy+yMbi6bxU/7F
+	xHQOqxSQAVNxl3nlq1u99vTM1OSLSaHboa0I0O+WrQXd4ArzXnNBn/Gbhn7871pjmy4tnMksxcE
+	xrk5Z0C+eboq4QMr0+i2sRj1Aumcg3SBEKo1GTs9HlZpvJgu+x7+LQZRi4X6fiJMOtNaCUkb5+P
+	KKoiV2qHci4p3R/ylkPcGpXr7EFXfRq8UPkFm+QYSfRlOfFaBZFFU3fDiUfNA36xxkYJ/AsmWsV
+	tC4v+jNqY8hJt4B30M1oMzB58qVbfWO0QxBukFkBp5CXspGA5aNSbw8uNu2Kh1SzJ90uHuHF4me
+	IATIiHFZzUDqphAVgIH1YekjfaztpGyDT4NlH+BB+aFq6rZoYn6kxcoa7zqb6XnXDOH3shDMu0h
+	Ntz5EjaWY/WONCmW8Z8+DZgG15Aq33FalLEQLdoO6WrhRtjwDdAqxefG/lcxoq/GHL5iwDXgxon
+	6zzPsAdSwxiXnFwoB7ayhc2DQDfpl4OrxedXh5ZUozgtu/VhtQx63fFpb3QO2QsflJQ
+X-Received: by 2002:a17:90b:1fc4:b0:359:8de8:1229 with SMTP id 98e67ed59e1d1-36140490bf8mr18857025a91.21.1776749628220;
+        Mon, 20 Apr 2026 22:33:48 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:c0a5:e9e6:3079:1553:266:991])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3613fa91d31sm6454484a91.2.2026.04.20.22.33.43
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 20 Apr 2026 22:33:47 -0700 (PDT)
+From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	abdobngad@gmail.com,
+	bence@ferdinandy.com,
+	john.a.passaro@gmail.com,
+	r.siddharth.shrimali@gmail.com
+Subject: [PATCH v2 0/3] t7004: cleanup and modernize brittle tests
+Date: Tue, 21 Apr 2026 11:03:31 +0530
+Message-ID: <20260421053334.5414-1-r.siddharth.shrimali@gmail.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
+References: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
-To: Ian Jackson <ijackson@chiark.greenend.org.uk>
-Cc: git@vger.kernel.org, Christian Heusel <christian@heusel.eu>,
- george@mail.dietrich.pub, Christian Hesse <list@eworm.de>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
-References: <20260215201748.889866-1-ask+git@howdoi.land>
- <20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
- <27104.58166.993109.63505@chiark.greenend.org.uk>
- <a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
- <27109.13129.424068.382997@chiark.greenend.org.uk>
- <27109.63619.90318.366157@chiark.greenend.org.uk>
-Content-Language: en-US
-From: Colin Stagner <ask+git@howdoi.land>
-In-Reply-To: <27109.63619.90318.366157@chiark.greenend.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 4/20/26 04:57, Ian Jackson wrote:
+This patch series addresses brittle testing patterns in t7004-tag.sh. 
 
-> I need to think about this some more but I doubt this can be made to
-> work well without more significant changes, including to the data
-> model.  There would have to be some kind of compatibility arrangement
-> to handle existing histories.
+In this second version, the first patch has been updated to follow 
+Junio's "belt-and-suspenders" suggestion. Instead of simply removing
+the tag count check, it now uses 'test_cmp' to verify that the repository
+state remains unchanged after failed tag creation attempts. This
+maintains verification while removing the reliance on a hardcoded
+global tag count.
 
-I would take a look at the test-cases for git-subtree.sh, which document 
-some of the kinds of issues you will encounter. They may help you test 
-compatibility.
+Subsequent patches continue to modernize the script by removing 
+hardcoded global state and replacing subshell patterns that could 
+otherwise suppress Git exit codes, ensuring that crashes (like 
+segmentation faults) are properly detected.
 
-Anything you can do to limit breakage to "opt-in" points-in-time only 
-would be greatly appreciated.
+Thanks to Patrick and Junio for the feedback on v1 regarding
+state verification.
 
-> Colin, is that OK with you?
+---
+Changes since v1:
+- Updated patch 1 to use 'test_cmp' for state verification 
+  instead of just dropping the count check.
 
-You can name it and develop it however you like. No need to ask 
-permission here.
+Siddharth Shrimali (3):
+  t7004: drop hardcoded tag count for state verification
+  t7004: dynamically grab expected state in tests
+  t7004: avoid subshells to capture git exit codes
 
-(For the record, I'm also not the maintainer of contrib/git-subtree. 
-I've just been trying to fix a few issues with it.)
+ t/t7004-tag.sh | 44 +++++++++++++++++++++++---------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
-> If you would prefer, I could choose a different name for the
-> resulting program.
-
-If I were writing it, I would give the new program a different name but 
-perhaps provide a "compile-time" way to set it to "git-subtree" instead. 
-My reason for this is that it may need to exist with the legacy script 
-for awhile, and it's good to be able to tell them apart.
-
-Colin
+-- 
+2.51.2
 
