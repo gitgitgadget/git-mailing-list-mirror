@@ -1,71 +1,72 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956183DDDB0
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 20:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3FF27F01E
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 20:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776803883; cv=none; b=lSA0DIHGcSMxGoldXmqCACcyVy/BvYznNIZ9vd3cHGKxhn5XP+ODG4g3YXzzaKssiEWsptUFG73qEHXewJjtZbzCMvFm2VGh+NRRJBcMqV8IU68027b/SF07tSOiz1r88Qez5wK2dBL2luC3K+bbMt8YPokf7IwmT6KKTbYuod0=
+	t=1776803887; cv=none; b=Y73cfgmbNzL1sXSzong/6pK64tfg0MsR0S/sBEocglJ11+QmoM4YgTLfakLlRechfoRskv8qP3DtdN0+UlnhZ5Fc2jWyDytnV3OAI8W6UxJC4x8eVZEOjHbFON2xC30Hhgi0yVVkkotIdi+lpJj2mCruH84yN+qqjIBnxAQ5C6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776803883; c=relaxed/simple;
-	bh=gPF934dd6/rc7SmdA/YzBjQvCjcOJcRXgn4VAR3bhvM=;
+	s=arc-20240116; t=1776803887; c=relaxed/simple;
+	bh=Jh0G0BE5UbRuV66zDfQIm1O9QQSl1XGWdeLAVP3dF+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KTdXZYOXPUU3oo7Sww6u78DLQ+BtRO8CmbQ0uupcvGGcOt6laTSSZ+M2LJcGsfZhh3LxfeT8FLTs6Y0SMt83ajRFuXGRllLmCuRbBAXfMWesxxnQT6dpGC6HZfuCY/W9ZWC2YUqH0dkNhNfG+Q3bTj2y1tdvvLGo5LVwOKBgSgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=SBnBKlyk; arc=none smtp.client-ip=209.85.219.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=LnHSg9SM6tRd8pPAkoBKVFD0j7Zw7DU4NNq98hiAtNlWBjG4WLFwPoVerUoUFh9V7qyuPxa7oWaDWvEjo1ak1pp++j4OcLn3TH6clWdTfK0YKVgOKdUidyHLDD1NvPXJISaU8hW2MrCltSrmyFxXYJgZJkiJclaN8arVx3A9fPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=X7+UVFsw; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="SBnBKlyk"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8acb550db18so51106506d6.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 13:38:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="X7+UVFsw"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8ec37d52c0dso254494685a.0
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 13:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1776803879; x=1777408679; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1776803885; x=1777408685; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cYgRkuDHv1ktoXtU3VrafR7QFqxqqSZpTsRdNUFjR7Q=;
-        b=SBnBKlykB3XZUGX5tZf1M5Kp9/7UQXuhFWLBZjtpXJH5K+mUhuyh43WXJ4obr7v45B
-         mCx/kYcIVho/l55b5qlJH1f0kS655xiYJqyvWZHEyd/YGQ3kZc+vzTogr+xSErgjOh3O
-         IpIsbXRpPQpzD2J/SdLopPymjQZzNN9gHS6WTvOGTdQZS+skjwdYXjA8HRWI02VnQ8/A
-         eYoRfF746asWSU0hFkB7577BVyHPo/0Z+Szfwaj74tWvP2dGSqP7/tIwcnaBb8XYDTDv
-         Y2HhS72h9WW1Ft7CtyPZ45DvquJxWv/NBF203ShO9hVR8ZTBXprUgtcru6CJlJsYAq1B
-         DI6g==
+        bh=VJSpTUWS98wM9EFKygBt+kZV1KKjXfOb6SjoR8mABoM=;
+        b=X7+UVFswgWeTXlc/lYBfN3LQ079ArabJTm1pPILF8Th/azR83r/GRwGA5rPli2xBFK
+         A/XkFGsG5KYZWOtSCk5A30C6DS4w7O5LyjbMowjGrRmujN4SmYbHzjbHztkgc1aPTdJW
+         T5JetPAMZZ8a/yjy2l6o/C7oAqm9j+NGfmaNL0rqFgQNPRAJQ88rwVLFCsIA2OdiKyAL
+         OU8D75FPzMsEIaKFnAMUcbnRnSLRGSrUdioRREwEvdHqSU+g+SKb4bAUr9qK7/LzQKR+
+         NkxEKlJKyDqsztb9wC1RpCTIra1B6ev8IAUs2H+OjbfLNIpt8LVmzPDiT1aHCCsYNR9A
+         hpLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776803879; x=1777408679;
+        d=1e100.net; s=20251104; t=1776803885; x=1777408685;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cYgRkuDHv1ktoXtU3VrafR7QFqxqqSZpTsRdNUFjR7Q=;
-        b=nagQQki9XcNd2pfufeqPAIy2QJGJYwk0fFmCoDTZn0+hg8lSCqh5kPqwbAJTm1Tezb
-         kDfjpLJyrGEt5VV7xM3Skz94H6rACu+zE7p1k2jW14gN87VkwgdTNtmQ79d0sfZ/RWy7
-         jn+Ga9vUBhY1rXpX3VI7yTj6owPP9tM1F7rHHHCA1IN8qFp18BD7FoSXqFFEk9h0Ex+z
-         3anUodh+4g5EcZKK1VKDDqxEd1kKCxGhEfAbFxTPRVXNkcdcRAuCJ7h6MIhxrb6f5eY/
-         MJxElzOmlb1uFy1MOWIq3APGsbh5ORKwbZ+wfTWO81wuPxHDKprVJkpXLyaG3GDRdhWz
-         hrkw==
-X-Gm-Message-State: AOJu0YycuJtHak0td/7J7etkJvQcmqPy4RuR6Vy0XHxiIRJHzi/RoFz1
-	oqKcH24rJ57HxYsWGTA+FE85hcz58v82nl2gZAfwVgfeCjtl3jAsgYiv6Ia6DfKqnv+cG0IVD+2
-	PjfQI
-X-Gm-Gg: AeBDieukyZ83PC6KVON49prlsgBeGmCrim0jCVn1+tAlsLxOVJUyQ9nVd7pX0f1Dgl5
-	Z+WrvGBDLsyqF0WZNeFdZIcJ+zR7KC8v2dQzOwzsmTNNm1yey3pddQ93/9rsBtmj4RDDPTMBTIB
-	L8kejaRMXbPjO/UmN7541oCtkgjuuCzjzSR1nqgqFlQwOh/5PRmatSF5TQD03GCVG8mLvuqxPhb
-	DqgTASYGw8UCbx35XAz/VgXodi5kgMKnEmLfrVogO8Cx2jXG3mSsW70QA/6RFKfBvBxCdWuKRM5
-	FZLBOg6Ll8Vtsx/TavrqJe9tc8Z7A16DAbBptG1k+l9KC1rJ7wxgYPOTSO/3IL7O2VIfVJazoH5
-	1lvXcoZa0XPFA/eFuiZPmw2wm0cMtqOhrvxAZsUMBS5oUhKZ8ifoLpGr97SUnnXOKYwhueiJPw8
-	EVTdh+X08AQfumWTI1/APz09GFhy2lveuj0D44+oZ/bJGX4XikRvBJ7aA2V4PG+EUXw47/OyhaF
-	QuuC5e9tHAU6xgjkAB8c6y0rJq95+e6ZCjT22CrhxxcW8KOXHICXvc0kPI+Bp9DYwhG6/ruRxh3
-	oJvIad0RBr8UnP+HHOAvWWKdZvM=
-X-Received: by 2002:a05:6214:3d06:b0:899:fd80:f79f with SMTP id 6a1803df08f44-8b02812e40fmr336887776d6.23.1776803878879;
-        Tue, 21 Apr 2026 13:37:58 -0700 (PDT)
+        bh=VJSpTUWS98wM9EFKygBt+kZV1KKjXfOb6SjoR8mABoM=;
+        b=Co97S+GE+hmiL1QFe2yz9Gmqba/5pDnxSWSnu3Ntk/YxITMuuSkujh7sbMddVeKYb5
+         mktQLZ95tk3zLJh3xBTe2X4mZi48jPhpvNVvep/SN9af3dyX3/vK1+tdUVwx5E4Rxga2
+         d4UPk55HiSDTqkE3Ffs8VhNjJcyTDFbaHs9cPTAJEXcCpOO4lndbMr3JHHARNRRbwby1
+         mXoRH6tmDMrGvNgG8oZX56rguWAwR3w5fWQOqHSA9TxDlkEniuvURmt1RF079djCFqSc
+         Af2X9z7uLzUQVBeth6aZax9Q1UV84YiyFvYnEVed96aJ9DTtBd+y29p2QGOabwoeYuQk
+         K0iw==
+X-Gm-Message-State: AOJu0Yx5Xm50+FC1HDNtGrYiLICu5yPtKWIKVgAMpFTn4lW7SHD6yMrH
+	wlnyHNx08KCckLUlTlFzqq4JYGEO5XxkC1j9omK7mmTRda+4s1C7H7PzlBsH5/g7I3OVCzrxoFT
+	C1qK3KbU=
+X-Gm-Gg: AeBDieu1AVSes6hfMVkdlUp/WldCwbpZ503YbfBj+nOzCy+aktdqPtYJM79sP4ZmK3p
+	7OZ42aFQ76A4rxUN1xPIQlpmtcgURTmJ8iVD7zlC8wzEESDxADugUxDnx98BiGNqVbFN/oG2qDf
+	QVwl2DiLQxnLtsVfkeWtl5gm5YJBzFbH3z7czhMy/vXHmzAVgqOVn8CxCUcL1z8tHQYrxvmIV7o
+	/oPsSKD/8ZlEpFOpbTVgvQyTQvd7BfVv2b3vRMLK8OCiE5jZToJgwlzhLtdGiE8k8tUfkjuxHnr
+	eGE7PlU174Jnjq6RfEF6qraRf5hpKEaU+zL+eWwpVz4Jd87yZ9Jui4Rg84fht/5Jc2tYxehuklm
+	XQTY43Jecc3C85v6oGzy92h/pkKQ8UBXJAEajv+5OGvQKKSyTW6dFGoQlagu+7nq3iHiJPz0B5V
+	bob4MTAsMZ8z9hPfxanRHEIa0U0SbR+lqvtX45Ae9wGd8j9FEfqlZkfrJcgGKLRy483X4gI2ot2
+	ofaMbjgF10ScXYcK+6uZOjg2O5e7/bM9rzfk9b2ozE8gu0eXljwZMY5rXibKHlNwBWU1/WYwMfr
+	UiDmoaJ1PwCSi7vg+M/jHA5qAAk=
+X-Received: by 2002:a05:620a:4056:b0:8ee:9f5e:e13c with SMTP id af79cd13be357-8ee9f5eea83mr529951285a.21.1776803884892;
+        Tue, 21 Apr 2026 13:38:04 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b02ae7fef0sm108729416d6.38.2026.04.21.13.37.58
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d94d3f99sm1172582885a.40.2026.04.21.13.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 13:37:58 -0700 (PDT)
-Date: Tue, 21 Apr 2026 16:37:57 -0400
+        Tue, 21 Apr 2026 13:38:04 -0700 (PDT)
+Date: Tue, 21 Apr 2026 16:38:03 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 15/16] repack: introduce `--write-midx=incremental`
-Message-ID: <6119f15d3e8619f75c7dfb2e5dcf67e9f5fafc41.1776803827.git.me@ttaylorr.com>
+Subject: [PATCH v2 16/16] repack: allow `--write-midx=incremental` without
+ `--geometric`
+Message-ID: <d9acef1334ae42df45b8a4ec1e1b771b48249006.1776803827.git.me@ttaylorr.com>
 References: <cover.1774820449.git.me@ttaylorr.com>
  <cover.1776803827.git.me@ttaylorr.com>
 Precedence: bulk
@@ -78,1043 +79,213 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1776803827.git.me@ttaylorr.com>
 
-Expose the incremental MIDX repacking mode (implemented in an earlier
-commit) via a new --write-midx=incremental option for `git repack`.
+Previously, `--write-midx=incremental` required `--geometric` and would
+die() without it. Relax this restriction so that incremental MIDX
+repacking can be used independently.
 
-Add "incremental" as a recognized argument to the --write-midx
-OPT_CALLBACK, mapping it to REPACK_WRITE_MIDX_INCREMENTAL. When this
-mode is active and --geometric is in use, set the midx_layer_threshold
-on the pack geometry so that only packs in sufficiently large tip layers
-are considered for repacking.
+Without `--geometric`, the behavior is append-only: a single new MIDX
+layer is created containing whatever packs were written by the repack
+and appended to the existing chain (or a new chain is started). Existing
+layers are preserved as-is with no compaction or merging.
 
-Two new configuration options control the compaction behavior:
+Implement this via a new repack_make_midx_append_plan() that builds a
+plan consisting of a WRITE step for the freshly written packs followed
+by COPY steps for every existing MIDX layer. The existing compaction
+plan (repack_make_midx_compaction_plan) is used only when `--geometric`
+is active.
 
- - repack.midxSplitFactor (default: 2): the factor used in the
-   geometric merging condition for MIDX layers.
-
- - repack.midxNewLayerThreshold (default: 8): the minimum number of
-   packs in the tip MIDX layer before its packs are considered as
-   candidates for geometric repacking.
-
-Add tests exercising the new mode across a variety of scenarios
-including basic geometric violations, multi-round chain integrity,
-branching and merging histories, cross-layer object uniqueness, and
-threshold-based compaction.
+Update the documentation to describe the behavior with and without
+`--geometric`, and replace the test that enforced the old restriction
+with one exercising append-only incremental MIDX repacking.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config/repack.adoc   |  18 ++
- Documentation/git-repack.adoc      |  39 ++-
- builtin/repack.c                   |  49 ++-
- midx.c                             |  31 ++
- midx.h                             |   3 +
- repack-geometry.c                  |  13 +-
- repack-midx.c                      |   5 +
- repack.c                           |  56 +++-
- repack.h                           |  10 +-
- t/meson.build                      |   1 +
- t/t7705-repack-incremental-midx.sh | 500 +++++++++++++++++++++++++++++
- 11 files changed, 701 insertions(+), 24 deletions(-)
- create mode 100755 t/t7705-repack-incremental-midx.sh
+ Documentation/git-repack.adoc      | 19 +++++----
+ builtin/repack.c                   |  3 --
+ repack-midx.c                      | 64 ++++++++++++++++++++++++++++--
+ t/t7705-repack-incremental-midx.sh | 35 +++++++++++++---
+ 4 files changed, 103 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/config/repack.adoc b/Documentation/config/repack.adoc
-index e9e78dcb198..4c22a499f62 100644
---- a/Documentation/config/repack.adoc
-+++ b/Documentation/config/repack.adoc
-@@ -46,3 +46,21 @@ repack.midxMustContainCruft::
- 	`--write-midx`. When false, cruft packs are only included in the MIDX
- 	when necessary (e.g., because they might be required to form a
- 	reachability closure with MIDX bitmaps). Defaults to true.
-+
-+repack.midxSplitFactor::
-+	The factor used in the geometric merging condition when
-+	compacting incremental MIDX layers during `git repack` when
-+	invoked with the `--write-midx=incremental` option.
-++
-+Adjacent layers are merged when the accumulated object count of the
-+newer layer exceeds `1/<N>` of the object count of the next deeper
-+layer. Must be at least 2. Defaults to 2.
-+
-+repack.midxNewLayerThreshold::
-+	The minimum number of packs in the tip MIDX layer before those
-+	packs are considered as candidates for geometric repacking
-+	during `git repack --write-midx=incremental`.
-++
-+When the tip layer has fewer packs than this threshold, those packs are
-+excluded from the geometric repack entirely, and are thus left
-+unmodified. Must be at least 1. Defaults to 8.
 diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-index 673ce910837..27a99cc46f4 100644
+index 27a99cc46f4..72c42015e23 100644
 --- a/Documentation/git-repack.adoc
 +++ b/Documentation/git-repack.adoc
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
- 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
--	[--write-midx] [--name-hash-version=<n>] [--path-walk]
-+	[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
+@@ -263,14 +263,19 @@ linkgit:git-multi-pack-index[1]).
  
- DESCRIPTION
- -----------
-@@ -250,9 +250,42 @@ pack as the preferred pack for object selection by the MIDX (see
- linkgit:git-multi-pack-index[1]).
- 
- -m::
----write-midx::
-+--write-midx[=<mode>]::
- 	Write a multi-pack index (see linkgit:git-multi-pack-index[1])
--	containing the non-redundant packs.
-+	containing the non-redundant packs. The following modes are
-+	available:
+ 	`incremental`;;
+ 		Write an incremental MIDX chain instead of a single
+-		flat MIDX. This mode requires `--geometric`.
++		flat MIDX.
+ +
+-The incremental mode maintains a chain of MIDX layers that is compacted
+-over time using a geometric merging strategy. Each repack creates a new
+-tip layer containing the newly written pack(s). Adjacent layers are then
+-merged whenever the newer layer's object count exceeds
+-`1/repack.midxSplitFactor` of the next deeper layer's count. Layers
+-that do not meet this condition are retained as-is.
++Without `--geometric`, a new MIDX layer is appended to the existing
++chain (or a new chain is started) containing whatever packs were written
++by the repack. Existing layers are preserved as-is.
 ++
-+--
-+	`default`;;
-+		Write a single MIDX covering all packs. This is the
-+		default when `--write-midx` is given without an
-+		explicit mode.
-+
-+	`incremental`;;
-+		Write an incremental MIDX chain instead of a single
-+		flat MIDX. This mode requires `--geometric`.
-++
-+The incremental mode maintains a chain of MIDX layers that is compacted
-+over time using a geometric merging strategy. Each repack creates a new
-+tip layer containing the newly written pack(s). Adjacent layers are then
-+merged whenever the newer layer's object count exceeds
-+`1/repack.midxSplitFactor` of the next deeper layer's count. Layers
-+that do not meet this condition are retained as-is.
-++
-+The result is that newer (tip) layers tend to contain many small packs
-+with relatively few objects, while older (deeper) layers contain fewer,
-+larger packs covering more objects. Because compaction is driven by the
-+tip of the chain, newer layers are also rewritten more frequently than
-+older ones, which are only touched when enough objects have accumulated
-+to justify merging into them. This keeps the total number of layers
-+logarithmic relative to the total number of objects.
-++
-+Only packs in the tip MIDX layer are considered as candidates for the
-+geometric repack; packs in deeper layers are left untouched. If the tip
-+layer contains fewer packs than `repack.midxNewLayerThreshold`, those
-+packs are excluded from the geometry entirely, and a new layer is
-+created for any new pack(s) without disturbing the existing chain.
-+--
- 
- --name-hash-version=<n>::
- 	Provide this argument to the underlying `git pack-objects` process.
++When combined with `--geometric`, the incremental mode maintains a chain
++of MIDX layers that is compacted over time using a geometric merging
++strategy. Each repack creates a new tip layer containing the newly
++written pack(s). Adjacent layers are then merged whenever the newer
++layer's object count exceeds `1/repack.midxSplitFactor` of the next
++deeper layer's count. Layers that do not meet this condition are
++retained as-is.
+ +
+ The result is that newer (tip) layers tend to contain many small packs
+ with relatively few objects, while older (deeper) layers contain fewer,
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 75c57736780..5ffa18e085e 100644
+index 5ffa18e085e..1524a9c13ad 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -33,7 +33,7 @@ static int midx_must_contain_cruft = 1;
- static const char *const git_repack_usage[] = {
- 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
- 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
--	   "[--write-midx] [--name-hash-version=<n>] [--path-walk]"),
-+	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]"),
- 	NULL
- };
- 
-@@ -48,6 +48,8 @@ static const char incremental_bitmap_conflict_error[] = N_(
- struct repack_config_ctx {
- 	struct pack_objects_args *po_args;
- 	struct pack_objects_args *cruft_po_args;
-+	int midx_split_factor;
-+	int midx_new_layer_threshold;
- };
- 
- static int repack_config(const char *var, const char *value,
-@@ -97,6 +99,16 @@ static int repack_config(const char *var, const char *value,
- 		midx_must_contain_cruft = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "repack.midxsplitfactor")) {
-+		repack_ctx->midx_split_factor = git_config_int(var, value,
-+							       ctx->kvi);
-+		return 0;
-+	}
-+	if (!strcmp(var, "repack.midxnewlayerthreshold")) {
-+		repack_ctx->midx_new_layer_threshold = git_config_int(var, value,
-+								      ctx->kvi);
-+		return 0;
-+	}
- 	return git_default_config(var, value, ctx, cb);
- }
- 
-@@ -112,6 +124,8 @@ static int option_parse_write_midx(const struct option *opt, const char *arg,
- 
- 	if (!arg || !*arg)
- 		*cfg = REPACK_WRITE_MIDX_DEFAULT;
-+	else if (!strcmp(arg, "incremental"))
-+		*cfg = REPACK_WRITE_MIDX_INCREMENTAL;
- 	else
- 		return error(_("unknown value for %s: %s"), opt->long_name, arg);
- 
-@@ -226,6 +240,8 @@ int cmd_repack(int argc,
- 	memset(&config_ctx, 0, sizeof(config_ctx));
- 	config_ctx.po_args = &po_args;
- 	config_ctx.cruft_po_args = &cruft_po_args;
-+	config_ctx.midx_split_factor = DEFAULT_MIDX_SPLIT_FACTOR;
-+	config_ctx.midx_new_layer_threshold = DEFAULT_MIDX_NEW_LAYER_THRESHOLD;
- 
- 	repo_config(repo, repack_config, &config_ctx);
- 
-@@ -247,6 +263,9 @@ int cmd_repack(int argc,
+@@ -263,9 +263,6 @@ int cmd_repack(int argc,
  	if (pack_everything & PACK_CRUFT)
  		pack_everything |= ALL_INTO_ONE;
  
-+	if (write_midx == REPACK_WRITE_MIDX_INCREMENTAL && !geometry.split_factor)
-+		die(_("--write-midx=incremental requires --geometric"));
-+
+-	if (write_midx == REPACK_WRITE_MIDX_INCREMENTAL && !geometry.split_factor)
+-		die(_("--write-midx=incremental requires --geometric"));
+-
  	if (write_bitmaps < 0) {
  		if (write_midx == REPACK_WRITE_MIDX_NONE &&
  		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository()))
-@@ -273,6 +292,13 @@ int cmd_repack(int argc,
- 		write_bitmaps = 0;
- 	}
- 
-+	if (config_ctx.midx_split_factor < 2)
-+		die(_("invalid value for %s: %d"), "--midx-split-factor",
-+		    config_ctx.midx_split_factor);
-+	if (config_ctx.midx_new_layer_threshold < 1)
-+		die(_("invalid value for %s: %d"), "--midx-new-layer-threshold",
-+		    config_ctx.midx_new_layer_threshold);
-+
- 	if (write_midx != REPACK_WRITE_MIDX_NONE && write_bitmaps) {
- 		struct strbuf path = STRBUF_INIT;
- 
-@@ -296,6 +322,10 @@ int cmd_repack(int argc,
- 	if (geometry.split_factor) {
- 		if (pack_everything)
- 			die(_("options '%s' and '%s' cannot be used together"), "--geometric", "-A/-a");
-+		if (write_midx == REPACK_WRITE_MIDX_INCREMENTAL) {
-+			geometry.midx_layer_threshold = config_ctx.midx_new_layer_threshold;
-+			geometry.midx_layer_threshold_set = true;
-+		}
- 		pack_geometry_init(&geometry, &existing, &po_args);
- 		pack_geometry_split(&geometry);
- 	}
-@@ -545,8 +575,11 @@ int cmd_repack(int argc,
- 				       packtmp);
- 	/* End of pack replacement. */
- 
--	if (delete_redundant && pack_everything & ALL_INTO_ONE)
-+	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
-+		if (write_midx == REPACK_WRITE_MIDX_INCREMENTAL)
-+			existing_packs_retain_midx_packs(&existing);
- 		existing_packs_mark_for_deletion(&existing, &names);
-+	}
- 
- 	if (write_midx != REPACK_WRITE_MIDX_NONE) {
- 		struct repack_write_midx_opts opts = {
-@@ -558,8 +591,8 @@ int cmd_repack(int argc,
- 			.show_progress = show_progress,
- 			.write_bitmaps = write_bitmaps > 0,
- 			.midx_must_contain_cruft = midx_must_contain_cruft,
--			.midx_split_factor = DEFAULT_MIDX_SPLIT_FACTOR,
--			.midx_new_layer_threshold = DEFAULT_MIDX_NEW_LAYER_THRESHOLD,
-+			.midx_split_factor = config_ctx.midx_split_factor,
-+			.midx_new_layer_threshold = config_ctx.midx_new_layer_threshold,
- 			.mode = write_midx,
- 		};
- 
-@@ -572,11 +605,15 @@ int cmd_repack(int argc,
- 
- 	if (delete_redundant) {
- 		int opts = 0;
--		existing_packs_remove_redundant(&existing, packdir);
-+		bool wrote_incremental_midx = write_midx == REPACK_WRITE_MIDX_INCREMENTAL;
-+
-+		existing_packs_remove_redundant(&existing, packdir,
-+						wrote_incremental_midx);
- 
- 		if (geometry.split_factor)
- 			pack_geometry_remove_redundant(&geometry, &names,
--						       &existing, packdir);
-+						       &existing, packdir,
-+						       wrote_incremental_midx);
- 		if (show_progress)
- 			opts |= PRUNE_PACKED_VERBOSE;
- 		prune_packed_objects(opts);
-diff --git a/midx.c b/midx.c
-index dc86c8e7fee..cd31fa20788 100644
---- a/midx.c
-+++ b/midx.c
-@@ -850,6 +850,37 @@ void clear_midx_file(struct repository *r)
- 	strbuf_release(&midx);
- }
- 
-+void clear_incremental_midx_files(struct repository *r,
-+				  const struct strvec *keep_hashes)
-+{
-+	struct strbuf chain = STRBUF_INIT;
-+
-+	get_midx_chain_filename(r->objects->sources, &chain);
-+
-+	if (r->objects) {
-+		struct odb_source *source = r->objects->sources;
-+		for (source = r->objects->sources; source; source = source->next) {
-+			struct odb_source_files *files = odb_source_files_downcast(source);
-+			if (files->packed->midx)
-+				close_midx(files->packed->midx);
-+			files->packed->midx = NULL;
-+		}
-+	}
-+
-+	if (!keep_hashes && remove_path(chain.buf))
-+		die(_("failed to clear multi-pack-index chain at %s"),
-+		    chain.buf);
-+
-+	clear_incremental_midx_files_ext(r->objects->sources, MIDX_EXT_BITMAP,
-+					 keep_hashes);
-+	clear_incremental_midx_files_ext(r->objects->sources, MIDX_EXT_REV,
-+					 keep_hashes);
-+	clear_incremental_midx_files_ext(r->objects->sources, MIDX_EXT_MIDX,
-+					 keep_hashes);
-+
-+	strbuf_release(&chain);
-+}
-+
- static int verify_midx_error;
- 
- __attribute__((format (printf, 1, 2)))
-diff --git a/midx.h b/midx.h
-index 3ee12dd08ec..63853a03a47 100644
---- a/midx.h
-+++ b/midx.h
-@@ -9,6 +9,7 @@ struct repository;
- struct bitmapped_pack;
- struct git_hash_algo;
- struct odb_source;
-+struct strvec;
- 
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
- #define MIDX_VERSION_V1 1
-@@ -143,6 +144,8 @@ int write_midx_file_compact(struct odb_source *source,
- 			    const char *incremental_base,
- 			    unsigned flags);
- void clear_midx_file(struct repository *r);
-+void clear_incremental_midx_files(struct repository *r,
-+				  const struct strvec *keep_hashes);
- int verify_midx_file(struct odb_source *source, unsigned flags);
- int expire_midx_packs(struct odb_source *source, unsigned flags);
- int midx_repack(struct odb_source *source, size_t batch_size, unsigned flags);
-diff --git a/repack-geometry.c b/repack-geometry.c
-index 2408b8a3cc2..2064683dcfe 100644
---- a/repack-geometry.c
-+++ b/repack-geometry.c
-@@ -249,7 +249,8 @@ static void remove_redundant_packs(struct packed_git **pack,
- 				   uint32_t pack_nr,
- 				   struct string_list *names,
- 				   struct existing_packs *existing,
--				   const char *packdir)
-+				   const char *packdir,
-+				   bool wrote_incremental_midx)
- {
- 	const struct git_hash_algo *algop = existing->repo->hash_algo;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -269,7 +270,8 @@ static void remove_redundant_packs(struct packed_git **pack,
- 		    (string_list_has_string(&existing->kept_packs, buf.buf)))
- 			continue;
- 
--		repack_remove_redundant_pack(existing->repo, packdir, buf.buf);
-+		repack_remove_redundant_pack(existing->repo, packdir, buf.buf,
-+					     wrote_incremental_midx);
- 	}
- 
- 	strbuf_release(&buf);
-@@ -278,12 +280,13 @@ static void remove_redundant_packs(struct packed_git **pack,
- void pack_geometry_remove_redundant(struct pack_geometry *geometry,
- 				    struct string_list *names,
- 				    struct existing_packs *existing,
--				    const char *packdir)
-+				    const char *packdir,
-+				    bool wrote_incremental_midx)
- {
- 	remove_redundant_packs(geometry->pack, geometry->split,
--			       names, existing, packdir);
-+			       names, existing, packdir, wrote_incremental_midx);
- 	remove_redundant_packs(geometry->promisor_pack, geometry->promisor_split,
--			       names, existing, packdir);
-+			       names, existing, packdir, wrote_incremental_midx);
- }
- 
- void pack_geometry_release(struct pack_geometry *geometry)
 diff --git a/repack-midx.c b/repack-midx.c
-index 8f3720772b8..6a0358096ec 100644
+index 6a0358096ec..b1c429b8cee 100644
 --- a/repack-midx.c
 +++ b/repack-midx.c
-@@ -894,6 +894,7 @@ static int write_midx_incremental(struct repack_write_midx_opts *opts)
- 	struct midx_compaction_step *steps = NULL;
- 	struct strbuf lock_name = STRBUF_INIT;
- 	struct lock_file lf;
-+	struct strvec keep_hashes = STRVEC_INIT;
- 	size_t steps_nr = 0;
- 	size_t i;
- 	int ret = 0;
-@@ -939,11 +940,15 @@ static int write_midx_incremental(struct repack_write_midx_opts *opts)
- 			BUG("missing result for compaction step %"PRIuMAX,
- 			    (uintmax_t)i);
- 		fprintf(get_lock_file_fp(&lf), "%s\n", step->csum);
-+		strvec_push(&keep_hashes, step->csum);
- 	}
- 
- 	commit_lock_file(&lf);
- 
-+	clear_incremental_midx_files(opts->existing->repo, &keep_hashes);
-+
- done:
-+	strvec_clear(&keep_hashes);
- 	strbuf_release(&lock_name);
- 	for (i = 0; i < steps_nr; i++)
- 		midx_compaction_step_release(&steps[i]);
-diff --git a/repack.c b/repack.c
-index 2ee6b51420a..571dabb665e 100644
---- a/repack.c
-+++ b/repack.c
-@@ -55,14 +55,18 @@ void pack_objects_args_release(struct pack_objects_args *args)
- }
- 
- void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
--				  const char *base_name)
-+				  const char *base_name,
-+				  bool wrote_incremental_midx)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct odb_source *source = repo->objects->sources;
- 	struct multi_pack_index *m = get_multi_pack_index(source);
- 	strbuf_addf(&buf, "%s.pack", base_name);
--	if (m && source->local && midx_contains_pack(m, buf.buf))
-+	if (m && source->local && midx_contains_pack(m, buf.buf)) {
- 		clear_midx_file(repo);
-+		if (!wrote_incremental_midx)
-+			clear_incremental_midx_files(repo, NULL);
-+	}
- 	strbuf_insertf(&buf, 0, "%s/", dir_name);
- 	unlink_pack_path(buf.buf, 1);
- 	strbuf_release(&buf);
-@@ -250,25 +254,63 @@ void existing_packs_mark_for_deletion(struct existing_packs *existing,
- 					   &existing->cruft_packs);
+@@ -555,6 +555,60 @@ static void midx_compaction_step_release(struct midx_compaction_step *step)
+ 	free(step->csum);
  }
  
 +/*
-+ * Mark every pack that is referenced by the existing MIDX chain as
-+ * retained, so that a subsequent call to
-+ * existing_packs_mark_for_deletion() will not mark them for deletion.
-+ *
-+ * This is used when writing an incremental MIDX layer on top of an
-+ * existing chain: retained layers continue to reference the same
-+ * packs on disk, so those packs must not be unlinked even if the
-+ * freshly-written pack supersedes them.
++ * Build an append-only MIDX plan: a single WRITE step for the freshly
++ * written packs, plus COPY steps for every existing layer.  No
++ * compaction or merging is performed.
 + */
-+void existing_packs_retain_midx_packs(struct existing_packs *existing)
++static void repack_make_midx_append_plan(struct repack_write_midx_opts *opts,
++					 struct midx_compaction_step **steps_p,
++					 size_t *steps_nr_p)
 +{
-+	struct string_list_item *item;
-+	struct strbuf buf = STRBUF_INIT;
++	struct multi_pack_index *m;
++	struct midx_compaction_step *steps = NULL;
++	struct midx_compaction_step *step;
++	size_t steps_nr = 0, steps_alloc = 0;
 +
-+	for_each_string_list_item(item, &existing->midx_packs) {
-+		struct string_list_item *found;
++	odb_reprepare(opts->existing->repo->objects);
++	m = get_multi_pack_index(opts->existing->source);
 +
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, item->string);
-+		strbuf_strip_suffix(&buf, ".pack");
-+		strbuf_strip_suffix(&buf, ".idx");
++	if (opts->names->nr) {
++		struct strbuf buf = STRBUF_INIT;
++		uint32_t i;
 +
-+		found = string_list_lookup(&existing->non_kept_packs, buf.buf);
-+		if (found)
-+			existing_packs_mark_retained(found);
++		ALLOC_GROW(steps, st_add(steps_nr, 1), steps_alloc);
 +
-+		found = string_list_lookup(&existing->cruft_packs, buf.buf);
-+		if (found)
-+			existing_packs_mark_retained(found);
++		step = &steps[steps_nr++];
++		memset(step, 0, sizeof(*step));
++
++		step->type = MIDX_COMPACTION_STEP_WRITE;
++		string_list_init_dup(&step->u.write);
++
++		for (i = 0; i < opts->names->nr; i++) {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "pack-%s.idx",
++				    opts->names->items[i].string);
++			string_list_append(&step->u.write, buf.buf);
++		}
++
++		strbuf_release(&buf);
 +	}
 +
-+	strbuf_release(&buf);
++	for (; m; m = m->base_midx) {
++		ALLOC_GROW(steps, st_add(steps_nr, 1), steps_alloc);
++
++		step = &steps[steps_nr++];
++		memset(step, 0, sizeof(*step));
++
++		step->type = MIDX_COMPACTION_STEP_COPY;
++		step->u.copy = m;
++		step->objects_nr = m->num_objects;
++	}
++
++	*steps_p = steps;
++	*steps_nr_p = steps_nr;
 +}
 +
- static void remove_redundant_packs_1(struct repository *repo,
- 				     struct string_list *packs,
--				     const char *packdir)
-+				     const char *packdir,
-+				     bool wrote_incremental_midx)
- {
- 	struct string_list_item *item;
- 	for_each_string_list_item(item, packs) {
- 		if (!existing_pack_is_marked_for_deletion(item))
- 			continue;
--		repack_remove_redundant_pack(repo, packdir, item->string);
-+		repack_remove_redundant_pack(repo, packdir, item->string,
-+					     wrote_incremental_midx);
+ static int repack_make_midx_compaction_plan(struct repack_write_midx_opts *opts,
+ 					    struct midx_compaction_step **steps_p,
+ 					    size_t *steps_nr_p)
+@@ -911,9 +965,13 @@ static int write_midx_incremental(struct repack_write_midx_opts *opts)
+ 		goto done;
  	}
- }
  
- void existing_packs_remove_redundant(struct existing_packs *existing,
--				     const char *packdir)
-+				     const char *packdir,
-+				     bool wrote_incremental_midx)
- {
- 	remove_redundant_packs_1(existing->repo, &existing->non_kept_packs,
--				 packdir);
-+				 packdir, wrote_incremental_midx);
- 	remove_redundant_packs_1(existing->repo, &existing->cruft_packs,
--				 packdir);
-+				 packdir, wrote_incremental_midx);
- }
+-	if (repack_make_midx_compaction_plan(opts, &steps, &steps_nr) < 0) {
+-		ret = error(_("unable to generate compaction plan"));
+-		goto done;
++	if (opts->geometry->split_factor) {
++		if (repack_make_midx_compaction_plan(opts, &steps, &steps_nr) < 0) {
++			ret = error(_("unable to generate compaction plan"));
++			goto done;
++		}
++	} else {
++		repack_make_midx_append_plan(opts, &steps, &steps_nr);
+ 	}
  
- void existing_packs_release(struct existing_packs *existing)
-diff --git a/repack.h b/repack.h
-index 831ccfb1c6c..f9fbc895f02 100644
---- a/repack.h
-+++ b/repack.h
-@@ -34,7 +34,8 @@ void prepare_pack_objects(struct child_process *cmd,
- void pack_objects_args_release(struct pack_objects_args *args);
- 
- void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
--				  const char *base_name);
-+				  const char *base_name,
-+				  bool wrote_incremental_midx);
- 
- struct write_pack_opts {
- 	struct pack_objects_args *po_args;
-@@ -83,8 +84,10 @@ void existing_packs_retain_cruft(struct existing_packs *existing,
- 				 struct packed_git *cruft);
- void existing_packs_mark_for_deletion(struct existing_packs *existing,
- 				      struct string_list *names);
-+void existing_packs_retain_midx_packs(struct existing_packs *existing);
- void existing_packs_remove_redundant(struct existing_packs *existing,
--				     const char *packdir);
-+				     const char *packdir,
-+				     bool wrote_incremental_midx);
- void existing_packs_release(struct existing_packs *existing);
- 
- struct generated_pack;
-@@ -129,7 +132,8 @@ struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry);
- void pack_geometry_remove_redundant(struct pack_geometry *geometry,
- 				    struct string_list *names,
- 				    struct existing_packs *existing,
--				    const char *packdir);
-+				    const char *packdir,
-+				    bool wrote_incremental_midx);
- void pack_geometry_release(struct pack_geometry *geometry);
- 
- struct tempfile;
-diff --git a/t/meson.build b/t/meson.build
-index 7528e5cda5f..25f0d823d8e 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -951,6 +951,7 @@ integration_tests = [
-   't7702-repack-cyclic-alternate.sh',
-   't7703-repack-geometric.sh',
-   't7704-repack-cruft.sh',
-+  't7705-repack-incremental-midx.sh',
-   't7800-difftool.sh',
-   't7810-grep.sh',
-   't7811-grep-open.sh',
+ 	for (i = 0; i < steps_nr; i++) {
 diff --git a/t/t7705-repack-incremental-midx.sh b/t/t7705-repack-incremental-midx.sh
-new file mode 100755
-index 00000000000..af1a1483b8c
---- /dev/null
+index af1a1483b8c..25a8c40e8ee 100755
+--- a/t/t7705-repack-incremental-midx.sh
 +++ b/t/t7705-repack-incremental-midx.sh
-@@ -0,0 +1,500 @@
-+#!/bin/sh
-+
-+test_description='git repack --write-midx=incremental'
-+
-+. ./test-lib.sh
-+
-+GIT_TEST_MULTI_PACK_INDEX=0
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
-+
-+objdir=.git/objects
-+packdir=$objdir/pack
-+midxdir=$packdir/multi-pack-index.d
-+midx_chain=$midxdir/multi-pack-index-chain
-+
-+# incrementally_repack N
-+#
-+# Make "N" new commits, each stored in their own pack, and then repacked
-+# with the --write-midx=incremental strategy.
-+incrementally_repack () {
-+	for i in $(test_seq 1 "$1")
-+	do
-+		test_commit "$i" &&
-+
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+		git multi-pack-index verify || return 1
-+	done
-+}
-+
-+# Create packs with geometrically increasing sizes so that they
-+# satisfy the geometric progression and survive a --geometric=2
-+# repack without being rolled up. Creates 3 packs containing 1,
-+# 2, and 6 commits (3, 6, and 18 objects) respectively.
-+create_geometric_packs () {
-+	test_commit "small" &&
-+	git repack -d &&
-+
-+	test_commit_bulk --message="medium" 2 &&
-+	test_commit_bulk --message="large" 6 &&
-+
-+	git repack --geometric=2 -d --write-midx=incremental \
-+		--write-bitmap-index
-+}
-+
-+# create_layer <test_commit_bulk args>
-+#
-+# Creates a new MIDX layer with the contents of "test_commit_bulk $@".
-+create_layer () {
-+	test_commit_bulk "$@" &&
-+
-+	git multi-pack-index write --incremental --bitmap
-+}
-+
-+# create_layers
-+#
-+# Reads lines of "<message> <nr>" from stdin and creates a new MIDX
-+# layer for each line. See create_layer above for more.
-+create_layers () {
-+	while read msg nr
-+	do
-+		create_layer --message="$msg" "$nr" || return 1
-+	done
-+}
-+
-+test_expect_success '--write-midx=incremental requires --geometric' '
-+	test_must_fail git repack --write-midx=incremental 2>err &&
-+
-+	test_grep -- "--write-midx=incremental requires --geometric" err
-+'
-+
-+test_expect_success 'below layer threshold, tip packs excluded' '
-+	git init below-layer-threshold-tip-packs-excluded &&
+@@ -63,10 +63,36 @@ create_layers () {
+ 	done
+ }
+ 
+-test_expect_success '--write-midx=incremental requires --geometric' '
+-	test_must_fail git repack --write-midx=incremental 2>err &&
++test_expect_success '--write-midx=incremental without --geometric' '
++	git init incremental-without-geometric &&
 +	(
-+		cd below-layer-threshold-tip-packs-excluded &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 4 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		# Create 3 packs forming a geometric progression by
-+		# object count such that they are unmodified by the
-+		# initial repack. The MIDX chain thusly contains a
-+		# single layer with three packs.
-+		create_geometric_packs &&
-+		ls $packdir/pack-*.idx | sort >packs.before &&
-+		test_line_count = 1 $midx_chain &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Repack a new commit. Since the layer threshold is
-+		# unmet, a new MIDX layer is added on top of the
-+		# existing one.
-+		test_commit extra &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+		git multi-pack-index verify &&
-+
-+		ls $packdir/pack-*.idx | sort >packs.after &&
-+		comm -13 packs.before packs.after >packs.new &&
-+		test_line_count = 1 packs.new &&
-+
-+		test_line_count = 2 "$midx_chain" &&
-+		head -n 1 "$midx_chain.before" >expect &&
-+		head -n 1 "$midx_chain" >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'above layer threshold, tip packs repacked' '
-+	git init above-layer-threshold-tip-packs-repacked &&
-+	(
-+		cd above-layer-threshold-tip-packs-repacked &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 2 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		# Same setup, but with the layer threshold set to 2.
-+		# Since the tip MIDX layer meets that threshold, its
-+		# packs are considered repack candidates.
-+		create_geometric_packs &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Perturb the existing progression such that it is
-+		# rolled up into a single new pack, invalidating the
-+		# existing MIDX layer and replacing it with a new one.
-+		test_commit extra &&
-+		git repack -d &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		! test_cmp $midx_chain.before $midx_chain &&
-+		test_line_count = 1 $midx_chain &&
-+
-+		git multi-pack-index verify
-+	)
-+'
-+
-+test_expect_success 'above layer threshold, tip layer preserved' '
-+	git init above-layer-threshold-tip-layer-preserved &&
-+	(
-+		cd above-layer-threshold-tip-layer-preserved &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 2 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		test_commit_bulk --message="medium" 2 &&
-+		test_commit_bulk --message="large" 6 &&
-+
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		test_line_count = 1 "$midx_chain" &&
-+		ls $packdir/pack-*.idx | sort >packs.before &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Create objects to form a pack satisfying the geometric
-+		# progression (thus preserving the tip layer), but not
-+		# so large that it meets the layer merging condition.
-+		test_commit_bulk --message="small" 1 &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		ls $packdir/pack-*.idx | sort >packs.after &&
-+		comm -13 packs.before packs.after >packs.new &&
-+
-+		test_line_count = 1 packs.new &&
-+		test_line_count = 3 packs.after &&
-+		test_line_count = 2 "$midx_chain" &&
-+		head -n 1 "$midx_chain.before" >expect &&
-+		head -n 1 "$midx_chain" >actual &&
-+		test_cmp expect actual &&
-+
-+		git multi-pack-index verify
-+	)
-+'
-+
-+test_expect_success 'above layer threshold, tip packs preserved' '
-+	git init above-layer-threshold-tip-packs-preserved &&
-+	(
-+		cd above-layer-threshold-tip-packs-preserved &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 2 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		create_geometric_packs &&
-+		ls $packdir/pack-*.idx | sort >packs.before &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Same setup as above, but this time the new objects do
-+		# not satisfy the new layer merging condition, resulting
-+		# in a new tip layer.
-+		test_commit_bulk --message="huge" 18 &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		ls $packdir/pack-*.idx | sort >packs.after &&
-+		comm -13 packs.before packs.after >packs.new &&
-+
-+		! test_cmp $midx_chain.before $midx_chain &&
-+		test_line_count = 1 $midx_chain &&
-+		test_line_count = 1 packs.new &&
-+
-+		git multi-pack-index verify
-+	)
-+'
-+
-+test_expect_success 'new tip absorbs multiple layers' '
-+	git init new-tip-absorbs-multiple-layers &&
-+	(
-+		cd new-tip-absorbs-multiple-layers &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		# Build a 4-layer chain where each layer is too small to
-+		# absorb the one below it. The sizes must satisfy L(n) <
-+		# L(n-1)/2 for each adjacent pair:
-+		#
-+		#   L0 (oldest): 75 obj (25 commits)
-+		#   L1:          21 obj  (7 commits, 21 < 75/2)
-+		#   L2:           9 obj  (3 commits,  9 < 21/2)
-+		#   L3 (tip):     3 obj  (1 commit,   3 <  9/2)
-+		create_layers <<-\EOF &&
-+		L0 25
-+		L1 7
-+		L2 3
-+		L3 1
-+		EOF
-+
-+		test_line_count = 4 "$midx_chain" &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Now add a new commit. The merging condition is
-+		# satisfied between L3-L1, but violated at L0, which is
-+		# too large relative to the accumulated size.
-+		#
-+		# As a result, the chain shrinks from 4 to 2 layers.
-+		test_commit new &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		! test_cmp $midx_chain.before $midx_chain &&
-+		test_line_count = 2 "$midx_chain" &&
-+		git multi-pack-index verify
-+	)
-+'
-+
-+test_expect_success 'compaction of older layers' '
-+	git init compaction-of-older-layers &&
-+	(
-+		cd compaction-of-older-layers &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		# Build a chain with two small layers at the bottom
-+		# and a larger barrier layer on top, producing a
-+		# chain that violates the compaction invariant, since
-+		# the two small layers would normally have been merged.
-+		create_layers <<-\EOF &&
-+		one 2
-+		two 4
-+		barrier 54
-+		EOF
-+
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Running an incremental repack compacts the two
-+		# small layers at the bottom of the chain as a
-+		# separate step in the compaction plan.
-+		test_commit another &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		test_line_count = 2 "$midx_chain" &&
-+		git multi-pack-index verify
-+	)
-+'
-+
-+test_expect_success 'geometric rollup with surviving tip packs' '
-+	git init geometric-rollup-with-surviving-tip-packs &&
-+	(
-+		cd geometric-rollup-with-surviving-tip-packs &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		# Create a pack large enough to anchor the geometric
-+		# progression when small packs are added alongside it.
-+		create_layer --message="big" 5 &&
-+
-+		test_line_count = 1 "$midx_chain" &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Repack a small number of objects such that the
-+		# progression is unbothered. Note that the existing pack
-+		# is considered a repack candidate as the new layer
-+		# threshold is set to 1.
-+		test_commit small-1 &&
-+		git repack -d &&
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		! test_cmp $midx_chain.before $midx_chain &&
-+		cp $midx_chain $midx_chain.before
-+	)
-+'
-+
-+test_expect_success 'kept packs are excluded from repack' '
-+	git init kept-packs-excluded-from-repack &&
-+	(
-+		cd kept-packs-excluded-from-repack &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		# Create two equal-sized packs, marking one as kept.
-+		for i in A B
-+		do
-+			test_commit "$i" && git repack -d || return 1
-+		done &&
-+
-+		keep=$(ls $packdir/pack-*.idx | head -n 1) &&
-+		touch "${keep%.idx}.keep" &&
-+
-+		# The kept pack is excluded as a repacking candidate
-+		# entirely, so no rollup occurs as there is only one
-+		# non-kept pack. A new MIDX layer is written containing
-+		# that pack.
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		test-tool read-midx $objdir >actual &&
-+		grep "^pack-.*\.idx$" actual >actual.packs &&
-+		test_line_count = 1 actual.packs &&
-+		test_grep ! "$keep" actual.packs &&
-+
-+		git multi-pack-index verify &&
-+
-+		# All objects (from both kept and non-kept packs)
-+		# must still be accessible.
-+		git fsck
-+	)
-+'
-+
-+test_expect_success 'incremental MIDX with --max-pack-size' '
-+	git init incremental-midx-with--max-pack-size &&
-+	(
-+		cd incremental-midx-with--max-pack-size &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		create_layer --message="base" 1 &&
-+
-+		# Now add enough data that a small --max-pack-size will
-+		# cause pack-objects to split its output. Create objects
-+		# large enough to fill multiple packs.
-+		test-tool genrandom foo 1M >big1 &&
-+		test-tool genrandom bar 1M >big2 &&
-+		git add big1 big2 &&
-+		test_tick &&
-+		git commit -a -m "big blobs" &&
-+		git repack -d &&
-+
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index --max-pack-size=1M &&
-+
-+		test_line_count = 1 "$midx_chain" &&
-+		test-tool read-midx $objdir >actual &&
-+		grep "^pack-.*\.idx$" actual >actual.packs &&
-+		test_line_count -gt 1 actual.packs &&
-+
-+		git multi-pack-index verify
-+	)
-+'
-+
-+test_expect_success 'noop repack preserves valid MIDX chain' '
-+	git init noop-repack-preserves-valid-midx-chain &&
-+	(
-+		cd noop-repack-preserves-valid-midx-chain &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		create_layer --message="base" 1 &&
-+
-+		git multi-pack-index verify &&
-+		cp $midx_chain $midx_chain.before &&
-+
-+		# Running again with no new objects should not break
-+		# the MIDX chain. It produces "Nothing new to pack."
-+		git repack --geometric=2 -d --write-midx=incremental \
-+			--write-bitmap-index &&
-+
-+		test_cmp $midx_chain.before $midx_chain &&
-+
-+		git multi-pack-index verify &&
-+		git fsck
-+	)
-+'
-+
-+test_expect_success 'repack -ad removes stale incremental chain' '
-+	git init repack--ad-removes-stale-incremental-chain &&
-+	(
-+		cd repack--ad-removes-stale-incremental-chain &&
-+
-+		git config maintenance.auto false &&
-+		git config repack.midxnewlayerthreshold 1 &&
-+		git config repack.midxsplitfactor 2 &&
-+
-+		create_layers <<-\EOF &&
-+		one 1
-+		two 1
-+		EOF
-+
-+		test_path_is_file $midx_chain &&
-+		test_line_count = 2 $midx_chain &&
-+
-+		git repack -ad &&
-+
-+		test_path_is_missing $packdir/multi-pack-index &&
-+		test_dir_is_empty $midxdir
-+	)
-+'
-+
-+test_expect_success 'repack -ad --write-midx=incremental is safe' '
-+	git init ad-incremental-midx &&
-+	(
-+		cd ad-incremental-midx &&
-+
++		cd incremental-without-geometric &&
+ 
+-	test_grep -- "--write-midx=incremental requires --geometric" err
 +		git config maintenance.auto false &&
 +
-+		# Build a MIDX chain with multiple layers referencing
-+		# distinct packs.
 +		test_commit first &&
 +		git repack -d &&
 +
 +		test_commit second &&
-+		git repack -d --write-midx=incremental &&
++		git repack --write-midx=incremental &&
 +
 +		git multi-pack-index verify &&
 +		test_line_count = 1 $midx_chain &&
++		cp $midx_chain $midx_chain.before &&
 +
-+		# Now do a full -ad repack. The new pack contains all
-+		# objects, but any retained MIDX layers still reference
-+		# the now-deleted packs.
++		# A second repack appends a new layer without
++		# disturbing the existing one.
 +		test_commit third &&
-+		git repack -ad --write-midx=incremental &&
++		git repack --write-midx=incremental &&
 +
 +		git multi-pack-index verify &&
-+		git fsck &&
-+		git rev-list --all --objects >/dev/null
++		test_line_count = 2 $midx_chain &&
++		head -n 1 $midx_chain.before >expect &&
++		head -n 1 $midx_chain >actual &&
++		test_cmp expect actual &&
++
++		git fsck
 +	)
-+'
-+
-+test_expect_success 'repack rejects invalid midxSplitFactor' '
-+	test_when_finished "rm -fr bad-split-factor" &&
-+	git init bad-split-factor &&
-+	(
-+		cd bad-split-factor &&
-+		test_commit base &&
-+
-+		for v in 0 1 -1
-+		do
-+			test_must_fail git -c repack.midxSplitFactor=$v \
-+				repack -d --geometric=2 --write-midx=incremental 2>err &&
-+			test_grep "invalid value for --midx-split-factor" err ||
-+			return 1
-+		done
-+	)
-+'
-+
-+test_expect_success 'repack rejects invalid midxNewLayerThreshold' '
-+	test_when_finished "rm -fr bad-layer-threshold" &&
-+	git init bad-layer-threshold &&
-+	(
-+		cd bad-layer-threshold &&
-+		test_commit base &&
-+
-+		for v in 0 -1
-+		do
-+			test_must_fail git -c repack.midxNewLayerThreshold=$v \
-+				repack -d --geometric=2 --write-midx=incremental 2>err &&
-+			test_grep "invalid value for --midx-new-layer-threshold" err ||
-+			return 1
-+		done
-+	)
-+'
-+
-+test_done
+ '
+ 
+ test_expect_success 'below layer threshold, tip packs excluded' '
+@@ -334,8 +360,7 @@ test_expect_success 'kept packs are excluded from repack' '
+ 		# entirely, so no rollup occurs as there is only one
+ 		# non-kept pack. A new MIDX layer is written containing
+ 		# that pack.
+-		git repack --geometric=2 -d --write-midx=incremental \
+-			--write-bitmap-index &&
++		git repack --geometric=2 -d --write-midx=incremental &&
+ 
+ 		test-tool read-midx $objdir >actual &&
+ 		grep "^pack-.*\.idx$" actual >actual.packs &&
 -- 
 2.54.0.9.gb905fd5d0ae
-
