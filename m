@@ -1,64 +1,68 @@
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E9C2DC76A
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 12:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A453D1715
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 12:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776775325; cv=none; b=des6rTzUIlDNKMM/fQ1RJYTy414D1xxGoozCYLy28Xh8J8+Vu2klnN6GunsMWyNjSnLmIWBRCUUUrQfOyyplefzoEk52O5FwsXZqjOgUMVOqEVjBaGo0o/iS/VuLC9+clFIzJn4TqDxgSAegllRzMHkl7PqpNmM4uoMioGT7PHM=
+	t=1776775328; cv=none; b=mdvapJ0gJLdx7L0FfnnJOox6liPGRnNWBkuL8yvDFpN6kxV39QheAO0G8dHuiXlfhHpiuoJbzAgT7OiYP0MubAWLaBMqSYa03ZYScBGs2njTpeHOunpFs0d8yP5zaNx5WioRruk1SuD9oclZXCPlSAveteSop9Sy0w7e4Eb4XEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776775325; c=relaxed/simple;
-	bh=VU0fe/OjTzFpZdAbxzw9r4994LVu7rhwnCUEbImr844=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GXlCbgcdk/pxJNYDA7U/3jA2xemQac/tz4+i5IlT783s5i+Y7deQ9Kc72OIdIvcIoDU4xsTfTv8WyT2LgxWzm5e2+9WsNsF6nIfNa1jhWhWl6yyXPuTbgbMbegXYcZP/1pXdRP6sPfZYFMfGOqdcbcswmX4JnSzL5nvCyLjalZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YlwhG7vc; arc=none smtp.client-ip=74.125.82.175
+	s=arc-20240116; t=1776775328; c=relaxed/simple;
+	bh=xxU+JUF678Pz6oONy4mJFecLq/ydqBtKIS0ntKkkmv8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fPpZLKungkZ2QrzVkq6UC1UrfaN273Z+80dw/Y00/cnKzQubK7lJYRzkVsR3hGk65Ub4WQpBuHDADWhOUKRQlfgU2TdSHVlA8mpK3iAbOFhjc/f59CnxkC4hDpBeeVDW6EGiuBWjM+n+5XxwWfYdTRDYRpbRJbURnxmJOn3Ev0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+27oxvM; arc=none smtp.client-ip=74.125.82.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YlwhG7vc"
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2d868d014a5so3981952eec.1
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:42:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+27oxvM"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-12c565476d7so9319156c88.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776775322; x=1777380122; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776775325; x=1777380125; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jknLOp/3DfZNZxwjmB+MK1bd5XnCL4FY3WU/a7ma/7k=;
-        b=YlwhG7vc7GCC2TlyY0Fw6YEhgkSilb9Iwleirrzcxk2RY9XC8m/7T7fPpw7Ws2DKhT
-         3zU0DNt6x/b1z56qfH148a5PhUFf2s1Jf6/R1N5oQPhDfnn9h/uX2rOZZ9TfctTAeD5D
-         eNzR+jQJTMUkjnjzs+foiDdtldmPLZVqErS14i9iqDTk68q4QMUFOCCF7JlgGdkWRtub
-         tb0F1fTLw5lrngY+A0LPGFpjpFx454Vlpohc7YH62NnWrxzUUzCSE518mhD+83aWlYc8
-         DYFT9FerAUevI0fUapfwPzt7XdgZwvmYUqnJjDykm2j5X6xrGVZBILwR1BwVP3wc1VVV
-         0yzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776775322; x=1777380122;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jknLOp/3DfZNZxwjmB+MK1bd5XnCL4FY3WU/a7ma/7k=;
-        b=P/QW4bOwYbPrJJPV1uoh71uqEHCKfP9N8SZyV23Nkwfy/HLl4/DO7Dk5r20aC1dTFg
-         VeF/lvzkecThVCSUf4DPjxMD+fK2wS9fQtmC4vj51sWjZhrlzgy3mY1uDKG1TVdqZhdQ
-         IBLbmZxUv+YTERpK7reSaQY6Ivbjv88mqHhO1efUY3KH0Xx+lwktSqB+pLmFJqrNVTAF
-         WgHMpYm8yy9jGxaIMH8FCRyFIvqk8KZ+dw7QIkDDDy0Jo5YYt8O67ZjnlOun6lyjI1jE
-         rReyESLzkK9DxRMQXeoCZYLL+AyVIweWSnfHMtswsoXCI2Tsl1mWWiskf7hezr+5i0yd
-         LiJQ==
-X-Gm-Message-State: AOJu0Ywp3DZ9J75Y4AjkyFJyMQH1R/+VkBKFSHcJZ1MXyroAmOsZh8nN
-	bp30muIA7wMY8PJEVIA2VgQfCZ/7IUeZPaiQbMoeLkUlqBbW+RVNIJNFJlPNpQ==
-X-Gm-Gg: AeBDiesUtr5UaB60t3Ds5VbY0GPf3hGGrZ10lqGOyxqWJFKy9risVrPEF+2gGVMQLEU
-	C08rTd7x2R+ts6TS6J98MBKjWS4tRFnibVHjOzo37e/usIoBK6TNF5HUwH9ZfONlILBHz9kxBEg
-	4ZeQ5EJUse4umEdtorItHPuSjUdTtyA3Eig6FpSWD7oq5EiD9O59ACCPNqNYG2un2JC6a3LMMpc
-	8aR7xLsdbhNjbGisL6tctgIJ7Am6+CFsEHKLFoYRN+UKxeMnt9dDkKnml0mpvIC1FbGUrJgppvH
-	0v1vLqT1VvztOORd6YMt4Sbg1+YYfjTzPnOy2sihT7TyX/3jhtdLEIMMkvxxDiI1Ovbm9ESbmjQ
-	kwyaa4oq0B1cKkDb1fjwJZZEIK+HWukAAYEVjB7GvEmhPQ3Qryxrg0Y+LfHIkdfmNaLRC9Z8nvr
-	dnbGyMFyxwg2lokRS2SPOWqx3urLU6wry8/9U=
-X-Received: by 2002:a05:7301:4586:b0:2e2:27bb:a4a2 with SMTP id 5a478bee46e88-2e47873a866mr10100376eec.13.1776775322257;
-        Tue, 21 Apr 2026 05:42:02 -0700 (PDT)
+        bh=VgFWpsdsCkPHmL0PFlslVbVTKr38GMgkPX9sT8GUvtE=;
+        b=S+27oxvMa7yGxy1Y8d+DudtsACNRJimRmivQmfBShuhGAIzDVh0c91j/OyoQBIhiWe
+         L7iVPdHcL9pcjHf9mtB/sl6aD2ELvPYxNZBf99ijhpReg2dWvAwuxcAu46F14ho3bHvT
+         uYf9GgvRAREqmDFAaIsGImpmw4KjbEsuaSW22Tg3hw2IEKG0Zh6Lv6PBOYObVA1ZzRys
+         I5Sie2BXTn9C+KX1bAx8XHZPdmXPAiOe9bMKE4AqlHTDNjWA9oid+HitscgkscZTBsWt
+         fMSiVFm5jQIWHK5l1OYheiHzMM8a4pFej5Ax7JDKA6/PyzbW4hwEHnxUFVSj+gPCqILQ
+         pxng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776775325; x=1777380125;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VgFWpsdsCkPHmL0PFlslVbVTKr38GMgkPX9sT8GUvtE=;
+        b=IA680DdkPmDKLV0Og6YVzrot7PHnce5z3ZOZS4/pdMgPWDvO0qHrMCfQ4pvaqfU4cy
+         zkyxhUZ9583bX2P3kc3NU9N5gd2jAN9jl4b3O6izdP4ATz+pPbQGD8UT1kfg+dDnAqvG
+         rwlcnCyCDztXK1nDTe9MAdkrrZE9mJ482dDZ6QJI45ShHvt7dlzerpxOvCjtNFrs39iS
+         USAdWwWyaecLQ8ccBlSwYGoJbwRoMzNSy8YyPCGN0mASVXkXhB1M2gty/WM5GnMwfQsR
+         +FE677pmvAe+AgGQQg0BXi12lxLGoY+3CKSBdT5bFEH8hibhAz7Ny3z9lPZ8NO0gDLNa
+         ngGw==
+X-Gm-Message-State: AOJu0YxYT+aJ7HKllMZASlUIgZ8aqsAAcZq5TYfxfOuGfSL17D884M/T
+	aAd4cDQfctejwG05CVN4IQMW09ksVrUSm8MKFwUJLl/EmgElbveU7qfmGrLrog==
+X-Gm-Gg: AeBDietRc65/kR3MI0pQMbxgoSRwAlnVcQw9LncAZFNRzYKGts4Eh849tGMlq/G4KNJ
+	CRDllEGI2Ijam3a0rUKoHOleWWz5CvK4O7ojICU4f7+xbz3RTmB1r2f+mucs6jnace+DEwGhzGS
+	It1V+1YX1kTP2N7uu3+g3ufuK58rDk2l6lNXTKH7CuRbRTiCCNwFr6U1o9GDDfXO2jmNArIQiIs
+	L5ycHbelo9QVEE96D9BY6ZC/TRNtdU7KJWIuVQmu8m+hbE/apjD6ZLSgOg3gxYNGxxCCJ3bekcp
+	fpjQ0ErxsdF2RZS1tu28j+993vQ10JfO1LPNPegMSP/hPOpWlg65W5miHwf2oHx1UgBnKmxakwg
+	mjmf0HxfEJS1HrN52HveIxxsmjzxU1YiYIZrgf2gY+txv6Ur+x4ZeeEUdfaorGwK8KLxO6C8nSZ
+	lRORcMQO4likoZ3Wu8RpvfZFE91PsHcjuDCl4=
+X-Received: by 2002:a05:7300:148c:b0:2c7:287:6740 with SMTP id 5a478bee46e88-2e47930948emr10914520eec.28.1776775324640;
+        Tue, 21 Apr 2026 05:42:04 -0700 (PDT)
 Received: from [127.0.0.1] ([20.171.55.50])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e79c2954f6sm15837750eec.30.2026.04.21.05.42.00
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e53a4a8018sm23413751eec.8.2026.04.21.05.42.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 05:42:00 -0700 (PDT)
-Message-Id: <pull.2097.git.1776775319.gitgitgadget@gmail.com>
+        Tue, 21 Apr 2026 05:42:02 -0700 (PDT)
+Message-Id: <0d2fdc1cf4c5d7273addedc442a222f0c3485efd.1776775319.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2097.git.1776775319.gitgitgadget@gmail.com>
+References: <pull.2097.git.1776775319.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 21 Apr 2026 12:41:55 +0000
-Subject: [PATCH 0/4] ci: GitHub Actions updates (brought to you by Dependabot)
+Date: Tue, 21 Apr 2026 12:41:56 +0000
+Subject: [PATCH 1/4] ci: bump microsoft/setup-msbuild from v2 to v3
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,33 +73,47 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Dependabot (which my voice-typing software frequently mis-translates to "the
-panda bot" 😉) is enabled in Git for Windows' fork of the git/git repository
-to lighten the maintenance burden a little bit. Frequently, the updates are
-not actually for Git for Windows' patches on top of git/git, but apply
-directly to git/git.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Here is the latest batch of those updates, with heavily augmented commit
-messages.
+The v2 of `microsoft/setup-msbuild` runs on Node.js 20, which GitHub
+is phasing out of the Actions runners. v3 is a minimal release whose
+only substantive change is moving the action's runtime to Node.js 24,
+so that our Visual Studio build jobs keep working once Node.js 20 is
+removed from the runners.
 
-Johannes Schindelin (4):
-  ci: bump microsoft/setup-msbuild from v2 to v3
-  ci: bump actions/{upload,download}-artifact to v7 and v8
-  ci: bump actions/github-script from v8 to v9
-  ci: bump actions/checkout from v5 to v6
+The risk of this bump is very low: v3 contains no functional changes
+to the action itself -- it merely adds `msbuild.exe` to `PATH`, with
+no change to command-line flags, inputs, outputs, or default tool
+resolution. The only precondition is a recent-enough Actions Runner,
+which the github.com-hosted runners already satisfy.
 
- .github/workflows/check-style.yml      |  2 +-
- .github/workflows/check-whitespace.yml |  2 +-
- .github/workflows/coverity.yml         |  2 +-
- .github/workflows/main.yml             | 50 +++++++++++++-------------
- 4 files changed, 28 insertions(+), 28 deletions(-)
+See also:
 
+- Release notes: https://github.com/microsoft/setup-msbuild/releases
+- Compare: https://github.com/microsoft/setup-msbuild/compare/v2...v3
 
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2097%2Fdscho%2Fdependabot-updates-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2097/dscho/dependabot-updates-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2097
+Originally-authored-by: dependabot[bot] <support@github.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ .github/workflows/main.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 6f3d94e3a6..0d3e0e42a4 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -186,7 +186,7 @@ jobs:
+         repository: git/git
+         definitionId: 9
+     - name: add msbuild to PATH
+-      uses: microsoft/setup-msbuild@v2
++      uses: microsoft/setup-msbuild@v3
+     - name: copy dlls to root
+       shell: cmd
+       run: compat\vcbuild\vcpkg_copy_dlls.bat release
 -- 
 gitgitgadget
+
