@@ -1,159 +1,93 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B497E359A90
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 21:28:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776806924; cv=pass; b=f1hX5/FamUIXEwd/SK7/9vyQD8fnBjmjzkGk6fRF8Cxh0s7lnz5B+ER9EyEhFOTVUK9zU085dQS3F9nnO5QX/pFlDxXUDmmpSzR7fJwP8DrdukLnYBFvvUnnUEkMtN1q0UEO8KEHAHr9Mj610jMiKN+YbKUlnfwg687gFVm5KLw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776806924; c=relaxed/simple;
-	bh=QHWQTK4uZJRJIXaCHu568Ga3WJ+/+X7gtXNhonikvWc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j6cdneSnRgWPN6+ruRTuwmhKOu1Nafbw5pBay6rJrwFrMWfQOiuAgLWxt1+AWg6GectDKEonz7gm13bq5FRBe0wDO1jawqJCUF+gA4h4dRTDNjDo+Vo5IW37zch50p8iRiiWMsiV7/fhZCeALUf4q6P4f0W79aQpIxaS4CloJkg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6Qt2G4J; arc=pass smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F9234A799
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 22:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776809613; cv=none; b=gDJbQT0b/4qkFx1PXSZ09thI+TAycAO85PUxO4inJHC8Lg7R6uTN/k0YT6HcTRUKZ2unSyF5va82EQ15eUUHcSBprLLo19vYjGNoNm5WSFZGDSnDiJHp4ksafvluRf7IfnlkcRN3hDk9GM15iPsTQlaFKtsvnJNQXRJ/jhI45Os=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776809613; c=relaxed/simple;
+	bh=DSTwp4gJEvnsYI9QYL1z2o+tlnAaIlyJkns3JnzQQn4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CEMzMEKOaB/CKaNbjbqJILGWj5cCYy/xPOBZj3xWtA5vI0R3pofhI1IE5Gy447v9vsIRE7ZWPSylyjttdC4fhnTMkkfobc84ES/FBjE9cE7VuZoVb6FStG8wHFLyBjnzE9RHln2x+L5Nf7LZmNZfWk4ZgjUS/KhA/41IBLLnPNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=vtPG1Ubq; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6Qt2G4J"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-673ee2a98b1so2596364eaf.0
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 14:28:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776806922; cv=none;
-        d=google.com; s=arc-20240605;
-        b=KAYRmnAyWaOo3QQOD921+5EO4M0BVWueLppRACav35H2cSCg41lqO+5NOXVewvemJ2
-         CiA52tctwUeAoteGYPsh24qlaWewSzrXk0qOuL1J/SzZHbbzL+a2hofRM+2YiJ4XWREE
-         juG5MClF8SLYYOCCvaSDpsOvKrpR+1qfE6vCAE4pb908NV8aDzzGiWQoSeL9bWkn1iKi
-         T3FJQEpx2qBYNt3UtEuTPOeqUwPYXy4nlwDINASSyCQi7x+Bir4TM38xHcOSJfUa/HL1
-         P60cNd9qJ0eE8sJHg5X/6FaWJuKQhbuxznsQSP6fQHbz2lg6lYudYtm/7N5AhTX3kSPo
-         ue+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=eALGwJ8YaHAQyhQTZUy3kE5IBxekg0ZIi65Lk67U0/E=;
-        fh=jzY6moeyBaGqSHtRq49HUos/AS3aAs9QhLhmRUDr2PU=;
-        b=Uv7kN+d1fOkKyDN4LcqOjeTUJwg89MnE9D+YtXGwqQMWdMkZekgKzThujMbwWdTJBM
-         xM+rE6Q+627O4bYSIZDmFB2bwIQT8lhNbH/6l5DQCMw66Q/km4QRALTV4sRg8kdCywlh
-         IYsr4hTZyLgPkqCdi6TpFkGXVvW6ah+0uhKvm2B9QQ44ciZ17Eyo6uKN0/RtnA2ykWZl
-         e2pOaVhXJkzproXNnUm2PTSXzrvXtfz7k7JaaQCUkU+dFABP8+4rPxeyY14j9a9eiRcc
-         acF8J+vti1/Eo42AqkWq/6cgcn8Z/XcO75GgfUKP03alH0LjCgG/xmFokvJ1ZgGJ+PFX
-         2MPw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776806922; x=1777411722; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eALGwJ8YaHAQyhQTZUy3kE5IBxekg0ZIi65Lk67U0/E=;
-        b=m6Qt2G4JaLoLWdYAv2LBEo3Y1wIvcSiTg4v/x4lCD5LVUNBnWuswQWc0NlKOQkAkTN
-         hgQILXsZ/f3wCnMFQKsJFxcegsj3RzhBRu04/dPmQ0ECPN/WlgtImj4RQg3gDc2CK/od
-         znaFWm6Otzg/i7n9j466IoyRxF+oD63iGltmfZgTE5j1d3wDkJ2NGEed1t7XJOaarMKl
-         idE3qYubCZMiYIOKi9Rb/peHDvhVVE/hJ1sTQrPYaiBGa3yxvW9XMs2Ru15FjVYRnSq7
-         U1iKPeqTHkqCWlLyOCCrTN17J5dZG+xSQeDakT1ElVlSdbfbxcDmqwEInynmjMpLt2P9
-         1y7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776806922; x=1777411722;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eALGwJ8YaHAQyhQTZUy3kE5IBxekg0ZIi65Lk67U0/E=;
-        b=iR5xXsVg4tJdf8+hutWdTJfZ64F8nYUPPmVAUWg2DaZOd3n/pBLIBd4IViEBmzltPW
-         iPY275ni8KupN5UNNPWVUyu3CDNJNQo16a+dCtlEkQonwGJScfxFhS4+wCu+65RwNflj
-         68igg0mSXTNSxpheLVB7qZmbUWY2FyPaDMTfrDAvZw8vntFFBtWnfaJRW1L6f5XD4+9V
-         Kof0Q4Jtjl6XiIw0l/Bt3HZ2+pLpK6uxKaYH3ors3PwWROE3katGuejRSPUDRbCrTLz1
-         A3+2tmCb/Ac/zgCKe8+EL1xcAVgxr9D0Pf7NJrPskrO0njGukh9I4lBeQbt7lDmAOaaz
-         vJrA==
-X-Forwarded-Encrypted: i=1; AFNElJ9LqY/OiY2RxqwMC0XoMCs2iH7EBzhFzi8QPO0JiwoxnMANRJAdmjmqzmhpJ48UrOS+hBU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxq/Tjc8YjZNTw1Rjj9uTQT+0O9qHaIQPy4wivujJm+nVynd8O2
-	ix7ZYYF+ZItyfEklDUMYzUpx1CYFIrGBy0vN78gi9QNY1/VjPbr/lvMa4keG+o8Dz9RPokHlrH5
-	kxOZkwdMbt8uccpHoin6nfDaiqz732VswmHwf
-X-Gm-Gg: AeBDietIhZ53H63dbXuQK+rrofaeqBB5SlpmqnviBh8LdvkoNZbXyoIbgvA7UirBg9E
-	HRKWtoM9WJx+Z93Uf9YjWYyN+8toawSVvzgnRRuhfET1YUTtYFpHanhEAP6GeXUYhepkGz01sMy
-	PJZ3UXMATlBIATEjsMqVV+ITJ5YbratiE2KPjoh7aYYbF8DqSW8+IaHfH6srl6WgxlIH+lTOX1u
-	61Ytb94eOtpk4C3Hm/9y7WLGdR+pPnJqMWqqP1EyRfXNI8RmN1PepSTu5qbi/EDXY2FBzURhz9V
-	/3n74d/zr7z8wcXp63eR2Tq+HwLPP9fl9dFxg/+YrXFB9pb8WZRyCTXIRI+iduF7oMG1i/ARNM6
-	s8QbeDZDXBF4wUFBUXZIT/VbYl974XmTOUsJR2g==
-X-Received: by 2002:a05:6820:610c:b0:694:9ea7:7aa1 with SMTP id
- 006d021491bc7-6949ea78057mr1073364eaf.5.1776806921571; Tue, 21 Apr 2026
- 14:28:41 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vtPG1Ubq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1776809605;
+	bh=DSTwp4gJEvnsYI9QYL1z2o+tlnAaIlyJkns3JnzQQn4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=vtPG1UbqHNbESSMTf2jsLUYDYOwCsJ50nOR9ZP8qzZ3bMngmFykmuW5shCh9l0K0D
+	 I3+SBhWVPcFB/f+W0D4N1F8Aii/xaaSLOfeJYh6HPAb0i1yIcOuD1xsZaZs5Rjty/+
+	 Jap1YA0eXZd+wPcxESPkThfJX3nR7hdtv7VTEoZ2pltcRw5RtfiQeZtscNXfA+3ce4
+	 lonNyHRsry0Wab9HqWV8EyUchu4ou23x75rKZWZwTPY7znf37YcUjAYogdZl6BRpsf
+	 hwYbM1LFr4THDFHnz34qrX3ziM9WB83ir6C6keheKITSDvZLIE01OuQyOJsPyyM0Tl
+	 J9RUXHu93lKMzDycg/7t8ha0yr5SbX1ojNjqq+bMQNJ4oU9BeJ8Vhi4zwZRhgdsIrW
+	 xpp4N0Jxfrnz/UCrWUvI8eAKlnwpwbjc4ReqTVriATOHbtbcanHdWifxrEkIk/AdUR
+	 ftkcrOgU8rR05wEQEKdaRdnRje1GollQHgWyAwSA/J/5X4SSmON
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5ad8:61c3:7428:ec68])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 22F30200FF;
+	Tue, 21 Apr 2026 22:13:25 +0000 (UTC)
+Date: Tue, 21 Apr 2026 22:13:23 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kushal Das <kushal@sunet.se>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] v2.45+: git commit -S invalidates signature for non-UTF-8
+ messages
+Message-ID: <aef2g0j-ws4zZ2Zp@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kushal Das <kushal@sunet.se>, git@vger.kernel.org
+References: <4d5d04e2-49c4-4781-a289-f8cf79570643@sunet.se>
+ <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
+ <c0df6dbd-47f9-4a2d-b68d-cb0c1e19ca5a@sunet.se>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
- <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com> <a705852723fbe88e94ad3de1daba548dbce32211.1776472347.git.gitgitgadget@gmail.com>
- <a010a4ad-403a-4b6f-9a92-a33323eca0f2@gmail.com>
-In-Reply-To: <a010a4ad-403a-4b6f-9a92-a33323eca0f2@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 21 Apr 2026 14:28:29 -0700
-X-Gm-Features: AQROBzD-s6sia3BuUiMQ0wu4muV7BPxd7eqk5HdHyvKyZCYDe4074JyMde8PB-g
-Message-ID: <CABPp-BF4woakYQ5RZ32J8SzDs_VpvT2Wv+Y2WaHTnFnM=96Kzg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] builtin/log: prefetch necessary blobs for `git cherry`
-To: phillip.wood@dunelm.org.uk
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wvrlMylemSpu7cJl"
+Content-Disposition: inline
+In-Reply-To: <c0df6dbd-47f9-4a2d-b68d-cb0c1e19ca5a@sunet.se>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--wvrlMylemSpu7cJl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Phillip,
+On 2026-04-21 at 07:39:11, Kushal Das wrote:
+> I am also wondering in the test harness for git signing, if you want to
+> include other tools than gnupg for testing.
 
-On Sun, Apr 19, 2026 at 7:04=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Elijah
->
-> On 18/04/2026 01:32, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > In partial clones, `git cherry` fetches necessary blobs on-demand one
-> > at a time, which can be very slow.  We would like to prefetch all
-> > necessary blobs upfront.  To do so, we need to be able to first figure
-> > out which blobs are needed.
->
-> "git rebase" without "--reapply-cherry-picks" suffers from this problem
-> as well as it does the equivalent of "git log --cherry-pick". Is there
-> any way to share prefetch_cherry_blobs() with the cherry-pick detection
-> in revision.c?
+The signing code is abstract at that point in the code, so it should
+work identically with SSH or X.509 and I don't think a separate test is
+necessary.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Yes, you're right; git rebase without --reapply-cherry-picks and git
-log --cherry-pick both go through cherry_pick_list() in revision.c,
-which has exactly the same shape as the patch-ids loop in
-cmd_cherry(): build a hashmap of one side via add_commit_patch_id(),
-then look up the other side via patch_id_iter_first(). The on-demand
-blob fetches come from the same patch_id_neq() callback.
+--wvrlMylemSpu7cJl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-After poking around, I think the approximate scope of the fix would
-be: Move collect_diff_blob_oids(), always_match(), and
-prefetch_cherry_blobs() from builtin/log.c to patch-ids.c and expose
-the last one in patch-ids.h. In cherry_pick_list(), between the
-add_commit_patch_id loop and the comparison loop, build a temporary
-list of just the lookup-side commits (filtering by
-SYMMETRIC_LEFT/BOUNDARY as the existing loop already does) and call
-prefetch_cherry_blobs() on it.
+-----BEGIN PGP SIGNATURE-----
 
-That said, I'd rather leave this out of the current series. The bigger
-picture is that I have reservations about expanding partial-clone
-support further into this area. git cherry, git log --cherry-pick, and
-the default cherry-pick detection in git rebase all exist to answer
-"has this patch already landed upstream?" -- a question that, in
-repositories large enough to need partial clones, I feel is rarely
-worth the cost of computing patch-ids across arbitrary amounts of
-history. The honest guidance I would probably give for users on a
-large repo is "pass --reapply-cherry-picks (with rebase) and skip this
-entirely" or to narrow the range under consideration.  The omission of
-a --no-reapply-cherry-picks option in git-replay wasn't a lack of
-effort or oversight, but a deliberate choice where I'd rather hold off
-(possibly indefinitely) on implementing it.  So I'm a bit reluctant to
-make the performance hazard less visible without also asking whether
-we should even be doing that piece of the operation.
+wr0EABYKAG8Fgmnn9oMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ4g/19FDgczVjZoewzdqWERzMz+UG/6qPEWJgSa5akbz
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOV7AP9overOSWX4Ghu/AyI2Ku7JlK8D
+yWL6hhl+lanif/rhRAEA8+8ZKsWUW0KsD5oAfXyKV41uujos8KskyRfdlZjJog0=
+=AN+c
+-----END PGP SIGNATURE-----
 
-I only implemented the git cherry fix because of a specific customer
-situation where the operation was already baked into tooling, and
-prefetching at least makes the worst case tolerable. I don't want to
-hold myself to doing the same for the cherry_pick_list() path, but I'm
-fairly confident the code here can be re-used for those other cases
-and I'd help review a patch from anyone who wants to carry it forward.
-
-Anyway, you are making the right connection, it's just that my
-personal answer is to let some other interested individual do it.
+--wvrlMylemSpu7cJl--
