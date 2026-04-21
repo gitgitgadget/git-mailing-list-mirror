@@ -1,71 +1,71 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E023DDDA1
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 20:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6116A3DBD7D
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 20:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776803844; cv=none; b=UcC43C8Qn8PQ88oCxaD4faGTlsqQCEhE5jqYFtq6fh3sKXsw34/Ks93u5pxSOwebvmATw3ZH/NmWGXpP/pAdmHWdk+BLhMVpw9eErPXV2ftAYsTIC5w2Iq/n2POMcl0Dyz77D4FrH5n5vxoIpGIvqL3b2OaBwazf6CisN4TFAME=
+	t=1776803849; cv=none; b=hDxpvWHx0jiq77I3Pv3RpmgwKwROBpLLJ9QnoaSBCCHrPmEeeYJ7o1Q0A9kZwBIs+1YJ24wNv7HwNaBRndxDjJys0iGOIv4oZtLdfXabnblxSBOXcQTyZikMCceIEDwlrCcfndi7Q6kq780edop09qcXudUgTF8XiRIXxaww2LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776803844; c=relaxed/simple;
-	bh=vYombD2/9kC/am0KFj7T1Jlx5zA/5a4Pv21HEmHPWlo=;
+	s=arc-20240116; t=1776803849; c=relaxed/simple;
+	bh=zGIqWl9XazTEbJQ+5AtHCGvR3FsFbuFSXLHXTi8zpek=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iqHaGbGBSucgnThorqzDi09NegU9tfTwXmqAVO5C9xbgOvJYx7zyfQ+jBeqYLPzfmVfXzrHpYQSkK6eLF/zR1AgnkQ018Ya9qrLqc2GOVjEokDzCR92kkXdQQryEi4GdAWJ7lp3GCR+gC9AmvrvTTRTv+HrkNuhZ2Mqsc8KXJbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=n2qhDQdj; arc=none smtp.client-ip=209.85.210.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=AMIXEem3HfyI1DT57LKAXHilFhSVEOUeQirx228Bwadk6kPGuTzAzUhffuUfrCaLQJeoNzlfCeoBrqKPfJ71SN/JALJushKK3natElMkLrdYPKErSpBL3Woj21a95hdYiYu3V2aX60OwIGR+NXmFwBgumcoJLvssqHGwrNhR11k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=plBrX81B; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="n2qhDQdj"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7dcd689829eso1209517a34.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 13:37:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="plBrX81B"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-41708f6c3feso3022775fac.3
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 13:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1776803841; x=1777408641; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1776803846; x=1777408646; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/NjBsWaeZgNzOofXHG1Ya9Hf1tLcK9lYbzjEDgN+qos=;
-        b=n2qhDQdjHmzreHQf0R7gfoYm8abea2j/LM7JAttu2xbQEALYgvvzeMw72s5BpqMtaN
-         v5rio16pYGZAh2+Y5GUA++xRF9Ow7yE23JgDVAN5FZUDv5uavga1ivIrAzL3OuW98h52
-         6HgfkqnnPebto59HkajLaaCOg+7G/GpFyBDZ+UGRakTtPhUT5MsJYmvH3jm3ReaaNnEE
-         nSR2WZ8y/rmVh3j5v5ndo/PYoHMsb9lsnUvk2kfH+t6kJoBC9wjGknFTLJewlfBGRWBt
-         3xGNONhKpMKUXFRT4WFDLFB0elgvA8M6VsM71dNkqsHJz+uu2u5NCw6VDe6mfoZuUHFH
-         X/FQ==
+        bh=yGnoQOcPPnW/C/vnXr1goMexW+zjeb72vOIlX6vaCBw=;
+        b=plBrX81BWfzB58a3ud4NT9nLeWbUewcGrowxJTmbjGJ84gRjiq3WCIISXClA8HIMW2
+         RlhQGvgSo4Tlt4Hh9GQUkKygNI1+U61pquhPtiAFqSa+nLITOGIPDxNO0hmpiFHMQ1e0
+         xuFEdP3Bi7RyWufhzPI9tiL6fgkuh4HddDHfNqcZ6RSq67XTTJm3AgKNAvCUBfx2aQmj
+         wrmouu3u6oLojMFrBcucLubEYdNfQprBhJptd2A6wpxFhBqRsNrkK4Kn+/uX2z/sHqbs
+         WjBpXrMHOZhF66NVsH4/tNwvNXsv4vyX9L4+niNYsUVaBpTaOjMADNKUdPVfskaVXjHB
+         L6iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776803841; x=1777408641;
+        d=1e100.net; s=20251104; t=1776803846; x=1777408646;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/NjBsWaeZgNzOofXHG1Ya9Hf1tLcK9lYbzjEDgN+qos=;
-        b=kAV0/mU/x1V8SgGoiNYfsaYY48hbTTCEPOlaW/rnYAryyNHMUTdgO84cyoHuzbKya4
-         iyzw0wSag1KsnGm7pz5U97KOASVozrzMcbpjMKctQO0xuPKvVf4yL7tkcjbeoTIkkkM4
-         dz4nAIaby74bKkLBcsJ2+ZkcjWcl78QdTVT1hJFTtDpOcJke2MvSQ4Idrlg/x7cesJqH
-         wsH3JNTT1eNdnemK16NhTLQvCLmYESTirsL4WEExUOlHvYQ/AKUKslQ1ALRmYrxo48Sm
-         pUnHUXdTM4zuRvdOS3cXxNExjNAwU+W7CPqHPd3uDER5IxmoRi6XCLjBVFnGAPCCW1WS
-         OgbQ==
-X-Gm-Message-State: AOJu0YxW9NghD5t+Eu6jvAo+WT3WLb703Rb2StlwGdJhG3mRJwH5nyrK
-	Mie7TubnUAExz/91Sd8E6EFeMfiQC8/Dig6qjAS7OQoJKf0sVImvKoolrgsMBPxrwaIcACp+cAY
-	yd+5dsS4=
-X-Gm-Gg: AeBDievT7/g0d9YanWkCC22N7afWxQiUbof1pID/+ltmkffewljxotJEkjpjuFngBk/
-	jiZ2UH/z7+0M8UYCL5VtaSS0Sgr0418mygFNzTDSdJ1V7gjWVtIcy+bZjQLnmsWattoPDoZpHK6
-	r+zwwPVRNb2HaZLsLLqcaFcc+V3t4+AsEU3fGgNK1fVUHPOTScVqgROUVornSKB0HI3AmnxYNDt
-	f3IFQoMY4/xobGzvQt9ZJtt2J7JsKRfTC9opzQdWcbf6kqgqaoJ2RtFyG4CVo5Q7pva/sUdhSE8
-	SQvW7jnZBRN42yEI1igR94bEhyQBI2Vv+rZ8lHoE8Jj1K/f3DtTHhBYcpsvyWrw1JORybXJ02et
-	h09C6PcRPnmXvfRe2Mx2ckeCEC+30lIEU84YC0kDgDvEp97fXnq54GN1BMFIICS0PNNGmv0AwsW
-	cLW1syA9J3oMdxlIvKBW2P9HGsiJ8VAhEryNyRXaTJfy2FS+f0T2vLnmmmtZW3j8TczGMCrqpmN
-	U1NK12djImzUAQrgdk3yHsCe0tB8eEKsArmeJd+2H5uePBrf7e2mFZ2yVhykUsDXYO8NNGbaqJL
-	ywM7IjNMl4JVq8HoM7/7HFeppkw=
-X-Received: by 2002:a05:6830:661a:b0:7d7:ecfc:76d6 with SMTP id 46e09a7af769-7dc951c298cmr11400405a34.17.1776803841517;
-        Tue, 21 Apr 2026 13:37:21 -0700 (PDT)
+        bh=yGnoQOcPPnW/C/vnXr1goMexW+zjeb72vOIlX6vaCBw=;
+        b=UJMdOuj4c5kwV2baMhtxKyvUuMu86K+qD1xryaRqq1kHYuJwT8l4ca1QgC3VGFos84
+         kkhXRo6HNtZnvJlvaGDarEd1eYKjysUHm1qjw13lP6VgDCn3LNS+DPiIXITBkawRwIn3
+         NhqQwP21uinLBMrqBOMuuDefWzKpl6HMCpZSmPSrVmYquFlUoMV1TfhhxfRZcEG7znMD
+         tFnIAOeIAqlKt3u48hbip3zX7KIZFb+MdoYxeinZUESoUC7vs94cfJ2FCxzjfftkTVJX
+         WRGLOh6SLMxW/ToZL0gmRxjM0Fzh2dKAJD3kL956SEvcawXf69qTILtkeOXtKfZ/ERBf
+         rmdQ==
+X-Gm-Message-State: AOJu0Yw3OhaJ8QsQ/8T+yEMCJ75DRiwePb/bpBtsdXiM4bJkcPxEqE3R
+	Tzhq8CbPGeoE9NoRKii2l8q+l+PR0Ha+9430p9R6nikldY9XC+jD3pyK7WDQY1v/9ZUHYIfNhmC
+	XhILyUoQ=
+X-Gm-Gg: AeBDiet4VBzMoDOqaXwCgIqYSu3sTu6/H6qgN1MrdYRiOPiXuOm4ne7LGAWyN7tYM7f
+	Tjdq+qU5mDCI8Ov5Mu/9LAJXsv0/GhxDA9kmixVIIQc972kQgidLrp/COS9bfCW1vpd5V6Lhqbi
+	4ro3KJhqC4YHMCuQ5zDC17roj1HghCQ64mbn0L1A3RAwrSZOe+n1g+dPR24KcxYmojpXVViLQr9
+	1cyD4YBEWpSSwMXxmP51Hn6Q0VyMretcl0M6sGZMH/KejNWoD2QnwZCnCy1xuUuy4azmLEuoz+C
+	8SMwxImVgpE1XdBXIIFIYJf+I9BFsQ1nSWa0nE6LAxNAjvxWxiwXG0Rcf9/f0IkLvSZymirgp0E
+	JNXjkNGLfviDD1vTle+tDhI0zF/naXFhOwYeKDS6bjdaRIfLp3RuGTOAMcVLNFJMyrq9VMhxO6G
+	5PuaZjQlCC7jlEkFnEk+eFAdToWKvhpm2Pv8SgSIIAwR77nEAXsccVsuRBtf3BCIiMT7jPC0NqA
+	Elur2uRs1EjROVMQOsOiJc6C4RTTx006Szt32LP1Gou93HCRLoLhMkXeRlZXugZt+T+RprSlAl6
+	gl0YHaffois87WOCeQhaf+IeoX8=
+X-Received: by 2002:a05:6870:4149:b0:42c:3db:a4bd with SMTP id 586e51a60fabf-42c03dbaf48mr7227952fac.31.1776803846053;
+        Tue, 21 Apr 2026 13:37:26 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7dcd164d2c3sm3825959a34.24.2026.04.21.13.37.21
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-42b934a2dd1sm13388907fac.9.2026.04.21.13.37.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 13:37:21 -0700 (PDT)
-Date: Tue, 21 Apr 2026 16:37:20 -0400
+        Tue, 21 Apr 2026 13:37:25 -0700 (PDT)
+Date: Tue, 21 Apr 2026 16:37:24 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 03/16] midx: build `keep_hashes` array in order
-Message-ID: <e303bf6a4ace587259f09755b257b2f5df793af9.1776803827.git.me@ttaylorr.com>
+Subject: [PATCH v2 04/16] midx: use `strvec` for `keep_hashes`
+Message-ID: <42d76c7006096125a741faa7edb1286f5ea20612.1776803827.git.me@ttaylorr.com>
 References: <cover.1774820449.git.me@ttaylorr.com>
  <cover.1776803827.git.me@ttaylorr.com>
 Precedence: bulk
@@ -78,115 +78,254 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1776803827.git.me@ttaylorr.com>
 
-Instead of filling the keep_hashes array using reverse indexing (e.g.,
-`keep_hashes[count - i - 1]`) while traversing linked lists forward,
-collect linked list nodes into a temporary `layers` array and then
-iterate it backwards to fill `keep_hashes` sequentially.
+The `keep_hashes` array in `write_midx_internal()` accumulates the
+checksums of MIDX files that should be retained when pruning stale
+entries from the MIDX chain. For similar reasons as in a previous
+commit, rewrite this using a strvec, requiring us to pass one fewer
+parameter.
 
-This makes the filling logic easier to follow, since each segment of the
-array is filled with a simple forward-marching index. Moreover, this
-change prepares us for a subsequent commit that will switch to using a
-`strvec`.
+Unlike the aforementioned previous commit, use a `strvec` instead of a
+`string_list`, which provides a more ergonomic interface to adjust the
+values at a particular index. The ordering is important here, as this
+value is used to determine the contents of the resulting
+`multi-pack-index-chain` file when writing with "--incremental".
+
+Since the previous commit already builds the array in forward order, the
+conversion is straightforward: replace indexed assignments with
+`strvec_push()`, drop the pre-counting and `CALLOC_ARRAY()`, and
+simplify cleanup via `strvec_clear()`.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c | 66 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 36 insertions(+), 30 deletions(-)
+ midx-write.c | 84 ++++++++++++++++++----------------------------------
+ midx.c       | 20 ++++++-------
+ 2 files changed, 38 insertions(+), 66 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 9328f65a201..55c778a97cb 100644
+index 55c778a97cb..5d9409a9741 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1731,6 +1731,9 @@ static int write_midx_internal(struct write_midx_opts *opts)
+@@ -29,8 +29,7 @@ extern void clear_midx_files_ext(struct odb_source *source, const char *ext,
+ 				 const char *keep_hash);
+ extern void clear_incremental_midx_files_ext(struct odb_source *source,
+ 					     const char *ext,
+-					     const char **keep_hashes,
+-					     uint32_t hashes_nr);
++					     const struct strvec *keep_hashes);
+ extern int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+ 				const char *idx_name);
+ 
+@@ -1109,8 +1108,7 @@ static int link_midx_to_chain(struct multi_pack_index *m)
+ }
+ 
+ static void clear_midx_files(struct odb_source *source,
+-			     const char **hashes, uint32_t hashes_nr,
+-			     unsigned incremental)
++			     const struct strvec *hashes, unsigned incremental)
+ {
+ 	/*
+ 	 * if incremental:
+@@ -1124,13 +1122,15 @@ static void clear_midx_files(struct odb_source *source,
+ 	 */
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *exts[] = { MIDX_EXT_BITMAP, MIDX_EXT_REV, MIDX_EXT_MIDX };
+-	uint32_t i, j;
++	uint32_t i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
+-		clear_incremental_midx_files_ext(source, exts[i],
+-						 hashes, hashes_nr);
+-		for (j = 0; j < hashes_nr; j++)
+-			clear_midx_files_ext(source, exts[i], hashes[j]);
++		clear_incremental_midx_files_ext(source, exts[i], hashes);
++		if (hashes) {
++			for (size_t j = 0; j < hashes->nr; j++)
++				clear_midx_files_ext(source, exts[i],
++						     hashes->v[j]);
++		}
+ 	}
+ 
+ 	if (incremental)
+@@ -1267,8 +1267,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 	int pack_name_concat_len = 0;
+ 	int dropped_packs = 0;
+ 	int result = -1;
+-	const char **keep_hashes = NULL;
+-	size_t keep_hashes_nr = 0;
++	struct strvec keep_hashes = STRVEC_INIT;
+ 	struct chunkfile *cf;
+ 
+ 	trace2_region_enter("midx", "write_midx_internal", r);
+@@ -1708,32 +1707,12 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 	if (ctx.num_multi_pack_indexes_before == UINT32_MAX)
+ 		die(_("too many multi-pack-indexes"));
+ 
+-	if (ctx.compact) {
+-		struct multi_pack_index *m;
+-
+-		/*
+-		 * Keep all MIDX layers excluding those in the range [from, to].
+-		 */
+-		for (m = ctx.base_midx; m; m = m->base_midx)
+-			keep_hashes_nr++;
+-		for (m = ctx.m;
+-		     m && midx_hashcmp(m, ctx.compact_to, r->hash_algo);
+-		     m = m->base_midx)
+-			keep_hashes_nr++;
+-
+-		keep_hashes_nr++; /* include the compacted layer */
+-	} else {
+-		keep_hashes_nr = ctx.num_multi_pack_indexes_before + 1;
+-	}
+-	CALLOC_ARRAY(keep_hashes, keep_hashes_nr);
+-
+ 	if (ctx.incremental) {
  		FILE *chainf = fdopen_lock_file(&lk, "w");
  		struct strbuf final_midx_name = STRBUF_INIT;
  		struct multi_pack_index *m = ctx.base_midx;
-+		struct multi_pack_index **layers = NULL;
-+		size_t layers_nr = 0, layers_alloc = 0;
-+		size_t j = 0;
+ 		struct multi_pack_index **layers = NULL;
+ 		size_t layers_nr = 0, layers_alloc = 0;
+-		size_t j = 0;
  
  		if (!chainf) {
  			error_errno(_("unable to open multi-pack-index chain file"));
-@@ -1751,46 +1754,49 @@ static int write_midx_internal(struct write_midx_opts *opts)
- 		strbuf_release(&final_midx_name);
- 
- 		if (ctx.compact) {
--			struct multi_pack_index *m;
--			uint32_t num_layers_before_from = 0;
--			uint32_t i;
-+			struct multi_pack_index *mp;
- 
--			for (m = ctx.base_midx; m; m = m->base_midx)
--				num_layers_before_from++;
--
--			m = ctx.base_midx;
--			for (i = 0; i < num_layers_before_from; i++) {
--				uint32_t j = num_layers_before_from - i - 1;
--
--				keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
--				m = m->base_midx;
-+			for (mp = ctx.base_midx; mp; mp = mp->base_midx) {
-+				ALLOC_GROW(layers, layers_nr + 1, layers_alloc);
-+				layers[layers_nr++] = mp;
+@@ -1761,12 +1740,12 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 				layers[layers_nr++] = mp;
  			}
-+			while (layers_nr)
-+				keep_hashes[j++] =
-+					xstrdup(midx_get_checksum_hex(layers[--layers_nr]));
+ 			while (layers_nr)
+-				keep_hashes[j++] =
+-					xstrdup(midx_get_checksum_hex(layers[--layers_nr]));
++				strvec_push(&keep_hashes,
++					    midx_get_checksum_hex(layers[--layers_nr]));
  
--			keep_hashes[i] = xstrdup(hash_to_hex_algop(midx_hash,
--								   r->hash_algo));
-+			keep_hashes[j++] =
-+				xstrdup(hash_to_hex_algop(midx_hash,
-+							  r->hash_algo));
+-			keep_hashes[j++] =
+-				xstrdup(hash_to_hex_algop(midx_hash,
+-							  r->hash_algo));
++			strvec_push(&keep_hashes,
++				    hash_to_hex_algop(midx_hash,
++						     r->hash_algo));
  
--			i = 0;
--			for (m = ctx.m;
--			     m && midx_hashcmp(m, ctx.compact_to, r->hash_algo);
--			     m = m->base_midx) {
--				keep_hashes[keep_hashes_nr - i - 1] =
--					xstrdup(midx_get_checksum_hex(m));
--				i++;
-+			for (mp = ctx.m;
-+			     mp && midx_hashcmp(mp, ctx.compact_to,
-+						r->hash_algo);
-+			     mp = mp->base_midx) {
-+				ALLOC_GROW(layers, layers_nr + 1, layers_alloc);
-+				layers[layers_nr++] = mp;
+ 			for (mp = ctx.m;
+ 			     mp && midx_hashcmp(mp, ctx.compact_to,
+@@ -1776,31 +1755,29 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 				layers[layers_nr++] = mp;
  			}
-+			while (layers_nr)
-+				keep_hashes[j++] =
-+					xstrdup(midx_get_checksum_hex(layers[--layers_nr]));
+ 			while (layers_nr)
+-				keep_hashes[j++] =
+-					xstrdup(midx_get_checksum_hex(layers[--layers_nr]));
++				strvec_push(&keep_hashes,
++					    midx_get_checksum_hex(layers[--layers_nr]));
  		} else {
--			keep_hashes[ctx.num_multi_pack_indexes_before] =
-+			for (; m; m = m->base_midx) {
-+				ALLOC_GROW(layers, layers_nr + 1, layers_alloc);
-+				layers[layers_nr++] = m;
-+			}
-+			while (layers_nr)
-+				keep_hashes[j++] =
-+					xstrdup(midx_get_checksum_hex(layers[--layers_nr]));
-+
-+			keep_hashes[j++] =
- 				xstrdup(hash_to_hex_algop(midx_hash,
- 							  r->hash_algo));
--
--			for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
--				uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
--
--				keep_hashes[j] = xstrdup(midx_get_checksum_hex(m));
--				m = m->base_midx;
--			}
+ 			for (; m; m = m->base_midx) {
+ 				ALLOC_GROW(layers, layers_nr + 1, layers_alloc);
+ 				layers[layers_nr++] = m;
+ 			}
+ 			while (layers_nr)
+-				keep_hashes[j++] =
+-					xstrdup(midx_get_checksum_hex(layers[--layers_nr]));
++				strvec_push(&keep_hashes,
++					    midx_get_checksum_hex(layers[--layers_nr]));
+ 
+-			keep_hashes[j++] =
+-				xstrdup(hash_to_hex_algop(midx_hash,
+-							  r->hash_algo));
++			strvec_push(&keep_hashes,
++				    hash_to_hex_algop(midx_hash,
++						     r->hash_algo));
  		}
  
--		for (uint32_t i = 0; i < keep_hashes_nr; i++)
-+		ASSERT(j == keep_hashes_nr);
-+
-+		free(layers);
-+
-+		for (uint32_t i = 0; i < j; i++)
- 			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes[i]);
+-		ASSERT(j == keep_hashes_nr);
+-
+ 		free(layers);
+ 
+-		for (uint32_t i = 0; i < j; i++)
+-			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes[i]);
++		for (size_t i = 0; i < keep_hashes.nr; i++)
++			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes.v[i]);
  	} else {
- 		keep_hashes[ctx.num_multi_pack_indexes_before] =
+-		keep_hashes[ctx.num_multi_pack_indexes_before] =
+-			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
++		strvec_push(&keep_hashes,
++			    hash_to_hex_algop(midx_hash, r->hash_algo));
+ 	}
+ 
+ 	if (ctx.m || ctx.base_midx)
+@@ -1809,8 +1786,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 	if (commit_lock_file(&lk) < 0)
+ 		die_errno(_("could not write multi-pack-index"));
+ 
+-	clear_midx_files(opts->source, keep_hashes, keep_hashes_nr,
+-			 ctx.incremental);
++	clear_midx_files(opts->source, &keep_hashes, ctx.incremental);
+ 	result = 0;
+ 
+ cleanup:
+@@ -1826,11 +1802,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 	free(ctx.entries);
+ 	free(ctx.pack_perm);
+ 	free(ctx.pack_order);
+-	if (keep_hashes) {
+-		for (uint32_t i = 0; i < keep_hashes_nr; i++)
+-			free((char *)keep_hashes[i]);
+-		free(keep_hashes);
+-	}
++	strvec_clear(&keep_hashes);
+ 	strbuf_release(&midx_name);
+ 	close_midx(midx_to_free);
+ 
+diff --git a/midx.c b/midx.c
+index f75e3c9fa6d..bcb8c999015 100644
+--- a/midx.c
++++ b/midx.c
+@@ -12,6 +12,7 @@
+ #include "chunk-format.h"
+ #include "pack-bitmap.h"
+ #include "pack-revindex.h"
++#include "strvec.h"
+ 
+ #define MIDX_PACK_ERROR ((void *)(intptr_t)-1)
+ 
+@@ -19,8 +20,7 @@ int midx_checksum_valid(struct multi_pack_index *m);
+ void clear_midx_files_ext(struct odb_source *source, const char *ext,
+ 			  const char *keep_hash);
+ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext,
+-				      char **keep_hashes,
+-				      uint32_t hashes_nr);
++				      const struct strvec *keep_hashes);
+ int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+ 			 const char *idx_name);
+ 
+@@ -799,22 +799,22 @@ void clear_midx_files_ext(struct odb_source *source, const char *ext,
+ }
+ 
+ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext,
+-				      char **keep_hashes,
+-				      uint32_t hashes_nr)
++				      const struct strvec *keep_hashes)
+ {
+ 	struct clear_midx_data data = {
+ 		.keep = STRSET_INIT,
+ 		.ext = ext,
+ 	};
+ 	struct strbuf buf = STRBUF_INIT;
+-	uint32_t i;
+ 
+-	for (i = 0; i < hashes_nr; i++) {
+-		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "multi-pack-index-%s.%s", keep_hashes[i],
+-			    ext);
++	if (keep_hashes) {
++		for (size_t i = 0; i < keep_hashes->nr; i++) {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "multi-pack-index-%s.%s",
++				    keep_hashes->v[i], ext);
+ 
+-		strset_add(&data.keep, buf.buf);
++			strset_add(&data.keep, buf.buf);
++		}
+ 	}
+ 
+ 	for_each_file_in_pack_subdir(source->path, "multi-pack-index.d",
 -- 
 2.54.0.9.gb905fd5d0ae
 
