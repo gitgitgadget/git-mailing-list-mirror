@@ -1,158 +1,86 @@
-Received: from MM0P280CU009.outbound.protection.outlook.com (mail-swedensouthazon11021101.outbound.protection.outlook.com [52.101.76.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B022D97B9
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 07:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.76.101
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776757161; cv=fail; b=MOHZUuooJdbhZtAQiPVYTr3o22IFKcpiI1DdflfqDFVj5E2q5xaDvirA+xnAwluyPe8wGhODTwMu2TzcXcnEIpTyg7doPlFIH7gt8MX5kGRkYSTAnBUWPpuGFDhClmlDuSgKZ3Xi3tFH7DrqeDzopDPR/AGGWY9qy4FUxC3ptcs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776757161; c=relaxed/simple;
-	bh=NqHetpyUxeyX/ihMdSvBNeBM4Ky6fBB69bqXJ0njPK4=;
-	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=p+KCoENyKe6onxgrCZ5Gu13mIABKsa/mVLkF+1N6fj8/fFIfgaLnvtrY8NdyOeoUOECf/ram9DW6z4z0o5+4kGKjtDwK4IqN0HUaYt4B1CAUCBqmFIgv1haEgMueAaUVG6xiLBdrBgzkX9i/7ndM/5CzPVvn+K8wxRxSyCB1ISI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sunet.se; spf=pass smtp.mailfrom=sunet.se; dkim=pass (2048-bit key) header.d=sunet.se header.i=@sunet.se header.b=ZNZN8o4h; arc=fail smtp.client-ip=52.101.76.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sunet.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sunet.se
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7901FB1
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 07:53:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776757985; cv=none; b=EBmv0a/lav2xX/IAjN/OpXaq9gmj5fjCe9C2un4Ph7WMHFT0EgPVnkMrxoUvAA0p/pGEDbU9EWcHsljN3U3Yv+KPOiJ9bj6gl/4CC6/kwkBBsPqOjownemReP4IB1jXI+aaxc6CHnn49/DDYgzUY6oLvHnKPlGue+GPbKb9kJBU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776757985; c=relaxed/simple;
+	bh=Kmn01ALn0vXm1nSbbBUa82LILFj/Iv6/sZh3xSGXFWE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=s7eTl+c+MLJoQ+8uXiI329NDr7u9gj4Q21sSxuTIcqRtaRaxNF4UUiXS6MmCY/vynqhfFO3d1CBzN8IkXdlWtPvtZqKtFiy4IpvS+LT7iYQDDzslnxtsVL46CvX+xMOJhzisBXiE3LMcYXPkr50GaLDN9pX2SX3R1WKHti5wwuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZRTY7zk; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sunet.se header.i=@sunet.se header.b="ZNZN8o4h"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SStesXjUAyQlgVtuWQWPi0yATq7FVQ7a2OkwrCibj4ry/wXd5mZ3f/4amNM0cQRzsmYuC+3ek5lTROEkkZoiP1h9ipuCgtvK5fYkNH7JjFYDOjFvs2grxwTvUobuQweqqb06XzWnSB1zpDjPWSs9F7FPFeY4Fh/65PCz0G5D/bC9ClWbz6NyE/Iy7YUDh1ussUfhmFS1wVsv4hEQQvjmauf0JhTvvk1I+QSSCjktLyeRPDu7Sn+qx0a0v5EV5hJlP7c2zcZlAVk3dIAOZehkTCOidGb6rZsyN0lCFWvZh7Z2ckbCBok+4pVYDCzpHzvfeJ+EqB8R7lhVdJ8A5Z6Ysg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8ke1IH6ZehECeSxu3ees5885hnf4KQPC10+9u+Uji5k=;
- b=TjI60Jb2wW88UmTE/5BqdGR321N0ethmn3IIeNNwQVZsLYEp3oKu202q8pXGRPt5Cn813B2OcC6UKIhlAa5PhmTwXV/Oqz35xlb3xTxIfOjcZFNnjDukMV9V3UeIJVlBj7DUCdHY1xkmEDB3DuM9Xv4n+Hin5mGPngDe2fXe/cWyy8u5b/1hnyge3eQrPKMKO2UnHc5jepmvoQxjB31fLGHEt35Hhc8rG3nfVWocwP/I2RglFbx9yWIce1J4ykSwBsOhDlydZEsPHqBbFbTU/3t0mm8rQb1ThfJxgAnm5Kll1GXiQlqU9xsm8tD1Fbec9QyQvQZ9GtbyySZrgMgNRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=sunet.se; dmarc=pass action=none header.from=sunet.se;
- dkim=pass header.d=sunet.se; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sunet.se; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8ke1IH6ZehECeSxu3ees5885hnf4KQPC10+9u+Uji5k=;
- b=ZNZN8o4hNkNnK4IoR52ktob6n3sqG1xTiaXydnyn222XGs0ZLgAt+ioduh1/c2j1IUeuM4XxkBt1MRL4p5LSlAUeKy3E/d1Mvwz2avXDnbzZDrXd/Knkto+bM3CK0SdMciLaOp/p6iiIHP/9S/1k5MgO/ZlU4Ixve9nqGjeA6huaGgfFp3T0G9RBDa8arH2JX+kPilXx2yl97ldrQsEIghQwgphOTmL57T3qjsi+Jr49LohR6Wd6MVbuZrfD9yPcRVXTxvNmKGvkxmnoT2Ob13klghv05Mce8sY3arGMYIryDodnSOO0t+ytGGpGMEqsgN6jAlWa54UTPQXj1t2QIQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=sunet.se;
-Received: from GVTP280MB2179.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:370::13)
- by GVYP280MB1974.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:249::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Tue, 21 Apr
- 2026 07:39:12 +0000
-Received: from GVTP280MB2179.SWEP280.PROD.OUTLOOK.COM
- ([fe80::9ab4:ee3a:7036:5a27]) by GVTP280MB2179.SWEP280.PROD.OUTLOOK.COM
- ([fe80::9ab4:ee3a:7036:5a27%5]) with mapi id 15.20.9846.016; Tue, 21 Apr 2026
- 07:39:12 +0000
-Message-ID: <c0df6dbd-47f9-4a2d-b68d-cb0c1e19ca5a@sunet.se>
-Date: Tue, 21 Apr 2026 09:39:11 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] v2.45+: git commit -S invalidates signature for non-UTF-8
- messages
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-References: <4d5d04e2-49c4-4781-a289-f8cf79570643@sunet.se>
- <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
-Content-Language: en-US
-From: Kushal Das <kushal@sunet.se>
-In-Reply-To: <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV2PEPF00023A18.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:158:400::21b) To GVTP280MB2179.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:150:370::13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZRTY7zk"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a1307438ddso3631534e87.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 00:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776757983; x=1777362783; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Kmn01ALn0vXm1nSbbBUa82LILFj/Iv6/sZh3xSGXFWE=;
+        b=DZRTY7zkrqMR52O8AdxCcqukNet4bHWL2nX0uJCKLZHKevNgoDUxoD+HAizxCeU14A
+         Wyi5zEryFfBUO3tZhTkrmNS6C5V24GXOHQeUANO6IBE6BvoqfP1A7/Cz9ywfdYILwMjD
+         WXC76+kKJmeXdIvm13zkm5s+tvvRHZdwROqreiXkAPTLNb5h9415dnpUCQePipRZvl3e
+         opjrGn+tnRmnwu77PJkqttgryJzKFau52C3hpQ5y2skaer9jSPpAfwbM19qIPIaUzcur
+         SX1OtV++jG8CK0aLkTPCoTEkaxAvoinRpnly1OyMWimE/aCXyI1wKVqsk77oTiRkZ3jO
+         KBbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776757983; x=1777362783;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Kmn01ALn0vXm1nSbbBUa82LILFj/Iv6/sZh3xSGXFWE=;
+        b=QGLblKVL8zP6XYXjNQ459yJmdn146lKeVndNyz702aK2hQ3/elW9ZmHnNJnSO1Q4iM
+         hHeRQ3iRldSnNV59v2iX/fet/7+5DBvg01Q4WoehV3H+p2puLt6SWwCWk1dMKHq8Sbm5
+         V0n5Op6DA6GMHoTEdKtP3I0stYO/LB0ZXF6sHujd2f19VTYQVObu9w/Yot/bn24C6fBj
+         n6bcs1yahvJ/8fSgp8mI530XJeOhhFfARu7UQunpnVfXIzxyGEXOfkx9cUO8bS5562Qg
+         KzjYP2UwKx4hfifYJAMO9zgE0Ca/4m4oO04hwFVGJGbzpylSt6M2Iq58c4qRf1ZFK2XR
+         FLkw==
+X-Forwarded-Encrypted: i=1; AFNElJ+p+uEE20AO2tu7tq1uWNjZQ8rX+sx/WHen6SKvZtogsXoMp5XL1zH5RAPELSikkmMkmak=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyU9UaaJ3Y+MK6lPjeR8KaqUl4LkswVmzSYykg71wbqfsihIEtS
+	JAA8nZe2VTmeoLn3y+NeYKveowKo4ljAbbSTpuI172YyqKJcbnO0i2+IB5GxF11R
+X-Gm-Gg: AeBDiesOm6KD9QyCyKYxUpentp6J16hFc4CHGJfVgvDqJWuktfObkvtPdJeajsxsheL
+	ZgKSqOTZp7n0WP5BsLfd6+ShaQN/nLCBm78KyrvFKDL0DgrLascapKPcMw5fTS1HpSoz2DqJ1pu
+	UpHHnuwnd9PrNS5DZKRGhBffgNO/rhk0/waOOyHDl3dJ5DjKj+PCWs2CKFFHLGW4mNm2AkJ40vC
+	7S51kW7u/v3MszBUSLhpTeCVHskTubA/mvQkQ9wcszo2tt6/ArW6XL9EwokcA4JFh2DAcP7Tr6k
+	vrO7/SkGbGOTiLKuNNWlLwaCC1c+a+e9A/TBmz+11rf9MknyTyzWKWGkYzjEnUpws4qXKW2SD05
+	kWhuZxodwUg18qFa7XGo5Eqh8xDyzcj/k2m6tMtc8A0dwqPzopqwgphUEXIAc1X/vqaryZvsJny
+	lhLy4EajfbDAC8ecSv41MXithQQf/ZNaECrsCv6G/12oHCHUOFKmk4nDvgu8Nn182FT3VoU5Iy5
+	lorKMf6AHTPsj6+fbem/vko8zSOlTq6
+X-Received: by 2002:a05:6512:108b:b0:5a3:fdf4:4899 with SMTP id 2adb3069b0e04-5a4172ca2afmr5207670e87.16.1776757982578;
+        Tue, 21 Apr 2026 00:53:02 -0700 (PDT)
+Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4185ad0fdsm3538164e87.13.2026.04.21.00.53.01
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 21 Apr 2026 00:53:01 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitgitgadget@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Tue, 21 Apr 2026 09:53:00 +0200
+Message-ID: <20260421075300.49672-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0-rc2
+In-Reply-To: <pull.2234.v14.git.git.1776270259.gitgitgadget@gmail.com>
+References: <pull.2234.v14.git.git.1776270259.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GVTP280MB2179:EE_|GVYP280MB1974:EE_
-X-MS-Office365-Filtering-Correlation-Id: c88dd3b9-ac4b-4254-372e-08de9f7914f7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|786006|366016|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	aJjCrvpXkdApdzI8R20mX5syHLo6H/unqlkMYR12ZKb2ONNveWlR0RVcXpRQyV/fJUQPeqOvol2hJnHkdO8Ehm/j5PZnYuc13fMsr40k6eA+nyyDmff4XTYVM3I6SVTstOn2AY0ew4pLZDudoHaMlkdt9Nld1MFktl89k/g72fq3Wjc6nemxt/BYS1jhfN8Nms1QKvkzkrQXEP7rf+ZTcTyvQk9gvsF7mLv5x26InaMj3elAS6y+69YvuVIJpOahPzMgaCZUAKWezx5oSS8G0mot3hrpUq7F/tzd3IYEhioFeILMN3tLr6RbNnuw+KtoEEWHYsfJsOIC5sU4wd4Y9sUivwvh+aePs9lVcNleJaPEtK6+X+KnheYObhWUsCnnmDd3V4ASq4S+sWiJriI2X+aTVGf2HkGwOgoMcdxSshyCbgXHcGIjOzSHNQKJW/NStRTUy8Xj9fIHvRdlWlAWKBNXUP2/AJhpkGybAnwwPLEaEjApSQ7YLFen67o516+qZ6Ggr8nlTSMG9lc+eAkUXKpcT2vcdfc+ehCoxSPe92Qx5GwThyhAljQfvqvEJ6sp8WqKEIPMQoxttfsT/zvpHfOxUD5qB835thANkXF1DqAJNN5lLIOqJqrCkb2IQh3yJnLOMphBOKCI3tqrU6jarPtB8blM3irvo+k17LO6jrXlF7n1U0xTlLs+t6AQIMZj3b0h4mW743adBoKHgpRaPCGyxmrtw9OTJInvg38dESk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GVTP280MB2179.SWEP280.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(786006)(366016)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cjRPRE1Db2pNNlFoaEc1T3Qxc0ZzS3djd204M2plTi9tWnJUNnNMcyt4TnRU?=
- =?utf-8?B?ak45YU4rRXFvTiszV2NFdy9LaHpJcTRlNCt5dUF2OXQrSHlFNkdUOTRFdGlh?=
- =?utf-8?B?UDJEUmNnK2VoRnFXbEs5a3ZxT1pEZHVCTE9rWVE3TFBRbnRBUlFmWi80dWJs?=
- =?utf-8?B?OTBzdlgzUUJZV0R0czE4NlZONDEzSi9vc3RvcThMMmRreEJtTUxVdTRjVWtX?=
- =?utf-8?B?ODFtNDRHaWtVUWp4YkwwQlR3WGlQMUpTQ0ZlQ1pkaHUxdC9JcFBXMEpWTktR?=
- =?utf-8?B?TE54L3RLQUJ2NEl2a3VjaEZFYWIwQ0ZMQUZERkdjbk5lWWViWVR3dlFZbW9P?=
- =?utf-8?B?b1J1eHJwdnBHZ1FTOTlrY2oxM1NPWmJoUVlmWmR6UlgydWZHQWNSeVM2SHJC?=
- =?utf-8?B?bVViWkI3dE9yQjlKZGtKcm5QTDVGMGp0cjhLd1NOUjlwcEh5Z09QVms2VHlY?=
- =?utf-8?B?UnlkSjdQdHJyVXgzL3pQc081YWxUTVprMFBpM21OdGZlNTl6TzBwU0UrWmRQ?=
- =?utf-8?B?WFFEL2R5Rm5XQlo2Q1E5emtQemhrdmUwUU8yVWJFY2hRWTNIWHhodkdsS1V5?=
- =?utf-8?B?ZEpiYy9mTG9HQ0FLOE5ZMzdsekZyR1BOeGtUOVNMR3dnaVQ3RHdYR2EwM2tQ?=
- =?utf-8?B?c2ZnVTlZNEU4QXVnUGNGc0JZc3RVQVlQZjNxc2gza0srVHRZWkpYNjFsVHc3?=
- =?utf-8?B?Ym5TSUkyQWlmazYyRE96bjZvdmFjTGlaK0trZHZjUzUzQmZqU0lmNFZFWVlJ?=
- =?utf-8?B?S2NaTmIwVW56YU13QVhLcVRNdXVlYTJtQUZ1L3lrcGNVWUlQZXkvNmpSREFt?=
- =?utf-8?B?c21DSEEzVnhVS3BwbGNQOHM5V0dTSk1JRzk5Z1UrZzVvVVFoa0toeHgycDNs?=
- =?utf-8?B?WVdTU0drREZ3RTVjc3NGYUNvUkhXVzNCRDdjODF1L3JJTFFoU0tHUGFuUUhZ?=
- =?utf-8?B?RWpjOXZNdG1OTXFPM29ZSFEwNTRVeElyL3FiVUgvY0N2Wmc1YU90T0IyNVlU?=
- =?utf-8?B?MW1hZjhUanBSbWxUdXhRZjY1RmVBZUJzRVF4ejFxb2RtQlZLK2NpVUVpMkZ2?=
- =?utf-8?B?ekJsR2Nzb3hnUk80V1EyNTdqQTFmNHhsRHFTaW5hcm5HSm5VdWRHQkZ3QlZD?=
- =?utf-8?B?QjgzNzIxVGQwRzU4RG53UVpJN29oMXBpNm1qUEdUYndsUDhWSjM5RlFIVmJh?=
- =?utf-8?B?TFduYVVNTGhKcGVrSEgyQzZPZ3JId2lkU045Y0RDWmU4Y3BHbjZaRlpxTVJk?=
- =?utf-8?B?NG1pZFIwcnRtRXBMbTF5T0QzZmNLek1jZ3hWR1Rhd3FrUVZTTUtETGQrNXJt?=
- =?utf-8?B?RWhKZnhOMUZaYVNVNVBSN0E4RVMwZnlyRzBFbzV3akpmc3NIRXowNFdlRUVT?=
- =?utf-8?B?MGlreWxLT2kzMElpU1J3bEpzK1Qwc3kwdStVWHhNQTNpKzhsR1pGVXBDVVZ4?=
- =?utf-8?B?QUw0RTdDQ3BVMmJBa3ZZQVgyVDlkc1Nmb2NZSWhNNmZRN3Zyc3VzZnNjWHZm?=
- =?utf-8?B?ejMyVUxka05KMGhCOXRUSjZCRzBKK3BvTTNnMmsyVVVlT3YrM1FHK3g2bWRl?=
- =?utf-8?B?VElMTG9Tb3JISjUvWUlQZmJkOXB4QnFIMm1QZnVSb05CeE9tdTlPSHBabnA0?=
- =?utf-8?B?Qml4c2lQT1lCOWU5QXpyWmpOckNpL2N6dFdLTzZ0L3JRQnI0RDlYSTljbU1u?=
- =?utf-8?B?Y29xTU5SOUI3ODhZLzFzVmlKN3JSQ1VKZy9hUmlCMDdMTUd0WUpqY3ZnejMx?=
- =?utf-8?B?VVFXN1Zzd2hZT21TbkxKNGw5ZzRDR3dNNlVMeUJVQlowUi9zTHBYZUNqMHdG?=
- =?utf-8?B?cTBMUElXWEVBWU9ReUZWWGJTTjYwRm1oU1A2dzQ4ME9mZktsK2lmWXRuNVJW?=
- =?utf-8?B?VXA4WXFjMEZFMkVsRTJLMlBiUlYwYXoxOFlnZFJVdjE4VWlRcUdhc25GbTEx?=
- =?utf-8?B?WGEvSjRCbE4zU3phV0F1WVQ0cWU2Z0g5dU4yY3BBRHdmbFhOaUx2NEhDQUhZ?=
- =?utf-8?B?YUpOeG5zdGxQUUxVNE5zVXU2RXp4ci8xTXgrL09OVldUMGxOMm5YL2xpSlVr?=
- =?utf-8?B?VnRuc0VZUWdXb2xDSkJWV2FBWExzYU16SXNXZEZSaUFqQWw4ZUh4MDB4cFRY?=
- =?utf-8?B?L2hnbHNqdGg2dDRVV2J6bGJoY2swZUFRWlE0Wi90K2pmcXpOMFhiK0YwaTVJ?=
- =?utf-8?B?c0xvQmgzd1M2R3ZNbkkyc2NETkR2YVlXSm04NExGbWsxcFh5UFhuWVZPTE9v?=
- =?utf-8?B?bGJhb2h5Vi9RZVEwdGNpODRTcFVOc0RVcjFaV2RXWjNHQTUvOGd0WGRlN3pV?=
- =?utf-8?B?S2g0N0VVcHFKeldXMkpvWVZEZDRjV0N0WmNmWStHVzdBSGxleExUQT09?=
-X-OriginatorOrg: sunet.se
-X-MS-Exchange-CrossTenant-Network-Message-Id: c88dd3b9-ac4b-4254-372e-08de9f7914f7
-X-MS-Exchange-CrossTenant-AuthSource: GVTP280MB2179.SWEP280.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Apr 2026 07:39:12.6076
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: beb73af0-54c3-4c95-886a-3e6de3a76471
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dcW5dbCuRxkkxIh6Y6XKdJqmUvWUflX1Cxo1izxsQ9xOs/KmFQeVfXKJ0vw4Fxva
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVYP280MB1974
+Content-Transfer-Encoding: 8bit
 
-Hi,
+Hi Phillip, did you have a chance to look at the latest changes?
 
-On 4/21/26 12:11 AM, brian m. carlson wrote:
-> On 2026-04-20 at 08:59:05, Kushal Das wrote:
->> Hi all,
->>
->> Every `git commit -S` since v2.45.0 produces a permanently-BAD
->> signature when the commit message contains bytes that are not valid
->> UTF-8 AND `i18n.commitEncoding` is unset (i.e. the default case).
->> Verification fails under both `gpg --verify` and any non-GnuPG signer.
->> The failure is deterministic: it happens every time, on every
->> non-UTF-8 commit, no card or external tooling needed.
-> 
-> I'm not sure that's a valid configuration.  The commit message either
-> needs to be UTF-8 or you need to declare the encoding so Git can convert
-> it.
-> 
 
-It is not a valid configuration, but I am guessing there are more people 
-like me who never knew this configuration and just freaked out by seeing 
-bad signatures over own commits :)
-
-Thank you for quick fix.
-
-I am also wondering in the test harness for git signing, if you want to 
-include other tools than gnupg for testing.
-
-Kushal
-
+Harald
