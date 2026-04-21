@@ -1,77 +1,84 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532E67260F
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90164330650
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:39:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776749649; cv=none; b=ZtiRwSlDM1pQP+Vv87+jcJvmTwn781NCGHlobIHtkFWJ9bLfPfXZY7wjsmOqA9s3zdb5eizi+5l3l6cGZ+ji+BciRbCVXJoXYueZa1zUxOWvR/kBeivvZMtxsYWKT+ePyL1uSSZ3FFzsG5qinDH7vZnkQyqe/sw6JRLIz7qee9I=
+	t=1776749948; cv=none; b=K26pU1FKhHUZVapA3By4YVvcvzeR6W1JocI1ugAcHHRFkoAPyBqPmx8lHSxbDmKfmeNqY/BUr5JDD81Z3x1NI9Mjlav/KaEXN2S3ezZjK4w+6EC6zW6jPt9g8Jd9M81yVuB99Ami+lgxIN/Dy8LLAvigIygF9ygvzGfJqLWeZ1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776749649; c=relaxed/simple;
-	bh=t4SAiHXAnKPI6fDfByIf/+FadUj2WQV09lmy4KKu+NE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CBqF0cPDjSS+Bm/cuk9JLVUI3BshNZsLuiNQyz0EDDz3NDg4uygcOFL3y5BqL9h9/FWV1z7os3Xk0VSWSOQfOxPPS6116kLy65pmcpFN+BfvsUoWUYg1C+pJSZdmQm2AutdWIpSfSZQ5XRbr5/jlKXADoKf92Wn5DWslCDWTRIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GiyDd0n2; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776749948; c=relaxed/simple;
+	bh=ipx8QFynWsd85cAFMVizSAhiCvSDQ1W7Mlr3ZKwA+tw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ozACfNcKPcBJi3ADxxo4KxjLML2MOFja3GWIDbGvNhubZMg9Opj5rSrIoYjxuVjrBVfq8OVS4532rrsuRNjXb3xgjZE2XpHSmQGEt0Kqyao5/FVWxjDamoX2fZEIg0VIG2+y2dxIhkliTWi4oLxSqJgTGPuvM2CJtoavbZBSS4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sZChfUq2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HDZ+4/VV; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GiyDd0n2"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3567e2b4159so2539094a91.0
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 22:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776749647; x=1777354447; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Vvy6UWyOIkxMUcSKKB54WuggSt+eQXt1lfKricpRdw=;
-        b=GiyDd0n2yxLGtRF8pJZYTyxq8W+ahIHkZI/3hPCi/XqiwUGHWOdAaR3nX3eVQRUWmC
-         em7H2FFyxpRz2rsANHbyc4HHH+8suLGd3iV7B6DMs5y7qjVYyDJCqb2a6l98NqvmNCeq
-         k6OYtzNtk8rZ9zVO1jamGxwjy/l4rSSTFmEt+HFyyFXP5OLLYEM9Dcm5OdGvaaATM720
-         bCFuK3HGz0vbTquITIvLUEaSVJeQ9RmfWrk69vjhySiz2G0aFTyajPKsLrrbckM+m67v
-         hlQe3AamEoE/qYb+QpfEDuar1kFVvRdXKsTAnLb59MyY0YKhEaKr8gYDF7v4xQeth7w3
-         Ba7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776749647; x=1777354447;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1Vvy6UWyOIkxMUcSKKB54WuggSt+eQXt1lfKricpRdw=;
-        b=Zt/P5Vh9ELJnMKSxVu6LS2m1BhkHlmizg3V897WRFkRqc6F8/56dAQ076ULkwu8dAq
-         uAm+fMqPLRpa0faBYTo0jsHYW4UFzZDvl1a/vMqC8VaVBErdNRhRLI15SF51RW/ABZLy
-         zpiILO1AuIvUIP+Vt5w1QsKgNOl9/M92HyjZ6LeQzT75SvbGohxebAfAEWunxSJZFbIK
-         hIvDGFynbkqC0VY2lWgD+JCxS49j283xkxTr1s7xH3M3A8KsircYvmAEsh5xKxfEieFV
-         tV/B1BFx3Xbn1KCtEwl9mLhUatBoyhe15ftflI7KDQ664OvRpZU1lbHk37ZsWlAH82n7
-         o2ZA==
-X-Gm-Message-State: AOJu0YyNKJvvilacS1pc20JGKM2+XGmAsGR5T4iW116Ufrh9ArqlyaTp
-	n8bpm3NFfcjlDPP/4xOjyIsuIRPYH5WheH/sOm7jcEpBeioYCyTK5835XvXC/A==
-X-Gm-Gg: AeBDieuq/EcdseHlhlQNzOi+gfyw5dmvNgVHCpeLkCl3+zyo+9yp8lCVI9khRZEIX88
-	5UgpZ4qruC1yidS1CGZVprScE4AFSU3lYqSM0+7BYDLmpz0/YAab5C/+2xWukfZoK1JV79JCswT
-	TzwN94RG/uy/8mkM4S+6DGeahFzcUkkoon3tRm6dCLdIngWm615GG+soEX2BLZCaiATYBGulzvr
-	EpYSrdnawq2919oV594uaHw3bMRgBps6frwe4qvA5T/mPJbK9ylprAW9OhRcAhSm0hLPvpQqt66
-	Ds/72jdjOvcD6AJJraGUOnC+05bPga7AQaAMt9ve5Nk6LhR274nq5ai374yEzgBsek8yE0Wjfyn
-	+iRQ3S71bNt6Q9c7JqykwOzsCrTkqlilgOtInmSpxT2AU29HDYzDbzt8y0dkRbwyE+4jPzwQeM2
-	9i60FOZR85I4KLoGXJRcwPoEOlDYZllTJKTUQ4oUcu9Vsr3kmQVGa5JD92fp6PTrxMTeF9fp16+
-	uM/3LcF848bhncjjtfX0/XvdQnzpSr7ez3/VH04c2QSPAm+cjgFxbs7QHNwAiUKDnkfSfk+E1Ah
-	ivo=
-X-Received: by 2002:a17:90b:2686:b0:35d:a3b4:2ef6 with SMTP id 98e67ed59e1d1-36140494b8amr16769107a91.21.1776749647301;
-        Mon, 20 Apr 2026 22:34:07 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:c0a5:e9e6:3079:1553:266:991])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3613fa91d31sm6454484a91.2.2026.04.20.22.34.02
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 20 Apr 2026 22:34:07 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	abdobngad@gmail.com,
-	bence@ferdinandy.com,
-	john.a.passaro@gmail.com,
-	r.siddharth.shrimali@gmail.com
-Subject: [PATCH v2 3/3] t7004: avoid subshells to capture git exit codes
-Date: Tue, 21 Apr 2026 11:03:34 +0530
-Message-ID: <20260421053334.5414-4-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20260421053334.5414-1-r.siddharth.shrimali@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sZChfUq2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HDZ+4/VV"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id A2CE4EC0227;
+	Tue, 21 Apr 2026 01:39:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 21 Apr 2026 01:39:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1776749945; x=1776836345; bh=ktmzH3I3kl
+	evUHwyQFe56IXJyV0ORUHL/rhopaboRb8=; b=sZChfUq2nQXoBB4tU81qCSh6Iy
+	amzGcLxUtzfsUPtP/ET+fnIlmljjniT+5qHGkXJHPT+6cWb2ldh/+MHv1sk66Gmt
+	ddbuvzWPk4SwaGOQml0Z1ruhX08/7w2nI8ImLp//Ei3Cz6gAcn6EIx9zMlh3AEBW
+	d6v2FdSfNJhF4/NaXZqN9HQgVlwyU9e824ISCvR7ISpZ8irJkNT9yyMZiqGV1WLu
+	uYD1z7wxcvpDz/7tqM3UwV1gIAjA3Tp5nQrz9uQLHey05IzaRqK0ENrxHjuGQyEt
+	C3zIuN9FoSHvxLb3GpYMFc7/h+TQ7cyvMsy/VguNKF7KwRALfpB04dJR52gg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776749945; x=1776836345; bh=ktmzH3I3klevUHwyQFe56IXJyV0ORUHL/rh
+	opaboRb8=; b=HDZ+4/VVRTWYslHn3pe4Ob9ZDI8/rikG9OGlXRt2IRGYR7qyY0H
+	zadE/3WRzCfIX1weauuFtAU2rRJJCaNlePqWxFd65OuybQ1yVkOG9e/63kZhvTdy
+	cx1tZg1hQR70NEZPVvmo39YSH4mB8BAmJM7wohHy2jRlm2YuY7jKk3T2232FDdeu
+	qAA/gMQ5BVPzlDqBxhVTaOYD5QcSNONxy0u3UIx0LN4dRDFtHdVpBJ5GeV73F/RX
+	ctfatNTdaCXTGymYX2xq3rTxOlWtrURY+4uGCkg7NWHC3+EWr+PTx/expT6r0ez/
+	RyiQxzpnH+Ks5rMei9Q6WQwsO/k/530RMKQ==
+X-ME-Sender: <xms:eQ3nadhUugDpzvnBcyJWFWuAqWBrNysLL4yLfmyB7gaVF_kB_re8jA>
+    <xme:eQ3naVtxITZF4nzVwGCAFxdUN3HStQUwz_ESHfVnQAmFdC0TNVkXFfpps1c3MA8qY
+    DXKsaM6HUWugzB18N6qIWbQa9sO0wuu5Yzzc7gimcgaVtF9ZWLBbA>
+X-ME-Received: <xmr:eQ3naW5gvMoT25PDpf8VWqEa5C8UJwH0XuDcaK6tDjHgCuOtQWhiB2f8h_fM2qgq18dl2B8UEZX769m9F-TNKbjZACHFlnNSaBTRqVok-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeitdehkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehrrdhsihguughhrghrthhhrdhshhhrihhmrghlihesghhmrghilhdrtghomhdprhgtph
+    htthhopehjohhhnhdrrgdrphgrshhsrghrohesghhmrghilhdrtghomhdprhgtphhtthho
+    pegrsgguohgsnhhgrggusehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhgtvgesfh
+    gvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:eQ3naZNSLb47cnAPjd380xKCxUFLhkHGsi-eT74O1JwS2mC0fD6ZUA>
+    <xmx:eQ3nacsJdrH1_SSFBAMuczsJgnqxsRPmKUNFI2qmeFBCtcQW0vKQpg>
+    <xmx:eQ3naUasYjw5A8GogWQDxjLp0o3KnMiTANMLEtDLe0S5rGHK70XEUg>
+    <xmx:eQ3naWy0Wu8u2vqg9KGGFZztsBra9a_0z9-ct89WG994t2EsBNGkMQ>
+    <xmx:eQ3naeunFFgNjH-7AfKPTpkrwqOcLuDSGsZMWD-U7LB_nC2f3B-mKbxz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Apr 2026 01:39:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 5d86b98c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 21 Apr 2026 05:39:02 +0000 (UTC)
+Date: Tue, 21 Apr 2026 07:38:59 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, abdobngad@gmail.com,
+	bence@ferdinandy.com, john.a.passaro@gmail.com
+Subject: Re: [PATCH v2 0/3] t7004: cleanup and modernize brittle tests
+Message-ID: <aecNc-BNwaqFlg5c@pks.im>
 References: <20260414141828.27576-1-r.siddharth.shrimali@gmail.com>
  <20260421053334.5414-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
@@ -80,88 +87,28 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260421053334.5414-1-r.siddharth.shrimali@gmail.com>
 
-Several tests in t7004 use the 'test$(git ...) = ...' or the '! (git ...)'
-subshell pattern. This swallows git's exit code. If git crashes
-(e.g. segmentation fault) the crash would go undetected, and the test
-would fail due to a mismatch or an inverted exit code.
+On Tue, Apr 21, 2026 at 11:03:31AM +0530, Siddharth Shrimali wrote:
+> This patch series addresses brittle testing patterns in t7004-tag.sh. 
+> 
+> In this second version, the first patch has been updated to follow 
+> Junio's "belt-and-suspenders" suggestion. Instead of simply removing
+> the tag count check, it now uses 'test_cmp' to verify that the repository
+> state remains unchanged after failed tag creation attempts. This
+> maintains verification while removing the reliance on a hardcoded
+> global tag count.
+> 
+> Subsequent patches continue to modernize the script by removing 
+> hardcoded global state and replacing subshell patterns that could 
+> otherwise suppress Git exit codes, ensuring that crashes (like 
+> segmentation faults) are properly detected.
+> 
+> Thanks to Patrick and Junio for the feedback on v1 regarding
+> state verification.
 
-Modernize these tests by directly writing output to files(actual) and
-verifying them with 'test_cmp' or 'test_grep'. Replace subshell
-negations with 'test_must_fail'. This way, if git crashes, the test
-fails immediately and clearly instead of hiding the error behind a
-string mismatch.
+Thanks, this version looks good to me!
 
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
- t/t7004-tag.sh | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
-
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index bef7618da2..d918005dd9 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -155,8 +155,10 @@ test_expect_success 'Multiple -l or --list options are equivalent to one -l opti
- '
- 
- test_expect_success 'listing all tags if one exists should output that tag' '
--	test $(git tag -l) = mytag &&
--	test $(git tag) = mytag
-+	git tag -l >actual &&
-+	test_grep "^mytag$" actual &&
-+	git tag >actual &&
-+	test_grep "^mytag$" actual
- '
- 
- # pattern matching:
-@@ -166,11 +168,15 @@ test_expect_success 'listing a tag using a matching pattern should succeed' '
- '
- 
- test_expect_success 'listing a tag with --ignore-case' '
--	test $(git tag -l --ignore-case MYTAG) = mytag
-+	echo mytag >expect &&
-+	git tag -l --ignore-case MYTAG >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'listing a tag using a matching pattern should output that tag' '
--	test $(git tag -l mytag) = mytag
-+	echo mytag >expect &&
-+	git tag -l mytag >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'listing tags using a non-matching pattern should succeed' '
-@@ -430,8 +436,12 @@ test_expect_success 'listing tags -n in column with column.ui ignored' '
- 
- test_expect_success 'a non-annotated tag created without parameters should point to HEAD' '
- 	git tag non-annotated-tag &&
--	test $(git cat-file -t non-annotated-tag) = commit &&
--	test $(git rev-parse non-annotated-tag) = $(git rev-parse HEAD)
-+	echo commit >expect &&
-+	git cat-file -t non-annotated-tag >actual &&
-+	test_cmp expect actual &&
-+	git rev-parse HEAD >expect &&
-+	git rev-parse non-annotated-tag >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'trying to verify an unknown tag should fail' '
-@@ -1520,11 +1530,11 @@ test_expect_success GPG 'verify signed tag fails when public key is not present'
- '
- 
- test_expect_success 'git tag -a fails if tag annotation is empty' '
--	! (GIT_EDITOR=cat git tag -a initial-comment)
-+	test_must_fail env GIT_EDITOR=cat git tag -a initial-comment
- '
- 
- test_expect_success 'message in editor has initial comment' '
--	! (GIT_EDITOR=cat git tag -a initial-comment >actual)
-+	test_must_fail env GIT_EDITOR=cat git tag -a initial-comment >actual
- '
- 
- test_expect_success 'message in editor has initial comment: first line' '
--- 
-2.51.2
-
+Patrick
