@@ -1,125 +1,97 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F188F255F2D
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776747851; cv=pass; b=nbBmfVq4IJCqUK9BjNEygqrFRl+zKLTnL4HtxB8D+UVAa0O8+yYoE8UvMXCcZvE7DuVxMdmsi4PoUuFaddH3gnq8mKGgBAsIPxcjmCm7/M1yAuH8/Ld3oCk4rughsWX8qqplPT8o3wjrq5ZIg/6XCwiGkpMctDmoOYMzesexGu0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776747851; c=relaxed/simple;
-	bh=2biN2FuGI3PbUTYmsGznjN36mWhspzJx9J4wDAWPnIE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Sa9W0cpi6M2oFCaetxLP9xC7WBfOwuDS4eVejJiecY4t4ug314jCJRmbdyVpp1rQexaKkAqJ5OsRVGqXKTvRCtMxtK9zYs/tn8ARggYfnLJouY625jfbqlBcr94meIPbFvxjT/VPRRQuKhJMlVxPmWo4tmsPQPYF76SFvoOMAgs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UU8xZIKu; arc=pass smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C8E316192
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 05:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776748071; cv=none; b=dy69BjVMI1KXBzZXR56QfiiG34z7KeIcxQ5MUTo42uan7lwRlAqvQUUiDkVmSDSeYdmds04YWRrREqTSWaqnwwvIG+tLRnocKkc5PkbpDzjMV2dkPBdNsyTVHQiWtU3xDymsc5ugz6bl6guEqQDQ8ZXxtYahC35avfxlpMmTAig=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776748071; c=relaxed/simple;
+	bh=aMBnWm6QrAINntxcNFvfoaVJLG5C1TZW4lK7ues3Jfw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gT9O6tfv1OjFYfi+UO8GFTirfzurMRSPsW/dqVVD7DGef6DQf/DLcHN5OumIsaRoWFyrY4L5LuW6pU5kXLnIHgJxD/lSNDMCkkyDIq1HxWtbrisU3vcu5e/PrZm6u3bLGswocHwXs/XkDQwMBFJp2LVH04uHe/6UMKnU5rv9IJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=JR0S5uJm; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UU8xZIKu"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5a2b636b944so4649987e87.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2026 22:04:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776747848; cv=none;
-        d=google.com; s=arc-20240605;
-        b=CKSNjLCBT7gljtws2sLzzBrUpGxbatyKwuVoH4TF1aYh6arDEush3c6X7kXmov8/s+
-         kgBEdU6hp/4Mg/4kDdSjGuiSAhZPUdopPx9FFzKx17axqAYDQCihsXRqnDb/FaYaaDPv
-         Cch+Mn8ZJDC/w80B/B7MzT+Klf8RjMJN9s094j+L19NxG3jXVWBQqL1nhcHVoHaDDsFM
-         flMGbrJrZZE6s7eiZTpHBxGxS5joJsrm0FqVvzy1jzFvC4jydCTK8ZZZeLivHwr7CI7D
-         9KtmfHaMTZfFMVGyOG46YS/MZ26KG6AAdEVHYIgmpb/25sUrltjoC5gWWYNXP2g26M6b
-         6pCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=EZRAJ54qC+4e+i2IoAmP3P9712H4lUWUwml4Q53bHe4=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=A8UrC739w5KsWmBg+VzNR6Hbj+NCgDbJZs/T9XKIvD2BZhW2azTMFRYz1g8tJhzBZe
-         VmupKd38zt1xu7WNP1n09TPnt9CeWDYX5+vnXXrq13K9VOHGP7whyJ10xxjeyMhgVxFG
-         Sa0Ws2qlYdEb48j18lwSDO1FjI5S0Sth08YYBMoGakN/CeS/CQu+W+9ENOWv2bHR0T7T
-         xGmqXNO2IhntuDOzAYN66TSjeQQslkuptoIegasD48agh+MYxxP3bLn6b0MVGOeFg1Hb
-         d9U4Ig0x9mjTtLhq+2Hyq+Tizc3beNj6SeC4ekaQxreY6pYbfbEhZ9mjAPYNN3R9NGH8
-         Hrqg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776747848; x=1777352648; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EZRAJ54qC+4e+i2IoAmP3P9712H4lUWUwml4Q53bHe4=;
-        b=UU8xZIKuuDZp++gxYkizRb+Zm36CBKMKI2tQwsnQZ5qLPj83/E6lqKBRjC7SvGNzmR
-         /xC3VrHoZ0JhvKLDSiL+MvzK5DQNg3MI83IK0bbm1qqI55ORqMy6ihkwZB2qctBT77zd
-         s21S2n7xDDVSDVlrCWZcnEogLg2E87oBP4KWHXBw6U1ATH7oswLyFqhScDVK1ScDv3kc
-         boTO6fl6cBENsRM92cnVupg1TJaqPkfoXoyWRvRkbkzcPvx95BJwmiRtHBinN2cGBX8c
-         S7BSANwu7P3xCEb5uwYjAwQO2acugedsm2Ua7HGiqFTnK5xw7yt6IlMAgHK0ZPyB6yBl
-         sFQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776747848; x=1777352648;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EZRAJ54qC+4e+i2IoAmP3P9712H4lUWUwml4Q53bHe4=;
-        b=jlQf5zesWT4hyfpmgiAB/eOhOcWk0D5w52JGRLza6v0xDK3LaDyOh18W7GIWGwOLAt
-         c5PbJ68d7SED27HD1F6cy/yVsoL1HOhFqAyru9ge1Bbalh2mWzt4F3P8BDk9czPYlwr4
-         kSKAcW5FDCal06CSekcwmoEpReiuzjDIXx38dXBAegu36LnQXSJ2rpObO0BF/Ke1TyZ/
-         t15DlMs2p9WDn2+M/S1aTEyPLTMgPnzxSJgEgp5Pm1hodtFODtS+rtfE+rWK5gaDzSyI
-         17S2Osi6IpVpmcUl2RYKYBxHH03M2CpHtmuD/TKuMCTJlA0mMP5jSXPk4u6hmp97Gzws
-         3n4g==
-X-Gm-Message-State: AOJu0YxyNbpcqjbCRgo4jnR919ZJDBxRdj/F+ZlCT/ZZJSnfIu2audR/
-	j6lk9X/IH50jdc94WDGsVlwAUjYgYWN0Urf8p2U+0ZWH8U38uAnmemW+gkIFlVfGPKPdBwXJslK
-	Rn5zPSZ8GxToiLcz3zqYk9+4lMfYu56ngYBXY
-X-Gm-Gg: AeBDiesGFWKmXpgZc86yH8sdqYL+Hv/PQOAQ1Jfnr2J+XseSL9msqoImAXsyPa17XKr
-	gMbO0CEek2BTYqslY+KYqFCrK0NZ3PdBxSTEYx0Byy+THFhI9sV1fQGk0gor0dhyKOMjZEe4rbC
-	52EdHNhErF7cniWODj9bFtVnlqXLwIgZliQ4iz3/c1zCGX3HZzmjpKVip+WJ8fp5nMX5LJ9C2n5
-	o1NBDBB0tA3bLGh3dfo13GVHSKMt0kdIPFihZWUkc5n6th97j1fQAJ8586CJmaXyUxHElsJi4al
-	m2+iV4mZ9XjwI2cBxA==
-X-Received: by 2002:a05:6512:3e18:b0:5a2:a525:511e with SMTP id
- 2adb3069b0e04-5a4172ba628mr5405612e87.3.1776747847520; Mon, 20 Apr 2026
- 22:04:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="JR0S5uJm"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1wF3Kk-00Gk8W-0H; Tue, 21 Apr 2026 07:07:38 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector1; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=jJ3SfKIiCfvHdT3H68j2p5RPYh9qSBlL8TjVF2CqL0E=; b=JR0S5uJmwzSCRb2IuQ+J9YC9n6
+	2AjAvF3ImtpyZrLXj/j8tdcmDJz79WsyUyyldpj3j51tKb9JW2CX7gBIm/DPMjEiDF1MKi3LTmY7B
+	2l19O5SeqSS1XNWhAhfsHNEEhQ+xNEgQSeb2AI5W9TKLYfPIECcc/wbeSGVC28AkA/pFRrqOjnubp
+	5LFqsxy7lOo3ewAv0yh/kkhTn03NM+RGmMoMbx9C+WtjLgs5TCHdgQJQj6Bj07dL1ueGUGKwzD3Vk
+	nUPMeUiz+uRxLFWSrj7Uz36BKGnpKQDI+zo48zTBmsa1JdmTyPKrnvDhD4SJTTY6/cSXqtBvLiK18
+	TkyGqvaw==;
+Received: from [10.9.9.72] (helo=submission01.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1wF3Kj-0003fw-6W; Tue, 21 Apr 2026 07:07:37 +0200
+Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1wF3KY-00D15A-Qr; Tue, 21 Apr 2026 07:07:27 +0200
+Message-ID: <cca575ae-e5dd-4a5d-bde2-f493a3e62a87@howdoi.land>
+Date: Tue, 21 Apr 2026 00:07:22 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Brandon Chinn <brandonchinn178@gmail.com>
-Date: Mon, 20 Apr 2026 22:03:56 -0700
-X-Gm-Features: AQROBzC4cCTFyVlGHViTjgGZlR2ygmZcAuly1Eq7Hfmcz7HCm254nmmgseC6ays
-Message-ID: <CAGANf=dkRgFp+bEkB5f8QBeiR3m+3WE8sKqT9vKstkGHqbxA3A@mail.gmail.com>
-Subject: git grep bug with --column and --only-matching
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
+To: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Cc: git@vger.kernel.org, Christian Heusel <christian@heusel.eu>,
+ george@mail.dietrich.pub, Christian Hesse <list@eworm.de>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
+References: <20260215201748.889866-1-ask+git@howdoi.land>
+ <20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
+ <27104.58166.993109.63505@chiark.greenend.org.uk>
+ <a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
+ <27109.13129.424068.382997@chiark.greenend.org.uk>
+ <27109.63619.90318.366157@chiark.greenend.org.uk>
+Content-Language: en-US
+From: Colin Stagner <ask+git@howdoi.land>
+In-Reply-To: <27109.63619.90318.366157@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I'm encountering a bug when using `git grep` with both `--column` and
-`--only-matching`, is this a known limitation?
+On 4/20/26 04:57, Ian Jackson wrote:
 
-Repro:
+> I need to think about this some more but I doubt this can be made to
+> work well without more significant changes, including to the data
+> model.  There would have to be some kind of compatibility arrangement
+> to handle existing histories.
 
-```
-$ echo 'x   x   x' > repro.txt
+I would take a look at the test-cases for git-subtree.sh, which document 
+some of the kinds of issues you will encounter. They may help you test 
+compatibility.
 
-$ grep -bo x repro.txt
-0:x
-4:x
-8:x
+Anything you can do to limit breakage to "opt-in" points-in-time only 
+would be greatly appreciated.
 
-$ git grep --no-index -o -n --column x repro.txt
-repro.txt:1:  1:x
-repro.txt:1:  2:x
-repro.txt:1:  6:x
-```
+> Colin, is that OK with you?
 
-[System Info]
-git version:
-git version 2.51.1
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.7.1
-zlib: 1.2.12
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Darwin 25.3.0 Darwin Kernel Version 25.3.0: Wed Jan 28 20:56:34
-PST 2026; root:xnu-12377.91.3~2/RELEASE_ARM64_T8112 arm64
-compiler info: clang: 17.0.0 (clang-1700.0.13.3)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+You can name it and develop it however you like. No need to ask 
+permission here.
+
+(For the record, I'm also not the maintainer of contrib/git-subtree. 
+I've just been trying to fix a few issues with it.)
+
+> If you would prefer, I could choose a different name for the
+> resulting program.
+
+If I were writing it, I would give the new program a different name but 
+perhaps provide a "compile-time" way to set it to "git-subtree" instead. 
+My reason for this is that it may need to exist with the legacy script 
+for awhile, and it's good to be able to tell them apart.
+
+Colin
+
