@@ -1,72 +1,72 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC03381B1A
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 20:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187C13446C7
+	for <git@vger.kernel.org>; Tue, 21 Apr 2026 20:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776803863; cv=none; b=oIbxBsZm3OWPKqiIqMhas6thRBRj59BkN8be6/1iW6duE4aD6A7cCNapFY8VPdtDq/aiXK+jF8muVCRhfBIZpI1ZaP00p46hKo2Nugqx9Yt22jvSNAcL4z+doOh/FkpkYW6Qy1yg80saQbeXW0xGn/QzQCCihdlUTP+UtG+TtPE=
+	t=1776803866; cv=none; b=Dbok0H4nboTJ5CXLLYQjD5rBFk/w5kSv7SrzP5mrKqm4xQPZY4U7xGfaSwBtP2NHngglokh44aadZgAws16H443i7yhsUa81MqxBkidBLFONGMrhnPpMR5S/IJc3rWOZKt9cvVyMZxKd8VL7UnXxV/S2ynGbmHTq3Fsyqvy7hVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776803863; c=relaxed/simple;
-	bh=xxNiXaAglrNYJcP6DAa6FXJXFpzH1um3eN+vzX9hM7g=;
+	s=arc-20240116; t=1776803866; c=relaxed/simple;
+	bh=ElWxJvL4rjLFfpxR28cshO3bRJvg7h+Ss3/FQSbpapM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IoXXkgV5fPJgyPUl20I2U21DpOcrWXxOTxp3du2JqgkHi77UR31iJ7HcEdcw/lUxhvY3j2w6zrsM2uMJN0V8JIP9iiOLEWMrwvXL0QcKYAHeS2VK/VNHKjPeYVbgS8NzbZGxhD7ikrCMrFU5uyOuGlG+SnZ44r4RKEZtkA4vR7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nAfmPBxx; arc=none smtp.client-ip=209.85.210.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=cER8c4NxWbJQk6K+SmN4GGVYtLIRaO9kb9/KJ89NE5LXGIq5iCQyvWyCZD+xzqSzj33gamMPRx7MqCZqHTnKA2Wrh93ekPm/V8budfRTTJTLWUMqYGmHJ2S0dVcfQDttvHurn9c4lUOy9hc0ryjCgI6gv/8gUHUb6szOKSLgrTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LdsX2fbL; arc=none smtp.client-ip=209.85.160.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nAfmPBxx"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7dcd9061b1aso1001845a34.2
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 13:37:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LdsX2fbL"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-40f1a1f77a6so3564831fac.2
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 13:37:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1776803861; x=1777408661; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1776803864; x=1777408664; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zVBOiJppV8jzOBaNwrmh6YcpH5lWep2Yf49L/LcEUJU=;
-        b=nAfmPBxxdarItCYqkyDt11YzeIp4lZOv3SNzEHMyMn2DBGFTTuTlOJM+aqh2Mph5Ic
-         0kVKpXcMJ9LWl+svPqFqgVzVGxOTTe7Tj94yLFo7zSOXlRsNXLrjzlz9HM4xtH31Sldp
-         1lTmLDtTOl20bsBKxdBFKMMJPiHVUZVImX8fiwPPtZ2BGHwq6iBAxxo9PLainQ1MysnH
-         R3uDTvqXgxPHaCvyFzcP0UO72F/pZ8tD4IegfQ2DcU50XOcrfTDNcN7KtUyfiyxQhWj4
-         aWiI+g4Jd0S1XmTZ1pTED/CR3kTWuz6SRsn+lgZxFO6s1EgOluBu/gCRPaIOWm7QzI+d
-         0hZw==
+        bh=21v91jUopmUrnp5msa4wdZdGn9tPvpfjSKm2WqDuwj4=;
+        b=LdsX2fbL2jq/LU2dut0xx1uDGDH9EfdQz6RC0+TdHwbaFRpF/hhku5VjpIzo2RqZxV
+         BlJxgwpHCsw1tAeSQP1mn/e2clm1mMPOry/ZYcRHJdGULFOvatKi5v3c7z31TQ2oWzim
+         Lg6ouwyZUsSTfPX5h3FGNKi9R57GslEOesL/zLS407cwo95/QWTdfgQVkPKBm+VQnaUD
+         EnPNqcjrpkZSGpxQSL3vK+OojMsQfgsc8E6ySiqp2OhsNs1fRrvMGb7WTO+MdkohSmq5
+         J4/H002U0aDsILX8YRgGctxz3XpHWqFzXnqjdL420Z9ZXetODVu+Pbfz5KT364Di+fgw
+         G0Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776803861; x=1777408661;
+        d=1e100.net; s=20251104; t=1776803864; x=1777408664;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zVBOiJppV8jzOBaNwrmh6YcpH5lWep2Yf49L/LcEUJU=;
-        b=aBQyMsVgZgrwNV/2hwGThKaUnzwGHSjCXsIugVc7IPBDgCXdUWpZoLJge/lBOciiRA
-         ep65TA0rUQhFiRaCqaUPUiqD0gtTR3wKmkUqT/9eVwY0Fga5kxtA5oex0SJYuvNMAqnS
-         kcgZ1NYY6BT4utENzHcWYLanRlJrr76gDyxaqop/v6Lg0h8bdaH/POxydiGATnC2RIk1
-         qGjezb0GA3geTZO5DHFMx3o3NJ6d7o85+7XXTxY5UHYtbZg/R1oqtP2bElmqsqi/edy5
-         jDRUg5jPzHaBa5QvYWmlmBHj6terpg/95XrubNEOXoyE+ReBWfwJnZ97n+8LLzhvuInX
-         X65A==
-X-Gm-Message-State: AOJu0YwV+UAwo59+Uxj340lVUwgDFp1EKYbCswAq/2XgpBSUI6o1rjJA
-	Fccyu3Hd47Ysb70saw4vwcW2M3nhrtCcbf97RoVeJxIJSLfd5PzFC3pQhrJU159m+6mM0hDCN4U
-	+yBOnyYE=
-X-Gm-Gg: AeBDiet/ifh03DHmGc9t51Fg6GoVgnuF3UQ6SuzF9GFqM6fOcemQbMOAMXAxXmCCZLW
-	AZ3wa/TiZ0Sl7XP03SQlyRyI/ofuFLzMCqjeP8HDLXEcE0iY2cvg7JHyQAQ3gKR9tQh6Yv1QyPX
-	U6tS/MKf+jnbJ0B2TCdw7nvHgYt37woYgvB/+1aZl5PGcIkmZrRi6qcnficLk71ZMrFrIn09TAO
-	kumvTtAxLbDWdPS6UQxJ9/3bTVzxD2up4Yv4D3Q2oU9QAvSc9e26pOQtO4MnE+yqaXDA5b4J3im
-	8xLsJLIOkdeokjFb4b1iy7OlvxOlBARflCVZhyn+m+sGq3c+v3lfYzY3LMsldd3DSUDIt0j4qh7
-	To40FD9GYnTdwBfQe2zwPbguKTRJHaV6OL4dYD4IJYvm+9Ici2RRznUUlQbZ1+89/A2qzsV0RON
-	Yqm3zM/nUCc3uliOKIof+99g2yRQ58wI2NSDLTLRgwSnPXbWbCrwtrPyrPjO2Kh5whkHhlaUj49
-	5+WA+9M62N3KnK9yLQsPEZegZdcdDB7Z2Awvfj1OVTjRYE7oA+/YlRZZ4WCKMHc5wPsojW8necu
-	oj4qtJbR/c9a033UPGLW+HhwySX6TuGTvZZYDA==
-X-Received: by 2002:a05:6830:67f6:b0:7d7:5559:3d1c with SMTP id 46e09a7af769-7dc94f961d0mr12575753a34.1.1776803860943;
-        Tue, 21 Apr 2026 13:37:40 -0700 (PDT)
+        bh=21v91jUopmUrnp5msa4wdZdGn9tPvpfjSKm2WqDuwj4=;
+        b=ayjGR45phivjsz1n7AKWJzNeKEoJciDaqzV3mGi3+TxXYm1N7nRqdZLM5UoPup5dws
+         P+iHgUkAIdvut2vlnzso3BTFcVG1ZGOcxQ3A/4d3vzeOG3Ozz/9wcGUHFZpYITtenxgQ
+         8ctk+/pWcaCe9FO11MSeeo/6CBVCHVtH2zuNnPZzehlwQHMxSxTQgL+RevXrE6RQbjnt
+         HMO9Wta+3tDSViih7pP2Uj2K99+ISxiYgk6hc1UTR+nRjyoNLLWxnPcrZL8fA/fTr0eZ
+         yPcBhyIf3FoiKm+H62rwhdF/CpmTV+qkGNTyBuHn0MQpeNcianmUF8fDYYi+J+oVyCK8
+         7VPw==
+X-Gm-Message-State: AOJu0Yx0H0WzwjcoupHPDGpF8BYUJkX5KqJLTPh4qZfQ5nzE++vNbFgr
+	e7PPdOagRxkMrKZwl1k+Nwwshxk34np8VV3lAOqIhfy0rDk43kSmf2/9OfyZpN0Ucc333OkuNqL
+	31IlR2Ww=
+X-Gm-Gg: AeBDiesfDICvu1UA4n6yKB3hUCNkb7hced9eLTD3JrmJOE1dI8fY2cRuiV3T3QFMSLo
+	PJOSUuCCmP7B72OYFjQ+g9Gxt0bznGfIKQxjk5d7FK9p9pd/q0a75urYxCOjXnmvUe708l8/kBA
+	cjsaejY4sKu29/b7iwWrMmZD73PjMwwoEhRAE5L3VdrqAYzGsjNjrQghj9rCEdW6skGtAJ1CHBx
+	ybi2lyadIychaZG+SGdwm79WTisa2Ypx+QpSLDs/Vxe9urVAG0KKOr1xuczCADqzkrTexkhueNN
+	kDcvrlzCHCGEhJRKgqIVW6U+gj40E7esi0Xf/uTv5ViaonUPV91zJfvIJ3BOjSMl0KuWNsHoaAr
+	rVAMNMGN4y+ArGk9gIssK75qbEBa4DRXoQd/WashzUhz9kUnsCQVYDs9XdAfmKQ9Llirkdb7p77
+	XQbB0VoXzgj7xD19GTF6e0KMceQD2i3irYjzVkIDUfMMMOId9NVIFrYIdBCCLZe4KCGE8AelHnP
+	KFZFAb7okZlxENjNd3a9yps5fWupTTKNgtCL18nxPr1C7neQrtbcQTYAumqw+fu4nYg5MWxcZ/m
+	zaOQsFMgDjFjZOGUtLCzZbeLcCs=
+X-Received: by 2002:a05:6820:f003:b0:694:6e87:2815 with SMTP id 006d021491bc7-6946e873675mr8190085eaf.24.1776803863800;
+        Tue, 21 Apr 2026 13:37:43 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7dc9751a2f9sm11962715a34.12.2026.04.21.13.37.40
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-42c05ca16e2sm5327413fac.15.2026.04.21.13.37.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 13:37:40 -0700 (PDT)
-Date: Tue, 21 Apr 2026 16:37:39 -0400
+        Tue, 21 Apr 2026 13:37:43 -0700 (PDT)
+Date: Tue, 21 Apr 2026 16:37:42 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 09/16] repack-midx: factor out
- `repack_prepare_midx_command()`
-Message-ID: <1bd2f194c6f7f64f2ff1e7b55a3a69defcb6a344.1776803827.git.me@ttaylorr.com>
+Subject: [PATCH v2 10/16] repack-midx: extract
+ `repack_fill_midx_stdin_packs()`
+Message-ID: <44f522ea04df5176ec332b60a38d1eab9b649c30.1776803827.git.me@ttaylorr.com>
 References: <cover.1774820449.git.me@ttaylorr.com>
  <cover.1776803827.git.me@ttaylorr.com>
 Precedence: bulk
@@ -79,76 +79,95 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1776803827.git.me@ttaylorr.com>
 
-The `write_midx_included_packs()` function assembles and executes a
-`git multi-pack-index write` command, constructing the argument list
-inline.
+The function `write_midx_included_packs()` manages the lifecycle of
+writing packs to stdin when running `git multi-pack-index write` as a
+child process.
 
-Future commits will introduce additional callers that need to construct
-similar `git multi-pack-index` commands (for both `write` and `compact`
-subcommands), so extract the common portions of the command setup into a
-reusable `repack_prepare_midx_command()` helper.
+Extract a standalone `repack_fill_midx_stdin_packs()` helper, which
+handles `--stdin-packs` argument setup, starting the command, writing
+pack names to its standard input, and finishing the command.
 
-The extracted helper sets `git_cmd`, pushes the `multi-pack-index`
-subcommand and verb, and handles `--progress`/`--no-progress` and
-`--bitmap` flags. The remaining arguments that are specific to the
-`write` subcommand (such as `--stdin-packs`) are left to the caller.
+This simplifies `write_midx_included_packs()` and prepares for a
+subsequent commit where the same helper is called with `cmd->out = -1`
+to capture the MIDX's checksum from the command's standard output,
+which is needed when writing MIDX layers with `--checksum-only`.
 
 No functional changes are included in this patch.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- repack-midx.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ repack-midx.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
 diff --git a/repack-midx.c b/repack-midx.c
-index 0682b80c427..83151d4734a 100644
+index 83151d4734a..78f069c2151 100644
 --- a/repack-midx.c
 +++ b/repack-midx.c
-@@ -275,6 +275,23 @@ static void remove_redundant_bitmaps(struct string_list *include,
- 	strbuf_release(&path);
+@@ -292,23 +292,42 @@ static void repack_prepare_midx_command(struct child_process *cmd,
+ 		strvec_push(&cmd->args, "--bitmap");
  }
  
-+static void repack_prepare_midx_command(struct child_process *cmd,
-+					struct repack_write_midx_opts *opts,
-+					const char *verb)
++static int repack_fill_midx_stdin_packs(struct child_process *cmd,
++					struct string_list *include)
 +{
-+	cmd->git_cmd = 1;
++	struct string_list_item *item;
++	FILE *in;
++	int ret;
 +
-+	strvec_pushl(&cmd->args, "multi-pack-index", verb, NULL);
++	cmd->in = -1;
 +
-+	if (opts->show_progress)
-+		strvec_push(&cmd->args, "--progress");
-+	else
-+		strvec_push(&cmd->args, "--no-progress");
++	strvec_push(&cmd->args, "--stdin-packs");
 +
-+	if (opts->write_bitmaps)
-+		strvec_push(&cmd->args, "--bitmap");
++	ret = start_command(cmd);
++	if (ret)
++		return ret;
++
++	in = xfdopen(cmd->in, "w");
++	for_each_string_list_item(item, include)
++		fprintf(in, "%s\n", item->string);
++	fclose(in);
++
++	return finish_command(cmd);
 +}
 +
  int write_midx_included_packs(struct repack_write_midx_opts *opts)
  {
  	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -289,18 +306,9 @@ int write_midx_included_packs(struct repack_write_midx_opts *opts)
+ 	struct string_list include = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *item;
+ 	struct packed_git *preferred = pack_geometry_preferred_pack(opts->geometry);
+-	FILE *in;
+ 	int ret = 0;
+ 
+ 	midx_included_packs(&include, opts);
+ 	if (!include.nr)
  		goto done;
  
- 	cmd.in = -1;
--	cmd.git_cmd = 1;
- 
--	strvec_push(&cmd.args, "multi-pack-index");
--	strvec_pushl(&cmd.args, "write", "--stdin-packs", NULL);
+-	cmd.in = -1;
 -
--	if (opts->show_progress)
--		strvec_push(&cmd.args, "--progress");
--	else
--		strvec_push(&cmd.args, "--no-progress");
--
--	if (opts->write_bitmaps)
--		strvec_push(&cmd.args, "--bitmap");
-+	repack_prepare_midx_command(&cmd, opts, "write");
-+	strvec_push(&cmd.args, "--stdin-packs");
+ 	repack_prepare_midx_command(&cmd, opts, "write");
+-	strvec_push(&cmd.args, "--stdin-packs");
  
  	if (preferred)
  		strvec_pushf(&cmd.args, "--preferred-pack=%s",
+@@ -350,16 +369,7 @@ int write_midx_included_packs(struct repack_write_midx_opts *opts)
+ 		strvec_pushf(&cmd.args, "--refs-snapshot=%s",
+ 			     opts->refs_snapshot);
+ 
+-	ret = start_command(&cmd);
+-	if (ret)
+-		goto done;
+-
+-	in = xfdopen(cmd.in, "w");
+-	for_each_string_list_item(item, &include)
+-		fprintf(in, "%s\n", item->string);
+-	fclose(in);
+-
+-	ret = finish_command(&cmd);
++	ret = repack_fill_midx_stdin_packs(&cmd, &include);
+ done:
+ 	if (!ret && opts->write_bitmaps)
+ 		remove_redundant_bitmaps(&include, opts->packdir);
 -- 
 2.54.0.9.gb905fd5d0ae
 
