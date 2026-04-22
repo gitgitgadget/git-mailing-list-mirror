@@ -1,84 +1,83 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8E53314AE
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 10:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AF93CEB85
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 11:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776854500; cv=none; b=ZRcVQ/Wloc6kuBHJ1CbrsMtAIzzq9gF4uZ7FNQ2oLsTEIfMk1LfatYOExzZ46qj3arZqI8NP2zppV0JRJ5c0hUXBDBGofOweo/4OsOATQmkfWTwfLFQzXGNvU+s5Kr8pu3BG3UCWYx5jNmciGsbjmAgWtiYx43fKBoeHKedALFQ=
+	t=1776856534; cv=none; b=Bh7c7Hbn2zBRNT1QsHFwkOIxvFJ48atGzy7IdQrMti6UwpMov+jyGuMnep0EWda1rh02wml2JNRwXQrhrDEAsuHknnGkM7RHHvcifPKQb+9ZhCSRTQDA9u8KXUVrdYesPkHuFjx08N+N6Hmjcl0O/KSrnKoWyybuq3svDzBiqvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776854500; c=relaxed/simple;
-	bh=NtgzNanv15Vmn+WGnwN3P1YaiLIdFxCvQaAQSV0yfV4=;
+	s=arc-20240116; t=1776856534; c=relaxed/simple;
+	bh=8nyGU0IT0N3rORktfs9eu/1216TiV9hVioiy7NFvF94=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AHlInlJ2P9LT46F27f88fwEzYsH2uzhrQQh0m9BZb+rjdhQuW+hkPuoD/BNb9Zs++VcOLSwUyNAAOolr8ClHlFfTAABQu2ZYwWKpqEsA75p2mdwr2oo9SPE8GPk7R57h5lDWhEge+j4hQ5PdeaH9TkF2+ITbD25HQmhQtoNPFJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WXB1/1Uo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IG94yxJR; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=DmnaZXhMu2EBkJbxmhOgIMKG03h6VAcjQCTV0YQfJYb6cx/JHELPwR9U28Bh1QWivVqYhfJroClLNI+iw9uTHdBjir9Deoua7WPesg78E1kK40lGM7DmqcuLh0MXs23xdEAI/FZp+ZZm0QbvaSl2UOOD3+7njezA7/iih5HKv6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pFVd93n1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X1Dw6ZAk; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WXB1/1Uo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IG94yxJR"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2C2971D00023;
-	Wed, 22 Apr 2026 06:41:37 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 22 Apr 2026 06:41:38 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pFVd93n1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X1Dw6ZAk"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id A4CA61D0016D;
+	Wed, 22 Apr 2026 07:15:30 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 22 Apr 2026 07:15:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776854497; x=1776940897; bh=fAhMdlmila
-	fGybkX4kVunMRVowYdQfl7XArAyQeacpQ=; b=WXB1/1UofU9ud5mI1gIrTee0ql
-	cO9fVGJJMtO3BhcwASxZA5G0gNbByZYYfW7jxM1ZwqXSlIpdsopUvzfzDdAEhRgA
-	pyCLBh38TQT8uk1Emd6qNRcnY3nCVPD4mAymb+MBG7jhmVUhE6wpObG7/UELR9ZG
-	LL9qUP5xOuwBFzQaU8VHi/EZvp4/9opPkS0jN4po+d+SgcuF3DLnXAcgx4NOAlSG
-	IDn/CksU4C+H9U8Yva+MEZypuFvkctcEFYPh1o84jSdBZxdpEUEckBZMCVHpIGui
-	/rYFhOkyuKxW3ruMKdYgrtrwAmixgTngupVkx1CB/OAxLbW+wKuZRuo62tdg==
+	:subject:to:to; s=fm2; t=1776856530; x=1776942930; bh=I/Q/8JMTGb
+	uRpxCQmZEpH2kk3avq5SL2OLPMbgSbCuo=; b=pFVd93n17vSy7nJaazvEtXoSFd
+	XoHo/7RaGTu0pD4z7SWLFbEvc3XB1Uczq8ecOv3ThiiYK1RitZj+PePLjQKYEUkM
+	zxnqcS9fjvXxoyvPOeO+yJiGujMdDgo61DN6y8g54qt+FQYdLYG8CbZ96QVaK/cC
+	pD6SdMgn4AITzeMUvgqpZeXG0UhABiTnhPo21oRQWktcjsyNRSlHl9E/7aLfDqme
+	/4yQ7FlSElocPaBOfXsFMXxFFyD+KkSGw0+QPKYeAZ6GQxa6Se8Zxv/jTExNRq6m
+	4XR7fnszbBJkOkUGVRlf+GMb8fLOw5qK6ZjVuVFvmo07bbPkuFHTiLbrKvww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776854497; x=1776940897; bh=fAhMdlmilafGybkX4kVunMRVowYdQfl7XAr
-	AyQeacpQ=; b=IG94yxJRyJfvJK/bZcLQex5Rnib+CyXzWkqC86MY/JyLk7XMDK3
-	vuANA3u1fQNMUu8xtL3/O3IImLdukAfQcDcRkck+WIRNnQjxHcohbRpAfMs3IUPR
-	5gRIDdU9ADP0Dkbzq7XTRi6OsnpmmOUJM14AGAANwTjxQ7CLs0JOyhYhG4PDjPAI
-	CccRptNOzw2ysPe/hqQ1MmoBRbei2x4TeF9AXxhDeLtZ7fFLDUpE0RgX+uXdmg9H
-	y0f3KL82L/przAbocOZBbXWmbWQ0HdXrftQOM7g2yVxG7bDEDpJj1a3YAYq72wEB
-	1IctudXqbpnduUDqTqwPe9q+X/fB7Hnd3UQ==
-X-ME-Sender: <xms:4aXoafgMKCHy2rDaOZVgdPC1BdUssxw4dI5bayQdE33bF0Ko79qI0Q>
-    <xme:4aXoaTAWg4HVX717XyHnKa98Zwtk5Rpnmudc61GoNKmLy_Lx6Z3VxK6-riKHY5mXo
-    xsYpbRADL-r7fvffWIbdmCWab027nCVKnDgg2FT8fXuDIRRcVgcIg>
-X-ME-Received: <xmr:4aXoaUGg6WzGv8Wnw_dovFO5q5ZIHcoyoNrIhkmfFMenY7OAkSpLZ_0NM78NYMrJ7_KMtqbFAqRbDiaHjn-3f9gYUeFyeMG1cmzp0dYPa7s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigedtiecutefuodetggdotefrod
+	1776856530; x=1776942930; bh=I/Q/8JMTGbuRpxCQmZEpH2kk3avq5SL2OLP
+	MbgSbCuo=; b=X1Dw6ZAkSwJm85uAYMME7C2fXKvfgZ688hvYggPyFJ/o2vxq7jO
+	0S6p2yK7a0aiqQAcRF1QOZ3BiUUekMPzuTEnhmozdc+vFuGJoc2uA0mnXIs6RB1N
+	giSB69hcFkqv4SiHv16hLaf1i7V/OPXIMpFXWDiuIiFD4U4Xlj0+fAwV2G2wr8st
+	Fy4f9ExvV4B6NI9DeK4Gbs34EfDsEkUrfNcF1hzuBWfPbD7V1OXxPxExVeieDVp6
+	OHXCJoEuLclIUtQj7TnWwUf0DmjH7r4JAv7P/HHKLjGr+7ZBadjp6kYyFZqRVu8a
+	jfmeDDLulA6EigJMrzOBdTFydl6bEFpjtZQ==
+X-ME-Sender: <xms:0a3oaWAtYPAxTKNnleEPIL5vo4bUtu6NIc1WZVGc8HIfF0YsrrXr8g>
+    <xme:0a3oaWgxy67p6uKU8iKoJYDrEQxnLqTIGvCLrlCPHKs0o-eV0Qtn3aAxYl6kgyekG
+    KooNXJtE8Rqd0fN6gXZjTJSMFVZjJaW1blyL7peNJ8SBnSvZFs6aw>
+X-ME-Received: <xmr:0a3oaXNvEOs30Xtj6Z5pZ6dmnIlgnNPM8VDKpOUFSfLsMU98lfRp9XbAZhpKnMWnnXuCZiIAL5a1Ip_e35eeJCn4WkzU_-jTmO0JGMaP6BI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigeduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgr
-    mhhilhihrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:4aXoabKvfzi4RhmsHvBVfykn67nf06_SCXx4m_sNgnlVKCAMjeixOw>
-    <xmx:4aXoaYnwkMfrCSFnZK3xWmwhBJ-ZYQ5HswYHDlTNQeXkv7_F5m_bQw>
-    <xmx:4aXoaTTOswt6QbrE94GU0NFOdg-Xqd6f4PMf2--mNsU1WtEQMb-tXQ>
-    <xmx:4aXoaaKXrD7F35DEE5M6dHEd4WosrcyKITZwzsp5-S0iqOJgUn6Qrg>
-    <xmx:4aXoaXG6uGSkjdRr2qFLdt-2CCOpVigZAxcleHFrUEqdKc7sDvgULpXa>
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:0a3oaf4O_3nX6CllYvusn8ZnZXz1UlBuSbo2NmMo3iAg_uMzZRIRoA>
+    <xmx:0a3oad0TABlx8IgVRcLkgIFsqwHKrvR-1lNEBoES5w7iDBHwW2NdUQ>
+    <xmx:0a3oaYbuNEqf6RGs0lGyvNpA-CeFdKNV8DUOiUM7SD1JrZEGRpU6LA>
+    <xmx:0a3oadCl8hnu7hksBhNcuyvgYKfUCVhpc-_ZdiprUuKWk7_88v_Lmg>
+    <xmx:0q3oaVz-EizKA0EWVIQmU9xMcOsUgj-E8fbuiWR-gWeft1HBJsOids1Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Apr 2026 06:41:36 -0400 (EDT)
+ 22 Apr 2026 07:15:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b5aa49fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Apr 2026 10:41:34 +0000 (UTC)
-Date: Wed, 22 Apr 2026 12:41:29 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 2ad112ff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Apr 2026 11:15:27 +0000 (UTC)
+Date: Wed, 22 Apr 2026 13:15:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] refs/files: skip lock files during consistency checks
-Message-ID: <aeil2Q_Mh_fKCwGa@pks.im>
-References: <20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com>
- <20260422-refs-fsck-skip-lock-files-v2-1-9607571ae59a@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/8] refs: remove unused typedef
+ 'ref_transaction_commit_fn'
+Message-ID: <aeityL_05KDRZF98@pks.im>
+References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
+ <20260420-refs-move-to-generic-layer-v1-1-513e354f376b@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,56 +86,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260422-refs-fsck-skip-lock-files-v2-1-9607571ae59a@gmail.com>
+In-Reply-To: <20260420-refs-move-to-generic-layer-v1-1-513e354f376b@gmail.com>
 
-On Wed, Apr 22, 2026 at 11:49:58AM +0200, Karthik Nayak wrote:
-> Consistency checks in the files reference backend involve two steps:
-> 
-> 1. Iterate over all entries within the 'refs/' directory and call
-> `files_fsck_ref()` on each.
-> 2. Iterate over all root refs via `for_each_root_ref()` and call
-> `files_fsck_ref()` on each.
-> 
-> `files_fsck_ref()` then runs all fsck checks defined in
-> `fsck_refs_fn[]`. Step 2 goes through the refs API and only sees valid
-> refs, but step 1 iterates the directory directly and will also encounter
-
-Nit, obviously not worth a reroll: maybe do s/will/may/?
-
-> intermediate '*.lock' files.
-> 
-> Currently, `files_fsck_refs_name()`, one of the functions in
-> `fsck_refs_fn[]`, filters out lock files itself. The other function,
-> `files_fsck_refs_content()`, has no such check and would parse the lock
-> file. Any new function added to `fsck_refs_fn[]` would have the same
-> problem.
-> 
-> Move the filter up into `files_fsck_refs_dir()`, where the directory
-> iteration happens. Since step 2 cannot produce lock files, this is the
-> only site where the filter is needed, and individual checks no longer
-> have to re-implement it.
-
-Makes sense.
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index b3b0c25f84..1504a1e2f3 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3962,6 +3953,15 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
->  			strbuf_addf(&refname, "worktrees/%s/", wt->id);
->  		strbuf_addf(&refname, "refs/%s", iter->relative_path);
+On Mon, Apr 20, 2026 at 12:11:59PM +0200, Karthik Nayak wrote:
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index d79e35fd26..2d963cc4f4 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -421,10 +421,6 @@ typedef int ref_transaction_abort_fn(struct ref_store *refs,
+>  				     struct ref_transaction *transaction,
+>  				     struct strbuf *err);
 >  
-> +		filename = basename((char *) iter->path.buf);
+> -typedef int ref_transaction_commit_fn(struct ref_store *refs,
+> -				      struct ref_transaction *transaction,
+> -				      struct strbuf *err);
+> -
+>  typedef int optimize_fn(struct ref_store *ref_store,
+>  			struct refs_optimize_opts *opts);
+>  
 
-Not a new issue, but this cast made me wonder. As it turns out,
-basename(3p) is documented as "may modify the string pointed to by
-path". I assume that this can happen if the path itself ends with a
-slash for example, as in that case the basename should of course not
-include the slash itself. So maybe it modifies the caller-provided path
-directly in that case?
-
-In any case, it shouldn't be much of an issue as we only use this on
-discovered path names, and those cannot contain contain a trailing
-slash.
+I'm in general not much of a fan of these typedefs -- there's not really
+much of a point why we'd need them in the first place. We don't use them
+as a type anywhere but in the struct definition for the ref backend. So
+we could just as well move them in there, which would also ensure that
+they cannot become stale in the first place.
 
 Patrick
