@@ -1,188 +1,214 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SY5PR01CU010.outbound.protection.outlook.com (mail-australiaeastazolkn19012070.outbound.protection.outlook.com [52.103.72.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031C73D2FFD
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBCD19D065
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776859499; cv=pass; b=uSK85qVx1w+V5ywEeBZkDMtm03NtqxHLq3JlC2ElGXfapHz7+5Z9vH0F6000D0VmWCclcvtNtGhEnEqDZb82XP7U/JjXTYjoi/J2GPtidZV2IGJnIGCp6OTr5mo+9VDZQjPYEC2LIRqiN+aTCuoKKAIbVuMgnLsnAcD5D3r0MxQ=
+	t=1776860391; cv=fail; b=pSfF7TS7W9bztDLIhf+DWc9zc/GAID2R9DWJxEcREwU6i51MIX4oFUa+ig27p2xBKChm4CtQAjw4q09MnJXFM8nBiCt3nw7SwPEWg8GHKI02EglaX4uxYHz9xYD4bWwRhX/X87ifrGCRgIWy5feD2TlmnIQnLpLNDvdq/fTnSps=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776859499; c=relaxed/simple;
-	bh=nyBdVAOYf1XFpuLERoE8LpOmwEFFJW9mN6U+jm2ikxM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KNfug1hqqjfmG1XW1rf7XIyJx1PbVoe+sHRjyZLOod0IJGPTovX8l8sKzKhV+VifiizniuwdDcheLsd4bGxCA2Jbk52cCHWHYG5yaHP5ABQCmNe0yLPQcwzYRg8Ag1PsVYHALsyd2Yv/RIU94sqLu+FJm+aS9unogVVm+r1CrII=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qYiZx8Gi; arc=pass smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1776860391; c=relaxed/simple;
+	bh=1Cuk9VLm7GL7fXFXXNsxnN+L5HDUmCtPI0sB5tAOtMg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=LfvecjTPepM5bgk7a94qlcspWK+BV/gw9uiObKd+YXe6FCaYGV6TXW6u0xdofdlpJdOhjbB472Lp5Z/0TLS1QYVKm6pIAT50hcWS7I7RNiXdz8dmL79m8OjHqMITbJ80pKdR5CgfFzjTL3EZ1+BM/wJDnKYFXcjHWDXLqRj5hfk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=BmJ8T0mr; arc=fail smtp.client-ip=52.103.72.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qYiZx8Gi"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-60fa13bde2dso3457613137.3
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 05:04:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776859497; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lBkG0OJPKpmlgTDfZn17Sc7+frf+BSUjKN7lHZb4J1F5/uIol6vbEsZ93AxxyRTcdZ
-         FSP+2NuL8PY30ck2lqT7klcieCHV+rwHzUEu+12Cdb650fYH+c1LDrp2IkdIpFHmfnjY
-         Uzkx5eyATCC20jIrMCMNQnbh6tFvekkb/z4Hr0o+N6RCS/VCKMnlMdM8MnH81asxsmtw
-         cwwDRyQbT6kIDfr5uz+dxRPrfXVwKZPQ3nDQO2qDpPAnVrfhdABd9aeHak2DXSf5yhQ3
-         +1IiWKiXnBQktzXYH89QiaOXIdnZvRNM3D+4MPuV3XmQZN/tIFXlR+apU7d2VlFwuGIr
-         ZFYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=E/qgAPeikJIYyd45798LOR1J7T4zlOfsiRZWijUYqAg=;
-        fh=wGUO1cWQgMUfUsI3b11YAGcfHb2MuH2HVgwXwqOKUSU=;
-        b=BcqE2oZhtH0MK8T9CBYQ8gN7OByjZv+fJbjzT4Sm9lkHRvLS/uFTtujA7BuRtxcZZ+
-         rfuMSBVqb3+1DDATOn2aQeWGbpPlFOBiY3AHLcCXuqD89kIoBPAh299Ah1NLbeL4j5SI
-         RJX7MO1yMfr138Cxu/PJSEXxC+i0O9flKK4JiOzdwkcs0YNfvDtOYDrnpXP5Si8oU3Kn
-         lp5RDhg9RSIL3HITM1kkGqRMt6ucIC72EMKYkkyMnDhaXWSXkMf5d2i+DHYqJWhYUfvp
-         NGjpYk4ovnqAr7jCxvAukcCa9/ih44rl8vCwZFSqFzaBRmgxbrDS2kJWoBYwlUOioZ5U
-         CumA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776859497; x=1777464297; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E/qgAPeikJIYyd45798LOR1J7T4zlOfsiRZWijUYqAg=;
-        b=qYiZx8Gitcheh80U4BGK7VYkLtC5I8DtMI3xagiBpjTwwB3oHSQ2xTJOssRp6ElQ/G
-         2p4GSREntbcd7lw2LfRdxyblTFCIN8o3R8TdKohSNRi3QDYmmxPDOd3rzxHnI/wq0V6P
-         iUMHGNQ0uWw2m/fXN0my2iMhdh3aH+ga4IOhmJo6EFVBGOQwhe+bx3w1HC4fULH45E+M
-         Dowh/D8sywpYoaCkk8Cu0iIrwpAyuNeX82iZE6oSWyXjaQDO6lsRpzisRuMTdedr5uZH
-         ikT2DqSRLNgnGFE4umnEs1WHFO0YIjdMqcbkMa1a4dC3cEnX0Oh4O2dBuh5lNaSMbcN0
-         QF9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776859497; x=1777464297;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E/qgAPeikJIYyd45798LOR1J7T4zlOfsiRZWijUYqAg=;
-        b=DWrx51ZyYKgRfs50OtPwOUVHv43WTKXGcCdk2R6o0U2hLGgFGTVznax4qjR2tpJFDR
-         d4yRKP3WLSw5v1w+gmbFYH7s6zDGwefxipadBPbmvaAksMacnKp8CkkvZxVfcGMa3vkW
-         7dgeteMtj/og660+aFmyHtVtAlOUCsGEQfypJ9TDGpc5CB6+E8+m08OHlyvxjyIJ8nd7
-         LXuLu89gAvGbAWcaG76Ufw/XIIbdYz7fdNnFoZYKGQVGfzDKgMu0oJX7MP895uf8s2zk
-         fEi2hu3F4Wf7Kn2j/v34dm8cnpCrY9xrgo2YYbA52H1Jtsjl+nS31dWxmFkKDfEwHBD0
-         Yk5w==
-X-Gm-Message-State: AOJu0Yy8oynihNxzjC2VsU1uf4Pz99S5Y1xzLnOSZ9j4GZQ3gtVJsJi6
-	DI4s/9aN6aHdUsri+2MP52SCgtMfhsIGKmpfvkBoNY4BN/AZmHSOEuLtNY9797ylk0ijiy3A72/
-	r181SIdAOZhI2Bx+GY6/HbZXJcFgdIoGMeg==
-X-Gm-Gg: AeBDievyU1TjxDSJqId0nzzZANYJroD1JBqgwXTi3AcBvPW0se/+48lT1C2mvCAi3CJ
-	UbjKm/VorkAI5eiTyLAD8iSvp32r7dWirLBmc/eEL4CLMdF08kNHccTVXO7+lnaHsIZEsV9y34r
-	I4Uxl/ZbkDYa9j9M+hyXlWxfh+SxyOto7mNgQEdaHy51VsrKdbzbEtsL/7pAUzvo+zI3l0ewS+F
-	xHQnHPzx2RL9PPDBJcK+mZNWI2tSGCbsp52RUseyYhf8cdbA3KrjfgjxCp98MHdUDlXAbE667nB
-	/s+2REQWwvwNtvGagczpHklFjpy5joDJvjdYpeHkqsZC12pYrs6+
-X-Received: by 2002:a05:6102:50a7:b0:601:f85b:efeb with SMTP id
- ada2fe7eead31-616f518b494mr10541352137.9.1776859495916; Wed, 22 Apr 2026
- 05:04:55 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Apr 2026 05:04:54 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Apr 2026 05:04:54 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aeil2Q_Mh_fKCwGa@pks.im>
-References: <20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com>
- <20260422-refs-fsck-skip-lock-files-v2-1-9607571ae59a@gmail.com> <aeil2Q_Mh_fKCwGa@pks.im>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="BmJ8T0mr"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oX2ChvHY+akJHTDthDUNKWtQraoPxbtQFnjt3UrngmC14COOREFqO0dm2FIaBx2K98Qgq8ruP2OUyk2Zs6OVtgIEz9iULHkA8xp8rWY4EjxxANxDxbJF4y9Q2FE6F/S4eDpvcfPMtK/Rje/zKRCPmJ+f4HglNMxZBH7zRQyQoBbLE+BxN0sp+fQTfFVzaVdfMXcTHxuqQxE7L5UB8XT97Oekn9xsnOq7GVoDWNJuVXLrQnF0HxVcF3OIV0TWZpzAtRdjxnGODUhFqY4EBvxPhgQtWbjcW5sX2dEUV6fAv+UdxSdbVqwsXWpYc/6P7HfQ/xcSzc7JzHlsRP1Lm66VVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2ukR3By5h2svVMJWSWlCpSNO2lsRSBQfYoskQGMsGcY=;
+ b=CgGrOCLnfUibhmYWS9nnjrhCwuC+0IX2VmGmPnkov9esRKG4N/MM16O1iYykdaPt64s4vOzr+cGfjcpCngenjV3/dE9fk+5c+0dn6bnVvThgRK66Mk3DCdmEoVHaU9rQZxq9GvXQSXVqerLbesqlrNVBo4qpu3QcDPFunSo/1amNYTJ/VCr2m7b5vRhp442r8NYzj1fzAY5kPZh7kCI8nXD9L6c/UFuI2PYOzsHAQ7w8ya9Muy7NoGmPhzwVPhH50yMe0ItQgqbFj7vXft5HVDKBra4c3fJ/poA431b9s7ViK33kRtSGKD1pSzNqXM79iPockxnA+icP/DiHCuruDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2ukR3By5h2svVMJWSWlCpSNO2lsRSBQfYoskQGMsGcY=;
+ b=BmJ8T0mrU4Vll9IajUc99mtZzaFZxDdmFGPqnj42naF3CCxd+WHL2jj3WcmdK0P5ZJmpTp3cw7ElOuQrZCK/k2MLMtPgpkGziRSFwwOv76QEOBN56lPoFNQiXr0a64v0dvfGPfnfhjgjP407IvR80NHntM2yQzWRqE/IGtS3tsVeTFDv7Bqc5fhyKNP3RNwCfFm6sEaGjMjPtkZc/oHmsa1EgK9VPQRv7acQujvsWTMI/alJN1W54m+GorJZz40v6erLSebrtDKJmFjKhoSZ5R/jm3HsLCef0Tw9SJSEns04PZm45ZUDDi0qOz6vRNF7qxH0zsewG15KPsCPHtEycA==
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
+ by SY0P300MB0530.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:286::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.18; Wed, 22 Apr
+ 2026 12:19:46 +0000
+Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9846.016; Wed, 22 Apr 2026
+ 12:19:45 +0000
+From: Jiamu Sun <39@barroit.sh>
+To: git@vger.kernel.org
+Cc: aplattner@nvidia.com,
+	gitster@pobox.com,
+	karthik.188@gmail.com,
+	Jiamu Sun <39@barroit.sh>
+Subject: [PATCH v5 00/10] parseopt: add subcommand autocorrection
+Date: Wed, 22 Apr 2026 21:18:00 +0900
+Message-ID:
+ <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+References: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCP286CA0104.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:2b4::20) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:27f::21)
+X-Microsoft-Original-Message-ID: <20260422121810.307862-1-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 22 Apr 2026 05:04:54 -0700
-X-Gm-Features: AQROBzCCoTtlwcOFFcttI3g7VwV8v49H2VLWpFC1sbBWE11reoOy_IRMFx3UdPM
-Message-ID: <CAOLa=ZT1zE+MLeaYE_5jWmNzSvtTTBw3ZAopai+2Ei27kmYm2g@mail.gmail.com>
-Subject: Re: [PATCH v2] refs/files: skip lock files during consistency checks
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="00000000000012213306500b572b"
+Sender: Jiamu Sun <sunjiamu@outlook.com>
+X-MS-Exchange-MessageSentRepresentingType: 2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY0P300MB0530:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3210ddb5-c392-4174-ed3d-08dea069703f
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|25031999004|5072599009|15080799012|23021999003|12121999013|461199028|8060799015|19110799012|51005399006|55001999006|440099028|3412199025|40105399003|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?NEcaGT+Zk+GCZ75fXnautejqCZmimr2BI82Rse97MRXbx741LEvqWqhMcEqC?=
+ =?us-ascii?Q?It5ryW9hJdojoqw6TqC/WC85ZDyKJccCNtRdtnNLXS7EPd2ZLk6ttyH2yWVy?=
+ =?us-ascii?Q?LRuoas1dTnlEDP90geUUykwZxMVnrMQFgy/aOYUe9O7MA4OZJSk2RBPSY8Es?=
+ =?us-ascii?Q?kr3spDJk5AeJDUidPm3B1sK+r8flx8ZgTJcrFq4N2dD0oC9dOjArd/S5fjpv?=
+ =?us-ascii?Q?XT+s6EWQDi1PKfclIv1pvvP9GuuvqxKC6P89yybhSZfqNW0VYNIIrz6IDdA7?=
+ =?us-ascii?Q?wsQQvgJfTZ17qabWItzAzYtzO3MueNb3n/nAJsyp8vJ5jbafWCP2VUCiOkxe?=
+ =?us-ascii?Q?BRb9nf6Mc4XCu4P0jKwsrrnrSwFHXeezRQEBt/1Mz3yv2O5W+rV7LWGzlk/F?=
+ =?us-ascii?Q?s27kJy64pUjtvmig15GSk0tmE63zAdOziRnEm2AzdsMGCyqX2fma0223ZROp?=
+ =?us-ascii?Q?wiAJljojz6mgomvNj6yipB+deR9v6UYbiKJNyJShAapXUOzmO12wHegy7KDP?=
+ =?us-ascii?Q?f3hgOypacLSLZR4grMDobHTDrx9p5M70rZJbUvQj+V7jMJRD4EkBa7mYhO5L?=
+ =?us-ascii?Q?BJGYJV8ZBld7EUB3zHMOGfQQn5CQCKysODGrHB2M76K52JsjfHCbAN7togew?=
+ =?us-ascii?Q?jmHyAeEK1bgkC/0VAWE/rK8u3yTwowy6vtIckZ/6+uLmsZcXHJ26WiE4pba4?=
+ =?us-ascii?Q?Yr9Kb68VEN3gYstXo6f+bq4AdaLHvWJWKen7TrTyaGoxQFC8h7ktHs+0l4/Y?=
+ =?us-ascii?Q?7JtnC+BtJJoZBYluTer0WnRbeGBNMsf7+SvI9hVeLALki3K67RJXyo9nraV2?=
+ =?us-ascii?Q?YrSkMlzcWTguFP6267PtkNv+pJ1YE+nq0cOmwYOcd3jFv9Rti/bTg6hK6deD?=
+ =?us-ascii?Q?X0Z5M4tLG0EgWsh6fMcHFUzz6/I9OXjTCUTZx5Krd/1LiWHS1g/P863fpWe+?=
+ =?us-ascii?Q?yp3sAvMwACm3VFCUX221IVZkood8Ds6WBjzoiSNczbmGXEJpTz5SaufBk+dF?=
+ =?us-ascii?Q?eu8el0kD1j9ZZdsa8Ic7gptzAkuuy0TvPC+dVJk4lykqNqo=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?t5t5ExFJNcYu8o8UTIceuKj1gkwrVFqPTSU1bXzlFa03KX0JrDNaSj+mIv5J?=
+ =?us-ascii?Q?xUMc/sda9QtK4Wi02kOfR0ZunUaxgi1o+gjJ+VL5YJFYarakLl0quWakoMgl?=
+ =?us-ascii?Q?vK9gexVCmggA1U3zVWe7kzYIVs7braf/L1xOysAWb94MTvvvldtbpTOgUjtc?=
+ =?us-ascii?Q?DunX+7QBE6LFjSJjw62D/TscgSwY0WVUW0LUm8SBw+ayasUfl17LHrKyd9mC?=
+ =?us-ascii?Q?pRYm9uhPROPANM0fKIiIkxZuKzJo+h7goKCq3LWSA8wj+2VQWaLCdqlcqT3h?=
+ =?us-ascii?Q?rsl2UVK6nDSJAMFTrmEhwo/XksyCsJvFHMCANNdwWWAFKQrMvO246MZX8ZFV?=
+ =?us-ascii?Q?YYJeimZmwwN+kjUr4+8RxqknenBllfo3V0Yn9Q6xz//0ULlgAZqc1llREN9X?=
+ =?us-ascii?Q?YJjBrppYCPle4IR8iP3IGJ0ollHKrPffkxLqh7n8cKqFkKj72JtLDa4IoUbl?=
+ =?us-ascii?Q?sMu61ycOHMdbBWTfbzcOJloxxPpr/biY44Ek8WL1IXTl5SvPXB6F5Ds/syeW?=
+ =?us-ascii?Q?XXK3NtF6laaxKOKvkkD01SqjqUJ2yw2HhPpZRw7uCGqs/DUB2am/1QSHnGZ/?=
+ =?us-ascii?Q?Z8Xk45LPJvOpO+6BzRAQ9M9me9A3CjZS+/yk9y3ucBW4F5nEBTLFJ6vYjQ4a?=
+ =?us-ascii?Q?qOe/s4zhZ1gxn9cqfki+nNsBT/gSKXn80e3pjvV3eOcAKhQ2xQQKa2Su2AP1?=
+ =?us-ascii?Q?qu4CAjwaql+Gwp6Jqsw3jk4cHFlPjvLq6BTsxWnXRT+lM3E4ShRHsKHCVYn2?=
+ =?us-ascii?Q?t2ODIDtezBCPsQgFFsgwcZx8wmPOTt/nZ3GsGRTmFk+P8zH2IMm4AdCUmmze?=
+ =?us-ascii?Q?96EVG6Vde33dQRD/m9L54sjvyNRGnNg/ZrCc5zFq16LAsklSXV7ywS0Tqt+U?=
+ =?us-ascii?Q?ZmQzJMMuvEbHuDu0+gAIM0r7fiPYwO4BnOCtdhEqRA+DAv+IOCXVHTECDcBm?=
+ =?us-ascii?Q?KXxUZXJNgC51iuMnpvlmj8EH+kfivyZ79HUpISkG65rdW3yrOSx1jZ0CVS9Z?=
+ =?us-ascii?Q?2XprdBa4I/6aDxO4GdZ2wZWwJcVoDiVWIFLfXj7Lu5PmVHLBVaQVok3HyrO/?=
+ =?us-ascii?Q?iI17lyjfkV1MnZwT881chdY3tuTI9FPemTOruFwHB5wc6PrQps1i0d36CydU?=
+ =?us-ascii?Q?s7YNxlY0eCPy+ST6fCRhFal1c1tV0rdlTThkBaBW+fFkeF6o9yNXbiLUVryN?=
+ =?us-ascii?Q?7Eu0WsHAEBqBf0FaRXuTdvQ9OFDRKhSq5kKUwuKKsrFxcW0H6hjbRktW1xOg?=
+ =?us-ascii?Q?PtufSB+lpQ6zr3FTGCXE8MKzwq/HNFZ1+Xra91QgQC/744fF5Z6MqX8Gw3ac?=
+ =?us-ascii?Q?D3v/fu96mP9lkQqgGD2PWs2n8ldxW2E9pbtM+liVSMBtVLvf8ZQBp7zErRJZ?=
+ =?us-ascii?Q?ReLX7d6Ml9DyoLMGKeLDex7wmVp3?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3210ddb5-c392-4174-ed3d-08dea069703f
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:45.5671
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0530
 
---00000000000012213306500b572b
-Content-Type: text/plain; charset="UTF-8"
+Git currently provides auto-correction for builtins and aliases, but
+lacks this functionality for subcommands parsed via the parse-options
+API. Subcommands are also commands, and typos will occur, too. Like:
 
-Patrick Steinhardt <ps@pks.im> writes:
+	git remote add-rul
 
-> On Wed, Apr 22, 2026 at 11:49:58AM +0200, Karthik Nayak wrote:
->> Consistency checks in the files reference backend involve two steps:
->>
->> 1. Iterate over all entries within the 'refs/' directory and call
->> `files_fsck_ref()` on each.
->> 2. Iterate over all root refs via `for_each_root_ref()` and call
->> `files_fsck_ref()` on each.
->>
->> `files_fsck_ref()` then runs all fsck checks defined in
->> `fsck_refs_fn[]`. Step 2 goes through the refs API and only sees valid
->> refs, but step 1 iterates the directory directly and will also encounter
->
-> Nit, obviously not worth a reroll: maybe do s/will/may/?
->
+So, this series introduces subcommand auto-correction.
 
-I thought will would go with 'intermediate' better, but 'may' is the
-right choice I guess. Will add it in locally.
+By default, this implementation enables autocorrection for builtins
+with mandatory subcommands. However, for those using
+PARSE_OPT_SUBCOMMAND_OPTIONAL, autocorrection is skipped to avoid
+misinterpreting legitimate unknown arguments as mistyped subcommands.
 
->> intermediate '*.lock' files.
->>
->> Currently, `files_fsck_refs_name()`, one of the functions in
->> `fsck_refs_fn[]`, filters out lock files itself. The other function,
->> `files_fsck_refs_content()`, has no such check and would parse the lock
->> file. Any new function added to `fsck_refs_fn[]` would have the same
->> problem.
->>
->> Move the filter up into `files_fsck_refs_dir()`, where the directory
->> iteration happens. Since step 2 cannot produce lock files, this is the
->> only site where the filter is needed, and individual checks no longer
->> have to re-implement it.
->
-> Makes sense.
->
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index b3b0c25f84..1504a1e2f3 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -3962,6 +3953,15 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
->>  			strbuf_addf(&refname, "worktrees/%s/", wt->id);
->>  		strbuf_addf(&refname, "refs/%s", iter->relative_path);
->>
->> +		filename = basename((char *) iter->path.buf);
->
-> Not a new issue, but this cast made me wonder. As it turns out,
-> basename(3p) is documented as "may modify the string pointed to by
-> path". I assume that this can happen if the path itself ends with a
-> slash for example, as in that case the basename should of course not
-> include the slash itself. So maybe it modifies the caller-provided path
-> directly in that case?
->
+To allow builtins with optional subcommands to explicitly opt in,
+this series adds the PARSE_OPT_SUBCOMMAND_AUTOCORRECT flag, and enables
+it for git-remote and git-notes.
 
-I guess it depends on the implementation, the glibc for example doesn't
-seem to [1].
+Additionally, the existing autocorrection logic is extracted from
+help.c so subcommand handling can reuse the same config parsing and
+prompt/delay logic.
 
-> In any case, it shouldn't be much of an issue as we only use this on
-> discovered path names, and those cannot contain contain a trailing
-> slash.
->
-> Patrick
+Some string literals are also combined so the full text is easier to
+grep for.
 
-Yeah we should be fine here. Thanks for the review. I'll avoid
-re-rolling for now and see if there are other changes needed.
+Changes in v5:
+  - Make subcommand autocorrection behave the same as command
+    autocorrection
+  - Rename PARSE_OPT_SUBCOMMAND_AUTOCORR to
+    PARSE_OPT_SUBCOMMAND_AUTOCORRECT
+  - Adjust subcommand autocorrection tests to fit new behavior
 
-[1]: https://sourceware.org/git/?p=glibc.git;a=blob;f=string/basename.c;h=1658ba98d3ff89e8257b36219599184866798d0d;hb=refs/heads/master
+Changes in v4:
+  - Add missing files to Meson build
+  - Change API prefix from autocorr to autocorrect
+  - Split the commit that moves tty code
+  - Add API documentation
+  - Use standard Damerau-Levenshtein distance and common practice
+    fuzziness thresholds
+  - Rename AUTOCORRECT_HINTONLY to AUTOCORRECT_HINT
+  - Change commit subject prefix for tests from "help:" to "parseopt:"
+  - Fix coding style issues
 
---00000000000012213306500b572b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5477993b1c68ad7_0.1
+Changes in v3:
+  - Align with the coding guildline
+  - Split patch so diffs don't get hidden by code movement
+  - Improve commit messages
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ub3VXUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK2hHQy80NWd2WGYrS1NjVnlWU0tPZ0NJWDZDWjlNdwpseFRjNisyRXl5
-aElKRytFZ1ozVjQ2dlM2ejJqR1A1Qzg3WU5mcFdoOHkrbVFWS3cvUVQwc1FjZWcrNGN0REpRCndm
-d29sc290Y3UybWU5UnhJT0lkS0JNdFRIWmllNldJM0x0UlY1VklqRzl2cDBrUVNEUGJPY0tudGZy
-RHQrQnMKM1FBRlFjOVUxL01iNmI1MldlTk1pZnNHbnkzbDREVW1WVzlUdTd3Vk9saUs4ZGc4QlEw
-eFRJby9Cc3laZ2ZjYgpMYVFvQmZZRWg1ZWU4VEljOGh1WVVjeFg2b2txSUtEbmc5VXlhaEwwNFVz
-QkFORlhvUnFqYkZDNTNWTExmSUhZCitBWFZkYWlUS2N6MGYxenpNK0VTaVFGUW9mMDEwTWl1NXVa
-U0ZFR1FJVzIvRnBoeEJLSnFoWFFRY0dYckQxQ3MKNXVrSVA3YXBCOU1ja2xYZGRhUG9pT3JlOTBH
-c0puaUNVSTFSWS9vRWswZmhHb1lSano1U3BhZ1o0SzU2aVl0cQpGWFh0QVFJcGk3ZzBneGE4TkFZ
-L0Z4ckhmZTJTdzZVYlR4OWN2WXZvYW5IRmx5emp4TXZZYXcxT0N0UlhOSlJTCnBXMmtvUGhIMGVS
-YmMxc1ZIclloQ1Flc1FOYWQ4RTRFRm1IVkNEZz0KPW5BaGcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000012213306500b572b--
+Changes in v2:
+  - Reword the explanation of default autocorrection behavior
+
+Jiamu Sun (10):
+  parseopt: extract subcommand handling from parse_options_step()
+  help: make autocorrect handling reusable
+  help: move tty check for autocorrection to autocorrect.c
+  autocorrect: use mode and delay instead of magic numbers
+  autocorrect: rename AUTOCORRECT_SHOW to AUTOCORRECT_HINT
+  autocorrect: provide config resolution API
+  parseopt: autocorrect mistyped subcommands
+  parseopt: enable subcommand autocorrection for git-remote and
+    git-notes
+  parseopt: add tests for subcommand autocorrection
+  doc: document autocorrect API
+
+ Makefile                          |   1 +
+ autocorrect.c                     |  89 +++++++++++++++
+ autocorrect.h                     |  36 ++++++
+ builtin/notes.c                   |  10 +-
+ builtin/remote.c                  |  12 +-
+ help.c                            | 120 ++++----------------
+ meson.build                       |   1 +
+ parse-options.c                   | 183 +++++++++++++++++++++++-------
+ parse-options.h                   |   1 +
+ t/meson.build                     |   1 +
+ t/t9004-autocorrect-subcommand.sh |  58 ++++++++++
+ 11 files changed, 361 insertions(+), 151 deletions(-)
+ create mode 100644 autocorrect.c
+ create mode 100644 autocorrect.h
+ create mode 100755 t/t9004-autocorrect-subcommand.sh
+
+
+base-commit: f65aba1e87db64413b6d1ed5ae5a45b5a84a0997
+-- 
+2.53.0
+
