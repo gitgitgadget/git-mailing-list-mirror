@@ -1,318 +1,148 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9EA2AE8D
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 00:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBC21A683E
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 01:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776817955; cv=pass; b=CgE5+c6+s8tSxgR8pPsFGdrrPTMSVV2wUH4YPeoAPzXH1INiTBT1Fyp/o5CEl7wiuExdjODLAbLnl3LZoKtsgpLua49xgpJXBYqJNFFXIbF441oo2xYcx1TaE85cWqdC9xeMkktCs1OmB0AFCeX3MTbP+aPOhvX/WYAQR6KQvV4=
+	t=1776821879; cv=pass; b=VncNxmqP9Purh/ZKaJDkP0u7vqCs9cvROETdONY0sissBjlhn5xcpAkhcol9aB0V5+SIfk/fN9noIjLQe3Atxh50TzAAUEn8x4zAFmNZ+rahOcevbHVl5PPOHhuaBWyTCdfkvQVjmXO14kMvvG7DgjOJStTqx07JF8Prz1Z4s2Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776817955; c=relaxed/simple;
-	bh=+Z9bqLTRuw56e/AmzxURXgdSIu6nxXKPK/Gmm9GYxmE=;
+	s=arc-20240116; t=1776821879; c=relaxed/simple;
+	bh=QbX3ito2/PHb5BGBxi7njse1rHdbSfzi2NjazHm9hMQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jmu7Kseb6SUJYmSpzAkcWCNsalRj4VXseocFjQimAe7LiefkmKcvmHeTeatlKvd7PodLS2rvxsbFwnPz6DICteWCTMllnmfEqHRPiCfKbJEQw0nlU+ayZOLK4FJYhLB+Ra4NYCw1u7Y+aLdQuyq4iQD6bLPcw0pGQwt8jUh7Vl0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WkGkTmoF; arc=pass smtp.client-ip=209.85.161.46
+	 To:Cc:Content-Type; b=WfihkdikDIH02aSNGeHUU0GVmmzE2gUCIT0V83IBGzDt9fTASWCgdHN0IrAP9VrBKIpwD1vi4hnkAoHo9QBzwtgq0e2oeYnGlJUO7eib33/39KhhdrdYq9D8wgukhYPRFXFpQe9UYBOXHs79Hx0jyJcLbm6zPr+sb0czzrkCul0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M5JDzZFU; arc=pass smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WkGkTmoF"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-69486849137so1350662eaf.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 17:32:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776817953; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5JDzZFU"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7dcd17e19b6so1190170a34.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 18:37:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776821877; cv=none;
         d=google.com; s=arc-20240605;
-        b=VQ/TDXymE5rhXenMcODDEMWd5J3w/WCYihgYb6Yjy1EMw+G4TBl9WVI/J566FNXbs7
-         K2R5iFg3lM2PV3tEDV8zPTE6Aqgbb9+SddwZYw6kpsw8zwtmNzHXHjm+v9zn/7ybETgB
-         8HDoaWbQbVz1gmrao6HlgPiWajm1An5v89Hp7LTmJRJ0T+sNbvpcd9QLcaFrK5mEtlvi
-         hQ+yIEEXSoYeoHTpm/N3Rv5nmtLdqUpX/jm/yybXdmzwR8INzk4KhP7Sz4wMQDvjH8BZ
-         hQ5tNMvJTI1/NTKELGj7u+YpSkiNSPaHOaAebfptlk3gLRHz1RmPGZU9DbnJsL3xLid7
-         MzUQ==
+        b=FPYq7vbSZ/yxIyYD/vlPErBCWsl9mdDhwjDMzcfrNlVYXPwn0fycMAaP1GqPeP/z9e
+         OKkUceCDL2T5tPrjDj+ut1UEV8AcUHRip/xrRjtPlb6xVIU1JrGYnYEveIbDS+Uc6c3V
+         8YvDqmxi2RlpLbFcEQ3sBUdzhHp3CT4jaNx9F0C8fVcEVGDSpFs2r/oXuD8YZxxM9jvX
+         Mp1ry+x2GyU61KeClmCDv8dQ4IApW8bC3Y7dvcANJ41xwWi+qYO59D9XW51XPyBLxKa8
+         Mn0jouqEQCx2rRHsQ/NoaPXE0gcc06si3K4inCLyblfOmIv8RPVneHRGpVpQ8PMMpkdy
+         FJhA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=20r6yTkgSgzNiBziY2hSS2+a751Z++Jk84VwcCZ6LPo=;
-        fh=SA66t81nxC4XQU/4vrl+WCXkowt3lMvgIejciFJn/Lw=;
-        b=cJN3JqlsXF+8dCUW0hv1pUiehjBpc/U7v3AXEJ6rFYKya1P62AZRPKSux10LmUuGjl
-         fgRThEmaSIdg6c0XFugxPzJEAcxngiYybbEHU+Nmejw5FExeZe/9VV1teLugDIiIVdbF
-         dF1sVflNzbQIwZos8o81z8RiviH/uhghHUe4Zh/bMwHcu9fJ0hOpYTZR6B34Hp30Lamw
-         i0naCYR5QYJ2NPVxXf5JBMqjzdBGn/1VCCHdaYJIsLn0q3DOmgg3ZN2LftmthkVUuxKO
-         LgfwQ8MhWmEriztbyCnkbhdPQfvZP1ItbEiwkdKmNTuugj5EIB958aGrqdN0OBtmhc2u
-         v/ig==;
+        bh=7/GxX1A+7Jeo1vjm4V/ZbZsSE2q3CftsRAp2dM+p908=;
+        fh=SlejNgZhDGxYE3RoeDx16OjaGxHLTwSxXQ+/jdvn8IE=;
+        b=AN3DLqZ6KeAsXdSMCT2N3pM5+d0Bz7+2lqDUQCfZoq9sU/LJmUmFne+CVzl7GS1fqB
+         BlgcQlKj/+eMEbJnDmzIv4TkjJNYPdkXF3cj21lLELG9PEeGaN3/WnyT18N+foLL3oXm
+         6GjXtPHTO18fXlc6ks2ERX2C55+JgpIoiAZFh/th9DA4YNIfd5rwGmnunuppIXq6XYo0
+         A9HQSYlP+a2H870sAmDXiNUlEIPy54nPKmoAAsJvGO6SPqR0+8JQWuHhTBv+l70G/dxm
+         VY2/t042AavHtTcLmuVmI5iptlTiFdjM+2gVen/z8LkRx0JFynVrZ4MGcVsbSXazx/wg
+         lKZA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776817953; x=1777422753; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776821877; x=1777426677; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=20r6yTkgSgzNiBziY2hSS2+a751Z++Jk84VwcCZ6LPo=;
-        b=WkGkTmoFIBgABsN30A4VukJtmTz6MQXCimnbLi0OUmW3xYIUAeBIq16kLW+XS5M7W4
-         JZZdlb4nleaxttPD+OyLmOrtxqMmps1uynALYSeOqpiapXVcL2EHPq0EzI4NdbocMt++
-         KyxrFdBe5c5wK+4ZZu1I79JSIYiIuVJkmug4TrxyEptnh/3LLyyq4N/U1Z6Nu1zsSz9d
-         m5ipiueDZQnpfj5A13c8fI2oOihGKET2qsdm/u1c7LacLg1xwdj2Emc/0SQ4wZZDIfcs
-         HGpyNc0HQDuxiaBesOzIb24MT/ZePxjtp591kT75GMwWMWP4urB00+ISyFJhcAX7D+Ql
-         FVGw==
+        bh=7/GxX1A+7Jeo1vjm4V/ZbZsSE2q3CftsRAp2dM+p908=;
+        b=M5JDzZFURDD1DLcgc18QjNpeX4JLGbkfwgjIE3YTcT4let3T8pZJSmuxZeFwQnmGJN
+         ED3xOoYlgRHfSP7pdg4cs9UUIqNzw2dprYVJRrRR3e08EL4uqQoiel12eoG7BEsydjTD
+         s50wzRUMcoA2vc+z4wxmXPZ732DqQ/8cV7WAvPQf+USBlwYxHd0n/hn98qAI3+uZabyo
+         2wGJCC3ksgvD4gzRfwenGN8IFo5gptPSDHVmQCRJlYn8Oj2icoPcykaycLyK7rwvxi8w
+         5yVft0LgwH/CpWG+d+vJV1DL7j4eyHnGC9GfgRWw4L4sqq5bUDFT/UWnqVOQyKo1OKDN
+         dfJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776817953; x=1777422753;
+        d=1e100.net; s=20251104; t=1776821877; x=1777426677;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=20r6yTkgSgzNiBziY2hSS2+a751Z++Jk84VwcCZ6LPo=;
-        b=e+V2FDwS/NjAHKRQI/fyt+m+shHs3yEVKThNgPJxpdIWGoXr+BsF/HElfqfZj64bms
-         8ecp2O7iyUOPYWAF1Sa0V2NrA/hcZMr4hFpC+nnzMrtXt1KvqfjxvhNPz5NgP6vVIqte
-         uZnxsG2xN1Tu+/N2DpVaqUKsmpUfRo88nM5p+H6tyiBIvZRK+0Cv1N9P5/sNkAUGV+ln
-         o4RYV2W2bn3QMRpVmbzCkKhGdVwyTAvducN2Mg4LYx5gCRCSyvuNCZvACECwHXrbWZTQ
-         6918wWO+7xvwywjyrgU65NS1MiXo7FF9hdAMpK+ExZuv5eieYkM0IW4RlFUPFlfgxiwF
-         M6Zg==
-X-Gm-Message-State: AOJu0YwfK/pQ/CBbBcaDQW113/LlcmVUdJFzg2sMmWiCM3BWXr4km2kF
-	0aD/S0TPKb3SHZ0kXCzKYP3J86DoEK4D07JjpjA7QjmKix7ikjkNMlDGuCieFDIWqEu01/0IzlH
-	f4UektZz259nRXNP9tsxH69eQZM13wqA=
-X-Gm-Gg: AeBDievfe9ijTQBfAZykRSZP2tSc+aipZcPIdgLoD32KKTjTZB01huWSMYFBsiSvwUa
-	2SPbhAwK5S2XuCDLGQL9MXfrKLHAWIZAwPX/FtN1g7cB/5aA+62Uv0pODhgA1OO48S+X0SeKu1F
-	VPCyC6ndxV08SDOvW/NXHNMpIAKEfkHB1U7+L6UXnYGHADZZGSVz/wT5lwPsvDNGAlkRcOfvFzl
-	cFVTGshAm48QjHyAra+6dlCVwcKSXpoWDytCJvTgpdN1aez9o0vWcdlx/vNC2kjto48pJaq5071
-	bA9x8vYHHd8KOQJ05vJjC9vHZ9jcWOILOTMhYALdd+1rCsiHn4sgOCvGUYWdKXE+cK3xlwOhyaG
-	5D0mTvEcV9Vn3E1Bwh1Yv5evrQp+knUJykKrXSo+sDfjXzhWW
-X-Received: by 2002:a05:6820:210e:b0:684:dd1d:5b8f with SMTP id
- 006d021491bc7-69462bcecb3mr12002724eaf.0.1776817952892; Tue, 21 Apr 2026
- 17:32:32 -0700 (PDT)
+        bh=7/GxX1A+7Jeo1vjm4V/ZbZsSE2q3CftsRAp2dM+p908=;
+        b=lr0rOBx7ajAMbY9Hwd5iMM99t8IFBB7JYPkf9xYYrrrmuSpX2IeF5pzC+hzytVO6nP
+         QKRk7SQEWF+khy/UZmIO3Wp6HjpUoWKLxeH+5MEo/8h7so2cEHPy3HRg/Yl9tqxEDrDl
+         I05emhT9CthLxxfuRaTZ09Xrp8UbbxjqBPMukwBUmInQSJBktR287Q24mNTqHVBFGEcS
+         X/N9K7BwE11MnIcJmavhjB5MIADL7iIT1A6OzTG7L/bz/kHmC4Z5sT1yHGWJQfibCBHr
+         Izl/FfqpAz4PgaPJwrvftY3OpPCBQOP//ILAV7XsB5frsZhSaqSpruYVn2EIzIXRhPU0
+         sasw==
+X-Gm-Message-State: AOJu0Yyz/uUDP1JPAVGhSpYiZ9Kb5OYUj43pgygdNj8VpmXfJcykmLBZ
+	R8T+4y3Xun+X6xetAuXkiJ3Natygk+ibimlkuzrPxId+H718MAIccN7z7cdlTs5x53SnMeJrYDD
+	8ILKRkIO8sdnl1falKfrJKZV51sjYwoM=
+X-Gm-Gg: AeBDieth+iWoROqXrhWFMebN7yEFRKnoqC+j3Ucrair4Lq814KW3lgJyM4npOF8cZAB
+	BfZC8ccnwFIy6D0wJ+YRy4hJ2iszJv6UvhnteYQ8VGYmbCu9xBPAFG5sjWOkT7GFUyehdX6+YIr
+	6fZu0dKjcWSexYw7P+FIhYt1n0N6qKjPtfZjgcpRCn9kJT53goiSkBUW6tWNDubi2vsjVyBm6aY
+	eOebd3sKhIgmLOkjmqyYi0JLDZjFx9cV1S4ap2iEAF1w8SOfXEVTxiP31mZvDzDEZXm2aSG1gFt
+	eJYv7ykNQ4g/Fi8i61igdMBbIwYM4AyqKhi7wQc9KF77EqvZ2t8nsyUW0LIPgkbbto2iNnWqvub
+	x+Td6U2hL6tMUbEhmo6VfcWEnSndD2Ludjeibrg==
+X-Received: by 2002:a05:6820:c0ce:10b0:67e:f8c:6bcc with SMTP id
+ 006d021491bc7-69462e64b14mr8263331eaf.19.1776821877407; Tue, 21 Apr 2026
+ 18:37:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1776697483.git.phillip.wood@dunelm.org.uk> <d20dc1f6550078883995ae963b91faaa00984c6e.1776697483.git.phillip.wood@dunelm.org.uk>
-In-Reply-To: <d20dc1f6550078883995ae963b91faaa00984c6e.1776697483.git.phillip.wood@dunelm.org.uk>
+References: <cover.1776124588.git.me@ttaylorr.com> <cover.1776801694.git.me@ttaylorr.com>
+In-Reply-To: <cover.1776801694.git.me@ttaylorr.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 21 Apr 2026 17:32:21 -0700
-X-Gm-Features: AQROBzDWCDAzvBXiR8AxfvhmJi7OJl-ATyiPfuRw-MdCFMLEatRQ8E8dTF7MytY
-Message-ID: <CABPp-BFziRXjuMKqf=RHgCwuCcujXSSrz0f+BS4pvE6EUbk-WQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] status: improve rebase todo list parsing
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Date: Tue, 21 Apr 2026 18:37:45 -0700
+X-Gm-Features: AQROBzCs_bVDmYsxo3udND5DaDSVrW5beXlvJEG3mIz_Y4WI9ECn8B6RkQQtIYI
+Message-ID: <CABPp-BGkfavqezk2SV3+K6iF8MLm8j_=ijHiPDLmv_U_o_Ykgg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/9] pack-bitmap: fix various pseudo-merge bugs
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 20, 2026 at 8:25=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+On Tue, Apr 21, 2026 at 1:01=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
 >
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> [Note to the maintainer: this series has been rebased onto the current
+> tip of master, which is 94f057755b7 (Git 2.54, 2026-04-19) at the time
+> of writing.]
 >
-> When there is rebase in progress "git status" displays the last couple
-> of completed and the next couple of pending commands from the todo
-> list. When it does this is tries to abbreviate the object ids of
+> This is a small reroll of my series to fix several bugs in the
+> pseudo-merge bitmap implementation. The main changes since last time
+> are:
+>
+>  - Fixed a use-after-realloc bug in the test helper introduced in the
+>    first commit.
+>
+>  - Swapped the order of initializing and cleaning up repositories in the
+>    new test scripts.
+>
+>  - Updated bitmapPseudoMerge.<name>.sampleRate's documentation to
+>    describe the range as (0,1], and added a new commit fixing a broken
+>    example in gitpacking(7).
 
-is tries =3D> it tries ?
+Thanks for fixing these.
 
+> Range-diff against v1:
 [...]
-> @@ -1363,6 +1363,51 @@ static int split_commit_in_progress(struct wt_stat=
-us *s)
->         free(rebase_orig_head);
+>  4:  af9f651269d !  4:  07f70a07c20 pack-bitmap: fix inverted binary sear=
+ch in `pseudo_merge_at()`
+>     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'apply pseudo=
+-merges during
 >
->         return split_in_progress;
-> +}
-> +
-> +static void abbrev_oid_in_line(struct repository *r,
-> +                              struct strbuf *line, char **pp)
-> +{
-> +       char *p =3D *pp;
-> +       char *end_of_object_name, saved;
-> +       const char *abbrev;
-> +       struct object_id oid;
-> +       bool have_oid;
+>      -test_expect_failure 'apply pseudo-merges from multiple groups durin=
+g fill-in' '
+>      +test_expect_success 'apply pseudo-merges from multiple groups durin=
+g fill-in' '
+>     -   git init pseudo-merge-fill-in-multi &&
+>         test_when_finished "rm -fr pseudo-merge-fill-in-multi" &&
+>     +   git init pseudo-merge-fill-in-multi &&
 
-I'll put "thinking out loud" text in square brackets below...
+Here you fixed the order, but...
 
-> +
-> +       p +=3D strspn(p, " \t");
-> +       end_of_object_name =3D p + strcspn(p, " \t");
+>     ++  git init pseudo-merge-fill-in-multi &&
 
-[Advances p after whitespace, marks the end of the object with the
-next whitespace after that.]
+...then you immediately run git init a second time?  I'm guessing this
+was a stray edit made while trying to fix the order; could we get rid
+of the duplicate?
 
-> +       /*
-> +        * The for "merge" and "reset" the object name may be a label or
+>         (
+>     +           cd pseudo-merge-fill-in-multi &&
+>     +
 
-The for =3D> For ?
-
-> +        * ref rather than a hex object id. Only abbreviate the object
-> +        * name if it is a hex object id.
-> +        */
-> +       for (const char *q =3D p; q < end_of_object_name; q++) {
-> +               if (!isxdigit(*q))
-> +                       goto out;
-> +       }
-
-
-
-> +       saved =3D *end_of_object_name;
-> +       *end_of_object_name =3D '\0';
-> +       have_oid =3D !repo_get_oid(r, p, &oid);
-> +       *end_of_object_name =3D saved;
-
-[Tries to resolve the token, doing NUL-termination and restore dance.]
-
-> +       if (!have_oid)
-> +               goto out; /* object name was a label */
-
-
-> +       abbrev =3D repo_find_unique_abbrev(r, &oid, DEFAULT_ABBREV);
-> +       if (!starts_with(p, abbrev))
-> +               goto out; /* object name was a refname containing only xd=
-igits */
-
-[Ensures what we have is an oid rather than a branch name that can be
-resolved to an oid]
-
-> +       p +=3D strlen(abbrev);
-> +       strbuf_remove(line, p - line->buf, end_of_object_name - p);
-> +       end_of_object_name =3D p;
-
-[Splice out a bunch of characters in the middle?]
-
-> +out:
-> +       *pp =3D end_of_object_name;
-> +}
-
-I had a hard time following the logic in the function and trying to
-figure out what it was doing.  I went line by line but had no mental
-model to follow.  When I got to the comment that is now above
-format_todo_line(), I suddenly understood, but without it, all the
-code was hard to follow.  Maybe a small comment at the beginning of
-the function along the lines of
-
- /*
-  * If the whitespace-delimited token starting at or just after *pp is a
-  * full hex object id that resolves uniquely, rewrite it in place to
-  * its default abbreviation, shrinking `line` accordingly. On return
-  * *pp points one past the (possibly abbreviated) token. Leaves both
-  * `line` and *pp-advanced-past-the-token unchanged in all other cases
-  * (non-hex token, unresolvable, or a refname that happens to consist
-  * only of hex digits).
-  */
-
-?  (Assuming I'm understanding correctly, of course.)
-
-> +
-> +static void skip_dash_c(char **pp) {
-
-Move the brace to the next line?
-
-> +       char *p =3D *pp;
-> +
-> +       p +=3D strspn(p, " \t");
-> +       /* The (void) cast is required to silence -Wunused_value */
-
--Wunused_value =3D> -Wunused-value ?
-
-> +       (void)(skip_prefix(p, "-C", &p) || skip_prefix(p, "-c", &p));
-> +       *pp =3D p;
->  }
->
->  /*
-> @@ -1371,29 +1416,57 @@ static int split_commit_in_progress(struct wt_sta=
-tus *s)
->   * into
->   * "pick d6a2f03 some message"
->   *
-> - * The function assumes that the line does not contain useless spaces
-> - * before or after the command.
-> + * Returns false on comment lines, true otherwise
->   */
-> -static void abbrev_oid_in_line(struct repository *r, struct strbuf *line=
-)
-> +static bool format_todo_line(struct repository *r, struct strbuf *line)
->  {
-> -       struct string_list split =3D STRING_LIST_INIT_DUP;
-> -       struct object_id oid;
-> -
-> -       if (starts_with(line->buf, "exec ") ||
-> -           starts_with(line->buf, "x ") ||
-> -           starts_with(line->buf, "label ") ||
-> -           starts_with(line->buf, "l "))
-> -               return;
-> -
-> -       if ((2 <=3D string_list_split(&split, line->buf, " ", 2)) &&
-> -           !repo_get_oid(r, split.items[1].string, &oid)) {
-> -               strbuf_reset(line);
-> -               strbuf_addf(line, "%s ", split.items[0].string);
-> -               strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
-> -               for (size_t i =3D 2; i < split.nr; i++)
-> -                       strbuf_addf(line, " %s", split.items[i].string);
-> +       enum todo_command cmd;
-> +       char *p =3D line->buf;
-> +
-> +       if (!sequencer_parse_todo_command((const char**)&p, &cmd))
-> +               return true; /* keep invalid lines */
-> +
-> +       switch (cmd) {
-> +       case TODO_COMMENT:
-> +               return false;
-> +
-> +       case TODO_MERGE:
-> +               skip_dash_c(&p);
-> +               while (true) {
-> +                       p +=3D strspn(p, " \t");
-> +                       if (!p[0] || (p[0] =3D=3D '#' && (!p[1] || isspac=
-e(p[1]))))
-> +                               break;
-> +                       abbrev_oid_in_line(r, line, &p);
-> +               }
-> +               break;
-> +
-> +       case TODO_FIXUP:
-> +               skip_dash_c(&p);
-> +               /* fallthrough */
-> +       case TODO_DROP:
-> +       case TODO_EDIT:
-> +       case TODO_PICK:
-> +       case TODO_RESET:
-> +       case TODO_REVERT:
-> +       case TODO_REWORD:
-> +       case TODO_SQUASH:
-> +               abbrev_oid_in_line(r, line, &p);
-> +               break;
-> +
-> +       /*
-> +        * Avoid "default" and instead list all the other commands so
-> +        * that -Wswitch warns if a new command is added without handling
-> +        * it in this function.
-> +        */
-
-Nice. :-)
-
-> +       case TODO_BREAK:
-> +       case TODO_EXEC:
-> +       case TODO_LABEL:
-> +       case TODO_NOOP:
-> +       case TODO_UPDATE_REF:
-> +               break;
->         }
-> -       string_list_clear(&split, 0);
-> +
-> +       return true;
->  }
->
->  static int read_rebase_todolist(struct repository *r, const char *fname,=
- struct string_list *lines)
-> @@ -1411,13 +1484,9 @@ static int read_rebase_todolist(struct repository =
-*r, const char *fname, struct
->                           repo_git_path_replace(r, &buf, "%s", fname));
->         }
->         while (!strbuf_getline_lf(&buf, f)) {
-> -               if (starts_with(buf.buf, comment_line_str))
-> -                       continue;
->                 strbuf_trim(&buf);
-> -               if (!buf.len)
-> -                       continue;
-> -               abbrev_oid_in_line(r, &buf);
-> -               string_list_append(lines, buf.buf);
-> +               if (format_todo_line(r, &buf))
-> +                       string_list_append(lines, buf.buf);
->         }
->         fclose(f);
->
-> --
-> 2.54.0.rc1.174.gd833f386ac5.dirty
-
-Other than the minor comments above, this looks like a nice cleanup.
+Looks like you addressed all the feedback so far from v1.  There does
+appear to be a new accidental double-init that I noted above in patch
+4, but I didn't spot any other issues.
