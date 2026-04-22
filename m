@@ -1,54 +1,54 @@
 Received: from SY5PR01CU010.outbound.protection.outlook.com (mail-australiaeastazolkn19012070.outbound.protection.outlook.com [52.103.72.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8903344DAD
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D119A3CF663
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776860400; cv=fail; b=T6EQRP6Rf4WU8fWPFUAPKOHGYdlUiPUiC1PPHJEB/+4d5RYzGP3mkCtPiSoaS+FS83l5CZK61uilHeloNl0AaEyS0SM8/JIJOKnbuGN5c3sRlFK0wOEB5KN57Pz8JBaWBdEFeIWtEprP3F1TntqaJhNG2lYdiRPIFg0XBvzgIxM=
+	t=1776860402; cv=fail; b=FZ3eY77Ci2OhDP8G8csDDFqjag1AXIUu9qc59LNgOZsY0L1kXRQhKdmnmIiME3TVaP5flZMl7gUhGsVPFa/5nV6UQjAgAg0Cs19yeX7+/09UqwkyYEMuabwzUPeln5aP9KjY2LQyJwfDGq0o+zSAZ+fvFjnI6yaqxX2aJF0UKdg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776860400; c=relaxed/simple;
-	bh=68FebspMp9Q6D0Ym8ldxHBPxN4S0c+O2EGeggJKUxT4=;
+	s=arc-20240116; t=1776860402; c=relaxed/simple;
+	bh=ooNaqs/PGgKqVNFJF0CF4AUcm5FWxbIvxWlWMcts9qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=p9VrqcnNUvd//0vG3g/a06NkNhVJ4ec6CZQ6gLYVwZjyEdxSqEtloCS8AXqqdUJXeOoUMnEQzmxSIlm/voYuFGBm0qGfBzzadfZBsgOlS6pdO5nSVOPklzzbkoKO6TD/NXAVKH+enCbKWQkgZSPx7j6bBDwhyibYsXE7e2a0yuo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=lKtOPj52; arc=fail smtp.client-ip=52.103.72.70
+	 Content-Type:MIME-Version; b=B9R1qfaVjciQ+nYoYX3qJI358TbVi26qEYdHsuJx1DtW9+ixRMW003wXjeUGem3qGDHO2fbBqniRoxpNdrbp4mRGEA9McVUKJfMdgZuVUuZM88S57SuZpvASZ30yoEAnIW5rYYiU9hi9Zv5n84ueiYGzTS96aMpkBi7bRvU7LYM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=WxnVJidT; arc=fail smtp.client-ip=52.103.72.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="lKtOPj52"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="WxnVJidT"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W045eUtkHq4I3OAhdHfaVRGm+1P9L4FF16JTmYgkQdh0V26NbZYmyzw0pS1PZIQ4lkVdO9iB1uPjXBIP3ogATkv6loe1yGYODjZstAKJV5QgVeWl9pR1B/lt1eTSHJgLixhlfV0HyvubeYlwH+y0ed9xrPk5JupsqfJ/oPj1mFM1p4UHb3y5w5VJNei7ABCZ1r7hip152Mr/ecl7XWTx+3U5y1UfJR94Z9QnFSqgKNit5tQHGJiqPE+k7z3Mgpu4ZWyF3cngSTyCxL9S3BuUiSMQ7M2AE9lwqfnXVsgdXyAsLu0q4s2uNCNteS4yxf53MmG5sQIbXzyy6Pf2XGGDrQ==
+ b=iUC0ElDO4hKLGtGEEh6zy14x5oaI3U+6tDCVs1wBviL0247OHAz7OSywP6xW5X2cZ6RhZUsNsOsejPN6t8s9l1+RjM2waIhCTovgkkLONze6KmWNJUhOBX2tWTpUEXFn7V6YncyXnhlGzhA3JTjDnUCwLKGoUjTn2edHg/PAk4PWrSzmkxDcFzG+uOuNZ2Imgd5p1xW32l1emmyfO2V0NQ7f126UwnpG376DLl8FH28LG3HKClRcYNPJ9swNeaiKVHlSn4h3/3HWp8vAQoMX85sYy8A2XJO07ovpUtLAIy/HSxFUUvEtnXA3Z7HWLxUIclfk0+de5/HsrOLBln3Pxw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8UDxO4fgtt3IkUlFcZtC12qDoEAxN84EDvPGkkhJhBU=;
- b=EPcHVrZ6JusdhcZHm7qAohYYNJsHOtofcDSSn7RjUxZOQ2DlixR+RRqlIJ8Sclux9ofLwiimhuVb+mlieCc23OKPZk5djSmRCZlr5GMHOSBG3wombjuTQdD6R3tvuLKzxGQcEIqSZZsGDTsweWbO3hV8Bp2ThiaTtqB+b4xe5hJRn4BXvl6RRnbKlwnG6RRAM8dME/8BlK2RK4of4ZAuW7rqn6NPfugoOf0h7upB1VNuVzO0cv2cFHzgdPEY/s9QO3b8cQrNhlO1bjdw8EaIjVA9QoloHf9OY9bR/qZGVHTn02cdDS4D6IszBfiqeTr2BmrZKLQjvTKvXikj/y1rpw==
+ bh=t2DPK9N8VMtf1TjiB50KiZxnQaeDK/Gy/dy54YKGKPM=;
+ b=eYk+HVR3V8aFzYq3dujy7KcqFtOA4vLbPByM/VHh0pBYraUv8EiJfQ6TGsRs/Yz0qc0aJXDi47Nrr4DkSIQIpPh6rgPMLZ/GYPJVK3iT00bpmEgY0gW4xGie5kvdT1yv/xzVK3NGtiFfhzrHqEIKOuJtzl763z001sNvfqsOZoMSOz/e0TIguJWRXyLDpYdvBnD0Dgqi/DCCqzMV4mSNQL5BM+P9mtGHmg1E1ZJdNzHVQ6KJKqjOOZ9SPlHSyb6YexbBy7RIr9jrw7p+Dvr3CQIbaD7Dx832a/vg+/NDLO5bmIKViImoFuBVL3SsvZHEi6O+UvjyewsMKIGtApk25g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8UDxO4fgtt3IkUlFcZtC12qDoEAxN84EDvPGkkhJhBU=;
- b=lKtOPj52LtWmyNQ59KUBdMdA9OlwwdDhsxQRMcaeq/UzQjQBJSz+a2kFvwVyHaJAgVOggjfVnHPRgoUQMYzl9ir4aXXM/7f7a9KbBV4OD3UHVV0rYmtm1g9PeeQ0iSsd7O4+cMNLWIggvA+eiHWwcakdrQZ3Fz+XUBqCHJXzDOQxtDURRcHJnKx39VJ41cYwACpL+FrynBcaj/n+FNkZQOqTcCF4FCLraKIugWaVWSvG4NJ5oFZSJ9iRdZUPZ8/guJTINKG9fo/89L9yKBwlOVg/wTvJt1wo/FxHK68gs29vTqQg0M41stb394GeK16mFMbzplPWi4SHe2A1Wix4OQ==
+ bh=t2DPK9N8VMtf1TjiB50KiZxnQaeDK/Gy/dy54YKGKPM=;
+ b=WxnVJidTKMIz1DI/00S/iRgl8VQ0e5rZfdZpA642+Ied20dbcpVosgJ9dVjj6TbVnXqtt6i7FXl2OGF+5aU+Hd7meoDztNRbUtrx1QpsINft83HMQEpUE9cQnCTXtf/q5+/2yHvolGcrRxVsz925RTdM9j9HGsjWJoJABnV3k+DsivHUw6s927GgjzIZQKD+7/NmAJUuFihA6H4df/egzvCPTUhLIvUqsRdTWysAUo5Qu7spRZQabNezHlQ6IHMDq5ebdUpMZoY8CP7SOuMYTf46piPQJP0mwGP2t4vvk0Qige+xuvTxTFGVZgY70shETyeg3hnEn+Nt2CdP4v9f1w==
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
  by SY0P300MB0530.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:286::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.18; Wed, 22 Apr
- 2026 12:19:54 +0000
+ 2026 12:19:56 +0000
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9846.016; Wed, 22 Apr 2026
- 12:19:54 +0000
+ 12:19:56 +0000
 From: Jiamu Sun <39@barroit.sh>
 To: git@vger.kernel.org
 Cc: aplattner@nvidia.com,
 	gitster@pobox.com,
 	karthik.188@gmail.com,
 	Jiamu Sun <39@barroit.sh>
-Subject: [PATCH v5 06/10] autocorrect: provide config resolution API
-Date: Wed, 22 Apr 2026 21:18:06 +0900
+Subject: [PATCH v5 07/10] parseopt: autocorrect mistyped subcommands
+Date: Wed, 22 Apr 2026 21:18:07 +0900
 Message-ID:
- <SY0P300MB0801D329C871F2F277526CD7CE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB080136CB238AAA21CB36153DCE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 References: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
@@ -58,7 +58,7 @@ Content-Type: text/plain
 X-ClientProxiedBy: TYCP286CA0104.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:400:2b4::20) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <20260422121810.307862-7-39@barroit.sh>
+X-Microsoft-Original-Message-ID: <20260422121810.307862-8-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,59 +69,60 @@ Sender: Jiamu Sun <sunjiamu@outlook.com>
 X-MS-Exchange-MessageSentRepresentingType: 2
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY0P300MB0530:EE_
-X-MS-Office365-Filtering-Correlation-Id: a2e5bf24-9550-4082-4b88-08dea06975b0
+X-MS-Office365-Filtering-Correlation-Id: 52b28605-6229-4815-b68f-08dea069767c
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|25031999004|5072599009|15080799012|23021999003|461199028|8060799015|19110799012|51005399006|55001999006|41001999006|440099028|3412199025|40105399003|1710799026;
+	BCL:0;ARA:14566002|25031999004|5072599009|15080799012|23021999003|12121999013|461199028|8060799015|19110799012|51005399006|55001999006|41001999006|440099028|3412199025|40105399003|1710799026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?gHLbrTdrC/gSBtAVUKJrT+pVvb55emUWWeV1msUZLNPwXDINWXvd0WtwT7u8?=
- =?us-ascii?Q?sj2tQkysOLx16qmvdUvs2X3bmpXHE8N62+7l/yLHnTBd0X5YalvmuTqUwMD9?=
- =?us-ascii?Q?MHpFvs56Xh/hVYiKmarYDQ4dSqT548UrQ9635Aqm//mcrgMRJr8SXLtzu4iL?=
- =?us-ascii?Q?l+JIpxMyTEdIiz8ixGJnshcy7Orh8rayek4GdUcJjNFccSNrdjnxtCgLpujO?=
- =?us-ascii?Q?rcEI+G3ndZtkbwGdRoH0lFQi52xZYZVB4pk51BSCwYTL3cCPJ4a/fGAzqVn/?=
- =?us-ascii?Q?DPJqyL5vWjnFISuQhomYRrjgqV7FcGH9Y9QRA8G+VT286C4SR3gp9Xf2e9RY?=
- =?us-ascii?Q?yuP8Wyezqf4HhxLpv1ZrzNHABYxNvhC3/AEWpYBAbwKg+vZ6Mg8PJQ5y8rFw?=
- =?us-ascii?Q?puVUmp2csUeT5uq2qBhYpI/vM46tTguPQTSOBb1TOLUq9vLG5mRqUBvQB9m9?=
- =?us-ascii?Q?uVHN9rCx3U97/LQzJEXATN6j1DJ9qWbPvNwZsfCDT5NtBAaBD7v6p3TPFdyE?=
- =?us-ascii?Q?hzBoCnZ2ZVr6fPhveJElatzCEzK3OKN4wbLgoegriMmDiQx5dXm0Ktf7IQGn?=
- =?us-ascii?Q?VWoXJu4IOK4/j7Uw4GKV40gIP+x7m7LdSUPn41HYeXCnKhe9VRSeICHbildN?=
- =?us-ascii?Q?0g3mTxR9zD6hvX6G28R7d6TrHpzpb83aBCoLxCevWBaq0uYErLDHDKphdohK?=
- =?us-ascii?Q?DKlVrdBSyuVJCPBneRHCi+hGt1Dc0ogeO8tMN37vekbAYTpvSkq1tHs92c5z?=
- =?us-ascii?Q?VO+IviINvB1uKg/pxxte2ksuS4D/w9shUffrIGAdPJkGzZthLGsHID5/iqqB?=
- =?us-ascii?Q?jYDX+NWcet477gjry9YFz+5icUpTZ/Bir9tFoOQ4ZiHpWLjTvLG2QgHQZXR7?=
- =?us-ascii?Q?+YVQeI4TEzaZXZO9Tof1LMxj3bf5l0IJoPWzUuCq5j5Lgsuiu/MrHtmRBq7N?=
- =?us-ascii?Q?z/ACBTTtnl+MwL6UiEOeqGTlfNJ0jfuLFTvEFwVaWjek07zAUhHGgBh7DYRc?=
- =?us-ascii?Q?2i05lpeTYa7i5rdA+OCl+kLi+KK8HBxuMFVPZdp5fmXpAus=3D?=
+	=?us-ascii?Q?pPsZuvlqVl+McjAe8x4sbo05VT8zOE0t7+Ie3zX8o3/uwHpDohmuxU9AaUjf?=
+ =?us-ascii?Q?/1HdDXjAzWg6OJzQIc1bd3MCiRo7b5Ag+hulMUwV9tU7HrDmVBqIIDDNOClf?=
+ =?us-ascii?Q?HayKTqNBJX1NXb8W7xOJOHMKjrKTsOsTr21gCF4fe9b7i4b3+qTZzPGO5ki3?=
+ =?us-ascii?Q?CMbkxlNhy24PzeKG7xb1wRByOAuGXwpaBRy7YWm7Npbx8XG5wlAUPGX8RQIc?=
+ =?us-ascii?Q?FDOErfToaJRVOpXcygapVSEOA9zcBnCoWAcRMWgajtlZyPIZTOKUuhRusX1r?=
+ =?us-ascii?Q?67JcceZ0TWhTJtZX5dwV/W66gtNFNKG1/DqiWjavQBtL2CA5Sm/36RVvIlc8?=
+ =?us-ascii?Q?R7xU/6+kyxxVte6r4GjfQy3x5OCTfQ7bDRGawamTlW3mSBJYgnHViOysoTBd?=
+ =?us-ascii?Q?hW9WszQiFzo93su1SDe+KtqBe0CXgwAl/MjUXDk+pY7FKAFdpcTS4DHyUgaH?=
+ =?us-ascii?Q?/ZJAboaWkw9fnfb9ZUbZz5IYAhQ/HKM9LY4MH/2r+fwXxblOx077QUDDlbWz?=
+ =?us-ascii?Q?EotE5Ya9DghSDi0G1/WkIQvSDcEfw5ZiPPsRh1Kaz3naU/t8nBoZsfzgG0LH?=
+ =?us-ascii?Q?dNYUsdyN/i7eUSztbwGer60ix/mD2sL7BTPU3LasLBgzuXKV3l2EC46FAdFS?=
+ =?us-ascii?Q?t/BbTXqXCUdryirkW+gPyPGxZtpzWS33s8eh1TwiAB+MmPoHFj1dlA4/kP9y?=
+ =?us-ascii?Q?XUmtop9bih/z5DMCJ7WFn4UFO6tEFx20BRlyxzrWGbqSa4ZYvW30kGGyWrOf?=
+ =?us-ascii?Q?OcyrnrDCLGB10dVTF7kqqIersA4lvnLNsAFL9Z7/R0aaoD2PohCfkfTbei6s?=
+ =?us-ascii?Q?rZiGh7Yh8zVdsXUuk8b1bnwtTUUwrt2fuV97fZOJcgmFG7LuhM7QGs3t6jse?=
+ =?us-ascii?Q?HEzsQuTxBDyBR4moQ35cmcrtWw4Itr0/s8hu58ycyo7TYN8Zmf6Os7K9tXGq?=
+ =?us-ascii?Q?YkolLf+5QkuKQIrC0Biwr6aufEaROK4jHSHK7j9djX6eJ139eVUooKfT3rAf?=
+ =?us-ascii?Q?X3PlOyeN/+3EKexJTcqFDMQAlfSim/Ie7kyoK9JhArBfRvLJ+Xj4ZK19AgrT?=
+ =?us-ascii?Q?OLNlPz4E?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?b1I63p3Dr41WIsHaNEaqwj2iQhfqxBFW1G4Xgkll9by4UW7KXFJ9tQ8CdxHR?=
- =?us-ascii?Q?z5/ZFFrpuqkrpceA63wq7RhfTWIuy4BwubBarzEcljnuIQ/DMVIkQ/XTVT99?=
- =?us-ascii?Q?qSiw6Mbv1uimNf4MBgDwzxSqGhy1V8ynB4O4hvebxJt1aUUD4P1aFY1Lmjtd?=
- =?us-ascii?Q?4y0jnnvfNq2IS5YdqzmSih90L1xqCtH5TtUdF5CLAmkzotapP1zio4xqDgtm?=
- =?us-ascii?Q?ge9lmoGaeA0IHPCaM1kbnlmGsn2tL6Uam/+wb9lK0wzNnmWpHH3vgOsUPmVg?=
- =?us-ascii?Q?xJHv9f2uWx7W3SqwknSvzjONLTWkvMVGVQW1pLKrW8Fl80nYpj+yQRCaDXIf?=
- =?us-ascii?Q?W84hr1RQcyAqKncsVJNddKHbWgNyBAca+yNXzDseUZnoFC5gBa+HA/dcfzjH?=
- =?us-ascii?Q?mVvGCKEBu1hf+eLD+dxIG232zTuvKmOTApZymXI9CvIemdk/zocBIj6BpJDe?=
- =?us-ascii?Q?RLiKODBpAHBwZiaAjxnqd40yGs30oK4Vlk/fs4d5zShTMmurQ5nfWJH5Rk2C?=
- =?us-ascii?Q?/Zkyfcgfc80vCLqTBHQny0Z1n47tDRAqvjAtoIYnwGep94f6i4yPP0oQs9RK?=
- =?us-ascii?Q?1n+zMOl2vegy6jhjMPji9zO48X8GVK2MsaIbh3r5fw2Of4jyHksUP1nA/CGK?=
- =?us-ascii?Q?rTZpS4kr2rCs6tD6OsuOs/WlSiOD39Pz13xnzdUFIvrqArMk8ggbKEIOTg3c?=
- =?us-ascii?Q?y3Gm4ywEMXOFwTWUmBxNWOEWGuDOFU0TZJkujMrpkFNrtIY332Op7Swi3lTN?=
- =?us-ascii?Q?A7uqBHHMzZanDN6GtGrxnwbl700pKB4Jq8Elh0TsrGBsFqsVl76kvOqBTwnP?=
- =?us-ascii?Q?uW1vQU+mUrYb+B5ofPTqZwJzIzu15gljBwd1d+IChuOiUQAZPeLH6h2vipL3?=
- =?us-ascii?Q?GqjfAv3XdBppxrapSQYZtsLYzO2DZER9/DN9hmD30U106dtLBhs1Fg2gM0Xk?=
- =?us-ascii?Q?8R/kgf5/tn2ud0tL0z9BxbzJq1/WxsWuCrYMc/cMkZ3TzkhblqBxPGpntapc?=
- =?us-ascii?Q?XzVzlmy2d2w6OQGIEQa5eVkgEsNJR+gBkcYfdyupjuqqzcjhdCSFuCs5qsYJ?=
- =?us-ascii?Q?OSkEQvS3/Gvx+nQhyrawDtSr+jsEE0nxqDOo3ljSox2LtxjICM+Tbxd8z/11?=
- =?us-ascii?Q?5KewOacRL8x3fQC1Ofp3Z6Kvbb1eAkigy868mqpXCF48zrQ+KxMr/wDn7PlH?=
- =?us-ascii?Q?AKqxiOtBnYTLB45cWMtdBySVc87Q82ur9toHM3L9Bde32Yx/ae2s/VAPxzBN?=
- =?us-ascii?Q?jtobk3sakkQLUlsW98RfB+zFno6KIXh+hpXZvnkg+eBF9BSb+7OfL1MSh/qz?=
- =?us-ascii?Q?VQ2j0AmQiN6Yobv33q36RBw+XaTYznTwN/URZflGSn3pvfQFaz2u8ms/71pZ?=
- =?us-ascii?Q?t2tdumNkz3e7Ec+KuujxNINtpSIi?=
+	=?us-ascii?Q?JGKgAg34gsN7HjtGrzFNgJ3pXOHWd60u5Z408jclpbTzf11uhlYAh+24dwxK?=
+ =?us-ascii?Q?od1h0mnU06cNQjixhxWE4IDo672aDfxucyhTnTFZ+yKhhlMe4ycnEL48B9aQ?=
+ =?us-ascii?Q?qJRLL9haoa1FBLXZL+DWgBfBMYT8A9WzLQEi6oAuqUbUtWIDksfaRM2cZP9y?=
+ =?us-ascii?Q?WlH/kAP5k8SHpvToG26a5u5pbG43Dg7jUmLwZwKSKrFA/6NKd3a39GporOFT?=
+ =?us-ascii?Q?MziCR/Z2/fh7Z0Jbhgm+qzsgjs5VkNTA1Ho5yc9OE5jVhESixrF3anCrp7iK?=
+ =?us-ascii?Q?6FdygDDmwrsXZSQ+3c8DIeeitWUhXyRyLbFWRIVskoVZouMw7zjQf3YdkKWS?=
+ =?us-ascii?Q?FgSKzqhS3sVBx1aCEJMzInEkDboHw/5vwXkpNe6q4yuYaQaQuUp3DORkftFi?=
+ =?us-ascii?Q?hWXNF2X9aDHbP/3IQ7myH8trRY2lftBPIH/3uQhgm+lnoXvAPmHPXLUq7CHu?=
+ =?us-ascii?Q?EA6E/GfiEpkOZB4kl7LiShno6ItNbG/KExXZ0HkTbwpLVDgwEpgTxtsshbI0?=
+ =?us-ascii?Q?nd96mORy8gjOPZo6hTgzhS4SpRDzYxf1B5Q3K5l9QE9XTY0gFn9C2sgZQMmP?=
+ =?us-ascii?Q?mZ3A/fjoZL5vCcCyzcLkGbMKi8QatHMUIK8V6/8Y96s61uqk17o9g6PA/hIP?=
+ =?us-ascii?Q?fDRGD572JTPV5VW3CVPTKs+Xo7qkfFQyTEeduNBY0LMYyNT6LlEH3syGQO8w?=
+ =?us-ascii?Q?GWq2K7Dg29AhlDD2k92uG2oE8LWWpx9vwgjy2vhjVZURWPpXkQuzF14lMBX3?=
+ =?us-ascii?Q?+a3KiS2Yfl1u6TjJoa+ggh/cYZULMpfij/cCEaibj13uudlwBszqGY6zNY6t?=
+ =?us-ascii?Q?8rgjkbsqgf/oNw7KSSCC6JqvqpaivnzKtqbWahBhAkpjI0n02Vz0gpxsBeRH?=
+ =?us-ascii?Q?7h3mgju233shH6lOtqtttuz8ZkRq5iD+9IklR4UnS+JWBaKZOswYPZYZTpup?=
+ =?us-ascii?Q?CAFUPD8ayCWuumAjic5p8LXWNtucVwNDq0MnnfEMmqr+/LinXjqfiD8pXNU9?=
+ =?us-ascii?Q?hb1ligfS7g7UaLcun3ocD0FKk7CVm48NDgg2FMr8Gp36nzPto0OwwG6EL/q3?=
+ =?us-ascii?Q?rRUsFZecr0KHwOSFNBwqsmvs+iHnC2tzF79trpdOoiizOT1gJO8EdFSZAw8f?=
+ =?us-ascii?Q?tIGZRD6Pa7WZFCpMO8Gz7ZnyHfkZoIoeuodLLky2HI4EhAqX5AB4rJYbIQ8S?=
+ =?us-ascii?Q?iLHRIk875e+SE6Z0+rmOaZWbllTz6OtGksXRN9RD9+l95i680ctfSgJhBmbl?=
+ =?us-ascii?Q?YMmpub/c9ljw3NYk/j/uBo1HvqkpWhEQJSp5Uarob6cN6WrpzPoWRRk0swNL?=
+ =?us-ascii?Q?ncGyeezdkxmoLAxzxHFrV9LRNgCQfFVIAuqTDCyAN3YQTYgZRf6Kvrc1ybBV?=
+ =?us-ascii?Q?WrEtVZ6Wcu5R5HkUIV02rp66cLUV?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2e5bf24-9550-4082-4b88-08dea06975b0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52b28605-6229-4815-b68f-08dea069767c
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:54.3293
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:55.6764
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -129,184 +130,215 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0530
 
-Add autocorrect_resolve(). This resolves and populates the correct
-values for autocorrect config.
+Try to autocorrect the mistyped mandatory subcommand before showing an
+error and exiting. Subcommands parsed with PARSE_OPT_SUBCOMMAND_OPTIONAL
+are skipped.
 
-Make autocorrect config callback internal. The API is meant to provide
-a high-level way to retrieve the config. Allowing access to the config
-callback from outside violates that intent.
-
-Additionally, in some cases, without access to the config callback, two
-config iterations cannot be merged into one, which can hurt performance.
-This is fine, as the code path that calls autocorrect_resolve() is cold.
+The subcommand autocorrection behaves the same as the command
+autocorrection.
 
 Signed-off-by: Jiamu Sun <39@barroit.sh>
 ---
- autocorrect.c | 15 ++++++++++++---
- autocorrect.h |  5 +----
- help.c        | 40 +++++++++++++++++-----------------------
- 3 files changed, 30 insertions(+), 30 deletions(-)
+ autocorrect.h   |   4 ++
+ help.c          |  13 ++----
+ parse-options.c | 102 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 107 insertions(+), 12 deletions(-)
 
-diff --git a/autocorrect.c b/autocorrect.c
-index de0fa282c934..b2ee9f51e8c0 100644
---- a/autocorrect.c
-+++ b/autocorrect.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "autocorrect.h"
- #include "config.h"
-@@ -29,13 +31,13 @@ static enum autocorrect_mode parse_autocorrect(const char *value)
- 		return AUTOCORRECT_DELAY;
- }
- 
--void autocorrect_resolve_config(const char *var, const char *value,
--				const struct config_context *ctx, void *data)
-+static int resolve_autocorrect(const char *var, const char *value,
-+			       const struct config_context *ctx, void *data)
- {
- 	struct autocorrect *conf = data;
- 
- 	if (strcmp(var, "help.autocorrect"))
--		return;
-+		return 0;
- 
- 	conf->mode = parse_autocorrect(value);
- 
-@@ -53,6 +55,13 @@ void autocorrect_resolve_config(const char *var, const char *value,
- 		else if (conf->delay < 0 || conf->delay == 1)
- 			conf->mode = AUTOCORRECT_IMMEDIATELY;
- 	}
-+
-+	return 0;
-+}
-+
-+void autocorrect_resolve(struct autocorrect *conf)
-+{
-+	read_early_config(the_repository, resolve_autocorrect, conf);
- }
- 
- void autocorrect_confirm(struct autocorrect *conf, const char *assumed)
 diff --git a/autocorrect.h b/autocorrect.h
-index 328807242c15..0d3e819262ed 100644
+index 0d3e819262ed..14ee7c4548d3 100644
 --- a/autocorrect.h
 +++ b/autocorrect.h
-@@ -1,8 +1,6 @@
+@@ -1,6 +1,10 @@
  #ifndef AUTOCORRECT_H
  #define AUTOCORRECT_H
  
--struct config_context;
--
++/* An empirically derived magic number */
++#define AUTOCORRECT_SIMILARITY_FLOOR 7
++#define AUTOCORRECT_SIMILAR_ENOUGH(x) ((x) < AUTOCORRECT_SIMILARITY_FLOOR)
++
  enum autocorrect_mode {
  	AUTOCORRECT_HINT,
  	AUTOCORRECT_NEVER,
-@@ -16,8 +14,7 @@ struct autocorrect {
- 	int delay;
- };
- 
--void autocorrect_resolve_config(const char *var, const char *value,
--				const struct config_context *ctx, void *data);
-+void autocorrect_resolve(struct autocorrect *conf);
- 
- void autocorrect_confirm(struct autocorrect *conf, const char *assumed);
- 
 diff --git a/help.c b/help.c
-index c7dab8395ee2..0fff43545cc1 100644
+index 0fff43545cc1..ecc5673b7243 100644
 --- a/help.c
 +++ b/help.c
-@@ -537,32 +537,23 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
- 	return 0;
+@@ -580,10 +580,6 @@ static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
+ 	old->cnt = 0;
  }
  
--struct help_unknown_cmd_config {
--	struct autocorrect autocorrect;
--	struct cmdnames aliases;
--};
+-/* An empirically derived magic number */
+-#define SIMILARITY_FLOOR 7
+-#define SIMILAR_ENOUGH(x) ((x) < SIMILARITY_FLOOR)
 -
--static int git_unknown_cmd_config(const char *var, const char *value,
--				  const struct config_context *ctx,
--				  void *cb)
-+static int resolve_aliases(const char *var, const char *value UNUSED,
-+			   const struct config_context *ctx UNUSED, void *data)
- {
--	struct help_unknown_cmd_config *cfg = cb;
-+	struct cmdnames *aliases = data;
- 	const char *subsection, *key;
- 	size_t subsection_len;
+ static const char bad_interpreter_advice[] =
+ 	N_("'%s' appears to be a git command, but we were not\n"
+ 	"able to execute it. Maybe git-%s is broken?");
+@@ -659,7 +655,7 @@ char *help_unknown_cmd(const char *cmd)
  
--	autocorrect_resolve_config(var, value, ctx, &cfg->autocorrect);
--
--	/* Also use aliases for command lookup */
- 	if (!parse_config_key(var, "alias", &subsection, &subsection_len,
- 			      &key)) {
- 		if (subsection) {
- 			/* [alias "name"] command = value */
- 			if (!strcmp(key, "command"))
--				add_cmdname(&cfg->aliases, subsection,
-+				add_cmdname(aliases, subsection,
- 					    subsection_len);
- 		} else {
- 			/* alias.name = value */
--			add_cmdname(&cfg->aliases, key, strlen(key));
-+			add_cmdname(aliases, key, strlen(key));
- 		}
+ 	if (main_cmds.cnt <= n) {
+ 		/* prefix matches with everything? that is too ambiguous */
+-		best_similarity = SIMILARITY_FLOOR + 1;
++		best_similarity = AUTOCORRECT_SIMILARITY_FLOOR + 1;
+ 	} else {
+ 		/* count all the most similar ones */
+ 		for (best_similarity = main_cmds.names[n++]->len;
+@@ -670,7 +666,7 @@ char *help_unknown_cmd(const char *cmd)
  	}
  
-@@ -599,22 +590,26 @@ static const char bad_interpreter_advice[] =
- 
- char *help_unknown_cmd(const char *cmd)
- {
--	struct help_unknown_cmd_config cfg = { 0 };
-+	struct cmdnames aliases = { 0 };
-+	struct autocorrect autocorrect = { 0 };
- 	int i, n, best_similarity = 0;
- 	struct cmdnames main_cmds = { 0 };
- 	struct cmdnames other_cmds = { 0 };
- 	struct cmdname_help *common_cmds;
- 
--	read_early_config(the_repository, git_unknown_cmd_config, &cfg);
-+	autocorrect_resolve(&autocorrect);
- 
--	if (cfg.autocorrect.mode == AUTOCORRECT_NEVER) {
-+	if (autocorrect.mode == AUTOCORRECT_NEVER) {
- 		fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
- 		exit(1);
- 	}
- 
- 	load_command_list("git-", &main_cmds, &other_cmds);
- 
--	add_cmd_list(&main_cmds, &cfg.aliases);
-+	/* Also use aliases for command lookup */
-+	read_early_config(the_repository, resolve_aliases, &aliases);
-+
-+	add_cmd_list(&main_cmds, &aliases);
- 	add_cmd_list(&main_cmds, &other_cmds);
- 	QSORT(main_cmds.names, main_cmds.cnt, cmdname_compare);
- 	uniq(&main_cmds);
-@@ -674,18 +669,17 @@ char *help_unknown_cmd(const char *cmd)
- 			; /* still counting */
- 	}
- 
--	if (cfg.autocorrect.mode != AUTOCORRECT_HINT && n == 1 &&
-+	if (autocorrect.mode != AUTOCORRECT_HINT && n == 1 &&
- 	    SIMILAR_ENOUGH(best_similarity)) {
+ 	if (autocorrect.mode != AUTOCORRECT_HINT && n == 1 &&
+-	    SIMILAR_ENOUGH(best_similarity)) {
++	    AUTOCORRECT_SIMILAR_ENOUGH(best_similarity)) {
  		char *assumed = xstrdup(main_cmds.names[0]->name);
  
  		fprintf_ln(stderr,
--			   _("WARNING: You called a Git command named '%s', "
--			     "which does not exist."),
-+			   _("WARNING: You called a Git command named '%s', which does not exist."),
- 			   cmd);
+@@ -687,11 +683,10 @@ char *help_unknown_cmd(const char *cmd)
  
--		autocorrect_confirm(&cfg.autocorrect, assumed);
-+		autocorrect_confirm(&autocorrect, assumed);
+ 	fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
  
--		cmdnames_release(&cfg.aliases);
-+		cmdnames_release(&aliases);
- 		cmdnames_release(&main_cmds);
- 		cmdnames_release(&other_cmds);
- 		return assumed;
+-	if (SIMILAR_ENOUGH(best_similarity)) {
++	if (AUTOCORRECT_SIMILAR_ENOUGH(best_similarity)) {
+ 		fprintf_ln(stderr,
+ 			   Q_("\nThe most similar command is",
+-			      "\nThe most similar commands are",
+-			   n));
++			      "\nThe most similar commands are", n));
+ 
+ 		for (i = 0; i < n; i++)
+ 			fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
+diff --git a/parse-options.c b/parse-options.c
+index 803ce2ba4443..a488f9a41df8 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -7,6 +7,8 @@
+ #include "string-list.h"
+ #include "strmap.h"
+ #include "utf8.h"
++#include "autocorrect.h"
++#include "levenshtein.h"
+ 
+ static int disallow_abbreviated_options;
+ 
+@@ -623,13 +625,98 @@ static int parse_subcommand(const char *arg, const struct option *options)
+ 	return -1;
+ }
+ 
++static void find_subcommands(struct string_list *list,
++			     const struct option *options)
++{
++	for (; options->type != OPTION_END; options++) {
++		if (options->type == OPTION_SUBCOMMAND)
++			string_list_append(list, options->long_name);
++	}
++}
++
++static int levenshtein_compare(const void *p1, const void *p2)
++{
++	const struct string_list_item *i1 = p1, *i2 = p2;
++	const char *s1 = i1->string, *s2 = i2->string;
++	int l1 = (intptr_t)i1->util;
++	int l2 = (intptr_t)i2->util;
++
++	return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
++}
++
++static const char *autocorrect_subcommand(const char *cmd,
++					  struct string_list *cmds)
++{
++	struct autocorrect autocorrect = { 0 };
++	unsigned int n = 0, best = 0;
++	struct string_list_item *cand;
++
++	autocorrect_resolve(&autocorrect);
++
++	if (autocorrect.mode == AUTOCORRECT_NEVER)
++		return NULL;
++
++	for_each_string_list_item(cand, cmds) {
++		if (starts_with(cand->string, cmd)) {
++			cand->util = 0;
++		} else {
++			int edit = levenshtein(cmd, cand->string,
++					       0, 2, 1, 3) + 1;
++
++			cand->util = (void *)(intptr_t)edit;
++		}
++	}
++
++	QSORT(cmds->items, cmds->nr, levenshtein_compare);
++
++	/* Match help.c:help_unknown_cmd */
++	for (; n < cmds->nr && !cmds->items[n].util; n++);
++
++	if (n == cmds->nr)
++		/* prefix matches with every subcommands */
++		best = AUTOCORRECT_SIMILARITY_FLOOR + 1;
++	else
++		for (best = (intptr_t)cmds->items[n++].util;
++		     (n < cmds->nr && best == (intptr_t)cmds->items[n].util);
++		     n++);
++
++	if (autocorrect.mode != AUTOCORRECT_HINT &&  n == 1 &&
++	    AUTOCORRECT_SIMILAR_ENOUGH(best)) {
++		fprintf_ln(stderr,
++			   _("WARNING: You called a subcommand named '%s', which does not exist."),
++			   cmd);
++
++		autocorrect_confirm(&autocorrect, cmds->items[0].string);
++		return cmds->items[0].string;
++	}
++
++	if (AUTOCORRECT_SIMILAR_ENOUGH(best)) {
++		error(_("'%s' is not a subcommand."), cmd);
++
++		fprintf_ln(stderr,
++			   Q_("\nThe most similar subcommand is",
++			      "\nThe most similar subcommands are",
++			   n));
++
++		for (unsigned int i = 0; i < n; i++)
++			fprintf(stderr, "\t%s\n", cmds->items[i].string);
++
++		exit(1);
++	}
++
++	return NULL;
++}
++
+ static enum parse_opt_result handle_subcommand(struct parse_opt_ctx_t *ctx,
+ 					       const char *arg,
+ 					       const struct option *options,
+ 					       const char * const usagestr[])
+ {
+-	int err = parse_subcommand(arg, options);
++	int err;
++	const char *assumed;
++	struct string_list cmds = STRING_LIST_INIT_NODUP;
+ 
++	err = parse_subcommand(arg, options);
+ 	if (!err)
+ 		return PARSE_OPT_SUBCOMMAND;
+ 
+@@ -642,8 +729,17 @@ static enum parse_opt_result handle_subcommand(struct parse_opt_ctx_t *ctx,
+ 	if (ctx->flags & PARSE_OPT_SUBCOMMAND_OPTIONAL)
+ 		return PARSE_OPT_DONE;
+ 
+-	error(_("unknown subcommand: `%s'"), arg);
+-	usage_with_options(usagestr, options);
++	find_subcommands(&cmds, options);
++	assumed = autocorrect_subcommand(arg, &cmds);
++
++	if (!assumed) {
++		error(_("unknown subcommand: `%s'"), arg);
++		usage_with_options(usagestr, options);
++	}
++
++	string_list_clear(&cmds, 0);
++	parse_subcommand(assumed, options);
++	return PARSE_OPT_SUBCOMMAND;
+ }
+ 
+ static void check_typos(const char *arg, const struct option *options)
 -- 
 2.53.0
 
