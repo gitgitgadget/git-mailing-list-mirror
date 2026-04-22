@@ -1,69 +1,69 @@
 Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A46430E0EF
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 15:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601A91B4244
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 15:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776871559; cv=none; b=ZeVqkp92sGFD2Ix+V3cN6IbS3+buLNtoKKcySe4GcI+zyifQKczDl/cjjMgombnh/hWxNLe6qQCIhLtW+adQ4G4l/Vyg+FdewzKkyVEPHAtFpnCz1JVuRSk+Lz/DmtzEcLxqmpkV0jlaK1HbbFy2053EOlj4yNNXwmMTGtRefwk=
+	t=1776871560; cv=none; b=WUXa7I/oO1qf099k8WgM7JwGgWh1qvINkjTaRuWlCQaTzW4wLWMS1djAaoJ1BudP02hO2wrLwF+NNhMym5sNjv2w6kCy/XDZmnP6wSohsF8yEUZYMVuQpABzN7h9fJtL/jhC9i6Q+qUpPNo24gPVJmP2cxO5n717cVNwO+sW384=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776871559; c=relaxed/simple;
-	bh=nggAsERb6c7u88h1gXRKSfEbR5LPBXAb9N65eTLpBGU=;
+	s=arc-20240116; t=1776871560; c=relaxed/simple;
+	bh=3IZdKoqeptsJPXJGycBsC2ID+ZoqP5Mp6Mm80ubGmMI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=V/mcBaIRKjZ6/bLenVkUsa9ZBnxVeE648zEVYFV7TFsLB4wy5w1JyIQ0oA3oTXBslBNkDAAGJ+YgYSirA+mnExqtPx47vD6gUcIWr8SVmzbKR6qIcfl48iIkFA5wfQhG80OM3m1rz02MLC0IZxdmNCbPbg1MBtm2AHFL5wxATnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TIz/RjxE; arc=none smtp.client-ip=74.125.82.44
+	 MIME-Version:To:Cc; b=oa3U6gryLJyDOfOMydA8xjeK7z92CoGSkD5mD0MLT9YpKmuxENGr7oQSxeILGRBaaTal8Z5Cfmi5AOwI33+MHuWxm/5DIEuD01JoPoU3lQKiPZ+8tiYqWrXznv/eXptJjx/xKeIK743hkzuzibnLXhFy1IrUdcocG/+eu90xT5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=anj4HMUY; arc=none smtp.client-ip=74.125.82.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TIz/RjxE"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-12dbd0f7ecaso933128c88.0
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 08:25:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="anj4HMUY"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-12c726ef332so7674577c88.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 08:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776871552; x=1777476352; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776871554; x=1777476354; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Tk6I83P7zFD5mRkXJ76BrCZ0BRxBeNTZ5M5DJEYTK2I=;
-        b=TIz/RjxEjX20seo+o2dAJD3cz2DWsvRY9u5uqfYXbcBM/437UnmQG4SCWq9szzhJaI
-         pUBIAnQlLH13PXMiAR3FZ6KwZNoCbuDCi7HRAui8i89zzXO4pxGIjlwxcn3A9vBNJIkb
-         Q9yY6tXPQ6ZVDdcJx1Vt+qQs5i4kpvz4r1pTFjLC03cJ7U7Ke6alTtb4xSDK1Gwjoesu
-         l0YeoiDjG2CuMD5kU+83BQ+sulM5BZW3MU6CXqSqdrTFF58IocfxjDgw+WdwjsUSRB3A
-         bkWzfjfPXEACRu2OiIIx7GPrdnCnkuihJ1hbZAswSNoz+iS5UIbs/CBrb9NA5ycWhTtF
-         6o/Q==
+        bh=IjyFhgh0xlub76JWdbB0umm4y0cMklc2IXNvPrIZTDM=;
+        b=anj4HMUYzs7H81FMJzraMK4Sd4DJWIxWOE97kegxrTJCRBDpq0ypNAZK8wslCrErKR
+         sZojJvRoU6JuAcQmJ8teq3y5EL+f3FrRfQQ87lJVluwh0KS31sBQUdjVqs3xJsg3b4a6
+         xZA//vwcQjxXfHpDdz4Hixrkd6qydiTYJmJJMkBNzL6/nVqb53TlwUYsSjXlLTTfTiVS
+         o9hteDPvik1o6MnspM9YQmqOYi4ur0c2yw71ynXqXB25g2P3uGb7WXpyOb48fCeijGTI
+         WHwCPy4G0PvyOAHvC0QlUsVfYKm87yhZGklPLYDZ8KqvOojPAMaFF5cFksC0bYEg+Gnf
+         tIew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776871552; x=1777476352;
+        d=1e100.net; s=20251104; t=1776871554; x=1777476354;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Tk6I83P7zFD5mRkXJ76BrCZ0BRxBeNTZ5M5DJEYTK2I=;
-        b=co/gP85OhL2zAuK4vMKmbh5bAwF0D2yPWUFQIR9h9MAAyDPhOA2P6pkTld/QtO4ccP
-         JjjGv6VjfBiNPyDjF8Lj4uCtu5phqTJZh/IEEE4KIj1YPBpVjafyRIxd9oRi6d5YHiZz
-         QTT8D9YI/j6Dn4enSISsyMukOFeFxlSSv2ErBFmFAssJfO27FRFz4kMt0YiTQf+1hdMj
-         nV4Zv6mU5qM3WDv3i1N0dYIg+QsnLmIvf0PZ89U0bE82fPA8ES2wWhK588QeQSUv6pQt
-         W6wYFv9gfuDfDn57TuVoADw+ygU3h8w5XgU/nlcd7EfH88TVHZwm7nPcxtoqdecO9znA
-         OPaA==
-X-Gm-Message-State: AOJu0YywfV2NvAFtUUcUjAaPX5SUf3euU3lGkh3eFUAjhbsAuYYsmWD9
-	7DC8kxFlj3XA78LvzEqyWfCzVDSfbQKLnaeGiUCXVC7cDfR/KO1e0UehrfwNnA==
-X-Gm-Gg: AeBDievlIkyL4PfCo8dBYtQClnczKb8YovCDcpqJ6Bfo3hDQjd2RxiL4se+eeK96EBx
-	NdjJe1RovDNC/wWpnHNXw6lXK9BD6am0z2DGHr9ihM9R+aV8TxWlrSb+o3UQVjdrQszfKUh++Ka
-	x3ljhEXUaPo5IIfhD2e/ppmkjHp/391Lw8xoE+iBt7L2NcPEEqsU28rP519xZo2MLvD+fGRLrdg
-	1OpWMm+fwAn+wIUfPLmLUsQQ2R7sVbNNrU/YDe68fagmRmIvSADph+HrkNbVZXq7DEwTxzP+REC
-	TF4JKR7EMgP0a3gvzdjXcgQPnYwIj0jRSetKv3pGMHima75DH+i7v0EAXw5Pdeilw3mgh8kcHhM
-	OGa5+aeevxXwStkNl70lNksK3rP2bWzVYe3KFJALwFOCyb9K01tmD4IOOqqWuCYFAHmlmvvQywL
-	/KKsuWzGVimoA6IEKX0k+s7iuOZ+DKFJIDfsOqJQ==
-X-Received: by 2002:a05:7022:4586:b0:12d:b7bb:4f54 with SMTP id a92af1059eb24-12db7bb5581mr3444422c88.3.1776871551755;
-        Wed, 22 Apr 2026 08:25:51 -0700 (PDT)
+        bh=IjyFhgh0xlub76JWdbB0umm4y0cMklc2IXNvPrIZTDM=;
+        b=ENaWAdF5401HFNGj13teVE48npmINLXMyeK3jRAoTeqC9aSfJuFl0w4Gyx7EdEB9QI
+         7usOCeDP8oGpb5w6f7g3KOe57Axi+g0SWZubtwbvynVEqTjebhp/v3wm3bUCudpXQQ09
+         49uSK5EVXZbJ0RSDNqZo8xnadeQjG/oXVuDUde+4AfdqzzChwvE2MG/sqwx883R5ngme
+         woUeRND92tlBn9sFqA1cbkdPItwMm6UELnkGkaYJt3DMbgilwoG+8FLmabmbWqdf71AP
+         lyKnBlYc7lMjkQaHUSqnfJlhHLoW46Go1SSx2GcoJrKd1RNadWH+kd30JJPYCNyBOitr
+         x84A==
+X-Gm-Message-State: AOJu0YxoIPIcoy7hYFD3u4XybFN6NZ/eyt+hO4hrB96lvA31sAbL/S/t
+	Pwy5EZk3ptwMWRTlCADqASFn1bvtEx5zppjNK0AhyTm0ZVi3420b9ktEQv33nw==
+X-Gm-Gg: AeBDieuVuamUfhCVmKopr5lXOvJc0oiL8tYJCF89qiXqnwVWKeTYwbCATldE0KWJ3jx
+	FVLzTjWlFs5KwK6sQ/SbXuKfbOTAx7k5AK8fBQD+n70eOW0fvkZoZnrtEIiP37UldgCCTRIu55R
+	RwnGGfLQ9onNvsykzMhkuQZ7vbL6f1h7k7A8Dwt5MeRQf8rLVIT1PSfqkFkqNf3qxe/JOtgG3Rg
+	tIGeU1PyQrX5C9MEKxkKAiFPJ8YGqlbFZoX2BYDhboYAzuXiOK+MjUUNdeVpBe4SWp5cVu2OKqh
+	eWoXlXHPQCfpQ9OlfaZbYjUY5CZxFGddYMOjMaYLypIn3gSLM5TExGS+PLTE39lZjI0OjiIAdo3
+	3kkzi2bAeqntVCko9GS7zZwUvbAlmG9yfgHXTE7dAR434Gr5EFubUVAK/4gz6LvCMimfOtUmk8x
+	WdtOOjfiSrr2BIsZgtULmPfvqsSObvXICvjviqgA==
+X-Received: by 2002:a05:7022:223:b0:12c:8e70:c32e with SMTP id a92af1059eb24-12c8e70c78dmr6712245c88.5.1776871553307;
+        Wed, 22 Apr 2026 08:25:53 -0700 (PDT)
 Received: from [127.0.0.1] ([128.24.160.246])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12c74a20eb5sm30073313c88.14.2026.04.22.08.25.50
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12c919266f6sm15568697c88.1.2026.04.22.08.25.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2026 08:25:51 -0700 (PDT)
-Message-Id: <fe875399a851ba27ab193463cb6a1faf62aa6835.1776871546.git.gitgitgadget@gmail.com>
+        Wed, 22 Apr 2026 08:25:52 -0700 (PDT)
+Message-Id: <4332cbf26631516030da32fd6de6ae134f8a6645.1776871546.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
 References: <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
 	<pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 22 Apr 2026 15:25:41 +0000
-Subject: [PATCH v3 2/7] fetch: add --negotiation-restrict option
+Date: Wed, 22 Apr 2026 15:25:42 +0000
+Subject: [PATCH v3 3/7] transport: rename negotiation_tips
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,176 +81,261 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The --negotiation-tip option to 'git fetch' and 'git pull' allows users
-to specify that they want to focus negotiation on a small set of
-references. This is a _restriction_ on the negotiation set, helping to
-focus the negotiation when the ref count is high. However, it doesn't
-allow for the ability to opportunistically select references beyond that
-list.
+The previous change added the --negotiation-restrict synonym for the
+--negotiation-tips option for 'git fetch'. In anticipation of adding a
+new option that behaves similarly but with distinct changes to its
+behavior, rename the internal representation of this data from
+'negotiation_tips' to 'negotiation_restrict_tips'.
 
-This subtle detail that this is a 'maximum set' and not a 'minimum set'
-is not immediately clear from the option name. This makes it more
-complicated to add a new option that provides the complementary behavior
-of a minimum set.
+The 'tips' part is kept because this is an oid_array in the transport
+layer. This requires the builtin to handle parsing refs into collections
+of oids so the transport layer can handle this cleaner form of the data.
 
-For now, create a new synonym option, --negotiation-restrict, that
-behaves identically to --negotiation-tip. Update the documentation to
-make it clear that this new name is the preferred option, but we keep
-the old name for compatibility. Mark --negotiation-tip as an alias of the
-new, preferred option.
-
-Update a few warning messages with the new option, but also make them
-translatable with the option name inserted by formatting. At least one
-of these messages will be reused later for a new option.
+Also update the string_list used to store the inputs from command-line
+options.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/fetch-options.adoc |  4 ++++
- builtin/fetch.c                  | 13 ++++++++-----
- builtin/pull.c                   |  3 +++
- t/t5510-fetch.sh                 | 25 +++++++++++++++++++++++++
- t/t5702-protocol-v2.sh           |  4 ++--
- 5 files changed, 42 insertions(+), 7 deletions(-)
+ builtin/fetch.c    | 18 +++++++++---------
+ fetch-pack.c       | 18 +++++++++---------
+ fetch-pack.h       |  4 ++--
+ transport-helper.c |  2 +-
+ transport.c        | 10 +++++-----
+ transport.h        |  4 ++--
+ 6 files changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-index 81a9d7f9bb..c07b85499f 100644
---- a/Documentation/fetch-options.adoc
-+++ b/Documentation/fetch-options.adoc
-@@ -49,6 +49,7 @@ the current repository has the same history as the source repository.
- 	`.git/shallow`. This option updates `.git/shallow` and accepts such
- 	refs.
- 
-+`--negotiation-restrict=(<commit>|<glob>)`::
- `--negotiation-tip=(<commit>|<glob>)`::
- 	By default, Git will report, to the server, commits reachable
- 	from all local refs to find common commits in an attempt to
-@@ -58,6 +59,9 @@ the current repository has the same history as the source repository.
- 	local ref is likely to have commits in common with the
- 	upstream ref being fetched.
- +
-+`--negotiation-restrict` is the preferred name for this option;
-+`--negotiation-tip` is accepted as a synonym.
-++
- This option may be specified more than once; if so, Git will report
- commits reachable from any of the given commits.
- +
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 4795b2a13c..fc950fe35b 100644
+index fc950fe35b..2ba0051d52 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -1558,8 +1558,8 @@ static void add_negotiation_tips(struct git_transport_options *smart_options)
- 		refs_for_each_ref_ext(get_main_ref_store(the_repository),
- 				      add_oid, oids, &opts);
- 		if (old_nr == oids->nr)
--			warning("ignoring --negotiation-tip=%s because it does not match any refs",
--				s);
-+			warning(_("ignoring %s=%s because it does not match any refs"),
-+				"--negotiation-restrict", s);
- 	}
- 	smart_options->negotiation_tips = oids;
+@@ -98,7 +98,7 @@ static struct transport *gtransport;
+ static struct transport *gsecondary;
+ static struct refspec refmap = REFSPEC_INIT_FETCH;
+ static struct string_list server_options = STRING_LIST_INIT_DUP;
+-static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
++static struct string_list negotiation_restrict = STRING_LIST_INIT_NODUP;
+ 
+ struct fetch_config {
+ 	enum display_format display_format;
+@@ -1534,13 +1534,13 @@ static int add_oid(const struct reference *ref, void *cb_data)
+ 	return 0;
  }
-@@ -1599,7 +1599,8 @@ static struct transport *prepare_transport(struct remote *remote, int deepen,
+ 
+-static void add_negotiation_tips(struct git_transport_options *smart_options)
++static void add_negotiation_restrict_tips(struct git_transport_options *smart_options)
+ {
+ 	struct oid_array *oids = xcalloc(1, sizeof(*oids));
+ 	int i;
+ 
+-	for (i = 0; i < negotiation_tip.nr; i++) {
+-		const char *s = negotiation_tip.items[i].string;
++	for (i = 0; i < negotiation_restrict.nr; i++) {
++		const char *s = negotiation_restrict.items[i].string;
+ 		struct refs_for_each_ref_options opts = {
+ 			.pattern = s,
+ 		};
+@@ -1561,7 +1561,7 @@ static void add_negotiation_tips(struct git_transport_options *smart_options)
+ 			warning(_("ignoring %s=%s because it does not match any refs"),
+ 				"--negotiation-restrict", s);
+ 	}
+-	smart_options->negotiation_tips = oids;
++	smart_options->negotiation_restrict_tips = oids;
+ }
+ 
+ static struct transport *prepare_transport(struct remote *remote, int deepen,
+@@ -1595,9 +1595,9 @@ static struct transport *prepare_transport(struct remote *remote, int deepen,
+ 		set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER, spec);
+ 		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	}
+-	if (negotiation_tip.nr) {
++	if (negotiation_restrict.nr) {
  		if (transport->smart_options)
- 			add_negotiation_tips(transport->smart_options);
+-			add_negotiation_tips(transport->smart_options);
++			add_negotiation_restrict_tips(transport->smart_options);
  		else
--			warning("ignoring --negotiation-tip because the protocol does not support it");
-+			warning(_("ignoring %s because the protocol does not support it"),
-+				"--negotiation-restrict");
- 	}
- 	return transport;
- }
-@@ -2565,8 +2566,9 @@ int cmd_fetch(int argc,
+ 			warning(_("ignoring %s because the protocol does not support it"),
+ 				"--negotiation-restrict");
+@@ -2566,7 +2566,7 @@ int cmd_fetch(int argc,
  			       N_("specify fetch refmap"), PARSE_OPT_NONEG, parse_refmap_arg),
  		OPT_STRING_LIST('o', "server-option", &server_options, N_("server-specific"), N_("option to transmit")),
  		OPT_IPVERSION(&family),
--		OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
-+		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
+-		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
++		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_restrict, N_("revision"),
  				N_("report that we have only objects reachable from this object")),
-+		OPT_ALIAS(0, "negotiation-tip", "negotiation-restrict"),
+ 		OPT_ALIAS(0, "negotiation-tip", "negotiation-restrict"),
  		OPT_BOOL(0, "negotiate-only", &negotiate_only,
- 			 N_("do not fetch a packfile; instead, print ancestors of negotiation tips")),
- 		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
-@@ -2657,7 +2659,8 @@ int cmd_fetch(int argc,
+@@ -2658,7 +2658,7 @@ int cmd_fetch(int argc,
+ 		config.display_format = DISPLAY_FORMAT_PORCELAIN;
  	}
  
- 	if (negotiate_only && !negotiation_tip.nr)
--		die(_("--negotiate-only needs one or more --negotiation-tip=*"));
-+		die(_("%s needs one or more %s"), "--negotiate-only",
-+		    "--negotiation-restrict=*");
+-	if (negotiate_only && !negotiation_tip.nr)
++	if (negotiate_only && !negotiation_restrict.nr)
+ 		die(_("%s needs one or more %s"), "--negotiate-only",
+ 		    "--negotiation-restrict=*");
  
- 	if (deepen_relative) {
- 		if (deepen_relative < 0)
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 7e67fdce97..821cc6699a 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -999,6 +999,9 @@ int cmd_pull(int argc,
- 		OPT_PASSTHRU_ARGV(0, "negotiation-tip", &opt_fetch, N_("revision"),
- 			N_("report that we have only objects reachable from this object"),
- 			0),
-+		OPT_PASSTHRU_ARGV(0, "negotiation-restrict", &opt_fetch, N_("revision"),
-+			N_("report that we have only objects reachable from this object"),
-+			0),
- 		OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
- 			 N_("check for forced-updates on all updated branches")),
- 		OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 5dcb4b51a4..dc3ce56d84 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1460,6 +1460,31 @@ EOF
- 	test_cmp fatal-expect fatal-actual
- '
- 
-+test_expect_success '--negotiation-restrict limits "have" lines sent' '
-+	setup_negotiation_tip server server 0 &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
-+		--negotiation-restrict=alpha_1 --negotiation-restrict=beta_1 \
-+		origin alpha_s beta_s &&
-+	check_negotiation_tip
-+'
-+
-+test_expect_success '--negotiation-restrict understands globs' '
-+	setup_negotiation_tip server server 0 &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
-+		--negotiation-restrict=*_1 \
-+		origin alpha_s beta_s &&
-+	check_negotiation_tip
-+'
-+
-+test_expect_success '--negotiation-restrict and --negotiation-tip can be mixed' '
-+	setup_negotiation_tip server server 0 &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
-+		--negotiation-restrict=alpha_1 \
-+		--negotiation-tip=beta_1 \
-+		origin alpha_s beta_s &&
-+	check_negotiation_tip
-+'
-+
- test_expect_success SYMLINKS 'clone does not get confused by a D/F conflict' '
- 	git init df-conflict &&
- 	(
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index f826ac46a5..9f6cf4142d 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -869,14 +869,14 @@ setup_negotiate_only () {
- 	test_commit -C client three
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 6ecd468ef7..baf239adf9 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -291,21 +291,21 @@ static int next_flush(int stateless_rpc, int count)
  }
  
--test_expect_success 'usage: --negotiate-only without --negotiation-tip' '
-+test_expect_success 'usage: --negotiate-only without --negotiation-restrict' '
- 	SERVER="server" &&
- 	URI="file://$(pwd)/server" &&
+ static void mark_tips(struct fetch_negotiator *negotiator,
+-		      const struct oid_array *negotiation_tips)
++		      const struct oid_array *negotiation_restrict_tips)
+ {
+ 	struct refs_for_each_ref_options opts = {
+ 		.flags = REFS_FOR_EACH_INCLUDE_BROKEN,
+ 	};
+ 	int i;
  
- 	setup_negotiate_only "$SERVER" "$URI" &&
+-	if (!negotiation_tips) {
++	if (!negotiation_restrict_tips) {
+ 		refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 				      rev_list_insert_ref_oid, negotiator, &opts);
+ 		return;
+ 	}
  
- 	cat >err.expect <<-\EOF &&
--	fatal: --negotiate-only needs one or more --negotiation-tip=*
-+	fatal: --negotiate-only needs one or more --negotiation-restrict=*
- 	EOF
+-	for (i = 0; i < negotiation_tips->nr; i++)
+-		rev_list_insert_ref(negotiator, &negotiation_tips->oid[i]);
++	for (i = 0; i < negotiation_restrict_tips->nr; i++)
++		rev_list_insert_ref(negotiator, &negotiation_restrict_tips->oid[i]);
+ 	return;
+ }
  
- 	test_must_fail git -c protocol.version=2 -C client fetch \
+@@ -355,7 +355,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 			   PACKET_READ_CHOMP_NEWLINE |
+ 			   PACKET_READ_DIE_ON_ERR_PACKET);
+ 
+-	mark_tips(negotiator, args->negotiation_tips);
++	mark_tips(negotiator, args->negotiation_restrict_tips);
+ 	for_each_cached_alternate(negotiator, insert_one_alternate_object);
+ 
+ 	fetching = 0;
+@@ -1728,7 +1728,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			else
+ 				state = FETCH_SEND_REQUEST;
+ 
+-			mark_tips(negotiator, args->negotiation_tips);
++			mark_tips(negotiator, args->negotiation_restrict_tips);
+ 			for_each_cached_alternate(negotiator,
+ 						  insert_one_alternate_object);
+ 			break;
+@@ -2177,7 +2177,7 @@ static void clear_common_flag(struct oidset *s)
+ 	}
+ }
+ 
+-void negotiate_using_fetch(const struct oid_array *negotiation_tips,
++void negotiate_using_fetch(const struct oid_array *negotiation_restrict_tips,
+ 			   const struct string_list *server_options,
+ 			   int stateless_rpc,
+ 			   int fd[],
+@@ -2195,13 +2195,13 @@ void negotiate_using_fetch(const struct oid_array *negotiation_tips,
+ 	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
+ 
+ 	fetch_negotiator_init(the_repository, &negotiator);
+-	mark_tips(&negotiator, negotiation_tips);
++	mark_tips(&negotiator, negotiation_restrict_tips);
+ 
+ 	packet_reader_init(&reader, fd[0], NULL, 0,
+ 			   PACKET_READ_CHOMP_NEWLINE |
+ 			   PACKET_READ_DIE_ON_ERR_PACKET);
+ 
+-	oid_array_for_each((struct oid_array *) negotiation_tips,
++	oid_array_for_each((struct oid_array *) negotiation_restrict_tips,
+ 			   add_to_object_array,
+ 			   &nt_object_array);
+ 
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 9d3470366f..6c70c942c2 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -21,7 +21,7 @@ struct fetch_pack_args {
+ 	 * If not NULL, during packfile negotiation, fetch-pack will send "have"
+ 	 * lines only with these tips and their ancestors.
+ 	 */
+-	const struct oid_array *negotiation_tips;
++	const struct oid_array *negotiation_restrict_tips;
+ 
+ 	unsigned deepen_relative:1;
+ 	unsigned quiet:1;
+@@ -89,7 +89,7 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+  * In the capability advertisement that has happened prior to invoking this
+  * function, the "wait-for-done" capability must be present.
+  */
+-void negotiate_using_fetch(const struct oid_array *negotiation_tips,
++void negotiate_using_fetch(const struct oid_array *negotiation_restrict_tips,
+ 			   const struct string_list *server_options,
+ 			   int stateless_rpc,
+ 			   int fd[],
+diff --git a/transport-helper.c b/transport-helper.c
+index 4d95d84f9e..0e5b3b7202 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -754,7 +754,7 @@ static int fetch_refs(struct transport *transport,
+ 		set_helper_option(transport, "filter", spec);
+ 	}
+ 
+-	if (data->transport_options.negotiation_tips)
++	if (data->transport_options.negotiation_restrict_tips)
+ 		warning("Ignoring --negotiation-tip because the protocol does not support it.");
+ 
+ 	if (data->fetch)
+diff --git a/transport.c b/transport.c
+index 107f4fa5dc..a3051f6733 100644
+--- a/transport.c
++++ b/transport.c
+@@ -463,7 +463,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.refetch = data->options.refetch;
+ 	args.stateless_rpc = transport->stateless_rpc;
+ 	args.server_options = transport->server_options;
+-	args.negotiation_tips = data->options.negotiation_tips;
++	args.negotiation_restrict_tips = data->options.negotiation_restrict_tips;
+ 	args.reject_shallow_remote = transport->smart_options->reject_shallow;
+ 
+ 	if (!data->finished_handshake) {
+@@ -491,7 +491,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 			warning(_("server does not support wait-for-done"));
+ 			ret = -1;
+ 		} else {
+-			negotiate_using_fetch(data->options.negotiation_tips,
++			negotiate_using_fetch(data->options.negotiation_restrict_tips,
+ 					      transport->server_options,
+ 					      transport->stateless_rpc,
+ 					      data->fd,
+@@ -979,9 +979,9 @@ static int disconnect_git(struct transport *transport)
+ 		finish_connect(data->conn);
+ 	}
+ 
+-	if (data->options.negotiation_tips) {
+-		oid_array_clear(data->options.negotiation_tips);
+-		free(data->options.negotiation_tips);
++	if (data->options.negotiation_restrict_tips) {
++		oid_array_clear(data->options.negotiation_restrict_tips);
++		free(data->options.negotiation_restrict_tips);
+ 	}
+ 	list_objects_filter_release(&data->options.filter_options);
+ 	oid_array_clear(&data->extra_have);
+diff --git a/transport.h b/transport.h
+index 892f19454a..cdeb33c16f 100644
+--- a/transport.h
++++ b/transport.h
+@@ -40,13 +40,13 @@ struct git_transport_options {
+ 
+ 	/*
+ 	 * This is only used during fetch. See the documentation of
+-	 * negotiation_tips in struct fetch_pack_args.
++	 * negotiation_restrict_tips in struct fetch_pack_args.
+ 	 *
+ 	 * This field is only supported by transports that support connect or
+ 	 * stateless_connect. Set this field directly instead of using
+ 	 * transport_set_option().
+ 	 */
+-	struct oid_array *negotiation_tips;
++	struct oid_array *negotiation_restrict_tips;
+ 
+ 	/*
+ 	 * If allocated, whenever transport_fetch_refs() is called, add known
 -- 
 gitgitgadget
 
