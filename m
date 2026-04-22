@@ -1,151 +1,253 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FE73ED5A8
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 14:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776867165; cv=none; b=sjooCuJ74Jnq+9qwRiZbfYKNi4Oh1PVVOAkwJ0kXJpoxM9dTEJui8DIVDh6wiMbqgcQJfLGLkVcrRAYw65N3SzYi18CTK6BMAm4PhrNZrG0pbWwCY2ihunywtXVuykZsVf9MWMaGGeqftA9cvlEmc1bcn9cUUrWE+k0lZTZiSfc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776867165; c=relaxed/simple;
-	bh=JpAsnZre1um2EpXeTgrXFcAz0iM9ho++Ee2suxf7d88=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=EbCOdbOHTIvce9U/2A5RgZT8p92OvXgRCG/d3MU5JC/4YY4+nuLqaggtL9dVimy6eRXQM2NBMp9H2MfvtHzmvWsLHIxdm8QG7RJLVPAyJGH2/Yl/5WjS5gFIGqNTk9XL+oHVWkPXiZukSoptDEd8Fj1Y6GcyRIXcsLN7QeYwfgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sIu9h/LF; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1352244687
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 14:13:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776867190; cv=pass; b=bNzRszV+tj65Xn6W5b1W2rNEBbVOETNGjV1ETFSUMqimT4Zan4Uc3dRtenvc3J8dJrGCLm8k/4W81QiLSziKberUYa4iR2/8mel692jBXltr65xL23I0JNemVWMxRbxoMRkInx4r03DojKrY5HATE4oX8IiqVhi2JUE8jld8wnk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776867190; c=relaxed/simple;
+	bh=2L2ouMaMJZql8ZCdOSzacClyJnwN+3/gdnyxElSe4Nw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ijYFygIwJJvlgPdjbp+fUYeflGxF2/jWjL5mw6Ziq3csJ/SWBwSmputBfhmFIE3alo53lMt4PPDWcEtoNk/NR/GvXhcoTqrp0q91cHT60X6GwYSMzQEd2kglwSJypDr6wDyVQoYXPb/dh0QkNfT/ZtWPYZxi8HODqTSZAeJb3M8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N2eza6CP; arc=pass smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sIu9h/LF"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43d7650202fso4329761f8f.2
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 07:12:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N2eza6CP"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-953c5738c03so3012161241.2
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 07:13:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776867188; cv=none;
+        d=google.com; s=arc-20240605;
+        b=G17v1OwEInRcI3oE/+EHUbFBiQB3u1VbiyhQNhGJZDdX4SCl3/jWL+Fx9zx7iiktF+
+         SRwfBN9500KYvjHa0lnNjkVtb21DuMLIxCMpONvpNtlyHeizyDIun46ucHsTxGsdPsEG
+         zRDGUvhHucoE8dglrjOjfLp3Vi2LEhCmUEQNI/ilRu8qWxeIH7f6vJW9Z4AqMoxoDTvR
+         a3KjxR69KcrN/KB5g6mqmcAEHjueCkcCylMBz26oIZjOBR4LdQBZt2Whqs05jChMTqda
+         svLEVTrGC27cJWsTEJnUg6okTadRXMxlV+pPlkFu4TWs63cgtfnSp1yqPbRtp8p+chbP
+         1Esw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=RtUsu2T3gztGD1awmV4q4V6eOJF8i3Q6kNaMvvS4rBE=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=dnSumAWir4LUJTE5LRmsYLnfV6UlOqid9k1fGAMz9Ozms6md1oBE0DO6d72R/ueA55
+         n4rbdIy1ZtFxhnC9Nn64mk+L+tfsRSqwgUbHsvphH+88poFZrvzOyxJxXgpqe7mryhES
+         x82UhEEj5K6svY8B8GCO4te1IZe/ngDEg/cdE0XQ7+J2IqnZR+MjB2LeX4Pq7Dgk0DRK
+         BWxliqDEnGncEhnYr3MuINrF5DbwRQH+lp0yZBBvn7UHvCE1giY+8SekjZzslujCJKh4
+         LdAUBO98crX57iR7Qr8dKujNSdL2gEzRWczyruw8ZoPBKYYVocjZ5CF0eef5MI980C3F
+         QB8w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776867161; x=1777471961; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9hjZrGgpS1RNqroKn8/CQEk2AUtOnTfGZT5lf2op6rk=;
-        b=sIu9h/LFJlgFc6Hp/FoAqj6E05pBo6+dN3LgtZuP5MJesIlGI64dCcMcz/O1BRrCRL
-         QHr/80462/5KCpy9HLgzPQeWYCYIxZAYanyMXa5kbVtkU2ysXbz52OmxP33OYaOsbCTn
-         32KmND2LP3NGRUxdiWUUw4IOeRpe2XhnUcXcAGIoC8xzvvUrL1kUCO+K721dCf3rfhRD
-         ll0Qk9n+BP4YZGhg1Cy3idmf9F/RAnNmteZp1FtMqXMJmTO0vAzevcTOzHxAlFdHoyg6
-         0f7jL2ry9cdrK5AMAYmhu1+yToiebse/lD5zxUqHeLhrTXlOC4Uj8bYPBGyGvk4wwHTG
-         8J1A==
+        d=gmail.com; s=20251104; t=1776867188; x=1777471988; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RtUsu2T3gztGD1awmV4q4V6eOJF8i3Q6kNaMvvS4rBE=;
+        b=N2eza6CPbUYYALptz7qZ4erjHcTObBPgbrXT9JwXyxnpHzXfgQNnx18uHL1LYy4Ep1
+         AKbXOl3QCS9QhSvoyFCFZR3r4kJLm/sWpGwOTYsvNp6ddgJH2dQrciju4xkts+u6D2nO
+         vsPshxFRwWOLpcuRdVwaM4lAQ/e6IS+dHs/K5amzT8/Kritw5Z/7rcNT6dVTLbKHFX3S
+         PYV03wC3wb2DYreol6/SMowIVWQChMHhThHVXeu8T55VF8ieaWFG9EX8AzbggPCQuN/J
+         mU2VjAKA/NsuQtFnnMbToDC8x42JY7wj4c1JzWpxaywPlJ4IPaff1nHHOtF9OsOQ3D9v
+         JwTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776867161; x=1777471961;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20251104; t=1776867188; x=1777471988;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9hjZrGgpS1RNqroKn8/CQEk2AUtOnTfGZT5lf2op6rk=;
-        b=j8e4aNr4T6j52h1BYD5BAJADMzdgowHlwzgSQFGyDP0zSoF/T+jsO69G4weQ3AFDzF
-         iLKIgpCXtBYwHbSlqGWMaiO7KNwBpgBah7NVOA0HaWukRUQuyl/6R9yvqVQXeCS1z1OE
-         +1T91vGZ05KLU0mHjjroUGtVUBkIm8TFMCdr1G8e4aRtaGZvV166Acw2rFgo43i8kOO9
-         Dr6GcZZR29+EuK38+vd1yWFtkXhqT62wyJmLenHTnMuGXCPujBjXdCPn03rhi7Knn/xv
-         XdgCxja1PWPDAOLuPUBmupXwwfbHvC0RQmbMm+XNQqWzbjtLMpQNzLTLp5DYNE7tkaDH
-         imqA==
-X-Forwarded-Encrypted: i=1; AFNElJ+qwDfuyqwWMjVLCsySksBKxbZc8LeX60x3U7ZRIaIGijZmc0XLkVW7PeHD7CA7sPL3+Js=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzq9zRN+G9YKh3lal2n8p4WPLkCmd5E35O0/hCGd3Xxq7iqLfMb
-	tYGImgP2UZ5Wj9cAiO/Z3n//YR7c4kFhg2qbeZuEYE8clG5iHW58VetbCB2d0Q==
-X-Gm-Gg: AeBDietyL1eqABEg6SYQKeuOsn/kYWpaXeIEC2LRp3LIXCSr0cSGslUYZaW0EGABIpv
-	y/gk4pNZWXIrmrzEDD1VkwqrL67xcJOPqd4Tapm6zBJZrht3nxS+HHHmqSRs7xiVjzMTg7yLP+K
-	LzkLdntrR0x0DrzdD6A85LmPP1g1B5ncPoSLv4eL/FEaGTHogaoOUFnH6Px5A0RLcO7md3MYvXF
-	3ytpUd96+n9Hr0gK0yoOluu9KPyCXyNEQUb02UUxagOI7j0QmuF29xbw8TJWkUHNQScC0HBglRi
-	AnleS5b5PgJ3xowzn8hz/CQFLHUHA1ihKg8FcaymUm+guk+J3aNWDnN4gYPgky++FHscya4+BGd
-	SKNIMtYfsj4n0oDyHA9wLi8akcgY1qk7lYX63nE+z8YH++tc4lcufmJff1QhLuZEDtFsardCX1a
-	tFy3BYLPcTSbZsITnny70k+syxu4Foavx0tEp2gdjU1ar1ZNd4VE+T2eVmqtruA88zOoljZZnJJ
-	2kXTKtTujQwmg==
-X-Received: by 2002:a5d:5f93:0:b0:43d:7854:32e7 with SMTP id ffacd0b85a97d-43fe3dd3ac1mr35998737f8f.15.1776867160992;
-        Wed, 22 Apr 2026 07:12:40 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4cc0d51sm45970577f8f.10.2026.04.22.07.12.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Apr 2026 07:12:40 -0700 (PDT)
-Message-ID: <de2b6af2-b1ba-4262-a171-22c9cdbc7bee@gmail.com>
-Date: Wed, 22 Apr 2026 15:12:39 +0100
+        bh=RtUsu2T3gztGD1awmV4q4V6eOJF8i3Q6kNaMvvS4rBE=;
+        b=Cu/W9+QjgNlh8sop+UYf7P5r5ofi5PCWo8CaVCj5GuhSTXfpUG3/p5HRyuTJ24d2X+
+         u1hTanX1ztAi+vujxc+5YZGuDWUueGiwjM2yBxgwAYtXYH1bn2dI0ut0HvgGAWlaVWAr
+         DRoeIV2t0kD1U4T/zWlY9mt2Q0BmofNcZr3YBeCiCqCZlt52tG8lktwq6M4e6lfEXg74
+         VW4cy6vi5Fxf+S/jxE1c0w70qIYrGLPevAY3zwaXec5PqCgzzv/AdUA/aHztMFfysT/M
+         CGpTrKr2MwQHqssl1guV3knwmKDXKjffEvqhD/nOgDlbW3XkyP9kY56X9kjkjFNxxu1r
+         Sf2g==
+X-Gm-Message-State: AOJu0YzhjxADImmEp5T7KDuDUhtxxVv8INLSkwUWY4Krh+DzLxtHEkK6
+	IJfrk+gOr8Na7KSRGBj5usClVhPh3yuf2gUOdkKHvbrBmkUpZAdq7BCgUyU3/wSLsWjymFGsnQp
+	88MvX6rSYs0FFSi2k7xzxs3lGX0VjFiZZqQ==
+X-Gm-Gg: AeBDievOWQOHlCmQ/aFhD//MSnJtah/Gm6o2wql1A78U9vVxp2bp1BCdLSIF/IEnTFd
+	WEGC9fcWsypFNdyVpvNHNwCUq8GVDbt5CZygYVf9MAmmy68N/XBEc6q6Gf9YMkk+AMSXL2caqq6
+	5v8l9CAKhwt5yzu/fIoV1U2nztogwxpogOVv0YfHYEZCPHLjUOaz6ZHrFajLcwZkctjmYYhOvSs
+	Wp9y4Q9ejV+YhNBgU4+nOyi06HNs7RVtrcOxe1aTJlXTR9YsmaTF2jmvpa4u4TtP2/fWLDTMI+j
+	j6lZF95d+Zy/12d8HVU5LMPyLC7RT79AkXpjunercjpMC8tht6Wtov/XQJ+1R+U=
+X-Received: by 2002:a67:e716:0:b0:602:9977:a4fe with SMTP id
+ ada2fe7eead31-616f67c8685mr11389528137.19.1776867187587; Wed, 22 Apr 2026
+ 07:13:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Apr 2026 16:13:05 +0200
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Apr 2026 16:13:05 +0200
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aeit6Ic4fUa3Xx1Z@pks.im>
+References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
+ <20260420-refs-move-to-generic-layer-v1-5-513e354f376b@gmail.com> <aeit6Ic4fUa3Xx1Z@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] generate-configlist: collapse depfile for older Ninja
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <20260421-toon-fix-almalinux8-v1-1-aec1d54addde@iotcl.com>
- <20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com>
- <0557838b-214d-4e8f-9cbd-bc342563e9ba@gmail.com>
-Content-Language: en-US
-In-Reply-To: <0557838b-214d-4e8f-9cbd-bc342563e9ba@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Wed, 22 Apr 2026 16:13:05 +0200
+X-Gm-Features: AQROBzDDRHLzrlEvRoMof03aejjDm6w-gPRsdQ5J6ME2s9PpRbk5RZGsyvQYs9g
+Message-ID: <CAOLa=ZT+JL5pbvKx44fkOMqx07TcZxbC--xCTAsUThf9a7RCjQ@mail.gmail.com>
+Subject: Re: [PATCH 5/8] update-ref: handle rejections while adding updates
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000087a2bd06500d2153"
 
-On 22/04/2026 14:45, Phillip Wood wrote:
-> 
->      sed -e "s/second/second \\\n foo/" patch1 >patchnl &&
+--00000000000087a2bd06500d2153
+Content-Type: text/plain; charset="UTF-8"
 
-Of course the extra backslashes would supress any special meaning of 
-'\n' so that's not a good example. However the freebsd man page [1] says
+Patrick Steinhardt <ps@pks.im> writes:
 
-    The	escape sequence	\n matches a newline character embedded	in the
-    pattern space. You cannot, however, use a literal newline character
-    in an address or in the substitute command.
+> On Mon, Apr 20, 2026 at 12:12:03PM +0200, Karthik Nayak wrote:
+>> When using git-update-ref(1) with the '--batch-updates' flag, updates
+>> rejected by the reference backend are displayed to the user while other
+>> updates are applied. This only applies during the committing of the
+>
+> Nit: s/committing/commit phase/
+>
 
-Thanks
+Will do.
 
-Phillip
-
-[1] 
-https://man.freebsd.org/cgi/man.cgi?query=sed&apropos=0&sektion=0&manpath=FreeBSD+16.0-CURRENT&format=html
-
-> 
-> However if I add "cat patchnl" it shows the subject line is
-> 
->      Subject: [PATCH] second \n foo
-> 
-> so sed has inserted "\n" rather than a newline. Indeed looking at the 
-> commit message for that test it is testing a fix that c escapes are 
-> printed verbatim introduced by 4b7cc26a74 (git-am: use printf instead of 
-> echo on user-supplied strings, 2007-05-25).
-> 
-> I've not tested it but I think
-> 
->      sed 's/ $/\
-> /'
-> 
-> will insert a newline. Alternatively we could do
-> 
->      printf '%s' "$QUOTED_OUTPUT: "
->      printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
->               "$SOURCE_DIR"/Documentation/config/*.adoc |
->          sed -e 's/[# ]/\\&/g' |
->          tr '\n' ' '
->      printf '\n'
-> 
-> That leaves a trailing space at the end of the line but I don't think 
-> that should matter.
-> 
-> As I recall, the depfiles created by gcc have all the dependencies on a 
-> single line so this should be widely supported and I agree with Patrick 
-> that we should do this unconditionally.
-> 
-> Thanks
-> 
-> Phillip
-> 
-> [1] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sed.html
-> 
->>           printf '%s:\n' "$SOURCE_DIR"/Documentation/*config.adoc \
->>               "$SOURCE_DIR"/Documentation/config/*.adoc |
->>               sed -e 's/[# ]/\\&/g'
+>> transaction.
 >>
->> ---
->> base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
->> change-id: 20260421-toon-fix-almalinux8-102de9138294
->>
->>
-> 
+>> In the following commits, we'll also extend `ref_transaction_update()`
+>> to reject updates before even a transaction is prepared/committed. In
+>
+> The "even" reads like it's at the wrong position.
+>
 
+Yeah seems like a filler, will remove.
+
+>> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+>> index 5259cc7226..d1980c60c4 100644
+>> --- a/builtin/update-ref.c
+>> +++ b/builtin/update-ref.c
+>> @@ -268,11 +277,13 @@ static void print_rejected_refs(const char *refname,
+>>   */
+>>
+>>  static void parse_cmd_update(struct ref_transaction *transaction,
+>> -			     const char *next, const char *end)
+>> +			     const char *next, const char *end,
+>> +			     struct command_options *opts)
+>
+> Here you follow my earlier suggestion of using `_options` for the struct
+> name, but `opts` for the variable :)
+>
+
+Haha, indeed, seems like I learn very quickly.
+
+>> @@ -289,11 +300,18 @@ static void parse_cmd_update(struct ref_transaction *transaction,
+>>  	if (*next != line_termination)
+>>  		die("update %s: extra input: %s", refname, next);
+>>
+>> -	if (ref_transaction_update(transaction, refname,
+>> -				   &new_oid, have_old ? &old_oid : NULL,
+>> -				   NULL, NULL,
+>> -				   update_flags | create_reflog_flag,
+>> -				   msg, &err))
+>> +	tx_err = ref_transaction_update(transaction, refname,
+>> +					&new_oid, have_old ? &old_oid : NULL,
+>> +					NULL, NULL,
+>> +					update_flags | create_reflog_flag,
+>> +					msg, &err);
+>> +
+>> +	if (tx_err && tx_err != REF_TRANSACTION_ERROR_GENERIC &&
+>> +	    opts->allow_update_failures)
+>> +		print_rejected_refs(refname, have_old ? &old_oid : NULL,
+>> +				    &new_oid, NULL, NULL, tx_err, err.buf,
+>> +				    NULL);
+>> +	else if (tx_err)
+>>  		die("%s", err.buf);
+>>
+>>  	update_flags = default_flags;
+>
+> I think this could use some curly braces to become easier to read, even
+> if it's only single-line statements.
+
+That's fair.
+
+
+> Does this change have an impact on the ordering the user sees for
+> printed errors? If so, it might make sense to point that out in the
+> commit message.
+>
+
+I didn't consider that, it will be different since we already output to
+the user before the transaction is prepared/committed.
+
+Will add.
+
+>> @@ -341,12 +361,19 @@ static void parse_cmd_symref_update(struct ref_transaction *transaction,
+>>  	if (*next != line_termination)
+>>  		die("symref-update %s: extra input: %s", refname, next);
+>>
+>> -	if (ref_transaction_update(transaction, refname, NULL,
+>> -				   have_old_oid ? &old_oid : NULL,
+>> -				   new_target,
+>> -				   have_old_oid ? NULL : old_target,
+>> -				   update_flags | create_reflog_flag,
+>> -				   msg, &err))
+>> +	tx_err = ref_transaction_update(transaction, refname, NULL,
+>> +					have_old_oid ? &old_oid : NULL,
+>> +					new_target,
+>> +					have_old_oid ? NULL : old_target,
+>> +					update_flags | create_reflog_flag,
+>> +					msg, &err);
+>> +
+>> +	if (tx_err && tx_err != REF_TRANSACTION_ERROR_GENERIC &&
+>> +	    opts->allow_update_failures)
+>> +		print_rejected_refs(refname, have_old_oid ? &old_oid : NULL,
+>> +				    NULL, have_old_oid ? NULL : old_target,
+>> +				    new_target, tx_err, err.buf, NULL);
+>> +	else if (tx_err)
+>>  		die("%s", err.buf);
+>>
+>>  	update_flags = default_flags;
+>
+> Same here, curly braces might help readability.
+>
+
+Will do.
+
+>> @@ -644,6 +680,10 @@ static void update_refs_stdin(unsigned int flags)
+>>  	struct ref_transaction *transaction;
+>>  	int i, j;
+>>
+>> +	struct command_options opts = {
+>> +		.allow_update_failures = flags & REF_TRANSACTION_ALLOW_FAILURE,
+>> +	};
+>> +
+>>  	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+>>  						  flags, &err);
+>>  	if (!transaction)
+>
+> Suggestion, please feel free to ignore: we could also pass the flags
+> directly instead.
+>
+> Patrick
+
+Yeah we could, I deliberately avoided it to make the easily extensible
+in the future. If you feel strongly, happy to make the change.
+
+--00000000000087a2bd06500d2153
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 471fa9177c4726e2_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ubzEzQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMlpuQy93TlMyVFJIVGx6VGR0ZFpVWDgrL1Z0SlNlcgoyVTZjOHo2a3Ry
+dS8xVjVKTmNSZWxBNmZtbTh5R0hKbUhoNGI2aVU4eStESzFMbitxTytERldHc3U3NTQ4bENHCmZs
+d1l1U0xuaCtaeVNjcTAySHlvUDhuZ1VaWlBkbnBFOVp2R29rMitZdldtZVM5c2dmblFHUE1XSjB4
+SHg0NXUKWlM5NDV5ek53Sy9vTTNUR2pkZG5Jd0JFNzJkQStML0FwK3MxcFNXQ05oUndzdmx1Ykk1
+Q2hsT3k4WEVxVHc4VgpqUkd0QmZXQi9Kd2c4cUpFcTFraXdOYU11MUVYZzN4MERFYTlIYmZURjk1
+dHlZdkhhdTF1YWhUYjVsMGVaOTBnCjBFNGJ5NjVzYjFGZFh4TGtXN3l3a3V0cUhzVU9qMWRLaFBi
+cUJTamJZM1h3cW1zdm1GbzF1L1BMQzhQUEc1ZlkKc1lWaS9qYjB3ZmFTWXJPQ3puSjJlaFJaQmk1
+d21qcFN2ZlZGMUE1TXh3cFUrSFpaU3J0N1EzTkUzOWQ5Qy9GSAovQUp3RU56MitOZG03RVdFbUpW
+R3BKclRZa3pEMlVmQWZ4RWIzR2dFS0pwU1locVhTci8zVDR2WGE3Q1Z6U3dKCkFROUtCRS9lYUF6
+N3cvQi9idlUzN201OUFGaFhIYWRoYUtZNzVLUT0KPTJjWXMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000087a2bd06500d2153--
