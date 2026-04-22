@@ -1,204 +1,107 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C1C3D1711
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 13:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776863600; cv=pass; b=L5V/C84G+xs4Fj2W0BNKB24wivtRfVsMk+c8uNA74dQ8BUs0lRvKi9DxUESbZtI/QN8XYhFnEJyIWkfvG5ayFZJskicNOGSI9fAv+Y4iVARBbmTYGjtyBWNOS3jMpbhP0FN/A/cEfzHsr4sOB4a7nTGE2WEfZFEUwE9Jb6saC3M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776863600; c=relaxed/simple;
-	bh=02gnpT0gJwGfQkpyPwOW86EuljTjkkHJzEY1+wQkRhA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iuereVVhpJyn0PVSzEAMPHwxDxBsS3JMps+0Zr+sEXOkqJgj+HmFcx6nGLdwDNE9M7UtbCxmIC/RoDLELbilG9Qn+I3YEL5KBY6E5SmRVSd/FY6Rgn6XuZQICDDnNMib7GEDjGAucmNvDZH+QkmtJGmJgS3VXndEws9yoOSYEXs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/w4SKh+; arc=pass smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3E13C5DA6
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 13:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776863618; cv=none; b=oXPS7bCk6rn+r+t6GD5nnEclBlKqHMI5Gd8an72cmFQByWF4nmGMXgUn0z8dt9tP+Qtr55oeSSNvNk/bRTdTyleBQGoTvwasPb/2vZJzgjJaJxZJvkfextKMybYjSNZ7JPsPgLq6YgIC4JuG3t8P1bwSOt6FiIq8vT5s+aLuE2Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776863618; c=relaxed/simple;
+	bh=5+8uzNKAIK3wwt2vOkmtZl+38sPW/wFeOIY4sYnU7RA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NdD35h/0jxSQSSF+Z8d48qKQy9UDJIyVWVKcu+DPj3XC1ywtW9HO4OOsQ8NVTnUFs7eiFzxVizpGrHruxkK6DDJA2elhgCUIB6L8McA0NPSFee+Y+HTwUN+LfUYokfmUNNDlQpLFqVHxxhxLjI48hcAaBtgMFuaavF2nSNgkzR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=buLW5KTy; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/w4SKh+"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-60fbeeeaa7aso3130244137.0
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 06:13:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776863597; cv=none;
-        d=google.com; s=arc-20240605;
-        b=HrZj2oq7FPzkWj1i+8Jc3MvZ0Wzi2evyknWe5Kg6qA7xOAtBFghKmsv/M3eS6enlIu
-         lmpn+8RJLiHOkpA6QK6/UZYuVUCF30zjMVrLbQjPvRQjjjLQJDvREfTbE1+tAG3gd5P8
-         OzxL1s0an07x0+AV7bSPFiZWdeCRb38G8CTslsrYrJt0Q8rDd7pNW2f9iHDDtX47SggD
-         Z5XjEBB72X8wDa6ncNtKLvrPqPrnNkPZhPGpKOzdKErq6+lx3I6e+Fi4D24NucxpNeCe
-         5ywqCXBHAM2NXsVn4EUfAqLnBncE1ZQteDFGQbE5f8bZFpNadiHQmtoZ3SBaiSxezy/Z
-         HIJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=NCxzUirgBNrH2khmxprBDuf7PMFWZteeiLxZmgNUUzY=;
-        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=f6UqLvC5FRsSgqtEC0n/5lHtaV7YvdScm8YrFGrtxjbxz5xib/9ycesI2GDG2ovag/
-         Y0ViydiJ2PxniKhclI23IFTYNN18CbKpN0gfod99YWETGSPJJ5R7lWoOXlkLzySBGIMW
-         QHKCeYarzGi82lo5Y1pSldkryVLy3nJ6+jtPQJ6o4T7CV+QSfoqU6J6lazMqFuhwtVbc
-         e8uFy1lIRcbCdUg+oOrmxb7Us4RU7lSmy6zlVimzhjvGcUxxqBgW6pKpfFptCnOYnwma
-         uNOpEoHroQWqVoVfSss2UYqota6wUVECCPKnM4KRLNPA77Bqn5h5kWu7aIO2mhHGLnUF
-         E0NQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="buLW5KTy"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-483487335c2so54209055e9.2
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 06:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776863597; x=1777468397; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NCxzUirgBNrH2khmxprBDuf7PMFWZteeiLxZmgNUUzY=;
-        b=i/w4SKh+IclyuyHbDQ7Uow9XifCWPciz2x8Fwtf2IRRAoZ0CPyNhAjola4cHDWd0Pw
-         JxSvtpTeuVHVoORWY9vCmUxHKxUTttZ/23p+AwyWsFr2AhAPVlxK9fXnkGdhVhsWedo2
-         BTeUo0OyDTIwZoS4QhL2OsTaXyLvJ0AK4trYC9D/TaGGPW4cuaDJTIu7XzuYzVkfnSJq
-         29qV29jGsBmjXSg033ApAeC8QUkyvLdsm1eFEqRBzRcdXKXrxboururPjxUCSAv2l6bb
-         qa77D2NuHdI5zA31ExIw98G5NrJiQXOdXYhwX3ruNfigJ3WOiEH2Gf91RqNQMNGsTDaX
-         jtFQ==
+        d=gmail.com; s=20251104; t=1776863616; x=1777468416; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=u4mTwArM2v3jPl6Oyu/9Qm1PyhoS2nyj8QB56xkBTYA=;
+        b=buLW5KTycpkmXLmwR/nJeRtYmakwQEKygQH/1ybUaYxmp7GDsG/P+RCXgUw7EKmCoY
+         7i/oN5p7uToQm2feLYOIrjiia6vXuC/wkNzpderUavymIKxjrLTN61hRVnTxENNddCPX
+         tGogK6uJE0E05DCwUNXy1f/HG3H1jwD7jg0bjJz+Nth/aYpLVuKVmSyNLnz6an/o4K+1
+         IuifRNlOXrNuNa+YyrV+8G/a2DcfIb7SUjQQzYfz+llhWJpl67gs4ICkuXasgXA28xaM
+         PZlb5h2nLdS66kVJBzFImzFpnPgIQS76wzH39NSa/QzryhcuiCbjr63NUmGi2e0EugJY
+         NE5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776863597; x=1777468397;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NCxzUirgBNrH2khmxprBDuf7PMFWZteeiLxZmgNUUzY=;
-        b=S11rM5aR/7+q3dzCgrqeajNonXS7qbiSuShgqLrp8UHjS7U/JiwSaU6ZS1asI0Iqwj
-         XM46DdCLb2cFEd5xHWwnTLCFjrJvzoz/9MJ3TC4QG3lvM3H17n9eY6BOCavR5zCB/mc0
-         tjW3E9pmIxU2EwzAcn4ynK5m38psRK3kXODoChtsQc3/cWPDsEGP7gGzNDq3t98cxEbq
-         poXe3EemoAUt7WhWVw5HKekvUj1oLhLMOHUEjQl9/3ehVFFKPG9a+pRdrc6S300qV99I
-         /+7fykTx3FrxFdJwgTQ4bhThlEGUmE3QWRG8H9EFjaKGwF7C9BIQOJdNPTAO0HLLk8zt
-         d8Rw==
-X-Gm-Message-State: AOJu0YwY/lgTgNgFoOT7KgtchXWOTy834uwlxIHj6yhpY6aagTMeaWEi
-	DN6nMizCFZVl9Bo8dgJa2ih9WGy6pYx9SW3Xceu1OP6jgHBx2d6uJzfHMb0pKEKz6RjnhsHggEg
-	8XxIvIuWWAiWJjqL9kmB6eZp/HyDwXB4pUQ==
-X-Gm-Gg: AeBDies2JRgdD6FUp9637RvqVWgxNcL9B+ekRbXluraHJ6PTuRl8kPeJv5Dwjh8bhp0
-	n+x2DzrAthsMLOQQaw/+hZv50I162VEilmrWRko2ULX97BpiUySnZGRNOzJlIr0JGJA7WQHZaPy
-	ayKYJdTRKFA+3RCKwwmDjhf6Kxj6q4/eiGautWWwojC2oC4pruxXcY+Gw3xn91vaar+ExLBGisV
-	XUTpg7KXbiRvf6LzjT8EJv7XMnu+R4zyaCgDjzj9QD/V6o1dRwLMX7WXC3CKXHsxhAADmAjXhAD
-	7wm4KqLBbwXbA/DB0+9EaUHRb2zODoQXjC/rk6QLOp4VN5NEo74P
-X-Received: by 2002:a05:6102:5110:b0:605:42a8:940f with SMTP id
- ada2fe7eead31-616f7c4b535mr12112904137.31.1776863597496; Wed, 22 Apr 2026
- 06:13:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Apr 2026 15:13:16 +0200
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Apr 2026 15:13:16 +0200
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aeit0pw44IxBfc2J@pks.im>
-References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
- <20260420-refs-move-to-generic-layer-v1-2-513e354f376b@gmail.com> <aeit0pw44IxBfc2J@pks.im>
+        d=1e100.net; s=20251104; t=1776863616; x=1777468416;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u4mTwArM2v3jPl6Oyu/9Qm1PyhoS2nyj8QB56xkBTYA=;
+        b=hNq3g9FB+sIPEP+9hqwf4vBxbuj+xa7XCaPB4+IHSVyX+3v7bYXFlCNSzyBQ8FsBiA
+         ldGuESoJEeS6m2+odF9QAEj7g2QtvBsm/b7wr5JJhm5Xr3mcRv9fDi1Z3gsgotWvpDb2
+         RlIInkF7Fm8Xv7y4qsvVMiVnC78Q1ERaCLAgUuHPZfpcCtO62t8SQaSh6+i6Cx9lvWkv
+         zDu15gnoKZ4rpAq5wulG7wILcvvb7rVfmD45x7CZWmpjf+Tp1p1sHiJXrq5Zxjgv+D/J
+         EXuBR7Y3MD6FinN4scMssnU5rF2ELHfScmiy7Ep8m/Zm93j/yVF0e/6O6TGxk5FxJpfi
+         8YSg==
+X-Gm-Message-State: AOJu0YxyEEk3P410/lemPzsAK/xK3ULTPEd6/Kctb1BbnGzfvDyNJdgU
+	/1Ckm4ah3Jj2UwmGABJbq99W2k8US6zveqXvloWvCWH8/TGgzlB/DtOK1LAG1g==
+X-Gm-Gg: AeBDiesxMR14Po0XMmH3Gd3dfJUr2CKKl16+6npuVZSsOTeXER7OyqR6fhc90/M1uFm
+	hbwXZuvV55z5RANGGh5z4Do/FvKAcqs99AzoNYEulq7wcGBgZ0VYH6qgJAxVW7UTiaICkkhFACZ
+	h2w76cZ3rnSj8fRZGr13sOcWap/WDYYh634onirN648jlt6uK4RFB+R3ZXettgdTWbIpSK8c0tW
+	1H/mduhwUkgSTmjJN+zEYIwCHG2IUQAftbIoIJ4cK8NWlD7vNStg01dJFn+d+CejqfXdjjD/Vzs
+	FRWNdOkcUrIw9nrO1/lNicQZdlwtCFnCZBfhYS/ez1TuNq00jjmLaB+v+iBbJBVnIagSs1ts7Fn
+	KELNujquXRrt8FM0ccIdbRjzrEk5N9VMT1PhI6JieANsW6YnmiFXBM9Kfo4tkVMi1/JkBDrX2zF
+	AR8fS9ogzQNsaiL170Tdol9DdbfeePFiVxmih8Y0kQuofSvfXT4/eEZrpIlwu1+rdLTyGepHluw
+	214PtdmHmOsqw==
+X-Received: by 2002:a05:600c:a416:b0:483:8062:b2f with SMTP id 5b1f17b1804b1-488fb73b31dmr270127645e9.6.1776863615466;
+        Wed, 22 Apr 2026 06:13:35 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fc1393f5sm419973425e9.9.2026.04.22.06.13.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Apr 2026 06:13:34 -0700 (PDT)
+Message-ID: <fe75e0a5-1a87-4515-b02b-bfbef0366aaf@gmail.com>
+Date: Wed, 22 Apr 2026 14:13:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 22 Apr 2026 15:13:16 +0200
-X-Gm-Features: AQROBzBNNu4SdsWz9lY7Tqgw4oWwLKesFpZxzmZoiOAnSSzW33KdkHkzns7gYzM
-Message-ID: <CAOLa=ZTvYEzFrLCgJm6hVXUppHKCwPBws9eZeiBYbx2o8EaT_w@mail.gmail.com>
-Subject: Re: [PATCH 2/8] refs: extract out reflog config to generic layer
-To: Patrick Steinhardt <ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [BUG] git-credential-libsecret writes secret to stdout on store
+To: =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>,
+ Lutz-Christian Quander <lcq@wateringcan.de>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000008b5e2e06500c4b01"
+References: <b7b6b94c-7e42-42a5-95e5-d44a54d6da0f@wateringcan.de>
+ <2d5b37b0-3442-42f8-81f4-18b48e95a617@gmail.com>
+ <60cf5f7c-9ccb-4dfe-82e4-9b6e54b3c2c0@wateringcan.de>
+ <0b2370ed-f3e1-4011-8a2c-8da539759881@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <0b2370ed-f3e1-4011-8a2c-8da539759881@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---0000000000008b5e2e06500c4b01
-Content-Type: text/plain; charset="UTF-8"
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Mon, Apr 20, 2026 at 12:12:00PM +0200, Karthik Nayak wrote:
->> The reference backends need to know when to create reflog entries, this
->
-> s/this/which/
->
-
-Better.
-
->> is dictated by the 'core.logallrefupdates' config. Instead of relying on
->
-> s/dictated/controlled/
->
-
-Both of those mean the same. I guess there is a negative connotation to
-using the word 'dictated', but that's present with 'controlled' too.
-Perhaps 'determined'?
-
->> the backends to call `repo_settings_get_log_all_ref_updates()` to obtain
->> this config value, let's do this in the generic layer and pass down the
->> value to the backends.
+On 22/04/2026 06:49, Mantas Mikulėnas wrote:
+>> 2. The direct-invocation pattern shows up widely in distro docs,
+>>    StackOverflow answers, and automation scripts -- empirically the
+>>    "internal protocol" boundary is porous. Fixing the helper is one
+>>    line; documenting the internal boundary across the ecosystem is
+>>    not.
 >>
->> Instead of passing this in as a new argument, let's create a new
->> `ref_init_options` structure which will house information required to
->> initialize a reference backend. Move the access flags here as well.
->
-> I agree with this direction. It's also something that I'm doing for many
-> callbacks in the ODB layer, and I'm moving more and more into that
-> direction.
->
->> diff --git a/refs.c b/refs.c
->> index bfcb9c7ac3..aa66c6b28e 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2295,6 +2295,10 @@ static struct ref_store *ref_store_init(struct repository *repo,
->>  {
->>  	const struct ref_storage_be *be;
->>  	struct ref_store *refs;
->> +	struct ref_store_init_options options = {
->> +		.access_flags = flags,
->> +		.log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo),
->> +	};
->>
->>  	be = find_ref_storage_backend(format);
->>  	if (!be)
->
-> Tiniest nit, please feel free to ignore: we often call the structure
-> itself `_options`, but the variables just `opts`. May just be my own
-> preference though.
->
+>> If the preferred answer is instead "users should only use
+>> `git credential approve`", that would also work for me, but it may
+>> deserve a note in gitcredentials(7) to steer people away from the
+>> direct pattern -- the current docs don't actively discourage it.
 
-Let's make it consistent, I'll also start using `opts`.
+Yes, users should be using "git credential", not be running the helpers 
+directly. That's why the helpers are installed in a directory that is 
+not in $PATH. gitcredentials(7) shows how to set the config setting used 
+by "git credential", as far as I can see it does not suggest that users 
+should be running the helpers directly.
 
->> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->> index 2d963cc4f4..eed13af4eb 100644
->> --- a/refs/refs-internal.h
->> +++ b/refs/refs-internal.h
->> @@ -385,6 +385,21 @@ struct ref_store;
->>  				 REF_STORE_ODB | \
->>  				 REF_STORE_MAIN)
->>
->> +/*
->> + * Options for initializing the ref backend. All backend-agnostic information
->> + * which backends required will be held here.
->> + */
->> +struct ref_store_init_options {
->> +	/* The kind of operations that the ref_store is allowed to perform. */
->> +	unsigned int access_flags;
->> +
->> +	/*
->> +	 * Denotes under what conditions reflogs should be created when updating
->> +	 * references.
->> +	 */
->> +	enum log_refs_config log_all_ref_updates;
->> +};
->
-> Nit: it might've made sense to split this up into two steps: the
-> introduction of the struct, and then moving the config in there.
->
-> Patrick
+Thanks
 
-Yeah that might be better. I'll go ahead and do that.
+Phillip
 
---0000000000008b5e2e06500c4b01
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b5e906d3b09b3512_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ub3lXb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOUNlQy85UUFieFdsS3JoM25tbGJtR05weU85bEM2VgpueHdTUE5aWUFJ
-UjBHMVc2QklkWWt1UUdnTkdZVmplaDA1aXRoSHZ3STdIVlBEVFIxQmszYlE2Q2lHYjI0MnpXCjZj
-Sjc5ZmRPcHpVSmhBTS9vdUVyU0NvaTJXT2x0eUxLQ01xakdYSHRmWDc5eHZra2JXUjBiaHh4MmtH
-enlabDEKeDZUcXYyQ2dJRDNpOWVQejdTTitXSzhNTzhYeUcrWk1hRlJmWXdKU05BVEJVNk51aE1Q
-UjdvYlNKN3FwVFNGYQpZS0lXOGVKV3V2OUYxdVBGT3Z4WU9HZ0lrc3loVldFa0gzamlnL1AyeGE4
-eVByUkRzRDlpNjFpcURQaVV1TnhECmlGa0psRDErUDd0WjJtYTlacHZpUUxDdkxjWFhiRFdUMXdp
-d3FKRmEyelJpNTFMV0NoUHczN3g3bjBpak5tdzQKTHRMNUpZRGNCbEJMbm5BRmtvMWx6MDBWcEJm
-cmxLeW9WOHQ2eVk0a2NKcnNIL0Y2bk9HbDhTaEdhU29zSUkxcAo4cVlUOVNPSmlVdk4vMUhTa0F1
-MklBaVNsMHJ4Q0ZHcitWZTQ1WVg3VzdhMGVzaFJGbTE5eHZacXRsZHY2b3JrCklFTGd2clVGMnFk
-M0tiZ0RsMS9SOTB6N0lTZm1BZUdqbHRUMVRIbz0KPWhKUEwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008b5e2e06500c4b01--
