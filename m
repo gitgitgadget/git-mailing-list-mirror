@@ -1,63 +1,64 @@
 Received: from SY5PR01CU010.outbound.protection.outlook.com (mail-australiaeastazolkn19012070.outbound.protection.outlook.com [52.103.72.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBCD19D065
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D253CE483
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776860391; cv=fail; b=pSfF7TS7W9bztDLIhf+DWc9zc/GAID2R9DWJxEcREwU6i51MIX4oFUa+ig27p2xBKChm4CtQAjw4q09MnJXFM8nBiCt3nw7SwPEWg8GHKI02EglaX4uxYHz9xYD4bWwRhX/X87ifrGCRgIWy5feD2TlmnIQnLpLNDvdq/fTnSps=
+	t=1776860393; cv=fail; b=PDTX0rBwYavX2AOKFXpibMrsuloYiWQpYn8mGyRlm9et4ZZj14/6pl061iaiM9reGOhXwAteu3BXL5c/5HC928nGCxNr2Dgd3OoNau43g8czB5PWf3Se3kSDYYm1DVYfawzwl296uxPfQPSVWyADOG+/ixIGZy2GoPRY6o57yhE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776860391; c=relaxed/simple;
-	bh=1Cuk9VLm7GL7fXFXXNsxnN+L5HDUmCtPI0sB5tAOtMg=;
+	s=arc-20240116; t=1776860393; c=relaxed/simple;
+	bh=KzcuyF78OVUY2lbY5YJdU75G30lkoTJVuHnbANQ4DSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=LfvecjTPepM5bgk7a94qlcspWK+BV/gw9uiObKd+YXe6FCaYGV6TXW6u0xdofdlpJdOhjbB472Lp5Z/0TLS1QYVKm6pIAT50hcWS7I7RNiXdz8dmL79m8OjHqMITbJ80pKdR5CgfFzjTL3EZ1+BM/wJDnKYFXcjHWDXLqRj5hfk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=BmJ8T0mr; arc=fail smtp.client-ip=52.103.72.70
+	 Content-Type:MIME-Version; b=Q59cHtmVotwJWtmmJKgU/hymEtcUkws0xF2jWaMX3IvpMCysIPcKwg7L0mxUN3M5sWLesy63vpvQrtoCHzYThju5M+5PS/4Q1JeaIsjMxnEJuqnKHS86VpbZ0Soy1p555TXHNTcussUkcDU7+uovRVviHMAypqHBdFYGVC12E4Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=F7ARvmGI; arc=fail smtp.client-ip=52.103.72.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="BmJ8T0mr"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="F7ARvmGI"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oX2ChvHY+akJHTDthDUNKWtQraoPxbtQFnjt3UrngmC14COOREFqO0dm2FIaBx2K98Qgq8ruP2OUyk2Zs6OVtgIEz9iULHkA8xp8rWY4EjxxANxDxbJF4y9Q2FE6F/S4eDpvcfPMtK/Rje/zKRCPmJ+f4HglNMxZBH7zRQyQoBbLE+BxN0sp+fQTfFVzaVdfMXcTHxuqQxE7L5UB8XT97Oekn9xsnOq7GVoDWNJuVXLrQnF0HxVcF3OIV0TWZpzAtRdjxnGODUhFqY4EBvxPhgQtWbjcW5sX2dEUV6fAv+UdxSdbVqwsXWpYc/6P7HfQ/xcSzc7JzHlsRP1Lm66VVQ==
+ b=cHyg5qdqB4UO5iRWAg2DaopUJiuHlwTHK9xRpo3GcyWKu5aLKTbT8HDljqpqwOwBB4VJmnCBc+ozqc7Vs8VK6Gpb3TWNQ7V7FdOZ0eBx80zORwjxnwgghFYIiGH9LKeZp9dnnWzQ3M4J2kv6OGWOnqwAJbLIfAIhpsXhDpKAMgYotoUvKG2ckQ8ZIn4PTZuVMWhgaiCGoImTUVhZW+kVBnaVPLuKCFzn7Og2Vdd/EMGSMTVrXX93w+JtHcFIhJ+1AC/t0qsLRnapKhGQpU9vPl3jXtJfm46rkgP3DxTWBRbG95ciNTAzlpXHp+jfoHqsk63A8yvLOANS8JwnGZEG2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2ukR3By5h2svVMJWSWlCpSNO2lsRSBQfYoskQGMsGcY=;
- b=CgGrOCLnfUibhmYWS9nnjrhCwuC+0IX2VmGmPnkov9esRKG4N/MM16O1iYykdaPt64s4vOzr+cGfjcpCngenjV3/dE9fk+5c+0dn6bnVvThgRK66Mk3DCdmEoVHaU9rQZxq9GvXQSXVqerLbesqlrNVBo4qpu3QcDPFunSo/1amNYTJ/VCr2m7b5vRhp442r8NYzj1fzAY5kPZh7kCI8nXD9L6c/UFuI2PYOzsHAQ7w8ya9Muy7NoGmPhzwVPhH50yMe0ItQgqbFj7vXft5HVDKBra4c3fJ/poA431b9s7ViK33kRtSGKD1pSzNqXM79iPockxnA+icP/DiHCuruDQ==
+ bh=KQdRovOl83nIv3c8G3mhikzhZMb9AlZAd9IExBDGrzQ=;
+ b=ocwgcwN/Y1wIBYpMs2UgRlwIJgmC9nPISwL+yLpCmS+zkEISCSXURGqQ7wD3GncrWd2KmeCQ29dbR8/ScIWqdOUCq7buq23PHQ6I8pmw64F+C9D8TFJtgCDKDuNPM6taZm8YLEmexWHXqYv3rvPv25WiFUKTaqUQBYTUh93cK3Qm9Erlsa2fxW0DW6I0oAcmI3J5x6CoXk38zcnfqWdb8H2CbtB2/sqa5G3jmRJ0JU/Zfaq2BrbyASsnK/iMAen/rrVCp1rOZ+Fe4LGmBak6fMQE2pN+1BwGiXYMLT5emFVI1e6Yqvf3UqxfOj37ZTI9WKxXzvHHDzGJJKR1gxDyZQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2ukR3By5h2svVMJWSWlCpSNO2lsRSBQfYoskQGMsGcY=;
- b=BmJ8T0mrU4Vll9IajUc99mtZzaFZxDdmFGPqnj42naF3CCxd+WHL2jj3WcmdK0P5ZJmpTp3cw7ElOuQrZCK/k2MLMtPgpkGziRSFwwOv76QEOBN56lPoFNQiXr0a64v0dvfGPfnfhjgjP407IvR80NHntM2yQzWRqE/IGtS3tsVeTFDv7Bqc5fhyKNP3RNwCfFm6sEaGjMjPtkZc/oHmsa1EgK9VPQRv7acQujvsWTMI/alJN1W54m+GorJZz40v6erLSebrtDKJmFjKhoSZ5R/jm3HsLCef0Tw9SJSEns04PZm45ZUDDi0qOz6vRNF7qxH0zsewG15KPsCPHtEycA==
+ bh=KQdRovOl83nIv3c8G3mhikzhZMb9AlZAd9IExBDGrzQ=;
+ b=F7ARvmGIUtX5nuJbdZbACtrt3Qf4xEPKgYoNZLTAR05sS1qWHAyyE5k7ax7wltDD4XLvQqK0XppoUwG++JpgWDEP4Wss5WFm7ADiU30DKI6xlHqxannAUwvD6M9A2YXF9Mueb9Pfh9XLp3QgZ7VyTq30fFdHDW5p/Jgip3m4MrnMkz8HpyDIvKmWO85XTJ6iQwR8Y2a3I283VRRxjLZ0/xnFmnuDlxT38dxCkqZhjhTPf6TsOIy7BZ35+kZp+Fl2mgd6ktg1Eafj4JXHfUyBlPGyPKOhL7l6RGmP3j4YrxfL7AADcexY0o86M4qLP1aMGrENnwZnPEAIOOORtn5HWg==
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
  by SY0P300MB0530.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:286::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.18; Wed, 22 Apr
- 2026 12:19:46 +0000
+ 2026 12:19:49 +0000
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9846.016; Wed, 22 Apr 2026
- 12:19:45 +0000
+ 12:19:49 +0000
 From: Jiamu Sun <39@barroit.sh>
 To: git@vger.kernel.org
 Cc: aplattner@nvidia.com,
 	gitster@pobox.com,
 	karthik.188@gmail.com,
 	Jiamu Sun <39@barroit.sh>
-Subject: [PATCH v5 00/10] parseopt: add subcommand autocorrection
-Date: Wed, 22 Apr 2026 21:18:00 +0900
+Subject: [PATCH v5 02/10] help: make autocorrect handling reusable
+Date: Wed, 22 Apr 2026 21:18:02 +0900
 Message-ID:
- <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB0801DC1AC241760564952863CE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 References: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: TYCP286CA0104.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:400:2b4::20) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <20260422121810.307862-1-39@barroit.sh>
+X-Microsoft-Original-Message-ID: <20260422121810.307862-3-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,59 +69,59 @@ Sender: Jiamu Sun <sunjiamu@outlook.com>
 X-MS-Exchange-MessageSentRepresentingType: 2
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY0P300MB0530:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3210ddb5-c392-4174-ed3d-08dea069703f
+X-MS-Office365-Filtering-Correlation-Id: 91dfecc6-b768-4f1a-3adb-08dea0697273
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|25031999004|5072599009|15080799012|23021999003|12121999013|461199028|8060799015|19110799012|51005399006|55001999006|440099028|3412199025|40105399003|1710799026;
+	BCL:0;ARA:14566002|25031999004|5072599009|15080799012|23021999003|461199028|8060799015|19110799012|51005399006|55001999006|41001999006|440099028|3412199025|40105399003|1710799026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?NEcaGT+Zk+GCZ75fXnautejqCZmimr2BI82Rse97MRXbx741LEvqWqhMcEqC?=
- =?us-ascii?Q?It5ryW9hJdojoqw6TqC/WC85ZDyKJccCNtRdtnNLXS7EPd2ZLk6ttyH2yWVy?=
- =?us-ascii?Q?LRuoas1dTnlEDP90geUUykwZxMVnrMQFgy/aOYUe9O7MA4OZJSk2RBPSY8Es?=
- =?us-ascii?Q?kr3spDJk5AeJDUidPm3B1sK+r8flx8ZgTJcrFq4N2dD0oC9dOjArd/S5fjpv?=
- =?us-ascii?Q?XT+s6EWQDi1PKfclIv1pvvP9GuuvqxKC6P89yybhSZfqNW0VYNIIrz6IDdA7?=
- =?us-ascii?Q?wsQQvgJfTZ17qabWItzAzYtzO3MueNb3n/nAJsyp8vJ5jbafWCP2VUCiOkxe?=
- =?us-ascii?Q?BRb9nf6Mc4XCu4P0jKwsrrnrSwFHXeezRQEBt/1Mz3yv2O5W+rV7LWGzlk/F?=
- =?us-ascii?Q?s27kJy64pUjtvmig15GSk0tmE63zAdOziRnEm2AzdsMGCyqX2fma0223ZROp?=
- =?us-ascii?Q?wiAJljojz6mgomvNj6yipB+deR9v6UYbiKJNyJShAapXUOzmO12wHegy7KDP?=
- =?us-ascii?Q?f3hgOypacLSLZR4grMDobHTDrx9p5M70rZJbUvQj+V7jMJRD4EkBa7mYhO5L?=
- =?us-ascii?Q?BJGYJV8ZBld7EUB3zHMOGfQQn5CQCKysODGrHB2M76K52JsjfHCbAN7togew?=
- =?us-ascii?Q?jmHyAeEK1bgkC/0VAWE/rK8u3yTwowy6vtIckZ/6+uLmsZcXHJ26WiE4pba4?=
- =?us-ascii?Q?Yr9Kb68VEN3gYstXo6f+bq4AdaLHvWJWKen7TrTyaGoxQFC8h7ktHs+0l4/Y?=
- =?us-ascii?Q?7JtnC+BtJJoZBYluTer0WnRbeGBNMsf7+SvI9hVeLALki3K67RJXyo9nraV2?=
- =?us-ascii?Q?YrSkMlzcWTguFP6267PtkNv+pJ1YE+nq0cOmwYOcd3jFv9Rti/bTg6hK6deD?=
- =?us-ascii?Q?X0Z5M4tLG0EgWsh6fMcHFUzz6/I9OXjTCUTZx5Krd/1LiWHS1g/P863fpWe+?=
- =?us-ascii?Q?yp3sAvMwACm3VFCUX221IVZkood8Ds6WBjzoiSNczbmGXEJpTz5SaufBk+dF?=
- =?us-ascii?Q?eu8el0kD1j9ZZdsa8Ic7gptzAkuuy0TvPC+dVJk4lykqNqo=3D?=
+	=?us-ascii?Q?J712tSj9vuk37ahTo7M1pUoOfeRWkg+4mErTq08q4hKTkT3+hvUaPSF0KVzm?=
+ =?us-ascii?Q?GmZtMsd/egxJj6VXsP5RtMbMpNzWFMr3/V68CupsITjn2hH8kuNUlo5x8Cvw?=
+ =?us-ascii?Q?DkkI+UcYhy664NBKvnIGytlCtzs3hZiByOq1oNHslBfBuV+YP4xocvjZ24oX?=
+ =?us-ascii?Q?2mcJ+3VJfb71pmvcIJnut5qIU6/zEqa1aWGE+A1npoLUrEDQi2rcykZYiohb?=
+ =?us-ascii?Q?KYhCMdaKwnU8ME2Jl20zXSWI0o/1BrO+S7cmw2/SOajRaltMM1Kev3ivlkUT?=
+ =?us-ascii?Q?RXXTJOsy6gLFusZQXLJntpBPgHGc6/QPKd93R8TfDvGLB9IvDN2EzkMxPA9n?=
+ =?us-ascii?Q?YtwECHNP7mH6hskz8Q7VPlpKQI8HjbD80cWWmHZmCRMYnHuAHtDtQgRnTRp/?=
+ =?us-ascii?Q?7MEFYGOjcdV1iQ/n0vX+EdagBCHC/g22yEhvNvNOCIfZWfS5evyGY995bKMn?=
+ =?us-ascii?Q?Y9BHAIvcYCqSxaiUsJUe5y0Yc3Cpggel4pB/QjFwYBMwNYug0s0dnt8mNMpa?=
+ =?us-ascii?Q?+eJv4Zdr/uu2nP/VGH629JX3cTeoVO9JlFOi7/UskrQg+hXpJstOU+SxJjBc?=
+ =?us-ascii?Q?Dec5tjBj+L8OD3JdmWhuz+Uiqiy1sJ9vqJRjw3RUOGfH8N70FGnKdXM4i5gc?=
+ =?us-ascii?Q?JrCXsFo/C/N3nlHCRMcc6WoERVUBYKtf+rCEg3sLnkhVlErLBkWHvtp/IX3Q?=
+ =?us-ascii?Q?5pgnqRQI81egsK1knPk5gbOqjczDGb6poRtq97p8WoRHLHLYDLq+Iz3VL8mN?=
+ =?us-ascii?Q?RyNrxjO8yLHsasOwCZ7N3Hc/6CucFq2NYGFcu+54TcB8+/aQfv3zulNryN3B?=
+ =?us-ascii?Q?zKulzImvJj+9NxmoKd8Gu3l3ZZKLOqMfUBTlrN4U7HPBVe6D5Ys0RVmDusJo?=
+ =?us-ascii?Q?6oyLAOs3J7MPNbEGbt2EkpNRIpN4DudVtwYtKy/z8T/Ts5nuMtlZ9CbCueTP?=
+ =?us-ascii?Q?rp0+lOL6eJ7Ehmqu3lMR7LykS4EIhAbNSiaoqKk+aqP2X0WDDsSHd4WaQIhB?=
+ =?us-ascii?Q?fmpAKjpDFI+dHjwHPbEbphqVmA=3D=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?t5t5ExFJNcYu8o8UTIceuKj1gkwrVFqPTSU1bXzlFa03KX0JrDNaSj+mIv5J?=
- =?us-ascii?Q?xUMc/sda9QtK4Wi02kOfR0ZunUaxgi1o+gjJ+VL5YJFYarakLl0quWakoMgl?=
- =?us-ascii?Q?vK9gexVCmggA1U3zVWe7kzYIVs7braf/L1xOysAWb94MTvvvldtbpTOgUjtc?=
- =?us-ascii?Q?DunX+7QBE6LFjSJjw62D/TscgSwY0WVUW0LUm8SBw+ayasUfl17LHrKyd9mC?=
- =?us-ascii?Q?pRYm9uhPROPANM0fKIiIkxZuKzJo+h7goKCq3LWSA8wj+2VQWaLCdqlcqT3h?=
- =?us-ascii?Q?rsl2UVK6nDSJAMFTrmEhwo/XksyCsJvFHMCANNdwWWAFKQrMvO246MZX8ZFV?=
- =?us-ascii?Q?YYJeimZmwwN+kjUr4+8RxqknenBllfo3V0Yn9Q6xz//0ULlgAZqc1llREN9X?=
- =?us-ascii?Q?YJjBrppYCPle4IR8iP3IGJ0ollHKrPffkxLqh7n8cKqFkKj72JtLDa4IoUbl?=
- =?us-ascii?Q?sMu61ycOHMdbBWTfbzcOJloxxPpr/biY44Ek8WL1IXTl5SvPXB6F5Ds/syeW?=
- =?us-ascii?Q?XXK3NtF6laaxKOKvkkD01SqjqUJ2yw2HhPpZRw7uCGqs/DUB2am/1QSHnGZ/?=
- =?us-ascii?Q?Z8Xk45LPJvOpO+6BzRAQ9M9me9A3CjZS+/yk9y3ucBW4F5nEBTLFJ6vYjQ4a?=
- =?us-ascii?Q?qOe/s4zhZ1gxn9cqfki+nNsBT/gSKXn80e3pjvV3eOcAKhQ2xQQKa2Su2AP1?=
- =?us-ascii?Q?qu4CAjwaql+Gwp6Jqsw3jk4cHFlPjvLq6BTsxWnXRT+lM3E4ShRHsKHCVYn2?=
- =?us-ascii?Q?t2ODIDtezBCPsQgFFsgwcZx8wmPOTt/nZ3GsGRTmFk+P8zH2IMm4AdCUmmze?=
- =?us-ascii?Q?96EVG6Vde33dQRD/m9L54sjvyNRGnNg/ZrCc5zFq16LAsklSXV7ywS0Tqt+U?=
- =?us-ascii?Q?ZmQzJMMuvEbHuDu0+gAIM0r7fiPYwO4BnOCtdhEqRA+DAv+IOCXVHTECDcBm?=
- =?us-ascii?Q?KXxUZXJNgC51iuMnpvlmj8EH+kfivyZ79HUpISkG65rdW3yrOSx1jZ0CVS9Z?=
- =?us-ascii?Q?2XprdBa4I/6aDxO4GdZ2wZWwJcVoDiVWIFLfXj7Lu5PmVHLBVaQVok3HyrO/?=
- =?us-ascii?Q?iI17lyjfkV1MnZwT881chdY3tuTI9FPemTOruFwHB5wc6PrQps1i0d36CydU?=
- =?us-ascii?Q?s7YNxlY0eCPy+ST6fCRhFal1c1tV0rdlTThkBaBW+fFkeF6o9yNXbiLUVryN?=
- =?us-ascii?Q?7Eu0WsHAEBqBf0FaRXuTdvQ9OFDRKhSq5kKUwuKKsrFxcW0H6hjbRktW1xOg?=
- =?us-ascii?Q?PtufSB+lpQ6zr3FTGCXE8MKzwq/HNFZ1+Xra91QgQC/744fF5Z6MqX8Gw3ac?=
- =?us-ascii?Q?D3v/fu96mP9lkQqgGD2PWs2n8ldxW2E9pbtM+liVSMBtVLvf8ZQBp7zErRJZ?=
- =?us-ascii?Q?ReLX7d6Ml9DyoLMGKeLDex7wmVp3?=
+	=?us-ascii?Q?EizKeaHj10L2kP46D/6sVT+2HdqbL78fWRV6W12sAGDE6nzPl7Rvl2ycFBhK?=
+ =?us-ascii?Q?OtPaHZPNVgB5JIVpuHymNo1guraJOfCca8TbMKFtBVeM4Czo/eGaQCofCI/B?=
+ =?us-ascii?Q?exfn2vjRnvy9BzqY3P30+OMLljz3eTjOVV/yO4b9Ar1JTCsOVmZns5dGyiuJ?=
+ =?us-ascii?Q?m5c/oRNtoANc3kSyUNi7DL/HVYusr++diyk7rCMGn1yi7Sic0WqMq0Ia95m9?=
+ =?us-ascii?Q?PBEe8POuFlqOph0y0nzvls/zOCIUJw+rG1elgmJkjgi08YD81D+XjuoCOup3?=
+ =?us-ascii?Q?eeo/1ZQF8T6KfQJcrc1FvJ69GwslAPR5DY8zvteqIdQjDZJ+CSx5kdJn/I6Q?=
+ =?us-ascii?Q?o8jnU9TT8wxb7sh8CYu9xiIAy4X6u/yAAHtJnLBZz7j6dn7b5zZSVQvIypYC?=
+ =?us-ascii?Q?+VC7ug8NFpUXV1mzwDvfVf3GfN9yS/rPPfPMXe32dk6gnsk0IpWsXXCfkavK?=
+ =?us-ascii?Q?EwloU5RAKmmMC5oqywBD1rpRwfb5MmgD0KNt+3TI52tpln2KARJ5n6ziX17e?=
+ =?us-ascii?Q?0eoVnselOoqa1CF1VxqaAgRbIoDnaTbhbz+JgVfFvlyYYvSmU15dIudAeO+S?=
+ =?us-ascii?Q?su+u+gQvG2aElQWy2VzuuTNcyQM1NcA8UoRs9AN2QK4pgoHpZl+tbu6RFZqT?=
+ =?us-ascii?Q?R4gdiNtd/M9wI8W/Q+4zjcHKOL3Mry1PMjyWBlyfgWM0a5tQ2iCBbKP9VSnx?=
+ =?us-ascii?Q?426YQbvh0jP2Z2DZ1N0OhkJS4HKCsrafdGXrvNfySQ6sZLOP+scGUYnGq50M?=
+ =?us-ascii?Q?oWI7PBlBrpFO6qjA4sLJxKPAwZpyZ0Zphl/FSS5fNmPvWr/Oh442oszKBxzU?=
+ =?us-ascii?Q?nqQhqgyF7Ws1XBbwlpnVEGwTm9ons7jBUKmwsHuiGtRQqrxqehmRYUeJATtd?=
+ =?us-ascii?Q?6wOluUuSKPO3rnlXqbIlonT+cgTwH6UvDUbl2okS6B5EuImDU2PC0ue4U2bd?=
+ =?us-ascii?Q?tS7ud9fy0lyDoMvYYcXLesKCqmv/gxujPiSsSM5/vfQT8jlL1UNMMX0WnMrk?=
+ =?us-ascii?Q?ID4rvCqwScREypAzLTm23W1qVc9EkfKuzZ0B1JSh7H2yiLTDCN8GzxNOscSf?=
+ =?us-ascii?Q?GdUJzad3Svm+3Ekyft4TME2KKsn5cL6uQ8yjo9CC55F2VeCpB/ib9nrqggoA?=
+ =?us-ascii?Q?SJBCKwHX07vRDMR5x/Lw+276XDT8Wuj33L/l53DC/A+kBbuT69Ygz9cXvVn/?=
+ =?us-ascii?Q?y9EH7zeZBa5RthEYgRSGMkM2DfkwKEi7JtHi3An0IXsLDjAvv39zViroPSEb?=
+ =?us-ascii?Q?Khrc+jBLA+8Rj8FGucmkv501sAqlDN58J+iGP9LMcW6r5u6/r5ThYYFyjC70?=
+ =?us-ascii?Q?eE7UwjvIU9INapT5611VFWABoobV80oZMv9RLP94kHQ5/ZaFCOQgUzeUFXkq?=
+ =?us-ascii?Q?wjgi4+Yg/4vUvBC6nvpOqNJ4Zg4H?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3210ddb5-c392-4174-ed3d-08dea069703f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 91dfecc6-b768-4f1a-3adb-08dea0697273
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:45.5671
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:48.8992
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -128,87 +129,241 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0530
 
-Git currently provides auto-correction for builtins and aliases, but
-lacks this functionality for subcommands parsed via the parse-options
-API. Subcommands are also commands, and typos will occur, too. Like:
+Move config parsing and prompt/delay handling into autocorrect.c and
+expose them in autocorrect.h. This makes autocorrect reusable regardless
+of which target links against it.
 
-	git remote add-rul
-
-So, this series introduces subcommand auto-correction.
-
-By default, this implementation enables autocorrection for builtins
-with mandatory subcommands. However, for those using
-PARSE_OPT_SUBCOMMAND_OPTIONAL, autocorrection is skipped to avoid
-misinterpreting legitimate unknown arguments as mistyped subcommands.
-
-To allow builtins with optional subcommands to explicitly opt in,
-this series adds the PARSE_OPT_SUBCOMMAND_AUTOCORRECT flag, and enables
-it for git-remote and git-notes.
-
-Additionally, the existing autocorrection logic is extracted from
-help.c so subcommand handling can reuse the same config parsing and
-prompt/delay logic.
-
-Some string literals are also combined so the full text is easier to
-grep for.
-
-Changes in v5:
-  - Make subcommand autocorrection behave the same as command
-    autocorrection
-  - Rename PARSE_OPT_SUBCOMMAND_AUTOCORR to
-    PARSE_OPT_SUBCOMMAND_AUTOCORRECT
-  - Adjust subcommand autocorrection tests to fit new behavior
-
-Changes in v4:
-  - Add missing files to Meson build
-  - Change API prefix from autocorr to autocorrect
-  - Split the commit that moves tty code
-  - Add API documentation
-  - Use standard Damerau-Levenshtein distance and common practice
-    fuzziness thresholds
-  - Rename AUTOCORRECT_HINTONLY to AUTOCORRECT_HINT
-  - Change commit subject prefix for tests from "help:" to "parseopt:"
-  - Fix coding style issues
-
-Changes in v3:
-  - Align with the coding guildline
-  - Split patch so diffs don't get hidden by code movement
-  - Improve commit messages
-
-Changes in v2:
-  - Reword the explanation of default autocorrection behavior
-
-Jiamu Sun (10):
-  parseopt: extract subcommand handling from parse_options_step()
-  help: make autocorrect handling reusable
-  help: move tty check for autocorrection to autocorrect.c
-  autocorrect: use mode and delay instead of magic numbers
-  autocorrect: rename AUTOCORRECT_SHOW to AUTOCORRECT_HINT
-  autocorrect: provide config resolution API
-  parseopt: autocorrect mistyped subcommands
-  parseopt: enable subcommand autocorrection for git-remote and
-    git-notes
-  parseopt: add tests for subcommand autocorrection
-  doc: document autocorrect API
-
- Makefile                          |   1 +
- autocorrect.c                     |  89 +++++++++++++++
- autocorrect.h                     |  36 ++++++
- builtin/notes.c                   |  10 +-
- builtin/remote.c                  |  12 +-
- help.c                            | 120 ++++----------------
- meson.build                       |   1 +
- parse-options.c                   | 183 +++++++++++++++++++++++-------
- parse-options.h                   |   1 +
- t/meson.build                     |   1 +
- t/t9004-autocorrect-subcommand.sh |  58 ++++++++++
- 11 files changed, 361 insertions(+), 151 deletions(-)
+Signed-off-by: Jiamu Sun <39@barroit.sh>
+---
+ Makefile      |  1 +
+ autocorrect.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ autocorrect.h | 16 ++++++++++++
+ help.c        | 64 +++------------------------------------------
+ meson.build   |  1 +
+ 5 files changed, 94 insertions(+), 60 deletions(-)
  create mode 100644 autocorrect.c
  create mode 100644 autocorrect.h
- create mode 100755 t/t9004-autocorrect-subcommand.sh
 
-
-base-commit: f65aba1e87db64413b6d1ed5ae5a45b5a84a0997
+diff --git a/Makefile b/Makefile
+index cedc234173e3..ced8a9b5abb4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1100,6 +1100,7 @@ LIB_OBJS += archive-tar.o
+ LIB_OBJS += archive-zip.o
+ LIB_OBJS += archive.o
+ LIB_OBJS += attr.o
++LIB_OBJS += autocorrect.o
+ LIB_OBJS += base85.o
+ LIB_OBJS += bisect.o
+ LIB_OBJS += blame.o
+diff --git a/autocorrect.c b/autocorrect.c
+new file mode 100644
+index 000000000000..97145d3a53ce
+--- /dev/null
++++ b/autocorrect.c
+@@ -0,0 +1,72 @@
++#include "git-compat-util.h"
++#include "autocorrect.h"
++#include "config.h"
++#include "parse.h"
++#include "strbuf.h"
++#include "prompt.h"
++#include "gettext.h"
++
++static int parse_autocorrect(const char *value)
++{
++	switch (git_parse_maybe_bool_text(value)) {
++	case 1:
++		return AUTOCORRECT_IMMEDIATELY;
++	case 0:
++		return AUTOCORRECT_SHOW;
++	default: /* other random text */
++		break;
++	}
++
++	if (!strcmp(value, "prompt"))
++		return AUTOCORRECT_PROMPT;
++	if (!strcmp(value, "never"))
++		return AUTOCORRECT_NEVER;
++	if (!strcmp(value, "immediate"))
++		return AUTOCORRECT_IMMEDIATELY;
++	if (!strcmp(value, "show"))
++		return AUTOCORRECT_SHOW;
++
++	return 0;
++}
++
++void autocorrect_resolve_config(const char *var, const char *value,
++				const struct config_context *ctx, void *data)
++{
++	int *out = data;
++
++	if (!strcmp(var, "help.autocorrect")) {
++		int v = parse_autocorrect(value);
++
++		if (!v) {
++			v = git_config_int(var, value, ctx->kvi);
++			if (v < 0 || v == 1)
++				v = AUTOCORRECT_IMMEDIATELY;
++		}
++
++		*out = v;
++	}
++}
++
++void autocorrect_confirm(int autocorrect, const char *assumed)
++{
++	if (autocorrect == AUTOCORRECT_IMMEDIATELY) {
++		fprintf_ln(stderr,
++			   _("Continuing under the assumption that you meant '%s'."),
++			   assumed);
++	} else if (autocorrect == AUTOCORRECT_PROMPT) {
++		char *answer;
++		struct strbuf msg = STRBUF_INIT;
++
++		strbuf_addf(&msg, _("Run '%s' instead [y/N]? "), assumed);
++		answer = git_prompt(msg.buf, PROMPT_ECHO);
++		strbuf_release(&msg);
++
++		if (!(starts_with(answer, "y") || starts_with(answer, "Y")))
++			exit(1);
++	} else {
++		fprintf_ln(stderr,
++			   _("Continuing in %0.1f seconds, assuming that you meant '%s'."),
++			   (float)autocorrect / 10.0, assumed);
++		sleep_millisec(autocorrect * 100);
++	}
++}
+diff --git a/autocorrect.h b/autocorrect.h
+new file mode 100644
+index 000000000000..f5fadf9d9605
+--- /dev/null
++++ b/autocorrect.h
+@@ -0,0 +1,16 @@
++#ifndef AUTOCORRECT_H
++#define AUTOCORRECT_H
++
++#define AUTOCORRECT_SHOW (-4)
++#define AUTOCORRECT_PROMPT (-3)
++#define AUTOCORRECT_NEVER (-2)
++#define AUTOCORRECT_IMMEDIATELY (-1)
++
++struct config_context;
++
++void autocorrect_resolve_config(const char *var, const char *value,
++				const struct config_context *ctx, void *data);
++
++void autocorrect_confirm(int autocorrect, const char *assumed);
++
++#endif /* AUTOCORRECT_H */
+diff --git a/help.c b/help.c
+index 3e59d07c370b..ab619ed43c7a 100644
+--- a/help.c
++++ b/help.c
+@@ -22,6 +22,7 @@
+ #include "repository.h"
+ #include "alias.h"
+ #include "utf8.h"
++#include "autocorrect.h"
+ 
+ #ifndef NO_CURL
+ #include "git-curl-compat.h" /* For LIBCURL_VERSION only */
+@@ -541,34 +542,6 @@ struct help_unknown_cmd_config {
+ 	struct cmdnames aliases;
+ };
+ 
+-#define AUTOCORRECT_SHOW (-4)
+-#define AUTOCORRECT_PROMPT (-3)
+-#define AUTOCORRECT_NEVER (-2)
+-#define AUTOCORRECT_IMMEDIATELY (-1)
+-
+-static int parse_autocorrect(const char *value)
+-{
+-	switch (git_parse_maybe_bool_text(value)) {
+-		case 1:
+-			return AUTOCORRECT_IMMEDIATELY;
+-		case 0:
+-			return AUTOCORRECT_SHOW;
+-		default: /* other random text */
+-			break;
+-	}
+-
+-	if (!strcmp(value, "prompt"))
+-		return AUTOCORRECT_PROMPT;
+-	if (!strcmp(value, "never"))
+-		return AUTOCORRECT_NEVER;
+-	if (!strcmp(value, "immediate"))
+-		return AUTOCORRECT_IMMEDIATELY;
+-	if (!strcmp(value, "show"))
+-		return AUTOCORRECT_SHOW;
+-
+-	return 0;
+-}
+-
+ static int git_unknown_cmd_config(const char *var, const char *value,
+ 				  const struct config_context *ctx,
+ 				  void *cb)
+@@ -577,17 +550,7 @@ static int git_unknown_cmd_config(const char *var, const char *value,
+ 	const char *subsection, *key;
+ 	size_t subsection_len;
+ 
+-	if (!strcmp(var, "help.autocorrect")) {
+-		int v = parse_autocorrect(value);
+-
+-		if (!v) {
+-			v = git_config_int(var, value, ctx->kvi);
+-			if (v < 0 || v == 1)
+-				v = AUTOCORRECT_IMMEDIATELY;
+-		}
+-
+-		cfg->autocorrect = v;
+-	}
++	autocorrect_resolve_config(var, value, ctx, &cfg->autocorrect);
+ 
+ 	/* Also use aliases for command lookup */
+ 	if (!parse_config_key(var, "alias", &subsection, &subsection_len,
+@@ -724,27 +687,8 @@ char *help_unknown_cmd(const char *cmd)
+ 			   _("WARNING: You called a Git command named '%s', "
+ 			     "which does not exist."),
+ 			   cmd);
+-		if (cfg.autocorrect == AUTOCORRECT_IMMEDIATELY)
+-			fprintf_ln(stderr,
+-				   _("Continuing under the assumption that "
+-				     "you meant '%s'."),
+-				   assumed);
+-		else if (cfg.autocorrect == AUTOCORRECT_PROMPT) {
+-			char *answer;
+-			struct strbuf msg = STRBUF_INIT;
+-			strbuf_addf(&msg, _("Run '%s' instead [y/N]? "), assumed);
+-			answer = git_prompt(msg.buf, PROMPT_ECHO);
+-			strbuf_release(&msg);
+-			if (!(starts_with(answer, "y") ||
+-			      starts_with(answer, "Y")))
+-				exit(1);
+-		} else {
+-			fprintf_ln(stderr,
+-				   _("Continuing in %0.1f seconds, "
+-				     "assuming that you meant '%s'."),
+-				   (float)cfg.autocorrect/10.0, assumed);
+-			sleep_millisec(cfg.autocorrect * 100);
+-		}
++
++		autocorrect_confirm(cfg.autocorrect, assumed);
+ 
+ 		cmdnames_release(&cfg.aliases);
+ 		cmdnames_release(&main_cmds);
+diff --git a/meson.build b/meson.build
+index 11488623bfd8..be20d507826d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -290,6 +290,7 @@ libgit_sources = [
+   'archive-zip.c',
+   'archive.c',
+   'attr.c',
++  'autocorrect.c',
+   'base85.c',
+   'bisect.c',
+   'blame.c',
 -- 
 2.53.0
 
