@@ -1,119 +1,88 @@
-Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE45233722
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 17:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAFA3988E0
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 17:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776877964; cv=none; b=kCvM8xi93+0+y6tgGLUWuPjDeASunar/fBq9X2hNsUUFlgFsTHZIOnW79ec0MO2fvo3RMJJ+bFdp/E+NncXDCLdSmiUnWxbgPYGxUsifKcgPMBl3vTcrjR5+IhJYPFbulaBGHjAs305ZciwgTwyYb/P7jx7Ext7AELdBsZYqaRg=
+	t=1776880710; cv=none; b=KsU087LAv2+opgaIs31n0stQlG+QL4dfyrdD604xyf+AkhZYFAC0MW5Gwbj8xozajKYIA+2aPYjxGdqMQxmtxeMnm6d/X1r7ovRlOeuUNfKHO+59dFQqHI6g4CRRkql/IlKqWJIlF7aQa5LwcLa52jx+T15NdAIs5sd3m3KU7HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776877964; c=relaxed/simple;
-	bh=e6rNPcY+jvT8TnIHwv86Ek0MDqA2lAei/+dZJ5tDe0g=;
-	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
-	 In-Reply-To:References; b=ATjXS6yJ7B9UHZUZ/ogJB6nScsZfyjfg6LvigkmFcovTKw8WX/dKg68ClQQwKabRgXkYoNdOuVpxmIt8JDFGws02UiJjoWRa2oZbcqIUg1PoqOBXN3tA0HggZ1YYj3rvEtKmMzTdfQG2TKIh4ysU9oLxt6nOjt5OQOEIDZ2q5Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=ON2fBLqz; arc=none smtp.client-ip=93.93.131.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
+	s=arc-20240116; t=1776880710; c=relaxed/simple;
+	bh=HItO5BTwSNA6nkEaPoYL9mditrZpm6RytLraZ0RsUoU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LsFQyuZDNEt0o42DLSsWUim9L/lI1U9TDrBNxWdgX8u0KrrheOw8D34aQk68BLHeObotr9SEt3GZsd4DnIfakRg4JvBFLlvca3QxbI7+mjuxNEWiagh/tlF0VYGCq6kMmpg0opXf7nv46hTeNGUNdRyy06HggYJTAIbaijy5SR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=az5X88V3; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="ON2fBLqz"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=chiark.greenend.org.uk; s=g.chiark; h=DKIM-Signature-Warning:References:
-	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
-	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=Sffx6ctsaK75lYvYhvLb2Qc5tlArL2MPzbeJOPATcLI=; b=ON2fBLqz49mZ
-	tfOjQMDkxgG7gC0PvlT2K2DSwCB/a+C2dUXRdP6CaQoXmoOyTwxctplEvq40eZhlYB8hqW9W2PVSz
-	kqBEVqekPOcmIIahWniZQZ5Br53T4D1xkQ4iVfCmSKCxyCCpV/0iXzknLKA1tj0fiCy4F+NiquC3u
-	8VJH3z1u5uBB99Ny9mSN+L44CMKzlhqy6j33DqWr+t7DH8L5Oo3prMdLduiuBhUOMjV6aJF3AcBHf
-	3MSQFZKBRoVRsBtR7oFFWKHi8RTEEBoXn9Xthhm/czbEy9eYMgdT8Qw3SJVdkDkb6NMyKnofrPJpZ
-	bh8HY6yqKe2tdEfeN2E3DA==;
-Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1wFb7o-000705-DP; Wed, 22 Apr 2026 18:12:32 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="az5X88V3"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59e4a04f059so6615713e87.2
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 10:58:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776880707; x=1777485507; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HItO5BTwSNA6nkEaPoYL9mditrZpm6RytLraZ0RsUoU=;
+        b=az5X88V3lBKiHR+4QT2n07OlwMZMc5jibvBhRNpfiTi6jCVy5g+OsAupliw6sLjkP9
+         bJdb3lX6/bUqnJ42Qlts7eLAHdrc+MHc9iueNIGnGA2uyKP8L0tLs2D0fA+T26HREa28
+         kVrcf6eZ9XHWd7ObSOZqU4V/mybjpN4eeHxzBY4WzdWmOrDxO+bOeAtqcWG4S232UQbc
+         4YVvsQqfqT0DcTnoGwqoEI1zazKmlTZiPtJ6VmU9p5XDIqnpupx+xKdHd4uESwJ+Um5S
+         jmdIpRnc56aCXddebgyNA9g8QXWhl20wqI5n0V0AIfgfG0rytIzUP/RZgsiY7DkNs+SO
+         u1Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776880707; x=1777485507;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HItO5BTwSNA6nkEaPoYL9mditrZpm6RytLraZ0RsUoU=;
+        b=jhl0Am/j1XOQ600gKacvcPPkjsxs2N94icjrFONEDXOkAcyfxn029E96vuQre8xmfy
+         yYHFP4dDc/Y1Xz3FcqYpLiueAtboxpBpwJKuvdVN6Rxdh3VFf4KJjqI1OZhXBW9E24Nw
+         dCtTi6E0KTJezk2rwF29g8BakzDEu2Xoy3N9iMlN35CqBch1hglz+8cEqo6c3p+DJX3k
+         2dCL8kBPAkHacZpOfTAGS3RQtvjKIGm2VtaMVQU3/RPdv7GlBoNQSppwjeranguzTSA6
+         lzZQOE6vO6pprf8yCjHuReLmR/1z1Qm70fW6Jj4wLkHJ1XS2ghuuU0ZzGkeH+KAnKhFG
+         LvuA==
+X-Forwarded-Encrypted: i=1; AFNElJ/SiAjLIWZccCPHHqC1zU+Xyp8gCbpAl/0pwBJIiFQlTUl4y0dvFS9JC9XQ3iI1KuUaMDk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhD9pBjBLVoUxRBzrgEXE5poVYoaxN8VSD9wVJXSpCyvlChPpk
+	IwgzbgMB0BiP897YQq7OQ/jKJg16ml34tc97JYFKRAlXx0VEnwUeZRDkYCt/T5vL
+X-Gm-Gg: AeBDieurdUFEN0k3PaF8cun7KDUe8ATVZehG1FPoUNb1wWiRgMwU+DJiHMohy5rUiIV
+	fXdJYMZhJXYmnNkvULNS8Dm+kyTHZzzV7rRzFg4DI9BoiYsg9AMhU60cPHMWemP5INn8Ie1PSAA
+	84hC7nHUiZZHbY8zodzr6iYcneZv29Y7qOd757hC6JSYkZ7C8JzCJkJ9hrhGMTJCYy27F3XVqty
+	S+mV7UfrTXs/dXGhIyOeYRVogN/1bXT463IPVwBDfHNIdCWstKTAa1g72qoEW6s0sHZdYzwKRgC
+	Jmaok/YEbT7kMKKiVUq/FSKo0D78oS1N+5uaZsE5FC5ZZ4uABE/EV43QG3yNXy9F6XEFotGCM+9
+	hSOOQwVYaf5hXkprYI6GsyX8TVjYEUm072FxKxgvroR4zSE5t9OKfkz8EypO8hxMRngmHPxuIUj
+	n6lZtnJpI01NhZXEtv07mjlszAFZzL7wi94VHS+EyaAsXoUhQyajYyI002OMQYJaOrBe/KOZasc
+	HQLnJtkhaUfvROwI0cWj+yQFmY=
+X-Received: by 2002:a05:6512:b99:b0:5a3:cc81:efdb with SMTP id 2adb3069b0e04-5a4172de867mr7255437e87.21.1776880707245;
+        Wed, 22 Apr 2026 10:58:27 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4185bc25csm4625276e87.26.2026.04.22.10.58.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 22 Apr 2026 10:58:26 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] checkout: add --autostash option for branch switching
+Date: Wed, 22 Apr 2026 19:58:25 +0200
+Message-ID: <20260422175825.40701-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0-rc2
+In-Reply-To: <09d1390e-8334-49e6-a0b5-42d298db4caa@gmail.com>
+References: <09d1390e-8334-49e6-a0b5-42d298db4caa@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <27113.384.389621.34039@chiark.greenend.org.uk>
-Date: Wed, 22 Apr 2026 18:12:32 +0100
-To: Avery Pennarun <apenwarr@gmail.com>
-Cc: Colin Stagner <ask+git@howdoi.land>,
-    git@vger.kernel.org,
-    Christian Heusel <christian@heusel.eu>,
-    george@mail.dietrich.pub,
-    Christian Hesse <list@eworm.de>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Junio C Hamano <gitster@pobox.com>
-Subject: git-subtree rewrite
-In-Reply-To: <27109.63619.90318.366157@chiark.greenend.org.uk>
-References: <20260215201748.889866-1-ask+git@howdoi.land>
-	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
-	<27104.58166.993109.63505@chiark.greenend.org.uk>
-	<a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
-	<27109.13129.424068.382997@chiark.greenend.org.uk>
-	<27109.63619.90318.366157@chiark.greenend.org.uk>
-X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
-DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/c1/c1ddf06a6f81ef753bdb3a544fda03f3.pem
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi, Avery.
-
-tl;dr:
-  Do you object if I use the name git-subtree for my rewrite?
-
-  I intend it to be forward compatible with existing git-subtree
-  histories and existing command line invocations.
+👍
 
 
-I've been looking into your git-subtree program.  Thanks for it;
-it is definitely solving a very real problem reasonably well. [1]
-However, I think the existing implementation (in shell) and data model
-need some work.
-
-I have done some experiments, with enough success that I have more or
-less decided to try to rewrite git-subtree.
-
-I am intending to make my rewrite able to work with existing histories
-(ie, projects which have done git-subtree add and git-subtree merge).
-I intend to support the existing command line interface, although I
-may improve that later.
-
-I am also hoping to be able to define the data model more formally.
-
-The git maintainers and others on the git mailing list seem reasonably
-enthusiastic about all this.  My nascent rewrite is a a standalone
-Rust package, and the plan would be for it to obsolete the shell
-script in git.git/contrib, but live outside the git project itself.
-
-I would like to call my new program "git-subtree" and have it use
-(and extend) the exisitng `git-subtree-...:` metadata that
-`git-subtree add` puts into its generated commits.
-
-Obviously there are compatibility, packaging, and deployment
-considerations, which I'm keeping in mind.  I don't want to break
-anyone downstream.  So I will proceed reasonably cautiously.
-
-I hope this is all OK with you.  If not, or if you have questions,
-please let me know, using reply-all to this email (so the mailing list
-gets a copy).
-
-If I don't hear from you I will go ahead.  The actual programming work
-is going to take a while so watch this space but not too closely :-).
-
-Regards,
-Ian.
-
-[1] See also my blog post
-   Never use git submodules
-   https://diziet.dreamwidth.org/14666.html
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
-
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
+Harald
