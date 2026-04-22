@@ -1,155 +1,204 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7793CF676
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C1C3D1711
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 13:13:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776860423; cv=pass; b=OvyakPKNSi/9hQYrao9X69uOrtwW6Vu+qKq9XTEle+AfY2mGZSF2CWfFxOaMBWayF1co2agvIngTUGft7shSLxLyOLzEFoFeJ0VDXab9jmsEDwLG3ueSbqhiNfbrCzikuicBudG+a0c7V8zPRUcndFjiadOgGTYHtPAToxrOYg0=
+	t=1776863600; cv=pass; b=L5V/C84G+xs4Fj2W0BNKB24wivtRfVsMk+c8uNA74dQ8BUs0lRvKi9DxUESbZtI/QN8XYhFnEJyIWkfvG5ayFZJskicNOGSI9fAv+Y4iVARBbmTYGjtyBWNOS3jMpbhP0FN/A/cEfzHsr4sOB4a7nTGE2WEfZFEUwE9Jb6saC3M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776860423; c=relaxed/simple;
-	bh=F203Fesxl2MgBPTg2wKwJouMqWCp/CxQq7Tn+F0sz2U=;
+	s=arc-20240116; t=1776863600; c=relaxed/simple;
+	bh=02gnpT0gJwGfQkpyPwOW86EuljTjkkHJzEY1+wQkRhA=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VMTcFSnQiKGEBToFBFKxQoZMooOfhP0ZFrlkdYmnn4tzlSvHlpftRknI+OZPKJ6V0KMi9+dmOsjMomGvCJ1obTD/MokNRarApH6KenXmO46ePIy2iMM6NiqjKuk0PwONi24KjnlD1TG3kJFpOBAdpaf2ViATbpAKlkvThguG8EQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lgb8Euw/; arc=pass smtp.client-ip=209.85.222.46
+	 To:Cc:Content-Type; b=iuereVVhpJyn0PVSzEAMPHwxDxBsS3JMps+0Zr+sEXOkqJgj+HmFcx6nGLdwDNE9M7UtbCxmIC/RoDLELbilG9Qn+I3YEL5KBY6E5SmRVSd/FY6Rgn6XuZQICDDnNMib7GEDjGAucmNvDZH+QkmtJGmJgS3VXndEws9yoOSYEXs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/w4SKh+; arc=pass smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lgb8Euw/"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-94de664b541so1435135241.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 05:20:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776860421; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/w4SKh+"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-60fbeeeaa7aso3130244137.0
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 06:13:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776863597; cv=none;
         d=google.com; s=arc-20240605;
-        b=R+DN9SI9jATchKs5qtr2NlzjQnQSRHojdkywtzHTFNoyr9rd515e7UGITrZDlvexX9
-         0r21x3Huj3323cMZkDcEUvOSkclAKYExKr1CxL9lNqLxt1eWcvh6HmADn/EuvDwzyeg+
-         U7EPBxWmZCmlwdQaW+Ouke9+v+rza0X9yDwdTSpFmeo3uNdqoN7vc3qWeJp2EHL7rC29
-         UdokMcjJ+TEqCAZFzEuTrk6wLRRmS4nXQgvoonzDqaR5xVmQwfs1zQ8WMaByuahqzFe2
-         qqjQd/JVNQyGgs/R3xHpNNEqW519e3UsYuecCxf0Dx1T9W3lu3D2RDhIZzrQ6g/WXAbD
-         /2eg==
+        b=HrZj2oq7FPzkWj1i+8Jc3MvZ0Wzi2evyknWe5Kg6qA7xOAtBFghKmsv/M3eS6enlIu
+         lmpn+8RJLiHOkpA6QK6/UZYuVUCF30zjMVrLbQjPvRQjjjLQJDvREfTbE1+tAG3gd5P8
+         OzxL1s0an07x0+AV7bSPFiZWdeCRb38G8CTslsrYrJt0Q8rDd7pNW2f9iHDDtX47SggD
+         Z5XjEBB72X8wDa6ncNtKLvrPqPrnNkPZhPGpKOzdKErq6+lx3I6e+Fi4D24NucxpNeCe
+         5ywqCXBHAM2NXsVn4EUfAqLnBncE1ZQteDFGQbE5f8bZFpNadiHQmtoZ3SBaiSxezy/Z
+         HIJw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=+YYF5Ux55cZSEsGe/ha3kTPm7wLorAaPgV/ublOmZHE=;
+        bh=NCxzUirgBNrH2khmxprBDuf7PMFWZteeiLxZmgNUUzY=;
         fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
-        b=kUvf4sNsGcJpIakV2dg3XuY1mv0Erjb1K2plvQ0MJzr9vyGtlKagaqOzIQqsgJ5diw
-         pYWxq6zgUMIMR1T5//JeBgNSpI7VQhISXjfYEOlzQLn1Lpo+S5GDHyXmmMzG0vR9CZge
-         PC8IJ/LEVHlhgjJ2ks9w+XDP9aZoWxRw17fn6QWgwpxOX5VPAkPTo20G6ePCczp4mS4a
-         gt2V0YnT1BIwTTwKRLxODbRoA/E5iTLC2oRVvKmEyvmy3R/8fmpTP5KSPUileQuh7ph/
-         91RdI+RkUmG5sLoZCZup2X9Nen74WeIHVkekvDM1WTT7N7JPfNiGp7w/dmN3QLIizp6e
-         1EVQ==;
+        b=f6UqLvC5FRsSgqtEC0n/5lHtaV7YvdScm8YrFGrtxjbxz5xib/9ycesI2GDG2ovag/
+         Y0ViydiJ2PxniKhclI23IFTYNN18CbKpN0gfod99YWETGSPJJ5R7lWoOXlkLzySBGIMW
+         QHKCeYarzGi82lo5Y1pSldkryVLy3nJ6+jtPQJ6o4T7CV+QSfoqU6J6lazMqFuhwtVbc
+         e8uFy1lIRcbCdUg+oOrmxb7Us4RU7lSmy6zlVimzhjvGcUxxqBgW6pKpfFptCnOYnwma
+         uNOpEoHroQWqVoVfSss2UYqota6wUVECCPKnM4KRLNPA77Bqn5h5kWu7aIO2mhHGLnUF
+         E0NQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776860421; x=1777465221; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776863597; x=1777468397; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+YYF5Ux55cZSEsGe/ha3kTPm7wLorAaPgV/ublOmZHE=;
-        b=lgb8Euw/WuJv61x5kUMIAEg4dKca7hnFEG9bPwfK4VvEdcJLxV3ZoLtlZdy1W+UvO+
-         qTTeveGffGmwnKEu1uo6j0OhPfTkjQOcQipsOB7yowW0X43umS7XVQcZsqRsYBMi80LH
-         oxhse9aUEFykM0lfkgEtc62BvpUGCL2Ip++SKOaBWSHKJfKjiI1sEcB7TwLSn3n8OPfw
-         jzFCe98R8CDu8qYnBnM0Q45RtsVI5YdTVLGn/qVXzRJBy71L7CtCMcAtBsAb1Zo9X+OA
-         T/IspBOUyrjsmtvEF50lhoWTU92qxDOHdLYKpR/XUL6+BRT5k+eDunzyPy7vCDdUp3AS
-         R8SQ==
+        bh=NCxzUirgBNrH2khmxprBDuf7PMFWZteeiLxZmgNUUzY=;
+        b=i/w4SKh+IclyuyHbDQ7Uow9XifCWPciz2x8Fwtf2IRRAoZ0CPyNhAjola4cHDWd0Pw
+         JxSvtpTeuVHVoORWY9vCmUxHKxUTttZ/23p+AwyWsFr2AhAPVlxK9fXnkGdhVhsWedo2
+         BTeUo0OyDTIwZoS4QhL2OsTaXyLvJ0AK4trYC9D/TaGGPW4cuaDJTIu7XzuYzVkfnSJq
+         29qV29jGsBmjXSg033ApAeC8QUkyvLdsm1eFEqRBzRcdXKXrxboururPjxUCSAv2l6bb
+         qa77D2NuHdI5zA31ExIw98G5NrJiQXOdXYhwX3ruNfigJ3WOiEH2Gf91RqNQMNGsTDaX
+         jtFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776860421; x=1777465221;
+        d=1e100.net; s=20251104; t=1776863597; x=1777468397;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+YYF5Ux55cZSEsGe/ha3kTPm7wLorAaPgV/ublOmZHE=;
-        b=i/seFhzJlUO9AYbh5KQ0VeiXnb1P4JsmBaSOv9L488535iQ2Zsg/bx+T4jIIOr3hzL
-         WUJ9DwttNmKExjRSw2cc1TpwBpdjyp775/oiyE1U/4HO2vWHCXxdgebrC5ueakth/87F
-         Gjz1kRtgoTxEmPnYY8zgIlMJbcYcrW5j1w4mkXrHZrfaanhJ56bqQsTgkUs6qcxy+7e9
-         oec4ahP4TZtsUZuKuOkr9xAXFpLQcto7RkxyjJMrH3lVxSmZYCL11wd8uTkoWE+WLKZb
-         bQd2CfxkywYHPv1t8BaqIUrtZwobjRAIKa/VTrf2wSVz6yWegVnaQxzlyadCO/+KSzb2
-         embw==
-X-Gm-Message-State: AOJu0YwJ86yL4Dtaa5WCiRBE+9A7Q1ftYa5/RbpKmjPiHwiWfHpg/JOn
-	RoLvv9Cg5KONdteVkXxIaMKbF07XXb5XHSTpeL9hE4T1wXQHAiQwX2dg9stmBcRDTZJVyWLKaem
-	XBfV1TClZStbPDysjfLjvAgI52nJa/CE=
-X-Gm-Gg: AeBDievfv3urosf3dWcvBRSpBxOID9/9WCpPhtcFKRJaWOw1GBw8HJ2J75mo652nVD3
-	vnBUAANAd6717Ak5hFMIkTcpw9uinMBFClrRGiPDYLCAzSVOmtt0iIriHBQTjWB/Qgf7PSENG8r
-	nFhde3V7iKQGtU7CwzpQXOTWaUDOia/rs572ahZM3b/kFpRMlR6TsDJogrlCJE1F3QG0nkCdLGX
-	eDT7GewkWwa4V3u5CBrWFO6TacPON5sUEucA5WQd+8LSRrB0PCNRffINfflez8pFVF2alirlXNs
-	K2AfcmUWAG1R9Nv1l+YqzgkfjDw5izI6p9I+ooll2bqIHrJNrYd8
-X-Received: by 2002:a05:6102:26c3:b0:60a:9cac:d286 with SMTP id
- ada2fe7eead31-616f4f7be9cmr9778386137.12.1776860421133; Wed, 22 Apr 2026
- 05:20:21 -0700 (PDT)
+        bh=NCxzUirgBNrH2khmxprBDuf7PMFWZteeiLxZmgNUUzY=;
+        b=S11rM5aR/7+q3dzCgrqeajNonXS7qbiSuShgqLrp8UHjS7U/JiwSaU6ZS1asI0Iqwj
+         XM46DdCLb2cFEd5xHWwnTLCFjrJvzoz/9MJ3TC4QG3lvM3H17n9eY6BOCavR5zCB/mc0
+         tjW3E9pmIxU2EwzAcn4ynK5m38psRK3kXODoChtsQc3/cWPDsEGP7gGzNDq3t98cxEbq
+         poXe3EemoAUt7WhWVw5HKekvUj1oLhLMOHUEjQl9/3ehVFFKPG9a+pRdrc6S300qV99I
+         /+7fykTx3FrxFdJwgTQ4bhThlEGUmE3QWRG8H9EFjaKGwF7C9BIQOJdNPTAO0HLLk8zt
+         d8Rw==
+X-Gm-Message-State: AOJu0YwY/lgTgNgFoOT7KgtchXWOTy834uwlxIHj6yhpY6aagTMeaWEi
+	DN6nMizCFZVl9Bo8dgJa2ih9WGy6pYx9SW3Xceu1OP6jgHBx2d6uJzfHMb0pKEKz6RjnhsHggEg
+	8XxIvIuWWAiWJjqL9kmB6eZp/HyDwXB4pUQ==
+X-Gm-Gg: AeBDies2JRgdD6FUp9637RvqVWgxNcL9B+ekRbXluraHJ6PTuRl8kPeJv5Dwjh8bhp0
+	n+x2DzrAthsMLOQQaw/+hZv50I162VEilmrWRko2ULX97BpiUySnZGRNOzJlIr0JGJA7WQHZaPy
+	ayKYJdTRKFA+3RCKwwmDjhf6Kxj6q4/eiGautWWwojC2oC4pruxXcY+Gw3xn91vaar+ExLBGisV
+	XUTpg7KXbiRvf6LzjT8EJv7XMnu+R4zyaCgDjzj9QD/V6o1dRwLMX7WXC3CKXHsxhAADmAjXhAD
+	7wm4KqLBbwXbA/DB0+9EaUHRb2zODoQXjC/rk6QLOp4VN5NEo74P
+X-Received: by 2002:a05:6102:5110:b0:605:42a8:940f with SMTP id
+ ada2fe7eead31-616f7c4b535mr12112904137.31.1776863597496; Wed, 22 Apr 2026
+ 06:13:17 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Apr 2026 14:20:20 +0200
+ HTTPREST; Wed, 22 Apr 2026 15:13:16 +0200
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Apr 2026 14:20:20 +0200
+ HTTPREST; Wed, 22 Apr 2026 15:13:16 +0200
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aeityL_05KDRZF98@pks.im>
+In-Reply-To: <aeit0pw44IxBfc2J@pks.im>
 References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
- <20260420-refs-move-to-generic-layer-v1-1-513e354f376b@gmail.com> <aeityL_05KDRZF98@pks.im>
+ <20260420-refs-move-to-generic-layer-v1-2-513e354f376b@gmail.com> <aeit0pw44IxBfc2J@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 22 Apr 2026 14:20:20 +0200
-X-Gm-Features: AQROBzCO7RHDyH35qyh1BQoL7wkE0LcRRknzbclzkKESuhi2WyrzL8zfrCqG25c
-Message-ID: <CAOLa=ZRHVUYYLE6JHJ8hJBOp7teTAZgz2vB+chMA6kr0RNb7zw@mail.gmail.com>
-Subject: Re: [PATCH 1/8] refs: remove unused typedef 'ref_transaction_commit_fn'
+Date: Wed, 22 Apr 2026 15:13:16 +0200
+X-Gm-Features: AQROBzBNNu4SdsWz9lY7Tqgw4oWwLKesFpZxzmZoiOAnSSzW33KdkHkzns7gYzM
+Message-ID: <CAOLa=ZTvYEzFrLCgJm6hVXUppHKCwPBws9eZeiBYbx2o8EaT_w@mail.gmail.com>
+Subject: Re: [PATCH 2/8] refs: extract out reflog config to generic layer
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000037b01406500b8e74"
+Content-Type: multipart/mixed; boundary="0000000000008b5e2e06500c4b01"
 
---00000000000037b01406500b8e74
+--0000000000008b5e2e06500c4b01
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Mon, Apr 20, 2026 at 12:11:59PM +0200, Karthik Nayak wrote:
+> On Mon, Apr 20, 2026 at 12:12:00PM +0200, Karthik Nayak wrote:
+>> The reference backends need to know when to create reflog entries, this
+>
+> s/this/which/
+>
+
+Better.
+
+>> is dictated by the 'core.logallrefupdates' config. Instead of relying on
+>
+> s/dictated/controlled/
+>
+
+Both of those mean the same. I guess there is a negative connotation to
+using the word 'dictated', but that's present with 'controlled' too.
+Perhaps 'determined'?
+
+>> the backends to call `repo_settings_get_log_all_ref_updates()` to obtain
+>> this config value, let's do this in the generic layer and pass down the
+>> value to the backends.
+>>
+>> Instead of passing this in as a new argument, let's create a new
+>> `ref_init_options` structure which will house information required to
+>> initialize a reference backend. Move the access flags here as well.
+>
+> I agree with this direction. It's also something that I'm doing for many
+> callbacks in the ODB layer, and I'm moving more and more into that
+> direction.
+>
+>> diff --git a/refs.c b/refs.c
+>> index bfcb9c7ac3..aa66c6b28e 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2295,6 +2295,10 @@ static struct ref_store *ref_store_init(struct repository *repo,
+>>  {
+>>  	const struct ref_storage_be *be;
+>>  	struct ref_store *refs;
+>> +	struct ref_store_init_options options = {
+>> +		.access_flags = flags,
+>> +		.log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo),
+>> +	};
+>>
+>>  	be = find_ref_storage_backend(format);
+>>  	if (!be)
+>
+> Tiniest nit, please feel free to ignore: we often call the structure
+> itself `_options`, but the variables just `opts`. May just be my own
+> preference though.
+>
+
+Let's make it consistent, I'll also start using `opts`.
+
 >> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->> index d79e35fd26..2d963cc4f4 100644
+>> index 2d963cc4f4..eed13af4eb 100644
 >> --- a/refs/refs-internal.h
 >> +++ b/refs/refs-internal.h
->> @@ -421,10 +421,6 @@ typedef int ref_transaction_abort_fn(struct ref_store *refs,
->>  				     struct ref_transaction *transaction,
->>  				     struct strbuf *err);
+>> @@ -385,6 +385,21 @@ struct ref_store;
+>>  				 REF_STORE_ODB | \
+>>  				 REF_STORE_MAIN)
 >>
->> -typedef int ref_transaction_commit_fn(struct ref_store *refs,
->> -				      struct ref_transaction *transaction,
->> -				      struct strbuf *err);
->> -
->>  typedef int optimize_fn(struct ref_store *ref_store,
->>  			struct refs_optimize_opts *opts);
->>
+>> +/*
+>> + * Options for initializing the ref backend. All backend-agnostic information
+>> + * which backends required will be held here.
+>> + */
+>> +struct ref_store_init_options {
+>> +	/* The kind of operations that the ref_store is allowed to perform. */
+>> +	unsigned int access_flags;
+>> +
+>> +	/*
+>> +	 * Denotes under what conditions reflogs should be created when updating
+>> +	 * references.
+>> +	 */
+>> +	enum log_refs_config log_all_ref_updates;
+>> +};
 >
-> I'm in general not much of a fan of these typedefs -- there's not really
-> much of a point why we'd need them in the first place. We don't use them
-> as a type anywhere but in the struct definition for the ref backend. So
-> we could just as well move them in there, which would also ensure that
-> they cannot become stale in the first place.
+> Nit: it might've made sense to split this up into two steps: the
+> introduction of the struct, and then moving the config in there.
 >
 > Patrick
 
-I do like them, when reading `struct ref_storage_be {}` with these
-typedefs, the interface is simplified and I only need to know what are
-the different functions which need to be implemented without being
-exposed to the details of each of the functions. The details are
-available in the typedefs.
+Yeah that might be better. I'll go ahead and do that.
 
-I'll leave it out of this series though.
-
---00000000000037b01406500b8e74
+--0000000000008b5e2e06500c4b01
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 27b26e7b94979796_0.1
+X-Attachment-Id: b5e906d3b09b3512_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ub3ZRSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meS83Qy93TjBqb0pjMmY4SmlDK2xGb0hpU2RKczVoRgpRazI1VUdWMlhX
-QWlHNXRpOFN6UEF6cGkvU0VETHNjS20rbms3eG1ZdGQybUJIUFFQOWZ5Rm9HaDlGbCtpZFF3Cm43
-TFVCNzBPbzc5V3RBcmFFTGNvRkI5OVZGNkQ0L3VGV2JYemh2TFhieDZiOTNVa2ZvSXZlMXVpOFoz
-NW44NXAKT3krOTdUUUxweHIzV3dJR3BFYUovRG1Id2o2VkZvMURPV1UvV0p3L2JJdnVkRUM5KzBs
-VmE2SldmdGRqU2E0Qgp1bDNEM21adjhOb3BRRGY0emRzQndaNWZlR0hZajJwSGpFOWt1U2t3QUI5
-U2trbzRXWTNBZjB0UXRHN2w1aTVVCkhXSE0xK1dpUlFHSDFyTHoxTVg2MzNvdUsrOFFVZUM2NXJa
-QjI5SzFraHJjbjBsZncvYngvODJkVi9HNnV0OFYKWk5ESGpvR3BXcVZkMFNtMHNpYkJLczgwMVpC
-VnUxcFZqTDA4VXczZ0Z5Q0MwTXFzSDNHdm9JS04yWi93M1dzUgpmNy9xRnRzUUxJcGd5TXM1ckE2
-ektNZC9abkdFbTNWOXY2VVNhNUtwekVGQThoRG4rWnA0dDVJZ1I1cVAvWGZXCkdjcGFmRzlndnAy
-STRuNEZMTllVSzh4NlU2OUhNSHVtcnlTbHpwRT0KPU9zNlIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ub3lXb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOUNlQy85UUFieFdsS3JoM25tbGJtR05weU85bEM2VgpueHdTUE5aWUFJ
+UjBHMVc2QklkWWt1UUdnTkdZVmplaDA1aXRoSHZ3STdIVlBEVFIxQmszYlE2Q2lHYjI0MnpXCjZj
+Sjc5ZmRPcHpVSmhBTS9vdUVyU0NvaTJXT2x0eUxLQ01xakdYSHRmWDc5eHZra2JXUjBiaHh4MmtH
+enlabDEKeDZUcXYyQ2dJRDNpOWVQejdTTitXSzhNTzhYeUcrWk1hRlJmWXdKU05BVEJVNk51aE1Q
+UjdvYlNKN3FwVFNGYQpZS0lXOGVKV3V2OUYxdVBGT3Z4WU9HZ0lrc3loVldFa0gzamlnL1AyeGE4
+eVByUkRzRDlpNjFpcURQaVV1TnhECmlGa0psRDErUDd0WjJtYTlacHZpUUxDdkxjWFhiRFdUMXdp
+d3FKRmEyelJpNTFMV0NoUHczN3g3bjBpak5tdzQKTHRMNUpZRGNCbEJMbm5BRmtvMWx6MDBWcEJm
+cmxLeW9WOHQ2eVk0a2NKcnNIL0Y2bk9HbDhTaEdhU29zSUkxcAo4cVlUOVNPSmlVdk4vMUhTa0F1
+MklBaVNsMHJ4Q0ZHcitWZTQ1WVg3VzdhMGVzaFJGbTE5eHZacXRsZHY2b3JrCklFTGd2clVGMnFk
+M0tiZ0RsMS9SOTB6N0lTZm1BZUdqbHRUMVRIbz0KPWhKUEwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000037b01406500b8e74--
+--0000000000008b5e2e06500c4b01--
