@@ -1,253 +1,171 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB10B399007
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 18:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80431366542
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 18:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776882302; cv=pass; b=Hv+jex5B20cXg+TzwqV+YmCoqTPRRYB8Pn+IvY03gjLxcT8nYVT9PeOkhy/e2omKXoUvcwCmHWAx+xui8aZCMreWqRexlVPs3DCd1liomWvSGBTPy9NcIa07u8qznankuWQKhSLDjgqDLGZxsoQiu648AIjGUcPqqMPcYK8cwGs=
+	t=1776882956; cv=pass; b=U6RjwgYSJ4IqiI9chhD8ytkTdk95Lsy6xWCfkh0UGZozuGSDqHQyLCgGbF7TiYlD138Lw8vkw+vcni5WZfkV5m6/UzD0nWUXz/dWr0SNSwrEzOqEQ1HG2U6zd2HPXR7OM6bOqE0ZHX5dXgAlXBVVveEYZqY7nq6IgkEAyfG8vzs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776882302; c=relaxed/simple;
-	bh=+SVKBivSfehWDXDcNy7Ww8ezNH2gnRYO5m7PM16yiUY=;
+	s=arc-20240116; t=1776882956; c=relaxed/simple;
+	bh=fxKsJMd9lqkxNm17+Vt+FMweMrJDZq7n83+IsBfB3OE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LQh2SIVIhkhBdJywMxqR3k96LCi55TWiufSQ/t8N01FcbQHa8HcP0mTWGdRXoN1ojyKzzIqV5S2XBPjRjkw4wxA5UfFhSXmSEIPhZ/rvweH4m5LJiSGSDJOLXeZenh3gyLmttOpmPBCM8gEbYslif3HGHZ/tDS5dTyl+gEweLbM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bc8Mi3H3; arc=pass smtp.client-ip=209.85.214.174
+	 To:Cc:Content-Type; b=XeHO7DMzkwq/Elq70WI7Xu/7/GvB6xi0Tca/X83EaJFimhWdIYys9oe6mHzKKV+Mv5tx244yUZQAfwxnTNSZm+svPuhxc5du1LnmEISjpkvQNdZvyZleV/qW3bx9EDoCGWCcwzLiRXJ/oAjK3ZBAnI8fMtFFqcETfejIw7bu0bU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WMugLuwy; arc=pass smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bc8Mi3H3"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2b2589c26e3so52441435ad.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 11:25:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776882300; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WMugLuwy"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-35da9c0c007so5227482a91.2
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 11:35:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776882954; cv=none;
         d=google.com; s=arc-20240605;
-        b=iD9H706NOMSJDxYemPZy8w9NtBDEYuiPCd8w7QcX2g+3BNellVGaJoLuY7pRHH1yuW
-         IE//3aYwJxtEO9Vii12H+3ee07UtfEkDgGU5VD/Rc2VnToRAO8O3lsC0316O3l6GLnUo
-         FgnA5j4gi3bySx69pJOyk4uChBB5Jv7DLI8zU+wWLm9Sul4+tLCkOmviic9nFKhhylD9
-         gb50VUuWkQMHPFriOmQpWaz+v5Ruhy3RbJ+/c3CzLz8+owx/unE+CwkqEDjdZERZaarG
-         e4wFu7y/d/aMMo/V+VS/15p/BgD7CPCbV47txHTstMO0zeif/vsj+9M88sxSp0OKcULb
-         WWPQ==
+        b=B1covKO8JQVcfIpgUR9dGNCxZb1DP16/OJrSC7jGjaWSDttfxfyYuLSF8CMwtXhQqe
+         x6fTlFzhe3iXiPsR7A4GFPflkBlpG6mzxAUWh/AjdnTeKXROgEX4QNuDtPCy+OkZusow
+         qqRTdlm/s6Z/kJA43abga0KbObeRptl74BauOb+XFeJTpDW50/9KHe5Q8ENucvwPm5wA
+         hhA48YJltfuKwt88mJA8cK1O3m3/yfdkNMdO+2UcH8SSsv3ZTb/jGr/ShlzaaO2B6JOW
+         sGV2KkaUxHhNMHuH+RLADF5G7/nVbwOTb9KzcNR10iinYc5CjhexozO2GXZYs8O48xQ3
+         2VwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=pa+RvZzVfiKQDJrNHlyiM/w0BqRsCZpUxe3BTXb/ybs=;
-        fh=YRp4XrKOda7rMviyQmVtSvJ26XINAn4+UTwSfHRS0Hg=;
-        b=hkOQT4wdwTbYIM6fplTlEwSmFZ1nnks1qg4vuTxJMdNUZAnFYduQN5g3Em4XwBWJpu
-         UthDXpN8rQ7suqKhYvtqb5bUz6FWneRU9S4W3IcBbFKoXIUrGAjhJ4C2kKyUrN3vAO9Y
-         Q1+hvPQ/81fObEgJZiUC8UT6F3cerTjq4aOZoEKEOEVuR6Y6gobYPbW4rfKISvM/muSZ
-         Lumws02aeTAohvjwbCFkT3LkFw3YWL7YwCng94L1b8UpqGY6j0wI57vU4ul6RYAfaPur
-         bqeZcVzyAjSAwXU/Ur5l2D30DXLdJEE5n5qdrEWcmq1m4N2ykIFbgzu9BX9dM9xo9tNv
-         2nyw==;
+        bh=Ve9VpStEjcoDwid1pYw7xaG7QNiZLHD4uLfySjkshrQ=;
+        fh=ZeuEFUvMW7nGHrCqfiPuyWcBybt0P3RJgcddBkt92eI=;
+        b=gxnygc/i5NU6oER5sxv+zvY3OosQThbhr6TlJU/NxXHZHRf2VM7v4shg6UJLykbS9o
+         JxHLPYwab0RnjZMDBRhk6mUjHK8u0AmtTTbjBORDaICtSJdIabWR/MSHr5wNROuRc2+6
+         GnB4fBZY08LnVM4ty+Z9V1EciUaTbP2R/PAT6m3TLzhN+1KZ/33Wo9jy+D+/5XhIfjG+
+         NYoRR/8pTaGl/uyZAcQ4aG7SPAWkWw4WlJ9q3R/xc+fqfUHaM88BQIClxgzKoBNyfwdt
+         NVDkdC8GzBB6u7zRmTiXdlVprttvGlRD27RNJX+zh2MQt+OKn1E2qiof6dri+fYem+ap
+         moUA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776882300; x=1777487100; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776882954; x=1777487754; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pa+RvZzVfiKQDJrNHlyiM/w0BqRsCZpUxe3BTXb/ybs=;
-        b=bc8Mi3H3lrt+ufuDlClyoEWx3N86fO7r6bwtlDtwAkQGaZREu03KmNjr1x3reVBZ3v
-         Yea/zT+jw9fbDUaFqTrP/R/IVpXFv46hUmILjqVdGA1Z5FLvcUFzwQXp0iDrbImARV1+
-         fFaiFgLkk9CP3JZkYMpQBMMHgvmlFgNHSk04KYHSLXJECWJxsuYPQDeask1zlft5FiyM
-         1PL4X0BFHs29u0bar601xADPkY/IrSnmkfP3Q4oU4+8QtQawypAFRN6Fr0qwaw88Vjm+
-         YxpNrNpdSpNV53WvU2IH7Rnh5oMBQmdNrwwo/J56ZMHbqQiB9vnNotLqdMbl3UYLABPT
-         HhJQ==
+        bh=Ve9VpStEjcoDwid1pYw7xaG7QNiZLHD4uLfySjkshrQ=;
+        b=WMugLuwyd7I5YnFXGPrYPdB/op84DgpbOvQD9EKPOOeR98DSEA8wd0pbRHv/3lj4RP
+         uGN1/cKEhERotMDwQKBFn+VrKeXw6SJ+7OfonlSIPh0JPvJdErb15jjRXDB04hOWJCLb
+         5BW/30MAf7uJEt+DS9d1ou8iTZt7j6agCNT0rLiSFW8OPKsi1w2Yqk9w/xIiFbLYQaCS
+         eF3x+hES6jMQbXk9e4rzv31KkQ3P40E7HTfrXDWLWNKXh8Ag4QSz+AvI3Vpqdq7slmOZ
+         K4v0x9P9pWdmKYYDIN8OvBqrJLDMyLaGp8zQZDT5AlymdOo6wmhmVhzh5G1gaYrkcRtE
+         ylWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776882300; x=1777487100;
+        d=1e100.net; s=20251104; t=1776882954; x=1777487754;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=pa+RvZzVfiKQDJrNHlyiM/w0BqRsCZpUxe3BTXb/ybs=;
-        b=pIWSABSbQqf+YJq7qb3EKOPd8Qjl1iMPltYYiMUQtFb5uY6OtpZ1LNcHkfCLNGq5pr
-         0zoaztw1jEqrLE68m07ZOmkpagQ2G8KxH96eXSQ6cFZhEB4ip9BdeQmJXjqbha8Ehbi4
-         AY6M7ZB9qFWa6vpY1J4t7lwarT4Okp5yktk75ylqSfnZAQfqN0COq9/IWx8B/DjMYeOz
-         FHMpizZB3REZkP3RCqXs5Hkhmvvvcyt5M2m230fJGr4ByCnxTnwBxb/suX8OpbEBxisQ
-         +NTYpsJ7g5/baSkJrEx8LwqqYuv8PdGNFWQKy0Ryf6bTV3ZuGc0WxrwAsJrHhoiVWn7J
-         qQBw==
-X-Gm-Message-State: AOJu0YyjE21vNSk97ZyKPWOrfrHUYdK2JdvzKc93HX9kRMNI10iCWHaC
-	r/BG8i9l1v5gsHEzJm0Xgz4B8hPHEtoJfGAH0IZg5Njt8Bolb8N6w1XlC4xmFtOT2VId9nxJqms
-	bu6GlcHOLiwnqDZktlQA+wVqOG0YhXK4=
-X-Gm-Gg: AeBDies2cFYk+N4hGzw/c8K3djvQR7036eaRO+KR/h4qMDL931Es+xxsVgZ90KDkjZf
-	Bhovk4Xp8rsGMgs4EazNcCOw9Pj7DsaB65YKeItm3ZrbTYtmaDOmkD0tkpYR8OUL/mxYqMkzdq3
-	QFEWvb4cPAYmUDyWBo3LCz84ILbe8adZ9Rpcq+yRS3gR1tI+9DCFRftHG89rnsENBeZCQuIFxVa
-	txsgjUkhTl0JB/hwp9jfYNYlHMw3W+9zMltRF9tUBUTubu5pc5aAbbdjDWYn3b6o2tYOQrGCX94
-	9b/ePYQ/tsUel6iL2b1nyqwWW/1mmwxzDpOzkp5vhMcSjCIFWZk2+JdFBkgXahIBdTM5WHOlXBh
-	fJJq5wWP/KAYAki8=
-X-Received: by 2002:a17:902:cece:b0:2b5:f105:52b2 with SMTP id
- d9443c01a7336-2b5f9eceba5mr256602655ad.9.1776882299767; Wed, 22 Apr 2026
- 11:24:59 -0700 (PDT)
+        bh=Ve9VpStEjcoDwid1pYw7xaG7QNiZLHD4uLfySjkshrQ=;
+        b=Lt9sW9Gs/IILX0r03UESqvKG5RiFq/rKQvx6wTHpmnjwqCbFka5bEwhMEf38sM/x7H
+         0P2/dWxwNXAXltJ+4pAAxUOVyVkV/eWkIqy3wQzD3dM4kuvql+6eZVW6WGPZgwBaiFBg
+         HbZHjj341v0/Oad+MHoYr5LyFfuX54PfmOhZPhUPvoonIpXTiosvO+sO9UAJfBF0FcZz
+         lYfz2l6ltrLYpuI/k+nSv/6cTqeqffzRBiJduC85CsY8uT3QjgNtXB5dtVPNAhVua3ST
+         x5DWMP4lA/8Nu+/al5ythsV9WV8pqwksulkEU8uura0uWf+FHjekYxDNKHmHqNfuzEFt
+         JLsA==
+X-Gm-Message-State: AOJu0YyEK4bvq+v5Ve6DJv+4ZT2eElg0lISeys8i4VFFhPS/lG5n2eUu
+	BDcutDeIvbNQpwA6UCIrnP5z7c60AP+iu8spG+E8AODsOouWBHtAEMwLoFlEZk6JOXMHjOSSS5E
+	iUISBwNlc9s4MqyGWjuQRjDfDABG0xig=
+X-Gm-Gg: AeBDies4/iioA06MEwtG+NJ3TBU+lZ0GqCiA0n/9lm1vCVaC+QkVrxejQc1AdjtqBhA
+	KgzCQj+6DDzmIfa7JATCYrpJcKkHsw836oGTVhZAUgJ9YKV8+DCPnfqYP9rgInPZxymgbPCvOdy
+	BfY4uMEurFsQz0TMI3YRx/T7CheoPgcozg1DwF8nR+pvQ9uY4mxxWLlheHGccD21Zmy5tulfT+J
+	oXQd+a9a4Aa3lurvYg7K4+RAAvbBE2sfWjdxRNXLPs5snQru0D9AHgMmBtk1UyeL1nGyEBLsBAY
+	0eUnkhxDb6Qm195UPVAdBPj596auL3pVxoX1VogbAIOYc5qY7W57WGECiu7PQQ/5wwZrWexU2H6
+	eteEDuyiMq+T9cCg=
+X-Received: by 2002:a17:90b:2d8c:b0:35b:93d8:6aaa with SMTP id
+ 98e67ed59e1d1-3614048b3f5mr22353891a91.19.1776882953734; Wed, 22 Apr 2026
+ 11:35:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260418164736.2367523-2-mroik@delayed.space> <C60EE993-97DA-45F7-89DE-2F97ABB0F685@gmail.com>
- <aeUZUqSQI8FvRUco@exploit> <CALnO6CACfSyzyguX4623Dk3y+QEM_Dbmfko8dTyM1p3JxBjZFg@mail.gmail.com>
- <aeUqSltEWIWaPDh3@exploit>
-In-Reply-To: <aeUqSltEWIWaPDh3@exploit>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 22 Apr 2026 14:24:48 -0400
-X-Gm-Features: AQROBzDlu2CnjXtvxRWOqBpNs8_g3mrTEg5B9-VZm-BWk1HcYZr2li4tDLdvyZ4
-Message-ID: <CALnO6CAjMAZhBk_WXW1wbKk1kpQScFtbY0R+mCxHTFB7=CcEDg@mail.gmail.com>
-Subject: Re: [PATCH] revision.c: implement --reverse=before for walks
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
-	Jeff King <peff@peff.net>
+References: <20260421-toon-fix-almalinux8-v1-1-aec1d54addde@iotcl.com>
+In-Reply-To: <20260421-toon-fix-almalinux8-v1-1-aec1d54addde@iotcl.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Wed, 22 Apr 2026 14:35:41 -0400
+X-Gm-Features: AQROBzD7eHZydbVKRnTphe3vktnODp198xlCSordFZLS5KV1DAwFjwtV6yt3gRc
+Message-ID: <CALnO6CDM3HGcJgKWAqVMRXw=HWbW+xA+FNwDMJwkuf8AoSmv1w@mail.gmail.com>
+Subject: Re: [PATCH] generate-configlist: collapse depfile for older Ninja
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Apr 19, 2026 at 4:31=E2=80=AFPM Mirko Faina <mroik@delayed.space> w=
-rote:
-> > > > >    if (revs->reverse_output_stage) {
-> > > > > +        if (revs->reverse =3D=3D 2 && revs->max_count =3D=3D 0)
-> > > > > +            return NULL;
-> > > > > +
-> >
-> > PS: something I spotted on a second read. [Ignoring reverse=3Dafter
-> > mode] This hunk looks to me like a nice little optimization (return
-> > nothing if we know max_count says we yield no commits). Of course, I
-> > could see that being viable early in the function, right? When asking
-> > get_revision for commits, if max_count is 0, just return NULL.
-> >
-> > For reverse=3Dafter mode, this condition is only true if the max_count
-> > was 0 in the previous conditional, also, since we use max_count=3D-1
-> > before iterating get_revision_internal. That means the original
-> > max_count isn't touched. At any rate, it _seems_ to me that the whole
-> > function could benefit from this optimization=E2=80=A6 but I wonder if =
-it is
-> > _necessary_ for correctness of reverse=3Dafter in some way that I'm not
-> > seeing? Since the current version doesn't need the early bailout, why
-> > does reverse=3Dafter?
+On Tue, Apr 21, 2026 at 3:17=E2=80=AFPM Toon Claes <toon@iotcl.com> wrote:
 >
-> Just to clarify, "reverse =3D 2" is "--reverse=3Dbefore" and not
-> "--reverse=3Dafter".
+> The tools/generate-configlist.sh script generates two files:
+>   * config-list.h
+>   * config-list.h.d
+>
+> The former is included by the source code and the latter defines on
+> which files the former depends.
+>
+> The contents of `config-list.h.d` consists of two sections:
+>
+>     config-list.h: Documentation/config.adoc
+>     config-list.h: Documentation/git-config.adoc
+>     config-list.h: Documentation/config/add.adoc
+>     config-list.h: Documentation/config/advice.adoc
+>     config-list.h: Documentation/config/alias.adoc
+>     config-list.h: Documentation/config/am.adoc
+>     config-list.h: Documentation/config/apply.adoc
+>     ...
+>
+> This first section actually defines on which individual files
+> `config-list.h` depends and thus needs to be rebuild if one of those
+> changes.
+>
+> And the second section contains content like:
+>
+>     Documentation/config.adoc:
+>     Documentation/git-config.adoc:
+>     Documentation/config/add.adoc:
+>     Documentation/config/advice.adoc:
+>     Documentation/config/alias.adoc:
+>     Documentation/config/am.adoc:
+>     Documentation/config/apply.adoc:
+>     ...
+>
+> These rules exist to ensure Make won't fail with the following error if
+> one of the .adoc files is renamed or removed:
+>
+>    make: *** No rule to make target 'Documentation/config.adoc', needed b=
+y 'config-list.h'.
+>
+> With the no-op targets defined in `config-list.h.d`, Make knows there's
+> no work to be done to generate these files, so it doesn't error out if
+> it doesn't exist.
+>
+> For the Makefile build system this works great. And since
+> ebeea3c471 (build: regenerate config-list.h when Documentation changes,
+> 2026-02-24) this script is also called from the Meson build system.
+> Nevertheless, on AlmaLinux 8 the following build failure is seen:
+>
+>     ninja: error: dependency cycle: config-list.h -> config-list.h
+>
+> This version of this distro uses Ninja 1.8.2 and it seems to have some
+> issues with the format of the `config-list.h.d` file.
+>
+> Ninja versions before 1.10.0 do not reset the depfile parser state on
+> newlines. This causes issues when the depfile has one dependency per
+> line, like we have in `config-list.h.d`:
+>
+>     config-list.h: Documentation/config.adoc
+>     config-list.h: Documentation/config/add.adoc
+>
+> The parser only recognizes the first "config-list.h:" as a target. On
+> subsequent lines it is still in dependency-parsing mode, so the repeated
+> output name is recorded as an input. This causes the error mentioned
+> above.
+>
+> The bug in Ninja is fixed in 1.10, with commit
+> ninja-build/ninja@1daa7470ab7e (depfile_parser: remove restriction on
+> multiple outputs, 2019-11-20).
 
-Oh golly, sorry about that!
-
-> With "reverse =3D 2", the snippet of code you're referencing is not an
-> optimization but a requirement for correctness. With "reverse =3D 1" we
-> just keep the max_count as is and it's used by get_revision_internal()
-> to stop if that limit is reached. What we find in 'reversed' are already
-> just the commits we need to return.
->
-> With "reverse =3D 2", we first set max_count to -1 and then retrieve the
-> whole history, then we set max_count to its original value. Then we
-> return the commits on each call of get_revision(). Now, unlike with
-> "reverse =3D 1", we have the whole history in 'reversed', because of that
-> we need to know when to stop. That's the reason we decrement max_count
-> only for "reverse =3D 2" and why "max_count =3D=3D 0" is checked only for
-> "reverse =3D 2".
-
-Ok, this explanation hasn't yet clicked=E2=80=A6
-
-> > > > >        c =3D pop_commit(&revs->commits);
-> > > > > +        if (revs->reverse =3D=3D 2)
-> > > > > +            revs->max_count--;
-> > > >
-> > > > Hm. Why do we decrement here? Again, not an area I=E2=80=99m famili=
-ar with, but a bit surprising.
-> > >
-> > > get_revision() (in revision.c) handles the reverse option and updates
-> > > the "struct git_graph". get_revision() then calls
-> > > get_revision_internal(), which handles commit boundaries and max_coun=
-t,
-> > > here is where it gets decreased. Since max_count gets decreased
-> > > everytime get_revision_internal() is called, if we were to leave
-> > > max_count as is before the walk (in get_revision() at line 4558), the
-> > > walk would stop before reaching the root commit. This is why the curr=
-ent
-> > > --reverse option is applied only after commit limiting options. So
-> > > instead we set max_count at -1 walking the whole history and storing =
-it
-> > > in 'reversed'. Now we're in "reverse_output_stage =3D 1", and in this
-> > > state we never call get_revision_internal() again, instead we pop
-> > > commits from 'reversed'. Because of this we have to handle max_count
-> > > outside get_revision_internal(), so we decrement it in the snippet of
-> > > code you referenced.
-> > >
-> > > A bit verbose but hopefully it'll get my point across.
-> >
-> > I don't 100% follow, but I'm out of my depth :)
-> >
-> > I think I see that get_revision() effectively has 2 modes pertaining
-> > to reverse: reverse and reverse output stage (the former falls
-> > directly into the latter, though).
-> >
-> > After some setup, the reverse mode calls get_revision_internal() as
-> > you said. That decrements max_count as a way of counting how many
-> > commits we've seen through the loop, so if we asked for 5 we'd only
-> > process 5 commits.
-> >
-> > Then we fall into the output stage mode, which pops a commit [1].
-> >
-> > With this patch, in reverse=3Dafter we disable max_count in the first
-> > (reverse) mode, as you said. Ok: we get the whole (filtered) history
-> > then, at which point we can now shrink. That makes sense.
-> >
-> > Then in the reverse output stage mode, we pretend to have one less
-> > max_count. That's what I can't figure out. Is it because of the
-> > pop_commit()? I guess I'm not totally seeing how that interacted with
-> > the max_count in the original code: does the current code yield one
-> > extra commit in get_revision_internal() ?
->
-> I'm not sure I understand what you're referencing with "Then in the
-> reverse output stage mode, we pretend to have one less max_count".
->
-> If you're referring to line 4573, then...
->
-> > You wrote that "we never call get_revision_internal() again," but I
-> > don't see why that's true with this patch and not true before it.
-> >
-> > I do agree that _somebody_ has to handle max_count after
-> > get_revision() returns with reverse=3Dafter. I'm just not sure what
-> >
-> >     if (revs->reverse =3D=3D 2)
-> >         revs->max_count--;
-> >
-> > is doing.
->
-> ...we're not pretending we have fewer commits. Every subsequent call to
-> get_revision() after the first call will never enter the branch at line
-> 4548 and will only enter the branch at 4568. Everytime we pop a commit
-> from 'reversed' we decrease max_count so we can limit only to the amount
-> of commits the user wants.
->
-> So, to recap, with "reverse =3D 2", on the first call to get_revision() w=
-e
-> walk the whole history and store it in 'reversed' in reversed order and
-> return the first commit.
-> On subsequent calls to get_revision() we do not walk the history again,
-> we simply return the commits that have been stored in 'reversed'.
-> Everytime we pop a commit we have to decrease max_count, and we check
-> againts max_count to know if we shouldn't return anymore commits (by
-> returning NULL).
-
-=E2=80=A6but I think this one does. I think what I missed is that in all
-"reverse" modes, get_revision() does some pre-computation and then
-yields one at a time the commits. In traditional "after" mode, the
-counting is done by get_revision_internal() [before reversal]. In the
-new mode, get_revision takes on that responsibility of
-get_revision_internal instead.
-
-Hm. That suggests to me that get_revision's responsibilities are
-becoming complex. Might be worth some version of a refactor, but idk
-which.
-
-> > Of course if I'm the only one confused and others make sense of it,
-> > that's ok, too.
->
-> No, I completely understand. I did have to retouch the function a few
-> times after writing the tests :P
->
-> > [1]: I traced this to 498bcd3159 (rev-list: fix --reverse interaction
-> > with --parents, 2008-08-29), but I can't fathom what the pop is doing
-> > there.
->
-> It's pretty much doing the same thing it does now, it's returning stored
-> commits. In both versions, the initial setup when "revs->reverse" is
-> true, becomes "dead code" after the first call.
-
-And this pop makes more sense now, too. Phew!
---=20
-D. Ben Knoble
+Fascinating. Thanks for finding and fixing. I did wish while embarking
+on this endeavor to find more documentation of what these depfiles
+should look like, so I'm not surprised to find some bugs in how they
+are parsed.
