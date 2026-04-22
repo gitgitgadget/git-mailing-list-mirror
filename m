@@ -1,54 +1,54 @@
 Received: from SY5PR01CU010.outbound.protection.outlook.com (mail-australiaeastazolkn19012070.outbound.protection.outlook.com [52.103.72.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CDF3CE483
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8903344DAD
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 12:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776860398; cv=fail; b=bPZD5sIuKIRe44DkF4MAKdGePeiueS9ERGQqW+G4Jhc2QDU2ZCaSJ54INJIVlxZn4JoHuD5yOtrg2t68Uv+DvVAvTARYUCaVCx1GGJmlB+/zftG8IdK+qEudvFAJ1WBzYkl1B2eSR7b41oWnN4jdlcEryhDFbwvv2MZH90FV9LQ=
+	t=1776860400; cv=fail; b=T6EQRP6Rf4WU8fWPFUAPKOHGYdlUiPUiC1PPHJEB/+4d5RYzGP3mkCtPiSoaS+FS83l5CZK61uilHeloNl0AaEyS0SM8/JIJOKnbuGN5c3sRlFK0wOEB5KN57Pz8JBaWBdEFeIWtEprP3F1TntqaJhNG2lYdiRPIFg0XBvzgIxM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776860398; c=relaxed/simple;
-	bh=V5zckcQxKhjeHRlrAstbcNkSZsvRppRqpeeu1O5CXmE=;
+	s=arc-20240116; t=1776860400; c=relaxed/simple;
+	bh=68FebspMp9Q6D0Ym8ldxHBPxN4S0c+O2EGeggJKUxT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=WH3+c1hOfUYK3xQne3HDIeFhyy7gKg5plVDN8h9cn2GJNlx+UpMDDsWsj+/HqAckMxPvhMbh9uji+De21eO+UXwcZywPXrY2zH2/aiK8e4BN+aiYK/tNWWi5HJdnBK21lwwnSb7FKn1GUhUHP7LLeXfbqMvjh6fZSsq4wYVSCZ8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=le8O6P4W; arc=fail smtp.client-ip=52.103.72.70
+	 Content-Type:MIME-Version; b=p9VrqcnNUvd//0vG3g/a06NkNhVJ4ec6CZQ6gLYVwZjyEdxSqEtloCS8AXqqdUJXeOoUMnEQzmxSIlm/voYuFGBm0qGfBzzadfZBsgOlS6pdO5nSVOPklzzbkoKO6TD/NXAVKH+enCbKWQkgZSPx7j6bBDwhyibYsXE7e2a0yuo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=lKtOPj52; arc=fail smtp.client-ip=52.103.72.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="le8O6P4W"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="lKtOPj52"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AExcOt1NWhCxKX0qb7yGd+JHX3F2gpfcBO1w7TXxax45QYoVlZOJGqqixbaDdtfQCFsBkMelzBwYJMsuOvsQa4aoHZCAcfnmnMqKHDvtY3T60ljWElZgHVOL4sWS06zlkGlql04g82ko8lX3GzewjVcgoV8uokzjS9PBVJHbwwumdi7c+duQk7z1T1FO+8NB49qW0m/goKDKvE7Ha3nt75DrEp5Fj5uDsTWSrhXIX+3vDgyftFspndPj9MB+8g3p9MEN2qGi1Ilx4t3Ivcp5YwdkO+yErBm8H7EfojWSJpW6WMhHfSlzYaqNvkcvULZatKVJDCiskZlAUOR/q5tvcA==
+ b=W045eUtkHq4I3OAhdHfaVRGm+1P9L4FF16JTmYgkQdh0V26NbZYmyzw0pS1PZIQ4lkVdO9iB1uPjXBIP3ogATkv6loe1yGYODjZstAKJV5QgVeWl9pR1B/lt1eTSHJgLixhlfV0HyvubeYlwH+y0ed9xrPk5JupsqfJ/oPj1mFM1p4UHb3y5w5VJNei7ABCZ1r7hip152Mr/ecl7XWTx+3U5y1UfJR94Z9QnFSqgKNit5tQHGJiqPE+k7z3Mgpu4ZWyF3cngSTyCxL9S3BuUiSMQ7M2AE9lwqfnXVsgdXyAsLu0q4s2uNCNteS4yxf53MmG5sQIbXzyy6Pf2XGGDrQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7nriWBHMI5KyLCEnsGRWP39I39OMhkeor62iGkyKZKY=;
- b=bX71+A/SQfvbcZBCNOh5qz41ferSBGX1JIM3e+nHqm3dIpxq77m41rj7E9TX2K0aTmCCmlOSnt80MT7zs0Y8rrwNnQJU3Hu73VNBZvR4f/Sd4mBAxwPDYj0XQwfQZqfAligsgT4/dbmA2I2caMdZf9GWdEwLi8m7v5FTLAuSLMQYmtw4xztg7Mp9NYbBpxj2/SL4adqFDGNMhkk9JQ/5OzoEvuTIlz8QlxJEZHARPfnnQhyYlwVPB3f9fn3bd1+Q4FO0UYxYARpHxiG2+G/jz9JejiSX470WwW6oo3YmYrfNJmnh79ZSDxauebzyVHMYpsRFaUARlDDn16CKpuJ2bA==
+ bh=8UDxO4fgtt3IkUlFcZtC12qDoEAxN84EDvPGkkhJhBU=;
+ b=EPcHVrZ6JusdhcZHm7qAohYYNJsHOtofcDSSn7RjUxZOQ2DlixR+RRqlIJ8Sclux9ofLwiimhuVb+mlieCc23OKPZk5djSmRCZlr5GMHOSBG3wombjuTQdD6R3tvuLKzxGQcEIqSZZsGDTsweWbO3hV8Bp2ThiaTtqB+b4xe5hJRn4BXvl6RRnbKlwnG6RRAM8dME/8BlK2RK4of4ZAuW7rqn6NPfugoOf0h7upB1VNuVzO0cv2cFHzgdPEY/s9QO3b8cQrNhlO1bjdw8EaIjVA9QoloHf9OY9bR/qZGVHTn02cdDS4D6IszBfiqeTr2BmrZKLQjvTKvXikj/y1rpw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7nriWBHMI5KyLCEnsGRWP39I39OMhkeor62iGkyKZKY=;
- b=le8O6P4WYE9Wt8B29Gfmb11iKjWRR0N5HFAh/AYD2JcK0Ol/g7aLuna13+c6JtkQjPQPd541zFl98tDrkcgTwVplqsZbs6Eiu0Q/qUxGz8jmKj/YmsWLdTXJywUjtUrn0CuAt1oqoz39DGwe4muQZ/03UL3elYkmxX/cO8Fy85zYQyxkoluEdTmxWq+5Bfk8KfmuuCfKxDOFXa2m52B3lfiwFSEa1e2J+2p01DZeHGUbCmWr8hGap9/qUPw4FVdhtIKrwl90VlOpO4rcVmFjUWPKi+fyVr+CZsOKszHV3EKVDD33B9dndFC59nAFXm4EIf19+/BuIXyHqGuI3s7p1w==
+ bh=8UDxO4fgtt3IkUlFcZtC12qDoEAxN84EDvPGkkhJhBU=;
+ b=lKtOPj52LtWmyNQ59KUBdMdA9OlwwdDhsxQRMcaeq/UzQjQBJSz+a2kFvwVyHaJAgVOggjfVnHPRgoUQMYzl9ir4aXXM/7f7a9KbBV4OD3UHVV0rYmtm1g9PeeQ0iSsd7O4+cMNLWIggvA+eiHWwcakdrQZ3Fz+XUBqCHJXzDOQxtDURRcHJnKx39VJ41cYwACpL+FrynBcaj/n+FNkZQOqTcCF4FCLraKIugWaVWSvG4NJ5oFZSJ9iRdZUPZ8/guJTINKG9fo/89L9yKBwlOVg/wTvJt1wo/FxHK68gs29vTqQg0M41stb394GeK16mFMbzplPWi4SHe2A1Wix4OQ==
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
  by SY0P300MB0530.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:286::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.18; Wed, 22 Apr
- 2026 12:19:53 +0000
+ 2026 12:19:54 +0000
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9846.016; Wed, 22 Apr 2026
- 12:19:53 +0000
+ 12:19:54 +0000
 From: Jiamu Sun <39@barroit.sh>
 To: git@vger.kernel.org
 Cc: aplattner@nvidia.com,
 	gitster@pobox.com,
 	karthik.188@gmail.com,
 	Jiamu Sun <39@barroit.sh>
-Subject: [PATCH v5 05/10] autocorrect: rename AUTOCORRECT_SHOW to AUTOCORRECT_HINT
-Date: Wed, 22 Apr 2026 21:18:05 +0900
+Subject: [PATCH v5 06/10] autocorrect: provide config resolution API
+Date: Wed, 22 Apr 2026 21:18:06 +0900
 Message-ID:
- <SY0P300MB0801893D2DD10EDEB682D722CE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+ <SY0P300MB0801D329C871F2F277526CD7CE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
 References: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
@@ -58,7 +58,7 @@ Content-Type: text/plain
 X-ClientProxiedBy: TYCP286CA0104.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:400:2b4::20) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <20260422121810.307862-6-39@barroit.sh>
+X-Microsoft-Original-Message-ID: <20260422121810.307862-7-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,59 +69,59 @@ Sender: Jiamu Sun <sunjiamu@outlook.com>
 X-MS-Exchange-MessageSentRepresentingType: 2
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY0P300MB0530:EE_
-X-MS-Office365-Filtering-Correlation-Id: b39d3480-a5eb-4b1c-b072-08dea06974de
+X-MS-Office365-Filtering-Correlation-Id: a2e5bf24-9550-4082-4b88-08dea06975b0
 X-Microsoft-Antispam:
 	BCL:0;ARA:14566002|25031999004|5072599009|15080799012|23021999003|461199028|8060799015|19110799012|51005399006|55001999006|41001999006|440099028|3412199025|40105399003|1710799026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?/CjsMqmic6ItdL3nXAhqGGoLF9Y17AmaiqDTTGCnYV/FnEjTt/Z5onalsLD+?=
- =?us-ascii?Q?OPCSqdB15/rmPC5/mT9PBg8ljJWUmpDbvSyy5pH1tAOccsP/P4uFei70+D6H?=
- =?us-ascii?Q?I+rwRvQRw+IztR0Grw/l/qPl8XvPYYVaysGK18GOIcuewNTasvNTDiKwgKUs?=
- =?us-ascii?Q?2pY7vMBwl/afLSIp9JZjMMA/6PQHoBwLG2SMR1oTfXIn5VdsbsDQ+nW+uYSw?=
- =?us-ascii?Q?OqgczWzgcogt/U1NK1WSH1ENo9WqODcBi0oT6QjVUf9cAnK4r3YRnE/VDad3?=
- =?us-ascii?Q?kuVW8PfWVzX5CWidE1eD8ZUvw+Av00/go047xREVyLEpRMi17VeyiD7noMMP?=
- =?us-ascii?Q?PgIk4aakfaZBdsMTfHTg4Yr9t6psyi9SKVUt0gjxa2vLCn6o31a7UhaYt2XY?=
- =?us-ascii?Q?efK/MUiaOD+Llf1+7tVHZ+WZxqGlD/tD90aQVtkwAOAwGd/AaaezjWrr1I5H?=
- =?us-ascii?Q?yUmu2KyXqE3zIWRBGvnI28qk9fATmp56Fll4aSTzN8jOVEdptc8d1xMp2IIJ?=
- =?us-ascii?Q?kvXIj3vW7TDiH8G4jc0tmxonW7XM1MOpaEm0JGXbuygsnTTA5GitISjul2A3?=
- =?us-ascii?Q?806jDDN68QRTBtQ4JwSgQq7nAs6WHKmva/eauTzIw0I5PyqfKB1sMzlhEWeI?=
- =?us-ascii?Q?QS9Uv83ahduAQ5THlURp6/EcYkaz2wI3jF9F0nVBD5PsVVA2mLmWdVrCMu+L?=
- =?us-ascii?Q?mCB2s7C9Btr4NKN3RrCfm2q3zB+Ta5yalpwzglvlzCV/BY5cz5BNoiUKmptF?=
- =?us-ascii?Q?pBS4owK/lc0jBrKH3izjGP/zsVBKxAyv7FddGRqMpaeeCs/83yNrFZZpvpZZ?=
- =?us-ascii?Q?bzRmlgrXysMKi9rVwn0hyGhSUuHglkiWKFChcwg4RxhuL1e7TEKFZ6H4irK6?=
- =?us-ascii?Q?ZG1eX6MUACUgkXhYTf0wXrQVqtm2UD3hMOtI4M1MVEyxdnNX7COcLJQXgwDZ?=
- =?us-ascii?Q?aFpOrGVOFuGXtgQIf/VJp6Ddahje2k/0W/2Yc+OKGC1P/Yvy1rpMhR2vs0PK?=
- =?us-ascii?Q?EQpMhc5WmVraceAyR1K8G+TbAbA2zq2p20BZAVV2jh/+Sv4=3D?=
+	=?us-ascii?Q?gHLbrTdrC/gSBtAVUKJrT+pVvb55emUWWeV1msUZLNPwXDINWXvd0WtwT7u8?=
+ =?us-ascii?Q?sj2tQkysOLx16qmvdUvs2X3bmpXHE8N62+7l/yLHnTBd0X5YalvmuTqUwMD9?=
+ =?us-ascii?Q?MHpFvs56Xh/hVYiKmarYDQ4dSqT548UrQ9635Aqm//mcrgMRJr8SXLtzu4iL?=
+ =?us-ascii?Q?l+JIpxMyTEdIiz8ixGJnshcy7Orh8rayek4GdUcJjNFccSNrdjnxtCgLpujO?=
+ =?us-ascii?Q?rcEI+G3ndZtkbwGdRoH0lFQi52xZYZVB4pk51BSCwYTL3cCPJ4a/fGAzqVn/?=
+ =?us-ascii?Q?DPJqyL5vWjnFISuQhomYRrjgqV7FcGH9Y9QRA8G+VT286C4SR3gp9Xf2e9RY?=
+ =?us-ascii?Q?yuP8Wyezqf4HhxLpv1ZrzNHABYxNvhC3/AEWpYBAbwKg+vZ6Mg8PJQ5y8rFw?=
+ =?us-ascii?Q?puVUmp2csUeT5uq2qBhYpI/vM46tTguPQTSOBb1TOLUq9vLG5mRqUBvQB9m9?=
+ =?us-ascii?Q?uVHN9rCx3U97/LQzJEXATN6j1DJ9qWbPvNwZsfCDT5NtBAaBD7v6p3TPFdyE?=
+ =?us-ascii?Q?hzBoCnZ2ZVr6fPhveJElatzCEzK3OKN4wbLgoegriMmDiQx5dXm0Ktf7IQGn?=
+ =?us-ascii?Q?VWoXJu4IOK4/j7Uw4GKV40gIP+x7m7LdSUPn41HYeXCnKhe9VRSeICHbildN?=
+ =?us-ascii?Q?0g3mTxR9zD6hvX6G28R7d6TrHpzpb83aBCoLxCevWBaq0uYErLDHDKphdohK?=
+ =?us-ascii?Q?DKlVrdBSyuVJCPBneRHCi+hGt1Dc0ogeO8tMN37vekbAYTpvSkq1tHs92c5z?=
+ =?us-ascii?Q?VO+IviINvB1uKg/pxxte2ksuS4D/w9shUffrIGAdPJkGzZthLGsHID5/iqqB?=
+ =?us-ascii?Q?jYDX+NWcet477gjry9YFz+5icUpTZ/Bir9tFoOQ4ZiHpWLjTvLG2QgHQZXR7?=
+ =?us-ascii?Q?+YVQeI4TEzaZXZO9Tof1LMxj3bf5l0IJoPWzUuCq5j5Lgsuiu/MrHtmRBq7N?=
+ =?us-ascii?Q?z/ACBTTtnl+MwL6UiEOeqGTlfNJ0jfuLFTvEFwVaWjek07zAUhHGgBh7DYRc?=
+ =?us-ascii?Q?2i05lpeTYa7i5rdA+OCl+kLi+KK8HBxuMFVPZdp5fmXpAus=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?4vzh+3I453LpHOLT6cJqlrxwOmMzVbLSsF6uj4FqEtecG+X0MeJr1VccL+GP?=
- =?us-ascii?Q?d1rwtCVnGsHGw+x+xZibtUTTkb27aBv6kdqxX1UhN8T/CfnXLi2KR4JUb3/Y?=
- =?us-ascii?Q?dNGh5FytUxAmCbeS7giOWaM85chzBI2RMG/6MbGCycp0a3C2k3ltEsKZxYsP?=
- =?us-ascii?Q?ElpARHJGMJutrTWwBlVl5eC4nPpUJeB6RnxWl959gPtHpVxnWDQ7YTInmgYO?=
- =?us-ascii?Q?fs5LD5E5KqN8IO/COpLJzt8myTmBMr3UC9ylBd95v/jA0XSvuFHfcgQ7MZ0F?=
- =?us-ascii?Q?gvzB/Nf3YYrKhDQNgPV4mCCPbAs7FClTIF6r0M7WhMYPU8I0QqWYjz7YHXK/?=
- =?us-ascii?Q?xPqnsCqqW4WN3n0CufCsDggmr6imTBWTk7wtcJGv/K5BhkXZaKJm0g0L4Hou?=
- =?us-ascii?Q?NymM7ulLd1Nn29ShCpuYTn0wLRQJBAgfIlreYi6D9Zn2HoD/DNEk53loAtSP?=
- =?us-ascii?Q?i4teH8c/R9ZMeFkVZT14MZiUw7AuR98UvQ7pC8bHDynjkVdaF8iv64UyM0Mc?=
- =?us-ascii?Q?28BYnf505FWgWWfNNOK7BVfTDRAvrc7TwsA6XuSY+1T0NCPimpmDPgAavZX0?=
- =?us-ascii?Q?kAHQ0D8LR1JtVoJIwPs674xZZmBtuRvQFeLwu3KBtzfmSMti/eNDld71d9JQ?=
- =?us-ascii?Q?S/MpScgRzE+Yb0heBiEmfJinNSyDuuDz4/7Opy+MmVy+WtCE93VOr7HcB9ha?=
- =?us-ascii?Q?RTQ0z9ti8z7eEiRxtm89bsU0HrXqkEJ1jpXTMoINpAnxD4b66YqKzDoPsF45?=
- =?us-ascii?Q?O1W7I9lInp1l9OWs2aw0qKZ9jIOzupDPCUtiYVDG8D4HLtmC458eKPULjB5s?=
- =?us-ascii?Q?jqfWdWEUv/3leEnGEi/4yHXV429k014MGFXfVl0Yd1IBL/2CgzqU28ElSldt?=
- =?us-ascii?Q?zY/UKeVrTcGNOybqjlV9I7ISzPoH04lur7KDAFrjmHCURfebF5LKCRW/WslL?=
- =?us-ascii?Q?mpXq2NVZ1j4wSU02gGVFY+x2EFpAndNR6oKZ9WOlD0EQLrh+hwupdfDRufAY?=
- =?us-ascii?Q?HqIEfRn9g2CIXa0dBcEqltjDYVB4NqEbRKWtPX8VOklDvEtL2PpxHg/ZFbCx?=
- =?us-ascii?Q?T3abz5DOF8caAre2x/aFcSCsRqfrppKR8xqODNU4e1ZqSeVgQ6fynpOCjm5i?=
- =?us-ascii?Q?8Q+zakw1TbczMC5vYyzBRDctXtGjG0uqilSLmnuLjUqE5y3WObZdWp2QmKFx?=
- =?us-ascii?Q?7BM+eOEEU++MnJRQQonwSfpDRIl1SpQMFvDKC/gnG1qU8m4iM/xSg0Pbuy2I?=
- =?us-ascii?Q?dhNi25//7tcrWQU8+edmHSGA0lyszH01eNWOTDCB/8E1yL7UcWTzwucvvtIP?=
- =?us-ascii?Q?g3Fo8h8YQiEt7LBf1+xtKef7y6Fw7atwRhNAQmP4N+PYxE2NZcSbXw0P9TwL?=
- =?us-ascii?Q?bdWrHaNU3PDX8y//MNAqulSQ/TIO?=
+	=?us-ascii?Q?b1I63p3Dr41WIsHaNEaqwj2iQhfqxBFW1G4Xgkll9by4UW7KXFJ9tQ8CdxHR?=
+ =?us-ascii?Q?z5/ZFFrpuqkrpceA63wq7RhfTWIuy4BwubBarzEcljnuIQ/DMVIkQ/XTVT99?=
+ =?us-ascii?Q?qSiw6Mbv1uimNf4MBgDwzxSqGhy1V8ynB4O4hvebxJt1aUUD4P1aFY1Lmjtd?=
+ =?us-ascii?Q?4y0jnnvfNq2IS5YdqzmSih90L1xqCtH5TtUdF5CLAmkzotapP1zio4xqDgtm?=
+ =?us-ascii?Q?ge9lmoGaeA0IHPCaM1kbnlmGsn2tL6Uam/+wb9lK0wzNnmWpHH3vgOsUPmVg?=
+ =?us-ascii?Q?xJHv9f2uWx7W3SqwknSvzjONLTWkvMVGVQW1pLKrW8Fl80nYpj+yQRCaDXIf?=
+ =?us-ascii?Q?W84hr1RQcyAqKncsVJNddKHbWgNyBAca+yNXzDseUZnoFC5gBa+HA/dcfzjH?=
+ =?us-ascii?Q?mVvGCKEBu1hf+eLD+dxIG232zTuvKmOTApZymXI9CvIemdk/zocBIj6BpJDe?=
+ =?us-ascii?Q?RLiKODBpAHBwZiaAjxnqd40yGs30oK4Vlk/fs4d5zShTMmurQ5nfWJH5Rk2C?=
+ =?us-ascii?Q?/Zkyfcgfc80vCLqTBHQny0Z1n47tDRAqvjAtoIYnwGep94f6i4yPP0oQs9RK?=
+ =?us-ascii?Q?1n+zMOl2vegy6jhjMPji9zO48X8GVK2MsaIbh3r5fw2Of4jyHksUP1nA/CGK?=
+ =?us-ascii?Q?rTZpS4kr2rCs6tD6OsuOs/WlSiOD39Pz13xnzdUFIvrqArMk8ggbKEIOTg3c?=
+ =?us-ascii?Q?y3Gm4ywEMXOFwTWUmBxNWOEWGuDOFU0TZJkujMrpkFNrtIY332Op7Swi3lTN?=
+ =?us-ascii?Q?A7uqBHHMzZanDN6GtGrxnwbl700pKB4Jq8Elh0TsrGBsFqsVl76kvOqBTwnP?=
+ =?us-ascii?Q?uW1vQU+mUrYb+B5ofPTqZwJzIzu15gljBwd1d+IChuOiUQAZPeLH6h2vipL3?=
+ =?us-ascii?Q?GqjfAv3XdBppxrapSQYZtsLYzO2DZER9/DN9hmD30U106dtLBhs1Fg2gM0Xk?=
+ =?us-ascii?Q?8R/kgf5/tn2ud0tL0z9BxbzJq1/WxsWuCrYMc/cMkZ3TzkhblqBxPGpntapc?=
+ =?us-ascii?Q?XzVzlmy2d2w6OQGIEQa5eVkgEsNJR+gBkcYfdyupjuqqzcjhdCSFuCs5qsYJ?=
+ =?us-ascii?Q?OSkEQvS3/Gvx+nQhyrawDtSr+jsEE0nxqDOo3ljSox2LtxjICM+Tbxd8z/11?=
+ =?us-ascii?Q?5KewOacRL8x3fQC1Ofp3Z6Kvbb1eAkigy868mqpXCF48zrQ+KxMr/wDn7PlH?=
+ =?us-ascii?Q?AKqxiOtBnYTLB45cWMtdBySVc87Q82ur9toHM3L9Bde32Yx/ae2s/VAPxzBN?=
+ =?us-ascii?Q?jtobk3sakkQLUlsW98RfB+zFno6KIXh+hpXZvnkg+eBF9BSb+7OfL1MSh/qz?=
+ =?us-ascii?Q?VQ2j0AmQiN6Yobv33q36RBw+XaTYznTwN/URZflGSn3pvfQFaz2u8ms/71pZ?=
+ =?us-ascii?Q?t2tdumNkz3e7Ec+KuujxNINtpSIi?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b39d3480-a5eb-4b1c-b072-08dea06974de
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2e5bf24-9550-4082-4b88-08dea06975b0
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:52.9808
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2026 12:19:54.3293
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -129,74 +129,184 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0530
 
-AUTOCORRECT_SHOW is ambiguous. Its purpose is to show commands similar
-to the unknown one and take no other action. Rename it to fit the
-semantics.
+Add autocorrect_resolve(). This resolves and populates the correct
+values for autocorrect config.
+
+Make autocorrect config callback internal. The API is meant to provide
+a high-level way to retrieve the config. Allowing access to the config
+callback from outside violates that intent.
+
+Additionally, in some cases, without access to the config callback, two
+config iterations cannot be merged into one, which can hurt performance.
+This is fine, as the code path that calls autocorrect_resolve() is cold.
 
 Signed-off-by: Jiamu Sun <39@barroit.sh>
 ---
- autocorrect.c | 6 +++---
- autocorrect.h | 2 +-
- help.c        | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ autocorrect.c | 15 ++++++++++++---
+ autocorrect.h |  5 +----
+ help.c        | 40 +++++++++++++++++-----------------------
+ 3 files changed, 30 insertions(+), 30 deletions(-)
 
 diff --git a/autocorrect.c b/autocorrect.c
-index 2484546fc731..de0fa282c934 100644
+index de0fa282c934..b2ee9f51e8c0 100644
 --- a/autocorrect.c
 +++ b/autocorrect.c
-@@ -12,7 +12,7 @@ static enum autocorrect_mode parse_autocorrect(const char *value)
- 	case 1:
- 		return AUTOCORRECT_IMMEDIATELY;
- 	case 0:
--		return AUTOCORRECT_SHOW;
-+		return AUTOCORRECT_HINT;
- 	default: /* other random text */
- 		break;
- 	}
-@@ -24,7 +24,7 @@ static enum autocorrect_mode parse_autocorrect(const char *value)
- 	else if (!strcmp(value, "immediate"))
- 		return AUTOCORRECT_IMMEDIATELY;
- 	else if (!strcmp(value, "show"))
--		return AUTOCORRECT_SHOW;
-+		return AUTOCORRECT_HINT;
- 	else
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "autocorrect.h"
+ #include "config.h"
+@@ -29,13 +31,13 @@ static enum autocorrect_mode parse_autocorrect(const char *value)
  		return AUTOCORRECT_DELAY;
  }
-@@ -49,7 +49,7 @@ void autocorrect_resolve_config(const char *var, const char *value,
- 		conf->delay = git_config_int(var, value, ctx->kvi);
  
- 		if (!conf->delay)
--			conf->mode = AUTOCORRECT_SHOW;
-+			conf->mode = AUTOCORRECT_HINT;
+-void autocorrect_resolve_config(const char *var, const char *value,
+-				const struct config_context *ctx, void *data)
++static int resolve_autocorrect(const char *var, const char *value,
++			       const struct config_context *ctx, void *data)
+ {
+ 	struct autocorrect *conf = data;
+ 
+ 	if (strcmp(var, "help.autocorrect"))
+-		return;
++		return 0;
+ 
+ 	conf->mode = parse_autocorrect(value);
+ 
+@@ -53,6 +55,13 @@ void autocorrect_resolve_config(const char *var, const char *value,
  		else if (conf->delay < 0 || conf->delay == 1)
  			conf->mode = AUTOCORRECT_IMMEDIATELY;
  	}
++
++	return 0;
++}
++
++void autocorrect_resolve(struct autocorrect *conf)
++{
++	read_early_config(the_repository, resolve_autocorrect, conf);
+ }
+ 
+ void autocorrect_confirm(struct autocorrect *conf, const char *assumed)
 diff --git a/autocorrect.h b/autocorrect.h
-index 5506a36f11a7..328807242c15 100644
+index 328807242c15..0d3e819262ed 100644
 --- a/autocorrect.h
 +++ b/autocorrect.h
-@@ -4,7 +4,7 @@
- struct config_context;
+@@ -1,8 +1,6 @@
+ #ifndef AUTOCORRECT_H
+ #define AUTOCORRECT_H
  
+-struct config_context;
+-
  enum autocorrect_mode {
--	AUTOCORRECT_SHOW,
-+	AUTOCORRECT_HINT,
+ 	AUTOCORRECT_HINT,
  	AUTOCORRECT_NEVER,
- 	AUTOCORRECT_PROMPT,
- 	AUTOCORRECT_IMMEDIATELY,
+@@ -16,8 +14,7 @@ struct autocorrect {
+ 	int delay;
+ };
+ 
+-void autocorrect_resolve_config(const char *var, const char *value,
+-				const struct config_context *ctx, void *data);
++void autocorrect_resolve(struct autocorrect *conf);
+ 
+ void autocorrect_confirm(struct autocorrect *conf, const char *assumed);
+ 
 diff --git a/help.c b/help.c
-index 353596c17d82..c7dab8395ee2 100644
+index c7dab8395ee2..0fff43545cc1 100644
 --- a/help.c
 +++ b/help.c
-@@ -674,7 +674,7 @@ char *help_unknown_cmd(const char *cmd)
+@@ -537,32 +537,23 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
+ 	return 0;
+ }
+ 
+-struct help_unknown_cmd_config {
+-	struct autocorrect autocorrect;
+-	struct cmdnames aliases;
+-};
+-
+-static int git_unknown_cmd_config(const char *var, const char *value,
+-				  const struct config_context *ctx,
+-				  void *cb)
++static int resolve_aliases(const char *var, const char *value UNUSED,
++			   const struct config_context *ctx UNUSED, void *data)
+ {
+-	struct help_unknown_cmd_config *cfg = cb;
++	struct cmdnames *aliases = data;
+ 	const char *subsection, *key;
+ 	size_t subsection_len;
+ 
+-	autocorrect_resolve_config(var, value, ctx, &cfg->autocorrect);
+-
+-	/* Also use aliases for command lookup */
+ 	if (!parse_config_key(var, "alias", &subsection, &subsection_len,
+ 			      &key)) {
+ 		if (subsection) {
+ 			/* [alias "name"] command = value */
+ 			if (!strcmp(key, "command"))
+-				add_cmdname(&cfg->aliases, subsection,
++				add_cmdname(aliases, subsection,
+ 					    subsection_len);
+ 		} else {
+ 			/* alias.name = value */
+-			add_cmdname(&cfg->aliases, key, strlen(key));
++			add_cmdname(aliases, key, strlen(key));
+ 		}
+ 	}
+ 
+@@ -599,22 +590,26 @@ static const char bad_interpreter_advice[] =
+ 
+ char *help_unknown_cmd(const char *cmd)
+ {
+-	struct help_unknown_cmd_config cfg = { 0 };
++	struct cmdnames aliases = { 0 };
++	struct autocorrect autocorrect = { 0 };
+ 	int i, n, best_similarity = 0;
+ 	struct cmdnames main_cmds = { 0 };
+ 	struct cmdnames other_cmds = { 0 };
+ 	struct cmdname_help *common_cmds;
+ 
+-	read_early_config(the_repository, git_unknown_cmd_config, &cfg);
++	autocorrect_resolve(&autocorrect);
+ 
+-	if (cfg.autocorrect.mode == AUTOCORRECT_NEVER) {
++	if (autocorrect.mode == AUTOCORRECT_NEVER) {
+ 		fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
+ 		exit(1);
+ 	}
+ 
+ 	load_command_list("git-", &main_cmds, &other_cmds);
+ 
+-	add_cmd_list(&main_cmds, &cfg.aliases);
++	/* Also use aliases for command lookup */
++	read_early_config(the_repository, resolve_aliases, &aliases);
++
++	add_cmd_list(&main_cmds, &aliases);
+ 	add_cmd_list(&main_cmds, &other_cmds);
+ 	QSORT(main_cmds.names, main_cmds.cnt, cmdname_compare);
+ 	uniq(&main_cmds);
+@@ -674,18 +669,17 @@ char *help_unknown_cmd(const char *cmd)
  			; /* still counting */
  	}
  
--	if (cfg.autocorrect.mode != AUTOCORRECT_SHOW && n == 1 &&
-+	if (cfg.autocorrect.mode != AUTOCORRECT_HINT && n == 1 &&
+-	if (cfg.autocorrect.mode != AUTOCORRECT_HINT && n == 1 &&
++	if (autocorrect.mode != AUTOCORRECT_HINT && n == 1 &&
  	    SIMILAR_ENOUGH(best_similarity)) {
  		char *assumed = xstrdup(main_cmds.names[0]->name);
  
+ 		fprintf_ln(stderr,
+-			   _("WARNING: You called a Git command named '%s', "
+-			     "which does not exist."),
++			   _("WARNING: You called a Git command named '%s', which does not exist."),
+ 			   cmd);
+ 
+-		autocorrect_confirm(&cfg.autocorrect, assumed);
++		autocorrect_confirm(&autocorrect, assumed);
+ 
+-		cmdnames_release(&cfg.aliases);
++		cmdnames_release(&aliases);
+ 		cmdnames_release(&main_cmds);
+ 		cmdnames_release(&other_cmds);
+ 		return assumed;
 -- 
 2.53.0
 
