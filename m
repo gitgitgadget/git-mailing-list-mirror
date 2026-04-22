@@ -1,83 +1,84 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467742773F0
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 10:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8E53314AE
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 10:41:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776853843; cv=none; b=qzuXs7klxhaQyBqunPqniOzcyR7WDOJ48orMjJAz5vIXwDxGHeTTY0bnaJFH4LvjqecMBFfAYHI1bD18xqQfSGdmAjO38CZ+9It7KRR2WlBw1VMen+iU7iW/pftx1X6WL8AoxHrcOrpcq/Ze4g9drYRQATBdvMVuZKAhzMh7XGs=
+	t=1776854500; cv=none; b=ZRcVQ/Wloc6kuBHJ1CbrsMtAIzzq9gF4uZ7FNQ2oLsTEIfMk1LfatYOExzZ46qj3arZqI8NP2zppV0JRJ5c0hUXBDBGofOweo/4OsOATQmkfWTwfLFQzXGNvU+s5Kr8pu3BG3UCWYx5jNmciGsbjmAgWtiYx43fKBoeHKedALFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776853843; c=relaxed/simple;
-	bh=XzRBM1eRdCnUlBUC7TL7aHePbzTVmFBw1bnuMcZBL88=;
+	s=arc-20240116; t=1776854500; c=relaxed/simple;
+	bh=NtgzNanv15Vmn+WGnwN3P1YaiLIdFxCvQaAQSV0yfV4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I3Ex+T2fX6xbRV095wQ0Uij6QLS1vOb0fQ4c11EqPw5TSNyZzYcikzQETHD0q4OMJbvDLYKZfkYZbxfaSV08zEgVlPOO9kz3t3gEomNzEqmovbsgwYwgrs8ANhCr1KPR9SpEcdNwkl0P6tNjh0xaCaybklrpye7vPsCHkk+/P90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q7Xf9Rgk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o53xEe3Q; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=AHlInlJ2P9LT46F27f88fwEzYsH2uzhrQQh0m9BZb+rjdhQuW+hkPuoD/BNb9Zs++VcOLSwUyNAAOolr8ClHlFfTAABQu2ZYwWKpqEsA75p2mdwr2oo9SPE8GPk7R57h5lDWhEge+j4hQ5PdeaH9TkF2+ITbD25HQmhQtoNPFJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WXB1/1Uo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IG94yxJR; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q7Xf9Rgk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o53xEe3Q"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 814557A0208;
-	Wed, 22 Apr 2026 06:30:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WXB1/1Uo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IG94yxJR"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2C2971D00023;
+	Wed, 22 Apr 2026 06:41:37 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 22 Apr 2026 06:30:41 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 22 Apr 2026 06:41:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776853841; x=1776940241; bh=XzRBM1eRdC
-	nUlBUC7TL7aHePbzTVmFBw1bnuMcZBL88=; b=q7Xf9RgkVe+6kzl13oVmdqIjBf
-	sdpiayf2hScwLmH94h8I2TKR2Cii4Z4hvPbBFRiAaRykPCSBLx816QnruT0ehoo3
-	2XjeGPtcZ6Q+wYOOnLV1I2bMMhJqjnigYAFR+6L159hWDSQ1ZPL65G+9AUzvjexW
-	K9M1BXqEtDCFz+HEjy8tgBauiOqLeQY2qL/yS4dnF2eXzdDg2/UIgUO5fI5BvOzj
-	A49WWUErofET8tz056oVP3Kc66QBpnQA0nYNzyqnU6lffS10M9ecUKQkgnMc+cgj
-	GGDjABdBZSsjlpPrcmZ/SFdjqcjnBhEiFxoKfoOgo/n5C9dRFrNb+tLqZ+oA==
+	:subject:to:to; s=fm2; t=1776854497; x=1776940897; bh=fAhMdlmila
+	fGybkX4kVunMRVowYdQfl7XArAyQeacpQ=; b=WXB1/1UofU9ud5mI1gIrTee0ql
+	cO9fVGJJMtO3BhcwASxZA5G0gNbByZYYfW7jxM1ZwqXSlIpdsopUvzfzDdAEhRgA
+	pyCLBh38TQT8uk1Emd6qNRcnY3nCVPD4mAymb+MBG7jhmVUhE6wpObG7/UELR9ZG
+	LL9qUP5xOuwBFzQaU8VHi/EZvp4/9opPkS0jN4po+d+SgcuF3DLnXAcgx4NOAlSG
+	IDn/CksU4C+H9U8Yva+MEZypuFvkctcEFYPh1o84jSdBZxdpEUEckBZMCVHpIGui
+	/rYFhOkyuKxW3ruMKdYgrtrwAmixgTngupVkx1CB/OAxLbW+wKuZRuo62tdg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776853841; x=1776940241; bh=XzRBM1eRdCnUlBUC7TL7aHePbzTVmFBw1bn
-	uMcZBL88=; b=o53xEe3QC4n7uWfz0NLa8f9e/RPHV9V/diganRqCdVaT32g8PaG
-	+diJ2BxrYjVq+ds0TjVFmlbgQGStojoiPHHiSPPtOT7uhVb7qAFERDVSaO1wRaKz
-	0+UatHsczkAgMNSl1VIYIyGF6NMT/Msv2hvlEsrLacARQQMZNK2XH6LNdz2puNL1
-	mmmb+QwT0yothlfFl2Bn2U0Bb5mWCbVx2a7lfjNjaWM3an29pNuLySTrEUihBRVT
-	fLe9k8Bxzc0LaJ21t1MwmtuuOJGHVJLZQs8wxVpc1cn+wWUm+dVaWsP05UUkASxZ
-	cBFA7svb8MO8rdLNLA8v4ZSsVaSQZTCXIXA==
-X-ME-Sender: <xms:UaPoacAvACSor6I-ef9I5idykB88apcgFXjv1S2K4eHI2QuHtnQeGA>
-    <xme:UaPoaV_MzLU8aBd_-Dct7PKFW8V9ZyoPWwzHsaZKUO5ML0Q6BDOkdpJZCSmj2ia5n
-    ra1U_n-DXTcm4eKZs6baMi8zpWzAa1G_HyTKn3XtxbwMTBrPE3oriE>
-X-ME-Received: <xmr:UaPoac9m4mVh8lirPhc1ASLaKWiKpb-_Cfz2Z1jTiZUpZrHQGdfA7MskfgHk_7EeqS8e4O15cPImE9u9VCODAZJ7_qbFpwl9QIPr8a_8TGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigedtfecutefuodetggdotefrod
+	1776854497; x=1776940897; bh=fAhMdlmilafGybkX4kVunMRVowYdQfl7XAr
+	AyQeacpQ=; b=IG94yxJRyJfvJK/bZcLQex5Rnib+CyXzWkqC86MY/JyLk7XMDK3
+	vuANA3u1fQNMUu8xtL3/O3IImLdukAfQcDcRkck+WIRNnQjxHcohbRpAfMs3IUPR
+	5gRIDdU9ADP0Dkbzq7XTRi6OsnpmmOUJM14AGAANwTjxQ7CLs0JOyhYhG4PDjPAI
+	CccRptNOzw2ysPe/hqQ1MmoBRbei2x4TeF9AXxhDeLtZ7fFLDUpE0RgX+uXdmg9H
+	y0f3KL82L/przAbocOZBbXWmbWQ0HdXrftQOM7g2yVxG7bDEDpJj1a3YAYq72wEB
+	1IctudXqbpnduUDqTqwPe9q+X/fB7Hnd3UQ==
+X-ME-Sender: <xms:4aXoafgMKCHy2rDaOZVgdPC1BdUssxw4dI5bayQdE33bF0Ko79qI0Q>
+    <xme:4aXoaTAWg4HVX717XyHnKa98Zwtk5Rpnmudc61GoNKmLy_Lx6Z3VxK6-riKHY5mXo
+    xsYpbRADL-r7fvffWIbdmCWab027nCVKnDgg2FT8fXuDIRRcVgcIg>
+X-ME-Received: <xmr:4aXoaUGg6WzGv8Wnw_dovFO5q5ZIHcoyoNrIhkmfFMenY7OAkSpLZ_0NM78NYMrJ7_KMtqbFAqRbDiaHjn-3f9gYUeFyeMG1cmzp0dYPa7s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigedtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejvefgudduheeihfefkeekgfetjeektdfhjefhteelffelheegudeijeetvdetheenucff
-    ohhmrghinhepmhhsghhiugdrlhhinhhknecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpd
-    hrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:UaPoacdDYvvVCmAyeQBZBEbqqQS5nn9t6HocOL1VvbKy33aBEzh1rQ>
-    <xmx:UaPoaVEhkcmg0BBm2GY801DQls18jIemGM1WoBtKifVE8d-Xxt2lLg>
-    <xmx:UaPoaad29zXPMzD0yylkO_3rnxGVspZGl1GbXVeTMyzj1G0vb-PO_g>
-    <xmx:UaPoafGYvvAY27CbqM566hdCC641EPY-ILz2wy60ssFr0GohZ5BQcw>
-    <xmx:UaPoaV8DkxX5ePT5gKd2jbk983rKozKsWxXAK37phcsy1jyGd8gOTM-J>
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgr
+    mhhilhihrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:4aXoabKvfzi4RhmsHvBVfykn67nf06_SCXx4m_sNgnlVKCAMjeixOw>
+    <xmx:4aXoaYnwkMfrCSFnZK3xWmwhBJ-ZYQ5HswYHDlTNQeXkv7_F5m_bQw>
+    <xmx:4aXoaTTOswt6QbrE94GU0NFOdg-Xqd6f4PMf2--mNsU1WtEQMb-tXQ>
+    <xmx:4aXoaaKXrD7F35DEE5M6dHEd4WosrcyKITZwzsp5-S0iqOJgUn6Qrg>
+    <xmx:4aXoaXG6uGSkjdRr2qFLdt-2CCOpVigZAxcleHFrUEqdKc7sDvgULpXa>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Apr 2026 06:30:40 -0400 (EDT)
+ 22 Apr 2026 06:41:36 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 376baf09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Apr 2026 10:30:38 +0000 (UTC)
-Date: Wed, 22 Apr 2026 12:30:35 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b5aa49fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Apr 2026 10:41:34 +0000 (UTC)
+Date: Wed, 22 Apr 2026 12:41:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: Re: [PATCH v2] generate-configlist: collapse depfile for older Ninja
-Message-ID: <aeijSwIcqzkqstFG@pks.im>
-References: <20260421-toon-fix-almalinux8-v1-1-aec1d54addde@iotcl.com>
- <20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] refs/files: skip lock files during consistency checks
+Message-ID: <aeil2Q_Mh_fKCwGa@pks.im>
+References: <20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com>
+ <20260422-refs-fsck-skip-lock-files-v2-1-9607571ae59a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,14 +87,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com>
+In-Reply-To: <20260422-refs-fsck-skip-lock-files-v2-1-9607571ae59a@gmail.com>
 
-On Wed, Apr 22, 2026 at 09:21:20AM +0200, Toon Claes wrote:
-> Changes in v2:
-> - Simplify the changes *a lot* by doing the collapsing unconditionally.
-> - Link to v1: https://patch.msgid.link/20260421-toon-fix-almalinux8-v1-1-aec1d54addde@iotcl.com
+On Wed, Apr 22, 2026 at 11:49:58AM +0200, Karthik Nayak wrote:
+> Consistency checks in the files reference backend involve two steps:
+> 
+> 1. Iterate over all entries within the 'refs/' directory and call
+> `files_fsck_ref()` on each.
+> 2. Iterate over all root refs via `for_each_root_ref()` and call
+> `files_fsck_ref()` on each.
+> 
+> `files_fsck_ref()` then runs all fsck checks defined in
+> `fsck_refs_fn[]`. Step 2 goes through the refs API and only sees valid
+> refs, but step 1 iterates the directory directly and will also encounter
 
-Thanks. I've tested those changes with Ninja 1.8.2 and can confirm that
-it does fix the issue.
+Nit, obviously not worth a reroll: maybe do s/will/may/?
+
+> intermediate '*.lock' files.
+> 
+> Currently, `files_fsck_refs_name()`, one of the functions in
+> `fsck_refs_fn[]`, filters out lock files itself. The other function,
+> `files_fsck_refs_content()`, has no such check and would parse the lock
+> file. Any new function added to `fsck_refs_fn[]` would have the same
+> problem.
+> 
+> Move the filter up into `files_fsck_refs_dir()`, where the directory
+> iteration happens. Since step 2 cannot produce lock files, this is the
+> only site where the filter is needed, and individual checks no longer
+> have to re-implement it.
+
+Makes sense.
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index b3b0c25f84..1504a1e2f3 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3962,6 +3953,15 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+>  			strbuf_addf(&refname, "worktrees/%s/", wt->id);
+>  		strbuf_addf(&refname, "refs/%s", iter->relative_path);
+>  
+> +		filename = basename((char *) iter->path.buf);
+
+Not a new issue, but this cast made me wonder. As it turns out,
+basename(3p) is documented as "may modify the string pointed to by
+path". I assume that this can happen if the path itself ends with a
+slash for example, as in that case the basename should of course not
+include the slash itself. So maybe it modifies the caller-provided path
+directly in that case?
+
+In any case, it shouldn't be much of an issue as we only use this on
+discovered path names, and those cannot contain contain a trailing
+slash.
 
 Patrick
