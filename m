@@ -1,54 +1,54 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD76C3CD8C3
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 11:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4973C3C06
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 11:15:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776856544; cv=none; b=Lh59Y6WuGY9JXAjvotdPwB2ejX9BYSf1jxJd76sc3zRt7WjqoRlHK8m08ZP6dLoJbTzUD55neUFIlA03hna2uYjwyJ48BsDlGeyW6egilCdnzMxDGYM5WMNNfCBdQfjZ6sHyx4N6uw+1nzw3qhxR2VyLTZXYKxc3njDqkwf+04w=
+	t=1776856549; cv=none; b=ePU8j/jnz0vubJw2pKY0oDIs1VqqOWClsmb6MYRe/KQ2tn7Spfr64XwZ+w+HxV+IFtxVxUYLsNwG3utL6ncEszhdVCAWMdi5q8/QSl4NAMjbB4HZ0uDPzoi+KcMKhoPd1sxJPGsho/LO2Ppwx8Z1X0oRzfHtEbyi71w6J4UxDyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776856544; c=relaxed/simple;
-	bh=Qt3Cr5nPbcFezyAWWRdwipSIbFAoYWYKPQBZdxCTixI=;
+	s=arc-20240116; t=1776856549; c=relaxed/simple;
+	bh=cEsCibI6FXsBQZ911buIDefKFwdvqpUWkQ76TGSg/ck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kJBNCwkIMOKqPWwclSr69qXPY7On1bXNZQ7rBvM8R6eg4b6lWZBCq0ZJXaJeUEU384E0Q+NyhqYzGDMDO4UKTtq9z6QZQPjOxr6IM3X+M5rH34+ekw+U6veA/TFRuLZfK5byo95P3h+fi9cCMAY3w7pKQbz2sz/X40UZX7LLb84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UO0FvgGD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DDFUWO0y; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=mNjK9CnhJTp+C+bVGPWzaZPndocJnIToE7pEjZVFIVO9pJ/afKqQpYVZUSxMq1ikmjzmkngQ5zebJGyLP6LpecT2vyh4Tg1ggivxEh1vcbntXJPNzAvi1mR4q4V5JyyCcFzRlhXeCE2n7Vv8rYGnqMYBaqt5G40L+JjgNbjvZaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kR0OCmye; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DO+2uxC4; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UO0FvgGD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DDFUWO0y"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EBF131D0016D;
-	Wed, 22 Apr 2026 07:15:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kR0OCmye";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DO+2uxC4"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 197237A0154;
+	Wed, 22 Apr 2026 07:15:46 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 22 Apr 2026 07:15:41 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 22 Apr 2026 07:15:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1776856540; x=1776942940; bh=zfbmuqBEFr
-	j4wjyGh4s7Svr44wtY5u4RhwEGnHUskZU=; b=UO0FvgGDMz9reZSZLTdEsYn03e
-	81hzh12cxXnx1PY33XpxCp5Zq9xie3Uko6jVghMubAMeBOmEkJCipxkZEFPfP2cn
-	IKO4f868RKGwhZLJtCiNe4+T0JSpUpJEsTjkvtWifosauhsF9dzlYj8SmOK8kVX+
-	7k1MQoVqYbWV20UPU6KBc6jRupVskXT3vqgkaxRjifXXyqkOBbrnlaA9ACu8ANvU
-	oNV7DpnytE4tVwbMnD5vuTDtPdUfkIqMQp29gl2K55nNSQpQogt8Dei0rPmZDMU1
-	ijvXTgbcg01dO3YXXYwHujfX26B6A5Q2Ysofp4yZoypc2l1v/TAIOPhY2e+w==
+	:subject:to:to; s=fm2; t=1776856545; x=1776942945; bh=cEsCibI6FX
+	sBQZ911buIDefKFwdvqpUWkQ76TGSg/ck=; b=kR0OCmye4dYL3svMj/VEFBGXJn
+	U6nxbLu4BOF2KvzosrrmE18FxLrAAkOl3IPmdfG4M7CmKd9tT50POsG8oGAUO/fb
+	SYXas4K6XMJLK4IROh2/+qfG9kpmLH5PRhx3neevDHiQTnnfeR0qjcMNsRIaKn4V
+	rJFSWHyNpIl0GKjugAl/nRffMJGNgO1V0k69dajzIwIb5Ty+BR/XnFhoF5iV222p
+	IVBjUgmXWLQ1i6Y4HDakzc3M8HBfhSoozUOpie5VHpwS98PwRbmW4S6AIvbTzV/8
+	cj/klDFoG8yV8PCcHMP+KpIgJ6rf2kbW4b8TM9coYaq6ij2xnTkNHFnPXCTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1776856540; x=1776942940; bh=zfbmuqBEFrj4wjyGh4s7Svr44wtY5u4RhwE
-	GnHUskZU=; b=DDFUWO0yFWGaWcd/Xauw4qFZHJaZWPbm9CbfAwW/tgtqSFtHK3D
-	+OA9lYC7FzC3f2AG8h81VSMynyOsIRBUvdSlNRB8eYW3OohSUpY44/y3tOC4sNGW
-	5PVx35JjMLDrKO7n20JY5F67jIfeKN7C1kCfkbfBp9xx+HzAQLbH1uLS6aiXeo7i
-	1UEW40iqtsXWECkivGaE9jsoPzphqjE3RGLuuu1WN+bSfTkuc57qzt9NlAazlRF2
-	CzN+jqiJ3GulY0myuMVXXCbY6aTZR39o7frFEkkkZ4RGHmJHR0ku4CKzvRewZEXx
-	KD35T7Aq0ARRpDSMg6f+fhXBnlZCrNHNjeQ==
-X-ME-Sender: <xms:3K3oaaD7CCubhCvOiotenBmgfitUFHleZtkpNJ5XLn6e8DodFKMLCw>
-    <xme:3K3oaaiC-PSBOSyUHzSbd1NXj_vdqIlnHAFQYjUeHJKsacNF4wExJcH9k7YksFBE2
-    hMPY32w_vnC6045ymLZzQWa0_zjgNF8vh1Ch4LpE4sW9aTXWKM3>
-X-ME-Received: <xmr:3K3oabOHW-oek4UrdIm3eXXSBi0iL3xa8tr62xQd4XRt4CpVTu1hl8JKBb7ZiB2b1Hdd6zI4kZZcAxfTMh9BIOwLCYoonlXR1Civ4MBcdKY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigeduvdcutefuodetggdotefrod
+	1776856545; x=1776942945; bh=cEsCibI6FXsBQZ911buIDefKFwdvqpUWkQ7
+	6TGSg/ck=; b=DO+2uxC4kYs0CscvqkVYrsJ1vgu5SheMyJ0KInFhdfF4UmmPCHb
+	mSGmtaI1WO5YF10ev7MciPRn0z4UKYqPw9zIZId4sSK7jBFQ6hiyPS6kBOJkVndo
+	t1sJ22T8Nx9qwqVTqcmJNAKb+O99vw5mun5Chx/L9nHH83+lCprItK+668J/5c3w
+	TVLNs4N1xH7EeUrAV7pVvmBBcZkPTjOiu3y3abE9eO/Gr9wJ38cEZPipIRp3j1C/
+	+zAEgCx5lzfahBZyR5O9+A/7onxwiuT+63+OkRTrBjzXgTx1vgm8WiZutP+OQBfj
+	TIqlWGdQN2sPuKat5//ewWNiFQ8Q3IVvnYA==
+X-ME-Sender: <xms:4a3oafhyN5x9662TtrNcVsDj9g5QoQDByhp5DFCVaKzICjtgNGNduQ>
+    <xme:4a3oaSBjGjqOLHu-uLSxmo3bsVEHi25885n25-YWTIJuN2pTBioURUf8hU8_pHwt2
+    sSaCBBnAucDGH7nYwf9JygcI4ahfyzsYLA4-0baRLgKpI40SyIA_g>
+X-ME-Received: <xmr:4a3oacvqE8h2wC9nOYU6sAN00dQaY8KSY74XA2LWzmHtpLQ_mn40H2G9Oyy-fkaVHQCL3PaxbJ5zKhbm5dCKmn9XRDUe_qbzc-RKOe2tA-8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigedufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
@@ -58,26 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeigeduvdcutefuodetgg
     drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
     pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
     hgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:3K3oaT7iwX9_GxBamkEJoNlf6LmoHBoWgiTaO59Hg9yYUmLniOpizw>
-    <xmx:3K3oaR2Gv9VBSpjaFe-k2lYTejieLIm0xNOME_wy6Gf4zhkwW-9qKQ>
-    <xmx:3K3oacYTXntCiJQF3NMeK07yr_jjPjWy4JPJotC8NV2csNWRs3id5A>
-    <xmx:3K3oaRAC79bYsZK4g3a03HnSmOeHGEFw61EDAULw9nXqZooGW9k6GA>
-    <xmx:3K3oaZywLqrZg6DbfL8dW1_xG2UrJWMXt5SEGUowG2DdUa2Z2ycsnYbC>
+X-ME-Proxy: <xmx:4a3oaXaja7rioU6dqEK0TBjkvFNQuqO-lslnMNUx5YgAB6sdymkCnw>
+    <xmx:4a3oafUaPwM_6Nip1dKx75F-yGc99FmTQWFBH90y7zTI50B2LyhjTg>
+    <xmx:4a3oab6DigHLR6lnJa5PcryZjFr05TlqGYDRY_DY8h5Wpi5N83-acw>
+    <xmx:4a3oaah-Ey2-Nq7f9_ceXvbEW0EVohXBNiGH6VLmK8ZiYOo1f-chRg>
+    <xmx:4a3oaXTdCo4o7Jom9osfAYJtTc2zewTVGJfHJ0hhycG5vuHXitztGGVe>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Apr 2026 07:15:40 -0400 (EDT)
+ 22 Apr 2026 07:15:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 014275f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Apr 2026 11:15:39 +0000 (UTC)
-Date: Wed, 22 Apr 2026 13:15:35 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e53fd924 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Apr 2026 11:15:44 +0000 (UTC)
+Date: Wed, 22 Apr 2026 13:15:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/8] refs: return `ref_transaction_error` from
- `ref_transaction_update()`
-Message-ID: <aeit12h5l34Wkon-@pks.im>
+Subject: Re: [PATCH 4/8] update-ref: move `print_rejected_refs()` up
+Message-ID: <aeit3RVFhX680NfZ@pks.im>
 References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
- <20260420-refs-move-to-generic-layer-v1-3-513e354f376b@gmail.com>
+ <20260420-refs-move-to-generic-layer-v1-4-513e354f376b@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,24 +85,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260420-refs-move-to-generic-layer-v1-3-513e354f376b@gmail.com>
+In-Reply-To: <20260420-refs-move-to-generic-layer-v1-4-513e354f376b@gmail.com>
 
-On Mon, Apr 20, 2026 at 12:12:01PM +0200, Karthik Nayak wrote:
-> The `ref_transaction_update()` function is used to add updates to a
-> given reference transactions. In the following commit, we'll add more
-> validation to this function. As such, it would be more beneficial if the
+On Mon, Apr 20, 2026 at 12:12:02PM +0200, Karthik Nayak wrote:
+> The `print_rejected_refs()` is used to print any rejected refs when
 
-s/more beneficial/beneficial/
-
-> function returns specific error types, so callers can differentiate
-> between different errors.
-> 
-> To facilitate this, return `enum ref_transaction_error` from the
-> function and covert the existing '-1' returns to
-> 'REF_TRANSACTION_ERROR_GENERIC'. Since this retains the existing
-> behavior, no changes are made to any of the callers but this sets the
-> necessary infrastructure for introduction of other errors.
-
-Yup, makes sense. This doesn't buy us anything yet, but will eventually.
+Seems like a word is missing here. Maybe "The `print_rejected_refs()`
+function"?
 
 Patrick
