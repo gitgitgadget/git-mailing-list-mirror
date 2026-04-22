@@ -1,133 +1,164 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7787C22257E
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 14:45:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AE53101B8
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 15:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776869140; cv=pass; b=ZkbkGG43Q9tC3Wcmq4ZFaz1Mb6nIO86gtT4yNBgsZriUXY3TGz94OYfmPMqUlWuiCYL7cUaaCM9LT0Dq6PfrcLvWq3D+vzGBrO0pdCo+aP+PUDJR1CdM4Y5C1z4gQhq37Saxhl9eSK9v1cX/XQjdpkAyoQBtTv+beyXcbQoFZfU=
+	t=1776870195; cv=pass; b=Q4n4H4HAun0z+RVJtTXQrOByqmqHfVi04Q/iwZHZDp77rKAVxMfj7yDTctrdGqAyVCxvNvRcdoxPtzivJsQn2Li71+7fJpGj29xTo5TnMUJHS/ye/Q8Vhd/dusFSJLzoNhz3qm8RWEEYwt2MjrnEPfQAd2nadbgWfWQVmGjNyQs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776869140; c=relaxed/simple;
-	bh=SkNG4vfGT8Tx/2V2WJTOps/SeUa/jX7iw1g0JoOPH4o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lqJX+rx73ozPyCosfvTM0ds3yteJGp0QupddEhJi5YzuYGkJd/+nnrAwKl8sUoTzulANfPPrbhEurPg4+BxMJWqijGfpckX7vcveG2o80HmnnwjithgYp25Ld8uefJwg8Dj1iw+J9J92Rl1IGzgvATdb9sJoHOAxP+HpzKnc+Wc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kp3j6QY4; arc=pass smtp.client-ip=209.85.161.54
+	s=arc-20240116; t=1776870195; c=relaxed/simple;
+	bh=sTTFaz8VWR5o0WwF19sZJjOCBX+FPUpT9PK5k8zfgY0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BeIOjRh5T0LXST4yL15LuMvY+fXDVlEItEs6MEYuYcZg3pWfxWfRzs1+bRVL6S3VuVh0V3ly44YD2PqC6jkR+5Cf5oy1FmDjNKJbDL4C/oRR8EKRYU8B+1Mc02q7D8Wm6H0B3XBOxmZ6dDTUBrO0n4GB0OKZgm9LxY4RwLlcdCE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WtbyUOSP; arc=pass smtp.client-ip=209.85.217.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kp3j6QY4"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-692205ca402so1954263eaf.0
-        for <git@vger.kernel.org>; Wed, 22 Apr 2026 07:45:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776869138; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtbyUOSP"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-61399bdd395so1754525137.2
+        for <git@vger.kernel.org>; Wed, 22 Apr 2026 08:03:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776870193; cv=none;
         d=google.com; s=arc-20240605;
-        b=TVj+KZ65n2m0zoT4Ye0ynko5VSP3YnKyxkUmvGBffPt2ZxFzqGi/SuF9VABOxvNN2p
-         4RMCO2uovBADwoLtmA5t2m3v4xQkhbZepyZAjTo29NxW0HZi9SF/KqMaxRnMPNH1tp1z
-         oHOJeTaRxBoFWDte2cw+QTwMp+UWdw+kpw7n0tmCiJBZhK7XCyb1DyAnAa4GEnwLFnX5
-         1n89t3TRMes5qM5z6ch2wSWQc/iBsmkoifKHblSCehKJl7ZoKKeDlckjg8T7rxqTf7Jk
-         UGayu/6tTLF2R7karQvwLfjRxesSeaGvxUmmvwsHgL8LH7sT8uPMYZz9ROkXTB7tv5sa
-         QV1A==
+        b=ZUfa19kRuZnAjTTeIEmVOEPl2zFx0gDhiLcz6jnd4G9SXTVmMULsF+zg+ITt5M/MhZ
+         /HmB2snlwPFxHQ1w3NrJ2f9AFpsHF37Zmi7stqcXWd5s/BzBbL7DjnztVnOcU3e78s/b
+         51tQBWP46BRswJgDTKP2LA721B43IWUhTd/Btl+0y+eQnGs4b7j9SBMxw6QeN/vuxHcB
+         CZWNt7vxCsHt70cw1k0+zspnXh1jBiQYCB7BTXZ0vE6ymF0oGSSAvGe0RklK2rW+V1ft
+         xfLHg8SHIgnEnBR32AdnXWE82Y0W8uqUTgp0yp3Yz8qrh1JtOSMTYVAPUEHgjRYhzkSG
+         gXtA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qYlW4SweQEPFTFww96eyJfWsOpuR0ARl0O21HcqQpz0=;
-        fh=fDra5E97jdgrddDfDvRTGbshnji+3XysukvVq5At42I=;
-        b=aYu059rruw7NRcHdfwtXA/I7+zxQ8UmLcdJFUAKl+koXEdcPtERAHBjNjnlLQw58pH
-         rgWTMGe1KeqEnDIqvvZyU2ua/oIZ63QT6QuijqZ3UhAgW66MMfVzbTQm9kilSAnTY5N1
-         DOAluHzgg8Ei7RJZT7w28d5nTs68KDly9AUd9wHMv0vCaW9fa8u2wzwPC0WjsSgCkRT0
-         rWe0zZo/OlwWGaoYG52QoU/bFMJyzt60rhFNsyunnMc5A0GodsQu5MQ7RoRcl/1ea+wn
-         JOXxYQbPEi+2NU76qEDK26xgk9mNkDxM7PeZGM0HsRufnK7PQmAcCAd/bgJ7lWr3V3Qf
-         vxCw==;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=sTTFaz8VWR5o0WwF19sZJjOCBX+FPUpT9PK5k8zfgY0=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=CS2s70lhB3xfhDOU5pfjuudmVICQgZQaJxvPPcZnQZZ/WwxhqkpvqEXfCHRKIK7Ydp
+         iFevwoz+uijeCFDJ3Mfo0wzkCusWVKaCJWvS+88bIj7zSV+dDLVFvQ4/ETMFDO1JYdLh
+         0bGBR8FYBJxjbmttQ0jrlt2ip4Ia2eE6AhU/U+JyrBo8DtH5Iw9WSSqKhNT+XSvHX8d5
+         O5go5hW6cKUJMmSkkks7ueMVEABE9yGs7RQ6R/I6OcmpiPjNzADeVIhvoComgfVtX0F6
+         2GeIyaSdrEHycJp9lZ9BzKZgEwvVKXYIwhPVfSFlPbPPX+ua7UD6jhdF3BdCNq6LWosI
+         5PGA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776869138; x=1777473938; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qYlW4SweQEPFTFww96eyJfWsOpuR0ARl0O21HcqQpz0=;
-        b=Kp3j6QY4ALVwlmRyuoXmTfM5zS9Y8WJG9mHgdnOxEhURq4KuAbVDOnbdJuEz868sOq
-         DTMJjkq6Oj4bA7rH8QIR4yh3yFGaW75s51FTykSz4rwpAvEmyRBxjGVQb2EzfcCdKdIf
-         kduk54rbg1e2qRJWoyrCJgi0H4MlBpnhdsTRj6Wk4KjpyrCweEtFRxSAPH6a4NnF05P3
-         QBVS6IAoXBv29G422YbZcmf8hb7TRZQxl9zXPmla/uvldaZz39T0NDmQY0CA7W2GJzgs
-         NGEkytisY7mNVhvobd8XvSxjaamHzmMrfTNJd2Yx3f+NwCg+qoCjXiX6Nt2VapKu7oMx
-         RgHg==
+        d=gmail.com; s=20251104; t=1776870193; x=1777474993; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sTTFaz8VWR5o0WwF19sZJjOCBX+FPUpT9PK5k8zfgY0=;
+        b=WtbyUOSPoyfnyimwCGzeP9p11o1c2y1bgZWYxs2nxGsFP3S16dR89UWkrcyMRGMzhw
+         ra4RWCUSzXJ0NoYoZKTS7u5iDjaR0HhcDLQDLl/J0dY1CDVc1cPQ5cTni2LGqawNknV7
+         Z5JvGlaPDOR9rv6aXTGGjzZAfQ2/VhXNKWzgFY9rRIY4BbmzpZFg8h+z5yt7cXqmDAyz
+         zyiWA9n04PiQFWOh10OTS0PRxnSb3lKd2Ab3e8dIBPcJ9gH4E1Aype9bZ5/5Fqf1OE5N
+         OoQd7oVOqwauJV9n/Q4p/zGXvYuPDZpEOb1p99gXrEGC9HsJmdJIY1XzEoxXZ7Go2O7q
+         4Ksg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776869138; x=1777473938;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qYlW4SweQEPFTFww96eyJfWsOpuR0ARl0O21HcqQpz0=;
-        b=bJ/VYhz4/7U3pO+ZC9q+IsmJuN3nehhcTua5GfC24UGcOaTBJnHYH6yB9dDe4K3j3n
-         km8K+7/MThsNhf6172nQ9MiZ9DdQp1++lRFjQ+GAKXOAYsekxJNfcKhfhlgPD2AEpu2K
-         sejBRQaeAOuhtZw4UXWdaRLH/fXU4cQoz/NDL1TjF3GeZvmGSCaQb4ETiCLE3EOuhsrb
-         RvH539pQSW6U576CGryR2UPTzsvTCtvofLJQvAcaibsKgdJ+yQe5Sde2FRsBgZwh51Wz
-         U8/PdGwE2UqFWLJt0ie5peL26pqk9IUy357F6Cy8kbTlRkgz7PqUTeSEtyP7pJma2lki
-         6Pmw==
-X-Gm-Message-State: AOJu0Yzssp1gN2M576dUTJDIt/v9jXFW8fXPK7DQIMB4W3yxS9ckcZPA
-	jUGOq0N/sqc5GGoAJt0IMX7ZzBwWD0XT86hOgkyrHlUNU9wqKjjODjbcUoAQ/naa+GO9Uh4Xbhe
-	9HeaUnkzmJA7xdUMS/k7t0BREzQkzqrEPGA==
-X-Gm-Gg: AeBDievFD9N3jOGpM8SAKiHTKKL4xGJFDfX/sN8hj2KnI9XlIPSopq2PGqdeblhzSp5
-	fszFigqKckL3Tk/GzYq8/Tcx1nngIKGgx5jjkmCQ8Rt3eM95gfN4KLJrZIvIXQx2Wh6VfwZsWXo
-	qSAyyQV34AFm0VoMjZrwPUz2aDrAmzH2trErp9OSXqG6IYxBr4VhlY0O9z8uaL2hp/8VpjGc933
-	XVTWPUxww5673Fij8jleF4gyLo2l1oytm7j+t2tfAWObYhAWDdv2nafJIT0YkDlIUpa621wWhBx
-	qk/0TsiUq/KWoWjusYP1CeZB+yPf2WuDzxceDaT0wJLZbyH25rExnrq/I8knqWhtd7SHLgZ7wt7
-	T0eKc
-X-Received: by 2002:a05:6820:28c5:b0:694:a3d8:e532 with SMTP id
- 006d021491bc7-694a3d8ea68mr1242538eaf.37.1776869138285; Wed, 22 Apr 2026
- 07:45:38 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1776870193; x=1777474993;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sTTFaz8VWR5o0WwF19sZJjOCBX+FPUpT9PK5k8zfgY0=;
+        b=hJW0KWgPEvy2GvVP81qTrzVJwSBEIihVYZPxuFHfUkcpj+l9xAZyWS6W1PBB+E+Ri7
+         HAfA45OuVpWlUkSEK9dToikxtfYgbDJSb2ZUy7s1vUdDMuET0hmLUB0kjNAb301jrYDP
+         jgN8Ma2bvBFIQvfr1VegjtRdRkRdZ35j81yc8TYpQTqTjnM+IFzWCkAWknBQm5xeGP0/
+         TQqVxez+RgY+TPHXCDwld6/G2FRXObOXhmWYGDz1OSi2k+1PayLwz4G9BwFg69EueKCP
+         CfAwUiU3B/NwaHj6dnytuVy1dTMBe6MPDbAHpwDOhCJQEgwKzXnmABHSONEjfHgSm7aU
+         uQhA==
+X-Gm-Message-State: AOJu0YyZwmBjZYFB89aN/I+rI6fs9l056fvz9ATgYHVZ08sFKSO80TXs
+	9XhJpj87nN6XcGra1K4tK96A4LL3x6HqoAQb5w2o9ZVOfAglywO/fPJj58ay+9kZi8gYOAE5kY7
+	07T8OJUbleQok6JKF3o/bLLxQWZRteGA=
+X-Gm-Gg: AeBDieuVlXKcI7uCjR4go+87F1oOJAXwj9X6wmsXmkRSpnqbN8AYuOZawDedRtTF5D1
+	l6x77TMGcHAhOeSe8YZdG32KLdj/ktAeXrP0N3DPUkExa4pMeBI4/Nq64U+l6+a484YhsVJ2REO
+	c5tDqqrkahgHHHAMeHprUgj9Vkw07Mmcqbq4tPmJfg3EcxVwmBqPMfYtUIgc9G1f56ei22LvjID
+	C7E3Ch1QKCwCuuigSzF+SI2Y6u7YCq4dR7sISDdZu4RcBQRj8ja9r5ZkimTJjeoa5+5qDeepZA7
+	1z9IhBD7gnk1OQxVZzkwSMqW+pVA2+itbntxKbYDgW+93pfhB+tn
+X-Received: by 2002:a05:6102:6b02:b0:602:a9f3:74d8 with SMTP id
+ ada2fe7eead31-616f74063a4mr10872682137.25.1776870192936; Wed, 22 Apr 2026
+ 08:03:12 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Apr 2026 17:03:10 +0200
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 22 Apr 2026 17:03:10 +0200
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aeit7X0Q_MlxvPas@pks.im>
+References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
+ <20260420-refs-move-to-generic-layer-v1-6-513e354f376b@gmail.com> <aeit7X0Q_MlxvPas@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1774820449.git.me@ttaylorr.com> <cover.1776803827.git.me@ttaylorr.com>
-In-Reply-To: <cover.1776803827.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 22 Apr 2026 07:45:24 -0700
-X-Gm-Features: AQROBzByuzdh0s_g8DJMt3Tmlo18nCuk1cQ0induJ_mes_TC1ws0y_1op-XiZpk
-Message-ID: <CABPp-BEoXTukGMQNMyj1P2DNxU6KrYasq=3uWcjOgkstqeK06A@mail.gmail.com>
-Subject: Re: [PATCH v2 00/16] repack: incremental MIDX/bitmap-based repacking
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-	Patrick Steinhardt <ps@pks.im>
+Date: Wed, 22 Apr 2026 17:03:10 +0200
+X-Gm-Features: AQROBzCaZrn1sWtaEc04StWtIEXumua1no-3d1RNr1ERX44gYhDxtdTDZwqM2JI
+Message-ID: <CAOLa=ZQnxNgsLbp9J-T8eP5S-mW9xgr=viDfwo-VkbqQcjXU+A@mail.gmail.com>
+Subject: Re: [PATCH 6/8] refs: move object parsing to the generic layer
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000a9a56d06500dd4fa"
+
+--000000000000a9a56d06500dd4fa
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 21, 2026 at 1:37=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> [Note to the maintainer, this is rebased onto current 'master', which is
-> 94f057755b7 (Git 2.54, 2026-04-19) at the time of writing.]
->
-> This a modest-sized reroll of my series to implement the last remaining
-> component of the incremental MIDX/bitmap-based repacking strategy that I
-> have been working on.
->
-> The main changes since last time are described in [1], which I sent to
-> the list last week just before the 2.54 release was tagged. For
-> convenience, a copy of the main changes are below:
->
->  - Use a strset instead of a string_list for keeping track of the MIDX
->    layers to retain when calling `either clear_midx_files_ext()` or
->    `clear_incremental_midx_files_ext()`.
->
->  - A new patch to rewrite the logic for determining which MIDX layers
->    comprise the new chain via keep_hashes to build the array in order.
->    The subsequent patch converts that into a strvec, which no longer
->    requires direct manipulation.
->
->  - The new "--checksum-only" option has been renamed to
->    "--no-write-chain-file", and various small implementation tweaks
->    (e.g., relying on `is_lock_file_locked()` to determine whether we
->    should update the chain file as opposed to reading the flags).
->
-> As usual, a range-diff is included below as well for convenience. Thanks
-> in advance for reviewing!
-[...]
-> Range-diff against v1:
-[...]
+Patrick Steinhardt <ps@pks.im> writes:
 
-This round addresses all the (admittedly minor) pieces of feedback I
-had on v1, and I didn't spot anything new to comment on in looking
-over the changes in this round.
+> On Mon, Apr 20, 2026 at 12:12:04PM +0200, Karthik Nayak wrote:
+>> Regular reference updates made via reference transactions validate that
+>> the provided object ID exists in the object database, this is done by
+>
+> s/this/which/
+>
+>> calling 'parse_object()'. This check is done independently by the
+>> backends.
+>
+> ..., which leads to duplicated logic.
+
+Will add in.
+
+>
+>> Let's move this to the generic layer, ensuring the backends only have to
+>> care about reference storage and not about validation of the object IDs.
+>> With this also remove the 'REF_TRANSACTION_ERROR_INVALID_NEW_VALUE'
+>> error type as its no longer used.
+>>
+>> Since we don't iterate over individual references in
+>> `ref_transaction_prepare()`, we add this check to
+>> `ref_transaction_update()`. This means that the validation is done as
+>> soon as an update is queued, without needing to prepare the
+>> transaction. It can be argued that this is more ideal, since this
+>> validation has no dependency on the reference transaction being
+>> prepared.
+>>
+>> It must be noted that the change in behavior means that this error
+>> cannot be ignored even with usage of batched updates, since this happens
+>> when the update is being added to the transaction. But since the caller
+>> gets specific error codes, they can either abort the transaction or
+>> continue adding other updates to the transaction.
+>
+> Right, this is what the preceding commits have allowed us to do.
+>
+> I think this is a good step. Being less entangled with the object
+> database in the ref backends is a good thing.
+>
+> Patrick
+
+Agreed. Thanks for the review.
+
+--000000000000a9a56d06500dd4fa
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ff189662369ee767_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ubzR5c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNGkzQy80NllzY2dHaDBJcURCZXR4OVFVbExVVjlTVQpRYm1pYTVITW1l
+UHZ5TytyV0ZZQzl0eUc1dWNoWUVnWmcvUE5FT0tRQjJuTW9TSTFOTzlCd2VraHBpSTM2ejMyCm5r
+OEVxbERJa1lTN2tGZGJDNk5TekQ3Q3BTZm5nUTA1UlZpczNXTk8wWk9WNE5VZ0JRU213ajFnbmUr
+Wlh3WEgKTkx2T29UeERJZ0ZpTnRsRHc3amxDMlMzaUpXZk5kR0JkVlFFL0J1Wmp6R0FrRE16ZGlM
+TzBsdmU0OHhidXlYYQpSMmNlTmFsOTNUTFB0QlV1eU9STGZlSG9EREFqZmZybDlWV0NraTRrcm93
+MGhVOUlxZFRWNk43SnA0VldGWHIxCm8vcjZ2ZW1oK1lWSlJra2pnc3hNRHJsN0I3WFBGWnBmZTVE
+SlhjN2JIWE0rQmU0bGFsV29NM2RjRVJFbSsrUksKMmNnT2JNYW03WUNHVzNHcCszbjBvZUE4cTBz
+bzJGdW5NSWVKMXJIdmlZR1puMlNxWEtZZUdyMVo3ajRDT01oYwpTYzFaVW43K2ZyL01yMGxISGdv
+VVZPcjBaZ0Z0N3ZaNmxWNFI3Q1RRdS9ucWZ3bmZIMTNxZ3hYTlJZaDBRa1crCkg2WUZTZnJJdkJJ
+TkttOEozSUxUd2R4bDJJQ21tWnl3djQ1TXlpMD0KPTJONmkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a9a56d06500dd4fa--
