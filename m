@@ -1,222 +1,318 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB242AE8D
-	for <git@vger.kernel.org>; Wed, 22 Apr 2026 00:32:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9EA2AE8D
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 00:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776817950; cv=pass; b=u/lrrj0RPBhnO/Fkj1djmcG5mg/4oSsJvcWc4VVVPidcoEg1e83ypWLlFPxL4r8YyM6HSj31XpFbxhUcMYIk7DX+X8D0eo5I840ZSCtXAuKR7RTvb18mqlURspajQ37zL0+W6K7tVaVeXb/zN4HFSy4HfmJGzrjT1hY2d4sT7kU=
+	t=1776817955; cv=pass; b=CgE5+c6+s8tSxgR8pPsFGdrrPTMSVV2wUH4YPeoAPzXH1INiTBT1Fyp/o5CEl7wiuExdjODLAbLnl3LZoKtsgpLua49xgpJXBYqJNFFXIbF441oo2xYcx1TaE85cWqdC9xeMkktCs1OmB0AFCeX3MTbP+aPOhvX/WYAQR6KQvV4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776817950; c=relaxed/simple;
-	bh=JNyooS4YoHDRBLQKQYnBlXsk0/ujv4yiNPZiB7eKoWA=;
+	s=arc-20240116; t=1776817955; c=relaxed/simple;
+	bh=+Z9bqLTRuw56e/AmzxURXgdSIu6nxXKPK/Gmm9GYxmE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UdSxXrxdMJ8bNJCD/0gUZVuUJOw/b9GM2G7OMfxRKlLluzL2uxX0hsNVDrrl0yFej0Eh0jIl8ioQByStmTAIuoWWqunw3fYEpXL4QeiOHIYshaT4/0W0eIwgUUWZ70czOPzQGxiXqv0KX3mAaTawsBXirIMXEh1U+/ZHstrN3bU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AYOUOWgU; arc=pass smtp.client-ip=209.85.210.50
+	 To:Cc:Content-Type; b=jmu7Kseb6SUJYmSpzAkcWCNsalRj4VXseocFjQimAe7LiefkmKcvmHeTeatlKvd7PodLS2rvxsbFwnPz6DICteWCTMllnmfEqHRPiCfKbJEQw0nlU+ayZOLK4FJYhLB+Ra4NYCw1u7Y+aLdQuyq4iQD6bLPcw0pGQwt8jUh7Vl0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WkGkTmoF; arc=pass smtp.client-ip=209.85.161.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AYOUOWgU"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7d55b97f358so3044996a34.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2026 17:32:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776817947; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WkGkTmoF"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-69486849137so1350662eaf.3
+        for <git@vger.kernel.org>; Tue, 21 Apr 2026 17:32:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776817953; cv=none;
         d=google.com; s=arc-20240605;
-        b=GD878j3FiaAsB12b5qxUVWw3/0nlO4Uy5SS9B/gzJPboZpR7zjRc0IJ5Jf9/b64h76
-         0mOG7+3KfRcr+BK24TT9xiBqGgbYsNsb01g0+wTmF5kJWxp8m3N8uX3n2LsIONUaqu8l
-         pFjE5qHds4/rBaSzg2+98BWcrHXgeKvspjXMe/xLNuGMyl4KQRX+TXLGmksE26ogfvVY
-         mHcZPUAawMnV5FJZqUPPO4hxvtlXD2AkMKsLMJOovgpmbaivGUEXdarpPlFpXoKEQYAY
-         ZXt6RpsgzS1RjJQL9A0kB6Aw/agU5p4d9MnTYzn3w45tSprMkz91FK7uD2CmnjPTvLbk
-         zjEg==
+        b=VQ/TDXymE5rhXenMcODDEMWd5J3w/WCYihgYb6Yjy1EMw+G4TBl9WVI/J566FNXbs7
+         K2R5iFg3lM2PV3tEDV8zPTE6Aqgbb9+SddwZYw6kpsw8zwtmNzHXHjm+v9zn/7ybETgB
+         8HDoaWbQbVz1gmrao6HlgPiWajm1An5v89Hp7LTmJRJ0T+sNbvpcd9QLcaFrK5mEtlvi
+         hQ+yIEEXSoYeoHTpm/N3Rv5nmtLdqUpX/jm/yybXdmzwR8INzk4KhP7Sz4wMQDvjH8BZ
+         hQ5tNMvJTI1/NTKELGj7u+YpSkiNSPaHOaAebfptlk3gLRHz1RmPGZU9DbnJsL3xLid7
+         MzUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=4PKjvLBKQ7yERHEQ/ebstiK022Sj/W3x+fTmesS4mQU=;
+        bh=20r6yTkgSgzNiBziY2hSS2+a751Z++Jk84VwcCZ6LPo=;
         fh=SA66t81nxC4XQU/4vrl+WCXkowt3lMvgIejciFJn/Lw=;
-        b=P5eMH5uoYz61o+440ONvTnsftavsWXpSCu5OrzT9qfsqFdWfsGQgV6G2rOerHjulPC
-         YPoTHpwBpHEEaVytbIhtaOn3ng2Gj8XcagbL3ZukzMwaQXjAGcegXzo+oW9FmtELLtiK
-         5ghdd+WMijCYOj5YOBcCmei1nVRR2928oXDJFqQ+iT7QPKnRnLpS/tLLjBb+mvt/Oijv
-         yK82HPti0l8X+4Yf2MvtCklWkGAjry1PvHtCwpLanTxGQGjMyIZag/i3URUBGPaN+QPa
-         e2ibYd9Z7/BvOjs535hijujiGuF3+Omuw77GIqvguv5/zLGltueTz36hC4ZO8m8gNvyG
-         CrIg==;
+        b=cJN3JqlsXF+8dCUW0hv1pUiehjBpc/U7v3AXEJ6rFYKya1P62AZRPKSux10LmUuGjl
+         fgRThEmaSIdg6c0XFugxPzJEAcxngiYybbEHU+Nmejw5FExeZe/9VV1teLugDIiIVdbF
+         dF1sVflNzbQIwZos8o81z8RiviH/uhghHUe4Zh/bMwHcu9fJ0hOpYTZR6B34Hp30Lamw
+         i0naCYR5QYJ2NPVxXf5JBMqjzdBGn/1VCCHdaYJIsLn0q3DOmgg3ZN2LftmthkVUuxKO
+         LgfwQ8MhWmEriztbyCnkbhdPQfvZP1ItbEiwkdKmNTuugj5EIB958aGrqdN0OBtmhc2u
+         v/ig==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776817947; x=1777422747; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776817953; x=1777422753; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4PKjvLBKQ7yERHEQ/ebstiK022Sj/W3x+fTmesS4mQU=;
-        b=AYOUOWgUv1ZaAxiHuroYsKUsdxoAs84cYjAFaAdP5036lzvqvX3KiSDoDDuNYxK0rc
-         VUByGVsUxd9itH5qJlAWSWoS/7DaFusc7T77Ik0tIMgLeZwzCfsJIyLCiUnFPt2gZh4M
-         nT8+hFL1paQQWxaxnmGeV9s4KehG/idjnPQe0HlP8yqOF7Set1zqr5EGg+0/i82tusf8
-         cQCIbBGY7vQq3B+Y8vOA/y/o9yXDltqg1wKZo9/aynasDN9utwkOkcAJiD6jUuFGV3MQ
-         aNEuxw4fz/SS02P3dR5GxV9ZU4MKeh4wQiIiWuvsmKYQPLZ5/nI96wKDPCwLPzjYedFx
-         Y6EA==
+        bh=20r6yTkgSgzNiBziY2hSS2+a751Z++Jk84VwcCZ6LPo=;
+        b=WkGkTmoFIBgABsN30A4VukJtmTz6MQXCimnbLi0OUmW3xYIUAeBIq16kLW+XS5M7W4
+         JZZdlb4nleaxttPD+OyLmOrtxqMmps1uynALYSeOqpiapXVcL2EHPq0EzI4NdbocMt++
+         KyxrFdBe5c5wK+4ZZu1I79JSIYiIuVJkmug4TrxyEptnh/3LLyyq4N/U1Z6Nu1zsSz9d
+         m5ipiueDZQnpfj5A13c8fI2oOihGKET2qsdm/u1c7LacLg1xwdj2Emc/0SQ4wZZDIfcs
+         HGpyNc0HQDuxiaBesOzIb24MT/ZePxjtp591kT75GMwWMWP4urB00+ISyFJhcAX7D+Ql
+         FVGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776817947; x=1777422747;
+        d=1e100.net; s=20251104; t=1776817953; x=1777422753;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=4PKjvLBKQ7yERHEQ/ebstiK022Sj/W3x+fTmesS4mQU=;
-        b=ZCW/Ntq84IkS6RMAZyiPWMTznEm8A0DGbHQs2YCNV7xy//SpWc4hkzEbso2ekcKmv2
-         WV+nTRUmn+rtIWrVQ1W9Nvl7ZiRAQectu/iTTQNufUcDLui23NAbmjR14e9P79q0VwRq
-         QuDP8tVSExSjOEcE33vyZAxNlmzVAqLN/VqqCy6U3v821kEec8daIbslOkSLN4E3JzxO
-         YZfkyrybItVwB4SUuL92I407DANAvrkBaSKgpOE4ijMZeZ+vIVp5xl2NosNR39AETVQi
-         uYvDGDjXqP7iC1M70n7q9fbD9AgfD7urZN96S0brixJT+Eiru5QsGq59/CDUpDX4pbBr
-         V52w==
-X-Gm-Message-State: AOJu0YwpOgkCahjcN23/Ce0WqLukfgs9tphqrPbjm85X7/W7NwW7zqeW
-	Qr8eOkXEaZ1Gsr9Ielh0f1mGDLYEFMglmjSVgxbAebFYAgoS/6Crp3UU0jt6bEgg9xgaqv43Uk2
-	liSbt/ReKzEz/r8DO9Xcvz21+AOA+Lvk=
-X-Gm-Gg: AeBDies7/IpDd0huK/AQikDwuJfHTpgeuiFLR/4MCTEuI2YpRU1xAti5V2q0ZNNibgD
-	ShwYIrInUE3V5Wi4WZa/GUQoACNfsG6+QaphguTJiSvYAt40RUNEHcZmmTjFBnY8VoXrDZ5bozk
-	XSxBN32LeI3FWWWOYxq9OyA/UQYMxCKU6KGZJmk2IYPYhfLpbGaUVoFPQHDENUiVKNECryw3LZf
-	2FTpZBa75iUs0a6s/i8oAU3TRyfvGpXkxHSSsXEpwOWCKr0fT5ykzI6o8laoEJXrmKBW1kvfsno
-	9rAjEVHCfkqL6YRx/OodIzuyo+Q0jrE/yjTUz6tj9QD0zhRgNhaOzMQYkXd4sZDQ5uXRORxGFKo
-	73ViSv5IlTK54kLS+IjCJ5klebFYnvt3wN73tLA==
-X-Received: by 2002:a05:6820:f0c:b0:694:a1d0:113b with SMTP id
- 006d021491bc7-694a1d0157cmr1323221eaf.50.1776817947404; Tue, 21 Apr 2026
- 17:32:27 -0700 (PDT)
+        bh=20r6yTkgSgzNiBziY2hSS2+a751Z++Jk84VwcCZ6LPo=;
+        b=e+V2FDwS/NjAHKRQI/fyt+m+shHs3yEVKThNgPJxpdIWGoXr+BsF/HElfqfZj64bms
+         8ecp2O7iyUOPYWAF1Sa0V2NrA/hcZMr4hFpC+nnzMrtXt1KvqfjxvhNPz5NgP6vVIqte
+         uZnxsG2xN1Tu+/N2DpVaqUKsmpUfRo88nM5p+H6tyiBIvZRK+0Cv1N9P5/sNkAUGV+ln
+         o4RYV2W2bn3QMRpVmbzCkKhGdVwyTAvducN2Mg4LYx5gCRCSyvuNCZvACECwHXrbWZTQ
+         6918wWO+7xvwywjyrgU65NS1MiXo7FF9hdAMpK+ExZuv5eieYkM0IW4RlFUPFlfgxiwF
+         M6Zg==
+X-Gm-Message-State: AOJu0YwfK/pQ/CBbBcaDQW113/LlcmVUdJFzg2sMmWiCM3BWXr4km2kF
+	0aD/S0TPKb3SHZ0kXCzKYP3J86DoEK4D07JjpjA7QjmKix7ikjkNMlDGuCieFDIWqEu01/0IzlH
+	f4UektZz259nRXNP9tsxH69eQZM13wqA=
+X-Gm-Gg: AeBDievfe9ijTQBfAZykRSZP2tSc+aipZcPIdgLoD32KKTjTZB01huWSMYFBsiSvwUa
+	2SPbhAwK5S2XuCDLGQL9MXfrKLHAWIZAwPX/FtN1g7cB/5aA+62Uv0pODhgA1OO48S+X0SeKu1F
+	VPCyC6ndxV08SDOvW/NXHNMpIAKEfkHB1U7+L6UXnYGHADZZGSVz/wT5lwPsvDNGAlkRcOfvFzl
+	cFVTGshAm48QjHyAra+6dlCVwcKSXpoWDytCJvTgpdN1aez9o0vWcdlx/vNC2kjto48pJaq5071
+	bA9x8vYHHd8KOQJ05vJjC9vHZ9jcWOILOTMhYALdd+1rCsiHn4sgOCvGUYWdKXE+cK3xlwOhyaG
+	5D0mTvEcV9Vn3E1Bwh1Yv5evrQp+knUJykKrXSo+sDfjXzhWW
+X-Received: by 2002:a05:6820:210e:b0:684:dd1d:5b8f with SMTP id
+ 006d021491bc7-69462bcecb3mr12002724eaf.0.1776817952892; Tue, 21 Apr 2026
+ 17:32:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1776697483.git.phillip.wood@dunelm.org.uk> <3d5135a719221031e50ad8067ff42740a3bbce0c.1776697483.git.phillip.wood@dunelm.org.uk>
-In-Reply-To: <3d5135a719221031e50ad8067ff42740a3bbce0c.1776697483.git.phillip.wood@dunelm.org.uk>
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk> <d20dc1f6550078883995ae963b91faaa00984c6e.1776697483.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <d20dc1f6550078883995ae963b91faaa00984c6e.1776697483.git.phillip.wood@dunelm.org.uk>
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 21 Apr 2026 17:32:16 -0700
-X-Gm-Features: AQROBzDEs07rahHKfpGxgcOxxNTCMvbA-qWd93uRfcg22q_9iahpUp-y5bFhNak
-Message-ID: <CABPp-BGrRehYkox__=VYVqgViuyjRft_VGiaST+nrjbV7H8PPA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] sequencer: factor out parsing of todo commands
+Date: Tue, 21 Apr 2026 17:32:21 -0700
+X-Gm-Features: AQROBzDWCDAzvBXiR8AxfvhmJi7OJl-ATyiPfuRw-MdCFMLEatRQ8E8dTF7MytY
+Message-ID: <CABPp-BFziRXjuMKqf=RHgCwuCcujXSSrz0f+BS4pvE6EUbk-WQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] status: improve rebase todo list parsing
 To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 20, 2026 at 8:41=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+On Mon, Apr 20, 2026 at 8:25=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
 .com> wrote:
 >
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Move the code that parses todo commands into a separate function so that
-> it can be shared with "git status" in the next commit.
+> When there is rebase in progress "git status" displays the last couple
+> of completed and the next couple of pending commands from the todo
+> list. When it does this is tries to abbreviate the object ids of
+
+is tries =3D> it tries ?
+
+[...]
+> @@ -1363,6 +1363,51 @@ static int split_commit_in_progress(struct wt_stat=
+us *s)
+>         free(rebase_orig_head);
 >
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  sequencer.c | 45 ++++++++++++++++++++++++++++++---------------
->  sequencer.h |  1 +
->  2 files changed, 31 insertions(+), 15 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index b7d8dca47f..b8e860434a 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2625,6 +2625,27 @@ static int is_command(enum todo_command command, c=
-onst char **bol)
->                 return 1;
->         }
->         return 0;
+>         return split_in_progress;
 > +}
 > +
-> +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd=
-)
+> +static void abbrev_oid_in_line(struct repository *r,
+> +                              struct strbuf *line, char **pp)
 > +{
-> +       const char *s =3D *p;
+> +       char *p =3D *pp;
+> +       char *end_of_object_name, saved;
+> +       const char *abbrev;
+> +       struct object_id oid;
+> +       bool have_oid;
+
+I'll put "thinking out loud" text in square brackets below...
+
 > +
-> +       for (int i =3D 0; i < TODO_COMMENT; i++)
-> +               if (is_command(i, p)) {
-> +                       *cmd =3D i;
-> +                       return true;
-> +               }
-> +
-> +       if (starts_with(s, comment_line_str)) {
-> +               *cmd =3D TODO_COMMENT;
-> +               return true;
-> +       } else if (s[0] =3D=3D '\n' || (s[0] =3D=3D '\r' && s[1] =3D=3D '=
-\n') || !s[0]) {
-> +               *cmd =3D TODO_COMMENT;
-> +               return true;
+> +       p +=3D strspn(p, " \t");
+> +       end_of_object_name =3D p + strcspn(p, " \t");
+
+[Advances p after whitespace, marks the end of the object with the
+next whitespace after that.]
+
+> +       /*
+> +        * The for "merge" and "reset" the object name may be a label or
+
+The for =3D> For ?
+
+> +        * ref rather than a hex object id. Only abbreviate the object
+> +        * name if it is a hex object id.
+> +        */
+> +       for (const char *q =3D p; q < end_of_object_name; q++) {
+> +               if (!isxdigit(*q))
+> +                       goto out;
 > +       }
+
+
+
+> +       saved =3D *end_of_object_name;
+> +       *end_of_object_name =3D '\0';
+> +       have_oid =3D !repo_get_oid(r, p, &oid);
+> +       *end_of_object_name =3D saved;
+
+[Tries to resolve the token, doing NUL-termination and restore dance.]
+
+> +       if (!have_oid)
+> +               goto out; /* object name was a label */
+
+
+> +       abbrev =3D repo_find_unique_abbrev(r, &oid, DEFAULT_ABBREV);
+> +       if (!starts_with(p, abbrev))
+> +               goto out; /* object name was a refname containing only xd=
+igits */
+
+[Ensures what we have is an oid rather than a branch name that can be
+resolved to an oid]
+
+> +       p +=3D strlen(abbrev);
+> +       strbuf_remove(line, p - line->buf, end_of_object_name - p);
+> +       end_of_object_name =3D p;
+
+[Splice out a bunch of characters in the middle?]
+
+> +out:
+> +       *pp =3D end_of_object_name;
+> +}
+
+I had a hard time following the logic in the function and trying to
+figure out what it was doing.  I went line by line but had no mental
+model to follow.  When I got to the comment that is now above
+format_todo_line(), I suddenly understood, but without it, all the
+code was hard to follow.  Maybe a small comment at the beginning of
+the function along the lines of
+
+ /*
+  * If the whitespace-delimited token starting at or just after *pp is a
+  * full hex object id that resolves uniquely, rewrite it in place to
+  * its default abbreviation, shrinking `line` accordingly. On return
+  * *pp points one past the (possibly abbreviated) token. Leaves both
+  * `line` and *pp-advanced-past-the-token unchanged in all other cases
+  * (non-hex token, unresolvable, or a refname that happens to consist
+  * only of hex digits).
+  */
+
+?  (Assuming I'm understanding correctly, of course.)
+
 > +
-> +       return false;
+> +static void skip_dash_c(char **pp) {
+
+Move the brace to the next line?
+
+> +       char *p =3D *pp;
+> +
+> +       p +=3D strspn(p, " \t");
+> +       /* The (void) cast is required to silence -Wunused_value */
+
+-Wunused_value =3D> -Wunused-value ?
+
+> +       (void)(skip_prefix(p, "-C", &p) || skip_prefix(p, "-c", &p));
+> +       *pp =3D p;
 >  }
-
-Since *p will be advanced by this function, perhaps it's worth a quick
-comment before the function explaining how it advances?
-
 >
->  static int check_label_or_ref_arg(enum todo_command command, const char =
-*arg)
-> @@ -2716,29 +2737,23 @@ static int parse_insn_line(struct repository *r, =
-struct replay_opts *opts,
+>  /*
+> @@ -1371,29 +1416,57 @@ static int split_commit_in_progress(struct wt_sta=
+tus *s)
+>   * into
+>   * "pick d6a2f03 some message"
+>   *
+> - * The function assumes that the line does not contain useless spaces
+> - * before or after the command.
+> + * Returns false on comment lines, true otherwise
+>   */
+> -static void abbrev_oid_in_line(struct repository *r, struct strbuf *line=
+)
+> +static bool format_todo_line(struct repository *r, struct strbuf *line)
 >  {
->         struct object_id commit_oid;
->         char *end_of_object_name;
-> -       int i, saved, status, padding;
-> +       int saved, status, padding;
->
->         item->flags =3D 0;
->
->         /* left-trim */
->         bol +=3D strspn(bol, " \t");
->
-> -       if (bol =3D=3D eol || *bol =3D=3D '\r' || starts_with_mem(bol, eo=
-l - bol, comment_line_str)) {
-> -               item->command =3D TODO_COMMENT;
-> -               item->commit =3D NULL;
-> -               item->arg_offset =3D bol - buf;
-> -               item->arg_len =3D eol - bol;
-> -               return 0;
-> -       }
+> -       struct string_list split =3D STRING_LIST_INIT_DUP;
+> -       struct object_id oid;
 > -
-> -       for (i =3D 0; i < TODO_COMMENT; i++)
-> -               if (is_command(i, &bol)) {
-> -                       item->command =3D i;
-> -                       break;
-> -               }
-> -       if (i >=3D TODO_COMMENT)
-> +       if (!sequencer_parse_todo_command(&bol, &item->command))
->                 return error(_("invalid command '%.*s'"),
->                              (int)strcspn(bol, " \t\r\n"), bol);
+> -       if (starts_with(line->buf, "exec ") ||
+> -           starts_with(line->buf, "x ") ||
+> -           starts_with(line->buf, "label ") ||
+> -           starts_with(line->buf, "l "))
+> -               return;
+> -
+> -       if ((2 <=3D string_list_split(&split, line->buf, " ", 2)) &&
+> -           !repo_get_oid(r, split.items[1].string, &oid)) {
+> -               strbuf_reset(line);
+> -               strbuf_addf(line, "%s ", split.items[0].string);
+> -               strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
+> -               for (size_t i =3D 2; i < split.nr; i++)
+> -                       strbuf_addf(line, " %s", split.items[i].string);
+> +       enum todo_command cmd;
+> +       char *p =3D line->buf;
 > +
-> +       if (item->command =3D=3D TODO_COMMENT) {
-> +               item->commit =3D NULL;
-> +               item->arg_offset =3D bol - buf;
-> +               item->arg_len =3D eol - bol;
-> +               return 0;
-> +       }
+> +       if (!sequencer_parse_todo_command((const char**)&p, &cmd))
+> +               return true; /* keep invalid lines */
+> +
+> +       switch (cmd) {
+> +       case TODO_COMMENT:
+> +               return false;
+> +
+> +       case TODO_MERGE:
+> +               skip_dash_c(&p);
+> +               while (true) {
+> +                       p +=3D strspn(p, " \t");
+> +                       if (!p[0] || (p[0] =3D=3D '#' && (!p[1] || isspac=
+e(p[1]))))
+> +                               break;
+> +                       abbrev_oid_in_line(r, line, &p);
+> +               }
+> +               break;
+> +
+> +       case TODO_FIXUP:
+> +               skip_dash_c(&p);
+> +               /* fallthrough */
+> +       case TODO_DROP:
+> +       case TODO_EDIT:
+> +       case TODO_PICK:
+> +       case TODO_RESET:
+> +       case TODO_REVERT:
+> +       case TODO_REWORD:
+> +       case TODO_SQUASH:
+> +               abbrev_oid_in_line(r, line, &p);
+> +               break;
+> +
+> +       /*
+> +        * Avoid "default" and instead list all the other commands so
+> +        * that -Wswitch warns if a new command is added without handling
+> +        * it in this function.
+> +        */
 
-The commit message says it's just moving code, but are there some
-subtle changes?  It switches the order of parsing commands and
-comments, which I think doesn't matter.  I think the previous code
-would treat a bare carriage return not immediately followed by a
-newline as the start of a comment, whereas the new code only handles
-carriage return immediately followed by a newline as the start of a
-comment.  I don't think that matters in practice, and was potentially
-buggy before, but feels like the commit message isn't quite telling
-the whole story.  Maybe it's worth calling out the minor but harmless
-tweaks in the commit message?
+Nice. :-)
 
-
->         /* Eat up extra spaces/ tabs before object name */
->         padding =3D strspn(bol, " \t");
-> diff --git a/sequencer.h b/sequencer.h
-> index a6fa670c7c..20f6fac48a 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -262,6 +262,7 @@ int read_author_script(const char *path, char **name,=
- char **email, char **date,
->  int write_basic_state(struct replay_opts *opts, const char *head_name,
->                       struct commit *onto, const struct object_id *orig_h=
-ead);
->  void sequencer_post_commit_cleanup(struct repository *r, int verbose);
-> +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd=
-);
->  int sequencer_get_last_command(struct repository* r,
->                                enum replay_action *action);
->  int sequencer_determine_whence(struct repository *r, enum commit_whence =
-*whence);
+> +       case TODO_BREAK:
+> +       case TODO_EXEC:
+> +       case TODO_LABEL:
+> +       case TODO_NOOP:
+> +       case TODO_UPDATE_REF:
+> +               break;
+>         }
+> -       string_list_clear(&split, 0);
+> +
+> +       return true;
+>  }
+>
+>  static int read_rebase_todolist(struct repository *r, const char *fname,=
+ struct string_list *lines)
+> @@ -1411,13 +1484,9 @@ static int read_rebase_todolist(struct repository =
+*r, const char *fname, struct
+>                           repo_git_path_replace(r, &buf, "%s", fname));
+>         }
+>         while (!strbuf_getline_lf(&buf, f)) {
+> -               if (starts_with(buf.buf, comment_line_str))
+> -                       continue;
+>                 strbuf_trim(&buf);
+> -               if (!buf.len)
+> -                       continue;
+> -               abbrev_oid_in_line(r, &buf);
+> -               string_list_append(lines, buf.buf);
+> +               if (format_todo_line(r, &buf))
+> +                       string_list_append(lines, buf.buf);
+>         }
+>         fclose(f);
+>
 > --
 > 2.54.0.rc1.174.gd833f386ac5.dirty
 
-Otherwise, looks good.
+Other than the minor comments above, this looks like a nice cleanup.
