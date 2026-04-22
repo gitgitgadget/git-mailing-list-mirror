@@ -1,93 +1,81 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F9234A799
-	for <git@vger.kernel.org>; Tue, 21 Apr 2026 22:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F4819B5B1
+	for <git@vger.kernel.org>; Wed, 22 Apr 2026 00:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776809613; cv=none; b=gDJbQT0b/4qkFx1PXSZ09thI+TAycAO85PUxO4inJHC8Lg7R6uTN/k0YT6HcTRUKZ2unSyF5va82EQ15eUUHcSBprLLo19vYjGNoNm5WSFZGDSnDiJHp4ksafvluRf7IfnlkcRN3hDk9GM15iPsTQlaFKtsvnJNQXRJ/jhI45Os=
+	t=1776817760; cv=none; b=B31BVdDE96dFYItbazWpyXzmCqY2rWGULLGtIhi93Ii16XzbQaU+WiUCELZeDpd7q3BgzotsFrEh9zjJVSuKYvp8TcoNrUk54FB0DKuRzH7zVuY9Q7IFvoDo5RO2MXpfxNA55a2lR7a8LnJBOXS8TUcM943A3lQKR/Q3kCdmITM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776809613; c=relaxed/simple;
-	bh=DSTwp4gJEvnsYI9QYL1z2o+tlnAaIlyJkns3JnzQQn4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CEMzMEKOaB/CKaNbjbqJILGWj5cCYy/xPOBZj3xWtA5vI0R3pofhI1IE5Gy447v9vsIRE7ZWPSylyjttdC4fhnTMkkfobc84ES/FBjE9cE7VuZoVb6FStG8wHFLyBjnzE9RHln2x+L5Nf7LZmNZfWk4ZgjUS/KhA/41IBLLnPNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=vtPG1Ubq; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1776817760; c=relaxed/simple;
+	bh=4uk8hJhA7TlK3YlDPLyZ62GctPJc4HYIxYXdJ2v6aik=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jJYbASt7PeGbPF6ktzgLU122BOyP/EVHrzLvIcnoRU9YnHTlypnI18Hb8jq4dhWBlAzWzUU+ag74LQlZM43ghpqlUN+IUl0KYR4VmzfzXeGPA4BTNtH4tAKzz1ssKf9OLEywuDIydbXjk/Ryfuc78Ml9B9Wic0WVjoQKlhDkxZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=dfd6LjGm; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vtPG1Ubq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1776809605;
-	bh=DSTwp4gJEvnsYI9QYL1z2o+tlnAaIlyJkns3JnzQQn4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=vtPG1UbqHNbESSMTf2jsLUYDYOwCsJ50nOR9ZP8qzZ3bMngmFykmuW5shCh9l0K0D
-	 I3+SBhWVPcFB/f+W0D4N1F8Aii/xaaSLOfeJYh6HPAb0i1yIcOuD1xsZaZs5Rjty/+
-	 Jap1YA0eXZd+wPcxESPkThfJX3nR7hdtv7VTEoZ2pltcRw5RtfiQeZtscNXfA+3ce4
-	 lonNyHRsry0Wab9HqWV8EyUchu4ou23x75rKZWZwTPY7znf37YcUjAYogdZl6BRpsf
-	 hwYbM1LFr4THDFHnz34qrX3ziM9WB83ir6C6keheKITSDvZLIE01OuQyOJsPyyM0Tl
-	 J9RUXHu93lKMzDycg/7t8ha0yr5SbX1ojNjqq+bMQNJ4oU9BeJ8Vhi4zwZRhgdsIrW
-	 xpp4N0Jxfrnz/UCrWUvI8eAKlnwpwbjc4ReqTVriATOHbtbcanHdWifxrEkIk/AdUR
-	 ftkcrOgU8rR05wEQEKdaRdnRje1GollQHgWyAwSA/J/5X4SSmON
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5ad8:61c3:7428:ec68])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 22F30200FF;
-	Tue, 21 Apr 2026 22:13:25 +0000 (UTC)
-Date: Tue, 21 Apr 2026 22:13:23 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kushal Das <kushal@sunet.se>
-Cc: git@vger.kernel.org
-Subject: Re: [BUG] v2.45+: git commit -S invalidates signature for non-UTF-8
- messages
-Message-ID: <aef2g0j-ws4zZ2Zp@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kushal Das <kushal@sunet.se>, git@vger.kernel.org
-References: <4d5d04e2-49c4-4781-a289-f8cf79570643@sunet.se>
- <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
- <c0df6dbd-47f9-4a2d-b68d-cb0c1e19ca5a@sunet.se>
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="dfd6LjGm"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1776817750;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AY8VV5OFSwssrSQvY0nCYdhDJjR5jV5CWjEfNQnCX1c=;
+	b=dfd6LjGmqHPl+liTdZha0pvSCNT9pM0Mh4dAb+ViZ8HrP0kV5wcrakcdjLxGBl7Ddy5PjS
+	hYbEFWbswyzzqolBIUzMR8906+eD72QhJqguCT5f5an2s98dMbJeGo4wLdG5tFe3xvScIz
+	Y8OaZZa7FPwXnLMxDpRVpXScEG+2hHM6p9dZ1BMJaV+fosfOWfFz87cpUi5porWmxk5BpV
+	vsVHfifCMG1DpicQ5gQtvecGop/SAjafLeY9pjRLPtKX7Swq+gJEyWeVXogoLYd14p+fbT
+	wBr7eXfypCLdet6HIoJLIwm5gyC7t1mkPn+nD1jQVPIXajFZfFQhbnUvKdaX3w==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+To: git@vger.kernel.org
+Cc: Mirko Faina <mroik@delayed.space>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Patrick Steinhardt <ps@pks.im>,
+	Tian Yuchen <cat@malon.dev>,
+	Ben Knoble <ben.knoble@gmail.com>
+Subject: [PATCH v2 0/2] revision.c: implement --reverse=before for walks
+Date: Wed, 22 Apr 2026 02:28:39 +0200
+Message-ID: <20260422002840.303477-4-mroik@delayed.space>
+In-Reply-To: <20260418164736.2367523-2-mroik@delayed.space>
+References: <20260418164736.2367523-2-mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wvrlMylemSpu7cJl"
-Content-Disposition: inline
-In-Reply-To: <c0df6dbd-47f9-4a2d-b68d-cb0c1e19ca5a@sunet.se>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Developer-Signature: v=1; a=openpgp-sha256; l=922; i=mroik@delayed.space; h=from:subject; bh=4uk8hJhA7TlK3YlDPLyZ62GctPJc4HYIxYXdJ2v6aik=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBp6BY4UBrfwfDdvcR/I0RUR9qYdDRCnvHvEU9tS bBNOzLAk3+JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaegWOAAKCRBIeX6hnBm+ 0VybEACphYUGIzxJGRydR/k/9Nxq3fXPBvMQcB0qDfSIH67t84XJiu30TEwF7jYSit+Yu1cw+bD 1EkCf23rXi0LOHG5fkNvFYUiXtqGtxef2B2WEewt58v6lG1zCkDDU1Un9d2UEC7kK4ja7S5vRZo kUnPre5MjVULJFVWHyWyGad0un4zh9eLpcyYcYb6o82GVQnGsJu4s8mXy8suNKsmKOo36r1tLK1 /oV6tdxk3u3mCQW2JRgkObUsNHf37JqR+XFZ1v6fYNVP5G/0q+pLLBwLZz4lyNOF16RRY9Gy/L9 oK5nOmtVkYJ91UIKk4k5lNeGARGwTxeUEdl5uJSoU/IJA89tOH+MN5WgfH/BLEIRzlfHM0RGHe+ 95jE66jjV754TySEdzwH+1YtdUzxOTgTzueAT1mvm/xkZq1g/Jh3IF5mRPSaXyfa66zNgdEfoki uM24wyTIqASWKkmBacZu+sgym5BE0RYTsyic/ZU1uqN1dCmvvR/s/rVa/Ap1nN5DOWM8DPfRn+Y wkozsrb8zMrdlj5685hYQVid1P6buexX6odaQeJkYVxFvvqiCcrltuWDIWZU5TKMStNvtKrJvS+ /A4AD5l2CvMdhjuHuyEW3tHBXjy5PxEzw01RAJC83KsSwaR8dpM9jRJe8tCm44sSc40cR+laapI 9h6o8JiNSmZ6adw==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: /
+
+Since v1 I've:
+	* removed the non stuck form for the --reverse option
+	* --reverse with no argument now flips "no reverse -> reverse
+	  after", "reverse after -> no reverse" and "reverse before ->
+	  no reverse"
+	* implemented a window to reduce memory usage when
+	  --reverse=before with --max-count=<n>
+	* updated the docs to highlight the peculiarities of --reverse
+	  when it's specified multiple times
+
+[1/2] revision.c: implement --reverse=before for walks (Mirko Faina)
+[2/2] revision.c: reduce memory usage on reverse before (Mirko Faina)
+
+ Documentation/rev-list-options.adoc | 14 +++--
+ revision.c                          | 85 +++++++++++++++++++++++++++--
+ revision.h                          |  8 ++-
+ t/t4202-log.sh                      | 66 ++++++++++++++++++++++
+ 4 files changed, 163 insertions(+), 10 deletions(-)
 
 
---wvrlMylemSpu7cJl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+base-commit: e8955061076952cc5eab0300424fc48b601fe12d
+-- 
+2.54.0
 
-On 2026-04-21 at 07:39:11, Kushal Das wrote:
-> I am also wondering in the test harness for git signing, if you want to
-> include other tools than gnupg for testing.
-
-The signing code is abstract at that point in the code, so it should
-work identically with SSH or X.509 and I don't think a separate test is
-necessary.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---wvrlMylemSpu7cJl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8Fgmnn9oMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ4g/19FDgczVjZoewzdqWERzMz+UG/6qPEWJgSa5akbz
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOV7AP9overOSWX4Ghu/AyI2Ku7JlK8D
-yWL6hhl+lanif/rhRAEA8+8ZKsWUW0KsD5oAfXyKV41uujos8KskyRfdlZjJog0=
-=AN+c
------END PGP SIGNATURE-----
-
---wvrlMylemSpu7cJl--
