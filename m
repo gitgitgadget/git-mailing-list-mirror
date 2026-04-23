@@ -1,62 +1,62 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A4B35CBCB
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 16:09:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9D3377EBA
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 16:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776960569; cv=none; b=HhYK0Qhy+JQww5lv7zOisrhwy7Rk9C7FKyLxkCMWG/BNTgV8s/t83Ue4hvzplfxvDQ9qi7yUyFuVZg7jDlYlz+D4XljLFIFBh73LzvABz+rs4lCbuyOEcknJLa/8ru8eX0ynmXdmb9DS6gj3X5evTrnmOLRZlrksYBPOLtc7qMo=
+	t=1776960573; cv=none; b=sp4scvjDyCmpsiWLOayjLLOQSJpp1n2KDVfoAYIZLdHXwIiXfvASezsHxjnafr7VaKxvYt2TkzhiNj/j93k3m9kE4+62QLgt4Wyg49FLYpfvxEIV/nkdy9NXmDgbNbf1lHoe5wokVrF68ST/hnmg8G4n65chmytMVJQht+Jg2r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776960569; c=relaxed/simple;
-	bh=4KrB8V2soIkMFQ3yKsXtw1yFg6IejgY1Q+7z1KlC9bE=;
+	s=arc-20240116; t=1776960573; c=relaxed/simple;
+	bh=B4/DW42HbhkDu7VHlMB41RSbx30NpYXPEzkRfq0dhWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3DZh/M3b8UoihbvMJtsZgolqOk45OQ2oSjfhBapsB6sqv6y5HU3usZ/qvQ3sM8CCJhTEcx0wy24MqSlSZAeErzcOrA1sSFD5D39LkWOiNNES/GFmOVxQzPso5CWA3RhaO9eoOHo4V/itB96TpB+0SZoFkSRsGYYIENvJDpCH7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eiVxYQ7f; arc=none smtp.client-ip=209.85.128.172
+	 MIME-Version; b=X8pDWWIdSPL48mGsInTVAij5AE4/eNefTeinxzpZAokovv6yVczNr7z+0G8qHi6sq6PgBvlH+I6I8hlU+/OvSMDRM1OXaSMXeXLT2zt9BC0CqLO5RxQtf3iFK0gM8L6RMtWnd+unL0IuoRfP9wia85ZSd3p3XqdlDPSOCwHFKQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dEm+Aqz4; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eiVxYQ7f"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-79a7109f568so83348037b3.1
-        for <git@vger.kernel.org>; Thu, 23 Apr 2026 09:09:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dEm+Aqz4"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79ab5fd969aso77972087b3.0
+        for <git@vger.kernel.org>; Thu, 23 Apr 2026 09:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776960567; x=1777565367; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776960571; x=1777565371; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cGKL+EnVICh/jyc+yvMql0ikOORR6KDKj/RgXtx/O3U=;
-        b=eiVxYQ7fbgUaV2D0Hvc0TLSFEhZYMnVJzLSG/QgLl2W4AuRctx73UKeSObSTofjc2G
-         QXf85gqr2jKR5EsgjGx4WgstTMCEOwlqT32qvJIlM+5hk+Em/aA+C1uI/5dlkRF5q/db
-         oI1mUM/jbbapfNvZiYUP2GQbDQCpzC+E1WHvRIadYG9tnD0xjsN+OojI//FU4E6HHaEU
-         mI2JjRZZ7Xp7rUn8quYaqFwA9lbrY0t12uhQDACJWW9j05ZflRLnc5IrLtBn9YOq9c5/
-         logUoenRU7MsdSiIsaCq5PFlKkqfP72ZK04uRyPBq2C3ARZfNhDWSWvYORcjOjY/m3hE
-         SF2A==
+        bh=WNeOxsvRqFOMEQhF+u4UuDaXC+cFR9LPA+gUGGD2YA0=;
+        b=dEm+Aqz4RkkQttjance03mc8u5kixC58HXCKU45aF4Eg18g/xdKQoSYH5bCN/rsJdA
+         HEWyEsDGrzmt/fsvo2lPRouM2Fgr9ltuOuNwPjYU1/AVUMp1AEcMZdOwQcXRHvJGymrM
+         TEsSFdS11stOwMq0y2/3fcQdrkDs0msnP7w+D9+fqaIKpKEFjKc209UCg82nDgSwifuj
+         Gkt1Vtv1aKmuORAIzD2B0LfjBdcysb33xxzqKGTpBZBbDEX8KXUuFU6rlgFbMQT1CK9m
+         X9NqpGO+TWN1hPvTnxSL3P/cG7vi7yBeg4Z44YEBpVgIb2ttoICAhkm8J0wJunEqGHAO
+         lLGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776960567; x=1777565367;
+        d=1e100.net; s=20251104; t=1776960571; x=1777565371;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=cGKL+EnVICh/jyc+yvMql0ikOORR6KDKj/RgXtx/O3U=;
-        b=JWGGBchrFq9C/v+AyYofA7TbLCcdt79W5G3T6khl2cUEZASQbKfL/LlKYqYPF85BHq
-         hCv2JgLXjfRqLpdo7ncBzwOD50ttJzsXXM7OqVDYOzl/OFguLLfAG3v/vO9uc/kgnzjM
-         Hi+kYwEx0avpcmeD09oRYhX55DawiLzn2Db2gakQY+51+eSbvX4DQqyMgUEwOOYPyRKi
-         vR+J5kkxajN/yTUXgJNT2sjIrhyrIrwrodyL/m3mnoTfrwN4rxTW4Ckt+d1QRnGk1cRw
-         M3yLLqA/irTaCqVL5Pi92rgqK0JY2VeSFbbb28xzLIc6hkG775ARqv+DkKWBgbbHTueO
-         8hvA==
-X-Gm-Message-State: AOJu0YwvLhh528w/fV91F6PPw0XgrRzSod86jXnLyqbcuEzwks+ghXIi
-	h1Kh8TjMxAA1S9J5GdvmkNC8Jnw1MfcaT0AwzWgyO59Dh5klIOfGn2X9qhW6Shng
-X-Gm-Gg: AeBDieuym7eyJ1KBy9vfizswJCcT6aBpBSxCVInNv3IfXWaQcrm88D94irriJWFbFWs
-	++59vEj8QfnJJ/kB1HdLNOv67deiD610jgpe7qghHt0fazSiPde4cdtaQGB74i5V2m8IijlQHOR
-	iOAM0TVAa2GS7DY1fisjqoqd2T36OG0faEstquLdduPu7o3P7NQPc4fK1CsolW+gF1RSmCrznnV
-	NbZwpWon7IhTgKnUjSzqBHzm4aUeNeFHDdr7Ar+G4nfLZbC781C7+4ZQAXGJ2YW4nNZaoHjXwu4
-	d+TRFPWo/n7ORQsyEZVV79QWISs7Ra4FAfB6r766vGGdvL2ltSRSBMfV1cYUB3bD2RTkfqblDMd
-	5csBMS9NZhCsaX6zF1LMtD3q6Z0bKwaCfUk/8uKjkYYllzYlzShtFBe6WXJsf3FUV/i0UoI8z4j
-	8DJ6hnJkpl1LVvCIP2ETss/p49PzzQ+GNUw4ulR6B3aP2UFezalGXDhpCNJ5kJRslAEMf8oA==
-X-Received: by 2002:a05:690c:6c0d:b0:7b4:378c:f732 with SMTP id 00721157ae682-7b9ed0477e1mr285135767b3.46.1776960567263;
-        Thu, 23 Apr 2026 09:09:27 -0700 (PDT)
+        bh=WNeOxsvRqFOMEQhF+u4UuDaXC+cFR9LPA+gUGGD2YA0=;
+        b=pP8w3s3ROFNT1dP4kVRjZ+Ubr2kNR4vRrhaE3g/CmwRyCTV4VwnObboMWj60aP9QQy
+         7MOjxqvRWZg6SC/Em8YIWYTIOKsY3O96cRDgcODsMFi1Vm/dI/g97NI1erAg3zHCKNy/
+         lHnfwvznULeJVJxmwGhjSBAkUEl/GqFgTLxP3RQAWMJTpm3u0X714/p1w/wBIGsx1tME
+         GzQ8g/u/35zxFAoQH/30adnTb1+9YyuKhb5M7F82Lxwk7N2cMJGSc3eyG5o7dfGoFOIA
+         xnI0vPZWrweb8c1pYQ+IidtekFvbxtiDLviO9+8bu7gmH5K8I9Rjc2BTMN36+juIieCb
+         0uAQ==
+X-Gm-Message-State: AOJu0YwkKryTaPMJH7zBTsoKRUMzCSn1aJEYh6qEg+bkbUcwh9hzHNSO
+	eZ8y/HPhh8bKXJ+C/hraXVI4e72wkOVOUh5fK9Un9mIYpKe/0IQt8lLmjYHBFfHP
+X-Gm-Gg: AeBDievobKollsvSelNVDwZ01oByi8MRFn44140mbjznta3/K08mQpHqf6Pmzn0UmyN
+	mWWvOzyvFGVBZQFGvPiV8xoBhY+Etkcca13Hb4xaug01Ig0d5cM+h9NhTDKOfVFKnPcHmVwIKQi
+	b1POUcpB/ai3Bahz5NaIrzsVT+7al1jDTiL9sb0rgfKFgVK+VjU3JA1ITpui57GWTglcZz9apuV
+	dfuEAFz9FikhI3feF0/Co+3xvkdVk6bBMCTdR8YGeLgSTlFsIM3+jmkHxxW6LKdNGl1wH+XYSDl
+	yJUzKJfjH8AKpqqkkP1ZZ/GDkeQLHK1cuFJU/DbDiM5wBCqb5hsL2zTlKWY5DxUYT/5Id8eQMYo
+	dVCUH5FY1LD2f2HbkKT7ATNJueVM+hSgUcUPF3jSunIBosDPZMQRjIHVzh7bwWXKFs99jor98DI
+	kO/pBqIHezQQoi0Z6vR2QRqw5sLk0zhL+VVeCP3/460DFVM/V35PjkiUBo9qtGI815nSNAXg==
+X-Received: by 2002:a05:690c:348a:b0:7ba:f414:cd1d with SMTP id 00721157ae682-7baf414d19amr177103577b3.18.1776960570423;
+        Thu, 23 Apr 2026 09:09:30 -0700 (PDT)
 Received: from pop-os.lan ([2605:59c0:e5f:a910:737e:f405:338f:9bbf])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7baeeaa2cb5sm51083997b3.21.2026.04.23.09.09.24
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7baeeaa2cb5sm51083997b3.21.2026.04.23.09.09.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2026 09:09:26 -0700 (PDT)
+        Thu, 23 Apr 2026 09:09:30 -0700 (PDT)
 From: Olamide Caleb Bello <belkid98@gmail.com>
 To: git@vger.kernel.org
 Cc: phillip.wood123@gmail.com,
@@ -64,10 +64,12 @@ Cc: phillip.wood123@gmail.com,
 	christian.couder@gmail.com,
 	usmanakinyemi202@gmail.com,
 	kaartic.sivaraam@gmail.com,
-	me@ttaylorr.com
-Subject: [PATCH v3 1/8] Revert "compat/posix: introduce writev(3p) wrapper"
-Date: Thu, 23 Apr 2026 17:08:25 +0100
-Message-ID: <20260423160832.114816-2-belkid98@gmail.com>
+	me@ttaylorr.com,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH v3 2/8] rust: we are way beyond 2.53
+Date: Thu, 23 Apr 2026 17:08:26 +0100
+Message-ID: <20260423160832.114816-3-belkid98@gmail.com>
 X-Mailer: git-send-email 2.53.0.155.g9f36b15afa
 In-Reply-To: <20260423160832.114816-1-belkid98@gmail.com>
 References: <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
@@ -82,146 +84,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Junio C Hamano <gitster@pobox.com>
 
-This reverts commit 3b9b2c2a29a1d529ca9884fa0a6529f6e2496abe; let's
-not use writev() for now.
----
- Makefile         |  4 ----
- compat/posix.h   | 14 --------------
- compat/writev.c  | 44 --------------------------------------------
- config.mak.uname |  2 --
- meson.build      |  1 -
- 5 files changed, 65 deletions(-)
- delete mode 100644 compat/writev.c
+Earlier we timelined that we'd tune our build procedures to build
+with Rust by default in Git 2.53, but we are already in prerelease
+freeze for 2.54 now.  Update the BreakingChanges document to delay
+it until Git 2.55 (slated for the end of June 2026).
 
-diff --git a/Makefile b/Makefile
-index 5d22394c2e..cedc234173 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2029,10 +2029,6 @@ ifdef NO_PREAD
- 	COMPAT_CFLAGS += -DNO_PREAD
- 	COMPAT_OBJS += compat/pread.o
- endif
--ifdef NO_WRITEV
--	COMPAT_CFLAGS += -DNO_WRITEV
--	COMPAT_OBJS += compat/writev.o
--endif
- ifdef NO_FAST_WORKING_DIRECTORY
- 	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
- endif
-diff --git a/compat/posix.h b/compat/posix.h
-index 94699a03fa..faaae1b655 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -137,9 +137,6 @@
- #include <sys/socket.h>
- #include <sys/ioctl.h>
- #include <sys/statvfs.h>
--#ifndef NO_WRITEV
--#include <sys/uio.h>
--#endif
- #include <termios.h>
- #ifndef NO_SYS_SELECT_H
- #include <sys/select.h>
-@@ -326,17 +323,6 @@ int git_lstat(const char *, struct stat *);
- ssize_t git_pread(int fd, void *buf, size_t count, off_t offset);
- #endif
- 
--#ifdef NO_WRITEV
--#define writev git_writev
--#define iovec git_iovec
--struct git_iovec {
--	void *iov_base;
--	size_t iov_len;
--};
--
--ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt);
--#endif
--
- #ifdef NO_SETENV
- #define setenv gitsetenv
- int gitsetenv(const char *, const char *, int);
-diff --git a/compat/writev.c b/compat/writev.c
-deleted file mode 100644
-index 3a94870a2f..0000000000
---- a/compat/writev.c
-+++ /dev/null
-@@ -1,44 +0,0 @@
--#include "../git-compat-util.h"
--#include "../wrapper.h"
--
--ssize_t git_writev(int fd, const struct iovec *iov, int iovcnt)
--{
--	size_t total_written = 0;
--	size_t sum = 0;
--
--	/*
--	 * According to writev(3p), the syscall shall error with EINVAL in case
--	 * the sum of `iov_len` overflows `ssize_t`.
--	 */
--	 for (int i = 0; i < iovcnt; i++) {
--		if (iov[i].iov_len > maximum_signed_value_of_type(ssize_t) ||
--		    iov[i].iov_len + sum > maximum_signed_value_of_type(ssize_t)) {
--			errno = EINVAL;
--			return -1;
--		}
--
--		sum += iov[i].iov_len;
--	}
--
--	for (int i = 0; i < iovcnt; i++) {
--		const char *bytes = iov[i].iov_base;
--		size_t iovec_written = 0;
--
--		while (iovec_written < iov[i].iov_len) {
--			ssize_t bytes_written = xwrite(fd, bytes + iovec_written,
--						       iov[i].iov_len - iovec_written);
--			if (bytes_written < 0) {
--				if (total_written)
--					goto out;
--				return bytes_written;
--			}
--			if (!bytes_written)
--				goto out;
--			iovec_written += bytes_written;
--			total_written += bytes_written;
--		}
--	}
--
--out:
--	return (ssize_t) total_written;
--}
-diff --git a/config.mak.uname b/config.mak.uname
-index ccb3f71881..5feb582558 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -459,7 +459,6 @@ ifeq ($(uname_S),Windows)
- 	SANE_TOOL_PATH ?= $(msvc_bin_dir_msys)
- 	HAVE_ALLOCA_H = YesPlease
- 	NO_PREAD = YesPlease
--	NO_WRITEV = YesPlease
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
- 	NO_POLL = YesPlease
-@@ -675,7 +674,6 @@ ifeq ($(uname_S),MINGW)
- 	pathsep = ;
- 	HAVE_ALLOCA_H = YesPlease
- 	NO_PREAD = YesPlease
--	NO_WRITEV = YesPlease
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
- 	NO_POLL = YesPlease
-diff --git a/meson.build b/meson.build
-index 8309942d18..11488623bf 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1429,7 +1429,6 @@ checkfuncs = {
-   'initgroups' : [],
-   'strtoumax' : ['strtoumax.c', 'strtoimax.c'],
-   'pread' : ['pread.c'],
--  'writev' : ['writev.c'],
- }
- 
- if host_machine.system() == 'windows'
+Noticed-by: brian m. carlson <sandals@crustytoothpaste.net>
+Helped-by: Derrick Stolee <stolee@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/BreakingChanges.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+index f814450d2f..af59c43f42 100644
+--- a/Documentation/BreakingChanges.adoc
++++ b/Documentation/BreakingChanges.adoc
+@@ -190,7 +190,7 @@ milestones for the introduction of Rust:
+ 1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
+    disabled in our Makefile so that the project can sort out the initial
+    infrastructure.
+-2. In Git 2.53, both build systems will default-enable support for Rust.
++2. In Git 2.55, both build systems will default-enable support for Rust.
+    Consequently, builds will break by default if Rust is not available on the
+    build host. The use of Rust can still be explicitly disabled via build
+    flags.
 -- 
 2.53.0.155.g9f36b15afa
 
