@@ -1,69 +1,67 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC9932BF52
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 14:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.163
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776954219; cv=pass; b=REsDsZPNBBaT0TuvPaKVAaNv8MweV2DjlOCV5p9rEApCt3NjbDmtpUfGbVSZd2BBaEdVeocrgwsANW5WlZVZzcJYcH0ukREJWaeqP041Ckz5+Hm/TsqxWfGz+4NvGGS8NG24ticOTY5pqEhteaPiiWlJxgUUckZ47OAaIaULHqM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776954219; c=relaxed/simple;
-	bh=udgpui5X1LsLS3EpGxfYkSZ1CKEM6Rkq4ch1aV8mo2k=;
-	h=Content-Type:Message-ID:Date:MIME-Version:To:From:Cc:Subject; b=iTcHr4l59py44nwMtCJAH94YYoa66dYx5dGWNR67xRn/mcp9CeU5A4hgPcbzOrFcLk0VEGAYZ48BvWzmnrqrbgUjU3mrntRGvKn1r5YX6uO1vgACRI0QG6NQy8tBqSTXwDCkI6kQgU7Tlp5PgdN5CXP7ZaUUZBQqnT6hHUA1Nxw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grueninger.de; spf=none smtp.mailfrom=grueninger.de; dkim=pass (2048-bit key) header.d=grueninger.de header.i=@grueninger.de header.b=KuHcVCCJ; dkim=permerror (0-bit key) header.d=grueninger.de header.i=@grueninger.de header.b=22N0wHwa; arc=pass smtp.client-ip=81.169.146.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=grueninger.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=grueninger.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFA5248881
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 15:15:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776957357; cv=none; b=FsamP0a+hWa1lEy1MEqEFg7GxiBud0Ntk0+AmV1kkQE/W08DQyVprtDfQ9yuXAoLzHCEMXFk/K68dTgFX8Ky2pIUjYvjf+KAQ83RBpW27HIgfkp0g5nsJ+P8EgTgDA8stL7lPNGHkooSl9MqHZZ7nn5/5yS6eJP2v5XOtRwTQEo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776957357; c=relaxed/simple;
+	bh=Fi2CQVjkeT79gLehwwU/HlZl6iBH7cwZC+xheRbQQJQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WEy3PWI1JEsPoHBVsq/bx1nDgS1OWxhPBaSYknIyDRn+Wcicpxz7XtYzJ/lLXzfoVukIOt/e9TgR/kt0SlZ1Gvf9QtWcCwfmPFs2YMqryaRgOJ4GRtR1j43dbdqJBxbU3erePyZJefV8CckDPJ+VbK6jH0xyLj/AUkrpUQexhIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DeJnkkA0; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=grueninger.de header.i=@grueninger.de header.b="KuHcVCCJ";
-	dkim=permerror (0-bit key) header.d=grueninger.de header.i=@grueninger.de header.b="22N0wHwa"
-ARC-Seal: i=1; a=rsa-sha256; t=1776954026; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=X5KQIlTa0mhntxGTl1eFTgcAZsIToRWvhdgvDZw6X1q8gBSa6MHYMO9pWqWCb7OGYi
-    8d/Um1TdZXT/0bJGKzvqAS475tFVCyTOhNeW3YdmvzMZf1uECpFDAqGyTyEGERxwKvvy
-    0ifxssTqy4mRqBnrU8DXQp1ISASJ4KSn9IwiIzTwz3E0XHw0n2yFvU7FJaWZGAPsrz5J
-    dQyiTdiBJw0XclD6yZCqbHaCwX+BmFs4UEwXyCrjiagSV8p16mvZICDmrYg6wkPOHAVp
-    izhNRnQw55HDkVPRVdGcupQzngNbY0nKHxDDiUqTS/Z/lXT+Zurrg1o1Zz8OW3wx2mVt
-    Hb8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1776954026;
-    s=strato-dkim-0002; d=strato.com;
-    h=Subject:Cc:From:To:Date:Message-ID:Cc:Date:From:Subject:Sender;
-    bh=1B5parTKoFybS6PKSUgxm0sJLnaJzf4CqwAsWn7cTms=;
-    b=V/Wj7ALUqhTGImKkbkyl15OSlhgkFdXcgAjc6M2ePOPHWlJDYwWmB2x6KQHULFzI6u
-    xy43Q/joO7SQpywBe4f4AP7/c8jQ5k9mzCLEFQJVbZUpe54kNaSuULfRGxUqaAjTlpJy
-    nFOi9evTO2BGnjYXAQqM7CclCTgMDnc0n2mI0HEEZF6OGZEtmMlGfkfr8aih7M97Dt2G
-    SSKXan2Zo+Fp3r+vIj5Q9TAk5qhAuQT5Hm5RSp6fN1Z4I75KGyJm2626zc9G4G2ZyUdz
-    j4vjLaP5Fjp1lzh+2KSIizV2vu1T4tGAMQhw4g8p8cKqnXlTDnvM1j84HJ178R1pB+P9
-    Xf6g==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1776954026;
-    s=strato-dkim-0002; d=grueninger.de;
-    h=Subject:Cc:From:To:Date:Message-ID:Cc:Date:From:Subject:Sender;
-    bh=1B5parTKoFybS6PKSUgxm0sJLnaJzf4CqwAsWn7cTms=;
-    b=KuHcVCCJoroydcwEjnNxxin8r+FUxYIhZPhqiJQoSzXVKJDkPZg6ip+//UYAg14DOB
-    TxLq1hAqDJf2Xr8XDVfBSt94evO9JVtUBFVZPCWTe7FmjGYxc4eA5mCTdsTbfeNtjUC4
-    wuqJ+1HDuyCNSFQtdqEdn3x3IWU2eILTfGHp5iqfJJQ1Li+odj5F66d5hkJ03/WpOqAU
-    0E512WK03mnVhSOPB2xzZr/DSc1U7FQYetnalnLf3Z/jJscgVMj7k5mjloIrA7p/DG2g
-    crOzpUHwkHQNk+oPA6YeFdUCiDxIBm6XN7x7GIr2Z6rzAFY6uHNdFTdOx9026F/o4lHo
-    1+Lw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1776954026;
-    s=strato-dkim-0003; d=grueninger.de;
-    h=Subject:Cc:From:To:Date:Message-ID:Cc:Date:From:Subject:Sender;
-    bh=1B5parTKoFybS6PKSUgxm0sJLnaJzf4CqwAsWn7cTms=;
-    b=22N0wHwa2Lzn03r3jOD4y4o9EgRdFM0KCzN7opVqnoFJcx62MhYtX3nzJ6FQzwmQDW
-    OMzt2UhZyDfYJQr5lUBQ==
-X-RZG-AUTH: ":KmMXZmCvaeohc7VigFhGhYQlaG+8Y2WlGQK9xTU69ffPMhoFOSeiO+VI+ciLbGRuFsDJvpN6Es8peIeNxNvzlttQWMcfwkN7D+s="
-Received: from [IPV6:2001:9e8:a0a3:c200:96e6:f7ff:fed5:1fce]
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Ib9a8623NEKQhGt
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Thu, 23 Apr 2026 16:20:26 +0200 (CEST)
-Content-Type: multipart/mixed; boundary="------------WFwEWj092f4XbBYHrhdJbMX3"
-Message-ID: <b3238847-91c1-42fa-b87a-b9d10daa6066@grueninger.de>
-Date: Thu, 23 Apr 2026 16:20:26 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DeJnkkA0"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48374014a77so88832625e9.3
+        for <git@vger.kernel.org>; Thu, 23 Apr 2026 08:15:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776957355; x=1777562155; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UCU4i8xmy4VQXVs6X5DrYkqy4OgKbey/3ScKG5wMRtM=;
+        b=DeJnkkA0UPXT//E8wnRVJEY7bzlEbIzB/EFHByRX8qKyVctqcTgwglEkuG9XfqIzfj
+         KSarIZtRO3UGSCTt+wvZ5nJjbVasd7FrIINypMOgKdOhBE0OlIVskmFF+z/UESqqGcRW
+         8d0YFiaBHw2uRtj2Dnu8+WL2tqBtuOW9wPWFyIBUUAIgb7lvmq7ZlaPQV98q9rt6Zx3V
+         4kc0GoggQyTtBFdmNvCpEk9GvJuiUD7c/n00vwC1mkqQyAjw9YwhzUlFbYvBS3xQ5ZDt
+         Cxh9gXu7JofOI5TguWDRSwCP63o9m3W/9fXekfxjZlSe6rhcKenEl+rXWJupa+Vz8BH2
+         B3/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776957355; x=1777562155;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UCU4i8xmy4VQXVs6X5DrYkqy4OgKbey/3ScKG5wMRtM=;
+        b=pfJQNSPe6AknaqI4auHuT1iIwP1EzUMOASyJ3sVHpCquMR3+K4geuik2u8DFVHt7VM
+         81pfCjnJ6YVjZXeU2muPd9xdN+3e+CoaJTm5wgf6eY8ZUQrJP+/58Ly0kc7SUT8LwUh2
+         tLd6fBciMz48NawL9BIJ12E0RUiX2aw/nr2J0q5nFo83mPEtSXT5OF7iOF1ND1PSbqxC
+         1IQm/hgUVJq7TGhqpahnk1dOtR48r5O5cCU6ccLQn+PbL+cPtZR799mlSQj1gz/fcHCY
+         dMpwBot7iw3Bb8rSI2v6ZIWLyZAZXvXoMUFQyoZmhMd76MJoMKyHquWYrOnQN+L547Pu
+         j5Bw==
+X-Forwarded-Encrypted: i=1; AFNElJ9aSwE6GCSAZS2canIL18Sq4WkvHzDLPqvoBhyknj7qI1NBHCUzuAZ80Sj5G8WI0sEy2yQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSm4KBaLuO9BUarPmGmXCE0BmwtF5e+LnEBY8aIgY4sozfIofO
+	6QR3xlx3nZFsVbhhNRz7vHRIcS72MiIlMFmSH/bEsE4Aqet6j58iRvRR
+X-Gm-Gg: AeBDietCqwc+kli94pjg9Kvb3Lmv3A/twt1xD+8Aj7UQqNDxlEbtvDJqoT5F2L8gqPV
+	x4mkCtlhAGvIR2yP2GUzqNaVyMw/0snffNfuvSSE9AIewt9o6raELIARJMLZzK9FxSpyDz2yl6o
+	bArSfZqaxEfPu2bz0oRwhiAg2Cb7LCi7auMpN0wHFmew99aLqqHhwOIp8ueMESfRcfMTaxDjzHD
+	f/2rbzmVH8qup5cyfVf1PagyhoXEt/bbTceIfqug6ixtsXNdNdAmVtH0n/3+hdiZNtav9EpFnyk
+	QBmCbJtHwAaF2hDuLd8X7OYu8jxMGp6oDerO0saLajwqdrXY0PnZ8O7HZyqpFhyKQRsRNVLYJOn
+	qGpTRXO0UrTr03cnF+zEIjR8VHeo/55E569NCOGo1My5q8zEfLz7XdbXkelq4P9xOFYwA9hQam/
+	ARuxlsDXiLRTsi7P/Fd0cYjVeNkmB6tWPx/asfN7rgOvFcyeK2mWyXFtDN/I0Iyue9a1aX/jgrt
+	BkLmGtZVnHyaK4SgqSPoqHC
+X-Received: by 2002:a05:600c:468c:b0:48a:56d5:16f2 with SMTP id 5b1f17b1804b1-48a56d5179amr167878445e9.7.1776957354487;
+        Thu, 23 Apr 2026 08:15:54 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488ffc5e3f4sm286739415e9.2.2026.04.23.08.15.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2026 08:15:53 -0700 (PDT)
+Message-ID: <2abdc8ba-e361-492c-88b7-0c807ee9fb4d@gmail.com>
+Date: Thu, 23 Apr 2026 16:15:51 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,232 +69,104 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: de-DE
-To: git@vger.kernel.org
-From: =?UTF-8?Q?Christoph_Gr=C3=BCninger?= <foss@grueninger.de>
-Cc: johannes.schindelin@gmx.de
-Subject: [PATCH] [ci] Update GitHub Actions to latest major release / GitHub
- #2278
-Content-Transfer-Encoding: 7bit
-
-This is a multi-part message in MIME format.
---------------WFwEWj092f4XbBYHrhdJbMX3
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/3] builtin/log: prefetch necessary blobs for `git
+ cherry`
+To: Elijah Newren <newren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
+ <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
+ <a705852723fbe88e94ad3de1daba548dbce32211.1776472347.git.gitgitgadget@gmail.com>
+ <a010a4ad-403a-4b6f-9a92-a33323eca0f2@gmail.com>
+ <CABPp-BF4woakYQ5RZ32J8SzDs_VpvT2Wv+Y2WaHTnFnM=96Kzg@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CABPp-BF4woakYQ5RZ32J8SzDs_VpvT2Wv+Y2WaHTnFnM=96Kzg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Dear Git developer!
+Hi Elijah
 
-I repost my suggested contribution from:
+On 21/04/2026 22:28, Elijah Newren wrote:
+> On Sun, Apr 19, 2026 at 7:04 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 18/04/2026 01:32, Elijah Newren via GitGitGadget wrote:
+>>> From: Elijah Newren <newren@gmail.com>
+>>>
+>>> In partial clones, `git cherry` fetches necessary blobs on-demand one
+>>> at a time, which can be very slow.  We would like to prefetch all
+>>> necessary blobs upfront.  To do so, we need to be able to first figure
+>>> out which blobs are needed.
+>>
+>> "git rebase" without "--reapply-cherry-picks" suffers from this problem
+>> as well as it does the equivalent of "git log --cherry-pick". Is there
+>> any way to share prefetch_cherry_blobs() with the cherry-pick detection
+>> in revision.c?
+> 
+> Yes, you're right; git rebase without --reapply-cherry-picks and git
+> log --cherry-pick both go through cherry_pick_list() in revision.c,
+> which has exactly the same shape as the patch-ids loop in
+> cmd_cherry(): build a hashmap of one side via add_commit_patch_id(),
+> then look up the other side via patch_id_iter_first(). The on-demand
+> blob fetches come from the same patch_id_neq() callback.
+> 
+> After poking around, I think the approximate scope of the fix would
+> be: Move collect_diff_blob_oids(), always_match(), and
+> prefetch_cherry_blobs() from builtin/log.c to patch-ids.c and expose
+> the last one in patch-ids.h. In cherry_pick_list(), between the
+> add_commit_patch_id loop and the comparison loop, build a temporary
+> list of just the lookup-side commits (filtering by
+> SYMMETRIC_LEFT/BOUNDARY as the existing loop already does) and call
+> prefetch_cherry_blobs() on it.
 
-https://github.com/git/git/pull/2278
+Thanks for taking a look
 
-I updated all GitHub Actions to their latest major release. In contrast 
-to "ci: GitHub Actions updates" (brought to you by Dependabot 
-(https://lore.kernel.org/git/pull.2097.git.1776775319.gitgitgadget@gmail.com/T/#t), 
-I update some more standard actions and mshick/add-pr-comment.
-They fix deprecation warnings that GitHub Action deprecated Node20.js.
+> That said, I'd rather leave this out of the current series. The bigger
+> picture is that I have reservations about expanding partial-clone
+> support further into this area. git cherry, git log --cherry-pick, and
+> the default cherry-pick detection in git rebase all exist to answer
+> "has this patch already landed upstream?" -- a question that, in
+> repositories large enough to need partial clones, I feel is rarely
+> worth the cost of computing patch-ids across arbitrary amounts of
+> history. The honest guidance I would probably give for users on a
+> large repo is "pass --reapply-cherry-picks (with rebase) and skip this
+> entirely" or to narrow the range under consideration.
 
-Kind regards,
-Christoph
+"--reapply-cherry-picks --empty=drop" is certainly more efficient. When 
+we're computing patch ids do we do it for every upstream commit or just 
+the ones that modify the set of paths that are modified in the branch 
+we're rebasing?
 
+It is a shame that we don't have a config setting for 
+"-reapply-cherry-picks" as it is easy to forget to pass that option. 
+Unfortunately it is not supported by the apply backend which makes such 
+a setting potentially confusing.
 
--- 
-Most customers will not accept source code with compile errors in it.
-                  Dan Saks, CppCon 2016 (https://youtu.be/D7Sd8A6_fYU)
+>  The omission of
+> a --no-reapply-cherry-picks option in git-replay wasn't a lack of
+> effort or oversight, but a deliberate choice where I'd rather hold off
+> (possibly indefinitely) on implementing it.  So I'm a bit reluctant to
+> make the performance hazard less visible without also asking whether
+> we should even be doing that piece of the operation.
+> 
+> I only implemented the git cherry fix because of a specific customer
+> situation where the operation was already baked into tooling, and
+> prefetching at least makes the worst case tolerable.
 
---------------WFwEWj092f4XbBYHrhdJbMX3
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-ci-Update-GitHub-Actions-to-latest-major-release.patch"
-Content-Disposition: attachment;
- filename*0="0001-ci-Update-GitHub-Actions-to-latest-major-release.patch"
-Content-Transfer-Encoding: base64
+I'm a bit surprised customers aren't complaining about tools that use 
+"git rebase" being slow.
 
-RnJvbSBjNTViYWM3MjJiNmU2ZTVkZjZlYTY5OGY1OTg1ZTk3ZDYyNWRiNDU3IE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/Q2hyaXN0b3BoPTIwR3I9QzM9QkNu
-aW5nZXI/PSA8Zm9zc0BncnVlbmluZ2VyLmRlPgpEYXRlOiBXZWQsIDIyIEFwciAyMDI2IDIz
-OjM0OjEyICswMjAwClN1YmplY3Q6IFtQQVRDSF0gW2NpXSBVcGRhdGUgR2l0SHViIEFjdGlv
-bnMgdG8gbGF0ZXN0IG1ham9yIHJlbGVhc2UKCkZpeCBkZXByZWNhdGlvbiB3YXJuaW5nIHRo
-YXQgTm9kZTIwLmpzIHdpbGwgc3RvcCB3b3JraW5nCmluIEp1bmUuCi0tLQogLmdpdGh1Yi93
-b3JrZmxvd3MvY2hlY2std2hpdGVzcGFjZS55bWwgfCAgMiArLQogLmdpdGh1Yi93b3JrZmxv
-d3MvY292ZXJpdHkueW1sICAgICAgICAgfCAgMiArLQogLmdpdGh1Yi93b3JrZmxvd3MvbDEw
-bi55bWwgICAgICAgICAgICAgfCAgMiArLQogLmdpdGh1Yi93b3JrZmxvd3MvbWFpbi55bWwg
-ICAgICAgICAgICAgfCA1MCArKysrKysrKysrKysrLS0tLS0tLS0tLS0tLQogNCBmaWxlcyBj
-aGFuZ2VkLCAyOCBpbnNlcnRpb25zKCspLCAyOCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQg
-YS8uZ2l0aHViL3dvcmtmbG93cy9jaGVjay13aGl0ZXNwYWNlLnltbCBiLy5naXRodWIvd29y
-a2Zsb3dzL2NoZWNrLXdoaXRlc3BhY2UueW1sCmluZGV4IDkyOGZkNGMuLmVhNmY0OWYgMTAw
-NjQ0Ci0tLSBhLy5naXRodWIvd29ya2Zsb3dzL2NoZWNrLXdoaXRlc3BhY2UueW1sCisrKyBi
-Ly5naXRodWIvd29ya2Zsb3dzL2NoZWNrLXdoaXRlc3BhY2UueW1sCkBAIC0xOSw3ICsxOSw3
-IEBAIGpvYnM6CiAgIGNoZWNrLXdoaXRlc3BhY2U6CiAgICAgcnVucy1vbjogdWJ1bnR1LWxh
-dGVzdAogICAgIHN0ZXBzOgotICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NQorICAg
-IC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NgogICAgICAgd2l0aDoKICAgICAgICAgZmV0
-Y2gtZGVwdGg6IDAKIApkaWZmIC0tZ2l0IGEvLmdpdGh1Yi93b3JrZmxvd3MvY292ZXJpdHku
-eW1sIGIvLmdpdGh1Yi93b3JrZmxvd3MvY292ZXJpdHkueW1sCmluZGV4IDM0MzViYWUuLjg5
-YmVmMjYgMTAwNjQ0Ci0tLSBhLy5naXRodWIvd29ya2Zsb3dzL2NvdmVyaXR5LnltbAorKysg
-Yi8uZ2l0aHViL3dvcmtmbG93cy9jb3Zlcml0eS55bWwKQEAgLTM4LDcgKzM4LDcgQEAgam9i
-czoKICAgICAgIENPVkVSSVRZX0xBTkdVQUdFOiBjeHgKICAgICAgIENPVkVSSVRZX1BMQVRG
-T1JNOiBvdmVycmlkZGVuLWJlbG93CiAgICAgc3RlcHM6Ci0gICAgICAtIHVzZXM6IGFjdGlv
-bnMvY2hlY2tvdXRAdjUKKyAgICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NgogICAg
-ICAgLSBuYW1lOiBpbnN0YWxsIG1pbmltYWwgR2l0IGZvciBXaW5kb3dzIFNESwogICAgICAg
-ICBpZjogY29udGFpbnMobWF0cml4Lm9zLCAnd2luZG93cycpCiAgICAgICAgIHVzZXM6IGdp
-dC1mb3Itd2luZG93cy9zZXR1cC1naXQtZm9yLXdpbmRvd3Mtc2RrQHYxCmRpZmYgLS1naXQg
-YS8uZ2l0aHViL3dvcmtmbG93cy9sMTBuLnltbCBiLy5naXRodWIvd29ya2Zsb3dzL2wxMG4u
-eW1sCmluZGV4IDk1ZTU1MTMuLjExNGExMmEgMTAwNjQ0Ci0tLSBhLy5naXRodWIvd29ya2Zs
-b3dzL2wxMG4ueW1sCisrKyBiLy5naXRodWIvd29ya2Zsb3dzL2wxMG4ueW1sCkBAIC05Miw3
-ICs5Miw3IEBAIGpvYnM6CiAgICAgICAgICAgY2F0IGdpdC1wby1oZWxwZXIub3V0CiAgICAg
-ICAgICAgZXhpdCAkZXhpdF9jb2RlCiAgICAgICAtIG5hbWU6IENyZWF0ZSBjb21tZW50IGlu
-IHB1bGwgcmVxdWVzdCBmb3IgcmVwb3J0Ci0gICAgICAgIHVzZXM6IG1zaGljay9hZGQtcHIt
-Y29tbWVudEB2MgorICAgICAgICB1c2VzOiBtc2hpY2svYWRkLXByLWNvbW1lbnRAdjMKICAg
-ICAgICAgaWY6ID4tCiAgICAgICAgICAgYWx3YXlzKCkgJiYKICAgICAgICAgICBnaXRodWIu
-ZXZlbnRfbmFtZSA9PSAncHVsbF9yZXF1ZXN0X3RhcmdldCcgJiYKZGlmZiAtLWdpdCBhLy5n
-aXRodWIvd29ya2Zsb3dzL21haW4ueW1sIGIvLmdpdGh1Yi93b3JrZmxvd3MvbWFpbi55bWwK
-aW5kZXggNmYzZDk0ZS4uZTk5MjU2MiAxMDA2NDQKLS0tIGEvLmdpdGh1Yi93b3JrZmxvd3Mv
-bWFpbi55bWwKKysrIGIvLmdpdGh1Yi93b3JrZmxvd3MvbWFpbi55bWwKQEAgLTYzLDcgKzYz
-LDcgQEAgam9iczoKICAgICAgICAgICBlY2hvICJza2lwX2NvbmN1cnJlbnQ9JHNraXBfY29u
-Y3VycmVudCIgPj4kR0lUSFVCX09VVFBVVAogICAgICAgLSBuYW1lOiBza2lwIGlmIHRoZSBj
-b21taXQgb3IgdHJlZSB3YXMgYWxyZWFkeSB0ZXN0ZWQKICAgICAgICAgaWQ6IHNraXAtaWYt
-cmVkdW5kYW50Ci0gICAgICAgIHVzZXM6IGFjdGlvbnMvZ2l0aHViLXNjcmlwdEB2OAorICAg
-ICAgICB1c2VzOiBhY3Rpb25zL2dpdGh1Yi1zY3JpcHRAdjkKICAgICAgICAgaWY6IHN0ZXBz
-LmNoZWNrLXJlZi5vdXRwdXRzLmVuYWJsZWQgPT0gJ3llcycKICAgICAgICAgd2l0aDoKICAg
-ICAgICAgICBnaXRodWItdG9rZW46ICR7e3NlY3JldHMuR0lUSFVCX1RPS0VOfX0KQEAgLTEx
-Miw3ICsxMTIsNyBAQCBqb2JzOgogICAgICAgZ3JvdXA6IHdpbmRvd3MtYnVpbGQtJHt7IGdp
-dGh1Yi5yZWYgfX0KICAgICAgIGNhbmNlbC1pbi1wcm9ncmVzczogJHt7IG5lZWRzLmNpLWNv
-bmZpZy5vdXRwdXRzLnNraXBfY29uY3VycmVudCA9PSAneWVzJyB9fQogICAgIHN0ZXBzOgot
-ICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NQorICAgIC0gdXNlczogYWN0aW9ucy9j
-aGVja291dEB2NgogICAgIC0gdXNlczogZ2l0LWZvci13aW5kb3dzL3NldHVwLWdpdC1mb3It
-d2luZG93cy1zZGtAdjEKICAgICAtIG5hbWU6IGJ1aWxkCiAgICAgICBzaGVsbDogYmFzaApA
-QCAtMTIzLDcgKzEyMyw3IEBAIGpvYnM6CiAgICAgLSBuYW1lOiB6aXAgdXAgdHJhY2tlZCBm
-aWxlcwogICAgICAgcnVuOiBnaXQgYXJjaGl2ZSAtbyBhcnRpZmFjdHMvdHJhY2tlZC50YXIu
-Z3ogSEVBRAogICAgIC0gbmFtZTogdXBsb2FkIHRyYWNrZWQgZmlsZXMgYW5kIGJ1aWxkIGFy
-dGlmYWN0cwotICAgICAgdXNlczogYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RAdjUKKyAgICAg
-IHVzZXM6IGFjdGlvbnMvdXBsb2FkLWFydGlmYWN0QHY3CiAgICAgICB3aXRoOgogICAgICAg
-ICBuYW1lOiB3aW5kb3dzLWFydGlmYWN0cwogICAgICAgICBwYXRoOiBhcnRpZmFjdHMKQEAg
-LTE0MCw3ICsxNDAsNyBAQCBqb2JzOgogICAgICAgY2FuY2VsLWluLXByb2dyZXNzOiAke3sg
-bmVlZHMuY2ktY29uZmlnLm91dHB1dHMuc2tpcF9jb25jdXJyZW50ID09ICd5ZXMnIH19CiAg
-ICAgc3RlcHM6CiAgICAgLSBuYW1lOiBkb3dubG9hZCB0cmFja2VkIGZpbGVzIGFuZCBidWls
-ZCBhcnRpZmFjdHMKLSAgICAgIHVzZXM6IGFjdGlvbnMvZG93bmxvYWQtYXJ0aWZhY3RAdjYK
-KyAgICAgIHVzZXM6IGFjdGlvbnMvZG93bmxvYWQtYXJ0aWZhY3RAdjgKICAgICAgIHdpdGg6
-CiAgICAgICAgIG5hbWU6IHdpbmRvd3MtYXJ0aWZhY3RzCiAgICAgICAgIHBhdGg6ICR7e2dp
-dGh1Yi53b3Jrc3BhY2V9fQpAQCAtMTU3LDcgKzE1Nyw3IEBAIGpvYnM6CiAgICAgICBydW46
-IGNpL3ByaW50LXRlc3QtZmFpbHVyZXMuc2gKICAgICAtIG5hbWU6IFVwbG9hZCBmYWlsZWQg
-dGVzdHMnIGRpcmVjdG9yaWVzCiAgICAgICBpZjogZmFpbHVyZSgpICYmIGVudi5GQUlMRURf
-VEVTVF9BUlRJRkFDVFMgIT0gJycKLSAgICAgIHVzZXM6IGFjdGlvbnMvdXBsb2FkLWFydGlm
-YWN0QHY1CisgICAgICB1c2VzOiBhY3Rpb25zL3VwbG9hZC1hcnRpZmFjdEB2NwogICAgICAg
-d2l0aDoKICAgICAgICAgbmFtZTogZmFpbGVkLXRlc3RzLXdpbmRvd3MtJHt7IG1hdHJpeC5u
-ciB9fQogICAgICAgICBwYXRoOiAke3tlbnYuRkFJTEVEX1RFU1RfQVJUSUZBQ1RTfX0KQEAg
-LTE3MywxMCArMTczLDEwIEBAIGpvYnM6CiAgICAgICBncm91cDogdnMtYnVpbGQtJHt7IGdp
-dGh1Yi5yZWYgfX0KICAgICAgIGNhbmNlbC1pbi1wcm9ncmVzczogJHt7IG5lZWRzLmNpLWNv
-bmZpZy5vdXRwdXRzLnNraXBfY29uY3VycmVudCA9PSAneWVzJyB9fQogICAgIHN0ZXBzOgot
-ICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NQorICAgIC0gdXNlczogYWN0aW9ucy9j
-aGVja291dEB2NgogICAgIC0gdXNlczogZ2l0LWZvci13aW5kb3dzL3NldHVwLWdpdC1mb3It
-d2luZG93cy1zZGtAdjEKICAgICAtIG5hbWU6IGluaXRpYWxpemUgdmNwa2cKLSAgICAgIHVz
-ZXM6IGFjdGlvbnMvY2hlY2tvdXRAdjUKKyAgICAgIHVzZXM6IGFjdGlvbnMvY2hlY2tvdXRA
-djYKICAgICAgIHdpdGg6CiAgICAgICAgIHJlcG9zaXRvcnk6ICdtaWNyb3NvZnQvdmNwa2cn
-CiAgICAgICAgIHBhdGg6ICdjb21wYXQvdmNidWlsZC92Y3BrZycKQEAgLTE4Niw3ICsxODYs
-NyBAQCBqb2JzOgogICAgICAgICByZXBvc2l0b3J5OiBnaXQvZ2l0CiAgICAgICAgIGRlZmlu
-aXRpb25JZDogOQogICAgIC0gbmFtZTogYWRkIG1zYnVpbGQgdG8gUEFUSAotICAgICAgdXNl
-czogbWljcm9zb2Z0L3NldHVwLW1zYnVpbGRAdjIKKyAgICAgIHVzZXM6IG1pY3Jvc29mdC9z
-ZXR1cC1tc2J1aWxkQHYzCiAgICAgLSBuYW1lOiBjb3B5IGRsbHMgdG8gcm9vdAogICAgICAg
-c2hlbGw6IGNtZAogICAgICAgcnVuOiBjb21wYXRcdmNidWlsZFx2Y3BrZ19jb3B5X2RsbHMu
-YmF0IHJlbGVhc2UKQEAgLTIwOCw3ICsyMDgsNyBAQCBqb2JzOgogICAgIC0gbmFtZTogemlw
-IHVwIHRyYWNrZWQgZmlsZXMKICAgICAgIHJ1bjogZ2l0IGFyY2hpdmUgLW8gYXJ0aWZhY3Rz
-L3RyYWNrZWQudGFyLmd6IEhFQUQKICAgICAtIG5hbWU6IHVwbG9hZCB0cmFja2VkIGZpbGVz
-IGFuZCBidWlsZCBhcnRpZmFjdHMKLSAgICAgIHVzZXM6IGFjdGlvbnMvdXBsb2FkLWFydGlm
-YWN0QHY1CisgICAgICB1c2VzOiBhY3Rpb25zL3VwbG9hZC1hcnRpZmFjdEB2NwogICAgICAg
-d2l0aDoKICAgICAgICAgbmFtZTogdnMtYXJ0aWZhY3RzCiAgICAgICAgIHBhdGg6IGFydGlm
-YWN0cwpAQCAtMjI2LDcgKzIyNiw3IEBAIGpvYnM6CiAgICAgc3RlcHM6CiAgICAgLSB1c2Vz
-OiBnaXQtZm9yLXdpbmRvd3Mvc2V0dXAtZ2l0LWZvci13aW5kb3dzLXNka0B2MQogICAgIC0g
-bmFtZTogZG93bmxvYWQgdHJhY2tlZCBmaWxlcyBhbmQgYnVpbGQgYXJ0aWZhY3RzCi0gICAg
-ICB1c2VzOiBhY3Rpb25zL2Rvd25sb2FkLWFydGlmYWN0QHY2CisgICAgICB1c2VzOiBhY3Rp
-b25zL2Rvd25sb2FkLWFydGlmYWN0QHY4CiAgICAgICB3aXRoOgogICAgICAgICBuYW1lOiB2
-cy1hcnRpZmFjdHMKICAgICAgICAgcGF0aDogJHt7Z2l0aHViLndvcmtzcGFjZX19CkBAIC0y
-NDQsNyArMjQ0LDcgQEAgam9iczoKICAgICAgIHJ1bjogY2kvcHJpbnQtdGVzdC1mYWlsdXJl
-cy5zaAogICAgIC0gbmFtZTogVXBsb2FkIGZhaWxlZCB0ZXN0cycgZGlyZWN0b3JpZXMKICAg
-ICAgIGlmOiBmYWlsdXJlKCkgJiYgZW52LkZBSUxFRF9URVNUX0FSVElGQUNUUyAhPSAnJwot
-ICAgICAgdXNlczogYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RAdjUKKyAgICAgIHVzZXM6IGFj
-dGlvbnMvdXBsb2FkLWFydGlmYWN0QHY3CiAgICAgICB3aXRoOgogICAgICAgICBuYW1lOiBm
-YWlsZWQtdGVzdHMtd2luZG93cy12cy0ke3sgbWF0cml4Lm5yIH19CiAgICAgICAgIHBhdGg6
-ICR7e2Vudi5GQUlMRURfVEVTVF9BUlRJRkFDVFN9fQpAQCAtMjU4LDcgKzI1OCw3IEBAIGpv
-YnM6CiAgICAgICBncm91cDogd2luZG93cy1tZXNvbi1idWlsZC0ke3sgZ2l0aHViLnJlZiB9
-fQogICAgICAgY2FuY2VsLWluLXByb2dyZXNzOiAke3sgbmVlZHMuY2ktY29uZmlnLm91dHB1
-dHMuc2tpcF9jb25jdXJyZW50ID09ICd5ZXMnIH19CiAgICAgc3RlcHM6Ci0gICAgLSB1c2Vz
-OiBhY3Rpb25zL2NoZWNrb3V0QHY1CisgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHY2
-CiAgICAgLSB1c2VzOiBhY3Rpb25zL3NldHVwLXB5dGhvbkB2NgogICAgIC0gbmFtZTogU2V0
-IHVwIGRlcGVuZGVuY2llcwogICAgICAgc2hlbGw6IHB3c2gKQEAgLTI3MCw3ICsyNzAsNyBA
-QCBqb2JzOgogICAgICAgc2hlbGw6IHB3c2gKICAgICAgIHJ1bjogbWVzb24gY29tcGlsZSAt
-QyBidWlsZAogICAgIC0gbmFtZTogVXBsb2FkIGJ1aWxkIGFydGlmYWN0cwotICAgICAgdXNl
-czogYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RAdjUKKyAgICAgIHVzZXM6IGFjdGlvbnMvdXBs
-b2FkLWFydGlmYWN0QHY3CiAgICAgICB3aXRoOgogICAgICAgICBuYW1lOiB3aW5kb3dzLW1l
-c29uLWFydGlmYWN0cwogICAgICAgICBwYXRoOiBidWlsZApAQCAtMjg2LDEzICsyODYsMTMg
-QEAgam9iczoKICAgICAgIGdyb3VwOiB3aW5kb3dzLW1lc29uLXRlc3QtJHt7IG1hdHJpeC5u
-ciB9fS0ke3sgZ2l0aHViLnJlZiB9fQogICAgICAgY2FuY2VsLWluLXByb2dyZXNzOiAke3sg
-bmVlZHMuY2ktY29uZmlnLm91dHB1dHMuc2tpcF9jb25jdXJyZW50ID09ICd5ZXMnIH19CiAg
-ICAgc3RlcHM6Ci0gICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHY1CisgICAgLSB1c2Vz
-OiBhY3Rpb25zL2NoZWNrb3V0QHY2CiAgICAgLSB1c2VzOiBhY3Rpb25zL3NldHVwLXB5dGhv
-bkB2NgogICAgIC0gbmFtZTogU2V0IHVwIGRlcGVuZGVuY2llcwogICAgICAgc2hlbGw6IHB3
-c2gKICAgICAgIHJ1bjogcGlwIGluc3RhbGwgbWVzb24gbmluamEKICAgICAtIG5hbWU6IERv
-d25sb2FkIGJ1aWxkIGFydGlmYWN0cwotICAgICAgdXNlczogYWN0aW9ucy9kb3dubG9hZC1h
-cnRpZmFjdEB2NgorICAgICAgdXNlczogYWN0aW9ucy9kb3dubG9hZC1hcnRpZmFjdEB2OAog
-ICAgICAgd2l0aDoKICAgICAgICAgbmFtZTogd2luZG93cy1tZXNvbi1hcnRpZmFjdHMKICAg
-ICAgICAgcGF0aDogYnVpbGQKQEAgLTMwNSw3ICszMDUsNyBAQCBqb2JzOgogICAgICAgcnVu
-OiBjaS9wcmludC10ZXN0LWZhaWx1cmVzLnNoCiAgICAgLSBuYW1lOiBVcGxvYWQgZmFpbGVk
-IHRlc3RzJyBkaXJlY3RvcmllcwogICAgICAgaWY6IGZhaWx1cmUoKSAmJiBlbnYuRkFJTEVE
-X1RFU1RfQVJUSUZBQ1RTICE9ICcnCi0gICAgICB1c2VzOiBhY3Rpb25zL3VwbG9hZC1hcnRp
-ZmFjdEB2NAorICAgICAgdXNlczogYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RAdjcKICAgICAg
-IHdpdGg6CiAgICAgICAgIG5hbWU6IGZhaWxlZC10ZXN0cy13aW5kb3dzLW1lc29uLSR7eyBt
-YXRyaXgubnIgfX0KICAgICAgICAgcGF0aDogJHt7ZW52LkZBSUxFRF9URVNUX0FSVElGQUNU
-U319CkBAIC0zNDEsNyArMzQxLDcgQEAgam9iczoKICAgICAgIFRFU1RfT1VUUFVUX0RJUkVD
-VE9SWTogJHt7Z2l0aHViLndvcmtzcGFjZX19L3QKICAgICBydW5zLW9uOiAke3ttYXRyaXgu
-dmVjdG9yLnBvb2x9fQogICAgIHN0ZXBzOgotICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291
-dEB2NQorICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NgogICAgIC0gcnVuOiBjaS9p
-bnN0YWxsLWRlcGVuZGVuY2llcy5zaAogICAgIC0gcnVuOiBjaS9ydW4tYnVpbGQtYW5kLXRl
-c3RzLnNoCiAgICAgLSBuYW1lOiBwcmludCB0ZXN0IGZhaWx1cmVzCkBAIC0zNDksNyArMzQ5
-LDcgQEAgam9iczoKICAgICAgIHJ1bjogY2kvcHJpbnQtdGVzdC1mYWlsdXJlcy5zaAogICAg
-IC0gbmFtZTogVXBsb2FkIGZhaWxlZCB0ZXN0cycgZGlyZWN0b3JpZXMKICAgICAgIGlmOiBm
-YWlsdXJlKCkgJiYgZW52LkZBSUxFRF9URVNUX0FSVElGQUNUUyAhPSAnJwotICAgICAgdXNl
-czogYWN0aW9ucy91cGxvYWQtYXJ0aWZhY3RAdjUKKyAgICAgIHVzZXM6IGFjdGlvbnMvdXBs
-b2FkLWFydGlmYWN0QHY3CiAgICAgICB3aXRoOgogICAgICAgICBuYW1lOiBmYWlsZWQtdGVz
-dHMtJHt7bWF0cml4LnZlY3Rvci5qb2JuYW1lfX0KICAgICAgICAgcGF0aDogJHt7ZW52LkZB
-SUxFRF9URVNUX0FSVElGQUNUU319CkBAIC0zNjIsNyArMzYyLDcgQEAgam9iczoKICAgICAg
-IENJX0pPQl9JTUFHRTogdWJ1bnR1LWxhdGVzdAogICAgIHJ1bnMtb246IHVidW50dS1sYXRl
-c3QKICAgICBzdGVwczoKLSAgICAtIHVzZXM6IGFjdGlvbnMvY2hlY2tvdXRAdjUKKyAgICAt
-IHVzZXM6IGFjdGlvbnMvY2hlY2tvdXRAdjYKICAgICAtIHJ1bjogY2kvaW5zdGFsbC1kZXBl
-bmRlbmNpZXMuc2gKICAgICAtIHJ1bjogY2kvcnVuLWJ1aWxkLWFuZC1taW5pbWFsLWZ1enpl
-cnMuc2gKICAgZG9ja2VyaXplZDoKQEAgLTQzOSw3ICs0MzksNyBAQCBqb2JzOgogICAgICAg
-ICBlbHNlCiAgICAgICAgICAgYXB0LWdldCAtcSB1cGRhdGUgJiYgYXB0LWdldCAtcSAteSBp
-bnN0YWxsIGdpdAogICAgICAgICBmaQotICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2
-NQorICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NgogICAgIC0gcnVuOiBjaS9pbnN0
-YWxsLWRlcGVuZGVuY2llcy5zaAogICAgIC0gcnVuOiB1c2VyYWRkIGJ1aWxkZXIgLS1jcmVh
-dGUtaG9tZQogICAgIC0gcnVuOiBjaG93biAtUiBidWlsZGVyIC4KQEAgLTQ0OSw3ICs0NDks
-NyBAQCBqb2JzOgogICAgICAgcnVuOiBzdWRvIC0tcHJlc2VydmUtZW52IC0tc2V0LWhvbWUg
-LS11c2VyPWJ1aWxkZXIgY2kvcHJpbnQtdGVzdC1mYWlsdXJlcy5zaAogICAgIC0gbmFtZTog
-VXBsb2FkIGZhaWxlZCB0ZXN0cycgZGlyZWN0b3JpZXMKICAgICAgIGlmOiBmYWlsdXJlKCkg
-JiYgZW52LkZBSUxFRF9URVNUX0FSVElGQUNUUyAhPSAnJwotICAgICAgdXNlczogYWN0aW9u
-cy91cGxvYWQtYXJ0aWZhY3RAdjUKKyAgICAgIHVzZXM6IGFjdGlvbnMvdXBsb2FkLWFydGlm
-YWN0QHY2CiAgICAgICB3aXRoOgogICAgICAgICBuYW1lOiBmYWlsZWQtdGVzdHMtJHt7bWF0
-cml4LnZlY3Rvci5qb2JuYW1lfX0KICAgICAgICAgcGF0aDogJHt7ZW52LkZBSUxFRF9URVNU
-X0FSVElGQUNUU319CkBAIC00NjQsNyArNDY0LDcgQEAgam9iczoKICAgICAgIGdyb3VwOiBz
-dGF0aWMtYW5hbHlzaXMtJHt7IGdpdGh1Yi5yZWYgfX0KICAgICAgIGNhbmNlbC1pbi1wcm9n
-cmVzczogJHt7IG5lZWRzLmNpLWNvbmZpZy5vdXRwdXRzLnNraXBfY29uY3VycmVudCA9PSAn
-eWVzJyB9fQogICAgIHN0ZXBzOgotICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NQor
-ICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NgogICAgIC0gcnVuOiBjaS9pbnN0YWxs
-LWRlcGVuZGVuY2llcy5zaAogICAgIC0gcnVuOiBjaS9ydW4tc3RhdGljLWFuYWx5c2lzLnNo
-CiAgICAgLSBydW46IGNpL2NoZWNrLWRpcmVjdGlvbmFsLWZvcm1hdHRpbmcuYmFzaApAQCAt
-NDgwLDcgKzQ4MCw3IEBAIGpvYnM6CiAgICAgICBncm91cDogcnVzdC1hbmFseXNpcy0ke3sg
-Z2l0aHViLnJlZiB9fQogICAgICAgY2FuY2VsLWluLXByb2dyZXNzOiAke3sgbmVlZHMuY2kt
-Y29uZmlnLm91dHB1dHMuc2tpcF9jb25jdXJyZW50ID09ICd5ZXMnIH19CiAgICAgc3RlcHM6
-Ci0gICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHY1CisgICAgLSB1c2VzOiBhY3Rpb25z
-L2NoZWNrb3V0QHY2CiAgICAgLSBydW46IGNpL2luc3RhbGwtZGVwZW5kZW5jaWVzLnNoCiAg
-ICAgLSBydW46IGNpL3J1bi1ydXN0LWNoZWNrcy5zaAogICBzcGFyc2U6CkBAIC00OTQsNyAr
-NDk0LDcgQEAgam9iczoKICAgICAgIGdyb3VwOiBzcGFyc2UtJHt7IGdpdGh1Yi5yZWYgfX0K
-ICAgICAgIGNhbmNlbC1pbi1wcm9ncmVzczogJHt7IG5lZWRzLmNpLWNvbmZpZy5vdXRwdXRz
-LnNraXBfY29uY3VycmVudCA9PSAneWVzJyB9fQogICAgIHN0ZXBzOgotICAgIC0gdXNlczog
-YWN0aW9ucy9jaGVja291dEB2NQorICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2Ngog
-ICAgIC0gbmFtZTogSW5zdGFsbCBvdGhlciBkZXBlbmRlbmNpZXMKICAgICAgIHJ1bjogY2kv
-aW5zdGFsbC1kZXBlbmRlbmNpZXMuc2gKICAgICAtIHJ1bjogbWFrZSBzcGFyc2UKQEAgLTUx
-MCw2ICs1MTAsNiBAQCBqb2JzOgogICAgICAgQ0lfSk9CX0lNQUdFOiB1YnVudHUtbGF0ZXN0
-CiAgICAgcnVucy1vbjogdWJ1bnR1LWxhdGVzdAogICAgIHN0ZXBzOgotICAgIC0gdXNlczog
-YWN0aW9ucy9jaGVja291dEB2NQorICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2Ngog
-ICAgIC0gcnVuOiBjaS9pbnN0YWxsLWRlcGVuZGVuY2llcy5zaAogICAgIC0gcnVuOiBjaS90
-ZXN0LWRvY3VtZW50YXRpb24uc2gKLS0gCjIuNTMuMAoK
+> I don't want to
+> hold myself to doing the same for the cherry_pick_list() path, but I'm
+> fairly confident the code here can be re-used for those other cases
+> and I'd help review a patch from anyone who wants to carry it forward.
+> 
+> Anyway, you are making the right connection, it's just that my
+> personal answer is to let some other interested individual do it.
 
---------------WFwEWj092f4XbBYHrhdJbMX3--
+Fair enough
+
+Thanks
+
+Phillip
+
