@@ -1,63 +1,63 @@
-Received: from MEUPR01CU001.outbound.protection.outlook.com (mail-australiasoutheastazolkn19010015.outbound.protection.outlook.com [52.103.73.15])
+Received: from SY5PR01CU010.outbound.protection.outlook.com (mail-australiaeastazolkn19012008.outbound.protection.outlook.com [52.103.72.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D7D2248A5
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 01:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.73.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1212222CC
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 01:38:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776906867; cv=fail; b=CwnUMRFaYc6BX74WS8KDFTRkvulbgIQc/tcA0Yoa6kqNPqIdDWC4xjI/0ToZBac0ro7L62LORu6LyoTVEFrA1tRwUn8XWthCMJx4FSCL52RfCT5rzR/UIMmluN2Gr7IDPSxzjIoikFgaE3n9PbDofdXxlgvubE7LyfMAGPz8ArE=
+	t=1776908298; cv=fail; b=hixQu9afMqIiHrJg+b0jw+wBmsWuNSg8Pxgpz0m/dpL+EGqtq1Ixjv5whtzeCHrpAJcMXPuXnl4QmYDxLc5w+erj67qOWjavd/2lv0uFojgjPg6oue9TQCX4yAWfKwm4h6SrnS/emJXkY33jFuB+uG1St8N3FCpCgvAXjpDJBwo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776906867; c=relaxed/simple;
-	bh=lXJR5dwMDip6KEo3VDMpAsiBj+bxmNauOMXMddZyfY4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=EFtxMFQt+3SwasauWLCnIVMAEasZckc3+Ofs3kKKvcqZJY4bAe+QnK8Wtiuuv7cYdhjm34IpkACj1YCr6ZQMZBaLWdycXD/oQPOdwoyjZWg9pxrjw7u4UCvBTAHnGQFOCoKPeh2gFfLBA2sCovM8wZ8EWVbpEdu+X8uq2wJtkPM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Ms816nuM; arc=fail smtp.client-ip=52.103.73.15
+	s=arc-20240116; t=1776908298; c=relaxed/simple;
+	bh=x/ZjpRGwSOIL691lanRpovTz0QsOpLvvVKrtlhgIm14=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=KzFX54M8c8chClxfX/5Vt8rnzCMms+t90A4nyeAD5T752xPnrNxKucidRxAWsI7WfGdpIMvndn7+EViCsFWo8iAjIDNmaqRM8B94W0RqPOoUUB5u9pNF6zWebav4WZfwOnOWVcAF6t5C+9mdc96XWyqvQHc7w5A6Y9rzRRHwdK0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=qbpYi6mx; arc=fail smtp.client-ip=52.103.72.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=barroit.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Ms816nuM"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="qbpYi6mx"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WIrns+Nz+18193oyhx19vU581qm1ZU8DOw5uha4/s4PU5+r5GT4Ye6gTPo8RyzSsYmb4l+2aH8bJbJLXuYTgKW5ycclVyv3cmg4ZALJsm0DYGFxP75ttj7JlxdTcvQlUtsQzz09QByjsshm/rw3LO8MG3KMf7ZJV6yXcApWLj4MdmbazSVk4ilVIdTlpK11pMTAxOTBsbv/F04OSeExpqX80XZEDtvX640oRzOqhP/AVoNMSY4WT/tP19yWP8gGndWVQJPdRUb0fP5/dZFT0IR0IE0vBK81zlEYq6WSgZlDenXi0nn9B4f8l8CLnE7WMqwxZhRat27H/VgUiytmvmg==
+ b=cUuSIZgo12L8JP+Xm2GbFtXqgAD2459pI2DJ6Egb3GG4XttEHxEbGSlWTUH7v7mOXqVqnEwawgFnW1hsxifnprA9ccaR3tsJF4Vqa4+YEysUbEvXvlUNzmkJa7fmRgleef2MsVDDajB4qs7yKxgyDkcQ2f4HwwQtI+HvXjerrZwMJFgKg+kLE2FDUpb/4i8Xiwh0uvDIB3kLwNi74m+RR+QboHXPmjMQk0p0tM5+y2pUsonoK/0GD+EO4zEYu7xKbsrlGaSqSfSBhFoxk0oarctughzm4ngeBldkgN1dBRJU//Oa3GTQ9Nb5ccCLjRupvcBnuzVQdMhVgciHjdHUlg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Qbxpbg/RnMu1z1koqdohrNoVX1/0GLVHnnY/WO37TaA=;
- b=gCHeitGKT5Htk+xfwpo/fG5iOFYSTfS2FODejyJRbBtGRRdeCLFLamWDPcDiIk8xuTFzY+X4WxnoECmMnveqPeTnSKP8wVTanjt28TOUS2V4ELYRZVUDi7RLsbfRpkha31QKwtgISqUMBWM1hTzhu0rqjrbHZqX942B45TZAJl5SblDjr792P/lij6kpeGwMjPjv8e01PnaW4Grs6wk55pqL9EP8syEZytTle9bkHAtxT2zAbTR55C0YzrcoCmPrkynmmgemva0Hj8v5losqxxP2/ucgOaSQm2KgkxbEQM8MVsy7+necCyovl803DvyU45zpwYTMIMNMASteuIQgvQ==
+ bh=5LVEenND/ln7DLwPYeMEwY90zVbSrCOjgKIsYqgM95w=;
+ b=DeNkhSq5B9ZBQqY8UaIjKpwsT5pUGOTtqwqYxB2kJlT8wtF3eBEnynosEjanfRy79/erOAfarrk6sDQ9lRxcESv13YQRYWnARDFNBv/GAXoHYCkQxx7mRbTobeQNSSJ4vVgIbiBk4r/noUwsDmVXBn66+boEG/vyG0VQeJ+ubI04K5X3T8ddKMZ/MgM6BH0eWpzGC+uudkC2fuEscCQhr6zHvxQhlPbSIK+Xaw0v7L/+nKn7QEot7CvVxLStizhvHnZ2JJy8IxQRRfJ/EpfQ/T4shH0vbc2/EMEdkngqB+OR3ColNfFuHOdT11BiXTV5lzxIWcAzD9dV8n5HFPMHUQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qbxpbg/RnMu1z1koqdohrNoVX1/0GLVHnnY/WO37TaA=;
- b=Ms816nuMRypF6sllQMkAHdDT8LngvmmE8IWZZeMkb0+qyKp6Nt9MgYELXIsz6GOJk1C7Xv7kAW4/CiJecoUCBQAv+Z48mPVurkl6JIWkDspRX5Wxf3GRufGqxKG9fHgCzU8zHo+9ae7PmmrfJomWc0CNQsjFNvNbF0tHQntDGR7TKBSZafE0ihOaQFo31ARTniMT1+q31gJ/g5x88Klddd0AaBVHpWg8vbev/f5t2EJ2dpwsk7qFCMX7UQZNYof/0hTbZN9eX+BKePL1ECYmKQyU9sAwCqDI/XeKNvfZM3awdXHNGtT6Kd5H+do2Fwxqyk3cShSl6+DWmGYCv5arSQ==
+ bh=5LVEenND/ln7DLwPYeMEwY90zVbSrCOjgKIsYqgM95w=;
+ b=qbpYi6mxJjD1qnNJ2Nta+n54k9eJ6yTyRfNH6aTfydtXuqoAQng41/x3OqkZKOcsa3xxVoTZJz/aAzkzs1ozWia0oRsianPYhu3lmLjOWNqKyoXAnmgdeMTd8+oTnAb1JrYEXIV82L2Cvx+lPZ/qSGCFCHkUKVUuW1d9saiKuC2Uoh5+SYFxe7PkhpdAKK9KHizWdKghAXFhLq/g7RbFHPI7tqeblnFzcEqUIFlXdDGa79TfAb9ZITvcJNgIFQ6taZN0aIUzggUkF0Q3r07cYxMhsX70IAu3g9a/XurFFaiJUI+bcq4j6RnUX75p/0P0zw+hpxTpFJBHvneQxjhN7A==
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:27f::21)
- by SY7P300MB0258.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:238::10) with
+ by SY8P300MB0270.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:263::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.20; Thu, 23 Apr
- 2026 01:14:20 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.21; Thu, 23 Apr
+ 2026 01:38:12 +0000
 Received: from SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a]) by SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  ([fe80::68d9:aadc:5a52:bb7a%6]) with mapi id 15.20.9846.016; Thu, 23 Apr 2026
- 01:14:20 +0000
-Date: Thu, 23 Apr 2026 10:14:13 +0900
+ 01:38:12 +0000
 From: Jiamu Sun <39@barroit.sh>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Aaron Plattner <aplattner@nvidia.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 00/10] parseopt: add subcommand autocorrection
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Aaron Plattner <aplattner@nvidia.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Jiamu Sun <39@barroit.sh>
+Subject: [PATCH v6 00/10] parseopt: add subcommand autocorrection
+Date: Thu, 23 Apr 2026 10:37:50 +0900
 Message-ID:
- <SY0P300MB08012E039329CC8EF7C3EB92CE2A2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
-Reply-To: Jiamu Sun <39@barroit.sh>
-References: <SY0P300MB080186A23FB9582AD793F0D1CE40A@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
- <xmqqwlxyo7w6.fsf@gitster.g>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwlxyo7w6.fsf@gitster.g>
-X-ClientProxiedBy: TYCP286CA0014.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:26c::8) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
+ <SY0P300MB0801677A2A1E0FD38D06A841CE2A2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+References: <SY0P300MB0801AE56F740AD087D22B35ACE2D2@SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TY4PR01CA0052.jpnprd01.prod.outlook.com
+ (2603:1096:405:372::10) To SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:27f::21)
-X-Microsoft-Original-Message-ID: <aelyZd7pMqTj9vkE@raider.node>
+X-Microsoft-Original-Message-ID: <20260423013800.82156-1-39@barroit.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,100 +67,155 @@ MIME-Version: 1.0
 Sender: Jiamu Sun <sunjiamu@outlook.com>
 X-MS-Exchange-MessageSentRepresentingType: 2
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY7P300MB0258:EE_
-X-MS-Office365-Filtering-Correlation-Id: aff8d452-30ed-4d33-1ec8-08dea0d5a54e
+X-MS-TrafficTypeDiagnostic: SY0P300MB0801:EE_|SY8P300MB0270:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7f8bf799-3bbb-4f33-9869-08dea0d8faa1
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|23021999003|5072599009|15080799012|25031999004|8060799015|24021099003|19110799012|6090799003|55001999006|51005399006|461199028|3412199025|440099028|40105399003;
+	BCL:0;ARA:14566002|24021099003|55001999006|19110799012|15080799012|8060799015|461199028|5072599009|25031999004|23021999003|12121999013|51005399006|40105399003|3412199025|440099028|1710799026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ZfE0A+zZcIZbjQJ3xQXBhPajVDg/QRjjIVxMOTX/U4RqUg3KhZlWmYKDJuwO?=
- =?us-ascii?Q?N4lxlO/8W869CvAA+i9eLV/CSrLIvci7aBx4Z6G0ghUz0i6mVlBgdYzgk6sY?=
- =?us-ascii?Q?weImCJUE9hYX2Vv8vS2gjEKpCI6LEkhxuGDfgO3QEsLWr5HkeFDXPjqCmOag?=
- =?us-ascii?Q?2QQ/u8OAeKmdFp3slz3dWHn6ZKyeU7vBREdckXiHz/Dvoa5pl5xE4WVDkIjf?=
- =?us-ascii?Q?FUyONaKlzKq5aHUM7jRKWgQ9R+iR6pdKJdPMWsZZ+02EYcArPbSzH/HSr38p?=
- =?us-ascii?Q?4W9oei4YzfOsCZpWMaISB2jo5yVAMGYhi81axju1YrXyQVLAG3HZR94SLaBW?=
- =?us-ascii?Q?Xd00Ufq9RUTIiimyWtx1LScxtjp3ZOU/GL6WnS1lQAdv7YEPHEmBx5cQinqv?=
- =?us-ascii?Q?333c5qKfwBQoKPMR4jHf7ET+xJElezcpRIsaXiNLPS5jKNDjwuPd6O9ymdra?=
- =?us-ascii?Q?EV+LfHVGuTCpvAE383i3634gPxbvc4yGkl+SoNYkSAn3miBfvg0/W8tAA5dt?=
- =?us-ascii?Q?cbdFalPMTr/s6VfLlOK2imMuk1kxmrjMQQ+8WzzVt5IEhE0WcQ6f43WISQeT?=
- =?us-ascii?Q?WXwJAgDrIXwuw/4s5bWEyHgkj02WITuE9l3Mt0djqqOlnNQ6TZP65EIDKde8?=
- =?us-ascii?Q?HRwqQXvRyprd3b26zIIv/8S1wL6ogXQdS+c+/SCeFqCZflJxm2k9W/1eReer?=
- =?us-ascii?Q?oZMXJi5vb0syhv4k6do+MJ6ORKD9qot0l/lKXdXqrb2HRLnJ6MGcZ3DlvALS?=
- =?us-ascii?Q?gFT2m/02dSwULt8gd7aMWiSxSmFeza0cD8istvijJvxpjqhxE5qGNJAyD+8c?=
- =?us-ascii?Q?S5WB71k1sOjvIRKvCuWl8VPV0guQ/frM0MvwIcYfumcJfkY3NcqH9Vt1r7Mt?=
- =?us-ascii?Q?4KMuwQp1ZVhQ1z7flYrA1XIBqKDoHfa0OF8y5O5wPjuxLVGxmbTdxGlkIOE3?=
- =?us-ascii?Q?lr+Yib1bm8Pz8TyGDG6PaIPoP8UNeVPWOisOQfCeed4XriQPGrCyI67uFyG7?=
- =?us-ascii?Q?883AvOG3QZIOK8/nEyQkZdToqA=3D=3D?=
+	=?us-ascii?Q?PKZT+hdJBU1yq/n0BwU5mBANOpbbeQXUozy1yCeLqzhVyQdt/1LyOuRCq5RC?=
+ =?us-ascii?Q?Pq0bkRAxxu6Tx0c8psz74z6eNGdSr8bD8kbvpukTo6Mzx+v2S2tLh5P7d6lZ?=
+ =?us-ascii?Q?ggAvz9CykOF1Dzv8SqaqAc0yAWkJEIJN4ibylr6DsudXZrpTeChteu7fSesa?=
+ =?us-ascii?Q?HN4/FUdPMFlbs/bmDWEI4TA4De9Fgg4FANMF3a352e5+fPC4EHU+33e0sF2z?=
+ =?us-ascii?Q?5C4ptdSeVhUyzmXhKxXyy2cQha3JNo/hUgeFj5IdNzSb8kEYyxTMfIxej2u1?=
+ =?us-ascii?Q?FEQ7lhYFWG0V0OUOfKEN3ydqmD6t4Zfebglhm+PZY3myW4+I0OePzXqwpW0+?=
+ =?us-ascii?Q?+6e+0Td5Fs0Jka1SuECnW1DvjSpPrHihconu/aaYD50J0dcUt8BJ9zicSd5b?=
+ =?us-ascii?Q?Dqpa+3XZEPKZ8toEH4mIYY1x0UmLqEZooYJ2nJfoCjEG5x5otaxNI+w+t0Qs?=
+ =?us-ascii?Q?U7qf1iH7m1qyZmquyw2OO7cr93iFCo8eW6h0E7aNhvv+/8RuzvF/46GsteL9?=
+ =?us-ascii?Q?1V3cOU1OOpPNxUCXerr7YA6Sx/hWF9IzXYbBcWetGwwkG6RsBrZWq1yqa4bx?=
+ =?us-ascii?Q?Jp+Db3mbbSdcxyoBwfqSm8EDpBRRO/OrSwOwMXV35d5zZ6FKHt2mlUL05tOx?=
+ =?us-ascii?Q?BYk1H34qrcAMLe5omVxRQ9HYnajnw/3BnlAFOt93uqnzKU9uTD8TDPfSvUwP?=
+ =?us-ascii?Q?z4qWrD4bSIIx93s49R45QZaDA15r3PXEbV5SeBPvvgTLnsPReA6lODYOkQuH?=
+ =?us-ascii?Q?SJGUwLkBJYbszEGpgYidKeR9e/cMGicuLYhJjd1M79M4V3ioCSJY3ebD939w?=
+ =?us-ascii?Q?0SUIaP1f3Vnp2KZT6Ov2bvu3UADtOh+3i1tea1wg6+RzW/p8WgJ0NqFXt7At?=
+ =?us-ascii?Q?6wFEJvS23KvZscqQHG9x1aT7Oxc0pDwY4QdFS8k6tR/Q/1nBUbS18qK5e5Nk?=
+ =?us-ascii?Q?BqMYOBoPVZf5ZGn3nJAGKx1wNIjOBLNbMfqk61CSL9XGQLhPxNxIP8jrfxAI?=
+ =?us-ascii?Q?yKwaIRzGOBbS43t8FaPkNHiKHsuqSZ1S2GrL/C/YR0JPXfARK4m2J9fH43hE?=
+ =?us-ascii?Q?KjPAJBqf?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ayN2jAFdhtH2B03FP1zaVu3WeKRtCDaBzRR7kdMuyzeNARnbVDD94h+HYRbg?=
- =?us-ascii?Q?x6fp7n8p5DkcXL7xWliPylMSy45UzpnMr+vF8zkbMKTT1i+13ldZHvF3C04Z?=
- =?us-ascii?Q?VZUZGscURwxzRz8kjxNHZC1ZMoSZsutT1P+yZPItq+uSZ409t0lINpLBRAYa?=
- =?us-ascii?Q?K3oor8nzpxdT1jFZA+AWQqY9KJwk/QMC6gfeRz9p2TQGcNxjEJ+Rk5bQsrff?=
- =?us-ascii?Q?BxJuB4wii22BV547/E8RzaDk4fzST/+kWoKEC1moMP3AXUCzobBJk75fpEOI?=
- =?us-ascii?Q?ovBfaRnwIn1jtIqlxrvL6nwK3Ese44+VR3VdXjSC/9dNnu63e/4VfOh88fUT?=
- =?us-ascii?Q?fyLaJeZPWdfcu/H1oU+HbGpZnqwFuWXL29EaOeCpeghs2RvAL7U5HlHfJh6e?=
- =?us-ascii?Q?XUcia+vwafVfOoSC2vyLIctwtF5WJlJienQ08vXBVzL83M+t1zFi9tgCWFSv?=
- =?us-ascii?Q?MpJQQKm/MpS4tRw7IvGPShxd9VD/AKxW5zAQ2Q+hsEORozfJf7/HgEi79DCN?=
- =?us-ascii?Q?9L5y9ceo5rE4VenlJ3JsKNJFGrS3GggbdeHvO2Akl/Q+5guecs6ZIqgl49wk?=
- =?us-ascii?Q?PbFsX268O1dMfBcUM20DMbjATA8OUgkAQVXlCIoJ6RXEuq5fnVn3Z19wy7cp?=
- =?us-ascii?Q?cG3AnTYjXptLlznEeWqy+KizEB5O0hyOERSyjTSZyaJR9VKVNtO4AowmgbAR?=
- =?us-ascii?Q?O6vX1n+c0X5Qi5PoYNeez3dMDVjO3v8cNgIstW/JWVQJsI54Y3YBJMlBDuhI?=
- =?us-ascii?Q?2UPrfOo+Ozg+QDXJ/njFX7gyIl5G0hMmvgLs68aIb9BFYhj1KNp4i9+fRUdN?=
- =?us-ascii?Q?DBCH9JfEXfjEXUffJsOOTfb2OrPWBdw97vKhKfe85Rff+AleZCdWh/3mLqo/?=
- =?us-ascii?Q?sZ2Mxk1+VnxtIcjK5OoFD9POFT015y+ieI3PzBRIz1y8eNOOAnyv3ChEDPcG?=
- =?us-ascii?Q?+QJDt7GulGkFw86AacPfWFLy/A4EnXP5X2bZYebV83q7RKuaOU1rbDdZ9IdO?=
- =?us-ascii?Q?ZuTm9dzhwGvN/hAsEzfQWC2c7JZ6q+8nwtMN5CDzrobhOvHxooWrJ4AwuYES?=
- =?us-ascii?Q?S4luZkPH53X6h2Sa6rk/DK1TLIe5xqJEJUT80GJRWuVWrp4MkSxf+UUXRdrc?=
- =?us-ascii?Q?RWOoxvaXXp7U+ewkZIkE5gxIWeUepvazncMw2oX6Wh9TzpGmjkYj6LkKF737?=
- =?us-ascii?Q?fe9sSgKSk+MfgIHpV63iBPZt7Q6IqUkxQK8OLVRdSHpKVm8FPLd3OPR18Bqy?=
- =?us-ascii?Q?M+5lPB8OIqrSqe3ajuR1yluDsao7Q7QF0+c6TXFr7I65LDcXzf71LaUAQKFk?=
- =?us-ascii?Q?+L1AZVgulRPZzUqfcFo5m5wHedrjzDW+PqqPXDnx99zokfRSvdZ9EMAnB3T7?=
- =?us-ascii?Q?wckS48L5Jg328nlv2S3mv8wN8qFA?=
+	=?us-ascii?Q?G1J2WJ2YsVIUKQAO2+9eSbYbLquh64yROihEiu+0JKlIn37/kf0/QZeD+q5a?=
+ =?us-ascii?Q?GKh5guZyY1Ef/f7zofWKax7oueF/eKPGmPh/YBJWup0SvI9vWnlGu6ogdeEz?=
+ =?us-ascii?Q?6OzcYF3W05JNGjWgfWwbL3FAbPEtMFhq/pty6KvIdiy7tJ3Us8FTKpqCdG76?=
+ =?us-ascii?Q?q48g8BLejgzIedJfhdMnM0rjY+OR1718z2fK5Spj0dHUYkTEIWU3a1t6KH9H?=
+ =?us-ascii?Q?7PlSCzQngwHKEV1I89J6Zs9sxHBH4UrG4TSt3V5JVd1ENoRAtczXlmigcfXj?=
+ =?us-ascii?Q?z2hK+Ed08gYrGEiagGy6QJmNJFYLKRlowmmN0N8h4kyulZQrR7ikrfA5Y+c0?=
+ =?us-ascii?Q?AgwcqkkTwxfgVcMefcpZwFh/ZLXlwKTJPzGXjAypaJXLcidaHsGUsqcvYADZ?=
+ =?us-ascii?Q?42pHA25nrToXvLS1dmNOyvglqR0lhkvgKyDmiX1+7wVb99d7lh6ZpFKfJdPB?=
+ =?us-ascii?Q?44RjnyfZQif1oqMvC4n3buBAQYaBi2vKL4aWO5gR6ULqK4sZFz+WIj29xEeA?=
+ =?us-ascii?Q?mKEXpKhU6ZZdXEEZN1H1LcV7IdlM1qFc7WqTJh2Cs5X0VTFPBb1ublgbTPhn?=
+ =?us-ascii?Q?yeyctsBVjrrwvhQocifWt+WfZtAMcI3CZyf/8U8be5i8I0qXMs3SjuLfqqGM?=
+ =?us-ascii?Q?viSEq4zL1i/f96tmDW5Obi33QQl4L93sTvwrVx3LzeD2Zby0pdQufoNTr4GD?=
+ =?us-ascii?Q?PFmtB1oHwF1ZjSkBZQDBo3KkGDQHvmc8ekRLZDTIjL370e/C2dLy0Wn83Y5f?=
+ =?us-ascii?Q?zpe3n+pahAUrzDlTfsV2QtUfYneRaaJgPYgncuxM0I07OCvIicByWuGgIMid?=
+ =?us-ascii?Q?F//V55UkMhUMQDCUiqatBFfxUH3jZkvHZW9lxvYwnN75Kyx33PaYwAwX7b0t?=
+ =?us-ascii?Q?Ej/KtaCUQQ0BDmn+vyw0NHeWKV8lR0qFVo6jdA0SNTgHgIAuYImb/RTELl3q?=
+ =?us-ascii?Q?MjLleuKRtjx4I1P+cI8D37ygIlVdRvSELd5WFooP3TixGc0R5+8O8Lzi/yd8?=
+ =?us-ascii?Q?2Soi4Mcxq3PXfPn5kjYZqZKIZoqDQd7eFfFcI5N2p8vrjxak3WCEbrVyC6S7?=
+ =?us-ascii?Q?/+ZdhelM3uIPtDwUWWGZmkqCDaRw6WW9wHcvZpX9oI8TzkD0pLaBaB1QdSsG?=
+ =?us-ascii?Q?CJI61V7pzadpquoS4hmIM4N43++WzuFi/C2qUAKQ7vdHTV9+gWW21uRSezaN?=
+ =?us-ascii?Q?U1P0u3ZvdFkrA9VcZBUWpngpA8zQEOCV/NsLpKJje4iglWzJu14yKsc71wlu?=
+ =?us-ascii?Q?/T/UlYUQ1587W/fJTUB1XYtZZEZ6mEn3ZKX6X62D/JVSF1+XaARKAWPLZqA+?=
+ =?us-ascii?Q?SE1POZFPlWLO2pEln2rOaMIPmDr36X4erpaYw7XCIUxCcPCrLMtr/L/kMCxF?=
+ =?us-ascii?Q?Okhx+oKPtUeNEmIm1bpRNkU/6YDi?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aff8d452-30ed-4d33-1ec8-08dea0d5a54e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7f8bf799-3bbb-4f33-9869-08dea0d8faa1
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0801.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2026 01:14:20.3355
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2026 01:38:12.4677
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB0258
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0270
 
-On Wed, Apr 22, 2026 at 05:08:41PM -0700, Junio C Hamano wrote:
-> It seems that the exit status of some error path (subcommand parse
-> failure, presumably) has changed unexpectedly?  As I am mostly
-> offline for this and next week, I didn't dig any further.
+Git currently provides auto-correction for builtins and aliases, but
+lacks this functionality for subcommands parsed via the parse-options
+API. Subcommands are also commands, and typos will occur, too. Like:
 
-My fault, forgot to adjust these tests. Since subcommand parser learned
-to autocorrect misspelled names,
+	git remote add-rul
 
-> t0040-parse-options.sh (Wstat: 256 (exited 1) Tests: 94 Failed: 1)
+So, this series introduces subcommand auto-correction.
 
-	test-tool parse-subcommand cmd subcmd-o
+By default, this implementation enables autocorrection for builtins
+with mandatory subcommands. However, for those using
+PARSE_OPT_SUBCOMMAND_OPTIONAL, autocorrection is skipped to avoid
+misinterpreting legitimate unknown arguments as mistyped subcommands.
 
-in "subcommand - subcommands cannot be abbreviated" test now shows
-similar subcommands.
+To allow builtins with optional subcommands to explicitly opt in,
+this series adds the PARSE_OPT_SUBCOMMAND_AUTOCORRECT flag, and enables
+it for git-remote and git-notes.
 
-> t7900-maintenance.sh  (Wstat: 256 (exited 1) Tests: 72 Failed: 1)
+Additionally, the existing autocorrection logic is extracted from
+help.c so subcommand handling can reuse the same config parsing and
+prompt/delay logic.
 
-	git maintenance barf
+Some string literals are also combined so the full text is easier to
+grep for.
 
-in "help text" test now corrects "barf" to "start".
+Changes in v6:
+  - Adjust existing tests to fit subcommand autocorrection behavior
+  - Change the similar subcommand hint exit code to 129
 
-After fixing these two, all tests pass.
+Changes in v5:
+  - Make subcommand autocorrection behave the same as command
+    autocorrection
+  - Rename PARSE_OPT_SUBCOMMAND_AUTOCORR to
+    PARSE_OPT_SUBCOMMAND_AUTOCORRECT
+  - Adjust subcommand autocorrection tests to fit new behavior
 
-----
-All tests successful.
-Files=1043, Tests=33202, 465 wallclock secs
-( 7.02 usr  2.23 sys + 1244.78 cusr 1642.22 csys = 2896.25 CPU)
-Result: PASS
+Changes in v4:
+  - Add missing files to Meson build
+  - Change API prefix from autocorr to autocorrect
+  - Split the commit that moves tty code
+  - Add API documentation
+  - Use standard Damerau-Levenshtein distance and common practice
+    fuzziness thresholds
+  - Rename AUTOCORRECT_HINTONLY to AUTOCORRECT_HINT
+  - Change commit subject prefix for tests from "help:" to "parseopt:"
+  - Fix coding style issues
 
-Also, I found most error paths exit with 129 in parse-options.c, but
-the similar subcommand hint exits with 1. That's inconsistent, will
-change the exit code to 129.
+Changes in v3:
+  - Align with the coding guildline
+  - Split patch so diffs don't get hidden by code movement
+  - Improve commit messages
 
+Changes in v2:
+  - Reword the explanation of default autocorrection behavior
+
+Jiamu Sun (10):
+  parseopt: extract subcommand handling from parse_options_step()
+  help: make autocorrect handling reusable
+  help: move tty check for autocorrection to autocorrect.c
+  autocorrect: use mode and delay instead of magic numbers
+  autocorrect: rename AUTOCORRECT_SHOW to AUTOCORRECT_HINT
+  autocorrect: provide config resolution API
+  parseopt: autocorrect mistyped subcommands
+  parseopt: enable subcommand autocorrection for git-remote and
+    git-notes
+  parseopt: add tests for subcommand autocorrection
+  doc: document autocorrect API
+
+ Makefile                          |   1 +
+ autocorrect.c                     |  89 +++++++++++++++
+ autocorrect.h                     |  36 ++++++
+ builtin/notes.c                   |  10 +-
+ builtin/remote.c                  |  12 +-
+ help.c                            | 120 ++++----------------
+ meson.build                       |   1 +
+ parse-options.c                   | 183 +++++++++++++++++++++++-------
+ parse-options.h                   |   1 +
+ t/meson.build                     |   1 +
+ t/t0040-parse-options.sh          |   5 +-
+ t/t7900-maintenance.sh            |   4 +-
+ t/t9004-autocorrect-subcommand.sh |  58 ++++++++++
+ 13 files changed, 366 insertions(+), 155 deletions(-)
+ create mode 100644 autocorrect.c
+ create mode 100644 autocorrect.h
+ create mode 100755 t/t9004-autocorrect-subcommand.sh
+
+
+base-commit: f65aba1e87db64413b6d1ed5ae5a45b5a84a0997
 -- 
-Jiamu Sun <39@barroit.sh>
-          <sunjiamu@outlook.com>
+2.54.0
+
