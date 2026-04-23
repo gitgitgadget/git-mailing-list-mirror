@@ -1,34 +1,34 @@
 Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E99E387361
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 22:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13A837FF75
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 22:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776984758; cv=none; b=WXjscINjlJm5krEgsvauiifQqkhwqJrxp4KfFDS8nP3vEWjQyzx5A+I/pk/YI/54NheVKH9Nvu/hNlIbJE6aPSRmg/s0S7RIdufBaI+YuXCdJHjgPb/IKPdrlNidrzQQNPTf9N0HhlODISLSglLat+FYlNGKcN/1hSTHw6wF5xo=
+	t=1776984758; cv=none; b=joMNS1APxY/YkyXASh9EeSOywInObSQ+Awx88xb70JAK05yWk6kxLZFqFG34JJ7v1gJXPFlzwxy5r8yeI3OqBfwfl/z3wbetZKa0dr6rfdFcL+faiVt+I6RoJtX7KYpJjyPUOo4pjDaFIlt42cjBm//nIzrAI418aJewvEXIsyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776984758; c=relaxed/simple;
-	bh=5gXy4MWbqbYPcPSjfHyG9HJYFU6tkhnj9Dr+23UFWhE=;
+	bh=XLxqLT5POXRf7Ar/9HxlEBsZftQ2qd8flh7XG4WbfJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvqAtik0qviNK4i681Gp3ceDsTs7I8+jCI+czZwDlI//2QXtoYIc69G5Q43ga3bmBFZciz5wJh3K/K+0VMhQYPP4S7Es5kLxM/GzQfRTi/UzkcHHJxU4S1pFWQVf6qnA2RqpWCsSTIP3SsSEe1bp7eiBBaXIuwBKdzAwjaaALs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=Y1Ws/1XO; arc=none smtp.client-ip=195.231.85.169
+	 MIME-Version; b=MKo44pXCX+XAPS9CMCs71Krj9BTLWNIjf9GLGpI1E0a8p3emHmTySG8jOfSMrOR5Zrt3qZuGv83jr0JM9Xzis2YsG0MX/pctKpDRb+2RZ3uo5bmtr9ojkUDr5KqknyX9bcRYcbAxFU7k9zXjMJLoDlAj8YUFH0F9dlCEnJH0Gx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=lQNljhaV; arc=none smtp.client-ip=195.231.85.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="Y1Ws/1XO"
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="lQNljhaV"
 From: Mirko Faina <mroik@delayed.space>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1776984744;
+	s=dkim; t=1776984743;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=QKUfZkN5fcH/HtjvvxANtR2A57SZLebaxQBWXSWZdl4=;
-	b=Y1Ws/1XON7WKH1A8IcLX0pocSUH263shxAux80SsbRzw6xUtvpt75T3yCPlyNbR894mR5H
-	GavXIxoBkZ+8ftcJ5AOGgPgug2mEmSrkbmSKef5liLuryXT/bH1VNlU04bn3OWUqDDbEjL
-	oXRPXzaIvurZ6y5qs13H4EfuNAiknypv/4lsnUMDJYnxXMBt8LohBkxpd1dm640mF7bqfq
-	coGxRtOrw1eiGHs+VLWB1Yl7quYoHzBzh69sAOm2/oLWbvXxnzBsM590y9aROdIH0fxCWM
-	OM08o+X3F35PJmshy0T0ahvFqQRPWETer2ereBYdm6BdXBAX+70TARwP48SiGQ==
+	bh=3fybBiJYwVtkkCFuvomSGy4KTPk+Wi12/nhLDhBYnws=;
+	b=lQNljhaVRkilE65GJd8avcyPtXUd7H0PAs5hGVPQVjlYkvuEjEmkOmegiNHvkvhm1vIJ5q
+	8D56xzVes9jM0MTLcg31ka7LdA2Azz3Uqh8nHKiDJH2deEL6IlNG9KJA7bAgUVLfj7Ahcf
+	z5uHCBWkfN5afdNuj8Q6OJ6qQH64m5teAb0DGdQHKGYjrYuneLH+6K50lyi6uwOtl0h3ZZ
+	yTZ5f9bYvKpwEbUxNUn+MxmW2H8jqLP3h717fZLyKzW1vLdj63LPmmD0Sl+YfNrbAF37A8
+	0zjZqN/GDhGJlkTR59Bsxic0xZkHoorihbbxYz3YyL5UVz4Zelc3rO792VImIQ==
 Authentication-Results: mail.delayed.space;
 	auth=pass smtp.mailfrom=mroik@delayed.space
 To: git@vger.kernel.org
@@ -39,9 +39,9 @@ Cc: Mirko Faina <mroik@delayed.space>,
 	Patrick Steinhardt <ps@pks.im>,
 	Tian Yuchen <cat@malon.dev>,
 	Ben Knoble <ben.knoble@gmail.com>
-Subject: [PATCH v3 2/2] revision.c: reduce memory usage on reverse before
-Date: Fri, 24 Apr 2026 00:52:00 +0200
-Message-ID: <00489b0e5282028292a6a2f582b9bef3f8a50041.1776984666.git.mroik@delayed.space>
+Subject: [PATCH v3 1/2] revision.c: implement --reverse=before for walks
+Date: Fri, 24 Apr 2026 00:51:59 +0200
+Message-ID: <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1776984666.git.mroik@delayed.space>
 In-Reply-To: <cover.1776984666.git.mroik@delayed.space>
 References: <20260422002840.303477-4-mroik@delayed.space> <cover.1776984666.git.mroik@delayed.space>
 Precedence: bulk
@@ -50,92 +50,232 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2806; i=mroik@delayed.space; h=from:subject:message-id; bh=5gXy4MWbqbYPcPSjfHyG9HJYFU6tkhnj9Dr+23UFWhE=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBp6qKS6y6GpEPgAsB8J+i4usXLlg/wlVA5Q3LJ5 nGXbMVo1POJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaeqikgAKCRBIeX6hnBm+ 0Q4uEACEnRaQehwXaU6Hbi+1SJJHYdQ+I8dz1UU+nDcVE/s/mLkICQ7yX0yRU05IVELOIQ0klNV 2iUD3nPMFya3Wr1aoj6/o6YzTv1hHM4VayeqgpcMRqm0rAdoT0CnFfe0Ij8xh7IxCI6qfVIBAGs Pu8IjxfcifTOPXSJYmHiakjmaFCNw8lWoDqU2pSp09Z72T4JyDTM99dOPzJ0B3RbQcxNI5sxKfG YjsIJhl+TG3AmDU6fG7MmiEf8vvFPLUDqNwEHuocJ2UeT/ht6aViJ8Sh67XQsHoY+Jj88CHTawV fXP858/8OT7TVLSymUekIGNf6GXFcPSu88f7NxncWbWR2r8NAjX0I8GK5VoxYH//uIi5tzvjTvW XGa5pqpWegB4gQAWnfw4SZHc/auunFou/1U8DkbxIkATAVDJtv9s9dUhti05UiUgTqJIa0BVYwU HYF9lPbxJWo83VkcBL/rzR38eoqA1b/rKcQPoONagwZ+DThYNt5tBMgZXugIE8Ru/EVY/eHZu3I /KAxWgFeTrMXpj802kV+GMIYbJc8ueu40XndDHQHQ/f9g6zYFC1giuvaT9qnCeD5sHiwfs8+PvY 2ufoLnaVyyfxsqgmvJ+YDpdQVcLB2QpdOPU2yABCGonvlx6/nqLX+bKOStawE2AIg/qcyIUs04K d//OgncdC
- mxeD6Q==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7205; i=mroik@delayed.space; h=from:subject:message-id; bh=XLxqLT5POXRf7Ar/9HxlEBsZftQ2qd8flh7XG4WbfJ0=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBp6qKSbqQBoLSr862OxObfQDCR5TUZuZ/ke78gO g5hV3zGtECJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCaeqikgAKCRBIeX6hnBm+ 0XGSD/9lrHiAlVcUvqygyXYqVmg3aM0PYZjtODLoIKt4ivYrzPusuekURJZEM3KS/zEsGKze+Es wd8uua99Fk55Rd/EQNRMifAa7sCZ4CsUXy4bwPpL3GOQyFV7TbhT+hKigrPbnlJIfBHT5nQfsEF 4cZGyfsPkJZbzCWaT9FCSnUNXDVik4b3BZoduToRgX2vJ0dMwoEBIfimQ/sAszdae1Fp9PHhT/3 YLoNwgCaVBJYztBmKuI1lehFcU7fe8YCu6sG5zbzeqV7edcd7TLmHSKeCE5drod7ETUwhLCpkmv iJut/mOFlZGK9YkoucgAPQJQhNFhqk+eDslzq2lXXZlMCop/lboq3znAn6wRojWkfLoyth33SII AhJESjT259DrgL/O3H2J0S93j3GaPc9q5a9KtpPmJZR6PvIWcpPnMpEhpVDEa6tG2uNnbkkHJD9 wi76ezAMxJqPw6yXWiyJ2dAA103Fks7+AoYQcURzPbdRjD7poiduuzc4lxoey4pmBwfP8Fwp+oy ileImcnZ9iabyUPg2pyOTfMNES091J/QL5qaVvRnb6JVDzkNZDWjYVNMjsgF6RC5zWJJJFkdb0g EYNfSfaLTnnYZFkc6faHIPglYFMJXLzR+m6wC741Eebo5nMy47YQJ7ql/Fxim/syz6Cslwr8+MZ DlwyDL93C
+ Ekt91Q==
 X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
 Content-Transfer-Encoding: 8bit
 X-Spamd-Bar: ----
 
-Due to the nature of --reverse=before we have to walk all of the history
-and store each non-filtered processed commit, this can be expensive on
-memory for projects with a long history. When --max-count is being used
-we don't really have to keep every processed commit, we can discard
-older commits (as in have been processed before than the ones we're now
-considering, from a chronological commit order they are the newer
-commits) as we surpass the --max-count limit.
+In a revision walk `--reverse` can only be applied after any commit
+limiting option. This makes getting a limited amount of commits from the
+tail impossible. E.g.
 
-Teach get_revision() to keep only the newer commits as we walk a
-revision with --reverse=before and --max-count=<k>. We do this through a
-simple queue. With N nodes and K as the --max-count argument, assuming K
-< N, we go from a space complexity of O(N) to O(K). When it comes down
-to time complexity, the queue has an ammortized time of O(1) for pops,
-so the complexity remains O(N).
+    git log --reverse --max-count=3
+
+Some would expect this to give back the first 3 commits of the project.
+Instead it returns the last 3 but in reversed order.
+
+Teach `get_revision()` to accpet an argument `(after|before)` from the
+CLI, and apply the reversal before or after the commit limiting options
+based on this argument. If no argument is provided default to the
+current behaviour, applying `--reverse` after the commit limiting
+options.
 
 Signed-off-by: Mirko Faina <mroik@delayed.space>
 ---
- revision.c | 42 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 40 insertions(+), 2 deletions(-)
+ Documentation/rev-list-options.adoc | 16 +++++--
+ revision.c                          | 31 ++++++++++++--
+ revision.h                          |  8 +++-
+ t/t4202-log.sh                      | 66 +++++++++++++++++++++++++++++
+ 4 files changed, 113 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index 2d195a1474..e97f6f2aff 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -914,10 +914,18 @@ With `--topo-order`, they would show 8 6 5 3 7 4 2 1 (or 8 7 4 2 6 5
+ avoid showing the commits from two parallel development track mixed
+ together.
+ 
+-`--reverse`::
+-	Output the commits chosen to be shown (see 'Commit Limiting'
+-	section above) in reverse order. Cannot be combined with
+-	`--walk-reflogs`.
++`--[no-]reverse[=(after|before)]`::
++	Accepts `after` or `before`. Cannot be combined with
++	`--walk-reflogs`. If `after`, output the commits chosen to be
++	shown (see 'Commit Limiting' section above) in reverse order. If
++	`before`, reverse the commits before filtering with `Commit
++	Limiting` options. When multiple `--reverse=` options are given,
++	the final option overrides any previous options. The `--reverse`
++	option (with no specifier) behaves as `--reverse=after`, except
++	that, for historical reasons, it negates any previous reversed
++	state (so `--reverse --reverse` does nothing, nor does
++	`--reverse=before --reverse`. Note that `--reverse=before
++	--reverse --reverse` is the same as `--reverse=after`).
+ endif::git-shortlog[]
+ 
+ ifndef::git-shortlog[]
 diff --git a/revision.c b/revision.c
-index d581f5e38e..03acff9bac 100644
+index 599b3a66c3..d581f5e38e 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -4530,6 +4530,40 @@ static struct commit *get_revision_internal(struct rev_info *revs)
- 	return c;
- }
- 
-+static void retrieve_with_window(struct rev_info *revs, int max_count,
-+			  	 struct commit_list **reversed)
-+{
-+	struct commit *c;
-+	struct commit_list *into_queue = NULL;
-+	struct commit_list *outo_queue = NULL;
-+	int into_count = 0;
-+	int outo_count = 0;
-+
-+	while ((c = get_revision_internal(revs))) {
-+		commit_list_insert(c, &into_queue);
-+		into_count++;
-+		if (into_count + outo_count > max_count) {
-+			if (!outo_count) {
-+				while (into_count) {
-+					c = pop_commit(&into_queue);
-+					into_count--;
-+					commit_list_insert(c, &outo_queue);
-+					outo_count++;
-+				}
-+			}
-+			pop_commit(&outo_queue);
-+			outo_count--;
-+		}
-+	}
-+
-+	while ((c = pop_commit(&outo_queue)))
-+		commit_list_insert(c, reversed);
-+	while ((c = pop_commit(&into_queue)))
-+		commit_list_insert(c, &outo_queue);
-+	while ((c = pop_commit(&outo_queue)))
-+		commit_list_insert(c, reversed);
-+}
-+
- struct commit *get_revision(struct rev_info *revs)
+@@ -2686,7 +2686,16 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 			git_log_output_encoding = xstrdup("");
+ 		return argcount;
+ 	} else if (!strcmp(arg, "--reverse")) {
+-		revs->reverse ^= 1;
++		revs->reverse = !revs->reverse;
++	} else if (skip_prefix(arg, "--reverse=", &optarg)) {
++		if (!strcmp(optarg, "after"))
++			revs->reverse = REVERSE_AFTER;
++		else if(!strcmp(optarg, "before"))
++			revs->reverse = REVERSE_BEFORE;
++		else
++			die(_("unknown value for --reverse: %s"), optarg);
++	} else if (!strcmp(arg, "--no-reverse")) {
++		revs->reverse = NO_REVERSE;
+ 	} else if (!strcmp(arg, "--children")) {
+ 		revs->children.name = "children";
+ 		revs->limited = 1;
+@@ -4525,19 +4534,35 @@ struct commit *get_revision(struct rev_info *revs)
  {
  	struct commit *c;
-@@ -4546,8 +4580,12 @@ struct commit *get_revision(struct rev_info *revs)
- 			revs->max_count = -1;
- 
- 		reversed = NULL;
--		while ((c = get_revision_internal(revs)))
--			commit_list_insert(c, &reversed);
-+		if (revs->reverse == REVERSE_BEFORE && max_count != -1) {
-+			retrieve_with_window(revs, max_count, &reversed);
-+		} else {
-+			while ((c = get_revision_internal(revs)))
-+				commit_list_insert(c, &reversed);
+ 	struct commit_list *reversed;
++	int max_count = revs->max_count;
++
++	if (revs->reverse && !revs->reverse_output_stage) {
++		if (revs->reverse == 3) {
++			BUG("allowed values for reverse are 0, 1 and 2");
++			revs->reverse = 1;
 +		}
++
++		if (revs->reverse == REVERSE_BEFORE)
++			revs->max_count = -1;
+ 
+-	if (revs->reverse) {
+ 		reversed = NULL;
+ 		while ((c = get_revision_internal(revs)))
+ 			commit_list_insert(c, &reversed);
  		commit_list_free(revs->commits);
  		revs->commits = reversed;
+-		revs->reverse = 0;
  		revs->reverse_output_stage = 1;
++
++		if (revs->reverse == REVERSE_BEFORE)
++			revs->max_count = max_count;
+ 	}
+ 
+ 	if (revs->reverse_output_stage) {
++		if (revs->reverse == REVERSE_BEFORE && revs->max_count == 0)
++			return NULL;
++
+ 		c = pop_commit(&revs->commits);
++		if (revs->reverse == REVERSE_BEFORE)
++			revs->max_count--;
+ 		if (revs->track_linear)
+ 			revs->linear = !!(c && c->object.flags & TRACK_LINEAR);
+ 		return c;
+diff --git a/revision.h b/revision.h
+index 584f1338b5..02881577dc 100644
+--- a/revision.h
++++ b/revision.h
+@@ -121,6 +121,12 @@ struct ref_exclusions {
+ struct oidset;
+ struct topo_walk_info;
+ 
++enum rev_reverse {
++	NO_REVERSE = 0,
++	REVERSE_AFTER = 1,
++	REVERSE_BEFORE = 2,
++};
++
+ struct rev_info {
+ 	/* Starting list */
+ 	struct commit_list *commits;
+@@ -167,6 +173,7 @@ struct rev_info {
+ 			ignore_missing_links:1;
+ 
+ 	/* Traversal flags */
++	enum rev_reverse reverse:2;
+ 	unsigned int	dense:1,
+ 			prune:1,
+ 			no_walk:1,
+@@ -196,7 +203,6 @@ struct rev_info {
+ 			rewrite_parents:1,
+ 			print_parents:1,
+ 			show_decorations:1,
+-			reverse:1,
+ 			reverse_output_stage:1,
+ 			cherry_pick:1,
+ 			cherry_mark:1,
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 05cee9e41b..3bfe2c99b8 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1882,6 +1882,72 @@ test_expect_success 'log --graph with --name-status' '
+ 	test_cmp_graph --name-status tangle..reach
+ '
+ 
++cat >expect <<-\EOF
++c3f451c Merge tag 'reach'
++046b221 to remove
++EOF
++
++test_expect_success 'log --reverse --oneline --max-count=2' '
++	test_when_finished git reset --hard HEAD~1 &&
++	touch to_remove &&
++	git add to_remove &&
++	git commit -m "to remove" &&
++	git log --reverse --oneline --max-count=2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'log --reverse --reverse --reverse --oneline --max-count=2' '
++	test_when_finished git reset --hard HEAD~1 &&
++	touch to_remove &&
++	git add to_remove &&
++	git commit -m "to remove" &&
++	git log --reverse --reverse --reverse --oneline --max-count=2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'log --reverse=after --oneline --max-count=2' '
++	test_when_finished git reset --hard HEAD~1 &&
++	touch to_remove &&
++	git add to_remove &&
++	git commit -m "to remove" &&
++	git log --reverse=after --oneline --max-count=2 >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<-\EOF
++3a2fdcb initial
++f7dab8e second
++EOF
++
++test_expect_success 'log --reverse=before --oneline --max-count=2' '
++	test_when_finished rm actual &&
++	git log --reverse=before --oneline --max-count=2 >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<-\EOF
++046b221 to remove
++c3f451c Merge tag 'reach'
++EOF
++
++test_expect_success 'log --reverse --reverse --oneline --max-count=2' '
++	test_when_finished git reset --hard HEAD~1 &&
++	touch to_remove &&
++	git add to_remove &&
++	git commit -m "to remove" &&
++	git log --reverse --reverse --oneline --max-count=2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'log --reverse --no-reverse --oneline --max-count=2' '
++	test_when_finished git reset --hard HEAD~1 &&
++	touch to_remove &&
++	git add to_remove &&
++	git commit -m "to remove" &&
++	git log --reverse --no-reverse --oneline --max-count=2 >actual &&
++	test_cmp expect actual
++'
++
+ cat >expect <<-\EOF
+ * reach
+ |
 -- 
 2.54.0
 
