@@ -1,157 +1,158 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4463D4117
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 06:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399D1222565
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 06:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776927308; cv=none; b=efyuT/fiJtSuYvreDCNW5WS0zbNR2IzPfxUuD6Q6u6NuL97CG6ezBLsRzFluVtoEYDFtuD6r/J/Dnp0bTIQHxVYkB7GXj1rWBOEMRRDGcPjVSRGy75EG6m0p+qQAuvmt5EOZkArjeAcgCTzccPR42b0la8UAEsjJIx9GzTQ4SMs=
+	t=1776927325; cv=none; b=A10Hiwg8Abc20Y77PNSxHD8LqgN9sZqN3uMxNAT2DyLfpu45Ekb641vvJwqVbKFZ5lI1D45YKdR7LJ4+C2mKkspXIZ5qDnSxk1ScVrxJih7gxqE07HisQzPK1Cnsd0crxl0AFOR/AT8hAI18WWjz+2Mui8fPMOy4XrWpk7EPn+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776927308; c=relaxed/simple;
-	bh=GC0zesULAbZWogXdkIypRFSeQIUigMe2e6p2YMjVeLQ=;
+	s=arc-20240116; t=1776927325; c=relaxed/simple;
+	bh=YeC71m4SWgl9kL6hOqNPfiz2qsnlauALyUjvrv6jY0c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IzLK/rcihq5Cl8IbwpsvWg1WmVTM7nNt/cD5zrq+B8SEhJIUBqTzW5R4cEsnxH102G7XOSqD1KxBRJ6gGwiGHEt/RSy0mekwxuTXoYT/ZGi51DWjhf/hgZuSEb6Kn64SbKUfybN6rP/Mp7TUaOPkwUGR+7SdRUL65LJBA6ir4Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n5YzemdB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LmZKEWgy; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=CTUsmDTo6nVcmaHYmQlBabxBe87lWlfl3wz0S6dYH/InF/Lrv0BmIAiWRqc3UupV4ar3TJcWC/eQMtGauo3avdKVFdYXli9NZMiizikTRX/uOf920GRnF5VQJ1nGGMvXQTuJ7RcBcIw5lY2PAaAWr9Wen/e1YP/Yqn0pq98KsWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NnHX21r5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aaZv+kl6; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n5YzemdB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LmZKEWgy"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 80CC11400109;
-	Thu, 23 Apr 2026 02:55:05 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NnHX21r5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aaZv+kl6"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 859A8140009E;
+	Thu, 23 Apr 2026 02:55:23 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 23 Apr 2026 02:55:05 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 23 Apr 2026 02:55:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1776927305;
-	 x=1777013705; bh=s6eAEbXthOoX9VJ6T+QXWFPfUZLRgja4LHXKRfRjwg4=; b=
-	n5YzemdB2U2eK9ZnCF2hFf4vhGz3n9ZRw9TLl4+FSf78TOLdOantV9cwculaG4Sr
-	5ZPugBpcGwLqBsBtR+jdnkShbjvzZW55sNz0R3ctF2I4Muyp016BNLisyAyoMeT6
-	JdwvG2z9lTKJMW4C1a3IPF88cF93uGWhogTTnv1gpaq/Qx7tqrc0BG8ykA5cMhX9
-	UP8L5IP4AgqhUp9ewaaEFxwvIc1EoftbyLXileq0Q5COdrBAesHC9O4ANoxaeVFT
-	6wu7d5A2qfZdK6UBuMersgxcce5Ll9vRjWc/fPNwxFiULXTWlr2HEL8D+AasSsgI
-	v/cH6hUatLrUNIcvqYw56g==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1776927323; x=1777013723; bh=foAuA6rQNd
+	05q4o+O6k1RzQQz+0Hm/0QmMTep+vlPNA=; b=NnHX21r5tPhRqfZ6LkP4bsoart
+	QOfh3UKmF7Ai00iptHT5JsQRfgPblOEcV6sxU2GWihr6sqsRG/IYZgPCimUHgntz
+	5323//aCfqeiitMu9gOQzhy3n8gPFDn+mo0yq4ANeHecNVpvKinAU4YohJAn5mGE
+	TYqpJorbqPY9r5Sb6VV0xHyQ20vIsNmiYYuuoumM7yMgyP8jUxCzmthUSHRNoLrF
+	8+SzqOTz59iLAdTIMu//hHUVlg3dOmi8l9B0PTiZBY7JfrzMnrqQjLeS36ONkD0Z
+	qS3uQxkURVCTIBvn0fWbQ81UC/SvyaciB+uqWwAz78neb0447J3eKVAlsa9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1776927305; x=
-	1777013705; bh=s6eAEbXthOoX9VJ6T+QXWFPfUZLRgja4LHXKRfRjwg4=; b=L
-	mZKEWgysGkbd9iyA9SEAvjUBsAXvIucUhJrfrkG8G+kJgdF0exnUlQz4Oif+wqTg
-	II57+Wd0ipYj2ThoCftT0qO0Z22IL38ukEKzgxPAtQhg+yyGd41vZrNzr13i4XDk
-	CFdcCpLWy986p5bV0FKyMqpkZMsqwFU1n3nSBU+non9gb2vBsLJ6VroEaTLChZNs
-	/43BT1MuavSMQi6UM4J4AAiBLEFzFO4sBewsXWpFt+6hTjJF8nDhA5XTr3h3ChNh
-	RKGX/tx7EiyZq7800vs2LPGstc158x/DV71B/vMZftU7ehugnAatA/Wb7dLEMx2Q
-	xdUVzs8cfkb6gxWLypGhw==
-X-ME-Sender: <xms:ScLpaXfjBvfYtInqfApCeRCJ9Kr38szwEBVOVY79fqFanGO0ZHh0cQ>
-    <xme:ScLpaUq70fOS0l5XvC6dUQIeOzJh2Y7XaOCzVMrfetUIvInpDNXdtIMU65pnqPUxo
-    yg3SldOGZIYoVK8AY7zGslCa2wnCMX9Fc4jSCvhdyEWFPwPjisWIQ>
-X-ME-Received: <xmr:ScLpad5CR0f_pSE_8JP-RDu7rRqC7ddPqmgFOwR81y5nGSmZVO9AdxpM9nVw3QZlm2YQ_P8BWONV8e1nwWHu2tu_-XfFi2naABcoGR8M7yRh>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1776927323; x=1777013723; bh=foAuA6rQNd05q4o+O6k1RzQQz+0Hm/0QmMT
+	ep+vlPNA=; b=aaZv+kl6gLhx1RtiuEjahCLzC3dg9gLUTJY9qzSp780al7rJ0zJ
+	SCCF6I2w7wazBxkk9oxWlMSgnIFyaNXL+AhcvMiC4pKYIWw+6fHn/6Z8sDP2/Wj/
+	7Nejf41ejQ/Iuhqa0G4fq0MNx2g1CMEt/Dl1xHEPRfQW+v21pqp276oX+n2MnHph
+	gJzwB2b79g0hsdTthvxmkVh25bxdlrM9QVbztLWltvNI/gGnMXCeORN//Xp7BafB
+	Ze7V+0OsdxNURmKeVGEe8h5Ws5Nz8HvIJKfcU9uIHpiN1cymcWtiXVwyy0xGM4WU
+	00b5X6ujK8Ih+L4DjKXh9H8ZSN5SaStORdA==
+X-ME-Sender: <xms:W8LpaZf6ToCrWcPkQi6j1Iy1ZXmSEtILxgWhW90evMnDwnFsqAZ7Kw>
+    <xme:W8LpaepTyj2QMdjiY4ZDoerC2xGDrX2zcrQIjcdIR5u7asl9RucQOJLicHl3eV2uw
+    YiC0q4iBKUd81YfAPwVoxc_cfYHWKQ4tzGFiwq-Vtkvj5AwVdZzjw>
+X-ME-Received: <xmr:W8Lpaf7-v5I3wflEikpnRmgw8pHm9-kNrQlVVBCCQNQi-CEdE-jrJMziwce9W0ytKw2TFcXI7wuBUz0_Xw-uzTIXTBj1cdCl_dCmI7zt6iZp>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeiieegkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdr
-    tghomh
-X-ME-Proxy: <xmx:ScLpaSpw3XDl_NvCB-3jJD7-GP28JXXI105lEKBR5yhVp48wzqywyw>
-    <xmx:ScLpaXj5Jz42YZLd88a_UKLBb-NGlJchXLIHLEIw_mze8wsBMGRWqQ>
-    <xmx:ScLpaUKJWHZg1W_th3gyuN4s6IHTq794jnWX9nJu18UYs08YlwtAFA>
-    <xmx:ScLpafDGriEJ8HHcI_huotNMlKhKVSkQTyqghfglOASIdJIrqT7qDA>
-    <xmx:ScLpaTG4rq8qzMaYW0rS7eejedfU3bUeM3NKoXpmPqOYL9dFDJs0p5Ev>
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegtrghtsehmrghlohhnrd
+    guvghvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:W8LpacpJyjkYr2D3D6dJtJ51SmtiH9SZCI2nQgdI_6k-6lQFPzKqxQ>
+    <xmx:W8LpaZhiBvYimnx7ObWyOKc3WF4pZ3BFQ0S_0Nmi3E4YrHmCABK4Ug>
+    <xmx:W8LpaeIL_jvtMGzX0bcg3eqIrdH3e1TC9K-E-TSEVhpVSSUxtUN3_A>
+    <xmx:W8LpaRAlAyi44R9cLsmgHckcL6WT9Eihs7ht4MIWB4lHP-5t4v0iDQ>
+    <xmx:W8LpaX0v6jkGTD0-EhWZjqBn0wQDKJQG1tLNd_U6Rf7Rr1KnJ1n757L9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Apr 2026 02:55:04 -0400 (EDT)
+ 23 Apr 2026 02:55:22 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 303da28b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 23 Apr 2026 06:55:02 +0000 (UTC)
-Date: Thu, 23 Apr 2026 08:55:00 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8805726a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 23 Apr 2026 06:55:21 +0000 (UTC)
+Date: Thu, 23 Apr 2026 08:55:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: Tian Yuchen <cat@malon.dev>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] builtin/history: introduce "fixup" subcommand
-Message-ID: <aenCRKxak1l6GE3H@pks.im>
+Subject: Re: [PATCH 0/2] builtin/history: introduce "fixup" subcommand
+Message-ID: <aenCV2w4qzGj5t-8@pks.im>
 References: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
- <20260422-b4-pks-history-fixup-v1-2-48d4484243de@pks.im>
- <CALnO6CCBA=OSvKT8D6-YR1S=x3VOa_MpzWfK6FJWPSXq0ysMPg@mail.gmail.com>
+ <d2b19306-71e9-4e17-a0c0-83309a00bd45@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CCBA=OSvKT8D6-YR1S=x3VOa_MpzWfK6FJWPSXq0ysMPg@mail.gmail.com>
+In-Reply-To: <d2b19306-71e9-4e17-a0c0-83309a00bd45@malon.dev>
 
-On Wed, Apr 22, 2026 at 03:06:12PM -0400, D. Ben Knoble wrote:
-> On Wed, Apr 22, 2026 at 6:30 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-> > index 24dc907033..3cdfc8ba02 100644
-> > --- a/Documentation/git-history.adoc
-> > +++ b/Documentation/git-history.adoc
-> > @@ -53,6 +55,19 @@ COMMANDS
-> >
-> >  The following commands are available to rewrite history in different ways:
-> >
-> > +`fixup <commit>`::
-> > +       Apply the currently staged changes to the specified commit. The staged
-> > +       changes are incorporated into the target commit's tree via a three-way
-> > +       merge, using HEAD's tree as the merge base, which is equivalent to
-> > +       linkgit:git-cherry-pick[1].
+On Thu, Apr 23, 2026 at 02:18:16AM +0800, Tian Yuchen wrote:
+> Hi Patrick,
 > 
-> I'm not quite sure what, as a user of "git history fixup," I'm
-> supposed to take from this. Does it make conflicts less likely when
-> creating the new fixup? I imagine it doesn't help with conflicts
-> between <commit> and HEAD that newly arise.
+> On 4/22/26 18:28, Patrick Steinhardt wrote:
 > 
-> Anyway, I'd think the mechanics are less relevant than the end-user
-> behavior at this point in the doc, unless the equivalence with
-> cherry-pick is supposed to tell me something about that behavior.
-
-There's at least two more or less obvious variants to do this:
-
-  - You generate the diff between HEAD and index and then try to reapply
-    the patch on top of the target commit.
-
-  - You perform the three-way merge.
-
-The second item is definitely more robust compared to generating the
-diff and reapplying it, and we use the exact same strategy to perform
-cherry-picks nowadays.
-
-> > diff --git a/builtin/history.c b/builtin/history.c
-> > index 549e352c74..6299f0dfa9 100644
-> > --- a/builtin/history.c
-> > +++ b/builtin/history.c
-[snip]
-> > +       /*
-> > +        * Perform the three-way merge to reapply changes in the index onto the
-> > +        * target commit. This is using basically the same logic as a
-> > +        * cherry-pick, where the base commit is our HEAD, ours is the original
-> > +        * tree and theirs is the index tree.
-> > +        */
+> > Hi,
+> > 
+> > this short patch series introduces a new "fixup" subcommand. This
+> > command is the first one that I felt is missing in my day to day work,
+> > as I end up doing fixup commits quite often.
+> > 
+> > The flow is rather simple: the user stages some changes, and then they
+> > execute `git history fixup <commit>` to amend those changes to the given
+> > commit. As with the other subcommands, dependent branches will then be
+> > rebased automatically.
+> > 
+> > This is the first command that may result in merge conflicts. For now we
+> > simply abort in such cases, but there are plans to introduce first-class
+> > conflicts into Git. So once we have them, we'll also be able to handle
+> > such cases more gracefully. I still think that the command is useful
+> > even without that conflict handling.
 > 
-> OTOH, this explanation helps quite a bit here :)
+> Thank you for developing this feature. Godsend for lazy people like me ;)
+> 
+> Nevertheless, I seem to have come across what appears to be a bug. I carried
+> out the following steps:
+> 
+> 	create a.txt -> git add -> git commit -m "base" ->
+> 
+> 	create b.txt -> git add -> git commit -m "feature" ->
+> 
+> 	create c.txt -> git add -> git commit -m "tip" ->
+> 
+> 	rm b.txt -> git add ->
+> 
+> 	git history fixup HEAD~ ->
+> 
+> 	git log --oneline --stat...
+> 
+> And the output looks like:
+> 
+> 	3096a65 (HEAD -> master) tip
+> 	 c.txt | 1 +
+> 	 1 file changed, 1 insertion(+)
+> 	699f610 feature
+> 	0be07e6 base
+> 	 a.txt | 1 +
+>  	1 file changed, 1 insertion(+)
+> 
+> More specifically, the output of
+> 
+> 	git show HEAD~
+> 
+> is:
+> 
+> 	Author: Tian Yuchen <cat@malon.dev>
+> 	Date:   Thu Apr 23 01:57:17 2026 +0800
+> 
+>  	   feature
+> 
+> which is an empty commit. Is it what we expect to see? Sorry that I don't
+> have enough time to look at the code in detail :P
 
-Hm, okay. I felt that this explanation here is even more technical. How
-about:
-
-    `fixup <commit>`::
-        Apply the currently staged changes to the specified commit. This
-        is done by performing a three-way merge between the HEAD commit,
-        the target commit and the tree generated from staged changes.
-        This is using the same logic as linkgit:git-cherry-pick[1].
-
-Not sure that this is an improvement? Happy to hear other suggestions.
+I guess the answer is "maybe". I think it would most sense if we had the
+equivalent of `--empty=(drop|keep|stop)` that we also have in
+git-rebase(1).
 
 Thanks!
 
