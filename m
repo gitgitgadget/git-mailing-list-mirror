@@ -1,283 +1,187 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD7E38735A
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 16:55:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776963358; cv=none; b=C8iuIrtgJ7+5CkZu5qLVlRG7rdaXJagH56Mupb5HwVScpBFgVwwh16pTEJ7B7zK29BAy2rSYT78GjbKpQy6YByRK+sUPknXSVUMZkfkJFmVYmLHsH6MJDF+N32jkuhQ2jYpLAfqq17ZX4cKIgmR+HDyuFJycDWWt5NEK6EALaQ4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776963358; c=relaxed/simple;
-	bh=/6c+dbeiUG3B+YUM0ZLJCPU2dmO4rHRaKXrNwisDGN4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AINEOxkWjql+biMXxMd/73XNX2Wu+olER50b2cnsPZx+K0iPdq8U2Q94/VwQIsbLT90cwJXIqrT5I8SYix9yB2ta/xTWNusR/yPhdS0ymOpMze9uLH+WCReH2YrjvN6Oz5yyCZqwMYdf7MnCmZgw0gjFrmaPoOZXD8/DPHsI5pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qIFfx0Nu; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5113033DF
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 17:38:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776965903; cv=pass; b=Fwrq+CMCuuO/fb8zCS2NqgwRYRWsB0ULVDuNVPQ2x+2Xo6ElE7Bpq7Plc3mZLC6FdtK/IDi4pH0BvVGPoxwsoKiShSIXdH0C4h2qx41AP/n8m2vaFhQn38gKPx7/1NRFgKscJms8ZyNBJLaFz2aN7lbq3AZTyredwHyaHg4pQcQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776965903; c=relaxed/simple;
+	bh=ixTlUvv9QVlvh2uEPk/WeXBAmdXuZYJTKCwudkxRmiQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=D/zsLqpN9DwduEhEoQgfi0NEYIlYt95E/KhDnCOOfXaPINDq7QGJpU8XRfi35W9fTECgE5NnY9Vc2awC1kckbHFkIer0EXiE8iiRHO6iuPrCwj3Ps96nW9PODou33flF2H44zoJpCxUvIlQSbby/vCrbalieSYZnSyHvbD+LZnY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZXIgEfx; arc=pass smtp.client-ip=209.85.161.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qIFfx0Nu"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-483487335c2so67977445e9.2
-        for <git@vger.kernel.org>; Thu, 23 Apr 2026 09:55:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZXIgEfx"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-69486849135so1618010eaf.2
+        for <git@vger.kernel.org>; Thu, 23 Apr 2026 10:38:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776965901; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lZSrKmBoUajpXX8c8B+xoFNBbIfpBtqrQoy7qbFAbGcEegAhjCscErhtBRMR+iQYWz
+         R9B6UXOsEPyxhBr280+u/g5kFOF55iQrowcasyN+//j5QZZibODO84YZdmb52o0yhWW6
+         mWj6EBmVauWBMAzMiyTV01N0PTruk9mBlkagZLhfatZG+ue9SkC+RhNKeXb4lE5Au6Fk
+         xWp8zSp9NTwNgMLNUcLwLtP2Uv9Tc9m1UgZNE+TrBDxzQG9fJGAr/4ChX3GiMs2UpdFv
+         a76pyHcPqjbKNUFjAi2hKWPOZ9cVPTgf5mkOjSPUQ7nGjVYs6dQWX9aOLUrJ58yzUjdq
+         KQ0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=AMHksb38saQ1a650B8DxSCPUGKeBApnoqAUeQytJgEQ=;
+        fh=tQot0S9BvixeB1XFVNnTBx9Edn3T9Wx7f8vDsX/UvP8=;
+        b=XzeRBkY1eIaDVYP9E3W/te5L6RbuxBVae/+juZ8wylI0OpKnNMmMACHCF57zJYqdlk
+         P5iwgw4bpYS4KIEeLmuxUEB6LIodEW8D3BqcxIdcX3VhNDSlhoiUgh3wtXDtguxftvzh
+         x7sLqobymC7EnLOkFH9h5DcOXncrYczzFVYAirdoFplgn0hKkhOpdLt9+KCUeh+7CZXA
+         HZoiRQdC36QniZU3ET6oq6Ynqjcq99RZpePtrXkQkSt125wBUq4TLgWnxzx4anJbWnKi
+         +cyz9Pzd/6fzsOQUf+0MZ/IQ92RkHDSBCdy880vxsGX9mk0l2eXCh3HMXcFj9EWi/ERw
+         9KxA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776963355; x=1777568155; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1776965901; x=1777570701; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=seC9EwPT85Hqc0mYP/zzdggodyJfK5UAqOgowPQ23y8=;
-        b=qIFfx0NuQ4uCYQFUVt1a4MjPRvq2edscajBPDEiAlHUTgT/EOMeQ3MUspEvZH2OHjY
-         T5pAYWJ+Bd+c1WFsaJFkE2WMOeGMQ+Mpbhcav2GzFzxiwyEIwQGJSG2bgHN86en3DVkv
-         Ye2bepSA6WZZZz3tFg1EUsvYnKTtJmp0mwwiQN9WJAEaG42VbliQhfajdl1Z8ihtsViO
-         PaDyLB+koo4jrFoIGY89ar3oL9pzUHVtdvjIMepaajN+C4V0VY1BnIw13d5x2aeTY/Ex
-         lFYv6OP9X+BeiDvZdD1bC+Ve9vMfhiZrLTRfdJNr+k6U8mqDmK+sbNYttPSH6EARW6KQ
-         PCkg==
+        bh=AMHksb38saQ1a650B8DxSCPUGKeBApnoqAUeQytJgEQ=;
+        b=MZXIgEfx4owdWF4+lVmSjwxK04WeQ165g5taaVnnHUORA0bR8AzP0u0JNokD5HL76U
+         Y7hDIKVUeAobsRoelJp2a5kVp0s0lCBkoZ2cG+a/UBDQaVzcEDyI9QdYjyjjA86R0NJi
+         J8G78OsK3LocFMnreloMJQKl8g+qr0PwWPjzQEkC09PvxxpDITK/PetYO/zbT6+Iukke
+         feRsjLlZgU8ZKShf3rb3OMRfzKtW2FXO3BdE0RcbmgupddxCD7vTXu5XyV8ArnNe55h9
+         gol//1vOd5mOrEIkaEAFrCmlDMZVE+Pu/93sqbsoxr9L9JHbZtOlwbMNa4AJOlzaA2fR
+         CYNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776963355; x=1777568155;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1776965901; x=1777570701;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=seC9EwPT85Hqc0mYP/zzdggodyJfK5UAqOgowPQ23y8=;
-        b=Uf527PGwDKT/TM6IlGntv1J6BacCv/kZYF8xFjZN1Jw14YWD4RClugFE7hf4PL3B26
-         SrM1IkjbU3pjde2SzHFvCqDE/JvewOrgz56b4CvATt5vohqtlnSYaM1rIQ8XASW8P3tG
-         mhnS4x8OZWtCMI724XwtSYctGdC4GoBenGfU5xXxYfFQdBln5R3+aJ1xTBzT3+PGDhvg
-         wMebuRdchSgFhyCH153XgSBrHAoAhACRWgXAlfO7vlggagGBlY4GI3S1R5qTtN48n13x
-         fLQGw+ecwt1S5yVZTAICOWZcMKQceRLCMxevn+IohhYW3r4AAClKa3WRBFu0zdpjijCS
-         GxTA==
-X-Gm-Message-State: AOJu0YwLQXiRjYAFrQ6WPjnyOT/9WilgtBKT+6zR7GEiu4nGm04Tm1Ot
-	oQAWi2NnfEDYZTe5ZTcPYch0PufYena4Rdp12i3We1pwZ53XfQ2pyOeLJGa0yaUb
-X-Gm-Gg: AeBDiesXvHncB4m5gm+JpmI7maiynWpaTIMVCtwNN34dCMJC+mb9d9v3X1wKGXuN9di
-	ps08IDpv5pn700AozNSB+1U8r5arpcU+mtbJbaSyksK+IFDbEyM2vrLIotA6dnb3RVeacryLghZ
-	gXMMA8FRciAfqoWzbkdKs+2pwF8bLfOkweGk2jZB53CR1ITTVcgpB8bX5lmNS52T9HlsOvohw32
-	pxFQ66vuzsaqqBMuMOif5XnT8gHZ0AJADBEXNJYSINXx8uc2RAUfotyJYcxjk04KcCVkwsLggOo
-	CUMVYWOmUSyUy/p0jW8dKKNg2JCETr0IfGQ07TIWwnOcbn7UhQyxrDjWJ24/1c6n4a7ePItWfsW
-	v/sF6hueVp94ba8yPa4GwE2ZLGQ6Ps/muNKeXnR4KwBamHjNG+vTPq1OAqpzKfPwRVgoRaggKhZ
-	eNyhjPLfrVubhj1jtIBN8OgU8u1mAaAilEGmLP3HVybN4WUx6pkk6ntcHs7ZN215HkY6pz8w==
-X-Received: by 2002:a05:600c:4f8c:b0:48a:58ae:993b with SMTP id 5b1f17b1804b1-48a58ae9faemr169835405e9.16.1776963355427;
-        Thu, 23 Apr 2026 09:55:55 -0700 (PDT)
-Received: from pop-os.lan ([2605:59c0:e5f:a910:737e:f405:338f:9bbf])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4891b46cffasm353431995e9.13.2026.04.23.09.55.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2026 09:55:55 -0700 (PDT)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	gitster@pobox.com,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	me@ttaylorr.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v3 8/8] env: move "warn_on_object_refname_ambiguity" into `struct repo_config_values`
-Date: Thu, 23 Apr 2026 17:54:32 +0100
-Message-ID: <20260423165432.143598-9-belkid98@gmail.com>
-X-Mailer: git-send-email 2.53.0.155.g9f36b15afa
-In-Reply-To: <20260423165432.143598-1-belkid98@gmail.com>
-References: <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
- <20260423165432.143598-1-belkid98@gmail.com>
+        bh=AMHksb38saQ1a650B8DxSCPUGKeBApnoqAUeQytJgEQ=;
+        b=NcbtuC+CEWnCCBw4JJFJX6C60zM8kA6+SD2mhrm6NPh93JsyhW4JKaIEsUCJnCSHwo
+         gFEmDRjAeGTdwhab76wYIn3+L81X2ve7rBGX0u4XfRRwwcIiBwzpJVKR72G9NvVs1lYm
+         3PREHiXz3Z5PJxMQfyVdDyNJhTRiSW7fbfhfe5UEAZpJDT5gsk+P50lhhrz8FbWuF1fU
+         qU+zcXp+sV3tzd2sSGMMCyFHJrmdrCW6YTIi1a4nmTNj2wbT4LsRR+6RMj1NRJT9dfRh
+         m5KHvemo4x6+tgypNRTt9M2X00veqVfj89QZSS6O7kMexvs2kau3vYxM2+hXJruFENRF
+         VS7w==
+X-Forwarded-Encrypted: i=1; AFNElJ/6tM+PanShjzr4Q6DCoxYx+fqUxNZyKOCn3NG2VW49wyakCWYiuPX2bq6Ph+q/wcHs3Pg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxS5UxLmZygY10IS44eWOrQm8Stj672sBBgURcZP9Cl2M2WSzBH
+	JNLMlT7O8/2SinrlrelxwhKbj0ovlO/U3KiE4lbNamzLw4hSIGzh4cDP4ivviJvpPByY25husnx
+	A8YttOCnAqhOdqN2gz4QhtiZmcBmUoIE7dQ==
+X-Gm-Gg: AeBDieuqM+3ArYhrbeFa7hqVvKxtHBhFwPLMqLy4c+e4HmBGd5rm63DpTCBqmJTBz/4
+	V0OQ3iQni+KWzdg4/sInASEoVjEQMkIBTaFRhYWrhcvogn+Mvn2QXi4MCH2JyOpnygiQFIbapvB
+	2T17flEQc6RU+6sXXyNE8KFk8BtoquUMhABBWrbY2L5O2csAY6Gspsls4RHgJgEskQfQvIJvH+m
+	USNpesd3iwd8VKUfN6qi+jgHFOg9N4QMoaQdV0BdY91EqFmT/gj4kAIyfIbGcdEMV/QIuAr6Rd5
+	ppMi47/XRoR/2ZyfGsWWX6frIoG8ST1UsKYYbsadY0cGqUBNg+ZO/QhjFVu4aeg7BQfcogBhQ3e
+	ymht+t6qPHdtYzyozjsoNlPLZu+M5+5DppBgR
+X-Received: by 2002:a05:6820:629:b0:696:1a25:fdc9 with SMTP id
+ 006d021491bc7-6961a25fe95mr1998631eaf.28.1776965900838; Thu, 23 Apr 2026
+ 10:38:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
+ <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com> <a705852723fbe88e94ad3de1daba548dbce32211.1776472347.git.gitgitgadget@gmail.com>
+ <a010a4ad-403a-4b6f-9a92-a33323eca0f2@gmail.com> <CABPp-BF4woakYQ5RZ32J8SzDs_VpvT2Wv+Y2WaHTnFnM=96Kzg@mail.gmail.com>
+ <2abdc8ba-e361-492c-88b7-0c807ee9fb4d@gmail.com>
+In-Reply-To: <2abdc8ba-e361-492c-88b7-0c807ee9fb4d@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 23 Apr 2026 10:38:09 -0700
+X-Gm-Features: AQROBzDM6MgkrJzIio4IP7c_z9LTdP5d3cbwKshnzB_-1XcI6ZtZnpGwe__VRlk
+Message-ID: <CABPp-BGQkN0ZeDAR4NzuyBakJHLM1AuqkdSGbb0YQfgWh2dWFg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] builtin/log: prefetch necessary blobs for `git cherry`
+To: phillip.wood@dunelm.org.uk
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `core.warnAmbiguousRefs` configuration was previously stored in a
-global `int` variable, making it shared across repository instances
-and risking cross‑repository state leakage.
+Hi Phillip,
 
-Store it instead in `repo_config_values`, where eagerly‑parsed
-repository configuration lives. This option is parsed eagerly because
-ambiguity warnings influence how users interpret object references in
-many commands; a lazy parse could cause these warnings to behave
-inconsistently or to appear for the wrong repository, confusing users
-and hindering libification. This preserves the existing behavior while
-tying the value to the repository from which it was read, avoiding
-cross‑repository state leakage and continuing the effort to reduce
-reliance on global configuration state.
+On Thu, Apr 23, 2026 at 8:15=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+> On 21/04/2026 22:28, Elijah Newren wrote:
+> > On Sun, Apr 19, 2026 at 7:04=E2=80=AFAM Phillip Wood <phillip.wood123@g=
+mail.com> wrote:
+> >> On 18/04/2026 01:32, Elijah Newren via GitGitGadget wrote:
 
-Update all references to use `repo_config_values()`.
+> "--reapply-cherry-picks --empty=3Ddrop" is certainly more efficient. When
+> we're computing patch ids do we do it for every upstream commit or just
+> the ones that modify the set of paths that are modified in the branch
+> we're rebasing?
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
- builtin/cat-file.c     | 7 ++++---
- builtin/pack-objects.c | 7 ++++---
- environment.c          | 2 +-
- environment.h          | 2 +-
- object-name.c          | 3 ++-
- revision.c             | 7 ++++---
- submodule.c            | 7 ++++---
- 7 files changed, 20 insertions(+), 15 deletions(-)
+You are correct that the patch id computations won't look at file
+contents of commits unless they modify the same set of files as one of
+the commits in our topic branch, but in order to determine the set of
+commits which modify the same paths as commits in the branch we're
+rebasing, we have to walk the upstream commits and do a tree-diff for
+every one of them.  Yes, commits and trees tend to be much smaller
+than blobs, but the number of trees/commits we have to look at may be
+far larger than the number of blobs.  The biggest repositories are
+constantly pushing so many commits that they are at a size where even
+a merge-base operation can start to feel expensive.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d9fbad5358..cfc5430186 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -901,6 +901,7 @@ static int batch_objects(struct batch_options *opt)
- 	struct strbuf input = STRBUF_INIT;
- 	struct strbuf output = STRBUF_INIT;
- 	struct expand_data data = EXPAND_DATA_INIT;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	int save_warning;
- 	int retval = 0;
- 
-@@ -973,8 +974,8 @@ static int batch_objects(struct batch_options *opt)
- 	 * warn) ends up dwarfing the actual cost of the object lookups
- 	 * themselves. We can work around it by just turning off the warning.
- 	 */
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 
- 	if (opt->batch_mode == BATCH_MODE_QUEUE_AND_DISPATCH) {
- 		batch_objects_command(opt, &output, &data);
-@@ -1002,7 +1003,7 @@ static int batch_objects(struct batch_options *opt)
-  cleanup:
- 	strbuf_release(&input);
- 	strbuf_release(&output);
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- 	return retval;
- }
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8ccbe7e178..7df75fe91e 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4788,6 +4788,7 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
- 	struct setup_revision_opt s_r_opt = {
- 		.allow_exclude_promisor_objects = 1,
- 	};
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	char line[1000];
- 	int flags = 0;
- 	int save_warning;
-@@ -4798,8 +4799,8 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
- 	/* make sure shallows are read */
- 	is_repository_shallow(the_repository);
- 
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 
- 	while (fgets(line, sizeof(line), stdin) != NULL) {
- 		int len = strlen(line);
-@@ -4827,7 +4828,7 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
- 			die(_("bad revision '%s'"), line);
- 	}
- 
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- 
- 	if (use_bitmap_index && !get_object_list_from_bitmap(revs))
- 		return;
-diff --git a/environment.c b/environment.c
-index 57587ede56..ba2c60103f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -47,7 +47,6 @@ int minimum_abbrev = 4, default_abbrev = -1;
- int ignore_case;
- int assume_unchanged;
- int is_bare_repository_cfg = -1; /* unspecified */
--int warn_on_object_refname_ambiguity = 1;
- char *git_commit_encoding;
- char *git_log_output_encoding;
- char *apply_default_whitespace;
-@@ -725,4 +724,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- 	cfg->core_sparse_checkout_cone = 0;
- 	cfg->sparse_expect_files_outside_of_patterns = 0;
-+	cfg->warn_on_object_refname_ambiguity = 1;
- }
-diff --git a/environment.h b/environment.h
-index 609cdaa07f..1ff0a7ba8b 100644
---- a/environment.h
-+++ b/environment.h
-@@ -97,6 +97,7 @@ struct repo_config_values {
- 	int pack_compression_level;
- 	int precomposed_unicode;
- 	int core_sparse_checkout_cone;
-+	int warn_on_object_refname_ambiguity;
- 
- 	/* section "sparse" config values */
- 	int sparse_expect_files_outside_of_patterns;
-@@ -174,7 +175,6 @@ extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
- extern int ignore_case;
- extern int assume_unchanged;
--extern int warn_on_object_refname_ambiguity;
- extern char *apply_default_whitespace;
- extern char *apply_default_ignorewhitespace;
- extern unsigned long pack_size_limit_cfg;
-diff --git a/object-name.c b/object-name.c
-index 21dcdc4a0e..319d3db01d 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -684,11 +684,12 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	int refs_found = 0;
- 	int at, reflog_len, nth_prior = 0;
- 	int fatal = !(flags & GET_OID_QUIETLY);
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
- 		if (!(flags & GET_OID_SKIP_AMBIGUITY_CHECK) &&
- 		    repo_settings_get_warn_ambiguous_refs(r) &&
--		    warn_on_object_refname_ambiguity) {
-+		    cfg->warn_on_object_refname_ambiguity) {
- 			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, 0);
- 			if (refs_found > 0) {
- 				warning(warn_msg, len, str);
-diff --git a/revision.c b/revision.c
-index 599b3a66c3..4e7faa7eb1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2922,9 +2922,10 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 	int seen_end_of_options = 0;
- 	int save_warning;
- 	int flags = 0;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 
- 	strbuf_init(&sb, 1000);
- 	while (strbuf_getline(&sb, stdin) != EOF) {
-@@ -2958,7 +2959,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 		read_pathspec_from_stdin(&sb, prune);
- 
- 	strbuf_release(&sb);
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- }
- 
- static void NORETURN diagnose_missing_default(const char *def)
-diff --git a/submodule.c b/submodule.c
-index b1a0363f9d..f26235bbb7 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -898,12 +898,13 @@ static void collect_changed_submodules(struct repository *r,
- 	struct setup_revision_opt s_r_opt = {
- 		.assume_dashdash = 1,
- 	};
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 	repo_init_revisions(r, &rev, NULL);
- 	setup_revisions_from_strvec(argv, &rev, &s_r_opt);
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- 	if (prepare_revision_walk(&rev))
- 		die(_("revision walk setup failed"));
- 
--- 
-2.53.0.155.g9f36b15afa
+> It is a shame that we don't have a config setting for
+> "-reapply-cherry-picks" as it is easy to forget to pass that option.
+> Unfortunately it is not supported by the apply backend which makes such
+> a setting potentially confusing.
 
+Indeed.
+
+> >  The omission of
+> > a --no-reapply-cherry-picks option in git-replay wasn't a lack of
+> > effort or oversight, but a deliberate choice where I'd rather hold off
+> > (possibly indefinitely) on implementing it.  So I'm a bit reluctant to
+> > make the performance hazard less visible without also asking whether
+> > we should even be doing that piece of the operation.
+> >
+> > I only implemented the git cherry fix because of a specific customer
+> > situation where the operation was already baked into tooling, and
+> > prefetching at least makes the worst case tolerable.
+>
+> I'm a bit surprised customers aren't complaining about tools that use
+> "git rebase" being slow.
+
+Are you sure they aren't complaining?
+
+The merging parts of a rebase operation do have batch prefetching
+already (up to 3 batches per commit; done that way to minimize the
+number of objects downloaded because sometimes 2 or more of those
+batches can be skipped entirely and trying to combine them into a
+single batch would only be doable by downloading far more than
+needed).  But, as you're alluding to, the --no-reapply-cherry-picks
+part does not.
+
+I'll note that GitHub tends to focus far more on the server side; it's
+just that in this particular case with a special customer, they had me
+dig a little closer to their client side operations.  In their case,
+they were using git-replay rather than git-rebase, so they'd have no
+reason to complain about rebase.  git-replay shares the same batch
+prefetching for merge operations that rebase has, and doesn't have a
+--no-reapply-cherry-picks behavior that can even be selected.
+Honestly, I think the main reason this customer was also using
+git-cherry was because I didn't get the drop-commits-that-become-empty
+logic in the early versions of git-replay.  You added that to
+git-replay (thanks again!), but after they had already built their
+tooling.  This is only a guess on my part; they may have other reasons
+for actively wanting git-cherry, but I think it might be worthwhile
+for me to ask them if they can upgrade git versions (to get your fixes
+for empty commits in replay) and then drop the calls to git-cherry.
+However, I didn't want it to sound like I was pushing them to change
+their workflows at my convenience, and hence this patch so that things
+can be fast even if they keep the git-cherry in there.
+
+> > I don't want to
+> > hold myself to doing the same for the cherry_pick_list() path, but I'm
+> > fairly confident the code here can be re-used for those other cases
+> > and I'd help review a patch from anyone who wants to carry it forward.
+> >
+> > Anyway, you are making the right connection, it's just that my
+> > personal answer is to let some other interested individual do it.
+>
+> Fair enough
+
+Thanks for taking a look and asking interesting questions.
+
+Elijah
