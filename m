@@ -1,181 +1,102 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8116B1509AB
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 12:30:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9790289E13
+	for <git@vger.kernel.org>; Thu, 23 Apr 2026 13:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776947439; cv=none; b=qxVfMAG0Pp2o310hACxXQg92fgl/aOoK/eEYYGGJrgEwtRDyFMDytISHU4hTZpyeqcG0/saEUFlIW2k/ikCYrD00EmQCY3uVMkG0DkRYI/0qWnmFvChdSXBWm8Ipfqc63Siwp8CbdfUyMjOPKD8Q8zqCrE3MpDRJBetcWfXL8ss=
+	t=1776951719; cv=none; b=EZO3kXRYiZU2nHixgXY82FqU2AmdfDiFkw0ZSRu37aiHxpeUxzbAUomS+zA7ikgSRaDJ6fmH33G94FjZctKo/4pxJfM5x5ioZEW8EZzcR0xUnrBnHpyXOdH9RkoOfRzYyQeiZfcIiP2B4hswvk9F5l2yrokWmDHO2CET/aInDgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776947439; c=relaxed/simple;
-	bh=RRxQrqc59L3CMoSga0OzXyqNd5GZemSeK6YJCSfYEt0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=m9b2m1aNFhxzHe4Udg3gFICNiXx3et7aZ5EAk+ZQx2fEkyyif7yF367mJQiESn/8qXnXogovSVJmv6DNG9ZlbAwi3cE4DXQ1p2Lk56p6RU5TsM838Qba9Bb+4aOn++l5r816Zm9Jy9qVwx/qIZLlVXfIX1VFqZ9MPPx49zQUoAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GpJe+80d; arc=none smtp.client-ip=209.85.222.182
+	s=arc-20240116; t=1776951719; c=relaxed/simple;
+	bh=E4AQekrsgvoI9aNOk7njxOluBKllzusVgihKBTtS67k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=TJJQ78PtKfvSL7mABJh1/ujc8gjBuJZiXshk+hMdPwJwwSrM0h0HQ5K87U+feruVkqdtQbm0RzAGGfhjB9KaIKmYm+nl+wQpyKm5f1PN+3Qc93H9Bk+5Z0rcBIMLulnTjoXpah5oWTUePVaSZDxLHd4Db1pOP11u28mYKVOK06o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E8VjATv3; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GpJe+80d"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8c70b5594f4so723814185a.1
-        for <git@vger.kernel.org>; Thu, 23 Apr 2026 05:30:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8VjATv3"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8cb38e86cf2so620007985a.1
+        for <git@vger.kernel.org>; Thu, 23 Apr 2026 06:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776947437; x=1777552237; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fboSC+5JEPlNaGwxjVwi00pOcAQwm1F+WIu4q4tD+/c=;
-        b=GpJe+80dLwNxQsNOgI1OW+B45Y0LuYx3efC8OwgxgEANn4IL0UMUDDsWcsqw3ujcjZ
-         RRAx0Cm2SfDYMGr9s3EIyBvHNnJrwkFuAZ34fpuVsxtJopiNnjogkyt5j0tns6pI4HD2
-         pd5L7oQOqC8aJmlm9NRzt2YK2yAfOyXWgoSrR3c0DCbhUcOnv2oCt1lrFIFUcBF3bu7C
-         lAloGbYDtNFAtjPdgu7P9OOm7csIlfQhR37OCKABldMumphETpA8/7d4dgj5+rsSXRLE
-         c5pd3C4HhHAEqDXd3gZPHjYbxtKoIQScr3u9HqipmXCULveWbdaMShTfZ4bivIJtSWCt
-         ca/g==
+        d=gmail.com; s=20251104; t=1776951717; x=1777556517; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=sieCsO2Pew3NpijzPRI4bVrz7UQtlcPMvteCAnetnrc=;
+        b=E8VjATv3BHfawTsvwDk83Nm+e+DaBhrlyohIlQxjojAWfmnHwl50fDoRp1Nk2ENkQE
+         t/lNWnqt3pSRWdnhDKEhjkHI52PpeynI7Dnyo+Ca0sh0khOxBTXT5YhlDuCbn4U4vXJW
+         L7hsQ0GyButHt3g+n7zKy988WYk3vdNNRpkrr8sFO24Z3b6e/Hi6AKl1T/0MxbcTbz4t
+         yn9shnfsgh3V4aImq1Viz1iw+nIA6m6f9CdtfelsTsj5oJSGVJpu1Dw2glB4HS4CESNH
+         C+72ZAGNagLwvbZYt0NB8s+HZoET+BOGYuS9jllJFC5CjDLyoJlbgQkzJD6S8Kv7ADsj
+         lEwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776947437; x=1777552237;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fboSC+5JEPlNaGwxjVwi00pOcAQwm1F+WIu4q4tD+/c=;
-        b=RVMeTeQNfBEABHGX/iO+m7nR5M4DHDTDtQrekrWeUVZCGdETuNnhnu2cSlo2w2MONP
-         1d6DB8VGezLE1in71HrdELGTK8nTUl0clSwrZacXeGiX3QTD4xTIE0Ua79pM1d9VZBL5
-         FzbFkJgiN6qsOuc6B+ArOUxVaWZUZ2OnKtAxhnRbsvCwdxqL/ci6sYFjwNzxPd+xfHNq
-         gcl0J7oAKSL7rp3ueJTkw7uI4l6mWrUkPrGxb0GUSkyMXvJl5rAAnhYWZNcR5ftG9FJ0
-         0IJH6wwdQdL4ZNdxz59TCrAfRfm2sCG1s0TnkSlAj37445XXTVc4Jvd2aOUnPNW3oSfu
-         a/eA==
-X-Gm-Message-State: AOJu0Yw/vLXzYwLChIuKhjhLZlYEArx2VOujsgHZ/u2FP0wbYOyjQe+y
-	8aHevt3W5BZe1ASblsJCv2VeCQ8l6am7K8vSTT/1ER34bWEzUbgkvJqIOso9HQ==
-X-Gm-Gg: AeBDievtsDpuwW9G/PcRXCvJJGNxyt9c26ZWVPWKAWqrFlGvZ2imPjAkfn0zbkvbPsb
-	Om7zGTKIvZSBY7JmTJatug32PXOxx9bAlw+h8EiRPli6KzOHepMgQcoHydB1CIgZTP/tbCqJqeG
-	d5682OseYUP641Z0ZMwok9huMChrxEY8DY9A+qfB7du/VOM3Q5wJZbmNAhLAhFXnTUDWA5xNp41
-	6X/8aJw3xZ42qhkuYo1ecEYse1V6gOMigo6rj801ukxA9wn/4wmlTMX0TWhEETLeENH+5vgVtYC
-	vwaJkS5SnmyUbpo7tzR+AWA8fh9Mkh0CMqlpVaxYFOVgy7eoT9GGitfDPt3h86ojnTfGG8yPkZg
-	ahzOERdR2LmuCOHnxFYcUhaITQ8wHz4TpVqPzXqlIFVQ6oWebt8nMTwdkHw/ZYIFBIzA6T4/H4V
-	gO9rui233KATBFQ909xuOk5bJ86VnMTaH7+Ls=
-X-Received: by 2002:a05:620a:4694:b0:8cf:d80c:5ab0 with SMTP id af79cd13be357-8e78bbef7admr3257923085a.17.1776947436509;
-        Thu, 23 Apr 2026 05:30:36 -0700 (PDT)
-Received: from [127.0.0.1] ([20.49.14.178])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d5fe90a4sm1653995885a.9.2026.04.23.05.30.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2026 05:30:35 -0700 (PDT)
-Message-Id: <pull.2279.git.git.1776947435168.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 23 Apr 2026 12:30:35 +0000
-Subject: [PATCH] push: add push.showProgress config option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1776951717; x=1777556517;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sieCsO2Pew3NpijzPRI4bVrz7UQtlcPMvteCAnetnrc=;
+        b=XxXHbmSERPqEog02JRoogh85JUjDeXFcivgN4XQ/Sw09p5HH0y4iHDzSMAdGPdLZAD
+         r1BjNvZ12gkndded/Y5P1FQte5FPWs63gnvLpM28edbmK7C75yDdaj5Vgg5SNKcq67Mh
+         6+czyNZ/s4bSEMkQt2BfBDtQnnnsFRVDj6o/zjRjVe3biC924lSOyOOwCcxQ77YcCYFC
+         O12m6xIrLjZoQmcHCaYKYYVN65YekHBFHZijn298G1Qkasp2fR11PkBvL9Rh9uCjriUk
+         FO551TJ49E+lOCWy/Wcqt7r5TjVp9pXOz1Hrw8H3p1Q79ub+ENfvUuAyFfP3KPOiVLL/
+         r8/A==
+X-Forwarded-Encrypted: i=1; AFNElJ/SY4hrTEFGYSg+JMseqpfTfn7eP5rgTX7A9dRurs3GGxcXmP0u65qeZof8hqtnhJn2zZ0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiKd2HpogVGPi5gRS62kPU5hUy9xfc3QPesu2dWEE0aHawjZFG
+	q/x0HMZHM/Sw/UTCX6/f8eTJBDYNFjCrvD+q01+Bwfi/TL3NErtooUvk
+X-Gm-Gg: AeBDieurUfZt7z0wnM9QGrTpzknJqFHuRNaVIx/zTZC1RcN+oj/0DppYDGU7LRCtyQQ
+	ZklC6Z0HW62YR9dw5oBwtciZgAxdNNfV8pkayZVQ0MZAIIIMbOqxuzpirnHp1NLWj/NL+oVT4FZ
+	Gb9E1KnLdftpMZvXtpS1//YQ+5W1OoxVFD2PEjo0dz90GmYXyj6E7vtaXl39GWyZJmDlpDyA81g
+	bXj11jSMQV1BuHpfOPgytuTC7dvtpaHZbviW3TKTKDkTmUW5blZxQ8KS68uZUPhl/F3VYIJ+AJQ
+	+KlLfLcj111UUvlpDY7MvlKbDJmJ8FgVuAgUNCVCBETzXTDQdnVdzsfUaaGLIqvJs73PS2YpCr2
+	ftMzRySLmHMgEL/Sy3xuM6YvBnz9JZ4UzOcnjUCe+HiRiHJThHmwm1z0C9QBonP+b0TjcmOTyiX
+	TS+JtLh+MZcwgtXcln8HiluB1Bn0Xyt7GlcCca6AsKx7rzh+S3CNUQJK8WArRx+fb+KL9i3Rxc+
+	IRLUIls
+X-Received: by 2002:a05:620a:1789:b0:8cd:d91f:b61 with SMTP id af79cd13be357-8e791c8dfc9mr3683423385a.51.1776951716572;
+        Thu, 23 Apr 2026 06:41:56 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d5fe90afsm1880500185a.3.2026.04.23.06.41.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Apr 2026 06:41:55 -0700 (PDT)
+Message-ID: <6e95b82a-19e3-460e-86f7-f899c2df261d@gmail.com>
+Date: Thu, 23 Apr 2026 09:41:54 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: en/backfill-fixes-and-edges (was Re: What's cooking in git.git (Apr
+ 2026, #08))
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Elijah Newren <newren@gmail.com>
+References: <xmqqv7dix8pi.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqv7dix8pi.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On 4/23/2026 6:38 AM, Junio C Hamano wrote:
 
-Add a `push.showProgress` boolean config that sets the default for
-progress reporting during `git push`. Setting it to `false` suppresses
-the pack-objects progress output (Enumerating/Counting/Compressing/
-Writing objects) without silencing the ref update summary line the
-way `--quiet` does. An explicit `--progress` or `--no-progress` on the
-command line still overrides the config.
+> * en/backfill-fixes-and-edges (2026-04-15) 3 commits
+>  - backfill: default to grabbing edge blobs too
+>  - backfill: document acceptance of revision-range in more standard manner
+>  - backfill: reject rev-list arguments that do not make sense
+> 
+>  The 'git backfill' command now rejects revision-limiting options that
+>  are incompatible with its operation, uses standard documentation for
+>  revision ranges, and includes blobs from boundary commits by default
+>  to improve performance of subsequent operations.
+> 
+>  Needs review.
+>  source: <pull.2088.git.1776297482.gitgitgadget@gmail.com>
+I carefully reviewed these patches and think they look good
+to go in version 1. Maybe you need a second opinion?
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    push: add showProgress config option
-    
-    The amount of output shown for each push is excessive in my opinion.
-    
-    It can be silenced by '-q', but this has the bad side-effect that the
-    success message is not shown. '--no-progress' exists, so would make
-    sense to allow this to be always be turned on.
-    
-    Enumerating objects: 17, done.
-    Counting objects: 100% (17/17), done.
-    Delta compression using up to 8 threads
-    Compressing objects: 100% (9/9), done.
-    Writing objects: 100% (9/9), 1.32 KiB | 1.32 MiB/s, done.
-    Total 9 (delta 8), reused 0 (delta 0), pack-reused 0 (from 0)
-    remote: Resolving deltas: 100% (8/8), completed with 8 local objects.
-    To github.com:HaraldNordgren/git.git
-     + 3b9fc3aac6...6d326b0098 push-use-progress-config -> push-use-progress-config (forced update)
-    
+Thanks,
+-Stolee
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2279%2FHaraldNordgren%2Fpush-use-progress-config-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2279/HaraldNordgren/push-use-progress-config-v1
-Pull-Request: https://github.com/git/git/pull/2279
-
- Documentation/config/push.adoc |  8 ++++++++
- builtin/push.c                 |  3 +++
- t/t5523-push-upstream.sh       | 23 +++++++++++++++++++++++
- 3 files changed, 34 insertions(+)
-
-diff --git a/Documentation/config/push.adoc b/Documentation/config/push.adoc
-index d9112b2260..92f22c8ec3 100644
---- a/Documentation/config/push.adoc
-+++ b/Documentation/config/push.adoc
-@@ -137,3 +137,11 @@ This will result in only b (a and c are cleared).
- 	If set to `false`, disable use of bitmaps for `git push` even if
- 	`pack.useBitmaps` is `true`, without preventing other git operations
- 	from using bitmaps. Default is `true`.
-+
-+`push.showProgress`::
-+	If set to `false`, suppress progress reporting during `git push`,
-+	equivalent to passing `--no-progress` on the command line. If set
-+	to `true`, force progress reporting, equivalent to `--progress`.
-+	If unset, progress is reported when standard error is connected to
-+	a terminal. An explicit `--progress` or `--no-progress` on the
-+	command line overrides this configuration.
-diff --git a/builtin/push.c b/builtin/push.c
-index 7100ffba5d..d35f816740 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -539,6 +539,9 @@ static int git_push_config(const char *k, const char *v,
- 		else
- 			*flags &= ~TRANSPORT_PUSH_FORCE_IF_INCLUDES;
- 		return 0;
-+	} else if (!strcmp(k, "push.showprogress")) {
-+		progress = git_config_bool(k, v);
-+		return 0;
- 	}
- 
- 	return git_default_config(k, v, ctx, NULL);
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index 22d3e1162c..27aa87ee01 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -120,6 +120,29 @@ test_expect_success TTY 'push --no-progress suppresses progress' '
- 	test_grep ! "Writing objects" err
- '
- 
-+test_expect_success TTY 'push.showProgress=false suppresses progress' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git -c push.showProgress=false push -u upstream main \
-+		>out 2>err &&
-+	test_grep ! "Writing objects" err
-+'
-+
-+test_expect_success 'push.showProgress=true forces progress on non-tty' '
-+	ensure_fresh_upstream &&
-+
-+	git -c push.showProgress=true push -u upstream main >out 2>err &&
-+	test_grep "Writing objects" err
-+'
-+
-+test_expect_success TTY '--progress overrides push.showProgress=false' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git -c push.showProgress=false push -u --progress \
-+		upstream main >out 2>err &&
-+	test_grep "Writing objects" err
-+'
-+
- test_expect_success TTY 'quiet push' '
- 	ensure_fresh_upstream &&
- 
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
--- 
-gitgitgadget
