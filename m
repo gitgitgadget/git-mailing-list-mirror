@@ -1,65 +1,66 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222C23DEAD5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FF63DEAEB
 	for <git@vger.kernel.org>; Thu, 23 Apr 2026 08:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776933645; cv=none; b=qF+X/cqPJjVNlKcA9HjL6Si3jw25UVkTRUml2W4syEM4FIlmEEKN1wkq3GaDJCZFuUr2l1rLi/gNp7GHPmcGq6rJCHoMEjMxm8R3OjpflF+XnNXCdfIXAHL7BHxiZHkd/8/aRfJbX/GfsDchMX7bc2YQIBqeR2e6W4e8iZFCnKk=
+	t=1776933646; cv=none; b=sjfj+Gni5ba2dfiasVd19aexNe+jLDo8czSD1LkX4B+nv1JM3+OBCdegOgRaFy4F3sWzIn9pYdbCIbsrDY7zojmLEjJ4fBiPxFcCFbE4MbZvLOqWPFZZUpcS6m619sbGP1ipCYdAkiJpqg627F6useR/uDQkDTIXKmg1JJ//r+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776933645; c=relaxed/simple;
-	bh=MEwnxkW6/gSp+7PkhIK07wqH558H8Mt8KYZfpIPWxPI=;
+	s=arc-20240116; t=1776933646; c=relaxed/simple;
+	bh=9hmCFKoKScRjhfqO/sM+O28CtMU/EzaD+pSewKN1a58=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d/jUGq260laEf3BfwCsc8Vl8JTnZpXOeW+mCF1rY+kgcmSeEOF8qxCZeC7YiXJM/zvcIuuAZT0ajbQT4/psCpAioMOgjGU7P7FSLMBCjtnV+X/fjZtJdrs1et3MQ2vr1UDXOvrRvUcRcEbu5iDhD1vkcn3TPD+G3B1rlv2w9BcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+UZtM6r; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:To:Cc; b=Vpj3oz8abmA7VRARWriUPlOho8gR8p7T2w3tSGdVd2rdNvamKaYVryBJQwdHL4O5M0p1pTeUUv2bz8C75bMZAtGZP6VX4UYAhpaEJTzQqF8v/qoyptMB31licQDopz9f7WEnv59MnmWQejkY9pquvYhZRQpur8A3fCOnGV4Knx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L5bjWXXQ; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+UZtM6r"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-48374014a77so83239905e9.3
-        for <git@vger.kernel.org>; Thu, 23 Apr 2026 01:40:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5bjWXXQ"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488ff90d6c7so51481995e9.2
+        for <git@vger.kernel.org>; Thu, 23 Apr 2026 01:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776933642; x=1777538442; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1776933643; x=1777538443; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kpLhhuTRukXFDEeEDyXZU5dhtW3P+you+q8JQGUyEwU=;
-        b=h+UZtM6rfcc+RRsxIqTCTJ2Vcb4i2FzfQ3oabLzaKjtXEgYeD9K/01eWrtkKB/Su2K
-         JvT6/S6xh7R80tDiGgqw8AnPkceLN60TQ+0x9bV9yu065Q2Pr2yfZhUC9XRAA8gHqTJO
-         uZcBv8qI6owM4BRDLHppb06fal62eJ9+l4tDsIrAgpoMsld3xACw5KcdzMUG7YLDK+yi
-         dDP+ZOnDWugGJZI5+4qP58E5YbRFxhUxo0F2RunOAujqy65uPwqh2iZM8CT9TTb4lbZy
-         usgOD+lalC/bxoU5K9BGrb/1nenufqf33XpYgfKVP24PmBh4NTb7BBlTF4u1XfVz3271
-         ohFQ==
+        bh=KPlWDpTehSrUWXOWCJ9JidhgaGbaVdI3x5TMBlSYF/w=;
+        b=L5bjWXXQurtxdtsthqR7Qw86hx4kcSAmw203enAl1sgBlxUimqR/PoEDZGOMIMXWOq
+         AEcJgRU13r7iptlFreGD44RKOdx+Lrfil5+YEAV2a3c4Knd3E2/emEw173p1hD7zoEeU
+         6VoAhllAKPiVvpl0VAxOUivZA73IcgCrm8W5aMLt5HaD9zBhOt8RaOH8MCXk75Za32aB
+         SYBMXCz1nUYCVXHidir8Vadee9VzZ1JHh+113VcJ5iB6jlku20ksVnIxsssaTEacUyeQ
+         Xsqk4uAaqSeV0WnDR4/VZmq1REJuqTFI2cq0nvgiMC5/beuLYMN74gPZU/e1aXQNoK8R
+         VG4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776933642; x=1777538442;
+        d=1e100.net; s=20251104; t=1776933643; x=1777538443;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=kpLhhuTRukXFDEeEDyXZU5dhtW3P+you+q8JQGUyEwU=;
-        b=etjaCa/qmNLjheghZhBl2Ti3XUpvUCBibLdvfwh3T3090kdnilKt/9q/InRCMAjGEB
-         41FbBF6nNQppdz3H6UAlMZQGdTsV21cxqs3fjSH3cDNUlX921CaDct1mLICVYoYID2Kr
-         gA5qrZysaMYSeLUyu1zpeqN5RDtrXSVQdQ2nM66cgHWyOvYFItw0xKGsFVoHb1D3XlBJ
-         BLqHFHmlZmwilPPcyNsJ+RjzPKBhQy0Qq0UOBCs7HF/kDDAgZDC2NwLeXoxQfZYZtQjz
-         a/+iuzaSFP/KBkN4nSan6R8mSufZ8shiPT1KrwscvKm+CmbMdIri9o5913z+CHYSRgcF
-         usHw==
-X-Gm-Message-State: AOJu0Yx/78NKcO75G4DG+K7EVOvdU/J9uzSCqs9Zlu/marRtoPG8mxOm
-	9N5wZ903I3qspXpUSporVGggNhDoh2phDQzoZplhgzJB8xku6jG9iJDMGoKGkQ==
-X-Gm-Gg: AeBDievC1cnFiOYLZ0X9DaWu2sL0yQxag8QkFU5195uy2oUvj+L82/40eBNUFxdbX5/
-	XWK7SJuRVgAuP+BKN2Qk6/C7AljoDbVATUCF8dYb2PTgaAY86EMxZcCsWV6nfp3b0u5ZQPWdRtG
-	tCVMghcBlal5KqDIKHeAS0gHWmX8ODzeA37lSSDM7PF8q36LF1aon8azbI1waJWsg0dk2kqqqLK
-	P5Gq22ONQJSBHWtIjtxVWBs41nsftYWeR0GFFb3YINdwx8QTSX1qrvf9iRvb7nj/WqFzQPchilU
-	/QDoGNmtdQk1JlJZkvH3f1qgLabm12ExNnIOMY2D2CXH8QtpLCE4SNLlJ0OlBP+pBhJW+NQUA/E
-	Zk4V52uQrSdgepOiwIFV+CXHWpAvnHHzpBjnlWiks/NKPnH+UrC9bNyfKjerUEzLB9glMb3qRjR
-	3qVa+JJVC6x2UitoYG1GDVpRH86nB/kcbvTZVRkm+W
-X-Received: by 2002:a05:600c:1390:b0:483:709e:f238 with SMTP id 5b1f17b1804b1-488fb78ea6fmr373793585e9.29.1776933642091;
+        bh=KPlWDpTehSrUWXOWCJ9JidhgaGbaVdI3x5TMBlSYF/w=;
+        b=JDRZHi6U2ekM6IvaNZhpWkWyqx/2TUO2ZD9PTGldE5KyHHMTFIBKC44x5lnT18mOYX
+         UIz2Jd8OoHwCW5p+bYcpf75XtsJaR8LeTnIUukA/vwbXuG236XEJfEl3GYFYJ+0NDVdn
+         MhVPAHGUuwFwmVw/hnZ74jsNZBKKXmgFL1iqBAET23IbAaUF5pQp8SB/Y5BfZZHL/xaQ
+         z5x+1OxBE2os5uud0AomH5mWkKHa7PT54FtkIgULXUyTnEaISnU8h8bfhekUBW4ZwkG4
+         ZsmshhuVMf5SFimtvygFdNAgm3NqkCVklAWDoT8iz/EJu5BHEyZl9jrdteGsgnXhtW6Z
+         /L1g==
+X-Gm-Message-State: AOJu0YyQr7hPKHtSMns31zcUV9o8qozSq2AupfgNoJJD2T6P0c3d59R8
+	KmstY2heLxPIjByTOx5Zu4uFuVpc7uQf4jqJCGOwBcSIc761njG7yv33X5Rk7w==
+X-Gm-Gg: AeBDieuNUgD+TqCXwI7IYTW0L2a7vSDtq+ZH0Ljsg+xbzpkJhtTV0enU0xBoG89INTo
+	XBZBE5G4yW41sMZdOMtsFOKIF6dT7Q+8PLQ6x4eef/dcvqYdV5ZmtznPTAIwSi/xKWgnPjkEPZY
+	dLAzxobsYQ3koSGosPhYhOo27pQNzAkRctzMM9Q5R58spq25g0znm1R/DcQ/XN4RhWWGceDGmaZ
+	hn40VDPiJhBsaMOR8nHMoZblYtP5kAUVa+cyEeykNV39g8Xs5Xmtpi7PAEsQhs1xlmp0mNUivcr
+	Q+/JOuIVHHSx/v2h2tvXZEZqXqp5jgu+I2jXuQibQQMebYpInQRKfQcFzRYsW9eqt47ltcgO7DO
+	NpNkizQ8MIsz/QJQ1Zr0mxcq2Nx5MsMt7zaf/4JWL0UkaDM5Iaw8CJdHruy1GS1T71zK+hHhBfS
+	qkBmF1slulVFw1skELLGcZbbpSzkK5b9kdxM8cyWvi
+X-Received: by 2002:a05:600c:46cb:b0:488:ac01:72de with SMTP id 5b1f17b1804b1-488fb7451e4mr372825645e9.5.1776933642885;
         Thu, 23 Apr 2026 01:40:42 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1cda:f096:cc8c:a0e2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-489fec8f7cbsm234286785e9.11.2026.04.23.01.40.41
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-489fec8f7cbsm234286785e9.11.2026.04.23.01.40.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2026 01:40:41 -0700 (PDT)
+        Thu, 23 Apr 2026 01:40:42 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 23 Apr 2026 10:40:32 +0200
-Subject: [PATCH v2 3/9] refs: extract out reflog config to generic layer
+Date: Thu, 23 Apr 2026 10:40:33 +0200
+Subject: [PATCH v2 4/9] refs: return `ref_transaction_error` from
+ `ref_transaction_update()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,96 +69,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260423-refs-move-to-generic-layer-v2-3-ae5a4f146d7d@gmail.com>
+Message-Id: <20260423-refs-move-to-generic-layer-v2-4-ae5a4f146d7d@gmail.com>
 References: <20260423-refs-move-to-generic-layer-v2-0-ae5a4f146d7d@gmail.com>
 In-Reply-To: <20260423-refs-move-to-generic-layer-v2-0-ae5a4f146d7d@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com, ps@pks.im
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2681; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=MEwnxkW6/gSp+7PkhIK07wqH558H8Mt8KYZfpIPWxPI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnp2wNQqz+XwXdkNGbqmR0mnpk+YogwGS1lY
- b2Q/Tf/1imGWokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp6dsDAAoJED7VnySO
- Rox/5eAL/1Z3OfqTfJxyP7vhJ0OVcI1WK44evWlN2yk2I0g1mXIlB2CZvKr6Z+YxSZ5KRQR1J+n
- wjpfduLqujmNnsLkr7K4U22qtS9upOU5GjAhKpPYOt/jegSqX9uUyZPzcVug28mmh09UxfaJ/Jt
- CWTxWqIMoosInk5TsHAIz0PGVXB4IimgIwegUHNdpQPQbHIUyIYlgUAqvD5qH+D/wp7U4zym/Pt
- T40VOMI/jsS88IUoHWQhztwzWbaGHo3mS9o0pl6cCia8asFAGhNiLkGctCqxGq5p8DR9Pk4gRLd
- mZlun6216dQCJlZ4Y15ukzt8PilVoLLSnOC2H277046qAq1sxMRI97kWcSxeliSKYPDti8ZfOMk
- f/3oT/itzFtTxQzsJlENX0cng+QD7OQ0260RyFqDGjsdrgjjaq6qvIToQt5rKd8icS+s0icc28g
- BKGzYwGnVz133BvnBKK+ZiBa3wayxMB1xCAE2B+W2Y5md8BZ84z7mal67oxIbAG3iPB9mgRyzB5
- q8=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3225; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=9hmCFKoKScRjhfqO/sM+O28CtMU/EzaD+pSewKN1a58=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnp2wN+OgxdpvRPjfKEeocF4S29syDxAMqkH
+ XpIHChy4o5b1YkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp6dsDAAoJED7VnySO
+ Rox/G6QL/1AaCRU/1y7PLZZxF2lhw2z8AHHMNIHf353LGLFMv5SXEh6H12BU1sTo8AF531YnRix
+ NXmNh++QnRSKoj+gGb+++3IWiTxiYG/dRuOU+HDjiFm7FMUoNCw6ET5F2+3yDZhXYBbUaEd/uoA
+ IlWo5A8+byIAN+f1OnRCZpkrb1ujmRLVYUoj6Nr98mF7lvJHiQHkS0O1NQp/mbiZzbRiTVvQxHI
+ gWPlgbNWk2BWogO5d4ACRaGal8sqocSX1yH8JeF6B3JPrsYgXjOm4MeAQM26l5MdOj0Krm7iani
+ F6RPtuqK7L2l0UlPzNrYH7SHBRp5Mi1Gar5DWtUh/fOJZl4XxLB/DvSZ63idQg/2AUSGpm/8TY/
+ Gbf/Yijx0w5leKLh6gfLh9RL4g5U+89WR0biBToBz7f5CDG9eM9CtkLanEZLJXnlw3mMztaPl4U
+ 7Y70+t4YEhjdKdz8VB7iDDqf2GwIXkNjEKGZzWO7DanOktDM2+4jvyu6o8FjqnqapzsCp+jYRX6
+ NM=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The reference backends need to know when to create reflog entries, this
-is dictated by the 'core.logallrefupdates' config. Instead of relying on
-the backends to call `repo_settings_get_log_all_ref_updates()` to obtain
-this config value, let's do this in the generic layer and pass down the
-value to the backends.
+The `ref_transaction_update()` function is used to add updates to a
+given reference transactions. In the following commit, we'll add more
+validation to this function. As such, it would be beneficial if the
+function returns specific error types, so callers can differentiate
+between different errors.
+
+To facilitate this, return `enum ref_transaction_error` from the
+function and covert the existing '-1' returns to
+'REF_TRANSACTION_ERROR_GENERIC'. Since this retains the existing
+behavior, no changes are made to any of the callers but this sets the
+necessary infrastructure for introduction of other errors.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c                  | 1 +
- refs/files-backend.c    | 2 +-
- refs/refs-internal.h    | 6 ++++++
- refs/reftable-backend.c | 2 +-
- 4 files changed, 9 insertions(+), 2 deletions(-)
+ refs.c | 20 ++++++++++----------
+ refs.h | 16 ++++++++--------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 8992dd6ae8..6b506aeea3 100644
+index 6b506aeea3..efa16b739d 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2297,6 +2297,7 @@ static struct ref_store *ref_store_init(struct repository *repo,
- 	struct ref_store *refs;
- 	struct ref_store_init_options opts = {
- 		.access_flags = flags,
-+		.log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo),
- 	};
+@@ -1383,25 +1383,25 @@ static int transaction_refname_valid(const char *refname,
+ 	return 1;
+ }
  
- 	be = find_ref_storage_backend(format);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 78150ad209..9b1fa955f8 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -125,7 +125,7 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
- 	refs->packed_ref_store =
- 		packed_ref_store_init(repo, payload, refs->gitcommondir, opts);
- 	refs->store_flags = opts->access_flags;
--	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
-+	refs->log_all_ref_updates = opts->log_all_ref_updates;
+-int ref_transaction_update(struct ref_transaction *transaction,
+-			   const char *refname,
+-			   const struct object_id *new_oid,
+-			   const struct object_id *old_oid,
+-			   const char *new_target,
+-			   const char *old_target,
+-			   unsigned int flags, const char *msg,
+-			   struct strbuf *err)
++enum ref_transaction_error ref_transaction_update(struct ref_transaction *transaction,
++						  const char *refname,
++						  const struct object_id *new_oid,
++						  const struct object_id *old_oid,
++						  const char *new_target,
++						  const char *old_target,
++						  unsigned int flags, const char *msg,
++						  struct strbuf *err)
+ {
+ 	assert(err);
  
- 	repo_config_get_bool(repo, "core.prefersymlinkrefs", &refs->prefer_symlink_refs);
+ 	if ((flags & REF_FORCE_CREATE_REFLOG) &&
+ 	    (flags & REF_SKIP_CREATE_REFLOG)) {
+ 		strbuf_addstr(err, _("refusing to force and skip creation of reflog"));
+-		return -1;
++		return REF_TRANSACTION_ERROR_GENERIC;
+ 	}
  
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index f49b3807bf..d103387ebf 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -392,6 +392,12 @@ struct ref_store;
- struct ref_store_init_options {
- 	/* The kind of operations that the ref_store is allowed to perform. */
- 	unsigned int access_flags;
-+
-+	/*
-+	 * Denotes under what conditions reflogs should be created when updating
-+	 * references.
-+	 */
-+	enum log_refs_config log_all_ref_updates;
- };
+ 	if (!transaction_refname_valid(refname, new_oid, flags, err))
+-		return -1;
++		return REF_TRANSACTION_ERROR_GENERIC;
+ 
+ 	if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
+ 		BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
+diff --git a/refs.h b/refs.h
+index d65de6ab5f..71d5c186d0 100644
+--- a/refs.h
++++ b/refs.h
+@@ -905,14 +905,14 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
+  * See the above comment "Reference transaction updates" for more
+  * information.
+  */
+-int ref_transaction_update(struct ref_transaction *transaction,
+-			   const char *refname,
+-			   const struct object_id *new_oid,
+-			   const struct object_id *old_oid,
+-			   const char *new_target,
+-			   const char *old_target,
+-			   unsigned int flags, const char *msg,
+-			   struct strbuf *err);
++enum ref_transaction_error ref_transaction_update(struct ref_transaction *transaction,
++						  const char *refname,
++						  const struct object_id *new_oid,
++						  const struct object_id *old_oid,
++						  const char *new_target,
++						  const char *old_target,
++						  unsigned int flags, const char *msg,
++						  struct strbuf *err);
  
  /*
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index ad4ee2627c..93374d25c2 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -386,7 +386,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
- 
- 	base_ref_store_init(&refs->base, repo, refdir.buf, &refs_be_reftable);
- 	strmap_init(&refs->worktree_backends);
--	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
-+	refs->log_all_ref_updates = opts->log_all_ref_updates;
- 	refs->store_flags = opts->access_flags;
- 
- 	switch (repo->hash_algo->format_id) {
+  * Similar to `ref_transaction_update`, but this function is only for adding
 
 -- 
 2.53.GIT
