@@ -1,130 +1,235 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038AD30E853
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 20:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E589F30BF4F
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 20:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777061834; cv=none; b=CyLeUkGpXgjdydpH/nOR26kREBfsS0Cpl27UkcbcQMC5pQmaNwVGEgL80N+gNtXaO7ovFwRIwyod3UPZovm4Dtoe5R1njIujjJnH3CZNfGUJQOHJMn8Enw+WLjXXiU/dB6ZcIQEXgJeOk/wkBzeOpXUgfIg4PCcIV/bFgiXE7io=
+	t=1777063962; cv=none; b=lLYQKiCDFWoa37b2tDsDkZ3dISa7BJC+JxBDIeGqj6kUxm4Tvu2QtAfVnwvbK2PlRAf4NbhKB/rWJraengZqtedWMCtFt04De4vod7lciLEA7/InvOfJK/it/ks8Q8bQ+mIUWvjgt8NCzffNQwrXOD3bRmEq5+0eAppNp+fXeGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777061834; c=relaxed/simple;
-	bh=APxcoZeh/k7garK03FlzxDvWwamkT7HYSwGqUcWGbHg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I0omMzRVtKW/exUN9woq+nL2XMYJ1xTALlMXoEfHRQnm537NmTEvj/OTA5wZ90pkR6j9onDpZUykScBVIjCR2SKOkhGvhLeOWFTQeAeXhCnW0gLu3qiMEWTILmZ/xKf7+rZZTYxWnqs04HCSttaFc5/Hj7EDXvqsMBUFidR1wUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=epD6fqRv; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1777063962; c=relaxed/simple;
+	bh=eCm5T2Z3FKSPTaKNvtSojPUBEVBb8UoNHmCrqekqBfc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eOGdSoH4OPHCuyCq1hkh45s4XFgtExsVlJeusn5p1CcNNiHaYTlvWkZuG39/KMWam5+KcGa21AZ2KkDw93CV8zYU1XvnQzXNqmf2WDNJ86CVmpYwfTkXfF8IKcRugY39I0mxKSrIv6ojv2u3+9Ebn9iZLNupcpoFSuSFHElDBrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=On2VJk3m; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="epD6fqRv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1777061831;
-	bh=APxcoZeh/k7garK03FlzxDvWwamkT7HYSwGqUcWGbHg=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=epD6fqRv/Vnaqsfwpu2wui4b/Nv45qHHpASYe228iaViyQfE+eVTzNcBIhcPSBQOp
-	 83fCpa0E2MOvdXvyV5Km8P/VjhcJchRwvGRjEoY1XTgk2YnAvt3PV3Uz0di+JBsF1Y
-	 2tSrCQS8WYaZaqQCVMWvU995XFp0FpGZuIvzqjTE0K/iGHSeeqRPgzuUAR7FA+Jk7k
-	 mHDMMmf4KSsfPk8lv4u1Vr1teK4U3h1wbLMck0c7GUjeVxdUgSyZfc4C6KI3D9JMET
-	 6S7yoH6OlQpuzTYCiV6nJro4se6qOtNF/9q60Xgs4DToa9BEJMbbIdfZZPa+R0Cl7o
-	 JGSOCQrcRmGLmjxZG+uoJQGq5eZqX/Qy1N5+OVE7fNKJZLVckMriFAARggfzVQKsd7
-	 pbeBoKqyfjuog0KZcSYIDUEumUwLxEK3xp7z/+O9qeV2mUvXLiEElsKqcb9ORdABcp
-	 wmmOAxcgwNstpr4VrJs6KvUIfGIvDcoNadvsGgMh4KzLnsLAQxA
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:55cc:40d2:74ee:685e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EE5F62006D;
-	Fri, 24 Apr 2026 20:17:11 +0000 (UTC)
-Date: Fri, 24 Apr 2026 20:17:10 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kushal Das <kushal@sunet.se>
-Subject: Re: [PATCH 2/2] commit: sign commit after mutating buffer
-Message-ID: <aevPxrN3xWq8SP71@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Kushal Das <kushal@sunet.se>
-References: <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
- <20260420221425.2763661-1-sandals@crustytoothpaste.net>
- <20260420221425.2763661-2-sandals@crustytoothpaste.net>
- <CABPp-BEd9saiMWVdcSaZBHqGreshpA=fGZc4AvYkoU=swSSuxA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="On2VJk3m"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a283c44478so13928665e87.3
+        for <git@vger.kernel.org>; Fri, 24 Apr 2026 13:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777063959; x=1777668759; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EgAknIsuGhm7pAI+QcXtOK1CQEyjfaBovnWP9TkkniI=;
+        b=On2VJk3mFKD6AFH9q81po+HgQQ/E1idwGvG22KoAdbthR5hotCjHswDm583Sle8ORK
+         Wa+Smo7prldbfwbt5WNA0OLaNyG9gZVh+muzy27gDlCwloI1PBcehpbI9jJpigqnlNs3
+         9b1Bz7ikuHym8UmOs/fdyraS80ejfi7SUtCVxJZt3KRPYZUslMr+TqUNybAdhIYEVFNi
+         byoDYuh6U/cfMWEd6ICyk3QCTMmMvyRNZWJZEJJ/oTKYMz4mTm+xOh6iJcbdvneyVRfU
+         FIEMUJLjUo8pkfTBOThiszil0OJ9fqrZArWtPEZXkhk6JjfYxuUCtBEfyUxaMa+v1j5U
+         BFDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777063959; x=1777668759;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EgAknIsuGhm7pAI+QcXtOK1CQEyjfaBovnWP9TkkniI=;
+        b=r1rFKbxe8nBm0GGpAwOKuVfef38Y3Y77/Aq38Rv9k5Qo81grNPQQA1gi1+hepsiHer
+         pqv+oOFbXDiY2G/yFvd6RvUoPR7oy9lP8kYwp2rAfM2kqER9H0G7jmgA6etiW1vyEysw
+         AkumHt34MVo28I7Bjx5s19WT2z2JkF3H0F0/DyWWkPW6TOyHBiMzMmGUuR5dOiRzel4v
+         H7ddJ6mE3M19wjqJwFGhjTEHYnyNwosd+vfp6YVAZn6zF5oXzfuzFpRMsYlBxIypyKN1
+         mtVWNN4TT7wSfGx1VbUiu8i680IfK/q0AYAZr+4ULsN18Lf5s+sjlV3XyivtOA97OqLF
+         N07g==
+X-Forwarded-Encrypted: i=1; AFNElJ+28tmIDK9M0kTSrjb+LQl65RdEBrfTbSsrzisNEJUdATyfOJgRIgPftm8c/oGNVeQZ4Ng=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywbn5TO0EkO/YaEPjnKWEQ9GLftNUP0aRz8PR1G5R/tQuSOIQ8f
+	M0yC8Qt+snfFVXNj2s0lC1fDEg8dIziLg3nFHM8MidoYBAKZl4xxcYZUkRD8cttW
+X-Gm-Gg: AeBDietSP68mXTmyorKUAnSx2xC/OlYplvpeCgDF7QAwwAOB7dBUZizGP5Z5WLU/Cbe
+	lQKIksak9d1IHCJ7rekfZfnthun0GaMsJFejjFNW2iZtLw1XBIZlbgRB75U2Plptd/tRebMtkBf
+	ivN3G4zMydW5FagLZFpf3sPvJj8IaOWS33uAfaC4sTFSolqmW8tkHERQbCBSURrAgPdUlFZ4vji
+	s6scdI/U9DQT74hgnEJyt9q0t+6L2WaarJWVFcjDjrBQZtqCqkvEcCB+qPNLBJH/w2BWwEN6+sw
+	7ZjRtjR/mrSyTuHg9a8RZoyGvh6PXjy96skAjf27NO71GmTh16ymdao6JO4YWfBHfxEfSrEOiQn
+	itq4//pElqXs8+LpmZB4BETN+W3qf9cA9fC9x1JfarmCUZJVXB9wC0JS8WcPNTQGoDPgoULFzkq
+	ECuqUvVmRBjM64oFulVkuSdSNaKJdz3F+WeaeCjNdxkUjAb7qQGlZD8QrcV/I9c8nhcQ9kXK9Jx
+	JYtvomvTqhnUA4yKr/5/vcZaso=
+X-Received: by 2002:a05:6512:3b25:b0:5a2:a8ab:ab4d with SMTP id 2adb3069b0e04-5a4172daacfmr10739714e87.22.1777063958783;
+        Fri, 24 Apr 2026 13:52:38 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4187e11ecsm6332143e87.47.2026.04.24.13.52.37
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 24 Apr 2026 13:52:38 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: chris.torek@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk
+Subject: Comments on Phillip's review
+Date: Fri, 24 Apr 2026 22:52:37 +0200
+Message-ID: <20260424205237.65227-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0-rc2
+In-Reply-To: <65f77343-2ee6-4ed6-adb2-271814148310@gmail.com>
+References: <65f77343-2ee6-4ed6-adb2-271814148310@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rpyDT7E1ZwOtF8df"
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEd9saiMWVdcSaZBHqGreshpA=fGZc4AvYkoU=swSSuxA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+> ret is -1 so we return the same value if unpack_trees() fails as do the
+> checks at the top of the function do when they fail with "return
+> error(...)". Therefore we cannot determine whether a failure of this
+> function is due to unpack_trees() or not and so we wont know whether to
+> autostash or not. You need to return a unique value here like -2 (or
+> ideally a named constant)
 
---rpyDT7E1ZwOtF8df
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+👍
 
-On 2026-04-22 at 15:10:29, Elijah Newren wrote:
-> On Mon, Apr 20, 2026 at 3:14=E2=80=AFPM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > diff --git a/commit.c b/commit.c
-> > index 790dd2faed..bc41859be1 100644
-> > --- a/commit.c
-> > +++ b/commit.c
-> > @@ -1747,6 +1747,11 @@ int commit_tree_extended(const char *msg, size_t=
- msg_len,
-> >                 oidcpy(&parent_buf[i++], &p->item->object.oid);
-> >
-> >         write_commit_tree(&buffer, msg, msg_len, tree, parent_buf, npar=
-ents, author, committer, extra);
+> Good - now we only try to restore the stashed changes if we actually
+> stashed. However we only restore the stashed changes if there was an
+> error(). If there isn't an error we call update_refs_for_switch() before
+> restoring them. It would be safer to restore them straight away in case
+> that function ends up dying for any reason (though I think that's pretty
+> unlikely)
+
+I hope I understand correctly, the code becomes easier this way, so that's
+nice!
+
+> As I said last time we should not be calling apply_autostash() if we
+> have not created an autostash. We should also not discard and re-read
+> the index if we haven't stashed. I do think we'd be better restoring the
+> stashed changes in a single place as I said above.
+
+Makes sense.
+
+> where the changes appear to be part of the advice message. Perhaps we
+> should print a short (i.e. one sentance) message along the lines of
+> 
+>         The following paths have local changes
+> 
+> We should test what the user sees here as well.
+
+Add that message.
+
+Do you mean to test the full output? I'm not against it at all, but that
+seems to be going against the convention of the other tests in this file.
+But it would be a more robust test.
+
+> I'm not sure we need to say "local changes" twice here
+
+👍
+
+> I find the bulleted list a bit odd, maybe
+> 
+>         You can either resolve the conflicts and then discard the stash
+>         with "git stash drop", or, if you do not want to resolve them
+>         now, run "git reset --hard" and apply the local changes later by
+>         running "git stash pop"
+> 
+> would be better?
+
+Much cleaner, thanks!
+
+> we already have tests for --conflict=diff3 and
+> --conflict=merge I'm not sure this test adds much.
+
+Deleted.
+
 > > +
-> > +       /* And check the encoding. */
-> > +       if (encoding_is_utf8 && !ensure_utf8(&buffer))
-> > +               fprintf(stderr, _(commit_utf8_warn));
+> > +     cat <<-EOF >expect &&
+> > +     a
+> > +     <<<<<<< simple
+> > +     c
+> > +     ||||||| main
+> > +     b
+> > +     c
+> > +     d
+> > +     =======
+> > +     b
+> > +     X
+> > +     d
+> > +     >>>>>>> local
+> > +     e
+> > +     EOF
+> > +     test_cmp expect two
+> > +'
 > > +
-> >         if (sign_commit && sign_buffer(&buffer, &sig, sign_commit,
-> >                                        SIGN_BUFFER_USE_DEFAULT_KEY)) {
-> >                 result =3D -1;
-> > @@ -1780,6 +1785,9 @@ int commit_tree_extended(const char *msg, size_t =
-msg_len,
-> >                 free_commit_extra_headers(compat_extra);
-> >                 free(mapped_parents);
-> >
-> > +               if (encoding_is_utf8 && !ensure_utf8(&compat_buffer))
-> > +                       fprintf(stderr, _(commit_utf8_warn));
+> > +test_expect_success 'checkout -m respects merge.conflictStyle config' '
+> 
+> Looking at the existing tests, 'checkout with --merge, in diff3 -m
+> style' and 'checkout --conflict=merge, overriding config' already test
+> that we respect merge.conflictStyle and that --conflict overrides it so
+> I don't see what new coverage this test adds.
+
+Deleted.
+
+> > +test_expect_success 'checkout -m skips stash when no conflict' '
+> > +     git checkout -f main &&
+> > +     git clean -f &&
 > > +
->=20
-> So the users might see "commit message did not conform to UTF-8..."
-> twice? (Isn't compat_buffer likely to have invalid UTF-8 whenever
-> buffer does?)  Do we want to avoid that double printing?
+> > +     fill 0 x y z >same &&
+> > +     git stash list >stash-before &&
+> > +     git checkout -m side >actual 2>&1 &&
+> 
+> file "same" is unchanged between branch "side" and "branch" main so we
+> do not need to stash it.
 
-Yeah, I'll fix that in v2.
+Deleted.
 
-> Did the change in this patch also fix a short-circuiting error?
-> Previously, when both buffers had invalid UTF-8, we'd only call
-> ensure_utf8() on the first one and fix it, and then short-circuit and
-> not handle compat_buffer, right?
+> > +     test_grep ! "Created autostash" actual &&
+> > +     git stash list >stash-after &&
+> > +     test_cmp stash-before stash-after &&
+> > +     fill 0 x y z >expect &&
+> > +     test_cmp expect same
+> 
+> Even if we created an autostash this test would not pick it up as the
+> stash is not written to refs/stash unless there are merge conflicts and
+> we don't print "Created autostash" even when we do create an autostash.
+> The same is true for "checkout -m -b skips stash with dirty tree" below.
+> I don't see how we can check that a stash was not created without using
+> GIT_TRACE to see if we run "git stash". Even that is fragile as we might
+> start stashing without forking a separate process in future.
 
-I believe it did, yes.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Deleted.
 
---rpyDT7E1ZwOtF8df
-Content-Type: application/pgp-signature; name="signature.asc"
+> I don't think the two tests above add any extra coverage when we have
+> the one below so they can be deleted. Our test suite is slow enough
+> already - we only need one test to fail for any given issue.
 
------BEGIN PGP SIGNATURE-----
+Deleted.
 
-wr0EABYKAG8Fgmnrz8YJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ0QR1YMUPZPWUO8B/Qeo1laH5de+6qUy4kfvJAnOp8Bq
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAADwhAP93QMFEcdf2h0vTM6C+JcP/+GaH
-8dDv3rW8bq3ekT76ZAEAhuFujRgS2rYUKGBklLn+9LL3W8XjxHHq3fCDkfTmqwY=
-=9VSy
------END PGP SIGNATURE-----
+> > +test_expect_success 'checkout -m stashes on truly conflicting changes' '
+> 
+> This use of conflicting is rather confusing - what's the difference
+> between a conflicting change and a truly conflicting change?
+> 
+> I think a single test is sufficient to check that we create a valid
+> stash entry
 
---rpyDT7E1ZwOtF8df--
+Updated.
+
+> test_expect_success 'checkout -m which would overwrite untracked file' '
+>         git checkout -f --detach main &&
+>         test_commit another-file &&
+>         git checkout HEAD^ &&
+>         >another-file.t &&
+>         test_must_fail git checkout -m @{-1} 2>err &&
+>         test_grep "another-file.t.*overwritten" err
+> '
+> 
+> which passes on master but fails with these patches applied. We need to
+> make sure that we don't set "quiet" in unpack_tree_opts the second time
+> we call merge_working_tree(). The test could be improved by adding some
+> local changes.
+
+Tricky to get right, the test if very good to have! I rewrote the logic now
+to make this test pass, I hope it looks better now.
+
+
+Harald
