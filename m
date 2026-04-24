@@ -1,107 +1,113 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0EC30DEDC
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 17:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777050771; cv=pass; b=utJHU/qXw1LtXVklwSCI3rXBSTBDevtZnYdrJQzkrMCbg+sHvqKllx50uTpT8k9w9JaGZjpPEslu7h12FQcpTSLh4BoeXHqejiitFRmc4Tr+RnRa2Xp+Tzu/JlPEmgH/Pdzf3za1ktn7Ds+FXVsmOEqcDMHMnKka96Ki9wBajS8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777050771; c=relaxed/simple;
-	bh=My3vguTTSXXyTctjRji2R55Mhj9wwFu0zE+OItDzNdE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PJi9jel4tcNEwNyillliU/XqSiwxJTuMAZScCaEDW3QgFhI3EdYiHnAR1I4MO70hpZYK0dlzt9bzofZdWq1WaComB6krkvGymgqN0dmwSw5bN+1VFg+CkldYC2bn9ZmB8fIoLLNLYrHZdLF5KK5DBfBI4hss9GVyCd3Ij6Eg/Ks=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KZqUg2/W; arc=pass smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8026D288AD
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 17:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777052331; cv=none; b=gDyvOJ448AMyhpA6f6Ry5sJnSNUukCU06y284XyGTK62F4qwaxge0DIpyAIImdm6UqRkz7E/B09mnkH8uAiQVOE7sgVZQRfqym1KTGmy6B0WLZNiSn2msP6gWkVuE1UbFFfLTDCB0V5sJ/EyyaCryk6ClwPnZv+jn53DBqmqZ08=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777052331; c=relaxed/simple;
+	bh=X11VAVs9KRv1XDUz9ark2/X/c+stbnBFFI9xWxS7aGQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=XjPSBq1XjcNvpMTQUWk+zOXXO4bJDq+cf3/BwC8Mm+aUQc8P+To2Ki3UKjtYKvShrIlIrYOXLcYwR3Ltj+vBN4R+cbSj3+iNA5Rhf4pEf4ophWDtSJESIStYVUKFouWHkPmKTQMmefROLtpcbFsLej8PJ8XMBKGE4OpLqmHi5nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LALptvXq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZjaxDrKJ; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KZqUg2/W"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2a8fba3f769so36913345ad.2
-        for <git@vger.kernel.org>; Fri, 24 Apr 2026 10:12:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777050769; cv=none;
-        d=google.com; s=arc-20240605;
-        b=aPYspZ9fAqYhGz/kfAQR8tfv99AzHH9ztK/4wd2D/xniZVOfk/kjDG6B9RmX8pv6sD
-         jTZtIor/E4UTQ24wpACF1upNy/Z3QPcF2JVbiM0HwUSczLKbJqt3nYkPFqZNrZVbwcT6
-         06zcVgsRoudHjlydozYErAiZoBD+pEOYwnv54bJGmg0AhDbWgdn/MEpbCt4fZC85MfON
-         OnghxeAg6MGiO9ydEYJTkhb/9A+/3JN6iLw60JVTzCvjsxCj4kpQgwo0wV7c3Bm2WEwN
-         cTqTyprOwPvMqlk1j7JUMrNBR3pOdBF3nc76zcPhNlNE8mx0O28xl2BkbNF37+DdFJdY
-         Eh0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8BMBugdY5f0NQ6yFqySFWox/czzyNxzxPX2e13Xjmgw=;
-        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
-        b=CvJC+7h8DFI6IUV1myeV6MvudCni1yhwKeWvnjxoV8H3yqmWm1m3BtS8kBAwjSimrX
-         jjH1cSRsTpng+OuloKPC95QAkKMkCkRzxcNkCxiPiw4H8hIy4Qm1A7BJpUXYwjbYjDcU
-         /f4BGz/aYN14SRx3df3QppyQX8D22USnxfJ02uIQMTdnIdPiAmCAQhKZbHULtLrfLan1
-         y7ea9NCxYQQ0G3mD2qsUW+3K3tJJ5nIuzp3HZXYK/b8pku1VHnCsGWxRtTGvLFrQDC7S
-         r0OyWkXTe4kG8gJnZynY81R+3qfLW7yhZvqZTN8epZh6YHF3xz4n9vCv8qfXjPiwxn1n
-         IHSQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777050769; x=1777655569; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8BMBugdY5f0NQ6yFqySFWox/czzyNxzxPX2e13Xjmgw=;
-        b=KZqUg2/WsKAJY0theBDu8vyU3piqQJk4+hQ085UpIRP3j95NDZy7YWcfrB03ie8OBC
-         OmTIM/hQxGDOCHHV/RF/UM9BcS2QwRvFVuBdFLB9VxwXfM6PHcg9As6InqT2niwlxwFQ
-         1+hsjQFN1v9osORLbN86zt22DZVutvCxWb+VBzHgKxVJ66jJJc/rQIyWwue+uj6aumO8
-         C4BLKKmljZOnswYyE1XCzXfF17rkr1gqAXWNyI7iAewfe2uoEZ4kDYjLJ8LWd8yXBsgU
-         s8rj3vB65EkTKFOrVogJSFpbWCcGQSyhGUilVgKJXJzEzYNbRXPNLWYcGVHZKws5HPpw
-         0PJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777050769; x=1777655569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8BMBugdY5f0NQ6yFqySFWox/czzyNxzxPX2e13Xjmgw=;
-        b=nuft5Y+Vp/sxv9vPTlW4bPBAt8RhLtEA31bHQlct+9O/cysKX7EUl2R8T7bdzDRlUf
-         vg5fsV8AA4SyYUyaf7+GTX0vNQtSkj4+7nkNI/0lVEd+WrxtX5zn7sEnqfCuO+mLfbHJ
-         VGKhWu2la9dQzqxb3ZGm5S5uAV2htpNNBSVUF+flJ5TlnphV8WUkpyi3nBOLjyCPB4L5
-         ZgMg/w0GVYUpUn/xJUuLCVKEsOs+ce2TnlEyC9fBZ/YWsmjMH5KcIXpTOBHcUsth77EX
-         Zrhl1rnykIKaU/LUMBUlOrL8U+fwdEkc9hZm7Tbw4+ftMvotWSx6jIsmKOrfi2/M4mJm
-         bC1g==
-X-Gm-Message-State: AOJu0YzQMiUTq/ErrJlSDNYxrOSOOo+g2lVBtaqvztjkr3lcqPVBUvY6
-	ldqFo63TaYSOcGNFRH5lHie0VbjnQRo73zG7B8iRh2Yc3Qd65Mwrty/4AmnNc0NGe1XsOhFIpdA
-	W0uIlup6kFkrFyUkNfzIC3iCWeaIziQdxKBZm
-X-Gm-Gg: AeBDietbJBIdLNPN+BKv7T90j+ZGugvNnmHhi5dvwFGL1NleWqVxsICwKZ1e9jwyjQb
-	KYBFG21eY3+O2cTM1PjemG/D5dTk0FB5QngeVF+mA4SDao4RprDiBqWmzJJTEZqVwD8fOwRzUwj
-	8MMhU2mPiVqtKhKiIkXVYszVpRpXhpk+KtAu9ovdWFOWfFOV9t9U3OgWEm7HNCE0JIKNn4SbHe3
-	krTEh5ju25ISNRXzwq85DN3Eu4J9WxtAucASQsYGrJrX91FziYO+3CapBn95exTYg6rkmO0NVfY
-	WZIye73pd7t41JINOXZ3rN8CW8L1tSoPjJdngQoutPmtgU0li+HMPTyA5R05ba4WmywV2ZQNpHz
-	ce1nM3bMDsyITnbg=
-X-Received: by 2002:a17:902:bf41:b0:2ae:4a4e:1e25 with SMTP id
- d9443c01a7336-2b5f9f5c1c5mr247237765ad.25.1777050769376; Fri, 24 Apr 2026
- 10:12:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LALptvXq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZjaxDrKJ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B5558140013E;
+	Fri, 24 Apr 2026 13:38:48 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 24 Apr 2026 13:38:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1777052328;
+	 x=1777138728; bh=Wesn1Fqt02Fc88gwlUb+WEGbMOH7EMcYxdy/eY82EUs=; b=
+	LALptvXqlocKF4luw5yGB8uA4/dYJ4pZTvOeR0D3yh/OhPngpd78MQDGBzgOBvty
+	Xh3E0vyEd56iFAY6ZUMu9Gxlr0EQ/Djw6DkSvSBtXdCfKVzAPYqMnnLyUBcfc2wT
+	3kYyF9CvaFV5QvdZXFLK35uLeqzoe7OcfAfQd9hJWrRsqtEU7wgRKFYBugokMoT1
+	GG5y0c1RtbwOxOtJ3TOjM+a5Z5JurnGSmMGsoyymtBvvowhYSY4JxeKBO/4MDuuh
+	8yJ7J0yA/HuMri/2/4rnkFp4Y3vidNwyR1UWWP0hiJ0YzzB//W0olqoiFVG9YBdt
+	hyju3DoklbIMtDBU8yXhbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777052328; x=
+	1777138728; bh=Wesn1Fqt02Fc88gwlUb+WEGbMOH7EMcYxdy/eY82EUs=; b=Z
+	jaxDrKJEQpp0Q6yfHnLRY1olovneGkrYCdQbx+ItvF/B0+C6j2zhnrKOMUm6QdYW
+	Q/BhoT3/p+lWqJ3eeulwLKWRvkRrzTSBBQ2Y+xtOef7Gc06l+gpo0p8DSN0PQTge
+	z/DamUuh0gBzLb7CIf8WPvyzHu2riFSPWHgGrfFWPGzTdGymwyGE3qcM5sYLqRNm
+	TInTe0h27Gn5WqYgrdYhMp6HHbsDs/akyWqv6BQfqzg4uMbXRCVeqOk5uTACgQks
+	NmriiP/XSUnSYyGjanCJHbIptINiSTdy98S118V8D7Ljl6Ql9OQuTI+wiy4vWSSg
+	Y6CUfOSqgAhTu2YDi15rA==
+X-ME-Sender: <xms:qKrrads2_3-rjxjgBlu5d004TbOo4a6gCzT_4dPyciwbHxUAwP1BMPU>
+    <xme:qKrraRTxZSJS59ukwX7jOTkmQSvx8s02W7tIh2uAuiFev0vFMntgqZrx3G26Q3-Nu
+    T-1zZLrhONA_fkpmc7Q8XDburPQlxfIZYMNmE8BmrBByt0h0Zo83g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejtdeihecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeelfeejudejfffg
+    leduheegheeufeeffedtgfeffeevudeuleffgeektdelueekieenucffohhmrghinhepgh
+    hithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehhrghrrg
+    hlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:qKrraRqstoaiQTUWN5Wim6wVUkQjXYpJE816_bTjKzA8Kw7SkVz3-A>
+    <xmx:qKrrabYmKZcpLZnicv7wXFCweaR8GQWmPIdnEuUwgYCVSTXGch-EBg>
+    <xmx:qKrraRR7dkMHEwwZxqQaVPZGjDVN6t1BHiNRP6_9OdvJUJQCqvVFWw>
+    <xmx:qKrraa7gBwWjOGpNxjk3T0PcQq8gPcoz8vYBNi0xaOvZynGJwahe6g>
+    <xmx:qKrraWp3QQWthSQxmMTNeGp123o7vTXtRLTUmgclLm3iPZZxgARPZ5Oj>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 8049D1EA006B; Fri, 24 Apr 2026 13:38:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2281.git.git.1777024991531.gitgitgadget@gmail.com>
+X-ThreadId: A9iHKXlPzkr3
+Date: Fri, 24 Apr 2026 19:38:28 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org, gitgitgadget@gmail.com
+Cc: "Harald Nordgren" <haraldnordgren@gmail.com>
+Message-Id: <89f923bf-e5fc-4557-a2f0-d240db07eaf9@app.fastmail.com>
 In-Reply-To: <pull.2281.git.git.1777024991531.gitgitgadget@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 24 Apr 2026 13:12:36 -0400
-X-Gm-Features: AQROBzCAWrfJqEK-xM7JysXZ35Qf8X3C3XRLcy7E6UQpPrMxFABBoUAFU-whi5I
-Message-ID: <CALnO6CCNoo8y2V5KmE0KQ6qDurZELipFowcr=ZpZ3ocVB-uLjA@mail.gmail.com>
+References: <pull.2281.git.git.1777024991531.gitgitgadget@gmail.com>
 Subject: Re: [PATCH] checkout: add --fetch to fetch remote before resolving start-point
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 24, 2026 at 6:08=E2=80=AFAM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
+On Fri, Apr 24, 2026, at 12:03, Harald Nordgren via GitGitGadget wrote:
 > From: Harald Nordgren <haraldnordgren@gmail.com>
 >
 > Add a --fetch option to git checkout and git switch, plus a
 > checkout.autoFetch config to enable it by default. When set and the
+
+Why is the config not `checkout.config`? So it=E2=80=99s named the same =
+as the
+option (modulo snake case/camel case which is not relevant here).
+
 > start-point argument names a configured remote (either bare, like
-> "origin", or prefixed, like "origin/foo"), fetch that remote before
+> "origin", or prefixed, like "origin/foo"),
+
+It=E2=80=99s great that it only fetches when you have a remote-tracking =
+branch
+or alias for `<remote>/HEAD`. Doing a fetch on every <start-point> would
+have been bad.
+
+> fetch that remote before
 > resolving the ref. Aborts the checkout if the fetch fails.
 >
 > Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
@@ -114,32 +120,86 @@ On Fri, Apr 24, 2026 at 6:08=E2=80=AFAM Harald Nordgren via GitGitGadget
 >     git checkout -b new_branch origin/some-branch
 >
 >
->     The first command exists purely to make the second one see an up-to-d=
-ate
->     view of the remote. If I forget it, origin/some-branch points at a st=
-ale
->     commit, and I end up creating a local branch from the wrong starting
+>     The first command exists purely to make the second one see an up-t=
+o-date
+>     view of the remote. If I forget it, origin/some-branch points at a=
+ stale
+>     commit, and I end up creating a local branch from the wrong starti=
+ng
 >     point.
-
-When you realize this, "git pull --rebase" should help correct it.
-
 >
->     This series teaches git checkout (and git switch) a new --fetch flag
+>     This series teaches git checkout (and git switch) a new --fetch fl=
+ag
 >     that folds the two steps into one:
 >
 >     git checkout --fetch -b new_branch origin/some-branch
+
+The motivation for why this is being proposed maybe might as well go in
+the commit message. Maybe that=E2=80=99s just me.
+
+The commit message just says that =E2=80=9Cthis thing is added=E2=80=9D.=
+ Not why.
+
 >
 >
->     When the start-point argument names a configured remote =E2=80=94 eit=
-her bare
->     (origin, which resolves to the remote's default branch) or in / form =
-=E2=80=94
->     git fetch is run before the start-point is resolved. If the fetch fai=
-ls,
+>     When the start-point argument names a configured remote =E2=80=94 =
+either bare
+>     (origin, which resolves to the remote's default branch) or in / fo=
+rm =E2=80=94
+>     git fetch is run before the start-point is resolved. If the fetch =
+fails,
 >     the checkout aborts and no local branch is created.
 >
 >     A new checkout.autoFetch config option enables the same behavior by
 >     default, for users who always want it.
+>
+> Published-As:
+> https://github.com/gitgitgadget/git/releases/tag/pr-git-2281%2FHaraldN=
+ordgren%2Fcheckout-fetch-start-point-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
+> pr-git-2281/HaraldNordgren/checkout-fetch-start-point-v1
+> Pull-Request: https://github.com/git/git/pull/2281
+>
+>  builtin/checkout.c    | 48 ++++++++++++++++++++++++++++++++++++++--
+>  t/t7201-co.sh         | 51 +++++++++++++++++++++++++++++++++++++++++++
+>  t/t9902-completion.sh |  1 +
+>  3 files changed, 98 insertions(+), 2 deletions(-)
 
-I could certainly see this being convenient. (I don't have any comment
-on the code at this time.)
+I guess a later version will have the changes to the documentation.
+
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>[snip]
+>  		argv +=3D n;
+>  		argc -=3D n;
+>  	} else if (!opts->accept_ref && opts->from_treeish) {
+> @@ -2052,6 +2092,8 @@ int cmd_checkout(int argc,
+>  		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode
+> (default)")),
+>  		OPT_BOOL(0, "auto-advance", &opts.auto_advance,
+>  			 N_("auto advance to the next file when selecting hunks
+> interactively")),
+> +		OPT_BOOL(0, "fetch", &opts.auto_fetch,
+> +			 N_("fetch from the remote first if <start-point> is a remote-trac=
+king ref")),
+
+s/remote-tracking ref/remote-tracking branch/ ?
+
+git(1) doesn=E2=80=99t have a namespace for tracking refs in general.
+
+>  		OPT_END()
+>  	};
+>
+> @@ -2102,6 +2144,8 @@ int cmd_switch(int argc,
+>  			 N_("second guess 'git switch <no-such-branch>'")),
+>  		OPT_BOOL(0, "discard-changes", &opts.discard_changes,
+>  			 N_("throw away local modifications")),
+> +		OPT_BOOL(0, "fetch", &opts.auto_fetch,
+> +			 N_("fetch from the remote first if <start-point> is a remote-trac=
+king ref")),
+
+Ditto.
+
+>  		OPT_END()
+>  	};
+>[snip]
