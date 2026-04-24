@@ -1,138 +1,171 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pio-pvt-msa2.bahnhof.se (pio-pvt-msa2.bahnhof.se [79.136.2.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204771AA7A6
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 15:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9232F691F
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 15:20:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777042948; cv=none; b=al/4g4gxPbAElRmm+3fGiyccsO8GUqUnzY2VOI2wC6DGZ/DlPjUivY7fuGiuLRaqv94nhxNXvPS8WmECOCILx0E08UFqgqpN7aK8JbDWj0YE33vd4tJZy4wUEB7ReioAVqXSnUzCyYnW+vpJrw80FOdtyq/twV5KMiftL/Ota2M=
+	t=1777044029; cv=none; b=WMqa17a6fEfwi8WEs7lYXH93yGqEA/5twCXPkvHSpWKPwpugI7vShYYdxKNpL5KOSLeoVBXPUS3qG9ErVNUgQQaFWphNFd73JEK5NiCp3cD9efJq1l2s9i3NEkszfErXnz6ZTc3x6oJrZDBIBz2Lg0WaT8ou7Y5k9WcZSGYeY4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777042948; c=relaxed/simple;
-	bh=BGxmQVA4lJOHGxeTk6nkqTAjQ59/43TGROABe6fQFHU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=RXyIrZaWr4WdOeC3Ap7UdXpoRlnJA4laWjTCLb066kbzVHbXyWmCRpzikZ4Ccy2MGLsE3/tk85tWfO5SrjKk7XwctHJc4e9SveNh1y4d/c2CoHjuJwI12j0HyPF1knW40mQSzCN93Py8wMwN2D+booZKGCQYiUE197+tn4XVO6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=meFyLlii; arc=none smtp.client-ip=209.85.161.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777044029; c=relaxed/simple;
+	bh=i+2cvglCb8AupgrZ43jYTA1CjQvvaAmNyNR4HnnrQlQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=k4OFN4S08Om3l8SDeIVgi/5e5su1sViE34V5UNoDYzsU7FX3CM6yDltaqbNtlnDzH4UGJqYPFxO/HBq5NNFSBLNlrEXKyPmzInh7MRYu9fV1QgSDCzIlNcXBeoQAobuYT6j+rX4B1JTYzOCRLqG2Dx8D+vRuyTIs5sLxlS1Z5Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=leV8v5XU; arc=none smtp.client-ip=79.136.2.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="meFyLlii"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6949831a7bcso2403438eaf.1
-        for <git@vger.kernel.org>; Fri, 24 Apr 2026 08:02:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777042945; x=1777647745; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JVfF0FsgTeeOjyo11cKc2/xqL2yQCXgKeZzcYgiTaMU=;
-        b=meFyLlii886pphf0QDD4LrFWxV7//lvIHVRhHL7MVVYURtNu7i1wBXHmMshMObsrtH
-         WxG+tcpYTwkeB0NFh2piWUa5VS6ogd+ZuntXvmaS560LQBEy/BIX7CZ0d920F7GkESoO
-         uoVhX+VLlBKXSMunzW1rjPu+P/VyNcZBC9RJ01lh+JfEgfEzYBpOanhnmrBET6bzAu49
-         nVPSSWpLZZhMobthF4Ip1Knm8bzJyrjqlorbITMqklD4D+kpMEu/IJ1zlnt06NMTidDg
-         2+nR8Ee8hs6O26L8Uu0+UAAY0ssTEQLCUMPgey23czG3UiyiySuM5joai7EN88SeUgk3
-         p3Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777042945; x=1777647745;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JVfF0FsgTeeOjyo11cKc2/xqL2yQCXgKeZzcYgiTaMU=;
-        b=KVuWNLMouyWixcoCdj5/MgLra4WtaOvxDUJT8UIojTSVMQMuWite2F6LL3N9/SI6pH
-         iRfDmys3jwANRPJYJPl2kSQxsJFxqAIIyRIwv1QYhOi6zY/3tsx9omYrB8cLzjUoc7QW
-         pO038X7hZwKbfIvZ6FgRCg5KBgsgt8rvXiS+W4H+hVcEXTcw9nk2/0tXn7gwKKwwvaVm
-         GFMxdXioL7NIGVl7SU44em67oBh+AZnJOCNfPlkwt9vrKKfmKvm5Ew8V2bwt21Gs6aX1
-         LdOCe6YLLxrdExJ9Sjcky5fLj+KvtYIInudEk8OuWsSqdrq+3WxV+YQF8Q6X86GKQtZ8
-         8F4g==
-X-Gm-Message-State: AOJu0YyHAvx1Kb6E/eESj7DvchtfRCxIfGbZPbcWx6BxETOv9Yj17VoB
-	1CSv7CgWWsZJHRwbXA66ocRyxwWNIg+fIUmcy1TSOtCGUSHINzWv81TUpvMZDA==
-X-Gm-Gg: AeBDieuno/T9CDNRLb2JRDm+98r4oeKr41EB+V2QNQi98e8MJHYPkgqXQeRztx76gdN
-	vubU66nttPeAYDtIvkTFXoMg2Al2wmWLasMExKcLlASBbe+pnLA7rtAXxG7DCW8CLZmipabVscU
-	2IhG4zp2kIsV1E2BaBa1gGkZeGof1yG4a/wF/dayJL9lAHUGEeDGklZuItO3gspV9fNCuo+qz1u
-	k0pAj/qmAv3V4XrJfrIB5X5bm1Aqob5AmAhdkw1UayzTQfY1xd3W9pUlWo9sgwsygVFI3x3LAVL
-	BMR96IAhMSEmHI/n6pci1P7kfJvkeBAyTZpAps33aKPiiqQBXb5/F8cPrUHsyZog3wJwxUcZIJT
-	EQYnpCAPaL2x46xaQo4D4JxRzO9mWF7Y0BntmDy0XUQMtXNSyDsgHsoOUg6k9nZWZ0V8VZiRsjg
-	Pcwm8hhKYlmHmBq7V/b496i9M7CMkU29lewRN11Q==
-X-Received: by 2002:a05:622a:698f:b0:50e:5de8:6458 with SMTP id d75a77b69052e-50e5de873a3mr219464941cf.57.1777042878599;
-        Fri, 24 Apr 2026 08:01:18 -0700 (PDT)
-Received: from [127.0.0.1] ([48.217.251.133])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e392c7994sm200589611cf.4.2026.04.24.08.01.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2026 08:01:18 -0700 (PDT)
-Message-Id: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 24 Apr 2026 15:01:09 +0000
-Subject: [PATCH 0/8] safe.bareRepository: default to "explicit" with WITH_BREAKING_CHANGES
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="leV8v5XU"
+Received: from localhost (localhost [127.0.0.1])
+	by pio-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 011623FBAD;
+	Fri, 24 Apr 2026 17:11:38 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.1
+X-Spam-Level:
+Authentication-Results: pio-pvt-msa2.bahnhof.se (amavisd-new);
+	dkim=pass (2048-bit key) header.d=jontes.page
+Received: from pio-pvt-msa2.bahnhof.se ([127.0.0.1])
+	by localhost (pio-pvt-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OYFiPniY5mwP; Fri, 24 Apr 2026 17:11:36 +0200 (CEST)
+Received: 
+	by pio-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id 861B63F870;
+	Fri, 24 Apr 2026 17:11:36 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 527CEB21EB;
+	Fri, 24 Apr 2026 17:08:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
+	t=1777043327; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=bdnfmWer6n+0mKFF2EwWVswbHsfvO23Yx2q7mBuKcmE=;
+	b=leV8v5XUAEEzUPQYUgQNcAHf3Z1CT14cyWrkhICovxqpNkh9IQ2o3p8CR3meF+zD3XeSpO
+	54RTn5EpF3fewQMBNtH5UB4Ira15Q1gmmTmkeTF8n+RB5m+p7KzBv3jVfJOwQmMArHb3Lp
+	dPQYIh/OZlDEeQeCUl8SYdma7bxd4aDnTA1XjGZuWSIkf3zX+qbJsdlZR47QLDb045VluJ
+	6Lj06p4Jspsg8hrDg65+3dLtK1BDxsBSeqgIZrwBZ6KKPplSujos/9o+NH40WBn7k7kTWT
+	BKSi4SfVyvLymFid4ocqnfvw7xcIBmydheMJE1LBWETYygqwGOdOOPVZZXNJfw==
+From: Jonatan Holmgren <jonatan@jontes.page>
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+	rsch@web.de,
+	michael.grossfeld@amd.com,
+	Jonatan Holmgren <jonatan@jontes.page>
+Subject: [PATCH] alias: restore support for simple dotted aliases
+Date: Fri, 24 Apr 2026 17:10:48 +0200
+Message-ID: <20260424151053.917066-1-jonatan@jontes.page>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
+References: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-This supersedes my earlier series [*1*] which took the approach of adjusting
-individual tests to access bare repositories explicitly.
+Historically, config entries like alias.foo.bar expanded the alias
+"foo.bar". The subsection-based alias syntax introduced in
+ac1f12a9de (alias: support non-alphanumeric names via subsection
+syntax, 2026-02-18) broke that behavior by treating such entries as
+if they were subsection syntax.
 
-As Junio suggested [*2*], this series instead takes the approach of setting
-safe.bareRepository=all in the test environment's global config whenever
-WITH_BREAKING_CHANGES is in effect, so that existing tests continue to work
-without individual modifications.
+Restore support for the old dotted form by falling back to the full
+name when the final key is not "command". Add tests covering execution
+and help output for simple dotted aliases.
 
-Implementing this turned out to require a number of follow-up adjustments,
-because writing to $HOME/.gitconfig has side effects beyond the intended
-setting: $HOME is the trash directory, which doubles as the test
-repository's working tree, so the file shows up in ls-files and status
-output, and tests that manipulate $HOME/.gitconfig for their own purposes
-can clobber or remove the setting. Patches 2 through 7 address these
-interactions in the affected test scripts.
+Reported-by: Michael Grossfeld <michael.grossfeld@amd.com>
+Helped-by: Jeff King <peff@peff.net>
+---
+ alias.c          | 16 ++++++++++++++--
+ help.c           |  9 ++++++++-
+ t/t0014-alias.sh | 12 ++++++++++++
+ 3 files changed, 34 insertions(+), 3 deletions(-)
 
-The final patch flips the safe.bareRepository default to "explicit" under
-WITH_BREAKING_CHANGES.
-
-Footnote [*1*]:
-https://lore.kernel.org/git/pull.2076.git.1775140403.gitgitgadget@gmail.com/
-
-Footnote [*2*]: https://lore.kernel.org/git/xmqqse98cc51.fsf@gitster.g/
-
-Johannes Schindelin (8):
-  test-lib: allow bare repository access when breaking changes are
-    enabled
-  t7900: do not let `$HOME/.gitconfig` interfere with XDG tests
-  t1300: remove global config settings injected by test-lib.sh
-  t1305: use `--git-dir=.` for bare repo in include cycle test
-  t5601: restore `.gitconfig` after includeIf test
-  ls-files tests: filter `.gitconfig` from `--others` output
-  status tests: filter `.gitconfig` from status output
-  safe.bareRepository: default to "explicit" with WITH_BREAKING_CHANGES
-
- Documentation/BreakingChanges.adoc            | 24 +++++++++++++++++
- Documentation/config/safe.adoc                | 10 +++++--
- setup.c                                       |  4 +++
- t/t0035-safe-bare-repository.sh               | 10 +++++--
- t/t1300-config.sh                             |  7 +++++
- t/t1305-config-include.sh                     |  4 +--
- t/t3000-ls-files-others.sh                    |  4 +++
- t/t3001-ls-files-others-exclude.sh            |  3 +++
- t/t3002-ls-files-dashpath.sh                  |  2 ++
- t/t3009-ls-files-others-nonsubmodule.sh       |  1 +
- ...common-prefixes-and-directory-traversal.sh |  3 ++-
- t/t5601-clone.sh                              |  4 ++-
- t/t7060-wtstatus.sh                           |  3 +--
- t/t7061-wtstatus-ignore.sh                    | 27 +++++++++++++++++++
- t/t7064-wtstatus-pv2.sh                       |  1 +
- t/t7104-reset-hard.sh                         |  2 +-
- t/t7508-status.sh                             |  4 +++
- t/t7521-ignored-mode.sh                       |  1 +
- t/t7900-maintenance.sh                        | 12 +++++++--
- t/test-lib-functions.sh                       |  8 ++++++
- t/test-lib.sh                                 |  6 +++++
- 21 files changed, 127 insertions(+), 13 deletions(-)
-
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2098%2Fdscho%2Fsafe-bare-repo-default-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2098/dscho/safe-bare-repo-default-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2098
+diff --git a/alias.c b/alias.c
+index ec9833dd30..e737c49edd 100644
+--- a/alias.c
++++ b/alias.c
+@@ -34,8 +34,20 @@ static int config_alias_cb(const char *var, const char *value,
+ 	if (subsection && !subsection_len)
+ 		subsection = NULL;
+ 
+-	if (subsection && strcmp(key, "command"))
+-		return 0;
++	if (subsection && strcmp(key, "command")) {
++		/*
++		 * We have historically supported the "alias.name" form when
++		 * "name" happens to contain dots (e.g., alias.foo.bar to allow
++		 * "git foo.bar". But our parsing above would split that into
++		 * subsection "foo".
++		 *
++		 * If we do not understand the final key in a subsection-style
++		 * variable, fall back to treating it as a two-level alias.
++		 */
++		key = var + strlen("alias.");
++		subsection = NULL;
++		subsection_len = 0;
++	}
+ 
+ 	if (data->alias) {
+ 		int match;
+diff --git a/help.c b/help.c
+index 3e59d07c37..46241492ce 100644
+--- a/help.c
++++ b/help.c
+@@ -592,14 +592,21 @@ static int git_unknown_cmd_config(const char *var, const char *value,
+ 	/* Also use aliases for command lookup */
+ 	if (!parse_config_key(var, "alias", &subsection, &subsection_len,
+ 			      &key)) {
++		size_t key_len = strlen(key);
++
+ 		if (subsection) {
+ 			/* [alias "name"] command = value */
+ 			if (!strcmp(key, "command"))
+ 				add_cmdname(&cfg->aliases, subsection,
+ 					    subsection_len);
++			else {
++				key = var + strlen("alias.");
++				key_len = strlen(key);
++				add_cmdname(&cfg->aliases, key, key_len);
++			}
+ 		} else {
+ 			/* alias.name = value */
+-			add_cmdname(&cfg->aliases, key, strlen(key));
++			add_cmdname(&cfg->aliases, key, key_len);
+ 		}
+ 	}
+ 
+diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+index 68b4903cbf..5144b0effd 100755
+--- a/t/t0014-alias.sh
++++ b/t/t0014-alias.sh
+@@ -128,6 +128,12 @@ test_expect_success 'subsection syntax works' '
+ 	test_grep "ran-subsection" output
+ '
+ 
++test_expect_success 'simple dotted alias syntax still works' '
++	test_config alias.simple.dotted "!echo ran-simple-dotted" &&
++	git simple.dotted >output &&
++	test_grep "ran-simple-dotted" output
++'
++
+ test_expect_success 'subsection syntax only accepts command key' '
+ 	test_config alias.invalid.notcommand value &&
+ 	test_must_fail git invalid 2>error &&
+@@ -183,6 +189,12 @@ test_expect_success 'subsection aliases listed in help -a' '
+ 	test_grep "förgrena" output
+ '
+ 
++test_expect_success 'simple dotted aliases listed in help -a' '
++	test_config alias.simple.listed "!echo test" &&
++	git help -a >output &&
++	test_grep "simple.listed" output
++'
++
+ test_expect_success 'empty subsection treated as no subsection' '
+ 	test_config "alias..something" "!echo foobar" &&
+ 	git something >actual &&
 -- 
-gitgitgadget
+2.54.0
+
