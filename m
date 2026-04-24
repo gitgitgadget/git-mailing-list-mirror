@@ -1,224 +1,133 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC003DC4C8
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 14:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777041831; cv=pass; b=lTxvLEQX5jLkr9+UHYNj1ywvy2lbUp4Mp9N7Qr51EmrnX5Bcctiw1OFmXbeJ1XNs5c1RQ+TE3OtcivYphErnd7dcDNrP+6xRyvP+MU54b9AcvfbFIR/Ms9oiuFAo7KP6K/myJkkK9/wYqdWTKE1EPdtE0gs5mYlLszZUt1ESNgY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777041831; c=relaxed/simple;
-	bh=TfohyiCwNhzzFCeIlXWMYcDIg9RTR+w1jRsQDsOITw4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YLSZQP/M1czQpXzYnnIBjY7GzICSKbMm+Ul2UQz8t7mxD4JyKx90b+UoZeuCcWyo4vAAb0uLslwEBpy4BK+hcEicZebYpJehK7r119hK7xZQNOnWp5pd66o2rijoDMK1X9kH4wNmU5IIv+5imeSCyNSaqNWPI1KLEAGBcDAtaAo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFwCHk+X; arc=pass smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD7E280035
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 15:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777042884; cv=none; b=rdroFYpstVlBt28j52CJLyN65B0nr7T4zNj+W78vnrUanhEFUlYZwlRl+iZA3qIawQxV4y9hpUP+WQ0PHurdj4SCqdz6pMAEc+7cvBM8FGKIBijaMdlb5NzGzEaT0wpc8oQfUCEQaqC2ZwJdu7yquIlJJbDkc3Hxhv+fAriFj+0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777042884; c=relaxed/simple;
+	bh=rmu5z5V2euAn5gbTTKB8XTD3b9nAO5wjFHJmTRkR1rg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=pMkDv9swhsz/QW6f9liHnURSFlkbvlDW+s1l/UKFh1AxXeLy0d5+0rcDiA9qN/G7aUt8knSc33jBQGcrQHLFXj5s1CE7izGpcuOBcxBQAvukwL2aeDtxfiv+sLVPnCIZBXv8+O6IAlWP3CnoPBkucH2zsgZrtVfL08dK+Hng/vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dQOptvkB; arc=none smtp.client-ip=209.85.222.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFwCHk+X"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c7971d0d97dso4679609a12.1
-        for <git@vger.kernel.org>; Fri, 24 Apr 2026 07:43:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777041827; cv=none;
-        d=google.com; s=arc-20240605;
-        b=dcQLbxrdsDvqx86O7gaXR0BABw7JI6tmOAje1eB74Q/yqBnX1wzsWmLat291GK/J0z
-         efmDpSWEPHjo/ZDCZ0LSRzCljOPnaxqNeZbftz0MCnHp1tHvM3DYkymPyOIgLsWOh1fg
-         kacbF6gd3/gV4Q0c+GL5HWpO1lf0Z1pfWuu3byb0m7QtDFNXvvj1WvsSZzZdReUC5OqI
-         gNk7MDFeJmbcq+m5K+pgDJQi2y0oEP0VD07ZSWkA+MvQmwiSM0rZTQaKXhHDCRAgrjAn
-         PL5lyrUDlA4TfeQuTVB+M4DYvhCbtfY8KUCgqqBfEObYD1+7GrUynCN1cimbqAwLX+a0
-         M3FQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NrqkaTu6F3hgC5gxjg5Kkdc4d7wd3jdN1618WDXm8wU=;
-        fh=7C13Yara6diLW3o1hgquesR7ciM/ftgxAeePVQ59NFA=;
-        b=IoN+R/gqRp1FRu6+JA6wIJjFR21SSl1yXOnYNVDC4TMBIFTzIwt6Hdr5okYvllWp04
-         k2gYUVSQouVszkGsmz9fSCzPRcpPgloAr5OBFmpHSXrWpBK8kOQAn2qilVbrgS+fA3iO
-         9uUzhOBghlw41XxTBpG2g14RORQfYU5PC5ziHsddQyzglGhYLrnsKN3OH98WxrNP1FKy
-         BEE87FkFkjTQCbmVCqrOOZh7Bt/5Kd99w4dEAqXPZc9cvO0tyQUT/BALlbtVKdNgX48N
-         j64NOCSz+P5j+gu5mysEfzB/ywK/sl3o+xXIJ0iUGNvPY82jgbUOxI8fiL6vN2x8MZYm
-         lqJg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQOptvkB"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-94e578a0fa5so3664624241.0
+        for <git@vger.kernel.org>; Fri, 24 Apr 2026 08:01:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777041827; x=1777646627; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1777042882; x=1777647682; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NrqkaTu6F3hgC5gxjg5Kkdc4d7wd3jdN1618WDXm8wU=;
-        b=mFwCHk+XZpWoSEMwf94dcvnf6iZUSW9IhWznIpqxNX0EdVQ8uxeE8YWgMA2vUZO3Cq
-         5BYvT2uzXLJM7SwI3Z01h3GQfQkyuxMxRFzDxgDVRJbCQUoIIk+vJ7J7wCruqhBIRJKq
-         ap+JMXbC41ATeaIxJVqDFltntPNqayAXr2Qq4EIfpyPcq4fGDjp5KpKbph2gqHpYv1oQ
-         XkJvAlbFaq4Lsf/d6K7oxXs8NmSig1SyorzlFt8PPvFUppXae2erpSPFvvrXImMY3KWD
-         KuF01b74g5iBq4Dch00kA8sO1h6PPh7gHrGwfw7ftGoKYJypgfAcsMrTiFbytfEIFUOe
-         GIkw==
+        bh=XRAPcRPjEztK44f727GGVSrCN3tTUQZWyM8FSGsNS6I=;
+        b=dQOptvkB1mTVfzwbC7GesPDv8MPf4cIUa24J0mN00JLCFhq8FCSFHkTufUORoFAfqy
+         ciS3i32rgZrgntguqD+VjZsFUW4CKX+XxPLPzfvPhGGK5jJqBcMZooLuLgqHzrZJFH8G
+         4SroxWzs8s3KsIz+eJ2/N4Xgg672F4gACOwXHX86Zsd6r1NXqru7IvDVUdYisssxaPDB
+         IVv5VOO+50KHoUJHp9XTH0Uu1OqpnJL5uP3ccFYNqrctRB81Hv9Hq0UUbV10RJDPv84R
+         VrFUGymnsZ3CObvRswodymxgUCwiTzJG4kZ42wzIMHJAr1pvAFUAf68fB3s2/xxFeD6z
+         ehtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777041827; x=1777646627;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1777042882; x=1777647682;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NrqkaTu6F3hgC5gxjg5Kkdc4d7wd3jdN1618WDXm8wU=;
-        b=pzRLDgcCtG/fyqkFxN2ZkJkvn7O6wzK7bvMkEQTVN4QNely8GvOvBgDV0yBJRjVt2z
-         5q4PZrf3QCDunwi0V9mahPammaaO385jHJmn8rI9X2VO9YdUVmFjeVmRcrHIsR287+dS
-         nOYiX0gyMuCB3udPfkYYgXS12PxgYzv7yRymHR38Ry5k2Qkk+gwhozfMzTX9P8XtyyOd
-         0FJu3I+zI5J8efHivsTXMySi125BcV+FJydB/3hDtbKBImBnRidfBVuGt1EmQbvSAR6O
-         As/GB172597O0bYs6i8p+NQuFmKqmxTdiTA6dnSnbH/VOgEm7M3gqUmWrNZCdOsd5jF7
-         bzcA==
-X-Gm-Message-State: AOJu0Yzue6WS1yeO7qJYSgX4jroXWYMicXsJy5Ri0E+H0dipjV25Vtfv
-	6OT3AwVb/pzxJuWW1icdMuq8gFBHk0QX52rL8i+XwyLQ95bAOURJunDXz8FaYloVw9EDZh31g/g
-	4j6oZBbcI8vuqujprpXFq6sFDhh5WU38ryw==
-X-Gm-Gg: AeBDiesKZUlWGjTUsvdtl0HFtWUVcWFBf8BGTNO2zKU3jdRtI4BwbZ5Y0CZNm89tQ6b
-	uMC6qM8cr+ubgNr6NaPYtLcTRVXFzrXSt5av93exFqow1q3jzgOiBwrSCqgSVlHpcTP6pPraOxJ
-	5YQ700Tbrav4PxD/jkUgg55Zfp8pqI3SLnvM8FfVGBM8Z9Epfd2r89exaSr0LxraUHh3ghPBhPk
-	0CF5mLRIFCCmDynoeFnAqDIVtDG9+AouA23d2lWa8RxE2x7BvJu6HczGLhMKGu98m5PqiQbDrHW
-	xiWI7sMDPNzIzYUiHVQq70RpnuC5CNkKTiNA6mYM9gPq4kD1UraclizhCxJWGDVLxIOADLisQOB
-	i9qkNRfbkNaku17iWEm+WCMAu9w==
-X-Received: by 2002:a05:6a00:4fcc:b0:82f:5034:77a4 with SMTP id
- d2e1a72fcca58-82f8c8409b4mr34512292b3a.21.1777041827112; Fri, 24 Apr 2026
- 07:43:47 -0700 (PDT)
+        bh=XRAPcRPjEztK44f727GGVSrCN3tTUQZWyM8FSGsNS6I=;
+        b=icRiTXsW4mBHx1JQkqsP3xyrVWo4E9Z2AqidpXmyuAPX6qF2VUTF4b655GgG1kqqor
+         h/pptQ1wnWB/3Fczac9FdXRGbNsBzZ3D2l7bzcphyUkqVxDy4eEpI7HZKmqTTtqD0ZHd
+         Ehlm1a3yzDkceyl2Ip+l6UTkoUQvPDXPJbIb0DRwXMvz3xvgSicMwlEOI3Wh5WwI6xFx
+         jYgoqTBpQqi0i0x1sFexP7ESZapuU8pDxgTGqz4TYSGXtNFk4u7KmKVP7wa6iLGsh4+e
+         NfiLxVtDRxuMIPAQcMrg4QwX6gU4ioVcxgSHMfKWls7TgBIZ/tIo4vml2HDVaHefVjR/
+         w9xg==
+X-Gm-Message-State: AOJu0YzOZH9ICBxdiJsmTvblI6BZbyHfaJjDPt5u9rB4P5IOMnAaKCE1
+	DNgMSrUZdI8kCq7jFtuq0dzdJmo0Rj4tcUBTGkTgdl9xe9/wKySkVsPQobgC/g==
+X-Gm-Gg: AeBDievNIe+hlOvKI8AuL1eYktb9yrDUKkUTaj0JKUof32TGqO4hTgKfGdIFntPba9H
+	qUmy2p8iA8FQvn6Om4e4ZAI2kCBywnvGnN5ncwN/IKAmg18Tm9wgXECAJxARSuuOWdpQQcCC9bH
+	gSMpC6mqeLfLERS6dduBWVqA5uFNPsgNlEocO4wz+VQ8bN6iHY1aGqXy8RxOLZq4yyjVumwl0Kz
+	u59+4qjsumQrFQ3/09dPqiYlYF7AKz0TIq5pwB1Wy62Zl2tsBeuKjKIG5STvBq/cqiCBYgPdu0Y
+	5QOyPTs+jbCD+LvbVdOhopm5fkMdTBKs3YoymNSuYILJCjK1sHKrSS8NXQJf7yLvwJ2M5kfSPHp
+	O1Cn8FvZEjTuJPaVgpSyfq7v5+nS6C7QwLZ5ENNkRTHfkWwdXUOcFc/NRgG6iWmn4+bJ0AbDA/P
+	NdsvxJ/M3yD4CwCtHIYtTDBRCn/ZZwUfzDzv/rLQ==
+X-Received: by 2002:a05:6102:5123:b0:607:a151:d5a with SMTP id ada2fe7eead31-616f45351ddmr17961100137.6.1777042880289;
+        Fri, 24 Apr 2026 08:01:20 -0700 (PDT)
+Received: from [127.0.0.1] ([48.217.251.133])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8eb9becc72dsm1485581885a.34.2026.04.24.08.01.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Apr 2026 08:01:19 -0700 (PDT)
+Message-Id: <62707b410977af2c80d98306455aaec55499f606.1777042877.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
+References: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 24 Apr 2026 15:01:10 +0000
+Subject: [PATCH 1/8] test-lib: allow bare repository access when breaking
+ changes are enabled
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
- <20260422-b4-pks-history-fixup-v1-2-48d4484243de@pks.im> <CALnO6CCBA=OSvKT8D6-YR1S=x3VOa_MpzWfK6FJWPSXq0ysMPg@mail.gmail.com>
- <aenCRKxak1l6GE3H@pks.im> <CALnO6CAZQxvqEqDhahFs7NcjENrU=Dg=cbFDkEeAE3+h_3R+8g@mail.gmail.com>
- <aesTeWQqMTFd4gy8@pks.im>
-In-Reply-To: <aesTeWQqMTFd4gy8@pks.im>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 24 Apr 2026 10:43:35 -0400
-X-Gm-Features: AQROBzDyGBUVSNx3aBT2cmWLHU-2I6X5hvVLpLp2u7c3shupffJF_w6tcwIlPTQ
-Message-ID: <CALnO6CCkdoCFfyq97hUNzx2DaBNSHBpCUWfuq2LW1Jfzt2jfEw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] builtin/history: introduce "fixup" subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, Apr 24, 2026 at 2:53=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Thu, Apr 23, 2026 at 05:18:50PM -0400, D. Ben Knoble wrote:
-> > On Thu, Apr 23, 2026 at 2:55=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> > > On Wed, Apr 22, 2026 at 03:06:12PM -0400, D. Ben Knoble wrote:
-> > > > On Wed, Apr 22, 2026 at 6:30=E2=80=AFAM Patrick Steinhardt <ps@pks.=
-im> wrote:
-> > > > > diff --git a/Documentation/git-history.adoc b/Documentation/git-h=
-istory.adoc
-> > > > > index 24dc907033..3cdfc8ba02 100644
-> > > > > --- a/Documentation/git-history.adoc
-> > > > > +++ b/Documentation/git-history.adoc
-> > > > > @@ -53,6 +55,19 @@ COMMANDS
-> > > > >
-> > > > >  The following commands are available to rewrite history in diffe=
-rent ways:
-> > > > >
-> > > > > +`fixup <commit>`::
-> > > > > +       Apply the currently staged changes to the specified commi=
-t. The staged
-> > > > > +       changes are incorporated into the target commit's tree vi=
-a a three-way
-> > > > > +       merge, using HEAD's tree as the merge base, which is equi=
-valent to
-> > > > > +       linkgit:git-cherry-pick[1].
-> > > >
-> > > > I'm not quite sure what, as a user of "git history fixup," I'm
-> > > > supposed to take from this. Does it make conflicts less likely when
-> > > > creating the new fixup? I imagine it doesn't help with conflicts
-> > > > between <commit> and HEAD that newly arise.
-> > > >
-> > > > Anyway, I'd think the mechanics are less relevant than the end-user
-> > > > behavior at this point in the doc, unless the equivalence with
-> > > > cherry-pick is supposed to tell me something about that behavior.
-> > >
-> > > There's at least two more or less obvious variants to do this:
-> > >
-> > >   - You generate the diff between HEAD and index and then try to reap=
-ply
-> > >     the patch on top of the target commit.
-> > >
-> > >   - You perform the three-way merge.
-> > >
-> > > The second item is definitely more robust compared to generating the
-> > > diff and reapplying it, and we use the exact same strategy to perform
-> > > cherry-picks nowadays.
-> > >
-> > > > > diff --git a/builtin/history.c b/builtin/history.c
-> > > > > index 549e352c74..6299f0dfa9 100644
-> > > > > --- a/builtin/history.c
-> > > > > +++ b/builtin/history.c
-> > > [snip]
-> > > > > +       /*
-> > > > > +        * Perform the three-way merge to reapply changes in the =
-index onto the
-> > > > > +        * target commit. This is using basically the same logic =
-as a
-> > > > > +        * cherry-pick, where the base commit is our HEAD, ours i=
-s the original
-> > > > > +        * tree and theirs is the index tree.
-> > > > > +        */
-> > > >
-> > > > OTOH, this explanation helps quite a bit here :)
-> > >
-> > > Hm, okay. I felt that this explanation here is even more technical. H=
-ow
-> > > about:
-> > >
-> > >     `fixup <commit>`::
-> > >         Apply the currently staged changes to the specified commit. T=
-his
-> > >         is done by performing a three-way merge between the HEAD comm=
-it,
-> > >         the target commit and the tree generated from staged changes.
-> > >         This is using the same logic as linkgit:git-cherry-pick[1].
-> > >
-> > > Not sure that this is an improvement? Happy to hear other suggestions=
-.
-> > >
-> > > Thanks!
-> > >
-> > > Patrick
-> >
-> > Hm. I think what I meant is that the in-code comment makes sense to
-> > describe internals; for users, I'm not sure what I should get out of
-> > that description of fixup.
-> >
-> > What I (think I) really care about is that it behaves a bit like `git
-> > rebase -i` with a "fixup" command (modulo conflicts). Especially since
-> > this is quite a bit more porcelain than plumbing, no?
-> >
-> > Idk. If the 3-way merge is valuable to keep, maybe it belongs in a
-> > second paragraph just to push it out of the way of the primary
-> > description ("Apply the currently staged changes to the specified
-> > commit")?
->
-> Ah, that's what you're getting at! I totally misunderstood what you
-> wanted to say, this makes a lot more sense. How about this:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Yep, sorry!
+A future patch will change the `safe.bareRepository` default from
+`all` to `explicit` under `WITH_BREAKING_CHANGES`. At that point,
+every test that operates on a bare repository through implicit
+discovery would fail, regardless of whether the test is actually
+about discovery or about how a specific command behaves once inside
+a bare repository.
 
->     `fixup <commit>`::
->         Apply the currently staged changes to the specified commit. This
->         is similar in nature to `git commit --fixup=3D<commit>` followed
->         by `git rebase --autosquash <commit>~`. Changes are applied to
->         the target commit by performing a three-way merge between the
->         HEAD commit, the target commit and the tree generated from
->         staged changes.
+The maintainer suggested [1] setting `safe.bareRepository=all` in
+the test environment's global config whenever `WITH_BREAKING_CHANGES`
+is in effect, rather than adjusting each affected test to access
+bare repositories explicitly (via `--git-dir`, `GIT_DIR`, or
+similar). This means the test suite continues to exercise only the
+historical default behavior even after the user-facing default
+changes, relying on a small number of dedicated tests in t0035 to
+validate the new, stricter default.
 
-I think that's much better.
+Since `$HOME` points at the trash directory (which doubles as the
+test repository's working tree), writing to `$HOME/.gitconfig` also
+creates a file inside the working tree. Exclude it via
+`.git/info/exclude` to limit the fallout, though this does not
+help tests that use `git ls-files --others` without
+`--exclude-standard` or `git status --ignored`; those are addressed
+by subsequent commits.
 
-> Maybe there should be a new paragraph before we start talking about the
-> technical details?
+[1] https://lore.kernel.org/git/xmqqse98cc51.fsf@gitster.g/
 
-With this version I could go either way :)
+Original-patch-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/test-lib.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> Thanks!
->
-> Patrick
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 70fd3e9baf..b8726f4647 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1597,6 +1597,12 @@ cd -P "$TRASH_DIRECTORY" || BAIL_OUT "cannot cd -P to \"$TRASH_DIRECTORY\""
+ TRASH_DIRECTORY=$(pwd)
+ HOME="$TRASH_DIRECTORY"
+ 
++if test -n "$WITH_BREAKING_CHANGES"
++then
++	git config --global safe.bareRepository all &&
++	echo "/.gitconfig" >>.git/info/exclude
++fi
++
+ start_test_output "$0"
+ 
+ # Convenience
+-- 
+gitgitgadget
 
-Thank you!
-
---=20
-D. Ben Knoble
