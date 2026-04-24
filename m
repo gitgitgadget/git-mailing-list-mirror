@@ -1,235 +1,246 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E589F30BF4F
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 20:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43FB3254A2
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 21:09:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777063962; cv=none; b=lLYQKiCDFWoa37b2tDsDkZ3dISa7BJC+JxBDIeGqj6kUxm4Tvu2QtAfVnwvbK2PlRAf4NbhKB/rWJraengZqtedWMCtFt04De4vod7lciLEA7/InvOfJK/it/ks8Q8bQ+mIUWvjgt8NCzffNQwrXOD3bRmEq5+0eAppNp+fXeGs=
+	t=1777064984; cv=none; b=Gr9C30gkdX/iZlBXETE4MiBMJ6qV/0WpQifieeGagaeqCYUQSuj3H97LD/iM8MNjHcE1t5VFh6jMZCduAVWf7Z2FbTX86oBTMm8kGQLv282Y2Dr1MUzfOJrH9E3GPCv6bEHb7xnmav+vSWYnDREujgZHPyAbntUvNUW3DLBlXL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777063962; c=relaxed/simple;
-	bh=eCm5T2Z3FKSPTaKNvtSojPUBEVBb8UoNHmCrqekqBfc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eOGdSoH4OPHCuyCq1hkh45s4XFgtExsVlJeusn5p1CcNNiHaYTlvWkZuG39/KMWam5+KcGa21AZ2KkDw93CV8zYU1XvnQzXNqmf2WDNJ86CVmpYwfTkXfF8IKcRugY39I0mxKSrIv6ojv2u3+9Ebn9iZLNupcpoFSuSFHElDBrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=On2VJk3m; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777064984; c=relaxed/simple;
+	bh=+Iiox5CpsZ8isdlfRPIhRjqk9km/w5X9Z0PG324VN3Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=WeYGJzUmENOQ0hWJLNDKSfWeNGrIIZ3lUD8wINHuX7LuQqJ1TPtkuvYZZevTTB6ZChrdQOQ4S4YMXV2NKPo/hQEOeyQG0/uh5kAdtQHktEumJ8ZAMJLbv0Zx9aSwcHnbEZs6evMI2lqDTLhRmjY6exPtmjxPgYgGXhhwJYiLbW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Fx+RgFMQ; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="On2VJk3m"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a283c44478so13928665e87.3
-        for <git@vger.kernel.org>; Fri, 24 Apr 2026 13:52:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777063959; x=1777668759; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EgAknIsuGhm7pAI+QcXtOK1CQEyjfaBovnWP9TkkniI=;
-        b=On2VJk3mFKD6AFH9q81po+HgQQ/E1idwGvG22KoAdbthR5hotCjHswDm583Sle8ORK
-         Wa+Smo7prldbfwbt5WNA0OLaNyG9gZVh+muzy27gDlCwloI1PBcehpbI9jJpigqnlNs3
-         9b1Bz7ikuHym8UmOs/fdyraS80ejfi7SUtCVxJZt3KRPYZUslMr+TqUNybAdhIYEVFNi
-         byoDYuh6U/cfMWEd6ICyk3QCTMmMvyRNZWJZEJJ/oTKYMz4mTm+xOh6iJcbdvneyVRfU
-         FIEMUJLjUo8pkfTBOThiszil0OJ9fqrZArWtPEZXkhk6JjfYxuUCtBEfyUxaMa+v1j5U
-         BFDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777063959; x=1777668759;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EgAknIsuGhm7pAI+QcXtOK1CQEyjfaBovnWP9TkkniI=;
-        b=r1rFKbxe8nBm0GGpAwOKuVfef38Y3Y77/Aq38Rv9k5Qo81grNPQQA1gi1+hepsiHer
-         pqv+oOFbXDiY2G/yFvd6RvUoPR7oy9lP8kYwp2rAfM2kqER9H0G7jmgA6etiW1vyEysw
-         AkumHt34MVo28I7Bjx5s19WT2z2JkF3H0F0/DyWWkPW6TOyHBiMzMmGUuR5dOiRzel4v
-         H7ddJ6mE3M19wjqJwFGhjTEHYnyNwosd+vfp6YVAZn6zF5oXzfuzFpRMsYlBxIypyKN1
-         mtVWNN4TT7wSfGx1VbUiu8i680IfK/q0AYAZr+4ULsN18Lf5s+sjlV3XyivtOA97OqLF
-         N07g==
-X-Forwarded-Encrypted: i=1; AFNElJ+28tmIDK9M0kTSrjb+LQl65RdEBrfTbSsrzisNEJUdATyfOJgRIgPftm8c/oGNVeQZ4Ng=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywbn5TO0EkO/YaEPjnKWEQ9GLftNUP0aRz8PR1G5R/tQuSOIQ8f
-	M0yC8Qt+snfFVXNj2s0lC1fDEg8dIziLg3nFHM8MidoYBAKZl4xxcYZUkRD8cttW
-X-Gm-Gg: AeBDietSP68mXTmyorKUAnSx2xC/OlYplvpeCgDF7QAwwAOB7dBUZizGP5Z5WLU/Cbe
-	lQKIksak9d1IHCJ7rekfZfnthun0GaMsJFejjFNW2iZtLw1XBIZlbgRB75U2Plptd/tRebMtkBf
-	ivN3G4zMydW5FagLZFpf3sPvJj8IaOWS33uAfaC4sTFSolqmW8tkHERQbCBSURrAgPdUlFZ4vji
-	s6scdI/U9DQT74hgnEJyt9q0t+6L2WaarJWVFcjDjrBQZtqCqkvEcCB+qPNLBJH/w2BWwEN6+sw
-	7ZjRtjR/mrSyTuHg9a8RZoyGvh6PXjy96skAjf27NO71GmTh16ymdao6JO4YWfBHfxEfSrEOiQn
-	itq4//pElqXs8+LpmZB4BETN+W3qf9cA9fC9x1JfarmCUZJVXB9wC0JS8WcPNTQGoDPgoULFzkq
-	ECuqUvVmRBjM64oFulVkuSdSNaKJdz3F+WeaeCjNdxkUjAb7qQGlZD8QrcV/I9c8nhcQ9kXK9Jx
-	JYtvomvTqhnUA4yKr/5/vcZaso=
-X-Received: by 2002:a05:6512:3b25:b0:5a2:a8ab:ab4d with SMTP id 2adb3069b0e04-5a4172daacfmr10739714e87.22.1777063958783;
-        Fri, 24 Apr 2026 13:52:38 -0700 (PDT)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4187e11ecsm6332143e87.47.2026.04.24.13.52.37
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 24 Apr 2026 13:52:38 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: phillip.wood123@gmail.com
-Cc: chris.torek@gmail.com,
-	git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	peff@peff.net,
-	phillip.wood@dunelm.org.uk
-Subject: Comments on Phillip's review
-Date: Fri, 24 Apr 2026 22:52:37 +0200
-Message-ID: <20260424205237.65227-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.54.0-rc2
-In-Reply-To: <65f77343-2ee6-4ed6-adb2-271814148310@gmail.com>
-References: <65f77343-2ee6-4ed6-adb2-271814148310@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Fx+RgFMQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1777064980; x=1777669780; i=l.s.r@web.de;
+	bh=TUjhRJVmPqCoP2z6pVIvuVxF3NoHZMukV0HuzsakEjQ=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Fx+RgFMQpJtKXo0jTceDNzAn4ZgmXTFElzH5p0q7pOvhB1DSfKRdEczLjRFqCJOg
+	 VGDA3Ki+eOGlIUCl3/O4Uv2K/d3UwTfIJk6O77tEZs22cnRY5bG8DuWd42IW++jZA
+	 GiD5xvaDs/EozjoKDsKYK3LJZLLt/rNvRAoLQdLh/ovEWmdaLgIs21h9No0Int4WA
+	 TcV2ztDWQ2UcFX4hynHilPl8HAXgypO/QWIoo9PsatSNZHvQPN4lpRPPPY5ZphJPV
+	 P4xLuvk0PPoxaBeE8X+RcrWECCpYEv6a6icr/C15NQJ2Z6MS7e+FUJbIxyi0Y6KFR
+	 3WrBAJD6gAZNhOu4pQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mo6Nt-1vZd1r12FP-00b059; Fri, 24
+ Apr 2026 23:04:28 +0200
+Message-ID: <9bd69678-f04b-41d2-ad74-a386820d34c8@web.de>
+Date: Fri, 24 Apr 2026 23:04:27 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] grep: fix --column --only-match for 2nd and later matches
+To: Brandon Chinn <brandonchinn178@gmail.com>, git@vger.kernel.org
+References: <CAGANf=dkRgFp+bEkB5f8QBeiR3m+3WE8sKqT9vKstkGHqbxA3A@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAGANf=dkRgFp+bEkB5f8QBeiR3m+3WE8sKqT9vKstkGHqbxA3A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:axo7X7Lvcoj4mBxqCtv8qjnQQHH8GuVYIe2UWrlwZ1gfr2HduxD
+ FUjNB7nEx9QxR+kmxYdjNLPpblUe3DHQVrWzgN4sJSfdBqFAhx+kCEsereunrirdIPis6ST
+ IdbePBr8EYHLsnI+Otdo5H6pIp0ci5J4OT1FEX1NCHwGaseA1dwvdga/oB8pgYYFjPzxTJ2
+ 7VzVkHCoypGn53V+QZx/Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:DHb2/0CoIlg=;w8MpnPR7O48KD37nBAQ/zMoEg2I
+ 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
 
-> ret is -1 so we return the same value if unpack_trees() fails as do the
-> checks at the top of the function do when they fail with "return
-> error(...)". Therefore we cannot determine whether a failure of this
-> function is due to unpack_trees() or not and so we wont know whether to
-> autostash or not. You need to return a unique value here like -2 (or
-> ideally a named constant)
+"git grep --column --only-match" shows the 1-based column number of the
+first match on each line, but confusing numbers for further matches.
+Example:
 
-👍
+   $ echo 123456789012345678901234567890 >file
+   $ for d in 1 2 3 4 5 6 7 8 9 0
+     do
+       git grep --no-index --column --only-matching $d file |
+       awk -v FS=3D: -v l=3D$d: '{l =3D l sprintf("%3s", $2)} END {print l=
+}'
+     done
+   1:  1  2 12
+   2:  2  4 14
+   3:  3  6 16
+   4:  4  8 18
+   5:  5 10 20
+   6:  6 12 22
+   7:  7 14 24
+   8:  8 16 26
+   9:  9 18 28
+   0: 10 20 30
 
-> Good - now we only try to restore the stashed changes if we actually
-> stashed. However we only restore the stashed changes if there was an
-> error(). If there isn't an error we call update_refs_for_switch() before
-> restoring them. It would be safer to restore them straight away in case
-> that function ends up dying for any reason (though I think that's pretty
-> unlikely)
+Report the column number of each match instead:
 
-I hope I understand correctly, the code becomes easier this way, so that's
-nice!
+   $ for d in 1 2 3 4 5 6 7 8 9 0
+     do
+       ./git grep --no-index --column --only-matching $d file |
+       awk -v FS=3D: -v l=3D$d: '{l =3D l sprintf("%3s", $2)} END {print l=
+}'
+     done
+   1:  1 11 21
+   2:  2 12 22
+   3:  3 13 23
+   4:  4 14 24
+   5:  5 15 25
+   6:  6 16 26
+   7:  7 17 27
+   8:  8 18 28
+   9:  9 19 29
+   0: 10 20 30
 
-> As I said last time we should not be calling apply_autostash() if we
-> have not created an autostash. We should also not discard and re-read
-> the index if we haven't stashed. I do think we'd be better restoring the
-> stashed changes in a single place as I said above.
+We need to adjust the test in t7810 as well.  The file it uses has the
+following five lines; I add a line highlighting the matches and a ruler
+at the bottom here, to make it easier to see that the second "mmap"
+indeed starts at column 14:
 
-Makes sense.
+foo mmap bar
+foo_mmap bar
+foo_mmap bar mmap
+foo mmap bar_mmap
+foo_mmap bar mmap baz
+    =3D=3D=3D=3D     =3D=3D=3D=3D
+123456789 123456789 1
 
-> where the changes appear to be part of the advice message. Perhaps we
-> should print a short (i.e. one sentance) message along the lines of
-> 
->         The following paths have local changes
-> 
-> We should test what the user sees here as well.
+Reported-by: Brandon Chinn <brandonchinn178@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ grep.c          | 3 ++-
+ t/t7810-grep.sh | 6 +++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-Add that message.
-
-Do you mean to test the full output? I'm not against it at all, but that
-seems to be going against the convention of the other tests in this file.
-But it would be a more robust test.
-
-> I'm not sure we need to say "local changes" twice here
-
-👍
-
-> I find the bulleted list a bit odd, maybe
-> 
->         You can either resolve the conflicts and then discard the stash
->         with "git stash drop", or, if you do not want to resolve them
->         now, run "git reset --hard" and apply the local changes later by
->         running "git stash pop"
-> 
-> would be better?
-
-Much cleaner, thanks!
-
-> we already have tests for --conflict=diff3 and
-> --conflict=merge I'm not sure this test adds much.
-
-Deleted.
-
-> > +
-> > +     cat <<-EOF >expect &&
-> > +     a
-> > +     <<<<<<< simple
-> > +     c
-> > +     ||||||| main
-> > +     b
-> > +     c
-> > +     d
-> > +     =======
-> > +     b
-> > +     X
-> > +     d
-> > +     >>>>>>> local
-> > +     e
-> > +     EOF
-> > +     test_cmp expect two
-> > +'
-> > +
-> > +test_expect_success 'checkout -m respects merge.conflictStyle config' '
-> 
-> Looking at the existing tests, 'checkout with --merge, in diff3 -m
-> style' and 'checkout --conflict=merge, overriding config' already test
-> that we respect merge.conflictStyle and that --conflict overrides it so
-> I don't see what new coverage this test adds.
-
-Deleted.
-
-> > +test_expect_success 'checkout -m skips stash when no conflict' '
-> > +     git checkout -f main &&
-> > +     git clean -f &&
-> > +
-> > +     fill 0 x y z >same &&
-> > +     git stash list >stash-before &&
-> > +     git checkout -m side >actual 2>&1 &&
-> 
-> file "same" is unchanged between branch "side" and "branch" main so we
-> do not need to stash it.
-
-Deleted.
-
-> > +     test_grep ! "Created autostash" actual &&
-> > +     git stash list >stash-after &&
-> > +     test_cmp stash-before stash-after &&
-> > +     fill 0 x y z >expect &&
-> > +     test_cmp expect same
-> 
-> Even if we created an autostash this test would not pick it up as the
-> stash is not written to refs/stash unless there are merge conflicts and
-> we don't print "Created autostash" even when we do create an autostash.
-> The same is true for "checkout -m -b skips stash with dirty tree" below.
-> I don't see how we can check that a stash was not created without using
-> GIT_TRACE to see if we run "git stash". Even that is fragile as we might
-> start stashing without forking a separate process in future.
-
-Deleted.
-
-> I don't think the two tests above add any extra coverage when we have
-> the one below so they can be deleted. Our test suite is slow enough
-> already - we only need one test to fail for any given issue.
-
-Deleted.
-
-> > +test_expect_success 'checkout -m stashes on truly conflicting changes' '
-> 
-> This use of conflicting is rather confusing - what's the difference
-> between a conflicting change and a truly conflicting change?
-> 
-> I think a single test is sufficient to check that we create a valid
-> stash entry
-
-Updated.
-
-> test_expect_success 'checkout -m which would overwrite untracked file' '
->         git checkout -f --detach main &&
->         test_commit another-file &&
->         git checkout HEAD^ &&
->         >another-file.t &&
->         test_must_fail git checkout -m @{-1} 2>err &&
->         test_grep "another-file.t.*overwritten" err
-> '
-> 
-> which passes on master but fails with these patches applied. We need to
-> make sure that we don't set "quiet" in unpack_tree_opts the second time
-> we call merge_working_tree(). The test could be improved by adding some
-> local changes.
-
-Tricky to get right, the test if very good to have! I rewrote the logic now
-to make this test pass, I hope it looks better now.
-
-
-Harald
+diff --git a/grep.c b/grep.c
+index c7e1dc1e0e..a54e5d86a9 100644
+=2D-- a/grep.c
++++ b/grep.c
+@@ -1267,6 +1267,7 @@ static void show_line(struct grep_opt *opt,
+ 		regmatch_t match;
+ 		enum grep_context ctx =3D GREP_CONTEXT_BODY;
+ 		int eflags =3D 0;
++		const char *start =3D bol;
+=20
+ 		if (want_color(opt->color)) {
+ 			if (sign =3D=3D ':')
+@@ -1285,6 +1286,7 @@ static void show_line(struct grep_opt *opt,
+ 			if (match.rm_so =3D=3D match.rm_eo)
+ 				break;
+=20
++			cno =3D bol - start + match.rm_so + 1;
+ 			if (opt->only_matching)
+ 				show_line_header(opt, name, lno, cno, sign);
+ 			else
+@@ -1294,7 +1296,6 @@ static void show_line(struct grep_opt *opt,
+ 			if (opt->only_matching)
+ 				opt->output(opt, "\n", 1);
+ 			bol +=3D match.rm_eo;
+-			cno +=3D match.rm_eo;
+ 			rest -=3D match.rm_eo;
+ 			eflags =3D REG_NOTBOL;
+ 		}
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 64ac4f04ee..bd439563d6 100755
+=2D-- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -322,11 +322,11 @@ do
+ 		${HC}file:1:5:mmap
+ 		${HC}file:2:5:mmap
+ 		${HC}file:3:5:mmap
+-		${HC}file:3:13:mmap
++		${HC}file:3:14:mmap
+ 		${HC}file:4:5:mmap
+-		${HC}file:4:13:mmap
++		${HC}file:4:14:mmap
+ 		${HC}file:5:5:mmap
+-		${HC}file:5:13:mmap
++		${HC}file:5:14:mmap
+ 		EOF
+ 		git grep --column -n -o -e mmap $H >actual &&
+ 		test_cmp expected actual
+=2D-=20
+2.54.0
