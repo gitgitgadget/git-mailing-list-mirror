@@ -1,119 +1,130 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010049.outbound.protection.outlook.com [52.101.193.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D9B342524
-	for <git@vger.kernel.org>; Thu, 23 Apr 2026 22:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E7633E7
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 02:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776984924; cv=fail; b=TfeOKhh6zrIEn0mWZGf9AZ2lR6CIVRxbd/seRGGty+MOg0Q6Y1EneixMg8V9XgYJ5GdDurMnFg4wfDYGdD5+tiZnbEl0ErA/bZDe7EJCWUgE2gfy7yhTv7o3+f+eq4DI1S+4Fr13+waRqMiVxr1IqSu4mPcAx5UyAWrvfGGwA4U=
+	t=1776998897; cv=pass; b=bz38l2A/+XKai5a18vPV1My2/e8VTjkKzbvJ7lMYyNfYdEj6V0U5XauVKiTcmgRstsspu+p6g9TnG+i9XuLVBBoY8MguqzYL0XhK05WUBWmILKadAX3gtjBmqSc4F4I0zFhCwOEGtF5FgCRYqgZ4vGPOLsV1qmTlh3F86fG001s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776984924; c=relaxed/simple;
-	bh=2QBFCnRHJX6HqMCRpwPDohTwEBt3Oi/6b0G0Ke4hx/U=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K4E8R1Gy6ZLaC1KIlYfM9/19Kkn18TKiQj6RjxrfLfiwtmTJ1A1+HHqjxeIkkbog2SUvo87e9CUpZ5nzh4SQKHBsnXHAzdFtKzIDPJC5UCcuiGm46c7KkAUnyhQmdRMKs1vC2j0VqI/1lNpqh4/9vBwVB8cHbL8vdqtlzXG6iFQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=1jx55iol; arc=fail smtp.client-ip=52.101.193.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="1jx55iol"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jwwxGgQPVgaPljo2fkq/ErPBS9BY9aJtTzwK6VjFCGQxhXAMaylZbxNl3bUCVMytAciaQE/9wCIqJe5jqvcTXjrt9yZZc0qVgt4KCJB6aF0kkLcyMH6ta/OPVLZQ1ON1LNH6Fg3Yhe1cSOv9fc85gnOQHhIpesIMxC4LObWTtOvJSBfIgWp8dtj3sKCk28vZwEx+Sha8JvsGkIkzlrbz6yzIgiyhoVDhoeqmQMOwsnhKxz0/T9+7/LvEPZZp8J+NMLyFkSUzdqTqZ8nIHuop0oabGdbGgxyJrHb9K/xyi4w59dZI6Bf5r9WpgRe4QN1gDTHOaBGXalhSy/wY6Ewq8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O+d3YjdYDMSEmZLc/t/zIQzm716cof+v1uTCSl0sekA=;
- b=OZwtd+OH+//rSBdXl5yQm7c/41S5qrBpi97TEJX3HkAok0HweYcMeUKUVpa3c5Y38gblPyC3wmJ5ufT4q+5+1SIicmwveteWkqJl5HJZAi2bAnbyFzNFIvBRrcT/wGIWIUkZuJl0MtHxL0W+jO2xsNFie1cDwd1FQmD/KgBLmnZWxs59uh1Kgcmq37Nee7RBu7u+R7bPGTDYCuV8mx5VgZwvtltgusval7S66aT8oZEkdsq9drXNwrILUe8HGgXx3tUydVd2OWxULG/MZ5ZG2+4EW4Rs9ZPhCXj6L0+QSUpLSSg9AJHD4OKNyfcnzz0EMMRKCcwufMbHJAvqJ8wXCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=peff.net smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O+d3YjdYDMSEmZLc/t/zIQzm716cof+v1uTCSl0sekA=;
- b=1jx55iolxEL8RsV1ScFMGpcK8pHllSITKso/SGhVcqPzMYdtd6l/eT+m5AOwHvQvQ/3GUbs9c0UsFRQBe8/x5S4D26j1hMj3fzFKZll5JQcfQeCA9VVJPtX23E4DmgFgyMrSJvpg1ILMBIMYkuJFMJKl6h/5YJ2jXbWwuLFjRn0=
-Received: from SJ0PR13CA0128.namprd13.prod.outlook.com (2603:10b6:a03:2c6::13)
- by CY5PR12MB6226.namprd12.prod.outlook.com (2603:10b6:930:22::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.20; Thu, 23 Apr
- 2026 22:55:20 +0000
-Received: from SJ1PEPF00002320.namprd03.prod.outlook.com
- (2603:10b6:a03:2c6:cafe::da) by SJ0PR13CA0128.outlook.office365.com
- (2603:10b6:a03:2c6::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.21 via Frontend Transport; Thu,
- 23 Apr 2026 22:55:18 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ1PEPF00002320.mail.protection.outlook.com (10.167.242.86) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.18 via Frontend Transport; Thu, 23 Apr 2026 22:55:18 +0000
-Received: from msdn-mgrossfe-2.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 23 Apr
- 2026 17:55:18 -0500
-From: Michael Grossfeld <Michael.Grossfeld@amd.com>
-To: <peff@peff.net>
-CC: <Michael.Grossfeld@amd.com>, <git@vger.kernel.org>, <jonatan@jontes.page>
-Subject: Re: Bug: Hierarchical Aliases no longer work in 2.54.0
-Date: Thu, 23 Apr 2026 18:55:11 -0400
-Message-ID: <20260423225511.924-1-Michael.Grossfeld@amd.com>
-X-Mailer: git-send-email 2.54.0.windows.1
-In-Reply-To: <20260423211237.GA1906241@coredump.intra.peff.net>
-References: <20260423211237.GA1906241@coredump.intra.peff.net>
+	s=arc-20240116; t=1776998897; c=relaxed/simple;
+	bh=GlcMsPHcgN9W2YK6pVtjH9Qg0xzCU/ZqZBdyDOeEwec=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NslET/Pbl0ua6mP8g0zr5nvEEQZszvOcW8EfuzwHgtjHA7w/2am6eRSL5DGB8Bxt1x589ET/vF1B06l0G0jwK9lBtfSpsCUA5wY0M7C1//yRxsH5U+oPZB965HB0QQqMRMa3LO6ype4QcB4em1s60wMgfsLYEELDGrV7SwCqYIw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; arc=pass smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a40cfab24dso7695694e87.2
+        for <git@vger.kernel.org>; Thu, 23 Apr 2026 19:48:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776998895; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jdbxu8K2Y5V6y3wuTPEtURUVe/ZuI3y3m8SOTaPg02kumWIs64P+SdT3r3Ol7HNvtf
+         bDQdFWkAJlXLeVKqCz8IEGb9kKCkn4pPjZfLkaRbu+e/4vMLJSsFQsZGVECGx3e1amD1
+         p8iNtYDU5qJ+feJLrAtXnCXQWq+jBvfI9Lxunj+9LC9eP2LDOenAgZqJfz9jjOxpcaj/
+         hAAiZkvb59M7p1J6m6Tls9iffj6zEo0skO/LEbd9mea1OEzaAh49VtqL9Q0FWvPNyGjj
+         OMqWVxqPr0Dit6D7/cHfGV821w/eQNbgsYH7zOy7RGeSqdlmrTkov2bRdNLHZZY3tGO0
+         RNCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=yOCbEz4pJenamMKAN280ZqOJPwxAM/sw+curN6BNogc=;
+        fh=3JU/BKPb0KH1tYyi95+GJEmVCpeM8u8SG8/PjvzRvkk=;
+        b=BmanlvHEaymTAND7EkhxDkRkdwJ74cHeO78jZezbV3dXsXytpU92vvWIQrdErbeZux
+         Vpfouo3pBfKgaGTXyKifhVxqEm7yYl1JvkEHqrCXscsdcGfg/YPmJIaK5vCN2WExMFKz
+         NVepOwX7JORbDd10AaGzs4LDsbCplqzTE7wgFPkO4pC1ZWuPUz4J3AjvrQw9RBDUTDp6
+         AlTDdvbM7RPpFVqaRgeoKsCRHYINTwZsDX9OG7Z+tVD0W+Td2YyXGx7eqBZaFpHW2Yau
+         GHNguY9fgTcS8Hlhsf1MoWV7MWL4mjPJSrFVhImT50HZpvF4m9dunJthNW25KfEg2wiY
+         ijYg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776998895; x=1777603695;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=yOCbEz4pJenamMKAN280ZqOJPwxAM/sw+curN6BNogc=;
+        b=iUI77z4W1RqgGTlj9ppaJdH7cZapEQpzt9FWLgxhhwccZ8TvyVssjijZfB+635Nayy
+         YYUXpDO+vKMK2tKYwDseO6HARVEkZzDDGaxop/FAVcN51L3iQx+MB4wTrFqh2uZumXzd
+         ZpQC0Xrgt1MVUihUaiZ1nJM7bkoMOugU2l+AZnRP59ahLCRucfixDkr0IrSpDfRq3WJJ
+         jMVeh9t5Fs+zEKWU3ndGgPKFFNDsi3ULu/vliReKQZCkY5lW1meQbJUg0q/9NmfeJ2nE
+         q2UYpjK7Ihba0Y0lkI4et/H7PHtafXKXzOTrXz3yRk6fuDYYPGFV0wQQ2DY5V8PXcIlZ
+         7Fsg==
+X-Forwarded-Encrypted: i=1; AFNElJ8FCPcGXpiBcnvZaub/KyYibaM0WwZ7wHRZ3RnZKdFFtpN3gF7s1MEs+QLBeuxEdjAZFjs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEG4UqIqReWHdO6OGM5Ni38A2hJjbG+bfleoul7BeqZeF7nAfY
+	jaP3h9dcwSranD4sBWO+HCCHCTtMmY3lObQS+/pRf+17UYrcsT56Shad6x6VLTrCK6MyP9Yxv+e
+	AxtBIrZVjxe8+3o7ZpPKCeU33cVq3EKbQbNHezUHTyA==
+X-Gm-Gg: AeBDievlp2rWmNMEegSC/4VcKtoelSqBnqaGlMksi+v0+J7RnmON/QZndeaUlaG+hTX
+	dqKwfYrdxfw/eDnaTB2BtyovzNaRzxqy3C+CoIu9qZO+ZTu9PEivBZRSE4fXxTNX1jsWaIKrLWb
+	Zc+gmhWh2gu/Ba4197WoqWUzEgHS2HZhHG0mVTzwNJPNMBpElwHt9IFIJXv/pUkzntsXWkLa/IC
+	D6WYvn+GV0kpYpoc+/SwhxkrPHzCabKLnh4rICE49Uhjspd8xl+LMJX3uMxPie8hDVwCNgTvvsa
+	MaMDMchiloW6RcjDo++wWZVf2oB6WA==
+X-Received: by 2002:a05:6512:1595:b0:5a4:52d:4abc with SMTP id
+ 2adb3069b0e04-5a4172ba775mr9330395e87.8.1776998894487; Thu, 23 Apr 2026
+ 19:48:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00002320:EE_|CY5PR12MB6226:EE_
-X-MS-Office365-Filtering-Correlation-Id: d1211b41-95cf-4935-4305-08dea18b6432
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|376014|1800799024|82310400026|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	6/F0kFgdsiL3HX+VW9a5gndgD0rq5sDaelvo7woAciNbfe58oWWX7kUcnFI8PDKYBD70H2bPEoKaf73rQSq9Bh/8FZl0L3l4ifO0FSakbmqw/MjfFHx7q2Dl27A5cVS73vrYyhZh7rz54o0dLTD2TYx5bzJLYUK//UMWBH6++fiXf1tmN26NWd2vUxokFBJlwJfM2tSYsW6Cv3xUlV5+1A+u7QVw/8T0kxFCOaF/W00z7Ue9IB49HXa/+wxFQ2uQch4K8j5BAIbRbSPe19Z4EibZUEtiqZlKajFjPdcS2TyARcTiQykDfirWaV9gx7cnNLwJLMzNoWZmabdTy0BsPtDdafVbOfSlAyaGuxVCS/L7Kv2GcSf5Le0pIJgg7nQqW+U/axALUKY1jOsfoFeL++V7RGIEYIJ3lMLrvGjmMYfPB9DZjBycDpZEgMBBBpITEKkYlQVYBWK1zEF5/F042qWRY6dIeRT1G2VYhBGaLdSyT+XXEgWkbsJiFJtnKM9XeA3v7n/N9p+VE6v+nw6wQAJ1ijkeR3rbqIHD5vubcJ8bH/kXuZq9soGhjThmLhMaG811LyEondU+xty1/WI6PNYtsDCMBIjhrZSm6b6TykPADlW0V82tO+9yZCYkIRcmnFY5UF1FxfScDIKs1iWNzEXZlIOBqyAwAVDtDXz4PCPm8BaaFp/VZ78nrha5TGwZCuuPNs2S3JJ/xG0rvj+p4+5heRyA/rwKdkQzrczm8o+ZEaIHVprzSSN3qr5KcITHRHud4a11yUbag4hRufy2rg==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	5Ivcnl212LM530NPbT2T3avx/JqrMu/LnqleuUejNd4AmOeJPSjdYlbGq+SUR7EF3dh18ChwELemyCVcP0c45uWNhGDP9ko3DuEebf8nBVipy7106ejr8lEkUVWoBZWTCfANXqc/RR4CZrYAYYxsNH86Gj1N0hUUZ6G2BR7fqWafzzQxrjURo4irbDOCgLgbgx22IjHBGBWsaIUqOllo7wyoIqQtgSSglxIjMQOYMldmjEesORBnqQ7/5+UsN+1V4y5Pp9ByKo/Cesdhr28v1gYvpDf8+1hCdmffq36URzROxKC3laFY7a3SfvahhlIsUSFVGpJeOVCQO6kUWwUAffxap78lFEAgxbMAYlvFssE/gyEObTXd165CAFcxhsd0xe2FOb9t5to4hG8cPz8NpQ1WJGCYQxDk6yYK/rwtvhJ99TixlZEvdXWuFFWDjaaY
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2026 22:55:18.5900
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1211b41-95cf-4935-4305-08dea18b6432
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF00002320.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6226
+References: <7aac2206-8b60-484f-a5f6-4943348ad3f6@ramsayjones.plus.com>
+In-Reply-To: <7aac2206-8b60-484f-a5f6-4943348ad3f6@ramsayjones.plus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Date: Fri, 24 Apr 2026 11:47:56 +0900
+X-Gm-Features: AQROBzDJVy2xT-rPIwfVO8nJ5WRIVeTtBA2jJrDXMU6ijjBWP1nJOMmH3ujIAnM
+Message-ID: <CAPc5daWZUJA0sEqS4Qk2vn5x+LNRgphxjzjdbcLFpEgS+69kUg@mail.gmail.com>
+Subject: Re: [PATCH] parse-options: fix sparse 'plain integer as NULL pointer'
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Jiamu Sun <39@barroit.sh>, GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> In the short-term, you can work around it by using the new syntax:
+Another thing from GitHub CI
+
+https://github.com/git/git/actions/runs/24825391649/job/72659919418#step:9:=
+144
+
+  Error: parse-options.c:680:30: comparison of integer expressions of
+different signedness: 'unsigned int' and 'int' [-Werror=3Dsign-compare]
+    680 |        (n < cmds->nr && best =3D=3D (intptr_t)cmds->items[n].util=
+);
+        |                              ^~
+
+2026=E5=B9=B44=E6=9C=8824=E6=97=A5(=E9=87=91) 1:05 Ramsay Jones <ramsay@ram=
+sayjones.plus.com>:
 >
->  [alias "pull.sub"]
->  command = ...whatever...
-
-Sounds good. I'll likely write a script for my team to convert their
-existing aliases depending on their git version.
-
-> That does still break a historical alias if you happened to call it
-> "foo.command". I'm not sure if we want to try to be even more thorough
-> and fall back on that case, or if we're getting now into unlikely
-> hypotheticals.
-
-For my purposes, this would be fine and work for me. As the hierarchical
-aliases are already unlikely, I imagine "foo.command" existing is even more
-unlikely.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Jiamu Sun,
+>
+> If you need to re-roll your 'js/parseopt-subcommand-autocorrection'
+> branch, could you please squash this into the patch corresponding
+> to commit b9e6a2d30a ("parseopt: autocorrect mistyped subcommands",
+> 2026-04-23).
+>
+> Thanks.
+>
+> ATB,
+> Ramsay Jones
+>
+>  parse-options.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/parse-options.c b/parse-options.c
+> index d60e7bd3c9..14f3f385eb 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -658,7 +658,7 @@ static const char *autocorrect_subcommand(const char =
+*cmd,
+>
+>         for_each_string_list_item(cand, cmds) {
+>                 if (starts_with(cand->string, cmd)) {
+> -                       cand->util =3D 0;
+> +                       cand->util =3D NULL;
+>                 } else {
+>                         int edit =3D levenshtein(cmd, cand->string,
+>                                                0, 2, 1, 3) + 1;
+> --
+> 2.54.0
