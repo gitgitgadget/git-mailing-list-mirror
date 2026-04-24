@@ -1,111 +1,172 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from ste-pvt-msa1.bahnhof.se (ste-pvt-msa1.bahnhof.se [213.80.101.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87FB3D566B
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 16:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143F3283C87
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 16:27:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.80.101.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777047009; cv=none; b=fJJXqw0bTXCO3Pkh6Ir6elhWwmstqhzNRCCHCYrp+gc2FgGehTyfi+PiacngMh/NHqXRoukh4OHjLuJ5MAdduJLrohhdCsV6wre/NYKLRRxa9lq+ibQrF0D9ijWrRDuU946bX3EutToUwZp/xcHfCbF2nZX8Pqbp+V8z1LMjyTY=
+	t=1777048041; cv=none; b=k8MSGlX9ZIrrdUxz2QpbW52QXxh4+xgGwmVyISez84U0f7A72sRgZHZ2MaXL4IqUD1b4Yu8St8hMzwSRSCDFyYbr5RBHbEo781oay/lMmYWgwd4Glq9VSKVbs2CgtXtXK2Va5hH6/qfdTJWslIvKjFDmBVtiFYqScVCKrrCwT/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777047009; c=relaxed/simple;
-	bh=/cOj0qPX+R+VeZG+q4OBAHmbkHA1Otq7WdD7OoYf84I=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=izIJhzey7g1T/3iqOkO5ry/sOIwf+5pjMA0CeKiN+9lpDl1PFl9hvRfZ3ytdXJ1mzkkGTL5Q8+TVaDiTd5WF25E+DfnIGVN0CRiw/Xz58G8XPgJHX0GTDe7K85o1MTcln5dhUY2McOxzDrDJPbUxX6tX/dLLDnvt/XMI5ooYo6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=PctLcEVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KZoZ/6nD; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1777048041; c=relaxed/simple;
+	bh=0obUN7Z6k2J1af8WAl7r0zFity9/kksjsWMkcrKFYtc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iUNkRmN4rJKjtV3EIf15a/Jxy1qxXxcFbk74rwdwypqJ721RQVMxu31NSzGq8Er+Tw2XekSDDKeUEnQlzVqdoDjBCvimdumJqKt6Xj7DueZyKGA+f3FBBXh5LW7Y6SEKiTI+TtgrbcWdTjihsRyA2ec1QXEFrs5dZ1hZxNchIKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=Lsi23673; arc=none smtp.client-ip=213.80.101.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="PctLcEVA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KZoZ/6nD"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9773114000FC;
-	Fri, 24 Apr 2026 12:10:06 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Fri, 24 Apr 2026 12:10:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1777047006;
-	 x=1777133406; bh=/cOj0qPX+R+VeZG+q4OBAHmbkHA1Otq7WdD7OoYf84I=; b=
-	PctLcEVAiF0/NrJB5WVJhu/dQ3L2JFCOEja7eA2jGYYU7vY7dx9yEip52B3X+e6C
-	Y8vRa1MTuLPoXzEAwqwrkDAChl1bVXgEvylUAJlm0KOflNJh+zDnFZ0KKM2ARTyW
-	tz1vme2FnaHVix2yabY/P+yuc24Sjq8gdF7tRNujgJqH27vCLdXUiCwm5Xp/Q0/f
-	LNPzO/N/sEy1YRrIeCdsPH2yNXlGRY2M0agaUPJuAFAiQOLvIKmkg25qBomTUna1
-	66MbaL2E0vmQGy4rVwG3gbPJr/3854z0NZ9kV1RCzzyrG4WFaTxvsURDfPL4wc/8
-	aXyvl0d3olWAj44fWpjCPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777047006; x=
-	1777133406; bh=/cOj0qPX+R+VeZG+q4OBAHmbkHA1Otq7WdD7OoYf84I=; b=K
-	ZoZ/6nDyk1NutykpGWkAyblX7nWvUWdHfTIIHQ5+DNFzf2k0ddTd2V4Rtnau0Wgx
-	iT/zcUscAuqWxnBeTHWuHPoNqRCnJko8vbxKH5qlY6fV1HJqYnJGXtpCUeNRO68/
-	YQ0D4+7Sn26ilU9g+eWaCnyzGYBTHAtuElcrnlotFSYvAOgmld8XvFyCPIlFcHc9
-	FoSJ7CIvvOcdWTXqQrCjr7pcftHnEG/0okBwsNp9HdP/IV+4ddTAKmCPsbwDNBhZ
-	YDDuXdQ4JZ77gke3/vkURlmoXaeOT3DVHu60hgVAm/SCG3F4HimD/u7Iyd2DY0nF
-	ZcxpGRm+jz9X1e7OE419A==
-X-ME-Sender: <xms:3pXraVboqx3PxOUpruhnwgEC3_1-_sxX1PUEyU2T8y1AU8kBhTpqsM4>
-    <xme:3pXraXMExrO4hQJnN-5F9JwswWirl8Xq5hcV9ndleEVdvlhbUjTfUdd_gI2MW-NK-
-    ax_B_zdy-nPyRyeXvaouaDTbV3IgE2GBJ53iZE9zBE2bo598pU72Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejtdegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
-    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhhitghhrggvlhdrghhrohhsshhfvghluges
-    rghmugdrtghomhdprhgtphhtthhopehjohhnrghtrghnsehjohhnthgvshdrphgrghgvpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhstghhseifvggsrdguvg
-X-ME-Proxy: <xmx:3pXraZc-6VyhoOkgzob4ic7EuBbspLmtFeODiDQZ1nxTFn6dTKxMqA>
-    <xmx:3pXraYt6YEgUZLww5OaQPpUab7IR0bGvKAJUHipEp8KCQXuLqs2_yw>
-    <xmx:3pXraSnMZjbEb5UTiJypI8BzOGi4shRsWeCpJiDrFADd5KBGN5UoPw>
-    <xmx:3pXraSwd-kwKnRXLKVM-LNjsGbZgaDAi3GWI21EyA4o9I28v85qLsA>
-    <xmx:3pXraXzy_RA0HQPN_pXTo0GMZJWLF9BNo4LMXjdzyRml4z4MUexSyuC9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5E6F41EA006B; Fri, 24 Apr 2026 12:10:06 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="Lsi23673"
+Received: from localhost (localhost [127.0.0.1])
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 460063F854;
+	Fri, 24 Apr 2026 18:17:36 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.1
+X-Spam-Level:
+Authentication-Results: ste-pvt-msa1.bahnhof.se (amavisd-new);
+	dkim=pass (2048-bit key) header.d=jontes.page
+Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7BazGAIgs8nz; Fri, 24 Apr 2026 18:17:34 +0200 (CEST)
+Received: 
+	by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 07C7E3F845;
+	Fri, 24 Apr 2026 18:17:33 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2663EB0A43;
+	Fri, 24 Apr 2026 18:14:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
+	t=1777047285; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=32PjzkQCH++0es5UjV1mL3G8ccmdDlZSl6MTv6aYY7k=;
+	b=Lsi23673iIZvaxUrOXUis+GOk7WwhxkjeqpVtuG1MMz0wv8LgUk7bo0dJ4X9BwqBImsbxK
+	dZPIUwvjSIglIOy94Evo6lYxISSFRXTSOommkk5shcbOKUKjgoBnU20N+DDZClnZerXcEa
+	OyeNOiSk+351cYhIGVrrznzcZ7X9FT9QbYdwGQGp9gF/Diu+tSOeijZeNf4rP4OYowwlEL
+	mcQT7VktOFjqGQfwCKP36aetaJOVLFAbND68AiteyYjd8/fSF6MaPUo1UTja8IBvC2TP1R
+	De19eKe51kT8sqeT6kYdrP8S+QC5xtCxEvLfwe9gZsOIynyUgv2eAcUUwnhxZg==
+From: Jonatan Holmgren <jonatan@jontes.page>
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+	rsch@web.de,
+	michael.grossfeld@amd.com,
+	Jonatan Holmgren <jonatan@jontes.page>
+Subject: [PATCH] alias: restore support for simple dotted aliases
+Date: Fri, 24 Apr 2026 18:17:00 +0200
+Message-ID: <20260424161707.1514255-1-jonatan@jontes.page>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
+References: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Ao1-gErK46Ro
-Date: Fri, 24 Apr 2026 18:09:45 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jonatan Holmgren" <jonatan@jontes.page>, git@vger.kernel.org
-Cc: "Jeff King" <peff@peff.net>, rsch@web.de, michael.grossfeld@amd.com
-Message-Id: <38188193-e6ab-40bf-950a-c516aec71d5d@app.fastmail.com>
-In-Reply-To: <20260424151053.917066-1-jonatan@jontes.page>
-References: 
- <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
- <20260424151053.917066-1-jonatan@jontes.page>
-Subject: Re: [PATCH] alias: restore support for simple dotted aliases
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Fri, Apr 24, 2026, at 17:10, Jonatan Holmgren wrote:
-> Historically, config entries like alias.foo.bar expanded the alias
-> "foo.bar". The subsection-based alias syntax introduced in
-> ac1f12a9de (alias: support non-alphanumeric names via subsection
-> syntax, 2026-02-18) broke that behavior by treating such entries as
-> if they were subsection syntax.
->
-> Restore support for the old dotted form by falling back to the full
-> name when the final key is not "command". Add tests covering execution
-> and help output for simple dotted aliases.
->
-> Reported-by: Michael Grossfeld <michael.grossfeld@amd.com>
-> Helped-by: Jeff King <peff@peff.net>
+Historically, config entries like alias.foo.bar expanded the alias
+"foo.bar". The subsection-based alias syntax introduced in
+ac1f12a9de (alias: support non-alphanumeric names via subsection
+syntax, 2026-02-18) broke that behavior by treating such entries as
+if they were subsection syntax.
 
-Missing signoff.
+Restore support for the old dotted form by falling back to the full
+name when the final key is not "command". Add tests covering execution
+and help output for simple dotted aliases.
 
-> ---
->[snip]
+Reported-by: Michael Grossfeld <michael.grossfeld@amd.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonatan Holmgren <jonatan@jontes.page>
+---
+ alias.c          | 16 ++++++++++++++--
+ help.c           |  9 ++++++++-
+ t/t0014-alias.sh | 12 ++++++++++++
+ 3 files changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/alias.c b/alias.c
+index ec9833dd30..e737c49edd 100644
+--- a/alias.c
++++ b/alias.c
+@@ -34,8 +34,20 @@ static int config_alias_cb(const char *var, const char *value,
+ 	if (subsection && !subsection_len)
+ 		subsection = NULL;
+ 
+-	if (subsection && strcmp(key, "command"))
+-		return 0;
++	if (subsection && strcmp(key, "command")) {
++		/*
++		 * We have historically supported the "alias.name" form when
++		 * "name" happens to contain dots (e.g., alias.foo.bar to allow
++		 * "git foo.bar". But our parsing above would split that into
++		 * subsection "foo".
++		 *
++		 * If we do not understand the final key in a subsection-style
++		 * variable, fall back to treating it as a two-level alias.
++		 */
++		key = var + strlen("alias.");
++		subsection = NULL;
++		subsection_len = 0;
++	}
+ 
+ 	if (data->alias) {
+ 		int match;
+diff --git a/help.c b/help.c
+index 3e59d07c37..46241492ce 100644
+--- a/help.c
++++ b/help.c
+@@ -592,14 +592,21 @@ static int git_unknown_cmd_config(const char *var, const char *value,
+ 	/* Also use aliases for command lookup */
+ 	if (!parse_config_key(var, "alias", &subsection, &subsection_len,
+ 			      &key)) {
++		size_t key_len = strlen(key);
++
+ 		if (subsection) {
+ 			/* [alias "name"] command = value */
+ 			if (!strcmp(key, "command"))
+ 				add_cmdname(&cfg->aliases, subsection,
+ 					    subsection_len);
++			else {
++				key = var + strlen("alias.");
++				key_len = strlen(key);
++				add_cmdname(&cfg->aliases, key, key_len);
++			}
+ 		} else {
+ 			/* alias.name = value */
+-			add_cmdname(&cfg->aliases, key, strlen(key));
++			add_cmdname(&cfg->aliases, key, key_len);
+ 		}
+ 	}
+ 
+diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+index 68b4903cbf..5144b0effd 100755
+--- a/t/t0014-alias.sh
++++ b/t/t0014-alias.sh
+@@ -128,6 +128,12 @@ test_expect_success 'subsection syntax works' '
+ 	test_grep "ran-subsection" output
+ '
+ 
++test_expect_success 'simple dotted alias syntax still works' '
++	test_config alias.simple.dotted "!echo ran-simple-dotted" &&
++	git simple.dotted >output &&
++	test_grep "ran-simple-dotted" output
++'
++
+ test_expect_success 'subsection syntax only accepts command key' '
+ 	test_config alias.invalid.notcommand value &&
+ 	test_must_fail git invalid 2>error &&
+@@ -183,6 +189,12 @@ test_expect_success 'subsection aliases listed in help -a' '
+ 	test_grep "förgrena" output
+ '
+ 
++test_expect_success 'simple dotted aliases listed in help -a' '
++	test_config alias.simple.listed "!echo test" &&
++	git help -a >output &&
++	test_grep "simple.listed" output
++'
++
+ test_expect_success 'empty subsection treated as no subsection' '
+ 	test_config "alias..something" "!echo foobar" &&
+ 	git something >actual &&
+-- 
+2.54.0
+
