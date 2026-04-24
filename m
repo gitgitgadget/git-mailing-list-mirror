@@ -1,69 +1,68 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DC31AA7A6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9784F281369
 	for <git@vger.kernel.org>; Fri, 24 Apr 2026 15:01:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777042919; cv=none; b=jTaGlC5CL8vqU45rYQdZuJiy7zYWH/rN79g+cT/Eq4u0RBDbxqxOh3gfkFxsLXw0z8742tOKEsL1Z2ynUWxpx2YcIqkS1ooEgU7q9tCrS7B3WeUWpaiXT5tytcBD5GpUUJ85PZMSCJ2uX4/fbL4ZKp0ywIQfx/3t1ArmN8lqJcw=
+	t=1777042919; cv=none; b=byU6RVfvRKPEHPU5IkOE5xRtMCP9xCoVrLuzu7p+65oEVcoh1m1OYHEsb4Eya6qCNjIeR/Kz3Ln/qRsWcRtfauiw3fAmZF8cx4YoH12Mky1nqY4cKwljYhWFzgCNf6sB8CsBNxTJiFZYo6nkBuClOcinMNp/CdCWaijjb8POaf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777042919; c=relaxed/simple;
-	bh=Cg8gOdl4iXD8K3iBHzhZ1+M0TqHiSvFtXYaaDhAXIhI=;
+	bh=jnm/Z1If7bkvFQkcU7sqYak1vdbr0fMaw8wj4FMrIJk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=J2X4lLaKzrBxey6bdHLH/2moFjjlaXnU+FWBkXNVQAA+sQ86fnCDhcHHnN4G4Tp+zeNdmw60LVLasGCPhZb1A6TmfXXgchyhg8/gkevUpN8yf2YHFu3zM2ASpnVksURLkeFq60x4sOmjMRxwIRuY1I3NRk8MnW4cQ9PmaSdRh34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MYeMRYUk; arc=none smtp.client-ip=209.85.160.169
+	 MIME-Version:To:Cc; b=KNGbcv3u7XvTu7q9ICjxpXaBNr/8trbIphYMsG0pPZ388xgxDihchIg1r7ysYDA4bmlhQZGzMM/GxDWo1mfg1LVwAodd9C1cgxmQ4FDGkPXI+We+XBPpzOmv7RtDOTNYgJ/FY0MbBlmLkuqgJAOA99E2NGV80GKyNS10fWsa0AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FBcl4vYL; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MYeMRYUk"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50335b926c2so61882111cf.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FBcl4vYL"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8ef5776530bso411750785a.0
         for <git@vger.kernel.org>; Fri, 24 Apr 2026 08:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1777042917; x=1777647717; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IpT3gsty+J5evlOS4DEDjPoZhDOu8/4vtCbpLo7aTY4=;
-        b=MYeMRYUkfTvzaUzkIi+a0Yht08jNFDYPBWxzhRtJdLyMye4H1tJbf/iX2T/3Q92/xa
-         Ln4D8MmdgndRyL9/wLaAGC44eq1RGBliy9+gHObt7/vUSfDwc3RUc4cpUtRwf30QZMAq
-         0Nq4RDlSDmbYjVUDTKzd0vOG0vktNTf8ayhRKiMBP9L6G+wxe7uYGbOnAkhDdhy8ClI6
-         wbMnijEqU1+i5SGE9tFUlrH+o/WS4PTBFXJuCrcX81Eqm4ApJX+dXTUQMAknGCI889Cp
-         7UC273Yui2VE6Jqg+UJn3gZUiGQrmGirK665Uqxqr3jyh5DcbLAp7BZGyWV39NfwU3ib
-         WO+g==
+        bh=oCHz9aPq0NVGCNpLUqgbv5QeQXOox7FOOXUOGvMdvAw=;
+        b=FBcl4vYLeQNx+p5trBfwGiEbIC3HRJVuws9lGLjUPtaTgY8XPJ8QLcOWhdRzPo5Tb9
+         XspEJj4ita4ZmR1eLMwGcITRGcoEIlmy7HcrjPjqc662fI0mzPDv0l4IYNfWTrKbzkPE
+         K92N+mANMH2BzSmirb508+Xi4k60j45k8BVSif7vf/Da9NZb51Pnvat82fIo+4/QxK77
+         x/Nys1aUXwCy/h76bMJc2XMLaUpLpJhv19gJ3xR89YxZwOkQGrE0pHFx+j8npWvY5xue
+         4YsL5rXEQsY8J2ViHF83y1q388ak7MIesQG0E350S2Kv3A/eEbnXUatWBu61I9c9DLdz
+         cLFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1777042917; x=1777647717;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=IpT3gsty+J5evlOS4DEDjPoZhDOu8/4vtCbpLo7aTY4=;
-        b=COOrNNxXh+a3KFdMKQhO5Nh15jUA3dVLdN49yUn8QXpeyeqhD0/CIrgUVpyB4pzZhp
-         damO5QUAXPVnrkavURkA7qfsSqJ8u9WHF0pLO8xz0YYuxiLTFOt2VqgQx33DxnN5CQwB
-         QnpqcZI15+Tf42cFkTVH21L74D+LOHbjsJ64f+4ggv3UbguDgnaapTFqtGy9JTrC6uPG
-         oi/NMHVmo0OrGNoXDLAnorzKIlQgBzdMcV2or3kji79pFnCPPbzX4F/CTAtnHBGD9UBh
-         +al7UCqrRXa+znw+gcv+Qh2Wd+E+uoF27VEohaQeoe5rGKfrFDfjc/7pMasCQrMuWehn
-         jXgw==
-X-Gm-Message-State: AOJu0YxRTkcO2nn3+GkrzLko3ydNO2dkwfIB0fRvf5y9AQo7C9JPamQO
-	M4QIPdFgzW20CevOoctLTPalEkTEM5PlvxGVl6zCPGx9/yr7PCkVRJRp2C3DWA==
-X-Gm-Gg: AeBDiev8RLK2JNTcSJjxTK9wmgXPt8rt/RB/Xw4O9q+nNmAUz2z8bnu7rW4G5cFXwbF
-	9qqOdWS4qwSGgt7Kh1sX1DLqBO98ZZZVcHidicTpIoeBeqzS1jL2+MvIUNnTqKxpNSFC2JYEN3Y
-	tSAor3w1WyaP4aydJtRJAmoEjqJu6EjSTXTORLPfeDdFs4A+cVqWhCJOHLFg/seHj95oZSI/IXC
-	w6BfJlg1gPMXmq4NLlnrehtpjIPzoyYOB8OlNdGe1vg/FAELPXE+g9w5TpW/VkHc4a2p7D65KMX
-	RjEekVIGNfqADXbVi7O/JjtL7SuMeIiwv6TvZIFCu2UmZqJ+7VOYiqDaz9HZeLCmnHOcdo9O+4k
-	LnhwOSOgipMjdIKlQC9B54RFKx8ddEiEpYDgM6EqUT2yGKHKtmP9yg2DWDmr9qFwCCG1Fqz3zma
-	odAsOq/3GhlXHiah+HB993gnj8DXjbs9lkpGrU7w==
-X-Received: by 2002:a05:622a:1189:b0:50d:84a7:72d0 with SMTP id d75a77b69052e-50e36e9c0c7mr479750931cf.36.1777042884063;
-        Fri, 24 Apr 2026 08:01:24 -0700 (PDT)
+        bh=oCHz9aPq0NVGCNpLUqgbv5QeQXOox7FOOXUOGvMdvAw=;
+        b=h7f1s9I/0Cp3r2tVexTG/C0B5W68AwVHArjFJLycOPSsQno9C9He5HFaYY0nH1sJdb
+         lQTdUqFd2gW95oB9dBkhgN0sgl8H/Ys9wB6DMONIAvXLzhpjYZ5Mxdj40jJLEFNQVlvN
+         9CLvfneVJ67crQfqk/+dhId4vZpfuCP32qNEmlgm4AePP+us1RVdYs2LGaZXbhwfqeKC
+         kM6NC/g7JZf229hJW6WvqioW6TX0NNC3+IIF5cDXKbL9SfWdKG6byrvYjhFqmh3PR0cQ
+         Xhm33OpXcEGsx4HLgUYjWVm2rNFnNla4NnjLrbV0wWTAQb9/gHPB1JXvMoHlagDaC1rM
+         tXbQ==
+X-Gm-Message-State: AOJu0YyORYT8kmfV3RQpwI2i02HHwbDQ/XcwxGuzb9MIeC601En3H6JD
+	JYJXjX/9QFQ5aiCyM3JChSaygwbuQR4Iz5dQVYpH7v3KM62rRTkIMMdm+UREaw==
+X-Gm-Gg: AeBDiev5ZSuU5v+B0K4JL/rlrX8d68zzJAAA8R146aCN1D5q647Nv6pFq6OPILRT1V3
+	x7cT5omaijDgLhrExCyveo/MJOg6cyMa5Jbl/j19vrdjmMkFlgo92B92RgsvtsYshx5Xy7NXwrc
+	6FWWc1yhcaJmeSEYSbzRVc5CgTNnxdccxO60EYh9VjGb9fRZ7qHd6r3+dYdQUwQ03ASwQqAMgRl
+	tAd+Tt0ZSY1rLR27BnqawLUVvmA8NcPvrmfpvIPLX3+n+636whLsNK/djV/wiPICtIgsrR/DYLO
+	hPBq5kIC0SoffbwNM5YRLq/z/YWatIg0wBfYb1U6jNONbvPfHOVKTHw//rnDIbePLWfupANoIID
+	lpeORoGwYSSQEbZ4G+Z+cN8Xhd29oX/GLiUzqGCwaMLmGf1CSR02EMsRKK4NZga8icU8WwKJAgu
+	t6lNA+vdhRr0H6dWG5HoxN45kYIqsgqWQkTem94Q==
+X-Received: by 2002:a05:620a:470d:b0:8d0:3add:30d8 with SMTP id af79cd13be357-8e792566f53mr4535815385a.52.1777042885433;
+        Fri, 24 Apr 2026 08:01:25 -0700 (PDT)
 Received: from [127.0.0.1] ([48.217.251.133])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50e392e351esm186475761cf.7.2026.04.24.08.01.23
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d64cc559sm1923592385a.13.2026.04.24.08.01.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2026 08:01:23 -0700 (PDT)
-Message-Id: <092ec11621ce698e3f3af7bd5024d338440ffce7.1777042877.git.gitgitgadget@gmail.com>
+        Fri, 24 Apr 2026 08:01:24 -0700 (PDT)
+Message-Id: <3aca302275225d374d33789f56efae47c025bb32.1777042877.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
 References: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 24 Apr 2026 15:01:13 +0000
-Subject: [PATCH 4/8] t1305: use `--git-dir=.` for bare repo in include cycle
- test
+Date: Fri, 24 Apr 2026 15:01:14 +0000
+Subject: [PATCH 5/8] t5601: restore `.gitconfig` after includeIf test
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,38 +78,37 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Earlier tests in t1305 overwrite `$HOME/.gitconfig` with their own
-content as part of testing config includes. This clobbers the
-`safe.bareRepository=all` entry that test-lib.sh writes when
-`WITH_BREAKING_CHANGES` is in effect, causing `git -C cycle config`
-to fail with "not in a git directory" when it tries to access the
-bare repository created by `git init --bare cycle`.
+One test in t5601 overwrites `$HOME/.gitconfig` with an `includeIf`
+configuration snippet and removes the file in its cleanup. This
+destroys the `safe.bareRepository=all` entry that test-lib.sh
+writes when `WITH_BREAKING_CHANGES` is in effect, causing later
+tests that use `git -C <bare-repo> config` to fail with "not in a
+git directory".
 
-Use `--git-dir=.` to access the bare repo explicitly, avoiding the
-dependency on global config for repository discovery.
+Back up `.gitconfig` before overwriting and restore it in the
+cleanup, so the global config survives into subsequent tests.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1305-config-include.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5601-clone.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 6e51f892f3..f3892578e4 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -350,9 +350,9 @@ test_expect_success 'conditional include, onbranch, implicit /** for /' '
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index d743d986c4..3dd229c186 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -813,7 +813,9 @@ test_expect_success 'clone with includeIf' '
+ 	test_when_finished "rm -rf repo \"$HTTPD_DOCUMENT_ROOT_PATH/repo.git\"" &&
+ 	git clone --bare --no-local src "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
  
- test_expect_success 'include cycles are detected' '
- 	git init --bare cycle &&
--	git -C cycle config include.path cycle &&
-+	git -C cycle --git-dir=. config include.path cycle &&
- 	git config -f cycle/cycle include.path config &&
--	test_must_fail git -C cycle config --get-all test.value 2>stderr &&
-+	test_must_fail git -C cycle --git-dir=. config --get-all test.value 2>stderr &&
- 	grep "exceeded maximum include depth" stderr
- '
- 
+-	test_when_finished "rm \"$HOME\"/.gitconfig" &&
++	test_when_finished "cp \"$HOME\"/.gitconfig.bak \
++		\"$HOME\"/.gitconfig 2>/dev/null || rm -f \"$HOME\"/.gitconfig" &&
++	cp "$HOME"/.gitconfig "$HOME"/.gitconfig.bak 2>/dev/null &&
+ 	cat >"$HOME"/.gitconfig <<-EOF &&
+ 	[includeIf "onbranch:something"]
+ 		path = /does/not/exist.inc
 -- 
 gitgitgadget
 
