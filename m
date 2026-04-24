@@ -1,146 +1,224 @@
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EFA3D34B7
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 13:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038490; cv=none; b=hA5T0GgS5D4cfes/h66IqgjasxXhYJ5AXOXT5GPleD57rsSuRbWBpjr9hC1Ba2WSXIDm4Fr5fmJr8ZBFmFj37w2g9s2p+4vxquY1JK1hPoa97uJuH7JZT0b6prJIyh8FbG3REajaknEr9g27o4QEsqNsXAIv9F5t4SDgBENzcWE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038490; c=relaxed/simple;
-	bh=uH7n9ALRf+Njvx1qP/uZsqjoZJYFA5d6jQnustDS/9g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mAtzUtjyVYHHuma5O6j0VOB+MxclY8lyS0ZgShO1+OLlUpovIGa6rbkd4PN/xkQ2PEjLZIs/pVtkacz7h7X12xDmp5c9rd5Uguc+dOzQT1hCSDQgAEJj0fMgCiEv1ju1n27kFikm6210/zkTQHkvSbBol7Vyg2GJGQrOHc/kOXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=PFnayA/E; arc=none smtp.client-ip=212.159.14.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC003DC4C8
+	for <git@vger.kernel.org>; Fri, 24 Apr 2026 14:43:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777041831; cv=pass; b=lTxvLEQX5jLkr9+UHYNj1ywvy2lbUp4Mp9N7Qr51EmrnX5Bcctiw1OFmXbeJ1XNs5c1RQ+TE3OtcivYphErnd7dcDNrP+6xRyvP+MU54b9AcvfbFIR/Ms9oiuFAo7KP6K/myJkkK9/wYqdWTKE1EPdtE0gs5mYlLszZUt1ESNgY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777041831; c=relaxed/simple;
+	bh=TfohyiCwNhzzFCeIlXWMYcDIg9RTR+w1jRsQDsOITw4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YLSZQP/M1czQpXzYnnIBjY7GzICSKbMm+Ul2UQz8t7mxD4JyKx90b+UoZeuCcWyo4vAAb0uLslwEBpy4BK+hcEicZebYpJehK7r119hK7xZQNOnWp5pd66o2rijoDMK1X9kH4wNmU5IIv+5imeSCyNSaqNWPI1KLEAGBcDAtaAo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFwCHk+X; arc=pass smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="PFnayA/E"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id GGt2wLv0de3PcGGt3wdzfd; Fri, 24 Apr 2026 14:48:05 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1777038485; bh=Y+6BNU4ukAGItBTpdcOrv3VeTkLnndZxUcgyeiP7y5k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=PFnayA/EabZ7oUZ1Q1ycdPDx2iE/7t4m7AW8wF5HE8Jq826/RhCtCPBCYyPvJCML2
-	 DEkGiTiZTfrXyzzUrhGGcQYn26RtxUewX70LCsz+nmzRBZXsHwX/omQXOMeoI6t36x
-	 /E5HPMq0L05v/l6a9xMKEKLO7CakdZV4gTaP16GXJWG0WFDnnjAysfdtFMTOpysW62
-	 11yxmh0IqE6NnjMiah9CSJ6q9V95iHPRDp2jn15khjFACIyjCY2OMCEVAb+31Rpa7/
-	 a4ZXYhEqT7TIoSalAaV4612J6Su22TALJiebpYVU6qE5XxVcfE/iX7uYsONHR1cjHr
-	 5PQUE2JmyLANA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=FMy4xPos c=1 sm=1 tr=0 ts=69eb7495
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=Memj1J29uPYTSwaFmhkA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <d7ffcab0-cec3-4cea-97d7-1b359b4ff55e@ramsayjones.plus.com>
-Date: Fri, 24 Apr 2026 14:48:04 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFwCHk+X"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c7971d0d97dso4679609a12.1
+        for <git@vger.kernel.org>; Fri, 24 Apr 2026 07:43:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777041827; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dcQLbxrdsDvqx86O7gaXR0BABw7JI6tmOAje1eB74Q/yqBnX1wzsWmLat291GK/J0z
+         efmDpSWEPHjo/ZDCZ0LSRzCljOPnaxqNeZbftz0MCnHp1tHvM3DYkymPyOIgLsWOh1fg
+         kacbF6gd3/gV4Q0c+GL5HWpO1lf0Z1pfWuu3byb0m7QtDFNXvvj1WvsSZzZdReUC5OqI
+         gNk7MDFeJmbcq+m5K+pgDJQi2y0oEP0VD07ZSWkA+MvQmwiSM0rZTQaKXhHDCRAgrjAn
+         PL5lyrUDlA4TfeQuTVB+M4DYvhCbtfY8KUCgqqBfEObYD1+7GrUynCN1cimbqAwLX+a0
+         M3FQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NrqkaTu6F3hgC5gxjg5Kkdc4d7wd3jdN1618WDXm8wU=;
+        fh=7C13Yara6diLW3o1hgquesR7ciM/ftgxAeePVQ59NFA=;
+        b=IoN+R/gqRp1FRu6+JA6wIJjFR21SSl1yXOnYNVDC4TMBIFTzIwt6Hdr5okYvllWp04
+         k2gYUVSQouVszkGsmz9fSCzPRcpPgloAr5OBFmpHSXrWpBK8kOQAn2qilVbrgS+fA3iO
+         9uUzhOBghlw41XxTBpG2g14RORQfYU5PC5ziHsddQyzglGhYLrnsKN3OH98WxrNP1FKy
+         BEE87FkFkjTQCbmVCqrOOZh7Bt/5Kd99w4dEAqXPZc9cvO0tyQUT/BALlbtVKdNgX48N
+         j64NOCSz+P5j+gu5mysEfzB/ywK/sl3o+xXIJ0iUGNvPY82jgbUOxI8fiL6vN2x8MZYm
+         lqJg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777041827; x=1777646627; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NrqkaTu6F3hgC5gxjg5Kkdc4d7wd3jdN1618WDXm8wU=;
+        b=mFwCHk+XZpWoSEMwf94dcvnf6iZUSW9IhWznIpqxNX0EdVQ8uxeE8YWgMA2vUZO3Cq
+         5BYvT2uzXLJM7SwI3Z01h3GQfQkyuxMxRFzDxgDVRJbCQUoIIk+vJ7J7wCruqhBIRJKq
+         ap+JMXbC41ATeaIxJVqDFltntPNqayAXr2Qq4EIfpyPcq4fGDjp5KpKbph2gqHpYv1oQ
+         XkJvAlbFaq4Lsf/d6K7oxXs8NmSig1SyorzlFt8PPvFUppXae2erpSPFvvrXImMY3KWD
+         KuF01b74g5iBq4Dch00kA8sO1h6PPh7gHrGwfw7ftGoKYJypgfAcsMrTiFbytfEIFUOe
+         GIkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777041827; x=1777646627;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NrqkaTu6F3hgC5gxjg5Kkdc4d7wd3jdN1618WDXm8wU=;
+        b=pzRLDgcCtG/fyqkFxN2ZkJkvn7O6wzK7bvMkEQTVN4QNely8GvOvBgDV0yBJRjVt2z
+         5q4PZrf3QCDunwi0V9mahPammaaO385jHJmn8rI9X2VO9YdUVmFjeVmRcrHIsR287+dS
+         nOYiX0gyMuCB3udPfkYYgXS12PxgYzv7yRymHR38Ry5k2Qkk+gwhozfMzTX9P8XtyyOd
+         0FJu3I+zI5J8efHivsTXMySi125BcV+FJydB/3hDtbKBImBnRidfBVuGt1EmQbvSAR6O
+         As/GB172597O0bYs6i8p+NQuFmKqmxTdiTA6dnSnbH/VOgEm7M3gqUmWrNZCdOsd5jF7
+         bzcA==
+X-Gm-Message-State: AOJu0Yzue6WS1yeO7qJYSgX4jroXWYMicXsJy5Ri0E+H0dipjV25Vtfv
+	6OT3AwVb/pzxJuWW1icdMuq8gFBHk0QX52rL8i+XwyLQ95bAOURJunDXz8FaYloVw9EDZh31g/g
+	4j6oZBbcI8vuqujprpXFq6sFDhh5WU38ryw==
+X-Gm-Gg: AeBDiesKZUlWGjTUsvdtl0HFtWUVcWFBf8BGTNO2zKU3jdRtI4BwbZ5Y0CZNm89tQ6b
+	uMC6qM8cr+ubgNr6NaPYtLcTRVXFzrXSt5av93exFqow1q3jzgOiBwrSCqgSVlHpcTP6pPraOxJ
+	5YQ700Tbrav4PxD/jkUgg55Zfp8pqI3SLnvM8FfVGBM8Z9Epfd2r89exaSr0LxraUHh3ghPBhPk
+	0CF5mLRIFCCmDynoeFnAqDIVtDG9+AouA23d2lWa8RxE2x7BvJu6HczGLhMKGu98m5PqiQbDrHW
+	xiWI7sMDPNzIzYUiHVQq70RpnuC5CNkKTiNA6mYM9gPq4kD1UraclizhCxJWGDVLxIOADLisQOB
+	i9qkNRfbkNaku17iWEm+WCMAu9w==
+X-Received: by 2002:a05:6a00:4fcc:b0:82f:5034:77a4 with SMTP id
+ d2e1a72fcca58-82f8c8409b4mr34512292b3a.21.1777041827112; Fri, 24 Apr 2026
+ 07:43:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] checkout: add --fetch to fetch remote before resolving
- start-point
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2281.git.git.1777024991531.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <pull.2281.git.git.1777024991531.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfOEgxCayTFuhXUCfly6pHPMLzNTEMsKkMLy33mG249vJ6pSVxwri7cXmmsOCYwXyotUf3g7qInhisShc4UvK32v0+ad/EgRws7xmErzowjFA/sC4ANNL
- 0UAzYamuUGaPtjLdb2RoEjPvDXl3FV4+IwmrCBCOWD2ISv3YRUnAQBYiZt84YHk6TgqBMkCtgC2k+TlxA94KxDCDywa3ew3uv0k=
+References: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
+ <20260422-b4-pks-history-fixup-v1-2-48d4484243de@pks.im> <CALnO6CCBA=OSvKT8D6-YR1S=x3VOa_MpzWfK6FJWPSXq0ysMPg@mail.gmail.com>
+ <aenCRKxak1l6GE3H@pks.im> <CALnO6CAZQxvqEqDhahFs7NcjENrU=Dg=cbFDkEeAE3+h_3R+8g@mail.gmail.com>
+ <aesTeWQqMTFd4gy8@pks.im>
+In-Reply-To: <aesTeWQqMTFd4gy8@pks.im>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 24 Apr 2026 10:43:35 -0400
+X-Gm-Features: AQROBzDyGBUVSNx3aBT2cmWLHU-2I6X5hvVLpLp2u7c3shupffJF_w6tcwIlPTQ
+Message-ID: <CALnO6CCkdoCFfyq97hUNzx2DaBNSHBpCUWfuq2LW1Jfzt2jfEw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] builtin/history: introduce "fixup" subcommand
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Apr 24, 2026 at 2:53=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Thu, Apr 23, 2026 at 05:18:50PM -0400, D. Ben Knoble wrote:
+> > On Thu, Apr 23, 2026 at 2:55=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > > On Wed, Apr 22, 2026 at 03:06:12PM -0400, D. Ben Knoble wrote:
+> > > > On Wed, Apr 22, 2026 at 6:30=E2=80=AFAM Patrick Steinhardt <ps@pks.=
+im> wrote:
+> > > > > diff --git a/Documentation/git-history.adoc b/Documentation/git-h=
+istory.adoc
+> > > > > index 24dc907033..3cdfc8ba02 100644
+> > > > > --- a/Documentation/git-history.adoc
+> > > > > +++ b/Documentation/git-history.adoc
+> > > > > @@ -53,6 +55,19 @@ COMMANDS
+> > > > >
+> > > > >  The following commands are available to rewrite history in diffe=
+rent ways:
+> > > > >
+> > > > > +`fixup <commit>`::
+> > > > > +       Apply the currently staged changes to the specified commi=
+t. The staged
+> > > > > +       changes are incorporated into the target commit's tree vi=
+a a three-way
+> > > > > +       merge, using HEAD's tree as the merge base, which is equi=
+valent to
+> > > > > +       linkgit:git-cherry-pick[1].
+> > > >
+> > > > I'm not quite sure what, as a user of "git history fixup," I'm
+> > > > supposed to take from this. Does it make conflicts less likely when
+> > > > creating the new fixup? I imagine it doesn't help with conflicts
+> > > > between <commit> and HEAD that newly arise.
+> > > >
+> > > > Anyway, I'd think the mechanics are less relevant than the end-user
+> > > > behavior at this point in the doc, unless the equivalence with
+> > > > cherry-pick is supposed to tell me something about that behavior.
+> > >
+> > > There's at least two more or less obvious variants to do this:
+> > >
+> > >   - You generate the diff between HEAD and index and then try to reap=
+ply
+> > >     the patch on top of the target commit.
+> > >
+> > >   - You perform the three-way merge.
+> > >
+> > > The second item is definitely more robust compared to generating the
+> > > diff and reapplying it, and we use the exact same strategy to perform
+> > > cherry-picks nowadays.
+> > >
+> > > > > diff --git a/builtin/history.c b/builtin/history.c
+> > > > > index 549e352c74..6299f0dfa9 100644
+> > > > > --- a/builtin/history.c
+> > > > > +++ b/builtin/history.c
+> > > [snip]
+> > > > > +       /*
+> > > > > +        * Perform the three-way merge to reapply changes in the =
+index onto the
+> > > > > +        * target commit. This is using basically the same logic =
+as a
+> > > > > +        * cherry-pick, where the base commit is our HEAD, ours i=
+s the original
+> > > > > +        * tree and theirs is the index tree.
+> > > > > +        */
+> > > >
+> > > > OTOH, this explanation helps quite a bit here :)
+> > >
+> > > Hm, okay. I felt that this explanation here is even more technical. H=
+ow
+> > > about:
+> > >
+> > >     `fixup <commit>`::
+> > >         Apply the currently staged changes to the specified commit. T=
+his
+> > >         is done by performing a three-way merge between the HEAD comm=
+it,
+> > >         the target commit and the tree generated from staged changes.
+> > >         This is using the same logic as linkgit:git-cherry-pick[1].
+> > >
+> > > Not sure that this is an improvement? Happy to hear other suggestions=
+.
+> > >
+> > > Thanks!
+> > >
+> > > Patrick
+> >
+> > Hm. I think what I meant is that the in-code comment makes sense to
+> > describe internals; for users, I'm not sure what I should get out of
+> > that description of fixup.
+> >
+> > What I (think I) really care about is that it behaves a bit like `git
+> > rebase -i` with a "fixup" command (modulo conflicts). Especially since
+> > this is quite a bit more porcelain than plumbing, no?
+> >
+> > Idk. If the 3-way merge is valuable to keep, maybe it belongs in a
+> > second paragraph just to push it out of the way of the primary
+> > description ("Apply the currently staged changes to the specified
+> > commit")?
+>
+> Ah, that's what you're getting at! I totally misunderstood what you
+> wanted to say, this makes a lot more sense. How about this:
 
+Yep, sorry!
 
-On 24/04/2026 11:03 am, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
-> Add a --fetch option to git checkout and git switch, plus a
-> checkout.autoFetch config to enable it by default. When set and the
-> start-point argument names a configured remote (either bare, like
-> "origin", or prefixed, like "origin/foo"), fetch that remote before
-> resolving the ref. Aborts the checkout if the fetch fails.
-> 
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
+>     `fixup <commit>`::
+>         Apply the currently staged changes to the specified commit. This
+>         is similar in nature to `git commit --fixup=3D<commit>` followed
+>         by `git rebase --autosquash <commit>~`. Changes are applied to
+>         the target commit by performing a three-way merge between the
+>         HEAD commit, the target commit and the tree generated from
+>         staged changes.
 
-[snip]
+I think that's much better.
 
->  
-> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-> index 9bcf7c0b40..60ddebd9c3 100755
-> --- a/t/t7201-co.sh
-> +++ b/t/t7201-co.sh
-> @@ -801,4 +801,55 @@ test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
->  	test_cmp_config "" --default "" branch.main2.merge
->  '
->  
-> +test_expect_success 'setup upstream for --fetch tests' '
-> +	git checkout main &&
-> +	git init fetch_upstream &&
-> +	test_commit -C fetch_upstream u_main &&
-> +	git remote add fetch_upstream fetch_upstream &&
-> +	git fetch fetch_upstream &&
-> +	git -C fetch_upstream checkout -b fetch_new &&
-> +	test_commit -C fetch_upstream u_new
-> +'
-> +
-> +test_expect_success 'checkout --fetch -b picks up branch created upstream after clone' '
-> +	git checkout main &&
-> +	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_new &&
-> +	git checkout --fetch -b local_new fetch_upstream/fetch_new &&
-> +	test_cmp_rev refs/remotes/fetch_upstream/fetch_new HEAD
-> +'
-> +
-> +test_expect_success 'checkout --fetch with bare remote name fetches the remote' '
-> +	git checkout main &&
-> +	git -C fetch_upstream checkout -b fetch_new2 &&
-> +	test_commit -C fetch_upstream u_new2 &&
-> +	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_new2 &&
-> +	git checkout --fetch -b local_from_remote fetch_upstream &&
-> +	git rev-parse --verify refs/remotes/fetch_upstream/fetch_new2
-> +'
-> +
-> +test_expect_success 'checkout --fetch aborts and does not create branch on fetch failure' '
-> +	git checkout main &&
-> +	test_might_fail git branch -D bogus &&
-> +	test_must_fail git checkout --fetch -b bogus fetch_upstream/does_not_exist &&
-> +	test_must_fail git rev-parse --verify refs/heads/bogus
-> +'
-> +
-> +test_expect_success 'checkout.autoFetch=true enables fetching without --fetch' '
-> +	git checkout main &&
-> +	git -C fetch_upstream checkout -b fetch_cfg &&
-> +	test_commit -C fetch_upstream u_cfg &&
-> +	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_cfg &&
-> +	git -c checkout.autoFetch=true checkout -b local_cfg fetch_upstream/fetch_cfg &&
-> +	test_cmp_rev refs/remotes/fetch_upstream/fetch_cfg HEAD
-> +'
-> +
-> +test_expect_success 'switch --fetch -c picks up branch created upstream after clone' '
-> +	git checkout main &&
-> +	git -C fetch_upstream checkout -b fetch_switch &&
-> +	test_commit -C fetch_upstream u_switch &&
-> +	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_switch &&
-> +	git switch --fetch -c local_switch fetch_upstream/fetch_switch &&
-> +	test_cmp_rev refs/remotes/fetch_upstream/fetch_switch HEAD
-> +'
-> +
+> Maybe there should be a new paragraph before we start talking about the
+> technical details?
 
-I was just skimming the list (so if this is not appropriate, please just ignore) and,
-although I think '--no-fetch' will probably countermand the autoFetch config, I do not
-see a test that confirms it.
+With this version I could go either way :)
 
-Thanks.
+> Thanks!
+>
+> Patrick
 
-ATB,
-Ramsay Jones
+Thank you!
 
-
+--=20
+D. Ben Knoble
