@@ -1,69 +1,69 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD7E280035
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0192A280318
 	for <git@vger.kernel.org>; Fri, 24 Apr 2026 15:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777042884; cv=none; b=rdroFYpstVlBt28j52CJLyN65B0nr7T4zNj+W78vnrUanhEFUlYZwlRl+iZA3qIawQxV4y9hpUP+WQ0PHurdj4SCqdz6pMAEc+7cvBM8FGKIBijaMdlb5NzGzEaT0wpc8oQfUCEQaqC2ZwJdu7yquIlJJbDkc3Hxhv+fAriFj+0=
+	t=1777042885; cv=none; b=UaQk2Hx5CpHHbDmxCQunCy5rxJK5oeOIyvm+4R34KTNLFe5/oMhFe7vU0810OypqO7o6avdpUkCB45W+DVPOmTZwmaSPZhcYeuhIcJYTHNd9GaM5sCIMB59I0W0Kq499j6duLvnIldft6Iy86AaL3Q5mPKHTQn2Bd5Ynwx1hns4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777042884; c=relaxed/simple;
-	bh=rmu5z5V2euAn5gbTTKB8XTD3b9nAO5wjFHJmTRkR1rg=;
+	s=arc-20240116; t=1777042885; c=relaxed/simple;
+	bh=yX82TyB7MQCLvtauiAHheQkTi7xfhOxhE69AGWdjxiw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pMkDv9swhsz/QW6f9liHnURSFlkbvlDW+s1l/UKFh1AxXeLy0d5+0rcDiA9qN/G7aUt8knSc33jBQGcrQHLFXj5s1CE7izGpcuOBcxBQAvukwL2aeDtxfiv+sLVPnCIZBXv8+O6IAlWP3CnoPBkucH2zsgZrtVfL08dK+Hng/vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dQOptvkB; arc=none smtp.client-ip=209.85.222.51
+	 MIME-Version:To:Cc; b=n0wfPLO19gSLSmsRVmaxZxLQVFpBGR7dUR1Ec5JBLczbqa4w0Ir8b3QMXaTaq6oF2b9qUmC88mnr2EGxK1WkY6YrU4QcR4x/8JxoTMfQgmot3oHfGmoiJbB9oHrIzFvtsYLsYEaIAeeVTZm3wr+llf8U6WbF/a6fKl/OCRJoc+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OPdFbZFz; arc=none smtp.client-ip=209.85.222.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQOptvkB"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-94e578a0fa5so3664624241.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPdFbZFz"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-95697b46831so4439230241.0
         for <git@vger.kernel.org>; Fri, 24 Apr 2026 08:01:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1777042882; x=1777647682; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XRAPcRPjEztK44f727GGVSrCN3tTUQZWyM8FSGsNS6I=;
-        b=dQOptvkB1mTVfzwbC7GesPDv8MPf4cIUa24J0mN00JLCFhq8FCSFHkTufUORoFAfqy
-         ciS3i32rgZrgntguqD+VjZsFUW4CKX+XxPLPzfvPhGGK5jJqBcMZooLuLgqHzrZJFH8G
-         4SroxWzs8s3KsIz+eJ2/N4Xgg672F4gACOwXHX86Zsd6r1NXqru7IvDVUdYisssxaPDB
-         IVv5VOO+50KHoUJHp9XTH0Uu1OqpnJL5uP3ccFYNqrctRB81Hv9Hq0UUbV10RJDPv84R
-         VrFUGymnsZ3CObvRswodymxgUCwiTzJG4kZ42wzIMHJAr1pvAFUAf68fB3s2/xxFeD6z
-         ehtQ==
+        bh=yJisFIYmu999F7p9DhPuR13C32V5G82pAGkfuc9Jdyc=;
+        b=OPdFbZFzmvs23NT6mfhjp7bKeSc0W3re2NJd0y14Gyuqwa3hh880ltmE+f551lKWjC
+         O3fxCesXRz67238wa+D0czjsyLTz3Hl9gSt4QlOxNhEWRcIEr+1Hh2v707DRLnzpq0au
+         pOdmwllEbqBXr1975vwOezJU+xTxC6Lx3lrPMogU9Bpj3YzxitgbEAV1Ds1AF2WwALR2
+         BFXq5TV/kIVJzz3wGZcjsREhFOorz4VA8UCuUCPHaw4ObPCNU0JcmVU83/o9SzL81yE6
+         7mJZ1cNCYGOx9pKfNlsqyLG+QkNIKZtF1HzvNSg6vUt5vvXyd1lhddZ42YUf7ctS8uve
+         r8aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1777042882; x=1777647682;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=XRAPcRPjEztK44f727GGVSrCN3tTUQZWyM8FSGsNS6I=;
-        b=icRiTXsW4mBHx1JQkqsP3xyrVWo4E9Z2AqidpXmyuAPX6qF2VUTF4b655GgG1kqqor
-         h/pptQ1wnWB/3Fczac9FdXRGbNsBzZ3D2l7bzcphyUkqVxDy4eEpI7HZKmqTTtqD0ZHd
-         Ehlm1a3yzDkceyl2Ip+l6UTkoUQvPDXPJbIb0DRwXMvz3xvgSicMwlEOI3Wh5WwI6xFx
-         jYgoqTBpQqi0i0x1sFexP7ESZapuU8pDxgTGqz4TYSGXtNFk4u7KmKVP7wa6iLGsh4+e
-         NfiLxVtDRxuMIPAQcMrg4QwX6gU4ioVcxgSHMfKWls7TgBIZ/tIo4vml2HDVaHefVjR/
-         w9xg==
-X-Gm-Message-State: AOJu0YzOZH9ICBxdiJsmTvblI6BZbyHfaJjDPt5u9rB4P5IOMnAaKCE1
-	DNgMSrUZdI8kCq7jFtuq0dzdJmo0Rj4tcUBTGkTgdl9xe9/wKySkVsPQobgC/g==
-X-Gm-Gg: AeBDievNIe+hlOvKI8AuL1eYktb9yrDUKkUTaj0JKUof32TGqO4hTgKfGdIFntPba9H
-	qUmy2p8iA8FQvn6Om4e4ZAI2kCBywnvGnN5ncwN/IKAmg18Tm9wgXECAJxARSuuOWdpQQcCC9bH
-	gSMpC6mqeLfLERS6dduBWVqA5uFNPsgNlEocO4wz+VQ8bN6iHY1aGqXy8RxOLZq4yyjVumwl0Kz
-	u59+4qjsumQrFQ3/09dPqiYlYF7AKz0TIq5pwB1Wy62Zl2tsBeuKjKIG5STvBq/cqiCBYgPdu0Y
-	5QOyPTs+jbCD+LvbVdOhopm5fkMdTBKs3YoymNSuYILJCjK1sHKrSS8NXQJf7yLvwJ2M5kfSPHp
-	O1Cn8FvZEjTuJPaVgpSyfq7v5+nS6C7QwLZ5ENNkRTHfkWwdXUOcFc/NRgG6iWmn4+bJ0AbDA/P
-	NdsvxJ/M3yD4CwCtHIYtTDBRCn/ZZwUfzDzv/rLQ==
-X-Received: by 2002:a05:6102:5123:b0:607:a151:d5a with SMTP id ada2fe7eead31-616f45351ddmr17961100137.6.1777042880289;
-        Fri, 24 Apr 2026 08:01:20 -0700 (PDT)
+        bh=yJisFIYmu999F7p9DhPuR13C32V5G82pAGkfuc9Jdyc=;
+        b=UrkfZd1ePPNIoRUmclp01OtIu5zvIivWIt2lZIxQwwB5/JemACx4Gu3UnOutZhKgxy
+         9oYA+bNj4J03msnycLpwbbPAihhiSXNyji95z27c8Y7JSt+YVpn4qaSxkPD6jHhNXU6c
+         +gunTEOplVicxliKn90bxKcDpbO8njC5kJYBj29B23TsJ3ESbbTDBb/pI5l3EQzHEHeS
+         AwOTGi1t8h8QUa4aRoTKR9g1RYtvrx8+bZVtEBXUiG2hSGbUM7ABhUQ4Qga3Oz+Vyslr
+         fsXmD+RIv3L6GP+nPfH0zYRhPlGJWCkPupZ9q2jxgl6YLDNb8ViTXd91ZddAdZ1yMkpK
+         E1xA==
+X-Gm-Message-State: AOJu0YyI7/y0tje49E7ad6qWheiKxIDIwZoMJiAndH9VWA0XTccNWaZf
+	1+YJS6IQ4p0axu3SW3xUYdVSkT/H6JgL579sItpMCXUAjdpyXg8jqFMByZQOfQ==
+X-Gm-Gg: AeBDieu3jEduImysxY7mR3wF9BQn4S85+erMnkWlk3r6iY7iTiFnrPp53+j9VQhrWkR
+	Hbp1BzCemVghqDtw1vgBKPLkeL3ulf2KcwU8JBwOTi57pW71pOkXPJNye/ggUZZLVXnkIqa/iHw
+	f3I/CvtCbEjHwsjl5ocoxmGbkKDBsNGzxIUvEJKGgBf1FqQV/ued0/lZjF3Ycbvs/DqPGwqwkS4
+	XDHyGiAUjYtE821SucS2un7Y3VJJrSLt5544mcTUvkBYOzaEIyj72Dg99+uDYvwuWUMlOEM3Ar+
+	kchr5/eR2gbZNhHXwwDdQ1ILpwg5bQFXs8mNqu8QTjUKsrYXLcgyqIKvuwCqvHZRzGkT2C6q8hP
+	av+zPOKY8fwRsyP4uvdCepE8eZJx65G6coPydIwlHVKjm1rj/T5zgCe1TCtD9ps4xqfEvPAh2St
+	eg9ncVfNXc5DN3iQGBVO+Zk29t8wdewJTqCQZ4kA==
+X-Received: by 2002:a05:6102:419f:b0:604:f029:224c with SMTP id ada2fe7eead31-616f4d6abf2mr17257102137.8.1777042881332;
+        Fri, 24 Apr 2026 08:01:21 -0700 (PDT)
 Received: from [127.0.0.1] ([48.217.251.133])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8eb9becc72dsm1485581885a.34.2026.04.24.08.01.19
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b02ac429e9sm185752676d6.3.2026.04.24.08.01.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2026 08:01:19 -0700 (PDT)
-Message-Id: <62707b410977af2c80d98306455aaec55499f606.1777042877.git.gitgitgadget@gmail.com>
+        Fri, 24 Apr 2026 08:01:20 -0700 (PDT)
+Message-Id: <d9a2e76f3c2a96523f1655ef2f73f9b03ce88af3.1777042877.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
 References: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 24 Apr 2026 15:01:10 +0000
-Subject: [PATCH 1/8] test-lib: allow bare repository access when breaking
- changes are enabled
+Date: Fri, 24 Apr 2026 15:01:11 +0000
+Subject: [PATCH 2/8] t7900: do not let `$HOME/.gitconfig` interfere with XDG
+ tests
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,55 +79,64 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-A future patch will change the `safe.bareRepository` default from
-`all` to `explicit` under `WITH_BREAKING_CHANGES`. At that point,
-every test that operates on a bare repository through implicit
-discovery would fail, regardless of whether the test is actually
-about discovery or about how a specific command behaves once inside
-a bare repository.
+The XDG config tests for `git maintenance register/unregister`
+create a fresh `$XDG_CONFIG_HOME/git/config` and expect git to use
+that location. However, if `$HOME/.gitconfig` exists (which may
+happen when test-lib.sh writes global config, e.g. to set
+`safe.bareRepository`), git prefers `$HOME/.gitconfig` over the XDG
+location, and the `maintenance.repo` entry ends up in the wrong
+file.
 
-The maintainer suggested [1] setting `safe.bareRepository=all` in
-the test environment's global config whenever `WITH_BREAKING_CHANGES`
-is in effect, rather than adjusting each affected test to access
-bare repositories explicitly (via `--git-dir`, `GIT_DIR`, or
-similar). This means the test suite continues to exercise only the
-historical default behavior even after the user-facing default
-changes, relying on a small number of dedicated tests in t0035 to
-validate the new, stricter default.
+This is an inherent consequence of setting global config in
+test-lib.sh rather than adjusting individual tests: writing any
+entry to `$HOME/.gitconfig` has side effects beyond the intended
+setting, because the mere existence of that file changes which
+global config location git prefers for all subsequent writes.
+Individual per-test adjustments would not have this interaction.
 
-Since `$HOME` points at the trash directory (which doubles as the
-test repository's working tree), writing to `$HOME/.gitconfig` also
-creates a file inside the working tree. Exclude it via
-`.git/info/exclude` to limit the fallout, though this does not
-help tests that use `git ls-files --others` without
-`--exclude-standard` or `git status --ignored`; those are addressed
-by subsequent commits.
+Fix this by overriding `HOME` to a non-existent directory inside the
+subshells that test XDG behavior. Since these subshells already
+override `XDG_CONFIG_HOME`, they do not need `$HOME/.gitconfig` at
+all, and the subshell scoping ensures the original `HOME` is
+restored automatically.
 
-[1] https://lore.kernel.org/git/xmqqse98cc51.fsf@gitster.g/
-
-Original-patch-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ t/t7900-maintenance.sh | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 70fd3e9baf..b8726f4647 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1597,6 +1597,12 @@ cd -P "$TRASH_DIRECTORY" || BAIL_OUT "cannot cd -P to \"$TRASH_DIRECTORY\""
- TRASH_DIRECTORY=$(pwd)
- HOME="$TRASH_DIRECTORY"
- 
-+if test -n "$WITH_BREAKING_CHANGES"
-+then
-+	git config --global safe.bareRepository all &&
-+	echo "/.gitconfig" >>.git/info/exclude
-+fi
-+
- start_test_output "$0"
- 
- # Convenience
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 4700beacc1..4358df0424 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -101,8 +101,12 @@ test_expect_success "maintenance.autoDetach overrides gc.autoDetach" '
+ test_expect_success 'register uses XDG_CONFIG_HOME config if it exists' '
+ 	test_when_finished rm -r .config/git/config &&
+ 	(
++		# Override HOME so that .gitconfig (which test-lib.sh may
++		# have created, e.g. to set safe.bareRepository) does not
++		# take precedence over the XDG location.
++		HOME=$PWD/must-not-exist &&
+ 		XDG_CONFIG_HOME=.config &&
+-		export XDG_CONFIG_HOME &&
++		export HOME XDG_CONFIG_HOME &&
+ 		mkdir -p $XDG_CONFIG_HOME/git &&
+ 		>$XDG_CONFIG_HOME/git/config &&
+ 		git maintenance register &&
+@@ -124,8 +128,12 @@ test_expect_success 'register does not need XDG_CONFIG_HOME config to exist' '
+ test_expect_success 'unregister uses XDG_CONFIG_HOME config if it exists' '
+ 	test_when_finished rm -r .config/git/config &&
+ 	(
++		# Override HOME so that .gitconfig (which test-lib.sh may
++		# have created, e.g. to set safe.bareRepository) does not
++		# take precedence over the XDG location.
++		HOME=$PWD/must-not-exist &&
+ 		XDG_CONFIG_HOME=.config &&
+-		export XDG_CONFIG_HOME &&
++		export HOME XDG_CONFIG_HOME &&
+ 		mkdir -p $XDG_CONFIG_HOME/git &&
+ 		>$XDG_CONFIG_HOME/git/config &&
+ 		git maintenance register &&
 -- 
 gitgitgadget
 
