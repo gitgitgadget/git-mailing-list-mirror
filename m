@@ -1,85 +1,84 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4490E4D8CE
-	for <git@vger.kernel.org>; Fri, 24 Apr 2026 22:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E5D314B96
+	for <git@vger.kernel.org>; Sat, 25 Apr 2026 02:54:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777070829; cv=none; b=jAvETyu4IDSeUZ3Qj6aeXmR9Wp2P49/hOT35m6vXoLPgaEuhoC9mmamjUxB+EenCpTcXaeJaAqaScJLCiktxYkfZNIz/moWrLUpT++kKpvEp4gJUmtEVOGuy1PB2NGulqgLjOa1Lux0K9jfAXxIQaoMmUBi6K9ooaqMP8tuK4Gg=
+	t=1777085686; cv=none; b=q7Y9vkhhh0pbsk/HzR6hJlfmvCGKkpDeMhtq93QccI96tk8j8dc4a93vymqGVnvl2KrHlymqiFFOJs1KGw16l4qf1obbsDeg/g/XePukGS9MyR2seIM4+ncR0fIua4Rm4AIrBHEQv+aAFeiwicNR5+2ARqv+u0Iy0Hr6IGpJdv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777070829; c=relaxed/simple;
-	bh=TE3UmBIDwFSnIFsL4BWQopLkKTDY0W/uI0TNCCodwxY=;
+	s=arc-20240116; t=1777085686; c=relaxed/simple;
+	bh=rpVJVtj88XMaKaUir6JbmWnfv2kaPPLon5odiAZoVjI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kHJkcIdjnmsGyvDV7bSxqDkUVp36Ra7Yq3CqwIBg36q3GyHgxc6Wfrz3v8Tgasp5Do2iDerXbG4Zse0Wy0qQ+AdnMplH7F8GI9ovuhtK5ic/TF4Bqe0e1F7mg9YHgj2zo4YvAhpPZrj4YB9WPcqKCxiqxURZgha/V/BlGKxekl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pJ0dLNpA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tFneVK7v; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=hcBvrmgMkhr8RlFLg5bx4GxN9j+x1lmIxXMienwFn+V7VpX7he9Rb6aAe99+AjZjUgYGi5rxnch+vd4udURg5cl5pwMM7h1vvLWsidLppDHSVBfg1u2S3B6i5fpOKr0UEvmj5I8BqtBNG+VO416uwKvQ/CY4NFSB02TANN9A/Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XyBEGHWK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QheF6ZTs; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pJ0dLNpA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tFneVK7v"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 54021EC056C;
-	Fri, 24 Apr 2026 18:47:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 24 Apr 2026 18:47:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XyBEGHWK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QheF6ZTs"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2F4BC1D000B5;
+	Fri, 24 Apr 2026 22:54:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 24 Apr 2026 22:54:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1777070827; x=1777157227; bh=WfMfVNoH9s
-	9x+ncioYMMUse1HxOTJ/x6eWaBbfSTp40=; b=pJ0dLNpABYHfRnIyW1Vb/i4hhm
-	jGSUeRMazMXhKmfjbpt8BUfT0eKmJcqcWT0zXtzDPzZRVxE/yet3i1E2Z6mdVgM0
-	JfcZpU+JWpXrk3aIe+HoPX7OpDBQikielmchuBU8f2PXk7I3nL3TZKBjSCm6Zpg8
-	bu7ZDz9u7UFnQxb57FcnpFaWBAhzrqtA58Got1AIVKrt24RJ6w+x91GvUmDbD2AN
-	G1kHygqnjUAxQb0tzXHPSaLupX5gYAjpMfnyjjSFnUBNN3fW8GrVSJmaBXb5diuA
-	KjC0/uMPx9jWU+rO308ZtllTCumg9ycDxK4ZanvNDC4zDFDGzxLuzH2hL7WQ==
+	:subject:to:to; s=fm1; t=1777085683; x=1777172083; bh=U6uwhFGG2J
+	zevtTUPA1MOYgmiMMz3sfh64la4QLHFGA=; b=XyBEGHWKAVvb2pM2QGWbZcHOk0
+	A2vAGar4Dk47X/eKo3r+EewyCiURhCduFAMb+PHr+Tdno3sHwTgWl37l3YZZJe6t
+	+jLLy+8uGQJfvZZ0S2fvNJiE/jSPQxZcHY37XvvZ6FwtwKdBlriB7p0NlFHkXB4h
+	0lKlLSu/8hBBss6qYS/8SwIL4c7jtYYX+uousH54C/8kzrThxFLLW72GY+92/UcG
+	rJ1Th1vrkqYsDXAFv+lzAgEVgG7n3WS5HktTPav2MIM3wTKNqaYvZORvyp5dJE6/
+	oNKm+Gwfhp2l3AyAbTGQ1yBnRvl/MyT/MAaw9geu5m7py+RbMnp89xKpOWbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1777070827; x=1777157227; bh=WfMfVNoH9s9x+ncioYMMUse1HxOTJ/x6eWa
-	BbfSTp40=; b=tFneVK7vBqv36/4N+v4UPLmQijAVN7KyQxE/c28Nw9xwq929qp/
-	6f62/G1AbbCJ9dpJDikORQD86bLeTpyzeVZdautvyl2ONJ2gevY0/cScTjP/8ES9
-	vzkJyPMIItURRTDZdqQHNUuExZ59x8cvheL+y9A2TNOrBuL2DzOEwfK0odqD6EQH
-	BRPadGwI5/1cqU0QMKWIRWP0DpR+KiUjStBTyngg4LJReR4ITqQL6uork4QKRqAQ
-	ZZKiGoHF0dHCz7nPNi7ebB06+kgn3eegZu5C2TJRJCnAqLnErXVGUtezcnrxzRJE
-	gW6DlSiPBiXWt1xng+wfNmWf4Kp5pjLIwig==
-X-ME-Sender: <xms:6_LraQpjhtFPS_oGzN3LIkjj-14-zUWRTR7Z3Fw_2JrVsLtOO2b2cA>
-    <xme:6_LraaVo3OO8F-ag_7E4zpBa69Q9KwglMzoVArftAvWuiurFgHP86zUH4NnPKsZUt
-    8ZzDhvg7FKfgRWROF_LLYMSK26hdC1T6rX5DgZui9_Gjh6Rl_yombQ>
-X-ME-Received: <xmr:6_LrafAmvOGgVGpuGc5xU2mDm-7w-ueMAQhDbn_b0Wovy5kGRvGlsZelGmAv7A3v7WlP8HyLZ7Zzd1bRh2VbaShiDUyRISG4ZA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejuddvjecutefuodetggdotefrod
+	1777085683; x=1777172083; bh=U6uwhFGG2JzevtTUPA1MOYgmiMMz3sfh64l
+	a4QLHFGA=; b=QheF6ZTsSjLusuYPsE8UBqpMGfAlpMxMBNXsHskiXZwjeCn8TKz
+	VK92Uzxmdh872CECDRaD7rXSfqS0ca3p2zEz4q3O8LiAtV8v/SVMXMBv059bagIs
+	xmag1D6wAXIkLdZMju3JRZyHU3QYtMpK2/9k769ttll2lBlwHLfSHESzEe5ek+1/
+	mjx3gagfR7UfSQNyqh8zVXIKWJyVgUsuFrCS3AJqHz+SLoPDvs8mHkXj3SZh9j02
+	pcT3/l/AKsOj/MNNEO5YpsfaCVNlXkan5TM7/lqVxyYAS6LkLjg1HVCoab2Oyp7b
+	vNfZ4hFbMsvGGeFhbNafzNhqcm2MoWgPVXA==
+X-ME-Sender: <xms:8izsaRxRILGzEBBfvCso4bewZNP-9GO-7ozOmf-PtjaVrUue5ld_Eg>
+    <xme:8izsaYRxoOTYxXp4sinUqpp2USv765JER45LoBGecph5i-SgMDF4xQgnNOcoSVFYz
+    78znFK57zDsQjRc_YW4AJeM-8cOTIs2Hu3qQgRKRdPCp0XnyDEMvjc>
+X-ME-Received: <xmr:8izsaQX75gnSUfm0thhkb4DuGQBdJ1KfRSkoJHVClhi4OZjEo2oewmz4YIg4MOETZrgYKdorkzAU4S2wSTnQmrKRSQCRT-gFjw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejudejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjohhnrghtrghnsehjohhnthgvshdrphgrghgvpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtoheprhhstghhseifvggsrdguvgdprhgtphhtth
-    hopehmihgthhgrvghlrdhgrhhoshhsfhgvlhgusegrmhgurdgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:6_Lrae2jRREO37RxE73R8ow20U6tvWn9LZY3IVZkwM58Vfxv_YgMQA>
-    <xmx:6_LraR2J3_ZGGhTfYvnQBQ8J9bG0vsfS8uRoIHbNBS3bOH4Ha6LdMw>
-    <xmx:6_LraTCOSQ4JNyUBPJZROya1kOSPgREWU1srr0xr3JOJNOoWI-bRLQ>
-    <xmx:6_LraQ4hWe2KMWNFaNut5xqmEUM_T2SW_QTjbNF0Z2dqFz3k_pcBxA>
-    <xmx:6_Lraf1KCI_pLBDfq1-DveTgHja0ZRa8heKuyW6Qzbu7oz3MpTfjQh4H>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    hhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8izsaSZtm1QjnSm8qmfgqb_EOk37xyx3pmTMh9IZe_8p45eHaqvvIQ>
+    <xmx:8izsae3ShuredpHR14y2XQCvCK6Q6xGAUc1Xku-Stfpf_AYyY2-rdA>
+    <xmx:8izsacgK-0MfM8DIpYGGUydf14G0s1_nu4iz0SkajWuQ1bXhDrhFLw>
+    <xmx:8izsaaZa3mW7uA-QLSvx19TmGSX-8inWRcYas74MWIO9b30QU5l2Vw>
+    <xmx:8yzsaX05y2T4A4xE7YskwhJniVpZXPFeuVUHU1LT2XXqb_4JacPKwFQJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Apr 2026 18:47:06 -0400 (EDT)
+ 24 Apr 2026 22:54:42 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonatan Holmgren <jonatan@jontes.page>
-Cc: git@vger.kernel.org,  peff@peff.net,  rsch@web.de,
-  michael.grossfeld@amd.com
-Subject: Re: [PATCH] alias: restore support for simple dotted aliases
-In-Reply-To: <20260424151053.917066-1-jonatan@jontes.page> (Jonatan Holmgren's
-	message of "Fri, 24 Apr 2026 17:10:48 +0200")
-References: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
-	<20260424151053.917066-1-jonatan@jontes.page>
-Date: Sat, 25 Apr 2026 07:47:05 +0900
-Message-ID: <xmqqpl3ovuvq.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] checkout: add --fetch to fetch remote before resolving
+ start-point
+In-Reply-To: <xmqqeck4xan3.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	25 Apr 2026 07:21:20 +0900")
+References: <pull.2281.git.git.1777024991531.gitgitgadget@gmail.com>
+	<xmqqeck4xan3.fsf@gitster.g>
+Date: Sat, 25 Apr 2026 11:54:41 +0900
+Message-ID: <xmqqfr4jwxzi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,37 +88,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jonatan Holmgren <jonatan@jontes.page> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Historically, config entries like alias.foo.bar expanded the alias
-> "foo.bar". The subsection-based alias syntax introduced in
-> ac1f12a9de (alias: support non-alphanumeric names via subsection
-> syntax, 2026-02-18) broke that behavior by treating such entries as
-> if they were subsection syntax.
+> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Restore support for the old dotted form by falling back to the full
-> name when the final key is not "command". Add tests covering execution
-> and help output for simple dotted aliases.
+>> From: Harald Nordgren <haraldnordgren@gmail.com>
+>>
+>> Add a --fetch option to git checkout and git switch, plus a
+>> checkout.autoFetch config to enable it by default. When set and the
+>> start-point argument names a configured remote (either bare, like
+>> "origin", or prefixed, like "origin/foo"), fetch that remote before
+>> resolving the ref. Aborts the checkout if the fetch fails.
+>>
+>> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+>> ---
 >
-> Reported-by: Michael Grossfeld <michael.grossfeld@amd.com>
-> Helped-by: Jeff King <peff@peff.net>
-> ---
->  alias.c          | 16 ++++++++++++++--
->  help.c           |  9 ++++++++-
->  t/t0014-alias.sh | 12 ++++++++++++
->  3 files changed, 34 insertions(+), 3 deletions(-)
+> It is true that "checkout" does funny things to special case the
+> remote-tracking branches, like setting up the branch.<name>.merge
+> configuration or even inferring the name of the local branch to be
+> created.  
+> ...
+> ...  Should the configuration cause a fetch to happen before any
+> of these uses of remote-tracking branches for consistency?
 
-Do we lose the extensibility introduced by the new syntax by going
-this route, though?  I would imagine that
+The last one was a rhetorical question.  I do not want to see such a
+configuration variable to implicitly trigger fetching at all.
 
-    [alias "frotz"]
-	command = !"nitfol"
-	help = "run nitfol command"
+I am somewhat sympathetic to the desire "I want to be sure that I
+start the new branch in a state as fresh as possible".  It is tied
+to the "--track" option of "git checkout -b topic --track
+origin/main".  If you are merely starting at a single arbitrary
+commit, instead of anticipating to having to repeatedly sync with
+the remote-tracking branch that will subsequently move, there is no
+point jumping to a "freshest" commit that you haven't even seen let
+alone inspected (i.e., you do not even know if it is a good base to
+build on).
 
-would have been a natural first addition to the current system to
-give help text to the alias, but this change makes such an
-extensibility impossible, doesn't it?
+So instead of introducing a totally new option that can only be used
+only when "--track" is given, it might make more sense to introduce
+this as a variant of "--track", perhaps "--track=fetch,[in]direct"
+or something like that.  And extend branch.autosetup{Merge,Rebase}
+that controls what happens when a branch is created with "checkout
+-t -b" or "branch --track" so that the remote-tracking branch gets
+updated, perhaps.
 
-If this change robs the extensibility, it makes mse wonder if the
-three-level "alias" was a mistake, and we should have instead
-introduced a new "nalias" that is three level from the get go.
+As to "git checkout origin/main" (nothing else on the command line),
+it has "magic" compared to "git checkout origin/main~0" already by
+treating the parameter not just as a SHA-1 expression that names a
+commit object but as a remote-tracking branch (this is necessary for
+"-t").  So I am not fundamentally opposed to the idea to give an
+option to treat that form specifically.
+
+Having said all that, quite honestly, I prefer not to see any of the
+above changes, including the original patch.  It leaves too many
+usability questions unaddressed.  For a starter, if you interact
+with a repository with two or more branches, should
+
+   $ git checkout --track=fetch -b topic origin/main
+
+update an unrelated remote-tracking branch origin/maint from the
+same remote?  As I already said, most Git tools _depend_ on the
+stability of remote-tracking branches---the desire to update the
+origin/main when a new branch that builds on origin/main is created
+may be a valid one, but it is unclear if that warrants updating
+other remote-tracking branches only because they come from the same
+remote repository.  There may be a dozen other UI/usability issues
+that will be introduced if we start to "fetch from remote"
+automatically, but I won't even try to be exhaustive while I am
+still on a leave ;-)
+
