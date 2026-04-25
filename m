@@ -1,69 +1,70 @@
 Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B04C3947AA
-	for <git@vger.kernel.org>; Sat, 25 Apr 2026 10:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36C7391517
+	for <git@vger.kernel.org>; Sat, 25 Apr 2026 10:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777114726; cv=none; b=O1cxpXumkgIRQ9YsTFJURu7QcEKOvm2aknhHcsEXS/8cQVSBh+aiQjq9RaZAshGaw7MIxRrR4wsnfRKf3kA87H96iM+7J7gUbZe/7k2eMwEnSdPO61/XH8q5JOwD1vQrWN+OaWHZCgrIXRJCBCzERd86J4RSrCf8+hmaYjS+AtU=
+	t=1777114728; cv=none; b=tZ8E3lggIUXMJhxOBZR3S08AUn6co1ajfgscCdnZxB7IA/1kihbDCsYCzJgxzNygHTD4Lwlf5pHTthHYvPkMThXmLVsB4pTRdvutHMxGgBa6Xl43o4mPwjyH1T9IdVqK4vtXRjt92XKNdTepAMIXLqGJo7s1baJD+6Nd/p8Y7Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777114726; c=relaxed/simple;
-	bh=xxU+JUF678Pz6oONy4mJFecLq/ydqBtKIS0ntKkkmv8=;
+	s=arc-20240116; t=1777114728; c=relaxed/simple;
+	bh=npS15YFuEKhoJcgn7NZGntKnehRVmFgdekKgHMzz5dE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Ouvs6ykzv98uurS4M1SA+4NJ6e1oVlHiMAITReGZZbWf+dFbaHbSgnXKojywjCdI+YpZA7B9rdELSb8FLb7KJsnCKrEoXR/cml9iVX7JdiexhAc2C7yC6dOYVuXArxKirrp6oqnKuBlIjL/6Ah3RR1eWBt40zKAljt7zPBP1s4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p4pjcoPz; arc=none smtp.client-ip=209.85.219.53
+	 MIME-Version:To:Cc; b=KuK7d+PMn3hH/b2IxoZPBXIYq10FiE1eRtx5skIsj8rK31z4ghFa+H6Pk+prHewryvnWjmwJOudf153c4u5m3XndPEv5QCNxHtjb0NBOgZZ9eNkHfT8iDTF7jNPtQ2ZaCvjdTgkvYYywel3MUSk+Njs8txNlORZ1Ny8zrKUADEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dXjakLqf; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p4pjcoPz"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8aca4e14411so106514926d6.3
-        for <git@vger.kernel.org>; Sat, 25 Apr 2026 03:58:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXjakLqf"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8a154cc6a48so96463416d6.0
+        for <git@vger.kernel.org>; Sat, 25 Apr 2026 03:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777114724; x=1777719524; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777114725; x=1777719525; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VgFWpsdsCkPHmL0PFlslVbVTKr38GMgkPX9sT8GUvtE=;
-        b=p4pjcoPz6eFglYkkz2zgNYNBIC1o/ARhN81y7wnAxslgO+ffA2PDqZvFDCzh1BYoBg
-         Rkmg3Ttng9XSCcAjlHC3plZVk3M4sNlSxemvMzjNeW3bw7Y0rJk1yWDdFVBJbttW9JH5
-         cGWehC67M0XJ0ELDK9ZRnBMFfsHSJ/Sf48qY3vFTI8GZRuIGo83zqVcTK7QUr3B0lluH
-         hQf57rr8JfiNs07tLQH1OhSRxZHnGAIOwoiqs2lHWI1rXysxZmUxMI0YwuaaAVtJ0HyJ
-         7tiNlV3eU59P4CSRq4LsZp1fRYVhdVG3gaS4tZfFflO32LGK23bcVGzsn0kuTDLYEDGa
-         fPxg==
+        bh=xJ5AQlDQO0dWrMsLT68hGbAW+P4tfvnLcvDlhTuNHZE=;
+        b=dXjakLqff8NnXPOWXXNXDQ166AGGbzZUENyEQmR8bo3ju+4wr1ELwCR8UpE7ekoxbM
+         duEX1bwHP/QHUrgj1w7uj1CHPTBRwJXhctekreBERNpYHA4/IbY0jJBzlu2h5+cSH27G
+         JFHZGThK5lr60/jXmUEjCoudDB8jYTr2HsQkQ8UNJ7/wfQ3NurKQhVBjfKVDYhDAzouH
+         ycvzw0akbCWFhzLJp/BoTnJd+/vuwlU59GPaSamGnsaUyjmae4AtPFbeooFWzTwGX6sY
+         eCFGgw4X/h3H2eNCNpLLr6YE8umVix4YRNKzuiZfPzig7mooy25PXHBx6z6sLuKFu8qk
+         Htjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777114724; x=1777719524;
+        d=1e100.net; s=20251104; t=1777114725; x=1777719525;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=VgFWpsdsCkPHmL0PFlslVbVTKr38GMgkPX9sT8GUvtE=;
-        b=EVHTjqM7CKuNJ4EFrmn80+JC+N45WR+zJpnxYPVffnIUaG4MOSiXOZ8983KlFXp++H
-         Pj5sMf5lBvaesfVfdZvLL0sli00zjw38roOL/iDSONq7DZwNCtJyVGdqBPC0FQxDC2Dj
-         SqUfrlSyHYuFvSvbn1dOfL8m6q4xdEHw2DwZmMTW8LemyZdPjGWo9JnUtcSfARnn9xKP
-         KjJFrPDXKDiWs4dfTHCz/yEBG8OkMBAxHeoa9wAqxknIRlYGsb5S71MIPorm48Lpcx72
-         1nLZkcgx3Vcz6sbCpnZFu19NgnzJa8zT4d9AsNvQaF+NHwRkjrFWtU7t8yYfIH4aCZSP
-         DeVA==
-X-Gm-Message-State: AOJu0YwRga4jzlL55qP1mZK+eT8qjLTYD6PAYie/qXi73yBntCXVGtgJ
-	Uo377T0AAynNLScdHH2b49hjqZcCCJmwi5Z8kKEnajE2hQPIVPY4PcjMFr1i+g==
-X-Gm-Gg: AeBDietJCNuyQr7ONgh/O+oQw57HH6IIS4u3bLIYzqxUI4dR73CwzydCkVF4FcUAP4s
-	p6vSPnbm1EXs+QEfocIT689gLl60R9KoFnIqkocxRqCcj13h+fC1r444RyyPZO7OeHdNno46i+y
-	mDp4nLgONm98JeiZ2FzLOzHr1jlM+tMxxQk559nTH/Z/gfaUf0EW4rPt7Amhk34uchSj9DhQ83u
-	l+vR9NQK9sieZWN+DjzJGCJBZBtDoPuNE2ka314stX0hWxw+TQwp9iN57ABrHPtaWNREvYOsX3e
-	oy/+3lWK4hV2OtSQy/A6JwH72m0nKzrH96XWE8wzKqDy7uY0mAgdscVk8VKwKvfMjUSn2iO2qOY
-	2QRMULnmsdwV40sfV5ZTpOcvCqvCzvJ9Yc00OAOM3anIEaMUFiyiDTiU1LwvWG5Dd42wzhIdMVA
-	kTtQSXerXund8Bi17CFWTCjT37ZbKejh3Vd282eVwn24Wki0dB
-X-Received: by 2002:a05:6214:459d:b0:899:f0b1:7332 with SMTP id 6a1803df08f44-8b0280d6c96mr163957926d6.32.1777114723994;
-        Sat, 25 Apr 2026 03:58:43 -0700 (PDT)
+        bh=xJ5AQlDQO0dWrMsLT68hGbAW+P4tfvnLcvDlhTuNHZE=;
+        b=TxTgqAaPDGLjQ5CKNJ9QYxt6MBycSWBg+CCCXKQoj610v32fxUPLhk0po5A02zzahI
+         MpDLF6G3zU313t7I+kdMMSuEk6PiFov6bi+KJV3oQXY5ah1fBJaLJNPvFsED5gy5Kks/
+         bUxwjKm++72e1ikxQjmTNmry3dZCjG/Kf3KMom+KZHdsCPxXv4uQy3fsheA/tWkec7Hf
+         CwEnFi5FdQg9vdjJa2qqZc5VMdQOtnTQvDvfuDeJltO7pNO+us1Lkx1suYM81KEgO78C
+         DrZjniF3Z7ZX/CUuTKu5dAgZJ7A3vJjL1Q/rGslEbefm5Hy6y3AhdGd0D6Mw9rNiOVU4
+         ok8Q==
+X-Gm-Message-State: AOJu0Yyo1PPBdGU8Uc93wB/y7H9sZRkLKIGCZIvoDGY3jnYa5lVGMtON
+	7Ykb3WXJScoFJoehGSighY7tFNyf2Cwm63hOyE3OBVaL3xoKMtccH14/LaT6dQ==
+X-Gm-Gg: AeBDietwXPhmn9tMpeDjEDyt/ig9iXLznnr/OXe/lFVx3auvdOToQgcVEO0MOKAEpDy
+	MX1g1oHBMLIX/6O9plBVDbxtsyp5/gPH1YSarEctE3JJnbL4h4cZ8VySDP+u9ICRNivceMB40eL
+	7tjW9kGWpQ6HtKVh2u7m9k+V16QVB5ja4F728tbCtQwTrA6ACNSPLa8YW5+eNvyHzQxCkYRIUHJ
+	KHnFssusQAGsou1+bti55p8mIQoMZqCiPMX06foLxYkmXFLCm+8hGoTtu1GnmCiCYvw+dz6lzCn
+	ThXJ/9e5K2mqTZjOnjtV3aEDikldbRhMFfoFeCG8TqFFZmBuJywnnclGFP3kwCYjG0YrWj+Djhf
+	bHyRTyra5UBJf7I86o0pLo9m2HWwid8P3X+SqmcAccG8dJl5T20OYOgnfkiWAn0DBgQbB+fmpBD
+	Ghp285Cm96eEFufXWzFmsmiyFctSfkS0mZmHJIyw==
+X-Received: by 2002:a05:6214:5f83:b0:8ac:b43a:42d8 with SMTP id 6a1803df08f44-8b028012743mr499971296d6.12.1777114725074;
+        Sat, 25 Apr 2026 03:58:45 -0700 (PDT)
 Received: from [127.0.0.1] ([172.214.44.226])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b02aeb04e0sm202418006d6.46.2026.04.25.03.58.42
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b02ae88d5fsm264935246d6.39.2026.04.25.03.58.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2026 03:58:43 -0700 (PDT)
-Message-Id: <0d2fdc1cf4c5d7273addedc442a222f0c3485efd.1777114720.git.gitgitgadget@gmail.com>
+        Sat, 25 Apr 2026 03:58:44 -0700 (PDT)
+Message-Id: <5d719b3729e39d63ec0a1a474b0c1ff57570133e.1777114720.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2097.v2.git.1777114720.gitgitgadget@gmail.com>
 References: <pull.2097.git.1776775319.gitgitgadget@gmail.com>
 	<pull.2097.v2.git.1777114720.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 25 Apr 2026 10:58:36 +0000
-Subject: [PATCH v2 1/5] ci: bump microsoft/setup-msbuild from v2 to v3
+Date: Sat, 25 Apr 2026 10:58:37 +0000
+Subject: [PATCH v2 2/5] ci: bump actions/{upload,download}-artifact to v7 and
+ v8
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,42 +81,187 @@ Cc: Christoph =?UTF-8?Q?Gr=C3=BCninger?= <foss@grueninger.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The v2 of `microsoft/setup-msbuild` runs on Node.js 20, which GitHub
-is phasing out of the Actions runners. v3 is a minimal release whose
-only substantive change is moving the action's runtime to Node.js 24,
-so that our Visual Studio build jobs keep working once Node.js 20 is
-removed from the runners.
+`actions/upload-artifact` and `actions/download-artifact` are tightly
+coupled: the upload action writes artifact archives in a format that
+the download action then reads. Because of this coupling, the two
+actions should always be bumped together so that the artifact format
+contract between them is satisfied.
 
-The risk of this bump is very low: v3 contains no functional changes
-to the action itself -- it merely adds `msbuild.exe` to `PATH`, with
-no change to command-line flags, inputs, outputs, or default tool
-resolution. The only precondition is a recent-enough Actions Runner,
-which the github.com-hosted runners already satisfy.
+All of our `actions/upload-artifact` uses are still on v5, with one
+stray v4 occurrence. Keeping them on these versions would leave the
+artifact-upload steps running on Node.js 20, which GitHub is phasing
+out, and would eventually cause all upload steps to fail.
+
+Going from v5 directly to v7 folds in two release bumps:
+
+- v6 switches the action's default runtime from Node.js 20 to
+  Node.js 24 (v5 had preliminary Node 24 support but still defaulted
+  to Node 20). This is the main motivation for bumping now: it gets
+  us off the deprecated runtime.
+- v7 adds two opt-in features: direct (unzipped) single-file uploads
+  via a new `archive: false` parameter, and an internal conversion of
+  the action to ESM to match the updated `@actions/*` packages.
+
+Risk analysis: we never pass `archive`, so the zip-as-usual behavior
+is unchanged. We also do not `require('@actions/*')` from any calling
+workflow, so the ESM migration cannot affect us. The upload steps we
+care about -- tracked files/build artifacts and failing-test
+directories -- keep the same inputs (`name`, `path`) and outputs, so
+the diff is purely the `@vN` identifier. The main precondition is a
+recent Actions Runner (>= 2.327.1), which the github.com-hosted
+runners used by our CI already satisfy.
+
+While at it, align the one remaining `@v4` occurrence with the rest
+so that every `upload-artifact` step uses the same version.
 
 See also:
 
-- Release notes: https://github.com/microsoft/setup-msbuild/releases
-- Compare: https://github.com/microsoft/setup-msbuild/compare/v2...v3
+- Release notes: https://github.com/actions/upload-artifact/releases
+- Compare: https://github.com/actions/upload-artifact/compare/v5...v7
+
+We use `actions/download-artifact` to pass build artifacts between
+the "windows-build" / "vs-build" / "windows-meson-build" jobs and
+their corresponding test jobs. All callers are currently on v6;
+bumping to v8 keeps this action in lockstep with the `upload-artifact`
+bump above.
+
+What v7 and v8 change:
+
+- v7 switches the default runtime from Node.js 20 to Node.js 24 (v6
+  had preliminary Node 24 support but still defaulted to Node 20).
+  This is the main motivation: it gets us off the deprecated runtime.
+- v8 makes three further changes:
+  * The package is converted to ESM (invisible to workflow authors).
+  * The action now checks the `Content-Type` header before
+    attempting to unzip a download, so that directly-uploaded
+    (unzipped) artifacts from `upload-artifact` v7 are downloaded
+    correctly.
+  * The `digest-mismatch` behaviour is changed from warn-and-
+    continue to a hard failure by default.
+
+Risk analysis: defaulting hash-mismatch to a hard failure is
+strictly safer than the previous warn-and-continue behaviour -- a
+mismatch points to real corruption or tampering and should stop the
+run. We download archives that the same workflow just uploaded, on
+the same runner fleet, so false positives are not expected. Our
+usage is limited to the `name` and `path` inputs, which are
+unchanged between v6 and v8, so the diff is purely the `@vN`
+identifier.
+
+See also:
+
+- Release notes: https://github.com/actions/download-artifact/releases
+- Compare: https://github.com/actions/download-artifact/compare/v6...v8
 
 Originally-authored-by: dependabot[bot] <support@github.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/main.yml | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 6f3d94e3a6..0d3e0e42a4 100644
+index 0d3e0e42a4..da31b10c79 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -186,7 +186,7 @@ jobs:
-         repository: git/git
-         definitionId: 9
-     - name: add msbuild to PATH
--      uses: microsoft/setup-msbuild@v2
-+      uses: microsoft/setup-msbuild@v3
-     - name: copy dlls to root
-       shell: cmd
-       run: compat\vcbuild\vcpkg_copy_dlls.bat release
+@@ -123,7 +123,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: windows-artifacts
+         path: artifacts
+@@ -140,7 +140,7 @@ jobs:
+       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
+     steps:
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v6
++      uses: actions/download-artifact@v8
+       with:
+         name: windows-artifacts
+         path: ${{github.workspace}}
+@@ -157,7 +157,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: failed-tests-windows-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -208,7 +208,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: vs-artifacts
+         path: artifacts
+@@ -226,7 +226,7 @@ jobs:
+     steps:
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v6
++      uses: actions/download-artifact@v8
+       with:
+         name: vs-artifacts
+         path: ${{github.workspace}}
+@@ -244,7 +244,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: failed-tests-windows-vs-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -270,7 +270,7 @@ jobs:
+       shell: pwsh
+       run: meson compile -C build
+     - name: Upload build artifacts
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: windows-meson-artifacts
+         path: build
+@@ -292,7 +292,7 @@ jobs:
+       shell: pwsh
+       run: pip install meson ninja
+     - name: Download build artifacts
+-      uses: actions/download-artifact@v6
++      uses: actions/download-artifact@v8
+       with:
+         name: windows-meson-artifacts
+         path: build
+@@ -305,7 +305,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v7
+       with:
+         name: failed-tests-windows-meson-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -349,7 +349,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -449,7 +449,7 @@ jobs:
+       run: sudo --preserve-env --set-home --user=builder ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v5
++      uses: actions/upload-artifact@v7
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
 -- 
 gitgitgadget
 
