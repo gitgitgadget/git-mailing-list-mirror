@@ -1,91 +1,111 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA3829A309
-	for <git@vger.kernel.org>; Sat, 25 Apr 2026 22:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E108A39185E
+	for <git@vger.kernel.org>; Sat, 25 Apr 2026 23:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777157650; cv=none; b=Z/n/eGrd4dH5mLv+ldKYSfj6qI+BsjOgChYAyXU5drhZ4ClfKEvwndiWzO4TV8DC0osnNxBWw4Ok31GPKGIuwGtaWYWGIpm5Mwfra7MIcB6YTNqF7N4FS9eSZI17fajEYLxAhBNfL+aEcTOBVqmABtpM2gD3bYSmjf24tgtv5ec=
+	t=1777159760; cv=none; b=j4fBxnl7BopVUffjRF1wBvqAvql//lzx64QsaZEE+Lo3n44lNLJfDeGLsB4oSSk+j3D5EPP9doLv44X6RnH/NJ4NOaj1ws/5cub1k6gs9QnNLHSmYg9x6uA3Ow1WjVYDAa1c3B0aReQ3OrLoELQkzBDkeRcwnciE7CFmhKIu8lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777157650; c=relaxed/simple;
-	bh=6K1fsNDAnEOB3jgekCCsA+Sy+KtEsdwV1y3gcIS5WzM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ip1EXghN89fQ733k0gN7r2CLgcJaQHlqwCfyALMj2LmIlXtFyezFJJvGsZuod5GJU+3I5hy2LlAgooF3555F8pl3oj8ypSqUGRXcbWURzvoF67JE8mdb41aiRfpsEwIExBw2C1taGrHF6BLByPi69hnajISVDrcL00WUJnKKzDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=coTEU9Dd; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777159760; c=relaxed/simple;
+	bh=iU+v3ICS3bZGndqnR7xvdYo+17sFav0699mwp1zxiJw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b0vDXBIEVf3/XMUuTnsbcwv9ua6dI872kkX0D2kDtR8c6rYOxlZqX9+Ipvmn8av59mzp0Ai97J4XUAKu1ECKUpiZUcelQgtTdD5wAfagb00zdTJEOpEANN/ty6idZDRYSBz7OOLxyxmlP7XWzx7ZYZN9anGRCr5Gk0u20tIm+dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OK4y/XLg; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="coTEU9Dd"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a62a049c1fso6222726e87.3
-        for <git@vger.kernel.org>; Sat, 25 Apr 2026 15:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777157647; x=1777762447; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zq9oeSPRwR9l95k7AHmOWuoKG8qUMfGs1sXAy0GtVOE=;
-        b=coTEU9DdP0fyBy4flC8KaJP7mKvSa0Aaxm6XIQ7FnRgcEZBLsQozciqlR028Pq7ZMm
-         yQH6pZAkp0RGQZWI3amfvBvXQ9Bug55OmGRdPXIsGTL8iczHuCOw+WTKCNjXJ9G7gqmY
-         g1QVdn/ZEu3SkoOMm5+mWWO3A37hiZpVhaSVPqDB7xZTWNeXEU3n5jZKsVwRTMvvcloH
-         bcDOVGF0EYfnXN/5qaJ85p1ulumASGI3S49vECDgk+Ql3ZnunC0FHtOovf6XLnlLJc9Q
-         WhMaJ0i6JX4pgNMsKSZD7pqumrJzLYfgRHOXm+0FRu9Flw4nCk2d5KqOom4hUQBlb+HZ
-         +a6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777157647; x=1777762447;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zq9oeSPRwR9l95k7AHmOWuoKG8qUMfGs1sXAy0GtVOE=;
-        b=WrknaCbo/6AIO7X69wq0CCMQn42t/4bBUATt596xScQP6sk2XTjNrFHLjbVsDwRWiF
-         d5Zj5aZyEq3ajhoVoLrnCeur7r5QQblqBb/dk3s8H6y4Lzo3i+aSxjATQSeB3mA0ozqs
-         oq4UX36HROGKhvnQibt4bSmicGUp9O4LoF4BB07aB5s0xrQsbyAGP5riVhFuBolk7Fd3
-         q3fBEImcRQjdBIPTaBNC0KQ93XT2ZWSm4o5cVDoqaESNvkqVsjyG0QF9PQovFgQlYgNw
-         4WoTLP4DXm1INXoWsfHGALrbqglL2Hvxhke2Igh+VZL5Qg1N9ivIR8LqBdO8/mD9JzIZ
-         9Ibg==
-X-Gm-Message-State: AOJu0YwXMf6RAKi+sMphNXoR2bNGZNQLhEA+lpeAwFgZ8sPmDSDFskeS
-	QR/GbS2sGR1Zsr3PQD9d65iPc+RaJDOTYcySmZAWIlsLo/ubZp4UoaZW
-X-Gm-Gg: AeBDiesIE2YRQQgvLiCbFBDWXmQ8kzdlRECp0+VOmTcG1sVRXC1C4To6TcjUnWhQQp7
-	1Se2UguP0iHHaUKPM8dxfzJTTs9L/iABlSfHDtC1jUOCxHU/KBYAh9LTx+vl/JnYj2KGhVWRiTC
-	r1umCt13XzL0+XetxWzCHp0Y/f7iVU+gW2sp2WShya9W/AhIuzvHQzV5suVyZk/LtQhlIlddVcU
-	Nj9fcP7mGcfEHV0UaET1R9ok7P7B8nCQL0hyzxiCpDuvxbbCZc6QqxpxanN/yn3je8vxhaXAB5c
-	NMzYTKYSu7sT2JAB7rcJHAgFDMUbZWHHRHV7vFH2MnaL0jolKgcxzcacP8pJmz8Uews/Y7a2hvw
-	4kCYsadCPlqrNOPB/CX+bMH2CrRaei+zaeFPKi4mN2dD62vKaFH+gD7zBlFut3Wom9xQN/lNAaC
-	tl2ddLZDWXQYRVq+EF4SMpX60RrOWKJ6h5epSCWp7rnokFJlIQqbpHT4IXaDMmYvFfjq2q8wNiu
-	4MJmyNQuwRfJcSq9D42EA4WLSc=
-X-Received: by 2002:a05:6512:1594:b0:5a2:bb45:7f21 with SMTP id 2adb3069b0e04-5a4172f6573mr11444534e87.28.1777157647148;
-        Sat, 25 Apr 2026 15:54:07 -0700 (PDT)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4187ebe31sm6927795e87.75.2026.04.25.15.54.05
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 25 Apr 2026 15:54:06 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: ben.knoble@gmail.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	gitster@pobox.com,
-	haraldnordgren@gmail.com
-Subject: gh
-Date: Sun, 26 Apr 2026 00:54:05 +0200
-Message-ID: <20260425225405.7915-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.54.0-rc2
-In-Reply-To: <E5737766-2A41-46A6-A3FD-530CAC5076F4@gmail.com>
-References: <E5737766-2A41-46A6-A3FD-530CAC5076F4@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OK4y/XLg"
+Received: (qmail 457328 invoked by uid 106); 25 Apr 2026 23:29:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=iU+v3ICS3bZGndqnR7xvdYo+17sFav0699mwp1zxiJw=; b=OK4y/XLgCEQwVXHlrzxNlLxepolLBHl8q1hDqKLs8J/cgQmvJpAEYNp0YgkjalW1r1kDCGqStU2qozH70hYDWAOY0ieFuAf2PnE+fEbhJHbYSWg6wRbINuQVP7yfT2NsJLZ9XZYwBubnGEygYXDbV9wo0osf7CvhF5BN+yL3F10kgecGLeCP0FDY4IhefZtdTE9+gIviZGCbyJEhkne0AB1zbAG+7UGxyLBbFmX//BmpmO6JPl0rJt9KTcITdYmp4VeMD8M3t0aiR0/V/JkAQGYtZs3oZmB8l4L4wxCE6j+Lktqhp9V1eUZ3cdCwpVn/5QlCA7i+wJgu+kYzIcYIlw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Apr 2026 23:29:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1037382 invoked by uid 111); 25 Apr 2026 23:29:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Apr 2026 19:29:17 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 25 Apr 2026 19:29:16 -0400
+From: Jeff King <peff@peff.net>
+To: Jonatan Holmgren <jonatan@jontes.page>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, rsch@web.de,
+	michael.grossfeld@amd.com
+Subject: Re: [PATCH] alias: restore support for simple dotted aliases
+Message-ID: <20260425232916.GA29816@coredump.intra.peff.net>
+References: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
+ <20260424151053.917066-1-jonatan@jontes.page>
+ <xmqqpl3ovuvq.fsf@gitster.g>
+ <40408c99-7e2a-4cf6-b9b2-6d0e0da3b2c5@jontes.page>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <40408c99-7e2a-4cf6-b9b2-6d0e0da3b2c5@jontes.page>
 
-> Isn’t that exactly what
+On Sat, Apr 25, 2026 at 11:57:24AM +0200, Jonatan Holmgren wrote:
+
+> That is a challenge we are going to have to consider. I think reserving
+> `command` is a worthwhile compromise, but obviously we cannot do that for
+> arbitrary future keys such as `help`, `hidden`, etc.
+
+We don't necessarily have to reserve them. When we see alias.foo.bar, we
+could consider it as both alias "foo.bar" and the "bar" key of alias
+"foo", without regard to what is in "bar" (i.e., whether it is "command"
+or "help", etc). I.e., don't "fall back" but allow two overlapping
+namespace.s
+
+That is the most backwards-compatible thing we could do, but does create
+some interesting situations.
+
+If you define alias.foo.command with the intent to allow "git foo", that
+is also creating the identical alias "git foo.command". Probably nobody
+cares too much, as if you did not mean to make "foo.command" you would
+never invoke it. We'd probably want to omit it when listing aliases,
+though.
+
+If we later introduce alias.foo.help, the same thing applies but with a
+twist. Running "git foo.help" will invoke that key as an alias command,
+but it is probably not a sensible command in the first place. But again,
+I'm not sure why anybody would try to do so.
+
+
+That said, I don't think reserving "command" or even some future names
+is that painful in the long run. The three-level syntax is a superset of
+the old functionality, and in general the best solution will be for
+users to convert their old aliases to it. The benefits of providing the
+fallback compatibility are:
+
+  1. Users can avoid having to do anything at all. And that will still
+     be true for the majority, unless they happen to have a three-level
+     alias that ends with ".command" (for now) or eventually ".help",
+     etc. We don't have any hard data, but I have to imagine that the
+     numbers here are vanishingly small.
+
+  2. Cross-version compatibility. You can't use alias.pull.sub.command
+     in Git v2.53 and older, so it's otherwise impossible to have config
+     that works both there and with v2.54.
+
+     But as time goes on, wanting to cross that version boundary becomes
+     less and less likely. If we we eventually introduce ".help" and it
+     breaks somebody foo.help alias, suggesting alias.foo.help.command
+     will work all the way back to Git v2.54, which may be sufficient.
+
+> One possible compromise would be to reserve `command` and `alias-*`, as
+> neither seems very likely to exist in users' historical alias names.
 > 
->     git fetch origin main
-> 
-> does? (Might need to expand the refspec.)
+> A new namespace makes the most sense from a namespace-pollution point of
+> view, but I struggle to see that as good UX. Even a separate namespace
+> only for alias metadata would make more sense to me than moving aliases
+> entirely, since subsection aliases with just `command` will likely be far
+> more common than any future metadata keys, but this is not something I see
+> as a good solution either.
 
-Very good point, I will update it!
+Yeah. Obviously a totally separate namespace makes all of this go away,
+but it feels like we are sacrificing the experience going forward in
+order to accommodate some fairly unlikely historical clashes.
 
-
-Harald
+-Peff
