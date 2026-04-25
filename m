@@ -1,133 +1,82 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FEC3624BC
-	for <git@vger.kernel.org>; Sat, 25 Apr 2026 21:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D412E040D
+	for <git@vger.kernel.org>; Sat, 25 Apr 2026 22:06:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777154339; cv=none; b=LxXa3dbGbpNdqHJ+44XNEcWfwB28GddiR1sbglZLhIoPmXjRQlIj0deZoKf2HRS+Mcg9FIB6bv/EW+oiZJ8+utQV5alx1bSbrtt0JBNiTg3beTPAqW0zlL5khiFaPVDz9LDzoB74I+lBJkG8XH5CtnPBnc9WVzGeUD6RBV3djnc=
+	t=1777154800; cv=none; b=ZMUtaM2N6XRqo5l0794tGTuThoCEyB9sttsJ7JOhlRpsTkHmT1xj1jq4pYfO3BdXC5pqswtr71djfLDkM6fUBzGBKKMDKyAjFPJKY2KMry54UVwZ4vX2sfn1QKcVeyGSOGAN94g2xZDPzP/yYfjoexagSY/tJmaiXxbfLH7UNcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777154339; c=relaxed/simple;
-	bh=nelslIX7/0sUDmXjeNwlMNAgRapi8ZENX3s8/jQCh9Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j3/LFafgj7MauQrhuhAuxeTy+xppLOBsB95gOL9PJBfvPDHjT0YrFIKvS9IWokN7a7QQ8cKzq0TUZW1Oq38Cuu5iyj3C1f1j7NkdMYLqbzekcVOAE5u1RlWcbFI6cgSPPvpIK43H1neg+mDsIwJIHrL57FFhERYbKQwibP8t0vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fnWdPwAm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TuMHwoyM; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1777154800; c=relaxed/simple;
+	bh=duzRmY7wgV8bg4AgOIUzPW1LfXAXcqn6guwEmqC8wCQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DJiEb5UYXufIEGvpZ7xQxHyJXoOFKb48zKZTRqxtPze8z+L4psRZMB+t12WwgQSGivOmFYl23+e8XUZoUb3aKt0zxmudoT3AAEh0I0PC4nhQvEMfDFF2ZAqk8SYmQcJTKW8h6g6YseUCd8XC8hrVK86IqaSSRslw0s3rh0pDEu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CJLuTK2x; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fnWdPwAm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TuMHwoyM"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 13999EC0211;
-	Sat, 25 Apr 2026 17:58:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 25 Apr 2026 17:58:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1777154337; x=1777240737; bh=Juxbp3s93B
-	ojlLSL8qfpY8ZKkRmnabK94Xz05NOtHE4=; b=fnWdPwAmGYfjEhusI269EvKJiq
-	ymBC+83+UhF3X0zkb2bm0EbENOltcxsXEwe1u7Czw5kJep6GyXq0Rvz/ickddYBz
-	zfZ3f5lcidaNA6Z12X/8bNZOA/lqmiwaId8Kzc3hMDaU9s4Lwi6DuptnaL+GkHaU
-	SoxNWvpEk54rMZOS+KWtvq/j0X8pKGRYpnGqK1IZPxy92A6orT7qSPbpAGEV/5vZ
-	MgkmXSGjzIpNoknp1AtkyP2ANbHtScEOBKZsFirvNVZyZO5g7NOktbBCviPR8xbk
-	xdDU+meqDNRrjjVt+FkEVaPCSxsrujgGEXTiV6oCKS6aIw36cyO3mDXAGERA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1777154337; x=1777240737; bh=Juxbp3s93BojlLSL8qfpY8ZKkRmnabK94Xz
-	05NOtHE4=; b=TuMHwoyMoRGGpSmlxWK+WtxBgxOUuMhMf+AGgoF2mhk681D+uQG
-	mvzh+Z128OMerwMxYir24IpjfyQd3EfqjeTbfV4MNORdmp+RMWENT7kvMVPXNfQ7
-	gSyCDWeTzELfI5yEMihAfCwA3qvB4LlTsrpDJWQXsjCv0nvQMPUApBhdrQzHvWPj
-	Qkq+horAYhz0lUsOzjqee+Y3Sd4eNgkTu1264Y4uBET5crEDOLjAAaR3UE99ZaMu
-	n4cdPTdN6Vf8tKqWuaEjG7TDRVZZHRdT3X3dGnns9ZNtR6lMTpuKbMK97HTrSTJZ
-	rVzNpeK04nHnwytm3TIJzeu2NAd4ptxUMmw==
-X-ME-Sender: <xms:IDntaUs_V8ljMQdN3hK63ll3BUQJAdf1pbfEzBEjjQQi3U1xdX5G-w>
-    <xme:IDntaYcVVuPj_ZqRmHA6axQsXxJiydnAQt_KogVXYGVnyVZeGIwKCeg2DT6k7T2FQ
-    VNOZOor6a622z51yIm18WddbM2Us2Vu--zOBgdAtolV-zqvfRqslw>
-X-ME-Received: <xmr:IDntaUyCXHu_mQ2OlEeHnqdvQ31tR3JxJr89APpiCd8329qmlip8OlVdOQWAXmTXv338bgcT5TbBoXwEoBUBsDwFALolPALPJQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejgedthecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    hhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:IDntaWHQo4J4reDeKV5wd8fLjvWjkTqZgQQ85GBZpCQkjB1xytI6PQ>
-    <xmx:IDntaQwVpLF2-yAVR3nX5Tpmp4xcYOPh0dKnHNjE8QVuq1q3JSV2Mw>
-    <xmx:IDntafsLbCsSIM-63BwdJRNswKAOPLwuJiq97ryxgb-mz22d6xm_ZA>
-    <xmx:IDntaV2vE80R98Zf4MD04MveKUmwm5p6lLHMkI85c1PZvrnj7Y6ndw>
-    <xmx:ITntaYT_EOxhmD2x8et_7ay0KDxE-5QswHglYPiOkRUPPTruJnPKOZK8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 25 Apr 2026 17:58:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CJLuTK2x"
+Received: (qmail 456740 invoked by uid 106); 25 Apr 2026 22:06:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=duzRmY7wgV8bg4AgOIUzPW1LfXAXcqn6guwEmqC8wCQ=; b=CJLuTK2x6vJGUvfqO+8lQIL4YfkcP6vquOvjlabYTKR0p5V6Cyq++P4IcsY6se6sOFh2i2aYTCEPIHINqUrSWfSA+Tm0Ed0DUlC7TVje5gy6NljJqa+0W0Ko/ucgPet5ZTySt3qB6JzvnvOrTAUpx5RQBgtk481UFgRYREMs3ctBWzZ6PsNdUjShypjfWmQLE+HpP0TA1FmEIgxkwe1zAWmF2T8uUSLmLyB8Orun3Q2vR3ICBztUtHmcRRVPR7lIwD310HHf9gYjZD4Je07W7tcfv457EriLxT6i6bKQaqP3CizoxynfPlZEIQRtViLXl1mGNu74/x8LP8hcTz6LQw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Apr 2026 22:06:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1036423 invoked by uid 111); 25 Apr 2026 22:06:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Apr 2026 18:06:30 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 25 Apr 2026 18:06:29 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
 Subject: Re: [PATCH] remote: add --set-head option to 'git remote add'
-In-Reply-To: <pull.2283.git.git.1777115978088.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Sat, 25 Apr 2026 11:19:38
-	+0000")
+Message-ID: <20260425220629.GA28590@coredump.intra.peff.net>
 References: <pull.2283.git.git.1777115978088.gitgitgadget@gmail.com>
-Date: Sun, 26 Apr 2026 06:58:55 +0900
-Message-ID: <xmqqzf2q8zxc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <xmqqzf2q8zxc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzf2q8zxc.fsf@gitster.g>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sun, Apr 26, 2026 at 06:58:55AM +0900, Junio C Hamano wrote:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> Mirror the behavior 'git clone' applies to its first remote: after
-> fetching, set refs/remotes/<name>/HEAD to the remote's default branch.
->
-> Equivalent to running:
->
->     git remote add -f <name> <url>
->     git remote set-head <name> -a
->
-> The new option implies --fetch.
+> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > From: Harald Nordgren <haraldnordgren@gmail.com>
+> >
+> > Mirror the behavior 'git clone' applies to its first remote: after
+> > fetching, set refs/remotes/<name>/HEAD to the remote's default branch.
+> >
+> > Equivalent to running:
+> >
+> >     git remote add -f <name> <url>
+> >     git remote set-head <name> -a
+> >
+> > The new option implies --fetch.
+> 
+> Should this option (and the auto mode of "git remote set-head") even
+> be necessary as an extra thing that the end-user should need to be
+> aware of these days?
+> 
+> It feels to me that the "fetch" part of "git remote add --fetch"
+> command should behave in line with what "git fetch" from the remote
+> does with "remote.<name>.followRemoteHEAD" configuration.
 
-Should this option (and the auto mode of "git remote set-head") even
-be necessary as an extra thing that the end-user should need to be
-aware of these days?
+It already does, doesn't it? Doing:
 
-It feels to me that the "fetch" part of "git remote add --fetch"
-command should behave in line with what "git fetch" from the remote
-does with "remote.<name>.followRemoteHEAD" configuration.
+  $ git init
+  $ git remote add --fetch origin /path/to/some/repo
+  $ git for-each-ref
 
-Of course, the current implementation may not do so, and that is why
-you are sending this patch.  A patch would need to plumb through the
-mechanism, but I think this should be pretty much automatic without
-giving more control than what the users already have.
+shows an origin/HEAD link.
 
-And because remote.<name>.followRemoteHEAD that is unconfigured is
-the same as setting it to "create", it means "git remote add -f"
-will behave just like "git clone" would to remember the upstream
-choice of which of their branches is the primary one (which is what
-HEAD in the publishing repository means), unless the variable is
-explicitly configured to "never".
+Which I think is not too surprising, as it is just calling "git fetch"
+under the hood.
 
-IOW, I think this should/can be done as a bugfix, i.e.,
-
-    Even though "git clone -o <name> <URL>" does, "git remote add
-    --fetch <name> <URL>" does not create refs/remotes/<name>/HEAD.
-
-    Fix it by making it honor the remote.<name>.followRemoteHEAD
-    configuration variable, which was invented exactly for this
-    purpose..
-
-or something.
+-Peff
