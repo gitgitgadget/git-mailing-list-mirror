@@ -1,69 +1,70 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36922366DB4
-	for <git@vger.kernel.org>; Sun, 26 Apr 2026 14:38:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD3E366814
+	for <git@vger.kernel.org>; Sun, 26 Apr 2026 14:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777214332; cv=none; b=CNhMLw/t/E58QP2egQtPMGcEZatx+ZwIM6h7oIup98LJnKGU7SQmcqHpS6DY4SJKHs3MD5eWIpF+RBqJ5SWv0HOvmHttdDqm9bWK1x8LgV7PfYft+NnAm1SCw8XJuAIJcU/vSJLj2d9wqYiEkeOnIHddhvsqyqKPZXBy++zKtFM=
+	t=1777214335; cv=none; b=LYgzmCwhbEOejIagY+g91peNXPYuzETM20cQABIl+YYWtNVEM0gZ35gxcbEYt0kKyVmLyi6nNSmz4pylMSDPjjv6xA3WCTKzhllG5R8/mz+ubZ153f1/JUZOzTMy9dLIldmEPK4VjRrfibBOHDR1U0LwNScIzb8a6j45z2SOD+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777214332; c=relaxed/simple;
-	bh=Vzq/wYUQfB1R1pi7ResCdGX0Jro01nt1qIFce+RZSJs=;
+	s=arc-20240116; t=1777214335; c=relaxed/simple;
+	bh=pS0qRYyoKJl8T57rsP+ANZZYD40oyqq2wpoSgBTdGU8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rUMPFe6z5M+UsFSB1f9aJX9kQ0opaP4gnzbQQHouYQHNHatevyvTnDIMjb8go+rXE6vn0Sr5kUt7rdPhEE7MHt9/Bq+cMNdafihsxWGHM8v3dgVka5DXLPU08NdXMWG+ndT2ulnsc+DYck1IEbDIlD3kZqS0qau4aI/uJt3DckQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G2FaJrsm; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=DJxci56lqDNCF40fmYwMRVjhhXguc1RAmfgdDpwgm3fZrLTyHX5JKwNG+9kOYlfiUIMGLfgGsISsennXHySZypmT0jmZ2zRB73gCk4YDv/CC5GjdFvh0QHSzQpg56Z3XEQkC4+arN2fGhcXWSRDkP4OWa02oOY0xH6Dg/qfxUgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DDDhiRyE; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G2FaJrsm"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8eea23d01f7so514597885a.0
-        for <git@vger.kernel.org>; Sun, 26 Apr 2026 07:38:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DDDhiRyE"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8e0a768331cso1037418085a.0
+        for <git@vger.kernel.org>; Sun, 26 Apr 2026 07:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777214330; x=1777819130; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777214332; x=1777819132; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f9xkLvDtJ/wIlCfzzSUfzo3TzfkW5YJwu7ccK6abGW4=;
-        b=G2FaJrsmbDYSZ/JsqumKbJ/Usx+8g9JJVmWcCT3WZS7vfMMp6B1CGlujq1fK2hamCV
-         sdhUZxyDFddr6y8Y0Nf30TmLVighpKlpuaqIY/HAKHMWgwtoROoQ+NF8mkjJn9ScE9ww
-         pilYS7e9iacXe1H6Pgn5VmnGsRX0COwK4QnlkV2LoGJvBnX2oLkzZ3bMwSV1HfgFVbez
-         q+OWx3SbNLPF7Rdv0G6FVE0rVv9RrzNM3o6n8WBuHZm4cdIXTbVsJCZu61ZBVAiPgwhL
-         h/1s+NxoIxU4zaRegTJuXceHNKutH9MvlIsuVACwyfaVxiQHNCYLka7X/3D0yvNn/8Xx
-         P8WA==
+        bh=7lzdBQotG7F1Znt3c9k1B+J65DF+wORqmE4AJc2gC1I=;
+        b=DDDhiRyEyX+98ooG4o7Q0Fj2z9hb3jsDUdZyIyMnl7nh29N9huTYugI93+fJpm5DN1
+         jHGWdu4P1Lbm8hVwjSSsriQoxY0SKmWpMyhYLYBDbbS0IvWhgIFL/Us4TYm2bjOUIFhR
+         6LBGQrqIHV4q0oUuV0SaBoepNEBBXylJdLvyN18QVicbKg46wBrNVFjf0SO9Xf63gGV2
+         srq7/kGmcvX6kDZvgX/4uXRZQNT89348VciOrRPN2N+DUCG/kd8RJXd9WFgB4VFkRs+C
+         kfam0dstv3r5zuXtXnfP2wInxBMx+m1QLN94JBdLWVgd66V3zK6w9dFZuJjyo/1mhykD
+         YUUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777214330; x=1777819130;
+        d=1e100.net; s=20251104; t=1777214332; x=1777819132;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=f9xkLvDtJ/wIlCfzzSUfzo3TzfkW5YJwu7ccK6abGW4=;
-        b=n9m/x69047rzYMsrc9KaaSgRm+Ku3s2QFrhCmRocMDmXvppC1NyDUXXyxjlGmcl65I
-         95Jx2qyb+RQw19H8SgBXjlvwjBFtt7k/ZtKHWCZAFezuYeNei5HxXIrMcROphgZ6UQtJ
-         1S9wnE8cYzZgM+29TSDXbIOfPox57lsVN+CLxXpMQuFR1JCWHKzQykIqCQ59sPIalRKo
-         UTDeOCRizYbPVHJ6AR0XM7/Wq3h94xaHKtz5FbZfQR9gvXTkliMQIlWOhRt7d9O2I0Bj
-         IuYlV3hOgREK20TtSRTo3ipIYA49U9SXA1cJ06CyuhSby3KbpH3Bwq4+n6G9Cs3a+tTp
-         reCg==
-X-Gm-Message-State: AOJu0YxedRuy+L4esRj3sP+C2S2NCQebiVTPtoMA8TGw5NncJWskJeVW
-	gTPiwawGEkNsXSW3mxi9lTQG+RJOeKy7UNpogwpi2wKlDhNdDo+NBnIG5IeYxqsC
-X-Gm-Gg: AeBDievQtEzJFDGxAS4h+qY2HvorRBYDKwcBh/QYcuon3pErzLxwlI5HNd6INBXTYio
-	s6ofiJiKHtvGLbnXlxINcvu/lfdFamDkUmZD4dODUzA9He2lXeyNoFJQFSE1Xiw5mnXkRqHg6hJ
-	iHv0NGx6jLS8x37Jg6b3GCrrr4kDZ3V3UygCp9SWyPxK6Gbh97oAEsyXUZ2YeQ4Wp6tFWYWvwk6
-	rOpzb7pkKEDShOZJVIZB/XCEXKjVlBk6FFvyEq2uHOfuAqvheE8rwLpOrynVlYAxqx7cteheRXy
-	Z/KcHpa5n1NE7KPto0HWsHRdyB8bjhnQ6/oU9NBbWmwZNvGeVub/SpED/h4kIp78AyOeAlUvlks
-	khLlPO1FFM8Lj5kL5bclZ3sqf9sEpVjCVsv6d8Ru8UCmyysSGijrX0uLqcSkSK0zUBfw3fkjXn2
-	D1iZsx7S5nwREphxU+/pMepgbnHnVSAMmvdA==
-X-Received: by 2002:a05:620a:26a6:b0:8ea:f802:d947 with SMTP id af79cd13be357-8eaf802ddcemr4451521385a.6.1777214329733;
-        Sun, 26 Apr 2026 07:38:49 -0700 (PDT)
+        bh=7lzdBQotG7F1Znt3c9k1B+J65DF+wORqmE4AJc2gC1I=;
+        b=LWuyHOmYy3pMqzE9OObEqzsPtCvLMslWowrOObMvHdnmWDvBMRb5UnjEiBRuWnePQJ
+         0nRzeztQZYvGaRN8bJCTCd8N4D4iF2UXdCCrFKy6Vpw6HPnIhHYQMfoOqEe3ObUj+3TT
+         Cb/YhFQjzlmfWCm7CmiTF4RcAuxD/ZQwAkv8lvurW9kgYppDxe0kXhWWZmBWiU90XM+e
+         Oy3CDl2rX8IFfkhCrOKm/2vh1y4Y2BaJsuykNdunMvcTRJUycrEKZVI/EfeMnNzNUVob
+         Wof2PIc6264bBXHxK7uZr8yi2fq1z38DWtjD3jJEDxtjiLOTXW86r/lh+NExzgiNShYZ
+         pAFA==
+X-Gm-Message-State: AOJu0YwQn/5dqGfsq3h3MTitJp76wMoueq4kRxEhQjBwYnT2ybmdObwq
+	VcbZy6H2zRld9ya41DcS+/s6l7MWD5Tu8ZyOck3JhE3SSI4VStoYrDyMYdxJVZ7X
+X-Gm-Gg: AeBDievpfKjLXWGX49uHOAtvQMkL4UqrC2iq867hBrXccZJOvxOrs0EZBAHepieHslO
+	udYzLapDH5Khk25Beh4ozLEwHdDkZs5SJ+cjima7pOzVnfCul9+zMq35Il5REMws5sVDmgjFTub
+	CC2YlRJtmoEvcM6w8WXnTijMPeFUrG9tc54aoko+xcz/CxK3tvfvINlghffXvUR+dhmFT1x1C5D
+	7VO3y5Srj0s0x5Qlv8YVPQ7xpp9QdUkgZy8L5QGTWD7AamGPsqKsUfApXVWPKTVSCqr8pB0fZ14
+	8cIwh4SP3tkFbVb+uDWMbo24DhAwok9cUigTjdJq54oEaQo5Y6PLeHQibTxpFNyk6AH2dVHj57p
+	p7+QRBSLEdFnnZOCy8jldhftE9Ba3dK06mnL3fUUK85dJwYUWWFwMnempwgqkz5/oTTuDU7+bby
+	KchVeoGYLobdpJ2AW9yQih9Xz8fjDvX/b3EA==
+X-Received: by 2002:a05:620a:2682:b0:8f2:8bb8:cb52 with SMTP id af79cd13be357-8f28bb8cf74mr1226087885a.4.1777214332233;
+        Sun, 26 Apr 2026 07:38:52 -0700 (PDT)
 Received: from [127.0.0.1] ([20.98.18.66])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d5fe9638sm2405603985a.1.2026.04.26.07.38.48
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d5fe9800sm2432394185a.5.2026.04.26.07.38.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Apr 2026 07:38:49 -0700 (PDT)
-Message-Id: <ac4da79eac90aa062fd696f29c61b639030c1d41.1777214316.git.gitgitgadget@gmail.com>
+        Sun, 26 Apr 2026 07:38:51 -0700 (PDT)
+Message-Id: <73bb1aa17141077cf7cd1004feeee36b05886979.1777214316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2098.v2.git.1777214316.gitgitgadget@gmail.com>
 References: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
 	<pull.2098.v2.git.1777214316.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Apr 2026 14:38:35 +0000
-Subject: [PATCH v2 7/8] status tests: filter `.gitconfig` from status output
+Date: Sun, 26 Apr 2026 14:38:36 +0000
+Subject: [PATCH v2 8/8] safe.bareRepository: default to "explicit" with
+ WITH_BREAKING_CHANGES
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,323 +80,163 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Since test-lib.sh creates `$HOME/.gitconfig` when
-`WITH_BREAKING_CHANGES` is in effect, the file appears in `git
-status` output as either untracked (`?? .gitconfig`) or ignored
-(`!! .gitconfig` / `! .gitconfig`, depending on porcelain version),
-because the `.git/info/exclude` entry causes git to treat it as an
-ignored file rather than hiding it entirely.
+When an attacker can convince a user to clone a crafted repository
+that contains an embedded bare repository with malicious hooks, any Git
+command the user runs after entering that subdirectory will discover
+the bare repository and execute the hooks. The user does not even need
+to run a Git command explicitly: many shell prompts run `git status`
+in the background to display branch and dirty state information, and
+`git status` in turn may invoke the fsmonitor hook if so configured,
+making the user vulnerable the moment they `cd` into the directory. The
+`safe.bareRepository` configuration variable (introduced in 8959555cee7e
+(setup_git_directory(): add an owner check for the top-level directory,
+2022-03-02)) already provides protection against this attack vector by
+allowing users to set it to "explicit", but the default remained "all"
+for backwards compatibility.
 
-In t7061 and t7521, which are pervasively affected, introduce a
-`filter_gitconfig` helper that strips all status-prefix variants of
-`.gitconfig` from the output before comparison. In the remaining
-scripts (t7060, t7064, t7508), apply targeted adjustments.
+Since Git 3.0 is the natural point to change defaults to safer
+values, flip the default from "all" to "explicit" when built with
+`WITH_BREAKING_CHANGES`. This means Git will refuse to work with bare
+repositories that are discovered implicitly by walking up the directory
+tree. Bare repositories specified via `--git-dir` or `GIT_DIR` continue
+to work, and directories that look like `.git`, worktrees, or submodule
+directories are unaffected (the existing `is_implicit_bare_repo()`
+whitelist handles those cases).
 
-Assisted-by: Claude Opus 4.6
+Users who rely on implicit bare repository discovery can restore the
+previous behavior by setting `safe.bareRepository=all` in their global
+or system configuration.
+
+The test for the "safe.bareRepository in the repository" scenario
+needed a more involved fix: it writes a `safe.bareRepository=all`
+entry into the bare repository's own config to verify that repo-local
+config does not override the protected (global) setting. Previously,
+`test_config -C` was used to write that entry, but its cleanup runs `git
+-C <bare-repo> config --unset`, which itself fails when the default is
+"explicit" and the global config has already been cleaned up. Switching
+to direct git config --file access avoids going through repository
+discovery entirely.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t7060-wtstatus.sh        |  3 +--
- t/t7061-wtstatus-ignore.sh | 27 +++++++++++++++++++++++++++
- t/t7064-wtstatus-pv2.sh    |  1 +
- t/t7508-status.sh          |  4 ++++
- t/t7521-ignored-mode.sh    |  1 +
- 5 files changed, 34 insertions(+), 2 deletions(-)
+ Documentation/BreakingChanges.adoc | 24 ++++++++++++++++++++++++
+ Documentation/config/safe.adoc     | 10 ++++++++--
+ setup.c                            |  4 ++++
+ t/t0035-safe-bare-repository.sh    | 10 ++++++++--
+ 4 files changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index 0f4344c55e..942ddbbf0e 100755
---- a/t/t7060-wtstatus.sh
-+++ b/t/t7060-wtstatus.sh
-@@ -9,6 +9,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+index af59c43f42..73bb939359 100644
+--- a/Documentation/BreakingChanges.adoc
++++ b/Documentation/BreakingChanges.adoc
+@@ -216,6 +216,30 @@ would be significant, we may decide to defer this change to a subsequent minor
+ release. This evaluation will also take into account our own experience with
+ how painful it is to keep Rust an optional component.
  
- test_expect_success setup '
- 	git config --global advice.statusuoption false &&
-+	echo "/.gitconfig" >>.git/info/exclude &&
- 	test_commit A &&
- 	test_commit B oneside added &&
- 	git checkout A^0 &&
-@@ -221,7 +222,6 @@ test_expect_success 'status --branch with detached HEAD' '
- 	git status --branch --porcelain >actual &&
- 	cat >expected <<-EOF &&
- 	## HEAD (no branch)
--	?? .gitconfig
- 	?? actual
- 	?? expect
- 	?? expected
-@@ -237,7 +237,6 @@ test_expect_success 'status --porcelain=v1 --branch with detached HEAD' '
- 	git status --branch --porcelain=v1 >actual &&
- 	cat >expected <<-EOF &&
- 	## HEAD (no branch)
--	?? .gitconfig
- 	?? actual
- 	?? expect
- 	?? expected
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 2f9bea9793..14ddaba2f3 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -18,6 +18,7 @@ test_expect_success 'status untracked directory with --ignored' '
- 	: >untracked/ignored &&
- 	: >untracked/uncommitted &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
++* The default value of `safe.bareRepository` will change from `all` to
++  `explicit`. It is all too easy for an attacker to trick a user into cloning a
++  repository that contains an embedded bare repository with malicious hooks
++  configured. If the user enters that subdirectory and runs any Git command, Git
++  discovers the bare repository and the hooks fire. The user does not even need
++  to run a Git command explicitly: many shell prompts run `git status` in the
++  background to display branch and dirty state information, and `git status` in
++  turn may invoke the fsmonitor hook if so configured, making the user
++  vulnerable the moment they `cd` into the directory. The `safe.bareRepository`
++  configuration variable was introduced in 8959555cee (setup_git_directory():
++  add an owner check for the top-level directory, 2022-03-02) with a default of
++  `all` to preserve backwards compatibility.
+++
++Changing the default to `explicit` means that Git will refuse to work with bare
++repositories that are discovered implicitly by walking up the directory tree.
++Bare repositories specified explicitly via the `--git-dir` command-line option
++or the `GIT_DIR` environment variable continue to work regardless of this
++setting. Repositories that look like a `.git` directory, a worktree, or a
++submodule directory are also unaffected.
+++
++Users who rely on implicit discovery of bare repositories can restore the
++previous behavior by setting `safe.bareRepository=all` in their global or
++system configuration.
++
+ === Removals
+ 
+ * Support for grafting commits has long been superseded by git-replace(1).
+diff --git a/Documentation/config/safe.adoc b/Documentation/config/safe.adoc
+index 2d45c98b12..5b1690aebe 100644
+--- a/Documentation/config/safe.adoc
++++ b/Documentation/config/safe.adoc
+@@ -2,10 +2,12 @@ safe.bareRepository::
+ 	Specifies which bare repositories Git will work with. The currently
+ 	supported values are:
+ +
+-* `all`: Git works with all bare repositories. This is the default.
++* `all`: Git works with all bare repositories. This is the default in
++  Git 2.x.
+ * `explicit`: Git only works with bare repositories specified via
+   the top-level `--git-dir` command-line option, or the `GIT_DIR`
+-  environment variable (see linkgit:git[1]).
++  environment variable (see linkgit:git[1]). This will be the default
++  in Git 3.0.
+ +
+ If you do not use bare repositories in your workflow, then it may be
+ beneficial to set `safe.bareRepository` to `explicit` in your global
+@@ -13,6 +15,10 @@ config. This will protect you from attacks that involve cloning a
+ repository that contains a bare repository and running a Git command
+ within that directory.
+ +
++If you use bare repositories regularly and want to preserve the current
++behavior after upgrading to Git 3.0, set `safe.bareRepository` to `all`
++in your global or system config.
+++
+ This config setting is only respected in protected configuration (see
+ <<SCOPES>>). This prevents untrusted repositories from tampering with
+ this value.
+diff --git a/setup.c b/setup.c
+index 7ec4427368..17c0662076 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1485,7 +1485,11 @@ static int allowed_bare_repo_cb(const char *key, const char *value,
+ 
+ static enum allowed_bare_repo get_allowed_bare_repo(void)
+ {
++#ifdef WITH_BREAKING_CHANGES
++	enum allowed_bare_repo result = ALLOWED_BARE_REPO_EXPLICIT;
++#else
+ 	enum allowed_bare_repo result = ALLOWED_BARE_REPO_ALL;
++#endif
+ 	git_protected_config(allowed_bare_repo_cb, &result);
+ 	return result;
+ }
+diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-repository.sh
+index ae7ef092ab..1d3d19f5b4 100755
+--- a/t/t0035-safe-bare-repository.sh
++++ b/t/t0035-safe-bare-repository.sh
+@@ -44,11 +44,16 @@ test_expect_success 'setup an embedded bare repo, secondary worktree and submodu
+ 	test_path_is_dir outer-repo/.git/modules/subn
  '
  
-@@ -27,6 +28,7 @@ test_expect_success 'same with gitignore starting with BOM' '
- 	: >untracked/ignored &&
- 	: >untracked/uncommitted &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
+-test_expect_success 'safe.bareRepository unset' '
++test_expect_success !WITH_BREAKING_CHANGES 'safe.bareRepository unset' '
+ 	test_unconfig --global safe.bareRepository &&
+ 	expect_accepted_implicit -C outer-repo/bare-repo
  '
  
-@@ -40,18 +42,22 @@ test_expect_success 'status untracked files --ignored with pathspec (no match)'
- test_expect_success 'status untracked files --ignored with pathspec (literal match)' '
- 	git status --porcelain --ignored -- untracked/ignored >actual &&
- 	echo "!! untracked/ignored" >expected &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual &&
- 	git status --porcelain --ignored -- untracked/uncommitted >actual &&
- 	echo "?? untracked/uncommitted" >expected &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
++test_expect_success WITH_BREAKING_CHANGES 'safe.bareRepository unset (defaults to explicit)' '
++	test_unconfig --global safe.bareRepository &&
++	expect_rejected -C outer-repo/bare-repo
++'
++
+ test_expect_success 'safe.bareRepository=all' '
+ 	test_config_global safe.bareRepository all &&
+ 	expect_accepted_implicit -C outer-repo/bare-repo
+@@ -63,7 +68,8 @@ test_expect_success 'safe.bareRepository in the repository' '
+ 	# safe.bareRepository must not be "explicit", otherwise
+ 	# git config fails with "fatal: not in a git directory" (like
+ 	# safe.directory)
+-	test_config -C outer-repo/bare-repo safe.bareRepository all &&
++	test_when_finished "git config --file outer-repo/bare-repo/config --unset safe.bareRepository" &&
++	git config --file outer-repo/bare-repo/config safe.bareRepository all &&
+ 	test_config_global safe.bareRepository explicit &&
+ 	expect_rejected -C outer-repo/bare-repo
  '
- 
- test_expect_success 'status untracked files --ignored with pathspec (glob match)' '
- 	git status --porcelain --ignored -- untracked/i\* >actual &&
- 	echo "!! untracked/ignored" >expected &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual &&
- 	git status --porcelain --ignored -- untracked/u\* >actual &&
- 	echo "?? untracked/uncommitted" >expected &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -65,6 +71,7 @@ EOF
- 
- test_expect_success 'status untracked directory with --ignored -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- cat >expected <<\EOF
-@@ -76,9 +83,11 @@ test_expect_success 'status of untracked directory with --ignored works with or
- 	git status --porcelain --ignored >tmp &&
- 	grep untracked/ tmp >actual &&
- 	rm tmp &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual &&
- 
- 	git status --porcelain --ignored untracked/ >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -89,6 +98,7 @@ EOF
- 
- test_expect_success 'status prefixed untracked sub-directory with --ignored -u' '
- 	git status --porcelain --ignored -u untracked/ >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -104,6 +114,7 @@ test_expect_success 'status ignored directory with --ignore' '
- 	mkdir ignored &&
- 	: >ignored/uncommitted &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -116,6 +127,7 @@ EOF
- 
- test_expect_success 'status ignored directory with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -130,6 +142,7 @@ test_expect_success 'status empty untracked directory with --ignore' '
- 	mkdir untracked-ignored &&
- 	mkdir untracked-ignored/test &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -141,6 +154,7 @@ EOF
- 
- test_expect_success 'status empty untracked directory with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -155,6 +169,7 @@ test_expect_success 'status untracked directory with ignored files with --ignore
- 	: >untracked-ignored/ignored &&
- 	: >untracked-ignored/test/ignored &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -168,6 +183,7 @@ EOF
- 
- test_expect_success 'status untracked directory with ignored files with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -185,6 +201,7 @@ test_expect_success 'status ignored tracked directory with --ignore' '
- 	git commit -m. &&
- 	echo "tracked" >.gitignore &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -196,6 +213,7 @@ EOF
- 
- test_expect_success 'status ignored tracked directory with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -208,6 +226,7 @@ EOF
- test_expect_success 'status ignored tracked directory and ignored file with --ignore' '
- 	echo "committed" >>.gitignore &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -219,6 +238,7 @@ EOF
- 
- test_expect_success 'status ignored tracked directory and ignored file with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -233,6 +253,7 @@ test_expect_success 'status ignored tracked directory and uncommitted file with
- 	echo "tracked" >.gitignore &&
- 	: >tracked/uncommitted &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -245,6 +266,7 @@ EOF
- 
- test_expect_success 'status ignored tracked directory and uncommitted file with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -260,6 +282,7 @@ test_expect_success 'status ignored tracked directory with uncommitted file in u
- 	mkdir tracked/ignored &&
- 	: >tracked/ignored/uncommitted &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -272,6 +295,7 @@ EOF
- 
- test_expect_success 'status ignored tracked directory with uncommitted file in untracked subdir with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -287,6 +311,7 @@ test_expect_success 'status ignored tracked directory with uncommitted file in t
- 	git add -f tracked/ignored/committed &&
- 	git commit -m. &&
- 	git status --porcelain --ignored >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -299,6 +324,7 @@ EOF
- 
- test_expect_success 'status ignored tracked directory with uncommitted file in tracked subdir with --ignore -u' '
- 	git status --porcelain --ignored -u >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-@@ -310,6 +336,7 @@ test_expect_success 'status ignores submodule in excluded directory' '
- 	git init tracked/submodule &&
- 	test_commit -C tracked/submodule initial &&
- 	git status --porcelain --ignored -u tracked/submodule >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expected actual
- '
- 
-diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-index 8bbc5ce6d9..be6c931a96 100755
---- a/t/t7064-wtstatus-pv2.sh
-+++ b/t/t7064-wtstatus-pv2.sh
-@@ -231,6 +231,7 @@ test_expect_success 'ignored files are printed with --ignored' '
- 	EOF
- 
- 	git status --porcelain=v2 --ignored --untracked-files=all >actual &&
-+	test_filter_gitconfig actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index a5e21bf8bf..5f76ec62d8 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -263,6 +263,7 @@ test_expect_success 'status with gitignore' '
- 	!! untracked
- 	EOF
- 	git status -s --ignored >output &&
-+	test_filter_gitconfig output &&
- 	test_cmp expect output &&
- 
- 	cat >expect <<\EOF &&
-@@ -296,6 +297,7 @@ Ignored files:
- 
- EOF
- 	git status --ignored >output &&
-+	test_filter_gitconfig output &&
- 	test_cmp expect output
- '
- 
-@@ -328,6 +330,7 @@ test_expect_success 'status with gitignore (nothing untracked)' '
- 	!! untracked
- 	EOF
- 	git status -s --ignored >output &&
-+	test_filter_gitconfig output &&
- 	test_cmp expect output &&
- 
- 	cat >expect <<\EOF &&
-@@ -358,6 +361,7 @@ Ignored files:
- 
- EOF
- 	git status --ignored >output &&
-+	test_filter_gitconfig output &&
- 	test_cmp expect output
- '
- 
-diff --git a/t/t7521-ignored-mode.sh b/t/t7521-ignored-mode.sh
-index a88b02b06e..7ea0b0d2f2 100755
---- a/t/t7521-ignored-mode.sh
-+++ b/t/t7521-ignored-mode.sh
-@@ -30,6 +30,7 @@ test_expect_success 'Verify behavior of status on directories with ignored files
- 		dir/ignored/ignored_1.ign dir/ignored/ignored_2.ign &&
- 
- 	git status --porcelain=v2 --ignored=matching --untracked-files=all >output &&
-+	test_filter_gitconfig output &&
- 	test_cmp expect output
- '
- 
 -- 
 gitgitgadget
-
