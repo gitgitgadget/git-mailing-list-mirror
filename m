@@ -1,241 +1,188 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754B71F131A
-	for <git@vger.kernel.org>; Sun, 26 Apr 2026 12:14:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BBB14A4F0
+	for <git@vger.kernel.org>; Sun, 26 Apr 2026 14:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777205660; cv=none; b=tT8r7bg7s4/zs0gqR8QmasNslKUT/F23kr3y1YG11AV/QEP3MOq9p74GXjvATmDChXA5AnZV9h81On9PbLSdF1M4xzbAze97AVpucNFKNc9h3R6Q4cFMYNDX3NbCv1rnW9sWJVd7qmlpG+/ov8e0Hlv47bi98xA1e5k9HPzgdTI=
+	t=1777214321; cv=none; b=I7aVuZAjyAy86btV3ty7avEXtl9HLGc+g8Q/mxHznX03LWK2AArpNeZc2XI2zl+DlxAwTHwlKegU2dTC+Ar2UcML9yWCwLj0Vrz7quwiTSlxPerTq9CX9+TmSQLTL+Nui6zxjR2EyfDMXJ0ZaP6U94/6XYl3hx4+rOiwOWB+Emg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777205660; c=relaxed/simple;
-	bh=cRUGGUxJe9HcXIhdWfGJT2RpheGSvl+u5fPOP0ZssGc=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=R5grLo/Gi2RIq+VZqK7eTm3WUR/OtUDbKl9hbCfSdGyM/eFDqXfY5501r2HAobDPnevwMqbx1I2dlzeZaI7zNugXvhQtiMd21ucVpK0K9RdLawXQjXNa3J5eNxCgIWxX/fS0Tpd1cv27sxSKNNDKoWwJuXqtwNnQuH6NHLS31Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=J/2c+5wP; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1777214321; c=relaxed/simple;
+	bh=Hei6Gh3T1olNsNi2DuJhrUb+REtEYMiO1hfh4drhIl4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=mPMrmOTfCloY+8J6WIRxxA2AHDAw6vv55Ycz9Mn0SCIDMZprJK6rBqItnhSzVBSQaodyIEzjYaGbaDktI7WZI6hYFeEXTqIgnxjTzrmiWA6ycOcwRnQqpMX2xn0+DnuhSxljmnqMJXYRzT2A+EGHRosfTlGwIMLDiva0JmtFitw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G0grsKs5; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="J/2c+5wP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1777205645; x=1777810445;
-	i=johannes.schindelin@gmx.de;
-	bh=5pw9zkvCeNwPzTqu9A9al+nkHjg/jpPu6CQARSQDBTg=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=J/2c+5wPMzz5wJGpkKbE2JfS5BL09LK7MJ858c4UMT2vshi7aCKfPKueOJr45UlV
-	 ajyye1IHeTjhc/toUrvYZ17MFlOrLxNeOpDik658AYnnCVcl8Obwv54nNlFcWaspB
-	 lCPzTMa2tCLV62dm2RizIYXXmgyzMeaD3mQ/YZJcXgZHlNpGDNvOj7g32NgoEv+Tb
-	 TWzMmImAEPU1tPxutBDQeaueormRvgHXnpwUKhq9z+acHUHoMRlDPwOuggmW823+p
-	 QpkOSBlV/1w5wj3LD4d/z/uKxsaFkIfRR+TqOmZqma0VMf5+XF51xp+gSP05jfaDC
-	 WofcWmj83llV6EwFWw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N6siz-1vITPG3EOF-00xqqF; Sun, 26
- Apr 2026 14:14:05 +0200
-Date: Sun, 26 Apr 2026 14:14:03 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, Jiamu Sun <39@barroit.sh>, 
-    GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] parse-options: fix sparse 'plain integer as NULL
- pointer'
-In-Reply-To: <CAPc5daWZUJA0sEqS4Qk2vn5x+LNRgphxjzjdbcLFpEgS+69kUg@mail.gmail.com>
-Message-ID: <d0357af8-ce70-77be-a885-070420d76c0b@gmx.de>
-References: <7aac2206-8b60-484f-a5f6-4943348ad3f6@ramsayjones.plus.com> <CAPc5daWZUJA0sEqS4Qk2vn5x+LNRgphxjzjdbcLFpEgS+69kUg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G0grsKs5"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8b038a00370so80422826d6.1
+        for <git@vger.kernel.org>; Sun, 26 Apr 2026 07:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777214318; x=1777819118; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r8QSW0LB0PyVVtkzxG/NDHVtFkG9fRWEXjuhR2y5H18=;
+        b=G0grsKs5QSpwEy4fXnX34s0tJnK4I7nTq7n1U9ReaUp6y825glJkYbLlw1sGnF4ne4
+         KeX8U/UH/gIWLa/f5h5iAjftzMVEY+MU6cIXwuvWd3otQm8e4pHykKMV9KELYOwsVS7k
+         DqezwcfC9nZ16YJaVzPkvsEaNXB5PretXVCFEcFGDKT4oJvTAv2HnD+Q1IIjbCcMldgg
+         cCqpOt5cq5l9pOwPcYywWORJDbB7HsKB7oBX925hdqMto5+n7toOSUlQs4lO06VrvVCz
+         BGQtCj7qKVLV5R3jPqurB96KU79fjEM8CEDnhxJl4ryxgSQDUOmAzTDFvUge5h4gfyTH
+         46vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777214318; x=1777819118;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=r8QSW0LB0PyVVtkzxG/NDHVtFkG9fRWEXjuhR2y5H18=;
+        b=AXUH+J1wj2/EOFymI5zX4V2ePpnkgFLKjUh4GVF0dHRdQTe7YAudywaGMEW1GTT2h/
+         JV5uxFdF/YnzI5JlAm/AS+uoOpd0IXQRMQIA9vm43WsYnDDW+dzJbk/E7IVOrWsepDmW
+         zUhra3m6b7YOp2KM/KmlNOyn3k0I4fXxvlA1szVzdsTQrhkgEsY6bVOA2YaNks6r8up8
+         76IbJfZbs+fU/pDNQzoCsGGf4y7U64CT8Hwgcojr3BnwKQOO3FWWksaxOXItWwM05q6P
+         a6MMaJ9yM9/BuH5sC8bFKBE2EP0vtJ/yP+kuXNUXRKChowKz8+KVnqYZTi7D+xHL0/Zv
+         3EQg==
+X-Gm-Message-State: AOJu0YyJQBlkJJOk4Dm3lZZKoDUdlBbeZ55/opcmRkH1JWGleMAiXVRV
+	2exGaER7oT9XanQa3SFK9J6srJQqUhGPSNhNMrBsAxl15Jq8IVnvV+FbVjN7VA==
+X-Gm-Gg: AeBDiet+TkTtU00eACThDBUWHMhsbjznaXEMKKhIOGRDLYAsUU7o7QGpGXr/4s8TJ72
+	RwF/c3uHYFTty7eGmNdZwmExTlPG/zm19mv37NkBUoxsSkgWRyY0cGHPEF/41OR1xmn2u5RdPmP
+	h96pNG5nvV6jWeYZK4P9ug28G2Mkh9jSUcC5dboxZ0XWRYVpJGF4NKgQhj5nKsTr7gzmGDiprgb
+	gL8IVGGmG50ZaWOs22RDebUBLKksdUic8dCSR6vih3QRIHNjKNC7w+HDeose8eVsAjM663oxerf
+	Y3EdKPETSmD5zlzeV5IQSYPZLuW6pHA3nm++4m2j43oSQE0VlM6C7/XC9kRNwJ9Ul5e/dIhnPFV
+	Yr+2DehPGiT6Cv1KiHxMDkkqY/Bh6i5wLK/QarPSkZjBBZxhcUkFT7Ap2tjTUYuZkPVFUE6X/x9
+	QWBtbIGmA+cYcnuiktx9/IrJWSPuaUU2MxSw==
+X-Received: by 2002:a05:6214:598c:b0:8ac:b6d7:e60e with SMTP id 6a1803df08f44-8b027fd9d4amr643590366d6.7.1777214318202;
+        Sun, 26 Apr 2026 07:38:38 -0700 (PDT)
+Received: from [127.0.0.1] ([20.98.18.66])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b02ac42b3bsm230806556d6.5.2026.04.26.07.38.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Apr 2026 07:38:37 -0700 (PDT)
+Message-Id: <pull.2098.v2.git.1777214316.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
+References: <pull.2098.git.1777042877.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 26 Apr 2026 14:38:28 +0000
+Subject: [PATCH v2 0/8] safe.bareRepository: default to "explicit" with WITH_BREAKING_CHANGES
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-819879958-1777205645=:26638"
-X-Provags-ID: V03:K1:vnzyPFaqy1m4sYJ0+aGrHKB+UzBd4A2LkwCEq4Kiuj+/tCkIwSB
- cPXTUSDdOUGPWOwPoUAdZSVHtk6U1yLVmAVIK30VL9LseGlMpbuNihTXCJamU484mp/cPKo
- iQYn2JzqWsn8QdkTlp20DT0iXiZN+rLz+Clkqfzq7GBVJZRm0DcpRzI6ReltGvFpb38DDtf
- pQAATQSbo5vGU0gdLTX3A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:td9Nz9GLs3Q=;d1SAntaK4bJQ2BJSCsWfViLFkAP
- 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
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This supersedes my earlier series [*1*] which took the approach of adjusting
+individual tests to access bare repositories explicitly.
 
---8323328-819879958-1777205645=:26638
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+As Junio suggested [*2*], this series instead takes the approach of setting
+safe.bareRepository=all in the test environment's global config whenever
+WITH_BREAKING_CHANGES is in effect, so that existing tests continue to work
+without individual modifications.
 
-Hi Junio,
+Implementing this turned out to require a number of follow-up adjustments,
+because writing to $HOME/.gitconfig has side effects beyond the intended
+setting: $HOME is the trash directory, which doubles as the test
+repository's working tree, so the file shows up in ls-files and status
+output, and tests that manipulate $HOME/.gitconfig for their own purposes
+can clobber or remove the setting. Patches 2 through 7 address these
+interactions in the affected test scripts.
 
-On Sun, 26 Apr 2026, Junio C Hamano wrote:
+The final patch flips the safe.bareRepository default to "explicit" under
+WITH_BREAKING_CHANGES.
 
-> Another thing from GitHub CI
->=20
-> https://github.com/git/git/actions/runs/24825391649/job/72659919418#step=
-:9:144
->=20
->   Error: parse-options.c:680:30: comparison of integer expressions of
-> different signedness: 'unsigned int' and 'int' [-Werror=3Dsign-compare]
->     680 |        (n < cmds->nr && best =3D=3D (intptr_t)cmds->items[n].u=
-til);
->         |                              ^~
+Footnote [*1*]:
+https://lore.kernel.org/git/pull.2076.git.1775140403.gitgitgadget@gmail.com/
 
-Indeed. With this patch on top of Ramsay's fixup, it passes the build:
-https://github.com/dscho/git/actions/runs/24955417618
+Footnote [*2*]: https://lore.kernel.org/git/xmqqse98cc51.fsf@gitster.g/
 
-=2D- snip --
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Sun, 26 Apr 2026 11:11:35 +0000
-Subject: [PATCH] fixup! parseopt: autocorrect mistyped subcommands
+Changes since v1:
 
-Fix a build warning in `linux32`: Change `best` from `unsigned int` to
-`intptr_t` to match the `(intptr_t)` casts it is compared against, fixing
-a sign-compare warning on 32-bit platforms where `intptr_t` is `int`.
+ * Made it compatible with Patrick Steinhardt's set -e work.
 
-Assisted-by: Claude Opus 4.6
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- parse-options.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Johannes Schindelin (8):
+  test-lib: allow bare repository access when breaking changes are
+    enabled
+  t7900: do not let `$HOME/.gitconfig` interfere with XDG tests
+  t1300: remove global config settings injected by test-lib.sh
+  t1305: use `--git-dir=.` for bare repo in include cycle test
+  t5601: restore `.gitconfig` after includeIf test
+  ls-files tests: filter `.gitconfig` from `--others` output
+  status tests: filter `.gitconfig` from status output
+  safe.bareRepository: default to "explicit" with WITH_BREAKING_CHANGES
 
-diff --git a/parse-options.c b/parse-options.c
-index 14f3f385eb4..0ba6905fed5 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -648,7 +648,8 @@ static const char *autocorrect_subcommand(const char *=
-cmd,
- 					  struct string_list *cmds)
- {
- 	struct autocorrect autocorrect =3D { 0 };
--	unsigned int n =3D 0, best =3D 0;
-+	unsigned int n =3D 0;
-+	intptr_t best =3D 0;
- 	struct string_list_item *cand;
-=20
- 	autocorrect_resolve(&autocorrect);
-=2D- snap --
+ Documentation/BreakingChanges.adoc            | 24 +++++++++++++++++
+ Documentation/config/safe.adoc                | 10 +++++--
+ setup.c                                       |  4 +++
+ t/t0035-safe-bare-repository.sh               | 10 +++++--
+ t/t1300-config.sh                             |  7 +++++
+ t/t1305-config-include.sh                     |  4 +--
+ t/t3000-ls-files-others.sh                    |  4 +++
+ t/t3001-ls-files-others-exclude.sh            |  3 +++
+ t/t3002-ls-files-dashpath.sh                  |  2 ++
+ t/t3009-ls-files-others-nonsubmodule.sh       |  1 +
+ ...common-prefixes-and-directory-traversal.sh |  3 ++-
+ t/t5601-clone.sh                              |  4 ++-
+ t/t7060-wtstatus.sh                           |  3 +--
+ t/t7061-wtstatus-ignore.sh                    | 27 +++++++++++++++++++
+ t/t7064-wtstatus-pv2.sh                       |  1 +
+ t/t7104-reset-hard.sh                         |  2 +-
+ t/t7508-status.sh                             |  4 +++
+ t/t7521-ignored-mode.sh                       |  1 +
+ t/t7900-maintenance.sh                        | 12 +++++++--
+ t/test-lib-functions.sh                       |  8 ++++++
+ t/test-lib.sh                                 | 13 +++++++++
+ 21 files changed, 134 insertions(+), 13 deletions(-)
 
-Ciao,
-Johannes
 
->=20
-> 2026=E5=B9=B44=E6=9C=8824=E6=97=A5(=E9=87=91) 1:05 Ramsay Jones <ramsay@=
-ramsayjones.plus.com>:
-> >
-> >
-> > Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> > ---
-> >
-> > Hi Jiamu Sun,
-> >
-> > If you need to re-roll your 'js/parseopt-subcommand-autocorrection'
-> > branch, could you please squash this into the patch corresponding
-> > to commit b9e6a2d30a ("parseopt: autocorrect mistyped subcommands",
-> > 2026-04-23).
-> >
-> > Thanks.
-> >
-> > ATB,
-> > Ramsay Jones
-> >
-> >  parse-options.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/parse-options.c b/parse-options.c
-> > index d60e7bd3c9..14f3f385eb 100644
-> > --- a/parse-options.c
-> > +++ b/parse-options.c
-> > @@ -658,7 +658,7 @@ static const char *autocorrect_subcommand(const ch=
-ar *cmd,
-> >
-> >         for_each_string_list_item(cand, cmds) {
-> >                 if (starts_with(cand->string, cmd)) {
-> > -                       cand->util =3D 0;
-> > +                       cand->util =3D NULL;
-> >                 } else {
-> >                         int edit =3D levenshtein(cmd, cand->string,
-> >                                                0, 2, 1, 3) + 1;
-> > --
-> > 2.54.0
->=20
->=20
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2098%2Fdscho%2Fsafe-bare-repo-default-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2098/dscho/safe-bare-repo-default-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2098
 
---8323328-819879958-1777205645=:26638--
+Range-diff vs v1:
+
+ 1:  62707b4109 ! 1:  179fcf5369 test-lib: allow bare repository access when breaking changes are enabled
+     @@ Commit message
+          `--exclude-standard` or `git status --ignored`; those are addressed
+          by subsequent commits.
+      
+     +    The `.git/info/exclude` write is guarded by `test -d .git/info`
+     +    rather than using `mkdir -p`, because some tests (e.g. t0008)
+     +    expect to create `.git/info/` themselves and would fail with
+     +    Patrick Steinhardt's `set -e` preparation (ps/test-set-e-clean) if
+     +    the directory already existed. For tests using `TEST_NO_CREATE_REPO`
+     +    (where no `.git/` exists at all), the guard also handles that case.
+     +
+          [1] https://lore.kernel.org/git/xmqqse98cc51.fsf@gitster.g/
+      
+          Original-patch-by: Junio C Hamano <gitster@pobox.com>
+     @@ t/test-lib.sh: cd -P "$TRASH_DIRECTORY" || BAIL_OUT "cannot cd -P to \"$TRASH_DI
+      +if test -n "$WITH_BREAKING_CHANGES"
+      +then
+      +	git config --global safe.bareRepository all &&
+     -+	echo "/.gitconfig" >>.git/info/exclude
+     ++	# Only write to .git/info/exclude when the directory exists
+     ++	# (i.e. when git init created the repo). If we mkdir -p it
+     ++	# ourselves, tests that expect to create .git/info/ themselves
+     ++	# (e.g. t0008) would fail.
+     ++	if test -d .git/info
+     ++	then
+     ++		echo "/.gitconfig" >>.git/info/exclude
+     ++	fi
+      +fi
+      +
+       start_test_output "$0"
+ 2:  d9a2e76f3c = 2:  4dc5151e59 t7900: do not let `$HOME/.gitconfig` interfere with XDG tests
+ 3:  9c10e72eed = 3:  7d68155805 t1300: remove global config settings injected by test-lib.sh
+ 4:  092ec11621 = 4:  5ff48e0892 t1305: use `--git-dir=.` for bare repo in include cycle test
+ 5:  3aca302275 = 5:  ed7294ace3 t5601: restore `.gitconfig` after includeIf test
+ 6:  ef57244778 = 6:  556db0eabe ls-files tests: filter `.gitconfig` from `--others` output
+ 7:  56fe902644 = 7:  ac4da79eac status tests: filter `.gitconfig` from status output
+ 8:  64db45e385 = 8:  73bb1aa171 safe.bareRepository: default to "explicit" with WITH_BREAKING_CHANGES
+
+-- 
+gitgitgadget
