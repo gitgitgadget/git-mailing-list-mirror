@@ -1,130 +1,121 @@
-Received: from www610.your-server.de (www610.your-server.de [162.55.254.207])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A514C262FF8
-	for <git@vger.kernel.org>; Sun, 26 Apr 2026 06:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.55.254.207
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4AC175A8A
+	for <git@vger.kernel.org>; Sun, 26 Apr 2026 07:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777186043; cv=none; b=D86MD3BjrdlADsdl/xVZrnSkeSFwjgDODBBz+NGRVG1mlh+BSyLR/bXL6otPqK6Cr1guRiEV8fc10imJHGFV4IRxDLyiYX1jc2vylauuwDWc5m3LIfo4F/GQYel15zFm2pe5h9pBXoVLuYQCT5xCZ3fURwd5qjh3FIySel/rpP4=
+	t=1777187406; cv=none; b=hgzmkG4VZdwSFTQ03w9USgBy02KQyXcwTeLGLRTBbaBFGjO57jgyJqeQJGh8ekbivWfzkpo5z6E+IniFgzXm6iaYKXFLkst7C2T9CmwKnS25L6G5R6ZBwdqb5NZ2CV17PB2/oFVsBXfspbucoPHSIqMIlRin+57r9Hik6vanqy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777186043; c=relaxed/simple;
-	bh=b5sqR1yeY18xxlRwTWAL1R6py7JT4Wg9CAyLPq/w3PU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GFbWtUva8bDGiFJszPM4oQvcvt287v4C94cpAwfo00tAYxW3Fy5TTf2d5IzS0tfZf7CcmecNjrWg+pGbMzmsVCFpVZwJJYiEkBDQq5/nZnJ5aAv03BF7HZ2bCLc1sDz2D7ejc+sIR9+24ycMIc3pRMsDs2Hc60WtRaVB98ir75o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=beniamino.eu; spf=pass smtp.mailfrom=beniamino.eu; dkim=pass (2048-bit key) header.d=beniamino.eu header.i=@beniamino.eu header.b=xAFPuT6c; arc=none smtp.client-ip=162.55.254.207
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=beniamino.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=beniamino.eu
+	s=arc-20240116; t=1777187406; c=relaxed/simple;
+	bh=7xP3TsnWP8rYW435ouAYZeJSXAcyNQ5/SuZ1liI3rd8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=lzwXhuoiIPUvN6GgFsq25qaqQ5Iy3Cjw6ts+HO1seXXn7gbITAmZJtcV76iRsUoktRm+eDpikIGMJedyueje0zzkgpJ5vUDn9Z8KqMweTlQrF9UADfUap1Zdx2NYPqiwZzIQxlF3QkY60BmDkUvh9/++CQ965KeEa/2yWrrCO/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VJdAQNri; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RZmYqhe+; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=beniamino.eu header.i=@beniamino.eu header.b="xAFPuT6c"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=beniamino.eu; s=default2503; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=kdfrqeg5fTfWI4Z90O7bzHbDEbU5JCpUNVChq5HiG0Y=; b=xAFPuT6cZbT0Z7gBj83tL8iNB8
-	ofch+YYJ84Hb2kEyBbMuLbNFBqtGOUK2ss3uOM2gg0f/VP53fZNn5JPPVIe8xxl/pL5CzkIYK0eFd
-	9f3Yc1s/NdhLdKq7FHApY8YjIuXz7jd7Rr2J++w2GEv7/JMv9mlnjX//qogNjgexUErWEJQAdKN5n
-	jpFPxMr5QMgExDxMHfVqExWzxToBmAplzYeXGm7iZV26KoXuqhWqXz/GdNYwzoHajKN/Yu/iY5dex
-	fO0psI6u91SIDOIIega9RIH72AuBIvvqb4Iia+YNd7WCTzlkHkJY+NEcG8eIfagWzbzKe7gHKmcl6
-	qEIGmXiQ==;
-Received: from sslproxy06.your-server.de ([78.46.172.3])
-	by www610.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <m.beniamino@beniamino.eu>)
-	id 1wGtGq-000GRH-1W;
-	Sun, 26 Apr 2026 08:47:12 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <m.beniamino@beniamino.eu>)
-	id 1wGtGI-0003wQ-2i;
-	Sun, 26 Apr 2026 08:47:12 +0200
-Message-ID: <d7ec16d9-2707-4c1c-ac64-ac3dde3e0946@beniamino.eu>
-Date: Sun, 26 Apr 2026 08:47:11 +0200
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VJdAQNri";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RZmYqhe+"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 34C5B7A00FC;
+	Sun, 26 Apr 2026 03:10:04 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Sun, 26 Apr 2026 03:10:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1777187404;
+	 x=1777273804; bh=cPS+SS2u/m0bRb7TNhZCAOtpoi5XJc3mqL3TPXiKBGs=; b=
+	VJdAQNriln5f3PvUT/gcLSLX8tbAVcavmDj73GBC2pn0DfLMao0JxLHDh5fGkGRQ
+	WUUrdauKP0GrBmN1YNWzKztSUqsbFXRykQKO5m9Bz/MA82vkD7hys5EWh4WYxe9S
+	DfMOGnl+163JGn5/WrgmhduMpxXkKcp9TyeZw15kV5K5YxZqyOUjfQDUs2dWl2uZ
+	X2aJvmKL/uo7j02EABXOoIu/PG68lmuX5Qtjsa2+E2KBIFVs9EuVC/CHOhHJh+Sa
+	i4Hpc2Voos12RZ0P/S01QICTCE0/FGpPEsKW+Avb6+XRimsuITY2M9Zc8FAYXVH1
+	qZCLDx+J05QEEnskndcFmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777187404; x=
+	1777273804; bh=cPS+SS2u/m0bRb7TNhZCAOtpoi5XJc3mqL3TPXiKBGs=; b=R
+	ZmYqhe+C6J42VSN9GFjh2sinEh/8aBsZrYoLBPeZzjiHQvS/UgSYXMi1c6+MJJqq
+	nhnWYOz2sB00U/d77ukRgI1gA0oT74Dk2KAMaFwU+/g50ScartbVHIT8IosCViUK
+	r7WYm0meULh6ZpPAjdSdtxgqvi6UX/JXEkUTVkQpSyNrESZMeBt12tCt94d/TScL
+	VO1u0J/FlNKyoURw5X/JCdlRfEAAWSJj8QFVCyYVursVKHc5i4p3QIB4lYYIQ7yW
+	xFeHbMcmpVbWaG4lg8RK4AquSBS09W2DBjOnixC9JA6juaejCn98KKITK7oqxr5P
+	ijoVWwop728tqkOnpen3w==
+X-ME-Sender: <xms:S7rtaZrmPeAT5nE6zmJqI6C2qeGcR_iJELVRFgVkVVTof_X_ZK7gWcg>
+    <xme:S7rtaWdfEBXETrEDsTfbCZEOyaIOw4jn14y6EhY_i-w9U-lp2-kMbIyAbG6ddNw7S
+    Wj_7e15SR7w2KGp_5z8SCZOC7N4rjYF6yOY5AblusuRP8ykAqUFTA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejheduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:S7rtaTH_UZMJPb12pH8h3jKRhMqbdtTFEuk3yttoWWnSVJa7JjnlXA>
+    <xmx:S7rtaXMpvY7dI_puH4IbCuJ4PaW7pJ-xhZ6-me33AnSi7X0pe1xC1A>
+    <xmx:S7rtaSF5XbQybrY6cGz8wRqnoBw2-OEHHPOlifldW0GATh9Bn144KA>
+    <xmx:S7rtaeNC33zSXoi40CO6ueTXqxKMoWNzrMd29-9h_GEYyhEATzfYAQ>
+    <xmx:TLrtaRAf2Pd0jdqxCZlEZli-xMpZtcm-VGR7tslDnXpoMKE3fk6zEgrK>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CA5CA1EA006B; Sun, 26 Apr 2026 03:10:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] l10n: it.po: fix italian usage messages alignment
-To: Jiang Xin <worldhello.net@gmail.com>,
- Matteo Beniamino <beniamino@beniamino.eu>
-Cc: git@vger.kernel.org,
- Alessandro Menti <alessandro.menti@alessandromenti.it>
-References: <20260422182516.26667-1-beniamino@beniamino.eu>
- <20260422182516.26667-2-beniamino@beniamino.eu>
- <CANYiYbE1qTFYLEyhAR3SEyXozFnEMPxyj=3dAh-vmHkpXZnMpw@mail.gmail.com>
-Content-Language: en-US
-From: Matteo Beniamino <m.beniamino@beniamino.eu>
-In-Reply-To: <CANYiYbE1qTFYLEyhAR3SEyXozFnEMPxyj=3dAh-vmHkpXZnMpw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/27982/Sat Apr 25 08:24:36 2026)
+X-ThreadId: Af3IvHt69cCJ
+Date: Sun, 26 Apr 2026 09:07:52 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org, gitgitgadget@gmail.com
+Message-Id: <c61933c9-e489-4f4f-b4f4-74267d5eb76f@app.fastmail.com>
+In-Reply-To: <20260425174448.45681-1-haraldnordgren@gmail.com>
+References: <20260425174157.44868-1-haraldnordgren@gmail.com>
+ <20260425174448.45681-1-haraldnordgren@gmail.com>
+Subject: Re: Wrong subject line
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your answer. The italian repository found in the TEAMS files
-hasn't received an update for more than 5 years. I've opened a PR on the
-git-l10n repo, but it doesn't pass all the checks due to many obsolete
-entries.
+On Sat, Apr 25, 2026, at 19:44, Harald Nordgren wrote:
+> I know you are not Ben. Forgot to change the subject line from a
+> previous message.
 
-Maybe Alessandro can shed some light on the current status of
-the italian translation.
+You mean I=E2=80=99m not Phillip. ;)
 
-Also, notice that when creating a PR the default PR
-message tells the user that the correct way to post a patch is via the
-mailing list: I assume this behaviour is inherited by the main git repo, 
-but still can be a bit misleading.
+    Subject: Comments on Phillip's review
 
-Thanks again for your work.
+I don=E2=80=99t understand why you change the email subjects so often. R=
+ight now
+I had three =E2=80=9CWrong subject line=E2=80=9D in my inbox with lost t=
+hreading
+(webmail client) with the only way to distinguish them being that I was
+the the CC on this one.
 
-Il 26/04/26 05:01, Jiang Xin ha scritto:
-> On Thu, Apr 23, 2026 at 2:25 AM Matteo Beniamino
-> <beniamino@beniamino.eu> wrote:
->> 
->> Fixed a misalignment in the "usage:" and "   or:" lines in the
->> italian help messages.
->> 
->> Signed-off-by: Matteo Beniamino <beniamino@beniamino.eu> --- po/
->> it.po | 2 +- 1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/po/it.po b/po/it.po index 20fd8bb28d..b5ccd8c731
->> 100644 --- a/po/it.po +++ b/po/it.po @@ -5400,7 +5400,7 @@ msgstr
->> "uso: %s" #: parse-options.c:915 #, c-format msgid "   or: %s" -
->> msgstr "  oppure: %s" +msgstr "  o: %s"
-> 
-> An example of the original English output for a command with
-> multiple usage lines:
-> 
-> $ LC_ALL=C git checkout -h | head -2 usage: git checkout [<options>]
-> <branch> or: git checkout [<options>] [<branch>] -- <file>...
-> 
-> The current Italian translation does not achieve colon alignment:
-> 
-> $ LC_ALL=it  git checkout -h | head -2 uso: git checkout [<opzioni>]
-> <branch> oppure: git checkout [<opzioni>] [<branch>] -- <file>...
-> 
-> Your change fixes the alignment issue, producing the following
-> output:
-> 
-> $ LC_ALL=it  git checkout -h | head -2 uso: git checkout [<opzioni>]
-> <branch> o: git checkout [<opzioni>] [<branch>] -- <file>...
-> 
-> Another possible alignment solution for the Italian output would be:
-> 
-> $ LC_ALL=it  git checkout -h | head -2 uso: git checkout [<opzioni>]
-> <branch> oppure: git checkout [<opzioni>] [<branch>] -- <file>...
-> 
-> Obviously, your solution is better, because for commands with only a 
-> single usage line, such as "git clone -h", no leading spaces will be 
-> shown — i.e., it displays "uso: ..." instead of "   uso: ...".
-> 
-> Git localization follows a GitHub-based workflow; please refer to
-> the "po/README.md" file for details. This change can be submitted as
-> a Pull Request to the "git-l10n/git-po" repository, and will be
-> merged once the next Git localization window opens. If you have
-> additional changes to the Italian translation, please refer to the
-> "po/TEAMS file", contact the Italian localization leader Alessandro
-> Menti, and submit a pull request to his repository.
-> 
-> -- Jiang Xin
+Most of the time whole 100-email threads like patch series never change
+the subject. And to me it is easier to keep track of those =E2=80=9CRE: =
+[PATCH
+v5] florb: drop glorb=E2=80=9D than if someone changes the subject to e.=
+g.
+=E2=80=9CRegarding memory leaks=E2=80=9D because someone found a memory =
+leak in a
+review. Because that was a reply to an email from two days ago, but I=E2=
+=80=99ve
+been a away for a week so I think it=E2=80=99s a new thread about
+something else.
+
+That=E2=80=99s just my experience. My amateur webmail setup doesn=E2=80=99=
+t really
+matter here since I just dip in/interrupt threads when I feel like it.
