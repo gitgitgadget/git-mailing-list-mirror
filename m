@@ -1,64 +1,69 @@
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E293D1719
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 14:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92FA341660
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 16:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777299674; cv=none; b=OGLW+7+RPAkyAdd6+3jzn5cTyg0BmmUG1tb/F56U/7TTurzQ6Sl3u7TXIIUMypJwRvT1YU8n2NI3DoAGPp5tQx7vdgjv0LTKug/O8zEB74pNE/7ATohgoTn3eXHsw9cNIHzmW3gwy73J+ar/gPQGyjuxKlqBcHweI0NmVdHAumY=
+	t=1777306120; cv=none; b=cWydFnFP9Orhr7z2YVwAOiXFXPxcidcjtf95cJCRQ22kz8kN4/LmJdjDVvJ8W5JuG6XhNiGMtbZBgIhvpF4/8dxCbdJCF7OYWqabvHw8/kktO1yCpryyUiR/JXtVJ8kCRThS0dqaSmY+9LiGPjHqVoGmbpq51YxvXeg8xYQ/FYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777299674; c=relaxed/simple;
-	bh=gpVh/GOLk+WWmieEXO9ZzXkBc2c9J5bw/IwbZEZNM/s=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=s4zC48n/UlbbM5/KmLUKAHhaAAxw1GBZJ2cCTSgjr2HHeoS3+KJliZ5/W+p8jQrEvOV+bb2qPQV0OHUgvij9mnavCyiyueBFqn73hzoxM6mOlK71Evz/0QcSTgt2aghkCOwnpbyLNXLwl3Bg9kipRKP/xfbESW+cUnj5gUC/z6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwC+ikcv; arc=none smtp.client-ip=74.125.82.177
+	s=arc-20240116; t=1777306120; c=relaxed/simple;
+	bh=t13AdDny/23NJhGY1g3X0LJdJ9rf7Kyt/KhHXf0y4mg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Xk9i/D4unTP62oeSBHSAVxl+bdh5OUTu9+wD0uFGNNgPn0e7WRwwCzAlVNmR+f2hleEG9HvXQvHmvNJbD46kRgbjlNGawO90PMDd3qjhcEJbCWlJBLg6QQ7sntjr03t/3BICYLmgNdfSpUcqN0jZTRrs+kbteP0WcN/MF2n8R1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l5tMw0mi; arc=none smtp.client-ip=74.125.82.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwC+ikcv"
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2d9916deb14so18181396eec.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 07:21:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l5tMw0mi"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2d8ffdc31d0so1102591eec.0
+        for <git@vger.kernel.org>; Mon, 27 Apr 2026 09:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777299672; x=1777904472; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777306117; x=1777910917; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ea4K4PgQiAGkR/iq3xoKShSQdwSM9ioQ7vPhgj3SnVQ=;
-        b=AwC+ikcvWxqzlcDIr+8bGsF5/eySGZiF5lgeXmr1XntTi6nAhyi+WuvBzlyCG/w4Mq
-         zcHfxgMVhMvdwHBPSF2McmYmB7PWx9NhKqrH86+QfBotJjK95IsfStlvNN38rL4GImcW
-         6wAoM7JdPe2OSO/y4DV7U+6PpwjZaEmeZQzoaIECoRPv7uvfCsBM5m8tiVFk0KFHhb0A
-         TOCNnn9DEcfrxgxSa0dEagO91L52yws29guHRAjcX2oUiT75TkqLhDsQGVDR3XRZHlRR
-         RoI5Js47jW2JzsJwIa+l+g7nywAfjXI3y1RRtPKo3moeQ1Sq9/kP+Tl90W6OLvRDCa6H
-         zScg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777299672; x=1777904472;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ea4K4PgQiAGkR/iq3xoKShSQdwSM9ioQ7vPhgj3SnVQ=;
-        b=eY1u4ef+0VHy055X6nQPEYw+mlMCirLNzcBn18+ILg0gOeNZUi72uZ7WU1025IDsr8
-         xjlp2HWKVLAAuTfab5JMr+Iii3Un1SZJUCgqrEN0MAkQ1I63JUeOUXOtuXhC33HfQpO8
-         dnQDOB/30Kbbm4/FJtGY0jM43c0YwfqMMwR4SWvSPv0tCW20fapmbFSt8PqNfkxYXHO6
-         23Nu5GwEmifRVfCigjHw2dk/iqX+15awsd2lQcGsqMYIBDb3QIz9246vN4MAnOLJXw1D
-         OIAWtMOCBFBAGkb5Jl0hUf/fcA0aVfJVRZP0uM9EEPTZoRNWxeNh7eSOKGRdWeI7/flA
-         1wzg==
-X-Gm-Message-State: AOJu0YyDSO/YWmoOWNG6WgvaRuUFleDJy2xZylH8u7Zx06iGbU6Xu/UZ
-	qkxMqR/gZaeKnS+X6TPTFy4qRSDQNijCAlmFWG80C9SqUcqLLVmJ1LGgwLlgHQ==
-X-Gm-Gg: AeBDieuT9SiHVIFUFMaBQ8wEuxwYlDxthj0BQXQ+INoJtLuKq+DG6Ru24Acc7WYQegW
-	qqMYHhjh5V+oSZsCPErggozmd6MgcXppCLJISGU7IzkVc7MCrYqRG6oFtTpIt/7kIRmUc+GbX0E
-	5C/Op304b9EzonJe/mn5DgeIDHSDVVdn8+Odrb166FIqkkKvSkqU4R1IyAual87JyxX/ioZYwmr
-	NTWRAVLz/jSqOXNefOtAP4t73WX2Mmo0roAfbyb3s2YZfgC0XEttRo1zCMWcpikVLGiNAKaieP4
-	VYELv8lRSGSoce27y1WF/VH9SlRGhzyuDY4K0vwOTMxjX+q6i7CLfs29MrY8YDeuaUiBAI1JK46
-	AoNkNaV+hRgDCi9J2J2eXvtocNWOPdL5UDf+YxsPbPmvY7cL0RG5abKJYVH5Z2hwcL8CGPWufp8
-	4S5/Iuowg4J1Q7PfWP7H4ADG3Ue984LztOLg==
-X-Received: by 2002:a05:7301:3808:b0:2d8:7302:d21 with SMTP id 5a478bee46e88-2e479724538mr23771569eec.16.1777299671693;
-        Mon, 27 Apr 2026 07:21:11 -0700 (PDT)
-Received: from [127.0.0.1] ([68.220.61.4])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e539fa244csm43062321eec.2.2026.04.27.07.21.10
+        bh=eWjwAn3Pu+V9RrBPGF6MkSeQBe1Sa6IgvOKUGeHuzNw=;
+        b=l5tMw0mi07BathwyTLflTtvDuTwLLfBwh8xk00rAyk0s/smDyCuq/wmZg+DR34ZkL1
+         EjJxiCO06/6UiAiZzvg930taH+JhpzYkx40TimBQdYdrmP+KL15gdecxd0pLWem8Snmk
+         AusmCapRcpIomsUFfyqlud1cSpvm6J3DwDY++qYNwg38ksSLxCQTkYxArR4++/D1Cgua
+         PeCZx2KSFshRrRSlUbb5bLUja8pOr3vqyUoW5z1SPWI6wz7b3btbZ+5BsH9rGZKpVGhy
+         H3WkBLigWsutcBukI6/KPK16A6+RKep2PPjxSmYVEKKoxWYNqfqMJjSv/zPqaQDRKJ/1
+         UGpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777306117; x=1777910917;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=eWjwAn3Pu+V9RrBPGF6MkSeQBe1Sa6IgvOKUGeHuzNw=;
+        b=CkSV9f1/PQnrGYeZLR68fQcbNjPjgK9oqvv1Xkls3VdRPHpClLU4T1ZUVs+zRl7OxZ
+         I572AtV8tEApTfCg/riyJCEmXvp2j7S5O4k269l3XjO0mOE4VdxiFNeKUZN7qh/vNDF2
+         G7nc63BLECD1chsgdrMvqFACkBqHNCzwTtuzTb7sht+4gba7k8QjgaV7KfNWjxjO7hxm
+         fgMWKSQOwhJetzfSIzyZxQV2/RJidVjUa4va+hF2oFpw0hcfabK1HNTLvRTglyeJbDbA
+         Eg5gmMBThunsNy6VoItfosYcKU57l9ZcPooYkY1I/3GbC7oPdG0VSH0HuNtRDjg2zLCo
+         gOag==
+X-Gm-Message-State: AOJu0Yw4NIFzxmIwL6L/VqDFdtOy6qgtAiy9bpLL1L2EOzI8q+bMqOK2
+	gKL2yrml4NUlO2pvkQrmqPqLSokKyzWREH01vDiVW8VghNaFkwClih/Etloy4w==
+X-Gm-Gg: AeBDievUGZLfYNoHOg7UnXkECIwDE1AT+U+a4FnOi6v6AUaHM5FD/fcHTqEws3iqP0l
+	kb/LcnnuFIeZyW0UuUwmoRu5xOvJwtPDF53ZJYcp5+zBuoOyXrCL1cIxXy2mhI4V3vbzIGErMC0
+	ntkpQAg/18aA1HMUTr3NiMScUap9ZZ8Cie7jZNpj/UmrQyN1vIq/OaoRcAzDFDNSrHujH6snV3D
+	B8SUJWkqj279q7PB7ZImDnpfB0E+kapa60bnU+/aFCHa3g1yGw77mDNCHj6uobG60RLR76KvJbs
+	Zpz0dZ1K1H78d2LSvyI4r/ayPE9jrlNAOgKTaLfY/m6MI4uinLkoybV7WDmba7PAJ0qJLXa6/ft
+	+mnGccBm4L5o/m51DOjNyOuDJZCO5SjOHSo7qxyfVviHOPGNm/HIucLiOTYgFgJdGAYUD9P6Afc
+	kdRPZC+a8nh93306o1rRtDIupcVLqbi+CmXQpDPQ==
+X-Received: by 2002:a05:7300:641b:b0:2df:7fe3:96a with SMTP id 5a478bee46e88-2e4522010e4mr27750558eec.0.1777306117088;
+        Mon, 27 Apr 2026 09:08:37 -0700 (PDT)
+Received: from [127.0.0.1] ([128.24.160.228])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e53a4a8018sm55461523eec.8.2026.04.27.09.08.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 07:21:11 -0700 (PDT)
-Message-Id: <pull.2100.git.1777299669889.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 27 Apr 2026 14:21:09 +0000
-Subject: [PATCH] t5564: use a short path for the SOCKS proxy socket
+        Mon, 27 Apr 2026 09:08:36 -0700 (PDT)
+Message-Id: <pull.2282.v2.git.git.1777306114914.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2282.git.git.1777058098756.gitgitgadget@gmail.com>
+References: <pull.2282.git.git.1777058098756.gitgitgadget@gmail.com>
+From: "Scott Bauersfeld via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 27 Apr 2026 16:08:34 +0000
+Subject: [PATCH v2] index-pack, unpack-objects: increase input buffer from 4
+ KiB to 128 KiB
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,75 +74,261 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Derrick Stolee <stolee@gmail.com>,
+    Scott Bauersfeld <sbauersfeld@g.ucla.edu>,
+    Scott Bauersfeld <sbauersfeld@g.ucla.edu>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
 
-The SOCKS proxy test introduced in 0ca365c2ed4 (http: do not ignore
-proxy path, 2024-08-02) creates a Unix domain socket in
-`$TRASH_DIRECTORY`. When the trash directory path is long (e.g.
-when running from a deeply nested worktree), the socket path can
-exceed the 108-character limit for `struct sockaddr_un.sun_path` on
-Linux, causing the test to fail with "Path length ... is longer
-than maximum supported length (108)".
+index-pack and unpack-objects both read pack data from stdin through
+a 4 KiB static buffer. In index-pack, each fill() flushes consumed
+bytes to the pack file via write_or_die(), capping every write(2)
+at 4 KiB. unpack-objects uses the same buffer pattern for reads.
 
-Move the socket to `$TMPDIR` (defaulting to `/tmp`) where the path
-is short, following the same approach used in t7528 for the SSH
-agent socket in b7fb2194b96 (t7528: work around ETOOMANY in OpenSSH
-10.1 and newer, 2025-10-23).
+On FUSE-backed filesystems every write(2) is a synchronous round
+trip through the FUSE protocol (userspace -> kernel -> userspace ->
+back), so the 4 KiB buffer turns a clone into many unnecessary tiny
+writes with noticeable latency overhead.
 
-Assisted-by: Claude Opus 4.6
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Increase the buffer from 4 KiB to 128 KiB. Introduce a shared
+DEFAULT_PACKFILE_BUFFER_SIZE constant in git-compat-util.h (next to
+MAX_IO_SIZE) and use it in index-pack, unpack-objects, and the
+hashfile layer in csum-file (which already used 128 KiB but
+hardcoded the value).
+
+Syscall counts via strace on HTTPS clones of git/git (~296 MB pack,
+5 runs per variant, isolated builds from the same v2.54.0 source):
+
+  index-pack pack file writes: 72,465 -> 24,943 avg (65% fewer)
+  total write() syscalls:     310,192 -> 259,530 avg (16% fewer)
+  writes of exactly 4096 bytes: ~40,077 -> 0
+
+Wall-clock time of git clone over HTTPS onto a FUSE passthrough
+filesystem with writeback caching disabled, 3 runs per variant:
+
+  vscode (~1.26 GB pack): 84.5s -> 75.7s avg (10% faster)
+  git/git (~306 MB pack):  22.6s -> 20.0s avg (11% faster)
+
+Signed-off-by: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
 ---
-    t5564: use a short path for the SOCKS proxy socket
+    index-pack, unpack-objects: increase input buffer from 4 KiB to 128 KiB
     
-    When trying to run the entire test suite in a slightly deeper path than
-    usual, I was surprised to see that this test failed due to our old
-    friend, the 108 character limit of Unix sockets.
+    index-pack and unpack-objects read pack data from stdin through a 4 KiB
+    static buffer. In index-pack, each fill() flushes consumed bytes to the
+    pack file via write_or_die(), capping every write(2) at 4 KiB.
+    unpack-objects uses the same buffer pattern for reads.
+    
+    On FUSE-backed filesystems every write(2) is a synchronous round trip
+    through the FUSE protocol (userspace → kernel → userspace → back), so
+    the 4 KiB buffer turns a clone into many unnecessary tiny writes with
+    noticeable latency overhead.
+    
+    Increase the buffer from 4 KiB to 128 KiB. Introduce a shared
+    DEFAULT_PACKFILE_BUFFER_SIZE constant in git-compat-util.h (next to
+    MAX_IO_SIZE) and use it in index-pack, unpack-objects, and the hashfile
+    layer in csum-file (which already used 128 KiB but hardcoded the value).
+    
+    
+    Syscall reduction
+    =================
+    
+    Measured via strace -f on HTTPS clones of git/git (~296 MB pack, 5 runs
+    per variant, isolated builds from the same v2.54.0 source):
+    
+    Metric Unpatched (4 KiB) Patched (128 KiB) Change index-pack writes to
+    pack file 72,465 avg 24,943 avg −65% Total write() syscalls (all
+    processes) 310,192 avg 259,530 avg −16% Writes of exactly 4096 bytes
+    ~40,077 avg 0 eliminated HEAD / file count / fsck ✓ ✓ identical
+    
+    
+    Wall-clock time on FUSE
+    =======================
+    
+    Measured wall-clock time of git clone over HTTPS onto a FUSE passthrough
+    filesystem with writeback caching disabled. 3 runs per variant:
+    
+    Repo Unpatched avg Patched avg Change microsoft/vscode (~1.26 GB pack)
+    84.5s 75.7s −10% git/git (~306 MB pack) 22.6s 20.0s −11%
+    
+    
+    Changes since v1
+    ================
+    
+     * Introduced shared DEFAULT_PACKFILE_BUFFER_SIZE constant in
+       git-compat-util.h (next to MAX_IO_SIZE), replacing per-file #define
+       and the hardcoded value in csum-file.c. Placed here rather than
+       environment.h since it is an I/O buffer size, not an environment
+       variable or repo config.
+     * Added wall-clock timing on a FUSE filesystem.
+     * Cleaned up the commit description a bit.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2100%2Fdscho%2Favoid-too-long-unix-socket-path-in-socks-proxy-test-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2100/dscho/avoid-too-long-unix-socket-path-in-socks-proxy-test-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2100
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2282%2Fsbauersfeld%2Fsb%2Fincrease-index-pack-input-buffer-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2282/sbauersfeld/sb/increase-index-pack-input-buffer-v2
+Pull-Request: https://github.com/git/git/pull/2282
 
- t/t5564-http-proxy.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Range-diff vs v1:
 
-diff --git a/t/t5564-http-proxy.sh b/t/t5564-http-proxy.sh
-index 3bcbdef409..cb7ede4ca4 100755
---- a/t/t5564-http-proxy.sh
-+++ b/t/t5564-http-proxy.sh
-@@ -50,14 +50,19 @@ start_socks() {
+ 1:  c388e1dc2f ! 1:  ac2559ccb5 index-pack, unpack-objects: increase input buffer from 4 KiB to 128 KiB
+     @@ Metadata
+       ## Commit message ##
+          index-pack, unpack-objects: increase input buffer from 4 KiB to 128 KiB
+      
+     -    Both index-pack and unpack-objects read pack data from stdin through
+     -    a 4 KiB static buffer (input_buffer[4096]). On each fill(), consumed
+     -    bytes are flushed to the output pack file via write_or_die(), so
+     -    every write(2) moves at most 4 KiB.
+     +    index-pack and unpack-objects both read pack data from stdin through
+     +    a 4 KiB static buffer. In index-pack, each fill() flushes consumed
+     +    bytes to the pack file via write_or_die(), capping every write(2)
+     +    at 4 KiB. unpack-objects uses the same buffer pattern for reads.
+      
+          On FUSE-backed filesystems every write(2) is a synchronous round
+          trip through the FUSE protocol (userspace -> kernel -> userspace ->
+          back), so the 4 KiB buffer turns a clone into many unnecessary tiny
+          writes with noticeable latency overhead.
+      
+     -    Increase the buffer from 4 KiB to 128 KiB, matching the default
+     -    already used by the hashfile layer in csum-file.c.
+     +    Increase the buffer from 4 KiB to 128 KiB. Introduce a shared
+     +    DEFAULT_PACKFILE_BUFFER_SIZE constant in git-compat-util.h (next to
+     +    MAX_IO_SIZE) and use it in index-pack, unpack-objects, and the
+     +    hashfile layer in csum-file (which already used 128 KiB but
+     +    hardcoded the value).
+      
+     -    Testing with strace on HTTPS clones of git/git (~296 MB pack, 5 runs
+     -    per variant, isolated builds from the same v2.54.0 source) shows:
+     +    Syscall counts via strace on HTTPS clones of git/git (~296 MB pack,
+     +    5 runs per variant, isolated builds from the same v2.54.0 source):
+      
+     -      index-pack pack file writes: 72,465 -> 24,943 avg (66% reduction)
+     -      total write() syscalls:     310,192 -> 259,530 avg (17% reduction)
+     -      writes of exactly 4096 bytes: ~40,077 -> 0 (eliminated)
+     +      index-pack pack file writes: 72,465 -> 24,943 avg (65% fewer)
+     +      total write() syscalls:     310,192 -> 259,530 avg (16% fewer)
+     +      writes of exactly 4096 bytes: ~40,077 -> 0
+      
+     -    All clones produce identical HEAD, file count, and pass fsck.
+     +    Wall-clock time of git clone over HTTPS onto a FUSE passthrough
+     +    filesystem with writeback caching disabled, 3 runs per variant:
+     +
+     +      vscode (~1.26 GB pack): 84.5s -> 75.7s avg (10% faster)
+     +      git/git (~306 MB pack):  22.6s -> 20.0s avg (11% faster)
+      
+          Signed-off-by: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
+      
+     @@ builtin/index-pack.c: static int check_self_contained_and_connected;
+       
+      -/* We always read in 4kB chunks. */
+      -static unsigned char input_buffer[4096];
+     -+#define INPUT_BUFFER_SIZE (128 * 1024)
+     -+static unsigned char input_buffer[INPUT_BUFFER_SIZE];
+     ++static unsigned char input_buffer[DEFAULT_PACKFILE_BUFFER_SIZE];
+       static unsigned int input_offset, input_len;
+       static off_t consumed_bytes;
+       static off_t max_input_size;
+     @@ builtin/unpack-objects.c
+       
+      -/* We always read in 4kB chunks. */
+      -static unsigned char buffer[4096];
+     -+#define INPUT_BUFFER_SIZE (128 * 1024)
+     -+static unsigned char buffer[INPUT_BUFFER_SIZE];
+     ++static unsigned char buffer[DEFAULT_PACKFILE_BUFFER_SIZE];
+       static unsigned int offset, len;
+       static off_t consumed_bytes;
+       static off_t max_input_size;
+     +
+     + ## csum-file.c ##
+     +@@ csum-file.c: struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
+     + 	f->algop = unsafe_hash_algo(algop);
+     + 	f->algop->init_fn(&f->ctx);
+     + 
+     +-	f->buffer_len = opts->buffer_len ? opts->buffer_len : 128 * 1024;
+     ++	f->buffer_len = opts->buffer_len ? opts->buffer_len : DEFAULT_PACKFILE_BUFFER_SIZE;
+     + 	f->buffer = xmalloc(f->buffer_len);
+     + 	f->check_buffer = NULL;
+     + 
+     +
+     + ## git-compat-util.h ##
+     +@@ git-compat-util.h: static inline uint64_t u64_add(uint64_t a, uint64_t b)
+     + # endif
+     + #endif
+     + 
+     ++/*
+     ++ * Default buffer size for buffered I/O in pack file operations (index-pack,
+     ++ * unpack-objects) and the hashfile layer in csum-file.
+     ++ */
+     ++#define DEFAULT_PACKFILE_BUFFER_SIZE (128 * 1024)
+     ++
+     + #ifdef HAVE_ALLOCA_H
+     + # include <alloca.h>
+     + # define xalloca(size)      (alloca(size))
+
+
+ builtin/index-pack.c     | 3 +--
+ builtin/unpack-objects.c | 3 +--
+ csum-file.c              | 2 +-
+ git-compat-util.h        | 6 ++++++
+ 4 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index ca7784dc2c..d86476676f 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -145,8 +145,7 @@ static int check_self_contained_and_connected;
  
- # The %30 tests that the correct amount of percent-encoding is applied to the
- # proxy string passed to curl.
-+# Use a short path for the socket to avoid exceeding the 108-character
-+# Unix domain socket limit when the trash directory path is long.
-+SOCKS_SOCK="${TMPDIR:-/tmp}/git-test-socks-%30.sock"
+ static struct progress *progress;
+ 
+-/* We always read in 4kB chunks. */
+-static unsigned char input_buffer[4096];
++static unsigned char input_buffer[DEFAULT_PACKFILE_BUFFER_SIZE];
+ static unsigned int input_offset, input_len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index e01cf6e360..da8ec83d9f 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -23,8 +23,7 @@
+ static int dry_run, quiet, recover, has_errors, strict;
+ static const char unpack_usage[] = "git unpack-objects [-n] [-q] [-r] [--strict]";
+ 
+-/* We always read in 4kB chunks. */
+-static unsigned char buffer[4096];
++static unsigned char buffer[DEFAULT_PACKFILE_BUFFER_SIZE];
+ static unsigned int offset, len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+diff --git a/csum-file.c b/csum-file.c
+index 9558177a11..c1aeaf587a 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -178,7 +178,7 @@ struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
+ 	f->algop = unsafe_hash_algo(algop);
+ 	f->algop->init_fn(&f->ctx);
+ 
+-	f->buffer_len = opts->buffer_len ? opts->buffer_len : 128 * 1024;
++	f->buffer_len = opts->buffer_len ? opts->buffer_len : DEFAULT_PACKFILE_BUFFER_SIZE;
+ 	f->buffer = xmalloc(f->buffer_len);
+ 	f->check_buffer = NULL;
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index ae1bdc90a4..a2f037811c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -712,6 +712,12 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
+ # endif
+ #endif
+ 
++/*
++ * Default buffer size for buffered I/O in pack file operations (index-pack,
++ * unpack-objects) and the hashfile layer in csum-file.
++ */
++#define DEFAULT_PACKFILE_BUFFER_SIZE (128 * 1024)
 +
- test_lazy_prereq SOCKS_PROXY '
- 	test_have_prereq PERL &&
--	start_socks "$TRASH_DIRECTORY/%30.sock"
-+	start_socks "$SOCKS_SOCK"
- '
- 
- test_atexit '
- 	test ! -e "$TRASH_DIRECTORY/socks.pid" ||
- 	kill "$(cat "$TRASH_DIRECTORY/socks.pid")"
-+	rm -f "$SOCKS_SOCK"
- '
- 
- # The below tests morally ought to be gated on a prerequisite that Git is
-@@ -70,7 +75,8 @@ old_libcurl_error() {
- 
- test_expect_success SOCKS_PROXY 'clone via Unix socket' '
- 	test_when_finished "rm -rf clone" &&
--	test_config_global http.proxy "socks4://localhost$PWD/%2530.sock" && {
-+	socks_proxy_url="socks4://localhost$(echo "$SOCKS_SOCK" | sed "s/%/%25/g")" &&
-+	test_config_global http.proxy "$socks_proxy_url" && {
- 		{
- 			GIT_TRACE_CURL=$PWD/trace \
- 			GIT_TRACE_CURL_COMPONENTS=socks \
+ #ifdef HAVE_ALLOCA_H
+ # include <alloca.h>
+ # define xalloca(size)      (alloca(size))
 
 base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
 -- 
