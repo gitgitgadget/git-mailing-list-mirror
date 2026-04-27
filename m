@@ -1,82 +1,81 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31014364933
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:54:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0861E29898B
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:54:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777269242; cv=none; b=b8fWIgD01AEpwhHNL27vl53r/8KBkITQD1BuW4+bM0qAqHh7880xwpIR5XG22RHmFelyLeSyyVP/vj60kBgLrg+7n/k1n4XqPC+mGgT3nYgTg+1ZG7DtCE9ylWInfj1Gas1hmEmHfXlAIdHcYN09JOfQ4aZUsoJukXzZiHUTRy0=
+	t=1777269243; cv=none; b=cX+fuV0jGkSj+IIK1n7NK/52BVpG2qJh67E6kt/5x55C0q1urMbEIF/aX1Tt8K0Dy25pnLa1zJau5u88483IFVJ0UEwUfuYTjyaE5RO8uXKpEgSIWZLB7BRTm7MNSVk8yiqk3DbOtlUyIQemnPZrqwYJWVlVBZOo0qs4wu7J6Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777269242; c=relaxed/simple;
-	bh=p3xIyaUKmO7Mo+bxwmlMUDRnhIYKbu1Idugbe8P7h3Y=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=kXwLsDsjz0V3ZlzI/ikoWkxbG4g5LiloPiHPwkzxsrQuxWp0R4zYSML7p2Ozp+kwKd9QUllnopk/VrWO7Qy67f3ZEXkS4o9OKnGsPktHu45mKSaSXoEfuzXAz4jH18rYQFoZzJnruArCs9CkUTqfIqkD92mU48wmyqXMpsij5Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zUgrzVK/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ovdGVx1L; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1777269243; c=relaxed/simple;
+	bh=YhRhn4Trr/hi1hj+92/UF8C6yr62yKHwnRLbCDeeip8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=rqSJPsnoOlvy5mgY/AnvYqcsU5sVG5AmLQ/QG1On9U442RaY7VckvAWY8VsOJUvvOTPKWW3qA3CQPkdu27T2isBkIIX0b1Snc8YGamWrjISxpSnCeBqj3+acO+1suZrizAnhAls9CwWdTjuQXdbsKF21k9AjFxV1PNFd4ajvYfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M9P/9Ozo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SfjFpAe2; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zUgrzVK/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ovdGVx1L"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0C843EC14CF;
-	Mon, 27 Apr 2026 01:54:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M9P/9Ozo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SfjFpAe2"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2517114000BB;
+	Mon, 27 Apr 2026 01:54:01 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 27 Apr 2026 01:54:00 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 27 Apr 2026 01:54:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1777269240;
-	 x=1777355640; bh=TbjdQcDNQchvOxlPpX/iBKlosHVBxsDhseYWjM/gUKA=; b=
-	zUgrzVK/KtoVkcEgsHLwlJbhicAgeVNDwGcW3SkW6fxiJPTFdv1suocPtiLcRWRw
-	yZVB7LL5jE/VtzvQ6/MLizJQdTHA7JCO5PvgouQVEtT8/V71YR16jz3ZDgarsFVp
-	SutgJAH/OQn33BLfim60RTe+s0JPZi0dYcQ93GmL4koYVBnO3A9M3486DxBLq5pZ
-	+p3B36fGnG3KlNP9eRwfR2ZH4AfaV9Zy3rsy4qiXGG9uUSaplYqqbPvcvNyMClEa
-	5TOXo8jRBRkSXOqI1sBs0TBdYoDRkmPiqGEYBGIg3feudavYHCZRvWDsXjKYiWx/
-	hDhCloCuTb6mPaVpMMXG7A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1777269241;
+	 x=1777355641; bh=j9UsOfXrTzVw987oNc70OWncxfblN1mg8LBq5oYnL/0=; b=
+	M9P/9OzoEgyO7LRChAm9prgHwPl4nfe4tbIlnnskXU2ZkSfhGneh60BjCA31T7My
+	IIOIAPaHYibsnTL9KNqajfvkOOCNcU0uZc/n3mkfBQ73dPao7liyTMdvgPO5ktGJ
+	DL2IbWFdownREwBa8TO12IStpL9n0MsjnZ3lynViBNgvsTHOne+IMWjT/7ofHoGx
+	CHNKZJUnVZmK0O5uIdNubDqHPe8xmXVBG0EYDVw23CwZoOIHXDM9hX91fAY0OrC1
+	EhuADHehopLHhtnnrjM7x3z+Y2zRh2KdJUo/DlbnTsOTrd6glyRZm3UUuTauoAj2
+	Z7Fj5a4HMfsdO1Ub0agmPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777269240; x=
-	1777355640; bh=TbjdQcDNQchvOxlPpX/iBKlosHVBxsDhseYWjM/gUKA=; b=o
-	vdGVx1LwjR/yEZplJWRNjsNEadKyJNRTmGm0za9wDh+CLVnpQunM5S2gQ0lC+F5v
-	LcCfnpM5FEqO9Y1bqWFbPMfH0ebQKaSHhIIW6KQllNT5ARZRYE34eFJ4T65fkDI4
-	3K3r7aCpdpbMPugXU2ir0vOLYS5pYpj9OmQtxBW+N5ZHOEwvckGFhD0PVdXdoIFN
-	3H44muXEgQUTdIk+RTN4/lzfVFSJfUfV9pm3nGFWp8dqVtTe207DnZ11J+qhVz1b
-	UOGrrQxlw4JIoY1MQ44et7F32GnAmsuk0ozGbRbaDTb2qOMCm6+7j66E8BG7Nc/+
-	c6mLsuFuqvhae7XlMtOnw==
-X-ME-Sender: <xms:9_nuaXNzQ55dylIILafIsrpgnKWs3_ntmJVL5CVp4F6S4APmis_d7w>
-    <xme:9_nuaY86pIc105g629Tjn1mGE5iatqtZnfWPVanGioQb7ImISEmKraXEMwHwPYteW
-    pJf9y3jJ8zrCtuZNDjiOBucg6C2xCsC-96OyRr2I9rWOZZ3mSve>
-X-ME-Received: <xmr:9_nuabR2R7k6mY2dMkNsr7UpvltoBV_d_YfIcvu-4CLASBYaTD9ESy7VUFoObfqjsgny7QLAcRulQAFRotOYz8WFAJ167zWI1XHSNDTaIQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777269241; x=
+	1777355641; bh=j9UsOfXrTzVw987oNc70OWncxfblN1mg8LBq5oYnL/0=; b=S
+	fjFpAe2Rz+SQ6HRwhEtDduFKaHsbnibOo9pqRRl56n4j88Uhg2CtzZZP4Ted3NB/
+	CQaUEaLSoU/8pkbBAfHwrIOfjUUx0p9zJGfNI0HwILaOjcbF5OvDgsVsRjUut5yM
+	gYqJeZbahM8H3EDq+R7hZbErd2553+uCCe2IAJpteripyD4137hXtzY+AQPL34WH
+	2MLnLjAGon0vcdshHgADf+jYZY+URz/AjRd3imwnSosEpmhz4/7YhjfLPH1QJJ1X
+	OgXK/9g664Ks8vsXWWHAwi8IC5lt+S9ZrK9D0z8nQEAzulXDg+WtLvZ1YOzshnqg
+	CE9nH6NeydeCbYHfxoV2Q==
+X-ME-Sender: <xms:-fnuaXwBeqx_dBHB_xeszklY33QUrqEE93y2DeGT025sh7GbychAKw>
+    <xme:-fnuaWTKxlYdkVfMWMgXR3lFWRBk_GchOsewXAk5taYPAOffxaefPKUAjgMrgPdJc
+    mkLEq_YTdsbWvPsdmOVJmQKV5CIbmnxP6ps_H3BQybgeaUyfaKRfg>
+X-ME-Received: <xmr:-fnuaWUSlEakt7eV_XRJpPRd5pjB1Wa8I97f90Z09te3mV_wlnTiBUJoyAsxwr9yCiu7d2czpphn9V5o_4_MeDeq3W4TX6X3eYGxIAHMng>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejjeeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdffkeektdefleetveegueethedtfeeugeegvddvhfdvtdetieeiueekhefgfeehnecu
-    ffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghtsehmrghlohhnrdguvghvpd
-    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:9_nuaalQI3dpblQEoFR0THcUpEJN93HKQg_T-UzPAFTEhET21AqJuA>
-    <xmx:9_nuabRjjgsZ8fl26SafEX9WgNCC8UGxfjjRzGQogM_wI1rhhaf2TQ>
-    <xmx:9_nuaYN5uimLZEUY8QJiPWznP5gyHL_ezk5Lc67sdPgMXfkJLs4yAQ>
-    <xmx:9_nuaUWCQHRZD08UJsUNKUsNbOSp0xfwYQdbDVNkG3U0H7oKjjVLPg>
-    <xmx:-Pnuafv4oNI4nL9-OjD3xIJUqEnnf7RKeIsVZd86tBqp1mEm3_tjVSzf>
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrthesmhgrlhhonh
+    druggvvhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:-fnuaQahznl3bQ_EO6GsUhAA1i_1zofUELdpZj-UEtt_DXDAn0dOeQ>
+    <xmx:-fnuaU0pb9TfZUZXTNjf_GTR6Dn-fqE5VxDTCt8Nhj5C3IXI04gvGQ>
+    <xmx:-fnuaagRAnpzcJiymCplhOU7cb-6eqaOZqRAqjqyGWnRinZRJeZKCA>
+    <xmx:-fnuaQaIiU03Ce0T3MTENeuDMR0V3Ie3rZWT0w8GdP5OX4-4FVuclg>
+    <xmx:-fnuabRZ4nUeHVEgX4fdK_FQ47VWQETgV8JpLn8QCeS1ukCc394MKQpJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Apr 2026 01:53:58 -0400 (EDT)
+ 27 Apr 2026 01:54:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c26cc0b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 Apr 2026 05:53:57 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e393e151 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 Apr 2026 05:53:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 0/3] builtin/history: introduce "fixup" subcommand
-Date: Mon, 27 Apr 2026 07:53:50 +0200
-Message-Id: <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
+Date: Mon, 27 Apr 2026 07:53:51 +0200
+Subject: [PATCH v3 1/3] replay: allow callers to control what happens with
+ empty commits
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,87 +84,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAO757mkC/4XNQQ6CMBAF0KuYrh1TpiMQV97DuIB2lGoE0kKjI
- dzdFo1xY1z+zP9vJuHZWfZit5qE42C97doY1HoldFO1ZwZrYhYoMZeECDVBf/XQWD907gEnex9
- 7qBkLlpoqqVjEae84Hhb2cHxlP9YX1kOyUuO9X/6GLPX+vAgZSKDSEJWEpAzvY2djbyL5Ab8F9
- UPAKJhiW2Q6Nyrn+iPM8/wE5VYHIAkBAAA=
-X-Change-ID: 20260422-b4-pks-history-fixup-be27e0c4a03e
-In-Reply-To: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
-References: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
+Message-Id: <20260427-b4-pks-history-fixup-v3-1-cb908f06264b@pks.im>
+References: <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
+In-Reply-To: <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, 
  "D. Ben Knoble" <ben.knoble@gmail.com>, Tian Yuchen <cat@malon.dev>
 X-Mailer: b4 0.15.2
 
-Hi,
+When replaying commits it may happen that some of the commits become
+empty relative to their parent. Such commits are for now automatically
+dropped by the replay subsystem without much control from the user.
 
-this short patch series introduces a new "fixup" subcommand. This
-command is the first one that I felt is missing in my day to day work,
-as I end up doing fixup commits quite often.
+Introduce a new enum that allows the caller to drop, keep or abort in
+this case.
 
-The flow is rather simple: the user stages some changes, and then they
-execute `git history fixup <commit>` to amend those changes to the given
-commit. As with the other subcommands, dependent branches will then be
-rebased automatically.
-
-This is the first command that may result in merge conflicts. For now we
-simply abort in such cases, but there are plans to introduce first-class
-conflicts into Git. So once we have them, we'll also be able to handle
-such cases more gracefully. I still think that the command is useful
-even without that conflict handling.
-
-Changes in v3:
-  - Some more polishing of the command's description.
-  - Link to v2: https://patch.msgid.link/20260423-b4-pks-history-fixup-v2-0-d7571c6d36eb@pks.im
-
-Changes in v2:
-  - Introduce "--empty=(keep|drop|abort)" to specify what happens with
-    empty commits.
-  - Adapt documentation a bit to hopefully clarify how changes are
-    backported.
-  - Link to v1: https://patch.msgid.link/20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (3):
-      replay: allow callers to control what happens with empty commits
-      builtin/history: generalize function to commit trees
-      builtin/history: introduce "fixup" subcommand
+ replay.c | 29 ++++++++++++++++++++++++-----
+ replay.h | 19 +++++++++++++++++++
+ 2 files changed, 43 insertions(+), 5 deletions(-)
 
- Documentation/git-history.adoc |  78 ++++-
- builtin/history.c              | 291 ++++++++++++++++--
- replay.c                       |  29 +-
- replay.h                       |  19 ++
- t/meson.build                  |   1 +
- t/t3453-history-fixup.sh       | 680 +++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 1068 insertions(+), 30 deletions(-)
+diff --git a/replay.c b/replay.c
+index f96f1f6551..4ef8abb607 100644
+--- a/replay.c
++++ b/replay.c
+@@ -269,7 +269,8 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 					  struct commit *onto,
+ 					  struct merge_options *merge_opt,
+ 					  struct merge_result *result,
+-					  enum replay_mode mode)
++					  enum replay_mode mode,
++					  enum replay_empty_commit_action empty)
+ {
+ 	struct commit *base, *replayed_base;
+ 	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+@@ -321,12 +322,25 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 	}
+ 	merge_opt->ancestor = NULL;
+ 	merge_opt->branch2 = NULL;
++
+ 	if (!result->clean)
+ 		return NULL;
+-	/* Drop commits that become empty */
++
++	/* Handle commits that become empty */
+ 	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
+-	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
+-		return replayed_base;
++	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid)) {
++		switch (empty) {
++		case REPLAY_EMPTY_COMMIT_DROP:
++			return replayed_base;
++		case REPLAY_EMPTY_COMMIT_KEEP:
++			break;
++		case REPLAY_EMPTY_COMMIT_ABORT:
++			result->clean = error(_("commit %s became empty after replay"),
++					      oid_to_hex(&pickme->object.oid));
++			return NULL;
++		}
++	}
++
+ 	return create_commit(repo, result->tree, pickme, replayed_base, mode);
+ }
+ 
+@@ -417,7 +431,7 @@ int replay_revisions(struct rev_info *revs,
+ 
+ 		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
+ 						  mode == REPLAY_MODE_REVERT ? last_commit : onto,
+-						  &merge_opt, &result, mode);
++						  &merge_opt, &result, mode, opts->empty);
+ 		if (!last_commit)
+ 			break;
+ 
+@@ -458,6 +472,11 @@ int replay_revisions(struct rev_info *revs,
+ 		}
+ 	}
+ 
++	if (result.clean < 0) {
++		ret = -1;
++		goto out;
++	}
++
+ 	if (!result.clean) {
+ 		ret = 1;
+ 		goto out;
+diff --git a/replay.h b/replay.h
+index 0ab74b9805..1851a07705 100644
+--- a/replay.h
++++ b/replay.h
+@@ -6,6 +6,19 @@
+ struct repository;
+ struct rev_info;
+ 
++/*
++ * Controls what happens when a replayed commit becomes empty (i.e. its tree
++ * is identical to its parent's tree after the replay).
++ */
++enum replay_empty_commit_action {
++	/* Silently discard the empty commit. */
++	REPLAY_EMPTY_COMMIT_DROP,
++	/* Keep the empty commit as-is. */
++	REPLAY_EMPTY_COMMIT_KEEP,
++	/* Abort with an error. */
++	REPLAY_EMPTY_COMMIT_ABORT,
++};
++
+ /*
+  * A set of options that can be passed to `replay_revisions()`.
+  */
+@@ -43,6 +56,12 @@ struct replay_revisions_options {
+ 	 * Requires `onto` to be set.
+ 	 */
+ 	int contained;
++
++	/*
++	 * Controls what to do when a replayed commit becomes empty.
++	 * Defaults to REPLAY_EMPTY_COMMIT_DROP.
++	 */
++	enum replay_empty_commit_action empty;
+ };
+ 
+ /* This struct is used as an out-parameter by `replay_revisions()`. */
 
-Range-diff versus v2:
-
-1:  8840b18095 = 1:  81240d1959 replay: allow callers to control what happens with empty commits
-2:  b078354b5a = 2:  4f35bba868 builtin/history: generalize function to commit trees
-3:  3d1fec55c7 ! 3:  ecaded9415 builtin/history: introduce "fixup" subcommand
-    @@ Documentation/git-history.adoc: conflicts. This limitation is by design as histo
-      The following commands are available to rewrite history in different ways:
-      
-     +`fixup <commit>`::
-    -+	Apply the currently staged changes to the specified commit. This
-    -+	is done by performing a three-way merge between the HEAD commit,
-    -+	the target commit and the tree generated from staged changes.
-    -+	This is using the same logic as linkgit:git-cherry-pick[1].
-    ++	Apply the currently staged changes to the specified commit. This is
-    ++	similar in nature to `git commit --fixup=<commit>` followed by `git
-    ++	rebase --autosquash <commit>~`. Changes are applied to the target
-    ++	commit by performing a three-way merge between the HEAD commit, the
-    ++	target commit and the tree generated from staged changes.
-     ++
-     +The commit message and authorship of the target commit are preserved by
-     +default, unless you specify `--reedit-message`.
-
----
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-change-id: 20260422-b4-pks-history-fixup-be27e0c4a03e
+-- 
+2.54.0.545.g6539524ca2.dirty
 
