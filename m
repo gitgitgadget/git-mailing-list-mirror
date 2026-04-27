@@ -1,281 +1,135 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E1A1F5834
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 00:25:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777249549; cv=none; b=FziqRt43mYgnKIPg6HQ+MDCbsMydOhPPMNnLHi/8CPgn66dibGJ1i9yTb9lfMHMBAoR+RClNq2UOlQ2z45/hLzVd5rwRwua8k0D0KRkFf8EhT2DEV6wSLZ+XLXCiZHDqgk9LWzA84yIEZxnS5Q6DpQWv9NNat+hIc8HVb+fu2K8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777249549; c=relaxed/simple;
-	bh=XLxqLT5POXRf7Ar/9HxlEBsZftQ2qd8flh7XG4WbfJ0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkNHV9OO6c6k/EbDCgUIWQZbfjVxAnOxfpKRQsqUufluARrs9TCORQyi2Hjx2dfzui55aH+xTy9+ffTVVCCx2xtKyrgqhHpV1y3W3f4Mwvde0qOXSQIL0ex7Zc5Fvn55XbW/WkhC+h8fnBBayIRdifCMnGHwMGZrSNeIZRAGJiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=lKwEMnEo; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE36D3164D8
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 02:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777256568; cv=pass; b=Os0DCJlQx3v+hBfmxtYGbcHwy+E4V27MMH/4nGNLftqgucPn+gCdBM3jKhSWeKRGiC0GsPBQo/xFF/+KQnDKIEozdUMbKiorCSPB9DG1SvIXwprJtV/1GyKQnSHLWaVhCq6kzy5hnvV6AKSZ0iiqtgzMRqn459t+BpUTmoPtv4k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777256568; c=relaxed/simple;
+	bh=4pJxYFyIMOjA5cmJ0WusZPSlCdzGKjXqtqfKLOujh+M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UUZDHhSZMYccYCx3mUVvAaOmNh7PWH8bpEO9kYpfn/cM3YKCjKnfdRd6H5MJlkd5tsO4QP00dZDHjDElsd7FgehnQMWheURhXBGpSKwcwwnlZEb6OG8CEoCyYjVH+K5s1pDuJntZPE7patOZESaO7sYxCYhNkniEasOTlUnPlcQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eozF1puh; arc=pass smtp.client-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="lKwEMnEo"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1777249539;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3fybBiJYwVtkkCFuvomSGy4KTPk+Wi12/nhLDhBYnws=;
-	b=lKwEMnEoS7XaUkpilRpqZnmwFNagURf+StTXuS55CE3PCNUvARQY4um6o80zu+Fsk8oRdf
-	gItZYtyioVrNDAxMGdWvef8/9ononbYaTvkCdU9pyzhNaP9yaNv3ufzlHUUbNKQlF9Olyv
-	uz3dNzQSO6IpP03Ka1Ig+yBSWXC+kPiivnGusyqATZePyIYDjPICA9IxIhbwTYo0wb776M
-	u5OPG3aan6cGU5zEObUjxm3+VL6fAUVFTKyX88fFdA1e+cXzPaY1Booa/wfaYhZqnvaoR0
-	NxiRnRsoL+rKgyGHiTT+sDZXVLnrcEt1+MPgIl8cVAzx8d8Pm4MM71e9sjDiVA==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Patrick Steinhardt <ps@pks.im>,
-	Tian Yuchen <cat@malon.dev>,
-	Ben Knoble <ben.knoble@gmail.com>
-Subject: [PATCH v4 1/2] revision.c: implement --reverse=before for walks
-Date: Mon, 27 Apr 2026 02:24:57 +0200
-Message-ID: <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
-In-Reply-To: <cover.1777249165.git.mroik@delayed.space>
-References: <cover.1776984666.git.mroik@delayed.space> <cover.1777249165.git.mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eozF1puh"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-12c19d23b19so12405796c88.0
+        for <git@vger.kernel.org>; Sun, 26 Apr 2026 19:22:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777256566; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RAjLRL+Dhw6fzVLSnOuK7611bBsZTXm4LW9X1Q85tj3d1jlOKd90B8PqhOMypueVZw
+         ghGnkGo9xfyjnfwwJ/2tgFaDO5QrMzJ74faEocF3hCqJcs3Egst4ovaRBMclHbzJIxM6
+         AuxjnS67BHOV5q6biHJ+fufc7kNPixFHTElXhgSWCuhOu5VPut/swa1wN+VO6K7/oF84
+         brCVPMDJZlIuybLLsymr+pVhxAM3cSTnF0adFUaUMyl55IZaIn6KmC5YCK0CW0JmXfpq
+         iQDCbTx/xlpHKuxBd7QXpzHYXSOEU6k83BTblofxh65Py/XIT8tVzPStQuf7JJXqStf8
+         06Mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hSKbCwqR5PsQuxqlXNdjpJFb2sGCy6Eo7BuCvoOx7lY=;
+        fh=oMVJYWzugNv3c1WGdTDfMb/8lCrZCnndc0+ysGiSELk=;
+        b=MD6apm5qzT5ZE8IKawBxTWWDXguw/riCBSNubndyS09mj6NUweanuYQKgGDqjJAVhX
+         ha6xpXwNcllhLt8zaapXI0BEjMjPQwIrdXlMmgvJq+yhf/V7ERBJzBpFCgW/WB1wQK8n
+         1UmUHpABnP9ZmMSgqMahW+aNMuaDy23RdlIcSr/QbvogRKs/A8KSW2YhV+wUCmk1BLbf
+         dTmLOgSYDm/fLx2QyNGzAPUgs3Tn/o9fmbrE+FGQsnRttPjwG71p9GgBssyXmqGmD7lm
+         RlFLmAkPxa2s5oY6G3oZwj8tQsrtm6E2sQyM18cgsHblRSON/ODpZtc8f+IxDbXK1iS7
+         ymVQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777256566; x=1777861366; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hSKbCwqR5PsQuxqlXNdjpJFb2sGCy6Eo7BuCvoOx7lY=;
+        b=eozF1puhtawo/kmdDTxQenQ4hCtRVVQLjkAN9ceIrH58sRtQD+WgkkEy7EMrKE5Wf/
+         ToVhD3Islzw9Vt99Dcl7yT4FbF/UIG/z33eNGNFjag/sXPG812FkEu0bi+IR6KOQf3p7
+         vFKv8RrRkQoPaY18OX9mF+Ft52uCanVER5iQOGGeXxloK7i53cV+3ioLzPSM9dvxtsak
+         YEeVgSVS6ZlEYyXOfMIg8Etz17k+23CEQPKMX20L+UMKYanu5+eoThiXg/Mhqp6wmCgS
+         Doh/bHiFUmBfZq4j/HIIu45nCdFzit+qUlrvquuU3KLNesMHyjs6TRBWHYuIA1lVtT0M
+         zoDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777256566; x=1777861366;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hSKbCwqR5PsQuxqlXNdjpJFb2sGCy6Eo7BuCvoOx7lY=;
+        b=MfvvavLb0BQzVLit+n0YM+k9tUOf0j4hI7HKw15h6NAhkt8Isoy0eB8gF0QHTKBSz3
+         UVgax66nJR5tx18mA82vcPSeWvAIFk5JQvly1ys8Npxqx+iiH+a33oajwdNyfSlcxuNA
+         CxxBwMna8lFBzwmBzQHGFPbMZl6MDX08nyeBGqVnCslW/W2YLB/orokyRPM5mmO8k3GF
+         h2cr+pkr+Utlmq9yxKct2XJSo+NTDYW7p0oypR0SSJbqgjfOQypKanDZywF89fYTMBgV
+         l6mqU98ag0y+VAECkkRgrOANm80fMPSO9kmk+eY5CCnnlHeeW6ZKMuhAutS0gk7edrhj
+         cy0g==
+X-Forwarded-Encrypted: i=1; AFNElJ+imqTvi6pwcfQLGeOwGLduuwQQZ8KSiVf/36qzC4+jJd8zpwCbGEy9hT17L3hSCJvec6c=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+lK3Hon/iFB1FiJuK9b0VhpBeXxu3X3kgKLQfPktDrJiBjik3
+	7nVg7tCQ1/mVVzy41MLrQXAQzLx9CFKKsIFrck0bFXEzBsVXA+p8aQqx3w/qWr68700W4rMNM/M
+	U/q5Ktk04nbQuc6t7BqyU01iA0ugZnmIHAhYCqy8=
+X-Gm-Gg: AeBDietT6oSpYZhutMV4xInSd8IiUO9gtdc69URP1l3Dlzp5ig24YwSDfLGIIlTJrJ0
+	Sx2AucqsuOCTzkUIIj1N4V/sRS1nb/wf7igsnXRwCZuvVEZwbDkb1MGiz9kQIN/ARFlpGcziqGt
+	MgfIMl5jeOudm9c8n7eYBqOQCFzpoiu1Dv8JfvaC1MVazVcgmckRWlDnYpDWYa8e6BVAybSMLMq
+	/vBc61a1FOH3JYzBOld7IyGY9HjotNtEPBPlq3yGgeV0c7C/OIIIUljb59Mt8E5DiW/gWANTEv0
+	97RRyL+n60n+UxY4wnfZ5Qo67gPdAasDYu9ObgpH0Wn2dmLlwXIw4R8S7hRqapHcvgzXM9yMoV6
+	RhUmybeCKw+e6Uxj2GCTtAO4uMZ/M
+X-Received: by 2002:a05:7022:eac8:b0:119:e56b:98a4 with SMTP id
+ a92af1059eb24-12c73f75981mr22498187c88.11.1777256565764; Sun, 26 Apr 2026
+ 19:22:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7205; i=mroik@delayed.space; h=from:subject:message-id; bh=XLxqLT5POXRf7Ar/9HxlEBsZftQ2qd8flh7XG4WbfJ0=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBp7qzY1EEI4w30MNBGMwtLTPhVsUB/C62gE52TO +ys8v5Lb5eJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCae6s2AAKCRBIeX6hnBm+ 0TJrD/9xLQpSt2mTHius3J4V4SbsX8opl+WJsrbBshPBds+FuaSOgLi3mEWYUCViwmLIO0q5w1f gdm5ZfLmckfLiEAl1kb5zndJ4UWOS7guwJaCqyZ80K730GuXi4UuDL0jNRqYg6EmRPC+/JWYRKj czuvZwFrQVqHbR3NbpBYABCR6zbnRu00cv9NIuC3A9+/+B6TfHXYEIsSgrkmDCI6x92QkrAaPIq x25fgRXmGm3JGKMFLDmg4xIu0fHFZ0FkndexC/OkbcbEMVUm3mN4hqxHnvlo5x3eEBsUTMEcP6Z zN40zNirDBkMBb3PE5iD5sKXItPiDFEHtxAbuBHW8AmDyjMXcZ96vCgM7qnd2JZl/WnPP80rPSH nqfaruJQGeinB430shxRIZjoFfJsRUahkydPTVcFJu/ST6tHsL192c9pu1qWVnAjesy2a866FF4 1slb8KRthpN3AYq70uCKrR4MMwKRmOp5l+HR27kNy58JHPbhB30Tftjzu8aMxwPmL3rEMX6TSRX rLtmr6O7VyP2CoQ1gZdZ9eWxP0UHWRL9vxeWzOyMgChOgiDbdpv00lPCIZJhtp04D3Dc64+IlNI Y5iR2hoqV88JS0dQ88k4ZoWJdk/A6qvK74bijXH7qoBUER5c1fr2Ew43MtvvNne+7ZXsjVDpu4C GErSapXJ6
- 6mTBuw==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: ----
+References: <20260422182516.26667-1-beniamino@beniamino.eu>
+ <20260422182516.26667-2-beniamino@beniamino.eu> <CANYiYbE1qTFYLEyhAR3SEyXozFnEMPxyj=3dAh-vmHkpXZnMpw@mail.gmail.com>
+ <d7ec16d9-2707-4c1c-ac64-ac3dde3e0946@beniamino.eu>
+In-Reply-To: <d7ec16d9-2707-4c1c-ac64-ac3dde3e0946@beniamino.eu>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Mon, 27 Apr 2026 10:22:32 +0800
+X-Gm-Features: AQROBzBPGVTLfEbFBcyV54q80oHu3av9D3TbboLni-O7D-3RXxZOrmWKoeLazco
+Message-ID: <CANYiYbECkApqhLvFuh6EcjA+-QFo0ySDJ0w2g51RaK4mLpcF+A@mail.gmail.com>
+Subject: Re: [PATCH] l10n: it.po: fix italian usage messages alignment
+To: Matteo Beniamino <m.beniamino@beniamino.eu>
+Cc: Matteo Beniamino <beniamino@beniamino.eu>, git@vger.kernel.org, 
+	Alessandro Menti <alessandro.menti@alessandromenti.it>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In a revision walk `--reverse` can only be applied after any commit
-limiting option. This makes getting a limited amount of commits from the
-tail impossible. E.g.
+On Sun, Apr 26, 2026 at 2:47=E2=80=AFPM Matteo Beniamino
+<m.beniamino@beniamino.eu> wrote:
+>
+> Thanks for your answer. The italian repository found in the TEAMS files
+> hasn't received an update for more than 5 years. I've opened a PR on the
+> git-l10n repo, but it doesn't pass all the checks due to many obsolete
+> entries.
 
-    git log --reverse --max-count=3
+Your fix is unrelated to the CI issues reported in PR #918 [1]; feel
+free to ignore the errors reported. I will merge your PR in the next
+localization window.
 
-Some would expect this to give back the first 3 commits of the project.
-Instead it returns the last 3 but in reversed order.
+[1]: https://github.com/git-l10n/git-po/pull/918
 
-Teach `get_revision()` to accpet an argument `(after|before)` from the
-CLI, and apply the reversal before or after the commit limiting options
-based on this argument. If no argument is provided default to the
-current behaviour, applying `--reverse` after the commit limiting
-options.
+> Maybe Alessandro can shed some light on the current status of
+> the italian translation.
+>
+> Also, notice that when creating a PR the default PR
+> message tells the user that the correct way to post a patch is via the
+> mailing list: I assume this behaviour is inherited by the main git repo,
+> but still can be a bit misleading.
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
----
- Documentation/rev-list-options.adoc | 16 +++++--
- revision.c                          | 31 ++++++++++++--
- revision.h                          |  8 +++-
- t/t4202-log.sh                      | 66 +++++++++++++++++++++++++++++
- 4 files changed, 113 insertions(+), 8 deletions(-)
+The Git l10n coordinator repository ("git-po/git-l10n") inherits the
+pull request template file [2], and there is no way to disable it
+without changing the default branch name. I have updated the
+repository description as below to clarify:
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 2d195a1474..e97f6f2aff 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -914,10 +914,18 @@ With `--topo-order`, they would show 8 6 5 3 7 4 2 1 (or 8 7 4 2 6 5
- avoid showing the commits from two parallel development track mixed
- together.
- 
--`--reverse`::
--	Output the commits chosen to be shown (see 'Commit Limiting'
--	section above) in reverse order. Cannot be combined with
--	`--walk-reflogs`.
-+`--[no-]reverse[=(after|before)]`::
-+	Accepts `after` or `before`. Cannot be combined with
-+	`--walk-reflogs`. If `after`, output the commits chosen to be
-+	shown (see 'Commit Limiting' section above) in reverse order. If
-+	`before`, reverse the commits before filtering with `Commit
-+	Limiting` options. When multiple `--reverse=` options are given,
-+	the final option overrides any previous options. The `--reverse`
-+	option (with no specifier) behaves as `--reverse=after`, except
-+	that, for historical reasons, it negates any previous reversed
-+	state (so `--reverse --reverse` does nothing, nor does
-+	`--reverse=before --reverse`. Note that `--reverse=before
-+	--reverse --reverse` is the same as `--reverse=after`).
- endif::git-shortlog[]
- 
- ifndef::git-shortlog[]
-diff --git a/revision.c b/revision.c
-index 599b3a66c3..d581f5e38e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2686,7 +2686,16 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 			git_log_output_encoding = xstrdup("");
- 		return argcount;
- 	} else if (!strcmp(arg, "--reverse")) {
--		revs->reverse ^= 1;
-+		revs->reverse = !revs->reverse;
-+	} else if (skip_prefix(arg, "--reverse=", &optarg)) {
-+		if (!strcmp(optarg, "after"))
-+			revs->reverse = REVERSE_AFTER;
-+		else if(!strcmp(optarg, "before"))
-+			revs->reverse = REVERSE_BEFORE;
-+		else
-+			die(_("unknown value for --reverse: %s"), optarg);
-+	} else if (!strcmp(arg, "--no-reverse")) {
-+		revs->reverse = NO_REVERSE;
- 	} else if (!strcmp(arg, "--children")) {
- 		revs->children.name = "children";
- 		revs->limited = 1;
-@@ -4525,19 +4534,35 @@ struct commit *get_revision(struct rev_info *revs)
- {
- 	struct commit *c;
- 	struct commit_list *reversed;
-+	int max_count = revs->max_count;
-+
-+	if (revs->reverse && !revs->reverse_output_stage) {
-+		if (revs->reverse == 3) {
-+			BUG("allowed values for reverse are 0, 1 and 2");
-+			revs->reverse = 1;
-+		}
-+
-+		if (revs->reverse == REVERSE_BEFORE)
-+			revs->max_count = -1;
- 
--	if (revs->reverse) {
- 		reversed = NULL;
- 		while ((c = get_revision_internal(revs)))
- 			commit_list_insert(c, &reversed);
- 		commit_list_free(revs->commits);
- 		revs->commits = reversed;
--		revs->reverse = 0;
- 		revs->reverse_output_stage = 1;
-+
-+		if (revs->reverse == REVERSE_BEFORE)
-+			revs->max_count = max_count;
- 	}
- 
- 	if (revs->reverse_output_stage) {
-+		if (revs->reverse == REVERSE_BEFORE && revs->max_count == 0)
-+			return NULL;
-+
- 		c = pop_commit(&revs->commits);
-+		if (revs->reverse == REVERSE_BEFORE)
-+			revs->max_count--;
- 		if (revs->track_linear)
- 			revs->linear = !!(c && c->object.flags & TRACK_LINEAR);
- 		return c;
-diff --git a/revision.h b/revision.h
-index 584f1338b5..02881577dc 100644
---- a/revision.h
-+++ b/revision.h
-@@ -121,6 +121,12 @@ struct ref_exclusions {
- struct oidset;
- struct topo_walk_info;
- 
-+enum rev_reverse {
-+	NO_REVERSE = 0,
-+	REVERSE_AFTER = 1,
-+	REVERSE_BEFORE = 2,
-+};
-+
- struct rev_info {
- 	/* Starting list */
- 	struct commit_list *commits;
-@@ -167,6 +173,7 @@ struct rev_info {
- 			ignore_missing_links:1;
- 
- 	/* Traversal flags */
-+	enum rev_reverse reverse:2;
- 	unsigned int	dense:1,
- 			prune:1,
- 			no_walk:1,
-@@ -196,7 +203,6 @@ struct rev_info {
- 			rewrite_parents:1,
- 			print_parents:1,
- 			show_decorations:1,
--			reverse:1,
- 			reverse_output_stage:1,
- 			cherry_pick:1,
- 			cherry_mark:1,
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 05cee9e41b..3bfe2c99b8 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1882,6 +1882,72 @@ test_expect_success 'log --graph with --name-status' '
- 	test_cmp_graph --name-status tangle..reach
- '
- 
-+cat >expect <<-\EOF
-+c3f451c Merge tag 'reach'
-+046b221 to remove
-+EOF
-+
-+test_expect_success 'log --reverse --oneline --max-count=2' '
-+	test_when_finished git reset --hard HEAD~1 &&
-+	touch to_remove &&
-+	git add to_remove &&
-+	git commit -m "to remove" &&
-+	git log --reverse --oneline --max-count=2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --reverse --reverse --reverse --oneline --max-count=2' '
-+	test_when_finished git reset --hard HEAD~1 &&
-+	touch to_remove &&
-+	git add to_remove &&
-+	git commit -m "to remove" &&
-+	git log --reverse --reverse --reverse --oneline --max-count=2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --reverse=after --oneline --max-count=2' '
-+	test_when_finished git reset --hard HEAD~1 &&
-+	touch to_remove &&
-+	git add to_remove &&
-+	git commit -m "to remove" &&
-+	git log --reverse=after --oneline --max-count=2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<-\EOF
-+3a2fdcb initial
-+f7dab8e second
-+EOF
-+
-+test_expect_success 'log --reverse=before --oneline --max-count=2' '
-+	test_when_finished rm actual &&
-+	git log --reverse=before --oneline --max-count=2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<-\EOF
-+046b221 to remove
-+c3f451c Merge tag 'reach'
-+EOF
-+
-+test_expect_success 'log --reverse --reverse --oneline --max-count=2' '
-+	test_when_finished git reset --hard HEAD~1 &&
-+	touch to_remove &&
-+	git add to_remove &&
-+	git commit -m "to remove" &&
-+	git log --reverse --reverse --oneline --max-count=2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --reverse --no-reverse --oneline --max-count=2' '
-+	test_when_finished git reset --hard HEAD~1 &&
-+	touch to_remove &&
-+	git add to_remove &&
-+	git commit -m "to remove" &&
-+	git log --reverse --no-reverse --oneline --max-count=2 >actual &&
-+	test_cmp expect actual
-+'
-+
- cat >expect <<-\EOF
- * reach
- |
--- 
-2.54.0
+    Git l10n coordinator repository (We use the GitHub pull request
+    workflow. Please ignore the pull request template inherited from
+    the upstream git/git repository.)
 
+[2]: https://github.com/git-l10n/git-po/blob/master/.github/PULL_REQUEST_TE=
+MPLATE.md
+
+--
+Jiang Xin
