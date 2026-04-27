@@ -1,169 +1,102 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EAE352F95
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 17:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5877C3EDAA7
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 19:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777310591; cv=none; b=LceWZ4BwSA+rujYPiKEtoLlIH7DP8CUXHTuanKVby+cR3INlKMNMCPXT0CVgpXU0PuQVC0FgnIiCaYSzeQCydmYHDdCZbB0gPmR8rEcEFLb8uFcpAJ5gRNSkze6ZVRTyC9OQz9Ca5FlKtzH/BXO9gu2Jr0T0/xuzuzytk4saieY=
+	t=1777316828; cv=none; b=ROClAjvJZeb3+YBLnLAOPlSBeHs1HZjJFlcAuaj0XQ/7svxoNmBsHU8lig6cV9EGJJ68sjEJ3xezr9a4wXRfW7MHLnY4cmQDx/gha2ypGWltEdFgw8FpLowirdUKG8GUfPf6mUBr+Um4RzAe9A4KT0H1sGYeHFD19CnEQwqoSrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777310591; c=relaxed/simple;
-	bh=Nd9FgNUG6s26zFtzuOCZWN9ixl28RolC5SMVRqxHuIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kggFnHedQY1EG/fupVmhc0XJGv6SiSKK7EsTzbXxdKxRKFSSC7HhbjQi5haxdVbboerpthUeYz31nOkTkRIYT7yQU4sDwfed0eU2lqITy+QbxXVFhLD9ck6FbG9vP9MG85rocRNZ7fOX2V8FU8KnW/N9Gy5BKXRbHBk5pSVkQLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0QA9/36; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777316828; c=relaxed/simple;
+	bh=pxmzsZMyFEVMcrFu3zbIEvtnpBHKHcwr5l0Q+yxMvdc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UeLNN8yzI0qhUikOySF18eImzjIs29WdhAggRKsS1wbOIOBawGAg7AIDaoUn9OlESYojL6rHi1sYCkDSHIvSiN8G/alYbD+V8xhUrtPtnlAdiCPN51UAd3eHbTk+aBK5TFLFK5lWKTUADsJ9tMfxizmPSxl/v1BOAk89U8ccTBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=jO28NM5K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kliVZ49A; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0QA9/36"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8ec37d52c0dso1059047185a.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 10:23:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777310589; x=1777915389; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6UemOsuvanW8JSFFP85AVIFjmd5jyVDYR+kDpVyCTE4=;
-        b=J0QA9/36OAc2gaXCVq8u3gxIRw6i2v2VRHg3q9YwBAprBh5+mVB/wliCILrstXEqTn
-         9mICdjbVJHAjRFiOw2KU5bhwjF/sxMzV5VIzc2O+9b3++cmGXrQLmPibDk2a8oTdqUjB
-         CXijKSBIq/A6JG77M13J/h5J8l0GZaSNKb8Fp9y9Vnwt1Oyn4F/cUTFNWhevfbKdfL2e
-         JaV8/9vjYSNL1jDD8XD4XUVL9SUkb5xN/48zqm7bMv5K1TArA3JWvC+lgvkpItSDdhpJ
-         aFD3e9TuoyUvxT8e0FctyyF8zKOz0KYmfIcyHu+oQRRNi3sWS6JKc3I5GEnPHlOLHxEk
-         w6WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777310589; x=1777915389;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6UemOsuvanW8JSFFP85AVIFjmd5jyVDYR+kDpVyCTE4=;
-        b=TVXPmjXs8nMLLhYqxOi75F3FIAFzL7czLh0CiKYZIfpbarRRFIdmWW1fPP9EUpFJPR
-         XdoN1MlH+BElHaEUZipwrFmEjy/XjXyEDIlsXusqQx1sJfdBP658UgiOrankaMLzyazu
-         GZANNmCkI6IUgT1E6rrSXKHVEZqt0zv02kir0I+xCiQi75vGFfU83NjY4Ko6QhdvWbpe
-         rJ/0zbWMuNugAnK5NjqO8RdIAGAp8JjAlJ9UHb557m+GoA61thIXhfBdKu31/7QSQSoO
-         onf84STrp4mt/dQsOmoNGSX/rpHdJgBddUlreH6B224+/mNliM3SodzygffmXPiM2yHQ
-         mpCA==
-X-Forwarded-Encrypted: i=1; AFNElJ+G9xIPfo4UhrXY+g1f3GMCrThniOM2L4II/YOYJq6qYh0Z9sy4r6TNw6ywASXN8taI0Nk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2QBUimZlXMfam4mZ3FZhekzt3kMqQLBMkt93lGxiY8zMD0twa
-	pJH8DaRV+P8CVE33J3/NB5q6cQRQpp7CJ8bK+NHgOV1B6Y775AY63bSV
-X-Gm-Gg: AeBDieu8EZr4M5HFluRC4D0nHoosL/Nc+ghs09JZ1scOizaotDxbCIc8JqWXWLXkU7l
-	RN2VIe/KaA9FYQ4sVdrlv96GU1kaAouZ5TTjPin1AsCztTTTqqOoGxaup04MMI6P1EoHvGvfSXG
-	hr6TLQQ/h9hFcGhHTwnOMBKKM5BzcFHcN62MpvfmnmWsfsCB1GY+zFvX1AVKxw+CyjaQzdgqlUa
-	aoExzkHdHLnxfPdgJ+fUB0S/B0brICwcibZgYYnicbFlCMi7RzAccuHr6cjpr1xpTFzPpVFBCTF
-	/xw5B1c+VrQ6M/nZ3g2ZlDIQOafzNjna8IkPrIqPxr5UmT+Ud/AzcXn6+tfsbAYzGa5426FCGAP
-	U+KthVnR98nnROzNrOosUgbKvnL3T7UBTRZ5sx8PbjA7NSbEJ4fZYYldZqwiyQFL79WWCzf8h8c
-	sioDENkkZA2r+LUkKYW6sIyyBPf9gVvI7wcXFygGdoMshJPcHJAd6zXlO0NHQ4qPvUiGLSKsZZL
-	pqbsO9i
-X-Received: by 2002:a05:620a:46a3:b0:8ed:3c1:4bc6 with SMTP id af79cd13be357-8f7b5ba3754mr51385a.57.1777310588913;
-        Mon, 27 Apr 2026 10:23:08 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ebde788c01sm2031676185a.10.2026.04.27.10.23.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Apr 2026 10:23:07 -0700 (PDT)
-Message-ID: <5498637e-178f-48aa-8cdc-adc38b100627@gmail.com>
-Date: Mon, 27 Apr 2026 13:23:06 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="jO28NM5K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kliVZ49A"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7B3EDEC1811;
+	Mon, 27 Apr 2026 15:07:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 27 Apr 2026 15:07:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm2; t=1777316825; x=1777403225; bh=bhL0K3mq2iFlkB10YJTqP
+	g5n9OMSJsO1U065OqBZJiA=; b=jO28NM5Kv3rUtcj6uCbOTAfMAZd7/70H3YISw
+	z3Q6gpTq/aQ0eAXVdGNi4qtfczEhppaG1Ywsgz80D8eg7ViiG12s7vKboRl2O8rh
+	/X1xwuNCEwRj7UdLVv7/n10anLDXLrlE/RE2icUQyf3nvkXs3TrVroVI0cdA0wb4
+	s7/T0cZMleVDgGQYXiKwpcOZr59EZ0KDU4G/aSHyvPWRHUWN5b/A3rSTzkL7msGE
+	Xv7kUP7F6l3naCLq/BCanoTzRA3tLkylGyoozR0ATWDamQeVrtZGkMNWcW4RU2Xj
+	wFtfK2oJ5vgnQlET5I7IBqLaFTCqUYqIDGkrn0ybckOfDoNCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1777316825; x=1777403225; bh=bhL0K3mq2iFlkB10YJTqPg5n9OMSJsO1U06
+	5OqBZJiA=; b=kliVZ49AW91XESm99KSlVdNoB0KiDkdDEvg3B9DxFLU2l1TgXjP
+	OdatDavM9SvCXtBaj98I4eIF/m8XKoexpioCE2+5rwLfYvZ1TPE0Rx5X3mFfsbAO
+	egdcpef2pMOC6ZYVZK4YbJUSTBJprlrhEU1QbdU/n+wu+HPCc36+GlQSNKQO0nte
+	YYUI+siiGx+r9gpojXa5cUtlZ55ZJ4y8loQqIQORtfRoOGzf0YWxxlglNb+USwEJ
+	xSr/bV5L/gDk+DJTdthbx5DISWYbjzfnENMv+i3ZgvlNGvoBWPXVJ063/kxvHn5o
+	eiOHsFRo2Jkh5g/m+mAqvCVRn8MiChvljow==
+X-ME-Sender: <xms:2bPvaZuhiaCEUvPgT0FIGS72tfvdoJGPyKNqrd74mj5LHemsEhQsYPs>
+    <xme:2bPvaZ4IgRhgxpYZwBiNyQTweCzIF9nOkHrthn9LxfYaGzJAuRfbn1q6q-ikdOh-B
+    TcmlZ7NQ9v3goXsL2RUwDBqzlNKtfFzr0AdtADz5b_WNMUHQv1M>
+X-ME-Received: <xmr:2bPvaaKn1IZnfw4RXNa8bVSweohLsMM9wSGIQYetugIHhd8OXE3GA90PveKIVAeKLDezJ0X4u65dFQxd0n03VkoudrlaWoZg4kjysDQHotNQCblO4jv3Gco>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejleeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
+    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgggfestdekredtredttdenucfh
+    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
+    hmnecuggftrfgrthhtvghrnhepvdehledvjeehjeejheevtedtjeekhffhffevtedtfffg
+    keduvddvteefjefhuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
+    rdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehk
+    hhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvg
+    drfhhr
+X-ME-Proxy: <xmx:2bPvaZ5vSWUnRaRlw8PdNfO0-AlVbCPkkMQSln5fHTxnhtWMx0D4Fw>
+    <xmx:2bPvadz1lW4dZGsV5XmK6B79OXAMvE8hG7uBoWyhQ6caGoiMSpBJqA>
+    <xmx:2bPvadbXHkr6OZJhL9RsDivh3KH5b7jREC0FOulTzEOcId06M_XSDA>
+    <xmx:2bPvafQzJ0BpPIGiP--ljK5nV3SQR-rqiAPJdP7QT2jsKkUPG0LHmA>
+    <xmx:2bPvaRhjtuhdZqKbuYWcrcvjKwI5Kh6pakGmtHGXqogCRuPQs5WidjFd>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Apr 2026 15:07:04 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH 0/2] doc: log: fix --decorate description list
+Date: Mon, 27 Apr 2026 21:06:48 +0200
+Message-ID: <CV_doc_log_--decorate_list.626@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] index-pack, unpack-objects: increase input buffer from
- 4 KiB to 128 KiB
-To: Scott Bauersfeld via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- Scott Bauersfeld <sbauersfeld@g.ucla.edu>
-References: <pull.2282.git.git.1777058098756.gitgitgadget@gmail.com>
- <pull.2282.v2.git.git.1777306114914.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2282.v2.git.git.1777306114914.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 4/27/2026 12:08 PM, Scott Bauersfeld via GitGitGadget wrote:
-> From: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
-...
-> Wall-clock time of git clone over HTTPS onto a FUSE passthrough
-> filesystem with writeback caching disabled, 3 runs per variant:
-> 
->   vscode (~1.26 GB pack): 84.5s -> 75.7s avg (10% faster)
->   git/git (~306 MB pack):  22.6s -> 20.0s avg (11% faster)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Wow! This is much higher than I expected. Great find.
+Topic name: kh/doc-log-decorate-list
 
-I imagine that other platforms or non-FUSE setups will not
-have the same benefits. As long as they aren't _regressions_
-then this is a great find.
+Topic summary: Fix formatting of the '--decorate' description list.
 
-> -/* We always read in 4kB chunks. */
-> -static unsigned char input_buffer[4096];
-> +static unsigned char input_buffer[DEFAULT_PACKFILE_BUFFER_SIZE];
+[1/2] doc: log: fix --decorate description list
+[2/2] doc: log: use the same delimiter in description list
 
-> -/* We always read in 4kB chunks. */
-> -static unsigned char buffer[4096];
-> +static unsigned char buffer[DEFAULT_PACKFILE_BUFFER_SIZE];
+ Documentation/git-log.adoc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-These changes are what I expected in v2.
 
-> diff --git a/csum-file.c b/csum-file.c
-> index 9558177a11..c1aeaf587a 100644
-> --- a/csum-file.c
-> +++ b/csum-file.c
-> @@ -178,7 +178,7 @@ struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
->  	f->algop = unsafe_hash_algo(algop);
->  	f->algop->init_fn(&f->ctx);
->  
-> -	f->buffer_len = opts->buffer_len ? opts->buffer_len : 128 * 1024;
-> +	f->buffer_len = opts->buffer_len ? opts->buffer_len : DEFAULT_PACKFILE_BUFFER_SIZE;
->  	f->buffer = xmalloc(f->buffer_len);
->  	f->check_buffer = NULL;
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.54.0.13.g9c7419e39f8
 
-This one surprised me, as this hunk wasn't in your v1 patch.
-
-I think using this replacement makes sense, since it _is_ an
-exact value. It did make me think as to how we landed on 128K
-for this example.
-
-The previous line is due to a1118c0a446 (csum-file: introduce
-`hashfd_ext()`, 2026-03-13), but it only moved the 128K default
-from hashfd(). Notably, hashfd_throughput() still uses an 8K
-setting in opt->buffer_len.
-
-Hilariously, I went spelunking for the original reason for the
-128K and it was 2ca245f8be5 (csum-file.h: increase hashfile
-buffer size, 2021-05-18) written by...me. The motivation was
-due to using the hashfile logic for the .git/index file which
-also used 128K buffers in  f279894 (read-cache: make the index
-write buffer size 128K, 2021-02-18).
-
-All this is to say that we now have two constants of identical
-value, where WRITE_BUFFER_SIZE in read-cache.c could be replaced
-with your new DEFAULT_PACKFILE_BUFFER_SIZE.
-
-This does make me think that maybe DEFAULT_PACKFILE_BUFFER_SIZE
-is misnamed? Should it be DEFAULT_HASHFILE_BUFFER_SIZE or
-DEFAULT_FILESYSTEM_BUFFER_SIZE to better fit this size value
-being used in both packfiles and index files?
-
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index ae1bdc90a4..a2f037811c 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -712,6 +712,12 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
->  # endif
->  #endif
->  
-> +/*
-> + * Default buffer size for buffered I/O in pack file operations (index-pack,
-> + * unpack-objects) and the hashfile layer in csum-file.
-> + */
-> +#define DEFAULT_PACKFILE_BUFFER_SIZE (128 * 1024)
-> +
-I see. Putting this in git-compat-util.h makes the rest
-of the changes good without any need to add a new include.
-
-Thanks,
--Stolee
