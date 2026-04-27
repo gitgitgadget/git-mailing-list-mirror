@@ -1,124 +1,122 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4D23B5318
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 10:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D53315B998
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 12:30:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777286865; cv=none; b=cAwyBEOAJqIDFI42li+M3OPW2RcGSVXexzuEkpS6XBMEB8JTCPg0mUWH8yQarXuG7cuKbxJBcePYcVHdOY9syFrrB0H00GKJCp64MJT/CfUnRfn4iDSgQDFKjE+je6Il6+PpgkaPXUIp+vgKLnHfM4+bMs00fpQnyPuY4ZVGuuE=
+	t=1777293052; cv=none; b=LS1F8TA7W8t5HROeaQE2mMy0V+8Xbwj16RXgQ8MRgEdEZof/jh90sHv21WQ2i+P3se6UAqYjIkcM/iwaRIRhEzCrTdylgkxncoXTSwYykQbJUzhkybEgkgVE/8EDaPT56qIokITp1ctKcFDnejAylJOzmImcKF97MyjUTF3/FxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777286865; c=relaxed/simple;
-	bh=MErUZWakGgVzuHX36QCR2pAAeEiUpja1endP+JU64q0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=MCo6jtWDjuaoITNECtoKrFxWQMZXrzP98sNt5/VKw1s9hsNxsSbXn4gfeCobVqnEOAu8GBOnIrqXkxPw85gb3gm+Vch0e2KP597Ss0hIm6No47nGqyonuMGBeOEUSNhNHMGj3uK+4KuSkrCpCD0WF6J6ppYW/djjOQZNTjZfriU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bHnD5k0N; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777293052; c=relaxed/simple;
+	bh=Lfcy/4hWwDsxZmCxguQY8PnztsTYOSHI9MIA7t/t0kc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X036BJdquG4E7swqaT3qt9tN5b/7SbEhjONs7STz5+cKKKmq5u72T33fw2QnfX0gBVBdhhoWloajyDA1fptivm3FncuS41iqTLYswmSlAApvb9Cumd/Lm+mqdzfOOaNkexygNEWGYW4wf207ljF00g0nwxQW7LLcqjeI5s4DAHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g1dcgb5f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oky+bn9E; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bHnD5k0N"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5a415fd6bceso11053489e87.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 03:47:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777286862; x=1777891662; darn=vger.kernel.org;
-        h=content-disposition:mime-version:mail-followup-to:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Vl0kYW2Fl2mwlVJNWhoEddEdI0AVHR4fY2I8n+p+Scw=;
-        b=bHnD5k0N3kAqbCeGIEZB1lZ2qNWCbHMTkxwkyAU+AKT//0kv0XPmaGU5y6+SCNoCGx
-         cRqY9QExlxwSbDGeCAY0TrNa6n+fycgir5ykDgsnnWb9zhCZq1JwryBWcu7lHFynqbwT
-         MjYvQK8PI8y3JM/eoS137XixnRd9k/dpUSh6G4bTYcE8Hm4Bj0n4qtoWsePDLBuwc6tN
-         YbwIWIySknm216yuGd/QkLanv5ADsLzwQRZgbcEn7OmPWzrz55vpX1hK7hBJcf4sYXI9
-         OA0O9GCKbfx3rWEIaR49l83oUFiDOdLdF76Ckbql3nCjQUlid4BeM7V16mTr66cW0pWA
-         2IpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777286862; x=1777891662;
-        h=content-disposition:mime-version:mail-followup-to:message-id
-         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Vl0kYW2Fl2mwlVJNWhoEddEdI0AVHR4fY2I8n+p+Scw=;
-        b=aq6jZFYLK4rH4aFaat59ozC6hkvPl11ihD8XBF/P542flrFuee4chJbzGm237J3HTF
-         u4K5K5LYeg7t384DiZ3YgoUxycUFpRJpYrN6sZeqN1bS7p8G1dajyoXLsAJg0XMW/JUX
-         mEjgI/Gt8vqi3Bq8yUXfWfKWBBQiGHjxWMxUMBr6exptF/sAU1ydnDa+wcoCUQOE8nYj
-         V+m5I8W3BK/DaR4p/CednljPAaBaRrn7VR7taFDzCjHX5v0fy1xv83wRFbwRogLZNc7S
-         Yc8ThWa8jPwJMEYIGgw0NiebB7r+Va+Z5YfVoW0kra/t+4zQCx+LzcZiFK86rnxAjjMX
-         VTOA==
-X-Gm-Message-State: AOJu0Yz9XboscsW5bKkecquPkAFKRcopiOVAhY+TQSMcoG9t8FmxjaJv
-	/EYsQWwvXPx0dXNbH7keTyt2i5PZ0n+V9Pi4TQY0VivsyZdIMJTDyeZPY7hTAg==
-X-Gm-Gg: AeBDiesKKqTnG77BSx/uDGT1MPOFhdu1rzGyYT+k4lfVYoUJ4Etd6cciNN84tyJlYCN
-	3C1bUePX8822VOOyD3V3JIdmAUr6lDtCtPDGXNKiZJGcWYq0la/9n8MhzoyD+x26xetgQ/ilEE0
-	lFFl3iMjPXhdT4xQX0qte3Zy55BvOs3/TwTATYOCNQw0gXZVSFSwlQijJu9vWlV6Bk68KlWqX7v
-	velWdhkXwW4iVsHxhyfulowEy3qpiWJ04Z+9UZ4GZ6/F75w9k7W8xJzgZ14dNwIUhJqJjjsP7Pi
-	RkW9b6xbe5K/Vax3fUoVofw/QklaF7mIo951QPrTVPNvKpYHAEJ93/D2t/yGNKCn3iWFTfr7a99
-	XT4fREx047fOXF069aMU8EAch7opVMt6ZOLAcPf0otbczcit9vv1xLEykIkYoq+IV1RRojUpH8J
-	qHl4XPpfbZTkBGKFQMbjJlqdWR0BbbUEnYHVgG/m1pOg5MSHGNjxCGvs6kj8kMFdy3Vrj60qH3c
-	CnCa8N1PAbJmn71oKqSNBkojvpHTRUsXviTJUUSjzEXLiBSKZdjewZHwPviuDNbmhQXq3Rl
-X-Received: by 2002:a05:6512:3ba5:b0:5a2:b370:f796 with SMTP id 2adb3069b0e04-5a417287a78mr13791322e87.10.1777286861296;
-        Mon, 27 Apr 2026 03:47:41 -0700 (PDT)
-Received: from localhost ([2a02:1406:125:95d5:9ddc:9c5e:28cb:9376])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4185bc333sm8296578e87.24.2026.04.27.03.47.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 03:47:40 -0700 (PDT)
-Sender: Erik <erik88@gmail.com>
-Date: Mon, 27 Apr 2026 12:47:38 +0200
-From: Erik Cervin-Edin <erik@cervined.in>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH] Reintegrate: send "Huh?" warnings to stderr, not stdout
-Message-ID: <ae896PlyiYeqldFN@mbp>
-Mail-Followup-To: git@vger.kernel.org, gitster@pobox.com
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g1dcgb5f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oky+bn9E"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 972CD1D0011E;
+	Mon, 27 Apr 2026 08:30:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 27 Apr 2026 08:30:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1777293048; x=1777379448; bh=C2kZXWVXA4
+	QA6FQJywhtGtHdWOOF9iWBJ88HCBUGEAM=; b=g1dcgb5fKJnEpCCWAjj8ovFeMW
+	PWMOdjth2KAu/aG8FH0Ekv2hdQ6hDCH/UMOpAExFZCoTptH1ObDpmPY0/yH6L9WG
+	8nJsdQbL1zj3fRHksAzpsD7kuQiX6O20R12VzB8toQs+Nai2BZRVgmAd4R6skqpT
+	ljp51SAuiYVNcANDPRU8xDrNPFnaj7oOT60/p+jPD4cICn+NkUqobFd6Zwo+gt6o
+	gTrxNbyYcTFohnToluIZQHotc6YAZD1Bd1wBiP9appSTQO+wU4LEbLq7EzIA7XJq
+	WSNlMomU6fUhMdCkKmbAHMhfFxhYdW8U4Dhnvz36exGjiymR0oTMKC64V+hg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1777293048; x=1777379448; bh=C2kZXWVXA4QA6FQJywhtGtHdWOOF9iWBJ88
+	HCBUGEAM=; b=Oky+bn9E3RlLXJ36nwgDG8I+wM8Ze0dhjNVI72uZjeagF1nLxru
+	i06MAeGHPTVxyJSh2EGISA1o9YMKYNuQqtcQgWqB+Xm70XhkXCeDHyRFf0fmekUt
+	/iNu8RX3WyQFA+JpT/nkBZsTfmQbfE+puHBTWf0RMd3/CYfgfhwznEwmJm7N5fDN
+	sENbgYrTJJMPRBfkAQ5TFudXC9a9uj+vLB/AR6Jwopco/ctF1Ide8FvuJUtWv7vI
+	FWeER2hGD6+WhNtxJqLiSb3ykWTehkifbm1rRJMhkWSlTejBhpQQWF31QkCWtdZw
+	TidBkHIA/ATuCTIQnHpdYIzjwWDg8bunVIA==
+X-ME-Sender: <xms:91bvaY6Rc7T5QHiklQXwxWGE_c_qWH8kVJoivaTcKnDpY84rviRc6g>
+    <xme:91bvacdtli9-r6uhC8irFh02RISB2OO4H2lk33zXOFnu9QsK7w6f3A-FAExANX2pw
+    E2ifXZMiGuvUqYP1iiU08XqbHGzGSqcpAltTuDjw6zecezjWaK1>
+X-ME-Received: <xmr:91bvabFcP7askNVKmaKO_KXmsij1TreVjx4EcUFa1OQm7AurpoSH-BY3JSVbDkwsNBiOGHO0NK3hAV7Nl4xEGX2rrxImoynPPg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejkeeilecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjheith
+    eskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhnrdgrvh
+    hilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pegtrghtsehmrghlohhnrdguvghvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:91bvadQy-oQT7Q5rCQjwzUbtdQ5NGkRJooKZ2WIxvnHsKlZD5YapIA>
+    <xmx:91bvaRZMIp1c4Raf3NxPawEKHz3uWsmjhyur_p5CeGVStOBZlLY_Kg>
+    <xmx:91bvaY3f3wFzmUoN8f_DVdfQ-xxXgblUHJwGmBZtxsb3eHdrsbVlUA>
+    <xmx:91bvaUrZLRTeJh53tvqvuMpYZx3Nf_5o4KkeM7uXtaQXY824Py1cOA>
+    <xmx:-FbvaWcCDybmZJY3aYLbS4lLbsqzfiF-sTKjzSe4x9V7S-oakeFEboCH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Apr 2026 08:30:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  =?utf-8?Q?Jean-No?=
+ =?utf-8?Q?=C3=ABl?= Avila
+ <jn.avila@free.fr>,  Patrick Steinhardt <ps@pks.im>,  Tian Yuchen
+ <cat@malon.dev>,  Ben Knoble <ben.knoble@gmail.com>,  Mirko Faina
+ <mroik@delayed.space>
+Subject: Re: [PATCH v4 1/2] revision.c: implement --reverse=before for walks
+In-Reply-To: <971f19db-eb10-4c88-8d5d-3f4f7f92db73@kdbg.org> (Johannes Sixt's
+	message of "Mon, 27 Apr 2026 09:33:59 +0200")
+References: <cover.1776984666.git.mroik@delayed.space>
+	<cover.1777249165.git.mroik@delayed.space>
+	<4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
+	<xmqq8qa852b5.fsf@gitster.g>
+	<971f19db-eb10-4c88-8d5d-3f4f7f92db73@kdbg.org>
+Date: Mon, 27 Apr 2026 21:30:46 +0900
+Message-ID: <xmqq1pg04mbt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
 
-The "Huh?: $msg" warning in show_merge(), emitted when a first-parent
-merge subject does not match either "Merge branch '...'" or "Merge
-remote branch '...'", uses
+Johannes Sixt <j6t@kdbg.org> writes:
 
-	echo 2>&1 "Huh?: $msg"
+>> I wonder --reverse=oldest and --reverse=newest is easier to teach
+>> and explain?  I dunno.
 
-The "2>&1" redirect dupes stderr onto stdout's destination; it does
-not change where stdout itself points.  Since echo writes to stdout,
-the "Huh?:" message lands on stdout regardless -- as would any
-command's normal output.  The intent appears to have been ">&2",
-which dupes stdout onto stderr.
+> What does it mean to "revert the oldest"? Or "the newest"?
 
-In the common Reintegrate invocation that captures stdout, e.g.
+I do not quite understand where the "revert" comes from, though.
 
-	Meta/Reintegrate next..seen >Meta/redo-seen.sh
+> If at all,
+> then this "newest" and "oldest" must be a restriction that applies to
+> --max-count in some way. Perhaps we need a --max-count-oldest option,
+> then --reverse does not have to be touched at all, because it is still
+> applied only after the set of commits to show has been determined.
 
-this means the warning is silently embedded in the generated heredoc
-body instead of being printed to the maintainer's terminal.  The
-resulting redo-* script is corrupted with a "Huh?:..." line and the
-maintainer has no diagnostic that something went wrong.
+That makes two of us to suspect that this is more about --max-count
+than --reverse.
 
-Every other diagnostic in this script already uses ">&2"; this line
-is the lone outlier.
+cf. https://lore.kernel.org/git/xmqqv7dlr4yz.fsf@gitster.g/
 
-Use ">&2" so the warning reaches stderr as intended.
-
-Signed-off-by: Erik Cervin-Edin <erik@cervined.in>
----
- Reintegrate | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Reintegrate b/Reintegrate
-index a1e67a0330..6fdc7c5f41 100755
---- a/Reintegrate
-+++ b/Reintegrate
-@@ -327,7 +327,7 @@ show_merge () {
- 		merge_hier=
- 		;;
- 	*)
--		echo 2>&1 "Huh?: $msg"
-+		echo >&2 "Huh?: $msg"
- 		return
- 		;;
- 	esac &&
--- 
-2.53.0
-
+"git log --max-count-oldest=3" will give us three oldest commit in
+reverse chronological order, the set of commits shown are the same
+with or without "--reverse", which makes tons of sense.
