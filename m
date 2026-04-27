@@ -1,65 +1,65 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3988D3B38AE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A743B585C
 	for <git@vger.kernel.org>; Mon, 27 Apr 2026 10:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777286542; cv=none; b=kwxX7h19c99OU0najOvjYKyoJjvmjPaegyB/IdwPBfOLDGqklOMTY9NEh6XVjT5E02ORquGTPsbPhnqqncPs5gs7fh++buo2K2Ql0ctXMAdWEYGb00FSbNoqKUjJdxYMDF9Xs6rsbA27vZlemiPQp5Pd9exPMalY7brabMDW7NI=
+	t=1777286542; cv=none; b=u5RaruyjhDktAbqhahcKyGcKDHuTUQbfePB49flowMo87lD9pdyvLCDo2w3bgc5qIkuok6cDDy5pW+fYCFYawt/PDjvrXaLXCI+U6C4gGoV/8Z5B2F6P5xMHBOd7sEOi9kkkLVnStXdMVS0XPR1FIzRy740yY+Xzo/81mb92OyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777286542; c=relaxed/simple;
-	bh=r2v28c3wl5d/L0J6UZ8nz+gZ7ctBgxdu59dnQQzsXi4=;
+	bh=DjGPZfaZHhlBhPSmVnMQffN59KerRbptcmiWjYSxL1M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XR4l0NExIhqVIivNIGo9m58Y8NvSG5MAgMoWQgf7Q29sIfH9e+bkG+dGccs1cK9NHWlbLLSiyAshZZzFkbybp7WPGH+nTEuWIuql6SukNmfghIHOXbTFYTfhXMTMvvAxUezeVLK1KDRUcHiCaAvijvpCwjtITJOnk+yKKXxA3WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=p95lPrBu; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:To:Cc; b=Pb1TwGZzIfnvWy0M/7cOpZe5MZDaLMDd9M4HJL1ZXFpl7Rf7OlAnalJLUlLppYpQ1clhPQNNO9jLLnVCVu6Lz6eMNDxRLGlW8+l0afIsN4A6zWtkiAV4vsP05nFdQ8JP3pY5GUlhfMPEC91+Zr/f9JoTT9rfFs1cyO9naxUnzD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DrTIfwL0; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p95lPrBu"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-43fde5b81a1so7560566f8f.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 03:42:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DrTIfwL0"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43d0deb7ad5so8350927f8f.2
+        for <git@vger.kernel.org>; Mon, 27 Apr 2026 03:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777286538; x=1777891338; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777286539; x=1777891339; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pZf+eENodM7qckAD5PMHwVmXeXl1XY0tQNsT3S/5/eE=;
-        b=p95lPrBuIN1ZhdY5gh4/umxw/QnIvaVA5CY+7MUNpuHCQFb3SxhzDcOpzNOmReLrO1
-         XS2dX/GKScgWujWomJV/X9ASCShErnHAbUVs/ZJbogN75CO6A9IpocBoeAw2EubW7Xjd
-         gFqqkZ5WA+IQ633GeZYS0UI7Fk2pgjRx7WkP4o9Q0eQFbZsfNuuuEC7fYpdxWWGZV1Y/
-         uiAqwwkCDBzS/+gfxghb3riFFAorRQ/YR/r4MzKIX8984bMgbN780xRWLvoTCDRn9DQZ
-         JAM/hTIv7UHSy7zGlB6Wp5LoBhxmJm2O/uZvkTOFkxf+4+GrZFQGIkYgJF3IoZpIaFhu
-         il/Q==
+        bh=+MDWY2GTkGqUB/2Zjz2KS6A/bkSFgekCpuaAbzoVLdE=;
+        b=DrTIfwL0vB2ArNGU4R+NYTXpUFsVzZi9uSoCYXxmBqGg6ESEsEZyx6K/ayqMSHMrue
+         GdFcUd428mlgi67P9rx/xIY6El45dL54gElKobeIN8Fz1wiq2hJkwQc4YhK19EUipE1N
+         sGRm3cgTPHCGXBQwcLzPTALk3w4K1hAzQC6WeCWc9CrkM30sFepS3NfXy/rZAZoMQDcV
+         KUwRkdOUNg+WUyu0myC4IpsiYcP8BiAmTSrmHK0+hmilLcrlhGZc9CTUxWwtgIB6O+fX
+         2uKR4CPc+EK4IjwfKCVAhvCI3w9rHwCkKu3XkPJTTJn78D1/gNLyYzvPBy7KLOv2OrOR
+         9uNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777286538; x=1777891338;
+        d=1e100.net; s=20251104; t=1777286539; x=1777891339;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=pZf+eENodM7qckAD5PMHwVmXeXl1XY0tQNsT3S/5/eE=;
-        b=dUCeiF+m1jDvo5Mgn2flgVe9D0+iKrW44Z7zZxPtMWQjLRXHImRLQvqFuVFqY7Acy9
-         fByMYThfAM6L4NYC9FcnDg3mdZWTSIgb36jUd6xhYU0nQNBsNG8FKwcBTWciX530egp+
-         8nVuHzCHULrj5Pclk2Bqk6y8WNvsEFlhWB9wI0Zo2NGwuOD7nkPTlrRKYCFzK37uYH0M
-         CZMkXfmvBcWcO9K7syXGO0fVGB+fipqksARNcCkxnM19ULrb5DV0lRoxauHALcwLWDS3
-         UK4nJsgcLR1XJ0mi8Sfl07bjKqgxhFPYGBvg9wid5TD+0PiDvN6JCaoKvRXIRV/X+EjN
-         8kWw==
-X-Gm-Message-State: AOJu0YzkKO3j5A5v6BP/vbriNgVlK+YJnsXoDsKuHbAcvIVS0lVRzweR
-	hV+qk/f2CE4GioYBIc+ykHlIp6MwfjZkx0PcC7DsMu0JQmapyuJL0TGXpjSzrw==
-X-Gm-Gg: AeBDieufGtzxRTS5jsF2MX93RtPDeBDqjM6dokhUNXBKOkvBW9NKBsg0XikX53XQRrs
-	r+7iaSQHeaCCKU2Sy0660R/k5bHz1B4EOb+8Jk3Ok7kuMjBC6mnN/sycTnvlfV8bxo/XlHEyhRN
-	93FVXbGfexOn4yxVWBQ4e47XymZMvzUMXI6cDsXJbsTQsZmxUugLopHY1rlvHOhtUYJAcUoDL9u
-	JqbyYE/PyyF++htXaIYynl4/FpTZ24g7th+FNRiW5mBwsRYf62b2G+MOpmUQHxBvZfpuFtFUcR5
-	eshIwUvmSZhgRQSL1pl2b1SyCXcuzVb95c1yDgU1vRDRv7plV65N5uTjfu6HvRNDhHIbBsTI3AI
-	iXWGemzh4L7nz8Dx6ENXh2vTJzclIhYQf/YLPlg/D5VtajC6OgsSgT2jS61VRjlWcCVZfZLEjjP
-	IX6Nk28/TTYbBBUvuceORj+ddYSnf4tpN/sZEGwez+
-X-Received: by 2002:a05:6000:1a8e:b0:43f:de5a:eb63 with SMTP id ffacd0b85a97d-43fe3dc0dc4mr62740811f8f.11.1777286537687;
-        Mon, 27 Apr 2026 03:42:17 -0700 (PDT)
+        bh=+MDWY2GTkGqUB/2Zjz2KS6A/bkSFgekCpuaAbzoVLdE=;
+        b=F/FYYevvzOwgk3N3KGILACjZ0Ckmq+WbEVpsLzoIUZSmDxu+qle2J+ep1Q6bfMoXQG
+         0tMF2DbdT9vO1eDfGAEQTb8HwI1c/tntZNLeSCDOBZiGO+FYN168Lx3Kap6g0TvEIWps
+         4AfmyBqCw0xVT8HqUda892Lvq2RZ2JjJ0Sr8ib9Ka8ZpHV2FrPPByeVpJFQ2qFBb9JzZ
+         TmP1YKpTUaJLQzLJ/PBcdSbC33ewPeD5bu5cy5vTHVNPCfhEYirz8WauQm9lO+tAwpDc
+         Eb8qSuMoAkesziheNqgI5zBe4cxNGCgEtU0obZve9k4yDp2nVFVYAVHuhyWH26U4alzP
+         RZJg==
+X-Gm-Message-State: AOJu0YxOHhl+C7KEbY6m5LNvM9gfRpfCvZtd70cs92GJV9+MDyljUMHf
+	jBbT9s/fXOyzas5siMMPIqYpC5MjZSBc1ZDT/DMhHkdoC6weob+jS/XU1mVrdQ==
+X-Gm-Gg: AeBDieuqnjT9jUvRkGpWfezBUPoNZN2rA8bUCl+WV6utsLQ+hy+qZj2tLp+sCzYqzfb
+	XAXypgNjzLM1vEQufGyRrnC5whh8B1sUCIjeXZTQCyOwOO+c+Tcc8LnoUsYF1d/OpSbglPKAkz/
+	B4VH8VfrKSvTFOleeUvwcr9XAotIJx2wR+LRbfWf7B3B8SRfMIv4Kpqvy/x0ZEYESywuXpjgG5F
+	L0bUol3Gtw3B1E6zo7mFXvkHpbUEqVtR7sDf33ThKbbaZdFrDKN+0KfAwL+eaFpHgWBMq5+HICR
+	kxjYXcMFH6le0MOZ9RGOHy/U9MzY9FPWxt0A1xQ4LyXMySm/x9Aq417QZyB8X/yWsBwXnqkoaBO
+	Ju/oUQJAaPVx9weAgaOskGmJNk5OKXRSkcGU08PgZddJhNUnG9QxdYk1US00epkuQJU8IZuQmme
+	vCR5Hni9pxZ3Z1GEkwQTCF3/x5ssknADT0yaG47tYP
+X-Received: by 2002:a5d:5cc4:0:b0:43c:fc5c:aa0b with SMTP id ffacd0b85a97d-43fe3e13c5fmr48100571f8f.42.1777286538769;
+        Mon, 27 Apr 2026 03:42:18 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:5b56:7e7f:83e5:ed3a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4e3a7b4sm74231698f8f.22.2026.04.27.03.42.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4e3a7b4sm74231698f8f.22.2026.04.27.03.42.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 03:42:17 -0700 (PDT)
+        Mon, 27 Apr 2026 03:42:18 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 27 Apr 2026 12:42:07 +0200
-Subject: [PATCH v3 6/9] update-ref: handle rejections while adding updates
+Date: Mon, 27 Apr 2026 12:42:08 +0200
+Subject: [PATCH v3 7/9] refs: move object parsing to the generic layer
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,309 +68,242 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260427-refs-move-to-generic-layer-v3-6-e4638dfb7897@gmail.com>
+Message-Id: <20260427-refs-move-to-generic-layer-v3-7-e4638dfb7897@gmail.com>
 References: <20260427-refs-move-to-generic-layer-v3-0-e4638dfb7897@gmail.com>
 In-Reply-To: <20260427-refs-move-to-generic-layer-v3-0-e4638dfb7897@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, toon@iotcl.com
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10218;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=r2v28c3wl5d/L0J6UZ8nz+gZ7ctBgxdu59dnQQzsXi4=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnvPYDpNZGMHeBpD67n4wEeI0m5asJNY+p+P
- 9ZHIcvHlGjgtIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp7z2AAAoJED7VnySO
- Rox/yRwL/jTHmFeBDG2IX1o6bVuzFwvPG31ViF1VhswGi6xmtYBNqo16q2iFeBA9pdbj5C1dnpk
- HraBD92ufi8xRAJ/LJ9u+YOkFZ5wbhs+ccjaCimkd29zm374ER4ttGeRRcX+gwy7DXRHVwD7pkb
- CZUhPsVaww6UPQyRrsBMsDGfs4Vlz+U/W8rXg2xgFdX8XmST27D878SiJLtQMPduqIg5+GKiv+L
- Kd2LaUBtZ9vSBCrkf8VFn4XYWp9l7HS8HhHXY/NJ2ju/t463JH1nFhH+G18QwjPwW0YIA6om6BC
- 75KjwcgAu5gnupW1a5uzyMrjA180EfzVcuEjtwNyOd/2Zy6SlaJtl/Hzs2GpgwAo1ookux+rLeR
- gHrMnkbjmS9cCTLENFFUiC1HGxVmIVdWw/rHDuzAN74zsUJcS68rKi9tDzO4+4bait6KmxRRRWc
- o8asdPyeiaW1h8PUBViPHtjIAeqSU5QT8bAJ51zMU4Ch1DcWdot4WbvvufBADmy838c7tzXbIA6
- w4=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8409; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=DjGPZfaZHhlBhPSmVnMQffN59KerRbptcmiWjYSxL1M=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnvPYB+Qo8BFnJk2eMMVSkXUmXG7giM2wBsP
+ ZySBPCzumDMP4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp7z2AAAoJED7VnySO
+ Rox/M4EL/jXaVpBCgUiQzmCfmflBmstA4EYLCkd2Hiu1j9+KiiJUYLsCq+PSY2S9JrWWizM5SbX
+ YHVOXmvQRZ6FZ4vCuazzfPDmGM3yh2etYevNfAmaYUZQYcI9r/VVWKzWEBuOo7f5iQCmNYxU9kM
+ mqgmgvEezdSALUD87wjZtTSYEVHBmpcEKGBel30R//SWPD24Ua3jEcc7kTL23YBVwnBNfPFiRO/
+ jF1p/68LTwDARdEBU7KXYKH1RXkC1UhYTVTjtaUATkwSMK2rkYFcxbe+qAlaj9AyC6UyZIkWVja
+ oxNgABpXUiP8fVVrmnT6CKYpqxXArDy2t++qH+WFy/G0N/qwJxOpjvtlUNCGMkKPm2eTT+n5XrC
+ A7pGov8VLp+HdSY/Jg6hb1UkuzJ4jfE50BCZyIEhPxUPcEzpLDkwNfFSg/PQlIyj4IkCYrD7r1z
+ 6KDXSIBGRekRmUZ/NBjYKD8J6sRV8DQlyl9tbh8KODpW1EMcVOxnGH6PEEyLpYwr63tdAkIL7U3
+ rc=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-When using git-update-ref(1) with the '--batch-updates' flag, updates
-rejected by the reference backend are displayed to the user while other
-updates are applied. This only applies during the commit phase of the
-transaction.
+Regular reference updates made via reference transactions validate that
+the provided object ID exists in the object database, which is done by
+calling 'parse_object()'. This check is done independently by the
+backends which leads to duplicated logic.
 
-In the following commits, we'll also extend `ref_transaction_update()`
-to reject updates before a transaction is prepared/committed. In
-preparation, modify the code in update-ref to also handle non-generic
-rejections from `ref_transaction_update()`. This involves propagating
-information to each of the commands on whether updates are allowed to be
-rejected, and also checking for rejections and only dying for generic
-failures.
+Let's move this to the generic layer, ensuring the backends only have to
+care about reference storage and not about validation of the object IDs.
+With this also remove the 'REF_TRANSACTION_ERROR_INVALID_NEW_VALUE'
+error type as its no longer used.
 
-Errors encountered during updates will be shown to the user immediately
-unlike other errors encountered only when the transaction is
-prepared/committed. As the verification of object IDs and peeled tag
-objects will move into `ref_transaction_update()` in the following
-commit, this means that those errors will be shown to the user before
-other errors, this changes the order of errors, but the functionality
-remains the same.
+Since we don't iterate over individual references in
+`ref_transaction_prepare()`, we add this check to
+`ref_transaction_update()`. This means that the validation is done as
+soon as an update is queued, without needing to prepare the
+transaction. It can be argued that this is more ideal, since this
+validation has no dependency on the reference transaction being
+prepared.
+
+It must be noted that the change in behavior means that this error
+cannot be ignored even with usage of batched updates, since this happens
+when the update is being added to the transaction. But since the caller
+gets specific error codes, they can either abort the transaction or
+continue adding other updates to the transaction.
+
+Modify 'builtin/receive-pack.c' to now capture the error type so that
+the error propagated to the client stays the same. Also remove two of
+the tests which validates batch-updates with invalid new_oid.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/update-ref.c | 106 +++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 77 insertions(+), 29 deletions(-)
+ builtin/receive-pack.c  | 22 +++++++++++++---------
+ refs.c                  | 18 ++++++++++++++++++
+ refs/files-backend.c    | 28 ++--------------------------
+ refs/reftable-backend.c | 19 -------------------
+ 4 files changed, 33 insertions(+), 54 deletions(-)
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 5259cc7226..348b7fec94 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -25,6 +25,15 @@ static unsigned int default_flags;
- static unsigned create_reflog_flag;
- static const char *msg;
- 
-+struct command_options {
-+	/*
-+	 * Individual updates are allowed to fail without causing
-+	 * update-ref to exit. This is set when using the
-+	 * '--batch-updates' flag.
-+	 */
-+	bool allow_update_failures;
-+};
-+
- /*
-  * Parse one whitespace- or NUL-terminated, possibly C-quoted argument
-  * and append the result to arg.  Return a pointer to the terminator.
-@@ -268,11 +277,13 @@ static void print_rejected_refs(const char *refname,
-  */
- 
- static void parse_cmd_update(struct ref_transaction *transaction,
--			     const char *next, const char *end)
-+			     const char *next, const char *end,
-+			     struct command_options *opts)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	char *refname;
- 	struct object_id new_oid, old_oid;
-+	enum ref_transaction_error tx_err;
- 	int have_old;
- 
- 	refname = parse_refname(&next);
-@@ -289,22 +300,35 @@ static void parse_cmd_update(struct ref_transaction *transaction,
- 	if (*next != line_termination)
- 		die("update %s: extra input: %s", refname, next);
- 
--	if (ref_transaction_update(transaction, refname,
--				   &new_oid, have_old ? &old_oid : NULL,
--				   NULL, NULL,
--				   update_flags | create_reflog_flag,
--				   msg, &err))
-+	tx_err = ref_transaction_update(transaction, refname,
-+					&new_oid, have_old ? &old_oid : NULL,
-+					NULL, NULL,
-+					update_flags | create_reflog_flag,
-+					msg, &err);
-+
-+	/*
-+	 * Generic errors are non-recoverable, so we cannot skip the update
-+	 * or mark it as rejected.
-+	 */
-+	if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
- 		die("%s", err.buf);
- 
-+	if (tx_err && opts->allow_update_failures)
-+		print_rejected_refs(refname, have_old ? &old_oid : NULL,
-+				    &new_oid, NULL, NULL, tx_err, err.buf,
-+				    NULL);
-+
- 	update_flags = default_flags;
- 	free(refname);
- 	strbuf_release(&err);
- }
- 
- static void parse_cmd_symref_update(struct ref_transaction *transaction,
--				    const char *next, const char *end UNUSED)
-+				    const char *next, const char *end UNUSED,
-+				    struct command_options *opts)
- {
- 	char *refname, *new_target, *old_arg;
-+	enum ref_transaction_error tx_err;
- 	char *old_target = NULL;
- 	struct strbuf err = STRBUF_INIT;
- 	struct object_id old_oid;
-@@ -341,14 +365,25 @@ static void parse_cmd_symref_update(struct ref_transaction *transaction,
- 	if (*next != line_termination)
- 		die("symref-update %s: extra input: %s", refname, next);
- 
--	if (ref_transaction_update(transaction, refname, NULL,
--				   have_old_oid ? &old_oid : NULL,
--				   new_target,
--				   have_old_oid ? NULL : old_target,
--				   update_flags | create_reflog_flag,
--				   msg, &err))
-+	tx_err = ref_transaction_update(transaction, refname, NULL,
-+					have_old_oid ? &old_oid : NULL,
-+					new_target,
-+					have_old_oid ? NULL : old_target,
-+					update_flags | create_reflog_flag,
-+					msg, &err);
-+
-+	/*
-+	 * Generic errors are non-recoverable, so we cannot skip the update
-+	 * or mark it as rejected.
-+	 */
-+	if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
- 		die("%s", err.buf);
- 
-+	if (tx_err && opts->allow_update_failures)
-+		print_rejected_refs(refname, have_old_oid ? &old_oid : NULL,
-+				    NULL, have_old_oid ? NULL : old_target,
-+				    new_target, tx_err, err.buf, NULL);
-+
- 	update_flags = default_flags;
- 	free(refname);
- 	free(old_arg);
-@@ -358,7 +393,8 @@ static void parse_cmd_symref_update(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_create(struct ref_transaction *transaction,
--			     const char *next, const char *end)
-+			     const char *next, const char *end,
-+			     struct command_options *opts UNUSED)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	char *refname;
-@@ -387,9 +423,9 @@ static void parse_cmd_create(struct ref_transaction *transaction,
- 	strbuf_release(&err);
- }
- 
--
- static void parse_cmd_symref_create(struct ref_transaction *transaction,
--				    const char *next, const char *end UNUSED)
-+				    const char *next, const char *end UNUSED,
-+				    struct command_options *opts UNUSED)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	char *refname, *new_target;
-@@ -417,7 +453,8 @@ static void parse_cmd_symref_create(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_delete(struct ref_transaction *transaction,
--			     const char *next, const char *end)
-+			     const char *next, const char *end,
-+			     struct command_options *opts UNUSED)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	char *refname;
-@@ -450,9 +487,9 @@ static void parse_cmd_delete(struct ref_transaction *transaction,
- 	strbuf_release(&err);
- }
- 
--
- static void parse_cmd_symref_delete(struct ref_transaction *transaction,
--				    const char *next, const char *end UNUSED)
-+				    const char *next, const char *end UNUSED,
-+				    struct command_options *opts UNUSED)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	char *refname, *old_target;
-@@ -479,9 +516,9 @@ static void parse_cmd_symref_delete(struct ref_transaction *transaction,
- 	strbuf_release(&err);
- }
- 
--
- static void parse_cmd_verify(struct ref_transaction *transaction,
--			     const char *next, const char *end)
-+			     const char *next, const char *end,
-+			     struct command_options *opts UNUSED)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	char *refname;
-@@ -508,7 +545,8 @@ static void parse_cmd_verify(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_symref_verify(struct ref_transaction *transaction,
--				    const char *next, const char *end UNUSED)
-+				    const char *next, const char *end UNUSED,
-+				    struct command_options *opts UNUSED)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	struct object_id old_oid;
-@@ -550,7 +588,8 @@ static void report_ok(const char *command)
- }
- 
- static void parse_cmd_option(struct ref_transaction *transaction UNUSED,
--			     const char *next, const char *end UNUSED)
-+			     const char *next, const char *end UNUSED,
-+			     struct command_options *opts UNUSED)
- {
- 	const char *rest;
- 	if (skip_prefix(next, "no-deref", &rest) && *rest == line_termination)
-@@ -560,7 +599,8 @@ static void parse_cmd_option(struct ref_transaction *transaction UNUSED,
- }
- 
- static void parse_cmd_start(struct ref_transaction *transaction UNUSED,
--			    const char *next, const char *end UNUSED)
-+			    const char *next, const char *end UNUSED,
-+			    struct command_options *opts UNUSED)
- {
- 	if (*next != line_termination)
- 		die("start: extra input: %s", next);
-@@ -568,7 +608,8 @@ static void parse_cmd_start(struct ref_transaction *transaction UNUSED,
- }
- 
- static void parse_cmd_prepare(struct ref_transaction *transaction,
--			      const char *next, const char *end UNUSED)
-+			      const char *next, const char *end UNUSED,
-+			      struct command_options *opts UNUSED)
- {
- 	struct strbuf error = STRBUF_INIT;
- 	if (*next != line_termination)
-@@ -579,7 +620,8 @@ static void parse_cmd_prepare(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_abort(struct ref_transaction *transaction,
--			    const char *next, const char *end UNUSED)
-+			    const char *next, const char *end UNUSED,
-+			    struct command_options *opts UNUSED)
- {
- 	struct strbuf error = STRBUF_INIT;
- 	if (*next != line_termination)
-@@ -590,7 +632,8 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_commit(struct ref_transaction *transaction,
--			     const char *next, const char *end UNUSED)
-+			     const char *next, const char *end UNUSED,
-+			     struct command_options *opts UNUSED)
- {
- 	struct strbuf error = STRBUF_INIT;
- 	if (*next != line_termination)
-@@ -618,7 +661,8 @@ enum update_refs_state {
- 
- static const struct parse_cmd {
- 	const char *prefix;
--	void (*fn)(struct ref_transaction *, const char *, const char *);
-+	void (*fn)(struct ref_transaction *, const char *, const char *,
-+		   struct command_options *);
- 	unsigned args;
- 	enum update_refs_state state;
- } command[] = {
-@@ -644,6 +688,10 @@ static void update_refs_stdin(unsigned int flags)
- 	struct ref_transaction *transaction;
- 	int i, j;
- 
-+	struct command_options opts = {
-+		.allow_update_failures = flags & REF_TRANSACTION_ALLOW_FAILURE,
-+	};
-+
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
- 						  flags, &err);
- 	if (!transaction)
-@@ -721,7 +769,7 @@ static void update_refs_stdin(unsigned int flags)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 878aa7f0ed..376e755e97 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1641,8 +1641,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 			ret = NULL; /* good */
+ 		}
+ 		strbuf_release(&err);
+-	}
+-	else {
++	} else {
++		enum ref_transaction_error tx_err;
+ 		struct strbuf err = STRBUF_INIT;
+ 		if (shallow_update && si->shallow_ref[cmd->index] &&
+ 		    update_shallow_ref(cmd, si)) {
+@@ -1650,14 +1650,18 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 			goto out;
  		}
  
- 		cmd->fn(transaction, input.buf + strlen(cmd->prefix) + !!cmd->args,
--			input.buf + input.len);
-+			input.buf + input.len, &opts);
+-		if (ref_transaction_update(transaction,
+-					   namespaced_name,
+-					   new_oid, old_oid,
+-					   NULL, NULL,
+-					   0, "push",
+-					   &err)) {
++		tx_err = ref_transaction_update(transaction,
++						  namespaced_name,
++						  new_oid, old_oid,
++						  NULL, NULL,
++						  0, "push",
++						  &err);
++		if (tx_err) {
+ 			rp_error("%s", err.buf);
+-			ret = "failed to update ref";
++			if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
++				ret = "failed to update ref";
++			else
++				ret = ref_transaction_error_msg(tx_err);
+ 		} else {
+ 			ret = NULL; /* good */
+ 		}
+diff --git a/refs.c b/refs.c
+index efa16b739d..662a9e6f9e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1416,6 +1416,24 @@ enum ref_transaction_error ref_transaction_update(struct ref_transaction *transa
+ 	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
+ 	flags |= (new_target ? REF_HAVE_NEW : 0) | (old_target ? REF_HAVE_OLD : 0);
+ 
++	if ((flags & REF_HAVE_NEW) && !new_target && !is_null_oid(new_oid) &&
++	    !(flags & REF_SKIP_OID_VERIFICATION) && !(flags & REF_LOG_ONLY)) {
++		struct object *o = parse_object(transaction->ref_store->repo, new_oid);
++
++		if (!o) {
++			strbuf_addf(err,
++				    _("trying to write ref '%s' with nonexistent object %s"),
++				    refname, oid_to_hex(new_oid));
++			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
++		}
++
++		if (o->type != OBJ_COMMIT && is_branch(refname)) {
++			strbuf_addf(err, _("trying to write non-commit object %s to branch '%s'"),
++				    oid_to_hex(new_oid), refname);
++			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
++		}
++	}
++
+ 	ref_transaction_add_update(transaction, refname, flags,
+ 				   new_oid, old_oid, new_target,
+ 				   old_target, NULL, msg);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 4b2faf4777..f20f580fbc 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -19,7 +19,6 @@
+ #include "../iterator.h"
+ #include "../dir-iterator.h"
+ #include "../lockfile.h"
+-#include "../object.h"
+ #include "../path.h"
+ #include "../dir.h"
+ #include "../chdir-notify.h"
+@@ -1589,7 +1588,6 @@ static int rename_tmp_log(struct files_ref_store *refs, const char *newrefname)
+ static enum ref_transaction_error write_ref_to_lockfile(struct files_ref_store *refs,
+ 							struct ref_lock *lock,
+ 							const struct object_id *oid,
+-							int skip_oid_verification,
+ 							struct strbuf *err);
+ static int commit_ref_update(struct files_ref_store *refs,
+ 			     struct ref_lock *lock,
+@@ -1737,7 +1735,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+ 	}
+ 	oidcpy(&lock->old_oid, &orig_oid);
+ 
+-	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
++	if (write_ref_to_lockfile(refs, lock, &orig_oid, &err) ||
+ 	    commit_ref_update(refs, lock, &orig_oid, logmsg, 0, &err)) {
+ 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1755,7 +1753,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+ 		goto rollbacklog;
  	}
  
- 	switch (state) {
+-	if (write_ref_to_lockfile(refs, lock, &orig_oid, 0, &err) ||
++	if (write_ref_to_lockfile(refs, lock, &orig_oid, &err) ||
+ 	    commit_ref_update(refs, lock, &orig_oid, NULL, REF_SKIP_CREATE_REFLOG, &err)) {
+ 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1999,32 +1997,11 @@ static int files_log_ref_write(struct files_ref_store *refs,
+ static enum ref_transaction_error write_ref_to_lockfile(struct files_ref_store *refs,
+ 							struct ref_lock *lock,
+ 							const struct object_id *oid,
+-							int skip_oid_verification,
+ 							struct strbuf *err)
+ {
+ 	static char term = '\n';
+-	struct object *o;
+ 	int fd;
+ 
+-	if (!skip_oid_verification) {
+-		o = parse_object(refs->base.repo, oid);
+-		if (!o) {
+-			strbuf_addf(
+-				err,
+-				"trying to write ref '%s' with nonexistent object %s",
+-				lock->ref_name, oid_to_hex(oid));
+-			unlock_ref(lock);
+-			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
+-		}
+-		if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
+-			strbuf_addf(
+-				err,
+-				"trying to write non-commit object %s to branch '%s'",
+-				oid_to_hex(oid), lock->ref_name);
+-			unlock_ref(lock);
+-			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
+-		}
+-	}
+ 	fd = get_lock_file_fd(&lock->lk);
+ 	if (write_in_full(fd, oid_to_hex(oid), refs->base.repo->hash_algo->hexsz) < 0 ||
+ 	    write_in_full(fd, &term, 1) < 0 ||
+@@ -2828,7 +2805,6 @@ static enum ref_transaction_error lock_ref_for_update(struct files_ref_store *re
+ 		} else {
+ 			ret = write_ref_to_lockfile(
+ 				refs, lock, &update->new_oid,
+-				update->flags & REF_SKIP_OID_VERIFICATION,
+ 				err);
+ 			if (ret) {
+ 				char *write_err = strbuf_detach(err, NULL);
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 93374d25c2..444b0c24e5 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1081,25 +1081,6 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
+ 		return 0;
+ 	}
+ 
+-	/* Verify that the new object ID is valid. */
+-	if ((u->flags & REF_HAVE_NEW) && !is_null_oid(&u->new_oid) &&
+-	    !(u->flags & REF_SKIP_OID_VERIFICATION) &&
+-	    !(u->flags & REF_LOG_ONLY)) {
+-		struct object *o = parse_object(refs->base.repo, &u->new_oid);
+-		if (!o) {
+-			strbuf_addf(err,
+-				    _("trying to write ref '%s' with nonexistent object %s"),
+-				    u->refname, oid_to_hex(&u->new_oid));
+-			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
+-		}
+-
+-		if (o->type != OBJ_COMMIT && is_branch(u->refname)) {
+-			strbuf_addf(err, _("trying to write non-commit object %s to branch '%s'"),
+-				    oid_to_hex(&u->new_oid), u->refname);
+-			return REF_TRANSACTION_ERROR_INVALID_NEW_VALUE;
+-		}
+-	}
+-
+ 	/*
+ 	 * When we update the reference that HEAD points to we enqueue
+ 	 * a second log-only update for HEAD so that its reflog is
 
 -- 
 2.53.GIT
