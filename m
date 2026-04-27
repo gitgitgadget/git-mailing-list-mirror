@@ -1,141 +1,184 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F1E3C4579
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 13:17:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777295824; cv=none; b=CZd+/CZckI69J103wtlUDL64wSTTqLBjrldrcMLeXI7qJQWQQGSTB71k0WB4t8vX+77G3j2hXYGClxepFMv02iUyuG7zg1Ix8pC3Pfr8q2wN3OcxIUBtLijXFOjoiifmA4YmLLaS4NIxEM7QztQmfXOri2YciznJwdJzNlC3W98=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777295824; c=relaxed/simple;
-	bh=+OwpM6efLq7wDuG7BuYvnzF3WvQH3NXohUWom0vOQdo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RBD8shlrepDKWhR/yvkF+iLCnSbW7tuYuVAlw/SmslqcVtJ7WEuJtRKGX+eLWAeMO5HSGexE9OqxI3v0BbRMjg1JuYF8Tvc9YezVhUhmY5Q++HAavvP6rKxyEwsfTdfZSiBt1ASixhYisUYs1wdH7xvvct0jBR61FVuzz0jaaGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W2DmOcKR; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F75731195C
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 13:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777298353; cv=pass; b=nyldxMGYeUUY99ko2ZpzoOzX4JL+n4iPPScuTabTbcFDxitKIU9qagsP+7SJnMh+AMNk0RJAo1ppxdEzA/ckRNZ8poCjse9kQ1RShm3e7HQgGaAT1sS7C/IFpwRO+qFMnMDKrZMUF7/oKV50GgpqgV0fca5YzeVtnfAdPHd6h54=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777298353; c=relaxed/simple;
+	bh=lqfY/65iN4KWWwEaoQnlILqvjbrHZBiX/YNLGh+Acgo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u9d6a0WFkS/xqWZ8NLidBisksUsGU5p0pptSRHQ8aQ/Nb34FnQeghy49MyRZ7xiCDWZA0Yi54a0iexURvLd78PkHUtCQ7pmU6hztj3baK638iAvhaZ5E3+KroMygzc42dWomuITuGFrJAf/b5Nn91KN008P++y2dNixTyObrPgE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mGtza+bl; arc=pass smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W2DmOcKR"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8eae9229110so1370678885a.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 06:17:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mGtza+bl"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38e9653b580so113405511fa.2
+        for <git@vger.kernel.org>; Mon, 27 Apr 2026 06:59:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777298349; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LyYToibDQFtat2l3GLzYghWDyG/jTryllJRS992kqekzVg0QR9Z7QJxVmw8NeXGeYF
+         yGSO9G7i5cR+10em+hUzDUsl29/QxWZlc4JWpt0Rpe9gdycAKaYA8scn2UU0A8X3zTDD
+         VZHNX0Ij/MjSIEI1LUSzdaHykUu/nyvHPaQiSu9OYqMsNHfgI9tOAQWTy728n//8qWSQ
+         sCzeUWIjn20j/HFMAkLqkHGwFj2NWvBAu+1LnNTD/7eaRdB+o6+YTBKE0XB4w6/ahjuj
+         vvqwJ9i9C/LbhhFYC5UO9fvw2RaCRp+hxzOMWxc3DbeX2SBN+6YKXIKHItLNHyWln3EI
+         QRKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=lqfY/65iN4KWWwEaoQnlILqvjbrHZBiX/YNLGh+Acgo=;
+        fh=439TAajVyIx600SZu5PY7FeOPM5KB28236wdVQZA0e4=;
+        b=lWTW70JRTVKeIwmSC0huRoJ/eL5AwSU6u9GRwVHHDFEzyaIg6aQLJy8wahypwl/Ixg
+         qiguyjle6mOPkOkaYwNM5rCBjjSlv6qAYhGsHXNPP6aJSYgeiDwo10sgXNlUuE89GkQU
+         2O3HgofcONTxalhs+jjaWkLdUlug1uORzWondKEZ3O3wVzbamsJz6USAzYeX8Fib3qIl
+         j/SphJ7BWA4C75E0iESIfZf6QXCOsDyg8KiZemzj5NQHttSB1rF7+Iu8e6jWIyW+C9cP
+         XL8DtB7xmICU1W6Ii+e3aVskuIACXowFj3/btKLbmkyJleF7wIhmLgqVD0f6b6InEDQo
+         Q2sA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777295822; x=1777900622; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9mK9kcgZxYgXhou5Tah5DNqqTchBZ3Uu8dpVGheSGpg=;
-        b=W2DmOcKRkHCDZw+Iv56KAuLUg0v5JcDDqXlPaftadbj91kgG2Z9IpTLoOd2KbU6X+L
-         EgstBe30FOrevMQ1UdQdDedYJHL0t7qISbPx+PNTjYU8nLUCbZZEJOw2wVqpM32Pdhgo
-         iN+JOfTykgvzDLjLra3b5qGdd1miJJjYJD/wxgXxAg3++wg8jf5EjjWtzTcA2TiKRPaH
-         42ouZe++EuSeKaVArIgOVoEoq9HbSJjTKt8T0EbLYQRGa/VuHLWaPJTqXE9tDn3NJB9/
-         eltdktBM2yLk8MoilaKXvkOUUvRv0TdVY8QroXFaa7G1bcMbgH0ET9fu/lvtLxShlLhR
-         jsEQ==
+        d=gmail.com; s=20251104; t=1777298349; x=1777903149; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lqfY/65iN4KWWwEaoQnlILqvjbrHZBiX/YNLGh+Acgo=;
+        b=mGtza+bljHC1/koTOXEQTVpaH4QytY8CAygqRF+UK8FlmL7gcI1QYivTx33yLgSmqD
+         1fiQyzRdlTGmikGA5pxAH9ovzbKZ/8peTczHQDUY5wln4JGeua+MNWH9oCzI97+WQoIP
+         CyiknexIfvq7oBJseF0Ncf8UkkdiFshgEGJN8RezOCud0QifEuAvso3kUIWNL58eCbpH
+         aTuQjDpkWI3ESUgA8IbNfW8Wari0VgwAeLEajYcNPk8Xoiq11awuYtyKGQJ87jGccp9Q
+         zUsoZHzrabiBoC3IItp8k52GbC+4QxrokhQGLkM9QTDq2NNX4NoESuL8Z/K76dOdvmDX
+         7sJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777295822; x=1777900622;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9mK9kcgZxYgXhou5Tah5DNqqTchBZ3Uu8dpVGheSGpg=;
-        b=B/yX/wkaf/IUgNDIqIyw7LcxJgWlSo410vmTzzjOZcF0cWj3l6Ug7dILj8OtihYrU0
-         d2imMgP7AJCiuURaHchH3mPEdi+KuPIxRx4EUdDOeYLePIroIqTuIc7rGNqBSpMFC6df
-         M/W5Z/nfn8a1DHlZJsi3N/52ZGeNqdsHHxdbxx2Lg8d85aRzu2dJtPyTwKz4Wn44ngR5
-         35b/FvOHfO9b4k7EJhouvc7bCmRuYFPBzm7ZH70x2HfAzODDR4seqU2x1KVEnmzRYyry
-         Av2o4tZGQNfdGeWPBXPsN+l2stMNQ/GKOvDUYRAjrRItVRw/g9okHwyqk8Kn/G0nBkDg
-         TeBQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9ea32Eg42Sed6ibs3R5eDNeb1fKxi+uZlBfGAGlQ9i1yrTGpo1PezUk2hz8TMeyy7Ua7E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAakgAjTTDgggVi6U5tUPZln5sqHdhv0C8OXXvw7kGK8Ez9/nt
-	84CkSzcx/e9h2GvjvsZjRd2YXZG41cZgNga2zb6lQaspKQ12BzX49qg94P4s+Nib
-X-Gm-Gg: AeBDieuyYUyy/0y1vnHFojD+zzKJeSbUv2LJ19Y7J06n5gpZ3RXiy0zm/XvnMMmB1kC
-	WlgRhFpuFHF584Qgmn96oCwcljGs5WfpRYamEZ05RS9j2p+uX1XXWFgB10YZhYtlxe+0IZveRIw
-	Ve5dHYTk+JWj6PX5uh23siN8K4tgCpStuDCVE5TeAepPZQ/KhE+/3g45lRDDanPiSM4r569nuEP
-	saXfC9cXhCPxsU7XwNuBnnPg8H6imkVwvU1QOb3B7u8iwunpenVK12sDkixJzSbQHqNt1aUoEwy
-	4lHxuu1JQLaFBlEer3U62n/V53oFeNr+KeHb3QN51diDCflSDESwlomphnFBi1Qzda/SLbSzGcW
-	HvwvgmSHm/o1fp8Niro2dNPb3Qc0HifiuXYJzynLM4qMZcweMHHFMb5mwIT2Fxygest5B1m4TV5
-	8zVI3z/8UBynaznZx62LL8QGdqS9x6BRcu09Kn8vMjgCl0kSXyAQ6CsgFAe+znk94JsFyijRWJV
-	e3+9I80xfe0ARsyHwI=
-X-Received: by 2002:a05:620a:4692:b0:8cf:ffee:c616 with SMTP id af79cd13be357-8e78f0581ecmr5929529485a.7.1777295821467;
-        Mon, 27 Apr 2026 06:17:01 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d8edb734sm2960703085a.29.2026.04.27.06.16.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Apr 2026 06:17:00 -0700 (PDT)
-Message-ID: <a2fbb23d-0809-4a9d-8bf9-8ac0dc8ee054@gmail.com>
-Date: Mon, 27 Apr 2026 09:16:59 -0400
+        d=1e100.net; s=20251104; t=1777298349; x=1777903149;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lqfY/65iN4KWWwEaoQnlILqvjbrHZBiX/YNLGh+Acgo=;
+        b=BLUNvk3P1K49hbnpJr/caK0xYQZ4aMan3cNFkZ7Lh+COywBrVu+dodab3Bi1qpIust
+         4sJ0cufx8ssFuGU+Qmi7CbsLoAHJ+kY1uC1JqH2i43m4usYBzLqdrO0xI457Kh40JOBb
+         JTom9zvrjKQjEoxESoPMcpotLwugO/x2VxP/Dy8yfH/bv4GYwvEH9s6AbPWALU1ImMYJ
+         4jU/dySVCf3KTBM1RDSLVDv7ZHmWYpcrtpWQUOBmfqa0tBZBMNYMZ67uHbyAfnqnByFa
+         EKlaFFSUV69TyVRJ+tlq2ojAHQtxl4s/uUaGO5Zmb4bHkE0kqqC29r3iHUckMWNoNyBy
+         7i+w==
+X-Forwarded-Encrypted: i=1; AFNElJ+H3MFDO1xRJOux/YJG6DMm2wPkuM1EjtKsFdlp6MyQufTF4upQmNaYJiHA5CuHZrECk68=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7XkLJgr7U6BTiQarFI5tfOIcnPvbC40yIMpkEHweNKKUgv+NQ
+	u58EKWQW5uib0iYwVT1NEAR1KMaSAoJ7VAofp3HRx12Wxa9iLJ37Noktv/pM2wW0rJBiciBh37w
+	e3ADivqOCUxcCEyL6w88n6sARGPeVs58=
+X-Gm-Gg: AeBDiev5CRflodw96bVQNCZbPhNshyr/CFdKw9ec8nq0Cio4bEQzcBmbAYxR4cDyqap
+	Gz8qkhnezAoNVgGJz2ZU50Zo67bVT2RIMQCzPGWvswJeSUatybcbn0kSrZW5eQhHJhYMnBcI4LK
+	i0g/Q0MQofwzBd6GFnhWsL4wqoqm95uzsBvYQyftRuZbGkX5dSn7Vn60xCqppq7eb6e2wuOGqQW
+	zQhGkN4JGYsOW9norWnUncpbecbXfoJ3BBBWjbqwlZoEJWtoWJbcj/c9PAlGGedylMNEtexq3z2
+	OlGQgPUE77dSiON7qAk=
+X-Received: by 2002:a2e:2e09:0:b0:38e:94e3:206e with SMTP id
+ 38308e7fff4ca-38ec7af74a5mr104170811fa.26.1777298348941; Mon, 27 Apr 2026
+ 06:59:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] builtin/log: prefetch necessary blobs for `git
- cherry`
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
-References: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
- <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
- <a705852723fbe88e94ad3de1daba548dbce32211.1776472347.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <a705852723fbe88e94ad3de1daba548dbce32211.1776472347.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <cover.1776984666.git.mroik@delayed.space> <cover.1777249165.git.mroik@delayed.space>
+ <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
+ <xmqq8qa852b5.fsf@gitster.g> <971f19db-eb10-4c88-8d5d-3f4f7f92db73@kdbg.org> <xmqq1pg04mbt.fsf@gitster.g>
+In-Reply-To: <xmqq1pg04mbt.fsf@gitster.g>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Mon, 27 Apr 2026 06:58:55 -0700
+X-Gm-Features: AVHnY4Kf2v7k6w1AU9C7Ri3uQwHp3Z25O-xqWJuF8bVonLd7Tb1MORU40Ipx4Cw
+Message-ID: <CAPx1GvcU8b7CfGrXxzZa10Ys2YScGq_2B4M9jkhs2SwywRP3AQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] revision.c: implement --reverse=before for walks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	Patrick Steinhardt <ps@pks.im>, Tian Yuchen <cat@malon.dev>, Ben Knoble <ben.knoble@gmail.com>, 
+	Mirko Faina <mroik@delayed.space>
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/17/2026 8:32 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+This topic has been rattling around in my head for a while, and I need
+to get it out now. :-)
 
-(I'm sorry that I'm reviewing out of order. This reply includes my
-feelings about patch 3 after reading both.)
+First, a few notes:
 
-> +/*
-> + * Enumerate blob OIDs from a single commit's diff, inserting them into blobs.
-> + * Skips files whose userdiff driver explicitly declares binary status
-> + * (drv->binary > 0), since patch-ID uses oid_to_hex() for those and
-> + * never reads blob content.  Use userdiff_find_by_path() since
-> + * diff_filespec_load_driver() is static in diff.c.
-> + *
-> + * Clean up with diff_queue_clear() (from diffcore.h).
-> + */
-> +static void collect_diff_blob_oids(struct commit *commit,
-> +				   struct diff_options *opts,
-> +				   struct oidset *blobs)
+ * I'm going to delete most of the context because I want to go back
+to first principles here. Instead, I'll list what I think are the real
+issues.
 
-I think that this is generally a good idea, though I worry that
-having this hidden in builtin/log.c may not be the right long-
-term home.
+ * I have always had a suspicion that `--max-count` / `-n` was "done
+wrong" in the first place, it's just that it's generally invisibly
+wrong.
 
-I expect that we'll find more and more examples where we want to
-prefetch blobs in different operations, those that exist now and
-those that may be created in the future. It would be preferred if
-they could automatically take advantage of the logic already in
-diff_queued_diff_prefetch() within diffcore_std() in diff.c.
+ * While all the revision-walking machinery normally shows commits
+"newest first", there are several fundamental issues with defining
+"newest" anyway. A lot of Git newcomers find this terribly confusing
+-- usually a few weeks or months into use of Git, really.
 
-Ultimately, _this_ patch cares about a diff. Could we compute a
-"diff prep" computation using the core diff library instead of
-inventing a second queue of results for diffing?
+It's important to note that the rev-walk machinery uses a priority
+queue, and that this is necessary because commits are in a directed
+graph, which cannot be presented linearly unless you're willing to:
+(a) add additional information (graph drawing, parent list, whatever),
+or (b) discard information. The `git log` and `git rev-list`
+documentation skimp a bit on this.
 
-Patch 3 cares about a "scan prep" which cares about loading all
-blobs for a given tree with respect to a pathspec. This is very
-similar to what a checkout would do, though it ultimately uses
-a form of diff to find out what change should be applied to the
-working directory. Perhaps 'git archive' is a better matching
-example.
+There is of course nothing wrong with discarding information when it's
+irrelevant. In fact, that's the whole point of abstraction, to toss
+out irrelevancies so that one can concentrate only on the relevant.
+And that's what all the limiting options for revision walking are for!
 
-I don't mean to make your series more complicated. I value what
-you're doing and can see how your current attention can be used
-to make further improvements later. By implementing things in a
-common location, then we can have later integrations add to the
-confidence in the feature through tests covering each user-facing
-use.
+Sorting options affect the order in which items go into the priority
+queue. Limiting options affect which items go in, and sometimes, how
+many items come out. Display options affect what we see when the items
+come out, and this includes the sorting options since they come out in
+the order they're in there.
 
-I'm not sure if it makes sense to attempt to create a universal
-library method that would be used by builtin/log.c _and_ diff.c,
-at least not right now. I'm most interested in having this logic
-be more reusable in the future without needing to move code
-across files.
+Thus, `--reverse` is a *display* option (part of sorting), while
+`--max-count` is a *limiting* option. It's just that, well, there's a
+special case when they're combined.
 
-Thanks,
--Stolee
+Junio noted:
 
+> That makes two of us to suspect that this is more about --max-count than --reverse.
+
+And that's really the case here. Because `--max-count` was "done
+wrong" initially, we have a slight problem. Had it been done as a
+"window of items in the priority queue", we would always have gotten
+the limited-to-N items remaining in the queue after the selection
+process, displayed according to the display process. But when the
+display is going to be "in the order of items in the queue" and the
+limiting count is N items *and* the display doesn't reverse the queue,
+it suffices to display the first N items and then quit entirely. This
+is of course a nice space-and-time optimization.
+
+As it turns out, the only display option that causes this optimization
+to be invalid is (or might be) `--reverse`.
+
+Unfortunately, fixing the problem by simply defeating the "keep N
+items in the queue and only stop early (and maybe display as we go as
+well) if we're allowed" optimization -- the one that was applied
+prematurely, as it were -- will change the existing behavior of `git
+log -n 10 --reverse` in any repository with more than 10 commits in
+it. Had the over-optimization not been done, and someone wanted to add
+a "gather only N into the queue and then stop traversing, and then
+display" option, we could perhaps use `--stop-walk-(after|at)=n` as a
+new option.
+
+As far as I can tell, the gripe that this exposes the priority queue
+mechanism is valid, but at best trivial, because knowing about the
+priority queue is crucial anyway. Beginners can skip it for a little
+while, but as soon as they find out that commits have two separate
+date stamps, and learn about `--date-order`, `--author-date-order`,
+and `--topo-order`, they need to learn about the queue.
+
+If it's deemed acceptable to change the historic behavior of
+`--max-count` combined with `--reverse`, I'd suggest simply adding
+`--stop-walk-after` (perhaps with a slightly different name) to take
+over the historic behavior of `--max-count`, and make `--max-count`
+not over-optimize. If not, I'd suggest a new option, with a note in
+the documentation that `--max-count` has this odd behavior when
+combined with `--reverse`. Perhaps the new option could be called
+`--prio-queue-size=n`. The implementation can still optimize this
+(using the same code as before) when `--reverse` isn't in effect,
+since the effect is only visible with `--reverse`.
+
+Chris
