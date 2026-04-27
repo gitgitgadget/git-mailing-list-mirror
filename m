@@ -1,55 +1,55 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0861E29898B
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:54:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20461364933
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777269243; cv=none; b=cX+fuV0jGkSj+IIK1n7NK/52BVpG2qJh67E6kt/5x55C0q1urMbEIF/aX1Tt8K0Dy25pnLa1zJau5u88483IFVJ0UEwUfuYTjyaE5RO8uXKpEgSIWZLB7BRTm7MNSVk8yiqk3DbOtlUyIQemnPZrqwYJWVlVBZOo0qs4wu7J6Bo=
+	t=1777269246; cv=none; b=FztiQSZaDo1kg2hjFXp2p9LotJp8aaVPSH+alQWrFSAbAGtWWN/knNYiDuzj6UB2y83PO2aaiIr9b4147lnI9GwxAvsDw5opa4tYul/GQpUaUeNnUnxZD3UEBPM8mbeTz/Olj6gM6GWIpscwjlJvGc0OUmI8lB8h4ws274Try90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777269243; c=relaxed/simple;
-	bh=YhRhn4Trr/hi1hj+92/UF8C6yr62yKHwnRLbCDeeip8=;
+	s=arc-20240116; t=1777269246; c=relaxed/simple;
+	bh=cPVvKJGzr/UZf2yYmAjnPqvAd9d+b2yS9v9rerDLXfQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rqSJPsnoOlvy5mgY/AnvYqcsU5sVG5AmLQ/QG1On9U442RaY7VckvAWY8VsOJUvvOTPKWW3qA3CQPkdu27T2isBkIIX0b1Snc8YGamWrjISxpSnCeBqj3+acO+1suZrizAnhAls9CwWdTjuQXdbsKF21k9AjFxV1PNFd4ajvYfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M9P/9Ozo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SfjFpAe2; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=kCkupUTXDOZvvIG3xps1YdlmXD4wI1zODHYCvFlX0UxcBkmkJlarRVpcMkrp+AIid7hEtW2ALGxuFOBa81VlwV/ufH6HFQenyvrNZZ2ej5gJ1Z67200CApGnGlHRTi33ijl2E+WaHKndmHoGJmvevTt33PIo0PDwDMJ5QCROAAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RARGmlhc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CseIC+D8; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M9P/9Ozo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SfjFpAe2"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2517114000BB;
-	Mon, 27 Apr 2026 01:54:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RARGmlhc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CseIC+D8"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 518EEEC14D2;
+	Mon, 27 Apr 2026 01:54:04 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 27 Apr 2026 01:54:01 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 27 Apr 2026 01:54:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1777269241;
-	 x=1777355641; bh=j9UsOfXrTzVw987oNc70OWncxfblN1mg8LBq5oYnL/0=; b=
-	M9P/9OzoEgyO7LRChAm9prgHwPl4nfe4tbIlnnskXU2ZkSfhGneh60BjCA31T7My
-	IIOIAPaHYibsnTL9KNqajfvkOOCNcU0uZc/n3mkfBQ73dPao7liyTMdvgPO5ktGJ
-	DL2IbWFdownREwBa8TO12IStpL9n0MsjnZ3lynViBNgvsTHOne+IMWjT/7ofHoGx
-	CHNKZJUnVZmK0O5uIdNubDqHPe8xmXVBG0EYDVw23CwZoOIHXDM9hX91fAY0OrC1
-	EhuADHehopLHhtnnrjM7x3z+Y2zRh2KdJUo/DlbnTsOTrd6glyRZm3UUuTauoAj2
-	Z7Fj5a4HMfsdO1Ub0agmPA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1777269244;
+	 x=1777355644; bh=OWrTntZPvkwjEBJh0GfkpWctnWGTJEvHt00rAJ6hyGE=; b=
+	RARGmlhcLqSEb9Er4YqKzIVZ2nedmIP+wyWe7cuzUUPB4s32J5p6EVrzxB3T9Kh4
+	6Bejo9VTPJGhx1Gt7bxPb4WWl3E9swuadAQelRjRdipSj0bdrhuEW9+HNPEbQQGb
+	USqChWVeFuTCLJl6EcTeIKFb9szogKcLxMsv5KPs79Adutqt4tmqhHyfyeAvXow0
+	UBOoTdzRmXQCcGfuwz1mn+9+pr4hPbYnUFldtLwa38a5cIOxY4Fg8LHiBGmXIsW6
+	U6J+EIMwB2NmXrOxc6T6K032xNNedgOUZrA42lVcG26kXXscF3dC2yatJxVqoNXy
+	3KFxo5pY7DxJKmO9mn/QsA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777269241; x=
-	1777355641; bh=j9UsOfXrTzVw987oNc70OWncxfblN1mg8LBq5oYnL/0=; b=S
-	fjFpAe2Rz+SQ6HRwhEtDduFKaHsbnibOo9pqRRl56n4j88Uhg2CtzZZP4Ted3NB/
-	CQaUEaLSoU/8pkbBAfHwrIOfjUUx0p9zJGfNI0HwILaOjcbF5OvDgsVsRjUut5yM
-	gYqJeZbahM8H3EDq+R7hZbErd2553+uCCe2IAJpteripyD4137hXtzY+AQPL34WH
-	2MLnLjAGon0vcdshHgADf+jYZY+URz/AjRd3imwnSosEpmhz4/7YhjfLPH1QJJ1X
-	OgXK/9g664Ks8vsXWWHAwi8IC5lt+S9ZrK9D0z8nQEAzulXDg+WtLvZ1YOzshnqg
-	CE9nH6NeydeCbYHfxoV2Q==
-X-ME-Sender: <xms:-fnuaXwBeqx_dBHB_xeszklY33QUrqEE93y2DeGT025sh7GbychAKw>
-    <xme:-fnuaWTKxlYdkVfMWMgXR3lFWRBk_GchOsewXAk5taYPAOffxaefPKUAjgMrgPdJc
-    mkLEq_YTdsbWvPsdmOVJmQKV5CIbmnxP6ps_H3BQybgeaUyfaKRfg>
-X-ME-Received: <xmr:-fnuaWUSlEakt7eV_XRJpPRd5pjB1Wa8I97f90Z09te3mV_wlnTiBUJoyAsxwr9yCiu7d2czpphn9V5o_4_MeDeq3W4TX6X3eYGxIAHMng>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777269244; x=
+	1777355644; bh=OWrTntZPvkwjEBJh0GfkpWctnWGTJEvHt00rAJ6hyGE=; b=C
+	seIC+D87+/dbNJuoBIgi+lZbaHVT0WIfG5qidVWN2+w+GzWCrM3C6Kgvqeq0KKUG
+	PEU9y9GosoE0Qhsiy4WVMFUJ/JiUdR1/dwbLXCzP2Q/GrmLUAb+idDjXC904jZKe
+	84KDVE4ApnNu0J7OyxL3srE9QY93m9HDrBB03gWKU++nC4rh2PS6wjDbVHCoHWek
+	sBpsvnhW7JuvXwCPeMIqvNHChHJ3v6wjTGdpLsy/bbhgw3+G0Aq2zfbvUROSaVPN
+	6SfNIhoeYddeSzEORFOpvq/trsm2ymm4ytBjZxnNzamp2AYU9f62jSuqTrcqrXUw
+	HIE2nMIhukc9PY/j3DTvQ==
+X-ME-Sender: <xms:_Pnuaa-FS886oP3_DkOzzDZp0sHHTiDHlcZ1mTVubPk2YLJTeBKitg>
+    <xme:_PnuaRvmxX-woDHGUeyX4SPoExLbK5pPPY5U01nXKB6igjv3O36_dl4v24Xm1F6ZM
+    LO00Y7YVHSi0SsAfGdaRM3Zx2s47FMXYU2NPnm1T1IRRnu4A3aaRwg>
+X-ME-Received: <xmr:_PnuaVBJzSycD4LhEkrIaJfxgDZ01QDk_WUPh-JhduS4kSUuO3AvNP1dLHlDaTbsszN0IX39QO8qtjUdHSk_l4TB4k2FP2GfAOuR7ygptw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejjeeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejjeeklecutefuodetgg
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrthesmhgrlhhonh
-    druggvvhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    oheptggrthesmhgrlhhonhdruggvvhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
     thhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:-fnuaQahznl3bQ_EO6GsUhAA1i_1zofUELdpZj-UEtt_DXDAn0dOeQ>
-    <xmx:-fnuaU0pb9TfZUZXTNjf_GTR6Dn-fqE5VxDTCt8Nhj5C3IXI04gvGQ>
-    <xmx:-fnuaagRAnpzcJiymCplhOU7cb-6eqaOZqRAqjqyGWnRinZRJeZKCA>
-    <xmx:-fnuaQaIiU03Ce0T3MTENeuDMR0V3Ie3rZWT0w8GdP5OX4-4FVuclg>
-    <xmx:-fnuabRZ4nUeHVEgX4fdK_FQ47VWQETgV8JpLn8QCeS1ukCc394MKQpJ>
+X-ME-Proxy: <xmx:_PnuaRUlJlIN44l4OWvbq5ER-18wW1ozg9uQWQsFHjSZEGQlefj1uA>
+    <xmx:_PnuabDdK1JsowKfpLDdg8BbECxWcXmU4D-thbi_axGAi40_AZ0mIQ>
+    <xmx:_Pnuac_Rr7IVr852YWhrtO2pge2b-k53FObJMTyJs7pMYU5udi7xQQ>
+    <xmx:_PnuaaFiG4BbBOkmeVExeYZSRec4Sn2EmsWF4u73BQE108t4jsujeg>
+    <xmx:_PnuaXcSXel8zIs8GWkcQgYqOLp6m08vihzzODw7UwyFe1oKLjPAWjR_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Apr 2026 01:54:00 -0400 (EDT)
+ 27 Apr 2026 01:54:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e393e151 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 Apr 2026 05:53:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 8eb4c5c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 Apr 2026 05:54:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 27 Apr 2026 07:53:51 +0200
-Subject: [PATCH v3 1/3] replay: allow callers to control what happens with
- empty commits
+Date: Mon, 27 Apr 2026 07:53:52 +0200
+Subject: [PATCH v3 2/3] builtin/history: generalize function to commit
+ trees
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260427-b4-pks-history-fixup-v3-1-cb908f06264b@pks.im>
+Message-Id: <20260427-b4-pks-history-fixup-v3-2-cb908f06264b@pks.im>
 References: <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
 In-Reply-To: <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
 To: git@vger.kernel.org
@@ -92,120 +92,105 @@ Cc: Elijah Newren <newren@gmail.com>,
  "D. Ben Knoble" <ben.knoble@gmail.com>, Tian Yuchen <cat@malon.dev>
 X-Mailer: b4 0.15.2
 
-When replaying commits it may happen that some of the commits become
-empty relative to their parent. Such commits are for now automatically
-dropped by the replay subsystem without much control from the user.
+The function `commit_tree_with_edited_message_ext()` can be used to
+commit a tree with a specific list of parents with an edited commit
+message. This function is useful outside of editing the commit message
+though, as it also performs the plumbing to extract the original commit
+message and strip some headers from it.
 
-Introduce a new enum that allows the caller to drop, keep or abort in
-this case.
+Refactor the function to receive a flags field that allows the caller to
+control whether or not the commit message should be edited, or whether
+it should be retained as-is. This will be used in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- replay.c | 29 ++++++++++++++++++++++++-----
- replay.h | 19 +++++++++++++++++++
- 2 files changed, 43 insertions(+), 5 deletions(-)
+ builtin/history.c | 45 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
-diff --git a/replay.c b/replay.c
-index f96f1f6551..4ef8abb607 100644
---- a/replay.c
-+++ b/replay.c
-@@ -269,7 +269,8 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 					  struct commit *onto,
- 					  struct merge_options *merge_opt,
- 					  struct merge_result *result,
--					  enum replay_mode mode)
-+					  enum replay_mode mode,
-+					  enum replay_empty_commit_action empty)
- {
- 	struct commit *base, *replayed_base;
- 	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
-@@ -321,12 +322,25 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 	}
- 	merge_opt->ancestor = NULL;
- 	merge_opt->branch2 = NULL;
-+
- 	if (!result->clean)
- 		return NULL;
--	/* Drop commits that become empty */
-+
-+	/* Handle commits that become empty */
- 	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
--	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
--		return replayed_base;
-+	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid)) {
-+		switch (empty) {
-+		case REPLAY_EMPTY_COMMIT_DROP:
-+			return replayed_base;
-+		case REPLAY_EMPTY_COMMIT_KEEP:
-+			break;
-+		case REPLAY_EMPTY_COMMIT_ABORT:
-+			result->clean = error(_("commit %s became empty after replay"),
-+					      oid_to_hex(&pickme->object.oid));
-+			return NULL;
-+		}
-+	}
-+
- 	return create_commit(repo, result->tree, pickme, replayed_base, mode);
+diff --git a/builtin/history.c b/builtin/history.c
+index 9526938085..549e352c74 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -91,13 +91,18 @@ static int fill_commit_message(struct repository *repo,
+ 	return 0;
  }
  
-@@ -417,7 +431,7 @@ int replay_revisions(struct rev_info *revs,
- 
- 		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
- 						  mode == REPLAY_MODE_REVERT ? last_commit : onto,
--						  &merge_opt, &result, mode);
-+						  &merge_opt, &result, mode, opts->empty);
- 		if (!last_commit)
- 			break;
- 
-@@ -458,6 +472,11 @@ int replay_revisions(struct rev_info *revs,
- 		}
- 	}
- 
-+	if (result.clean < 0) {
-+		ret = -1;
-+		goto out;
-+	}
-+
- 	if (!result.clean) {
- 		ret = 1;
- 		goto out;
-diff --git a/replay.h b/replay.h
-index 0ab74b9805..1851a07705 100644
---- a/replay.h
-+++ b/replay.h
-@@ -6,6 +6,19 @@
- struct repository;
- struct rev_info;
- 
-+/*
-+ * Controls what happens when a replayed commit becomes empty (i.e. its tree
-+ * is identical to its parent's tree after the replay).
-+ */
-+enum replay_empty_commit_action {
-+	/* Silently discard the empty commit. */
-+	REPLAY_EMPTY_COMMIT_DROP,
-+	/* Keep the empty commit as-is. */
-+	REPLAY_EMPTY_COMMIT_KEEP,
-+	/* Abort with an error. */
-+	REPLAY_EMPTY_COMMIT_ABORT,
+-static int commit_tree_with_edited_message_ext(struct repository *repo,
+-					       const char *action,
+-					       struct commit *commit_with_message,
+-					       const struct commit_list *parents,
+-					       const struct object_id *old_tree,
+-					       const struct object_id *new_tree,
+-					       struct commit **out)
++enum commit_tree_flags {
++	COMMIT_TREE_EDIT_MESSAGE = (1 << 0),
 +};
 +
- /*
-  * A set of options that can be passed to `replay_revisions()`.
-  */
-@@ -43,6 +56,12 @@ struct replay_revisions_options {
- 	 * Requires `onto` to be set.
- 	 */
- 	int contained;
-+
-+	/*
-+	 * Controls what to do when a replayed commit becomes empty.
-+	 * Defaults to REPLAY_EMPTY_COMMIT_DROP.
-+	 */
-+	enum replay_empty_commit_action empty;
- };
++static int commit_tree_ext(struct repository *repo,
++			   const char *action,
++			   struct commit *commit_with_message,
++			   const struct commit_list *parents,
++			   const struct object_id *old_tree,
++			   const struct object_id *new_tree,
++			   struct commit **out,
++			   enum commit_tree_flags flags)
+ {
+ 	const char *exclude_gpgsig[] = {
+ 		/* We reencode the message, so the encoding needs to be stripped. */
+@@ -122,10 +127,14 @@ static int commit_tree_with_edited_message_ext(struct repository *repo,
+ 		original_author = xmemdupz(ptr, len);
+ 	find_commit_subject(original_message, &original_body);
  
- /* This struct is used as an out-parameter by `replay_revisions()`. */
+-	ret = fill_commit_message(repo, old_tree, new_tree,
+-				  original_body, action, &commit_message);
+-	if (ret < 0)
+-		goto out;
++	if (flags & COMMIT_TREE_EDIT_MESSAGE) {
++		ret = fill_commit_message(repo, old_tree, new_tree,
++					  original_body, action, &commit_message);
++		if (ret < 0)
++			goto out;
++	} else {
++		strbuf_addstr(&commit_message, original_body);
++	}
+ 
+ 	original_extra_headers = read_commit_extra_headers(commit_with_message,
+ 							   exclude_gpgsig);
+@@ -168,8 +177,8 @@ static int commit_tree_with_edited_message(struct repository *repo,
+ 		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
+ 	}
+ 
+-	return commit_tree_with_edited_message_ext(repo, action, original, original->parents,
+-						   &parent_tree_oid, tree_oid, out);
++	return commit_tree_ext(repo, action, original, original->parents,
++			       &parent_tree_oid, tree_oid, out, COMMIT_TREE_EDIT_MESSAGE);
+ }
+ 
+ enum ref_action {
+@@ -616,9 +625,8 @@ static int split_commit(struct repository *repo,
+ 	 * The first commit is constructed from the split-out tree. The base
+ 	 * that shall be diffed against is the parent of the original commit.
+ 	 */
+-	ret = commit_tree_with_edited_message_ext(repo, "split-out", original,
+-						  original->parents, &parent_tree_oid,
+-						  &split_tree->object.oid, &first_commit);
++	ret = commit_tree_ext(repo, "split-out", original, original->parents, &parent_tree_oid,
++			      &split_tree->object.oid, &first_commit, COMMIT_TREE_EDIT_MESSAGE);
+ 	if (ret < 0) {
+ 		ret = error(_("failed writing first commit"));
+ 		goto out;
+@@ -634,9 +642,8 @@ static int split_commit(struct repository *repo,
+ 	old_tree_oid = &repo_get_commit_tree(repo, first_commit)->object.oid;
+ 	new_tree_oid = &repo_get_commit_tree(repo, original)->object.oid;
+ 
+-	ret = commit_tree_with_edited_message_ext(repo, "split-out", original,
+-						  parents, old_tree_oid,
+-						  new_tree_oid, &second_commit);
++	ret = commit_tree_ext(repo, "split-out", original, parents, old_tree_oid,
++			      new_tree_oid, &second_commit, COMMIT_TREE_EDIT_MESSAGE);
+ 	if (ret < 0) {
+ 		ret = error(_("failed writing second commit"));
+ 		goto out;
 
 -- 
 2.54.0.545.g6539524ca2.dirty
