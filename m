@@ -1,27 +1,49 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from pio-pvt-msa1.bahnhof.se (pio-pvt-msa1.bahnhof.se [79.136.2.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D0397E75
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 08:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD6C39B497
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 08:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.136.2.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777277285; cv=none; b=uaNm7Wdt33dRQufsfyZRAMptBM0f0+dsXda/lP88NDxXUsD8ZdqPUNpixHF7BDFHgL8ELLdazzaaQXhhbahXGY6abUk7PUDVo1mR4Ue+jY5z/voTQkL743kRfO1XBO7th43NdeEgIDKdIDDeV7m0EClQJxj44+jRpvm2dyDdxvI=
+	t=1777279025; cv=none; b=asp2NrQZFbwqQVooBRnzNPd9W9952EMotbvoWsDa5qg/CPaa169V64UT3RnByDcLTwLxQ/T5M+B3lAnnKqSxdrfZD8+GDGENUsFq3GDjnZjNqZTt9UjnUT/Szedjid50Jg17kZM7B5xA1heCH1989itfTQyqzpQRnKs/hT6Et0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777277285; c=relaxed/simple;
-	bh=b3NbUeMKLh4FvBItQWLNFwXq/Q4lQ8auXPTHrEohncM=;
+	s=arc-20240116; t=1777279025; c=relaxed/simple;
+	bh=xAVMsYNB3GVqVggxoaeZJL2Q7z7ooSF1rKwCzDxvl4I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XZ4LHWCY7Bs00fUyb7yytd1ANPKG6grrKXXdywC5kHupoIC/DoYF8Ts4dr28Vz1FFESHuZFtOPhg4N0DP1i9QcwzGgJrSTubiIHzHN6atlli2rAQ05HBaN66oXgJyBOCt7d/RA3WbihJigxxkrqKBMGW/hOJzZ84NJI4BjW6iM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4g3wLB5YTxz7QsHX
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 09:34:10 +0200 (CEST)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4g3wKz4T9jzRnlX;
-	Mon, 27 Apr 2026 09:33:59 +0200 (CEST)
-Message-ID: <971f19db-eb10-4c88-8d5d-3f4f7f92db73@kdbg.org>
-Date: Mon, 27 Apr 2026 09:33:59 +0200
+	 In-Reply-To:Content-Type; b=BW7JaO0eQFP35luJ4yO+eTaga3RvFjHc1qTZ/5VuJ0DUjlIgiWxIBKgTHsTJembcmUO3op6xGwcTzcIYL8mt6CpCjw7Oa44CHd9ho6+eodH71GEeBl2p3qb1V2Jvn+hI/yEJ5401MdqhAAAqnSNe8r4buiNMyG8Y7XvEyDk7X74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page; spf=pass smtp.mailfrom=jontes.page; dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b=UGzaW7wL; arc=none smtp.client-ip=79.136.2.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jontes.page
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jontes.page
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=jontes.page header.i=@jontes.page header.b="UGzaW7wL"
+Received: from localhost (localhost [127.0.0.1])
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 8B0743F6CA;
+	Mon, 27 Apr 2026 10:36:55 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.1
+X-Spam-Level:
+Authentication-Results: pio-pvt-msa1.bahnhof.se (amavisd-new);
+	dkim=pass (2048-bit key) header.d=jontes.page
+Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
+	by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gnTnqi0jMd6g; Mon, 27 Apr 2026 10:36:54 +0200 (CEST)
+Received: 
+	by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id EFB113F603;
+	Mon, 27 Apr 2026 10:36:53 +0200 (CEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3204BB26B3;
+	Mon, 27 Apr 2026 10:33:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jontes.page; s=dkim;
+	t=1777278842; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=w5VyHnhVdm+bmN5vCQIGEYD8za54/eSavXV49LWfN0E=;
+	b=UGzaW7wLwVJ887xJJIbAD/pnnkp/B/8eQBl5An5kMWFWQxdIiFBq0njnlWP9r2hWKIkpNl
+	Y2hHAyCOj8I0ssui0BKDhcjz+lqRackbCx4FQsTGSXp6dUmFQlyK0OAWKGdy1ujK85pKxl
+	6KXy7HwVkVCYUDROIOYv3sPMyPzIAqjSYn0sSXTLcjiUw3+CGOVZo0MRkwIpTMqIne0Xgy
+	hCsV/sF3WMcwp7OKYEooUVI3R4NkKSIJQmGUXbtJHZG6t8nIUEr1ms0cWmp29a9LjHFDs7
+	AHhoKyL34Kv8nv0wKiBxLQgfGlXl5224cuBFNgr9v8YKDA3YNGgnCbSrPuvv+g==
+Message-ID: <d1170f92-3690-4fa4-8070-75ac9f119174@jontes.page>
+Date: Mon, 27 Apr 2026 10:36:55 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -29,39 +51,23 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] revision.c: implement --reverse=before for walks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
- Patrick Steinhardt <ps@pks.im>, Tian Yuchen <cat@malon.dev>,
- Ben Knoble <ben.knoble@gmail.com>, Mirko Faina <mroik@delayed.space>
-References: <cover.1776984666.git.mroik@delayed.space>
- <cover.1777249165.git.mroik@delayed.space>
- <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
- <xmqq8qa852b5.fsf@gitster.g>
+Subject: Re: [PATCH] alias: restore support for simple dotted aliases
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, rsch@web.de,
+ michael.grossfeld@amd.com
+References: <PH7PR12MB73313034573C59C73F821BBFE52A2@PH7PR12MB7331.namprd12.prod.outlook.com>
+ <20260424151053.917066-1-jonatan@jontes.page> <xmqqpl3ovuvq.fsf@gitster.g>
+ <40408c99-7e2a-4cf6-b9b2-6d0e0da3b2c5@jontes.page>
+ <20260425232916.GA29816@coredump.intra.peff.net>
+ <4a130a23-fa32-460b-a338-409d85d18166@jontes.page>
+ <20260426230125.GA218434@coredump.intra.peff.net>
 Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqq8qa852b5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+From: Jonatan Holmgren <jonatan@jontes.page>
+In-Reply-To: <20260426230125.GA218434@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-Am 27.04.26 um 08:45 schrieb Junio C Hamano:
-> I think "after" and "before" comes from "Do other things (including
-> count limiting) and then apply reverse after all that" and would be
-> very much understandable to those who know how the machinery works,
-> but should mere mortals need to know the machinery only to use "git
-> log"?
-
-I fully share your sentiments regarding "after" and "before" being too
-much tied to the machinery, but...
-
-> I wonder --reverse=oldest and --reverse=newest is easier to teach
-> and explain?  I dunno.
-What does it mean to "revert the oldest"? Or "the newest"? If at all,
-then this "newest" and "oldest" must be a restriction that applies to
---max-count in some way. Perhaps we need a --max-count-oldest option,
-then --reverse does not have to be touched at all, because it is still
-applied only after the set of commits to show has been determined.
-
--- Hannes
-
+Sorry, that wasn't a "hey we should deprecate this" code-wise, I was 
+asking from a documentation point of view, i.e. was curious how you felt 
+about what is "advisable". Shouldn't've included that in my email
