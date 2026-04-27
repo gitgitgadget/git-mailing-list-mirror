@@ -1,67 +1,66 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F7E34E74B
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 10:42:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734C237702E
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 10:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777286534; cv=none; b=u+8WaZDcJjreBG+mKBXPFjxXFC6Sfg/12g+2G+gWSQ0E+qDfiOzOBTP2y9F1FjhgplaT6gCwQQh3DIVCq2fPFS/Cd/CpKnej55rUGOdzFytmSvroZ5Edy91W/AuDkQZ9F6D3wKHdp+IoUhTWRevXv9RJMGCfNpq6ccDvOMWFnQg=
+	t=1777286534; cv=none; b=iirx319AHMluo4jIMYJBc/jhma87NeRcoyMlczDQoQoRMWKsLhPfsY3RZd0deU4uG1QE2MG46WSTVCfVQzdVjNuE2Amc7zaHZs0araVqr/f+2f07vbhgONYq8tNL05FAq14e+Ez3Q5ICKJj04vkaW9HHsPDTex71BpOLu7705Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777286534; c=relaxed/simple;
-	bh=4Ar3znLH3kB7A2W3mIlllChKQt7vT+h3dQSSkvzduIE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=rPZuInAVbBjnfymYqBKdqlu7HNQGwHDigbm/CXKolc55RoXLFXWH6hxb7xd+cDCjuMLubTX2fR5izj3ICTn4yCuzBFUoDElsT1IOZrnfen2/NujUpoEZsBTMGMhxe2+/SHnAl9wrQSX7ivNc3+QeB5eqh3purj0YAlulwiRd1SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xq7mdS5t; arc=none smtp.client-ip=209.85.221.41
+	bh=Bd9D1VtCumIWZbzUepcLIdYdQCzftsWLcb8YxD/j6tc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=llLJRbpDN5ZH17Ynybw9sgL4pfXPYaRFc6uGaAEKzucNJD+pUJPSHqjhYIgN0UThI5F3MdA1ZYutu2XLLARjx7ENM48i07VVRdNUruGDCcD+PWqdwoftuUKx3bFBo3m5bqjJa96QM22IcbR9L+629xeJQIBw0AS4pG24T5Xac+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oet2VKld; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xq7mdS5t"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-43fe8bda8e9so5581193f8f.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 03:42:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oet2VKld"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43fe3e22e33so6535622f8f.0
+        for <git@vger.kernel.org>; Mon, 27 Apr 2026 03:42:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1777286531; x=1777891331; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/e2Hek+XgZqeEzMDGEIr1yquqfbjOp6JRejqh4eAOcU=;
-        b=Xq7mdS5tJerkxccGn+KvhMDHiniYtJTYUq2ECA994+FBfR5Bn4ZzhVQPwWSyVXbKHG
-         VJPy4AH/vN+RGbgnWW5r9DEddqiTMFIKPBsu9j99GvHcg9c9HVubkBHi1Pi44U00oKfy
-         mLa/KXzagVdZrQbSzyXdhZE+KgQ9PsL9JxUdoHOAcf+QBk1yeWWbU9ybn9P1bUowTb7x
-         uYnk6SUHtp1AN+dsvQ72yeAt7OHFONLpHYtDzFbyIMCHYQnzt+9IYbZiI3HhYfCOrM8K
-         eiphVla+sAJkgLrdcRsRX7Qcqx7hGLO5KnbGbvvxpVeoIdhpselmFvd0iPEocH3VpJQU
-         xXMQ==
+        bh=OqxDK3F1izkzYs5hfLTq/4I57uRGE1Q5vx9FCq5CFMU=;
+        b=oet2VKld3fxcaspZNRKN/R2UlaPyksg5gg4O0hALo1oOBafDZWpdt0xbd4/M9aYCfn
+         hNErFSsS/vq4FmSxKrFGIZretecX3i1g5Pf/+P5GGcjf4iNmDrbpoeLjgtEsV2mxJwJ9
+         +r3xxLfno17iTxko36Iwe/DkwwCnUggdUDQHV5U8f+MJR+2DgefvqO55f3nu/Cdz/A+r
+         kG1O/On2aRXdMkpvr2915ZkqH6IEx2l7uX0mrSSr9d0EK6NA5Pto5m86XeZM8YJYSr/E
+         8I2qrN8U//TmP4ncG3vitkdZSxVg8TXcvi5tzoFWyCc35tCFIPc0i8S7897eWPRBXVMu
+         KmYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1777286531; x=1777891331;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/e2Hek+XgZqeEzMDGEIr1yquqfbjOp6JRejqh4eAOcU=;
-        b=OGNEFef7cLd0rmxWym5D6sQ5XDvQG6pRdjRfVyLrlBQmYDVz2sD6eQ6KKriHP0qmou
-         Pdt8HBgrJkcymUp+nPzzUJCaa0D+y8e3yaxu6vEQaxJIiV7LBiu5ynkNQZpp2uHDw4PL
-         T9m1rhpmMLz7sZ+voBfOBVk4QX0GQaJtqZUvBW9fNZDc022HgX99Mxc6AGMzWEAhb8rX
-         EoxcAj/HEZcBEZn4o5RxEt+tB06GRPCQHXYVN6kOkMmxWjcUPziVvrkfOzEJwzsBPwyw
-         BbQnrFY0cuVO4CWyFJcDiHRi1V7I3WQL8C1QhYbRZTxPHSmaQhJL8B+hJiX/uzqIfs0Y
-         BNMg==
-X-Gm-Message-State: AOJu0YyzU/Get/ojP4xTSRWxdKhkuGIr83Aq8eiQQ/AwFn9lL3HAtVPr
-	/PxuygeY4i9qjX8RJhogkdfKGwtMe2nAH5Hf/vjFBWHLbqMTJdf94tTRRYFeAA==
-X-Gm-Gg: AeBDievzl6KnCuaRXye2PicsH91ZtM0LxqPSpI7b7irJQVVt2ls9v1SQjQBBU0Hd9uc
-	rhmo4d4JCgQAITVE77/PDqZ8nP7TAr6xzp9TJ7hg9WU0Srl/N5k6eqsYTlqiUu84rgUItAKGHYQ
-	C6VTLoyRhzZVXV8EwzAtkC2oAtJk0uXq0X0tN8uPIZTLeYO4jLPFFoSPyGgjsaRTSxhk3FwqrjK
-	sh9PeyXHTrn2Mhiit/L3CUQD82quFRKYQdE1Ocv520V3r6pInzq/Ptd6S2h6YXXKjo6upuZFTZS
-	suX4uw70TdRGQF1zP49jQjGux+vYppBfBiWONzeReP+9Ui7wjT0ldmg9BgcCwe9lkpu63SejQWS
-	FMq/cm1d6Y5QWlpUj6jebOCFJva0/gqHPMD0ztiVGZ+XOMLMaV5BY0c49S6owQsn/Z1k8aBhUVW
-	8v7uwUUlt5sAL1rz2U8U+J0JCRiH0IJfGdxIgJ8/a/
-X-Received: by 2002:a05:6000:1889:b0:43d:21a:9a3e with SMTP id ffacd0b85a97d-43fe3e0bd8dmr62978114f8f.32.1777286530426;
-        Mon, 27 Apr 2026 03:42:10 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OqxDK3F1izkzYs5hfLTq/4I57uRGE1Q5vx9FCq5CFMU=;
+        b=A6sQEVhbW9EiwNEU0T16K3PP4TEHdBYWb758Dcfo7PFzNbIU8Rr29cCWDljg+LzR5k
+         gbk8210DjOXSh3FgCpIvHSB8roKimNSMhy2nuZdc6ZTVEBn/dTvGNKooD+QHdXNV0v6i
+         r6Z2l8RqSKkHqaVp0xDu24t/6P6Rq/Hp3gRETalDSV6ZrC8oRICFuQzj37OB8VnJ2N6p
+         9kz2k9RynJd/YMTn4TeA/2QBQkY46Vjs0zzlrhIiyX6SV11iqR1VEgxe4Hk0GHPXlIVk
+         Ovw9+aFwO7ZjwLt9cJfDfVNNZZ2+huRUsnsXEWqr6T1qlEEPIk0sAW3o9H4ZA9CTaZLI
+         mdhQ==
+X-Gm-Message-State: AOJu0Yw+nov4lkYQhwVlEly7ekS7TMT16G818B85FMD/XiQNgj0zurIV
+	G9q4VWMbVXekElJnv/t7hawnCRi0K9npA2NOE3zIkcR4RNNSstnsI29N127ADw==
+X-Gm-Gg: AeBDieuE8ZLOXXQowwDifdOq0GRsoZ/9UApoLDT3TUOAcZZ7Z0g1LZHfvSzDXABxM2d
+	9WpaUEWaPEyqcLk91FgUvk8zGJP6Elx1qqvONYrshPbDUJUMWcH0bIEzN3evpuN7IRkODKdKz/X
+	mGQJizOscz2D22HPI66FdIJcVMajw7hRl+zs9668o9OKEUt3Le+3GsmdnyVrat6IxDO40ci1+l7
+	Lu9+4VtKHpQSxj3XGeNnIUL4gElPsv5keCdZJy88412KzM5kvTtKUIrK8+kvFUUTCB/llgEtbJF
+	lrO0a+2iL7+WfxRTOkRn2TnELwBV7lOy8K0r2mPNFKVQp4SuBUHlD00nKtj53VYNtgTCOG1G6Nv
+	XzRTpW3xPijHWTyWGGa2GNSJb1Et1s+oIh6LFTxHEOsXD2tUqQ97BSnbrOcH0CZ/6ErKNxv+qab
+	CIBerio8QQnwGEs1f/Dpk90cmxgP9JTvYLfkVsEJas
+X-Received: by 2002:a5d:588f:0:b0:43d:1c7a:8b5b with SMTP id ffacd0b85a97d-43fe3e11665mr63284486f8f.40.1777286531253;
+        Mon, 27 Apr 2026 03:42:11 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:5b56:7e7f:83e5:ed3a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4e3a7b4sm74231698f8f.22.2026.04.27.03.42.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4e3a7b4sm74231698f8f.22.2026.04.27.03.42.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 03:42:09 -0700 (PDT)
+        Mon, 27 Apr 2026 03:42:10 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 0/9] refs: move some of the generic logic out of the
- backends
-Date: Mon, 27 Apr 2026 12:42:01 +0200
-Message-Id: <20260427-refs-move-to-generic-layer-v3-0-e4638dfb7897@gmail.com>
+Date: Mon, 27 Apr 2026 12:42:02 +0200
+Subject: [PATCH v3 1/9] refs: remove unused typedef
+ 'ref_transaction_commit_fn'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,237 +69,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHo972kC/32Nyw6CMBQFf4V07TX0RY0r/8O4KOUCNUBNi42E8
- O8WdMGK5UnmzMwkoLcYyDWbicdog3VDGvyUEdPqoUGwVdqE5azIBVXgsQ7Qu4gwOmhwSHcDnZ7
- QQ60kk0biRRWCJMErsfazye+P3w7v8olmXI0r0dowOj9t9UhX7h9i+VEoUshBUo5cipqrorw1v
- bbd2bierKHI9ip+qGJJpVFqUVNRVKraq5Zl+QKUqB0gIQEAAA==
-X-Change-ID: 20260417-refs-move-to-generic-layer-f7525c5e8764
-In-Reply-To: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
-References: <20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com>
+Message-Id: <20260427-refs-move-to-generic-layer-v3-1-e4638dfb7897@gmail.com>
+References: <20260427-refs-move-to-generic-layer-v3-0-e4638dfb7897@gmail.com>
+In-Reply-To: <20260427-refs-move-to-generic-layer-v3-0-e4638dfb7897@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, toon@iotcl.com
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9458; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=4Ar3znLH3kB7A2W3mIlllChKQt7vT+h3dQSSkvzduIE=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnvPX61kFBo2t2gh5cnL/cQUE8+0pJ2Uvd8+
- W2aHjK58fyd9YkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp7z1+AAoJED7VnySO
- Rox/3AgMAIAyvj8NXg7265hdCTHXVE53j23QmcoDNCW4hJOxRVAba7Eba7gPhVJF8T435OJwKMP
- z9HDONhiE+zMpv6xbZVWgHDQF3q782FtdLaI1OeYOto/kmQeMay8AKgwCFUoOf6iLF4srpVd7Sh
- 3TIVj3RVSSN7Gdz/PuPts5BxbTZCYzDvzUZDl7aucVz1+Qz4mjEBNJatfLZKQVIU36Xyk3rMnkz
- +puWBg5GHODB/UZNdZcy2PGOq5oDX9F5xy6FkrTocFW1jvC2LU50maAgh7HXOC6xRA80NDoTo3F
- tNI9rfQMUz3QBgEv840DPhLoYO4/RzouDEx4TllNZ+Q2A214r3OnvbqzuqSCoSniW/V5/dLzX/1
- i+2ezPVLjONUEvFHTNERjniBDkCMRDSmGJm9mBW3SjmECGgpBHK2WdxNF05KUm8S69L3B7vyI7i
- 67QldzwLMHZtCx5tQW2CQS83IWc42zY36iicXnjpnOaC7IPHzO2KtOldyZdydMQ572UwY2j+yw4
- eo=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=801; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=Bd9D1VtCumIWZbzUepcLIdYdQCzftsWLcb8YxD/j6tc=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGnvPX47rzEyxUFfCjjBjeKJAzkWbiCVkrL9K
+ M1I8RBs3yMlaokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp7z1+AAoJED7VnySO
+ Rox/Pe0MAIpcsP/I7F3SqH/X0/2FjblixCzH3kLh1vbQbGkrd57+Dgy+CGKQ4KvhsNdSOP0Ppqg
+ Ok5jcY7Tp3pmWDKQyuGPj/m+kUBc9QLXdg3dmL8tsWbYOXmqqbUwtgpa5GmoQqVbkUoGlMJi4E5
+ 5odIDuT8HHq2u1vp70cp31AN7OV0WDHQDRicSx40peo7Tm7d3fpn8GvhyY7sma8RYdtuoG6dotY
+ uJNCM+WWjQIzV6lRkspy21CdIvCU0R6U9o3/+n/jv80VRs+V1yR9PF+z2/zWa7EjZ/XuMPzVtIv
+ NY0FgjeFo03Wfm+MwvvDa9ipi8wRPNFH56fuTBAW5f2dmmJ/skrmMka++EgoCX6DzZvyuoKkqK8
+ nSTdRH3bdFXaXEacsEmhBFdGZvqy7kPJ+KsxRjbyAIQ4IjlJz1f2CxsV80vVZFxMp4XtFtQ4HAB
+ aUvWZDUyIHyse3wqLmpMcMh6NoWm/PLpn/2IhpCfEAe1cQAubWqYylLeusPo7daekG5jstndVj8
+ YU=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-This series came together while I was working on other reference related
-code and realized that some of the individual logic implemented with the
-reference backends can be moved to the generic layer.
+The typedef 'ref_transaction_commit_fn' is not used anywhere in our
+code, let's remove it.
 
-Moving code to the generic layer, simplifies the responsibility of
-individual backends and avoids deviation in logic between the backends.
-
-The biggest changes are related to moving out usage of `parse_object()`
-and `peel_object()` from reference transactions. The former is used to
-validate that the OID provided points to a commit object. The latter is
-an optimization technique where the packed/reftable backend store the
-peeled OID whenever available, so reading such references provides the
-peeled OID without having to call the ODB.
-
-Moving object parsing to the generic layout involves moving it out of
-the prepare stage of the transaction and into `ref_transaction_update()`
-where every added update is checked. As such, this also involves
-modifying update-ref(1) and receive-pack(1) to follow this paradigm.
-
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Changes in v3:
-- Remove an unwanted change which creeped up during a rebase.
-- Add information in the commit message around how the order of errors
-  in git-update-ref(1) will change while maintaining functionality.
-- Change up the order of an `if..else` to make it clearer.
-- Other small typos and fixes.
-- Link to v2: https://patch.msgid.link/20260423-refs-move-to-generic-layer-v2-0-ae5a4f146d7d@gmail.com
+ refs/refs-internal.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Changes in v2:
-- Split the second commit into two: one introducing
-  `ref_store_init_options` and the second to use it for reflog config.
-- Use opts as the variable name consistently.
-- A bunch of grammar fixes.
-- Link to v1: https://patch.msgid.link/20260420-refs-move-to-generic-layer-v1-0-513e354f376b@gmail.com
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index d79e35fd26..2d963cc4f4 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -421,10 +421,6 @@ typedef int ref_transaction_abort_fn(struct ref_store *refs,
+ 				     struct ref_transaction *transaction,
+ 				     struct strbuf *err);
+ 
+-typedef int ref_transaction_commit_fn(struct ref_store *refs,
+-				      struct ref_transaction *transaction,
+-				      struct strbuf *err);
+-
+ typedef int optimize_fn(struct ref_store *ref_store,
+ 			struct refs_optimize_opts *opts);
+ 
 
----
- builtin/receive-pack.c  |  22 ++++---
- builtin/update-ref.c    | 151 +++++++++++++++++++++++++++++++-----------------
- refs.c                  |  60 ++++++++++++++-----
- refs.h                  |  16 ++---
- refs/files-backend.c    |  58 +++++++------------
- refs/packed-backend.c   |  10 ++--
- refs/packed-backend.h   |   3 +-
- refs/refs-internal.h    |  35 +++++++++--
- refs/reftable-backend.c |  40 +++----------
- 9 files changed, 231 insertions(+), 164 deletions(-)
-
-Karthik Nayak (9):
-      refs: remove unused typedef 'ref_transaction_commit_fn'
-      refs: introduce `ref_store_init_options`
-      refs: extract out reflog config to generic layer
-      refs: return `ref_transaction_error` from `ref_transaction_update()`
-      update-ref: move `print_rejected_refs()` up
-      update-ref: handle rejections while adding updates
-      refs: move object parsing to the generic layer
-      refs: add peeled object ID to the `ref_update` struct
-      refs: use peeled tag values in reference backends
-
-Range-diff versus v2:
-
- 1:  b8ab8a6c8b =  1:  704a218bce refs: remove unused typedef 'ref_transaction_commit_fn'
- 2:  dd419614e0 !  2:  f3e0caa8e4 refs: introduce `ref_store_init_options`
-    @@ refs/files-backend.c: static struct ref_store *files_ref_store_init(struct repos
-      	refs->gitcommondir = strbuf_detach(&ref_common_dir, NULL);
-      	refs->packed_ref_store =
-     -		packed_ref_store_init(repo, NULL, refs->gitcommondir, flags);
-    -+		packed_ref_store_init(repo, payload, refs->gitcommondir, opts);
-    ++		packed_ref_store_init(repo, NULL, refs->gitcommondir, opts);
-     +	refs->store_flags = opts->access_flags;
-      	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
-     +
- 3:  337e5c8c5b !  3:  48ebcc2438 refs: extract out reflog config to generic layer
-    @@ refs.c: static struct ref_store *ref_store_init(struct repository *repo,
-      ## refs/files-backend.c ##
-     @@ refs/files-backend.c: static struct ref_store *files_ref_store_init(struct repository *repo,
-      	refs->packed_ref_store =
-    - 		packed_ref_store_init(repo, payload, refs->gitcommondir, opts);
-    + 		packed_ref_store_init(repo, NULL, refs->gitcommondir, opts);
-      	refs->store_flags = opts->access_flags;
-     -	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
-     +	refs->log_all_ref_updates = opts->log_all_ref_updates;
- 4:  cdb4aad11e =  4:  d4c120ab28 refs: return `ref_transaction_error` from `ref_transaction_update()`
- 5:  454549240a =  5:  6e3b16258c update-ref: move `print_rejected_refs()` up
- 6:  1f224fb868 !  6:  505c5b8edb update-ref: handle rejections while adding updates
-    @@ Commit message
-         rejected, and also checking for rejections and only dying for generic
-         failures.
-     
-    +    Errors encountered during updates will be shown to the user immediately
-    +    unlike other errors encountered only when the transaction is
-    +    prepared/committed. As the verification of object IDs and peeled tag
-    +    objects will move into `ref_transaction_update()` in the following
-    +    commit, this means that those errors will be shown to the user before
-    +    other errors, this changes the order of errors, but the functionality
-    +    remains the same.
-    +
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## builtin/update-ref.c ##
-    @@ builtin/update-ref.c: static void parse_cmd_update(struct ref_transaction *trans
-     +					update_flags | create_reflog_flag,
-     +					msg, &err);
-     +
-    -+	if (tx_err && tx_err != REF_TRANSACTION_ERROR_GENERIC &&
-    -+	    opts->allow_update_failures) {
-    ++	/*
-    ++	 * Generic errors are non-recoverable, so we cannot skip the update
-    ++	 * or mark it as rejected.
-    ++	 */
-    ++	if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
-    + 		die("%s", err.buf);
-    + 
-    ++	if (tx_err && opts->allow_update_failures)
-     +		print_rejected_refs(refname, have_old ? &old_oid : NULL,
-     +				    &new_oid, NULL, NULL, tx_err, err.buf,
-     +				    NULL);
-    -+	} else if (tx_err) {
-    - 		die("%s", err.buf);
-    -+	}
-    - 
-    ++
-      	update_flags = default_flags;
-      	free(refname);
-    -@@ builtin/update-ref.c: static void parse_cmd_update(struct ref_transaction *transaction,
-    + 	strbuf_release(&err);
-      }
-      
-      static void parse_cmd_symref_update(struct ref_transaction *transaction,
-    @@ builtin/update-ref.c: static void parse_cmd_symref_update(struct ref_transaction
-     +					update_flags | create_reflog_flag,
-     +					msg, &err);
-     +
-    -+	if (tx_err && tx_err != REF_TRANSACTION_ERROR_GENERIC &&
-    -+	    opts->allow_update_failures) {
-    ++	/*
-    ++	 * Generic errors are non-recoverable, so we cannot skip the update
-    ++	 * or mark it as rejected.
-    ++	 */
-    ++	if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
-    + 		die("%s", err.buf);
-    + 
-    ++	if (tx_err && opts->allow_update_failures)
-     +		print_rejected_refs(refname, have_old_oid ? &old_oid : NULL,
-     +				    NULL, have_old_oid ? NULL : old_target,
-     +				    new_target, tx_err, err.buf, NULL);
-    -+	} else if (tx_err) {
-    - 		die("%s", err.buf);
-    -+	}
-    - 
-    ++
-      	update_flags = default_flags;
-      	free(refname);
-    + 	free(old_arg);
-     @@ builtin/update-ref.c: static void parse_cmd_symref_update(struct ref_transaction *transaction,
-      }
-      
- 7:  a52b019afa !  7:  ad1aae6b35 refs: move object parsing to the generic layer
-    @@ builtin/receive-pack.c: static const char *update(struct command *cmd, struct sh
-     -	}
-     -	else {
-     +	} else {
-    -+		enum ref_transaction_error err_type;
-    ++		enum ref_transaction_error tx_err;
-      		struct strbuf err = STRBUF_INIT;
-      		if (shallow_update && si->shallow_ref[cmd->index] &&
-      		    update_shallow_ref(cmd, si)) {
-    @@ builtin/receive-pack.c: static const char *update(struct command *cmd, struct sh
-     -					   NULL, NULL,
-     -					   0, "push",
-     -					   &err)) {
-    -+		err_type = ref_transaction_update(transaction,
-    ++		tx_err = ref_transaction_update(transaction,
-     +						  namespaced_name,
-     +						  new_oid, old_oid,
-     +						  NULL, NULL,
-     +						  0, "push",
-     +						  &err);
-    -+		if (err_type) {
-    ++		if (tx_err) {
-      			rp_error("%s", err.buf);
-     -			ret = "failed to update ref";
-    -+			if (err_type == REF_TRANSACTION_ERROR_GENERIC)
-    ++			if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
-     +				ret = "failed to update ref";
-     +			else
-    -+				ret = ref_transaction_error_msg(err_type);
-    ++				ret = ref_transaction_error_msg(tx_err);
-      		} else {
-      			ret = NULL; /* good */
-      		}
- 8:  aa5fd09831 !  8:  5cb7ee9853 refs: add peeled object ID to the `ref_update` struct
-    @@ Metadata
-      ## Commit message ##
-         refs: add peeled object ID to the `ref_update` struct
-     
-    -    Certain reference backend {packed, reftable}, have the ability to also
-    +    Certain reference backends {packed, reftable}, have the ability to also
-         store the peeled object ID for a reference pointing to a tag object.
-         This has the added benefit that during retrieval of such references, we
-         also obtain the peeled object ID without having to use the ODB.
- 9:  96146b5083 =  9:  ba34e10548 refs: use peeled tag values in reference backends
-
-
-base-commit: f65aba1e87db64413b6d1ed5ae5a45b5a84a0997
-change-id: 20260417-refs-move-to-generic-layer-f7525c5e8764
-
-Thanks
-- Karthik
+-- 
+2.53.GIT
 
