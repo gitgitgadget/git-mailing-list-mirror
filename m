@@ -1,63 +1,63 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A8D3B8BBB
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 12:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C763B9618
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 12:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777293699; cv=none; b=Ip8o1N6S2J+m+2v+cVO93dMNsaD5U/1Shee/Ib1nz4dNU7CGdRDfYR+2WNXNREHbZOots7DvAv/r0Em0Wq4JRM0hRGWhGTXwHLOwyXa3TOjz17NYfca1fKcoI43N9qy742/bIDAv8xLo99+qvyFCtcDh9xxGEZmdeZ23BeHTIQc=
+	t=1777293701; cv=none; b=TBt11Dupra8WUuW5OdLTUb0WDZu9j01eIr2YWPoR+odTFMueY7nlGuRfDpAlLheFu2EnTFNnNhKFzAl8KwDgsZFQvzYDUQPEcIoyMlkdSq3RmhD2pKqGJlPgcvYGuPNBoudtJXcx1nARcrZciKwXV/DR6S64WCaKeviY61IMp3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777293699; c=relaxed/simple;
-	bh=QVDk3V2DMj9qzbIQmvqM7XXaWUVBBWiFflzpx6rhZbk=;
+	s=arc-20240116; t=1777293701; c=relaxed/simple;
+	bh=SB424Jq8IDxk8iiElXedKYGjCaNG2i8ZY0yA24lKeEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HV45KktJmELOYcNElDlpny09d1NeBundFVjK+GlJYR6CgSs1a9IuKfD3u9cCyqwSdRl/1q36NJa32qCEC1ySlVwVdUO2ToT3NkwcXmKjQq1ZMXwN0t5ZnjsNYoQLenHtiaD5GOrzOHIyQBp1WFD6RZN2qY2l2xDqsIgUxYpJZGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZVG2RTl; arc=none smtp.client-ip=209.85.208.46
+	 MIME-Version; b=oeb32bN5/uiILW07QzfDNVEH1kUGlum65YzEGJHdOvH/PSrkRPP0xmnyj8+3JfXYLWowwRrMpkKCzKRMSY77Ca4FKdhkIdIvX4BHJjETlLSavFx4kKabhR7GpFQVeyD0fErhsvaPmAg1WJBJPsOBZqd9yKCrl4DRouZLJbLMaT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RdwHxqHD; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZVG2RTl"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-67845996252so7424701a12.3
-        for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:41:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RdwHxqHD"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-670ab084a39so15315945a12.3
+        for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:41:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777293696; x=1777898496; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777293698; x=1777898498; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6ABAm3Tqn50t5mpzG4At4tZugLsUigOtQuqddfuGQmw=;
-        b=NZVG2RTl1cOyM6m6AIgWUTiLcsO4jIg2V7tOD86uCpot8IpB7gZphRBuIVlRB8gfbA
-         k1wZGVp/dp0EX684eFu9Br88/V6UmHu1JAtvWUhg/aQXDifla8TtFIKdIrDR+mXVizTT
-         tDKU9X1n2HDnBvoQnGCKUunszoXpjApWfavU5ZhYkfEth8DZBe0HMaLfXStYJ+0nM2If
-         +QOzOlBJi0PYG2q5b4KzXH5cqV9HynNZ1Mogi3QiDN6G0YNYtj5yggCthiqEEWLvLdjc
-         HGYiyiw9vLFouzzeJ22Uis58YVHMe/NNIcvDgPCFzhzNUAyS1lW8HOZBUIDmmdo8VSd1
-         h5rw==
+        bh=IbRN28dCcTxcP/HyVN7nudMDmE2SJ/Akq2fj0dI+RKg=;
+        b=RdwHxqHDd6NEsB/YrObKxJITjnnurFLhOsaYy0H+sI4TL+Kcmnu43kGDa+2Vno6nRo
+         ZSavuHIJwVEPG9cOJqb3PItFiL/5peiO4ErHHVzZQq/OmItsW8yN4AdgeJcRg1R7xzUR
+         DQ7VzNkwHGR0yThQU2jc7TXU8n7yxuYzNTEkJc5qi3hp501wBKyboar//B7AK0ssnmw1
+         7qUjWGZpTIfm9kHn17kX222Dr8S5j189kFE8p/kbeULoR4F2yc+Kq7m3B9laIVfCzW5a
+         UwlHkY9/o+iu894goDkPjAnT8W3z1CLO9Y3PWBOtktTHJd+b9wjpzTO+lO3BDE72GXM9
+         sRqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777293696; x=1777898496;
+        d=1e100.net; s=20251104; t=1777293698; x=1777898498;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=6ABAm3Tqn50t5mpzG4At4tZugLsUigOtQuqddfuGQmw=;
-        b=k3LN9/3u7XSH166W7bua0yQbenondKVwCTb0FBCtGWt0wdi4ecC/O6wjxuaw350ct7
-         cHEOvoJ9vATddzZDyBYtYmEb0OzFm43PH5tkrgcB5xbe0mwOvifj0+G2kuSbUO3pBqJG
-         wnrV2phLsKiCGKRRVy1qIi3gRm0BWrsAiS2Rqms5uRj3bwFRDEt1hQ9urxSwIdDE1zwV
-         gxWk/OTZaKk5+Q2F1SPsC3uZ3glDnZC819fC+LNd56x1Y+/IcEP63pS7K+1Ws2yfMdLQ
-         RPdUcJN3OWgKP/TGkirc3YN56XGV8fsPLzbaQsOZB5Mhpw8gQl1D/u2fqNpYieTK8LrU
-         9clw==
-X-Gm-Message-State: AOJu0YzXx2BluBqJ/A8h31vDZNnCW1a4SuQNP/gRaIKv+IvSW/1BX4Wk
-	y+0ltBefEeFPjXAwPW4vGNq3ap5UHdXNaKPwS4X0C2N1+9XEGWvxbmVbjYosGg==
-X-Gm-Gg: AeBDievqKdQUviQKae5dN5gK/zsddyqN49pYwVJ9IiBte4qEUfIw491Kp1FCYOytLmK
-	k/qt7Lgz7X9uYwtA3F3G8h3iKfDrW/imMjXbGmxyVfNvFwcvPwcTa6lfZmhjMedm/KVGH3tC8/+
-	mtYqGNHqoxvLSk/F9eN8MKB8kVU9xGRRh6Z0o1LKOqK3rQh+Xhq42/NusS4myw5VdirrZZtlpHG
-	VPGeuUyfWKC9M7CA1JIiYF4JTEDmKwAP5DKnILxmQlnUaj9UFHMDtb75zylE+CllpJWUjdBdKF1
-	+1w5WJE3qeUCHIFRKBdNnnrYN1SbjWEI3WAc/e3sL/sv8XghyCs4+bnvoRRRTXLsbGEqmHkVDnz
-	F0VbjfwtnurpZOgmzp14YjOAoCTO/aP1jII3v0/IOlQtVlxpBpw36pa6LSxhwPZ+wdvx/Po9+Sw
-	1F/ODRTdcm5RRUtHUwHgIZZTUPc6oupM7R4DtLHW9E6bSy552udwNpyEF3gVhxRwsV4VtbUblBx
-	X0t+ev6JqEWAPfClZIggwZja34f0W+u/H7iiRTaVbFmiArVFA==
-X-Received: by 2002:a05:6402:a0cb:b0:679:1f4f:9d2d with SMTP id 4fb4d7f45d1cf-6791f4f9f17mr2624901a12.2.1777293695724;
-        Mon, 27 Apr 2026 05:41:35 -0700 (PDT)
+        bh=IbRN28dCcTxcP/HyVN7nudMDmE2SJ/Akq2fj0dI+RKg=;
+        b=aar+bGK+H3SXZwXLhKF0x+J8BiYSsW8dIdh1MBr7v/hQwo6YAhAF6PXbsUkrgK58gs
+         g9gqBPz9u7Eqwy2eJhvNf2Pdrq4XiUnfJnWgmwLC7+9Cu1wNCvXUjFUH/QjYQZTJvILr
+         kDhGaWUM/bmGFAK7rRqzV9NICBNzeJdWQkXhT28t8XHgl/uXpRw8q3dQUoZUfJsdF4H0
+         BdvHTgUFm3v3HLcCwTK17YapRLsAdC7+xXXb9S8Lm2onqGzwkgKdYdF+IbRiD2oqSat+
+         bdd54qiA7EoZrYNmE4X4f4nt7kxbYpHUcWtP8xEKdayPbBK6BfIFak1Ih0CTu9FJu0PR
+         iKGw==
+X-Gm-Message-State: AOJu0YzNrcbHRnXoRzGCDLPZCbT9/nAaz8Wo3cmN+l/hjzH6w0RocWbA
+	7OPlwQay2vWPHrwTlKDRjbze1k8IX+1PU6y8+DMMCLoMNLN8QqsEVmvMHkjJLQ==
+X-Gm-Gg: AeBDieusqk+sBNr/cOOKSLfPSlySEXXpKJoc8Us+ftLahj2/ufs+jVoHR+7pOpD08d2
+	5wI6Om8q2qdXpKhAHgS5Ws1ohKrGsLXG0bdLUQtoteHrm99KsgO+E9FxukfOiGbo9GjAAG3iind
+	V1Z5togasWOLK/97TdiZLQvjFxJNaHSYgGU7QsyJ10DIQA6u5oLM+5tRMeLM2MG2yZrdLdiES54
+	B9gaHSfEibC+qKmYq78m6ya+WM5oR1okKjbw/HcucYMYKjfDwtrBp0oJSEW9fCnmFhFhQtNyVzD
+	lA8Nvwx1dEhawXOlpT4hEeJSKz7sg2c+A4g1eyqiD9MM9VDIE8QzCUbO2nmSWU7YEERJp6aNDEI
+	TbqZ1KOgdJITxJCkvdcRLuBRV5yVw8GhyxY5QRb6iXwOe4H9kT6vsw+UQlc2qRDExK6h+HsYheB
+	rYFqiKNWTLQv+8HhyOv+XEAxvdCEQxbCNvGBVklFrVNL0DsjRGeckM33s7LQT7i/jDumS+2nGl/
+	t0SHck1+VZS6TI5pBdFzP9ghOnyl7+7P52td4nOXP2y8m/asI9mw5Q0M39S
+X-Received: by 2002:a05:6402:3891:b0:678:a507:e80d with SMTP id 4fb4d7f45d1cf-678a507eae8mr7036042a12.22.1777293697242;
+        Mon, 27 Apr 2026 05:41:37 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6744dcdf29fsm6760446a12.30.2026.04.27.05.41.34
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6744dcdf29fsm6760446a12.30.2026.04.27.05.41.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 05:41:35 -0700 (PDT)
+        Mon, 27 Apr 2026 05:41:36 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 6/8] promisor-remote: trust known remotes matching acceptFromServerUrl
-Date: Mon, 27 Apr 2026 14:41:06 +0200
-Message-ID: <20260427124108.3524129-7-christian.couder@gmail.com>
+Subject: [PATCH v2 7/8] promisor-remote: auto-configure unknown remotes
+Date: Mon, 27 Apr 2026 14:41:07 +0200
+Message-ID: <20260427124108.3524129-8-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.54.0.19.gb68b9497aa
 In-Reply-To: <20260427124108.3524129-1-christian.couder@gmail.com>
 References: <20251223111113.47473-1-christian.couder@gmail.com>
@@ -82,389 +82,488 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A previous commit introduced the `promisor.acceptFromServerUrl` config
-variable along with the machinery to parse and validate the URL glob
-patterns and optional remote name prefixes it contains. However, these
-URL patterns are not yet tied into the client's acceptance logic.
+Previous commits have introduced the `promisor.acceptFromServerUrl`
+config variable to allowlist some URLs advertised by a server through
+the "promisor-remote" protocol capability.
 
-When a promisor remote is already configured locally, its fields (like
-authentication tokens) may occasionally need to be refreshed by the
-server. If `promisor.acceptFromServer` is set to the secure default
-("None"), these updates are rejected, potentially causing future
-fetches to fail.
+However the new `promisor.acceptFromServerUrl` mechanism, like the old
+`promisor.acceptFromServer` mechanism, still requires a remote to
+already exist in the client's local configuration before it can be
+accepted. This places a significant manual burden on users to
+pre-configure these remotes, and creates friction for administrators
+who have to troubleshoot or manually provision these setups for their
+teams.
 
-To enable such targeted updates for trusted URLs, let's use the URL
-patterns from `promisor.acceptFromServerUrl` as an additional URL
-based allowlist.
+To eliminate this burden, let's automatically create a new `[remote]`
+section in the client's config when a server advertises an unknown
+remote whose URL matches a `promisor.acceptFromServerUrl` glob pattern.
 
-Concretely, let's check the advertised URLs against the URL glob
-patterns by introducing a new small helper function called
-url_matches_accept_list(), which iterates over the glob patterns and
-returns the first matching allowed_url entry (or NULL).
+Concretely, let's add four helpers:
 
-The URL matching is done component by component: scheme and port are
-compared exactly, the host is matched with wildmatch() using the
-WM_PATHNAME flag (so '*' cannot cross the '/' boundary into the path),
-and the path is matched with wildmatch() without WM_PATHNAME (so '*'
-can still match multi-level paths). Before matching, the advertised
-URL is passed through url_normalize() so that case variations in the
-scheme/host, percent-encoding tricks, and ".." path segments cannot
-bypass the allowlist.
+ - sanitize_remote_name(): turn an arbitrary URL-derived string into a
+   valid remote name by replacing non-alphanumeric characters,
+   collapsing runs of '-', and prepending "promisor-auto-".
 
-Let's then use this helper at the tail of should_accept_remote() so
-that, when `accept == ACCEPT_NONE`, a known remote whose URL matches
-the allowlist is still accepted.
+ - promisor_remote_name_from_url(): normalize the URL and extract
+   host+port+path to build a human-readable base name, then pass it
+   through sanitize_remote_name().
 
-To prepare for this new logic, let's also:
+ - configure_auto_promisor_remote(): write the remote.*.url,
+   remote.*.promisor and remote.*.advertisedAs keys to the repo
+   config.
 
- - Add an 'accept_urls' parameter to should_accept_remote().
+ - handle_matching_allowed_url(): pick the final name (user-supplied
+   alias or auto-generated), handle collisions by appending "-1",
+   "-2", etc., then call configure_auto_promisor_remote().
 
- - Replace the BUG() guard in the ACCEPT_KNOWN_URL case with an
-   explicit 'if (accept == ACCEPT_KNOWN_URL) return' and a new
-   BUG() guard in the ACCEPT_NONE case, so url_matches_accept_list()
-   is only called in the ACCEPT_NONE case.
+Let's also add should_accept_new_remote_url() which reuses the
+url_matches_accept_list() helper introduced in a previous commit to
+find a matching pattern, then delegates to handle_matching_allowed_url()
+to create the remote.
 
- - Call accept_from_server_url() from filter_promisor_remote()
-   and relax its early return so that the function is entered when
-   `accept_urls` has entries even if `accept == ACCEPT_NONE`.
+And then let's call should_accept_new_remote_url() from the '!item'
+(unknown remote) branch of should_accept_remote(), setting
+`reload_config` so that the newly-written config is picked up.
 
-With this, many organizations may only need something like:
+Finally let's document all that by:
 
-  git config set --global \
-          promisor.acceptFromServerUrl "https://my-org.com/*"
-
-to accept only their own remotes. And if they need to accept additional
-remotes in some specific repos, they can also set:
-
-  git config set promisor.acceptFromServer knownUrl
-
-and configure the additional remote manually only in the repos where
-they are needed.
-
-Let's then properly document `promisor.acceptFromServerUrl` in
-"promisor.adoc" as an additive security allowlist for known remotes,
-including the URL normalization behavior and the component-wise
-matching, and let's mention it in "gitprotocol-v2.adoc".
+ - expanding the `promisor.acceptFromServerUrl` entry to describe
+   auto-creation, the optional "name=" prefix syntax, the
+   "promisor-auto-*" generation rules, and numeric-suffix collision
+   handling, and by
+ - adding a "remote.<name>.advertisedAs" entry to "remote.adoc".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config/promisor.adoc    | 52 ++++++++++++++
- Documentation/gitprotocol-v2.adoc     |  9 +--
- promisor-remote.c                     | 98 +++++++++++++++++++++++++--
- t/t5710-promisor-remote-capability.sh | 71 +++++++++++++++++++
- 4 files changed, 220 insertions(+), 10 deletions(-)
+ Documentation/config/promisor.adoc    |  26 +++-
+ Documentation/config/remote.adoc      |   9 ++
+ promisor-remote.c                     | 202 +++++++++++++++++++++++++-
+ t/t5710-promisor-remote-capability.sh | 104 +++++++++++++
+ 4 files changed, 332 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-index b0fa43b839..efc066c3f2 100644
+index efc066c3f2..ae1686a6e0 100644
 --- a/Documentation/config/promisor.adoc
 +++ b/Documentation/config/promisor.adoc
-@@ -51,6 +51,58 @@ promisor.acceptFromServer::
- 	to "fetch" and "clone" requests from the client. Name and URL
- 	comparisons are case sensitive. See linkgit:gitprotocol-v2[5].
+@@ -54,7 +54,8 @@ promisor.acceptFromServer::
+ promisor.acceptFromServerUrl::
+ 	A glob pattern to specify which server-advertised URLs a
+ 	client is allowed to act on. When a URL matches, the client
+-	will accept the advertised remote as a promisor remote and may
++	will accept the advertised remote as a promisor remote, may
++	automatically create a new remote configuration for it and may
+ 	automatically accept field updates (such as authentication
+ 	tokens) from the server, even if `promisor.acceptFromServer`
+ 	is set to `none` (the default).
+@@ -66,9 +67,10 @@ this option in _ANY_ config file read by Git.
+ Be _VERY_ careful with these patterns: `*` matches any sequence of
+ characters within the 'host' and 'path' parts of a URL (but cannot
+ cross part boundaries). An overly broad pattern is a major security
+-risk, as a matching URL allows a server to update fields (such as
+-authentication tokens) on known remotes without further confirmation.
+-To minimize security risks, follow these guidelines:
++risk, as a matching URL allows a server to auto-configure new remotes
++and to update fields (such as authentication tokens) on known remotes
++without further confirmation. To minimize security risks, follow these
++guidelines:
+ +
+ 1. Start with a secure protocol scheme, like `https://` or `ssh://`.
+ +
+@@ -99,6 +101,22 @@ are resolved. The port must also match exactly (e.g.,
+ `https://example.com:8080/*` will not match a URL advertised on
+ port 9999).
+ +
++The glob pattern can optionally be prefixed with a remote name and an
++equals sign (e.g., `cdn=https://cdn.example.com/*`). If such a prefix
++is provided, accepted remotes will be saved under that name. If no
++such prefix is provided, a safe remote name will be automatically
++generated by sanitizing the URL and prefixing it with
++`promisor-auto-`.
+++
++If a remote with the chosen name already exists but points to a
++different URL, Git will append a numeric suffix (e.g., `-1`, `-2`) to
++the name to prevent overwriting existing configurations. You should
++make sure that this doesn't happen often though, as remotes will be
++rejected if the numeric suffix increases too much. In all cases, the
++original name advertised by the server is recorded in the
++`remote.<name>.advertisedAs` configuration variable for tracing and
++debugging purposes.
+++
+ For the security implications of accepting a promisor remote, see the
+ documentation of `promisor.acceptFromServer`. For details on the
+ protocol, see linkgit:gitprotocol-v2[5].
+diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+index 91e46f66f5..6e2bbdf457 100644
+--- a/Documentation/config/remote.adoc
++++ b/Documentation/config/remote.adoc
+@@ -91,6 +91,15 @@ remote.<name>.promisor::
+ 	When set to true, this remote will be used to fetch promisor
+ 	objects.
  
-+promisor.acceptFromServerUrl::
-+	A glob pattern to specify which server-advertised URLs a
-+	client is allowed to act on. When a URL matches, the client
-+	will accept the advertised remote as a promisor remote and may
-+	automatically accept field updates (such as authentication
-+	tokens) from the server, even if `promisor.acceptFromServer`
-+	is set to `none` (the default).
-++
-+This option can appear multiple times in config files. An advertised
-+URL will be accepted if it matches _ANY_ glob pattern specified by
-+this option in _ANY_ config file read by Git.
-++
-+Be _VERY_ careful with these patterns: `*` matches any sequence of
-+characters within the 'host' and 'path' parts of a URL (but cannot
-+cross part boundaries). An overly broad pattern is a major security
-+risk, as a matching URL allows a server to update fields (such as
-+authentication tokens) on known remotes without further confirmation.
-+To minimize security risks, follow these guidelines:
-++
-+1. Start with a secure protocol scheme, like `https://` or `ssh://`.
-++
-+2. Only allow domain names or paths where you control and trust _ALL_
-+   the content. Be especially careful with shared hosting platforms
-+   like `github.com` or `gitlab.com`. A broad pattern like
-+   `https://gitlab.com/*` is dangerous because it trusts every
-+   repository on the entire platform. Always restrict such patterns to
-+   your specific organization or namespace (e.g.,
-+   `https://gitlab.com/your-org/*`).
-++
-+3. Never use globs at the end of domain names. For example,
-+   `https://cdn.your-org.com/*` might be safe, but
-+   `https://cdn.your-org.com*/*` is a major security risk because
-+   the latter matches `https://cdn.your-org.com.hacker.net/repo`.
-++
-+4. Be careful using globs at the beginning of domain names. While the
-+   code ensures a `*` in the host cannot cross into the path, a
-+   pattern like `https://*.example.com/*` will still match any
-+   subdomain. This is extremely dangerous on shared hosting platforms
-+   (e.g., `https://*.github.io/*` trusts every user's site on the
-+   entire platform).
-++
-+Before matching, both the advertised URL and the pattern are
-+normalized: the scheme and host are lowercased, percent-encoded
-+characters are decoded where possible, and path segments like `..`
-+are resolved. The port must also match exactly (e.g.,
-+`https://example.com:8080/*` will not match a URL advertised on
-+port 9999).
-++
-+For the security implications of accepting a promisor remote, see the
-+documentation of `promisor.acceptFromServer`. For details on the
-+protocol, see linkgit:gitprotocol-v2[5].
++remote.<name>.advertisedAs::
++	When a promisor remote is automatically configured using
++	information advertised by a server through the
++	`promisor-remote` protocol capability (see
++	`promisor.acceptFromServerUrl`), the server's originally
++	advertised name is saved in this variable. This is for
++	information, tracing and debugging purposes. Users should not
++	typically modify or create such configuration entries.
 +
- promisor.checkFields::
- 	A comma or space separated list of additional remote related
- 	field names. A client checks if the values of these fields
-diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-index befa697d21..2beb70595f 100644
---- a/Documentation/gitprotocol-v2.adoc
-+++ b/Documentation/gitprotocol-v2.adoc
-@@ -866,10 +866,11 @@ the server advertised, the client shouldn't advertise the
- 
- On the server side, the "promisor.advertise" and "promisor.sendFields"
- configuration options can be used to control what it advertises. On
--the client side, the "promisor.acceptFromServer" configuration option
--can be used to control what it accepts, and the "promisor.storeFields"
--option, to control what it stores. See the documentation of these
--configuration options in linkgit:git-config[1] for more information.
-+the client side, the "promisor.acceptFromServer" and
-+"promisor.acceptFromServerUrl" configuration options can be used to
-+control what it accepts, and the "promisor.storeFields" option, to
-+control what it stores. See the documentation of these configuration
-+options in linkgit:git-config[1] for more information.
- 
- Note that in the future it would be nice if the "promisor-remote"
- protocol capability could be used by the server, when responding to
+ remote.<name>.partialclonefilter::
+ 	The filter that will be applied when fetching from this	promisor remote.
+ 	Changing or clearing this value will only affect fetches for new commits.
 diff --git a/promisor-remote.c b/promisor-remote.c
-index 3f3924f587..72d5b94bf7 100644
+index 72d5b94bf7..8c8a798fdb 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -14,6 +14,7 @@
- #include "url.h"
- #include "urlmatch.h"
- #include "version.h"
-+#include "wildmatch.h"
- 
- struct promisor_remote_config {
- 	struct promisor_remote *promisors;
-@@ -742,8 +743,82 @@ static void load_accept_from_server_url(struct repository *repo,
- 	}
+@@ -816,10 +816,197 @@ static struct allowed_url *url_matches_accept_list(
+ 	return NULL;
  }
  
-+static bool match_one_url(const struct url_info *pi, const struct url_info *ui)
+-static int should_accept_remote(enum accept_promisor accept,
++/*
++ * Sanitize the buffer to make it a valid remote name coming from the
++ * server by:
++ *
++ * - replacing any non alphanumeric character with a '-'
++ * - stripping any leading '-',
++ * - condensing multiple '-' into one,
++ * - prepending "promisor-auto-",
++ * - validating the result.
++ */
++static int sanitize_remote_name(struct strbuf *buf, const char *url)
 +{
-+	const char *pat = pi->url;
-+	const char *url = ui->url;
-+	char *p_str, *u_str;
-+	bool res;
-+
-+	/*
-+	 * Schemes must match exactly. They are case-folded by
-+	 * url_normalize(), so strncmp() suffices.
-+	 */
-+	if (pi->scheme_len != ui->scheme_len || strncmp(pat, url, pi->scheme_len))
-+		return false;
-+
-+	/*
-+	 * Ports must match exactly. url_normalize() strips default
-+	 * ports (like 443 for https), so length and content
-+	 * comparisons are sufficient.
-+	 */
-+	if (pi->port_len != ui->port_len ||
-+	    strncmp(pat + pi->port_off, url + ui->port_off, pi->port_len))
-+		return false;
-+
-+	/*
-+	 * Match host and path separately to prevent a '*' in the host
-+	 * portion of the pattern from matching across the '/'
-+	 * boundary into the path. Use WM_PATHNAME for the host so '*'
-+	 * cannot cross '/' there, and 0 for the path so '*' can still
-+	 * match multi-level paths.
-+	 */
-+
-+	p_str = xstrndup(pat + pi->host_off, pi->host_len);
-+	u_str = xstrndup(url + ui->host_off, ui->host_len);
-+	res = !wildmatch(p_str, u_str, WM_PATHNAME);
-+	free(p_str);
-+	free(u_str);
-+
-+	if (!res)
-+		return false;
-+
-+	p_str = xstrndup(pat + pi->path_off, pi->path_len);
-+	u_str = xstrndup(url + ui->path_off, ui->path_len);
-+	res = !wildmatch(p_str, u_str, 0);
-+	free(p_str);
-+	free(u_str);
-+
-+	return res;
-+}
-+
-+static struct allowed_url *url_matches_accept_list(
-+		struct string_list *accept_urls, const char *url)
-+{
-+	struct string_list_item *item;
-+	struct url_info url_info;
-+
-+	url_info.url = url_normalize(url, &url_info);
-+
-+	if (!url_info.url)
-+		return NULL;
-+
-+	for_each_string_list_item(item, accept_urls) {
-+		struct allowed_url *allowed = item->util;
-+
-+		if (match_one_url(&allowed->pattern_info, &url_info)) {
-+			free(url_info.url);
-+			return allowed;
++	char prev = '-';
++	for (size_t i = 0; i < buf->len; ) {
++		if (!isalnum(buf->buf[i]))
++			buf->buf[i] = '-';
++		if (prev == '-' && buf->buf[i] == '-') {
++			strbuf_remove(buf, i, 1);
++		} else {
++			prev = buf->buf[i];
++			i++;
 +		}
 +	}
 +
-+	free(url_info.url);
-+	return NULL;
-+}
++	strbuf_strip_suffix(buf, "-");
 +
- static int should_accept_remote(enum accept_promisor accept,
- 				struct promisor_info *advertised,
-+				struct string_list *accept_urls,
- 				struct string_list *config_info)
- {
- 	struct promisor_info *p;
-@@ -771,9 +846,6 @@ static int should_accept_remote(enum accept_promisor accept,
- 	if (accept == ACCEPT_KNOWN_NAME)
- 		return all_fields_match(advertised, config_info, p);
- 
--	if (accept != ACCEPT_KNOWN_URL)
--		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
--
- 	if (strcmp(p->url, remote_url)) {
- 		warning(_("known remote named '%s' but with URL '%s' instead of '%s', "
- 			  "ignoring this remote"),
-@@ -781,7 +853,21 @@ static int should_accept_remote(enum accept_promisor accept,
- 		return 0;
- 	}
- 
--	return all_fields_match(advertised, config_info, p);
-+	if (accept == ACCEPT_KNOWN_URL)
-+		return all_fields_match(advertised, config_info, p);
++	if (!buf->len) {
++		warning(_("couldn't generate a valid remote name from "
++			  "advertised url '%s', ignoring this remote"), url);
++		return -1;
++	}
 +
-+	if (accept != ACCEPT_NONE)
-+		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
++	strbuf_insertstr(buf, 0, "promisor-auto-");
 +
-+	/*
-+	 * Even if accept == ACCEPT_NONE, we MUST trust this known
-+	 * remote to update its token or other such fields if its URL
-+	 * matches the acceptFromServerUrl allowlist!
-+	 */
-+	if (url_matches_accept_list(accept_urls, remote_url))
-+		return all_fields_match(advertised, config_info, p);
++	if (!valid_remote_name(buf->buf)) {
++		warning(_("generated remote name '%s' from advertised url '%s' "
++			  "is invalid, ignoring this remote"), buf->buf, url);
++		return -1;
++	}
 +
 +	return 0;
- }
++}
++
++static char *promisor_remote_name_from_url(const char *url)
++{
++	struct url_info url_info = { 0 };
++	char *normalized = url_normalize(url, &url_info);
++	struct strbuf buf = STRBUF_INIT;
++
++	if (!normalized) {
++		warning(_("couldn't normalize advertised url '%s', "
++			  "ignoring this remote"), url);
++		return NULL;
++	}
++
++	if (url_info.host_len) {
++		strbuf_add(&buf, normalized + url_info.host_off, url_info.host_len);
++		strbuf_addch(&buf, '-');
++	}
++
++	if (url_info.port_len) {
++		strbuf_add(&buf, normalized + url_info.port_off, url_info.port_len);
++		strbuf_addch(&buf, '-');
++	}
++
++	if (url_info.path_len) {
++		strbuf_add(&buf, normalized + url_info.path_off, url_info.path_len);
++		strbuf_trim_trailing_dir_sep(&buf);
++		strbuf_strip_suffix(&buf, ".git");
++	}
++
++	free(normalized);
++
++	if (sanitize_remote_name(&buf, url)) {
++		strbuf_release(&buf);
++		return NULL;
++	}
++
++	return strbuf_detach(&buf, NULL);
++}
++
++static void configure_auto_promisor_remote(struct repository *repo,
++					   const char *name,
++					   const char *url,
++					   const char *advertised_as,
++					   bool reuse)
++{
++	char *key;
++
++	if (!reuse) {
++		fprintf(stderr, _("Auto-creating promisor remote '%s' for URL '%s'\n"),
++			name, url);
++
++		key = xstrfmt("remote.%s.url", name);
++		repo_config_set_gently(repo, key, url);
++		free(key);
++	}
++
++	/* NB: when reusing, this promotes an existing non-promisor remote */
++	key = xstrfmt("remote.%s.promisor", name);
++	repo_config_set_gently(repo, key, "true");
++	free(key);
++
++	if (advertised_as) {
++		key = xstrfmt("remote.%s.advertisedAs", name);
++		repo_config_set_gently(repo, key, advertised_as);
++		free(key);
++	}
++}
++
++#define MAX_REMOTES_WITH_SIMILAR_NAMES 20
++
++/* Return the allocated local name, or NULL on failure */
++static char *handle_matching_allowed_url(struct repository *repo,
++					 char *allowed_name,
++					 const char *remote_url,
++					 const char *remote_name)
++{
++	char *name;
++	char *basename = allowed_name ?
++		xstrdup(allowed_name) :
++		promisor_remote_name_from_url(remote_url);
++	int i = 0;
++	bool reuse = false;
++
++	if (!basename)
++		return NULL;
++
++	name = xstrdup(basename);
++
++	while (i < MAX_REMOTES_WITH_SIMILAR_NAMES) {
++		char *url_key = xstrfmt("remote.%s.url", name);
++		const char *existing_url;
++		int exists = !repo_config_get_string_tmp(repo, url_key, &existing_url);
++
++		free(url_key);
++
++		if (!exists)
++			break; /* Free to use */
++
++		if (!strcmp(existing_url, remote_url)) {
++			reuse = true;
++			break; /* Same URL, so safe to reuse */
++		}
++
++		i++;
++		free(name);
++		name = xstrfmt("%s-%d", basename, i);
++	}
++
++	if (i < MAX_REMOTES_WITH_SIMILAR_NAMES) {
++		configure_auto_promisor_remote(repo, name,
++					       remote_url, remote_name,
++					       reuse);
++	} else {
++		warning(_("too many remotes accepted with name like '%s-X', "
++			  "ignoring this remote"), basename);
++		FREE_AND_NULL(name);
++	}
++
++	free(basename);
++	return name;
++}
++
++static int should_accept_new_remote_url(struct repository *repo,
++					struct string_list *accept_urls,
++					struct promisor_info *advertised)
++{
++	struct allowed_url *allowed = url_matches_accept_list(accept_urls,
++							     advertised->url);
++	if (allowed) {
++		char *name = handle_matching_allowed_url(repo,
++							 allowed->remote_name,
++							 advertised->url,
++							 advertised->name);
++		if (name) {
++			free((char *)advertised->local_name);
++			advertised->local_name = name;
++			return 1;
++		}
++	}
++
++	return 0;
++}
++
++static int should_accept_remote(struct repository *repo,
++				enum accept_promisor accept,
+ 				struct promisor_info *advertised,
+ 				struct string_list *accept_urls,
+-				struct string_list *config_info)
++				struct string_list *config_info,
++				bool *reload_config)
+ {
+ 	struct promisor_info *p;
+ 	struct string_list_item *item;
+@@ -837,9 +1024,13 @@ static int should_accept_remote(enum accept_promisor accept,
+ 	/* Get config info for that promisor remote */
+ 	item = string_list_lookup(config_info, remote_name);
  
- static int skip_field_name_prefix(const char *elem, const char *field_name, const char **value)
-@@ -991,7 +1077,7 @@ static void filter_promisor_remote(struct repository *repo,
- 	/* Load and validate the acceptFromServerUrl config */
- 	load_accept_from_server_url(repo, &accept_urls);
+-	if (!item)
++	if (!item) {
+ 		/* We don't know about that remote */
+-		return 0;
++		int res = should_accept_new_remote_url(repo, accept_urls, advertised);
++		if (res)
++			*reload_config = true;
++		return res;
++	}
  
--	if (accept == ACCEPT_NONE)
-+	if (accept == ACCEPT_NONE && !accept_urls.nr)
- 		return;
+ 	p = item->util;
  
- 	/* Parse remote info received */
-@@ -1011,7 +1097,7 @@ static void filter_promisor_remote(struct repository *repo,
+@@ -1097,7 +1288,8 @@ static void filter_promisor_remote(struct repository *repo,
  			string_list_sort(&config_info);
  		}
  
--		if (should_accept_remote(accept, advertised, &config_info)) {
-+		if (should_accept_remote(accept, advertised, &accept_urls, &config_info)) {
+-		if (should_accept_remote(accept, advertised, &accept_urls, &config_info)) {
++		if (should_accept_remote(repo, accept, advertised, &accept_urls,
++					 &config_info, &reload_config)) {
  			if (!store_info)
  				store_info = store_info_new(repo);
  			if (promisor_store_advertised_fields(advertised, store_info))
 diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-index 3b39505380..0659b2ac15 100755
+index 0659b2ac15..549acff23f 100755
 --- a/t/t5710-promisor-remote-capability.sh
 +++ b/t/t5710-promisor-remote-capability.sh
-@@ -387,6 +387,77 @@ test_expect_success "clone with 'KnownUrl' and empty url, so not advertised" '
- 	check_missing_objects server 1 "$oid"
+@@ -458,6 +458,107 @@ test_expect_success "clone with 'None', URL allowlisted, but client has differen
+ 	initialize_server 1 "$oid"
  '
  
-+test_expect_success "clone with 'None' but URL allowlisted" '
++test_expect_success "clone with URL allowlisted and no remote already configured" '
 +	git -C server config promisor.advertise true &&
 +	test_when_finished "rm -rf client" &&
++	test_when_finished "rm -f full_names" &&
 +
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="$TRASH_DIRECTORY_URL/lop" \
++	GIT_NO_LAZY_FETCH=0 git clone \
 +		-c promisor.acceptfromserver=None \
 +		-c promisor.acceptFromServerUrl="$ENCODED_TRASH_DIRECTORY_URL/*" \
 +		--no-local --filter="blob:limit=5k" server client &&
++
++	# Check that exactly one remote has been auto-created, identified
++	# by "remote.<name>.advertisedAs" == "lop".
++	git -C client config get --all --show-names --regexp \
++		"remote\..*\.advertisedas" >full_names &&
++	test_line_count = 1 full_names &&
++	REMOTE_NAME=$(sed "s/^remote\.\(.*\)\.advertisedas .*$/\1/" full_names) &&
++
++	# Check ".url" and ".promisor" values
++	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" >expect &&
++	git -C client config "remote.$REMOTE_NAME.url" >actual &&
++	git -C client config "remote.$REMOTE_NAME.promisor" >>actual &&
++	test_cmp expect actual &&
 +
 +	# Check that the largest object is still missing on the server
 +	check_missing_objects server 1 "$oid"
 +'
 +
-+test_expect_success "clone with 'None' but URL not in allowlist" '
++test_expect_success "clone with named URL allowlisted and no pre-configured remote" '
 +	git -C server config promisor.advertise true &&
 +	test_when_finished "rm -rf client" &&
 +
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="$TRASH_DIRECTORY_URL/lop" \
++	GIT_NO_LAZY_FETCH=0 git clone \
 +		-c promisor.acceptfromserver=None \
-+		-c promisor.acceptFromServerUrl="https://example.com/*" \
++		-c promisor.acceptFromServerUrl="cdn=$ENCODED_TRASH_DIRECTORY_URL/*" \
 +		--no-local --filter="blob:limit=5k" server client &&
 +
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
-+
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server 1 "$oid"
-+'
-+
-+test_expect_success "clone with 'None' but URL allowlisted in one pattern out of two" '
-+	git -C server config promisor.advertise true &&
-+	test_when_finished "rm -rf client" &&
-+
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="$TRASH_DIRECTORY_URL/lop" \
-+		-c promisor.acceptfromserver=None \
-+		-c promisor.acceptFromServerUrl="https://example.com/*" \
-+		-c promisor.acceptFromServerUrl="$ENCODED_TRASH_DIRECTORY_URL/*" \
-+		--no-local --filter="blob:limit=5k" server client &&
++	# Check that a remote has been auto-created with the right "cdn" name and fields.
++	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" "lop" >expect &&
++	git -C client config "remote.cdn.url" >actual &&
++	git -C client config "remote.cdn.promisor" >>actual &&
++	git -C client config "remote.cdn.advertisedAs" >>actual &&
++	test_cmp expect actual &&
 +
 +	# Check that the largest object is still missing on the server
 +	check_missing_objects server 1 "$oid"
 +'
 +
-+test_expect_success "clone with 'None', URL allowlisted, but client has different URL" '
++test_expect_success "clone with URL allowlisted but colliding name" '
 +	git -C server config promisor.advertise true &&
 +	test_when_finished "rm -rf client" &&
 +
-+	# The client configures "lop" with a different URL (serverTwo) than
-+	# what the server advertises (lop). Even though the advertised URL
-+	# matches the allowlist, the remote is rejected because the
-+	# configured URL does not match the advertised one.
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="$TRASH_DIRECTORY_URL/serverTwo" \
++	GIT_NO_LAZY_FETCH=0 git clone -c remote.cdn.promisor=true \
++		-c remote.cdn.fetch="+refs/heads/*:refs/remotes/lop/*" \
++		-c remote.cdn.url="https://example.com/cdn" \
 +		-c promisor.acceptfromserver=None \
-+		-c promisor.acceptFromServerUrl="$ENCODED_TRASH_DIRECTORY_URL/*" \
++		-c promisor.acceptFromServerUrl="cdn=$ENCODED_TRASH_DIRECTORY_URL/*" \
 +		--no-local --filter="blob:limit=5k" server client &&
 +
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
++	# Check that a remote has been auto-created with the right "cdn-1" name and fields.
++	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" "lop" >expect &&
++	git -C client config "remote.cdn-1.url" >actual &&
++	git -C client config "remote.cdn-1.promisor" >>actual &&
++	git -C client config "remote.cdn-1.advertisedAs" >>actual &&
++	test_cmp expect actual &&
 +
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server 1 "$oid"
++	# Check that the original "cdn" remote was not overwritten.
++	printf "%s\n" "https://example.com/cdn" "true" >expect &&
++	git -C client config "remote.cdn.url" >actual &&
++	git -C client config "remote.cdn.promisor" >>actual &&
++	test_cmp expect actual &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid"
++'
++
++test_expect_success "clone with URL allowlisted and reusable remote" '
++	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
++
++	GIT_NO_LAZY_FETCH=0 git clone \
++		-c remote.cdn.fetch="+refs/heads/*:refs/remotes/lop/*" \
++		-c remote.cdn.url="$TRASH_DIRECTORY_URL/lop" \
++		-c promisor.acceptfromserver=None \
++		-c promisor.acceptFromServerUrl="cdn=$ENCODED_TRASH_DIRECTORY_URL/*" \
++		--no-local --filter="blob:limit=5k" server client &&
++
++	# Check that the existing "cdn" remote has been properly updated.
++	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" "lop" "+refs/heads/*:refs/remotes/lop/*" >expect &&
++	git -C client config "remote.cdn.url" >actual &&
++	git -C client config "remote.cdn.promisor" >>actual &&
++	git -C client config "remote.cdn.advertisedAs" >>actual &&
++	git -C client config "remote.cdn.fetch" >>actual &&
++	test_cmp expect actual &&
++
++	# Check that no new "cdn-1" remote has been created.
++	test_must_fail git -C client config "remote.cdn-1.url" &&
++
++	# Check that the largest object is still missing on the server
++	check_missing_objects server 1 "$oid"
 +'
 +
  test_expect_success "clone with invalid promisor.acceptFromServerUrl" '
  	git -C server config promisor.advertise true &&
  	test_when_finished "rm -rf client" &&
+@@ -472,6 +573,9 @@ test_expect_success "clone with invalid promisor.acceptFromServerUrl" '
+ 	# Check that a warning was emitted
+ 	test_grep "invalid remote name '\''bad name'\''" err &&
+ 
++	# Check that no remote was auto-created
++	test_must_fail git -C client config get --regexp "remote\..*\.advertisedas" &&
++
+ 	# Check that the largest object is not missing on the server
+ 	check_missing_objects server 0 "" &&
+ 
 -- 
 2.54.0.19.gb68b9497aa
 
