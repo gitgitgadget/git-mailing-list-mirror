@@ -1,100 +1,171 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E02035C1B6
-	for <git@vger.kernel.org>; Mon, 27 Apr 2026 03:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777261267; cv=pass; b=SCui5ngjJ7IYcf+tICawsRoz577Gag9TlJ2qWZKmzTN0s7BR5ljkii/PtwTlYVmjIADrElnfdqdmfLXkRI91gQACceN9WoYMlN4oddL574MCrzhqaZkBh43QHYpXbW1OI8VoqR6iODX/tT9p2wA5AK+VBEm1Z3hKDG/EzEuwMoE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777261267; c=relaxed/simple;
-	bh=iDMJUQQKiCHoP5LTGqxTfJYdlIuTPlwVudQ02q/SS5g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=PPosHUeivYsUlUOa1aRzB1C/Poqtevz4InxJiDTZA00ZRT1nMdrEN1DhtLFcSLEVIBs5wir6NImqyCSic0pJI3A475u8AmLYkZzIJj2xVTyQ783Q2XASdBcXoHQ2+w9HiNSdl5IHHVNYBjPzFBWPuBnjG+vsXfkNiyi+t+1NHXc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2m8OYrF; arc=pass smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31014364933
+	for <git@vger.kernel.org>; Mon, 27 Apr 2026 05:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777269242; cv=none; b=b8fWIgD01AEpwhHNL27vl53r/8KBkITQD1BuW4+bM0qAqHh7880xwpIR5XG22RHmFelyLeSyyVP/vj60kBgLrg+7n/k1n4XqPC+mGgT3nYgTg+1ZG7DtCE9ylWInfj1Gas1hmEmHfXlAIdHcYN09JOfQ4aZUsoJukXzZiHUTRy0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777269242; c=relaxed/simple;
+	bh=p3xIyaUKmO7Mo+bxwmlMUDRnhIYKbu1Idugbe8P7h3Y=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=kXwLsDsjz0V3ZlzI/ikoWkxbG4g5LiloPiHPwkzxsrQuxWp0R4zYSML7p2Ozp+kwKd9QUllnopk/VrWO7Qy67f3ZEXkS4o9OKnGsPktHu45mKSaSXoEfuzXAz4jH18rYQFoZzJnruArCs9CkUTqfIqkD92mU48wmyqXMpsij5Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zUgrzVK/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ovdGVx1L; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2m8OYrF"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-59e5aa4ca41so9469069e87.2
-        for <git@vger.kernel.org>; Sun, 26 Apr 2026 20:41:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777261264; cv=none;
-        d=google.com; s=arc-20240605;
-        b=KdynF3ZvLMvYP2q53eh/IoPw9TDf9byXSxWEbL5anUeFpEXR14k2uxMuf2kNxEa3Mj
-         2pgBZUQ/tDudziooIqlqrbg4HXCcbEiptwZMCfp6IJauxibFE1KMDpVaSkLiKusTrvf7
-         fTkVKvlMHGQzvvANN2F0ofFMUtYc2DVMeOe9lu/Nbc2CWOp7VVT81Vte6fU/x7Z06nYg
-         JAyaiGSTfzyLbVtJFnEr/BJN4Yb+VrZ2qOYNzgh7ahscKSEvg1D4dQ5rLGibhYZcDEn8
-         yqq7dAmCvNpFRvWQwtILYBYqlbe9xcbpRcfIYNWJ5Rx/UmnH7hv1pAQ34SFlktr1iJlC
-         7QIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=iDMJUQQKiCHoP5LTGqxTfJYdlIuTPlwVudQ02q/SS5g=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=i3lz60ocQpViv/P/CcFQv7slgaY+OadetRaTLzYuWcB7Uvmp2uKyRu+1VjVuz5Xicj
-         DSv4BkaqArIWfHGyayUW1JkGTEa5tCWPJVb4w36zv7htIHzgU7cVKOouGLrRh5TYcQH3
-         6gdflKc9Z5//46qFvpr0FnaOsFM6ltgPzQjTLpr8he19GDWHVbVlGokei0gef9Pbbwnf
-         UrXoPUbDhkga63/xmb0kmgLbjr4B3bjGA+FoikrKCBm6ogQKkw4km5HLR89WTjTI26jI
-         yRrdCsWnPLl7ZQuPMV0ud1WlyixhJ8KopXtEYMd5yrtSX7I3YQlGUJeyjibie4Tgh2KD
-         NZJA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777261264; x=1777866064; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iDMJUQQKiCHoP5LTGqxTfJYdlIuTPlwVudQ02q/SS5g=;
-        b=j2m8OYrFurbaxrkoMer/VKQQmeiTmcrAM0bK9VbgTcd8j4Ul6huxQ0+tr7aZuYi1is
-         vzYKeQdttXXzYWpA0pq7nnEG8hlKAFFreLpaulQK3D6PvoTDHaPTkE1jOa1UFz/wzZRi
-         ORsKKs0FB4AR80GtBGyUsYsvFUoyxVSYayILtH5A5oEYauyAkAzzWixC3EfRn3SyEOF8
-         GDK/e1226gJ8OufQSLxPYcJr5S/Zgy6eVs5dogDwZNayZel9yYurrCyDbmgkd25QDvOU
-         S4g0aF2SzKsTF5/70Se5e5pcwVMRvpH65/7RfEFXr0dcoa0WlN3nhpKJUGmg++hUEjra
-         EsNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777261264; x=1777866064;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iDMJUQQKiCHoP5LTGqxTfJYdlIuTPlwVudQ02q/SS5g=;
-        b=OYNId9SAB6sSnIukhO15RTy/VqCM7Q6U5mioW20xtdPi2M8D6x3RPS47CXzhlfZjER
-         MG3oAHQytKP840JkjJc/zPvpxWRKhq1VsRZL27Ji9tnLXoo0J7U2vcnLMP/IPjeE4+1q
-         ltAGM327Us7br8/8XjRKHqMc3fd/tA3AwUdcMrU7Bz7RDevYp68MM9wXyIXSaor+FxE4
-         90eor400r6EGvHm5igjaIRiFhxPm/moSIW3PGxkLpiv4nj2ffaF2n9trgellp//E8Qh5
-         A8b4lrMHTVIMl60nbjZpxDCHyL2QpUCLIR585vA+1Wf03VEaGGy2kEqP6jlZz6+YXCM7
-         cBJg==
-X-Gm-Message-State: AOJu0Yy6zNy0triEPkuygOVe0B++MLqTDL915DlHspQfwopKcUmy26X1
-	DNBrJMm/FW+uh8jTotvXtjPrskS3R+le3INW5HbzWwxq54Odsx33wvqx+gIp39FJ/jRZJcsH8TL
-	8Uh2cgPTlJgU4hTtaJoiAksGbGVRULO5unQ==
-X-Gm-Gg: AeBDievvSHWy7US065Jgx8ZTtB0GZHQdBeMYzWUC670NNo1mgHxag3edTLCoxV+CIg2
-	kNGnV/KMaCV5lC5CISWGxuSHwNzpA/gFK9N31bkmeZHZiFbK1Ag6ijnFYOS2vKUsyNWzZRnBwro
-	cJPIajYBSkJVJDiaK/u/nMiFSXT/OQ/9mtIZ8gepTrAGIiXg9su58wuSde1coeGcip4W+dUyvmw
-	TrEUwLNuLoLa+vPtkLYWr2qWm4BBvKGcjmTHbSt4t5cDNCjMIhLlt+QFQGPqTIm7DKuZrRIeRYk
-	x2aqacKb7mo644SPiQ==
-X-Received: by 2002:a05:6512:159f:b0:5a3:f0f7:7da1 with SMTP id
- 2adb3069b0e04-5a4172cd17amr14983727e87.17.1777261264130; Sun, 26 Apr 2026
- 20:41:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zUgrzVK/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ovdGVx1L"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0C843EC14CF;
+	Mon, 27 Apr 2026 01:54:00 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 27 Apr 2026 01:54:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1777269240;
+	 x=1777355640; bh=TbjdQcDNQchvOxlPpX/iBKlosHVBxsDhseYWjM/gUKA=; b=
+	zUgrzVK/KtoVkcEgsHLwlJbhicAgeVNDwGcW3SkW6fxiJPTFdv1suocPtiLcRWRw
+	yZVB7LL5jE/VtzvQ6/MLizJQdTHA7JCO5PvgouQVEtT8/V71YR16jz3ZDgarsFVp
+	SutgJAH/OQn33BLfim60RTe+s0JPZi0dYcQ93GmL4koYVBnO3A9M3486DxBLq5pZ
+	+p3B36fGnG3KlNP9eRwfR2ZH4AfaV9Zy3rsy4qiXGG9uUSaplYqqbPvcvNyMClEa
+	5TOXo8jRBRkSXOqI1sBs0TBdYoDRkmPiqGEYBGIg3feudavYHCZRvWDsXjKYiWx/
+	hDhCloCuTb6mPaVpMMXG7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777269240; x=
+	1777355640; bh=TbjdQcDNQchvOxlPpX/iBKlosHVBxsDhseYWjM/gUKA=; b=o
+	vdGVx1LwjR/yEZplJWRNjsNEadKyJNRTmGm0za9wDh+CLVnpQunM5S2gQ0lC+F5v
+	LcCfnpM5FEqO9Y1bqWFbPMfH0ebQKaSHhIIW6KQllNT5ARZRYE34eFJ4T65fkDI4
+	3K3r7aCpdpbMPugXU2ir0vOLYS5pYpj9OmQtxBW+N5ZHOEwvckGFhD0PVdXdoIFN
+	3H44muXEgQUTdIk+RTN4/lzfVFSJfUfV9pm3nGFWp8dqVtTe207DnZ11J+qhVz1b
+	UOGrrQxlw4JIoY1MQ44et7F32GnAmsuk0ozGbRbaDTb2qOMCm6+7j66E8BG7Nc/+
+	c6mLsuFuqvhae7XlMtOnw==
+X-ME-Sender: <xms:9_nuaXNzQ55dylIILafIsrpgnKWs3_ntmJVL5CVp4F6S4APmis_d7w>
+    <xme:9_nuaY86pIc105g629Tjn1mGE5iatqtZnfWPVanGioQb7ImISEmKraXEMwHwPYteW
+    pJf9y3jJ8zrCtuZNDjiOBucg6C2xCsC-96OyRr2I9rWOZZ3mSve>
+X-ME-Received: <xmr:9_nuabR2R7k6mY2dMkNsr7UpvltoBV_d_YfIcvu-4CLASBYaTD9ESy7VUFoObfqjsgny7QLAcRulQAFRotOYz8WFAJ167zWI1XHSNDTaIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejjeeklecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdffkeektdefleetveegueethedtfeeugeegvddvhfdvtdetieeiueekhefgfeehnecu
+    ffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghtsehmrghlohhnrdguvghvpd
+    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:9_nuaalQI3dpblQEoFR0THcUpEJN93HKQg_T-UzPAFTEhET21AqJuA>
+    <xmx:9_nuabRjjgsZ8fl26SafEX9WgNCC8UGxfjjRzGQogM_wI1rhhaf2TQ>
+    <xmx:9_nuaYN5uimLZEUY8QJiPWznP5gyHL_ezk5Lc67sdPgMXfkJLs4yAQ>
+    <xmx:9_nuaUWCQHRZD08UJsUNKUsNbOSp0xfwYQdbDVNkG3U0H7oKjjVLPg>
+    <xmx:-Pnuafv4oNI4nL9-OjD3xIJUqEnnf7RKeIsVZd86tBqp1mEm3_tjVSzf>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Apr 2026 01:53:58 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c26cc0b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 Apr 2026 05:53:57 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/3] builtin/history: introduce "fixup" subcommand
+Date: Mon, 27 Apr 2026 07:53:50 +0200
+Message-Id: <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOZVFV9pKfDEG7ikAzb1yV8JcNzJ4sp_YXq9p1dPE2F-vKBO=Q@mail.gmail.com>
-In-Reply-To: <CAOZVFV9pKfDEG7ikAzb1yV8JcNzJ4sp_YXq9p1dPE2F-vKBO=Q@mail.gmail.com>
-From: balji balaji <baljirbalaji@gmail.com>
-Date: Mon, 27 Apr 2026 09:10:27 +0530
-X-Gm-Features: AVHnY4LAxLOpaZqGkOwOrfJegksJdafHNr0K4lru15-F1Sgqi1J6mFEZFX4E-VY
-Message-ID: <CAOZVFV_yNBBtTU=NwL5E2QecuHqyq8W4Au46kwFRFh_fHCh7TA@mail.gmail.com>
-Subject: Re: Doubt on post-merge script
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO757mkC/4XNQQ6CMBAF0KuYrh1TpiMQV97DuIB2lGoE0kKjI
+ dzdFo1xY1z+zP9vJuHZWfZit5qE42C97doY1HoldFO1ZwZrYhYoMZeECDVBf/XQWD907gEnex9
+ 7qBkLlpoqqVjEae84Hhb2cHxlP9YX1kOyUuO9X/6GLPX+vAgZSKDSEJWEpAzvY2djbyL5Ab8F9
+ UPAKJhiW2Q6Nyrn+iPM8/wE5VYHIAkBAAA=
+X-Change-ID: 20260422-b4-pks-history-fixup-be27e0c4a03e
+In-Reply-To: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
+References: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: Elijah Newren <newren@gmail.com>, 
+ "D. Ben Knoble" <ben.knoble@gmail.com>, Tian Yuchen <cat@malon.dev>
+X-Mailer: b4 0.15.2
 
-Hello,
-why is post-merge not hooked when I use git merge --continue after a
-merge conflict?
-I was expecting it to work, Is there a proper reason why we don't have
-this feature, can please elaborate the cons of having this feature?
-Thank You
+Hi,
 
-Regards,
-R Balaji
+this short patch series introduces a new "fixup" subcommand. This
+command is the first one that I felt is missing in my day to day work,
+as I end up doing fixup commits quite often.
+
+The flow is rather simple: the user stages some changes, and then they
+execute `git history fixup <commit>` to amend those changes to the given
+commit. As with the other subcommands, dependent branches will then be
+rebased automatically.
+
+This is the first command that may result in merge conflicts. For now we
+simply abort in such cases, but there are plans to introduce first-class
+conflicts into Git. So once we have them, we'll also be able to handle
+such cases more gracefully. I still think that the command is useful
+even without that conflict handling.
+
+Changes in v3:
+  - Some more polishing of the command's description.
+  - Link to v2: https://patch.msgid.link/20260423-b4-pks-history-fixup-v2-0-d7571c6d36eb@pks.im
+
+Changes in v2:
+  - Introduce "--empty=(keep|drop|abort)" to specify what happens with
+    empty commits.
+  - Adapt documentation a bit to hopefully clarify how changes are
+    backported.
+  - Link to v1: https://patch.msgid.link/20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (3):
+      replay: allow callers to control what happens with empty commits
+      builtin/history: generalize function to commit trees
+      builtin/history: introduce "fixup" subcommand
+
+ Documentation/git-history.adoc |  78 ++++-
+ builtin/history.c              | 291 ++++++++++++++++--
+ replay.c                       |  29 +-
+ replay.h                       |  19 ++
+ t/meson.build                  |   1 +
+ t/t3453-history-fixup.sh       | 680 +++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 1068 insertions(+), 30 deletions(-)
+
+Range-diff versus v2:
+
+1:  8840b18095 = 1:  81240d1959 replay: allow callers to control what happens with empty commits
+2:  b078354b5a = 2:  4f35bba868 builtin/history: generalize function to commit trees
+3:  3d1fec55c7 ! 3:  ecaded9415 builtin/history: introduce "fixup" subcommand
+    @@ Documentation/git-history.adoc: conflicts. This limitation is by design as histo
+      The following commands are available to rewrite history in different ways:
+      
+     +`fixup <commit>`::
+    -+	Apply the currently staged changes to the specified commit. This
+    -+	is done by performing a three-way merge between the HEAD commit,
+    -+	the target commit and the tree generated from staged changes.
+    -+	This is using the same logic as linkgit:git-cherry-pick[1].
+    ++	Apply the currently staged changes to the specified commit. This is
+    ++	similar in nature to `git commit --fixup=<commit>` followed by `git
+    ++	rebase --autosquash <commit>~`. Changes are applied to the target
+    ++	commit by performing a three-way merge between the HEAD commit, the
+    ++	target commit and the tree generated from staged changes.
+     ++
+     +The commit message and authorship of the target commit are preserved by
+     +default, unless you specify `--reedit-message`.
+
+---
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+change-id: 20260422-b4-pks-history-fixup-be27e0c4a03e
+
