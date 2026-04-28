@@ -1,64 +1,68 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AB32D5432
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 16:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D19A1ADC7E
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 16:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777393585; cv=none; b=sStdhfa1S/eMHYWi2l6FQEEk/lU8UqwYKbWhjGuJqkfbtfPwjp/rTmAiPBHLBOAI3s+N976WWXdsxgW0JcaEv3Zk2vqgcoeNjT4lUvRYat+/z1GK+0dFlqpzYH1860NRhFxTlGlJSxSUG7nXMJk+ViXVegSqzEwUWrg15RqcefY=
+	t=1777393586; cv=none; b=NbO6PaeujK4P6LBIvXHHt9927wyMCW0x+BlTIS6Gt8f/X7NZzvMabpT1VMZkmggwYH1opccOq9gxfzU1lAngrDksTr8CNVS/RwRYqIWHintqFvUpNn4ipowFX7HvMcTaXv/CbZDcG4K5lMHxrJJ694LhAt5yMORj9El3PfniwuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777393585; c=relaxed/simple;
-	bh=UW/W7o1YmTw01h5ZPhkhKPf1x4DA0RYxBWxairbrW7o=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=mSZJLNgoJHbHxZgY/CCRPYDptfBEbPhpj4jiMGYhzpc/THkRDY9KoyqRNla+hnRy2U83zq2u3OYpE9lM5At/KnLRCLkJ9pdLM2h55ecd9gBr+lWtEOqEgZE5vmTrN/N0vvZI3TpRiYU4exUaxsWV8JlGiIjW6K5tF1O6Q3g+j8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oheHV+NW; arc=none smtp.client-ip=209.85.210.41
+	s=arc-20240116; t=1777393586; c=relaxed/simple;
+	bh=PyaBD/Sc7hBvjQBUW3KATaLrrLVIfE0TAodLhq48Mb0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XkbGoP7FrgZ+n8H7EWN0rAcn1JoZMSP4UewrW4Ob4pDMLpLH1/GkGkpCpzZyeiZDIomZ53gLm/Q+FYgvTjOOMzxLi/pu23zuOhI+PhlYTqv6E4BO27OVaKwbNT1ONF533wF6EsBJx2ELTEqvqlhmj6SfDW4zx5t1Sb4qWnt5wtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i0f+ByMp; arc=none smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oheHV+NW"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7de4be15125so4525878a34.0
-        for <git@vger.kernel.org>; Tue, 28 Apr 2026 09:26:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0f+ByMp"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-479d9b155deso3165650b6e.3
+        for <git@vger.kernel.org>; Tue, 28 Apr 2026 09:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777393583; x=1777998383; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777393584; x=1777998384; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=RBi0j6o4lUx9WHZKTMFbGHMr6VRq2ZLM2KMwSeBMb0w=;
-        b=oheHV+NWprGLkVWT+xgTT4UVod2IREfJ3auDEDul8lvj7SBPod/piVdyAJwPuwWmX5
-         Q9xSxMxzN9kplCBTe7mEeetzUuuMOV4Q8L02F+vLSmYdfD4b3KxecdcXvMESfZzpUr/H
-         ovvOdtOydn1+ftyo81i4Vt1flgAnJf+Dj4JAGUF3X7NFHRrCckt4faegl9Oj1LqLCvh2
-         mKnZFb9fn0H96xrkIi8gysz70Xuw+eqtEHa2XlJw4UDaT+xqiiUa25zRMpq452vlw0CS
-         u2jRRpGHKKKH1h/nx0AQ293hTaLFQBWuOrbfAfvcg6vx7DKN/zcKmGYLozMGGz1/fZuc
-         GuxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777393583; x=1777998383;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RBi0j6o4lUx9WHZKTMFbGHMr6VRq2ZLM2KMwSeBMb0w=;
-        b=JmOcfjLZ7k+dP8BB/6aJpr5UTutyYNPAexA1WjqHQ6P3RF/RKT6loN3ePJMpOAvfiH
-         O0B3EE6s0AfARiEw7Rii0/5Wd+Aic0zQym9GtaS+HXd4NAGs7W2sApQStwRS19azaJF/
-         4lNbDbZIFKUvcC7/iVW0ghtde7iw4umkA/tiUWONcLm3qer0MmvGoB5oYLGZbcAWpxfV
-         coaaVPB4na3hRh3jaz72LiGUm7bx7XQ0qVTh3mStv9lewnf5jS6wHx+iurAxbJZkXrZM
-         tFPF5cbvG1d616bKsLl6luJx7MgKbOp3Z+hqXWOnG6Ypqk9X/j2oqDHS6dLl/rQMJtcE
-         b2PQ==
-X-Gm-Message-State: AOJu0Ywvn06Y8KCh0b3nlA6MOBz9UzVZdfNMUDwDZ7qhxC2f/5SnLdH/
-	PMh+EFE8W3Oq60L1BFSzlLya3SjXa7YM9EZ8/EcFyUNPg2U0zQIzaJB3+TtfHw==
-X-Gm-Gg: AeBDieu0j0tYoh05A9DEa9f/4D8Ju8RP+VPoMamuE/RkxfMZ701IfAAs7pXMDtBA3MQ
-	d1aId0wkfwgDPdTBbSsGOEwdB6sbHBZL+4iyJ+KPZk2QCsGHYDAIwwPPmPrkxF7+q2bwQC2plc5
-	IQMtks5JHsnTBqqw3nCP/U1dMoBdwK/RJMzt9dqzzXyFk3x5ksIatKg+5GK2GRZlMuX1FFW1BpV
-	Q59pwWeWs4sGOz9X/87HlSTOQXz37uXk0gzvy04DarMlOXPhUtG2nD2ELwMR1QiV04JRHnvmzbx
-	+wWb+YpkILE3/TnKEO+gi3W9jbDn5C0muQFFiUeAsvayfzUsaDymz0TyH7MLArWvjoOqj5Bdpm/
-	T/d3JJx8VmUvjy2lnu2Kx9YYg90YYgeN40T62h4Hk1zr3+2KbcwVLW4KPUBd8cAJ8pI7XvLVxTK
-	//GCLfO2yWntbXISVUKAi/uU2XtkK0bok1cHce2ME=
-X-Received: by 2002:a05:6830:2b06:b0:7de:4ebe:e44 with SMTP id 46e09a7af769-7de99f7c0f4mr2441226a34.2.1777393582924;
-        Tue, 28 Apr 2026 09:26:22 -0700 (PDT)
+        bh=KgDNeTtt+H+CTKzkdHIBt7oSXinFTX+FJ/k0/W1INaA=;
+        b=i0f+ByMp4cCHNNMinoePbzXNCa6ExM1ocBYFdYOtQ6f7xG5xfYDtw4hTE4YkTPPM54
+         GelncF5BTG4JziEU56IvJrGxjYu3X06OPDXY9RySY7uWxxYAJoLZkPSujjX+1UlHxdI0
+         jbkE0jea6tRJaumD/UG+YfRMXP+tNXvpacxwCXOu0E9PFf1VcHPtUjyHAbZFDy7X4wpB
+         pZttr+fu8hOwyTMa0ywq9Z5Kot8gxwYTZudKU4g/9D+fTdM57Ih11ZxFsStlBiY9LI+F
+         ZZDSyt9m6lfTCbnamV9UxnkstRIveA99aGtloHM2WBsgrUoH8AZ1r5OZoFCV2TTd6oJ+
+         u4wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777393584; x=1777998384;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KgDNeTtt+H+CTKzkdHIBt7oSXinFTX+FJ/k0/W1INaA=;
+        b=BTiFaWI8AWe7wJZfqpyMzk1XauE4fg7/VLMIeAVFOB3VBbANuuA5jqIuGnRyRM/s/r
+         26hhvB0I3W3HrS48PXxkD5Lf+Ky4Ai1uZVnxpj3E8J1lrK2YscKD9jVlSS6aUFQFjKbx
+         xIq9FHA3+eSJKtA62S3OoM3VLD5UriYnO+rZ8H1GgCOZ3h92DBTMN6Nx7VA6Wldkf8cl
+         yGuXWDj4Y1SlNwyEWWdJuhX/aHuNNixlkFFhUoesjCLbXKBtespRyPhOROyWqiY8dXYH
+         8ViWec6AD9Apk1h3TWYc/MLbXDc33Ho3XZ7K9MqnPF1rDzUBXfULNIuewTEE6velONhe
+         BNEw==
+X-Gm-Message-State: AOJu0YygyGFhWfrElychQmaZokdDsAkNvuCZ6VznwyFEzOicfG6+MKSD
+	J3c4/GPSNAIm+MDQ27TUuAXbIqDAIk9Lwe3gjiwSHTNxaKiCSFgS4RXD2v4uUA==
+X-Gm-Gg: AeBDietBloST8ppskGTs1nInUFhANrnmH7d8kzD+Kjvp3kE9B3Rc/kbNCElTAfMDwjt
+	H/unRvVa5qi5b20YBU47koUP3ySRXuztLDI7fQ+3XXqgpMVYUgzP9KJejb1YQVxQUwCpjLLUkAk
+	lSmXtUiM/+V7gGsCT/2uFivLdpX0KY1vAUmz5dl3mNeBYwaKudKfyutIPEkJrTR2lvUCP19OB8J
+	c7fVYSajMjoH5pwB7YQTwKN5/muA+j4BJQ244Huoj8vSoZZiYs9d8U2p/Wq4RDIzssav9oQ07rW
+	2nevmnsEO+2MIotluZ8QFZIFjx2XaIg1oDjNx9t7/NdELcKKsyAUooDfbVY111hkgxTU3aRgaT3
+	xwrhtKyMopZiu1ViEwh39rz98A45ZDtPRsJPpDuaaT0Jz4GRb4Ebl0fsd8wFc+48EGu47tEFhVx
+	Ps/gWPYK8x2hySExzEvswNUwKSPira5SCsGM8bMOQ=
+X-Received: by 2002:a05:6808:1211:b0:47b:e097:b8d with SMTP id 5614622812f47-47c2906f502mr2064569b6e.42.1777393584028;
+        Tue, 28 Apr 2026 09:26:24 -0700 (PDT)
 Received: from [127.0.0.1] ([172.212.163.230])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7de9866c3a7sm2144962a34.14.2026.04.28.09.26.21
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7de986d82c5sm1962866a34.23.2026.04.28.09.26.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 09:26:22 -0700 (PDT)
-Message-Id: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
+        Tue, 28 Apr 2026 09:26:23 -0700 (PDT)
+Message-Id: <dc660106ea8511e6adc44d2b70e9a4ae8b18090e.1777393580.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
+References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 28 Apr 2026 16:26:14 +0000
-Subject: [PATCH 0/6] Handle cloning of objects larger than 4GB on Windows
+Date: Tue, 28 Apr 2026 16:26:15 +0000
+Subject: [PATCH 1/6] index-pack, unpack-objects: use size_t for object size
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,69 +73,96 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Windows, unsigned long is 32-bit even on 64-bit systems. This causes
-multiple problems when Git handles objects larger than 4GB. This patch
-series is a very targeted fix for a very early part of the problem: it
-addresses the most fundamental truncation points that prevent a >4GB object
-from surviving a clone at all.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Specifically, this fixes:
+When unpacking objects from a packfile, the object size is decoded
+from a variable-length encoding. On platforms where unsigned long is
+32-bit (such as Windows, even in 64-bit builds), the shift operation
+overflows when decoding sizes larger than 4GB. The result is a
+truncated size value, causing the unpacked object to be corrupted or
+rejected.
 
- * zlib's uLong wrapping and triggering BUG() assertions in the git_zstream
-   wrapper
- * Object sizes being truncated in pack streaming, delta headers, and
-   index-pack/unpack-objects
- * pack-objects re-encoding reused pack entries with a truncated size,
-   producing corrupt packs on the wire
+Fix this by changing the size variable to size_t, which is 64-bit on
+64-bit platforms, and ensuring the shift arithmetic occurs in 64-bit
+space.
 
-Many other code paths still use unsigned long for object sizes (e.g.,
-cat-file -s, object_info.sizep, the delta machinery) and will need their own
-conversions. This series does not attempt to fix those.
+This was originally authored by LordKiRon <https://github.com/LordKiRon>,
+who preferred not to reveal their real name and therefore agreed that I
+take over authorship.
 
-Based on work by @LordKiRon in git-for-windows/git#6076.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/index-pack.c     | 9 +++++----
+ builtin/unpack-objects.c | 5 +++--
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-The last two commits add a test helper that synthesizes a pack with a >4GB
-blob and regression tests that clone it via both the unpack-objects and
-index-pack code paths using file:// transport.
-
-Johannes Schindelin (6):
-  index-pack, unpack-objects: use size_t for object size
-  git-zlib: handle data streams larger than 4GB
-  odb, packfile: use size_t for streaming object sizes
-  delta, packfile: use size_t for delta header sizes
-  test-tool: add a helper to synthesize large packfiles
-  t5608: add regression test for >4GB object clone
-
- Makefile                     |   1 +
- builtin/index-pack.c         |   9 +-
- builtin/pack-objects.c       |  23 +++-
- builtin/unpack-objects.c     |   5 +-
- compat/zlib-compat.h         |   2 +
- delta.h                      |  14 +-
- git-zlib.c                   |  25 ++--
- git-zlib.h                   |   4 +-
- object-file.c                |  12 +-
- odb/streaming.c              |  13 +-
- odb/streaming.h              |   2 +-
- oss-fuzz/fuzz-pack-headers.c |   2 +-
- pack-bitmap.c                |   2 +-
- pack-check.c                 |   6 +-
- packfile.c                   |  57 +++++---
- packfile.h                   |   4 +-
- t/helper/meson.build         |   1 +
- t/helper/test-synthesize.c   | 250 +++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c         |   1 +
- t/helper/test-tool.h         |   1 +
- t/t5608-clone-2gb.sh         |  37 ++++++
- 21 files changed, 418 insertions(+), 53 deletions(-)
- create mode 100644 t/helper/test-synthesize.c
-
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2102%2Fdscho%2Ffix-large-clones-on-windows-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2102/dscho/fix-large-clones-on-windows-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2102
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index ca7784dc2c..cc660582e9 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -37,7 +37,7 @@ static const char index_pack_usage[] =
+ 
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+-	unsigned long size;
++	size_t size;
+ 	unsigned char hdr_size;
+ 	signed char type;
+ 	signed char real_type;
+@@ -469,7 +469,7 @@ static int is_delta_type(enum object_type type)
+ 	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
+ }
+ 
+-static void *unpack_entry_data(off_t offset, unsigned long size,
++static void *unpack_entry_data(off_t offset, size_t size,
+ 			       enum object_type type, struct object_id *oid)
+ {
+ 	static char fixed_buf[8192];
+@@ -524,7 +524,8 @@ static void *unpack_raw_entry(struct object_entry *obj,
+ 			      struct object_id *oid)
+ {
+ 	unsigned char *p;
+-	unsigned long size, c;
++	size_t size;
++	unsigned long c;
+ 	off_t base_offset;
+ 	unsigned shift;
+ 	void *data;
+@@ -542,7 +543,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+ 		p = fill(1);
+ 		c = *p;
+ 		use(1);
+-		size += (c & 0x7f) << shift;
++		size += ((size_t)c & 0x7f) << shift;
+ 		shift += 7;
+ 	}
+ 	obj->size = size;
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index e01cf6e360..59a36c2481 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -533,7 +533,8 @@ static void unpack_one(unsigned nr)
+ {
+ 	unsigned shift;
+ 	unsigned char *pack;
+-	unsigned long size, c;
++	size_t size;
++	unsigned long c;
+ 	enum object_type type;
+ 
+ 	obj_list[nr].offset = consumed_bytes;
+@@ -548,7 +549,7 @@ static void unpack_one(unsigned nr)
+ 		pack = fill(1);
+ 		c = *pack;
+ 		use(1);
+-		size += (c & 0x7f) << shift;
++		size += ((size_t)c & 0x7f) << shift;
+ 		shift += 7;
+ 	}
+ 
 -- 
 gitgitgadget
+
