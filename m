@@ -1,120 +1,110 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD173D47D9
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 08:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56126318146
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 08:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.187.169.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777365861; cv=none; b=FSaoBdANwwwMWEPyILgNt5v8A7kJ//zlnzH6zRytnmGTYu/FlxPE3hI9+ha/Wd9BFqwmfezV/fAt00K2uhd6uedvV5Ox1LcgAvoertNeyu4Qk6Yv8qKNvmc8sXFMoUimP0cRkKWQlzuhZYO25vN/Pc012w5CKMykIOmAQzXUKGQ=
+	t=1777366213; cv=none; b=HV8uUyy6PewQwwykuCYT9xmNKQ/pSsvR17DU98ew82eZ3omFpqrDnZV++/Ov6agy7b36OOG18WpsFz4adwUAC6yzMFRAVgDlSAdBaCFSuW/b2MUPqU8g+sYBTxjzOl037DtA8qkqVCaWUiaq59sHVhICUPfB26v+wwMkEkY+60k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777365861; c=relaxed/simple;
-	bh=Zewltc+d08JECZstm4Tcsqihsw8XMODkbIe2PXFJc2Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uT8H39OtRXU+Xax5KOR60LSpnxdHGyMjD0OkpHKUHMTgXlp5+F+i7L9hR+q5Kh5zOQSlJKhlOkswblUZUZlzhT2SizwQn01Rtyln+zujymxgHvzCQBtrVS4Zedr5b4B1GutHT8icXDu/rahECamnMm/s0dwlcNZsVVT9Y6WjZ9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jMEZA5XM; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jMEZA5XM"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-38e7d984096so122959311fa.2
-        for <git@vger.kernel.org>; Tue, 28 Apr 2026 01:44:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777365858; x=1777970658; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YlMvQGaAu7M5OwB59SaeTQqOVLAt1W+aLNfuJTnuPrI=;
-        b=jMEZA5XM8MUOg/cE694bP9vnK23Lkf4baAETD9AdGxWizPe0XKOXEIuqZHpbF39ven
-         9RH3TA+ar7PCpnWmcPasIbFOJZUDpFtoFddIMGCsAbtPrgG/hyLaVIrukFthfuySbp3m
-         MgqHrTpwJKER55nPuidhiMUY/fPAyusVLshCbgb8Q5QFl41dCNnh5m7dDxwk3julmwnx
-         wGGbc/nwrLjWhVaLjmj6J9MP2OTj0cepEWPJllUTJxsp0TP2/HUFOCxOWx4BWnlKLg0L
-         UfVNgQdPX2RV46eLCYCcf1CcN2RqNkXLFG0C5RjGqrEUVzw1bWC95/pGM5/UoD2tDF2x
-         /OxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777365858; x=1777970658;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YlMvQGaAu7M5OwB59SaeTQqOVLAt1W+aLNfuJTnuPrI=;
-        b=JJTiC6LIEvD3PyfGxk62esOzQdJ4OZJZFiR++4Z5a7fMWqBbeeJcE1fRz3MGKHy7l8
-         hC0N1ML1heeGn55D5w/oz8+QXgmcBqOAh3sEApz6QNFOUhIidEi9kVxpacpQfbmJ/WgC
-         mWzzycPDGFRV4VdHzRYDegwsqCB0GTTtt1BhgKZSjbOtxb97XBVfGBbRRXlAAxbQB5ea
-         hpnt+9YOpnp2gQqLXfAlWlaZohoWPtezM3pC7Y/isvoqOo2ZfitNtd7qMfm56Osk20yR
-         FtD8G8IN4cFBTc/92GHi/7oAKBvQsKdsBtOFtrbczB7cxHVLRyCpbmpzJV/oB6ogk3gK
-         TDkQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/kY+JOSBATAtJlTh3fWXDS1tU4JTeZ73cPU3zZnGM5DxkOCwnJq5B6R2LtA09F7h1bxmU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwiC3ZrjTAEGZ5xCKYklDBJv2U8etNEyPGZ3V0OoXsth3s+aMR+
-	b5x5PUXCBHSDy2outJjU27PmX3xVbDTTrONcqPNzJpL/LaLa4DyPARtP
-X-Gm-Gg: AeBDieu1IDCyaCLfbz+4m3FwuyxzJgpIj0CYeM98+LHQdnEpMwFo54+5Cwmxj3UQYAi
-	jtpkyM/JJklybQzGDQcgKRhcFG9smiwD94fo3LGNG2h6oxauxEBPFhEQT8c0s+hKs0Bw/ggJoqN
-	j6wVMOuFa1HeOh28CI+D3xM3SrWH3q7Xh36ONg+uDtw4arAINqgVPPt/l6eC7ko0mt2eyKbzAE/
-	oOllqg77ogETEVABO1UmX+CiKzJ7w+W5RsKiv3BgojA9SVBe96OTW6F8jWEMe3zjJkZPtnkduq6
-	KyH4qIne6J1MIREgTRznjacl64AzSa+uO4EU9lU2uTUi7mR6SfEmx9U/HipxJaz9myLy9syHuLK
-	YAzP9Fs/btqkSYoBUyOD6anLU6Vjvb+YdFStYhoh8+D9Ciu/UDvBEfMzT+x7ax7aQ0z7SIzOWqC
-	uwhBwyl+n46DQPRqVYBESAMHpj5w1mxyyMp7BTh/g0s49KnGs9LlA/tT9ZFPFuvm3q0W9wta+7F
-	ibLxgfmVjPD49T3Frs8P4JQcCYEFXYFqzY=
-X-Received: by 2002:a05:651c:54d:b0:38b:d004:3b13 with SMTP id 38308e7fff4ca-39240f813a9mr6957111fa.16.1777365856889;
-        Tue, 28 Apr 2026 01:44:16 -0700 (PDT)
-Received: from Mac.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3923f2e0d9bsm5430401fa.6.2026.04.28.01.44.15
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 28 Apr 2026 01:44:16 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: ben.knoble@gmail.com,
-	git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	marcnarc@gmail.com,
-	ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH] checkout: add --fetch to fetch remote before resolving start-point
-Date: Tue, 28 Apr 2026 10:44:15 +0200
-Message-ID: <20260428084415.10702-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.54.0-rc2
-In-Reply-To: <xmqqwlxrzwid.fsf@gitster.g>
-References: <xmqqwlxrzwid.fsf@gitster.g>
+	s=arc-20240116; t=1777366213; c=relaxed/simple;
+	bh=NIM3cdfePgVj8FviujdkBHSoV0PI0Zz0jPU1FgBdATo=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=ZJZAsh4EYv6Mrr+mG/zaz4I+qii6UYt+Mz1EvJ+WxHEpaNl94Bsd7zqnCbkJ2tzdWhzULkJiDm96kw9LeVv+YFpWYs0ADquvzLodq8SPCUh+5bHxiIfsWExIvB2cZyGHHvnYzM1x6P0WLhqOE8Pe7pJve8TZDfEPHxh5I3a6UJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de; spf=pass smtp.mailfrom=hogyros.de; arc=none smtp.client-ip=185.187.169.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
+Received: from [IPV6:2400:2410:b120:f200:a1f3:73da:3a04:160d] (unknown [IPv6:2400:2410:b120:f200:a1f3:73da:3a04:160d])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by psionic.psi5.com (Postfix) with ESMTPSA id 3DFBE3F209;
+	Tue, 28 Apr 2026 10:40:08 +0200 (CEST)
+Message-ID: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
+Date: Tue, 28 Apr 2026 17:40:05 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git <git@vger.kernel.org>
+From: Simon Richter <Simon.Richter@hogyros.de>
+Subject: Git generated tarballs and Debian
+Cc: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I hope you had a good leave and is back with renewed energy! ☀️
+Hi,
 
-> Git is among projects that encourage forking only from a well-known
-> point in history (like the latest released version), not at a random
-> "tip of the day" commit from the upstream.
+in Debian, we're shipping "original" tarballs for each software package, 
+and the Debian specific changes in a separate file.
 
-Are you talking about the Git project that we are working on right now, or
-talking about how people use Git "in the wild"?
+Historically, this users could do a bitwise comparison of the original 
+tarball and the one in Debian to verify that these were unchanged.
 
-Because how people use Git in the wild can be a bit different, and merge
-conflicts arguably the worst part of collaborating with a team using Git.
-In my early days as a professional coder, snubbed my toe countless times on
-forgetting to pull in the latest changes, before starting to work on
-something.
+With git, some authors have stopped releasing official tarballs, so 
+we're using git-archive a lot -- but this is reproducible only by 
+accident. GitHub also prepares some release tarballs that may or not be 
+bitwise identical to what git archive produces.
 
-I respect that things work differently in a neatly ordered project like Git
-itself, where you do a great work of organizing, but all other projects are
-not like that. My advice to a junior developer is to pull in the latest
-changes when starting and to rebase obsessively to prevent a large merge
-conflict down the road.
+I've written a small tool that generates the tree checksum for a given 
+tarball (running inside a SECCOMP environment, not writing anything to 
+disk), that already goes a long way to make tarballs verifiable: one can 
+check whether that ID is the same as the one mentioned in a commit (and 
+the comment inside a git-archive generated tarball is helpful in finding 
+which commit).
 
-> So instead of introducing a totally new option that can only be used
-> only when "--track" is given, it might make more sense to introduce
-> this as a variant of "--track", perhaps "--track=fetch,[in]direct"
-> or something like that. 
+The downsides of that are:
 
-> I may have already pointed this out (but I do not remember), but
-> this option would not make any sense when --track is not in effect,
-> so instead of adding a brand new option, making it an extension to
-> the existing --track option might make it slightly more palatable.
+1. that you still need a copy of the commit to verify it, as it's not 
+included in the tarball.
 
-Fair enough. You did point it out and I will give that a try!
+We could add an ancillary file that contains the commit object (its 
+checksum being reproducible, and containing the tree checksum) and 
+possibly a signed tag object as well, so that is solvable inside Debian.
 
+Another option would be to extend the git-archive format to include them 
+as a (longer) comment in the global pax header.
 
-Harald
+2. that it doesn't work for submodules
+
+What we do currently is generate multiple archives with different 
+prefixes, and concatenate them using tar. That loses all the pax global 
+headers though, so commit information is lost. In addition, putting the 
+actual contents into a subdirectory instead of a commit reference means 
+that generating the tree object from the tarball contents means the 
+checksum does not match.
+
+What we could do is generate multiple archives, and keep them separate, 
+but the Debian toolchain can only unpack additional archives into a 
+direct subdirectory of the main archive (e.g. "orig.tar.gz" gets 
+unpacked to "foo-1.0", then "orig-addon.tar.gz" gets unpacked into 
+"foo-1.0/addon"). We can fix _that_ with symlinks, but it gets more and 
+more hacky.
+
+One thing we could do inside git here is add a method to create archives 
+that include submodules (that gets rid of the concatenation), but in 
+order for this to be easily verifiable, I still need to know where 
+submodules are and what their commit objects are (so I know the commit 
+checksum and can verify the tree checksum).
+
+The goal is to extend what I can already do inside the Linux kernel:
+
+$ git rev-parse HEAD
+94dfcc4a99b0cece77e73dc3011284050f95da89
+$ git rev-parse HEAD^{tree}
+2d14d43ce9f062160262f4e4f162f5ff0ed91a5e
+$ git archive --format=tar HEAD | git-treeof
+Commit-Hint: 94dfcc4a99b0cece77e73dc3011284050f95da89
+Tree-SHA1: 2d14d43ce9f062160262f4e4f162f5ff0ed91a5e
+
+so the "Commit-Hint" can become a stronger statement "I have seen a 
+commit object with this checksum that actually refers to the correct 
+tree", and to allow this to work for repositories with submodules.
+
+Does it make sense to extend git here to allow this, or should I try to 
+solve this entirely within Debian?
+
+    Simon
