@@ -1,54 +1,54 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF75134CF
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 01:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199D1233D9E
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 01:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777340737; cv=none; b=JQTpp+8avTsgWebMMmo0g+XoZDYAUg8v2DrAj6yE9eTTWf+kk0xu9dqHUpyBfhnxPUor0rDi3mrdlX6i1i5zrW1v7T8Na+s53Y0KLnleT+D3DUYT/oJ41fvw/B+BycOQ1jGd615L/QaDCcPX8lYfzoVy2MSwViRO17N0gzy5OBA=
+	t=1777340760; cv=none; b=dQ0dSWuCqAFUAMX5AW5K7mrcB2VyduVnXcahOgfHIfChN6rNMgluRm6ToeunBdihpr7YxICs1TdM915zj2TBgR0xis7ZbSJzPaqcYGwgUDd9c0Bvablh/BBHPAZoLhwQrFhpxbUWiSMuV+Blr2gUVS/EgYd5SFhrSbBXj7zIEQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777340737; c=relaxed/simple;
-	bh=z71MSooVeL2n1pqCu9OgnYvkFd8baqTnuoyotf5mapI=;
+	s=arc-20240116; t=1777340760; c=relaxed/simple;
+	bh=U34Nw2O1dq66YkpsynwlZk2ZOETpsObK7TniQ1qw5ik=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qqgsos19TsJhEcQkrBxWHuu2adH3FmvEvlGmg7XW2jtBkywzLdfhsxa/UDQKJey/lwZyoYXdVsvKoAJ3ptSeUDvlQ+B6AowOt+RUgSw57rJZFKmi3ivrKJVUKWcj54EPOjfw3+jvKHxvkmUU0Iah4vbpcESUpZjXzfOjNc731W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ARVgliRq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HbiwMJqm; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=iqU0GNpXLa8++5bnIqs1Hf581crHa9iJl4skgP0StAKSH3SbK3GQxZL4AjkBjBAdWvPXvdf7uLxvzQ2ZG5zdd729vXgJw3t9ooosFhuPrDGgfNWau294jeIp6YCM6occN7qYFzegy76xCFGOJslprWYOffh6+0w4lbz16GWaMC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cyNQGC/2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pRAnKPkM; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ARVgliRq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HbiwMJqm"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 25F781D00238;
-	Mon, 27 Apr 2026 21:45:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cyNQGC/2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pRAnKPkM"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DFFA7A0279;
+	Mon, 27 Apr 2026 21:45:58 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 27 Apr 2026 21:45:34 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 27 Apr 2026 21:45:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1777340733; x=1777427133; bh=ZcGLwYfek1
-	du+eskoPcGUmrNyveyLVBG4ApVST5OKRc=; b=ARVgliRqT4VIgrCXZSodJw7jdV
-	6YOJ4qNWoDuAmx5ZBTXPQ9rRYSwFsqxzHstx1rrtgEW9jpdBmYID+PPlFunXK9Eh
-	imPeWhEVRm68arQvzf/nQi9FfPeTPbpwjvw2Tf3/1qWMmsTP+txdrzUZCTJoPVNc
-	6KvdDMQjoEkk9HK+IGap+goRn8pyyXYfv1mzPTbl1EcC2bKDDBRhltTcXxxX3ONm
-	qpoOTBgWljjumdqp0b1VDrlZn43f/0yYk643HqPxlQ6PdZqzdnN+ikZ1yxZDYA6I
-	2YuggtI5YKEyAJEpJdPAxdaZf+FlXiio4Bw03rXeiVqvTYArtHwMmxcOcZ8Q==
+	:subject:to:to; s=fm1; t=1777340758; x=1777427158; bh=Up59A+fWwm
+	Hib3mD29kAU8h5asblo4lFHUeay9K3Kt0=; b=cyNQGC/2xMq5TLO0aXovgaLq2i
+	hjIn9Aasj7t+xfHSHO2dCM6JVCRjpSCpjHyqhOuY/49h5Wp9nhr2Z4RCXu/hyvXi
+	uwIwFQGGxUMY0j+ZFlG4hoXhZcFj3kN2R+ZtkM0nbtK7R3hG4/vMFRDW97KvlaEP
+	BPvkqFumCFw2iJdEG2MOeVuo919xeODEdmF6BOc+caYOxcjeW7eGkF7iFzAF98cW
+	m10C0rPovtWpNQJo7a3cGEiCFb7cApjuS0c+ReCJoCx4W95Ptt23zd7OjCKFFffp
+	uOVE1AWCAO8w6hogmtrl7Fnqnr5DUefHQNRqV56fDnv4TnXxg+iiTEn79U4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1777340733; x=1777427133; bh=ZcGLwYfek1du+eskoPcGUmrNyveyLVBG4Ap
-	VST5OKRc=; b=HbiwMJqmTilaInjZg10aMiPWOAi3hVFwjFGvC5d5iIQ0AK9EhcH
-	kuHSnJc/Tz0U+Xt9WVjPbv5ZsWxVc2X3m5acaWEawy/2oqSju4RWPzShr8Z0gTnn
-	zYhrgD+0/4Tz5lh4kVf+co1eXsnh1o5WHuybLryd/s0zWUbIgwr9pZS+T+Mpwpd2
-	W+9AM9ZTrgUtLtF1aDWFnbpTMKVoxR1eVh1zB9HyJnP4n2pnl3H0/bPs8rwZjtM0
-	bJcFg6E50qUVbhCFvJH+d6CyMfh4/pNWZkG3JS7o7Si6Mh/lOtmYQIBiQKX5qVcV
-	/MYCCKauxzWnIOOaZ17lufraMmqTmCbrqlw==
-X-ME-Sender: <xms:PRHwaT-n0PZ6rP1u6RmbZGzKG-O0fla3pZqN3QSXnliRSi9G2JGJqw>
-    <xme:PRHwaezKlutWp0YGYQ10eKZdwQdyHNVWBSjaj3eQ6XoeFh_e7XiW3Sd7iY4TTsLTN
-    pFZcHtVt67BmSwtiMuih1Lj1zTAGJ5Fkx1TK4w-t0-2X_FA5ZjP3A>
-X-ME-Received: <xmr:PRHwaXMsoRY2es2i_GvSbHiBTsSt2Om6BEv_f_FMvEVQtnsXCv3IpBdeCFkeMVIz6xf3Hx0jFslWxCIyjqOBO_Lqt4MKals-ww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdektddvkecutefuodetggdotefrod
+	1777340758; x=1777427158; bh=Up59A+fWwmHib3mD29kAU8h5asblo4lFHUe
+	ay9K3Kt0=; b=pRAnKPkMqJYZaoM4IHh/0zeNLOKUFwn/XCwtfC7N8KfK/csMPWY
+	EokgTd2GjSreQN9vLGJg7CJCVyUb4x6Ulm++Y1CSOIe4a/pOB2C4XthlRDv97VHB
+	LpTw2XG5nv21w3OfUtR83B+y8YctSNk9UP457p0F3ioej3+1oz7aEI8HEEWYO0RP
+	T7AJPSrtj420KQXrrxpK1y7GLPgaNwy3a5XDFI5/uyBMWe9YavOCoqMGt5T9iaYH
+	paxt92pks2REOp1ss97zfAis8ZmFIMm32YS8d9ZdwIAZL1OAqDu0s7gvZdqr7iT/
+	HjxzTCambkqGNd7jCUgXBQOCPkuhvCHQgVg==
+X-ME-Sender: <xms:VRHwaY-yqOPcly2o89meuVdDC8wJomWunYQvwCmVusfxfhlYfgr_mg>
+    <xme:VRHwafx7favU2iwPIoNuES1sKPf2N2OIFeuW__E6PXo9zgwH0b4dN2R0XOLu8doTZ
+    rSoeencH9QITVuDEs1ymatw-xidlYopyWaDJpfs0eLJ1obt9VW7jw>
+X-ME-Received: <xmr:VRHwaUPwril_VWlyZ-EnW3E4wZFig1OxQ5wbXZqyYaLc2DAYgOik7zVM3NWOfjy0mqnYfSErnMtjU5O7xkyI-RJVyiT4mvEwDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdektddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -62,28 +62,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdektddvkecutefuodetgg
     hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegtrghtsehmrghlohhnrdgu
     vghvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpth
     htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PRHwab9cfJnEtJVAH57_PuAxg5P7mEYlO7BOGgV48Kn7yA1nMBBeLA>
-    <xmx:PRHwac6lmV9R-orpn20Q8AEq7HWAflWoqbE4_00CMSrz_O7u14RnUQ>
-    <xmx:PRHwaZ6qAh47f89UXJosr59MeDUd2cY5x87bsjMqQ-QtYe-5rd-5oA>
-    <xmx:PRHwadrp1_xMAw2MccVVvB0A-OeAb2aYnfZz4YtUwA5xsojI8Q_ZKQ>
-    <xmx:PRHwadoRzrD-N-XH2ZANUJSCQZCHSXsQHxoKwSL6VpaZBSJ5bUShGXNx>
+X-ME-Proxy: <xmx:VRHwaU-cBfgcFkiuOG3_ZQnz8AqsHybmYrKu1Wag26heJUtI8pUpxg>
+    <xmx:VRHwaR4W5WfU8z_Rd89yaiRAWSX5Ox7LquqByZE8q54lpQ__VIvQrQ>
+    <xmx:VRHwaa5cyVZLEjjeaHiDK3fqTdT9sAlRmGrZ83NXUSzRzw0D2SX46A>
+    <xmx:VRHwaaoaLLR7_ZFZfRu1JTX68QEDdR-gad2F_iOQvP0gjiPFcuk9og>
+    <xmx:VhHwaWFAeXl2IyedesB5Df5rSTgk9mGlBlbSoWvmAnFniKnrB6VjeI_k>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Apr 2026 21:45:33 -0400 (EDT)
+ 27 Apr 2026 21:45:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Mirko Faina <mroik@delayed.space>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  =?utf-8?Q?Jean-No?=
  =?utf-8?Q?=C3=ABl?= Avila
  <jn.avila@free.fr>,  Patrick Steinhardt <ps@pks.im>,  Tian Yuchen
  <cat@malon.dev>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 1/2] revision.c: implement --reverse=before for walks
-In-Reply-To: <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1776984666.git.mroik@delayed.space>
-	(Mirko Faina's message of "Fri, 24 Apr 2026 00:51:59 +0200")
-References: <20260422002840.303477-4-mroik@delayed.space>
-	<cover.1776984666.git.mroik@delayed.space>
-	<4864ac46dd8ef4b704c29efc96c45f4e1412373b.1776984666.git.mroik@delayed.space>
-Date: Tue, 28 Apr 2026 10:45:31 +0900
-Message-ID: <xmqq1pfz3lj8.fsf@gitster.g>
+Subject: Re: [PATCH v4 1/2] revision.c: implement --reverse=before for walks
+In-Reply-To: <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
+	(Mirko Faina's message of "Mon, 27 Apr 2026 02:24:57 +0200")
+References: <cover.1776984666.git.mroik@delayed.space>
+	<cover.1777249165.git.mroik@delayed.space>
+	<4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
+Date: Tue, 28 Apr 2026 10:45:56 +0900
+Message-ID: <xmqqv7db26y3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,87 +95,9 @@ Content-Type: text/plain
 
 Mirko Faina <mroik@delayed.space> writes:
 
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 05cee9e41b..3bfe2c99b8 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
+> +	} else if (skip_prefix(arg, "--reverse=", &optarg)) {
+> +		if (!strcmp(optarg, "after"))
+> +			revs->reverse = REVERSE_AFTER;
+> +		else if(!strcmp(optarg, "before"))
 
-The hardcoded short object names are setting up traps to fail when 
-
-    $ GIT_TEST_DEFAULT_HASH=sha256 make test
-
-is run.  It also may break when the default abbreviation length
-and other things change.
-
-> @@ -1882,6 +1882,72 @@ test_expect_success 'log --graph with --name-status' '
->  	test_cmp_graph --name-status tangle..reach
->  '
->  
-> +cat >expect <<-\EOF
-> +c3f451c Merge tag 'reach'
-> +046b221 to remove
-> +EOF
-> +test_expect_success 'log --reverse --oneline --max-count=2' '
-> +	test_when_finished git reset --hard HEAD~1 &&
-> +	touch to_remove &&
-> +	git add to_remove &&
-> +	git commit -m "to remove" &&
-> +	git log --reverse --oneline --max-count=2 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'log --reverse --reverse --reverse --oneline --max-count=2' '
-> +	test_when_finished git reset --hard HEAD~1 &&
-> +	touch to_remove &&
-> +	git add to_remove &&
-> +	git commit -m "to remove" &&
-> +	git log --reverse --reverse --reverse --oneline --max-count=2 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'log --reverse=after --oneline --max-count=2' '
-> +	test_when_finished git reset --hard HEAD~1 &&
-> +	touch to_remove &&
-> +	git add to_remove &&
-> +	git commit -m "to remove" &&
-> +	git log --reverse=after --oneline --max-count=2 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +cat >expect <<-\EOF
-> +3a2fdcb initial
-> +f7dab8e second
-> +EOF
-> +
-> +test_expect_success 'log --reverse=before --oneline --max-count=2' '
-> +	test_when_finished rm actual &&
-> +	git log --reverse=before --oneline --max-count=2 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +cat >expect <<-\EOF
-> +046b221 to remove
-> +c3f451c Merge tag 'reach'
-> +EOF
-> +
-> +test_expect_success 'log --reverse --reverse --oneline --max-count=2' '
-> +	test_when_finished git reset --hard HEAD~1 &&
-> +	touch to_remove &&
-> +	git add to_remove &&
-> +	git commit -m "to remove" &&
-> +	git log --reverse --reverse --oneline --max-count=2 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'log --reverse --no-reverse --oneline --max-count=2' '
-> +	test_when_finished git reset --hard HEAD~1 &&
-> +	touch to_remove &&
-> +	git add to_remove &&
-> +	git commit -m "to remove" &&
-> +	git log --reverse --no-reverse --oneline --max-count=2 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  cat >expect <<-\EOF
->  * reach
->  |
+Style: missing SP after "else if".
