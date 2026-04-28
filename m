@@ -1,118 +1,66 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869E83E958E
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 10:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAD72D248B
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 11:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.187.169.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777371930; cv=none; b=NizCoxKYQ3cHY2omax1J4afkEaq7oeaG50Ji5HGjV6ff6K+sE7lpRspwLqhuyamG+ayeRKjSbu5dTXUT1C+kiY/jMYueD5b7uNSxgG2ppfm8PSYKV2ud6FsgPxsr9jwz/7KAQRKCsdrYocZsBXuz+86t92O2c47wcfqxOyqulnA=
+	t=1777375965; cv=none; b=HFY4oATU2x3kzGz81vqxDOkBfwKaojtxxbOeYxDbNOs6V77RD+CAClHrX83z7v7kJiNV99ccAO4uet67smLXLlwTh2lZkG4gmsXMIXTnSoKHiM5wTEwDbtlS1rOmlyFxqfMdARvT0wQokj4MGcWk9JVepm9juIoJaQ8HRmR1N3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777371930; c=relaxed/simple;
-	bh=MLTenAI4K4g2rUwWXezZf37O5ku3Lx1cntOLBYgPICU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AAkRb2a0wJbM2I8lnsnRO8gRN8v3D0K3YM2yQEWWBcqBDSnH1nys9GFBRcz2oXFq/o7ZlKjBj3m2VqFFdfkQgHMp+Y8pzU5AWZ9TW8RjB7ioCWY+g8Yni9UukwDN2/mV/8GlP2EinZOWEbnAzbQDXZXHULskqBAukFqAMz08tQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=b4ys7upS; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="b4ys7upS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1777371925;
-	bh=MLTenAI4K4g2rUwWXezZf37O5ku3Lx1cntOLBYgPICU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=b4ys7upSMci3+pmAqzMl8WbYWs1+ExRyR5I8USS3k5PCtEWX/j7FQjQWzQ6BFPZa4
-	 Pr0jro79I2CeOFzMu0o+3RjSbBVz153dj52Yjd+pMlhXOlpwqQRDHW99n+NC/smhyC
-	 2CcEZcAjh67Zq5DfJ695tuIpoSWTNc8asOeosg5tOAZSse8QDLkw7k0wG2iQZCkMer
-	 HL1BkbkuySsE8igdDBV1AEANfCoyIWHeqQsLQV0heUgIdDrzTFYkjhZsI2ZeqY9Pe9
-	 GTFckw8bSuDWLU2M2FX1rln64+b4m9JAsaj+6l2Y3qcZHR9wmLG8tjE+BXbDcsxYOw
-	 rFrglS3y+u/rX7qKiwp2IgXDPz01Zwe+BPWIYR5vaQsqmfkyHqjczAMdwROjqHIIMf
-	 JqaDT0U/UJoTqoXw+7VwxCkBjILRmbg3FdUV9u7gvxa8c4fUGJ4Wg6PcLx93Uk3XUP
-	 VRIDXoNtMN6yOKth0ON6JnGYSp+BZg9Z9/Z7XwPonUYz3T/SE2u
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:83ef:6e6f:372d:4e85])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CAB78200C5;
-	Tue, 28 Apr 2026 10:25:25 +0000 (UTC)
-Date: Tue, 28 Apr 2026 10:25:24 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: git <git@vger.kernel.org>,
-	Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: Re: Git generated tarballs and Debian
-Message-ID: <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>,
-	Ian Jackson <ijackson@chiark.greenend.org.uk>
-References: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
+	s=arc-20240116; t=1777375965; c=relaxed/simple;
+	bh=Q5S2lvGSP+DIUEDB8vtrKHH0K7vm3j8SBch7qqck2RI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=W71pIzGjDoz98HgQhCDHfaSVuRnMENhecySvSDS+445JZ4TOAdt9hlOoRSniKtJRgYPPOSJh7vImsKcayGQI90rPA61wIpIMiAFDlxl/WbJe5PtwAi3QKf1tXzgO8Ff9uIr+VoCw7DlLfXWNqiyO+rLwxcUk+Jh7EYQ5Pb+Zgak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de; spf=pass smtp.mailfrom=hogyros.de; arc=none smtp.client-ip=185.187.169.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
+Received: from [IPV6:2400:2410:b120:f200:a1f3:73da:3a04:160d] (unknown [IPv6:2400:2410:b120:f200:a1f3:73da:3a04:160d])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by psionic.psi5.com (Postfix) with ESMTPSA id 3B5ED3F209;
+	Tue, 28 Apr 2026 13:32:39 +0200 (CEST)
+Message-ID: <a54d57b6-9270-406a-9056-ffaa939c6c21@hogyros.de>
+Date: Tue, 28 Apr 2026 20:32:37 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="I8qNVwLQOIdkMyqL"
-Content-Disposition: inline
-In-Reply-To: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git generated tarballs and Debian
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ git <git@vger.kernel.org>, Ian Jackson <ijackson@chiark.greenend.org.uk>
+References: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
+ <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
+Content-Language: en-US
+From: Simon Richter <Simon.Richter@hogyros.de>
+In-Reply-To: <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi,
 
---I8qNVwLQOIdkMyqL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4/28/26 7:25 PM, brian m. carlson wrote:
 
-On 2026-04-28 at 08:40:05, Simon Richter wrote:
-> Hi,
->=20
-> in Debian, we're shipping "original" tarballs for each software package, =
-and
-> the Debian specific changes in a separate file.
->=20
-> Historically, this users could do a bitwise comparison of the original
-> tarball and the one in Debian to verify that these were unchanged.
->=20
-> With git, some authors have stopped releasing official tarballs, so we're
-> using git-archive a lot -- but this is reproducible only by accident. Git=
-Hub
-> also prepares some release tarballs that may or not be bitwise identical =
-to
-> what git archive produces.
+> I'll just note that we don't make any guarantees that `git archive`
+> produces identical output across versions.  Incorrectly making that
+> assumption broke kernel.org when we changed the format in the past.
 
-I'll just note that we don't make any guarantees that `git archive`
-produces identical output across versions.  Incorrectly making that
-assumption broke kernel.org when we changed the format in the past.
+Exactly -- that's why I read the tarball and calculate the checksum of 
+the corresponding tree object, but we have a few cases where we need 
+extra information that isn't in the archive, and I'm wondering where to 
+put that extra information: inside the archive itself, or into an extra 
+file.
 
-Also, if you use `export-subst`, then it's possible to emit short object
-IDs, which can differ in length depending on how many objects are in the
-repository.  It's also possible to use zlib or pigz instead of gzip to
-produce tarballs, in which case the compressed data will also differ.
+> Also, if you use `export-subst`, then it's possible to emit short object
+> IDs, which can differ in length depending on how many objects are in the
+> repository.  It's also possible to use zlib or pigz instead of gzip to
+> produce tarballs, in which case the compressed data will also differ.
 
-I had intended to create and emit a standard, reproducible format for
-`git archive`, but never got around to finishing that.  Perhaps I'll try
-to pick it up at some point; I expect it will be easier to implement now
-that we have Rust support in the tree.
+export-subst breaks verification completely as soon as a blob changes.
 
-When I was one of the maintainer of Git LFS, we intentionally produced
-source tarballs specifically to emit bit-for-bit identical artifacts.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Compression isn't an issue, because we're comparing tree checksums.
 
---I8qNVwLQOIdkMyqL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmnwixMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZw+aJwYzGqbJNPZwJ6jnYvp5axio7noUUxgK9nKCjPcT
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAABPXAP42vzpA7jzxN/MJAZtcg0VDb8bV
-UX5mfkF/wo26kDlQEgEA4DS5zkp7g71uOB/MjIlqiFPUVConROHA/TOyd1xVvAA=
-=DK48
------END PGP SIGNATURE-----
-
---I8qNVwLQOIdkMyqL--
+    Simon
