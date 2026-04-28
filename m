@@ -1,187 +1,289 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazolkn19013073.outbound.protection.outlook.com [52.103.46.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1032738AC97
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 14:38:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.46.73
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777387103; cv=fail; b=R48Y0uBbtYUd22yPS70jzCAnUSrdIbMMaVZs6duhf3bllyFkMCvWk6etsspR/BnAWHRHS+F3hLf04E2+ZHdIrfZUaA6QLhzGVt8ggW1B/1lvGqSsCd367JfV9cqA2tn7VIKbeBCjH2x+r0ziw4Suqlr14QqGt4bHI/tW0GY1VNE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777387103; c=relaxed/simple;
-	bh=B5oBwOhMaHgnqwLQXJOFbNCrN4iTMHUY1C1LY7wHbIU=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=QyaHNtSnmyWa00sLQPhrKCRT+7r5hW6aOTnMHHTsmtSNRB/QqR1NntCCp5++1gHQURXFtp/RiiZDpfoszkX20DkDqlkKo2sDzhWxnhKJSyafKwVMrPlFgUh2DenNNV1UbyuS+GKt0va4eG4T6P0QImgFvCoqia3X4yvKEytARQE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=WNwlzDYC; arc=fail smtp.client-ip=52.103.46.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F56F43D4EA
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 14:47:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777387665; cv=none; b=I61KZJexeqUacYhv8r9eoSBrZnNUgdJR62Euoik7496UkLfwpUfIdImvImZeRLy1u7BmcgMbAKjmC3wl+cUgtw100ZCxIY4lv2MmMLffJDhe/ofGiek2fHE6Ikqv2WPRmsfuL5oZMQjVqq2JeLX9zo4/OzTa7xqzja0lie5BYkg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777387665; c=relaxed/simple;
+	bh=c4XXmnrzJOOVT/WvZkrf5du7EWSGcmjpXDHs6N6N4dI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Q8sv/dmkUaSRopwy0jSVBNf5eQNXOCppG7GhIQE1WohEXTGTedTni6wuKmp18u6mhExhqrE4uUeP/wV3h/C4r8QlWckzTrk+sZLY1YB2JYVpRZPWTDepxCUWjmkh6FtZGm5dwfpA4mwz7tlEqN3P3TOtOhzPp73GF87Ii0FHvog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZO/KQ/D6; arc=none smtp.client-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="WNwlzDYC"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UjW5iuhannI2ckRwGKoLLVuDkiRWne2myNvvv1RimM7EEfGSwuGBitdnK8Gj1RbkwSpHM275mS86hgkKap6Ck+CFbyp8PJC8iFKvGMnjthP4vWhw3cRB/brse2EHpbne/NYNmk6xU0jQrjdhO1srMLxkdwR3BeT3LW76RgopBQDro56ef/qge4GkeeFvqcOt4xJtHhdZAZL3FgwHlFcwZK4WLFohuSPA0FoQms7F062b660ZEavWSD+f/piJc9NWabMsbS6/3jn9U9PjJcjQ2eSJCOua+47z84H4Ia8BUnEsBV3KT5v4FXv4Hm2VRh69WY9WkvReyLlu00OKgCn2TQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NzVKJ6PDl4W9hU4Rl1WmzMWknnnoj+5dsuoOGlhO9dg=;
- b=gqsfAQCm+yxHsrJUH6PbddwkbHxze2FX/47/qj4CurZZWlRFik4XeEawhD15BbakDAX8JB/uCKcPqNzxhwS3Z+XULWU8IG2VIl6sQE8a/PgATj+faW5+3gcEX9LLP0KuuXiaIK3u/J4HJjlMTou6FaeIJ89K9wDOBNuQA19JgA2x40O1L96/di/ygEeYhbBjRqimybardWL4tFjTWcJGWSh3y/s/vtwYr3O5DdXU0ZNXFXfAAuCySN1urxdVJx+lmkdlyAdgO6dsle1lE9VUaLecSS9EO6xgrYTpTj8dMRpxHIMWskBy1d+HD//UF+ZKdXNSgX4vJvnPxOormTyjdQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NzVKJ6PDl4W9hU4Rl1WmzMWknnnoj+5dsuoOGlhO9dg=;
- b=WNwlzDYC+kfcEanKrd1ogZuNiG8/s3gFaQx5OLbbkof4BUB6xDJhFWSqFlIpwiT1z05K9DEfEZuUCeA9ieXGTU0LirKeo99pRUZ6g9+MYI3CZAGmfCCI8RiDLvHY61n/bkmdym3bT98yaRKatLJQNVkTzZ9GV7eFjYmxW3fxu1Ks5wEUMcShUN7xg651RSjrWJxCKkiCSkD1hSyVmgzCvjQZ6QumFLUxqtBL7er+A6Mg8dyDl2Od63z6XtI7xFWx0VgV29649Q9cW+PyOSk78xa2y7d3vBiq83SjcgxKvin/3XHWXWZplhgLAAUqBIg3Zd1nw+O9ru19e3IWKkvnxQ==
-Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
- (2603:10a6:800:326::21) by AS2PR03MB9672.eurprd03.prod.outlook.com
- (2603:10a6:20b:60f::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Tue, 28 Apr
- 2026 14:38:19 +0000
-Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
- ([fe80::5e26:cb8:bbb:cf7a]) by VI0PR03MB11634.eurprd03.prod.outlook.com
- ([fe80::5e26:cb8:bbb:cf7a%6]) with mapi id 15.20.9846.025; Tue, 28 Apr 2026
- 14:38:18 +0000
-Message-ID:
- <VI0PR03MB11634FE845793CEA7D25FA2D0C0372@VI0PR03MB11634.eurprd03.prod.outlook.com>
-Date: Tue, 28 Apr 2026 15:38:17 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] http: attempt Negotiate auth in http.emptyAuth=auto
- mode
-To: Junio C Hamano <gitster@pobox.com>,
- Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
-References: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
- <f175294459c9370ed79c8338d6008b69c2028f99.1776331259.git.gitgitgadget@gmail.com>
- <xmqq7bq63lll.fsf@gitster.g>
-Content-Language: en-GB
-From: Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <xmqq7bq63lll.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO0P265CA0014.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:355::16) To VI0PR03MB11634.eurprd03.prod.outlook.com
- (2603:10a6:800:326::21)
-X-Microsoft-Original-Message-ID:
- <5494b860-ebdb-4d81-85eb-3a658c777a8c@outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZO/KQ/D6"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-12ddbe104ccso1671219c88.0
+        for <git@vger.kernel.org>; Tue, 28 Apr 2026 07:47:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777387663; x=1777992463; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oq7Nz9LsH0FnrW80jJHsWOAgsz/LTK2Cm+OYz1qYXVs=;
+        b=ZO/KQ/D65K2G/lDH91p0BCCXSgb7tPi+IR+TKbhLwXIJ15lefTUZL5xVxHtITHzimP
+         zUfJDVsBBoNmHrtkRFGgo8CXBgcQ7qOZY06XJr2u6YY3eAl9zCmAVEry6XvSIZ2Ar9N2
+         eq0BNdOya8vp0QVivZjRMufzF0YzGOw7qsLhqVCcKeXMyJcGPCF62FmtZ3E9+v7p0CiP
+         GIcEvPoT3cIlhhCwZoghwbYmfaf0SPyvFkP6e9zhZBOtMWF4Ph1qFvwVWtjpEkCeCo4i
+         rMJLM8SDCU4Z3q1AhSO3nekjFK+0t3IrOIohCL/3/BH/I6WhLCyJ9zgrTqDt1wnXhk/a
+         rNYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777387663; x=1777992463;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oq7Nz9LsH0FnrW80jJHsWOAgsz/LTK2Cm+OYz1qYXVs=;
+        b=dJ/N3KdK4b7LUuc/VsK54Hg3izZ+FFXC4PvyKwsC2cfA/cDyX+/3xgXEmFut0LsZPs
+         L/YwiKeRpCOpvy4YKCwqpst1a6GjnS6Efzv1eLTXJUpSExg59YIUyb4UDHzCj0S7dxrI
+         q7C/7sE6O6ioOe6wikvB/pqyUdIXeSC88iql/fMIxtJMM8b3rJjAScsf8Fm1JBWhKYtt
+         ETvbvWlg9uSMn1yCVxBhY6X2exIXsGTFgCa3wtkQBEfdSQmdUpjKkh8X13M9IO7E15KH
+         qXsU3MyGkTtQv6epGe4j432befX9djyLz+8+i//Rtfl1TpSjIBEagNQnxj+RcwvxTmPr
+         zNhQ==
+X-Gm-Message-State: AOJu0YxxHldB/Ntq3FnloMip4M+XoSTXaD3GRoVCtMFpuRbB+bvpn5fZ
+	hMRMmdiWf8nBsPQFkOAnERmiqot/mJXUyRy1vVsjCBrfHp34aoUauWsqiBF3EQ==
+X-Gm-Gg: AeBDieuiyIRNGlzYmi+QDBp92BxDKaCJlh0UFwuFG7dMxKU4rPWUDFtZJXmtlJJnBWZ
+	KMKVKQbeJ/r97B9CHfFK74djGZGwGjfDKFiOuu1T2yoMiQfDs0u4wWowtzGhxmy53YqDfFwPt4M
+	+egnLWHD48BjdBSf85jeUsVosYgrhU17fdXK+fMbZB/PFr4NsNlU1I72JiHNRxKO7do9GnLCSpV
+	QSuIYTmqQk6rl6EGyYXMp1e5KrFD3vsZFKdLhXUbkaUtlqQhVPmJJ1+pIcB0VcjgAtsReFhucrP
+	756S/6nGIiOGACw76gB8RiRwF0lwNp6BIogPLYtIkNYB1xDLuQmZSg9JdnyjBgU8Jb2yYopQnv/
+	dvQ7+t0//wrDdky4rGBzV5Lw5Dyturr2C17/3QAu1bNORTMCmuRyBki+LJCdMFmju+AhOsiyu+H
+	Nj6PUgbVaestebOb2XxEvc1Vsm79CjMPej7Gwp
+X-Received: by 2002:a05:7022:b9c:b0:11b:b3a1:714a with SMTP id a92af1059eb24-12ddd95654amr1525079c88.12.1777387662420;
+        Tue, 28 Apr 2026 07:47:42 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.74.193])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12ddd927c5fsm2104165c88.3.2026.04.28.07.47.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2026 07:47:41 -0700 (PDT)
+Message-Id: <pull.2282.v4.git.git.1777387660841.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2282.v3.git.git.1777317998098.gitgitgadget@gmail.com>
+References: <pull.2282.v3.git.git.1777317998098.gitgitgadget@gmail.com>
+From: "Scott Bauersfeld via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 28 Apr 2026 14:47:40 +0000
+Subject: [PATCH v4] index-pack, unpack-objects: increase input buffer from 4
+ KiB to 128 KiB
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR03MB11634:EE_|AS2PR03MB9672:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6bf7cf0b-27f6-432e-0bcc-08dea533ca11
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799015|6090799003|19110799012|5072599009|461199028|23021999003|15080799012|24021099003|51005399006|37011999003|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?eWwvV294VVhBaWxlTE5ocnVkQmIvTTVuTWFONXR4OWM5RlB0ZWlpMWY5d1Bq?=
- =?utf-8?B?bmt2ZGUzaFB4ZnBsSW1tZHJwMHE1MkpBbWNwOVB3WS9lV2ZCU2paT1FzV214?=
- =?utf-8?B?aFhOS2NmbkZQZUtvcjN1U041OFZCTWY5b2x4My94eE04QTN1d2N2b1VXOUFH?=
- =?utf-8?B?SGwvVDJJRjlhVy8zbVZKVTNXU0lieWttWTFUbjhmOTJwcTJnR1o0N09JRlA5?=
- =?utf-8?B?WjFRc2xDRWluUjgvMVJTMzBtWXZZaXNwbFVqcjNuYlhYT29xNDJDbUl2SmhI?=
- =?utf-8?B?a1lvUEwzME9ESnJHRUZVS1BqT1BLMjFrNGZBVXdxTnlKZis4SnFVN25qSHRP?=
- =?utf-8?B?WUttaVVXNHFFZ2cwV3dzNnhsSzZsZEtZYTNpcVZEdlp1ZW9JSFF6anpiNlkr?=
- =?utf-8?B?UUxXY0hFb0RaVU1RemNIYlVZZ09OeC9vcnUzUVBVZmlnTmlKeG1Lam5uSzl2?=
- =?utf-8?B?L1JDRzc4aFJBVFR0TWdOK09NU251dkcvQm8yenFNN1VKdVY1LzZYOTFzZEto?=
- =?utf-8?B?ZkV0aFozVEREYTNUVThpUDBrak5xYlVTU2JxSjFyaHF1WkozU2hPVUZxQ29F?=
- =?utf-8?B?Mm9HeEtBWXFIR1ZYYmRQMjh3VWtiTHVIQkw3NElhWVhYamNwdVFURVRma2Nm?=
- =?utf-8?B?OTd3VUVqcjFXRUo0cm9DeUdpQzJTc013WkJhdVlLRXl3SGZKWmdFUjZSb1lv?=
- =?utf-8?B?Z201c3FzRWtYRVdhVXMzbkgyK2owWUlGMkR5ZGsrd3BuaGNJS0tMek9OSmYr?=
- =?utf-8?B?MUNPU01iMCsxalJHbUp2MnJPYlNLSWpWK2VCTXM5b0lydEZ6TXlHWCtIU1Jh?=
- =?utf-8?B?NWpYUDFOd2dTQmFtNlA1eHNyakxRMnpMZDBPNmRWVHl1SnNJbWJKMU5ESEhL?=
- =?utf-8?B?NFBUbVhranNEb29XbC9GTjRXNHVSSXgwZnJmWWRUaHpoL3EwR2J6bzJjQ0Fp?=
- =?utf-8?B?bFZGeEhQek01T2hNNFphYnRFY2g0bHVBSTBPN2xxQUdGZTVQTGNRbUJHUURG?=
- =?utf-8?B?Y3hSTEtRVGxGWXVHKy9rb2krUVhZWm9VRHRSdzJpaWVoK3dzdS9WYWhGRmsw?=
- =?utf-8?B?MGNTUWpUWHBUT1liWC8vTGt2WFpLaWluMnRtVkJkOVdCTWZHVjdPbVkwUVZK?=
- =?utf-8?B?Z3hVQ2d0UVptSlQxcHRCeHQ5dkswTEF0dVR4Tmp0clB1SnA0ckJiNkxBSmhk?=
- =?utf-8?B?TThTanczdGtXdXE4TjlTVGNyVGZRbjdDbHkrMUNLbzA4NlVrWnZ1N0tlQW5l?=
- =?utf-8?B?MXhjemR1NFNwRmUzaGV6UzBiS0RBNmk1VTJUdWplM3A5L1hXWUpzbEVhTXkv?=
- =?utf-8?Q?TnUuVrjNpg2HoyBVbSfTKuR7yv0/uuVXNu?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cHV6TXZhbHdmZzI2MGNwV05qQW11ajJrOFNRRm1rUkNEWlFDSnhwMllhWVg4?=
- =?utf-8?B?VUtpTDFjRHVMY09yNUdzR3lSVk51NjFNMVJ5VXV3aWlmdHBZcnVpWmpHOFhm?=
- =?utf-8?B?MWVxL25LTWVrTFljMHdKcGNoYWx3VGtabFhPVnZWTXdtUC9lTWI2S0NOQXpF?=
- =?utf-8?B?OEplbVAvNzJGRkp0ZlpqYVoxTG9LU2N1RHRHMlp3S1FmMFVwMTY2NnJDbzNR?=
- =?utf-8?B?ekdBbm5FS1I4M1lEWkR4QVp0Ykp6dnJmNVFSUHlPZGN6VUdXNm1UM210bUNP?=
- =?utf-8?B?cm93OXVPeFg4bTloY3BReG9DN3JRYXFTU3ROUk42b2hjaFFsUDZodzlKYjNk?=
- =?utf-8?B?dDJpbzYyaXkzcVBlR1oyMU5UanR6T3ZXb24wcElqTHRkb0ZJNXFBT2VtNi9X?=
- =?utf-8?B?VkhWVUR3ODZ5M3MxRGVGaXcvK1VNV1QreE9LNms3VHJTeCtzWWgvZ2pWazhh?=
- =?utf-8?B?bHZQUENDNVAxY2dhbUZsMVRMaWNSZ1VhSmtqK3pZMWxaeHNZaVRzZGpQOFF2?=
- =?utf-8?B?eHRFMXJrNGEyTXBrSUJOTWpLUUtHZ1Izd0VlelVhcWQ1dmE2RXFRKzlmcFY3?=
- =?utf-8?B?MTlwSTE2S3lGU1M3Z1ZJMjFSSXpER04ydFJCZFVmTTlnQ2FCZFJXMEZlelBv?=
- =?utf-8?B?OTB4MEo2a3BHeTF1SndOYnNPdUFBL2tPNWZYbHl4VE11eFE2M1o2bDEwNE83?=
- =?utf-8?B?YVdvcjFVdDYySGV1MmVMYjNyZXp1TmlVRFdUUXlmc1BsVkxUdzZib0hBaGpl?=
- =?utf-8?B?dDdOMmFXWUFrYktybVIwbGIxNGlKYTZWajNKNEgxU0lFbG5TQnZQcndOZEY5?=
- =?utf-8?B?d2hmTWxUMkhmTFFWWnJxZ1RiOWg4V2c2Nkd1aTl0eWUwWmxydEt0QUxIb0Mw?=
- =?utf-8?B?dzAycjNSYkVqMXRFRlhJVmR5QmJHZU1Kd1Z3SmY3N0FiRVYwUWFNZ2VVNXc3?=
- =?utf-8?B?eW9neUNpMUF0a0Y5bnBLVnd4VktGVWx3K2pCWEZYZGlGOXdFNlptSEZEOGox?=
- =?utf-8?B?UDIvQUFtRUZlMGk0YXkvcVpHbVNXUHU4aUdkMHNWZUtVRDVYSWg2akMvTzNF?=
- =?utf-8?B?K1NXSEtjZ2xzMWdSNnAvNlJ1ZS9aWjdZdnBUUC9Yd0J3MkpUMkNJNGVBVUcx?=
- =?utf-8?B?N203YjVOUkc5czBUSjZveUNwUmJFekFoME1BMjV3WU5RZzlURmxmK2huYzkz?=
- =?utf-8?B?Y2lSa1VJTFF3UVhZTFdlcFVDR3BISEZEbWlYY2t0OWVmTkJ1WkIxWUllQlIw?=
- =?utf-8?B?eTBNV0RqNnJ0TGZhRms1RHJIa0w5TjVtQmZLQi9Fc3ZqdC9QWmdSOGVtVUdQ?=
- =?utf-8?B?aWpWU3l6TnI2eVJRa1BheVRCSTIxa1BmeVdsUlFhZVA5MTgrY0IvK0l0ZnRP?=
- =?utf-8?B?YlE0RlhPUit2UGZHditRNjhzNDdtYmYybVBqcUVmbis3aXRUb1p1T1RvbWo3?=
- =?utf-8?B?MmYvakdIQWhjaCtvdGwzQnFTeE1WbThrQndqOUxDclBJUFZ1Z0xZOEVGUGVS?=
- =?utf-8?B?ZytXOXd6RmlGaFIwd3FLNDNTRjlQZnl6NjNtVDBWZnZ6c0ZhajlsdlBycHNy?=
- =?utf-8?B?dzQzdVQ0UCtnRjZVMS96QlpLYURMTCtiS0diYVJlSlF5ZWwzeWVnZ0VrQVVV?=
- =?utf-8?B?VHgxL1JmcXVUNkRrcWdzMTZlNVArU3k2UzFheE01OGVodWlkcUlVWkJyTGZt?=
- =?utf-8?B?TTE3QzhCWTJaYmdZdHVnN1FFakFGZVdCdm5mQ3dvUkQ1bFRoVmZhVldFTzBj?=
- =?utf-8?B?RjZDY1RnN00yVEVXVnMvcmZzRGNsUTlGSVRmbGMzSXdBbzBIS001eWdldTQ1?=
- =?utf-8?B?QzVWeHQwN2dzeG5ZWTVkRVFOZHIvbVRRZHc2UUxaVnl4Kzg3WVlEbW5yV3JJ?=
- =?utf-8?Q?Wgl9gXEcuNb30?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6bf7cf0b-27f6-432e-0bcc-08dea533ca11
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR03MB11634.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2026 14:38:18.8364
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR03MB9672
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Derrick Stolee <stolee@gmail.com>,
+    Jeff King <peff@peff.net>,
+    Scott Bauersfeld <sbauersfeld@g.ucla.edu>,
+    Scott Bauersfeld <sbauersfeld@g.ucla.edu>
 
-On 2026-04-16 17:40, Junio C Hamano wrote:
->> The true and false modes are unchanged: true sends empty credentials
->> on the very first request (before any 401), and false never sends
->> them.
-> 
-> OK.  This is a tangent, but "git config --help" on "http.emptyAuth"
-> is horrible.  It does not say what the allowed values are, so I had
-> to first write "There are million other things in the system that
-> this patch does not modify, so what's the point of singling out
-> these two settings and saying that this patch does not change
-> them?", before realizing that 'auto' the patch (and the explanation
-> of the "empty-autho auto-detction" above) is about the third
-> possiblity of the same variable and take it back.
+From: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
 
-Agreed - the existing description is pretty opaque about what values it
-actually takes. Should I add another patch to this series to spell out
-the three values explicitly? How about something like this:
+index-pack and unpack-objects both read pack data from stdin through
+a 4 KiB static buffer. In index-pack, each fill() flushes consumed
+bytes to the pack file via write_or_die(), capping every write(2)
+at 4 KiB. unpack-objects uses the same buffer pattern for reads.
 
-      http.emptyAuth::
-              Attempt authentication without seeking a username or
-              password.  This can be used to attempt GSS-Negotiate
-              authentication without specifying a username in the URL,
-              as libcurl normally requires a username for
-              authentication. Possible values are:
-      +
-      --
-      * `auto` (default) - Send empty credentials only if the server's
-        401 response advertises an authentication mechanism that
-        requires them (such as GSS-Negotiate); otherwise fall back to
-        prompting via the credential helper.
-      * `true` - Always send empty credentials on the very first
-        request, before receiving any 401 response from the server.
-      * `false` - Never send empty credentials. Mechanisms that
-        require empty credentials, such as GSS-Negotiate, will not
-        work.
-      --
+On FUSE-backed filesystems every write(2) is a synchronous round
+trip through the FUSE protocol (userspace -> kernel -> userspace ->
+back), so the 4 KiB buffer turns a clone into many unnecessary tiny
+writes with noticeable latency overhead.
 
-  Does that read better?
+Increase the buffer from 4 KiB to 128 KiB. Introduce a shared
+DEFAULT_IO_BUFFER_SIZE constant in git-compat-util.h (next to
+MAX_IO_SIZE) and use it in index-pack, unpack-objects, and the
+hashfile layer in csum-file (which already used 128 KiB but
+hardcoded the value).
 
-  Thanks,
-  Matthew
+Pack file writes to a FUSE filesystem with writeback caching
+disabled during HTTPS clones of git/git (~293 MB pack):
 
+  74,958 -> 4,687 (94% fewer)
+
+Wall-clock time of git clone over HTTPS onto a FUSE passthrough
+filesystem with writeback caching disabled, 3 runs per variant:
+
+  vscode (~1.26 GB pack): 84.5s -> 75.7s avg (10% faster)
+  git/git (~306 MB pack):  22.6s -> 20.0s avg (11% faster)
+
+Signed-off-by: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
+---
+    index-pack, unpack-objects: increase input buffer from 4 KiB to 128 KiB
+    
+    index-pack and unpack-objects read pack data from stdin through a 4 KiB
+    static buffer. In index-pack, each fill() flushes consumed bytes to the
+    pack file via write_or_die(), capping every write(2) at 4 KiB.
+    unpack-objects uses the same buffer pattern for reads.
+    
+    On FUSE-backed filesystems every write(2) is a synchronous round trip
+    through the FUSE protocol (userspace → kernel → userspace → back), so
+    the 4 KiB buffer turns a clone into many unnecessary tiny writes with
+    noticeable latency overhead.
+    
+    Increase the buffer from 4 KiB to 128 KiB. Introduce a shared
+    DEFAULT_IO_BUFFER_SIZE constant in git-compat-util.h (next to
+    MAX_IO_SIZE) and use it in index-pack, unpack-objects, and the hashfile
+    layer in csum-file (which already used 128 KiB but hardcoded the value).
+    
+    
+    Pack file write reduction
+    =========================
+    
+    Pack file writes to a FUSE filesystem with writeback caching disabled
+    during HTTPS clones of git/git (~293 MB pack):
+    
+    Unpatched avg Patched avg Change 74,958 4,687 −94%
+    
+    Write counts measured by logging writes in a FUSE passthrough daemon
+    (libfuse 3.10.5, writeback cache off).
+    
+    
+    Wall-clock time on FUSE
+    =======================
+    
+    Measured wall-clock time of git clone over HTTPS onto a FUSE passthrough
+    filesystem with writeback caching disabled. 3 runs per variant:
+    
+    Repo Unpatched avg Patched avg Change microsoft/vscode (~1.26 GB pack)
+    84.5s 75.7s −10% git/git (~306 MB pack) 22.6s 20.0s −11%
+    
+    
+    Changes since v3
+    ================
+    
+     * Replaced strace-based syscall measurements with FUSE daemon write
+       logging. The earlier strace numbers (72,465 → 24,943, 65% reduction)
+       were distorted: strace -f ptrace intercepts every syscall in all
+       traced processes and added enough overhead to distort the
+       measurements. The FUSE daemon logging captures write sizes without
+       perturbing the traced processes, showing the true reduction is 94%
+       (74,958 → 4,687).
+     * Note: Why 4,687 writes instead of ~2k writes as would be expected
+       with a 128 KiB buffer size? It appears that fill() is calling xread()
+       on a pipe and the linux default buffer size for pipes is 64KiB. I
+       also tested using fcntl(F_SETPIPE_SZ) to increase the pipe's buffer
+       size to 128KiB, which does indeed reduce total pack file writes to
+       ~2.4K.
+    
+    
+    Changes since v2
+    ================
+    
+     * Renamed DEFAULT_PACKFILE_BUFFER_SIZE → DEFAULT_IO_BUFFER_SIZE per
+       Stolee's feedback. The constant is not packfile-specific, since it is
+       also used by the hashfile layer.
+     * Stolee noted that WRITE_BUFFER_SIZE in read-cache.c could be
+       consolidated. That constant was already removed in f6e2cd0625
+       ("read-cache: delete unused hashing methods", 2021-05-18) when
+       read-cache.c was converted to use the hashfile API, so there is
+       nothing left to unify. The rename to DEFAULT_IO_BUFFER_SIZE helps
+       account for the multiple usages of this constant.
+    
+    
+    Changes since v1
+    ================
+    
+     * Introduced shared DEFAULT_PACKFILE_BUFFER_SIZE constant in
+       git-compat-util.h (next to MAX_IO_SIZE), replacing per-file #define
+       and the hardcoded value in csum-file.c. Placed here rather than
+       environment.h since it is an I/O buffer size, not an environment
+       variable or repo config.
+     * Added wall-clock timing on a FUSE filesystem.
+     * Cleaned up the commit description a bit.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2282%2Fsbauersfeld%2Fsb%2Fincrease-index-pack-input-buffer-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2282/sbauersfeld/sb/increase-index-pack-input-buffer-v4
+Pull-Request: https://github.com/git/git/pull/2282
+
+Range-diff vs v3:
+
+ 1:  df754ac879 ! 1:  146b1846a5 index-pack, unpack-objects: increase input buffer from 4 KiB to 128 KiB
+     @@ Commit message
+          hashfile layer in csum-file (which already used 128 KiB but
+          hardcoded the value).
+      
+     -    Syscall counts via strace on HTTPS clones of git/git (~296 MB pack,
+     -    5 runs per variant, isolated builds from the same v2.54.0 source):
+     +    Pack file writes to a FUSE filesystem with writeback caching
+     +    disabled during HTTPS clones of git/git (~293 MB pack):
+      
+     -      index-pack pack file writes: 72,465 -> 24,943 avg (65% fewer)
+     -      total write() syscalls:     310,192 -> 259,530 avg (16% fewer)
+     -      writes of exactly 4096 bytes: ~40,077 -> 0
+     +      74,958 -> 4,687 (94% fewer)
+      
+          Wall-clock time of git clone over HTTPS onto a FUSE passthrough
+          filesystem with writeback caching disabled, 3 runs per variant:
+
+
+ builtin/index-pack.c     | 3 +--
+ builtin/unpack-objects.c | 3 +--
+ csum-file.c              | 2 +-
+ git-compat-util.h        | 6 ++++++
+ 4 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index ca7784dc2c..bb3639641c 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -145,8 +145,7 @@ static int check_self_contained_and_connected;
+ 
+ static struct progress *progress;
+ 
+-/* We always read in 4kB chunks. */
+-static unsigned char input_buffer[4096];
++static unsigned char input_buffer[DEFAULT_IO_BUFFER_SIZE];
+ static unsigned int input_offset, input_len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index e01cf6e360..af67d1a1d3 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -23,8 +23,7 @@
+ static int dry_run, quiet, recover, has_errors, strict;
+ static const char unpack_usage[] = "git unpack-objects [-n] [-q] [-r] [--strict]";
+ 
+-/* We always read in 4kB chunks. */
+-static unsigned char buffer[4096];
++static unsigned char buffer[DEFAULT_IO_BUFFER_SIZE];
+ static unsigned int offset, len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+diff --git a/csum-file.c b/csum-file.c
+index 9558177a11..d7a682c2b6 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -178,7 +178,7 @@ struct hashfile *hashfd_ext(const struct git_hash_algo *algop,
+ 	f->algop = unsafe_hash_algo(algop);
+ 	f->algop->init_fn(&f->ctx);
+ 
+-	f->buffer_len = opts->buffer_len ? opts->buffer_len : 128 * 1024;
++	f->buffer_len = opts->buffer_len ? opts->buffer_len : DEFAULT_IO_BUFFER_SIZE;
+ 	f->buffer = xmalloc(f->buffer_len);
+ 	f->check_buffer = NULL;
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index ae1bdc90a4..5024814bd4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -712,6 +712,12 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
+ # endif
+ #endif
+ 
++/*
++ * Default buffer size for buffered I/O in index-pack, unpack-objects,
++ * and the hashfile layer in csum-file.
++ */
++#define DEFAULT_IO_BUFFER_SIZE (128 * 1024)
++
+ #ifdef HAVE_ALLOCA_H
+ # include <alloca.h>
+ # define xalloca(size)      (alloca(size))
+
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+-- 
+gitgitgadget
