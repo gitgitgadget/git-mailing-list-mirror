@@ -1,142 +1,110 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5553321DC
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 16:26:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A64466B5F
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 18:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777393593; cv=none; b=kYc7HEhmmWtpI0ZkPGiYghcc37VMeD6cI46v4beEsYfalneic8up9GbXUOU7N059wgcEePm5XVRYmdaI0x7miSJotJlWUGDPE3R/Wyewlb5+ME3IJ35d36xtVmC6FUX32kLPsKO1NWyKxFbh2oqgS3u2TJQ7S9yu/I1FjWOkLeY=
+	t=1777399541; cv=none; b=dwZ62i7NQtJ50FpY/uQNhANvKANdG7V3FGEjRPIinyRzwctR3rMBX940RzZPU2EhHo9Td9rUkAuuymbK4MzPLAB3EdRkWzCUr0YNpFZlE71qvZjAg8HpTO1m9xGxLbghyZSw5ol/DG51VVn2xT5YMfe3K8CrxrtRtTSV6Kj2TYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777393593; c=relaxed/simple;
-	bh=LbHwbsSRObIKXgG6/GAGMTzOlaZOCtXaa7+uZISFc0s=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GYIKwa1hbOZ7L7+wJQCkxNtZySsMZmWm8JPoC6+ko6UGWSpUAeHty2JdxZSX8v/HHu9vEBQiDrJ6zKsNku8ryOIUEl8Qnu8LQ13nHV5tf/Q81g9Y1gc+yRM8wdLX3dsF6qmSKv57vxut9lXjEJvFg/AY8Kt5L/2xJwH39jZo5Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8+Yj8y+; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777399541; c=relaxed/simple;
+	bh=nzp1/xOcfHhGKd+7SYtZUwTMqVXT2balDCHnXl3Urh4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=brq9zX7XcJZhoGc+QEi0DiIM0Zs7AQb8lrIX3BAFiJUGyjb/p6T4xoB3UA5RGRn/u4ExgP9lTxjK5cm9AXVEvUVedWuZn/cXXB92cv4cxjcWFUfuTFAyuV9KhfpmQ/C2077SPv8hxubVDZ92nCaJzgwi2wdmZKqkdBobjc0dZnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=qAlHfSkp; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=pOmSuvHi; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8+Yj8y+"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7de4e6c5a30so4052359a34.0
-        for <git@vger.kernel.org>; Tue, 28 Apr 2026 09:26:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777393591; x=1777998391; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J4xodm3fjmxi+KQJTMUvyrLC0OV52p21gKVMP81J1fM=;
-        b=I8+Yj8y+drBLMis1XNspr3fXwvMqX8MnPJZojT8tBtaw9wZfJ9jrGDIK2I6VO4+kok
-         ZFfOazOk/hodQ2ZbVzwiSXNnw+vL+LKpvA3dfsxi0ebfyc50Rmd6IRA4FXaqccaNf6Se
-         WbrzVzlCQOfwu1QOnKC7PCfxKvthKoAqKNxDATbvqF3pfeUnkWE8Prma59V0a3MJkOd8
-         T0HgfKwfAfzakeB/Z5ZZvNlHEfNvM1MWNzmJCNXtt62pv23tO7Qe+/WjRLC8cKFcDrBz
-         LC6rytwaaVNMF0LQCwTKNT/XCoU1XH+cQvP4HgaQ6WIJqtndf09H2A95MSTGkdQQmTIc
-         XYgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777393591; x=1777998391;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=J4xodm3fjmxi+KQJTMUvyrLC0OV52p21gKVMP81J1fM=;
-        b=bLb0LJprClBCb6RFbpMu1+n1/BE6lyZkxgmx4jUE/BAOIASolzkZcr2n2hhRvJC4jc
-         4/DJzkVY76Awucg8NWW2b2B69qtfMLqkzwE9Th3Wn/f/Zu3tLcGPKHiZ+WoOz+8NTYoi
-         03eShNvVEfW93LrE1LT136u8zp93IH+vooc13j4I5O3cXVSJQwo35Ta3cLrmEBa1rHYi
-         ANcFcYwdYLXei22PbTrjafKYwaH4Q1jA7xVDVIi3zTYtCloszUw22wFAoeaezBjfrgod
-         xoJ6wX5JCY3lckVaZ4jB4m+akiJXggGlNYQQsBAly75j87xEe+LymSxNSKaGj4pbzgYr
-         hMcg==
-X-Gm-Message-State: AOJu0YyYjVkGTMmF2MoIEKPf4YXkJCfW7E3Oti2DetrkrE9X875CGwgO
-	6Fvj9MfzUHr2ByLrPl/0PBRKUm7fAW5d5cj6nToVm4BUjei+k5ImwpCKaELXMw==
-X-Gm-Gg: AeBDievNSdty/aQeYKpRfSDGK2wc4x4qHQObDzX1KDgQiaOwaqyCbrdH165s9Dv4XVp
-	GSvt/8Ruch94Y7oiF5OiOfSAVM8Z1Mcd74lrjhL01+l+qjp5pKaa5mN/IdPNMxpb3DiexF4go4r
-	GpzwtNyl6yBDg7LyirhrT24Byl4E1YSxDD4oZhp7IViRvTQQ0Wa+ezjU4IFDkwYELg4mLWlDgSN
-	Z5OFeTF2ldWk+cap5Ufm9yc4OcF4pZF0YFVQMlEQSmQYUkonCPCYSRd8LqNCxnjyM2DhsDiieYD
-	K932oQdbHhBKV7KKTeicKGKhMdjEA0VFoBztxvbkQWxbQZYudrtmCqD7ABsoWO8HoRi2Um8+6ZB
-	UbmnwHgdfBfLPz3mx5LI8CQP4REz3Rx6P4klG4NRYWTavrZIVa7Cy/SaGK33RhfCfHvpafcpvwy
-	ZwxcgerFXA54WmQCrRVaAXs1NegaX+4Ku3zrecXQM=
-X-Received: by 2002:a05:6830:264c:b0:7dc:e45a:adda with SMTP id 46e09a7af769-7dea679a2ddmr197299a34.19.1777393590917;
-        Tue, 28 Apr 2026 09:26:30 -0700 (PDT)
-Received: from [127.0.0.1] ([172.212.163.230])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7dea2d6b032sm501127a34.6.2026.04.28.09.26.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 09:26:30 -0700 (PDT)
-Message-Id: <a3019888d8465e0f77926a91a20db170fef6989d.1777393580.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
-References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 28 Apr 2026 16:26:20 +0000
-Subject: [PATCH 6/6] t5608: add regression test for >4GB object clone
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="qAlHfSkp";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="pOmSuvHi"
+DKIM-Signature: a=rsa-sha256; b=qAlHfSkp6/gXSE1+DRn1eB5HMPN/Wdgd60n6CwbVg4J0YojwWcm42HuZR2lXv+213YKoiaDDVtruxJ4Z2KqtIxCFgZKthZaZmS4CF/10/HzIaULX/5zvGtl/ytZ2tuPUKzprFc9lKIKGybmHUgxowTO0dOqI4/9ZKyxGTvEGFP4mdHkzcr+0tcEfu05cfNv0lCUADyoWrG0zEteWx1WBm7p8pTltTU9Fjc/YpZUJoAiHCEDEnM6A4WS+oYG5d+kJc2+nfsw/Q+7cr5dGra3TC/vRmUFPS3k5BZmyeDwMiqRIce47ZTiKLmijx0d37bu8wFNpi1991teZwaplorgunw==; s=purelymail2; d=malon.dev; v=1; bh=nzp1/xOcfHhGKd+7SYtZUwTMqVXT2balDCHnXl3Urh4=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=pOmSuvHieFJHrNNU8FcJ/6DDKHUxsBlxJImK7c1rAA1aO41k7dMoC48UyCtzkznjEYBWIcYIRfeY718JLLbpxm7Vy56Y6fLfBdTBziLTx1ctcqUJ1HfjGufEKaZMOakarmRBJqqhpGfTveg9srQRQwrH6zkkcKQCY0YVk+HApZckWMQktQkJd2lpI57JcHYziiSITGLP8vL+6SCP1DxlsfsHA5qg6/POxA6a7uSbC5D8kD3Ese5DWO1msG2pc+2l40V0Io40kp3ci6+fgliuEGYefg6yr7SgoDhiEqgIhF3LDC8gFn8Eu+ftbOYTJzPobkGILMfCleUFxfxFMTxZRw==; s=purelymail2; d=purelymail.com; v=1; bh=nzp1/xOcfHhGKd+7SYtZUwTMqVXT2balDCHnXl3Urh4=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1620491536;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Tue, 28 Apr 2026 18:05:19 +0000 (UTC)
+Message-ID: <5a821f71-3d6e-4942-9bdb-257617484a6b@malon.dev>
+Date: Wed, 29 Apr 2026 02:05:16 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Reintegrate: send "Huh?" warnings to stderr, not stdout
+To: git@vger.kernel.org, gitster@pobox.com
+References: <ae896PlyiYeqldFN@mbp>
+Content-Language: en-US
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <ae896PlyiYeqldFN@mbp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 4/27/26 18:47, Erik Cervin-Edin wrote:
+> The "Huh?: $msg" warning in show_merge(), emitted when a first-parent
+> merge subject does not match either "Merge branch '...'" or "Merge
+> remote branch '...'", uses
+>=20
+> =09echo 2>&1 "Huh?: $msg"
 
-The shift overflow bug in index-pack and unpack-objects caused incorrect
-object size calculation when the encoded size required more than 32 bits
-of shift. This would result in corrupted or failed unpacking of objects
-larger than 4GB.
+Yes, this is clearly wrong.
 
-Add a test that creates a pack file containing a 4GB+ blob using the
-new 'test-tool synthesize pack --reachable-large' command, then clones
-the repository to verify the fix works correctly.
+> The "2>&1" redirect dupes stderr onto stdout's destination; it does
+> not change where stdout itself points.  Since echo writes to stdout,
+> the "Huh?:" message lands on stdout regardless -- as would any
+> command's normal output. =20
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5608-clone-2gb.sh | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+> The intent appears to have been ">&2", which dupes stdout onto stderr.
 
-diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
-index 87a8cd9f98..af93302dde 100755
---- a/t/t5608-clone-2gb.sh
-+++ b/t/t5608-clone-2gb.sh
-@@ -49,4 +49,41 @@ test_expect_success 'clone - with worktree, file:// protocol' '
- 
- '
- 
-+test_expect_success SIZE_T_IS_64BIT 'set up repo with >4GB object' '
-+	large_blob_size=$((4*1024*1024*1024+1)) &&
-+	git init --bare 4gb-repo &&
-+	head_oid=$(test-tool synthesize pack \
-+		--reachable-large "$large_blob_size" \
-+		4gb-repo/objects/pack/test.pack) &&
-+	git -C 4gb-repo index-pack objects/pack/test.pack &&
-+	git -C 4gb-repo update-ref refs/heads/main $head_oid &&
-+	git -C 4gb-repo symbolic-ref HEAD refs/heads/main
-+'
-+
-+test_expect_success SIZE_T_IS_64BIT 'clone >4GB object via unpack-objects' '
-+	# The synthesized pack has five objects, so a large unpack limit keeps
-+	# fetch-pack on the unpack-objects path.
-+	git -c fetch.unpackLimit=100 clone --bare \
-+		"file://$(pwd)/4gb-repo" 4gb-clone-unpack &&
-+
-+	# Verify the large blob survived the clone by comparing its OID
-+	# between source and clone.  We cannot use "cat-file -s" because
-+	# object_info.sizep is still unsigned long, which truncates >4GB
-+	# sizes on Windows.  OID equality proves content integrity since
-+	# the clone already verified checksums via index-pack/unpack-objects.
-+	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
-+	clone_blob=$(git -C 4gb-clone-unpack rev-parse main^:file) &&
-+	test "$source_blob" = "$clone_blob"
-+'
-+
-+test_expect_success SIZE_T_IS_64BIT 'clone with >4GB object via index-pack' '
-+	# Force fetch-pack to hand the pack to index-pack instead.
-+	git -c fetch.unpackLimit=1 clone --bare \
-+		"file://$(pwd)/4gb-repo" 4gb-clone-index &&
-+
-+	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
-+	clone_blob=$(git -C 4gb-clone-index rev-parse main^:file) &&
-+	test "$source_blob" = "$clone_blob"
-+'
-+
- test_done
--- 
-gitgitgadget
+It would be better for me if this sentence (i.e., what was the code=20
+originally *intended* to do before the patch?) were placed right at the=20
+beginning. Something similar to:
+
+=09In show_merge(), the warning "Huh?: $msg" is emitted to stdout because=
+=20
+it uses the erroneous redirect `echo 2>&1`. The intent was clearly to=20
+use `>&2` to print to stderr...
+
+Of course, it=E2=80=99s up to you ;)
+
+>=20
+> In the common Reintegrate invocation that captures stdout, e.g.
+>=20
+> =09Meta/Reintegrate next..seen >Meta/redo-seen.sh
+>=20
+> this means the warning is silently embedded in the generated heredoc
+> body instead of being printed to the maintainer's terminal.  The
+> resulting redo-* script is corrupted with a "Huh?:..." line and the
+> maintainer has no diagnostic that something went wrong.
+>=20
+> Every other diagnostic in this script already uses ">&2"; this line
+> is the lone outlier.
+>=20
+> Use ">&2" so the warning reaches stderr as intended.
+
+Overall, the reasoning is nice :-)
+
+> Signed-off-by: Erik Cervin-Edin <erik@cervined.in>
+> ---
+>   Reintegrate | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/Reintegrate b/Reintegrate
+> index a1e67a0330..6fdc7c5f41 100755
+> --- a/Reintegrate
+> +++ b/Reintegrate
+> @@ -327,7 +327,7 @@ show_merge () {
+>   =09=09merge_hier=3D
+>   =09=09;;
+>   =09*)
+> -=09=09echo 2>&1 "Huh?: $msg"
+> +=09=09echo >&2 "Huh?: $msg"
+>   =09=09return
+>   =09=09;;
+>   =09esac &&
+
+Thanks, Yuchen
+
