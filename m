@@ -1,66 +1,90 @@
-Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAD72D248B
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 11:32:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.187.169.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88473264A97
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 11:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777375965; cv=none; b=HFY4oATU2x3kzGz81vqxDOkBfwKaojtxxbOeYxDbNOs6V77RD+CAClHrX83z7v7kJiNV99ccAO4uet67smLXLlwTh2lZkG4gmsXMIXTnSoKHiM5wTEwDbtlS1rOmlyFxqfMdARvT0wQokj4MGcWk9JVepm9juIoJaQ8HRmR1N3w=
+	t=1777377099; cv=none; b=L14cFSSMhOTjTttlgzz76coDMJf/Wby8/lNfJ6ldjj8nn3DUeAujFykSz2G8cv/cRw43gZ1aTiRrhLlNmOgBh0c8X3kQpfdSPu8NPOqdFScthdF8L2tfYlOqMz0xN3qU5miGusYgKBsgExJHEKoT8amFssEs1PxlbeIoO1MG2uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777375965; c=relaxed/simple;
-	bh=Q5S2lvGSP+DIUEDB8vtrKHH0K7vm3j8SBch7qqck2RI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=W71pIzGjDoz98HgQhCDHfaSVuRnMENhecySvSDS+445JZ4TOAdt9hlOoRSniKtJRgYPPOSJh7vImsKcayGQI90rPA61wIpIMiAFDlxl/WbJe5PtwAi3QKf1tXzgO8Ff9uIr+VoCw7DlLfXWNqiyO+rLwxcUk+Jh7EYQ5Pb+Zgak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de; spf=pass smtp.mailfrom=hogyros.de; arc=none smtp.client-ip=185.187.169.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
-Received: from [IPV6:2400:2410:b120:f200:a1f3:73da:3a04:160d] (unknown [IPv6:2400:2410:b120:f200:a1f3:73da:3a04:160d])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by psionic.psi5.com (Postfix) with ESMTPSA id 3B5ED3F209;
-	Tue, 28 Apr 2026 13:32:39 +0200 (CEST)
-Message-ID: <a54d57b6-9270-406a-9056-ffaa939c6c21@hogyros.de>
-Date: Tue, 28 Apr 2026 20:32:37 +0900
+	s=arc-20240116; t=1777377099; c=relaxed/simple;
+	bh=d50eU9r1fyJvxqXZJQxpVC0bHRwkHAsitXReM1rP7ik=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sN57jO45P3+ssMZpssLdX8F+BphL4i2s0RYwE/U/NM0Oqd6cG6jHSi5bCd0+694p05mz1dTTbHVdc0z7OjmNSVqc+dQrMYFDXWJ+TkCFBC16MByNmzEbyV13g4U/j0NyagvjLNVTZUB5HwGvJu7yioFGKRWjeHYnVx105OWQO1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=lsStx3Un; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="lsStx3Un"
+Received: from macsyma.thunk.org (pool-173-48-114-3.bstnma.fios.verizon.net [173.48.114.3])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 63SBpIxP009908
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Apr 2026 07:51:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1777377080; bh=dhAH5Gz8B46z0E7suRIqKlHXVTYKBrZmXLINHuoZ7+w=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=lsStx3UnKWuM7v9r8fjmOTyuS8rqioxRRm0MU0QCRMj3AZm1UiFQy2+L6WZAL3qnK
+	 pbB7DSoRbM+bVJkiKurDSvauEukVQHpb0/UOfXBPkxqCwqrHp8UpadwlZcrqMQ7Orv
+	 PSE0hyOBoWvEKRqFeyqUSMQy4QgHhSenaQn+uzNZyhrJwCjALkqWMyMvPULyySsOJT
+	 Q2VBPcQgIOYMDOFp/kijpeHOl2XJd1hnNuMto0y521i/nSMw2LHFBZC4N1m22WJ5UY
+	 kp/NROJo2MHf5hgg94kZnD5++Y0Nf6n2NtBQb0eOMfjDeRAdBDW5Crkppzd4jjd7zH
+	 imrBWpjeTZ9Vw==
+Received: by macsyma.thunk.org (Postfix, from userid 15806)
+	id 955336555522; Tue, 28 Apr 2026 07:50:17 -0400 (EDT)
+Date: Tue, 28 Apr 2026 07:50:17 -0400
+From: "Theodore Tso" <tytso@mit.edu>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>
+Subject: Re: Git generated tarballs and Debian
+Message-ID: <20260428115017.GA71700@macsyma-wired.lan>
+References: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
+ <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git generated tarballs and Debian
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- git <git@vger.kernel.org>, Ian Jackson <ijackson@chiark.greenend.org.uk>
-References: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
- <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
-Content-Language: en-US
-From: Simon Richter <Simon.Richter@hogyros.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 4/28/26 7:25 PM, brian m. carlson wrote:
-
+On Tue, Apr 28, 2026 at 10:25:24AM +0000, brian m. carlson wrote:
+> 
 > I'll just note that we don't make any guarantees that `git archive`
 > produces identical output across versions.  Incorrectly making that
 > assumption broke kernel.org when we changed the format in the past.
-
-Exactly -- that's why I read the tarball and calculate the checksum of 
-the corresponding tree object, but we have a few cases where we need 
-extra information that isn't in the archive, and I'm wondering where to 
-put that extra information: inside the archive itself, or into an extra 
-file.
-
+> 
 > Also, if you use `export-subst`, then it's possible to emit short object
 > IDs, which can differ in length depending on how many objects are in the
 > repository.  It's also possible to use zlib or pigz instead of gzip to
 > produce tarballs, in which case the compressed data will also differ.
 
-export-subst breaks verification completely as soon as a blob changes.
+This is what I've been using to try get reproducible tarballs for
+e2fprogs:
 
-Compression isn't an issue, because we're comparing tree checksums.
+git archive --prefix=e2fsprogs-${ver}/ ${commit} | gzip -9n > $fn
 
-    Simon
+,,, where $commit is a signed git tag.
+
+I know that in the past, using --format=tgz has broken based on
+different compression parameters used by git (and whether it used an
+external or internal compressor).  I also know that if $commit is a
+tree-id, this can result in the timestamps being not reproduible.  I
+also don't use export-subst.
+
+There is also the difference in the prefix used by github and gitlab,
+but that's arguably not git's fault.
+
+What other gotchas are there?  How is this likely to be inconsistent
+in the future?  How much work is there to provide that guarantee in
+the future?
+
+   	    	    	 	      	  - Ted
+
+P.S.  Although I use pristine-tar in Debian because I didn't want to
+count on git-archive being reproducible.  But it would be lovely if I
+could make that guarantee starting on a particular git version.
