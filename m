@@ -1,90 +1,109 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88473264A97
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 11:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C2343634E
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 12:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777377099; cv=none; b=L14cFSSMhOTjTttlgzz76coDMJf/Wby8/lNfJ6ldjj8nn3DUeAujFykSz2G8cv/cRw43gZ1aTiRrhLlNmOgBh0c8X3kQpfdSPu8NPOqdFScthdF8L2tfYlOqMz0xN3qU5miGusYgKBsgExJHEKoT8amFssEs1PxlbeIoO1MG2uQ=
+	t=1777380779; cv=none; b=kv7ROeFsb0Qpk063t1M0zicoLTGcypqEwOCbBSYjR/anSWfRbFp6cK033ZEeYaquImVQ39K2SpUlWD1Mcj0Gc+sVsfjtWkOoEZgM1VOfVubd7l9KSIGjrPRvR63a7sKUsOA9o0H2GPLVg2os/XSqdnC2Rxq7HjgHzuNwMjM0NBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777377099; c=relaxed/simple;
-	bh=d50eU9r1fyJvxqXZJQxpVC0bHRwkHAsitXReM1rP7ik=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sN57jO45P3+ssMZpssLdX8F+BphL4i2s0RYwE/U/NM0Oqd6cG6jHSi5bCd0+694p05mz1dTTbHVdc0z7OjmNSVqc+dQrMYFDXWJ+TkCFBC16MByNmzEbyV13g4U/j0NyagvjLNVTZUB5HwGvJu7yioFGKRWjeHYnVx105OWQO1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=lsStx3Un; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+	s=arc-20240116; t=1777380779; c=relaxed/simple;
+	bh=sx5SnQg4BS6zPrSf8j12JL/vMJ2DMCZ1XyDTs9Dh56A=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Cjx4dxqT8DjlG4jMVIR8sAIZy4VPoSYC2mttWgBcZnq/xYe/rSoWSo9ADm9yOJmvqXvYJjaQrweatXR4dLIrbPJZXnQVph+zPePz5J2mTECEG2cujtRqMQiSq5eQrjCE4BVaLaP9sdrlw3/NhxSUkR6nOQ2y3r8D18EqHY1TBC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ELOqPVbn; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="lsStx3Un"
-Received: from macsyma.thunk.org (pool-173-48-114-3.bstnma.fios.verizon.net [173.48.114.3])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 63SBpIxP009908
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Apr 2026 07:51:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1777377080; bh=dhAH5Gz8B46z0E7suRIqKlHXVTYKBrZmXLINHuoZ7+w=;
-	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
-	b=lsStx3UnKWuM7v9r8fjmOTyuS8rqioxRRm0MU0QCRMj3AZm1UiFQy2+L6WZAL3qnK
-	 pbB7DSoRbM+bVJkiKurDSvauEukVQHpb0/UOfXBPkxqCwqrHp8UpadwlZcrqMQ7Orv
-	 PSE0hyOBoWvEKRqFeyqUSMQy4QgHhSenaQn+uzNZyhrJwCjALkqWMyMvPULyySsOJT
-	 Q2VBPcQgIOYMDOFp/kijpeHOl2XJd1hnNuMto0y521i/nSMw2LHFBZC4N1m22WJ5UY
-	 kp/NROJo2MHf5hgg94kZnD5++Y0Nf6n2NtBQb0eOMfjDeRAdBDW5Crkppzd4jjd7zH
-	 imrBWpjeTZ9Vw==
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
-	id 955336555522; Tue, 28 Apr 2026 07:50:17 -0400 (EDT)
-Date: Tue, 28 Apr 2026 07:50:17 -0400
-From: "Theodore Tso" <tytso@mit.edu>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: Re: Git generated tarballs and Debian
-Message-ID: <20260428115017.GA71700@macsyma-wired.lan>
-References: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
- <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ELOqPVbn"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-65005a8840dso9650634d50.0
+        for <git@vger.kernel.org>; Tue, 28 Apr 2026 05:52:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777380770; x=1777985570; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qxbzli8597jHvE9YhwQU28K732wiuXB3xCRm7nAOtaU=;
+        b=ELOqPVbnHGlm66fWs+AMx+okdHIvVSLBT2BgymzeaGh9ac0dUkYZyGSdlnHX3vMt+2
+         LMThHPyLsOrZMGROibMJCWUmLMs6GHxYI4jtERPSt07D5iHGDz2UXq2HfF7mOF+GJ0UO
+         Zts+KV+ZdTMnhexSQgnxstLff6NJ3K+qekJ1Pkp+Xh6ouOgeMzbYjy2bofbFn6L2S1Y4
+         tM13g/E5K6XPs5Iy9OT0NeBu3G1TrBRR8sIaP7fCoqX9S/iMk/ZyS+mB+51j/dpODPQK
+         8VmKRMvFCZ5NJYxE1Y6xu854ANJAwRZW3rnoriH/laO5CIl0HZWSJDK+RkHhqsFPgQBV
+         WR1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777380770; x=1777985570;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qxbzli8597jHvE9YhwQU28K732wiuXB3xCRm7nAOtaU=;
+        b=ghs4EHnpp9RhVgrgt7DwYOdEs9GGVvEUf9f+shJIn4bGi91AbchU+1DQ1WUO1OL/bi
+         FW3Vm7wEQL5Dmr2pjs4YC91NcNHpwIKtwKORUix0L/dkeKMzy/xqFFxgF/FvBh3OpNvL
+         USaFE03BMVJM2GdFchPXPxH8j1hDWal4WglMzSBTryqtEgRbqBGCuKwPZwgax8gYW6Q+
+         4auMQ6TU4EgvAdN5LHZy0vMNY/9NzDvmrvR+Q29aOqsEhCnmNWeqYGgNSRS9sWPw6lDe
+         lF4tK15xT69IxKjX4GMDLxvEjSeGUvFjlYXAhKOdwKBCOkKSJ0PGoX3ek+3hS5JqaWdE
+         nEoQ==
+X-Gm-Message-State: AOJu0Yz4hMKADjEPxOl/EhUa27tOLTa+8Ygk99Cbc1Ib+YpyaJjvebmL
+	XwlQ+fpkAnj9zkCm+ycyTTehXpbo6128Wy/ZZBD6yNhXYb7H1S43XmWlhL6/Og==
+X-Gm-Gg: AeBDievBrOHnrjhc8/vWLmdDXJ0GMsqu3Mq7hqOu3lvuKu6ZszNDyL1WGDCc0EcsubI
+	lbSZQs0PLiC++6sj/EBcK2nIGSJrGJsJu1QSVAovcdWN4EaSicAi0jtohsVrGn+DNYWJsL6fz4T
+	NDdAr9/VKLwBoNsOd42N/ISfwalmF5Ezbnt0l6OSF7I7OUHcBPaiphFYekt3UVF1Pz8zSu9Ks4G
+	+kK3Gvkp34Q230Mukdnm22Z0qTmlpcfFBnEv1L7HwD6lLpygRGF3QDZ2F8CdEnVlUEw21+2sRyh
+	orZoG/Z3xSMB968328pk8+VkHrppQfUVz4Qf+HVYoSvRnWyIahOQ9RbaPq5pceyapEfLp8pcPAI
+	VWCEhTNzhux4kvBCswDp3363KqFwcWbaN+IEJUInYXQxkR+mEigHX6FckB+RldUiEfJlpn2XL+k
+	i7GWPgX9h+lSqsPeRlbKERlrYGGJ2Hz11rp1Vp9zUm+9Q1rF3C
+X-Received: by 2002:a53:ef0c:0:b0:651:be37:f5a9 with SMTP id 956f58d0204a3-65beeed58b4mr1832399d50.63.1777380770244;
+        Tue, 28 Apr 2026 05:52:50 -0700 (PDT)
+Received: from [127.0.0.1] ([57.151.137.185])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65bee4a6a1dsm1607856d50.20.2026.04.28.05.52.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2026 05:52:49 -0700 (PDT)
+Message-Id: <pull.2103.git.1777380768.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 28 Apr 2026 12:52:46 +0000
+Subject: [PATCH 0/2] maintenance(geometric): avoid deadlocks on Windows 10
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Tue, Apr 28, 2026 at 10:25:24AM +0000, brian m. carlson wrote:
-> 
-> I'll just note that we don't make any guarantees that `git archive`
-> produces identical output across versions.  Incorrectly making that
-> assumption broke kernel.org when we changed the format in the past.
-> 
-> Also, if you use `export-subst`, then it's possible to emit short object
-> IDs, which can differ in length depending on how many objects are in the
-> repository.  It's also possible to use zlib or pigz instead of gzip to
-> produce tarballs, in which case the compressed data will also differ.
+On Windows, maintenance_task_geometric_repack() opens pack index files via
+pack_geometry_init() (which mmap()s the .idx files), then spawns git repack
+as a child process without setting child.odb_to_close. The parent's mmap()s
+prevent the child from deleting old .idx files.
 
-This is what I've been using to try get reproducible tarballs for
-e2fprogs:
+On Windows 10 builds before the POSIX delete semantics change (between Build
+17134.1304 and 18363.657, see https://stackoverflow.com/a/60512798), this
+results in Unlink of file '.git/objects/pack/pack-<hash>.idx' failed. Should
+I try again? during fetch-triggered auto-maintenance with the geometric
+strategy.
 
-git archive --prefix=e2fsprogs-${ver}/ ${commit} | gzip -9n > $fn
+The fix adds the missing child.odb_to_close = the_repository->objects line,
+matching all other maintenance tasks.
 
-,,, where $commit is a signed git tag.
+The first commit introduces a GIT_TEST_LEGACY_DELETE environment variable to
+simulate legacy (pre-POSIX) delete semantics on modern Windows, so the
+regression test can verify the fix even on Windows 11.
 
-I know that in the past, using --format=tgz has broken based on
-different compression parameters used by git (and whether it used an
-external or internal compressor).  I also know that if $commit is a
-tree-id, this can result in the timestamps being not reproduible.  I
-also don't use export-subst.
+This fixes https://github.com/git-for-windows/git/issues/6210.
 
-There is also the difference in the prefix used by github and gitlab,
-but that's arguably not git's fault.
+Johannes Schindelin (2):
+  mingw: optionally use legacy (non-POSIX) delete semantics
+  maintenance(geometric): do release the `.idx` files before repacking
 
-What other gotchas are there?  How is this likely to be inconsistent
-in the future?  How much work is there to provide that guarantee in
-the future?
+ builtin/gc.c           |  1 +
+ compat/mingw.c         | 47 ++++++++++++++++++++++++++++++++++++++++--
+ t/t7900-maintenance.sh | 22 +++++++++++++++++++-
+ 3 files changed, 67 insertions(+), 3 deletions(-)
 
-   	    	    	 	      	  - Ted
 
-P.S.  Although I use pristine-tar in Debian because I didn't want to
-count on git-archive being reproducible.  But it would be lovely if I
-could make that guarantee starting on a particular git version.
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2103%2Fdscho%2Favoid-deadlocks-in-geometric-repacking-on-windows-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2103/dscho/avoid-deadlocks-in-geometric-repacking-on-windows-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2103
+-- 
+gitgitgadget
