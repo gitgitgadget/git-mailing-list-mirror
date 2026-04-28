@@ -1,53 +1,53 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199D1233D9E
-	for <git@vger.kernel.org>; Tue, 28 Apr 2026 01:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B018233D9E
+	for <git@vger.kernel.org>; Tue, 28 Apr 2026 01:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777340760; cv=none; b=dQ0dSWuCqAFUAMX5AW5K7mrcB2VyduVnXcahOgfHIfChN6rNMgluRm6ToeunBdihpr7YxICs1TdM915zj2TBgR0xis7ZbSJzPaqcYGwgUDd9c0Bvablh/BBHPAZoLhwQrFhpxbUWiSMuV+Blr2gUVS/EgYd5SFhrSbBXj7zIEQ8=
+	t=1777340769; cv=none; b=CZkSTBfj8OapSBbaPEnaWlKZ3wtm2h1w0tPLnxAuq1AtvN7bu5tAX4wiuoRwBO/oAsgU+EZCwSYv8PRg6NKSLeQlR/Hb2eREyqWcOIpwZ6PKHVvf213EaTzsaJYdjL3/AAZatIed0bQoMaMfRBSXTPBFrzSnyFRHlS2lfzM1DKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777340760; c=relaxed/simple;
-	bh=U34Nw2O1dq66YkpsynwlZk2ZOETpsObK7TniQ1qw5ik=;
+	s=arc-20240116; t=1777340769; c=relaxed/simple;
+	bh=PylcBvV8KkoijSkpl6ly+T+Rcgari2LEAIN8YtGr8AU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iqU0GNpXLa8++5bnIqs1Hf581crHa9iJl4skgP0StAKSH3SbK3GQxZL4AjkBjBAdWvPXvdf7uLxvzQ2ZG5zdd729vXgJw3t9ooosFhuPrDGgfNWau294jeIp6YCM6occN7qYFzegy76xCFGOJslprWYOffh6+0w4lbz16GWaMC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cyNQGC/2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pRAnKPkM; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=Mq1+e00DbCc8er1dDe1Xzq42FPDnPkyLVR26iXYK4zovV1iHG/l81xUxdyUn4R22wvP+5j5jGf+c6vNnjbNFMXeQBqbrDYwZzdjDo6tl0rZyNWN0mHd/BvLVB5gMVl/Czo1mRYVPlqPhFBBcjeyIrSubs1W7YYFTFq7IZIOodKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pelpxWys; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ejTsawdC; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cyNQGC/2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pRAnKPkM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DFFA7A0279;
-	Mon, 27 Apr 2026 21:45:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 27 Apr 2026 21:45:58 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pelpxWys";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ejTsawdC"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DB8C7A0279;
+	Mon, 27 Apr 2026 21:46:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 27 Apr 2026 21:46:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1777340758; x=1777427158; bh=Up59A+fWwm
-	Hib3mD29kAU8h5asblo4lFHUeay9K3Kt0=; b=cyNQGC/2xMq5TLO0aXovgaLq2i
-	hjIn9Aasj7t+xfHSHO2dCM6JVCRjpSCpjHyqhOuY/49h5Wp9nhr2Z4RCXu/hyvXi
-	uwIwFQGGxUMY0j+ZFlG4hoXhZcFj3kN2R+ZtkM0nbtK7R3hG4/vMFRDW97KvlaEP
-	BPvkqFumCFw2iJdEG2MOeVuo919xeODEdmF6BOc+caYOxcjeW7eGkF7iFzAF98cW
-	m10C0rPovtWpNQJo7a3cGEiCFb7cApjuS0c+ReCJoCx4W95Ptt23zd7OjCKFFffp
-	uOVE1AWCAO8w6hogmtrl7Fnqnr5DUefHQNRqV56fDnv4TnXxg+iiTEn79U4w==
+	:subject:to:to; s=fm1; t=1777340767; x=1777427167; bh=wldqM6lmYe
+	zq0yu7TI/pUP3jgviDHdn+8adVVriJZMM=; b=pelpxWysxaJNfG54awv5PcPzlA
+	6z3tLiPC+fJuRZwePBnG3uHzg2sd641r/WJfHGxfAy57CxRvbdlN2Bc+zTRhSli1
+	2Sj6sRmAJWDiK7KLLZLn1kFNOWq8nUcPGur0POVCIHodQBX9i5Kgoua117C0NH5e
+	vyb0NrAuy2oqZiPZUf7r7hracatexv/dUbvF4tDDVYne5eZYcD5veT0RQyU5LDdL
+	PH3zJ2eJrx21dJiaPdbT8GHU0z9Niqp1p/gpNqsWQAdz6WaqumEM1Tw6hJzHCsSn
+	VxL1wbNMCg5gWRJiqQFjN9N+SezGYa2yYTNkmVk+qcXfA5e+i8QVJOPT9Bsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1777340758; x=1777427158; bh=Up59A+fWwmHib3mD29kAU8h5asblo4lFHUe
-	ay9K3Kt0=; b=pRAnKPkMqJYZaoM4IHh/0zeNLOKUFwn/XCwtfC7N8KfK/csMPWY
-	EokgTd2GjSreQN9vLGJg7CJCVyUb4x6Ulm++Y1CSOIe4a/pOB2C4XthlRDv97VHB
-	LpTw2XG5nv21w3OfUtR83B+y8YctSNk9UP457p0F3ioej3+1oz7aEI8HEEWYO0RP
-	T7AJPSrtj420KQXrrxpK1y7GLPgaNwy3a5XDFI5/uyBMWe9YavOCoqMGt5T9iaYH
-	paxt92pks2REOp1ss97zfAis8ZmFIMm32YS8d9ZdwIAZL1OAqDu0s7gvZdqr7iT/
-	HjxzTCambkqGNd7jCUgXBQOCPkuhvCHQgVg==
-X-ME-Sender: <xms:VRHwaY-yqOPcly2o89meuVdDC8wJomWunYQvwCmVusfxfhlYfgr_mg>
-    <xme:VRHwafx7favU2iwPIoNuES1sKPf2N2OIFeuW__E6PXo9zgwH0b4dN2R0XOLu8doTZ
-    rSoeencH9QITVuDEs1ymatw-xidlYopyWaDJpfs0eLJ1obt9VW7jw>
-X-ME-Received: <xmr:VRHwaUPwril_VWlyZ-EnW3E4wZFig1OxQ5wbXZqyYaLc2DAYgOik7zVM3NWOfjy0mqnYfSErnMtjU5O7xkyI-RJVyiT4mvEwDg>
+	1777340767; x=1777427167; bh=wldqM6lmYezq0yu7TI/pUP3jgviDHdn+8ad
+	VVriJZMM=; b=ejTsawdCMttJAUX+87Ydy+rJcBE+EQOxq6UW9S1jVrQuLOksRf3
+	0kv6UBMe5aWp9FFGJjFGhhAsn5nJsoz86SsR+UqkxCyIVH4P8/DrVZQbhmbq9U7e
+	yAORXxGoUEj+pIiGrrD27Wkbldtv45F+9Id2+2rvzNruXWRCQoHX2YGFXXxu94xy
+	jbMibXL2OLbq5c1ijw4AKKUdJN80ZZlYb7h8+IEtDVyF94KCjKOSWjV9UB54p5Gn
+	jI8pxQB0yRw1oiYXbFCpmnhWIkgD5SNSvRPOmDUmc2jf3LEkE5nPMuhu5LeMP6ic
+	SLJ0SJkfOoPfGXXbYGPin+gGsOPv+fOomfw==
+X-ME-Sender: <xms:XxHwaUqos8adheMaUFdD58U5pO8uLjxA6NFORzE_xJ5hqbhPLS_uWw>
+    <xme:XxHwaZseUuIyEtULcX0zT03apvS1Nmb9R68AVaDEgIAcsjf6jWJYbFgI_S1h3QgW_
+    GfJjhRriU3qADjl7duqyTZ9gGY9cc3pKjcsPm7qdX5zshEB2GNR>
+X-ME-Received: <xmr:XxHwafYH51jzpBRu3zlljlhpCnawSv1agxijIIRv6NgxmT6nQeOrB8617GszsV4YYM8hnXZrlvZj4E4O6ExqWhVBVvPlYuRgvw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdektddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -62,28 +62,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdektddvlecutefuodetgg
     hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegtrghtsehmrghlohhnrdgu
     vghvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpth
     htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VRHwaU-cBfgcFkiuOG3_ZQnz8AqsHybmYrKu1Wag26heJUtI8pUpxg>
-    <xmx:VRHwaR4W5WfU8z_Rd89yaiRAWSX5Ox7LquqByZE8q54lpQ__VIvQrQ>
-    <xmx:VRHwaa5cyVZLEjjeaHiDK3fqTdT9sAlRmGrZ83NXUSzRzw0D2SX46A>
-    <xmx:VRHwaaoaLLR7_ZFZfRu1JTX68QEDdR-gad2F_iOQvP0gjiPFcuk9og>
-    <xmx:VhHwaWFAeXl2IyedesB5Df5rSTgk9mGlBlbSoWvmAnFniKnrB6VjeI_k>
+X-ME-Proxy: <xmx:XxHwaYaFNosBfad_CcQFRUS5aFzDuzMY_KjcGdo74mmhVNJLCBxd1g>
+    <xmx:XxHwaYnM87Vit1m8P6n-c_OmB-ukJ5HdA9A_mJZAeMd9B2rCUwYkvw>
+    <xmx:XxHwaT0qlb8HVqtqj837obKYueSIm_jljkKataWg4wRRARYIe4FdUw>
+    <xmx:XxHwaY0ade_hgfIZ5OGf8Mg-RLIn3X8KCN3ry1Ou0yDFQ8t90PsSqQ>
+    <xmx:XxHwac01iOEaMIh2DqLf1rPd9qXyd4p2rCNmKpWa5d6ddJ_RQpAKjKD3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Apr 2026 21:45:57 -0400 (EDT)
+ 27 Apr 2026 21:46:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Mirko Faina <mroik@delayed.space>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  =?utf-8?Q?Jean-No?=
  =?utf-8?Q?=C3=ABl?= Avila
  <jn.avila@free.fr>,  Patrick Steinhardt <ps@pks.im>,  Tian Yuchen
  <cat@malon.dev>,  Ben Knoble <ben.knoble@gmail.com>
-Subject: Re: [PATCH v4 1/2] revision.c: implement --reverse=before for walks
-In-Reply-To: <4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
-	(Mirko Faina's message of "Mon, 27 Apr 2026 02:24:57 +0200")
+Subject: Re: [PATCH v4 2/2] revision.c: reduce memory usage on reverse before
+In-Reply-To: <7c0bab5d14bb2ce2a10d35d93e3d911ed4c386eb.1777249165.git.mroik@delayed.space>
+	(Mirko Faina's message of "Mon, 27 Apr 2026 02:24:58 +0200")
 References: <cover.1776984666.git.mroik@delayed.space>
 	<cover.1777249165.git.mroik@delayed.space>
-	<4864ac46dd8ef4b704c29efc96c45f4e1412373b.1777249165.git.mroik@delayed.space>
-Date: Tue, 28 Apr 2026 10:45:56 +0900
-Message-ID: <xmqqv7db26y3.fsf@gitster.g>
+	<7c0bab5d14bb2ce2a10d35d93e3d911ed4c386eb.1777249165.git.mroik@delayed.space>
+Date: Tue, 28 Apr 2026 10:46:05 +0900
+Message-ID: <xmqqpl3j26xu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,9 +95,18 @@ Content-Type: text/plain
 
 Mirko Faina <mroik@delayed.space> writes:
 
-> +	} else if (skip_prefix(arg, "--reverse=", &optarg)) {
-> +		if (!strcmp(optarg, "after"))
-> +			revs->reverse = REVERSE_AFTER;
-> +		else if(!strcmp(optarg, "before"))
+>  		reversed = NULL;
+> -		while ((c = get_revision_internal(revs)))
+> -			commit_list_insert(c, &reversed);
+> +		if (revs->reverse == REVERSE_BEFORE && max_count >= 0) {
+> +			retrieve_with_window(revs, max_count, &reversed);
+> +		} else {
+> +			while ((c = get_revision_internal(revs)))
+> +				commit_list_insert(c, &reversed);
+> +		}
 
-Style: missing SP after "else if".
+Style: needless {} around single-statement body of if/else.
+
+>  		commit_list_free(revs->commits);
+>  		revs->commits = reversed;
+>  		revs->reverse_output_stage = 1;
