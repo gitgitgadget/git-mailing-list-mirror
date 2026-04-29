@@ -1,147 +1,112 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2553A3FCB13
-	for <git@vger.kernel.org>; Wed, 29 Apr 2026 13:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777468573; cv=pass; b=Krvu3JsSm/9Gt6U0rvpFXH60qjMl/gB5ZOGMwJOgE2u7oik4mZ8EB/+U8dupQ4OyWJOBVx4l5dAPNcOPRIpIrTl9wQHknKzPNBowxwH5tFa/kK1RVU8HyjYNWFNYprFN70TzoT+QPIzrVwuOcHb5dLtAtJ08ZkOw80Wv78AMXDo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777468573; c=relaxed/simple;
-	bh=9EOlxdnSQ1rl3cnXAi7Q3Vkps5/9ihxG1hXqlNtCMvc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VQV3v/XibYLjy9mT8SAF++GV7OhGAexzpCJF3eVhi7T21Fn9nmZ+naTTx8zplOA8M5vL64yHM45LrPuyto/CbVv2DcCdpCiOFf/obEivqFP8dBXMZcrHLj+7nqnoWta+rdKg6ctpr7tWA7X8dlWKwhjg44Wh90Ssu+ptsY96Oac=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJW9lNGW; arc=pass smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D580237647F
+	for <git@vger.kernel.org>; Wed, 29 Apr 2026 13:28:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777469329; cv=none; b=DS1Gei+AvkDV65yylBeVuWBvG3UzQ/kq0Qqzjw12vJQH3uhYepX2A6cPQK7aL5aDQ3ml8AxFnXWvpyLpiTag2mo58ih0ZdCJd1TRfVRQdWswVaS8u0+xP+TmY+4i6jXIiFDG7YvnR4v+CgWm2ZFVVLM0JNeqNm0971HQJ8FPCVE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777469329; c=relaxed/simple;
+	bh=nk+sVl9dCo61fRzQaScmO3f7iHJ3Z9CpGWuez4I5VaU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jzRBCpWRr/hCq9ArUMxUYcAoByJ2GiiPoFUGnsRDU2A/i6UVwOjmI7oBqOr7rgwc42Bqs4NDGKDlzOmbzzuLwRYy1vZzb0CglNwgtsJdEIkI2wf3R60mIG+Qm+hfZw8vYNeKn83NYGb++nT6dWYBIQkgWw/LcUJ5k1IQFHBKV6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R8U0CwRr; arc=none smtp.client-ip=209.85.160.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJW9lNGW"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82f68b3aaf7so4764056b3a.0
-        for <git@vger.kernel.org>; Wed, 29 Apr 2026 06:16:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777468571; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ArBdwWIzZlAht0CYuEWFBKrt0r9LJBhvNWyIDt7uUGaNxMMw26zEPRtOY58mbtNvIV
-         3wQiYqEbbxMfL83CoYg+XFRU4bazmkrI3ADP2FddmdvyWOfTl0DctV0ODdTS5SUj01C5
-         owmOhEDnt6zewlYZbMQSP6Tx5QumsEKBF6mNBLnTQQp+JRJy5uJoAYu/JjSvZCu0L2nF
-         Rwcxx0Y85pYVgA+oCArZatL60gaGUgRTC07e7F1mUg2nSF3oSM8FmTjZC51QuDaJq9mE
-         8NDU770gPC+rRUJo0piPWksLT7gStKu7lWvPFOxtlJnuOtvFgnE0OtbFQy597pmtkazQ
-         Am1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nxRkjRZhA/zuV/Bdvn9jNtDwKyYxr06YO4qkDkBXx50=;
-        fh=enyPv1IQS3g4+XHp2R5Lw+gSoxZHn/V0qlv9lMHAKm8=;
-        b=KSMZ6bRUTUdM8b3gRRKkO4DIhBQHoidNTFdvZ+u1S96F+vqxAo8FBX6Z6sksy0zvNl
-         UtUCIZv4WlobY/GJ2/YSrST8uP/ETZqF+ILmprG9O7sVJvVD5VuznAQQbw79SBkB5mXa
-         wB3rCxH16FnzzvQj0qzEYG5UlePQtsR3MjhVAKsna9ZYaCOmIgEpqWei4Gl8EE/mbmZ5
-         uivw4ia4BGsT7nPcnqUkfBWEhYO6rPqPLoujh/l+o75JeKTux5/SpvFXFQmqF49XPObY
-         kWd3hHdMw9AOrpsE1idgHAIQ4bTBNBq2bjUffVVq+r6jD3Fn3ufenLOyRBnp1ekyuKkb
-         kU4w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R8U0CwRr"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-50d876329bbso129260751cf.2
+        for <git@vger.kernel.org>; Wed, 29 Apr 2026 06:28:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777468571; x=1778073371; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nxRkjRZhA/zuV/Bdvn9jNtDwKyYxr06YO4qkDkBXx50=;
-        b=NJW9lNGW6E6njjWURVnWv2D0CR6Y6TziFuw4nz8al1HDDN8cjYvCk/Vt3v/Laf/nT7
-         gZvwYY4Vllq3g6ehVrB3vYJXaymbuzXnfDCP/VOwMrVvwjNjIygXWuEkhizVnsXyzMqj
-         d9WIVu43+KIXTZ/TO3l0v8V9iloZYMpgkik7G5z2RHpoPSwY7aKyVCaD7L7hNoxpzUKj
-         ysZuT1jb23YDLzfnq/YxEQ7sVFdO1t4wcPh4QvzRU+bwHfxjYQgxsKNfHOTEmR3TAf92
-         m/fsrnQZoZczBiqp16s62TscvYwT5/D4JjvyBj3WwGCW3IApwhCq+PidNiI5p8IVE9e2
-         0jRQ==
+        d=gmail.com; s=20251104; t=1777469327; x=1778074127; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4IrtQOfhTjJETG0YasWazPhjkLbwsJGoZg+yWCXEZv4=;
+        b=R8U0CwRrBHq0Jbps9LZjHHUGPcEmCen7JP64D6pMk8Rsx3P7wT8FRfDFV8lnpynRWX
+         cL1qPX7erQ82EVBkUJrNN1eVlwmUnZL0fD3QtikiNRb8PKesdtW/KHhEYclgh9uFCTdl
+         pnQ6WBwBWirkoEYPCCSj8I5R0LC4ALJSqExHTyrP/WetZbo+OA43jmp5EA4jAUSiTS2w
+         ZYCyLThhP6SAMr63YTgUeAfiSIVwcgYXF61+jlCqK+RHkozmf4+UVmzC03N0ll6dRybg
+         Jlw8vF2uC9KrqS6nDe2XrRlbSM1RiSOxKOjondcT8hCPUtAbqvbJWrjN0/a0wGTileCN
+         pHdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777468571; x=1778073371;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nxRkjRZhA/zuV/Bdvn9jNtDwKyYxr06YO4qkDkBXx50=;
-        b=Jifhsngd9z5wgZNPuehZNGfugs5BoLDsCMlDSxAxJWvyBeCKQjOF4liqldDRcbqJzo
-         qFZbuRjiRKwKJ1MKvURfl20z2rtBzSSbW/h1DuTsgDXfoVtkHA5l26TL3SfpKZI9Smxa
-         wsBaKtFydgksuxzrRFXyMs/rMIESgzRnEFPGAMnVyjnvqbP7gYRDqYYSmORVKmQq7qGz
-         8J3chEAWPhlsm0LNBkl1c3dcx9OYQ4kZl9lVMGi3S07tHdocOSRBijmV1Pyk21T6g6sz
-         0sU4FZZuA1nqqC03n7bmm6JNS7kn/WYDF09HPRM2WTNUz0uTUrb3TAt+3I00cVNpxyRc
-         6ryQ==
-X-Gm-Message-State: AOJu0YwBiyvWSjtkHUP/tOgsRG1/NEtEXH5XH7aFyec/frHFS4ZTCTU2
-	dRbsBxEhalHKMv43ND5XxddTbpRrJ9F/Xo8dMzmDmsnYuL3dX/D0gQ2aDzuNXsJ9YdpKXGG7Vdr
-	K81mbg6FYSyXLAjmWQuq/YPqQB1izjoQ=
-X-Gm-Gg: AeBDieuVAGFsVWh2/YgHVq5ZKifhLzYDt4aL6m1U/x8l7Vf8JRHTWBhuuv0pSv49j2l
-	t1SeMzi+FFHOhFgwXNN16dtmFInorliMRp/iaivN8TOa/+0M+UA1fixKEVpaQO04baByTClLmFC
-	1SxquyGQpZI7fu/jQgrHRUSnroZ9i0hM6ik8KcbCcq7DEy08K5CFL8QHy9kZ805FeEpS614LaZH
-	axp9IFrJ0DG/NdXmT4r4Kfk+jIZARddh7XkrF3YndkIZq1VJGJbOQD0egj/dag4jrmaB2vDQc+H
-	i655xSUU6fR9CsNZoBj/wW1w8hYxyqsGm4CffpbdMyoEqruh9KZqlp6i8wnLK7ilsB8wAaGJdea
-	/Eg1w1c4qWgwHHFNsD/8qQ+RfqGjC5n4E2zCX
-X-Received: by 2002:a05:6a00:6c83:b0:82c:ae0e:dea with SMTP id
- d2e1a72fcca58-834ddb9f511mr7496056b3a.32.1777468571385; Wed, 29 Apr 2026
- 06:16:11 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1777469327; x=1778074127;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4IrtQOfhTjJETG0YasWazPhjkLbwsJGoZg+yWCXEZv4=;
+        b=GBXktwrREh39zzgtGxVw+a4K+5QUm1xzyuytkXHfFvJPrpnhyFTu5vbdO3IOEsMAnO
+         4jizwL6HIamN0bceMJRyWc+gtRvTcx4f3kJy0ZSTNCBuISPVlFbsX4aF6gFxAsLynSQj
+         6tL2sDaFjPMZNZfBWnck/uW9JIo5vFZSwwWXjtnIWsBujaa0uhPAkjw+j/ynEI9Q2fbT
+         wuTfEU/cX9Zy+6cDXusgtVXQkewYVdn/VPzGzOZw3NZnZ8vu0xzBX4wVjsxovUfkZzV0
+         kaAZRNXTcp9eqhn7atTABXWpjJbUw8OW6IASEiFt5hfZF0xoE9nQvV3nKwF38ZjZr2E0
+         1cPA==
+X-Forwarded-Encrypted: i=1; AFNElJ/+srwNdjPoeTEn9hg4RBLGMrRhvWw9XD1Vn38We+1AGFtl0212I+4CCd3y7xqYHn6lQCw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXZIMif8qZDBXPUkdG14B3NgQ2dS5EFKK+xfs1bXqDAWD2/bxM
+	jWlc6zXR3dMeqBspoZY/7s7CSLUSxN1gY5WCP1bMN3AXqoHBHUrtiuJQ
+X-Gm-Gg: AeBDievf8LhKphpw8XmFmkrXTBUWzy2bW0cRlaiKGk00o3/w9gttkMu3ROFEmAT9+B3
+	s+ytikhWr23XLNn/j5yY0ETVYuOtMzCmvoCHTGN3sp+oVnZWycg5RpNSAmWG4vhcf1Wk6yPFwLk
+	UmbQSR99MIdplwT/5PZ+1xkXLWOSQogZa0c/1/JdZDNTa0tsGv+F8VFQCCRlOKW9B14+3OlGS35
+	kgxHYoUDnK8f0dmgXOzS4KnABzQkUTydBhwvyHmhJ7zCX6aaZ/MbjdaTEiqBH6wGfLuTbOepqZv
+	5UvfAbexrrjChnLm/lL6uKFZTF+ZKuV6hv/X8GTOrTLOriddWv8JNxj+0cgFWOHQT/o7LmjZDgY
+	lRIGpsGhE8fO1jCcJn2F+P2G9ALjVSESHtdotKVED0Xgz5AC7jlNmi9OEHIr3xHFBY4clkYmRB8
+	oA29CYBXF3W0CFPaah4Ehm1Sz/5r7yGC/F3lEUU6DIOih67ITnbdOz0v0XNarNuz953jMjn2ebJ
+	QQUyKYNgYMYrgLekRHEiplTDZxqOwaK8FvqPlXZuqnCluCvP8CnMQto5ndzZfbySKiAF/QR
+X-Received: by 2002:a05:622a:5908:b0:50b:4b3c:7554 with SMTP id d75a77b69052e-5100e0f46dbmr110271491cf.10.1777469326615;
+        Wed, 29 Apr 2026 06:28:46 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:c8b0:7338:485b:4bd7? ([2605:a601:9b88:8300:c8b0:7338:485b:4bd7])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b3ef70dcd2sm20157266d6.17.2026.04.29.06.28.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Apr 2026 06:28:45 -0700 (PDT)
+Message-ID: <1b2ce8fe-7c99-4dde-ae07-1443d03cf523@gmail.com>
+Date: Wed, 29 Apr 2026 09:28:45 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANOh7gEEw+6146NN3JV8EYxQarj0KkyA7r3RZ6v-DxeqQZLrCA@mail.gmail.com>
-In-Reply-To: <CANOh7gEEw+6146NN3JV8EYxQarj0KkyA7r3RZ6v-DxeqQZLrCA@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 29 Apr 2026 09:16:00 -0400
-X-Gm-Features: AVHnY4LWtjaMEtUNg_RuFRTN91OrBi2pIvOXYrMqpc-72U--Nr6YETSdpCQfUDw
-Message-ID: <CALnO6CBzd0coeyJ9B+EkGWsSNEVTdVLvcVmEraGNxnUm5wXy=g@mail.gmail.com>
-Subject: Re: [Bug] fetch --deepen truncates history in v2.54.0
-To: Owen Stephens <owen@owenstephens.co.uk>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] delta, packfile: use size_t for delta header sizes
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
+ <3274cba862ae42a6813710410274a692ec0f5d29.1777393580.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <3274cba862ae42a6813710410274a692ec0f5d29.1777393580.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 29, 2026 at 7:27=E2=80=AFAM Owen Stephens <owen@owenstephens.co=
-.uk> wrote:
->
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
->
-> Repeatedy called `git fetch --deepen 2` inside a shallow repo that was a
-> file:// clone of another repo. Once all commits had been fetched, a subse=
-quent
-> `fetch --deepen` appears to "reset" the repo back to being shallow with a=
- depth
-> of 2. A reproduction script is included below. This issue appears to have=
- been
-> introduced in v2.54.0.
->
-> > What did you expect to happen? (Expected behavior)
->
-> I expected `git fetch --deepen` in a non-shallow repo with no upstream co=
-mmits
-> to be a no-op.
+On 4/28/26 12:26 PM, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The delta header decoding functions return unsigned long, which
+> truncates on Windows for objects larger than 4GB. Introduce size_t
+> variants get_delta_hdr_size_sz() and get_size_from_delta_sz() that
+> preserve the full 64-bit size, and use them in packed_object_info()
+> where the size is needed for streaming decisions.
 
-Here's the relevant part of git-fetch(1):
+> + * Size_t variant that doesn't truncate - use for >4GB objects on Windows.
+> + */
+> +static inline size_t get_delta_hdr_size_sz(const unsigned char **datap,
+> +					   const unsigned char *top)
+...
+> +static inline unsigned long get_delta_hdr_size(const unsigned char **datap,
+> +					       const unsigned char *top)
+> +{
+> +	size_t size = get_delta_hdr_size_sz(datap, top);
+>   	return cast_size_t_to_ulong(size);
+>   }
 
-       --depth=3D<depth>
-           Limit fetching to the specified number of commits from the tip o=
-f
-           each remote branch history. If fetching to a shallow repository
-           created by git clone with --depth=3D<depth> option (see git-clon=
-e(1)),
-           deepen or shorten the history to the specified number of commits=
-.
-           Tags for the deepened commits are not fetched.
+I like this trick to use the 64-bit implementation and only to
+down-cast for API compatibility. This allows a more gradual
+transition than if we replaced ulongs with size_ts everywhere
+at once.
 
-       --deepen=3D<depth>
-           Similar to --depth, except it specifies the number of commits fr=
-om
-           the current shallow boundary instead of from the tip of each rem=
-ote
-           branch history.
+Thanks,
+-Stolee
 
-I can see how one might read this as implying that when fetching in a
-non-shallow repository, there's no effect, but I don't think the text
-explicitly says that. In fact, the first sentence under "--depth"
-(which is of course relevant for "--deepen") is unconditional.
-
-So I'm not sure it should be a no-op.
-
-That said, it is possible the behavior changed between 2.53 and 2.54?
-I haven't tried to reproduce or bisect yet.
-
-Best,
-D. Ben Knoble
