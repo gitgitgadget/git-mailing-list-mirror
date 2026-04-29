@@ -1,92 +1,167 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744F33A5E87
-	for <git@vger.kernel.org>; Wed, 29 Apr 2026 07:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F3138D686
+	for <git@vger.kernel.org>; Wed, 29 Apr 2026 07:38:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777447817; cv=none; b=Tv62UAlfTXM3kF/fvxlhtEQCLhz9zWXajlKEGecNvmy3n7TqY9fWB4qqmSxP8nWKW/d1RgMYfddP2lWFtjkL9fHF6c0lJVY0roxLswOwFA53R4GeA2DILfPTjNJdT7uHmhrJPm/jSB8dnl+KeM+C3Wq1DdXbtxQF2OuVWzA5At0=
+	t=1777448297; cv=none; b=i0RUwJ7yLlxQJNMEQ+lsv0HEt6DhqpVpzTzVZbK8outFVyq7bAD7POPlAabG1zf2HIpnTJpPtqyLvEv6uNc4IbpBkzG040rwzLJOsyBsaXllKgYsdll4e1oxnluq+GNgtvxeObue59vCXqJ6kdLdOfmbb1iFI8r+drMk/Ax3KL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777447817; c=relaxed/simple;
-	bh=IaWa0LDLxqg1AiQJMUQSQVzvi6pMZZN9LY3J3EPPU2I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=btoKLbcPDiqzsn9sRmc8wNlCueh/nIuur7tI61/GgZjrFEl5DwuHq28BAsa7kx3CL7aw/3RBJAl1MK9yBJL6Oqn0YLfu6cj9x2LOZdAbp4nqjc/NqlJG09/oILe7ZJUaFFKAxVM00cLfF6xt65OimQHrGRO29sm+3gw1tU1hlJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SJCryhSp; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SJCryhSp"
-Received: (qmail 485705 invoked by uid 106); 29 Apr 2026 07:30:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=IaWa0LDLxqg1AiQJMUQSQVzvi6pMZZN9LY3J3EPPU2I=; b=SJCryhSpq1b3R6C66PZ2yCJOgeXmsFGi9go63nbPfrVt8zhYfqqdo9nHdYTamImmzHrd8yGAxLlSHDqcDToBrcI7srGSfY8TfyjX5MSZWCuX3+ctJgdDh8s5liO+YXUYR/lvd9X5F1nUudAqB6Nu9b5o9W+RkIMUE0B6wzg5jIOCo5HAENJMg447QvmUDscavuo/VQu1N/1LH8xU2I3h9Cu4tNADwS4+YdskdCAbRfWaWOqQWgCDREydyMXKuEqi46VHCNAGzNPsCkvysMCzW0ui0oC4XEYYFjQ8yZT8Iiuebr0qeoZwKoMWahFU/QCAb4B5A5Lf70+SMruJY63UFQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 Apr 2026 07:30:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1099371 invoked by uid 111); 29 Apr 2026 07:30:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Apr 2026 03:30:02 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 29 Apr 2026 03:30:02 -0400
-From: Jeff King <peff@peff.net>
-To: Theodore Tso <tytso@mit.edu>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Simon Richter <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>,
-	Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: Re: Git generated tarballs and Debian
-Message-ID: <20260429073002.GA717507@coredump.intra.peff.net>
-References: <9030b26d-02ed-4452-b212-a69a4ff21e2d@hogyros.de>
- <afCLFJX86yEPKKfk@fruit.crustytoothpaste.net>
- <20260428115017.GA71700@macsyma-wired.lan>
+	s=arc-20240116; t=1777448297; c=relaxed/simple;
+	bh=frpjGL9ERtJkiU/QE7nrG7G6PFVGRIkk48B/kz8mpmc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=OtFFR84Th00N8MjFfdIarQ/d1oLdRGRGO79FdDIyNRx9/jjcGtrvps7EmPHB9Ydvj2WexIIcqgAz5sd6vaGa5ATvV57e2m781Oak9uGvCWj3tfTKIZ2RGE9uKp8IblcitHJNCbaZv+GESXcTtW/WMUC1ORc4XzYX+RFZh/EIr78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4g57Ss528Fz7VPZc
+	for <git@vger.kernel.org>; Wed, 29 Apr 2026 08:59:09 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4g57Sj17jGzRmcT;
+	Wed, 29 Apr 2026 08:58:59 +0200 (CEST)
+Message-ID: <308229f2-0d20-4f3b-8e6a-c962bd9c3a6e@kdbg.org>
+Date: Wed, 29 Apr 2026 08:58:58 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260428115017.GA71700@macsyma-wired.lan>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git-gui: handle bare repo or missing worktree
+To: Shroom Moo <egg_mushroomcow@foxmail.com>
+References: <tencent_3FF7B35FE8AD7236FC9BBB628B45EA65F405@qq.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <tencent_3FF7B35FE8AD7236FC9BBB628B45EA65F405@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 28, 2026 at 07:50:17AM -0400, Theodore Tso wrote:
-
-> I know that in the past, using --format=tgz has broken based on
-> different compression parameters used by git (and whether it used an
-> external or internal compressor).  I also know that if $commit is a
-> tree-id, this can result in the timestamps being not reproduible.  I
-> also don't use export-subst.
+Am 21.04.26 um 18:28 schrieb Shroom Moo:
+> When starting git-gui from a directory that Git recognizes as a valid
+> repository but the repository is either bare or its working tree is
+> missing, git-gui previously attempted to execute 'rev-parse
+> --show-toplevel' without error handling. This caused a fatal Tcl error
+> ("this operation must be run in a work tree") and prevented the user
+> from opening the repository selection dialog.
 > 
-> There is also the difference in the prefix used by github and gitlab,
-> but that's arguably not git's fault.
+> Improve the repository setup logic:
+> - After obtaining the git directory via 'rev-parse --git-dir', check
+>   whether the repository is bare or if the working tree can be
+>   successfully located.
+> - If the repository is unusable as a working tree, display a warning
+>   and present the "Create/Clone/Open" repository selection dialog.
+
+I consider it harmful to allow the user to create (or clone) a
+repository after Git GUI has already determined the existence of a
+repository. If the worktree was not found, we should report an error and
+exit after the message is dismissed, and not give the option to create a
+repository.
+
 > 
-> What other gotchas are there?  How is this likely to be inconsistent
-> in the future?  How much work is there to provide that guarantee in
-> the future?
+> This makes git-gui robust when launched from a bare repository, from
+> inside a .git directory without a worktree, or when GIT_DIR points to
+> an invalid location. No regressions observed in normal working trees.
+> 
+> Signed-off-by: Shroom Moo <egg_mushroomcow@foxmail.com>
+> ---
+>  git-gui/git-gui.sh | 75 +++++++++++++++++++++++++++++++++++-----------
+>  1 file changed, 57 insertions(+), 18 deletions(-)
+> 
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 23fe76e498..2e4bc2f226 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -1123,24 +1123,63 @@ unset argv0dir
+>  ## repository setup
+>  
+>  set picked 0
+> -if {[catch {
+> -		set _gitdir $env(GIT_DIR)
+> -		set _prefix {}
+> -		}]
+> -	&& [catch {
+> -		# beware that from the .git dir this sets _gitdir to .
+> -		# and _prefix to the empty string
+> -		set _gitdir [git rev-parse --git-dir]
+> -		set _prefix [git rev-parse --show-prefix]
+> -	} err]} {
+> -	load_config 1
+> -	apply_config
+> -	choose_repository::pick
+> -	if {![file isdirectory $_gitdir]} {
+> -		exit 1
+> -	}
+> -	set picked 1
+> -}
+> +# Save temporarily for restoration later
+> +set _startup_cwd [pwd]
+> +
+> +set need_pick 0
+> +if {[catch {set _gitdir $env(GIT_DIR); set _prefix {}}]} {
+> +    # GIT_DIR not set in environment, attempt auto-detection
+> +	# beware that from the .git dir this sets _gitdir to .
+> +	# and _prefix to the empty string
+> +    if {[catch {set _gitdir [git rev-parse --git-dir]; set _prefix [git rev-parse --show-prefix]} err]} {
+> +        # Not inside any Git repository, proceed to repository selection UI
+> +        set need_pick 1
+> +    } else {
+> +        # Inside a Git repository, but need to verify its usability
+> +        cd [file dirname $_gitdir]
+> +        set bare 0
+> +        set worktree_missing 0
+> +		# Check if this is a bare repository (no working tree)
+> +        if {![catch {set bare [git rev-parse --is-bare-repository]}]} {
+> +            if {$bare eq "true"} {
+> +                set bare 1
+> +            }
+> +        }
+> +		# Check if working tree is present and accessible
+> +        if {[catch {git rev-parse --show-toplevel}]} {
+> +            set worktree_missing 1
+> +        }
+> +
+> +        cd $_startup_cwd
+> +
+> +        # For bare repos or missing worktrees, warn and guide to selection
+> +        if {$bare || $worktree_missing} {
+> +            set msg [mc "The repository at '%s' cannot be opened:" [file normalize $_gitdir]]
+> +            if {$bare} {
+> +                append msg "\n\n" [mc "It is a bare repository (no working tree)."]
+> +            } else {
+> +                append msg "\n\n" [mc "The working tree appears to be missing or inaccessible."]
+> +            }
+> +            append msg "\n\n" [mc "Please select a valid working repository, or create/clone one."]
+> +            tk_messageBox -icon warning -type ok -title [mc "Repository Unusable"] -message $msg
+> +
+> +            set need_pick 1
+> +        }
+> +    }
+> +}
+> +
+> +if {$need_pick} {
+> +    load_config 1
+> +    apply_config
+> +    choose_repository::pick
+> +    if {![file isdirectory $_gitdir]} {
+> +        exit 1
+> +    }
+> +    set picked 1
+> +}
+> +
+> +# Clean up working tree checking temporary variables
+> +unset -nocomplain _startup_cwd need_pick bare worktree_missing
 
-The biggest unexpected change I recall was caused by a bug/compatibility
-fix. 22f0dcd963 (archive-tar: split long paths more carefully,
-2013-01-05) changed how some long paths were represented to be more
-compatible between GNU tar and NetBSD. Lots of Homebrew recipes, etc,
-were broken when GitHub deployed a version of Git with that commit.
+This adds quite a lot of code with failure cases, but after this point
+we already have some quite extensive error diagnosis, too. Except that
+the call to git rev-parse --show-toplevel is not protected.
 
-I think there was a more recent one in 2023-ish caused by some
-gzip-related changes (but it was after my time and I don't know the
-details).
+If we do not invoke the Create/Clone/Open dialog after a repository has
+already been discovered, would it not be sufficient to just add the
+protection around the --show-toplevel call? Or is there something else
+missing in the existing error paths?
 
-I feel like there was one in the middle, too, but I'm having trouble
-digging it up (I think GitHub reverted 22f0dcd963 at the time and
-finally reinstated it in 2017 after a warning period, so that might be
-what I'm thinking of).
+-- Hannes
 
-But I'm not sure how often we'd do fixes like that. Not a lot, as the
-tar code is pretty stable. But is 82a46af13e (archive-tar: fix pax
-extended header length calculation, 2019-08-17), for example, likely to
-have changed hashes for some repos? Probably.
-
-So I think if you really want byte-for-byte compatibility of git-archive
-you have to cement the behavior, bugs and all, behind some kind of
-version flag, and every possible behavior change has to be analyzed for
-a potential version bump.
-
-Though breaking some obscure cases once every 5-10 years is maybe not
-_so_ bad, and we can live with it. ;)
-
--Peff
