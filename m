@@ -1,100 +1,137 @@
-Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588C23FF89E
-	for <git@vger.kernel.org>; Wed, 29 Apr 2026 18:29:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E302F290A
+	for <git@vger.kernel.org>; Wed, 29 Apr 2026 20:14:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777487378; cv=none; b=pjTXk+NslB2kO/RWzmN88IhTNMqZnw68RcZv8XVd8pNSgVOPCIEvcyYRtGseNp7lwal4P1t8Am2dRiP8diKIJypR3NFVZ9jZXgER/kiYwDEb2z5nwDviTwfMKwMS+1yg7Q/55YJt3O/xJtp1ZZqoKNHhy/p7almqNS4HhUFs2FQ=
+	t=1777493653; cv=none; b=oCp3cTZNcdzgzmKgtjrdxWj4eVwHaANPdeDAYF/1W/16/pyuBrvnM6PzQCXS+eYLht6eydUnNV44Yng2FC3kE90pf56BbPxc0pyQYooCyWfZMh/cU6/MWhZWmV0r3m7/nS7sDsLEWy4VcEfAEuhjKY+0WkvG7cBIr7oP8uFy+0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777487378; c=relaxed/simple;
-	bh=8X3Cb9PsgZQOgthBV5vMDHHkLWg3P4fNsUxDkXCyBeo=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=jFdlplsIaemKbO4m2HgQFEGcKZ6UPocd89b6sz/BDpW8k0Pe9qmUuis66pKkESRsoTdRMpqmy7KoNi+8PP0JptsF7lAGwlc4ti0c1GN23+jHbINykbeH3GJER3u412y5N2qX7Ylrgnpw6kebeXbzNetzWbG48fM1ZYPeX4/i+2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=GW4hyb+6; arc=none smtp.client-ip=162.62.58.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	s=arc-20240116; t=1777493653; c=relaxed/simple;
+	bh=Np23F9laI9qIpxnHWI+heRPHHfyMthSHs8quv9EYJQA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nrfTHoe+fNT6F20n9MV2ELPDirHON6L6GCn/JF4+6rkWVeAoTAiIB4XXNaWlmUp3RommfFoWFkhc3M16iD5cdKM1vVPhnMmHNc/x5Oz3bl47lQzDr5D0/2uWCFlyHPw+h9D0ybrlweEgoKPubZX1KpPo/Ny+D0exQ6lgBbj3OuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nrzi/xWJ; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="GW4hyb+6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1777487362;
-	bh=xVAyUMvxIwTWm+nxhcZBo/gkymNPPW74x3E7cDku00Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GW4hyb+6u3MIjg/LdIzmuCty/qCUu1XLPR260YBIeUCCrgO3unUUlv5FQLmcrL+k3
-	 2GywkGdHUOYMyE4dK8Y41bZbFPgapFiKHqgMnA0zi596bLi5OOA5DPZ33tIznipUrC
-	 aX4XHKls4uJkFBzJi0f3NUnbFMS2hSBBuauDP39c=
-Received: from DESKTOP-31CF0TC ([117.188.249.188])
-	by newxmesmtplogicsvrszb43-0.qq.com (NewEsmtp) with SMTP
-	id 7503A4C1; Thu, 30 Apr 2026 02:29:16 +0800
-X-QQ-mid: xmsmtpt1777487356tfh1csz1r
-Message-ID: <tencent_38DC315B635248A3A19F1A426A95A3E19208@qq.com>
-X-QQ-XMAILINFO: N/WmRbclY25GCgRw1RSMQzjIX7tNUCJiJ/17imnzWPUhEc3POGoHHntqvvjd6v
-	 pewckJkxSOfjxmAepZq7nDrAMqzp4b0E3Eb9Ui+N4MY1VSzL7ZZAKMdd02XGDl2bGGl69AIwJgMh
-	 T06cwYmM8ezeAy/SlFJNv+g0Cw0EwYuV1y0H3qrf/+AjVp+iKyjzsjR+NqZN/SVTKmRSGp+R4qPo
-	 CV2GqodYrsRZ0uWtSiv5nm6khXRCF8RACT4zSN4Ko8wzkaG4bu3Kc13JxE6ncjaHfbEZcGqmPbAs
-	 7+44mXtxof1GMAJynaGjmOXyXNvo//iCmy4Bnj2xXY+Iq+VtnxgqvkJfpZOvAEAmO6A6tO4c1rwn
-	 dOmjc/2P/f/H3kqBeanih2SKqgEkOkbGvG90SsPoYs8uNmvfIMsJSFBoK/4VzrUxSHgv/51OfjaM
-	 CD5HrOuHRTOGYnSsL9gQAyVbVpSA1Rz7M9LzOgd4GY3D/ZxYdb9aYCeYV64Z7cj5vk489OsJT3Iu
-	 TD96ftKSaknrkN33R7QGSVHmi/Ki8t62bpWOyWlovWMqXZOGzxwyrcpZxm9bXKLwg71beBsLLDyD
-	 wQunUM4Gn/3v8L1eosNZ3KdWo5/nV8jPp3yZOkeWX8/e+0mHc8j6WeEKaTGt3qCKk6JsSI6KUKYK
-	 XMvPMQYbgpxzhPur0lznyhgqJfoWz68HWHEbf2OzTBb3R9x5cYXWljvs3lnfT2UprNmRFYM36ub1
-	 HxbVq57wgAftBfD8dt4459unfKDARURZ4vUzUezMHLgl7Iwsf6wrvQ4ozY0Wo4vxHZN5QF2TdTQt
-	 Tztjn0xVA2c2FNfx0yFyuN7PoEx3j3qJpwv3SmRDKINIGIJD7VxCXr7ti/b9IazooASGiHbiBLG7
-	 yWXzlpg86skjuwYYLsOm90HPl7+10t1jVZWN0A5FzzyRzsXI+pV0zeZhqTbkn0YuPVLkoeks2WiY
-	 iqxZY+OVptZGm7mO59TEC5YdctGPbmdzLIClZfyA+uWN0lGWvowMXj3tLRKoNQlb4A85xrZzryB/
-	 sPjPd7IhHU0sTN1H/2b8jAuPQYrrZkuaC5ihtDP5Kq7P7zzi2VXELUV1zfd7Ov+fNOcJF3Uv29TR
-	 3etR8t
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-From: Shroom Moo <egg_mushroomcow@foxmail.com>
-To: git@vger.kernel.org
-Cc: Shroom Moo <egg_mushroomcow@foxmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] git-gui: handle bare repo or missing worktree
-Date: Thu, 30 Apr 2026 02:28:22 +0800
-X-OQ-MSGID: <20260429182827.407-1-egg_mushroomcow@foxmail.com>
-X-Mailer: git-send-email 2.52.0.windows.1
-In-Reply-To: <308229f2-0d20-4f3b-8e6a-c962bd9c3a6e@kdbg.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nrzi/xWJ"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8ef0ba61d46so18388685a.2
+        for <git@vger.kernel.org>; Wed, 29 Apr 2026 13:14:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777493651; x=1778098451; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rJhM+6ybyXGbxAnFTeiarX7seI+YFXrDIhsrnABK9xc=;
+        b=Nrzi/xWJnF35eGSpJmw+KhEeewzwycWLndjWDf/guWyCBPKpumWe80pMsA0WAkhrlo
+         GIaThuOSwbCLjGSF5S7sovEwSwa5LasAwfuHXEOq6PCk8VTIzZR8e98RiT74nJ5yLbgC
+         jEB/CLUH2qsSjQ+4OhjF4LSdLMjkUNFdt7ipV3AcuAaCbDsxyNDg9imfnXnZl1bQpy/s
+         cqvkMr/i0qLjR2n7ak12gUY6pcr3tLdcCZfHSK5R9nrkXHsIGuDv/rVdR3EHtFB+qY5t
+         cnFBMX9+gtrttr28a1goRA4B+Pq9vzGoYouIIb+tgbPxZFy3s1oifZi1e9SH4QX2Vokd
+         BKrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777493651; x=1778098451;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rJhM+6ybyXGbxAnFTeiarX7seI+YFXrDIhsrnABK9xc=;
+        b=YJ2QaJmP4g+FiNQvO0dxnFki33nYuNpwBOeqSRdYrkoGo8axizgyRTMQq1pJXgMJmo
+         c3YthFocseesrhSnowq/fl+kY2SGaD0s9snoKQJu8yVG0MpFAf4EZo/Ri0IrVMeSdl/c
+         TGUhJWJ7bqYXJM/VMARIui39cqF+JP8SyQnGweXZMDEP8ELr/8MZ/ARc3gQ39oRCANUn
+         6UaB0oD2/lDIOtg/sQXt5Aeui8tZorXdNrM0mryJZNkh4fVqdJpAAa3u2f/U5cP6rrTm
+         a1lRe68VCfUQaX45ziP9U9RInw0LsXmS1G7KJ+EQCw7RUN+Yo6P+S55gF5q3MrZF4TKE
+         SHQQ==
+X-Forwarded-Encrypted: i=1; AFNElJ95BEo6Fy2RscHHZMnOR/CJ6hgAingil1nFQvwdtkJxTsBBaZz5ITI40LvkfbL4AZ3iA1c=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxa4CvUi/MN9qSg8f0+eFZgFdvsHyWQ8BXEnqLGUqL3IowBBtm7
+	uAddlzBSjOJomB8vhNDfkT1Co7H+WuKNj5bJ8j2/oke6clFCLzlzC4LlwPDfNxq4
+X-Gm-Gg: AeBDiesZBclwxpd/d8iLbJoeF16aW1pkanC969qihE3rgtvk7706hzt6F5gC/3xaKzC
+	8YsPuB4Xjp9aHIlxxp4nHTc9AFmSUn77zv1fqJH4ctfDDipTNM9ODMFGlP72KE47Dh2TEK1AQW7
+	/Y7DF8yQJAdSmRmzsB6k+/TT1m8lYdXiwTZ5iaD7HgQ1vwC/Mu0tCWlFZWesSyx2THvK1Jmbne+
+	IVGFZCX/FGpLMSe44Mcrjsf1GftOR6NARJLG4f0Ew608/H5VIDbaOKxBzW/vlHOviA4mkR8rbH7
+	1zfr9W+xfxa8+jpnOSeSR/9Ctx3q7AALBsU1jGWAd5sk/oLyumyWWtJGcAjG81pByen9gmWx3j0
+	zGA/bEJg4qqDR48OzicqTLOus/+aqiH/EWCzkbNpQUYcBK5hWWro/ih4O9qDYEq2PWi9Itx885b
+	QLD0pXvTa03rCYdgzZy3K3xf28vusmT0zCjONn0T7FVD0E
+X-Received: by 2002:a05:620a:1710:b0:8ca:fe5c:ea6d with SMTP id af79cd13be357-8fa8a5b7d96mr37420085a.59.1777493647934;
+        Wed, 29 Apr 2026 13:14:07 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100::59a? ([2600:4040:264b:4100::59a])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8f93ccff7e3sm269137185a.12.2026.04.29.13.14.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Apr 2026 13:14:07 -0700 (PDT)
+Message-ID: <0100848a-d408-49f0-aeb1-8835c8775539@gmail.com>
+Date: Wed, 29 Apr 2026 16:14:06 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] git-gui: protect rev-parse --show-toplevel call
+To: Shroom Moo <egg_mushroomcow@foxmail.com>, git@vger.kernel.org
+Cc: j6t@kdbg.org
+References: <308229f2-0d20-4f3b-8e6a-c962bd9c3a6e@kdbg.org>
+ <tencent_AEE968E8E785907BA55A383977C8968ED406@qq.com>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <tencent_AEE968E8E785907BA55A383977C8968ED406@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Hannes, =0D
-=0D
-Thanks for taking a close look at the patch.  You're right that the =0D
-minimal crashfix is just protecting the `rev-parse --show-toplevel` =0D
-call.  The existing error paths after that line already handle bare =0D
-repos and missing worktrees, showing an error dialog before exiting. =0D
-That alone would prevent the fatal Tcl error =E2=80=93the original crash is=
- =0D
-fixed. =0D
-=0D
-The extra logic is not about incomplete error diagnosis (the other =0D
-checks cover that).  It's about improving the user experience in the =0D
-specific case that prompted this report: a colleague double-clicked =0D
-git-gui.exe inside the Git installation directory, where a third-party =0D
-program had accidentally left a HEAD file.  That caused git to treat =0D
-the directory as a bare repository, even though it has no . git folder. =0D
-In that context, showing a "Cannot use bare repository" and quitting =0D
-was confusing =E2=80=93 the user simply started the program without choosin=
-g =0D
-that path. =0D
-=0D
-So the additional detection and the `choose_repository::pick` call are =0D
-a UX improvement, not a correctness requirement.  When the program =0D
-detects that the current directory is an unusable repository, falling =0D
-back to the repository-selection dialog (as we do when no repository =0D
-is found) is better than failing with an error.  The user can pick a =0D
-valid repository and continue without restarting the GUI. =0D
-=0D
-Since a minimal patch is preferred, I have prepared v2 which only =0D
-protects `--show-toplevel`.  The dialog fallback could be revisited as =0D
-a separate enhancement if desired. I've already sent the v2 patch to =0D
-the list.=0D
-=0D
--- Shroom=
+On 4/29/26 1:32 PM, Shroom Moo wrote:
+> When starting git-gui from a directory that is a bare repository or
+> where the working tree is missing, git-gui previously executed
+> 'rev-parse --show-toplevel' without error handling. This caused a
+> fatal Tcl error ("this operation must be run in a work tree").
+> 
+> Wrap the call in a catch to prevent the fatal error. The existing
+> error paths after this call already handle bare repos and missing
+> worktrees appropriately.
+> 
+> Signed-off-by: Shroom Moo <egg_mushroomcow@foxmail.com>
+> ---
+>  git-gui/git-gui.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 23fe76e498..aee37685e1 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -1169,7 +1169,9 @@ if {![file isdirectory $_gitdir]} {
+>  load_config 0
+>  apply_config
+>  
+> -set _gitworktree [git rev-parse --show-toplevel]
+> +if {[catch {set _gitworktree [git rev-parse --show-toplevel]}]} {
+> +    set _gitworktree {}
+> +}
+>  
+>  if {$_prefix ne {}} {
+>  	if {$_gitworktree eq {}} {
+
+Unfortunately, this allows starting git-gui inside the separate gitdir created by
+
+	git clone --separate-git-dir=/some/where/else ...
+
+There is no hint where the workdir is, but git recognizes the repository is not bare:
+
+	git rev-parse --is-bare-repository  ==> false
+	git rev-parse --is-inside-git-dir   ==> true
+	git rev-parse --is-inside-work-tree ==> false
+	git rev-parse --show-toplevel       ==> fatal: must be run in a work tree
+	git worktree list                   ==> absolute path to gitdir (not a worktree)
+
+As git-gui has no protection against modifying what is effectively a bare repository,
+allowing git-gui to run in this directory is dangerous, or possibly just very confusing.
+
+git refuses to work in this gitdir: "git status" run in the above gitdir gives: "fatal:
+this operation must be run in a work tree."
+
+The simplest safe thing is to catch the error and abort with a more useful message than
+currently provided. Or perhaps, check git rev-parse --is-inside-git-dir and abort, and do
+so before trying --show-toplevel.
+
+
+Mark
 
