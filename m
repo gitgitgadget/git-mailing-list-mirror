@@ -1,97 +1,109 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A5A3A9635
-	for <git@vger.kernel.org>; Wed, 29 Apr 2026 22:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97E42DAFD7
+	for <git@vger.kernel.org>; Wed, 29 Apr 2026 23:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777502446; cv=none; b=eiGekGaAhiy5sG5J+f+xN/BSt3yFPLXlPYF2WKh9qpeykJGFV4X2U0c5oXVOMqqobKOYwc6VfHB+5U4MCaQ/rr1r+UoqS6Iipr2cvK2VlEJT9IkEBGHVJS6RFgAGRqHcEA951ebmgXXt98xzYjLEGY89aknHuyjb3KdrxMKuuIo=
+	t=1777504413; cv=none; b=stnzKclQRRQRO4eVLaUw9chQC3fYlD290L7SEyUqg/NWatLs4KPAxqv7f2RJO+uFnZZBPRP2OaxX1biu+GakEd9wG55aaoymHg7RISrPlSuKTqq48llcqTB9uvYXhDl0orE8iGHz/nzhplUt2K1XCqVP+isWERsawaYTyUeaLTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777502446; c=relaxed/simple;
-	bh=gjycEvCx7CuJiSOuXjQNN5xX6pcV2hNgxh1zpoLxsiU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oRSJWQf8O3FLG+qMeXznUPZQpJXZsT93mrsVCIl2kQZxjEjb9JYROEhqVbAnVziAv1otSKgkufDOcFIWJcj5PHgGZb2rGXSqKbP0XHxrKcSYH9QeMSRRt2K2q2ZQpl/aEnFHl5j87Nq9HqVXpaX00jGwoa1uRbf0z0+pRl/xMGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Kxf6ol+m; arc=none smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Kxf6ol+m"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-651b4d09141so513137d50.1
-        for <git@vger.kernel.org>; Wed, 29 Apr 2026 15:40:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1777502444; x=1778107244; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gjycEvCx7CuJiSOuXjQNN5xX6pcV2hNgxh1zpoLxsiU=;
-        b=Kxf6ol+mxc4DLYR+89HoEpTvjsqTwzXsys7eGdUQtZJHb8PL9F39v3vQ/tODlp+8Hi
-         Ru7EpxBwzAq5UIO246gllRdPgYVN1mSi49MiizM26uj6h6edsvzN8Y/0HDXJA+c6fcBN
-         5mW4F1pqfnVQOZlcpGCcwxCOa+I7GqgdeeKQArsLMKgmGiDJGySCDDPHDKavIT/j4UDD
-         Idy6ssGkvcDckXvVfNO8cuJ0jG5aDBRKxt80CW+3f4JxU8qeEmaKbon02iksLbjgKIfy
-         gLTH3ylaN4rs9jDAtImBjeXBTigbeGNb5SUylEE8gI3HaX6/bxwrMuuFWPhdDy5oyJh8
-         DfUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777502444; x=1778107244;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gjycEvCx7CuJiSOuXjQNN5xX6pcV2hNgxh1zpoLxsiU=;
-        b=damIoN9Og9uwwP5/kp4GoiSU/Nflxd13B8fHXYTtkRHyVk6144QNTsp0UD0ux/E6WZ
-         YdvivQD24+CBsc6w3qfCQ9IRczvnyhEG/k2L3AuY9Ii+/9ykQuKcldw8R9pIlJIcuVzs
-         /3qrVPqxqZSMy1AqZKSLpfLd/QLKUbb57tLlxzBSdrepiaw+yUE6hZHylTfecK3AteqF
-         40QfFKT7efIFoaBz3z15be9cQasT6AGLpTYTMXGRr21wpcOx/vvZSZbTU0b0xRXLb3B/
-         3DJcA0/l2PJjZbfE33PxqaGrryEQ+i/S+RHc+ohnhlGBVVVXXpV46ZM/RrGaxmJRO1tx
-         3EbA==
-X-Gm-Message-State: AOJu0YyP/ZSJAw55IHznYSEFbKdX8KHXp30RHTvN3VFHfhXKBuS7M1PC
-	f4cFhdFO5G72MKBuHReCc7NSjZnISZqlML3FdWqJd6yGShqlhufha4d/3FyCF3NJE54=
-X-Gm-Gg: AeBDievVBY9+uYKlNyIw1cU301SQfo5girLyA9b1WdF2mXGoILrkJ8Xst3E+oQQOdc+
-	/86G4/NWsTzJk5dCPt+Pz50ArHEzVYcawE14wBlILicWlvK/y0F5tGHKcXCIO9LDSzLqBrkaWhR
-	/yb13GkHXwlFsgwQI1GWDbXDiVQhdnpjx96115G58u/otTbhkeC0Q4t0Gmjz69Tn9cpts2glh2k
-	D2cpvoldHdr+AhS6DhhYHkUN/9k0hSTdZsIOk9at4l9gH0m7MB9Sa03AOUrop8oK7j7M2ZFJpGc
-	Zjii6U/hIJZ3ynRrqhfWkkb0qnPtGftP6rEE5t66eTwPR79E4RIwpOQMRaclpE2kcMM6DKbUlrt
-	hy6l9W78j5xxhEJtVRDm2LMxSTkMNsW8xdQsuUJajRjS9Vb7dt55JQilP3tVO8gbDvltBkxn8vP
-	qTauKybO0bBOsu6nKf+xX8R8DdOJYbV/xBpBILK/VOOZbsQLAJ1wFMCFoucXVMo/1Nr3b9kWF7D
-	KVvjGRe5DoR+GRqygmgTxLMISY3aYipjXXFaSvMHdjq5EZ/88HA4E6pmRG3lrTYULogGul1itgi
-	xhgt5fQ01aTNLRwCfdf1qFwFc5U=
-X-Received: by 2002:a05:690e:14c4:b0:650:7893:a3c with SMTP id 956f58d0204a3-65c1b0e322emr11205d50.36.1777502444557;
-        Wed, 29 Apr 2026 15:40:44 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65bff6c4113sm1879089d50.11.2026.04.29.15.40.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2026 15:40:43 -0700 (PDT)
-Date: Wed, 29 Apr 2026 18:40:42 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 10/16] repack-midx: extract
- `repack_fill_midx_stdin_packs()`
-Message-ID: <afKI6rWBr5A7QdLc@nand.local>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <cover.1776803827.git.me@ttaylorr.com>
- <44f522ea04df5176ec332b60a38d1eab9b649c30.1776803827.git.me@ttaylorr.com>
- <20260429080821.GA1269182@coredump.intra.peff.net>
+	s=arc-20240116; t=1777504413; c=relaxed/simple;
+	bh=Vh4hoDFDmwi1n8zbzwnv8OV0pXlaSkz4oDeSetjIUUo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=awbo9gfJkUmBfncCWEXmKstmRvNqgtApAeglqBk7VcUxLmdA2OMjyZGsEo+7lH5WQ69LZLikZ0AUz6HouibuJs7Z3wW6nICIorcEYrBWlcVq57vjlEaBy19gjDH1rvIMWpoFZGn+dqcNIIWT2gNbZgn+ByTpyJP3uQ3pTwtfG8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com; spf=pass smtp.mailfrom=anselmschueler.com; arc=none smtp.client-ip=212.227.17.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anselmschueler.com
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue106
+ [212.227.15.152]) with ESMTPSA (Nemesis) id 1N33ZD-1vMBVH2aA1-0186hW for
+ <git@vger.kernel.org>; Thu, 30 Apr 2026 01:13:22 +0200
+Message-ID: <0f3ef394-d96a-42f2-825d-53cb475a2363@anselmschueler.com>
+Date: Thu, 30 Apr 2026 01:13:22 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260429080821.GA1269182@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
+Subject: Git maintenance fails without meaningful error message if any remote
+ is no longer available
+To: git@vger.kernel.org
+Content-Language: en-US, de-DE
+Autocrypt: addr=mail@anselmschueler.com; keydata=
+ xjMEZMK/6hYJKwYBBAHaRw8BAQdANvIiy7BrQ5bJ2txC1J4PpfkLnOrEhmG9DzItTcFrd2XN
+ KUFuc2VsbSBTY2jDvGxlciA8bWFpbEBhbnNlbG1zY2h1ZWxlci5jb20+wo4EExYKADYWIQTN
+ v+yoNv7jQBzrWP+6NO4aujoJVQUCZMK/6gIbAwQLCQgHBBUKCQgFFgIDAQACHgUCF4AACgkQ
+ ujTuGro6CVWjHwEAugikc3PIHCDCaZPrdSiXqV3mSabICGPMje+Kp73oxkoBAJYeHUdoZcyw
+ BkmGIh1mWY738FN+SPHwSWIS9jtJ2+4CzjgEZMK/6hIKKwYBBAGXVQEFAQEHQE6vKA4qvkMc
+ 6kslzFWzHQ+h9Qk89ggfrexKhse5F6NjAwEIB8J4BBgWCgAgFiEEzb/sqDb+40Ac61j/ujTu
+ Gro6CVUFAmTCv+oCGwwACgkQujTuGro6CVUKawD/SDvfSz7vUSUkNiJJsK59U+D7rBkdRHoq
+ sNsLc3EVYiEA/3kNw77KZvEG2Jb3ktvv5qoWKnW+xrEHh0FZLFzb50sM
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:K1ZLndb6a3Bl8etL6ppRUkBLR4KiRB9TPWIV7R/1NQ117YMwioc
+ 0x94hepmRAKiEUqg0FtF/hDkeeppKudNaLZx4Ih0Wt9057tYwbjQXiqnf0KSV70TImk5Ghf
+ kCSGvzbfbIGAU6XyGOSBG3LyWzEj3kbPbxNWN7QMSM+hoZggMhrjQa9cayINHqt4KsjY1hV
+ TebUEh11z9Djeq9hJ1Dsw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:SHS3iMhuyW0=;NKgz4pfYI7tzJJaxISNN49sqXUp
+ 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
+ HzhsP97uVjzPrDhYr/gA=
 
-On Wed, Apr 29, 2026 at 04:08:21AM -0400, Jeff King wrote:
-> On Tue, Apr 21, 2026 at 04:37:42PM -0400, Taylor Blau wrote:
->
-> > This simplifies `write_midx_included_packs()` and prepares for a
-> > subsequent commit where the same helper is called with `cmd->out = -1`
-> > to capture the MIDX's checksum from the command's standard output,
-> > which is needed when writing MIDX layers with `--checksum-only`.
->
-> This should be --no-write-chain-file now, right? It's not used in the
-> code here, so it's just a commit message fixup.
+I have a repo with multiple remotes, one of which no longer exists. When 
+git-maintenance runs on it, it fails during the prefetch stage because 
+that remote doesn’t exist anymore, and gives a mostly unhelpful error 
+message:
 
-Yup, good spotting. Fixed.
+$ git maintenance run --schedule=daily
+ERROR: Repository not found.
+fatal: Could not read from remote repository.
 
-Thanks,
-Taylor
+Please make sure you have the correct access rights
+and the repository exists.
+error: failed to prefetch remotes
+error: task 'prefetch' failed
+
+I think that
+1. git-maintenance should report which remote it’s encountering an error on
+2. git-maintenance should continue fetching other remotes even if one fails
+
+Now, on my system, the systemd timers for git-maintenance use 
+git-for-each-repo. Not sure if that’s upstream behaviour or something 
+Nix/home-manager does. But if it is upstream behaviour, it would also be 
+great to report the repo the error comes from, since I basically had to 
+guess right now which repo was erroring. Luckily I have only three repos 
+under maintenance so that was fine.
+
+Let me know if you agree that this should be done. I would be open to 
+writing a patch (no promises though)
+
+Anselm
+
