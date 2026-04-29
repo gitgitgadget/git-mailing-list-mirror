@@ -1,79 +1,80 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FFD3FB7C0
-	for <git@vger.kernel.org>; Wed, 29 Apr 2026 13:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2553A3FCB13
+	for <git@vger.kernel.org>; Wed, 29 Apr 2026 13:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777468505; cv=pass; b=IlzCtTQGF5M04m6nJVNwHPbYpUXXa/HxFYOufhMCh2KlV7QWp6GmynvNeywznxIVhKRmqKqyJHmVDRj3CYmxGNG7LodtmA18tQUjgte7wRVJlp19jQv/UmNKbbU3fESKVLkWLo/QlII8U1QA7kz3aEOcek0EJTj2k7yjUukfaVE=
+	t=1777468573; cv=pass; b=Krvu3JsSm/9Gt6U0rvpFXH60qjMl/gB5ZOGMwJOgE2u7oik4mZ8EB/+U8dupQ4OyWJOBVx4l5dAPNcOPRIpIrTl9wQHknKzPNBowxwH5tFa/kK1RVU8HyjYNWFNYprFN70TzoT+QPIzrVwuOcHb5dLtAtJ08ZkOw80Wv78AMXDo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777468505; c=relaxed/simple;
-	bh=D2riaDeHl6H/g5dkjE+mNhurDByVHosa3fx+K5jOtwI=;
+	s=arc-20240116; t=1777468573; c=relaxed/simple;
+	bh=9EOlxdnSQ1rl3cnXAi7Q3Vkps5/9ihxG1hXqlNtCMvc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=JqKFg7WtbYqNvuhLu1qsjhMIW9jeLamK+31Q9JGHY0I1kg0x3x0xN7Y2iLhkQR2xtFDW+xynqKwfphc+Fmo46I9VuWyOaQz3K43QJ9caKX2l7RkdPgJSXDFVqeWWijM2/vCn9e/d4IxNXOsqd7G+r1gusl8ATwmx/+DU7BPyTog=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=owenstephens.co.uk; spf=none smtp.mailfrom=owenstephens.co.uk; dkim=pass (2048-bit key) header.d=owenstephens-co-uk.20251104.gappssmtp.com header.i=@owenstephens-co-uk.20251104.gappssmtp.com header.b=sfjS/aYE; arc=pass smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=owenstephens.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=owenstephens.co.uk
+	 To:Cc:Content-Type; b=VQV3v/XibYLjy9mT8SAF++GV7OhGAexzpCJF3eVhi7T21Fn9nmZ+naTTx8zplOA8M5vL64yHM45LrPuyto/CbVv2DcCdpCiOFf/obEivqFP8dBXMZcrHLj+7nqnoWta+rdKg6ctpr7tWA7X8dlWKwhjg44Wh90Ssu+ptsY96Oac=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJW9lNGW; arc=pass smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=owenstephens-co-uk.20251104.gappssmtp.com header.i=@owenstephens-co-uk.20251104.gappssmtp.com header.b="sfjS/aYE"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-38e96a071c3so128248721fa.0
-        for <git@vger.kernel.org>; Wed, 29 Apr 2026 06:15:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777468502; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJW9lNGW"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82f68b3aaf7so4764056b3a.0
+        for <git@vger.kernel.org>; Wed, 29 Apr 2026 06:16:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777468571; cv=none;
         d=google.com; s=arc-20240605;
-        b=SJfuOdAU2f09on7GfFTHVuxoLcgk4y+PmGL9yNa0rG2pqGn7fv25sJY+VTN3lxi9QL
-         /c+wMUPOuEACzF8ndGlRlZ7VVxkuA2JWpZOMS+VYCgxSI9/uY6qd2lM6DDn35xDc1rez
-         rgB1Np5Mx+Sz/+j6ruRmNmOOGjMFm1CCK1FH4k9Lknd6tje4fQ0AnMRz0Yev3Rb2QUA6
-         qpzXnR3mEoExUUT4PWbzv4ydt6ZzOImUykJRzwDIgfVWrtoPhVLzVl01m7yCjgj35Ild
-         GRjYqyF+aUGivyMp8s6ykqd0YMoh22AIFQrO20F31myBfbBn7c3Xgr9uqLlUSdx1kQoV
-         7ofg==
+        b=ArBdwWIzZlAht0CYuEWFBKrt0r9LJBhvNWyIDt7uUGaNxMMw26zEPRtOY58mbtNvIV
+         3wQiYqEbbxMfL83CoYg+XFRU4bazmkrI3ADP2FddmdvyWOfTl0DctV0ODdTS5SUj01C5
+         owmOhEDnt6zewlYZbMQSP6Tx5QumsEKBF6mNBLnTQQp+JRJy5uJoAYu/JjSvZCu0L2nF
+         Rwcxx0Y85pYVgA+oCArZatL60gaGUgRTC07e7F1mUg2nSF3oSM8FmTjZC51QuDaJq9mE
+         8NDU770gPC+rRUJo0piPWksLT7gStKu7lWvPFOxtlJnuOtvFgnE0OtbFQy597pmtkazQ
+         Am1A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=D2riaDeHl6H/g5dkjE+mNhurDByVHosa3fx+K5jOtwI=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=V8rOdOzOGu1Ueb21s0j51/Wg6bb7baqOfaVWU9NMJEdFMgErB2amQakr0bM392QUfx
-         KJuszBdFS2/+SUTCOgofPmUG1x9pqP1QZQhmz5D1Fai8QoW5g2ARbaCp/UfB81SZxJrY
-         GnbdQUl/sL+vcvgtA9ZomkcNOdvfS+xQskWYekyx33hf7EnB4LQbxJB6vm2wRaFejZWQ
-         bWWWBy2SNkLypf3tIyWG209v3llueNg0w5twB1qfs2BBZD9t2NIOdBoCdWOz9X7HQAsr
-         +J2U/oLhxOQaHEhL4f/cyvgUgDLTLQIcuo3JIrYGELq1LuA7xmgeb+efFAAWAhQPKGsL
-         a5oA==;
+        bh=nxRkjRZhA/zuV/Bdvn9jNtDwKyYxr06YO4qkDkBXx50=;
+        fh=enyPv1IQS3g4+XHp2R5Lw+gSoxZHn/V0qlv9lMHAKm8=;
+        b=KSMZ6bRUTUdM8b3gRRKkO4DIhBQHoidNTFdvZ+u1S96F+vqxAo8FBX6Z6sksy0zvNl
+         UtUCIZv4WlobY/GJ2/YSrST8uP/ETZqF+ILmprG9O7sVJvVD5VuznAQQbw79SBkB5mXa
+         wB3rCxH16FnzzvQj0qzEYG5UlePQtsR3MjhVAKsna9ZYaCOmIgEpqWei4Gl8EE/mbmZ5
+         uivw4ia4BGsT7nPcnqUkfBWEhYO6rPqPLoujh/l+o75JeKTux5/SpvFXFQmqF49XPObY
+         kWd3hHdMw9AOrpsE1idgHAIQ4bTBNBq2bjUffVVq+r6jD3Fn3ufenLOyRBnp1ekyuKkb
+         kU4w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=owenstephens-co-uk.20251104.gappssmtp.com; s=20251104; t=1777468502; x=1778073302; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20251104; t=1777468571; x=1778073371; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D2riaDeHl6H/g5dkjE+mNhurDByVHosa3fx+K5jOtwI=;
-        b=sfjS/aYE+KHRzsrB/rDHjjzXK0MHPerX+b1ehZJ0S0xVFe0M+RjpqL2gSf9BwdIpO2
-         EohgKvdbd6mIIUGoRNz2UCy2F2Xnq+hC05f4qAjTFbm0ElaPajYpregeiYO+ExLq336M
-         X0kpO+XUF7hZXO6sxEFOG1lMLd70mh2neDHi96sdkoNkNp2AWcsjRjFMfDC7t78LEONQ
-         sPBmo71QGJM80TP6dEKc3Vt+6hVaoKjCBtnXPreJrMl3VtBdPL6qQWhGRRrv0qgrjDs0
-         k2BibMTpZxxqQnXgtzy9z2YHoHnbTuQQqshpcAH8/ly1BhgWl5hb593z4D3vyT7gq48S
-         PP8A==
+        bh=nxRkjRZhA/zuV/Bdvn9jNtDwKyYxr06YO4qkDkBXx50=;
+        b=NJW9lNGW6E6njjWURVnWv2D0CR6Y6TziFuw4nz8al1HDDN8cjYvCk/Vt3v/Laf/nT7
+         gZvwYY4Vllq3g6ehVrB3vYJXaymbuzXnfDCP/VOwMrVvwjNjIygXWuEkhizVnsXyzMqj
+         d9WIVu43+KIXTZ/TO3l0v8V9iloZYMpgkik7G5z2RHpoPSwY7aKyVCaD7L7hNoxpzUKj
+         ysZuT1jb23YDLzfnq/YxEQ7sVFdO1t4wcPh4QvzRU+bwHfxjYQgxsKNfHOTEmR3TAf92
+         m/fsrnQZoZczBiqp16s62TscvYwT5/D4JjvyBj3WwGCW3IApwhCq+PidNiI5p8IVE9e2
+         0jRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777468502; x=1778073302;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20251104; t=1777468571; x=1778073371;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=D2riaDeHl6H/g5dkjE+mNhurDByVHosa3fx+K5jOtwI=;
-        b=a0QaD4eMn38RQYUQr8ng2mP1SY+1nncfMoE+DI5jarRsSghD9XOarAsq8ujTBeytaf
-         Z60mqzUgM4Kg+UBVeX3FDjRM/6Piv5+Ch22V/fNas86Jpk8/l6vXVacpnxgPVNHcUV4c
-         dw5t+c2twwP7HU/Fzpr+CqNelrQ2rBsVG1Y1qiw1xx4GliNpHkXRqhkwy7sYtfQNH03F
-         0LX/BfWERA/8dhFh3ars/+0ahDzgaD8fpVLdFD7QEdm1gdhG6Pj1pUyvbzJszVjhaVLm
-         qjSRQXJeqblup2ijelh2VjPuKBrNuH9tiKswz4vBQ7s2XtRuJhT5YpJEzndKCe4LjMe/
-         On4g==
-X-Gm-Message-State: AOJu0YxP/B050V1V0yvMMUZ2c65wqW+OxtnychMlN3N/cSfFdMyucOLf
-	Xqas6rz5jk9txLDQhww4dgZUW+F7TOJraTfMH3YRylwglh42fNMDFPeUTctTXvyib77BKUFOKRP
-	XuzmY6+YoIgjL4Co6vapXpE+aDKLk+SnBS77WF+94sLe0sOnjrBbjPn8=
-X-Gm-Gg: AeBDievw0ga4q6DAzrat/eGAFXjOO96P1xgzDn3CQR2y2IFWwBc1rUrk2lbipzoS7o7
-	PiyjRrU30uOVlgiUTy8tfAN1mKEeZu1EtzXzs0PSwiumgjp9hJIjrHJtaLOUpVPSpLTegbvh5mK
-	Z1u9eXh6+GapRW6YdLmU3TKlUIkPsSGLKF1JMsynCY4oyXaqTxe8jJbZtyg2Lv+A3B8Cb7g1qOH
-	9imE1FXpGXOCzbnxqnwFVS7BCopKx/qHm61/jkTE1y5KogVNCrEkICgp9n6oTNlO+eqnK4Qoo6s
-	1hVE+wTnutjakNOirfehFYs9R3s=
-X-Received: by 2002:a05:651c:154c:b0:38e:c9f:a14c with SMTP id
- 38308e7fff4ca-39240f93b8emr28117261fa.24.1777468502272; Wed, 29 Apr 2026
- 06:15:02 -0700 (PDT)
+        bh=nxRkjRZhA/zuV/Bdvn9jNtDwKyYxr06YO4qkDkBXx50=;
+        b=Jifhsngd9z5wgZNPuehZNGfugs5BoLDsCMlDSxAxJWvyBeCKQjOF4liqldDRcbqJzo
+         qFZbuRjiRKwKJ1MKvURfl20z2rtBzSSbW/h1DuTsgDXfoVtkHA5l26TL3SfpKZI9Smxa
+         wsBaKtFydgksuxzrRFXyMs/rMIESgzRnEFPGAMnVyjnvqbP7gYRDqYYSmORVKmQq7qGz
+         8J3chEAWPhlsm0LNBkl1c3dcx9OYQ4kZl9lVMGi3S07tHdocOSRBijmV1Pyk21T6g6sz
+         0sU4FZZuA1nqqC03n7bmm6JNS7kn/WYDF09HPRM2WTNUz0uTUrb3TAt+3I00cVNpxyRc
+         6ryQ==
+X-Gm-Message-State: AOJu0YwBiyvWSjtkHUP/tOgsRG1/NEtEXH5XH7aFyec/frHFS4ZTCTU2
+	dRbsBxEhalHKMv43ND5XxddTbpRrJ9F/Xo8dMzmDmsnYuL3dX/D0gQ2aDzuNXsJ9YdpKXGG7Vdr
+	K81mbg6FYSyXLAjmWQuq/YPqQB1izjoQ=
+X-Gm-Gg: AeBDieuVAGFsVWh2/YgHVq5ZKifhLzYDt4aL6m1U/x8l7Vf8JRHTWBhuuv0pSv49j2l
+	t1SeMzi+FFHOhFgwXNN16dtmFInorliMRp/iaivN8TOa/+0M+UA1fixKEVpaQO04baByTClLmFC
+	1SxquyGQpZI7fu/jQgrHRUSnroZ9i0hM6ik8KcbCcq7DEy08K5CFL8QHy9kZ805FeEpS614LaZH
+	axp9IFrJ0DG/NdXmT4r4Kfk+jIZARddh7XkrF3YndkIZq1VJGJbOQD0egj/dag4jrmaB2vDQc+H
+	i655xSUU6fR9CsNZoBj/wW1w8hYxyqsGm4CffpbdMyoEqruh9KZqlp6i8wnLK7ilsB8wAaGJdea
+	/Eg1w1c4qWgwHHFNsD/8qQ+RfqGjC5n4E2zCX
+X-Received: by 2002:a05:6a00:6c83:b0:82c:ae0e:dea with SMTP id
+ d2e1a72fcca58-834ddb9f511mr7496056b3a.32.1777468571385; Wed, 29 Apr 2026
+ 06:16:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,48 +83,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <CANOh7gEEw+6146NN3JV8EYxQarj0KkyA7r3RZ6v-DxeqQZLrCA@mail.gmail.com>
 In-Reply-To: <CANOh7gEEw+6146NN3JV8EYxQarj0KkyA7r3RZ6v-DxeqQZLrCA@mail.gmail.com>
-From: Owen Stephens <owen@owenstephens.co.uk>
-Date: Wed, 29 Apr 2026 14:14:51 +0100
-X-Gm-Features: AVHnY4LLPAPJFxl7KQRyhc2wa_-XwGxXQqsQLoDNPvgVQw3rPK03LiGX78lzcqc
-Message-ID: <CANOh7gE6rQ1ya+KusfYhbaG9iSNqNkUtYWbTAPFOs=Ff21YSDw@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 29 Apr 2026 09:16:00 -0400
+X-Gm-Features: AVHnY4LWtjaMEtUNg_RuFRTN91OrBi2pIvOXYrMqpc-72U--Nr6YETSdpCQfUDw
+Message-ID: <CALnO6CBzd0coeyJ9B+EkGWsSNEVTdVLvcVmEraGNxnUm5wXy=g@mail.gmail.com>
 Subject: Re: [Bug] fetch --deepen truncates history in v2.54.0
-To: git@vger.kernel.org
+To: Owen Stephens <owen@owenstephens.co.uk>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 29, 2026 at 12:27=E2=80=AFPM Owen Stephens <owen@owenstephens.c=
-o.uk> wrote:
-> The key lines in the output are:
-> ```
-> Shallow repo? true
-> 63d1ebe (HEAD -> master, origin/master, origin/HEAD) Change 4
-> 864e13c (grafted) Change 3
-> remote: Enumerating objects: 10, done.
-> remote: Counting objects: 100% (10/10), done.
-> remote: Compressing objects: 100% (2/2), done.
-> remote: Total 6 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
-> Unpacking objects: 100% (6/6), 351 bytes | 175.00 KiB/s, done.
+On Wed, Apr 29, 2026 at 7:27=E2=80=AFAM Owen Stephens <owen@owenstephens.co=
+.uk> wrote:
 >
-> Shallow repo? true
-> 63d1ebe (HEAD -> master, origin/master, origin/HEAD) Change 4
-> 864e13c Change 3
-> 3e05d14 Change 2
-> 1d9fe14 (grafted) Change 1
-> remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+> > What did you do before the bug happened? (Steps to reproduce your issue=
+)
 >
-> Shallow repo? false
-> 63d1ebe (HEAD -> master, origin/master, origin/HEAD) Change 4
-> 864e13c Change 3
-> 3e05d14 Change 2
-> 1d9fe14 Change 1
-> remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+> Repeatedy called `git fetch --deepen 2` inside a shallow repo that was a
+> file:// clone of another repo. Once all commits had been fetched, a subse=
+quent
+> `fetch --deepen` appears to "reset" the repo back to being shallow with a=
+ depth
+> of 2. A reproduction script is included below. This issue appears to have=
+ been
+> introduced in v2.54.0.
 >
-> Shallow repo? true
-> 63d1ebe (HEAD -> master, origin/master, origin/HEAD) Change 4
-> 864e13c (grafted) Change 351
-> ```
+> > What did you expect to happen? (Expected behavior)
+>
+> I expected `git fetch --deepen` in a non-shallow repo with no upstream co=
+mmits
+> to be a no-op.
 
-Apologies, I just noticed that I had inadvertently munged the final
-line - it should read "864e13c (grafted) Change 3"
+Here's the relevant part of git-fetch(1):
 
-Owen.
+       --depth=3D<depth>
+           Limit fetching to the specified number of commits from the tip o=
+f
+           each remote branch history. If fetching to a shallow repository
+           created by git clone with --depth=3D<depth> option (see git-clon=
+e(1)),
+           deepen or shorten the history to the specified number of commits=
+.
+           Tags for the deepened commits are not fetched.
+
+       --deepen=3D<depth>
+           Similar to --depth, except it specifies the number of commits fr=
+om
+           the current shallow boundary instead of from the tip of each rem=
+ote
+           branch history.
+
+I can see how one might read this as implying that when fetching in a
+non-shallow repository, there's no effect, but I don't think the text
+explicitly says that. In fact, the first sentence under "--depth"
+(which is of course relevant for "--deepen") is unconditional.
+
+So I'm not sure it should be a no-op.
+
+That said, it is possible the behavior changed between 2.53 and 2.54?
+I haven't tried to reproduce or bisect yet.
+
+Best,
+D. Ben Knoble
