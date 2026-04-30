@@ -1,69 +1,70 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467DE3B4E98
-	for <git@vger.kernel.org>; Thu, 30 Apr 2026 10:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E284A3BF667
+	for <git@vger.kernel.org>; Thu, 30 Apr 2026 10:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777546478; cv=none; b=bWwWUmqMhYx95p0qNsiPKPvIVnrIGguopwU9nGD4y4+8Hkr532Q2UtRCj7Yb+sYx3rqBtEf5+dh0YTbtlDdLRBG8cTqO3qAVSafy+g87xEP1Kty/OcYTQMtaP4v6W1+0HHNDCcezQm9nmcsfk9jm4ewLONJqmw7M2uLo0rP5cP0=
+	t=1777546480; cv=none; b=R5r0Wya/GJKoyCBWKi7SxlQajVlaF0Mo89Le+UJPM1pr/HDDiwdty2O0VdMrAH/oTwc7dTOui+hSyt1GlUhX7uErEWCfcgTf17b6WWt8d5lY2/cSlWIT6iXYF3pdHuL7k8VhXkpCIbg9fltmq0f9DljTEubK1439XCgE7c6wFL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777546478; c=relaxed/simple;
-	bh=Rzs9JWUON2lfExV2/3yNY8SiloU58aHLKVKIHN0zcsc=;
+	s=arc-20240116; t=1777546480; c=relaxed/simple;
+	bh=THGskOHGWuBwCBBYrJJKhDNY11NGD5ZL0n0kUzveOTg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pb08sl078A5pcAus76vYicJESzSvGOkZqcFL1C0b+DHHFHPtLd9sOEPsIDcNRXPcUusLBHRMlj+NZFGFYIl9nvOW99qXoyeGF9ESQDs8NyILKnpI51YBFtWFe4pnHYxxdIhVxb1FKS94qjbAcCJ+PWmaVSV8oFhAOOVuSM9+/Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DWQz1HgC; arc=none smtp.client-ip=74.125.82.176
+	 MIME-Version:To:Cc; b=IudOuXdHZtxvcDGrFpeTHhJ3GaPJCnuEPa7Kyyyx5NA+leZr/oTKgbj1w9h7yNIldJP3aviFPMfudzazqqTy2Aqy6jgt5pHwNa2UBJDmOSkUBPFYiJJDG7hp+rWfmgo40wzMik6N4em+AEJSHVcqQvGJRmpWnqd9iuh9ZDvpIkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VtpsYwiW; arc=none smtp.client-ip=74.125.82.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DWQz1HgC"
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-2d868d014a5so786221eec.1
-        for <git@vger.kernel.org>; Thu, 30 Apr 2026 03:54:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VtpsYwiW"
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2b4520f6b32so1283321eec.0
+        for <git@vger.kernel.org>; Thu, 30 Apr 2026 03:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777546476; x=1778151276; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777546477; x=1778151277; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3Cy6Y/RV1dt6G3mU0S44K1/Vsd0MB+Dcb4kgKkYQxRM=;
-        b=DWQz1HgCpa6V851/8JcXJ8JwAl1y9Welq/lQVjUiHp/roxLjLBkkWf6/yK5jQXA69B
-         UUJGDNQB+0NMdea+1mNuptR9o+fKFHz3y/+MU6mCXAZTjTPLpAht0gZa3KqPYjrGhpn6
-         bpsxvscIPU4860N2isLdOmUcRUFMUKOSHGUVnaAswxbqq0FukzeSa/fh45llKtEfxsdm
-         voVau0VqoQ/yfCIlimmae0X2vG8bQpXKWKgmbSO0eNNJJ4v/BOt1fbEb/zIHLiZM7hyY
-         H5bJzQuYTLH7vODDzPH8mddRZHhgoRoDE9zQWKz3fF3UlZT3b78HurFjKZWjd1XSbeDp
-         f3PA==
+        bh=Y3M1oFC20+52tcAEAm0Q98Me2wu07wi9TJ+QAxGBrXQ=;
+        b=VtpsYwiWfdyEJ60YUASQObFLFT9af2mO8yj1Pxio1zdJm+dljtO0t7pTx5SZYONzvC
+         7zMc3l45ShKXNja+E406rLn7jmfFs4PoHAS0sOKXLqP9dCBWHnulNwhX1qlDoSELl3fH
+         Ded+/amC5WuwNyL/XJ3IyfpTVUExG5PgLxo1jnm8g/+HNf1WGxkml3lzYEct6ed8fpH3
+         xhdHT8CHYSUAt+s8tT9XygnGI+E6eZoCZsgawx76SzzlLEU5hHr01tphOAZRNzeUzo7P
+         iSvuog5dCTwboZL6VSnvB2QMnVNun2dfgiU2mPomULW0ydhrjyzHK9BrWnZg5dji8PiI
+         5VCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777546476; x=1778151276;
+        d=1e100.net; s=20251104; t=1777546477; x=1778151277;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=3Cy6Y/RV1dt6G3mU0S44K1/Vsd0MB+Dcb4kgKkYQxRM=;
-        b=DDm4uYRnHHPKtvkp8JLRHv0SInuFiAkdLBDqShaPNsCmTCWmwikTlf5T2YKIQ3FYcv
-         sd3q58q+2aHIo3aIbHVyB3OjPpQdKhJ0J+VQM6gK8Z2UpztrmVrHOQj4/SrMcadBJ14a
-         noZveZPYcdPsCAZAQxIxifVSQUw51ms6a4YmtzzGf5Uc+ot2Oso1FHoVfk3+Iz/EDzMS
-         94GoHG2S7w8MwbRLqKTLG4mAs5dOjLW9mI8rCD+rW4FfVhXwTcrqwPAOp9P6/FHjdCx1
-         zopjf60gctRvWdyLpRozJ5hfbbRNhGBwi2bbz1EKZEcmyVO0js8AQ9uCrV0ahiGgLagk
-         Vz8g==
-X-Gm-Message-State: AOJu0Yz+9J+xF/DXPCNXP3msvrw8f7Q37NDBY/1MOVvjlJIqLkc0KDU+
-	Oi7Iyw0LmUa3hOtS2OZSL31eNEVhrFBMpeuImwr+OQYTA9nUql1f+pjeo+VIil2S
-X-Gm-Gg: AeBDiesH+NwHOW5pnCOmgOxJFktoPRgErKhlyJ57lEtZ3fRsSRpSvElmQBF7yOoIiab
-	Q5AehBdWr3genFpWCUQMP3yVivht7biEKL7XqQ+On5wFcqQOsf3yqtWEinOdsxvvet49p5aEGf8
-	GjqaBM8GYiZ5D3/Skoab0EL5B6jKDqiJ+aRXH/0AGrp0b78CTj0dCm754oNrY3SqKeJ7O4ckex9
-	eiV/r2DXIz3Db22qPxQp7fMkNoqcgPM93TL7NgtVmbIefXBQc1l9+rhtRijaOtQ7iiciwUxTKxI
-	ljVJfuuBmEwNA32c7Kct8ni48mrYqIeKM9K7s6e+KzYoK1i92dyNXR2XcA9XlWZ4sT2OaDxRXCR
-	C3luqWdOrAKy9l3J1k3/Iv30uEX7dkL1F/4gHs9YwrN+x9vy1JKHISuekZcSO2XSFdze3Ul8IBt
-	8n3VmMQFcTlkcbGYTN2MFcBvMTAMGU1Ad9aihb
-X-Received: by 2002:a05:7300:5411:b0:2c1:558c:16e1 with SMTP id 5a478bee46e88-2ed3c5c9cf0mr983917eec.4.1777546475821;
-        Thu, 30 Apr 2026 03:54:35 -0700 (PDT)
+        bh=Y3M1oFC20+52tcAEAm0Q98Me2wu07wi9TJ+QAxGBrXQ=;
+        b=UfSUT03SyaZfi4GqMcrElPTJOIbw1fHU+KiKboGg9Qg3zo8hznGiZnhTgivcAS433b
+         lB24G1jqtvmc1oTPJQ0+aVFez888RCr2MQlo6Ixny2ZNaWpeXgcYo7/qBeP1sLkRVmWp
+         SABrJCl/lqzEpcZa93pIQgXt7G9EcTjvja3NVYHIYQSMJBmnBftG9mMkImqM1f6D+ihJ
+         ovaBflhoqoJBbZRFhC4P9BpTtECQYRTa6z4FXmnH7EKIiHm3Do/G2tzRC3ZmY9QCCyaZ
+         sUmPY374K0qzF6PcYLC59QbJvKMb1XUTGRzD2B9pVEfREwLCLFbAA2u5LXzidEgC2We0
+         Py8w==
+X-Gm-Message-State: AOJu0YzYir9/d/GpYjXenykEVtiMERWS1fUfdQ6VVuRN2DuP8s4gnPxM
+	b2yINfZjtjAlYW899bTFpTq1vryeek7MbSGo6AXIVBM0iRxrynSDI7xzGUVVKZlz
+X-Gm-Gg: AeBDiestOBvaEWMO/7LItH4Nb0bcDIGGtcJmlDDdz/k8kHfxDLnVrAIcUCtKwAXMgkv
+	9z79vL+OnhpvQ1zhONBk95F6Za30q+ZysN8ZX5MyIp13/PW+k292XIAjVbsPvW/DkCNCnM5+p7o
+	N6UkR0Gq+W6A+n+PvxL2vg2CNx+z4besQtnc8nQK1cmm6WAjCuWZTvAGluNoF4m46hFjyT/wato
+	Mj3M4BUhzR8dYeGNuUMMf4CXoTiCssvxY6HtXzGwUNWkx8N+/wm1vQxkitHVJ3MRyRzopdNjrJP
+	xBrfsqKDVrJSl9o5eHmtg0O2gCGG6/X4K51AJ0T1m3UFsevPGwF+9PVyVmarrxRl0aFOk/mgmbQ
+	LYDJ1yN0dBs9EIgqWc2XffFJtvsl8aW0ZhLwkLrxYdADzT9q6Vk5+D9YoD3whMfrdWUDRpMpW44
+	FCppUiDjZAIuuFgbRk7j0KRT5CTBH5TIGNM2m+
+X-Received: by 2002:a05:7022:e17:b0:12d:de3f:f3e6 with SMTP id a92af1059eb24-12dead2545cmr923520c88.38.1777546477354;
+        Thu, 30 Apr 2026 03:54:37 -0700 (PDT)
 Received: from [127.0.0.1] ([52.234.40.195])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ed1bf8e77bsm6318223eec.11.2026.04.30.03.54.34
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12de3261533sm7321486c88.9.2026.04.30.03.54.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2026 03:54:35 -0700 (PDT)
-Message-Id: <49488cc7d44404b9af55859dd892427bc8ee9142.1777546472.git.gitgitgadget@gmail.com>
+        Thu, 30 Apr 2026 03:54:36 -0700 (PDT)
+Message-Id: <f175294459c9370ed79c8338d6008b69c2028f99.1777546472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2087.v2.git.1777546472.gitgitgadget@gmail.com>
 References: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
 	<pull.2087.v2.git.1777546472.gitgitgadget@gmail.com>
 From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 30 Apr 2026 10:54:29 +0000
-Subject: [PATCH v2 1/4] http: extract http_reauth_prepare() from retry paths
+Date: Thu, 30 Apr 2026 10:54:30 +0000
+Subject: [PATCH v2 2/4] http: attempt Negotiate auth in http.emptyAuth=auto
+ mode
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,85 +83,93 @@ Cc: gitster@pobox.com,
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-All three HTTP retry paths (http_request_recoverable, post_rpc,
-probe_rpc) call credential_fill() directly when handling
-HTTP_REAUTH. Extract this into a helper function so that a
-subsequent commit can add pre-fill logic (such as attempting
-empty-auth before prompting) in one place.
+When a server advertises Negotiate (SPNEGO) authentication, the
+"auto" mode of http.emptyAuth should detect this as an "exotic"
+method and proactively send empty credentials, allowing libcurl to
+use the system Kerberos ticket without prompting the user.
 
-No functional change.
+However, two features interact to prevent this from working:
+
+The Negotiate-stripping logic, introduced in 4dbe66464b
+(remote-curl: fall back to Basic auth if Negotiate fails,
+2015-01-08), removes CURLAUTH_GSSNEGOTIATE from the allowed
+methods on the first 401 response. The empty-auth auto-detection,
+introduced in 40a18fc77c (http: add an "auto" mode for
+http.emptyauth, 2017-02-25), then checks the remaining methods
+for anything "exotic" -- but Negotiate has already been removed,
+so auto mode never activates for servers whose only non-Basic/Digest
+method is Negotiate (e.g., Apache with mod_auth_kerb offering
+Basic + Negotiate).
+
+Fix this by delaying the Negotiate stripping in auto mode: on the
+first 401, keep Negotiate in the allowed methods so that auto mode
+can detect it and retry with empty credentials. If that attempt
+fails (no valid Kerberos ticket), strip Negotiate on the second 401
+and fall through to credential_fill() as usual.
+
+To support this, also teach http_reauth_prepare() to skip
+credential_fill() when empty auth is about to be attempted, since
+filling real credentials would bypass the empty-auth mechanism.
+
+The true and false modes are unchanged: true sends empty credentials
+on the very first request (before any 401), and false never sends
+them.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- http.c        | 7 ++++++-
- http.h        | 6 ++++++
- remote-curl.c | 4 ++--
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ http.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/http.c b/http.c
-index d8d016891b..f208e0ad82 100644
+index f208e0ad82..1c7ea32ef2 100644
 --- a/http.c
 +++ b/http.c
-@@ -665,6 +665,11 @@ static void init_curl_http_auth(CURL *result)
- 	}
+@@ -138,6 +138,7 @@ static unsigned long empty_auth_useless =
+ 	CURLAUTH_BASIC
+ 	| CURLAUTH_DIGEST_IE
+ 	| CURLAUTH_DIGEST;
++static int empty_auth_try_negotiate;
+ 
+ static struct curl_slist *pragma_header;
+ static struct string_list extra_http_headers = STRING_LIST_INIT_DUP;
+@@ -667,6 +668,17 @@ static void init_curl_http_auth(CURL *result)
+ 
+ void http_reauth_prepare(int all_capabilities)
+ {
++	/*
++	 * If we deferred stripping Negotiate to give empty auth a
++	 * chance (auto mode), skip credential_fill on this retry so
++	 * that init_curl_http_auth() sends empty credentials and
++	 * libcurl can attempt Negotiate with the system ticket cache.
++	 */
++	if (empty_auth_try_negotiate &&
++	    !http_auth.password && !http_auth.credential &&
++	    (http_auth_methods & CURLAUTH_GSSNEGOTIATE))
++		return;
++
+ 	credential_fill(the_repository, &http_auth, all_capabilities);
  }
  
-+void http_reauth_prepare(int all_capabilities)
-+{
-+	credential_fill(the_repository, &http_auth, all_capabilities);
-+}
-+
- /* *var must be free-able */
- static void var_override(char **var, char *value)
- {
-@@ -2398,7 +2403,7 @@ static int http_request_recoverable(const char *url,
- 				sleep(retry_delay);
- 			}
- 		} else if (ret == HTTP_REAUTH) {
--			credential_fill(the_repository, &http_auth, 1);
-+			http_reauth_prepare(1);
- 		}
- 
- 		ret = http_request(url, result, target, options);
-diff --git a/http.h b/http.h
-index f9ee888c3e..729c51904d 100644
---- a/http.h
-+++ b/http.h
-@@ -76,6 +76,12 @@ extern int http_is_verbose;
- extern ssize_t http_post_buffer;
- extern struct credential http_auth;
- 
-+/**
-+ * Prepare for an HTTP re-authentication retry. This fills credentials
-+ * via credential_fill() so the next request can include them.
-+ */
-+void http_reauth_prepare(int all_capabilities);
-+
- extern char curl_errorstr[CURL_ERROR_SIZE];
- 
- enum http_follow_config {
-diff --git a/remote-curl.c b/remote-curl.c
-index aba60d5712..affdb880f7 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -946,7 +946,7 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
- 		do {
- 			err = probe_rpc(rpc, &results);
- 			if (err == HTTP_REAUTH)
--				credential_fill(the_repository, &http_auth, 0);
-+				http_reauth_prepare(0);
- 		} while (err == HTTP_REAUTH);
- 		if (err != HTTP_OK)
- 			return -1;
-@@ -1068,7 +1068,7 @@ retry:
- 	rpc->any_written = 0;
- 	err = run_slot(slot, NULL);
- 	if (err == HTTP_REAUTH && !large_request) {
--		credential_fill(the_repository, &http_auth, 0);
-+		http_reauth_prepare(0);
- 		curl_slist_free_all(headers);
- 		goto retry;
- 	}
+@@ -1895,7 +1907,18 @@ static int handle_curl_result(struct slot_results *results)
+ 				http_proactive_auth = PROACTIVE_AUTH_NONE;
+ 			return HTTP_NOAUTH;
+ 		} else {
+-			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
++			if (curl_empty_auth == -1 &&
++			    !empty_auth_try_negotiate &&
++			    (results->auth_avail & CURLAUTH_GSSNEGOTIATE)) {
++				/*
++				 * In auto mode, give Negotiate a chance via
++				 * empty auth before stripping it. If it fails,
++				 * we will strip it on the next 401.
++				 */
++				empty_auth_try_negotiate = 1;
++			} else {
++				http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
++			}
+ 			if (results->auth_avail) {
+ 				http_auth_methods &= results->auth_avail;
+ 				http_auth_methods_restricted = 1;
 -- 
 gitgitgadget
 
