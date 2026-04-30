@@ -1,243 +1,661 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0B333374F
-	for <git@vger.kernel.org>; Thu, 30 Apr 2026 19:53:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EDC381B1D
+	for <git@vger.kernel.org>; Thu, 30 Apr 2026 19:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777578812; cv=none; b=FJOQ17HYJv8uEfDs4PKD042JKLXS8/gBhCFHW2lq8AznljcXgJgM6jUfBg3o3Kkx462qBdtCfEBXAjd0CjUXheVAgMMrBRdyxqeL8YpIW0mgZsOR8f9ujI2dOwnsl9hJwncmrp6CbzcykY2Y2ibd21pCMdnCl+ZaAjE6gRvJq7o=
+	t=1777578912; cv=none; b=XM8TC3+KHc+euNPQp18ZT/L7li91PcHbW1wniR9Aj48IA7idlOB1yQc3BrfoUBzfSNnLzgukrb7w0ns6a7F9iXWaaedeVNYGRu4WXnkXQNR2P/bchW0UWiaajV5zze6UlLYbh1BpuucHK/0fxKQlYXNxPhQmYmlfo9ZYCeke5hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777578812; c=relaxed/simple;
-	bh=j5WC300Mptmwcu19MD603tCCVFiYgEr67k2UwJtMjm0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApmxK3Tz/qZyc/f1+iYNWYz775iFHfZdyDe6pOpDq1yajd166nxCSy6vGCZ+zS/Hp0O7O4p+m59HY8Q1NBAAzX3Qa0EIz3ReVL1LZYQtiTP+Q5hIC2IBl21HjW7S2/HcpVL9vK/GGyxUVagY5XuudA4kQ+4/UGdegYJzj44PNIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=ZDA+UDTn; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1777578912; c=relaxed/simple;
+	bh=PP113QOqrwcL1aynINKThEpE5v09gstwatzhB+x/neM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Fx/JTFZTGDOwQLWxzGnLnzUfj/VBbjuDSu9K3Zjq4RPKq2VVgceUm5jKweAVXdPKr5KNiZbq+YrEnK7K32mJzX37D3JwOEjuU5fnSkgcHrGk3NwvnWfL0su0aZx6v5/5HVUGlu6i4xOsB2K5HjGPYVCu0dkJ2vGpiAJLr3gCYsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E9usmhMD; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="ZDA+UDTn"
-From: Mirko Faina <mroik@delayed.space>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1777578800;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=90LB6azF2+xNtH5HRrcYFGaD0L7SsdH9hOwqQEVlSTs=;
-	b=ZDA+UDTnKf2T/cIV1+l1kv1qejohqHFo28suQtRuNNAWv+6Ww0W735I48s6M9yEv9p4kT0
-	mnnGGwvqqSN1UO3xPc+9ZTCXj2+aXUxUtYA66X83XrpnIuQ7M2XadKpIBMy3sA2RVTWzy7
-	8xRa8Yw/nQDXSV2BhIb7LFElX7Xy4Km2b03zwgTcs6jJiaSxBnRhEFY90/gYupgLDgqFf8
-	8YDZ5INW7EHtqQufT+6R1sAstKDeVax056SYGyrCrQ3oU+oLeX1L19TUtkaxXczYC+QJli
-	jIswYmplvpIIQsuzCvgsGmfeeRxheI9rYlCtof65osfmDgHMOd0OjKCJbYQzSQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-To: git@vger.kernel.org
-Cc: Mirko Faina <mroik@delayed.space>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Patrick Steinhardt <ps@pks.im>,
-	Tian Yuchen <cat@malon.dev>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Chris Torek <chris.torek@gmail.com>
-Subject: [PATCH v5] revision.c: implement --max-count-oldest
-Date: Thu, 30 Apr 2026 21:52:45 +0200
-Message-ID: <2f71a00b035e25b971641b77a6fa7626f1e2459c.1777578676.git.mroik@delayed.space>
-In-Reply-To: <cover.1777249165.git.mroik@delayed.space>
-References: <cover.1777249165.git.mroik@delayed.space>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9usmhMD"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8ec37d52c0dso135253185a.0
+        for <git@vger.kernel.org>; Thu, 30 Apr 2026 12:55:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777578905; x=1778183705; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=N2sVt7ntO/M1AnBGx0+XAiiqjez6TR7iTu4JCiRWdVA=;
+        b=E9usmhMDrPhIct5RDgvElHHh0XfnyAgj2L1UhSMmcrHscO7cDQWkpaspwByQDCoOHn
+         rfDoZRDiw3T2veKdp/JHp2m2WkeaAvu0rGPM9VKfMQtXaueZQAdJ8AtdAHEGCNxO+CWm
+         NbPz++wh5uHz9xa9EmD2qelLd1glBPt2utWmKti8XzQuUbB+G1ePso9mcGso/TeIlNHl
+         WcbY+V58hFcMfMMQrZy6vzw4itwCwjkFQ5TCsB4GFcDQslqDP92MNgoCR6uLZwGlcMdL
+         7yj9F9TgHMr4IUCcBrLlqZWxvOTC7RXzpHaCVSaaFE0NnYluDzN1YRihUlXkFFHq8nRZ
+         3LMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777578905; x=1778183705;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=N2sVt7ntO/M1AnBGx0+XAiiqjez6TR7iTu4JCiRWdVA=;
+        b=h6aboG541LExBoi8aXosakklNcFvvCAF/XY0qSuGG/TI7m2dGbAleaLrGHixMb/JVc
+         S3ymouVF40pzCQ0vEaAqNCZ7BBDaa7Z7XWyCRBW2d14c4ADfw6jCTuBkizRIN81ZU7pm
+         lzLWcDf/kopu5n6hBc8o6TqWzKtoWYEYUrY7oDxX9qPGS6QQnFO+xeZoiodjHDalEwBq
+         Spq4BDUn0hVtz1z2sitfULqisrnDM9g/6Pg/rFYqZAq2I9NZC5LirXGmrlHfjKPhvpGv
+         sDipScZIUCMsuUvjz2sg14UQ+C6unZAAgxHZLtCu4yiGtcOKtHrPYLXzbMWOuHq4se/Q
+         5SeA==
+X-Gm-Message-State: AOJu0YxZvcGKRtrN4kvddOvQ9ye2Ox3BGHOBIEDr6EYK7LsCBZ+K9NZ3
+	O08owYjX7R9h516XCQX5w2zsnLhNJxO1Eoo+XGYvAxymYOPv1Zh/dNBPg+ZNRw==
+X-Gm-Gg: AeBDietcc5YRW1lnlWOur4p3CAOXnjhWiDirC8c/azk123zOIGDi2j/AcAwLZHpiskY
+	7srm5daGIpt/Vlql9d0lf9piQmJVuCIvyxx+Y4ZsZXqXDdD5wGQlQIIh1c/t9/Y93DJPuA9hInB
+	7Wp0GNcetBe10bKqt/VvGVPGu/S+rJr/T8X+yciyS12PVbPDFStl+1c1jd9C5+lH0HQWRyAJJBt
+	3xGaYW6WLu2yDZD6h8iB0fWZCLvYs1vIrsDe7ooUAduJuWhx5DnCp8uq4txAdS0/IoYGwrzea4s
+	HDHTgdr5QHwrDmktGH4bX1nJrFfFal5fHfY4wlX9o3ePPoGFA4rmhyCft8z596KpAIE4NZa7ItJ
+	ShBnvFr8eFtyq5q8NsgKV+Rm6ytjTfnFQf+obm2eMWrpkEC1swkpPbu0IbME8F9eiZXfsAFbA9W
+	hQDzKLOoel33iiLQEHs5agFx4To3QRgBo/eaF0lQ==
+X-Received: by 2002:a05:620a:bc5:b0:8bb:ac44:bd3c with SMTP id af79cd13be357-8fa8922bc0bmr699698785a.52.1777578904876;
+        Thu, 30 Apr 2026 12:55:04 -0700 (PDT)
+Received: from [127.0.0.1] ([172.183.132.75])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fbf326db63sm306085a.22.2026.04.30.12.55.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Apr 2026 12:55:04 -0700 (PDT)
+Message-Id: <pull.2284.git.git.1777578903593.gitgitgadget@gmail.com>
+From: "Andrey Zarubin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 30 Apr 2026 19:55:03 +0000
+Subject: [PATCH] pretty: add diff-stat log placeholders
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5870; i=mroik@delayed.space; h=from:subject:message-id; bh=j5WC300Mptmwcu19MD603tCCVFiYgEr67k2UwJtMjm0=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBp87MNMCS1/PJLuaypQgduwdT4JG/wjJgjuE6FS kozdUADnq2JAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCafOzDQAKCRBIeX6hnBm+ 0XMDD/sEI++X4hYIc1yVN8t74lhd0o3VtyZ3JoCJRYsmuQrfQEDRXAc5lput1L2L5BJaS4STndE 2FkT05CmTSWoXYfC2qdiGra/2PwiWNxJL8Rb2gekVRqk6Sa23TZfQ8rxosnlgrxGi1BDZw5aDZG aoyaUeClU+kC68HiVlHzZENNDyRT5JjSNTpbL1UgU7AdosEGxep/NHVQ30EhfR+qJUdxlB38i81 XBxL5erzqf9B6+2RbnYO+YxPogLz8YDrvr75QIOesyGdsxnNXCoz2KNQZXFFxlWmLGomiq1Mn5T Qx39YGT2VdzyGuGi6jriRjJuUZrEqnpw6AKPZJMALu1ZL2UTmiPIGLprFMexO2z7/9GGz1J1W9T oo2SAwKzrfz1++cDg0gz4GKEMRrCSgU5vIDKxhnAsOV4UrMFHwwgTLOHvzKVgXUrdZ/7fwK1Nhd ZYfwuPZAbsKQF7vVqFJCxTC7GvlyMPsUn9MHr4ayKfx5K0H9H1W+2BwA0knmsTCv86ublILlkTc jBYth5y837H32QZpdeVdtELRd4fiGyYx48eODmLAJuViW5ljEfWFTkokjQZRrYTI+IyqLQoA53e eVCQvohkWdS2rC2m52juBg3JyEbYKPqUlKNO6OO3dRqhv//aQH9VT3UOELFbnaGOeVzsekvrDha qQwwCC4hg
- KkNFiQ==
-X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
+To: git@vger.kernel.org
+Cc: Andrey Zarubin <zarandr@gmail.com>,
+    Andrey Zarubin <zarandr@gmail.com>
 
---max-count is a commit limiting option sets a maximum amount of commits
-to be shown. If a user wants to see only the first N commits of the
-history (the oldest commits) they'd have to combine --max-count with
---skip. This is not very user-friendly.
+From: Andrey Zarubin <zarandr@gmail.com>
 
-Teach get_revision() the --max-count-oldest option.
+Currently, users who want per-commit line/file change counts in
+a custom log format must post-process `git log --shortstat`
+output because the pretty formatter exposes no equivalent
+placeholders.
 
-Signed-off-by: Mirko Faina <mroik@delayed.space>
+Introduce `%(diff-stat:files)`, `%(diff-stat:insertions)`,
+`%(diff-stat:deletions)`, and `%(diff-stat:lines)`, computed
+from the same diffstat machinery as `--shortstat` and cached
+once per commit during format expansion.
+
+Short aliases are provided as `%aF`, `%aA`, and `%aR`. The
+requested `%aI` and `%aD` forms are unavailable because those
+names already expand to author dates, so use additions/removals
+mnemonics instead.
+
+When log output is already walking a diff, the formatter reuses
+the current diff queue. Otherwise it computes a private summary
+lazily, so formats without these placeholders still pay no diff
+cost.
+
+Signed-off-by: Andrey Zarubin <zarandr@gmail.com>
 ---
- Documentation/rev-list-options.adoc |  3 ++
- revision.c                          | 77 +++++++++++++++++++++++++++--
- revision.h                          |  2 +
- t/t4202-log.sh                      | 14 ++++++
- 4 files changed, 93 insertions(+), 3 deletions(-)
+    pretty: add diff-stat log placeholders
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 2d195a1474..736f34efab 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -18,6 +18,9 @@ ordering and formatting options, such as `--reverse`.
- `--max-count=<number>`::
- 	Limit the output to _<number>_ commits.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2284%2Fzarandr%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2284/zarandr/master-v1
+Pull-Request: https://github.com/git/git/pull/2284
+
+ Documentation/pretty-formats.adoc |  12 +++
+ builtin/log.c                     |   5 +
+ diff.c                            |  32 ++++--
+ diff.h                            |   8 ++
+ log-tree.c                        |   2 +
+ pretty.c                          | 166 ++++++++++++++++++++++++++++++
+ pretty.h                          |   3 +
+ t/t4205-log-pretty-formats.sh     | 162 +++++++++++++++++++++++++++++
+ 8 files changed, 381 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
+index 2ae0eb11a9..d1b574f3ad 100644
+--- a/Documentation/pretty-formats.adoc
++++ b/Documentation/pretty-formats.adoc
+@@ -294,6 +294,18 @@ tags are added or removed at the same time.
+ `exclude=<pattern>`;; Do not consider tags matching the given
+    `glob(7)` _<pattern>_, excluding the `refs/tags/` prefix.
  
-+`--max-count-oldest=<number>`::
-+	Limit the output to the _<number>_ oldest commits.
++++%(diff-stat:files)++:: show the number of files changed
++++%(diff-stat:insertions)++:: show the number of inserted lines
++++%(diff-stat:deletions)++:: show the number of deleted lines
++++%(diff-stat:lines)++:: show the total number of inserted and deleted lines
+++
++  These placeholders are computed like `--shortstat`. By default,
++  merge commits expand to `0` unless a merge diff mode such as `-m`,
++  `-c`, or `--cc` is in effect.
+++%aF+:: short alias for `%(diff-stat:files)`
+++%aA+:: short alias for `%(diff-stat:insertions)`
+++%aR+:: short alias for `%(diff-stat:deletions)`
 +
- `--skip=<number>`::
- 	Skip _<number>_ commits before starting to show the commit output.
+ +%S+:: ref name given on the command line by which the commit was reached
+        (like `git log --source`), only works with `git log`
+ +%e+:: encoding
+diff --git a/builtin/log.c b/builtin/log.c
+index 8c0939dd42..017face2c0 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -321,6 +321,11 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 	memset(&w, 0, sizeof(w));
+ 	userformat_find_requirements(NULL, &w);
  
-diff --git a/revision.c b/revision.c
-index 599b3a66c3..3aaa77ced5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2339,10 +2339,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	}
- 
- 	if ((argcount = parse_long_opt("max-count", argv, &optarg))) {
-+		if (revs->max_count_type == 1)
-+			die(_("can't use --max-count with --max-count-oldest"));
- 		revs->max_count = parse_count(optarg);
- 		revs->no_walk = 0;
-+		revs->max_count_type = 0;
- 		return argcount;
-+	} else if ((argcount = parse_long_opt("max-count-oldest", argv, &optarg))) {
-+		if (revs->max_count_type == 0 && revs->max_count != -1)
-+			die(_("can't use --max-count with --max-count-oldest"));
-+		if (revs->skip_count > 0)
-+			die(_("con't use --max-count-oldest with --skip"));
-+		revs->max_count = parse_count(optarg);
-+		revs->no_walk = 0;
-+		revs->max_count_type = 1;
-+		revs->max_count_stage = 0;
- 	} else if ((argcount = parse_long_opt("skip", argv, &optarg))) {
-+		if (revs->max_count_type == 1)
-+			die(_("con't use --max-count-oldest with --skip"));
- 		revs->skip_count = parse_count(optarg);
- 		return argcount;
- 	} else if ((*arg == '-') && isdigit(arg[1])) {
-@@ -4521,15 +4535,68 @@ static struct commit *get_revision_internal(struct rev_info *revs)
- 	return c;
++	if (w.diffstat) {
++		rev->diff = 1;
++		rev->diffopt.output_format |= DIFF_FORMAT_NO_OUTPUT;
++	}
++
+ 	if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
+ 		rev->show_notes = 1;
+ 	if (rev->show_notes)
+diff --git a/diff.c b/diff.c
+index 397e38b41c..2f018e801a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3195,12 +3195,14 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	strbuf_release(&out);
  }
  
-+static void retrieve_oldest_commits(struct rev_info *revs,
-+				    struct commit_list **queue)
-+{
-+	struct commit *c;
-+	int max_count = revs->max_count;
-+	int queuei_count = 0;
-+	int queueo_count = 0;
-+	struct commit_list *queueo = NULL;
-+	struct commit_list *queuei = NULL;
-+	struct commit_list *reversed_queue = NULL;
+-static void show_shortstats(struct diffstat_t *data, struct diff_options *options)
++void summarize_diffstat(struct diffstat_t *data,
++			struct diff_stat_summary *summary)
+ {
+-	int i, adds = 0, dels = 0, total_files = data->nr;
++	int i;
+ 
+-	if (data->nr == 0)
+-		return;
++	summary->files = data->nr;
++	summary->insertions = 0;
++	summary->deletions = 0;
+ 
+ 	for (i = 0; i < data->nr; i++) {
+ 		int added = data->files[i]->added;
+@@ -3208,13 +3210,25 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
+ 
+ 		if (data->files[i]->is_unmerged ||
+ 		    (!data->files[i]->is_interesting && (added + deleted == 0))) {
+-			total_files--;
+-		} else if (!data->files[i]->is_binary) { /* don't count bytes */
+-			adds += added;
+-			dels += deleted;
++			summary->files--;
++		} else if (!data->files[i]->is_binary) {
++			summary->insertions += added;
++			summary->deletions += deleted;
+ 		}
+ 	}
+-	print_stat_summary_inserts_deletes(options, total_files, adds, dels);
++}
 +
-+	revs->max_count = -1;
-+	while ((c = get_revision_internal(revs))) {
-+		c->object.flags &= ~SHOWN;
-+		commit_list_insert(c, &queuei);
-+		queuei_count++;
-+		while (queuei_count + queueo_count > max_count) {
-+			if (!queueo_count) {
-+				while (queuei_count > 0) {
-+					c = pop_commit(&queuei);
-+					queuei_count--;
-+					commit_list_insert(c, &queueo);
-+					queueo_count++;
-+				}
-+			}
-+			pop_commit(&queueo);
-+			queueo_count--;
++static void show_shortstats(struct diffstat_t *data, struct diff_options *options)
++{
++	struct diff_stat_summary summary;
++
++	if (data->nr == 0)
++		return;
++
++	summarize_diffstat(data, &summary);
++	print_stat_summary_inserts_deletes(options, summary.files,
++					   summary.insertions,
++					   summary.deletions);
+ }
+ 
+ static void show_numstat(struct diffstat_t *data, struct diff_options *options)
+diff --git a/diff.h b/diff.h
+index 7eb84aadf4..798c52138d 100644
+--- a/diff.h
++++ b/diff.h
+@@ -449,6 +449,12 @@ struct diffstat_t {
+ 	} **files;
+ };
+ 
++struct diff_stat_summary {
++	int files;
++	int insertions;
++	int deletions;
++};
++
+ enum color_diff {
+ 	DIFF_RESET = 0,
+ 	DIFF_CONTEXT = 1,
+@@ -581,6 +587,8 @@ struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 
+ void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
+ 		      struct diff_queue_struct *q);
++void summarize_diffstat(struct diffstat_t *diffstat,
++			struct diff_stat_summary *summary);
+ void free_diffstat_info(struct diffstat_t *diffstat);
+ 
+ #define DIFF_SETUP_REVERSE      	1
+diff --git a/log-tree.c b/log-tree.c
+index 7e048701d0..aa6f6dd27d 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -881,6 +881,8 @@ void show_log(struct rev_info *opt)
+ 	ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
+ 	ctx.output_encoding = get_log_output_encoding();
+ 	ctx.rev = opt;
++	ctx.diff_parent = parent;
++	ctx.diff_queue_present = diff_queued_diff.nr > 0;
+ 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
+ 		ctx.from_ident = &opt->from_ident;
+ 	if (opt->graph)
+diff --git a/pretty.c b/pretty.c
+index 814803980b..a50ecd31ce 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -10,6 +10,7 @@
+ #include "hex.h"
+ #include "utf8.h"
+ #include "diff.h"
++#include "diffcore.h"
+ #include "pager.h"
+ #include "revision.h"
+ #include "string-list.h"
+@@ -893,6 +894,7 @@ struct format_commit_context {
+ 	const struct pretty_print_context *pretty_ctx;
+ 	unsigned commit_header_parsed:1;
+ 	unsigned commit_message_parsed:1;
++	unsigned diffstat_parsed:1;
+ 	struct signature_check signature_check;
+ 	enum flush_type flush_type;
+ 	enum trunc_type truncate;
+@@ -911,6 +913,7 @@ struct format_commit_context {
+ 
+ 	/* The following ones are relative to the result struct strbuf. */
+ 	size_t wrap_start;
++	struct diff_stat_summary diffstat;
+ };
+ 
+ static void parse_commit_header(struct format_commit_context *context)
+@@ -939,6 +942,145 @@ static void parse_commit_header(struct format_commit_context *context)
+ 	context->commit_header_parsed = 1;
+ }
+ 
++enum diff_stat_placeholder {
++	DIFF_STAT_FILES,
++	DIFF_STAT_INSERTIONS,
++	DIFF_STAT_DELETIONS,
++	DIFF_STAT_LINES,
++};
++
++static void parse_commit_diffstat(struct format_commit_context *c)
++{
++	const struct pretty_print_context *pretty_ctx = c->pretty_ctx;
++	const struct rev_info *rev = pretty_ctx->rev;
++	struct diff_options opts;
++	struct diffstat_t diffstat;
++	const struct commit *commit = c->commit;
++	const struct commit *parent = pretty_ctx->diff_parent;
++	const struct object_id *tree_oid;
++	int copied_pathspec = 0;
++	int use_current_queue = 0;
++	int use_rev_opts = rev && rev->diffopt.repo;
++
++	if (c->diffstat_parsed)
++		return;
++	c->diffstat_parsed = 1;
++	memset(&c->diffstat, 0, sizeof(c->diffstat));
++
++	if (pretty_ctx->diff_queue_present) {
++		opts = rev->diffopt;
++		compute_diffstat(&opts, &diffstat, &diff_queued_diff);
++		summarize_diffstat(&diffstat, &c->diffstat);
++		free_diffstat_info(&diffstat);
++		return;
++	}
++
++	parse_commit_or_die((struct commit *)commit);
++	tree_oid = get_commit_tree_oid(commit);
++
++	if (use_rev_opts) {
++		memcpy(&opts, &rev->diffopt, sizeof(opts));
++		copy_pathspec(&opts.pathspec, &rev->diffopt.pathspec);
++		copied_pathspec = 1;
++	} else {
++		repo_diff_setup(c->repository, &opts);
++		init_diffstat_widths(&opts);
++		opts.flags.recursive = 1;
++		opts.flags.allow_textconv = 1;
++	}
++	opts.output_format = DIFF_FORMAT_SHORTSTAT;
++	diff_setup_done(&opts);
++
++	if (!commit->parents) {
++		if (use_rev_opts && !rev->show_root_diff)
++			goto out;
++		diff_root_tree_oid(tree_oid, "", &opts);
++		use_current_queue = 1;
++		goto diffstat;
++	}
++
++	if (!parent && commit->parents->next) {
++		if (!use_rev_opts)
++			goto out;
++		if (rev->combine_merges ||
++		    (rev->separate_merges && rev->first_parent_merges))
++			parent = commit->parents->item;
++		else
++			goto out;
++	} else if (!parent) {
++		parent = commit->parents->item;
++	}
++
++	parse_commit_or_die((struct commit *)parent);
++	diff_tree_oid(get_commit_tree_oid(parent), tree_oid, "", &opts);
++	use_current_queue = 1;
++
++diffstat:
++	diffcore_std(&opts);
++	compute_diffstat(&opts, &diffstat, &diff_queued_diff);
++	summarize_diffstat(&diffstat, &c->diffstat);
++	free_diffstat_info(&diffstat);
++out:
++	if (use_current_queue) {
++		opts.output_format = DIFF_FORMAT_NO_OUTPUT;
++		diff_flush(&opts);
++	}
++	if (copied_pathspec)
++		clear_pathspec(&opts.pathspec);
++	else
++		diff_free(&opts);
++}
++
++static void format_commit_diffstat(struct strbuf *sb,
++				   struct format_commit_context *c,
++				   enum diff_stat_placeholder which)
++{
++	int value;
++
++	parse_commit_diffstat(c);
++
++	switch (which) {
++	case DIFF_STAT_FILES:
++		value = c->diffstat.files;
++		break;
++	case DIFF_STAT_INSERTIONS:
++		value = c->diffstat.insertions;
++		break;
++	case DIFF_STAT_DELETIONS:
++		value = c->diffstat.deletions;
++		break;
++	case DIFF_STAT_LINES:
++		value = c->diffstat.insertions + c->diffstat.deletions;
++		break;
++	default:
++		BUG("unknown diff stat placeholder");
++	}
++
++	strbuf_addf(sb, "%d", value);
++}
++
++static size_t parse_diff_stat_placeholder(struct strbuf *sb,
++					  const char *placeholder,
++					  struct format_commit_context *c)
++{
++	const char *arg;
++	enum diff_stat_placeholder which;
++
++	if (skip_prefix(placeholder, "(diff-stat:files)", &arg))
++		which = DIFF_STAT_FILES;
++	else if (skip_prefix(placeholder, "(diff-stat:insertions)", &arg))
++		which = DIFF_STAT_INSERTIONS;
++	else if (skip_prefix(placeholder, "(diff-stat:deletions)", &arg))
++		which = DIFF_STAT_DELETIONS;
++	else if (skip_prefix(placeholder, "(diff-stat:lines)", &arg))
++		which = DIFF_STAT_LINES;
++	else
++		return 0;
++
++	format_commit_diffstat(sb, c, which);
++	return arg - placeholder;
++}
++
+ static int istitlechar(char c)
+ {
+ 	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+@@ -1564,6 +1706,24 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		return 7;
+ 	}
+ 
++	if (placeholder[0] == 'a') {
++		switch (placeholder[1]) {
++		case 'F':
++			format_commit_diffstat(sb, c, DIFF_STAT_FILES);
++			return 2;
++		case 'A':
++			format_commit_diffstat(sb, c, DIFF_STAT_INSERTIONS);
++			return 2;
++		case 'R':
++			format_commit_diffstat(sb, c, DIFF_STAT_DELETIONS);
++			return 2;
 +		}
 +	}
 +
-+	while ((c = pop_commit(&queueo)))
-+		commit_list_insert(c, &reversed_queue);
-+	while ((c = pop_commit(&queuei)))
-+		commit_list_insert(c, &queueo);
-+	while ((c = pop_commit(&queueo)))
-+		commit_list_insert(c, &reversed_queue);
++	res = parse_diff_stat_placeholder(sb, placeholder, c);
++	if (res)
++		return res;
 +
-+	while ((c = pop_commit(&reversed_queue)))
-+		commit_list_insert(c, queue);
-+}
-+
- struct commit *get_revision(struct rev_info *revs)
- {
- 	struct commit *c;
- 	struct commit_list *reversed;
-+	struct commit_list *queue = NULL;
-+
-+	if (revs->max_count_type == 1 && !revs->max_count_stage) {
-+		retrieve_oldest_commits(revs, &queue);
-+		commit_list_free(revs->commits);
-+		revs->commits = queue;
-+		revs->max_count_stage = 1;
-+	}
+ 	switch (placeholder[0]) {
+ 	case 'H':		/* commit hash */
+ 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
+@@ -1980,6 +2140,10 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
+ 			fmt++;
  
- 	if (revs->reverse) {
- 		reversed = NULL;
--		while ((c = get_revision_internal(revs)))
--			commit_list_insert(c, &reversed);
-+		if (revs->max_count_type == 1)
-+			while ((c = pop_commit(&revs->commits)))
-+				commit_list_insert(c, &reversed);
-+		else
-+			while ((c = get_revision_internal(revs)))
-+				commit_list_insert(c, &reversed);
- 		commit_list_free(revs->commits);
- 		revs->commits = reversed;
- 		revs->reverse = 0;
-@@ -4543,7 +4610,11 @@ struct commit *get_revision(struct rev_info *revs)
- 		return c;
+ 		switch (*fmt) {
++		case 'a':
++			if (fmt[1] == 'F' || fmt[1] == 'A' || fmt[1] == 'R')
++				w->diffstat = 1;
++			break;
+ 		case 'N':
+ 			w->notes = 1;
+ 			break;
+@@ -1993,6 +2157,8 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
+ 		case '(':
+ 			if (starts_with(fmt + 1, "decorate"))
+ 				w->decorate = 1;
++			else if (starts_with(fmt + 1, "diff-stat:"))
++				w->diffstat = 1;
+ 			break;
+ 		}
  	}
+diff --git a/pretty.h b/pretty.h
+index fac699033e..7f0491e512 100644
+--- a/pretty.h
++++ b/pretty.h
+@@ -58,6 +58,8 @@ struct pretty_print_context {
+ 	 */
+ 	struct string_list in_body_headers;
+ 	int graph_width;
++	const struct commit *diff_parent;
++	unsigned diff_queue_present:1;
+ };
  
--	c = get_revision_internal(revs);
-+	if (revs->max_count_stage)
-+		c = pop_commit(&revs->commits);
-+	else
-+		c = get_revision_internal(revs);
-+
- 	if (c && revs->graph)
- 		graph_update(revs->graph, c);
- 	if (!c) {
-diff --git a/revision.h b/revision.h
-index 584f1338b5..e157463cb1 100644
---- a/revision.h
-+++ b/revision.h
-@@ -309,6 +309,8 @@ struct rev_info {
- 	/* special limits */
- 	int skip_count;
- 	int max_count;
-+	unsigned int max_count_type:1;
-+	unsigned int max_count_stage:1;
- 	timestamp_t max_age;
- 	timestamp_t max_age_as_filter;
- 	timestamp_t min_age;
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 05cee9e41b..668c231cf1 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1882,6 +1882,20 @@ test_expect_success 'log --graph with --name-status' '
- 	test_cmp_graph --name-status tangle..reach
+ /* Check whether commit format is mail. */
+@@ -75,6 +77,7 @@ struct userformat_want {
+ 	unsigned notes:1;
+ 	unsigned source:1;
+ 	unsigned decorate:1;
++	unsigned diffstat:1;
+ };
+ void userformat_find_requirements(const char *fmt, struct userformat_want *w);
+ 
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 3865f6abc7..230950baed 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -1227,4 +1227,166 @@ test_expect_failure 'wide and decomposed characters column counting' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'log --max-count-oldest=3 --oneline' '
-+	test_when_finished rm expect &&
-+	git log --oneline | tail -n3 >expect &&
-+	git log --oneline --max-count-oldest=3 >actual &&
-+	test_cmp expect actual
++diffstat_log_shortstat_values () {
++	git -C diffstat log --shortstat --format=tformat:commit "$@" |
++	perl -ne '
++		chomp;
++		if ($_ eq "commit") {
++			if ($seen) {
++				print "$files $insertions $deletions ",
++				      $insertions + $deletions, "\n";
++			}
++			$seen = 1;
++			($files, $insertions, $deletions) = (0, 0, 0);
++		} elsif (/^\s*(\d+) files? changed(?:, (\d+) insertions?\(\+\))?(?:, (\d+) deletions?\(-\))?$/) {
++			$files = $1;
++			$insertions = defined($2) ? $2 : 0;
++			$deletions = defined($3) ? $3 : 0;
++		}
++		END {
++			if ($seen) {
++				print "$files $insertions $deletions ",
++				      $insertions + $deletions, "\n";
++			}
++		}
++	'
++}
++
++test_diff_stat_placeholders () {
++	commit=$1
++	shift &&
++	diffstat_log_shortstat_values -1 "$@" "$commit" >expected &&
++	git -C diffstat log -1 \
++		--format="%(diff-stat:files) %(diff-stat:insertions) %(diff-stat:deletions) %(diff-stat:lines)" \
++		"$@" \
++		"$commit" >actual &&
++	sed "/^$/d" <expected >expect-nonblank &&
++	sed "/^$/d" <actual >actual-nonblank &&
++	test_cmp expect-nonblank actual-nonblank
++}
++
++test_expect_success 'set up diffstat pretty-format history' '
++	test_create_repo diffstat &&
++	(
++		cd diffstat &&
++		echo root >file &&
++		git add file &&
++		test_tick &&
++		git commit -m root &&
++		root=$(git rev-parse HEAD) &&
++		main_branch=$(git symbolic-ref --quiet --short HEAD) &&
++
++		printf "line two\nline three\n" >>file &&
++		git add file &&
++		test_tick &&
++		git commit -m text &&
++		text=$(git rev-parse HEAD) &&
++
++		printf "\000\001\002\003" >bin &&
++		git add bin &&
++		test_tick &&
++		git commit -m binary &&
++		binary=$(git rev-parse HEAD) &&
++
++		echo doomed >doomed &&
++		git add doomed &&
++		test_tick &&
++		git commit -m doomed &&
++
++		git rm doomed &&
++		test_tick &&
++		git commit -m delete-doomed &&
++		delete_only=$(git rev-parse HEAD) &&
++
++		git branch topic &&
++		git mv file renamed &&
++		test_tick &&
++		git commit -m rename &&
++		rename=$(git rev-parse HEAD) &&
++
++		git checkout topic &&
++		echo topic >topic &&
++		git add topic &&
++		test_tick &&
++		git commit -m topic &&
++
++		git checkout "$main_branch" &&
++		test_tick &&
++		git merge --no-ff -m merge topic &&
++		merge=$(git rev-parse HEAD) &&
++
++		cat >../diffstat-oids <<-EOF
++		root=$root
++		text=$text
++		binary=$binary
++		delete_only=$delete_only
++		rename=$rename
++		merge=$merge
++		EOF
++	)
 +'
 +
-+test_expect_success 'log --max-count-oldest=3 --reverse --oneline' '
-+	test_when_finished rm expect &&
-+	git log --oneline | tail -n3 | tac >expect &&
-+	git log --oneline --max-count-oldest=3 --reverse >actual &&
-+	test_cmp expect actual
++load_diffstat_oids () {
++	. ./diffstat-oids
++}
++
++test_expect_success 'diff-stat placeholders match shortstat for root commit' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$root"
 +'
 +
- cat >expect <<-\EOF
- * reach
- |
--- 
-2.54.0
++test_expect_success 'diff-stat placeholders match shortstat for normal commit' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$text"
++'
++
++test_expect_success 'diff-stat placeholders match shortstat for binary change' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$binary"
++'
++
++test_expect_success 'diff-stat placeholders match shortstat for delete-only commit' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$delete_only"
++'
++
++test_expect_success 'diff-stat placeholders match shortstat for rename commit' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$rename" -M
++'
++
++test_expect_success 'diff-stat placeholders match shortstat for merge commit' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$merge"
++'
++
++test_expect_success 'diff-stat placeholders match shortstat for -m merge output' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$merge" -m
++'
++
++test_expect_success 'diff-stat placeholders match shortstat for --cc merge output' '
++	load_diffstat_oids &&
++	test_diff_stat_placeholders "$merge" --cc
++'
++
++test_expect_success 'diff-stat aliases match shortstat' '
++	load_diffstat_oids &&
++	diffstat_log_shortstat_values -1 -M "$rename" >expected &&
++	cut -d" " -f1-3 expected >expect-alias &&
++	git -C diffstat log -1 -M --format="%aF %aA %aR" "$rename" >actual &&
++	test_cmp expect-alias actual
++'
++
++test_expect_success 'multiple diff-stat placeholders reuse one summary' '
++	load_diffstat_oids &&
++	set -- $(diffstat_log_shortstat_values -1 "$text") &&
++	printf "%s %s %s %s %s %s %s\n" \
++		"$1" "$1" "$2" "$2" "$3" "$3" "$4" >expected &&
++	git -C diffstat log -1 \
++		--format="%aF %(diff-stat:files) %aA %(diff-stat:insertions) %aR %(diff-stat:deletions) %(diff-stat:lines)" \
++		"$text" >actual &&
++	test_cmp expected actual
++'
++
+ test_done
 
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+-- 
+gitgitgadget
