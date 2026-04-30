@@ -1,185 +1,161 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazolkn19011035.outbound.protection.outlook.com [52.103.39.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8533B47E0
-	for <git@vger.kernel.org>; Thu, 30 Apr 2026 10:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.39.35
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777546422; cv=fail; b=kKh+JaQeiXBfq0edH5RZbjQePRRyjRQP7bzYtD0S0oBqBZJz/4fDW0glTxBE/Gob2PNQKu3Mqv9/3TsNwT1DbXhlZVsmtculTqp1PIfvsuJFPWg3CaEEmT/wtIGOCxG2nhpS2CYX3ugZdgy4CgxbHKkCnY2F6i5qUWYMoKMFUy8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777546422; c=relaxed/simple;
-	bh=ZN3g9uffRrUDCCPeoXfySYG+NgjkjMKuXrNaxVzSnNA=;
-	h=Message-ID:Date:Subject:To:References:Cc:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=QHNmvXa8t6f6iCtfHhhaEp7k6n+Yqtd0ri9bpSiHK30bA8X8xOFirKYhiIuLGZJFlj0hPIAOzFrOE3yHkqqaUSqGauzpwHlEf2fWbMIMBn1+xG2BXMyrFB4H5KE5WjHv9jCQI+I6lg2oNYx4zBA5EKHhfQ/3g+yn4pyUHIw99Ac=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=cwMIYpSh; arc=fail smtp.client-ip=52.103.39.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BFB3B9D99
+	for <git@vger.kernel.org>; Thu, 30 Apr 2026 10:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777546477; cv=none; b=TbxOaeF1FGNLGaYOSEoM5cNguvrC5K6sJshWTJXHmGW7yllkXckNjeQZXGmEgsPu0+z+DSBoFY35dSwbkkTW/nm2XHfgB+k1eGT11yWkYnBFLne0j9H8QAOF/jdSDUu4MSrCXWgipcQPgzu159+cPKVWebYoFc9xhG7eDxKdQ4I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777546477; c=relaxed/simple;
+	bh=AF4kxt9knvdBs/u0vtnjh1LwcfbdbDs7ILuLty808lA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=COj9hoZb2iPetdwr4fM5itfk/0L0t2VhRdm81OwWGFwUax5/bsuS/Zg74RXSsXhlWKnmTx70dSfYRd97o4cindnqEbUeHIIG2+57cFymCpglXaOYImB5PYHtWr1dbUXQlAIWTQWDxuzWhK5KvLL6qPXsFGqSr2FyE0IEGbCML9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OF9T9ZBb; arc=none smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="cwMIYpSh"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ANZmUPHSTg+Y8OqMhVmLS9aw9UvXUuALcbRh6yFSzaLbXTvIvyt8n/u9EfrkGbqN8yYtxx8We5r8JoOn60/OtODLM/NlcQEZs3ucQMC4iQNiz9WRIDCQr4kKkF4lLPzUoY1HUlKzDCJJWN1HeYOfTXCYn5p0swJS/SW7vniLMcDdJECtpruKlNleQTJr+g8PjSO65oorWPIe+1WiHyvyecyhFFji6zyeTi/5c1/a6A9ClXW0OMCoQbAMpqU858U3E0JCuVhuV8dPDicgsGRe4poGxkAAAx17VoVD++bvn7j3RbiemWrnqeGJ3lWIlcNkwMwlKQiJTvhTqje61kqeYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hBRNHdtyZyd3uCyRhoA2RV6utJZhJYvqzbrThlH9wEw=;
- b=DQiV8N9aNAKVyY0Q9skMaFno0o9YYCYjWXa5ZgvQEYdI8Zy+zsF687fTaTxXBCIhzBAnWuGOLD1R+PBYyLd7X++/yOOtIz2FPzzY8YENTRbsJo573EEJVRni6lm3Q8Xun1MCtEt4S+cMAmSviZ9nAIDUIGNEjaNL9tqAU5EWgL9wK7DCiFqX2saM5b7qsFjbJU5gWuAshQXsGcEmJaYFR3H05d2/CgzpUfyiyzfV5jfQ0NKVwnCCRYsfZ0K9X9NAcG38lS7BQjKa41vVy3OQ3WGj9BJ4T7CTds8AJa1GO0yhexw7MkIKcbZPDfwNjZ7f4uJobdtKiVZTAyICltdlyQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hBRNHdtyZyd3uCyRhoA2RV6utJZhJYvqzbrThlH9wEw=;
- b=cwMIYpShMfufP2yBg1p9WTae/wzi5f3gIPiJXP/8jUC0znIWdUWBmfQUNk+Hq+4Z/Zcs1RxGGfyT6Y4YvAynLN4sL7TMVZ95n7/a6KAwCwW2hLlNVu9FIRAd9q+WENBpb2V4vxDCY93N9gUpeqPAjrQhNcQrpXQup4L8Mp9LDR4sUkOk1WL9YFA6pLPRORfiRmkOra/ZtypXYL7ZADZWgjZnv7mDbJKN6FObezAByq6KW4e05wGFfnySzZQfSfZFKC5gBtxTzz4B1xh+rM/2/I5Z8zzu3G3mDgYnA9BRYL126rJIood4klXdp1a9w69npOVp88Ll2eDpZKpSEOrPkA==
-Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
- (2603:10a6:800:326::21) by GV2PR03MB9618.eurprd03.prod.outlook.com
- (2603:10a6:150:d6::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.20; Thu, 30 Apr
- 2026 10:53:38 +0000
-Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
- ([fe80::5e26:cb8:bbb:cf7a]) by VI0PR03MB11634.eurprd03.prod.outlook.com
- ([fe80::5e26:cb8:bbb:cf7a%6]) with mapi id 15.20.9870.020; Thu, 30 Apr 2026
- 10:53:38 +0000
-Message-ID:
- <VI0PR03MB1163459D06AB474AD97D29E43C0352@VI0PR03MB11634.eurprd03.prod.outlook.com>
-Date: Thu, 30 Apr 2026 11:53:36 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] http: attempt Negotiate auth in http.emptyAuth=auto
- mode
-To: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OF9T9ZBb"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2e221a71e19so1050910eec.0
+        for <git@vger.kernel.org>; Thu, 30 Apr 2026 03:54:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777546474; x=1778151274; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=isU/MJB7AfNbguRWhVmCmSXx+t0VR4YL/qKzbsuGgJM=;
+        b=OF9T9ZBbI+nmcbiO2rwrgJf7IFfyXb/CyyOndqOb1Tmm0bZIHNVDnKcbIrCZSVP/Es
+         VtE5fiX+CqgT542BbG+ltZprhJuEzQej97izP08BQxxJMtCvEgccshYyiVTH6nFFKJe6
+         GzyaldW7kueKv1fKMF62FZdrgvIPAgASv/j+eYL5jq3Sx7432VM6Gn40cPY57VGkpDQ7
+         ZTDF48akjKCcJOgwMPp9XLKUqMpdZE/z2CnWuNICdhLoSWNkAO58PAsqL/xjz9Os1pZM
+         K7x5xrNkeO/Y9FBJr8xrY8JzqY7tPhUbxwdZE93PTvqDDlW3BFRVW8Y+H0+R79F/fZ3I
+         mC5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777546474; x=1778151274;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=isU/MJB7AfNbguRWhVmCmSXx+t0VR4YL/qKzbsuGgJM=;
+        b=TYX1cimECPXlQTYSXZ4AyKNxvP5LIatO+uAm2weTe8c/HZGtoc812ZhTlMjyiVhCc2
+         HMoKnq/HWmzDWIoLov8iKNpmEwPYfe5FdQOqetneV/F3NZOqHkSOh2wG4i/wdbgfRQqx
+         b/C7x0g+e21TYA/VdG2Yb9CMCYH2lUAseyFsIj/YBzM2WJY3NX/EqJuvWmXdeU3PYtyt
+         gSkio2t5SAckzec1g+gOhE954PuLIhDSSuih7BBQ+l+0tLscYgnN1N8y5la3gz3llLTr
+         Hnb51vfyvqtK5L9H6dBOcHaBFyiABNVfz/B8423B6CnOKaKej3niN7/pCPl5dZyVQZwq
+         7XRg==
+X-Gm-Message-State: AOJu0Yxof0/4Ba/S94NrEq0WGzcxKUv15RIC4Gw0+Uo5pCeyUwvnTw4l
+	Bzp7Iwb/ij8w2AKOYAmq9CVsbdj4UgHC5uxYs4rB4BI6SUdmntFzYQHO3ZNVFQ==
+X-Gm-Gg: AeBDievjWb6E3E3BVLlJdhyQ/pzBJMuZ7F3p4tcaqi8UZs66djJ+BnKWiUztfQ8IBDh
+	M8T7OVspzD/G5FhYw/dHG9qq1mBUJP+EBKxDFYDPvSc0/oKT/XUM1+OgheXMFc364cTRISyLzle
+	/s/XTD06sbezBYJr07SJHCgU5rPKdmHsDsN24TGhyv5PkFEX1/SVN/KTBriy1QoU80h1NG7Tq9m
+	NeXY1+QHJKZTQHMjHELESzzs9QFQexA+TagXoRn9Q3mLgUalEZXls8yCY3xEeBqOOAo0Eqa2czn
+	Lk0cMuSB1ipQMf8Juq+GdyF81ymVO+ibkH797VcEJeyMgzBRORAmcNy3ZfPad3c2/MFwHtUupn1
+	MfOz1r0lP9xyeGFCm1NzCqNAfN3516FJKwQWrwEt+VIblZ5GuBBeYJLLZGgtljeo9XuKC5DzJW5
+	Xg9bo9EDmveOX73FgKxUGoEXhH8UCCEg/Oyp4H
+X-Received: by 2002:a05:7300:e8aa:b0:2e1:e5c0:7992 with SMTP id 5a478bee46e88-2ed3c5cc8dbmr852074eec.8.1777546474249;
+        Thu, 30 Apr 2026 03:54:34 -0700 (PDT)
+Received: from [127.0.0.1] ([52.234.40.195])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ed1c07058esm8026780eec.15.2026.04.30.03.54.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Apr 2026 03:54:33 -0700 (PDT)
+Message-Id: <pull.2087.v2.git.1777546472.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
 References: <pull.2087.git.1776331259.gitgitgadget@gmail.com>
- <f175294459c9370ed79c8338d6008b69c2028f99.1776331259.git.gitgitgadget@gmail.com>
- <xmqq7bq63lll.fsf@gitster.g>
- <VI0PR03MB11634FE845793CEA7D25FA2D0C0372@VI0PR03MB11634.eurprd03.prod.outlook.com>
- <xmqqse8dz4pi.fsf@gitster.g>
-Content-Language: en-GB
-Cc: Git Mailing List <git@vger.kernel.org>
-From: Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <xmqqse8dz4pi.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0099.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2bc::20) To VI0PR03MB11634.eurprd03.prod.outlook.com
- (2603:10a6:800:326::21)
-X-Microsoft-Original-Message-ID:
- <dda0841a-8ae9-4a26-a197-12a0b335b55a@outlook.com>
+From: "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 30 Apr 2026 10:54:28 +0000
+Subject: [PATCH v2 0/4] http: fix emptyAuth=auto for Negotiate/SPNEGO
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR03MB11634:EE_|GV2PR03MB9618:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71739559-15d1-4d8a-b7d0-08dea6a6bbe1
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|19110799012|8060799015|461199028|24021099003|23021999003|5072599009|6090799003|37011999003|51005399006|15080799012|40105399003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?TkF5VDlZaUVYckkyV09CczJzeGpOeXRWT2pwVXUyYjBVUGZ2dC9lZGZLdW9T?=
- =?utf-8?B?aEMwenQzOTgvQWVGSTlTbnlmN0FMa1JUa2h0QTJSb3lHeVNyWmtkTzV2bzlB?=
- =?utf-8?B?eDdIVDlRSTFGMUp1dGRGWmlnNDFOdXV3N2YranZOKzVoN3gxeUtYc0w5TFBv?=
- =?utf-8?B?M2RwVmozeFdZYjlCSWRXWEtqQXJPSkRGYUxkSW9VdVowRW1Fc2FkWmZwcmZa?=
- =?utf-8?B?Zk5OcUloaE1GWXZCYnpaR3dZUGw3SHk5Uk5Ibktoa2VBeHlqWVFYZlV2TmlU?=
- =?utf-8?B?SlUrMmVlR2RmYU9HY3FXMHRFYzYyL25CZ1grYXBlbzRsd1pwVytoSXh4cFhP?=
- =?utf-8?B?bGlIQlV4YlEwc3FhdjRGMW44Y1VyQUNZRFRtQnNYZkwrQzhsVG9wbnYxQXJM?=
- =?utf-8?B?bWV5NnJxWUQycnNQY1RYQVNIRzNreC9rU3Vwc2IrN0ZkRTZOdWNVdmtCdkhz?=
- =?utf-8?B?UnMwUEEvV2xWeUc5TENyNEl5MzZhWVZvSjEvRlZNc3pMOTBsc21lWTJLdVFr?=
- =?utf-8?B?SFNlQTNDK0JjSGdlOVdRd3hRVkd3QmJOMFFpdnk1eGlZMlBvVkZpRHhOeGYr?=
- =?utf-8?B?dmFGQlhNc2NJb1FlSzAyaHhsYWhNaUhweW9DSkdTVjBaenpyM2FsenBsT2ZG?=
- =?utf-8?B?cVBxTkRWR05YakFyOE45OXltWUZlSGN2d2l3SWdjdS84RWJKazU3a215WWxM?=
- =?utf-8?B?UUdMeThxTjZPV0ZLbjVQOHh1dzEwTHpka0pubVZOeU5CU1p2U3VBM0gvU25v?=
- =?utf-8?B?SkMvcTRKZzNVSE1mUFE1K0grQUE1d0hTVGZkSGRZaU0xNmd5SjZ2R2RZS1gx?=
- =?utf-8?B?Mko3RWJpRGdXTE8xTXQ1K2ltRmNQN1ljTGhkcmRwamRabk5SdjdUbkZZL2Iz?=
- =?utf-8?B?cDJWV3BBR1JoeWZ5UEZxcEhnZVZYWGd5SjR1SUFuaVRHRlJBQk5GbjVaSUcv?=
- =?utf-8?B?aVpxZWQ0TVphRExDWnZURklVZ2xGV2tSMm92bVZ2RXhET1Y1V0t2VzBWL2dp?=
- =?utf-8?B?aFMzVXNVb1NlTXZwbTQzbTY4a0JTS25FeVpzT0wyYW1DQmVtZWtrNm9uOUdE?=
- =?utf-8?B?YklWTmxXUjc5emJXUFZrTXcrUnpLRUg1WTVpNm5nRFlVdisyblpFSUd0M3VJ?=
- =?utf-8?B?MWRrVjZTVVQvK0dweCtZcFNDdTVnK1d4aGlZUGRLMDVGTVdGWmh3QStESDNu?=
- =?utf-8?B?aUVTalgrdHc2WkZubUY5dk8vMTVKUUc5WFlZSHpjMnMwTGFSa3FEMWpzSjF0?=
- =?utf-8?B?bkZQRlBmR0hGMENIWjVYOFo3WnE2cGJzaEdEeml5TEVlMkpDUEEyOVdmYXg2?=
- =?utf-8?Q?TNU7yBLVKON47+0p1f6tCvIk4857D78kLp?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bEdGSmFDWjdNdnhiQXR5N2s0cG5laDJaR0VQT1JObHZidGQ5d3EyMldVTWVm?=
- =?utf-8?B?bGE5NU5CWjBYN3NRWk40ZHM2YVJLc0Q4ZHV0ZVBrUStXSXA3RjFWVU5Qc2I4?=
- =?utf-8?B?OEdwdVJCWDIxWXpQNlpmcnNrZzVCenhIbjQrWVcyUDR2VnQrR1QyR3pDZ3FE?=
- =?utf-8?B?d3V4MzY2THlEeThKQnQwME9sWEJ1L3JmSGRlTkpmaDVuZWRsUndPZUlhM1pw?=
- =?utf-8?B?M3hZZ1BoL2JEeEpQU1R3RDdMVWlVYVFsSTlhbjhEczRKTkVlWWRLS2UvMXZU?=
- =?utf-8?B?eW1hQXFpeW01Vk12WlpUcEVPUGFTUzdtTlBvYVpaTWUzOWJkdHI4SVNZZDU2?=
- =?utf-8?B?VkpZUmdmVk9SWHQyWGRnU2FNUkZtb05TS0dZbUorYk9oYmxRT2xnWVRWZ3c3?=
- =?utf-8?B?ai92cHhqYURFaFFyeU5xVSttY3NsVkJnaUsrSnI4NERpalJVR2s2UjZUYzQ4?=
- =?utf-8?B?bGt1WTY0eEdVajV0RGtBQXdia3REZWVLbEIrZ0d0TmZVclZCZWtDZnRGbWh4?=
- =?utf-8?B?aGVYSTZuVy9FQm5QdGRGbHVDaVk5WHp2VGNKRzdQU2ZvQnBWbEFqV1NMV2xW?=
- =?utf-8?B?L0FydUhOS2JDNlRGM2FsUWIxSDRiSE9ML3kwaDBTTkdIZWpjWGZXWlAvNHBv?=
- =?utf-8?B?OXhtTTBjZm1HRGtteGZvNytocFhHcDlZV2ZoenBheGZDM3VZMUFxVUtLZmpq?=
- =?utf-8?B?WVZWU0gvbVF2WGl6RFhXdzNMRWxyLzJzbTYvcFdUYzNNbVBKN3pwZ1NMMlZ3?=
- =?utf-8?B?S1BVMHJWbUxVR1lnR25BVm44SFRJeGZQZmd0ZlE1VldTSFE3ci9GWC8vVkIv?=
- =?utf-8?B?NHloalBVeC9yakRYaVN0NnBNa3R3ZUFHb0hraHBGYVZRUS9KMmlVZm1OamhS?=
- =?utf-8?B?dGN6MmhGaTVSeVVEY0VXTE5Vcm1Cd2JTaGx6S0Qza0x3SzhBc2VwK0FjSG9K?=
- =?utf-8?B?elgzK1ZnNWIyNFNDMTF6ekd4RXdUTHhlaHlFVEpCZ09Ha3ppeGdqVyt4d0hn?=
- =?utf-8?B?LzlGcXBWM2VQK2VLNmVlaGtxVUpKeFlOdVM5UVFlMS9TVEExMHI4Q21HRDBa?=
- =?utf-8?B?anBsdFcydnhYeEJpQUlxOC9XN2ViWWpweUh6bkRtZTlrNFJ5OXNkMmxtNW1p?=
- =?utf-8?B?TndrT3doTkdFOEY0YUxleVFvMTZBQzJKSUsyUW96T3ZUeXNBaVRadVNPRlBF?=
- =?utf-8?B?UWpUczVPN0UwMGIxS1ArWE40Tmo5SGYvZXhVdXJzQmNVaFQxWmhXSGpKRm9S?=
- =?utf-8?B?aFRSc1R5YUp6Zm1iQ0U0b1prN3V3OGhVNDA1cm4vRUFWSmsvU1ZOa0Z5Snpw?=
- =?utf-8?B?NXBtUDNFRnJ4R0tlUURjV0RIdUEwMk91NFc2dWJhK0lFeW1LTFpiMjRQR09O?=
- =?utf-8?B?NTBvMHdRSVREcGJnVVZTTW05YnNwRUNrd1U1Z0pnTEh5MTVhdGVrZ2RDUjR6?=
- =?utf-8?B?bHBrdHpsaHVUQkt2Nzlyc2RJczZLT0g1YVpMdGV3MStoTDZWblBscy9wN0F3?=
- =?utf-8?B?RUxTeFRxQVJFM3dmYXdwNittTkxnM2JKelcwcUdZcGtuUVhFWWF3OEVuSkVv?=
- =?utf-8?B?a2FVUE1TQmNBTE9MREcwN21GMU1UUjJMMDF4eWZzVXlCZ0VWWUs1a0srQnA4?=
- =?utf-8?B?MDMyQWRmL2pYTjVjc1FMR3lVVlFUbTRBMTdLV2d6TmlhVWswclRkWkFJVjNh?=
- =?utf-8?B?aW5WRVczY0U2NWFubmZlTGl0Z0VHSzZGRDFrcGVzQ29ySlVjWkxkZjRWRmFs?=
- =?utf-8?B?cEs0YjdqVVJkV2loWm94ZzcwT2ZTQ1RYUGx5c2hHL1ZYbThmR2dTLzZnWE00?=
- =?utf-8?B?VDlJMHBsclVad1NsdEdBS2Myb1M2bEtEL0xMdkF6bXYrbGRMM3VKODV4aTZG?=
- =?utf-8?Q?8NSJ81yOWTCww?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71739559-15d1-4d8a-b7d0-08dea6a6bbe1
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR03MB11634.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2026 10:53:38.6996
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR03MB9618
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    johannes.schindelin@gmx.de,
+    Matthew John Cheetham <mjcheetham@outlook.com>,
+    Matthew John Cheetham <mjcheetham@outlook.com>
 
-[re-cc:ing the accidentially dropped mailing list]
+When a server advertises Negotiate (SPNEGO) authentication alongside Basic,
+the "auto" mode of http.emptyAuth should allow libcurl to attempt Kerberos
+authentication using the system ticket cache before falling back to
+credential_fill(). Currently this never happens due to an interaction
+between two older features.
 
-On 2026-04-30 01:12, Junio C Hamano wrote:
+The Negotiate-stripping logic from 4dbe66464b (remote-curl: fall back to
+Basic auth if Negotiate fails, 2015-01-08) removes CURLAUTH_GSSNEGOTIATE on
+the first 401, before the auto-detection from 40a18fc77c (http: add an
+"auto" mode for http.emptyauth, 2017-02-25) gets a chance to see it as an
+"exotic" method. The result is that auto mode silently degrades to the same
+behavior as emptyAuth=false for any server whose only non-Basic/Digest
+method is Negotiate, forcing Kerberos users to manually set
+http.emptyAuth=true to get seamless ticket-based authentication.
 
-> Matthew John Cheetham <mjcheetham@outlook.com> writes:
-> 
->> Agreed - the existing description is pretty opaque about what values it
->> actually takes. Should I add another patch to this series to spell out
->> the three values explicitly? How about something like this:
->>
->>        http.emptyAuth::
->>                Attempt authentication without seeking a username or
->>                password.  This can be used to attempt GSS-Negotiate
->>                authentication without specifying a username in the URL,
->>                as libcurl normally requires a username for
->>                authentication. Possible values are:
->>        +
->>        --
->>        * `auto` (default) - Send empty credentials only if the server's
->>          401 response advertises an authentication mechanism that
->>          requires them (such as GSS-Negotiate); otherwise fall back to
->>          prompting via the credential helper.
->>        * `true` - Always send empty credentials on the very first
->>          request, before receiving any 401 response from the server.
->>        * `false` - Never send empty credentials. Mechanisms that
->>          require empty credentials, such as GSS-Negotiate, will not
->>          work.
->>        --
->>
->>    Does that read better?
-> 
-> Surely.  Thanks.
+This series fixes the interaction by delaying the Negotiate stripping in
+auto mode by one round-trip, giving empty auth a chance to use the system
+Kerberos ticket. If there is no valid ticket, Negotiate is stripped on the
+second 401 and we fall through to credential_fill() as before. The true and
+false modes are unchanged.
+
+Patch 1: Extract a http_reauth_prepare() helper from the three retry paths
+that call credential_fill() on HTTP_REAUTH. Pure refactor, no behavior
+change.
+
+Patch 2: Delay the GSSNEGOTIATE stripping in auto mode and teach
+http_reauth_prepare() to skip credential_fill() when empty auth should be
+attempted first.
+
+Patch 3: Add tests verifying that auto mode produces an extra round-trip
+(empty auth attempt) compared to false mode, using the existing
+nph-custom-auth.sh CGI infrastructure.
+
+Patch 4: Update http.emptyAuth documentation to clarify possible values
+(true, false, and auto).
+
+There is a trade-off in auto mode: when a server advertises Negotiate but
+the client has no valid Kerberos ticket, there is one extra round-trip
+compared to the current behavior. This matches the trade-off already
+documented in 40a18fc77c. Users who want to avoid it can set
+http.emptyAuth=false.
+
+Note: this patch series was taken early into Git for Windows for the
+2.54.0-rc2 release.
+https://github.com/git-for-windows/git/commit/8e94b65c003783d7d7b09d9fccdf06a1363e347c
+
+----------------------------------------------------------------------------
+
+Update in v2:
+
+ * Add patch 4 to clarify the available options for http.emptyAuth in the
+   config documentation.
+
+Matthew John Cheetham (4):
+  http: extract http_reauth_prepare() from retry paths
+  http: attempt Negotiate auth in http.emptyAuth=auto mode
+  t5563: add tests for http.emptyAuth with Negotiate
+  doc: clarify http.emptyAuth values
+
+ Documentation/config/http.adoc | 13 +++++-
+ http.c                         | 32 ++++++++++++++-
+ http.h                         |  6 +++
+ remote-curl.c                  |  4 +-
+ t/t5563-simple-http-auth.sh    | 74 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 124 insertions(+), 5 deletions(-)
 
 
-Submitted as v2
+base-commit: 2b39a27d40682c09ac1c031f099ee602061597cd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2087%2Fmjcheetham%2Fspnego-fix-upstream-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2087/mjcheetham/spnego-fix-upstream-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2087
 
-Thanks,
-Matthew
+Range-diff vs v1:
 
+ 1:  49488cc7d4 = 1:  49488cc7d4 http: extract http_reauth_prepare() from retry paths
+ 2:  f175294459 = 2:  f175294459 http: attempt Negotiate auth in http.emptyAuth=auto mode
+ 3:  650acab79e = 3:  650acab79e t5563: add tests for http.emptyAuth with Negotiate
+ -:  ---------- > 4:  e0f236767f doc: clarify http.emptyAuth values
+
+-- 
+gitgitgadget
