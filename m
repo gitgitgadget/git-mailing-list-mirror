@@ -1,180 +1,161 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4755E4279FA
-	for <git@vger.kernel.org>; Thu, 30 Apr 2026 13:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8748F3FD141
+	for <git@vger.kernel.org>; Thu, 30 Apr 2026 14:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777557249; cv=none; b=q6/+6NP+WrGFQQ8eB/8vKYNpVkNqsLHt6kQjIBF38aIiKojPcfYhbz8mN/S8wExaXWltUk3rc3Y57mfz1x/Rf1DxM+84br7hgdmbAk6vyiN1Ock/IzvHt9rIbqp5oPAU2lwkk5c4JY2htpknF2UKsrgLQD9NDRwmRNq/xKPlaKk=
+	t=1777558410; cv=none; b=Md9kr4Tyqb4+Cmt/HjvaM9vqKdhAWKBdykGWJMfPrldg9a5/+r4KAfb9VdkZoSzIXwbQjx7ISu8CK6PnDWeZRoq61Y8MXTrRlXQtmZvmbWldrDpaefzJhVz2wr17z1KIq/9fDpuX7t6QWs33T13dm/gzbjx1n5AO4A3RN1Td0vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777557249; c=relaxed/simple;
-	bh=AZGBwEETPKU59CyAYm1WOyArD6Eo5m1tm6Nu31iar7E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hYbjKEqkBj89P1LunaorycSWP+0JtHLJNIQCCG9JNTDyBNotdCLz07hZ7D+R9XPmvoj5T6F85h8Y9gwHfl0Lgmyo6pnCIkTZr2lqucVE38I7IzxHOeIQ9dIV2JE4PryRU53TVemqdsfLMVZO+FAYuPdSQPzCyqQIMpK7rjPnnXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JJBIQ9D3; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777558410; c=relaxed/simple;
+	bh=4uLxIAfCVMN5C/KiVE9R32en/q0T87JpA3OcZYGFCNQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZGSDK0WNcStHR8SO472r/A28vIZ0JBodu2Oa993EUGBNyA/s89gmvgjHulAieInyMQo+DFQPv2W6SrAYctpu6coATSbheauFQSO4hJVj17Qw8b11MyFblJeh1IUw/eAUar/VzZr+IG00vBYpq5hIxWnVNR656hPGEi5Z+8AV5TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=kvao6R2P; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JJBIQ9D3"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-43eb05b1875so550077f8f.3
-        for <git@vger.kernel.org>; Thu, 30 Apr 2026 06:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777557247; x=1778162047; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JhFGu4IMv+d8s3pXBDAkfAJGcMfCB3AOl/L4mM5heQU=;
-        b=JJBIQ9D3G2QnkczVAtD1hochGVRLaJhOLqYZOirZTpwAGcvy6erdPvorTOGGUGBCFN
-         ooLiUJ2Nx2cczl8iIoBm8MlngL3SoxasPkzEv6IbGkUKw5rjmYdjQThPAug31oMHh/n3
-         PBq8JBsmq44VbzF7vwG+ZsUxBZgP14xigCblDr84C5soECsKZzGcoSeeVjeq5mQNpNJo
-         uXmXxzfAZwfjmSpv6jm6GRAC2Oi6NGAGUtay+vH1GMNmkMRFluEA+/AQgMXDxR1KAV68
-         TxD3EHfIlo7zFPbW8jMUoudH7PHRQYO+urjzZMRJ1o5fTJ2RzbaP4xSfqSFJcr5qjDNz
-         rwMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777557247; x=1778162047;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JhFGu4IMv+d8s3pXBDAkfAJGcMfCB3AOl/L4mM5heQU=;
-        b=mBrbpcxIgcRA+zcMQg+qKctF81OUPf+PJBb+O8GnuM9ExGUMn5R3zOrUoNHat1cxQJ
-         Zw+huBFo7+G6/oP2kSoU+dRJ7wYYdcydVzAZdEEIY/qHbUCFZ6d4bdsCloD2odLLfZZx
-         uNuHmYrmM5pTydKXukOunUOCfhHyvg2fZeoM7zZ156IOMeOp7dAl5TnOeErKcLV6pDIb
-         oXGXn9J2XyFzwvLyOaVPRnGUPnyt7cl0coxGMWIV68n93lzQqYA6WE23VGlCt1GtL8EB
-         7AABexK8XkeYTgKQdNor0LpHZomnHzwfqaNuwIKHX9fLPEc/AnZh84i+cbp37dIWgPk9
-         Ox6g==
-X-Forwarded-Encrypted: i=1; AFNElJ+5uPup6LqQUQLSX+BXjWdqu7JhowL3RQeR/zK0ISKGfvWrRdR5Ta0IkgBFMAvYXepe7ko=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvG9UCUBe4PsJtKdbOYMZeB+wZudhtgVHWycyU5KSQP73dpia6
-	jMZCKK8NIU3+L2/j1zjY2xBwtqyWY0BdCDKy/k0dz+DmkwpKw50GaYwd
-X-Gm-Gg: AeBDietwfKH5YzvNuO/ldC6518OOXUZbn+cQtHmmJqbm4PX0TiLSbX0uOBiCOSQTJc1
-	UOrB9pNnZ319apYYtnnimxYpAsSxQaZMqZf42fkdK51H2hdLkBivBYXhxEW3r9qu8erJwv7gRb3
-	gvFIGYTy3mr+VA9yG1UjuEdbLPolvvHA2oy2wzlDTBYNCNVKYhrJucikqqhOOhpbG+qgtPJ3bCK
-	IOYZY/EYZd9heng0UDQ3deiA2q0WXDX9A9qW0vr6WEDUzbQgNCcb6ETt0/Bypxr7o6wdHrkFkk/
-	SGJAR3y+EG+NZn+h4i7jioElvqIjucmT/11T4b9ZunOu0owbNtor7Q1uDcFKokIjLttK0h8uO5/
-	COMIl6QFDeh3a78bw5wPz5vnUmkBfWPucGEp7qtV8oAxO8zb6sNEzFqtNyUXn+RZbGSZ+vfccnz
-	XgMTDaXCAT/1cARo6ht7jHQ5Swj4Xpu/x0bDjt29snijU3UtwzQbxUQBYT+FcQXkVgkW6aWsvRp
-	F+HVTNCyeQh8g==
-X-Received: by 2002:a05:6000:3108:b0:43f:e16f:3cc3 with SMTP id ffacd0b85a97d-4493f6212c7mr5304237f8f.22.1777557246447;
-        Thu, 30 Apr 2026 06:54:06 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f? ([2a0a:ef40:7d8:fa01:60c8:18fb:2acc:d4f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-447b76e5c7csm13451460f8f.26.2026.04.30.06.54.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Apr 2026 06:54:05 -0700 (PDT)
-Message-ID: <8016697f-9eb7-4c75-be87-d9479186919c@gmail.com>
-Date: Thu, 30 Apr 2026 14:54:03 +0100
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="kvao6R2P"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1777558400; x=1778163200; i=tboegi@web.de;
+	bh=4uLxIAfCVMN5C/KiVE9R32en/q0T87JpA3OcZYGFCNQ=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=kvao6R2PHhJLzFF68ohHVhAE/0CJc3fegNUKJ7siP4S3zVRYBP9Rd7164jfpKVJv
+	 xSbWLYwVMrF2EMOR9wJY+4gLkHRkb5IIPFaiuHd6PlCaCVImMeTMuMxDo+ElB1bAc
+	 2ARdrTIb2RCICh5WH1Be2mPbVDFf8bA5hwLzalBrsyJtJqla+A3+b0i6/581Iym9Z
+	 PRX+Wk17hqpNb53J6zZC0Cg688XVTcJ1yt3EhomclLCi5f6wSPn7nsNnB9Uy8vc2t
+	 NjAOrw3xd9m4oc76wXhJWWxNwiQJMUEVCoAyMHlV0mP7mEPr0CsaJwWuJB5XnSHna
+	 kwvIH77PZCmCLQPPug==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MMpCS-1w1tEC3gBA-00NmPI; Thu, 30
+ Apr 2026 16:13:20 +0200
+Date: Thu, 30 Apr 2026 16:13:20 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/6] index-pack, unpack-objects: use size_t for object
+ size
+Message-ID: <20260430141320.GA6659@tb-raspi4>
+References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
+ <dc660106ea8511e6adc44d2b70e9a4ae8b18090e.1777393580.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/5] name-rev: factor code for sharing with a new
- command
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, ben.knoble@gmail.com
-References: <V2_CV_name-rev_--format.51b@msgid.xyz>
- <V3_CV_format-rev.66a@msgid.xyz> <V3_name-rev_factor.66d@msgid.xyz>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <V3_name-rev_factor.66d@msgid.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dc660106ea8511e6adc44d2b70e9a4ae8b18090e.1777393580.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:WGKT1XOW5w3LgxUAPqDbDmxrS7OYLpoRu3nxvmXOhYRp5TKHPfn
+ cpwEwY3ujQ7ShJBpAzgYeA/ax+l7f9JOLH++nT5mg2Gj5HoSCtNH1CRY39UDuT0LPGTjKBX
+ OFz+CTAF40sxd/6Ki0DnTJp2ZU2fsjv9y0QWL8ytK2a53Y+Y1DY1d1eD5hk5zeTcN3rhZvb
+ NLWUGNX7pRk5QUW8q+DzQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:bF5MoUlhACI=;WpkW+6hJXLSEJYTLdPnJy5Cp/IK
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-Hi Kristoffer
+On Tue, Apr 28, 2026 at 04:26:15PM +0000, Johannes Schindelin via GitGitGa=
+dget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> When unpacking objects from a packfile, the object size is decoded
+> from a variable-length encoding. On platforms where unsigned long is
+> 32-bit (such as Windows, even in 64-bit builds), the shift operation
+> overflows when decoding sizes larger than 4GB. The result is a
+> truncated size value, causing the unpacked object to be corrupted or
+> rejected.
+>=20
+> Fix this by changing the size variable to size_t, which is 64-bit on
+> 64-bit platforms, and ensuring the shift arithmetic occurs in 64-bit
+> space.
+>=20
+> This was originally authored by LordKiRon <https://github.com/LordKiRon>=
+,
+> who preferred not to reveal their real name and therefore agreed that I
+> take over authorship.
 
-On 28/04/2026 23:25, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> @@ -516,6 +534,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
->   
->   	for (p_start = p; *p; p++) {
->   #define ishex(x) (isdigit((x)) || ((x) >= 'a' && (x) <= 'f'))
-> +	start:
->   		if (!ishex(*p)) {
->   			counter = 0;
->   		} else if (++counter == hexsz &&
-> @@ -524,25 +543,32 @@ static void name_rev_line(char *p, struct name_ref_data *data)
->   			const char *name = NULL;
->   			char c = *(p + 1);
->   			int p_len = p - p_start + 1;
-> +			struct object *o = NULL;
-> +			int oid_ret = 1;
->   
->   			counter = 0;
->   
->   			*(p + 1) = 0;
-> -			if (!repo_get_oid(the_repository, p - (hexsz - 1), &oid)) {
-> -				struct object *o =
-> -					lookup_object(the_repository, &oid);
-> +			oid_ret = repo_get_oid(the_repository, p - (hexsz - 1), &oid);
+Good to see things moving forward.
 
-It would be safer to restore *(p + 1) here rather that relying on each 
-case block to do it.
-
-			*(p + 1) = c;
-> +
-> +			switch (cmd->type) {
-> +			case NAME_REV:
-> +				if (!oid_ret)
-> +					o = lookup_object(the_repository, &oid);
->   				if (o)
->   					name = get_rev_name(o, &buf);
-> +				*(p + 1) = c;
-> +				if (!name)
-> +					goto start;
-
-The pre-image uses "continue" which will increment p - why the change in 
-behavior?
-
-Thanks
-
-Phillip
-
-> +				if (cmd->u.name_only)
-> +					printf("%.*s%s", p_len - hexsz, p_start, name);
-> +				else
-> +					printf("%.*s (%s)", p_len, p_start, name);
-> +				break;
-> +			default:
-> +				BUG("uncovered case: %d", cmd->type);
->   			}
-> -			*(p + 1) = c;
-> -
-> -			if (!name)
-> -				continue;
->   
-> -			if (data->name_only)
-> -				printf("%.*s%s", p_len - hexsz, p_start, name);
-> -			else
-> -				printf("%.*s (%s)", p_len, p_start, name);
->   			p_start = p + 1;
->   		}
->   	}
-> @@ -567,6 +593,7 @@ int cmd_name_rev(int argc,
->   #endif
->   	int all = 0, annotate_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
->   	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
-> +	struct command cmd;
->   	struct option opts[] = {
->   		OPT_BOOL(0, "name-only", &data.name_only, N_("print only ref-based names (no object names)")),
->   		OPT_BOOL(0, "tags", &data.tags_only, N_("only use tags to name the commits")),
-> @@ -596,6 +623,7 @@ int cmd_name_rev(int argc,
->   	init_commit_rev_name(&rev_names);
->   	repo_config(the_repository, git_default_config, NULL);
->   	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
-> +	init_name_rev_command(&cmd, data.name_only);
->   
->   #ifndef WITH_BREAKING_CHANGES
->   	if (transform_stdin) {
-> @@ -663,7 +691,7 @@ int cmd_name_rev(int argc,
->   
->   		while (strbuf_getline(&sb, stdin) != EOF) {
->   			strbuf_addch(&sb, '\n');
-> -			name_rev_line(sb.buf, &data);
-> +			name_rev_line(sb.buf, &cmd);
->   		}
->   		strbuf_release(&sb);
->   	} else if (all) {
-
+See even
+https://github.com/git-for-windows/git/pull/2179
+which is probably obsolete soon.
