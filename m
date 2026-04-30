@@ -1,95 +1,183 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6275B23ED6F
-	for <git@vger.kernel.org>; Thu, 30 Apr 2026 09:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777541360; cv=none; b=RkCg224N2IM8Abfv+j2gFIp2G51yc8uQq061Xgs2B6gS5LbaOwxbhm6guQmML813thUeOzT4fgkrnliXz41lppu0cBNmQFyU3SgN3mUA71iaJWL7/5lLmsFNlU2cNpbSWoeNBxRHi8IgH26QwV6NwMkSeN1gB7eNGe2yC7duSio=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777541360; c=relaxed/simple;
-	bh=x3JQeai0h5o8rGKpiuiaLG91RzSvWOVBhxUm7EY1F7Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u6R6lqjYbrB4RB1spEuj9UWD5mCM6NpxfZtc/X+5ILPlXX+wgQtyaWM6Wm2f3YLQs1SCKtlmJkZaF1/OE4EAUrD43PEsL5LmTiFYLn3RV01GY0TSlRXrOidyOh4+JGMd24Tz5IsM3UndxtRKnxaJMW3HLhGl+Dh5gKPfyqfqPIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PmCsFFjB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=be+FaWUN; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEC83164C3
+	for <git@vger.kernel.org>; Thu, 30 Apr 2026 09:52:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777542740; cv=pass; b=r7Lw/Mq4A6gxrdDX4T01w7Ut6+Nakta9AbWLl3mFi5w30nOl/DI91eB7BF8pgWhEe6Seh4yY5Kh7A86vhJXqjgQdWEEYXK8ASkCz6gkw0TeiC+SkzagzeoiIDxn5W9YGIIswN29833Wc1pnBr7eCyqqShdy8CWAvaOUgB/CYmQQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777542740; c=relaxed/simple;
+	bh=e7K0+UNW2tzpiN19ZGkVcTRRuoFPZiMOklLIX8hLPcM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NMCwq1WPTf4EVzpbCj+fIm/waXC954d51RTpToXL/BwLVcg0i3a4fBMw6h774SbLgHKUwqnXAEwkOiTi+/3BByYyESUF/WFX6nfE2XKMxAicFXyVD6uPqPoqfKuPYa59myBraDLT4+rZ5Y7e/m6pFWB5p4WF8beFdDNrs04HxcA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GRbCXZsg; arc=pass smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PmCsFFjB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="be+FaWUN"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6474D14000E5;
-	Thu, 30 Apr 2026 05:29:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 30 Apr 2026 05:29:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1777541357; x=1777627757; bh=PmQoUudqpm
-	6eMa7gG/os5RyxCbCIYL7k84knKGXwkxM=; b=PmCsFFjB8u+R0eC0pTrG0cCzKS
-	gqkgHnmrW7vXAfnwP6GX4DZ1SENc4fqTMtE5u7mjdUTGZcMEyRpDGAOJjcAV0Nd4
-	RGS98wfei8xoTRQBB4bXXXZar9IkH07hMq7ImK3zBgpsJ/fBcZObkEUFeKz11yUT
-	QpiBA4qgp51nYSAa38ON+qux5d1UhKe53rYhLZ7RGMRfVVjRnJLe2GWKOg30Yn0e
-	Z+6Apbj15YepsbYp9wVr3GzI3WfBG7exxw2O+i+9NR4FkawJyYfrwY5VgsRZquU0
-	tZHvt2cwgJQBF1sAarsvdCt2hzJAAGHUJXMiBms1pdCWgeXvW7oVkKJP5XIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1777541357; x=1777627757; bh=PmQoUudqpm6eMa7gG/os5RyxCbCIYL7k84k
-	nKGXwkxM=; b=be+FaWUNHO02dAGK+6W1izs1IKwJN7LvC4B1rdKGHFwxLyVIOxQ
-	7ZYeOVUbIT3mNl//lUk8eAlRKd/PBwzUxL6RNkq1AlyHCVAT0beXyxESswjSzTGs
-	Osqgb06tQQp7TS7b1oQx7by5TefLQRL1g31tqq9Fl+18W3IaFK7DFFxmK5hBhbuN
-	c16MCN+OExQSX/uoxdjmq1SLAG0d/fq3syOI7a5A4wOdaWqAX6IYhkJchTHYEqNI
-	Tt9VTFAJRCtfC8hvmtWU3QWrbXCGMzyX3qRM+CUiayL0gVf+ObGJEW6pikag5a+M
-	5KbfxLzlYne0MeN4HU3J1+hvZZru3WB4CmQ==
-X-ME-Sender: <xms:7SDzaXg6Ufhg7dn_PPxwBubjFcKuh-0oKCyKEKFi-1XZfFqyVLtVfg>
-    <xme:7SDzabesj13kIn9CUcN9Zqgw8wAKbcLhsNM-5E2d9CD2sX3A7Oq7kMs46bvq3Dczd
-    prSQh4GiBozedPusNVgDGCxf62MJJ1gGjl4l-E-8xKpGCkfkPnvIQ>
-X-ME-Received: <xmr:7SDzaUf8igrEu_AeLy5de44APVmgIgon4g7yvrZNaGv4dcBAB-jeXyjqutr6LiwDtomJvvS3fuIkDiAT-lDdZyWQN6bs6bV0Sw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekieeliecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegurghvihgujhhorhgurghnvghssehouhhtlhhoohhkrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7SDzad-3E2jlLyHuxgrMhBxClKBjoMewXagdDUR0Ev7uJYYCQQW3WA>
-    <xmx:7SDzaYkfjVWWNc8C8R-3cA-MIBFHmXZM74gkyf-d5oL5lqv_OmZwFg>
-    <xmx:7SDzaX8ESSJAwl1JMduNNZgkW5y7peGEch5fc-xHVB3i5TzTdYiz3w>
-    <xmx:7SDzaekNCOiJOnGYA1AVtSk9LrNnExVt07l9Ugl14MN_4KuR_bkv5Q>
-    <xmx:7SDzaTkfyb_Cpo6RsrA8ONAOVP78NOUHY1siOiJX66Zbe4_-LSuP9NxX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Apr 2026 05:29:16 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: David Jordanes <davidjordanes@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git interactive rebase does not allow editing commits at once
- anymore
-In-Reply-To: <DB7PR03MB3881199B8D12CC7A981ADF0CA8352@DB7PR03MB3881.eurprd03.prod.outlook.com>
-	(David Jordanes's message of "Thu, 30 Apr 2026 07:46:05 +0000")
-References: <DB7PR03MB3881199B8D12CC7A981ADF0CA8352@DB7PR03MB3881.eurprd03.prod.outlook.com>
-Date: Thu, 30 Apr 2026 18:29:15 +0900
-Message-ID: <xmqqo6j0zthw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GRbCXZsg"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-944168e8c5fso450602241.2
+        for <git@vger.kernel.org>; Thu, 30 Apr 2026 02:52:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777542738; cv=none;
+        d=google.com; s=arc-20240605;
+        b=e7pNsdorW7sA20rVxGSa2Xbv64g5KUAnFR5npYhP66BoLxmt3WTkgyQAtyWfDVGn+h
+         27KFmIs9S9DYqdVEG9Pz4mHIQ4ngZDFtDqBi4PaHd99ZWQbveZbJldN2t4T5qKdohK7y
+         Vu/M1CpL9XvZ9Ennr3HRanPs2M0UmISG1Z3vhEK0jo49C9zKzLRn5sMamEWlw/i2FW86
+         uGSJrNHe7VoipOle9KPchRVSSE3mYz87yEJkQ6SiFpCD7OavhqIFfEyWwNrZl0Q8il6L
+         gcGWcnq2RDXgKCtrRleAkeGg2RXZRcSQ5domRbs1eliV/x9zjmD8zOYUZJ95BIXFwGzF
+         KajA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=ysD/NQL5sJdVYU7LzJ9JIKvQMWN4bvH4UB1q/G8EO1M=;
+        fh=CXjOW4ncwyQiq1jOOKNp/MxfwETfRm8jQw46qrw6aWI=;
+        b=lcsQtrUUhKeZ8a3NuVlfoWcauaRaSNqKEwKCV5uUDDrNqVgI6Uh6xvLSZs3zL7IyJA
+         pOF7YEp1fmk5yZrbIpRCiCd4AVrwQBiGsD2PgIas9WZEjnFmo9/XrNeaE7S+Xecg2Dk3
+         OFF4paeF1eKB0cl2XE3rydgPMrTWR+ns9V5aqBb3sF3b+6kM/AJb7r+AuBrRNmFWWJ+l
+         mhAKhh/gjp8WaHWIHEk6BCiv7v1LUMCHPxs+1TAf7U1IGlC7nqV3jeyqhz/NN80pRlFC
+         ZRJ7FAj4JILFgRMZ3kibMxfeVzTy7Sqg49hEFMS+MbXL2zb1JucF2cz20XiRkxmJRE2U
+         2r9A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777542738; x=1778147538; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ysD/NQL5sJdVYU7LzJ9JIKvQMWN4bvH4UB1q/G8EO1M=;
+        b=GRbCXZsgWHgBXA5DtnrDt8UZZSyyMHKhIvdJGOUnrsD8mCq6peRcd16GAyEFT1f+3s
+         J3229yqetuN0LlChw781AGsralXGrimE9v97Tt0mr6xdRZAgLAs7j/wIQRHspyfcPwbb
+         UpJtw7WZsI9Yx5ex9cU961nMCHF+iwU1zfem7av9OCGhTSl8yc8qFKq+Ad7m5rVf6ugs
+         Pi3sRsaDKAiV+nLw5Kfc5WIUWiPzwVclYTNOHMWqpi5DbnyT82VqD/h8bVCUDR6awyOI
+         gC26hpAiXisIaORFCtzTMZJczZDpaTsl/Ko6gF+9D4FEs10RRGfvaIaykWKuQyL2XZZQ
+         G4zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777542738; x=1778147538;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ysD/NQL5sJdVYU7LzJ9JIKvQMWN4bvH4UB1q/G8EO1M=;
+        b=W1o5zLH56zLucqss1/PT36d8/7siKUGM6LNTP/XeqUwsnpmTv6L3U3bkpdmvrHQD67
+         86xZvtfJM6mKZySkKOabvck08X/eNsZG5xqtDzhJCDrIF79ARle3ri5LMu1MvZ/soePR
+         f6+YHYPbIA23Q1/6Tg+Yi0oCnhoaimkAtcVKhQDQlXytN9y+ChmoSjoFC091y+NRdIIu
+         Zzhs2UTK/76zW6Lwt9gL9cNqThx34ZlqxT8+LPopy80oDT9zXD3oOilVAsYGIO96/AbE
+         VkO/4KJY1vrV2I9E9gLeGy0C85pZIZGxv3tmsiP39AtSerh0/dSUjZapbxiuKk8ZJL9p
+         2YWw==
+X-Forwarded-Encrypted: i=1; AFNElJ/V0vVEvcILHEQsUUnbavMVJeKg7DL1jlEE7PE4Apdb3dYqgZbW9k4f5KXcXX0xyM9XQxU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzg2WowufGmJKUZ3nhL5vVEXpDl4xosNPA6n8WznW6rFIuhUbBv
+	h/ws/+dq1ti59TL7ENDyo6YBF6XXBEO5pD6zqKNP+dAUiXlViUiPtJjGnjY/XWD1MxlA0X79QdQ
+	6BaiWTwXJWA1oF+osE+xSh9PWsZiZhE7joA==
+X-Gm-Gg: AeBDiesV4srLI4g2La3MAguarfETQ8mWz1ZKukglBFRuXwHoceEu++z2JFrQOdabgGO
+	/jh8DY7o4zNsqAhpo3lrxdUsRSPiEJXFGh1K28PcGaYfHK8fTv3JHU62bvn58p2X4cqzcysuciF
+	YqmSnZlToENBwC1ypj12vwQOy5wN/djDcv2LeoM1BjguWWra+Tf/aEtcdSBKfI8+LlD/mfshvMZ
+	P4+LKWPDatgjsg1KG4g99N1MZWRnBKrAtsHyc/O2GOdC6aLYJ7M1/1ChHC3ebTfCPmCd9BPu9CX
+	OmJt4k3TnT+Cr+Ff4HhVbNjkgxigzcQIA0Tgu8V5EmE4X5pNHSGH
+X-Received: by 2002:a05:6102:4b13:b0:610:2912:adc9 with SMTP id
+ ada2fe7eead31-62ad55ceee2mr956330137.28.1777542737753; Thu, 30 Apr 2026
+ 02:52:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 30 Apr 2026 02:52:16 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 30 Apr 2026 02:52:16 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <87v7dagdjk.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
+References: <20260427-refs-move-to-generic-layer-v3-0-e4638dfb7897@gmail.com>
+ <20260427-refs-move-to-generic-layer-v3-6-e4638dfb7897@gmail.com> <87v7dagdjk.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Thu, 30 Apr 2026 02:52:16 -0700
+X-Gm-Features: AVHnY4JpgRiWM-svh3DeU7DuhdDeA5TJmDnezsHToYAXqgYTaxzYJvCUQAlPSvo
+Message-ID: <CAOLa=ZQ3P=K0iX9w4GvMPPBXrUMuZrBkt=MxYg+nDt5_-vyMRw@mail.gmail.com>
+Subject: Re: [PATCH v3 6/9] update-ref: handle rejections while adding updates
+To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Cc: ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000751c8e0650aa6b78"
 
-David Jordanes <davidjordanes@outlook.com> writes:
+--000000000000751c8e0650aa6b78
+Content-Type: text/plain; charset="UTF-8"
 
-> Git version: git version 2.53.0.windows.2
-> OS: Windows 11
+Toon Claes <toon@iotcl.com> writes:
 
-I do not do Windows, but I am curious about "anymore" part of your
-message title.  Are you reporting a regression?
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> @@ -289,22 +300,35 @@ static void parse_cmd_update(struct ref_transaction *transaction,
+>>  	if (*next != line_termination)
+>>  		die("update %s: extra input: %s", refname, next);
+>>
+>> -	if (ref_transaction_update(transaction, refname,
+>> -				   &new_oid, have_old ? &old_oid : NULL,
+>> -				   NULL, NULL,
+>> -				   update_flags | create_reflog_flag,
+>> -				   msg, &err))
+>> +	tx_err = ref_transaction_update(transaction, refname,
+>> +					&new_oid, have_old ? &old_oid : NULL,
+>> +					NULL, NULL,
+>> +					update_flags | create_reflog_flag,
+>> +					msg, &err);
+>> +
+>> +	/*
+>> +	 * Generic errors are non-recoverable, so we cannot skip the update
+>> +	 * or mark it as rejected.
+>> +	 */
+>> +	if (tx_err == REF_TRANSACTION_ERROR_GENERIC)
+>>  		die("%s", err.buf);
+>>
+>> +	if (tx_err && opts->allow_update_failures)
+>> +		print_rejected_refs(refname, have_old ? &old_oid : NULL,
+>> +				    &new_oid, NULL, NULL, tx_err, err.buf,
+>> +				    NULL);
+>
+> I realize I've made this suggestion, but I think I've made a mistake.
+> When opts->allow_update_failures is falsey and tx_err is truthy we
+> should die also. Don't we?
+>
+
+Nice. I didn't think of that either.
+
+> I'm not sure what the nicest way is to write this, but maybe:
+>
+>         if (tx_err) {
+>             if (tx_err == REF_TRANSACTION_ERROR_GENERIC || !opts->allow_update_failures)
+>                 die("%s", err.buf);
+>
+>             print_rejected_refs(refname, have_old ? &old_oid : NULL,
+>                                 &new_oid, NULL, NULL, tx_err, err.buf,
+>                                 NULL);
+>         }
+>
+> How did test coverage not find this?
+>
+
+Because:
+1. The function only returns `REF_TRANSACTION_ERROR_GENERIC` as of this
+commit.
+2. We only seem to be testing this scenario for batched updates.
+3. I'll fix this and add some tests.
+
+> --
+> Cheers,
+> Toon
+
+--000000000000751c8e0650aa6b78
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7d521ad90e7ec91e_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1uekprNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMlF2Qy85allSakk2ZmgzQnZTbTE5eHFrSU1QYkpkZQpTVjhGK2RlWHUr
+Tmk1MldTSmFzWi9zRmwrZEYrVEhMSVArRG5lYWhTKzdncHFzNDNycVBneW05cEVSVXB3TVR0Cklh
+dG81bEx0UmlLMEVKTlZTUWNtN3hjTjBpOW16NUtkaStjQ3JJVzB2UUo2S0hteVYyVFpTQzRoZU9M
+NEN6dmkKRjdpZDk0QlE4MWd1bU5JZ2ZlVy9sUmtSaVRtSEhFRWVyRkFIRXc3VTdQRjVXcnFTT0Nv
+elp1VUc1NXh3eVFocQpuVzJUbFJQQkM3ZWw0eGhNOERBS2tqN043WDVZSGtoc3YwVmMzRWF1ODhT
+WkVXbTdCaFNxTmtPZjlhSC9ZYkdaCmQyM24yT0pER0srQlZiSHlycHFOd0RrT0tjcmhuQUZGM1RQ
+OERZcjNBNzlCRlB5WkU5Y3RWRTlvN0h6UFVKblAKSTV6VThvVmYrZFI1MmtqUFAwd2REVkl6UTFR
+YjNTTDFDUlBTYXhFa0F2Z0dweFRFRVZ6SUQ5b3VNbHRuUGIwdgppZmZ0TTZyY1paR2FXUzZsV1VY
+eHVqS1F5UnFZVjh6SlZGcFc2dWhuQW1kUHc4OGE3OUdmSjRDZXNhbjdYN3ptClcrM04zWkdoZ1d4
+dmh1OUJFUVV2OGlDcDYwM2I3V095bjBmQkZsYz0KPUVWVWgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000751c8e0650aa6b78--
