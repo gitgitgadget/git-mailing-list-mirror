@@ -1,128 +1,167 @@
-Received: from out203-205-221-239.mail.qq.com (out203-205-221-239.mail.qq.com [203.205.221.239])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F9E384238
-	for <git@vger.kernel.org>; Fri,  1 May 2026 10:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF99B2248B4
+	for <git@vger.kernel.org>; Fri,  1 May 2026 13:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777632963; cv=none; b=Rce+DvzOgbZhD4UloSMcUqMD3GVYahDss143+xZ837kzHEBtZhPs+xKkKRDTZgG65K094dWD+1A5ljHh3iAYZNYSrdqELiSC+Fh6lthmALUQmFVxHpDNz+MHgKFKDE0Gv9BlSxM4MMH0EZmveDEFYbzW4l6W9yMJZw3dsrpyOms=
+	t=1777641249; cv=none; b=C2JPqwq6wgGz/9OPzZqaAes9TAbLzM1ZLu9VdAhTo3BJFqKaPFR7QqusyBwhv2qH/dXrvpvjTwYyfSm8IPsY1zTC9YGxH2XF5tBv7HUO4SV6RoBeLQjCdWpPEHdSHmnjuH1Lg7AT3uTFpq2xxzcQz/Pf6XW5r9VS0e4DdOD8FJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777632963; c=relaxed/simple;
-	bh=YVnPdbu23Z/AweksD9+q3YHTSTVhzOiyxbIIrTCKc2U=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eEY3GI66rgsiQdc63ca/+eCB/ELsElLFpFdp2OE/vkM8xDm0a2J4hXuY88WNIrOXxM4SKPUVmCaeEEnRA5Qe2LtvT+IMnPOCMDtRgNasMViCOGER9TC4xv8pyd/SynzOuyY4YHSrGCIHwBkVqOB6a/pwlCWsv2SOsNRBzelRiO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=bGZqHWU1; arc=none smtp.client-ip=203.205.221.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="bGZqHWU1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1777632953;
-	bh=rDuVQqOEi2UPGyEV9gCMeTnU1vYuKAK35YetlPB8mq8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bGZqHWU1w837hxpmJH+tZ8DGkaryAalMA2iM6BFYWaMG4a6FWMfETwuA8dn7HjqKb
-	 nqc2xKYnR+Y9+7J/aB+SNue6l2tox2BoP9wfPCNkqgAcCCyFaayAufW510ddimflGo
-	 KJ1ySsbSGtKzaZIJz/Gai3dFTYy9rnifeO+T3woI=
-Received: from DESKTOP-31CF0TC ([117.188.244.93])
-	by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
-	id DA2A94D3; Fri, 01 May 2026 18:54:34 +0800
-X-QQ-mid: xmsmtpt1777632874t9c9j0nvy
-Message-ID: <tencent_277823B7C5D69914E168E5679A907C655606@qq.com>
-X-QQ-XMAILINFO: OIJV+wUmQOUAAZklMOMLMQzJh++Q6+4ftkmi0b+Wenwpcfw+a29g+o+LUUHgqa
-	 OuuY7ekQWlFYt3Bz8iOGw1Tf0rSBfRL+QW7expSTa84/4pjhGUXaF75RYfbi/t/PVudAlbo4sbbL
-	 BlWI5Mw2d4s1fzz6DR6yr73GzAUqs5eEFEvx0eMgoQoKU+bBBr3zexUCSYBkFBeekTSCI3WjN9oA
-	 gT5GEYIyIVtBfD2BlLQnXXmjtIPa7LUM9+BR3c17PEEIgR6TT4ThG0NG7vP/msJQWlwmCCEe+5fb
-	 oAh214luGejoBOz0/jrZp1Y9lb9bPMgmFHZOYV4CmUEFk8bd+cYXwQnciybJiOT0/uiKEvQCd+4N
-	 MbnPXAiUk9VuRNqpgdR99fRX8uSIlZECerz0K6+ikW0J2szzaXOUx/Vnyd3VhlJrQBoGELxdx1IO
-	 30dNsRJjxN3s8h2MVj46u9dvA/I7SpnLVJa/cvwMVKoloVETw+6p9pqns4Z0fSMF1HDYlkefwE0t
-	 DlLKXbqF4or1hmJGwSOureeGmmGSceUZTa4ShzWhKB6o6Y3mqqEbZg/6huY5hMcqYM6JWpHdq/fp
-	 sqnl5IqJvGlXQclmeIrEBTJ1Vm8+rLbh2SKsGWLn/WzQOH9juBIFCRC3bvDmra0y5H9YyFdxWAcH
-	 4fqh6DF4uPgBOKSdV7+aiDlhWMbAa/Q2ndGwUJCE+XU3gp2du0LWDKBql1UZVQlIAaOsLXAlmM+1
-	 Al/duSGi6/vOjGMpGrtokip087JtJpqndJc6ZzruzOYBl6Pqh8izdZRZVo3WPY+o8dXPNirnQI0f
-	 AF0WlFH/NgWptO1+19BQ2Xe6kaCtflbGWZa0JHmKNGQdv9gWgzH8NNbNqigBENi3VrKwuLHbgok2
-	 Wt2FPZwlk90KzP/QFKV7CjYpBxrdtkKXEDFLwu4TpTA7BCUR1WcVxZHaBb+jfRYQBw6ikhkq/hL9
-	 kGG09xp2ZYbeydVvUfPs4W26+CEmJgOTTX4ksOFZTFlCQjuVCUmzBPFWzzOtfmgnMRCpBtUDGEZ2
-	 XX93SB0xiO7fosZrFWZbVBURXjGYWtGpKFhXy1j9bmuLNrSNBtEp74kUbidCgDOEQcmrX1ag==
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-From: Shroom Moo <egg_mushroomcow@foxmail.com>
-To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	mlevedahl@gmail.com,
-	Shroom Moo <egg_mushroomcow@foxmail.com>
-Subject: [PATCH v4 1/1] git-gui: handle missing worktree and separated gitdir
-Date: Fri,  1 May 2026 18:54:13 +0800
-X-OQ-MSGID: <20260501105413.477-1-egg_mushroomcow@foxmail.com>
-X-Mailer: git-send-email 2.52.0.windows.1
-In-Reply-To: <tencent_8A236D9D4A8D8CCA7DAA083157AA8543700A@qq.com>
-References: <tencent_8A236D9D4A8D8CCA7DAA083157AA8543700A@qq.com>
+	s=arc-20240116; t=1777641249; c=relaxed/simple;
+	bh=lGl2U5amqAEyUNoCttRh+Hw9eOvyD0DhmlXWhI7NwwU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=OBzRCmtwUK7Ham3Z68Y6w4lzLpPPsQRqCtKgvocOsBvIXX78sDtRYwndBSmWaFeTtrnDUfG6/oP5JWT7EWNLRzz31SeSMc0z1DUOYZ6L39Hi4Xec9yqyekumETTesqp4cT8/VTz+CIZibPenHFYQAftGdNtXZrZ3kQIzSRN57mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.101])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4g6WhS1cF2z7RcQD
+	for <git@vger.kernel.org>; Fri,  1 May 2026 15:14:00 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4g6WhF1rXhzRnPp;
+	Fri,  1 May 2026 15:13:49 +0200 (CEST)
+Message-ID: <77219c75-7968-413f-a642-0446145c8023@kdbg.org>
+Date: Fri, 1 May 2026 15:13:48 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] git-gui: handle missing worktree and separated
+ gitdir
+Content-Language: en-US
+To: Mark Levedahl <mlevedahl@gmail.com>,
+ Shroom Moo <egg_mushroomcow@foxmail.com>
+References: <tencent_AEE968E8E785907BA55A383977C8968ED406@qq.com>
+ <tencent_8A236D9D4A8D8CCA7DAA083157AA8543700A@qq.com>
+ <3b0b37ed-1a5d-4fe1-b2b4-7db67a62a06d@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <3b0b37ed-1a5d-4fe1-b2b4-7db67a62a06d@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-When git-gui is started from a directory that Git recognizes as a
-valid repository but the working tree is not accessible (e.g., a
-separated gitdir created by `git clone --separate-git-dir`, a bare
-repository, or a case where the worktree directory was removed),
-it previously called `rev-parse --show-toplevel` without error
-handling, causing a fatal Tcl error ("this operation must be run
-in a work tree").
+Am 30.04.26 um 18:18 schrieb Mark Levedahl:
+> 
+> 
+> On 4/30/26 6:02 AM, Shroom Moo wrote:
+>> When git-gui is started from a directory that Git recognizes as a
+>> valid repository but the working tree is not accessible (e.g., a
+>> separated gitdir created by `git clone --separate-git-dir`, a bare
+>> repository, or a case where the worktree directory was removed),
+>> it previously called `rev-parse --show-toplevel` without error
+>> handling, causing a fatal Tcl error ("this operation must be run
+>> in a work tree").
+>>
+>> Wrap the call in a `catch` and handle the failure as follows:
+>>
+>> - For bare repositories, keep `_gitworktree` empty so that the
+>>   existing `is_bare` check shows "Cannot use bare repository" and
+>>   exits.  No behavioral change.
+>>
+>> - For non‑bare repositories, try to locate the worktree from the
+>>   parent directory using `git -C $parent rev-parse --show-toplevel`.
+>>   If the parent is a valid worktree, change to it; this covers the
+>>   legitimate case of starting git-gui from within the .git
+>>   subdirectory of a normal working tree.
+>>
+>> - If the parent directory is not a worktree, refuse to start with
+>>   a clear error message.  This prevents dangerous operations in a
+>>   separated gitdir, where ordinary Git commands like `git status`
+>>   would themselves refuse to run.
+>>
+>> The approach intentionally avoids two pitfalls:
+>>
+>>   - Testing `--is-inside-git-dir` before calling `--show-toplevel`
+>>     would break the normal use case of starting git-gui from within
+>>     a .git subdirectory (where --show-toplevel would succeed).
+>>
+>>   - A simple “non‑bare” check after a failed --show-toplevel would
+>>     reject a normal repository whose worktree was only temporarily
+>>     removed.
+>>
+>> The chosen method keeps the original behavior for bare repositories
+>> and for regular working trees, fixes the crash, and properly blocks
+>> separated gitdirs without a reachable worktree.
+>>
+>> Signed-off-by: Shroom Moo <egg_mushroomcow@foxmail.com>
+>> ---
+>>  git-gui/git-gui.sh | 23 ++++++++++++++++++++++-
+>>  1 file changed, 22 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+>> index 23fe76e498..2392282df3 100755
+>> --- a/git-gui/git-gui.sh
+>> +++ b/git-gui/git-gui.sh
+>> @@ -1169,7 +1169,28 @@ if {![file isdirectory $_gitdir]} {
+>>  load_config 0
+>>  apply_config
+>>  
+>> -set _gitworktree [git rev-parse --show-toplevel]
+>> +if {[catch {set _gitworktree [git rev-parse --show-toplevel]}]} {
+>> +	# For bare repositories, use the existing error handling
+>> +	if {![catch {set bare [git rev-parse --is-bare-repository]}] && $bare eq {true}} {
+>> +		set _gitworktree {}
+>> +	} else {
+>> +		# Non-bare: try to find the worktree from the parent directory
+>> +		set parent [file dirname [pwd]]
+>> +		# Cannot go higher than the root directory; leave _gitworktree empty
+>> +		if {[file normalize $parent] eq [file normalize [pwd]]} {
+>> +			# Already at the filesystem root; let existing paths cope
+>> +			set _gitworktree {}
+>> +		} elseif {![catch {
+>> +			set _gitworktree [git -C $parent rev-parse --show-toplevel]
+>> +		}]} {
+>> +			cd $parent
+>> +		} else {
+>> +			catch {wm withdraw .}
+>> +			error_popup [mc "Cannot start git-gui from inside the Git directory."]
+>> +			exit 1
+>> +		}
+>> +	}
+>> +}
+>>  
+>>  if {$_prefix ne {}} {
+>>  	if {$_gitworktree eq {}} {
+> 
+> A bare repository can be contained in a workdir / worktree pointing at a different gitdir:
+> the logic above can thus a workdir that doesn't use the gitdir where git-gui was started.
+> The bigger issue is that a gitdir can support multiple checked-out directories with no
+> one-to-one mapping and no clear idea of which of those a user may have intended.
+> 
+> So, I believe the correct fix is to test "rev-parse --is-inside-git-dir, and if so throw a
+> clear error message and exit. This will give the user something to start with to solve the
+> problem of why they started git-gui in a gitdir, and not in a worktree.
+We have quite a bit of code that attempts to make Git GUI work from the
+.git directory and also in bare repositories.
 
-Wrap the call in a `catch` and handle the failure as follows:
+87cd09f43e56 ("git-gui: work from the .git dir", 2010-01-23) made the
+first step. The original code just used the $_gitdir as the working
+directory. However, at that time we did not have alternate worktrees,
+and the old code, when used today, does not work in a `git
+worktree`-created worktree. Later, the `git rev-parse --show-toplevel`
+call came with 38ec8d3e2652 ("git-gui: correct assignment of work-tree",
+2010-10-20). However, it also changes the fall-back code slightly, so
+that running Git GUI from the .git directory would not work the same way
+as before and takes the .git directory as the work tree (because in the
+.git directory --show-cdup is not "..", but empty).
 
-- For bare repositories, keep `_gitworktree` empty so that the
-  existing `is_bare` check shows "Cannot use bare repository" and
-  exits.  No behavioral change.
+I think we need to restructure the existing flow a bit and not just fix
+a single spot in the code. I suggest this order of operation:
 
-- If we are inside the gitdir (i.e., `--is-inside-git-dir` is
-  `true`), refuse to start with a clear message: "Cannot start
-  git-gui from inside the Git directory. Please run git-gui from a
-  working tree."  This prevents dangerous operations in a separated
-  gitdir or when starting from a .git subdirectory, where ordinary
-  Git commands like `git status` also refuse to run.
+1. Handle the bare repository case. If not enabled, fail. Otherwise, we
+can work with an empty $_gitworktree.
 
-- Otherwise, leave `_gitworktree` empty so that the existing error
-  paths (e.g., missing worktree) can display their own diagnostics.
+2. Collect --show-toplevel into $_gitworktree.
 
-This fix intentionally drops the previous ability to start git-gui
-from within a regular repository's .git subdirectory.  That behavior
-was never reliable (Git itself forbids operations inside .git) and
-broke completely in the multi‑worktree case where the parent
-directory is not guaranteed to be the intended worktree.  The error
-message guides the user to start git-gui from a worktree instead.
+2a. If this failed: If --is-inside-git-dir is true, and the last
+$_gitdir directory component is exactly ".git", take the parent
+repository as $_gitworktree. Otherwise, fail.
 
-Signed-off-by: Shroom Moo <egg_mushroomcow@foxmail.com>
----
- git-gui/git-gui.sh | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+3. Handle all the other edge cases, if any, with the so determined
+$_gitworktree. (I didn't think through, yet, what needs to be done.)
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 23fe76e498..9e848aa26b 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1169,7 +1169,17 @@ if {![file isdirectory $_gitdir]} {
- load_config 0
- apply_config
- 
--set _gitworktree [git rev-parse --show-toplevel]
-+if {[catch {set _gitworktree [git rev-parse --show-toplevel]}]} {
-+    if {![catch {set bare [git rev-parse --is-bare-repository]}] && $bare eq {true}} {
-+        set _gitworktree {}
-+    } elseif {![catch {set inside [git rev-parse --is-inside-git-dir]}] && $inside eq {true}} {
-+        catch {wm withdraw .}
-+        error_popup [mc "Cannot start git-gui from inside the Git directory\nPlease run git-gui from a working tree"]
-+        exit 1
-+    } else {
-+        set _gitworktree {}
-+    }
-+}
- 
- if {$_prefix ne {}} {
- 	if {$_gitworktree eq {}} {
--- 
-2.52.0.windows.1
+-- Hannes
 
