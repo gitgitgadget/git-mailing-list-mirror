@@ -1,121 +1,224 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5CE16CD33
-	for <git@vger.kernel.org>; Fri,  1 May 2026 13:19:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8733932F4
+	for <git@vger.kernel.org>; Fri,  1 May 2026 15:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777641558; cv=none; b=JoJdEyT3pschP75c7KoS9BBBiL9tNrIVHyfnE1nSLkitgLRGhHZp2s5LevIYvn0xKtTYYsgD2TpOX00LySuZlSNXIH00IhzUnlFHqd7fbuYiWzrQm8Ng5OPFSkR9wDArvw55lGDYk4VRVs6Nq9JdsH1GO/mjg/JBAsHugvxPQag=
+	t=1777648618; cv=none; b=HJNss8JEiN2SO02yEK1sncPXlm9pdW8fflwV6SBZnTqMlqvJowa9iZjI4WSzzq6Gf+cFsIQ9OVIUGpZr1xp8iWrk0I9M3kn74fuyog/2AsgxCNC7QOcJhEYA2Avoiej9K36MGijNjl5vTzYrVAongttIkoiQW/TOi3ATtW/6I8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777641558; c=relaxed/simple;
-	bh=nUERPp2rkPxlVOvl50ktIyrWGZhFKCMtMzKC8E814mA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dW4TkjgwWamf3v8RB27rUqSR5ec1DquyBic2EGlylXG/iR4Ps9k39stACPxp6pEQDiCCYpOGvEvSN/2tXVROQD7ZAkO7mSojd6NmpaNCel385wc1LdbQEuGLPUVZAhpHrTcVXl3WmJDIEWotXj3P8irTbzPCdxtVYCxag0KZOyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LdJGBc9O; arc=none smtp.client-ip=209.85.160.174
+	s=arc-20240116; t=1777648618; c=relaxed/simple;
+	bh=1N8h3AYvJYJLaaip8x5ihrlyPhiWyVixpU9861t6CnA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=D5su58sF1Lfm3DQt8xivpu9l2X8YtRCl+9/dk74sU0c5kqnIWe9YM1yDJ7FRhOgqLOmEFpZMr3/26ajnPGRHP74fWZPg9g9Z7yDgLelAsvTQBRkyEG/57d0m+uKcaPY/CfTvCIgFNcxmtj4n/aX1F0CzvvNSAg9TTNUN6UAUZJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cXfKS4da; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdJGBc9O"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50faf8ed9c5so9096651cf.2
-        for <git@vger.kernel.org>; Fri, 01 May 2026 06:19:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cXfKS4da"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so32463495e9.2
+        for <git@vger.kernel.org>; Fri, 01 May 2026 08:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777641556; x=1778246356; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5+M0BX3xA8aftjk6v41TgQrYCcEsTbjkLE6TNcZ3is4=;
-        b=LdJGBc9OGvrMKgcc0ji3E+ZRpAoU8o4Kt66y0ul60TjcTy/aK1Ko8M5nUSZRBUASmF
-         40GJcGThp1Flu2I6uW5H1oYUnfjfLY0Fx5kT7dNn1u/EqZEARxrBt+BxSE0RbTzsKJBn
-         aAVFD8uZTYm8JNVgXhxoGxCsZEKv8/UoihahOx06xDXSLFwZ+hkP+Z0aHxLpj6p/xsCv
-         zYVj1b+I57kSs6sjrHRHoyb/RW2QcG7vwXMS+2y9iY5c9rgMlsKf5vnT4KIjjwRZr89h
-         o6nug43mlcYpG86SeguIlbWFyRRRmXOyKOhGke8gE07RvOp8gis5HBUieM0MSjZY4CkU
-         Osrw==
+        d=gmail.com; s=20251104; t=1777648615; x=1778253415; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Qr7z7J5/+EChMSxHchEHhAn9CJzTQ7LiE811JrEtlFo=;
+        b=cXfKS4dacgcv5joFotZvaidY9MOuPnFgfL+3Nxg9X5kA0oBvSBAmtli6YvGseSo2t7
+         bw+KKveaCPWPtbh9CqLahhMGOrDzmbNjzgn4z/bV4n1qluwdl/LgCP0W3o+2LafsngaN
+         Nk05jMSjwTZ4aCR3ZEKxxXls6q6FTWThjxaNLWxjnx8FsD2sv9Alb/E/QL9wUkGOtUHV
+         H3aaawaKrKEM5rfVMsrdT4+lZC+P5TyRaCs7JCxVQwyau59RMvBdl2501uT7wAC1iiCp
+         CNPLmkkKzg9vPQ3jZu9oPr/pwnIbYlOyyQRPDUHQWi4iZ0GPrnPqHs6eXcaQ30MSMi0E
+         H3XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777641556; x=1778246356;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5+M0BX3xA8aftjk6v41TgQrYCcEsTbjkLE6TNcZ3is4=;
-        b=kMjuiYpCgFXObxdiQMlK0o4nsTsaB2G60yTsfoTrvnAjOT2iGlF5/YZm8Wr1Tmklef
-         6UZlb1J3owIrlfOrzqSLPOLFtMTzmFndu+Ct/BdEWHELPfba8MzLENdiil91UANvGRIF
-         +Pxi77iD9OfxS8P9xelIqR1RY3pVU1NoSi89bhay0c/2B9r1yg/yXGMQTSIolWxU5Fft
-         gSraODd3hYi76ldTtwlO+q/97dC6mmM+SmA0agKInkxtGQdxMtkmA93NfFJOECTBq4y2
-         uBKUJ7LMiPFax0LD0ztIJUhFuyg6qeY1L44ZeJu/C2XeNlZBf3KecdwVgynj0hboC2HO
-         1fAw==
-X-Forwarded-Encrypted: i=1; AFNElJ/SJF/BXi7gt2azsX61X8LOXCV6ytaHPOEYwMYMH1uvskKowtpseHBONnwVBE6dgC4V0jU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywubm5T6CjWActkJuGDwgtrlrGfA5WQqigZifyY1xL5sjHkVePe
-	L5fHTTotf1k12hDcdK19LJE1CVVkNQGVA2deFj/vnDqIm7P3MM6jv6ra
-X-Gm-Gg: AeBDieuus35bTQeiJ67xKXdvWVrsgNgefsFMA5BdZ33kBH4bpoVMqwIw9CwFjb/c1NJ
-	aYA9i71xXrnaRugRU8p1+UX0ZQbWRtQcjyiB2Q2asWWZwSkgAAc2e1COW70/w4pxdXmbBE5RFDY
-	HnF+tJRhe5eCZWGqGNEvLmc2zAONQ+bqkokh1VWw2SaOv2ze0Q0nfTC1Jsxugez0tXHQjxj4yMO
-	dnIEmlzhokvXgy4v7veaA1w77Bp3w741l8H1INrBi6lOIenYjmt9aMXfM7QMhQJUja0DWATGnoI
-	CIeGul+ss9LgnYx8AXcFZuWbmQ5Q9pEaZnvo0hOwMfM+l6VJTn+xLQJYzQ+A8aBw9Z+cd6kt18W
-	ASFCJKN8GzRmJYPp42TzrsZVR4CoFAIiP11z47DxR4+coLW77YOUyWA9VCZZe+CSHJv88Cy3sYN
-	nfoArjaeXhgJwrvA1Gju23xNDteGkwwznm0oHMQBasgk6e/qLM2cf5m/715aksJ8j56PeXSs3ez
-	RpVpR5t
-X-Received: by 2002:ac8:5c88:0:b0:50e:5ffd:dec2 with SMTP id d75a77b69052e-5102ab1bf61mr111387421cf.1.1777641555887;
-        Fri, 01 May 2026 06:19:15 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-510416dfc75sm13868751cf.3.2026.05.01.06.19.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 May 2026 06:19:15 -0700 (PDT)
-Message-ID: <ed226571-a095-456b-9d9e-bcc545d7ddfb@gmail.com>
-Date: Fri, 1 May 2026 09:19:14 -0400
+        d=1e100.net; s=20251104; t=1777648615; x=1778253415;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qr7z7J5/+EChMSxHchEHhAn9CJzTQ7LiE811JrEtlFo=;
+        b=OEeM4bRbpl627cn04CudXAUb3QtBO6MgI1D6ESnwqFfi4d1LMdjdE8HqQ1xhl7zlk1
+         6NJHRUDZASvjmRX9qdb9KAc2XEtAADJe29GORCWc3VhC0K9Bxkl6rhIORh5AwxC2MS5Y
+         cAg2eUjxv5pxvsCjGLp6waeBCiHtCLaYkW0l9k83dCNAkrCGLRDiaRBu92h++U1sm7bc
+         B7u/jalbL9f8rtnDBh53e/lOZiexi53YOwKezaaFQfq4IwfK2uacvvp/ofSsXFHep9wj
+         ElEDIy7DreMjK6D1Seb7IPZ7OLJtHRR8QQ2SoQkB3aZRV9YDrRfL6QojJ3c2hgaYWn0t
+         V57A==
+X-Gm-Message-State: AOJu0Ywe/P/GyORrbWeh7Vi5wwyD2N+FMjH8c9gtXXypjL/XK634zRCD
+	PzlST+1YYa4JSisGxRVKu7CosV7SK6yLFgh/GFYWnTBUdaDGtlvUDlQUenh72w==
+X-Gm-Gg: AeBDietq5kLeXeOaOyZZr/Nak7P+NwaNXrn+7MBMi3v87zNZA08DAHJmaTe36fDgVmf
+	OWskPT3DbSqMpXTnXUhuIDiV/8oSHrB0xe4ZmSvc8SkL+cbmr+lQPvFqIRQwXGdGdWlVWCE+fcE
+	E/j4NlGrb74J1p5S/WYnP+oksESQZBN3AG5JZjR4ADwHR5hLQB6M9vLXbq8NXLxchl+d70dwFzV
+	wgZXiWuV/kZ7W5DPr/sjArzGgHPNLJyeoMVd9heKfEvLAu5UcsqxWPGCp1Hz9j1gLop4jqsYQMI
+	nuYKNip7b+28NH54tO4xGSksfWbHnE6CYgZuxvwNt8q9zfqJ+T433Bcm1mFS4F68uCClP/QNgA3
+	RmrY0FohCL10la+Abh22MHNiD0ev6gzPnxzmeihHdltgLgGfF6BeoYA3JL6iAl5gOE4pZaG6aLG
+	FHaxmkzLsqzt0COCYoRg3QKg3w882x7iZrGdiMlSg=
+X-Received: by 2002:a05:600c:350c:b0:488:f453:b976 with SMTP id 5b1f17b1804b1-48a8449e51amr129775825e9.27.1777648615140;
+        Fri, 01 May 2026 08:16:55 -0700 (PDT)
+Received: from berwick ([2a0a:ef40:1706:1a01:7ae4:ef77:45ac:8456])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8fef2a67sm20837745e9.5.2026.05.01.08.16.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 May 2026 08:16:54 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 0/2] status: improve rebase todo list parsing
+Date: Fri,  1 May 2026 16:16:37 +0100
+Message-ID: <cover.1777648598.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.54.0.rc1.174.gd833f386ac5.dirty
+In-Reply-To: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] t5608: add regression test for >4GB object clone
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
- <a3019888d8465e0f77926a91a20db170fef6989d.1777393580.git.gitgitgadget@gmail.com>
- <e1e8837f-7374-4079-ba87-ab95dd156e33@gmail.com>
- <20260501063805.GA2038915@coredump.intra.peff.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260501063805.GA2038915@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/1/2026 2:38 AM, Jeff King wrote:
-> On Wed, Apr 29, 2026 at 09:34:21AM -0400, Derrick Stolee wrote:
+When there is rebase in progress "git status" displays the last couple
+of completed and the next couple of pending commands from the todo
+list. When it does this is tries to abbreviate the object ids of
+the commits to be picked. Unfortunately it does not abbreviate the
+object ids when the line starts with "fixup -C" or "merge -C". It
+also mistakenly replaces the refname in "reset main" and "update-ref
+refs/heads/main" with the object id that the ref points to.
 
->>> +test_expect_success SIZE_T_IS_64BIT 'set up repo with >4GB object' '
->>
->> Your prereq here prevents it from running on 32-bit builds, which is
->> good. However, I wonder if it would be worth also specifying these
->> tests as expensive. It's less likely that these layers will be touched
->> often, so it should be enough to run these on major occasions, such as
->> testing a release candidate.
-> 
-> I think it is already skipped in most cases, because t5608 requires the
-> GIT_TEST_CLONE_2GB environment variable be set. Arguably it should just
-> be using EXPENSIVE, too, as I do not think there is much value in having
-> individual flags for all of the expensive tests. I think that test just
-> predates the modern prereq system entirely.
+This series fixes that. The first patch factors out the sequencer
+code that parses the command names in the todo list. The second patch
+uses that function in "git status" to parse the command names so that
+it knows whether the line may contain "-C" and whether there is an
+object id that should be abbreviated.
 
-Thanks for the extra details here! That helps avoid the issues that I
-was thinking about, but maybe doubling-down and adding EXPENSIVE is
-still worth it. 
->> I suppose this also is a question for Junio and our process for
->> validating releases. Do we have a certain cadence where we run the
->> expensive tests? What has been our threshold for hiding a test case
->> behind the expensive label?
-> 
-> AFAIK the labeling of expensive things is mostly ad-hoc, and nobody is
-> systematically running them. Likewise for the t/perf tests, which are
-> super expensive but do (very occasionally) turn up interesting
-> regressions.
-I used to be more diligent about running the performance tests myself
-around release windows. The EXPENSIVE tests would also be good to do
-on rc0. I will contemplate how to put this into my routine.
+Thanks to Elijah and Patrick for their comments in V1.
 
-Thanks,
--Stolee
+Changes since V1:
+
+Patch 1 - Expanded commit message and added a code comment.
+
+Patch 2 - Fixed some typos, added a code comment and clarified that -Wswitch
+          is included by -Wall.
+
+Base-Commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fimprove-status-todo-list-parsing%2Fv2
+View-Changes-At: https://github.com/phillipwood/git/compare/8c9303b1f...b80bc1e0a
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/improve-status-todo-list-parsing/v2
+
+
+Phillip Wood (2):
+  sequencer: factor out parsing of todo commands
+  status: improve rebase todo list parsing
+
+ sequencer.c            |  45 +++++++++-----
+ sequencer.h            |   8 +++
+ t/t7512-status-help.sh |  74 +++++++++++++++--------
+ wt-status.c            | 131 +++++++++++++++++++++++++++++++++--------
+ 4 files changed, 191 insertions(+), 67 deletions(-)
+
+Range-diff against v1:
+1:  3d5135a719 ! 1:  d27dddff93 sequencer: factor out parsing of todo commands
+    @@ Metadata
+      ## Commit message ##
+         sequencer: factor out parsing of todo commands
+     
+    -    Move the code that parses todo commands into a separate function so that
+    -    it can be shared with "git status" in the next commit.
+    +    Move the code that parses todo commands into a separate function so
+    +    that it can be shared with "git status" in the next commit. As we
+    +    know the input is NUL terminated we do not pass a pointer to the end
+    +    of the line and instead test for a blank line by looking for NUL, CR
+    +    LF, or LF. We use starts_with() instead of starts_with_mem() for the
+    +    same reason. This results in slightly different behavior when there
+    +    a CR at the start of the line that is not followed by LF. Previously
+    +    such a line was treated as a comment rather than an invalid line.
+     
+         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+    @@ sequencer.h: int read_author_script(const char *path, char **name, char **email,
+      int write_basic_state(struct replay_opts *opts, const char *head_name,
+      		      struct commit *onto, const struct object_id *orig_head);
+      void sequencer_post_commit_cleanup(struct repository *r, int verbose);
+    ++
+    ++/*
+    ++ * Try to parse the todo command pointed to by *p. On success sets cmd,
+    ++ * advances p and returns true. On failure returns false, leaves p and
+    ++ * cmd unchanged.
+    ++ */
+     +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd);
+    ++
+      int sequencer_get_last_command(struct repository* r,
+      			       enum replay_action *action);
+      int sequencer_determine_whence(struct repository *r, enum commit_whence *whence);
+2:  d20dc1f655 ! 2:  b80bc1e0a2 status: improve rebase todo list parsing
+    @@ Commit message
+     
+         When there is rebase in progress "git status" displays the last couple
+         of completed and the next couple of pending commands from the todo
+    -    list. When it does this is tries to abbreviate the object ids of
+    +    list. When it does this it tries to abbreviate the object ids of
+         the commits to be picked. Unfortunately it does not abbreviate the
+         object ids when the line starts with "fixup -C" or "merge -C". It
+         also mistakenly replaces the refname in "reset main" and "update-ref
+    @@ Commit message
+         wider variety of commands. Only the pending commands in the tests
+         are changed to avoid removing existing coverage.
+     
+    +    Helped-by: Elijah Newren <newren@gmail.com>
+         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+      ## t/t7512-status-help.sh ##
+    @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
+      	return split_in_progress;
+     +}
+     +
+    ++/*
+    ++ * If the whitespace-delimited token starting at or just after *pp *
+    ++ * is a hex object id that is longer than its default abbreviation, *
+    ++ * abbreviate it in-place, shrinking `line` accordingly. On return
+    ++ * *pp points one past the (possibly abbreviated) token. Leaves both
+    ++ * `line` and *pp-advanced-past-the-token unchanged in all other cases
+    ++ * (non-hex token, unresolvable, or a refname that happens to consist
+    ++ * only of hex digits).
+    ++ */
+     +static void abbrev_oid_in_line(struct repository *r,
+     +			       struct strbuf *line, char **pp)
+     +{
+    @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
+     +	p += strspn(p, " \t");
+     +	end_of_object_name = p + strcspn(p, " \t");
+     +	/*
+    -+	 * The for "merge" and "reset" the object name may be a label or
+    ++	 * For "merge" and "reset" the object name may be a label or
+     +	 * ref rather than a hex object id. Only abbreviate the object
+     +	 * name if it is a hex object id.
+     +	 */
+    @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
+     +	*pp = end_of_object_name;
+     +}
+     +
+    -+static void skip_dash_c(char **pp) {
+    ++static void skip_dash_c(char **pp)
+    ++{
+     +	char *p = *pp;
+     +
+     +	p += strspn(p, " \t");
+    -+	/* The (void) cast is required to silence -Wunused_value */
+    ++	/* The (void) cast is required to silence -Wunused-value */
+     +	(void)(skip_prefix(p, "-C", &p) || skip_prefix(p, "-c", &p));
+     +	*pp = p;
+      }
+    @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
+     +
+     +	/*
+     +	 * Avoid "default" and instead list all the other commands so
+    -+	 * that -Wswitch warns if a new command is added without handling
+    -+	 * it in this function.
+    ++	 * that -Wswitch (which is included in -Wall) warns if a new
+    ++	 * command is added without handling it in this function.
+     +	 */
+     +	case TODO_BREAK:
+     +	case TODO_EXEC:
+-- 
+2.54.0.rc1.174.gd833f386ac5.dirty
 
