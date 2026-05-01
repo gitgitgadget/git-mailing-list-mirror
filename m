@@ -1,73 +1,68 @@
 Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AC83B584B
-	for <git@vger.kernel.org>; Fri,  1 May 2026 15:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F672DB798
+	for <git@vger.kernel.org>; Fri,  1 May 2026 15:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777648620; cv=none; b=aT7lp/Ye2gapYHta4oZSmLet6p4YSkm348VF+jyvCFn435oOHRT/sLoukLvBZ5GL4clJlar8Vt1ytcdeagNDgcO+uwM6ceB8QcPlUSpIwaJ4ss6rrVThLqRqNIyPzqhonguWjPARBmDmiTnqIWUwdQCQfOvtRb6Nm/mzWLSj9nY=
+	t=1777648816; cv=none; b=TXf5urSKfTmDTr70nPE5l84WNaEySfyJXO1q+azZNhcn64olLxvuwwe5nE7MOTzAuhrp9OvCFHRZSnT3iNMLGfVCKgeijoaX6xUInFxGqQGVoA5s61hJNHH/N91dioBZSi0GDN/BdlRHPPLJAsI74bSHGeaEtMyudV8WbTw/t7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777648620; c=relaxed/simple;
-	bh=5iKs6kWvQmoWTjcqjmEsJf5zBOpEyUz+6K1cWrssnKM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VT5h5O/BUjSrdU4oryzqruI7SDN7qmjP3gVVnmtmUhnobPVi8tBAwI7ZcudQhEKWoHJvaUKiYN0uInk1QXIQILVCWT4Bz1kBvcydD0w4xfMSWtZMLnR4KO9A+3zX/GKuDJLjv218z/X86Jsr+0zBjz9+0z38eoOanTz9T4vBCVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VyUYaZTI; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1777648816; c=relaxed/simple;
+	bh=2qfD1dcY0rQ7d+BzAhQmdyO5oyZIWqUPtm/h+jY7A34=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TNBM5Kx1jDhw0xDpWA1XLCykJ9mN6GHc1oJOGeg/4FZCcUIQsSdZ87xdbAcgwRis5asDTjfroeCwV4PLV2zHxa2Ybv95KLmDQMlIAiJsj7dqSMzR1j0LzFZF2AS0qjpG6pGil5YMp8/rJG4PrOGiCGyFcpdngSWv/gWh+YD5JM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oOhJmYz/; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VyUYaZTI"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-48374014a77so23340055e9.3
-        for <git@vger.kernel.org>; Fri, 01 May 2026 08:16:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oOhJmYz/"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4896c22fcbaso14082315e9.0
+        for <git@vger.kernel.org>; Fri, 01 May 2026 08:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777648617; x=1778253417; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TFdBA6wjgL3c5h3FMc3XrACGjBIFMzycNfg5Wm6CY04=;
-        b=VyUYaZTIdK9WAsbrDmEldRpDcNyJhSaMYTNrV5p4Mgq7Vgj2R5l69SrIDpoCt/LQz5
-         zR1FJ65CrTe57N6dipHOQt/d1kZWRS/sIrqFUhxSEc/99jij78skES5dADFwgI2N1w80
-         NPZN2CMu4VvDE3AtjrmwqkH5nHu8iGXY71RBQi2c4OX7upSTayKpu4wQdbFDB+BpL88H
-         zABWMiuZNexKxOGzDWw7Azy7n4wgjJv1JdGhoxxTtRRqiUCGO+XbUTsLJkOJBgOaV1bl
-         ODET2RgDBuLQt8wVIXsuFkLTOz4ROzyiosohQM67/yaq7kn8tHv1EzsTemGIqvxdQWq5
-         iJbA==
+        d=gmail.com; s=20251104; t=1777648814; x=1778253614; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJyqF2Rwn9xPfPS1s19i3k8kB4DCYzOCcY7xpWup7tM=;
+        b=oOhJmYz/2L2OHYd2SkUnRSC3k6RTWWy6iyxAumW4/xGUb78/LNiaoei8D9iyAl3e94
+         JmB5H+JNCxTtm4x+C/PjC8dc34N1mmCDCDSHe3+Y3XdEfILc+V1nXc0V7tfdGJK1/hMt
+         o0DwrQyzubktfDguTWxXPmScEXhv8hTerqKFlCLEicYV/vNTfRtKf96BWMxnkKWvPXVS
+         kOEHqulQa3eQ3KUgBKgD+taFqXtedPfgV82mCzxf2GbE+PRssMJ6UNIvgth7dC3VePe/
+         kwHOiIZLBZCaanOugVLLUDO6norgSp4F1vZbE2KBQNSuBd2yUvuRT1yHjNQkhSO7FaI7
+         MCbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777648617; x=1778253417;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TFdBA6wjgL3c5h3FMc3XrACGjBIFMzycNfg5Wm6CY04=;
-        b=BG45igA+qzfwlMEBzI8636j3JcxKYaEZTvZ34yXk20dQC5RixX/lzvoaYUhTC+Mbnb
-         /Qcddb9tGwp7BHXBvZ5J0RqIL0YpuZ3Lloy2+n0yhDgRdQmewE7nvn9Z8edQkdp46k7N
-         O3unOchcXDAxzWv55/rsu11pAIogSknB203jQLezOgWyeAfx2SJHGUQTr9sfNykCkDGS
-         kqIppepEaFs4qmyjtQvxuAR6dxm4luv+tGPb+s+2pwI56nF5HIgUGve6rS2jcXZt0IdR
-         8ySr54Q4X+qBZqWH+wxKvLOSqbRpv7lTjlW6xCCiZSZAxpu/dAsixV4mAgsXUNI4FGIp
-         34MA==
-X-Gm-Message-State: AOJu0YyIF8tGwWFof3brZfvlqC78SFSKT6vOwBxZ6Ue/NhZajK4wMdqJ
-	Ml69qIv6rfvEx05wvZwx0CPQJBwUxZo5l3PzQy3cUTxYtX1wfqZUfe7rOV0EXg==
-X-Gm-Gg: AeBDiesX8R3PkUxTYgojoQO/ysGm/+Blcv8jcniivvfJjeLswMYgkkrupYdr+j1ntbE
-	kR9r6m48OhjnuzP2qUZ0f53XyYM5r04gogUjsCJuO6T0KvNMvOzleuHu+WCbPCNvGgRXkRyUJt2
-	ZfxRGj5Lql27bVb7SPB9LLCGmiZ6adqWNhtUngHsGQD4qzoPX7TOEUTp26bA3kfBQkb4WTGviWj
-	ygvng+CvP4QPTdu4CvDuUdut8xpBC3b834nMtWl13fMjp6xDGWlolGtaplNMWIxTAEVIkhpcWqA
-	BNbMfUFpleFb0frvghaCaxnfYUKlqtBzcqjHAxPq5tbXbDFwZeKGdydjsDRInQZxkiZipEUEmxz
-	Px7eBafyz5Es4FPygeJbfB12AGzoU5dd0jT4QMRVJjxsv3Fm1kMZ4dKHIfJZZSTVVUBbZlUSuO2
-	q72zkiFEwfYLI6AV/u6xfGx20lqbo2UmIsTf890r+DemZJz7CXhw==
-X-Received: by 2002:a05:600c:8b70:b0:483:2c98:4368 with SMTP id 5b1f17b1804b1-48a8eb88365mr51270855e9.18.1777648616986;
-        Fri, 01 May 2026 08:16:56 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1777648814; x=1778253614;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OJyqF2Rwn9xPfPS1s19i3k8kB4DCYzOCcY7xpWup7tM=;
+        b=F5lYWu9tTz+sd0ggOUEl21WOryEq5tuzfsSrUSi1ZnYrmgDcS4s7lMXmcPJiQHiG2E
+         tNIlaZpRHKFOYgAeY3h4uyQOPuba+u9bgNSMEFp2M4hTGGLWSaH9M4Gzmggd9iamzjUv
+         X/vtgOE03p7jcF+c7YlZfoyG7XyPYzqtBXSrdmFn/TgL5NBy310sKoAp8Yj48LPoQUip
+         0XMTl3Voxz4oXgm0a8KdsZXq5UDBKl+flVOc23GjVIG1RWHcFn9lef1w3KMiGEvlqFsa
+         5y4G/fTd3J7Koa23H2Dj8nykwY322m87wnUojELlBp7saFPFQvpCt4sdc3GbkMdChq9/
+         S23g==
+X-Gm-Message-State: AOJu0Yz0P9ZbpDJz/ktuInTEXQwuyQqEB8TIbKbyHKqTxhnf49rGm3w7
+	jcb+rBbSWYiN7/or8Af9CoQDaCm0yj/5l/CW7W1155ezUq3djO71amk+Tck8dg==
+X-Gm-Gg: AeBDievL1aUJNG75Cq+ZP3ACL1pz8ZsTIHGTsAnWo428KxuaqD52FJhFQ23jWrWtT97
+	7C2/Poa4wlXRaiwotiGEJ84iKEbmPRQmO4bC8ShBLNc4zW8WtYvRHTvh6O6mxPOcXgaQ2W/sUMB
+	4gzbM8/ZMvg8nwZ90Rp32YMbI/mPFlIF19MkfcgErGsaPzcatYTQC7wQ/OG3ojvi9B2X1VH6byo
+	9pIv61ICVKKCld4bF3BtpgTp9nn/sxCVXV5Eo+kgPVpK+uF6+uQ6ii4gux4i0KNy/xkULSEFsLz
+	bMwqKSuy6Xrd3At716ZDm0TTWLW6KxzJSwOSrMZy4cBsTJaLuUdOx8UUuLjOHG9Qdo4VDCGsGhy
+	0fXgeN4J/EGmBlDLlpuUSkqsaxNLZ7k/Koy8WKrtXGBBBWkUdUXjQWT9ZtNmyw8gkC6LTUvQjwT
+	6B0fPH46MIK+LObIC/QkuFdZHV0ASvXBrNP0seXZ8=
+X-Received: by 2002:a05:600c:a413:b0:488:a977:8de with SMTP id 5b1f17b1804b1-48a8eb8a430mr48205175e9.16.1777648813818;
+        Fri, 01 May 2026 08:20:13 -0700 (PDT)
 Received: from berwick ([2a0a:ef40:1706:1a01:7ae4:ef77:45ac:8456])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8fef2a67sm20837745e9.5.2026.05.01.08.16.56
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8eb6ffb7sm61464045e9.5.2026.05.01.08.20.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 08:16:56 -0700 (PDT)
+        Fri, 01 May 2026 08:20:13 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 2/2] status: improve rebase todo list parsing
-Date: Fri,  1 May 2026 16:16:39 +0100
-Message-ID: <b80bc1e0a298e2773a2fdab3e73651d59b8d39b7.1777648598.git.phillip.wood@dunelm.org.uk>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] worktree: rename get_worktree_from_repository()
+Date: Fri,  1 May 2026 16:20:00 +0100
+Message-ID: <bd48396137f8d1352d11b3bd2dca2848f24a347d.1777648798.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.54.0.rc1.174.gd833f386ac5.dirty
-In-Reply-To: <cover.1777648598.git.phillip.wood@dunelm.org.uk>
-References: <cover.1776697483.git.phillip.wood@dunelm.org.uk> <cover.1777648598.git.phillip.wood@dunelm.org.uk>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,398 +74,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When there is rebase in progress "git status" displays the last couple
-of completed and the next couple of pending commands from the todo
-list. When it does this it tries to abbreviate the object ids of
-the commits to be picked. Unfortunately it does not abbreviate the
-object ids when the line starts with "fixup -C" or "merge -C". It
-also mistakenly replaces the refname in "reset main" and "update-ref
-refs/heads/main" with the object id that the ref points to. Use
-the function added in the last commit to parse the command name and
-only try to abbreviate the argument for commands that take an object
-id. When trying to abbreviate an object id, only replace the object
-name if it starts with the abbreviated object id so that labels or
-branch names that contain only hex digits are left unchanged.
+get_worktree_from_repository() returns a struct worktree that
+describes the worktree that the repository argument would operate
+on. Since 0f779147602 (worktree: remove "the_repository" from
+is_current_worktree(), 2026-03-26) that worktree is always the
+"current" worktree. Change the name to get_current_worktee() to
+reflect better what the function does.
 
-Comments are now processed after stripping any leading
-whitespace from the line. This matches what the sequencer does in
-parse_insn_line(). The existing test cases are updated to test a
-wider variety of commands. Only the pending commands in the tests
-are changed to avoid removing existing coverage.
-
-Helped-by: Elijah Newren <newren@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t7512-status-help.sh |  74 +++++++++++++++--------
- wt-status.c            | 131 +++++++++++++++++++++++++++++++++--------
- 2 files changed, 153 insertions(+), 52 deletions(-)
+Base-Commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Frename-worktree-from-repository%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/94f057755...bd4839613
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/rename-worktree-from-repository/v1
 
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 08e82f7914..aca4b6d332 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -224,7 +224,7 @@ test_expect_success 'status when splitting a commit' '
- 	COMMIT3=$(git rev-parse --short split_commit) &&
- 	test_commit four_split main.txt four &&
- 	COMMIT4=$(git rev-parse --short split_commit) &&
--	FAKE_LINES="1 edit 2 3" &&
-+	FAKE_LINES="reword 1 edit 2 fixup_-C 3" &&
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	ONTO=$(git rev-parse --short HEAD~3) &&
-@@ -233,10 +233,10 @@ test_expect_success 'status when splitting a commit' '
- 	cat >expected <<EOF &&
- interactive rebase in progress; onto $ONTO
- Last commands done (2 commands done):
--   pick $COMMIT2 # two_split
-+   reword $COMMIT2 # two_split
-    edit $COMMIT3 # three_split
- Next command to do (1 remaining command):
--   pick $COMMIT4 # four_split
-+   fixup -C $COMMIT4 # four_split
-   (use "git rebase --edit-todo" to view and edit)
- You are currently splitting a commit while rebasing branch '\''split_commit'\'' on '\''$ONTO'\''.
-   (Once your working directory is clean, run "git rebase --continue")
-@@ -297,7 +297,7 @@ test_expect_success 'prepare for several edits' '
- 
- 
- test_expect_success 'status: (continue first edit) second edit' '
--	FAKE_LINES="edit 1 edit 2 3" &&
-+	FAKE_LINES="edit 1 edit 2 drop 3" &&
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
-@@ -312,7 +312,7 @@ Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
- Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+   drop $COMMIT4 # four_edits
-   (use "git rebase --edit-todo" to view and edit)
- You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (use "git commit --amend" to amend the current commit)
-@@ -327,7 +327,7 @@ EOF
- 
- test_expect_success 'status: (continue first edit) second edit and split' '
- 	git reset --hard several_edits &&
--	FAKE_LINES="edit 1 edit 2 3" &&
-+	FAKE_LINES="edit 1 edit 2 squash 3" &&
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
-@@ -343,7 +343,7 @@ Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
- Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+   squash $COMMIT4 # four_edits
-   (use "git rebase --edit-todo" to view and edit)
- You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (Once your working directory is clean, run "git rebase --continue")
-@@ -362,7 +362,7 @@ EOF
- 
- test_expect_success 'status: (continue first edit) second edit and amend' '
- 	git reset --hard several_edits &&
--	FAKE_LINES="edit 1 edit 2 3" &&
-+	FAKE_LINES="edit 1 edit 2 fixup 3" &&
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
-@@ -378,7 +378,7 @@ Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
- Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+   fixup $COMMIT4 # four_edits
-   (use "git rebase --edit-todo" to view and edit)
- You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (use "git commit --amend" to amend the current commit)
-@@ -393,7 +393,7 @@ EOF
- 
- test_expect_success 'status: (amend first edit) second edit' '
- 	git reset --hard several_edits &&
--	FAKE_LINES="edit 1 edit 2 3" &&
-+	FAKE_LINES="edit 1 edit 2 fixup_-c 3" &&
- 	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
-@@ -409,7 +409,7 @@ Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
- Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+   fixup -c $COMMIT4 # four_edits
-   (use "git rebase --edit-todo" to view and edit)
- You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (use "git commit --amend" to amend the current commit)
-@@ -460,14 +460,20 @@ EOF
- 
- test_expect_success 'status: (amend first edit) second edit and amend' '
- 	git reset --hard several_edits &&
--	FAKE_LINES="edit 1 edit 2 3" &&
--	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
- 	COMMIT3=$(git rev-parse --short several_edits^) &&
- 	COMMIT4=$(git rev-parse --short several_edits) &&
- 	ONTO=$(git rev-parse --short HEAD~3) &&
--	git rebase -i HEAD~3 &&
-+	cat >todo <<-EOF &&
-+	edit several_edits^^ # two_edits
-+	edit several_edits^ # three_edits
-+	merge $(git rev-parse main) $(git rev-parse several_edits)
-+	EOF
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i HEAD~3
-+	) &&
- 	git commit --amend -m "c" &&
- 	git rebase --continue &&
- 	git commit --amend -m "d" &&
-@@ -477,7 +483,7 @@ Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
- Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+   merge $(git rev-parse --short main) $COMMIT4
-   (use "git rebase --edit-todo" to view and edit)
- You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (use "git commit --amend" to amend the current commit)
-@@ -525,14 +531,21 @@ EOF
- 
- test_expect_success 'status: (split first edit) second edit and split' '
- 	git reset --hard several_edits &&
--	FAKE_LINES="edit 1 edit 2 3" &&
--	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
- 	COMMIT3=$(git rev-parse --short several_edits^) &&
- 	COMMIT4=$(git rev-parse --short several_edits) &&
-+	cat >todo <<-EOF &&
-+	edit several_edits^^ # two_edits
-+	edit several_edits^ # three_edits
-+	reset $(git rev-parse main)
-+	merge -C several_edits topic # title
-+	EOF
- 	ONTO=$(git rev-parse --short HEAD~3) &&
--	git rebase -i HEAD~3 &&
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i HEAD~3
-+	) &&
- 	git reset HEAD^ &&
- 	git add main.txt &&
- 	git commit --amend -m "f" &&
-@@ -543,8 +556,9 @@ interactive rebase in progress; onto $ONTO
- Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
--Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+Next commands to do (2 remaining commands):
-+   reset $(git rev-parse --short main)
-+   merge -C $COMMIT4 topic # title
-   (use "git rebase --edit-todo" to view and edit)
- You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (Once your working directory is clean, run "git rebase --continue")
-@@ -563,14 +577,21 @@ EOF
- 
- test_expect_success 'status: (split first edit) second edit and amend' '
- 	git reset --hard several_edits &&
--	FAKE_LINES="edit 1 edit 2 3" &&
--	export FAKE_LINES &&
- 	test_when_finished "git rebase --abort" &&
-+	git branch cafe main &&
- 	COMMIT2=$(git rev-parse --short several_edits^^) &&
- 	COMMIT3=$(git rev-parse --short several_edits^) &&
--	COMMIT4=$(git rev-parse --short several_edits) &&
-+	cat >todo <<-EOF &&
-+	edit several_edits^^ # two_edits
-+	edit several_edits^ # three_edits
-+	update-ref refs/heads/main
-+	reset cafe
-+	EOF
- 	ONTO=$(git rev-parse --short HEAD~3) &&
--	git rebase -i HEAD~3 &&
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i HEAD~3
-+	) &&
- 	git reset HEAD^ &&
- 	git add main.txt &&
- 	git commit --amend -m "g" &&
-@@ -581,8 +602,9 @@ interactive rebase in progress; onto $ONTO
- Last commands done (2 commands done):
-    edit $COMMIT2 # two_edits
-    edit $COMMIT3 # three_edits
--Next command to do (1 remaining command):
--   pick $COMMIT4 # four_edits
-+Next commands to do (2 remaining commands):
-+   update-ref refs/heads/main
-+   reset cafe
-   (use "git rebase --edit-todo" to view and edit)
- You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
-   (use "git commit --amend" to amend the current commit)
-diff --git a/wt-status.c b/wt-status.c
-index 479ccc3304..94c159d9d4 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1363,6 +1363,61 @@ static int split_commit_in_progress(struct wt_status *s)
- 	free(rebase_orig_head);
- 
- 	return split_in_progress;
-+}
-+
-+/*
-+ * If the whitespace-delimited token starting at or just after *pp *
-+ * is a hex object id that is longer than its default abbreviation, *
-+ * abbreviate it in-place, shrinking `line` accordingly. On return
-+ * *pp points one past the (possibly abbreviated) token. Leaves both
-+ * `line` and *pp-advanced-past-the-token unchanged in all other cases
-+ * (non-hex token, unresolvable, or a refname that happens to consist
-+ * only of hex digits).
-+ */
-+static void abbrev_oid_in_line(struct repository *r,
-+			       struct strbuf *line, char **pp)
-+{
-+	char *p = *pp;
-+	char *end_of_object_name, saved;
-+	const char *abbrev;
-+	struct object_id oid;
-+	bool have_oid;
-+
-+	p += strspn(p, " \t");
-+	end_of_object_name = p + strcspn(p, " \t");
-+	/*
-+	 * For "merge" and "reset" the object name may be a label or
-+	 * ref rather than a hex object id. Only abbreviate the object
-+	 * name if it is a hex object id.
-+	 */
-+	for (const char *q = p; q < end_of_object_name; q++) {
-+		if (!isxdigit(*q))
-+			goto out;
-+	}
-+	saved = *end_of_object_name;
-+	*end_of_object_name = '\0';
-+	have_oid = !repo_get_oid(r, p, &oid);
-+	*end_of_object_name = saved;
-+	if (!have_oid)
-+		goto out; /* object name was a label */
-+	abbrev = repo_find_unique_abbrev(r, &oid, DEFAULT_ABBREV);
-+	if (!starts_with(p, abbrev))
-+		goto out; /* object name was a refname containing only xdigits */
-+	p += strlen(abbrev);
-+	strbuf_remove(line, p - line->buf, end_of_object_name - p);
-+	end_of_object_name = p;
-+out:
-+	*pp = end_of_object_name;
-+}
-+
-+static void skip_dash_c(char **pp)
-+{
-+	char *p = *pp;
-+
-+	p += strspn(p, " \t");
-+	/* The (void) cast is required to silence -Wunused-value */
-+	(void)(skip_prefix(p, "-C", &p) || skip_prefix(p, "-c", &p));
-+	*pp = p;
+ worktree.c  | 2 +-
+ worktree.h  | 2 +-
+ wt-status.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/worktree.c b/worktree.c
+index d874e23b4e..340b4ed777 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -66,7 +66,7 @@ static int is_current_worktree(struct worktree *wt)
+ 	return is_current;
  }
+ 
+-struct worktree *get_worktree_from_repository(struct repository *repo)
++struct worktree *get_current_worktree(struct repository *repo)
+ {
+ 	struct worktree *wt = xcalloc(1, sizeof(*wt));
+ 	char *gitdir = absolute_pathdup(repo->gitdir);
+diff --git a/worktree.h b/worktree.h
+index d19ec29dbb..1075409f9a 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -42,7 +42,7 @@ struct worktree **get_worktrees_without_reading_head(void);
+  * Construct a struct worktree corresponding to repo->gitdir and
+  * repo->worktree.
+  */
+-struct worktree *get_worktree_from_repository(struct repository *repo);
++struct worktree *get_current_worktree(struct repository *repo);
  
  /*
-@@ -1371,29 +1426,57 @@ static int split_commit_in_progress(struct wt_status *s)
-  * into
-  * "pick d6a2f03 some message"
-  *
-- * The function assumes that the line does not contain useless spaces
-- * before or after the command.
-+ * Returns false on comment lines, true otherwise
-  */
--static void abbrev_oid_in_line(struct repository *r, struct strbuf *line)
-+static bool format_todo_line(struct repository *r, struct strbuf *line)
- {
--	struct string_list split = STRING_LIST_INIT_DUP;
--	struct object_id oid;
--
--	if (starts_with(line->buf, "exec ") ||
--	    starts_with(line->buf, "x ") ||
--	    starts_with(line->buf, "label ") ||
--	    starts_with(line->buf, "l "))
--		return;
--
--	if ((2 <= string_list_split(&split, line->buf, " ", 2)) &&
--	    !repo_get_oid(r, split.items[1].string, &oid)) {
--		strbuf_reset(line);
--		strbuf_addf(line, "%s ", split.items[0].string);
--		strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
--		for (size_t i = 2; i < split.nr; i++)
--			strbuf_addf(line, " %s", split.items[i].string);
-+	enum todo_command cmd;
-+	char *p = line->buf;
-+
-+	if (!sequencer_parse_todo_command((const char**)&p, &cmd))
-+		return true; /* keep invalid lines */
-+
-+	switch (cmd) {
-+	case TODO_COMMENT:
-+		return false;
-+
-+	case TODO_MERGE:
-+		skip_dash_c(&p);
-+		while (true) {
-+			p += strspn(p, " \t");
-+			if (!p[0] || (p[0] == '#' && (!p[1] || isspace(p[1]))))
-+				break;
-+			abbrev_oid_in_line(r, line, &p);
-+		}
-+		break;
-+
-+	case TODO_FIXUP:
-+		skip_dash_c(&p);
-+		/* fallthrough */
-+	case TODO_DROP:
-+	case TODO_EDIT:
-+	case TODO_PICK:
-+	case TODO_RESET:
-+	case TODO_REVERT:
-+	case TODO_REWORD:
-+	case TODO_SQUASH:
-+		abbrev_oid_in_line(r, line, &p);
-+		break;
-+
-+	/*
-+	 * Avoid "default" and instead list all the other commands so
-+	 * that -Wswitch (which is included in -Wall) warns if a new
-+	 * command is added without handling it in this function.
-+	 */
-+	case TODO_BREAK:
-+	case TODO_EXEC:
-+	case TODO_LABEL:
-+	case TODO_NOOP:
-+	case TODO_UPDATE_REF:
-+		break;
- 	}
--	string_list_clear(&split, 0);
-+
-+	return true;
- }
+  * Returns 1 if linked worktrees exist, 0 otherwise.
+diff --git a/wt-status.c b/wt-status.c
+index 479ccc3304..c12fca7078 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1827,7 +1827,7 @@ void wt_status_get_state(struct repository *r,
+ 	struct stat st;
+ 	struct object_id oid;
+ 	enum replay_action action;
+-	struct worktree *wt = get_worktree_from_repository(r);
++	struct worktree *wt = get_current_worktree(r);
  
- static int read_rebase_todolist(struct repository *r, const char *fname, struct string_list *lines)
-@@ -1411,13 +1494,9 @@ static int read_rebase_todolist(struct repository *r, const char *fname, struct
- 			  repo_git_path_replace(r, &buf, "%s", fname));
- 	}
- 	while (!strbuf_getline_lf(&buf, f)) {
--		if (starts_with(buf.buf, comment_line_str))
--			continue;
- 		strbuf_trim(&buf);
--		if (!buf.len)
--			continue;
--		abbrev_oid_in_line(r, &buf);
--		string_list_append(lines, buf.buf);
-+		if (format_todo_line(r, &buf))
-+			string_list_append(lines, buf.buf);
- 	}
- 	fclose(f);
- 
+ 	if (!stat(git_path_merge_head(r), &st)) {
+ 		wt_status_check_rebase(wt, state);
 -- 
 2.54.0.rc1.174.gd833f386ac5.dirty
 
