@@ -1,233 +1,156 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A39214A9B
-	for <git@vger.kernel.org>; Fri,  1 May 2026 18:19:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB5740FDA8
+	for <git@vger.kernel.org>; Fri,  1 May 2026 18:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777659548; cv=none; b=jRHSWZrfpCnWMctnUpMHnFyrL+r5oVSd89Ml2cXh0Mr2rR/4eiKS1+xeY+yvsCdueOEo52Na8svgd4KBvR0Ka7HYmmzRkoIlWrCF5y7VdVvaIFwWMI85Jj3+iWBjXqG8wsJed9RJQ6h9dp7jd3nbeIuAOSYzvtqGA4t2bkp1SCU=
+	t=1777660066; cv=none; b=PySZaysjwbGjlkbsESCfdTCrMkrr51eodAl5JNRje08ejW8SDQf87dOOGJXVM7/5IvEFOjXRSaY+L+ERD+ybomYLnXkNoejSpJ21GFag6h8kIYraHofox32uadTAHybRhtN1eRv7Ww11oFwMVqu8PTLuQYswJNn1F9jp7UolS/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777659548; c=relaxed/simple;
-	bh=RP2aQE5c/BdhvVQ/dzUqubCUKTn/oYD2IVMehyVyFDk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I4OrkrprrwlKEe3o/7hDD0IoWW59DQ4jHMKUK657oYJ7yA2kCPUEPxj/cnpgOMhvzbm9LxoV1vi75w0rQsaUkJDgwv6OXWiz/s7XvwUfOPxPsXrNbehnPSFsM/Jy4zUuVEf/gz+RxL4/uo4e1mum5+wdRK099vDGXwefZYLTVwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=puWwWtCx; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777660066; c=relaxed/simple;
+	bh=jiuAMPhveb6F0CFndRDI1UHQV9Mo1LroUYG2YvE727w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YEXwFaGbqLzzrpmewhATk+sl91/c0cEu2eDJxg75l+EaL7PPVDfKl/Ntv0T8w88jwcwK17kHU7wQUvaYSrioufRsy2Y5zKkWNpKiCRLkuA8yiFBcTwikuKXPeOqdMYVzbpPH0ArzGePOK371dac/lsNbdhagtqQFhLkKX3xZMSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IAaDE9+Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hvNFPNXA; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="puWwWtCx"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43d77f6092eso1342999f8f.2
-        for <git@vger.kernel.org>; Fri, 01 May 2026 11:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777659545; x=1778264345; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Tm0yLi9KjgzDDAifUNGZoLpV25aqSobgldQH1/zR3/A=;
-        b=puWwWtCxzbmYYlqYecG8xsTHqlNDqnwTfLje+oZUqB6BL6PqNUV3oB5tSWUZ6gCj0E
-         FzFtmga+PfuseIY1Fhn/SR3ZdmsE+Y3JFZ3H2ontQA2Hi0sI6L93AnBarroGnRGS98/T
-         GBNzuMq8mxDEbDVGoyA3UTVG69J0WLIjlMFm0Xde+ICeIwIHnJhL53udPQI6jOD8c/sd
-         FSdp1azn/NjMgjfwlg7ntSSYCt20xEJUrstwiyGNGgtvAvhVZ9fS5YOCVIOPsDRtMXV/
-         JBq54kvOn9nxNISFatUQn83+E1IK56ofGZvRt+chJ3JEwyC1mzAcwx1KqABYxbMkWiDT
-         FuMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777659545; x=1778264345;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tm0yLi9KjgzDDAifUNGZoLpV25aqSobgldQH1/zR3/A=;
-        b=AvChu+77o35L2EfhUY1tUtbP0g17aLhMZgMj+kscIh2i37m1oq70OEz5Eb4REGSKp2
-         G8Zm3lsPKPMJ+zYBKXtrpxmhM8gbEViI/byHaB4xXZ7p6CSkoGDaOGOUOJR49S1BiMy7
-         jvPXaFCRl9o0Zyi84Hxg+CWbrxmcS+15fzBA8nXaLZZkhjDw8K32/P5+r0OS1cnFMn7v
-         v6eq+wjLUKken+Ykjlvjj8Me0kxNaR5iVZOeatimGAb00e87f6yVXAGMVEwCDE9nkQ6E
-         FereQh3vjnfk48GZv+YgRE5+/nmVDNq9dGiiYPSoCl03dQ4d8NnOXLXWr9n7X5w4PCAv
-         lfqw==
-X-Forwarded-Encrypted: i=1; AFNElJ/kJaGAxa7w5j+/FRN1OcoE1DWVINn848qaCAxzs169jGostghBm58EBSmGrNwKPag30H4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHqICVB65W23qZ98Vt68/VuNxqa0f0IXEAJiEFglFVaWJ8M9pG
-	JVTMZpNPLJr+BaUNndZPcB25c7Qf4mqWBrtNk1wJC9Hi53wwehFOGBhm
-X-Gm-Gg: AeBDievErmBcbn756lWXSGGxOiGJGxPwEm9roNDmSZE7vJCug5XCdGRfX8ZU5P0XdZa
-	catehp7e+Ik6gO5kcb4fqmOQX8szWlQvfbe+0OXxI9eklTPcmjFrQXViwb9vFXmCyyGxkVRuYEE
-	u+oZwlNDgmNLbxxUdfxKClBYiFI8/pEWWJiDaxzQXXQblGUTdwu+8X1iQRb2dFRz1BVHsecOMFI
-	IdOk1NS1HAzS2pJSl9YE8YSlsYRXundWVpTB6e3q52Q7G8tg5zWeSCQW33ZG9elnOQnFGzePUS9
-	OOUGfic9hLjhrXhpECD1GVdUd7SZJYXpDz93R0EpkMUwidaknT0qJi+o6flQDb9s1rqA9KpKwlt
-	8Fg1TQa1eG+GXxdAhlzlWgGuOA/9IaN9wbmEM4koPVMCtPTb9HYX2B3dRXnLcchJM4zLeOhD6Xc
-	ZGgJDdbFX2/5Yenb2qulSWTXGhJi0531rZ31Wj2brApLBoaZfyQzmVXq5GkO4pfE6/mfYYEo/2A
-	CErVHP1GiCSPQXlpe15TAF0
-X-Received: by 2002:a05:6000:1841:b0:43d:7dc2:b655 with SMTP id ffacd0b85a97d-44bb3aa9a9fmr811432f8f.15.1777659544712;
-        Fri, 01 May 2026 11:19:04 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:1706:1a01:ea91:f304:7cad:8467? ([2a0a:ef40:1706:1a01:ea91:f304:7cad:8467])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-44a981defb3sm8695246f8f.20.2026.05.01.11.19.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 May 2026 11:19:04 -0700 (PDT)
-Message-ID: <5256b235-b173-4804-aef0-752eac81d618@gmail.com>
-Date: Fri, 1 May 2026 19:19:05 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IAaDE9+Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hvNFPNXA"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 86748EC0093;
+	Fri,  1 May 2026 14:27:43 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 01 May 2026 14:27:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1777660063;
+	 x=1777746463; bh=WU/GqtFSciB9olYiIX+WFVawGFpyXupFv2pEB+bm4cM=; b=
+	IAaDE9+YOCSdVbj7oZ5YHFTZT4gMD7z6A2RCFTQyFd1Ki/dMBqnGF+g8d8yyYhsl
+	sE0MWp1hHMb6sK3y/+f5M5CyoxXnB222IfAHhLlqxvW/g3Yby9mE+wXQkjsGKsx+
+	W8JeYIhKJMW/kYk/TGYQKrJ0swdnqPlBbQCK1yvQaOM8YbLM8DTRruGjReXHRdQa
+	lS0aPaj9D0eNXJLY8aiERzyjcvJrmJ9NdER39ToSerjDFUnbquThZKznE2dczAbD
+	7ymdnAV0jaB33tASfQxJHlPgV+4dRW9kjCoVhMjdV5DyXF08JrvyzwqFrWUDSEPs
+	CITllZ9YuHuRfV7zjUJp3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777660063; x=
+	1777746463; bh=WU/GqtFSciB9olYiIX+WFVawGFpyXupFv2pEB+bm4cM=; b=h
+	vNFPNXAC5Za9PJxbzCOLvc4pGpeT/oxaLjhvgNVbO19HJeCMSorkZgaD/WNTibCh
+	Ovltt+Q4PN7tP+Xrs9anl6MB6OvycS3qjozVKnzpfRu9/DBAASg2zdN0nRoM1Y4S
+	8RxlRIQdcku7crN0sIwYDXCD2RwJbcu0AkArZ5/g6gliZuf8EeVxzQR/BorlZQgI
+	jxa1knEfDV4Urzlg4s+jP+5OmQEwW6OaL+I1JkGMY2cjunr4f8GMZYFjC8nATo1/
+	eqoOQRrL4Ui5qrliVMEsPl1Losze2f7z4HwnDs1O8ePGNKQIUD+8oR5ySYsy52I+
+	f+r4poKcJqbKSC417oLbw==
+X-ME-Sender: <xms:n_D0abDmPCRYIv_RJ7dwEhMWe3lPP2V3afY6ddWaFMTGlYC0EInAWhM>
+    <xme:n_D0aYgZn9IZYpy4bwP_o-JiLrNphExcH7asgtslovORMs_KliK8GEiZ-daEvwfuQ
+    tVzCbDnEV2uFcj_v9ahl40-lKAFlZIV-WetDhDpvAl4gG8n_rQDOA>
+X-ME-Received: <xmr:n_D0abkc-IUbK_4F3a_fLbu4jMrsFVBWcFtR03ujtY_7zhWp5ibKST5JzpWTa6-6Tp-a4xDnKSNdRV3UlxFsPjjK-5Jkmyc0gL57yLSv_QObsAWNtdTQlSQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeltdelvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertd
+    ertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhenucggtffrrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeihe
+    egfedtudduffegjefhkeetudeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvg
+    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:n_D0acp-HrY4n2oh0i6qYVjmK2C7EXGYeJ8vD5tytoo58wPKrPHcAA>
+    <xmx:n_D0acGtXqz818i77bOE9Mnf3seV7c0G-O4kDshQAqBgs4k-3aHf8w>
+    <xmx:n_D0aQyv7U77EXluwLTl8M-iBbL1CBnSqwXw-3hRTj_F5tJLCTLXSg>
+    <xmx:n_D0aZpjc3X3hm6L4coiEpvNxXIMdpuRm_HLE0rALxn8_oh76IWiIQ>
+    <xmx:n_D0aTEEwBq6bQDcd5iS7HRxXXyE9wyw47oEFIoVl9orLaeOB5vrF4Lm>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 1 May 2026 14:27:42 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: phillip.wood123@gmail.com
+Cc: ben.knoble@gmail.com,
+	git@vger.kernel.org,
+	kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH v3 5/5] format-rev: introduce builtin for on-demand pretty formatting
+Date: Fri,  1 May 2026 20:27:16 +0200
+Message-ID: <20260501182718.27853-2-kristofferhaugsbakk@fastmail.com>
+X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
+In-Reply-To: <e8bb57a2-8eff-4f72-96ca-72d8880901e0@gmail.com>
+References: <e8bb57a2-8eff-4f72-96ca-72d8880901e0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] status: improve rebase todo list parsing
-To: Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Tian Yuchen <cat@malon.dev>
-References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
- <cover.1777648598.git.phillip.wood@dunelm.org.uk>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <cover.1777648598.git.phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 01/05/2026 16:16, Phillip Wood wrote:
-> When there is rebase in progress "git status" displays the last couple
-> of completed and the next couple of pending commands from the todo
-> list. When it does this is tries to abbreviate the object ids of
-> the commits to be picked. Unfortunately it does not abbreviate the
-> object ids when the line starts with "fixup -C" or "merge -C". It
-> also mistakenly replaces the refname in "reset main" and "update-ref
-> refs/heads/main" with the object id that the ref points to.
-> 
-> This series fixes that. The first patch factors out the sequencer
-> code that parses the command names in the todo list. The second patch
-> uses that function in "git status" to parse the command names so that
-> it knows whether the line may contain "-C" and whether there is an
-> object id that should be abbreviated.
-> 
-> Thanks to Elijah and Patrick for their comments in V1.
+On Fri, May 1, 2026, at 12:16, Phillip Wood wrote:
+>>[snip]
+>> • You can’t feed commits piecemeal to these commands, one input
+>>    for one output; they block until standard in is closed
+>
+> So you can feed them piecemeal but you don't get any output until you
+> close stdin. That can be helpful as it means the calling process can
+> write to "git log --stdin" and then read the output without worrying
+> about getting deadlocked.
 
-Sorry Tian, I'd forgotten that you'd commented on these patches as well 
-- thanks for your comments too.
+Okay. I don’t have much experience with concurrent programming.
 
-Phillip
+> The Implementation below works fine if there
+> are separate processes or threads writing to and reading from "git
+> format-rev", but if we want a single process to be able to read from and
+> write to "git format-rev --stdin-mode=text" there will need to be a way
+> to delimit message boundaries so that git knows where the input message
+> ends and the caller knows where the response ends.
 
-> 
-> Changes since V1:
-> 
-> Patch 1 - Expanded commit message and added a code comment.
-> 
-> Patch 2 - Fixed some typos, added a code comment and clarified that -Wswitch
->            is included by -Wall.
-> 
-> Base-Commit: 8c9303b1ffae5b745d1b0a1f98330cf7944d8db0
-> Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fimprove-status-todo-list-parsing%2Fv2
-> View-Changes-At: https://github.com/phillipwood/git/compare/8c9303b1f...b80bc1e0a
-> Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/improve-status-todo-list-parsing/v2
-> 
-> 
-> Phillip Wood (2):
->    sequencer: factor out parsing of todo commands
->    status: improve rebase todo list parsing
-> 
->   sequencer.c            |  45 +++++++++-----
->   sequencer.h            |   8 +++
->   t/t7512-status-help.sh |  74 +++++++++++++++--------
->   wt-status.c            | 131 +++++++++++++++++++++++++++++++++--------
->   4 files changed, 191 insertions(+), 67 deletions(-)
-> 
-> Range-diff against v1:
-> 1:  3d5135a719 ! 1:  d27dddff93 sequencer: factor out parsing of todo commands
->      @@ Metadata
->        ## Commit message ##
->           sequencer: factor out parsing of todo commands
->       
->      -    Move the code that parses todo commands into a separate function so that
->      -    it can be shared with "git status" in the next commit.
->      +    Move the code that parses todo commands into a separate function so
->      +    that it can be shared with "git status" in the next commit. As we
->      +    know the input is NUL terminated we do not pass a pointer to the end
->      +    of the line and instead test for a blank line by looking for NUL, CR
->      +    LF, or LF. We use starts_with() instead of starts_with_mem() for the
->      +    same reason. This results in slightly different behavior when there
->      +    a CR at the start of the line that is not followed by LF. Previously
->      +    such a line was treated as a comment rather than an invalid line.
->       
->           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->       
->      @@ sequencer.h: int read_author_script(const char *path, char **name, char **email,
->        int write_basic_state(struct replay_opts *opts, const char *head_name,
->        		      struct commit *onto, const struct object_id *orig_head);
->        void sequencer_post_commit_cleanup(struct repository *r, int verbose);
->      ++
->      ++/*
->      ++ * Try to parse the todo command pointed to by *p. On success sets cmd,
->      ++ * advances p and returns true. On failure returns false, leaves p and
->      ++ * cmd unchanged.
->      ++ */
->       +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd);
->      ++
->        int sequencer_get_last_command(struct repository* r,
->        			       enum replay_action *action);
->        int sequencer_determine_whence(struct repository *r, enum commit_whence *whence);
-> 2:  d20dc1f655 ! 2:  b80bc1e0a2 status: improve rebase todo list parsing
->      @@ Commit message
->       
->           When there is rebase in progress "git status" displays the last couple
->           of completed and the next couple of pending commands from the todo
->      -    list. When it does this is tries to abbreviate the object ids of
->      +    list. When it does this it tries to abbreviate the object ids of
->           the commits to be picked. Unfortunately it does not abbreviate the
->           object ids when the line starts with "fixup -C" or "merge -C". It
->           also mistakenly replaces the refname in "reset main" and "update-ref
->      @@ Commit message
->           wider variety of commands. Only the pending commands in the tests
->           are changed to avoid removing existing coverage.
->       
->      +    Helped-by: Elijah Newren <newren@gmail.com>
->           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->       
->        ## t/t7512-status-help.sh ##
->      @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
->        	return split_in_progress;
->       +}
->       +
->      ++/*
->      ++ * If the whitespace-delimited token starting at or just after *pp *
->      ++ * is a hex object id that is longer than its default abbreviation, *
->      ++ * abbreviate it in-place, shrinking `line` accordingly. On return
->      ++ * *pp points one past the (possibly abbreviated) token. Leaves both
->      ++ * `line` and *pp-advanced-past-the-token unchanged in all other cases
->      ++ * (non-hex token, unresolvable, or a refname that happens to consist
->      ++ * only of hex digits).
->      ++ */
->       +static void abbrev_oid_in_line(struct repository *r,
->       +			       struct strbuf *line, char **pp)
->       +{
->      @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
->       +	p += strspn(p, " \t");
->       +	end_of_object_name = p + strcspn(p, " \t");
->       +	/*
->      -+	 * The for "merge" and "reset" the object name may be a label or
->      ++	 * For "merge" and "reset" the object name may be a label or
->       +	 * ref rather than a hex object id. Only abbreviate the object
->       +	 * name if it is a hex object id.
->       +	 */
->      @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
->       +	*pp = end_of_object_name;
->       +}
->       +
->      -+static void skip_dash_c(char **pp) {
->      ++static void skip_dash_c(char **pp)
->      ++{
->       +	char *p = *pp;
->       +
->       +	p += strspn(p, " \t");
->      -+	/* The (void) cast is required to silence -Wunused_value */
->      ++	/* The (void) cast is required to silence -Wunused-value */
->       +	(void)(skip_prefix(p, "-C", &p) || skip_prefix(p, "-c", &p));
->       +	*pp = p;
->        }
->      @@ wt-status.c: static int split_commit_in_progress(struct wt_status *s)
->       +
->       +	/*
->       +	 * Avoid "default" and instead list all the other commands so
->      -+	 * that -Wswitch warns if a new command is added without handling
->      -+	 * it in this function.
->      ++	 * that -Wswitch (which is included in -Wall) warns if a new
->      ++	 * command is added without handling it in this function.
->       +	 */
->       +	case TODO_BREAK:
->       +	case TODO_EXEC:
+Okay, so I guess a null-terminator mode for output.
 
+> We'll also need to be
+> careful about flushing the output at the end of a processed message.
+
+I don’t get why this takes special care. I’ll think about it.
+
+> For "--stdin-mode=revs" the caller cannot know how many lines the output
+> will span because formats like %(trailers) will produce a variable
+> number of lines depending on which trailers are present. It is also
+> possible for a rev name to span more than one line. The following
+> example finds the most recent commit that mentions 'cherry-pick' in the
+> subject line
+>
+> :/^[^
+> ]cherry-pick
+>
+> so we need a way to delimit the input and output records there as well.
+
+Okay, so a null-terminator mode for input as well?
+
+> I think the functionality implemented here is useful (transforming the
+> output of 'git blame' or 'git-last-modified' are convicing examples) and
+> it is probably better to do it as a command rather than adding a
+> "--format" option to name-rev.
+>
+>> • You can’t feed a list of possibly duplicate commits, like the output
+>>    of git-last-modified(1); they effectively deduplicate the output
+>
+> That is definitely a problem
+
+Great, thanks.
+
+>> Beyond these two points there’s also the input massage problem: you
+>
+> s/massagge/message/?
+
+No. I meant massaging the input so that it can be processed by whatever
+tool you have. :) In this case splitting the object name column and file
+column because tools like git-log(1) can only deal with revision input.
+
+Thanks for reviewing the usability design.
+
+-- 
+Happy May Day
