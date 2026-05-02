@@ -1,78 +1,78 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254E82D839C
-	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925E82C0294
+	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777699735; cv=none; b=JR/ny/8Om7CeKsLmVKbHiwjuaK+2Bhb19YPZxaiNI4gBEpqw16MO2mbbyYZpwZY8EB1BdIHQhop9AfV741LfkujBy3BM9WUGSSVx327ujFglZr8um083ICFXFMLtLgKMJVAkCjgAQVNZ9XDPBZRM6v0JdFMirhyPG5mnRQrdaRc=
+	t=1777699742; cv=none; b=LCUPHn4c0iEguFqOcO/IqIuUwQTfb37gjUBApP76/674L8mZMJVnXLclufLmBb0N40odp0lh6fdg2KCq2rf2GOG/F1UpDdn/Vdx3LmdNSLGooSXA+/fYHme+N9IjeqzAXRq0r6Lj2UH9T3KsoviGMoHMNZASsahRXR0Ana9x0AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777699735; c=relaxed/simple;
-	bh=LkGdUreL9Vaw63FpspvkprOIKWAIvC/JtmV4i6zHeRQ=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gfjUib0nl2GwGuUHlJnLrlIdeiKZLrsJ1qxUyYjNJ65GaP8wcgSenVUi684l3stedcBQ9lUd3c8YY4L9gLRqLOlQu76SYxe/KTncLSw5b0/Xn84Pl+tcdG5LVuWresHsxkbbxR3r7EGRrnjMNHySPONBFFoVLGNPwOszxTDCj6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JcYn+XN/; arc=none smtp.client-ip=209.85.160.169
+	s=arc-20240116; t=1777699742; c=relaxed/simple;
+	bh=L7tb54BrNrXlW51LVic54tEw0mnWQ+eFglmwfZpMwBc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=FCF5BXu4UjF9tTB4Uo1C+zaNXLGow9NJAX3O06RFmm4K7TuJVLIKxc3LsaCUxhtKBxGEfO4j31VXsGC42GAHV/uOEqTmjgiaV3+yhQ4OuBToEhBlAo8Gjj+i4W9EAaRDH+cbXlqX0dypKK549BHZ5PA+jA/k+HCw0GXfrJf4dog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gFE6XFx5; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JcYn+XN/"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50d6b9bca48so34153951cf.2
-        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gFE6XFx5"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8ea8563c693so293913585a.2
+        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777699732; x=1778304532; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=gmail.com; s=20251104; t=1777699734; x=1778304534; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SxTuOFenopdaGsVedGOoozOJf0WWp21sJjG5eohJVt4=;
-        b=JcYn+XN/e5mXCV2jfS3BBYYCjij8x2jycnvMzo88TrvTjeI2OySKNS8zlBSfqapzJS
-         Rc2W4omr1elNhXj84H6SybThskPNTFN/MRsyjXFdj1jA+OW84byf1u84e7ImEKrmMRzG
-         4BIBIPExD1rMdkrTHjRZqfYW+YhF/671dn8ighfs8+uEi2jY5tIxH756uVhVFe2Xl2FU
-         ANWNdK+G3yDxQY0f32wlXMDEUM/VjSqGdE5uQwuxwI7utkGF5IXyyS4juBs1IhIOku/Y
-         Z8JvTUoEoe1j+UWD58q85VVj15fzRc23Qv2cadrTpi/qOZNmngBSm7jJx6Q3mKfHRbYO
-         5Y2A==
+        bh=Q7Ugk2AQ5UmfgXOyPtlW1aQhDLsVaRnHKFdVEvVbZgE=;
+        b=gFE6XFx5swU9FFLbJqF6GJxmcztXYQJRKi6nPV5rC6NSuN86QkPxLREQ7nuy5fzgCQ
+         kWouh4brOrXJGbSEqf83qBfYWKAnTm9zcjUbYGO543BmMJIsOnBZtClgfeqDJ+2YjOcM
+         1PgLStrs3YESZmDvQteBlUGRidbDlIHwADNFKvm8JiA4MIBTRz+DWXhN0V3LYaZqP9CS
+         257w7d+g5xr4kqbP/vdCgnLeERs7AfanpQaAVvstYwHBz7FC0anVG+tbI/UgE22Nrunn
+         T2uLkXEVjXXmBPMwVTP360O03WHT6Q+qZcF421RmUZCKXc/ZbwYN+4e+/KTyyxUThSVa
+         sniA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777699732; x=1778304532;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=1e100.net; s=20251104; t=1777699734; x=1778304534;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SxTuOFenopdaGsVedGOoozOJf0WWp21sJjG5eohJVt4=;
-        b=OhiOA/bMBiEBmCQcxR0RFKJNcmVK+Q1DMi9a94HdvbhZmyKygfE8CJb/zMlRi5tHLr
-         6yo5k+3ZF8UO31ZsHGTPWKBn/akgmil1VWePEJW91Vyup+tSOik8SMZJWkBJMXksZLNy
-         RW5kdmnM6V9SzszyGEoRlZGYZO1YsNZDBI23aXc9/pBF75hzaS15/vifeUIPFchpATB6
-         Gx3kNleorVawKPqQElS6ZxyfjCSXBDm0xcb3myRKXKAJjbzXiTionFNYL7732XfJv5Ue
-         7a0ISVqmd9n4zQg1wOu2Bt0IF0FiluR860mRto/URO2lRYzRsDrg5rWo0206JeMZWE4v
-         qqBQ==
-X-Gm-Message-State: AOJu0Yy/QdR0DoW8O+VhczioL2QQZWFUtwy/SOaOu2TDrjJTiJw0KG77
-	S8Rz5sebVxruyhXkrNmkMB/MQJY/aZ6ul47eAWaJ7pz4gluByugLgM/8ltadvQ==
-X-Gm-Gg: AeBDiet3kmSxWFVX7lmCXCWwcpQ8KBlzjzZK6Tmcupmcr+YRAwm0NRS9iHY9LjjxPKF
-	VqN0xrlxjetu+2vSATox8G6QDwaezk+qC1ASTSy4BIG9AhRWLvMIGbhLjjElSA5wfifmgzWCYb1
-	C7NYwHqXLPCv5W20k8T94uBQ+u4pVg2bonYvHTQy79GznVQQv1+9/w5RWczcLS28nWeBieDr5ju
-	OvzjuLZIqxkAl6lE/2hGUuzC3X8wuGH4A08bFyO7yFNn9CuhEmUd1TRHg/Vfdq/lsXsIzf+OYht
-	1QOcKhgkMcqh8KVwZTaoyV33fJLSMxLZLnGbpiWtDIio2QGHyaTk8CBGXKfVReVWoGYv8CRUCYs
-	jMOFGDWHglrmiZ4ZDe5MmWKANzrDtHIJolPL23Ckm6a2h340m2ymQCGCXj/1zMNxZoXoH3Zdavu
-	oxViiuofIsu2WgzC8d/RwtaOJQOI/hBDJmWpDs5nY=
-X-Received: by 2002:ac8:5d43:0:b0:50d:66b6:1564 with SMTP id d75a77b69052e-5104be2583emr30065531cf.14.1777699732390;
-        Fri, 01 May 2026 22:28:52 -0700 (PDT)
+        bh=Q7Ugk2AQ5UmfgXOyPtlW1aQhDLsVaRnHKFdVEvVbZgE=;
+        b=hSDvw6AJ4e0E1tI0B1tVlgJ3oFrxJrUVPPicaxQvcvjjX75i5qZInvTtZOuPyO0c5L
+         wD+5UzDHuVcRiDNYBpNMxdghgRxHdfeXNIXS/qjY8QsmhqrCk/ekzx2uhxSU+n0QK6nM
+         v4SVlBEBMAJ0ce9niH26d+XVVap9/anLv8pFxXDwtLjqZdq7JlViWUmr2ANcH4Hh8eVZ
+         Cl03QnmM7y3hIUUGaT01yy4SJkplgeQzcPsK+twz2g3NPcNSAuSwVXqqZb5MwEqBm25Z
+         OWeLZsZmnObJD9T9n6QrcQxN1EsMn0rVmks4BL5elvzeU6if+FYh2uHm9Ry8QOrV6iia
+         +NCQ==
+X-Gm-Message-State: AOJu0Yz1VdIyHLP3tkjq3kLBDK9i6yGk+TGZd6KQmes5SRed88RJgBnC
+	IBoBKSUgDjDASVodifNYOwSnHwPKd5zHEFMZQyfBeLZe8rYqMNTYUVjLMYgxNg==
+X-Gm-Gg: AeBDieuuHoi0ELs9cRBBH/GnEQU++iv653Gk2yiN5vTiE97SUBLyGw+A8n1rFYJzRgS
+	6QRmzA/4bxIGt6VudCI7xNf+EsjVzumUxZKYVemPV1CDLil8Y4zOp/zM0P0bskf3+FAIW5rGxqM
+	seXxZT067Y67Ox/zbE1j4KI63kdIpnm3N0VRBggL9cGbTOO+sZS33E/8vN7pQ5WZijh6Hmsokr1
+	ytzvzUxMKG9XYwRac/Yry7/t8NiLS5Nh7GvWYuECUENPMD4AkX4Zpi7IFrMTLqEZC2SmAUtHs+Q
+	DcmiWDfLsMpZVZBn7ON2dZqnS7Yve+LkO/4wTIJ8To0B6tqWCqNTusE1hG2+AORO5mZIIyUkvgd
+	rrQT8bukyUXyM80+PJq+kyDVFokURH45lLUTbiZg+SCH0PHwNoYBpqZgg6MyW3UNA2nVGTYt3F8
+	c6qe0SiOFPACVMjXe8QPUs1wX9eVnNoxtLKmN15uM=
+X-Received: by 2002:a05:620a:1709:b0:8d9:8c28:a945 with SMTP id af79cd13be357-8fd17d4961bmr352862185a.40.1777699733711;
+        Fri, 01 May 2026 22:28:53 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.224.103])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53c0e7f27sm56112146d6.32.2026.05.01.22.28.51
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91b976sm391856685a.39.2026.05.01.22.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 22:28:51 -0700 (PDT)
-Message-Id: <2b32cb71a359b936095f41e7c482e8369ddac786.1777699722.git.gitgitgadget@gmail.com>
+        Fri, 01 May 2026 22:28:53 -0700 (PDT)
+Message-Id: <ce41d2ec50effb277246c459d328a9d5d720ed3a.1777699722.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 References: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
 	<pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 From: "Matheus Afonso Martins Moreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 02 May 2026 05:28:41 +0000
-Subject: [PATCH v3 7/8] doc: describe the url-parse builtin
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Sat, 02 May 2026 05:28:42 +0000
+Subject: [PATCH v3 8/8] t9904: add tests for the new url-parse builtin
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
 To: git@vger.kernel.org
 Cc: Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
     Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
@@ -81,115 +81,376 @@ Cc: Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
 
 From: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-The new url-parse builtin validates git URLs
-and optionally extracts their components.
+Test git URL parsing, validation and component extraction
+on all documented git URL schemes and syntaxes.
 
-Helped-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Add IPv6 host coverage in URL form:
+
+    ssh://[::1]/path
+    ssh://user@[::1]:1234/path
+    git://[::1]:9418/path
+    http://[2001:db8::1]/path
+    https://[2001:db8::1]/path
+
+In URL form the brackets are kept in the host component (RFC 3986
+syntax for IPv6 literals).
+
+Also exercise the bracketed scp short forms that t5601-clone.sh
+covers via parse_connect_url:
+
+    [host]:path
+    [host:port]:path
+    [::1]:repo
+    user@[::1]:repo
+    user@[host:port]:path
+
+In scp form, brackets are kept for IPv6 literals (two or more inner
+colons) and stripped for plain hostnames or host:port pairs.
+
+Suggested-by: Torsten Bögershausen <tboegi@web.de>
 Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 ---
- Documentation/git-url-parse.adoc | 80 ++++++++++++++++++++++++++++++++
- Documentation/meson.build        |  1 +
- 2 files changed, 81 insertions(+)
- create mode 100644 Documentation/git-url-parse.adoc
+ t/meson.build        |   1 +
+ t/t9904-url-parse.sh | 319 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 320 insertions(+)
+ create mode 100755 t/t9904-url-parse.sh
 
-diff --git a/Documentation/git-url-parse.adoc b/Documentation/git-url-parse.adoc
-new file mode 100644
-index 0000000000..9d0d93da4a
+diff --git a/t/meson.build b/t/meson.build
+index 7528e5cda5..41b389a472 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -1114,6 +1114,7 @@ integration_tests = [
+   't9901-git-web--browse.sh',
+   't9902-completion.sh',
+   't9903-bash-prompt.sh',
++  't9904-url-parse.sh',
+ ]
+ 
+ benchmarks = [
+diff --git a/t/t9904-url-parse.sh b/t/t9904-url-parse.sh
+new file mode 100755
+index 0000000000..8a369d2040
 --- /dev/null
-+++ b/Documentation/git-url-parse.adoc
-@@ -0,0 +1,80 @@
-+git-url-parse(1)
-+================
++++ b/t/t9904-url-parse.sh
+@@ -0,0 +1,319 @@
++#!/bin/sh
++#
++# Copyright (c) 2024 Matheus Afonso Martins Moreira
++#
 +
-+NAME
-+----
-+git-url-parse - Parse and extract git URL components
++test_description='git url-parse tests'
 +
-+SYNOPSIS
-+--------
-+[synopsis]
-+git url-parse [-c <component>] [--] <url>...
++. ./test-lib.sh
 +
-+DESCRIPTION
-+-----------
++test_expect_success 'git url-parse -- ssh syntax' '
++	git url-parse "ssh://user@example.com:1234/repository/path" &&
++	git url-parse "ssh://user@example.com/repository/path" &&
++	git url-parse "ssh://example.com:1234/repository/path" &&
++	git url-parse "ssh://example.com/repository/path"
++'
 +
-+Git supports many ways to specify URLs, some of them non-standard.
-+For example, git supports the scp style [user@]host:[path] format.
-+This command eases interoperability with git URLs by enabling the
-+parsing and extraction of the components of all git URLs.
++test_expect_success 'git url-parse -- git syntax' '
++	git url-parse "git://example.com:1234/repository/path" &&
++	git url-parse "git://example.com/repository/path"
++'
 +
-+Any syntactically valid URL is parsed, even if the scheme is not one
-+git supports for fetching or pushing.
++test_expect_success 'git url-parse -- http syntax' '
++	git url-parse "https://example.com:1234/repository/path" &&
++	git url-parse "https://example.com/repository/path" &&
++	git url-parse "http://example.com:1234/repository/path" &&
++	git url-parse "http://example.com/repository/path"
++'
 +
-+OPTIONS
-+-------
++test_expect_success 'git url-parse -- scp syntax' '
++	git url-parse "user@example.com:/repository/path" &&
++	git url-parse "example.com:/repository/path"
++'
 +
-+`-c <component>`::
-+`--component <component>`::
-+	Extract the _<component>_ component from the given Git URLs.
-+	_<component>_ can be one of:
-+	`scheme`, `user`, `password`, `host`, `port`, `path`.
++test_expect_success 'git url-parse -- username expansion - ssh syntax' '
++	git url-parse "ssh://user@example.com:1234/~user/repository" &&
++	git url-parse "ssh://user@example.com/~user/repository" &&
++	git url-parse "ssh://example.com:1234/~user/repository" &&
++	git url-parse "ssh://example.com/~user/repository"
++'
 +
-+OUTPUT
-+------
++test_expect_success 'git url-parse -- username expansion - git syntax' '
++	git url-parse "git://example.com:1234/~user/repository" &&
++	git url-parse "git://example.com/~user/repository"
++'
 +
-+When `--component` is given, the requested component of each URL
-+is printed on its own line, in the order the URLs were given. If
-+the URL has no such component (for example, a port in a URL that
-+does not specify one), an empty line is printed in its place.
++test_expect_success 'git url-parse -- username expansion - scp syntax' '
++	git url-parse "user@example.com:~user/repository" &&
++	git url-parse "example.com:~user/repository"
++'
 +
-+When `--component` is not given, no output is produced. The exit
-+status is zero if every URL parses successfully and non-zero
-+otherwise, allowing the command to be used purely as a validator.
++test_expect_success 'git url-parse -- file urls' '
++	git url-parse "file:///repository/path" &&
++	git url-parse "file://"
++'
 +
-+EXAMPLES
-+--------
++test_expect_success 'git url-parse -c scheme -- ssh syntax' '
++	test ssh = "$(git url-parse -c scheme "ssh://user@example.com:1234/repository/path")" &&
++	test ssh = "$(git url-parse -c scheme "ssh://user@example.com/repository/path")" &&
++	test ssh = "$(git url-parse -c scheme "ssh://example.com:1234/repository/path")" &&
++	test ssh = "$(git url-parse -c scheme "ssh://example.com/repository/path")"
++'
 +
-+* Print the host name:
-++
-+------------
-+$ git url-parse --component host https://example.com/user/repo
-+example.com
-+------------
++test_expect_success 'git url-parse -c scheme -- git syntax' '
++	test git = "$(git url-parse -c scheme "git://example.com:1234/repository/path")" &&
++	test git = "$(git url-parse -c scheme "git://example.com/repository/path")"
++'
 +
-+* Print the path:
-++
-+------------
-+$ git url-parse --component path https://example.com/user/repo
-+/user/repo
-+$ git url-parse --component path example.com:~user/repo
-+~user/repo
-+$ git url-parse --component path example.com:user/repo
-+/user/repo
-+------------
++test_expect_success 'git url-parse -c scheme -- http syntax' '
++	test https = "$(git url-parse -c scheme "https://example.com:1234/repository/path")" &&
++	test https = "$(git url-parse -c scheme "https://example.com/repository/path")" &&
++	test http = "$(git url-parse -c scheme "http://example.com:1234/repository/path")" &&
++	test http = "$(git url-parse -c scheme "http://example.com/repository/path")"
++'
 +
-+* Validate URLs without outputting anything:
-++
-+------------
-+$ git url-parse https://example.com/user/repo example.com:~user/repo
-+------------
++test_expect_success 'git url-parse -c scheme -- scp syntax' '
++	test ssh = "$(git url-parse -c scheme "user@example.com:/repository/path")" &&
++	test ssh = "$(git url-parse -c scheme "example.com:/repository/path")"
++'
 +
-+SEE ALSO
-+--------
-+linkgit:git-clone[1],
-+linkgit:git-fetch[1],
-+linkgit:git-config[1]
++test_expect_success 'git url-parse -c user -- ssh syntax' '
++	test user = "$(git url-parse -c user "ssh://user@example.com:1234/repository/path")" &&
++	test user = "$(git url-parse -c user "ssh://user@example.com/repository/path")" &&
++	test "" = "$(git url-parse -c user "ssh://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c user "ssh://example.com/repository/path")"
++'
 +
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index d6365b888b..32c8606a80 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -155,6 +155,7 @@ manpages = {
-   'git-update-server-info.adoc' : 1,
-   'git-upload-archive.adoc' : 1,
-   'git-upload-pack.adoc' : 1,
-+  'git-url-parse.adoc' : 1,
-   'git-var.adoc' : 1,
-   'git-verify-commit.adoc' : 1,
-   'git-verify-pack.adoc' : 1,
++test_expect_success 'git url-parse -c user -- git syntax' '
++	test "" = "$(git url-parse -c user "git://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c user "git://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c user -- http syntax' '
++	test "" = "$(git url-parse -c user "https://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c user "https://example.com/repository/path")" &&
++	test "" = "$(git url-parse -c user "http://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c user "http://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c user -- scp syntax' '
++	test user = "$(git url-parse -c user "user@example.com:/repository/path")" &&
++	test "" = "$(git url-parse -c user "example.com:/repository/path")"
++'
++
++test_expect_success 'git url-parse -c password -- http syntax' '
++	test secret = "$(git url-parse -c password "https://user:secret@example.com:1234/repository/path")" &&
++	test secret = "$(git url-parse -c password "http://user:secret@example.com/repository/path")" &&
++	test "" = "$(git url-parse -c password "https://user@example.com/repository/path")" &&
++	test "" = "$(git url-parse -c password "https://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c host -- ssh syntax' '
++	test example.com = "$(git url-parse -c host "ssh://user@example.com:1234/repository/path")" &&
++	test example.com = "$(git url-parse -c host "ssh://user@example.com/repository/path")" &&
++	test example.com = "$(git url-parse -c host "ssh://example.com:1234/repository/path")" &&
++	test example.com = "$(git url-parse -c host "ssh://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c host -- git syntax' '
++	test example.com = "$(git url-parse -c host "git://example.com:1234/repository/path")" &&
++	test example.com = "$(git url-parse -c host "git://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c host -- http syntax' '
++	test example.com = "$(git url-parse -c host "https://example.com:1234/repository/path")" &&
++	test example.com = "$(git url-parse -c host "https://example.com/repository/path")" &&
++	test example.com = "$(git url-parse -c host "http://example.com:1234/repository/path")" &&
++	test example.com = "$(git url-parse -c host "http://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c host -- scp syntax' '
++	test example.com = "$(git url-parse -c host "user@example.com:/repository/path")" &&
++	test example.com = "$(git url-parse -c host "example.com:/repository/path")"
++'
++
++test_expect_success 'git url-parse -c port -- ssh syntax' '
++	test 1234 = "$(git url-parse -c port "ssh://user@example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c port "ssh://user@example.com/repository/path")" &&
++	test 1234 = "$(git url-parse -c port "ssh://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c port "ssh://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c port -- git syntax' '
++	test 1234 = "$(git url-parse -c port "git://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c port "git://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c port -- http syntax' '
++	test 1234 = "$(git url-parse -c port "https://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c port "https://example.com/repository/path")" &&
++	test 1234 = "$(git url-parse -c port "http://example.com:1234/repository/path")" &&
++	test "" = "$(git url-parse -c port "http://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c port -- scp syntax' '
++	test "" = "$(git url-parse -c port "user@example.com:/repository/path")" &&
++	test "" = "$(git url-parse -c port "example.com:/repository/path")"
++'
++
++test_expect_success 'git url-parse -c path -- ssh syntax' '
++	test "/repository/path" = "$(git url-parse -c path "ssh://user@example.com:1234/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "ssh://user@example.com/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "ssh://example.com:1234/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "ssh://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c path -- git syntax' '
++	test "/repository/path" = "$(git url-parse -c path "git://example.com:1234/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "git://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c path -- http syntax' '
++	test "/repository/path" = "$(git url-parse -c path "https://example.com:1234/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "https://example.com/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "http://example.com:1234/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "http://example.com/repository/path")"
++'
++
++test_expect_success 'git url-parse -c path -- scp syntax' '
++	test "/repository/path" = "$(git url-parse -c path "user@example.com:/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "example.com:/repository/path")"
++'
++
++test_expect_success 'git url-parse -c path -- username expansion - ssh syntax' '
++	test "~user/repository" = "$(git url-parse -c path "ssh://user@example.com:1234/~user/repository")" &&
++	test "~user/repository" = "$(git url-parse -c path "ssh://user@example.com/~user/repository")" &&
++	test "~user/repository" = "$(git url-parse -c path "ssh://example.com:1234/~user/repository")" &&
++	test "~user/repository" = "$(git url-parse -c path "ssh://example.com/~user/repository")"
++'
++
++test_expect_success 'git url-parse -c path -- username expansion - git syntax' '
++	test "~user/repository" = "$(git url-parse -c path "git://example.com:1234/~user/repository")" &&
++	test "~user/repository" = "$(git url-parse -c path "git://example.com/~user/repository")"
++'
++
++test_expect_success 'git url-parse -c path -- username expansion - scp syntax' '
++	test "~user/repository" = "$(git url-parse -c path "user@example.com:~user/repository")" &&
++	test "~user/repository" = "$(git url-parse -c path "example.com:~user/repository")"
++'
++
++test_expect_success 'git url-parse -c path -- username expansion strips query and fragment' '
++	test "~user/repository" = "$(git url-parse -c path "ssh://example.com/~user/repository?query")" &&
++	test "~user/repository" = "$(git url-parse -c path "ssh://example.com/~user/repository#fragment")" &&
++	test "~user/repository" = "$(git url-parse -c path "git://example.com/~user/repository?query")" &&
++	test "~user/repository" = "$(git url-parse -c path "user@example.com:~user/repository?query")"
++'
++
++test_expect_success 'git url-parse -- ssh syntax with IPv6' '
++	git url-parse "ssh://user@[::1]:1234/repository/path" &&
++	git url-parse "ssh://user@[::1]/repository/path" &&
++	git url-parse "ssh://[::1]:1234/repository/path" &&
++	git url-parse "ssh://[::1]/repository/path" &&
++	git url-parse "ssh://[2001:db8::1]/repository/path"
++'
++
++test_expect_success 'git url-parse -- git syntax with IPv6' '
++	git url-parse "git://[::1]:9418/repository/path" &&
++	git url-parse "git://[::1]/repository/path"
++'
++
++test_expect_success 'git url-parse -- http syntax with IPv6' '
++	git url-parse "https://[::1]:1234/repository/path" &&
++	git url-parse "https://[::1]/repository/path" &&
++	git url-parse "http://[2001:db8::1]/repository/path"
++'
++
++test_expect_success 'git url-parse -c host -- IPv6 in URL form' '
++	test "[::1]" = "$(git url-parse -c host "ssh://user@[::1]:1234/repository/path")" &&
++	test "[::1]" = "$(git url-parse -c host "ssh://[::1]/repository/path")" &&
++	test "[2001:db8::1]" = "$(git url-parse -c host "ssh://[2001:db8::1]/repository/path")" &&
++	test "[::1]" = "$(git url-parse -c host "git://[::1]/repository/path")" &&
++	test "[2001:db8::1]" = "$(git url-parse -c host "https://[2001:db8::1]/repository/path")"
++'
++
++test_expect_success 'git url-parse -c port -- IPv6 in URL form' '
++	test 1234 = "$(git url-parse -c port "ssh://user@[::1]:1234/repository/path")" &&
++	test "" = "$(git url-parse -c port "ssh://[::1]/repository/path")" &&
++	test 9418 = "$(git url-parse -c port "git://[::1]:9418/repository/path")"
++'
++
++test_expect_success 'git url-parse -- scp syntax with IPv6' '
++	git url-parse "[::1]:repository/path" &&
++	git url-parse "user@[::1]:repository/path" &&
++	git url-parse "[2001:db8::1]:repo"
++'
++
++test_expect_success 'git url-parse -- scp syntax with bracketed hostname' '
++	git url-parse "[myhost]:src" &&
++	git url-parse "user@[myhost]:src"
++'
++
++test_expect_success 'git url-parse -- scp syntax with bracketed host:port' '
++	git url-parse "[myhost:123]:src" &&
++	git url-parse "user@[myhost:123]:src"
++'
++
++test_expect_success 'git url-parse -c host -- scp+IPv6' '
++	test "[::1]" = "$(git url-parse -c host "[::1]:repository/path")" &&
++	test "[::1]" = "$(git url-parse -c host "user@[::1]:repository/path")" &&
++	test "[2001:db8::1]" = "$(git url-parse -c host "[2001:db8::1]:repo")"
++'
++
++test_expect_success 'git url-parse -c path -- scp+IPv6' '
++	test "/repository/path" = "$(git url-parse -c path "[::1]:/repository/path")" &&
++	test "/repository/path" = "$(git url-parse -c path "[::1]:repository/path")" &&
++	test "/repo" = "$(git url-parse -c path "[2001:db8::1]:repo")"
++'
++
++test_expect_success 'git url-parse -c host,port,path -- scp [host:port]:src' '
++	test myhost = "$(git url-parse -c host "[myhost:123]:src")" &&
++	test 123 = "$(git url-parse -c port "[myhost:123]:src")" &&
++	test "/src" = "$(git url-parse -c path "[myhost:123]:src")"
++'
++
++test_expect_success 'git url-parse -c host,path -- scp [host]:src' '
++	test myhost = "$(git url-parse -c host "[myhost]:src")" &&
++	test "/src" = "$(git url-parse -c path "[myhost]:src")"
++'
++
++test_expect_success 'git url-parse -c user -- scp with user@ and brackets' '
++	test user = "$(git url-parse -c user "user@[::1]:repo")" &&
++	test user = "$(git url-parse -c user "user@[myhost:123]:src")" &&
++	test user = "$(git url-parse -c user "user@[myhost]:src")"
++'
++
++test_expect_success 'git url-parse -- scp+IPv6 with username expansion' '
++	test "~user/repo" = "$(git url-parse -c path "[::1]:~user/repo")" &&
++	test "~user/repo" = "$(git url-parse -c path "user@[::1]:~user/repo")"
++'
++
++test_expect_success 'git url-parse fails on invalid URL' '
++	test_must_fail git url-parse "not a url"
++'
++
++test_expect_success 'git url-parse helpful error for absolute local path' '
++	test_must_fail git url-parse "/abs/path" 2>err &&
++	test_grep "is not a URL" err &&
++	test_grep "file:///" err
++'
++
++test_expect_success 'git url-parse helpful error for relative local path' '
++	test_must_fail git url-parse "./rel" 2>err &&
++	test_grep "is not a URL" err &&
++	test_grep "absolute path" err
++'
++
++test_expect_success 'git url-parse fails on unknown -c component name' '
++	test_must_fail git url-parse -c bogus "https://example.com/repo"
++'
++
++test_expect_success 'git url-parse fails on URL missing host' '
++	test_must_fail git url-parse "https://"
++'
++
++test_expect_success 'git url-parse with no URL prints usage' '
++	test_must_fail git url-parse 2>err &&
++	test_grep "usage:" err
++'
++
++test_done
 -- 
 gitgitgadget
-
