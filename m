@@ -1,69 +1,69 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC8E2E7185
-	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525922EBB86
+	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777699730; cv=none; b=Ha2C03rwnrsdag/51EOIbGuJc91bgIjx+2orgOdgf9xtwoqu50FiCcHGzUB4FllvP1hBPSaIWcBjA6VdOvHLUWdCYkwdNp2d1mKPqWATMGRyR4GlZO3q7qYBbty0vEn1AxG2s+6RVdQoDsOxhwi/rd0VhJHJsOb+SeUOGDw6laA=
+	t=1777699731; cv=none; b=pJiCy5jS+xxm+5L0OwqBBii7OfSIz5zLwHC12GH+6xCKd0dBDRd6TnQB53lShHcNM+Et+G29Ol5n02sYjax4igF2+qvPOzYauYz14nwCmL8KtH0fFcHN6rE95qxx/+bARoWy8EFWzgNNWfbM9QFMomTjLP5QdxC/1hhHeu9TkWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777699730; c=relaxed/simple;
-	bh=GMfBZIWWX/MjNnBlsCQqUlvoiwRrrzERkWYkXzRMcJc=;
+	s=arc-20240116; t=1777699731; c=relaxed/simple;
+	bh=M4RJ6jhK73iF4lBIzOOcMCmIbuNg1X+vUeKQ4E+5kX4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=S+7GZ9OOwaqnrqQkWWlL1wL2njrOGOs1GIpSav36AK+tZ7MYqA1FqEIMjI6BUeeGo3NI1fmPb8Zux12sLLkykrYcug4FwhRELHQP7ZwGP500trArmeLjikY+KU17J+lI6SxqueiCbSFegQEaTgawiPyXibt65/aEUZyJTtXJc5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ow5ySyk8; arc=none smtp.client-ip=209.85.219.42
+	 MIME-Version:To:Cc; b=INJ7noPObLgEpu/BriWdxV6bLUy6IBrbzOI0iM7vBIkUrcq7RiRP6vbetrjHoqu9ZjtwECBBjmCeUNKimFaLHH0U5UZpVGf/lXA3NPXysZ8PdFBcLNT8dqxhkOyLfXZvfHZ2z/L+VNTZ0sc6GO/zmMAAN9nKaFUyT5LxLDYJeQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kjq5+qdf; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ow5ySyk8"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8b7105dfb35so807656d6.3
-        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kjq5+qdf"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8b1f2b7f1bcso35691676d6.1
+        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777699728; x=1778304528; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777699729; x=1778304529; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3A7hhoGW+CS4cGk3xniP0Vw7I1DTwDRECXOTZSuA8iQ=;
-        b=Ow5ySyk8XrLrCe/1BUjT2WLwWcM2XS4jEMUP9RQXw3LzZfNSxmKw6C09YKTj063zlh
-         v76hK7T267cFor9iAjS2x62OJYv40tvSQTo5R+p9EO7EdfURAYbuH8jRkuYQzBse/iE9
-         ZYMDkrouEmYF8Tnbho2FppRLJJG8vGI+UrnHkwQuiCSDeEr5VDssTLmX8+1duIgiCHYo
-         c5lkcAd6iIvfdZ8vKRhcKQ5+I9pTldneFrs8Di9xHwMvviqD19dqoxNOeMadE18iI6/i
-         ZLtaNupC6EamvUP15SdQBKgTDNJkYGEVJn0lHstAeItIrC0eJGaLX2o6V/eLr7LQ1FZG
-         7L6w==
+        bh=l0N99xeMTsFfNBPOJZ+NQOEPKlNV2Qvh+SMY5pe0SwE=;
+        b=Kjq5+qdf3fzTm3ZytiH2/QqWpbTVkLfkdfE3zByecqmDnnruZHeSg0o8EuFkS0uHuv
+         Qs83wyjVsiOZA20PYOfaraB9RgIxLYtsmFuaOg+tbS8UmY5KY2vQ81Y1z/na+SE9awYw
+         iuxJYzrh/1fiW0Vmdo0YMeXy7NbOh3gk3xIds/unHYtOPc0diN9Ek32RHRhCnsWHXpaV
+         Gagz9HouE2UzrJh2oEwGsGK3GE26dIERk2xG3xEdrka/rxmtr2XGB9idb37CMSyK4/Iv
+         XxXhkTbM7sDmKkAZHaZs6QULiHK81jSU9m3E/bw8ZFnMCNHimZdwzUnYjua8j0KARTqM
+         uKzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777699728; x=1778304528;
+        d=1e100.net; s=20251104; t=1777699729; x=1778304529;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=3A7hhoGW+CS4cGk3xniP0Vw7I1DTwDRECXOTZSuA8iQ=;
-        b=ZFvuSdfxIjNgoVNlPm+m/d4b748rkHb2p8EROVzbiQqIVERS2KueL6w9gJwkm5RrEU
-         nGqortEfkCYm839e0r91dZqHl3QbfU/ecusfV6g0TkV+MhisXzo6kh6cPWZ49YC4iLlh
-         ZeypLEWM9Z+9+pLjFpwHZHfkaiQNRpEN/M64oCNYEciFgXy31K19MRKbWr8wYeWmXcDM
-         NSmnk5che+QvERHhMZUQLT31W8JXWH/NVNhB9wYPbkv5KLc0yKv510mDdi9V2AFn5clL
-         fl/FmVnbVeFGbyhcBnwk+8mT4h6Vy/SqjNYJGTwJk6A7dvs5CtribNwm8oqf9QFVeWr3
-         AMQg==
-X-Gm-Message-State: AOJu0YyH5eEfTz1G8alD2IEqPOp/dnOQLcIF/WUHkVGBmmrvIqupid+W
-	b1R0dAprd6OiUl47R4Dd0ookB9VhGVfN3XUorThyytEcjB8L6LEgKRw52fkGoA==
-X-Gm-Gg: AeBDieveUJZqvVuCKhgITY0YsbnkCT6kK6ZLcPNRYGav7NnAQDzLqWsJT4+Ar2DNTmd
-	K4zfcDn+AE1Cj/o9YX/HnUXQO51a5BBy0vQuzEk/2TiCWLYuXk1Kfz4KH4Pp9SO1MbaUwK8YNsm
-	mN1qNZyyWwduN8qE/Ukwn0Zw5xaetymCHVbcwLMI8bBp6S2f8wUWmv9hqlGnbFHtG0qV/N6abq3
-	4VdWHPXzLVt8UPRs6XsgXNCerN38HBuut3Apwrh9k/8qo9UEtoNVCnod/pd/g6A4sgJaIVx/C3K
-	5XnBp1K3LCe0HQS5QWPyPyLzRCUclcZwDU2wMbaqkfvnGENwTOCJxzsphKFv5UmEyA6lLM/Qiyh
-	A3RQOo1M8V/5NshceEqxH42Xp733h1eoRWNNqgoc8IQfm5JN8WaLHwbh8/4KGEpZV49SohPBTRT
-	VHqMIY97VMS0EUJPhrZ0Qg/Fnqi8I4suKoJoW9eK2FIpMYcmyQeg==
-X-Received: by 2002:a0c:f40c:0:b0:8b1:f2b7:cfb3 with SMTP id 6a1803df08f44-8b6667e3c20mr41551036d6.20.1777699727649;
-        Fri, 01 May 2026 22:28:47 -0700 (PDT)
+        bh=l0N99xeMTsFfNBPOJZ+NQOEPKlNV2Qvh+SMY5pe0SwE=;
+        b=BoXSZVD6gTPMEDG93u1PGh7r84q7Tcu19kkTYx1eq8FVZYknv4s46e3RQQTng5/BQ8
+         ibY62OvJajBLgJHNQmItRud6i22+VZmOibhUDtmUHKguNpLXbPyBMTjPex9U9i06P+7G
+         4CJRJykaXZDjuvM2MdVB+lU1fHHqtdoiqMwKau3rzvUEncq7RlmXR4QQofzpRVa47NTy
+         ceMf1mn/r5BofttRE2vqtcR7Rz/JAlKxYIKTOU+VWslf7OszQpizZQJu2wbEAiNJRW9Y
+         EUGVJZqWQZnwrk7KGgIJkpCKFF+GBQvigyxz57mzWaD5NgB2Y2J6NrKN0zBVHdIFV2ap
+         UfwQ==
+X-Gm-Message-State: AOJu0YwvL+oIVjFxUJQ51cEggkDMlajSFES8k6uZQPnttG03GJL9MTv2
+	kdcZaZWG1yFFsnxeIaiHOyZL/82gpPYBWvgGuV6PlXsMBD5LZ0s60wEc1cIzcQ==
+X-Gm-Gg: AeBDietX2vr53jbWxEEuWr3XhH90aY2r+WNF8lzCoTNgPSnUmHWo1PDnU5Hn3/CnW21
+	udWeh12rF8nIhvUsMQmMp7OT+7muGxoG/fqRiW1Rc/Q7jOSdZXUe82L/LTx9yDLjz8XgH2UU/t2
+	jwAckQ21+sSJNmfVF1B4pzh8K++VYnS2sqDFAgusqdpwmwYcH/GO39vsRF9MOe+Yz77k0Cvjo/8
+	rtClZwvjO0maIw4at7/YDu2bnIiJwnUoYJ0/U6f98Z8b34e34PXR8s6hvPTnNmJpnkNw5DTxGVR
+	AL5me8pAdluqI7zRAF3yBtfskUqolTARV1W5GDlQTJEe91jVjkAwMXNEf5IG5l5bIYBP7fUT305
+	8wBeoGY0meKsamzoekr6HdBfskzjNCugP0Vxtcam++JKz/aXLrLT+npCPDZKjIIixHohlKnvJ9/
+	ny3zXCNzapu1fQo8I4FxzzVj7jMvKqUCQj3Natumb7W4Ms+UHdzg==
+X-Received: by 2002:a05:6214:3290:b0:8ae:660a:be75 with SMTP id 6a1803df08f44-8b3ffffe751mr134958856d6.9.1777699728854;
+        Fri, 01 May 2026 22:28:48 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.224.103])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53c0e6d72sm53100376d6.26.2026.05.01.22.28.46
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53d450dcbsm46823146d6.45.2026.05.01.22.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 22:28:47 -0700 (PDT)
-Message-Id: <e584fb03f3c23fda452b8e53d287f8f835becd48.1777699722.git.gitgitgadget@gmail.com>
+        Fri, 01 May 2026 22:28:48 -0700 (PDT)
+Message-Id: <7381704c3809deec3adf1442a920f47840e0f104.1777699722.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 References: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
 	<pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 From: "Matheus Afonso Martins Moreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 02 May 2026 05:28:37 +0000
-Subject: [PATCH v3 3/8] url: move scheme detection to URL header/source
+Date: Sat, 02 May 2026 05:28:38 +0000
+Subject: [PATCH v3 4/8] url: return URL_SCHEME_UNKNOWN instead of dying
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,119 +81,81 @@ Cc: Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
 
 From: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-Move enum url_scheme and url_get_scheme()
-from connect.c to url.h and url.c
-so that other code can identify
-a URL's scheme without depending
-on connect.c.
+Enumerate a URL_SCHEME_UNKNOWN result with value 0.
+Have url_get_scheme() return it for unrecognized
+schemes instead of calling die() itself.
+Move the die() call to parse_connect_url()
+where url_get_scheme() is used.
 
-No behavior change. url_get_scheme() still dies
-on an unrecognized scheme name, with the same
-translated message as before.
+This lets url_get_scheme() be used from contexts
+that need to identify a URL's scheme without aborting
+the program. For example, a future plumbing command
+that validates URLs.
 
-scheme_name() stays in connect.c
-because it has no other callers.
+No external behavior change. parse_connect_url() still dies
+with the same translated message for unrecognized schemes.
 
 Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 ---
- connect.c | 22 ----------------------
- url.c     | 16 ++++++++++++++++
- url.h     | 13 +++++++++++++
- 3 files changed, 29 insertions(+), 22 deletions(-)
+ connect.c | 2 ++
+ url.c     | 3 +--
+ url.h     | 7 ++++---
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index cb145de30e..1ac7acc6e8 100644
+index 1ac7acc6e8..73d7a6b8d0 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -700,13 +700,6 @@ int server_supports(const char *feature)
- 	return !!server_feature_value(feature, NULL);
- }
- 
--enum url_scheme {
--	URL_SCHEME_LOCAL = 1,
--	URL_SCHEME_FILE,
--	URL_SCHEME_SSH,
--	URL_SCHEME_GIT
--};
--
- static const char *url_scheme_name(enum url_scheme scheme)
- {
- 	switch (scheme) {
-@@ -722,21 +715,6 @@ static const char *url_scheme_name(enum url_scheme scheme)
- 	}
- }
- 
--static enum url_scheme url_get_scheme(const char *name)
--{
--	if (!strcmp(name, "ssh"))
--		return URL_SCHEME_SSH;
--	if (!strcmp(name, "git"))
--		return URL_SCHEME_GIT;
--	if (!strcmp(name, "git+ssh")) /* deprecated - do not use */
--		return URL_SCHEME_SSH;
--	if (!strcmp(name, "ssh+git")) /* deprecated - do not use */
--		return URL_SCHEME_SSH;
--	if (!strcmp(name, "file"))
--		return URL_SCHEME_FILE;
--	die(_("protocol '%s' is not supported"), name);
--}
--
- static char *host_end(char **hoststart, int removebrackets)
- {
- 	char *host = *hoststart;
+@@ -1071,6 +1071,8 @@ static enum url_scheme parse_connect_url(const char *url_orig, char **ret_host,
+ 	if (host) {
+ 		*host = '\0';
+ 		scheme = url_get_scheme(url);
++		if (scheme == URL_SCHEME_UNKNOWN)
++			die(_("protocol '%s' is not supported"), url);
+ 		host += 3;
+ 	} else {
+ 		host = url;
 diff --git a/url.c b/url.c
-index 057576042a..300acf98fe 100644
+index 300acf98fe..a59818278f 100644
 --- a/url.c
 +++ b/url.c
-@@ -1,4 +1,5 @@
+@@ -1,5 +1,4 @@
  #include "git-compat-util.h"
-+#include "gettext.h"
+-#include "gettext.h"
  #include "hex-ll.h"
  #include "strbuf.h"
  #include "url.h"
-@@ -140,3 +141,18 @@ int url_is_local_not_ssh(const char *url)
- 	return !colon || (slash && slash < colon) ||
- 		(has_dos_drive_prefix(url) && is_valid_path(url));
+@@ -154,5 +153,5 @@ enum url_scheme url_get_scheme(const char *name)
+ 		return URL_SCHEME_SSH;
+ 	if (!strcmp(name, "file"))
+ 		return URL_SCHEME_FILE;
+-	die(_("protocol '%s' is not supported"), name);
++	return URL_SCHEME_UNKNOWN;
  }
-+
-+enum url_scheme url_get_scheme(const char *name)
-+{
-+	if (!strcmp(name, "ssh"))
-+		return URL_SCHEME_SSH;
-+	if (!strcmp(name, "git"))
-+		return URL_SCHEME_GIT;
-+	if (!strcmp(name, "git+ssh")) /* deprecated - do not use */
-+		return URL_SCHEME_SSH;
-+	if (!strcmp(name, "ssh+git")) /* deprecated - do not use */
-+		return URL_SCHEME_SSH;
-+	if (!strcmp(name, "file"))
-+		return URL_SCHEME_FILE;
-+	die(_("protocol '%s' is not supported"), name);
-+}
 diff --git a/url.h b/url.h
-index 39d621312f..24c8cd91d0 100644
+index 24c8cd91d0..7289523605 100644
 --- a/url.h
 +++ b/url.h
-@@ -23,6 +23,19 @@ void str_end_url_with_slash(const char *url, char **dest);
- 
+@@ -24,15 +24,16 @@ void str_end_url_with_slash(const char *url, char **dest);
  int url_is_local_not_ssh(const char *url);
  
-+enum url_scheme {
-+	URL_SCHEME_LOCAL = 1,
-+	URL_SCHEME_FILE,
-+	URL_SCHEME_SSH,
-+	URL_SCHEME_GIT,
-+};
-+
-+/*
-+ * Identify the URL scheme by name. Dies if the name does not match
-+ * any scheme that Git knows about.
-+ */
-+enum url_scheme url_get_scheme(const char *name);
-+
+ enum url_scheme {
+-	URL_SCHEME_LOCAL = 1,
++	URL_SCHEME_UNKNOWN = 0,
++	URL_SCHEME_LOCAL,
+ 	URL_SCHEME_FILE,
+ 	URL_SCHEME_SSH,
+ 	URL_SCHEME_GIT,
+ };
+ 
  /*
-  * The set of unreserved characters as per STD66 (RFC3986) is
-  * '[A-Za-z0-9-._~]'. These characters are safe to appear in URI
+- * Identify the URL scheme by name. Dies if the name does not match
+- * any scheme that Git knows about.
++ * Identify the URL scheme by name. Returns URL_SCHEME_UNKNOWN
++ * if the name does not match any scheme that Git knows about.
+  */
+ enum url_scheme url_get_scheme(const char *name);
+ 
 -- 
 gitgitgadget
 
