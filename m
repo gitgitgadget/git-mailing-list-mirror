@@ -1,68 +1,69 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C210923BCE3
-	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A302C0294
+	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777699727; cv=none; b=JiUBDB68CAgblx7y7dkWaAuZddrhIBMNwISSEM7mN2tYZu7hBsGZ89bUe8zbh8ndrm5SJkKYdIDt8HLDwLuoYs+mHTu1hQg0HtAYFA2tDbA7l6lo+ViTtf9jFMyRgfJSy3TPNxdc+nkQe/yPlco0yILsc72i8iQLb2Mk1Ayrkow=
+	t=1777699728; cv=none; b=LSpSnFd+06JmK8lCiQHXuSGu8brVggSDOr+j8af2YdoYdMNYzymIBxeuqWbd99JlopwCZXQRes4lNCBfB2yVLhFNknIRiETjgU+a0Fk0MOcs3p0fOS4HSmEKSK/Z107JkLR/voI+inrP35LZRq6ccASz1ULBKEDv4AdDCkOLr60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777699727; c=relaxed/simple;
-	bh=Tzja57LRKf4mi3MabAtc8c+IV0vZz/94b6UzYvzdfLg=;
+	s=arc-20240116; t=1777699728; c=relaxed/simple;
+	bh=l0tlNdf+upsmV/F2s+3E4DuQ+w8kAc45xqeRAbGJmNY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=GdutqHrvVR7jjzd0N5T27uJeGv1DMTY4f82m3n2HvVUCDUXRI9gN8cOjIoF9Bx9tIgDoNtedMd6iHmEUTx9hj6VXgh0fyxIn+sjYHlk2qe1Zx5mUMDJeuCVu9rzvdekaFCpZpgj8nGPeWz3m+TbjmNrYsLy6085kSJr+JsPiJBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fF9LDK36; arc=none smtp.client-ip=209.85.222.170
+	 Content-Type:To:Cc; b=ZLL9NelXms7MWTSdF7Hl4uE1nmqyyL5QmgylxYzNSuvsybeO2Ll+VF1dygViyaPRk6/1Tcuy2WRoL7mQ+ooY4EyWgNdf+Q97FZfQAle6km7hmEn7Xff8yizS7MvQ0zf29iMBfavPuk/EG9t/BIeFnvCb7b3mDKLQlXnicaYPIfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nRFwaaJo; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fF9LDK36"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8ef5776530bso289662385a.0
-        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nRFwaaJo"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8b5232009a6so15632696d6.1
+        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777699724; x=1778304524; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777699725; x=1778304525; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/ItD6LhiDuhFOET450oiILLJS8hoW0chl4sixDnelAQ=;
-        b=fF9LDK36h4O5/n5xdtCdJhULbRM5AGmZ+Ny4Bv4BRh5XY/ki64cYhCNLhqVhjVFO7l
-         qKFHkzOVqOuYR9fh0PKnI4QtBtAbqt+hB9FgT4/mkfmFI67ElrxkrUrW85ewyckQwgVS
-         f+yZ0HUX6MzLzHNFvevdHhbajJbh9TDfcmLWWiEgO7ShnMSONGExm3c6NQ00Cc7l/Ah5
-         ZV1f40yAUTPgRCo2lCoV8nzKRNJgbhGrMIB51+T21ht8tGzI+K+A8roXoHRbIeHBEkeO
-         6s2/2l6kyA20vZfdCx/PzZADC0SbgE5LUdl89jhE7YI3a5DRfeWx/Uw9HOuu+j99szh8
-         AWOA==
+        bh=ubQTVqhLBqKIanSEYTjmaZoP9FiAPOOqVMMpqgoaLQ4=;
+        b=nRFwaaJojFLKDeCWPhIE+zbh784N68MdQA4K4Uool//0PptmMExAdeYtfaVa9oLdFq
+         Mgg2UV4xigmUJBssyD1ZeuOH1YrC/3VAaMhLfosAvzEuCY7lvNRkEGONnQhTfrfIVRd4
+         /cZ0xQigFZSpXFvZyZthbrYLm84tbyqF0dAdxRX9SZs7I2LxCq7b2TpvkyYUJ/MmuSCP
+         mEEa2ibCWno4azqRiRtbmPA/kw6UhWFfqhZn4+JSOWB0rR6YiUhvwgDNjj9FwD4qLO6p
+         ZmseLPv4Nt7lmYuWlVGJ0+18i6xu7kn0194YCybQp9vMWF3OGPskX2CfOlPraEN+fqYh
+         HJug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777699724; x=1778304524;
+        d=1e100.net; s=20251104; t=1777699725; x=1778304525;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/ItD6LhiDuhFOET450oiILLJS8hoW0chl4sixDnelAQ=;
-        b=YDh2H9ReporPBOWISj4i2ECtRIJ8u3tckUQNnV4p9hMbbuHw+MowEdSYWcjnY6mTRl
-         O2c9QTFfc6KiPMBV2LfQXz7wYiOWorNQPQfhmRyoiNsjhsezUvlEVWC3Rbs0CZmyQ5mR
-         6OsIVHds331gMMDM2+JyxHl2qygCG1vcZT/fqWFkbhZBw9xI1HEpjQucusL6HQSis+Uz
-         YbiODe/zxF5un7DIw64vux5uYv5agTmXh09IJdlGdtNiUMhTnxluxrBYRFtMGydPl90c
-         57VBoH+CF70xpiGz9PZXkPfan/411IAWoKgZl6YKSnSRhnzBGMjnrcOsHdVhvUmGTuOA
-         eL7g==
-X-Gm-Message-State: AOJu0Yxov06HAIvwNQ0xrkYxgrJ04O/8lAxO4mlTetXFJopy877KkP/v
-	RsT4Nf3yuRoztUhGz9pfeYwSmYgKO1/5fVAcmit+TaAFudBkQq5ydmMqFVUv/A==
-X-Gm-Gg: AeBDievaMM0rHzJ0XW6R/zYRoMGwE/oTiynBwphTKTtdwuHwqr7WtGqoTatpgoGati2
-	9r//a3qVYi+6EooWIQAdnyv6XUj9GaTUQyPPx0rht4kTYvBrx90ZtLyb5MUOTicq6EYKFKrABLE
-	LCtnRF/bApYfm2GlvbVjWT2cGcpYdOIk/4IT997DxGzUfxN4tPDAyL4l3FZVJ+guzQCitVqFZEq
-	IjSfYDZmOT7Fi08GdxCAXLRfiSkB15GrICY6YquDc1Z0bHb/SswiIEVMPtMCek0APdYVMc/FpB+
-	YmGc0MAf4hM4HBszH2tonGtRgM/tYgxqWQbZYHaPPH8RF7bn0SGfMTRj4EEI80QJWEmoVR8AMSM
-	FyaDT5i6S3EfZQHJ1tk8anwpcRh73Hkr1+gQW+GENdxjFq9Q5zNNI4JaWuRpO0WSBQYXpbJnHNX
-	OHVl34Zu1iwkflqJVTzgyopoPlFMznJDjp4rHL1Ds=
-X-Received: by 2002:a05:620a:6cc5:b0:8d0:3add:30d8 with SMTP id af79cd13be357-8fd1833605cmr353479985a.52.1777699723742;
-        Fri, 01 May 2026 22:28:43 -0700 (PDT)
+        bh=ubQTVqhLBqKIanSEYTjmaZoP9FiAPOOqVMMpqgoaLQ4=;
+        b=H+fKQku5eRnMCgk/mPe+iOUWFvGkzL9fSMr/ddRujDV+gaXg+jxQgy/rOafTWeRyC6
+         pZGEqH/Rt9Vj81dvHvCKS0AcUZ2HbaTDSpY0BS+NOaAj1SZO0gZKeFulYv+CaZ9r62nJ
+         rPbiIc5d/7d2vTSXyoDY8R3v9QxAIm2uixzsj2Vf+3Vte117/4QdYJxtB6ZU61u95uEk
+         CXc8A6mI1DiJftZ8FJea88vj9EyyXU7VrEVgzkEFoNJK9J9T13Dj0moxWrNyBAkFt+fr
+         vref1GK5e2rtwlLMeo7GKazP7+HjyZb9Rnr8lsEXC7dz7YeECGPXt4Qe8BwvK1x+l146
+         AnfA==
+X-Gm-Message-State: AOJu0YwWcr4gZh2so7ZAEEpy3+Zg8jB+4Ck3uBH3Fuwz7THxPMTD5QiG
+	ws2e7ETBBCDtmz/GjNcpafUNyL52taSF3rdQPhRGoaXqi1yAgj/W5hGK7QRwNQ==
+X-Gm-Gg: AeBDies9KBlNSifkk/Ryaw0jWTlg2V/qXAo3aQbrC8WkQTfJwjGHSn2QY0pSr5sjv+A
+	4mjWq3GBKr7kOff1MVgFdH5nhJ3LJm5akeyMEbHe9r75CmBNlzPU8z+l5vkPkd0sW4FPEdu0aQ8
+	CTE8gUDdqRIp2PT8o6b0xyEAu9i6Rrb3CK7bxh3WoW6Z0+gRG+59CmfwCwIlfLSqHW7ogtR8W3c
+	iFdxSgDGzgLvsCVBlVlq08jHv0rt4lT/d3wD/OWCbiCQ7wjRel7n04XAzKS3VHHQzT0L9v+cG3E
+	cLtckuSwDbnMRf/OVYdaNR6zWkAbD7adAjNU3lFAKQdiUX1P7/vyKLb+IeHQLvoAathIOyAbjME
+	FdqJ1mF15X0RpT1MuvReZJM7DZ9pq4ojZdvYaMrHYhf8icC5AcRwTOAmqz3TaiMtatL5nCKE/oz
+	bysViQvX0/pFM1LnLjXGAGT+5Uv+CHu8CamdXU3Ag=
+X-Received: by 2002:a05:6214:2481:b0:8ac:ac3a:f1a6 with SMTP id 6a1803df08f44-8b665c140a9mr39696756d6.5.1777699725365;
+        Fri, 01 May 2026 22:28:45 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.224.103])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c253e04sm383692585a.31.2026.05.01.22.28.42
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53cd827c5sm57212716d6.40.2026.05.01.22.28.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 22:28:43 -0700 (PDT)
-Message-Id: <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
+        Fri, 01 May 2026 22:28:44 -0700 (PDT)
+Message-Id: <38f797362d268a51b979efaa1d435d9f7a3378f6.1777699722.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 References: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
-From: "Matheus Moreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 02 May 2026 05:28:34 +0000
-Subject: [PATCH v3 0/8] builtin: implement, document and test url-parse
+	<pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
+From: "Matheus Afonso Martins Moreira via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 02 May 2026 05:28:35 +0000
+Subject: [PATCH v3 1/8] connect: rename enum protocol to url_scheme
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,191 +76,223 @@ Fcc: Sent
 To: git@vger.kernel.org
 Cc: Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
     Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
-    Matheus Moreira <matheus@matheusmoreira.com>
+    Matheus Moreira <matheus@matheusmoreira.com>,
+    Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-This series adds git url-parse, a plumbing builtin for inspecting git URLs.
-Git accepts a wider variety of URL forms than any standard parser handles.
-The supported forms include RFC URLs, file:// URLs, scp-style
-[user@]host:path for SSH, and IPv6 in brackets. Tools wanting to reason
-about them have historically had to reimplement git's parsing or shell out
-indirectly. With git url-parse, scripts can ask git directly: validate a
-URL, extract a component (scheme, user, host, port, path, password), or
-both.
+From: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-The series consists of eight commits.
+RFC 1738 names the part of a URL before the colon a "scheme".
+connect.c calls it "protocol", which is more generic
+and collides with the unrelated enum protocol_version.
 
-The first four are preparatory. They rename enum protocol to enum url_scheme
-for RFC alignment, move url_is_local_not_ssh and the scheme-detection
-routines from connect.c to url.h/url.c, and stop url_get_scheme from dying
-on unknown schemes so other parsers can handle unknowns gracefully.
+Rename:
 
-The fifth commit defines the new parser, url_parse, in urlmatch.c. It is
-adapted from parse_connect_url and uses the same data structures as
-url_normalize. The parser returns NULL on failure with err populated, and
-exposes URL components as offset/length pairs into the normalized URL
-buffer.
+    enum protocol -> enum url_scheme
+    PROTO_*       -> URL_SCHEME_*
+    prot_name     -> url_scheme_name
+    get_protocol  -> url_get_scheme
 
-The sixth commit adds the user-facing command, with a helpful error when the
-input looks like a local path rather than a URL.
+The local variables in parse_connect_url and git_connect
+are renamed accordingly, from protocol to scheme.
 
-The last two commits are documentation (a manpage) and 53 tests covering URL
-form, scp form, IPv6 in URL and scp forms, bracket forms, username
-expansion, query/fragment stripping, the local-path error, and
-validation-only mode.
+No behavior change. The user-visible diagnostics
+and translated error messages are preserved:
 
-Several choices in this series are judgment calls. Happy to amend or follow
-up on any of them.
+    "Diag: protocol=..."
+    "protocol '%s' is not supported"
+    "unknown protocol"
 
-The component name is scheme, not protocol. RFC 1738/3986 calls them
-schemes. The series renames enum protocol to enum url_scheme internally, and
-the user-facing component name follows the same direction. I considered
-accepting both as aliases but decided against the precedent for a new
-command. If you would rather see protocol, or both protocol and scheme, that
-is easy to change.
+This rename also prepares for moving the scheme-detection functions
+to a shared header so that a future plumbing command can parse URLs
+using the same logic as the connect path.
 
-Local paths are deliberately not URLs. parse_connect_url accepts bare paths
-like /abs/path or ./rel as URL_SCHEME_LOCAL. url_parse rejects them, since
-url_normalize requires a scheme://host form, and silent conversion to
-file:// has no good answer for relative or tilde forms. The builtin emits a
-helpful error suggesting the explicit file:// form. If full git clone parity
-is preferred (bare paths accepted via auto-conversion or a new flag), that
-could be added.
+Suggested-by: Torsten Bögershausen <tboegi@web.de>
+Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
+---
+ connect.c | 68 +++++++++++++++++++++++++++----------------------------
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
-Absent and empty components are conflated in output. --component user
-http://host/ and --component user http://@host/ both produce empty lines.
-The underlying struct url_info preserves the distinction: *_off == 0 vs
-*_off != 0 with *_len == 0. A future option can expose it without breaking
-change. Can amend this patch set if necessary.
-
-Changes since v1:
-
- * Bug fix: ~user paths with a query string or fragment were leaking the ?
-   or # into the path output. The ~user-skip logic in url_parse previously
-   ran only for file://. It now runs for git/ssh/scp URLs as well, matching
-   what parse_connect_url does and what users expect.
-
- * Helpful error for local paths instead of the cryptic "invalid URL scheme
-   name or missing '://' suffix".
-
- * -c protocol renamed to -c scheme for consistency with the internal rename
-   and the RFC.
-
- * Documented the deliberate divergence from parse_connect_url (local paths
-   and unknown schemes) in the urlmatch commit message.
-
- * Doc and command-list polish: purehelpers category, asciidoc placeholder
-   convention, [synopsis] form.
-
- * Original micro commit style staged buildup of the builtin collapsed to a
-   single self-contained commit. The rest of the series is unchanged in
-   shape.
-
-Changes since v2:
-
- * Fix Windows CI failure: handle DOS drive prefix in the helpful local-path
-   error. With this, the message for a drive-letter input like C:/repo (or
-   an MSYS-mangled /abs/path that bash rewrites to D:/.../abs/path before
-   git sees it) gets the specific file:///<input> suggestion rather than the
-   generic fallback. No effect on Linux or macOS, since has_dos_drive_prefix
-   is a no-op on non-Windows builds.
-
- * t9904: relax the grep on the absolute-path test from the literal
-   file:///abs/path to the structural file:/// (three slashes). The original
-   assertion depended on the input being preserved verbatim, which MSYS does
-   not do. The relaxed grep verifies the structurally meaningful property
-   (specific URL suggestion was produced, not the generic fallback) and runs
-   cross-platform.
-
-Range-diff against v2:
-
-1: 38f797362d = 1: 38f797362d connect: rename enum protocol to url_scheme 2:
-a4153e1d24 = 2: a4153e1d24 url: move url_is_local_not_ssh to url.h 3:
-e584fb03f3 = 3: e584fb03f3 url: move scheme detection to URL header/source
-4: 7381704c38 = 4: 7381704c38 url: return URL_SCHEME_UNKNOWN instead of
-dying 5: 89932a70f3 = 5: 89932a70f3 urlmatch: define url_parse function 6:
-886a7d659e ! 6: af6c71227b builtin: create url-parse command @@
-builtin/url-parse.c (new) + if (*url == '/') + die("'%s' is not a URL; if
-you meant a local " + "repository, use 'file://%s'", url, url); ++ if
-(has_dos_drive_prefix(url)) ++ die("'%s' is not a URL; if you meant a local
-" ++ "repository, use 'file:///%s'", url, url); + die("'%s' is not a URL; if
-you meant a local repository, " + "use a 'file://' URL with an absolute
-path", url); + } 7: 3c44e0f478 = 7: 2b32cb71a3 doc: describe the url-parse
-builtin 8: cf2ae409e6 ! 8: ce41d2ec50 t9904: add tests for the new url-parse
-builtin @@ t/t9904-url-parse.sh (new) +test_expect_success 'git url-parse
-helpful error for absolute local path' ' + test_must_fail git url-parse
-"/abs/path" 2>err && + test_grep "is not a URL" err && -+ test_grep
-"file:///abs/path" err ++ test_grep "file:///" err +' + +test_expect_success
-'git url-parse helpful error for relative local path' '
-
-Matheus Afonso Martins Moreira (8):
-  connect: rename enum protocol to url_scheme
-  url: move url_is_local_not_ssh to url.h
-  url: move scheme detection to URL header/source
-  url: return URL_SCHEME_UNKNOWN instead of dying
-  urlmatch: define url_parse function
-  builtin: create url-parse command
-  doc: describe the url-parse builtin
-  t9904: add tests for the new url-parse builtin
-
- .gitignore                              |   1 +
- Documentation/git-url-parse.adoc        |  80 ++++++
- Documentation/meson.build               |   1 +
- Makefile                                |   1 +
- builtin.h                               |   1 +
- builtin/url-parse.c                     | 135 ++++++++++
- command-list.txt                        |   1 +
- connect.c                               |  78 ++----
- connect.h                               |   1 -
- git.c                                   |   1 +
- meson.build                             |   1 +
- remote.c                                |   1 +
- t/meson.build                           |   1 +
- t/t9904-url-parse.sh                    | 319 ++++++++++++++++++++++++
- t/unit-tests/u-urlmatch-normalization.c |  45 ++++
- url.c                                   |  23 ++
- url.h                                   |  16 ++
- urlmatch.c                              | 127 ++++++++++
- urlmatch.h                              |   1 +
- 19 files changed, 780 insertions(+), 54 deletions(-)
- create mode 100644 Documentation/git-url-parse.adoc
- create mode 100644 builtin/url-parse.c
- create mode 100755 t/t9904-url-parse.sh
-
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1715%2Fmatheusmoreira%2Furl-parse-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1715/matheusmoreira/url-parse-v3
-Pull-Request: https://github.com/git/git/pull/1715
-
-Range-diff vs v2:
-
- 1:  38f797362d = 1:  38f797362d connect: rename enum protocol to url_scheme
- 2:  a4153e1d24 = 2:  a4153e1d24 url: move url_is_local_not_ssh to url.h
- 3:  e584fb03f3 = 3:  e584fb03f3 url: move scheme detection to URL header/source
- 4:  7381704c38 = 4:  7381704c38 url: return URL_SCHEME_UNKNOWN instead of dying
- 5:  89932a70f3 = 5:  89932a70f3 urlmatch: define url_parse function
- 6:  886a7d659e ! 6:  af6c71227b builtin: create url-parse command
-     @@ builtin/url-parse.c (new)
-      +		if (*url == '/')
-      +			die("'%s' is not a URL; if you meant a local "
-      +			    "repository, use 'file://%s'", url, url);
-     ++		if (has_dos_drive_prefix(url))
-     ++			die("'%s' is not a URL; if you meant a local "
-     ++			    "repository, use 'file:///%s'", url, url);
-      +		die("'%s' is not a URL; if you meant a local repository, "
-      +		    "use a 'file://' URL with an absolute path", url);
-      +	}
- 7:  3c44e0f478 = 7:  2b32cb71a3 doc: describe the url-parse builtin
- 8:  cf2ae409e6 ! 8:  ce41d2ec50 t9904: add tests for the new url-parse builtin
-     @@ t/t9904-url-parse.sh (new)
-      +test_expect_success 'git url-parse helpful error for absolute local path' '
-      +	test_must_fail git url-parse "/abs/path" 2>err &&
-      +	test_grep "is not a URL" err &&
-     -+	test_grep "file:///abs/path" err
-     ++	test_grep "file:///" err
-      +'
-      +
-      +test_expect_success 'git url-parse helpful error for relative local path' '
-
+diff --git a/connect.c b/connect.c
+index fcd35c5539..46da89905e 100644
+--- a/connect.c
++++ b/connect.c
+@@ -700,11 +700,11 @@ int server_supports(const char *feature)
+ 	return !!server_feature_value(feature, NULL);
+ }
+ 
+-enum protocol {
+-	PROTO_LOCAL = 1,
+-	PROTO_FILE,
+-	PROTO_SSH,
+-	PROTO_GIT
++enum url_scheme {
++	URL_SCHEME_LOCAL = 1,
++	URL_SCHEME_FILE,
++	URL_SCHEME_SSH,
++	URL_SCHEME_GIT
+ };
+ 
+ int url_is_local_not_ssh(const char *url)
+@@ -715,33 +715,33 @@ int url_is_local_not_ssh(const char *url)
+ 		(has_dos_drive_prefix(url) && is_valid_path(url));
+ }
+ 
+-static const char *prot_name(enum protocol protocol)
++static const char *url_scheme_name(enum url_scheme scheme)
+ {
+-	switch (protocol) {
+-		case PROTO_LOCAL:
+-		case PROTO_FILE:
++	switch (scheme) {
++		case URL_SCHEME_LOCAL:
++		case URL_SCHEME_FILE:
+ 			return "file";
+-		case PROTO_SSH:
++		case URL_SCHEME_SSH:
+ 			return "ssh";
+-		case PROTO_GIT:
++		case URL_SCHEME_GIT:
+ 			return "git";
+ 		default:
+ 			return "unknown protocol";
+ 	}
+ }
+ 
+-static enum protocol get_protocol(const char *name)
++static enum url_scheme url_get_scheme(const char *name)
+ {
+ 	if (!strcmp(name, "ssh"))
+-		return PROTO_SSH;
++		return URL_SCHEME_SSH;
+ 	if (!strcmp(name, "git"))
+-		return PROTO_GIT;
++		return URL_SCHEME_GIT;
+ 	if (!strcmp(name, "git+ssh")) /* deprecated - do not use */
+-		return PROTO_SSH;
++		return URL_SCHEME_SSH;
+ 	if (!strcmp(name, "ssh+git")) /* deprecated - do not use */
+-		return PROTO_SSH;
++		return URL_SCHEME_SSH;
+ 	if (!strcmp(name, "file"))
+-		return PROTO_FILE;
++		return URL_SCHEME_FILE;
+ 	die(_("protocol '%s' is not supported"), name);
+ }
+ 
+@@ -1083,14 +1083,14 @@ static char *get_port(char *host)
+  * Extract protocol and relevant parts from the specified connection URL.
+  * The caller must free() the returned strings.
+  */
+-static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+-				       char **ret_path)
++static enum url_scheme parse_connect_url(const char *url_orig, char **ret_host,
++					 char **ret_path)
+ {
+ 	char *url;
+ 	char *host, *path;
+ 	char *end;
+ 	int separator = '/';
+-	enum protocol protocol = PROTO_LOCAL;
++	enum url_scheme scheme = URL_SCHEME_LOCAL;
+ 
+ 	if (is_url(url_orig))
+ 		url = url_decode(url_orig);
+@@ -1100,12 +1100,12 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	host = strstr(url, "://");
+ 	if (host) {
+ 		*host = '\0';
+-		protocol = get_protocol(url);
++		scheme = url_get_scheme(url);
+ 		host += 3;
+ 	} else {
+ 		host = url;
+ 		if (!url_is_local_not_ssh(url)) {
+-			protocol = PROTO_SSH;
++			scheme = URL_SCHEME_SSH;
+ 			separator = ':';
+ 		}
+ 	}
+@@ -1116,13 +1116,13 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	 */
+ 	end = host_end(&host, 0);
+ 
+-	if (protocol == PROTO_LOCAL)
++	if (scheme == URL_SCHEME_LOCAL)
+ 		path = end;
+-	else if (protocol == PROTO_FILE && *host != '/' &&
++	else if (scheme == URL_SCHEME_FILE && *host != '/' &&
+ 		 !has_dos_drive_prefix(host) &&
+ 		 offset_1st_component(host - 2) > 1)
+ 		path = host - 2; /* include the leading "//" */
+-	else if (protocol == PROTO_FILE && has_dos_drive_prefix(end))
++	else if (scheme == URL_SCHEME_FILE && has_dos_drive_prefix(end))
+ 		path = end; /* "file://$(pwd)" may be "file://C:/projects/repo" */
+ 	else
+ 		path = strchr(end, separator);
+@@ -1138,7 +1138,7 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	end = path; /* Need to \0 terminate host here */
+ 	if (separator == ':')
+ 		path++; /* path starts after ':' */
+-	if (protocol == PROTO_GIT || protocol == PROTO_SSH) {
++	if (scheme == URL_SCHEME_GIT || scheme == URL_SCHEME_SSH) {
+ 		if (path[1] == '~')
+ 			path++;
+ 	}
+@@ -1149,7 +1149,7 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	*ret_host = xstrdup(host);
+ 	*ret_path = path;
+ 	free(url);
+-	return protocol;
++	return scheme;
+ }
+ 
+ static const char *get_ssh_command(void)
+@@ -1434,7 +1434,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ {
+ 	char *hostandport, *path;
+ 	struct child_process *conn;
+-	enum protocol protocol;
++	enum url_scheme scheme;
+ 	enum protocol_version version = get_protocol_version_config();
+ 
+ 	/*
+@@ -1451,14 +1451,14 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 	 */
+ 	signal(SIGCHLD, SIG_DFL);
+ 
+-	protocol = parse_connect_url(url, &hostandport, &path);
+-	if ((flags & CONNECT_DIAG_URL) && (protocol != PROTO_SSH)) {
++	scheme = parse_connect_url(url, &hostandport, &path);
++	if ((flags & CONNECT_DIAG_URL) && (scheme != URL_SCHEME_SSH)) {
+ 		printf("Diag: url=%s\n", url ? url : "NULL");
+-		printf("Diag: protocol=%s\n", prot_name(protocol));
++		printf("Diag: protocol=%s\n", url_scheme_name(scheme));
+ 		printf("Diag: hostandport=%s\n", hostandport ? hostandport : "NULL");
+ 		printf("Diag: path=%s\n", path ? path : "NULL");
+ 		conn = NULL;
+-	} else if (protocol == PROTO_GIT) {
++	} else if (scheme == URL_SCHEME_GIT) {
+ 		conn = git_connect_git(fd, hostandport, path, prog, version, flags);
+ 		conn->trace2_child_class = "transport/git";
+ 	} else {
+@@ -1481,7 +1481,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 
+ 		conn->use_shell = 1;
+ 		conn->in = conn->out = -1;
+-		if (protocol == PROTO_SSH) {
++		if (scheme == URL_SCHEME_SSH) {
+ 			char *ssh_host = hostandport;
+ 			const char *port = NULL;
+ 			transport_check_allowed("ssh");
+@@ -1492,7 +1492,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 
+ 			if (flags & CONNECT_DIAG_URL) {
+ 				printf("Diag: url=%s\n", url ? url : "NULL");
+-				printf("Diag: protocol=%s\n", prot_name(protocol));
++				printf("Diag: protocol=%s\n", url_scheme_name(scheme));
+ 				printf("Diag: userandhost=%s\n", ssh_host ? ssh_host : "NULL");
+ 				printf("Diag: port=%s\n", port ? port : "NONE");
+ 				printf("Diag: path=%s\n", path ? path : "NULL");
 -- 
 gitgitgadget
+
