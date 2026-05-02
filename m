@@ -1,69 +1,69 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DB62E7185
-	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254E82D839C
+	for <git@vger.kernel.org>; Sat,  2 May 2026 05:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777699734; cv=none; b=m5UkBiNQ/2+F8JL92PIPfv0kOuEth6prGwucFqRKM+3checHr8eE6USbaEDXa+1Wpe/3h0giC0d2EW+o0EAom1YvYC6iNSWChLqnNcAl3NGCL9Yz1X2/82F0kEVTonoaYmI9bmlRcx3znIu2Na2qWQZwxgpY+FEz0DmmmZGpejE=
+	t=1777699735; cv=none; b=JR/ny/8Om7CeKsLmVKbHiwjuaK+2Bhb19YPZxaiNI4gBEpqw16MO2mbbyYZpwZY8EB1BdIHQhop9AfV741LfkujBy3BM9WUGSSVx327ujFglZr8um083ICFXFMLtLgKMJVAkCjgAQVNZ9XDPBZRM6v0JdFMirhyPG5mnRQrdaRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777699734; c=relaxed/simple;
-	bh=sEUmkmYPpco77qQCchI/9jynmVYFp1Slc7CoJ9Unj3I=;
+	s=arc-20240116; t=1777699735; c=relaxed/simple;
+	bh=LkGdUreL9Vaw63FpspvkprOIKWAIvC/JtmV4i6zHeRQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Jsl1Wy1xvzLOgC+sxo2ZFOsTRkvi0OMUzk2S0I1oXvQ5EcaHWah78gVORjWdRi7rUO/7hyAuU3tPxf3VwjSc/cs7B3CleWslesR8HPTmWlCMlfK7nhIlQOq6U96ZxXKUPo+2yBcz+/IHqiSrZRhvVBNBf7WU6TUqPOu7u/iJnzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lshfi/m5; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version:To:Cc; b=gfjUib0nl2GwGuUHlJnLrlIdeiKZLrsJ1qxUyYjNJ65GaP8wcgSenVUi684l3stedcBQ9lUd3c8YY4L9gLRqLOlQu76SYxe/KTncLSw5b0/Xn84Pl+tcdG5LVuWresHsxkbbxR3r7EGRrnjMNHySPONBFFoVLGNPwOszxTDCj6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JcYn+XN/; arc=none smtp.client-ip=209.85.160.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lshfi/m5"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8ea8563c693so293911985a.2
-        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JcYn+XN/"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50d6b9bca48so34153951cf.2
+        for <git@vger.kernel.org>; Fri, 01 May 2026 22:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777699731; x=1778304531; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777699732; x=1778304532; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wZPgh3Zav7aw7r7uD/3rIO+4QfeD0vskNZvV6eiTvaQ=;
-        b=Lshfi/m5k5x5m+5bwUHeTJpkPfP4hMtrNvQTHe/3gBf3Af3np3NuDg9dHiAtxCfeq3
-         8QrVd67qNY93kI8lvmtu96Gsz6zWiAb+7W1Fyk8GrThp/a3etCnlS/IJhXEATZk76v5O
-         w9+Lr+buZlqL5bSLBFJZzfu4WtV4CqaBX7NWL3FWZI6dscog1F5u+ajkhkVKiL8Sj1NL
-         68arbc4OnJ6907etqhAa/zgGfVh9qfj2PxeGOhElz0r5/DmaQwPjf+V/+zc+W3gwDeQM
-         DHpcsBqu8EtMu0HvzjA9tN0zXOjXLw1+j1km7ORPs6SCFbCE8I5Q/2UzWz3a910LFXH5
-         AEbg==
+        bh=SxTuOFenopdaGsVedGOoozOJf0WWp21sJjG5eohJVt4=;
+        b=JcYn+XN/e5mXCV2jfS3BBYYCjij8x2jycnvMzo88TrvTjeI2OySKNS8zlBSfqapzJS
+         Rc2W4omr1elNhXj84H6SybThskPNTFN/MRsyjXFdj1jA+OW84byf1u84e7ImEKrmMRzG
+         4BIBIPExD1rMdkrTHjRZqfYW+YhF/671dn8ighfs8+uEi2jY5tIxH756uVhVFe2Xl2FU
+         ANWNdK+G3yDxQY0f32wlXMDEUM/VjSqGdE5uQwuxwI7utkGF5IXyyS4juBs1IhIOku/Y
+         Z8JvTUoEoe1j+UWD58q85VVj15fzRc23Qv2cadrTpi/qOZNmngBSm7jJx6Q3mKfHRbYO
+         5Y2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777699731; x=1778304531;
+        d=1e100.net; s=20251104; t=1777699732; x=1778304532;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=wZPgh3Zav7aw7r7uD/3rIO+4QfeD0vskNZvV6eiTvaQ=;
-        b=eqjGEkHIN8gkVYJlD7qg7lFLJgvm93x5ZsJUCotT//d+yCaV74WjBr93yX0RYjK9Zr
-         aNuLhRqJGkwyrSV0Bb8pSQj8nOQZTwbNpKE09Zq8zKu9cAEH+2PKL1sJrJljxtDxpTpL
-         qRA5GzngnfJa97xjJI3S9nD9GJlAX0dS5Ixkpz3gpkGHd4xk5PGQ9mBuqSSqhvUFV/q7
-         C9C4EWTN95ahumapgg2HZhxgdRmyhPptjk2ZB/e8N/4CnZXUKWZdhCSWRG6IUcBlTHPU
-         9oOPkI0nYcco/oQyIGVexiISs4+Pb3CqoQxhpcY6dLf3YoE74+7GlGh+LIdH45lNl2wP
-         Z78w==
-X-Gm-Message-State: AOJu0Yyckr1V/nHYzRChpYY+N1hPWaYZzA98Qv9tN9XtRqaDEaH1GHil
-	kouiVNcH5iEQ+AxvG8WOx5nyqDuGV3+mq/HuLrEl4XdHu2AVnwHbpgZ+W27BRQ==
-X-Gm-Gg: AeBDiesGt4P09FPSUBM9fOrEC/AiLVV8+AzI/uMWJhP3hbZ1Z3pziP1p0O8xVA1Vo14
-	fCzFNN1Jb8ig4T3OS4g4E0JhMbHlc4pebgZStgMBZ/dKPUC3XFjlN3oGbc6ZJ3xyChoENWpPvm9
-	sKVmh05LNibTGfucKBnrs3SfmoO9lEAYdzsPyirQebH0DnP1YPBNqLvzuMDOlbJOXYda7Bgg5Kd
-	YLmOfnj5wzHCrlzoIfgn/8AkRj5lc0qVaQhJe2Ct6vp0WgLzZ1GzkeLgZD4Uj4FoP2E+lThpHmL
-	7Je59y+xlQnTz0yIIkcHMhgANfmCiBrf75yMuYIqN+6w383YRJ/9zGuMZqAmTVx6iXp9AzHXDM3
-	zGYfhUw1k2fxKalYeEAPjZefmuSLBTnKCj5MWw/rXKUFr1Cj1/vekeC6Bux8VZE+nIfPCHUtSSe
-	Qn1bJbdq4NjqnQOn6+kHVa4h/Esk86TNIf3dleON8=
-X-Received: by 2002:a05:620a:2849:b0:8ee:eb50:4f64 with SMTP id af79cd13be357-8fd18c2e8f4mr344762685a.57.1777699731215;
-        Fri, 01 May 2026 22:28:51 -0700 (PDT)
+        bh=SxTuOFenopdaGsVedGOoozOJf0WWp21sJjG5eohJVt4=;
+        b=OhiOA/bMBiEBmCQcxR0RFKJNcmVK+Q1DMi9a94HdvbhZmyKygfE8CJb/zMlRi5tHLr
+         6yo5k+3ZF8UO31ZsHGTPWKBn/akgmil1VWePEJW91Vyup+tSOik8SMZJWkBJMXksZLNy
+         RW5kdmnM6V9SzszyGEoRlZGYZO1YsNZDBI23aXc9/pBF75hzaS15/vifeUIPFchpATB6
+         Gx3kNleorVawKPqQElS6ZxyfjCSXBDm0xcb3myRKXKAJjbzXiTionFNYL7732XfJv5Ue
+         7a0ISVqmd9n4zQg1wOu2Bt0IF0FiluR860mRto/URO2lRYzRsDrg5rWo0206JeMZWE4v
+         qqBQ==
+X-Gm-Message-State: AOJu0Yy/QdR0DoW8O+VhczioL2QQZWFUtwy/SOaOu2TDrjJTiJw0KG77
+	S8Rz5sebVxruyhXkrNmkMB/MQJY/aZ6ul47eAWaJ7pz4gluByugLgM/8ltadvQ==
+X-Gm-Gg: AeBDiet3kmSxWFVX7lmCXCWwcpQ8KBlzjzZK6Tmcupmcr+YRAwm0NRS9iHY9LjjxPKF
+	VqN0xrlxjetu+2vSATox8G6QDwaezk+qC1ASTSy4BIG9AhRWLvMIGbhLjjElSA5wfifmgzWCYb1
+	C7NYwHqXLPCv5W20k8T94uBQ+u4pVg2bonYvHTQy79GznVQQv1+9/w5RWczcLS28nWeBieDr5ju
+	OvzjuLZIqxkAl6lE/2hGUuzC3X8wuGH4A08bFyO7yFNn9CuhEmUd1TRHg/Vfdq/lsXsIzf+OYht
+	1QOcKhgkMcqh8KVwZTaoyV33fJLSMxLZLnGbpiWtDIio2QGHyaTk8CBGXKfVReVWoGYv8CRUCYs
+	jMOFGDWHglrmiZ4ZDe5MmWKANzrDtHIJolPL23Ckm6a2h340m2ymQCGCXj/1zMNxZoXoH3Zdavu
+	oxViiuofIsu2WgzC8d/RwtaOJQOI/hBDJmWpDs5nY=
+X-Received: by 2002:ac8:5d43:0:b0:50d:66b6:1564 with SMTP id d75a77b69052e-5104be2583emr30065531cf.14.1777699732390;
+        Fri, 01 May 2026 22:28:52 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.224.103])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91dd48sm383465085a.38.2026.05.01.22.28.50
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53c0e7f27sm56112146d6.32.2026.05.01.22.28.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 22:28:50 -0700 (PDT)
-Message-Id: <af6c71227b795d59916e0383ec053067f77835fb.1777699722.git.gitgitgadget@gmail.com>
+        Fri, 01 May 2026 22:28:51 -0700 (PDT)
+Message-Id: <2b32cb71a359b936095f41e7c482e8369ddac786.1777699722.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 References: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
 	<pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 From: "Matheus Afonso Martins Moreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 02 May 2026 05:28:40 +0000
-Subject: [PATCH v3 6/8] builtin: create url-parse command
+Date: Sat, 02 May 2026 05:28:41 +0000
+Subject: [PATCH v3 7/8] doc: describe the url-parse builtin
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,244 +81,115 @@ Cc: Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
 
 From: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 
-Git commands can accept a rather wide variety of URLs syntaxes.
-The range of accepted inputs might expand even more in the future.
-This makes the parsing of URL components difficult since standard URL
-parsers cannot be used. Extracting the components of a git URL would
-require implementing all the schemes that git itself supports, not to
-mention tracking its development continuously in case new URL schemes
-are added.
+The new url-parse builtin validates git URLs
+and optionally extracts their components.
 
-The url-parse builtin command is designed to solve this problem
-by exposing git's native URL parsing facilities as a plumbing command.
-Other programs can then call upon git itself to parse the git URLs
-and extract their components. This should be quite useful for scripts.
-
+Helped-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Signed-off-by: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
 ---
- .gitignore          |   1 +
- Makefile            |   1 +
- builtin.h           |   1 +
- builtin/url-parse.c | 135 ++++++++++++++++++++++++++++++++++++++++++++
- command-list.txt    |   1 +
- git.c               |   1 +
- meson.build         |   1 +
- 7 files changed, 141 insertions(+)
- create mode 100644 builtin/url-parse.c
+ Documentation/git-url-parse.adoc | 80 ++++++++++++++++++++++++++++++++
+ Documentation/meson.build        |  1 +
+ 2 files changed, 81 insertions(+)
+ create mode 100644 Documentation/git-url-parse.adoc
 
-diff --git a/.gitignore b/.gitignore
-index 24635cf2d6..c5673daa6e 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -182,6 +182,7 @@
- /git-update-server-info
- /git-upload-archive
- /git-upload-pack
-+/git-url-parse
- /git-var
- /git-verify-commit
- /git-verify-pack
-diff --git a/Makefile b/Makefile
-index cedc234173..1c757a1aa0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1497,6 +1497,7 @@ BUILTIN_OBJS += builtin/update-ref.o
- BUILTIN_OBJS += builtin/update-server-info.o
- BUILTIN_OBJS += builtin/upload-archive.o
- BUILTIN_OBJS += builtin/upload-pack.o
-+BUILTIN_OBJS += builtin/url-parse.o
- BUILTIN_OBJS += builtin/var.o
- BUILTIN_OBJS += builtin/verify-commit.o
- BUILTIN_OBJS += builtin/verify-pack.o
-diff --git a/builtin.h b/builtin.h
-index 235c51f30e..c6f7672991 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -271,6 +271,7 @@ int cmd_update_server_info(int argc, const char **argv, const char *prefix, stru
- int cmd_upload_archive(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_upload_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
-+int cmd_url_parse(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_var(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_verify_commit(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_verify_tag(int argc, const char **argv, const char *prefix, struct repository *repo);
-diff --git a/builtin/url-parse.c b/builtin/url-parse.c
+diff --git a/Documentation/git-url-parse.adoc b/Documentation/git-url-parse.adoc
 new file mode 100644
-index 0000000000..7e705538c0
+index 0000000000..9d0d93da4a
 --- /dev/null
-+++ b/builtin/url-parse.c
-@@ -0,0 +1,135 @@
-+#include "builtin.h"
-+#include "gettext.h"
-+#include "parse-options.h"
-+#include "url.h"
-+#include "urlmatch.h"
++++ b/Documentation/git-url-parse.adoc
+@@ -0,0 +1,80 @@
++git-url-parse(1)
++================
 +
-+static const char * const builtin_url_parse_usage[] = {
-+	N_("git url-parse [-c <component>] [--] <url>..."),
-+	NULL
-+};
++NAME
++----
++git-url-parse - Parse and extract git URL components
 +
-+static char *component_arg;
++SYNOPSIS
++--------
++[synopsis]
++git url-parse [-c <component>] [--] <url>...
 +
-+static struct option builtin_url_parse_options[] = {
-+	OPT_STRING('c', "component", &component_arg, N_("component"),
-+		N_("which URL component to extract")),
-+	OPT_END(),
-+};
++DESCRIPTION
++-----------
 +
-+enum url_component {
-+	URL_NONE = 0,
-+	URL_SCHEME,
-+	URL_USER,
-+	URL_PASSWORD,
-+	URL_HOST,
-+	URL_PORT,
-+	URL_PATH,
-+};
++Git supports many ways to specify URLs, some of them non-standard.
++For example, git supports the scp style [user@]host:[path] format.
++This command eases interoperability with git URLs by enabling the
++parsing and extraction of the components of all git URLs.
 +
-+static void parse_or_die(const char *url, struct url_info *info)
-+{
-+	if (url_is_local_not_ssh(url)) {
-+		if (*url == '/')
-+			die("'%s' is not a URL; if you meant a local "
-+			    "repository, use 'file://%s'", url, url);
-+		if (has_dos_drive_prefix(url))
-+			die("'%s' is not a URL; if you meant a local "
-+			    "repository, use 'file:///%s'", url, url);
-+		die("'%s' is not a URL; if you meant a local repository, "
-+		    "use a 'file://' URL with an absolute path", url);
-+	}
-+	if (!url_parse(url, info))
-+		die("invalid git URL '%s': %s", url, info->err);
-+}
++Any syntactically valid URL is parsed, even if the scheme is not one
++git supports for fetching or pushing.
 +
-+static enum url_component get_component_or_die(const char *arg)
-+{
-+	if (!strcmp("path", arg))
-+		return URL_PATH;
-+	if (!strcmp("host", arg))
-+		return URL_HOST;
-+	if (!strcmp("scheme", arg))
-+		return URL_SCHEME;
-+	if (!strcmp("user", arg))
-+		return URL_USER;
-+	if (!strcmp("password", arg))
-+		return URL_PASSWORD;
-+	if (!strcmp("port", arg))
-+		return URL_PORT;
-+	die("invalid git URL component '%s'", arg);
-+}
++OPTIONS
++-------
 +
-+static char *extract_component(enum url_component component,
-+			       struct url_info *info)
-+{
-+	size_t offset, length;
++`-c <component>`::
++`--component <component>`::
++	Extract the _<component>_ component from the given Git URLs.
++	_<component>_ can be one of:
++	`scheme`, `user`, `password`, `host`, `port`, `path`.
 +
-+	switch (component) {
-+	case URL_SCHEME:
-+		offset = 0;
-+		length = info->scheme_len;
-+		break;
-+	case URL_USER:
-+		offset = info->user_off;
-+		length = info->user_len;
-+		break;
-+	case URL_PASSWORD:
-+		offset = info->passwd_off;
-+		length = info->passwd_len;
-+		break;
-+	case URL_HOST:
-+		offset = info->host_off;
-+		length = info->host_len;
-+		break;
-+	case URL_PORT:
-+		offset = info->port_off;
-+		length = info->port_len;
-+		break;
-+	case URL_PATH:
-+		offset = info->path_off;
-+		length = info->path_len;
-+		break;
-+	case URL_NONE:
-+		return NULL;
-+	}
++OUTPUT
++------
 +
-+	return xstrndup(info->url + offset, length);
-+}
++When `--component` is given, the requested component of each URL
++is printed on its own line, in the order the URLs were given. If
++the URL has no such component (for example, a port in a URL that
++does not specify one), an empty line is printed in its place.
 +
-+int cmd_url_parse(int argc,
-+		  const char **argv,
-+		  const char *prefix,
-+		  struct repository *repo UNUSED)
-+{
-+	struct url_info info;
-+	enum url_component selected = URL_NONE;
-+	char *extracted;
-+	int i;
++When `--component` is not given, no output is produced. The exit
++status is zero if every URL parses successfully and non-zero
++otherwise, allowing the command to be used purely as a validator.
 +
-+	argc = parse_options(argc, argv, prefix, builtin_url_parse_options,
-+			     builtin_url_parse_usage, 0);
++EXAMPLES
++--------
 +
-+	if (argc == 0)
-+		usage_with_options(builtin_url_parse_usage,
-+				   builtin_url_parse_options);
++* Print the host name:
+++
++------------
++$ git url-parse --component host https://example.com/user/repo
++example.com
++------------
 +
-+	if (component_arg)
-+		selected = get_component_or_die(component_arg);
++* Print the path:
+++
++------------
++$ git url-parse --component path https://example.com/user/repo
++/user/repo
++$ git url-parse --component path example.com:~user/repo
++~user/repo
++$ git url-parse --component path example.com:user/repo
++/user/repo
++------------
 +
-+	for (i = 0; i < argc; i++) {
-+		parse_or_die(argv[i], &info);
++* Validate URLs without outputting anything:
+++
++------------
++$ git url-parse https://example.com/user/repo example.com:~user/repo
++------------
 +
-+		if (selected != URL_NONE) {
-+			extracted = extract_component(selected, &info);
-+			if (extracted) {
-+				puts(extracted);
-+				free(extracted);
-+			}
-+		}
++SEE ALSO
++--------
++linkgit:git-clone[1],
++linkgit:git-fetch[1],
++linkgit:git-config[1]
 +
-+		free(info.url);
-+	}
-+
-+	return 0;
-+}
-diff --git a/command-list.txt b/command-list.txt
-index f9005cf459..1ede48186f 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -202,6 +202,7 @@ git-update-ref                          plumbingmanipulators
- git-update-server-info                  synchingrepositories
- git-upload-archive                      synchelpers
- git-upload-pack                         synchelpers
-+git-url-parse                           purehelpers
- git-var                                 plumbinginterrogators
- git-verify-commit                       ancillaryinterrogators
- git-verify-pack                         plumbinginterrogators
-diff --git a/git.c b/git.c
-index 5a40eab8a2..a073eed931 100644
---- a/git.c
-+++ b/git.c
-@@ -670,6 +670,7 @@ static struct cmd_struct commands[] = {
- 	{ "upload-archive", cmd_upload_archive, NO_PARSEOPT },
- 	{ "upload-archive--writer", cmd_upload_archive_writer, NO_PARSEOPT },
- 	{ "upload-pack", cmd_upload_pack },
-+	{ "url-parse", cmd_url_parse },
- 	{ "var", cmd_var, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "verify-commit", cmd_verify_commit, RUN_SETUP },
- 	{ "verify-pack", cmd_verify_pack },
-diff --git a/meson.build b/meson.build
-index 11488623bf..dc3cf68ee5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -686,6 +686,7 @@ builtin_sources = [
-   'builtin/update-server-info.c',
-   'builtin/upload-archive.c',
-   'builtin/upload-pack.c',
-+  'builtin/url-parse.c',
-   'builtin/var.c',
-   'builtin/verify-commit.c',
-   'builtin/verify-pack.c',
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index d6365b888b..32c8606a80 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -155,6 +155,7 @@ manpages = {
+   'git-update-server-info.adoc' : 1,
+   'git-upload-archive.adoc' : 1,
+   'git-upload-pack.adoc' : 1,
++  'git-url-parse.adoc' : 1,
+   'git-var.adoc' : 1,
+   'git-verify-commit.adoc' : 1,
+   'git-verify-pack.adoc' : 1,
 -- 
 gitgitgadget
 
