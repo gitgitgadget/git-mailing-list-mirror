@@ -1,155 +1,154 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910BC2236F0
-	for <git@vger.kernel.org>; Sun,  3 May 2026 13:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777816331; cv=none; b=N0rlSwBSxO8zB/X8f+LaSH6D/QzoTyl5gs3AHTaoFvkU1y/Ci3yShW4u1fDB0QlMoJm7VcOdOq+5Uqga1eclCnT/PPV/tCKI6Igs7p8+hto0J169jVxUoXww9pjrgiROd27WXzuUPfDyCpCh3KKLLNoVQAaCmPui/VYQXCVJ0Mo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777816331; c=relaxed/simple;
-	bh=gdQBlQRGy2tnB+4kkyrYne0maqWIxf/0umEtQlFXGcs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BKnZTWyMYsUE/AN2B+rnF9tz+DCnXGItBQlwMupJALjqGZ3pZZHFpjm6cM5nhL+wRllVFzI4A/UPt1WuflUpGV0m+OqjySAyiK1Mt3IkRlCBmdULcm/gCW0gq1R6d0Z0/cFPrnjrJQQ98RobE8gXiyNhUpNdxvPU7295eKwKtqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jcZWO845; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85863CD8CC
+	for <git@vger.kernel.org>; Sun,  3 May 2026 14:29:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777818550; cv=pass; b=TI9FeDmWWJfxmim6VdNHLFB7otwm7fIIfxveUg6M8yNZN7pGWMIRzdfIJzHvbj89Kl02SWlWMDhmkfaAavmzJirmhaUxvTPCu3otVfubH/EtQ2weCdoDOW9uQJwAmbR04wPknMb/RZ+vg2JNeW6TlQSQzkt8++he1PyA0XVuJiM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777818550; c=relaxed/simple;
+	bh=G4n7mktJNctkF6nmvIQWRB8iyONt5YjKLnLWbYj2p+k=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=kViVS0Cdy4ZKoVAosmdjMgVWkTHxgFwMHOfBJbOBUxbkvz/mov36Sz1xyN+9rS7qVNu44Gec6WcvbETgLDbNyEJyagtxt+qxXzXHRAfIi3XiLKEnF2mqRcnFf+uruRH5f8v29NgOtEujbvhhkr0AC4rU2SAAWcaVzsxmWC0v/f8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gwrCjxaR; arc=pass smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jcZWO845"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8ef45a6d9dfso372039385a.0
-        for <git@vger.kernel.org>; Sun, 03 May 2026 06:52:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gwrCjxaR"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-479d85152c9so1081634b6e.2
+        for <git@vger.kernel.org>; Sun, 03 May 2026 07:29:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777818547; cv=none;
+        d=google.com; s=arc-20240605;
+        b=N+nFxFdyIAW+vaGUQyxFyTWf4zHkBS93UcEyRJ/U/LX4R67QnH5DvhlR0sb3L0PtTi
+         wsyEG7A9tiTH7eFlctZS51GHXohm8qncMwp9halbAv6UVSHBpA7dXWP4UEy96/7zqMcx
+         h8nlwGOx7ofEq2e5/V+Ujt0ZX/86wv7JM/DDX01IQFPnPfVIkoZyxvCQsnIaivvu48VG
+         nVlBqBh2ufmx1lQjlg8VVqMr05EbM5iZBQCOEdPXqxCKi6ql13wu+Z46yoKYU34mAJM+
+         D1odC0i5kx2+2mFWsz0/WTyKs6UFwuEIOS+QPganvCuYvP9guNHMSbIyQ5UWmFUPw1l3
+         EZgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=n6tmCEMYY0K6dRm87IOToDZETaV/f+jRsEq3/v8OKAI=;
+        fh=MuhPXroUYsQRT4srYQaCPZ4N2V26P+p//xK4VT57afs=;
+        b=OE1TPhVlNWAppBAaB7TeY1DXHMwOsekrqRhAPn23QyIThmckvEiYPXDDybbzELmKIF
+         nAcfJeR/0wxX0SM5fuVB+r12+aJC5uFE0UyHqg3GVZ6lrd3UYb3p2nf0CpXwctHtRU7I
+         L8XFNMHNd6BIUScbpfeRJeiW/O/Hx9WoXFZh9u3VV6Sq/s5+anJze0RZJrztTTwMJGlS
+         TH3PUjRPihS6batmTtUhgY0f4Xf/TP5Vc8FAB6KELuPt3UTpT+hkFWvZtQrnaGtOkUg1
+         FXTqoac2IFCY8sDB3+aMxgjAjFq96Ox7Pp2y8F5++Mo1lxUhbLpsrZhSAeomM8iSCuNg
+         3/Fg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777816329; x=1778421129; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hB6J7oG/HSWEnLT6qrOfDZQTBxp8sAcezGOhX45EeOs=;
-        b=jcZWO845si+8iNSnA9m8H/h5sw2Vv4mDNXMaepXBb4MNvIPoTu63noORrhLBxY0eQ5
-         fOcxl622hRP0Zu8snYiw4YULq5Ml+Divt+k4hON/JTFc6fBysKGlKK9u6i0Ao4bWkGSZ
-         a1xH2rIZqZrI6MGCOwMJTNF0bwLQ4Sq5OPICPwpv0nBgMpv3BjDywVlbmsQZQyz5HPsj
-         HlEFhWX6CTROHjheRfIkAYEjiVSwmiN5HwZDl5bP1pX9crqLpOXG3P9iEH46baDmF2jc
-         YfJEbTohWJhNkBSv45MH/U12S7U+yUTwR9XOXK3V5dcOM5XQegb7axZtMhubIc7IbTdP
-         yP2w==
+        d=gmail.com; s=20251104; t=1777818547; x=1778423347; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=n6tmCEMYY0K6dRm87IOToDZETaV/f+jRsEq3/v8OKAI=;
+        b=gwrCjxaReFHUhZsQD0+6SBurkEl7CA9WnK5FR+iel7qObMK+oBKSPpQEzmJc+sqUDJ
+         QqbMNG9NsdIGU0fppas+g33wjnEZv63UhkXHwnH7gSDtb6LdriTNSlYASHpZpxOlU7UL
+         8hqIT409JgrSjo3As4yhmCk0BBeHcfcP107FZZx855rBp8ek/lZ8pmDdPc9UurPmnVTy
+         9V77zdI20R2QoLDP4utz+ofgFBqBKeDpO6tBHGhXac876fCpCyqKb5/CzK64629dSArQ
+         mEaZbgbEdsSiTNuhsa4qBbhEjy1mfBahPyN/8Q05Jk1k/m1Z2oNGuXLLy0kg7pYUgnoW
+         Jacg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777816329; x=1778421129;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hB6J7oG/HSWEnLT6qrOfDZQTBxp8sAcezGOhX45EeOs=;
-        b=lDWxBJvVWZTHKFDKHLJCQfLUQex23h4IVwHeGPGvCEU75ku+wNDu0Htsp2edALLqUk
-         NZ94HGa1gK3btWUDX/Wh7puOqqJ4PYkKTU+NjHPxz7bh7Wle/5uzXcBRxaYydtDvnQnz
-         D6zU2kfak3kqH695c36xNT9RvzsK9bLPpUauN4N574PJ+pbQVnzmqCLemUBfRr1DOJZ0
-         UzuJR8ZEZiFl6bbqbjO1zfmFlHvdoqf1pqq6w/drPwv5C3OEkN0I+3aHe4dOOlXHK6Nq
-         CpPX2lGYeLdIZv1XbuVkvbin78bHQPGoxiCxux4uNIE2E1hW7kDvjYoBVrqGzs2RPUlT
-         ypnw==
-X-Gm-Message-State: AOJu0YwRYqbymWrMJZE8CO7Xui6f9rH2L6RY7BB4qezuKgBu7IQ+VK74
-	EMgap8d/9iyN/5OWdzYH5gdkx44BmgboTT2X5YZw5eU5trdjGMS5N4wO/CNCWg==
-X-Gm-Gg: AeBDievAqEPe30H5NBMsfuo1AC/zsz0nMRW1s9OY/SRFZue12yxTd9H2Nw3YCA+PMIv
-	SQt2m6zcHkGZ6Wm5FCvqw2tpu7XTqKjDYZ0msrR/eAQ0uh8heuK6+tBAhm5QBqC57yTnmlJqsIC
-	q2vY9UXLpmE50+OTl1ITdY7yC08ML/W+fDU7BpenNcffyOjS+XyaSKiY1caDEzHP4JEVzQ7I0cg
-	taSFwU07uHnY6VSq40nyo1JLJo+Lbo5cwEPl+l9lyZjTyciV+vodqmsMFnQo3645ad5yIF9Bi/n
-	5Zf+9D086QMd9g2ksp8SweruMGmHM8TxvSFE9aPm6bs7fpPVWjKUPfylL3jijiCIFVZTmeJ18mS
-	aYAm1BqmcOWi0RJq2iJ9aqgwHJdqLs3efbm/5lpPB15FcVfu+X5kQNUubVvNxSxxwXwARSrpUgB
-	x/cb3nB6oD0A3Eoa6Xf2+ZjvI4Ze5yQitfFbn7cdqgDo/nId0=
-X-Received: by 2002:a05:622a:14ca:b0:50d:d1ea:65dd with SMTP id d75a77b69052e-5104be22865mr92863541cf.14.1777816328942;
-        Sun, 03 May 2026 06:52:08 -0700 (PDT)
-Received: from [127.0.0.1] ([20.161.70.179])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b5391e34dasm99504086d6.14.2026.05.03.06.52.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 May 2026 06:52:08 -0700 (PDT)
-Message-Id: <pull.2287.v3.git.git.1777816327842.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2287.v2.git.git.1777809430925.gitgitgadget@gmail.com>
-References: <pull.2287.v2.git.git.1777809430925.gitgitgadget@gmail.com>
-From: "Saagar Jha via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 May 2026 13:52:07 +0000
-Subject: [PATCH v3] submodule-config: fix reading submodule.fetchJobs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1777818547; x=1778423347;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n6tmCEMYY0K6dRm87IOToDZETaV/f+jRsEq3/v8OKAI=;
+        b=QRoNqrUh/BsByIDgAmzbnebz/UMwtcfuvvIylOWnfPG+ffaJINpOpjBj/7IM4x5t5Y
+         LGOmhRTyWb5O6MySLpOSSHSSsb4ykBHEqZghVYsbsO8tOKeWuY0T6m1ehpb37lDUiRM/
+         LhlVmsMZljdkVvFhtAVlLCn224ixOlmCHb/WeTFy2MeKrHzyFN2zsXo7Gc0B+og7QUbb
+         di/3KBrHTBK789bdL4l2ZFCbfF9xEtizBmZrVmeAkZgsCFbGHRXFK/NbmOQ10Ml9SdLX
+         wOsXCjiqcTngLlCF5vFkAK+r9p0mq2qFtG7edJK9+/rrDgFPRDi7ZEqXLHwKwB9qotB8
+         FBUQ==
+X-Gm-Message-State: AOJu0YwN31npmsxTD2xMSERiGGD116zkBhsaSLdMJiRcShus8kn8J8bo
+	sEcVddgbLqet2GPGNUrbN+xrybq0fsLC6B7AINkMn5+su08dmRcK7dqZX3GDO8C59sCbHOlmToF
+	FXO5MQi82Ejfsyzkn59JRiEaOPkvUvsYfSY70
+X-Gm-Gg: AeBDieuaOfzHTCPGlhsSzEt48jsPKELcimAhpi8+LiKpEdhbZwC9W/xL5QmHwLlgKuc
+	EvnP05LvaaoAZW6ZYNUuOXUfXEhuIU6Cwd2WHu+rhvO/6QjFYKFlu9XpaOjx2vXti5xhWhgo6ni
+	eBS2XP1RF7Wo981kCk3XjisF9nwcwJoXUJLEnIAoVKWwQewcd+f5iH4PdUzG6oGfcxgRDRS5yPk
+	3CkI03I8Cddoke1G4UlNq6gOXQh3NOMGGGVynytAU5kFbvJZrtSwwkRbO8IKjyM22FviQjvNGP0
+	n654stq0Bbg7hcZL7YEMBGpMWMlHIi1Q19M7FshvbMvWdasvooHyTV7/Rcwm
+X-Received: by 2002:a05:6808:1b0b:b0:469:fca3:e611 with SMTP id
+ 5614622812f47-47c892459edmr3178438b6e.28.1777818547430; Sun, 03 May 2026
+ 07:29:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Pablo <pabloosabaterr@gmail.com>,
-    Saagar Jha <saagar@saagarjha.com>,
-    Saagar Jha <saagar@saagarjha.com>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Date: Sun, 3 May 2026 19:58:56 +0530
+X-Gm-Features: AVHnY4JVo_SRfx0QusB-D6JDdV3CsR46iUPwwvK_N7u2ab7Ht0gdEcG4sQTe2Ik
+Message-ID: <CA+ARAto8ZLSu3oFS1QaOqc++Dm+Wb35EqeBo6JUJ5jVG4MZNbg@mail.gmail.com>
+Subject: [GSoC] Welcoming our 2026 contributors and thanking our applicants
+To: Git Users <git@vger.kernel.org>
+Cc: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>, 
+	Pablo Sabater <pabloosabaterr@gmail.com>, 
+	Siddharth Shrimali <r.siddharth.shrimali@gmail.com>, Tian Yuchen <cat@malon.dev>, 
+	Christian Couder <christian.couder@gmail.com>, karthik nayak <karthik.188@gmail.com>, 
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Justin Tobler <jltobler@gmail.com>, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Saagar Jha <saagar@saagarjha.com>
+Hello all,
 
-update_clone_config_from_gitmodules() passes &max_jobs to
-config_from_gitmodules(), but max_jobs is already a pointer. This causes
-the config value to be written to the wrong address and get dropped.
+As you may be aware, the results for GSoC 2026 have been officially
+announced[1]. We have 4 contributors contributing to Git this year[2].
+They are as follows (in no particular order):
 
-Pass max_jobs directly.
+  - K Jayatheerth
 
-Signed-off-by: Saagar Jha <saagar@saagarjha.com>
----
-    submodule-config: fix reading submodule.fetchJobs
+    Project: Improve the new git repo command [3]
+    Mentors: Justin Tobler, Lucas Oshiro
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2287%2Fsaagarjha%2Fmaint-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2287/saagarjha/maint-v3
-Pull-Request: https://github.com/git/git/pull/2287
+  - Pablo Sabater
 
-Range-diff vs v2:
+    Project: Complete and extend the remote-object-info command for
+git cat-file [4]
+    Mentors: Karthik Nayak, Chandra Pratap
 
- 1:  868901f1a6 ! 1:  70fb2ede0f submodule-config: fix reading submodule.fetchJobs
-     @@ Metadata
-       ## Commit message ##
-          submodule-config: fix reading submodule.fetchJobs
-      
-     -    The old code accidentally passed &max_jobs rather than max_jobs into
-     -    config_from_gitmodules, which caused the setting to be written to the
-     -    wrong place and dropped.
-     +    update_clone_config_from_gitmodules() passes &max_jobs to
-     +    config_from_gitmodules(), but max_jobs is already a pointer. This causes
-     +    the config value to be written to the wrong address and get dropped.
-     +
-     +    Pass max_jobs directly.
-      
-          Signed-off-by: Saagar Jha <saagar@saagarjha.com>
-      
+  - Siddharth Shrimali
 
+    Project: Improve Disk Space Recovery for Partial Clones [5]
+    Mentors: Christian Couder, Siddharth Asthana
 
- submodule-config.c          |  2 +-
- t/t7406-submodule-update.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+  - Tian Yuchen
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 1f19fe2077..57b190678e 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -1037,5 +1037,5 @@ static int gitmodules_update_clone_config(const char *var, const char *value,
- 
- void update_clone_config_from_gitmodules(int *max_jobs)
- {
--	config_from_gitmodules(gitmodules_update_clone_config, the_repository, &max_jobs);
-+	config_from_gitmodules(gitmodules_update_clone_config, the_repository, max_jobs);
- }
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 3adab12091..234a021fb3 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1055,6 +1055,16 @@ test_expect_success 'submodule update can be run in parallel' '
- 	)
- '
- 
-+test_expect_success 'submodule update honors fetch jobs config from .gitmodules' '
-+	test_when_finished "rm -rf super3" &&
-+	git clone cloned super3 &&
-+	(cd super3 &&
-+	 git config -f .gitmodules submodule.fetchJobs 67 &&
-+	 GIT_TRACE="$(pwd)/trace.out" git submodule update --init &&
-+	 grep "67 tasks" trace.out
-+	)
-+'
-+
- test_expect_success 'git clone passes the parallel jobs config on to submodules' '
- 	test_when_finished "rm -rf super4" &&
- 	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 7 . super4 &&
+    Project: Refactoring in order to reduce Git=E2=80=99s global state [6]
+    Mentors: Christian Couder, Ayush Chandekar
 
-base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
--- 
-gitgitgadget
+Let us welcome them and wish them a good summer of contributing to Git
+via GSoC!
+
+Thank you to all the contributors who applied to Git this year! It was
+a bit tough to choose from multiple potential contributors who all were goo=
+d
+in their own respect. Hoping to see you around continuing your
+contributions to the Git community in some way :-)
+
+Also many thanks to all the mentors who were willing to spend their valuabl=
+e
+time mentoring the students this summer. Very much appreciated! Special
+mention to Ayush, Lucas and Chandra who were GSoC participants in previous
+years and have volunteered to mentor this year.
+
+[[ References ]]
+
+[1]: https://opensource.googleblog.com/2026/04/the-journey-begins-meet-the-=
+2026-gsoc-contributors.html
+[2]: https://summerofcode.withgoogle.com/programs/2026/organizations/git
+[3]: https://summerofcode.withgoogle.com/organizations/git/projects/details=
+/O1nF3zMT
+[4]: https://summerofcode.withgoogle.com/organizations/git/projects/details=
+/752yzmwm
+[5]: https://summerofcode.withgoogle.com/organizations/git/projects/details=
+/hs14IFAn
+[6]: https://summerofcode.withgoogle.com/organizations/git/projects/details=
+/Lx1PmL4k
+
+--
+Sivaraam
