@@ -1,142 +1,118 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33CD3A1686
-	for <git@vger.kernel.org>; Sun,  3 May 2026 18:52:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CB937BE8D
+	for <git@vger.kernel.org>; Sun,  3 May 2026 19:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777834346; cv=none; b=WdDmIxc9RjTGJWiGvc4klUOpAsvlzf9vWpphaWJTcZondRU+hx3lYko9XgA8USxQiiPhsAWHGlWwowq9eOUXUxHWmFkUnOhseznxs7tm6aL2onaFUXb//7y/wE/cUf4RoTEwdypPS+VGJKY0vbRa/U7l2dWzAPFqFQkJ94nxUOE=
+	t=1777835991; cv=none; b=DOp79lQeII5rYZbu7MCfObyrdtY/x6Us38wx2eLk7oL9vazNBeaAGr4LsfVo2qLqToVEUcptPatBn6MVzF9CQLjqXK2ISOMjWhoaFw/+pv19SQx1te2f7DG0tt9y+b92CanDGwgjPLDUtiFYVcyTwaqXPNoMqcCvnrILJSP8dA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777834346; c=relaxed/simple;
-	bh=KafOMWByAgrlwPRVtv3+HjyXBiefFUvCdAVAdCZSF7k=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=NbtyUVO5apxhM5rpuGMNt/W13fESEn09a+DgJW7GpOFE2QqlsLIm78UQjxT/yVyc6DUWu0sOEMS6kamXBJIuaX8r85rxVdfir4R/hf1nfzPvisUlc+oC5ASNcVlKqhYIU17a4PifeXzGZxbAaGl9lgDg0VQ9thOqHlexJKY/7Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=SxLV+zR6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o+kJ7DPI; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1777835991; c=relaxed/simple;
+	bh=5lutB4cGCsl9B+O2YuSPdZEw9OWaPhT6WeaLk5U4o5w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gkr506Km0hASBykcc8pqf6z2SRjD12rSBHG81sobiiZK4lK68LNDT3a7tRceig7EU4dztBNYt7m4QVYc1ip5of+21IpPDvRD90CRuBURe4lgMal+71+VbCDvtP7qd/jEda/Cfc84bhwBKcZBXMxbO2f7W8D1710DoN2YWnlvYlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wqWlc0Yd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HRr5TgaK; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="SxLV+zR6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o+kJ7DPI"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id F1FE01D000A1;
-	Sun,  3 May 2026 14:52:22 -0400 (EDT)
-Received: from phl-imap-14 ([10.202.2.87])
-  by phl-compute-06.internal (MEProxy); Sun, 03 May 2026 14:52:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1777834342; x=1777920742; bh=pAeGuF2cJgyM0cjsAdZAJ6C3svj+fKdC
-	vm/OJCSDy6k=; b=SxLV+zR6OnXDhJwYnK4g2ovvsnBwlFhyjMib25eDvxGtl5fE
-	j/bbzBv342fkVtVd8FymekRi14J6OL1KWXXbkQ4uQUgvZZGAXpSKujx/vMeQ7HjN
-	HmiykFN1yNWTeymMKT4zQodV3lX/f/Olp7uSWpBMpwmhAkkTIuHz/E2ON5GEnG6R
-	E6G84l5AmE+Ian9jJe2Yb4M3xYsey2eb7V51s0KzjIox2NcCur7Jh+3PTZs/oRK5
-	lhxQue6cH1F01KP/r2da4a9wO+Li73NG+Kj62vugIycYuMI7MJfp/GzOQu5UMtFS
-	vkdhLV4wBnIDU4bnufZFm4bWTyhRN8Hb7Knb5A==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wqWlc0Yd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HRr5TgaK"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 27105EC00A0;
+	Sun,  3 May 2026 15:19:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 03 May 2026 15:19:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1777835989; x=1777922389; bh=5S+NU9CNKH
+	znb8jv0vYhcLYazNUn3bfiZ6Qx3NzHjPk=; b=wqWlc0YdbUF1Z7Kx3HB5M2Ro5J
+	Vfl/k+Lg43lJ+0qydo4Vv2hPzCsf0UCbo9GmoyBcYVMFpas0Tyw990SfhTsafbEo
+	P0v2kw0FwvINIAgLGGjy+dl6HPIQWcQ6NMEU2/WbOqSG/xZ8nXWCztyT/8doNPAD
+	6CIMCzNSV2MgqNHJtdz6phKrEonJ9AvKv3nJmma+UEguEg/wWXnZsqAqN/lmgahi
+	KBg8YI5n9VbelcrPRf5y/f6jk64OqLwvf3S1uaKUriOybPJD0my1RAe4thqrGrX0
+	Qc5K2KR+O8vdiQpwyV9e6oUuGKsnUb+MGqeZ3Vm0oDESZ8OrU5jGJTtNbzmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777834342; x=
-	1777920742; bh=pAeGuF2cJgyM0cjsAdZAJ6C3svj+fKdCvm/OJCSDy6k=; b=o
-	+kJ7DPIe/FqTv3cdIFF6+ctRWxLs2LBXTdKeTRcu/CP/8fzO4vXb+v0O/E712ueC
-	fTySESE8rzeSNZdHQdSSXExim3XTts47g5fExN5ALyD97F2DVixF7bf/wv1aPGwU
-	d43r5I+V45r/KXfi/fU+0eN/RoctQK9gZDLiUbxv9+8m+I3ElmBhmRfXldzzwv/l
-	lQHLCNBD83L6RW4X3eU8PuK85mVniGzRqbSnrqssKGnA4VSH2p8c+fapy6D8DsLo
-	qiRs/bTw4X6qlsBr5K1XQBgnlNlkBBpUg5NvLqM3dDIkptKQ3un4Fo349hELVCDp
-	+j0fMLxhXimW4+FAPcUAw==
-X-ME-Sender: <xms:Zpn3aRuY6OFzZodoXashoeNDNF4k8F_W0yUJlG03Z4UQzuPKW2SODCo>
-    <xme:Zpn3aVTZI6dG_CKg2crVmIkCVEgDW8jEg1JSZyWqZfs6BU8WoO4bf9EQlBwjC6rfw
-    Jmtb7DRUw2y8qFl5f6SvuLjChv2FZxbKfz7SK9QnRGM84OmBXrsBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelieejfecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1777835989; x=1777922389; bh=5S+NU9CNKHznb8jv0vYhcLYazNUn3bfiZ6Q
+	x3NzHjPk=; b=HRr5TgaKrr2Cy38KTHl74LO1K/Iznn5cuikrJFAhDP01bouVYvo
+	5S4ARl/+wa6NbjnddA581TSi5mgxl2ho9UoYkar3wqdyRns+JnioxFKcGucS9sl9
+	fi8RGKhyA5lu5vOP7zxwu23V27WdxcEoJQWFW1FCLyM2JXZ9NARXZt4njKQVphxG
+	mEE3fLCdO9EE6UYD9n7WskQve/bbvnGK5d+qrYzDn8z+o0M21aKIB/q/ENvFqzqQ
+	PoDqGetEsgZmjJyXQ5ec8gxw2pm1g77xSveVO5TU/UIWk5O7pDQkDHFxYYS7YxFN
+	N7dDEQsBP8FZuoUJo9+4NLHdZca0qNyS9SQ==
+X-ME-Sender: <xms:1Z_3ae8_nFo5XxUzhMLT-oAL_QbycctgCchVHZsOX8omdc9racmPLA>
+    <xme:1Z_3aVnZeEOfkdxpglRMSa8XrwldTySJYr7XWT_IufkHSQ-hyU4V2wUKJtzQeYSs4
+    py_a6-_pIcRIwUctO-L8DApYrIpct7-cFIrEnkLnkv83uKm1Ze7ELE>
+X-ME-Received: <xmr:1Z_3acUT2XwByVxNtT5ej6oNNUDnlqyx5G8FRcDknKON8Rk3CaNLR9D6Xf2zm2tWDG1JDLpUuXyhgUrEJuWHm86wkRSUKoMEkA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelieejkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
-    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgv
-    shdrphhluhhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrgh
-X-ME-Proxy: <xmx:Zpn3aVSU13yeo4_B1w-Nv91anZ-wDtmyapOTj8Goqy26KubSyqyGxQ>
-    <xmx:Zpn3ae4gD3eopJzwKcHZJ-8LHv7np8PEAFVdkLevW-s88pyR2aBoPg>
-    <xmx:Zpn3aSzjQXZvSiHzFfLsYhRdXip5UogeT26x0Vx185EmXMEhFPsrJA>
-    <xmx:Zpn3aVQC5oPJZOjxcKgcbXZUsYJFNhyP-tWrP88rJO3tlyK2_CgKNQ>
-    <xmx:Zpn3aX9muPXuZBM7rSOwGTYlqwjuHYxU8l7EYLj_zj5lqKOi17d7rN1a>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1F92FC4006E; Sun,  3 May 2026 14:52:22 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghu
+    ghhssggrkhhkrdhnrghmvgdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1Z_3aSGTbcXgStXvS7jwH99pQI-88cTMA0XL6GTwrzUlo5GdF7xtYA>
+    <xmx:1Z_3aQcIWfdOMgx57jCn0OTf4RrK5tFCj5Rl3M2R7pedCZyJ0kI0qQ>
+    <xmx:1Z_3abIOj8rS-Rx_0o4sk-3caJPIX2AiAXfUSzYNWELrG7JHZKhsbQ>
+    <xmx:1Z_3adF1bgQ4mcNe7ShKCLvQZYmbnVrjpEksstQunDWNHKHiAMm_4Q>
+    <xmx:1Z_3aZXIVVC-jARq6rJt9gK5WxmddlNuzsFux8zjjjlFdRQ735YsVMQG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 3 May 2026 15:19:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  ben.knoble@gmail.com
+Subject: Re: [PATCH v3 5/5] format-rev: introduce builtin for on-demand
+ pretty formatting
+In-Reply-To: <V3_format-rev_new_builtin.66f@msgid.xyz>
+	(kristofferhaugsbakk@fastmail.com's message of "Wed, 29 Apr 2026
+	00:25:56 +0200")
+References: <V2_CV_name-rev_--format.51b@msgid.xyz>
+	<V3_CV_format-rev.66a@msgid.xyz>
+	<V3_format-rev_new_builtin.66f@msgid.xyz>
+Date: Mon, 04 May 2026 04:19:47 +0900
+Message-ID: <xmqqwlxks3l8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AHDyktfZDWSB
-Date: Sun, 03 May 2026 20:52:00 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Ramsay Jones" <ramsay@ramsayjones.plus.com>
-Cc: "GIT Mailing-list" <git@vger.kernel.org>,
- "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <66710fd7-23bb-4b1f-852a-f61ea1f188e0@app.fastmail.com>
-In-Reply-To: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
-References: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
-Subject: Re: [PATCH] name-rev: fix an 'may be used uninitialized' error
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, May 3, 2026, at 17:16, Ramsay Jones wrote:
-> Today's seen branch fails to build (with DEVELOPER=3D1), like so:
->
->       CC builtin/name-rev.o
->   builtin/name-rev.c: In function =E2=80=98cmd_format_rev=E2=80=99:
->   builtin/name-rev.c:885:28: error: =E2=80=98commit=E2=80=99 may be us=
-ed uninitialized
-> [-Werror=3Dmaybe-uninitialized]
->     885 |                         if (!commit) {
->         |                            ^
->   builtin/name-rev.c:867:40: note: =E2=80=98commit=E2=80=99 was declar=
-ed here
->     867 |                         struct commit *commit;
->         |                                        ^~~~~~
->   cc1: all warnings being treated as errors
->   make: *** [Makefile:2932: builtin/name-rev.o] Error 1
->
-> This can be fixed in several ways; initialise the 'commit' variable to
-> NULL (on line 867), initialise 'commit' to NULL on the line before the
-> conditional on line 883, or (as I chose here) initialise the 'commit'
-> variable in an else arm of the conditional.
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->
-> Hi Kristoffer,
->
-> I wrote this patch yesterday, just before I had to go out, and didn't
-> get around to sending it to the list. Today, the problem has gone
-> away ... (along with the 'kh/name-rev-custom-format' branch)!
->
-> Assuming you will be sending a new version soon, ... could you please
-> squash this (or similar) into the patch corresponding to commit 590385=
-5b1c
-> ("format-rev: introduce builtin for on-demand pretty formatting", 2026=
--04-29).
->
-> Note that I don't think this particular fix is better than any other, =
-it
-> was just that my cursor was on that line in vim ... :)
->
-> ATB,
-> Ramsay Jones
-
-I=E2=80=99ll incorporate it. Thank you!
-
->
->  builtin/name-rev.c | 2 ++
->  1 file changed, 2 insertions(+)
->
->[snip]
+builtin/name-rev.c:883:8: error: variable 'commit' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+  883 |                         if (peeled && peeled->type == OBJ_COMMIT)
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+builtin/name-rev.c:885:9: note: uninitialized use occurs here
+  885 |                         if (!commit) {
+      |                              ^~~~~~
+builtin/name-rev.c:883:4: note: remove the 'if' if its condition is always true
+  883 |                         if (peeled && peeled->type == OBJ_COMMIT)
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  884 |                                 commit = (struct commit *)peeled;
+builtin/name-rev.c:883:8: error: variable 'commit' is used uninitialized whenever '&&' condition is false [-Werror,-Wsometimes-uninitialized]
+  883 |                         if (peeled && peeled->type == OBJ_COMMIT)
+      |                             ^~~~~~
+builtin/name-rev.c:885:9: note: uninitialized use occurs here
+  885 |                         if (!commit) {
+      |                              ^~~~~~
+builtin/name-rev.c:883:8: note: remove the '&&' if its condition is always true
+  883 |                         if (peeled && peeled->type == OBJ_COMMIT)
+      |                             ^~~~~~~~~
+builtin/name-rev.c:867:25: note: initialize the variable 'commit' to silence this warning
+  867 |                         struct commit *commit;
+      |                                              ^
+      |                                               = NULL
+2 errors generated.
+ 
