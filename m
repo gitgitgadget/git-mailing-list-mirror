@@ -1,90 +1,168 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC79A2147E5
-	for <git@vger.kernel.org>; Sun,  3 May 2026 22:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86903128CC
+	for <git@vger.kernel.org>; Sun,  3 May 2026 22:39:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777847543; cv=none; b=PNmfbWDDVblKQp2toOMkUqnQAomEz3aA39ALw3nqJiDoYscQZQlxth1B3ayS6xUj+4UW7uinoVqaontQz7FulAagoV6hov+MO+z6RPuChsvkImJ1t2uhevBXCM/lLcNx0BO+dFPI4oQDHHEBeXAzwdwSbC3ml7dO+prYD4lJgpY=
+	t=1777847991; cv=none; b=ku89wPGvNvV/4WrI36+pmErIiIiYDbwv9bqPaElDvoCiYf1pJ3WTeSLaqBte63EupUfONFhe50cP3vYBYp5+rHkbYRrwkFNHa1Fdsti/JvqjCqWTrf2qdsc2MmYLXDUqibyVpeA7RUCDRfcroGtO7foED7wiFeGqSF1bl4MQxxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777847543; c=relaxed/simple;
-	bh=Xsv6RyqT2HcJQ9AZktceeG21LwJcyK8f0hbiuDT7RJ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmj/sQWk9kyLWQNI1P8xZo3RW0rJyKtyPhzZbsodqZ1hloujYQ2Q67lez9ZBRcYtK9jVh/kZyeFe3CZhUBsUK8pg4t7GMqw0VoeDWu4fCX7mOp6B+vIW0wTobNfF35czpDav48b4TiiTpBHjIly3razvYah61Xj7EzZkHMSps+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NrTw4Kd/; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777847991; c=relaxed/simple;
+	bh=b3/kbar33KAx5WtZRPf1C2HjfFx3mQf9N9jG5aG1Btc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UhCcJx5l1vALmlNKemDri7Rj1iu8U89B+p9LuUtlE3mqRBMoI0pxt0OwDp12L+DnRUvZifaEBfKPAqGalmauJZYFgQMDlNQJKTkgjZM4UpYVSKYMw3pfKQ3btiM5lb91YrZ9bS2h+nronG8deMfaX4gGY3VCiVe8jnCSlQ0L53s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GIV3TOJn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rrzhKiF1; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NrTw4Kd/"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a74ac8b40aso3869725e87.1
-        for <git@vger.kernel.org>; Sun, 03 May 2026 15:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777847540; x=1778452340; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xsv6RyqT2HcJQ9AZktceeG21LwJcyK8f0hbiuDT7RJ8=;
-        b=NrTw4Kd/huLdJpQNOUYz8lW/cmNtGIVhIe14J6XMiSLkqPn8aAsn0D8SRa643ezi5N
-         ++3YbQ201AxnHjdjHvAm/AcOPYoJaVsPTul4EHq9XHX+uaLH5swX1Iag+peIYUn+lhxV
-         4tXSaaTsfiOQiBVM/Oiq6BQOYrm3k4Quqyy3kbSPxx5NRX4bzwsNuGAKCfwS5hkwAfAk
-         znXiDmLiSzful0yVToK5pqQyKl3TyNqoASE1YvlHqmuAsoC2rhTg58MlKGCJvSyStc5L
-         Vd//9Drg4r5f2/2+gnaruLX/31KnCyxsiBFWY0sx7kaWg0ZwDiQrrTQmFsg6a7V0lDbf
-         c4MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777847540; x=1778452340;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Xsv6RyqT2HcJQ9AZktceeG21LwJcyK8f0hbiuDT7RJ8=;
-        b=PjmoBdm3iwwLSdjMwjOiHlH3N8PX0zn6NJy+cugPkteDFviWwiS0QYtDc543JC+7DE
-         8IwEUBpFQunN8ROOSf5rqO9UnF2adVKjtMWVH4lJZWrrlilC1WqfV20/qphO4dIgBEbZ
-         YtWjqf2ePjITxpkxORuuYLUqIRMiR0ufWpZutmWIBDed6vmqAN8IyRxHVLMxIMeZNiy1
-         2apG3D+PhTP+Kcas3ly9S3frePCvYtL3ESuB9wzisVqOm0poqvHEgbuPmhEKfTi4y5vL
-         dOTwNrWbXzRR++ik4TF2KUyllA+qIwMQPLbcatGJoxkPeeAafTN6olbl/2QEku3s/+e8
-         wGEg==
-X-Forwarded-Encrypted: i=1; AFNElJ/KbshSrNZF4pAYCFeBUz1vFDguq41cn8+i130zInQGJ++ZlYSKGwS+t1LXR9iVvplZqnE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YziaIV8QMOVCcgay5EzY1VRQX2L8T6dmAFraCE9Lj8Nam0yQDmi
-	BgC3hkYykdLoHh7SwbZ0yt4/mIzZwmqCze8ZZLT3uarDrM76Dj9BRNZ+
-X-Gm-Gg: AeBDiesYzmieUSxdpeupDV8cVJiGm8eyXeTN/oBqcOi456wquNk3nh/ybrs6uCZyRYW
-	dR73DMbSYgSUOAaF5z2M5T6gCQDX6SEmmfrQaGxVm5rIAwndkNHf9LspIheGppn8s7OEQ84PMQV
-	j6kaAr8ynCu0eZxW6jKTMv/DwmCbWxxnyRI8BXXLU1wOSJ7Sx0yVNJhmSnMIQU1JNH4yluVwpnY
-	zkK0sklr2X/ZTr3Pztj7UZ6df/x9ySEiAR/kYW5SIqeuEgkLWnqy6VY3Ab01xBaKV2GnSdgw18k
-	RSmh2eWESedh7/DVMc2iyH/aatuwxcTkjyYpoJQEjilOS75AdODLaAVhe7JH12lAgDDNEb8Y/rg
-	52qky+b7AzCL1sa3Fl0YuvJwYDiELOr2eHRL3UJvS8Ckmx3vl2kWgrySYwWEVub3eu0Eb+S12XL
-	u5O6wBpGaCSTn9IznpNXbKGB8dWP+Vd23m7X6ech/BtwH/FdTsA6KX/TQgbCRalYL+hhZ0
-X-Received: by 2002:a05:6512:31d6:b0:5a3:fd47:aae6 with SMTP id 2adb3069b0e04-5a8631c0fb4mr2275643e87.32.1777847539580;
-        Sun, 03 May 2026 15:32:19 -0700 (PDT)
-Received: from localhost.localdomain ([192.194.110.50])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a870149b4csm438218e87.77.2026.05.03.15.32.18
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 03 May 2026 15:32:18 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: ben.knoble@gmail.com,
-	git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	marcnarc@gmail.com,
-	ramsay@ramsayjones.plus.com
-Subject: [PATCH] checkout: add --autostash option for branch switching
-Date: Mon,  4 May 2026 01:32:17 +0300
-Message-ID: <20260503223217.990-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.54.0-rc2
-In-Reply-To: <xmqqse88ryyk.fsf@gitster.g>
-References: <xmqqse88ryyk.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GIV3TOJn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rrzhKiF1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id E6501EC00B8;
+	Sun,  3 May 2026 18:39:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sun, 03 May 2026 18:39:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1777847988; x=1777934388; bh=sEgggg8CVb
+	sGPlfAXSBPxFuHc8BmmMN7mT/xMh2WNIU=; b=GIV3TOJn8xY6GIUcsFWUWciJvz
+	cFGavzGjgBuPK5KvJplzgI3I/nLmjgMVsDKk8FSewTKeXp1dEQ4jGNqmSNMT9PSN
+	VGfy2DcVrcHRCGp8lKUS0HS/Dlx7pTBeABGstlCIQsTWN9pg7XtXVflxM8yjJbg2
+	0ok8mhiK9rWNdCXfsKAtA6UkzpimACjOj+0HPWzNndB/mkvHtgd2r7ZrRibKJxKi
+	kaZtkoP+4tdSiKvXqZptfRZieNItZo9nKNJ/hV8NNbm+4pJwnaQAY4CgtVtd6l4R
+	fHfPY/J7hSj7k0ymQcG8l+J50SzT0AGJjbWZGYEI606/fbKT1cVztoAOORgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1777847988; x=1777934388; bh=sEgggg8CVbsGPlfAXSBPxFuHc8BmmMN7mT/
+	xMh2WNIU=; b=rrzhKiF1J8yblLm2TGCHBtDWO0+/WsO4cq6oamWzvZRQ7Th52Gj
+	T/OBDr4XjIh7KuXcVLPvv5NyzE7SkcEBpXlS4NadrbGHd9/SN2mB51Yjx83oXlci
+	j+C45D1BpL0d1beqypjhn1AC6GxVtuciEwnrQ/FU7Dg8iecW/mfXrpa7coz9bC6m
+	yLLk70gGvr9B+G68l6vvoK04HSbmt1DwCOtt9nAXovaGRZaTswuOIvS79hsGAGqs
+	SWYtKcQ8MA7JsxlpllTtMPHitf+ArjoY488cAQT54AKPY6F3VgKY5lUAcxaoqtZ0
+	KGonOCed8gwfd9R76HVKgxQXgbxRhw1AHGg==
+X-ME-Sender: <xms:tM73aYn9cMPbWg3W9AO99_1JKg6hpOcET6Wa1C-AHO2nSxSsdW2A2g>
+    <xme:tM73ae3JX6ZwAdeO-1uXpstLCeW-_sekLUQkH_qUzcEkvr18KCSuqH2Px_nFBGmdV
+    eHC0IIaFKEz85x9iyoX2dPyyxmiiXIJz3zjTGABj7JddRKj7jqoruw>
+X-ME-Received: <xmr:tM73abr1mQD0w-jd9We4bRqsjpnFpR9dcmOJta9jc6FiOjNsPnlhgyZ-GrdF-gjccRIfh3CSoOf8_MI03sib8E4vicalZQl7Bw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljedukecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    hhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:tM73aTfK6kDLaW_JUuFrxzInOofSYBZqogZxO7t8gZdcQK8AyEADng>
+    <xmx:tM73aSq5ml8Y3wssYVjZyn_Te-2-sQv_NBfLQMX5zo23QzCp7FF41w>
+    <xmx:tM73acHgiiSj7g5jCZUWNVImdPhDmclCXsZmsoZbu9df9JNnvtNTAw>
+    <xmx:tM73aasr5mxjweyUK2Jiu1OO_5gWm9dA84rFgNNQFuK25GhQF_-_8w>
+    <xmx:tM73acFCMb7uv2R2VMG2B1by7YTqC4dweyBtYfbpReUk6NK24LK_Ounn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 3 May 2026 18:39:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] fetch: add fetch.pruneLocalBranches config
+In-Reply-To: <pull.2285.git.git.1777671337839.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Fri, 01 May 2026 21:35:37
+	+0000")
+References: <pull.2285.git.git.1777671337839.gitgitgadget@gmail.com>
+Date: Mon, 04 May 2026 07:39:47 +0900
+Message-ID: <xmqqfr48rubw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> How about rewriting everything up to and including this "Tie the new
-> ..." line perhaps like so:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Done!
+> Introduce a tri-state config option that, when --prune (or
+> fetch.prune / remote.<name>.prune) removes a remote-tracking
+> ref, also deletes local branches whose configured upstream is
+> that ref.
+>
+> Values:
+> - false (default): no change in behavior.
+> - safe: delete only if the local tip is reachable from the
+>   upstream tip, preserving any unpushed work.
+> - force: delete unconditionally; recoverable only via reflog.
+>
+> The currently checked-out branch is always preserved.
 
+I do like the feature that allows you to identify which local
+branches are already merged and prune them.  It will help users keep
+their local branch namespace clean.
 
-Harald
+I however do not like to see the feature tied to "fetch".  By this,
+I do not mean I do not want an option to trigger the feature when
+"git fetch" is run.  What I mean is that users should have an option
+to prune merged branches without having to fetch first.  And you can
+then optionally trigger that machinery from "git fetch".
+
+Of course they aleady can do something silly like
+
+    $ git branch -d $(git branch --list | sed -e 's/^..//')
+
+and remove all the merged branches, but compared to what is
+presented here, one thing missing is that you allow pruning the
+local branches that are merged only to remote-tracking branches from
+a single remote.
+
+To break the feature down to make it easier to use by our users with
+various needs and workflows, we would benefit from having a
+collection of smaller features that can be composed, like these:
+
+ * "git branch --forked <remote>" lists local branches that build on
+   something taken from <remote>s.  The option can be given multiple
+   times to make a union of the results from individual "--forked
+   <remote>".
+
+   - <remote> may be a name of a remote, e.g., "origin" to mean all
+     the remote-tracking branches "refs/remotes/origin/*", 
+
+   - <remote> may be "origin/master" to name a specific
+     remote-tracking branch.
+
+   - There may be other handy things to cover with <remote>, like
+     "--all" that may act as if you listed all the available
+     <remote> on the command line.
+
+ * "git branch --prune-merged <remote>..." is a short-hand for "git
+   branch -d $(git branch --forked <remote>...".
+
+ * "git fetch/pull --prune-merged <remote>" can trigger "git branch
+   --prune-merged <remote>" after "git fetch" successfully updates
+   the remote-tracking branches, which should be equivalent to what
+   you have here..
+
+Some local branches that fork from remote and have their initial
+round already merged may not want to be pruned, however.  You may
+have multi-stage development plans for that topic, and you know
+already the second phase would want to build on top of the initial
+round, not a random version of the mainline with many topics from
+other folks merged in.  So you'd rather want to keep the topic
+branch around after your initial round has been merged to the
+upstream before you start the second phase.  This is especially true
+if your topic is designed to apply to an existing release (in other
+words, a bugfix) and you want to keep the second and subsequent
+rounds of the topic to be applicable to the same target version
+without contaminating the topic with irrelevant features from others
+that happened to have been developed and merged upstream around the
+same time.
+
+And we'd need to cater to their needs.  By this, I do not mean "they
+do not have to use --prune-merged", but by giving them a way to say
+"this branch should not be auto-pruned with --prune-merged".
