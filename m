@@ -1,711 +1,195 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3299E372B3D
-	for <git@vger.kernel.org>; Sun,  3 May 2026 15:34:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226553126B1
+	for <git@vger.kernel.org>; Sun,  3 May 2026 17:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777822465; cv=none; b=uUTYIC807Squ9SAkSEYItggxyDDVB+2VunQ/jF7abQcJphM7SYVAXo15DRWigBvp1sOfdB0LDPmPZZJ0INrFMDyjjkb6Gx6Nbo6v+l9JiULOvsmrW5b2m2kw1N3s4Jql/q6dGfscvt0eyIsTLdPOG78vNmoxHJlhWF7NnCJa4og=
+	t=1777829333; cv=none; b=lxzUU/BQRZHyuo9xvMdo8OF7lhuCgOv6GZisfORtkO+kCVWyl/ty73LTgEDsNEvZfuQr45kgyhxsaQjvqLrRsPFOed9X9oGCGIClByUSoaf58M9DNOVWGSoRQ4IWbBfIsAQIOdNlWxe1TnUvFJCtOVo2lo7ELtB6y2s1DAN+Els=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777822465; c=relaxed/simple;
-	bh=N0OdUsWsH0k+rXsbYBDeWHTr6pPJXiSXiyt2U8ycZ/Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Eqf7PEUo1vK5KmGKFpRs1ttMwbadOH846jiqPAJI5vuo8isYatZ9FGtmSjVbRiCaynhzyGyruyi480QTEnSLis6bKt3NcAq8OVTgnkF41W73fPoMhNfigpQYmETDqOXDe4V7sqptjiQA0Q/yheeFYAzNpOnGGR6HY5ag2MVSws4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/CdYVSa; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777829333; c=relaxed/simple;
+	bh=DQUK3qgidc8+W7pcZmSrcoeXFqelxafly3r9Ykmg63I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a6ZDSKuI709sngzDVekrTtjJSnwaSlnNKlC6WxG8CBO1tnVRmew7icHoAi4lG8d4YIRQXU4EIwd755u7kGRZM6Rex9cj3CeOcugkXSXnhLm9ex5zdBmcSMyV3FpqOI6SFO7HI8ccUfk6cAo7VWnOwM5n/YADM4EttikQgHcAJqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=oKbBXETE; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/CdYVSa"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-36505450d0dso1645191a91.1
-        for <git@vger.kernel.org>; Sun, 03 May 2026 08:34:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777822462; x=1778427262; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O1KcxDnCvNNtEHoqWejl6MRKaNBod1OFyDCzKFO5ZeQ=;
-        b=F/CdYVSaSf4O49QYepEZjoFnabt86RzQQvQVtWfWTHHuSwdBQxVGUdJsuF9O2lmjet
-         jV4K4SkZ3tY3KTgoTMUO0RveJ4A4qBaEKCBJTfz5oD0WYngLfIsUstdZdqasgpwge1op
-         7yfoP5JrKD5LsmUYGZZJMxnwfArMOCl+QIUpSEBg7tu3E3nTV5Ucfbh1SwbAm/BVSdb6
-         IQ0pYtVepJxdoB1Hd/VAiNSmzU2hIhk00SKD1cqnrlM6eDIYeaWRqY90VEXYguGD555N
-         HqEBICvwI8150je8pXM0r8Dom4dcLYY4ObATlmWm//7d4aXuiEyduU35RILamN2PuEdX
-         0MZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777822462; x=1778427262;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=O1KcxDnCvNNtEHoqWejl6MRKaNBod1OFyDCzKFO5ZeQ=;
-        b=A7Ckrm5xEeeliLrJbwT+wu9EApsg9B/Tegviu+l4592ksJPCaHvxL8nm+0cbUil/U2
-         bstkOAHAi8aLtOzEVkfRodSbYmECZIKpCH5Vfh0A1mgNVANsAA1qQe4CnqMcNE/+y7vB
-         A8rltehShqgB5/FXySUGo4S/1QzpQbAxFQuT9lUuZtci4ztvVjlR0VNRyMwgKWGLQnkY
-         077YYXd4C3D/q7qsx+To5RVt4ZeWPWq8pTCaedaoPLB8aGBxltX/8LN6wN0Rr6obM++s
-         dZ72BJbVQK9L1ugeAScawSz5dsEfNDi6g7nyjlkhUvhQ8ZyetXWrj7w1yocKvZsIHjLK
-         P1BA==
-X-Forwarded-Encrypted: i=1; AFNElJ9CY5i5NexuN6v6uyedIJQNOOwoLDzK5qg7M0ZL60ucJkbDXXkqXOiXPRr/tt+NcAv5M4Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJAU9EQq7vn36fdAtDKl4nm6Rw6FUFcxzNSF3vb4coiyz3XwiZ
-	aEyOpjP00mJbpfWFeHWLfxMO+hgJ66hoo7PWbw7ZOvq07QzyVqGKbvc0
-X-Gm-Gg: AeBDietMjdYYCRBIWDgAMYTBalMl2MY7D4nYysI6ckyxGyTuzJm1vXm0LOOgLv8QSXO
-	w5qltJk7vsB28J5E4JofWSXFyLJHwnYSdCV+s0f04Eof6SUhrAsnezjmOzbLuT5Wlx5TusW6u1i
-	IT9CWfN3A4gzg+MobWGC0Va2PRxXL1ZudXlun1m1/nb/8cljYhF/BmG8vi8UcsIrHMXxbPya1On
-	UmOvC7LjodNuzNSGCrxIVPv7eGivX0K9J6z7mtCEioAzvJRcMXSXquxsTIa/nmYsxxy5xZy594i
-	orruZzEWIe5Xd2GZmD0dNlbQWY1t0so26xUiw46+XAAzwvnRie5uQOUcXXMQxcHPE6cDewkBc3u
-	AWf7BtZym/z3WJgHNMIb/ALoNQ9MLvuucU/UYhWIwZtFXb9bxF9XqX7wPLrjs9e/gLMWLH/rzsb
-	hqMZ64GbOiUlwGfqxOFSgCg5AGzC2iKG60WBs3LVfXFwd1v11VKs7XcLOeSEyOzBvminN0tc1mO
-	skiIBycrRM=
-X-Received: by 2002:a17:902:778a:b0:2b2:81aa:f6ba with SMTP id d9443c01a7336-2b9f25e522fmr44201955ad.26.1777822462282;
-        Sun, 03 May 2026 08:34:22 -0700 (PDT)
-Received: from archlinux ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9cae0f0acsm74618375ad.38.2026.05.03.08.34.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 May 2026 08:34:21 -0700 (PDT)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: usmanakinyemi202@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	me@ttaylorr.com,
-	phillip.wood123@gmail.com,
-	ps@pks.im
-Subject: [RFC PATCH v5 3/3] push: support pushing to a remote group
-Date: Sun,  3 May 2026 21:04:02 +0530
-Message-ID: <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260503153402.1333220-1-usmanakinyemi202@gmail.com>
-References: <20260427140530.856125-1-usmanakinyemi202@gmail.com>
- <20260503153402.1333220-1-usmanakinyemi202@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="oKbBXETE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1777829318; x=1778434118; i=tboegi@web.de;
+	bh=ClYRsgneEj1B+ztDTpI+1M9sL+ajoygrTMQZwa12acc=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=oKbBXETEoqBh7HGsJUYCRSUWnr9trLMrfklPvPw1ywKtXQSbWYnot3OKTFIRt+9Z
+	 +44oE3KG4Vx91k3BE7FxEjJWOnZV1TldqxWMBsZHoIpeizavFw6EITbXQ3kazwxJs
+	 nVNEDSTgNzPFHwEODcLImXlGVyqy8NQnch7OwOf1Daq+XLQ2l4zVZ/QGeKgOFMtzK
+	 P1vmWhMayxEDrEN5s4Hr52/kAolkWcAIx020JEEiMgDhsxtyEso3v+XRf4iK47u/q
+	 thoYu3BcT7zf0rmHfdDv9tDxxuRJbqAd/blJVPqbcjRtEb/FDPV2jwleiJqlxUrkt
+	 hdmXBlgHNHBWPfYQkA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MwA1O-1vRcSA387A-016dB5; Sun, 03
+ May 2026 19:28:38 +0200
+Date: Sun, 3 May 2026 19:28:38 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Matheus Moreira via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+	Matheus Moreira <matheus@matheusmoreira.com>
+Subject: Re: [PATCH v3 0/8] builtin: implement, document and test url-parse
+Message-ID: <20260503172838.GA22957@tb-raspi4>
+References: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
+ <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:PoIcKxiVYWyjUb/Xg128ejWiBgJVeDgjq0UCpJMNjbPxVPlxgnw
+ Re4KH1wdIDyLL9cdDgPjEY7IxtL79bLJSZ4F6yO90QCNiDl5AYi6mxBXGYMB72RJWuprnlw
+ 42WC4/MaUY+SIKP7NaY6Trf1AXqLIDyL8tq9msUc0HtEhqAyPnB1U27qfA4Y/HpcVh5iMuO
+ iPZawNQ5O2dE+TJl3ioCg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:NWuIEbI9Kr8=;05qD3UbKLOgslfzdfaKA21NIpIT
+ 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
+ ZNU7H7yT0Zo3KtBUKCyiVNYSkdfSiVcrRfeM=
 
-`git fetch` accepts a remote group name (configured via `remotes.<name>`
-in config) and fetches from each member remote. `git push` has no
-equivalent — it only accepts a single remote name.
+>=20
+> The series consists of eight commits.
 
-Teach `git push` to resolve its repository argument through
-`add_remote_or_group()`, which was made public in the previous patch,
-so that a user can push to all remotes in a group with:
+Reviewers comment: Nicely done.
 
-    git push <group>
+> Changes since v2:
+>=20
+>  * Fix Windows CI failure: handle DOS drive prefix in the helpful local-=
+path
+>    error. With this, the message for a drive-letter input like C:/repo (=
+or
+>    an MSYS-mangled /abs/path that bash rewrites to D:/.../abs/path befor=
+e
+>    git sees it) gets the specific file:///<input> suggestion rather than=
+ the
+>    generic fallback. No effect on Linux or macOS, since has_dos_drive_pr=
+efix
+>    is a no-op on non-Windows builds.
+>=20
+>  * t9904: relax the grep on the absolute-path test from the literal
+>    file:///abs/path to the structural file:/// (three slashes). The orig=
+inal
+>    assertion depended on the input being preserved verbatim, which MSYS =
+does
+>    not do. The relaxed grep verifies the structurally meaningful propert=
+y
+>    (specific URL suggestion was produced, not the generic fallback) and =
+runs
+>    cross-platform.
 
-When the argument resolves to a single remote, the behaviour is
-identical to before. When it resolves to a group, each member remote
-is pushed in sequence.
+More a question to myself, may be, about t9904 (and may be other parts)
+I have in mind that the parser learned to handle
 
-The group push path rebuilds the refspec list (`rs`) from scratch for
-each member remote so that per-remote push mappings configured via
-`remote.<name>.push` are resolved correctly against each specific
-remote. Without this, refspec entries would accumulate across iterations
-and each subsequent remote would receive a growing list of duplicated
-entries.
+file://server/share/repo
+correctly under Windows.
+I don't know if this needs to be addressed here or in a follow-up commit ?
+The \\server\share\repo is an UNC name, which is handled by the
+Windows file system, backslashes towards windows must be used (which we do=
+)
+and '/' may be used outside Git.
 
-Mirror detection (`remote->mirror`) is also evaluated per remote using
-a copy of the flags, so that a mirror remote in the group cannot set
-TRANSPORT_PUSH_FORCE on subsequent non-mirror remotes in the same group.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- Documentation/git-push.adoc |  80 ++++++++++--
- builtin/push.c              | 251 +++++++++++++++++++++++++++++++-----
- t/meson.build               |   1 +
- t/t5566-push-group.sh       | 160 +++++++++++++++++++++++
- 4 files changed, 451 insertions(+), 41 deletions(-)
- create mode 100755 t/t5566-push-group.sh
+commit ebb8d2c90fb0840a0803935804e37e2205505f23
+Author: Torsten B=F6gershausen <tboegi@web.de>
+Date:   Sat Aug 24 15:07:59 2019 -0700
 
-diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index e5ba3a6742..aa221c3909 100644
---- a/Documentation/git-push.adoc
-+++ b/Documentation/git-push.adoc
-@@ -18,17 +18,28 @@ git push [--all | --branches | --mirror | --tags] [--follow-tags] [--atomic] [-n
- 
- DESCRIPTION
- -----------
--
--Updates one or more branches, tags, or other references in a remote
--repository from your local repository, and sends all necessary data
--that isn't already on the remote.
-+Updates one or more branches, tags, or other references in one or more
-+remote repositories from your local repository, and sends all necessary
-+data that isn't already on the remote.
- 
- The simplest way to push is `git push <remote> <branch>`.
- `git push origin main` will push the local `main` branch to the `main`
- branch on the remote named `origin`.
- 
--The `<repository>` argument defaults to the upstream for the current branch,
--or `origin` if there's no configured upstream.
-+You can also push to multiple remotes at once by using a remote group.
-+A remote group is a named list of remotes configured via `remotes.<name>`
-+in your git config:
-+
-+	$ git config remotes.all-remotes "origin gitlab backup"
-+
-+Then `git push all-remotes` will push to `origin`, `gitlab`, and
-+`backup` in turn, as if you had run `git push` against each one
-+individually.  Each remote is pushed independently using its own
-+push mapping configuration. There is a `remotes.<group>` entry in
-+the configuration file. (See linkgit:git-config[1]).
-+
-+The `<repository>` argument defaults to the upstream for the current
-+branch, or `origin` if there's no configured upstream.
- 
- To decide which branches, tags, or other refs to push, Git uses
- (in order of precedence):
-@@ -55,8 +66,10 @@ OPTIONS
- _<repository>_::
- 	The "remote" repository that is the destination of a push
- 	operation.  This parameter can be either a URL
--	(see the section <<URLS,GIT URLS>> below) or the name
--	of a remote (see the section <<REMOTES,REMOTES>> below).
-+	(see the section <<URLS,GIT URLS>> below), the name
-+	of a remote (see the section <<REMOTES,REMOTES>> below),
-+	or the name of a remote group
-+	(see the section <<REMOTE-GROUPS,REMOTE GROUPS>> below).
- 
- `<refspec>...`::
- 	Specify what destination ref to update with what source object.
-@@ -430,6 +443,57 @@ further recursion will occur. In this case, `only` is treated as `on-demand`.
- 
- include::urls-remotes.adoc[]
- 
-+[[REMOTE-GROUPS]]
-+REMOTE GROUPS
-+-------------
-+
-+A remote group is a named list of remotes configured via `remotes.<name>`
-+in your git config:
-+
-+	$ git config remotes.all-remotes "r1 r2 r3"
-+
-+When a group name is given as the `<repository>` argument, the push is
-+performed to each member remote in turn.  The defining principle is:
-+
-+	git push <options> all-remotes <args>
-+
-+is exactly equivalent to:
-+
-+	git push <options> r1 <args>
-+	git push <options> r2 <args>
-+	...
-+	git push <options> rN <args>
-+
-+where r1, r2, ..., rN are the members of `all-remotes`.  No special
-+behaviour is added or removed — the group is purely a shorthand for
-+running the same push command against each member remote individually.
-+
-+When pushing to a group of more than one remote, Git spawns a separate
-+`git push` subprocess for each member remote in sequence.  Each subprocess
-+receives the same flags and refspecs as the original invocation.  This
-+means that per-remote push mappings configured via `remote.<name>.push`
-+and mirror mode (`remote.<name>.mirror`) are evaluated independently for
-+each remote, and a mirror remote in the group cannot affect the push
-+behaviour of other non-mirror remotes in the same group.
-+
-+The `--atomic` option is not supported for group pushes, because atomicity
-+can only be guaranteed within a single transport connection to a single
-+remote.  Git will refuse the invocation with an error if `--atomic` is
-+combined with a group name.
-+
-+If any member remote fails whether due to a push rejection (e.g. a
-+non-fast-forward update, a server-side hook refusing a ref) or a connection
-+error (e.g. the repository does not exist, authentication fails, or the
-+network is unreachable), Git reports the error and continues pushing to
-+the remaining remotes in the group.  The overall exit code is non-zero if
-+any member push fails.
-+
-+This means the user is responsible for ensuring that the sequence of
-+individual pushes makes sense. If `git push r1`` would fail for a given
-+set of options and arguments, then `git push all-remotes` will fail in
-+the same way when it reaches r1. The group push does not do anything
-+special to make a failing individual push succeed.
-+
- OUTPUT
- ------
- 
-diff --git a/builtin/push.c b/builtin/push.c
-index 7100ffba5d..6021b71d66 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -10,6 +10,7 @@
- #include "config.h"
- #include "environment.h"
- #include "gettext.h"
-+#include "hex.h"
- #include "refspec.h"
- #include "run-command.h"
- #include "remote.h"
-@@ -544,6 +545,123 @@ static int git_push_config(const char *k, const char *v,
- 	return git_default_config(k, v, ctx, NULL);
- }
- 
-+static int push_multiple(struct string_list *list,
-+			 const struct string_list *push_options,
-+			 int flags,
-+			 int tags,
-+			 const char **refspecs,
-+			 int refspec_nr)
-+{
-+	int result = 0;
-+	size_t i;
-+	struct strvec argv = STRVEC_INIT;
-+
-+	strvec_push(&argv, "push");
-+
-+	if (flags & TRANSPORT_PUSH_FORCE)
-+		strvec_push(&argv, "--force");
-+	if (flags & TRANSPORT_PUSH_DRY_RUN)
-+		strvec_push(&argv, "--dry-run");
-+	if (flags & TRANSPORT_PUSH_PORCELAIN)
-+		strvec_push(&argv, "--porcelain");
-+	if (flags & TRANSPORT_PUSH_PRUNE)
-+		strvec_push(&argv, "--prune");
-+	if (flags & TRANSPORT_PUSH_NO_HOOK)
-+		strvec_push(&argv, "--no-verify");
-+	if (flags & TRANSPORT_PUSH_FOLLOW_TAGS)
-+		strvec_push(&argv, "--follow-tags");
-+	if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
-+		strvec_push(&argv, "--set-upstream");
-+	if (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES)
-+		strvec_push(&argv, "--force-if-includes");
-+	if (flags & TRANSPORT_PUSH_ALL)
-+		strvec_push(&argv, "--all");
-+	if (flags & TRANSPORT_PUSH_MIRROR)
-+		strvec_push(&argv, "--mirror");
-+
-+	if (flags & TRANSPORT_PUSH_CERT_ALWAYS)
-+		strvec_push(&argv, "--signed=yes");
-+	else if (flags & TRANSPORT_PUSH_CERT_IF_ASKED)
-+		strvec_push(&argv, "--signed=if-asked");
-+	if (!thin)
-+		strvec_push(&argv, "--no-thin");
-+
-+	if (deleterefs)
-+		strvec_push(&argv, "--delete");
-+
-+	if (receivepack)
-+		strvec_pushf(&argv, "--receive-pack=%s", receivepack);
-+	if (verbosity >= 2)
-+		strvec_push(&argv, "-v");
-+	if (verbosity >= 1)
-+		strvec_push(&argv, "-v");
-+	else if (verbosity < 0)
-+		strvec_push(&argv, "-q");
-+	if (progress > 0)
-+		strvec_push(&argv, "--progress");
-+	else if (progress == 0)
-+		strvec_push(&argv, "--no-progress");
-+
-+	if (family == TRANSPORT_FAMILY_IPV4)
-+		strvec_push(&argv, "--ipv4");
-+	else if (family == TRANSPORT_FAMILY_IPV6)
-+		strvec_push(&argv, "--ipv6");
-+
-+	if (recurse_submodules == RECURSE_SUBMODULES_CHECK)
-+		strvec_push(&argv, "--recurse-submodules=check");
-+	else if (recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
-+		strvec_push(&argv, "--recurse-submodules=on-demand");
-+	else if (recurse_submodules == RECURSE_SUBMODULES_ONLY)
-+		strvec_push(&argv, "--recurse-submodules=only");
-+	else if (recurse_submodules == RECURSE_SUBMODULES_OFF)
-+		strvec_push(&argv, "--recurse-submodules=no");
-+
-+
-+	if (tags)
-+		strvec_push(&argv, "--tags");
-+
-+	for (i = 0; i < push_options->nr; i++)
-+		strvec_pushf(&argv, "--push-option=%s",
-+			     push_options->items[i].string);
-+
-+	for (i = 0; i < cas.nr; i++) {
-+		if (cas.entry[i].use_tracking) {
-+			strvec_pushf(&argv, "--force-with-lease=%s",
-+				     cas.entry[i].refname);
-+		} else if (!is_null_oid(&cas.entry[i].expect)) {
-+			strvec_pushf(&argv, "--force-with-lease=%s:%s",
-+				     cas.entry[i].refname,
-+				     oid_to_hex(&cas.entry[i].expect));
-+		} else {
-+			strvec_push(&argv, "--force-with-lease");
-+		}
-+	}
-+
-+	for (i = 0; i < list->nr; i++) {
-+		const char *name = list->items[i].string;
-+		struct child_process cmd = CHILD_PROCESS_INIT;
-+		int j;
-+
-+		strvec_pushv(&cmd.args, argv.v);
-+		strvec_push(&cmd.args, name);
-+
-+		for (j = 0; j < refspec_nr; j++)
-+			strvec_push(&cmd.args, refspecs[j]);
-+
-+		if (verbosity >= 0)
-+			printf(_("Pushing to %s\n"), name);
-+
-+		cmd.git_cmd = 1;
-+		if (run_command(&cmd)) {
-+			error(_("could not push to %s"), name);
-+			result = 1;
-+		}
-+	}
-+
-+	strvec_clear(&argv);
-+	return result;
-+}
-+
- int cmd_push(int argc,
- 	     const char **argv,
- 	     const char *prefix,
-@@ -552,12 +670,13 @@ int cmd_push(int argc,
- 	int flags = 0;
- 	int tags = 0;
- 	int push_cert = -1;
--	int rc;
-+	int rc = 0;
-+	int base_flags;
- 	const char *repo = NULL;	/* default repository */
- 	struct string_list push_options_cmdline = STRING_LIST_INIT_DUP;
-+	struct string_list remote_group = STRING_LIST_INIT_DUP;
- 	struct string_list *push_options;
- 	const struct string_list_item *item;
--	struct remote *remote;
- 
- 	struct option options[] = {
- 		OPT__VERBOSITY(&verbosity),
-@@ -620,39 +739,45 @@ int cmd_push(int argc,
- 	else if (recurse_submodules == RECURSE_SUBMODULES_ONLY)
- 		flags |= TRANSPORT_RECURSE_SUBMODULES_ONLY;
- 
--	if (tags)
--		refspec_append(&rs, "refs/tags/*");
--
- 	if (argc > 0)
- 		repo = argv[0];
- 
--	remote = pushremote_get(repo);
--	if (!remote) {
--		if (repo)
--			die(_("bad repository '%s'"), repo);
--		die(_("No configured push destination.\n"
--		    "Either specify the URL from the command-line or configure a remote repository using\n"
--		    "\n"
--		    "    git remote add <name> <url>\n"
--		    "\n"
--		    "and then push using the remote name\n"
--		    "\n"
--		    "    git push <name>\n"));
--	}
--
--	if (argc > 0)
--		set_refspecs(argv + 1, argc - 1, remote);
--
--	if (remote->mirror)
--		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
--
--	if (flags & TRANSPORT_PUSH_ALL) {
--		if (argc >= 2)
--			die(_("--all can't be combined with refspecs"));
--	}
--	if (flags & TRANSPORT_PUSH_MIRROR) {
--		if (argc >= 2)
--			die(_("--mirror can't be combined with refspecs"));
-+	if (repo) {
-+		if (!add_remote_or_group(repo, &remote_group)) {
-+			/*
-+			 * Not a configured remote name or group name.
-+			 * Try treating it as a direct URL or path, e.g.
-+			 *   git push /tmp/foo.git
-+			 *   git push https://github.com/user/repo.git
-+			 * pushremote_get() creates an anonymous remote
-+			 * from the URL so the loop below can handle it
-+			 * identically to a named remote.
-+			 */
-+			struct remote *r = pushremote_get(repo);
-+			if (!r)
-+				die(_("bad repository '%s'"), repo);
-+			string_list_append(&remote_group, r->name);
-+		}
-+	} else {
-+		struct remote *r = pushremote_get(NULL);
-+		if (!r)
-+			die(_("No configured push destination.\n"
-+			    "Either specify the URL from the command-line or configure a remote repository using\n"
-+			    "\n"
-+			    "    git remote add <name> <url>\n"
-+			    "\n"
-+			    "and then push using the remote name\n"
-+			    "\n"
-+			    "    git push <name>\n"
-+			    "\n"
-+			    "To push to multiple remotes at once, configure a remote group using\n"
-+			    "\n"
-+			    "    git config remotes.<groupname> \"<remote1> <remote2>\"\n"
-+			    "\n"
-+			    "and then push using the group name\n"
-+			    "\n"
-+			    "    git push <groupname>\n"));
-+		string_list_append(&remote_group, r->name);
- 	}
- 
- 	if (!is_empty_cas(&cas) && (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES))
-@@ -662,10 +787,70 @@ int cmd_push(int argc,
- 		if (strchr(item->string, '\n'))
- 			die(_("push options must not have new line characters"));
- 
--	rc = do_push(flags, push_options, remote);
-+	if (remote_group.nr == 1) {
-+		/*
-+		 * Single remote (the common case): run do_push() directly
-+		 * in this process.  The loop runs exactly once.
-+		 *
-+		 * Mirror detection and the --mirror/--all + refspec conflict
-+		 * checks are done here.  rs is rebuilt so that per-remote push
-+		 * mappings (remote.NAME.push config) are resolved against the
-+		 * correct remote.  inner_flags is a snapshot of flags so that a
-+		 * mirror remote cannot bleed TRANSPORT_PUSH_FORCE into any
-+		 * subsequent call.
-+		 */
-+		base_flags = flags;
-+		{
-+			int inner_flags = base_flags;
-+			struct remote *r = pushremote_get(remote_group.items[0].string);
-+			if (!r)
-+				die(_("no such remote or remote group: %s"),
-+				    remote_group.items[0].string);
-+
-+			if (r->mirror)
-+				inner_flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
-+
-+			if (inner_flags & TRANSPORT_PUSH_ALL) {
-+				if (argc >= 2)
-+					die(_("--all can't be combined with refspecs"));
-+			}
-+			if (inner_flags & TRANSPORT_PUSH_MIRROR) {
-+				if (argc >= 2)
-+					die(_("--mirror can't be combined with refspecs"));
-+			}
-+
-+			refspec_clear(&rs);
-+			rs = (struct refspec) REFSPEC_INIT_PUSH;
-+
-+			if (tags)
-+				refspec_append(&rs, "refs/tags/*");
-+			if (argc > 0)
-+				set_refspecs(argv + 1, argc - 1, r);
-+
-+			rc = do_push(inner_flags, push_options, r);
-+		}
-+	} else {
-+		/*
-+		 * Multiple remotes: spawn one "git push <remote> [<refspecs>]"
-+		 * subprocess per remote, sequentially.
-+		 *
-+		 * Options that only make sense for a single transport connection
-+		 * are rejected here.
-+		 */
-+		if (flags & TRANSPORT_PUSH_ATOMIC)
-+			die(_("--atomic can only be used when pushing to one remote"));
-+
-+		rc = push_multiple(&remote_group, push_options, flags,
-+				   tags,
-+				   argc > 1 ? argv + 1 : NULL,
-+				   argc > 1 ? argc - 1 : 0);
-+	}
-+
- 	string_list_clear(&push_options_cmdline, 0);
- 	string_list_clear(&push_options_config, 0);
-+	string_list_clear(&remote_group, 0);
- 	clear_cas_option(&cas);
-+
- 	if (rc == -1)
- 		usage_with_options(push_usage, options);
- 	else
-diff --git a/t/meson.build b/t/meson.build
-index 7528e5cda5..bd090627e9 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -704,6 +704,7 @@ integration_tests = [
-   't5563-simple-http-auth.sh',
-   't5564-http-proxy.sh',
-   't5565-push-multiple.sh',
-+  't5566-push-group.sh',
-   't5570-git-daemon.sh',
-   't5571-pre-push-hook.sh',
-   't5572-pull-submodule.sh',
-diff --git a/t/t5566-push-group.sh b/t/t5566-push-group.sh
-new file mode 100755
-index 0000000000..a7d59352b1
---- /dev/null
-+++ b/t/t5566-push-group.sh
-@@ -0,0 +1,160 @@
-+#!/bin/sh
-+
-+test_description='push to remote group'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=default
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	for i in 1 2 3
-+	do
-+		git init --bare dest-$i.git &&
-+		git -C dest-$i.git symbolic-ref HEAD refs/heads/not-a-branch ||
-+		return 1
-+	done &&
-+	test_tick &&
-+	git commit --allow-empty -m "initial" &&
-+	git config set remote.remote-1.url "file://$(pwd)/dest-1.git" &&
-+	git config set remote.remote-1.fetch "+refs/heads/*:refs/remotes/remote-1/*" &&
-+	git config set remote.remote-2.url "file://$(pwd)/dest-2.git" &&
-+	git config set remote.remote-2.fetch "+refs/heads/*:refs/remotes/remote-2/*" &&
-+	git config set remote.remote-3.url "file://$(pwd)/dest-3.git" &&
-+	git config set remote.remote-3.fetch "+refs/heads/*:refs/remotes/remote-3/*" &&
-+	git config set remotes.all-remotes "remote-1 remote-2 remote-3"
-+'
-+
-+test_expect_success 'push to remote group updates all members correctly' '
-+	git push all-remotes HEAD:refs/heads/main &&
-+	git rev-parse HEAD >expect &&
-+	for i in 1 2 3
-+	do
-+		git -C dest-$i.git rev-parse refs/heads/main >actual ||
-+		return 1
-+		test_cmp expect actual || return 1
-+	done
-+'
-+
-+test_expect_success 'push second commit to group updates all members' '
-+	test_tick &&
-+	git commit --allow-empty -m "second" &&
-+	git push all-remotes HEAD:refs/heads/main &&
-+	git rev-parse HEAD >expect &&
-+	for i in 1 2 3
-+	do
-+		git -C dest-$i.git rev-parse refs/heads/main >actual ||
-+		return 1
-+		test_cmp expect actual || return 1
-+	done
-+'
-+
-+test_expect_success 'push to single remote in group does not affect others' '
-+	test_tick &&
-+	git commit --allow-empty -m "third" &&
-+	git push remote-1 HEAD:refs/heads/main &&
-+	git -C dest-1.git rev-parse refs/heads/main >hash-after-1 &&
-+	git -C dest-2.git rev-parse refs/heads/main >hash-after-2 &&
-+	! test_cmp hash-after-1 hash-after-2
-+'
-+
-+test_expect_success 'mirror remote in group with refspec fails' '
-+	git config set remote.remote-1.mirror true &&
-+	test_must_fail git push all-remotes HEAD:refs/heads/main 2>err &&
-+	test_grep "mirror" err &&
-+	git config unset remote.remote-1.mirror
-+'
-+
-+test_expect_success 'push.default=current works with group push' '
-+	git config set push.default current &&
-+	test_tick &&
-+	git commit --allow-empty -m "fifth" &&
-+	git push all-remotes &&
-+	git config unset push.default
-+'
-+
-+test_expect_success '--atomic is rejected for group push' '
-+	test_must_fail git push --atomic all-remotes HEAD:refs/heads/main 2>err &&
-+	test_grep "atomic" err
-+'
-+
-+test_expect_success 'push continues past rejection to remaining remotes' '
-+	for i in c1 c2 c3
-+	do
-+		git init --bare dest-$i.git || return 1
-+	done &&
-+	git config set remote.c1.url "file://$(pwd)/dest-c1.git" &&
-+	git config set remote.c2.url "file://$(pwd)/dest-c2.git" &&
-+	git config set remote.c3.url "file://$(pwd)/dest-c3.git" &&
-+	git config set remotes.continue-group "c1 c2 c3" &&
-+
-+	test_tick &&
-+	git commit --allow-empty -m "base for continue test" &&
-+
-+	# initial sync
-+	git push continue-group HEAD:refs/heads/main &&
-+
-+	# advance c2 independently
-+	git clone dest-c2.git tmp-c2 &&
-+	(
-+		cd tmp-c2 &&
-+		git checkout -b main origin/main &&
-+		test_commit c2_independent &&
-+		git push origin HEAD:refs/heads/main
-+	) &&
-+	rm -rf tmp-c2 &&
-+
-+	test_tick &&
-+	git commit --allow-empty -m "local diverging commit" &&
-+
-+	# push: c2 rejects, others succeed
-+	test_must_fail git push continue-group HEAD:refs/heads/main &&
-+
-+	git rev-parse HEAD >expect &&
-+	git -C dest-c1.git rev-parse refs/heads/main >actual-c1 &&
-+	git -C dest-c3.git rev-parse refs/heads/main >actual-c3 &&
-+	test_cmp expect actual-c1 &&
-+	test_cmp expect actual-c3 &&
-+
-+	# c2 should not have the new commit
-+	git -C dest-c2.git rev-parse refs/heads/main >actual-c2 &&
-+	! test_cmp expect actual-c2
-+'
-+
-+test_expect_success 'fatal connection error does not stop remaining remotes' '
-+	for i in f1 f2 f3
-+	do
-+		git init --bare dest-$i.git || return 1
-+	done &&
-+	git config set remote.f1.url "file://$(pwd)/dest-f1.git" &&
-+	git config set remote.f2.url "file://$(pwd)/dest-f2.git" &&
-+	git config set remote.f3.url "file://$(pwd)/dest-f3.git" &&
-+	git config set remotes.fatal-group "f1 f2 f3" &&
-+
-+	test_tick &&
-+	git commit --allow-empty -m "base for fatal test" &&
-+
-+	# initial sync
-+	git push fatal-group HEAD:refs/heads/main &&
-+
-+	# break f2
-+	git config set remote.f2.url "file:///tmp/does-not-exist-$$" &&
-+
-+	test_tick &&
-+	git commit --allow-empty -m "after fatal setup" &&
-+
-+	# overall exit code is non-zero because f2 failed
-+	test_must_fail git push fatal-group HEAD:refs/heads/main &&
-+
-+	git rev-parse HEAD >expect &&
-+
-+	# f1 and f3 should both have the new commit — subprocesses are independent
-+	git -C dest-f1.git rev-parse refs/heads/main >actual-f1 &&
-+	test_cmp expect actual-f1 &&
-+	git -C dest-f3.git rev-parse refs/heads/main >actual-f3 &&
-+	test_cmp expect actual-f3 &&
-+
-+	git config set remote.f2.url "file://$(pwd)/dest-f2.git"
-+'
-+
-+test_done
--- 
-2.53.0
-
+    mingw: support UNC in git clone file://server/share/repo
+   =20
+    Extend the parser to accept file://server/share/repo in the way that
+    Windows users expect it to be parsed who are used to referring to file
+    shares by UNC paths of the form \\server\share\folder.
+   =20
+    [jes: tightened check to avoid handling file://C:/some/path as a UNC
+    path.]
+   =20
+    This closes https://github.com/git-for-windows/git/issues/1264.
