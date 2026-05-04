@@ -1,66 +1,67 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B2C3B9600
-	for <git@vger.kernel.org>; Mon,  4 May 2026 12:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA9D3CE4BF
+	for <git@vger.kernel.org>; Mon,  4 May 2026 12:13:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777896596; cv=none; b=oh/vN1qGPyNXV/E1g3nTnzwIij2mBadzzypPeWsdQ6Nq0Inq7NuQVtBxpL/nUlhlHUMzcoTL+RqlC3D4OXYB4La4lZPWU5zVDd/tJwfVQe+/AF8hwgHaSFghRa1auL0v9mLZf65K1P0MU95FIc9/z3uqXrOdeAW2QRlGOPhOQ38=
+	t=1777896814; cv=none; b=gq7Y/51h9aG+HGolUeSYazVeVRS9mz7ozXVxa02nMeLHslqIMSn5Y1FFTFEOOl9jSaroMpsmdY1GUSotc+xAn3Vn/YniIUoB4VrqKtBfSne4qqD+2zTAv/LGU54nGyHE9nG6AgEeS/5qE4e++BI3NtUVSVAFPRTJPZaG/NKtkyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777896596; c=relaxed/simple;
-	bh=QJA2xsxp4+uEFFZnrn/mi7y2wO3VeNWa1jF9IwTrPeE=;
+	s=arc-20240116; t=1777896814; c=relaxed/simple;
+	bh=CvWLUza6lOUrXDEwIMbdbdYrQW3lu3QDhuFWRkG+lqo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UXLNRNN9S+QYpGOaoK9iNaFuCT49yuzzZSdFZ59JqGOk1rmDzQTZRTO4qOnXx7m5dhIEFVJbZ7p6jytNtQtsGfizQB8Wb/+Duv6/Jej23sEFlAdsivlCM6B8eq94grp29mSKctI43SYmClHHLp9JHjGG+zTYVx/J1MjsG5QQxzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bC/7SoAh; arc=none smtp.client-ip=209.85.219.46
+	 In-Reply-To:Content-Type; b=ofyLrTsuMu8HKWxKGEGW0wXSbz64F+8zKlIlyWTQY/Fjopp5j1l2hjb6CH80aW58VAp1+tbekMmY59H5O98uX2YTmmXz/kERbYeu/0cfWW3q2nphaegt8p6QgRUfO6umZlQGs+hol9ezH/fnmAPbWN/fIA5hWBmvTuBr34u6e/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I6dsAwjm; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bC/7SoAh"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8b7ec7bedcbso4511586d6.2
-        for <git@vger.kernel.org>; Mon, 04 May 2026 05:09:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6dsAwjm"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-50e594413c2so24540781cf.0
+        for <git@vger.kernel.org>; Mon, 04 May 2026 05:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777896594; x=1778501394; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777896812; x=1778501612; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tFpf9mEvl7xTZSDYC8EaXaUcl4C9Du2mcb32h4YYyz8=;
-        b=bC/7SoAhb7psVkfJRIA2z1E/VkriMBmBCfOeQbGKpaid8Wr8vM82iOwUAiu4Ztx4wI
-         II1YUVygb44LUtctw9x63diFb0CcS3nOEtCsbzeyQTXFGm3qccoBrvDSjYHwPBjVnOXk
-         6+NKcK2P92Xd1zY9Usri1PQO8FEZMY7ll8v+++Xd9bnpY7p+18lop0HnBdFALWaoT3/s
-         kBDFQhdIjbqPHhRyPXtmsXu6wLukS3f9DvRw34C7FNHOu3u9SgzT18jQdNNp4rrglp4x
-         7Bk1XM5koXQV/JedjbQgBebDfTReaDwMit9A/vIjeaSR0Pc19hIAY89vWmEA3LUnT6zW
-         b1Sw==
+        bh=Uhlk7RQj/S+BSOj1JC1QUntkQLSjsm4078i0cnI8IZE=;
+        b=I6dsAwjmTaYS21qgKiS1HZ5bSTLF5YYyndxzIBhXhgPU3ndxa+QKw29An7SgfWfMCI
+         McDlPpdgqyN4bCL2aYadDSo6hqxIOp8zBij9suJG3rqH9+vLfV8auvY4sqXV2CUFNpof
+         /YSXqYZfx5D3ZKuqs1l/YgWMYMosbYhrNsh0yKw0ZAuRNWt8Tm+dwRVIGtIediLut7wt
+         RqQVW/8ciGCa5k29eFYIwfFdvAHK7ZwOWG03Ax69ntMd9jnjZ0caQyPKYfqgpaSVmTdZ
+         RYxbfUEU9UnfX4UvkJCyghVBy9dLm2crmeU8PJyAIliiNKKdhCO/iCGGBxKahxtMHqla
+         Tvvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777896594; x=1778501394;
+        d=1e100.net; s=20251104; t=1777896812; x=1778501612;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tFpf9mEvl7xTZSDYC8EaXaUcl4C9Du2mcb32h4YYyz8=;
-        b=QUtEK4Wq/NSbkxEFgUlhYs9jzBW9ZIXTwvls6Y3So2FqwCPVGVcaHn4zhJZQzJ3/vS
-         8mXQpT+M+Fhl081/5+oerY8eKZEisYLGXeJUl50XcapIGAoKIuw2369+lyZzrwBzMx1B
-         l8gRACpVVCUSQQDL+wHabjqPMNUXVkzZk71Zl68kostVLwafZ3STfv0NOW03PpJz0bnv
-         KroNdrhWXbzBwXvV/f3BtkPxkBCrLBdNxCmhVJeAqhrh7YG25I659XS/b3FQQSYJam0Y
-         sXrmxCqFlVcFbEY3LP9p/8TPuTi0kQlZ2nt+XdbciV1XEPIFrmxAbBlhssc8ZsBGhD1J
-         7bvA==
-X-Gm-Message-State: AOJu0YxXcLalmSqHOUAnxjOz111UhX+kS9S2O6K8qyxmCRh/sEvUIlZ7
-	KiQKhZlEzUG/KsAZpqe0a54HMutrkKTEeJEPN/4/10CymbuOam40T4Iu
-X-Gm-Gg: AeBDiesWbLkJYT+GVuXR5oOphyhNdalfyA5v4imMG1SWnULLM6u2NImlYaUtTwsQxgg
-	UDw1WN0po2sVVV56baU0l+9nf4db6SX/HG43woiDBgDIEKfky5LjdHsdN8hQ2+NdYws2+SOQWs7
-	TG6FoM/jCTWmmepyRy1et+yJ9kXLt/aPT8XhWF0j0mJHeDMMIfySZcLMeRIrO7fj71BPlnuYUc0
-	ka7/sEWTLkfLSC3ZPv3zgRLL1XxQqW+KVLXhh6oeNTbgq86LFah6+TC67v8zP09ShxSICDQlQdq
-	FexAKITxx2odg9ES7yvex5tUvQgEQdoNUwWrWr6I/UkngZ3TVaINGY+jaw3P0BcAbn/0lTe7I0t
-	BNU/o4wipWYD3I2DQ2wsIyNTpaLJ6WrAyCzalhBwBcsP6hw4+u4tzLXiNr//ZCbYRWEANDhlSRL
-	ZqsyTFYchx12toJJWsoIuH+9FfV6n0MrbCRw+9d/YbmTLU3ErcUvhYZqagqXHs/YsoNBnMryXDY
-	tef2+Xo
-X-Received: by 2002:a05:6214:20a6:b0:8a0:d08c:a721 with SMTP id 6a1803df08f44-8b666cdcd72mr180810706d6.22.1777896593690;
-        Mon, 04 May 2026 05:09:53 -0700 (PDT)
+        bh=Uhlk7RQj/S+BSOj1JC1QUntkQLSjsm4078i0cnI8IZE=;
+        b=QB0JmKdYoSt4fH3brj23/jEamHqCvu3/55Dr98QZaS3lOdWpYZRBYGngdK7oFzDbxQ
+         1g+LaYWLiRQIU/R9UKtd1O7lNvRHdkaLVgYCoDZQ9nR7iTiBEWMF4o1G08clODkBmB6E
+         DNQe1Io0On/kV6rHQwDjqmJellUG1dradsscO8xh4tTL4TkLPxbCvOcf1N0ZuJJGrzt5
+         HXW4BjCfZarC0TNLj0qB6d9a5nFsmgFppDs7P5zKtu/j+QVspYGxShzmii0GbuQBAM3n
+         dk9LDbQp1rPcNtspRRRkrNsN37ALKXD8iV969cOIV9goHLRXrceWmk0H0/8NckTVCAc+
+         UpAQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9DTS6LKK2G1ZVnnqMUNfmIVSixFU5RlTgABAT5t/V/2rUo9fftNTjRm3+mfXVyg161GfA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw59OGdvrLMV47dm2QbNYIqjtg0UPpTjVRfq1A1ZCo0JUNfYNWw
+	yfSKg8VPUnCg7ikL4giM6QNvLOnjvfGSkL6h30fwLvI54hEbnZwX0N9ttbVNb2/h
+X-Gm-Gg: AeBDievi73FtYICrLd1xFbAQs73HTEvIgcMxBUa8dbv37hqp13KjJ2QV2XDS8BSxsME
+	/DdAGJ9N2SyxPt+Kikw2XzSNGesMAMsV+7RjdtMQiWqqoaIOTRO9RxU9Yn0o3+LqXUsbTa4/REi
+	rQJJ69moUt4u+2Pr5aU4uTHU51PjZ+8/yTPK7A6odQTjkWXs3QPvSfVK+nO8eN6Mp/PrBA4NSy9
+	gE3K/rcf6CvlahFdP9UGwChUMhyBbIjOwPjrOF8CuWp0qWNMwZ7S4Au6WK7p0oPyQwrhCcxem8+
+	B2Z4kt4nSfIWl8Zpv7zeI6hg6XLGt5UXnsSs6FVmJl3TcuobeP/tYc+fxGf/wgrMhyVAFbHMPKT
+	bisfGwVxgIKeV35DK+vqUxxfSJJQaKZfunAfa12jy/AQY54ugtLV3YfU4n/Zz1OlF6BTBe3us++
+	de/rMLPM5ik9dw4QiMrS9YI2biaOw+yJy7rYMLeWGYW5990q7FQL/Ex050+fNxroOdR0XCvzanF
+	zgOyfRH
+X-Received: by 2002:a05:622a:4a8f:b0:50d:7ca3:379a with SMTP id d75a77b69052e-5104b442bf4mr120547081cf.3.1777896811942;
+        Mon, 04 May 2026 05:13:31 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b534ac8ef3sm122288906d6.0.2026.05.04.05.09.52
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51040b33248sm95312051cf.18.2026.05.04.05.13.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 May 2026 05:09:53 -0700 (PDT)
-Message-ID: <eb8b4a7b-e241-4249-bae1-8f631bf7bd2d@gmail.com>
-Date: Mon, 4 May 2026 08:09:52 -0400
+        Mon, 04 May 2026 05:13:31 -0700 (PDT)
+Message-ID: <e70eefe6-9c18-4643-a995-69fe99edd1e3@gmail.com>
+Date: Mon, 4 May 2026 08:13:30 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,86 +69,76 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] backfill: die on incompatible filter options
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
- johannes.schindelin@gmx.de, johncai86@gmail.com, karthik.188@gmail.com,
- kristofferhaugsbakk@fastmail.com, me@ttaylorr.com, newren@gmail.com,
- peff@peff.net, ps@pks.im
-References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
- <22db528d0c5e6db71664f071dca97ab218f4ba45.1777731354.git.gitgitgadget@gmail.com>
- <xmqqbjewrtek.fsf@gitster.g>
+Subject: Re: [RFC PATCH 0/7] pack-bitmap: resolve various `--path-walk`
+ incompatibilities
+To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+ Elijah Newren <newren@gmail.com>
+References: <cover.1777853408.git.me@ttaylorr.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqbjewrtek.fsf@gitster.g>
+In-Reply-To: <cover.1777853408.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5/3/2026 6:59 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 5/3/2026 8:11 PM, Taylor Blau wrote:
+> (Note to the maintainer, this is built on top of 'ds/path-walk-filters').
 > 
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> The 'git backfill' command uses the path-walk API in a critical way: it
->> uses the objects output from the command to find the batches of missing
->> objects that should be requested from the server. Unlike 'git
->> pack-objects', we cannot fall back to another mechanism.
->>
->> The previous change added the path_walk_filter_compatible() method that
->> we can reuse here. Use it during argument validation in cmd_backfill().
->>
->> Signed-off-by: Derrick Stolee <stolee@gmail.com>
->> ---
->>  builtin/backfill.c  | 2 ++
->>  t/t5620-backfill.sh | 8 ++++++++
->>  2 files changed, 10 insertions(+)
+> Between other tasks, I have been working on trying to integrate
+> `--path-walk` within GitHub's infrastructure. In order to do this,
+> `--path-walk` must work with features that GitHub depends on, such as
+> reachability bitmaps and delta-islands (along with filters, shallow,
+> etc., though more on that below).
 > 
-> Another topic adds a helper function to check for many incompatible
-> options and calls it from here.  When I merged this topic, I made an
-> semi-evil merge to move this call to that function (with necessary
-> adjustment to the parameter).  Please sanity check the resolution I
-> made in 'seen'.  Thanks.
-Thanks for alerting me about this. I do think there is an error in
-your merge. Hopefully the tests I wrote in this series caught the
-mistake.
+> I had been sitting on these patches for a few days in my fork before
+> Stolee sent his series in [1] which resolves incompatibilities between
+> the `--path-walk` option and various filter types. Since I figured that
+> others are working in this area I wanted to send a reworked version of
+> my series for a couple of reasons:
+> 
+>  1. Since reviewers are already looking at this area as a consequence of
+>     Stolee's series, this topic should be slightly easier to review
+>     while the area is fresh.
 
-Here are the last lines in your copy of
-reject_unsupported_rev_list_options():
+I agree that we should review both series together. It's been a while
+since the original path-walk API series, so it may require some refresh
+of all its nuances.
+ 
+>  2. In case Stolee (or others) are working on resolving the
+>     incompatibility between `--path-walk` and either delta-islands or
+>     reachability bitmaps, this series can either combine with those (if
+>     any) or serve as inspiration (if others are in the process of
+>     writing such series).
 
-	if (revs->filter.choice)
-		die(_("'%s' cannot be used with 'git backfill'"),
-		    "--filter");
-	if (!path_walk_filter_compatible(&revs->filter))
-		die(_("cannot backfill with these filter options"));
-	if (revs->filter.blob_limit_value)
-		die(_("cannot backfill with blob size limits"));
+I was _not_ working on bitmap compatibility, but I'm grateful to see it!
+> When writing this originally, I had borrowed the same filter-application
+> mechanism from bitmaps, which supports trivial filters (e.g., blob:none,
+> tree:0, and combinations therein). Stolee's series is a strict
+> improvement on that approach supporting sparse:<oid> filters as well, so
+> I reworked my filtering-related patches based on that.
 
-The last two options are correct, but they can't do anything
-because the first one causes the command to fail immediately.
+You have some new filters that I had not considered, so they are welcome
+additions. If you don't mind, I could add them into my series, as they
+may be more appropriate grouped with the other filter changes. 
+> The patches surrounding bitmaps and delta-islands are largely
+> unchanged from when I had originally written them:
+> 
+>  * Supporting bitmaps with `--path-walk` is mostly straightforward, and
+>    boils down to ensuring that the path-walk-specific object callback
+>    indexes any commit(s) it sees for bitmapping.
+> 
+>  * Supporting delta-islands with `--path-walk` required a bit more
+>    surgery, and involves propagating island marks for commits in the
+>    path-walk-specific callback, as well as recording tree depth
+>    information in the same spot.
+> 
+> I'm submitting these patches as an RFC, since (a) I haven't thought
+> deeply about the approach taken here and could very well be on the wrong
+> track, and (b) in case Stolee or others want to combine forces here
+> and/or coordinate around each other.
 
-This should have caused failures in t5620-backfill.sh, specifically
-the test 'backfill rejects incompatible filter options'. Indeed, I
-get this error output when running on that commit:
-
-+ test_grep cannot backfill with these filter options err
-+ eval last_arg=${2}
-+ last_arg=err
-+ test -f err
-+ test 2 -lt 2
-+ test x! = xcannot backfill with these filter options
-+ test x! = xcannot backfill with these filter options
-+ grep cannot backfill with these filter options err
-+ echo error: 'grep cannot backfill with these filter options err' didn't find a match in:
-error: 'grep cannot backfill with these filter options err' didn't find a match in:
-+ test -s err
-+ cat err
-fatal: '--filter' cannot be used with 'git backfill'
-+ return 1
-
-This does make it clear that I should add a new test in t5620 that
-tests the 'sparse:<oid>' filter now that it is compatible, which I
-missed in v1.
+I'll definitely take a very close read of these patches, as there are
+some interesting interactions here.
 
 Thanks,
 -Stolee
