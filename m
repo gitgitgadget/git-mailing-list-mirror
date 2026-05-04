@@ -1,67 +1,67 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EB2353EEB
-	for <git@vger.kernel.org>; Mon,  4 May 2026 12:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C591212FAD
+	for <git@vger.kernel.org>; Mon,  4 May 2026 12:32:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777897831; cv=none; b=C2e+ZoUfzKIQgWNZxhFX92a2Qr8Fs69vb8rdczVhrpR10sJwANNSrDsSuRCyM1vS3KXdO7KZtJo9nkdcz6nFBnCH+/p8sDekCaMW7a28skpd9DJuzJ+QkwNoe8gQbgyZXPhePTqODu4zV2Esq/oeErFZbyIS/i6K03igxSy1g90=
+	t=1777897972; cv=none; b=ZUlcCMbXvs+PBVnOECNu17Hoyws7hspOGNVR62Nx+ydNzyj6kajcIPwMmlzi0SmV16kUsTtqEW3vevMPloH6I4/cJ7bVmRtZgJxT1+KDMWHOGJUeUAhWlx8ZcJRW2uz7P+d1T+wzwITWB+nPQgYDZ956T/f/gOZmGKTC6cWdW0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777897831; c=relaxed/simple;
-	bh=yB4ADApCNmVTnoUK7AXeeXVAL1XtmE7xOpyTZPnrhAE=;
+	s=arc-20240116; t=1777897972; c=relaxed/simple;
+	bh=KRmA/w0Ftl0KIu/brc3R3JqSrHPGoLYuhDjysk3VIuQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kWw7pDaIF9qJPRBMP7R/v6YYu0iOyhXS9TzkuQYkwt/Z9Q/35FgiPMAIArUYLxDdfn5PzXxxFY/c/a1gHKygMWNtdSTJmxzqZOhcN8p1UVOzsnQCqgLhFyHCqcm4DFbEQ/MK2vDSTw82ce63Ve2ZfUaJqGl+LY8Qd2HczRwvrA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sfirgGYt; arc=none smtp.client-ip=209.85.218.47
+	 In-Reply-To:Content-Type; b=QEhhnz/c2Z+6JlKVH3FxxYmwcw7Ux5eow4DKn6nxiQ+S6hkBpNwqxMIrxmb2oBPWZ5GlX3z88/bkq3zlDxhjkql/2n2cEfU4yEMMqncMcowJuxlty0/xZwKbw0Irkk1utmYZrZZ/5ofoTC3lBx6ipOXxwvz14X98EFKkInku4/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PcQKCvJ+; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sfirgGYt"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ba922426c5cso700247966b.3
-        for <git@vger.kernel.org>; Mon, 04 May 2026 05:30:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PcQKCvJ+"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8d65f4073bfso560484385a.3
+        for <git@vger.kernel.org>; Mon, 04 May 2026 05:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777897828; x=1778502628; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777897970; x=1778502770; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yB4ADApCNmVTnoUK7AXeeXVAL1XtmE7xOpyTZPnrhAE=;
-        b=sfirgGYtqOtpgl8p0Ppe5fWfWngPBepAGhaCAPYeFWUU51D9SBoUl64rXUVtcTzPpU
-         rL+vjnCZzI5ue9uAtw+QUsobQJEO3ONTBrZnpppDma9vFBDyP7cxHLFYtdIsIL+Y8ewf
-         giNz8N32gm/MJ4TbHNN4u9mTBr9vw9SJx6taBtMMMwcU3xpL7yaUdWbjJEYlvAWrCtV3
-         oGsWI8u8u9VUTbMobZ5spH9xQd4ZCX5MlRhh1vpb3/tm6frMlPqFRxfC9whupSuGTMkY
-         k4mRDOme8A3KaaUge0QW/gBnQZDBKTW7upC0gDllabxOJICKPNi9bPAra8kjasA5ai9U
-         Ar7g==
+        bh=Lc6Quo+zgzv0k3nPnd9lRfk7rWtDt1F4oNyQaoiLqvM=;
+        b=PcQKCvJ+oGiGIvqIfjKYwkgRfMFsN2AQMnwCG+a0GsBdz5zzcPd0hrQ7uQvGMt4Nq7
+         lA2ZGlGy6Xi/tMbziRAs7ub9NnvRFCTVleAty9c2A6uFtrseYq6vi6LNuhDXiVAqEjjV
+         od19WjMujNktmKOIMgmqFcgYd422Qm01jpP14UoPShdYoAk0lVJC5KJavzHOcmZcOvLj
+         PUqgzevyszN4aPAUsBPCc3ria7446Q9omRnooq8TQ36Dx/Iur8GuHR+7qbD+G5I7ieSD
+         /qUCj4Y3bRBOMmivb5nWnVvs3y+qvvvR8Rnc1ZsdnGlvgi7QN+1P2uHBsndL4J59MnX0
+         xP2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777897828; x=1778502628;
+        d=1e100.net; s=20251104; t=1777897970; x=1778502770;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yB4ADApCNmVTnoUK7AXeeXVAL1XtmE7xOpyTZPnrhAE=;
-        b=s3czYmYnCGxUwGo+q9Wx8z6SLndtAL4V1XFtDdR0r19R5wSZuJJl7zD95SJzolhy9e
-         AtkuLrGULsQastbnhGfncNX5lnvXumS4QHE9z4kx6q+XvCkdfNbfoUBg9ioYpUjMQUbV
-         pPbOrzf86/e3ahvdj9OB0NpRRggRex5nXLagXEbcpwdqqVaIb0zPScxpskUXHXVUZa4N
-         KIYCMMPVHbAaWhuIP4Zp4d9BvyxkXuTKy5FRNbCuVbUjYk5YC/QeULTU7po1iN0V0z9j
-         RhcCTE2hrlEKZINq8c7G/gWEevSxcLlxEWXbiCwkr2YJYevF50DVSkim+2BeRre8L9PZ
-         SDeQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+fPZIsvXE4WAwNniuf/B3rjKxXjOhAKH2XbgsI/tvuccXPa4dv228pOcJIKrzz6n13Lxo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDDr9tL2G6wsUuw9znyQ9XOeurReob+wx3R+rduxvG+e7Zm+Q6
-	AhwZ7DNJ43VP49mZq7DtD2FcvrUaWDGumO4wZgpcwDEWKyedFpqasNsK
-X-Gm-Gg: AeBDievTDf8Dnkgj3cGfaVQd+rxEiV4W9vsxMMMI1UrAaARlCYyQ2FB9YFRQqn43P2R
-	G32hPsZ10jMIRrkE87KjCWXr3UVgr2SuNUAPmvYWxBMtpxKCV93VDUu/FOlNSVhU56G6Cc1AhkQ
-	BWm2HqpxpASkZ1hM/BjlIczG5h+zU6c/B9JAzGPAf179dSCK2kfZfJNocFx0LymTeZZrqPba8BU
-	txycRQfQ71JzP7AzkwIxvNMU9CqadON9KTQ1/KMYJKaZsCdE72+yt32drlVmeKsHMIdmiTbxC/v
-	fgEcllyD1wdOCX1ImJ+CqkhjKPVNaHIwRO+P8uR2c+obtJaXo8wI+dsSfb+eY4Gp1aNsP1NIF0c
-	20KOPO0iqT4+DJQslTHb1uAEh6ZSeO1or00W9xuhkvLBO8A10IUZvaBzYHk7MIXwQtbAHImjzTF
-	aADPiAJ0z3JdO/eTxI5ISKcrfgfdC2KFgryIOEqSECmIuNK660r1nzUVm0OVGi6v/qXd1xiDjap
-	2ZazKmJamsyZfGjj44=
-X-Received: by 2002:a17:907:a2c8:b0:bb9:1a36:f811 with SMTP id a640c23a62f3a-bbffaa2e45fmr502195266b.9.1777897827627;
-        Mon, 04 May 2026 05:30:27 -0700 (PDT)
+        bh=Lc6Quo+zgzv0k3nPnd9lRfk7rWtDt1F4oNyQaoiLqvM=;
+        b=nj+64mrFfC92kqFixM+UbK1AbLv1QiUd/pwAXxG+dH8SYck9rD4BXmtUs1Sy5R4WmG
+         QigsOZrIZpvnlIRRvvBHNT4kaOYof1XTV7Ta3BinMgyvb1wxqL6/lrBoZEEte+w3i4ug
+         h4Dg05k19REYkicQoMb4i7R6anKTdFj8C3M1zyOnZZBROBMlaABL6xMyCeC7JCv/rdg2
+         Y+t6J0g+HBd526zYchW+PhnblF5nWNG8j0TlOpLTpbsxkhCX8UyPI4UlfK1/iInU3Naq
+         dxYn+dncOXwc9Z3P1VPCLQTSNymOsBmIZMyKLNvVo9KBkXzysFCn2JWzLycVlBTSOfio
+         XluA==
+X-Forwarded-Encrypted: i=1; AFNElJ/Wu2bQhBHIVr0zaup9lbZ2MMRPFXWNOcgr0gX9pZuLmtopmcAXFZVG3yJWrt8Zb3xfOME=@vger.kernel.org
+X-Gm-Message-State: AOJu0YytEucX2KFePKoOYqzZ2TyDNILuekkIvVzQkZG7quv+/FLbEM8Q
+	cg0M08+QUsV0cn99zbnX0X0q3/WjvgdLPnr8N5EHJPWkcNxZF2sO04Tp
+X-Gm-Gg: AeBDiet+Rr37iNt/1ou5kDuD+7M61hZmL8979279zzbzLjHjwogNfUno16BZ82imC21
+	+PbQFueu4Hkym2Vz9A0qF3yY78FZ2sc0V4igrglYKMFRNoGsbCJfWpSiQkekjs85ud+4kOmxVIT
+	PXoW1HnW8fNq0qtGf6mXET4Tq2pEyWsXwCtKTrDMin/gYqc/KIDPKEfS4THRD7f5q3CW4JaHsDA
+	xCqFPYPOipXsGGU2BRZPxIIObnDhPA66KqS9bTrtP85PCzUKM8ZaVZzmCs3OMNvflyKyb6DSk5r
+	hMXMUnRq6CEPdFDmfrGKDhtq/cBqkXjGYUoywF1K9oWWT4AVsgIz1FAUWxZBQC04ZlFAzQ8GLO/
+	vZWNWvHH7LW9jMuPSDc3qThX9M3wlDg/f6Z/re2XrLqCFuS3RewBRt7hQsTzopBR3mTcC6jnC9S
+	abx9dYdizIugW95a51ZTkGBPXXzZU5+eSTKkQwPEJOPRy5kwkoghK4qgg8+5DVMycxcYMR5Q35y
+	rVMAwUb
+X-Received: by 2002:a05:620a:25d3:b0:8ed:e1d4:1644 with SMTP id af79cd13be357-8fd15ade523mr1343065185a.3.1777897970518;
+        Mon, 04 May 2026 05:32:50 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bbe6aa4d524sm399844166b.26.2026.05.04.05.30.25
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c253c17sm1126700385a.30.2026.05.04.05.32.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 May 2026 05:30:26 -0700 (PDT)
-Message-ID: <bfb6d757-7b13-4267-9fd5-8739c7395378@gmail.com>
-Date: Mon, 4 May 2026 08:30:23 -0400
+        Mon, 04 May 2026 05:32:49 -0700 (PDT)
+Message-ID: <f8a376a2-33dc-4e9a-9365-ae453c1452c5@gmail.com>
+Date: Mon, 4 May 2026 08:32:48 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,42 +69,54 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/7] path-walk: support `tree:0` filter
+Subject: Re: [RFC PATCH 3/7] path-walk: support `object:type` filter
 To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
  Elijah Newren <newren@gmail.com>
 References: <cover.1777853408.git.me@ttaylorr.com>
- <e1b7fd3cb2a2bba5f6404ac5f8ac3487a46d51b5.1777853408.git.me@ttaylorr.com>
+ <db46c1248ece57476b369a9bff920facab24be04.1777853408.git.me@ttaylorr.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <e1b7fd3cb2a2bba5f6404ac5f8ac3487a46d51b5.1777853408.git.me@ttaylorr.com>
+In-Reply-To: <db46c1248ece57476b369a9bff920facab24be04.1777853408.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 5/3/2026 8:11 PM, Taylor Blau wrote:
-> The `tree:0` object filter omits all trees and blobs from the result,
-> keeping only commits and tags. Consequently, this filter type should
-> has a fairly straightforward integration with path-walk, as the decision
-> to include an object depends only on its type and does not depend on any
-> path-sensitive state.
+> The `object:type` filter accepts only objects of a single type; it is
+> the second member of the object-info-only filter family that bitmap
+> traversal already supports.
 
-I agree that the implementation here is straight-forward. It's something
-where I could easily see wanting to disable the path-walk API because it
-is no longer contributing much value, but perhaps the caller wants a
-consistent callback that provides all commits and tags in different
-chunks.
-> Non-zero tree-depth filters are not supported. Those depend on the depth
-> at which a tree is visited, which is a path-walk concept the filter
-> machinery doesn't currently share with the path-walk API. Reject them in
-> `prepare_filters()` with a helpful error and let pack-objects fall back
-> to the regular traversal, the same way it already does for unsupported
-> filters.
+...
 
-I think that this could be remedied with some tweaks to the internal
-methods and data within the path-walk API to track a depth. This could
-be handled later, if there was enough demand for nonzero tree-depth.
+> But there are a couple of side effects of the "trees off, blobs on" case
+> that need fixing:
+> 
+>  1. 'setup_pending_objects()' previously skipped pending trees as soon
+>     as `info->trees` was zero. For 'object:type=blob' the call site
+>     needs those pending trees: a lightweight tag pointing to a tree, or
+>     an annotated tag whose peeled target is a tree, can both reach
+>     blobs that are otherwise unreachable from any commit's root tree.
+>     Loosen the gate to "if (!info->trees && !info->blobs) continue" and
+>     similarly retrieve the root_tree_list whenever either trees or
+>     blobs are wanted.
+> 
+>  2. The revision machinery's `handle_commit()` drops pending trees when
+>     `revs->tree_objects` is zero (see the 'OBJ_TREE' handler in
+>     revision.c), so by the time path-walk sees the pending list
+>     after `prepare_revision_walk()` the tree-bearing pendings would
+>     already be gone. Fix this by setting
+> 
+>         revs->tree_objects = info->trees || info->blobs
+> 
+>     so pending trees survive `prepare_revision_walk()` whenever we
+>     need to walk into them. Path-walk still resets tree_objects to
+>     zero immediately after `prepare_revision_walk()` returns, so the
+>     rev-walk itself never enumerates trees redundantly with
+>     path-walk's own descent.
 
-The diff itself looks good.
+Both of these changes are very valuable bug fixes for the path-walk API!
+Thanks for catching the distinction here where we should still be
+walking trees in order to find the blobs we want.
 
 Thanks,
 -Stolee
