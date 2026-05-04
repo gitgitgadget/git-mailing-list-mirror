@@ -1,97 +1,124 @@
-Received: from mail.thalheim.io (mail.thalheim.io [135.181.61.171])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAF237DE85
-	for <git@vger.kernel.org>; Mon,  4 May 2026 10:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=135.181.61.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512363921FA
+	for <git@vger.kernel.org>; Mon,  4 May 2026 10:28:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777890483; cv=none; b=dmZNQR5VBmC0VNLLDZ2jDufGq74X+q2AuKJy5jAo7ZEFmv6tqR1NaNKYh9R8ygPEmcFnahy4Ai7SDHJFCN32RReoANSTPWBmAbUTkTO466dY732UHY3FNjjmMruu6ebU6rz3oGWCSA2M9ihmCrDnKKL1RNiVnckp1y8Bx5t2dgY=
+	t=1777890540; cv=none; b=EJwlHHp7jemfBfumRsgxtWDJpXaovshGZhQnqdVLcCj4vUk9r0jsZb27cSlWJOogUDDQn6ysmhihQxPVVXfuA6ReywryBGs1aLrJhQtH5Plp0Rwhlh+UUU05qO7VL8dEIwHkhUaNAp3tj1L37mZUdQJ7PQu4eOjglCwsgtPbo+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777890483; c=relaxed/simple;
-	bh=0w0oDWeLqLO+NRIlqwiQt9HwJFQBR8pxFNabvZ6WR+4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gYp98N5bLJQS34RF7+5HOZNdnxiBlw79NNvOav6pTDHnn5mKZ5p90yNhKmLpTaiWQKZQEwkErAB4pAu2RXGFauRHfmKl94s05E5DCWGCO2kn5yRauz4fKav9SqfEI1d89hYp2S4cBL1EPvocIvANf910SS2Nok5ZULYxVLsiFrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thalheim.io; spf=pass smtp.mailfrom=thalheim.io; dkim=pass (1024-bit key) header.d=thalheim.io header.i=@thalheim.io header.b=HoOEKGzs; arc=none smtp.client-ip=135.181.61.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thalheim.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thalheim.io
+	s=arc-20240116; t=1777890540; c=relaxed/simple;
+	bh=bb2nTAIVDAwlV3lwRNpFALakE7thX4/kQkjqhr3lf6U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=n8F7P7YX+pk9EPQ1iorP4Ny5/+eStGB1c7udbLBY5jc6DZp+K39U6RfFO+TEAbdx6wP+KsrJIwi58OMegSZ/0bx3e9w6TUwYsRe8T2y+Y/kJsKa/dPLYfg+qF74zuc0SB8Tst6s/w0P0k5iF3HHYQGr1rw/jXHPp33quPc96V8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kLw6bQgm; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=thalheim.io header.i=@thalheim.io header.b="HoOEKGzs"
-Received: from localhost (unknown [IPv6:2001:a61:2ae0:7401:c7d2:98c5:338e:745])
-	by mail.thalheim.io (Postfix) with ESMTPSA id ACD61D404EC;
-	Mon, 04 May 2026 10:14:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thalheim.io; s=default;
-	t=1777889675;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=oweITehqjOWI2lyCcbZAIuVFxBWR2yUfiVBT1DVCSjY=;
-	b=HoOEKGzs13bAwLWnqBqu7EfymliR/+983eGU++71Eq34uXqduTwJp0bN9kiuffVCtTsVGo
-	LlOFQfhV8R45AEesI2Qkj/HIQuUWp6XHzZG1hNOa3Xc8TtVKjqVVMHTB2ZLLMbbnPzSjgx
-	uaME+31ea/W8mXVeA/rWMSiE+UZ/hG8=
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=joerg@thalheim.io smtp.mailfrom=joerg@thalheim.io
-From: Joerg Thalheim <joerg@thalheim.io>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kLw6bQgm"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a858881ad2so3570948e87.3
+        for <git@vger.kernel.org>; Mon, 04 May 2026 03:28:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777890537; x=1778495337; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o3Ixhq9QHSURtkS6AwxoP8Uq2y1yF9XyV2t7u+RhNbs=;
+        b=kLw6bQgmukID9mknkhU6SLOBqZ92haRMsh/vwM8+PQfY8Ewv3gP6neWvw9szntIDBq
+         JH9kjIeJxSr+974xq+g03NqNgYKh31Hw384Tg6kYn0LZRco2m3YQT9jVjdJty3gu2nnM
+         1+rRGRdQlGe/lyQ4qvYFYHaalNFWzP5w5lf6R4KFyxMcDh6ONg08WKCDLSbHr3TipGcY
+         Esac3Ntrjc9oTU0CK1V389Oo1T7WGGy+np8SjTQpkp8zzjBRXMQGRYjgxiJu0tQVPQe0
+         Afk8kdsLuktUs9w6AbJd9AkZITsS+rQeoR2rHKvylfNFTP7sCcA4k4XBz5TnA52x3yD4
+         B5Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777890537; x=1778495337;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o3Ixhq9QHSURtkS6AwxoP8Uq2y1yF9XyV2t7u+RhNbs=;
+        b=Ui7wnhC3zXcNXvp7cMAkSoLWiComNahKLf/5iTP0mBDnULEVRMEKrtR777SndNTzw6
+         MlLFC2qp+Pm5OrtqE0rdDp5czST1e4yEvD0Kkzhi+e9s4wn4CeKFn+wAi0JZ0lB0lF6E
+         WHiZtHzg9S3JaRTjkcIOZXHeCGXP17ohttVmxjC5FCacJSqZ8bgv+rgkhPpHe4/zNo8l
+         NsQrNnFotjn0dTS5rZMvmBovI3qjOSez3J7hSMRlxZjlJJUfGXk0bp+4CnxdFppZiBgu
+         MDcFpjtGLVX9JnnGLljEJK1Y4NqUpbFbOOW2s2giUo/jcRM90140R4iNm5f9++g8Jksf
+         RyOg==
+X-Gm-Message-State: AOJu0YxTk4Hpm+71GK74+oWxqFLJ03wLT6/05hsSMt59A+ZlbYadHfgL
+	dCUoPsfNYjAUf+rVtQ/tPTlwjk56v2i+7idvCNnUMXQML9xAcAu+lsRtAuFang==
+X-Gm-Gg: AeBDievyLYXmCtzSlOIy4eZ//cPmS+1l0+d+d7RPfs5wWL3X6Vs3mycgd0e2MrLMzkp
+	XGtIuXfyDRF9BXMDBh+GJlLe7/UfBJi+NH+rXGx1NdQ5j0T6tm60+Rf6HGDHhUD2EjNHvnGNKBu
+	NXQM14v/sF6436XwdSni6Oj/Y93xzK/el5EJ4f4a0ZmUPWGZCnUOh5m+u9t2irBiFbrm4+ZoZbw
+	ifU6K6Pf/mTFXnsXzPG4IIepoq8tED02dhQXvTXkuSaEzgOqkzLXi0MFyompHtsKDsJVLU/VDf2
+	9L+TAZd2lGxLKRfcUP1nmWcCrKbTqwu80rfinHQZcxpnOU8gaXzLtFQLJ7AeOaxg/P3tUUelzrr
+	3HKHEE08bcKQ+Bi+z9qmeWNkFVKLNnj7m/pMkOFvrrrNS0AF8mWAkvd0ZJxpsSom9RXIECwJBqv
+	WxqwnvFWxUG/q1PnH8isUyb9PNRg0CQU3E04QQUKeO8XkraiCykTdsGM2cJA23Uaqj83JIZKdGs
+	L+GZMPr3slw9uaBbsXNw8O/g/t+prLl9q0ucoT3gbpjs31cOS/+IQy7zU3Jm2MlOssvX3Kwikg=
+X-Received: by 2002:a05:6512:3f06:b0:5a4:496:5bac with SMTP id 2adb3069b0e04-5a8631c3114mr2842376e87.36.1777890536709;
+        Mon, 04 May 2026 03:28:56 -0700 (PDT)
+Received: from localhost ([2001:2043:be0a:d700:5d74:cb35:863a:a32e])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3939a58fa47sm10320111fa.37.2026.05.04.03.28.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2026 03:28:56 -0700 (PDT)
+Sender: Erik <erik88@gmail.com>
+From: erik@cervined.in
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?J=C3=B6rg=20Thalheim?= <joerg@thalheim.io>
-Subject: [PATCH] t7703: ignore 'total' line when comparing ls -l output
-Date: Mon,  4 May 2026 12:14:29 +0200
-Message-ID: <20260504101429.340123-1-joerg@thalheim.io>
+Cc: gitster@pobox.com,
+	cat@malon.dev,
+	Erik Cervin-Edin <erik@cervined.in>
+Subject: [PATCH v2] Reintegrate: send "Huh?" warnings to stderr, not stdout
+Date: Mon,  4 May 2026 12:28:44 +0200
+Message-ID: <20260504102844.74734-2-erik@cervined.in>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <ae896PlyiYeqldFN@mbp>
+References: <ae896PlyiYeqldFN@mbp>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jörg Thalheim <joerg@thalheim.io>
+From: Erik Cervin-Edin <erik@cervined.in>
 
-The 'total N' header from ls -l reports the block count, which on
-copy-on-write or compressing filesystems such as ZFS can change between
-two back-to-back invocations even when the directory contents are
-identical. The MIDX retention checks introduced in 6ce9d558ce
-(midx-write: skip rewriting MIDX with --stdin-packs unless needed,
-2025-12-11) compare full ls -l output and thus fail spuriously on such
-filesystems. Strip the header line before comparing.
+In show_merge(), the "Huh?: $msg" warning -- emitted when a
+first-parent merge subject does not match either "Merge branch '...'"
+or "Merge remote branch '...'" -- is meant to go to stderr, but the
+redirect
 
-Signed-off-by: Jörg Thalheim <joerg@thalheim.io>
+	echo 2>&1 "Huh?: $msg"
+
+goes the wrong way and sends the message to stdout instead.
+
+In the common Reintegrate invocation that captures stdout, e.g.
+
+	Meta/Reintegrate next..seen >Meta/redo-seen.sh
+
+this means the warning is silently embedded in the generated heredoc
+body instead of being printed to the maintainer's terminal, with no
+diagnostic that something went wrong. Worse, the resulting redo-*
+script is corrupted with a "Huh?:..." line.
+
+Switch the redirection to ">&2", matching every other diagnostic in
+this script.
+
+Signed-off-by: Erik Cervin-Edin <erik@cervined.in>
 ---
- t/t7703-repack-geometric.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Reintegrate | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 04d5d8fc33..9b5a428620 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -299,9 +299,9 @@ test_expect_success '--geometric --write-midx retains up-to-date MIDX without bi
- 		test_path_is_file .git/objects/pack/multi-pack-index &&
- 		test-tool chmtime =0 .git/objects/pack/multi-pack-index &&
- 
--		ls -l .git/objects/pack/ >expect &&
-+		ls -l .git/objects/pack/ | sed 1d >expect &&
- 		git repack --geometric=2 --write-midx --no-write-bitmap-index &&
--		ls -l .git/objects/pack/ >actual &&
-+		ls -l .git/objects/pack/ | sed 1d >actual &&
- 		test_cmp expect actual
- 	)
- '
-@@ -316,9 +316,9 @@ test_expect_success '--geometric --write-midx retains up-to-date MIDX with bitma
- 	test_path_is_file repo/.git/objects/pack/multi-pack-index &&
- 	test-tool chmtime =0 repo/.git/objects/pack/multi-pack-index &&
- 
--	ls -l repo/.git/objects/pack/ >expect &&
-+	ls -l repo/.git/objects/pack/ | sed 1d >expect &&
- 	git -C repo repack --geometric=2 --write-midx --write-bitmap-index &&
--	ls -l repo/.git/objects/pack/ >actual &&
-+	ls -l repo/.git/objects/pack/ | sed 1d >actual &&
- 	test_cmp expect actual
- '
- 
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+diff --git a/Reintegrate b/Reintegrate
+index a1e67a0330..6fdc7c5f41 100755
+--- a/Reintegrate
++++ b/Reintegrate
+@@ -327,7 +327,7 @@ show_merge () {
+ 		merge_hier=
+ 		;;
+ 	*)
+-		echo 2>&1 "Huh?: $msg"
++		echo >&2 "Huh?: $msg"
+ 		return
+ 		;;
+ 	esac &&
 -- 
 2.53.0
 
