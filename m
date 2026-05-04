@@ -1,70 +1,70 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C9E3E3D89
-	for <git@vger.kernel.org>; Mon,  4 May 2026 20:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED71930EF89
+	for <git@vger.kernel.org>; Mon,  4 May 2026 20:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777926092; cv=none; b=AQVujMRqlDx4cA6c8Vhl0kdgruCzRkjKdlaaI7bz9BGR+LFCAld7FTOcvbLTVF+gmzR918bNH31Y1fVZhEIrO3y+Qf/bwpE/ZdNjkYd0nCt9OCe7TrHSOU2BtJgs0VQiGyGaUdrP5GJynaU/NQcq3s/RtQ0gx2+juhvlJXNWdTU=
+	t=1777926094; cv=none; b=WFuro5ozjv+l8irMp3M7O1+RVd/lAhbEC3L0bBtWJdc26DJBGrq70FZFVA9symHb33A8sXhRAgkIEhQxT0Q/OeZVzOQbtnKGxpUng0lkV7pqvxRo0ypVO6//6x06YOyRcxYVp9vAer+1P1NQYdnMGZBiyUPcstjsJTYYnwenD5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777926092; c=relaxed/simple;
-	bh=JdD/kKwHkWLGrgxe5SHJPJ+rmGW0KRBHF3gjemaO1o0=;
+	s=arc-20240116; t=1777926094; c=relaxed/simple;
+	bh=x17Le1ULwlVk2g21Y3jy2TENNl33QjJ/2uMOKgYcG9Q=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=m+GjosFqDVa+xVdsfpxmMLzZL4m7GUHhZKzmjzvtF+YzZdAwJexbaPjDTradlrdVEzpVJ/rDSZqqgNUCL2TZ5XCACdQyqWmvEehEQXBQ5ahvADv0YSdBBaandHZgrEmeIipiYZLuLS318efM4rDtKVxX7kFj36d4H6WUdPg0R6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MVccQMWJ; arc=none smtp.client-ip=209.85.219.48
+	 MIME-Version:To:Cc; b=lMvzUivABcr/h27OpQAUmIxO72CKw+xUpq0X/KuKPCNUSRIfpFGpYIzXoxMPsKUoOMhNnlOUeaZ1pnNqECBXF+bmli3pDFfZ6LRInW2tReCpwn+2knJHun3gLhrACu6Sm36rQJM4yV/XqkMj/Kaaz16/c52RMQTvOuhz+6RybDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SFFoqiY4; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MVccQMWJ"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-8b6ea7716bfso24362656d6.0
-        for <git@vger.kernel.org>; Mon, 04 May 2026 13:21:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SFFoqiY4"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8ee62a19730so492410285a.3
+        for <git@vger.kernel.org>; Mon, 04 May 2026 13:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777926089; x=1778530889; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777926090; x=1778530890; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S+Tn8iRRjuDObd2wqel3ZE8ce0RR8yTR5nuWhQJA2Jc=;
-        b=MVccQMWJ9NEBf6w85KVu9aSeTe+6xHpKKwFoNfisoGcUHR4H4BZ+9l3LILne2FskNS
-         VuVi2a+8uqg+d864sAOk23OyWsBmy9i8CLyTN+sXAqVb9YElDFTN+EW40v7eKY1rOFag
-         EsRgHFDhvtRMj6gUgWqwJFVlB6gmrBomP8+MluNTU+P4M2Acfr/YXCRXbt1w/9YaQQ7E
-         nUCN/iGfdqcc5XBmon5zkUF+PXq5d5SUUafB9bDETq/3UafCxsyojgF31hwfd1OW7UTz
-         Vj311xcH34++cPkOVFe/yWfbKtrG16QrHUdjfEjB/MzgWQ3iJyBeIAV9lu9u0lF+11Pv
-         Q8pA==
+        bh=xd0j1j1fTq419+dSwgGppXW4TtmcEFvvlQ31fy24rRc=;
+        b=SFFoqiY4tauZGgmuvDcSk7Abxh+DmaKacDQBP2+dAWuzAaJxoPMjzMcnb9l8Vsz1NT
+         kfs62XDacqzhe4kPM5ZDN8KivYFb289eKTNBYEeUeqPYklvtFU0TV/Taq6tHjYAaYhkO
+         R0IAm3dGSuSTZRDqB105GGbRgraQkKOx+EFTPN17Kfbr1awjDjwl4cU36nUh/jLeMNwr
+         EFU1WLcgUbSPobhoTt15TmrufeP7XhpCtjP0Q6miEw63YDubzV2Ca85wnl3YJZJ1hZR4
+         BrnwmwSvnLVKVthOmbgVDGvYIcZPwffNXAcLp7BEGZX4XsVx6lHc+B/jJqTMARzJ11Ix
+         CVsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777926089; x=1778530889;
+        d=1e100.net; s=20251104; t=1777926090; x=1778530890;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=S+Tn8iRRjuDObd2wqel3ZE8ce0RR8yTR5nuWhQJA2Jc=;
-        b=U052uUbs0E+2gJJa4AiD3bKW/losVLYT7Sb8bKvnrR2DtI9nJG+FeCoQ39/ykF354F
-         BFNAIQa1O2RMQx3UzdDBhNiLvsnbvSnj4D9VmLThKiIVJuSyW9g0VM6udqh5K6JFhk3t
-         42iW5lb/Ll8bBHbBQSAt1KeWiLkYqpKMt2DfpLWV6IBSKzswsr/tKaRWThKW1t/pOyYQ
-         F91lr+UbkFOmSGZGJ7UVwbOiP6sy/q/8yJpveF5APao8UTYN3ZtimmV5MVRHKFZxvxjD
-         0S9oS13ydD9LeJMH6jmDsG+OnkJd1+9uJYFQzssVCbtAgHldc2pegsBnU5okOCQ+JdYr
-         XYSQ==
-X-Gm-Message-State: AOJu0Yw+CpYoui+unfnt+is/EYCgXDh8w6nJK/E7OCJw7r9+c5bnyFgp
-	vwxfuKQIMGFtcl3gWXzGh40HnF5B32T/51jsTxSxqYLxvY76N8HGm2vVZNYV2g==
-X-Gm-Gg: AeBDiesR6Dg1W/FLs4s0kS2zYuoTlJ/86tQrb3lqU6LiK8fRrxLw19OiYLuuuE2cDYG
-	+6qgHM1Z8pEmJ2krd887RC+7wzYKPLzIaFmCxJipG7GSgJPQCxK4gg6Hpbw4Vg07zTJB2jq9hm3
-	npMSiXf6nHquAr9jOq5xQJnwmnjjVxcsjd3mKLEoqVcI8/eXcp12mnK0o6hb/GHB65JNZhL0Ruc
-	AG0/2p2+wfDLy+JkGHhZhL5fBRSqECfPndfRAJUoOG1mFOTv870JX8KwFQa221FKdNBTxTtmUCy
-	9WIvmQPd89Yiz9jtyNJBitJBWVeaCgENAbvhZi72/rX8qFYYKhAq9z8ymDz74HRECyaRPfL8QGV
-	Glo8yH2f1LiDk6im/avZtCTErNZPuUqLrUsslj7bY4OQb8UNtAHZzAkW7x4WiwA9uLCV6Id7ma9
-	7xkNHihB59dyBR8Zc24qbFOVVBgCPjMbsyl1Za
-X-Received: by 2002:a05:6214:3d85:b0:8ac:a57e:ec1f with SMTP id 6a1803df08f44-8b6682578c9mr195077466d6.29.1777926089079;
-        Mon, 04 May 2026 13:21:29 -0700 (PDT)
+        bh=xd0j1j1fTq419+dSwgGppXW4TtmcEFvvlQ31fy24rRc=;
+        b=BzX8PAtPH1CvJoblI34TtQSBy3XlYWnq457MRdGTZDCpMGCdmcXRkhWO/wXbxEXSup
+         M/aP8yoM+FAme8sTi4tUMER7Tvgg/TRWMDV3H6jUvpoaR/oLXYgIpxk5rWKkejhUzHQa
+         DN8gwfMcDguz1wknKcI+xf4MYsuWjEC6OVcW7TCtm2Kk9ZnpdjsYRKDlJj6NpjIwvy9z
+         c640iSNZVL7dKQ1UPMYjR/qTUZck0HtpqRP0MZ6MBTOUzXQMCOE72hnzHV5FmMK83uok
+         CYohHtugguL0Am9DqEY+m+cnkncRgKF4kWPhk5nqADhaNcJLPai7WSCyZr8lA3f3pSW6
+         QgXQ==
+X-Gm-Message-State: AOJu0Ywwa3KdU+tX+xpIVq0Wlct/Uh1zqdba9YwImaRR6K6Yw6B2dQWf
+	U89E8GB7poJOANxTB/YNbvA+ZiwgPe9A8R57KpLoIwIxclx7yRJLqBVBTZC4Xw==
+X-Gm-Gg: AeBDieuspADK7ZT2I+OWW5thEToIaZQMMdFHXZy7zv0l8yGBbb54NxaWDrskZOhARsp
+	dwFDg5N3hLNyOtrgtGTIm0eduhRJ4lS2eUhrbrWyZGjA8UDSnEO0ptuglVdKb3bscnDhggf7j9Y
+	Izx8Dym5c9aQ8pv03Vziu3KmWU0VRBMTLkdyiL4im9YaKzr9jpYUWlYC9VDkoIJ1OPzOoGbnW8k
+	fxfbAN+JgtqxbqEH16IsK2NgVgOjBKoWaxCDJJQeMgbLUB8HR5Un4hOQ814ZiAappf5Iwh9KrC9
+	Qk9htlu0zRpBHdCi9d4ZoIG5aDfBoWKksLx/miAxlNMhXWYIKxWLLS4vOTXiLAVUfJCT293eM6X
+	rIsnq4MTES4Dseivjii89JjhMUPK3wEUnGBmZAWOaASa6+dH1srCaeuui1v/7pG+1V6yiwJfinC
+	CoodSZTBk9RznBat/VuAbGEEVKJs/5VQ36Hjul
+X-Received: by 2002:a05:620a:4706:b0:8f8:8860:fb8b with SMTP id af79cd13be357-8fd18633adfmr1763817485a.52.1777926090334;
+        Mon, 04 May 2026 13:21:30 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.96])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53c0e6d72sm143033306d6.26.2026.05.04.13.21.28
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53c0e6d72sm143033826d6.26.2026.05.04.13.21.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 13:21:28 -0700 (PDT)
-Message-Id: <55ed02772b5c0aecebfb2a99416555d647d0cb77.1777926079.git.gitgitgadget@gmail.com>
+        Mon, 04 May 2026 13:21:29 -0700 (PDT)
+Message-Id: <dcb1a29d3a12d1f358b3b24937370c943c0be22e.1777926079.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
 References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
 	<pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 04 May 2026 20:21:15 +0000
-Subject: [PATCH v2 06/10] path-walk: add pl_sparse_trees to control tree
- pruning
+Date: Mon, 04 May 2026 20:21:16 +0000
+Subject: [PATCH v2 07/10] pack-objects: support sparse:oid filter with
+ path-walk
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,181 +90,517 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The path-walk API prunes trees and blobs when a sparse-checkout pattern
-list is provided, which is the correct behavior for 'git backfill
---sparse' since it only needs to fill in objects at paths within the
-sparse cone.
+The --filter=sparse:<oid> option to 'git pack-objects' allows focusing
+an object set to a sparse-checkout definition. This reduces the set of
+matching blobs while retaining all reachable trees. No server currently
+supports fetching with this filter because it is expensive to compute
+and reachability bitmaps do not help without a significant effort to
+extend the bitmap feature to store bitmaps for each supported sparse-
+checkout definition.
 
-However, a future change will use the path-walk API with a sparse:<oid>
-filter that restricts only blobs while retaining all reachable trees.
-To support both behaviors, add a 'pl_sparse_trees' flag to
-path_walk_info. When set (as in 'git backfill --sparse' and the
---stdin-pl test helper mode), the sparse patterns prune both trees and
-blobs. When unset, only blobs are filtered and all trees are walked and
-reported.
+Without focusing on serving fetches and clones with these filters, there
+are still benefits that could be realized by making this faster. With
+the sparse index, it's more realistic now than ever to be able to
+operate a local clone that was bootstrapped by a packfile created with
+a sparse filter, because the missing trees are not needed to move a
+sparse-checkout from one commit to another or to view the history of any
+path in scope. Such clones could perhaps be bootstrapped by partial
+bundles.
 
-Additionally, move the SEEN flag assignment in add_tree_entries() to
-after the sparse pattern and pathspec checks. Previously, SEEN was set
-immediately upon discovering an object, before checking whether its path
-matched the sparse patterns. When the same object ID appeared at
-multiple paths (e.g. sibling directories with identical contents), the
-first path to be visited would mark the object as SEEN. If that path was
-outside the sparse cone, the object would be skipped there but also
-never discovered at its in-cone path.
+Previously, constructing these sparse packs has been incredibly
+computationally inefficient. The revision walk that explores which
+objects are in scope spends a lot of time checking each object to see if
+it matches the sparse-checkout patterns, causing quadratic behavior
+(number of objects times number of sparse-checkout patterns). This
+improves somewhat when using cone-mode sparse-checkout patterns that can
+use hashtables and prefix matches to determine containment. However, the
+check per object is still too expensive for most cases.
 
-By deferring the SEEN flag until after the checks pass, objects that are
-skipped due to sparse filtering remain discoverable at other paths where
-they may be in scope.
+This is where the path-walk feature comes in. We can proceed as normal
+by placing objects in bins by path and _then_ check a group of objects
+all at once. Since sparse:<oid> only restricts blobs, the path-walk must
+include all reachable trees while using the cone-mode patterns to skip
+blobs at paths outside the sparse scope. This establishes a baseline for
+a potential future "treesparse:<oid>" filter that would also restrict
+trees, but introducing such a new filter is deferred to a later change.
 
+The implementation here is focused around loading the sparse-checkout
+patterns from the provided object ID and checking that the patterns are
+indeed cone-mode patterns. We can then load the correct pattern list
+into the path walk context and use the logic that already exists from
+bff45557675 (backfill: add --sparse option, 2025-02-03), though that
+feature loads sparse-checkout patterns from the worktree's local
+settings and also restricts tree objects. We use a combination of errors
+and warnings to signal problems during this load. The difference is that
+errors are likely fatal for the non-path-walk version while the warnings
+are probably just implementation details for the path-walk version and
+the 'git pack-objects' command can fall back to the revision walk
+version.
+
+Now that the SEEN flag is deferred until after pattern checks (from the
+previous commit), handle the case where a tree with a shared OID appears
+at both an out-of-cone and in-cone path. When trees are not being pruned
+(pl_sparse_trees == 0), the path-walk re-walks the tree at the in-cone
+path so that in-cone blobs within it are discovered. The new tests in
+t5317 and t6601 demonstrate this behavior and would fail without these
+changes.
+
+The performance test p5315 shows the impact of this change when using
+sparse filters:
+
+Test                                              HEAD~1     HEAD
+----------------------------------------------------------------------
+5315.10: repack (sparse:oid)                      77.98    77.47  -0.7%
+5315.11: repack size (sparse:oid)                187.5M   187.4M  -0.0%
+5315.12: repack (sparse:oid, --path-walk)         77.91    31.41 -59.7%
+5315.13: repack size (sparse:oid, --path-walk)   187.5M   161.1M -14.1%
+
+These performance tests were run on the Git repository. The --path-walk
+feature shows meaningful space savings (14% smaller for sparse packs)
+and dramatic time savings (60% faster) by leveraging the path-walk's
+ability to skip blobs outside the sparse scope.
+
+Co-authored-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Taylor Blaue <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/backfill.c        |  1 +
- path-walk.c               |  5 +++--
- path-walk.h               |  6 ++++++
- t/helper/test-path-walk.c |  6 +++++-
- t/t6601-path-walk.sh      | 37 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 52 insertions(+), 3 deletions(-)
+ Documentation/git-backfill.adoc        |   4 +
+ Documentation/git-pack-objects.adoc    |   3 +-
+ builtin/pack-objects.c                 |   2 +
+ path-walk.c                            |  81 ++++++++++++++-
+ t/t5317-pack-objects-filter-objects.sh | 125 +++++++++++++++++++++++
+ t/t6601-path-walk.sh                   | 131 +++++++++++++++++++++++++
+ 6 files changed, 341 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 5254a42711..e71e0f4742 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -109,6 +109,7 @@ static int do_backfill(struct backfill_context *ctx)
+diff --git a/Documentation/git-backfill.adoc b/Documentation/git-backfill.adoc
+index c0a3b80615..82d6a1969d 100644
+--- a/Documentation/git-backfill.adoc
++++ b/Documentation/git-backfill.adoc
+@@ -80,6 +80,10 @@ OPTIONS
+ +
+ You may also use commit-limiting options understood by
+ linkgit:git-rev-list[1] such as `--first-parent`, `--since`, or pathspecs.
+++
++Most `--filter=<spec>` options don't work with the purpose of
++`git backfill`, but the `sparse:<oid>` filter is integrated to provide a
++focused set of paths to download, distinct from the `--sparse` option.
  
- 	if (ctx->sparse) {
- 		CALLOC_ARRAY(info.pl, 1);
-+		info.pl_sparse_trees = 1;
- 		if (get_sparse_checkout_patterns(info.pl)) {
- 			path_walk_info_clear(&info);
- 			return error(_("problem loading sparse-checkout"));
+ SEE ALSO
+ --------
+diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
+index 3821bf7e22..026061a5bc 100644
+--- a/Documentation/git-pack-objects.adoc
++++ b/Documentation/git-pack-objects.adoc
+@@ -404,7 +404,8 @@ will be automatically changed to version `1`.
+ +
+ Incompatible with `--delta-islands`. The `--use-bitmap-index` option is
+ ignored in the presence of `--path-walk`. Whe `--path-walk` option
+-supports the `--filter=<spec>` form `blob:none` and `blob:limit=<n>`.
++supports the `--filter=<spec>` form `blob:none`, `blob:limit=<n>`, and
++`sparse:<oid>`.
+ 
+ 
+ DELTA ISLANDS
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index bc9fb5b457..ba00d8148a 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4777,6 +4777,8 @@ static void get_object_list_path_walk(struct rev_info *revs)
+ 	result = walk_objects_by_path(&info);
+ 	trace2_region_leave("pack-objects", "path-walk", revs->repo);
+ 
++	path_walk_info_clear(&info);
++
+ 	if (result)
+ 		die(_("failed to pack objects via path-walk"));
+ }
 diff --git a/path-walk.c b/path-walk.c
-index 0e7dab7a6a..c25392b901 100644
+index c25392b901..700617ee2f 100644
 --- a/path-walk.c
 +++ b/path-walk.c
-@@ -183,7 +183,6 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 		/* Skip this object if already seen. */
- 		if (o->flags & SEEN)
- 			continue;
--		o->flags |= SEEN;
- 
- 		strbuf_setlen(&path, base_len);
- 		strbuf_add(&path, entry.path, entry.pathlen);
-@@ -204,7 +203,8 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 							  ctx->repo->index);
- 
- 			if (ctx->info->pl->use_cone_patterns &&
--			    match == NOT_MATCHED)
-+			    match == NOT_MATCHED &&
-+			    (type == OBJ_BLOB || ctx->info->pl_sparse_trees))
- 				continue;
- 			else if (!ctx->info->pl->use_cone_patterns &&
- 				 type == OBJ_BLOB &&
-@@ -239,6 +239,7 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 				continue;
+@@ -10,6 +10,7 @@
+ #include "hex.h"
+ #include "list-objects.h"
+ #include "list-objects-filter-options.h"
++#include "object-name.h"
+ #include "odb.h"
+ #include "object.h"
+ #include "oid-array.h"
+@@ -180,10 +181,6 @@ static int add_tree_entries(struct path_walk_context *ctx,
+ 			return -1;
  		}
  
-+		o->flags |= SEEN;
- 		add_path_to_list(ctx, path.buf, type, &entry.oid,
- 				 !(o->flags & UNINTERESTING));
+-		/* Skip this object if already seen. */
+-		if (o->flags & SEEN)
+-			continue;
+-
+ 		strbuf_setlen(&path, base_len);
+ 		strbuf_add(&path, entry.path, entry.pathlen);
  
-diff --git a/path-walk.h b/path-walk.h
-index bcb81b70a1..5fa3ff46b4 100644
---- a/path-walk.h
-+++ b/path-walk.h
-@@ -72,8 +72,14 @@ struct path_walk_info {
- 	 * of the cone. If not in cone mode, then all tree paths will be
- 	 * explored but the path_fn will only be called when the path matches
- 	 * the sparse-checkout patterns.
-+	 *
-+	 * When 'pl_sparse_trees' is zero, the sparse patterns only restrict
-+	 * blobs and all trees are included in the walk output. This matches
-+	 * the behavior of the sparse:oid object filter. When nonzero, trees
-+	 * are also pruned by the sparse patterns (as used by backfill).
- 	 */
- 	struct pattern_list *pl;
-+	int pl_sparse_trees;
- };
+@@ -194,6 +191,40 @@ static int add_tree_entries(struct path_walk_context *ctx,
+ 		if (type == OBJ_TREE)
+ 			strbuf_addch(&path, '/');
  
- #define PATH_WALK_INFO_INIT {   \
-diff --git a/t/helper/test-path-walk.c b/t/helper/test-path-walk.c
-index 88f86ae0dc..3f2b50a9aa 100644
---- a/t/helper/test-path-walk.c
-+++ b/t/helper/test-path-walk.c
-@@ -68,7 +68,7 @@ static int emit_block(const char *path, struct oid_array *oids,
++		if (o->flags & SEEN) {
++			/*
++			 * A tree with a shared OID may appear at multiple
++			 * paths. Even though we already added this tree to
++			 * the output at some other path, we still need to
++			 * walk into it at this in-cone path to discover
++			 * blobs that were not found at the earlier
++			 * out-of-cone path.
++			 *
++			 * Only do this for paths not yet in our map, to
++			 * avoid duplicate entries when the same tree OID
++			 * appears at the same path across multiple commits.
++			 */
++			if (type == OBJ_TREE && ctx->info->pl &&
++			    ctx->info->pl->use_cone_patterns &&
++			    !ctx->info->pl_sparse_trees &&
++			    !strmap_contains(&ctx->paths_to_lists, path.buf)) {
++				int dtype;
++				enum pattern_match_result m;
++				m = path_matches_pattern_list(path.buf, path.len,
++							      path.buf + base_len,
++							      &dtype,
++							      ctx->info->pl,
++							      ctx->repo->index);
++				if (m != NOT_MATCHED) {
++					add_path_to_list(ctx, path.buf, type,
++							 &entry.oid,
++							 !(o->flags & UNINTERESTING));
++					push_to_stack(ctx, path.buf);
++				}
++			}
++			continue;
++		}
++
+ 		if (ctx->info->pl) {
+ 			int dtype;
+ 			enum pattern_match_result match;
+@@ -533,6 +564,48 @@ static int prepare_filters(struct path_walk_info *info,
+ 		}
+ 		return 1;
  
- int cmd__path_walk(int argc, const char **argv)
- {
--	int res, stdin_pl = 0;
-+	int res, stdin_pl = 0, pl_sparse_trees = -1;
- 	struct rev_info revs = REV_INFO_INIT;
- 	struct path_walk_info info = PATH_WALK_INFO_INIT;
- 	struct path_walk_test_data data = { 0 };
-@@ -89,6 +89,8 @@ int cmd__path_walk(int argc, const char **argv)
- 			 N_("toggle aggressive edge walk")),
- 		OPT_BOOL(0, "stdin-pl", &stdin_pl,
- 			 N_("read a pattern list over stdin")),
-+		OPT_BOOL(0, "pl-sparse-trees", &pl_sparse_trees,
-+			 N_("toggle pruning of trees by sparse patterns")),
- 		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 		OPT_END(),
- 	};
-@@ -116,6 +118,8 @@ int cmd__path_walk(int argc, const char **argv)
- 	if (stdin_pl) {
- 		struct strbuf in = STRBUF_INIT;
- 		CALLOC_ARRAY(info.pl, 1);
-+		info.pl_sparse_trees = (pl_sparse_trees >= 0) ?
-+			pl_sparse_trees : 1;
++	case LOFC_SPARSE_OID:
++		if (info) {
++			struct object_id sparse_oid;
++			struct repository *repo = info->revs->repo;
++
++			if (info->pl) {
++				warning(_("sparse filter cannot be combined with existing sparse patterns"));
++				return 0;
++			}
++
++			if (repo_get_oid_with_flags(repo,
++						    options->sparse_oid_name,
++						    &sparse_oid,
++						    GET_OID_BLOB)) {
++				error(_("unable to access sparse blob in '%s'"),
++				      options->sparse_oid_name);
++				return 0;
++			}
++
++			CALLOC_ARRAY(info->pl, 1);
++			info->pl->use_cone_patterns = 1;
++
++			if (add_patterns_from_blob_to_list(&sparse_oid, "", 0,
++							   info->pl) < 0) {
++				clear_pattern_list(info->pl);
++				FREE_AND_NULL(info->pl);
++				error(_("unable to parse sparse filter data in '%s'"),
++				      oid_to_hex(&sparse_oid));
++				return 0;
++			}
++
++			if (!info->pl->use_cone_patterns) {
++				clear_pattern_list(info->pl);
++				FREE_AND_NULL(info->pl);
++				warning(_("sparse filter is not cone-mode compatible"));
++				return 0;
++			}
++
++			list_objects_filter_release(options);
++		}
++		return 1;
++
+ 	default:
+ 		error(_("object filter '%s' not supported by the path-walk API"),
+ 		      list_objects_filter_spec(options));
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index 501d715b9a..dddb79ba62 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -478,4 +478,129 @@ test_expect_success 'verify pack-objects w/ --missing=allow-any' '
+ 	EOF
+ '
  
- 		info.pl->use_cone_patterns = 1;
- 
++# Test that --path-walk produces the same object set as standard traversal
++# when using sparse:oid filters with cone-mode patterns.
++#
++# The sparse:oid filter restricts only blobs, not trees. Both standard
++# and path-walk should produce identical sets of blobs, commits, and trees.
++
++test_expect_success 'setup pw_sparse for path-walk comparison' '
++	git init pw_sparse &&
++	mkdir -p pw_sparse/inc/sub pw_sparse/exc/sub &&
++
++	for n in 1 2
++	do
++		echo "inc $n" >pw_sparse/inc/file$n &&
++		echo "inc sub $n" >pw_sparse/inc/sub/file$n &&
++		echo "exc $n" >pw_sparse/exc/file$n &&
++		echo "exc sub $n" >pw_sparse/exc/sub/file$n &&
++		echo "root $n" >pw_sparse/root$n || return 1
++	done &&
++
++	git -C pw_sparse add . &&
++	git -C pw_sparse commit -m "first" &&
++
++	echo "inc 1 modified" >pw_sparse/inc/file1 &&
++	echo "exc 1 modified" >pw_sparse/exc/file1 &&
++	echo "root 1 modified" >pw_sparse/root1 &&
++	git -C pw_sparse add . &&
++	git -C pw_sparse commit -m "second" &&
++
++	# Cone-mode sparse pattern: include root + inc/
++	printf "/*\n!/*/\n/inc/\n" |
++	git -C pw_sparse hash-object -w --stdin >sparse_oid
++'
++
++test_expect_success 'sparse:oid with --path-walk produces same blobs' '
++	oid=$(cat sparse_oid) &&
++
++	git -C pw_sparse pack-objects --revs --stdout \
++		--filter=sparse:oid=$oid >standard.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C pw_sparse index-pack ../standard.pack &&
++	git -C pw_sparse verify-pack -v ../standard.pack >standard_verify &&
++
++	git -C pw_sparse pack-objects --revs --stdout \
++		--path-walk --filter=sparse:oid=$oid >pathwalk.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C pw_sparse index-pack ../pathwalk.pack &&
++	git -C pw_sparse verify-pack -v ../pathwalk.pack >pathwalk_verify &&
++
++	# Blobs must match exactly
++	grep -E "^[0-9a-f]{40} blob" standard_verify |
++	awk "{print \$1}" | sort >standard_blobs &&
++	grep -E "^[0-9a-f]{40} blob" pathwalk_verify |
++	awk "{print \$1}" | sort >pathwalk_blobs &&
++	test_cmp standard_blobs pathwalk_blobs &&
++
++	# Commits must match exactly
++	grep -E "^[0-9a-f]{40} commit" standard_verify |
++	awk "{print \$1}" | sort >standard_commits &&
++	grep -E "^[0-9a-f]{40} commit" pathwalk_verify |
++	awk "{print \$1}" | sort >pathwalk_commits &&
++	test_cmp standard_commits pathwalk_commits
++'
++
++test_expect_success 'sparse:oid with --path-walk includes all trees' '
++	# The sparse:oid filter restricts only blobs, not trees.
++	# Both standard and path-walk should include the same trees.
++	grep -E "^[0-9a-f]{40} tree" standard_verify |
++	awk "{print \$1}" | sort >standard_trees &&
++	grep -E "^[0-9a-f]{40} tree" pathwalk_verify |
++	awk "{print \$1}" | sort >pathwalk_trees &&
++
++	test_cmp standard_trees pathwalk_trees
++'
++
++# Test the edge case where the same tree/blob OID appears at both an
++# in-cone and out-of-cone path. When sibling directories have identical
++# contents, they share a tree OID. The path-walk defers marking objects
++# SEEN until after checking sparse patterns, so an object at an out-of-cone
++# path can still be discovered at an in-cone path.
++
++test_expect_success 'setup pw_shared for shared OID across cone boundary' '
++	git init pw_shared &&
++	mkdir pw_shared/aaa pw_shared/zzz &&
++	echo "shared content" >pw_shared/aaa/file &&
++	echo "shared content" >pw_shared/zzz/file &&
++	echo "root file" >pw_shared/rootfile &&
++	git -C pw_shared add . &&
++	git -C pw_shared commit -m "aaa and zzz share tree OID" &&
++
++	# Verify they share a tree OID
++	aaa_tree=$(git -C pw_shared rev-parse HEAD:aaa) &&
++	zzz_tree=$(git -C pw_shared rev-parse HEAD:zzz) &&
++	test "$aaa_tree" = "$zzz_tree" &&
++
++	# Cone pattern: include root + zzz/ (not aaa/)
++	printf "/*\n!/*/\n/zzz/\n" |
++	git -C pw_shared hash-object -w --stdin >shared_sparse_oid
++'
++
++test_expect_success 'shared tree OID: --path-walk blobs match standard' '
++	oid=$(cat shared_sparse_oid) &&
++
++	git -C pw_shared pack-objects --revs --stdout \
++		--filter=sparse:oid=$oid >shared_std.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C pw_shared index-pack ../shared_std.pack &&
++	git -C pw_shared verify-pack -v ../shared_std.pack >shared_std_verify &&
++
++	git -C pw_shared pack-objects --revs --stdout \
++		--path-walk --filter=sparse:oid=$oid >shared_pw.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C pw_shared index-pack ../shared_pw.pack &&
++	git -C pw_shared verify-pack -v ../shared_pw.pack >shared_pw_verify &&
++
++	grep -E "^[0-9a-f]{40} blob" shared_std_verify |
++	awk "{print \$1}" | sort >shared_std_blobs &&
++	grep -E "^[0-9a-f]{40} blob" shared_pw_verify |
++	awk "{print \$1}" | sort >shared_pw_blobs &&
++	test_cmp shared_std_blobs shared_pw_blobs
++'
++
+ test_done
 diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index d9be7b9cd2..1126afaea1 100755
+index 1126afaea1..520269dfc6 100755
 --- a/t/t6601-path-walk.sh
 +++ b/t/t6601-path-walk.sh
-@@ -206,6 +206,43 @@ test_expect_success 'base & topic, sparse' '
+@@ -590,4 +590,135 @@ test_expect_success 'all, blob:limit=3 filter' '
  	test_cmp_sorted expect out
  '
  
-+test_expect_success 'base & topic, sparse, no tree pruning' '
-+	cat >patterns <<-EOF &&
++test_expect_success 'setup sparse filter blob' '
++	# Cone-mode patterns: include root, exclude all dirs, include left/
++	cat >patterns <<-\EOF &&
 +	/*
 +	!/*/
 +	/left/
 +	EOF
++	sparse_oid=$(git hash-object -w -t blob patterns)
++'
 +
-+	test-tool path-walk --stdin-pl --no-pl-sparse-trees \
-+		-- base topic <patterns >out &&
++test_expect_success 'all, sparse:oid filter' '
++	test-tool path-walk --filter=sparse:oid=$sparse_oid -- --all >out &&
 +
 +	cat >expect <<-EOF &&
 +	0:commit::$(git rev-parse topic)
 +	0:commit::$(git rev-parse base)
 +	0:commit::$(git rev-parse base~1)
 +	0:commit::$(git rev-parse base~2)
-+	1:tree::$(git rev-parse topic^{tree})
-+	1:tree::$(git rev-parse base^{tree})
-+	1:tree::$(git rev-parse base~1^{tree})
-+	1:tree::$(git rev-parse base~2^{tree})
-+	2:blob:a:$(git rev-parse base~2:a)
-+	3:tree:a/:$(git rev-parse base:a)
-+	4:tree:left/:$(git rev-parse base:left)
-+	4:tree:left/:$(git rev-parse base~2:left)
-+	5:blob:left/b:$(git rev-parse base~2:left/b)
-+	5:blob:left/b:$(git rev-parse base:left/b)
-+	6:tree:right/:$(git rev-parse topic:right)
-+	6:tree:right/:$(git rev-parse base~1:right)
-+	6:tree:right/:$(git rev-parse base~2:right)
-+	blobs:3
++	1:tag:/tags:$(git rev-parse refs/tags/first)
++	1:tag:/tags:$(git rev-parse refs/tags/second.1)
++	1:tag:/tags:$(git rev-parse refs/tags/second.2)
++	1:tag:/tags:$(git rev-parse refs/tags/third)
++	1:tag:/tags:$(git rev-parse refs/tags/fourth)
++	1:tag:/tags:$(git rev-parse refs/tags/tree-tag)
++	1:tag:/tags:$(git rev-parse refs/tags/blob-tag)
++	2:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag^{})
++	2:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag2^{})
++	3:tree::$(git rev-parse topic^{tree})
++	3:tree::$(git rev-parse base^{tree})
++	3:tree::$(git rev-parse base~1^{tree})
++	3:tree::$(git rev-parse base~2^{tree})
++	3:tree::$(git rev-parse refs/tags/tree-tag^{})
++	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
++	4:blob:a:$(git rev-parse base~2:a)
++	5:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
++	6:tree:a/:$(git rev-parse base:a)
++	7:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	8:tree:left/:$(git rev-parse base:left)
++	8:tree:left/:$(git rev-parse base~2:left)
++	9:blob:left/b:$(git rev-parse base~2:left/b)
++	9:blob:left/b:$(git rev-parse base:left/b)
++	10:tree:right/:$(git rev-parse topic:right)
++	10:tree:right/:$(git rev-parse base~1:right)
++	10:tree:right/:$(git rev-parse base~2:right)
++	blobs:6
 +	commits:4
-+	tags:0
-+	trees:10
++	tags:7
++	trees:13
 +	EOF
 +
 +	test_cmp_sorted expect out
 +'
 +
- test_expect_success 'topic only' '
- 	test-tool path-walk -- topic >out &&
- 
++test_expect_success 'topic only, sparse:oid filter' '
++	test-tool path-walk --filter=sparse:oid=$sparse_oid -- topic >out &&
++
++	cat >expect <<-EOF &&
++	0:commit::$(git rev-parse topic)
++	0:commit::$(git rev-parse base~1)
++	0:commit::$(git rev-parse base~2)
++	1:tree::$(git rev-parse topic^{tree})
++	1:tree::$(git rev-parse base~1^{tree})
++	1:tree::$(git rev-parse base~2^{tree})
++	2:blob:a:$(git rev-parse base~2:a)
++	3:tree:left/:$(git rev-parse base~2:left)
++	4:blob:left/b:$(git rev-parse base~2:left/b)
++	5:tree:right/:$(git rev-parse topic:right)
++	5:tree:right/:$(git rev-parse base~1:right)
++	5:tree:right/:$(git rev-parse base~2:right)
++	blobs:2
++	commits:3
++	tags:0
++	trees:7
++	EOF
++
++	test_cmp_sorted expect out
++'
++
++# Demonstrate the SEEN flag ordering issue: when the same tree/blob OID
++# appears at two sibling paths where one is in-cone and the other is
++# out-of-cone, the path-walk must still discover blobs at the in-cone
++# path even when the shared tree OID was first encountered out-of-cone.
++# Since sparse:oid includes all trees, the out-of-cone tree (aaa/) is
++# walked first, and its blob is skipped. The path-walk then re-walks
++# the same tree OID at the in-cone path (zzz/) to find the blob there.
++
++test_expect_success 'setup shared tree OID across cone boundary' '
++	git checkout --orphan shared-tree &&
++	git rm -rf . &&
++	mkdir aaa zzz &&
++	echo "shared content" >aaa/file &&
++	echo "shared content" >zzz/file &&
++	echo "root file" >rootfile &&
++	git add aaa zzz rootfile &&
++	git commit -m "aaa and zzz have same tree OID" &&
++
++	# Verify they really share a tree OID
++	aaa_tree=$(git rev-parse HEAD:aaa) &&
++	zzz_tree=$(git rev-parse HEAD:zzz) &&
++	test "$aaa_tree" = "$zzz_tree" &&
++
++	# Cone pattern: include root + zzz/ (not aaa/)
++	cat >shared-patterns <<-\EOF &&
++	/*
++	!/*/
++	/zzz/
++	EOF
++	shared_sparse_oid=$(git hash-object -w -t blob shared-patterns)
++'
++
++test_expect_success 'sparse:oid with shared tree OID across cone boundary' '
++	test-tool path-walk \
++		--filter=sparse:oid=$shared_sparse_oid \
++		-- shared-tree >out &&
++
++	cat >expect <<-EOF &&
++	0:commit::$(git rev-parse shared-tree)
++	1:tree::$(git rev-parse shared-tree^{tree})
++	2:blob:rootfile:$(git rev-parse shared-tree:rootfile)
++	3:tree:aaa/:$(git rev-parse shared-tree:aaa)
++	4:tree:zzz/:$(git rev-parse shared-tree:zzz)
++	5:blob:zzz/file:$(git rev-parse shared-tree:zzz/file)
++	blobs:2
++	commits:1
++	tags:0
++	trees:3
++	EOF
++
++	test_cmp_sorted expect out
++'
++
+ test_done
 -- 
 gitgitgadget
 
