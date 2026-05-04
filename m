@@ -1,87 +1,85 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B262542A82
-	for <git@vger.kernel.org>; Mon,  4 May 2026 01:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B036E1A6813
+	for <git@vger.kernel.org>; Mon,  4 May 2026 01:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777857031; cv=none; b=c+SqOMcnFjHKmFIePclQckOV0wXAQ4OEDAPEvDYXxxCgRrFj81BnMd6S89hdo1n5Y6Gsi1G73rfbTktAQRCxh5m3BE4to45Kbg+emUAtnOTCcu720m/xPH9XE1c4P38+ZET4B/nmMiMb9PtVBrvwjb9xEn1TA2YD1VjQvxSy728=
+	t=1777857185; cv=none; b=BqOjtM1mtd39tTltc52hT0OKqM9rwrwNtCKg9zO/uKyDD9+IdBHjPZUMHYsArUbMhrjrqK+ubHb5sLR0loVnptNsuB7GhRbVnKHrzITX3TEDMRbe0BBzEG1W6TzJIWR4GxCugEI1hiPEveLbKWCE/OfKL+ozZLVoq7ouxUFI7jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777857031; c=relaxed/simple;
-	bh=1kFuMIrNO8skLaXQFxfcC5m+Ivbsw35sjKnO0xaAUQk=;
+	s=arc-20240116; t=1777857185; c=relaxed/simple;
+	bh=dCENWBIfYcIGfT5lOQBEwsUMAddiMYz+lBg5iFyrUoM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p1e+W7CTeo7rOeC7bh0pxMHje/XFvnH2Dc9zSvQWyBhLWx6p3Lj2kb4RztDu7qmNpLj+9Dt/SugsE36CruBiR2B6m1Nvr4A+digUKmkdPw2sMciKvexkKVZ9Ds9rTmR2dSneivuapVacD3coB7dyjeggGk9N8pdT9Db4VX4g/qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ryhltVdG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k78Ag/k/; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=YhxgXymaDiPmVRyBkPT2nALS7c5PhDNG5YHCQjFIWx1XGI1YHLk2f4AdYRIikrWTqbX2Og6n6AL4hhLkBE6nDIc+X97l+URjs3UWNiznrGj/X5PDHMKiiBntVBr4nLdSnjjyLAqFsGAqS+fkOX/0M8veYKOcuscX72aHZGl1QuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HBWs1K0J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LV3+a6CB; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ryhltVdG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k78Ag/k/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE01C7A003F;
-	Sun,  3 May 2026 21:10:28 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sun, 03 May 2026 21:10:29 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HBWs1K0J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LV3+a6CB"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id C60D81D0000E;
+	Sun,  3 May 2026 21:13:03 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 03 May 2026 21:13:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1777857028; x=1777943428; bh=qlZjakXmLr
-	PiMUfuIJoSAXzyL4BWzVPmpVp3CJX5FBA=; b=ryhltVdGbm++13AHlL0uFzJQpn
-	7wKzM/JJvLbWwU5Be0vbJ6hreiGemXPLIkZCzOWafzHSVmg/bf1empYOob//DjSI
-	XSNJHQwXOtvGpq4ch6FRZLsnilt2BxHI/WP0Pzvs7Azwhe1HZUZz1CtP8r47VBBH
-	3FCiom49JtPMGljhqUgkZu3pfZfqR+NufPEUKAxKndTVQTUsKgwvmIDxpazG+aR3
-	KLT2HEX4/LW1e9x5qz1IFlg7XrkTSLfFnNviC65lWC3vN6qgdP8G/Hphmi/SxCz+
-	5/0hUoHEWruWN1Wfju/Bn13iynhmrhfPCvI6G0K+doLIrZGAX2Ky7ZW1MzfA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1777857183;
+	 x=1777943583; bh=H5Dme+QMIToEcAhU+zE8lFmybpArt4ArMR6hKUWG6Nw=; b=
+	HBWs1K0JIlVfMrMWnNtyLaPxr63g/F/au40bHp1WTUAMlrkP5G11Troe0b8Ucywi
+	SA8x2cWxcLdqawz06gF4kCLQwMs2/duL3aGxz8m9rvKukBw8AJOo4AY8GzRqiJTG
+	czH4YNVgM0KpQSDZk/DCpQfcp+QhmLmiBE8WwOfe+FCgac5MwnN8bytHhILs7KfJ
+	JfbNU3ZcKjGKya+Nk9MzQtn8TKAbnzU6TKjMStqOJM87RlC5EV8pbm+f7wZfq1Xy
+	qVgIQ4Pe04ecFrZ5a8vfu/BYal9IpbTwwViRmFO4lwENP8cyCS1O7x1YmSelodX1
+	DRAcwyw6uxaQW/sqetEmwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777857028; x=1777943428; bh=qlZjakXmLrPiMUfuIJoSAXzyL4BWzVPmpVp
-	3CJX5FBA=; b=k78Ag/k/3EqfiEZ5tMWWjLl2Uv5jpzR9oI5EBrHTb6Egbho27OC
-	yQ/oXNZvwM+4koE9i+o/siAdv+IFcOXH4rhuVKw9ydkIZHbJQI8z7kFWfm6SkfQY
-	BDsetul31/Ufq0igpMXmJJ1d5V0Vf4bIym5CPaCgEC6mky1J8n4zL7JJOnMNc1Gr
-	gwA0OS9rzxcKokBvSfWSG3EBenYW/8GpizKFUg4NSn2jH/EahYXSxX1Bnmp67aDI
-	tC1CSE6Kg7vepKxlJ6MR6kWNr/1UuLGsknFZ2397lepv00TsAton3CUJFhtv0Tya
-	N/VF27rh/swZuYH7z6pHpG68mJgozROBREw==
-X-ME-Sender: <xms:BPL3aeedKo_PHiMMQjBwACO5fADSZYkeKjs0h-m4i-Q3aBoncXyLHQ>
-    <xme:BPL3aRg15AXc8UCzsacI8a5LtjigN2V0aECNmfum5VuAVGl4_AxMvQyTdxJPwQb6l
-    BsyqAFZs2Uo-eugeLic_D72psuPnsaOkdFhGhRFZeyRkZLMUiYjEw>
-X-ME-Received: <xmr:BPL3aWz6c7IidvVUEAuPX9M6TVQGgvjqmiaezG171i_byahips6iqAxK1r-WeyWe0InDd1lyCF_8gTFNQ7wkWm9EU19rWhmHpw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljeegkecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777857183; x=
+	1777943583; bh=H5Dme+QMIToEcAhU+zE8lFmybpArt4ArMR6hKUWG6Nw=; b=L
+	V3+a6CB+P+TglhMXOoLV70GG9OA4fyEaysnMgQSB3rnfSQbGmKrcrz0sN1LOLU6w
+	TS4qMoEdQkMooMM4Ds4z7Fo+b+RW9rBAvPiuRZb7aY/qa8cMiWAyP8DizUXUr8O7
+	8NlM47sv3KD/DgzNks4UeKoXuZf6Gxxkh8HFtAoQwvvPpHY0oEo0s4iwG25od5Uh
+	kUQO2vXQ1xAKtI2P/IWUcB8sJMb8477qgIBtlUfvsiznB1c7syFNRK7RUgF1sj6P
+	5pBhRElZYxPmNJ9aiixWAFA7Rc26zU9lENn5BXXHtmLUYOV6niVUch8czyXs7/pk
+	CaGRoWIIScN4VkQFvOnGQ==
+X-ME-Sender: <xms:n_L3aY6zHYo9CH9nCH9GK7MNL2iEC16a4G7KeXXlLpFchKh0tBdxKA>
+    <xme:n_L3aXsV_wGm7HmrJ_PiUSxLvTSRJ-rlARbdgUobiakf1-4cEfmSRfF7Jp7PleGdY
+    dYJgU8OgoVb-uEMF0dtQa-wANZCSMHRYq0zo6daEB3EdyOu4-nr>
+X-ME-Received: <xmr:n_L3aR7djStbLyKf-rnr_xNQEMyKtzl-VYAlUxQRMgS7dXNcZwFlFjvkjEQh3YEfCy2KHsvXZC2eRb_j2g8kFe2UGd2pbFBALw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljeeglecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopeguohhmihhnihhkrdhlohhiugholhhtsehunhhivhhivg
-    drrggtrdgrthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheprghsvgguvghnohesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprghsvg
-    guvghnohesmhhithdrvgguuhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:BPL3adPGHkHvDqGe_YKTp_zprgKeax7CDk9p66lqCd6LN8wKAM3c5A>
-    <xmx:BPL3aXWwSLNSmEyRLy---8NQItcGIkUcu2uj7wvmpNfwlDYbmmgWXg>
-    <xmx:BPL3aR1EJsXNYG5M68BsfjvdDHZNHo-HvR63FCZU9FL7Vjy0uBPABg>
-    <xmx:BPL3aVrqfC7gmZXBFcUUP6Xblf2Ffy6AudIPJKCyjJwvmuOtnLtpGQ>
-    <xmx:BPL3aSyr0zlb3ELKZWvQMHLq4taXy1FFzeDr-JBAisQEW7ObvX4L99Ez>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
+    hushdrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:n_L3aaVnTippCdUM6mKU7QcPPxkiwWaNveSLBfg-GhTLZFgvC4IAvg>
+    <xmx:n_L3ab9yh56r07XklGPYoY_ViJmjmFDro3K3mepDgDdQfv9wHV89jg>
+    <xmx:n_L3aelbBLY1pSuQZTjg6q7iJCWPXelbIvjKaNEJVFVwLO222BYIEQ>
+    <xmx:n_L3aRULTdYTWryVeDUdcCMtADS_vcJiTOQho7wYUfA4sBpeKyRdEA>
+    <xmx:n_L3aZ34bVhRfv5ktLH4zl_4AhX1Hm19Y03IThueKbZ21RQCZsB3qo33>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 May 2026 21:10:27 -0400 (EDT)
+ 3 May 2026 21:13:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Dominik Loidolt <dominik.loidolt@univie.ac.at>
-Cc: git@vger.kernel.org,  Alejandro R =?utf-8?Q?Sede=C3=B1o?=
- <asedeno@google.com>,
-  Alejandro R. =?utf-8?Q?Sede=C3=B1o?= <asedeno@MIT.EDU>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH] compat/posix.h: enable UNUSED warning messages for Clang
-In-Reply-To: <20260503151210.36036-1-dominik.loidolt@univie.ac.at> (Dominik
-	Loidolt's message of "Sun, 3 May 2026 17:12:10 +0200")
-References: <20260503151210.36036-1-dominik.loidolt@univie.ac.at>
-Date: Mon, 04 May 2026 10:10:26 +0900
-Message-ID: <xmqq1pfsq8sd.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  GIT Mailing-list
+ <git@vger.kernel.org>
+Subject: Re: [PATCH] name-rev: fix an 'may be used uninitialized' error
+In-Reply-To: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Sun, 3 May 2026 16:16:38 +0100")
+References: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
+Date: Mon, 04 May 2026 10:13:01 +0900
+Message-ID: <xmqqv7d4ou3m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,59 +87,59 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Dominik Loidolt <dominik.loidolt@univie.ac.at> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> Treat Clang like GCC 4.5+ so using an UNUSED parameter emits the
-> intended warning message.
+> Today's seen branch fails to build (with DEVELOPER=1), like so:
 >
-> Commit 7c07f36ad2 (git-compat-util.h: GCC deprecated message arg only in
-> GCC 4.5+, 2022-10-05) restricted use of the deprecated attribute's
-> message argument in the UNUSED macro to GCC 4.5 or newer.
->
-> Clang identifies itself as GNUC 4.2.1 for compatibility, causing the
-> current check to use the deprecated attribute without a message, even
-> though Clang supports deprecated("...") since version 2.9 (2011).
->
-> Signed-off-by: Dominik Loidolt <dominik.loidolt@univie.ac.at>
-> ---
-> I am not familiar with git's minimum compiler version but this patch
-> drops support for Clang < 2.9 from 2011.
+>       CC builtin/name-rev.o
+>   builtin/name-rev.c: In function ‘cmd_format_rev’:
+>   builtin/name-rev.c:885:28: error: ‘commit’ may be used uninitialized [-Werror=maybe-uninitialized]
+>     885 |                         if (!commit) {
+>         |                            ^
+>   builtin/name-rev.c:867:40: note: ‘commit’ was declared here
+>     867 |                         struct commit *commit;
+>         |                                        ^~~~~~
+>   cc1: all warnings being treated as errors
+>   make: *** [Makefile:2932: builtin/name-rev.o] Error 1
+> ...
+> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+> index b941e93834..5b7f7a00e5 100644
+> --- a/builtin/name-rev.c
+> +++ b/builtin/name-rev.c
+> @@ -882,6 +882,8 @@ int cmd_format_rev(int argc,
+>  			peeled = deref_tag(the_repository, object, scratch_buf.buf, 0);
+>  			if (peeled && peeled->type == OBJ_COMMIT)
+>  				commit = (struct commit *)peeled;
+> +			else
+> +				commit = NULL;
+>  			if (!commit) {
+>  				fprintf(stderr, "Could not get commit for %s. Skipping.\n",
+>  					*argv);
 
-Does this "drop support" because you force _all_ versions of Clang
-to use the "deprecated" attribute, even though you _know_ some older
-versions do not understand it?  Don't these versions identify
-themselves so that you can do
+Why not
 
-	#if defined(__clang__) && CLANG_VERSION >= 2.9
+			if (peeled && peeled->type == OBJ_COMMIT) {
+				commit = (struct commit *)peeled;
+			} else {
+				fprintf(stderr, "... skipping ...");
+				continue;
+			}
 
-I do not know if the userbase of GCC and Clang upgrade with a
-similar cadence, or we seem to say that we care about GCC 4.5
-(2010), so giving  a similar version detection for Clang and exclude
-ones older than 2.9 sounds more appropriate.
+			get_format_rev(commit, &format_pp, &scratch);
 
-> Dominik
-> P.S. This is my first patch sent by email. Please let me know if I
-> missed something.
->
->  compat/posix.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/compat/posix.h b/compat/posix.h
-> index 245386fa4a..ed83a4d9d4 100644
-> --- a/compat/posix.h
-> +++ b/compat/posix.h
-> @@ -35,7 +35,7 @@
->   * When a parameter may be used or unused, depending on conditional
->   * compilation, consider using MAYBE_UNUSED instead.
->   */
-> -#if GIT_GNUC_PREREQ(4, 5)
-> +#if GIT_GNUC_PREREQ(4, 5) || defined(__clang__)
->  #define UNUSED __attribute__((unused)) \
->  	__attribute__((deprecated ("parameter declared as UNUSED")))
->  #elif defined(__GNUC__)
->
-> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
-> --
-> 2.54.0
+or even
+
+			if (!peeled || peeled->type != OBJ_COMMIT) {
+				fprintf(stderr, "... skipping ...");
+				continue;
+			}
+
+			get_format_rev((struct commit *)peeled->type,
+					&format_pp, &scratch);
+
+and dropping the variable "struct commit *commit" altogether?
+
+
