@@ -1,138 +1,168 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDD53DEFFE
-	for <git@vger.kernel.org>; Mon,  4 May 2026 15:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777907616; cv=none; b=XmDmHYIMQwPXCgLdbW+szwbms5dlmhyFMf8RvkEHxYPiysy0xCpSYg8FhxSftFOOzVNlGgnVmfh5NR30uMYqnK+MJJNJFDUnI4vO6BHYgl9KieL2hQfz++D0b6lN+9NTo4GdUGBEl66/pQRPJnGXMe6CLsJsygx769R4A7DdDeU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777907616; c=relaxed/simple;
-	bh=BFPFJznAHitID4S0LzKMu7zyMWzcfL9bORgTcAoAlHA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qh7JUcSXIvWteKQXeztNCKBiNeUdOwF+nkAj/ZF6EN+UbCyLnM0ljjM7YHSVz4v97e6NHeHp6myAaL27bmxTUdXlfNyrSG2AT4DMqbpL/TdBb6S3VrvSCBIgjO+8P35pjpuRWv/hC8MkXzg66LfylQe0jdhKXTZmV6PdoMvBlhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=swbZl8sY; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71B73E0251
+	for <git@vger.kernel.org>; Mon,  4 May 2026 15:27:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777908457; cv=pass; b=uS851SilLJfMLO+svZz3imcX6NIPFrGbZ9Q2F+zAIWuSDALlMjRLncDbq8kTwOwndLTlOifFWaWPjzyKSFJ1y1xjZKHwR/2cSqoDeCM/O9HXO993kEJCpQcBqg0EVnj22ZWVnnfhjmcz1DJYxkz6Is6JT8rx1zZhbN8Zd6+UAn8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777908457; c=relaxed/simple;
+	bh=7EwGzQCfHpNghxXOugpRuwwgnz4qtuQ42MrdPvtW9tk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=D/pSnNzFCxj6tCRG6OZMRgZDsJxlhcIOm9/ZL/Ko7L0WbZm7Q7s5crGFlIu49AnRpYyJnzkizzKuNKn6HcRiYpbCJro03ZlSv4I+dcnjv3hH+JEotqcvflQ+B+jt7S8fOW+B3Yp0zFPLwjYzWeJ5BwbGcpFKIroYZzlsMsEules=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U/UDDRHh; arc=pass smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="swbZl8sY"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-8a4b8c3a30bso44371336d6.3
-        for <git@vger.kernel.org>; Mon, 04 May 2026 08:13:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U/UDDRHh"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b9358bc9c50so644159566b.1
+        for <git@vger.kernel.org>; Mon, 04 May 2026 08:27:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777908454; cv=none;
+        d=google.com; s=arc-20240605;
+        b=K4zN0KwP0NLc4n+XBAmFDoU+sBr2prA4LGO8Hg8YrWwj+2y15/RDTjoQTht21RuqQ4
+         WIfOmFiFFZEH9TU9/gEipejZ7nY7l+19peHh+w4VPRvcD65TZKAdTRFs1NI5yYk1mO6s
+         xLVgbEo8SIEjTjorIp2c9KXZJ3h0GsIP2GDRexCOntldf5bGl1+c97B6eHuEV9JZPtO6
+         Z1V1ZnxK0UKaxeF91fT3u95+I2TU+mAadivILJlvC8NawgiqjXPMkb3z130jsQgj9ovC
+         jsiMo6wYx2HUL3mSM3oxOpXw3kmnG0d8yw4CspHhRs3I/9T2ETNaa2sLyDDUwekTdKUc
+         VEkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=0JgN4jML4AYx6PgxPNmOz61c8biLIkMNQjL2WeUCuEk=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=gIrcvyNeGoRGIRZEVXuuFjOFDEvht6SEhUFOu+gAKpXfrFygwDg19oiX+ZA2AIfi2q
+         XIBnxeDqRoPNhM6NMN+JG1ongM1EN+SUnbmhCTC+Sob00WdiYMaytAbVU1fN/r1J4psC
+         Hm861VgB783hrys8zfJtMHxacaCaIEu2NG+ktdVHc23wdQ2ixA/y3mbFWp4IG6o1hjhL
+         AuGdDoacA0R6yUZYl+MFNLwmcX/I8k0heoj7C87vCZMpVl/I0bRFV/nU0QdzwjUIy21/
+         CDGrQnjVg/sjJof+1QPdQol8NIvVPdb4pQR+ZYDBiHnmVeRSuBaVzGUcdyIJo68squ6r
+         GICQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777907614; x=1778512414; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BFPFJznAHitID4S0LzKMu7zyMWzcfL9bORgTcAoAlHA=;
-        b=swbZl8sYBRBre0HkSuXQIAu642M+S3EDZwt+pztphssdGIfUmIQzdvesL7WdO9luae
-         gSeKVxQF4cJGikwQTYM6La15suWUsTfkh+nz6L6tmIBUJuSFAXRV35FQZ0sEv9NpAvnk
-         o+L5BiybHuWXf2DtTvhE3tuHLWzIF5sRHZSkYPU1IOkSmR1EBsa/mEmrZ3GHSrvU8OTw
-         04R19vPJb672HznoPCmmfrbPtdIR0zImLLqWQkWYDri2MvnwI/BZy4FQUbbx651vcInn
-         FmnkbfafrEiLoVo53ytfYHPJYVxx3R+1FTSzfKto/3ROWLikgcr0nq7CEw9CgK6EvIIg
-         avHA==
+        d=gmail.com; s=20251104; t=1777908454; x=1778513254; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0JgN4jML4AYx6PgxPNmOz61c8biLIkMNQjL2WeUCuEk=;
+        b=U/UDDRHhRz40+pHbvaFlqd+KXvpS+H2lZ8CjgkD6uJCfrO2Z58qXkidPmCmoRpuItO
+         /Njw7X/Sb5AbwLNNfVLXY2Wai70OnjG1mKuqrdbLlqpuj+rVQuaoFiwgeloB0v1+sm3J
+         AK/v6kZBPfhsZjohGNbt8uAriFWwaMeoCYtwW1z0WjBzKg4qz3EngM3zJdIGcAXRUdut
+         KP2rXzfJ0uvlPNJXIkOPhJBNVSJ5b0jCJhU250bAtVCHz+dtUVWXCurZDUx8kWl097J3
+         7cOdXL1/+YXTbUqXa9E00VmAnMHDBCS26AFRekkvMlOrUDYbMd6jJK+LG+Xds4NEPui9
+         QeZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777907614; x=1778512414;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BFPFJznAHitID4S0LzKMu7zyMWzcfL9bORgTcAoAlHA=;
-        b=hw2iq0VxC6hNYp7yeWVzHgwcpqFb1A4+pZxXzb6R9s9H/pm2PA7Ag1RCxP9J1sPHq2
-         5M69S7OBlAbcuVScuLTBEgk/UFYWq+MwhdTpM/aJtlybq38ztsqvwmx2eI1pbYu6mdHp
-         VkR+GLPnAYH/3hm1CqSBvifQ8YQ1bM6pUbSZphdZMgaB+pet03XAsvDU6of2WBbCaped
-         KPsn4VgV4Vr7LvGq22CmCurrHPimAgs3sfrIKkkTiqUpYoxLIxVa6ccZysoLitAvQaQz
-         lsuuoRuemQ8R39ehuwmafxu/NEbiOiDpSpXA+klV3K4IRW0fGzQckcSu4f1f18Pfmby4
-         4E5A==
-X-Gm-Message-State: AOJu0Yza/RTVEMJxu7R5YFqACeCM98+N7awQHUZZ7fEPQEqWmeLOl3TT
-	6cXUvFwgxtxeANXn2Vuu2qG/EJmN/1vHuk6Ddp4vnnpi4PoLNgOfLSPx
-X-Gm-Gg: AeBDiev3k/fHNQxQNY4q/1BorpkAe5nUMsXpHUglmhuyfBLZr7Uv7kdFQFFg1rlMehw
-	NOU24U5oYcW0y32Z3xCGwocsbGOyABQE1PRG2cmSF9EW8fOabIRwr8u35QV8bTkU7TN4jKlcVtO
-	5n5RpQt7/ugPgYMgThWHSSXuii52wHBp54m/zZSpzZyQOdip1KDnt4hHlXNQ2UMwVFq4GVrAUJZ
-	FtA9Dh7YfeY6YyABs8R138sqmRFGb92LtcXvQB9srOzIWBxb/gfnVQq+Hn/RNK4zMV15pabrrou
-	5HhFzAwiefPZT81IZ2ojQ3yixrcdnbanmQbtQkiZlnThPDAbmHbIKWEkkJr5uUr6BIvIvTgtNKE
-	rSBY/bif+6xF+1Zcf3TZyKkuIuVuluwQkZGbJwbPuV0It2UjrlH1q9ekALu7DOHlJ0Zj2NJLGsS
-	ilAhO9LdJ7/2eFdiBKYyD/MzmeBEUnanUE4x/eMHF4by2b
-X-Received: by 2002:a05:6214:5294:b0:8ac:a92f:cd05 with SMTP id 6a1803df08f44-8b6697d80d2mr166518306d6.48.1777907614463;
-        Mon, 04 May 2026 08:13:34 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100::59a? ([2600:4040:264b:4100::59a])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53d0702aasm127835826d6.43.2026.05.04.08.13.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 May 2026 08:13:34 -0700 (PDT)
-Message-ID: <7d5cf952-badb-4071-a0eb-af9443fa8b5b@gmail.com>
-Date: Mon, 4 May 2026 11:13:33 -0400
+        d=1e100.net; s=20251104; t=1777908454; x=1778513254;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0JgN4jML4AYx6PgxPNmOz61c8biLIkMNQjL2WeUCuEk=;
+        b=r6AwYsTgHR/EuLfSXjB281jzW/7pKTEIg/zHohdU72y6xPCt4fvA3eGrin3JmS5YhO
+         ojMoCKKwdBV6iejR2keKXKbXAJVZD1W5vrFlUo43jy89YJ3RKQYBs18wFoYqCEOgWGo+
+         +8zBK+ZT0VysElonl6dr6M/sdVr07/7XD9R10OOBpF2lKOmCZj3NOvP9spN6kci1WhY7
+         6j2nkhQiO/NbQzRfs2LuufntwFsr+gwXIi3FLkcufDVFTh5N1emvphQ3A88uJ74wFUn8
+         VUcAw6xDZ+nTR1bDOMZOjFoCpcsN8KIRT7NGo7BOAdtJkngT7UaBu4+DZKfy0fmkKoI3
+         0usw==
+X-Gm-Message-State: AOJu0YzFttecmlHDZpFiUp4KfORATPsoaWI+gWbNBBpjv49aA124+re9
+	DZdnSinJh/k6FyCDkiRGEKlt7LP6R805ZQvN9XFK3c5TEpT4dHfBHcywxW4XP+61FZ19K2htVXy
+	6smnkgbYNQl1lphUYwHo7h3/ftVisGt2S6w10
+X-Gm-Gg: AeBDietb6sgBNEeZulYUvvzzBY4n4tk1d9lCSH+DWIeZzPsxm9M+rpIqqSFcMxzMWyr
+	aqPEB2497jaa9dtkHUijCdo03R9OAV1DVguT2cG3iwaPfuovpF0MGmTwN9aFzdHquYtw8Rymi6R
+	YStSLEx0Kyy+lXgnxmsU09nutFs0n+ajIW3TTTerZTemxb+BUuwCvFkKqJgwjdWVBf0F6x42GFc
+	xlg5O3Zt3i/R0q9zeVfCfn76t595revUo9FBkKbz3NoRZ6aVnLcSIR0lGSr4jttLNNhsa9J6w+e
+	RhzEYhRMxIcyhH1zow==
+X-Received: by 2002:a17:907:5c2:b0:ba2:4338:e9fb with SMTP id
+ a640c23a62f3a-bbffb846e76mr537085966b.32.1777908454155; Mon, 04 May 2026
+ 08:27:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] git-gui: handle missing worktree and separated
- gitdir
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org, Shroom Moo <egg_mushroomcow@foxmail.com>
-References: <tencent_AEE968E8E785907BA55A383977C8968ED406@qq.com>
- <tencent_8A236D9D4A8D8CCA7DAA083157AA8543700A@qq.com>
- <3b0b37ed-1a5d-4fe1-b2b4-7db67a62a06d@gmail.com>
- <77219c75-7968-413f-a642-0446145c8023@kdbg.org>
- <a1a7237c-ffed-4a7a-ae58-55769aaa4453@gmail.com>
- <93e1c61f-e58b-4a0c-8ece-7a8d945fa900@gmail.com>
- <73b99b54-1d39-45c1-bd06-26ac1008fddb@kdbg.org>
-Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <73b99b54-1d39-45c1-bd06-26ac1008fddb@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: jean-christophe manciot <actionmystique@gmail.com>
+Date: Mon, 4 May 2026 17:27:21 +0200
+X-Gm-Features: AVHnY4J9WrSUGPXXkQLrfc2CaZnggTBDuQ81g3px_TurmdaPdNoniB1bZfaWefU
+Message-ID: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
+Subject: git hogs the CPU, RAM and storage despite its config
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+many:
+git add -v --force -- "${file_path}/${file_name}"
+git commit -v -m "${full_commit_message}" -o -- "${file_path}/${file_name}"
+
+What did you expect to happen? (Expected behavior)
+
+I expected git to respect the configuration (.git/config):
+[core]
+    repositoryformatversion = 0
+    filemode = false
+    bare = false
+    logallrefupdates = true
+    fsmonitor = true
+    untrackedcache = true
+[remote "origin"]
+    url = git@examle.com:ppa
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[branch]
+    autosetuprebase = always
+[branch "main"]
+    remote = origin
+    merge = refs/heads/main
+    rebase = true
+[feature]
+    manyFiles = true
+[fetch]
+    writeCommitGraph = true
+[gc]
+    auto = 0
+[pack]
+    threads = 1
+    windowMemory = 1g
+
+I expected git to use maximum one thread for packing and I'm surprised
+it even tried to perform packing as gc.auto was disabled.
+
+What happened instead? (Actual behavior)
+
+Instead, it used all the threads it could find (28 out of 32),
+depriving the whole server of CPU, RAM and storage as the tmp files
+kept piling up.
+
+What's different between what you expected and what actually happened?
+
+Uncontrollable use of CPU threads, RAM and storage
+
+Anything else you want to add:
+
+All the threads were running:
+git pack-objects --local --delta-base-offset --honor-pack-keep
+.git/objects/pack/.tmp-<number>-pack
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+[System Info]
+git version:
+git version 2.51.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.14.1
+zlib: 1.3.1
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 6.17.0-23-generic #23-Ubuntu SMP PREEMPT_DYNAMIC Sat Apr
+11 23:29:57 UTC 2026 x86_64
+compiler info: gnuc: 15.2
+libc info: glibc: 2.42
+$SHELL (typically, interactive shell): /bin/bash
 
 
+[Enabled Hooks]
 
-On 5/3/26 4:53 AM, Johannes Sixt wrote:
-> I would not call the use of --is-bar-repository instead of
-> --is-inside-git-dir an error, just a choice that has been made. In
-> particular, when the startup directory is named '.git' and is not marked
-> as bare, then its parent directory can very reasonably be taken as its
-> worktree. (That's how things worked before --show-toplevel was used.) If
-> the check is for --is-inside-git-dir, this treatment would be ruled out
-> early.
->
-Whether being in a gitdir is ok, or a worktree required, is of fundamental importance and
-is not explicitly checked now. This is my issue. (Whether the repo is bare, or embedded in
-a worktree, is relevant only when automatically fixing a user error.)
-> But perhaps there is a simpler solution: Let's present an error if
-> --show-toplevel fails except in the case where the startup directory is
-> named '.git' (and is a valid Git repository) and is not bare (then the
-> worktree is the parent). I insist in this exception, because this
-> use-case was considered important in the past (87cd09f43e56 "git-gui:
-> work from the .git dir", 2010-01-23).
->
-> -- Hannes
->
-
-This would not fix gitk's blame / browse from a gitdir, and I don't really see a one or
-two line fix as being adequate.
-
-git-gui sets GIT_WORK_TREE and GIT_DIR at startup. GIT_DIR passes my simple tests, but
-mishandles GIT_WORK_TREE.
-
-I expect these two invocations to be equivalent, both starting git-gui in the worktree
-'/some/path':
-
-    GIT_WORK_TREE=/some/path git gui
-    git -C /some/path gui
-
-But, the GIT_WORK_TREE approach:
-    works as I expect ONLY when the current directory is a valid worktree
-    when started from a gitdir, uses that gitdir in conjunction with the requested worktree
-    when started from an uncontrolled directory, shows the repository picker.
-
-The git -C approach is indifferent to the current directory, of course.
-
-GIT_WORK_TREE enters much too late in the process, and rather should handled first:
-    if GIT_WORK_TREE is in the environment, cd to that first. Throw an error if that
-directory is not a valid worktree.
-
-I don't actually understand the use case of defining GIT_DIR or GIT_WORK_TREE to git gui,
-and I wonder what other bugs are lurking... maybe the better approach is to just abort if
-GIT_DIR or GIT_WORK_TREE are defined?
-
-Mark
+-- 
+Jean-Christophe
