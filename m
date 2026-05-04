@@ -1,69 +1,69 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E163E3E4C67
-	for <git@vger.kernel.org>; Mon,  4 May 2026 17:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DA03E3DAE
+	for <git@vger.kernel.org>; Mon,  4 May 2026 17:08:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777914521; cv=none; b=HV1ECJg7mdI6TlSI0LcjdD+JcAAVWeUM6U60vPhQI1f80CbAOovuqPLeh78HvYoyqCGr5+PM5HoC5vPQjfFNpKElTSQeX3ReD7So9CzA7vA7XTJ/5rk1uil5qBxayRa5xl7SxTV0Vi3xzaL1gYljOnbSjEiATnu8wg+aHeLADoo=
+	t=1777914523; cv=none; b=mjm3+Zb7lobdgizkmPk+54QgFJR1QZQwX5qXjfWC8WqaYUJrguCyZ3V8OPspLBbqlxZ1Nok/OL0oh8PmHV+wrpcwyxIY0NJJAXCpJWSbCQSMzZ/Kj6v2Ub8mytnNsQ0FX+CzpNEbTzvQZAnhvASdKamVmqEfZbBamGgZmZFj2C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777914521; c=relaxed/simple;
-	bh=LbHwbsSRObIKXgG6/GAGMTzOlaZOCtXaa7+uZISFc0s=;
+	s=arc-20240116; t=1777914523; c=relaxed/simple;
+	bh=rjn9S4uPFxwGpahy9lehBMnxjJlImovlbC7EdM8Py0Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=V3rUUr8LBtEJ39olGkCY4t/ozvrg0LnlrDFdNRmVJH3kOkw2djL/7PdiVPmFzxL8UHfNIen6ERpISxNZT+hoVbPX5nhzjZZdDSI6tctDz3k8YB2aVI35xyJcDGSSaHxQS23aaRZwXj8Veb86RU1OR1I1CubW0bwHt+3IyxIlIZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oZgyQ1cA; arc=none smtp.client-ip=209.85.219.45
+	 MIME-Version:To:Cc; b=p2rLmRTyDiWTrhayNKCVRh7mDgmjEsNZ92ANwTvCDGF98+Rr4J9k8dOXsQEYLgmNaOs+6XBVmWIy7GwzuqG80ySoOExLDnmZWiNrl8NUSmVH83S/g7TjKvXrYskA1qiG8JpoFCl5UWuXu3Ky99AMyxGdLHnhJUzkqt07r/QVWFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HXJkKqb4; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oZgyQ1cA"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8b74b460d77so20919486d6.3
-        for <git@vger.kernel.org>; Mon, 04 May 2026 10:08:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HXJkKqb4"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8ec9f099fc6so481048185a.0
+        for <git@vger.kernel.org>; Mon, 04 May 2026 10:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777914517; x=1778519317; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777914519; x=1778519319; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J4xodm3fjmxi+KQJTMUvyrLC0OV52p21gKVMP81J1fM=;
-        b=oZgyQ1cATPbmE6VgRpJEk8PD0PedVQuZ4I6BtN8JW9Cl/jJk5y0ygrJYJXHSe9VfxO
-         y+UPjws50keXGFoM84hJ7fHrsDSTrJ+KM3d7cork98qVasRzYNHwnB8lqak1e5FNHA70
-         k8xlU9ezbB8mRoXg7PNGLs2bJlU7wblm4/ybVOB2zy9POI8rkRjz8VEj/HrfQmcmNB8j
-         +AdpaLFJJXpib8+28rStmS620X1MzQJjqHqrVuhJa7K82PRVvOS4S8Rozs9r91KCS96y
-         IqDUFQb0qxrU+cNluUWogteYqqBUgyD1lFThou4qDv7LoOcIZEk5MVlZxu3DUq/sals2
-         lQEg==
+        bh=70TF8LhV/nmHtP6Yix1dhugn/uTsr6ytzSbF0QWIOek=;
+        b=HXJkKqb4s4g98icePqVZYuR+lFD4P+t6FjKABmkM6XnRqkXDmxi6ksjIBJxBpDQon3
+         JJCZ4klmkJ/ze7QRGHTII3RjJI2S0fYrEz9nMqT6L0+iRrYkO+jWAiof9R9tqyqRRMVG
+         MJtiKSW+Y4ZVKiIIuszyE5KnPxTfVgdkB4Z94nkEuqglqqZ2GIbiJd/8kC5ZAtc34OLw
+         xm+oEt/U6/iMAHvbRTvxqSEWMAOpj+Fyt6dY2WliHABgccvZteShEBQw4CBTpEJsUvGP
+         BfnqKiGcS7NW/+7anmpDj2kYokNU4FfQxqYxzQRWO3rDCBr6EBJ1Ik5J+tisqOTwDejy
+         j9IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777914517; x=1778519317;
+        d=1e100.net; s=20251104; t=1777914519; x=1778519319;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=J4xodm3fjmxi+KQJTMUvyrLC0OV52p21gKVMP81J1fM=;
-        b=IUdghETVWWuwvge6/TXVbmF+LUuhA8/MK8qwv4EIMTN4G60r+c1lRJ6mY7Jo+v4NI1
-         UhCEfRGJ3o4IqTeW+szO0D1mNUgVFRomV29h2NJw8f5W+dUTht5KQUP4cJpJE7slQyRn
-         J8sC9LN9rUnc6TeO5bgBPJmakbOU4kb72zQNq9FAS71TYF1hKhAS+5toN3ipmIyb7Ol+
-         F/TcO/Y5DsdHdgiIpbOaz9lnPfRJf4TT6SGWdk82iWRo9FtqChSS69iup3rfJV/rCX93
-         H8Q0zhefm9nyvI/nTOOJs5YmLYYouGMZRB+YFZe4Ga2EdXrb9K4q+RInJK2MKJKbwzUY
-         47qw==
-X-Gm-Message-State: AOJu0YzdclWY/eHa+2w0i2nfnGcB2B9U1u+0sQXsH+OiEgFYLdd0xgPb
-	oEGI0a6bI+xoLx9E4jc+11+15DaLhNgl4p4osmKg02TMVaHPIxwrKVkQjmDQMFjI
-X-Gm-Gg: AeBDieuOWpvjNmn7cdrF7lzG3/kYEsYLW8hL8+lewaxFAx6wdfI7D5RUTZQVAM8ivy8
-	hIXVVJr4ew17ptV1GOyMSdliipLa1ZxlAjm7UYuTT4QtQUWylvw4PZzfMxYP7yddllbdPbPZ0Vg
-	JFC+IX5b673e073d5/297k3rlGC5CpjBtvhSXM59M40wZpdzJlDlZGr5Z4Y5W4g6APZHrDL5SCo
-	+vT58JKNWJlsUS8v05Re/SDXo27FdzK/4g1reD/hYMQHOBQxeMPYu2houEi/+s4/2fOLIxMIYl+
-	jBOaIcRCsSJ3Mr5O5grKhZfEVhkKt5dovRWjdCd0v1P03r4Wz5suno7xfrCllA8rVRk9ReFK3e5
-	JcDGKeRh07VKsCZfabc5JjLpKozVe/fcj/T/ShuxO7+r5HKD14T4H0zAjgHQYbKBHb7/g3eA+Hd
-	WKEP0IjcFCVwzpjELrFPz85xtCWDEClawvijid
-X-Received: by 2002:a05:6214:3da1:b0:8ac:a553:529d with SMTP id 6a1803df08f44-8b667698fdemr172029616d6.23.1777914516983;
-        Mon, 04 May 2026 10:08:36 -0700 (PDT)
+        bh=70TF8LhV/nmHtP6Yix1dhugn/uTsr6ytzSbF0QWIOek=;
+        b=KJAX5GbqhYl/DpbCHA/oJfVU5JA020xIw4BqkiWHfx84HRjo54J4kr2AiFwb520hDC
+         B0SctxEGgJWSfgAuyfE1pLtzFo+HIbnpFlu/o28AFTVfglAcHj6shuGpibFFw09SK5xa
+         OjQwDTqa1w7yorpSqNOrp+KN5dfqOzwFFYeADAnrXcsNOaS+yU6egCPqHKLpcxbRkS9/
+         WraxFUcDaB49OZGcn4iKCiUHKeKF0rGCwbCbzgcHxXAuS5lRzxu++9xDgA3VTc45MOIM
+         c+0JH0Z8iQ7uwwGWboNeB+RDPRI6aunxDuLCQvSGyQhW5bL8F7setJif9tztJ1PHBnlp
+         NkLQ==
+X-Gm-Message-State: AOJu0Yxt7Tl4hbDljapnu3zhUqUyZtAYroHbaUU0Q5g3y/NnfmbveJkh
+	93BD+qi7jOVXx5vvmkc5HsuFw4UHeQS5EXHdEcExApT5pQHvNYfWyZ/4ef1/n/tG
+X-Gm-Gg: AeBDietLiT5W3bC9uxUykuo+8mLEypQQpkaFsJljgJJHYHUzH+wsQVCQkVshxmKR6nJ
+	/wfYtPKEv1ieZh6gUB24SNX/6rWjDUTcgnNJsP1L6OR9vcVP8z6ajYqULRi8fKoaHjm5CB74XfK
+	UucYQ1/dKABtWT+Sk3jJA3fCPDQxXMm2qLqz7RBOUPr2mXtaw900G62/jtw0yqa7T5zgOTKlM/p
+	RWiNUc/OUAnTUgHtv2TWVYRMC4K/Bv6DIeh9HoKY72cbwm/tJiAj7d4HWzLLXd4fFEJEnvrsLOt
+	G+LPDxqA5Vmeso7eOn3oMzBe7o7dIU083N9WrNhpttB7MqMHNk4LPf4zuCG4kr4h0zLZyKT/x6w
+	VrNx+vXiZER6frMll1IFYLVLkesPgHulfIWPbeJ8uHJBc3Z1Ji+wcMTXZduAnvIEQioqzmoK1Td
+	eBZ0C69oOMHZT/BiKu4gdf038akMcvFFEfKeWU
+X-Received: by 2002:a05:620a:2892:b0:8d0:26db:4f9f with SMTP id af79cd13be357-8fd168a55camr1600466685a.26.1777914518432;
+        Mon, 04 May 2026 10:08:38 -0700 (PDT)
 Received: from [127.0.0.1] ([20.231.101.45])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b5396c4b7dsm123593336d6.18.2026.05.04.10.08.36
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91c807sm1201275285a.32.2026.05.04.10.08.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 10:08:36 -0700 (PDT)
-Message-Id: <a3019888d8465e0f77926a91a20db170fef6989d.1777914508.git.gitgitgadget@gmail.com>
+        Mon, 04 May 2026 10:08:37 -0700 (PDT)
+Message-Id: <859e93e7a9f1d5ba965dc2b9891b5885a6c167ef.1777914508.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
 References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
 	<pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 04 May 2026 17:08:23 +0000
-Subject: [PATCH v2 06/11] t5608: add regression test for >4GB object clone
+Date: Mon, 04 May 2026 17:08:24 +0000
+Subject: [PATCH v2 07/11] test-tool synthesize: use the unsafe hash for speed
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,66 +82,57 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The shift overflow bug in index-pack and unpack-objects caused incorrect
-object size calculation when the encoded size required more than 32 bits
-of shift. This would result in corrupted or failed unpacking of objects
-larger than 4GB.
+Jeff King pointed out on the mailing list [1] that t5608's new >4GB
+test cases dominate the entire test suite runtime: 160 seconds on his
+laptop when the rest of the suite finishes in under 90 seconds, and
+305-850 seconds across CI jobs. The bottleneck is that the synthesize
+helper hashes roughly 8 GB of data through SHA-1 (4 GB for the pack
+checksum plus 4 GB for the blob OID) for a 4 GB+1 blob.
 
-Add a test that creates a pack file containing a 4GB+ blob using the
-new 'test-tool synthesize pack --reachable-large' command, then clones
-the repository to verify the fix works correctly.
+Since the helper generates known test data, collision detection is
+unnecessary. Switch from repo->hash_algo to unsafe_hash_algo(), which
+uses hardware-accelerated SHA-1 (via OpenSSL or Apple CommonCrypto)
+when available.
 
+Benchmarks on an x86_64 machine generating a 4 GB+1 pack (2 runs
+each, interleaved):
+
+  SHA-1 backend      Run 1    Run 2
+  SHA1DC (safe)       75s      80s
+  OpenSSL (unsafe)    21s      19s
+
+The effect scales linearly. At 64 MB with 10 randomized interleaved
+runs, the OpenSSL unsafe backend shows a 5.4x improvement (median
+0.202s vs 1.088s) with tight variance (stdev 0.028s vs 0.095s).
+
+The speedup is only realized when the build has a fast unsafe backend
+compiled in. The CI's linux-TEST-vars job already sets
+OPENSSL_SHA1_UNSAFE=YesPlease; macOS benefits from Apple CommonCrypto
+when configured. On builds without a separate unsafe backend (such as
+the default Windows builds), unsafe_hash_algo() returns the regular
+collision-detecting implementation and the change is a no-op.
+
+[1] https://lore.kernel.org/git/20260501063805.GA2038915@coredump.intra.peff.net/
+
+Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5608-clone-2gb.sh | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ t/helper/test-synthesize.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
-index 87a8cd9f98..af93302dde 100755
---- a/t/t5608-clone-2gb.sh
-+++ b/t/t5608-clone-2gb.sh
-@@ -49,4 +49,41 @@ test_expect_success 'clone - with worktree, file:// protocol' '
+diff --git a/t/helper/test-synthesize.c b/t/helper/test-synthesize.c
+index 3ce7078078..e2faaad7b4 100644
+--- a/t/helper/test-synthesize.c
++++ b/t/helper/test-synthesize.c
+@@ -217,7 +217,7 @@ static int cmd__synthesize__pack(int argc, const char **argv,
  
- '
+ 	setup_git_directory_gently(&non_git);
+ 	repo = the_repository;
+-	algo = repo->hash_algo;
++	algo = unsafe_hash_algo(repo->hash_algo);
  
-+test_expect_success SIZE_T_IS_64BIT 'set up repo with >4GB object' '
-+	large_blob_size=$((4*1024*1024*1024+1)) &&
-+	git init --bare 4gb-repo &&
-+	head_oid=$(test-tool synthesize pack \
-+		--reachable-large "$large_blob_size" \
-+		4gb-repo/objects/pack/test.pack) &&
-+	git -C 4gb-repo index-pack objects/pack/test.pack &&
-+	git -C 4gb-repo update-ref refs/heads/main $head_oid &&
-+	git -C 4gb-repo symbolic-ref HEAD refs/heads/main
-+'
-+
-+test_expect_success SIZE_T_IS_64BIT 'clone >4GB object via unpack-objects' '
-+	# The synthesized pack has five objects, so a large unpack limit keeps
-+	# fetch-pack on the unpack-objects path.
-+	git -c fetch.unpackLimit=100 clone --bare \
-+		"file://$(pwd)/4gb-repo" 4gb-clone-unpack &&
-+
-+	# Verify the large blob survived the clone by comparing its OID
-+	# between source and clone.  We cannot use "cat-file -s" because
-+	# object_info.sizep is still unsigned long, which truncates >4GB
-+	# sizes on Windows.  OID equality proves content integrity since
-+	# the clone already verified checksums via index-pack/unpack-objects.
-+	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
-+	clone_blob=$(git -C 4gb-clone-unpack rev-parse main^:file) &&
-+	test "$source_blob" = "$clone_blob"
-+'
-+
-+test_expect_success SIZE_T_IS_64BIT 'clone with >4GB object via index-pack' '
-+	# Force fetch-pack to hand the pack to index-pack instead.
-+	git -c fetch.unpackLimit=1 clone --bare \
-+		"file://$(pwd)/4gb-repo" 4gb-clone-index &&
-+
-+	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
-+	clone_blob=$(git -C 4gb-clone-index rev-parse main^:file) &&
-+	test "$source_blob" = "$clone_blob"
-+'
-+
- test_done
+ 	argc = parse_options(argc, argv, NULL, options, usage,
+ 			     PARSE_OPT_KEEP_ARGV0);
 -- 
 gitgitgadget
 
