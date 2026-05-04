@@ -1,70 +1,70 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B563E4C6D
-	for <git@vger.kernel.org>; Mon,  4 May 2026 17:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5C53E3D91
+	for <git@vger.kernel.org>; Mon,  4 May 2026 17:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777914527; cv=none; b=us/daVWDVTsjEx2tD+J20vMe3A0mwAcetMUAdO5LE81lBTfKWbNBAD8dwOhCbff6AC7RS/VVjyQXuJ+K37MeEpt1Qa2ykaRfViNBvecQEwJW07Jn87XI4G5CnTgsMEpA6tNj/Ru0GzuCMzAn/LHZ44FIes2zcTsxDb1BZhUOeTg=
+	t=1777914527; cv=none; b=DUDYcaYCJ/VnRa/UFj1IMHQDedem2UZKxyevU0Aq39mCX1956gSV92/OWT/EmykzARrpFb6+k87fZtX8Npqjy4/r8ecE+DKHHhmbb97InktEz8IrAM2dHcPhGdEHLUBcM6PL0evfqDTwsO+9XFR9b6/AqtQ/i/ifoE0F47JVl5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777914527; c=relaxed/simple;
-	bh=RgORbJKHqbQVn1mMprl9zVyOe1oC1f1yN5ngvl5iA8k=;
+	bh=PASS0jf5R1CaQT04dB4gmIEPEo0kdfIoVtivlB04D60=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ND1GoE7+2668qbdw/QJs4nTHAAPRrvyPokvOUHGd538nzo426m+VLJ65r1rno3jiqpXeMd/6qIfZ0RsTuyuk6xTkUP7JeimUgxF5C+3LGOQXDNdfZm3ldSroDggMrOZsJD+/Tq82MeNYyD1qR1pO1yJChsM8aLNu9gbMxQ56DOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yeq0lW5O; arc=none smtp.client-ip=209.85.222.173
+	 MIME-Version:To:Cc; b=pewzBF8qOAayxGbo0H5Z3quPRMb3pnz2+uvD8I0VVAS4PDWlKAD7i0TDQggv8+mr25JNPQuQSTIypnCA545WjCS8YQ09mzEAt8pxnpsLeqX4b+Nu3zahG5tJ569B7juXXPVxJUbcNMicQIi8amKuc0WEuRUKlXjjKaHGviFGbtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7C/o5tf; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yeq0lW5O"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8ee9ec26edaso451310385a.2
-        for <git@vger.kernel.org>; Mon, 04 May 2026 10:08:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7C/o5tf"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8dbbc6c16b2so557516485a.0
+        for <git@vger.kernel.org>; Mon, 04 May 2026 10:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777914521; x=1778519321; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777914523; x=1778519323; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BnI1thrysx3kEVQAdKDR9hhOCjQLNCNfN1Zj/0PJk+8=;
-        b=Yeq0lW5OawKe/lruCKVdzyQngczF1mC7eOa57NJeUqruVD/8xLGnOa7RlOYZ++AitH
-         DEIgpuwCRGSQuI4mXm03jKO58wukg5OnkUwZj2lH511DsDaOLq+niR7YIQbwAptMtV86
-         5QDetD1YBm5MEhnWwpsBIJLwkjteVu7SRPx2XwPlr6bs0+hMTzb43/2Y620SRMFxOUUw
-         HHw63KZ9PGCqWuobxY1mgsDXPWv2zie3VBgfk4PrDr8ZTlcPUDPrOut8hCP6f2escPSV
-         o2E6K/TQz839qIqJfHnN6grjqGTBCcf1npTGeYFLaCX8ifs9o6PP+PAzvdz7OLhXQd1O
-         9i7w==
+        bh=wpTsmj91yrtrxUOUYDP3Ff5uPTzelI9FxAXV468jY8E=;
+        b=T7C/o5tfP81jZryTe1PUgeXOHs3SEvFGhf3PTlgOXe3OcXNyntTb+7QZgGiwgIVIUF
+         MXde5zoGsOq/N9d/XiMmYDKYtMPFLuqX9Bf8T7wwkGswdSF3BMQaGz/oTypm1TqHIr8+
+         VC8DCNhHRmYBC4sdWImrAd2eurAyJqK2VuCoyaSUy0lMnXJtCaxD+Vn7qAC6zvbd/FD2
+         CpA7d+2aR7zanS6N/lUh02gVqeJxTnrqMAZG1wYPEYozyS6b9UqFY1OYt+at2Xf1rItJ
+         sIB2biVevQB2VMQjmVQQGQWlXKU4doW/47dVTiEQxNnnBOBtSTdMCw0Wp/n5pf61gHGF
+         JR1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777914521; x=1778519321;
+        d=1e100.net; s=20251104; t=1777914523; x=1778519323;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=BnI1thrysx3kEVQAdKDR9hhOCjQLNCNfN1Zj/0PJk+8=;
-        b=IGb5sDFVm1Z7RbMs4RV/7oStGuMP1VGT+jGxxDvg14qE99gFnV8T6L/V8I8MUZ+w2L
-         bo8vc7nc2qz6HZ2ruDM8uvBZACONg6wMW8Ygqy15YzxyunmdiZETUFHMe7Hz0gaUCOup
-         eDa37z3lLfy4rF0CMLBnTXMhwKxYrs0B1q+kDiqyl3md7t7ih+vqAlo4kDvJPe+NlnCQ
-         5Xg6iccD1UkUMCYwMAdmYCMSiGJPNaQWj3SSLZ3zkhYIE74qFdEDezKrqGgeU5PJ9hiv
-         P2TqUCR+S7shA5lRn0hIq4OaFqM2RWtr72ermRx88ERiXOG2elUyC8N2oAGyGQ/HP4qG
-         X1Ag==
-X-Gm-Message-State: AOJu0YyRGGqMbJYmXjqBwFk19nJsuGQ6NalWcAOs1VhH5XLz1fL35UFK
-	cg9aXYLgHO8Xy6sAvAZh4WM0N2t9z+dcpb/dHBrNvW4c9gg/Xr0JClozTvuJO8lX
-X-Gm-Gg: AeBDieun7LtYIqc+ZZz8+6pP+9HEUoiUs4ogreAWawUIKtcZI3D8sWQAcpf7QFCIr6J
-	2DoFYAEXmQjsJDtylstGvkodxFHThqPLchljwAd+i6B13fag/iTUWUMjAhq+sG4H2sez4L5oWUh
-	iih8vytpyzuTdMv8G3nqfd9N9OMsQ9Y0VS3BYQ8i53G3SpS3rWcf035lgABNrB0uNMkUyZ6ljAP
-	ieO2CwITUKzQ9BieI0ybAWaky8mYwIJjuf1/340z7kB9w1q8+IY0a/jePbBdaEkecz9Ij3g1A59
-	at4DwDyWkgrf462/obIVmz/LlFEDxcFTNSX93ILCTsddPUUI6Gt28LaPSEcSmnmp6LHKE5e+itP
-	NQXAbkopXfvOzcOLlBXbmWrQKcuDUWQBGT26Dra5Z0hT99sRnqJ/b8UffpquI/mIg0XS3xyR6kU
-	E7n0AI5Las7EfPWb4ejwUkJAxnEj0MTOS8oX3W
-X-Received: by 2002:a05:620a:4891:b0:8ef:f1c0:ab7f with SMTP id af79cd13be357-8fd164c43c6mr1599930985a.24.1777914520709;
-        Mon, 04 May 2026 10:08:40 -0700 (PDT)
+        bh=wpTsmj91yrtrxUOUYDP3Ff5uPTzelI9FxAXV468jY8E=;
+        b=NoDMtDCLltRZ8+LlRf+Nr1n7x5sZ7hgjT2/O7S5LxsoFPczrqFZIJ61rBJkh4AMBtt
+         TrrY0tPIPvOKY8CytbSU4al345PDjztntNLnqBUe4i+CVZ7TTmHaaHPn0EPOfZYFNMr4
+         HfNRtmKVqYc6LNFnDlbDJF50XGy5gBE+CAf/Pfknz5c/GCi+4lKunOOVBKxEbpG3uTUy
+         eIExD/AY8WsfvtQxmH73Ri6+sFBAusUku6r7EIvuS+tgZVsBY9PxygE5VVGhch9kqHjI
+         4qy0B9/NnVK8fX5R+ZPLfuqMjfzc9g7P79VzhwON5uAnyeB/4hkE/i+Ksx8p8J2A/tf6
+         jPfQ==
+X-Gm-Message-State: AOJu0YxQqjVmIB0PmpMs+U2xwydp94hpofm/4UF/YnZooWQa8XfqCwOT
+	6otR6gMWCt4MtHsgOGQkMAA8GCMtxp2/9Nkt+oMOe6Ho3fBaUCpuQd01ro3GCAGr
+X-Gm-Gg: AeBDieu7kOkSd5G4wE2JVa3Dy7FWZx2z7HTe7D5GhiFl/d6tjsCioyzBZf/qbB4Pm4B
+	1iTUOCC2twKAswdXv73M37G7o7gbtNiwcDNA9n1p6ZvQZUniTPsEmum/v9JWJTjYbecrVs8fFEM
+	DeyG88v72rWWQP99SjEPdWqKd99hbIuLrg+52+ZvDfK+1TTLjVqapAIkuQ5XX0OGdvCUoajraRF
+	j+I4AKYIfu+zbbH5URkQ3pcUYdJ1ZHNaMnBCR9rUU9pm2V0E79h+TbtCyIHSAb0uyZMKb04ypjl
+	T/Jq/QSk20HshSdZ1dsPq9hFnrSJCIuwOnk+3xhBk/mk0t17DzPZ4y7pPT5FQFqPDGGgl8Crk8V
+	uqOM7lk4E+7JkK5sIS7Cf1TpCUq5uwQoPE6zg8YtOuffFo6Xi6WQ8TeQxEsFStWRVTGHrQ8+ODU
+	BldDI9oXdetolm7o1ySnufnJUkI/UdQuL18El4
+X-Received: by 2002:a05:620a:480b:b0:8f0:c513:8cd9 with SMTP id af79cd13be357-902e298e219mr55993085a.16.1777914523276;
+        Mon, 04 May 2026 10:08:43 -0700 (PDT)
 Received: from [127.0.0.1] ([20.231.101.45])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2cd04de9sm1122293285a.44.2026.05.04.10.08.39
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc29889603sm1099319285a.11.2026.05.04.10.08.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 10:08:39 -0700 (PDT)
-Message-Id: <8e6e7208040917a254379fd6c63d432f5e2f6f59.1777914508.git.gitgitgadget@gmail.com>
+        Mon, 04 May 2026 10:08:42 -0700 (PDT)
+Message-Id: <1eaaa7fad7a1432dd97ffdd7c45e8162f61bc302.1777914508.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
 References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
 	<pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 04 May 2026 17:08:26 +0000
-Subject: [PATCH v2 09/11] test-tool synthesize: add precomputed SHA-256 pack
- for 4 GiB + 1
+Date: Mon, 04 May 2026 17:08:28 +0000
+Subject: [PATCH v2 11/11] ci: run expensive tests on push builds to
+ integration branches
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,130 +83,41 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Add a SHA-256 entry to the fast_packs[] table. The pack prefix and
-deflate block structure are identical to SHA-1 (the pack format does
-not encode the hash algorithm in its header). Only the suffix differs:
-SHA-256 OIDs are 32 bytes instead of 20, giving a 609-byte suffix
-compared to 513 for SHA-1, and a different pack checksum.
+Derrick Stolee suggested [1] that expensive tests should be run at a
+regular cadence rather than on every PR iteration. Gate GIT_TEST_LONG
+on push builds to the integration branches (next, master, main, maint)
+so that the EXPENSIVE prereq is satisfied there but not during PR
+validation, where the extra minutes of wall-clock time do not justify
+themselves.
 
-The constants were generated by running the generic path inside a
-repository initialized with --object-format=sha256.
+[1] https://lore.kernel.org/git/e1e8837f-7374-4079-ba87-ab95dd156e33@gmail.com/
 
+Helped-by: Derrick Stolee <derrickstolee@github.com>
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-synthesize.c | 91 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
+ ci/lib.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/t/helper/test-synthesize.c b/t/helper/test-synthesize.c
-index 83c40ee02a..1f28ecf0f2 100644
---- a/t/helper/test-synthesize.c
-+++ b/t/helper/test-synthesize.c
-@@ -246,6 +246,90 @@ static const unsigned char fast_pack_sha1_suffix[] = {
- 	0xe3
- };
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 42a2b6a318..a671994bdf 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -314,6 +314,15 @@ export DEFAULT_TEST_TARGET=prove
+ export GIT_TEST_CLONE_2GB=true
+ export SKIP_DASHED_BUILT_INS=YesPlease
  
-+/*
-+ * SHA-256 suffix: same structure, but with 32-byte OIDs and SHA-256
-+ * pack checksum (609 bytes vs 513 for SHA-1).
-+ */
-+static const unsigned char fast_pack_sha256_suffix[] = {
-+	0xac, 0x02, 0x78, 0x01, 0x01, 0x2c, 0x00, 0xd3,
-+	0xff, 0x31, 0x30, 0x30, 0x36, 0x34, 0x34, 0x20,
-+	0x66, 0x69, 0x6c, 0x65, 0x00, 0x42, 0x53, 0xc1,
-+	0x8a, 0x9f, 0x5e, 0xc3, 0xbb, 0x47, 0xb0, 0x83,
-+	0x8a, 0x19, 0xdb, 0x31, 0xbb, 0x7b, 0x0f, 0x3b,
-+	0x80, 0xa4, 0xbc, 0x2f, 0xaf, 0x72, 0x6b, 0xdb,
-+	0x62, 0xaa, 0xba, 0xdd, 0xde, 0x77, 0xc6, 0x13,
-+	0xeb, 0x9d, 0x0c, 0x78, 0x01, 0x01, 0xcd, 0x00,
-+	0x32, 0xff, 0x74, 0x72, 0x65, 0x65, 0x20, 0x62,
-+	0x36, 0x30, 0x39, 0x37, 0x37, 0x64, 0x37, 0x63,
-+	0x34, 0x63, 0x32, 0x64, 0x31, 0x65, 0x63, 0x63,
-+	0x33, 0x66, 0x62, 0x61, 0x31, 0x64, 0x39, 0x38,
-+	0x65, 0x65, 0x31, 0x32, 0x30, 0x61, 0x64, 0x63,
-+	0x32, 0x34, 0x38, 0x33, 0x34, 0x39, 0x35, 0x30,
-+	0x62, 0x65, 0x34, 0x31, 0x32, 0x64, 0x39, 0x34,
-+	0x63, 0x38, 0x30, 0x39, 0x34, 0x38, 0x30, 0x66,
-+	0x35, 0x38, 0x62, 0x61, 0x39, 0x64, 0x61, 0x0a,
-+	0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x20, 0x41,
-+	0x20, 0x55, 0x20, 0x54, 0x68, 0x6f, 0x72, 0x20,
-+	0x3c, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x40,
-+	0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e,
-+	0x63, 0x6f, 0x6d, 0x3e, 0x20, 0x31, 0x32, 0x33,
-+	0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30, 0x20,
-+	0x2b, 0x30, 0x30, 0x30, 0x30, 0x0a, 0x63, 0x6f,
-+	0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72, 0x20,
-+	0x43, 0x20, 0x4f, 0x20, 0x4d, 0x69, 0x74, 0x74,
-+	0x65, 0x72, 0x20, 0x3c, 0x63, 0x6f, 0x6d, 0x6d,
-+	0x69, 0x74, 0x74, 0x65, 0x72, 0x40, 0x65, 0x78,
-+	0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f,
-+	0x6d, 0x3e, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35,
-+	0x36, 0x37, 0x38, 0x39, 0x30, 0x20, 0x2b, 0x30,
-+	0x30, 0x30, 0x30, 0x0a, 0x0a, 0x4c, 0x61, 0x72,
-+	0x67, 0x65, 0x20, 0x62, 0x6c, 0x6f, 0x62, 0x20,
-+	0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x0a, 0xb7,
-+	0x80, 0x3d, 0xd7, 0x20, 0x78, 0x01, 0x01, 0x00,
-+	0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x01, 0x95,
-+	0x11, 0x78, 0x01, 0x01, 0x15, 0x01, 0xea, 0xfe,
-+	0x74, 0x72, 0x65, 0x65, 0x20, 0x36, 0x65, 0x66,
-+	0x31, 0x39, 0x62, 0x34, 0x31, 0x32, 0x32, 0x35,
-+	0x63, 0x35, 0x33, 0x36, 0x39, 0x66, 0x31, 0x63,
-+	0x31, 0x30, 0x34, 0x64, 0x34, 0x35, 0x64, 0x38,
-+	0x64, 0x38, 0x35, 0x65, 0x66, 0x61, 0x39, 0x62,
-+	0x30, 0x35, 0x37, 0x62, 0x35, 0x33, 0x62, 0x31,
-+	0x34, 0x62, 0x34, 0x62, 0x39, 0x62, 0x39, 0x33,
-+	0x39, 0x64, 0x64, 0x37, 0x34, 0x64, 0x65, 0x63,
-+	0x63, 0x35, 0x33, 0x32, 0x31, 0x0a, 0x70, 0x61,
-+	0x72, 0x65, 0x6e, 0x74, 0x20, 0x37, 0x35, 0x62,
-+	0x66, 0x30, 0x63, 0x34, 0x37, 0x61, 0x65, 0x34,
-+	0x62, 0x62, 0x33, 0x30, 0x38, 0x65, 0x37, 0x63,
-+	0x63, 0x32, 0x34, 0x38, 0x32, 0x65, 0x32, 0x32,
-+	0x65, 0x66, 0x61, 0x65, 0x33, 0x37, 0x38, 0x37,
-+	0x61, 0x39, 0x36, 0x38, 0x34, 0x38, 0x62, 0x64,
-+	0x31, 0x37, 0x34, 0x39, 0x35, 0x36, 0x37, 0x31,
-+	0x34, 0x37, 0x31, 0x35, 0x32, 0x34, 0x36, 0x64,
-+	0x64, 0x62, 0x64, 0x35, 0x34, 0x0a, 0x61, 0x75,
-+	0x74, 0x68, 0x6f, 0x72, 0x20, 0x41, 0x20, 0x55,
-+	0x20, 0x54, 0x68, 0x6f, 0x72, 0x20, 0x3c, 0x61,
-+	0x75, 0x74, 0x68, 0x6f, 0x72, 0x40, 0x65, 0x78,
-+	0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f,
-+	0x6d, 0x3e, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35,
-+	0x36, 0x37, 0x38, 0x39, 0x30, 0x20, 0x2b, 0x30,
-+	0x30, 0x30, 0x30, 0x0a, 0x63, 0x6f, 0x6d, 0x6d,
-+	0x69, 0x74, 0x74, 0x65, 0x72, 0x20, 0x43, 0x20,
-+	0x4f, 0x20, 0x4d, 0x69, 0x74, 0x74, 0x65, 0x72,
-+	0x20, 0x3c, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74,
-+	0x74, 0x65, 0x72, 0x40, 0x65, 0x78, 0x61, 0x6d,
-+	0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d, 0x3e,
-+	0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
-+	0x38, 0x39, 0x30, 0x20, 0x2b, 0x30, 0x30, 0x30,
-+	0x30, 0x0a, 0x0a, 0x45, 0x6d, 0x70, 0x74, 0x79,
-+	0x20, 0x74, 0x72, 0x65, 0x65, 0x20, 0x63, 0x6f,
-+	0x6d, 0x6d, 0x69, 0x74, 0x0a, 0x6d, 0x6d, 0x51,
-+	0x9a, 0xc9, 0x11, 0x76, 0x61, 0xa3, 0x89, 0x49,
-+	0xb7, 0xa1, 0x58, 0xc6, 0x1d, 0x8c, 0x33, 0x75,
-+	0x8d, 0x7e, 0x4d, 0x8e, 0x58, 0x91, 0xf8, 0x5c,
-+	0x57, 0xd9, 0x89, 0x9e, 0xb8, 0xd2, 0x9a, 0xd8,
-+	0xc9
-+};
++# Enable expensive tests on push builds to integration branches, but
++# not on PR builds where the extra time is not justified for every
++# iteration.
++case "$GITHUB_EVENT_NAME,$CI_BRANCH" in
++push,*next*|push,*master*|push,*main*|push,*maint*)
++	export GIT_TEST_LONG=YesPlease
++	;;
++esac
 +
- static const struct fast_pack fast_packs[] = {
- 	{
- 		.format_id = GIT_SHA1_FORMAT_ID,
-@@ -253,6 +337,13 @@ static const struct fast_pack fast_packs[] = {
- 		.suffix_len = sizeof(fast_pack_sha1_suffix),
- 		.commit_oid = "aac43daf40d0377af31aa9c798a4ae8a31b55c1d",
- 	},
-+	{
-+		.format_id = GIT_SHA256_FORMAT_ID,
-+		.suffix = fast_pack_sha256_suffix,
-+		.suffix_len = sizeof(fast_pack_sha256_suffix),
-+		.commit_oid = "63c46ca51267b1d45be69a044bb84b4bf0559f09"
-+			      "d727f861d2ae94ddebdddbc9",
-+	},
- };
- 
- /*
+ case "$distro" in
+ ubuntu-*)
+ 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
 -- 
 gitgitgadget
-
