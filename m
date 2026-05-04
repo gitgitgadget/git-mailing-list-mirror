@@ -1,295 +1,166 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010047.outbound.protection.outlook.com [52.101.69.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0ED199931
-	for <git@vger.kernel.org>; Mon,  4 May 2026 05:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777872015; cv=none; b=YwVZijS+LncOLaZ2Prw2M9tDVYY3itDklbOY/U1UXlg/XYViW1vmN1ogW2MBzulIXRQ5LAM9yjV/rfC3yb3Qclp8g5H+koAfIoHahGJqHalId80B+h/NDFBjCISGYGutOZeNKbGZBktB9PDUkagm/0vY4OF7hQBNRWhRsF+Duds=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777872015; c=relaxed/simple;
-	bh=vyUb+78Lt8tpN22BMpF6qf47bvROU2fwYY/F0E6jZFw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LQgXtqDd63TRyP5HjzoSt1w5idSRy7f3IhywbsF1DB3n1IDqGCZEOYQP6z5WTjHjg1RMMR+TkabfkxR8Xhe3AwWM832XtGItBcFt7fqY+q6PtVLBzy9OM5/fkM+CQZAt+rAndzSNNjAZQ0H5eP2ggXeD0oJKvq8GYiKl6mmeepg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c+wt9KpV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y9ehH0Xk; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DD030F7F3
+	for <git@vger.kernel.org>; Mon,  4 May 2026 08:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777882845; cv=fail; b=Q9d+CBcSyJ8DsHFxPnMV8iWBaZ/SNQ/lRYrzZb+/4Uj0Jfx5h0NpPhpHdsvQFPIk+/6hYQ16Ae+oPcfdE1apl7v1W1WMbms4XJ7cpJVIie5Udr299Cdp3mrUQo0QGgIxzmbM7cW3zkOTs7MwcBPJdTctJNZPVg35uNub8VdKi04=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777882845; c=relaxed/simple;
+	bh=VvqqK1SFA+xIGBD1A0xqbMTowa8fB4oQzUXCHziVeWw=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=iGSv1Yv3PLDMIPZmb4Avbt35uJ5Cch0KGxNH49kjUxvHYggGTcHax+sCMgY0xx+F+5fqxqynjKk9GiVxQn/rTkb3G6wyymUJn6fJWP0vlSNqdp4R3BosDcv2YEb4OV27ll/bFcqla0x9o0fVEEHI54BJqEipVAyebcAi29ePJ6w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk; spf=pass smtp.mailfrom=prevas.dk; dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b=cQ+DD/ML; arc=fail smtp.client-ip=52.101.69.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prevas.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c+wt9KpV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y9ehH0Xk"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5A68A7A009D;
-	Mon,  4 May 2026 01:20:07 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 04 May 2026 01:20:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1777872005; x=1777958405; bh=0x3JT/iOEz
-	mY0X6BPW1s3FD9GXxoc0bYBkUKbwKUOt8=; b=c+wt9KpVtfdldK2Fs3Hek6FIoM
-	mfuygl1v5PIn/uX0GIHdAULozrfb7uwc0+Gm+LHzxvDqGbJSH5FlEvZonHldu6uG
-	12E8eueOI4GsQoR8Z6RsgR6OYeqJr1g5vUeUckyBhyXmrSNkq058QSPUTZfBd/gJ
-	AfJ/5TfMijNxjTnVDVV1vXLVJ7/0+j4/Ltb7ZsVQvgECC7TQuPcuicCh3retqw9x
-	b+sNW9eJnamIoIBziahf2dfNELb4JGlgwd75s2JvB+d6bw6QaKlKAtMWUZqIk9OV
-	uzrZBm6zHM/LxHJHWqJhAOwTSiVg48qjoSehJgi5gAWRUK8HrcZtn1DTlstw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777872005; x=1777958405; bh=0x3JT/iOEzmY0X6BPW1s3FD9GXxoc0bYBkU
-	KbwKUOt8=; b=Y9ehH0XkG+op8HMPtWJwhUg2wThLQMPVsCg1jmwK7ZHC8Q6m/W2
-	sQUyuDutfTAPeg/SlzYfKiFU8bVxmrDYYOQ5nVr/reEPrTkXUfTtxVdcvbeHKtHi
-	mhIRYLWo0WtgERJ/OPmUaWQ/MpF95Luy5zXxj4vPgYOIGPJXh988i5SUFGmesaFn
-	Y8wdF1gohCUqCn0p4MAD81VCwgI5I1FHQjVd7InibyNSMZY0McLuI/FQUbWawS29
-	0C6VUPov2SsO7i5Uc1kc09sibEVa2CF+Cf5Occf7m5MG6yqelPr+f+J/FiZiIdye
-	Q9/F+rV9GxpHfWN0gtWM2K6mUNHAu+dfF6g==
-X-ME-Sender: <xms:hCz4aeNEHF5WFc7bPpykKggjwUNAwIzEUUpcqNkIao4ThP2cngAtZQ>
-    <xme:hCz4aZgt_UrULVlHsSxsBQTgsbzIp2Vghhwsvw2fjvmEK4JWzFwq4E1CXZXpP7MbX
-    Eh5I10KdEnHXVVwQ_3-_Fag_Op8H1ReYnhLk5lNzEwDik0eUiFK>
-X-ME-Received: <xmr:hCz4aZsyibBRKapaPS4bH9pmn-qiAYeh4z7WoaQjmeE7R6xJmKjXSFaXtknZscIMntol6-SrUNkj0OC8ErfCzea4JQvBVK2HVA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljeelkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhrohhikhesuggvlhgrhigvugdrshhprggtvgdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptggrthesmhgrlhhonhdr
-    uggvvhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
-    htthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopegthhhrihhsrdhtohhrvghk
-    sehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:hCz4aVjPOq_tEAO7jEXy1lTUzvyB-L2zc8iN_giEIllY2sJhPo6f2A>
-    <xmx:hCz4aXYwkUOTJ3MHAyV55KmMF_DlSZveudVpgPkmtqjo8UW0E_8g-g>
-    <xmx:hCz4acYdJhD3THn3hPHcfroShN5PwamUFfEa6J3ww1do2mOKdOrZYA>
-    <xmx:hCz4aUz6QtmxoosxwGDg-e7A9Zya2CU_B2XalW9q52L2bKsZrubDNw>
-    <xmx:hSz4aXRjpWCM1ZoAmvk85qIB9a8UnmB9hT45QYoUGXNUI3Q5n26vwJ_M>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 May 2026 01:19:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  =?utf-8?Q?Jean-No?=
- =?utf-8?Q?=C3=ABl?= Avila
- <jn.avila@free.fr>,  Patrick Steinhardt <ps@pks.im>,  Tian Yuchen
- <cat@malon.dev>,  Ben Knoble <ben.knoble@gmail.com>,  Johannes Sixt
- <j6t@kdbg.org>,  Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v5] revision.c: implement --max-count-oldest
-In-Reply-To: <2f71a00b035e25b971641b77a6fa7626f1e2459c.1777578676.git.mroik@delayed.space>
-	(Mirko Faina's message of "Thu, 30 Apr 2026 21:52:45 +0200")
-References: <cover.1777249165.git.mroik@delayed.space>
-	<2f71a00b035e25b971641b77a6fa7626f1e2459c.1777578676.git.mroik@delayed.space>
-Date: Mon, 04 May 2026 14:19:47 +0900
-Message-ID: <xmqqik93px8s.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b="cQ+DD/ML"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dNyLB4g8auz8EU2cOBcXZ0iFeGwXRG5HHaEK+OUglwyNQrGqsmd/awDtTddvOICSoYkfYWApYPuoEFzdrgR3RDKI2zIWSWOi9k5AiumQVckR7nlfJfav+XRhtHoUE4Xq8pZ10xHoZSlpjH/zcUKEbRWpRAKDJCUNdjOwtldhstCUGfgFDVc0pU5b/47mlxcTF2VtKZUWuUnKlT4k1aomMvFOCqRRUChJYOjtPHAimE6D2UtYQcv8dXOsH4HvdJKLf0lSDPBoHh6PVWzCDDo3OqeEnyhQZnucW573ks95t0HwpcWQ/k4of16C238MbncMR+oP4SfL8kqCCvOzuTLB4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=miCp7VTUmYeD5Hq903bNkSJhynnphXXVXd51FKGYoWs=;
+ b=TDtd28Bqj+xDMavDwbVALacpmETmR1TV3xS5GwhWx+/ru8rrApLiMmaJnE0+gMvbLYMd3UoBfQj2iT1znzlPENL2EUcf4aTS2btjHuVR61xEiuNxfUlkQTMsnBSuYD+EC59gzg2yjeOJckrwce3gqdU9x0hzhqmZwbdUE+t2IQoNLfo0zMBCHW/7ps4hKb3EXuuNGs74ndzxTmj87fO8AIiNzX9Z8gcDarRqK8iCKeRr2LMl3FWsWiGqDkWYCX/6cBMK9wO6qTUMUxYp64H4DQEOfoFdnoJaW4Bn88My/9yYXGRW2hm42Ph6fZ/L36dONxrMnum3xCmKshongMAwgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=prevas.dk; dmarc=pass action=none header.from=prevas.dk;
+ dkim=pass header.d=prevas.dk; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prevas.dk;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=miCp7VTUmYeD5Hq903bNkSJhynnphXXVXd51FKGYoWs=;
+ b=cQ+DD/MLKLygTcRuAZnEGqV45g9Ls3yXWay9aP7UsAoW23eFnNZJ625qG964lPocXtZmhBaUDfQto2WmuzXt0hF5wmfmGNy3rpwAbbvHfUtqnJsdR1vzJ+V67Nm+Uw0wQ9YMd887f8qptR7LxXSYgnlCarzI3NMJcdJjxj3h5XA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=prevas.dk;
+Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:681::18)
+ by PAVPR10MB6909.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:328::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Mon, 4 May
+ 2026 08:20:36 +0000
+Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::ebc6:4e0d:5d6b:95d8]) by AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::ebc6:4e0d:5d6b:95d8%6]) with mapi id 15.20.9870.023; Mon, 4 May 2026
+ 08:20:35 +0000
+From: Rasmus Villemoes <ravi@prevas.dk>
+To: git@vger.kernel.org
+Cc: emkan@prevas.dk
+Subject: git clone with --dissociate sometimes fails to check out target commit
+Date: Mon, 04 May 2026 10:20:32 +0200
+Message-ID: <87h5onsi0f.fsf@prevas.dk>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Content-Type: text/plain
+X-ClientProxiedBy: GV3PEPF0001DC18.SWEP280.PROD.OUTLOOK.COM
+ (2603:10a6:158:400::265) To AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:681::18)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS5PR10MB8243:EE_|PAVPR10MB6909:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6c057ffb-e2eb-47bf-718b-08dea9b60430
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|52116014|366016|18002099003|56012099003|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	C0WsxT3UeL4r9w8/4Uh3X0FKrS+4dyf3bE98I9bT/fetN7rnAd7Bl3YfqYt1QWLDd306ESirYld3Eg2xJtbIXtQ3W9dogBey24L5aZ7uyMT7tMUnjP0pdlNwE3yvlIT4djEMmdf5aO7CJsSZ013nImQD4m7RIMnAre1mNwdlfdVJUV7njbkXcP50+iYp7U5qKf0GJwN+xErIyV45RsF8jNq5QA7z/LLm1RdaxBiVwqqQUgqihHAlrs4EnL1lI8ouBkdI3qhPofYXu8Jh0L7LDLXTUBXj/+QIjejxgZmD0V6DSHL6maz3wWI+V0uxHurZHiEifYouQq1zPkpx0BZj/b4M1XE5Ywcv6vH2n7yr/zg1Y3TJ1EOKEWehdVJFsRKWtbKz+lHgnhoZQuYlpww/PpFaKqlIIELFqzuKVfZkbE1kamDpyHVOs14Uq6fSMqkxSFKZwMf+ZqoriW4vu4IaV3JnC7PSbUyroqlvXdSbYxCDhtFVSjob8L070qa1Q/rFSbv+tWBq38RH+gafb0xKLhy2SVOJC581aynwItdjvNAmW1U366cTHBiJQxGCVMgw6VaqDBb3LW302aJEUSrXngu0mcut3Vqi7/q390Cy3PelJlA9EfiQzHc4I02y4UEdBf8vbVATUuVrI1l62hEOfac5JK4i83b8GD35LWSrAGlfSJP6aCOMZ6RBlXolkAzamFDk173rb4oTUpLMmxGRDg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(52116014)(366016)(18002099003)(56012099003)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?GkioOCl1ZEdmX+HxWDA9/12oij0y2oTPu3R2v3/26I1uKSElH4eGj9DuKqOw?=
+ =?us-ascii?Q?COSHv5rJLVxqRh25FdS9KCKNlWhxEO0cq2Ig4fJJegtRmPxvBikJlXuOETE1?=
+ =?us-ascii?Q?49Sa8zo/lf2Wv94jyeF+R6ObWvh43Hqg8tL3zeHNbe/k2f7NSmzRVeBdy/zJ?=
+ =?us-ascii?Q?4y8R0O7eGFJyM3AV6/wLELZHMxKfyeuLt54lafsKC4uQBvtsJEOJFHyNICFS?=
+ =?us-ascii?Q?cPH1P4WfhcJSXO5+XI8XQ32dpBPd65FUydQnMfPazb8RQfu94KTYuemI0XCh?=
+ =?us-ascii?Q?lgPcoXw2rZIamoh8agG1jpu3kMhsWMeimmUTJRj61WhnssxhxJDEEHbylQTg?=
+ =?us-ascii?Q?0JpkzEltH/Mg/8qyQCqidR4mXwKqAoiuYkxA1EsCNAembi5sSFLuqnU9y8PY?=
+ =?us-ascii?Q?TZzbFFl0yiUIoBcLgoq2N/irSYlz1wEeY2am/d05+mBF/uNJo983Qzz2yOQF?=
+ =?us-ascii?Q?aQjpa3s3zkACW9mcJTY0vdg6fBjmtjE+N4+QPWlNfmn+YyY1fng8v5rPkXD5?=
+ =?us-ascii?Q?VxzFcZRaZr/D/JGqe+WVPeqqcljoEZ5NYg77W8EVcYL1SepmuBEYWIZiB0t1?=
+ =?us-ascii?Q?zYIKXweSKuK0GyyyYVnSuVR6z/s+WxztZdwIJYT+QuSGFQ1i8XgMVh+6pbck?=
+ =?us-ascii?Q?BU/QZw68bE+p4w2moJsmQldysylZNq8/4q+7RGeIVRjQp1sHf/Pi+xImKqrB?=
+ =?us-ascii?Q?KsslZM6AsDJMuKtOH2NBKiMAajNX2BqCWU4xWnhULQCJ/alh5rgHP5AtXonV?=
+ =?us-ascii?Q?jaiWreK3ZFkzYk5jpmJWXGtbkD5PYbV7D8dC60SEzs1UGKaFoOahV722Fj9V?=
+ =?us-ascii?Q?YwOg6awTkRl3svRadc3Bnsr+CnTAQlxacdTCs31mvUQtB+XtFSp6PDoqabrd?=
+ =?us-ascii?Q?1foLR2qpuvjM5/UkYsA6a5d8+6Nf8PVNe8znEO1YT2N+7BM+UWnxMKkUwboz?=
+ =?us-ascii?Q?KMxim5W2J3hPpHIWN9UAfXhQ3u05zareZHZ6zTBzOVa85aYRyd85vg2y+lDO?=
+ =?us-ascii?Q?HQAj81HNmWpFy2CRjMOhAP8976tykv9tuXnq5rh6xZCwVZJf9sMiN92IR8tn?=
+ =?us-ascii?Q?YQK/lCS9Kiu1ch3zz6Pw/2sFeAsEVcDZ8H+BHN2g5o31NcLUzSB02UAyE7tA?=
+ =?us-ascii?Q?t1bgKpYP4Alpiq/ZNX/z236o4tUzDrhZ2lnJToYylA0Ri6aETrqodfwUgqmM?=
+ =?us-ascii?Q?nRqWajjRLPOY1yjophdXqF49Rk76A+xAjStxO7NRFENS62mbMLj7jvNQEVri?=
+ =?us-ascii?Q?wEFv5mJRwAOYY0GlE8s41LOneQPtJDVM7guuMR9rPSgqt4KsA6+XjXUmMlb+?=
+ =?us-ascii?Q?/SSteib56LxlUGjpogxLceBaupV26YLmh4OBqgDEtLY9jiFFM9LRbnvMLBsX?=
+ =?us-ascii?Q?xFdkMXJJxvQXGdFYkFQXxOf2/E7f3fnPXAETmB78s9Ad5DRsNVey7+DJ4hRB?=
+ =?us-ascii?Q?iEyHAxEAWv71QflUVd8nxvIs2CcRP0IoHSKqKZE608nEwpa4xZ1IU4arXoL5?=
+ =?us-ascii?Q?tl63i/LWcv9nbObYl+HnoEZPs7PeuhqGh1zXDAZBHIMds3iTQDVHnu8gWZKQ?=
+ =?us-ascii?Q?H/RT/viNTYcBjUfLVxk9BMowQw+CuLD/+Kzj8bzWf/XesrQLG46xKoEbniMj?=
+ =?us-ascii?Q?f6lTriwywQJWu8TBxB28PspiDxJzWCKEzhMxBOLEnKg9xsFkV+MWXtrc/M+8?=
+ =?us-ascii?Q?BaJtqTpKEbY4KfW1v9Jq8P3eF1C+ccI/oJtBwJ6KaodZNsVNWsLdzYJQ+3Ro?=
+ =?us-ascii?Q?9ziKI2iQvRdWaQHJY830q7d/hZuzUqA=3D?=
+X-OriginatorOrg: prevas.dk
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6c057ffb-e2eb-47bf-718b-08dea9b60430
+X-MS-Exchange-CrossTenant-AuthSource: AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 May 2026 08:20:35.8143
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: d350cf71-778d-4780-88f5-071a4cb1ed61
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: XISmXpEdh+flqeNbCDsg3VVww7WaDH9fQWAPVSuPVmYCdZhP7rJN1naVysa6et1YX8B77jvPAaXrRHNLN7glxc/+YsFEGOTAQu5zeLAUtqs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR10MB6909
 
-Mirko Faina <mroik@delayed.space> writes:
+Hi
 
-> --max-count is a commit limiting option sets a maximum amount of commits
-> to be shown. If a user wants to see only the first N commits of the
-> history (the oldest commits) they'd have to combine --max-count with
-> --skip. This is not very user-friendly.
+We have now seen this error a couple of times in our CI, and this time I
+managed to grab a snapshot of the local mirror for which it fails. The
+failing command is
 
-To use "--skip=<n>" for this purose, you'd need to know how many
-records are going to be omitted to begin with, but that means you'd
-run the command without count limitation once only to find out how
-many records there are.  "not very user-friendly" sounds like an
-understatement of the year.
+  git clone --verbose --depth=20 --branch=whinlatter --reference-if-able=/yocto/meta-mirrors/core --dissociate https://git.openembedded.org/openembedded-core core
+  Cloning into 'core'...
+  POST git-upload-pack (388 bytes)
+  POST git-upload-pack (986 bytes)
+  POST git-upload-pack (gzip 1836 to 958 bytes)
+  fatal: unable to parse commit 8751ec83421192fc0f8495fb95798f9eb7be77a0
+  warning: Clone succeeded, but checkout failed.
+  You can inspect what was checked out with 'git status'
+  and retry with 'git restore --source=HEAD :/'
 
-They can do with something silly like
+I wrapped up that local copy /yocto/meta-mirrors/core in a tarball, but
+it's ~200M, and I don't know another way of reproducing. I also don't
+have a better way of sharing such a file than [1], apologies.
 
-    git rev-list ... |
-    tail -n N |
-    xargs -n1 git show ...
+Using that repository as both the remote url to clone and the local
+reference, I can consistently reproduce the problem. That is:
 
-and that does count as "not very user-friendly", I would think.
+  cd /tmp
+  # fetch that core.tar.gz
+  mkdir upstream-core local-core
+  tar -xf core.tar.gz -C upstream-core/
+  tar -xf core.tar.gz -C local-core/
+  git clone --verbose --branch=whinlatter --reference-if-able=/tmp/local-core --dissociate --depth=20 file:///tmp/upstream-core core
 
-> Teach get_revision() the --max-count-oldest option.
->
-> Signed-off-by: Mirko Faina <mroik@delayed.space>
-> ---
->  Documentation/rev-list-options.adoc |  3 ++
->  revision.c                          | 77 +++++++++++++++++++++++++++--
->  revision.h                          |  2 +
->  t/t4202-log.sh                      | 14 ++++++
->  4 files changed, 93 insertions(+), 3 deletions(-)
+fails in the same way, with both git 2.47.3 (Debian trixie) and 2.53.0
+(Arch). Removing --depth=20 doesn't change anything, neither does
+removing --branch=whinlatter (except of course for the commit it tries
+to check out). But dropping --dissociate, the clone works as expected.
 
-It looks like this needs measurably smaller damage to the codebase
-than the other --reverse=before approach ;-).
+It doesn't happen very often, the last time was around January 30, where
+it was for another repository
+(https://github.com/openembedded/meta-openembedded.git), but exactly the
+same symptoms, so about 100 nightly pipelines ago.
 
-> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-> index 2d195a1474..736f34efab 100644
-> --- a/Documentation/rev-list-options.adoc
-> +++ b/Documentation/rev-list-options.adoc
-> @@ -18,6 +18,9 @@ ordering and formatting options, such as `--reverse`.
->  `--max-count=<number>`::
->  	Limit the output to _<number>_ commits.
->  
-> +`--max-count-oldest=<number>`::
-> +	Limit the output to the _<number>_ oldest commits.
-> +
->  `--skip=<number>`::
->  	Skip _<number>_ commits before starting to show the commit output.
->  
-> diff --git a/revision.c b/revision.c
-> index 599b3a66c3..3aaa77ced5 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2339,10 +2339,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  	}
->  
->  	if ((argcount = parse_long_opt("max-count", argv, &optarg))) {
-> +		if (revs->max_count_type == 1)
-> +			die(_("can't use --max-count with --max-count-oldest"));
->  		revs->max_count = parse_count(optarg);
->  		revs->no_walk = 0;
-> +		revs->max_count_type = 0;
->  		return argcount;
-> +	} else if ((argcount = parse_long_opt("max-count-oldest", argv, &optarg))) {
-> +		if (revs->max_count_type == 0 && revs->max_count != -1)
-> +			die(_("can't use --max-count with --max-count-oldest"));
-> +		if (revs->skip_count > 0)
-> +			die(_("con't use --max-count-oldest with --skip"));
-> +		revs->max_count = parse_count(optarg);
-> +		revs->no_walk = 0;
-> +		revs->max_count_type = 1;
-> +		revs->max_count_stage = 0;
->  	} else if ((argcount = parse_long_opt("skip", argv, &optarg))) {
-> +		if (revs->max_count_type == 1)
-> +			die(_("con't use --max-count-oldest with --skip"));
->  		revs->skip_count = parse_count(optarg);
->  		return argcount;
->  	} else if ((*arg == '-') && isdigit(arg[1])) {
-> @@ -4521,15 +4535,68 @@ static struct commit *get_revision_internal(struct rev_info *revs)
->  	return c;
->  }
->  
-> +static void retrieve_oldest_commits(struct rev_info *revs,
-> +				    struct commit_list **queue)
-> +{
-> +	struct commit *c;
-> +	int max_count = revs->max_count;
-> +	int queuei_count = 0;
-> +	int queueo_count = 0;
-> +	struct commit_list *queueo = NULL;
-> +	struct commit_list *queuei = NULL;
-> +	struct commit_list *reversed_queue = NULL;
-> +
-> +	revs->max_count = -1;
-> +	while ((c = get_revision_internal(revs))) {
-> +		c->object.flags &= ~SHOWN;
-> +		commit_list_insert(c, &queuei);
-> +		queuei_count++;
-> +		while (queuei_count + queueo_count > max_count) {
-> +			if (!queueo_count) {
-> +				while (queuei_count > 0) {
-> +					c = pop_commit(&queuei);
-> +					queuei_count--;
-> +					commit_list_insert(c, &queueo);
-> +					queueo_count++;
-> +				}
-> +			}
-> +			pop_commit(&queueo);
-> +			queueo_count--;
-> +		}
-> +	}
-> +
-> +	while ((c = pop_commit(&queueo)))
-> +		commit_list_insert(c, &reversed_queue);
-> +	while ((c = pop_commit(&queuei)))
-> +		commit_list_insert(c, &queueo);
-> +	while ((c = pop_commit(&queueo)))
-> +		commit_list_insert(c, &reversed_queue);
-> +
-> +	while ((c = pop_commit(&reversed_queue)))
-> +		commit_list_insert(c, queue);
-> +}
-> +
->  struct commit *get_revision(struct rev_info *revs)
->  {
->  	struct commit *c;
->  	struct commit_list *reversed;
-> +	struct commit_list *queue = NULL;
-> +
-> +	if (revs->max_count_type == 1 && !revs->max_count_stage) {
-> +		retrieve_oldest_commits(revs, &queue);
-> +		commit_list_free(revs->commits);
-> +		revs->commits = queue;
-> +		revs->max_count_stage = 1;
-> +	}
->  
->  	if (revs->reverse) {
->  		reversed = NULL;
-> -		while ((c = get_revision_internal(revs)))
-> -			commit_list_insert(c, &reversed);
-> +		if (revs->max_count_type == 1)
-> +			while ((c = pop_commit(&revs->commits)))
-> +				commit_list_insert(c, &reversed);
-> +		else
-> +			while ((c = get_revision_internal(revs)))
-> +				commit_list_insert(c, &reversed);
->  		commit_list_free(revs->commits);
->  		revs->commits = reversed;
->  		revs->reverse = 0;
-> @@ -4543,7 +4610,11 @@ struct commit *get_revision(struct rev_info *revs)
->  		return c;
->  	}
->  
-> -	c = get_revision_internal(revs);
-> +	if (revs->max_count_stage)
-> +		c = pop_commit(&revs->commits);
-> +	else
-> +		c = get_revision_internal(revs);
-> +
->  	if (c && revs->graph)
->  		graph_update(revs->graph, c);
->  	if (!c) {
-> diff --git a/revision.h b/revision.h
-> index 584f1338b5..e157463cb1 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -309,6 +309,8 @@ struct rev_info {
->  	/* special limits */
->  	int skip_count;
->  	int max_count;
-> +	unsigned int max_count_type:1;
-> +	unsigned int max_count_stage:1;
->  	timestamp_t max_age;
->  	timestamp_t max_age_as_filter;
->  	timestamp_t min_age;
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 05cee9e41b..668c231cf1 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1882,6 +1882,20 @@ test_expect_success 'log --graph with --name-status' '
->  	test_cmp_graph --name-status tangle..reach
->  '
->  
-> +test_expect_success 'log --max-count-oldest=3 --oneline' '
-> +	test_when_finished rm expect &&
-> +	git log --oneline | tail -n3 >expect &&
-> +	git log --oneline --max-count-oldest=3 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'log --max-count-oldest=3 --reverse --oneline' '
-> +	test_when_finished rm expect &&
-> +	git log --oneline | tail -n3 | tac >expect &&
-> +	git log --oneline --max-count-oldest=3 --reverse >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  cat >expect <<-\EOF
->  * reach
->  |
+Are we using --dissociate wrongly, or are we perhaps not maintaining
+those local mirror repos properly? They are essentially just created
+with 'git clone --mirror', with 'git remote update' run periodically.
+
+Naively, I'd expect the effects of --dissociate to only happen after
+everything else the clone command does has been done, but it seems that
+the ties to the reference repo are cut too soon.
+
+Rasmus
+
+[1] https://prevasonline-my.sharepoint.com/:u:/g/personal/rasmus_villemoes_prevas_dk/IQCRaxpwj5NfQYZNQJWc9PJTAY0C33XvXn8CnqPEdPAbpDA?e=zQAfg7
