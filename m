@@ -1,120 +1,149 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECB640DFA8
-	for <git@vger.kernel.org>; Mon,  4 May 2026 00:44:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AF95C613
+	for <git@vger.kernel.org>; Mon,  4 May 2026 00:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777855481; cv=none; b=Mmj1nu2ZlsoPs0W4rFIKyuyyxlqRSdzC8O9tuYHmfogv+osYPSGvXWMwh2w6FRNKIERhnCfaNxgZQgjtDvIWimGWhOYte5b/Bo0h8RW1ugLE1E7ytfXZ4jnQLv4WJ303DRDBGcvLuxcIsY2p3eoz4XPkBT+yIU1bqgAHUjDDP1c=
+	t=1777855792; cv=none; b=Ba9P+S23wkOiBWFaiuZiBO19Zf82RG9HR8aq3lqQ53Yv2NCZxKeRkuKLuiPQK3vIfCR5VOASqblhYAeoYPq9JLhuhjhY4FlejVTTLmbcG1cRCcAnxkrZtL14Qv5Dzu3kisbecYRfKWeoFMDXr+zs8dZbL9KhtZidg76Gr6fF9z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777855481; c=relaxed/simple;
-	bh=c5M4qDT7IgIqTDDezWDEjmv6O+G5z1UclMW+uamXQ5Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ojoy9UPHaLi1xbQMKR2RwxFd041JE0lfAae0TP/I8msRwp1OTv/SoNdJA1AHdyVhSrLsVJh47S8wnRGuGNGPFqMOy/MvgIBn+J1dURWONxMDu8dqhVCnX9Ke4RpmWa+7+gl1NbSGM5ANUoHN+BNbmzCnJ3uWK5wF1sSSTaj13P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MuV0+rWs; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1777855792; c=relaxed/simple;
+	bh=GyoZl42MXuj9iIPGKNL92S2QswWkwICZuD+jTPAMXH8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kQmIrEC17/e1ZwXvYkodmMf2TrAGez5hHWLAVi4NPdqitvikCXjVajHIpGuMMdAsiyNytSPcSC7plGuw/MeO19Y7JWk85sSsEMwflzJW2sPLISmN5OCOukP+GbjyvaymOMkWjGnPotk3qMWVSqEHaxmlcX+gXSnEbLf0zwkKCHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wA+TogO8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OiwnJU4j; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MuV0+rWs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1777854896;
-	bh=c5M4qDT7IgIqTDDezWDEjmv6O+G5z1UclMW+uamXQ5Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=MuV0+rWsRrJzDyOA+NHfHCKSb7ywINWJynfbGdxFF2tUvISq7pJOai+y/iqJZ1LyO
-	 wH6kC/iEt85rHK6GlOQYkjobPcgwZweqESTwCQf5iUl/GBpIA3TyJ1r4u6pb1KAPQt
-	 K5s/5qyk7GsljarXwcZPTPLid8/iAxOYIsTuyQCPlKs0M0Cwd3Ovhmwug7dwWAkKha
-	 enCVSlkbas+FoLRHJwVjVnj+ALXKfI69hrdTuVPtFJfCMQPM7LRmNkECE7wXv/kynB
-	 wWXUU3R0g64yvW7aFpOVVcB5Sc/F20sUvtBE8zjRLReRH8cUZa4liLmGL/a/b1bk9E
-	 m467ufA3A7+I2wcxuhvw12l8TEC54+M6w830ZIWNIP+KD0snbv3MqPVe+OSJJvWETF
-	 IL7Nsb5tZTdR90uwbj+tdlKLyRzEYP20YKyQa9hBBrHCrraydTkDdshOAwh1h6+uGg
-	 RGmt/7MaPNKW3wrGkbxfpLPJ24V2IXVx3PrOoGEXvC3CFb3Anns
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:43fd:681b:c55f:3c80])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 49BC220122;
-	Mon,  4 May 2026 00:34:56 +0000 (UTC)
-Date: Mon, 4 May 2026 00:34:54 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: =?utf-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>
-Cc: git@vger.kernel.org
-Subject: Re: git 2.54 fails to build for rhel 6 (2.53 builds fine)
-Message-ID: <affprsBwpM7L47j6@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>,
-	git@vger.kernel.org
-References: <9692091777837852@4991cc90-7cef-4f92-9de9-e195e7f2c04c>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wA+TogO8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OiwnJU4j"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 24CB87A00AC;
+	Sun,  3 May 2026 20:49:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sun, 03 May 2026 20:49:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1777855789; x=1777942189; bh=M2qAP8mLXN
+	hjvCJpvkyTMplUII/MA2jbEIL+klGCYbw=; b=wA+TogO82DRBX/vjF7Jo68Xtj9
+	2lg2DmE2NaE4RSQRFOhdERqWjeojrhEGmLjKGIB1iZ7feZrdACj1BgW7eVJ2hNGO
+	emxxPmiZSkFMZPV6a1n2mDmzv/mbaJ57crE8v/M8+EKK9DlFiwWdmJE182AXP/qq
+	JoilGO4MNAEYFRiEFuEFxXrYE1lu/esutnNDNFRAaJU4it3UE4m6aIjH3TKX7RbG
+	f7L7tgtRMSyo+Dqy0HzYxakO+AFDXZahA4hA/wNYEPKn+i1sYqtXObQMG2iXzDNv
+	ajR8Unz4lkKT2PSQPZKmEmj1JsAbD9twHGzmiPlKk2O8Bt50dmTRcR3Ptxug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1777855789; x=1777942189; bh=M2qAP8mLXNhjvCJpvkyTMplUII/MA2jbEIL
+	+klGCYbw=; b=OiwnJU4jG/oZWliOLp/qhgY+JAPyodsRAsg5PCMzvN/1OaYkPlo
+	GFw5X5s4WhNKYPcUDAwOBWpaw7hB5AoOlnuYhDHnh1OwrXYVVToHKhYqR/DdBtrc
+	lCHHaUlF75LWfjI1ms+FN4SmhZl7qBkCIuKwxZ47TUIH5ZCSti56cvxJLdedJIgJ
+	ZImV3Og0h3qvaCdWQoJoC9VxM9EjeqKqpjVUGASCquUgAP22GP9GCa0ngScRJnVc
+	HaNZ2ztB0uuN+IiiDpGmva0jEotbjn3tr6QaWfdY2BRpOaJBayA/G3jMqqObdecR
+	6C3XtLNlVcEnbEA3aQgTSwxz605CYSoj48A==
+X-ME-Sender: <xms:LO33aYKsabSh5EZ-5Dd9IPi1YzOQIKdnlm_CDQwHH9dAdOQHXpaonA>
+    <xme:LO33aei9PdiOfH_udUe3OOhszZMnhoaIu-6aSxvlEsw-OanTr0mRu0ldFfLktvJOW
+    TNZSbCoblYIuG_FdHq5LuZFX43Soq_BOLeEYbr6NsUpMYm7Jy8>
+X-ME-Received: <xmr:LO33aU9tuEnl-NTsT3CEzhKa4iBxkJoId3L8Ru3sPoj4YD5J9elh0os-7l5DEcw3bE0966CMFMI9IqwSwDuypMCZ-rGvBzWL8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljeeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedufedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehj
+    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhs
+    sggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:LO33aTMk_cFdoO6g4sBnnrCpj73iL3X0MD7p7Dr2cB4QgQWMTVsMXQ>
+    <xmx:LO33aYBGPDm082BaJcSaXUqCpEnAzXTiHKXTPXMQ9NbfzxDQeIge1Q>
+    <xmx:LO33aXNQq5HO45otuY7IHcxEcec0ZbD-XbCt3bXyfWlg01QIm4hn2w>
+    <xmx:LO33afd1Kk7cfOO3YJDCZW8exxjOv2cl7KmSuNRkgy8aEL9-R8F3iw>
+    <xmx:Le33aRLhrz17fdQ7AOq2mrSLJdxvbUTrpLoaYbbMc-5szoVYiWArxrMF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 3 May 2026 20:49:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  johannes.schindelin@gmx.de,  johncai86@gmail.com,  karthik.188@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  newren@gmail.com,
+  peff@peff.net,  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 1/7] pack-objects: pass --objects with --path-walk
+In-Reply-To: <29d2797440412bfec85be7b6a6439350b9ebf5e8.1777731354.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Sat, 02 May 2026
+	14:15:48 +0000")
+References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
+	<29d2797440412bfec85be7b6a6439350b9ebf5e8.1777731354.git.gitgitgadget@gmail.com>
+Date: Mon, 04 May 2026 09:49:47 +0900
+Message-ID: <xmqqo6iwq9qs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ajbx6XodwkCMZe2v"
-Content-Disposition: inline
-In-Reply-To: <9692091777837852@4991cc90-7cef-4f92-9de9-e195e7f2c04c>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---ajbx6XodwkCMZe2v
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> When 'git pack-objects' has the --path-walk option enabled, it uses a
+> different set of revision walk parameters than normal. For once,
 
-On 2026-05-03 at 19:50:52, =D0=90=D0=B7=D0=B0=D1=82 =D0=A3=D1=81=D0=BC=D0=
-=B0=D0=BD=D0=BE=D0=B2 wrote:
-> Hi everyone! I have noticed a problem when trying to build latest git
-> 2.54 in rhel 6,(2.53 builds fine ) nothing has changed on this machine
-> since I successfully installed 2.53 . My openssl version is 3.5.6. Any
-> Ideas? Below is the log
+"once" -> "one" (or "instance")?
 
-We no longer support RHEL 6.  It lacks security support and
-Documentation/technical/platform-support.adoc states the following
-requirement, among others:
+> --objects was previously assumed by the path-walk API and was not needed
+> to be added. We also needed --boundary to allow discovering
+> UNINTERESTING objects to use as delta bases.
+>
+> We will be updating the path-walk API soon to work with some filter
+> options. However, the revision machinery will trigger a fatal error:
+>
+>   fatal: object filtering requires --objects
+>
+> The fix is easy: add the --objects option as an argument. This has no
+> effect on the path-walk API but does simplify the revision option
+> parsing for the objects filter.
+>
+> We can remove the comment about "removing" the options because they were
+> never removed and instead not added. We still need to disable using
+> bitmaps.
 
-* Has active security support (taking security releases of dependencies, et=
-c)
+In the old code, there was a valid reason why bitmaps were not used
+(i.e., "--objects" not enabled), but that no longer holds (i.e., now
+we add "--objects" ourselves).  Do we need to give an updated
+rationale to keep bitmap disabled?
 
-We normally do not consider extended support time frames in this regard,
-but even if we were to do so, RHEL 6 lost security support in 2024[0],
-so it's not supported.  I would recommend you upgrade this system
-immediately to a supported OS to avoid it being compromised and becoming
-a hazard to the rest of the Internet.
-
-> /usr/local/bin/ld: warning: libssl.so.3, needed by /usr/local/lib/libcurl=
-=2Eso, may conflict with libssl.so.10
->     LINK git-http-fetch
-> /usr/local/bin/ld: warning: libcrypto.so.3, needed by /usr/local/lib/libc=
-url.so,may conflict with libcrypto.so.10
-> /usr/local/bin/ld: imap-send.o: undefined reference to symbol 'ASN1_STRIN=
-G_get0_data@@OPENSSL_3.0.0'
-> /usr/local/bin/ld: /usr/local/openssl/lib/libcrypto.so.3: error adding sy=
-mbols:DSO missing from command line
-> collect2: error: ld returned 1 exit status
-
-It looks like there's either a conflict between various versions of
-OpenSSL which are being linked into Git or perhaps the wrong one is
-being linked in.
-
-[0] https://endoflife.date/rhel
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ajbx6XodwkCMZe2v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8Fgmn36a4JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ1GnfyADn21YT45tWlRRtswEk3lDTfAVv6BVUIu9LOOA
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAANmWAQD5kG7tiW5Nen/wDOeYhUTDq2sk
-qbpO9eYuPOAf60IJwQD9Fl0QgClnPm6qbiG53sfsakJ2a8yMnRLjWwP4njRxNgI=
-=x0lA
------END PGP SIGNATURE-----
-
---ajbx6XodwkCMZe2v--
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  builtin/pack-objects.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index dd2480a73d..4338962904 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -5190,10 +5190,7 @@ int cmd_pack_objects(int argc,
+>  	}
+>  	if (path_walk) {
+>  		strvec_push(&rp, "--boundary");
+> -		 /*
+> -		  * We must disable the bitmaps because we are removing
+> -		  * the --objects / --objects-edge[-aggressive] options.
+> -		  */
+> +		strvec_push(&rp, "--objects");
+>  		use_bitmap_index = 0;
+>  	} else if (thin) {
+>  		use_internal_rev_list = 1;
