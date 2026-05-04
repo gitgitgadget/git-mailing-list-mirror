@@ -1,69 +1,69 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115663E7140
-	for <git@vger.kernel.org>; Mon,  4 May 2026 20:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8D73C6A39
+	for <git@vger.kernel.org>; Mon,  4 May 2026 20:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777926094; cv=none; b=QCaXAfgKT9XsdX5NCy2MZNT2tzfdmQoel80kimAcWTtavDs7Hjl3xrBC0QnQ28GahfGdfcLCFfAiTZjVLFMOevydAFJA2t3O/rvlgqh5Wz2ZkctiM/sug5BQQbcfWy+lvstJjhLL+64H8/PZmtX7HeAE+PNXBnfpKlcbOyiW1n8=
+	t=1777926096; cv=none; b=fu8lljGBmOY0eYzyEVRjS03b89HLI5GJ8TAawrYniXf2o5s30kH+zwI275hwHdXCX0Hn4YwqWBuAAo0ufoAccMEclZJedXSx+eMwlLQjPBXsh4R7xGqdXp15TzXXS8oQ0M/vKRfMDhz6GBdsbaIodTewIj8GcfZNq791mmZdVZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777926094; c=relaxed/simple;
-	bh=1O+Ck+h7O3USzbb+Vs3caqnrs/oFo+z5Lwv54oQlu7I=;
+	s=arc-20240116; t=1777926096; c=relaxed/simple;
+	bh=2RpOt7D9X/ngZruR8EZjx23vXQ7xs3Tclej6Xn8uuCk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=stm4a5Q5FqgmPnuIJ5+I1oUrKkpxKA3J7lCU9JBFj4mXHDNEk0auh4CTTgzo8IkqrbLYpqdWuVlUmHQYyLwn7I0PX903G9C24FSKILTnA95mf2Ik5S98tCF7VAFgcUKK9UU7WI5E9eBEwqrNHd+h4ePLhNOexVI7N3llXWOzCyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RKFAB8/R; arc=none smtp.client-ip=209.85.222.169
+	 MIME-Version:To:Cc; b=ikkkTQI3wpu+1jy4CoyjwS8FxM1cHCW3M6sEzoUegctoBK1ZLBsXTmDfo/7XEplZxTYXEYczDTbwvnTUAH1wNEHMCYsdOXy8wIf8Yk9n1aQF9JrtBKZL3RQWiyOSiihXGE+sPT9FpNrOf2C/IQfgu3+iZ2kT4A04J9aQbtWCxwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/nwTnMb; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RKFAB8/R"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8eae9229110so764940585a.1
-        for <git@vger.kernel.org>; Mon, 04 May 2026 13:21:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/nwTnMb"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8ee9ec26edaso469938085a.2
+        for <git@vger.kernel.org>; Mon, 04 May 2026 13:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777926092; x=1778530892; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777926093; x=1778530893; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PfFhHvqmnlcSqpGxiDOPZ/UANil5KFrWReRRO1AOaUU=;
-        b=RKFAB8/RHB2wT9zEkD0LRnQam5jBxrugs5Az/XuE0Z8kgpdQALLHgdhrIrtoeP+2JD
-         RodS+eotjAweWQlAhID40lj7gdRjabNVFkDVNfOja8+ez06va+4ZRyfsmGITYct9pKf8
-         xu6fR33/jKDYr7qD7I8BUgdGwORXvtJC+OZjp/hOlqTEZEQjgcWmk+2r7E1zHVb7IUDo
-         ++Ar+qU63v9+i1+hJIzIGjbWLORK9JnSDRlsVBGIc/a06K318UTWs18YhXjbIV7otLDE
-         7/xqZQ7M8UFaIlSll0OBjpCXuUaQ6M1EGqYCa5ybN+ZlqYDETQlK54JxjW8UxY96PRz8
-         FDJg==
+        bh=PfJYSMQZi6y/NHLld6PooiwMr6EruADQ24+xvpCfuMQ=;
+        b=c/nwTnMbJWEI3WpLkgAB5atiQjteHYx+Pv3IZp83ogzdWXNgLj7yku23x18Uc6AQyb
+         UdS8APVdk7iCAmDhPOLWo/GuEQQsxbHOu3wng7a0KzHA9K0psSinW2yYp76SQhH4H4eo
+         pVEWjayzxxIoTp4q58H60Eo260+wEiOMcCk0UOPSwmOF/aaJPZAovIIR374GcJaedy3d
+         hwUKYNoytMNTxs7F+3MeV85jyS8QezVIyMn24pDdgwcTwhgNptPdT0ISSma0jFZdB5Zt
+         8lKxCsYCaV+/WSjPrnqE6Qa27FlvSDod8yJMWYGOqYrlLYzI7xSQ7DPlHkZXTb7LsUCw
+         khlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777926092; x=1778530892;
+        d=1e100.net; s=20251104; t=1777926093; x=1778530893;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PfFhHvqmnlcSqpGxiDOPZ/UANil5KFrWReRRO1AOaUU=;
-        b=i1ARv1GcypzADRM8lPDpZtWpLTVRiZ7ZOmX8Bl8ZQUPooLZTYf5ssVrmUJrrIluEoI
-         zuRDNVMDBjUfDz5HTh04/o/TPnZ3sp0jlsJ06ewUc87hQfa+MYgjGQN9OI9Z4vGkXruy
-         sqn1rjdfCAdsyktYbI5BRYF+yck3ujYNDHL00U51KaZ97K+RlC6SQvh35/fza+y6xJ2K
-         6T+RYJDiljdYQlJbxfN4mD/olobX6L26Z9jc7acf3o/B9gtywo6/JM68l6yJA7FWiovt
-         BkQsrNe1WfskSo6kyaxh+/cuEEgEHaStUk8YKc58MOMtxSO+33l+RAoCa7kTxDvJJE7o
-         H01g==
-X-Gm-Message-State: AOJu0YzJ7qN51TILgNHYlaFaOiMrRrNjOqAvxKnUZdlK2t3m02t2U2hc
-	0eWQ6r9JmZPouM6QXi2tyyksntmhh1CD0zF5ntnja+9HKH8Jp7OH2K5AtdOc0A==
-X-Gm-Gg: AeBDieufHSXbMbTbBRbN54nslFYYJtuWpjC3hC4wm4D95Re0Yv8Dp1GXdU0IZT9O8uw
-	KpLYVn09eme2+dbZAV7Rw5jVgXqEqzHFVH1rQE0bgu9HrBAcyUxcQGPIinplzc3AhccfQaJcjgp
-	iq7qZISLJUbVo57fc2uUTD0WX21DqxHqK6C7fErtDeUpbo1Qr0AiFAhm/GjFOb8b98Cvav3/FDD
-	9xWVvabJzWhDILLsOZrCdkZ7KE+mWChSpzAn9cHydopnIc6u6jMy2dFW/i6jhbY3KuD/PKtAbiI
-	+W3LQgTP19eYxk8msR7W/7UQnJvXlEaKdZMfbxVjCtufmuSWmNFwxaibqXC/FYITas7ncO9VmuE
-	TOWyo92OIIvAde6Z6iO9JZwTk27Lm9lcvpa2lq5CA8SMJBzQhaXmbq/ttGHN88Vs92iE5rY3oYM
-	rh26NuUInBUcYX+OrjS2qu2JTr3jav0F9YE0jI
-X-Received: by 2002:a05:620a:c42:b0:8ef:c0b7:9e6b with SMTP id af79cd13be357-902e4dc6046mr62855585a.56.1777926091592;
-        Mon, 04 May 2026 13:21:31 -0700 (PDT)
+        bh=PfJYSMQZi6y/NHLld6PooiwMr6EruADQ24+xvpCfuMQ=;
+        b=XSp4w7TP1KmO9JYcaTjhxTBv3gWZGgJXkNh+nWg19gNSvsv2dWW0eQN67Lw0WGMyaR
+         igyDQs5n+Ggk/w3ZE/AbKOSTTJ2kzU1VFOL4WLeanQuwmv2oki09vRP2i7mV58h8Kzal
+         8IEp+wjB5IwybNiHTS7JZp22cmoE3OsHBBJp6Yvei0Zk1DP/4dErOQnZavDJFroMcqLu
+         qDue91+6p4P4TBia2wVphT2oHBaX2VhvzwsrL81VxtCHToJVqapVuLGc+7TyZqHJEks3
+         Are0VECcrQgJv+YsO/B9Z64VB4JnBH+jB+I+pZr2GwRfesjtz8iWBVv5qdZjgMxOa7Fn
+         o8Sw==
+X-Gm-Message-State: AOJu0Yz860/wO47XH+YgCouHSYiboG20ZhgHRAH6QUSMNGNlLwo41cbp
+	3OsIEfFDk4XzMS8sCWA9XiltOud2zWcbXg1vbYVgp+tRHPeH56xocgaRvcmrzw==
+X-Gm-Gg: AeBDiev9CuLTL9mIIn6OdUHEnKJwd+r4SPRS3/tQdZ/b+rni7P/OJ8c58yBb+4e0bhp
+	bRjXzaBvSnqc25e3C0cYstWEdFRwccaehPmoXb/SSolTpXVbxVaDjtUJrObToqklkBuUNhSVRhW
+	hpWMhja4t2gihaPOaUmzrWKR2SJ6G6A0Wcrabbs17dKvJ/ZzrIWEtkwPv+V+aD5w1QU5c05ys5U
+	eQqWjGb5vAsSkbt9KyjwQTfkQRNcY9utKrOHVfmylMAywWz416GcM/KbTJcnfjl/us7lSK0C4EZ
+	2tSMQySHbMoPMu+f1lt4kGKpIYfMCEyWW2DAAp5/fl8xj6JqicfFh0o5mZZPxrTPpfV+EQhk7Xh
+	j0lBGO67UnsQnqLhTGgcUd9M1x09DDiv9qCMA+uOBkt2Uuw0++gWZ1pOzrnKGoTtyHY3Mp9D+Ig
+	zKrq3Y2Rxq9r8HuJ8+LgVGvkSC4xpCHQ4fC+Dk
+X-Received: by 2002:a05:620a:444f:b0:8dd:b4fc:d561 with SMTP id af79cd13be357-902e48b9a7emr75861785a.10.1777926092836;
+        Mon, 04 May 2026 13:21:32 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.96])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c9229c8sm1244184985a.36.2026.05.04.13.21.30
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91c807sm1257600685a.32.2026.05.04.13.21.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 13:21:30 -0700 (PDT)
-Message-Id: <772cdcaeed69f81d6aa3f60d36f761e58aeb8cf3.1777926079.git.gitgitgadget@gmail.com>
+        Mon, 04 May 2026 13:21:32 -0700 (PDT)
+Message-Id: <c557f3c59d8cca51c0669d5463a7e032f9f8ab72.1777926079.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
 References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
 	<pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
 From: "Taylor Blau via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 04 May 2026 20:21:17 +0000
-Subject: [PATCH v2 08/10] path-walk: support `tree:0` filter
+Date: Mon, 04 May 2026 20:21:18 +0000
+Subject: [PATCH v2 09/10] path-walk: support `object:type` filter
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,85 +89,122 @@ Cc: christian.couder@gmail.com,
 
 From: Taylor Blau <me@ttaylorr.com>
 
-The `tree:0` object filter omits all trees and blobs from the result,
-keeping only commits and tags. Consequently, this filter type should
-has a fairly straightforward integration with path-walk, as the decision
-to include an object depends only on its type and does not depend on any
-path-sensitive state.
+The `object:type` filter accepts only objects of a single type; it is
+the second member of the object-info-only filter family that bitmap
+traversal already supports.
 
-Mapping it onto `path_walk_info` is direct: set `info->trees = 0` and
-`info->blobs = 0` in `prepare_filters()` when the `LOFC_TREE_DEPTH`
-choice is requested with depth zero. The existing code already plumbs
-those flags through the rest of the walk:
+Like `blob:none` and `tree:0`, it can be evaluated with nothing more
+than the object's type, which is exactly the granularity path-walk's
+existing info->{commits,trees,blobs,tags} flags already control.
 
- - 'walk_objects_by_path()' sets `revs->blob_objects = info->blobs` and
-   `revs->tree_objects = info->trees` before `prepare_revision_walk()`,
-   so the revision walk doesn't try to enumerate trees or blobs itself.
+Map `LOFC_OBJECT_TYPE` in `prepare_filters()` by AND-ing each flag
+against the filtered type. A single `object:type=X` filter
+applied to the default info (all flags = 1) leaves `info->X = 1` and
+all the others 0, which is what we want.
 
- - The commit-walk loop short-circuits the root-tree fetch with
-   "if (!info->trees && !info->blobs) continue;", so we never even
-   look up the root tree, let alone descend into it.
+Using an AND rather than straight assignment prepares us for a
+subsequent change to implement combined object filters.
 
- - `setup_pending_objects()` skips pending trees and blobs based on
-   the same flags.
+The path-walk machinery is mostly already wired for the per-type
+distinction:
 
-This means the path-walk doesn't allocate or expand any tree structures
-at all under `tree:0`, which matches the intended behavior of the
-filter.
+ - `walk_path()` calls `path_fn` for a batch only when the corresponding
+   `info->X` flag is set, so unwanted types are silently not reported.
 
-Non-zero tree-depth filters are not supported. Those depend on the depth
-at which a tree is visited, which is a path-walk concept the filter
-machinery doesn't currently share with the path-walk API. Reject them in
-`prepare_filters()` with a helpful error and let pack-objects fall back
-to the regular traversal, the same way it already does for unsupported
-filters.
+ - `add_tree_entries()` skips tree entries of type `OBJ_BLOB` when
+   `info->blobs` is unset, so we don't even allocate paths for them.
 
-Add coverage in t6601 for both `--all` and a single-branch case to
-confirm that no trees or blobs are emitted, and a separate test that
-`tree:1` is rejected with the expected error message. Place the new
-tests before "setup sparse filter blob" so they run on the original set
-of refs, before the orphan branch that the sparse-tree tests create.
+ - The commit-walk loop short-circuits the root-tree fetch when
+   `!info->trees && !info->blobs`, so commit-only filters don't descend
+   into trees at all.
+
+But there are a couple of side effects of the "trees off, blobs on" case
+that need fixing:
+
+ 1. 'setup_pending_objects()' previously skipped pending trees as soon
+    as `info->trees` was zero. For 'object:type=blob' the call site
+    needs those pending trees: a lightweight tag pointing to a tree, or
+    an annotated tag whose peeled target is a tree, can both reach
+    blobs that are otherwise unreachable from any commit's root tree.
+    Loosen the gate to "if (!info->trees && !info->blobs) continue" and
+    similarly retrieve the root_tree_list whenever either trees or
+    blobs are wanted.
+
+ 2. The revision machinery's `handle_commit()` drops pending trees when
+    `revs->tree_objects` is zero (see the 'OBJ_TREE' handler in
+    revision.c), so by the time path-walk sees the pending list
+    after `prepare_revision_walk()` the tree-bearing pendings would
+    already be gone. Fix this by setting
+
+        revs->tree_objects = info->trees || info->blobs
+
+    so pending trees survive `prepare_revision_walk()` whenever we
+    need to walk into them. Path-walk still resets tree_objects to
+    zero immediately after `prepare_revision_walk()` returns, so the
+    rev-walk itself never enumerates trees redundantly with
+    path-walk's own descent.
+
+Add coverage in t6601 for each of the four `object:type` values. The
+'object:type=blob' test in particular asserts that file2 and child/file
+(both reachable only through tag-pointed trees) show up in the output,
+exercising the pending-tree fix.
+
+Update Documentation/git-pack-objects.adoc to add object:type to
+the list of supported --filter forms.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-pack-objects.adoc |  4 +--
- path-walk.c                         | 13 +++++++++
- t/t6601-path-walk.sh                | 45 +++++++++++++++++++++++++++++
- 3 files changed, 60 insertions(+), 2 deletions(-)
+ Documentation/git-pack-objects.adoc |  2 +-
+ path-walk.c                         | 23 +++++++-
+ t/t6601-path-walk.sh                | 86 +++++++++++++++++++++++++++++
+ 3 files changed, 107 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
-index 026061a5bc..3e26f57b92 100644
+index 3e26f57b92..bd7c808eef 100644
 --- a/Documentation/git-pack-objects.adoc
 +++ b/Documentation/git-pack-objects.adoc
-@@ -404,8 +404,8 @@ will be automatically changed to version `1`.
- +
+@@ -405,7 +405,7 @@ will be automatically changed to version `1`.
  Incompatible with `--delta-islands`. The `--use-bitmap-index` option is
  ignored in the presence of `--path-walk`. Whe `--path-walk` option
--supports the `--filter=<spec>` form `blob:none`, `blob:limit=<n>`, and
--`sparse:<oid>`.
-+supports the `--filter=<spec>` form `blob:none`, `blob:limit=<n>`,
-+`tree:0`, and `sparse:<oid>`.
+ supports the `--filter=<spec>` form `blob:none`, `blob:limit=<n>`,
+-`tree:0`, and `sparse:<oid>`.
++`tree:0`, `object:type=<type>`, and `sparse:<oid>`.
  
  
  DELTA ISLANDS
 diff --git a/path-walk.c b/path-walk.c
-index 700617ee2f..36a1e5b967 100644
+index 36a1e5b967..b9902abbb7 100644
 --- a/path-walk.c
 +++ b/path-walk.c
-@@ -564,6 +564,19 @@ static int prepare_filters(struct path_walk_info *info,
+@@ -430,7 +430,7 @@ static int setup_pending_objects(struct path_walk_info *info,
+ 		CALLOC_ARRAY(tags, 1);
+ 	if (info->blobs)
+ 		CALLOC_ARRAY(tagged_blobs, 1);
+-	if (info->trees)
++	if (info->trees || info->blobs)
+ 		root_tree_list = strmap_get(&ctx->paths_to_lists, root_path);
+ 
+ 	/*
+@@ -475,7 +475,7 @@ static int setup_pending_objects(struct path_walk_info *info,
+ 
+ 		switch (obj->type) {
+ 		case OBJ_TREE:
+-			if (!info->trees)
++			if (!info->trees && !info->blobs)
+ 				continue;
+ 			if (pending->path) {
+ 				char *path = *pending->path ? xstrfmt("%s/", pending->path)
+@@ -577,6 +577,16 @@ static int prepare_filters(struct path_walk_info *info,
  		}
  		return 1;
  
-+	case LOFC_TREE_DEPTH:
-+		if (options->tree_exclude_depth) {
-+			error(_("tree:%lu filter not supported by the path-walk API"),
-+			      options->tree_exclude_depth);
-+			return 0;
-+		}
++	case LOFC_OBJECT_TYPE:
 +		if (info) {
-+			info->trees = 0;
-+			info->blobs = 0;
++			info->commits &= options->object_type == OBJ_COMMIT;
++			info->tags &= options->object_type == OBJ_TAG;
++			info->trees &= options->object_type == OBJ_TREE;
++			info->blobs &= options->object_type == OBJ_BLOB;
 +			list_objects_filter_release(options);
 +		}
 +		return 1;
@@ -175,47 +212,42 @@ index 700617ee2f..36a1e5b967 100644
  	case LOFC_SPARSE_OID:
  		if (info) {
  			struct object_id sparse_oid;
+@@ -683,9 +693,16 @@ int walk_objects_by_path(struct path_walk_info *info)
+ 	/*
+ 	 * Set these values before preparing the walk to catch
+ 	 * lightweight tags pointing to non-commits and indexed objects.
++	 *
++	 * Keep tree_objects set whenever blobs are wanted: blobs may
++	 * be reachable through trees that show up as pending objects
++	 * (e.g., via lightweight tags pointing to trees, or annotated
++	 * tags whose peeled target is a tree). Without tree_objects,
++	 * prepare_revision_walk() would discard those pending trees
++	 * and we would never descend into them.
+ 	 */
+ 	info->revs->blob_objects = info->blobs;
+-	info->revs->tree_objects = info->trees;
++	info->revs->tree_objects = info->trees || info->blobs;
+ 
+ 	if (prepare_revision_walk(info->revs))
+ 		die(_("failed to setup revision walk"));
 diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index 520269dfc6..72e09211e6 100755
+index 72e09211e6..13016e62ab 100755
 --- a/t/t6601-path-walk.sh
 +++ b/t/t6601-path-walk.sh
-@@ -590,6 +590,51 @@ test_expect_success 'all, blob:limit=3 filter' '
- 	test_cmp_sorted expect out
+@@ -635,6 +635,92 @@ test_expect_success 'tree:1 filter is rejected' '
+ 	test_grep "tree:1 filter not supported by the path-walk API" err
  '
  
-+test_expect_success 'all, tree:0 filter' '
-+	test-tool path-walk --filter=tree:0 -- --all >out &&
++test_expect_success 'all, object:type=commit filter' '
++	test-tool path-walk --filter=object:type=commit -- --all >out &&
 +
 +	cat >expect <<-EOF &&
 +	0:commit::$(git rev-parse topic)
 +	0:commit::$(git rev-parse base)
 +	0:commit::$(git rev-parse base~1)
 +	0:commit::$(git rev-parse base~2)
-+	1:tag:/tags:$(git rev-parse refs/tags/first)
-+	1:tag:/tags:$(git rev-parse refs/tags/second.1)
-+	1:tag:/tags:$(git rev-parse refs/tags/second.2)
-+	1:tag:/tags:$(git rev-parse refs/tags/third)
-+	1:tag:/tags:$(git rev-parse refs/tags/fourth)
-+	1:tag:/tags:$(git rev-parse refs/tags/tree-tag)
-+	1:tag:/tags:$(git rev-parse refs/tags/blob-tag)
 +	blobs:0
 +	commits:4
-+	tags:7
-+	trees:0
-+	EOF
-+
-+	test_cmp_sorted expect out
-+'
-+
-+test_expect_success 'topic only, tree:0 filter' '
-+	test-tool path-walk --filter=tree:0 -- topic >out &&
-+
-+	cat >expect <<-EOF &&
-+	0:commit::$(git rev-parse topic)
-+	0:commit::$(git rev-parse base~1)
-+	0:commit::$(git rev-parse base~2)
-+	blobs:0
-+	commits:3
 +	tags:0
 +	trees:0
 +	EOF
@@ -223,9 +255,73 @@ index 520269dfc6..72e09211e6 100755
 +	test_cmp_sorted expect out
 +'
 +
-+test_expect_success 'tree:1 filter is rejected' '
-+	test_must_fail test-tool path-walk --filter=tree:1 -- --all 2>err &&
-+	test_grep "tree:1 filter not supported by the path-walk API" err
++test_expect_success 'all, object:type=tag filter' '
++	test-tool path-walk --filter=object:type=tag -- --all >out &&
++
++	cat >expect <<-EOF &&
++	0:tag:/tags:$(git rev-parse refs/tags/first)
++	0:tag:/tags:$(git rev-parse refs/tags/second.1)
++	0:tag:/tags:$(git rev-parse refs/tags/second.2)
++	0:tag:/tags:$(git rev-parse refs/tags/third)
++	0:tag:/tags:$(git rev-parse refs/tags/fourth)
++	0:tag:/tags:$(git rev-parse refs/tags/tree-tag)
++	0:tag:/tags:$(git rev-parse refs/tags/blob-tag)
++	blobs:0
++	commits:0
++	tags:7
++	trees:0
++	EOF
++
++	test_cmp_sorted expect out
++'
++
++test_expect_success 'all, object:type=tree filter' '
++	test-tool path-walk --filter=object:type=tree -- --all >out &&
++
++	cat >expect <<-EOF &&
++	0:tree::$(git rev-parse topic^{tree})
++	0:tree::$(git rev-parse base^{tree})
++	0:tree::$(git rev-parse base~1^{tree})
++	0:tree::$(git rev-parse base~2^{tree})
++	0:tree::$(git rev-parse refs/tags/tree-tag^{})
++	0:tree::$(git rev-parse refs/tags/tree-tag2^{})
++	1:tree:a/:$(git rev-parse base:a)
++	2:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	3:tree:left/:$(git rev-parse base:left)
++	3:tree:left/:$(git rev-parse base~2:left)
++	4:tree:right/:$(git rev-parse topic:right)
++	4:tree:right/:$(git rev-parse base~1:right)
++	4:tree:right/:$(git rev-parse base~2:right)
++	blobs:0
++	commits:0
++	tags:0
++	trees:13
++	EOF
++
++	test_cmp_sorted expect out
++'
++
++test_expect_success 'all, object:type=blob filter' '
++	test-tool path-walk --filter=object:type=blob -- --all >out &&
++
++	cat >expect <<-EOF &&
++	0:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag^{})
++	0:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag2^{})
++	1:blob:a:$(git rev-parse base~2:a)
++	2:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
++	3:blob:child/file:$(git rev-parse refs/tags/tree-tag:child/file)
++	4:blob:left/b:$(git rev-parse base:left/b)
++	4:blob:left/b:$(git rev-parse base~2:left/b)
++	5:blob:right/c:$(git rev-parse base~2:right/c)
++	5:blob:right/c:$(git rev-parse topic:right/c)
++	6:blob:right/d:$(git rev-parse base~1:right/d)
++	blobs:10
++	commits:0
++	tags:0
++	trees:0
++	EOF
++
++	test_cmp_sorted expect out
 +'
 +
  test_expect_success 'setup sparse filter blob' '
