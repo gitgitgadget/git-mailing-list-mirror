@@ -1,66 +1,65 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326D13E51D6
-	for <git@vger.kernel.org>; Mon,  4 May 2026 17:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC313E5562
+	for <git@vger.kernel.org>; Mon,  4 May 2026 17:44:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777916659; cv=none; b=Hy04HP4iLDgR2P3UHiNpioqLBpPB7x1LG9XNb9JmfdgcUyPUg6g0LS8N/heqf1n9y1R/Gzh/vIz0oiXEvFJCuavplAgY5eXQJuHESevbqZB21pgCb9dt7dyt8CVqRgnNhajlkjXsgn4qCOKdqoKbw4PEwHStgGfkylKiWVpB008=
+	t=1777916660; cv=none; b=uCXbq4RQFjxHczzjBrVgwhdKF7q4+ZnjLNG7URbrFBVtrAAE4/repg/m8NxAW5oeuoqCIeN7ZvK6iVXDWT/thSAN9Nq3dZftA32hI+9z8URaWnWMVIpqtZW3k00T5k5f3lgeMlsuoHXhn6k6B9pVAsm0QSweHrnRLI26w8Glzdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777916659; c=relaxed/simple;
-	bh=9hmCFKoKScRjhfqO/sM+O28CtMU/EzaD+pSewKN1a58=;
+	s=arc-20240116; t=1777916660; c=relaxed/simple;
+	bh=IB6HIIho4lrN2TnQXyT8tqTXBm5rXPnZlDwjzScKF4M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=URRvJDs0ODaT6KaEm14ERp/B2ku+UdrMsP6HYS7s15Yx35iYyB48yZ4saz5Eg24XbDGVGpoUoQw1K1L9hqFOT3skUu6ft6yHEvP5znS4GfmS6gifoSXIqvOftc8HUdTHMcJ7UmPzz3+QBGctd9OqMRE1okvCcuxI+df2V1DbuQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f+eIEpVS; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:To:Cc; b=VuxuGZ6lkdqUe8op6th/+daFuf8ZCDyk1cqYCLt8bhhqGcp3CNXDGpGhxKGM+wyLmlhzFJ7QK+X9Ks7XbrzVqkNPItpOmMRUTp5BmHtCKJdbdhYYjl30dSBZe8CWasea94W7LPHwopLky/GLULEXLyU8MLVBH3XP99UZKDwuIuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IAMavSjz; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f+eIEpVS"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so27180925e9.3
-        for <git@vger.kernel.org>; Mon, 04 May 2026 10:44:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IAMavSjz"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48984d29fe3so64309345e9.0
+        for <git@vger.kernel.org>; Mon, 04 May 2026 10:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777916657; x=1778521457; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777916658; x=1778521458; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KPlWDpTehSrUWXOWCJ9JidhgaGbaVdI3x5TMBlSYF/w=;
-        b=f+eIEpVSkDGFZIIFye+HteiT1WKV7ClzFd5mZ+MIBikde94LzpQrfQxDQVvS/pAxwy
-         43VViyUHp4pnG8+vkdAVvWGUF86cnzUHMfMQS56rGTWsjP67AiO9BcT1KsRhTO3Fxi2n
-         JElfzNGC8QPl95X6YIkH2h9i56X7aL/ZzYlqb+c4u82Jh2hKMzceXDeLH82Rnm2tf3Cz
-         wRGa9OzxI2EPZ+Bv+cNhLPvxTFeo9UyGZe+/WpxfEZg/xMNfhJqkWCjmlfBw9iVAzIQR
-         0zop6S/M4Ud78EOI7jrcNNKxkAvM+BkSE1golGdszlco0FvdSBcGdnfTA+4eavNHztDw
-         d/yQ==
+        bh=T0YmjADqGD03h6WFV6WSZlVCQK+jJbDkt2lcZ1dUCUQ=;
+        b=IAMavSjzqCW1n/H6SyJy+PJDt0x8GWMo36WrmYtF1P0C0dE8FO9sNtQMeYf+zHkzSR
+         2T4JiqNMQLItlp431lH1venzk2k0q0u6aNs+7u13kJxvItOu/i5VwKB8VzOzxxSIe1bh
+         Y/C58+JfoWQvxuFHF6HyhAGlZ4rEPd4fi3MPyN0wo9MLWqeOn9kqi4/wH0RXJrAJA1PX
+         u1KjFx4nXuTM4QRgVpkCuTQN9w9m78UBJrpwHi1M2LrUGkUdjGnbJpU5v0i51c4alMO1
+         kf08rLddeqC+mEETE+mFTZoNi5DBnT57ZF35IEhGxytjieAMdKsXEXtJ8l1oUb5Nbpc7
+         +new==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777916657; x=1778521457;
+        d=1e100.net; s=20251104; t=1777916658; x=1778521458;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=KPlWDpTehSrUWXOWCJ9JidhgaGbaVdI3x5TMBlSYF/w=;
-        b=YW2GSsXvv1AgOPPvE8YhPMxZVc2pRjPrk8maeexJTr5F0QnGXgNMJh5PuX7JTOY9fl
-         JHvzzQWYl14Q6eDO+qB5BsBXLadKbUOfJReENAHA0eR6iXhCdfmLMFP6CI0sGsxGlThG
-         zl+AZ/oNUgcB001ZWVF7mXlms8lmGoX4bUpN9QMJ/fXv+MoVhjamH9Nau0CyJ8MA8uX7
-         VjPPO0aE4l5mUNiJioOtU0kcMZqJCSr80rNkHM7D9nsTSNLCDKnGpqwY8UEpFcrmmY4N
-         /ElDEZsltEeqrxNL+bbEtYxhsoF60efwl2Rpfb5neRpLk5RNZDFQ4D9rO1RgAKZAOWz1
-         4qAg==
-X-Gm-Message-State: AOJu0YzDcZkVEgsrEPZfElduqTlZqwYQw36wFxDqw2wGoVdLnVuxJt5x
-	AHr9uqNq/+omq28FpjxqQaM8+xxAXA1l8OqyrrwtU+Vd2zrLBwdqGR8N
-X-Gm-Gg: AeBDiesXiUNfo/HYg7pYdHHFmgky0430/VJ7B9ensetFtgUqYVGmYyyVe6BWDMY21QJ
-	XJnKFaJffeYqUA3/3UUAjUjh6JkZ476AUc+/srKQGjrblGMNb+TcxaFLokN42vOqbbE6Yaza02R
-	bXJc7oKwwjmv5XEJOYRWGK17e0Zkrq14qmq2dEWTwyCAFm50bnVA/MP9xOs2A0GFvsulp2r/pEQ
-	yIo9hF2gNAFiTcVTJx5h1XlOiNvR6LoekccYawiWmj5O4ysBYlg+/OQkTEZcsbv08NCX6PU8WLU
-	N5ltyI3F64zJIjoSY24LBsdgjpjRjfFfrtnacsnbO+LmT29/1Uhs16r85+9nGC+HHpcq/KJczgT
-	Nt1ingO4jvCumUNHncYdkzfxEYfa67QyGBJvh+1P+gdTc4oeRsLUURdNcO4SAZksST/2iiUpZq5
-	kyeXQ8VOYBaPCFOd/GCEr0tHl1jOe/UXboTb6O+bjF
-X-Received: by 2002:a05:600c:821b:b0:488:c40b:c8a4 with SMTP id 5b1f17b1804b1-48a9852f366mr171051475e9.1.1777916656377;
-        Mon, 04 May 2026 10:44:16 -0700 (PDT)
+        bh=T0YmjADqGD03h6WFV6WSZlVCQK+jJbDkt2lcZ1dUCUQ=;
+        b=mdaUJI7m1Mto3ibMD9z7o+QWEE3TLEISJELWEiM3RN5fdTG9FcSp85jbh35/1cUaPY
+         Qu8O4NW5UHIrkyjrnI5XPSnOMObGqwADOFaaH8VxwQFZ3m4YwqIOHDNPQfllgCQxNXrF
+         hQyPFWjMJ96fFWntS+4JwuU9h1s7hf724/N+cLF9Zl95QTxIhhfVHT/qz1KKYMOandMh
+         N1HH2AICy5IwJAL3UouiX8MXqUGe6BcipSC8niMK2uRAMCfc5pQvQZOl7m9dOktGTKnH
+         0SBwe4DPyfTbiJm4Cv/Q0ZpYZqhmbzaKvKnwguAnIY+om18NKZ0xYc7LzUULIZz2/wp5
+         soHw==
+X-Gm-Message-State: AOJu0Yz4evlpye/pvJM8ABfY+r/RK94G0aT5v3GhXnFITkT5/i00yoO/
+	EJNrKwsuw9m7WHVILA5QzolyLghZUOdcTspHmJr4VNf396VvT/UvaTq28M0GIw==
+X-Gm-Gg: AeBDieueuNRHAIcfS9DAP4c3VlKEjRHpIl3/OB02WXbGbE30AOpK+7ewi4k7hss96pZ
+	SaTDEopSTmqR98Da1UwJH/gja0o3SLJy/vCoe2u0oLFps05hJ0Es1gjHzG+Xp8sv7LMPsUIgt70
+	hyUUVgRE3srYHjCpSx4eo/zkQn1VItYRWe8QrIzqtMOqWg7cISD3XD+TpR34HajdPY1GshjVPlA
+	OO/1vczu+ZUuNfq1Snb5mKKkV9FuLJ6jZemISA2xlbPE1HKo0q8FFADBp989uvUiaH3ToryXdti
+	ShV6fDoYIdbdTRfmvsumHeUwfRs72Hq8cqSclnaU+Pnxq80B86iaGO58Evrqya9HIAmqLygIeP3
+	tDkxnNxIXlk4Ue3BuRYMdEJ0sarhEAKny9jPot1HWXYOlkNiAj+Qceu25n8nE9lhzkNocVe6hXH
+	KDCKJDJFYgBvD6X9AY3o9Nm/ua/Z9IOKELIn8+WPF4
+X-Received: by 2002:a05:600c:4e0d:b0:488:d6eb:e63c with SMTP id 5b1f17b1804b1-48a98658b64mr191735325e9.15.1777916657530;
+        Mon, 04 May 2026 10:44:17 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:8109:d906:4e00:1f8b:93fc:106a:20a3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8eb75fc1sm299297675e9.7.2026.05.04.10.44.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8eb75fc1sm299297675e9.7.2026.05.04.10.44.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 10:44:16 -0700 (PDT)
+        Mon, 04 May 2026 10:44:17 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 04 May 2026 19:44:08 +0200
-Subject: [PATCH v4 4/9] refs: return `ref_transaction_error` from
- `ref_transaction_update()`
+Date: Mon, 04 May 2026 19:44:09 +0200
+Subject: [PATCH v4 5/9] update-ref: move `print_rejected_refs()` up
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,112 +68,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260504-refs-move-to-generic-layer-v4-4-936ac2f0b1a3@gmail.com>
+Message-Id: <20260504-refs-move-to-generic-layer-v4-5-936ac2f0b1a3@gmail.com>
 References: <20260504-refs-move-to-generic-layer-v4-0-936ac2f0b1a3@gmail.com>
 In-Reply-To: <20260504-refs-move-to-generic-layer-v4-0-936ac2f0b1a3@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im, toon@iotcl.com, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3225; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=9hmCFKoKScRjhfqO/sM+O28CtMU/EzaD+pSewKN1a58=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGn42ukxTz7M8OI7kwjTZctNJTJ4+jgSg8KHc
- i0FvjbFGNSn04kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp+NrpAAoJED7VnySO
- Rox/5nUL/3FMPA8lLGeLZPWEkmez+9w7BS4KNsbdvLwCHWOEIiAp/0QFAoUlGXxQeWViTJFuAnz
- TV2BvrxwpPigRvMf7zaq7LtMJRnXVjSFaSxIyZyP/tlSaSeYncBS1tNx6cI0gvo7MAN8s+4UEBV
- 1vXx6RerZru3kETHQXbDb4HDHnBydW1Zgg9i1uK1aDQY3dU8oBXDNDTpUEDVTSARuVvLSjie6T+
- FihHNN69ulw0oUetWeVz/L3/Z8L1y9pygiHRTtC5KVo9kGDE6vmLxu0uuojPhliCfCNg7KWxYY2
- RUGsFqBXXuWeoT5nvYAoxNGSELX6h0YGuojxuNvGSvHAUaJK33zolMX05GmpSKLSJfyNSdSyj0v
- BD0PaIRuTUb0i18+hJiUF0g/RVx1MWksYtgv9sliwjxlvzsGnNBgYRSEBgGyGrVWh7bl6jsMxg7
- P1tQet1cSAovBxUG5G6PRYcFelyqwr7cXhG5HPCMBLbYj0SQ6XTOOAxiaRTlXcOF20FlwLTlDQ4
- vU=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2387; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=IB6HIIho4lrN2TnQXyT8tqTXBm5rXPnZlDwjzScKF4M=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGn42ukJDBVritEt0G9CF+xdfqhnaUuXtCnfv
+ UWjeYd61f+QfYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJp+NrpAAoJED7VnySO
+ Rox/f8cL+wVrRsCsIzVlGifK0ZpArQLNGajqhCH7YN9MBPpvKefhdc7z0OCBG7FTyv3TNXoHO/c
+ Yql8VZRcrzg3esKAITdDaGauNV2PZ80k4qXr6uNeJvh9TaLpzOXMulUF+wbcQjvLSVXQTj4DK9F
+ EeHbO8dkt0UUNniU+YGBYSWzseMEAShjeMuat1zvhcLok0OOBwmFZrm6dlUpPRmAkYWu2OZTRMy
+ Z9JggK0o3Qy5ghpbV0M/8zI4tRG6Z/+hDUI8pbSV75OtpoRi/mE5RiVG1I5culEZQhlTxnXn3SA
+ l1PLQIakaL2S3ugWiIkb5eL/R7iFOb0+iMZUPTRt2kg94O5Dx5UtNyi7FbnYo9DTE7tr6MPWvgC
+ rNHsdx9WK9rOmt5l/yh8ybUySNrMNWT10o+ramgXvlkqUUFiux+iD2HX5kRBwaj2eRo7wN7Ml6a
+ YL2iez+vlw2MmoJQp2po3L51eutPC+Hlrqa26UlnXA9egZ9eQCz0A6dOze2GkE6SvVlfcN8lEa8
+ L0=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The `ref_transaction_update()` function is used to add updates to a
-given reference transactions. In the following commit, we'll add more
-validation to this function. As such, it would be beneficial if the
-function returns specific error types, so callers can differentiate
-between different errors.
-
-To facilitate this, return `enum ref_transaction_error` from the
-function and covert the existing '-1' returns to
-'REF_TRANSACTION_ERROR_GENERIC'. Since this retains the existing
-behavior, no changes are made to any of the callers but this sets the
-necessary infrastructure for introduction of other errors.
+The `print_rejected_refs()` function is used to print any rejected refs
+when using git-updated-ref(1) with the '--batch-updates' option. In the
+following commit, we'll need to use this function in another place, so
+move the function up to avoid a separate forward declaration.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c | 20 ++++++++++----------
- refs.h | 16 ++++++++--------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ builtin/update-ref.c | 45 ++++++++++++++++++++++-----------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 6b506aeea3..efa16b739d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1383,25 +1383,25 @@ static int transaction_refname_valid(const char *refname,
- 	return 1;
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 2d68c40ecb..5259cc7226 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -234,6 +234,28 @@ static int parse_next_oid(const char **next, const char *end,
+ 	    command, refname);
  }
  
--int ref_transaction_update(struct ref_transaction *transaction,
--			   const char *refname,
--			   const struct object_id *new_oid,
--			   const struct object_id *old_oid,
--			   const char *new_target,
--			   const char *old_target,
--			   unsigned int flags, const char *msg,
--			   struct strbuf *err)
-+enum ref_transaction_error ref_transaction_update(struct ref_transaction *transaction,
-+						  const char *refname,
-+						  const struct object_id *new_oid,
-+						  const struct object_id *old_oid,
-+						  const char *new_target,
-+						  const char *old_target,
-+						  unsigned int flags, const char *msg,
-+						  struct strbuf *err)
- {
- 	assert(err);
- 
- 	if ((flags & REF_FORCE_CREATE_REFLOG) &&
- 	    (flags & REF_SKIP_CREATE_REFLOG)) {
- 		strbuf_addstr(err, _("refusing to force and skip creation of reflog"));
--		return -1;
-+		return REF_TRANSACTION_ERROR_GENERIC;
- 	}
- 
- 	if (!transaction_refname_valid(refname, new_oid, flags, err))
--		return -1;
-+		return REF_TRANSACTION_ERROR_GENERIC;
- 
- 	if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
- 		BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
-diff --git a/refs.h b/refs.h
-index d65de6ab5f..71d5c186d0 100644
---- a/refs.h
-+++ b/refs.h
-@@ -905,14 +905,14 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-  * See the above comment "Reference transaction updates" for more
-  * information.
-  */
--int ref_transaction_update(struct ref_transaction *transaction,
--			   const char *refname,
--			   const struct object_id *new_oid,
--			   const struct object_id *old_oid,
--			   const char *new_target,
--			   const char *old_target,
--			   unsigned int flags, const char *msg,
--			   struct strbuf *err);
-+enum ref_transaction_error ref_transaction_update(struct ref_transaction *transaction,
-+						  const char *refname,
-+						  const struct object_id *new_oid,
-+						  const struct object_id *old_oid,
-+						  const char *new_target,
-+						  const char *old_target,
-+						  unsigned int flags, const char *msg,
-+						  struct strbuf *err);
++static void print_rejected_refs(const char *refname,
++				const struct object_id *old_oid,
++				const struct object_id *new_oid,
++				const char *old_target,
++				const char *new_target,
++				enum ref_transaction_error err,
++				const char *details,
++				void *cb_data UNUSED)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	if (details && *details)
++		error("%s", details);
++
++	strbuf_addf(&sb, "rejected %s %s %s %s\n", refname,
++		    new_oid ? oid_to_hex(new_oid) : new_target,
++		    old_oid ? oid_to_hex(old_oid) : old_target,
++		    ref_transaction_error_msg(err));
++
++	fwrite(sb.buf, sb.len, 1, stdout);
++	strbuf_release(&sb);
++}
  
  /*
-  * Similar to `ref_transaction_update`, but this function is only for adding
+  * The following five parse_cmd_*() functions parse the corresponding
+@@ -567,29 +589,6 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
+ 	report_ok("abort");
+ }
+ 
+-static void print_rejected_refs(const char *refname,
+-				const struct object_id *old_oid,
+-				const struct object_id *new_oid,
+-				const char *old_target,
+-				const char *new_target,
+-				enum ref_transaction_error err,
+-				const char *details,
+-				void *cb_data UNUSED)
+-{
+-	struct strbuf sb = STRBUF_INIT;
+-
+-	if (details && *details)
+-		error("%s", details);
+-
+-	strbuf_addf(&sb, "rejected %s %s %s %s\n", refname,
+-		    new_oid ? oid_to_hex(new_oid) : new_target,
+-		    old_oid ? oid_to_hex(old_oid) : old_target,
+-		    ref_transaction_error_msg(err));
+-
+-	fwrite(sb.buf, sb.len, 1, stdout);
+-	strbuf_release(&sb);
+-}
+-
+ static void parse_cmd_commit(struct ref_transaction *transaction,
+ 			     const char *next, const char *end UNUSED)
+ {
 
 -- 
 2.53.GIT
