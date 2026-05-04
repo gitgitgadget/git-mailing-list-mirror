@@ -1,71 +1,72 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f196.google.com (mail-yw1-f196.google.com [209.85.128.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17737E56A
-	for <git@vger.kernel.org>; Mon,  4 May 2026 00:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E40CBA45
+	for <git@vger.kernel.org>; Mon,  4 May 2026 00:11:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777853490; cv=none; b=SBdm6vzY61VZUt+nKwY8qewFQzYPi4UtsROBKT1/RfpVkRYU+hq40vo5BY3Cdd3JcSGoifud01kU4uqgphxRkgWjEZon+wgVgcdF6dOLuPrvZKJ+N7+vOOKMwOpoEAz3UxRWFt1jRcbiGz8d/IEj9FJ9SQjgP8Mxvmlc5XHhAKs=
+	t=1777853493; cv=none; b=Zz1EGpyCbEpR/Iee9inCzdDcg2dmDTPHSWffZ5KoK3vkxwl3tAP4o/YlJ/u8vRF4zZA4Hk5o1SASeSWZjVkjykkwEKei5cUSFve49a9idaodOR1o87YSKi6y5pz4OP/8aLE6gQRGl+54dg5LS1Vgm3lbOoVWDtqHtNxeYH1egYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777853490; c=relaxed/simple;
-	bh=wJubTlNIBsebrUnGRE5SMlY7IBafJOG66GGnkFz7NlI=;
+	s=arc-20240116; t=1777853493; c=relaxed/simple;
+	bh=3feaBS7YpToQjdQn9GLDtJW5TLGBQsswd/4x5C8yLo8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QvnushjFX6q5pF44GvTy4Klf1l6uDWQ46397uGDuTcSO66QWIJSZrhAGhqPODSs2ydDeRGZRXyZVssnIzWD9rwO1Xr3mCRIAQwmLDpYa8rSYT1MJ1IUxZFFaFwhQ2j3mtSI2w+l4lu2M5FBqpn9PrDModuON3us61zYjtS/hAzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Tu956UC/; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=EypRrPEoDLjzhRJh2zM8dDHgGOONdJXQT+udWunywkaKMh8XmddOhhBlekeTLCxXLR2jaLRHhTmU/M0SgZquSIZPqE4DXUepHgOTc0FPwCOp7YcHJmfn+s0NwVpV7I5cxoxEUXKJoMnrscyTc1xGf9x+dNK5jv081KjRmhHPU/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=MBjgALAE; arc=none smtp.client-ip=209.85.128.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Tu956UC/"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-79a46260385so42502667b3.3
-        for <git@vger.kernel.org>; Sun, 03 May 2026 17:11:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="MBjgALAE"
+Received: by mail-yw1-f196.google.com with SMTP id 00721157ae682-7991db3dc98so36960467b3.0
+        for <git@vger.kernel.org>; Sun, 03 May 2026 17:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1777853488; x=1778458288; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1777853490; x=1778458290; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J//WEfqUvo6fqnEVirn1uWx6JECG6Jt5n0L0zePrHz4=;
-        b=Tu956UC/jB1Q5bQpeY2+DJK++J2CPjMevTys7gZRs6Po2ekn1faMSdoqvwJ5SHHHqT
-         OMpbU9H5A1o1Wco1gUzYi33ZT6EyAwioBdzOF+L2qnrBv3HvBx9jGYgu7NMyhqE6aQ9r
-         kcVFyBJdoFVfBG2dQp7a2zrkEiKlORU3RpZ1CicEsz7A6mXkoKI1qIt3nnoZ5UrSTb9f
-         C0PDvfY8ILDdRD5t0YoOg/BJhH5uNUnk86gLRNgc+OZ4Fo0ubhapU875GN2o2gmOgleK
-         CKhTBbxhAaC9eoNNTxfZ4CUeh5Pn/ugcss42b7GGjL3OxTcBg6/Yh1RjsRUDQ4D/BGzk
-         8DDA==
+        bh=6hlbDf3T8cmwpofChck7LJi9fNZWdganB/cnsTuQm6Y=;
+        b=MBjgALAEOKsriwqt+/Sy4ujI4in4heUsPkd8iXoz2f076DHs3iwPRVyiNJXCH3PeKE
+         mLsrxHNURzCFNvlPUSlG/r9TVGhhBc4mSPGUu22XA7OImgR9l00sUAfhUU2yFcxv0+w8
+         ZHwyjuLLRc71Mo/Dg/74LQ1YH0GDaJuX1TIwXMvYyv3JTRW79X4frt0PzH/6OVJNAEJ6
+         9b0fNKr6EOjnpYAULBL9u0pT2GgAYjNpiGrZ9Os+f7CnApI/ztbi5fy+wz4MQoQmVEh4
+         XTs/6jgRkEgYMmtS4Sr3LP13Z2LHnBCoAxwvTMyDI43odikdmL6X2OrlG7Tm5+v6Ib5U
+         4TXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777853488; x=1778458288;
+        d=1e100.net; s=20251104; t=1777853490; x=1778458290;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J//WEfqUvo6fqnEVirn1uWx6JECG6Jt5n0L0zePrHz4=;
-        b=mDsi3C2q6iWJRbEhBvYhyBILIeDz3HJRqzwB3vY1YRUvTrqksLlj+0+bAkhu+gdVRc
-         pwJdGhSIp7Twj6pXb+/c+OYp7hF6ghk+kHusFqSUWKfjP3ynYQyYbyDCgp7WaegtJkhT
-         RowMm0GF6xwttI6iwcA5sbKDN39nhPEEc+vwesFfysqYDBzbYzKmkNSIoLdZT4YtXmEM
-         4J23XLfWCjzGeEiG0l582u0lQ/BY9umYwTGvTp8EDNqCGAZd4jKiC19uGuM67igMTQOE
-         nGVAMxk0jMN9nQqhvwvtpEDw674qBc8h64m0nD85UK5KV11NcVf2l6Wl6P/EUYWQHfUI
-         sOtg==
-X-Gm-Message-State: AOJu0YykFdCvFNiWhLI/NFr424UYI4woSwFDngB94cw6mFlchQug3HqP
-	T3KZ3bxw9lnnmWCa0u1vAd2l9kGu5wAcddmdog7N8nQQuqD/gcZV5ME/20VC/J2kk+4kBvqig/x
-	r6H8soENP/A==
-X-Gm-Gg: AeBDievF8DoMsLvdgb2yrN+hM0fb0fUKNEPM5vaoLB6cKDZ8y2DUKMfkB+zMucU0xX5
-	lHVyG6IqAxZeJVVXmjj2DQQ5D2FqoQO55fFqsyi2PUoQ1eSG61UD4kgDBNZLMa5eltn7WMCMiNF
-	skBxsd8QG/Q2soFIMFOpt5DcHXHthuAvztDbHaf1fOli5GuuL0ysTWp7oCAVk3WujOvBGZyeLN5
-	NXsaW3Uz6hsCdhcqMyRIymBX0r/mZ1QS4mlV6Pxbb/haWUToiv1KmHhePPeVTO/pjtw0F8porMP
-	OobhuCJs5/kvV1XADkxH2YVBwdaKZp5AezYRLMvR/qZIYqIoXCDVR35bH8FZjZoANA9c/ktbMhC
-	6aqxWovmyYQqjUfqnbJVe45kIx2o28r5M+wIVdAn14r1Pg2Hoec9QgVIZmG3hcRWUW1ssVOLSCo
-	kI+WhabvdjXXDESjEBf9mN8QnUcGQMS1wExzZDI6D5nmfXNMhA0y1Fl+qpSkDR1t5UxrgxzEZNo
-	26uARqVNp2flS4aNZm1Au2ix+PoUn0iQgAaAW6NcQUfex0cSWj+s/bRiBzJB/PGFfQlMYIfUOzU
-	0sQP2ohQW0C/DlnX1FsUfybn/FMzrUs36+T6Sg==
-X-Received: by 2002:a05:690c:a018:b0:799:2b4c:1d49 with SMTP id 00721157ae682-7bd7710bb60mr74209017b3.36.1777853487767;
-        Sun, 03 May 2026 17:11:27 -0700 (PDT)
+        bh=6hlbDf3T8cmwpofChck7LJi9fNZWdganB/cnsTuQm6Y=;
+        b=kIJwSuNv8x98+QwIqZsoqEoh6Qi8PWpwAgFR5Y1k54iOgBSE+FqrdAlZ/Eu1HiBE/4
+         7bBB3xgfjYlIpHPpiX3NsmIcZjyZbww67FYfGCQQhV6xOzBiTC6Fhzj/+gT4Hg1xB/TC
+         ijA2kKQ/YBqX4OEJ2MzNoNA1BqN5v9qxDcD3+gc7uur570ypxl5MxUOwEN2yntXllTlT
+         wCr+Mh7ddVYv+RTWqwn1OV1YueD+QqUaB8WyMuqwAd2MchVR1jtwMKLz+arx/SEKaTEs
+         ejTVIjnNcZXoxayPd3mpP8NQ2Xw7branR7z35/G+D5ID3mO5HmLjKHpNAlACVeXcZQXn
+         UpjA==
+X-Gm-Message-State: AOJu0Yx5ugP4S2zOEWKtFm/gz5usx7u4+UbSwMXoS3++reGJgTEPHJcG
+	xQ6t41tHsDdwqVnCi8pTNez976EACCRDHH6nmWF9RGXdR0B9fzVdEPFA4SmjDRLtP50kzO5rzJW
+	Y351/Vy2+7mpY
+X-Gm-Gg: AeBDietYHlqYeO5O2HY0N4VFDGgelXmsYi695enxsUHZSHyReblCxd1hDu0z6HfDT/S
+	ATO97S3P712Gs+PCkCXoZ1UDB38P08MXVtQkhiX6pnIx4OWhEfsxtR4AGgSCC+XOwrQ+C39e1lh
+	bc99M6Vb+nTOjjDVsNS2yiKd0J0N40lieOACoYN3E3qrRCv82KmgRAcm5A+TfFDM0EA9tPoaeIL
+	A0UiMXIWqPkvbd+/M7++qlsMya0yJNy/2VkxkHvdh//9jfXUtcniwLo2I5NC/PNpVZV11RlJu6m
+	s+kOtzNOck4Scr9UcLWSI7dfzbUTWNTird2WrY5vETRO1/cNXsHPzIYnHo4zODkSYxFqrPTmkTj
+	S6XwS8nZLBbNMdTA+RBWMhZEJSTATbW4QULrjDB8s95Oqk12lNqD28eEZsq0q8D6VMGFU3tcvgg
+	Z0Y2DPymx/AkcI2AWSXf364QhVRRWDh2pBT8aetW+67v6pDnRhPqMxSUd26FXiZDfFWGozrcV0b
+	tBY6/7Iq02SgeMcAbIT+umSrj6zA1r4G8dC7f5cvxPMTWUESc6eOkNoomydHUq9o4Ax4vgvn3C/
+	VRDt8RBCRwG2O+iKnRC0bCPwso0=
+X-Received: by 2002:a05:690c:c4e8:b0:7b2:64f4:a2c0 with SMTP id 00721157ae682-7bd76f7ed0cmr82089817b3.5.1777853490480;
+        Sun, 03 May 2026 17:11:30 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66839f63sm42746107b3.31.2026.05.03.17.11.27
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66896398sm41947917b3.48.2026.05.03.17.11.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 May 2026 17:11:27 -0700 (PDT)
-Date: Sun, 3 May 2026 20:11:26 -0400
+        Sun, 03 May 2026 17:11:30 -0700 (PDT)
+Date: Sun, 3 May 2026 20:11:29 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>,
 	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 4/7] path-walk: support `combine` filter
-Message-ID: <5a4c39d7ae18c2dafa0e9d80ce5aad9ee6db4245.1777853408.git.me@ttaylorr.com>
+Subject: [RFC PATCH 5/7] pack-objects: support reachability bitmaps with
+ `--path-walk`
+Message-ID: <f50f8df01a9f216d5b4388b2fe4ff58077b574f3.1777853408.git.me@ttaylorr.com>
 References: <cover.1777853408.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,257 +78,185 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1777853408.git.me@ttaylorr.com>
 
-The `combine` filter takes the intersection of its children, that is:
-objects are shown only when all child filters would admit the object.
+When 'pack-objects' is invoked with '--path-walk', it prevents us from
+using reachability bitmaps.
 
-The preceding patches added support for many individual filter types.
-Enable users to compose these filters by implementing support for the
-`combine` filter type.
+This behavior dates back to 70664d2865c (pack-objects: add --path-walk
+option, 2025-05-16), which included a comment in the relevant portion of
+the command-line arguments handling that read as follows:
 
-Mapping intersection onto path_walk_info works because every supported
-child filter is a monotonic restriction:
+    /*
+     * We must disable the bitmaps because we are removing
+     * the --objects / --objects-edge[-aggressive] options.
+     */
 
- - `blob:none`, `tree:0` unconditionally clear `info->blobs` and (for
-   `tree:0`) `info->trees`; clearing an already-cleared flag is a
-   no-op.
+In fb2c309b7d3 (pack-objects: pass --objects with --path-walk,
+2026-05-02), we adjusted this behavior to also pass "--objects", but
+still disable use of reachability bitmaps.
 
- - `object:type=X` is now expressed as an AND of each type flag with the
-   filtered type, so applying multiple such filters only refines the
-   existing set rather than overwrites it.
+Fortunately, disabling reachability bitmaps is not strictly necessary.
+Consider a couple of pack-objects use-cases: one during repacking, when
+we would ordinarily generate reachability bitmaps, and another for
+serving fetches and clones, when we would ordinarily read existing
+bitmaps:
 
- - `blob:limit=N` has to compose too: the intersection of "size < L1"
-   and "size < L2" is "size < min(L1, L2)".
+ - When attempting to generate reachability bitmaps, we would fail to do
+   so since path-walk reveals objects through the
+   `add_objects_by_path()` callback rather than, e.g., `show_commit()`,
+   so the bitmap selector's `index_commit_for_bitmap()` was never called
+   for any commit.
 
-   Update the `LOFC_BLOB_LIMIT` handler to take the running minimum when
-   `info->blob_limit` is already set, so a combined filter with, e.g.,
-   both "blob:limit=10" and "blob:limit=5" produces a limit of 5
-   regardless of ordering.
+   The selection routine then had no candidates and bitmap writing was
+   effectively a no-op.
 
- - `sparse:oid` is left unchanged. A `combine` filter that includes a
-   `sparse:oid` is allowed at most once, since the existing handler
-   refuses to overwrite `info->pl`. Two `sparse:oid` filters in a single
-   `combine` would be unusual and are rejected with a warning, matching
-   the standalone `sparse:oid` behavior.
+ - On the bitmap-reading side, an invocation like "git pack-objects
+   --use-bitmap-index --path-walk" never even tried to consult a bitmap,
+   even when one was sitting on disk that could have answered the
+   request.
 
-Implementation-wise, the existing `prepare_filters()` called
-`list_objects_filter_release()` inside each case branch. That works fine
-for top-level filters, but `combine` filters need to recurse over its
-  child filters without releasing each one in turn (since the parent's
-  release iterates the sub array). Split `prepare_filters()` into a
-  recursive helper that performs only the mutation, plus a thin wrapper
-  that calls the helper and then releases the top-level filter once.
+Neither restriction is required. They are discussed in turn:
 
-The `LOFC_COMBINE` case in the helper just walks `sub_nr` and recurses;
-child filters are released by the wrapper's single
-`list_objects_filter_release()` call on the parent (which itself
-recursively releases each sub-filter, the same way it always has).
+ - For bitmap-writing, all we need is for `index_commit_for_bitmap()` to
+   see each commit that path-walk visits. The path-walk callback already
+   groups commits into a single batch keyed by `OBJ_COMMIT`, so invoking
+   `index_commit_for_bitmap()` from there gives the bitmap selection
+   routine the same input it would have gotten from `show_commit()` in
+   the regular traversal.
 
-If any sub-filter is unsupported (e.g. "tree:1", "sparse:<path>", or a
-not-yet-supported choice), the recursion bubbles a failure up and the
-existing pack-objects/backfill fallback paths kick in.
+   The candidate set of commits is identical, though the ordering
+   differs. Bitmap selection is sensitive to commit ordering, but
+   commits are visited in the same order as we see them from
+   `get_revision()` so bitmap selection should be identical with or
+   without `--path-walk`.
 
-Add coverage in t6601:
+ - For bitmap-reading, all we need is for `revs->tree_objects` (and so
+   on for blobs and tags) to be set, otherwise bitmap traversal would
+   only emit commit objects.
 
-  - "combine:blob:none+tree:0" collapses to "tree:0"
+   In commit fb2c309b7d3, those flags are set via passing "--objects",
+   so bitmap traversal under "--path-walk" packs everything just like
+   any other "--use-bitmap-index" invocation.
 
-  - "combine:object:type=blob+blob:limit=3" yields only the blobs
-    smaller than three bytes
+If an existing reachability bitmap is unable to satisfy the request (no
+bitmap on disk, haves not in the bitmapped pack, etc.) we fall through
+to path-walk's own enumeration, just as the regular traversal falls back
+when a bitmap is unavailable.
 
-  - "combine:object:type=blob+object:type=tree" intersects to empty
+In other words: "--path-walk --use-bitmap-index" uses reachability
+bitmaps when available, and otherwise enumerates via path-walk.
 
-  - "combine:tree:1+blob:none" reports the "tree:1" error.
+The regression in t5310 deserves a word about pack-reuse. With
+pack-reuse enabled (the default), the output pack copies whole regions
+of the existing bitmapped pack before `traverse_bitmap_commit_list()`
+even runs, so a naive test would happily pass even if, say,
+`revs->blob_objects` is set to 0. We test both with and without
+pack-reuse enabled. When pack-reuse is disabled, pack-objects must
+enumerate the resulting bitmap without copying any existing on-disk in
+the rev_info setup that pack-reuse would otherwise paper over.
 
-Update Documentation/git-pack-objects.adoc to add combine to the
-list of supported --filter forms.
+Update Documentation/git-pack-objects.adoc to drop the "ignored"
+claim about --use-bitmap-index in favor of describing the new
+fallback chain.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-pack-objects.adoc |  8 ++--
- path-walk.c                         | 31 +++++++++-----
- t/t6601-path-walk.sh                | 65 +++++++++++++++++++++++++++++
- 3 files changed, 90 insertions(+), 14 deletions(-)
+ Documentation/git-pack-objects.adoc |  6 +++--
+ builtin/pack-objects.c              | 10 +++++++-
+ t/t5310-pack-bitmaps.sh             | 36 +++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
-index 22c782611d2..6c7bbff5be5 100644
+index 6c7bbff5be5..60e594c7bc4 100644
 --- a/Documentation/git-pack-objects.adoc
 +++ b/Documentation/git-pack-objects.adoc
-@@ -404,10 +404,10 @@ will be automatically changed to version `1`.
- +
- Incompatible with `--delta-islands`. Path-walk supports
+@@ -406,8 +406,10 @@ Incompatible with `--delta-islands`. Path-walk supports
  the `--filter=<spec>` forms `blob:none`, `blob:limit=<n>`,
--`sparse:oid=<blob>`, `tree:0`, and `object:type=<type>`. Other filter
--forms fall back to the regular object traversal. The
--`--use-bitmap-index` option will be ignored in the presence of
--`--path-walk`.
-+`sparse:oid=<blob>`, `tree:0`, `object:type=<type>`, and `combine:`
-+over any of those. Other filter forms fall back to the regular object
-+traversal. The `--use-bitmap-index` option will be ignored in the
-+presence of `--path-walk`.
+ `sparse:oid=<blob>`, `tree:0`, `object:type=<type>`, and `combine:`
+ over any of those. Other filter forms fall back to the regular object
+-traversal. The `--use-bitmap-index` option will be ignored in the
+-presence of `--path-walk`.
++traversal. When `--use-bitmap-index` is specified with `--path-walk`, a
++successful bitmap traversal is used for object enumeration, with
++path-walk remaining as the fallback traversal when the bitmap cannot
++satisfy the request.
  
  
  DELTA ISLANDS
-diff --git a/path-walk.c b/path-walk.c
-index b9902abbb75..6d66da3dc3b 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -539,28 +539,26 @@ static int setup_pending_objects(struct path_walk_info *info,
- 	return 0;
- }
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ba00d8148ab..1a5f1afd32e 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4732,6 +4732,15 @@ static int add_objects_by_path(const char *path,
+ 			continue;
  
--static int prepare_filters(struct path_walk_info *info,
--			   struct list_objects_filter_options *options)
-+static int prepare_filters_one(struct path_walk_info *info,
-+			       struct list_objects_filter_options *options)
- {
- 	switch (options->choice) {
- 	case LOFC_DISABLED:
- 		return 1;
- 
- 	case LOFC_BLOB_NONE:
--		if (info) {
-+		if (info)
- 			info->blobs = 0;
--			list_objects_filter_release(options);
--		}
- 		return 1;
- 
- 	case LOFC_BLOB_LIMIT:
- 		if (info) {
- 			if (!options->blob_limit_value) {
- 				info->blobs = 0;
--			} else {
-+			} else if (!info->blob_limit ||
-+				   options->blob_limit_value < info->blob_limit) {
- 				info->blob_limit = options->blob_limit_value;
- 			}
--			list_objects_filter_release(options);
- 		}
- 		return 1;
- 
-@@ -573,7 +571,6 @@ static int prepare_filters(struct path_walk_info *info,
- 		if (info) {
- 			info->trees = 0;
- 			info->blobs = 0;
--			list_objects_filter_release(options);
- 		}
- 		return 1;
- 
-@@ -583,7 +580,6 @@ static int prepare_filters(struct path_walk_info *info,
- 			info->tags &= options->object_type == OBJ_TAG;
- 			info->trees &= options->object_type == OBJ_TREE;
- 			info->blobs &= options->object_type == OBJ_BLOB;
--			list_objects_filter_release(options);
- 		}
- 		return 1;
- 
-@@ -624,8 +620,13 @@ static int prepare_filters(struct path_walk_info *info,
- 				warning(_("sparse filter is not cone-mode compatible"));
- 				return 0;
- 			}
+ 		add_object_entry(oid, type, path, exclude);
++
++		if (type == OBJ_COMMIT && write_bitmap_index) {
++			struct commit *commit;
++
++			commit = lookup_commit(the_repository, oid);
++			if (!commit)
++				die(_("could not find commit %s"), oid_to_hex(oid));
++			index_commit_for_bitmap(commit);
 +		}
-+		return 1;
- 
--			list_objects_filter_release(options);
-+	case LOFC_COMBINE:
-+		for (size_t i = 0; i < options->sub_nr; i++) {
-+			if (!prepare_filters_one(info, &options->sub[i]))
-+				return 0;
- 		}
- 		return 1;
- 
-@@ -636,6 +637,16 @@ static int prepare_filters(struct path_walk_info *info,
  	}
- }
  
-+static int prepare_filters(struct path_walk_info *info,
-+			   struct list_objects_filter_options *options)
-+{
-+	if (!prepare_filters_one(info, options))
-+		return 0;
-+	if (info)
-+		list_objects_filter_release(options);
-+	return 1;
-+}
-+
- int path_walk_filter_compatible(struct list_objects_filter_options *options)
- {
- 	return prepare_filters(NULL, options);
-diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index 13016e62ab1..a7d5f0de4ec 100755
---- a/t/t6601-path-walk.sh
-+++ b/t/t6601-path-walk.sh
-@@ -721,6 +721,71 @@ test_expect_success 'all, object:type=blob filter' '
- 	test_cmp_sorted expect out
- '
+ 	oe_end = to_pack.nr_objects;
+@@ -5193,7 +5202,6 @@ int cmd_pack_objects(int argc,
+ 	if (path_walk) {
+ 		strvec_push(&rp, "--boundary");
+ 		strvec_push(&rp, "--objects");
+-		use_bitmap_index = 0;
+ 	} else if (thin) {
+ 		use_internal_rev_list = 1;
+ 		strvec_push(&rp, shallow
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index f693cb56691..69c5da1580a 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -577,6 +577,42 @@ test_bitmap_cases
  
-+test_expect_success 'all, combine:blob:none+tree:0 filter' '
-+	test-tool path-walk \
-+		--filter=combine:blob:none+tree:0 -- --all >out &&
+ sane_unset GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL
+ 
++test_expect_success 'path-walk repack can write and use bitmap indexes' '
++	test_when_finished "rm -rf path-walk-bitmap" &&
++	git init path-walk-bitmap &&
++	(
++		cd path-walk-bitmap &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
 +
-+	cat >expect <<-EOF &&
-+	0:commit::$(git rev-parse topic)
-+	0:commit::$(git rev-parse base)
-+	0:commit::$(git rev-parse base~1)
-+	0:commit::$(git rev-parse base~2)
-+	1:tag:/tags:$(git rev-parse refs/tags/first)
-+	1:tag:/tags:$(git rev-parse refs/tags/second.1)
-+	1:tag:/tags:$(git rev-parse refs/tags/second.2)
-+	1:tag:/tags:$(git rev-parse refs/tags/third)
-+	1:tag:/tags:$(git rev-parse refs/tags/fourth)
-+	1:tag:/tags:$(git rev-parse refs/tags/tree-tag)
-+	1:tag:/tags:$(git rev-parse refs/tags/blob-tag)
-+	blobs:0
-+	commits:4
-+	tags:7
-+	trees:0
-+	EOF
++		git repack -a -d -b --path-walk &&
++		git rev-list --test-bitmap --use-bitmap-index HEAD &&
 +
-+	test_cmp_sorted expect out
++		git rev-parse HEAD >in &&
++
++		git rev-list --objects --no-object-names HEAD >expect.raw &&
++		sort expect.raw >expect &&
++
++		for reuse in true false
++		do
++			: >trace.txt &&
++
++			GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++			git -c pack.allowPackReuse=$reuse pack-objects \
++				--stdout --revs --path-walk --use-bitmap-index \
++				<in >out.pack &&
++			grep "\"category\":\"bitmap\",\"key\":\"bitmap/hits\"" trace.txt &&
++
++			git index-pack out.pack &&
++
++			list_packed_objects out.idx >actual.raw &&
++			sort actual.raw >actual &&
++			test_cmp expect actual || return 1
++		done
++	)
 +'
 +
-+test_expect_success 'all, combine:object:type=blob+blob:limit=3 filter' '
-+	test-tool path-walk \
-+		--filter=combine:object:type=blob+blob:limit=3 \
-+		-- --all >out &&
-+
-+	cat >expect <<-EOF &&
-+	0:blob:a:$(git rev-parse base~2:a)
-+	1:blob:left/b:$(git rev-parse base~2:left/b)
-+	2:blob:right/c:$(git rev-parse base~2:right/c)
-+	3:blob:right/d:$(git rev-parse base~1:right/d)
-+	blobs:4
-+	commits:0
-+	tags:0
-+	trees:0
-+	EOF
-+
-+	test_cmp_sorted expect out
-+'
-+
-+test_expect_success 'all, combine of disjoint object:types is empty' '
-+	test-tool path-walk \
-+		--filter=combine:object:type=blob+object:type=tree \
-+		-- --all >out &&
-+
-+	cat >expect <<-EOF &&
-+	blobs:0
-+	commits:0
-+	tags:0
-+	trees:0
-+	EOF
-+
-+	test_cmp_sorted expect out
-+'
-+
-+test_expect_success 'combine: rejects unsupported subfilters' '
-+	test_must_fail test-tool path-walk \
-+		--filter=combine:tree:1+blob:none -- --all 2>err &&
-+	test_grep "tree:1 filter not supported by the path-walk API" err
-+'
-+
- test_expect_success 'setup sparse filter blob' '
- 	# Cone-mode patterns: include root, exclude all dirs, include left/
- 	cat >patterns <<-\EOF &&
+ test_expect_success 'incremental repack fails when bitmaps are requested' '
+ 	test_commit more-1 &&
+ 	test_must_fail git repack -d 2>err &&
 -- 
 2.54.0.4.g6aa0d38a4ec
 
