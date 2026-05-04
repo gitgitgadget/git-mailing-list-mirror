@@ -1,166 +1,155 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010047.outbound.protection.outlook.com [52.101.69.47])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DD030F7F3
-	for <git@vger.kernel.org>; Mon,  4 May 2026 08:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777882845; cv=fail; b=Q9d+CBcSyJ8DsHFxPnMV8iWBaZ/SNQ/lRYrzZb+/4Uj0Jfx5h0NpPhpHdsvQFPIk+/6hYQ16Ae+oPcfdE1apl7v1W1WMbms4XJ7cpJVIie5Udr299Cdp3mrUQo0QGgIxzmbM7cW3zkOTs7MwcBPJdTctJNZPVg35uNub8VdKi04=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777882845; c=relaxed/simple;
-	bh=VvqqK1SFA+xIGBD1A0xqbMTowa8fB4oQzUXCHziVeWw=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=iGSv1Yv3PLDMIPZmb4Avbt35uJ5Cch0KGxNH49kjUxvHYggGTcHax+sCMgY0xx+F+5fqxqynjKk9GiVxQn/rTkb3G6wyymUJn6fJWP0vlSNqdp4R3BosDcv2YEb4OV27ll/bFcqla0x9o0fVEEHI54BJqEipVAyebcAi29ePJ6w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk; spf=pass smtp.mailfrom=prevas.dk; dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b=cQ+DD/ML; arc=fail smtp.client-ip=52.101.69.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prevas.dk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08B234AB19
+	for <git@vger.kernel.org>; Mon,  4 May 2026 08:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777884939; cv=none; b=A54ZCgZfFpb9SISUD1euvfoq3L0EY6goKDkytmsLBVD+L7qKEbAwXfT5nm4jZHCNSGBaPjsx1fSSpXSUHixHE6OAwccP9n+VLEO6v8urmF6p/OqBjXGst+PsQWSwRbEoiHrDMl0jY2zScFRcKxzFkQ6+MivGuKe8ALv74ZaeKgc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777884939; c=relaxed/simple;
+	bh=HbPNXHb5FsmUn9X9B9NoQ2rTmYjKJEF+/pCuRTGpBGM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=h8KHp+QOwtGhwR8ZHO1GLhN3ygALOb3+mjNOnmlfgsGqmrlq/wmG5byIxe2m2cBdv/Fkrw+bH1oK1t4GjQmlB1pHApkCNMVgoCrqY7O5lJuqHG32SMsXzk7D2ml2yHU+frM9M7hwbVylhollzG7xf5BADTPzoUyxYPzy8GkK/lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lujmAtDa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jka5HB0Q; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b="cQ+DD/ML"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dNyLB4g8auz8EU2cOBcXZ0iFeGwXRG5HHaEK+OUglwyNQrGqsmd/awDtTddvOICSoYkfYWApYPuoEFzdrgR3RDKI2zIWSWOi9k5AiumQVckR7nlfJfav+XRhtHoUE4Xq8pZ10xHoZSlpjH/zcUKEbRWpRAKDJCUNdjOwtldhstCUGfgFDVc0pU5b/47mlxcTF2VtKZUWuUnKlT4k1aomMvFOCqRRUChJYOjtPHAimE6D2UtYQcv8dXOsH4HvdJKLf0lSDPBoHh6PVWzCDDo3OqeEnyhQZnucW573ks95t0HwpcWQ/k4of16C238MbncMR+oP4SfL8kqCCvOzuTLB4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=miCp7VTUmYeD5Hq903bNkSJhynnphXXVXd51FKGYoWs=;
- b=TDtd28Bqj+xDMavDwbVALacpmETmR1TV3xS5GwhWx+/ru8rrApLiMmaJnE0+gMvbLYMd3UoBfQj2iT1znzlPENL2EUcf4aTS2btjHuVR61xEiuNxfUlkQTMsnBSuYD+EC59gzg2yjeOJckrwce3gqdU9x0hzhqmZwbdUE+t2IQoNLfo0zMBCHW/7ps4hKb3EXuuNGs74ndzxTmj87fO8AIiNzX9Z8gcDarRqK8iCKeRr2LMl3FWsWiGqDkWYCX/6cBMK9wO6qTUMUxYp64H4DQEOfoFdnoJaW4Bn88My/9yYXGRW2hm42Ph6fZ/L36dONxrMnum3xCmKshongMAwgQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=prevas.dk; dmarc=pass action=none header.from=prevas.dk;
- dkim=pass header.d=prevas.dk; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prevas.dk;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=miCp7VTUmYeD5Hq903bNkSJhynnphXXVXd51FKGYoWs=;
- b=cQ+DD/MLKLygTcRuAZnEGqV45g9Ls3yXWay9aP7UsAoW23eFnNZJ625qG964lPocXtZmhBaUDfQto2WmuzXt0hF5wmfmGNy3rpwAbbvHfUtqnJsdR1vzJ+V67Nm+Uw0wQ9YMd887f8qptR7LxXSYgnlCarzI3NMJcdJjxj3h5XA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=prevas.dk;
-Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:681::18)
- by PAVPR10MB6909.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:328::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Mon, 4 May
- 2026 08:20:36 +0000
-Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::ebc6:4e0d:5d6b:95d8]) by AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::ebc6:4e0d:5d6b:95d8%6]) with mapi id 15.20.9870.023; Mon, 4 May 2026
- 08:20:35 +0000
-From: Rasmus Villemoes <ravi@prevas.dk>
-To: git@vger.kernel.org
-Cc: emkan@prevas.dk
-Subject: git clone with --dissociate sometimes fails to check out target commit
-Date: Mon, 04 May 2026 10:20:32 +0200
-Message-ID: <87h5onsi0f.fsf@prevas.dk>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Content-Type: text/plain
-X-ClientProxiedBy: GV3PEPF0001DC18.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:158:400::265) To AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:20b:681::18)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lujmAtDa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jka5HB0Q"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 201127A00D3;
+	Mon,  4 May 2026 04:55:36 -0400 (EDT)
+Received: from phl-imap-14 ([10.202.2.87])
+  by phl-compute-06.internal (MEProxy); Mon, 04 May 2026 04:55:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1777884936;
+	 x=1777971336; bh=m+RAn4YcB67ApscuBqT1OwU7pS9snK7xDS1UGZIcd3I=; b=
+	lujmAtDaKymmCnAdLcmksv3u4KZ6trnnYQcODAC6PB+itAS6NPPGkEFpRvGwfAZt
+	kQI4MO6mSzjKDcZZMXi3h/9Zcx48UpkpMXd8Z8wNCl2iQfkNPv5cGN8dgxKnkXt1
+	k3izGlWvQ2jzE6gpXPGZch+6/T8Hrxa4HNzM2WCYZCD2u3fFK990sRjKGH1RYxQK
+	G4NPnQmTOSPmbZPTwruRUdA4DqyVg4tqv+GfVjWSo8AYU7VaFpr65J6bDhJ+lWLt
+	GXh/5/A7UnqEOqXJwbwRoRf3JysMKsLuZttZXmwjhRyPotOgU+TR8/24KPhVUpO5
+	0+B+6fw8Y+teJfKStVd+FA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777884936; x=
+	1777971336; bh=m+RAn4YcB67ApscuBqT1OwU7pS9snK7xDS1UGZIcd3I=; b=J
+	ka5HB0QdB/UN7JIvp8I0JQ6Usy4d7BZL1M/+w6yfiLdD0axIzp9Fey6L1iOWN4FZ
+	5KSWxqbE0VRft9WgjH42r+1u/izeTgo7Rrn3xhJ5OW7F5UbOFyqOqry/F/bC7e22
+	7KlhMFOCm64qTP687DkFRHt2aLsr3EFRh9FDCMmJzM/4qSxF0u240FbUCkYF0l9m
+	llQ7NIYTf3q1Sccildfmwfh8cZhZPEmVzIgukd/60rIemQkHqUc9eKa47c2wjxZc
+	gO1pXo3JAZE3YGg3y11cD9o21p/A8HLbLSyx60jIXiY5oJ7c2ovB2qAzAl7pKDQz
+	NX3xSPwXV9wsqJjV2Bo1Q==
+X-ME-Sender: <xms:CF_4aZ_psRSqPQ-IQwgrNY3-YWoe6cLbMwhFijdbf8NI-Bew8XMZ54k>
+    <xme:CF_4aYgmyMMoei91Rzl4778_X_CzHN4uM-Y2ZMMmjywgW4nPhp8mWYQwqXqM4_Z_i
+    i8F57lZL57TJsrzYcgdL4RBeokwjnDXsGNmChQTGTZm58Ar5yQaiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelkeegudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:CF_4aVibaytnL0goTH-NImqzbWVtrFa2WOTmkzbK-St_uhLo6wH7kw>
+    <xmx:CF_4aaK1E7q_UK-psCBnjqau_LiWrTcKycV4oy_0WSUG73ba-ZPYPQ>
+    <xmx:CF_4adDrvkrNy7__wvZ1FAZSsKa7ewdxJcpDPlMG8bUUghuP0Xjy9Q>
+    <xmx:CF_4aSgIFoJ97-NxVFNQy_8TyTkxrPOGkxZetAuqdmEUGECb5FMAww>
+    <xmx:CF_4acNLRmU9F4Ywt71BMxXgLlPMoaN-Y_zVnJubikz4hNsHT1FwFkmu>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6BBA5C4006F; Mon,  4 May 2026 04:55:36 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS5PR10MB8243:EE_|PAVPR10MB6909:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6c057ffb-e2eb-47bf-718b-08dea9b60430
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|52116014|366016|18002099003|56012099003|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	C0WsxT3UeL4r9w8/4Uh3X0FKrS+4dyf3bE98I9bT/fetN7rnAd7Bl3YfqYt1QWLDd306ESirYld3Eg2xJtbIXtQ3W9dogBey24L5aZ7uyMT7tMUnjP0pdlNwE3yvlIT4djEMmdf5aO7CJsSZ013nImQD4m7RIMnAre1mNwdlfdVJUV7njbkXcP50+iYp7U5qKf0GJwN+xErIyV45RsF8jNq5QA7z/LLm1RdaxBiVwqqQUgqihHAlrs4EnL1lI8ouBkdI3qhPofYXu8Jh0L7LDLXTUBXj/+QIjejxgZmD0V6DSHL6maz3wWI+V0uxHurZHiEifYouQq1zPkpx0BZj/b4M1XE5Ywcv6vH2n7yr/zg1Y3TJ1EOKEWehdVJFsRKWtbKz+lHgnhoZQuYlpww/PpFaKqlIIELFqzuKVfZkbE1kamDpyHVOs14Uq6fSMqkxSFKZwMf+ZqoriW4vu4IaV3JnC7PSbUyroqlvXdSbYxCDhtFVSjob8L070qa1Q/rFSbv+tWBq38RH+gafb0xKLhy2SVOJC581aynwItdjvNAmW1U366cTHBiJQxGCVMgw6VaqDBb3LW302aJEUSrXngu0mcut3Vqi7/q390Cy3PelJlA9EfiQzHc4I02y4UEdBf8vbVATUuVrI1l62hEOfac5JK4i83b8GD35LWSrAGlfSJP6aCOMZ6RBlXolkAzamFDk173rb4oTUpLMmxGRDg==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(52116014)(366016)(18002099003)(56012099003)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?GkioOCl1ZEdmX+HxWDA9/12oij0y2oTPu3R2v3/26I1uKSElH4eGj9DuKqOw?=
- =?us-ascii?Q?COSHv5rJLVxqRh25FdS9KCKNlWhxEO0cq2Ig4fJJegtRmPxvBikJlXuOETE1?=
- =?us-ascii?Q?49Sa8zo/lf2Wv94jyeF+R6ObWvh43Hqg8tL3zeHNbe/k2f7NSmzRVeBdy/zJ?=
- =?us-ascii?Q?4y8R0O7eGFJyM3AV6/wLELZHMxKfyeuLt54lafsKC4uQBvtsJEOJFHyNICFS?=
- =?us-ascii?Q?cPH1P4WfhcJSXO5+XI8XQ32dpBPd65FUydQnMfPazb8RQfu94KTYuemI0XCh?=
- =?us-ascii?Q?lgPcoXw2rZIamoh8agG1jpu3kMhsWMeimmUTJRj61WhnssxhxJDEEHbylQTg?=
- =?us-ascii?Q?0JpkzEltH/Mg/8qyQCqidR4mXwKqAoiuYkxA1EsCNAembi5sSFLuqnU9y8PY?=
- =?us-ascii?Q?TZzbFFl0yiUIoBcLgoq2N/irSYlz1wEeY2am/d05+mBF/uNJo983Qzz2yOQF?=
- =?us-ascii?Q?aQjpa3s3zkACW9mcJTY0vdg6fBjmtjE+N4+QPWlNfmn+YyY1fng8v5rPkXD5?=
- =?us-ascii?Q?VxzFcZRaZr/D/JGqe+WVPeqqcljoEZ5NYg77W8EVcYL1SepmuBEYWIZiB0t1?=
- =?us-ascii?Q?zYIKXweSKuK0GyyyYVnSuVR6z/s+WxztZdwIJYT+QuSGFQ1i8XgMVh+6pbck?=
- =?us-ascii?Q?BU/QZw68bE+p4w2moJsmQldysylZNq8/4q+7RGeIVRjQp1sHf/Pi+xImKqrB?=
- =?us-ascii?Q?KsslZM6AsDJMuKtOH2NBKiMAajNX2BqCWU4xWnhULQCJ/alh5rgHP5AtXonV?=
- =?us-ascii?Q?jaiWreK3ZFkzYk5jpmJWXGtbkD5PYbV7D8dC60SEzs1UGKaFoOahV722Fj9V?=
- =?us-ascii?Q?YwOg6awTkRl3svRadc3Bnsr+CnTAQlxacdTCs31mvUQtB+XtFSp6PDoqabrd?=
- =?us-ascii?Q?1foLR2qpuvjM5/UkYsA6a5d8+6Nf8PVNe8znEO1YT2N+7BM+UWnxMKkUwboz?=
- =?us-ascii?Q?KMxim5W2J3hPpHIWN9UAfXhQ3u05zareZHZ6zTBzOVa85aYRyd85vg2y+lDO?=
- =?us-ascii?Q?HQAj81HNmWpFy2CRjMOhAP8976tykv9tuXnq5rh6xZCwVZJf9sMiN92IR8tn?=
- =?us-ascii?Q?YQK/lCS9Kiu1ch3zz6Pw/2sFeAsEVcDZ8H+BHN2g5o31NcLUzSB02UAyE7tA?=
- =?us-ascii?Q?t1bgKpYP4Alpiq/ZNX/z236o4tUzDrhZ2lnJToYylA0Ri6aETrqodfwUgqmM?=
- =?us-ascii?Q?nRqWajjRLPOY1yjophdXqF49Rk76A+xAjStxO7NRFENS62mbMLj7jvNQEVri?=
- =?us-ascii?Q?wEFv5mJRwAOYY0GlE8s41LOneQPtJDVM7guuMR9rPSgqt4KsA6+XjXUmMlb+?=
- =?us-ascii?Q?/SSteib56LxlUGjpogxLceBaupV26YLmh4OBqgDEtLY9jiFFM9LRbnvMLBsX?=
- =?us-ascii?Q?xFdkMXJJxvQXGdFYkFQXxOf2/E7f3fnPXAETmB78s9Ad5DRsNVey7+DJ4hRB?=
- =?us-ascii?Q?iEyHAxEAWv71QflUVd8nxvIs2CcRP0IoHSKqKZE608nEwpa4xZ1IU4arXoL5?=
- =?us-ascii?Q?tl63i/LWcv9nbObYl+HnoEZPs7PeuhqGh1zXDAZBHIMds3iTQDVHnu8gWZKQ?=
- =?us-ascii?Q?H/RT/viNTYcBjUfLVxk9BMowQw+CuLD/+Kzj8bzWf/XesrQLG46xKoEbniMj?=
- =?us-ascii?Q?f6lTriwywQJWu8TBxB28PspiDxJzWCKEzhMxBOLEnKg9xsFkV+MWXtrc/M+8?=
- =?us-ascii?Q?BaJtqTpKEbY4KfW1v9Jq8P3eF1C+ccI/oJtBwJ6KaodZNsVNWsLdzYJQ+3Ro?=
- =?us-ascii?Q?9ziKI2iQvRdWaQHJY830q7d/hZuzUqA=3D?=
-X-OriginatorOrg: prevas.dk
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c057ffb-e2eb-47bf-718b-08dea9b60430
-X-MS-Exchange-CrossTenant-AuthSource: AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 May 2026 08:20:35.8143
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: d350cf71-778d-4780-88f5-071a4cb1ed61
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XISmXpEdh+flqeNbCDsg3VVww7WaDH9fQWAPVSuPVmYCdZhP7rJN1naVysa6et1YX8B77jvPAaXrRHNLN7glxc/+YsFEGOTAQu5zeLAUtqs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR10MB6909
+X-ThreadId: AHDyktfZDWSB
+Date: Mon, 04 May 2026 10:55:16 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Ramsay Jones" <ramsay@ramsayjones.plus.com>
+Cc: "GIT Mailing-list" <git@vger.kernel.org>
+Message-Id: <592c01fd-1e1b-4850-adf1-77fffdf71321@app.fastmail.com>
+In-Reply-To: <xmqqv7d4ou3m.fsf@gitster.g>
+References: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
+ <xmqqv7d4ou3m.fsf@gitster.g>
+Subject: Re: [PATCH] name-rev: fix an 'may be used uninitialized' error
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi
+Hi Junio
 
-We have now seen this error a couple of times in our CI, and this time I
-managed to grab a snapshot of the local mirror for which it fails. The
-failing command is
+On Mon, May 4, 2026, at 03:13, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>
+>> Today's seen branch fails to build (with DEVELOPER=3D1), like so:
+>>
+>>       CC builtin/name-rev.o
+>>   builtin/name-rev.c: In function =E2=80=98cmd_format_rev=E2=80=99:
+>>   builtin/name-rev.c:885:28: error: =E2=80=98commit=E2=80=99 may be u=
+sed uninitialized [-Werror=3Dmaybe-uninitialized]
+>>     885 |                         if (!commit) {
+>>         |                            ^
+>>   builtin/name-rev.c:867:40: note: =E2=80=98commit=E2=80=99 was decla=
+red here
+>>     867 |                         struct commit *commit;
+>>         |                                        ^~~~~~
+>>   cc1: all warnings being treated as errors
+>>   make: *** [Makefile:2932: builtin/name-rev.o] Error 1
+>> ...
+>> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+>> index b941e93834..5b7f7a00e5 100644
+>> --- a/builtin/name-rev.c
+>> +++ b/builtin/name-rev.c
+>> @@ -882,6 +882,8 @@ int cmd_format_rev(int argc,
+>>  			peeled =3D deref_tag(the_repository, object, scratch_buf.buf, 0);
+>>  			if (peeled && peeled->type =3D=3D OBJ_COMMIT)
+>>  				commit =3D (struct commit *)peeled;
+>> +			else
+>> +				commit =3D NULL;
+>>  			if (!commit) {
+>>  				fprintf(stderr, "Could not get commit for %s. Skipping.\n",
+>>  					*argv);
+>
+> Why not
+>
+> 			if (peeled && peeled->type =3D=3D OBJ_COMMIT) {
+> 				commit =3D (struct commit *)peeled;
+> 			} else {
+> 				fprintf(stderr, "... skipping ...");
+> 				continue;
+> 			}
+>
+> 			get_format_rev(commit, &format_pp, &scratch);
+>
+> or even
+>
+> 			if (!peeled || peeled->type !=3D OBJ_COMMIT) {
+> 				fprintf(stderr, "... skipping ...");
+> 				continue;
+> 			}
+>
+> 			get_format_rev((struct commit *)peeled->type,
+> 					&format_pp, &scratch);
+>
+> and dropping the variable "struct commit *commit" altogether?
 
-  git clone --verbose --depth=20 --branch=whinlatter --reference-if-able=/yocto/meta-mirrors/core --dissociate https://git.openembedded.org/openembedded-core core
-  Cloning into 'core'...
-  POST git-upload-pack (388 bytes)
-  POST git-upload-pack (986 bytes)
-  POST git-upload-pack (gzip 1836 to 958 bytes)
-  fatal: unable to parse commit 8751ec83421192fc0f8495fb95798f9eb7be77a0
-  warning: Clone succeeded, but checkout failed.
-  You can inspect what was checked out with 'git status'
-  and retry with 'git restore --source=HEAD :/'
+I see that you added this as one of two =E2=80=9CSQUASH???=E2=80=9D comm=
+its on your
+kh/name-rev-custom-format branch. I will squash both of them in for the
+next round.
 
-I wrapped up that local copy /yocto/meta-mirrors/core in a tarball, but
-it's ~200M, and I don't know another way of reproducing. I also don't
-have a better way of sharing such a file than [1], apologies.
-
-Using that repository as both the remote url to clone and the local
-reference, I can consistently reproduce the problem. That is:
-
-  cd /tmp
-  # fetch that core.tar.gz
-  mkdir upstream-core local-core
-  tar -xf core.tar.gz -C upstream-core/
-  tar -xf core.tar.gz -C local-core/
-  git clone --verbose --branch=whinlatter --reference-if-able=/tmp/local-core --dissociate --depth=20 file:///tmp/upstream-core core
-
-fails in the same way, with both git 2.47.3 (Debian trixie) and 2.53.0
-(Arch). Removing --depth=20 doesn't change anything, neither does
-removing --branch=whinlatter (except of course for the commit it tries
-to check out). But dropping --dissociate, the clone works as expected.
-
-It doesn't happen very often, the last time was around January 30, where
-it was for another repository
-(https://github.com/openembedded/meta-openembedded.git), but exactly the
-same symptoms, so about 100 nightly pipelines ago.
-
-Are we using --dissociate wrongly, or are we perhaps not maintaining
-those local mirror repos properly? They are essentially just created
-with 'git clone --mirror', with 'git remote update' run periodically.
-
-Naively, I'd expect the effects of --dissociate to only happen after
-everything else the clone command does has been done, but it seems that
-the ties to the reference repo are cut too soon.
-
-Rasmus
-
-[1] https://prevasonline-my.sharepoint.com/:u:/g/personal/rasmus_villemoes_prevas_dk/IQCRaxpwj5NfQYZNQJWc9PJTAY0C33XvXn8CnqPEdPAbpDA?e=zQAfg7
+Thanks to both of you.
