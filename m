@@ -1,155 +1,65 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from outbound.ms.icloud.com (p-west3-cluster5-host4-snip4-2.eps.apple.com [57.103.72.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08B234AB19
-	for <git@vger.kernel.org>; Mon,  4 May 2026 08:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93756318EEE
+	for <git@vger.kernel.org>; Mon,  4 May 2026 09:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.72.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777884939; cv=none; b=A54ZCgZfFpb9SISUD1euvfoq3L0EY6goKDkytmsLBVD+L7qKEbAwXfT5nm4jZHCNSGBaPjsx1fSSpXSUHixHE6OAwccP9n+VLEO6v8urmF6p/OqBjXGst+PsQWSwRbEoiHrDMl0jY2zScFRcKxzFkQ6+MivGuKe8ALv74ZaeKgc=
+	t=1777887427; cv=none; b=OvUmo9nn5JY6V9pzq0HASE5+j+9AfMXYBHxVDMvwwlL4EnEoseoLbes8Cc/72dSzUbdvl1ReGe9lmO2dG2z52689lwmD4vLQ7M6sY7/yULPO4NUEdX+uhYRp9jK7BBGD2iARFOisfBcoZ6lX9zFByQJWz7IeM8BWSNY/oKqG9s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777884939; c=relaxed/simple;
-	bh=HbPNXHb5FsmUn9X9B9NoQ2rTmYjKJEF+/pCuRTGpBGM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=h8KHp+QOwtGhwR8ZHO1GLhN3ygALOb3+mjNOnmlfgsGqmrlq/wmG5byIxe2m2cBdv/Fkrw+bH1oK1t4GjQmlB1pHApkCNMVgoCrqY7O5lJuqHG32SMsXzk7D2ml2yHU+frM9M7hwbVylhollzG7xf5BADTPzoUyxYPzy8GkK/lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lujmAtDa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jka5HB0Q; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1777887427; c=relaxed/simple;
+	bh=ql5RwT+JTzFzgB9/bMuWMcNQpHfVJuXg7ahkCPwk4vw=;
+	h=Content-Type:From:Mime-Version:Subject:Message-Id:References:
+	 In-Reply-To:To:Date; b=KLFWfbAgc0icg2R9tH5iI8+1I6OanqO52g/ZME5RvlxChHX0ZhWYmtj3HSDkT1d5m4onJHX3M4k45Mt6esNL4Zrz+UMv/173uTjafJrutpAL62NdNZNxzGVy0Z/ns/GVhBeJ5S8a0je9/rxu0aM39417xLtiwamXwZpBYrLSq/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=N1g0tMcp; arc=none smtp.client-ip=57.103.72.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lujmAtDa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jka5HB0Q"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 201127A00D3;
-	Mon,  4 May 2026 04:55:36 -0400 (EDT)
-Received: from phl-imap-14 ([10.202.2.87])
-  by phl-compute-06.internal (MEProxy); Mon, 04 May 2026 04:55:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1777884936;
-	 x=1777971336; bh=m+RAn4YcB67ApscuBqT1OwU7pS9snK7xDS1UGZIcd3I=; b=
-	lujmAtDaKymmCnAdLcmksv3u4KZ6trnnYQcODAC6PB+itAS6NPPGkEFpRvGwfAZt
-	kQI4MO6mSzjKDcZZMXi3h/9Zcx48UpkpMXd8Z8wNCl2iQfkNPv5cGN8dgxKnkXt1
-	k3izGlWvQ2jzE6gpXPGZch+6/T8Hrxa4HNzM2WCYZCD2u3fFK990sRjKGH1RYxQK
-	G4NPnQmTOSPmbZPTwruRUdA4DqyVg4tqv+GfVjWSo8AYU7VaFpr65J6bDhJ+lWLt
-	GXh/5/A7UnqEOqXJwbwRoRf3JysMKsLuZttZXmwjhRyPotOgU+TR8/24KPhVUpO5
-	0+B+6fw8Y+teJfKStVd+FA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777884936; x=
-	1777971336; bh=m+RAn4YcB67ApscuBqT1OwU7pS9snK7xDS1UGZIcd3I=; b=J
-	ka5HB0QdB/UN7JIvp8I0JQ6Usy4d7BZL1M/+w6yfiLdD0axIzp9Fey6L1iOWN4FZ
-	5KSWxqbE0VRft9WgjH42r+1u/izeTgo7Rrn3xhJ5OW7F5UbOFyqOqry/F/bC7e22
-	7KlhMFOCm64qTP687DkFRHt2aLsr3EFRh9FDCMmJzM/4qSxF0u240FbUCkYF0l9m
-	llQ7NIYTf3q1Sccildfmwfh8cZhZPEmVzIgukd/60rIemQkHqUc9eKa47c2wjxZc
-	gO1pXo3JAZE3YGg3y11cD9o21p/A8HLbLSyx60jIXiY5oJ7c2ovB2qAzAl7pKDQz
-	NX3xSPwXV9wsqJjV2Bo1Q==
-X-ME-Sender: <xms:CF_4aZ_psRSqPQ-IQwgrNY3-YWoe6cLbMwhFijdbf8NI-Bew8XMZ54k>
-    <xme:CF_4aYgmyMMoei91Rzl4778_X_CzHN4uM-Y2ZMMmjywgW4nPhp8mWYQwqXqM4_Z_i
-    i8F57lZL57TJsrzYcgdL4RBeokwjnDXsGNmChQTGTZm58Ar5yQaiA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelkeegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:CF_4aVibaytnL0goTH-NImqzbWVtrFa2WOTmkzbK-St_uhLo6wH7kw>
-    <xmx:CF_4aaK1E7q_UK-psCBnjqau_LiWrTcKycV4oy_0WSUG73ba-ZPYPQ>
-    <xmx:CF_4adDrvkrNy7__wvZ1FAZSsKa7ewdxJcpDPlMG8bUUghuP0Xjy9Q>
-    <xmx:CF_4aSgIFoJ97-NxVFNQy_8TyTkxrPOGkxZetAuqdmEUGECb5FMAww>
-    <xmx:CF_4acNLRmU9F4Ywt71BMxXgLlPMoaN-Y_zVnJubikz4hNsHT1FwFkmu>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6BBA5C4006F; Mon,  4 May 2026 04:55:36 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="N1g0tMcp"
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPS id 2DA6A1800103;
+	Mon, 04 May 2026 09:37:03 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQpOHV4ARQBADVYCWwZLVxQEGVsUVlsCQAk4Wg5bBEcUFxtcABcNVk1YEEoMB1sCQHkRUAFYHlZeWhdeTUUID0IZEFYBWFZdBU0aXBhZDxwdSlZaDlsERxQXG1wAFxtGAgQjAl8ARQJeCVYBMBcPVk1QG18CQg8cE1YVEwBeDw9MAUoEWnFeC0gUSQFac0YGRgtBHlRyKnddCjoDKQFSAjINSgNUdwJRHFYNV0NUBF9OGQxKHVJWWxNVF0YJ
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1777887425; x=1780479425; bh=ql5RwT+JTzFzgB9/bMuWMcNQpHfVJuXg7ahkCPwk4vw=; h=Content-Type:From:Mime-Version:Subject:Message-Id:To:Date:x-icloud-hme; b=N1g0tMcpRihi3ZKM5Q626/j2a0vQ8itByiFvhJwMGcSsL4bEUXi29iEBmAdsTXesPZzOskkMR6ew9FbJL9VYzGiSs1gqnFi/+ZvGMaPDTGZO3khRzyfG7dzyf22j5EzVjCeVAf+cDvKi/MZIjBEZLdn59rIIXbYenf2vaH/mOcaoSWHRNosTkKDSAvuOPV+m5t92WuTS1QPLUO4uQz+1BuhlCx8hwsdejglEpcDcz4NffGuHpLu2f1Q93W5CYoGF6O9cuP2qJQOkeWurx4WIvdmZ3CliKLQox5aKB/J3qatEOhIWO5Fe7NM+1UqNP7UZg4Upj8ushjrWML+z0S//MA==
+Received: from smtpclient.apple (unknown [17.57.154.37])
+	by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPSA id 91F3D18000B5;
+	Mon, 04 May 2026 09:37:02 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Aa Kk <ahya0000@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: AHDyktfZDWSB
-Date: Mon, 04 May 2026 10:55:16 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Ramsay Jones" <ramsay@ramsayjones.plus.com>
-Cc: "GIT Mailing-list" <git@vger.kernel.org>
-Message-Id: <592c01fd-1e1b-4850-adf1-77fffdf71321@app.fastmail.com>
-In-Reply-To: <xmqqv7d4ou3m.fsf@gitster.g>
-References: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
- <xmqqv7d4ou3m.fsf@gitster.g>
-Subject: Re: [PATCH] name-rev: fix an 'may be used uninitialized' error
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: 10.26
+Message-Id: <8277F598-127D-4629-9EAE-3B0D690B4209@icloud.com>
+References: <4160301E-113E-4F4D-A0F4-C9D1847C1057@icloud.com>
+In-Reply-To: <4160301E-113E-4F4D-A0F4-C9D1847C1057@icloud.com>
+To: git@vger.kernel.org
+Date: Mon, 4 May 2026 16:36:59 +0700
+X-Mailer: iPhone Mail (23E246)
+X-Authority-Info-Out: v=2.4 cv=P5k3RyAu c=1 sm=1 tr=0 ts=69f868c0
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=x7bEGLp0ZPQA:10 a=SLUWHT11B0QA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=v3ZZPjhaAAAA:8 a=OFRuYd6BbWmtacfeY3oA:9
+ a=QEXdDO2ut3YA:10 a=l7XeHLoSm2AA:10
+X-Proofpoint-ORIG-GUID: UK_XITBD46sYiB53XRJpLrMxxocnTeH4
+X-Proofpoint-GUID: UK_XITBD46sYiB53XRJpLrMxxocnTeH4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDEwMiBTYWx0ZWRfXwzDZBM74Ld61
+ Gp+pOTxc8UVOkO9KQtv/qjwOawgSoBxrb8DBGRPEYagSxW+c0QvvxbL0DwOOyKy9FlSXhHLH120
+ yh4g5cMxl7w5qnH28sukZmX04tt0hId7fEPrkzp6NPNFNYamEC/s3SIeP1SwwNLwiLl4bqxe3aa
+ lS4tVTG08p/5VclnNuc6tASLLNSq+Sg1ThSZdf2TA+l9EwWbeKpgnsycWIAhX/nAk3G6IopqxfQ
+ 54dSXAwVro+LBmLURBxEDoKhjGlLN0DuZzu6ZtMDaMLM6wFBTA1PNnn16Uini3gip+mcuCuNTOw
+ a1aD6PxasaySZTDbdhw0O1RpQ/ppM60SKKNuyX6d1s0FhIXaW3fQeX1vo7Xo8E=
 
-Hi Junio
+524152
+Sent from my iPhone
 
-On Mon, May 4, 2026, at 03:13, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->
->> Today's seen branch fails to build (with DEVELOPER=3D1), like so:
->>
->>       CC builtin/name-rev.o
->>   builtin/name-rev.c: In function =E2=80=98cmd_format_rev=E2=80=99:
->>   builtin/name-rev.c:885:28: error: =E2=80=98commit=E2=80=99 may be u=
-sed uninitialized [-Werror=3Dmaybe-uninitialized]
->>     885 |                         if (!commit) {
->>         |                            ^
->>   builtin/name-rev.c:867:40: note: =E2=80=98commit=E2=80=99 was decla=
-red here
->>     867 |                         struct commit *commit;
->>         |                                        ^~~~~~
->>   cc1: all warnings being treated as errors
->>   make: *** [Makefile:2932: builtin/name-rev.o] Error 1
->> ...
->> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
->> index b941e93834..5b7f7a00e5 100644
->> --- a/builtin/name-rev.c
->> +++ b/builtin/name-rev.c
->> @@ -882,6 +882,8 @@ int cmd_format_rev(int argc,
->>  			peeled =3D deref_tag(the_repository, object, scratch_buf.buf, 0);
->>  			if (peeled && peeled->type =3D=3D OBJ_COMMIT)
->>  				commit =3D (struct commit *)peeled;
->> +			else
->> +				commit =3D NULL;
->>  			if (!commit) {
->>  				fprintf(stderr, "Could not get commit for %s. Skipping.\n",
->>  					*argv);
->
-> Why not
->
-> 			if (peeled && peeled->type =3D=3D OBJ_COMMIT) {
-> 				commit =3D (struct commit *)peeled;
-> 			} else {
-> 				fprintf(stderr, "... skipping ...");
-> 				continue;
-> 			}
->
-> 			get_format_rev(commit, &format_pp, &scratch);
->
-> or even
->
-> 			if (!peeled || peeled->type !=3D OBJ_COMMIT) {
-> 				fprintf(stderr, "... skipping ...");
-> 				continue;
-> 			}
->
-> 			get_format_rev((struct commit *)peeled->type,
-> 					&format_pp, &scratch);
->
-> and dropping the variable "struct commit *commit" altogether?
 
-I see that you added this as one of two =E2=80=9CSQUASH???=E2=80=9D comm=
-its on your
-kh/name-rev-custom-format branch. I will squash both of them in for the
-next round.
-
-Thanks to both of you.
+> On 4 May 2569 BE, at 12:05=E2=80=AFAM, Aa Kk <ahya0000@icloud.com> wrote:
+>=20
+> =EF=BB=BF
+> Sent from my iPhone
+>=20
