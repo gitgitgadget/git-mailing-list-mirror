@@ -1,136 +1,149 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0DD19CC0C
-	for <git@vger.kernel.org>; Mon,  4 May 2026 20:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777926575; cv=none; b=BLYcbRmpFq9Tlk0bOUeve2oOE5RgRmx2hBLCGJuGCq1Ffsutjp9fFNW/rwPi6dbsx+YcSTRvkSS0DOXApdhfqNC+KRUJhjDqCgk4HJ+p2AdSAwLuJ9IyxqxZGe1NYgCqZc9H9+rhb8wGPB5Cldvyk51nvVH9XFxkiEy1q8X43kU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777926575; c=relaxed/simple;
-	bh=lnWE8KEqdoOQsRR6QX7LVQR3+bCx2rUpRTd1IzcUQO8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GWab7yj5/C5cJAA2esL35lA2xhDHaROlyjih3szE7DBoGQGLnx3CO8oI1IL4dxBy6oHw4KxfI9QtMkFyLyaCJxTHGWNA41wDJjXZOg6uIWx0ZmvccRN3xNi6fHeLR3yOKr4D965lHfnwanwrG7yqkD5PWiHx7kjIK2qVfdkAKj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Pv7VPzCo; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FFF33ADA8
+	for <git@vger.kernel.org>; Mon,  4 May 2026 21:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777928419; cv=pass; b=Uy4OBHFQbapPaehsRU8sHuqf8NNWodLimTACKHAcww60Mpk77/2eEiBNorq23XNa6wKZxSG6AIB9/bknr3uIjK0uilEnSsRPrITcAKxP4G5SL4oLfC1Nd1Z67uj1uA2wCC5ZVs0MS7BFSJvHnojb0W07rRdARpYMooYT6cNcegs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777928419; c=relaxed/simple;
+	bh=2ihiopl+B+V35y5QSSHLta+fkgvSqs61d349pWCI9WE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=K7ejuGofzfRfAJDe6ArMieLZkQUVbXxkArxywW03U9Rn1NG3odRgxyCnResi0HHAeb7iU98Ky1MyIO1hVir/fRcXF8mH0BlrVqstNnfYgrPPCSeiSd4W1p0c+87LN8iqYOdv4yY/3hD6h3u/swhP5BhH9kAWLqhtSU4b1XBWZKs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jre/sDg4; arc=pass smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Pv7VPzCo"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id JzrxwB5z1WlIOJzrzwQeyY; Mon, 04 May 2026 21:26:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1777926383; bh=CCTN9xrLuBxFz0FentetCL3Gq4+Vz3aUdayzApQSLDA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Pv7VPzCoi566p1DSdSJDQ+omZqv/euC82DhSEVwqAHTJSnGiP4D5AnDiMPU0bY7AQ
-	 fZL2NC4B1j8diD+cTCNypp5DcKuL1fpX6MZ3fTC6lnnge0alaf0fy35CxMINOXX6Q7
-	 wyC4hDMAGVz6x55CAUIxZLvSXZDKAOMhTxiQsYFVftyBnIQ5QtikXxoW2rnnAx4LeA
-	 qrvPeC0vIKSvepA2qnF2hoA2oz3eqBzyLqe5hmu1+pcBG2EalZWKCc4RPT+9UAo3m4
-	 IeJLUUE6fX7YzdvBted9pbGHauk8pvna6o/50iSUhmSdZH2dKLvYawFAWjSk1SH3PX
-	 8XhtDiwMeSDXA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=atcRCjZV c=1 sm=1 tr=0 ts=69f900ef
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=pko6VkqtiMf1LGvLsy0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <b04e98e3-0840-456d-a627-351f2378c037@ramsayjones.plus.com>
-Date: Mon, 4 May 2026 21:26:21 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jre/sDg4"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8a016799d2cso49238306d6.1
+        for <git@vger.kernel.org>; Mon, 04 May 2026 14:00:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777928417; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WLas//524belKDNBOIqfBB8PIdst8zXNBYYz1EkzMCeTSkI82CVsu0ewBiRJP6ohBt
+         ib56A9nLqYvVjjW5EwshxMC4QuuVv5J3QzuxyKAYU/7zFrciOvyRVAkFux62aSarR/m+
+         eABzP7P6p+bmYwMyhd24d7+8hIGhbCizmQfS+orHJS3JtULT+gRWMmx2g13k+zNHy02Y
+         SGEAl0NTo7nqJiaoP1S/6KeERCdSkwPpFmfGnr3uKL47/yK7HmpnNXgIsfJPIKRxXxv/
+         V95HBJmUj+AgvaoRy8SzRjAAFAE5JlJqu0dq89hDRNa/CW1A/HYudvNvLy+3VM/WRNzb
+         wnAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BUmF29nanXdPaCmttXk5RUoDOvrs+woOXNCNAxOuN7Y=;
+        fh=EHvOgDoo4BTgKlf4s0fC3udO+Ig8fiMLUux1RABGpqI=;
+        b=haM3XMLp6TTdQL/6ah8ab1+spIMIE7+pdEX0a89Lh7I/SJrN4hgPxycyIanc06WXt0
+         GrlN7OMSuT/XJ0kI2Q8F8tt1vH8EETh+hqhfI4SnV1pymACbDyxma0vXkiHrwDIFCJY2
+         M5qD5++mBV6MTmI7Y2fEPU1XuGGcWjZhpi43S2zi5+BTXMmrJn0YQukyuLbp8wqc3ccx
+         ON0/apZN5ZW4r6ie7fpVm4i0KbRMilTR6AStpTV1fbeeoOR2bhp5PvKskkwvrcxHbKD3
+         OOmHmbqIA27CurAiwbZ0DbEpRxiERd2I1dZoey4qRKl0Vpd869pN4ARVZjmHVimLMl1y
+         /glA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777928417; x=1778533217; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BUmF29nanXdPaCmttXk5RUoDOvrs+woOXNCNAxOuN7Y=;
+        b=Jre/sDg47T2MLEIqpv77m6fXVp+qam4GXaezjwkdtqNRdfHnRjtWlxmQ8RNl2xim7I
+         L2UWgR62bXFHAFDDrb1CrjKF4abJgAeVeWH6qUnDYXHA+KrhnOZO9IDqmD7T3qLv37tQ
+         53YklJCdubejwaTlwHJflFQV4ZMKTWETRa7YlPUAmG0LYtaQLxe7bOHhza14B+004LWD
+         aeJW3fQfC+avaH5tKIiy+MX5UnfRwMgzmjnOnloDqf0gEb0FjaXn3fkz2gBnKFMrgOvt
+         vWiJsAh7rXfI0CF0fFmsk0vgx8tggj2YJHnEKCCVphMUDfZcv1GRsJefmHZSB9fEhFeL
+         BCjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777928417; x=1778533217;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BUmF29nanXdPaCmttXk5RUoDOvrs+woOXNCNAxOuN7Y=;
+        b=OfAiPhDje9T1rAY99frGdG1oq9NJSEOK+gNqr7UFXLMsbc1q31MqU9fLATBshTJPQn
+         UYiNNrt1SRfnKKth/MEbjoDQj9u5QKju5vajWQRkU/mkfcYtG5Ni6Xa4Xpl79OPuk7bh
+         CCzJFC02bJtw9EnhHFqQf43xc+7tO7dXsjEMX/gQIMR/mnONAN/6nhU6XOGJawlVDI8p
+         WNaBceScS4oZDEDSB+CUxtAv/QqikUn7FpA7BpdIPYuasPg5+y5Xt6KDvXjOKK7Nv4Av
+         JZ6rez/FqyaRHZy+4MKxcvYMtyoTEJw047sUgQIKtkJHOL+ZCPB1y6Ger+8npe1xiWNv
+         w/yA==
+X-Forwarded-Encrypted: i=1; AFNElJ848cIXEWFXR/3MdiF/nW69yVoj7dUgj4SiSJma0SLEYsv7QK/t48PVuLK1I9cMnUj6OYo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz93hARrE/Ppj0dWC2KxQLDdfkSntIdBJVGVsnbUpYeXEXPXToi
+	0YTFggQknEnYH5aerVgL0qBfqR9R/SSbblwCtDQLqjxYkDI+daJ93yPWkSxHsrPJMcC8PKcF22Z
+	onv7AkU/s+WVLtuU9pyB6X7WEe7io9pY=
+X-Gm-Gg: AeBDievJQkkudmnJ++72oihVfaozjquiI/DCt7vqeqyEg0rSRqTlxpnRyw7y1CWotQV
+	lMm4uSaT2fL0G1VE/Tnpj5v+LvqgO30lDSbkFqaIQPVdImHefTzi2ebbcIMsDr7JhGL07sKC90R
+	WTZmQhmMtL8kbJifVwXBjjX7LCYxWQWM+OV+R+1PIcQee0Za9VrgiJtUaqAm+oONsFGpTwLIkBV
+	3mm+vGGJxgYqHMcBxifpnEWelk+FS1Nr0baYTri/0DO9Jz5HX1AaqLSmKLyWIrW/PcJU1tzD6Nc
+	WqVG7QCxBI90ChStZb2Nik5l+xsa
+X-Received: by 2002:a05:6214:3212:b0:8ac:aaac:4034 with SMTP id
+ 6a1803df08f44-8b667e6dea2mr198145536d6.29.1777928416984; Mon, 04 May 2026
+ 14:00:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] name-rev: fix an 'may be used uninitialized' error
+References: <pull.2284.git.git.1777578903593.gitgitgadget@gmail.com> <xmqqmryfpxpg.fsf@gitster.g>
+In-Reply-To: <xmqqmryfpxpg.fsf@gitster.g>
+From: Andrey Zarubin <zarandr@gmail.com>
+Date: Tue, 5 May 2026 00:00:06 +0300
+X-Gm-Features: AVHnY4L7DQRuO18xIbbgADzAfG0YwjNwKvenpotpt6ooXngdH2Uxe9cIvzR5rzA
+Message-ID: <CAHGMpHAeSQ7xfm5AcfPNAEkuFwhfbwbU9dNgX1vk5qhC++1eFA@mail.gmail.com>
+Subject: Re: [PATCH] pretty: add diff-stat log placeholders
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
- GIT Mailing-list <git@vger.kernel.org>
-References: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
- <xmqqv7d4ou3m.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqv7d4ou3m.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfGse6yfUR0ZFJUnT0oqfAycIGmuVFhFKaqSwgBc/CeLzSospcj3QvuqDY+T8sNBe3EtCfn4Arl1irJnyubQCM7LoQbNsOG/c7PCpy9mVP03v4pfWaMka
- S8v6BI9fzAHJHHAzvaZUWpVLrnPM06xE14KGhiqPeg3RTI5sgUSmttdfRO6z3i+zOEzIu7k4T6Eg25vFtalE+PLOoGL8XPkHGXQ=
+Cc: Andrey Zarubin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, May 4, 2026 at 8:09=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> "Andrey Zarubin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Andrey Zarubin <zarandr@gmail.com>
+> >
+> > Currently, users who want per-commit line/file change counts in
+> > a custom log format must post-process `git log --shortstat`
+> > output because the pretty formatter exposes no equivalent
+> > placeholders.
+> >
+> > Introduce `%(diff-stat:files)`, `%(diff-stat:insertions)`,
+> > `%(diff-stat:deletions)`, and `%(diff-stat:lines)`, computed
+> > from the same diffstat machinery as `--shortstat` and cached
+> > once per commit during format expansion.
+> >
+> > Short aliases are provided as `%aF`, `%aA`, and `%aR`. The
+> > requested `%aI` and `%aD` forms are unavailable because those
+> > names already expand to author dates, so use additions/removals
+> > mnemonics instead.
+> >
+> > When log output is already walking a diff, the formatter reuses
+> > the current diff queue. Otherwise it computes a private summary
+> > lazily, so formats without these placeholders still pay no diff
+> > cost.
+> >
+> > Signed-off-by: Andrey Zarubin <zarandr@gmail.com>
+> > ---
+> >     pretty: add diff-stat log placeholders
+>
+> Personally I find this a bit on the other side of the line between
+> sensible and insanity.  Will we next be adding a new placeholder to
+> show the summary (i.e. list of created, deleted, and renamed paths)
+> and another placeholder to show the entire patch text?
 
+I see the concern, and I agree that placeholders for `--summary` or
+full patch text would cross that line.
 
-On 04/05/2026 2:13 am, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> Today's seen branch fails to build (with DEVELOPER=1), like so:
->>
->>       CC builtin/name-rev.o
->>   builtin/name-rev.c: In function ‘cmd_format_rev’:
->>   builtin/name-rev.c:885:28: error: ‘commit’ may be used uninitialized [-Werror=maybe-uninitialized]
->>     885 |                         if (!commit) {
->>         |                            ^
->>   builtin/name-rev.c:867:40: note: ‘commit’ was declared here
->>     867 |                         struct commit *commit;
->>         |                                        ^~~~~~
->>   cc1: all warnings being treated as errors
->>   make: *** [Makefile:2932: builtin/name-rev.o] Error 1
->> ...
->> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
->> index b941e93834..5b7f7a00e5 100644
->> --- a/builtin/name-rev.c
->> +++ b/builtin/name-rev.c
->> @@ -882,6 +882,8 @@ int cmd_format_rev(int argc,
->>  			peeled = deref_tag(the_repository, object, scratch_buf.buf, 0);
->>  			if (peeled && peeled->type == OBJ_COMMIT)
->>  				commit = (struct commit *)peeled;
->> +			else
->> +				commit = NULL;
->>  			if (!commit) {
->>  				fprintf(stderr, "Could not get commit for %s. Skipping.\n",
->>  					*argv);
-> 
-> Why not
+The distinction I had in mind is that these are bounded scalar values,
+not diff output. They are the same three counters already produced by
+`--shortstat`, and the main use case is one-line structured log output
+where today callers have to run `git log --shortstat` and parse/correlate
+the human-oriented output after the fact.
 
-Heh, you noticed that I spent all of a few seconds writing this patch, just to get
-the branch to build, as I was in a rush to go out. I wasn't quick enough anyway, so
-I didn't send it until the next day. But, as I said in the patch, I wasn't pushing
-this patch as _the_ fix ...
+Path summaries and patch text are qualitatively different: they are
+multi-line, formatting-heavy, affected by quoting/color/output choices,
+and would effectively embed diff output inside the pretty formatter. I
+would not want this change to imply support for that direction.
 
-> 
-> 			if (peeled && peeled->type == OBJ_COMMIT) {
-> 				commit = (struct commit *)peeled;
-> 			} else {
-> 				fprintf(stderr, "... skipping ...");
-> 				continue;
-> 			}
-> 
-> 			get_format_rev(commit, &format_pp, &scratch);
-> 
-> or even
-> 
-> 			if (!peeled || peeled->type != OBJ_COMMIT) {
-> 				fprintf(stderr, "... skipping ...");
-> 				continue;
-> 			}
-> 
-> 			get_format_rev((struct commit *)peeled->type,
-> 					&format_pp, &scratch);
-> 
-> and dropping the variable "struct commit *commit" altogether?
-
-Having now spent some time (well at least 30 seconds :) ) looking at the
-surrounding code, then your final suggestion looks really good to me! ;)
-
-However, these 'maybe-uninitialized' errors (historically have been) somewhat
-sensitive to the level of optimization used in the compilation and even algo
-used by the compiler changing frequently from one version to the next ...
-So, I wasn't sure if Kristoffer was actually seeing the error or had the
-DEVELOPER variable set (which is why I mentioned it in passing!).
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
+If the short aliases make this feel too much like expanding the kitchen
+sink, I can drop them and keep only the explicit
+`%(diff-stat:<field>)` forms. I think the long forms make the intended
+scope clearer: numeric shortstat counters only.
