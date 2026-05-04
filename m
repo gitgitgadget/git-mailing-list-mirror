@@ -1,75 +1,74 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945CE40DFC0
-	for <git@vger.kernel.org>; Mon,  4 May 2026 21:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD0B39B4AE
+	for <git@vger.kernel.org>; Mon,  4 May 2026 23:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777931841; cv=none; b=NQuzDFDltiJcHMpfgUHzzqEzeLyg0rk++YZOgaChM7hcYP2f6F+f+UvxJWgum+jS6TmANIaldUCEJzz0WL19ctjTgsk5QRcEb+W7mA6RaslRe0NtwQ3wnHcIhlJ2Q4gaEXPDg7bmhXs01+YwHnFKiZ74Z8SwCm1L2d+7xT/wadw=
+	t=1777937123; cv=none; b=gE+76SjpCaKmXotwdF1Aa6AyGOouY3jiNVjWANY0ISuGeIY61SJ97PHZqbQ/E2pg0sGeBW070T9UC9DgW/ljHNOaNQyU7qZ7okWAP8i4PkLTIwvISwEDXQT3iZOOwllfyUDQIgPKp2+3RAsLSGtdfKWxfdnI8OYgxrKFHizsAZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777931841; c=relaxed/simple;
-	bh=PdkwTOR4lVkFihdB3F3n1JK/9v0EMAtT1FRemEbxzhg=;
+	s=arc-20240116; t=1777937123; c=relaxed/simple;
+	bh=G60pxN/5VB2DGO1pfIZewmiOBx9kuyl3P0xYvEuBQTo=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=L2rAAuprmwlN7RT7ucePAoKjGVzLEZfo8h4zOb2XthhrD8mcRvCVH47RYlCYPKEDEq9UhIJclTmKUoIpki1sxzgJDzTTxMZpFt38uO1dTa5g3Yt8S/56CpvJVlYb2ceacQdiTudYRrg1IS4NxglMk6hmTU4rXTgh4NcRzt/iryw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=jW/OBVIv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PFQKVUNs; arc=none smtp.client-ip=202.12.124.155
+	 Subject:Content-Type; b=WYBX6AzzLf6NbWEzx+IGZBdC57swJ4AycjIJK7v8yGtwGQeGHZt47kiv5DpMPST8adv7SEspcoWKELoFedDN1+bq+nCWPAV/0+Lxs7hNp3VgGb/iua+4/twBgkmhFjHo9LUOg3oqD4OROQfb/XHzwVechdfH6CrI9jlilEKHuTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WOdho7yM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ARTI2iBR; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="jW/OBVIv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PFQKVUNs"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WOdho7yM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ARTI2iBR"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D82AE7A0076;
-	Mon,  4 May 2026 17:57:18 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 455E67A00B5;
+	Mon,  4 May 2026 19:25:21 -0400 (EDT)
 Received: from phl-imap-14 ([10.202.2.87])
-  by phl-compute-06.internal (MEProxy); Mon, 04 May 2026 17:57:19 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 04 May 2026 19:25:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1777931838;
-	 x=1778018238; bh=3BOXLdOjgX4s+NRFuBgvG1PcK9c1I1l7CjuXbUrFhKs=; b=
-	jW/OBVIvg5+C2Y/g7zkVN5tvEmGga8ThyUulN0q4rPn5Cqo/2ndO1SNRSOjlB8Kt
-	EBncawEiK6LVAEFMn+ujEw0v4U14ax3LomLuCtOkEoVvDtfwMxnGceh1X1AfIcyW
-	MibPmLDvfFN/BlGiNk82B4+pTa8VwfPhmzLkCxvi7Xn4gEyJmcfmBU/UI+Ax4zdD
-	ZaCEUv3GVglWCkNxXlrJhsQdCge8nWI573PeThf/lNYRe3qKidGwxlC1Ej0Uo6Zo
-	r6UuZtvmgF52CteyQWE8rSpAws9+gddSgjRQalQvvfmbGQdsqf0X7xbePsTFAimD
-	9DmvHVYbInVdtzwV1aQ7NQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1777937121;
+	 x=1778023521; bh=Ua4ItPFraWAy2l4zocWk5Jp5+teDZIRECqqm0Q7QUzI=; b=
+	WOdho7yMiAqmFAtgWslYGMRv+Al/lPwldVSI7YifjrW6UoyWhc/HICYgAPa9C3Ou
+	QO7ucMqSGV5XQ8uiZnrlQqRbDSBCPkADN9gG0B9HDxayXgvikp1ddUIsZUejwe/m
+	V6aUf2y8Cb/cX+oYwf81G/fIWOGMMf55/+DZurKmsvIUG0IE/jy5buVflIy1NLnU
+	3RMXHGV0sK0P55avFNNa9J5OYhOkno/lpeqFNrwXLrZE8fwLDFD480Kpf1eeEXPt
+	Ahm6A8tMdH/TWU/h9nzct45rVL+YLYFMSKEiysNamKhx8m6FM0jFT5sWxVNwGNQ0
+	S4/BdrCOOr15E9AUPDghaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777931838; x=
-	1778018238; bh=3BOXLdOjgX4s+NRFuBgvG1PcK9c1I1l7CjuXbUrFhKs=; b=P
-	FQKVUNsT8zgOlpQ0yRYLqGhDpLYWuWidLbZE9G5ffNFU3WIbfMfspSb83lSKUVpx
-	Dd5MokuNQigjAzKhh3BmxomvNEEa+DyPDTcr6v2ERl72eMKqcnpXA5ZpV+cx+wEQ
-	aSlyo2PPDxpFRVUARBxauCzwAtHJB2IpQKmkrEsj5G/MWN7JtPdzUyXjpLjMAbSi
-	9til47VUTYdtp7uafx3++BgFQJy3OLW72gPro4iElhwDzbA23XhVKUGLKkOhh+1h
-	pC0kfEWRko+X3VmF41WfwX+0W9s0irW25sEyBKuoql1QkzVyMGwjlH4sLKWF+WXM
-	1yYhWLcHaf5F3Z+/IRutA==
-X-ME-Sender: <xms:Phb5aZ_9xXhNglF55mqK2_ph1j-WIevBb0QQjrcWouELJvCf4MT_Eng>
-    <xme:Phb5aYiqTNqmGEJDTrD_nqlI8aQEPlXTX8ybWhoxeS_Be6Ygi0-TG7afo9Bo6By8P
-    Rvx3JSUxwta92LHLqIAXDNQFrtRaidrGkqQKlM4c4_K8ADVfl1cAg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelleelkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeekteekhfekieev
-    gffhveefieffuddutdeggefhjeduudejffdtudeuieetuddtheenucffohhmrghinhepmh
-    grkhdruggvvhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-    dpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrg
-    ihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Phb5aVgvO0RwCFjn2lhV0crNb951BfTJNXCQpc4-q28-HEtJ3CqAYA>
-    <xmx:Phb5aaK5bTm4De6hgRe2b_eMIDh_TPwqXKON0VA2N6uja8RaOiKvGw>
-    <xmx:Phb5adCfqhOsHZQz98hG4EBeuOhvfGjIHNDbElahZd3E809xamSkkw>
-    <xmx:Phb5aSisKcJm33VZQgrqeBBkdimPMNeSreI7JQ5fTAp_iF9x2_3C-A>
-    <xmx:Phb5acMf9cEN6FxMJMC_i43tSJCGp0a9lYeys8hK4eHR2uxo58RzEfOj>
-Feedback-ID: i83a1424c:Fastmail
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777937121; x=
+	1778023521; bh=Ua4ItPFraWAy2l4zocWk5Jp5+teDZIRECqqm0Q7QUzI=; b=A
+	RTI2iBRLUntetQ68SwdXJjFfm7Oxw8MVpro0U4Ia5eaPU5UE9IHPB7hLD52UhGmR
+	QBfrwOvMx6qK0Ro1KF6oBCmNOOMJCBHZbS+4ZlBHZCr0u+H3GFT0IVPmyLLDfWcf
+	Df76Oui+0UKN6xqs0YEVJA/EzzBYT4Bt1WLDuOmbXITDZwejo9Zu6ZVF4gy8ImBW
+	zQnlqTbU25dCYl5IYBfR/Mr6v5DXL5J/agPHYdsIP+EDvMftCsKYBxTJTub7Hw0p
+	t4TfSXX8qyr7SPs945X5R97Mbwahs3NEWNsSMkmpOKp+PWRlzfrip641CmwUVJZy
+	nDa8qyurDuK0xW3wrWtpg==
+X-ME-Sender: <xms:4Sr5aRJaXCHwT9a8dTk20DnQ_9be1d0hRBrh2pmwJEiwrvNvXKjaAfw>
+    <xme:4Sr5aX9ZZa3mEkcIu9Ucoh7EjWH1mpF_deTPEDqNuuul0kqHFCmjeWbbc1BSvjrIb
+    69eIsHRoDgdTfq0m8TBXdVpXx8UTaPvWDencsjZzXY-x0YlKa6mAg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddtudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeg
+    hfeutdeutddtiefgvdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:4Sr5aVkrjbMgpHOsJ2G34BV5Ut_yBDgLtv4C4svBqYt4bc1JbhHc3A>
+    <xmx:4Sr5aYnu41RLIp1TkN0YBlFQo_8iHSvYtZ5bxrADV6J_6X1jPYZ_Cg>
+    <xmx:4Sr5aeshCQxAflj_JuaKovKMxJT_HWteo8-HS6yfl2l85Gd7Fukxzw>
+    <xmx:4Sr5aTkUkm0QbGsbuESgH_UpEytEMXIm4unvJMqFqAQHa2FmpkQ2Hw>
+    <xmx:4Sr5aUFNFKYlu5w0ICc2urU7f-1yjlRrYpScWjssiSviBs6l0zg8NBpG>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3CB1FC4006E; Mon,  4 May 2026 17:57:18 -0400 (EDT)
+	id E5C04C4006E; Mon,  4 May 2026 19:25:20 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,50 +76,41 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AHDyktfZDWSB
-Date: Mon, 04 May 2026 23:56:57 +0200
+X-ThreadId: ANXxGyJ2AX0-
+Date: Tue, 05 May 2026 01:25:00 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Ramsay Jones" <ramsay@ramsayjones.plus.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "GIT Mailing-list" <git@vger.kernel.org>
-Message-Id: <cccf9618-31de-447b-ab17-4fb8cee23363@app.fastmail.com>
-In-Reply-To: <b04e98e3-0840-456d-a627-351f2378c037@ramsayjones.plus.com>
-References: <e74a8fd8-0617-46a8-8bef-a454d51a99c1@ramsayjones.plus.com>
- <xmqqv7d4ou3m.fsf@gitster.g>
- <b04e98e3-0840-456d-a627-351f2378c037@ramsayjones.plus.com>
-Subject: Re: [PATCH] name-rev: fix an 'may be used uninitialized' error
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org, gitgitgadget@gmail.com
+Cc: "Harald Nordgren" <haraldnordgren@gmail.com>
+Message-Id: <2f809a63-3487-449a-a892-225d2b8122b6@app.fastmail.com>
+In-Reply-To: 
+ <e9f8d06a2bbab155b66e89c467aaeb2f37d808ed.1777919250.git.gitgitgadget@gmail.com>
+References: <pull.2285.git.git.1777671337839.gitgitgadget@gmail.com>
+ <pull.2285.v2.git.git.1777919250.gitgitgadget@gmail.com>
+ <e9f8d06a2bbab155b66e89c467aaeb2f37d808ed.1777919250.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 1/6] branch: add --forked <remote>
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 4, 2026, at 22:26, Ramsay Jones wrote:
-> On 04/05/2026 2:13 am, Junio C Hamano wrote:
->> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->>>[snip]
+On Mon, May 4, 2026, at 20:27, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> Having now spent some time (well at least 30 seconds :) ) looking at t=
-he
-> surrounding code, then your final suggestion looks really good to me! =
-;)
+> List local branches whose configured upstream falls within any of
+> the given <remote> arguments. <remote> may be either a configured
+> remote name (matching all of its remote-tracking refs) or a single
+> remote-tracking ref. Multiple <remote> arguments are unioned.
 >
-> However, these 'maybe-uninitialized' errors (historically have been) s=
-omewhat
-> sensitive to the level of optimization used in the compilation and eve=
-n algo
-> used by the compiler changing frequently from one version to the next =
-...
-> So, I wasn't sure if Kristoffer was actually seeing the error or had t=
-he
-> DEVELOPER variable set (which is why I mentioned it in passing!).
+> This is the building block for --prune-merged, which deletes the
+> listed branches.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 
-This is what I had when maybe-uninit. didn=E2=80=99t fail for me.
+s/remote-tracking refs/remote-tracking branches/g
 
-    $ cat config.mak
-    DEVELOPER=3D1
-    DEBUG=3D1
-    CC =3D ccache gcc
-    CFLAGS+=3D-O0
-    CFLAGS+=3D-ggdb3
-    USE_ASCIIDOCTOR=3Dtrue
+Here and below and on the other patches.
 
-I switched to the whole config.mak.dev enchilada and now it fails
-as it should.
+> ---
+>  Documentation/git-branch.adoc |  12 ++++
+>  builtin/branch.c              | 110 +++++++++++++++++++++++++++++++++-
+>  t/t3200-branch.sh             |  54 +++++++++++++++++
+>  3 files changed, 174 insertions(+), 2 deletions(-)
+>[snip]
