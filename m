@@ -1,168 +1,113 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71B73E0251
-	for <git@vger.kernel.org>; Mon,  4 May 2026 15:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777908457; cv=pass; b=uS851SilLJfMLO+svZz3imcX6NIPFrGbZ9Q2F+zAIWuSDALlMjRLncDbq8kTwOwndLTlOifFWaWPjzyKSFJ1y1xjZKHwR/2cSqoDeCM/O9HXO993kEJCpQcBqg0EVnj22ZWVnnfhjmcz1DJYxkz6Is6JT8rx1zZhbN8Zd6+UAn8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777908457; c=relaxed/simple;
-	bh=7EwGzQCfHpNghxXOugpRuwwgnz4qtuQ42MrdPvtW9tk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=D/pSnNzFCxj6tCRG6OZMRgZDsJxlhcIOm9/ZL/Ko7L0WbZm7Q7s5crGFlIu49AnRpYyJnzkizzKuNKn6HcRiYpbCJro03ZlSv4I+dcnjv3hH+JEotqcvflQ+B+jt7S8fOW+B3Yp0zFPLwjYzWeJ5BwbGcpFKIroYZzlsMsEules=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U/UDDRHh; arc=pass smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6E23E022F
+	for <git@vger.kernel.org>; Mon,  4 May 2026 17:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777914144; cv=none; b=RHLtsqIVBDCoENCKbHMiMc8xbdKwIFMeQkvHIFmnyq06oySq1tkig26hsCYH5DGEmetrdQAr+8sY7K7YsSJmXRkxLVB8SIvnpJsYsd+twFJBJGn6t8AGXnHtwmzR190aM8b9nzeNjjIBwye38B4tNl4DN0JrcWCiiducdJgM4aQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777914144; c=relaxed/simple;
+	bh=899arcLcPC4XTICs0cWH7WoRE1YhDizKynO9Saq9h7I=;
+	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=mZfVZBiyvlUZRVfaxz5bAJ2xLD1O6Ex3rwnp2nOp7ufCtPTTdGQbvzb/nMwOxlnbAqJOLeXgm57ZdsRZY60vVotLN7ecMe5C62EYuAllAEumraUtQYdqG0iJVgnyTOOlD83GTOof+KYcpj5M1T0uBRZP9VUULCDkButgIwVOmbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=whynothugo.nl; spf=pass smtp.mailfrom=whynothugo.nl; dkim=pass (2048-bit key) header.d=whynothugo.nl header.i=@whynothugo.nl header.b=P4NVMGRO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SxPRDn87; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=whynothugo.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whynothugo.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U/UDDRHh"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b9358bc9c50so644159566b.1
-        for <git@vger.kernel.org>; Mon, 04 May 2026 08:27:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777908454; cv=none;
-        d=google.com; s=arc-20240605;
-        b=K4zN0KwP0NLc4n+XBAmFDoU+sBr2prA4LGO8Hg8YrWwj+2y15/RDTjoQTht21RuqQ4
-         WIfOmFiFFZEH9TU9/gEipejZ7nY7l+19peHh+w4VPRvcD65TZKAdTRFs1NI5yYk1mO6s
-         xLVgbEo8SIEjTjorIp2c9KXZJ3h0GsIP2GDRexCOntldf5bGl1+c97B6eHuEV9JZPtO6
-         Z1V1ZnxK0UKaxeF91fT3u95+I2TU+mAadivILJlvC8NawgiqjXPMkb3z130jsQgj9ovC
-         jsiMo6wYx2HUL3mSM3oxOpXw3kmnG0d8yw4CspHhRs3I/9T2ETNaa2sLyDDUwekTdKUc
-         VEkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=0JgN4jML4AYx6PgxPNmOz61c8biLIkMNQjL2WeUCuEk=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=gIrcvyNeGoRGIRZEVXuuFjOFDEvht6SEhUFOu+gAKpXfrFygwDg19oiX+ZA2AIfi2q
-         XIBnxeDqRoPNhM6NMN+JG1ongM1EN+SUnbmhCTC+Sob00WdiYMaytAbVU1fN/r1J4psC
-         Hm861VgB783hrys8zfJtMHxacaCaIEu2NG+ktdVHc23wdQ2ixA/y3mbFWp4IG6o1hjhL
-         AuGdDoacA0R6yUZYl+MFNLwmcX/I8k0heoj7C87vCZMpVl/I0bRFV/nU0QdzwjUIy21/
-         CDGrQnjVg/sjJof+1QPdQol8NIvVPdb4pQR+ZYDBiHnmVeRSuBaVzGUcdyIJo68squ6r
-         GICQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777908454; x=1778513254; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0JgN4jML4AYx6PgxPNmOz61c8biLIkMNQjL2WeUCuEk=;
-        b=U/UDDRHhRz40+pHbvaFlqd+KXvpS+H2lZ8CjgkD6uJCfrO2Z58qXkidPmCmoRpuItO
-         /Njw7X/Sb5AbwLNNfVLXY2Wai70OnjG1mKuqrdbLlqpuj+rVQuaoFiwgeloB0v1+sm3J
-         AK/v6kZBPfhsZjohGNbt8uAriFWwaMeoCYtwW1z0WjBzKg4qz3EngM3zJdIGcAXRUdut
-         KP2rXzfJ0uvlPNJXIkOPhJBNVSJ5b0jCJhU250bAtVCHz+dtUVWXCurZDUx8kWl097J3
-         7cOdXL1/+YXTbUqXa9E00VmAnMHDBCS26AFRekkvMlOrUDYbMd6jJK+LG+Xds4NEPui9
-         QeZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777908454; x=1778513254;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0JgN4jML4AYx6PgxPNmOz61c8biLIkMNQjL2WeUCuEk=;
-        b=r6AwYsTgHR/EuLfSXjB281jzW/7pKTEIg/zHohdU72y6xPCt4fvA3eGrin3JmS5YhO
-         ojMoCKKwdBV6iejR2keKXKbXAJVZD1W5vrFlUo43jy89YJ3RKQYBs18wFoYqCEOgWGo+
-         +8zBK+ZT0VysElonl6dr6M/sdVr07/7XD9R10OOBpF2lKOmCZj3NOvP9spN6kci1WhY7
-         6j2nkhQiO/NbQzRfs2LuufntwFsr+gwXIi3FLkcufDVFTh5N1emvphQ3A88uJ74wFUn8
-         VUcAw6xDZ+nTR1bDOMZOjFoCpcsN8KIRT7NGo7BOAdtJkngT7UaBu4+DZKfy0fmkKoI3
-         0usw==
-X-Gm-Message-State: AOJu0YzFttecmlHDZpFiUp4KfORATPsoaWI+gWbNBBpjv49aA124+re9
-	DZdnSinJh/k6FyCDkiRGEKlt7LP6R805ZQvN9XFK3c5TEpT4dHfBHcywxW4XP+61FZ19K2htVXy
-	6smnkgbYNQl1lphUYwHo7h3/ftVisGt2S6w10
-X-Gm-Gg: AeBDietb6sgBNEeZulYUvvzzBY4n4tk1d9lCSH+DWIeZzPsxm9M+rpIqqSFcMxzMWyr
-	aqPEB2497jaa9dtkHUijCdo03R9OAV1DVguT2cG3iwaPfuovpF0MGmTwN9aFzdHquYtw8Rymi6R
-	YStSLEx0Kyy+lXgnxmsU09nutFs0n+ajIW3TTTerZTemxb+BUuwCvFkKqJgwjdWVBf0F6x42GFc
-	xlg5O3Zt3i/R0q9zeVfCfn76t595revUo9FBkKbz3NoRZ6aVnLcSIR0lGSr4jttLNNhsa9J6w+e
-	RhzEYhRMxIcyhH1zow==
-X-Received: by 2002:a17:907:5c2:b0:ba2:4338:e9fb with SMTP id
- a640c23a62f3a-bbffb846e76mr537085966b.32.1777908454155; Mon, 04 May 2026
- 08:27:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=whynothugo.nl header.i=@whynothugo.nl header.b="P4NVMGRO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SxPRDn87"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id ABE14EC0325
+	for <git@vger.kernel.org>; Mon,  4 May 2026 13:02:21 -0400 (EDT)
+Received: from phl-imap-01 ([10.202.2.91])
+  by phl-compute-04.internal (MEProxy); Mon, 04 May 2026 13:02:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=whynothugo.nl;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1777914141; x=1778000541; bh=2X
+	UTx52B43DC1mbdlgonlr42eU8lg0QS2lTSCHlFack=; b=P4NVMGROpvL7yLOIJA
+	TtpUmxQ2pXNd3hhs8hD4BpeDjEF8dJTCc40cf80haP5suw4Hl9jwpNHDUUisTm14
+	N6HqNodlVH2EeJxlgMnm3H4qmfoBeLMBY+b9h6IXRkw2GTO9qkRdZVWDL+QkcPpp
+	i7L2RO392IOligTHy92P/bPdob/I33ykgbc4awQ9snURJpwQOheQj+K9HcLSeR04
+	ThmEZoF90j2z8W1k3HdPOyZTujfplybpB9gwAmxPT2DcYLOFrMRD/GUebGv5GfId
+	cotyqNR5FPCZ6wgJvftikns9vv35xGNQRpQ2dDdaG5dhtiiXBHeIE2cZcaptwzHu
+	Y2ig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1777914141; x=1778000541; bh=2XUTx52B43DC1mbdlgonlr42eU8lg0QS2lT
+	SCHlFack=; b=SxPRDn874kO606RLZWwYH23IRgg5saMXe38aYlC/4OJcpV3QFsg
+	3BQgZL/uojvD9PMDwcDlz8+nFdlyJV2XeaVvM5rpS3/su8IpI06QO17iUtCPdH08
+	o1IYPiRT2Pw8BuMbwz+wBSwmsYS9j6i6vguA4ao4B+HbODvfjdTIewbDWWksnvGy
+	uVeJw6aVMAiZeN0fsGFSEQ/a9wvPRkKCHWJWoqAenwH9qHLjBYDVOMM2xZRH1i72
+	adpKZ7MjLlo6ufd7zkLQlqdGcQXGlQ3KoZOUpu59hP9DMLwfljpnu3iZVOvfHW+g
+	31oe8/ONs5Gv1xiotJJz1GnOh8A/p/thxKw==
+X-ME-Sender: <xms:HdH4ad1J6_EdEO4zQ_H4TGj6WpH3xHastvyCk7H0oa_qRyWXCXaHpg>
+    <xme:HdH4aZC20zDCKuMXOXlfOrYVKLJSpNBc4tPYEz5xcUXCfvFo9l5fcfMYVIGi6LHon
+    Y7Dx0Tp-DMGMNVr5uvxqc6hX0ZKrsFCIV7AbRNsWYDGCIwAlMeivg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelleeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkufgtgfesthejredtredttd
+    enucfhrhhomhepfdfjuhhgohcuqfhsvhgrlhguohcuuegrrhhrvghrrgdfuceohhhughho
+    seifhhihnhhothhhuhhgohdrnhhlqeenucggtffrrghtthgvrhhnpeelfeejffdvgeegge
+    efueettdetleelleetveduleeljedvfeefueeihfelfeefveenucffohhmrghinheprghl
+    phhinhgvlhhinhhugidrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehhuhhgohesfihhhihnohhthhhughhordhnlhdpnhgspghrtghp
+    thhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:HdH4aQfY9hy9npwk-oIHo0n_x5HwJWtrFQRqhZKywp0z5NJJY7TxdQ>
+    <xmx:HdH4aaZVFhZgJqdTGy51fAf3WAY_URHc_SxmOqjBrrn3tLXJq0UzcQ>
+    <xmx:HdH4adFd-Or2E_6SanN9fOW93kzbdAqk0rQCBmQKeL1A0WY2lfZTVQ>
+    <xmx:HdH4aQk-Lk0iJ0o2Br5mgFTdm1i6cpx6QngE3UAGMs6OXRqq3zHdJw>
+    <xmx:HdH4aVuhTGdSfA81RlaAG1HIHEz8iMIVPZG871kIV8vRT4ecBNf1dQha>
+Feedback-ID: ib8c04050:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 776AF18C0067; Mon,  4 May 2026 13:02:21 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: jean-christophe manciot <actionmystique@gmail.com>
-Date: Mon, 4 May 2026 17:27:21 +0200
-X-Gm-Features: AVHnY4J9WrSUGPXXkQLrfc2CaZnggTBDuQ81g3px_TurmdaPdNoniB1bZfaWefU
-Message-ID: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
-Subject: git hogs the CPU, RAM and storage despite its config
+Date: Mon, 04 May 2026 19:01:50 +0200
+From: "Hugo Osvaldo Barrera" <hugo@whynothugo.nl>
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
+Subject: Git trims the last character of content from remotes
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Hi all,
 
-many:
-git add -v --force -- "${file_path}/${file_name}"
-git commit -v -m "${full_commit_message}" -o -- "${file_path}/${file_name}"
+When I push content to GitLab, the remote server sends back some text which git
+then prints to stderr:
 
-What did you expect to happen? (Expected behavior)
+  remote:
+  remote: To create a merge request for zk, visit:
+  remote:   https://gitlab.alpinelinux.org/WhyNotHugo/aports/-/merge_requests/new?merge_request%5Bsource_branch%5D=zk
+  remote:
 
-I expected git to respect the configuration (.git/config):
-[core]
-    repositoryformatversion = 0
-    filemode = false
-    bare = false
-    logallrefupdates = true
-    fsmonitor = true
-    untrackedcache = true
-[remote "origin"]
-    url = git@examle.com:ppa
-    fetch = +refs/heads/*:refs/remotes/origin/*
-[branch]
-    autosetuprebase = always
-[branch "main"]
-    remote = origin
-    merge = refs/heads/main
-    rebase = true
-[feature]
-    manyFiles = true
-[fetch]
-    writeCommitGraph = true
-[gc]
-    auto = 0
-[pack]
-    threads = 1
-    windowMemory = 1g
+When the width of a whole line is the same as my terminal width, the last digit
+gets trimmed off. E.g.: if I resize my terminal for the above to fix exactly,
+and re-run the same command, git prints:
 
-I expected git to use maximum one thread for packing and I'm surprised
-it even tried to perform packing as gc.auto was disabled.
+  remote:   https://gitlab.alpinelinux.org/WhyNotHugo/aports/-/merge_requests/new?merge_request%5Bsource_branch%5D=z
 
-What happened instead? (Actual behavior)
+From what I can tell, sideband.c prints ANSI_SUFFIX = "\033[K", this escape
+sequence being "clear the line from the current position until the end of the
+line", and this is the root cause of the issue.
 
-Instead, it used all the threads it could find (28 out of 32),
-depriving the whole server of CPU, RAM and storage as the tmp files
-kept piling up.
+When piping to cat or to a file, this sequence is not printed, so the output is
+fine.
 
-What's different between what you expected and what actually happened?
+Is this a bug?
 
-Uncontrollable use of CPU threads, RAM and storage
+Thanks,
 
-Anything else you want to add:
-
-All the threads were running:
-git pack-objects --local --delta-base-offset --honor-pack-keep
-.git/objects/pack/.tmp-<number>-pack
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-[System Info]
-git version:
-git version 2.51.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.14.1
-zlib: 1.3.1
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 6.17.0-23-generic #23-Ubuntu SMP PREEMPT_DYNAMIC Sat Apr
-11 23:29:57 UTC 2026 x86_64
-compiler info: gnuc: 15.2
-libc info: glibc: 2.42
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+PS: please CC me, as I am not subscribed to the list.
 
 -- 
-Jean-Christophe
+Hugo
