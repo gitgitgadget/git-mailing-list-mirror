@@ -1,95 +1,108 @@
-Received: from outbound.qs.icloud.com (qs-2003e-snip4-7.eps.apple.com [57.103.86.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC023E3C48
-	for <git@vger.kernel.org>; Mon,  4 May 2026 18:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.86.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452BF3E638C
+	for <git@vger.kernel.org>; Mon,  4 May 2026 18:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777918954; cv=none; b=Fv7G45JNOv5D+7V44gS80wTYWk42weOu4ihVYcHAcOgueeqJj67HUkn1HjYv0sagEy0kvmOIJux18QxftwXjz75qUPES6iHmrp3bcJ3bpDddupRkt6zDWQ1hrOZcFplcQGJ/g3jEVSeqaagW5PGw/JD7o7ejZwKMGkdOcpIFQJc=
+	t=1777919249; cv=none; b=jpNZvS+o2KuFFtMGkKFxf87hnU1fqgR82Nm37Ou7Esw32PScMiDBSVZ5POWqr+0nvcjHbP1wn5tDGAfk+0kQx0sFOfjc0dgiYLD2gvBAyt8gycTNLPmPczMAfuhqOFLjD5qnYBYzA/eMo/8ieLD8P6s8p79UmNZCvLoUKD3pS54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777918954; c=relaxed/simple;
-	bh=MhIJKMuU+ikfka9egI2b5CUSrjXKY+2hM3xTWHDnJS4=;
-	h=Content-Type:From:Mime-Version:Subject:Message-Id:References:
-	 In-Reply-To:To:Date; b=KWsO5m9tcZTWHVMTw/ZSvMVEkJk3BSH+zKAxZrskvf056J5NZxVC5HJGE0cb2gjWjYJZX0+DN0pAnxx2RaT+2LNYeERtzFeWSdG6uSUhX5bw43e9T+z/3mQkimTXlB8nujNndlRXH4RdKCeEoreQuqdNlRXPWSmT/cR+mGQDufM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=Q1s212bI; arc=none smtp.client-ip=57.103.86.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1777919249; c=relaxed/simple;
+	bh=c4YAZUwkK8fkHKFU/f2sPlzW3kLAIlZcsg/r05rgl8A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AsFKMwUoV06O0S0OWouVoo5osizB+L5imEJjYLdjP/QQ0yGyCmj46PywMQHprRjcatIsgg8p70ULhf7L2rciVTsQxYkHOJWsqxloGD0iJTpODyEzS17C2mFWSJUik5XBZRLm4lHiQo/yT6Jn1Y2rHX2d7QElfTlSkjYmrgWefjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rAyGIM80; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="Q1s212bI"
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPS id 4EE7C1800175;
-	Mon, 04 May 2026 18:22:31 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhPBkMGWwJeCE0dXAFdEhVdRVIFTgoCQAlIcwRUB10FXVZQAlpLVBQEGVsUVlsCQAk4Wg5bBEcUFxtcABcZUU0LWFsIWwQPH0wMUQJCBVZeSAsdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEEVABWB5WXloXXk1aAlZNBU8EXw5eA0EBVQIoAikfRAxKcUAOWQQ2FEAALgNZCzQBOgMrDitbE1UXRgkZCF0dB1hHFEcODxlaFFwYUw==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1777918952; x=1780510952; bh=MhIJKMuU+ikfka9egI2b5CUSrjXKY+2hM3xTWHDnJS4=; h=Content-Type:From:Mime-Version:Subject:Message-Id:To:Date:x-icloud-hme; b=Q1s212bIbWfWS92sxnxt2NBK+9PhPxlQYwwbhOGlt4RH+pxuQf/0ouoVQRFoOFZX0Pgv21/zO79mL/Q/e7r+9LGgGFCYsEVlTmmKyvOCXr94crB667X5LCKmI6KSdkZ9adtUN0/gHjWUiWDr94dKewdWbuufElmaVyIF7ZLU9KANIVJyh8YAVE1QRIecvdTsJKQhxakwMo7tgzmw2AkNNvuympHsKiqnY6O9w2gt8ISfFz8VCiXG4LHBNxdExFknj6WM4G000L5oBIT0qt0J7sNjynyS8goNMnU0gwWwgRlF+cqpJWoYIIJ5JU1ONcGrMQpfMGCLdui94eMmU5L3uQ==
-Received: from smtpclient.apple (unknown [17.57.155.37])
-	by p00-icloudmta-asmtp-us-east-2d-60-percent-6 (Postfix) with ESMTPSA id 1ADAB1800245;
-	Mon, 04 May 2026 18:22:30 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Aa Kk <ahya0000@icloud.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rAyGIM80"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8d736211595so299760585a.0
+        for <git@vger.kernel.org>; Mon, 04 May 2026 11:27:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777919247; x=1778524047; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e/yJKQNwOx5jDnikw9jQ3E/+152ax/ARzoaJzkGPWzo=;
+        b=rAyGIM80zeCNNPZ4zHi/DWlawVCFLCJyExD32wIpFtXqH+1kGeRgtqulpJIGHF2dOe
+         7ipe2LPpuHtk8YZxuLmoGgLOz6GVbqGL1sGIMdeXy74wMDpcFKBokZn1KOCIy43MCsjC
+         RtOuCTtnA9hSF47+JJXL86Um2joWBay3viLkxDvhpjmvOvktuN5QosNicMPb0eUJv6OF
+         VzXLcx2XxLVf/vgZSmKdoqAVSSzg7LW812Jd2XVYfvi6/+U25qlE2vesnOYcDYvq/UFA
+         55guKglnFXeRTdjmbtnmHKzgYr2Tw0cIxYo+A0D7H0lf6J/nfWDzqQRrEM2OmBqMUJQz
+         utaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777919247; x=1778524047;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e/yJKQNwOx5jDnikw9jQ3E/+152ax/ARzoaJzkGPWzo=;
+        b=N2goRDko4JyaqnWQjtUebqh1+vq0de/JRh5ahPaAptEfVM4IMiIfrco0VTiKL5i0J9
+         ub0Rv/AfP0JySZlke5YVbwa1n7fN9SWuPNqbcwHOAUtAWh/o0BarHQSgQtcdk6+zh7ao
+         FGHGmQfYByM4CDGO91l6mVqbFDIooSOyxK4Iq+tk5xvCjcUZIgjhUyRR2g9WbgZPEal+
+         TETkiTHeqOMlvG+SLZ4VRqLPtmKmn5YSBRc0w58D8MoSm/i8CFGWqsjJn1DkZOYPxgZz
+         8YvgG8tTNBgT0jRwqtzUnb/fpmMb7EbY/KPf+agMNcqhbxsvjdIdFE+OsS40iIQGZSOH
+         LGpg==
+X-Forwarded-Encrypted: i=1; AFNElJ9EShBaEt7H5XR+jdccpbePrmZYgH2h+wcxY+KFmX+ozu5QNmaDc5vtgs+MaVeuhiZeHcQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLTXCk+Du1uzJ1h/4Du+Fs9VDfYcl7auKavtmRNF2xh6azkBJr
+	nlkgFxy1cBoNbbdA/mpN8BCz5084n4ayYUrUlGCbpEjSF6wA2wfg2AgO
+X-Gm-Gg: AeBDies+TxUAs9HviGk9meMmg8VYZ6A7Qd18UzIVKEc/dwhpTDoPvzbZDC/oadLFHD4
+	xOrD91m8es5ppz29Q0e5cUmFAwwM/QSiiM20kDRAzCN/bK2KjGDbpX7j+o2MyIBqGqvM0mG1X7j
+	AufL6pBjD3KFgVjBBAmZseFSWfLY8jrt/6YPA2QRbxJnzVaw22kB2LtlOYYPbLcx0AN7L8ijEoC
+	IAP83Gpp10tZDkpUpCLXYq61K4DqKwP6YS4kXCehO5O/RFRvEsCWodr+ie3ktZG16tlKP8rx9Fk
+	iPuga89hyLu3PvH2w/j6axUon12UPGusa2XiTmNxUeFez9JD337RjLS2SOvB6YHzShunZFyNgw2
+	UhfKKypXhDmWOozbg+uYDv9FMYAe2f5qlfGn1i0uPy9crA+oA9EBUBRMcTiwmMny4ag6UPegW1t
+	ySitQTM1iBj2Yldc09URPLc8AteQFft9873TyBZiCkg2wbs69eVNzB9V3RIp/Ph8UiO3obYnhtL
+	gCY3trskO9wL4IWlSg=
+X-Received: by 2002:ac8:6f1b:0:b0:50f:ec27:5d05 with SMTP id d75a77b69052e-5104be42610mr182924071cf.10.1777919246820;
+        Mon, 04 May 2026 11:27:26 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5108429202esm85120021cf.14.2026.05.04.11.27.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 May 2026 11:27:24 -0700 (PDT)
+Message-ID: <a382fcdf-a9c9-4caa-8be4-163c7bcbd64b@gmail.com>
+Date: Mon, 4 May 2026 14:27:23 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: 10.26
-Message-Id: <77295118-1E5B-452B-926F-83C429D8B0F9@icloud.com>
-References: <88D33A93-5CDD-40FE-A402-490A5944117A@icloud.com>
-In-Reply-To: <88D33A93-5CDD-40FE-A402-490A5944117A@icloud.com>
-To: git@vger.kernel.org
-Date: Tue, 5 May 2026 01:22:29 +0700
-X-Mailer: iPhone Mail (23E246)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE2NyBTYWx0ZWRfX3L+O1wlBMtoU
- SiKWKEcyKCoRw5e1IsbFhYP9I0njbCy67mlsxkZEfQFlhcLccb3/ogvDgIEiakrKKC3JwHFzBNK
- HsrMlVsQ26VpptqgQ8ZsQy61iApfAlplUwFjXp1l0qTY/XQmqdzn3tiKvLQRkek5yIVEqmo+obM
- SVECUDsySPHMSnmqSVkidZ3U0L0UxChsz+WLpP5LebAYZftDJIQBU/H5deNW4FmBDD+l4RTzkX2
- rFiVOZSB8R6Y4Yha2KnPEGJS0SLQ+aLALd+mcPz7nSj8xcUK1cIIbXZUz9zuQolUswpz7IPC62a
- 4+3U+VTrvtAAPvhViu0s/c7PqKBIkj9clWiQ9m5ErRYf9otPpENYTsyRqTsesM=
-X-Proofpoint-GUID: 0j3oqTP8fd3iWCMZS4P4e4LgM4LG9aAR
-X-Proofpoint-ORIG-GUID: 0j3oqTP8fd3iWCMZS4P4e4LgM4LG9aAR
-X-Authority-Info-Out: v=2.4 cv=aa5sXBot c=1 sm=1 tr=0 ts=69f8e3e7
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=x7bEGLp0ZPQA:10 a=SLUWHT11B0QA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=v3ZZPjhaAAAA:8 a=uU14XX-s0zQvFckFOGgA:9 a=QEXdDO2ut3YA:10
- a=UoVXzJWRzKW9j2P5KAX1:22
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/11] test-tool synthesize: precompute pack for 4 GiB
+ + 1
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+ Jeff King <peff@peff.net>, Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
+ <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
+ <29b9a74e915e6200ac2b4d98e446c1e73964cbd2.1777914508.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <29b9a74e915e6200ac2b4d98e446c1e73964cbd2.1777914508.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 5/4/2026 1:08 PM, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Sent from my iPhone
+> Benchmarks generating a 4 GiB + 1 pack (3 runs each, SHA1DC on
+> x86_64):
+> 
+>   generic path:   88s / 81s / 140s
+>   fast path:      14s / 13s / 15s
+> 
+> On CI, where t5608 currently takes 200-850 seconds depending on the
+> job, the fast path cuts the pack-generation phase from minutes to
+> seconds, leaving only the clone operations themselves.
 
+Are these numbers accurate for the patch position in the series?
 
-> On 4 May 2569 BE, at 4:39=E2=80=AFPM, Aa Kk <ahya0000@icloud.com> wrote:
->=20
-> =EF=BB=BF524152
-> Sent from my iPhone
->=20
->=20
->> On 4 May 2569 BE, at 4:38=E2=80=AFPM, Aa Kk <ahya0000@icloud.com> wrote:
->>=20
->> =EF=BB=BF
->> Sent from my iPhone
->>=20
->>=20
->>>> On 4 May 2569 BE, at 4:38=E2=80=AFPM, Aa Kk <ahya0000@icloud.com> wrote=
-:
->>>=20
->>> =EF=BB=BF
->>> Sent from my iPhone
->>>=20
->>>=20
->>>>> On 4 May 2569 BE, at 4:37=E2=80=AFPM, Aa Kk <ahya0000@icloud.com> wrot=
-e:
->>>>=20
->>>> =EF=BB=BF524152
->>>> Sent from my iPhone
->>>>=20
->>>>=20
->>>>>> On 4 May 2569 BE, at 12:05=E2=80=AFAM, Aa Kk <ahya0000@icloud.com> wr=
-ote:
->>>>>=20
->>>>> =EF=BB=BF
->>>>> Sent from my iPhone
->>> <Contact 3.vcf>
->>>>>=20
->>>>>=20
+The previous change replaced SHA1DC with the unsafe version, which
+gained similar performance improvements. I'd be interested to see
+the numbers for both enabled at the same time.
+
+Thanks,
+-Stolee
+
