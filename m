@@ -1,154 +1,150 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f67.google.com (mail-yx1-f67.google.com [74.125.224.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAC8396D1C
-	for <git@vger.kernel.org>; Sun,  3 May 2026 22:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185621391
+	for <git@vger.kernel.org>; Mon,  4 May 2026 00:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777849191; cv=none; b=YlMthplI0JS7aMuRWzWWTJ+6hThshRtoqo/8eA0tqcu2BlBAUlcX0q1c6+gzQNRmZxEelQegsEx6+IC3GbIeoHQ2F17I1OaPrighw1h9OX/daoDw846Pgodj5GsKXR/TZu2TZwWg72JoF7I32slzJipFRapvz9szxbmSbU2LzZY=
+	t=1777853478; cv=none; b=L6jk4Dvm3T6vDitYLc1wSpOeW+WtaUtT7CvWh/Lkg9BlmW61w8aA2JhwDcuH+9vs8HolyZ9x3OoXV5jxPcFXzZmZuljIntm3SWU/K0ElFUBEQD0lQtg27MfMK1WiXM6qSg0Mh7lxMlf5I67ATjbrn92F+2yHz9vVbrHmNf2NgOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777849191; c=relaxed/simple;
-	bh=HEnqZA0Xsj2H8zwhc9K8zR5SMUNxfdgWO49RCMn0EhE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gWgOjjtX08bODOFqxwWJIPA1zwwXnOYKxL/Jc1NzJMr+BW7vJ1lyXzYA8Y8NfxykHculk5ja0m9/cYWNNer5G0VsQzSsZ1GOACyHcwL+lBcJSXPG/Ze+x90pTaRztxJo30aIuMCOe7wL/dVzR+3S7abPhHARZbbrn120m9O2lsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nB82giVZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KmJZrXYp; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1777853478; c=relaxed/simple;
+	bh=Sku1S54gVQSLF4WxYiR6ekGdxuT7ByB2xOOi4dubSn0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=F2g0rYKlcC6ilv03l32zu7+ENdSA+WOZeVBZ2vqKbEI1cdP/RhU7hEpUvHL+A3qnDoM0HqcCDFNjtCUlxQZPen5d0Ce76OMpY7ooTJHX8uClBn8xphWdjlrGdD7uPsU2CA9yHr42s0O9cVfblsGzqSUh8alWBbn0zPvX5DrqYUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=cJlhQ5Dd; arc=none smtp.client-ip=74.125.224.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nB82giVZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KmJZrXYp"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5ADEA140008E;
-	Sun,  3 May 2026 18:59:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Sun, 03 May 2026 18:59:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1777849189; x=1777935589; bh=44rmWn9IIo
-	RVuWQQwi2ullfW85IAM07ZDBSV2spWDLw=; b=nB82giVZQ0k6xSX/rwWTbu70kp
-	qwgXgRPxKXzAfnWCFtfHYHZZCjOutHXT3p9RdumTn8oiyYyUbtNLTLb3ZZRd+BR/
-	ubJzQyv7DnX5pXBoMyknXnyFI/d0TP/h5qR0UMhVQi/boULKN6ST1hYmH3C32k/i
-	aOWkpITLalQQ/4dBARyew7GED5hJhci7yGz39IGPpd+40o2Wt46GWWdqsaXTe4DQ
-	t+2faPJhOWMPJtrYR8JLKaRWj3T2OnV0fHh5IBoPx0stnbv1mID2E7XqY7PPwgIg
-	F77tfZJdHgUiqFyeXQLrnSh+m/Le2C+m7EsL7ZoZDJQcxH41EVHFNCRDTlrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777849189; x=1777935589; bh=44rmWn9IIoRVuWQQwi2ullfW85IAM07ZDBS
-	V2spWDLw=; b=KmJZrXYpqU6FVZHP89S/yBP76HHw7SD4JTcBGjhU0NXE5nxN1Kt
-	76BOu9b5XMuF2D0cgaeqoGgSJ5c/YUxy37r+a68aiblBrofYn0SsWSysIDwHLtJd
-	wjb8EZFXU0VZdjxGKGIpD5nXUL92ydQ05HJSx208OXQBi8zZchLW+iJlvy83kGji
-	Dzx/rmkWsot8rp/3VmnSkemQXJtK3KepFOFLGKTYpZD4qoROtb9MBicxtGcKIJy5
-	YqP1eeyy+nXJcaPDcwEyoIuOf34fYZhZ0MwuyVWDXHIjZbeFt0bH+/z0SKD5LJVq
-	98dcq7z0m8jSBHjGEOjaUb6+B/nhZdFtGBA==
-X-ME-Sender: <xms:ZNP3aZHA-nNQI_zlzUyrHqGFYGbI0wd5lztTN_pCbr9zbPIMDDGakA>
-    <xme:ZNP3aUvC3EDTnfrqyWBVhWgjsXeOSb57Siv019wiIvy1pugN7S38Q8kd14GKyX7dz
-    UR4qXIUzSHWmziO3gpTzja3bbpoueWriECL2FQkVjhVitz0JNcQcQ>
-X-ME-Received: <xmr:ZNP3aXY9ophkJT4JjgKUyJ6aodg6gd_EKmzFlD2zKKWsT2GXzroTnLLDmKppYOudRj3yfvH2izA1O1uFhPjr_BB9vVCM4dgP3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljedvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedufedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehj
-    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhs
-    sggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:ZNP3ac7OgSKR5SfNHr8JJmTlY71QYzzRf_aE8Icnt46T3K89Oaht4g>
-    <xmx:ZNP3aX8s5DPFJ8sRCfFeTpRKumXyn-_8ELlNvNjwPu4Qfl85EQ_Isg>
-    <xmx:ZNP3aQZY30zoKb6ClQEm1AVXZNzmfPfOIh9NVmSA09ZmK6uGtVdzXw>
-    <xmx:ZNP3aY7BozcUOpY0e7fUd9bigklBIVqWcJgXB6fTQybKbaBPLxBs8g>
-    <xmx:ZdP3ac0-8CkF7OZPg835LVUpH0ieT62F2k-Vp4rFxjAs0k-Iuy5t2E4B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 May 2026 18:59:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  johannes.schindelin@gmx.de,  johncai86@gmail.com,  karthik.188@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  newren@gmail.com,
-  peff@peff.net,  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 4/7] backfill: die on incompatible filter options
-In-Reply-To: <22db528d0c5e6db71664f071dca97ab218f4ba45.1777731354.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Sat, 02 May 2026
-	14:15:51 +0000")
-References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
-	<22db528d0c5e6db71664f071dca97ab218f4ba45.1777731354.git.gitgitgadget@gmail.com>
-Date: Mon, 04 May 2026 07:59:47 +0900
-Message-ID: <xmqqbjewrtek.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="cJlhQ5Dd"
+Received: by mail-yx1-f67.google.com with SMTP id 956f58d0204a3-65c396d3b36so1654117d50.0
+        for <git@vger.kernel.org>; Sun, 03 May 2026 17:11:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1777853476; x=1778458276; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B0O9ZuiQTlFf4PoryHsePJQfaYK3o9E/0BYEqZin3bk=;
+        b=cJlhQ5DdLl6fzMeFE83Rv7OeNox55OVoGQw/PhdB5bWWW2QNxAE93Pc68M7XoVEI61
+         XwUsOYcFOdpMouRdaqmDfLhnL9MSWU49hSXatlm64RxwDietTrjRF/8anzQFHUmAjr4t
+         rfpfJp9dnklXdxnaLDVl4tr8jYHA8qhrAUfbauwPZCACe/nbAWB89C8+tvlsKpIGQkPg
+         tbMkCEAUSyvUIpwQuWzvCyn13NNljJPM3t/XBmMWu1HjUKdYmX04agscd0AhzOv/b3lS
+         nxDDDbzq899qell8reDtrrJJIcundlszLbTwvm0+pUKibYijQU+mIlQMvF57v+KcnKY+
+         cdjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777853476; x=1778458276;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B0O9ZuiQTlFf4PoryHsePJQfaYK3o9E/0BYEqZin3bk=;
+        b=fpGfnFOuizkPaI+hEWaLfMSV21QKlZVE3+1DOAj2k8kYpR2jZ1ouExgNY69Z2XMPhW
+         XekOcnX+Rly99djDhNWhJ3wVo0IJqAczyu4uNzRQfhbf/176zwqoY1KbjiVXH5SKMtaq
+         n1B7WMl4yX109jyRVR0SMUWFGk0YkNq9YEDvTXViApFsapznsfs4SaTJSbSHtz5rIhWG
+         HtQTzz/TRo3AkHmTtjJ2ckG8n+74wZMXuDXyrmLbVloD6DVK9zDGpWzg7xIqPPTuY2JW
+         JM3Gl9ln9ZUC/+72JW7vt0ai1WRXvVgANJR8cf9anJqf+3GxK5p/8GewKJQnCAtxsZbJ
+         SMIA==
+X-Gm-Message-State: AOJu0YyPXFRIkXaYvuvp/VfDuqpaoJfOK5vh0TwvIf9fM1ecCTRqli7q
+	RxqHHXo8JAsqsfn+/NEhvAe7ED5n6tD+A1POlAWoA97SgOZVZ5y1sqcGvMHDwnocYswbERdpHLX
+	Hibbz/qy023Eb
+X-Gm-Gg: AeBDieuRMKr2kRzPknRYsLfpW5Ob6Issg4xPdItpc/Vv4rePUlRx+paqcgbfl4pZU/l
+	+QXCjxY4EGiS2XQ81QSVK9BCjwJrAO5Db9qS9/UttgzDzOU7Jc/N69ikcZolQjMDtKHZKfU/m42
+	K8PImzS4rHIiQqzJH0bquMWlGkiw1lZ8f3xyoew6hc6foPBmRzMCz7zqtjyxZLGOveSxlR4C3cT
+	fQW4iftOKDSpMy/m1OFf+laIjMiCr0WEIH+LzOd4bCs7piA3e6oAhv0UpRySmePOt1GbC+h2VzZ
+	1b/jwdduW25roq557oZ/rfa14VQBweijSLKYW3+m5vY6fGGoQpvhlDuCJjveH7UKMAGi+9WhtCq
+	pMg0cm812lb52hxkB94v1ioh65CqKHwkI7zdoSTU5fiNZX/PZFPPl+3GVq6EL3hIJKAFZXOdcEO
+	hukyV+7wuin0CJy82h9a8/7hkggolJh88a7y7iHkoHjOJVNB5NDnWHsiojskP9KsQjHgJjoKEUA
+	yHdtd61U6SefgPZK4nmUXQOVBo4/xXVBdYta5tdmdCVQT2BYJtLCfmEHvI+jzBW1F3NZLcs/o8d
+	X6rSf108Aqfd9WvR+cHmmJA+LvA=
+X-Received: by 2002:a05:690c:660c:b0:7ba:f3a2:5535 with SMTP id 00721157ae682-7bd7710423cmr76139337b3.31.1777853475827;
+        Sun, 03 May 2026 17:11:15 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd6652742csm41797927b3.9.2026.05.03.17.11.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 May 2026 17:11:15 -0700 (PDT)
+Date: Sun, 3 May 2026 20:11:11 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Subject: [RFC PATCH 0/7] pack-bitmap: resolve various `--path-walk`
+ incompatibilities
+Message-ID: <cover.1777853408.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+(Note to the maintainer, this is built on top of 'ds/path-walk-filters').
 
-> From: Derrick Stolee <stolee@gmail.com>
->
-> The 'git backfill' command uses the path-walk API in a critical way: it
-> uses the objects output from the command to find the batches of missing
-> objects that should be requested from the server. Unlike 'git
-> pack-objects', we cannot fall back to another mechanism.
->
-> The previous change added the path_walk_filter_compatible() method that
-> we can reuse here. Use it during argument validation in cmd_backfill().
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  builtin/backfill.c  | 2 ++
->  t/t5620-backfill.sh | 8 ++++++++
->  2 files changed, 10 insertions(+)
+Between other tasks, I have been working on trying to integrate
+`--path-walk` within GitHub's infrastructure. In order to do this,
+`--path-walk` must work with features that GitHub depends on, such as
+reachability bitmaps and delta-islands (along with filters, shallow,
+etc., though more on that below).
 
-Another topic adds a helper function to check for many incompatible
-options and calls it from here.  When I merged this topic, I made an
-semi-evil merge to move this call to that function (with necessary
-adjustment to the parameter).  Please sanity check the resolution I
-made in 'seen'.  Thanks.
+I had been sitting on these patches for a few days in my fork before
+Stolee sent his series in [1] which resolves incompatibilities between
+the `--path-walk` option and various filter types. Since I figured that
+others are working in this area I wanted to send a reworked version of
+my series for a couple of reasons:
+
+ 1. Since reviewers are already looking at this area as a consequence of
+    Stolee's series, this topic should be slightly easier to review
+    while the area is fresh.
+
+ 2. In case Stolee (or others) are working on resolving the
+    incompatibility between `--path-walk` and either delta-islands or
+    reachability bitmaps, this series can either combine with those (if
+    any) or serve as inspiration (if others are in the process of
+    writing such series).
+
+When writing this originally, I had borrowed the same filter-application
+mechanism from bitmaps, which supports trivial filters (e.g., blob:none,
+tree:0, and combinations therein). Stolee's series is a strict
+improvement on that approach supporting sparse:<oid> filters as well, so
+I reworked my filtering-related patches based on that.
+
+The patches surrounding bitmaps and delta-islands are largely
+unchanged from when I had originally written them:
+
+ * Supporting bitmaps with `--path-walk` is mostly straightforward, and
+   boils down to ensuring that the path-walk-specific object callback
+   indexes any commit(s) it sees for bitmapping.
+
+ * Supporting delta-islands with `--path-walk` required a bit more
+   surgery, and involves propagating island marks for commits in the
+   path-walk-specific callback, as well as recording tree depth
+   information in the same spot.
+
+I'm submitting these patches as an RFC, since (a) I haven't thought
+deeply about the approach taken here and could very well be on the wrong
+track, and (b) in case Stolee or others want to combine forces here
+and/or coordinate around each other.
+
+Thanks in advance for your review!
+
+[1]: https://lore.kernel.org/git/pull.2101.git.1777731354.gitgitgadget@gmail.com/
+
+Taylor Blau (7):
+  pack-objects: update `--path-walk`'s existing incompatibilities
+  path-walk: support `tree:0` filter
+  path-walk: support `object:type` filter
+  path-walk: support `combine` filter
+  pack-objects: support reachability bitmaps with `--path-walk`
+  pack-objects: extract `record_tree_depth()` helper
+  pack-objects: support `--delta-islands` with `--path-walk`
+
+ Documentation/git-pack-objects.adoc |  10 +-
+ builtin/pack-objects.c              |  62 ++++++---
+ path-walk.c                         |  63 +++++++--
+ t/t5310-pack-bitmaps.sh             |  36 +++++
+ t/t5320-delta-islands.sh            |  29 ++++
+ t/t6601-path-walk.sh                | 196 ++++++++++++++++++++++++++++
+ 6 files changed, 365 insertions(+), 31 deletions(-)
 
 
-> diff --git a/builtin/backfill.c b/builtin/backfill.c
-> index d794dd842f..51eaa42169 100644
-> --- a/builtin/backfill.c
-> +++ b/builtin/backfill.c
-> @@ -144,6 +144,8 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
->  
->  	if (argc > 1)
->  		die(_("unrecognized argument: %s"), argv[1]);
-> +	if (!path_walk_filter_compatible(&ctx.revs.filter))
-> +		die(_("cannot backfill with these filter options"));
->  
->  	repo_config(repo, git_default_config, NULL);
->  
-> diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-> index f3b5e39493..3580e10b9c 100755
-> --- a/t/t5620-backfill.sh
-> +++ b/t/t5620-backfill.sh
-> @@ -15,6 +15,14 @@ test_expect_success 'backfill rejects unexpected arguments' '
->  	test_grep "unrecognized argument: --unexpected-arg" err
->  '
->  
-> +test_expect_success 'backfill rejects incompatible filter options' '
-> +	test_must_fail git backfill --objects --filter=tree:1 2>err &&
-> +	test_grep "cannot backfill with these filter options" err &&
-> +
-> +	test_must_fail git backfill --objects --filter=blob:limit=10m 2>err &&
-> +	test_grep "cannot backfill with these filter options" err
-> +'
-> +
->  # We create objects in the 'src' repo.
->  test_expect_success 'setup repo for object creation' '
->  	echo "{print \$1}" >print_1.awk &&
+base-commit: 465ceb37112ddfc6338727887f4431e755bf1831
+-- 
+2.54.0.4.g6aa0d38a4ec
