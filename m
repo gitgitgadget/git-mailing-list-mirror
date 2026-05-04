@@ -1,94 +1,87 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9017B190473
-	for <git@vger.kernel.org>; Mon,  4 May 2026 00:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B262542A82
+	for <git@vger.kernel.org>; Mon,  4 May 2026 01:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777856390; cv=none; b=kmsXXcuksl8Xf7s51BYFUJAkk6/u9kvkgvcA2aRHlR9K44CHpYuw1mke1dsbJqgZT3SiagnlgvBjr/V4BHJ4XCjTMvrVxKQEvRyUMm75nTiM3gYBDz/mR8MfRXP5RU0O1T6lvUfj4fqgkNfKgJO39YaPdbb2nE+WPgOr9Z0fCUs=
+	t=1777857031; cv=none; b=c+SqOMcnFjHKmFIePclQckOV0wXAQ4OEDAPEvDYXxxCgRrFj81BnMd6S89hdo1n5Y6Gsi1G73rfbTktAQRCxh5m3BE4to45Kbg+emUAtnOTCcu720m/xPH9XE1c4P38+ZET4B/nmMiMb9PtVBrvwjb9xEn1TA2YD1VjQvxSy728=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777856390; c=relaxed/simple;
-	bh=lXfvGBkqz16ou0ayHHKPRXsL+tpxJsbWgzj9M5aps90=;
+	s=arc-20240116; t=1777857031; c=relaxed/simple;
+	bh=1kFuMIrNO8skLaXQFxfcC5m+Ivbsw35sjKnO0xaAUQk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s5qX18l0PJGQd1jOnWN1LE1SAHL7VYcRsxdQDcQxUz7gdsvjAGSPbQYcoUPRXMYew7eAaC6Eh4NAqw70TeiulQ5TBmNXhyEsQ8VbP1I0MyhXY29K/qkOAftepJetmZbZsnSCpLcHl3IaxSmmjWhagwo/8x+hH3TGrOPcHaVruaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dccDjdLY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dwc5Kz5B; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=p1e+W7CTeo7rOeC7bh0pxMHje/XFvnH2Dc9zSvQWyBhLWx6p3Lj2kb4RztDu7qmNpLj+9Dt/SugsE36CruBiR2B6m1Nvr4A+digUKmkdPw2sMciKvexkKVZ9Ds9rTmR2dSneivuapVacD3coB7dyjeggGk9N8pdT9Db4VX4g/qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ryhltVdG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k78Ag/k/; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dccDjdLY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dwc5Kz5B"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A1EE57A0049;
-	Sun,  3 May 2026 20:59:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 03 May 2026 20:59:48 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ryhltVdG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k78Ag/k/"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AE01C7A003F;
+	Sun,  3 May 2026 21:10:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 03 May 2026 21:10:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1777856388; x=1777942788; bh=HkYV9zISgc
-	e90taBSB5Av/EIyL7aUX5nRIjaAt0IZqc=; b=dccDjdLY1U2nTu1OGC4keH52fr
-	giezFf8pECTA4DdPD+RIQkghc9ko2g032WZxA7xZdPJFGc4m8P8dp+3tiFRZU++5
-	ZvN9gE7COaNnGEz181XI5wWoelCe9Ni8hCeqggOBx9loK+PZCRfsA7gMyhYFHvNC
-	nO5yWfI5NQ4owtf9HKZtLiYr9PprhsdhgRCTL4yhnssufcXBDU/obopNS/h1wq8F
-	4GLOD60oGERz3I7D2/IzSQ+XiKv19N38JXtP20+wvEZtXYAR2OrTIm7RUsJcLjwv
-	ELP4HlfJpyuO8h+RwbYlK9Q2fTZwc1fN/ZU4qWTUd0EKxVnDFckijLDGlKMA==
+	:subject:to:to; s=fm2; t=1777857028; x=1777943428; bh=qlZjakXmLr
+	PiMUfuIJoSAXzyL4BWzVPmpVp3CJX5FBA=; b=ryhltVdGbm++13AHlL0uFzJQpn
+	7wKzM/JJvLbWwU5Be0vbJ6hreiGemXPLIkZCzOWafzHSVmg/bf1empYOob//DjSI
+	XSNJHQwXOtvGpq4ch6FRZLsnilt2BxHI/WP0Pzvs7Azwhe1HZUZz1CtP8r47VBBH
+	3FCiom49JtPMGljhqUgkZu3pfZfqR+NufPEUKAxKndTVQTUsKgwvmIDxpazG+aR3
+	KLT2HEX4/LW1e9x5qz1IFlg7XrkTSLfFnNviC65lWC3vN6qgdP8G/Hphmi/SxCz+
+	5/0hUoHEWruWN1Wfju/Bn13iynhmrhfPCvI6G0K+doLIrZGAX2Ky7ZW1MzfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777856388; x=1777942788; bh=HkYV9zISgce90taBSB5Av/EIyL7aUX5nRIj
-	aAt0IZqc=; b=Dwc5Kz5BoAo7+5GTgCAtBIqpf3HujQOSkaps30zE6vP6ZisxWY5
-	COZpf9fbqTMfdZSgSvuL9zLZ7HnUH19YUs2zaXHSMy8MaSouPYVj/Mt+arDMXUGM
-	ngPm8DO8Ch4VlJjxRwzqi+x0SCDjEBksJEcsEYfWudMpit4JwC2nuYFNNnjagVwn
-	XGPgZBixavSjnVirqDhYzRepVdAXWOdobGyB0CXnH9R6RZ2oY9YQdLUcbobhlIrf
-	EKIGtOKvkZrpnyH3wf4DzKPbKVwY8op85Bj7g8Gs3lzbM1p3IUq/iYoSM8cLXLMv
-	pmGeZYcfL8Huw/5XCkfzzbZ3ZJ+hjxXpygg==
-X-ME-Sender: <xms:hO_3aYvCmpmFcbytIElY2Z45qj6VuM8nxWH0OsjaGdHM72DXZeFk_A>
-    <xme:hO_3aSCencv7ULYJ5pLagkr0rKBFFquRWVx7Ll8FJNzVgjrlYTkKpCqDxgnLeIX98
-    pknBGYTXElLnF4pdEusIVOgrYHLwN539wh057vViXkckG5rugs7hI8>
-X-ME-Received: <xmr:hO_3aYNMU0dX797NHrMT7oxk4Btuz-nrNoCegfCcIoTE9CHaHYrpVunGk2KUc58hcaytyAXX60adtfijRPHJItdnkG3QmU_H9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljeegiecutefuodetggdotefrod
+	1777857028; x=1777943428; bh=qlZjakXmLrPiMUfuIJoSAXzyL4BWzVPmpVp
+	3CJX5FBA=; b=k78Ag/k/3EqfiEZ5tMWWjLl2Uv5jpzR9oI5EBrHTb6Egbho27OC
+	yQ/oXNZvwM+4koE9i+o/siAdv+IFcOXH4rhuVKw9ydkIZHbJQI8z7kFWfm6SkfQY
+	BDsetul31/Ufq0igpMXmJJ1d5V0Vf4bIym5CPaCgEC6mky1J8n4zL7JJOnMNc1Gr
+	gwA0OS9rzxcKokBvSfWSG3EBenYW/8GpizKFUg4NSn2jH/EahYXSxX1Bnmp67aDI
+	tC1CSE6Kg7vepKxlJ6MR6kWNr/1UuLGsknFZ2397lepv00TsAton3CUJFhtv0Tya
+	N/VF27rh/swZuYH7z6pHpG68mJgozROBREw==
+X-ME-Sender: <xms:BPL3aeedKo_PHiMMQjBwACO5fADSZYkeKjs0h-m4i-Q3aBoncXyLHQ>
+    <xme:BPL3aRg15AXc8UCzsacI8a5LtjigN2V0aECNmfum5VuAVGl4_AxMvQyTdxJPwQb6l
+    BsyqAFZs2Uo-eugeLic_D72psuPnsaOkdFhGhRFZeyRkZLMUiYjEw>
+X-ME-Received: <xmr:BPL3aWz6c7IidvVUEAuPX9M6TVQGgvjqmiaezG171i_byahips6iqAxK1r-WeyWe0InDd1lyCF_8gTFNQ7wkWm9EU19rWhmHpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdeljeegkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephi
-    gthhhinhdrghhithesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggs
-    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnh
-    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:hO_3aSBHbojWiVL8iHwIDBgNKFx7gO_zdwZt2eGkaFRcTtgg7pz3WQ>
-    <xmx:hO_3aZ7geNixNY_yddIBnViqWogj0eqG7dsqtkigLi3wtK2CNdSowA>
-    <xmx:hO_3ac4O8LNOyCV5M-6S5B9YauwUPTMKO8XYzcuh9iWZ483v-KciNg>
-    <xmx:hO_3abTKKyjJa1UhHj2dCVNow4WN-tdotfuXN2VRuxRRKleSRyJyMw>
-    <xmx:hO_3aWdwW08IRPLgwZjDpvcE6W2fNeRScHV0M6i1ZtdVQYCff8-mC1uU>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopeguohhmihhnihhkrdhlohhiugholhhtsehunhhivhhivg
+    drrggtrdgrthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheprghsvgguvghnohesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprghsvg
+    guvghnohesmhhithdrvgguuhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BPL3adPGHkHvDqGe_YKTp_zprgKeax7CDk9p66lqCd6LN8wKAM3c5A>
+    <xmx:BPL3aXWwSLNSmEyRLy---8NQItcGIkUcu2uj7wvmpNfwlDYbmmgWXg>
+    <xmx:BPL3aR1EJsXNYG5M68BsfjvdDHZNHo-HvR63FCZU9FL7Vjy0uBPABg>
+    <xmx:BPL3aVrqfC7gmZXBFcUUP6Xblf2Ffy6AudIPJKCyjJwvmuOtnLtpGQ>
+    <xmx:BPL3aSyr0zlb3ELKZWvQMHLq4taXy1FFzeDr-JBAisQEW7ObvX4L99Ez>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 May 2026 20:59:48 -0400 (EDT)
+ 3 May 2026 21:10:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Yee Cheng Chin <ychin.git@gmail.com>,  =?utf-8?Q?R?=
- =?utf-8?Q?en=C3=A9?= Scharfe
- <l.s.r@web.de>,  Jeff King <peff@peff.net>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Ezekiel
- Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v6 0/6] Xdiff cleanup part 3
-In-Reply-To: <c8b48c6a-5a20-4981-9cd4-999b40c618fc@gmail.com> (Phillip Wood's
-	message of "Thu, 30 Apr 2026 14:35:49 +0100")
-References: <pull.2156.v5.git.git.1775679988.gitgitgadget@gmail.com>
-	<pull.2156.v6.git.git.1777500495.gitgitgadget@gmail.com>
-	<c8b48c6a-5a20-4981-9cd4-999b40c618fc@gmail.com>
-Date: Mon, 04 May 2026 09:59:47 +0900
-Message-ID: <xmqq8qa0q9a4.fsf@gitster.g>
+To: Dominik Loidolt <dominik.loidolt@univie.ac.at>
+Cc: git@vger.kernel.org,  Alejandro R =?utf-8?Q?Sede=C3=B1o?=
+ <asedeno@google.com>,
+  Alejandro R. =?utf-8?Q?Sede=C3=B1o?= <asedeno@MIT.EDU>,  =?utf-8?B?w4Z2?=
+ =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH] compat/posix.h: enable UNUSED warning messages for Clang
+In-Reply-To: <20260503151210.36036-1-dominik.loidolt@univie.ac.at> (Dominik
+	Loidolt's message of "Sun, 3 May 2026 17:12:10 +0200")
+References: <20260503151210.36036-1-dominik.loidolt@univie.ac.at>
+Date: Mon, 04 May 2026 10:10:26 +0900
+Message-ID: <xmqq1pfsq8sd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,10 +91,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Dominik Loidolt <dominik.loidolt@univie.ac.at> writes:
 
-> Juino - are you happy to rebase pw/xdiff-shrink-memory-consumption, or 
-> do you want be to send a re-roll?
+> Treat Clang like GCC 4.5+ so using an UNUSED parameter emits the
+> intended warning message.
+>
+> Commit 7c07f36ad2 (git-compat-util.h: GCC deprecated message arg only in
+> GCC 4.5+, 2022-10-05) restricted use of the deprecated attribute's
+> message argument in the UNUSED macro to GCC 4.5 or newer.
+>
+> Clang identifies itself as GNUC 4.2.1 for compatibility, causing the
+> current check to use the deprecated attribute without a message, even
+> though Clang supports deprecated("...") since version 2.9 (2011).
+>
+> Signed-off-by: Dominik Loidolt <dominik.loidolt@univie.ac.at>
+> ---
+> I am not familiar with git's minimum compiler version but this patch
+> drops support for Clang < 2.9 from 2011.
 
-I'd rather not risk botched rebase by a third-party and prefer to
-take a fresh submission by the original author.  Thanks.
+Does this "drop support" because you force _all_ versions of Clang
+to use the "deprecated" attribute, even though you _know_ some older
+versions do not understand it?  Don't these versions identify
+themselves so that you can do
+
+	#if defined(__clang__) && CLANG_VERSION >= 2.9
+
+I do not know if the userbase of GCC and Clang upgrade with a
+similar cadence, or we seem to say that we care about GCC 4.5
+(2010), so giving  a similar version detection for Clang and exclude
+ones older than 2.9 sounds more appropriate.
+
+> Dominik
+> P.S. This is my first patch sent by email. Please let me know if I
+> missed something.
+>
+>  compat/posix.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/compat/posix.h b/compat/posix.h
+> index 245386fa4a..ed83a4d9d4 100644
+> --- a/compat/posix.h
+> +++ b/compat/posix.h
+> @@ -35,7 +35,7 @@
+>   * When a parameter may be used or unused, depending on conditional
+>   * compilation, consider using MAYBE_UNUSED instead.
+>   */
+> -#if GIT_GNUC_PREREQ(4, 5)
+> +#if GIT_GNUC_PREREQ(4, 5) || defined(__clang__)
+>  #define UNUSED __attribute__((unused)) \
+>  	__attribute__((deprecated ("parameter declared as UNUSED")))
+>  #elif defined(__GNUC__)
+>
+> base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+> --
+> 2.54.0
