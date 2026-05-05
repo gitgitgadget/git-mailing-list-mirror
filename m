@@ -1,110 +1,87 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93FD38E5C5
-	for <git@vger.kernel.org>; Tue,  5 May 2026 06:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86803AEF51
+	for <git@vger.kernel.org>; Tue,  5 May 2026 06:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777961379; cv=none; b=ZU24utb+W9IeIze61izJU8IwdnZDhnWFByVNM2JvAt/q7JLuKMBrNQWRhGWwKzYmGWgxlkkEwwdqxS4API/WsxGWsA43PJ/Wworqrz3VLxbWdhjruD66wDWAVwikHPBZS5U89AsSuIYgP1mUG0h5PJ6RDiTUlZksKPpAUSGmhf8=
+	t=1777963398; cv=none; b=oakB87x6pcVZYuI0IrDTGABg1fSY7z/WEiqgI6yJIcZHjsQZykrRcKDlHIWS3I+Bp0ECLlD24ZBb4t3d8TDi4Wvx+IX88JPzrcXL3xR6CHig8JxzScdfjzz+75gx0QFq0tjUoyio0xfLO7hn6nADC+a2wMdcsYhR88rhBcbOemE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777961379; c=relaxed/simple;
-	bh=GzSduC9zylCS+Hs0OMaw5NhamOkc1Q06ymk++5OTxQ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gF40c8OKdb95+e5djflBXRqqt8xcKL3lN7k2t7GWJm+zHO0WMVGZRUY2WFnR0IdRX6C0u0FDwKmBKqvSSOMqbXBMN3UJ4FRslr2oh3oFWx/K8VESRA7seEFD0pbhconmRXYZ4E5J6nPoe45KoI+vwJER21E/U8wzP8Cq3xb5o4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YRE9h7Jn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W09pU6uE; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1777963398; c=relaxed/simple;
+	bh=i8bFhd+l7MuVH8N48lwIMq+LcYjaZD2BLpO0sT9FnPI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Iz5BEg88yVN+62PloaUF+RiekRDCiN4Nh0G93SI2pZwkLzIhopkh9TE7oQNHInFYSxamWDBcZhwauSnIYQZsQkYFWImGE6rVzRDn67zOusdM5awhwlu+gaHNYFpPxd8Vd7UKGP2A6LwxGAfeFS+7eMvj7o/Q4J1dL6b4E2VVLfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z45p2yRp; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YRE9h7Jn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W09pU6uE"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1F36C1D0001C;
-	Tue,  5 May 2026 02:09:38 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 05 May 2026 02:09:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1777961377; x=1778047777; bh=5db8bloRw1
-	HgXl4qBYjAByDR17gMac6W5/dOHkag+Jg=; b=YRE9h7JnaXASEjdxNIy8DfCwdP
-	xc/uzXPqopKtFN4UZHn37v/n9PPoeS4Uh6R4BvwGDMjnlEwIhrApaFfe+N2vQik8
-	QjwGM/+z5KiAteJhlAEIIFt5nnSUyOqjmHe8s6QRBzHhmLBv9occTCy0Go8KUNSw
-	lLs/SczdyA3Yor8sp51vnpodNxiJW7HDx4NFVVQaciPrmIEQ/E9egV1zhhfWeIFQ
-	BoVa//oUjDEhMLx0uiLk2o/Gvr43Gne2icXirT9UunhiyYaI9yKKkRSj+0jr0vCL
-	wmFiR6x3ulwPvm5t+s67Miw5vm+6q3R7ivNlb2+jL1qwqn/3jU1zcshBhOEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777961377; x=1778047777; bh=5db8bloRw1HgXl4qBYjAByDR17gMac6W5/d
-	OHkag+Jg=; b=W09pU6uEfTf+dAfXprBQ8OkC8uTmPFi7vPAtDItC0qwOI7QpBER
-	13kyBVrm3Qlw/ODP4Rs+q2rExoF2GcwIt4DsXZr3oJVemjYBBAhu2v5P3+yFC9T+
-	GF+gMzCgCzKnC5Zb0XCO9rKmxwcL8JFwqYCseKIHpZykaASQnaxi4fXgNWhCPnmi
-	NyyDvoedp/9V6UZ8qvrHh22WWyskX/ifgLbQeiRgY33xh7WrRfg7zLR2l1f923hA
-	zcEGnCYQZmM/+JZy1+E3RO8vCcnCYkwqdS33Yw/8pjkP0XrTs18VnQJtNVmVSD/6
-	ApGBAkXcvdAZGedMCdamr1/HrEXEmN6Evdw==
-X-ME-Sender: <xms:oYn5acHrJ94O3Bp1-_RTomhkrgWbj0qxA61evHlVsvgJsDBIa3mtqw>
-    <xme:oYn5acy-jNoIeG_dec9kOVLIKVkcMqgLyWl0DFDZyUXGYXtUUGWKp8k-R7pn9SzQO
-    tt4MlshEi4-UTvGu86E7ic_miqB1bLDXyc4Kd7J1QzYYE3I8_bO>
-X-ME-Received: <xmr:oYn5aTiN5oEOQGx4nAuJcAaYOhfhbM735SJ2W30gogwBFP7lcByohFtFBJkHnmUuWdA3SHwgJ52Zh_-HNYOqx0zTvszOx3idodN7RX0fsw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddtleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnh
-    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:oYn5aXz0dBpi4l7z3VsH_JvyZAMZHKTKksQJ4VKesuUkRW_NDDwc4g>
-    <xmx:oYn5aWL8JKycuNRKPP1_9_HM0m-FdPRDD7nm6OS2ySFg8JSY4ki7xQ>
-    <xmx:oYn5aeQCaTdOdXtzkdRbg_H0w_0Bm9kyAra0vn4VohUOkd8-MI47TQ>
-    <xmx:oYn5aeocUsBAByj0ySptbBvm1qaPkfaCzSVmf50O1vjMVFpMnyZqew>
-    <xmx:oYn5aaSC7n02tSIQUYF9FHBd883Hf9vyEGnR0d4VZrIzipOM0qHuDVa7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 May 2026 02:09:37 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 08a44812 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 May 2026 06:09:35 +0000 (UTC)
-Date: Tue, 5 May 2026 08:09:33 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: stop using nedmalloc
-Message-ID: <afmJnZXeWtNEru4q@pks.im>
-References: <pull.2104.git.1777811392756.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z45p2yRp"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-44da2de25f3so1213329f8f.1
+        for <git@vger.kernel.org>; Mon, 04 May 2026 23:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777963395; x=1778568195; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i8bFhd+l7MuVH8N48lwIMq+LcYjaZD2BLpO0sT9FnPI=;
+        b=Z45p2yRpGF/meLWMf8yBpbRH9S4Fgn+K2FhP3I+eY8VHnHpdGH3f47hp8eYt5DUPeO
+         2d4xUNRHiSU8qJeRgqP5XnR9OeY1foaSKMzQ0rsRKRWJUPbrfZ7JRrwpCQJ0wBdarUPp
+         77Ear6p4hwhdXWtwOHEmT+8r03xmDhFC6eazuy05GKWPH9aDFZi0n8UIHMq3VDAvsKBG
+         WyPFwdlW5kh5G37dKhHsCRmY/l3c48MFuZQHRaOdDBVOyeRblCxwuliCoUSJxgUm5hDj
+         h0oUKZPvA/jCWTcejmnGR501kc0h7/Gf/g6GN582MI+G1hp49AG5wnRN1odg5+B1xSFW
+         G+DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777963395; x=1778568195;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=i8bFhd+l7MuVH8N48lwIMq+LcYjaZD2BLpO0sT9FnPI=;
+        b=BaHZSUv7Sag0gfmUIdCG8D/PDsoMxQS3S599CJjbmt7p03qYIKaRcu3k1UaaBuQ3Tt
+         WoSanbRQsdd0L1NsLfwOw8l0NSr9XOLyvsAJHbPdYNZAcfHn7RqmfOQwIOs8wBC4OpYF
+         HzCWJwybX5mCIv9WiC06lGhoM0SMJcFGrMFKwFo93p8TZX4Dn2EECgvlnYrW4bvudutj
+         /EnDXZY0HfGndgE1Ov6aQwTIOyFtulVeQR8bwG9DKlUYv7Cmaae5Tt+BK6lsCls07NAk
+         a4ovUrWTePackP8168uQ7oLjfI+u3QeSWoo0P8QVreApnK4UkEy68og6koRVyxMU5ckt
+         WI/A==
+X-Gm-Message-State: AOJu0Yy8SUaVhp7kEr+vPSI+4SO6E5s85664xc7yk0CwM0Z/4KxLQwx1
+	PCyfBufhFoucbC4RKsxlgWTlrAWCQq7KHXdWvmjE1JjaIyh7HWEBhyj2rrihmYgE
+X-Gm-Gg: AeBDievqJ8r/EdTX0d4tqvLT2N9XATOpK/gegriTI3QbmoP56f6iBIIfCFCJC51t/Mh
+	54VLtf5ywTmANvALpd83QEOPXMv5LM6TU6REmGkjNkDd8Ep3Shz0mqcp4DUu849c6xgGT/EQjqz
+	UHnksPI9Cwu7dNucjmj2IiVaC/tM5kykHWk9i8YU0h9OhnwOlJXTnz8TJ1bKg7+jz6EZl0985Xq
+	DavWHc+kkbDHSn6K131BfndC1rqle35RRUK6DcdvY2tqjD7383AT3baxuoHxCDsKIy/dS17Du5W
+	Zb+f/VirWIRIcUGmvrFKn/4YOmsD9xLcdNRz9ENZrx454BgmNWbw534kh+qo/ELXf+6lLqk/m+4
+	gRQupoOQmWmg5lLi/ARbd+H7Ul6yMH81iTcZrccCVMqct5BBmUrMsE/yZad5AXs1X2BMswZamyQ
+	qv1gfloW2J6kuNHccpWewutngJfTY3FpSUAu/slP1xB2pibIM+1tNi4VpDpAL0AtJ2XS1E+7zTV
+	rJuk+MkXSnZpc32oBDIeD6AyOPa
+X-Received: by 2002:adf:fc88:0:b0:44d:821:1a09 with SMTP id ffacd0b85a97d-44d08211b76mr12741429f8f.25.1777963394398;
+        Mon, 04 May 2026 23:43:14 -0700 (PDT)
+Received: from alibaba.. ([98.97.76.20])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45052a48b23sm2286742f8f.14.2026.05.04.23.43.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2026 23:43:13 -0700 (PDT)
+From: Zakariyah Ali <zakariyahali100@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	karthik.188@gmail.com
+Subject: Re: [PATCH v6] t2000: consolidate second scenario into a single test block
+Date: Tue,  5 May 2026 07:42:55 +0100
+Message-ID: <20260505064255.195476-1-zakariyahali100@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260429103607.406339-1-zakariyahali100@gmail.com>
+References: <20260429103607.406339-1-zakariyahali100@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2104.git.1777811392756.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Sun, May 03, 2026 at 12:29:52PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Rather than patch the unmaintained vendored sources to silence the
-> warning, stop opting into nedmalloc altogether on MINGW. The platform
-> allocator is what every non-MINGW build already uses, and a fresh
-> build of git.git's master against a minimal Git for Windows SDK
-> upgraded to GCC 16, with `USE_NED_ALLOCATOR` removed from the MINGW
-> section, completes successfully.
-> 
-> The compat/nedmalloc/ subtree itself is left in place to keep this
-> change minimal; nothing in the build links against it any longer, so
-> it can be removed in a follow-up if desired.
+Hi everyone,
 
-I guess this is fair as an intermediate step. But seeing that this
-removes the last user per our "config.mak.uname" I do wonder whether we
-want to maybe drop nedmalloc completely. Not necessarily in this patch,
-but maybe in a subsequent step?
+Just a gentle reminder on this v6 patch:
+https://lore.kernel.org/git/20260429103607.406339-1-zakariyahali100@gmail.com/
 
-Thanks!
+I would be looking forward to your review.
 
-Patrick
+Thanks,
+Zakariyah Ali
