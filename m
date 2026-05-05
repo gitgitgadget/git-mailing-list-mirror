@@ -1,186 +1,110 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B933EF65D
-	for <git@vger.kernel.org>; Tue,  5 May 2026 08:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777969423; cv=pass; b=Did3hJ3Be3Sy+on6u6u7I1TvEmEzL5bMdxzlnVURuzagOiSSep6nwHnp72GByMBE0itMQehF5u2ZxOnSqD9tnXuV4eYZ9A71DTWK9+lhc4jcy9hD9pfCv9kGYMqS/ly22uDryv+HnjLvitLG0iLNyrsxzrp5ATZ6YR7ss5Zv0gM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777969423; c=relaxed/simple;
-	bh=8jyjZGBUBVSeWuH3ByCX5xs126Yb+ht5T+7U3jVcrhI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UDplhUEkLLA8aA9lpdoQM/tC5mpRUHyIohw+AdNnQWyPmxmRF0fbiAXtx7T6U+nx53F14Q156Jmcs7Ibi6Xs9gYnL0KnJ0BJRkWxTniAm5QeR5Mevlf9uPiVo4nQ/GhdSK/WBi4J/SuvaiCNBctiXVmADGzmlq1Wx6ah3mq38qQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qwDUmNas; arc=pass smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926CB19B5B1
+	for <git@vger.kernel.org>; Tue,  5 May 2026 09:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777972818; cv=none; b=IF9gkTjYChDcnAvqMoxEnsaMMhEiAJwS57LlxhZLYuSr29yCEbt5KCu9memRspOTNFJFqNsM9z5d5DHgJbvctfJuGgqW2bP1YhM+HtVFjlm01Qh7a0mrMxTXCmMFo0Z17lGwukh8VCT22fYU3y3uhNLGKiLv3chg3tH1kqRKC04=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777972818; c=relaxed/simple;
+	bh=JA5TGXdkPEPrJy5NtUtELa2Al9IGYqnsEpueEx6PPMY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ok9RmgmotbAgfXj+MzA5uNsD+dfxBjzzTz8qoahG3HzXYSyh5EMrIj+0hhLHpMVrKk92lY5DOAKys2I+gMr5AeexJv5IJbj5EvoJYr44I2M7NPcaPyAQrM/TOorQVW5B6klyHktxWlHoBasWRn2ub/JrB4B88XCikCfPs3O7dcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hSHIn62P; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qwDUmNas"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-95699e8e26aso1230355241.0
-        for <git@vger.kernel.org>; Tue, 05 May 2026 01:23:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777969421; cv=none;
-        d=google.com; s=arc-20240605;
-        b=AXUvNP6Yrw++3/vgslPI2dmlr78hw6WKMvEYIBroDX6gOTbCApYYo/GRmbTM85Ita9
-         XA5t/rAin8w+smMy2x7v+Kk4Dk6t3C7wd/aBr5vJxkli/SzEXRwb75oIUH0qPRmPvexs
-         UtxUEmXsLGrCcMbXAJa6DLo9IGw5+7igOoyGkp2Hvivb54zxnFzSXAlFk4dtDh7T+w1P
-         q1XpKXZhA9ENfOev4FfW8XzKnwKUttfoGH1xpS2EGGDgAQ+i6/2V1YXd2JpJaESNyf0I
-         J487LEztRhxLhHDNtnEstkJSu6sFNFZynuBzqg0cxmCW1gumHQc2g5sDeqoP0JiPIr7E
-         pYTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=J/ZzKwDL6zZ0Oco9CH7rXOySgk7HkY7AHdviwu4TrFY=;
-        fh=Uv3BoY/4RM9pxrqM1sEzEr9JvpUQwCc0FATUaMK8DqE=;
-        b=FE9d9jsKtgQwwOTMivaxPLzRLoNn+KhxQ1MpJCLpmyEMcSrH+CKYsY4eW1imXc1sV2
-         MLxDW24uthmzD0W+VAV6XMumhaSjuf5/M7id8WZ4S4xM/Lylt7UCBJOe4FtD+wFeB/Uq
-         BatGLPk3IEierTigMg35VFpCn0MTEVJngdgNoSvxHEw2rOyftRv8IMULPPLJGiRyTfVq
-         3jzEdhNc/TmgPs7YrjTZv0C42Of08jhXQ5qNLnQRSi12esLlQLPsKd3R84Tfsg8J1pux
-         Ctdj9zni3fk37E93UHyKQCCXu19bg4ZoKjuxoSnTZKXCYt3Syoa/KCRhrRMkbhPDwQwS
-         edrA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hSHIn62P"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4852a9c6309so40341825e9.0
+        for <git@vger.kernel.org>; Tue, 05 May 2026 02:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777969421; x=1778574221; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=J/ZzKwDL6zZ0Oco9CH7rXOySgk7HkY7AHdviwu4TrFY=;
-        b=qwDUmNaswap/QaUlBQPgxyO7tAdklbxUGhtPIy1j3XvVqzMIpkwUsdTAUliaEIQE31
-         8UjjMLgQ8nFG1ofTAWRXixDG1kmsACsbnaZAkpLg50iiWR6qevE3Y9JEwH/ZfSlp7RBy
-         wdC7eZXTi0T12xkzaiNZEn3uTLiJ6/ks3h3c0YOVhajkYEvQwRbPIhzsX3NK2ULwQKGn
-         e02SEC7Z9mWLs/HFJR6GhNZthIN9yZx4X0IBosSzB4YU1Eq8E71XfTRSUTj3p1gk1+1+
-         qNsupJucTpowVM7FAzgJXMRgHyKj3bqRdAXt4pPqxTLzXFgobnnVJcfb4pa8NaJSxS/3
-         5Qiw==
+        d=gmail.com; s=20251104; t=1777972815; x=1778577615; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=65V6nDgIpDKir1C68siIYsRJtQWnd7gj/BdfPM7L/bA=;
+        b=hSHIn62PgjnrX5b8+ZMVdHenYSEnm+hNrhXYaxPVxD86ewYgGSKfpJOykbNgOuyktU
+         49iuFy3dGOaLuAkiYD5zANVpIedAtVWCApnOv+IynoiahBIOYH1alZ9iueO/94hHlx6I
+         vRXf7lq13dcyxuZyaCCahtHD3TlyYW6I4pLV8hxWBpr/dMKyeBW/zB6JawwtqCWcZj1a
+         0rySNlKWXpjnUiXi0uXcagzC9GKtF04Yv29XEe7faD3TjLDa0k2WouJPTlXOICIzBRIc
+         JA4SuGfJTomnK+yeDQd+wjcelTR5Ad2E+4s145iGMhbhbwp+6OCFAxJSoZ9/n8soxx0+
+         r4UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777969421; x=1778574221;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J/ZzKwDL6zZ0Oco9CH7rXOySgk7HkY7AHdviwu4TrFY=;
-        b=NpxBCxAhA03h7EjZ2Txaohg9Qh9JpblI2/xp+z9obrZkqcKYUX30K/VJfWVYUp8Kfp
-         PJ0fDnbAH7h89BM/jJ2bpFsLx7xFyzHS7Y4mUNBuYFbM58mpuhbDCU2JupJ2sf2Pqf0j
-         EuPVvlMSer9RJNnFKwfSiEN2D1g8E2GN124pQ2iIrWRX8fDta/rHPJ8/tbmzQZp1tFVA
-         LHEZCISx28Q4MG/8TD9sjpLXwXkV38U0KsRUckTvgH/OrSCMttO14YqSofSH7oF4L9rp
-         wUXRRDbZONBkkTXtwdsWqz/xVJJZrppSDI1zgmFGCGTqtez8+TLKd5MsSQPyGbOPvWAq
-         iExA==
-X-Gm-Message-State: AOJu0Yy4ij1HQpBf1UpybmxEPt+fuZRwMS7DkhmYo7zQU1DdCq16PVsn
-	GaWO7jnDkb84GJVyFOJHqp2Mnm7KsMs8lK73vppdYXg2YSe9CUIzjCmSUw5GHQcfHHUGwOtdu2M
-	0LNBWSpEOltKX0hriGZJorj7Nj72L3iZClg==
-X-Gm-Gg: AeBDiespzPhYOqwG6xrdMJeeiO7P32WC/GpsGP6J/IOLqAbvo6tz5iidC7hbN8XfcJi
-	WbWygGIYw2YNSMBBC6FlWGASnD11yK+xzIiqYizX0iDkXqncYoOpDZgLyhgo8XVeBSm9uF5Q4Rp
-	7wJvjQFJtT3/BjMWixguj8LRWEqTW85ffdgTbXFVYncNS1/RxscWB1kxkKSs1CvYF9Xiwu1OIxw
-	rxp4tCp62fV4V6+kYREaX0eS2q3S7V4V6HqPTyeV+44YFDLSuGLVZ4Ll0I8hOE7XmfhdvVeaB5I
-	PWKeUzwkHFdOLxulYWSO8pHRgPlrbdkxcYo/2tAmsRBsmzAh6fo=
-X-Received: by 2002:a05:6102:4bc7:b0:610:6e69:5239 with SMTP id
- ada2fe7eead31-62d87558a50mr5111822137.23.1777969420857; Tue, 05 May 2026
- 01:23:40 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 May 2026 01:23:39 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 May 2026 01:23:39 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <afmFmGo_Sg33Rv6V@pks.im>
-References: <20260504-refs-move-to-generic-layer-v4-0-936ac2f0b1a3@gmail.com>
- <20260504-refs-move-to-generic-layer-v4-6-936ac2f0b1a3@gmail.com> <afmFmGo_Sg33Rv6V@pks.im>
+        d=1e100.net; s=20251104; t=1777972815; x=1778577615;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=65V6nDgIpDKir1C68siIYsRJtQWnd7gj/BdfPM7L/bA=;
+        b=Q3FfQcaG2aNIiVk7TvFhADzfyXwQA2iJ/REOeSno4WeZwVlRyWRp7vXargt0MwtPPX
+         qCC0FiDBhrffGdQzEo4SzOuueWP37Q3OM6QbbnvPQF3jqGeGOx2dv6qH4IT3ZMpzn9AO
+         3uicjLuLlSFVz+is3rUIfjBLWILT880GO28+M/4bOH13hTyUeK4uai9fnBEXdHRtpfbC
+         Qnd1HRY/Krs9+Acm3KQOkSZI0u3IvS9s0Ctz39k4rlivj3ZXs7YY7A5pD/IwILFxwDUi
+         ckbVdZj+IEAZdhWzZAkaZuhhSW76z3xiI71VZDe9951ziRmNH79EoO5YYHj5Gk1aFGZ/
+         BPYQ==
+X-Gm-Message-State: AOJu0Yw4hbnnRK+TZPQPqADA8KTqoYeHISqeFOSRsBSQUqJPK/rVFLel
+	H1FPeF0mnZXJ55myca1Fmv6VfVEbgSjIWYQ2TLfclhGBrsWU8HZxnCZRfiCSjvE6gXJuk5WyjgQ
+	=
+X-Gm-Gg: AeBDiet6hhIzoBli7VLuDzJNYhNB7vCAsKLsNFU5KuHoDhzsOux1u8bi/js5vTBMn4K
+	NhW+QZfQL865D8horpbpoN/jhEkDb20uuv3R5w6xM8lx4TVcxT4ZyCulWV4xXez4YCOUu8Br0O7
+	sRTWyvd+UO4tgF7KsIqo5sRYfLf/cJTDNuSb6TSFAfQzXaxAJ08w3iJFTI7qWHm+hNOc+E4NJkY
+	8Uo5Ho0EtV6LZnL3U6W365SoCZy6L4i/PQLAU44yVbx4/RtGqLd6IycTHof4JiRPheBrGdNFmwR
+	p5Cg9nU9sFYvo1Io1PqLa0SBvxif1JLK+rPnE5uFLgJffIxc1alVSjVLCwvMTlosewI6vjVRMql
+	rSgmdq5nmPPmeoiwW9LAVZ/bpIImlrIFQrO1Mj+0nMLcowJ0ylxZeJ2TchO+7x49JoYz2YOOYLh
+	j550jSo7J0Ru394+O/RWgwUAwXbHbDXHp5eYMwUPZQyOx9Qip0WoP2bnYzug==
+X-Received: by 2002:a05:600c:528e:b0:489:ecee:c4ef with SMTP id 5b1f17b1804b1-48d18bde33amr34556625e9.13.1777972814519;
+        Tue, 05 May 2026 02:20:14 -0700 (PDT)
+Received: from localhost.localdomain ([85.121.183.69])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8ebb2fa5sm291828175e9.12.2026.05.05.02.20.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2026 02:20:14 -0700 (PDT)
+From: aminnimaj@gmail.com
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	peff@peff.net,
+	ryan.hendrickson@alum.mit.edu,
+	Aliwoto <aminnimaj@gmail.com>
+Subject: [PATCH v2 0/1] http: reject unsupported proxy URL schemes
+Date: Tue,  5 May 2026 09:19:39 +0000
+Message-ID: <20260505091941.1825-1-aminnimaj@gmail.com>
+X-Mailer: git-send-email 2.49.0.windows.1
+In-Reply-To: <20260501190401.1580-1-aminnimaj@gmail.com>
+References: <20260501190401.1580-1-aminnimaj@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 5 May 2026 01:23:39 -0700
-X-Gm-Features: AVHnY4L3hnxU-8ENkszamV2oaXld_tt9nfa2MyjPubuFqtNW_E1hlwJvsioDEJ0
-Message-ID: <CAOLa=ZRj11QW16-E6dY2YxDWZ+3moV1h_-S1DfbFPJeOGTjHgg@mail.gmail.com>
-Subject: Re: [PATCH v4 6/9] update-ref: handle rejections while adding updates
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, toon@iotcl.com
-Content-Type: multipart/mixed; boundary="000000000000c08dc206510dc390"
+Content-Transfer-Encoding: 8bit
 
---000000000000c08dc206510dc390
-Content-Type: text/plain; charset="UTF-8"
+From: Aliwoto <aminnimaj@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+An explicit proxy URL with an unsupported scheme such as
+htpp://127.0.0.1 is currently accepted and treated as an HTTP proxy.
 
-> On Mon, May 04, 2026 at 07:44:10PM +0200, Karthik Nayak wrote:
->> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
->> index 5259cc7226..6355c3dd3e 100644
->> --- a/builtin/update-ref.c
->> +++ b/builtin/update-ref.c
->> @@ -257,6 +266,31 @@ static void print_rejected_refs(const char *refname,
->>  	strbuf_release(&sb);
->>  }
->>
->> +/*
->> + * Handle transaction errors. If we're using batches updates, we want to only
->> + * die for generic errors and print the remaining to the user.
->> + */
->> +static void handle_ref_transaction_error(const char *refname,
->> +					 struct object_id *new_oid,
->> +					 struct object_id *old_oid,
->> +					 const char *new_target,
->> +					 const char *old_target,
->> +					 enum ref_transaction_error tx_err,
->> +					 struct strbuf *err,
->> +					 struct command_options *opts)
->> +{
->> +	if (!tx_err)
->> +		return;
->> +
->> +	if (tx_err != REF_TRANSACTION_ERROR_GENERIC && opts->allow_update_failures) {
->> +		print_rejected_refs(refname, old_oid, new_oid, old_target,
->> +				    new_target, tx_err, err->buf, NULL);
->> +		return;
->> +	}
->> +
->> +	die("%s", err->buf);
->> +}
->
-> It's a bit weird that we pass in the error message as a strbuf given
-> that we really only care about the actual message.
->
+This happens because Git parses the URL, extracts the host part, and
+passes only that host to libcurl without rejecting the unsupported
+scheme. As a result, the typo is silently accepted.
 
-That's fair. I will add this locally but I think it is also not worth a
-re-roll.
+This patch rejects explicit unsupported proxy schemes while keeping the
+existing host:port-without-scheme behavior unchanged, and adds a
+regression test for the unsupported-scheme case.
 
->> @@ -644,6 +699,10 @@ static void update_refs_stdin(unsigned int flags)
->>  	struct ref_transaction *transaction;
->>  	int i, j;
->>
->> +	struct command_options opts = {
->> +		.allow_update_failures = flags & REF_TRANSACTION_ALLOW_FAILURE,
->> +	};
->> +
->
-> Nit: stray empty line between the variable declarations.
->
+---
+Changes in v2:
+- make SOCKS proxy type handling table-driven
+- use test_must_fail in the regression test
+- use test_grep on the essential error text
 
-Same here.
+Aliwoto (1):
+  http: reject unsupported proxy URL schemes
 
-> Other than that this patch looks good to me, thanks!
->
-> Patrick
->
+ http.c                | 93 +++++++++++++++++++++++++++++++------------
+ t/t5564-http-proxy.sh |  6 +++
+ 2 files changed, 74 insertions(+), 25 deletions(-)
 
-I'll hold off on a re-roll unless needed.
 
-Thanks for the review again!
-
---000000000000c08dc206510dc390
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: c0fc9ffab836b816_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1uNXFRWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL0JZREFDSUM0b09oY1krTHFuRFN1TUpoTm1Rbm5hMQpPdTRDdWhVdkNp
-Myt0MG0ycGpkWlM0ZW9BYW5pcTRUUUM4VUcyK0pJV2luVVdRZWlqV0lPM2czTC9DelBvUTYyCnQ3
-UkwyQ2hpZndDdXVnTFM1VzZIUDhlL21HVWtTMW1LMmFoRlAzMWcwRUN3QXdmb3Z2TlNadStjbWhS
-UVBBL1EKWXplQUNjenlBRkFCci8rV0RHUEo1WnIwTjhxYktmTW00WWdWOW9jZ0lWZVc0NnUwOUNP
-Z1ZJSlQ2blc4TEErZwp3Y3NUdk5NbVZRNFpvQ2toKzdQeTl5TGcrQUxJVjZjV0tiVnRxcVpSMDdG
-T3ZxU1dMM2hWWUgxemRDL3dNWGoxCmVEcElTQ0VlN0JjY1BwVEVDL2tsb21Mb0JWcEg4M01VWHVu
-ODdBTTBaeFBnTlZ2QlYrc3NFaXJOWWdaaEQ4YS8KbUlTYTVKTGhHUzllZCt0V2E1YzRtUi9DemFt
-Rk5RZEd0VjhsbkFmSDU0cnBpV2d3OWpFMGQwL2tMT3pwTk9KMAovL3gzd2lrSUNIYUNPWHhHZzdK
-Wkd5TWpaOFlBVTI5YTBqSnVWcGNvUmJ6dEcvZlMxTVV2QTZ6TkwwNzcvZm5aCmhGLytkT3o4Mm0z
-bnVnVlBBdlFzZ01PWmx1ckVISGpFcllubURYTT0KPVhDVnUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c08dc206510dc390--
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.49.0.windows.1
