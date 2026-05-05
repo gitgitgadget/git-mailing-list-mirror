@@ -1,116 +1,169 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39B313AD26
-	for <git@vger.kernel.org>; Tue,  5 May 2026 00:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777939792; cv=none; b=JcDg8JA8WLTMOinVn4RpNTLbILMYEYLoJW5OdKkcYkeQKEzBpcSmv2D3TXryrWLGljY+J+b6DbvumUoAghMtCFlpVEk1KL3WGSLJ9G2u0QtXrdLj4b3FoBh/yfmrGzxpafticYvGoCFRj+nDkPDDA9CqhCF9ZCRVosgoNkX3ht0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777939792; c=relaxed/simple;
-	bh=LQrdl2/bPcAJAFeSH/sDZl4tAcp1BJejuxaDS5RZnvg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bCxfwiNsMB7UJjkomFObjmoqg9nP8caSPWQJIR45b3O+tY2znkzX2mwRQDbXt/D0faT/rqFTt00S6wWEOXqcpVhu0h9KLrOtXTYxFXQ3vsPMgHHBCMBR3CzZNZ1RZF5H/Jd78CuMZ9gTygYsNcR4/2FtMF8CfMFbrFYXojuRzRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XpS8AmNr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=omOEsnjY; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ECB2556E
+	for <git@vger.kernel.org>; Tue,  5 May 2026 00:34:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777941274; cv=pass; b=SAX8GsdqOLmqw4pfbW9mYXorWkapFJz9b3efzpFpLxzPmXf/q/1M3dYqbrQJBSQrDNH9V+8qMSr+VK2syi3sUHY8gyc0CRioiGGdVaOz19NZq87fA/H77V9d+lOTamj128sq2qWEYdweLNgH2jn2xXiMBcZNJeluSqDhnIu6kPY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777941274; c=relaxed/simple;
+	bh=BWdXlFolO7ccvtJ+p0GWKD0Z870VO0RFNanMrKjo7ME=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=t6sd97pRcyL2udZkwCwuTKomxyJ9OqVCHWXhqP8DeIGsNvSUK0HZ25D0R8jaq7A5MBttPZGv5FxlB8ellXVsaWe2GscP+94BPDzc1rwghrQqSMe0IoYUN2BUwAXQMFxeq3GeaRDqkIL6J3d6ITo4w6E8JVD4TYWubqtZH5RhfTc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dtAyQjfP; arc=pass smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XpS8AmNr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="omOEsnjY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id CA85CEC01F6;
-	Mon,  4 May 2026 20:09:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 04 May 2026 20:09:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1777939788; x=1778026188; bh=1oSDn8RijR
-	XP3N1DHSjxYr6LICVJz8R0+rh4jn26Ytk=; b=XpS8AmNrYqgjL9JUxayM7C6io0
-	y8AA9UshMi8rTdqW6YJsYv8OnK41FxrPJfqtWIVUsX9Iq7bH6oU+SUjymq6adDTe
-	heTXMfSs+nRg1mK/B6wAWDLW3y/sSoJLRpu/F6nFWbkUTvlOJilo+A33OrpTfeBg
-	s4O5UbgZbTXBp/i6cW8A+JZrVNCn5W+rb4eXZCnv3ktj0RhAYZ5juK8F+LYXnfgU
-	fYlHkPIYr9i0ADK0/81S1Gpf+kABhHBhUiAo/BApLXO+cIABDmUSOguvN7ExCKkC
-	5wA8lCrOlc5RPqAkNrDKtaHAFbQDEC4EP/PIKiEwfHP0NHr1aQPW/m+sZNsw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777939788; x=1778026188; bh=1oSDn8RijRXP3N1DHSjxYr6LICVJz8R0+rh
-	4jn26Ytk=; b=omOEsnjYdcLrOT6BCUK/ohfcD9TdPWaXrpCcz51wRC4rLdHTdc5
-	3ek0E0iZTqbOOUdaBs0aFxPaFyNfhLu5ziPheMFpkQkmt/bI5TPeE37I1xNmMO1f
-	C2dmPN4HYk3GLtqtpo4hYf9QPHQMnN0zaiNPzJl4Im5q1m1W3zhZFE/nYtIBq/0B
-	QRcFQLR1UGSBM3AjOTGp3XYj8qN99DCAFxKaiXuaDvAl9rAZDyYLD4FwnYT02tGs
-	9dN04ynCt3q1Nl6hOYyeU9GtilrrB885udDKSp9vUUF7ERQOJg07oz7z9YJMawEz
-	U0hehJzuTZrhEZ6/e9FBIRHjrSpoY9F0T6g==
-X-ME-Sender: <xms:TDX5aRJOXmFLurm4iDDOpHYv4k8qK8rNd4VH8DHHrr9s_Lz_2ZBtNA>
-    <xme:TDX5aUIqEicACuYtK2rtD7kR77QyvPBvHpyWsOo96_JOl7rRBn_nRQl7AyK7c4ZF7
-    U0_ujr7RswzQSyJdEs0ZMp2QxjkWrK1TVdjcPZ9znz5u7NsOp6qv8s>
-X-ME-Received: <xmr:TDX5aetXdZN1m_dYxBZrW1HY7pjYJENDlA2_myEnoxd6kFiRNPJFhy8RDATpg7ysBQNMwwPBfMrLOh9f3xI3TPPxrPs84EL0qQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddtvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehsvggsrghsthhivghnrdhsthgvthhtlhgvrhesphhrohhtohhnrdhm
-    vgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:TDX5aRSft-UAA09A3v-z70GSkcew_EWRpdWC68Og_L3jj7tdfnZ1pw>
-    <xmx:TDX5aUPpy3NWBIh0Fu_JH2-ekN6te7ng2oKeyFo_iDMsabEBiECWhQ>
-    <xmx:TDX5aWbRvvPvFArKLO4hZaQTD3ImJ6lppT1En0itjgK5jlmlxgPjXg>
-    <xmx:TDX5aezfUz4e2SgB5CtwOCeS1KCjWT4k2Nj3VZnatvU1Sljdg1WpWA>
-    <xmx:TDX5aXsSaEB3bTUSjs2YnRTdvSkktfpcMMphBpOnRF4y8yWjnCA0goMO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 May 2026 20:09:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: "sebastien.stettler" <sebastien.stettler@proton.me>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git rename/moved status unreliable in ruby
-In-Reply-To: <CAPx1Gvd_VEWHrBWtUjNeWZ+wfmsAOTamKmL6fhBSQi=MbmXRcw@mail.gmail.com>
-	(Chris Torek's message of "Sat, 2 May 2026 01:06:58 -0700")
-References: <OsOzcjEwvHCQSghLE8LD_wHb_jDlil9I88OUuhpiRONnVd1o9p3gStbK1mx4q7OwY3ePtbZO-BBgTNOCeJ2DMyvBsdlMhRmDrTP894KP5xo=@proton.me>
-	<CAPx1Gvd_VEWHrBWtUjNeWZ+wfmsAOTamKmL6fhBSQi=MbmXRcw@mail.gmail.com>
-Date: Tue, 05 May 2026 09:09:47 +0900
-Message-ID: <xmqqecjqpvhw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtAyQjfP"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-39389398838so20566581fa.3
+        for <git@vger.kernel.org>; Mon, 04 May 2026 17:34:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777941270; cv=none;
+        d=google.com; s=arc-20240605;
+        b=czKyM0jeD+pv/OkRKLNrsWj02KbqoWnGTAatSZvz1Ldsy8+rwKNREDqDjJEfIf07fB
+         ijvDhaFHKLxS4oCTsjN3+VjR+NHrFgbPhPQ2ehT38yODlhyQNNrnw5H1rpUWWdmBChU1
+         JfJRRipX/VRBN/IBIUVf4E6oK1cFzRGUdUFdIQ+xRLoqPTaynpEz92hH0WBSyREVVWsc
+         XGMsliF0CNivM27rTWUUyXivPodJPcgeYbij061t3KR3LVPRDqYLFxHIK0g3n6y4B+Cu
+         PlhrxHIN02veTOM7UUzYfj8iVSeMt5AjeQF99V32OO6iAuQ3DUGjBCV5C+mrk9mq/U9v
+         ogpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BWdXlFolO7ccvtJ+p0GWKD0Z870VO0RFNanMrKjo7ME=;
+        fh=TvJNO+rJreHiIe/P9PBSp2UjZQ18Q+mmajMR58IAADk=;
+        b=Rj6G1utFnonox0kAJdzDSDaRcyLKbXY000CgxY88w9mCe8omTehRZL7z8RdIMFH/UG
+         BVYOnQDELAY+kRZPK7wFnyphB7bLR7TqQqBsLYYAFbVKzlcyYFV7YTcoLw8uBNsy3YBM
+         GM48vVL6Ns1Ej7HZzWCuXj/lMvSYOkcVaP3pgK/haVLMD0RWJuxflP4/t+3ejvf4abrp
+         KM/icndMX+Z9AyLyoW7dqnKUoCm5SIZpe/7KACLr6SZYlntjTt1NSb14SNxJD1N+BK9+
+         hVBVkKsVClqSt9J1RWN3KeP0+Dy0Iz7cq6KssH0eOqLMfICk4OC2D1+jWSBAObz7WgeF
+         cgsQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777941270; x=1778546070; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BWdXlFolO7ccvtJ+p0GWKD0Z870VO0RFNanMrKjo7ME=;
+        b=dtAyQjfPMQF0i9ex51u9LFJdKvNkqB3WCxzvwusvDR3Tp2eo2Cz6qBkFRHF9NFJQ1M
+         xq1YxqZlnUJ9xMtY5dBAsZKguWeWW+a2TyOv0HGGCecmuQMLB2GR6ALqYIo0eDOwJuts
+         TJTrA0g4gkZPpH26zBzSJL67+ZCO6D3NhMREFIWbfNVObguuaRHHcKgExMqcgK2qDoCi
+         4ws63bLWLWp1xz8ovfCzEahYnj3TICI3uYMam9ki3W72qA7EyotzybHGJZeDwjiAK6vX
+         K1YfGnHjtz3XmcxWgm5d+D12EQ31F6XbUxhHtjIZ89cE1Hqtp6fOmZ/VC5mgWBhxjh4+
+         M7vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777941270; x=1778546070;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BWdXlFolO7ccvtJ+p0GWKD0Z870VO0RFNanMrKjo7ME=;
+        b=sBxuJbl6CnMKwvclySkQDFFZbZgel3XmiQkcsrGcSHGxN60cp+XmJMfHHYT/wtrgRE
+         pQ5uhhrpKM7Qlx1W6Y1mszJuLsVEZwCnKEbzdlGY5eQWUAcFbNiZfMIc0WEMTdbEUyVD
+         be3feIBoHD1+8BdVSnudcWecjVz2Q5PmHq97jWPZXw4R/TX+7X/BCXvUydYO7VI8fOxd
+         Rm0mZhK7TNt4O7Zr8Cm5FUx48FkCyQ3DIIlP/DDkEz08amd/ea9fuWto+jlViNDP1IoH
+         bNhkNQN7RiQnrOP8XJ1EtxVyCTxhP0Nbq34IW6AtcInW7BaIjzN4a/hLcT7NXsukBnbW
+         IN3g==
+X-Gm-Message-State: AOJu0YyZOXzyOxHWD/MbkUnNztoQSCskV3q4OMyUxXao238Sb3zCihhg
+	PxRKmqIwl5gPNgJOoGiDj9/n7zPr8rtrKV68ukBM7TPPIXeIj6B1BjcbTgbNmDILELl4wE81qwU
+	u8cG9vJNOGZVoSCdgfrR8Bq02pLfoyrCP7Mfn8lw=
+X-Gm-Gg: AeBDiesXkbMEoQW94OrZrGK+5jo1qioWg7E0btoPekb8lyAtHJPoexcEMNFemEprZ+l
+	XG3FMeefGy7OT0MnwR1I4T14BtmrGkWtQJU3fYVVyj4DT12nT1Aa3R6/2L4frZxqltBc1b/8jo2
+	1Xz+lgpDzyFbUQyYKFL2DHdCTsrIaj4bMQDI4mq+G5cQNLnrOmNy9uOraoyFXGDl3HwlWm50jU7
+	BdaEWaSvE+IduV+VUdEwZp1ce9VDlNH1t2ZejWFsFGgTdqP2mqstAS+bTqGChRWcQr7B+HylK1z
+	KdU7MDkEGSVnolTHW+s=
+X-Received: by 2002:a2e:8a88:0:b0:38f:e999:6a5a with SMTP id
+ 38308e7fff4ca-39378417850mr32111261fa.11.1777941270304; Mon, 04 May 2026
+ 17:34:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
+In-Reply-To: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Mon, 4 May 2026 17:34:18 -0700
+X-Gm-Features: AVHnY4I0U99X9clTxLfSnRYAL1Wawq1XqB83hJOEAxzaZg3fBhRJHRfwcMldPcQ
+Message-ID: <CAPx1Gvf5Vts3oS2BdFQ4PpCR-UY=5cYW7fgOkRuQpi8ug2JXDg@mail.gmail.com>
+Subject: Re: Git trims the last character of content from remotes
+To: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Chris Torek <chris.torek@gmail.com> writes:
+On Mon, May 4, 2026 at 10:02=E2=80=AFAM Hugo Osvaldo Barrera <hugo@whynothu=
+go.nl> wrote:
+[snippage]
+> When the width of a whole line is the same as my terminal width ...
+[snippage]
+> ... sideband.c prints ANSI_SUFFIX =3D "\033[K", this escape
+> sequence being "clear the line from the current position until the end of=
+ the
+> line", and this is the root cause of the issue.
 
-> This is why -- and when -- making two separate commits, one with
-> "exact same content for deleted-file-D vs added-file-A", followed by
-> later changes to new file A, helps: if you compare the commit that has
+Interesting.
 
-"helps" -> "somtimes helps".  Only when comparison is done step-wise
-(e.g., "git log -M/--follow" and "git rebase"), it may help, but in
-general, when comparison between only two endpoints matter (e.g.,
-"git diff" and "git merge"), such an artificial breaking of a
-logically single change into two does not help.
+In Ye Olden Dayes of (n)curses, there was (and still is) a terminal
+capacity boolean flag, "xn" or (in terminfo which is more verbose)
+"xenl", the "terminal eats newline glitch".
 
->> If this is considered something that can be improved ...
->
-> It *could* be improved. Doing so in a way that works for more than
-> just some special cases -- e.g., in a way that works for ordinary
-> text, or graphical images, for instance, rather than just for Ruby
-> sources (or just C sources, or C++, or Swift, or Python, or whatever)
-> -- seems particularly tricky. Some degree of ignoring white-space
-> changes would probably help multiple cases, though.
+Consider your bog-standard 80x24 "glass tty" from the late 1970s /
+early 1980s. Printing a line of exactly 80 characters caused the
+cursor to march from column 1, to 2, to 3, ..., to 80, to ... column
+81? There is no column 81. So what is this "glass tty" to do?
 
-You could tie it with the attributes system to allow logic
-specialized for the nature of the contents.  The beauty of the
-design decision to store "snapshots" is that these heuristics can be
-improved without having to change anything in the history that are
-cast in stone.
+Some acted like a print head, leaving the cursor stuck in column 80,
+so that printing *more* characters just made that big black blob of
+ink on the paper er I mean erased each previous character with the new
+one printed on top. So then a final "new line" sequence left the
+cursor on column 1 of the next line, which is where we want it.
+
+Some thought this was annoying and/or stupid so they immediately
+wrapped to column 1 of the next line, as if the computer had sent a
+newline sequence. But if the line was in fact exactly 80 characters,
+this meant the subsequent newline sequence moved to column 1 of the
+*next* row, leaving a blank line (or scrolling the screen twice or
+whatever). This is Obviously Bad Behavior, but the "overprint" answer
+is equally Obviously Bad.
+
+There were two ways of dealing with the problem intelligently: put the
+cursor to an internal "column 81" that, if there's a newline, sends
+the cursor to column 1 of the next row; or simply set a flag and eat
+the next character if it's a newline. (This is a little trickier than
+it sounds since the newline sequence is actually CR+LF, or LF+CR,
+depending on certain computer-maker choices, but it works either way.)
+
+The xn / xenl flag describes terminals that behave this way. The
+screen-oriented programs (ex/vi, now vim and emacs and nano and so on,
+plus things like "more"/"less"/other pagers, etc) would know to send
+an extra newline here if the xn/xenl flag is true, and not if not
+since the cursor was already on column 1 of the next line
+automatically. (Though actually this depends on another boolean, "am",
+auto-right-margin. Lacking "am", the cursor simply hammers on the
+final column, the overprint Bad Behavior Mode.)
+
+Alas, this does not describe what happens if one sends the "clear to
+end of line" sequence. If the cursor is in the phantom "column 81",
+perhaps that sequence does nothing. If it's lingering in column 80,
+perhaps that clears the character under the cursor. All that xn tells
+you is "send a newline anyway".
+
+As for what to do, well, that could be tricky. Git *could* check for
+"am" and "xn" / "xenl", but that requires parsing termcap/terminfo,
+which is kind of a nightmare. It also requires counting cursor column
+movements, which is something of a mug's game.[1] If you're willing to
+play that game though, you could just count and, if at the last column
+as determined by "tty column width" inquiry, omit the ESC [ K
+entirely: there's nothing to clear. If you have a non-empty prefix
+string before this "clear to end of line" suffix, the solution is more
+obvious: print the ESC [ K as a *prefix* rather than a suffix, but
+that fails with the empty prefix.
+
+One last easy possibility is to print an extra space before the ESC [
+K. It's imperfect, as it causes a blank line for these exact-width
+lines, but avoids data loss.
+
+Chris
+
+[1]: https://www.merriam-webster.com/dictionary/mug%27s%20game
