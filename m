@@ -1,105 +1,147 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AF930DECE
-	for <git@vger.kernel.org>; Tue,  5 May 2026 20:42:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36378175A7D
+	for <git@vger.kernel.org>; Tue,  5 May 2026 20:45:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778013756; cv=none; b=JMryR1xO15x/USRlo0SHgyAXqu0OjMIb/XY/YL2+4o5of8JyiXJD+eJ4AjgHqVFCFMqaFSa3bjYNd9z/s7NGOtTbf+LhtZby4WrQLqncc2iZQAmrprCzGV0TeHGsjJTGtpM2G600nmso3hbP2jRcKLwD5C5W5cDam6PPlRuiAeI=
+	t=1778013955; cv=none; b=KTtnii55oY59Er7t2Hxr0GaACJxEIS08iVjGL6C4mK8Wb1zXRHmM8+HRFeQZPRxPFXAEwjoN2ITPaaljeGwaEUqHxBFpzufMqbp9hcGsLYoCubsZP8wVnxvAif+WPXtCb9KiSbl1Xf8snORDovW5jXwe/KRPiI9gWVVg7nV29hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778013756; c=relaxed/simple;
-	bh=Cic6bWNJDeuWSL8nZv78kAL4GWRHzFmbtTppXMcPdVw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nWtJyS7ZthHJtoac5/xYFm3cJfRXBaoxyBkcK8d4xcNACpWq/Xzpg4RBbPnTH4YPZ1KOcb/ECDDG6DjgN1iPQIi16pd7lgm5Kst7AZa9Cnwd9dvFnFTmnbv0tS8zVZfWJXIrIx+Do5dq49QisvLaGhUWWLfplpDi/9l6yjeGDfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=N0QPNqVx; arc=none smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1778013955; c=relaxed/simple;
+	bh=Pi1I+VmsP3OYpOifm32L7e4478ZCMpqZ0ZcRrOuPH7c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=emn17RakPcTC+eaLWY8LIWciOdKISCgqzE2bCpj+p3cqTQkAE8ABzJW7vb3oXB/cnVpik3LWuUShCqAbsNh6vDysE3Z8pnjwP3rx58mTOsbJeN0bl7x3aBeF6sOtxkdNMB7XH0pTNOEyZf7tTJfvGrW6VPob7WJdL9sS+nZfsC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LM0LByJF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AdaaeZ1n; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="N0QPNqVx"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-64d5a7926cfso5728950d50.2
-        for <git@vger.kernel.org>; Tue, 05 May 2026 13:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1778013754; x=1778618554; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cic6bWNJDeuWSL8nZv78kAL4GWRHzFmbtTppXMcPdVw=;
-        b=N0QPNqVxE4116sDfialzQ6QfM2rMNcSOUWTQxWPZb7XM/Daonej1h+UCebshsTqkND
-         KTfA+99bWBxfKK3VxyU5YbJUpgAoKqD8yBGBSGQeFYMMqKND8DNSgE+0Iy8y08rZn9qn
-         kMX5pEiA2EwlLtcRhsuBXHCr+0gSuln4y5SBDbgcZJkj7TDYyvGzb0EQbgJ5mYRPhYvZ
-         zEc1f0hX3SunxhhvQJhlShTaqq7ov57sb8Dqm0LeyKI3/419UvTOd8/8niGakU7h8Myq
-         Ihjn3sKk+Uho9cwMcs4NWrR+uB8W5a2DuD1696owCVeXVPOheeUO4UBFtNCybX+9jEtg
-         YjqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778013754; x=1778618554;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Cic6bWNJDeuWSL8nZv78kAL4GWRHzFmbtTppXMcPdVw=;
-        b=bTZyYPcF+rK0JF42TqfB+lC1VJ8bI0GQH35RsMaWBeDEvIOlKkGMzrd3UuKF+71muI
-         hRlB1Iz9PZBxT5YplZOKubrdDDNSFzpGrFIDRHCpwsPWlO4AoYTRcJpwZP9iRiWEEKQ+
-         5GE7TxLzAvZ+hfz5re11qRwD1rlRRbZykgBvY6dXQhoDLyz6GboCH+CLT98z27M5//Ly
-         fbZKsv4C/ywJIRRambQ9rwXgfP7lWXmIbhx5mOCtDVoSRVojx1fvXut4fBut3F9zF7ct
-         IvAepNvQ7hFJvAy1kZxrvjjJnCVTHTKxQrYuHxLPDhzzVc2NT0dxPyJ7gzOVjDHMo/BY
-         EBFg==
-X-Forwarded-Encrypted: i=1; AFNElJ+8gDvLhNGRmeFSKb/4D0Sw1HVh94d3LCLZCj7eky5iqzN2xLiQTx3Xdi9FDg9mInaxH1s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYlWIw30BneqZR+Ck7lHPEZoqNAo3Gfc7HY6AetOEyMFA/yCI9
-	VBYAb4q2vLa8IMTCr04njr6gpzS6bgYQ9L5+AFGdJaWyCm9xvRZDRyFvvFp6yCGNFaI=
-X-Gm-Gg: AeBDieuJk1J5sUZPygOefl+pVI11KJCrEzxDEFS+7FGmFYzyn+JMRWqBqD73MJygau3
-	/fwqh8Ed3SwLi6WTEWJ88+xD+CTTsCH5VbGSvfjNy3JjHEZKG9VRDxowSrfHV/jhRiOO6t9CNNk
-	28PpEGqet4LCFIjcgbgp32zgWqHlW8r5yGgLkz8n8igbP4KNPfDMAAiwN0E1C0o5QeJ473kydef
-	OAUUxjC8OWFetaddYCijExBV0Z1gFQhIoMSzrmmjOgf06oJiK99xeyW6ei335vhLWLpH+oDShRA
-	6e5mhJ2WBmSjeD4EWSevd0Hii0xDx1GM1Piu2cRmpt6b728O/B/TUkzRpQYyMUoVF5CoHiLPTe1
-	T+Go75Xy4A8fXuYJowp8Yw3IHQH92HBxaQVwsQfP08Zzpq9sl5mv6LcTt0oI5jcue7a/kWgGqJz
-	erWhfH/gFV+aVT8Dq+y7A6vWwYNmkk4xTN/i+j/tG/D4I6O5Jeers5T7MEondmSaOqM4sugdsLT
-	I+IzCdpKQIHmWApDUI9BIAecKDL43j9WWr0BSiQTNHKV8cRJs3xrQtJDdW6JYutFzcoZtmafptl
-	k07pAH7/VwxKcYc4wYKUIjrzK/Q/Sx5jpGVAQw==
-X-Received: by 2002:a05:690c:12:b0:7b1:2c46:9480 with SMTP id 00721157ae682-7bdf5ed84c2mr9501977b3.34.1778013753787;
-        Tue, 05 May 2026 13:42:33 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66559e92sm68931517b3.17.2026.05.05.13.42.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 13:42:33 -0700 (PDT)
-Date: Tue, 5 May 2026 16:42:32 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im
-Subject: Re: [PATCH v2 00/10] pack-objects: integrate --path-walk and some
- --filter options
-Message-ID: <afpWOGhWJrRdPtcy@nand.local>
-References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
- <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
- <f5d8d4aa-2453-45ef-bc96-2b94bdf55c7e@gmail.com>
- <afo+mEITFBSLevqV@nand.local>
- <07b36bd8-376b-4a98-a735-0c0f75452c24@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LM0LByJF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AdaaeZ1n"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 68C09140010D;
+	Tue,  5 May 2026 16:45:52 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Tue, 05 May 2026 16:45:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1778013952; x=1778100352; bh=4U
+	jZtTniW+3UySo4zpk2uUwBuHxhofN2AR5JCRFzUzk=; b=LM0LByJFSa0ruRLQuP
+	V86H3XP0Jqunp5Abd8LWDTB7fi62jQ3fxLES4/rTxS0B3VDTmeVlrUBnn8SELn4K
+	2p33fAwTxQp86oCJVeQykQXjh5knt0YXZ2pS2kFAPo4yGtgpF7JwZ84uWBzgGQM6
+	KXsq2YwxU9zsUW7AmPoQRQUYhrif3QM3b2tFs5nM+fwrB6bk32vv/HRiDQHWWqSA
+	OD7HFMIPz3egixjR5DJIC60gmOB2SaVC1rFT9pwAq70NavlJSNMR8JMDKQU45N2Z
+	RRAsyzY+6X6LMPnX2rQlGls1s0GSMQD/maW1mngliJYHf7uvcH74/FSvpLqvFm8N
+	6MoQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1778013952; x=1778100352; bh=4UjZtTniW+3UySo4zpk2uUwBuHxh
+	ofN2AR5JCRFzUzk=; b=AdaaeZ1nksLpdcNY/w+NGyxJKhgmFdHLi6MRlFEtU+uT
+	HXIQjJ+Z4uP4MHoBlJgO6pkHG4QYrxTQCyMrfLfv/8hnBuf5z4xfK2TMOa/WzZSc
+	0A9laI7KNhUo0awxzoFGSwESaZvkz8KR/0rpDhp1DHBj5kxdfqePofcv/xp8nRX4
+	UPupSBlWQjAkavZd0kXjL/0fV0wjZ3ea4IIb7oGqPTLaRADYu992Y2dDUwHKF24Q
+	rpAHrXPrPZUSMliqI5EKdPcmIPFEcH747G2LJ3mwsTD9DG/UE7+7zxYNqX0ngRts
+	JWdqYQj7VxIVNLwhZFVbFJLX5SWfJ1071rJOv8ZYKA==
+X-ME-Sender: <xms:AFf6aZmHQx0Q-NaaHvB1eQUo1N-fCHFELV353Noz-NvnlGWgp697ZDY>
+    <xme:AFf6acQpcoIcFjHn4H4LP7SYttcrPqCph6fTPoToXjd-xpY2jUu7DZkFu3lqJ6VA7
+    elM5F1CTeLGcpuiqfO6C1Fx3sWRyNKdgZpSzG4KYDTr2XB017gZnA>
+X-ME-Received: <xmr:AFf6adDoT8m0FCCv9oeUYHwILTJ_8SnpYzszf0CkGEYbM9XXqIff9VVMz6rJY20IIYwjNQzKGaGFTKF4i6rk9Kqh3B_ID_wQcqGOLRJGvzGFpwGMidc7E1x3PA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddvjeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffogggtgfesthekredtredtjeen
+    ucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmnecuggftrfgrthhtvghrnheptefgkeejffdufeefffegkeevgfevvdegffeujeej
+    leegudfhtdffieekleefhffgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggv
+    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:AFf6aTSEu2qBwNIyQ-vhU4cjVmXrflKoO9L78ik_wsenTevWNeisNg>
+    <xmx:AFf6abp970x2BfeptgGGCBgdHU4n-MmF8wyCc-WbCVrplhe1gX2tfA>
+    <xmx:AFf6aVwl9yoeQgtSOfNfbM9TjwAf04CmbYlf7rV4d-IAwIOf6ZAAbw>
+    <xmx:AFf6aQKabv3m9-wNOSxwry5MR4KKOoDJiE3Gv-E9yPypsHLOoHL85A>
+    <xmx:AFf6aQQxCL3HqZx8p8NemEC9CAYRXqS8LwBGqq1WsYxU1AKAgvVIJevF>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 May 2026 16:45:50 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH] doc: add caveat about turning off commit-graph
+Date: Tue,  5 May 2026 22:45:42 +0200
+Message-ID: <caveat_commit-graph.671@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <07b36bd8-376b-4a98-a735-0c0f75452c24@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 05, 2026 at 03:44:56PM -0400, Derrick Stolee wrote:
-> Thanks for this suggestion. I got pulled away from my investigation, so
-> wasn't to this point yet.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-No problem. One of those things that in the course of responding to your
-email, I had written enough to fix at least one of the tests. I hope I
-didn't step on any toes as a consequence.
+The doc `technical/commit-graph.adoc` says that replace objects and
+commit grafts turn off commit-graph:
 
-> I think the initial idea was that the feature was too niche to add it to
-> the CI builds right away. Your series is going to make it a lot more
-> important, so adding this to CI builds may be valuable.
+    Commit grafts and replace objects can change the shape of the commit
+    history. The latter can also be enabled/disabled on the fly using
+    `--no-replace-objects`. This leads to difficulty storing both possible
+    interpretations of a commit id, especially when computing generation
+    numbers. The commit-graph will not be read or written when
+    replace-objects or grafts are present.
 
-Sounds good to me. I imagine that this makes more sense to place as a
-preparatory patch in your series, but LMK if you would rather I place it
-in mine.
+But this isn’t mentioned in the user-facing doc. Let’s mention it on
+git-replace(1) and git-commit-graph(1).
 
-Thanks,
-Taylor
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ Documentation/git-commit-graph.adoc | 6 ++++++
+ Documentation/git-replace.adoc      | 6 ++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/Documentation/git-commit-graph.adoc b/Documentation/git-commit-graph.adoc
+index 6d19026035f..f2a37e91634 100644
+--- a/Documentation/git-commit-graph.adoc
++++ b/Documentation/git-commit-graph.adoc
+@@ -146,6 +146,12 @@ $ git show-ref -s | git commit-graph write --stdin-commits
+ $ git rev-parse HEAD | git commit-graph write --stdin-commits --append
+ ------------------------------------------------
+ 
++CAVEATS
++-------
++
++The existence of replace objects or commit grafts turns off reading or
++writing to the commit-graph. See linkgit:git-replace[1].
++
+ CONFIGURATION
+ -------------
+ 
+diff --git a/Documentation/git-replace.adoc b/Documentation/git-replace.adoc
+index 0a65460adbd..2c0ea07724d 100644
+--- a/Documentation/git-replace.adoc
++++ b/Documentation/git-replace.adoc
+@@ -145,6 +145,12 @@ commit instead of the replaced commit.
+ There may be other problems when using 'git rev-list' related to
+ pending objects.
+ 
++CAVEATS
++-------
++
++The existence of replace objects or commit grafts turns off reading or
++writing to the commit-graph. See linkgit:git-commit-graph[1].
++
+ SEE ALSO
+ --------
+ linkgit:git-hash-object[1]
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
+-- 
+2.54.0.13.g9c7419e39f8
+
