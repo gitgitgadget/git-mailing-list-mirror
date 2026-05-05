@@ -1,69 +1,69 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD873C456D
-	for <git@vger.kernel.org>; Tue,  5 May 2026 19:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4F42EC0A6
+	for <git@vger.kernel.org>; Tue,  5 May 2026 19:24:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778009049; cv=none; b=l/vdyMyC3JcXl2/7tD8f7LPxd0A5XnCqdMHUvhVowPr0HEGoFjCl62Zt742CSy2sqv8RDW3WNMMc/ZxGfftPtI1P1CmXUm/+fRFodl57gG8cQWkjAdo6vkkNlsRS3ve/URfA1o3m4k7hQAxbek/dYW4zYXbDcHJ5fhP9JtbiFc8=
+	t=1778009051; cv=none; b=Vw4SjJfeab+thK7hIIqupsDSge9ba5MeZ1IKhUoMCHFC8edYCcJ1Ugldlv8OC8A+KTVXpLDUHltVd56NiqRODYiaji0GOAD2DCxNbjF/oOxhtHwgDejg0FQHhsP8OJ7GoZUfYbZugy2ToK18TQB3WVdaf6s6KrjdbUQiFqQvbqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778009049; c=relaxed/simple;
-	bh=1gcUePTcjxKfedR/adt+cIzlkWB0vnvfbO6MYGKgTsw=;
+	s=arc-20240116; t=1778009051; c=relaxed/simple;
+	bh=+ijuAnXpL0uD6XVvx4gebsk0JUCaRIVmT7gyD5iAYzA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=RNkrUKDacfmDF+9aMhTNCDJctYLE9mJ6Hx9+GLZxn1APJp9XY/mKMJMqlKHj9qccyUHKG5dCCceuoZzA0FJvB9z03bU8qNvclYoom5QYIJ1kiWaGuDfue+svtS/DVkNttMHZAGi87qevqw50kaNswMREHmNbuyi5PH0mhtiqZrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LdmWxRBh; arc=none smtp.client-ip=209.85.167.174
+	 MIME-Version:To:Cc; b=Lp3quDW/u8R3DnvOjBDDMeZ6GumGWllrhm83FguUCOWRHo4G1j4UMSPsn59MI1JT3C6sEQx9HoaR8OLJzTYDiJoelH/swV/OHp49Ar8M3hmfBvyEt9a0kNUC25pzGMdSIE9cIwh6QjoV7pf/SKOq3frlfp6ej8+90VSkVNyiLZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gJAKhpft; arc=none smtp.client-ip=209.85.167.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdmWxRBh"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-479dc6d26e3so3174367b6e.0
-        for <git@vger.kernel.org>; Tue, 05 May 2026 12:24:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gJAKhpft"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-479dc6d26e3so3174381b6e.0
+        for <git@vger.kernel.org>; Tue, 05 May 2026 12:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778009047; x=1778613847; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778009048; x=1778613848; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fHmZh4duX4oine/vSRhojzu/fu/W0t4JMuffp91h5Lg=;
-        b=LdmWxRBhDAIzQxydHJK2vQRp1sPeSFq//9k79C+mXNKlflsBUi/W+99iEMbiZ2nazG
-         l1lzt+ZnW5mgD3c55DAElwl75x66XFyL29AE8xruYFq4qWqtoUuZnhZwKe7ShYV4eeds
-         xVjeNAkjblGRxt4k9ulfm/tO4O1xKOvXUQqBwZ6E1qI/gEdeJUk697IHKGfLFoMJShqb
-         3jkjt9Iv+8EAkQxpXJY+wrw9GZApHenSjW08YmfurDQWxWie5t/M9McLpuxtMV8aoJyE
-         atUweHDg6IdwjZwe26Ol+6CsumLtzVLOuUyR+VjsOyTQaqNVFGwJvqfBM/Tzy0tzNlyp
-         nXxg==
+        bh=voLD+WYhQefwnj26p99HAWOufcq7B2+rDde40BV2cck=;
+        b=gJAKhpft8VreVTzCFI5+pDfJneK/UQDl6rhDngy8iuEfQiHAMprb8sI7KGmx0/OM1d
+         fVsHN6ShQoByk96hF2ZY/s6Y5qCm1Hm/z1MpEdxyFYnBHbOxUyWUMm+JPHAWDNCcaC6K
+         CMFKEWUSYzax1fZ74AKyMQlqSui8l1EDPfe2bJlEjkpKkq53Nmhd759lDQTgSQPr/NjN
+         LHyzZB10G7wlrKUkvQ5XdmObdydDsm76qwQbAG++r8u9vMKvKpl0kF16xZ2e49TgZ56A
+         ejOSVi6FuKxZArynQ4MXo6TroSrgQm+OTaASkn2pvX+HsuXWBwtbw7r+yriFHWj1BVzZ
+         Z6Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778009047; x=1778613847;
+        d=1e100.net; s=20251104; t=1778009048; x=1778613848;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fHmZh4duX4oine/vSRhojzu/fu/W0t4JMuffp91h5Lg=;
-        b=TfuMFp3H5K937+/he0qhBsOnh5KaH+/OPix52mJFb4v6yRkmXZK59eQE7ceYtkRkp4
-         PJSQ4UnJMfebIiBByPxsOAN8hwIpklJpuX9AKvwnL2cTvzjALPySRCVYn75zMWercKq0
-         XCaEAvPPew/TfZSxrc8m3ufcz+fd9hZpyY4Pjkivla8Ujt4rnw0BGRDm+eamrvjMOxFx
-         Frf4LF2HgV5vjlNgV/ab9Nu+U1IBwhWBYsVFu/9CXK6EeUFDrvH7+pzEvbXQPqtPgIdK
-         ioAv+9FpSQrPtayRyFqT/ZuTeo9BISdcKOHmmkPQHJmZwqcTc+TQY4n1n1PQwte2ufRB
-         vh1A==
-X-Gm-Message-State: AOJu0YyD2Oj1uCJDUhhTUSs2kETCk7fjlEY4Fuue2ztE34fg+09YquL2
-	tsvkZE8qRRfblaZhwpvS02/G6DjmhmfUWo0fRdppLZIi62RQl//KEIXw8UZD+w==
-X-Gm-Gg: AeBDiesVJVypDe88U7oYFXmizTRHlNg6KH1wb4TLszaqQPVB7pdw5i0zN9gzIODihoY
-	BBd1eulgqiw+WOT3dI2Zt3QRHB9kOUvxWyOA658M7V7XPDTgcJDBU4fj1P8YHjoSO9IVmCoAvdF
-	oaoPyGySc3HrslLh5W77svu2OHqV1KMewNUYl6MdbRDhMWzwZdAxoCeCClFOnOJzR+ONrgPBS8h
-	qZh5pokq2oWl+LkT5qGYgFpKSTJCZ6jzoPCNg+fV1NERKrzGL3i0qptarEj2CjNWafHM4TkuLEg
-	1ABa3dLRu917GviSEWm+7Chohed3CWTiG3ojJJIiXE23RRpLLwJO1AUosx0kkrl+bS8AxyXCxzp
-	Pqs42wyBWKbx80HMHwKSfJItceHEKmvDokTFDt1QLxivJvysaSOFnXUn8GJmYrjMhonTgSOcVmZ
-	E7QhPYf6+iYwsVCjPEZ0vrT8jP0OpWG9bcfmP8
-X-Received: by 2002:a05:6808:2507:b0:467:2a6e:ada8 with SMTP id 5614622812f47-4804230908emr248827b6e.25.1778009046893;
-        Tue, 05 May 2026 12:24:06 -0700 (PDT)
+        bh=voLD+WYhQefwnj26p99HAWOufcq7B2+rDde40BV2cck=;
+        b=Zq87PwkQ0L1DQJQfs4xiqvHsVlwxOrc8TmU3XgUGYFE/3/6DXiF90Mk2ikQQ4CsCsp
+         ckect97QhwYx9RDxPK0QSY6bzf3KN/LX42y5OUYrcjihhr+m6KGQsdIHntEkeXw3adZk
+         wjkWEvU9Tss16QvIdHs3T3q8ovlKHn3yKj0ZkAVtFSxAYXZ9QEvEE5fFU+6EN1FUee4/
+         gDu3lOQm3yTDh6lt3RIIk6Iu19S5hALA+4wSZ3qTELUrRCxNEOozX5+iPy/jSNz2dI39
+         leWdaQQnSDaYVZxmaJsrj8iq8JzMRz1h8uwCXgQjnxS+9f2YQ3S64vao0xNmUN/1GrDx
+         KKlA==
+X-Gm-Message-State: AOJu0Yytd3uSrJ38yN5jL8z9Sf9doCBxHu2hpe7XSKmXRx+jZWkqwaYN
+	u1kV6gO1vT4184P3QTJsJqfeYAIyheBrpv/uxWMHMZ+ugX53AQsoI2hBxSgVxQ==
+X-Gm-Gg: AeBDieukhgrEs+ALJeKaLVtQxunoVds7b6jklro4iX3TCP3TwXAfA20WhweRgfQZE6L
+	YNIWKHkuTmBie66P/qgQbgyz0iSt9lJe//c9cguvfm1M/S92aKs8etr04WL6B/eKvnphAIep05A
+	3o9J59Zztw9SauCK0v/koQscMbMSiZqWySs5v0pyDlmsMNkg5tEQshOE/glO3v5gwd7kLmDFhww
+	+cfI73UBFteTYpjRceR3H75mf3wlfWVXpPQ7MN8jYekqbnuicplxckquZsnirAsJE8OLbZqsFv1
+	3k4/RHYi4ZWVBWNhyzEfbZuDkYMP1+20CdXqr5D50NPo0OEYNL84PF4baSI7Q6ZRAvnGoBjMPaz
+	AmOtc+Xsi41NSCEUOmPUhuWu4whJIlguQftjgP/yuJesMNOzP9uLr9+Ye666p84ODOqXwTN03Hh
+	crW1a0sTMJncgSyWUqcCdkbLJqV2/g+q/+W6jk
+X-Received: by 2002:a05:6808:30a5:b0:46a:cd63:96ca with SMTP id 5614622812f47-48042309bf6mr235140b6e.27.1778009048421;
+        Tue, 05 May 2026 12:24:08 -0700 (PDT)
 Received: from [127.0.0.1] ([52.173.108.21])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-47c76935904sm9047739b6e.11.2026.05.05.12.24.05
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7deca826dbesm10630132a34.12.2026.05.05.12.24.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 12:24:06 -0700 (PDT)
-Message-Id: <98cfdb87d26cec5f91ea4d8ce949512d60958e56.1778009038.git.gitgitgadget@gmail.com>
+        Tue, 05 May 2026 12:24:07 -0700 (PDT)
+Message-Id: <c645526bb5c699df5238d148e8fd8d2b891cd337.1778009038.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2285.v4.git.git.1778009038.gitgitgadget@gmail.com>
 References: <pull.2285.v3.git.git.1777965747.gitgitgadget@gmail.com>
 	<pull.2285.v4.git.git.1778009038.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 05 May 2026 19:23:56 +0000
-Subject: [PATCH v4 4/6] fetch: add --prune-merged
+Date: Tue, 05 May 2026 19:23:57 +0000
+Subject: [PATCH v4 5/6] branch: add branch.<name>.pruneMerged opt-out
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,137 +81,177 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-After a successful fetch from a configured remote, run
-'git branch --prune-merged <remote>' to delete local branches
-whose push destination ref has just been pruned.
+Setting branch.<name>.pruneMerged=false exempts that branch from
+--prune-merged (and from fetch --prune-merged), even with --force.
+Useful for keeping a topic branch around between rounds.
+
+Explicit deletion via 'git branch -d' is unaffected.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/fetch-options.adoc |  8 ++++++++
- builtin/fetch.c                  | 20 ++++++++++++++++++++
- t/t5510-fetch.sh                 | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+)
+ Documentation/config/branch.adoc |  7 ++++++
+ Documentation/git-branch.adoc    | 17 +++++++-------
+ builtin/branch.c                 | 31 +++++++++++++++++++++----
+ t/t3200-branch.sh                | 40 ++++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
-index 81a9d7f9bb..afbd1f60b8 100644
---- a/Documentation/fetch-options.adoc
-+++ b/Documentation/fetch-options.adoc
-@@ -185,6 +185,14 @@ See the PRUNING section below for more details.
+diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
+index a4db9fa5c8..60dba38e27 100644
+--- a/Documentation/config/branch.adoc
++++ b/Documentation/config/branch.adoc
+@@ -102,3 +102,10 @@ for details).
+ 	`git branch --edit-description`. Branch description is
+ 	automatically added to the `format-patch` cover letter or
+ 	`request-pull` summary.
++
++`branch.<name>.pruneMerged`::
++	If set to `false`, branch _<name>_ is exempt from
++	`git branch --prune-merged` (and `git fetch --prune-merged`).
++	Useful for topic branches you intend to develop further after
++	an initial round has been merged upstream. Defaults to true.
++	Explicit deletion via `git branch -d` is unaffected.
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index 80b20a55eb..9d4944d17e 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -216,16 +216,15 @@ Each _<remote>_ may be either the name of a configured remote
+ 	Delete the local branches that `--forked` would list for
+ 	the same _<remote>_ arguments, but only when the branch's
+ 	push destination remote-tracking branch (the branch `git push`
+-	would update; see `branch_get_push` semantics) no longer
+-	resolves locally. In other words: the branch was pushed
+-	under some name on _<remote>_, and that name has since
+-	been pruned upstream.
++	would update) no longer resolves locally. In other words:
++	the branch was pushed under some name on _<remote>_, and
++	that name has since been pruned upstream.
  +
- See the PRUNING section below for more details.
+-By default, the local tip must also be reachable from the
+-upstream remote-tracking branch (see `--no-merged`); branches with
+-unpushed commits are refused. With `--force` (or `-f`), delete
+-them regardless. The currently checked-out branch in any worktree
+-is always preserved.
++The local tip must also be reachable from the upstream
++remote-tracking branch; branches with unpushed commits are refused.
++With `--force` (or `-f`), delete them regardless. The currently
++checked-out branch in any worktree is always preserved, as is
++any branch with `branch.<name>.pruneMerged` set to `false`.
  
-+`--prune-merged`::
-+	After a successful fetch, run `git branch --prune-merged
-+	<remote>` for the fetched remote, deleting local branches
-+	that fork from this remote and whose tip is reachable from
-+	their upstream remote-tracking branch. See linkgit:git-branch[1]
-+	for the exact selection rules. The currently checked-out
-+	branch is always preserved.
-+
- endif::git-pull[]
+ `-v`::
+ `-vv`::
+diff --git a/builtin/branch.c b/builtin/branch.c
+index f2ca7b64d3..07d867373f 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -834,13 +834,16 @@ static int prune_merged_branches(int argc, const char **argv, int force,
+ 	for_each_string_list_item(item, &candidates) {
+ 		const char *short_name = item->string;
+ 		struct strbuf full = STRBUF_INIT;
++		struct strbuf key = STRBUF_INIT;
+ 		struct branch *branch;
+ 		const char *push_ref;
+ 		const char *upstream;
++		int opt_out = 0;
  
- ifndef::git-pull[]
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index a22c319467..5451bf3b5b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -82,6 +82,8 @@ static int prune = -1; /* unspecified */
- static int prune_tags = -1; /* unspecified */
- #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
+ 		strbuf_addf(&full, "refs/heads/%s", short_name);
+ 		if (branch_checked_out(full.buf)) {
+ 			strbuf_release(&full);
++			strbuf_release(&key);
+ 			continue;
+ 		}
+ 		strbuf_release(&full);
+@@ -850,18 +853,38 @@ static int prune_merged_branches(int argc, const char **argv, int force,
+ 		if (upstream &&
+ 		    string_list_has_string(&protected_default_refs, upstream)) {
+ 			const char *leaf = strrchr(upstream, '/');
+-			if (leaf && !strcmp(leaf + 1, short_name))
++			if (leaf && !strcmp(leaf + 1, short_name)) {
++				strbuf_release(&key);
+ 				continue;
++			}
+ 		}
  
-+static int prune_merged;
+ 		push_ref = branch ? branch_get_push(branch, NULL) : NULL;
+-		if (!push_ref)
++		if (!push_ref) {
++			strbuf_release(&key);
+ 			continue;
++		}
+ 		if (refs_ref_exists(get_main_ref_store(the_repository),
+-				    push_ref))
++				    push_ref)) {
++			strbuf_release(&key);
++			continue;
++		}
++		if (string_list_has_string(&protected_default_refs, push_ref)) {
++			strbuf_release(&key);
+ 			continue;
+-		if (string_list_has_string(&protected_default_refs, push_ref))
++		}
 +
- static int append, dry_run, force, keep, update_head_ok;
- static int write_fetch_head = 1;
- static int verbosity, deepen_relative, set_upstream, refetch;
-@@ -2189,6 +2191,8 @@ static void add_options_to_argv(struct strvec *argv,
- 		strvec_push(argv, prune ? "--prune" : "--no-prune");
- 	if (prune_tags != -1)
- 		strvec_push(argv, prune_tags ? "--prune-tags" : "--no-prune-tags");
-+	if (prune_merged)
-+		strvec_push(argv, "--prune-merged");
- 	if (update_head_ok)
- 		strvec_push(argv, "--update-head-ok");
- 	if (force)
-@@ -2382,6 +2386,15 @@ static inline void fetch_one_setup_partial(struct remote *remote,
- 	return;
- }
++		strbuf_addf(&key, "branch.%s.prunemerged", short_name);
++		if (!repo_config_get_bool(the_repository, key.buf, &opt_out) &&
++		    !opt_out) {
++			if (!quiet)
++				fprintf(stderr, _("Skipping '%s' "
++						  "(branch.%s.pruneMerged is false)\n"),
++					short_name, short_name);
++			strbuf_release(&key);
+ 			continue;
++		}
++		strbuf_release(&key);
  
-+static int prune_merged_for_remote(const struct remote *remote)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+
-+	cmd.git_cmd = 1;
-+	strvec_pushl(&cmd.args, "branch", "--prune-merged", remote->name, NULL);
-+	return run_command(&cmd);
-+}
-+
- static int fetch_one(struct remote *remote, int argc, const char **argv,
- 		     int prune_tags_ok, int use_stdin_refspecs,
- 		     const struct fetch_config *config,
-@@ -2457,6 +2470,11 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
- 	refspec_clear(&rs);
- 	transport_disconnect(gtransport);
- 	gtransport = NULL;
-+
-+	if (!exit_code && prune_merged && remote_via_config &&
-+	    prune_merged_for_remote(remote))
-+		exit_code = 1;
-+
- 	return exit_code;
- }
- 
-@@ -2520,6 +2538,8 @@ int cmd_fetch(int argc,
- 			 N_("prune remote-tracking branches no longer on remote")),
- 		OPT_BOOL('P', "prune-tags", &prune_tags,
- 			 N_("prune local tags no longer on remote and clobber changed tags")),
-+		OPT_BOOL(0, "prune-merged", &prune_merged,
-+			 N_("after pruning, also delete local branches forked from this remote whose tips are reachable from their upstream")),
- 		OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_cli, N_("on-demand"),
- 			    N_("control recursive fetching of submodules"),
- 			    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 6fe21e2b3a..b94fd2bda0 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -386,6 +386,37 @@ test_expect_success REFFILES 'fetch --prune fails to delete branches' '
- 	)
+ 		strvec_push(&deletable, short_name);
+ 	}
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index b41f8343b3..f9aca90f4d 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1884,4 +1884,44 @@ test_expect_success '--prune-merged spares branches whose push ref is the defaul
+ 	git -C pm-pushdefault rev-parse --verify refs/heads/topic
  '
  
-+test_expect_success 'fetch --prune-merged: setup' '
-+	git init -b main fetch-pm-parent &&
-+	test_commit -C fetch-pm-parent base
++test_expect_success '--prune-merged honours branch.<name>.pruneMerged=false' '
++	test_when_finished "rm -rf pm-optout" &&
++	git clone pm-upstream pm-optout &&
++	git -C pm-optout branch one --track origin/one &&
++	git -C pm-optout branch two --track origin/two &&
++	git -C pm-optout config branch.one.pruneMerged false &&
++
++	git -C pm-optout update-ref -d refs/remotes/origin/one &&
++	git -C pm-optout update-ref -d refs/remotes/origin/two &&
++	git -C pm-optout branch --prune-merged origin 2>err &&
++
++	git -C pm-optout rev-parse --verify refs/heads/one &&
++	test_must_fail git -C pm-optout rev-parse --verify refs/heads/two &&
++	test_grep "Skipping .one." err
 +'
 +
-+test_expect_success 'fetch --prune-merged deletes merged local branches' '
-+	test_when_finished "rm -rf fetch-pm-clone" &&
-+	git -C fetch-pm-parent branch one base &&
-+	git clone fetch-pm-parent fetch-pm-clone &&
-+	git -C fetch-pm-clone branch one --track origin/one &&
-+	git -C fetch-pm-parent branch -D one &&
++test_expect_success '--prune-merged --force still honours pruneMerged=false' '
++	test_when_finished "rm -rf pm-optout-force" &&
++	git clone pm-upstream pm-optout-force &&
++	git -C pm-optout-force checkout -b one --track origin/one &&
++	test_commit -C pm-optout-force unpushed &&
++	git -C pm-optout-force checkout - &&
++	git -C pm-optout-force config branch.one.pruneMerged false &&
 +
-+	git -C fetch-pm-clone fetch --prune --prune-merged origin &&
++	git -C pm-optout-force update-ref -d refs/remotes/origin/one &&
++	git -C pm-optout-force branch --force --prune-merged origin &&
 +
-+	test_must_fail git -C fetch-pm-clone rev-parse --verify refs/heads/one
++	git -C pm-optout-force rev-parse --verify refs/heads/one
 +'
 +
-+test_expect_success 'fetch --prune-merged skips unmerged local branches' '
-+	test_when_finished "rm -rf fetch-pm-unmerged" &&
-+	git -C fetch-pm-parent branch two base &&
-+	git clone fetch-pm-parent fetch-pm-unmerged &&
-+	git -C fetch-pm-unmerged checkout -b two --track origin/two &&
-+	test_commit -C fetch-pm-unmerged unpushed &&
-+	git -C fetch-pm-unmerged checkout - &&
-+	git -C fetch-pm-parent branch -D two &&
++test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
++	test_when_finished "rm -rf pm-optout-d" &&
++	git clone pm-upstream pm-optout-d &&
++	git -C pm-optout-d branch one --track origin/one &&
++	git -C pm-optout-d config branch.one.pruneMerged false &&
 +
-+	git -C fetch-pm-unmerged fetch --prune --prune-merged origin 2>err &&
-+	test_grep "not fully merged" err &&
-+	git -C fetch-pm-unmerged rev-parse --verify refs/heads/two
++	git -C pm-optout-d branch -d one &&
++	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
 +'
 +
- test_expect_success 'fetch --atomic works with a single branch' '
- 	test_when_finished "rm -rf atomic" &&
- 
+ test_done
 -- 
 gitgitgadget
 
