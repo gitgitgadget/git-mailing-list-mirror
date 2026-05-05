@@ -1,68 +1,69 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F335332E6BB
-	for <git@vger.kernel.org>; Tue,  5 May 2026 23:02:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9392D061D
+	for <git@vger.kernel.org>; Tue,  5 May 2026 23:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778022153; cv=none; b=ODwLAF6wSdsT9+nEXJsoNRyCBl8U6A7Qi7b3Ycu2t668vxMiKI4+aRIRKCR3JbjZ9olQkYJi9CfCjoc8hEjzCEZRkBnhvv5RH2xR6elMDkh7kgZD7SZEPcc3zmT25pMxGrOyI/pSgI6ATxanY6SfTRHEkHaS6bLCGKulHIeQNYo=
+	t=1778022154; cv=none; b=sX/MhxY6ZfOuUUe7P0hALlhNTNBdP7kLB/RkCi1aw8rCWhVbta7uwkUHTDaUReXq+odTFDU79L4yaZ32Uf8AvbNw5hd9WRU9hKaYIBuQf3Bgp0wzIMJaY7Q4b94ETQEQpujTouw96Koathn2CBrY5jgt6srJuqNSK4Zqg32r8Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778022153; c=relaxed/simple;
-	bh=fX4OvBVV8Pd7ppnT5E3rnJzlKJlg/3XrfBXMkyWB0oY=;
+	s=arc-20240116; t=1778022154; c=relaxed/simple;
+	bh=945T+YgGioXWrLBlAGYCaCA4OedqWlnzbKO05SJqzMs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SAlJuOADPkJzuwqborUCr6CoQZJ0P/GElflkQcQ4ctuGz0VqTdJeqhwJt40oZlDZxbMq7WKLe8FFfASeQcyWp8bnPTUFb0O0Zp02eRczV3aN2K5RMpgDDoHCous0cTonRUKHYTiKiFDsPfaoKyZHu8jUx4mxWQwr7Gq9HqLCPNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kYHLj+yb; arc=none smtp.client-ip=74.125.82.172
+	 MIME-Version:To:Cc; b=j7RpiISrjCa6fHzSnBimtNynenIjumuSZ2AG0lWm6JtZ1bKD/4SovKwsxPfdMC1J56azDpoT3WJ5tj3Mzc2PT6jwSSdH0UgsAKMUjXTrRNTM4TALejQZLYMyh8xJgWLp5DEayCzdQwO/4AKkungqpcIOL/WHdFSuAUrO6+pEo9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SFUHpnmn; arc=none smtp.client-ip=74.125.82.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kYHLj+yb"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2f00a567cfaso300763eec.0
-        for <git@vger.kernel.org>; Tue, 05 May 2026 16:02:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SFUHpnmn"
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-12dfee30612so734366c88.0
+        for <git@vger.kernel.org>; Tue, 05 May 2026 16:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778022151; x=1778626951; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778022152; x=1778626952; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vcLsdeWMhUMQPfZNq5JY+8B03eHo1E5r5hp/TD9BEIk=;
-        b=kYHLj+ybdKLyCsGDeyrpQWBnL9pbrvRTdC6Xfxjkc/h5bRg6v7e5O8jH8xREiJB7i5
-         m1IJuL/x7qXj0E/PemlYbAElK5e/CSipWfLfCgt+z6/YZLTmhad422HePhagJfKCcOEq
-         ARzFG50VO7A15UlsvXJIzM3/Edc746sfdcfaJdlMVFKO7NRyqc0i3w+4lDHvDoqrCUvJ
-         J4mf6+x5JPignDQpGV9nKAQuUH0B/qGffpd7Ivj45KkH+PXicd4AnSSqqzbCU+3cWQQt
-         Dcbk86WGE/e7pE24rVpBCkuWZzu9a8j2WzYxtvMcEkquwk7Wq0tUQWiCpfm+rp/fz5eE
-         VFCQ==
+        bh=R6sZa5uY9DQabCmC38lmMHEUJ2GkFbk9IjATtAWL4LM=;
+        b=SFUHpnmnGfgbpDM8+4Li0TJE/OmFk+81nWPY4UWkwGFFi1D6al05GroyJF4D4+cmYi
+         RtRJoc2WDz1Tzgsi3D9PMQXceCfbSDfuggtIHilhooq4QOqlwjLlXGtmWvSCNaqXPjRE
+         ZlroVo8lPYdd1oVg5K/PphUFx6a92Ru6j2S/n5TFYpTQA36vxFwfuOsXEsib7hQfft64
+         Haxa9bgDfhQStZN/HN3PZ0vii12sNlJRWRkB0gOCtDCOV3mIouv+FvHtsq+uCrO9yrxV
+         ykW0meLbn2ApQWzmeDfcxswP6LGYzmv1OILXCsMuOlZwAg30CSklYKTsk0G06wKJYnEh
+         BCag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778022151; x=1778626951;
+        d=1e100.net; s=20251104; t=1778022152; x=1778626952;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vcLsdeWMhUMQPfZNq5JY+8B03eHo1E5r5hp/TD9BEIk=;
-        b=MvypdJjHs3oj16BQAe8/i5W1FsK+KsWVg6+3XG+UCphf5ZfIUNrXEAETuFvGDYEMxf
-         cwoWCrZSozgVHH8GbY/OJZFjCdUltGR5S+xD/msyR+cV7aIs9Pn934ZYlDZuIpe/sOvG
-         dGDOIJfwbi6M+tZ73sRlEGCasjoQjBCppi5lBiqc4TYwu/PV/kwWzZlTNLtoZyQ/MrxU
-         K35BQEhU4cXcuyns8rD/D0XnaytktB9bRxstz2OjSYjPnju+SsHuKBrqST5XHKesk20K
-         djSGZ1M3Byd1b+aOBGKvD2Z53PVEnEL1RpIurDg53agxK4ZG92MS5p4X4Myn8i1LF8Mf
-         vPnQ==
-X-Gm-Message-State: AOJu0YzpppD/UFHVQBiyVyKruBS1aKZu3XP5feB+7zEA9Rd1Nz3h3eCu
-	jhtwPFplco4f4LlQuTUkC88S4265VkWWET8FxmV/yQ1VEfb4kajn+H8hnkkGgwNY
-X-Gm-Gg: AeBDievobTiifo1dkV9paEdEmj2k+RYfPpkiLxWNcPMjt21IHpQWQ/v75sINxYdrqzS
-	ROHNWpG1144Wc45c1FRYBU0XiV1iPz67jtFdbWAr35bnCoVw5GH/qHwMsUpjxhrTcE2PjkGDkBc
-	F1lJx2oSyDYvZT0cOV0+iU6Lc58GaovjNjsKoEGLZ4jqVzeExOAXffBzfa+drXNnDU/Y/i9onUV
-	dv+3uLbpOpdxBVMwohumw2Ikd4aRrDkavZy17kOZCAhItHefOHl+5WTkONsW9tLNDMRq/wxVSX6
-	0QjncMcy3Reppx6kHWggSlrJbrXQLFIz3oSbd9coLNTn8Onop7q34Xh9yvKlHBodt18hCwlzAkL
-	BqTzpL7Ltl7ZgycEXlrpKr5KRw53UcWLiKxdPV/9nMffxJHjokorsIg+d2kCNfsqEdz1S3pXaJ0
-	hAsmZ3a1JpOUB8BTRR1dnO4Mmz1jjwni15
-X-Received: by 2002:a05:7300:b10b:b0:2f3:b7b2:cbd3 with SMTP id 5a478bee46e88-2f558c796cdmr385805eec.5.1778022150246;
-        Tue, 05 May 2026 16:02:30 -0700 (PDT)
+        bh=R6sZa5uY9DQabCmC38lmMHEUJ2GkFbk9IjATtAWL4LM=;
+        b=tLwBokcYsnhiNX0QzPCNIAQx06keQ9Xus7F1U7Tg3RlpGv4NSj3YzHMTWvZVlR58/T
+         +k5DyOdVyAOkYj1HNyj/gaNePOjJYFYU7VupXSfBvUsiQ4UCdZ4/bT/YUlzkG+QUSWd0
+         jABvMHHe5kF6o7YyG7rx9aSiFZuJDIHNoFKfFutbYJLC6srnLn5cY8bkNyi4lvjqOCjx
+         90KdT7hIwA36kCFZ3UmDntcIRhP86NpTTeqUkaCZ3H1wKje4jZQkFeEnxPmd5kQ/YCjS
+         n1dQI6UcecBKCOq7ZCwWSmxiwSz9MblEOuDAhQaUGELcJG/RYV5HVMdk33onyawNokvw
+         8Whg==
+X-Gm-Message-State: AOJu0YxxsoU8djzVoOgVtCJhQ+7fR+jLK4txGv4Ed6lyg1ugziG/NpOg
+	puv2NOHd/xUntiTWSCsK+XGV4pS5o1itzuUP1PfI2cGLtzGr+X5/d1u3A4GHBeGZ
+X-Gm-Gg: AeBDietmRawifbmB9+uHBbkRx+CkpEaa0Z7db6EJHfdxb4vjt2K5/NGJcXsVhUCOzur
+	80i4Rb260rRR4kyIK0L1oo0kLqP/HGq/Cmz3CBPfns0dMOy6r5OhNlJJd2MbRMZb6C6L6Oleqqd
+	gNSFHFwnrqO6AXfn4aXIVXDQrCZLSyqTMFDZZVWRD/2lW3ALcGTAfGahyzSsEXBzi1EqOCyKIGd
+	QBQRRn38g9vQS92TZi700ZsH8mXCW3U+ngdpj2cN1cEegNoOxQNevLt5c6hiNU0NbhYBw7Vbm0T
+	dEf9Dzc8b0nONY0vgp3Duv6xrvOFj+gBaR93pHu0/C9BPx0ehOSi0rDkfvFC8UyTbEXLPDOnV1M
+	xyZaw1ZQp+43EKAwrSl0sVpKSzVjx30wFoI+VE6L6dHwLi+eN67JDbM1r1pvkPoMMzWEZ1WRt07
+	lkBWZWZC6jjjGjaQRpU1RDNGtLrThi/q/h
+X-Received: by 2002:a05:7022:4184:b0:12d:de3e:86a7 with SMTP id a92af1059eb24-131964ae31amr641594c88.37.1778022151745;
+        Tue, 05 May 2026 16:02:31 -0700 (PDT)
 Received: from [127.0.0.1] ([20.168.4.2])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f56cec58efsm902968eec.2.2026.05.05.16.02.29
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13202fbf850sm977542c88.14.2026.05.05.16.02.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 16:02:29 -0700 (PDT)
-Message-Id: <f9cfa0c55dde8f7e876b568f8ea7caf555ffff1c.1778022144.git.gitgitgadget@gmail.com>
+        Tue, 05 May 2026 16:02:31 -0700 (PDT)
+Message-Id: <05ff821e6ffec02a3bfc5aef542592de6a7add76.1778022144.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
 References: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 05 May 2026 23:02:23 +0000
-Subject: [PATCH 3/4] xdiff: guard against negative context lengths
+Date: Tue, 05 May 2026 23:02:24 +0000
+Subject: [PATCH 4/4] parse-options: clarify PARSE_OPT_NONEG does not reject
+ negative numbers
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,62 +79,37 @@ Cc: Michael Montalbo <mmontalbo@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-The xdemitconf_t fields ctxlen and interhunkctxlen are typed as long
-(signed), but negative values are not meaningful for context line
-counts. Unlike the diff_options fields changed in the previous two
-commits, these cannot be converted to unsigned because the xdiff
-arithmetic relies on signed subtraction:
+The name "NONEG" can be misread as "no negative [values]" when it
+actually means "no [boolean] negation" (the --no-* form).
 
-    s1 = XDL_MAX(xch->i1 - xecfg->ctxlen, 0);
+When --inter-hunk-context and -U/--unified were converted from a
+custom parser to OPT_INTEGER_F with PARSE_OPT_NONEG in d473e2e0e8
+and 16ed6c97cc, the implicit rejection of negative values (via
+isdigit() in the old opt_arg() parser) was silently lost. The
+previous commits in this series fix the resulting bugs.
 
-If ctxlen were unsigned long, the signed operand would be implicitly
-converted to unsigned, and the subtraction would wrap to a large
-positive value when i1 < ctxlen, defeating the XDL_MAX clamp. The
-signed type is required for correct context-window calculations.
-
-The previous two commits reject negative values at the parse layer
-for --inter-hunk-context and -U/--unified, so negative values should
-no longer reach xdiff in normal use. Add BUG() guards at the top of
-xdl_get_hunk() as defense in depth to catch programming errors in
-current or future callers that bypass option parsing.
-
-xdl_get_hunk() is called by both xdl_emit_diff() and
-xdl_call_hunk_func(), so a single guard covers all xdiff consumers.
+Add a clarifying note to the flag documentation.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- xdiff/xemit.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ parse-options.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 04f7e9193b..7cd9cf0a44 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -46,12 +46,20 @@ static long saturating_add(long a, long b)
- xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
- {
- 	xdchange_t *xch, *xchp, *lxch;
--	long max_common = saturating_add(saturating_add(xecfg->ctxlen,
--							xecfg->ctxlen),
--					 xecfg->interhunkctxlen);
--	long max_ignorable = xecfg->ctxlen;
-+	long max_common;
-+	long max_ignorable;
- 	long ignored = 0; /* number of ignored blank lines */
- 
-+	if (xecfg->ctxlen < 0)
-+		BUG("negative context length: %ld", xecfg->ctxlen);
-+	if (xecfg->interhunkctxlen < 0)
-+		BUG("negative inter-hunk context length: %ld", xecfg->interhunkctxlen);
-+
-+	max_common = saturating_add(saturating_add(xecfg->ctxlen,
-+						   xecfg->ctxlen),
-+				    xecfg->interhunkctxlen);
-+	max_ignorable = xecfg->ctxlen;
-+
- 	/* remove ignorable changes that are too far before other changes */
- 	for (xchp = *xscr; xchp && xchp->ignore; xchp = xchp->next) {
- 		xch = xchp->next;
+diff --git a/parse-options.h b/parse-options.h
+index 706de9729f..c0a3a3dcae 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -116,7 +116,10 @@ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+  *   mask of parse_opt_option_flags.
+  *   PARSE_OPT_OPTARG: says that the argument is optional (not for BOOLEANs)
+  *   PARSE_OPT_NOARG: says that this option does not take an argument
+- *   PARSE_OPT_NONEG: says that this option cannot be negated
++ *   PARSE_OPT_NONEG: says that this option cannot be negated (i.e.
++ *                   prevents --no-<option> boolean form). Does not reject
++ *                   negative numeric values like --option=-1. Use
++ *                   OPT_UNSIGNED for options that must be non-negative.
+  *   PARSE_OPT_HIDDEN: this option is skipped in the default usage, and
+  *                     shown only in the full usage.
+  *   PARSE_OPT_LASTARG_DEFAULT: says that this option will take the default
 -- 
 gitgitgadget
-
