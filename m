@@ -1,248 +1,144 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE8030EF91
-	for <git@vger.kernel.org>; Tue,  5 May 2026 09:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777972820; cv=none; b=VGswGaMEYElmDR36B6+YmXnVqicqEjUFR3T3EdGofvTNZWivXbj0aoa5Sk5JU05dhpNtAmUTYQRt3pDj4CO3Yjx1W2uxuo0DQNcFnf5TlUrxG2pN0VAta84ebgGBIxVDnq+lsH+poDQwLEGRr6wxf393b+m7EhcSI3PE/xVwChA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777972820; c=relaxed/simple;
-	bh=hUhv+blg45GkHxW5PEl1rlFx593W8ZFyrgR15of0yfQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K27cBL+Me98VhZjMZT9LgHJmD/IZGaNxccX4SvUKvgwxphUuga+mzX7sYnwzvtWBxOPC2bDBlLqiE/XWM2Y3Olu7Cm2vWxPT1U1+Wx7ahwIzsRgpmk2kSIm3ZlM57+EKJFmHxo38ysZ9hWuNkYztAPkMaX6bKeA2TiyTnVvNCvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HKnlXTx9; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A492773C3
+	for <git@vger.kernel.org>; Tue,  5 May 2026 09:38:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777973897; cv=pass; b=RzSl3hkw6t3qajxLQV0NVyXUjSsgxxU2DyqHTrKC/3nGxcIJjLfuFdYJhaaDXfBYOaOD5+3tRhVi3tFktDvh7oYJa+mK3klmRnCZsQZ2W8HIms3qxPXEFC5gBmKnv64Mthfkp8Wdvor6k0uM+oW765NAFU7gci/7VkvjlxOgc24=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777973897; c=relaxed/simple;
+	bh=0CFy27bR+qK9LeBX4V5c3oHbrdcmOjKr5d0M5lyx1o8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WNjQlXss+HciPYPVLIhOK39qqvdTFZGxtxhyz1kU8APhuWy0h6surCEeoE7JE53nfskYFZKtRgOmHyBJgVeM3jBQF4r2dvAv5D77lp1bshg6YAraLCBiBru1BPOJwShN0IqpjUMcQKoxAP3ZN0NwpGmVjSAJsaIdFVf3H+jMP7I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6aesF6p; arc=pass smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HKnlXTx9"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4852a9c6309so40342455e9.0
-        for <git@vger.kernel.org>; Tue, 05 May 2026 02:20:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6aesF6p"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b79f8f7ea43so795831966b.2
+        for <git@vger.kernel.org>; Tue, 05 May 2026 02:38:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777973894; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ejQk0okpzEJqJu1RneGM99Mhx7bZoTrolKIXMeI+yTegynWU9+9TupeLG0ZW09um69
+         7KSJO84xxe6r/frt8tzjU8c+FKcONfOmF463O+uiA3grcUtnpV1BtxXunUzCg8ftnLAZ
+         7SFxoryL3+dOT03xuYijGKRNBN/B3Klz0E6zHIs05lKcxugCGi/8w54s0GQgMo+09NAX
+         t+JN5qrKHM7W552BjnASzgkPPZQYwUUV7o5y1ifo3UcJumPveHA6o53S+W5Mm1EfDsRs
+         QUsBoyYhctIuQR+ksjXT1xR3PZl7tEhkBvVJ8rp5N9fdP14GuZKKr3rRlhJVCOIv3/SA
+         1rog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=m7Bl4c0j3LckSpCrOU+x54esEgUjsJCVbXplMlN8C6k=;
+        fh=TvJNO+rJreHiIe/P9PBSp2UjZQ18Q+mmajMR58IAADk=;
+        b=daSYPUcsmclu0absfdJ/jhdhORZw7eCm5z2qMqmDBVZfb/aGdVzl/qNMFr32wcqTSo
+         3HhqIGKmbOss54eiQylC31zkMLvWxTrTGTVQoHZJiTymFHhxIk0qtq1s/3nKFtuSFUWh
+         mSXSVx6bzHULmbexQ35+yJwuH06AMwgwlOtK59JJS/dMLRDj8ODYpsK9Iec72UufO5mS
+         8TjxM4aRGLKuEpCUwSHGuuy8wm7RRNpNuJQZve1VMko/9YVvC/3RK2uhcwHyJwVQq5Y4
+         HstvRxFQVHmPp6MsE8hyN4eJauna/Q9Qok8uNiOm4X3q2fZqOiu8yS6EPFZ+xiAakqhy
+         XEjg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777972817; x=1778577617; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1777973894; x=1778578694; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uqaZrCaw8wl3au3ZhFAKV5nvn9zE9SxyiCeSHuFpI6A=;
-        b=HKnlXTx9utpEFTFrZZ5tHNFNGHuCxOf6Vtu4ydTvOH2A1ho2HzWUyuf62I+QrvPnIb
-         Zj2yw9+JYGnFGeFXDtIMGll/+vC7/ZNRTXz3iZv+R2fYf0l7ieLyuXzdAnX8ey1csYjE
-         7aUs+5avDb0MCR+JmphV+U9JelAB8rU/4txlNhAOkHRg6rYDxwTXX/PvnUyUcwKh5sqk
-         BwqJijLleFPsBk4bryVAD9o15L1KffFZQg4u3ei6kYg+aLr7QQFVBhDddUs59nlm535l
-         ioHGAgbSi1ol7DS4AdXvqNbM2EfD1XwZz+ziFzXgDmrEqGWrxggioRMIykQ0vjMLFpmR
-         9mOQ==
+        bh=m7Bl4c0j3LckSpCrOU+x54esEgUjsJCVbXplMlN8C6k=;
+        b=m6aesF6piLgfKVuyLMubc6TzTrgrQ57DKSVu4oDBDbdx0Et6A49G+JUQ529/Na+B/p
+         0IQ34JtmQjOtcEjHUYFHj5FuWncW2hGjwjZTvQ42mTMbQeueH/FoDYCSgn8tKM6+7EgV
+         TZ/6hfn1a9sqeTn5qgLxDF0keg+mCVWUas2+VTPJUeg7A/pdsjO7oKEAiCEWYwkSo2KH
+         DMbq7sdOqXet30P38N+AOr53BRTNUht4YBMdkkbyuHldpcbZa8tR3dql80mYr+Bpa3Oe
+         idoivZzKWGoXQM5ibXUI5uzUtRyF08NkrX5xDTrtajftF+ME8mefEyx6G9ZeG/0d5hrT
+         oQsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777972817; x=1778577617;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1777973894; x=1778578694;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=uqaZrCaw8wl3au3ZhFAKV5nvn9zE9SxyiCeSHuFpI6A=;
-        b=WJMJFt3HRduUgqZuqRwyMZNcMzywaoj+3TAH4mvlO8CNO08hQyKD/cmYmU5F+jbgcY
-         dHIqKLfTGoqNGJf+FX9KnmwOYjMBZGMIqU+naaVt8lEAMuMISVssiHJOJjGjQsvUTWJJ
-         bDgKFFQ3DITgkt2DEkasIZkLd5CAn2AVR7RczyclyxvV/PMt3KjNDP+UvPkV6HSbnhUs
-         iw/fzmko03jSJ2ZLysGv5PDOUVnDws27SZWyh6rrj4f76kE1Wfl9U688Ti/7fCZLjT7N
-         rIx8ial1YA4me+IdBLdFDsf+loDfwo2puY1E9ee5UPOjNkC2gM7xjJ8SuArCWTRspclx
-         e6rg==
-X-Gm-Message-State: AOJu0YxDkh+wmIbzPExM4kRegdibNRl6cwMRcqaCi4UlT/c0Yfw60Fan
-	lot/VHj5SN7s7hxW89FVzoXMF8w3/xXI1svi5g5URg7Pm8wf0Vk0f6CxjToreUVMUM63mWlvEYw
-	=
-X-Gm-Gg: AeBDies8OH/J9cd3SyCxVY3mEhUjwxanGfwF9B6pAeQHCkRuVUM2PQZbzrkaeUVkKlb
-	Zb31VlePvInRwkPltAAzlBQe5WDZr+EX18GMuB/pr9MnSUI72WhHfVw1644WZuQ4O2fAtS0H6yJ
-	Z8ZDyD1KVu1kDMEexB1rd4koteT4ibjFaKTA1qy1VFIRbrYDcJw4fCcsd0gwUv+oG2o06p2ZB4C
-	uYQg609LFXkz3qLU/c8uC9voG6bplWR2H7kNESJrZnXaCDR4sCwJL8KzgwFfNgHtqbVjWqhM/q6
-	E0pdPoitjrrUYTVvhIKoLJaGLLx0qLC3RUDEU+aB3QTYb5pLfobhyEUA9fGOnOfALIAFzYrM8XU
-	9SnXhIPx5L9CEWHVaiG8EUdnLnOZd4ACRejpG3EIPUBCw3jS4SDBosEx5YAdB0w0sATHlaMCyUW
-	nLaF5E5Z+hXod6mrZsMnMQ1s6W7heVKxL1HcqCD2Oc8iOAl/YlO4Us8BkIgw==
-X-Received: by 2002:a05:600c:a11:b0:48a:53ea:1408 with SMTP id 5b1f17b1804b1-48d187d95b8mr35594825e9.8.1777972817090;
-        Tue, 05 May 2026 02:20:17 -0700 (PDT)
-Received: from localhost.localdomain ([85.121.183.69])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8ebb2fa5sm291828175e9.12.2026.05.05.02.20.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 02:20:16 -0700 (PDT)
-From: aminnimaj@gmail.com
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	peff@peff.net,
-	ryan.hendrickson@alum.mit.edu,
-	Aliwoto <aminnimaj@gmail.com>
-Subject: [PATCH v2 1/1] http: reject unsupported proxy URL schemes
-Date: Tue,  5 May 2026 09:19:40 +0000
-Message-ID: <20260505091941.1825-2-aminnimaj@gmail.com>
-X-Mailer: git-send-email 2.49.0.windows.1
-In-Reply-To: <20260505091941.1825-1-aminnimaj@gmail.com>
-References: <20260501190401.1580-1-aminnimaj@gmail.com>
- <20260505091941.1825-1-aminnimaj@gmail.com>
+        bh=m7Bl4c0j3LckSpCrOU+x54esEgUjsJCVbXplMlN8C6k=;
+        b=Ai+DLz+GtKLqwxQrsii38rStQdwvoY9mp9A5pSLkS00EEivKK2EJXKc1KTeu/9xHhn
+         wY39G1rPwBAYlSYB7GxaTwS5kcX03ud03vITRQ0ouh01n2AjiErAzAOJD7RmDTdIwGhL
+         77hMuQPn6oHUS3EklvzAcOdP54r83f6uOUVhohSQSyekpmg8PUe3NBzjT50OB0oSAhEO
+         ptsxSWNfUCXrOr7eY5G+rbPvgBjlfa4TfuqzE6cRe5mSD2aDJS4ossFhvmqJG4x+qvRH
+         fG58NDXFe01YaQQsOh7OEXextmr8FbolsoUJ2XwPoLn9VPYJZZ8y3lPwP3mA0+9xj6Gt
+         rz9g==
+X-Gm-Message-State: AOJu0Yxc1Tc0gXXKN31KvL3iaYMZ5VBCBSbAYydAdxRCLn8nDD3XMAHW
+	DAeB6Xaqtjdx+EPbsX8AT+iMPBJ60ZFFECZiyGWxWos3S4dClb1MQev0nrZV7qcNwlvMTj7UIFW
+	Qts6zjBDcgtUTfcz9qUHNlkaKAmugg/NiEQ==
+X-Gm-Gg: AeBDietb+zUNlXSW/uZZXE2eKO32IJdPHc7usc4CzaWtRG6jFmCKWhjuUram7NLgcUj
+	JluqVxZgqh1aDPnKcPQIehFUXnsBx/2pwBDoDLnLG5hUKT50H6YBtL8QRt9gQR2F+YFHwu3OaW9
+	it7BfTVaf7QQjv8WgysSrPBnDvE+c7SupfLkJbxPhhesXxEcJ2bWfrOOrd2WsYyvifqQuoHhn9h
+	ZLs5vUbS/ewXOapxjZi2DTjyQnYq01PA48IXGo0FCDcOApOwLn6jjBgaD2F3QmWVEFoHCvk2HKP
+	hutY7Bi5gM7gXEFo
+X-Received: by 2002:a17:907:6d27:b0:bc2:9733:9ecc with SMTP id
+ a640c23a62f3a-bc29733a257mr446473066b.32.1777973894019; Tue, 05 May 2026
+ 02:38:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
+In-Reply-To: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
+From: Mikael Magnusson <mikachu@gmail.com>
+Date: Tue, 5 May 2026 11:38:01 +0200
+X-Gm-Features: AVHnY4Jf0dIHrcjaDbstb8l3Oz6LEp5BxBFthIPH0l_IxTnDf7LeizF9yc_KEDQ
+Message-ID: <CAHYJk3Qvx2i-K7ozLmwyA_S1tbRhf9i2EZa-5sfzBwC5aebeQg@mail.gmail.com>
+Subject: Re: Git trims the last character of content from remotes
+To: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Aliwoto <aminnimaj@gmail.com>
+On Mon, May 4, 2026 at 7:02=E2=80=AFPM Hugo Osvaldo Barrera <hugo@whynothug=
+o.nl> wrote:
+>
+> Hi all,
+>
+> When I push content to GitLab, the remote server sends back some text whi=
+ch git
+> then prints to stderr:
+>
+>   remote:
+>   remote: To create a merge request for zk, visit:
+>   remote:   https://gitlab.alpinelinux.org/WhyNotHugo/aports/-/merge_requ=
+ests/new?merge_request%5Bsource_branch%5D=3Dzk
+>   remote:
+>
+> When the width of a whole line is the same as my terminal width, the last=
+ digit
+> gets trimmed off. E.g.: if I resize my terminal for the above to fix exac=
+tly,
+> and re-run the same command, git prints:
+>
+>   remote:   https://gitlab.alpinelinux.org/WhyNotHugo/aports/-/merge_requ=
+ests/new?merge_request%5Bsource_branch%5D=3Dz
+>
+> From what I can tell, sideband.c prints ANSI_SUFFIX =3D "\033[K", this es=
+cape
+> sequence being "clear the line from the current position until the end of=
+ the
+> line", and this is the root cause of the issue.
+>
+> When piping to cat or to a file, this sequence is not printed, so the out=
+put is
+> fine.
+>
+> Is this a bug?
 
-An explicit proxy URL with an unrecognized scheme such as
-htpp://127.0.0.1 is currently accepted.
+grep has the same bug with --color, if you have a line of text the
+same width as your terminal, for the same reason. urxvt supports an
+extension of \e[3K to clear to end but not erase the character under
+the cursor if it's wrapped (but not yet moved to the next line). xterm
+hasn't picked it up though, so it's not a general solution,
+unfortunately. It's a little unclear to me why git prints this
+sequence here at all, are we expecting that there is already other
+text printed on the line? Or is it to clear cells that may have had
+another background color when the current line was scrolled in? Maybe
+that case is more unusual and less harmful than actually eating the
+final character, that it's not worth clearing?
 
-Git parses the URL, extracts the host part, and then passes only that
-host to libcurl. Because no proxy type is selected for the unknown
-scheme, Git leaves libcurl at its default HTTP proxy type, so the typo
-is silently treated as an HTTP proxy.
-
-Reject proxy URLs with explicit unsupported schemes instead of silently
-accepting them. Keep the existing host:port-without-scheme behavior
-unchanged.
-
-Implement the SOCKS proxy handling with a shared table-driven mapping.
-
-Add a regression test to cover the unsupported-scheme case.
-
-Signed-off-by: Aliwoto <aminnimaj@gmail.com>
----
- http.c                | 93 +++++++++++++++++++++++++++++++------------
- t/t5564-http-proxy.sh |  6 +++
- 2 files changed, 74 insertions(+), 25 deletions(-)
-
-diff --git a/http.c b/http.c
-index 7815f144de..b945267c9c 100644
---- a/http.c
-+++ b/http.c
-@@ -722,6 +722,69 @@ static int has_proxy_cert_password(void)
- 	return 1;
- }
- 
-+static const struct socks_proxy_type {
-+	const char *name;
-+	long curlsym;
-+} socks_proxy_types[] = {
-+	{ "socks", CURLPROXY_SOCKS4 },
-+	{ "socks4", CURLPROXY_SOCKS4 },
-+	{ "socks4a", CURLPROXY_SOCKS4A },
-+	{ "socks5", CURLPROXY_SOCKS5 },
-+	{ "socks5h", CURLPROXY_SOCKS5_HOSTNAME },
-+};
-+
-+static const struct socks_proxy_type *find_socks_proxy_type(const char *protocol)
-+{
-+	int i;
-+
-+	if (!protocol)
-+		return NULL;
-+
-+	for (i = 0; i < ARRAY_SIZE(socks_proxy_types); i++) {
-+		if (!strcmp(socks_proxy_types[i].name, protocol))
-+			return &socks_proxy_types[i];
-+	}
-+
-+	return NULL;
-+}
-+
-+static int is_socks_proxy_protocol(const char *protocol)
-+{
-+	return !!find_socks_proxy_type(protocol);
-+}
-+
-+static int set_curl_proxy_type(CURL *result, const char *protocol)
-+{
-+	const struct socks_proxy_type *socks_proxy_type;
-+
-+	if (!protocol || !strcmp(protocol, "http"))
-+		return 0;
-+
-+	socks_proxy_type = find_socks_proxy_type(protocol);
-+	if (socks_proxy_type) {
-+		curl_easy_setopt(result, CURLOPT_PROXYTYPE, socks_proxy_type->curlsym);
-+		return 0;
-+	}
-+
-+	if (!strcmp(protocol, "https")) {
-+		curl_easy_setopt(result, CURLOPT_PROXYTYPE, (long)CURLPROXY_HTTPS);
-+
-+		if (http_proxy_ssl_cert)
-+			curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT,
-+					 http_proxy_ssl_cert);
-+
-+		if (http_proxy_ssl_key)
-+			curl_easy_setopt(result, CURLOPT_PROXY_SSLKEY,
-+					 http_proxy_ssl_key);
-+
-+		if (has_proxy_cert_password())
-+			curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD,
-+					 proxy_cert_auth.password);
-+	}
-+
-+	return -1;
-+}
-+
- /* Return 1 if redactions have been made, 0 otherwise. */
- static int redact_sensitive_header(struct strbuf *header, size_t offset)
- {
-@@ -1192,30 +1255,6 @@ static CURL *get_curl_handle(void)
- 	} else if (curl_http_proxy) {
- 		struct strbuf proxy = STRBUF_INIT;
- 
--		if (starts_with(curl_http_proxy, "socks5h"))
--			curl_easy_setopt(result,
--				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS5_HOSTNAME);
--		else if (starts_with(curl_http_proxy, "socks5"))
--			curl_easy_setopt(result,
--				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS5);
--		else if (starts_with(curl_http_proxy, "socks4a"))
--			curl_easy_setopt(result,
--				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS4A);
--		else if (starts_with(curl_http_proxy, "socks"))
--			curl_easy_setopt(result,
--				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS4);
--		else if (starts_with(curl_http_proxy, "https")) {
--			curl_easy_setopt(result, CURLOPT_PROXYTYPE, (long)CURLPROXY_HTTPS);
--
--			if (http_proxy_ssl_cert)
--				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT, http_proxy_ssl_cert);
--
--			if (http_proxy_ssl_key)
--				curl_easy_setopt(result, CURLOPT_PROXY_SSLKEY, http_proxy_ssl_key);
--
--			if (has_proxy_cert_password())
--				curl_easy_setopt(result, CURLOPT_PROXY_KEYPASSWD, proxy_cert_auth.password);
--		}
- 		if (strstr(curl_http_proxy, "://"))
- 			credential_from_url(&proxy_auth, curl_http_proxy);
- 		else {
-@@ -1225,6 +1264,10 @@ static CURL *get_curl_handle(void)
- 			strbuf_release(&url);
- 		}
- 
-+		if (set_curl_proxy_type(result, proxy_auth.protocol) < 0)
-+			die("Invalid proxy URL '%s': unsupported proxy scheme '%s'",
-+			    curl_http_proxy, proxy_auth.protocol);
-+
- 		if (!proxy_auth.host)
- 			die("Invalid proxy URL '%s'", curl_http_proxy);
- 
-@@ -1235,7 +1278,7 @@ static CURL *get_curl_handle(void)
- 			if (ver->version_num < 0x075400)
- 				die("libcurl 7.84 or later is required to support paths in proxy URLs");
- 
--			if (!starts_with(proxy_auth.protocol, "socks"))
-+			if (!is_socks_proxy_protocol(proxy_auth.protocol))
- 				die("Invalid proxy URL '%s': only SOCKS proxies support paths",
- 				    curl_http_proxy);
- 
-diff --git a/t/t5564-http-proxy.sh b/t/t5564-http-proxy.sh
-index 3bcbdef409..5669ce37d8 100755
---- a/t/t5564-http-proxy.sh
-+++ b/t/t5564-http-proxy.sh
-@@ -95,4 +95,10 @@ test_expect_success 'Unix socket requires localhost' - <<\EOT
- 	}
- EOT
- 
-+test_expect_success 'unknown proxy scheme is rejected' '
-+	test_must_fail git clone -c http.proxy=htpp://127.0.0.1 \
-+		https://example.com/repo.git 2>err &&
-+	test_grep "unsupported proxy scheme '\''htpp'\''" err
-+'
-+
- test_done
--- 
-2.49.0.windows.1
-
+--=20
+Mikael Magnusson
