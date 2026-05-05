@@ -1,83 +1,82 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18743BD643
-	for <git@vger.kernel.org>; Tue,  5 May 2026 05:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B782194C96
+	for <git@vger.kernel.org>; Tue,  5 May 2026 06:02:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777960353; cv=none; b=anlGtrxVqyIIWF+wBBhkD+CQFrLsAKGMG6raAO8UqF5N4f9GyCQQxhn2AYh9C8H03psgPS9dmk3qz1MQu9fCnhhhRuES7eHXv1Dwb8BSoOt8Np46TI2peisdxAINxwfPK5KjtN02jsCyEaAJnPkr2itWQ8fGEceBSxNWqCAWDvw=
+	t=1777960971; cv=none; b=dKwZPE/aVqwajJoKIauMI+COJ4oGSFY4RuGmlTp7wLp4XqZ3ce1w02rU/31y2XWnGueiBkN2MV4l60soZNW0gPY9XY2IDOGLZLkSazVZw/2N8P/sfwdxCuO9X1RcgnIwWsWNwJKDV3qVkfXVx1iLJJRlwKGLrq7Pn1Hr76hvZ4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777960353; c=relaxed/simple;
-	bh=KlfB0wSS10NCyQoyJ1nseZNuoRfSMkBBrgv5b5oF9ZQ=;
+	s=arc-20240116; t=1777960971; c=relaxed/simple;
+	bh=1Qi5MBCx1hdTlnStczr3lXdRfmDPw++kSmAN9C+ygXk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DYhmbC0Bgnlfk4m+ZYPKBGFi5Kip6cIiolp295d0YCWjzLp9yHUivB2dohYt40S5p7jBv2vJnT4ewHRJyMa3+Sq7M5olyjjxKqKoW9upMTQugLdR9+9x/xhYiaGjMvF4NvZ4d7A6zjpFFYQA/XblKSVG6hYMRKgM4QZOdlR/g3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jCeVeh9J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zpea295Z; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=D391e7W4C3o05OUyCnsGfTAvvXnNqMc/lF3JePTnjvX3XU8Ea+DkHIGKmn+zK4a3s7cCSONw9RVlxFc0iBad0CUvNxvpSvSYTdSpAFeaXIVmBW92xyy3ZNg+ydpya6l7rNDOk1RY9rMJiPHc1UcqQgHv1BMNBRiPe9SaZqwTjDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bZMxB1z8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PvQkMdBl; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jCeVeh9J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zpea295Z"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id AFE6E1D0002E;
-	Tue,  5 May 2026 01:52:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 05 May 2026 01:52:30 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bZMxB1z8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PvQkMdBl"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 55FEA7A0047;
+	Tue,  5 May 2026 02:02:49 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Tue, 05 May 2026 02:02:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1777960350; x=1778046750; bh=5mDC9mUXO3
-	//k08y8Ji4uxAIm/xR23UxCTjTF2ign3k=; b=jCeVeh9JT0TIMmCQWe9hU8FiXo
-	dp0gtqO7Hj0ec8ldlVdrP8Ki5w0napsk5QsCd46Q24Nl48Z/146DWfVjDrIKHjIX
-	0qniLDnp5VXaFf6Qdg1r6HcXWhh0z1WKWQMGl/UCEAz2p69n7VkhA5xGicnu+Ios
-	m6zyydnQqqochgUUtY77OK1gB7QDsUHC88SYJfQR25uBVbeHe8oJ+XwCtzBe8u3Q
-	3P7pQLj2/WhA6GThudtMx6ArZARXWNxrOAoGs9tjYFBoC50Q/SBbf/nkxMX1Ot2m
-	4LB9zXmKHk1p+oJzr/WohWRb7RSc2xOn/oK74rqBKVX+DjrCuK68fXQ9BePg==
+	:subject:to:to; s=fm3; t=1777960969; x=1778047369; bh=mbNZKNonve
+	aaFW+3nkWzqjevgInT2powGvxZWizuHLg=; b=bZMxB1z8cqwcgRAe3RS3x8eocj
+	nO/PS9rsmKDuai6POoTOlMXW92ExKA/5H6qz/fyDqTdZbxLoqtj11V45AQSEaeeX
+	FPkTB+5tOLcne1MKZULmUn0XEETGrQp5W6SYp3v+EJrFGdBeW5e9HI1P0d+VKymU
+	7vaE85LeOc+EI+qMBN9HJJZPOCZREMbaurpV0hq93MeumATYIB7jxVFly5AwLRay
+	2kXjs0xh5gyUqRIacGd3k3pQiir1r0/TK7RDCXNKGICdY958cXY6TSJ9K7UYMTql
+	yZkFXFw4iwUhWOpOQNOyjfMOerBd/+c27B6OeTCpKrP1Vy8WG5kMJ+K/9RIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777960350; x=1778046750; bh=5mDC9mUXO3//k08y8Ji4uxAIm/xR23UxCTj
-	TF2ign3k=; b=Zpea295ZQpyh+Xdv/Ilu56Mqg9A8muPs6qPpPgfDXUy8AV7yYzN
-	5oJvvhUkK8MXGWQ3AYyOnMc647S2BwIstm+4tN9jPq5+NA5HtbD3kH8r/nnc4uZt
-	5CqvPb27/dIOqGhGfKChmQdNps3cFUq092jNPXaVxxFSorMaM232zpTn0QOmTIij
-	/mn+nfwXNUNP3nUCGInf/hKj/2PWv2lIzuO0DXbToO/T7MFc3CZ5Kc0Lbnl/3/lY
-	YDcoGPquxNMzVK6vdK5gvo51wH0+P+XxfvFHR/V0s+QtpexaIEqPlHq/sV9/xewS
-	JljLquCJCaLduR83CLohmR6UlxOIuh9WF2A==
-X-ME-Sender: <xms:nYX5aRbwD6aButcw2q009GXju2U8_jiWq7oxLknE_IyviXIyUUrPlw>
-    <xme:nYX5af30liB3CEsvnnjWGYaM4ZJ7L5PPCAEJSlXiggjhEOAkks9gjAehsr_SczLyU
-    7ChE8qBUECkx55Gs3ii2VZY1FQAIvHXdobLv0sidUgaXTkk61uzmA>
-X-ME-Received: <xmr:nYX5aRWmG_TJUWW5vyxS9Nw1HKH8ZJehzx9ZdmKZur07gzZXA_Vi093cfri9Rkum9pumkHPaA9mkUqCHpULLFq6FG-ki_BOCucYiqg6GqQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddtleefucetufdoteggodetrf
+	1777960969; x=1778047369; bh=mbNZKNonveaaFW+3nkWzqjevgInT2powGvx
+	ZWizuHLg=; b=PvQkMdBl6U8Ucuay2+5TyOjIEasj5RM3NwFa0V9v6TzttAn9lTg
+	YL1APJUsiu4CyIOEcCM10vaC1DdL1Ix0AwcmB4IvAZdoDfAiSz5csWJhinKUqsGN
+	mYtoFTuFm5vh5a+VTGiFj3qfkTtIw6tLZgr7tr4zSyhv2RbZ3900XjEqks3G71U1
+	g+aE/391QdpAgf3SifX9uTxN8C0xkEMivv/7saHmnY46GGYypRyyZZcOJ1FWL+hM
+	njkZ9Y2EVduinNCkNBfe7wD5lkqD6mzmfp9Jv2a13MLZb96BxpHoNKLDRZKih3rq
+	z0yh1Z46t3dORgcXxgRl2uep/R30EMsyhjw==
+X-ME-Sender: <xms:CIj5aQT0nP9Op0ZJU6C5__y6_xbIa7cpgPENtaC-Rwn0k6_x-y9w9w>
+    <xme:CIj5aVN1kfbZshBgOxACWrIc7GdyVbvGwnmZ_9t3OCYzoI2lRI2IGHelAa18cLtvF
+    4erQd6UwRsXuuFN2s_LWQdNL2vpT3KzXLb9OQGvJpBEu3iIU61kqQ>
+X-ME-Received: <xmr:CIj5abOOWQLnpglMj-28XwQpcuRlHStTbra5tJWFndLSHH7POIjMxVcAMCoEAhBD1NkGv6LlE8Bf_5g0a0lcCFzlLU3UwsmACDJLlEbazA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddtleehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgt
-    ohhm
-X-ME-Proxy: <xmx:nYX5aZUYIwEkRuIGk-rRdwuAXxPwPbFP_nwUBS9boEQcSL_6b1mDjg>
-    <xmx:nYX5aQfRxE2TK_F2cJhMcciuqSuGQzm8aiTemojnMzP_MGOA8YEd3w>
-    <xmx:nYX5aSXLnr_U5uM23qHMvg_hBFQmPuIr1r11CI-wso_w_DVglO0EVA>
-    <xmx:nYX5aZfGDgvWZP-kIWXJOXVl4WK8FCn4HSqVm3PbUUqJpBaUNPyGPQ>
-    <xmx:noX5aX3dDAwxoP3zlEYc0Ne8zQUvkOIJJKVzWhryyc44f4HAAvBCfO74>
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjohgvrhhgsehthh
+    grlhhhvghimhdrihhopdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:CIj5adsXJSbUxAHArkoJXMbf5Ef0e9VboYJFa5wy4ceAjlNNol2UMg>
+    <xmx:CIj5adVlf-MvUw4WXFvjbNzKcA8wJl-4T1rNq3u0ROSSX_VuZcU1rA>
+    <xmx:CIj5ads6qfMDm8KETIg-kYNJpOtrdBVR3yRCcA_tEIuqXh9GReNmAA>
+    <xmx:CIj5aRXbpWOf2Q2bsXgctK8ctB07LhjyXfPU0Pz3ib5XCdHv5mRkKQ>
+    <xmx:CYj5afaLWt7icEnut0_jsNEeS92gPpcl_ctG4FuS9FjPsBPB5IzupjCy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 May 2026 01:52:29 -0400 (EDT)
+ 5 May 2026 02:02:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e210f138 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 May 2026 05:52:27 +0000 (UTC)
-Date: Tue, 5 May 2026 07:52:24 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 404a02aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 May 2026 06:02:46 +0000 (UTC)
+Date: Tue, 5 May 2026 08:02:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH v4 6/9] update-ref: handle rejections while adding updates
-Message-ID: <afmFmGo_Sg33Rv6V@pks.im>
-References: <20260504-refs-move-to-generic-layer-v4-0-936ac2f0b1a3@gmail.com>
- <20260504-refs-move-to-generic-layer-v4-6-936ac2f0b1a3@gmail.com>
+To: Joerg Thalheim <joerg@thalheim.io>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t7703: ignore 'total' line when comparing ls -l output
+Message-ID: <afmIAxNKOlRCxwKn@pks.im>
+References: <20260504101429.340123-1-joerg@thalheim.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,56 +85,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260504-refs-move-to-generic-layer-v4-6-936ac2f0b1a3@gmail.com>
+In-Reply-To: <20260504101429.340123-1-joerg@thalheim.io>
 
-On Mon, May 04, 2026 at 07:44:10PM +0200, Karthik Nayak wrote:
-> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-> index 5259cc7226..6355c3dd3e 100644
-> --- a/builtin/update-ref.c
-> +++ b/builtin/update-ref.c
-> @@ -257,6 +266,31 @@ static void print_rejected_refs(const char *refname,
->  	strbuf_release(&sb);
->  }
+On Mon, May 04, 2026 at 12:14:29PM +0200, Joerg Thalheim wrote:
+> diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+> index 04d5d8fc33..9b5a428620 100755
+> --- a/t/t7703-repack-geometric.sh
+> +++ b/t/t7703-repack-geometric.sh
+> @@ -299,9 +299,9 @@ test_expect_success '--geometric --write-midx retains up-to-date MIDX without bi
+>  		test_path_is_file .git/objects/pack/multi-pack-index &&
+>  		test-tool chmtime =0 .git/objects/pack/multi-pack-index &&
 >  
-> +/*
-> + * Handle transaction errors. If we're using batches updates, we want to only
-> + * die for generic errors and print the remaining to the user.
-> + */
-> +static void handle_ref_transaction_error(const char *refname,
-> +					 struct object_id *new_oid,
-> +					 struct object_id *old_oid,
-> +					 const char *new_target,
-> +					 const char *old_target,
-> +					 enum ref_transaction_error tx_err,
-> +					 struct strbuf *err,
-> +					 struct command_options *opts)
-> +{
-> +	if (!tx_err)
-> +		return;
-> +
-> +	if (tx_err != REF_TRANSACTION_ERROR_GENERIC && opts->allow_update_failures) {
-> +		print_rejected_refs(refname, old_oid, new_oid, old_target,
-> +				    new_target, tx_err, err->buf, NULL);
-> +		return;
-> +	}
-> +
-> +	die("%s", err->buf);
-> +}
-
-It's a bit weird that we pass in the error message as a strbuf given
-that we really only care about the actual message.
-
-> @@ -644,6 +699,10 @@ static void update_refs_stdin(unsigned int flags)
->  	struct ref_transaction *transaction;
->  	int i, j;
+> -		ls -l .git/objects/pack/ >expect &&
+> +		ls -l .git/objects/pack/ | sed 1d >expect &&
+>  		git repack --geometric=2 --write-midx --no-write-bitmap-index &&
+> -		ls -l .git/objects/pack/ >actual &&
+> +		ls -l .git/objects/pack/ | sed 1d >actual &&
+>  		test_cmp expect actual
+>  	)
+>  '
+> @@ -316,9 +316,9 @@ test_expect_success '--geometric --write-midx retains up-to-date MIDX with bitma
+>  	test_path_is_file repo/.git/objects/pack/multi-pack-index &&
+>  	test-tool chmtime =0 repo/.git/objects/pack/multi-pack-index &&
 >  
-> +	struct command_options opts = {
-> +		.allow_update_failures = flags & REF_TRANSACTION_ALLOW_FAILURE,
-> +	};
-> +
+> -	ls -l repo/.git/objects/pack/ >expect &&
+> +	ls -l repo/.git/objects/pack/ | sed 1d >expect &&
+>  	git -C repo repack --geometric=2 --write-midx --write-bitmap-index &&
+> -	ls -l repo/.git/objects/pack/ >actual &&
+> +	ls -l repo/.git/objects/pack/ | sed 1d >actual &&
+>  	test_cmp expect actual
+>  '
 
-Nit: stray empty line between the variable declarations.
+Hm. So all we're interested in is the mtime of these files as an
+indicator whether they have been rewritten or not. I don't think there's
+an easy, portable via POSIX tooling to retrieve that. But we don't need
+it, because our test-tool already supports this functionality:
 
-Other than that this patch looks good to me, thanks!
+    $ test-tool chmtime --get <files>
+
+So how about we do the below patch instead?
+
+Thanks!
 
 Patrick
+
+diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+index 04d5d8fc33..ec7032bf5d 100755
+--- a/t/t7703-repack-geometric.sh
++++ b/t/t7703-repack-geometric.sh
+@@ -299,9 +299,9 @@ test_expect_success '--geometric --write-midx retains up-to-date MIDX without bi
+ 		test_path_is_file .git/objects/pack/multi-pack-index &&
+ 		test-tool chmtime =0 .git/objects/pack/multi-pack-index &&
+ 
+-		ls -l .git/objects/pack/ >expect &&
++		test-tool chmtime --get .git/objects/pack/* >expect &&
+ 		git repack --geometric=2 --write-midx --no-write-bitmap-index &&
+-		ls -l .git/objects/pack/ >actual &&
++		test-tool chmtime --get .git/objects/pack/* >actual &&
+ 		test_cmp expect actual
+ 	)
+ '
+@@ -316,9 +316,9 @@ test_expect_success '--geometric --write-midx retains up-to-date MIDX with bitma
+ 	test_path_is_file repo/.git/objects/pack/multi-pack-index &&
+ 	test-tool chmtime =0 repo/.git/objects/pack/multi-pack-index &&
+ 
+-	ls -l repo/.git/objects/pack/ >expect &&
++	test-tool chmtime --get repo/.git/objects/pack/* >expect &&
+ 	git -C repo repack --geometric=2 --write-midx --write-bitmap-index &&
+-	ls -l repo/.git/objects/pack/ >actual &&
++	test-tool chmtime --get repo/.git/objects/pack/* >actual &&
+ 	test_cmp expect actual
+ '
