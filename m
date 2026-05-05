@@ -1,68 +1,69 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99EB2EC0A6
-	for <git@vger.kernel.org>; Tue,  5 May 2026 19:24:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74673C456D
+	for <git@vger.kernel.org>; Tue,  5 May 2026 19:24:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778009043; cv=none; b=h7XcSh1mauigqHeMxEhwG+N/g2aoBKu7rfB0gA1aJdZjWT6aNgDHzSoHe8TOFp9EeoEjo7CUsW41QrQlOfaJnXVWJh9D93LZNFT9HjHs5iV0OSMFD/ijRH43eUDE/NuCP1emmdwMrKJa53E8pZjf4FUKtGuqlr5cdP3ymuF1HhA=
+	t=1778009044; cv=none; b=o/Gae5WO8l7xD02Uv9qo2ERaTveWnh9JXgr5yfmyAt9akQChpirBHGFqza9u+hFlj7L+9VaODqqpgEY/2bF6QHFs9T4Xw6GG2GmFbHJ9BmKXE2eysvP6pvwxoJwW6NN2WD7D6/Rx6SRegCYPObbPNaG+PQk58IceIF32Vn+WzrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778009043; c=relaxed/simple;
-	bh=OdE6YLIfbFMoHnCjvxAaaBTlwBHp2CVEgRIQOS6V7wU=;
+	s=arc-20240116; t=1778009044; c=relaxed/simple;
+	bh=bsPBW2zprvMLkpNQwV1GE8hy6SGkdwl4MIdRfEaITpY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BgkJ7257crE0t31pDO89y1nuGfEV4Fqak+UzCTiLjccdgkHHtJ4w2mI3k5gppEXxt50XHrskKVLUVnkBgDjkovIBhE02jrbH8SFT8Zly6H0l5wJeTXCvAPNL5mWw0tQgfISZVTny5kFzYgp+N2mZbTeYFwzUf0vcnAKwN2mLz3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MPoCLUbX; arc=none smtp.client-ip=209.85.210.41
+	 MIME-Version:To:Cc; b=cPhfVrJ+O2SlJxvxKaT9POlcxIiPPoEW7AW0m6fy4WLlovHPnpoFtTWb7S4tKG7WIqb+GgbGpkqKacjCYTJuTIkLhfdrgtXx1BY+ZgGtizEyG5MeqBWgnUKb88RnCfwkhoQAV+mgkryspkC+onkID5pfx2vowuhCQ+gWSoZ5u4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VTYpWRk1; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MPoCLUbX"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7dca5f64e86so4371498a34.0
-        for <git@vger.kernel.org>; Tue, 05 May 2026 12:24:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VTYpWRk1"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-479e4835e26so3323247b6e.3
+        for <git@vger.kernel.org>; Tue, 05 May 2026 12:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778009040; x=1778613840; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778009041; x=1778613841; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9fAokTVTfoL+x51KRRgsdgBknTsauqutBD2n4kM5i3E=;
-        b=MPoCLUbXxDCCsgTU/KdFrnN8rMgpLvCMsOvgyzpHuRRp+63NKTFkqibnVDHlipRQ7O
-         KC3UUb6GbTliMoa2wobnssMqOqMJvExU+fP8TXeSitFjAOFRY9S9eS5Lun603ql+hF9t
-         eKNz6k/ZsYlc3P6DtW0g6x5DKThogozjf/ooWJi9cMTTkb6Sw2k11FUbyDpOBJTt+JSF
-         D6K4je9QQXCMGEHkP83S1eSwMTB3sHbDd3EJfkrAY3hg9VVgGPoH43RT5bFLp07x4Qjq
-         YV4jI32kWgFP9dSFyoQwfDf8svMmx8iv0n5a4jLxW1I6Upu9gVV4WWxaa2bH4g4jdpS/
-         WqEQ==
+        bh=X5btTfE1nEFMRlfaUQ7E/YIBxw2kjfzyMERY7EtkcRA=;
+        b=VTYpWRk1m7A10bAGEBFwOvF5ZbTWNptEzbqrBB1L0/Z6ThoQolnomvlM98rE3xbGs7
+         IJ925rTuul79AT2bGHrcR3i3xidlOmsG0QI9aksoM283csibscAS9wDKnDKn0SlVYF4D
+         ucjRZ83X8ANdnbVbq93os20W3OJj7eEE4yZKGEdkuKKEdwUolNi4DxPzWgDO1sJRewQi
+         zYaDQgwSxPKBJt21FT0tTAFl8Kk7UbHl9Sqtf2PuVp9I9hSXk2pFR2cEr6fFvJqMjkL/
+         SzdYh2Vxhdd3iEY6zjmMDRbXxwDLu4gEfvhVsQ8d04T3DoHieBwrkhAmFMLKgl9nfoo5
+         ZNag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778009040; x=1778613840;
+        d=1e100.net; s=20251104; t=1778009041; x=1778613841;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9fAokTVTfoL+x51KRRgsdgBknTsauqutBD2n4kM5i3E=;
-        b=K600rXKkiyExeNF2pygZIKb/FJL8CbaJAsvilxOnlnaQbb98OUybsyvvjjwizT5/r9
-         4WonCU04nGep0U0iLPn5L+KzGii+lTTDskLxl2sFaesm/czH8QJpHQz8gSCvrVHV3IpX
-         XJP4rdLixRtCT2qmdf8CF4Kk3/PjRfvOVrYWhGCizwhiSThQqkcwxlfxU6iHteHgtOxE
-         HnvyLJeyhNSyquboaLB0cZiIXjbsLFMhP5Mi+yy3/UaRQKI43wb4nNmxvpN3dEO60oyB
-         oxjxHOvb8SYMMyLclNXgibcsuvKV6XM4PVk6GNlHa7nTPqmz5dabnj5un8bUO/uD2hH8
-         3tGA==
-X-Gm-Message-State: AOJu0YxnlZpdBkBvy+BZ2ad+5H/a0j0XAF4Bs8UXRkioyuDLv2i8WCr0
-	MyfiGjzL1B6jOzdvSWa2+hhj8W3Bm2gnVnMa0Cb7uw0HXqLPDhAxIbCW1sYdxw==
-X-Gm-Gg: AeBDieuD6ONNfWb2hF9mW/lyp6IBCQmzCRjnzuV1cK5VLvmObAC35HMOTy6nljZLsSI
-	cVN5gW4q05QziMQCXNP7HAigiSdsY9bWHuBZoACNXQ8pqxDhUI5JyVjUh5lhuQf7m8mZ4cejCXT
-	l3uDWQII2N9leKdRIFarjmwX+xzuEMW13KnvOGTkguDVzse8Yfvc2cQuIO1xpSV4PI3nY3sTS/f
-	fn0AJkFtc3wbcENz4pazxyiuiMYPmYInGAjKMvloP5P0FIAqFVJXPwQXjepG2OIhq1SP1G4rewp
-	c5HJb1Xk2S6IsaOke+ErStPeu0UsTeAyeiEKPvdSuswArj5FvgNlaQsRIv2Bv5sSxPY5TPQgnQU
-	rzmV77Z+0YEyQ3dP0gWmuhn6BF5xEZ26qgO2gJywLsRHeKhDdoHEvM0BXk0B2WJ++gPJxW81nRv
-	BAyCXcZlVLxkKx2Wf/RZx6YuSGjvp7WHlGX8Om
-X-Received: by 2002:a05:6830:2704:b0:7d7:f13a:761c with SMTP id 46e09a7af769-7e1df15829emr30299a34.23.1778009040136;
-        Tue, 05 May 2026 12:24:00 -0700 (PDT)
+        bh=X5btTfE1nEFMRlfaUQ7E/YIBxw2kjfzyMERY7EtkcRA=;
+        b=K4/Q7KyEz1AMPVCkdj2oCb8J4Pjm6EuEjgfQ/g/Sxpu59WQkQgd1CFcwBrW4BYyjqI
+         fmC3xtfLjZS79x1Tz9/UmiyeKRjliLkVnWJPn/LF8JGdRFnOsm6w/MCiWW9pLhKM884N
+         HV7our6VD7BY+fhGHThZSrp1nygqcdaHHyyZOAwamHZKlpVa1YiHWj7xy5pYpeHt+yD4
+         NWLLXy2Nea2HA/jItfyFLmAUTMuPwueNaKVFK5ExSvb5I0CjKdedQLjXoq3cvZa5COnR
+         9y6o4mt3bD5TfN4hREWw7VYneR5bYyzMyu68DJCAtXiQDuXbR0V1ntzMftvTrYOW649e
+         QHEA==
+X-Gm-Message-State: AOJu0YzQAdOzqyxGtqU4xO14jyK7XmxUf7p6daGO1WVkzJ6Ucov0JwUi
+	Ag4vM0l2mYjheinwJrD+1AECFaHqCvBFOpPVUzwGYcxGQvYNnLnHzYuhLJP3Qw==
+X-Gm-Gg: AeBDietDpkT47fy0ur4LjGks7bXVwnFvHneaicuThZRuXd7WjVAdwPbF8N0gY3nkuFr
+	ICiwDmKoD6KYCH0rnbhYLaEw7C27MwBAiwkaFcfxbkVFTpkVDgmS5sh7EG/atTNJSwMDK3hRR7T
+	syzkx1iJXPEZWBtf45TT0RPyB114TDfum60a5TF0ZwIZ70dfgCo3hOwW5L9WtlLtL5KOwEcxI/L
+	nkU0Fq7+qqDjLSUoMRZdlpBkTBjgOjAnrb+uFZg9DytvaBmgMVAlnP7Dw9AQvnkajxyREW8x/hI
+	C+6M/sXl90CCtvHEV0kvaGs4abKzEGnVu/1/T+ClJ+bM7gMm16gwg3oai/htF1jo5WYHiPASuuH
+	oS5Re0hoGJgc4HD7mq8nByQ41C3zN3wexBaAWbT6R2+lsf25+JiajVEsHF7SrJP+Tf3iApksPp4
+	ILfdkwJU5MsyGctCgk5ezicvOVV3rUYrs28kDY
+X-Received: by 2002:a05:6808:508c:b0:455:daf0:9998 with SMTP id 5614622812f47-48042549aaemr268168b6e.41.1778009041503;
+        Tue, 05 May 2026 12:24:01 -0700 (PDT)
 Received: from [127.0.0.1] ([52.173.108.21])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7decac248d1sm10922596a34.15.2026.05.05.12.23.59
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7decac8ef53sm10841702a34.21.2026.05.05.12.24.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 12:23:59 -0700 (PDT)
-Message-Id: <pull.2285.v4.git.git.1778009038.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2285.v3.git.git.1777965747.gitgitgadget@gmail.com>
+        Tue, 05 May 2026 12:24:00 -0700 (PDT)
+Message-Id: <77e67d4b8b7da1b982b384c5ad6044c5637e161f.1778009038.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v4.git.git.1778009038.gitgitgadget@gmail.com>
 References: <pull.2285.v3.git.git.1777965747.gitgitgadget@gmail.com>
+	<pull.2285.v4.git.git.1778009038.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 05 May 2026 19:23:52 +0000
-Subject: [PATCH v4 0/6] fetch: add fetch.pruneBranches config
+Date: Tue, 05 May 2026 19:23:53 +0000
+Subject: [PATCH v4 1/6] branch: add --forked <remote>
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,304 +76,283 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
     Johannes Sixt <j6t@kdbg.org>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
-I ran this on one of my repos and wiped out the local master branch! That
-was a bad surprise, so I made an update now to treat the default branch in a
-special way (never prune it).
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
- * Resolve each remote's HEAD and collect the targets into a
-   protected_default_refs set in collect_forked_set.
- * In prune_merged_branches, skip a candidate when its upstream is a
-   protected default ref and the local branch name matches the default
-   branch's leaf name (so a local main tracking origin/main is spared, but a
-   renamed trunk tracking origin/main is not).
- * Also skip when the candidate's push ref points at a protected default
-   ref, so a topic branch configured to push to origin/main is never pruned.
- * Tests: spare the local default branch; only protect by matching leaf name
-   (not by upstream alone); spare a branch whose push ref is the remote
-   default.
+List local branches whose configured upstream falls within any of
+the given <remote> arguments. <remote> may be either a configured
+remote name (matching all of its remote-tracking branches) or a
+single remote-tracking branch. Multiple <remote> arguments are
+unioned.
 
-Harald Nordgren (6):
-  branch: add --forked <remote>
-  branch: let delete_branches warn instead of error on bulk refusal
-  branch: add --prune-merged <remote>
-  fetch: add --prune-merged
-  branch: add branch.<name>.pruneMerged opt-out
-  branch: add --all-remotes flag
+This is the building block for --prune-merged, which deletes the
+listed branches.
 
- Documentation/config/branch.adoc |   7 +
- Documentation/fetch-options.adoc |   8 +
- Documentation/git-branch.adoc    |  32 ++++
- builtin/branch.c                 | 289 +++++++++++++++++++++++++++++--
- builtin/fetch.c                  |  20 +++
- t/t3200-branch.sh                | 247 ++++++++++++++++++++++++++
- t/t5510-fetch.sh                 |  31 ++++
- 7 files changed, 623 insertions(+), 11 deletions(-)
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ Documentation/git-branch.adoc |  12 ++++
+ builtin/branch.c              | 110 +++++++++++++++++++++++++++++++++-
+ t/t3200-branch.sh             |  54 +++++++++++++++++
+ 3 files changed, 174 insertions(+), 2 deletions(-)
 
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2285%2FHaraldNordgren%2Ffetch-prune-local-branches-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2285/HaraldNordgren/fetch-prune-local-branches-v4
-Pull-Request: https://github.com/git/git/pull/2285
-
-Range-diff vs v3:
-
- 1:  77e67d4b8b = 1:  77e67d4b8b branch: add --forked <remote>
- 2:  807c9f981f = 2:  807c9f981f branch: let delete_branches warn instead of error on bulk refusal
- 3:  49dc853403 ! 3:  77beb620d7 branch: add --prune-merged <remote>
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-       }
-       
-      -static int list_forked_branches(int argc, const char **argv)
-     ++static void collect_default_branch_refs(const struct string_list *remote_names,
-     ++					struct string_list *out)
-     ++{
-     ++	struct ref_store *refs = get_main_ref_store(the_repository);
-     ++	struct string_list_item *item;
-     ++
-     ++	for_each_string_list_item(item, remote_names) {
-     ++		struct strbuf head = STRBUF_INIT;
-     ++		const char *target;
-     ++
-     ++		strbuf_addf(&head, "refs/remotes/%s/HEAD", item->string);
-     ++		target = refs_resolve_ref_unsafe(refs, head.buf,
-     ++						 RESOLVE_REF_NO_RECURSE,
-     ++						 NULL, NULL);
-     ++		if (target && starts_with(target, "refs/remotes/"))
-     ++			string_list_insert(out, target);
-     ++		strbuf_release(&head);
-     ++	}
-     ++}
-     ++
-      +static void collect_forked_set(int argc, const char **argv,
-     ++			       struct string_list *protected_default_refs,
-      +			       struct string_list *out)
-       {
-       	struct string_list remote_names = STRING_LIST_INIT_NODUP;
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-      -	for_each_string_list_item(item, &out)
-      -		puts(item->string);
-      +	string_list_sort(out);
-     ++
-     ++	if (protected_default_refs)
-     ++		collect_default_branch_refs(&remote_names, protected_default_refs);
-       
-       	string_list_clear(&remote_names, 0);
-       	string_list_clear(&tracking_refs, 0);
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-      +	if (!argc)
-      +		die(_("--forked requires at least one <remote>"));
-      +
-     -+	collect_forked_set(argc, argv, &out);
-     ++	collect_forked_set(argc, argv, NULL, &out);
-      +	for_each_string_list_item(item, &out)
-      +		puts(item->string);
-      +
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-      +				 int quiet)
-      +{
-      +	struct string_list candidates = STRING_LIST_INIT_DUP;
-     ++	struct string_list protected_default_refs = STRING_LIST_INIT_DUP;
-      +	struct strvec deletable = STRVEC_INIT;
-      +	struct string_list_item *item;
-      +	int n_not_merged = 0;
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-      +	if (!argc)
-      +		die(_("--prune-merged requires at least one <remote>"));
-      +
-     -+	collect_forked_set(argc, argv, &candidates);
-     ++	collect_forked_set(argc, argv, &protected_default_refs, &candidates);
-      +
-      +	for_each_string_list_item(item, &candidates) {
-      +		const char *short_name = item->string;
-      +		struct strbuf full = STRBUF_INIT;
-      +		struct branch *branch;
-      +		const char *push_ref;
-     ++		const char *upstream;
-      +
-      +		strbuf_addf(&full, "refs/heads/%s", short_name);
-      +		if (branch_checked_out(full.buf)) {
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-      +		strbuf_release(&full);
-      +
-      +		branch = branch_get(short_name);
-     ++		upstream = branch ? branch_get_upstream(branch, NULL) : NULL;
-     ++		if (upstream &&
-     ++		    string_list_has_string(&protected_default_refs, upstream)) {
-     ++			const char *leaf = strrchr(upstream, '/');
-     ++			if (leaf && !strcmp(leaf + 1, short_name))
-     ++				continue;
-     ++		}
-     ++
-      +		push_ref = branch ? branch_get_push(branch, NULL) : NULL;
-      +		if (!push_ref)
-      +			continue;
-      +		if (refs_ref_exists(get_main_ref_store(the_repository),
-      +				    push_ref))
-      +			continue;
-     ++		if (string_list_has_string(&protected_default_refs, push_ref))
-     ++			continue;
-      +
-      +		strvec_push(&deletable, short_name);
-      +	}
-     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
-      +
-      +	strvec_clear(&deletable);
-      +	string_list_clear(&candidates, 0);
-     ++	string_list_clear(&protected_default_refs, 0);
-      +	return ret;
-      +}
-      +
-     @@ t/t3200-branch.sh: test_expect_success '--forked requires at least one <remote>'
-      +	test_when_finished "rm -rf pm-pushdiff" &&
-      +	git clone pm-upstream pm-pushdiff &&
-      +	git -C pm-pushdiff config push.default current &&
-     -+	git -C pm-pushdiff branch --track topic-a origin/main &&
-     ++	git -C pm-pushdiff branch --track topic-a origin/one &&
-      +
-      +	git -C pm-pushdiff branch --force --prune-merged origin &&
-      +
-      +	test_must_fail git -C pm-pushdiff rev-parse --verify refs/heads/topic-a
-      +'
-     ++
-     ++test_expect_success '--prune-merged spares the local default branch' '
-     ++	test_when_finished "rm -rf pm-default" &&
-     ++	git clone pm-upstream pm-default &&
-     ++	git -C pm-default config push.default current &&
-     ++	git -C pm-default checkout --detach &&
-     ++	git -C pm-default branch --prune-merged origin &&
-     ++	git -C pm-default rev-parse --verify refs/heads/main
-     ++'
-     ++
-     ++test_expect_success '--prune-merged protects only the default branch by name, not by upstream' '
-     ++	test_when_finished "rm -rf pm-default-alias" &&
-     ++	git clone pm-upstream pm-default-alias &&
-     ++	git -C pm-default-alias config push.default current &&
-     ++	git -C pm-default-alias branch --track trunk origin/main &&
-     ++	git -C pm-default-alias checkout --detach &&
-     ++	git -C pm-default-alias branch --force --prune-merged origin &&
-     ++	git -C pm-default-alias rev-parse --verify refs/heads/main &&
-     ++	test_must_fail git -C pm-default-alias rev-parse --verify refs/heads/trunk
-     ++'
-     ++
-     ++test_expect_success '--prune-merged spares branches whose push ref is the default branch' '
-     ++	test_when_finished "rm -rf pm-pushdefault" &&
-     ++	git clone pm-upstream pm-pushdefault &&
-     ++	git -C pm-pushdefault branch --track topic origin/one &&
-     ++	git -C pm-pushdefault config --add remote.origin.push refs/heads/topic:refs/heads/main &&
-     ++	git -C pm-pushdefault update-ref -d refs/remotes/origin/one &&
-     ++	git -C pm-pushdefault update-ref -d refs/remotes/origin/main &&
-     ++	git -C pm-pushdefault checkout --detach &&
-     ++	git -C pm-pushdefault branch --prune-merged origin &&
-     ++	git -C pm-pushdefault rev-parse --verify refs/heads/topic
-     ++'
-      +
-       test_done
- 4:  938bf7c794 = 4:  98cfdb87d2 fetch: add --prune-merged
- 5:  b2e7c97298 ! 5:  c645526bb5 branch: add branch.<name>.pruneMerged opt-out
-     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
-      +		struct strbuf key = STRBUF_INIT;
-       		struct branch *branch;
-       		const char *push_ref;
-     + 		const char *upstream;
-      +		int opt_out = 0;
-       
-       		strbuf_addf(&full, "refs/heads/%s", short_name);
-     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
-       			continue;
-       		}
-       		strbuf_release(&full);
-     +@@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv, int force,
-     + 		if (upstream &&
-     + 		    string_list_has_string(&protected_default_refs, upstream)) {
-     + 			const char *leaf = strrchr(upstream, '/');
-     +-			if (leaf && !strcmp(leaf + 1, short_name))
-     ++			if (leaf && !strcmp(leaf + 1, short_name)) {
-     ++				strbuf_release(&key);
-     + 				continue;
-     ++			}
-     + 		}
-       
-     - 		branch = branch_get(short_name);
-       		push_ref = branch ? branch_get_push(branch, NULL) : NULL;
-      -		if (!push_ref)
-      +		if (!push_ref) {
-     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
-      +			strbuf_release(&key);
-      +			continue;
-      +		}
-     ++		if (string_list_has_string(&protected_default_refs, push_ref)) {
-     ++			strbuf_release(&key);
-     + 			continue;
-     +-		if (string_list_has_string(&protected_default_refs, push_ref))
-     ++		}
-      +
-      +		strbuf_addf(&key, "branch.%s.prunemerged", short_name);
-      +		if (!repo_config_get_bool(the_repository, key.buf, &opt_out) &&
-     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
-       	}
-      
-       ## t/t3200-branch.sh ##
-     -@@ t/t3200-branch.sh: test_expect_success '--prune-merged deletes when push ref differs from upstream'
-     - 	test_must_fail git -C pm-pushdiff rev-parse --verify refs/heads/topic-a
-     +@@ t/t3200-branch.sh: test_expect_success '--prune-merged spares branches whose push ref is the defaul
-     + 	git -C pm-pushdefault rev-parse --verify refs/heads/topic
-       '
-       
-      +test_expect_success '--prune-merged honours branch.<name>.pruneMerged=false' '
- 6:  6462642cd0 ! 6:  690242d89b branch: add --all-remotes flag
-     @@ builtin/branch.c: static void copy_or_rename_branch(const char *oldname, const c
-       static void parse_forked_args(int argc, const char **argv,
-       			      struct string_list *remote_names,
-       			      struct string_list *tracking_refs)
-     -@@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref, void *cb_data)
-     - 	return 0;
-     +@@ builtin/branch.c: static void collect_default_branch_refs(const struct string_list *remote_names,
-     + 	}
-       }
-       
-      -static void collect_forked_set(int argc, const char **argv,
-      +static void collect_forked_set(int argc, const char **argv, int all_remotes,
-     + 			       struct string_list *protected_default_refs,
-       			       struct string_list *out)
-       {
-     - 	struct string_list remote_names = STRING_LIST_INIT_NODUP;
-      @@ builtin/branch.c: static void collect_forked_set(int argc, const char **argv,
-       	};
-       
-     @@ builtin/branch.c: static void collect_forked_set(int argc, const char **argv,
-      +	if (!argc && !all_remotes)
-      +		die(_("--forked requires at least one <remote> or --all-remotes"));
-       
-     --	collect_forked_set(argc, argv, &out);
-     -+	collect_forked_set(argc, argv, all_remotes, &out);
-     +-	collect_forked_set(argc, argv, NULL, &out);
-     ++	collect_forked_set(argc, argv, all_remotes, NULL, &out);
-       	for_each_string_list_item(item, &out)
-       		puts(item->string);
-       
-     @@ builtin/branch.c: static int list_forked_branches(int argc, const char **argv)
-      +				 int all_remotes, int force, int quiet)
-       {
-       	struct string_list candidates = STRING_LIST_INIT_DUP;
-     - 	struct strvec deletable = STRVEC_INIT;
-     + 	struct string_list protected_default_refs = STRING_LIST_INIT_DUP;
-      @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv, int force,
-       	int n_not_merged = 0;
-       	int ret = 0;
-     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
-      +	if (!argc && !all_remotes)
-      +		die(_("--prune-merged requires at least one <remote> or --all-remotes"));
-       
-     --	collect_forked_set(argc, argv, &candidates);
-     -+	collect_forked_set(argc, argv, all_remotes, &candidates);
-     +-	collect_forked_set(argc, argv, &protected_default_refs, &candidates);
-     ++	collect_forked_set(argc, argv, all_remotes, &protected_default_refs,
-     ++			   &candidates);
-       
-       	for_each_string_list_item(item, &candidates) {
-       		const char *short_name = item->string;
-
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index c0afddc424..5773104cd3 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -24,6 +24,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
+ git branch (-c|-C) [<old-branch>] <new-branch>
+ git branch (-d|-D) [-r] <branch-name>...
+ git branch --edit-description [<branch-name>]
++git branch --forked <remote>...
+ 
+ DESCRIPTION
+ -----------
+@@ -199,6 +200,17 @@ This option is only applicable in non-verbose mode.
+ 	Print the name of the current branch. In detached `HEAD` state,
+ 	nothing is printed.
+ 
++`--forked`::
++	List local branches that fork from any of the given _<remote>_
++	arguments, that is, those whose configured upstream
++	(`branch.<name>.merge`) is one of those remotes' remote-tracking
++	branches.
+++
++Each _<remote>_ may be either the name of a configured remote
++(e.g. `origin`, meaning any branch tracking a
++`refs/remotes/origin/*` ref) or a specific remote-tracking branch
++(e.g. `origin/master`). Multiple _<remote>_ arguments are unioned.
++
+ `-v`::
+ `-vv`::
+ `--verbose`::
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1572a4f9ef..b3289a8875 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -38,6 +38,7 @@ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
+ 	N_("git branch [<options>] [-r | -a] [--points-at]"),
+ 	N_("git branch [<options>] [-r | -a] [--format]"),
++	N_("git branch [<options>] --forked <remote>..."),
+ 	NULL
+ };
+ 
+@@ -673,6 +674,105 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	free_worktrees(worktrees);
+ }
+ 
++static void parse_forked_args(int argc, const char **argv,
++			      struct string_list *remote_names,
++			      struct string_list *tracking_refs)
++{
++	int i;
++
++	for (i = 0; i < argc; i++) {
++		const char *arg = argv[i];
++		struct remote *remote;
++		struct object_id oid;
++		char *full_ref = NULL;
++
++		remote = remote_get(arg);
++		if (remote && remote_is_configured(remote, 0)) {
++			string_list_insert(remote_names, remote->name);
++			continue;
++		}
++
++		if (repo_dwim_ref(the_repository, arg, strlen(arg), &oid,
++				  &full_ref, 0) == 1 &&
++		    starts_with(full_ref, "refs/remotes/")) {
++			string_list_insert(tracking_refs, full_ref);
++			free(full_ref);
++			continue;
++		}
++		free(full_ref);
++
++		die(_("'%s' is neither a configured remote nor a "
++		      "remote-tracking branch"), arg);
++	}
++}
++
++static int branch_is_forked(const char *short_name,
++			    const struct string_list *remote_names,
++			    const struct string_list *tracking_refs)
++{
++	struct branch *branch = branch_get(short_name);
++	const char *upstream;
++
++	if (!branch || !branch->remote_name)
++		return 0;
++
++	if (string_list_has_string(remote_names, branch->remote_name))
++		return 1;
++
++	upstream = branch_get_upstream(branch, NULL);
++	if (upstream && string_list_has_string(tracking_refs, upstream))
++		return 1;
++
++	return 0;
++}
++
++struct forked_cb {
++	const struct string_list *remote_names;
++	const struct string_list *tracking_refs;
++	struct string_list *out;
++};
++
++static int collect_forked_branch(const struct reference *ref, void *cb_data)
++{
++	struct forked_cb *cb = cb_data;
++
++	if (ref->flags & REF_ISSYMREF)
++		return 0;
++	if (branch_is_forked(ref->name, cb->remote_names, cb->tracking_refs))
++		string_list_append(cb->out, ref->name);
++	return 0;
++}
++
++static int list_forked_branches(int argc, const char **argv)
++{
++	struct string_list remote_names = STRING_LIST_INIT_NODUP;
++	struct string_list tracking_refs = STRING_LIST_INIT_DUP;
++	struct string_list out = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
++	struct forked_cb cb = {
++		.remote_names = &remote_names,
++		.tracking_refs = &tracking_refs,
++		.out = &out,
++	};
++
++	if (!argc)
++		die(_("--forked requires at least one <remote>"));
++
++	parse_forked_args(argc, argv, &remote_names, &tracking_refs);
++
++	refs_for_each_branch_ref(get_main_ref_store(the_repository),
++				 collect_forked_branch, &cb);
++
++	string_list_sort(&out);
++	for_each_string_list_item(item, &out)
++		puts(item->string);
++
++	string_list_clear(&remote_names, 0);
++	string_list_clear(&tracking_refs, 0);
++	string_list_clear(&out, 0);
++	return 0;
++}
++
+ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ 
+ static int edit_branch_description(const char *branch_name)
+@@ -714,6 +814,7 @@ int cmd_branch(int argc,
+ 	/* possible actions */
+ 	int delete = 0, rename = 0, copy = 0, list = 0,
+ 	    unset_upstream = 0, show_current = 0, edit_description = 0;
++	int forked = 0;
+ 	const char *new_upstream = NULL;
+ 	int noncreate_actions = 0;
+ 	/* possible options */
+@@ -767,6 +868,8 @@ int cmd_branch(int argc,
+ 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
+ 		OPT_BOOL(0, "edit-description", &edit_description,
+ 			 N_("edit the description for the branch")),
++		OPT_BOOL(0, "forked", &forked,
++			N_("list local branches forked from the given <remote>s")),
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
+@@ -811,7 +914,7 @@ int cmd_branch(int argc,
+ 			     0);
+ 
+ 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
+-	    !show_current && !unset_upstream && argc == 0)
++	    !show_current && !unset_upstream && !forked && argc == 0)
+ 		list = 1;
+ 
+ 	if (filter.with_commit || filter.no_commit ||
+@@ -820,7 +923,7 @@ int cmd_branch(int argc,
+ 
+ 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
+ 			    !!show_current + !!list + !!edit_description +
+-			    !!unset_upstream;
++			    !!unset_upstream + !!forked;
+ 	if (noncreate_actions > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+@@ -860,6 +963,9 @@ int cmd_branch(int argc,
+ 			die(_("branch name required"));
+ 		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+ 		goto out;
++	} else if (forked) {
++		ret = list_forked_branches(argc, argv);
++		goto out;
+ 	} else if (show_current) {
+ 		print_current_branch_name();
+ 		ret = 0;
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index e7829c2c4b..24a3ec44ee 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1717,4 +1717,58 @@ test_expect_success 'errors if given a bad branch name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--forked: setup' '
++	test_create_repo forked-upstream &&
++	test_commit -C forked-upstream base &&
++	git -C forked-upstream branch one base &&
++	git -C forked-upstream branch two base &&
++
++	test_create_repo forked-other &&
++	test_commit -C forked-other other-base &&
++	git -C forked-other branch foreign other-base &&
++
++	git clone forked-upstream forked &&
++	git -C forked remote add other ../forked-other &&
++	git -C forked fetch other &&
++	git -C forked branch --track local-one origin/one &&
++	git -C forked branch --track local-two origin/two &&
++	git -C forked branch --track local-foreign other/foreign &&
++	git -C forked branch detached
++'
++
++test_expect_success '--forked <remote-name> lists branches tracking that remote' '
++	git -C forked branch --forked origin >actual &&
++	cat >expect <<-\EOF &&
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <remote-tracking-branch> lists only matching branches' '
++	git -C forked branch --forked origin/one >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked unions multiple <remote> arguments' '
++	git -C forked branch --forked origin/one other >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked rejects unknown remote/ref' '
++	test_must_fail git -C forked branch --forked nope 2>err &&
++	test_grep "neither a configured remote nor a remote-tracking branch" err
++'
++
++test_expect_success '--forked requires at least one <remote>' '
++	test_must_fail git -C forked branch --forked 2>err &&
++	test_grep "at least one <remote>" err
++'
++
+ test_done
 -- 
 gitgitgadget
+
