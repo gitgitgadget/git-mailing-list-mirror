@@ -1,87 +1,87 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86803AEF51
-	for <git@vger.kernel.org>; Tue,  5 May 2026 06:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076CA3AF664
+	for <git@vger.kernel.org>; Tue,  5 May 2026 07:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777963398; cv=none; b=oakB87x6pcVZYuI0IrDTGABg1fSY7z/WEiqgI6yJIcZHjsQZykrRcKDlHIWS3I+Bp0ECLlD24ZBb4t3d8TDi4Wvx+IX88JPzrcXL3xR6CHig8JxzScdfjzz+75gx0QFq0tjUoyio0xfLO7hn6nADC+a2wMdcsYhR88rhBcbOemE=
+	t=1777965266; cv=none; b=od5xochyWNt/IykmXfD2onY6sgv09ZmmPiY0i+feVMG66R1EBkb1P3US6bEXVUdRf/0OB1YJXvPxXoGnKtGxhRNMl+7RoUycT1o3w9QAXBPSk9qSD5u/XusIdGBPpNuMl18vGoNfDqfk8EkjZzItnx+FDZXyw9d9s8dcHsHbxSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777963398; c=relaxed/simple;
-	bh=i8bFhd+l7MuVH8N48lwIMq+LcYjaZD2BLpO0sT9FnPI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iz5BEg88yVN+62PloaUF+RiekRDCiN4Nh0G93SI2pZwkLzIhopkh9TE7oQNHInFYSxamWDBcZhwauSnIYQZsQkYFWImGE6rVzRDn67zOusdM5awhwlu+gaHNYFpPxd8Vd7UKGP2A6LwxGAfeFS+7eMvj7o/Q4J1dL6b4E2VVLfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z45p2yRp; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z45p2yRp"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-44da2de25f3so1213329f8f.1
-        for <git@vger.kernel.org>; Mon, 04 May 2026 23:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777963395; x=1778568195; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i8bFhd+l7MuVH8N48lwIMq+LcYjaZD2BLpO0sT9FnPI=;
-        b=Z45p2yRpGF/meLWMf8yBpbRH9S4Fgn+K2FhP3I+eY8VHnHpdGH3f47hp8eYt5DUPeO
-         2d4xUNRHiSU8qJeRgqP5XnR9OeY1foaSKMzQ0rsRKRWJUPbrfZ7JRrwpCQJ0wBdarUPp
-         77Ear6p4hwhdXWtwOHEmT+8r03xmDhFC6eazuy05GKWPH9aDFZi0n8UIHMq3VDAvsKBG
-         WyPFwdlW5kh5G37dKhHsCRmY/l3c48MFuZQHRaOdDBVOyeRblCxwuliCoUSJxgUm5hDj
-         h0oUKZPvA/jCWTcejmnGR501kc0h7/Gf/g6GN582MI+G1hp49AG5wnRN1odg5+B1xSFW
-         G+DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777963395; x=1778568195;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=i8bFhd+l7MuVH8N48lwIMq+LcYjaZD2BLpO0sT9FnPI=;
-        b=BaHZSUv7Sag0gfmUIdCG8D/PDsoMxQS3S599CJjbmt7p03qYIKaRcu3k1UaaBuQ3Tt
-         WoSanbRQsdd0L1NsLfwOw8l0NSr9XOLyvsAJHbPdYNZAcfHn7RqmfOQwIOs8wBC4OpYF
-         HzCWJwybX5mCIv9WiC06lGhoM0SMJcFGrMFKwFo93p8TZX4Dn2EECgvlnYrW4bvudutj
-         /EnDXZY0HfGndgE1Ov6aQwTIOyFtulVeQR8bwG9DKlUYv7Cmaae5Tt+BK6lsCls07NAk
-         a4ovUrWTePackP8168uQ7oLjfI+u3QeSWoo0P8QVreApnK4UkEy68og6koRVyxMU5ckt
-         WI/A==
-X-Gm-Message-State: AOJu0Yy8SUaVhp7kEr+vPSI+4SO6E5s85664xc7yk0CwM0Z/4KxLQwx1
-	PCyfBufhFoucbC4RKsxlgWTlrAWCQq7KHXdWvmjE1JjaIyh7HWEBhyj2rrihmYgE
-X-Gm-Gg: AeBDievqJ8r/EdTX0d4tqvLT2N9XATOpK/gegriTI3QbmoP56f6iBIIfCFCJC51t/Mh
-	54VLtf5ywTmANvALpd83QEOPXMv5LM6TU6REmGkjNkDd8Ep3Shz0mqcp4DUu849c6xgGT/EQjqz
-	UHnksPI9Cwu7dNucjmj2IiVaC/tM5kykHWk9i8YU0h9OhnwOlJXTnz8TJ1bKg7+jz6EZl0985Xq
-	DavWHc+kkbDHSn6K131BfndC1rqle35RRUK6DcdvY2tqjD7383AT3baxuoHxCDsKIy/dS17Du5W
-	Zb+f/VirWIRIcUGmvrFKn/4YOmsD9xLcdNRz9ENZrx454BgmNWbw534kh+qo/ELXf+6lLqk/m+4
-	gRQupoOQmWmg5lLi/ARbd+H7Ul6yMH81iTcZrccCVMqct5BBmUrMsE/yZad5AXs1X2BMswZamyQ
-	qv1gfloW2J6kuNHccpWewutngJfTY3FpSUAu/slP1xB2pibIM+1tNi4VpDpAL0AtJ2XS1E+7zTV
-	rJuk+MkXSnZpc32oBDIeD6AyOPa
-X-Received: by 2002:adf:fc88:0:b0:44d:821:1a09 with SMTP id ffacd0b85a97d-44d08211b76mr12741429f8f.25.1777963394398;
-        Mon, 04 May 2026 23:43:14 -0700 (PDT)
-Received: from alibaba.. ([98.97.76.20])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45052a48b23sm2286742f8f.14.2026.05.04.23.43.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 23:43:13 -0700 (PDT)
-From: Zakariyah Ali <zakariyahali100@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH v6] t2000: consolidate second scenario into a single test block
-Date: Tue,  5 May 2026 07:42:55 +0100
-Message-ID: <20260505064255.195476-1-zakariyahali100@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260429103607.406339-1-zakariyahali100@gmail.com>
-References: <20260429103607.406339-1-zakariyahali100@gmail.com>
+	s=arc-20240116; t=1777965266; c=relaxed/simple;
+	bh=Vrr67Xo2iSyifbjqaPEfTTtG58rfGIxZts0IY3o/Rzk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ATwfAOaZ7eIgfFIxdJ7JmY6fv9GrZ71e7N9RHAPe3dHdpBWYDTbztU/sVI6Bdx1KPohOrxvvfyuAmDu+4egi4ZyilTaFetdoXXc8fGdiVP5wZWHIetDPpUztr4CKYG2ILQ0p453CjB2PwchLKcGXGfwQ2oNwPx/xop7qeY1yP58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp1.bon.at (unknown [192.168.181.103])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4g8qWY4YTHz7Qw24
+	for <git@vger.kernel.org>; Tue,  5 May 2026 09:14:17 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4g8qWN3q7ZzRnlX;
+	Tue,  5 May 2026 09:14:08 +0200 (CEST)
+Message-ID: <d8bb745e-56d6-4da5-aac9-7ebcbc0df379@kdbg.org>
+Date: Tue, 5 May 2026 09:14:07 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fetch: add fetch.pruneLocalBranches config
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2285.git.git.1777671337839.gitgitgadget@gmail.com>
+ <xmqqfr48rubw.fsf@gitster.g>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <xmqqfr48rubw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi everyone,
+Am 04.05.26 um 00:39 schrieb Junio C Hamano:
+> To break the feature down to make it easier to use by our users with
+> various needs and workflows, we would benefit from having a
+> collection of smaller features that can be composed, like these:
+> 
+>  * "git branch --forked <remote>" lists local branches that build on
+>    something taken from <remote>s.  The option can be given multiple
+>    times to make a union of the results from individual "--forked
+>    <remote>".
 
-Just a gentle reminder on this v6 patch:
-https://lore.kernel.org/git/20260429103607.406339-1-zakariyahali100@gmail.com/
+Clearly, this version of --forked does something very different from the
+option `--merged some_branch` that we already have.
 
-I would be looking forward to your review.
+> 
+>    - <remote> may be a name of a remote, e.g., "origin" to mean all
+>      the remote-tracking branches "refs/remotes/origin/*", 
+> 
+>    - <remote> may be "origin/master" to name a specific
+>      remote-tracking branch.
+> 
+>    - There may be other handy things to cover with <remote>, like
+>      "--all" that may act as if you listed all the available
+>      <remote> on the command line.
+> >  * "git branch --prune-merged <remote>..." is a short-hand for "git
+>    branch -d $(git branch --forked <remote>...".
 
-Thanks,
-Zakariyah Ali
+I don't understand this. The option includes the word "merged". Then I
+interpret the command to prune only branches that have already been
+merged into something (BTW, merged into what?), but as described, the
+command removes all local branches that have been forked from some
+(remote) branch.
+
+> 
+>  * "git fetch/pull --prune-merged <remote>" can trigger "git branch
+>    --prune-merged <remote>" after "git fetch" successfully updates
+>    the remote-tracking branches, which should be equivalent to what
+>    you have here..
+
+I think that the intended behavior is to call the equivalent of `git
+branch --merged X | xargs git branch -d` for a suitable set of 'X' to be
+determined by `git fetch`.
+
+-- Hannes
+
