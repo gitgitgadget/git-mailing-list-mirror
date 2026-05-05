@@ -1,144 +1,135 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A492773C3
-	for <git@vger.kernel.org>; Tue,  5 May 2026 09:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777973897; cv=pass; b=RzSl3hkw6t3qajxLQV0NVyXUjSsgxxU2DyqHTrKC/3nGxcIJjLfuFdYJhaaDXfBYOaOD5+3tRhVi3tFktDvh7oYJa+mK3klmRnCZsQZ2W8HIms3qxPXEFC5gBmKnv64Mthfkp8Wdvor6k0uM+oW765NAFU7gci/7VkvjlxOgc24=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777973897; c=relaxed/simple;
-	bh=0CFy27bR+qK9LeBX4V5c3oHbrdcmOjKr5d0M5lyx1o8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WNjQlXss+HciPYPVLIhOK39qqvdTFZGxtxhyz1kU8APhuWy0h6surCEeoE7JE53nfskYFZKtRgOmHyBJgVeM3jBQF4r2dvAv5D77lp1bshg6YAraLCBiBru1BPOJwShN0IqpjUMcQKoxAP3ZN0NwpGmVjSAJsaIdFVf3H+jMP7I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6aesF6p; arc=pass smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493452C21FF
+	for <git@vger.kernel.org>; Tue,  5 May 2026 09:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777975176; cv=none; b=ZsoiLascxYtbQ1u4TTXontrsF+Vl6m7/GwJxY/oEUv03lfEu3MXMlo8DulEn5gw4dp70m4/5urZVPLHOroxzvy5TSoufgCMgizEsP4N9sFCwNo7amUX5IW2P8N638yGuMILEqhxSJXjM5RsJ6j4aFsGkL78xg1hjid8CaE2bTJs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777975176; c=relaxed/simple;
+	bh=P9YpxgPBwCjV3xm7oyE3G+Y6TWl6yj18+ahP6URzqLw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=XzJS5IJxZMpQFtZwmxuJHMCDgqSbd0P8Le0osWKlU7+WMR5tDgBv/Xfepmk+ez7nynC0/g1wRbIV/WYHtYecijoAZvs3uxt15a5/cKxYr9iu+mpC2Mp/ouQBZFyjNCKZExd89eZ79s+V46nmGJY5OwwIMik30WrVHvNdt/bGHNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oli8Cno8; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6aesF6p"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b79f8f7ea43so795831966b.2
-        for <git@vger.kernel.org>; Tue, 05 May 2026 02:38:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777973894; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ejQk0okpzEJqJu1RneGM99Mhx7bZoTrolKIXMeI+yTegynWU9+9TupeLG0ZW09um69
-         7KSJO84xxe6r/frt8tzjU8c+FKcONfOmF463O+uiA3grcUtnpV1BtxXunUzCg8ftnLAZ
-         7SFxoryL3+dOT03xuYijGKRNBN/B3Klz0E6zHIs05lKcxugCGi/8w54s0GQgMo+09NAX
-         t+JN5qrKHM7W552BjnASzgkPPZQYwUUV7o5y1ifo3UcJumPveHA6o53S+W5Mm1EfDsRs
-         QUsBoyYhctIuQR+ksjXT1xR3PZl7tEhkBvVJ8rp5N9fdP14GuZKKr3rRlhJVCOIv3/SA
-         1rog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=m7Bl4c0j3LckSpCrOU+x54esEgUjsJCVbXplMlN8C6k=;
-        fh=TvJNO+rJreHiIe/P9PBSp2UjZQ18Q+mmajMR58IAADk=;
-        b=daSYPUcsmclu0absfdJ/jhdhORZw7eCm5z2qMqmDBVZfb/aGdVzl/qNMFr32wcqTSo
-         3HhqIGKmbOss54eiQylC31zkMLvWxTrTGTVQoHZJiTymFHhxIk0qtq1s/3nKFtuSFUWh
-         mSXSVx6bzHULmbexQ35+yJwuH06AMwgwlOtK59JJS/dMLRDj8ODYpsK9Iec72UufO5mS
-         8TjxM4aRGLKuEpCUwSHGuuy8wm7RRNpNuJQZve1VMko/9YVvC/3RK2uhcwHyJwVQq5Y4
-         HstvRxFQVHmPp6MsE8hyN4eJauna/Q9Qok8uNiOm4X3q2fZqOiu8yS6EPFZ+xiAakqhy
-         XEjg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oli8Cno8"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-67179ed133dso5612681a12.2
+        for <git@vger.kernel.org>; Tue, 05 May 2026 02:59:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777973894; x=1778578694; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m7Bl4c0j3LckSpCrOU+x54esEgUjsJCVbXplMlN8C6k=;
-        b=m6aesF6piLgfKVuyLMubc6TzTrgrQ57DKSVu4oDBDbdx0Et6A49G+JUQ529/Na+B/p
-         0IQ34JtmQjOtcEjHUYFHj5FuWncW2hGjwjZTvQ42mTMbQeueH/FoDYCSgn8tKM6+7EgV
-         TZ/6hfn1a9sqeTn5qgLxDF0keg+mCVWUas2+VTPJUeg7A/pdsjO7oKEAiCEWYwkSo2KH
-         DMbq7sdOqXet30P38N+AOr53BRTNUht4YBMdkkbyuHldpcbZa8tR3dql80mYr+Bpa3Oe
-         idoivZzKWGoXQM5ibXUI5uzUtRyF08NkrX5xDTrtajftF+ME8mefEyx6G9ZeG/0d5hrT
-         oQsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777973894; x=1778578694;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=gmail.com; s=20251104; t=1777975174; x=1778579974; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=m7Bl4c0j3LckSpCrOU+x54esEgUjsJCVbXplMlN8C6k=;
-        b=Ai+DLz+GtKLqwxQrsii38rStQdwvoY9mp9A5pSLkS00EEivKK2EJXKc1KTeu/9xHhn
-         wY39G1rPwBAYlSYB7GxaTwS5kcX03ud03vITRQ0ouh01n2AjiErAzAOJD7RmDTdIwGhL
-         77hMuQPn6oHUS3EklvzAcOdP54r83f6uOUVhohSQSyekpmg8PUe3NBzjT50OB0oSAhEO
-         ptsxSWNfUCXrOr7eY5G+rbPvgBjlfa4TfuqzE6cRe5mSD2aDJS4ossFhvmqJG4x+qvRH
-         fG58NDXFe01YaQQsOh7OEXextmr8FbolsoUJ2XwPoLn9VPYJZZ8y3lPwP3mA0+9xj6Gt
-         rz9g==
-X-Gm-Message-State: AOJu0Yxc1Tc0gXXKN31KvL3iaYMZ5VBCBSbAYydAdxRCLn8nDD3XMAHW
-	DAeB6Xaqtjdx+EPbsX8AT+iMPBJ60ZFFECZiyGWxWos3S4dClb1MQev0nrZV7qcNwlvMTj7UIFW
-	Qts6zjBDcgtUTfcz9qUHNlkaKAmugg/NiEQ==
-X-Gm-Gg: AeBDietb+zUNlXSW/uZZXE2eKO32IJdPHc7usc4CzaWtRG6jFmCKWhjuUram7NLgcUj
-	JluqVxZgqh1aDPnKcPQIehFUXnsBx/2pwBDoDLnLG5hUKT50H6YBtL8QRt9gQR2F+YFHwu3OaW9
-	it7BfTVaf7QQjv8WgysSrPBnDvE+c7SupfLkJbxPhhesXxEcJ2bWfrOOrd2WsYyvifqQuoHhn9h
-	ZLs5vUbS/ewXOapxjZi2DTjyQnYq01PA48IXGo0FCDcOApOwLn6jjBgaD2F3QmWVEFoHCvk2HKP
-	hutY7Bi5gM7gXEFo
-X-Received: by 2002:a17:907:6d27:b0:bc2:9733:9ecc with SMTP id
- a640c23a62f3a-bc29733a257mr446473066b.32.1777973894019; Tue, 05 May 2026
- 02:38:14 -0700 (PDT)
+        bh=x0h+L+DoPIHt3JIyDa0yrFePJecuGIdRdI5RsJS6U/s=;
+        b=Oli8Cno8nAhszlncImDIbwnZoq7z/e8q4SwL3sbQKuRTmpDWlttLK19V1wv6KVrvzO
+         CqChVVzbDI07IGE53NbiILai3nITOWI9rrWXHI4z3oY+zPa4k4ajqFZiaszI8wWjbCaJ
+         1RxaT/tGLhsDEhjaNhW4Qpog+di9K8VeSC8GP+H5VoJolb3joZACQuN5P3TArbLp+d8f
+         5b1iuwl0GwXX4f6YGpWSmdbn0NF6dipI0Wi8SiB01frOAThQTwwobJDRKZf9L8c3vfEk
+         wyvqCtC/cp+ToSANEsx2HclSw0vT2H4qJOV9u4R0e/yKyWuwHusLfm5g/aglDArRxhYO
+         2cGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777975174; x=1778579974;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x0h+L+DoPIHt3JIyDa0yrFePJecuGIdRdI5RsJS6U/s=;
+        b=AAMSE9etvOyLA2jead1gIoM3tK2mJei27ebj+VnmGNFwwuxcu9XTyt5Lqnu7AWugbF
+         NZCWppn4AUS+clM0bJg1YzI9TF41U8/XG89eU5qC3/7G+E6H/Fv0GzERvfmyfdxZYg8q
+         YuJXvxvAbOK81cDybKuEx9YLp/AwSdLc37yW+fKr4vRB/v+IESaVJ9Dx9PiE/tCn/9OE
+         /msw4f2atgGaibg8nJdkMT7gM5rd+XpLKJwMJH0VmE2Ic/L02gak7dLiZuLDyzT2VgLn
+         fRmJp+CaLB09Am0M8TLL6kspOoixWZRmE6/R6WbmyUMi5+pti1XnSj6VpUgNQbJLFdaz
+         NsHw==
+X-Forwarded-Encrypted: i=1; AFNElJ/SnWLhZotYEHwb/Sx1Dq44a+gmOHWg6TKmcFT8EyVVz1d4w/JlUdau3ngCiY03TBt1rDY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvbdPs00ZfXOV4Vh83AjV3XsosWwItv/4mb3hMjUQP3s/yPfvP
+	e/b/G5vMLOsO9+27S8EQZlMcAKmistO5A7FralKYjmcj1FVF7MphI5u8
+X-Gm-Gg: AeBDietyF3Uwzg5VxzVfr9oTi3pK/reylNJ11RyCdka6cny6VeKqjGZ5ppTVVzQP1k8
+	WeIj2mNEL+BCv2WZxr5VHdPfjSo2YCj7J349bvQL8HS+tO2WE8Xu1ywXXWy2jk4LU9IS7IE7kL/
+	v/65eHbrIumUdX1mO60G8yXFsKpBVhnV6QHVP47Fjg9loMVLzKrUfdd2Na0Xg1rCbTzTkycYJGf
+	cn0OArQFxRZNsxI/QEDb1tZ4BjM1ihtcC/QVg8/UqeXf5FtSVI+1U3R9XXxuXSZiYvVR6Ev91ao
+	3FaqSJ+xFgZiUTyHGgJF9K5o+mWIepVatafvMFKeGnRNY9DbQ3V8Hq2QAaJabGvFguorURO3+5S
+	1QHoT4SHiKTJqUXeqNfOEryAApG9TLZVaGaNVizag9x89+XXYFmfzkuqYn7RHcx0dCeJb4F3hQB
+	RUlXMN69ZRRHh28ZvRbtNQ1DiN9wU34mUfQBKkjlSE0wOGZmx+h7koLpSUUvEvpUlrB7hU2ntZb
+	73499oQ0Ly8dsGjIhZB/CgcnQjmXpBL
+X-Received: by 2002:a05:6402:46c7:b0:67c:4e1b:9131 with SMTP id 4fb4d7f45d1cf-67ccc1822camr918304a12.21.1777975173437;
+        Tue, 05 May 2026 02:59:33 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:1706:1a01:60e5:d619:d6a8:b2a? ([2a0a:ef40:1706:1a01:60e5:d619:d6a8:b2a])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-67cd90e0f69sm280151a12.4.2026.05.05.02.59.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2026 02:59:32 -0700 (PDT)
+Message-ID: <5e3bcfdb-d3aa-4494-81d6-15b0dfd43af1@gmail.com>
+Date: Tue, 5 May 2026 10:59:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
-In-Reply-To: <2d3f5504-f5dd-4171-96e8-b5633b6a1f5e@app.fastmail.com>
-From: Mikael Magnusson <mikachu@gmail.com>
-Date: Tue, 5 May 2026 11:38:01 +0200
-X-Gm-Features: AVHnY4Jf0dIHrcjaDbstb8l3Oz6LEp5BxBFthIPH0l_IxTnDf7LeizF9yc_KEDQ
-Message-ID: <CAHYJk3Qvx2i-K7ozLmwyA_S1tbRhf9i2EZa-5sfzBwC5aebeQg@mail.gmail.com>
-Subject: Re: Git trims the last character of content from remotes
-To: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git maintenance fails without meaningful error message if any
+ remote is no longer available
+To: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>,
+ git@vger.kernel.org
+References: <0f3ef394-d96a-42f2-825d-53cb475a2363@anselmschueler.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <0f3ef394-d96a-42f2-825d-53cb475a2363@anselmschueler.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, May 4, 2026 at 7:02=E2=80=AFPM Hugo Osvaldo Barrera <hugo@whynothug=
-o.nl> wrote:
->
-> Hi all,
->
-> When I push content to GitLab, the remote server sends back some text whi=
-ch git
-> then prints to stderr:
->
->   remote:
->   remote: To create a merge request for zk, visit:
->   remote:   https://gitlab.alpinelinux.org/WhyNotHugo/aports/-/merge_requ=
-ests/new?merge_request%5Bsource_branch%5D=3Dzk
->   remote:
->
-> When the width of a whole line is the same as my terminal width, the last=
- digit
-> gets trimmed off. E.g.: if I resize my terminal for the above to fix exac=
-tly,
-> and re-run the same command, git prints:
->
->   remote:   https://gitlab.alpinelinux.org/WhyNotHugo/aports/-/merge_requ=
-ests/new?merge_request%5Bsource_branch%5D=3Dz
->
-> From what I can tell, sideband.c prints ANSI_SUFFIX =3D "\033[K", this es=
-cape
-> sequence being "clear the line from the current position until the end of=
- the
-> line", and this is the root cause of the issue.
->
-> When piping to cat or to a file, this sequence is not printed, so the out=
-put is
-> fine.
->
-> Is this a bug?
+Hi Anselm
 
-grep has the same bug with --color, if you have a line of text the
-same width as your terminal, for the same reason. urxvt supports an
-extension of \e[3K to clear to end but not erase the character under
-the cursor if it's wrapped (but not yet moved to the next line). xterm
-hasn't picked it up though, so it's not a general solution,
-unfortunately. It's a little unclear to me why git prints this
-sequence here at all, are we expecting that there is already other
-text printed on the line? Or is it to clear cells that may have had
-another background color when the current line was scrolled in? Maybe
-that case is more unusual and less harmful than actually eating the
-final character, that it's not worth clearing?
+On 30/04/2026 00:13, Anselm Schüler wrote:
+> I have a repo with multiple remotes, one of which no longer exists. When 
+> git-maintenance runs on it, it fails during the prefetch stage because 
+> that remote doesn’t exist anymore, and gives a mostly unhelpful error 
+> message:
+> 
+> $ git maintenance run --schedule=daily
+> ERROR: Repository not found.
+> fatal: Could not read from remote repository.
+> 
+> Please make sure you have the correct access rights
+> and the repository exists.
+> error: failed to prefetch remotes
+> error: task 'prefetch' failed
+> 
+> I think that
+> 1. git-maintenance should report which remote it’s encountering an error on
+> 2. git-maintenance should continue fetching other remotes even if one fails
 
---=20
-Mikael Magnusson
+Since c75662bfc9 (maintenance: running maintenance should not stop on 
+errors, 2024-04-24) which is in git 2.45.3 the systemd timer files 
+installed by "git maintenance start" use "git for-each-repo --keep-going 
+--config=..." to avoid this problem. Unfortunately we don't have a way 
+to automatically upgrade the timer files for users who ran "git 
+maintenance start" before that. I think if you run
+
+	git maintenance stop
+	git maintenance start
+
+It will delete the old timer files and install the new ones. If that 
+does not work you'll need to manually edit the files and add 
+"--keep-going" to "git for-each-repo".
+
+Thanks
+
+Phillip
+
+> Now, on my system, the systemd timers for git-maintenance use git-for- 
+> each-repo. Not sure if that’s upstream behaviour or something Nix/home- 
+> manager does. But if it is upstream behaviour, it would also be great to 
+> report the repo the error comes from, since I basically had to guess 
+> right now which repo was erroring. Luckily I have only three repos under 
+> maintenance so that was fine.
+> 
+> Let me know if you agree that this should be done. I would be open to 
+> writing a patch (no promises though)
+> 
+> Anselm
+> 
+> 
+
