@@ -1,91 +1,80 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C12F387367
-	for <git@vger.kernel.org>; Tue,  5 May 2026 12:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F82037CD54
+	for <git@vger.kernel.org>; Tue,  5 May 2026 12:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777985774; cv=none; b=INoc7kfQXqXlF0EB6Vf/hg8YtUnZDQDW+wkeMEk4P6m2nfwGDaUrrW2pqIYT38YI14Jfxy+UKPu20LBuFz3BrWMaNnFztsfDoDgTY0zyGm/yRfL52mOPcrfQNSoeQay9z1GoBh0BixTsVI9SvBdLR6JRm3RYed1kX5RJBOj9B9Y=
+	t=1777985790; cv=none; b=G6I1C24U7jl0pJeTrdRpAKoxqp5DfW2YdY5Q5N7/9YS8QMBSrVNuS9twQPFCuK2pftIx8Rkzzn35XZcYeCto0JzcgWc5srGGq+mNGZndQR0gZGV+VijG1Hjr56yENmMjhGDEFPp77hX3b/LteMZE1/nQLPj+cxoIYK+DZ/KOLy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777985774; c=relaxed/simple;
-	bh=NTfvrGFq29pDDIVvU4NGUowzjX80XK5PXu+zoL3HmMo=;
+	s=arc-20240116; t=1777985790; c=relaxed/simple;
+	bh=Zdtsr9/+Fyv4Y57vpcIP+1c/1OAd811g/eaTgBF0WGU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MjGirLHEJMcZUbrl4UZeit7csjiI93VGSMfKMdTPi6zpRqbx1w4xsxgoRDD39LrziZMluqE25f7Ce9a9EdEZpdqnn0YML5iS+oF0vGZGxUGGutTKRw35xtqwZsoKDV20qSE9YbpadHrSsMtF2hvkim3qDlo7oa+kckXuOuZkamU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=woi4LTgq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EUIgVixD; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=sGGnyOj8trsQ+4FAzIm+8kie4eMXoPJ6YuaCTmfvwVwLMg2oeuOGIMJKOxBIhn+phoOvRfkcXGae1S5jBTx+63fOR6GSfnbM+au5+PygOQFc+Z32j9AIiHPnK7jMEoiff9pkbfmqa1B41QxWerlhpilaa85p06uZZn8jk9QTMus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PjTKa5NV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=etOSOQUQ; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="woi4LTgq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EUIgVixD"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5543A7A0125;
-	Tue,  5 May 2026 08:56:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PjTKa5NV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="etOSOQUQ"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7A7CB1D00117;
+	Tue,  5 May 2026 08:56:28 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 05 May 2026 08:56:11 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 05 May 2026 08:56:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1777985771; x=1778072171; bh=iXR7Br4JwF
-	YPkpLmMmU1cmz6lSA8l8Q/bvZSyj9sadQ=; b=woi4LTgq04yNbo/Ui+/pcLD5Z/
-	YwjAgItJND1qcwVWl7HKCPOfQ/xvEEJmwiKo0GXFS+BCLjB5Llfurt1DegwRcwvi
-	Zk27kDowsdUkRBvacsbYJApHVkU7D4sZgT2fgJF/twd1OBLJVO1hpqimuiCh5QmW
-	8qXp7m+dib99jFr520PEC2Y1voXJQLgOpgEy4yUrPOxesYJOJoHlL6SaHcLyKPCk
-	kbiRWVJsgF25q1xi7Xf3QLLW7hLglMPvy36BkopETbZmc67HD9uWqgcu7AlgxG3z
-	eFpgyzejXx7wq7h2llKjB5NDgr/sazbtJC0d0+/rTRyc3HPEyOZ07IEFeYyQ==
+	:subject:to:to; s=fm2; t=1777985788; x=1778072188; bh=gW7JmqCHoz
+	3dYlgyUErJP10NEvaywE/XJuW3tuBwZyU=; b=PjTKa5NVyefZzdACbaMgcdd4f8
+	iRu8smiUrheZ6QypA5j1eOkG4qYK8AeUDfMv5RmKC+nnOFe/GaYPV5X7VNmhQ9YO
+	q6JA15GCDjmd1d+vsUx2ZrLRmUoJt1s92ByWgOLNTmYH/LcQ7Hwk+eX6BwhikMXy
+	xYHlQIvz3ojre9JPmRp1+y4KkJbD60rsYNIJhHKqAVIm3cP4vgo8G6rjr6Ri0hW6
+	FwZyMh3ffafjSYXTjtAs2oTeMbhs6r0bgBaDnqnuKHJOCKVI8LXX0q2336ja3dbA
+	P0eiyHBLLrfjDA56x2UTWQqDO/GOGBeQERSzVCHH1+QmKMWmhHpzTCEwz1qQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1777985771; x=1778072171; bh=iXR7Br4JwFYPkpLmMmU1cmz6lSA8l8Q/bvZ
-	Syj9sadQ=; b=EUIgVixDa7RpGS3RKQe6OzhyDzK0kFwcwbI65x5CHtmzXHwJucr
-	klqEKVPfS2Oj92P8RxOtkNPiRRgTofawrcSmNPE/pqlDORgGkzUmzmf/oXwDNYbv
-	Nv/yQZnwyul7xiI7Xa+r/XzsxK8ZlgPVbqB15qfQA8REcrS43DSwArsV2aakHC9w
-	lUrhSQanG/L2heDjotdRnmKDXMr+vMWDgxQEqH9ZJzydlOZOtNw6auogUVtTpm4z
-	SchmcbKypQFxqokxxM2hDoxj93CRtRho7eVcHvsDCMOLfcPSP5KxhVVuQsQtZmlG
-	nPK880G97b5EyFxZv9ChbUXObO9D0o4IK7A==
-X-ME-Sender: <xms:6-j5adk0DBFYQKPDhBi3GqfVrcaqtHhmecE9lTuEe5V1yXlzo3rssw>
-    <xme:6-j5abF6hx6ZKydH4iOmX8rFhjR9j7YF7E41EzcJX1oXf5LTdq8cmU8FZZbtiZMWE
-    xQ4HkUxBRg2T0GTgQo0jmtUsqacN-Nbhk4KdftyFuUSzVThKiln>
-X-ME-Received: <xmr:6-j5aV4fWjzx1ZIp1EXLJALHC5brtKtPnCfXrtBYxUH_EaqKPujDYeCx4iIzLLcVI1AqrKR-hdODM8GGLFdKoLgsjOf0MFcKcg>
+	1777985788; x=1778072188; bh=gW7JmqCHoz3dYlgyUErJP10NEvaywE/XJuW
+	3tuBwZyU=; b=etOSOQUQvjr6dVLBPX4LcofUIKQphAWlN/7mirLO6BJj1tvikti
+	gjbQ0KuS9NiOM/oxXjQNaWkqzAt/GJCd6f4MFIVsMm+u2A7gR0TQsfh/V1xp6LGH
+	wdAxUaaJnKHCsrr2XjB+aYQvcxPgEApFF2irkiPqlxHIAnHpiEt83kKO7J78Py4Y
+	l50RqpL9Am3oe8ORlbdEugm9shBasj8RK449ot1IRrrh+VsqfYe+cpuCoenjqugz
+	utMP9NUqkhICLIEhFK3UrCYBV56P1kJFijZJvysgwX9asbUIkXe6oxPF0WzOE304
+	npFKzAaGji8R6gcnaUuBIlRhHnOHsq+a6kQ==
+X-ME-Sender: <xms:_Oj5aaGEyJVIM2LtyXLieEq4DBxpgmar92b7sgV1kn8r4EsDhdsqQg>
+    <xme:_Oj5aSwWx4EMqoRE-RRKF9Mgbz07ZbgLXOWvA0E5dY1TNZL1tFtFGf5clvObArbTo
+    kKJyI8IehQ6DYlF9SwwGTxLlWzC6efqkaLvuDgPn3j3DyDO24b_kg>
+X-ME-Received: <xmr:_Oj5aRgBvuxE86GI68oUJ0iJvaG-KichHoNUxcfu9NSwNHcbWO3C7Nyg6_VdtqtXJHz6f-ZFE2cSKWCrWTuIoFtrzWASGPbJMA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutddujeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtsghovghgihesfigvsg
-    druggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjohhh
-    rghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6-j5aTk95afbdAEDeX3altsJGLXs7aif-d6oeouknDzxirUIWl4gow>
-    <xmx:6-j5aaob3ZeSeAxXLd3Wl7ePhyQ65_voN-_mmb7nK9qvV6TUC4RSfg>
-    <xmx:6-j5aSvjBI8o_S7WyBwoykd7FJCFYIUcTqe9WGkcRb1dUvVcDsJYLQ>
-    <xmx:6-j5afG2q3L1E9sOv4j-zRkFazVyy7ADjIyuM3sHjSDUiZpZlxDGJA>
-    <xmx:6-j5aeSyvJVbBdif4ricbfnlEiySosRMsOX7VgIoc-DynZP4vnmMh7rm>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrshgsvggt
+    khgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:_Oj5adyKzDwe-m9Fmy0_dC2x5boTLhzNNQ8N7x7AgtVhKOgB9ByUUA>
+    <xmx:_Oj5aUJDCt2Pf73eF0O2V2p1TfytFI7IL9vZDKS4ZHAzaMIK-949Rg>
+    <xmx:_Oj5aURwNZ0q-L3fZH_x5AcZorZvoBYRjb4Z9lKuxK0_sjGe_-7MRQ>
+    <xmx:_Oj5acruINelRX7uquAGYiau26i6SG6plkW0VauBuskaXOw1_t4g_Q>
+    <xmx:_Oj5aYfqOW66AGajdzkHgDPolay5UDVPUttJQYxMUU_JO5aSqeELF3uc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 May 2026 08:56:10 -0400 (EDT)
+ 5 May 2026 08:56:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Torsten =?utf-8?Q?B=C3=B6gershausen?=
- <tboegi@web.de>,  Jeff King
- <peff@peff.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 11/11] ci: run expensive tests on push builds to
- integration branches
-In-Reply-To: <42f96e54-7b94-4075-91b1-1c2447b93322@gmail.com> (Derrick
-	Stolee's message of "Mon, 4 May 2026 14:35:05 -0400")
-References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
-	<pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
-	<1eaaa7fad7a1432dd97ffdd7c45e8162f61bc302.1777914508.git.gitgitgadget@gmail.com>
-	<42f96e54-7b94-4075-91b1-1c2447b93322@gmail.com>
-Date: Tue, 05 May 2026 21:56:09 +0900
-Message-ID: <xmqq5x52nhg6.fsf@gitster.g>
+To: <rsbecker@nexbridge.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: Question on Clean/Smudge Infrastructure
+In-Reply-To: <079201dcdbe7$162d5430$4287fc90$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Mon, 4 May 2026 12:57:21 -0400")
+References: <079201dcdbe7$162d5430$4287fc90$@nexbridge.com>
+Date: Tue, 05 May 2026 21:56:27 +0900
+Message-ID: <xmqqzf2em2v8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,69 +84,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+<rsbecker@nexbridge.com> writes:
 
-> On 5/4/2026 1:08 PM, Johannes Schindelin via GitGitGadget wrote:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->> 
->> Derrick Stolee suggested [1] that expensive tests should be run at a
->> regular cadence rather than on every PR iteration. Gate GIT_TEST_LONG
->> on push builds to the integration branches (next, master, main, maint)
->> so that the EXPENSIVE prereq is satisfied there but not during PR
->> validation, where the extra minutes of wall-clock time do not justify
->> themselves.
-> I like that this will be run as part of regular updates to the
-> important branches. The important bit after that is whether or
-> not a human pays attention to the signal of these builds.
+> Hi Git,
 >
-> Junio: Do you pay attention to CI breaks when you push to
-> 'master'?
+> I have a edge use case that I would like to ask about.
+>
+> Given a directory with a large number, say 100, text files, and a few
+> scattered
+> binary files - specified in .gitattributes as binary, what does clean smudge
+> do
+> with the binary files if they match the filter specification pattern? Are
+> they
+> ignored or processed. I am not sure that passing binary via stdin is
+> necessarily
+> portable. However, I would like to be able to explicitly ignore the binary
+> files
+> in my clean/smudge filters - either by doing a copy stdin/stdout (as I said,
+> probably
+> not portable), or sending a non-zero exit code, or some other mechanism.
+> The root of the use case is that the directory is subject to significant
+> changes
+> over time, and errors are sneaking in when people forget to update
+> .gitattributes
+> or name the files incorrectly. I would like to make their situation more
+> stable
+> to errors.
+>
+> Thanks,
+> Randall
+>
+> --
+> Brief whoami: NonStop&UNIX developer since approximately
+> UNIX(421664400)
+> NonStop(211288444200000000)
+> -- In real life, I talk too much.
 
-Well, it is way too late to notice breakage when the faulty update
-hits 'master'.  CI failures should be noticed before breakage hits
-'next'.
 
-I often notice and complain when I see failures on 'seen', and
-sometimes I help original submitter by bisecting, but I do not
-necessarily have enough time and bandwidth to help everybody.
+* Passing binary via stdin is perfetly normal.  Otherwise, it would
+  not work to set "exif" as the textconv filter on JPEG image files.
 
-Quite honestly, the best place to give widest test coverage is much
-closer to the source of the problems than in my tree and mixed with
-other topics, i.e., at individual contributor's CI.  That way, I
-presume that GitGitGadget can also help submitters avoid sending a
-faulty series, reducing the load on the list and the maintainer.
+* The "filter" attribute is orthogonal to other attributes like
+  "text" or "diff".  If "filter" somehow paid attention to
+  binary-ness of the payload and refrained from working at all, then
+  it would make it impossible to filter binary contents.
 
-Ideally the CI tests by the integrator should only be catching any
-mismerges and unexpected inter-topic interactions, as they cannot be
-caught by contributor's standalone tests, so I do not mind widening
-coverage of CI tests when I push the integration results out.  But
-so far, the majority of what I have seen and reported back to the
-list have been something that the authors should be equipped to spot
-in their topic without getting mixed with other topics into any
-integration branches.
+* If you want to apply your "filter" attribute to a subset of the
+  files you have, you need to sift your files into two classes, ones
+  that your filter would be used, and the other the remainder.  And
+  they give your filter attribute only to the former.  Perhaps you
+  only want *.txt to go through clean/smudge, and then you would
+  have 
 
-> One way to help this procedure could be to have GitHub CI
-> failures trigger new issues, which could then be more easily
-> viewed and noticed by the community watching the repo. This
-> is of course out-of-scope for this patch series, but could be
-> considered in the future.
+    *.txt filter=mytextfilter
 
-I think a better way to help would be to arrange the workflow so
-that we do not even have to trigger an issue, and stop before the
-patches leave the original authors' hand.  They can of course ask
-for help saying "here is my topic in my fork of the repository and
-failing in this way for macOS that I do not have access to.  Could
-anybody help me figuring out what macOS peculiarity my changes are
-tickling?", or something like that.
+  in your .gitattributes, and in your .git/config, you would have
+  lines to speicify the executable you can use on each system.
 
-It would be best to find problems early, and make it easier for
-individual contributors to help each other by having a concrete CI
-failure reports in their forks that they can point at when they ask
-for help.  And CI run when I push 'seen' or 'master' out would not
-help as much as CI run when they publish their forked branches would.
-
-By the way, please expect slow responses as I am (officially) still
-mostly offline for the rest of the week.
-
-Thanks.
+   [filter "mytextfilter"]
+	clean = ... your system specific command comes here ...
+	smudge = ... your system specific command comes here ...
 
