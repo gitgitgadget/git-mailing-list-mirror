@@ -1,57 +1,57 @@
-Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
+Received: from out162-62-57-49.mail.qq.com (out162-62-57-49.mail.qq.com [162.62.57.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8728037F010
-	for <git@vger.kernel.org>; Wed,  6 May 2026 20:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD0037FF66
+	for <git@vger.kernel.org>; Wed,  6 May 2026 20:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778099354; cv=none; b=ZqHs4d6llqkD0Cngm2UUr8DNjX+cO5fJrXtqb80OHL3/i6ECDFpRHy3yAcF5tVl8BONxsZAH2QAILqa5b2uPOuIkUtwJDomzkUIyiMhM1VFY8jb6PIqTzxiQcziDQXMBFLNF9mRE+Tp87WyBD1gZcMzz8rR/cDxY7dmWeKJnbl4=
+	t=1778099358; cv=none; b=oFLbkgCXPc+jJg+aM2sEi+qKX8ry0J6SL+cNxBWZ2eA8JhlJxwF+gjB6K4urUDaa3VumeStWi7f47yhMKsd7/ACZd56xkgSw90wDzl7bMZlPzFZ3d3Yd1pbGRHL0jEK4/AOrhPNNtQ0Odi57BOoAgWCAEgpyrtwSluJ3o1E5uJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778099354; c=relaxed/simple;
-	bh=rSOurxt7RmCeDBn+sjbOQF+aVhcEJ99/nMsE4S0h19U=;
+	s=arc-20240116; t=1778099358; c=relaxed/simple;
+	bh=e2S3rgTGlng4xcW0aciz1+LVhYvK0Z5dn+Hsp/sk3DI=;
 	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JhDbe+8XVYDJ3C/LV6/WuIszAI7MeWBzhla/5dEpD3c7YXKUF8/Tl5zjcvxrLehGNMt441XFgzrHogzsG8MJzwt/j0Ke6iih5QbK2FdcfYjrLkb4bpq7KYM33EUCTrkHFR3w7E5+6zBiYYI2rWr27003vct/Umeo4kgt9LLegl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=Q8+gsMkM; arc=none smtp.client-ip=162.62.58.216
+	 MIME-Version; b=GXUm8Fj8ArQ8HaatIR/5RhM21ZrO2Gw8kqdR3IBDybcXBT9oM8CeWphLuoH+uPYfntbgm9lKh9e6OeZ6Rwiagpf61X6/IypZpF6ThKCxvUZqJcv7QMTxGemqxmYAATtC8dzBBg6xxLMr5gLkvH0yQi5/u4lln8oRG8KJvp00p7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=H8TmbNqP; arc=none smtp.client-ip=162.62.57.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="Q8+gsMkM"
+	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="H8TmbNqP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1778099339;
-	bh=h8nTsPKB23K6o2TD0UIuKUdgm7Crm95tZXQEiOrai7Q=;
+	s=s201512; t=1778099343;
+	bh=oB5T9WGgGd29IGFrJ22eR0GaSHlIZ74uyl4lvgKisoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q8+gsMkMfA2RYcBq9nXEWd3TFuBzl6baWSE0mQYV3egRt11IsLktaeTTP308kwYUL
-	 txpTjz1/71znmkizWIGfXe2iXe1lUr1LrvrGBMo2J6bARsHkE2hiqXPvLjqZo/c0TJ
-	 8cqMtlTATL/i8LbO13UyxkkoPwaElZBtBzf9sva8=
+	b=H8TmbNqPQMSwtkyOsRR84aqCzNAnhED0qrM47oRJjZDqStYzAPNW+VXALUjlldHTs
+	 Nz8HLquHiCXMp6dAZNbH39u+SWG/bPMFa0S96ivJQGQgsDApe3sMiijhYimMgQIOJi
+	 4BDDd6zOYvslV4tIXOucYcdwB58guuDLu1gupCY4=
 Received: from DESKTOP-31CF0TC ([58.209.116.75])
 	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
 	id 72BB2671; Thu, 07 May 2026 04:28:43 +0800
-X-QQ-mid: xmsmtpt1778099333tq42j8zbj
-Message-ID: <tencent_E834EEF92D17298D51E74F26219DCA807007@qq.com>
-X-QQ-XMAILINFO: OD5LcSma53sH12N/I/U9x4qTmItqBxrM6LlJyqdiXaDxaPel4EFCcui0ho45mH
-	 4xHYb8Ke+krh7jYEfZZ3zNDqtMmyW0lH3WWnVQxGN/hwtgynJ5jRdHFSajmjjYrCExlbeyQwcul0
-	 QdMOlGQxz1HIUu/VhXUWl6LBTOvvuv9XsvR/S4UyqK/z++4dnjuW0T7cikamdNMs/8wllI+d5MbG
-	 AynFIpqNlsQC7gO792cORlGpnyQAE6KexcE60ThXXuthQbUX/OX5FvOVw2bDN1aRf5epSREDCDo7
-	 W9FC2KIxJaBi3oU8ct5Jpy2GRMPIvi57WxG6TJOdelj4Ijzzs1+mi69CJFXNYs+qeIHQjXY6QIB3
-	 0A7Sqtiq7tojpbmZXkhUQqgjSKl/Lz5rGNiX5sioPSRwG5Grx0+wPtUVoCJawziHJ6dZwUP/PNUP
-	 z0qlQFLIwbW93BpBlky4yMpEnZVBkEgjyRyeRTTflxwD0N/8ZuF3+Mb7H5aHFG3ReeTK9DwzEM4r
-	 ry8PsfwQehscy5DPBe1oU7zU9UXCo0PAT+cysydKHW8Kgv7j7cC3DS+PcLLU/obbn4R+O1RM2WeU
-	 g94TqgKctja5NVAcSpoPLaeURnuPncaHYLXgngQhqcjrHOtVFbPhwch4bY4Tl9m10vpTUdpw3XlQ
-	 OVT6mJqWPQkMzGqaib0FeXRdtLRsFPy64zxwR64OhS3pAKqiiZ9RhKXmIEgDwH5E8xyYpd3KslV/
-	 eTcdOuMqLFfAD8gv0c5h3QPSFjCK54HSRuIQkvsEAxLq0O9Jfh+4dGOe1slIruRayZkbWrNvx0AX
-	 flro1qs4hRIMDjGl7wD7WqXQvWi7fBtieCTwypPBokkMyVl6m3ZsrtTnFaVZuqjgOndO0SCBkdvO
-	 2IUsCNb5Lx9i88bHimCRLNRHbXUxPDlr7VIsU/0MtTZKsmWluiBZbUStCUoZmJl6DupXC1xJ6Rh5
-	 4AtZXPdl3b6o2gxH/rl9IYx2ccCBs5jO8HJzi/dNZHFaKNf1XkVmmieBpY71/IC8Wv11kAiFQAdQ
-	 PBeXqf924ts6awoD2sJCOaJExHLPA=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-mid: xmsmtpt1778099340tpkraik69
+Message-ID: <tencent_16BC933B6ECB562A74F4EE334828A2D23605@qq.com>
+X-QQ-XMAILINFO: M2SvzgchpLqfBTBXS99olIxzJrI2km2IQWfsGBduioiTOITKdiJx7LE3AoG7ao
+	 h0MENw4drft2rl0JEaGMBRKTNjeI13CVoj0dZlDDgAs5p7eeCzQZXk66qffx2q483KkuZqexj9wA
+	 X4HuV4dD06e4yTuBiDY/Y2v0ZlxVILFRkBYB34zrzjjTFOxbIludmKBKuz4Bqt3jVNdZrJiBywTA
+	 76yPy5mxJAs3OXm+vZV4zgvymgf6ZCVYuvNUSIdQTI3HZl20Hc1BWaq09FgJDfz9CZgae6i/Qslr
+	 VOD5tH3zxYzGcZ5OUezaO6RZ3huGGHBk+Ra9/UqD5ue2bLLHL6X5mWAUXu1xMPpsjm7t2WyESxhY
+	 xMAE8Xax88RVpaWgXTjwN/F15RpQJGN22fmyK23vJ/b4WvmhwsikdPGoST9TU8y/ADlmqgfmLj6e
+	 TWx6Lm8SfTlBa6epeYEO5H/9/CYrc2bL5ymNPva0WeaQ2m76Td8Q/b08ilwt81ommk4D4qBlu5CO
+	 eiXgIKKZOdksmt0jAzUTEjl15Q21QKTe7cL/7VY0Jkyi6hZhSiwgeB/cLyMwyfhFNEEYdHLIYVSl
+	 hZAviH8NMA78YB3xjJSPJRJitbkK0tgIDOfkGETeefmy5i+vtsz11PxTrv/m33s61HRNj250hp9+
+	 771tdHaB+9bMPknR8rkCw5jlS/xD3ZjlY4OCccQPqsLsFLe+NJ9tlEY4XbY4DY2SVdt3kHxdVtPv
+	 m/4QYVVrq/VsZFAr+MxB5Wrnx+KLRPL7fc1uXfA/KqXAh7P1Ozxcjd6gsVP5YZ5QE/z5UTTBh8NA
+	 usVpf+ldx2HhNiyvhQOSnJFQLTaR1sumcoYX65QRsdoFgDS2ambBCglsoGjOnlm2X11by/fVYykr
+	 /weAbX+rGxRS1IeCK5mAyzQ0vX0pkfHr/Y0yixxrzTlojUeKMu6PREljyy3oeb6TksBlv7CAaB/C
+	 OYogFKDNjP2+EiJSnH3397U/I10b1W8HNdfeHNaa+7NBQXCbvSJArkU4hEXbUBMxY4SBGWgmXLKy
+	 W81k8H6i33BvceGXRqbeGjG5wascWORod0Inw6M1f1PLxNm4CAFrqsEiVDKvs=
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
 From: Shroom Moo <egg_mushroomcow@foxmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Sixt <j6t@kdbg.org>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Shroom Moo <egg_mushroomcow@foxmail.com>
-Subject: [PATCH v6 1/3] git-gui: restructure repository startup
-Date: Thu,  7 May 2026 04:27:49 +0800
-X-OQ-MSGID: <20260506202751.3294-2-egg_mushroomcow@foxmail.com>
+Subject: [PATCH v6 3/3] git-gui: handle GIT_DIR and GIT_WORK_TREE early
+Date: Thu,  7 May 2026 04:27:51 +0800
+X-OQ-MSGID: <20260506202751.3294-4-egg_mushroomcow@foxmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260506202751.3294-1-egg_mushroomcow@foxmail.com>
 References: <tencent_78B80FB7A0A42E464B3EF1841E2AF3C39509@qq.com>
@@ -62,178 +62,151 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-When git-gui is started inside a .git directory of a non-bare
-repository, it should treat the parent directory as the worktree,
-as it did before commit 2d92ab32fd (rev-parse: make --show-toplevel
-without a worktree an error, 2019-11-19).  However, a bare repository
-or a separated gitdir without a worktree must be rejected early.
+Users expect these two invocations to be equivalent:
 
-Protect the previously unguarded calls to `git rev-parse
---show-object-format` and `--show-toplevel`.  Restructure the startup
-sequence to:
+    GIT_WORK_TREE=/some/path GIT_DIR=/some/path/.git git gui
+    git -C /some/path gui
 
-- Check for a bare repository right after loading the config.  If the
-  repository is bare and the current subcommand does not allow bare
-  repos (e.g. normal commit mode), show "Cannot use bare repository"
-  and exit.
+Currently, the environment variable variant often brings up the
+repository picker or ignores the requested worktree because
+GIT_WORK_TREE is processed too late.  Moreover, after determining
+the working tree, git-gui unconditionally exports GIT_WORK_TREE.
+When no worktree is found (e.g., in a bare repository with a
+read-only subcommand like blame), an empty value is exported, which
+confuses commands like `git branch --show-current`.
 
-- When `rev-parse --show-toplevel` fails and the repository is
-  non-bare, the gitdir path ends with ".git", and we are inside that
-  gitdir, use the parent directory as the worktree.  This preserves
-  the ability to start git-gui from within a regular repository’s
-  .git directory, which was intentionally supported since 87cd09f43e56
-  (git-gui: work from the .git dir, 2010-01-23).
+Fix both issues:
 
-- Otherwise, show a descriptive error and exit.
+- Introduce resolve_initial_environment, which is called before any
+  repository detection.  When both GIT_DIR and GIT_WORK_TREE are
+  set, it changes to the specified worktree, verifies that it is a
+  valid worktree, and adopts the given GIT_DIR.  In this case, the
+  subsequent automatic detection is skipped.  After successful
+  validation, GIT_WORK_TREE is unset so that later steps do not
+  inherit it.
 
-- Wrap `rev-parse --show-object-format` in a catch to avoid a crash
-  when the repository configuration is broken (e.g. core.worktree
-  pointing to an invalid path).
+- At the end of startup, only export GIT_DIR.  The current directory
+  is already at the top of the worktree (when a worktree exists), so
+  Git can discover the worktree automatically.  Not exporting an
+  empty GIT_WORK_TREE fixes `git gui blame` in bare repositories.
 
-Also removes the old `_prefix`‑based fallback that computed a relative
-path to the worktree top from a subdirectory, and the unconditional
-`[file dirname $_gitdir]` guess.  Both are unnecessary now that
-`rev‑parse --show‑toplevel` directly provides the absolute top‑level
-path and we can `cd` to it.  The guess is further unsafe in
-multi‑worktree setups, where a gitdir may have more than one worktree.
-The only remaining fallback is the explicit “.git directory” rule for
-non‑bare repositories, which mirrors the historical behaviour.
+When only GIT_DIR is set without GIT_WORK_TREE, the existing logic
+remains unchanged for backward compatibility.  Setting only
+GIT_WORK_TREE is not a valid Git use-case and is silently ignored.
 
-This fixes the fatal Tcl error when the working tree is missing, while
-keeping the .git startup feature and avoiding any automatic directory
-switching that could be dangerous in multi‑worktree setups.
-
-Helped-by: Johannes Sixt <j6t@kdbg.org>
 Helped-by: Mark Levedahl <mlevedahl@gmail.com>
+Helped-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Shroom Moo <egg_mushroomcow@foxmail.com>
 ---
- git-gui/git-gui.sh | 72 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 46 insertions(+), 26 deletions(-)
+ git-gui/git-gui.sh | 84 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 66 insertions(+), 18 deletions(-)
 
 diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 23fe76e498..fbdc0b2a41 100755
+index 1191e6654c..ca651dc576 100755
 --- a/git-gui/git-gui.sh
 +++ b/git-gui/git-gui.sh
-@@ -1129,7 +1129,8 @@ if {[catch {
- 		}]
- 	&& [catch {
- 		# beware that from the .git dir this sets _gitdir to .
--		# and _prefix to the empty string
-+		# and _prefix to the empty string; this is handled by
-+		# the startup safety checks below
- 		set _gitdir [git rev-parse --git-dir]
- 		set _prefix [git rev-parse --show-prefix]
- 	} err]} {
-@@ -1142,8 +1143,20 @@ if {[catch {
- 	set picked 1
- }
+@@ -1122,25 +1122,69 @@ unset argv0dir
+ ##
+ ## repository setup
  
-+if {![file isdirectory $_gitdir]} {
-+	catch {wm withdraw .}
-+	error_popup [strcat 
-+		[mc "Git directory not found:"] "\n\n$_gitdir\n\n" \
-+		[mc "Please ensure GIT_DIR points to a valid Git repository"]]
-+	exit 1
-+}
++proc resolve_initial_environment {} {
++	global _gitdir env
 +
- # Use object format as hash algorithm (either "sha1" or "sha256")
--set hashalgorithm [git rev-parse --show-object-format]
-+if {[catch {set hashalgorithm [git rev-parse --show-object-format]} err]} {
-+	catch {wm withdraw .}
-+	error_popup [strcat [mc "Failed to determine hash algorithm:"] "\n\n$err"]
-+	exit 1
-+}
- if {$hashalgorithm eq "sha1"} {
- 	set hashlength 40
- } elseif {$hashalgorithm eq "sha256"} {
-@@ -1160,46 +1173,52 @@ if {$_gitdir eq "."} {
- 	set _gitdir [pwd]
- }
- 
--if {![file isdirectory $_gitdir]} {
--	catch {wm withdraw .}
--	error_popup [strcat [mc "Git directory not found:"] "\n\n$_gitdir"]
--	exit 1
--}
- # _gitdir exists, so try loading the config
- load_config 0
- apply_config
- 
--set _gitworktree [git rev-parse --show-toplevel]
--
--if {$_prefix ne {}} {
--	if {$_gitworktree eq {}} {
--		regsub -all {[^/]+/} $_prefix ../ cdup
--	} else {
--		set cdup $_gitworktree
--	}
--	if {[catch {cd $cdup} err]} {
-+# Handle bare repository and determine working tree
-+if {[is_bare]} {
-+	# Bare repository: only allowed for certain subcommands
-+	if {![is_enabled bare]} {
- 		catch {wm withdraw .}
--		error_popup [strcat [mc "Cannot move to top of working directory:"] "\n\n$err"]
-+		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n" [file normalize $_gitdir]]
- 		exit 1
- 	}
--	set _gitworktree [pwd]
--	unset cdup
--} elseif {![is_enabled bare]} {
--	if {[is_bare]} {
--		catch {wm withdraw .}
--		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n$_gitdir"]
--		exit 1
-+	# Allowed bare repo does not have a worktree
-+	set _gitworktree {}
-+} else {
-+	# Non-bare repository: we must find a worktree
-+	if {[catch {set _gitworktree [git rev-parse --show-toplevel]} err]} {
-+		# The only acceptable failure is when we are inside
-+		# the .git directory of a regular repository.
-+		set inside_gitdir 0
-+		catch {set inside_gitdir [git rev-parse --is-inside-git-dir]}
-+		if {$inside_gitdir eq {true} && [file tail $_gitdir] eq {.git}} {
-+			# Use the parent directory as worktree (historic behavior)
-+			set _gitworktree [file normalize [file dirname $_gitdir]]
-+		} else {
++	# Only act if both GIT_DIR and GIT_WORK_TREE are set
++	if {[info exists env(GIT_DIR)] && [info exists env(GIT_WORK_TREE)]} {
++		# Validate GIT_DIR by resolving its absolute path
++		if {[catch {set _abs [git rev-parse --absolute-git-dir]} err]} {
 +			catch {wm withdraw .}
-+			error_popup [strcat [mc "Cannot determine working tree:"] "\n\n$err"]
++			error_popup [strcat [mc "Invalid GIT_DIR:"] "\n\n$err"]
 +			exit 1
 +		}
- 	}
 +
- 	if {$_gitworktree eq {}} {
--		set _gitworktree [file dirname $_gitdir]
-+		catch {wm withdraw .}
-+		error_popup [mc "Cannot determine working tree (unexpected empty result)"]
-+		exit 1
- 	}
++		# Change current directory to GIT_WORK_TREE
++		if {[catch {cd $env(GIT_WORK_TREE)} err]} {
++			catch {wm withdraw .}
++			error_popup [strcat [mc "Cannot change to GIT_WORK_TREE:"] "\n\n$err"]
++			exit 1
++		}
 +
- 	if {[catch {cd $_gitworktree} err]} {
- 		catch {wm withdraw .}
--		error_popup [strcat [mc "No working directory"] " $_gitworktree:\n\n$err"]
-+		error_popup [strcat [mc "Cannot move to working directory:"] "\n\n$err"]
- 		exit 1
- 	}
- 	set _gitworktree [pwd]
- }
++		# Verify that GIT_WORK_TREE is a valid Git worktree
++		if {[catch {git rev-parse --show-toplevel} err]} {
++			catch {wm withdraw .}
++			error_popup [strcat [mc "GIT_WORK_TREE is not a valid worktree:"] "\n\n$err"]
++			exit 1
++		}
 +
-+# Derive a human-readable repository name
- set _reponame [file split [file normalize $_gitdir]]
- if {[lindex $_reponame end] eq {.git}} {
- 	set _reponame [lindex $_reponame end-1]
-@@ -1207,6 +1226,7 @@ if {[lindex $_reponame end] eq {.git}} {
- 	set _reponame [lindex $_reponame end]
++		# Use repository path specified by environment variables
++		set _gitdir $_abs
++		set ::_prefix {}
++
++		# Unset GIT_WORK_TREE to prevent it from being inherited by child processes
++		unset env(GIT_WORK_TREE)
++
++		return 1
++	}
++
++	# Other cases (only GIT_DIR, only GIT_WORK_TREE, or neither):
++	# Do nothing here and let the existing logic handle it later
++	return 0
++}
++set force_gitdir [resolve_initial_environment]
++
+ set picked 0
+-if {[catch {
+-		set _gitdir $env(GIT_DIR)
+-		set _prefix {}
+-		}]
+-	&& [catch {
+-		# beware that from the .git dir this sets _gitdir to .
+-		# and _prefix to the empty string; this is handled by
+-		# the startup safety checks below
+-		set _gitdir [git rev-parse --git-dir]
+-		set _prefix [git rev-parse --show-prefix]
+-	} err]} {
+-	load_config 1
+-	apply_config
+-	choose_repository::pick
+-	if {![file isdirectory $_gitdir]} {
+-		exit 1
++if {!$force_gitdir} {
++	if {[catch {
++			set _gitdir $env(GIT_DIR)
++			set _prefix {}
++			}]
++		&& [catch {
++			# beware that from the .git dir this sets _gitdir to .
++			# and _prefix to the empty string; this is handled by
++			# the startup safety checks below
++			set _gitdir [git rev-parse --git-dir]
++			set _prefix [git rev-parse --show-prefix]
++		} err]} {
++		load_config 1
++		apply_config
++		choose_repository::pick
++		if {![file isdirectory $_gitdir]} {
++			exit 1
++		}
++		set picked 1
+ 	}
+-	set picked 1
  }
  
-+# Export the final paths
+ if {![file isdirectory $_gitdir]} {
+@@ -1228,7 +1272,11 @@ if {[lindex $_reponame end] eq {.git}} {
+ 
+ # Export the final paths
  set env(GIT_DIR) $_gitdir
- set env(GIT_WORK_TREE) $_gitworktree
+-set env(GIT_WORK_TREE) $_gitworktree
++# Do not export `GIT_WORK_TREE`. The current directory is already
++# the top-level of the working tree (if it exists), and Git will
++# automatically identify the working tree. For bare repositories,
++# `_gitworktree` is empty, and exporting an empty value would cause
++# commands like `git branch --show-current` to fail
  
+ ######################################################################
+ ##
 -- 
 2.52.0.windows.1
 
