@@ -1,130 +1,182 @@
-Received: from mailgw02.zimbra-vnc.de (mailgw02.zimbra-vnc.de [148.251.102.236])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB14329E44
-	for <git@vger.kernel.org>; Wed,  6 May 2026 12:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.102.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558A9451051
+	for <git@vger.kernel.org>; Wed,  6 May 2026 12:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778070748; cv=none; b=Wgw+a9+U5VAOIwJWzwjq4Us5Rue76zVZCdqIjhzxwn3C5HDMayA3M4b0Ad5Zy7HS4sNPMZcgJGLPofCKmHq7H1NNyjOqzzN37Z4Fv443ejD8JY1YohN22ZCRzHnMQLwQZFvJ8/27OA7zgUvdQL4UTUZGAvdp+S3vxyrhBdkxBMs=
+	t=1778072071; cv=none; b=rbQmjnC6WXnWrF1ePXn3/vFpOo4oK+wMzBHuKh6u1Qn0vQl0tGOfHrSBigBiaEFMABoZoUzZWN7I5lxk4k9lbsSKwf45lZZupdH3WYyVXicJrP8+CwWMivdtHS1/PIdrWNg2tIIJjqruc7qiTfMtbQ8KOgkBZLjjjw+jslc03Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778070748; c=relaxed/simple;
-	bh=vEGLlo/p4SkSmfSJt4OW6GWaiXemOsov3yCYrMzOyJI=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=cIjm9623fXIE8hGkx5r9rjTQyTF/dbxPotp1xioR8p7N3D/LdSEeBImWLk/1WGNgY46mtEZHfDpbk+ch9GSPx26Swc0tGLLY91pEwFGN775XdgP1TX3VPVqT/7sJP85SM9PU1l/bigl0Z4g9wXgDV1RfWusLyGMIcTDOHKYxcsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tngtech.com; spf=pass smtp.mailfrom=tngtech.com; dkim=pass (2048-bit key) header.d=tngtech.com header.i=@tngtech.com header.b=KktkYwNf; arc=none smtp.client-ip=148.251.102.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tngtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tngtech.com
+	s=arc-20240116; t=1778072071; c=relaxed/simple;
+	bh=fvOtZYq3AL0JI/4Wr1T+ckVvkuvSuJrMnM4mMisLFPo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sdbZgqFysWYNd+1AgWzJQRcTWEpNdyz6ErCfOM/eAQGC7LAeGxiI8sLPSBDThbqpDArvWG3Ml7yRBLnSPv/t5WusrASGY55iDhLJhwhcbqln1xv3W/YrTFXTw4Zh8eLodWCKSPtN566s7Z1SpU3uS+SKo/ijC/sK2cAf9ZxFZ2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=WVH1HlIY; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tngtech.com header.i=@tngtech.com header.b="KktkYwNf"
-Received: from zmproxy.tng.vnc.biz (zimbra-vnc.tngtech.com [35.234.71.156])
-	by mailgw02.zimbra-vnc.de (Postfix) with ESMTPS id D0671200C5
-	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zmproxy.tng.vnc.biz (Postfix) with ESMTP id 9925B1FB1A6
-	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:58 +0200 (CEST)
-Received: from zmproxy.tng.vnc.biz ([127.0.0.1])
- by localhost (zmproxy.tng.vnc.biz [127.0.0.1]) (amavis, port 10032)
- with ESMTP id z_s5TzXCbToV for <git@vger.kernel.org>;
- Wed,  6 May 2026 14:26:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zmproxy.tng.vnc.biz (Postfix) with ESMTP id 05F301FB1A8
-	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:58 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zmproxy.tng.vnc.biz 05F301FB1A8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tngtech.com;
-	s=B14491C6-869D-11EB-BB6C-8DD33D883B31; t=1778070418;
-	bh=vEGLlo/p4SkSmfSJt4OW6GWaiXemOsov3yCYrMzOyJI=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject;
-	b=KktkYwNfh2tPMx0PfkE6TrvY/onQN4JGwK4XqlJwz6Yi4yG4X53opPHi/o99IyqI4
-	 LVpStHXaexQK2z+hzvcz1Piec2cz9u8S8CJIzy5Nz/3uYSKKX/Gg+njUrBB6ejK+go
-	 LStbngmU+xxlnvyQxTr6xp7N5ELzpbkuEDKtlv7UaAA78NqPRWGOzZxrmR0H/jq/qt
-	 wvOIaI9KKknjJfcbqKJ7tuuhAfcF3kI9HynrXYygvFmwW8tLxP+Em68N+ewLOFQ2Rf
-	 h9SbYyo9mE8RwKKfXFmUt2JjIeM8mXLphvWsQ+40/4D5kKPN4mB8/84f3v5SU2UgpJ
-	 jlvLOYLhTxvYQ==
-X-Virus-Scanned: amavis at zmproxy.tng.vnc.biz
-Received: from zmproxy.tng.vnc.biz ([127.0.0.1])
- by localhost (zmproxy.tng.vnc.biz [127.0.0.1]) (amavis, port 10026)
- with ESMTP id vP6YDlosDkDb for <git@vger.kernel.org>;
- Wed,  6 May 2026 14:26:57 +0200 (CEST)
-Received: from [10.16.210.86] (unknown [193.30.133.7])
-	by zmproxy.tng.vnc.biz (Postfix) with ESMTPSA id C86871FB016
-	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:57 +0200 (CEST)
-Message-ID: <b46cbce8-d2bb-46d2-bdd3-545422813d6b@tngtech.com>
-Date: Wed, 6 May 2026 14:26:56 +0200
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="WVH1HlIY"
+Date: Wed, 6 May 2026 14:54:19 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1778072065;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kKvKZQnGKVDWFX/nwbOaRH17uUrOdWP31V3hKbUrSeI=;
+	b=WVH1HlIYmaO1CscycTau9oA6eDzw/dhbMQP2qmplSsJfDBvn7VLj9QFGtcY2ry06VJescp
+	ZvHjFkxB7jQCY3zRwlb1B9DA25OTXY6OhaFHgzijq1pSaMrwTea9rrCxMARihKCN/Exixk
+	vQIfdKCGM1lxHKZc4ADcNsRDVd7NKyI1oyTQNW+o3QY5rwUc9cbMPgdvl8hvZnHxtctX/R
+	HyDL1GTGbz+o1Gc/tQnFdrUeTXPwJcsGrARtfzYSwnaHdlILQqWefuOBwgwIcNiOia7pAG
+	iuWEMsCtcZsQCmFtKe+9wADsPM4XoHzoPTvd+VnaS7xIrHN4oXKjuM9Q5ZBRCQ==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>, Patrick Steinhardt <ps@pks.im>, Tian Yuchen <cat@malon.dev>, 
+	Ben Knoble <ben.knoble@gmail.com>, Chris Torek <chris.torek@gmail.com>, git@vger.kernel.org, 
+	Mirko Faina <mroik@delayed.space>
+Subject: Re: [PATCH v6] revision.c: implement --max-count-oldest
+Message-ID: <afs2QVHerGLALFcl@exploit>
+References: <2f71a00b035e25b971641b77a6fa7626f1e2459c.1777578676.git.mroik@delayed.space>
+ <ce8d1ff49ef418ae3720265a124ef53a959d289e.1778017966.git.mroik@delayed.space>
+ <7250e6c1-633e-417b-aacb-94e35d240d3f@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Sven Weiland <sven.weiland@tngtech.com>
-Subject: git reflog expire output inconsistency
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------tMwYIrUvTZhQh631S2jGilKk"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7250e6c1-633e-417b-aacb-94e35d240d3f@kdbg.org>
+X-Spamd-Bar: -
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------tMwYIrUvTZhQh631S2jGilKk
-Content-Type: multipart/mixed; boundary="------------vX26O9B7yyWmWA6VlJH48yA5";
- protected-headers="v1"
-From: Sven Weiland <sven.weiland@tngtech.com>
-To: git@vger.kernel.org
-Message-ID: <b46cbce8-d2bb-46d2-bdd3-545422813d6b@tngtech.com>
-Subject: git reflog expire output inconsistency
+On Wed, May 06, 2026 at 08:45:36AM +0200, Johannes Sixt wrote:
+> > +`--max-count-oldest=<number>`::
+> > +   Just like `--max-count=<number>`, it limits the output to _<number>_
+> > +   commits. But instead of limiting to the first _<number>_ commits it
+> > +   limits to the last _<number>_ commits.
+> > +
+> 
+> "Just like --max-count" is a surprising addendum in this sentence,
+> because the only thing they have in common is the limiting of commits,
+> which it repeats anyway. It's more like "Unlike --max-count, limits the
+> output to _<number>_ last commits."
 
---------------vX26O9B7yyWmWA6VlJH48yA5
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Will fix in v7.
 
-SGksDQoNCkkgbm90aWNlZCBhIHNtYWxsIGluY29uc2lzdGVuY3kgaW4gdGhlIG91dHB1dCBv
-ZiB0aGUgZ2l0IHJlZmxvZyBleHBpcmUgDQpjb21tYW5kLg0KDQoNClRoYW5rIHlvdSBmb3Ig
-ZmlsbGluZyBvdXQgYSBHaXQgYnVnIHJlcG9ydCENClBsZWFzZSBhbnN3ZXIgdGhlIGZvbGxv
-d2luZyBxdWVzdGlvbnMgdG8gaGVscCB1cyB1bmRlcnN0YW5kIHlvdXIgaXNzdWUuDQoNCldo
-YXQgZGlkIHlvdSBkbyBiZWZvcmUgdGhlIGJ1ZyBoYXBwZW5lZD8gKFN0ZXBzIHRvIHJlcHJv
-ZHVjZSB5b3VyIGlzc3VlKQ0KDQoJMS4gRmlsbCByZWZsb2cgSEVBRCB3aXRoIHNvbWV0aGlu
-Zw0KCTIuIGdpdCByZWZsb2cgZXhwaXJlIC0tdmVyYm9zZSAtLWV4cGlyZT1ub3cgLS1kcnkt
-cnVuIEhFQUQNCg0KV2hhdCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBi
-ZWhhdmlvcikNCg0KCXdvdWxkIHBydW5lIGNoZWNrb3V0OiA8c29tZXRoaW5nPg0KDQpXaGF0
-IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpDQoNCglwcnVuZSBjaGVja291
-dDogPHNvbWV0aGluZz4NCg0KV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4
-cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPw0KDQoJSXQgb21pdHRlZCAid291
-bGQgIi4NCg0KQW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBhZGQ6DQoNCglJdCdzIGp1c3Qg
-YSBsb2dnaW5nIHRoaW5nIHRoZSBiZWhhdmlvciBpcyBhcyBleHBlY3RlZCBmcm9tIHRoZSBk
-cnktcnVuLg0KDQpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJl
-bG93Lg0KWW91IGNhbiBkZWxldGUgYW55IGxpbmVzIHlvdSBkb24ndCB3aXNoIHRvIHNoYXJl
-Lg0KDQoNCltTeXN0ZW0gSW5mb10NCmdpdCB2ZXJzaW9uOg0KZ2l0IHZlcnNpb24gMi41NC4w
-DQpjcHU6IHg4Nl82NA0Kbm8gY29tbWl0IGFzc29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxkDQpz
-aXplb2YtbG9uZzogOA0Kc2l6ZW9mLXNpemVfdDogOA0Kc2hlbGwtcGF0aDogL2Jpbi9zaA0K
-cnVzdDogZGlzYWJsZWQNCmdldHRleHQ6IGVuYWJsZWQNCmxpYmN1cmw6IDguNS4wDQp6bGli
-OiAxLjMNClNIQS0xOiBTSEExX0RDDQpTSEEtMjU2OiBTSEEyNTZfQkxLDQpkZWZhdWx0LXJl
-Zi1mb3JtYXQ6IGZpbGVzDQpkZWZhdWx0LWhhc2g6IHNoYTENCnVuYW1lOiBMaW51eCA2LjE3
-LjAtMTAxNy1vZW0gIzE3LVVidW50dSBTTVAgUFJFRU1QVF9EWU5BTUlDIEZyaSBNYXIgMjcg
-DQoxMzo0ODowMyBVVEMgMjAyNiB4ODZfNjQNCmNvbXBpbGVyIGluZm86IGdudWM6IDEzLjMN
-CmxpYmMgaW5mbzogZ2xpYmM6IDIuMzkNCiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2
-ZSBzaGVsbCk6IC91c3IvYmluL3pzaA0KDQoNCltFbmFibGVkIEhvb2tzXQ0KDQo=
+> BTW, this makes me think whether this kind of limiting could be
+> triggered by a negative argument to --max-count.
 
---------------vX26O9B7yyWmWA6VlJH48yA5--
+Would be a good idea if it weren't for the fact that --max-count < 0 has
+for a long time acted like no max count. I'd imagine many could be
+asssuming this behaviour in their scripts.
 
---------------tMwYIrUvTZhQh631S2jGilKk
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+> >  `--skip=<number>`::
+> >     Skip _<number>_ commits before starting to show the commit output.
+> >  
+> > diff --git a/revision.c b/revision.c
+> > index 599b3a66c3..3aaa77ced5 100644
+> > --- a/revision.c
+> > +++ b/revision.c
+> > @@ -2339,10 +2339,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+> >     }
+> >  
+> >     if ((argcount = parse_long_opt("max-count", argv, &optarg))) {
+> > +       if (revs->max_count_type == 1)
+> > +           die(_("can't use --max-count with --max-count-oldest"));
+> 
+> To help translators, the usual pattern is to say (here and later)
+> 
+> 	die(_("options '%s' and '%s' cannot be used together"),
+> 		"--max-count", "--max-count-oldest");
 
------BEGIN PGP SIGNATURE-----
+Will do.
 
-wsF5BAABCAAjFiEErnh3SCJFVwW5alt8MzANZZ37INUFAmn7M5EFAwAAAAAACgkQMzANZZ37INWZ
-+w//Wo7W/oX034nwYeoHUgxx/aiKXIdwuMn6zhrIucQycXI7HJlWq7MIEyugUEN+Gn4CTzxEergX
-e0wsw0Qw7T08NRZjWLM4x5iAcgV5mM+5HgwDlVZhpLyRFAr0POAGvvzVSTfMlCInpgaEQ073O8ph
-MbwPscDXjnpBOgbWw+8uln7NWcUtkfzKyk+Eb9EYe9MCcTll/JD/3+GDRqHOKGVPcsYc0JFPYXCB
-Rcze3wJSPDqVT0aP96gg6zjzIXKingDOqMySl9dq2t+gz736AC+2dgmtZgKRk7WIZZ6f0S4mx8eV
-lqCCK16repFwT6dlXESMvo6tfldSK3MMA54aHCT0iCfXSTjiAoaF5M3MGy7m7pryPAIn6IY5iy/y
-yger8Ilso/oSDEGiZ6lPqkTFG19Loj6q87OziQ67AisGmuackpGOxmOFi/l8ztEkSCOrZtBZrma9
-PF0en+JyLy2q6zJCCs44qiecMmo4AD4mbQfmHYkZjmzW0p8ogCFQDUAjzeiRyP82UiIkzFw7dxbv
-SxD4K0glC4ip48kqXMDVhMRljVGJRj/U0QAsG66I7GEUrxoUx2iN/NRy+Gmdr7vPyTl05BYmr4rP
-bTeZNuGLHqOJy15qkT571vlobcuZVr26xzHqFoTkaqprMA1wSwDUFQSTsZcnYpTxH9MAncMTgmf6
-0WU=
-=B2GO
------END PGP SIGNATURE-----
+> > @@ -4521,15 +4535,68 @@ static struct commit *get_revision_internal(struct rev_info *revs)
+> >     return c;
+> >  }
+> >  
+> > +static void retrieve_oldest_commits(struct rev_info *revs,
+> > +                   struct commit_list **queue)
+> > +{
+> > +   struct commit *c;
+> > +   int max_count = revs->max_count;
+> > +   int queuei_count = 0;
+> > +   int queueo_count = 0;
+> > +   struct commit_list *queueo = NULL;
+> > +   struct commit_list *queuei = NULL;
+> > +   struct commit_list *reversed_queue = NULL;
+> > +
+> > +   revs->max_count = -1;
+> > +   while ((c = get_revision_internal(revs))) {
+> > +       c->object.flags &= ~SHOWN;
+> > +       commit_list_insert(c, &queuei);
+> > +       queuei_count++;
+> > +       while (queuei_count + queueo_count > max_count) {
+> > +           if (!queueo_count) {
+> > +               while (queuei_count > 0) {
+> > +                   c = pop_commit(&queuei);
+> > +                   queuei_count--;
+> > +                   commit_list_insert(c, &queueo);
+> > +                   queueo_count++;
+> > +               }
+> > +           }
+> > +           pop_commit(&queueo);
+> > +           queueo_count--;
+> > +       }
+> > +   }
+> > +
+> > +   while ((c = pop_commit(&queueo)))
+> > +       commit_list_insert(c, &reversed_queue);
+> > +   while ((c = pop_commit(&queuei)))
+> > +       commit_list_insert(c, &queueo);
+> > +   while ((c = pop_commit(&queueo)))
+> > +       commit_list_insert(c, &reversed_queue);
+> > +
+> > +   while ((c = pop_commit(&reversed_queue)))
+> > +       commit_list_insert(c, queue);
+> > +}
+> > +
+> >  struct commit *get_revision(struct rev_info *revs)
+> >  {
+> >     struct commit *c;
+> >     struct commit_list *reversed;
+> > +   struct commit_list *queue = NULL;
+> > +
+> > +   if (revs->max_count_type == 1 && !revs->max_count_stage) {
+> > +       retrieve_oldest_commits(revs, &queue);
+> > +       commit_list_free(revs->commits);
+> > +       revs->commits = queue;
+> > +       revs->max_count_stage = 1;
+> > +   }
+> >  
+> >     if (revs->reverse) {
+> >         reversed = NULL;
+> > -       while ((c = get_revision_internal(revs)))
+> > -           commit_list_insert(c, &reversed);
+> > +       if (revs->max_count_type == 1)
+> > +           while ((c = pop_commit(&revs->commits)))
+> > +               commit_list_insert(c, &reversed);
+> > +       else
+> > +           while ((c = get_revision_internal(revs)))
+> > +               commit_list_insert(c, &reversed);
+> >         commit_list_free(revs->commits);
+> >         revs->commits = reversed;
+> >         revs->reverse = 0;
+> 
+> I would have expected that this kind of commit counting is handled at
+> the same spot where --max-count is handled, i.e., in
+> get_revision_internal(). It could make a difference in combination with
+> sorting options, --boundary, and --graph. The goal is that --max-count
+> and --max-count-oldest behave the same in this regard. (But I am in no
+> way an expert of the revision walker.)
 
---------------tMwYIrUvTZhQh631S2jGilKk--
+It doesn't affect sorting options and the graph output by itself is
+handled by setting the commits as not shown when we store them, but the
+boundary option does break.
+
+Will fix in v7.
+
+Thank you
