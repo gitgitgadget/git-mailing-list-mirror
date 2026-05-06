@@ -1,182 +1,110 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558A9451051
-	for <git@vger.kernel.org>; Wed,  6 May 2026 12:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649993EDAD4
+	for <git@vger.kernel.org>; Wed,  6 May 2026 12:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778072071; cv=none; b=rbQmjnC6WXnWrF1ePXn3/vFpOo4oK+wMzBHuKh6u1Qn0vQl0tGOfHrSBigBiaEFMABoZoUzZWN7I5lxk4k9lbsSKwf45lZZupdH3WYyVXicJrP8+CwWMivdtHS1/PIdrWNg2tIIJjqruc7qiTfMtbQ8KOgkBZLjjjw+jslc03Sg=
+	t=1778072246; cv=none; b=jhr/xeuxaAwxLx+1GTOi8qKjOEfe2eVWC58Lv2SCcJuhfqXKJgkEpQHQ0lET2zL0g/FD8HBP6PFYFNuWDEI/V3qtfnYw1gFP5B5lSwvmv6l5HsNgXnr9/XBO4tsorLFw5fVXx1u71HcEp1oyyNnd7uhpdMEbUMadpJCTIjT1F3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778072071; c=relaxed/simple;
-	bh=fvOtZYq3AL0JI/4Wr1T+ckVvkuvSuJrMnM4mMisLFPo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sdbZgqFysWYNd+1AgWzJQRcTWEpNdyz6ErCfOM/eAQGC7LAeGxiI8sLPSBDThbqpDArvWG3Ml7yRBLnSPv/t5WusrASGY55iDhLJhwhcbqln1xv3W/YrTFXTw4Zh8eLodWCKSPtN566s7Z1SpU3uS+SKo/ijC/sK2cAf9ZxFZ2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=WVH1HlIY; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="WVH1HlIY"
-Date: Wed, 6 May 2026 14:54:19 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1778072065;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kKvKZQnGKVDWFX/nwbOaRH17uUrOdWP31V3hKbUrSeI=;
-	b=WVH1HlIYmaO1CscycTau9oA6eDzw/dhbMQP2qmplSsJfDBvn7VLj9QFGtcY2ry06VJescp
-	ZvHjFkxB7jQCY3zRwlb1B9DA25OTXY6OhaFHgzijq1pSaMrwTea9rrCxMARihKCN/Exixk
-	vQIfdKCGM1lxHKZc4ADcNsRDVd7NKyI1oyTQNW+o3QY5rwUc9cbMPgdvl8hvZnHxtctX/R
-	HyDL1GTGbz+o1Gc/tQnFdrUeTXPwJcsGrARtfzYSwnaHdlILQqWefuOBwgwIcNiOia7pAG
-	iuWEMsCtcZsQCmFtKe+9wADsPM4XoHzoPTvd+VnaS7xIrHN4oXKjuM9Q5ZBRCQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>, Patrick Steinhardt <ps@pks.im>, Tian Yuchen <cat@malon.dev>, 
-	Ben Knoble <ben.knoble@gmail.com>, Chris Torek <chris.torek@gmail.com>, git@vger.kernel.org, 
-	Mirko Faina <mroik@delayed.space>
-Subject: Re: [PATCH v6] revision.c: implement --max-count-oldest
-Message-ID: <afs2QVHerGLALFcl@exploit>
-References: <2f71a00b035e25b971641b77a6fa7626f1e2459c.1777578676.git.mroik@delayed.space>
- <ce8d1ff49ef418ae3720265a124ef53a959d289e.1778017966.git.mroik@delayed.space>
- <7250e6c1-633e-417b-aacb-94e35d240d3f@kdbg.org>
+	s=arc-20240116; t=1778072246; c=relaxed/simple;
+	bh=tjWQ1EBW2u40PpOlHUYUAdlRtV03gMG3OVdw1r8Man0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mEDrhvsdgTU/oZKxpX5GMqEp/9inHyko2LQJ6dAWga+i8LllWQYBoS0N6k5FbsOmV7UKAVa4vJX18NvTeDHSpuDSzQ+IAxC8L19ckQ3wUId3RJsd+ccqKSsPmScESOEVN8Aov1lBzhSAz9AqkUlOLh/L/2DmI+a+HJ/f1aEVBvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4g9b4q6bc6zRnlL;
+	Wed,  6 May 2026 14:57:15 +0200 (CEST)
+Message-ID: <9fecbb11-3cc5-4084-bc29-bd948962dca0@kdbg.org>
+Date: Wed, 6 May 2026 14:57:15 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7250e6c1-633e-417b-aacb-94e35d240d3f@kdbg.org>
-X-Spamd-Bar: -
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] git-gui: handle missing worktree and separated
+ gitdir
+Content-Language: en-US
+To: Mark Levedahl <mlevedahl@gmail.com>
+Cc: git@vger.kernel.org, Shroom Moo <egg_mushroomcow@foxmail.com>
+References: <tencent_AEE968E8E785907BA55A383977C8968ED406@qq.com>
+ <tencent_8A236D9D4A8D8CCA7DAA083157AA8543700A@qq.com>
+ <3b0b37ed-1a5d-4fe1-b2b4-7db67a62a06d@gmail.com>
+ <77219c75-7968-413f-a642-0446145c8023@kdbg.org>
+ <a1a7237c-ffed-4a7a-ae58-55769aaa4453@gmail.com>
+ <93e1c61f-e58b-4a0c-8ece-7a8d945fa900@gmail.com>
+ <73b99b54-1d39-45c1-bd06-26ac1008fddb@kdbg.org>
+ <7d5cf952-badb-4071-a0eb-af9443fa8b5b@gmail.com>
+ <ac115a8f-5dbc-4988-b8a5-c1647af1bb74@kdbg.org>
+ <f6c7c3d5-1d68-45b5-87a7-ae19b59270f4@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <f6c7c3d5-1d68-45b5-87a7-ae19b59270f4@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 06, 2026 at 08:45:36AM +0200, Johannes Sixt wrote:
-> > +`--max-count-oldest=<number>`::
-> > +   Just like `--max-count=<number>`, it limits the output to _<number>_
-> > +   commits. But instead of limiting to the first _<number>_ commits it
-> > +   limits to the last _<number>_ commits.
-> > +
+Am 06.05.26 um 13:27 schrieb Mark Levedahl:
+> A git repository (gitdir) can have config.bare true | false | not set
+> git rev-parse --is-bare-repository tells you that whatever gitdir is discovered from the
+> current directory has core.bare==true. This happens whether the call is from inside the
+> gitdir, or in the parent dir of a gitdir named '.git', or in a directory containing a
+> symlink or a gitfile link to the gitdir. This call never tells you what directory you are
+> actually in.
+
+OK. But how does "find out which directory we are in" come into play
+here? If we find a bare repository, we do not need a worktree. If we are
+in a non-bare repository, we can find the worktree with `rev-parse
+--show-toplevel`.
+
 > 
-> "Just like --max-count" is a surprising addendum in this sentence,
-> because the only thing they have in common is the limiting of commits,
-> which it repeats anyway. It's more like "Unlike --max-count, limits the
-> output to _<number>_ last commits."
-
-Will fix in v7.
-
-> BTW, this makes me think whether this kind of limiting could be
-> triggered by a negative argument to --max-count.
-
-Would be a good idea if it weren't for the fact that --max-count < 0 has
-for a long time acted like no max count. I'd imagine many could be
-asssuming this behaviour in their scripts.
-
-> >  `--skip=<number>`::
-> >     Skip _<number>_ commits before starting to show the commit output.
-> >  
-> > diff --git a/revision.c b/revision.c
-> > index 599b3a66c3..3aaa77ced5 100644
-> > --- a/revision.c
-> > +++ b/revision.c
-> > @@ -2339,10 +2339,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
-> >     }
-> >  
-> >     if ((argcount = parse_long_opt("max-count", argv, &optarg))) {
-> > +       if (revs->max_count_type == 1)
-> > +           die(_("can't use --max-count with --max-count-oldest"));
+> git rev-parse --is-inside-work-tree gives:
+>     true - the call is made from a directory that is suported/supportable as a worktree of
+> a gitdir.
+>     false - the call is made from inside a gitdir, or from a directory linked to a to a
+> gitdir with core.bare == true.
+>     and error is thrown if no gitdir is discovered.
 > 
-> To help translators, the usual pattern is to say (here and later)
+> I find --is-inside-work-tree a much better call to make early in setup. 
+>     true - full git-gui is ok, 
+>     false - blame/browser is ok (gitdir might have core.bare true)
+>     error - no gitdir found, the repository picker should be called.
+
+But we would still make an exception for the case that $PWD is a
+non-bare repository named ".git", because then, by Git GUI's definition,
+its parent is the corresponding worktree.
+
+> So, the only need to test if the repo is marked bare is when looking for a possible
+> worktree when git-gui was started inside the gitdir, or started in a directory linked to
+> said gitdir, or GIT_DIR in the environment points to said gitdir: I consider all of this a
+> user (or configuration) error, and there are many possible causes to explore to give
+> useful feedback to the user.
+
+How does this scheme work when the user starts `git gui blame` in a bare
+repository that does not have a worktree? Would this not produce an
+error because no worktree was found?
+
+> As you mentioned elsewhere, the problem on browser/blame is that _gitworktree is empty
+> when no worktree is found, so GIT_WORK_TREE is exported to the environment as an empty
+> variable. This cause is in a commit from 12 years ago:
 > 
-> 	die(_("options '%s' and '%s' cannot be used together"),
-> 		"--max-count", "--max-count-oldest");
+>     3decb8e0ac ("git-gui: tolerate major version changes when comparing the git version",
+> 2014-05-17)
 
-Will do.
+I don't think that this commit very relevant. The problem is in `git
+branch --show-current` (and probably other git command variants) that
+want to turn an empty $GIT_WORK_TREE into an absolute path even in cases
+where no worktree is needed. I haven't tried to figure out which commit
+(in the Git repository) started to do this.
 
-> > @@ -4521,15 +4535,68 @@ static struct commit *get_revision_internal(struct rev_info *revs)
-> >     return c;
-> >  }
-> >  
-> > +static void retrieve_oldest_commits(struct rev_info *revs,
-> > +                   struct commit_list **queue)
-> > +{
-> > +   struct commit *c;
-> > +   int max_count = revs->max_count;
-> > +   int queuei_count = 0;
-> > +   int queueo_count = 0;
-> > +   struct commit_list *queueo = NULL;
-> > +   struct commit_list *queuei = NULL;
-> > +   struct commit_list *reversed_queue = NULL;
-> > +
-> > +   revs->max_count = -1;
-> > +   while ((c = get_revision_internal(revs))) {
-> > +       c->object.flags &= ~SHOWN;
-> > +       commit_list_insert(c, &queuei);
-> > +       queuei_count++;
-> > +       while (queuei_count + queueo_count > max_count) {
-> > +           if (!queueo_count) {
-> > +               while (queuei_count > 0) {
-> > +                   c = pop_commit(&queuei);
-> > +                   queuei_count--;
-> > +                   commit_list_insert(c, &queueo);
-> > +                   queueo_count++;
-> > +               }
-> > +           }
-> > +           pop_commit(&queueo);
-> > +           queueo_count--;
-> > +       }
-> > +   }
-> > +
-> > +   while ((c = pop_commit(&queueo)))
-> > +       commit_list_insert(c, &reversed_queue);
-> > +   while ((c = pop_commit(&queuei)))
-> > +       commit_list_insert(c, &queueo);
-> > +   while ((c = pop_commit(&queueo)))
-> > +       commit_list_insert(c, &reversed_queue);
-> > +
-> > +   while ((c = pop_commit(&reversed_queue)))
-> > +       commit_list_insert(c, queue);
-> > +}
-> > +
-> >  struct commit *get_revision(struct rev_info *revs)
-> >  {
-> >     struct commit *c;
-> >     struct commit_list *reversed;
-> > +   struct commit_list *queue = NULL;
-> > +
-> > +   if (revs->max_count_type == 1 && !revs->max_count_stage) {
-> > +       retrieve_oldest_commits(revs, &queue);
-> > +       commit_list_free(revs->commits);
-> > +       revs->commits = queue;
-> > +       revs->max_count_stage = 1;
-> > +   }
-> >  
-> >     if (revs->reverse) {
-> >         reversed = NULL;
-> > -       while ((c = get_revision_internal(revs)))
-> > -           commit_list_insert(c, &reversed);
-> > +       if (revs->max_count_type == 1)
-> > +           while ((c = pop_commit(&revs->commits)))
-> > +               commit_list_insert(c, &reversed);
-> > +       else
-> > +           while ((c = get_revision_internal(revs)))
-> > +               commit_list_insert(c, &reversed);
-> >         commit_list_free(revs->commits);
-> >         revs->commits = reversed;
-> >         revs->reverse = 0;
-> 
-> I would have expected that this kind of commit counting is handled at
-> the same spot where --max-count is handled, i.e., in
-> get_revision_internal(). It could make a difference in combination with
-> sorting options, --boundary, and --graph. The goal is that --max-count
-> and --max-count-oldest behave the same in this regard. (But I am in no
-> way an expert of the revision walker.)
+> The fix is to set _gitworktree to _gitdir before exporting GIT_WORK_TREE, or to just not
+> export an empty GIT_WORK_TREE. Obviously, having GIT_WORK_TREE = GIT_DIR is asking for
+> trouble, but perhaps is ok as git-gui is running in a read-only mode for browse/blame. My
+> limited testing shows this works.
+Good to know. My preference is to not set GIT_WORK_TREE at all provided
+that setting GIT_DIR without GIT_WORK_TREE is a use-case supported by Git.
 
-It doesn't affect sorting options and the graph output by itself is
-handled by setting the commits as not shown when we store them, but the
-boundary option does break.
+-- Hannes
 
-Will fix in v7.
-
-Thank you
