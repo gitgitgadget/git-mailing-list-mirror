@@ -1,65 +1,54 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw02.zimbra-vnc.de (mailgw02.zimbra-vnc.de [148.251.102.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3353DB646
-	for <git@vger.kernel.org>; Wed,  6 May 2026 11:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB14329E44
+	for <git@vger.kernel.org>; Wed,  6 May 2026 12:32:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.102.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778066882; cv=none; b=rggpz24yLgex8xtCC990PpGY02T411yUIkAayrp+y1kc0ShGp8/m3oZkYgrdmCBDnXVoJrsOr2bY2xiRv2vVEIU8yYma5T39vZJE3ZqehrtF5zd/1/+sXyy47e3zl9NUad2GePOYbjvZ4tPNZ0/QT+FCi2139IhKjRAKVu5e1M4=
+	t=1778070748; cv=none; b=Wgw+a9+U5VAOIwJWzwjq4Us5Rue76zVZCdqIjhzxwn3C5HDMayA3M4b0Ad5Zy7HS4sNPMZcgJGLPofCKmHq7H1NNyjOqzzN37Z4Fv443ejD8JY1YohN22ZCRzHnMQLwQZFvJ8/27OA7zgUvdQL4UTUZGAvdp+S3vxyrhBdkxBMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778066882; c=relaxed/simple;
-	bh=30mJxBc10U3RxcKtJ5VLtUVcjLTMPVMv53gZ3ZqC9U0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NF/Wn/5KixQVh/b9iRboGhSLd5p2uTZb1XcZWD0MqRGN2/z9pmEV0Cs98GQdcDHjebYRvrzvUyrbfnPZycL9dpDRkMabnQulrIkOcwrPi6IrNtFfjApu9LAKaPAJzsjtJ45VZqKgokwp6w7slYB4nJ+YlZ/TvfFe188+IPEW9U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dGwZmkVw; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778070748; c=relaxed/simple;
+	bh=vEGLlo/p4SkSmfSJt4OW6GWaiXemOsov3yCYrMzOyJI=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=cIjm9623fXIE8hGkx5r9rjTQyTF/dbxPotp1xioR8p7N3D/LdSEeBImWLk/1WGNgY46mtEZHfDpbk+ch9GSPx26Swc0tGLLY91pEwFGN775XdgP1TX3VPVqT/7sJP85SM9PU1l/bigl0Z4g9wXgDV1RfWusLyGMIcTDOHKYxcsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tngtech.com; spf=pass smtp.mailfrom=tngtech.com; dkim=pass (2048-bit key) header.d=tngtech.com header.i=@tngtech.com header.b=KktkYwNf; arc=none smtp.client-ip=148.251.102.236
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tngtech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tngtech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dGwZmkVw"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8d4f78fc9f6so680126585a.3
-        for <git@vger.kernel.org>; Wed, 06 May 2026 04:28:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778066880; x=1778671680; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=30mJxBc10U3RxcKtJ5VLtUVcjLTMPVMv53gZ3ZqC9U0=;
-        b=dGwZmkVwno/01z2ov5joF0MUamShkVkA9SrzheHKlIG9rvQclanPgrfX2TxyGSoStB
-         2XEPLoEtCiI/6+/a0Y/V6a8EGbhpjRvauGvH5VMyWjTVhOBj6t8TQhyfWt2weQrMstjh
-         pMxoXJJJzdUXWIUPmGxXMIyWAppFyrED+wioT7JvxF5BYn9JfBRsP6WdwJ7wED0wcbWw
-         VFrHuVVucniOmyvtIIwyKk+Z6tlIazHBsR5dfL3GdYZf1c9env245qyq4nWzx6LwOGXy
-         fbZ0fez/OlGtTTCxl5XfkHR6GOiY5on8t+SVT724cV/d+7KXeKNwfcUxTmFRkpREIaoW
-         YeXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778066880; x=1778671680;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=30mJxBc10U3RxcKtJ5VLtUVcjLTMPVMv53gZ3ZqC9U0=;
-        b=sccW2KDWFRTXXA98ZZneReYLKF75bTLYMn90B5zRSHkeaK1IqQ3dW1msHr9e1woPFo
-         yWZZ5J6Ygn2aANzjPAM3cqd+qSySH+BVc9izTHXKD+meAmrJwtlyVPDfj5yHFw6dp8xW
-         atnRSsCQvIGKKswMrSNZmr2Tqb+nU5W0sdQlKhAYp0tDeYeQ1HNPGKu+ffiREwHoAJ7V
-         vov7fZd+lWyA58STQ9Ef6rv9EVzvHevATb+uBJruUlSjHyFOKb88d0ft38dR3eQh0AXY
-         w5q914MBpqLFTVXwbRfj1I93Qhh2ID2nUlT8m9uSasBkn4QHVLXJq+61TCMGxywQ5zxH
-         2gbA==
-X-Gm-Message-State: AOJu0YxCcr/4WWI7vI6AMvHYuGnzg+R6gVvAYXOAs3UBWek2cmTbSpPz
-	NtnfQLpw1QIZpZYS49miTGTj6KaVRrXxymM1fn/8gZRPoqnH/G46iThs
-X-Gm-Gg: AeBDietqS0NcL22Nrf3MHt5AXJYDTK8LFAaNGbELt/lQVLIXSu/cOO651PnduKxog2J
-	EgqbXy48tJdmPH+KqMViWU6+wa0Dfw6Fko7ADFnE+gi6+PSSL/rG8KZbCsCt71RudrUUcfLkuG4
-	9SNv2YEDtdawQuUf0Yjn4SCPZtuqwIoSu55El0TjToEwR+s6wKbVmA7+WjJHA/EGIzvO0G+MOI8
-	zUL+FNp1T60Gb2dpAukgcxgWwFhiCc48zgrVddSq84OQ5jIZjbLOssLuV1sMQ6KYILOF+AChmoW
-	v47w4QFY65eGozRD9+Llx2AgeGa/K02awQYIcTw7pRXxmJlIqJPuHLtfAhzIcNg9GLA6j+g9d96
-	l0KLeajoabdCyY+ujVWn7dl2XHPTGUJIwsuXYeltPF5iX7RbOu17WFt6H/97xR/7Hl2A0j16+g+
-	sL1Lh47+b2nYngXOYN3xwjNwl07T3/aDy8O6+RYnuDGt63
-X-Received: by 2002:a05:620a:7017:b0:8f8:cdd0:df80 with SMTP id af79cd13be357-904d70c2e1amr397136285a.59.1778066880205;
-        Wed, 06 May 2026 04:28:00 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100::59a? ([2600:4040:264b:4100::59a])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2938d20fsm1649657085a.1.2026.05.06.04.27.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 May 2026 04:27:59 -0700 (PDT)
-Message-ID: <f6c7c3d5-1d68-45b5-87a7-ae19b59270f4@gmail.com>
-Date: Wed, 6 May 2026 07:27:59 -0400
+	dkim=pass (2048-bit key) header.d=tngtech.com header.i=@tngtech.com header.b="KktkYwNf"
+Received: from zmproxy.tng.vnc.biz (zimbra-vnc.tngtech.com [35.234.71.156])
+	by mailgw02.zimbra-vnc.de (Postfix) with ESMTPS id D0671200C5
+	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmproxy.tng.vnc.biz (Postfix) with ESMTP id 9925B1FB1A6
+	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:58 +0200 (CEST)
+Received: from zmproxy.tng.vnc.biz ([127.0.0.1])
+ by localhost (zmproxy.tng.vnc.biz [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id z_s5TzXCbToV for <git@vger.kernel.org>;
+ Wed,  6 May 2026 14:26:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmproxy.tng.vnc.biz (Postfix) with ESMTP id 05F301FB1A8
+	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:58 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmproxy.tng.vnc.biz 05F301FB1A8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tngtech.com;
+	s=B14491C6-869D-11EB-BB6C-8DD33D883B31; t=1778070418;
+	bh=vEGLlo/p4SkSmfSJt4OW6GWaiXemOsov3yCYrMzOyJI=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject;
+	b=KktkYwNfh2tPMx0PfkE6TrvY/onQN4JGwK4XqlJwz6Yi4yG4X53opPHi/o99IyqI4
+	 LVpStHXaexQK2z+hzvcz1Piec2cz9u8S8CJIzy5Nz/3uYSKKX/Gg+njUrBB6ejK+go
+	 LStbngmU+xxlnvyQxTr6xp7N5ELzpbkuEDKtlv7UaAA78NqPRWGOzZxrmR0H/jq/qt
+	 wvOIaI9KKknjJfcbqKJ7tuuhAfcF3kI9HynrXYygvFmwW8tLxP+Em68N+ewLOFQ2Rf
+	 h9SbYyo9mE8RwKKfXFmUt2JjIeM8mXLphvWsQ+40/4D5kKPN4mB8/84f3v5SU2UgpJ
+	 jlvLOYLhTxvYQ==
+X-Virus-Scanned: amavis at zmproxy.tng.vnc.biz
+Received: from zmproxy.tng.vnc.biz ([127.0.0.1])
+ by localhost (zmproxy.tng.vnc.biz [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id vP6YDlosDkDb for <git@vger.kernel.org>;
+ Wed,  6 May 2026 14:26:57 +0200 (CEST)
+Received: from [10.16.210.86] (unknown [193.30.133.7])
+	by zmproxy.tng.vnc.biz (Postfix) with ESMTPSA id C86871FB016
+	for <git@vger.kernel.org>; Wed,  6 May 2026 14:26:57 +0200 (CEST)
+Message-ID: <b46cbce8-d2bb-46d2-bdd3-545422813d6b@tngtech.com>
+Date: Wed, 6 May 2026 14:26:56 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,91 +56,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] git-gui: handle missing worktree and separated
- gitdir
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org, Shroom Moo <egg_mushroomcow@foxmail.com>
-References: <tencent_AEE968E8E785907BA55A383977C8968ED406@qq.com>
- <tencent_8A236D9D4A8D8CCA7DAA083157AA8543700A@qq.com>
- <3b0b37ed-1a5d-4fe1-b2b4-7db67a62a06d@gmail.com>
- <77219c75-7968-413f-a642-0446145c8023@kdbg.org>
- <a1a7237c-ffed-4a7a-ae58-55769aaa4453@gmail.com>
- <93e1c61f-e58b-4a0c-8ece-7a8d945fa900@gmail.com>
- <73b99b54-1d39-45c1-bd06-26ac1008fddb@kdbg.org>
- <7d5cf952-badb-4071-a0eb-af9443fa8b5b@gmail.com>
- <ac115a8f-5dbc-4988-b8a5-c1647af1bb74@kdbg.org>
+To: git@vger.kernel.org
 Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <ac115a8f-5dbc-4988-b8a5-c1647af1bb74@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Sven Weiland <sven.weiland@tngtech.com>
+Subject: git reflog expire output inconsistency
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------tMwYIrUvTZhQh631S2jGilKk"
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------tMwYIrUvTZhQh631S2jGilKk
+Content-Type: multipart/mixed; boundary="------------vX26O9B7yyWmWA6VlJH48yA5";
+ protected-headers="v1"
+From: Sven Weiland <sven.weiland@tngtech.com>
+To: git@vger.kernel.org
+Message-ID: <b46cbce8-d2bb-46d2-bdd3-545422813d6b@tngtech.com>
+Subject: git reflog expire output inconsistency
 
+--------------vX26O9B7yyWmWA6VlJH48yA5
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-On 5/6/26 3:32 AM, Johannes Sixt wrote:
->> Whether being in a gitdir is ok, or a worktree required, is of fundamental importance and
->> is not explicitly checked now. This is my issue. (Whether the repo is bare, or embedded in
->> a worktree, is relevant only when automatically fixing a user error.)
-> I don't quite follow what you a trying to say here.
-I played a bit more:
+SGksDQoNCkkgbm90aWNlZCBhIHNtYWxsIGluY29uc2lzdGVuY3kgaW4gdGhlIG91dHB1dCBv
+ZiB0aGUgZ2l0IHJlZmxvZyBleHBpcmUgDQpjb21tYW5kLg0KDQoNClRoYW5rIHlvdSBmb3Ig
+ZmlsbGluZyBvdXQgYSBHaXQgYnVnIHJlcG9ydCENClBsZWFzZSBhbnN3ZXIgdGhlIGZvbGxv
+d2luZyBxdWVzdGlvbnMgdG8gaGVscCB1cyB1bmRlcnN0YW5kIHlvdXIgaXNzdWUuDQoNCldo
+YXQgZGlkIHlvdSBkbyBiZWZvcmUgdGhlIGJ1ZyBoYXBwZW5lZD8gKFN0ZXBzIHRvIHJlcHJv
+ZHVjZSB5b3VyIGlzc3VlKQ0KDQoJMS4gRmlsbCByZWZsb2cgSEVBRCB3aXRoIHNvbWV0aGlu
+Zw0KCTIuIGdpdCByZWZsb2cgZXhwaXJlIC0tdmVyYm9zZSAtLWV4cGlyZT1ub3cgLS1kcnkt
+cnVuIEhFQUQNCg0KV2hhdCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBi
+ZWhhdmlvcikNCg0KCXdvdWxkIHBydW5lIGNoZWNrb3V0OiA8c29tZXRoaW5nPg0KDQpXaGF0
+IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpDQoNCglwcnVuZSBjaGVja291
+dDogPHNvbWV0aGluZz4NCg0KV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4
+cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPw0KDQoJSXQgb21pdHRlZCAid291
+bGQgIi4NCg0KQW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBhZGQ6DQoNCglJdCdzIGp1c3Qg
+YSBsb2dnaW5nIHRoaW5nIHRoZSBiZWhhdmlvciBpcyBhcyBleHBlY3RlZCBmcm9tIHRoZSBk
+cnktcnVuLg0KDQpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJl
+bG93Lg0KWW91IGNhbiBkZWxldGUgYW55IGxpbmVzIHlvdSBkb24ndCB3aXNoIHRvIHNoYXJl
+Lg0KDQoNCltTeXN0ZW0gSW5mb10NCmdpdCB2ZXJzaW9uOg0KZ2l0IHZlcnNpb24gMi41NC4w
+DQpjcHU6IHg4Nl82NA0Kbm8gY29tbWl0IGFzc29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxkDQpz
+aXplb2YtbG9uZzogOA0Kc2l6ZW9mLXNpemVfdDogOA0Kc2hlbGwtcGF0aDogL2Jpbi9zaA0K
+cnVzdDogZGlzYWJsZWQNCmdldHRleHQ6IGVuYWJsZWQNCmxpYmN1cmw6IDguNS4wDQp6bGli
+OiAxLjMNClNIQS0xOiBTSEExX0RDDQpTSEEtMjU2OiBTSEEyNTZfQkxLDQpkZWZhdWx0LXJl
+Zi1mb3JtYXQ6IGZpbGVzDQpkZWZhdWx0LWhhc2g6IHNoYTENCnVuYW1lOiBMaW51eCA2LjE3
+LjAtMTAxNy1vZW0gIzE3LVVidW50dSBTTVAgUFJFRU1QVF9EWU5BTUlDIEZyaSBNYXIgMjcg
+DQoxMzo0ODowMyBVVEMgMjAyNiB4ODZfNjQNCmNvbXBpbGVyIGluZm86IGdudWM6IDEzLjMN
+CmxpYmMgaW5mbzogZ2xpYmM6IDIuMzkNCiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2
+ZSBzaGVsbCk6IC91c3IvYmluL3pzaA0KDQoNCltFbmFibGVkIEhvb2tzXQ0KDQo=
 
-A git repository (gitdir) can have config.bare true | false | not set
-git rev-parse --is-bare-repository tells you that whatever gitdir is discovered from the
-current directory has core.bare==true. This happens whether the call is from inside the
-gitdir, or in the parent dir of a gitdir named '.git', or in a directory containing a
-symlink or a gitfile link to the gitdir. This call never tells you what directory you are
-actually in.
+--------------vX26O9B7yyWmWA6VlJH48yA5--
 
-git rev-parse --is-inside-work-tree gives:
-    true - the call is made from a directory that is suported/supportable as a worktree of
-a gitdir.
-    false - the call is made from inside a gitdir, or from a directory linked to a to a
-gitdir with core.bare == true.
-    and error is thrown if no gitdir is discovered.
+--------------tMwYIrUvTZhQh631S2jGilKk
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-I find --is-inside-work-tree a much better call to make early in setup. 
-    true - full git-gui is ok, 
-    false - blame/browser is ok (gitdir might have core.bare true)
-    error - no gitdir found, the repository picker should be called.
+-----BEGIN PGP SIGNATURE-----
 
-So, the only need to test if the repo is marked bare is when looking for a possible
-worktree when git-gui was started inside the gitdir, or started in a directory linked to
-said gitdir, or GIT_DIR in the environment points to said gitdir: I consider all of this a
-user (or configuration) error, and there are many possible causes to explore to give
-useful feedback to the user.
+wsF5BAABCAAjFiEErnh3SCJFVwW5alt8MzANZZ37INUFAmn7M5EFAwAAAAAACgkQMzANZZ37INWZ
++w//Wo7W/oX034nwYeoHUgxx/aiKXIdwuMn6zhrIucQycXI7HJlWq7MIEyugUEN+Gn4CTzxEergX
+e0wsw0Qw7T08NRZjWLM4x5iAcgV5mM+5HgwDlVZhpLyRFAr0POAGvvzVSTfMlCInpgaEQ073O8ph
+MbwPscDXjnpBOgbWw+8uln7NWcUtkfzKyk+Eb9EYe9MCcTll/JD/3+GDRqHOKGVPcsYc0JFPYXCB
+Rcze3wJSPDqVT0aP96gg6zjzIXKingDOqMySl9dq2t+gz736AC+2dgmtZgKRk7WIZZ6f0S4mx8eV
+lqCCK16repFwT6dlXESMvo6tfldSK3MMA54aHCT0iCfXSTjiAoaF5M3MGy7m7pryPAIn6IY5iy/y
+yger8Ilso/oSDEGiZ6lPqkTFG19Loj6q87OziQ67AisGmuackpGOxmOFi/l8ztEkSCOrZtBZrma9
+PF0en+JyLy2q6zJCCs44qiecMmo4AD4mbQfmHYkZjmzW0p8ogCFQDUAjzeiRyP82UiIkzFw7dxbv
+SxD4K0glC4ip48kqXMDVhMRljVGJRj/U0QAsG66I7GEUrxoUx2iN/NRy+Gmdr7vPyTl05BYmr4rP
+bTeZNuGLHqOJy15qkT571vlobcuZVr26xzHqFoTkaqprMA1wSwDUFQSTsZcnYpTxH9MAncMTgmf6
+0WU=
+=B2GO
+-----END PGP SIGNATURE-----
 
-But, there are many ways to code this. I started down a path of using
---is-inside-worktree, but in the end there are still a lot of corner cases to find.
-
->>> But perhaps there is a simpler solution: Let's present an error if
->>> --show-toplevel fails except in the case where the startup directory is
->>> named '.git' (and is a valid Git repository) and is not bare (then the
->>> worktree is the parent). I insist in this exception, because this
->>> use-case was considered important in the past (87cd09f43e56 "git-gui:
->>> work from the .git dir", 2010-01-23).
->>>
->>> -- Hannes
->>>
->> This would not fix gitk's blame / browse from a gitdir, and I don't really see a one or
->> two line fix as being adequate.
-
-As you mentioned elsewhere, the problem on browser/blame is that _gitworktree is empty
-when no worktree is found, so GIT_WORK_TREE is exported to the environment as an empty
-variable. This cause is in a commit from 12 years ago:
-
-    3decb8e0ac ("git-gui: tolerate major version changes when comparing the git version",
-2014-05-17)
-
-Prior to that commit and if not using git v1.7.x, an alternate branch of code not using
-git rev-parse was used for worktree discovery, and that code set _gitworktree = _gitdir
-when in a gitdir. The alternate code was removed more recently as it was unreachable from
-non-ancient git versions.
-
-The fix is to set _gitworktree to _gitdir before exporting GIT_WORK_TREE, or to just not
-export an empty GIT_WORK_TREE. Obviously, having GIT_WORK_TREE = GIT_DIR is asking for
-trouble, but perhaps is ok as git-gui is running in a read-only mode for browse/blame. My
-limited testing shows this works.
-
-
-Mark
-
+--------------tMwYIrUvTZhQh631S2jGilKk--
