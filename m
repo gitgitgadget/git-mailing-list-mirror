@@ -1,93 +1,95 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AE42C859
-	for <git@vger.kernel.org>; Thu,  7 May 2026 14:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E204F3B895E
+	for <git@vger.kernel.org>; Thu,  7 May 2026 14:53:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778164759; cv=pass; b=jlFJ06aaym0o6vTn/CfaAVwQwPeBil1TaKVhk1sXBmkuLlMQzAM7hbMNrzNWuqrrX/1a8y2iXYgRCgavmvfVGySJiSug6rQw8zRJ01bJvvzVH3MDQM/GywZfEtQhTTX3au2r2VPS0PzGY1B66axzqrt9lG+Rehyt4zRKiPnoNQI=
+	t=1778165623; cv=pass; b=jlP38/jSDfkIVDGOln3cph9S57vb8fjWtWoKKuvPhh7AhlHXo+n05fcyKUUqg2p32WQB25rutzR9NuQG8rFJvxtiGSJOVujTwoVQHYOp4FjoxYdNUkAs8EeR+t39oF1qv82tj7S5JP02ZPuv5td1RzokZhdZfQZWYz5w1gbLfmU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778164759; c=relaxed/simple;
-	bh=+7SJyvNR+bwkzrtljl4I+fgA4l7XyTMgFojqgae6wYg=;
+	s=arc-20240116; t=1778165623; c=relaxed/simple;
+	bh=Ono0LJb53hAPnN1k7TZD1ID4yb/dDswStcI7aXKBwPI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SNYriTwHYikIQA+JgMIc60sXWXsBOQcknkeIRiOGbC30sBTVnfPGVBe9wuYyEy2j+iN6qqGz9gT2z4a54Tz7q43U7FPmrkmZy2dYGZXJWcevjdSmlDpagtqbgR2Wk2HyMIiS6k9/6uM8SMFA8zJs692fvHFBZ55rIhwcGJnJJUo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sUpOku+z; arc=pass smtp.client-ip=209.85.214.174
+	 To:Cc:Content-Type; b=PnILJDSaFANfjztgLIOlEnjeHiQ4HySSDFEzMeWSyDZOYTmt5bu82LgufQpsLYiU/3M6s54780ZcinnU0QGjwVU0t+9OQD5pHAaUIdEwmTgwEfmwBwVQ7J8AvJYtUl28DRQO0g+9GbChe7jKKls3k/N3SwwWA25Ysmc6cnBOHVs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CA27S+2v; arc=pass smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sUpOku+z"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ba6485d219so6541585ad.3
-        for <git@vger.kernel.org>; Thu, 07 May 2026 07:39:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778164755; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CA27S+2v"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7bd5e373d07so9900607b3.2
+        for <git@vger.kernel.org>; Thu, 07 May 2026 07:53:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778165621; cv=none;
         d=google.com; s=arc-20240605;
-        b=l0YhCcEHiK20tW7yb+w01seLYguP5NlvHaAW3jxBUXzlL8rHnb2T9f/btSuaMQQxH1
-         GnWbVvLrUf0teZg5FFQowOT5A2m5neolBivajwfUmxc3z1U3A6KRByuuBNGOLeCM2QEQ
-         dSJ+YeyIi/3B1aOnRH9gTjymfjepxgjcVOgYGxDHgmcZmKSYmD3UDCZQz81anzXRDU8q
-         jPWANqJbZ1RKKzUDJvNRTNK4FPojk0hv1wL+lpUasWIwnAEe7Xxd5vWUxlQMTVdrEKv6
-         dHrLS+jZC/DuOa2JjpOKTW1m9LxC236/DX9bGGYZMlgzGmFKMdYQjg4LVqYz8bOSkQG0
-         tKIg==
+        b=cVmQT9mw9rGVP5/b4lPFjq+3+2yAN1raSb/nnNiyyOOodQCVtjWKV1a/Tr6y6/0Q1C
+         g+saY51zd/UGAhT1IdvWYcwxus41+tVvvJo5zaGjy9R3he0vGPscmYP52iPkvGViPwOQ
+         u6xiVQQa3RSU0aar5jWzKfh49DtUTEdFTYeTfthoJ9yBUgIA6Krp26WdSd5CPFvY4DoJ
+         14CzhJC2sc5ZTrOiD83rLFv8KtFca6Gkrt+cSY3u4GkF03Dlh1yPGxTJoKwmXtkX9xI1
+         i2rA2Hwp2hVzniwpzRPu4MHbmkqPH2f8U3ctvlGVgVfAWmomP8aY2ECO7EnwYAGwJWvY
+         4YkQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=6tdHQjfmb5cZPBThIdVSieuwZESLaFAZSPTlf8+eTEc=;
-        fh=5Pq1TaQL+Iap9bzMsZFgF02ItY5twbuvu2wZsG6aiIM=;
-        b=P7tcB9vJwMg2nNrgjuZFxQ+7wzCIs0wwJVd07ux5ms+4djJjUDk033o+HRrxY0Qqkk
-         pc91Pl+dFaaCDMBiTdTZHr5yEYYvfS6sEqR9GScOueXg0wT5pMSm8o5Jz0DE+sgxnAKG
-         UJpC7yq14tZ1BGWjf174/UDeuGE8/W7kMfjcLPOs/rqlKKqskFiphM4HJbPQYLGiTXpi
-         hXgMljS1RgWxR0ZpSjOYGSSlRQXfFlOhZ439wl9DAHDcTfu75BkAch3d6Eo4lXAq0k/7
-         T/6yZ9QIk0PEM2DSGMl61CYdfc+anBtIpSTS9a/tNDyBUnD9kf4Iq2hf4k7pwcNAnjSg
-         zPVA==;
+        bh=M6NDGMCQmt+CFgoAVCJ+vcQplGvywN5fUmRbWeo4N+w=;
+        fh=soNPjaifp3sUPfGhzvTFwZlMk7wd4yY31UPS9K3+ylo=;
+        b=SW2P+KNhqUDf6NvKKfHe/mpZTmr4Qj1qhBNuYHMnDDdPjmggV4WNlJ6roaXcpN0bPu
+         E562kWqwR1Ybd6Yntv+twPW0CKpwMDQGxFIGgAmXOE50H4ESWqEXpbfdBzR7Rdq/ldb1
+         Ox8INgG8lvjHTvaGZMFX+Wpm9RtL6VqfxSkfIAtaK0CbXkfFPswruevyFg/7hFqPTIIg
+         /4G0FyQeMhdORE3xvAxXfN3WCaqbYIAvaGlqfi2nQIoWT1cMRpxAUsK6l7bflNEyAoWt
+         Y4OB46xKdk1h2+Wqud8Mq8ehjHxdWdy4h6hNVdYpsiNaX8Edgur5g16dfG72c2cEJrPU
+         0uww==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778164755; x=1778769555; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778165621; x=1778770421; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6tdHQjfmb5cZPBThIdVSieuwZESLaFAZSPTlf8+eTEc=;
-        b=sUpOku+zuvCPi3T2ZsfUhIGVxVLMS6jLCtxELJPwg2/s4SlYoa5VHDPOPWds4LqVoC
-         CAC4SbQSPLg2yJ7BdNXPnp19tQdCErgWu/UZxdZUzQa/4S/6Uwz4Gl4sywXGVcCvkmxo
-         4TP/YmXSYQ0jmj5ypei2JkCeZ79b/8Pp22PAn13CMpqsKfoVp4HarhetbqNJV3OZsDNt
-         LcAK7mEvnuI2xDfczDpdXPtaGEfO/aP4dgTkWAM7304tZvtIesiIMJClIa+dFw2uKb3o
-         HnL35DPADb2ofVml4jtX5NtQSNJwhsAoJ4mhcbE3ZhNdbYaFe4o+1hfv47mDlsRGZAYM
-         672w==
+        bh=M6NDGMCQmt+CFgoAVCJ+vcQplGvywN5fUmRbWeo4N+w=;
+        b=CA27S+2vh903jq8IFLQmEDStuEBRJwlKbDz8wFL9HkG9e12+gvgBN18ZoUh2vUVHxe
+         gqJJ+aZsmBCcFMrxzpEw67eJ1MuuUpb36gB2bseKTgIwJU6MWz4Ge7v9KgTR646ceLbn
+         FO4/+G8hirb2VcF6YBYHZup7EwB8MgxRHz8jj20m5de7PoeSdumJ+ws+B8ja6ZiBALY3
+         XicoewhQL4OLTEASAB/ACP0ekIIdYjzaMTm+Rb0XceRJAexRbF6dEjwtJMfSZ16fow0b
+         csX+bJjS5e0xtZqIadSAWz76TDycIh7WfCM+3bzYRlCnCKCrsAZ9MIQYS2NDGf/gHgYe
+         IjkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778164755; x=1778769555;
+        d=1e100.net; s=20251104; t=1778165621; x=1778770421;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=6tdHQjfmb5cZPBThIdVSieuwZESLaFAZSPTlf8+eTEc=;
-        b=VRHwfjG/44YRmw/zH3lPlmgf8FxsJSz7Iv70xRtupC07C/NNJ7Io7R7TT3Wj46ynMA
-         KqDVRFignjGCWN0AAdf4jr4GXkCOQBtuuijpzjBIvIElpUE0BJecmHQmOl6dkp6mFnfd
-         yhRyoiMkzNA+Haf8AlV4XtnTkQU2xXbLn7ot57i0EWn6IrNa+UqbJ4ZQ/irGGs9Gj2bv
-         uLU1bUa907P4xtw6OSkj5tfbhMIcseHmRvVLW2mQIWVVO7gwSrV+xJiqOPxLc1LzegH8
-         CpBlIoqTkW0Fc38KoD3lkknaRykdNpsiMXScQ0WhPt4r9b3MzihtJl5hEyl8U+Lr92KE
-         Ucng==
-X-Forwarded-Encrypted: i=1; AFNElJ9kelpEY09Ni5VsgzGJOUI5rEdMDL+7NDce5oCXU23hhqmsLky3YKxhGIUGoS3R13Xv4m0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/dh7wLqCs4VIMkGlknb2BsDhOve64ZyIDRQma8LDYlZjsx78T
-	q17NFRw2l1QqXooO3fKT85WwAX0ma9YHR6h2/OBIi4sTXoA7W4a84ljZcIVMlCXB+MWQXSjIeXk
-	UTCCNB7TCCjW9TNxW0CJT2OD4iIXONH4=
-X-Gm-Gg: AeBDietwx68mHulyuHOLGpohVS9FaFu6EU+9BGefFk3RLvq41NXg9phawhyprwc1Osr
-	f0n6Uv5l6WWmYvCq+aDI+Xh4l5JHkiBz/UeE/yL8RNgYA8wG6v/SDJrbNhqgPZm0n5UEfDrONip
-	nI0YCSVYcJ794HXOTk8fEIGHbwhYufejy/GVKBiyiVHPM+ee5Qq9oSN+MQfOgFwrW/hkhNDeqlg
-	52o7gO7Ltgdla7Uq+xeo2/FlgUWswccN7M4qaOcODmk7w8H7P7Qhcx1eb9KoOM6nmIGric1McBe
-	XRMKFFMCIAAH/FUtOJYeQUL9QyYnzNA9U2E6YOfGKrHEkIwSl4S/ZLpe9UucvtQZ3Z998mPAJoY
-	9+3DHgj4qdnqdL24=
-X-Received: by 2002:a17:902:ef11:b0:2ba:60a:3108 with SMTP id
- d9443c01a7336-2ba79bfcbe3mr81344485ad.34.1778164754832; Thu, 07 May 2026
- 07:39:14 -0700 (PDT)
+        bh=M6NDGMCQmt+CFgoAVCJ+vcQplGvywN5fUmRbWeo4N+w=;
+        b=rYMYLnNr5BSrmPMB+mCwpT2vNdNKXLWF9+i+lzCxtu5DLeD9g91WCwL8PbATfj5UaF
+         VY0OqpeOV0AXcs5NdwB2fImEyDyXi9iJD3f+QOvpytgIIZFTZwP6d5x5t+OEQuFpm0dB
+         zyqb2dbyQygMhS1e6qFPRe5bRoujtCeR3JF5nl4Ap6nQ9zKl5Kpjj3Txrg47HdEjvrd+
+         C4OWaeQjtQXl/6UJQ2pQCIfOwac9krXN4mpvMXYvWdCMhHNIKNPlJcqSdfDMNFu2q1uo
+         M8XkG9us8OrzpEQiFHQ5u5Y0N5RvXJrd7rUUoeO8vrXdEC17w7J+UY/aD9OcjMm+6nMJ
+         QLSg==
+X-Forwarded-Encrypted: i=1; AFNElJ8n4lGi0c4kiynHHUPM4pyEske1mu1/0bdWYcHqoRK0l0UfuMHM0pMgndNuK2qE/AZu3Oc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxD0mJGjWIs5k6RB7fa6ommav4SFPOQJzuZFYtUCph+z2QUFho5
+	CEeSx6iD/2sqhKXUYUzHQ5C7Dvg9XOOXsopPBasPh1oPByJ/fmzBDTbUKd2nV1iNTDTTrl+U5Rr
+	JvEtn9Sql14jyPtWIPjOzPLNqZM04qY8=
+X-Gm-Gg: Acq92OGkFx3x7aETGB/x2G8H2zvd8TN12LOEl+VkR/IPHIk6P/vs5B7xph6b6LwQYxD
+	x1XwzpIhNlO/2Yo+ogtT4935cIYdSSxb0Yh6jWR1KwsxVwVy362BVxkzjiEVZ8Lybdh8+ugJNfw
+	yhqiorDoSrSh8N0LXwAlfcMjXOEkErmN+inckHL2kqCf/AtVaK50fjyAD1vgPWhCXXc7UEERaKj
+	jl+3xg7f7rV60Lie0omRW0Rq+eJ5S13UmJIEP5nue1kuaCBtxr0faULOrRII0GbCPaMkWCbyck+
+	/VnW+Szu//spPolw7Qn4DTFOGeNe+uh+PkuJt9q8hEggUChjqt7DjgpsE2X5b34hy42vvCzymU2
+	LWiJfkuoweukJefaM4Eo1zwCJkHR7chhZHLfoDZ1VGVQTI9LWBYQikRolTl4Xw1fikI+EMiJ4+R
+	4LaWjaiJiDSKQy64tN
+X-Received: by 2002:a05:690c:11:b0:7b3:c611:7ef5 with SMTP id
+ 00721157ae682-7bdf5d6b8bamr92803457b3.6.1778165620861; Thu, 07 May 2026
+ 07:53:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260506235459.529862-1-javierbassi@gmail.com> <e640ac2d-9e46-4f1e-9aef-deac80c65361@gmail.com>
-In-Reply-To: <e640ac2d-9e46-4f1e-9aef-deac80c65361@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 7 May 2026 10:39:03 -0400
-X-Gm-Features: AVHnY4JLa_ehJy1VJh64jCLz2crOl1B5nzPPsirzwK7aYf7nkypiL-wy901XZv4
-Message-ID: <CALnO6CCsOMyLxAhGW10L4duaahUORwedfmtdpY3zDGpQcZoP2Q@mail.gmail.com>
+References: <20260506235459.529862-1-javierbassi@gmail.com>
+ <CAN5EUNRT7V3BrtyU0UYwGVnJ51LWSsNi1OnzMB5WL=w8vhKmrw@mail.gmail.com> <1f811deb-7cbb-4fe0-ab40-49274b1db165@gmail.com>
+In-Reply-To: <1f811deb-7cbb-4fe0-ab40-49274b1db165@gmail.com>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Thu, 7 May 2026 16:53:27 +0200
+X-Gm-Features: AVHnY4KgZpZu1DvlV8GDfUqsHOGtT7jqdASLoAEHONjWK5VAVvZj3GA9rrfFcmY
+Message-ID: <CAN5EUNTOtRvjiJ4v4wdCPazSafLRdUmzc9rGCMvwjRKVz6Hz=A@mail.gmail.com>
 Subject: Re: [PATCH] add -p: introduce 'w' command to view hunk with --word-diff
 To: Phillip Wood <phillip.wood123@gmail.com>
 Cc: Javier Bassi <javierbassi@gmail.com>, git@vger.kernel.org, 
@@ -97,56 +99,87 @@ Cc: Javier Bassi <javierbassi@gmail.com>, git@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 7, 2026 at 9:28=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
+El jue, 7 may 2026 a las 15:24, Phillip Wood
+(<phillip.wood123@gmail.com>) escribi=C3=B3:
 >
-> Hi Javier
->
-> On 07/05/2026 00:54, Javier Bassi wrote:
-> > When using `git add --patch`, reviewing changes in long lines can be
-> > difficult with the default line-based diff. This is particularly
-> > noticeable in formats such as JSONP, CSV, LaTeX, Markdown, or other
-> > plain text where small inline edits can be hard to spot.
+> On 07/05/2026 08:55, Pablo wrote:
+> > El jue, 7 may 2026 a las 1:58, Javier Bassi (<javierbassi@gmail.com>) e=
+scribi=C3=B3:
+> >>
+> >> +static void add_word_diff_line(struct strbuf *old, struct strbuf *new=
+,
+> >> +                              const char *line, size_t len, char mark=
+er)
+> >> +{
+> >> +       if (marker =3D=3D '-' || marker =3D=3D '+' || *line =3D=3D ' '=
+) {
+> >> +               line++;
+> >> +               len--;
+> >> +       }
 > >
-> > Added `w - print the current hunk with word-diff` during hunk selection
-> > to re-display the current hunk using `--word-diff`. This provides a
-> > clearer inline view of changes without modifying the hunk or affecting
-> > how patches are applied or staged.
+> > Maybe a tiny comment here would help, to know why '*line' is being
+> > checked here instead of 'marker'. They seem the same and one has to go
+> > to marker declaration and see the comment at 'normalize_marker()'
+> >
+> >    /* Empty context lines may omit the leading ' ' */
 >
-> I think this is useful. While one can set interactive.diffFilter to
-> highlight intraline differences with "diff-highlight" or "delta" they do
-> not cope well if the text has been reflowed.
+> That's a good point - it might be clearer to use
+>
+>         if (marker =3D=3D *line) {
+>                 line++;
+>                 len--;
+>         }
+>
+> instead. That also trims lines starting with '\' but that shouldn't
+> matter as the code should be checking "marker" rather than "line".
 
-I concur, though I wonder what other diff options would be useful. I
-can imagine a world where "add --patch" allows to reshow the patch
-with any set of custom options. Spitballing=E2=80=A6
+Yeah, I like "marker =3D=3D *line".
+About lines starting with '\', "add_word_diff_line()" is called after
+"marker =3D=3D '\\'" block which ends in "continue;" skipping
+"add_word_diff_line()" call when marker =3D=3D '\\'.
 
-     :show <opts>
+>
+> >> +
+> >> +               if (marker =3D=3D '\\') {
+> >> +                       if (last_marker !=3D '+')
+> >> +                               trim_trailing_lf(old);
+> >> +                       if (last_marker !=3D '-')
+> >> +                               trim_trailing_lf(new);
+> >> +                       continue;
+> >> +               }
+> >
+> > Here we check about "\No newline at end of file", after this point I
+> > believe that 'buf->buf[buf->len - 1] =3D=3D '\n'' will always be true.
+> > Same should be for 'buf->len' because "\No newline at end of file"
+> > shouldn't come first and a '+' '-' line should have been added on a
+> > previous iteration, but the check it's fine, just in case I'm wrong.
+> >
+> > What I want to point out is, is the 'trim_trailing_lf' function
+> > necessary? It's only called in the same place and it carries a check
+> > that could be on the caller instead, leaving  the function only with
+> > 'strbuf_setlen(buf, buf->len - 1);" making sense to inline it at this
+> > point.
+> > You could keep the buf->len check:
+> >
+> >    if (marker =3D=3D '\\') {
+> >            if (last_marker !=3D '+' && old->len)
+> >                     strbuf_setlen(old, old->len - 1);
+> >            if (last_marker !=3D '-' && new->len)
+> >                     strbuf_setlen(new, new->len - 1);
+> >            continue;
+> >    }
+>
+> Should we be trimming '\r\n' if the file has dos style line endings?
 
-=E2=80=A6could work, since we have room to allow long-form commands still.
-This could be extended to arbitrary git-* commands, and ":!cmd" could
-be used for shelling out.
+True, I haven't thought of that. Then I take back what I said about
+inlining it, I'd keep the helper just as is (same for the if (marker
+=3D=3D '\\' block)) adding a check for '\r' after trimming '\n'.
 
-(Can you tell I use Vim?)
+--
+Pablo
 
-Anyway, what I like about this is we don't have to worry about running
-out of (or thinking up new mnemonics for) single letters for different
-combinations of diff options, so it's a bit more extensible.
-
-> I think the approach of using the current hunk text, rather than running
-> "git diff --diff-words" is sensible because it works correctly if the
-> user has edited the hunk and it makes it easy to handle hunks that have
-> been split. It would be good to propagate the filename when creating the
-> filespec so that we use the correct word diff regex for the file. We
-> should also propagate the context and inter-hunk context settings from
-> struct interactive_options. It would also be a good idea to reuse the
-> hunk header from the unified diff so that the line numbers and hunk
-> fragment are correct.
 >
 > Thanks
 >
 > Phillip
-
-
---=20
-D. Ben Knoble
+>
