@@ -1,176 +1,442 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB123F20EF
-	for <git@vger.kernel.org>; Thu,  7 May 2026 12:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47DD3F23C0
+	for <git@vger.kernel.org>; Thu,  7 May 2026 13:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778158280; cv=none; b=kNFz1+3Qtb18cFw2Wgrouxgg3Fe9T2I2Np1fPHEx3bQpkG0YwzvAIhVT35N1Gg9vf5nYaUshE4KZ9TG8lZppiEoNosI+32ZrqKu2eai+p9NSja7tMC/Bj0WvDS/1tyrfB7qobYxk0NPg5ud7mXjDT4F7PYlGHK/RmeNkrNxQo0Y=
+	t=1778160270; cv=none; b=IAbdC+2AQv4tF7IyMY571Omsho/oKbV+cS3p7P4Kj8WfEx/jl8MX25ZfzyuZY+faSyKBqybiAni7cf9bAAkIZOt3TsRRytBhJeReclrfDNTKW25WWU8QjsT1+tWVvFSp1KJd6yvlwJQ+gubwLff6fVN9URpB5y91oD4ti6K8lFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778158280; c=relaxed/simple;
-	bh=VfCQMAmV6FoOsGJZLbGBAAcrs+3HFqLvCCiBA8BbE5A=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Z11eYHsRZYMDGvUZbgGQknMVYGwA3vbCFh/XFsmpMo80om6lNzW337vwDbgAEZd/X7clWWhUhuiJ0JjtMzJDGNMvMAmhfBfbxoPgRhPMMyS8wdP3adrkyxC8zk6Ff01mSuIw4+otXgQ/XVCnOPgovJbQt+HjM7q3oC1m4+iKb5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dNpB+J7c; arc=none smtp.client-ip=209.85.222.177
+	s=arc-20240116; t=1778160270; c=relaxed/simple;
+	bh=QfXyKolXtDLcSPk/8QRwjFOdhgZZp/XLjiwsIAJzHyw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WMMKyS3IgWlbxBCQY3uemjJo0iFJ3w73XRRo5mKqoTa/rvJ0NFpe6VFYkmPV6dUYI63d9lXVzkDpXHbT4Fb9z8sRs3nAPunQgCRRNGMMjtrVawEj4Mrr3aHQYTHX/ZZiT8Bl597dKIxQaEhoavq2/7cqeEWGLseQT32eR7+mVOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WtFyJf4n; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dNpB+J7c"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8ec9f099fc6so90937385a.0
-        for <git@vger.kernel.org>; Thu, 07 May 2026 05:51:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtFyJf4n"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48d102471a4so8813025e9.2
+        for <git@vger.kernel.org>; Thu, 07 May 2026 06:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778158277; x=1778763077; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fo3zsNr6OqCl4Zg3E/x5GcDvn0VbcU76B0K3epfV0sI=;
-        b=dNpB+J7c2BMeVcddNFb3TkHbPgNbtaKJXAhLEi33OrHH/y4/Fv+RuEALRvKx0/OTn1
-         s4tMoARu+CtfRHtcvquLMyY4A/nXwMs0IMWzPPqPXV+ThJ9dgeDDfddJSx/dNPpHwopG
-         leyEZzxA30nmQx8btL1fuZSDPg0ggcOwX5Uc6xbk/W23orGJy5oYzx6OhCeVa7w4Jo97
-         h8WxNKIj4+RSqirEgZ06WLZrbFzqI7/GLWrs/YKMnjN/iJ0wjNulA8xA3/eRcZQLwXJb
-         5mhzFm+WknGaZmiStCCJ7UrShIwSfroAOKCyeCRU///kuy62fbl77+rKgt9vUVAlmqWk
-         ouNw==
+        d=gmail.com; s=20251104; t=1778160262; x=1778765062; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d8GxO42HbanXSTppFTpz5hyj8hhdKMw6KDpF7OurTeo=;
+        b=WtFyJf4nfoFr/rIw2c+Dj6B68OBJPJZwz6Q6h/44gFACiB09UF59iWUY3JLlzx6Ub0
+         KhjUwwkJWQubwQiffA48qx6ZUK1D1BB5PnSzjH8tmKen4H2dFHtF8smZHIUHcsiqphbH
+         0YCVJKFNWNcHGfczv26ZmC8hEoCvmOwgGM+DgbSN8jeplVIeEQB3NnzkUNWVK6aBF2UT
+         mj39yjX+yhWpsIlK7QvYNmDNCNA3lgepkoPjiSEKUBKFdsSRSDps/hAKSNMHmE6NTFIC
+         Y8aD7qTbmHRdSwDhikxwWNoCYp1iXHPyKplVNUh+wT+wklEVg66H7XUuT5AQnkd4OPMz
+         WuhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778158277; x=1778763077;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Fo3zsNr6OqCl4Zg3E/x5GcDvn0VbcU76B0K3epfV0sI=;
-        b=NcSg+69pmBTKQ5HR6VNEbOA8hORPb9MBLntGIRz+0XrkfXuAsKi9eK2Iwsaoqya/m5
-         Wwak8ww1JzJVcgF+WBnlhMBuff3TwFzq4f0RQ3tuvyV3LFKOEBW5WweVvbE7NAyWBnzU
-         f8HZXRHBS/354C7YJzk15b1dMkyOkbiIWmMW/sjdl36ahjG6PeI1+n1oaBaNYJW1j97F
-         YFBd0vpooKq/SdDZzMtdMRYI035l1RD6qFPrMXXOceB+CSMM8AHnpGhLDfZkuCq2pCaR
-         HLFJes/HaC71q5OBtHmL6vlpc5eTfV4VcVfvP0nVPBv/DkjJ9WuewCkAGIEqrhfrIXif
-         QHKA==
-X-Gm-Message-State: AOJu0Yz5va1mQhoVMSOsm7Tg2csJbJH/01Zwlz1hdfpJ5h7Pak4V6p/R
-	R+z2DjPQH9Y+sZ8XIZ6iiquPFEkoDKJu1rkTfgPjc9CrXcibgan/N3lnoqskpcQr
-X-Gm-Gg: AeBDievoMbPFWKPBoBs6D8wlaA2CfbiVRUeFVj3MkYtNOJgi/uLjU7Dil5fXSLOv6j/
-	sZ7hyvvIx6NkFM6I5hGahvUktLO3fnK4bxxqjh2JF5beEBkUTE5zw03e71VARFzr7Zk0lfxaAeH
-	6vi+Iqr17IF1+h8tmYCJBJT2bhob8lxdh/7wIWHwS0Io7wazo1xuM8FtX4Q84DD4AFIfC1qOTk5
-	Kwt7obTn0C47odUrjytRlBCWa8X9O7ph1LG0T62bqyH/kKU66UTPqoSApl9wk9AyCPfh1ucxHGM
-	VN0USNA2X6hFUIVslknHfc/dq++5rdgIHp4IAnARv5rFLfHiyDGp/HGKUP+PpE3H1ASduxGIAd4
-	fbuHSqvwN11ovg2vkWk5jWIUwSDx0a80l71L+c2OLBwlsIkNw3vkn6aoKen0drVOQDAHs6cdLJI
-	sBCEepM1T+ICjv89lM8nQRY9JFbaHfudks+JA=
-X-Received: by 2002:a05:620a:2592:b0:8ca:fe5c:ea6d with SMTP id af79cd13be357-904d72b9846mr1083928885a.59.1778158277276;
-        Thu, 07 May 2026 05:51:17 -0700 (PDT)
-Received: from [127.0.0.1] ([20.55.117.85])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc29a7a627sm1968007985a.17.2026.05.07.05.51.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 05:51:16 -0700 (PDT)
-Message-Id: <66219b79fa3808a85d2c0e1aee03a4979ca01116.1778158273.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2103.v2.git.1778158273.gitgitgadget@gmail.com>
-References: <pull.2103.git.1777380768.gitgitgadget@gmail.com>
-	<pull.2103.v2.git.1778158273.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 07 May 2026 12:51:13 +0000
-Subject: [PATCH v2 2/2] maintenance(geometric): do release the `.idx` files
- before repacking
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1778160262; x=1778765062;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d8GxO42HbanXSTppFTpz5hyj8hhdKMw6KDpF7OurTeo=;
+        b=q6xp6umVnjAee/mfGbqOaJD/DQOl+uXr5jgTYnpAbj2ULyCH3I3qthz/rH1U3J3/vB
+         wMZJgwz/GZ2/XgnrWeuJruzHq6FrZdZeYQGkTB1qLeeAoKaZI3FR/AUbWcWIrgdfA2y6
+         Err7d9LudBvUjMAEizUZ1RnBu55+evu9eRbT9mHi7NyvHKW53/wHAm+sg41spbTtXghM
+         lIQnqhscZ+SMoz4zVf6X5pHC9JH7QPVtOKfWikSOtaeZJYVjhiXPG/Y5f3R9qf9aIL5r
+         akgl7TCnMuBaru98Qiqkrmt8NUb/3sb2CSdlOd6OIVsqvQuVkAfczQYmvkKO/I3Q1Ydb
+         oG6g==
+X-Forwarded-Encrypted: i=1; AFNElJ9oscihB7K2UUEVDhoLn9fiqEuU/bO10XzYhZd+obEpCP/25aQwIz80Jcn4iAqIO/3AaD0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxRxF9epFanKfcjtqV5alDni4pjCWN3P6fiov7QaeKt/rPG4lk
+	r5hYnyVGddLD98qMbhJGghvPrJ+Dw202+3XirtprhlmA+GZExgQXQNo1
+X-Gm-Gg: AeBDietxZpiz4tUqCu9FFa/gxALi/dkTBKrYsCbWx/Y3yKjVGAB7bhjRsQEkTH3PQY8
+	AsZ9Epc4/0sZp22G3tZfa6MKgQ8kLHMUFdmwmqZZVEwXBKFqP1icRWN4216u1UTlrZ2QksB8dfM
+	Sff0zMiIdjoKJBhiRbcUij+nlF3VdWOw8doLta6gqdkeD3GG7nNmEadLDLcoJEJU1p9cEujs0rA
+	Q9VuSwhYl2otB3v14iMQBpFIPmhYZciQlWQgjCk+MnAg5YIVqNDC22yIVJVPGkbtKJgfKkCLlK3
+	bQ8zf8j8PBtJjqUd1Dfnmw8ImOMgE/C/BH4cqlRIRwo2PuIZTPdgxKZXov/xMVEBMIUVacBDgLy
+	eF0jTvZR5C1kY8pmw8HaWHEC/blpPrTQSgMJD+iu+gMnaKKwZTA7sNKnFC4qq/yHt1IpbaSt1BS
+	GqJgwbT7LLtjRU5otCiLy2eqt+u55J/91RCZhFpKfT3QCLxMMzr5RXerkB3S8f6g+G+f7WE/l7N
+	HG3Cw2J4kKDzMmq5LuuMA==
+X-Received: by 2002:a05:600c:1504:b0:48a:525b:e148 with SMTP id 5b1f17b1804b1-48e51f1856dmr70877695e9.4.1778160262123;
+        Thu, 07 May 2026 06:24:22 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:76d:4c01:bd41:1f83:652f:1d59? ([2a0a:ef40:76d:4c01:bd41:1f83:652f:1d59])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e538a517bsm134242055e9.4.2026.05.07.06.24.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2026 06:24:21 -0700 (PDT)
+Message-ID: <e640ac2d-9e46-4f1e-9aef-deac80c65361@gmail.com>
+Date: Thu, 7 May 2026 14:24:24 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] add -p: introduce 'w' command to view hunk with
+ --word-diff
+To: Javier Bassi <javierbassi@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>,
+ Rene Scharfe <l.s.r@web.de>, Elijah Newren <newren@gmail.com>,
+ Ruben Justo <rjusto@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <20260506235459.529862-1-javierbassi@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20260506235459.529862-1-javierbassi@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Javier
 
-As is done for all the other maintenance tasks, let's release the ODB
-also before starting the geometric repacking. That way, the `.idx` files
-won't be `mmap()`ed when they are to be deleted (which does not work on
-Windows because you cannot delete files on that platform as long as they
-are kept open by a process).
+On 07/05/2026 00:54, Javier Bassi wrote:
+> When using `git add --patch`, reviewing changes in long lines can be
+> difficult with the default line-based diff. This is particularly
+> noticeable in formats such as JSONP, CSV, LaTeX, Markdown, or other
+> plain text where small inline edits can be hard to spot.
+> 
+> Added `w - print the current hunk with word-diff` during hunk selection
+> to re-display the current hunk using `--word-diff`. This provides a
+> clearer inline view of changes without modifying the hunk or affecting
+> how patches are applied or staged.
 
-This regression was introduced by 9bc151850c1c (builtin/maintenance:
-introduce "geometric-repack" task, 2025-10-24), but was only noticed
-once geometric repacking was made the default in 452b12c2e0fe (builtin/
-maintenance: use "geometric" strategy by default, 2026-02-24).
+I think this is useful. While one can set interactive.diffFilter to 
+highlight intraline differences with "diff-highlight" or "delta" they do 
+not cope well if the text has been reflowed.
 
-The fix recapitulates my work from df76ee7b77f0 (run-command: offer to
-close the object store before running, 2021-09-09) & friends.
+I think the approach of using the current hunk text, rather than running 
+"git diff --diff-words" is sensible because it works correctly if the 
+user has edited the hunk and it makes it easy to handle hunks that have 
+been split. It would be good to propagate the filename when creating the 
+filespec so that we use the correct word diff regex for the file. We 
+should also propagate the context and inter-hunk context settings from 
+struct interactive_options. It would also be a good idea to reuse the 
+hunk header from the unified diff so that the line numbers and hunk 
+fragment are correct.
 
-To guard against future regressions of this kind, add a check to
-`run_and_verify_geometric_pack()` in `t7900` that detects orphaned
-`.idx` files left behind after repacking. Contrary to interactive
-calls, the `git maintenance` call in that test case would _not_ block on
-Windows, asking whether to retry deleting that file, which is the reason
-why this bug was not caught earlier.
+Thanks
 
-Furthermore, since the default behavior of `DeleteFileW()` was changed
-at some point between Windows 10 Build 17134.1304 and Build 18363.657
-to use POSIX semantics (see https://stackoverflow.com/a/60512798),
-the added orphaned-`.idx` check would be insufficient to catch this
-regression on modern Windows without emulating legacy delete semantics
-via `GIT_TEST_LEGACY_DELETE=1`.
+Phillip
 
-This fixes https://github.com/git-for-windows/git/issues/6210.
+> Signed-off-by: Javier Bassi <javierbassi@gmail.com>
+> ---
+>   Documentation/git-add.adoc |   1 +
+>   add-patch.c                | 105 ++++++++++++++++++++++++++++++++++++-
+>   t/t3701-add-interactive.sh |  59 +++++++++++++--------
+>   3 files changed, 142 insertions(+), 23 deletions(-)
+> 
+> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> index 941135dc63..d2ee1cf9a9 100644
+> --- a/Documentation/git-add.adoc
+> +++ b/Documentation/git-add.adoc
+> @@ -351,6 +351,7 @@ patch::
+>          K - go to the previous hunk, roll over at the top
+>          s - split the current hunk into smaller hunks
+>          e - manually edit the current hunk
+> +       w - print the current hunk with word-diff
+>          p - print the current hunk
+>          P - print the current hunk using the pager
+>          ? - print help
+> diff --git a/add-patch.c b/add-patch.c
+> index f27edcbe8d..0364f4bc97 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -7,6 +7,7 @@
+>   #include "commit.h"
+>   #include "config.h"
+>   #include "diff.h"
+> +#include "diffcore.h"
+>   #include "editor.h"
+>   #include "environment.h"
+>   #include "gettext.h"
+> @@ -1508,6 +1509,105 @@ static void summarize_hunk(struct add_p_state *s, struct hunk *hunk,
+>   	strbuf_complete_line(out);
+>   }
+>   
+> +static void trim_trailing_lf(struct strbuf *buf)
+> +{
+> +	if (buf->len && buf->buf[buf->len - 1] == '\n')
+> +		strbuf_setlen(buf, buf->len - 1);
+> +}
+> +
+> +static void add_word_diff_line(struct strbuf *old, struct strbuf *new,
+> +			       const char *line, size_t len, char marker)
+> +{
+> +	if (marker == '-' || marker == '+' || *line == ' ') {
+> +		line++;
+> +		len--;
+> +	}
+> +
+> +	if (marker != '+')
+> +		strbuf_add(old, line, len);
+> +	if (marker != '-')
+> +		strbuf_add(new, line, len);
+> +}
+> +
+> +static void build_word_diff_files(struct add_p_state *s, struct hunk *hunk,
+> +				  struct strbuf *old, struct strbuf *new)
+> +{
+> +	size_t i;
+> +	char last_marker = '\0';
+> +
+> +	for (i = hunk->start; i < hunk->end; i = find_next_line(&s->plain, i)) {
+> +		size_t next = find_next_line(&s->plain, i);
+> +		char marker = normalize_marker(s->plain.buf + i);
+> +
+> +		if (marker == '\\') {
+> +			if (last_marker != '+')
+> +				trim_trailing_lf(old);
+> +			if (last_marker != '-')
+> +				trim_trailing_lf(new);
+> +			continue;
+> +		}
+> +
+> +		if (marker != ' ' && marker != '-' && marker != '+')
+> +			BUG("unhandled diff marker: '%c'", marker);
+> +
+> +		add_word_diff_line(old, new, s->plain.buf + i, next - i,
+> +				   marker);
+> +		last_marker = marker;
+> +	}
+> +}
+> +
+> +static struct diff_filespec *word_diff_filespec(struct repository *r,
+> +						const char *name,
+> +						struct strbuf *buf)
+> +{
+> +	struct diff_filespec *spec = alloc_filespec(name);
+> +	size_t size;
+> +
+> +	fill_filespec(spec, null_oid(r->hash_algo), 0, 0100644);
+> +	spec->data = strbuf_detach(buf, &size);
+> +	spec->size = size;
+> +	spec->should_free = 1;
+> +	spec->is_stdin = 1;
+> +
+> +	return spec;
+> +}
+> +
+> +static void show_hunk_word_diff(struct add_p_state *s, struct hunk *hunk,
+> +				int colored)
+> +{
+> +	struct hunk_header *header = &hunk->header;
+> +	struct strbuf old = STRBUF_INIT, new = STRBUF_INIT;
+> +	struct diff_options opts;
+> +	struct diff_queue_struct queue;
+> +
+> +	if (!header->old_offset && !header->new_offset) {
+> +		strbuf_reset(&s->buf);
+> +		render_hunk(s, hunk, 0, colored, &s->buf);
+> +		fputs(s->buf.buf, stdout);
+> +		return;
+> +	}
+> +
+> +	build_word_diff_files(s, hunk, &old, &new);
+> +
+> +	repo_diff_setup(s->r, &opts);
+> +	opts.output_format = DIFF_FORMAT_PATCH;
+> +	opts.use_color = colored ? s->cfg.use_color_diff : GIT_COLOR_NEVER;
+> +	opts.word_diff = DIFF_WORDS_PLAIN;
+> +	opts.context = header->old_count > header->new_count ?
+> +		header->old_count : header->new_count;
+> +	opts.flags.suppress_diff_headers = 1;
+> +	diff_setup_done(&opts);
+> +
+> +	memcpy(&queue, &diff_queued_diff, sizeof(diff_queued_diff));
+> +	diff_queue_init(&diff_queued_diff);
+> +	diff_queue(&diff_queued_diff,
+> +		   word_diff_filespec(s->r, "a", &old),
+> +		   word_diff_filespec(s->r, "b", &new));
+> +	diffcore_std(&opts);
+> +	diff_flush(&opts);
+> +	memcpy(&diff_queued_diff, &queue, sizeof(diff_queued_diff));
+> +}
+> +
+>   #define DISPLAY_HUNKS_LINES 20
+>   static size_t display_hunks(struct add_p_state *s,
+>   			    struct file_diff *file_diff, size_t start_index)
+> @@ -1540,6 +1640,7 @@ N_("j - go to the next undecided hunk, roll over at the bottom\n"
+>      "/ - search for a hunk matching the given regex\n"
+>      "s - split the current hunk into smaller hunks\n"
+>      "e - manually edit the current hunk\n"
+> +   "w - print the current hunk with word-diff\n"
+>      "p - print the current hunk\n"
+>      "P - print the current hunk using the pager\n"
+>      "> - go to the next file, roll over at the bottom\n"
+> @@ -1731,7 +1832,7 @@ static size_t patch_update_file(struct add_p_state *s,
+>   				permitted |= ALLOW_GOTO_PREVIOUS_FILE;
+>   				strbuf_addstr(&s->buf, ",<");
+>   			}
+> -			strbuf_addstr(&s->buf, ",p,P");
+> +			strbuf_addstr(&s->buf, ",w,p,P");
+>   		}
+>   		if (file_diff->deleted)
+>   			prompt_mode_type = PROMPT_DELETION;
+> @@ -1953,6 +2054,8 @@ static size_t patch_update_file(struct add_p_state *s,
+>   				hunk->use = USE_HUNK;
+>   				goto soft_increment;
+>   			}
+> +		} else if (s->answer.buf[0] == 'w') {
+> +			show_hunk_word_diff(s, hunk, colored);
+>   		} else if (ch == 'p') {
+>   			rendered_hunk_index = -1;
+>   			use_pager = (s->answer.buf[0] == 'P') ? 1 : 0;
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 6e120a4001..e1ce98d62b 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -48,8 +48,8 @@ test_expect_success 'unknown command' '
+>   	git add -N command &&
+>   	git diff command >expect &&
+>   	cat >>expect <<-EOF &&
+> -	(1/1) Stage addition [y,n,q,a,d,e,p,P,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
+> -	(1/1) Stage addition [y,n,q,a,d,e,p,P,?]?$SP
+> +	(1/1) Stage addition [y,n,q,a,d,e,w,p,P,?]? Unknown command ${SQ}W${SQ} (use ${SQ}?${SQ} for help)
+> +	(1/1) Stage addition [y,n,q,a,d,e,w,p,P,?]?$SP
+>   	EOF
+>   	git add -p -- command <command >actual 2>&1 &&
+>   	test_cmp expect actual
+> @@ -332,9 +332,9 @@ test_expect_success 'different prompts for mode change/deleted' '
+>   	git -c core.filemode=true add -p >actual &&
+>   	sed -n "s/^\(([0-9/]*) Stage .*?\).*/\1/p" actual >actual.filtered &&
+>   	cat >expect <<-\EOF &&
+> -	(1/1) Stage deletion [y,n,q,a,d,p,P,?]?
+> -	(1/2) Stage mode change [y,n,q,a,d,k,K,j,J,g,/,p,P,?]?
+> -	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,P,?]?
+> +	(1/1) Stage deletion [y,n,q,a,d,w,p,P,?]?
+> +	(1/2) Stage mode change [y,n,q,a,d,k,K,j,J,g,/,w,p,P,?]?
+> +	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,w,p,P,?]?
+>   	EOF
+>   	test_cmp expect actual.filtered
+>   '
+> @@ -521,13 +521,13 @@ test_expect_success 'split hunk setup' '
+>   test_expect_success 'goto hunk 1 with "g 1"' '
+>   	test_when_finished "git reset" &&
+>   	tr _ " " >expect <<-EOF &&
+> -	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,P,?]? + 1:  -1,2 +1,3          +15
+> +	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,w,p,P,?]? + 1:  -1,2 +1,3          +15
+>   	_ 2:  -2,4 +3,8          +21
+>   	go to which hunk? @@ -1,2 +1,3 @@
+>   	_10
+>   	+15
+>   	_20
+> -	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
+> +	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]?_
+>   	EOF
+>   	test_write_lines s y g 1 | git add -p >actual &&
+>   	tail -n 7 <actual >actual.trimmed &&
+> @@ -540,7 +540,7 @@ test_expect_success 'goto hunk 1 with "g1"' '
+>   	_10
+>   	+15
+>   	_20
+> -	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
+> +	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]?_
+>   	EOF
+>   	test_write_lines s y g1 | git add -p >actual &&
+>   	tail -n 4 <actual >actual.trimmed &&
+> @@ -550,11 +550,11 @@ test_expect_success 'goto hunk 1 with "g1"' '
+>   test_expect_success 'navigate to hunk via regex /pattern' '
+>   	test_when_finished "git reset" &&
+>   	tr _ " " >expect <<-EOF &&
+> -	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,P,?]? @@ -1,2 +1,3 @@
+> +	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,w,p,P,?]? @@ -1,2 +1,3 @@
+>   	_10
+>   	+15
+>   	_20
+> -	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
+> +	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]?_
+>   	EOF
+>   	test_write_lines s y /1,2 | git add -p >actual &&
+>   	tail -n 5 <actual >actual.trimmed &&
+> @@ -567,7 +567,7 @@ test_expect_success 'navigate to hunk via regex / pattern' '
+>   	_10
+>   	+15
+>   	_20
+> -	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
+> +	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]?_
+>   	EOF
+>   	test_write_lines s y / 1,2 | git add -p >actual &&
+>   	tail -n 4 <actual >actual.trimmed &&
+> @@ -579,27 +579,42 @@ test_expect_success 'print again the hunk' '
+>   	tr _ " " >expect <<-EOF &&
+>   	+15
+>   	 20
+> -	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? @@ -1,2 +1,3 @@
+> +	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]? @@ -1,2 +1,3 @@
+>   	 10
+>   	+15
+>   	 20
+> -	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
+> +	(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]?_
+>   	EOF
+>   	test_write_lines s y g 1 p | git add -p >actual &&
+>   	tail -n 7 <actual >actual.trimmed &&
+>   	test_cmp expect actual.trimmed
+>   '
+>   
+> +test_expect_success 'print hunk with word-diff' '
+> +	test_when_finished "rm -rf word-diff-repo" &&
+> +	git init word-diff-repo &&
+> +	(
+> +		cd word-diff-repo &&
+> +		test_write_lines "alpha old beta" context >word-diff &&
+> +		git add word-diff &&
+> +		git commit -m word-diff &&
+> +		test_write_lines "alpha new beta" context >word-diff &&
+> +		test_write_lines w n | git add -p word-diff >actual &&
+> +		test_grep "alpha \\[-old-\\]{+new+} beta" actual &&
+> +		git diff --cached --exit-code
+> +	)
+> +'
+> +
+>   test_expect_success TTY 'print again the hunk (PAGER)' '
+>   	test_when_finished "git reset" &&
+>   	cat >expect <<-EOF &&
+>   	<GREEN>+<RESET><GREEN>15<RESET>
+>   	 20<RESET>
+> -	<BOLD;BLUE>(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
+> +	<BOLD;BLUE>(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
+>   	PAGER  10<RESET>
+>   	PAGER <GREEN>+<RESET><GREEN>15<RESET>
+>   	PAGER  20<RESET>
+> -	<BOLD;BLUE>(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
+> +	<BOLD;BLUE>(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]? <RESET>
+>   	EOF
+>   	test_write_lines s y g 1 P |
+>   	(
+> @@ -796,21 +811,21 @@ test_expect_success 'colors can be overridden' '
+>   	<BLUE>+<RESET><BLUE>new<RESET>
+>   	<CYAN> more-context<RESET>
+>   	<BLUE>+<RESET><BLUE>another-one<RESET>
+> -	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,p,P,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
+> +	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,w,p,P,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
+>   	<MAGENTA>@@ -1,3 +1,3 @@<RESET>
+>   	<CYAN> context<RESET>
+>   	<BOLD>-old<RESET>
+>   	<BLUE>+<RESET><BLUE>new<RESET>
+>   	<CYAN> more-context<RESET>
+> -	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
+> +	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
+>   	<CYAN> more-context<RESET>
+>   	<BLUE>+<RESET><BLUE>another-one<RESET>
+> -	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,P,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
+> +	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,w,p,P,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
+>   	<CYAN> context<RESET>
+>   	<BOLD>-old<RESET>
+>   	<BLUE>+new<RESET>
+>   	<CYAN> more-context<RESET>
+> -	<YELLOW>(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
+> +	<YELLOW>(1/2) Stage this hunk (was: y) [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]? <RESET>
+>   	EOF
+>   	test_cmp expect actual
+>   '
+> @@ -1424,9 +1439,9 @@ test_expect_success 'invalid option s is rejected' '
+>   	test_write_lines j s q | git add -p >out &&
+>   	sed -ne "s/ @@.*//" -e "s/ \$//" -e "/^(/p" <out >actual &&
+>   	cat >expect <<-EOF &&
+> -	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,s,e,p,P,?]?
+> -	(2/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? Sorry, cannot split this hunk
+> -	(2/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?
+> +	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,s,e,w,p,P,?]?
+> +	(2/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]? Sorry, cannot split this hunk
+> +	(2/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,w,p,P,?]?
+>   	EOF
+>   	test_cmp expect actual
+>   '
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/gc.c           |  1 +
- t/t7900-maintenance.sh | 22 +++++++++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3a71e314c9..84a66d3240 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1590,6 +1590,7 @@ static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
- 	pack_geometry_split(&geometry);
- 
- 	child.git_cmd = 1;
-+	child.odb_to_close = the_repository->objects;
- 
- 	strvec_pushl(&child.args, "repack", "-d", "-l", NULL);
- 	if (geometry.split < geometry.pack_nr)
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4700beacc1..f497f51b23 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -532,7 +532,16 @@ run_and_verify_geometric_pack () {
- 
- 	# And verify that there are no loose objects anymore.
- 	git count-objects -v >count &&
--	test_grep '^count: 0$' count
-+	test_grep '^count: 0$' count &&
-+
-+	# Verify that no orphaned .idx files were left behind. On
-+	# Windows, a missing odb_to_close causes the parent to hold
-+	# mmap handles on .idx files, silently preventing their
-+	# deletion by the child git-repack process.
-+	ls .git/objects/pack/pack-*.idx .git/objects/pack/pack-*.pack |
-+	sed "s/\.pack$/.idx/" |
-+	sort | uniq -u >orphaned-idx &&
-+	test_must_be_empty orphaned-idx
- }
- 
- test_expect_success 'geometric repacking task' '
-@@ -580,8 +589,19 @@ test_expect_success 'geometric repacking task' '
- 
- 		# And these two small packs should now be merged via the
- 		# geometric repack. The large packfile should remain intact.
-+		cp -R .git/objects .git/objects.save &&
- 		run_and_verify_geometric_pack 2 &&
- 
-+		# On Windows, verify the same with legacy delete semantics
-+		# that reject deletion of mmap-held .idx files.
-+		if test_have_prereq MINGW
-+		then
-+			rm -rf .git/objects &&
-+			mv .git/objects.save .git/objects &&
-+			test_env GIT_TEST_LEGACY_DELETE=1 \
-+				run_and_verify_geometric_pack 2
-+		fi &&
-+
- 		# If we now add two more objects and repack twice we should
- 		# then see another all-into-one repack. This time around
- 		# though, as we have unreachable objects, we should also see a
--- 
-gitgitgadget
