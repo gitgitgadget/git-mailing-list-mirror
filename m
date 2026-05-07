@@ -1,148 +1,160 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A4640DFA8
-	for <git@vger.kernel.org>; Thu,  7 May 2026 14:14:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778163285; cv=none; b=cbxrk+nBP4kxYIgT+dk3Bl1y75x3Kka4gnHxnkp0ZUAo+fadCDub2oxU2ipfJwKa2Fi3c9dNLW5/M92UukeR8+YHgrxOdwFksuHQavBMpc9MXqLApxe19JQ6rG5DFIVVqJwoyrF0I444QsOA8cxqKq+8zww5Vg5QTMLtIHKmL8A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778163285; c=relaxed/simple;
-	bh=pp0CGAC2dx98+W3+c4/57qalEuIWw0in2XpJKKwv5ks=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nhzcbYNiRGgxODq0W6w8uXlber7gk7QJfDl92JaXcilVbNamtb1KmDReCi3yP7T0hGSHWJ0D5R3zl9K5wIuMfCFAuD2f2F/7a2UAxiPT0wuv+0kLDjDZPCN8XxvPg2txVZ9MGql54TMjAzpTEcce8FW1x9KJ9+yc9oMUSzZfKkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X/viQ1Kz; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F5A3F54C4
+	for <git@vger.kernel.org>; Thu,  7 May 2026 14:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778163298; cv=pass; b=jkZd0sy2/q1GdDzCdzKjNqtZu83TPJHOAk9STxK89YkheceQtvmJahZFD8JOh5wAxx8yG/bKFqiZIsOpj68KV84ymWyE01GfcYgmeEKY2qs/UfGGy3uKuWHOzbQxVgu6fSIbLxAlfuYUfT+jh7g/nLhUqMYo4uof8omDv7LB6dw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778163298; c=relaxed/simple;
+	bh=kjDWhdQk7kGNUai4VK++6T883IKzsnhU4OHA9/l/84g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Mxp/4xMJGLzMM/S2OfOghHKQwDyrpF/MmPmHfRgx3aVJLQKW/A3rcmKLALw5KIqLtpVTvNREMV4oWk6u2fR9obyldcU433lu7zKti7BjvnNlQtPQ+bHzvf3O0RqvMNBr6gUA9JUQn5oGyjuSAWsWQsdoqdBmQ1hNchy1HKvmBns=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EjqrwEUK; arc=pass smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X/viQ1Kz"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-50fbd79350dso7186241cf.3
-        for <git@vger.kernel.org>; Thu, 07 May 2026 07:14:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EjqrwEUK"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2addb31945aso6911935ad.1
+        for <git@vger.kernel.org>; Thu, 07 May 2026 07:14:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778163295; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RwQpHd22jBP2hr71G3NL09iR85wws05A9YuRj0Ym2lzqvEy046jpGv1PQMk7Jtwsk4
+         ENAzwV0eikGj7EZqA/LAtY6fXv+R5DmuqgOfL/fC5YyckxGwwo+Xm9AZCyxTD9MijmkI
+         Y+I5uM4AJ1A6ep3/Ievu9fJ4nfdbYMFbwfxkBzZN9M5U6ULz9fomoRroWrV04Yf4ddTh
+         vaiW6IveM4eh3BLfhIJTQvfWSShRyRcXpgXoecEj1sNfupIfipLddVU2BuBcPsl01H14
+         tw5jg+d0m8noSPEfx6Apjm+pEpR/D18W3YtFxx7gmGNtchRmA4V3RBUn8yC7WJmy3YpC
+         GdWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kjDWhdQk7kGNUai4VK++6T883IKzsnhU4OHA9/l/84g=;
+        fh=IlIpqNvVVz8u9oqg5F6OIpWHHVUF9MQWeIfpHF0llE8=;
+        b=P41EemXhRq5wjI8HbwhcQO8vq7CNvwVg6HX1ru7bJ8JE143uGBYVfrIz4+RuJpEmLo
+         kXGvfeQsJ3gWtc+Qj27htICk/eqa511uI5KxF+CXFY+zB6znzdWDgn1MPK7huEKM541o
+         EdYNnnwupVyojfbNxiOkVQ8YZFwxFe2LSWIUo2nGuv2jGirc2lql8qMhNAEF2pwK0Gzq
+         VxWYgCxSgXuhsqZiPMSQWHb6XcVnPBAPVJOuosGrnVtv4HqeuQxLc+AruFcedRU9b/sk
+         8tkrz/o1wFJXKs9vqH9pZPdBhcDi8nF6c/pd0jN83T4pKqU+iylSaBQsyyoCnzx4x4N7
+         sBmg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778163283; x=1778768083; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+x0+nMrfc2laBBLDiOtZrfkRtizboODSHec5bPeJJOM=;
-        b=X/viQ1Kzpw2xrSTepRZQii6042eii33mAB3WQXuPKahWFlTIsEPScg1zuWNP9S5Irq
-         sgpT+gKRFDWgq9ppP/b7qrsbxpNmMA4YSPgPDxpQ6TD0ulZmYPR30eoG8d/veQUmiOGD
-         HYGUy8H4rHX5r4BWzSAxUsb2ZxHVFk4OLE84N+iuNUetIA2QooacCLP1Fu+4Qf+tVBu4
-         DPLNC7/hJdbXYRCeUg1Lz2CQSOJXXm6q4uS6w6cGQ9A3Z06gka4Ucb490pZ3YcbHii9o
-         VUw/ZLK66sW/i/tA0dNT+i9snMrsQHjQNPwJoRGV28fBgiJKOHLczj4oMoyngCcoYkyl
-         8rJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778163283; x=1778768083;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778163295; x=1778768095; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+x0+nMrfc2laBBLDiOtZrfkRtizboODSHec5bPeJJOM=;
-        b=rqk8tL66z2CxAmjfp+0bSeozAnkpddfWsHVjqVMo/Gw69DrnjVc/YpPe7JcubMfQ4m
-         NWCEN4+OnqrrFSTMrq1nwH8CiYREKYxHd3y4+oh00tbhYMg7QvUck5FFrjBut8vRQwyW
-         YgWNnDoL8me96FAbyC3HV5pdhuVZxxIbXYjQp1vH7BOCwYCZYP5xguTKonHrjwMTpu8o
-         vbfALSnqecQzv2eLhyJqSf96OLBfP9GlVskJu0laHzBlGuge4/aI9S+K0WMtC4Vbrfv7
-         iIRcwqvHZDeEuSQMF52M4fpDoFCfUuCJ9kF6T3joKYqvliZiLkoy+G7vf7Cq8aoMQ456
-         0UYA==
-X-Gm-Message-State: AOJu0YzZQI3Q6XbvzEWiGnT6vlXnXDeKHQrblBQoT2kgMqSd0E76C3TB
-	++AdAt1ERAzckdw4kKgRtjYKE5rETtVIdKX+dLVBr5Pq6Hi+xf5wloL5VW8OLcJW
-X-Gm-Gg: AeBDieuxNhuORm8msKvkEni8XViEkxOOq1DN1xTETSyNh6d3dxVJe1IoAUogm4EMJTg
-	di3To23p+kM1W2uV9dbwaHEcHZYw4bGc/dYS0uk/bfV1Kz+kLXKqz3nW4WHFpACGUNNbUwusmt6
-	y7TYYpLbmOnvZWRsh2/6ZTugr8LNDwSP7FM3S1Nu43JgM3i5gWN4sqHE94s8RSqnOdbAcraP3zU
-	l1Za6LfpLWiSdPmkvgpdMPP6feRv4qxjggJfk4gON+JBMEYLmA0iKPb+LxQYwT14hBCksabCUTz
-	SIEFdWfVPwtKlvBChtxC6cyx2h9PXMWOdMvEw1p1GPmOm0a7p+j72yCpMek+k5CXvbq4OiBxqFz
-	m6KapF72SbZoPdsyp8cScKa5zpU6zR3wap1hwPbFkpQJ0G3C3i88+3cy5z2rN+hqUFzVnhA8+2g
-	lk0CyX1MFx3f3cICd86X5DK4tbtVfLrV5rL7BdsjLVC+YlgUuQis0/GkyrGiwI90ONp9/t6Zm2F
-	3R8CuTowh+95oZGQAEYrabZhCLlQ7Fvn9/Zq6I3a8mxmlT/eB8Jjcri4Tsy/bVF8/LF84Lj+yvZ
-	lS80uKrEfl6ZkPzxw90gAEh8OySdhI3vvnBZto/qqbQNz9e23idaAjGApOvGZEw=
-X-Received: by 2002:a05:622a:550e:b0:50f:b1be:76f9 with SMTP id d75a77b69052e-51461e27350mr110196351cf.24.1778163283168;
-        Thu, 07 May 2026 07:14:43 -0700 (PDT)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([208.80.35.35])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51467169c24sm39038201cf.1.2026.05.07.07.14.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 07:14:42 -0700 (PDT)
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Thu, 07 May 2026 10:14:39 -0400
-Subject: [PATCH] doc: git-log: document --no-follow
+        bh=kjDWhdQk7kGNUai4VK++6T883IKzsnhU4OHA9/l/84g=;
+        b=EjqrwEUK0qbeL7uKrbRQnYKNziIeElGy8yXXK96bQreu6ZIxQX1s1g1i4uPiSGxfGq
+         h5v4iYJrdhYr32uzi0IScbCdq8v57dKJustNdawPlgGjuwaMGd7TMsyt6C3KYtxwMXEK
+         Y/dAOl5eZ5sSB/bRVMjXzAanBfPTPp5lJQcbYhkAm+D/CL7VEADdlRfzQJvs8VcE0XPJ
+         gbFCtEilUc/yhoZ7EP9p8qTDnTcONjjGcahIiII/r3aJ/0KPNRhLhjD3W7qMvMWynd7Y
+         RpXMuC21lLXVDB/Ahv1TJzQ9TpZF2J9BqKbojFO5bMJNthdDx3vrHO6JT12qRZytqkyK
+         MDww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778163295; x=1778768095;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kjDWhdQk7kGNUai4VK++6T883IKzsnhU4OHA9/l/84g=;
+        b=idk5+tgy7V4jRI2IHtjUriJy7BWOiUGtyuAj/IHitfCqWCXC3DX8D3/j9jbV7F/s5d
+         pJcTXn8AW6dAI8hnWdnQ+WhmUTYAUioi96hfFSbZqCjKnG7w/DKv/YaflWUbkhi+iRa/
+         mvEFSJE8F1VvIWA4/MYuN3o/CtNdpzYkQ26xV/f6p6TpyyqOUsF+OaJ/yTlRrLB/0nOz
+         J4gVFsUc19ZH7FNnTt6ZY/0ZSQeHO8hQr53wzgt/xGF3uqdEUG6fDvJomLIA1WaBhFoA
+         aOEUeb7eSIwv23eSjKO6yC3fcz4VtXrqqWDd3ocLNKbWwJ0XEosA8oTI9rFW+t4jocqI
+         PUtw==
+X-Gm-Message-State: AOJu0YzcT53hbA13F61TS9ua15ppIlUfohs6e+R5FEN2Z5Mz+3XIiIC5
+	L8ZZG38t1d3yk2MAdjMFkA3+R22TKy+E6eawM5t31fld+omgxl1uqz6q1THRgkkyT2tCANB8fuv
+	dkhdEGWFnrGe6Ugy0ZiA9qjCdmmBiQCw=
+X-Gm-Gg: AeBDievtaHh5EmbXLWJfIR8gGDCIZzDSk5i6kKIICx7g9HJBBZdsWVzAXlyRGQtTjEe
+	LDw/hRG7nE7GxS/YDpqFAXuud7lwuiiZVEM5zmQjGpef3pRVdUhE+ReO+1dlHIZKccF+eMF1MuB
+	PlBI1Neplev9NarCJFxLstEn4pb4Vk0NO3i8fC1ZrHn4chdwrdDnCGukhh7XIaMuSBo9fxfPuPy
+	UsV8eOrK1taLsQN/HGXPyBxMS6RR9jardEXO+8MWF8uV6hFZwwQCqKrFXFot1x0TXSGcbx0pfbY
+	+DeptKvOiEXaCuPD9X01+vEGmGeiOdQxS/iEkd204zomioGwk6/z3mBEjmg4p0kSi4LvP0R4Fpg
+	7FZSmXjJlhpj8wi6+s/oLzQcuoQ==
+X-Received: by 2002:a17:903:1ae5:b0:2b4:59d4:9a with SMTP id
+ d9443c01a7336-2ba78b4a778mr92411895ad.2.1778163295400; Thu, 07 May 2026
+ 07:14:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260507-document-log-no-follow-v1-1-46ce02490eba@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ6CMBBA0auQWTtJW4JNuIpxodMBh9SOaUFNC
- Hen6PIt/l+hcBYu0DcrZH5LEU0V9tQAPW5pZJRQDc64s+mMx6C0PDnNGHXEpDhojPpB76htA9n
- OWA81fmUe5PsbX65/l+U+Mc3HDbZtB2kT+Lx6AAAA
-X-Change-ID: 20260507-document-log-no-follow-72c33dc15017
-To: git@vger.kernel.org
-Cc: =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, 
- Junio C Hamano <gitster@pobox.com>, Tamir Duberstein <tamird@gmail.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1778163282; l=2224;
- i=tamird@gmail.com; h=from:subject:message-id;
- bh=pp0CGAC2dx98+W3+c4/57qalEuIWw0in2XpJKKwv5ks=;
- b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
- MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QBzAXHvSHSiVYCEVsf68JLFcUOv12T1GwwTx9Dq9lSsirCtDy1j+l+degB1aIlcUDdjiDsdrPzO
- /8urXGHUlgwI=
-X-Developer-Key: i=tamird@gmail.com; a=openssh;
- fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
+References: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 7 May 2026 10:14:44 -0400
+X-Gm-Features: AVHnY4LFIGbhQwGrrn6e411EqIZHwsR2lC-KI0El2_N8KqeouBwHYcmRdDQrC8Q
+Message-ID: <CALnO6CDJgUEiEgG=4r_F4jeyrHSsSpwD0X8rZzh+EScL+vJn7g@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/5] replay: support replaying 2-parent merges
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The --no-follow option was added by aebbcf5797 (diff: accept --no-follow
-option, 2012-09-21), but git-log(1) only documents the positive --follow
-form.
+Hi Dscho,
 
-Later, 076c98372e (log: add "log.follow" configuration variable,
-2015-07-07) taught git log to act as if --follow were given when
-log.follow is true and there is a single path, with --no-follow
-overriding that default. 1e9250b5aa (diff-parseopt: convert
---[no-]follow, 2019-03-05) preserved the negated form while moving the
-option to parse-options.
+On Wed, May 6, 2026 at 6:44=E2=80=AFPM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> git history, the new history-rewriting builtin in v2.54, dies on any merg=
+e
+> in the rewrite path with replaying merge commits is not supported yet!. T=
+hat
+> makes it not very useful for the workflows I actually have, where almost
+> every interesting branch contains at least one merge of a feature topic. =
+The
+> natural fallback, git rebase --rebase-merges, is interactive and stops to
+> ask for re-resolution even when no re-resolution is needed.
+>
+> This series lifts that limitation for the common 2-parent case. The
+> algorithm itself is not new: Elijah Newren wrote it down in his replay
+> design notes
+> [https://github.com/newren/git/blob/replay/replay-design-notes.txt] and
+> prototyped it in a 2022 work-in-progress sketch
+> [https://github.com/newren/git/commit/4c45e8955ef9bf7d01fd15d9106b3bdb8ea=
+91b45].
+> What is new is wiring it into the replay_revisions() API that backs both =
+git
+> replay and git history, plus three specific tweaks that make the trickier
+> cases work where the WIP sketch bailed out: identical conflict-marker lab=
+els
+> for the inner remerges of the original and the rewritten parents (so thei=
+r
+> conflict-markered trees compare equal in the regions the user did not
+> touch), tolerating result.clean =3D=3D 0 from those inner merges (their
+> well-defined conflict-markered trees are valid inputs to the outer 3-way
+> merge), and self-fallback for both merge parents combined with mapping th=
+e
+> rev-range boundary commits to the onto commit.
+>
+> Octopus merges and revert-of-merge are surfaced as explicit errors at the
+> dispatch point. The split sub-command of git history continues to refuse
+> when its target is a merge: split semantics simply do not apply there. Th=
+e
+> xdiff special mode for matching conflict-marker hunks across inner remerg=
+es,
+> the XDL_MERGE_FAVOR_BASE variant, and the modify/delete and binary-file
+> specials that the design notes flag as future work all remain future work=
+.
+>
+> While I was at it, git history reword had a pre-existing silent-success b=
+ug:
+> a positive return from replay_revisions() (which means "conflict, no upda=
+tes
+> queued") was treated as success. Obviously this should never occur, as a
+> reword simply does not change any of the file contents, but bugs do happe=
+n.
+> The merge-replay work is complex enough to make that class of bugs more
+> likely, therefore I introduce error messages for those instances.
 
-Document --no-follow alongside --follow, and mention the override in the
-log.follow documentation.
+Fixing this bug sounded interesting; I had a hard time spotting it
+while skimming the first 2 patches.
 
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
----
- Documentation/config/log.adoc | 2 +-
- Documentation/git-log.adoc    | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+Did I just miss it? Is it worth splitting that fix out to a separate patch?
 
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index f20cc25cd7..58147dff9b 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -54,7 +54,7 @@ This is the same as the `--decorate` option of the `git log`.
- 	If `true`, `git log` will act as if the `--follow` option was used when
- 	a single <path> is given.  This has the same limitations as `--follow`,
- 	i.e. it cannot be used to follow multiple files and does not work well
--	on non-linear history.
-+	on non-linear history.  This can be overridden by `--no-follow`.
- 
- `log.graphColors`::
- 	A list of colors, separated by commas, that can be used to draw
-diff --git a/Documentation/git-log.adoc b/Documentation/git-log.adoc
-index e304739c5e..58a2be60a1 100644
---- a/Documentation/git-log.adoc
-+++ b/Documentation/git-log.adoc
-@@ -28,8 +28,11 @@ OPTIONS
- -------
- 
- `--follow`::
-+`--no-follow`::
- 	Continue listing the history of a file beyond renames
--	(works only for a single file).
-+	(works only for a single file).  `--no-follow` disables this
-+	behavior, including when it was enabled by the `log.follow`
-+	configuration variable.
- 
- `--no-decorate`::
- `--decorate[=(short|full|auto|no)]`::
-
----
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-change-id: 20260507-document-log-no-follow-72c33dc15017
-
-Best regards,
---  
-Tamir Duberstein <tamird@gmail.com>
-
+Best,
+--=20
+D. Ben Knoble
