@@ -1,91 +1,85 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A3B33F38E
-	for <git@vger.kernel.org>; Thu,  7 May 2026 19:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CA12C0F81
+	for <git@vger.kernel.org>; Thu,  7 May 2026 19:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778182578; cv=none; b=YzmFFwZ1kZIhF+coQ129vk/9D3y9eC24pwrgcAZ1CTgTbBuDLEOeACUoLYTBs6pF4d8LtQ6T5EvZT99aso3mnzmXOkJ4GtIu25A2o186qzVOV1/UMEc1Wuq0DRd9rMbLFtqqsb03RIA4bx7aCij2Ox8k8de7fMPUYy4M6cXKPAA=
+	t=1778182965; cv=none; b=gqWhyC9snEOAPaXLeeEPCBqMBnwfWsW6H4ZfhiEKqRbPZoBPTppY/fiSbCJ0ZFsjgt/H8wDMWVG978EUhKzJm3hvCRXatgT5VatdUAOXhZ71G0A4LPLxBmzfEMP/dbrmd6oxQ2e3h/lcYgDO9PoPXPESDdBeZPcUroT6x3Wk2rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778182578; c=relaxed/simple;
-	bh=C7pPmib5quddvcOsqjM20swED4STt12ymYUooRVha3s=;
+	s=arc-20240116; t=1778182965; c=relaxed/simple;
+	bh=0JVdfyqTsHJd/dll2tfn/IIeor4tIoiiFWffdJlueVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BDTcBIuQQI9FY+45uZhi9ox+2iIEimcogY6Xu2sZgYRmOatF8+/tMHpcN3DXpAWVmfhvQbq0Iq6qoxyTVEChRr0CuwTXN9amio0Wt7EDRsC6gBqkgYw5aX/xD0K7Wou/m2SDEEC7qtO7McGig3MycVWUZTOARnQXihXg3zja2DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VPbr6jct; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nCvDGfeG; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=LVc2W5Szv0DCmCBi1KiuqsrhXAcOutjcM/oc+UW+Rwlh9zscCNF/aMnC+ESD3oQfCErEejuz3MQFMIewv9i5P2tjjeIMsfKcxWopr8PTxrc3kfWzNKbCNxashb0uvW7rH2Tmn3YOOU4Ke45h0Ej7Qm/cLHskZOy8UaWHNuoLXxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bsJFBZ54; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AJ3DL/sL; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VPbr6jct";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nCvDGfeG"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 997C5EC00CD;
-	Thu,  7 May 2026 15:36:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bsJFBZ54";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AJ3DL/sL"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5189BEC00CD;
+	Thu,  7 May 2026 15:42:43 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 07 May 2026 15:36:14 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 07 May 2026 15:42:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778182574;
-	 x=1778268974; bh=5yC4TNst2TDdfc+FilgMOmMtQRtXYB7nnLyk15/h4+A=; b=
-	VPbr6jctqgzyNLqHIQ4eOfntlZmxoXhep8v1u23dWCLpVNlLbvmSBXYTEwihKwX+
-	b3ICyBOfw5IBa8Rn4EzoZnML9jzld6K4CNzIlj5Rtldg0tFfabi6+M6uYRXbO/wc
-	nzbbYbawCt7FF+wiIEuumg3zaGA81khVdcULFp4uPMGnvUZjchCT195UaJSevNB6
-	L82haL5coRdT6WF1s3y+VakAME9BhGwThRdJCtpVUjogxP3KMl7/Kg5PjZBU7+y1
-	tGv5Uc6TIFrA1Bjc6PrLOZ8NUTkhp+oekCvp9W3voHAp78uL1aAAGOLobCkF5sWI
-	Ek7xt6EjvtjGd4c3007JZA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1778182963;
+	 x=1778269363; bh=CdidIhNGZ7aNv0OlFIz3XLhne13fKtnIoS7ylBPxhXI=; b=
+	bsJFBZ54+aTf6fJJpiKtpsRAyfUOaXPqmHkKkGJnc+Cl+AfDOBv2o98/XjKEXUwm
+	etH0Cfttqrv7fILZzeMK3O8YlsJb6McNVBybdqyi/pZyX4quBP7y/PqoFZ3+PFNm
+	TdfPgnN1xJWNzvEuEuutdfWR9d6poXPgrcOAKqHsooS9UP0m9bhX+PBBmdthyXMR
+	Zu2Zae8jfEdm0r11UnncX2WBKleXj1xpDvFxKvEOUJF42rbvYA0Egt2FG/jhI3yA
+	N23ve0jrG7jeoi451Zl4pTT57fYCYCZe/+qbYd8BSAlwKl0ONYgfuyW6yKPasXki
+	4M8cl3qM08gHauQWDBKzgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778182574; x=
-	1778268974; bh=5yC4TNst2TDdfc+FilgMOmMtQRtXYB7nnLyk15/h4+A=; b=n
-	CvDGfeGvwY0UHhZpRFPkFKM5rjUQoiUZFs4kmZtxdZun2JJarzoEJo13t9bEH4sg
-	cgYkBero5YZ928fFN6auZ5aLYJ8erDUcNV4WU/bsD3L28HEClJTXPqQwPM/IKlrS
-	h8nzCGMsNHPNEYJkAOlrRS5IMyifuxPBkpeO+Aful06Sz3+exndwea+6D7vs2NUK
-	wBu6WtQIo3zkeofFHAP/IzY/BJmCNiWrLJd6KAoJr2asAW1rROPxQSEUCwcmVW2q
-	5CVyvKw7++Rb2PHkcAMperhxE50IiSOUNZUGeDjsborLcIS8LzxpRPK2WBf4+cu3
-	t6HmdFle/cWahJMhLmGAg==
-X-ME-Sender: <xms:run8aRBTrbtAv5WZRT9igYFPL7LA_d4FeA25FYEkl7lZeCye3PNLYII>
-    <xme:run8aafcXKP8RqkjJBSxR0y4zjdhIs_Ru9jY1PCmWofP908NQmQp-k8fgwOchDN3p
-    w1AVMJIhrWNJLPKkaZDM8JLR7g15BWcHyrkH1Qf-0mpe0E9dFJGszY>
-X-ME-Received: <xmr:run8ablzxEYhdbwSOwzI05YxL2NcQDjDxtR0dViBp_tqeq6Hjifn7Pq6B6WQgKPoIH-jWqwq4fR6UE8aa6jwE5iQj7dMw-fdwXPEyx0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdekfedvucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778182963; x=
+	1778269363; bh=CdidIhNGZ7aNv0OlFIz3XLhne13fKtnIoS7ylBPxhXI=; b=A
+	J3DL/sLOJ+jvNfBYYL2nN1j0t2has31FIyhJ0nhxsHICpu1ihG70V/fc+5OtzbQW
+	T0RQkYsSpbMMK8S5osxYifVSH5oO5AKCO5W/jl1gdrH/ZSe4RCF8vUkwU9rnThAq
+	+UqaC8LUrsv0delj1wZbwBb8zR2JvoIKW++9yLBaZ8MhjEDjA4BqaBRDy/onVLdh
+	P9RkBlnmpOJHS61j+JN8ffz3YmTkfOqxPpKrXxWZBwa9q6nlY1UhznyTsO93pRAm
+	cP6R6HZH9sEnL5y+6q2Cl6vuGMp6o2dO/aL+v+pVWa4UFq8LwFO5lSyuX3NApcel
+	VE8uXAnUjo/I6livH8Fag==
+X-ME-Sender: <xms:M-v8aULHBppdvfmVLxCAGXjRLqRUNbswfWK3QQEhRQY88g6V0R2G-Cs>
+    <xme:M-v8abkakkom40ghyaoodHxp0Jp_n2IiuHGCTIJ_9zyfouhn57jLkHF-c_7GnmdwE
+    8APqTi0s81QgBdtH2GYXMQ-z1Yjnj71cgQFnmyuUBEbOpnKp0MKf7s>
+X-ME-Received: <xmr:M-v8aSGfQUlq0t4vmLIA8gUni8azRcdnQ2wWNazs3iD5YKBcgHf97kzczlOfb3Q61jC5ydwK3WPuPyLuwNEI5VvQSjSFI0aeDBBOU-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdekfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlvdefmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
+    hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
     jeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
-    hlrdgtohhmnecuggftrfgrthhtvghrnhephfekkeeuieefffdugeeuleegteejffegvedt
-    lefhudetgeejhfefleekudegudetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdptg
-    htgidruggrthgvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
-    hmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruh
-    hgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrgh
-    druhhkpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:run8aRGA97wsuqe6cXJSfyslutHa7at8vQNPG2EraIF2Y1iEcwF5iA>
-    <xmx:run8aT6pYIsaPHVioTx74JKyxljZqEvzNIAR-BBXV4yfwYCpjp3n4A>
-    <xmx:run8aZkxDYi7_oIR9M9kwB-JKi6UWHNG52KIH2f2mNzXRP8KZnmkXQ>
-    <xmx:run8aYpo7naPIDXj4ovEhAgh5vpOxpKmcySLkBX6ThPao_X1Ya5AGQ>
-    <xmx:run8aVZcHWVUyhgpl8jeU9kWt8jnCJVLlE9R_VYo65nEiQ9Y3Tt4EuiL>
+    hlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetieehgeef
+    tdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhtohhlvggvsehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:M-v8abHqHl8eedXbrp1HOF5RjhdXbTS2wvF5hykTO5Yn1kB6vjJ3ug>
+    <xmx:M-v8afNukopYAOwWhTt6nNXyYXOe6brNGgoKpJRf51cUXPija2aTNw>
+    <xmx:M-v8aaEQnZxQMqH8L5PbowGBVsOH8cs-_9yjdVWV4IWWrJDuQX4OGA>
+    <xmx:M-v8aWPEDyzTL5QZwTl5Vgb32trc83eLV1T34pd1jxGq4tr5wo3aGw>
+    <xmx:M-v8aTkGDp7bFiGMr4il9hRIxS_vQcTEdpPav4s_wUaskwv6OhCaEJKj>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 May 2026 15:36:13 -0400 (EDT)
+ 7 May 2026 15:42:42 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	ben.knoble@gmail.com,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 5/5] format-rev: introduce builtin for on-demand pretty formatting
-Date: Thu,  7 May 2026 21:34:24 +0200
-Message-ID: <V4_format-rev_new_builtin.6af@msgid.xyz>
+	Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH v3] doc: add caveat about turning off commit-graph
+Date: Thu,  7 May 2026 21:42:28 +0200
+Message-ID: <V3_caveat_commit-graph.6b6@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
-In-Reply-To: <V4_CV_format-rev.6aa@msgid.xyz>
-References: <V3_CV_format-rev.66a@msgid.xyz> <V4_CV_format-rev.6aa@msgid.xyz>
+In-Reply-To: <V2_caveat_commit-graph.68b@msgid.xyz>
+References: <V2_caveat_commit-graph.68b@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,884 +91,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Introduce a new builtin for pretty formatting one revision expression
-per line or commit object names found in running text.
+The doc `technical/commit-graph.adoc` says that replace objects and
+commit grafts turn off commit-graph:
 
-Sometimes you want to format commits. Most of the time you’re
-walking the graph, e.g. getting a range of commits like
-`master..topic`. That’s a job for git-log(1).
+    Commit grafts and replace objects can change the shape of the commit
+    history. The latter can also be enabled/disabled on the fly using
+    `--no-replace-objects`. This leads to difficulty storing both possible
+    interpretations of a commit id, especially when computing generation
+    numbers. The commit-graph will not be read or written when
+    replace-objects or grafts are present.
 
-But there are times when you want to format commits that you encounter
-on demand:
+But this isn’t mentioned in the user-facing doc. Let’s mention it on
+git-replace(1) and git-commit-graph(1).
 
-• Full hashes in running text that you might want to pretty-print
-• git-last-modified(1) outputs full hashes that you can do the same
-  with
-• git-cherry(1) has `-v` for commit subject, but maybe you want
-  something else?
-
-But now you can’t use git-log(1), git-show(1), or git-rev-list(1):
-
-• You can’t feed commits piecemeal to these commands, one input
-  for one output; they block until standard in is closed
-• You can’t feed a list of possibly duplicate commits, like the output
-  of git-last-modified(1); they effectively deduplicate the output
-
-Beyond these two points there’s also the input massage problem: you
-cannot feed mixed input (revisions mixed with arbitrary text).
-
-One might hope that git-cat-file(1) can save us. But it doesn’t
-support pretty formats.
-
-But there is one command that already both handles revisions as
-arguments, revisions on standard input, and even revisions mixed in
-with arbitrary text. Namely git-name-rev(1): the command for outputting
-symbolic names for commits.
-
-We made some room in `builtin/name-rev.c` two commits ago. Let’s
-now add this new git-format-rev(1) command. Taking inspiration from
-git-name-rev(1), there are two modes:
-
-• revs: like git-name-rev(1) in argv mode, but one revision per line
-  on standard in
-• text: like git-name-rev(1) with `--annotate-stdin`
-
-***
-
-We need to add this command to the exception list in
-`t/t1517-outside-repo.sh` because it uses “EXPERIMENTAL!”
-in the usage line.
-
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Acked-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v4:
-    • Squash in “SQUASH???” commits from Junio’s branch:
-      • Fix -Werror=maybe-uninitialized at builtin/name-rev.c:893:25
-      • Add this new builtin to Meson build file as well
-    • Flush every output line/record with `maybe_flush_or_die(...)` (Phillip)
-    • Introduce `-z` and other NUL output options (Phillip)
-    • Tests:
-      • More tests: “name lookup failures” (This would have caught my
-        uninitialized mistake from v3)
-      • More tests: for NUL/LF termination
-      • Fix stale setup command which uses “name-rev” in the name
-      • Use `setup:` prefix for both (now two) setup tests
-      • Drop some `:/fifth` expressions in favor just `fifth` (the tag from
-      `test_commit`)
-    • Flesh out documentation
-    • --stdin-mode=revs: Replace “Could not get [sha1][object name]” since the
-      user could be using SHA256
-      • This error string was originally stolen from name-rev
-    • Remember to add this command to `.gitignore` this time
-    • Correct doc to `git [show][log] --no-walk -1` (next to `git show`)
-    • Plus some minor things!
-    v3:
-    • And don’t forget to document --notes this time
-    
-          https://lore.kernel.org/git/CALnO6CB5WOTp_e7Kv3CrEbQ+3XE-gDxNVHf7qATBEbyKWfxpLg@mail.gmail.com/
+    v3: Add Ack
+    v2: Incorporate “performance issues” suggestion on git-replace(1)
 
- .gitignore                        |   1 +
- Documentation/git-format-rev.adoc | 215 ++++++++++++++++++++++++++++
- Documentation/meson.build         |   1 +
- Makefile                          |   1 +
- builtin.h                         |   1 +
- builtin/name-rev.c                | 223 ++++++++++++++++++++++++++++++
- command-list.txt                  |   1 +
- git.c                             |   1 +
- t/t1517-outside-repo.sh           |   3 +-
- t/t6120-describe.sh               | 194 ++++++++++++++++++++++++++
- 10 files changed, 640 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/git-format-rev.adoc
+ Documentation/git-commit-graph.adoc | 6 ++++++
+ Documentation/git-replace.adoc      | 7 +++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/.gitignore b/.gitignore
-index 24635cf2d6f..e406d3741cd 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -71,6 +71,7 @@
- /git-for-each-ref
- /git-for-each-repo
- /git-format-patch
-+/git-format-rev
- /git-fsck
- /git-fsck-objects
- /git-fsmonitor--daemon
-diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
-new file mode 100644
-index 00000000000..436980012bc
---- /dev/null
-+++ b/Documentation/git-format-rev.adoc
-@@ -0,0 +1,215 @@
-+git-format-rev(1)
-+=================
-+
-+NAME
-+----
-+git-format-rev - EXPERIMENTAL: Pretty format revisions on demand
-+
-+
-+SYNOPSIS
-+--------
-+[synopsis]
-+(EXPERIMENTAL!) git format-rev --stdin-mode=<mode> --format=<pretty> [--[no-]notes=<ref>] [-z] [--[no-]null-output] [--[no-]null-input]
-+
-+DESCRIPTION
-+-----------
-+
-+Pretty format revisions from standard input.
-+
-+THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-+
-+OPTIONS
+diff --git a/Documentation/git-commit-graph.adoc b/Documentation/git-commit-graph.adoc
+index 6d19026035f..f2a37e91634 100644
+--- a/Documentation/git-commit-graph.adoc
++++ b/Documentation/git-commit-graph.adoc
+@@ -146,6 +146,12 @@ $ git show-ref -s | git commit-graph write --stdin-commits
+ $ git rev-parse HEAD | git commit-graph write --stdin-commits --append
+ ------------------------------------------------
+ 
++CAVEATS
 +-------
 +
-+`--stdin-mode=<mode>`::
-+	How to interpret standard input data:
-++
-+--
-+`revs`:: Each line or record (see the <<io,INPUT AND OUTPUT FORMATS>>
-+	section) is interpreted as a commit. Any kind of revision
-+	expression can be used (see linkgit:gitrevisions[7]). Annotated
-+	tags are peeled (see linkgit:gitglossary[7]).
-++
-+The argument `rev` is also accepted.
-+`text`:: Formats all commit object names found in freeform text. These
-+	must the full object names, i.e. abbreviated hexidecimal object
-+	names will not be interpreted.
-++
-+Anything that is parsed as an object name but that is not found to be a
-+commit object name is left alone (echoed).
-+--
++The existence of replace objects or commit grafts turns off reading or
++writing to the commit-graph. See linkgit:git-replace[1].
 +
-+`--format=<pretty>`::
-+	Pretty format string.
-+
-+`--notes=<ref>`::
-+`--no-notes`::
-+	Custom notes ref. Notes are displayed when using the `%N`
-+	atom. See linkgit:git-notes[1].
-+
-+`-z`::
-+`--null`::
-+	Use _NUL_ character to terminate both input and output instead
-+	of newline. This option cannot be negated.
-++
-+This is useful if both the input and output could contain newlines or if
-+the input could contain _NUL_ characters; see the <<io,INPUT AND OUTPUT
-+FORMATS>> section.
-+
-+`--null-output`::
-+`--no-null-output`::
-+	Use _NUL_ character to terminate output instead of newline. The
-+	default is `--no-null-output`.
-++
-+This is useful if the output could contain newlines, for example if the
-+`%n` (newline) atom is used.
-+
-+`--null-input`::
-+`--no-null-input`::
-+	Use _NUL_ character to terminate input instead of newline. The
-+	default is `--no-null-input`.
-++
-+This is useful if the input revision expressions could contain newlines.
-+It is also useful if the input could contain _NUL_ characters; see the
-+<<io,INPUT AND OUTPUT FORMATS>> section.
-+
-+[[io]]
-+INPUT AND OUTPUT FORMAT
-+-----------------------
-+
-+The command uses newlines for both input and output termination by
-+default. See the `-z`, `--null-output`, and `--null-input` options for
-+using _NUL_ character as the terminator.
-+
-+The mode `--stdin-mode=revs` outputs one formatted commit followed by
-+the terminator. This could either be called a _line_ or a _record_ in
-+case "line" is too suggestive of newline termination.
-+
-+Note that this means that the terminator character (newline or _NUL_)
-+acts as a _terminator_, not a _separator_. In other words, the final
-+line or record is also terminated by the terminator character.
-+
-+The mode `--stdin-mode=text` replaces each object name with the
-+formatted commit, i.e. the format `%s` would transform the object name
-+`abcdef012...` to `<subject>` without any termination. Like this:
-+
-+----
-+Did we not fix this in "<subject>"?
-+----
-+
-+Regarding input in this mode: using `-z` or `--null-input` makes sure
-+that _NUL_ characters in the input are passed through correctly.
-+
-+It is safe to interactively read and write from this command since each
-+record is immediately flushed.
-+
-+[[examples]]
-+EXAMPLES
-+--------
-+
-+The command linkgit:git-last-modified[1] shows the commit that each file
-+was last modified in.
-+
-+----
-+$ git last-modified -- README.md Makefile
-+7798034171030be0909c56377a4e0e10e6d2df93	Makefile
-+c50fbb2dd225e7e82abba4380423ae105089f4d7	README.md
-+----
-+
-+We can pipe the result to this command in order to replace the object
-+name with the commit author.
-+
-+----
-+$ git last-modified -- README.md Makefile |
-+    git format-rev --stdin-mode=text --format=%an
-+Junio C Hamano	Makefile
-+Todd Zullinger	README.md
-+----
-+
-+Another example is _formatting commits in commit messages_. Given this commit message:
-+
-+----
-+Fix off-by-one error
-+
-+Fix off-by-one error introduced in
-+e83c5163316f89bfbde7d9ab23ca2e25604af290.
-+
-+We thought we fixed this in 5569bf9bbedd63a00780fc5c110e0cfab3aa97b9 but
-+that only covered 1/3 of the faulty cases.
-+----
-+
-+We can format the commits and use par(1) to reflow the text, say in a
-+`commit-msg` hook:
-+
-+----
-+$ git config set hook.reference-commits.event commit-msg
-+$ git config set hook.reference-commits.command reference-commits
-+$ cat $(which reference-commits)
-+#/bin/sh
-+
-+msg="$1"
-+rewritten=$(mktemp)
-+git format-rev --stdin-mode=text --format=reference <"$msg" |
-+    par >"$rewritten"
-+mv "$rewritten" "$msg"
-+----
-+
-+Which will produce something like this:
-+
-+----
-+Fix off-by-one error
-+
-+Fix off-by-one error introduced in e83c5163316 (Implement better memory
-+allocator, 2005-04-07).
-+
-+We thought we fixed this in 5569bf9bbed (Fix memory allocator,
-+2005-06-22) but that only covered 1/3 of the faulty cases.
-+----
-+
-+DISCUSSION
-+----------
-+
-+This command lets you format any number of revisions in any order
-+through one command invocation. Consider the
-+linkgit:git-last-modified[1] case from the <<examples,EXAMPLES>> section
-+above:
-+
-+1. There might be hundreds of files
-+2. Commits can be repeated, i.e. two or more files were last modified in
-+   the same commit
-+
-+Two widely-used commands which pretty formats commits are
-+linkgit:git-log[1] and linkgit:git-show[1]. It turns out that they are
-+not a good fit for the above use case.
-+
-+- The output of linkgit:git-last-modified[1] would have to be processed
-+  in stages since you need to transform the first column separately and
-+  then link the author to the filename. But this is surmountable.
-+- You can feed each commit to `git show` or `git log --no-walk -1`. But
-+  that means that you need to create a process for each line.
-+- Let’s say that you want to use one process, not one per line. So you
-+  want to feed all the commits to the command. Now you face the problem
-+  that you have to feed all the commits to the commands before you get
-+  any output (this is also the case for the `--stdin` modes). In other
-+  words, you cannot loop through each line, get the author for the
-+  commit, and output the author and the filename. You need to feed all
-+  the commits, get back all the output, and match the output with the
-+  filename.
-+- But the next problem is that commands will deduplicate the input and
-+  only output one commit one single time only. Thus you cannot make the
-+  output order match the input order, since a commit could have been
-+  repeated in the original input.
-+
-+In short, it is straightforward to use these two commands if you use one
-+process per line. It is much more work if you just want to use one
-+process, but still doable. In contrast, this problem is just another
-+shell pipeline with this command.
-+
-+SEE ALSO
-+--------
-+linkgit:git-name-rev[1],
-+linkgit:git-log[1].
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index d6365b888bb..58e7c6a0b8a 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -55,6 +55,7 @@ manpages = {
-   'git-for-each-ref.adoc' : 1,
-   'git-for-each-repo.adoc' : 1,
-   'git-format-patch.adoc' : 1,
-+  'git-format-rev.adoc' : 1,
-   'git-fsck-objects.adoc' : 1,
-   'git-fsck.adoc' : 1,
-   'git-fsmonitor--daemon.adoc' : 1,
-diff --git a/Makefile b/Makefile
-index 15b1ded1a0b..cbaf91fd846 100644
---- a/Makefile
-+++ b/Makefile
-@@ -895,6 +895,7 @@ BUILT_INS += $(patsubst builtin/%.o,git-%$X,$(BUILTIN_OBJS))
- BUILT_INS += git-cherry$X
- BUILT_INS += git-cherry-pick$X
- BUILT_INS += git-format-patch$X
-+BUILT_INS += git-format-rev$X
- BUILT_INS += git-fsck-objects$X
- BUILT_INS += git-init$X
- BUILT_INS += git-maintenance$X
-diff --git a/builtin.h b/builtin.h
-index 235c51f30e5..63813c90125 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -189,6 +189,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix, struct re
- int cmd_for_each_ref(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_for_each_repo(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_format_patch(int argc, const char **argv, const char *prefix, struct repository *repo);
-+int cmd_format_rev(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_fsck(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_gc(int argc, const char **argv, const char *prefix, struct repository *repo);
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 475efb0b82b..5494b0424b3 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -18,6 +18,10 @@
- #include "commit-graph.h"
- #include "wildmatch.h"
- #include "mem-pool.h"
-+#include "pretty.h"
-+#include "revision.h"
-+#include "notes.h"
-+#include "write-or-die.h"
+ CONFIGURATION
+ -------------
  
- /*
-  * One day.  See the 'name a rev shortly after epoch' test in t6120 when
-@@ -272,14 +276,26 @@ struct name_ref_data {
- 	struct string_list exclude_filters;
- };
+diff --git a/Documentation/git-replace.adoc b/Documentation/git-replace.adoc
+index 0a65460adbd..436a0e58caf 100644
+--- a/Documentation/git-replace.adoc
++++ b/Documentation/git-replace.adoc
+@@ -145,6 +145,13 @@ commit instead of the replaced commit.
+ There may be other problems when using 'git rev-list' related to
+ pending objects.
  
-+struct pretty_format {
-+	struct pretty_print_context ctx;
-+	struct userformat_want want;
-+};
++CAVEATS
++-------
 +
- enum command_type {
- 	NAME_REV = 1,
-+	FORMAT_REV = 2,
-+};
++The existence of replace objects or commit grafts turns off reading or
++writing to the commit-graph, which can cause performance issues. See
++linkgit:git-commit-graph[1].
 +
-+enum stdin_mode {
-+    TEXT = 1,
-+    REVS = 2,
- };
- 
- struct command {
- 	enum command_type type;
- 	union {
- 		int name_only;
-+		struct pretty_format *pretty_format;
- 	} u;
- };
- 
-@@ -290,6 +306,13 @@ static void init_name_rev_command(struct command *cmd,
- 	cmd->u.name_only = name_only;
- }
- 
-+static void init_format_rev_command(struct command *cmd,
-+				    struct pretty_format *pretty_format)
-+{
-+	cmd->type = FORMAT_REV;
-+	cmd->u.pretty_format = pretty_format;
-+}
-+
- static struct tip_table {
- 	struct tip_table_entry {
- 		struct object_id oid;
-@@ -495,6 +518,27 @@ static const char *get_rev_name(const struct object *o, struct strbuf *buf)
- 	}
- }
- 
-+static const char *get_format_rev(const struct commit *c,
-+				  struct pretty_format *format_ctx,
-+				  struct strbuf *buf)
-+{
-+	strbuf_reset(buf);
-+
-+	if (format_ctx->want.notes) {
-+		struct strbuf notebuf = STRBUF_INIT;
-+
-+		format_display_notes(&c->object.oid, &notebuf,
-+				     get_log_output_encoding(),
-+				     format_ctx->ctx.fmt == CMIT_FMT_USERFORMAT);
-+		format_ctx->ctx.notes_message = strbuf_detach(&notebuf, NULL);
-+	}
-+
-+	pretty_print_commit(&format_ctx->ctx, c, buf);
-+	FREE_AND_NULL(format_ctx->ctx.notes_message);
-+
-+	return buf->buf;
-+}
-+
- static void show_name(const struct object *obj,
- 		      const char *caller_name,
- 		      int always, int allow_undefined, int name_only)
-@@ -564,6 +608,18 @@ static void name_rev_line(char *p, struct command *cmd)
- 				else
- 					printf("%.*s (%s)", p_len, p_start, name);
- 				break;
-+			case FORMAT_REV:
-+				if (!oid_ret)
-+					o = parse_object(the_repository, &oid);
-+				if (o && o->type == OBJ_COMMIT)
-+					name = get_format_rev((const struct commit *)o,
-+							      cmd->u.pretty_format,
-+							      &buf);
-+				if (name)
-+					printf("%.*s%s", p_len - hexsz, p_start, name);
-+				else
-+					printf("%.*s", p_len, p_start);
-+				break;
- 			default:
- 				BUG("uncovered case: %d", cmd->type);
- 			}
-@@ -717,3 +773,170 @@ int cmd_name_rev(int argc,
- 	object_array_clear(&revs);
- 	return 0;
- }
-+
-+struct format_nul_data {
-+	bool nul_input;
-+	bool nul_output;
-+};
-+
-+static int format_nul_cb(const struct option *option,
-+			 const char *arg,
-+			 int unset)
-+{
-+	struct format_nul_data *data = option->value;
-+	data->nul_input = 1;
-+	data->nul_output = 1;
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+	return 0;
-+}
-+
-+static enum stdin_mode parse_stdin_mode(const char *stdin_mode)
-+{
-+	if (!strcmp(stdin_mode, "text"))
-+		return TEXT;
-+	else if (!strcmp(stdin_mode, "revs") ||
-+		 !strcmp(stdin_mode, "rev"))
-+		return REVS;
-+	else
-+		die(_("'%s' needs to be either text, revs, or rev"),
-+		    "--stdin-mode");
-+}
-+
-+static char const *const format_rev_usage[] = {
-+	N_("(EXPERIMENTAL!) git format-rev --stdin-mode=<mode> "
-+	   "--format=<pretty> [--[no-]notes=<ref>] "
-+	   "[-z] [--[no-]null-output] [--[no-]null-input]"),
-+	NULL
-+};
-+
-+int cmd_format_rev(int argc,
-+		   const char **argv,
-+		   const char *prefix,
-+		   struct repository *repo UNUSED)
-+{
-+	const char *format = NULL;
-+	enum stdin_mode stdin_mode;
-+	const char *stdin_mode_arg = NULL;
-+	struct format_nul_data nul_data = { 0, 0 };
-+	char output_terminator;
-+	strbuf_getline_fn getline_fn;
-+	struct display_notes_opt format_notes_opt;
-+	struct rev_info format_rev = REV_INFO_INIT;
-+	struct pretty_format format_pp = { 0 };
-+	struct string_list notes = STRING_LIST_INIT_NODUP;
-+	struct strbuf scratch_buf = STRBUF_INIT;
-+	struct command cmd;
-+	struct option opts[] = {
-+		OPT_STRING(0, "format", &format, N_("format"),
-+			   N_("pretty format to use")),
-+		OPT_STRING(0, "stdin-mode", &stdin_mode_arg, N_("stdin-mode"),
-+			   N_("how revs are processed")),
-+		OPT_STRING_LIST(0, "notes", &notes, N_("notes"),
-+				N_("display notes for pretty format")),
-+		OPT_CALLBACK_F('z', "null", &nul_data, N_("z"),
-+			       N_("Use NUL for input and output termination"),
-+			       PARSE_OPT_NOARG | PARSE_OPT_NONEG, format_nul_cb),
-+		OPT_BOOL(0, "null-input", &nul_data.nul_input,
-+			 N_("Use NUL for input termination")),
-+		OPT_BOOL(0, "null-output", &nul_data.nul_output,
-+			 N_("Use NUL for output termination")),
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, opts, format_rev_usage, 0);
-+
-+	if (argc > 0) {
-+		error(_("too many arguments"));
-+		usage_with_options(format_rev_usage, opts);
-+	}
-+
-+	if (!format)
-+		die(_("'%s' is required"), "--format");
-+	if (!stdin_mode_arg)
-+		die(_("'%s' is required"), "--stdin-mode");
-+
-+	getline_fn = nul_data.nul_input ? strbuf_getline_nul : strbuf_getline_lf;
-+	output_terminator = nul_data.nul_output ? '\0' : '\n';
-+
-+	init_display_notes(&format_notes_opt);
-+	stdin_mode = parse_stdin_mode(stdin_mode_arg);
-+
-+	get_commit_format(format, &format_rev);
-+	format_pp.ctx.rev = &format_rev;
-+	format_pp.ctx.fmt = format_rev.commit_format;
-+	format_pp.ctx.abbrev = format_rev.abbrev;
-+	format_pp.ctx.date_mode_explicit = format_rev.date_mode_explicit;
-+	format_pp.ctx.date_mode = format_rev.date_mode;
-+	format_pp.ctx.color = GIT_COLOR_AUTO;
-+
-+	userformat_find_requirements(format,
-+				     &format_pp.want);
-+	if (format_pp.want.notes) {
-+		int ignore_show_notes = 0;
-+		struct string_list_item *n;
-+
-+		for_each_string_list_item(n, &notes)
-+			enable_ref_display_notes(&format_notes_opt,
-+						 &ignore_show_notes,
-+						 n->string);
-+		load_display_notes(&format_notes_opt);
-+	}
-+
-+	init_format_rev_command(&cmd, &format_pp);
-+
-+	switch (stdin_mode) {
-+	case TEXT:
-+		while (getline_fn(&scratch_buf, stdin) != EOF) {
-+			name_rev_line(scratch_buf.buf, &cmd);
-+			/*
-+			 * We do not pass on the terminator to name_rev_line,
-+			 * unlike name-rev.
-+			 */
-+			printf("%c", output_terminator);
-+			maybe_flush_or_die(stdout, "stdout");
-+		}
-+		break;
-+	case REVS:
-+		while (getline_fn(&scratch_buf, stdin) != EOF) {
-+			struct object_id oid;
-+			struct object *object;
-+			struct object *peeled;
-+
-+			if (repo_get_oid(the_repository, scratch_buf.buf, &oid)) {
-+				fprintf(stderr, "Could not get object name for %s. Skipping.\n",
-+					scratch_buf.buf);
-+				continue;
-+			}
-+
-+			object = parse_object(the_repository, &oid);
-+			if (!object) {
-+				fprintf(stderr, "Could not get object for %s. Skipping.\n",
-+					scratch_buf.buf);
-+				continue;
-+			}
-+
-+			peeled = deref_tag(the_repository, object, scratch_buf.buf, 0);
-+			if (!peeled || peeled->type != OBJ_COMMIT) {
-+				fprintf(stderr,
-+					"Could not get commit for %s. Skipping.\n",
-+					scratch_buf.buf);
-+				continue;
-+			}
-+
-+			get_format_rev((struct commit *)peeled,
-+				       &format_pp, &scratch_buf);
-+			printf("%s%c", scratch_buf.buf, output_terminator);
-+			maybe_flush_or_die(stdout, "stdout");
-+			strbuf_release(&scratch_buf);
-+		}
-+		break;
-+	default:
-+		BUG("uncovered case: %d", stdin_mode);
-+	}
-+
-+	strbuf_release(&scratch_buf);
-+	string_list_clear(&notes, 0);
-+	release_display_notes(&format_notes_opt);
-+	return 0;
-+}
-diff --git a/command-list.txt b/command-list.txt
-index f9005cf4597..df729872dca 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -108,6 +108,7 @@ git-fmt-merge-msg                       purehelpers
- git-for-each-ref                        plumbinginterrogators
- git-for-each-repo                       plumbinginterrogators
- git-format-patch                        mainporcelain
-+git-format-rev                          plumbinginterrogators
- git-fsck                                ancillaryinterrogators          complete
- git-gc                                  mainporcelain
- git-get-tar-commit-id                   plumbinginterrogators
-diff --git a/git.c b/git.c
-index 2b212e6675d..af5b0422b00 100644
---- a/git.c
-+++ b/git.c
-@@ -578,6 +578,7 @@ static struct cmd_struct commands[] = {
- 	{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
- 	{ "for-each-repo", cmd_for_each_repo, RUN_SETUP_GENTLY },
- 	{ "format-patch", cmd_format_patch, RUN_SETUP },
-+	{ "format-rev", cmd_format_rev, RUN_SETUP },
- 	{ "fsck", cmd_fsck, RUN_SETUP },
- 	{ "fsck-objects", cmd_fsck, RUN_SETUP },
- 	{ "fsmonitor--daemon", cmd_fsmonitor__daemon, RUN_SETUP },
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index c824c1a25cf..360a9323343 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -114,7 +114,8 @@ do
- 	archimport | citool | credential-netrc | credential-libsecret | \
- 	credential-osxkeychain | cvsexportcommit | cvsimport | cvsserver | \
- 	daemon | \
--	difftool--helper | filter-branch | fsck-objects | get-tar-commit-id | \
-+	difftool--helper | filter-branch | format-rev | fsck-objects | \
-+	get-tar-commit-id | \
- 	gui | gui--askpass | \
- 	http-backend | http-fetch | http-push | init-db | \
- 	merge-octopus | merge-one-file | merge-resolve | mergetool | \
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 62789f76381..8ee3d2c37d0 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -801,4 +801,198 @@ test_expect_success 'do not be fooled by invalid describe format ' '
- 	test_must_fail git cat-file -t "refs/tags/super-invalid/./../...../ ~^:/?*[////\\\\\\&}/busted.lock-42-g"$(cat out)
- '
- 
-+test_expect_success 'setup: format-rev' '
-+	mkdir repo-format &&
-+	git -C repo-format init &&
-+	test_commit -C repo-format first &&
-+	test_commit -C repo-format second &&
-+	test_commit -C repo-format third &&
-+	test_commit -C repo-format fourth &&
-+	test_commit -C repo-format fifth &&
-+	test_commit -C repo-format sixth &&
-+	test_commit -C repo-format seventh &&
-+	test_commit -C repo-format eighth
-+'
-+
-+test_expect_success 'format-rev --stdin-mode=revs' '
-+	cat >expect <<-\EOF &&
-+	eighth
-+	seventh
-+	fifth
-+	EOF
-+	git -C repo-format format-rev --stdin-mode=revs \
-+		--format=%s >actual <<-\EOF &&
-+	HEAD
-+	HEAD~
-+	HEAD~3
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-rev --stdin-mode=text from rev-list same as log' '
-+	git -C repo-format log --format=reference >expect &&
-+	test_file_not_empty expect &&
-+	git -C repo-format rev-list HEAD >list &&
-+	git -C repo-format format-rev --stdin-mode=text \
-+		--format=reference <list >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-rev --stdin-mode=text with running text and tree oid' '
-+	cmit_oid=$(git -C repo-format rev-parse fifth) &&
-+	reference=$(git -C repo-format log -n1 --format=reference fifth) &&
-+	tree=$(git -C repo-format rev-parse HEAD^{tree}) &&
-+	cat >expect <<-EOF &&
-+	We thought we fixed this in ${reference}.
-+	But look at this tree: ${tree}.
-+	EOF
-+	git -C repo-format format-rev --stdin-mode=text --format=reference \
-+		>actual <<-EOF &&
-+	We thought we fixed this in ${cmit_oid}.
-+	But look at this tree: ${tree}.
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-rev with %N (note)' '
-+	test_when_finished "git -C repo-format notes remove" &&
-+	git -C repo-format notes add -m"Make a note" &&
-+	printf "Make a note\n\n\n" >expect &&
-+	git -C repo-format format-rev --stdin-mode=revs \
-+		--format="tformat:%N" \
-+		>actual <<-\EOF &&
-+	HEAD
-+	HEAD~
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-rev --notes<ref> (custom notes ref)' '
-+	# One custom notes ref
-+	test_when_finished "git -C repo-format notes remove" &&
-+	test_when_finished "git -C repo-format notes --ref=word remove" &&
-+	git -C repo-format notes add -m"default" &&
-+	git -C repo-format notes --ref=word add -m"custom" &&
-+	printf "custom\n\n" >expect &&
-+	git -C repo-format format-rev --stdin-mode=revs \
-+		--format="tformat:%N" \
-+		--notes=word \
-+		>actual <<-\EOF &&
-+	HEAD
-+	EOF
-+	test_cmp expect actual &&
-+	# Glob all
-+	printf "default\ncustom\n\n" >expect &&
-+	git -C repo-format format-rev --stdin-mode=revs \
-+		--format="tformat:%N" \
-+		--notes=* >actual <<-\EOF &&
-+	HEAD
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-rev --stdin-mode=revs on annotated tag peels to commit' '
-+	test_when_finished "git -C repo-format tag -d version" &&
-+	git -C repo-format tag -a -m"new version" version &&
-+	cat >expect <<-\EOF &&
-+	eighth
-+	EOF
-+	git -C repo-format format-rev --stdin-mode=revs \
-+		--format=%s \
-+		>actual <<-\EOF &&
-+	version
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-rev --stdin-mode=revs lookup failures' '
-+	test_when_finished "git -C repo-format tag -d tag-to-tree" &&
-+	invalid_syntax=not-valid &&
-+	non_existing_oid=${EMPTY_BLOB} &&
-+	tree=$(git -C repo-format rev-parse eighth^{tree}) &&
-+	git -C repo-format tag -a -mmessage tag-to-tree "$tree" &&
-+	tag_to_tree=$(git -C repo-format rev-parse tag-to-tree) &&
-+	cat >expect <<-EOF &&
-+	Could not get object name for ${invalid_syntax}. Skipping.
-+	Could not get object for ${non_existing_oid}. Skipping.
-+	Could not get commit for ${tree}. Skipping.
-+	Could not get commit for ${tag_to_tree}. Skipping.
-+	EOF
-+	git -C repo-format format-rev --stdin-mode=revs \
-+		--format=%s \
-+		2>actual >out <<-EOF &&
-+	${invalid_syntax}
-+	${non_existing_oid}
-+	${tree}
-+	${tag_to_tree}
-+	EOF
-+	test_line_count = 0 out &&
-+	test_cmp expect actual
-+'
-+
-+
-+test_expect_success 'format-rev -z --stdin-mode=text with object name lookup failures' '
-+	printf "%s\0" "$(git -C repo-format rev-parse HEAD)" >input &&
-+	printf "%s\0" "$(git -C repo-format rev-parse HEAD^{tree})" >>input &&
-+	printf "%s\0" "$EMPTY_BLOB" >>input &&
-+	printf "%s\0" "$(git -C repo-format log --format=%s -1)" >expect &&
-+	printf "%s\0" "$(git -C repo-format rev-parse HEAD^{tree})" >>expect &&
-+	printf "%s\0" "$EMPTY_BLOB" >>expect &&
-+	git -C repo-format format-rev --stdin-mode=text \
-+		--format=%s -z <input >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup: format-rev input and output separators' '
-+	git -C repo-format rev-list HEAD >input-lf &&
-+	git -C repo-format rev-list -z HEAD >input-nul &&
-+	git -C repo-format log --format=%s >output-lf &&
-+	git -C repo-format log -z --format=%s >output-nul &&
-+	echo revs >stdin-modes &&
-+	echo text >>stdin-modes
-+'
-+
-+while read mode
-+do
-+	test_expect_success "format-rev -z --stdin-mode=$mode" '
-+		cat output-nul >expect &&
-+		git -C repo-format format-rev --stdin-mode="$mode" \
-+			--format=%s -z <input-nul >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "format-rev -z --no-null-input --no-null-output --stdin-mode=$mode" '
-+		cat output-lf >expect &&
-+		git -C repo-format format-rev --stdin-mode="$mode" \
-+			--format=%s -z --no-null-input --no-null-output \
-+			<input-lf >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "format-rev ---null-input --stdin-mode=$mode" '
-+		cat output-lf >expect &&
-+		git -C repo-format format-rev --stdin-mode="$mode" \
-+			--format=%s --null-input \
-+			<input-nul >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "format-rev --null-output --stdin-mode=$mode" '
-+		cat output-nul >expect &&
-+		git -C repo-format format-rev --stdin-mode="$mode" \
-+			--format=%s --null-output \
-+			<input-lf >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "format-rev -z --stdin-mode=$mode with multi-line output" '
-+		format="%s%n%aI" &&
-+		git -C repo-format log -z --format="$format" \
-+			>expect &&
-+		git -C repo-format format-rev --stdin-mode="$mode" \
-+			--format="$format" -z <input-nul >actual &&
-+		test_cmp expect actual
-+	'
-+done <stdin-modes
-+
- test_done
+ SEE ALSO
+ --------
+ linkgit:git-hash-object[1]
+
+Interdiff against v2:
+
+Range-diff against v2:
+1:  82faa72f7bf ! 1:  fb5ba74ea3e doc: add caveat about turning off commit-graph
+    @@ Commit message
+         But this isn’t mentioned in the user-facing doc. Let’s mention it on
+         git-replace(1) and git-commit-graph(1).
+     
+    +    Acked-by: Derrick Stolee <stolee@gmail.com>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Documentation/git-commit-graph.adoc ##
+
+base-commit: 67ad42147a7acc2af6074753ebd03d904476118f
 -- 
 2.54.0.13.g9c7419e39f8
 
