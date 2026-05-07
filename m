@@ -1,140 +1,134 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667872E8B6B
-	for <git@vger.kernel.org>; Thu,  7 May 2026 10:24:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DC93D668C
+	for <git@vger.kernel.org>; Thu,  7 May 2026 11:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778149451; cv=none; b=J/HGFiCNH2AzedGxf7OKchHvaOCT0jB4u2mn4g2jVwTmwLP8dwk4OOVsJ/7L10RoWPJU3sryacpsuTXNFxrvKL4RyXn0l6k6COmD+wWmQIqZBANwIhJ0MT62x3KnQzXXmq2WkeoLgwYszCZ4fNMDe2g7CkEhhFyzYnu9FwtakWc=
+	t=1778154059; cv=none; b=QZ1a6mqbm4xpquEJfbfGjrav3UaPHd3NOEas9hIzeOPOujf7pG8reu88H1WkLNNh/IM0jGIZWtUfGa2Uqag+IRyyfAU9buZmHUJ+/XAuB5fAbOCIEBAGy06ZkStFV5s2NNrv+P28+bRUyMWdJUsTXGH/VKI+BGtGMsI7P5TMKPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778149451; c=relaxed/simple;
-	bh=Zxv8mvCLptBXEtWdliRpyXzn/lcT9dO6UcsEw+/rjnM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r3+sAL9De55f4oOCBZLPSuBCUDno6Si6T8qjePd0ahqgqdJHxO71Uwn8OnsfNSGTpDfG5cui29aP14upT2dNjOieTMHb+cnMMoRss7c1mVUINj3KkcJKHiuCr74ARcb/KPVG6HJfgew0BiSX0yGoXACrmvQtbYCFPn4I0UdVGrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eikBPCyl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s9urpDJL; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1778154059; c=relaxed/simple;
+	bh=ANj+59TozRp4BBB74n+XEHVIGGc8XfOHlWxQ/J3mb3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Rfi66YYB4fsXae4cq7fFZzxQNGGwUsuA73pFpBF0z9zMatmI2WgAN7sKD4mp8rBLLe8MytSs1wbs0w1/uQ8uCuawABqpT/H2Tbzkxfx7lmPZhSo3kveVzykp6NOKxto9Y0rjnb+zYYs2jtjLVl65nHFG0M8VIXudyxlyzmT3+00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TAofsnLx; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eikBPCyl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s9urpDJL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 996DE14000EC;
-	Thu,  7 May 2026 06:24:09 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 07 May 2026 06:24:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1778149449; x=1778235849; bh=KjUMsfJqde
-	KnwILsylt7TJZFjiQ+e5HBqIap5LkFWVw=; b=eikBPCylXQAbuwBd+Ru75Vdw6a
-	ApDI30SyTLDDNIdiASzk3+0xQxTNvRh3s65M3fp/8KHEMKbekxoyCr/qXxWXSgU5
-	X2OzkB8pxJnHe1iIXRelZ/eE+z9m4WjESBqCqk5ELGNy7XApp+ybnL6N9iMUMRcm
-	wZ7t4nhDuWnZ3JUdmrELW+APRGqJbZFrjfT97H0i0Q6FYHHOX7MJbjFstje20v7H
-	yU4NlzusPAEeamPN/xcYlAClmyfcv0tgV1D5s0ZIJAGglWAgi7rwVqR0AidwaUlQ
-	+Ai67WKxAlfbBrCy/DijAYlrUQIM7WdK+ANRJJEJe0QjoiY5xbytJb5zzihQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778149449; x=1778235849; bh=KjUMsfJqdeKnwILsylt7TJZFjiQ+e5HBqIa
-	p5LkFWVw=; b=s9urpDJLOHG7wGzb8c7sOFfZDUXDfkBF0irtigmJrWkWwnzOWg5
-	fHPTCyWQc5YcrWgDBIZa+xiGzZwEYskDOhDqua6zzLVvM1Hu0y78T1tf56JrWLaS
-	d0LrY+yjnskY195ROrGkvx0FQTCNsrHs5cSpRcwLkMrYFX5ygmZ1qyYYphyoDITb
-	fxdVWhvlQaZVDScCRn95F+Cpk9jdeCNbhOt3HYPcr+OFmVwNBeKPt3MyGNN/cXoF
-	D/NbKQlLx35kl7Dy/zDWQkU6KaHKqSJZqckzugQna1zOCqpHxgDNG21dJJ8rIGRl
-	EYG05PDvMss0mRPmwN3adk8SA2lqpu4/KYA==
-X-ME-Sender: <xms:SWj8ablUPxp3jugXPYHQRRFYhMtJ_5pio-NDi0BW6s4WM_h_T4GelQ>
-    <xme:SWj8aRFNb5ruKYNShbI220MZsSyDpRwNnVxALqJx7dUxxOob0SykOsitQ8UOu_hBT
-    yEO661pfSUVAH1drUfQBLnET_Qm8aOoNNWHus0SAEYbbki1BwkLyA>
-X-ME-Received: <xmr:SWj8aT7ykHUwwf0A974_TM0NBYeeENAXgd77XyTKJTEkgTyMbCAIx7GECPqOgOlWDnXN0Nb_14csd4H6LLK-KM2Se7WFAXI6cLczhxTxBmJ8lA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdejvddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeej
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjohhhrghnnh
-    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:SWj8aZlGMuz3ZcVT-PkFaPyoyhabzOflSXumaRTaiuAPxGwJ_k8gbg>
-    <xmx:SWj8aYpZlse4vot9A3yC0IgQKOis-8Ww2_WlAoGV5YtUj5QNUMBbZQ>
-    <xmx:SWj8aYt7-5j2aP2xiJOMFwgXtKa2NnSnyP7lIqb0Ptq5CF3vdCPQ_w>
-    <xmx:SWj8adHXEPYXtwv7cvng3A5ryTapMaNqIfmad2LGkUTJQGrSVL6Egg>
-    <xmx:SWj8aUTZXJOGc0Zvqu6hyyW2RbRCDI2xz7IhUvswitvZFs8qlKZ73win>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 May 2026 06:24:08 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ca42807e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 7 May 2026 10:24:05 +0000 (UTC)
-Date: Thu, 7 May 2026 12:24:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Derrick Stolee <stolee@gmail.com>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 11/11] ci: run expensive tests on push builds to
- integration branches
-Message-ID: <afxoQh8SxCqBCaFP@pks.im>
-References: <pull.2102.git.1777393580.gitgitgadget@gmail.com>
- <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
- <1eaaa7fad7a1432dd97ffdd7c45e8162f61bc302.1777914508.git.gitgitgadget@gmail.com>
- <42f96e54-7b94-4075-91b1-1c2447b93322@gmail.com>
- <xmqq5x52nhg6.fsf@gitster.g>
- <CAPc5daUzr+mn6ojzsqpW6mCXzc2yVqpevVk8njefx4j09G_OgA@mail.gmail.com>
- <e00dbf04-5866-008f-12e9-efdaacc3f2e0@gmx.de>
- <87se83efx1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TAofsnLx"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8b74b460d77so6694736d6.3
+        for <git@vger.kernel.org>; Thu, 07 May 2026 04:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778154057; x=1778758857; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hBZ5cHob5Yas1RHpzEsCxvGp5JXGdPwgCRiMvsX8BKM=;
+        b=TAofsnLxTa6pQY52dS5s52r1SqdUImnhm0TzwwqRUmQKZjEx9EtVtFWHi0M1RNbiY+
+         +NDvgFXkCKBP61dIL92XksOIsgZ4VfPMEUJb7LHg+/WJq6CgiWZ1x81egXyC9J5uSkmC
+         Dj+axBxJZ+Q65yHILhapJQRIMcKtu/RH75KyiF8wzPX/yosx5p2xR+pu2m+443swIcv4
+         L3t4wJZktBz30yPPzCTqtdFr7V3wAvcyuyL1cEzgua2auR1wAtyJN9iOm2Dqe6Xj19Jz
+         cHaWW5QAgAZzCRYm9lV0UiUjw8fhi5ItexkNB1pcu7K8ki19Z9pKG+P02UidrB/F5TDc
+         UXxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778154057; x=1778758857;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hBZ5cHob5Yas1RHpzEsCxvGp5JXGdPwgCRiMvsX8BKM=;
+        b=O0Ja4SnAJ+jAoiXpiAyUae7Hl7sb/1tsFvsdoY8EXRwvT+3CBXqwxk/pEfNNtHL5wv
+         pwgFedimGjQv93n6hFzWRUZtn/g1LlYLN47UuTv9rTGiMrh9ezeUFJIiIWwN9A7YXcDB
+         dd6+o/S2aGK6vyGH8k9KJ9tqVKLDDpSIFnrpJIElxuJHP+xRtzVgJ9l56gOaKQO4Jf3w
+         mXwATW3Y4no3f1xkgHljYFVQd7crRfM1KnJLs+2UYs3ghKyScIqq7+IieDYrdPoa6ZnW
+         wRoSZJmmGV/GbDdIYu9qFVJ/7EpDGykeJUltxj/lIDxMucmQCrLspv0V+9MYA8TmT5ml
+         OSCg==
+X-Forwarded-Encrypted: i=1; AFNElJ8+QEEsuaKXoj26b2hprZEWW87iZXs/jFEQIRkAGOD0MHCdiaBHRV+3vt5quanicvcW2So=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy302TEcMiVSgY2k+O3S1JX8ww7FioIIkGYvg6nHfiUZ+flQlr6
+	Jk9ZcWrtCw3Lm1gEXAdfVuayw3/MpEF90TG7M5DclNFGfF3fLS1+ExSM
+X-Gm-Gg: AeBDievGGEIXZfQbuBhfQlYEqrenphfmzyhHe+VYx/C3DL6OYMIhMgtUu/rm0yu8T0d
+	J2hf+es4CFEuelngeFflZRqA7P3XOgx2pI98EDSWiE4jPGhLjM3UWPc2K69fHaXSSGgmgpJAYPu
+	BIH5DwCditSeU8Gc4G/hfIqznSmpbIlQ7kIQhgRm1kdrfGH3Oim589Za0LJWa53l3UWibr/kDfP
+	RV1feEikXzUldqLF6iKe/Lq3o5O6f0262JS9dvStBQ9BDZQcdDswjhL+d4kALbefxCjDQe1gYwt
+	dVC68+LtkvStt+tDpKRU63jRm6m6kLcrmh6f/oCOWziHTegYDBOfRjNZ6TAkcA+FQoznurIn1bU
+	AKQ8c/YV8bYg4WYf0gHzxfu8OX0JjXFwx/ywQzWnh3T0ygBNSVnOy64Cc2wP9K17ftdI+e7OCy1
+	FAVi9TWFxamX3Q0rF0DFiqU+KqFBYocDkWrPi1ooU45MLT0GaQsU09HP4RlNyq3UykhQwrJI1Q6
+	kblwD1o2rJ/uh2pC0NH0nO3NTty2/G6Sm5GJuzn7zX0mH5HSVDv6sS7NIMDP9ohkpHG9g==
+X-Received: by 2002:a05:6214:1d2e:b0:8ae:61f1:c562 with SMTP id 6a1803df08f44-8bc41bca521mr119011746d6.6.1778154056905;
+        Thu, 07 May 2026 04:40:56 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:c441:9261:ffb:e4da? ([2605:a601:9b88:8300:c441:9261:ffb:e4da])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b5397bdc7bsm211766586d6.20.2026.05.07.04.40.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2026 04:40:56 -0700 (PDT)
+Message-ID: <f5a08ae2-3eec-4939-b6d3-c31f8968dd09@gmail.com>
+Date: Thu, 7 May 2026 07:40:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87se83efx1.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/10] pack-objects: integrate --path-walk and some
+ --filter options
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+ johannes.schindelin@gmx.de, johncai86@gmail.com, karthik.188@gmail.com,
+ kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net, ps@pks.im
+References: <pull.2101.git.1777731354.gitgitgadget@gmail.com>
+ <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
+ <f5d8d4aa-2453-45ef-bc96-2b94bdf55c7e@gmail.com>
+ <afo+mEITFBSLevqV@nand.local>
+ <07b36bd8-376b-4a98-a735-0c0f75452c24@gmail.com>
+ <afpWOGhWJrRdPtcy@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <afpWOGhWJrRdPtcy@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 07, 2026 at 06:18:34PM +0900, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 5/5/26 4:42 PM, Taylor Blau wrote:
+> On Tue, May 05, 2026 at 03:44:56PM -0400, Derrick Stolee wrote:
+>> Thanks for this suggestion. I got pulled away from my investigation, so
+>> wasn't to this point yet.
 > 
-> >> I thought we updated the codebase to avoid stripping away constness
-> >> with strchr() and friends, but the error seems to be more like one
-> >> hand in the system passing -Wc11-extensions to stick to older version
-> >> of C and the other hand in the system that uses _Generic to implement
-> >> the const/non-const variants of strchr() in the system header not
-> >> knowing that the other tells C11 const-preserving strchr() should not
-> >> be used?
-> >
-> > This was diagnosed (with a proposed fix) by Patrick over in
-> > https://lore.kernel.org/git/20260505-b4-pks-ci-tolerate-glibc-generic-v1-1-5786386fe512@pks.im/.
+> No problem. One of those things that in the course of responding to your
+> email, I had written enough to fix at least one of the tests. I hope I
+> didn't step on any toes as a consequence.
 > 
-> Indeed.
+>> I think the initial idea was that the feature was too niche to add it to
+>> the CI builds right away. Your series is going to make it a lot more
+>> important, so adding this to CI builds may be valuable.
 > 
-> > tl;dr It's not about `const`-ness at all, but about glibc using a C11
-> > construct which clang's strict c99 checker now refuses, thanks to the
-> > upgrade to Ubuntu 26.04 in the `ubuntu:rolling` runners.
-> 
-> Yes, that is exactly what I meant by one hand knowing that it was
-> told not to use c11 extensions while the other hand ignoring and
-> always using c11 extensions in the header.  I recall that in the
-> past gnu library headers were a bit more careful to make the life
-> more pleasant when we use (or decline to use) various features by
-> using conditional compilation, but apparently not this case.
+> Sounds good to me. I imagine that this makes more sense to place as a
+> preparatory patch in your series, but LMK if you would rather I place it
+> in mine.
 
-Yeah, it's a bit unfortunate indeed. I'd claim that this is a plain bug
-though -- as mentioned in the commit message, I think what glibc should
-have used is `_has_feature()` instead of `_has_extension()`,  and if so,
-I think the issue wouldn't exist.
+I've got some changes that make everything work, and they plug into
+the right patches at the right time. I need to do a few more rounds
+of tweaking, but I should have a new version of the series ready by
+tomorrow with these fixes.
 
-But oh, well.
+In summary, we've got a few things going on:
 
-Patrick
+1. At the base of the topic, the backfill tests fail because they
+    assert that stderr is empty and the warning about combining
+    filters comes up. This goes away with the integration, but it
+    was causing the tests to fail patch-by-patch.
+
+2. In partial clone situations, as you deduced, the direct object
+    requests were getting filtered out. This starts with the blob
+    requests with blob:none and then the tree requests are added
+    in with the tree:0 filter.
+
+3. When getting to your bitmap patches, there are some subtleties
+    around the --path-walk option adding --boundary to the revision
+    walk but that changes the object set and breaks tests. I need
+    to think more about the solution here, but I'll include it as
+    a reply to my v3 cover letter when the rest of this series is
+    re-rolled.
+
+Thanks,
+-Stolee
+
