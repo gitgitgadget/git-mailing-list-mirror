@@ -1,111 +1,100 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD9C38D007
-	for <git@vger.kernel.org>; Thu,  7 May 2026 09:20:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D103A8758
+	for <git@vger.kernel.org>; Thu,  7 May 2026 10:02:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778145651; cv=none; b=nr+SdIEDMMH2XJCnbFsfCXq+YHBwOYYZEVo7bTbZ0k6LS2HME7HCQ97ARFeoHGFdpxDMy1foyBX+yb0hHka/fCcf1z+XNcdfrOGP17Iq85GUV3jxgnQ5Blom4Z8+XTBNeXBUAy+/TpB6ef388ig+qJWXdA3tbmBd5312IENchE0=
+	t=1778148173; cv=none; b=OBo0hk3+JYurB5k4kjXMqnS/RFBHQd57sx5u68Xhg3rmDoWOtobMuXaW8GK6v7mLoNRNxv2Efmg/AkRP+0DZ+/VoIUeZwGnT9G0LGFCQ91eorGQ1ajaTeyHyyYCQoKxBukIpB6NgpYzCSzEx4We/Hnr4OMOoNpAlgeLhDwqJGDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778145651; c=relaxed/simple;
-	bh=fIKXgOPznpR+ovsUNAiA4f9llmQtGVoQaYA6m6zKYLo=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=XTtsAEaiIIJsM7/T5oW3sN6Hx/BogB17AhIojpRT15zxIvwAlzzOVFTLI42iIpxhg69stCGu9vr6kTz6yCX/x9HDeYaPp1WYbOUhyuwzGaAFLwC/5Pz8dm+GrWG1I8egTEjsuwy/KxozLf5LHnoHRULUy6FYV6yhP89nZ3w5hxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vvZCK+IC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bC9ZdDHg; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778148173; c=relaxed/simple;
+	bh=C+TtHxHTLgogogTjort6CruiMBudY+A4RWlgGQeOchM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oT4zD4l7576l9pGeeEXU1HjVC+tmA2NGt5gc4i+z4as1/7kYYRfQo8EOtzcRBGmUKQfrMf5uXiTJZ2Z6w6tIiCQY+4uYEfRRpRnEgmPUrqlmYlb229tU0x2uYq/bZCdfTLkPH/KMj3NMT4vTsEF+3BqtOFJ7OhkxQg3OQJ3W+5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CsxLm5e4; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vvZCK+IC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bC9ZdDHg"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9A6CB14000A7;
-	Thu,  7 May 2026 05:20:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Thu, 07 May 2026 05:20:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778145644; x=1778232044; bh=BUYlsndgus
-	RNYMa4BD7BpOQJiu8fHApqq0x16YgSWrg=; b=vvZCK+ICEStD7Hty6FlcouvljR
-	XI+rQ2WZYi6JH9Zmb3x8AjxFVBkkmCbUoe1kz1WHrSDebFqjl6qEw8Ek12zKoch3
-	e6Debr91ymhFt6Z9fOqYc6eZdSJePjihYg2v9fA2v3hxo25uOY6mh0274wt28TDg
-	+ktf7Kz5mJdy4fefGKl4koJ4RcpEX8t/WYYee1D9r2pINJMrERnxWH6FUEldgpcG
-	oHxFh1cG4m75ExaiBoS3+kgInAJ3+3o6fZt6B52MIZpDtUlz38H61wy6L6uTF5jb
-	5mQT181BgAF0dTptmznE/cPqZ4VbNr/llMoxA9sL85klGCXT477edzPn6Q8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778145644; x=1778232044; bh=BUYlsndgusRNYMa4BD7BpOQJiu8fHApqq0x
-	16YgSWrg=; b=bC9ZdDHgKI2lg9YKeLR6jeWWMTl+nnd8rPj9L3VYRcOtQCVyywI
-	e88ET5q0wlBHkVYcUjn8bfNwXmPViwyrRXLNzWbq9XZM/7vOQ0nlTXjIkY/ZRsPl
-	L2CB/8/m5w62PhknLlu6KfgMfnUNIyXxtUycOdXiMB1ky7/MqnkldKAzDEUAdmVp
-	77z6cXwryXQzrUJDeaBpBlj4dwYSvk2rWWLNpbK36W0yQdG+rHZcAnSoyzgPWUXD
-	8rltwGnZjZx8j8plNc+WEfpOFvoNG5GqrdLA/s0WzSVSt1jrYx5KS/f+G00o1fi8
-	Z9+EU0I1SMVsC6Al0XUVER1zdL+TgHF+3JQ==
-X-ME-Sender: <xms:bFn8aVqHrnlBrdFx0SPtaTihQoc7kLIQlhesLgEGR_NzWt0s_8fR1Q>
-    <xme:bFn8aUNkrud5Ea7xw3_T5ZrnNOTm-gKk2iY-C_V0t8wje9pnUrSQpKEtrPgeM34M5
-    JRV0WLWrW7O2aAyAGcERCW_RoCAOEka0dR96lLJ_UAeQepybv1CnQ>
-X-ME-Received: <xmr:bFn8aWobv06u552COVKp8LjzAAFrHQo-K7HwvcYpYzgd6Zo-GMJogp7kjpO8OBuGmX6kGog_nLxlTtHZKnHYiy9PoYKXWmRASmQkevLF-sle>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdejtdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
-    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmrhhoihhkseguvghlrgihvggurdhsphgrtggvpd
-    hrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtth
-    hopehpshesphhkshdrihhmpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgt
-    phhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegthh
-    hrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:bFn8aXvpLJxTw3_j3OMvyOnhUGr1a3_vX1qap8ykH51mmTuHDKqKAA>
-    <xmx:bFn8aV3DZRyAuv42Xx6ynH1scnh9JHK6er1KmldxQaAhkhOJIQjycg>
-    <xmx:bFn8aSE0mB2-EiIlT2goSyC_kRxbKCiW0GfbsPxQURsyCXW1QRKsvw>
-    <xmx:bFn8aQtB0Jh77bwHMeTrRdB0rv-ojsAxhrghI4bCZ8aMbtETR4hqQA>
-    <xmx:bFn8aVPb0OJ0otBcyy8DohBJB5CBPYFDdHpnOobB0V1qz2Gv9GsyyCVH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 May 2026 05:20:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mirko Faina <mroik@delayed.space>
-Cc: Johannes Sixt <j6t@kdbg.org>,  Jeff King <peff@peff.net>,  =?utf-8?Q?J?=
- =?utf-8?Q?ean-No=C3=ABl?=
- Avila <jn.avila@free.fr>,  Patrick Steinhardt <ps@pks.im>,  Tian Yuchen
- <cat@malon.dev>,  Ben Knoble <ben.knoble@gmail.com>,  Chris Torek
- <chris.torek@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v6] revision.c: implement --max-count-oldest
-References: <2f71a00b035e25b971641b77a6fa7626f1e2459c.1777578676.git.mroik@delayed.space>
-	<ce8d1ff49ef418ae3720265a124ef53a959d289e.1778017966.git.mroik@delayed.space>
-	<7250e6c1-633e-417b-aacb-94e35d240d3f@kdbg.org>
-	<afs2QVHerGLALFcl@exploit>
-Date: Thu, 07 May 2026 18:20:40 +0900
-In-Reply-To: <afs2QVHerGLALFcl@exploit> (Mirko Faina's message of "Wed, 6 May
-	2026 14:54:19 +0200")
-Message-ID: <87o6ireftj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CsxLm5e4"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488a9033b2cso6098155e9.2
+        for <git@vger.kernel.org>; Thu, 07 May 2026 03:02:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778148169; x=1778752969; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9BdVP1g+9xc0YRUX+K16Z3+VkhrcfLlofvUlwkvGl5c=;
+        b=CsxLm5e4l5KeNTFMCX9VH4ShiFpD5n3Ua9/9ycasat7DLf+JsLK5nqB/W0gDyW9W3M
+         HOUoMnaOLxBWyxt+UqzY11DFvVx6ajSSRuO7rJoh9VaWepAqQPs9Y/AbnpOqGhZUs8wI
+         i5hIiCYBbv0qXhCmJm317yDSh6yEGNrWSyf3SpOXTQNPKWz9kQFfG3UKJwkNZq2kLzm+
+         Oy58PBLSgIfrktcSKqgOa4OsrR0EziR0wtiYmugLa55ItvdtlKivtq8zbDFnwANRzn7K
+         s//NipIoHI+iNegr9aA7CdYwOi1jdBWQ6XldBKdnGzS08HxAt2AIXy+AqmJMxo2a+/aE
+         ta/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778148169; x=1778752969;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9BdVP1g+9xc0YRUX+K16Z3+VkhrcfLlofvUlwkvGl5c=;
+        b=FKDLgtKPE39DVqFaVYYlHRKtrELYWRXSCq8HR20Nn+COrJFaOnD+MWhBFlH3CReVHx
+         mn1srMFWWOmEir8fgfhptJx4XPSuL7p+FL+jVRzbzsboB6JjK0AS7r8QAD/BK1tAcsRv
+         jq5nAXg/psUJ1FJOV/PCOGrD9rS2108eHYEdAF759DQABbvF5Wi3OLWbzO1NHiFJ5D+G
+         2nqqgXpJtvPbG+xEYbEmizWhK2uoj3BgW7zqP3ij6bJ6qV8row8INR2XISlWamzSlXsl
+         fTlHerE4pNRb9eyFYmhinJsccbhzaEV6h19Sl9yeN0cA64ShiX+jh+RmRWi5dQfsDRKK
+         /M0w==
+X-Gm-Message-State: AOJu0YzwZ0cpM2ergB5lDOIAfdOnFgN/9DO+ZCamQ80XW9bZljN2qnZi
+	SKvjxd/Ia3ie9iTzUv2qBYBUbV9AW8d0PKTcdv9yVd9bT5rWqic3yyW2
+X-Gm-Gg: AeBDietabrYirULQgXCRwxyV2P3+3udDgRsv3b1Qv+OWKnFZ7Ur5N9+lHLox4lBDleq
+	XNxSp/kQf+hHlNdIArDRv0ruGijJOgOq69SE1vNGkzPVjsxRLsrx3OljiFIW4oTpjKno9rVZ8n3
+	Lce0DrBsra6Y5kkcvbdSkjPlThZXVcTUMhxhOMF8v4614SXbdViyaYfAOsBWRUZtBemZBdVJYYz
+	zpGtEXM8GE+svZ0HqgR/UnDgAu8//3LNLOSF/R2XA9tD9nG1+yOh4osWeqer8kQPj+sWN0yMkE5
+	qc+AopW5yNoytEhZkOZfOPBDOCD8g7ltZ2eCiACLB6JhAkUOD2hZKUNsU1MDGVXw81AmE5xuutJ
+	DgtByJbnQzUxeFkUOt8I96ROZhkgP+kgIJ6zuqA6s0vUzCoPFftKareGpU0ZagbnJ2gUagtZWbm
+	a6vbCE0dFJlW1tzyJYKwpwDDpleROCyV2/Gl4TJLx6cgYm3OSFVGYT77CiEGQhA96hb/nH5ruZl
+	1edz+dHEk8oFJTX
+X-Received: by 2002:a05:600c:a30a:b0:48a:58ae:9938 with SMTP id 5b1f17b1804b1-48e51f37f28mr83240865e9.19.1778148168089;
+        Thu, 07 May 2026 03:02:48 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:76d:4c01:131c:ee41:99c0:e0a6? ([2a0a:ef40:76d:4c01:131c:ee41:99c0:e0a6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e538b26a3sm208325785e9.9.2026.05.07.03.02.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2026 03:02:47 -0700 (PDT)
+Message-ID: <d2dd6e44-d852-48f7-9dc4-1dd1c71b98fb@gmail.com>
+Date: Thu, 7 May 2026 11:02:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git 2.54 fails to build for rhel 6 (2.53 builds fine)
+To: =?UTF-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+References: <9692091777837852@4991cc90-7cef-4f92-9de9-e195e7f2c04c>
+ <affprsBwpM7L47j6@fruit.crustytoothpaste.net>
+ <14616621778106505@de6a8060-5532-44d2-bc08-24865b6e9c4d>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <14616621778106505@de6a8060-5532-44d2-bc08-24865b6e9c4d>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Mirko Faina <mroik@delayed.space> writes:
+On 06/05/2026 23:28, Азат Усманов wrote:
+> any chance someone could show what commit causing the issue, since 2.53 builds ok. Ive looked through the changelog for 2.54 didn't see anythihg specific that migh cause this.
 
->> BTW, this makes me think whether this kind of limiting could be
->> triggered by a negative argument to --max-count.
->
-> Would be a good idea if it weren't for the fact that --max-count < 0 has
-> for a long time acted like no max count. I'd imagine many could be
-> asssuming this behaviour in their scripts.
+The compiler errors you are seeing are complaining that it cannot find a 
+function that was added in openssl 3.0 and as brain has already said it 
+looks like git is linking to an older version of openssl. So if you have 
+openssl version 3.5.6 installed the configure script is not finding it. 
+You need to tell the build process where to find the libraries you want 
+it to use, either by passing that information to configure, or by using 
+the makefile directly and setting the appropiate compiler flags.
 
-Many?  I am not sure.  
+Thanks
 
-What do these script try to achieve by having "--max-count=-1"?  It
-would be to defeat --max-count=<n> coming from elsewhere, but where?
+Phillip
+
+
