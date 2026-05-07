@@ -1,68 +1,70 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED9B3ED131
-	for <git@vger.kernel.org>; Thu,  7 May 2026 12:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83683F20E6
+	for <git@vger.kernel.org>; Thu,  7 May 2026 12:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778158277; cv=none; b=UuybPWk4p9vffmdULNGaHBWqLsGOepaN/kqBH/MlbA1q/W7qsfg/tJpIFsU4Hn+tZBXD+cQJiWWqAcFm5nXRf76z8lMkImYIs+9gothAlwT6QXb1bJL2F8VuPlRIcM16nRP4ibAE4FIY33FW23CtmjAmRSK1CZxAx8X9Zj9LVeY=
+	t=1778158279; cv=none; b=uahBwjI7xzHCShiWCu5noD5hpAXaQVf/jF0AbtsMlxHJGOUtGPYFxz7G66S+VX30W3q+rhgrAfPSlM6TLYmFflMKVbDLNs6f73Qk7KpvbhS+SbO5MKXyVCjtmfY57ox5a/4hq9UYFUTU8Jl9kX+FFAvZGsnptxUuXmEQHRy2ofM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778158277; c=relaxed/simple;
-	bh=eWqj16H3IdKBGWA7Pp1e60/vl1mfLTtCqdYLhBQi5IA=;
+	s=arc-20240116; t=1778158279; c=relaxed/simple;
+	bh=chSFdLA6gaEnJh1JfbFmjrYyNRIRV7SAostygs5o1+M=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=h65+7U4V3mZ/ij8nKGZEmz9P7JXPkRKFTFwv8zgdRWk5VpandjHntZJkcLbkmOMPhqZQlp7VMSr07CFIS9lecjNpTcoY+gLQgkIqKwcFEP7VjQoby0Ove1IutENBQiW0shgfAXEaFYeXWGgNtVTDOvYSLKc+9029CGYAVPCI5Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IWarmnoy; arc=none smtp.client-ip=209.85.219.49
+	 MIME-Version:To:Cc; b=s4UQKQ1PeIVS4VV3i4yf8Vk2VIfEy66B5ZxsaDEYZRYJfjtPO7J9ymtCVs15RQeAmMmPxYJZL49VRSamNlC7qvGUWIIULB9jz75FO8JC02G2aHISdszAQmp0lDr6OEdP4ysdHzLDTAfTwo4LNW+T8pzM69eWsDOiyq8hcbXzW+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jrxz19Il; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IWarmnoy"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8b3fe2f19a4so7874996d6.2
-        for <git@vger.kernel.org>; Thu, 07 May 2026 05:51:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jrxz19Il"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8d736211595so55114185a.0
+        for <git@vger.kernel.org>; Thu, 07 May 2026 05:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778158275; x=1778763075; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778158276; x=1778763076; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RDqvI4TqArnaMKehAwOaVPq1hNTGxn79JDiCdXiU0n4=;
-        b=IWarmnoyDckfn5W25YNTE5n8l6fHCFXfJjlQoD1ZfCfMltbfb6Ch8uNa2cXch6SRtj
-         RiRlmAFQtlPwiQhsDiBHwCmhCZtvFPnMajhpP/nIat7YeeSuyU1iTokzBVoySQoDdBlL
-         Mie4hPVLxb5sFj7LugMGnnbi0hBJjpC+mslhLa6EnnDqvk24XRgWXu63wZXKWX0P+k65
-         PPQV4zbDiGf4/LhXBhPzWIzihKjEDs6HsZJmTOHyi/w+bqrniIzkmY/BaQNSWNOkL5ZI
-         6OqyCZuNtSqCpf9dTS0fnexVjoRG7yP4/DVdnNP5W4zq8yOIz3WAjRCQOR8+Orz1pORR
-         veeA==
+        bh=m78NMXdG9yMxhLsGRNany8UpMqQUmryXk3KYDr82MVI=;
+        b=Jrxz19IlRu9r3+LE9j6SKaLovGpPdXfYnD2tKMvjUdLQHzDmuCRVYPl/w5GDb+5222
+         675RvP5YfwewQ3khsf0LfZSOuceKQSUD5/64YOpWqdm26kR43RISGXmD+pn2ckaMcUf7
+         O3As2VQ4rIhcjrX3l2212pJI3s41bAzF0l2+LS7208jCjT3xr26PHU5rf118MZ0MIjjn
+         1/PfdTP0/R34naObboGck8VNKFANxT8ssbGxrIDMB+XgBo1YBg9HLp+mBunWlLFj6zaA
+         EzBOBzng7LiFUcoa7cZgC6tFr/phmijHCa4SOLVH7H1Z5kMndqt4yqvtnRgeN99UJcY1
+         +JAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778158275; x=1778763075;
+        d=1e100.net; s=20251104; t=1778158276; x=1778763076;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=RDqvI4TqArnaMKehAwOaVPq1hNTGxn79JDiCdXiU0n4=;
-        b=STVSXRt/7Rf0n67FQqs1rl8ZVD7mkf03W4gJKwuMRXm0YsGgzFO+95h55Xod7H0K7O
-         dadXZXtLRmr5bXeJuKDMkDLGUMiDPc6IIim64yUnO/KvS6ePs77GiQxiYa9Qpddo5iFU
-         1XEt6y6jACJ/f/WbIjVrU6d0ZQ6ZrdypmfDxHaPrsvriIYpRwMPV2tV84QW88xD3q4zS
-         niy9cQYOpvSPqgAOoONRlHaItAU6iL43bOaW+zrOIf0W0IesbL2U7UTHctrcGHAWZnRm
-         C7mzDWRQyVfM8kFbrsKIHpJQqkl7VSCCZmpM8WBHAWWRDfAjEmwSVpEZfLERVn1hPdhu
-         wuiA==
-X-Gm-Message-State: AOJu0YwaIab2RrCgW1gZyIJkdcYPYk/6Pb6iWUDSdlmSDCI+qryNjv4e
-	1x7tUtsHPlgdmYTjSSY0cJrHxKgeURCxr/4waHyLjI9UB0TRdFAAI5FjwnwYwg==
-X-Gm-Gg: AeBDietozNgDyHheIBrR1g99AurKqN3QM3JoX+uTo9haTFyKwC6V6sk8D6TnhrVLLwD
-	RwvxlAGQIut3TRFPJWWUMBJzD+5K5sVjP9+NUmH5ZjTPqO0DvWGVbjn7xFCovw2DhR/G8jyP+ks
-	YAnvQB6LC9rzUo42wD30E5iNhYKqgPV3tfiX0C1dH7prO/WYBDIWAYM06VscGPG+4D4/EFxNu+m
-	CvLnWJi8SMJuf78fVWdxO7viFehme5izqOcg3wo0AKzx2M5XKpkQNMrdKIPrYfsnTTdKpMc0rmB
-	FZ8hLeX/G8iLDaaf76oJitW9zrBcSXCJzg4hau16iV8YXUxpd0vsurfTO6LVucQohB+u5XHsr9k
-	A016Mf8GLxUfEgieSabcrkrSdBbsld6SL4mHSx1N8/SBHXWr0vMoxmAbLIagFwn50BorK2koNHn
-	NDGLoXgRRwAGdNFXGeGhR90jkFIoT6mVvhVNZAp2M2HCNOzQ==
-X-Received: by 2002:ad4:5c8b:0:b0:8ac:aaac:4034 with SMTP id 6a1803df08f44-8bc454650d4mr110438106d6.29.1778158274869;
-        Thu, 07 May 2026 05:51:14 -0700 (PDT)
+        bh=m78NMXdG9yMxhLsGRNany8UpMqQUmryXk3KYDr82MVI=;
+        b=FeEri3N5khF91SN75CBuuUCTVdPR+6k0fwy6mO3mhbRfRXKvdlLrgBj18LbZAi6Wuj
+         DxcTEpDWDGQAkuI8kVqnSNMIIjO9Nt+rZx/V82iGohHVm1wII/rFiQ7iLnyJPWLIJCwV
+         zwpm6oJ00WH3Z8vnqou63+y9Xw3a5KobqmKBH+aTBz4ZMktzuFBCSEwxbUPqafQ7wxGf
+         gtvarfr+l2h13zA7JgDg5HZf7GpCVjMx0dBWJEsV3xdW9HAcwLEWP2QtE59SeUnPl0KH
+         ESGOO/IYvecksCZ4tOnOpY1Cll3buMTxI2FqwOUGsRYDmW+zFqI0Oux1SMBlm2jiaoqH
+         xP2Q==
+X-Gm-Message-State: AOJu0YwWL1swHfGWtDdb2qAmy4V8m3MbwOWqGGa0ISewzkdd54JNHSk6
+	yzGJPbgJoH+pkVAC+XhM0O4k1wFqLbL6vv4VL98+okN6Jm3A/afP1LVSp/zrkg==
+X-Gm-Gg: AeBDieu0EdgOWtjTjJ7z9aEsLYewy0rKUmWNeEgEaNJVB5KWNP7YZpFXSlEZxzAIpMz
+	aImoSYscYQnmzbX4XAj7GoZ3h0TMzzxNK+Ajwtl+FXRsHW1WGocVQ8/LoENOs9L0kWAk3v1DwQG
+	X3TdN+CYV+rLuO2xD/kUh9+FU0Nf0u8GNT+DLcr+wsN7Q9QAhQ7Ex6h8oiALOpb1d56aFOzY6Ti
+	i68z2aMzvrawx0fz5MC2GlNwLnHVu9/Gza4lswpTkwrhfcbLDRniw2lk5XcOYYWYkSWckP47nn0
+	V2OugBQPwQ3qPk3YAvdG1+SPHG3UZXyblC/5t9BvyvkjCbQpv9UWl4umg1owbBfLDiyxAwPZfcB
+	s1obPVnfwsNnlH4XG0uW1CplrVj+JiIxQP3VNLa/fqD1G7PJ11WDW5wQCn2kjCCNijIcYHojX0d
+	A7ADYUoaqDdsbvjWtPixE8OnGSw7Bs0Qux9jMR8SMgaYmK+Q==
+X-Received: by 2002:a05:620a:4101:b0:8cf:dceb:827e with SMTP id af79cd13be357-904d6ccc0d3mr1126046585a.52.1778158276117;
+        Thu, 07 May 2026 05:51:16 -0700 (PDT)
 Received: from [127.0.0.1] ([20.55.117.85])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b539aa6f5fsm208208006d6.21.2026.05.07.05.51.14
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c253e04sm1917192685a.31.2026.05.07.05.51.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 05:51:14 -0700 (PDT)
-Message-Id: <pull.2103.v2.git.1778158273.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2103.git.1777380768.gitgitgadget@gmail.com>
+        Thu, 07 May 2026 05:51:15 -0700 (PDT)
+Message-Id: <8ee749dd2fea06811e929d247e34132cb5c95ead.1778158273.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2103.v2.git.1778158273.gitgitgadget@gmail.com>
 References: <pull.2103.git.1777380768.gitgitgadget@gmail.com>
+	<pull.2103.v2.git.1778158273.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 07 May 2026 12:51:11 +0000
-Subject: [PATCH v2 0/2] maintenance(geometric): avoid deadlocks on Windows 10
+Date: Thu, 07 May 2026 12:51:12 +0000
+Subject: [PATCH v2 1/2] mingw: optionally use legacy (non-POSIX) delete
+ semantics
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,60 +77,103 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>,
     Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Windows, maintenance_task_geometric_repack() opens pack index files via
-pack_geometry_init() (which mmap()s the .idx files), then spawns git repack
-as a child process without setting child.odb_to_close. The parent's mmap()s
-prevent the child from deleting old .idx files.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Windows 10 builds before the POSIX delete semantics change (between Build
-17134.1304 and 18363.657, see https://stackoverflow.com/a/60512798), this
-results in Unlink of file '.git/objects/pack/pack-<hash>.idx' failed. Should
-I try again? during fetch-triggered auto-maintenance with the geometric
-strategy.
+At some point between Windows 10 Build 17134.1304 and Build 18363.657,
+the default behavior of `DeleteFileW()` was changed to use POSIX
+semantics (https://stackoverflow.com/a/60512798). Under those semantics,
+a file can be deleted even when another process holds an active
+`MapViewOfFile` view on it: the directory entry is removed immediately,
+but the underlying data persists until the last handle is closed.
 
-The fix adds the missing child.odb_to_close = the_repository->objects line,
-matching all other maintenance tasks.
+On older Windows versions (and Windows 10 builds before that change),
+`DeleteFileW()` uses legacy semantics where deletion fails outright if
+any process holds a file mapping.
 
-The first commit introduces a GIT_TEST_LEGACY_DELETE environment variable to
-simulate legacy (pre-POSIX) delete semantics on modern Windows, so the
-regression test can verify the fix even on Windows 11.
+To allow testing code paths that depend on the legacy behavior, introduce
+a `GIT_TEST_LEGACY_DELETE` environment variable. When set, `mingw_unlink()`
+uses `SetFileInformationByHandle()` with `FileDispositionInfo` (the
+non-POSIX variant) instead of `DeleteFileW()`, forcing legacy delete
+semantics regardless of the Windows version.
 
-This fixes https://github.com/git-for-windows/git/issues/6210.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.c | 47 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 2 deletions(-)
 
-Changes since v1:
-
- * The code now uses git_env_bool() as appropriate (thanks Patrick!)
-
-Johannes Schindelin (2):
-  mingw: optionally use legacy (non-POSIX) delete semantics
-  maintenance(geometric): do release the `.idx` files before repacking
-
- builtin/gc.c           |  1 +
- compat/mingw.c         | 47 ++++++++++++++++++++++++++++++++++++++++--
- t/t7900-maintenance.sh | 22 +++++++++++++++++++-
- 3 files changed, 67 insertions(+), 3 deletions(-)
-
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2103%2Fdscho%2Favoid-deadlocks-in-geometric-repacking-on-windows-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2103/dscho/avoid-deadlocks-in-geometric-repacking-on-windows-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2103
-
-Range-diff vs v1:
-
- 1:  97508e91b6 ! 1:  8ee749dd2f mingw: optionally use legacy (non-POSIX) delete semantics
-     @@ compat/mingw.c: static wchar_t *normalize_ntpath(wchar_t *wbuf)
-       
-      -	if (DeleteFileW(wpathname))
-      +	if (use_legacy_delete < 0)
-     -+		use_legacy_delete = !!getenv("GIT_TEST_LEGACY_DELETE");
-     ++		use_legacy_delete = git_env_bool("GIT_TEST_LEGACY_DELETE", 0);
-      +
-      +	if (try_delete_file(wpathname, use_legacy_delete))
-       		return 0;
- 2:  12ebd5c56f = 2:  66219b79fa maintenance(geometric): do release the `.idx` files before repacking
-
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 2023c16db6..aa7525f419 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -449,20 +449,63 @@ static wchar_t *normalize_ntpath(wchar_t *wbuf)
+ 	return wbuf;
+ }
+ 
++/*
++ * Use SetFileInformationByHandle(FileDispositionInfo) to force legacy
++ * (non-POSIX) delete semantics. On Windows 11, DeleteFileW() uses POSIX
++ * delete semantics internally, allowing deletion even with active
++ * MapViewOfFile views. This helper simulates Windows 10 behavior where
++ * deletion fails if a file mapping exists.
++ *
++ * Returns nonzero on success (like DeleteFileW), 0 on failure.
++ */
++static int legacy_delete_file(const wchar_t *wpathname)
++{
++	FILE_DISPOSITION_INFO fdi = { TRUE };
++	DWORD gle;
++	HANDLE h = CreateFileW(wpathname, DELETE,
++			       FILE_SHARE_READ | FILE_SHARE_WRITE |
++			       FILE_SHARE_DELETE,
++			       NULL, OPEN_EXISTING,
++			       FILE_FLAG_OPEN_REPARSE_POINT, NULL);
++	if (h == INVALID_HANDLE_VALUE)
++		return 0;
++
++	if (SetFileInformationByHandle(h, FileDispositionInfo,
++				       &fdi, sizeof(fdi))) {
++		CloseHandle(h);
++		return 1;
++	}
++	gle = GetLastError();
++	CloseHandle(h);
++	SetLastError(gle);
++	return 0;
++}
++
++static int try_delete_file(const wchar_t *wpathname, int use_legacy)
++{
++	if (use_legacy)
++		return legacy_delete_file(wpathname);
++	return DeleteFileW(wpathname);
++}
++
+ int mingw_unlink(const char *pathname, int handle_in_use_error)
+ {
++	static int use_legacy_delete = -1;
+ 	int tries = 0;
+ 	wchar_t wpathname[MAX_PATH];
+ 	if (xutftowcs_path(wpathname, pathname) < 0)
+ 		return -1;
+ 
+-	if (DeleteFileW(wpathname))
++	if (use_legacy_delete < 0)
++		use_legacy_delete = git_env_bool("GIT_TEST_LEGACY_DELETE", 0);
++
++	if (try_delete_file(wpathname, use_legacy_delete))
+ 		return 0;
+ 
+ 	do {
+ 		/* read-only files cannot be removed */
+ 		_wchmod(wpathname, 0666);
+-		if (!_wunlink(wpathname))
++		if (try_delete_file(wpathname, use_legacy_delete))
+ 			return 0;
+ 		if (!is_file_in_use_error(GetLastError()))
+ 			break;
 -- 
 gitgitgadget
+
