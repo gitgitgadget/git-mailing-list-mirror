@@ -1,100 +1,164 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D103A8758
-	for <git@vger.kernel.org>; Thu,  7 May 2026 10:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778148173; cv=none; b=OBo0hk3+JYurB5k4kjXMqnS/RFBHQd57sx5u68Xhg3rmDoWOtobMuXaW8GK6v7mLoNRNxv2Efmg/AkRP+0DZ+/VoIUeZwGnT9G0LGFCQ91eorGQ1ajaTeyHyyYCQoKxBukIpB6NgpYzCSzEx4We/Hnr4OMOoNpAlgeLhDwqJGDc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778148173; c=relaxed/simple;
-	bh=C+TtHxHTLgogogTjort6CruiMBudY+A4RWlgGQeOchM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oT4zD4l7576l9pGeeEXU1HjVC+tmA2NGt5gc4i+z4as1/7kYYRfQo8EOtzcRBGmUKQfrMf5uXiTJZ2Z6w6tIiCQY+4uYEfRRpRnEgmPUrqlmYlb229tU0x2uYq/bZCdfTLkPH/KMj3NMT4vTsEF+3BqtOFJ7OhkxQg3OQJ3W+5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CsxLm5e4; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E340221DB3
+	for <git@vger.kernel.org>; Thu,  7 May 2026 10:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778148478; cv=pass; b=aZnqxx9/ODzyT+04qQ+BM29odYhg63jQDaYZ09ZcQwVSv/G6QSiBfce5FP2pdS4lJP2sI6RXeebg1rOdRD71a+3BKqOsq6EpAAMiffhYH2f5hN8MTbmJzdZYS89FoI6gD/jsJHXaQGnUaRz3aCthyrSqRdF8Y2sVtmwy+VcV6c4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778148478; c=relaxed/simple;
+	bh=ubXQVOAzOipY+gFnuAECrHhNmQhPd+lPM1//2YTEEHo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZiaaPT9oqwJd3KDxbUBE1PB45o5ZY+Sx2GoC6hg3KbQV1HNN7X6AuHkSmE0ciPatBAjhlORSuQLm/7c2VJ2mrGKyQ/Sdg6ewPCiaWND94j8j0lU4NGLPLsrj6hHh9klVtYbPA3qn9rkfNxq7bKpcUUtBsmPfb+jWTo92l8e7Zd8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i0L6oYHS; arc=pass smtp.client-ip=74.125.224.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CsxLm5e4"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488a9033b2cso6098155e9.2
-        for <git@vger.kernel.org>; Thu, 07 May 2026 03:02:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i0L6oYHS"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-65c37eafcbeso671370d50.1
+        for <git@vger.kernel.org>; Thu, 07 May 2026 03:07:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778148473; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Jn5F8nB4zWY0rVYXx93vT5XY3lw4M22dFHlcLhaskrtQhCeEqoOEeMaNBVUTHEvx3n
+         dO74YErqH0fTvsBUcuglpfBbFNU95wlWrtA87jGosalNhkt7ECBSxagQD35gu6ailwBh
+         +94RcSepeNnrKKqWgeoekWIy7ZtaW4GArcdpMELOhh5R79IGm0lDwEtovwTIBsvpuB7B
+         Xp4vi/pbWOpY0X11zTetBpJIyBgjb5B4w8k0DFxT75cEfo8aD6o6iTboBT2wW9z3U9yB
+         e86otImyLXNw0ltWBBVZDn5flGKbRCvCIwZx1UIKPNq7xQo+K+OGiuZBh2hMsUlDGnBB
+         IuTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=eqVPNnuE53degUO+YWzbq907aDZPFfAWi2dezUNygYg=;
+        fh=+1MRend4nV0HMxc/17vhViVinOugLXiLLAwZD1yMKZM=;
+        b=i+rbg2mHA0U5sjAPIq7W6dGOIHz8n0t7B15UT/30hRpLxcZC4RxY1eCZBSCW6M0Xvf
+         zbmn4tThcLBac4+svOlagGSJzpJSrGYpUvqsL+1K33RRmmJvlAnYq3fkR9JlNeN2BYEj
+         pLHQJo3kUWoEdUCY5K1jIaS7NJhcMN/Zyfyi22QuXN8LTRG5QndxhSPZXYfji3IS5DhG
+         MdfaspR9UGRpcfoeFf5FWMuXd5T2sWDreYJjXKROA57K2RLK/3YMigr+ft3GuNgYp/I6
+         RgWvy0YcNGwFB+hMIMRgJjkNxGZHA4mHnwlP4Fm3XAvFIGaQhu+YZSG1gqK8AsgjKJ5c
+         +GLg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778148169; x=1778752969; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9BdVP1g+9xc0YRUX+K16Z3+VkhrcfLlofvUlwkvGl5c=;
-        b=CsxLm5e4l5KeNTFMCX9VH4ShiFpD5n3Ua9/9ycasat7DLf+JsLK5nqB/W0gDyW9W3M
-         HOUoMnaOLxBWyxt+UqzY11DFvVx6ajSSRuO7rJoh9VaWepAqQPs9Y/AbnpOqGhZUs8wI
-         i5hIiCYBbv0qXhCmJm317yDSh6yEGNrWSyf3SpOXTQNPKWz9kQFfG3UKJwkNZq2kLzm+
-         Oy58PBLSgIfrktcSKqgOa4OsrR0EziR0wtiYmugLa55ItvdtlKivtq8zbDFnwANRzn7K
-         s//NipIoHI+iNegr9aA7CdYwOi1jdBWQ6XldBKdnGzS08HxAt2AIXy+AqmJMxo2a+/aE
-         ta/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778148169; x=1778752969;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778148473; x=1778753273; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9BdVP1g+9xc0YRUX+K16Z3+VkhrcfLlofvUlwkvGl5c=;
-        b=FKDLgtKPE39DVqFaVYYlHRKtrELYWRXSCq8HR20Nn+COrJFaOnD+MWhBFlH3CReVHx
-         mn1srMFWWOmEir8fgfhptJx4XPSuL7p+FL+jVRzbzsboB6JjK0AS7r8QAD/BK1tAcsRv
-         jq5nAXg/psUJ1FJOV/PCOGrD9rS2108eHYEdAF759DQABbvF5Wi3OLWbzO1NHiFJ5D+G
-         2nqqgXpJtvPbG+xEYbEmizWhK2uoj3BgW7zqP3ij6bJ6qV8row8INR2XISlWamzSlXsl
-         fTlHerE4pNRb9eyFYmhinJsccbhzaEV6h19Sl9yeN0cA64ShiX+jh+RmRWi5dQfsDRKK
-         /M0w==
-X-Gm-Message-State: AOJu0YzwZ0cpM2ergB5lDOIAfdOnFgN/9DO+ZCamQ80XW9bZljN2qnZi
-	SKvjxd/Ia3ie9iTzUv2qBYBUbV9AW8d0PKTcdv9yVd9bT5rWqic3yyW2
-X-Gm-Gg: AeBDietabrYirULQgXCRwxyV2P3+3udDgRsv3b1Qv+OWKnFZ7Ur5N9+lHLox4lBDleq
-	XNxSp/kQf+hHlNdIArDRv0ruGijJOgOq69SE1vNGkzPVjsxRLsrx3OljiFIW4oTpjKno9rVZ8n3
-	Lce0DrBsra6Y5kkcvbdSkjPlThZXVcTUMhxhOMF8v4614SXbdViyaYfAOsBWRUZtBemZBdVJYYz
-	zpGtEXM8GE+svZ0HqgR/UnDgAu8//3LNLOSF/R2XA9tD9nG1+yOh4osWeqer8kQPj+sWN0yMkE5
-	qc+AopW5yNoytEhZkOZfOPBDOCD8g7ltZ2eCiACLB6JhAkUOD2hZKUNsU1MDGVXw81AmE5xuutJ
-	DgtByJbnQzUxeFkUOt8I96ROZhkgP+kgIJ6zuqA6s0vUzCoPFftKareGpU0ZagbnJ2gUagtZWbm
-	a6vbCE0dFJlW1tzyJYKwpwDDpleROCyV2/Gl4TJLx6cgYm3OSFVGYT77CiEGQhA96hb/nH5ruZl
-	1edz+dHEk8oFJTX
-X-Received: by 2002:a05:600c:a30a:b0:48a:58ae:9938 with SMTP id 5b1f17b1804b1-48e51f37f28mr83240865e9.19.1778148168089;
-        Thu, 07 May 2026 03:02:48 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:76d:4c01:131c:ee41:99c0:e0a6? ([2a0a:ef40:76d:4c01:131c:ee41:99c0:e0a6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e538b26a3sm208325785e9.9.2026.05.07.03.02.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 May 2026 03:02:47 -0700 (PDT)
-Message-ID: <d2dd6e44-d852-48f7-9dc4-1dd1c71b98fb@gmail.com>
-Date: Thu, 7 May 2026 11:02:44 +0100
+        bh=eqVPNnuE53degUO+YWzbq907aDZPFfAWi2dezUNygYg=;
+        b=i0L6oYHSae8qdAKVm+HUcERwlM3WXKLvpiCQp6Dz0VdVuwOkbbyDdegHM0c0nLaT1/
+         couvcJvqIcG8nTPqhjo9P/REMuihIzbDJclxLP84rrEHDMwGu3S0VAl30lTK4Va+tgev
+         T+iNQaByLaAzCp1lv7O2gKSJ3b15FHW2+ZsFJYQiKtA2pVPMrONdlZsg+Y07wVu2wj6W
+         nwMpxM4rVXXkPkrRn1BotqMal7LXRnYTTRbRHzMed+9e8ZsZVmLzenXrS5qu93+ise1J
+         Xcm6/vSI5ubqZfAT1OX1arhU5tBx+TrGPoGypaw37AFxp2AN4Y5dYxJkMcOLlee5AFKv
+         VgUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778148473; x=1778753273;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=eqVPNnuE53degUO+YWzbq907aDZPFfAWi2dezUNygYg=;
+        b=QnYIVR2d4wSQbCEWY4h2li5loI8u7lvjZK1dgBntFGn+Ig6e+egC9tlIyizoE4xE3/
+         OgupPr9VtF0bKBHzjvWrNjkuMVtU/Ift2dRnBMOIL83NfmFZTuGmxktLIuUuZsEHBrHH
+         qecWsuEsrMfHzQBgm3DT62Fs8LXwFLCRzU5nW16wxqOQIqEeF/jEX2MahWEXBJkGdb1S
+         Efrk7m/LU6JAV1A+fyiOBRmcCqG7D7rG6kTJ5WYJdfvWL8JJiMXLKLZU1stVtQcLxp8K
+         JamIyjxMNiMIuWs4i4FmTWnqPbsjh1J7TcwTCZfTm1DyHdJvvA8wGJcKkh1YloPdVfdR
+         oLvQ==
+X-Gm-Message-State: AOJu0YywI8OezaZzmuAIn0rvW77f+CR//DON8y9gxd/Kit5HByeBQb7D
+	obKtXQyPLsIQjNQO+PuHU+yY1XSWyvd8+DERB/YeyxOQC8vmvCA5tiU/x4bsGlxMVkz4vRd+6cM
+	c4Oy7R7f7KyA5+JgnBY+L5LNbQBFP4mM=
+X-Gm-Gg: AeBDiesqo4abRqHqloX3XQy2TkEGSUqcCLFK6epMO4UAyOxAlioQLTNl7DEcoy6LCjB
+	jLDBr7dBi9MEIUxXj66C4H33fPnU1RzBvTFd+oGz5sFp5KeS4vT16VNiAuMU9E/QrjkSkuKFBb7
+	anH7Q1N0Fo4GdD+F2xOWPoKIF/B2jC3jSRuq6+reURuuxLdw3O0H5MYosvEbziXUYPFxN5bVaSZ
+	5ALMNyIr/+owXPQ7XTXfSgjaOpdRnQ+0Ifna6jtQ4MXKm8VHOsd398T68zi8eLBKUOOPjlScCGI
+	aaJKaXJHFZQ4ZJU7RGDnRTAWV9IVuuRBFJMArSbJ/BWTz2/QVIoSOvV4jG+UeiQ7/IUk1F+7pYQ
+	/VoL/gL1fJt0fblnhcQ24mq8QxOMJA0RCcsOvM4+44WgG5io29AnoShhA4K1i8Q9nU1uvlmrsbp
+	vUaitLU+hz2MIbPPkn8lkmIsz6MKQ=
+X-Received: by 2002:a05:690e:4390:b0:650:1bae:2f7e with SMTP id
+ 956f58d0204a3-65c7993e274mr5526953d50.24.1778148472765; Thu, 07 May 2026
+ 03:07:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git 2.54 fails to build for rhel 6 (2.53 builds fine)
-To: =?UTF-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-References: <9692091777837852@4991cc90-7cef-4f92-9de9-e195e7f2c04c>
- <affprsBwpM7L47j6@fruit.crustytoothpaste.net>
- <14616621778106505@de6a8060-5532-44d2-bc08-24865b6e9c4d>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <14616621778106505@de6a8060-5532-44d2-bc08-24865b6e9c4d>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.2291.git.git.1778120192298.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2291.git.git.1778120192298.gitgitgadget@gmail.com>
+From: Pablo <pabloosabaterr@gmail.com>
+Date: Thu, 7 May 2026 12:07:39 +0200
+X-Gm-Features: AVHnY4JiTwJ4SBitj1Dt9iioKw9Cs0TzDQk6zMlFSg57V8keLIljjLYgPOVLUtQ
+Message-ID: <CAN5EUNRn+SqALbGR3KE9zUKxUfuJrqvK+XJcq-t=biTw56m8kg@mail.gmail.com>
+Subject: Re: [PATCH] config.mak.dev: suppress C11 extension warning for Clang
+ on Linux
+To: Shardul Natu via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Shnatu <snatu@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 06/05/2026 23:28, Азат Усманов wrote:
-> any chance someone could show what commit causing the issue, since 2.53 builds ok. Ive looked through the changelog for 2.54 didn't see anythihg specific that migh cause this.
+El jue, 7 may 2026 a las 4:16, Shardul Natu via GitGitGadget
+(<gitgitgadget@gmail.com>) escribi=C3=B3:
+>
+> From: Shnatu <snatu@google.com>
+>
+> When building Git with Clang on Linux with DEVELOPER=3D1, the build fails
+> because Clang treats C11 features used in glibc headers as extensions
+> and raises errors due to -std=3Dgnu99, -pedantic, and -Werror.
 
-The compiler errors you are seeing are complaining that it cannot find a 
-function that was added in openssl 3.0 and as brain has already said it 
-looks like git is linking to an older version of openssl. So if you have 
-openssl version 3.5.6 installed the configure script is not finding it. 
-You need to tell the build process where to find the libraries you want 
-it to use, either by passing that information to configure, or by using 
-the makefile directly and setting the appropiate compiler flags.
+Hi Shnatu!
+This is already being discussed at:
+https://lore.kernel.org/git/20260505-b4-pks-ci-tolerate-glibc-generic-v1-1-=
+5786386fe512@pks.im/T/#u
 
-Thanks
+You might want to check out that thread.
 
-Phillip
+Hope this helps,
 
+--
+Pablo
 
+>
+> Specifically, glibc's string.h uses _Generic (a C11 feature) in macros
+> like strchr. When these macros are expanded in Git's C files, Clang
+> warns about them being C11 extensions.
+>
+> GCC does not exhibit this behavior because it suppresses pedantic
+> warnings for macros defined in system headers.
+>
+> To fix this, add -Wno-c11-extensions to DEVELOPER_CFLAGS when using
+> Clang, but restrict it to Linux (uname_S =3D=3D Linux). This suppresses
+> the warning for glibc headers while keeping the build strict on other
+> platforms (like macOS) to catch accidental C11 usage in Git's own code.
+>
+> Signed-off-by: Shnatu <snatu@google.com>
+> ---
+>     config.mak.dev: suppress C11 extension warning for Clang on Linux
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-229=
+1%2Fkiranani%2Fnext-2-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2291/k=
+iranani/next-2-v1
+> Pull-Request: https://github.com/git/git/pull/2291
+>
+>  config.mak.dev | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/config.mak.dev b/config.mak.dev
+> index c8dcf78779..f1dcf4329a 100644
+> --- a/config.mak.dev
+> +++ b/config.mak.dev
+> @@ -87,6 +87,9 @@ endif
+>  # The bug was fixed in Apple clang 12.
+>  #
+>  ifneq ($(filter clang1,$(COMPILER_FEATURES)),)     # if we are using cla=
+ng
+> +ifeq ($(uname_S),Linux)
+> +DEVELOPER_CFLAGS +=3D -Wno-c11-extensions
+> +endif
+>  ifeq ($(uname_S),Darwin)                           # if we are on darwin
+>  ifeq ($(filter clang12,$(COMPILER_FEATURES)),)     # if version < 12
+>  DEVELOPER_CFLAGS +=3D -Wno-missing-braces
+>
+> base-commit: 4f69b47b940100b02630f745a52f9d9850f122b2
+> --
+> gitgitgadget
+>
