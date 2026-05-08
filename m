@@ -1,70 +1,69 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C90837C110
-	for <git@vger.kernel.org>; Fri,  8 May 2026 08:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CB6382294
+	for <git@vger.kernel.org>; Fri,  8 May 2026 08:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778228221; cv=none; b=TVZ4PKaGMQuJvz+an1rLmU6CZe3jFcU7SK/JCmXIYt0G2qOI5kKSUUMyB4S7glVg7RkX1p5nLqzrOf3NKbnKCnUV6RRbCC537b3dMoG6Dy/m2woUSLQz62+Lan3tUWMIE9zFSEwynn2lpcUbynJ29mfi7V1Fgy2mZMIcIGsY07M=
+	t=1778228223; cv=none; b=P2C4SsOsPLZlXBg/Rnbzg+E+K0gDTzQHClyTGzEdTdsQbxecAjz1DYaMyitiom8fnrYQ+vrN+rXLg2Sp1gfXP+npA7eY4m6bJuRazdJ/ObWBRuwKjoe8uMr42bhKDqOejnzboZbUgb8zVP1m2I1qnXK4IMcGm7vmc1bqJJwVJ2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778228221; c=relaxed/simple;
-	bh=pewfZXQySmLP9PgqkybgdC0FHEe4AWZEuRdR7E7OI3Q=;
+	s=arc-20240116; t=1778228223; c=relaxed/simple;
+	bh=LbHwbsSRObIKXgG6/GAGMTzOlaZOCtXaa7+uZISFc0s=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WCKGCT6dxJtmTLZIb8Smst91IF1TLRW9p+QvadSEC6OnhsGvl3w/1wRrG4XcYPfy2gsoXJRK1PnZ2FEGzxsp9Vpb3FLiOXh+1KX/xfFceQw5lNC9Zh/DcDbRX3S8QENNLOBrNwg4ICfVXJByyqcI6Clm9oLfWXj/VdkCCkjjj2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fND47pwE; arc=none smtp.client-ip=209.85.219.41
+	 MIME-Version:To:Cc; b=bbw0fwntJhKMejmHtCzkCAN6n+5KF7KJTR4xmgDvFIemM4xFA5PF1xvUjmy4qI12QU24Xi3y0NKV84X48/AhAwPkLUTwt7hFVvzW5KLmfLZVWzm/1yXbZ+M61tM8UM2zncGwz32l+eO52Q+Ay6BYK/bKyHdINEMiLINyjnq5vM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ccG/1BaK; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fND47pwE"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8b3d6b215cfso30272156d6.3
-        for <git@vger.kernel.org>; Fri, 08 May 2026 01:17:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccG/1BaK"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-51306c9f2e1so17037091cf.0
+        for <git@vger.kernel.org>; Fri, 08 May 2026 01:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778228219; x=1778833019; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778228221; x=1778833021; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nZOWmtOiCy+qQAVoehJEJnvyJBE7fdTTfnBA2g8JJnM=;
-        b=fND47pwEeDQDFIHtLxc22zChmTFhR/xRIe+2WRCDWeDE1xw4DCJTz77pGqZcmtYGTM
-         Wkfa5zCyI2U7zmsLUBAWEM7ahnDu+A3YXhPYpybTyQQ4nlpBFs8Xlb5JdRyl9llh6SIR
-         zzVKlP+ln+EZ9xRaod/rtCpe2pUpaN+u7N20nkn2XxNnWGvqfvv5l//w5bj/qQfFbUPA
-         Jyk9PsT7aFyv9IByuqdkdSeRSupR1nc1M+Z2qpcgXH+LK57c7ZrXtRenZ5O0Aq4Zgra9
-         3paQGRYWKeOdu4GeCB1AIoKcIWwLZQmwUzznG6+gpzVdoCzTC2wA8nx86CsNDaNxIiv4
-         w1rw==
+        bh=J4xodm3fjmxi+KQJTMUvyrLC0OV52p21gKVMP81J1fM=;
+        b=ccG/1BaKn+IukKDI0IvZtB6/SkO1MX5aVIRBQUsHITZMOmI7vUSaCfynaLs0edqHbv
+         3bxrmlRM35hkXUST3ggfxi+p/P69Ff1CdulE3G1eCsifCRUl44+2diZCR1hjBy/3Z2w4
+         03dUY/IasBP1wbxjw7n/sDt1tTOHrq1smZ68WIcXfpzhoE8Ase+yrY+H5ns18y+nayYR
+         frq8eC09E1rjNv6egG80Ap1djhbwKZ4Q3TnbYCOPea6I+ww0K2PQsmWgtjHGUAPhZYLn
+         wkVfoxPgzb0c8BZ2v6jp6QLHI3YV5FdSZeV/3dn6ZrmoddySTOgD712RiXqbF3Lsm8uC
+         Ixyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778228219; x=1778833019;
+        d=1e100.net; s=20251104; t=1778228221; x=1778833021;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=nZOWmtOiCy+qQAVoehJEJnvyJBE7fdTTfnBA2g8JJnM=;
-        b=Oe3NCh7/T6E64nugLgxucHNEz0yj8J35hoDvPlSiFytI0EyFb5x3DxB0/25nzNNzks
-         H4FsvIvLS1jaEtdhbwApWzQiUaBEho6RuoVV4HqEFZXP1VpHagjgQP39kUrszHeYMRS3
-         A1GVhcQc89U19geep6NgeP8pIErmb2apwLhUIPj6jJysztwO/1u/J1jvBRkKSF5XAzpT
-         cPBBmd7HSTOwEBuHCG+vUttSiuyUBs7Sa4yd6gjzz+Hwfv/yuAH09RST4wWtiE6yrEsH
-         eZJiS6lKee8iWLToH0RQ+RwZQyEwciXgsAQ+pYrXFIZx1da0LVyGxSbL4I/cdICGzTrB
-         OH5A==
-X-Gm-Message-State: AOJu0YxM4D6r3brmzk/sJdMBwgstTsTpKFjXRYf5/o+vJ0x+396Vylot
-	RdwfewbtvcVZg0wUXkbGF74IjXx4lYMKS2OggmQO9TgyshtLX22SswCdE7bbUA==
-X-Gm-Gg: Acq92OEzldKKhrgD4Y739iUcDBgoIneWrQl9s3WMS9cQBA7LQm4zZ9N1LwsLHBuHHV3
-	a1AEiQ/6KMh5fQxrilaL9I7qdQQbRn2qgKltEVNXT+e5FKMjgHSzqO5wsMRYNz3z5Q2mGHzC3AB
-	a+MWEup3Mo/RRd6w19sepFAwqv3yzcDmf2oYOm5drYGHFRiv6iQJhTZck6MA1KHZjnZSMaKoH9d
-	DX6/y+ztaP1glIK8xZx2NVKxGvhrg08tG0Yx7dPNorUmNtriee1yz73QTSZUr3uG6V3qLzpKyJO
-	8KHQ6VlvV25IWJjaztv/CUH7jc26FLNTCPGqk4w5vKyav3/IiT/Iz3pc1VXeS4TSyUHaduGzJ2L
-	h6E/aguFrW9sAJIUTZjiUxh+dvkxxkGtLJqrTzmF+hI7Ih38snBpX5M3oGw6XT5KrNgHJSi9mWv
-	7FCHErYKvB7t0Z+on9dadP+L4drw==
-X-Received: by 2002:a05:6214:3bc3:b0:8bd:a072:cbc with SMTP id 6a1803df08f44-8bda07213d6mr113218916d6.3.1778228218780;
-        Fri, 08 May 2026 01:16:58 -0700 (PDT)
+        bh=J4xodm3fjmxi+KQJTMUvyrLC0OV52p21gKVMP81J1fM=;
+        b=UmT3mjG85vf1C7914GGOflSNLcDNuKdFi82VKxoEmLJvJSN413bWrz+kVZ1t6uqkIV
+         UNn4xaozJ+9zIjVRD+VtxBNAPk0pqunhndrDBQ9oil6n5XIdKAqGCluLi05TdycxrCrU
+         E7Wqcso90qjxhjHFjIoVey/p/0vbKOk8sgt0ULNjm4djYL5wxpGWwstyYZYyyHG9My7o
+         Vo69AhO8fH5b8EvXlzAZTQkXvwElwpkF1b6wXAFGBEyw1Ag2BKaSHBSi5UDcKFqGjHGn
+         sXA1dWCOYG6cmEik1o4IeV5t/+mf6aspN1c0tVtQdvPMWp7s+QMykxcPBTAQtH0XQyv6
+         Xxhg==
+X-Gm-Message-State: AOJu0YzDsIz37WKLlgPTJGDSwdyfiZrQ8xjbOihsgYgDZTQfasHY1MnA
+	W8yIaVcynW/RC8JwRguMnXdqByfxh2SblQ8LHdHnWQReIHXY+RLAv3puG/5CKw==
+X-Gm-Gg: AeBDiet+JfnbcsWOcE7T5q68gjzr74YGe1+ns2FajjRIz8SC+w0Tnqe5TocT7EiaQWD
+	eaW6WIL/C5TpiZEAwZPw7b3Sn4m1CNxK6OcXd8w2ujcSgjYWZ1oxW4lxsr1UU5gD4degKG3cXVS
+	U0ahY8IIhgqE/KyN9iNK+4eUf84H05dVw3Ba4ibdKZyiZd/piyMZ6A5gbNWtQpc3Sf8XSQkWo6P
+	Wv8aVR5ori8edGg0dtGUOohxQ/78hPpWIXFE00dejd84FhlsRmH1VbJDNysoNXa7Lcd/ChPLbKa
+	MTZZc8Ivmb6ob+QeYqM2yZHQ0ouFngM5VZxHUWUAQqc+LxUSsO8Vb4glugHvy/ut5ejUtdN8OxE
+	y2o5p7V+hEhq5DzQ+2IAy6Vs6/NnK5Nb8JlR5d1nLGjtK7vRdsfN6Sx/nTBRgy47nb1eB0jY+eS
+	Cd9tBQGPoqzXEQ5t11TIU5npA6gQ==
+X-Received: by 2002:a05:622a:5a9b:b0:50e:c093:9051 with SMTP id d75a77b69052e-51461fa08e6mr142640891cf.30.1778228220627;
+        Fri, 08 May 2026 01:17:00 -0700 (PDT)
 Received: from [127.0.0.1] ([40.76.117.241])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8bf3a906e65sm11379306d6.16.2026.05.08.01.16.57
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5148e7c0289sm11445681cf.18.2026.05.08.01.16.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 01:16:58 -0700 (PDT)
-Message-Id: <34fec4a32d6847441a765c4e91a63afc01fae742.1778228209.git.gitgitgadget@gmail.com>
+        Fri, 08 May 2026 01:17:00 -0700 (PDT)
+Message-Id: <88f992903f8c0f01335f7573e2806ecfba4b508f.1778228209.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2102.v3.git.1778228209.gitgitgadget@gmail.com>
 References: <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
 	<pull.2102.v3.git.1778228209.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 08:16:43 +0000
-Subject: [PATCH v3 05/11] test-tool: add a helper to synthesize large
- packfiles
+Date: Fri, 08 May 2026 08:16:44 +0000
+Subject: [PATCH v3 06/11] t5608: add regression test for >4GB object clone
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,359 +83,66 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-To test Git's behavior with very large pack files, we need a way to
-generate such files quickly.
+The shift overflow bug in index-pack and unpack-objects caused incorrect
+object size calculation when the encoded size required more than 32 bits
+of shift. This would result in corrupted or failed unpacking of objects
+larger than 4GB.
 
-A naive approach using only readily-available Git commands would take
-over 10 hours for a 4GB pack file, which is prohibitive.
-
-Side-stepping Git's machinery and actual zlib compression by writing
-uncompressed content with the appropriate zlib header makes things
-much faster. The fastest method using this approach generates many
-small, unreachable blob objects and takes about 1.5 minutes for 4GB.
-However, this cannot be used because we need to test git clone, which
-requires a reachable commit history.
-
-Generating many reachable commits with small, uncompressed blobs takes
-about 4 minutes for 4GB. But this approach 1) does not reproduce the
-issues we want to fix (which require individual objects larger than
-4GB) and 2) is comparatively slow because of the many SHA-1
-calculations.
-
-The approach taken here generates a single large blob (filled with NUL
-bytes), along with the trees and commits needed to make it reachable.
-This takes about 2.5 minutes for 4.5GB, which is the fastest option
-that produces a valid, clonable repository with an object large enough
-to trigger the bugs we want to test.
+Add a test that creates a pack file containing a 4GB+ blob using the
+new 'test-tool synthesize pack --reachable-large' command, then clones
+the repository to verify the fix works correctly.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                   |   1 +
- compat/zlib-compat.h       |   2 +
- t/helper/meson.build       |   1 +
- t/helper/test-synthesize.c | 250 +++++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c       |   1 +
- t/helper/test-tool.h       |   1 +
- 6 files changed, 256 insertions(+)
- create mode 100644 t/helper/test-synthesize.c
+ t/t5608-clone-2gb.sh | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index cedc234173..85405cb5b8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -872,6 +872,7 @@ TEST_BUILTINS_OBJS += test-submodule-config.o
- TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
- TEST_BUILTINS_OBJS += test-submodule.o
- TEST_BUILTINS_OBJS += test-subprocess.o
-+TEST_BUILTINS_OBJS += test-synthesize.o
- TEST_BUILTINS_OBJS += test-trace2.o
- TEST_BUILTINS_OBJS += test-truncate.o
- TEST_BUILTINS_OBJS += test-userdiff.o
-diff --git a/compat/zlib-compat.h b/compat/zlib-compat.h
-index ac08276622..5078c5ef6c 100644
---- a/compat/zlib-compat.h
-+++ b/compat/zlib-compat.h
-@@ -7,6 +7,8 @@
- # define z_stream_s zng_stream_s
- # define gz_header_s zng_gz_header_s
+diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+index 87a8cd9f98..af93302dde 100755
+--- a/t/t5608-clone-2gb.sh
++++ b/t/t5608-clone-2gb.sh
+@@ -49,4 +49,41 @@ test_expect_success 'clone - with worktree, file:// protocol' '
  
-+# define adler32(adler, buf, len) zng_adler32(adler, buf, len)
-+
- # define crc32(crc, buf, len) zng_crc32(crc, buf, len)
+ '
  
- # define inflate(strm, bits) zng_inflate(strm, bits)
-diff --git a/t/helper/meson.build b/t/helper/meson.build
-index 675e64c010..3235f10ab8 100644
---- a/t/helper/meson.build
-+++ b/t/helper/meson.build
-@@ -69,6 +69,7 @@ test_tool_sources = [
-   'test-submodule-nested-repo-config.c',
-   'test-submodule.c',
-   'test-subprocess.c',
-+  'test-synthesize.c',
-   'test-tool.c',
-   'test-trace2.c',
-   'test-truncate.c',
-diff --git a/t/helper/test-synthesize.c b/t/helper/test-synthesize.c
-new file mode 100644
-index 0000000000..3ce7078078
---- /dev/null
-+++ b/t/helper/test-synthesize.c
-@@ -0,0 +1,250 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++test_expect_success SIZE_T_IS_64BIT 'set up repo with >4GB object' '
++	large_blob_size=$((4*1024*1024*1024+1)) &&
++	git init --bare 4gb-repo &&
++	head_oid=$(test-tool synthesize pack \
++		--reachable-large "$large_blob_size" \
++		4gb-repo/objects/pack/test.pack) &&
++	git -C 4gb-repo index-pack objects/pack/test.pack &&
++	git -C 4gb-repo update-ref refs/heads/main $head_oid &&
++	git -C 4gb-repo symbolic-ref HEAD refs/heads/main
++'
 +
-+#include "test-tool.h"
-+#include "git-compat-util.h"
-+#include "git-zlib.h"
-+#include "hash.h"
-+#include "hex.h"
-+#include "object-file.h"
-+#include "object.h"
-+#include "pack.h"
-+#include "parse-options.h"
-+#include "parse.h"
-+#include "repository.h"
-+#include "setup.h"
-+#include "strbuf.h"
-+#include "write-or-die.h"
++test_expect_success SIZE_T_IS_64BIT 'clone >4GB object via unpack-objects' '
++	# The synthesized pack has five objects, so a large unpack limit keeps
++	# fetch-pack on the unpack-objects path.
++	git -c fetch.unpackLimit=100 clone --bare \
++		"file://$(pwd)/4gb-repo" 4gb-clone-unpack &&
 +
-+#define BLOCK_SIZE 0xffff
-+static const unsigned char zeros[BLOCK_SIZE];
++	# Verify the large blob survived the clone by comparing its OID
++	# between source and clone.  We cannot use "cat-file -s" because
++	# object_info.sizep is still unsigned long, which truncates >4GB
++	# sizes on Windows.  OID equality proves content integrity since
++	# the clone already verified checksums via index-pack/unpack-objects.
++	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
++	clone_blob=$(git -C 4gb-clone-unpack rev-parse main^:file) &&
++	test "$source_blob" = "$clone_blob"
++'
 +
-+/*
-+ * Write data as an uncompressed zlib stream.
-+ * For data larger than 64KB, writes multiple uncompressed blocks.
-+ * If data is NULL, writes zeros.
-+ * Updates the pack checksum context.
-+ */
-+static void write_uncompressed_zlib(FILE *f, struct git_hash_ctx *pack_ctx,
-+				    const void *data, size_t len,
-+				    const struct git_hash_algo *algo)
-+{
-+	unsigned char zlib_header[2] = { 0x78, 0x01 }; /* CMF, FLG */
-+	unsigned char block_header[5];
-+	const unsigned char *p = data;
-+	size_t remaining = len;
-+	uint32_t adler = 1L; /* adler32 initial value */
-+	unsigned char adler_buf[4];
++test_expect_success SIZE_T_IS_64BIT 'clone with >4GB object via index-pack' '
++	# Force fetch-pack to hand the pack to index-pack instead.
++	git -c fetch.unpackLimit=1 clone --bare \
++		"file://$(pwd)/4gb-repo" 4gb-clone-index &&
 +
-+	/* Write zlib header */
-+	fwrite_or_die(f, zlib_header, sizeof(zlib_header));
-+	algo->update_fn(pack_ctx, zlib_header, 2);
++	source_blob=$(git -C 4gb-repo rev-parse main^:file) &&
++	clone_blob=$(git -C 4gb-clone-index rev-parse main^:file) &&
++	test "$source_blob" = "$clone_blob"
++'
 +
-+	/* Write uncompressed blocks (max 64KB each) */
-+	do {
-+		size_t block_len = remaining > BLOCK_SIZE ? BLOCK_SIZE : remaining;
-+		int is_final = (block_len == remaining);
-+		const unsigned char *block_data = data ? p : zeros;
-+
-+		block_header[0] = is_final ? 0x01 : 0x00;
-+		block_header[1] = block_len & 0xff;
-+		block_header[2] = (block_len >> 8) & 0xff;
-+		block_header[3] = block_header[1] ^ 0xff;
-+		block_header[4] = block_header[2] ^ 0xff;
-+
-+		fwrite_or_die(f, block_header, sizeof(block_header));
-+		algo->update_fn(pack_ctx, block_header, 5);
-+
-+		if (block_len) {
-+			fwrite_or_die(f, block_data, block_len);
-+			algo->update_fn(pack_ctx, block_data, block_len);
-+			adler = adler32(adler, block_data, block_len);
-+		}
-+
-+		if (data)
-+			p += block_len;
-+		remaining -= block_len;
-+	} while (remaining > 0);
-+
-+	/* Write adler32 checksum */
-+	put_be32(adler_buf, adler);
-+	fwrite_or_die(f, adler_buf, sizeof(adler_buf));
-+	algo->update_fn(pack_ctx, adler_buf, 4);
-+}
-+
-+/*
-+ * Write an uncompressed object to the pack file.
-+ * If `data == NULL`, it is treated like a buffer to NUL bytes.
-+ * Updates the pack checksum context.
-+ */
-+static void write_pack_object(FILE *f, struct git_hash_ctx *pack_ctx,
-+			      enum object_type type,
-+			      const void *data, size_t len,
-+			      struct object_id *oid,
-+			      const struct git_hash_algo *algo)
-+{
-+	unsigned char pack_header[MAX_PACK_OBJECT_HEADER];
-+	char object_header[32];
-+	int pack_header_len, object_header_len;
-+	struct git_hash_ctx ctx;
-+
-+	/* Write pack object header */
-+	pack_header_len = encode_in_pack_object_header(pack_header,
-+						       sizeof(pack_header),
-+						       type, len);
-+	fwrite_or_die(f, pack_header, pack_header_len);
-+	algo->update_fn(pack_ctx, pack_header, pack_header_len);
-+
-+	/* Write the data as uncompressed zlib */
-+	write_uncompressed_zlib(f, pack_ctx, data, len, algo);
-+
-+	algo->init_fn(&ctx);
-+	object_header_len = format_object_header(object_header,
-+						 sizeof(object_header),
-+						 type, len);
-+	algo->update_fn(&ctx, object_header, object_header_len);
-+	if (data)
-+		algo->update_fn(&ctx, data, len);
-+	else {
-+		for (size_t i = len / BLOCK_SIZE; i; i--)
-+			algo->update_fn(&ctx, zeros, BLOCK_SIZE);
-+		algo->update_fn(&ctx, zeros, len % BLOCK_SIZE);
-+	}
-+	algo->final_oid_fn(oid, &ctx);
-+}
-+
-+/*
-+ * Generate a pack file with a single large (>4GB) reachable object.
-+ *
-+ * Creates:
-+ *   1. A large blob (all NUL bytes)
-+ *   2. A tree containing that blob as "file"
-+ *   3. A commit using that tree
-+ *   4. The empty tree
-+ *   5. A child commit using the empty tree
-+ *
-+ * This is useful for testing that Git can handle objects larger than 4GB.
-+ */
-+static int generate_pack_with_large_object(const char *path, size_t blob_size,
-+					   const struct git_hash_algo *algo)
-+{
-+	FILE *f = xfopen(path, "wb");
-+	struct git_hash_ctx pack_ctx;
-+	unsigned char pack_hash[GIT_MAX_RAWSZ];
-+	struct object_id blob_oid, tree_oid, commit_oid, empty_tree_oid, final_commit_oid;
-+	struct strbuf buf = STRBUF_INIT;
-+	const uint32_t object_count = 5;
-+	struct pack_header pack_header = {
-+		.hdr_signature = htonl(PACK_SIGNATURE),
-+		.hdr_version = htonl(PACK_VERSION),
-+		.hdr_entries = htonl(object_count),
-+	};
-+
-+	algo->init_fn(&pack_ctx);
-+
-+	/* Write pack header */
-+	fwrite_or_die(f, &pack_header, sizeof(pack_header));
-+	algo->update_fn(&pack_ctx, &pack_header, sizeof(pack_header));
-+
-+	/* 1. Write the large blob */
-+	write_pack_object(f, &pack_ctx, OBJ_BLOB, NULL, blob_size, &blob_oid, algo);
-+
-+	/* 2. Write tree containing the blob as "file" */
-+	strbuf_addf(&buf, "100644 file%c", '\0');
-+	strbuf_add(&buf, blob_oid.hash, algo->rawsz);
-+	write_pack_object(f, &pack_ctx, OBJ_TREE, buf.buf, buf.len, &tree_oid, algo);
-+
-+	/* 3. Write commit using that tree */
-+	strbuf_reset(&buf);
-+	strbuf_addf(&buf,
-+		    "tree %s\n"
-+		    "author A U Thor <author@example.com> 1234567890 +0000\n"
-+		    "committer C O Mitter <committer@example.com> 1234567890 +0000\n"
-+		    "\n"
-+		    "Large blob commit\n",
-+		    oid_to_hex(&tree_oid));
-+	write_pack_object(f, &pack_ctx, OBJ_COMMIT, buf.buf, buf.len, &commit_oid, algo);
-+
-+	/* 4. Write the empty tree */
-+	write_pack_object(f, &pack_ctx, OBJ_TREE, "", 0, &empty_tree_oid, algo);
-+
-+	/* 5. Write final commit using empty tree, with previous commit as parent */
-+	strbuf_reset(&buf);
-+	strbuf_addf(&buf,
-+		    "tree %s\n"
-+		    "parent %s\n"
-+		    "author A U Thor <author@example.com> 1234567890 +0000\n"
-+		    "committer C O Mitter <committer@example.com> 1234567890 +0000\n"
-+		    "\n"
-+		    "Empty tree commit\n",
-+		    oid_to_hex(&empty_tree_oid),
-+		    oid_to_hex(&commit_oid));
-+	write_pack_object(f, &pack_ctx, OBJ_COMMIT, buf.buf, buf.len, &final_commit_oid, algo);
-+
-+	/* Write pack trailer (checksum) */
-+	algo->final_fn(pack_hash, &pack_ctx);
-+	fwrite_or_die(f, pack_hash, algo->rawsz);
-+	if (fclose(f))
-+		die_errno(_("could not close '%s'"), path);
-+
-+	strbuf_release(&buf);
-+
-+	/* Print the final commit OID so caller can set up refs */
-+	printf("%s\n", oid_to_hex(&final_commit_oid));
-+
-+	return 0;
-+}
-+
-+static int cmd__synthesize__pack(int argc, const char **argv,
-+				 const char *prefix UNUSED,
-+				 struct repository *repo)
-+{
-+	int non_git;
-+	int reachable_large = 0;
-+	const struct git_hash_algo *algo;
-+	size_t blob_size;
-+	uintmax_t blob_size_u;
-+	const char *path;
-+	const char * const usage[] = {
-+		"test-tool synthesize pack "
-+		"--reachable-large <blob-size> <filename>",
-+		NULL
-+	};
-+	struct option options[] = {
-+		OPT_BOOL(0, "reachable-large", &reachable_large,
-+			 N_("write a pack with a single reachable large blob")),
-+		OPT_END()
-+	};
-+
-+	setup_git_directory_gently(&non_git);
-+	repo = the_repository;
-+	algo = repo->hash_algo;
-+
-+	argc = parse_options(argc, argv, NULL, options, usage,
-+			     PARSE_OPT_KEEP_ARGV0);
-+	if (argc != 3 || !reachable_large)
-+		usage_with_options(usage, options);
-+
-+	if (!git_parse_unsigned(argv[1], &blob_size_u,
-+				maximum_unsigned_value_of_type(size_t)))
-+		die(_("'%s' is not a valid blob size"), argv[1]);
-+	blob_size = blob_size_u;
-+	path = argv[2];
-+
-+	return !!generate_pack_with_large_object(path, blob_size, algo);
-+}
-+
-+int cmd__synthesize(int argc, const char **argv)
-+{
-+	const char *prefix = NULL;
-+	char const * const synthesize_usage[] = {
-+		"test-tool synthesize pack <options>",
-+		NULL,
-+	};
-+	parse_opt_subcommand_fn *fn = NULL;
-+	struct option options[] = {
-+		OPT_SUBCOMMAND("pack", &fn, cmd__synthesize__pack),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, prefix, options, synthesize_usage, 0);
-+	return !!fn(argc, argv, prefix, NULL);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index a7abc618b3..b71a22b43b 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -82,6 +82,7 @@ static struct test_cmd cmds[] = {
- 	{ "submodule-config", cmd__submodule_config },
- 	{ "submodule-nested-repo-config", cmd__submodule_nested_repo_config },
- 	{ "subprocess", cmd__subprocess },
-+	{ "synthesize", cmd__synthesize },
- 	{ "trace2", cmd__trace2 },
- 	{ "truncate", cmd__truncate },
- 	{ "userdiff", cmd__userdiff },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 7f150fa1eb..f2885b33d5 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -75,6 +75,7 @@ int cmd__submodule(int argc, const char **argv);
- int cmd__submodule_config(int argc, const char **argv);
- int cmd__submodule_nested_repo_config(int argc, const char **argv);
- int cmd__subprocess(int argc, const char **argv);
-+int cmd__synthesize(int argc, const char **argv);
- int cmd__trace2(int argc, const char **argv);
- int cmd__truncate(int argc, const char **argv);
- int cmd__userdiff(int argc, const char **argv);
+ test_done
 -- 
 gitgitgadget
 
