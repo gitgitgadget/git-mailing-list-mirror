@@ -1,86 +1,85 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1944282F3B
-	for <git@vger.kernel.org>; Fri,  8 May 2026 02:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCAD25A357
+	for <git@vger.kernel.org>; Fri,  8 May 2026 02:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778208898; cv=none; b=nYo3zGk7JVwoLDv+F9m2rD4AZnfCa5mepa4JmtISjSm/QcpffWgZ8u/ZQqrcaY+uMQF2+lZ60DcNKbOYz1iMurgZ8V2eiTKzY09e/32eGP9xkOKcVfPggJZ4JANb0Rk9pY717nnR5GVPsXwZ261DaXKd9ywDD+LOG8FUE0mE6fI=
+	t=1778208983; cv=none; b=ZytTjLrY7KD6+x+E2SKvOaL4ydOXVg3xJpy8c9Ff2cJkonLD/2EcgoVgvhrUftrrAbvJOmzf7KFfLgb5TYs/mQ2bEThHLyccvpEu5P5yJeDgQamFR31dVktfPMVz17z+5b1k/dGaBR5BM+bpfPUV88CfLh6Ske/SIfOBhxyEWPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778208898; c=relaxed/simple;
-	bh=PLquTC3HZ/V/eeaXBFLFqyNuyC0OBQWG1++0yFqq98U=;
+	s=arc-20240116; t=1778208983; c=relaxed/simple;
+	bh=6ZfEXXX+Wf+XiVUO57Su92HU5q0jR21MYCxEfmxS0ck=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sBgVDZ5VePzz6mMtaAhziqeMx4mU5bMEDyVFEqtzpngOHBppbcRaIyUKfXtdbI2fepiIuhA+OhYiLYAEzqVQKh5htTqeK+s9OPlU51wVUYH0XBh+7A9lADVo0yfFPIktShp+ycoUoSXyX+KfplcsatVjWQ92CIjGIELvTaXt4DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BRmRyVUw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GEiIJY9B; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=WhJBwiqwMRI3SEoaTwbbOZy3HoHPuk8Om/XreeWB7cPUuy3RAgBkTdwmarvXdNdzAStVwR5LoNy+BeSoejZxmbzgQTVnhVfxHy5W0uTXZ/c9Mdce0iaT6XX4qr6aumB55wWazT7EgTbmXzqqLUa1PnYpnlpNYgn9nKjkLIz8lwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gh7NipYA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pCveRTL4; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BRmRyVUw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GEiIJY9B"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id CAA6A1D00074;
-	Thu,  7 May 2026 22:54:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 07 May 2026 22:54:56 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gh7NipYA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pCveRTL4"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 009AF1D00074;
+	Thu,  7 May 2026 22:56:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Thu, 07 May 2026 22:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778208895; x=1778295295; bh=mLW0ojQR7B
-	3AnKCtcfrBAYpewY/wNlHqZukt9fOGekE=; b=BRmRyVUwJYgM9gbqv8jCGV4QU0
-	qJI3tlEdaGCdt1q3B7APaqz9LYGEic43OP0KzDUoqY/iefvePzkxikLH+8GdW2yD
-	6iMVvRVawfZubP1+LuLF1Ha+VI+UC2vlwdXcfVIwaG0/JlATFwmfl8QhpQQgCrWW
-	dCV3kjvaRBjGzpHY7ntCKfmtV889opfXJQgLxqsHYtiMXeCGTTNjEpf5PH6rlhsd
-	cRFbqLlmT6cq94PWjZVjyj+NrbZ/pVSjPbxs4IMGusfOysSPfW4Dgmxfr7na13gt
-	UZLaisAeXqhq9eRJMGQT2uM0i8E8AmzyPO+HqBKZwZzmuDqHkJ+BJ5NISXUw==
+	:subject:to:to; s=fm2; t=1778208980; x=1778295380; bh=C/mbLTVEny
+	p8VzRoX5bFUcuQM6iCdizuZbEhI6MiFwQ=; b=gh7NipYAg2lRPkvC1BRk9PuljV
+	86Pq3fDznu4dMvWo9fQ8MNLPyneCZuEsRZXxbJBIFJBNnUp/IInqFNCe8XZRxmn6
+	An8qt1/oNOqy9Nx+3EfDDMS+zR1SiaHvzN+BIedInY8FnZ4Jp9Jh/41XvrGd6jrs
+	BhnhZRHkybxcv88rZqWQ7+2jy1gm70tTAbkBWNdCYASGHY2+5IAyz6wo8nXzV4Zz
+	u97U1hGyGxMSsK/NtGMyLd4IG8ISOOEGpP4TTuS5O2JRAY8luPLYygZcJxV1kY/4
+	B3Eu+nmnMyn3H2tn4lG5nNBzvPvSdIbEkGFGAoJepMH/MQqIJ78WUZOg17Dw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778208895; x=1778295295; bh=mLW0ojQR7B3AnKCtcfrBAYpewY/wNlHqZuk
-	t9fOGekE=; b=GEiIJY9Bj8UvfwDh7mMghN1CN6AB3g2IWSLBM9cg9Qvvg20sGss
-	oSJe0omaTtdkiiB4H8n7+DdCS7RycWbl+VTVTdUqqIQyU7i+UiydZfTfI81m8kzo
-	ZGaETD9lstyoweh66rLM/wMOtMFEP3C6ShBUKOml7ljqNf1cc287ojChCJouZF9+
-	x+Z8mT3ofVJLGYI56tahmOhuW9ZhFO1mOc1R4YKvsH5XV0kIakgh2XxDsoppoxA4
-	q756mkzRqma3P26C7ZPLZkQax3o9Hi6NmV4Otr7cZ1NcLKnevqKBuSYfmEonbapJ
-	43G6ozWcUcjGMkS2IewhfRWdJqt9yc3ccLA==
-X-ME-Sender: <xms:f1D9aSlO3xF3sDjMSa3TPf6g6ZPPX0Eff-bqc0t17rt_k6RDpbyrrg>
-    <xme:f1D9adheis_TnB6E50Zw4AMSzjtDvAuvPgzWuLk5ZoLm44K41OI3SqXF4y4f_KmCj
-    0XY0TeMUikHgwrlAKjdVDS4zlK7oUD0mxRM65X_61wqX2Q-nXEN0tA>
-X-ME-Received: <xmr:f1D9aafMA7fz8V58EWJZSfkpsbLAR2iH1SlaZVlQzm0k3zsHXUI4XIwOE-eZ0nFr74w5JtJ--Rh9aq-zzo_u2tJbqJOXubutZQ>
+	1778208980; x=1778295380; bh=C/mbLTVEnyp8VzRoX5bFUcuQM6iCdizuZbE
+	hI6MiFwQ=; b=pCveRTL49462/c66Z4/I7/EEmToPbyEDIBzQK5rvsGE2s7aj4ug
+	37YMP3Mrb5hRaEHZwccESxtHbtDXasvomFiCJeJp5lXC2e+tJtV6Pu/or4JcG/Ka
+	My/0UvqTYnUWhrjkQbMC9PAQTUinC438GILUAVqKNcVlZ4teU5Wz+Enq6uOhkc+d
+	Puky7ShCpyG1DKNIMoDhPj08m465s1Kqkcp/fPcz1lxDB6vdjMiw4RuXb836MKSP
+	Tn4XeUjx452NTIWQXf70vjFwMLDtKqbHXr42KemL0RwbL9AjceN/3Dcz98qrIqZD
+	bJgMQA/hnsKImb8i6TSqsR8GUtS0BUhTwDA==
+X-ME-Sender: <xms:1FD9aVr1V_brRbnJI4sL67YDCysP_j6zdGQFPSVuASaQMDWuPS02jA>
+    <xme:1FD9aeg5B0BWphORekV0LInmfTLKJzE3VAN3HTdabCzFUe1ntML-b8IkQBLrhfiK9
+    0cKnkWiaLMbqPNGDoFKyrexTc-5Hz9wTlPUxevkiWjwDrufww7hGw>
+X-ME-Received: <xmr:1FD9aaiqDPbVmXbOJhSoODiH6a5zScZLqlXu_MUSHPZ1M_VkHx8fmSj7a76tfiHaKCiJbxVjpfyEf-Wpuqq6ZXWRRLLq-EbxPg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdelvddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhnrghtuhesghhoohhglhgvrdgtoh
-    hmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhn
-    vghtpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrdhnvghtpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:f1D9adicXbaAD2Lbp4K-tyvDc8yKnsnj43F6QO43fF7pE1HWPB43hQ>
-    <xmx:f1D9aSynWw79KUJGWfsQvRQkO6wcUmZFevYt4zrp0HM_glJWjDOKAQ>
-    <xmx:f1D9aZPU90jZUEqpG7LQcb2YiBS9whclZv-llvb3e2fZN5Br4zgxsA>
-    <xmx:f1D9aTULDjotZ-uy6JFniSvMn2SXDSCDJLy2K86RkFbmrcbAvyE4HA>
-    <xmx:f1D9aYWKpBSFvIG_e1C8tHVwekK5EELwBxNNnmfEP_guNA92UzrH3hlm>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
+    hinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1FD9acjDOK0usPyFaUyXnV0xoqbbtE8FHlNLT3AoDzZam7VLvPiLMQ>
+    <xmx:1FD9aSLJhuKSvGgSs63cSs0nZnFtZdUGnlcO6yBUv8Kxy9p2QHRcCg>
+    <xmx:1FD9aTGJbHcEi6nRvC9IC01u8cuB8B6K9MM38n5QcZQ7vmO2HkUpPg>
+    <xmx:1FD9aeS33am5DE39q97q7boB1U-0pd2mz5QZgXnaN5IfJa_Jw0Xsjg>
+    <xmx:1FD9aS4677y3g-XeVZVMrIa5gLVNIk7hFPtBi-Tk17dX-_P9jb1Nf4FR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 May 2026 22:54:55 -0400 (EDT)
+ 7 May 2026 22:56:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Shnatu <snatu@google.com>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] Makefile: link osxkeychain helper against Rust
-In-Reply-To: <pull.2288.git.git.1778001976709.gitgitgadget@gmail.com> (Shardul
-	Natu via GitGitGadget's message of "Tue, 05 May 2026 17:26:16 +0000")
-References: <pull.2288.git.git.1778001976709.gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 11:54:54 +0900
-Message-ID: <xmqqlddufw5d.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/6] mingw: stop using nedmalloc
+In-Reply-To: <pull.2104.v2.git.1778169613.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Thu, 07 May 2026 16:00:07
+	+0000")
+References: <pull.2104.git.1777811392756.gitgitgadget@gmail.com>
+	<pull.2104.v2.git.1778169613.gitgitgadget@gmail.com>
+Date: Fri, 08 May 2026 11:56:19 +0900
+Message-ID: <xmqqfr42fw30.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,68 +89,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Shardul Natu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> From: Shnatu <snatu@google.com>
+> The patches that remove the vendored sources have a slightly unusual shape:
+> the Git mailing list rejects messages over 100kB and
+> compat/nedmalloc/malloc.c.h alone is ~196kB of source, so the deletion of
+> that file is split at section boundaries into three commits, each
+> comfortably under the cap.
 
-If your name is "Shardul Natu", we'd prefer (not 'require', but
-'prefer') that the patches authored by you also identify with that
-name, both on "From:" and "Signed-off-by:"..
+The history made strange only by the limitation of the tool (i.e.,
+mailing list) we use is like the tail wagging the dog.  Could you
+give a commit log message that describes droppage of everything done
+in the "artificially stepwise only due to mailing list limitation,
+but we wish we could do in a single step because the separation is
+not logical at all" in the later steps, to the first of such steps
+([2/6], I presume), and give each remaining patch a single liner "to
+be squashed into [2/6]" log message, or something?  Then I can
+squash them on my end.  Alternatively for this one only after we get
+favourable reviews on the early two steps to drop the use of the
+library, I can pull a single "discard everything" patch that builds
+on these two from your repository.
 
-> When Rust is enabled, ensure that the git-credential-osxkeychain
-> helper is linked with the necessary Rust libraries.
->
-> Introduce the RUST_LIBS variable inside ifndef NO_RUST block
-> to hold the Rust library dependency, and use it in the helper's
-> build target. This cleanly handles cases where Rust is disabled,
-> making it a no-op and avoiding any build failures on systems
-> without Cargo.
->
-> This addresses reviewer feedback from internal CL 910223487
-> by simplifying the variables and avoiding confusing "LINK"
-> terminology.
->
-> Signed-off-by: Shnatu <snatu@google.com>
-> ---
->     Makefile: link osxkeychain helper against Rust
-
-Thanks.  I've added to CC: a few folks who may be more clueful in
-the affected area than I am.  It somehow feels strange that we have
-to have RUST_LIB and RUST_LIBS separately, and apparently with the
-new definition the latter is expected to be a superset of the
-former, and it is unclear what are the things that should be added
-to the latter without getting added to the former.
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2288%2Fkiranani%2Fnext-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2288/kiranani/next-v1
-> Pull-Request: https://github.com/git/git/pull/2288
->
->  Makefile | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index f86173f93a..a17dca22b1 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1593,6 +1593,7 @@ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
->  ifndef NO_RUST
->  BASIC_CFLAGS += -DWITH_RUST
->  GITLIBS += $(RUST_LIB)
-> +RUST_LIBS = $(RUST_LIB)
->  ifeq ($(uname_S),Windows)
->  EXTLIBS += -luserenv
->  endif
-> @@ -4082,9 +4083,9 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
->  contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
->  	$(AR) $(ARFLAGS) $@ $^
->  
-> -contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
-> +contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) $(RUST_LIBS) GIT-LDFLAGS
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
-> -		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
-> +		$(filter %.o,$^) $(LIB_FILE) $(RUST_LIBS) $(EXTLIBS) -framework Security -framework CoreFoundation
->  
->  contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
->  	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
->
-> base-commit: 4f69b47b940100b02630f745a52f9d9850f122b2
+Thanks.
